@@ -1,7 +1,7 @@
 /mob/living/simple_animal/hostile/asteroid/polarbear
 	name = "polar bear"
 	desc = "An aggressive animal that defends it's territory with incredible power. These beasts don't run from their enemies."
-	icon = 'icons/mob/icemoon/icemoon_monsters.dmi'
+	icon = 'icons/mob/simple/icemoon/icemoon_monsters.dmi'
 	icon_state = "polarbear"
 	icon_living = "polarbear"
 	icon_dead = "polarbear_dead"
@@ -20,6 +20,7 @@
 	attack_verb_continuous = "claws"
 	attack_verb_simple = "claw"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_vis_effect = ATTACK_EFFECT_CLAW
 	vision_range = 2 // don't aggro unless you basically antagonize it, though they will kill you worse than a goliath will
 	aggro_vision_range = 9
 	move_force = MOVE_FORCE_VERY_STRONG
@@ -41,7 +42,7 @@
 		rapid_melee = initial(rapid_melee)
 		return
 	if(!aggressive_message_said && target)
-		visible_message("<span class='danger'>The [name] gets an enraged look at [target]!</span>")
+		visible_message(span_danger("The [name] gets an enraged look at [target]!"))
 		aggressive_message_said = TRUE
 	rapid_melee = 2
 
@@ -49,7 +50,6 @@
 	. = ..()
 	if(!. || target)
 		return
-	adjustHealth(-0.0125 * maxHealth * delta_time)
 	aggressive_message_said = FALSE
 
 /mob/living/simple_animal/hostile/asteroid/polarbear/death(gibbed)
@@ -57,6 +57,14 @@
 	move_resist = MOVE_RESIST_DEFAULT
 	pull_force = PULL_FORCE_DEFAULT
 	return ..()
+
+/mob/living/simple_animal/hostile/asteroid/polarbear/revive(full_heal = FALSE, admin_revive = FALSE)
+	. = ..()
+	if(!.)
+		return
+	move_force = initial(move_force)
+	move_resist = initial(move_resist)
+	pull_force = initial(pull_force)
 
 /mob/living/simple_animal/hostile/asteroid/polarbear/lesser
 	name = "magic polar bear"

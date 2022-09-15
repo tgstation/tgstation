@@ -24,10 +24,10 @@ other types of metals and chemistry for reagents).
 	/// Name of the created object
 	var/name = "Name"
 	/// Description of the created object
-	var/desc = "Desc"
+	var/desc = null
 	/// The ID of the design. Used for quick reference. Alphanumeric, lower-case, no symbols
 	var/id = DESIGN_ID_IGNORE
-	/// Bitflags indicating what machines this design is compatable with. ([IMPRINTER]|[AWAY_IMPRINTER]|[PROTOLATHE]|[AWAY_LATHE]|[AUTOLATHE]|[MECHFAB]|[BIOGENERATOR]|[LIMBGROWER]|[SMELTER]|[NANITE_COMPILER])
+	/// Bitflags indicating what machines this design is compatable with. ([IMPRINTER]|[AWAY_IMPRINTER]|[PROTOLATHE]|[AWAY_LATHE]|[AUTOLATHE]|[MECHFAB]|[BIOGENERATOR]|[LIMBGROWER]|[SMELTER])
 	var/build_type = null
 	/// List of materials required to create one unit of the product. Format is (typepath or caregory) -> amount
 	var/list/materials = list()
@@ -59,6 +59,8 @@ other types of metals and chemistry for reagents).
 	var/icon_cache
 	/// Optional string that interfaces can use as part of search filters. See- item/borg/upgrade/ai and the Exosuit Fabs.
 	var/search_metadata
+	/// For protolathe designs that don't require reagents: If they can be exported to autolathes with a design disk or not.
+	var/autolathe_exportable = TRUE
 
 /datum/design/error_design
 	name = "ERROR"
@@ -73,7 +75,7 @@ other types of metals and chemistry for reagents).
 	for(var/i in materials) //Go through all of our materials, get the subsystem instance, and then replace the list.
 		var/amount = materials[i]
 		if(!istext(i)) //Not a category, so get the ref the normal way
-			var/datum/material/M =  GET_MATERIAL_REF(i)
+			var/datum/material/M = GET_MATERIAL_REF(i)
 			temp_list[M] = amount
 		else
 			temp_list[i] = amount
@@ -83,6 +85,13 @@ other types of metals and chemistry for reagents).
 	var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/research_designs)
 	sheet.send(user)
 	return sheet.icon_tag(id)
+
+/// Returns the description of the design
+/datum/design/proc/get_description()
+	var/obj/object_build_item_path = build_path
+
+	return isnull(desc) ? initial(object_build_item_path.desc) : desc
+
 
 ////////////////////////////////////////
 //Disks for transporting design datums//
@@ -96,7 +105,7 @@ other types of metals and chemistry for reagents).
 	var/list/blueprints = list()
 	var/max_blueprints = 1
 
-/obj/item/disk/design_disk/Initialize()
+/obj/item/disk/design_disk/Initialize(mapload)
 	. = ..()
 	pixel_x = base_pixel_x + rand(-5, 5)
 	pixel_y = base_pixel_y + rand(-5, 5)

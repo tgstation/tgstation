@@ -33,11 +33,12 @@
 	attack_verb_continuous = "claws"
 	attack_verb_simple = "claw"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_vis_effect = ATTACK_EFFECT_CLAW
 	friendly_verb_continuous = "bear hugs"
 	friendly_verb_simple = "bear hug"
 
 	//Space bears aren't affected by cold.
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = 1500
 
@@ -47,7 +48,7 @@
 
 	var/armored = FALSE
 
-/mob/living/simple_animal/hostile/bear/Initialize()
+/mob/living/simple_animal/hostile/bear/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	add_cell_sample()
@@ -81,7 +82,7 @@
 	icon_living = "snowbear"
 	icon_dead = "snowbear_dead"
 	desc = "It's a polar bear, in space, but not actually in space."
-	weather_immunities = list("snow")
+	weather_immunities = list(TRAIT_SNOWSTORM_IMMUNE)
 
 /mob/living/simple_animal/hostile/bear/russian
 	name = "combat bear"
@@ -104,7 +105,7 @@
 	name = "pile of bear armor"
 	desc = "A scattered pile of various shaped armor pieces fitted for a bear, some duct tape, and a nail filer. Crude instructions \
 		are written on the back of one of the plates in russian. This seems like an awful idea."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "bear_armor_upgrade"
 
 /obj/item/bear_armor/afterattack(atom/target, mob/user, proximity_flag)
@@ -112,7 +113,7 @@
 	if(istype(target, /mob/living/simple_animal/hostile/bear) && proximity_flag)
 		var/mob/living/simple_animal/hostile/bear/A = target
 		if(A.armored)
-			to_chat(user, "<span class='warning'>[A] has already been armored up!</span>")
+			to_chat(user, span_warning("[A] has already been armored up!"))
 			return
 		A.armored = TRUE
 		A.maxHealth += 60
@@ -122,7 +123,7 @@
 		A.melee_damage_upper += 5
 		A.wound_bonus += 5
 		A.update_icons()
-		to_chat(user, "<span class='info'>You strap the armor plating to [A] and sharpen [A.p_their()] claws with the nail filer. This was a great idea.</span>")
+		to_chat(user, span_info("You strap the armor plating to [A] and sharpen [A.p_their()] claws with the nail filer. This was a great idea."))
 		qdel(src)
 
 /mob/living/simple_animal/hostile/bear/butter //The mighty companion to Cak. Several functions used from it.
@@ -133,15 +134,18 @@
 	desc = "I can't believe its not a bear!"
 	faction = list("neutral", "russian")
 	obj_damage = 11
-	melee_damage_lower = 1
-	melee_damage_upper = 1
+	melee_damage_lower = 0
+	melee_damage_upper = 0
+	sharpness = NONE //it's made of butter
 	armour_penetration = 0
 	response_harm_continuous = "takes a bite out of"
 	response_harm_simple = "take a bite out of"
 	attacked_sound = 'sound/items/eatfood.ogg'
-	deathmessage = "loses its false life and collapses!"
-	butcher_results = list(/obj/item/food/butter = 6, /obj/item/food/meat/slab = 3, /obj/item/organ/brain = 1, /obj/item/organ/heart = 1)
+	death_message = "loses its false life and collapses!"
+	butcher_results = list(/obj/item/food/butter = 6, /obj/item/food/meat/slab = 3, /obj/item/organ/internal/brain = 1, /obj/item/organ/internal/heart = 1)
 	attack_sound = 'sound/weapons/slap.ogg'
+	attack_vis_effect = ATTACK_EFFECT_DISARM
+	attack_verb_simple = "slap"
 	attack_verb_continuous = "slaps"
 
 /mob/living/simple_animal/hostile/bear/butter/add_cell_sample()
@@ -161,22 +165,24 @@
 
 /mob/living/simple_animal/hostile/bear/butter/CheckParts(list/parts) //Borrowed code from Cak, allows the brain used to actually control the bear.
 	..()
-	var/obj/item/organ/brain/B = locate(/obj/item/organ/brain) in contents
-	if(!B || !B.brainmob || !B.brainmob.mind)
+	var/obj/item/organ/internal/brain/candidate = locate(/obj/item/organ/internal/brain) in contents
+	if(!candidate || !candidate.brainmob || !candidate.brainmob.mind)
 		return
-	B.brainmob.mind.transfer_to(src)
-	to_chat(src, "<span class='big bold'>You are a butter bear!</span><b> You're a mostly harmless bear/butter hybrid that everyone loves. People can take bites out of you if they're hungry, but you regenerate health \
+	candidate.brainmob.mind.transfer_to(src)
+	to_chat(src, "[span_boldbig("You are a butter bear!")]<b> You're a mostly harmless bear/butter hybrid that everyone loves. People can take bites out of you if they're hungry, but you regenerate health \
 	so quickly that it generally doesn't matter. You're remarkably resilient to any damage besides this and it's hard for you to really die at all. You should go around and bring happiness and \
 	free butter to the station!</b>")
-	var/new_name = stripped_input(src, "Enter your name, or press \"Cancel\" to stick with Terrygold.", "Name Change")
+	var/default_name = "Terrygold"
+	var/new_name = sanitize_name(reject_bad_text(tgui_input_text(src, "You are the [name]. Would you like to change your name to something else?", "Name change", default_name, MAX_NAME_LEN)), cap_after_symbols = FALSE)
 	if(new_name)
-		to_chat(src, "<span class='notice'>Your name is now <b>\"new_name\"</b>!</span>")
+		to_chat(src, span_notice("Your name is now <b>[new_name]</b>!"))
 		name = new_name
 
-/mob/living/simple_animal/hostile/bear/butter/AttackingTarget() //Makes some attacks by the butter bear slip those who dare cross its path.
-	if(isliving(target))
+/mob/living/simple_animal/hostile/bear/butter/AttackingTarget() //Makes the butter bear's attacks against vertical targets slip said targets
+	. = ..()
+	if(isliving(target)) //we don't check for . here, since attack_animal() (and thus AttackingTarget()) will return false if your damage dealt is 0
 		var/mob/living/L = target
 		if((L.body_position == STANDING_UP))
 			L.Knockdown(20)
 			playsound(loc, 'sound/misc/slip.ogg', 15)
-			L.visible_message("<span class='danger'>[L] slips on butter!</span>")
+			L.visible_message(span_danger("[L] slips on [src]'s butter!"))

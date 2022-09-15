@@ -1,51 +1,5 @@
 
 ////////////////////////////////////////////OTHER////////////////////////////////////////////
-
-
-/obj/item/food/cheese/wheel
-	name = "cheese wheel"
-	desc = "A big wheel of delcious Cheddar."
-	icon_state = "cheesewheel"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 5) //Hard cheeses contain about 25% protein
-	w_class = WEIGHT_CLASS_NORMAL
-	rat_heal = 35
-
-/obj/item/food/cheese/wheel/Initialize()
-	. = ..()
-	AddComponent(/datum/component/food_storage)
-
-/obj/item/food/cheese/wheel/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cheese, 5, 30)
-
-/obj/item/food/cheese/royal
-	name = "royal cheese"
-	desc = "Ascend the throne. Consume the wheel. Feel the POWER."
-	icon_state = "royalcheese"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 15, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/gold = 20, /datum/reagent/toxin/mutagen = 5)
-	w_class = WEIGHT_CLASS_BULKY
-	tastes = list("cheese" = 4, "royalty" = 1)
-	rat_heal = 70
-
-/obj/item/food/cheese
-	name = "cheese wedge"
-	desc = "A wedge of delicious Cheddar. The cheese wheel it was cut from can't have gone far."
-	icon_state = "cheesewedge"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
-	tastes = list("cheese" = 1)
-	foodtypes = DAIRY
-	w_class = WEIGHT_CLASS_SMALL
-	/// used to determine how much health rats/regal rats recover when they eat it.
-	var/rat_heal = 10
-
-/obj/item/food/cheese/Initialize()
-	. = ..()
-	RegisterSignal(src, COMSIG_RAT_INTERACT, .proc/on_rat_eat)
-
-/obj/item/food/cheese/proc/on_rat_eat(mob/living/simple_animal/hostile/regalrat/king)
-	SIGNAL_HANDLER
-
-	king.cheese_heal(src, rat_heal, "<span class='green'>You eat [src], restoring some health.</span>")
-
 /obj/item/food/watermelonslice
 	name = "watermelon slice"
 	desc = "A slice of watery goodness."
@@ -53,6 +7,7 @@
 	food_reagents = list(/datum/reagent/water = 1, /datum/reagent/consumable/nutriment/vitamin = 0.2, /datum/reagent/consumable/nutriment = 1)
 	tastes = list("watermelon" = 1)
 	foodtypes = FRUIT
+	food_flags = FOOD_FINGER_FOOD
 	juice_results = list(/datum/reagent/consumable/watermelonjuice = 5)
 	w_class = WEIGHT_CLASS_SMALL
 
@@ -63,6 +18,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/sugar = 2)
 	tastes = list("candy corn" = 1)
 	foodtypes = JUNKFOOD | SUGAR
+	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/food/candy_corn/prison
@@ -80,6 +36,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/sugar = 2, /datum/reagent/consumable/coco = 2)
 	tastes = list("chocolate" = 1)
 	foodtypes = JUNKFOOD | SUGAR
+	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/food/hugemushroomslice
@@ -91,6 +48,10 @@
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 
+/obj/item/food/hugemushroomslice/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_WALKING_MUSHROOM, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+
 /obj/item/food/popcorn
 	name = "popcorn"
 	desc = "Now let's find some cinema."
@@ -100,7 +61,7 @@
 	bite_consumption = 0.1 //this snack is supposed to be eating during looooong time. And this it not dinner food! --rastaf0
 	tastes = list("popcorn" = 3, "butter" = 1)
 	foodtypes = JUNKFOOD
-	eatverbs = list("bite","nibble","gnaw","gobble","chomp")
+	eatverbs = list("bite", "nibble", "gnaw", "gobble", "chomp")
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/loadedbakedpotato
@@ -116,14 +77,14 @@
 	name = "space fries"
 	desc = "AKA: French Fries, Freedom Fries, etc."
 	icon_state = "fries"
-	trash_type = /obj/item/trash/plate
+
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4)
 	tastes = list("fries" = 3, "salt" = 1)
-	foodtypes = VEGETABLES | GRAIN | FRIED
+	foodtypes = VEGETABLES | FRIED
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_CHEAP
 
-/obj/item/food/fries/Initialize()
+/obj/item/food/fries/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/dunkable, 10)
 
@@ -134,9 +95,10 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4)
 	tastes = list("potato" = 3, "valids" = 1)
 	foodtypes = FRIED | VEGETABLES
+	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/tatortot/Initialize()
+/obj/item/food/tatortot/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/dunkable, 10)
 
@@ -144,7 +106,7 @@
 	name = "soy dope"
 	desc = "Dope from a soy."
 	icon_state = "soydope"
-	trash_type = /obj/item/trash/plate
+
 	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/protein = 1)
 	tastes = list("soy" = 1)
 	foodtypes = VEGETABLES
@@ -154,14 +116,28 @@
 	name = "cheesy fries"
 	desc = "Fries. Covered in cheese. Duh."
 	icon_state = "cheesyfries"
-	trash_type = /obj/item/trash/plate
+
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("fries" = 3, "cheese" = 1)
-	foodtypes = VEGETABLES | GRAIN | DAIRY
+	foodtypes = VEGETABLES | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_CHEAP
 
-/obj/item/food/cheesyfries/Initialize()
+/obj/item/food/cheesyfries/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/dunkable, 10)
+
+/obj/item/food/poutine
+	name = "poutine"
+	desc = "Fries covered in cheese curds and gravy."
+	icon_state = "poutine"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 7)
+	tastes = list("potato" = 3, "gravy" = 1, "squeaky cheese" = 1)
+	foodtypes = VEGETABLES | FRIED | MEAT
+	w_class = WEIGHT_CLASS_SMALL
+	venue_value = FOOD_PRICE_CHEAP
+
+/obj/item/food/poutine/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/dunkable, 10)
 
@@ -172,26 +148,45 @@
 	food_reagents = list(/datum/reagent/toxin/bad_food = 30)
 	foodtypes = GROSS
 	w_class = WEIGHT_CLASS_SMALL
+	preserved_food = TRUE //Can't decompose any more than this
 
-/obj/item/food/badrecipe/Initialize()
+/obj/item/food/badrecipe/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_ITEM_GRILLED, .proc/OnGrill)
 
+/obj/item/food/badrecipe/moldy
+	name = "moldy mess"
+	desc = "A rancid, disgusting culture of mold and ants. Somewhere under there, at <i>some point,</i> there was food."
+	food_reagents = list(/datum/reagent/consumable/mold = 30)
+	preserved_food = FALSE
+	ant_attracting = TRUE
+	decomp_type = null
+	decomposition_time = 30 SECONDS
+
+/obj/item/food/badrecipe/moldy/bacteria
+	name = "bacteria rich moldy mess"
+	desc = "Not only is this rancid lump of disgusting bile crawling with insect life, but it is also teeming with various microscopic cultures. <i>It moves when you're not looking.</i>"
+
+/obj/item/food/badrecipe/moldy/bacteria/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOLD, CELL_VIRUS_TABLE_GENERIC, rand(2, 4), 25)
+
 ///Prevents grilling burnt shit from well, burning.
 /obj/item/food/badrecipe/proc/OnGrill()
+	SIGNAL_HANDLER
 	return COMPONENT_HANDLED_GRILLING
 
 /obj/item/food/carrotfries
 	name = "carrot fries"
 	desc = "Tasty fries from fresh Carrots."
 	icon_state = "carrotfries"
-	trash_type = /obj/item/trash/plate
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/medicine/oculine = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
+
+	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("carrots" = 3, "salt" = 1)
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/carrotfries/Initialize()
+/obj/item/food/carrotfries/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/dunkable, 10)
 
@@ -210,46 +205,54 @@
 	desc = "It is only wafer thin."
 	icon_state = "mint"
 	bite_consumption = 1
-	trash_type = /obj/item/trash/plate
 	food_reagents = list(/datum/reagent/toxin/minttoxin = 2)
 	foodtypes = TOXIC | SUGAR
-	w_class = WEIGHT_CLASS_TINY
-
-/obj/item/food/eggwrap
-	name = "egg wrap"
-	desc = "The precursor to Pigs in a Blanket."
-	icon_state = "eggwrap"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 3)
-	tastes = list("egg" = 1)
-	foodtypes = MEAT | GRAIN
+	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/food/spidereggs
 	name = "spider eggs"
 	desc = "A cluster of juicy spider eggs. A great side dish for when you care not for your health."
+	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "spidereggs"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/toxin = 2)
 	tastes = list("cobwebs" = 1)
-	foodtypes = MEAT | TOXIC
+	foodtypes = MEAT | TOXIC | BUGS
+	w_class = WEIGHT_CLASS_TINY
+
+/obj/item/food/spidereggs/processed
+	name = "spider eggs"
+	desc = "A cluster of juicy spider eggs. Pops in your mouth without making you sick."
+	icon_state = "spidereggs"
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4)
+	tastes = list("cobwebs" = 1)
+	foodtypes = MEAT | BUGS
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/food/spiderling
 	name = "spiderling"
 	desc = "It's slightly twitching in your hand. Ew..."
+	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "spiderling"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/toxin = 4)
 	tastes = list("cobwebs" = 1, "guts" = 2)
-	foodtypes = MEAT | TOXIC
+	foodtypes = MEAT | TOXIC | BUGS
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/chewable/spiderlollipop
+/obj/item/food/spiderlollipop
 	name = "spider lollipop"
 	desc = "Still gross, but at least it has a mountain of sugar on it."
 	icon_state = "spiderlollipop"
 	worn_icon_state = "lollipop_stick"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/toxin = 1, /datum/reagent/iron = 10, /datum/reagent/consumable/sugar = 5, /datum/reagent/medicine/omnizine = 2) //lollipop, but vitamins = toxins
 	tastes = list("cobwebs" = 1, "sugar" = 2)
-	foodtypes = JUNKFOOD | SUGAR
+	foodtypes = JUNKFOOD | SUGAR | BUGS
+	food_flags = FOOD_FINGER_FOOD
+	slot_flags = ITEM_SLOT_MASK
+
+/obj/item/food/spiderlollipop/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/chewable)
 
 /obj/item/food/chococoin
 	name = "chocolate coin"
@@ -258,6 +261,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/coco = 1, /datum/reagent/consumable/sugar = 1)
 	tastes = list("chocolate" = 1)
 	foodtypes = JUNKFOOD | SUGAR
+	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/fudgedice
@@ -268,6 +272,7 @@
 	trash_type = /obj/item/dice/fudge
 	tastes = list("fudge" = 1)
 	foodtypes = JUNKFOOD | SUGAR
+	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/chocoorange
@@ -276,84 +281,36 @@
 	icon_state = "chocoorange"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/sugar = 1)
 	tastes = list("chocolate" = 3, "oranges" = 1)
-	foodtypes = JUNKFOOD | SUGAR
+	foodtypes = JUNKFOOD | SUGAR | ORANGES
+	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/eggplantparm
 	name = "eggplant parmigiana"
 	desc = "The only good recipe for eggplant."
 	icon_state = "eggplantparm"
-	trash_type = /obj/item/trash/plate
+
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("eggplant" = 3, "cheese" = 1)
 	foodtypes = VEGETABLES | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
-
-/obj/item/food/tortilla
-	name = "tortilla"
-	desc = "The base for all your burritos."
-	icon = 'icons/obj/food/food_ingredients.dmi'
-	icon_state = "tortilla"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 1)
-	tastes = list("tortilla" = 1)
-	foodtypes = GRAIN
-	w_class = WEIGHT_CLASS_TINY
-
-/obj/item/food/burrito
-	name = "burrito"
-	desc = "Tortilla wrapped goodness."
-	icon_state = "burrito"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 2,/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/nutriment/vitamin = 1)
-	tastes = list("torilla" = 2, "meat" = 3)
-	foodtypes = GRAIN | MEAT
-	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_NORMAL
-
-/obj/item/food/cheesyburrito
-	name = "cheesy burrito"
-	desc = "It's a burrito filled with cheese."
-	icon_state = "cheesyburrito"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
-	tastes = list("torilla" = 2, "meat" = 3, "cheese" = 1)
-	foodtypes = GRAIN | MEAT | DAIRY
-	w_class = WEIGHT_CLASS_SMALL
-	venue_value = FOOD_PRICE_EXOTIC
-
-/obj/item/food/carneburrito
-	name = "carne asada burrito"
-	desc = "The best burrito for meat lovers."
-	icon_state = "carneburrito"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 1)
-	tastes = list("torilla" = 2, "meat" = 4)
-	foodtypes = GRAIN | MEAT
-	w_class = WEIGHT_CLASS_SMALL
-	venue_value = FOOD_PRICE_EXOTIC
-
-/obj/item/food/fuegoburrito
-	name = "fuego plasma burrito"
-	desc = "A super spicy burrito."
-	icon_state = "fuegoburrito"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/capsaicin = 5, /datum/reagent/consumable/nutriment/vitamin = 3)
-	tastes = list("torilla" = 2, "meat" = 3, "hot peppers" = 1)
-	foodtypes = GRAIN | MEAT
-	w_class = WEIGHT_CLASS_SMALL
-	venue_value = FOOD_PRICE_LEGENDARY
 
 /obj/item/food/yakiimo
 	name = "yaki imo"
 	desc = "Made with roasted sweet potatoes!"
 	icon_state = "yakiimo"
-	trash_type = /obj/item/trash/plate
+
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("sweet potato" = 1)
-	foodtypes = GRAIN | VEGETABLES | SUGAR
+	foodtypes = VEGETABLES | SUGAR
 	w_class = WEIGHT_CLASS_SMALL
+	burns_in_oven = TRUE
 
 /obj/item/food/roastparsnip
 	name = "roast parsnip"
 	desc = "Sweet and crunchy."
 	icon_state = "roastparsnip"
-	trash_type = /obj/item/trash/plate
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("parsnip" = 1)
 	foodtypes = VEGETABLES
@@ -367,35 +324,6 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	tastes = list("melon" = 1)
 	foodtypes = FRUIT
-	w_class = WEIGHT_CLASS_SMALL
-
-/obj/item/food/nachos
-	name = "nachos"
-	desc = "Chips from Space Mexico."
-	icon_state = "nachos"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
-	tastes = list("nachos" = 1)
-	foodtypes = VEGETABLES | FRIED
-	w_class = WEIGHT_CLASS_SMALL
-	venue_value = FOOD_PRICE_CHEAP
-
-/obj/item/food/cheesynachos
-	name = "cheesy nachos"
-	desc = "The delicious combination of nachos and melting cheese."
-	icon_state = "cheesynachos"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/consumable/nutriment/vitamin = 3)
-	tastes = list("nachos" = 2, "cheese" = 1)
-	foodtypes = VEGETABLES | FRIED | DAIRY
-	w_class = WEIGHT_CLASS_SMALL
-	venue_value = FOOD_PRICE_EXOTIC
-
-/obj/item/food/cubannachos
-	name = "Cuban nachos"
-	desc = "That's some dangerously spicy nachos."
-	icon_state = "cubannachos"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/consumable/capsaicin = 8, /datum/reagent/consumable/nutriment/vitamin = 4)
-	tastes = list("nachos" = 2, "hot pepper" = 1)
-	foodtypes = VEGETABLES | FRIED | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/melonkeg
@@ -415,17 +343,8 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/honey = 5)
 	tastes = list("oats" = 3, "nuts" = 2, "honey" = 1)
 	foodtypes = GRAIN | SUGAR
+	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
-
-/obj/item/food/stuffedlegion
-	name = "stuffed legion"
-	desc = "The former skull of a damned human, filled with goliath meat. It has a decorative lava pool made of ketchup and hotsauce."
-	icon_state = "stuffed_legion"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/consumable/capsaicin = 2)
-	tastes = list("death" = 2, "rock" = 1, "meat" = 1, "hot peppers" = 1)
-	foodtypes = MEAT
-	w_class = WEIGHT_CLASS_SMALL
-	venue_value = FOOD_PRICE_LEGENDARY
 
 /obj/item/food/powercrepe
 	name = "Powercrepe"
@@ -443,93 +362,43 @@
 	tastes = list("cherry" = 1, "crepe" = 1)
 	foodtypes = GRAIN | FRUIT | SUGAR
 
-///Shit typepath to allow you to suck on shit. Like the coder of this code probably did to penis.
-/obj/item/food/chewable
-	slot_flags = ITEM_SLOT_MASK
-	///How long it lasts before being deleted in seconds
-	var/succ_dur = 360
-	///The delay between each time it will handle reagents
-	var/succ_int = 100
-	///Stores the time set for the next handle_reagents
-	var/next_succ = 0
-
-	//makes snacks actually wearable as masks and still edible the old-fashioned way.
-/obj/item/food/chewable/proc/handle_reagents()
-	if(reagents.total_volume)
-		if(iscarbon(loc))
-			var/mob/living/carbon/C = loc
-			if (src == C.wear_mask) // if it's in the human/monkey mouth, transfer reagents to the mob
-				if(!reagents.trans_to(C, REAGENTS_METABOLISM, methods = INGEST))
-					reagents.remove_any(REAGENTS_METABOLISM)
-				return
-		reagents.remove_any(REAGENTS_METABOLISM)
-
-/obj/item/food/chewable/process(delta_time)
-	if(iscarbon(loc))
-		if(succ_dur <= 0)
-			qdel(src)
-			return
-		succ_dur -= delta_time
-		if((reagents?.total_volume) && (next_succ <= world.time))
-			handle_reagents()
-			next_succ = world.time + succ_int
-
-/obj/item/food/chewable/equipped(mob/user, slot)
-	. = ..()
-	if(slot == ITEM_SLOT_MASK)
-		START_PROCESSING(SSobj, src)
-	else
-		STOP_PROCESSING(SSobj, src)
-
-/obj/item/food/chewable/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	. = ..()
-
-/obj/item/food/chewable/lollipop
+/obj/item/food/lollipop
 	name = "lollipop"
 	desc = "A delicious lollipop. Makes for a great Valentine's present."
-	icon = 'icons/obj/lollipop.dmi'
+	icon = 'icons/obj/food/lollipop.dmi'
 	icon_state = "lollipop_stick"
 	inhand_icon_state = "lollipop_stick"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/iron = 10, /datum/reagent/consumable/sugar = 5, /datum/reagent/medicine/omnizine = 2) //Honk
-	var/mutable_appearance/head
-	var/headcolor = rgb(0, 0, 0)
 	tastes = list("candy" = 1)
 	foodtypes = JUNKFOOD | SUGAR
+	food_flags = FOOD_FINGER_FOOD
+	slot_flags = ITEM_SLOT_MASK
 	w_class = WEIGHT_CLASS_TINY
+	venue_value = FOOD_PRICE_WORTHLESS
+	var/mutable_appearance/head
+	var/head_color = rgb(0, 0, 0)
 
-/obj/item/food/chewable/lollipop/Initialize()
+/obj/item/food/lollipop/Initialize(mapload)
 	. = ..()
-	head = mutable_appearance('icons/obj/lollipop.dmi', "lollipop_head")
+	head = mutable_appearance('icons/obj/food/lollipop.dmi', "lollipop_head")
 	change_head_color(rgb(rand(0, 255), rand(0, 255), rand(0, 255)))
+	AddElement(/datum/element/chewable)
 
-/obj/item/food/chewable/lollipop/proc/change_head_color(C)
-	headcolor = C
+/obj/item/food/lollipop/proc/change_head_color(C)
+	head_color = C
 	cut_overlay(head)
 	head.color = C
 	add_overlay(head)
 
-/obj/item/food/chewable/lollipop/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+/obj/item/food/lollipop/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..(hit_atom)
 	throw_speed = 1
 	throwforce = 0
 
-/obj/item/food/chewable/lollipop/cyborg
-	var/spamchecking = TRUE
+/obj/item/food/lollipop/cyborg
+	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/iron = 10, /datum/reagent/consumable/sugar = 5, /datum/reagent/medicine/psicodine = 2) //psicodine instead of omnizine, because the latter was making coders freak out
 
-/obj/item/food/chewable/lollipop/cyborg/Initialize()
-	. = ..()
-	addtimer(CALLBACK(src, .proc/spamcheck), 1200)
-
-/obj/item/food/chewable/lollipop/cyborg/equipped(mob/living/user, slot)
-	. = ..(user, slot)
-	spamchecking = FALSE
-
-/obj/item/food/chewable/lollipop/cyborg/proc/spamcheck()
-	if(spamchecking)
-		qdel(src)
-
-/obj/item/food/chewable/bubblegum
+/obj/item/food/bubblegum
 	name = "bubblegum"
 	desc = "A rubbery strip of gum. Not exactly filling, but it keeps you busy."
 	icon_state = "bubblegum"
@@ -537,36 +406,51 @@
 	color = "#E48AB5" // craftable custom gums someday?
 	food_reagents = list(/datum/reagent/consumable/sugar = 5)
 	tastes = list("candy" = 1)
-	succ_dur = 15 * 60
+	food_flags = FOOD_FINGER_FOOD
+	slot_flags = ITEM_SLOT_MASK
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/food/chewable/bubblegum/nicotine
+	/// The amount to metabolize per second
+	var/metabolization_amount = REAGENTS_METABOLISM / 2
+
+/obj/item/food/bubblegum/suicide_act(mob/user)
+	user.visible_message(span_suicide("[user] swallows [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	qdel(src)
+	return TOXLOSS
+
+/obj/item/food/bubblegum/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/chewable, metabolization_amount = metabolization_amount)
+
+/obj/item/food/bubblegum/nicotine
 	name = "nicotine gum"
 	food_reagents = list(/datum/reagent/drug/nicotine = 10, /datum/reagent/consumable/menthol = 5)
 	tastes = list("mint" = 1)
 	color = "#60A584"
 
-/obj/item/food/chewable/bubblegum/happiness
+/obj/item/food/bubblegum/happiness
 	name = "HP+ gum"
 	desc = "A rubbery strip of gum. It smells funny."
 	food_reagents = list(/datum/reagent/drug/happiness = 15)
 	tastes = list("paint thinner" = 1)
 	color = "#EE35FF"
 
-/obj/item/food/chewable/bubblegum/bubblegum
+/obj/item/food/bubblegum/bubblegum
 	name = "bubblegum gum"
 	desc = "A rubbery strip of gum. You don't feel like eating it is a good idea."
 	color = "#913D3D"
 	food_reagents = list(/datum/reagent/blood = 15)
-	tastes = list("hell" = 1)
-	succ_dur = 6 * 60
+	tastes = list("hell" = 1, "people" = 1)
+	metabolization_amount = REAGENTS_METABOLISM
+	/// What the player hears from the bubblegum hallucination, and also says one of these when suiciding
+	var/static/list/hallucination_lines = list("I AM IMMORTAL.", "I SHALL TAKE YOUR WORLD.", "I SEE YOU.", "YOU CANNOT ESCAPE ME FOREVER.", "NOTHING CAN HOLD ME.")
 
-/obj/item/food/chewable/bubblegum/bubblegum/process()
+/obj/item/food/bubblegum/bubblegum/process()
 	. = ..()
 	if(iscarbon(loc))
 		hallucinate(loc)
 
-/obj/item/food/chewable/bubblegum/bubblegum/MakeEdible()
+/obj/item/food/bubblegum/bubblegum/MakeEdible()
 	AddComponent(/datum/component/edible,\
 				initial_reagents = food_reagents,\
 				food_flags = food_flags,\
@@ -580,68 +464,42 @@
 				junkiness = junkiness,\
 				on_consume = CALLBACK(src, .proc/OnConsume))
 
-/obj/item/food/chewable/bubblegum/bubblegum/proc/OnConsume(mob/living/eater, mob/living/feeder)
+/obj/item/food/bubblegum/bubblegum/proc/OnConsume(mob/living/eater, mob/living/feeder)
 	if(iscarbon(eater))
 		hallucinate(eater)
 
 ///This proc has a 5% chance to have a bubblegum line appear, with an 85% chance for just text and 15% for a bubblegum hallucination and scarier text.
-/obj/item/food/chewable/bubblegum/bubblegum/proc/hallucinate(mob/living/carbon/victim)
+/obj/item/food/bubblegum/bubblegum/proc/hallucinate(mob/living/carbon/victim)
 	if(!prob(5)) //cursed by bubblegum
 		return
 	if(prob(15))
 		new /datum/hallucination/oh_yeah(victim)
-		to_chat(victim, "<span class='colossus'><b>[pick("I AM IMMORTAL.","I SHALL TAKE YOUR WORLD.","I SEE YOU.","YOU CANNOT ESCAPE ME FOREVER.","NOTHING CAN HOLD ME.")]</b></span>")
+		to_chat(victim, span_colossus("<b>[pick(hallucination_lines)]</b>"))
 	else
-		to_chat(victim, "<span class='warning'>[pick("You hear faint whispers.","You smell ash.","You feel hot.","You hear a roar in the distance.")]</span>")
+		to_chat(victim, span_warning("[pick("You hear faint whispers.", "You smell ash.", "You feel hot.", "You hear a roar in the distance.")]"))
 
-/obj/item/food/chewable/gumball
+/obj/item/food/bubblegum/bubblegum/suicide_act(mob/user)
+	user.say(";[pick(hallucination_lines)]")
+	return ..()
+
+/obj/item/food/gumball
 	name = "gumball"
 	desc = "A colorful, sugary gumball."
-	icon = 'icons/obj/lollipop.dmi'
+	icon = 'icons/obj/food/lollipop.dmi'
 	icon_state = "gumball"
 	worn_icon_state = "bubblegum"
 	food_reagents = list(/datum/reagent/consumable/sugar = 5, /datum/reagent/medicine/sal_acid = 2, /datum/reagent/medicine/oxandrolone = 2) //Kek
 	tastes = list("candy")
 	foodtypes = JUNKFOOD
+	food_flags = FOOD_FINGER_FOOD
+	slot_flags = ITEM_SLOT_MASK
 	w_class = WEIGHT_CLASS_TINY
+	venue_value = FOOD_PRICE_WORTHLESS
 
-/obj/item/food/chewable/gumball/Initialize()
+/obj/item/food/gumball/Initialize(mapload)
 	. = ..()
 	color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
-
-/obj/item/food/chewable/gumball/cyborg
-	var/spamchecking = TRUE
-
-/obj/item/food/chewable/gumball/cyborg/Initialize()
-	. = ..()
-	addtimer(CALLBACK(src, .proc/spamcheck), 1200)
-
-/obj/item/food/chewable/gumball/cyborg/equipped(mob/living/user, slot)
-	. = ..(user, slot)
-	spamchecking = FALSE
-
-/obj/item/food/chewable/gumball/cyborg/proc/spamcheck()
-	if(spamchecking)
-		qdel(src)
-
-/obj/item/food/taco
-	name = "classic taco"
-	desc = "A traditional taco with meat, cheese, and lettuce."
-	icon_state = "taco"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
-	tastes = list("taco" = 4, "meat" = 2, "cheese" = 2, "lettuce" = 1)
-	foodtypes = MEAT | DAIRY | GRAIN | VEGETABLES
-	w_class = WEIGHT_CLASS_SMALL
-	venue_value = FOOD_PRICE_NORMAL
-
-/obj/item/food/taco/plain
-	name = "plain taco"
-	desc = "A traditional taco with meat and cheese, minus the rabbit food."
-	icon_state = "taco_plain"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 1)
-	tastes = list("taco" = 4, "meat" = 2, "cheese" = 2)
-	foodtypes = MEAT | DAIRY | GRAIN
-	venue_value = FOOD_PRICE_CHEAP
+	AddElement(/datum/element/chewable)
 
 /obj/item/food/branrequests
 	name = "Bran Requests Cereal"
@@ -663,18 +521,18 @@
 
 /obj/item/food/butter/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>If you had a rod you could make <b>butter on a stick</b>.</span>"
+	. += span_notice("If you had a rod you could make <b>butter on a stick</b>.")
 
-/obj/item/food/butter/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/stack/rods))
-		var/obj/item/stack/rods/R = W
-		if(!R.use(1))//borgs can still fail this if they have no metal
-			to_chat(user, "<span class='warning'>You do not have enough iron to put [src] on a stick!</span>")
+/obj/item/food/butter/attackby(obj/item/item, mob/user, params)
+	if(istype(item, /obj/item/stack/rods))
+		var/obj/item/stack/rods/rods = item
+		if(!rods.use(1))//borgs can still fail this if they have no metal
+			to_chat(user, span_warning("You do not have enough iron to put [src] on a stick!"))
 			return ..()
-		to_chat(user, "<span class='notice'>You stick the rod into the stick of butter.</span>")
+		to_chat(user, span_notice("You stick the rod into the stick of butter."))
 		var/obj/item/food/butter/on_a_stick/new_item = new(usr.loc)
-		var/replace = (user.get_inactive_held_item() == R)
-		if(!R && replace)
+		var/replace = (user.get_inactive_held_item() == rods)
+		if(!rods && replace)
 			user.put_in_hands(new_item)
 		qdel(src)
 		return TRUE
@@ -685,6 +543,7 @@
 	desc = "delicious, golden, fatty goodness on a stick."
 	icon_state = "butteronastick"
 	trash_type = /obj/item/stack/rods
+	food_flags = FOOD_FINGER_FOOD
 
 /obj/item/food/onionrings
 	name = "onion rings"
@@ -712,23 +571,28 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/sugar = 1, /datum/reagent/consumable/coco = 1)
 	tastes = list("chocolate" = 1)
 	foodtypes = JUNKFOOD | SUGAR
+	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/food/canned
 	name = "Canned Air"
 	desc = "If you ever wondered where air came from..."
 	food_reagents = list(/datum/reagent/oxygen = 6, /datum/reagent/nitrogen = 24)
+	icon = 'icons/obj/food/canned.dmi'
 	icon_state = "peachcan"
 	food_flags = FOOD_IN_CONTAINER
 	w_class = WEIGHT_CLASS_NORMAL
 	max_volume = 30
 	w_class = WEIGHT_CLASS_SMALL
+	preserved_food = TRUE
 
 
 /obj/item/food/canned/proc/open_can(mob/user)
-	to_chat(user, "<span class='notice'>You pull back the tab of \the [src].</span>")
+	to_chat(user, span_notice("You pull back the tab of \the [src]."))
 	playsound(user.loc, 'sound/items/foodcanopen.ogg', 50)
 	reagents.flags |= OPENCONTAINER
+	preserved_food = FALSE
+	MakeDecompose()
 
 /obj/item/food/canned/attack_self(mob/user)
 	if(!is_drainable())
@@ -736,9 +600,9 @@
 		icon_state = "[icon_state]_open"
 	return ..()
 
-/obj/item/food/canned/attack(mob/living/M, mob/user, def_zone)
+/obj/item/food/canned/attack(mob/living/target, mob/user, def_zone)
 	if (!is_drainable())
-		to_chat(user, "<span class='warning'>[src]'s lid hasn't been opened!</span>")
+		to_chat(user, span_warning("[src]'s lid hasn't been opened!"))
 		return FALSE
 	return ..()
 
@@ -766,6 +630,26 @@
 	icon_state = "peachcanmaint"
 	trash_type = /obj/item/trash/can/food/peaches/maint
 	tastes = list("peaches" = 1, "tin" = 7)
+	venue_value = FOOD_PRICE_EXOTIC
+
+/obj/item/food/canned/tomatoes
+	name = "canned San Marzano tomatoes"
+	desc = "A can of premium San Marzano tomatoes, from the hills of Southern Italy."
+	icon_state = "tomatoescan"
+	trash_type = /obj/item/trash/can/food/tomatoes
+	food_reagents = list(/datum/reagent/consumable/tomatojuice = 20, /datum/reagent/consumable/salt = 2)
+	tastes = list("tomato" = 7, "tin" = 1)
+	foodtypes = VEGETABLES //fuck you, real life!
+
+/obj/item/food/canned/pine_nuts
+	name = "canned pine nuts"
+	desc = "A small can of pine nuts. Can be eaten on their own, if you're into that."
+	icon_state = "pinenutscan"
+	trash_type = /obj/item/trash/can/food/pine_nuts
+	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 3)
+	tastes = list("pine nuts" = 1)
+	foodtypes = NUTS
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/crab_rangoon
 	name = "Crab Rangoon"
@@ -776,22 +660,6 @@
 	tastes = list("cream cheese" = 4, "crab" = 3, "crispiness" = 2)
 	foodtypes = MEAT | DAIRY | GRAIN
 	venue_value = FOOD_PRICE_CHEAP
-
-/obj/item/food/cornchips
-	name = "boritos corn chips"
-	desc = "Triangular corn chips. They do seem a bit bland but would probably go well with some kind of dipping sauce."
-	icon_state = "boritos"
-	trash_type = /obj/item/trash/boritos
-	bite_consumption = 2
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/cooking_oil = 2, /datum/reagent/consumable/salt = 3)
-	junkiness = 20
-	tastes = list("fried corn" = 1)
-	foodtypes = JUNKFOOD | FRIED
-	w_class = WEIGHT_CLASS_SMALL
-
-/obj/item/food/cornchips/MakeLeaveTrash()
-	if(trash_type)
-		AddElement(/datum/element/food_trash, trash_type, FOOD_TRASH_POPABLE)
 
 
 /obj/item/food/rationpack
@@ -819,5 +687,247 @@
 				junkiness = junkiness,\
 				check_liked = CALLBACK(src, .proc/check_liked))
 
-/obj/item/food/rationpack/proc/check_liked(fraction, mob/M) //Nobody likes rationpacks. Nobody.
+/obj/item/food/rationpack/proc/check_liked(fraction, mob/mob) //Nobody likes rationpacks. Nobody.
 	return FOOD_DISLIKED
+
+/obj/item/food/ant_candy
+	name = "ant candy"
+	desc = "A colony of ants suspended in hardened sugar. Those things are dead, right?"
+	icon_state = "ant_pop"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/consumable/sugar = 5, /datum/reagent/ants = 3)
+	tastes = list("candy" = 1, "insects" = 1)
+	foodtypes = JUNKFOOD | SUGAR | BUGS
+	food_flags = FOOD_FINGER_FOOD
+	w_class = WEIGHT_CLASS_TINY
+
+/obj/item/food/canned/envirochow
+	name = "dog eat dog envirochow"
+	desc = "The first pet food product that is made fully sustainable by employing ancient British animal husbandry techniques."
+	icon_state = "envirochow"
+	trash_type = /obj/item/trash/can/food/envirochow
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 9, /datum/reagent/consumable/nutriment/vitamin = 4)
+	tastes = list("dog food" = 5, "狗肉" = 3)
+	foodtypes = MEAT | GROSS
+
+/obj/item/food/canned/envirochow/attack_animal(mob/living/simple_animal/user, list/modifiers)
+	if(!check_buffability(user))
+		return ..()
+	apply_buff(user)
+
+/obj/item/food/canned/envirochow/afterattack(atom/target, mob/user, proximity_flag)
+	. = ..()
+	if(!proximity_flag)
+		return
+	if(!isanimal(target))
+		return
+	if(!check_buffability(target))
+		return
+	apply_buff(target, user)
+
+///This proc checks if the mob is able to recieve the buff.
+/obj/item/food/canned/envirochow/proc/check_buffability(mob/living/simple_animal/hungry_pet)
+	if(!is_drainable()) //can is not open
+		return FALSE
+	if(hungry_pet.stat) //parrot deceased
+		return FALSE
+	if(hungry_pet.mob_biotypes & (MOB_BEAST|MOB_REPTILE|MOB_BUG))
+		return TRUE
+	else
+		return FALSE //humans, robots & spooky ghosts not allowed
+
+///This makes the animal eat the food, and applies the buff status effect to them.
+/obj/item/food/canned/envirochow/proc/apply_buff(mob/living/simple_animal/hungry_pet, mob/living/dog_mom)
+	hungry_pet.apply_status_effect(/datum/status_effect/limited_buff/health_buff) //the status effect keeps track of the stacks
+	hungry_pet.visible_message(
+		span_notice("[hungry_pet] chows down on [src]."),
+		span_nicegreen("You chow down on [src]."),
+		span_notice("You hear sloppy eating noises."))
+	SEND_SIGNAL(src, COMSIG_FOOD_CONSUMED, hungry_pet, dog_mom ? dog_mom : hungry_pet)//If there is no dog mom, we assume the pet fed itself.
+	playsound(loc, 'sound/items/eatfood.ogg', rand(30, 50), TRUE)
+	qdel(src)
+
+/obj/item/food/pesto
+	name = "pesto"
+	desc = "A combination of firm cheese, salt, herbs, garlic, oil, and pine nuts. Frequently used as a sauce for pasta or pizza, or eaten on bread."
+	icon_state = "pesto"
+	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 3)
+	tastes = list("pesto" = 1)
+	foodtypes = VEGETABLES | DAIRY | NUTS
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/tomato_sauce
+	name = "tomato sauce"
+	desc = "Tomato sauce, perfect for pizza or pasta. Mamma mia!"
+	icon_state = "tomato_sauce"
+	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 3)
+	tastes = list("tomato" = 1, "herbs" = 1)
+	foodtypes = VEGETABLES
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/bechamel_sauce
+	name = "béchamel sauce"
+	desc = "A classic white sauce common to several European cultures."
+	icon_state = "bechamel_sauce"
+	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 3)
+	tastes = list("cream" = 1)
+	foodtypes = DAIRY | GRAIN
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/roasted_bell_pepper
+	name = "roasted bell pepper"
+	desc = "A blackened, blistered bell pepper. Great for making sauces."
+	icon_state = "roasted_bell_pepper"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/consumable/char = 1)
+	tastes = list("bell pepper" = 1, "char" = 1)
+	foodtypes = VEGETABLES
+	burns_in_oven = TRUE
+
+//DONK DINNER: THE INNOVATIVE WAY TO GET YOUR DAILY RECOMMENDED ALLOWANCE OF SALT... AND THEN SOME!
+/obj/item/food/ready_donk
+	name = "\improper Ready-Donk: Bachelor Chow"
+	desc = "A quick Donk-dinner: now with flavour!"
+	icon_state = "ready_donk"
+	trash_type = /obj/item/trash/ready_donk
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5)
+	microwaved_type = /obj/item/food/ready_donk/warm
+	tastes = list("food?" = 2, "laziness" = 1)
+	foodtypes = MEAT | JUNKFOOD
+	food_flags = FOOD_FINGER_FOOD
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/ready_donk/examine_more(mob/user)
+	. = ..()
+	. += span_notice("<i>You browse the back of the box...</i>")
+	. += "\t[span_info("Ready-Donk: a product of Donk Co.")]"
+	. += "\t[span_info("Heating instructions: open box and pierce film, heat in microwave on high for 2 minutes. Allow to stand for 60 seconds prior to eating. Product will be hot.")]"
+	. += "\t[span_info("Per 200g serving contains: 8g Sodium; 25g Fat, of which 22g are saturated; 2g Sugar.")]"
+	return .
+
+/obj/item/food/ready_donk/warm
+	name = "warm Ready-Donk: Bachelor Chow"
+	desc = "A quick Donk-dinner, now with flavour! And it's even hot!"
+	icon_state = "ready_donk_warm"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/medicine/omnizine = 3)
+	microwaved_type = null
+	tastes = list("food?" = 2, "laziness" = 1)
+
+/obj/item/food/ready_donk/mac_n_cheese
+	name = "\improper Ready-Donk: Donk-a-Roni"
+	desc = "Neon-orange mac n' cheese in seconds!"
+	microwaved_type = /obj/item/food/ready_donk/warm/mac_n_cheese
+	tastes = list("cheesy pasta" = 2, "laziness" = 1)
+	foodtypes = GRAIN | DAIRY | JUNKFOOD
+
+/obj/item/food/ready_donk/warm/mac_n_cheese
+	name = "warm Ready-Donk: Donk-a-Roni"
+	desc = "Neon-orange mac n' cheese, ready to eat!"
+	icon_state = "ready_donk_warm_mac"
+	tastes = list("cheesy pasta" = 2, "laziness" = 1)
+	foodtypes = GRAIN | DAIRY | JUNKFOOD
+
+/obj/item/food/ready_donk/donkhiladas
+	name = "\improper Ready-Donk: Donkhiladas"
+	desc = "Donk Co's signature Donkhiladas with Donk sauce, for an 'authentic' taste of Mexico."
+	microwaved_type = /obj/item/food/ready_donk/warm/donkhiladas
+	tastes = list("enchiladas" = 2, "laziness" = 1)
+	foodtypes = GRAIN | DAIRY | MEAT | VEGETABLES | JUNKFOOD
+
+/obj/item/food/ready_donk/warm/donkhiladas
+	name = "warm Ready-Donk: Donkhiladas"
+	desc = "Donk Co's signature Donkhiladas with Donk sauce, served as hot as the Mexican sun."
+	icon_state = "ready_donk_warm_mex"
+	tastes = list("enchiladas" = 2, "laziness" = 1)
+	foodtypes = GRAIN | DAIRY | MEAT | VEGETABLES | JUNKFOOD
+
+/obj/item/food/pierogi
+	name = "pierogi"
+	desc = "A dumpling made by wrapping unleavened dough around a savoury or sweet filling and cooking in boiling water. This one is filled with a potato and onion mixture."
+	icon_state = "pierogi"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 2)
+	tastes = list("potato" = 1, "onions" = 1)
+	foodtypes = GRAIN | VEGETABLES
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/stuffed_cabbage
+	name = "stuffed cabbage"
+	desc = "A savoury mixture of ground meat and rice wrapped in cooked cabbage leaves and topped with a tomato sauce. To die for."
+	icon_state = "stuffed_cabbage"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
+	tastes = list("juicy meat" = 1, "rice" = 1, "cabbage" = 1)
+	foodtypes = MEAT | VEGETABLES
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/seaweedsheet
+	name = "seaweed sheet"
+	desc = "A dried sheet of seaweed used for making sushi. Use an ingredient on it to start making custom sushi!"
+	icon_state = "seaweedsheet"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
+	tastes = list("seaweed" = 1)
+	foodtypes = VEGETABLES
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/seaweedsheet/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/sushi/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 6)
+
+/obj/item/food/granola_bar
+	name = "granola bar"
+	desc = "A dried mixture of oats, nuts, fruits, and chocolate condensed into a chewy bar. Makes a great snack while space-hiking."
+	icon = 'icons/obj/food/food.dmi'
+	icon_state = "granola_bar"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/consumable/nutriment/protein = 4)
+	tastes = list("granola" = 1, "nuts" = 1, "chocolate" = 1, "raisin" = 1)
+	foodtypes = GRAIN | NUTS | FRUIT | SUGAR | DAIRY
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/onigiri
+	name = "onigiri"
+	desc = "A ball of cooked rice surrounding a filling formed into a triangular shape and wrapped in seaweed. Can be added fillings!"
+	icon = 'icons/obj/food/food.dmi'
+	icon_state = "onigiri"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 2)
+	tastes = list("rice" = 1, "dried seaweed" = 1)
+	foodtypes = VEGETABLES
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/onigiri/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/onigiri/empty, CUSTOM_INGREDIENT_ICON_NOCHANGE, max_ingredients = 4)
+
+// empty onigiri for custom onigiri
+/obj/item/food/onigiri/empty
+	name = "onigiri"
+	foodtypes = VEGETABLES
+	tastes = list()
+	icon_state = "onigiri"
+	desc = "A ball of cooked rice surrounding a filling formed into a triangular shape and wrapped in seaweed."
+
+/obj/item/food/mashed_potatoes
+	name = "mashed potatoes"
+	desc = "A creamy serving of mashed potatoes, a staple of many Thanksgiving dinners."
+	icon = 'icons/obj/food/food.dmi'
+	icon_state = "mashed_potatoes"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
+	tastes = list("creamy mashed potatoes" = 1, "garlic" = 1)
+	foodtypes = VEGETABLES | DAIRY
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/pacoca
+	name = "pacoca"
+	desc = "A traditional Brazilian treat made of ground peanuts, sugar, and salt compressed into a cylinder."
+	icon = 'icons/obj/food/food.dmi'
+	icon_state = "pacoca"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/nutriment/protein = 2)
+	tastes = list("peanuts" = 1, "sweetness" = 1)
+	foodtypes = NUTS | SUGAR
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/pickle
+	name = "pickle"
+	desc = "Slightly shriveled darkish cucumber. Smelling something sour, but incredibly inviting."
+	icon = 'icons/obj/food/food.dmi'
+	icon_state = "pickle"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/medicine/antihol = 2)
+	tastes = list("pickle" = 1, "spices" = 1, "salt water" = 2)
+	foodtypes = VEGETABLES
+	w_class = WEIGHT_CLASS_SMALL

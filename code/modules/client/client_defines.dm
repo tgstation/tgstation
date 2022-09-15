@@ -1,8 +1,38 @@
-
+/**
+ * Client datum
+ *
+ * A datum that is created whenever a user joins a BYOND world, one will exist for every active connected
+ * player
+ *
+ * when they first connect, this client object is created and [/client/New] is called
+ *
+ * When they disconnect, this client object is deleted and [/client/Del] is called
+ *
+ * All client topic calls go through [/client/Topic] first, so a lot of our specialised
+ * topic handling starts here
+ */
 /client
-		//////////////////////
-		//BLACK MAGIC THINGS//
-		//////////////////////
+
+	/**
+	 * This line makes clients parent type be a datum
+	 *
+	 * By default in byond if you define a proc on datums, that proc will exist on nearly every single type
+	 * from icons to images to atoms to mobs to objs to turfs to areas, it won't however, appear on client
+	 *
+	 * instead by default they act like their own independent type so while you can do isdatum(icon)
+	 * and have it return true, you can't do isdatum(client), it will always return false.
+	 *
+	 * This makes writing oo code hard, when you have to consider this extra special case
+	 *
+	 * This line prevents that, and has never appeared to cause any ill effects, while saving us an extra
+	 * pain to think about
+	 *
+	 * This line is widely considered black fucking magic, and the fact it works is a puzzle to everyone
+	 * involved, including the current engine developer, lummox
+	 *
+	 * If you are a future developer and the engine source is now available and you can explain why this
+	 * is the way it is, please do update this comment
+	 */
 	parent_type = /datum
 		////////////////
 		//ADMIN THINGS//
@@ -13,11 +43,15 @@
 	var/datum/admins/holder = null
 	///Needs to implement InterceptClickOn(user,params,atom) proc
 	var/datum/click_intercept = null
+	///Time when the click was intercepted
+	var/click_intercept_time = 0
 	///Used for admin AI interaction
 	var/AI_Interact = FALSE
 
 	///Used to cache this client's bans to save on DB queries
 	var/ban_cache = null
+	///If we are currently building this client's ban cache, this var stores the timeofday we started at
+	var/ban_cache_start = 0
 	///Contains the last message sent by this client - used to protect against copy-paste spamming.
 	var/last_message = ""
 	///contins a number of how many times a message identical to last_message was sent.
@@ -28,16 +62,20 @@
 	var/total_count_reset = 0
 	///Internal counter for clients sending external (IRC/Discord) relay messages via ahelp to prevent spamming. Set to a number every time an admin reply is sent, decremented for every client send.
 	var/externalreplyamount = 0
+	///Tracks say() usage for ic/dchat while slowmode is enabled
+	COOLDOWN_DECLARE(say_slowmode)
+	/// The last urgent ahelp that this player sent
+	COOLDOWN_DECLARE(urgent_ahelp_cooldown)
 
 		/////////
 		//OTHER//
 		/////////
 	///Player preferences datum for the client
 	var/datum/preferences/prefs = null
-	///last turn of the controlled mob, I think this is only used by mechs?
-	var/last_turn = 0
-	///Move delay of controlled mob, related to input handling
+	///Move delay of controlled mob, any keypresses inside this period will persist until the next proper move
 	var/move_delay = 0
+	///The visual delay to use for the current client.Move(), mostly used for making a client based move look like it came from some other slower source
+	var/visual_delay = 0
 	///Current area of the controlled mob
 	var/area = null
 
@@ -75,6 +113,8 @@
 	var/mouse_up_icon = null
 	///used to make a special mouse cursor, this one for mouse up icon
 	var/mouse_down_icon = null
+	///used to override the mouse cursor so it doesnt get reset
+	var/mouse_override_icon = null
 
 	///Used for ip intel checking to identify evaders, disabled because of issues with traffic
 	var/ip_intel = "Disabled"
@@ -93,8 +133,6 @@
 	///world.timeofday they connected
 	var/connection_timeofday
 
-	///If the client is currently in player preferences
-	var/inprefs = FALSE
 	///Used for limiting the rate of topic sends by the client to avoid abuse
 	var/list/topiclimiter
 	///Used for limiting the rate of clicks sends by the client to avoid abuse
@@ -126,17 +164,23 @@
 	var/obj/item/active_mousedown_item = null
 	///Used in MouseDrag to preserve the original mouse click parameters
 	var/mouseParams = ""
-	///Used in MouseDrag to preserve the last mouse-entered location.
-	var/mouseLocation = null
-	///Used in MouseDrag to preserve the last mouse-entered object.
-	var/mouseObject = null
+	///Used in MouseDrag to preserve the last mouse-entered location. Weakref
+	var/datum/weakref/mouse_location_ref = null
+	///Used in MouseDrag to preserve the last mouse-entered object. Weakref
+	var/datum/weakref/mouse_object_ref
 	//Middle-mouse-button click dragtime control for aimbot exploit detection.
 	var/middragtime = 0
-	//Middle-mouse-button clicked object control for aimbot exploit detection.
-	var/atom/middragatom
+	//Middle-mouse-button clicked object control for aimbot exploit detection. Weakref
+	var/datum/weakref/middle_drag_atom_ref
+
 
 	/// Messages currently seen by this client
 	var/list/seen_messages
+
+	//Hide top bars
+	var/fullscreen = FALSE
+	//Hide status bar (bottom left)
+	var/show_status_bar = TRUE
 
 	/// datum wrapper for client view
 	var/datum/view_data/view_size
@@ -144,29 +188,30 @@
 	/// our current tab
 	var/stat_tab
 
-	/// whether our browser is ready or not yet
-	var/statbrowser_ready = FALSE
-
 	/// list of all tabs
 	var/list/panel_tabs = list()
 	/// list of tabs containing spells and abilities
 	var/list/spell_tabs = list()
-	///A lazy list of atoms we've examined in the last EXAMINE_MORE_TIME (default 1.5) seconds, so that we will call [/atom/proc/examine_more] instead of [/atom/proc/examine] on them when examining
+	///A lazy list of atoms we've examined in the last RECENT_EXAMINE_MAX_WINDOW (default 2) seconds, so that we will call [/atom/proc/examine_more] instead of [/atom/proc/examine] on them when examining
 	var/list/recent_examines
 
 	var/list/parallax_layers
 	var/list/parallax_layers_cached
+	///this is the last recorded client eye by SSparallax/fire()
 	var/atom/movable/movingmob
 	var/turf/previous_turf
 	///world.time of when we can state animate()ing parallax again
 	var/dont_animate_parallax
-	///world.time of last parallax update
-	var/last_parallax_shift
-	///ds between parallax updates
-	var/parallax_throttle = 0
+	/// Direction our current area wants to move parallax
 	var/parallax_movedir = 0
+	/// How many parallax layers to show our client
 	var/parallax_layers_max = 4
+	/// Timer for the area directional animation
 	var/parallax_animate_timer
+	/// Do we want to do parallax animations at all?
+	/// Exists to prevent laptop fires
+	var/do_parallax_animations = TRUE
+
 	///Are we locking our movement input?
 	var/movement_locked = FALSE
 
@@ -204,3 +249,15 @@
 
 	/// If the client is currently under the restrictions of the interview system
 	var/interviewee = FALSE
+
+	/// Whether or not this client has standard hotkeys enabled
+	var/hotkeys = TRUE
+
+	/// Whether or not this client has the combo HUD enabled
+	var/combo_hud_enabled = FALSE
+
+	/// If this client has been fully initialized or not
+	var/fully_created = FALSE
+
+	/// Does this client have typing indicators enabled?
+	var/typing_indicators = FALSE

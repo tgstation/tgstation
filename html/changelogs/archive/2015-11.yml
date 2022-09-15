@@ -1,0 +1,456 @@
+2015-11-01:
+  Gun Hog:
+  - rscadd: Nanotrasen listens! After numerous complaints and petitions from Security
+      personnel regarding energy weapon upkeep, we have authorized the construction
+      and maintenance of your station's weapon rechargers. As an added bonus, we have
+      also provided a more modular design for the devices, allowing for greater recharge
+      rates if fitted with a more efficient capacitor!
+  - rscadd: Added Diagnostic HUDs! They can be used to view the health and cell status
+      of borgs and mechs. Silicons have them built in, Roboticists get two in their
+      locker, and the RD's hardsuit has one built in.
+  Incoming5643:
+  - rscadd: The number of roundstart head revolutionaries nows depends on the roundstart
+      security force as well as the roundstart heads
+  - rscadd: The maximum number of head revs is 3, the minimum is 1. If there is fewer
+      than three station heads there will never be more than that number of head revs
+      at roundstart. For every three vacant security roles (Head of Security/Warden/Security
+      Officer/Detective) at roundstart the number of starting head revs will be reduced
+      by 1.
+  - rscadd: Head revolutionaries can be gained during play if the security/head roles
+      are filled. They are drawn from existing revolutionaries.
+  - rscadd: Added dental implant surgery. While targeting the mouth drill a hole in
+      a tooth then stick a pill in there for hands free later use.
+  Kor:
+  - rscadd: Added an experimental control console for Xenobiology. Ask the admins
+      if you'd like to try it out. It may not work on maps other than Box if they
+      have renamed the Xenobiology Lab.
+  - rscadd: Injecting blood into a cerulean slime will yield a special one use set
+      of blueprints that will allow you to expand the territory your camera can cover.
+  Kor and Remie:
+  - rscadd: Added as series of laser reflector structures, the frame of which can
+      be built with 5 metal sheets.
+  - rscadd: Completing the frame with 5 glass sheets creates a mirror that will reflect
+      lasers at a 90 degree angle.
+  - rscadd: Completing the frame with 10 reinforced glass sheets creates a double
+      sided mirror that reflects lasers at a 90 degree angle.
+  - rscadd: Completing the frame with a single diamond sheet creates a box that will
+      redirect all lasers that hit it from any angle in a single direction.
+  MMMiracles:
+  - tweak: Energy Swords can now embed when thrown for a 75% chance. Embedding
+2015-11-05:
+  AnturK:
+  - rscadd: Added wild shapeshift spell for wizards.
+2015-11-08:
+  Cuboos:
+  - soundadd: Added a new and better sounding flashbang sound and a ringing sound
+      for flashbang deaf effect
+  JJRcop:
+  - tweak: Chronosuits have had their movement revised, they now take time to teleport
+      depending on how far you've traveled, and don't teleport automatically anymore
+      unless you stop moving for a short moment, or press the new ' Teleport Now'
+      button.
+  - rscadd: Added new outfit that allows admins to dress people up in the chrono equipment
+      easier.
+  Jalleo:
+  - tweak: Due to a recently discovered report it turns out The Wizard Federation
+      has devised a way for CEOs to stop having some teas from their Smartfridges
+      due to this change all smartfridges will temporarily be unable to stack contents.
+  Joan:
+  - tweak: Revenant draining now takes about 5 seconds to complete and can be interrupted
+      by dragging the target away.
+  - tweak: Revenants can now tell if they are currently visible.
+  - tweak: Revenant ability costs tweaked; Defile now costs 40 essence to cast, Overload
+      Lights now costs 45 essence to cast, and Malfunction now costs 50 essence to
+      cast.
+  - tweak: Malfunction now affects non-machine objects, even if they're not being
+      held by a human.
+  - tweak: Defile does an extremely low amount of toxin damage to humans and confuses,
+      but does much less stamina damage and stuns the revenant for slightly longer.
+  - tweak: Overload Lights will no longer shock if the light is broken after a light
+      is chosen to shock an area.
+  Kor:
+  - rscadd: Using water on a dark blue slime extract will now yield a new potion capable
+      of completely fireproofing clothing items.
+  - rscadd: You can once again click+drag mobs into disposal units. Xenobiologists
+      rejoice.
+  Xhuis:
+  - tweak: Shadowling abilities now require the user to be human.
+  - tweak: Enthralling now takes 21 seconds (down from 30).
+  - tweak: Regenerate Chitin has been renamed to Rapid Re-Hatch.
+  - tweak: Dethralling surgery's final step now requires a flash, penlight, or flashlight.
+  - tweak: Dethralling surgery now produces a black tumor, which has a high biological
+      tech origin but dies quickly in the light.
+  - rscdel: Shadowlings no longer have Enthrall before hatching.
+  - rscadd: Shadowling clothing now has icons to better reflect its existence.
+  - rscdel: Ascendant Broadcast has been removed.
+  - rscdel: Destroy Engines is now removed from the user after it is used once.
+2015-11-11:
+  AnturK:
+  - tweak: DNA Injectors now grant temporary powers on every use. Duration dependent
+      on activated powers and machine upgrades
+  - rscadd: 'Delayed Transfer added to DNA Scanner - It will activate on the next
+      closing of scanner door '
+  - rscadd: 'UI+UE injectors/buffer transfers added for convinience '
+  - tweak: Injector creation timeout cut in half
+  Firecage:
+  - rscadd: NanoTrasen specialists has developed a new type of operating table. You
+      can now make one yourself with only some rods and a sheet of silver!
+  Kor:
+  - rscadd: Adds immovable and indestructible reflector structures for badmin use.
+  - rscadd: The Mjolnir has been added to the wizards spellbook.
+  - rscadd: The Singularity Hammer has been added to the wizards spellbook.
+  - rscadd: The Supermatter Sword has been added to the wizards spellbook.
+  - rscadd: The Veil Render has been added to the wizards spellbook.
+  - rscadd: Trigger Multiverse War (give the entire crew multiswords) has been added
+      to the wizards spellbook, at a cost of 8 points.
+  - rscadd: Converting (to cultist, rev, or gangster) a jobbaned player will now automatically
+      offer control of their character to ghosts.
+  - rscadd: Emergency Response Teams and Deathsquads no longer accept non-human members
+      if the server is configured to bar mutants from being heads of staff.
+  LordPidey:
+  - rscadd: Nanotransen doctors have re-approved Saline-Glucose Solution for usage
+      in IV drips, when blood supplies are low.  Simple pills will not suffice.
+  MMMiracles:
+  - tweak: Water slips have been nerfed to a more reasonable duration. It is still
+      a guaranteed way to disarm an opponent and obtain their weapon, but you can
+      no longer manage to cuff/choke everyone who manages to slip without a problem.
+  MrStonedOne:
+  - bugfix: Fixes the smartfridge not stacking items.
+  Xhuis:
+  - soundadd: The emergency shuttle now plays unique sounds (thanks to Cuboos for
+      creating them) when launching from the station and arriving at Central Command.
+  torger597:
+  - rscadd: Added a syringe to boxed poison kits.
+2015-11-12:
+  Dunc:
+  - rscdel: DNA injectors have been restored to their original permanent RNG state
+      from the impermanent guaranteed state.
+  Xhuis:
+  - rscadd: Reagents can no longer be determined by examining a reagent container
+      without the proper apparatus. Silicons and ghosts can always see reagents.
+  - rscadd: Science goggles now allow reagents to be seen on examine. In addition,
+      chemists now start wearing them. The bartender has a pair that looks and functions
+      like sunglasses.
+2015-11-13:
+  as334:
+  - rscadd: Nanotrasen has hired a brand new supply of ~~expendable labor~~ *LOYAL
+      CREW MEMBERS* please welcome them with open arms.
+  - rscadd: Plasmamen are now a playable race. They require plasma gas to survive
+      and will ignite in oxygen environments.
+2015-11-15:
+  CosmicScientist:
+  - tweak: Hopefully made the dehydrated carp's uplink description 100% clear.
+  - tweak: Made the dehydrated carp cost 1 TC (instead of 3) to help with your traitor
+      gear combos.
+  Incoming5643:
+  - tweak: The supermatter sword was being far too kind in the hands of men. They
+      should now have <b>the desired effect</b> when swung at people.
+  Joan:
+  - tweak: Anomalies move more often, are resistant to explosions and will only be
+      destroyed if they are in devastation range. You shouldn't bomb them, though.
+  - tweak: Hyper-energetic flux anomaly will shock mobs that run into it, or if it
+      runs into them.
+  - tweak: Bluespace anomaly will occasionally teleport mobs away from it in a small
+      radius.
+  - tweak: Vortex anomalies will sometimes throw objects at nearby living mobs.
+  - tweak: Pyroclastic anomalies will produce bigger, hotter fires, and if not disabled,
+      it will release an additional burst of flame. In addition, the resulting slime
+      will be rabid and thus attack much more aggressively.
+  - bugfix: Gravitational anomalies will now properly throw objects at nearby living
+      things.
+  MrStonedOne:
+  - bugfix: Away mission loading will no longer improperly expand the width of the
+      game world to two times the size of the away mission map.
+  - tweak: This should also improve the speed of loading away missions, since the
+      game doesn't have to resize the world
+  RemieRichards:
+  - rscadd: Deities now start off with the ability to place 1 free turret
+  - tweak: HoG Claymores now do 30 Brute (Down from 40) but now have 15 Armour Penetration
+      (Up from 0)
+  - bugfix: Killing the other god objective is fixed
+  - tweak: Turrets will no longer attack handcuffed people
+  - rscadd: Followers are now informed of their god's death
+  - rscadd: Followers are now informed of the location of their god's nexus when it
+      is placed
+  - tweak: Gods can no longer place structures near the enemy god's nexus
+2015-11-16:
+  Gun Hog:
+  - tweak: The Combat tech requirement for Loyalty Firing Pins has been reduced from
+      6 to 5.
+  Joan:
+  - tweak: Plasmamen can now man the bar.
+  - tweak: Defile no longer directly affects mobs. Instead, it rips up floors and
+      opens most machines and lockers.
+  - rscadd: Blight added. Blight infects humans with a virus that does a set amount
+      of damage over time and is relatively easily cured. Blight also badly affects
+      nonhuman mobs and other living things.
+  - experiment: While the cure to Blight is simple, it's not in this changelog. Use
+      a medical analyzer to find the cure.
+  - tweak: Tweaked costs and stuntimes of abilities;
+  - tweak: Defile now costs 30 essence and stuns for about a second.
+  - tweak: Overload Lights now costs 40 essence.
+  - tweak: Malfunction now costs 45 essence.
+  - rscadd: Blight costs 50 essence and 200 essence to unlock.
+  - imageadd: Transmit has a new, spookier icon.
+  - bugfix: Revenant abilities can be given to non-revenants, and will work as normal
+      spells instead of runtiming.
+  bgobandit:
+  - rscadd: Blood packs can now be labeled with a pen.
+2015-11-17:
+  Xhuis:
+  - tweak: Many medicines have received rebalancing. Expect underused chemicals like
+      Oxandralone to be much more effective in restoring damage.
+  - tweak: Many toxins are now more or less efficient.
+  - tweak: The descriptions of many reagents have been made more accurate.
+  - rscadd: 'New poison: Heparin. Made from Formaldehyde, Sodium, Chlorine, and Lithium.
+      Functions as an anticoagulant, inducing uncontrollable bleeding and small amounts
+      of bruising.'
+  - rscadd: 'New poison: Teslium. Made from Plasma, Silver, and Black Powder, heated
+      to 400K. Modifies examine text and induces periodic shocks in the victim as
+      well as making all shocks against them more damaging.'
+  - rscadd: Two Chemistry books have been placed in the lab. When used, they will
+      link to the wiki page for chemistry in the same vein as other wiki books.
+2015-11-18:
+  oranges:
+  - tweak: Nanotrasen apologies for a recent bad batch of synthflesh that was shipped
+      to the station, any rumours of death or serious injury are false and should
+      be reported to your nearest political officer. At most, only light burns would
+      result.
+  phil235:
+  - bugfix: Remotely detonating a planted c4 with a signaler now works again.
+2015-11-19:
+  Joan:
+  - rscadd: Constructs have action buttons for their spells.
+  - imageadd: The Juggernaut forcewall now has a new, more cult-appropriate sprite.
+  - imageadd: Cult floors and walls now have a glow effect when being created.
+  - bugfix: Nar-Sie and Artificers will properly produce cult flooring.
+  - spellcheck: Nar-Sie is a she.
+2015-11-20:
+  AnturK:
+  - tweak: Staff of Doors now creates random types of doors.
+  Incoming5643:
+  - bugfix: Setting your species to something other than human (if available) once
+      again saves properly. Note that if you join a round where your species setting
+      is no longer valid it will be reset to human.
+  PKPenguin321:
+  - tweak: Healing Fountains in Hand of God now give cultists a better and more culty
+      healing chemical instead of Doctor's Delight.
+  kingofkosmos:
+  - rscadd: Added the ability to upgrade your grab by clicking the grabbed mob repeatedly.
+  octareenroon91:
+  - rscadd: Add the four-color pen, which writes in black, red, green, and blue.
+  - rscadd: Adds two such pens to the Bureaucracy supply pack.
+2015-11-21:
+  Joan:
+  - rscadd: Blobs now have a hud, with jump to node, create storage blob, create resource
+      blob, create node blob, create factory blob, readapt chemical, relocate core,
+      and jump to core buttons.
+  - tweak: Manual blob expansion is now triggered by clicking anything next to a blob
+      tile, instead of by ctrl-click.
+  - tweak: 'Rally Spores no longer has a cost. Reminder: You can middle-click anything
+      you can see to rally spores to it.'
+  - tweak: Creating a Shield Blob with hotkeys is now ctrl-click instead of alt-click.
+  - rscadd: Removing a blob now refunds some points based on the blob type, usually
+      around 40% of initial cost. Hotkey for removal is alt-click.
+  - rscadd: Blobs now have the *Blob Help* verb which will pull up useful information,
+      including what your reagent does.
+  - tweak: Storage Blobs now cost 20, from 40. Storage Blobs also cannot be removed
+      by blob removal.
+  - tweak: Readapt Chemical now costs 40, from 50.
+  octareenroon91:
+  - rscadd: Add numbers and a star graffiti to crayon/spraycan designs.
+2015-11-23:
+  octareenroon91:
+  - rscadd: Spilling oxygen or nitrogen will obtain a release of the corresponding
+      atmospheric gas in the effected tile.
+  - rscadd: 'Carbon Dioxide has been added as a reagent.  Recipe: 2:1 carbon:oxygen,
+      heated to 777K.'
+  - rscadd: Spilling CO2 will produce CO2 gas.
+2015-11-24:
+  Kor:
+  - rscadd: Added a lava turf. Expect to see it in away missions or in admin 'events'
+2015-11-25:
+  Incoming5643:
+  - experiment: A number of popular stunning spells have undergone balance changes.
+      Note that for the most part the stuns themselves are untouched.
+  - experiment: 'Lightning Bolt Changes:'
+  - rscdel: You can no longer throw the bolt whenever you want, it will fire itself
+      once it's done charging.
+  - rscadd: Getting hit by a bolt will do a flat 30 burn now, as opposed to scaling
+      with how long the wizard spent charging the spell. Unless said wizard made a
+      habit of charging lightning bolt to near maximum every time this is a buff to
+      damage.
+  - rscdel: Every time the bolt jumps the next shock will do five less burn damage.
+  - rscadd: Lightning bolts can still jump back to the same body, so the maximum number
+      of bolts you can be hit by in a single casting is three, and the maximum amount
+      of damage you could take for that is 60 burn.
+  - experiment: 'Magic Missile Changes:'
+  - rscdel: Cooldown raised to 20 seconds, up from 15
+  - rscadd: Cooldown reduction from taking the spell multiple times raised from 1.5
+      seconds to 3.5 seconds. Rank 5 magic missile now has a cooldown of 6 seconds,
+      down from 9, and is effectively a permastun.
+  - experiment: 'Time Stop Changes:'
+  - rscadd: Time Stop field now persists for 10 seconds, up from 9
+  - rscdel: Cooldown raised to 50 seconds, up from 40
+  - rscadd: Cooldown reduction from taking the spell multiple times raised from  7.75
+      seconds to 10 seconds. Rank 5 time stop now has a cooldown of 10 seconds, up
+      from 9, and is effectively a permastun.
+  Kor:
+  - rscadd: Escape pods can now be launched to the asteroid during red and delta level
+      security alerts. Pods launched in this manner will not travel to Centcomm at
+      the end of the round.
+  - rscadd: Each pod is now equipped with a safe that contains two emergency space
+      suits and mining pickaxes. This safe will only open during red or delta level
+      security alerts.
+  MrStonedOne:
+  - bugfix: fixes interfaces (like the "ready" button) being unresponsive for the
+      first minute or two after connecting.
+  - tweak: Burn related code has been changed
+  - tweak: This will give a small buff to fires by making them burn for longer
+  - tweak: This will give a massive nerf to plasma related bombs
+  - tweak: I am actively seeking feedback, if the nerf to bombs is too bad we can
+      still tweak stuff
+  PKPenguin321:
+  - rscadd: Chainsaws (both arm-mounted and not arm-mounted) can now be used in surgeries
+      as a ghetto sawing tool. Arm-mounted chainsaws are a teeny bit more precise
+      than regular ol' everyday chainsaws.
+  YotaXP:
+  - tweak: Spruced up the preview icons on the Character Setup dialog.
+  incoming5643:
+  - rscdel: Citing shenanigan quality concerns the wizard federation has withdrawn
+      supermatter swords and veil renderers from spellbooks.
+  neersighted:
+  - bugfix: Make Airlock Electronics use standard ID checks, allowing Drones to use
+      them.
+2015-11-26:
+  neersighted:
+  - tweak: Cyborg Toner is now refilled by recharging stations.
+  oranges:
+  - tweak: Removed the 'gloves' from the sailor dress which looked weird since it
+      was a blouse basically
+  - tweak: Made the skirt on the blue/red skirts less blocky,
+  - tweak: Made the striped dress consistent at every direction
+2015-11-27:
+  AnturK:
+  - rscadd: Turret control panels can now be made through frames available at autolathe.
+  - rscadd: Unlocked turrets can be linked with built controls with multiool
+  JJRcop:
+  - bugfix: Restores golem shock immunity.
+  Kor and Ausops:
+  - rscadd: Added four different suits of medieval plate armour.
+  - rscadd: The Chaplain starts with a suit of Templar armour in his locker. God wills
+      it!
+  - rscadd: Rumour has it that Nanotrasen is now training a new elite unit of soldiers
+      to deal with paranormal threats. Corporate was unable to be reached for comment.
+  MMMiracles:
+  - rscadd: Adds a brand new away mission for the gateway called 'Caves'.
+  - rscadd: The away mission has multiple levels to explore and could be quite dangerous,
+      running in without proper preparation is unadvised.
+  YotaXP:
+  - bugfix: Drones can now use the pick-up verb, and watertanks no longer get jammed
+      in their internal storage.
+  bgobandit:
+  - rscadd: Due to changes in Nanotrasen's mining supply chain, ore redemption machines
+      now offer a variety of upgraded items! However, certain items are more expensive.
+      Point values for minerals have been adjusted to reflect their scarcity.
+  - rscadd: Nanotrasen R&D has discovered how to improve upon the resonator and kinetic
+      accelerator.
+  - rscadd: After a colossal tectonic event on Nanotrasen's asteroid, ores are distributed
+      more randomly.
+  - rscadd: Bluespace crystals have been discovered to be ore. They will now fit into
+      satchels and ore boxes.
+  - rscadd: Mech advanced mining scanners now include meson functionality.
+  neersighted:
+  - bugfix: Wooden Barricades now take bullet damage.
+  - tweak: Rebalance Wooden Barricade damage.
+2015-11-28:
+  TechnoAlchemisto:
+  - tweak: Cloaks are now worn in your exosuit slot!
+2015-11-29:
+  Firecage:
+  - rscadd: Hand tools now have variable operating speeds.
+  GunHog:
+  - tweak: Nanotrasen has improved the interface for the hand-held teleportation device.
+      It will now provide the user with the name of the destination tracking beacon.
+  JJRcop:
+  - bugfix: Fixes changeling Hive Absorb DNA ability runtime.
+  Joan:
+  - imageadd: When sacrificing a target with the sacrifice rune, Nar-Sie herself will
+      briefly appear to consume them.
+  - imageadd: When an artificer repairs a construct, there is a visible beam between
+      it and the target.
+  - imageadd: When reviving a target with the raise dead rune, there is a visible
+      beam between the two corpses used.
+  - imageadd: When draining a target with the blood drain rune, there is a visible
+      beam between you and the rune.
+  - imageadd: Construct sprites are now consistent and all bob in the air.
+  - rscadd: Most cult messages now use the cult span classes, though visible messages
+      from cult things generally do not.
+  - bugfix: Examining a cultist talisman as a cultist no longer causes the paper popup
+      to appear.
+  - bugfix: You no longer need to press two buttons to read a cultist tome.
+  - spellcheck: Cult should have a few less typos and grammatical errors.
+  - spellcheck: The sacrifice rune now uses the proper invocation.
+  KorPhaeron:
+  - rscadd: Guardians and holoparasites can now be manually recalled by their master.
+  - rscadd: The ghost controlling a guardian or holoparasite can be repicked by their
+      master, only one use which is removed when a new ghost is chosen.
+  MrStonedOne:
+  - rscadd: Re-adds 100% chance timed injectors, as it was removed over a misunderstanding.
+  - bugfix: Fixes bug with injectors having a 100% power chance despite not being
+      timed
+  - bugfix: Fixes the excessive amount of time it took the game to initialize.
+  - bugfix: Fixes some interface bugs.
+  - rscadd: when an interface window has to send a lot of resources before it can
+      open, it will now tell you with a "sending resources" line so you know why it's
+      not opening right away.
+  PKPenguin321:
+  - rscadd: Teleprods can now be constructed. Make them via tablecrafting, or by putting
+      a bluespace crystal onto a stunprod. They warp the target to a random nearby
+      area (which may include space/the inside of a wall) in addition to giving the
+      victim a brief stun. Like stunprods, they require a power cell to function.
+  - rscadd: Teleprods can have their crystal removed and be made back into stunprods
+      by using them in your hand when they have no cell installed.
+  - imageadd: Mounted chainsaws now have a unique inhand sprite.
+  Remie + Kor:
+  - tweak: Holopads now use AltClick to request the AI
+  Shadowlight213:
+  - tweak: Syndie melee mobs have been buffed.
+  TheNightingale:
+  - rscadd: Nuclear operatives can now buy the Elite Syndicate Hardsuit for 8 TC that
+      has better armor and fireproofing.
+  - tweak: Added throwing stars and Syndicate playing cards to nuclear operative's
+      uplink.
+  Yolopanther12:
+  - rscadd: Added the ability to use a box of lights on a light replacer to more quickly
+      refill it to capacity.
+  incoming5643:
+  - rscadd: OOC will now take steps to try and prevent accidental IC from people who
+      mistakenly use OOC instead of say. This doesn't catch all mistakes, so please
+      don't test it.
+  ktccd:
+  - bugfix: Blob pieces on some areas no longer count for blob mode victory (Such
+      as space or asteroid).
+  - bugfix: Blobcode no longer spawns and destroys blobs uselessly, which fixes other
+      stuff too.
+  - bugfix: Asteroid areas are no longer valid gang territory.
+  neersighted:
+  - experiment: Nanotrasen would like to announce NanoUI 2.0, now being rolled out
+      across all our stations. Existing NanoUI devices have been updated, and more
+      will be added soon. Please report any bugs to Nanotrasen Support.
+  - tweak: Many NanoUI interfaces have had +/- buttons replaced with input fields.
+  - tweak: Some NanoUI interfaces have had more information added.
+  - bugfix: Drones can now interact with NanoUI windows.
+  swankcookie:
+  - bugfix: Fixes issue of space-Christians forgetting about the true, humbling values
+      of space-Christmas.
+  - rscadd: Adds snowmen outfits
+2015-11-30:
+  neersighted:
+  - bugfix: Nanotrasen would like to apologize for Chemistry being stuck on NanoUI
+      1.0... Please report any further bugs to Nanotrasen Support.
+  - tweak: NanoUI becomes... difficult to operate with brain damage. Who would have
+      guessed?
+  - tweak: Telekinesis enables you to use NanoUI at a distance.
+  - bugfix: Canisters require physical proximity to actuate...
+  - bugfix: NanoUI no longer leaks memory on click.

@@ -16,9 +16,9 @@
 			if(I?.imp_in)
 				var/datum/component/uplink/hidden_uplink = I.GetComponent(/datum/component/uplink)
 				if(hidden_uplink)
-					hidden_uplink.telecrystals += amount
+					hidden_uplink.add_telecrystals(amount)
 					use(amount)
-					to_chat(user, "<span class='notice'>You press [src] onto yourself and charge your hidden uplink.</span>")
+					to_chat(user, span_notice("You press [src] onto yourself and charge your hidden uplink."))
 	else
 		return ..()
 

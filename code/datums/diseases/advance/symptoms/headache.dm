@@ -1,23 +1,12 @@
-/*
-//////////////////////////////////////
-
-Headache
-
-	Noticable.
-	Highly resistant.
-	Increases stage speed.
-	Not transmittable.
-	Low Level.
-
-BONUS
-	Displays an annoying message!
-	Should be used for buffing your disease.
-
-//////////////////////////////////////
+/*Headache
+ * Slightly reduces stealth
+ * Increases resistance tremendously
+ * Increases stage speed
+ * No change to transmissibility
+ * Low level
+ * Bonus: Displays an annoying message! Should be used for buffing your disease.
 */
-
 /datum/symptom/headache
-
 	name = "Headache"
 	desc = "The virus causes inflammation inside the brain, causing constant headaches."
 	stealth = -1
@@ -55,10 +44,10 @@ BONUS
 	var/mob/living/M = A.affected_mob
 	if(power < 2)
 		if(prob(base_message_chance) || A.stage >=4)
-			to_chat(M, "<span class='warning'>[pick("Your head hurts.", "Your head pounds.")]</span>")
+			to_chat(M, span_warning("[pick("Your head hurts.", "Your head pounds.")]"))
 	if(power >= 2 && A.stage >= 4)
-		to_chat(M, "<span class='warning'>[pick("Your head hurts a lot.", "Your head pounds incessantly.")]</span>")
+		to_chat(M, span_warning("[pick("Your head hurts a lot.", "Your head pounds incessantly.")]"))
 		M.adjustStaminaLoss(25)
 	if(power >= 3 && A.stage >= 5)
-		to_chat(M, "<span class='userdanger'>[pick("Your head hurts!", "You feel a burning knife inside your brain!", "A wave of pain fills your head!")]</span>")
+		to_chat(M, span_userdanger("[pick("Your head hurts!", "You feel a burning knife inside your brain!", "A wave of pain fills your head!")]"))
 		M.Stun(35)

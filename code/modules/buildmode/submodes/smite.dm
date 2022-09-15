@@ -34,7 +34,7 @@
 		return
 
 	if (selected_smite == null)
-		to_chat(user, "<span class='notice'>No smite selected.</span>")
+		to_chat(user, span_notice("No smite selected."))
 		return
 
 	selected_smite.effect(user, object)

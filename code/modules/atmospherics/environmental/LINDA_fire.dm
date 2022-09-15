@@ -1,4 +1,11 @@
+/// Returns reactions which will contribute to a hotspot's size.
+/proc/init_hotspot_reactions()
+	var/list/fire_reactions = list()
+	for (var/datum/gas_reaction/reaction as anything in subtypesof(/datum/gas_reaction))
+		if(initial(reaction.expands_hotspot))
+			fire_reactions += reaction
 
+	return fire_reactions
 
 /atom/proc/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	return null
@@ -8,7 +15,11 @@
 /turf/proc/hotspot_expose(exposed_temperature, exposed_volume, soh = 0)
 	return
 
-
+/**
+ * Handles the creation of hotspots and initial activation of turfs.
+ * Setting the conditions for the reaction to actually happen for gasmixtures
+ * is handled by the hotspot itself, specifically perform_exposure().
+ */
 /turf/open/hotspot_expose(exposed_temperature, exposed_volume, soh)
 	//If the air doesn't exist we just return false
 	var/list/air_gases = air?.gases
@@ -20,21 +31,29 @@
 	if (oxy < 0.5)
 		return
 	. = air_gases[/datum/gas/plasma]
-	var/tox = . ? .[MOLES] : 0
+	var/plas = . ? .[MOLES] : 0
 	. = air_gases[/datum/gas/tritium]
 	var/trit = . ? .[MOLES] : 0
 	. = air_gases[/datum/gas/hydrogen]
 	var/h2 = . ? .[MOLES] : 0
+	. = air_gases[/datum/gas/freon]
+	var/freon = . ? .[MOLES] : 0
 	if(active_hotspot)
 		if(soh)
-			if(tox > 0.5 || trit > 0.5 || h2 > 0.5)
+			if(plas > 0.5 || trit > 0.5 || h2 > 0.5)
 				if(active_hotspot.temperature < exposed_temperature)
+					active_hotspot.temperature = exposed_temperature
+				if(active_hotspot.volume < exposed_volume)
+					active_hotspot.volume = exposed_volume
+			else if(freon > 0.5)
+				if(active_hotspot.temperature > exposed_temperature)
 					active_hotspot.temperature = exposed_temperature
 				if(active_hotspot.volume < exposed_volume)
 					active_hotspot.volume = exposed_volume
 		return
 
-	if((exposed_temperature > PLASMA_MINIMUM_BURN_TEMPERATURE) && (tox > 0.5 || trit > 0.5 || h2 > 0.5))
+	if(((exposed_temperature > PLASMA_MINIMUM_BURN_TEMPERATURE) && (plas > 0.5 || trit > 0.5 || h2 > 0.5)) || \
+		((exposed_temperature < FREON_MAXIMUM_BURN_TEMPERATURE) && (freon > 0.5)))
 
 		active_hotspot = new /obj/effect/hotspot(src, exposed_volume*25, exposed_temperature)
 
@@ -42,24 +61,38 @@
 			//remove just_spawned protection if no longer processing this cell
 		SSair.add_to_active(src)
 
-//This is the icon for fire on turfs, also helps for nurturing small fires until they are full tile
+/**
+ * Hotspot objects interfaces with the temperature of turf gasmixtures while also providing visual effects.
+ * One important thing to note about hotspots are that they can roughly be divided into two categories based on the bypassing variable.
+ */
 /obj/effect/hotspot
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	icon = 'icons/effects/fire.dmi'
 	icon_state = "1"
 	layer = GASFIRE_LAYER
+	plane = ABOVE_GAME_PLANE
 	blend_mode = BLEND_ADD
 	light_system = MOVABLE_LIGHT
 	light_range = LIGHT_RANGE_FIRE
 	light_power = 1
 	light_color = LIGHT_COLOR_FIRE
 
+	/**
+	 * Volume is the representation of how big and healthy a fire is.
+	 * Hotspot volume will be divided by turf volume to get the ratio for temperature setting on non bypassing mode.
+	 * Also some visual stuffs for fainter fires.
+	 */
 	var/volume = 125
+	/// Temperature handles the initial ignition and the colouring.
 	var/temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST
+	/// Whether the hotspot is new or not. Used for bypass logic.
 	var/just_spawned = TRUE
+	/// Whether the hotspot becomes passive and follows the gasmix temp instead of changing it.
 	var/bypassing = FALSE
 	var/visual_update_tick = 0
+	///Are we burning freon?
+	var/cold_fire = FALSE
 
 
 /obj/effect/hotspot/Initialize(mapload, starting_volume, starting_temperature)
@@ -72,9 +105,28 @@
 	perform_exposure()
 	setDir(pick(GLOB.cardinals))
 	air_update_turf(FALSE, FALSE)
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ABSTRACT_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
+/**
+ * Perform interactions between the hotspot and the gasmixture.
+ *
+ * For the first tick, hotspots will take a sample of the air in the turf,
+ * set the temperature equal to a certain amount, and then reacts it.
+ * In some implementations the ratio comes out to around 1, so all of the air in the turf.
+ *
+ * Afterwards if the reaction is big enough it mostly just tags along the fire,
+ * copying the temperature and handling the colouring.
+ * If the reaction is too small it will perform like the first tick.
+ *
+ * Also calls fire_act() which handles burning.
+ */
 /obj/effect/hotspot/proc/perform_exposure()
 	var/turf/open/location = loc
+	var/datum/gas_mixture/reference
 	if(!istype(location) || !(location.air))
 		return
 
@@ -82,24 +134,35 @@
 
 	bypassing = !just_spawned && (volume > CELL_VOLUME*0.95)
 
-	if(bypassing)
-		volume = location.air.reaction_results["fire"]*FIRE_GROWTH_RATE
-		temperature = location.air.temperature
+	//Passive mode
+	if(bypassing || cold_fire)
+		reference = location.air // Our color and volume will depend on the turf's gasmix
+	//Active mode
 	else
 		var/datum/gas_mixture/affected = location.air.remove_ratio(volume/location.air.volume)
 		if(affected) //in case volume is 0
+			reference = affected // Our color and volume will depend on this small sparked gasmix
 			affected.temperature = temperature
 			affected.react(src)
-			temperature = affected.temperature
-			volume = affected.reaction_results["fire"]*FIRE_GROWTH_RATE
 			location.assume_air(affected)
 
+	if(reference)
+		volume = 0
+		var/list/cached_results = reference.reaction_results
+		for (var/reaction in SSair.hotspot_reactions)
+			volume += cached_results[reaction] * FIRE_GROWTH_RATE
+		temperature = reference.temperature
+
+	// Handles the burning of atoms.
+	if(cold_fire)
+		return
 	for(var/A in location)
 		var/atom/AT = A
 		if(!QDELETED(AT) && AT != src)
 			AT.fire_act(temperature, volume)
 	return
 
+/// Mathematics to be used for color calculation.
 /obj/effect/hotspot/proc/gauss_lerp(x, x1, x2)
 	var/b = (x1 + x2) * 0.5
 	var/c = (x2 - x1) / 6
@@ -114,7 +177,12 @@
 	var/heat_a = 255
 	var/greyscale_fire = 1 //This determines how greyscaled the fire is.
 
-	if(temperature < 5000) //This is where fire is very orange, we turn it into the normal fire texture here.
+	if(cold_fire)
+		heat_r = 0
+		heat_g = LERP(255, temperature, 1.2)
+		heat_b = LERP(255, temperature, 0.9)
+		heat_a = 100
+	else if(temperature < 5000) //This is where fire is very orange, we turn it into the normal fire texture here.
 		var/normal_amt = gauss_lerp(temperature, 1000, 3000)
 		heat_r = LERP(heat_r,255,normal_amt)
 		heat_g = LERP(heat_g,255,normal_amt)
@@ -159,6 +227,14 @@
 	alpha = heat_a
 
 #define INSUFFICIENT(path) (!location.air.gases[path] || location.air.gases[path][MOLES] < 0.5)
+
+/**
+ * Regular process proc for hotspots governed by the controller.
+ * Handles the calling of perform_exposure() which handles the bulk of temperature processing.
+ * Burning or fire_act() are also called by perform_exposure().
+ * Also handles the dying and qdeletion of the hotspot and hotspot creations on adjacent cardinal turfs.
+ * And some visual stuffs too! Colors and fainter icons for specific conditions.
+ */
 /obj/effect/hotspot/process()
 	if(just_spawned)
 		just_spawned = FALSE
@@ -172,12 +248,16 @@
 	if(location.excited_group)
 		location.excited_group.reset_cooldowns()
 
-	if((temperature < FIRE_MINIMUM_TEMPERATURE_TO_EXIST) || (volume <= 1))
+	cold_fire = FALSE
+	if(temperature <= FREON_MAXIMUM_BURN_TEMPERATURE)
+		cold_fire = TRUE
+
+	if((temperature < FIRE_MINIMUM_TEMPERATURE_TO_EXIST && !cold_fire) || (volume <= 1))
 		qdel(src)
 		return
 
 	//Not enough / nothing to burn
-	if(!location.air || (INSUFFICIENT(/datum/gas/plasma) && INSUFFICIENT(/datum/gas/tritium) && INSUFFICIENT(/datum/gas/hydrogen)) || INSUFFICIENT(/datum/gas/oxygen))
+	if(!location.air || (INSUFFICIENT(/datum/gas/plasma) && INSUFFICIENT(/datum/gas/tritium) && INSUFFICIENT(/datum/gas/hydrogen) && INSUFFICIENT(/datum/gas/freon)) || INSUFFICIENT(/datum/gas/oxygen))
 		qdel(src)
 		return
 
@@ -185,11 +265,14 @@
 
 	if(bypassing)
 		icon_state = "3"
-		location.burn_tile()
+		if(!cold_fire)
+			location.burn_tile()
 
-		//Possible spread due to radiated heat
-		if(location.air.temperature > FIRE_MINIMUM_TEMPERATURE_TO_SPREAD)
+		//Possible spread due to radiated heat.
+		if(location.air.temperature > FIRE_MINIMUM_TEMPERATURE_TO_SPREAD || cold_fire)
 			var/radiated_temperature = location.air.temperature*FIRE_SPREAD_RADIOSITY_SCALE
+			if(cold_fire)
+				radiated_temperature = location.air.temperature * COLD_FIRE_SPREAD_RADIOSITY_SCALE
 			for(var/t in location.atmos_adjacent_turfs)
 				var/turf/open/T = t
 				if(!T.active_hotspot)
@@ -213,11 +296,11 @@
 		T.active_hotspot = null
 	return ..()
 
-/obj/effect/hotspot/Crossed(atom/movable/AM, oldLoc)
-	..()
-	if(isliving(AM))
-		var/mob/living/L = AM
-		L.fire_act(temperature, volume)
+/obj/effect/hotspot/proc/on_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	SIGNAL_HANDLER
+	if(isliving(arrived) && !cold_fire)
+		var/mob/living/immolated = arrived
+		immolated.fire_act(temperature, volume)
 
 /obj/effect/hotspot/singularity_pull()
 	return

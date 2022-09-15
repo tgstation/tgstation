@@ -1,0 +1,147 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/rack,
+/obj/structure/window/reinforced/spawner,
+/obj/effect/spawner/random/engineering/tool,
+/obj/effect/spawner/random/engineering/tool,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/clothing/gloves,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"c" = (
+/obj/structure/rack,
+/obj/structure/window/reinforced/spawner/north,
+/obj/effect/spawner/random/engineering/flashlight,
+/obj/effect/spawner/random/engineering/material_cheap,
+/obj/effect/spawner/random/engineering/material_cheap,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"d" = (
+/turf/template_noop,
+/area/station/maintenance/department/security)
+"f" = (
+/turf/template_noop,
+/area/template_noop)
+"j" = (
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch"
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"m" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/extinguisher_cabinet/directional/north,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"y" = (
+/turf/closed/wall,
+/area/station/maintenance/department/security)
+"B" = (
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch"
+	},
+/obj/modular_map_connector,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"D" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/effect/spawner/random/engineering/toolbox,
+/obj/effect/spawner/random/engineering/vending_restock,
+/obj/effect/spawner/random/engineering/vending_restock,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"G" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/space_heater,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"M" = (
+/obj/effect/spawner/random/engineering/tank,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"Q" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"X" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/contraband/hacking_guide{
+	pixel_y = -32
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+
+(1,1,1) = {"
+d
+y
+y
+y
+y
+y
+f
+f
+f
+"}
+(2,1,1) = {"
+d
+M
+c
+a
+M
+y
+y
+y
+y
+"}
+(3,1,1) = {"
+d
+Q
+Q
+Q
+Q
+y
+Q
+G
+y
+"}
+(4,1,1) = {"
+y
+m
+Q
+Q
+Q
+j
+Q
+D
+y
+"}
+(5,1,1) = {"
+y
+Q
+Q
+Q
+X
+y
+Q
+G
+y
+"}
+(6,1,1) = {"
+y
+y
+B
+y
+f
+f
+f
+f
+y
+"}

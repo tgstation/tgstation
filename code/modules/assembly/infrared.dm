@@ -5,7 +5,7 @@
 	custom_materials = list(/datum/material/iron=1000, /datum/material/glass=500)
 	is_position_sensitive = TRUE
 	drop_sound = 'sound/items/handling/component_drop.ogg'
-	pickup_sound =  'sound/items/handling/component_pickup.ogg'
+	pickup_sound = 'sound/items/handling/component_pickup.ogg'
 	var/on = FALSE
 	var/visible = FALSE
 	var/maxlength = 8
@@ -14,18 +14,17 @@
 	var/turf/listeningTo
 	var/hearing_range = 3
 
-/obj/item/assembly/infra/Initialize()
+/obj/item/assembly/infra/Initialize(mapload)
 	. = ..()
 	beams = list()
 	START_PROCESSING(SSobj, src)
+	AddComponent(/datum/component/simple_rotation, AfterRotation = CALLBACK(src, .proc/AfterRotation))
 
-/obj/item/assembly/infra/ComponentInitialize()
-	. = ..()
-	var/static/rotation_flags = ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_FLIP | ROTATION_VERBS
-	AddComponent(/datum/component/simple_rotation, rotation_flags, after_rotation=CALLBACK(src,.proc/after_rotation))
-
-/obj/item/assembly/infra/proc/after_rotation()
+/obj/item/assembly/infra/proc/AfterRotation(mob/user, degrees)
 	refreshBeam()
+
+/obj/item/assembly/infra/AltClick(mob/user)
+	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 /obj/item/assembly/infra/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -35,7 +34,7 @@
 
 /obj/item/assembly/infra/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>The infrared trigger is [on?"on":"off"].</span>"
+	. += span_notice("The infrared trigger is [on?"on":"off"].")
 
 /obj/item/assembly/infra/activate()
 	if(!..())
@@ -102,16 +101,15 @@
 		for(var/i in 1 to maxlength)
 			var/obj/effect/beam/i_beam/I = new(T)
 			if(istype(holder, /obj/item/assembly_holder))
-				var/obj/item/assembly_holder/assembly_holder = holder
-				I.icon_state = "[initial(I.icon_state)]_[(assembly_holder.a_left == src) ? "l":"r"]" //Sync the offset of the beam with the position of the sensor.
+				I.icon_state = "[initial(I.icon_state)]_l" //Sync the offset of the beam with the position of the sensor.
 			else if(istype(holder, /obj/item/transfer_valve))
 				I.icon_state = "[initial(I.icon_state)]_ttv"
-			I.density = TRUE
+			I.set_density(TRUE)
 			if(!I.Move(_T))
 				qdel(I)
 				switchListener(_T)
 				break
-			I.density = FALSE
+			I.set_density(FALSE)
 			beams += I
 			I.master = src
 			I.setDir(_dir)
@@ -130,7 +128,7 @@
 	. = ..()
 	refreshBeam()
 
-/obj/item/assembly/infra/Moved()
+/obj/item/assembly/infra/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	var/t = dir
 	. = ..()
 	setDir(t)
@@ -152,12 +150,10 @@
 	if(!secured || !on || next_activate > world.time)
 		return FALSE
 	pulse(FALSE)
-	audible_message("[icon2html(src, hearers(src))] *beep* *beep* *beep*", null, hearing_range)
-	for(var/CHM in get_hearers_in_view(hearing_range, src))
-		if(ismob(CHM))
-			var/mob/LM = CHM
-			LM.playsound_local(get_turf(src), 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
-	next_activate =  world.time + 30
+	audible_message("<span class='infoplain'>[icon2html(src, hearers(src))] *beep* *beep* *beep*</span>", null, hearing_range)
+	for(var/mob/hearing_mob in get_hearers_in_view(hearing_range, src))
+		hearing_mob.playsound_local(get_turf(src), 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
+	next_activate = world.time + 30
 
 /obj/item/assembly/infra/proc/switchListener(turf/newloc)
 	if(listeningTo == newloc)
@@ -167,15 +163,15 @@
 	RegisterSignal(newloc, COMSIG_ATOM_EXITED, .proc/check_exit)
 	listeningTo = newloc
 
-/obj/item/assembly/infra/proc/check_exit(datum/source, atom/movable/offender)
+/obj/item/assembly/infra/proc/check_exit(datum/source, atom/movable/gone, direction)
 	SIGNAL_HANDLER
 
 	if(QDELETED(src))
 		return
-	if(offender == src || istype(offender,/obj/effect/beam/i_beam))
+	if(src == gone || istype(gone, /obj/effect/beam/i_beam))
 		return
-	if (offender && isitem(offender))
-		var/obj/item/I = offender
+	if(isitem(gone))
+		var/obj/item/I = gone
 		if (I.item_flags & ABSTRACT)
 			return
 	INVOKE_ASYNC(src, .proc/refreshBeam)
@@ -221,7 +217,7 @@
 
 /obj/effect/beam/i_beam
 	name = "infrared beam"
-	icon = 'icons/obj/guns/projectiles.dmi'
+	icon = 'icons/obj/weapons/guns/projectiles.dmi'
 	icon_state = "ibeam"
 	anchored = TRUE
 	density = FALSE
@@ -229,12 +225,19 @@
 	pass_flags_self = LETPASSTHROW
 	var/obj/item/assembly/infra/master
 
-/obj/effect/beam/i_beam/Crossed(atom/movable/AM as mob|obj)
+/obj/effect/beam/i_beam/Initialize(mapload)
 	. = ..()
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+
+/obj/effect/beam/i_beam/proc/on_entered(datum/source, atom/movable/AM as mob|obj)
+	SIGNAL_HANDLER
 	if(istype(AM, /obj/effect/beam))
 		return
 	if (isitem(AM))
 		var/obj/item/I = AM
 		if (I.item_flags & ABSTRACT)
 			return
-	master.trigger_beam(AM, get_turf(src))
+	INVOKE_ASYNC(master, /obj/item/assembly/infra.proc/trigger_beam, AM, get_turf(src))

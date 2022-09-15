@@ -55,12 +55,15 @@
 				<tr><td>[M.c]</td><td>[M.f]</td><td>1</td></tr>
 			</tbody>
 			</table></td><td class='rbrak'>&nbsp;</td></tr></tbody></table></span>"} //TODO link to modify_transform wrapper for all matrices
-	else if (istype(value, /datum))
+	else if (isdatum(value))
 		var/datum/DV = value
 		if ("[DV]" != "[DV.type]") //if the thing as a name var, lets use it.
 			item = "[name_part] = <a href='?_src_=vars;[HrefToken()];Vars=[REF(value)]'>[DV] [DV.type] [REF(value)]</a>"
 		else
 			item = "[name_part] = <a href='?_src_=vars;[HrefToken()];Vars=[REF(value)]'>[DV.type] [REF(value)]</a>"
+		if(istype(value,/datum/weakref))
+			var/datum/weakref/weakref = value
+			item += " <a href='?_src_=vars;[HrefToken()];Vars=[weakref.reference]'>(Resolve)</a>"
 
 	else if (islist(value))
 		var/list/L = value

@@ -19,10 +19,21 @@
 		return FALSE
 	var/obj/docking_port/mobile/M = SSshuttle.getShuttle("laborcamp")
 	if(!M)
-		to_chat(user, "<span class='warning'>Cannot locate shuttle!</span>")
+		to_chat(user, span_warning("Cannot locate shuttle!"))
 		return FALSE
 	var/obj/docking_port/stationary/S = M.get_docked()
 	if(S?.name == "laborcamp_away")
-		to_chat(user, "<span class='warning'>Shuttle is already at the outpost!</span>")
+		to_chat(user, span_warning("Shuttle is already at the outpost!"))
 		return FALSE
 	return TRUE
+
+/obj/docking_port/stationary/laborcamp_home
+	name = "SS13: Labor Shuttle Dock"
+	shuttle_id = "laborcamp_home"
+	roundstart_template = /datum/map_template/shuttle/labour/delta
+	width = 9
+	dwidth = 2
+	height = 5
+
+/obj/docking_port/stationary/laborcamp_home/kilo
+	roundstart_template = /datum/map_template/shuttle/labour/kilo

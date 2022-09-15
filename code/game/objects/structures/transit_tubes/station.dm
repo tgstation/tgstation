@@ -3,7 +3,7 @@
 
 // A place where tube pods stop, and people can get in or out.
 // Mappers: use "Generate Instances from Directions" for this
-//  one.
+// one.
 
 
 /obj/structure/transit_tube/station
@@ -21,8 +21,8 @@
 	var/base_icon = "station0"
 	var/boarding_dir //from which direction you can board the tube
 
-/obj/structure/transit_tube/station/New()
-	..()
+/obj/structure/transit_tube/station/Initialize(mapload)
+	. = ..()
 	START_PROCESSING(SSobj, src)
 
 /obj/structure/transit_tube/station/Destroy()
@@ -55,7 +55,7 @@
 	R.transfer_fingerprints_to(TP)
 	TP.add_fingerprint(user)
 	TP.setDir(turn(src.dir, -90))
-	user.visible_message("<span class='notice'>[user] inserts [R].</span>", "<span class='notice'>You insert [R].</span>")
+	user.visible_message(span_notice("[user] inserts [R]."), span_notice("You insert [R]."))
 	qdel(R)
 
 
@@ -69,10 +69,10 @@
 				var/mob/living/GM = user.pulling
 				if(user.grab_state >= GRAB_AGGRESSIVE)
 					if(GM.buckled || GM.has_buckled_mobs())
-						to_chat(user, "<span class='warning'>[GM] is attached to something!</span>")
+						to_chat(user, span_warning("[GM] is attached to something!"))
 						return
 					for(var/obj/structure/transit_tube_pod/pod in loc)
-						pod.visible_message("<span class='warning'>[user] starts putting [GM] into the [pod]!</span>")
+						pod.visible_message(span_warning("[user] starts putting [GM] into the [pod]!"))
 						if(do_after(user, 15, target = src))
 							if(open_status == STATION_TUBE_OPEN && GM && user.grab_state >= GRAB_AGGRESSIVE && user.pulling == GM && !GM.buckled && !GM.has_buckled_mobs())
 								GM.Paralyze(100)
@@ -86,7 +86,7 @@
 
 					else if(open_status == STATION_TUBE_OPEN)
 						if(pod.contents.len && user.loc != pod)
-							user.visible_message("<span class='notice'>[user] starts emptying [pod]'s contents onto the floor.</span>", "<span class='notice'>You start emptying [pod]'s contents onto the floor...</span>")
+							user.visible_message(span_notice("[user] starts emptying [pod]'s contents onto the floor."), span_notice("You start emptying [pod]'s contents onto the floor..."))
 							if(do_after(user, 10, target = src)) //So it doesn't default to close_animation() on fail
 								if(pod && pod.loc == loc)
 									for(var/atom/movable/AM in pod)
@@ -142,7 +142,7 @@
 			close_animation()
 			sleep(CLOSE_DURATION + 2)
 			if(open_status == STATION_TUBE_CLOSED && pod && pod.loc == loc)
-				pod.follow_tube()
+				pod.follow_tube(src)
 			pod_moving = FALSE
 			return TRUE
 	return FALSE
@@ -166,11 +166,10 @@
 
 /obj/structure/transit_tube/station/proc/finish_stopped(obj/structure/transit_tube_pod/pod)
 	pod_moving = FALSE
-	if(!QDELETED(pod))
-		var/datum/gas_mixture/floor_mixture = loc.return_air()
-		floor_mixture.archive()
-		pod.air_contents.archive()
-		pod.air_contents.share(floor_mixture, 1) //mix the pod's gas mixture with the tile it's on
+	if(QDELETED(pod))
+		return
+	var/datum/gas_mixture/floor_mixture = loc.return_air()
+	if(pod.air_contents.equalize(floor_mixture)) //equalize the pod's mix with the tile it's on
 		air_update_turf(FALSE, FALSE)
 
 /obj/structure/transit_tube/station/init_tube_dirs()
@@ -242,20 +241,20 @@
 	for(var/obj/structure/transit_tube_pod/pod in loc)
 		if(!pod.moving)
 			pod_moving = TRUE
-			pod.follow_tube()
+			pod.follow_tube(src)
 			pod_moving = FALSE
 			return TRUE
 	return FALSE
 
 /obj/structure/transit_tube/station/dispenser/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>This station will create a pod for you to ride, no need to wait for one.</span>"
+	. += span_notice("This station will create a pod for you to ride, no need to wait for one.")
 
 /obj/structure/transit_tube/station/dispenser/Bumped(atom/movable/AM)
-	if(!(istype(AM) && AM.dir == boarding_dir))
+	if(!(istype(AM) && AM.dir == boarding_dir) || AM.anchored)
 		return
 	var/obj/structure/transit_tube_pod/dispensed/pod = new(loc)
-	AM.visible_message("<span class='notice'>[pod] forms around [AM].</span>", "<span class='notice'>[pod] materializes around you.</span>")
+	AM.visible_message(span_notice("[pod] forms around [AM]."), span_notice("[pod] materializes around you."))
 	playsound(src, 'sound/weapons/emitter2.ogg', 50, TRUE)
 	pod.setDir(turn(src.dir, -90))
 	AM.forceMove(pod)
@@ -279,7 +278,7 @@
 /obj/structure/transit_tube/station/dispenser/reverse
 	tube_construction = /obj/structure/c_transit_tube/station/dispenser/reverse
 	reverse_launch = TRUE
-	icon_state = "closed_terminusdispenser0"
+	icon_state = "open_terminusdispenser0"
 	base_icon = "terminusdispenser0"
 
 /obj/structure/transit_tube/station/dispenser/reverse/init_tube_dirs()
@@ -295,7 +294,7 @@
 	boarding_dir = turn(dir, 180)
 
 /obj/structure/transit_tube/station/dispenser/reverse/flipped
-	icon_state = "closed_terminusdispenser1"
+	icon_state = "open_terminusdispenser1"
 	base_icon = "terminusdispenser1"
 	tube_construction = /obj/structure/c_transit_tube/station/dispenser/reverse/flipped
 

@@ -1,10 +1,17 @@
+// Skillchip categories
+//Various skillchip categories. Use these when setting which categories a skillchip restricts being paired with
+//while using the SKILLCHIP_RESTRICTED_CATEGORIES flag
+/// General related skillchip category
+#define SKILLCHIP_CATEGORY_GENERAL "general"
+
+
 /obj/item/skillchip
 	name = "skillchip"
 	desc = "This biochip integrates with user's brain to enable mastery of specific skill. Consult certified Nanotrasen neurosurgeon before use."
 
 	icon = 'icons/obj/card.dmi'
 	icon_state = "data_3"
-	custom_price = PAYCHECK_MEDIUM * 3
+	custom_price = PAYCHECK_CREW * 3
 	w_class = WEIGHT_CLASS_SMALL
 
 	/// Traits automatically granted by this chip, optional. Lazylist.
@@ -40,7 +47,7 @@
 	/// Set to TRUE when the skill chip's effects are applied. Set to FALSE when they're not.
 	var/active = FALSE
 	/// Brain that holds this skillchip.
-	var/obj/item/organ/brain/holding_brain
+	var/obj/item/organ/internal/brain/holding_brain
 
 /obj/item/skillchip/Initialize(mapload, is_removable = TRUE)
 	. = ..()
@@ -125,7 +132,7 @@
  * Arguments:
  * * owner_brain - The brain that this skillchip was implanted in to.
  */
-/obj/item/skillchip/proc/on_implant(obj/item/organ/brain/owner_brain)
+/obj/item/skillchip/proc/on_implant(obj/item/organ/internal/brain/owner_brain)
 	if(holding_brain)
 		CRASH("Skillchip is trying to be implanted into [owner_brain], but it's already implanted in [holding_brain]")
 
@@ -191,7 +198,7 @@
  * Arguments:
  * * skillchip - The skillchip you're intending to activate. Does not activate the chip.
  */
-/obj/item/skillchip/proc/has_activate_incompatibility(obj/item/organ/brain/brain)
+/obj/item/skillchip/proc/has_activate_incompatibility(obj/item/organ/internal/brain/brain)
 	if(QDELETED(brain))
 		return "No brain detected."
 
@@ -241,7 +248,7 @@
 		return "Incompatible lifeform detected."
 
 	// No brain
-	var/obj/item/organ/brain/brain = target.getorganslot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/internal/brain/brain = target.getorganslot(ORGAN_SLOT_BRAIN)
 	if(QDELETED(brain))
 		return "No brain detected."
 
@@ -260,7 +267,7 @@
  * Arguments:
  * * brain - The brain to check for implantability with.
  */
-/obj/item/skillchip/proc/has_brain_incompatibility(obj/item/organ/brain/brain)
+/obj/item/skillchip/proc/has_brain_incompatibility(obj/item/organ/internal/brain/brain)
 	if(!istype(brain))
 		stack_trace("Attempted to check incompatibility with invalid brain object [brain].")
 		return "Incompatible brain."
@@ -402,7 +409,7 @@
 	skill_icon = "plug"
 	activate_message = "<span class='notice'>You can now activate another chip through this adapter, but you're not sure why you did this...</span>"
 	deactivate_message = "<span class='notice'>You no longer have the useless skillchip adapter.</span>"
-	skillchip_flags = SKILLCHIP_ALLOWS_MULTIPLE | SKILLCHIP_CHAMELEON_INCOMPATIBLE
+	skillchip_flags = SKILLCHIP_ALLOWS_MULTIPLE
 	// Literally does nothing.
 	complexity = 0
 	slot_use = 0
@@ -434,26 +441,31 @@
 	activate_message = "<span class='notice'>You feel that you know a lot about interpreting organs.</span>"
 	deactivate_message = "<span class='notice'>Knowledge of liver damage, heart strain and lung scars fades from your mind.</span>"
 
-/obj/item/skillchip/quickcarry
-	name = "Ant Hauler skillchip"
-	auto_traits = list(TRAIT_QUICK_CARRY)
-	skill_name = "Ant Hauler"
-	chip_category = SKILLCHIP_CATEGORY_FIREMAN_CARRYING
-	skillchip_flags = SKILLCHIP_RESTRICTED_CATEGORIES
-	incompatibility_list = list(SKILLCHIP_CATEGORY_FIREMAN_CARRYING)
-	skill_description = "Discover various lifting techniques to more accurately and quickly lift someone up into a fireman carry."
-	skill_icon = "hand-holding"
-	activate_message = "<span class='notice'>You feel like you can easily lift and carry people around.</span>"
-	deactivate_message = "<span class='notice'>Your skill at lifting people into a fireman carry fades from your mind.</span>"
+/obj/item/skillchip/appraiser
+	name = "GENUINE ID Appraisal Now! skillchip"
+	auto_traits = list(TRAIT_ID_APPRAISER)
+	skill_name = "ID Appraisal"
+	skill_description = "Appraise an ID and see if it's issued from centcom, or just a cruddy station-printed one."
+	skill_icon = "magnifying-glass"
+	activate_message = span_notice("You feel that you can recognize special, minute details on ID cards.")
+	deactivate_message = span_notice("Was there something special about certain IDs?")
 
-/obj/item/skillchip/quickercarry
-	name = "RES-Q skillchip"
-	auto_traits = list(TRAIT_QUICKER_CARRY)
-	skill_name = "RES-Q"
-	chip_category = SKILLCHIP_CATEGORY_FIREMAN_CARRYING
-	skillchip_flags = SKILLCHIP_RESTRICTED_CATEGORIES
-	incompatibility_list = list(SKILLCHIP_CATEGORY_FIREMAN_CARRYING)
-	skill_description = "Learn how to fireman carry like a professional, and haul the injured, sick or dying with speed!"
-	skill_icon = "hand-holding"
-	activate_message = "<span class='notice'>Carrying people across your back feels like second nature to you.</span>"
-	deactivate_message = "<span class='notice'>Your expert knowledge in fireman carrying fades from your mind.</span>"
+/obj/item/skillchip/brainwashing
+	name = "suspicious skillchip"
+	auto_traits = list(TRAIT_BRAINWASHING)
+	skill_name = "Brainwashing"
+	skill_description = "WARNING: The integrity of this chip is compromised. Please discard this skillchip."
+	skill_icon = "soap"
+	activate_message = span_notice("...But all at once it comes to you... something involving putting a brain in a washing machine?")
+	deactivate_message = span_warning("All knowledge of the secret brainwashing technique is GONE.")
+
+/obj/item/skillchip/brainwashing/examine(mob/user)
+	. = ..()
+	. += span_warning("It seems to have been corroded over time, putting this in your head may not be the best idea...")
+
+/obj/item/skillchip/brainwashing/on_activate(mob/living/carbon/user, silent = FALSE)
+	to_chat(user, span_danger("You get a pounding headache as the chip sends corrupt memories into your head!"))
+	user.adjustOrganLoss(ORGAN_SLOT_BRAIN, 20)
+	. = ..()
+
+#undef SKILLCHIP_CATEGORY_GENERAL

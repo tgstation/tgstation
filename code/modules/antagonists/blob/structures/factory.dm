@@ -1,6 +1,6 @@
 /obj/structure/blob/special/factory
 	name = "factory blob"
-	icon = 'icons/mob/blob.dmi'
+	icon = 'icons/mob/nonhuman-player/blob.dmi'
 	icon_state = "blob_factory"
 	desc = "A thick spire of tendrils."
 	max_integrity = BLOB_FACTORY_MAX_HP
@@ -24,7 +24,7 @@
 			spore.factory = null
 	if(naut)
 		naut.factory = null
-		to_chat(naut, "<span class='userdanger'>Your factory was destroyed! You feel yourself dying!</span>")
+		to_chat(naut, span_userdanger("Your factory was destroyed! You feel yourself dying!"))
 		naut.throw_alert("nofactory", /atom/movable/screen/alert/nofactory)
 	spores = null
 	if(overmind)

@@ -173,7 +173,7 @@
 		/datum/reagent/consumable/milk = 5,
 		/datum/reagent/consumable/sugar = 5,
 		/obj/item/food/pie/plain = 1,
-		/obj/item/food/grown/blumpkin = 1
+		/obj/item/food/grown/pumpkin/blumpkin = 1
 	)
 	result = /obj/item/food/pie/blumpkinpie
 	subcategory = CAT_PIE
@@ -205,4 +205,27 @@
 		/obj/item/seeds/wheat/oat = 4
 	)
 	result = /obj/item/food/pie/baklava
+	subcategory = CAT_PIE
+
+/datum/crafting_recipe/food/frenchsilkpie
+	name = "French silk pie"
+	reqs = list(
+		/datum/reagent/consumable/sugar = 5,
+		/obj/item/food/pie/plain = 1,
+		/obj/item/food/chocolatebar = 2,
+	)
+	result = /obj/item/food/pie/frenchsilkpie
+	subcategory = CAT_PIE
+
+/datum/crafting_recipe/food/shepherds_pie
+	name = "Shepherds pie"
+	reqs = list(
+		/obj/item/food/mashed_potatoes = 1,
+		/obj/item/food/meat/cutlet = 3,
+		/obj/item/food/grown/onion = 1,
+		/obj/item/food/grown/peas = 1,
+		/obj/item/food/grown/corn = 1,
+		/obj/item/food/grown/garlic = 1,
+	)
+	result = /obj/item/food/pie/shepherds_pie
 	subcategory = CAT_PIE

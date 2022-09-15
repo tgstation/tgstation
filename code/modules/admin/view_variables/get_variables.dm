@@ -11,6 +11,8 @@
 	else if(istext(var_value))
 		if(findtext(var_value, "\n"))
 			. = VV_MESSAGE
+		else if(findtext(var_value, GLOB.is_color))
+			. = VV_COLOR
 		else
 			. = VV_TEXT
 
@@ -26,7 +28,10 @@
 	else if(istype(var_value, /client))
 		. = VV_CLIENT
 
-	else if(istype(var_value, /datum))
+	else if(isweakref(var_value))
+		. = VV_WEAKREF
+
+	else if(isdatum(var_value))
 		. = VV_DATUM_REFERENCE
 
 	else if(ispath(var_value))
@@ -38,7 +43,10 @@
 			. = VV_TYPE
 
 	else if(islist(var_value))
-		. = VV_LIST
+		if(var_name in GLOB.color_vars)
+			. = VV_COLOR_MATRIX
+		else
+			. = VV_LIST
 
 	else if(isfile(var_value))
 		. = VV_FILE
@@ -54,6 +62,8 @@
 				VV_TEXT,
 				VV_MESSAGE,
 				VV_ICON,
+				VV_COLOR,
+				VV_COLOR_MATRIX,
 				VV_ATOM_REFERENCE,
 				VV_DATUM_REFERENCE,
 				VV_MOB_REFERENCE,
@@ -67,15 +77,26 @@
 				VV_NEW_TYPE,
 				VV_NEW_LIST,
 				VV_NULL,
+				VV_INFINITY,
 				VV_RESTORE_DEFAULT,
 				VV_TEXT_LOCATE,
 				VV_PROCCALL_RETVAL,
+				VV_WEAKREF,
 				)
 
 		var/markstring
 		if(!(VV_MARKED_DATUM in restricted_classes))
 			markstring = "[VV_MARKED_DATUM] (CURRENT: [(istype(holder) && istype(holder.marked_datum))? holder.marked_datum.type : "NULL"])"
 			classes += markstring
+
+		var/list/tagstrings = new
+		if(!(VV_TAGGED_DATUM in restricted_classes) && holder && LAZYLEN(holder.tagged_datums))
+			var/i = 0
+			for(var/datum/iter_tagged_datum as anything in holder.tagged_datums)
+				i++
+				var/new_tagstring = "[VV_TAGGED_DATUM] #[i]: [iter_tagged_datum.type])"
+				tagstrings[new_tagstring] = iter_tagged_datum
+				classes += new_tagstring
 
 		if(restricted_classes)
 			classes -= restricted_classes
@@ -86,6 +107,12 @@
 		.["class"] = input(src, "What kind of data?", "Variable Type", default_class) as null|anything in classes
 		if(holder && holder.marked_datum && .["class"] == markstring)
 			.["class"] = VV_MARKED_DATUM
+
+		if(holder && tagstrings[.["class"]])
+			var/datum/chosen_datum = tagstrings[.["class"]]
+			.["value"] = chosen_datum
+			.["class"] = VV_TAGGED_DATUM
+
 
 	switch(.["class"])
 		if(VV_TEXT)
@@ -178,6 +205,19 @@
 				return
 			.["value"] = things[value]
 
+		if(VV_WEAKREF)
+			var/type = pick_closest_path(FALSE, get_fancy_list_of_datum_types())
+			var/subtypes = vv_subtype_prompt(type)
+			if(subtypes == null)
+				.["class"] = null
+				return
+			var/list/things = vv_reference_list(type, subtypes)
+			var/value = input("Select reference:", "Reference", current_value) as null|anything in things
+			if(!value)
+				.["class"] = null
+				return
+			.["value"] = WEAKREF(things[value])
+
 		if(VV_CLIENT)
 			.["value"] = input("Select reference:", "Reference", current_value) as null|anything in GLOB.clients
 			if(.["value"] == null)
@@ -198,6 +238,11 @@
 
 		if(VV_MARKED_DATUM)
 			.["value"] = holder.marked_datum
+			if(.["value"] == null)
+				.["class"] = null
+				return
+
+		if(VV_TAGGED_DATUM)
 			if(.["value"] == null)
 				.["class"] = null
 				return
@@ -261,11 +306,25 @@
 					break
 				D = locate(ref)
 				if(!D)
-					alert("Invalid ref!")
+					tgui_alert(usr,"Invalid ref!")
 					continue
 				if(!D.can_vv_mark())
-					alert("Datum can not be marked!")
+					tgui_alert(usr,"Datum can not be marked!")
 					continue
 			while(!D)
 			.["type"] = D.type
 			.["value"] = D
+
+		if(VV_COLOR)
+			.["value"] = input("Enter new color:", "Color", current_value) as color|null
+			if(.["value"] == null)
+				.["class"] = null
+				return
+
+		if(VV_COLOR_MATRIX)
+			.["value"] = open_color_matrix_editor()
+			if(.["value"] == color_matrix_identity()) //identity is equivalent to null
+				.["class"] = null
+
+		if(VV_INFINITY)
+			.["value"] = INFINITY

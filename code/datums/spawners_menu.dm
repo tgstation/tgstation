@@ -10,7 +10,6 @@
 	owner = null
 	return ..()
 
-
 /datum/spawners_menu/ui_state(mob/user)
 	return GLOB.observer_state
 
@@ -20,33 +19,34 @@
 		ui = new(user, src, "SpawnersMenu")
 		ui.open()
 
-/datum/spawners_menu/ui_data(mob/user)
+/datum/spawners_menu/ui_static_data(mob/user)
 	var/list/data = list()
 	data["spawners"] = list()
 	for(var/spawner in GLOB.mob_spawners)
 		var/list/this = list()
 		this["name"] = spawner
-		this["short_desc"] = ""
+		this["you_are_text"] = ""
 		this["flavor_text"] = ""
 		this["important_warning"] = ""
-		this["refs"] = list()
+		this["amount_left"] = 0
 		for(var/spawner_obj in GLOB.mob_spawners[spawner])
-			this["refs"] += "[REF(spawner_obj)]"
 			if(!this["desc"])
 				if(istype(spawner_obj, /obj/effect/mob_spawn))
-					var/obj/effect/mob_spawn/MS = spawner_obj
-					this["short_desc"] = MS.short_desc
-					this["flavor_text"] = MS.flavour_text
-					this["important_info"] = MS.important_info
+					var/obj/effect/mob_spawn/ghost_role/mob_spawner = spawner_obj
+					if(!mob_spawner.allow_spawn(user, silent = TRUE))
+						continue
+					this["you_are_text"] = mob_spawner.you_are_text
+					this["flavor_text"] = mob_spawner.flavour_text
+					this["important_text"] = mob_spawner.important_text
 				else
-					var/obj/O = spawner_obj
-					this["desc"] = O.desc
-		this["amount_left"] = LAZYLEN(GLOB.mob_spawners[spawner])
-		data["spawners"] += list(this)
-
+					var/obj/object = spawner_obj
+					this["desc"] = object.desc
+			this["amount_left"] += 1
+		if(this["amount_left"] > 0)
+			data["spawners"] += list(this)
 	return data
 
-/datum/spawners_menu/ui_act(action, params)
+/datum/spawners_menu/ui_act(action, params, datum/tgui/ui)
 	. = ..()
 	if(.)
 		return
@@ -55,17 +55,23 @@
 	if(!group_name || !(group_name in GLOB.mob_spawners))
 		return
 	var/list/spawnerlist = GLOB.mob_spawners[group_name]
+	for(var/obj/effect/mob_spawn/ghost_role/current_spawner as anything in spawnerlist)
+		if(!current_spawner.allow_spawn(usr, silent = TRUE))
+			spawnerlist -= current_spawner
 	if(!spawnerlist.len)
 		return
-	var/obj/effect/mob_spawn/MS = pick(spawnerlist)
-	if(!istype(MS) || !(MS in GLOB.poi_list))
+	var/obj/effect/mob_spawn/mob_spawner = pick(spawnerlist)
+	if(!istype(mob_spawner) || !SSpoints_of_interest.is_valid_poi(mob_spawner))
 		return
+
 	switch(action)
 		if("jump")
-			if(MS)
-				owner.forceMove(get_turf(MS))
-				. = TRUE
+			if(mob_spawner)
+				owner.forceMove(get_turf(mob_spawner))
+				return TRUE
 		if("spawn")
-			if(MS)
-				MS.attack_ghost(owner)
-				. = TRUE
+			if(mob_spawner)
+				owner.ManualFollow(mob_spawner)
+				ui.close()
+				mob_spawner.attack_ghost(owner)
+				return TRUE

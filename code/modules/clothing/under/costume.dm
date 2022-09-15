@@ -1,6 +1,6 @@
 /obj/item/clothing/under/costume
 	icon = 'icons/obj/clothing/under/costume.dmi'
-	worn_icon =  'icons/mob/clothing/under/costume.dmi'
+	worn_icon = 'icons/mob/clothing/under/costume.dmi'
 
 /obj/item/clothing/under/costume/roman
 	name = "\improper Roman armor"
@@ -36,7 +36,7 @@
 	icon_state = "schoolgirl"
 	inhand_icon_state = "schoolgirl"
 	body_parts_covered = CHEST|GROIN|ARMS
-	fitted = FEMALE_UNIFORM_TOP
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/schoolgirl/red
@@ -81,13 +81,13 @@
 	icon_state = "kilt"
 	inhand_icon_state = "kilt"
 	body_parts_covered = CHEST|GROIN|LEGS|FEET
-	fitted = FEMALE_UNIFORM_TOP
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/kilt/highlander
 	desc = "You're the only one worthy of this kilt."
 
-/obj/item/clothing/under/costume/kilt/highlander/Initialize()
+/obj/item/clothing/under/costume/kilt/highlander/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HIGHLANDER)
 
@@ -97,7 +97,8 @@
 	icon_state = "gladiator"
 	inhand_icon_state = "gladiator"
 	body_parts_covered = CHEST|GROIN|ARMS
-	fitted = NO_FEMALE_UNIFORM
+	female_sprite_flags = NO_FEMALE_UNIFORM
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 	can_adjust = FALSE
 	resistance_flags = NONE
 
@@ -111,12 +112,13 @@
 	icon_state = "maid"
 	inhand_icon_state = "maid"
 	body_parts_covered = CHEST|GROIN
-	fitted = FEMALE_UNIFORM_TOP
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 	can_adjust = FALSE
 
-/obj/item/clothing/under/costume/maid/Initialize()
+/obj/item/clothing/under/costume/maid/Initialize(mapload)
 	. = ..()
-	var/obj/item/clothing/accessory/maidapron/A = new (src)
+	var/obj/item/clothing/accessory/maidcorset/A = new (src)
 	attach_accessory(A)
 
 /obj/item/clothing/under/costume/geisha
@@ -149,13 +151,13 @@
 	name = "yellow performer's outfit"
 	icon_state = "ysing"
 	inhand_icon_state = "ysing"
-	fitted = NO_FEMALE_UNIFORM
+	female_sprite_flags = NO_FEMALE_UNIFORM
 
 /obj/item/clothing/under/costume/singer/blue
 	name = "blue performer's outfit"
 	icon_state = "bsing"
 	inhand_icon_state = "bsing"
-	fitted = FEMALE_UNIFORM_TOP
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 
 /obj/item/clothing/under/costume/mummy
 	name = "mummy wrapping"
@@ -163,7 +165,7 @@
 	icon_state = "mummy"
 	inhand_icon_state = "mummy"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
-	fitted = NO_FEMALE_UNIFORM
+	female_sprite_flags = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
 	resistance_flags = NONE
 
@@ -173,7 +175,7 @@
 	icon_state = "scarecrow"
 	inhand_icon_state = "scarecrow"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
-	fitted = NO_FEMALE_UNIFORM
+	female_sprite_flags = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
 	resistance_flags = NONE
 
@@ -183,7 +185,7 @@
 	icon_state = "draculass"
 	inhand_icon_state = "draculass"
 	body_parts_covered = CHEST|GROIN|ARMS
-	fitted = FEMALE_UNIFORM_TOP
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/drfreeze
@@ -198,7 +200,7 @@
 	desc = "Who beheaded the college mascot?"
 	icon_state = "lobster"
 	inhand_icon_state = "lobster"
-	fitted = NO_FEMALE_UNIFORM
+	female_sprite_flags = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/gondola
@@ -214,32 +216,27 @@
 	icon_state = "skeleton"
 	inhand_icon_state = "skeleton"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
-	fitted = NO_FEMALE_UNIFORM
+	female_sprite_flags = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
 	resistance_flags = NONE
 
 /obj/item/clothing/under/costume/mech_suit
-	name = "red mech pilot's suit"
-	desc = "A red mech pilot's suit. Might make your butt look big."
+	name = "mech pilot's suit"
+	desc = "A mech pilot's suit. Might make your butt look big."
 	icon_state = "red_mech_suit"
 	inhand_icon_state = "red_mech_suit"
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	fitted = NO_FEMALE_UNIFORM
+	female_sprite_flags = NO_FEMALE_UNIFORM
 	alternate_worn_layer = GLOVES_LAYER //covers hands but gloves can go over it. This is how these things work in my head.
 	can_adjust = FALSE
 
-/obj/item/clothing/under/costume/mech_suit/white
-	name = "white mech pilot's suit"
-	desc = "A white mech pilot's suit. Very fetching."
-	icon_state = "white_mech_suit"
-	inhand_icon_state = "white_mech_suit"
-
-/obj/item/clothing/under/costume/mech_suit/blue
-	name = "blue mech pilot's suit"
-	desc = "A blue mech pilot's suit. For the more reluctant mech pilots."
-	icon_state = "blue_mech_suit"
-	inhand_icon_state = "blue_mech_suit"
+	unique_reskin = list(
+						"Red" = "red_mech_suit",
+						"White" = "white_mech_suit",
+						"Blue" = "blue_mech_suit",
+						"Black" = "black_mech_suit",
+						)
 
 /obj/item/clothing/under/costume/russian_officer
 	name = "\improper Russian officer's uniform"
@@ -247,12 +244,41 @@
 	icon = 'icons/obj/clothing/under/security.dmi'
 	icon_state = "hostanclothes"
 	inhand_icon_state = "hostanclothes"
-	worn_icon =  'icons/mob/clothing/under/security.dmi'
+	worn_icon = 'icons/mob/clothing/under/security.dmi'
 	alt_covers_chest = TRUE
-	armor = list(MELEE = 10, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 30, ACID = 30)
+	armor = list(MELEE = 10, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 30, ACID = 30)
 	strip_delay = 50
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/buttondown
+	gender = PLURAL
+	body_parts_covered = GROIN|LEGS
+	female_sprite_flags = NO_FEMALE_UNIFORM
+	custom_price = PAYCHECK_CREW
+	icon = 'icons/obj/clothing/under/shorts_pants_shirts.dmi'
+	worn_icon = 'icons/mob/clothing/under/shorts_pants_shirts.dmi'
+	species_exception = list(/datum/species/golem)
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/buttondown/slacks
+	name = "buttondown shirt with slacks"
+	desc = "A fancy buttondown shirt with slacks."
+	icon_state = "buttondown_slacks"
+	greyscale_config = /datum/greyscale_config/buttondown_slacks
+	greyscale_config_worn = /datum/greyscale_config/buttondown_slacks_worn
+	greyscale_colors = "#EEEEEE#EE8E2E#222227#D8D39C"
+	flags_1 = IS_PLAYER_COLORABLE_1
+
+/obj/item/clothing/under/costume/buttondown/shorts
+	name = "buttondown shirt with shorts"
+	desc = "A fancy buttondown shirt with shorts."
+	icon_state = "buttondown_shorts"
+	greyscale_config = /datum/greyscale_config/buttondown_shorts
+	greyscale_config_worn = /datum/greyscale_config/buttondown_shorts_worn
+	greyscale_colors = "#EEEEEE#EE8E2E#222227#D8D39C"
+	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/under/costume/jackbros
 	name = "jack bros outfit"
@@ -261,11 +287,45 @@
 	inhand_icon_state = "JackFrostUniform"
 	can_adjust = FALSE
 
-/obj/item/clothing/under/costume/yakuza
-	name = "tojo clan pants"
-	desc = "For those long nights under the traffic cone."
-	icon_state = "MajimaPants"
-	inhand_icon_state = "MajimaPants"
+/obj/item/clothing/under/costume/deckers
+	name = "deckers outfit"
+	icon_state = "decker_jumpsuit"
+	inhand_icon_state = "decker_jumpsuit"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/football_suit
+	name = "football uniform"
+	icon_state = "football_suit"
+	can_adjust = FALSE
+	greyscale_config = /datum/greyscale_config/football_suit
+	greyscale_config_worn = /datum/greyscale_config/football_suit_worn
+	greyscale_colors = "#D74722"
+	flags_1 = IS_PLAYER_COLORABLE_1
+
+/obj/item/clothing/under/costume/swagoutfit
+	name = "Swag outfit"
+	desc = "Why don't you go secure some bitches?"
+	icon_state = "SwagOutfit"
+	inhand_icon_state = "SwagOutfit"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/referee
+	name = "referee uniform"
+	desc = "A standard black and white striped uniform to signal authority."
+	icon_state = "referee"
+	inhand_icon_state = "referee"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/joker
+	name = "comedian suit"
+	desc = "The worst part of having a mental illness is people expect you to behave as if you don't."
+	icon_state = "joker"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/yuri
+	name = "yuri initiate jumpsuit"
+	icon_state = "yuri_uniform"
+	inhand_icon_state = "yuri_uniform"
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/dutch
@@ -274,9 +334,16 @@
 	icon_state = "DutchUniform"
 	inhand_icon_state = "DutchUniform"
 	can_adjust = FALSE
-/obj/item/clothing/under/costume/swagoutfit
-	name = "Swag outfit"
-	desc = "Why don't you go secure some bitches?"
-	icon_state = "SwagOutfit"
-	inhand_icon_state = "SwagOutfit"
+
+/obj/item/clothing/under/costume/osi
+	name = "O.S.I. jumpsuit"
+	icon_state = "osi_jumpsuit"
+	inhand_icon_state = "osi_jumpsuit"
 	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/tmc
+	name = "Lost MC clothing"
+	icon_state = "tmc_jumpsuit"
+	inhand_icon_state = "tmc_jumpsuit"
+	can_adjust = FALSE
+

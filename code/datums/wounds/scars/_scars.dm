@@ -32,6 +32,8 @@
 		LAZYREMOVE(limb.scars, src)
 	if(victim)
 		LAZYREMOVE(victim.all_scars, src)
+	limb = null
+	victim = null
 	. = ..()
 
 /**
@@ -46,6 +48,8 @@
  */
 /datum/scar/proc/generate(obj/item/bodypart/BP, datum/wound/W, add_to_scars=TRUE)
 	limb = BP
+	RegisterSignal(limb, COMSIG_PARENT_QDELETING, .proc/limb_gone)
+
 	severity = W.severity
 	if(limb.owner)
 		victim = limb.owner
@@ -83,11 +87,12 @@
 
 /// Used to "load" a persistent scar
 /datum/scar/proc/load(obj/item/bodypart/BP, version, description, specific_location, severity=WOUND_SEVERITY_SEVERE, biology=BIO_FLESH_BONE, char_slot)
-	if(!BP.is_organic_limb())
+	if(!IS_ORGANIC_LIMB(BP))
 		qdel(src)
 		return
 
 	limb = BP
+	RegisterSignal(limb, COMSIG_PARENT_QDELETING, .proc/limb_gone)
 	if(limb.owner)
 		victim = limb.owner
 		if(victim.get_biological_state() != biology)
@@ -113,6 +118,10 @@
 			visibility = 7
 	return src
 
+/datum/scar/proc/limb_gone()
+	SIGNAL_HANDLER
+	qdel(src)
+
 /// What will show up in examine_more() if this scar is visible
 /datum/scar/proc/get_examine_description(mob/viewer)
 	if(!victim || !is_visible(viewer))
@@ -121,14 +130,14 @@
 	var/msg = "[victim.p_they(TRUE)] [victim.p_have()] [description] on [victim.p_their()] [precise_location]."
 	switch(severity)
 		if(WOUND_SEVERITY_MODERATE)
-			msg = "<span class='tinynoticeital'>[msg]</span>"
+			msg = span_tinynoticeital("[msg]")
 		if(WOUND_SEVERITY_SEVERE)
-			msg = "<span class='smallnoticeital'>[msg]</span>"
+			msg = span_smallnoticeital("[msg]")
 		if(WOUND_SEVERITY_CRITICAL)
-			msg = "<span class='smallnoticeital'><b>[msg]</b></span>"
+			msg = span_smallnoticeital("<b>[msg]</b>")
 		if(WOUND_SEVERITY_LOSS)
-			msg = "[victim.p_their(TRUE)] [limb.name] [description]." // different format
-			msg = "<span class='notice'><i><b>[msg]</b></i></span>"
+			msg = "[victim.p_their(TRUE)] [limb.plaintext_zone] [description]." // different format
+			msg = span_notice("<i><b>[msg]</b></i>")
 	return "\t[msg]"
 
 /// Whether a scar can currently be seen by the viewer

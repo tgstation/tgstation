@@ -1,7 +1,9 @@
 /obj/vehicle/sealed/car
 	layer = ABOVE_MOB_LAYER
 	move_resist = MOVE_FORCE_VERY_STRONG
-	var/car_traits = NONE //Bitflag for special behavior such as kidnapping
+	///Bitflags for special behavior such as kidnapping
+	var/car_traits = NONE
+	///Sound file(s) to play when we drive around
 	var/engine_sound = 'sound/vehicles/carrev.ogg'
 	///Set this to the length of the engine sound.
 	var/engine_sound_length = 2 SECONDS
@@ -22,57 +24,58 @@
 	if(M.stat != CONSCIOUS || (HAS_TRAIT(M, TRAIT_HANDS_BLOCKED) && !is_driver(M)))
 		return FALSE
 	if((car_traits & CAN_KIDNAP) && isliving(dropping) && M != dropping)
-		var/mob/living/L = dropping
-		L.visible_message("<span class='warning'>[M] starts forcing [L] into [src]!</span>")
-		mob_try_forced_enter(M, L)
+		var/mob/living/kidnapped = dropping
+		kidnapped.visible_message(span_warning("[M] starts forcing [kidnapped] into [src]!"))
+		mob_try_forced_enter(M, kidnapped)
 	return ..()
 
 /obj/vehicle/sealed/car/mob_try_exit(mob/M, mob/user, silent = FALSE)
-	if(M == user && (LAZYACCESS(occupants, M) & VEHICLE_CONTROL_KIDNAPPED))
-		to_chat(user, "<span class='notice'>You push against the back of \the [src]'s trunk to try and get out.</span>")
-		if(!do_after(user, escape_time, target = src))
-			return FALSE
-		to_chat(user,"<span class='danger'>[user] gets out of [src].</span>")
+	if(M != user || !(LAZYACCESS(occupants, M) & VEHICLE_CONTROL_KIDNAPPED))
 		mob_exit(M, silent)
 		return TRUE
+	to_chat(user, span_notice("You push against the back of \the [src]'s trunk to try and get out."))
+	if(!do_after(user, escape_time, target = src))
+		return FALSE
+	to_chat(user,span_danger("[user] gets out of [src]."))
 	mob_exit(M, silent)
 	return TRUE
-
 
 /obj/vehicle/sealed/car/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(!(car_traits & CAN_KIDNAP))
 		return
-	to_chat(user, "<span class='notice'>You start opening [src]'s trunk.</span>")
-	if(do_after(user, 30))
-		if(return_amount_of_controllers_with_flag(VEHICLE_CONTROL_KIDNAPPED))
-			to_chat(user, "<span class='notice'>The people stuck in [src]'s trunk all come tumbling out.</span>")
-			dump_specific_mobs(VEHICLE_CONTROL_KIDNAPPED)
-		else
-			to_chat(user, "<span class='notice'>It seems [src]'s trunk was empty.</span>")
+	to_chat(user, span_notice("You start opening [src]'s trunk."))
+	if(!do_after(user, 30))
+		return
+	if(return_amount_of_controllers_with_flag(VEHICLE_CONTROL_KIDNAPPED))
+		to_chat(user, span_notice("The people stuck in [src]'s trunk all come tumbling out."))
+		dump_specific_mobs(VEHICLE_CONTROL_KIDNAPPED)
+		return
+	to_chat(user, span_notice("It seems [src]'s trunk was empty."))
 
-/obj/vehicle/sealed/car/proc/mob_try_forced_enter(mob/forcer, mob/M, silent = FALSE)
-	if(!istype(M))
-		return FALSE
+///attempts to force a mob into the car
+/obj/vehicle/sealed/car/proc/mob_try_forced_enter(mob/forcer, mob/kidnapped, silent = FALSE)
 	if(occupant_amount() >= max_occupants)
 		return FALSE
 	var/atom/old_loc = loc
-	if(do_mob(forcer, M, get_enter_delay(M), extra_checks=CALLBACK(src, /obj/vehicle/sealed/car/proc/is_car_stationary, old_loc)))
-		mob_forced_enter(M, silent)
+	if(do_mob(forcer, kidnapped, get_enter_delay(kidnapped), extra_checks=CALLBACK(src, /obj/vehicle/sealed/car.proc/is_car_stationary, old_loc)))
+		mob_forced_enter(kidnapped, silent)
 		return TRUE
 	return FALSE
 
+///Callback proc to check for
 /obj/vehicle/sealed/car/proc/is_car_stationary(atom/old_loc)
 	return (old_loc == loc)
 
-/obj/vehicle/sealed/car/proc/mob_forced_enter(mob/M, silent = FALSE)
+///Proc called when someone is forcefully stuffedd into a car
+/obj/vehicle/sealed/car/proc/mob_forced_enter(mob/kidnapped, silent = FALSE)
 	if(!silent)
-		M.visible_message("<span class='warning'>[M] is forced into \the [src]!</span>")
-	M.forceMove(src)
-	add_occupant(M, VEHICLE_CONTROL_KIDNAPPED)
+		kidnapped.visible_message(span_warning("[kidnapped] is forced into \the [src]!"))
+	kidnapped.forceMove(src)
+	add_occupant(kidnapped, VEHICLE_CONTROL_KIDNAPPED)
 
-/obj/vehicle/sealed/car/obj_destruction(damage_flag)
-	explosion(loc, 0, 1, 2, 3, 0)
+/obj/vehicle/sealed/car/atom_destruction(damage_flag)
+	explosion(src, heavy_impact_range = 1, light_impact_range = 2, flash_range = 3, adminlog = FALSE)
 	log_message("[src] exploded due to destruction", LOG_ATTACK)
 	return ..()
 
@@ -96,6 +99,5 @@
 		if(did_move)
 			step(trailer, dir_to_move)
 		return did_move
-	else
-		after_move(direction)
-		return step(src, direction)
+	after_move(direction)
+	return step(src, direction)

@@ -3,16 +3,14 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/labor)
 "b" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/labor)
 "c" = (
 /obj/machinery/computer/shuttle/labor{
 	dir = 4
 	},
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_x = -31
-	},
+/obj/structure/reagent_dispensers/wall/peppertank/directional/west,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/labor)
 "d" = (
@@ -28,9 +26,8 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/labor)
 "f" = (
-/obj/structure/grille,
 /obj/structure/cable,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/labor)
 "g" = (
@@ -41,14 +38,13 @@
 	id = "gulagshuttleflasher";
 	name = "Flash Control";
 	pixel_y = -26;
-	req_access_txt = "1"
+	req_access = list("security")
 	},
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/labor)
 "i" = (
 /obj/machinery/mineral/stacking_unit_console{
-	machinedir = 2;
 	pixel_x = 30;
 	pixel_y = 30
 	},
@@ -56,8 +52,7 @@
 /area/shuttle/labor)
 "j" = (
 /obj/machinery/door/airlock/shuttle{
-	name = "Labor Shuttle Airlock";
-	req_access_txt = "2"
+	name = "Labor Shuttle Airlock"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -65,14 +60,15 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /turf/open/floor/plating,
 /area/shuttle/labor)
 "k" = (
 /obj/machinery/door/airlock/shuttle{
-	name = "Labor Shuttle Airlock";
-	req_access_txt = "2"
+	name = "Labor Shuttle Airlock"
 	},
 /obj/effect/turf_decal/stripes/line,
+/obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /turf/open/floor/iron/white,
 /area/shuttle/labor)
 "l" = (
@@ -97,14 +93,11 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/shuttle/labor)
 "p" = (
 /obj/machinery/mineral/labor_claim_console{
-	machinedir = 1;
 	pixel_x = 30
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -130,9 +123,8 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/obj/machinery/flasher{
-	id = "gulagshuttleflasher";
-	pixel_x = 25
+/obj/machinery/flasher/directional/east{
+	id = "gulagshuttleflasher"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -238,7 +230,7 @@
 	dir = 8;
 	dwidth = 2;
 	height = 5;
-	id = "laborcamp";
+	shuttle_id = "laborcamp";
 	name = "labor camp shuttle";
 	port_direction = 4;
 	width = 9

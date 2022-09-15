@@ -1,3 +1,4 @@
+
 // check_pierce() return values
 /// Default behavior: hit and delete self
 #define PROJECTILE_PIERCE_NONE 0
@@ -13,9 +14,7 @@
 #define CALIBER_712X82MM "mm71282"
 /// The caliber used by the [security auto-rifle][/obj/item/gun/ballistic/automatic/wt550].
 #define CALIBER_46X30MM "4.6x30mm"
-/// The caliber used by the [plastikov SMG][/obj/item/gun/ballistic/automatic/plastikov].
-#define CALIBER_9X19MM "9x19mm"
-/// The caliber used by the Nanotrasen Saber SMG, and Type U3 Uzi. Also used as the default caliber for pistols but only the stechkin APS machine pistol doesn't override it.
+/// The caliber used by the Nanotrasen Saber SMG, PP-95 SMG and Type U3 Uzi. Also used as the default caliber for pistols but only the stechkin APS machine pistol doesn't override it.
 #define CALIBER_9MM "9mm"
 /// The caliber used as the default for ballistic guns. Only not overridden for the [surplus rifle][/obj/item/gun/ballistic/automatic/surplus].
 #define CALIBER_10MM "10mm"
@@ -45,8 +44,6 @@
 #define CALIBER_LASER "laser"
 /// The caliber used by most energy guns.
 #define CALIBER_ENERGY "energy"
-/// The caliber used by the laser minigun.
-#define CALIBER_GATLING "gatling"
 /// The acliber used by foam force and donksoft toy guns.
 #define CALIBER_FOAM "foam_force"
 /// The caliber used by the bow and arrow.

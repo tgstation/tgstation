@@ -1,13 +1,26 @@
 {
 	"version": 1,
-    "map_name": "Kilo Station",
-    "map_path": "map_files/KiloStation",
-    "map_file": "KiloStation.dmm",
-    "space_ruin_levels": 4,
-    "shuttles": {
-	    "emergency": "emergency_kilo",
-	    "ferry": "ferry_kilo",
-	    "cargo": "cargo_kilo",
-	    "whiteship": "whiteship_kilo"
-    }
+	"map_name": "Kilo Station",
+	"map_path": "map_files/KiloStation",
+	"map_file": "KiloStation.dmm",
+	"shuttles": {
+		"emergency": "emergency_kilo",
+		"ferry": "ferry_kilo",
+		"cargo": "cargo_kilo",
+		"whiteship": "whiteship_kilo"
+	},
+	"traits": [
+		{
+			"Linkage": "Cross",
+			"Bombcap Multiplier": 0.7
+		}
+	],
+	"job_changes": {
+		"Cook": {
+			"additional_cqc_areas": ["/area/station/service/bar/atrium"]
+		},
+		"Captain": {
+			"special_charter": "asteroid"
+		}
+	}
 }

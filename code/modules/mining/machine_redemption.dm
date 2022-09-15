@@ -38,9 +38,9 @@
 /obj/machinery/mineral/ore_redemption/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += "<span class='notice'>The status display reads: Smelting <b>[ore_multiplier]</b> sheet(s) per piece of ore.<br>Reward point generation at <b>[point_upgrade*100]%</b>.</span>"
+		. += span_notice("The status display reads: Smelting <b>[ore_multiplier]</b> sheet(s) per piece of ore.<br>Reward point generation at <b>[point_upgrade*100]%</b>.")
 	if(panel_open)
-		. += "<span class='notice'>Alt-click to rotate the input and output direction.</span>"
+		. += span_notice("Alt-click to rotate the input and output direction.")
 
 /obj/machinery/mineral/ore_redemption/proc/smelt_ore(obj/item/stack/ore/O)
 	if(QDELETED(O))
@@ -132,7 +132,7 @@
 	))
 	signal.send_to_receivers()
 
-/obj/machinery/mineral/ore_redemption/pickup_item(datum/source, atom/movable/target, atom/oldLoc)
+/obj/machinery/mineral/ore_redemption/pickup_item(datum/source, atom/movable/target, direction)
 	if(QDELETED(target))
 		return
 	if(!materials.mat_container || panel_open || !powered())
@@ -160,11 +160,13 @@
 	else
 		unregister_input_turf() // someone just un-wrenched us, unregister the turf
 
+/obj/machinery/mineral/ore_redemption/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
 /obj/machinery/mineral/ore_redemption/attackby(obj/item/W, mob/user, params)
-	if(default_unfasten_wrench(user, W))
-		return
 	if(default_deconstruction_screwdriver(user, "ore_redemption-open", "ore_redemption", W))
-		updateUsrDialog()
 		return
 	if(default_deconstruction_crowbar(W))
 		return
@@ -180,7 +182,7 @@
 	var/obj/item/stack/ore/O = W
 	if(istype(O))
 		if(O.refined_type == null)
-			to_chat(user, "<span class='warning'>[O] has already been refined!</span>")
+			to_chat(user, span_warning("[O] has already been refined!"))
 			return
 
 	return ..()
@@ -192,9 +194,10 @@
 	if(panel_open)
 		input_dir = turn(input_dir, -90)
 		output_dir = turn(output_dir, -90)
-		to_chat(user, "<span class='notice'>You change [src]'s I/O settings, setting the input to [dir2text(input_dir)] and the output to [dir2text(output_dir)].</span>")
+		to_chat(user, span_notice("You change [src]'s I/O settings, setting the input to [dir2text(input_dir)] and the output to [dir2text(output_dir)]."))
 		unregister_input_turf() // someone just rotated the input and output directions, unregister the old turf
 		register_input_turf() // register the new one
+		update_appearance(UPDATE_OVERLAYS)
 		return TRUE
 
 /obj/machinery/mineral/ore_redemption/ui_interact(mob/user, datum/tgui/ui)
@@ -248,26 +251,26 @@
 	var/datum/component/material_container/mat_container = materials.mat_container
 	switch(action)
 		if("Claim")
-			var/obj/item/card/id/I
+			var/obj/item/card/id/user_id_card
 			if(isliving(usr))
-				var/mob/living/L = usr
-				I = L.get_idcard(TRUE)
+				var/mob/living/user = usr
+				user_id_card = user.get_idcard(TRUE)
 			if(points)
-				if(I)
-					I.mining_points += points
+				if(user_id_card)
+					user_id_card.mining_points += points
 					points = 0
 				else
-					to_chat(usr, "<span class='warning'>No valid ID detected.</span>")
+					to_chat(usr, span_warning("No valid ID detected."))
 			else
-				to_chat(usr, "<span class='warning'>No points to claim.</span>")
+				to_chat(usr, span_warning("No points to claim."))
 			return TRUE
 		if("Release")
 			if(!mat_container)
 				return
 			if(materials.on_hold())
-				to_chat(usr, "<span class='warning'>Mineral access is on hold, please contact the quartermaster.</span>")
+				to_chat(usr, span_warning("Mineral access is on hold, please contact the quartermaster."))
 			else if(!allowed(usr)) //Check the ID inside, otherwise check the user
-				to_chat(usr, "<span class='warning'>Required access not found.</span>")
+				to_chat(usr, span_warning("Required access not found."))
 			else
 				var/datum/material/mat = locate(params["id"])
 
@@ -284,8 +287,9 @@
 				if (params["sheets"])
 					desired = text2num(params["sheets"])
 				else
-					desired = input("How many sheets?", "How many sheets would you like to smelt?", 1) as null|num
-
+					desired = tgui_input_number(usr, "How many sheets would you like to smelt?", "Smelt",  max_value = stored_amount)
+					if(!desired || QDELETED(usr) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+						return
 				var/sheets_to_remove = round(min(desired,50,stored_amount))
 
 				var/count = mat_container.retrieve_sheets(sheets_to_remove, mat, get_step(src, output_dir))
@@ -301,7 +305,7 @@
 					return
 				inserted_disk = disk
 			else
-				to_chat(usr, "<span class='warning'>Not a valid Design Disk!</span>")
+				to_chat(usr, span_warning("Not a valid Design Disk!"))
 			return TRUE
 		if("diskEject")
 			if(inserted_disk)
@@ -317,22 +321,26 @@
 			if(!mat_container)
 				return
 			if(materials.on_hold())
-				to_chat(usr, "<span class='warning'>Mineral access is on hold, please contact the quartermaster.</span>")
+				to_chat(usr, span_warning("Mineral access is on hold, please contact the quartermaster."))
 				return
 			var/alloy_id = params["id"]
 			var/datum/design/alloy = stored_research.isDesignResearchedID(alloy_id)
-			var/obj/item/card/id/I
+			var/obj/item/card/id/user_id_card
 			if(isliving(usr))
-				var/mob/living/L = usr
-				I = L.get_idcard(TRUE)
-			if((check_access(I) || allowed(usr)) && alloy)
+				var/mob/living/user = usr
+				user_id_card = user.get_idcard(TRUE)
+			if((check_access(user_id_card) || allowed(usr)) && alloy)
 				var/smelt_amount = can_smelt_alloy(alloy)
 				var/desired = 0
 				if (params["sheets"])
 					desired = text2num(params["sheets"])
 				else
-					desired = input("How many sheets?", "How many sheets would you like to smelt?", 1) as null|num
+					desired = tgui_input_number(usr, "How many sheets would you like to smelt?", "Smelt", max_value = smelt_amount)
+					if(!desired || QDELETED(usr) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+						return
 				var/amount = round(min(desired,50,smelt_amount))
+				if(amount < 1) //no negative mats
+					return
 				mat_container.use_materials(alloy.materials, amount)
 				materials.silo_log(src, "released", -amount, "sheets", alloy.materials)
 				var/output
@@ -342,13 +350,55 @@
 					output = new alloy.build_path(src)
 				unload_mineral(output)
 			else
-				to_chat(usr, "<span class='warning'>Required access not found.</span>")
+				to_chat(usr, span_warning("Required access not found."))
 			return TRUE
 
 /obj/machinery/mineral/ore_redemption/ex_act(severity, target)
 	do_sparks(5, TRUE, src)
-	..()
+	return ..()
 
 /obj/machinery/mineral/ore_redemption/update_icon_state()
 	icon_state = "[initial(icon_state)][powered() ? null : "-off"]"
 	return ..()
+
+/obj/machinery/mineral/ore_redemption/update_overlays()
+	. = ..()
+	if((machine_stat & NOPOWER))
+		return
+	var/image/ore_input
+	var/image/ore_output
+
+	switch(input_dir)
+		if(NORTH)
+			ore_input = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_n")
+			ore_input.pixel_y = 32
+			ore_output = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_s")
+			ore_output.pixel_y = -32
+		if(SOUTH)
+			ore_input = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_s")
+			ore_input.pixel_y = -32
+			ore_output = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_n")
+			ore_output.pixel_y = 32
+		if(EAST)
+			ore_input = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_e")
+			ore_input.pixel_x = 32
+			ore_output = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_w")
+			ore_output.pixel_x = -32
+		if(WEST)
+			ore_input = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_w")
+			ore_input.pixel_x = -32
+			ore_output = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_e")
+			ore_output.pixel_x = 32
+	ore_input.color = COLOR_MODERATE_BLUE
+	ore_output.color = COLOR_SECURITY_RED
+	var/mutable_appearance/light_in = emissive_appearance(ore_input.icon, ore_input.icon_state, alpha = ore_input.alpha)
+	light_in.pixel_y = ore_input.pixel_y
+	light_in.pixel_x = ore_input.pixel_x
+	var/mutable_appearance/light_out = emissive_appearance(ore_output.icon, ore_output.icon_state, alpha = ore_output.alpha)
+	light_out.pixel_y = ore_output.pixel_y
+	light_out.pixel_x = ore_output.pixel_x
+	. += ore_input
+	. += ore_output
+	. += light_in
+	. += light_out
+

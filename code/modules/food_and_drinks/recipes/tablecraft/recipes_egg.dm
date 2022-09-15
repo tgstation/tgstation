@@ -3,21 +3,20 @@
 
 ////////////////////////////////////////////////EGG RECIPE's////////////////////////////////////////////////
 
-/datum/crafting_recipe/food/friedegg
-	name = "Fried egg"
+/datum/crafting_recipe/food/sausageegg
+	name = "Egg with sausage"
 	reqs = list(
-		/datum/reagent/consumable/salt = 1,
-		/datum/reagent/consumable/blackpepper = 1,
-		/obj/item/food/egg = 1
+		/obj/item/food/sausage = 1,
+		/obj/item/food/friedegg = 1,
 	)
-	result = /obj/item/food/friedegg
+	result = /obj/item/food/eggsausage
 	subcategory = CAT_EGG
 
 /datum/crafting_recipe/food/omelette
 	name = "Omelette"
 	reqs = list(
 		/obj/item/food/egg = 2,
-		/obj/item/food/cheese = 2
+		/obj/item/food/cheese/wedge = 2
 	)
 	result = /obj/item/food/omelette
 	subcategory = CAT_EGG
@@ -52,6 +51,15 @@
 	result = /obj/item/food/salad/eggbowl
 	subcategory = CAT_EGG
 
+/datum/crafting_recipe/food/wrap
+	name = "Egg Wrap"
+	reqs = list(/datum/reagent/consumable/soysauce = 10,
+		/obj/item/food/friedegg = 1,
+		/obj/item/food/grown/cabbage = 1,
+	)
+	result = /obj/item/food/eggwrap
+	subcategory = CAT_EGG
+
 /datum/crafting_recipe/food/chawanmushi
 	name = "Chawanmushi"
 	reqs = list(
@@ -62,4 +70,4 @@
 	)
 	result = /obj/item/food/chawanmushi
 	subcategory = CAT_EGG
-	
+

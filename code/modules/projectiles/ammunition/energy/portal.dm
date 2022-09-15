@@ -4,7 +4,8 @@
 	harmful = FALSE
 	fire_sound = 'sound/weapons/pulse3.ogg'
 	select_name = "blue"
-	var/obj/item/gun/energy/wormhole_projector/gun
+	//Weakref to the gun that shot us
+	var/datum/weakref/gun
 
 /obj/item/ammo_casing/energy/wormhole/orange
 	projectile_type = /obj/projectile/beam/wormhole/orange
@@ -12,9 +13,9 @@
 
 /obj/item/ammo_casing/energy/wormhole/Initialize(mapload, obj/item/gun/energy/wormhole_projector/wh)
 	. = ..()
-	gun = wh
+	gun = WEAKREF(wh)
 
-/obj/item/ammo_casing/energy/wormhole/throw_proj()
+/obj/item/ammo_casing/energy/wormhole/throw_proj(atom/target, turf/targloc, mob/living/user, params, spread, atom/fired_from)
 	. = ..()
 	if(istype(loaded_projectile, /obj/projectile/beam/wormhole))
 		var/obj/projectile/beam/wormhole/WH = loaded_projectile

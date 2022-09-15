@@ -17,7 +17,7 @@
 	. = ..()
 	to_chat(usr, info_text)
 
-/obj/effect/abstract/info/MouseEntered()
+/obj/effect/abstract/info/MouseEntered(location, control, params)
 	. = ..()
 	icon_state = "info_hovered"
 

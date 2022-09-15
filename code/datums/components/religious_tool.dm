@@ -7,6 +7,8 @@
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 	/// Enables access to the global sect directly
 	var/datum/religion_sect/easy_access_sect
+	/// Prevents double selecting sects
+	var/selecting_sect = FALSE
 	/// What extent do we want this religious tool to act? In case you don't want full access to the list. Generated on New
 	var/operation_flags
 	/// The rite currently being invoked
@@ -42,10 +44,9 @@
 	if(!GLOB.religious_sect)
 		return FALSE
 	easy_access_sect = GLOB.religious_sect
-	after_sect_select_cb.Invoke()
+	if(after_sect_select_cb)
+		after_sect_select_cb.Invoke()
 	return TRUE
-
-
 
 /**
  * Since all of these involve attackby, we require mega proc. Handles Invocation, Sacrificing, And Selection of Sects.
@@ -53,20 +54,8 @@
 /datum/component/religious_tool/proc/AttemptActions(datum/source, obj/item/the_item, mob/living/user)
 	SIGNAL_HANDLER
 
-	/**********Sect Selection**********/
-	if(!SetGlobalToLocal())
-		if(!(operation_flags & RELIGION_TOOL_SECTSELECT))
-			return
-		//At this point you're intentionally trying to select a sect.
-		INVOKE_ASYNC(src, .proc/select_sect, user)
-		return COMPONENT_NO_AFTERATTACK
-
-	/**********Rite Invocation**********/
-	else if(istype(the_item, catalyst_type))
-		if(!(operation_flags & RELIGION_TOOL_INVOKE))
-			return
-		INVOKE_ASYNC(src, .proc/perform_rite, user)
-		return (force_catalyst_afterattack ? NONE : COMPONENT_NO_AFTERATTACK)
+	if(istype(the_item, catalyst_type))
+		INVOKE_ASYNC(src, /datum.proc/ui_interact, user) //asynchronous to avoid sleeping in a signal
 
 	/**********Sacrificing**********/
 	else if(operation_flags & RELIGION_TOOL_SACRIFICE)
@@ -75,21 +64,70 @@
 		easy_access_sect.on_sacrifice(the_item,user)
 		return COMPONENT_NO_AFTERATTACK
 
-/// Select the sect, called async from [/datum/component/religious_tool/proc/AttemptActions]
-/datum/component/religious_tool/proc/select_sect(mob/living/user)
+/datum/component/religious_tool/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "ReligiousTool")
+		ui.open()
+	return COMPONENT_NO_AFTERATTACK
+
+/datum/component/religious_tool/ui_state(mob/user)
+	if(!iscarbon(usr))
+		return GLOB.never_state
+	var/mob/living/carbon/carbon = usr
+	if(!carbon.is_holding_item_of_type(catalyst_type))
+		return GLOB.never_state
+	return GLOB.default_state
+
+/datum/component/religious_tool/ui_data(mob/user)
+	var/list/data = list()
+	//cannot find global vars, so lets offer options
+	if(!SetGlobalToLocal())
+		data["sects"] = generate_available_sects(user)
+		data["alignment"] = ALIGNMENT_NEUT //neutral theme if you have no sect
+	else
+		data["sects"] = null
+		data["name"] = easy_access_sect.name
+		data["desc"] = easy_access_sect.desc
+		data["quote"] = easy_access_sect.quote
+		data["alignment"] = easy_access_sect.alignment
+		data["icon"] = easy_access_sect.tgui_icon
+		data["favordesc"] = easy_access_sect.tool_examine(user)
+		data["favor"] = easy_access_sect.favor
+		data["deity"] = GLOB.deity
+		data["rites"] = generate_available_rites()
+		data["wanted"] = generate_sacrifice_list()
+
+	var/atom/atom_parent = parent
+	data["toolname"] = atom_parent.name
+	data["can_select_sect"] = (operation_flags & RELIGION_TOOL_SECTSELECT)
+	data["can_invoke_rite"] = (operation_flags & RELIGION_TOOL_INVOKE)
+	data["can_sacrifice_item"] = (operation_flags & RELIGION_TOOL_SACRIFICE)
+	return data
+
+/datum/component/religious_tool/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	switch(action)
+		if("sect_select")
+			select_sect(usr, params["path"])
+			return TRUE //they picked a sect lets update so some weird spammy shit doesn't happen
+		if("perform_rite")
+			perform_rite(usr, params["path"])
+
+/// Select the sect, called from [/datum/component/religious_tool/proc/AttemptActions]
+/datum/component/religious_tool/proc/select_sect(mob/living/user, path)
+	if(!ispath(text2path(path), /datum/religion_sect))
+		message_admins("[ADMIN_LOOKUPFLW(usr)] has tried to spawn an item when selecting a sect.")
+		return
 	if(user.mind.holy_role != HOLY_ROLE_HIGHPRIEST)
 		to_chat(user, "<span class='warning'>You are not the high priest, and therefore cannot select a religious sect.")
 		return
-	var/list/available_options = generate_available_sects(user)
-	if(!available_options)
+	if(!user.canUseTopic(parent, BE_CLOSE, FALSE, NO_TK))
+		to_chat(user,span_warning("You cannot select a sect at this time."))
 		return
-
-	var/sect_select = input(user,"Select a sect (You CANNOT revert this decision!)","Select a Sect",null) in available_options
-	if(!sect_select || !user.canUseTopic(parent, BE_CLOSE, FALSE, NO_TK))
-		to_chat(user,"<span class ='warning'>You cannot select a sect at this time.</span>")
+	if(GLOB.religious_sect)
 		return
-	var/type_selected = available_options[sect_select]
-	GLOB.religious_sect = new type_selected()
+	GLOB.religious_sect = new path()
 	for(var/i in GLOB.player_list)
 		if(!isliving(i))
 			continue
@@ -100,36 +138,87 @@
 	easy_access_sect = GLOB.religious_sect
 	after_sect_select_cb.Invoke()
 
-/// Perform the rite, called async from [/datum/component/religious_tool/proc/AttemptActions]
-/datum/component/religious_tool/proc/perform_rite(mob/living/user)
-	if(!easy_access_sect.rites_list)
-		to_chat(user, "<span class='notice'>Your sect doesn't have any rites to perform!")
+/// Perform the rite, called from [/datum/component/religious_tool/proc/AttemptActions]
+/datum/component/religious_tool/proc/perform_rite(mob/living/user, path)
+	if(!ispath(text2path(path), /datum/religion_rites))
+		message_admins("[ADMIN_LOOKUPFLW(usr)] has tried to spawn an item when performing a rite.")
+		return
+	if(user.mind.holy_role < HOLY_ROLE_PRIEST)
+		if(user.mind.holy_role == HOLY_ROLE_DEACON)
+			to_chat(user, "<span class='warning'>You are merely a deacon of [GLOB.deity], and therefore cannot perform rites.")
+		else
+			to_chat(user, "<span class='warning'>You are not holy, and therefore cannot perform rites.")
 		return
 	if(performing_rite)
-		to_chat(user, "<span class='notice'>There is a rite currently being performed here already!")
+		to_chat(user, "<span class='notice'>There is a rite currently being performed here already.")
 		return
-	var/rite_select = input(user,"Select a rite to perform!","Select a rite",null) in easy_access_sect.rites_list
-	if(!rite_select || !user.canUseTopic(parent, BE_CLOSE, FALSE, NO_TK))
-		to_chat(user,"<span class ='warning'>You cannot perform the rite at this time.</span>")
+	if(!user.canUseTopic(parent, BE_CLOSE, FALSE, NO_TK))
+		to_chat(user,span_warning("You are not close enough to perform the rite."))
 		return
-	var/selection2type = easy_access_sect.rites_list[rite_select]
-	performing_rite = new selection2type(parent)
+	performing_rite = new path(parent)
 	if(!performing_rite.perform_rite(user, parent))
 		QDEL_NULL(performing_rite)
 	else
 		performing_rite.invoke_effect(user, parent)
 		easy_access_sect.adjust_favor(-performing_rite.favor_cost)
-		QDEL_NULL(performing_rite)
+		if(performing_rite.auto_delete)
+			QDEL_NULL(performing_rite)
+		else
+			performing_rite = null
 
 /**
- * Generates a list of available sects to the user. Intended to support custom-availability sects. Because these are not instanced, we cannot put the availability on said sect beyond variables.
+ * Generates a list of available sects to the user. Intended to support custom-availability sects.
  */
 /datum/component/religious_tool/proc/generate_available_sects(mob/user)
-	. = list()
-	for(var/i in subtypesof(/datum/religion_sect))
-		var/datum/religion_sect/not_a_real_instance_rs = i
-		if(initial(not_a_real_instance_rs.starter))
-			. += list(initial(not_a_real_instance_rs.name) = i)
+	var/list/sects_to_pick = list()
+	var/human_highpriest = ishuman(user)
+	var/mob/living/carbon/human/highpriest = user
+	for(var/path in subtypesof(/datum/religion_sect))
+		if(human_highpriest && initial(easy_access_sect.invalidating_qualities))
+			var/datum/species/highpriest_species = highpriest.dna.species
+			if(initial(easy_access_sect.invalidating_qualities) in highpriest_species.inherent_traits)
+				continue
+		var/list/sect = list()
+		var/datum/religion_sect/not_a_real_instance_rs = path
+		sect["name"] = initial(not_a_real_instance_rs.name)
+		sect["desc"] = initial(not_a_real_instance_rs.desc)
+		sect["alignment"] = initial(not_a_real_instance_rs.alignment)
+		sect["quote"] = initial(not_a_real_instance_rs.quote)
+		sect["icon"] = initial(not_a_real_instance_rs.tgui_icon)
+		sect["path"] = path
+		sects_to_pick += list(sect)
+	return sects_to_pick
+
+/**
+ * Generates available rites to pick from. It expects the sect to be picked by the time it was called (by tgui data)
+ */
+/datum/component/religious_tool/proc/generate_available_rites()
+	var/list/rites_to_pick = list()
+	for(var/path in easy_access_sect.rites_list)
+		///checks to invalidate
+		var/list/rite = list()
+		var/datum/religion_rites/rite_type = path
+		rite["name"] = initial(rite_type.name)
+		rite["desc"] = initial(rite_type.desc)
+		var/cost = initial(rite_type.favor_cost)
+		rite["favor"] = cost
+		rite["can_cast"] = cost > easy_access_sect.favor
+		rite["path"] = path
+		rites_to_pick += list(rite)
+	return rites_to_pick
+
+/**
+ * Generates an english list (so string) of wanted sac items. Returns null if no targets!
+ */
+/datum/component/religious_tool/proc/generate_sacrifice_list()
+	if(!easy_access_sect.desired_items)
+		return //specifically null so the data sends as such
+	var/list/item_names = list()
+	for(var/atom/sac_type as anything in easy_access_sect.desired_items)
+		var/append = easy_access_sect.desired_items[sac_type]
+		var/entry = "[initial(sac_type.name)]s [append]"
+		item_names += entry
+	return english_list(item_names)
 
 /**
  * Appends to examine so the user knows it can be used for religious purposes.
@@ -147,14 +236,12 @@
 
 	if(!can_i_see)
 		return
+	examine_list += span_notice("Use a bible to interact with this.")
 	if(!easy_access_sect)
 		if(operation_flags & RELIGION_TOOL_SECTSELECT)
-			examine_list += "<span class='notice'>This looks like it can be used to select a sect.</span>"
+			examine_list += span_notice("This looks like it can be used to select a sect.")
 			return
-
-	examine_list += "<span class='notice'>The sect currently has [round(easy_access_sect.favor)] favor with [GLOB.deity].[(operation_flags & RELIGION_TOOL_SACRIFICE) ? "Desired items can be used on this to increase favor." : ""]</span>"
-	if(!easy_access_sect.rites_list)
-		return //if we dont have rites it doesnt do us much good if the object can be used to invoke them!
-	if(operation_flags & RELIGION_TOOL_INVOKE)
-		examine_list += "List of available Rites:"
-		examine_list += easy_access_sect.rites_list
+	if(operation_flags & RELIGION_TOOL_SACRIFICE)//this can be moved around if things change but usually no rites == no sacrifice
+		examine_list += span_notice("Desired items can be used on this to increase favor.")
+	if(easy_access_sect.rites_list && operation_flags & RELIGION_TOOL_INVOKE)
+		examine_list += span_notice("You can invoke rites from this.")

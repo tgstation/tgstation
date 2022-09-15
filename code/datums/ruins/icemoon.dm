@@ -4,6 +4,11 @@
 	prefix = "_maps/RandomRuins/IceRuins/"
 	allow_duplicates = FALSE
 	cost = 5
+	ruin_type = ZTRAIT_ICE_RUINS
+	default_area = /area/icemoon/surface/outdoors/unexplored
+	has_ceiling = TRUE
+	ceiling_turf = /turf/closed/mineral/random/snow
+	ceiling_baseturfs = list(/turf/open/misc/asteroid/snow/icemoon)
 
 // above ground only
 
@@ -19,12 +24,6 @@
 	description = "Surprised to see us here?"
 	suffix = "icemoon_surface_asteroid.dmm"
 
-/datum/map_template/ruin/icemoon/hotsprings
-	name = "Hot Springs"
-	id = "hotsprings"
-	description = "Just relax and take a dip, nothing will go wrong, I swear!"
-	suffix = "icemoon_surface_hotsprings.dmm"
-
 /datum/map_template/ruin/icemoon/engioutpost
 	name = "Engineer Outpost"
 	id = "engioutpost"
@@ -37,6 +36,24 @@
 	description = "The fountain has a warning on the side. DANGER: May have undeclared side effects that only become obvious when implemented."
 	prefix = "_maps/RandomRuins/AnywhereRuins/"
 	suffix = "fountain_hall.dmm"
+
+/datum/map_template/ruin/icemoon/abandoned_homestead
+	name = "Abandoned Homestead"
+	id = "abandoned_homestead"
+	description = "This homestead was once host to a happy homesteading family. It's now host to hungry bears."
+	suffix = "icemoon_underground_abandoned_homestead.dmm"
+
+/datum/map_template/ruin/icemoon/entemology
+	name = "Insect Research Station"
+	id = "bug_habitat"
+	description = "An independently funded research outpost, long abandoned. Their mission, to boldly go where no insect life would ever live, ever, and look for bugs."
+	suffix = "icemoon_surface_bughabitat.dmm"
+
+/datum/map_template/ruin/icemoon/pizza
+	name = "Moffuchi's Pizzeria"
+	id = "pizzeria"
+	description = "Moffuchi's Family Pizzeria chain has a reputation for providing affordable artisanal meals of questionable edibility. This particular pizzeria seems to have been abandoned for some time."
+	suffix = "icemoon_surface_pizza.dmm"
 
 // above and below ground together
 
@@ -59,6 +76,8 @@
 
 /datum/map_template/ruin/icemoon/underground
 	name = "underground ruin"
+	ruin_type = ZTRAIT_ICE_RUINS_UNDERGROUND
+	default_area = /area/icemoon/underground/unexplored
 
 /datum/map_template/ruin/icemoon/underground/abandonedvillage
 	name = "Abandoned Village"
@@ -115,3 +134,29 @@
 	Seem very intent on research and individual liberty, and also geology-based naming?"
 	prefix = "_maps/RandomRuins/AnywhereRuins/"
 	suffix = "golem_ship.dmm"
+
+/datum/map_template/ruin/icemoon/underground/mailroom
+	name = "Frozen-over Post Office"
+	id = "mailroom"
+	description = "This is where all of your paychecks went. Signed, the management."
+	suffix = "icemoon_underground_mailroom.dmm"
+
+/datum/map_template/ruin/icemoon/underground/frozen_comms
+	name = "Frozen Communicatons Outpost"
+	id = "frozen_comms"
+	description = "3 Peaks Radio, where the 2000's live forever."
+	suffix = "icemoon_underground_frozen_comms.dmm"
+
+//TODO: Bottom-Level ONLY Spawns after Refactoring Related Code
+/datum/map_template/ruin/icemoon/underground/plasma_facility
+	name = "Abandoned Plasma Facility"
+	id = "plasma_facility"
+	description = "Rumors have developed over the many years of Freyja plasma mining. These rumors suggest that the ghosts of dead mistreated excavation staff have returned to \
+	exact revenge on their (now former) employers. Coorperate reminds all staff that rumors are just that: Old Housewife tales meant to scare misbehaving kids to bed."
+	suffix = "icemoon_underground_abandoned_plasma_facility.dmm"
+
+/datum/map_template/ruin/icemoon/underground/hotsprings
+	name = "Hot Springs"
+	id = "hotsprings"
+	description = "Just relax and take a dip, nothing will go wrong, I swear!"
+	suffix = "icemoon_underground_hotsprings.dmm"

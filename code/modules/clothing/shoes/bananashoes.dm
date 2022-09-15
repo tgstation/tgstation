@@ -8,17 +8,14 @@
 	var/on = FALSE
 	var/always_noslip = FALSE
 
-/obj/item/clothing/shoes/clown_shoes/banana_shoes/Initialize()
+/obj/item/clothing/shoes/clown_shoes/banana_shoes/Initialize(mapload)
 	. = ..()
-	if(always_noslip)
-		clothing_flags |= NOSLIP
-
-/obj/item/clothing/shoes/clown_shoes/banana_shoes/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob)
+	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_FEET)
 	AddComponent(/datum/component/material_container, list(/datum/material/bananium), 100 * MINERAL_MATERIAL_AMOUNT, MATCONTAINER_EXAMINE|MATCONTAINER_ANY_INTENT|MATCONTAINER_SILENT, allowed_items=/obj/item/stack)
 	AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 75, falloff_exponent = 20)
 	RegisterSignal(src, COMSIG_SHOES_STEP_ACTION, .proc/on_step)
+	if(always_noslip)
+		clothing_flags |= NOSLIP
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/proc/on_step()
 	SIGNAL_HANDLER
@@ -31,7 +28,7 @@
 			if(!always_noslip)
 				clothing_flags &= ~NOSLIP
 			update_appearance()
-			to_chat(loc, "<span class='warning'>You ran out of bananium!</span>")
+			to_chat(loc, span_warning("You ran out of bananium!"))
 		else
 			new /obj/item/grown/bananapeel/specialpeel(get_step(src,turn(wearer.dir, 180))) //honk
 			bananium.use_amount_mat(100, /datum/material/bananium)
@@ -40,27 +37,27 @@
 	var/datum/component/material_container/bananium = GetComponent(/datum/component/material_container)
 	var/sheet_amount = bananium.retrieve_all()
 	if(sheet_amount)
-		to_chat(user, "<span class='notice'>You retrieve [sheet_amount] sheets of bananium from the prototype shoes.</span>")
+		to_chat(user, span_notice("You retrieve [sheet_amount] sheets of bananium from the prototype shoes."))
 	else
-		to_chat(user, "<span class='warning'>You cannot retrieve any bananium from the prototype shoes!</span>")
+		to_chat(user, span_warning("You cannot retrieve any bananium from the prototype shoes!"))
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>The shoes are [on ? "enabled" : "disabled"].</span>"
+	. += span_notice("The shoes are [on ? "enabled" : "disabled"].")
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/ui_action_click(mob/user)
 	var/datum/component/material_container/bananium = GetComponent(/datum/component/material_container)
 	if(bananium.get_material_amount(/datum/material/bananium))
 		on = !on
 		update_appearance()
-		to_chat(user, "<span class='notice'>You [on ? "activate" : "deactivate"] the prototype shoes.</span>")
+		to_chat(user, span_notice("You [on ? "activate" : "deactivate"] the prototype shoes."))
 		if(!always_noslip)
 			if(on)
 				clothing_flags |= NOSLIP
 			else
 				clothing_flags &= ~NOSLIP
 	else
-		to_chat(user, "<span class='warning'>You need bananium to turn the prototype shoes on!</span>")
+		to_chat(user, span_warning("You need bananium to turn the prototype shoes on!"))
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/update_icon_state()
 	icon_state = "clown_prototype_[on ? "on" : "off"]"

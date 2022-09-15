@@ -1,7 +1,6 @@
 SUBSYSTEM_DEF(nightshift)
 	name = "Night Shift"
-	wait = 600
-	flags = SS_NO_TICK_CHECK
+	wait = 10 MINUTES
 
 	var/nightshift_active = FALSE
 	var/nightshift_start_time = 702000 //7:30 PM, station time
@@ -9,6 +8,7 @@ SUBSYSTEM_DEF(nightshift)
 	var/nightshift_first_check = 30 SECONDS
 
 	var/high_security_mode = FALSE
+	var/list/currentrun
 
 /datum/controller/subsystem/nightshift/Initialize()
 	if(!CONFIG_GET(flag/enable_night_shifts))
@@ -16,6 +16,9 @@ SUBSYSTEM_DEF(nightshift)
 	return ..()
 
 /datum/controller/subsystem/nightshift/fire(resumed = FALSE)
+	if(resumed)
+		update_nightshift(resumed = TRUE)
+		return
 	if(world.time - SSticker.round_start_time < nightshift_first_check)
 		return
 	check_nightshift()
@@ -24,7 +27,7 @@ SUBSYSTEM_DEF(nightshift)
 	priority_announce(message, sound='sound/misc/notice2.ogg', sender_override="Automated Lighting System Announcement")
 
 /datum/controller/subsystem/nightshift/proc/check_nightshift()
-	var/emergency = GLOB.security_level >= SEC_LEVEL_RED
+	var/emergency = SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED
 	var/announcing = TRUE
 	var/time = station_time()
 	var/night_time = (time < nightshift_end_time) || (time > nightshift_start_time)
@@ -41,15 +44,18 @@ SUBSYSTEM_DEF(nightshift)
 	if(nightshift_active != night_time)
 		update_nightshift(night_time, announcing)
 
-/datum/controller/subsystem/nightshift/proc/update_nightshift(active, announce = TRUE)
-	nightshift_active = active
-	if(announce)
-		if (active)
-			announce("Good evening, crew. To reduce power consumption and stimulate the circadian rhythms of some species, all of the lights aboard the station have been dimmed for the night.")
-		else
-			announce("Good morning, crew. As it is now day time, all of the lights aboard the station have been restored to their former brightness.")
-	for(var/A in GLOB.apcs_list)
-		var/obj/machinery/power/apc/APC = A
+/datum/controller/subsystem/nightshift/proc/update_nightshift(active, announce = TRUE, resumed = FALSE)
+	if(!resumed)
+		currentrun = GLOB.apcs_list.Copy()
+		nightshift_active = active
+		if(announce)
+			if (active)
+				announce("Good evening, crew. To reduce power consumption and stimulate the circadian rhythms of some species, all of the lights aboard the station have been dimmed for the night.")
+			else
+				announce("Good morning, crew. As it is now day time, all of the lights aboard the station have been restored to their former brightness.")
+	for(var/obj/machinery/power/apc/APC as anything in currentrun)
+		currentrun -= APC
 		if (APC.area && (APC.area.type in GLOB.the_station_areas))
-			APC.set_nightshift(active)
-			CHECK_TICK
+			APC.set_nightshift(nightshift_active)
+		if(MC_TICK_CHECK)
+			return

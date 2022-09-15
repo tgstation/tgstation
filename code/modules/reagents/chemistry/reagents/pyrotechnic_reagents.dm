@@ -60,21 +60,20 @@
 		var/turf/open/floor/plating/target_plating = exposed_turf
 		if(prob(10 + target_plating.burnt + 5*target_plating.broken)) //broken or burnt plating is more susceptible to being destroyed
 			target_plating.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
-	if(isfloorturf(exposed_turf))
+	if(isfloorturf(exposed_turf) && prob(reac_volume))
 		var/turf/open/floor/target_floor = exposed_turf
-		if(prob(reac_volume))
-			target_floor.make_plating()
-		else if(prob(reac_volume))
-			target_floor.burn_tile()
-		if(isfloorturf(target_floor))
-			for(var/turf/nearby_turf in range(1, target_floor))
-				if(!locate(/obj/effect/hotspot) in nearby_turf)
-					new /obj/effect/hotspot(nearby_turf)
+		target_floor.make_plating()
+	else if(prob(reac_volume))
+		exposed_turf.burn_tile()
+	if(isfloorturf(exposed_turf))
+		for(var/turf/nearby_turf in RANGE_TURFS(1, exposed_turf))
+			if(!locate(/obj/effect/hotspot) in nearby_turf)
+				new /obj/effect/hotspot(nearby_turf)
 
 /datum/reagent/clf3/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
 	exposed_mob.adjust_fire_stacks(min(reac_volume/5, 10))
-	exposed_mob.IgniteMob()
+	exposed_mob.ignite_mob()
 	if(!locate(/obj/effect/hotspot) in exposed_mob.loc)
 		new /obj/effect/hotspot(exposed_mob.loc)
 
@@ -103,20 +102,33 @@
 	taste_description = "salt"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/gunpowder/on_new(data)
+	. = ..()
+	if(holder?.my_atom)
+		RegisterSignal(holder.my_atom, COMSIG_ATOM_EX_ACT, .proc/on_ex_act)
+
+/datum/reagent/gunpowder/Destroy()
+	if(holder?.my_atom)
+		UnregisterSignal(holder.my_atom, COMSIG_ATOM_EX_ACT)
+	return ..()
+
 /datum/reagent/gunpowder/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	. = TRUE
 	..()
 	if(!isplasmaman(M))
 		return
-	M.set_drugginess(15 * REM * delta_time)
+	M.set_timed_status_effect(30 SECONDS * REM * delta_time, /datum/status_effect/drugginess)
 	if(M.hallucination < volume)
 		M.hallucination += 5 * REM * delta_time
 
-/datum/reagent/gunpowder/on_ex_act()
+/datum/reagent/gunpowder/proc/on_ex_act(atom/source, severity, target)
+	SIGNAL_HANDLER
+	if(source.flags_1 & PREVENT_CONTENTS_EXPLOSION_1)
+		return
 	var/location = get_turf(holder.my_atom)
 	var/datum/effect_system/reagents_explosion/e = new()
 	e.set_up(1 + round(volume/6, 1), location, 0, 0, message = 0)
-	e.start()
+	e.start(holder.my_atom)
 	holder.clear_reagents()
 
 /datum/reagent/rdx
@@ -173,7 +185,7 @@
 	exposed_mob.adjust_fire_stacks(1)
 	var/burndmg = max(0.3*exposed_mob.fire_stacks, 0.3)
 	exposed_mob.adjustFireLoss(burndmg, 0)
-	exposed_mob.IgniteMob()
+	exposed_mob.ignite_mob()
 
 /datum/reagent/phlogiston/on_mob_life(mob/living/carbon/metabolizer, delta_time, times_fired)
 	metabolizer.adjust_fire_stacks(1 * REM * delta_time)
@@ -196,9 +208,9 @@
 	. = ..()
 	if(chems.has_reagent(type, 1))
 		if(!(myseed.resistance_flags & FIRE_PROOF))
-			mytray.adjustHealth(-round(chems.get_reagent_amount(type) * 6))
-			mytray.adjustToxic(round(chems.get_reagent_amount(type) * 7))
-		mytray.adjustWeeds(-rand(5,9)) //At least give them a small reward if they bother.
+			mytray.adjust_plant_health(-round(chems.get_reagent_amount(type) * 6))
+			mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 7))
+		mytray.adjust_weedlevel(-rand(5,9)) //At least give them a small reward if they bother.
 
 /datum/reagent/napalm/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjust_fire_stacks(1 * REM * delta_time)
@@ -219,12 +231,10 @@
 	ph = 8.6
 	metabolization_rate = 0.05 * REAGENTS_METABOLISM
 	taste_description = "icey bitterness"
-	purity = REAGENT_STANDARD_PUIRTY
+	purity = REAGENT_STANDARD_PURITY
 	self_consuming = TRUE
-	impure_chem = /datum/reagent/consumable/ice
 	inverse_chem_val = 0.5
 	inverse_chem = /datum/reagent/inverse/cryostylane
-	failed_chem = null
 	burning_volume = 0.05
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_DEAD_PROCESS
 
@@ -245,7 +255,7 @@
 	consumer.color = COLOR_WHITE
 
 //Pauses decay! Does do something, I promise.
-/datum/reagent/cryostylane/on_mob_dead(mob/living/carbon/consumer)
+/datum/reagent/cryostylane/on_mob_dead(mob/living/carbon/consumer, delta_time)
 	. = ..()
 	metabolization_rate = 0.05 * REM //slower consumption when dead
 
@@ -311,7 +321,7 @@
 	if(shock_timer >= rand(5, 30)) //Random shocks are wildly unpredictable
 		shock_timer = 0
 		M.electrocute_act(rand(5, 20), "Teslium in their body", 1, SHOCK_NOGLOVES) //SHOCK_NOGLOVES because it's caused from INSIDE of you
-		playsound(M, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(M, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	..()
 
 /datum/reagent/teslium/on_mob_metabolize(mob/living/carbon/human/L)
@@ -359,7 +369,7 @@
 		return
 
 	if(reac_volume >= 1)
-		var/obj/effect/particle_effect/foam/firefighting/foam = (locate(/obj/effect/particle_effect/foam) in exposed_turf)
+		var/obj/effect/particle_effect/fluid/foam/firefighting/foam = (locate(/obj/effect/particle_effect/fluid/foam) in exposed_turf)
 		if(!foam)
 			foam = new(exposed_turf)
 		else if(istype(foam))

@@ -7,8 +7,7 @@
 	base_icon_state = "pump"
 	anchored = FALSE
 	density = TRUE
-	idle_power_usage = 10
-	active_power_usage = 1000
+	use_power = NO_POWER_USE
 
 	///units we pump per second
 	var/pump_power = 1
@@ -19,9 +18,9 @@
 	///volume of our internal buffer
 	var/volume = 200
 
-/obj/machinery/plumbing/liquid_pump/Initialize(mapload, bolt)
+/obj/machinery/plumbing/liquid_pump/Initialize(mapload, bolt, layer)
 	. = ..()
-	AddComponent(/datum/component/plumbing/simple_supply, bolt)
+	AddComponent(/datum/component/plumbing/simple_supply, bolt, layer)
 
 ///please note that the component has a hook in the parent call, wich handles activating and deactivating
 /obj/machinery/plumbing/liquid_pump/default_unfasten_wrench(mob/user, obj/item/I, time = 20)
@@ -41,7 +40,7 @@
 			update_appearance()
 		if(!geyser) //we didnt find one, abort
 			geyserless = TRUE
-			visible_message("<span class='warning'>The [name] makes a sad beep!</span>")
+			visible_message(span_warning("The [name] makes a sad beep!"))
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 50)
 			return
 

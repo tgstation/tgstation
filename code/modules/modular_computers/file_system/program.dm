@@ -3,14 +3,12 @@
 	filetype = "PRG"
 	/// File name. FILE NAME MUST BE UNIQUE IF YOU WANT THE PROGRAM TO BE DOWNLOADABLE FROM NTNET!
 	filename = "UnknownProgram"
-	/// List of required accesses to *run* the program.
-	var/required_access = null
-	/// List of required access to download or file host the program
-	var/transfer_access = null
+	/// List of required accesses to *run* the program. Any match will do.
+	var/list/required_access = list()
+	/// List of required access to download or file host the program. Any match will do.
+	var/list/transfer_access = list()
 	/// PROGRAM_STATE_KILLED or PROGRAM_STATE_BACKGROUND or PROGRAM_STATE_ACTIVE - specifies whether this program is running.
 	var/program_state = PROGRAM_STATE_KILLED
-	/// Device that runs this program.
-	var/obj/item/modular_computer/computer
 	/// User-friendly name of this program.
 	var/filedesc = "Unknown Program"
 	/// Short description of this program's function.
@@ -27,10 +25,10 @@
 	var/ntnet_status = 1
 	/// Bitflags (PROGRAM_CONSOLE, PROGRAM_LAPTOP, PROGRAM_TABLET combination) or PROGRAM_ALL
 	var/usage_flags = PROGRAM_ALL
-	/// Whether the program can be downloaded from NTNet. Set to 0 to disable.
-	var/available_on_ntnet = 1
-	/// Whether the program can be downloaded from SyndiNet (accessible via emagging the computer). Set to 1 to enable.
-	var/available_on_syndinet = 0
+	/// Whether the program can be downloaded from NTNet. Set to FALSE to disable.
+	var/available_on_ntnet = TRUE
+	/// Whether the program can be downloaded from SyndiNet (accessible via emagging the computer). Set to TRUE to enable.
+	var/available_on_syndinet = FALSE
 	/// Name of the tgui interface
 	var/tgui_id
 	/// Example: "something.gif" - a header image that will be rendered in computer's UI when this program is running at background. Images are taken from /icons/program_icons. Be careful not to use too large images!
@@ -43,15 +41,8 @@
 	var/alert_silenced = FALSE
 	/// Whether to highlight our program in the main screen. Intended for alerts, but loosely available for any need to notify of changed conditions. Think Windows task bar highlighting. Available even if alerts are muted.
 	var/alert_pending = FALSE
-
-/datum/computer_file/program/New(obj/item/modular_computer/comp = null)
-	..()
-	if(comp && istype(comp))
-		computer = comp
-
-/datum/computer_file/program/Destroy()
-	computer = null
-	. = ..()
+	/// How well this program will help combat detomatix viruses.
+	var/detomatix_resistance = NONE
 
 /datum/computer_file/program/clone()
 	var/datum/computer_file/program/temp = ..()
@@ -74,10 +65,25 @@
 		return computer.add_log(text)
 	return 0
 
+/**
+ *Runs when the device is used to attack an atom in non-combat mode using right click (secondary).
+ *
+ *Simulates using the device to read or scan something. Tap is called by the computer during pre_attack
+ *and sends us all of the related info. If we return TRUE, the computer will stop the attack process
+ *there. What we do with the info is up to us, but we should only return TRUE if we actually perform
+ *an action of some sort.
+ *Arguments:
+ *A is the atom being tapped
+ *user is the person making the attack action
+ *params is anything the pre_attack() proc had in the same-named variable.
+*/
+/datum/computer_file/program/proc/tap(atom/A, mob/living/user, params)
+	return FALSE
+
 /datum/computer_file/program/proc/is_supported_by_hardware(hardware_flag = 0, loud = 0, mob/user = null)
 	if(!(hardware_flag & usage_flags))
 		if(loud && computer && user)
-			to_chat(user, "<span class='danger'>\The [computer] flashes a \"Hardware Error - Incompatible software\" warning.</span>")
+			to_chat(user, span_danger("\The [computer] flashes a \"Hardware Error - Incompatible software\" warning."))
 		return FALSE
 	return TRUE
 
@@ -91,7 +97,7 @@
 	return TRUE
 
 /**
- *Check if the user can run program. Only humans can operate computer. Automatically called in run_program()
+ *Check if the user can run program. Only humans and silicons can operate computer. Automatically called in on_start()
  *ID must be inserted into a card slot to be read. If the program is not currently installed (as is the case when
  *NT Software Hub is checking available software), a list can be given to be used instead.
  *Arguments:
@@ -102,53 +108,66 @@
  *access can contain a list of access numbers to check against. If access is not empty, it will be used istead of checking any inserted ID.
 */
 /datum/computer_file/program/proc/can_run(mob/user, loud = FALSE, access_to_check, transfer = FALSE, list/access)
-	// Defaults to required_access
-	if(!access_to_check)
-		if(transfer && transfer_access)
-			access_to_check = transfer_access
-		else
-			access_to_check = required_access
-	if(!access_to_check) // No required_access, allow it.
-		return TRUE
-
-	if(!transfer && computer && (computer.obj_flags & EMAGGED)) //emags can bypass the execution locks but not the download ones.
+	if(issilicon(user))
 		return TRUE
 
 	if(isAdminGhostAI(user))
 		return TRUE
 
-	if(issilicon(user))
+	if(!transfer && computer && (computer.obj_flags & EMAGGED)) //emags can bypass the execution locks but not the download ones.
+		return TRUE
+
+	// Defaults to required_access
+	if(!access_to_check)
+		if(transfer && length(transfer_access))
+			access_to_check = transfer_access
+		else
+			access_to_check = required_access
+	if(!length(access_to_check)) // No required_access, allow it.
 		return TRUE
 
 	if(!length(access))
-		var/obj/item/card/id/D
+		var/obj/item/card/id/accesscard
 		var/obj/item/computer_hardware/card_slot/card_slot
 		if(computer)
 			card_slot = computer.all_components[MC_CARD]
-			D = card_slot?.GetID()
+			accesscard = card_slot?.GetID()
 
-		if(!D)
+		if(!accesscard)
 			if(loud)
-				to_chat(user, "<span class='danger'>\The [computer] flashes an \"RFID Error - Unable to scan ID\" warning.</span>")
+				to_chat(user, span_danger("\The [computer] flashes an \"RFID Error - Unable to scan ID\" warning."))
 			return FALSE
-		access = D.GetAccess()
+		access = accesscard.GetAccess()
 
-	if(access_to_check in access)
-		return TRUE
+	for(var/singular_access in access_to_check)
+		if(singular_access in access) //For loop checks every individual access entry in the access list. If the user's ID has access to any entry, then we're good.
+			return TRUE
+
 	if(loud)
-		to_chat(user, "<span class='danger'>\The [computer] flashes an \"Access Denied\" warning.</span>")
+		to_chat(user, span_danger("\The [computer] flashes an \"Access Denied\" warning."))
 	return FALSE
 
-// This attempts to retrieve header data for UIs. If implementing completely new device of different type than existing ones
-// always include the device here in this proc. This proc basically relays the request to whatever is running the program.
+/**
+ * This attempts to retrieve header data for UIs.
+ *
+ * If implementing completely new device of different type than existing ones
+ * always include the device here in this proc. This proc basically relays the request to whatever is running the program.
+ **/
 /datum/computer_file/program/proc/get_header_data()
 	if(computer)
 		return computer.get_header_data()
 	return list()
 
-// This is performed on program startup. May be overridden to add extra logic. Remember to include ..() call. Return 1 on success, 0 on failure.
-// When implementing new program based device, use this to run the program.
-/datum/computer_file/program/proc/run_program(mob/living/user)
+/**
+ * Called on program startup.
+ *
+ * May be overridden to add extra logic. Remember to include ..() call. Return 1 on success, 0 on failure.
+ * When implementing new program based device, use this to run the program.
+ * Arguments:
+ * * user - The mob that started the program
+ **/
+/datum/computer_file/program/proc/on_start(mob/living/user)
+	SHOULD_CALL_PARENT(TRUE)
 	if(can_run(user, 1))
 		if(requires_ntnet)
 			var/obj/item/card/id/ID
@@ -174,8 +193,15 @@
 /datum/computer_file/program/proc/run_emag()
 	return FALSE
 
-// Use this proc to kill the program. Designed to be implemented by each program if it requires on-quit logic, such as the NTNRC client.
+/**
+ * Kills the running program
+ *
+ * Use this proc to kill the program. Designed to be implemented by each program if it requires on-quit logic, such as the NTNRC client.
+ * Arguments:
+ * * forced - Boolean to determine if this was a forced close. Should be TRUE if the user did not willingly close the program.
+ **/
 /datum/computer_file/program/proc/kill_program(forced = FALSE)
+	SHOULD_CALL_PARENT(TRUE)
 	program_state = PROGRAM_STATE_KILLED
 	if(requires_ntnet)
 		var/obj/item/card/id/ID
@@ -214,7 +240,7 @@
 				return TRUE
 			if("PC_minimize")
 				var/mob/user = usr
-				if(!computer.active_program || !computer.all_components[MC_CPU])
+				if(!computer.active_program)
 					return
 
 				computer.idle_threads.Add(computer.active_program)

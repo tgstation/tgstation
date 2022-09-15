@@ -1,0 +1,186 @@
+{
+	"smooth": [
+		{
+			"type": "icon_state",
+			"icon_state": "smooth",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"window-fg": [
+		{
+			"type": "icon_state",
+			"icon_state": "window-fg",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"window-bg": [
+		{
+			"type": "icon_state",
+			"icon_state": "window-bg",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"1-i": [
+		{
+			"type": "icon_state",
+			"icon_state": "1-i",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"2-i": [
+		{
+			"type": "icon_state",
+			"icon_state": "2-i",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"3-i": [
+		{
+			"type": "icon_state",
+			"icon_state": "3-i",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"4-i": [
+		{
+			"type": "icon_state",
+			"icon_state": "4-i",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"1-n": [
+		{
+			"type": "icon_state",
+			"icon_state": "1-n",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"2-n": [
+		{
+			"type": "icon_state",
+			"icon_state": "2-n",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"3-s": [
+		{
+			"type": "icon_state",
+			"icon_state": "3-s",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"4-s": [
+		{
+			"type": "icon_state",
+			"icon_state": "4-s",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"1-w": [
+		{
+			"type": "icon_state",
+			"icon_state": "1-w",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"2-e": [
+		{
+			"type": "icon_state",
+			"icon_state": "2-e",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"3-w": [
+		{
+			"type": "icon_state",
+			"icon_state": "3-w",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"4-e": [
+		{
+			"type": "icon_state",
+			"icon_state": "4-e",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"1-nw": [
+		{
+			"type": "icon_state",
+			"icon_state": "1-nw",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"2-ne": [
+		{
+			"type": "icon_state",
+			"icon_state": "2-ne",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"3-sw": [
+		{
+			"type": "icon_state",
+			"icon_state": "3-sw",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"4-se": [
+		{
+			"type": "icon_state",
+			"icon_state": "4-se",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"1-f": [
+		{
+			"type": "icon_state",
+			"icon_state": "1-f",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"2-f": [
+		{
+			"type": "icon_state",
+			"icon_state": "2-f",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"3-f": [
+		{
+			"type": "icon_state",
+			"icon_state": "3-f",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"4-f": [
+		{
+			"type": "icon_state",
+			"icon_state": "4-f",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}

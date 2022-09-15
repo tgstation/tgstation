@@ -3,7 +3,7 @@
 	description = "There has been interest in using our engineering equipment to see what kind of new cooking appliances we can create"
 
 /datum/experiment/physical/meat_wall_explosion/register_events()
-	if(!istype(currently_scanned_atom, /turf/closed/wall))
+	if(!iswallturf(currently_scanned_atom))
 		linked_experiment_handler.announce_message("Incorrect object for experiment.")
 		return FALSE
 
@@ -22,6 +22,7 @@
 	. += EXPERIMENT_PROG_BOOL("Fire an emitter at a tracked meat wall", is_complete())
 
 /datum/experiment/physical/meat_wall_explosion/proc/check_experiment(datum/source, obj/projectile/Proj)
+	SIGNAL_HANDLER
 	if(istype(Proj, /obj/projectile/beam/emitter))
 		finish_experiment(linked_experiment_handler)
 
@@ -53,4 +54,5 @@
 	. += EXPERIMENT_PROG_BOOL("Win an arcade game at a tracked arcade cabinet.", is_complete())
 
 /datum/experiment/physical/arcade_winner/proc/win_arcade(datum/source)
+	SIGNAL_HANDLER
 	finish_experiment(linked_experiment_handler)

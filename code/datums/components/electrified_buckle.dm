@@ -58,7 +58,7 @@
 	if(usage_flags & SHOCK_REQUIREMENT_ITEM)
 		required_object = input_item
 		required_object.Move(parent_as_movable)
-		RegisterSignal(required_object, COMSIG_PARENT_PREQDELETED, .proc/delete_self)
+		RegisterSignal(required_object, COMSIG_PARENT_QDELETING, .proc/delete_self)
 		RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER), .proc/move_required_object_from_contents)
 
 		if(usage_flags & SHOCK_REQUIREMENT_ON_SIGNAL_RECEIVED)
@@ -104,12 +104,12 @@
 
 	if(parent)
 		REMOVE_TRAIT(parent_as_movable, TRAIT_ELECTRIFIED_BUCKLE, INNATE_TRAIT)
-		UnregisterSignal(parent, list(COMSIG_MOVABLE_BUCKLE, COMSIG_MOVABLE_UNBUCKLE, COMSIG_ATOM_EXIT, COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER)))
+		UnregisterSignal(parent, list(COMSIG_MOVABLE_BUCKLE, COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER)))
 		if(requested_signal_parent_emits)
 			UnregisterSignal(parent, requested_signal_parent_emits)
 
 	if(required_object)
-		UnregisterSignal(required_object, list(COMSIG_PARENT_PREQDELETED, COMSIG_ASSEMBLY_PULSED))
+		UnregisterSignal(required_object, list(COMSIG_PARENT_QDELETING, COMSIG_ASSEMBLY_PULSED))
 		if(parent_as_movable && (required_object in parent_as_movable.contents))
 			required_object.Move(parent_as_movable.loc)
 
@@ -167,7 +167,7 @@
 			guinea_pig.electrocute_act(shock_damage, parent_as_movable)
 			break
 
-	parent_as_movable.visible_message("<span class='danger'>The electric chair went off!</span>", "<span class='hear'>You hear a deep sharp shock!</span>")
+	parent_as_movable.visible_message(span_danger("The electric chair went off!"), span_hear("You hear a deep sharp shock!"))
 
 ///a shock that is toggled manually
 /datum/component/electrified_buckle/proc/shock_on_demand()
@@ -193,11 +193,11 @@
 	if(shock_on_loop)
 		shock_on_loop = FALSE
 		STOP_PROCESSING(SSprocessing, src)
-		parent_as_movable.visible_message("<span class='notice'>The electric chair emits a snap as its circuit opens, making it safe for now.</span>")
+		parent_as_movable.visible_message(span_notice("The electric chair emits a snap as its circuit opens, making it safe for now."))
 	else
 		shock_on_loop = TRUE
 		START_PROCESSING(SSprocessing, src)
-		parent_as_movable.visible_message("<span class='notice'>You hear the sound of an electric circuit closing coming from the electric chair!</span>")
+		parent_as_movable.visible_message(span_notice("You hear the sound of an electric circuit closing coming from the electric chair!"))
 
 #undef ELECTRIC_BUCKLE_SHOCK_STRENGTH_DIVISOR
 #undef ELECTRIC_BUCKLE_MINUMUM_POWERNET_STRENGTH

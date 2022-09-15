@@ -6,7 +6,7 @@
 /turf/closed/mineral/random,
 /area/ruin/unpowered/no_grav)
 "c" = (
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "d" = (
 /turf/closed/wall,
@@ -19,11 +19,10 @@
 	amount = 2
 	},
 /obj/item/shard,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "g" = (
-/obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/ruin/unpowered/no_grav)
 "h" = (
@@ -35,7 +34,7 @@
 /area/ruin/unpowered/no_grav)
 "i" = (
 /obj/structure/light_prism,
-/turf/open/floor/iron/airless/dark,
+/turf/open/floor/iron/dark/airless,
 /area/ruin/unpowered/no_grav)
 "j" = (
 /obj/effect/decal/cleanable/blood/drip,
@@ -43,11 +42,11 @@
 /area/ruin/unpowered/no_grav)
 "k" = (
 /obj/item/ectoplasm,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "l" = (
 /obj/structure/closet/crate/coffin,
-/turf/open/floor/iron/airless/dark,
+/turf/open/floor/iron/dark/airless,
 /area/ruin/unpowered/no_grav)
 "m" = (
 /turf/open/floor/plating/airless,
@@ -57,7 +56,7 @@
 /area/ruin/unpowered/no_grav)
 "o" = (
 /obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/food/drinks/bottle/holywater,
+/obj/item/reagent_containers/cup/glass/bottle/holywater,
 /turf/open/floor/carpet/airless,
 /area/ruin/unpowered/no_grav)
 "p" = (
@@ -98,7 +97,7 @@
 /area/ruin/unpowered/no_grav)
 "x" = (
 /obj/structure/bonfire,
-/turf/open/floor/iron/airless/dark,
+/turf/open/floor/iron/dark/airless,
 /area/ruin/unpowered/no_grav)
 "y" = (
 /obj/effect/decal/cleanable/blood/tracks,
@@ -156,11 +155,10 @@
 /obj/structure/rack,
 /obj/item/tank/internals/emergency_oxygen,
 /obj/item/clothing/mask/breath,
-/turf/open/floor/iron/airless/dark,
+/turf/open/floor/iron/dark/airless,
 /area/ruin/unpowered/no_grav)
 "K" = (
-/obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/effect/spawner/structure/window,
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
 "L" = (
@@ -174,32 +172,31 @@
 /area/ruin/unpowered/no_grav)
 "N" = (
 /mob/living/simple_animal/hostile/construct/proteon,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "O" = (
-/obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/effect/spawner/structure/window,
 /obj/structure/barricade/wooden/crude,
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
 "Q" = (
 /obj/item/storage/book/bible,
 /obj/effect/decal/cleanable/blood,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "R" = (
 /obj/structure/closet/crate/coffin,
 /obj/item/gps/spaceruin,
-/turf/open/floor/iron/airless/dark,
+/turf/open/floor/iron/dark/airless,
 /area/ruin/unpowered/no_grav)
 "S" = (
 /obj/effect/decal/cleanable/blood/drip,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "U" = (
 /obj/effect/decal/remains/human,
 /obj/item/paper/fluff/ruins/clericsden/warning,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 
 (1,1,1) = {"

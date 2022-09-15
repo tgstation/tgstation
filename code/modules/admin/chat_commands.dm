@@ -9,7 +9,7 @@
 	var/list/adm = get_admin_counts()
 	var/list/allmins = adm["total"]
 	var/status = "Admins: [allmins.len] (Active: [english_list(adm["present"])] AFK: [english_list(adm["afk"])] Stealth: [english_list(adm["stealth"])] Skipped: [english_list(adm["noflags"])]). "
-	status += "Players: [GLOB.clients.len] (Active: [get_active_player_count(0,1,0)]). Mode: [SSticker.mode ? SSticker.mode.name : "Not started"]."
+	status += "Players: [GLOB.clients.len] (Active: [get_active_player_count(0,1,0)]). Round has [SSticker.HasRoundStarted() ? "" : "not "]started."
 	return status
 
 /datum/tgs_chat_command/tgscheck
@@ -18,7 +18,33 @@
 
 /datum/tgs_chat_command/tgscheck/Run(datum/tgs_chat_user/sender, params)
 	var/server = CONFIG_GET(string/server)
-	return "[GLOB.round_id ? "Round #[GLOB.round_id]: " : ""][GLOB.clients.len] players on [SSmapping.config.map_name], Mode: [GLOB.master_mode]; Round [SSticker.HasRoundStarted() ? (SSticker.IsRoundInProgress() ? "Active" : "Finishing") : "Starting"] -- [server ? server : "[world.internet_address]:[world.port]"]" 
+	return "[GLOB.round_id ? "Round #[GLOB.round_id]: " : ""][GLOB.clients.len] players on [SSmapping.config.map_name]; Round [SSticker.HasRoundStarted() ? (SSticker.IsRoundInProgress() ? "Active" : "Finishing") : "Starting"] -- [server ? server : "[world.internet_address]:[world.port]"]"
+
+/datum/tgs_chat_command/gameversion
+	name = "gameversion"
+	help_text = "Gets the version details from the show-server-revision verb, basically"
+
+/datum/tgs_chat_command/gameversion/Run(datum/tgs_chat_user/sender, params)
+	var/list/msg = list("")
+	msg += "BYOND Server Version: [world.byond_version].[world.byond_build] (Compiled with: [DM_VERSION].[DM_BUILD])\n"
+
+	if (!GLOB.revdata)
+		msg += "No revision information found."
+	else
+		msg += "Revision [copytext_char(GLOB.revdata.commit, 1, 9)]"
+		if (GLOB.revdata.date)
+			msg += " compiled on '[GLOB.revdata.date]'"
+		
+		if(GLOB.revdata.originmastercommit)
+			msg += ", from origin commit: <[CONFIG_GET(string/githuburl)]/commit/[GLOB.revdata.originmastercommit]>"
+
+		if(GLOB.revdata.testmerge.len)
+			msg += "\n"
+			for(var/datum/tgs_revision_information/test_merge/PR as anything in GLOB.revdata.testmerge)
+				msg += "PR #[PR.number] at [copytext_char(PR.head_commit, 1, 9)] [PR.title].\n"
+				if (PR.url)
+					msg += "<[PR.url]>\n"
+	return msg.Join("")
 
 /datum/tgs_chat_command/ahelp
 	name = "ahelp"
@@ -38,9 +64,7 @@
 			target = AH.initiator_ckey
 		else
 			return "Ticket #[id] not found!"
-	var/res = TgsPm(target, all_params.Join(" "), sender.friendly_name)
-	if(res != "Message Successful")
-		return res
+	return TgsPm(target, all_params.Join(" "), sender.friendly_name)
 
 /datum/tgs_chat_command/namecheck
 	name = "namecheck"
@@ -83,17 +107,13 @@ GLOBAL_LIST(round_end_notifiees)
 	admin_only = TRUE
 
 /datum/tgs_chat_command/sdql/Run(datum/tgs_chat_user/sender, params)
-	if(GLOB.AdminProcCaller)
-		return "Unable to run query, another admin proc call is in progress. Try again later."
-	GLOB.AdminProcCaller = "CHAT_[sender.friendly_name]" //_ won't show up in ckeys so it'll never match with a real admin
-	var/list/results = world.SDQL2_query(params, GLOB.AdminProcCaller, GLOB.AdminProcCaller)
-	GLOB.AdminProcCaller = null
+	var/list/results = HandleUserlessSDQL(sender.friendly_name, params)
 	if(!results)
 		return "Query produced no output"
 	var/list/text_res = results.Copy(1, 3)
 	var/list/refs = results.len > 3 ? results.Copy(4) : null
 	. = "[text_res.Join("\n")][refs ? "\nRefs: [refs.Join(" ")]" : ""]"
-	
+
 /datum/tgs_chat_command/reload_admins
 	name = "reload_admins"
 	help_text = "Forces the server to reload admins."

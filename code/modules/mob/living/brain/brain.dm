@@ -7,12 +7,12 @@
 	see_invisible = SEE_INVISIBLE_LIVING
 	speech_span = SPAN_ROBOT
 
-/mob/living/brain/Initialize()
+/mob/living/brain/Initialize(mapload)
 	. = ..()
 	create_dna(src)
 	stored_dna.initialize_dna(random_blood_type())
 	if(isturf(loc)) //not spawned in an MMI or brain organ (most likely adminspawned)
-		var/obj/item/organ/brain/OB = new(loc) //we create a new brain organ for it.
+		var/obj/item/organ/internal/brain/OB = new(loc) //we create a new brain organ for it.
 		OB.brainmob = src
 		forceMove(OB)
 	if(!container?.mecha) //Unless inside a mecha, brains are rather helpless.
@@ -23,7 +23,7 @@
 /mob/living/brain/proc/create_dna()
 	stored_dna = new /datum/dna/stored(src)
 	if(!stored_dna.species)
-		var/rando_race = pick(GLOB.roundstart_races)
+		var/rando_race = pick(get_selectable_species())
 		stored_dna.species = new rando_race()
 
 /mob/living/brain/Destroy()
@@ -31,14 +31,15 @@
 		if(stat!=DEAD) //If not dead.
 			death(1) //Brains can die again. AND THEY SHOULD AHA HA HA HA HA HA
 		if(mind) //You aren't allowed to return to brains that don't exist
-			mind.current = null
+			mind.set_current(null)
 		ghostize() //Ghostize checks for key so nothing else is necessary.
 	container = null
+	QDEL_NULL(stored_dna)
 	return ..()
 
 
 /mob/living/brain/ex_act() //you cant blow up brainmobs because it makes transfer_to() freak out when borgs blow up.
-	return
+	return FALSE
 
 /mob/living/brain/blob_act(obj/structure/blob/B)
 	return
@@ -65,10 +66,10 @@
 /mob/living/brain/forceMove(atom/destination)
 	if(container)
 		return container.forceMove(destination)
-	else if (istype(loc, /obj/item/organ/brain))
-		var/obj/item/organ/brain/B = loc
+	else if (istype(loc, /obj/item/organ/internal/brain))
+		var/obj/item/organ/internal/brain/B = loc
 		B.forceMove(destination)
-	else if (istype(destination, /obj/item/organ/brain))
+	else if (istype(destination, /obj/item/organ/internal/brain))
 		doMove(destination)
 	else if (istype(destination, /obj/item/mmi))
 		doMove(destination)
@@ -85,13 +86,11 @@
 		var/obj/vehicle/sealed/mecha/M = container.mecha
 		if(M.mouse_pointer)
 			client.mouse_pointer_icon = M.mouse_pointer
-	if (client && ranged_ability?.ranged_mousepointer)
-		client.mouse_pointer_icon = ranged_ability.ranged_mousepointer
 
 /mob/living/brain/proc/get_traumas()
 	. = list()
-	if(istype(loc, /obj/item/organ/brain))
-		var/obj/item/organ/brain/B = loc
+	if(istype(loc, /obj/item/organ/internal/brain))
+		var/obj/item/organ/internal/brain/B = loc
 		. = B.traumas
 
 /mob/living/brain/get_policy_keywords()

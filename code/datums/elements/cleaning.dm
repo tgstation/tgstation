@@ -29,4 +29,4 @@
 			if(cleaned_human.body_position == LYING_DOWN)
 				cleaned_human.wash(CLEAN_SCRUB)
 				cleaned_human.regenerate_icons()
-				to_chat(cleaned_human, "<span class='danger'>[AM] cleans your face!</span>")
+				to_chat(cleaned_human, span_danger("[AM] cleans your face!"))

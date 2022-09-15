@@ -2,7 +2,7 @@
 /obj/item/ammo_box
 	name = "ammo box (null_reference_exception)"
 	desc = "A box of ammo."
-	icon = 'icons/obj/guns/ammo.dmi'
+	icon = 'icons/obj/weapons/guns/ammo.dmi'
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 	inhand_icon_state = "syringe_kit"
@@ -14,6 +14,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 7
+	override_notes = TRUE
 	///list containing the actual ammo within the magazine
 	var/list/stored_ammo = list()
 	///type that the magazine will be searching for, rejects if not a subtype of
@@ -22,6 +23,8 @@
 	var/max_ammo = 7
 	///Controls how sprites are updated for the ammo box; see defines in combat.dm: AMMO_BOX_ONE_SPRITE; AMMO_BOX_PER_BULLET; AMMO_BOX_FULL_EMPTY
 	var/multiple_sprites = AMMO_BOX_ONE_SPRITE
+	///For sprite updating, do we use initial(icon_state) or base_icon_state?
+	var/multiple_sprite_use_base = FALSE
 	///String, used for checking if ammo of different types but still fits can fit inside it; generally used for magazines
 	var/caliber
 	///Allows multiple bullets to be loaded in from one click of another box/magazine
@@ -33,13 +36,30 @@
 	///cost of the materials in the magazine/box itself
 	var/list/base_cost
 
-/obj/item/ammo_box/Initialize()
+/obj/item/ammo_box/Initialize(mapload)
 	. = ..()
 	if(!bullet_cost)
 		base_cost = SSmaterials.FindOrCreateMaterialCombo(custom_materials, 0.1)
 		bullet_cost = SSmaterials.FindOrCreateMaterialCombo(custom_materials, 0.9 / max_ammo)
 	if(!start_empty)
 		top_off(starting=TRUE)
+
+/obj/item/ammo_box/add_weapon_description()
+	AddElement(/datum/element/weapon_description, attached_proc = .proc/add_notes_box)
+
+/obj/item/ammo_box/proc/add_notes_box()
+	var/list/readout = list()
+
+	if(caliber && max_ammo) // Text references a 'magazine' as only magazines generally have the caliber variable initialized
+		readout += "Up to [span_warning("[max_ammo] [caliber] rounds")] can be found within this magazine. \
+		\nAccidentally discharging any of these projectiles may void your insurance contract."
+
+	var/obj/item/ammo_casing/mag_ammo = get_round(TRUE)
+
+	if(istype(mag_ammo))
+		readout += "\n[mag_ammo.add_notes_ammo()]"
+
+	return readout.Join("\n")
 
 /**
  * top_off is used to refill the magazine to max, in case you want to increase the size of a magazine with VV then refill it at once
@@ -57,7 +77,7 @@
 		stack_trace("Tried loading unsupported ammocasing type [load_type] into ammo box [type].")
 		return
 
-	for(var/i = max(1, stored_ammo.len), i <= max_ammo, i++)
+	for(var/i in max(1, stored_ammo.len) to max_ammo)
 		stored_ammo += new round_check(src)
 	update_ammo_count()
 
@@ -114,7 +134,7 @@
 				break
 		if(num_loaded)
 			AM.update_ammo_count()
-	if(istype(A, /obj/item/ammo_casing))
+	if(isammocasing(A))
 		var/obj/item/ammo_casing/AC = A
 		if(give_round(AC, replace_spent))
 			user.transferItemToLoc(AC, src, TRUE)
@@ -123,7 +143,7 @@
 
 	if(num_loaded)
 		if(!silent)
-			to_chat(user, "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>")
+			to_chat(user, span_notice("You load [num_loaded] shell\s into \the [src]!"))
 			playsound(src, 'sound/weapons/gun/general/mag_bullet_insert.ogg', 60, TRUE)
 		update_ammo_count()
 
@@ -138,7 +158,7 @@
 	if(!user.is_holding(src) || !user.put_in_hands(A)) //incase they're using TK
 		A.bounce_away(FALSE, NONE)
 	playsound(src, 'sound/weapons/gun/general/mag_bullet_insert.ogg', 60, TRUE)
-	to_chat(user, "<span class='notice'>You remove a round from [src]!</span>")
+	to_chat(user, span_notice("You remove a round from [src]!"))
 	update_ammo_count()
 
 /// Updates the materials and appearance of this ammo box
@@ -155,9 +175,9 @@
 	var/shells_left = LAZYLEN(stored_ammo)
 	switch(multiple_sprites)
 		if(AMMO_BOX_PER_BULLET)
-			icon_state = "[initial(icon_state)]-[shells_left]"
+			icon_state = "[multiple_sprite_use_base ? base_icon_state : initial(icon_state)]-[shells_left]"
 		if(AMMO_BOX_FULL_EMPTY)
-			icon_state = "[initial(icon_state)]-[shells_left ? "[max_ammo]" : "0"]"
+			icon_state = "[multiple_sprite_use_base ? base_icon_state : initial(icon_state)]-[shells_left ? "[max_ammo]" : "0"]"
 	return ..()
 
 /// Updates the amount of material in this ammo box according to how many bullets are left in it.

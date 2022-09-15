@@ -1,0 +1,253 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/table/reinforced,
+/obj/machinery/microwave/hell,
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"j" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/brown/line{
+	dir = 10
+	},
+/obj/effect/turf_decal/trimline/brown/corner{
+	dir = 4
+	},
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"l" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/brown/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/brown/corner,
+/obj/effect/turf_decal/trimline/brown/corner{
+	dir = 4
+	},
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"q" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/brown/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/brown/line{
+	dir = 8
+	},
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"r" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/brown/line{
+	dir = 9
+	},
+/obj/effect/turf_decal/trimline/brown/corner{
+	dir = 2
+	},
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"u" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/brown/end{
+	dir = 4
+	},
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"x" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/brown/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/brown/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/brown/corner{
+	dir = 1
+	},
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"B" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/brown/line{
+	dir = 5
+	},
+/obj/effect/turf_decal/trimline/brown/corner{
+	dir = 8
+	},
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"C" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/brown/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/brown/line{
+	dir = 2
+	},
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"E" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/brown/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/brown/line{
+	dir = 6
+	},
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"H" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/brown/end{
+	dir = 8
+	},
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"L" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/brown/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/brown/line{
+	dir = 5
+	},
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"N" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/brown/corner{
+	dir = 2
+	},
+/obj/effect/turf_decal/trimline/brown/line{
+	dir = 9
+	},
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"Q" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/brown/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/brown/line{
+	dir = 4
+	},
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"S" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/brown/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/brown/line{
+	dir = 10
+	},
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+
+(1,1,1) = {"
+a
+a
+a
+H
+a
+a
+H
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+r
+q
+E
+a
+a
+L
+Q
+S
+a
+"}
+(3,1,1) = {"
+a
+C
+a
+a
+a
+a
+a
+a
+C
+a
+"}
+(4,1,1) = {"
+a
+B
+Q
+Q
+l
+Q
+Q
+Q
+E
+a
+"}
+(5,1,1) = {"
+a
+a
+a
+a
+C
+a
+a
+a
+a
+a
+"}
+(6,1,1) = {"
+a
+r
+Q
+Q
+x
+Q
+Q
+Q
+j
+a
+"}
+(7,1,1) = {"
+a
+C
+a
+a
+a
+a
+a
+a
+C
+a
+"}
+(8,1,1) = {"
+a
+B
+Q
+S
+a
+a
+N
+Q
+E
+a
+"}
+(9,1,1) = {"
+a
+a
+a
+u
+a
+a
+u
+a
+a
+a
+"}

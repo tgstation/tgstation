@@ -1,6 +1,7 @@
 /obj/effect/ebeam/curse_arm
 	name = "curse arm"
 	layer = LARGE_MOB_LAYER
+	plane = GAME_PLANE_UPPER_FOV_HIDDEN
 
 /obj/projectile/curse_hand
 	name = "curse hand"
@@ -8,6 +9,7 @@
 	base_icon_state = "cursehand"
 	hitsound = 'sound/effects/curse4.ogg'
 	layer = LARGE_MOB_LAYER
+	plane = GAME_PLANE_UPPER_FOV_HIDDEN
 	damage_type = BURN
 	damage = 10
 	paralyze = 20
@@ -20,6 +22,10 @@
 	. = ..()
 	handedness = prob(50)
 	icon_state = "[base_icon_state][handedness]"
+
+/obj/projectile/curse_hand/Destroy()
+	QDEL_NULL(arm)
+	return ..()
 
 /obj/projectile/curse_hand/update_icon_state()
 	icon_state = "[base_icon_state]0[handedness]"

@@ -7,7 +7,7 @@
 	cure_chance = 50
 	agent = "H0NI<42 Virus"
 	viable_mobtypes = list(/mob/living/carbon/human)
-	permeability_mod = 0.75
+	spreading_modifier = 0.75
 	desc = "If left untreated the subject will probably drive others to insanity."
 	severity = DISEASE_SEVERITY_MEDIUM
 
@@ -20,13 +20,13 @@
 	switch(stage)
 		if(1)
 			if(DT_PROB(5, delta_time))
-				to_chat(affected_mob, "<span class='danger'>You feel a little silly.</span>")
+				to_chat(affected_mob, span_danger("You feel a little silly."))
 		if(2)
 			if(DT_PROB(5, delta_time))
-				to_chat(affected_mob, "<span class='danger'>You start seeing rainbows.</span>")
+				to_chat(affected_mob, span_danger("You start seeing rainbows."))
 		if(3)
 			if(DT_PROB(5, delta_time))
-				to_chat(affected_mob, "<span class='danger'>Your thoughts are interrupted by a loud <b>HONK!</b></span>")
+				to_chat(affected_mob, span_danger("Your thoughts are interrupted by a loud <b>HONK!</b>"))
 		if(4)
 			if(DT_PROB(2.5, delta_time))
 				affected_mob.say( pick( list("HONK!", "Honk!", "Honk.", "Honk?", "Honk!!", "Honk?!", "Honk...") ) , forced = "pierrot's throat")

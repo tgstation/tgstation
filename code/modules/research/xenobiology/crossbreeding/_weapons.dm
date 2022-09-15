@@ -17,18 +17,18 @@ Slimecrossing Weapons
 		user.emote("scream")
 
 //Rainbow knife - Burning Rainbow
-/obj/item/kitchen/knife/rainbowknife
+/obj/item/knife/rainbowknife
 	name = "rainbow knife"
 	desc = "A strange, transparent knife which constantly shifts color. It hums slightly when moved."
-	icon = 'icons/obj/slimecrossing.dmi'
+	icon = 'icons/obj/xenobiology/slimecrossing.dmi'
 	icon_state = "rainbowknife"
 	inhand_icon_state = "rainbowknife"
 	force = 15
 	throwforce = 15
 	damtype = BRUTE
 
-/obj/item/kitchen/knife/rainbowknife/afterattack(atom/O, mob/user, proximity)
-	if(proximity && istype(O, /mob/living))
+/obj/item/knife/rainbowknife/afterattack(atom/O, mob/user, proximity)
+	if(proximity && isliving(O))
 		damtype = pick(BRUTE, BURN, TOX, OXY, CLONE)
 	switch(damtype)
 		if(BRUTE)
@@ -37,8 +37,8 @@ Slimecrossing Weapons
 			attack_verb_simple = string_list(list("slash", "slice", "cut"))
 		if(BURN)
 			hitsound = 'sound/weapons/sear.ogg'
-			attack_verb_continuous = string_list(list("burns", "sings", "heats"))
-			attack_verb_simple = string_list(list("burn", "sing", "heat"))
+			attack_verb_continuous = string_list(list("burns", "singes", "heats"))
+			attack_verb_simple = string_list(list("burn", "singe", "heat"))
 		if(TOX)
 			hitsound = 'sound/weapons/pierce.ogg'
 			attack_verb_continuous = string_list(list("poisons", "doses", "toxifies"))
@@ -57,11 +57,11 @@ Slimecrossing Weapons
 /obj/item/shield/adamantineshield
 	name = "adamantine shield"
 	desc = "A gigantic shield made of solid adamantium."
-	icon = 'icons/obj/slimecrossing.dmi'
+	icon = 'icons/obj/xenobiology/slimecrossing.dmi'
 	icon_state = "adamshield"
 	inhand_icon_state = "adamshield"
 	w_class = WEIGHT_CLASS_HUGE
-	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 0, BOMB = 30, BIO = 0, RAD = 0, FIRE = 80, ACID = 70)
+	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 0, BOMB = 30, BIO = 0, FIRE = 80, ACID = 70)
 	slot_flags = ITEM_SLOT_BACK
 	block_chance = 75
 	force = 0
@@ -71,7 +71,7 @@ Slimecrossing Weapons
 	attack_verb_simple = list("bash", "pound", "slam")
 	item_flags = SLOWS_WHILE_IN_HAND
 
-/obj/item/shield/adamantineshield/ComponentInitialize()
+/obj/item/shield/adamantineshield/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/two_handed, require_twohands=TRUE, force_wielded=15)
 
@@ -79,7 +79,7 @@ Slimecrossing Weapons
 /obj/item/gun/magic/bloodchill
 	name = "blood chiller"
 	desc = "A horrifying weapon made of your own bone and blood vessels. It shoots slowing globules of your own blood. Ech."
-	icon = 'icons/obj/slimecrossing.dmi'
+	icon = 'icons/obj/xenobiology/slimecrossing.dmi'
 	icon_state = "bloodgun"
 	inhand_icon_state = "bloodgun"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
@@ -93,7 +93,7 @@ Slimecrossing Weapons
 	ammo_type = /obj/item/ammo_casing/magic/bloodchill
 	fire_sound = 'sound/effects/attackblob.ogg'
 
-/obj/item/gun/magic/bloodchill/Initialize()
+/obj/item/gun/magic/bloodchill/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 

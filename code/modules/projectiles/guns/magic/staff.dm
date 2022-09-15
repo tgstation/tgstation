@@ -6,6 +6,27 @@
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	item_flags = NEEDS_PERMIT | NO_MAT_REDEMPTION
+	/// Can non-magic folk use our staff?
+	/// If FALSE, only wizards or survivalists can use the staff to its full potential - If TRUE, anyone can
+	var/allow_intruder_use = FALSE
+
+/obj/item/gun/magic/staff/proc/is_wizard_or_friend(mob/user)
+	if(!user?.mind?.has_antag_datum(/datum/antagonist/wizard) \
+		&& !user.mind.has_antag_datum(/datum/antagonist/survivalist/magic) \
+		&& !user.mind.has_antag_datum(/datum/antagonist/wizard_minion) \
+		&& !allow_intruder_use)
+		return FALSE
+	return TRUE
+
+/obj/item/gun/magic/staff/check_botched(mob/living/user, atom/target)
+	if(!is_wizard_or_friend(user))
+		return !on_intruder_use(user, target)
+	return ..()
+
+/// Called when someone who isn't a wizard or magician uses this staff.
+/// Return TRUE to allow usage.
+/obj/item/gun/magic/staff/proc/on_intruder_use(mob/living/user, atom/target)
+	return TRUE
 
 /obj/item/gun/magic/staff/change
 	name = "staff of change"
@@ -14,6 +35,29 @@
 	ammo_type = /obj/item/ammo_casing/magic/change
 	icon_state = "staffofchange"
 	inhand_icon_state = "staffofchange"
+	school = SCHOOL_TRANSMUTATION
+	/// If set, all wabbajacks this staff produces will be of this type, instead of random
+	var/preset_wabbajack_type
+	/// If set, all wabbajacks this staff produces will be of this changeflag, instead of only WABBAJACK
+	var/preset_wabbajack_changeflag
+
+/obj/item/gun/magic/staff/change/unrestricted
+	allow_intruder_use = TRUE
+
+/obj/item/gun/magic/staff/change/pickup(mob/user)
+	. = ..()
+	if(!is_wizard_or_friend(user))
+		to_chat(user, span_hypnophrase("<span style='font-size: 24px'>You don't feel strong enough to properly wield this staff!</span>"))
+		balloon_alert(user, "you feel weak holding this staff")
+
+/obj/item/gun/magic/staff/change/on_intruder_use(mob/living/user, atom/target)
+	user.dropItemToGround(src, TRUE)
+	var/wabbajack_into = preset_wabbajack_type || pick(WABBAJACK_MONKEY, WABBAJACK_HUMAN, WABBAJACK_ANIMAL)
+	var/mob/living/new_body = user.wabbajack(wabbajack_into, preset_wabbajack_changeflag)
+	if(!new_body)
+		return
+
+	balloon_alert(new_body, "wabbajack, wabbajack!")
 
 /obj/item/gun/magic/staff/animate
 	name = "staff of animation"
@@ -22,6 +66,7 @@
 	ammo_type = /obj/item/ammo_casing/magic/animate
 	icon_state = "staffofanimation"
 	inhand_icon_state = "staffofanimation"
+	school = SCHOOL_EVOCATION
 
 /obj/item/gun/magic/staff/healing
 	name = "staff of healing"
@@ -30,6 +75,37 @@
 	ammo_type = /obj/item/ammo_casing/magic/heal
 	icon_state = "staffofhealing"
 	inhand_icon_state = "staffofhealing"
+	school = SCHOOL_RESTORATION
+	/// Our internal healbeam, used if an intruder (non-magic person) tries to use our staff
+	var/obj/item/gun/medbeam/healing_beam
+
+/obj/item/gun/magic/staff/healing/pickup(mob/user)
+	. = ..()
+	if(!is_wizard_or_friend(user))
+		to_chat(user, span_hypnophrase("<span style='font-size: 24px'>The staff feels weaker as you touch it</span>"))
+		user.balloon_alert(user, "the staff feels weaker as you touch it")
+
+/obj/item/gun/magic/staff/healing/Initialize(mapload)
+	. = ..()
+	healing_beam = new(src)
+	healing_beam.mounted = TRUE
+
+/obj/item/gun/magic/staff/healing/Destroy()
+	QDEL_NULL(healing_beam)
+	return ..()
+
+/obj/item/gun/magic/staff/healing/unrestricted
+	allow_intruder_use = TRUE
+
+/obj/item/gun/magic/staff/healing/on_intruder_use(mob/living/user, atom/target)
+	if(target == user)
+		return FALSE
+	healing_beam.process_fire(target, user)
+	return FALSE
+
+/obj/item/gun/magic/staff/healing/dropped(mob/user)
+	healing_beam.LoseTarget()
+	return ..()
 
 /obj/item/gun/magic/staff/healing/handle_suicide() //Stops people trying to commit suicide to heal themselves
 	return
@@ -44,15 +120,49 @@
 	max_charges = 10
 	recharge_rate = 2
 	no_den_usage = 1
-	var/allowed_projectile_types = list(/obj/projectile/magic/change, /obj/projectile/magic/animate, /obj/projectile/magic/resurrection,
-	/obj/projectile/magic/death, /obj/projectile/magic/teleport, /obj/projectile/magic/door, /obj/projectile/magic/aoe/fireball,
-	/obj/projectile/magic/spellblade, /obj/projectile/magic/arcane_barrage, /obj/projectile/magic/locker, /obj/projectile/magic/flying,
-	/obj/projectile/magic/bounty, /obj/projectile/magic/antimagic, /obj/projectile/magic/fetch, /obj/projectile/magic/sapping,
-	/obj/projectile/magic/necropotence, /obj/projectile/magic, /obj/projectile/temp/chill, /obj/projectile/magic/wipe)
+	school = SCHOOL_FORBIDDEN //this staff is evil. okay? it just is. look at this projectile type list. this is wrong.
+
+	/// Static list of all projectiles we can fire from our staff.
+	/// Doesn't contain all subtypes of magic projectiles, unlike what it looks like
+	var/static/list/allowed_projectile_types = list(
+		/obj/projectile/magic/animate,
+		/obj/projectile/magic/antimagic,
+		/obj/projectile/magic/arcane_barrage,
+		/obj/projectile/magic/bounty,
+		/obj/projectile/magic/change,
+		/obj/projectile/magic/death,
+		/obj/projectile/magic/door,
+		/obj/projectile/magic/fetch,
+		/obj/projectile/magic/fireball,
+		/obj/projectile/magic/flying,
+		/obj/projectile/magic/locker,
+		/obj/projectile/magic/necropotence,
+		/obj/projectile/magic/resurrection,
+		/obj/projectile/magic/sapping,
+		/obj/projectile/magic/spellblade,
+		/obj/projectile/magic/teleport,
+		/obj/projectile/magic/wipe,
+		/obj/projectile/temp/chill,
+	)
+
+/obj/item/gun/magic/staff/chaos/unrestricted
+	allow_intruder_use = TRUE
 
 /obj/item/gun/magic/staff/chaos/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	chambered.projectile_type = pick(allowed_projectile_types)
-	. = ..()
+	return ..()
+
+/obj/item/gun/magic/staff/chaos/on_intruder_use(mob/living/user)
+	if(!user.can_cast_magic()) // Don't let people with antimagic use the staff of chaos.
+		balloon_alert(user, "the staff refuses to fire!")
+		return FALSE
+
+	if(prob(95)) // You have a 5% chance of hitting yourself when using the staff of chaos.
+		return TRUE
+	balloon_alert(user, "chaos!")
+	user.dropItemToGround(src, TRUE)
+	process_fire(user, user, FALSE)
+	return FALSE
 
 /obj/item/gun/magic/staff/door
 	name = "staff of door creation"
@@ -64,6 +174,7 @@
 	max_charges = 10
 	recharge_rate = 2
 	no_den_usage = 1
+	school = SCHOOL_TRANSMUTATION
 
 /obj/item/gun/magic/staff/honk
 	name = "staff of the honkmother"
@@ -74,6 +185,7 @@
 	inhand_icon_state = "honker"
 	max_charges = 4
 	recharge_rate = 8
+	school = SCHOOL_EVOCATION
 
 /obj/item/gun/magic/staff/spellblade
 	name = "spellblade"
@@ -90,10 +202,16 @@
 	block_chance = 50
 	sharpness = SHARP_EDGED
 	max_charges = 4
+	school = SCHOOL_EVOCATION
 
-/obj/item/gun/magic/staff/spellblade/Initialize()
+/obj/item/gun/magic/staff/spellblade/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/butchering, 15, 125, 0, hitsound)
+	AddComponent(/datum/component/butchering, \
+		speed = 1.5 SECONDS, \
+		effectiveness = 125, \
+		bonus_modifier = 0, \
+		butcher_sound = hitsound, \
+	)
 
 /obj/item/gun/magic/staff/spellblade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(attack_type == PROJECTILE_ATTACK)
@@ -110,6 +228,7 @@
 	worn_icon_state = "lockerstaff"
 	max_charges = 6
 	recharge_rate = 4
+	school = SCHOOL_TRANSMUTATION //in a way
 
 //yes, they don't have sounds. they're admin staves, and their projectiles will play the chaos bolt sound anyway so why bother?
 
@@ -121,6 +240,7 @@
 	icon_state = "staffofflight"
 	inhand_icon_state = "staffofchange"
 	worn_icon_state = "flightstaff"
+	school = SCHOOL_EVOCATION
 
 /obj/item/gun/magic/staff/sapping
 	name = "staff of sapping"
@@ -130,6 +250,7 @@
 	icon_state = "staffofsapping"
 	inhand_icon_state = "staffofdoor"
 	worn_icon_state = "sapstaff"
+	school = SCHOOL_FORBIDDEN //evil
 
 /obj/item/gun/magic/staff/necropotence
 	name = "staff of necropotence"
@@ -139,6 +260,7 @@
 	icon_state = "staffofnecropotence"
 	inhand_icon_state = "staffofchaos"
 	worn_icon_state = "necrostaff"
+	school = SCHOOL_NECROMANCY //REALLY evil
 
 /obj/item/gun/magic/staff/wipe
 	name = "staff of possession"
@@ -148,3 +270,4 @@
 	icon_state = "staffofwipe"
 	inhand_icon_state = "pharoah_sceptre"
 	worn_icon_state = "wipestaff"
+	school = SCHOOL_FORBIDDEN //arguably the worst staff in the entire game effect wise

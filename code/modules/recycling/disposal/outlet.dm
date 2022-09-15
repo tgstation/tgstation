@@ -1,3 +1,13 @@
+//how fast disposal machinery is ejecting things (does not effect range)
+/// The slowest setting for disposal eject speed
+#define EJECT_SPEED_SLOW 1
+/// The default setting for disposal eject speed
+#define EJECT_SPEED_MED 2
+/// The fast setting for disposal eject speed
+#define EJECT_SPEED_FAST 4
+/// The fastest setting for disposal eject speed
+#define EJECT_SPEED_YEET 6
+
 // the disposal outlet machine
 /obj/structure/disposaloutlet
 	name = "disposal outlet"
@@ -6,7 +16,6 @@
 	icon_state = "outlet"
 	density = TRUE
 	anchored = TRUE
-	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
 	var/active = FALSE
 	var/turf/target // this will be where the output objects are 'thrown' to.
 	var/obj/structure/disposalpipe/trunk/trunk // the attached pipe trunk
@@ -57,7 +66,7 @@
 	if(!H)
 		return
 
-	pipe_eject(H, dir, TRUE, target, eject_range, throw_range)
+	pipe_eject(H, dir, TRUE, target, eject_range, eject_speed)
 
 	H.vent_gas(loc)
 	qdel(H)
@@ -68,9 +77,9 @@
 		return TRUE
 
 	playsound(src, 'sound/items/welder2.ogg', 100, TRUE)
-	to_chat(user, "<span class='notice'>You start slicing the floorweld off [src]...</span>")
+	to_chat(user, span_notice("You start slicing the floorweld off [src]..."))
 	if(I.use_tool(src, user, 20))
-		to_chat(user, "<span class='notice'>You slice the floorweld off [src].</span>")
+		to_chat(user, span_notice("You slice the floorweld off [src]."))
 		stored.forceMove(loc)
 		transfer_fingerprints_to(stored)
 		stored = null
@@ -81,17 +90,17 @@
 	. = ..()
 	switch(eject_speed)
 		if(EJECT_SPEED_SLOW)
-			. += "<span class='info'>An LED image of a turtle is displayed on the side of the outlet.</span>"
+			. += span_info("An LED image of a turtle is displayed on the side of the outlet.")
 		if(EJECT_SPEED_MED)
-			. += "<span class='info'>An LED image of a bumblebee is displayed on the side of the outlet.</span>"
+			. += span_info("An LED image of a bumblebee is displayed on the side of the outlet.")
 		if(EJECT_SPEED_FAST)
-			. += "<span class='info'>An LED image of a speeding bullet is displayed on the side of the outlet.</span>"
+			. += span_info("An LED image of a speeding bullet is displayed on the side of the outlet.")
 		if(EJECT_SPEED_YEET)
-			. += "<span class='info'>An LED image of a grawlix is displayed on the side of the outlet.</span>"
+			. += span_info("An LED image of a grawlix is displayed on the side of the outlet.")
 
 /obj/structure/disposaloutlet/multitool_act(mob/living/user, obj/item/I)
 	. = ..()
-	to_chat(user, "<span class='notice'>You adjust the ejection force on \the [src].</span>")
+	to_chat(user, span_notice("You adjust the ejection force on \the [src]."))
 	switch(eject_speed)
 		if(EJECT_SPEED_SLOW)
 			eject_speed = EJECT_SPEED_MED
@@ -110,5 +119,10 @@
 	. = ..()
 	if(obj_flags & EMAGGED)
 		return
-	to_chat(user, "<span class='notice'>You silently disable the sanity checking on \the [src]'s ejection force.</span>")
+	to_chat(user, span_notice("You silently disable the sanity checking on \the [src]'s ejection force."))
 	obj_flags |= EMAGGED
+
+#undef EJECT_SPEED_SLOW
+#undef EJECT_SPEED_MED
+#undef EJECT_SPEED_FAST
+#undef EJECT_SPEED_YEET

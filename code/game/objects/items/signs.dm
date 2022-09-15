@@ -18,11 +18,10 @@
 	resistance_flags = NONE
 	actions_types = list(/datum/action/item_action/nano_picket_sign)
 
-/obj/item/picket_sign/proc/retext(mob/user)
-	if(!user.is_literate())
-		to_chat(user, "<span class='notice'>You scribble illegibly on [src]!</span>")
+/obj/item/picket_sign/proc/retext(mob/user, obj/item/writing_instrument)
+	if(!user.can_write(writing_instrument))
 		return
-	var/txt = stripped_input(user, "What would you like to write on the sign?", "Sign Label", null , 30)
+	var/txt = tgui_input_text(user, "What would you like to write on the sign?", "Sign Label", max_length = 30)
 	if(txt && user.canUseTopic(src, BE_CLOSE))
 		label = txt
 		name = "[label] sign"
@@ -30,7 +29,7 @@
 
 /obj/item/picket_sign/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/pen) || istype(W, /obj/item/toy/crayon))
-		retext(user)
+		retext(user, W)
 	else
 		return ..()
 
@@ -56,6 +55,15 @@
 		animate(pixel_y = user.pixel_y - (2 * direction), time = 1, easing = SINE_EASING)
 		animate(pixel_y = user.pixel_y + (1 * direction), time = 1, easing = SINE_EASING)
 	user.changeNext_move(CLICK_CD_MELEE)
+
+/datum/action/item_action/nano_picket_sign
+	name = "Retext Nano Picket Sign"
+
+/datum/action/item_action/nano_picket_sign/Trigger(trigger_flags)
+	if(!istype(target, /obj/item/picket_sign))
+		return
+	var/obj/item/picket_sign/sign = target
+	sign.retext(owner)
 
 /datum/crafting_recipe/picket_sign
 	name = "Picket Sign"

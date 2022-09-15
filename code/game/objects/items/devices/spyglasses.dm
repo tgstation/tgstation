@@ -10,8 +10,8 @@
 	if(!user.client)
 		return
 	if(!linked_bug)
-		user.audible_message("<span class='warning'>[src] lets off a shrill beep!</span>")
-	if("spypopup_map" in user.client.screen_maps) //alright, the popup this object uses is already IN use, so the window is open. no point in doing any other work here, so we're good.
+		user.audible_message(span_warning("[src] lets off a shrill beep!"))
+	if(user.client.screen_maps["spypopup_map"]) //alright, the popup this object uses is already IN use, so the window is open. no point in doing any other work here, so we're good.
 		return
 	user.client.setup_popup("spypopup", 3, 3, 2)
 	user.client.register_map_obj(linked_bug.cam_screen)
@@ -22,11 +22,11 @@
 /obj/item/clothing/glasses/sunglasses/spy/equipped(mob/user, slot)
 	. = ..()
 	if(slot != ITEM_SLOT_EYES)
-		user.client.close_popup("spypopup")
+		user.client?.close_popup("spypopup")
 
 /obj/item/clothing/glasses/sunglasses/spy/dropped(mob/user)
 	. = ..()
-	user.client.close_popup("spypopup")
+	user.client?.close_popup("spypopup")
 
 /obj/item/clothing/glasses/sunglasses/spy/ui_action_click(mob/user)
 	show_to_user(user)
@@ -40,6 +40,9 @@
 		linked_bug.linked_glasses = null
 	. = ..()
 
+/datum/action/item_action/activate_remote_view
+	name = "Activate Remote View"
+	desc = "Activates the Remote View of your spy sunglasses."
 
 /obj/item/clothing/accessory/spy_bug
 	name = "pocket protector"
@@ -53,7 +56,7 @@
 	var/cam_range = 1
 	var/datum/movement_detector/tracker
 
-/obj/item/clothing/accessory/spy_bug/Initialize()
+/obj/item/clothing/accessory/spy_bug/Initialize(mapload)
 	. = ..()
 	tracker = new /datum/movement_detector(src, CALLBACK(src, .proc/update_view))
 
@@ -68,8 +71,10 @@
 	// NOT apply to map popups. If there's ever a way to make planesmasters
 	// omnipresent, then this wouldn't be needed.
 	cam_plane_masters = list()
-	for(var/plane in subtypesof(/atom/movable/screen/plane_master))
-		var/atom/movable/screen/instance = new plane()
+	for(var/plane in subtypesof(/atom/movable/screen/plane_master) - /atom/movable/screen/plane_master/blackness)
+		var/atom/movable/screen/plane_master/instance = new plane()
+		if(instance.blend_mode_override)
+			instance.blend_mode = instance.blend_mode_override
 		instance.assigned_map = "spypopup_map"
 		instance.del_on_map_removal = FALSE
 		instance.screen_loc = "spypopup_map:CENTER"
@@ -78,9 +83,9 @@
 /obj/item/clothing/accessory/spy_bug/Destroy()
 	if(linked_glasses)
 		linked_glasses.linked_bug = null
-	qdel(cam_screen)
+	QDEL_NULL(cam_screen)
 	QDEL_LIST(cam_plane_masters)
-	qdel(tracker)
+	QDEL_NULL(tracker)
 	. = ..()
 
 /obj/item/clothing/accessory/spy_bug/proc/update_view()//this doesn't do anything too crazy, just updates the vis_contents of its screen obj
@@ -97,7 +102,7 @@
 	name = "Espionage For Dummies"
 	color = "#FFFF00"
 	desc = "An eye gougingly yellow pamphlet with a badly designed image of a detective on it. the subtext says \" The Latest way to violate privacy guidelines!\" "
-	info = @{"
+	default_raw_text = @{"
 
 Thank you for your purchase of the Nerd Co SpySpeks <small>tm</small>, this paper will be your quick-start guide to violating the privacy of your crewmates in three easy steps!<br><br>Step One: Nerd Co SpySpeks <small>tm</small> upon your face. <br>
 Step Two: Place the included "ProfitProtektor <small>tm</small>" camera assembly in a place of your choosing - make sure to make heavy use of it's inconspicous design!

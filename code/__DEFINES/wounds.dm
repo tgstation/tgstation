@@ -77,10 +77,12 @@ GLOBAL_LIST_INIT(global_all_wound_types, list(/datum/wound/blunt/critical, /datu
 // ~random wound balance defines
 /// how quickly sanitization removes infestation and decays per second
 #define WOUND_BURN_SANITIZATION_RATE 0.075
-/// how much blood you can lose per second per slash max. 4 is a LOT of blood for one cut so don't worry about hitting it easily
-#define WOUND_SLASH_MAX_BLOODFLOW 4
+/// how much blood you can lose per tick per slash max.
+#define WOUND_SLASH_MAX_BLOODFLOW 4.5
 /// dead people don't bleed, but they can clot! this is the minimum amount of clotting per tick on dead people, so even critical cuts will slowly clot in dead people
 #define WOUND_SLASH_DEAD_CLOT_MIN 0.025
+/// further slash attacks on a bodypart with a slash wound have their blood_flow further increased by damage * this (10 damage slash adds .25 flow)
+#define WOUND_SLASH_DAMAGE_FLOW_COEFF 0.025
 /// if we suffer a bone wound to the head that creates brain traumas, the timer for the trauma cycle is +/- by this percent (0-100)
 #define WOUND_BONE_HEAD_TIME_VARIANCE 20
 
@@ -156,3 +158,6 @@ GLOBAL_LIST_INIT(global_all_wound_types, list(/datum/wound/blunt/critical, /datu
 
 /// How often can we annoy the player about their bleeding? This duration is extended if it's not serious bleeding
 #define BLEEDING_MESSAGE_BASE_CD 10 SECONDS
+
+/// Skeletons and other BIO_ONLY_BONE creatures respond much better to bone gel and can have severe and critical bone wounds healed by bone gel alone. The duration it takes to heal is also multiplied by this, lucky them!
+#define WOUND_BONE_BIO_BONE_GEL_MULT 0.25

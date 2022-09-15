@@ -1,18 +1,14 @@
 /obj/machinery/portable_atmospherics/scrubber
 	name = "portable air scrubber"
-	icon_state = "pscrubber:0"
+	icon_state = "scrubber"
 	density = TRUE
 	max_integrity = 250
 	volume = 1000
 
-	///Max amount of heat allowed inside of the canister before it starts to melt (different tiers have different limits)
-	var/heat_limit = 5000
-	///Max amount of pressure allowed inside of the canister before it starts to break (different tiers have different limits)
-	var/pressure_limit = 50000
 	///Is the machine on?
 	var/on = FALSE
 	///the rate the machine will scrub air
-	var/volume_rate = 500
+	var/volume_rate = 1000
 	///Multiplier with ONE_ATMOSPHERE, if the enviroment pressure is higher than that, the scrubber won't work
 	var/overpressure_m = 80
 	///Should the machine use overlay in update_overlays() when open/close?
@@ -23,7 +19,7 @@
 		/datum/gas/carbon_dioxide,
 		/datum/gas/nitrous_oxide,
 		/datum/gas/bz,
-		/datum/gas/nitryl,
+		/datum/gas/nitrium,
 		/datum/gas/tritium,
 		/datum/gas/hypernoblium,
 		/datum/gas/water_vapor,
@@ -38,11 +34,10 @@
 /obj/machinery/portable_atmospherics/scrubber/Destroy()
 	var/turf/T = get_turf(src)
 	T.assume_air(air_contents)
-	air_update_turf(FALSE, FALSE)
 	return ..()
 
 /obj/machinery/portable_atmospherics/scrubber/update_icon_state()
-	icon_state = "pscrubber:[on]"
+	icon_state = "[initial(icon_state)]_[on]"
 	return ..()
 
 /obj/machinery/portable_atmospherics/scrubber/update_overlays()
@@ -54,35 +49,30 @@
 	if(connected_port)
 		. += "scrubber-connector"
 
-/obj/machinery/portable_atmospherics/scrubber/process_atmos(delta_time)
-	. = ..()
-	var/pressure = air_contents.return_pressure()
-	var/temperature = air_contents.return_temperature()
-	///function used to check the limit of the scrubbers and also set the amount of damage that the scrubber can receive, if the heat and pressure are way higher than the limit the more damage will be done
-	if(temperature > heat_limit || pressure > pressure_limit)
-		take_damage(clamp((temperature/heat_limit) * (pressure/pressure_limit), 5, 50), BURN, 0)
-		return
+/obj/machinery/portable_atmospherics/scrubber/process_atmos()
+	if(take_atmos_damage())
+		excited = TRUE
+		return ..()
 
 	if(!on)
-		return
+		return ..()
 
-	if(holding)
-		scrub(holding.air_contents, delta_time)
-	else
-		var/turf/T = get_turf(src)
-		scrub(T.return_air(), delta_time)
+	excited = TRUE
+
+	var/atom/target = holding || get_turf(src)
+	scrub(target.return_air())
+	return ..()
 
 /**
  * Called in process_atmos(), handles the scrubbing of the given gas_mixture
  * Arguments:
  * * mixture: the gas mixture to be scrubbed
- * * delta_time: multiplier for transfer_moles that depends on the time between ticks
  */
-/obj/machinery/portable_atmospherics/scrubber/proc/scrub(datum/gas_mixture/mixture, delta_time = 2)
+/obj/machinery/portable_atmospherics/scrubber/proc/scrub(datum/gas_mixture/mixture)
 	if(air_contents.return_pressure() >= overpressure_m * ONE_ATMOSPHERE)
 		return
 
-	var/transfer_moles = min(1, volume_rate * delta_time / mixture.volume) * mixture.total_moles()
+	var/transfer_moles = min(1, volume_rate / mixture.volume) * mixture.total_moles()
 
 	var/datum/gas_mixture/filtering = mixture.remove(transfer_moles) // Remove part of the mixture to filter.
 	var/datum/gas_mixture/filtered = new
@@ -108,6 +98,8 @@
 	if(is_operational)
 		if(prob(50 / severity))
 			on = !on
+			if(on)
+				SSair.start_processing_machine(src)
 		update_appearance()
 
 /obj/machinery/portable_atmospherics/scrubber/ui_interact(mob/user, datum/tgui/ui)
@@ -131,7 +123,8 @@
 	if(holding)
 		data["holding"] = list()
 		data["holding"]["name"] = holding.name
-		data["holding"]["pressure"] = round(holding.air_contents.return_pressure())
+		var/datum/gas_mixture/holding_mix = holding.return_air()
+		data["holding"]["pressure"] = round(holding_mix.return_pressure())
 	else
 		data["holding"] = null
 	return data
@@ -154,6 +147,8 @@
 	switch(action)
 		if("power")
 			on = !on
+			if(on)
+				SSair.start_processing_machine(src)
 			. = TRUE
 		if("eject")
 			if(holding)
@@ -164,12 +159,15 @@
 			. = TRUE
 	update_appearance()
 
+/obj/machinery/portable_atmospherics/scrubber/unregister_holding()
+	on = FALSE
+	return ..()
+
 /obj/machinery/portable_atmospherics/scrubber/huge
 	name = "huge air scrubber"
-	icon_state = "scrubber:0"
+	icon_state = "hugescrubber"
 	anchored = TRUE
-	active_power_usage = 500
-	idle_power_usage = 10
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
 
 	overpressure_m = 200
 	volume_rate = 1500
@@ -185,26 +183,31 @@
 	anchored = FALSE
 
 /obj/machinery/portable_atmospherics/scrubber/huge/update_icon_state()
-	icon_state = "scrubber:[on]"
+	icon_state = "[initial(icon_state)]_[on]"
 	return ..()
 
-/obj/machinery/portable_atmospherics/scrubber/huge/process_atmos(delta_time)
+/obj/machinery/portable_atmospherics/scrubber/huge/process_atmos()
 	if((!anchored && !movable) || !is_operational)
 		on = FALSE
 		update_appearance()
-	use_power = on ? ACTIVE_POWER_USE : IDLE_POWER_USE
+	update_use_power(on ? ACTIVE_POWER_USE : IDLE_POWER_USE)
 	if(!on)
-		return
+		return ..()
 
-	..()
+	excited = TRUE
+
 	if(!holding)
 		var/turf/T = get_turf(src)
-		for(var/turf/AT in T.GetAtmosAdjacentTurfs(alldir = TRUE))
-			scrub(AT.return_air(), delta_time)
+		for(var/turf/AT in T.get_atmos_adjacent_turfs(alldir = TRUE))
+			scrub(AT.return_air())
 
-/obj/machinery/portable_atmospherics/scrubber/huge/attackby(obj/item/W, mob/user)
-	if(default_unfasten_wrench(user, W))
+	return ..()
+
+/obj/machinery/portable_atmospherics/scrubber/huge/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(default_unfasten_wrench(user, tool))
 		if(!movable)
 			on = FALSE
-	else
-		return ..()
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	return FALSE
+

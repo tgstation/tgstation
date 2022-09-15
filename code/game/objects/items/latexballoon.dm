@@ -11,17 +11,17 @@
 	var/state
 	var/datum/gas_mixture/air_contents = null
 
-/obj/item/latexballon/ComponentInitialize()
+/obj/item/latexballon/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/atmos_sensitive)
+	AddElement(/datum/element/atmos_sensitive, mapload)
 
 /obj/item/latexballon/proc/blow(obj/item/tank/tank, mob/user)
 	if (icon_state == "latexballon_bursted")
 		return
 	icon_state = "latexballon_blow"
 	inhand_icon_state = "latexballon"
-	user.update_inv_hands()
-	to_chat(user, "<span class='notice'>You blow up [src] with [tank].</span>")
+	user.update_held_items()
+	to_chat(user, span_notice("You blow up [src] with [tank]."))
 	air_contents = tank.remove_air_volume(3)
 
 /obj/item/latexballon/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
@@ -38,15 +38,15 @@
 	inhand_icon_state = "lgloves"
 	if(isliving(loc))
 		var/mob/living/user = src.loc
-		user.update_inv_hands()
+		user.update_held_items()
 	loc.assume_air(air_contents)
 
 /obj/item/latexballon/ex_act(severity, target)
 	burst()
 	switch(severity)
-		if (1)
+		if (EXPLODE_DEVASTATE)
 			qdel(src)
-		if (2)
+		if (EXPLODE_HEAVY)
 			if (prob(50))
 				qdel(src)
 

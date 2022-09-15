@@ -3,8 +3,10 @@
 	typepath = /datum/round_event/shuttle_catastrophe
 	weight = 10
 	max_occurrences = 1
+	category = EVENT_CATEGORY_BUREAUCRATIC
+	description = "Replaces the emergency shuttle with a random one."
 
-/datum/round_event_control/shuttle_catastrophe/canSpawnEvent(players, gamemode)
+/datum/round_event_control/shuttle_catastrophe/canSpawnEvent(players)
 	if(SSshuttle.shuttle_purchased == SHUTTLEPURCHASE_FORCED)
 		return FALSE //don't do it if its already been done
 	if(istype(SSshuttle.emergency, /obj/docking_port/mobile/emergency/shuttle_build))
@@ -37,7 +39,7 @@
 	var/list/valid_shuttle_templates = list()
 	for(var/shuttle_id in SSmapping.shuttle_templates)
 		var/datum/map_template/shuttle/template = SSmapping.shuttle_templates[shuttle_id]
-		if(template.can_be_bought && template.credit_cost < INFINITY) //if we could get it from the communications console, it's cool for us to get it here
+		if(!isnull(template.who_can_purchase) && template.credit_cost < INFINITY) //if we could get it from the communications console, it's cool for us to get it here
 			valid_shuttle_templates += template
 	new_shuttle = pick(valid_shuttle_templates)
 

@@ -12,6 +12,8 @@
 	weight = -1 //forces it to be called, regardless of weight
 	max_occurrences = 1
 	earliest_start = 0 MINUTES
+	category = EVENT_CATEGORY_HOLIDAY
+	description = "Puts people on dates! They must protect each other. Sometimes a vengeful third wheel spawns."
 
 /datum/round_event/valentines/start()
 	..()
@@ -23,7 +25,8 @@
 
 	var/list/valentines = list()
 	for(var/mob/living/M in GLOB.player_list)
-		if(!M.stat && M.mind)
+		var/turf/current_turf = get_turf(M.mind.current)
+		if(!M.stat && M.mind && !current_turf.onCentCom())
 			valentines |= M
 
 
@@ -54,24 +57,23 @@
 /obj/item/valentine
 	name = "valentine"
 	desc = "A Valentine's card! Wonder what it says..."
-	icon = 'icons/obj/toy.dmi'
-	icon_state = "sc_Ace of Hearts_syndicate" // shut up
+	icon = 'icons/obj/toys/playing_cards.dmi'
+	icon_state = "sc_Ace of Hearts_syndicate" // shut up // bye felicia
 	var/message = "A generic message of love or whatever."
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/valentine/Initialize()
+/obj/item/valentine/Initialize(mapload)
 	. = ..()
 	message = pick(strings(VALENTINE_FILE, "valentines"))
 
 /obj/item/valentine/attackby(obj/item/W, mob/user, params)
 	..()
 	if(istype(W, /obj/item/pen) || istype(W, /obj/item/toy/crayon))
-		if(!user.is_literate())
-			to_chat(user, "<span class='notice'>You scribble illegibly on [src]!</span>")
+		if(!user.can_write(W))
 			return
-		var/recipient = stripped_input(user, "Who is receiving this valentine?", "To:", null , 20)
-		var/sender = stripped_input(user, "Who is sending this valentine?", "From:", null , 20)
+		var/recipient = tgui_input_text(user, "Who is receiving this valentine?", "To:", max_length = MAX_NAME_LEN)
+		var/sender = tgui_input_text(user, "Who is sending this valentine?", "From:", max_length = MAX_NAME_LEN)
 		if(!user.canUseTopic(src, BE_CLOSE))
 			return
 		if(recipient && sender)
@@ -87,20 +89,20 @@
 			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[message]</BODY></HTML>", "window=[name]")
 			onclose(user, "[name]")
 	else
-		. += "<span class='notice'>It is too far away.</span>"
+		. += span_notice("It is too far away.")
 
 /obj/item/valentine/attack_self(mob/user)
 	user.examinate(src)
 
 /obj/item/food/candyheart
 	name = "candy heart"
-	icon = 'icons/obj/holiday_misc.dmi'
+	icon = 'icons/obj/holiday/holiday_misc.dmi'
 	icon_state = "candyheart"
 	desc = "A heart-shaped candy that reads: "
 	food_reagents = list(/datum/reagent/consumable/sugar = 2)
 	junkiness = 5
 
-/obj/item/food/candyheart/Initialize()
+/obj/item/food/candyheart/Initialize(mapload)
 	. = ..()
 	desc = pick(strings(VALENTINE_FILE, "candyhearts"))
 	icon_state = pick("candyheart", "candyheart2", "candyheart3", "candyheart4")

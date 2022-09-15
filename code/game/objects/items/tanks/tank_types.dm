@@ -49,7 +49,7 @@
 	desc = "A tank with an N2O/O2 gas mix."
 	icon_state = "anesthetic"
 	inhand_icon_state = "an_tank"
-	tank_holder_icon_state = "holder_oxygen_anesthetic"
+	tank_holder_icon_state = "holder_anesthetic"
 	force = 10
 
 /obj/item/tank/internals/anesthetic/populate_gas()
@@ -106,7 +106,7 @@
 	inhand_icon_state = "plasmaman_tank"
 	tank_holder_icon_state = null
 	force = 10
-	distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
+	distribute_pressure = TANK_PLASMAMAN_RELEASE_PRESSURE
 
 /obj/item/tank/internals/plasmaman/populate_gas()
 	air_contents.assert_gas(/datum/gas/plasma)
@@ -125,7 +125,7 @@
 	worn_icon = null
 	slot_flags = ITEM_SLOT_BELT
 	force = 5
-	volume = 24 //enough so they need to refill but not that often to be a chore
+	volume = 6 //same size as the engineering ones but plasmamen have special lungs that consume less plasma per breath
 	w_class = WEIGHT_CLASS_SMALL //thanks i forgot this
 
 /obj/item/tank/internals/plasmaman/belt/full/populate_gas()

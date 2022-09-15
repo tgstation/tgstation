@@ -1,15 +1,16 @@
+
 /mob/living/simple_animal/hostile/regalrat
 	name = "feral regal rat"
-	desc = "An evolved rat, created through some strange science. It leads nearby rats with deadly efficiency to protect its kingdom. Not technically a king."
+	desc = "An evolved rat, created through some strange science. They lead nearby rats with deadly efficiency to protect their kingdom. Not technically a king."
 	icon_state = "regalrat"
 	icon_living = "regalrat"
 	icon_dead = "regalrat_dead"
-	gender = NEUTER
 	speak_chance = 0
 	turns_per_move = 5
 	maxHealth = 70
 	health = 70
-	see_in_dark = 5
+	see_in_dark = 15
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	obj_damage = 10
 	butcher_results = list(/obj/item/clothing/head/crown = 1,)
 	response_help_continuous = "glares at"
@@ -22,31 +23,65 @@
 	melee_damage_upper = 15
 	attack_verb_continuous = "slashes"
 	attack_verb_simple = "slash"
-	attack_sound = 'sound/weapons/punch1.ogg'
+	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_vis_effect = ATTACK_EFFECT_CLAW
 	unique_name = TRUE
 	faction = list("rat")
+	///Whether or not the regal rat is already opening an airlock
+	var/opening_airlock = FALSE
 	///The spell that the rat uses to generate miasma
-	var/datum/action/cooldown/domain
+	var/datum/action/cooldown/domain/domain
 	///The Spell that the rat uses to recruit/convert more rats.
-	var/datum/action/cooldown/riot
+	var/datum/action/cooldown/riot/riot
 
-/mob/living/simple_animal/hostile/regalrat/Initialize()
+/mob/living/simple_animal/hostile/regalrat/Initialize(mapload)
 	. = ..()
-	domain = new /datum/action/cooldown/domain
-	riot = new /datum/action/cooldown/riot
+	domain = new(src)
+	riot = new(src)
 	domain.Grant(src)
 	riot.Grant(src)
 	AddElement(/datum/element/waddling)
 
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
+/mob/living/simple_animal/hostile/regalrat/Destroy()
+	QDEL_NULL(domain)
+	QDEL_NULL(riot)
+	return ..()
+
 /mob/living/simple_animal/hostile/regalrat/proc/get_player()
-	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as the Royal Rat, cheesey be his crown?", ROLE_SENTIENCE, null, FALSE, 100, POLL_IGNORE_SENTIENCE_POTION)
+	var/list/mob/dead/observer/candidates = poll_ghost_candidates("Do you want to play as the Regal Rat, cheesey be their crown?", ROLE_SENTIENCE, ROLE_SENTIENCE, 100, POLL_IGNORE_REGAL_RAT)
 	if(LAZYLEN(candidates) && !mind)
 		var/mob/dead/observer/C = pick(candidates)
 		key = C.key
 		notify_ghosts("All rise for the rat king, ascendant to the throne in \the [get_area(src)].", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Sentient Rat Created")
-	to_chat(src, "<span class='notice'>You are an independent, invasive force on the station! Horde coins, trash, cheese, and the like from the safety of darkness!</span>")
+	to_chat(src, span_notice("You are an independent, invasive force on the station! Horde coins, trash, cheese, and the like from the safety of darkness!"))
+
+/mob/living/simple_animal/hostile/regalrat/attack_ghost(mob/user)
+	. = ..()
+	if(. || !(GLOB.ghost_role_flags & GHOSTROLE_SPAWNER))
+		return
+	get_clicked_player(user)
+
+/**
+ * Sets a ghost to control the rat if the rat is eligible
+ *
+ * Asks the interacting ghost if they would like to control the rat.
+ * If they answer yes, and another ghost hasn't taken control, sets the ghost to control the rat.
+ * Arguments:
+ * * mob/user - The ghost to possibly control the rat
+ */
+/mob/living/simple_animal/hostile/regalrat/proc/get_clicked_player(mob/user)
+	if(key || stat)
+		return
+	var/rat_ask = tgui_alert(usr, "Become the Royal Rat?", "Are you sure?", list("Yes", "No"))
+	if(rat_ask != "Yes" || QDELETED(src))
+		return
+	if(key)
+		to_chat(user, span_warning("Someone else already took the rat!"))
+		return
+	key = user.key
+	src.log_message("took control of [name].", LOG_GAME)
 
 /mob/living/simple_animal/hostile/regalrat/handle_automated_action()
 	if(prob(20))
@@ -58,9 +93,9 @@
 /mob/living/simple_animal/hostile/regalrat/CanAttack(atom/the_target)
 	if(istype(the_target,/mob/living/simple_animal))
 		var/mob/living/A = the_target
-		if(istype(the_target, /mob/living/simple_animal/hostile/regalrat) && A.stat == CONSCIOUS)
+		if(isregalrat(the_target) && A.stat == CONSCIOUS)
 			return TRUE
-		if(istype(the_target, /mob/living/simple_animal/hostile/rat) && A.stat == CONSCIOUS)
+		if(israt(the_target) && A.stat == CONSCIOUS)
 			var/mob/living/simple_animal/hostile/rat/R = the_target
 			if(R.faction_check_mob(src, TRUE))
 				return FALSE
@@ -73,11 +108,11 @@
 	if(istype(user,/mob/living/simple_animal/hostile/rat))
 		var/mob/living/simple_animal/hostile/rat/ratself = user
 		if(ratself.faction_check_mob(src, TRUE))
-			. += "<span class='notice'>This is your king. Long live his majesty!</span>"
+			. += span_notice("This is your king. Long live their majesty!")
 		else
-			. += "<span class='warning'>This is a false king! Strike him down!</span>"
+			. += span_warning("This is a false king! Strike them down!")
 	else if(user != src && istype(user,/mob/living/simple_animal/hostile/regalrat))
-		. += "<span class='warning'>Who is this foolish false king? This will not stand!</span>"
+		. += span_warning("Who is this foolish false king? This will not stand!")
 
 /mob/living/simple_animal/hostile/regalrat/handle_environment(datum/gas_mixture/environment)
 	. = ..()
@@ -87,18 +122,28 @@
 	if(miasma_percentage>=0.25)
 		heal_bodypart_damage(1)
 
+#define REGALRAT_INTERACTION "regalrat"
 /mob/living/simple_animal/hostile/regalrat/AttackingTarget()
-	if (DOING_INTERACTION(src, "regalrat"))
+	if (DOING_INTERACTION(src, REGALRAT_INTERACTION))
 		return
-	. = ..()
-	if (target.reagents && target.is_injectable(src, allowmobs = TRUE))
-		src.visible_message("<span class='warning'>[src] starts licking [target] passionately!</span>","<span class='notice'>You start licking [target]...</span>")
-		if (do_mob(src, target, 2 SECONDS, interaction_key = "regalrat"))
+	if (QDELETED(target))
+		return
+	if(istype(target, /obj/machinery/door/airlock) && !opening_airlock)
+		pry_door(target)
+		return
+
+	if (target.reagents && target.is_injectable(src, allowmobs = TRUE) && !istype(target, /obj/item/food/cheese))
+		src.visible_message(span_warning("[src] starts licking [target] passionately!"),span_notice("You start licking [target]..."))
+		if (do_mob(src, target, 2 SECONDS, interaction_key = REGALRAT_INTERACTION))
 			target.reagents.add_reagent(/datum/reagent/rat_spit,rand(1,3),no_react = TRUE)
-			to_chat(src, "<span class='notice'>You finish licking [target].</span>")
-	else 
+			to_chat(src, span_notice("You finish licking [target]."))
+	else
 		SEND_SIGNAL(target, COMSIG_RAT_INTERACT, src)
 
+	if (DOING_INTERACTION(src, REGALRAT_INTERACTION)) // check again in case we started interacting
+		return
+	return ..()
+#undef REGALRAT_INTERACTION
 /**
  * Conditionally "eat" cheese object and heal, if injured.
  *
@@ -113,9 +158,39 @@
 		heal_bodypart_damage(amount)
 		qdel(target)
 	else
-		to_chat(src, "<span class='warning'>You feel fine, no need to eat anything!</span>")
+		to_chat(src, span_warning("You feel fine, no need to eat anything!"))
 
-/mob/living/simple_animal/hostile/regalrat/controlled/Initialize()
+/**
+ * Allows rat king to pry open an airlock if it isn't locked.
+ *
+ * A proc used for letting the rat king pry open airlocks instead of just attacking them.
+ * This allows the rat king to traverse the station when there is a lack of vents or
+ * accessible doors, something which is common in certain rat king spawn points.
+ */
+/mob/living/simple_animal/hostile/regalrat/proc/pry_door(target)
+	var/obj/machinery/door/airlock/prying_door = target
+	if(!prying_door.density || prying_door.locked || prying_door.welded || prying_door.seal)
+		return FALSE
+	opening_airlock = TRUE
+	visible_message(
+		span_warning("[src] begins prying open the airlock..."),
+		span_notice("You begin digging your claws into the airlock..."),
+		span_warning("You hear groaning metal..."),
+	)
+	var/time_to_open = 0.5 SECONDS
+	if(prying_door.hasPower())
+		time_to_open = 5 SECONDS
+		playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, vary = TRUE)
+	if(do_after(src, time_to_open, prying_door))
+		opening_airlock = FALSE
+		if(prying_door.density && !prying_door.open(2))
+			to_chat(src, span_warning("Despite your efforts, the airlock managed to resist your attempts to open it!"))
+			return FALSE
+		prying_door.open()
+		return FALSE
+	opening_airlock = FALSE
+
+/mob/living/simple_animal/hostile/regalrat/controlled/Initialize(mapload)
 	. = ..()
 	INVOKE_ASYNC(src, .proc/get_player)
 	var/kingdom = pick("Plague","Miasma","Maintenance","Trash","Garbage","Rat","Vermin","Cheese")
@@ -130,13 +205,14 @@
 /datum/action/cooldown/domain
 	name = "Rat King's Domain"
 	desc = "Corrupts this area to be more suitable for your rat army."
-	cooldown_time = 60
+	check_flags = AB_CHECK_CONSCIOUS
+	cooldown_time = 6 SECONDS
+	melee_cooldown_time = 0 SECONDS
 	icon_icon = 'icons/mob/actions/actions_animal.dmi'
 	background_icon_state = "bg_clock"
 	button_icon_state = "coffer"
 
-/datum/action/cooldown/domain/Trigger()
-	. = ..()
+/datum/action/cooldown/domain/proc/domain()
 	var/turf/T = get_turf(owner)
 	T.atmos_spawn_air("miasma=4;TEMP=[T20C]")
 	switch (rand(1,10))
@@ -150,6 +226,11 @@
 			new /obj/effect/decal/cleanable/dirt(T)
 	StartCooldown()
 
+/datum/action/cooldown/domain/Activate(atom/target)
+	StartCooldown(10 SECONDS)
+	domain()
+	StartCooldown()
+
 /**
  *This action checks all nearby mice, and converts them into hostile rats. If no mice are nearby, creates a new one.
  */
@@ -157,16 +238,14 @@
 /datum/action/cooldown/riot
 	name = "Raise Army"
 	desc = "Raise an army out of the hordes of mice and pests crawling around the maintenance shafts."
+	check_flags = AB_CHECK_CONSCIOUS
 	icon_icon = 'icons/mob/actions/actions_animal.dmi'
 	button_icon_state = "riot"
 	background_icon_state = "bg_clock"
-	cooldown_time = 80
-	///Checks to see if there are any nearby mice. Does not count Rats.
+	cooldown_time = 8 SECONDS
+	melee_cooldown_time = 0 SECONDS
 
-/datum/action/cooldown/riot/Trigger()
-	. = ..()
-	if(!.)
-		return
+/datum/action/cooldown/riot/proc/riot()
 	var/cap = CONFIG_GET(number/ratcap)
 	var/something_from_nothing = FALSE
 	for(var/mob/living/simple_animal/mouse/M in oview(owner, 5))
@@ -180,24 +259,29 @@
 		qdel(M)
 	if(!something_from_nothing)
 		if(LAZYLEN(SSmobs.cheeserats) >= cap)
-			to_chat(owner,"<span class='warning'>There's too many mice on this station to beckon a new one! Find them first!</span>")
+			to_chat(owner,span_warning("There's too many mice on this station to beckon a new one! Find them first!"))
 			return
 		new /mob/living/simple_animal/mouse(owner.loc)
-		owner.visible_message("<span class='warning'>[owner] commands a mouse to its side!</span>")
+		owner.visible_message(span_warning("[owner] commands a mouse to their side!"))
 	else
-		owner.visible_message("<span class='warning'>[owner] commands its army to action, mutating them into rats!</span>")
+		owner.visible_message(span_warning("[owner] commands their army to action, mutating them into rats!"))
+	StartCooldown()
+
+/datum/action/cooldown/riot/Activate(atom/target)
+	StartCooldown(10 SECONDS)
+	riot()
 	StartCooldown()
 
 /mob/living/simple_animal/hostile/rat
 	name = "rat"
-	desc = "It's a nasty, ugly, evil, disease-ridden rodent with anger issues."
+	desc = "They're a nasty, ugly, evil, disease-ridden rodent with anger issues."
 	icon_state = "mouse_gray"
 	icon_living = "mouse_gray"
 	icon_dead = "mouse_gray_dead"
 	speak = list("Skree!","SKREEE!","Squeak?")
 	speak_emote = list("squeaks")
 	emote_hear = list("Hisses.")
-	emote_see = list("runs in a circle.", "stands on its hind legs.")
+	emote_see = list("runs in a circle.", "stands on their hind legs.")
 	melee_damage_lower = 3
 	melee_damage_upper = 5
 	obj_damage = 5
@@ -213,7 +297,7 @@
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	faction = list("rat")
 
-/mob/living/simple_animal/hostile/rat/Initialize()
+/mob/living/simple_animal/hostile/rat/Initialize(mapload)
 	. = ..()
 	SSmobs.cheeserats += src
 
@@ -230,13 +314,15 @@
 			var/obj/item/food/deadmouse/mouse = new(loc)
 			mouse.icon_state = icon_dead
 			mouse.name = name
-	SSmobs.cheeserats -= src // remove rats on death
+		qdel(src)
+	else
+		SSmobs.cheeserats -= src // remove rats on death
 	return ..()
 
 /mob/living/simple_animal/hostile/rat/revive(full_heal = FALSE, admin_revive = FALSE)
 	var/cap = CONFIG_GET(number/ratcap)
 	if(!admin_revive && !ckey && LAZYLEN(SSmobs.cheeserats) >= cap)
-		visible_message("<span class='warning'>[src] twitched but does not continue moving due to the overwhelming rodent population on the station!</span>")
+		visible_message(span_warning("[src] twitched but does not continue moving due to the overwhelming rodent population on the station!"))
 		return FALSE
 	. = ..()
 	if(.)
@@ -247,26 +333,26 @@
 	if(istype(user,/mob/living/simple_animal/hostile/rat))
 		var/mob/living/simple_animal/hostile/rat/ratself = user
 		if(ratself.faction_check_mob(src, TRUE))
-			. += "<span class='notice'>You both serve the same king.</span>"
+			. += span_notice("You both serve the same king.")
 		else
-			. += "<span class='warning'>This fool serves a different king!</span>"
+			. += span_warning("This fool serves a different king!")
 	else if(istype(user,/mob/living/simple_animal/hostile/regalrat))
 		var/mob/living/simple_animal/hostile/regalrat/ratking = user
 		if(ratking.faction_check_mob(src, TRUE))
-			. += "<span class='notice'>This rat serves under you.</span>"
+			. += span_notice("This rat serves under you.")
 		else
-			. += "<span class='warning'>This peasant serves a different king! Strike him down!</span>"
+			. += span_warning("This peasant serves a different king! Strike them down!")
 
 /mob/living/simple_animal/hostile/rat/CanAttack(atom/the_target)
 	if(istype(the_target,/mob/living/simple_animal))
 		var/mob/living/A = the_target
-		if(istype(the_target, /mob/living/simple_animal/hostile/regalrat) && A.stat == CONSCIOUS)
+		if(isregalrat(the_target) && A.stat == CONSCIOUS)
 			var/mob/living/simple_animal/hostile/regalrat/ratking = the_target
 			if(ratking.faction_check_mob(src, TRUE))
 				return FALSE
 			else
 				return TRUE
-		if(istype(the_target, /mob/living/simple_animal/hostile/rat) && A.stat == CONSCIOUS)
+		if(israt(the_target) && A.stat == CONSCIOUS)
 			var/mob/living/simple_animal/hostile/rat/R = the_target
 			if(R.faction_check_mob(src, TRUE))
 				return FALSE
@@ -278,16 +364,16 @@
 	. = ..()
 	if(prob(40))
 		var/turf/open/floor/F = get_turf(src)
-		if(istype(F) && !F.intact)
+		if(istype(F) && F.underfloor_accessibility >= UNDERFLOOR_INTERACTABLE)
 			var/obj/structure/cable/C = locate() in F
 			if(C && prob(15))
 				if(C.avail())
-					visible_message("<span class='warning'>[src] chews through the [C]. It's toast!</span>")
+					visible_message(span_warning("[src] chews through the [C]. It's toast!"))
 					playsound(src, 'sound/effects/sparks2.ogg', 100, TRUE)
 					C.deconstruct()
 					death()
 			else if(C?.avail())
-				visible_message("<span class='warning'>[src] chews through the [C]. It looks unharmed!</span>")
+				visible_message(span_warning("[src] chews through the [C]. It looks unharmed!"))
 				playsound(src, 'sound/effects/sparks2.ogg', 100, TRUE)
 				C.deconstruct()
 
@@ -295,9 +381,9 @@
 	. = ..()
 	if(istype(target, /obj/item/food/cheese))
 		if (health >= maxHealth)
-			to_chat(src, "<span class='warning'>You feel fine, no need to eat anything!</span>")
+			to_chat(src, span_warning("You feel fine, no need to eat anything!"))
 			return
-		to_chat(src, "<span class='green'>You eat \the [src], restoring some health.</span>")
+		to_chat(src, span_green("You eat \the [src], restoring some health."))
 		heal_bodypart_damage(maxHealth)
 		qdel(target)
 
@@ -319,23 +405,23 @@
 	..()
 	if(HAS_TRAIT(L, TRAIT_AGEUSIA))
 		return
-	to_chat(L, "<span class='notice'>This food has a funny taste!</span>")
-	
+	to_chat(L, span_notice("This food has a funny taste!"))
+
 /datum/reagent/rat_spit/overdose_start(mob/living/M)
 	..()
 	var/mob/living/carbon/victim = M
-	if (istype(victim))
-		to_chat(victim, "<span class='userdanger'>With this last sip, you feel your body convulsing horribly from the contents you've ingested. As you contemplate your actions, you sense an awakened kinship with rat-kind and their newly risen leader!</span>")
+	if (istype(victim) && !("rat" in victim.faction))
+		to_chat(victim, span_userdanger("With this last sip, you feel your body convulsing horribly from the contents you've ingested. As you contemplate your actions, you sense an awakened kinship with rat-kind and their newly risen leader!"))
 		victim.faction |= "rat"
 		victim.vomit()
-	metabolization_rate = 10 * REAGENTS_METABOLISM 
+	metabolization_rate = 10 * REAGENTS_METABOLISM
 
 /datum/reagent/rat_spit/on_mob_life(mob/living/carbon/C)
 	if(prob(15))
-		to_chat(C, "<span class='notice'>You feel queasy!</span>")
+		to_chat(C, span_notice("You feel queasy!"))
 		C.adjust_disgust(3)
 	else if(prob(10))
-		to_chat(C, "<span class='warning'>That food does not sit up well!</span>")
+		to_chat(C, span_warning("That food does not sit up well!"))
 		C.adjust_disgust(5)
 	else if(prob(5))
 		C.vomit()

@@ -3,6 +3,8 @@ Reproductive extracts:
 	When fed three monkey cubes, produces between
 	1 and 4 normal slime extracts of the same colour.
 */
+
+
 /obj/item/slimecross/reproductive
 	name = "reproductive extract"
 	desc = "It pulses with a strange hunger."
@@ -10,39 +12,51 @@ Reproductive extracts:
 	effect = "reproductive"
 	effect_desc = "When fed monkey cubes it produces more extracts. Bio bag compatible as well."
 	var/extract_type = /obj/item/slime_extract/
-	var/cubes_eaten = 0
+	var/cooldown = 3 SECONDS
+	var/feedAmount = 3
 	var/last_produce = 0
-	var/cooldown = 30 // 3 seconds.
+
+/obj/item/slimecross/reproductive/examine()
+	. = ..()
+	. += span_danger("It appears to have eaten [length(contents)] Monkey Cube[p_s()]")
+
+/obj/item/slimecross/reproductive/Initialize(mapload)
+	. = ..()
+	create_storage(type = /datum/storage/extract_inventory)
 
 /obj/item/slimecross/reproductive/attackby(obj/item/O, mob/user)
-	if((last_produce + cooldown) > world.time)
-		to_chat(user, "<span class='warning'>[src] is still digesting!</span>")
+	var/datum/storage/extract_inventory/slime_storage = atom_storage
+	if(!istype(slime_storage))
 		return
-	if(istype(O, /obj/item/storage/bag/bio))
-		var/list/inserted = list()
-		SEND_SIGNAL(O, COMSIG_TRY_STORAGE_TAKE_TYPE, /obj/item/food/monkeycube, src, 1, null, null, user, inserted)
-		if(inserted.len)
-			var/obj/item/food/monkeycube/M = inserted[1]
-			if(istype(M))
-				eat_cube(M, user)
-		else
-			to_chat(user, "<span class='warning'>There are no monkey cubes in the bio bag!</span>")
-	if(istype(O,/obj/item/food/monkeycube))
-		eat_cube(O, user)
-	if(cubes_eaten >= 3)
-		var/cores = rand(1,4)
-		visible_message("<span class='notice'>[src] briefly swells to a massive size, and expels [cores] extract[cores > 1 ? "s":""]!</span>")
-		playsound(src, 'sound/effects/splat.ogg', 40, TRUE)
-		last_produce = world.time
-		for(var/i = 0, i < cores, i++)
-			new extract_type(get_turf(loc))
-		cubes_eaten = 0
 
-/obj/item/slimecross/reproductive/proc/eat_cube(obj/item/food/monkeycube, mob/user)
-		qdel(monkeycube)
-		cubes_eaten++
-		to_chat(user, "<span class='notice'>You feed [monkeycube] to [src], and it pulses gently.</span>")
-		playsound(src, 'sound/items/eatfood.ogg', 20, TRUE)
+	if((last_produce + cooldown) > world.time)
+		to_chat(user, span_warning("[src] is still digesting!"))
+		return
+
+	if(length(contents) >= feedAmount) //if for some reason the contents are full, but it didnt digest, attempt to digest again
+		to_chat(user, span_warning("[src] appears to be full but is not digesting! Maybe poking it stimulated it to digest."))
+		slime_storage?.processCubes(user)
+		return
+
+	if(istype(O, /obj/item/storage/bag/xeno))
+		var/list/inserted = list()
+		O.atom_storage.remove_type(/obj/item/food/monkeycube, src, feedAmount - length(contents), TRUE, FALSE, user, inserted)
+		if(inserted.len)
+			to_chat(user, span_notice("You feed [length(inserted)] Monkey Cube[p_s()] to [src], and it pulses gently."))
+			playsound(src, 'sound/items/eatfood.ogg', 20, TRUE)
+			slime_storage?.processCubes(user)
+		else
+			to_chat(user, span_warning("There are no monkey cubes in the bio bag!"))
+		return
+
+	else if(istype(O, /obj/item/food/monkeycube))
+		if(atom_storage?.attempt_insert(O, user, override = TRUE, force = TRUE))
+			to_chat(user, span_notice("You feed 1 Monkey Cube to [src], and it pulses gently."))
+			slime_storage?.processCubes(user)
+			playsound(src, 'sound/items/eatfood.ogg', 20, TRUE)
+			return
+		else
+			to_chat(user, span_notice("The [src] rejects the Monkey Cube!")) //in case it fails to insert for whatever reason you get feedback
 
 /obj/item/slimecross/reproductive/grey
 	extract_type = /obj/item/slime_extract/grey

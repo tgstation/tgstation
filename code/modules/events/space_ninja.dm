@@ -6,6 +6,8 @@
 	earliest_start = 20 MINUTES
 	min_players = 20
 	dynamic_should_hijack = TRUE
+	category = EVENT_CATEGORY_INVASION
+	description = "A space ninja infiltrates the station."
 
 /datum/round_event/ghost_role/space_ninja
 	minimum_required = 1
@@ -23,7 +25,7 @@
 		return MAP_ERROR
 
 	//selecting a candidate player
-	var/list/candidates = get_candidates(ROLE_NINJA, null, ROLE_NINJA)
+	var/list/candidates = get_candidates(ROLE_NINJA, ROLE_NINJA)
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
 
@@ -36,7 +38,7 @@
 	ninja.mind.add_antag_datum(/datum/antagonist/ninja)
 	spawned_mobs += ninja
 	message_admins("[ADMIN_LOOKUPFLW(ninja)] has been made into a space ninja by an event.")
-	log_game("[key_name(ninja)] was spawned as a ninja by an event.")
+	ninja.log_message("was spawned as a ninja by an event.", LOG_GAME)
 
 	return SUCCESSFUL_SPAWN
 
@@ -45,8 +47,9 @@
 
 /proc/create_space_ninja(spawn_loc)
 	var/mob/living/carbon/human/new_ninja = new(spawn_loc)
-	var/datum/preferences/random_human_options = new()//Randomize appearance for the ninja.
-	random_human_options.real_name = "[pick(GLOB.ninja_titles)] [pick(GLOB.ninja_names)]"
-	random_human_options.copy_to(new_ninja)
+	new_ninja.randomize_human_appearance(~(RANDOMIZE_NAME|RANDOMIZE_SPECIES))
+	var/new_name = "[pick(GLOB.ninja_titles)] [pick(GLOB.ninja_names)]"
+	new_ninja.name = new_name
+	new_ninja.real_name = new_name
 	new_ninja.dna.update_dna_identity()
 	return new_ninja

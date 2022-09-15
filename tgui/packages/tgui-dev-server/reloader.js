@@ -4,13 +4,13 @@
  * @license MIT
  */
 
-import { createLogger } from 'common/logging.js';
 import fs from 'fs';
 import os from 'os';
 import { basename } from 'path';
+import { DreamSeeker } from './dreamseeker.js';
+import { createLogger } from './logging.js';
 import { resolveGlob, resolvePath } from './util.js';
 import { regQuery } from './winreg.js';
-import { DreamSeeker } from './dreamseeker.js';
 
 const logger = createLogger('reloader');
 
@@ -50,10 +50,9 @@ export const findCacheRoot = async () => {
   // Query the Windows Registry
   if (process.platform === 'win32') {
     logger.log('querying windows registry');
-    let userpath = await regQuery(
-      'HKCU\\Software\\Dantom\\BYOND',
-      'userpath');
+    let userpath = await regQuery('HKCU\\Software\\Dantom\\BYOND', 'userpath');
     if (userpath) {
+      // prettier-ignore
       cacheRoot = userpath
         .replace(/\\$/, '')
         .replace(/\\/g, '/')
@@ -65,13 +64,13 @@ export const findCacheRoot = async () => {
   logger.log('found no cache directories');
 };
 
-const onCacheRootFound = cacheRoot => {
+const onCacheRootFound = (cacheRoot) => {
   logger.log(`found cache at '${cacheRoot}'`);
   // Plant a dummy
   fs.closeSync(fs.openSync(cacheRoot + '/dummy', 'w'));
 };
 
-export const reloadByondCache = async bundleDir => {
+export const reloadByondCache = async (bundleDir) => {
   const cacheRoot = await findCacheRoot();
   if (!cacheRoot) {
     return;
@@ -83,15 +82,21 @@ export const reloadByondCache = async bundleDir => {
     return;
   }
   // Get dreamseeker instances
-  const pids = cacheDirs.map(cacheDir => (
+  const pids = cacheDirs.map((cacheDir) =>
     parseInt(cacheDir.split('/cache/tmp').pop(), 10)
-  ));
+  );
   const dssPromise = DreamSeeker.getInstancesByPids(pids);
   // Copy assets
-  const assets = await resolveGlob(bundleDir, './*.+(bundle|chunk|hot-update).*');
+  const assets = await resolveGlob(
+    bundleDir,
+    './*.+(bundle|chunk|hot-update).*'
+  );
   for (let cacheDir of cacheDirs) {
     // Clear garbage
-    const garbage = await resolveGlob(cacheDir, './*.+(bundle|chunk|hot-update).*');
+    const garbage = await resolveGlob(
+      cacheDir,
+      './*.+(bundle|chunk|hot-update).*'
+    );
     try {
       for (let file of garbage) {
         fs.unlinkSync(file);
@@ -102,8 +107,7 @@ export const reloadByondCache = async bundleDir => {
         fs.writeFileSync(destination, fs.readFileSync(asset));
       }
       logger.log(`copied ${assets.length} files to '${cacheDir}'`);
-    }
-    catch (err) {
+    } catch (err) {
       logger.error(`failed copying to '${cacheDir}'`);
       logger.error(err);
     }

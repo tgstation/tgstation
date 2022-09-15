@@ -10,12 +10,12 @@
 /area/shuttle/abandoned)
 "ad" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/door/airlock/external/glass,
+/obj/machinery/door/airlock/external/glass/ruin,
 /obj/docking_port/mobile{
 	dir = 2;
 	dwidth = 8;
 	height = 17;
-	id = "whiteship";
+	shuttle_id = "whiteship";
 	launch_status = 0;
 	name = "White Ship";
 	port_direction = 2;
@@ -25,9 +25,7 @@
 /area/shuttle/abandoned)
 "ae" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /obj/item/stack/sheet/iron,
 /obj/structure/tank_dispenser,
 /turf/open/floor/iron/airless,
@@ -42,9 +40,7 @@
 /area/shuttle/abandoned)
 "ah" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/broken{
-	dir = 4
-	},
+/obj/machinery/light/broken/directional/east,
 /obj/structure/closet/emcloset,
 /turf/open/floor/iron/airless,
 /area/shuttle/abandoned)
@@ -151,15 +147,15 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/frame/machine,
 /obj/item/stack/cable_coil,
-/obj/machinery/light/broken{
-	dir = 4
-	},
+/obj/machinery/light/broken/directional/east,
 /turf/open/floor/iron/airless,
 /area/shuttle/abandoned)
 "aC" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/wallframe/apc,
-/obj/item/circuitboard/computer/apc_control,
+/obj/item/electronics/apc{
+	name = "improper power control module"
+	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "aD" = (
@@ -171,19 +167,19 @@
 "aE" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/mecha_wreckage/ripley,
-/turf/open/floor/mech_bay_recharge_floor,
+/turf/open/floor/iron/recharge_floor,
 /area/shuttle/abandoned)
 "aF" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/door/airlock/titanium{
-	name = "restroom"
+	name = "Restroom"
 	},
-/turf/open/floor/iron/airless/showroomfloor,
+/turf/open/floor/iron/showroomfloor/airless,
 /area/shuttle/abandoned)
 "aG" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/door/airlock/titanium{
-	name = "mech bay"
+	name = "Mech Bay"
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
@@ -209,22 +205,19 @@
 /obj/structure/toilet{
 	dir = 4
 	},
-/obj/machinery/door/window/eastleft,
+/obj/machinery/door/window/left/directional/east,
 /obj/structure/window/reinforced/tinted,
-/turf/open/floor/iron/airless/showroomfloor,
+/turf/open/floor/iron/showroomfloor/airless,
 /area/shuttle/abandoned)
 "aL" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron/airless/showroomfloor,
+/turf/open/floor/iron/showroomfloor/airless,
 /area/shuttle/abandoned)
 "aM" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/urinal{
-	dir = 8;
-	pixel_x = 32
-	},
+/obj/structure/urinal/directional/east,
 /obj/structure/window/reinforced/tinted,
-/turf/open/floor/iron/airless/showroomfloor,
+/turf/open/floor/iron/showroomfloor/airless,
 /area/shuttle/abandoned)
 "aN" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -248,28 +241,22 @@
 /area/shuttle/abandoned)
 "aQ" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12
-	},
+/obj/structure/sink/directional/east,
 /obj/item/soap,
-/turf/open/floor/iron/airless/showroomfloor,
+/turf/open/floor/iron/showroomfloor/airless,
 /area/shuttle/abandoned)
 "aR" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light,
-/turf/open/floor/iron/airless/showroomfloor,
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron/showroomfloor/airless,
 /area/shuttle/abandoned)
 "aS" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/urinal{
-	dir = 8;
-	pixel_x = 32
-	},
+/obj/structure/urinal/directional/east,
 /obj/structure/window/reinforced/tinted{
 	dir = 1
 	},
-/turf/open/floor/iron/airless/showroomfloor,
+/turf/open/floor/iron/showroomfloor/airless,
 /area/shuttle/abandoned)
 "aT" = (
 /obj/machinery/mech_bay_recharge_port,
@@ -278,9 +265,9 @@
 /area/shuttle/abandoned)
 "aU" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light,
-/obj/effect/spawner/lootdrop/whiteship_cere_ripley,
-/turf/open/floor/mech_bay_recharge_floor,
+/obj/machinery/light/directional/south,
+/obj/effect/spawner/random/exotic/ripley,
+/turf/open/floor/iron/recharge_floor,
 /area/shuttle/abandoned)
 "aV" = (
 /obj/machinery/computer/mech_bay_power_console{
@@ -292,9 +279,9 @@
 "aW" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/door/airlock/titanium{
-	name = "Cockpit";
-	req_access_txt = "109"
+	name = "Cockpit"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/admin/captain,
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
@@ -344,9 +331,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/extinguisher_cabinet{
-	pixel_y = 28
-	},
+/obj/structure/extinguisher_cabinet/directional/north,
 /obj/item/storage/toolbox/emergency,
 /turf/open/floor/iron/airless,
 /area/shuttle/abandoned)
@@ -369,9 +354,7 @@
 "bg" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /obj/item/folder/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -384,9 +367,7 @@
 "bh" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -441,7 +422,7 @@
 /area/shuttle/abandoned)
 "bn" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/item/reagent_containers/food/drinks/mug,
+/obj/item/reagent_containers/cup/glass/mug,
 /obj/effect/turf_decal/tile/blue,
 /turf/open/floor/iron/airless,
 /area/shuttle/abandoned)
@@ -470,7 +451,7 @@
 /turf/open/floor/iron/airless,
 /area/shuttle/abandoned)
 "bq" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
 "br" = (
@@ -515,7 +496,7 @@
 "pe" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/shreds,
-/obj/item/storage/firstaid/ancient,
+/obj/item/storage/medkit/ancient,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "tT" = (
@@ -532,7 +513,7 @@
 /area/shuttle/abandoned)
 "CQ" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/item/stack/sheet/mineral/uranium{
+/obj/item/stack/sheet/mineral/plasma{
 	amount = 15
 	},
 /turf/open/floor/plating/airless,

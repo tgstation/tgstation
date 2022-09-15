@@ -4,28 +4,38 @@
 	desc = "A large structural assembly made out of metal; It requires a layer of iron before it can be considered a wall."
 	anchored = TRUE
 	density = TRUE
+	max_integrity = 200
+	rad_insulation = RAD_VERY_LIGHT_INSULATION
 	var/state = GIRDER_NORMAL
 	var/girderpasschance = 20 // percentage chance that a projectile passes through the girder.
 	var/can_displace = TRUE //If the girder can be moved around by wrenching it
 	var/next_beep = 0 //Prevents spamming of the construction sound
-	max_integrity = 200
-	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
-	rad_insulation = RAD_VERY_LIGHT_INSULATION
+	/// The material cost to construct something on the girder
+	var/static/list/construction_cost = list(
+		/obj/item/stack/sheet/iron = 2,
+		/obj/item/stack/rods = 5,
+		/obj/item/stack/sheet/plasteel = 2,
+		/obj/item/stack/sheet/bronze = 2,
+		/obj/item/stack/sheet/runed_metal = 1,
+		exotic_material = 2 // this needs to be refactored properly
+	)
 
 /obj/structure/girder/examine(mob/user)
 	. = ..()
 	switch(state)
 		if(GIRDER_REINF)
-			. += "<span class='notice'>The support struts are <b>screwed</b> in place.</span>"
+			. += span_notice("The support struts are <b>screwed</b> in place.")
 		if(GIRDER_REINF_STRUTS)
-			. += "<span class='notice'>The support struts are <i>unscrewed</i> and the inner <b>grille</b> is intact.</span>"
+			. += span_notice("The support struts are <i>unscrewed</i> and the inner <b>grille</b> is intact.")
 		if(GIRDER_NORMAL)
 			if(can_displace)
-				. += "<span class='notice'>The bolts are <b>wrenched</b> in place.</span>"
+				. += span_notice("The bolts are <b>wrenched</b> in place.")
 		if(GIRDER_DISPLACED)
-			. += "<span class='notice'>The bolts are <i>loosened</i>, but the <b>screws</b> are holding [src] together.</span>"
+			. += span_notice("The bolts are <i>loosened</i>, but the <b>screws</b> are holding [src] together.")
 		if(GIRDER_DISASSEMBLED)
-			. += "<span class='notice'>[src] is disassembled! You probably shouldn't be able to see this examine message.</span>"
+			. += span_notice("[src] is disassembled! You probably shouldn't be able to see this examine message.")
+		if(GIRDER_TRAM)
+			. += span_notice("[src] is designed for tram usage. Deconstructed with a screwdriver!")
 
 /obj/structure/girder/attackby(obj/item/W, mob/user, params)
 	var/platingmodifier = 1
@@ -37,49 +47,51 @@
 	add_fingerprint(user)
 
 	if(istype(W, /obj/item/gun/energy/plasmacutter))
-		to_chat(user, "<span class='notice'>You start slicing apart the girder...</span>")
+		balloon_alert(user, "slicing apart...")
 		if(W.use_tool(src, user, 40, volume=100))
-			to_chat(user, "<span class='notice'>You slice apart the girder.</span>")
 			var/obj/item/stack/sheet/iron/M = new (loc, 2)
-			M.add_fingerprint(user)
+			if (!QDELETED(M))
+				M.add_fingerprint(user)
 			qdel(src)
+			return
 
-	else if(istype(W, /obj/item/stack))
-		if(iswallturf(loc))
-			to_chat(user, "<span class='warning'>There is already a wall present!</span>")
+	else if(isstack(W))
+		if(iswallturf(loc) || (locate(/obj/structure/falsewall) in src.loc.contents))
+			balloon_alert(user, "wall already present!")
 			return
-		if(!isfloorturf(src.loc))
-			to_chat(user, "<span class='warning'>A floor must be present to build a false wall!</span>")
+		if(!isfloorturf(src.loc) && state != GIRDER_TRAM)
+			balloon_alert(user, "need floor!")
 			return
-		if (locate(/obj/structure/falsewall) in src.loc.contents)
-			to_chat(user, "<span class='warning'>There is already a false wall present!</span>")
-			return
+		if(state == GIRDER_TRAM)
+			if(!locate(/obj/structure/industrial_lift/tram) in src.loc.contents)
+				balloon_alert(user, "need tram floors!")
+				return
 
 		if(istype(W, /obj/item/stack/rods))
-			var/obj/item/stack/rods/S = W
+			var/obj/item/stack/rods/rod = W
+			var/amount = construction_cost[rod.type]
 			if(state == GIRDER_DISPLACED)
-				if(S.get_amount() < 2)
-					to_chat(user, "<span class='warning'>You need at least two rods to create a false wall!</span>")
+				if(rod.get_amount() < amount)
+					balloon_alert(user, "need [amount] rods!")
 					return
-				to_chat(user, "<span class='notice'>You start building a reinforced false wall...</span>")
+				balloon_alert(user, "concealing entrance...")
 				if(do_after(user, 20, target = src))
-					if(S.get_amount() < 2)
+					if(rod.get_amount() < amount)
 						return
-					S.use(2)
-					to_chat(user, "<span class='notice'>You create a false wall. Push on it to open or close the passage.</span>")
+					rod.use(amount)
 					var/obj/structure/falsewall/iron/FW = new (loc)
 					transfer_fingerprints_to(FW)
 					qdel(src)
-			else
-				if(S.get_amount() < 5)
-					to_chat(user, "<span class='warning'>You need at least five rods to add plating!</span>")
 					return
-				to_chat(user, "<span class='notice'>You start adding plating...</span>")
+			else
+				if(rod.get_amount() < amount)
+					balloon_alert(user, "need [amount] rods!")
+					return
+				balloon_alert(user, "adding plating...")
 				if(do_after(user, 40, target = src))
-					if(S.get_amount() < 5)
+					if(rod.get_amount() < amount)
 						return
-					S.use(5)
-					to_chat(user, "<span class='notice'>You add the plating.</span>")
+					rod.use(amount)
 					var/turf/T = get_turf(src)
 					T.PlaceOnTop(/turf/closed/wall/mineral/iron)
 					transfer_fingerprints_to(T)
@@ -89,118 +101,165 @@
 		if(!istype(W, /obj/item/stack/sheet))
 			return
 
-		var/obj/item/stack/sheet/S = W
-		if(istype(S, /obj/item/stack/sheet/iron))
+		var/obj/item/stack/sheet/sheets = W
+		if(istype(sheets, /obj/item/stack/sheet/iron))
+			var/amount = construction_cost[/obj/item/stack/sheet/iron]
 			if(state == GIRDER_DISPLACED)
-				if(S.get_amount() < 2)
-					to_chat(user, "<span class='warning'>You need two sheets of iron to create a false wall!</span>")
+				if(sheets.get_amount() < amount)
+					balloon_alert(user, "need [amount] sheets!")
 					return
-				to_chat(user, "<span class='notice'>You start building a false wall...</span>")
+				balloon_alert(user, "concealing entrance...")
 				if(do_after(user, 20*platingmodifier, target = src))
-					if(S.get_amount() < 2)
+					if(sheets.get_amount() < amount)
 						return
-					S.use(2)
-					to_chat(user, "<span class='notice'>You create a false wall. Push on it to open or close the passage.</span>")
+					sheets.use(amount)
 					var/obj/structure/falsewall/F = new (loc)
 					transfer_fingerprints_to(F)
 					qdel(src)
+					return
 			else if(state == GIRDER_REINF)
-				to_chat(user, "<span class='warning'>You can't finish a reinforced girder with regular iron. You need a plasteel sheet for that.</span>")
+				balloon_alert(user, "need plasteel sheet!")
+				return
+			else if(state == GIRDER_TRAM)
+				if(sheets.get_amount() < amount)
+					balloon_alert(user, "need [amount] sheets!")
+					return
+				balloon_alert(user, "adding plating...")
+				if (do_after(user, 4 SECONDS, target = src))
+					if(sheets.get_amount() < amount)
+						return
+					sheets.use(2)
+					var/obj/structure/tramwall/tram_wall = new(loc)
+					transfer_fingerprints_to(tram_wall)
+					qdel(src)
 				return
 			else
-				if(S.get_amount() < 2)
-					to_chat(user, "<span class='warning'>You need two sheets of iron to finish a wall!</span>")
+				if(sheets.get_amount() < amount)
+					balloon_alert(user, "need [amount] sheets!")
 					return
-				to_chat(user, "<span class='notice'>You start adding plating...</span>")
+				balloon_alert(user, "adding plating...")
 				if (do_after(user, 40*platingmodifier, target = src))
-					if(S.get_amount() < 2)
+					if(sheets.get_amount() < amount)
 						return
-					S.use(2)
-					to_chat(user, "<span class='notice'>You add the plating.</span>")
+					sheets.use(amount)
 					var/turf/T = get_turf(src)
 					T.PlaceOnTop(/turf/closed/wall)
 					transfer_fingerprints_to(T)
 					qdel(src)
 				return
 
-		if(istype(S, /obj/item/stack/sheet/plasteel))
+		if(istype(sheets, /obj/item/stack/sheet/plasteel))
+			var/amount = construction_cost[/obj/item/stack/sheet/plasteel]
 			if(state == GIRDER_DISPLACED)
-				if(S.get_amount() < 2)
-					to_chat(user, "<span class='warning'>You need at least two sheets to create a false wall!</span>")
+				if(sheets.get_amount() < amount)
+					balloon_alert(user, "need [amount] sheets!")
 					return
-				to_chat(user, "<span class='notice'>You start building a reinforced false wall...</span>")
+				balloon_alert(user, "concealing entrance...")
 				if(do_after(user, 20, target = src))
-					if(S.get_amount() < 2)
+					if(sheets.get_amount() < amount)
 						return
-					S.use(2)
-					to_chat(user, "<span class='notice'>You create a reinforced false wall. Push on it to open or close the passage.</span>")
+					sheets.use(amount)
 					var/obj/structure/falsewall/reinforced/FW = new (loc)
 					transfer_fingerprints_to(FW)
 					qdel(src)
-			else if(state == GIRDER_REINF)
-				if(S.get_amount() < 1)
 					return
-				to_chat(user, "<span class='notice'>You start finalizing the reinforced wall...</span>")
+			else if(state == GIRDER_REINF)
+				amount = 1 // hur dur let's make plasteel have different construction amounts 4norasin
+				if(sheets.get_amount() < amount)
+					return
+				balloon_alert(user, "adding plating...")
 				if(do_after(user, 50*platingmodifier, target = src))
-					if(S.get_amount() < 1)
+					if(sheets.get_amount() < amount)
 						return
-					S.use(1)
-					to_chat(user, "<span class='notice'>You fully reinforce the wall.</span>")
+					sheets.use(amount)
 					var/turf/T = get_turf(src)
 					T.PlaceOnTop(/turf/closed/wall/r_wall)
 					transfer_fingerprints_to(T)
 					qdel(src)
 				return
 			else
-				if(S.get_amount() < 1)
+				amount = 1 // hur dur x2
+				if(sheets.get_amount() < amount)
 					return
-				to_chat(user, "<span class='notice'>You start reinforcing the girder...</span>")
+				balloon_alert(user, "reinforcing frame...")
 				if(do_after(user, 60*platingmodifier, target = src))
-					if(S.get_amount() < 1)
+					if(sheets.get_amount() < amount)
 						return
-					S.use(1)
-					to_chat(user, "<span class='notice'>You reinforce the girder.</span>")
+					sheets.use(amount)
 					var/obj/structure/girder/reinforced/R = new (loc)
 					transfer_fingerprints_to(R)
 					qdel(src)
 				return
 
-		if(!S.has_unique_girder)
-			var/M = S.sheettype
+		if(!sheets.has_unique_girder && sheets.material_type)
+			if(istype(src, /obj/structure/girder/reinforced))
+				balloon_alert(user, "need plasteel!")
+				return
+
+			var/M = sheets.sheettype
+			var/amount = construction_cost["exotic_material"]
+			if(state == GIRDER_TRAM)
+				if(sheets.get_amount() < amount)
+					balloon_alert(user, "need [amount] sheets!")
+					return
+				balloon_alert(user, "adding plating...")
+				if (do_after(user, 4 SECONDS, target = src))
+					if(sheets.get_amount() < amount)
+						return
+					sheets.use(amount)
+					var/obj/structure/tramwall/tram_wall
+					var/tram_wall_type = text2path("/obj/structure/tramwall/[M]")
+					if(tram_wall_type)
+						tram_wall = new tram_wall_type(loc)
+					else
+						var/obj/structure/tramwall/material/mat_tram_wall = new(loc)
+						var/list/material_list = list()
+						material_list[GET_MATERIAL_REF(sheets.material_type)] = MINERAL_MATERIAL_AMOUNT * 2
+						if(material_list)
+							mat_tram_wall.set_custom_materials(material_list)
+						tram_wall = mat_tram_wall
+					transfer_fingerprints_to(tram_wall)
+					qdel(src)
+				return
 			if(state == GIRDER_DISPLACED)
 				var/falsewall_type = text2path("/obj/structure/falsewall/[M]")
-				if(!falsewall_type)
-					to_chat(user, "<span class='warning'>You can't seem to figure out how to make a false wall with [S]!</span>")
+				if(sheets.get_amount() < amount)
+					balloon_alert(user, "need [amount] sheets!")
 					return
-				if(S.get_amount() < 2)
-					to_chat(user, "<span class='warning'>You need at least two sheets to create a false wall!</span>")
-					return
+				balloon_alert(user, "concealing entrance...")
 				if(do_after(user, 20, target = src))
-					if(S.get_amount() < 2)
+					if(sheets.get_amount() < amount)
 						return
-					S.use(2)
-					to_chat(user, "<span class='notice'>You create a false wall. Push on it to open or close the passage.</span>")
-					var/obj/structure/falsewall/FW = new falsewall_type (loc)
-					transfer_fingerprints_to(FW)
+					sheets.use(amount)
+					var/obj/structure/falsewall/falsewall
+					if(falsewall_type)
+						falsewall = new falsewall_type (loc)
+					else
+						var/obj/structure/falsewall/material/mat_falsewall = new(loc)
+						var/list/material_list = list()
+						material_list[GET_MATERIAL_REF(sheets.material_type)] = MINERAL_MATERIAL_AMOUNT * 2
+						if(material_list)
+							mat_falsewall.set_custom_materials(material_list)
+						falsewall = mat_falsewall
+					transfer_fingerprints_to(falsewall)
 					qdel(src)
-			else
-				if(S.get_amount() < 2)
-					to_chat(user, "<span class='warning'>You need at least two sheets to add plating!</span>")
 					return
-				to_chat(user, "<span class='notice'>You start adding plating...</span>")
+			else
+				if(sheets.get_amount() < amount)
+					balloon_alert(user, "need [amount] sheets!")
+					return
+				balloon_alert(user, "adding plating...")
 				if (do_after(user, 40, target = src))
-					if(S.get_amount() < 2)
+					if(sheets.get_amount() < amount)
 						return
-					S.use(2)
-					to_chat(user, "<span class='notice'>You add the plating.</span>")
+					sheets.use(amount)
 					var/turf/T = get_turf(src)
-					if(S.walltype)
-						T.PlaceOnTop(S.walltype)
+					if(sheets.walltype)
+						T.PlaceOnTop(sheets.walltype)
 					else
 						var/turf/newturf = T.PlaceOnTop(/turf/closed/wall/material)
 						var/list/material_list = list()
-						if(S.material_type)
-							material_list[GET_MATERIAL_REF(S.material_type)] = MINERAL_MATERIAL_AMOUNT * 2
+						material_list[GET_MATERIAL_REF(sheets.material_type)] = MINERAL_MATERIAL_AMOUNT * 2
 						if(material_list)
 							newturf.set_custom_materials(material_list)
 
@@ -215,7 +274,7 @@
 		if (P.pipe_type in list(0, 1, 5)) //simple pipes, simple bends, and simple manifolds.
 			if(!user.transferItemToLoc(P, drop_location()))
 				return
-			to_chat(user, "<span class='notice'>You fit the pipe into \the [src].</span>")
+			balloon_alert(user, "inserted pipe")
 	else
 		return ..()
 
@@ -225,35 +284,43 @@
 		return TRUE
 
 	. = FALSE
+	if(state == GIRDER_TRAM)
+		balloon_alert(user, "disassembling frame...")
+		if(tool.use_tool(src, user, 4 SECONDS, volume=100))
+			if(state != GIRDER_TRAM)
+				return
+			state = GIRDER_DISASSEMBLED
+			var/obj/item/stack/sheet/iron/M = new (loc, 2)
+			if (!QDELETED(M))
+				M.add_fingerprint(user)
+			qdel(src)
+		return TRUE
+
 	if(state == GIRDER_DISPLACED)
-		user.visible_message("<span class='warning'>[user] disassembles the girder.</span>",
-			"<span class='notice'>You start to disassemble the girder...</span>",
-			"<span class='hear'>You hear clanking and banging noises.</span>")
+		balloon_alert(user, "disassembling frame...")
 		if(tool.use_tool(src, user, 40, volume=100))
 			if(state != GIRDER_DISPLACED)
 				return
 			state = GIRDER_DISASSEMBLED
-			to_chat(user, "<span class='notice'>You disassemble the girder.</span>")
 			var/obj/item/stack/sheet/iron/M = new (loc, 2)
-			M.add_fingerprint(user)
+			if (!QDELETED(M))
+				M.add_fingerprint(user)
 			qdel(src)
 		return TRUE
 
 	else if(state == GIRDER_REINF)
-		to_chat(user, "<span class='notice'>You start unsecuring support struts...</span>")
+		balloon_alert(user, "unsecuring support struts...")
 		if(tool.use_tool(src, user, 40, volume=100))
 			if(state != GIRDER_REINF)
 				return
-			to_chat(user, "<span class='notice'>You unsecure the support struts.</span>")
 			state = GIRDER_REINF_STRUTS
 		return TRUE
 
 	else if(state == GIRDER_REINF_STRUTS)
-		to_chat(user, "<span class='notice'>You start securing support struts...</span>")
+		balloon_alert(user, "securing support struts...")
 		if(tool.use_tool(src, user, 40, volume=100))
 			if(state != GIRDER_REINF_STRUTS)
 				return
-			to_chat(user, "<span class='notice'>You secure the support struts.</span>")
 			state = GIRDER_REINF
 		return TRUE
 
@@ -261,9 +328,8 @@
 /obj/structure/girder/wirecutter_act(mob/user, obj/item/tool)
 	. = ..()
 	if(state == GIRDER_REINF_STRUTS)
-		to_chat(user, "<span class='notice'>You start removing the inner grille...</span>")
+		balloon_alert(user, "removing inner grille...")
 		if(tool.use_tool(src, user, 40, volume=100))
-			to_chat(user, "<span class='notice'>You remove the inner grille.</span>")
 			new /obj/item/stack/sheet/plasteel(get_turf(src))
 			var/obj/structure/girder/G = new (loc)
 			transfer_fingerprints_to(G)
@@ -274,32 +340,30 @@
 	. = ..()
 	if(state == GIRDER_DISPLACED)
 		if(!isfloorturf(loc))
-			to_chat(user, "<span class='warning'>A floor must be present to secure the girder!</span>")
+			balloon_alert(user, "needs floor!")
 
-		to_chat(user, "<span class='notice'>You start securing the girder...</span>")
+		balloon_alert(user, "securing frame...")
 		if(tool.use_tool(src, user, 40, volume=100))
-			to_chat(user, "<span class='notice'>You secure the girder.</span>")
 			var/obj/structure/girder/G = new (loc)
 			transfer_fingerprints_to(G)
 			qdel(src)
 		return TRUE
 	else if(state == GIRDER_NORMAL && can_displace)
-		to_chat(user, "<span class='notice'>You start unsecuring the girder...</span>")
+		balloon_alert(user, "unsecuring frame...")
 		if(tool.use_tool(src, user, 40, volume=100))
-			to_chat(user, "<span class='notice'>You unsecure the girder.</span>")
 			var/obj/structure/girder/displaced/D = new (loc)
 			transfer_fingerprints_to(D)
 			qdel(src)
 		return TRUE
 
-/obj/structure/girder/CanAllowThrough(atom/movable/mover, turf/target)
+/obj/structure/girder/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
-	if((mover.pass_flags & PASSGRILLE) || istype(mover, /obj/projectile))
+	if((mover.pass_flags & PASSGRILLE) || isprojectile(mover))
 		return prob(girderpasschance)
 
-/obj/structure/girder/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller)
+/obj/structure/girder/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller, no_id = FALSE)
 	. = !density
-	if(istype(caller))
+	if(caller)
 		. = . || (caller.pass_flags & PASSGRILLE)
 
 /obj/structure/girder/deconstruct(disassembled = TRUE)
@@ -327,46 +391,42 @@
 	girderpasschance = 0
 	max_integrity = 350
 
-
+/obj/structure/girder/tram
+	name = "tram girder"
+	state = GIRDER_TRAM
 
 //////////////////////////////////////////// cult girder //////////////////////////////////////////////
 
 /obj/structure/girder/cult
 	name = "runed girder"
 	desc = "Framework made of a strange and shockingly cold metal. It doesn't seem to have any bolts."
-	icon = 'icons/obj/cult.dmi'
+	icon = 'icons/obj/cult/structures.dmi'
 	icon_state= "cultgirder"
 	can_displace = FALSE
 
 /obj/structure/girder/cult/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
-	if(istype(W, /obj/item/melee/cultblade/dagger) && iscultist(user)) //Cultists can demolish cult girders instantly with their tomes
-		user.visible_message("<span class='warning'>[user] strikes [src] with [W]!</span>", "<span class='notice'>You demolish [src].</span>")
-		new /obj/item/stack/sheet/runed_metal(drop_location(), 1)
-		qdel(src)
-
-	else if(W.tool_behaviour == TOOL_WELDER)
+	if(W.tool_behaviour == TOOL_WELDER)
 		if(!W.tool_start_check(user, amount=0))
 			return
 
-		to_chat(user, "<span class='notice'>You start slicing apart the girder...</span>")
+		balloon_alert(user, "slicing apart...")
 		if(W.use_tool(src, user, 40, volume=50))
-			to_chat(user, "<span class='notice'>You slice apart the girder.</span>")
 			var/obj/item/stack/sheet/runed_metal/R = new(drop_location(), 1)
 			transfer_fingerprints_to(R)
 			qdel(src)
 
 	else if(istype(W, /obj/item/stack/sheet/runed_metal))
 		var/obj/item/stack/sheet/runed_metal/R = W
-		if(R.get_amount() < 1)
-			to_chat(user, "<span class='warning'>You need at least one sheet of runed metal to construct a runed wall!</span>")
+		var/amount = construction_cost[R.type]
+		if(R.get_amount() < amount)
+			balloon_alert(user, "need [amount] sheet!")
 			return
-		user.visible_message("<span class='notice'>[user] begins laying runed metal on [src]...</span>", "<span class='notice'>You begin constructing a runed wall...</span>")
+		balloon_alert(user, "adding plating...")
 		if(do_after(user, 50, target = src))
-			if(R.get_amount() < 1)
+			if(R.get_amount() < amount)
 				return
-			user.visible_message("<span class='notice'>[user] plates [src] with runed metal.</span>", "<span class='notice'>You construct a runed wall.</span>")
-			R.use(1)
+			R.use(amount)
 			var/turf/T = get_turf(src)
 			T.PlaceOnTop(/turf/closed/wall/mineral/cult)
 			qdel(src)
@@ -385,7 +445,10 @@
 /obj/structure/girder/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_FLOORWALL)
-			return list("mode" = RCD_FLOORWALL, "delay" = 20, "cost" = 8)
+			return rcd_result_with_memory(
+				list("mode" = RCD_FLOORWALL, "delay" = 2 SECONDS, "cost" = 8),
+				get_turf(src), RCD_MEMORY_WALL,
+			)
 		if(RCD_DECONSTRUCT)
 			return list("mode" = RCD_DECONSTRUCT, "delay" = 20, "cost" = 13)
 	return FALSE
@@ -394,12 +457,10 @@
 	var/turf/T = get_turf(src)
 	switch(passed_mode)
 		if(RCD_FLOORWALL)
-			to_chat(user, "<span class='notice'>You finish a wall.</span>")
 			T.PlaceOnTop(/turf/closed/wall)
 			qdel(src)
 			return TRUE
 		if(RCD_DECONSTRUCT)
-			to_chat(user, "<span class='notice'>You deconstruct the girder.</span>")
 			qdel(src)
 			return TRUE
 	return FALSE
@@ -407,7 +468,6 @@
 /obj/structure/girder/bronze
 	name = "wall gear"
 	desc = "A girder made out of sturdy bronze, made to resemble a gear."
-	icon = 'icons/obj/clockwork_objects.dmi'
 	icon_state = "wall_gear"
 	can_displace = FALSE
 
@@ -416,24 +476,23 @@
 	if(W.tool_behaviour == TOOL_WELDER)
 		if(!W.tool_start_check(user, amount = 0))
 			return
-		to_chat(user, "<span class='notice'>You start slicing apart [src]...</span>")
+		balloon_alert(user, "slicing apart...")
 		if(W.use_tool(src, user, 40, volume=50))
-			to_chat(user, "<span class='notice'>You slice apart [src].</span>")
-			var/obj/item/stack/tile/bronze/B = new(drop_location(), 2)
+			var/obj/item/stack/sheet/bronze/B = new(drop_location(), 2)
 			transfer_fingerprints_to(B)
 			qdel(src)
 
 	else if(istype(W, /obj/item/stack/sheet/bronze))
 		var/obj/item/stack/sheet/bronze/B = W
-		if(B.get_amount() < 2)
-			to_chat(user, "<span class='warning'>You need at least two bronze sheets to build a bronze wall!</span>")
+		var/amount = construction_cost[B.type]
+		if(B.get_amount() < amount)
+			balloon_alert(user, "need [amount] sheets!")
 			return
-		user.visible_message("<span class='notice'>[user] begins plating [src] with bronze...</span>", "<span class='notice'>You begin constructing a bronze wall...</span>")
+		balloon_alert(user, "adding plating...")
 		if(do_after(user, 50, target = src))
-			if(B.get_amount() < 2)
+			if(B.get_amount() < amount)
 				return
-			user.visible_message("<span class='notice'>[user] plates [src] with bronze!</span>", "<span class='notice'>You construct a bronze wall.</span>")
-			B.use(2)
+			B.use(amount)
 			var/turf/T = get_turf(src)
 			T.PlaceOnTop(/turf/closed/wall/mineral/bronze)
 			qdel(src)

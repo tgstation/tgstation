@@ -12,6 +12,7 @@
 
 	var/static/list/affixListing
 
+///affixes expects an initialized list
 /datum/component/fantasy/Initialize(quality, list/affixes = list(), canFail=FALSE, announce=FALSE)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -22,7 +23,10 @@
 
 	src.affixes = affixes
 	appliedComponents = list()
-	randomAffixes()
+	if(affixes && affixes.len)
+		setAffixes()
+	else
+		randomAffixes()
 
 /datum/component/fantasy/Destroy()
 	unmodify()
@@ -55,6 +59,7 @@
 		quality = -quality
 	return quality
 
+///proc on creation for random affixes
 /datum/component/fantasy/proc/randomAffixes(force)
 	if(!affixListing)
 		affixListing = list()
@@ -75,14 +80,23 @@
 
 	var/usedSlots = NONE
 	for(var/i in 1 to max(1, abs(quality))) // We want at least 1 affix applied
-		var/datum/fantasy_affix/affix = pickweight(affixListing)
+		var/datum/fantasy_affix/affix = pick_weight(affixListing)
 		if(affix.placement & usedSlots)
 			continue
 		if(!(affix.alignment & alignment))
 			continue
-		if(!affix.validate(src))
+		if(!affix.validate(parent))
 			continue
 		affixes += affix
+		usedSlots |= affix.placement
+
+///proc on creation for specific affixes given to the fantasy component
+/datum/component/fantasy/proc/setAffixes(force)
+	var/usedSlots = NONE
+	for(var/datum/fantasy_affix/affix in affixes) // We want at least 1 affix applied
+		if((affix.placement & usedSlots) || (!affix.validate(parent)))
+			affixes.Remove(affix) //bad affix (can't be added to this item)
+			continue
 		usedSlots |= affix.placement
 
 /datum/component/fantasy/proc/modify()
@@ -104,7 +118,7 @@
 
 	if(canFail && prob((quality - 9)*10))
 		var/turf/place = get_turf(parent)
-		place.visible_message("<span class='danger'>[parent] <span class='blue'>violently glows blue</span> for a while, then evaporates.</span>")
+		place.visible_message(span_danger("[parent] [span_blue("violently glows blue")] for a while, then evaporates."))
 		master.burn()
 		return
 	else if(announce)
@@ -118,8 +132,7 @@
 	for(var/i in affixes)
 		var/datum/fantasy_affix/affix = i
 		affix.remove(src)
-	for(var/i in appliedComponents)
-		qdel(i)
+	QDEL_LIST(appliedComponents)
 
 	master.force = max(0, master.force - quality)
 	master.throwforce = max(0, master.throwforce - quality)
@@ -138,6 +151,6 @@
 		effect_description = "<span class='heavy_brass'>shimmering golden glow</span>"
 	else
 		span = "<span class='danger'>"
-		effect_description = "<span class='bold'>mottled black glow</span>"
+		effect_description = span_bold("mottled black glow")
 
 	location.visible_message("[span][originalName] is covered by a [effect_description] and then transforms into [parent]!</span>")

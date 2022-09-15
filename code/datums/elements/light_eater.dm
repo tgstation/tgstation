@@ -9,20 +9,26 @@
 /datum/element/light_eater/Attach(datum/target)
 	if(isatom(target))
 		if(ismovable(target))
+			if(ismachinery(target) || isstructure(target))
+				RegisterSignal(target, COMSIG_PROJECTILE_ON_HIT, .proc/on_projectile_hit)
 			RegisterSignal(target, COMSIG_MOVABLE_IMPACT, .proc/on_throw_impact)
 			if(isitem(target))
+				if(isgun(target))
+					RegisterSignal(target, COMSIG_PROJECTILE_ON_HIT, .proc/on_projectile_hit)
 				RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, .proc/on_afterattack)
 				RegisterSignal(target, COMSIG_ITEM_HIT_REACT, .proc/on_hit_reaction)
 			else if(isprojectile(target))
-				RegisterSignal(target, COMSIG_PROJECTILE_ON_HIT, .proc/on_projectile_hit)
+				RegisterSignal(target, COMSIG_PROJECTILE_SELF_ON_HIT, .proc/on_projectile_self_hit)
 	else if(istype(target, /datum/reagent))
 		RegisterSignal(target, COMSIG_REAGENT_EXPOSE_ATOM, .proc/on_expose_atom)
+	else if(isprojectilespell(target))
+		RegisterSignal(target, COMSIG_PROJECTILE_ON_HIT, .proc/on_projectile_hit)
 	else
 		return ELEMENT_INCOMPATIBLE
 
 	return ..()
 
-/datum/element/light_eater/Detach(datum/source, force)
+/datum/element/light_eater/Detach(datum/source)
 	UnregisterSignal(source, list(
 		COMSIG_MOVABLE_IMPACT,
 		COMSIG_ITEM_AFTERATTACK,
@@ -52,9 +58,9 @@
 		return
 
 	food.visible_message(
-		"<span class='danger'>Something dark in [eater] lashes out at [food] and [food.p_their()] light goes out in an instant!</span>",
-		"<span class='userdanger'>You feel something dark in [eater] lash out and gnaw through your light in an instant! It recedes just as fast, but you can feel that [eater.p_theyve()] left something hungry behind.</span>",
-		"<span class='danger'>You feel a gnawing pulse eat at your sight.</span>"
+		span_danger("Something dark in [eater] lashes out at [food] and [food.p_their()] light goes out in an instant!"),
+		span_userdanger("You feel something dark in [eater] lash out and gnaw through your light in an instant! It recedes just as fast, but you can feel that [eater.p_theyve()] left something hungry behind."),
+		span_danger("You feel a gnawing pulse eat at your sight.")
 	)
 
 /**
@@ -67,9 +73,8 @@
 /datum/element/light_eater/proc/table_buffet(atom/commisary, datum/devourer)
 	. = list()
 	SEND_SIGNAL(commisary, COMSIG_LIGHT_EATER_QUEUE, ., devourer)
-	for(var/nom in commisary.light_sources)
-		var/datum/light_source/morsel = nom
-		. += morsel.source_atom
+	for(var/datum/light_source/morsel as anything in commisary.light_sources)
+		.[morsel.source_atom] = TRUE
 
 /**
  * Consumes the light on the target, permanently rendering it incapable of producing light
@@ -139,6 +144,20 @@
 	return NONE
 
 /**
+ * Called when a produced projectile strikes a target atom
+ *
+ * Arguments:
+ * - [source][/datum]: The thing that created the projectile
+ * - [firer][/atom/movable]: The movable atom that fired the projectile
+ * - [target][/atom]: The atom that was struck by the projectile
+ * - angle: The angle the target was struck at
+ */
+/datum/element/light_eater/proc/on_projectile_hit(datum/source, atom/movable/firer, atom/target, angle)
+	SIGNAL_HANDLER
+	eat_lights(target, source)
+	return NONE
+
+/**
  * Called when a source projectile strikes a target atom
  *
  * Arguments:
@@ -146,8 +165,9 @@
  * - [firer][/atom/movable]: The movable atom that fired the projectile
  * - [target][/atom]: The atom that was struck by the projectile
  * - angle: The angle the target was struck at
+ * - hit_limb: The limb that was hit, if the target was a carbon
  */
-/datum/element/light_eater/proc/on_projectile_hit(obj/projectile/source, atom/movable/firer, atom/target, angle)
+/datum/element/light_eater/proc/on_projectile_self_hit(obj/projectile/source, atom/movable/firer, atom/target, angle, hit_limb)
 	SIGNAL_HANDLER
 	eat_lights(target, source)
 	return NONE

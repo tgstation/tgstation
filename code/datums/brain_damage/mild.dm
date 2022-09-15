@@ -27,12 +27,11 @@
 	lose_text = "<span class='notice'>You feel in control of your speech.</span>"
 
 /datum/brain_trauma/mild/stuttering/on_life(delta_time, times_fired)
-	owner.stuttering = min(owner.stuttering + 5, 25)
-	..()
+	owner.adjust_timed_status_effect(5 SECONDS * delta_time, /datum/status_effect/speech/stutter, max_duration = 50 SECONDS)
 
 /datum/brain_trauma/mild/stuttering/on_lose()
-	owner.stuttering = 0
-	..()
+	owner.remove_status_effect(/datum/status_effect/speech/stutter)
+	return ..()
 
 /datum/brain_trauma/mild/dumbness
 	name = "Dumbness"
@@ -43,22 +42,21 @@
 
 /datum/brain_trauma/mild/dumbness/on_gain()
 	ADD_TRAIT(owner, TRAIT_DUMB, TRAUMA_TRAIT)
-	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "dumb", /datum/mood_event/oblivious)
-	..()
+	owner.add_mood_event("dumb", /datum/mood_event/oblivious)
+	return ..()
 
 /datum/brain_trauma/mild/dumbness/on_life(delta_time, times_fired)
-	owner.derpspeech = min(owner.derpspeech + 5, 25)
+	owner.adjust_timed_status_effect(5 SECONDS * delta_time, /datum/status_effect/speech/stutter/derpspeech, max_duration = 50 SECONDS)
 	if(DT_PROB(1.5, delta_time))
 		owner.emote("drool")
 	else if(owner.stat == CONSCIOUS && DT_PROB(1.5, delta_time))
 		owner.say(pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage"), forced = "brain damage")
-	..()
 
 /datum/brain_trauma/mild/dumbness/on_lose()
 	REMOVE_TRAIT(owner, TRAIT_DUMB, TRAUMA_TRAIT)
-	owner.derpspeech = 0
-	SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "dumb")
-	..()
+	owner.remove_status_effect(/datum/status_effect/speech/stutter/derpspeech)
+	owner.clear_mood_event("dumb")
+	return ..()
 
 /datum/brain_trauma/mild/speech_impediment
 	name = "Speech Impediment"
@@ -88,17 +86,17 @@
 			if(1)
 				owner.vomit()
 			if(2,3)
-				owner.dizziness += 10
+				owner.adjust_timed_status_effect(20 SECONDS, /datum/status_effect/dizziness)
 			if(4,5)
-				owner.add_confusion(10)
+				owner.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/confusion)
 				owner.blur_eyes(10)
 			if(6 to 9)
-				owner.slurring += 30
+				owner.adjust_timed_status_effect(1 MINUTES, /datum/status_effect/speech/slurring/drunk)
 			if(10)
-				to_chat(owner, "<span class='notice'>You forget for a moment what you were doing.</span>")
+				to_chat(owner, span_notice("You forget for a moment what you were doing."))
 				owner.Stun(20)
 			if(11)
-				to_chat(owner, "<span class='warning'>You faint.</span>")
+				to_chat(owner, span_warning("You faint."))
 				owner.Unconscious(80)
 
 	..()
@@ -135,7 +133,7 @@
 	if(owner.m_intent == MOVE_INTENT_RUN)
 		fall_chance += 2
 	if(DT_PROB(0.5 * fall_chance, delta_time) && owner.body_position == STANDING_UP)
-		to_chat(owner, "<span class='warning'>Your leg gives out!</span>")
+		to_chat(owner, span_warning("Your leg gives out!"))
 		owner.Paralyze(35)
 
 	else if(owner.get_active_held_item())
@@ -143,10 +141,10 @@
 		var/obj/item/I = owner.get_active_held_item()
 		drop_chance += I.w_class
 		if(DT_PROB(0.5 * drop_chance, delta_time) && owner.dropItemToGround(I))
-			to_chat(owner, "<span class='warning'>You drop [I]!</span>")
+			to_chat(owner, span_warning("You drop [I]!"))
 
 	else if(DT_PROB(1.5, delta_time))
-		to_chat(owner, "<span class='warning'>You feel a sudden weakness in your muscles!</span>")
+		to_chat(owner, span_warning("You feel a sudden weakness in your muscles!"))
 		owner.adjustStaminaLoss(50)
 	..()
 
@@ -158,11 +156,11 @@
 	lose_text = "<span class='notice'>You feel in control of your muscles again.</span>"
 
 /datum/brain_trauma/mild/muscle_spasms/on_gain()
-	owner.apply_status_effect(STATUS_EFFECT_SPASMS)
+	owner.apply_status_effect(/datum/status_effect/spasms)
 	..()
 
 /datum/brain_trauma/mild/muscle_spasms/on_lose()
-	owner.remove_status_effect(STATUS_EFFECT_SPASMS)
+	owner.remove_status_effect(/datum/status_effect/spasms)
 	..()
 
 /datum/brain_trauma/mild/nervous_cough
@@ -175,7 +173,7 @@
 /datum/brain_trauma/mild/nervous_cough/on_life(delta_time, times_fired)
 	if(DT_PROB(6, delta_time) && !HAS_TRAIT(owner, TRAIT_SOOTHED_THROAT))
 		if(prob(5))
-			to_chat(owner, "<span notice='warning'>[pick("You have a coughing fit!", "You can't stop coughing!")]</span>")
+			to_chat(owner, span_warning("[pick("You have a coughing fit!", "You can't stop coughing!")]"))
 			owner.Immobilize(20)
 			owner.emote("cough")
 			addtimer(CALLBACK(owner, /mob/.proc/emote, "cough"), 6)

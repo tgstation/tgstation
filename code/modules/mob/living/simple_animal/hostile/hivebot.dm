@@ -5,7 +5,7 @@
 /mob/living/simple_animal/hostile/hivebot
 	name = "hivebot"
 	desc = "A small robot."
-	icon = 'icons/mob/hivebot.dmi'
+	icon = 'icons/mob/simple/hivebot.dmi'
 	icon_state = "basic"
 	icon_living = "basic"
 	icon_dead = "basic"
@@ -19,11 +19,12 @@
 	attack_verb_continuous = "claws"
 	attack_verb_simple = "claw"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_vis_effect = ATTACK_EFFECT_CLAW
 	projectilesound = 'sound/weapons/gun/pistol/shot.ogg'
 	projectiletype = /obj/projectile/hivebotbullet
 	faction = list("hivebot")
 	check_friendly_fire = 1
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	verb_say = "states"
 	verb_ask = "queries"
@@ -37,9 +38,9 @@
 
 	footstep_type = FOOTSTEP_MOB_CLAW
 
-/mob/living/simple_animal/hostile/hivebot/Initialize()
+/mob/living/simple_animal/hostile/hivebot/Initialize(mapload)
 	. = ..()
-	deathmessage = "[src] blows apart!"
+	death_message = "[src] blows apart!"
 
 /mob/living/simple_animal/hostile/hivebot/Aggro()
 	. = ..()
@@ -107,33 +108,33 @@
 	gold_core_spawnable = HOSTILE_SPAWN
 	var/datum/action/innate/hivebot/foamwall/foam
 
-/mob/living/simple_animal/hostile/hivebot/mechanic/Initialize()
+/mob/living/simple_animal/hostile/hivebot/mechanic/Initialize(mapload)
 	. = ..()
 	foam = new
 	foam.Grant(src)
 
 /mob/living/simple_animal/hostile/hivebot/mechanic/AttackingTarget()
-	if(istype(target, /obj/machinery))
+	if(ismachinery(target))
 		var/obj/machinery/fixable = target
-		if(fixable.obj_integrity >= fixable.max_integrity)
-			to_chat(src, "<span class='warning'>Diagnostics indicate that this machine is at peak integrity.</span>")
+		if(fixable.get_integrity() >= fixable.max_integrity)
+			to_chat(src, span_warning("Diagnostics indicate that this machine is at peak integrity."))
 			return
-		to_chat(src, "<span class='warning'>You begin repairs...</span>")
+		to_chat(src, span_warning("You begin repairs..."))
 		if(do_after(src, 50, target = fixable))
-			fixable.obj_integrity = fixable.max_integrity
+			fixable.repair_damage(fixable.max_integrity - fixable.get_integrity())
 			do_sparks(3, TRUE, fixable)
-			to_chat(src, "<span class='warning'>Repairs complete.</span>")
+			to_chat(src, span_warning("Repairs complete."))
 		return
 	if(istype(target, /mob/living/simple_animal/hostile/hivebot))
 		var/mob/living/simple_animal/hostile/hivebot/fixable = target
 		if(fixable.health >= fixable.maxHealth)
-			to_chat(src, "<span class='warning'>Diagnostics indicate that this unit is at peak integrity.</span>")
+			to_chat(src, span_warning("Diagnostics indicate that this unit is at peak integrity."))
 			return
-		to_chat(src, "<span class='warning'>You begin repairs...</span>")
+		to_chat(src, span_warning("You begin repairs..."))
 		if(do_after(src, 50, target = fixable))
 			fixable.revive(full_heal = TRUE, admin_revive = TRUE)
 			do_sparks(3, TRUE, fixable)
-			to_chat(src, "<span class='warning'>Repairs complete.</span>")
+			to_chat(src, span_warning("Repairs complete."))
 		return
 	return ..()
 
@@ -148,12 +149,12 @@
 	var/mob/living/simple_animal/hostile/hivebot/H = owner
 	var/turf/T = get_turf(H)
 	if(T.density)
-		to_chat(H, "<span class='warning'>There's already something on this tile!</span>")
+		to_chat(H, span_warning("There's already something on this tile!"))
 		return
-	to_chat(H, "<span class='warning'>You begin to create a foam wall at your position...</span>")
+	to_chat(H, span_warning("You begin to create a foam wall at your position..."))
 	if(do_after(H, 50, target = H))
 		for(var/obj/structure/foamedmetal/FM in T.contents)
-			to_chat(H, "<span class='warning'>There's already a foam wall on this tile!</span>")
+			to_chat(H, span_warning("There's already a foam wall on this tile!"))
 			return
 		new /obj/structure/foamedmetal(H.loc)
 		playsound(get_turf(H), 'sound/effects/extinguish.ogg', 50, TRUE, -1)

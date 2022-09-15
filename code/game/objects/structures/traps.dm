@@ -10,7 +10,7 @@
 	var/last_trigger = 0
 	var/time_between_triggers = 600 //takes a minute to recharge
 	var/charges = INFINITY
-	var/checks_antimagic = TRUE
+	var/antimagic_flags = MAGIC_RESISTANCE
 
 	var/list/static/ignore_typecache
 	var/list/mob/immune_minds = list()
@@ -25,10 +25,16 @@
 	spark_system.set_up(4,1,src)
 	spark_system.attach(src)
 
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+
 	if(!ignore_typecache)
 		ignore_typecache = typecacheof(list(
 			/obj/effect,
-			/mob/dead))
+			/mob/dead,
+		))
 
 /obj/structure/trap/Destroy()
 	qdel(spark_system)
@@ -42,7 +48,7 @@
 	if(user.mind && (user.mind in immune_minds))
 		return
 	if(get_dist(user, src) <= 1)
-		. += "<span class='notice'>You reveal [src]!</span>"
+		. += span_notice("You reveal [src]!")
 		flare()
 
 /obj/structure/trap/proc/flare()
@@ -60,8 +66,8 @@
 	else
 		animate(src, alpha = initial(alpha), time = time_between_triggers)
 
-/obj/structure/trap/Crossed(atom/movable/AM)
-	. = ..()
+/obj/structure/trap/proc/on_entered(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	if(last_trigger + time_between_triggers > world.time)
 		return
 	// Don't want the traps triggered by sparks, ghosts or projectiles.
@@ -71,7 +77,7 @@
 		var/mob/M = AM
 		if(M.mind in immune_minds)
 			return
-		if(checks_antimagic && M.anti_magic_check())
+		if(M.can_block_magic(antimagic_flags))
 			flare()
 			return
 	if(charges <= 0)
@@ -100,7 +106,7 @@
 	icon_state = "bounty_trap_on"
 	stun_time = 200
 	sparks = FALSE //the item version gives them off to prevent runtimes (see Destroy())
-	checks_antimagic  = FALSE
+	antimagic_flags = NONE
 	var/obj/item/bountytrap/stored_item
 	var/caught = FALSE
 
@@ -109,7 +115,13 @@
 	time_between_triggers = 10
 	flare_message = "<span class='warning'>[src] snaps shut!</span>"
 
-/obj/structure/trap/stun/hunter/Crossed(atom/movable/AM)
+/obj/structure/trap/stun/hunter/Destroy()
+	if(!QDELETED(stored_item))
+		qdel(stored_item)
+	stored_item = null
+	return ..()
+
+/obj/structure/trap/stun/hunter/on_entered(datum/source, atom/movable/AM)
 	if(isliving(AM))
 		var/mob/living/L = AM
 		if(!L.mind?.has_antag_datum(/datum/antagonist/fugitive))
@@ -119,6 +131,9 @@
 
 /obj/structure/trap/stun/hunter/flare()
 	..()
+	var/turf/our_turf = get_turf(src)
+	if(!our_turf)
+		return
 	stored_item.forceMove(get_turf(src))
 	forceMove(stored_item)
 	if(caught)
@@ -157,12 +172,14 @@
 	var/turf/T = get_turf(src)
 	if(!user || !user.transferItemToLoc(src, T))//visibly unequips
 		return
-	to_chat(user, "<span class=notice>You set up [src]. Examine while close to disarm it.</span>")
+	to_chat(user, span_notice("You set up [src]. Examine while close to disarm it."))
 	stored_trap.forceMove(T)//moves trap to ground
 	forceMove(stored_trap)//moves item into trap
 
 /obj/item/bountytrap/Destroy()
-	qdel(stored_trap)
+	if(!QDELETED(stored_trap))
+		qdel(stored_trap)
+	stored_trap = null
 	QDEL_NULL(radio)
 	QDEL_NULL(spark_system)
 	. = ..()
@@ -173,7 +190,7 @@
 	icon_state = "trap-fire"
 
 /obj/structure/trap/fire/trap_effect(mob/living/L)
-	to_chat(L, "<span class='danger'><B>Spontaneous combustion!</B></span>")
+	to_chat(L, span_danger("<B>Spontaneous combustion!</B>"))
 	L.Paralyze(20)
 	new /obj/effect/hotspot(get_turf(src))
 
@@ -183,7 +200,7 @@
 	icon_state = "trap-frost"
 
 /obj/structure/trap/chill/trap_effect(mob/living/L)
-	to_chat(L, "<span class='danger'><B>You're frozen solid!</B></span>")
+	to_chat(L, span_danger("<B>You're frozen solid!</B>"))
 	L.Paralyze(20)
 	L.adjust_bodytemperature(-300)
 	L.apply_status_effect(/datum/status_effect/freon)
@@ -196,10 +213,10 @@
 
 
 /obj/structure/trap/damage/trap_effect(mob/living/L)
-	to_chat(L, "<span class='danger'><B>The ground quakes beneath your feet!</B></span>")
+	to_chat(L, span_danger("<B>The ground quakes beneath your feet!</B>"))
 	L.Paralyze(100)
 	L.adjustBruteLoss(35)
-	var/obj/structure/flora/rock/giant_rock = new(get_turf(src))
+	var/obj/structure/flora/rock/style_random/giant_rock = new(get_turf(src))
 	QDEL_IN(giant_rock, 200)
 
 
@@ -210,7 +227,7 @@
 	density = TRUE
 	time_between_triggers = 1200 //Exists for 2 minutes
 
-/obj/structure/trap/ward/Initialize()
+/obj/structure/trap/ward/Initialize(mapload)
 	. = ..()
 	QDEL_IN(src, time_between_triggers)
 
@@ -220,7 +237,7 @@
 	icon_state = "trap-cult"
 
 /obj/structure/trap/cult/trap_effect(mob/living/L)
-	to_chat(L, "<span class='danger'><B>With a crack, the hostile constructs come out of hiding, stunning you!</B></span>")
+	to_chat(L, span_danger("<B>With a crack, the hostile constructs come out of hiding, stunning you!</B>"))
 	L.electrocute_act(10, src, flags = SHOCK_NOGLOVES) // electrocute act does a message.
 	L.Paralyze(20)
 	new /mob/living/simple_animal/hostile/construct/proteon/hostile(loc)

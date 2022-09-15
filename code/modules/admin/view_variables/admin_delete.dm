@@ -5,12 +5,14 @@
 	if(istype(A))
 		var/turf/T = get_turf(A)
 		if(T)
-			coords = "at [COORD(T)]"
-			jmp_coords = "at [ADMIN_COORDJMP(T)]"
+			var/atom/a_loc = A.loc
+			var/is_turf = isturf(a_loc)
+			coords = "[is_turf ? "at" : "from [a_loc] at"] [AREACOORD(T)]"
+			jmp_coords = "[is_turf ? "at" : "from [a_loc] at"] [ADMIN_VERBOSEJMP(T)]"
 		else
 			jmp_coords = coords = "in nullspace"
 
-	if (alert(src, "Are you sure you want to delete:\n[D]\n[coords]?", "Confirmation", "Yes", "No") == "Yes")
+	if (tgui_alert(usr, "Are you sure you want to delete:\n[D]\n[coords]?", "Confirmation", list("Yes", "No")) == "Yes")
 		log_admin("[key_name(usr)] deleted [D] [coords]")
 		message_admins("[key_name_admin(usr)] deleted [D] [jmp_coords]")
 		SSblackbox.record_feedback("tally", "admin_verb", 1, "Delete") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

@@ -74,11 +74,12 @@
 	timeofdeath = world.time
 	tod = station_time_timestamp()
 	var/turf/T = get_turf(src)
-	if(mind && mind.name && mind.active && !istype(T.loc, /area/ctf))
-		deadchat_broadcast(" has died at <b>[get_area_name(T)]</b>.", "<b>[mind.name]</b>", follow_target = src, turf_target = T, message_type=DEADCHAT_DEATHRATTLE)
-	if(mind)
-		mind.store_memory("Time of death: [tod]", 0)
-	set_drugginess(0)
+	if(mind && mind.name && mind.active && !istype(T.loc, /area/centcom/ctf))
+		if(!isanimal_or_basicmob(src) || HAS_TRAIT(src, TRAIT_ALERT_GHOSTS_ON_DEATH))
+			deadchat_broadcast(" has died at <b>[get_area_name(T)]</b>.", "<b>[mind.name]</b>", follow_target = src, turf_target = T, message_type=DEADCHAT_DEATHRATTLE)
+		if(SSlag_switch.measures[DISABLE_DEAD_KEYLOOP] && !client?.holder)
+			to_chat(src, span_deadsay(span_big("Observer freelook is disabled.\nPlease use Orbit, Teleport, and Jump to look around.")))
+			ghostize(TRUE)
 	set_disgust(0)
 	SetSleeping(0, 0)
 	reset_perspective(null)
@@ -90,10 +91,14 @@
 	med_hud_set_status()
 	stop_pulling()
 
+
 	SEND_SIGNAL(src, COMSIG_LIVING_DEATH, gibbed)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_MOB_DEATH, src, gibbed)
 
 	if (client)
 		client.move_delay = initial(client.move_delay)
+
+	if(!gibbed && (death_sound || death_message))
+		INVOKE_ASYNC(src, /mob.proc/emote, "deathgasp")
 
 	return TRUE

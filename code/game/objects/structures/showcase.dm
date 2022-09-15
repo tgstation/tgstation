@@ -17,7 +17,7 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer"
 
-/obj/structure/showcase/fakeid/Initialize()
+/obj/structure/showcase/fakeid/Initialize(mapload)
 	. = ..()
 	add_overlay("id")
 	add_overlay("id_key")
@@ -28,10 +28,10 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer"
 
-/obj/structure/showcase/fakesec/Initialize()
+/obj/structure/showcase/fakesec/update_overlays()
 	. = ..()
-	add_overlay("security")
-	add_overlay("security_key")
+	. += "security"
+	. += "security_key"
 
 /obj/structure/showcase/horrific_experiment
 	name = "horrific experiment"
@@ -52,7 +52,7 @@
 /obj/structure/showcase/cyborg/old
 	name = "Cyborg Statue"
 	desc = "An old, deactivated cyborg. Whilst once actively used to guard against intruders, it now simply intimidates them with its cold, steely gaze."
-	icon = 'icons/mob/robots.dmi'
+	icon = 'icons/mob/silicon/robots.dmi'
 	icon_state = "robot_old"
 	density = FALSE
 
@@ -102,31 +102,55 @@
 	icon = 'icons/obj/machines/telecomms.dmi'
 	icon_state = "processor"
 
+/obj/structure/showcase/wizard
+	name = "wizard of yendor showcase"
+	desc = "A historical figure of great importance to the wizard federation. He spent his long life learning magic, stealing artifacts, and harassing idiots with swords. May he rest forever, Rodney."
+	icon = 'icons/mob/simple/mob.dmi'
+	icon_state = "nim"
 
+/obj/structure/showcase/machinery/rng
+	name = "byond random number generator"
+	desc = "A strange machine supposedly from another world. The Wizard Federation has been meddling with it for years."
+	icon = 'icons/obj/machines/telecomms.dmi'
+	icon_state = "processor"
+
+/obj/structure/showcase/katana
+	name = "seppuku katana"
+	density = 0
+	desc = "Welp, only one way to recover your honour."
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon_state = "katana"
 
 //Deconstructing
 //Showcases can be any sprite, so it makes sense that they can't be constructed.
 //However if a player wants to move an existing showcase or remove one, this is for that.
 
-/obj/structure/showcase/attackby(obj/item/W, mob/user)
-	if(W.tool_behaviour == TOOL_SCREWDRIVER && !anchored)
-		if(deconstruction_state == SHOWCASE_SCREWDRIVERED)
-			to_chat(user, "<span class='notice'>You screw the screws back into the showcase.</span>")
-			W.play_tool_sound(src, 100)
-			deconstruction_state = SHOWCASE_CONSTRUCTED
-		else if (deconstruction_state == SHOWCASE_CONSTRUCTED)
-			to_chat(user, "<span class='notice'>You unscrew the screws.</span>")
-			W.play_tool_sound(src, 100)
-			deconstruction_state = SHOWCASE_SCREWDRIVERED
+/obj/structure/showcase/screwdriver_act(mob/living/user, obj/item/tool)
+	if(anchored)
+		return FALSE
+	if(deconstruction_state == SHOWCASE_SCREWDRIVERED)
+		to_chat(user, span_notice("You screw the screws back into the showcase."))
+		tool.play_tool_sound(src, 100)
+		deconstruction_state = SHOWCASE_CONSTRUCTED
+	else if (deconstruction_state == SHOWCASE_CONSTRUCTED)
+		to_chat(user, span_notice("You unscrew the screws."))
+		tool.play_tool_sound(src, 100)
+		deconstruction_state = SHOWCASE_SCREWDRIVERED
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
-	if(W.tool_behaviour == TOOL_CROWBAR && deconstruction_state == SHOWCASE_SCREWDRIVERED)
-		if(W.use_tool(src, user, 20, volume=100))
-			to_chat(user, "<span class='notice'>You start to crowbar the showcase apart...</span>")
-			new /obj/item/stack/sheet/iron(drop_location(), 4)
-			qdel(src)
-
-	if(deconstruction_state == SHOWCASE_CONSTRUCTED && default_unfasten_wrench(user, W))
+/obj/structure/showcase/crowbar_act(mob/living/user, obj/item/tool)
+	if(!tool.use_tool(src, user, 2 SECONDS, volume=100))
 		return
+	to_chat(user, span_notice("You start to crowbar the showcase apart..."))
+	new /obj/item/stack/sheet/iron(drop_location(), 4)
+	qdel(src)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/structure/showcase/wrench_act(mob/living/user, obj/item/tool)
+	if(deconstruction_state != SHOWCASE_CONSTRUCTED)
+		return FALSE
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 //Feedback is given in examine because showcases can basically have any sprite assigned to them
 

@@ -2,18 +2,23 @@
 	blood_volume = BLOOD_VOLUME_NORMAL
 	gender = MALE
 	pressure_resistance = 15
-	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD,GLAND_HUD,NANITE_HUD,DIAG_NANITE_FULL_HUD)
-	has_limbs = 1
+	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD,GLAND_HUD)
+	has_limbs = TRUE
 	held_items = list(null, null)
 	num_legs = 0 //Populated on init through list/bodyparts
 	usable_legs = 0 //Populated on init through list/bodyparts
 	num_hands = 0 //Populated on init through list/bodyparts
 	usable_hands = 0 //Populated on init through list/bodyparts
 	mobility_flags = MOBILITY_FLAGS_CARBON_DEFAULT
-	///List of [/obj/item/organ] in the mob. They don't go in the contents for some reason I don't want to know.
-	var/list/internal_organs = list()
+	blocks_emissive = NONE
+	///List of [/obj/item/organ/internal] in the mob. They don't go in the contents for some reason I don't want to know.
+	var/list/obj/item/organ/internal/internal_organs = list()
 	///Same as [above][/mob/living/carbon/var/internal_organs], but stores "slot ID" - "organ" pairs for easy access.
 	var/list/internal_organs_slot = list()
+	///List of [/obj/item/organ/external] in the mob, similarly used as internal_organs.
+	var/list/obj/item/organ/external/external_organs = list()
+	///Same as [above][/mob/living/carbon/var/external_organs], but stores "ID" = "organ" pairs.
+	var/list/external_organs_slot = list()
 	///Can't talk. Value goes down every life proc. NOTE TO FUTURE CODERS: DO NOT INITIALIZE NUMERICAL VARS AS NULL OR I WILL MURDER YOU.
 	var/silent = 0
 	///How many dream images we have left to send
@@ -24,7 +29,10 @@
 	///Same as handcuffs but for legs. Bear traps use this.
 	var/obj/item/legcuffed = null
 
+	/// Measure of how disgusted we are. See DISGUST_LEVEL_GROSS and friends
 	var/disgust = 0
+	/// How disgusted we were LAST time we processed disgust. Helps prevent unneeded work
+	var/old_disgust = 0
 
 	//inventory slots
 	var/obj/item/back = null
@@ -51,7 +59,6 @@
 	var/failed_last_breath = FALSE
 
 	var/co2overloadtime = null
-	var/temperature_resistance = T0C+75
 	var/obj/item/food/meat/slab/type_of_meat = /obj/item/food/meat/slab
 
 	var/gib_type = /obj/effect/decal/cleanable/blood/gibs
@@ -74,7 +81,8 @@
 	/// A collection of arms (or actually whatever the fug /bodyparts you monsters use to wreck my systems)
 	var/list/hand_bodyparts = list()
 
-	var/icon_render_key = ""
+	///A cache of bodypart = icon to prevent excessive icon creation.
+	var/list/icon_render_keys = list()
 	var/static/list/limb_icon_cache = list()
 
 	//halucination vars
@@ -82,8 +90,6 @@
 	var/next_hallucination = 0
 	var/damageoverlaytemp = 0
 
-	///Overall drunkenness
-	var/drunkenness = 0
 	///used to halt stamina regen temporarily
 	var/stam_regen_start_time = 0
 
@@ -105,5 +111,8 @@
 
 	/// Can other carbons be shoved into this one to make it fall?
 	var/can_be_shoved_into = FALSE
+
+	/// Only load in visual organs
+	var/visual_only_organs = FALSE
 
 	COOLDOWN_DECLARE(bleeding_message_cd)

@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "b" = (
 /turf/closed/mineral/volcanic/lava_land_surface,
@@ -12,35 +12,21 @@
 /turf/closed/wall/rust,
 /area/ruin/unpowered)
 "e" = (
-/obj/structure/mirror{
-	broken = 1;
-	desc = "This mirror has been shattered. It looks like the bad luck energies spilling from it are taking immediate effect on your surroundings!";
-	icon_state = "mirror_broke";
-	pixel_x = -28
-	},
+/obj/structure/mirror/directional/west,
 /obj/item/clothing/suit/hooded/bloated_human,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/plating,
 /area/ruin/unpowered)
 "f" = (
-/obj/structure/mirror{
-	broken = 1;
-	desc = "This mirror has been shattered. It looks like the bad luck energies spilling from it are taking immediate effect on your surroundings!";
-	icon_state = "mirror_broke";
-	pixel_x = 28
+/obj/structure/mirror/directional/east{
+	icon_state = "mirror_broke"
 	},
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
 /area/ruin/unpowered)
 "g" = (
 /obj/effect/decal/cleanable/blood/tracks,
-/obj/structure/mirror{
-	broken = 1;
-	desc = "This mirror has been shattered. It looks like the bad luck energies spilling from it are taking immediate effect on your surroundings!";
-	icon_state = "mirror_broke";
-	pixel_x = -28
-	},
+/obj/structure/mirror/directional/west,
 /turf/open/floor/plating,
 /area/ruin/unpowered)
 "h" = (
@@ -55,48 +41,30 @@
 /turf/open/floor/plating,
 /area/ruin/unpowered)
 "k" = (
-/obj/structure/mirror{
-	broken = 1;
-	desc = "This mirror has been shattered. It looks like the bad luck energies spilling from it are taking immediate effect on your surroundings!";
-	icon_state = "mirror_broke";
-	pixel_y = 28
+/obj/structure/mirror/directional/north{
+	icon_state = "mirror_broke"
 	},
-/obj/item/kitchen/knife/envy,
+/obj/item/knife/envy,
 /turf/open/floor/plating,
 /area/ruin/unpowered)
 "l" = (
-/obj/structure/mirror{
-	broken = 1;
-	desc = "This mirror has been shattered. It looks like the bad luck energies spilling from it are taking immediate effect on your surroundings!";
-	icon_state = "mirror_broke";
-	pixel_x = 28
+/obj/structure/mirror/directional/east{
+	icon_state = "mirror_broke"
 	},
 /turf/open/floor/plating,
 /area/ruin/unpowered)
 "m" = (
-/obj/structure/mirror{
-	broken = 1;
-	desc = "This mirror has been shattered. It looks like the bad luck energies spilling from it are taking immediate effect on your surroundings!";
-	icon_state = "mirror_broke";
-	pixel_x = -28
-	},
+/obj/structure/mirror/directional/west,
 /turf/open/floor/plating,
 /area/ruin/unpowered)
 "n" = (
-/turf/open/floor/plating{
-	icon_state = "platingdmg2"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
 /area/ruin/unpowered)
 "o" = (
-/obj/structure/mirror{
-	broken = 1;
-	desc = "This mirror has been shattered. It looks like the bad luck energies spilling from it are taking immediate effect on your surroundings!";
-	icon_state = "mirror_broke";
-	pixel_x = -28
-	},
-/turf/open/floor/plating{
-	icon_state = "platingdmg1"
-	},
+/obj/structure/mirror/directional/west,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
 /area/ruin/unpowered)
 "p" = (
 /obj/machinery/door/airlock/hatch,
@@ -104,7 +72,7 @@
 /area/ruin/unpowered)
 "A" = (
 /obj/effect/mapping_helpers/no_lava,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 
 (1,1,1) = {"

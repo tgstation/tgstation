@@ -4,7 +4,7 @@
 	damage = 0
 	damage_type = BURN
 	nodamage = FALSE
-	flag = ENERGY
+	armor_flag = ENERGY
 	var/temperature = -50 // reduce the body temperature by 50 points
 
 /obj/projectile/temp/on_hit(atom/target, blocked = 0)
@@ -35,5 +35,5 @@
 	var/turf/T = get_turf(src)
 	if(isopenturf(T))
 		var/turf/open/O = T
-		O.freon_gas_act()
+		O.freeze_turf()
 	return ..()

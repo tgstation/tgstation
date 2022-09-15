@@ -1,7 +1,7 @@
 /mob/living/simple_animal/hostile/asteroid/wolf
 	name = "white wolf"
 	desc = "A beast that survives by feasting on weaker opponents, they're much stronger with numbers."
-	icon = 'icons/mob/icemoon/icemoon_monsters.dmi'
+	icon = 'icons/mob/simple/icemoon/icemoon_monsters.dmi'
 	icon_state = "whitewolf"
 	icon_living = "whitewolf"
 	icon_dead = "whitewolf_dead"
@@ -23,6 +23,7 @@
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
 	attack_sound = 'sound/weapons/bite.ogg'
+	attack_vis_effect = ATTACK_EFFECT_BITE
 	vision_range = 7
 	aggro_vision_range = 7
 	move_force = MOVE_FORCE_WEAK
@@ -48,7 +49,7 @@
 		retreat_distance = initial(retreat_distance)
 		return
 	if(!retreat_message_said && target)
-		visible_message("<span class='danger'>The [name] tries to flee from [target]!</span>")
+		visible_message(span_danger("The [name] tries to flee from [target]!"))
 		retreat_message_said = TRUE
 	retreat_distance = 30
 
@@ -56,7 +57,6 @@
 	. = ..()
 	if(!. || target)
 		return
-	adjustHealth(-0.0125 * maxHealth * delta_time)
 	retreat_message_said = FALSE
 
 /obj/item/crusher_trophy/wolf_ear

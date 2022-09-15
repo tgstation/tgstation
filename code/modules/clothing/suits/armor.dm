@@ -1,4 +1,6 @@
 /obj/item/clothing/suit/armor
+	icon = 'icons/obj/clothing/suits/armor.dmi'
+	worn_icon = 'icons/mob/clothing/suits/armor.dmi'
 	allowed = null
 	body_parts_covered = CHEST
 	cold_protection = CHEST|GROIN
@@ -9,9 +11,9 @@
 	equip_delay_other = 40
 	max_integrity = 250
 	resistance_flags = NONE
-	armor = list(MELEE = 35, BULLET = 30, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, RAD = 0, FIRE = 50, ACID = 50, WOUND = 10)
+	armor = list(MELEE = 35, BULLET = 30, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, FIRE = 50, ACID = 50, WOUND = 10)
 
-/obj/item/clothing/suit/armor/Initialize()
+/obj/item/clothing/suit/armor/Initialize(mapload)
 	. = ..()
 	if(!allowed)
 		allowed = GLOB.security_vest_allowed
@@ -29,6 +31,32 @@
 	icon_state = "armor"
 	inhand_icon_state = "armor"
 
+/obj/item/clothing/suit/armor/vest/marine
+	name = "tactical armor vest"
+	desc = "A set of the finest mass produced, stamped plasteel armor plates, containing an environmental protection unit for all-condition door kicking."
+	icon_state = "marine_command"
+	inhand_icon_state = "armor"
+	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	armor = list(MELEE = 50, BULLET = 50, LASER = 30, ENERGY = 25, BOMB = 50, BIO = 100, FIRE = 40, ACID = 50, WOUND = 20)
+	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
+	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT_OFF
+	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+
+/obj/item/clothing/suit/armor/vest/marine/security
+	name = "large tactical armor vest"
+	icon_state = "marine_security"
+
+/obj/item/clothing/suit/armor/vest/marine/engineer
+	name = "tactical utility armor vest"
+	icon_state = "marine_engineer"
+
+/obj/item/clothing/suit/armor/vest/marine/medic
+	name = "tactical medic's armor vest"
+	icon_state = "marine_medic"
+	body_parts_covered = CHEST|GROIN
+
 /obj/item/clothing/suit/armor/vest/old
 	name = "degrading armor vest"
 	desc = "Older generation Type 1 armored vest. Due to degradation over time the vest is far less maneuverable to move in."
@@ -41,7 +69,7 @@
 	desc = "A large, yet comfortable piece of armor, protecting you from some threats."
 	icon_state = "blueshift"
 	inhand_icon_state = "blueshift"
-	custom_premium_price = PAYCHECK_HARD
+	custom_premium_price = PAYCHECK_COMMAND
 
 /obj/item/clothing/suit/armor/vest/cuirass
 	name = "cuirass"
@@ -55,7 +83,7 @@
 	icon_state = "hos"
 	inhand_icon_state = "greatcoat"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
-	armor = list(MELEE = 30, BULLET = 30, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, RAD = 0, FIRE = 70, ACID = 90, WOUND = 10)
+	armor = list(MELEE = 30, BULLET = 30, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, FIRE = 70, ACID = 90, WOUND = 10)
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	heat_protection = CHEST|GROIN|LEGS|ARMS
 	strip_delay = 80
@@ -67,6 +95,17 @@
 	inhand_icon_state = "hostrench"
 	flags_inv = 0
 	strip_delay = 80
+
+/obj/item/clothing/suit/armor/hos/hos_formal
+	name = "\improper Head of Security's parade jacket"
+	desc = "For when an armoured vest isn't fashionable enough."
+	icon_state = "hosformal"
+	inhand_icon_state = "hostrench"
+	body_parts_covered = CHEST|GROIN|ARMS
+
+/obj/item/clothing/suit/armor/hos/hos_formal/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/toggle_icon)
 
 /obj/item/clothing/suit/armor/vest/warden
 	name = "warden's jacket"
@@ -101,7 +140,7 @@
 	icon_state = "capcarapace"
 	inhand_icon_state = "armor"
 	body_parts_covered = CHEST|GROIN
-	armor = list(MELEE = 50, BULLET = 40, LASER = 50, ENERGY = 50, BOMB = 25, BIO = 0, RAD = 0, FIRE = 100, ACID = 90, WOUND = 10)
+	armor = list(MELEE = 50, BULLET = 40, LASER = 50, ENERGY = 50, BOMB = 25, BIO = 0, FIRE = 100, ACID = 90, WOUND = 10)
 	dog_fashion = null
 	resistance_flags = FIRE_PROOF
 
@@ -110,11 +149,16 @@
 	desc = "A sinister looking vest of advanced armor worn over a black and red fireproof jacket. The gold collar and shoulders denote that this belongs to a high ranking syndicate officer."
 	icon_state = "syndievest"
 
-/obj/item/clothing/suit/armor/vest/capcarapace/alt
-	name = "captain's parade jacket"
+/obj/item/clothing/suit/armor/vest/capcarapace/captains_formal
+	name = "captain's parade coat"
 	desc = "For when an armoured vest isn't fashionable enough."
 	icon_state = "capformal"
 	inhand_icon_state = "capspacesuit"
+	body_parts_covered = CHEST|GROIN|ARMS
+
+/obj/item/clothing/suit/armor/vest/capcarapace/captains_formal/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/toggle_icon)
 
 /obj/item/clothing/suit/armor/riot
 	name = "riot suit"
@@ -124,7 +168,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	armor = list(MELEE = 50, BULLET = 10, LASER = 10, ENERGY = 10, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 80, WOUND = 20)
+	armor = list(MELEE = 50, BULLET = 10, LASER = 10, ENERGY = 10, BOMB = 0, BIO = 0, FIRE = 80, ACID = 80, WOUND = 20)
 	clothing_flags = BLOCKS_SHOVE_KNOCKDOWN
 	strip_delay = 80
 	equip_delay_other = 60
@@ -135,7 +179,7 @@
 	icon_state = "bonearmor"
 	inhand_icon_state = "bonearmor"
 	blood_overlay_type = "armor"
-	armor = list(MELEE = 35, BULLET = 25, LASER = 25, ENERGY = 35, BOMB = 25, BIO = 0, RAD = 0, FIRE = 50, ACID = 50, WOUND = 10)
+	armor = list(MELEE = 35, BULLET = 25, LASER = 25, ENERGY = 35, BOMB = 25, BIO = 0, FIRE = 50, ACID = 50, WOUND = 10)
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
 
 /obj/item/clothing/suit/armor/bulletproof
@@ -144,7 +188,7 @@
 	icon_state = "bulletproof"
 	inhand_icon_state = "armor"
 	blood_overlay_type = "armor"
-	armor = list(MELEE = 15, BULLET = 60, LASER = 10, ENERGY = 10, BOMB = 40, BIO = 0, RAD = 0, FIRE = 50, ACID = 50, WOUND = 20)
+	armor = list(MELEE = 15, BULLET = 60, LASER = 10, ENERGY = 10, BOMB = 40, BIO = 0, FIRE = 50, ACID = 50, WOUND = 20)
 	strip_delay = 70
 	equip_delay_other = 50
 
@@ -157,7 +201,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	cold_protection = CHEST|GROIN|ARMS
 	heat_protection = CHEST|GROIN|ARMS
-	armor = list(MELEE = 10, BULLET = 10, LASER = 60, ENERGY = 60, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 100)
+	armor = list(MELEE = 10, BULLET = 10, LASER = 60, ENERGY = 60, BOMB = 0, BIO = 0, FIRE = 100, ACID = 100)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/hit_reflect_chance = 50
 
@@ -174,7 +218,7 @@
 	resistance_flags = FLAMMABLE
 	dog_fashion = null
 
-/obj/item/clothing/suit/armor/vest/det_suit/Initialize()
+/obj/item/clothing/suit/armor/vest/det_suit/Initialize(mapload)
 	. = ..()
 	allowed = GLOB.detective_vest_allowed
 
@@ -183,27 +227,27 @@
 	desc = "This vest appears to be made of of highly flexible materials that absorb impacts with ease."
 	icon_state = "infiltrator"
 	inhand_icon_state = "infiltrator"
-	armor = list(MELEE = 40, BULLET = 40, LASER = 30, ENERGY = 40, BOMB = 70, BIO = 0, RAD = 0, FIRE = 100, ACID = 100)
+	armor = list(MELEE = 40, BULLET = 40, LASER = 30, ENERGY = 40, BOMB = 70, BIO = 0, FIRE = 100, ACID = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	strip_delay = 80
 
-//All of the armor below is mostly unused
-
-/obj/item/clothing/suit/armor/centcom
-	name = "\improper CentCom armor"
-	desc = "A suit that protects against some damage."
-	icon_state = "centcom"
-	inhand_icon_state = "centcom"
-	w_class = WEIGHT_CLASS_BULKY
-	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	allowed = list(/obj/item/gun/energy, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
+/obj/item/clothing/suit/armor/swat
+	name = "MK.I SWAT Suit"
+	desc = "A tactical suit first developed in a joint effort by the defunct IS-ERI and Nanotrasen in 2321 for military operations. It has a minor slowdown, but offers decent protection."
+	icon_state = "heavy"
+	inhand_icon_state = "swat_suit"
+	armor = list(MELEE = 40, BULLET = 30, LASER = 30,ENERGY = 40, BOMB = 50, BIO = 90, FIRE = 100, ACID = 100, WOUND = 15)
+	strip_delay = 120
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	clothing_flags = THICKMATERIAL
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
-	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
-	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT_OFF
+	heat_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
-	armor = list(MELEE = 80, BULLET = 80, LASER = 50, ENERGY = 50, BOMB = 100, BIO = 100, RAD = 100, FIRE = 90, ACID = 90)
+	slowdown = 0.7
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+
+//All of the armor below is mostly unused
 
 /obj/item/clothing/suit/armor/heavy
 	name = "heavy armor"
@@ -211,12 +255,11 @@
 	icon_state = "heavy"
 	inhand_icon_state = "swat_suit"
 	w_class = WEIGHT_CLASS_BULKY
-	gas_transfer_coefficient = 0.9
 	clothing_flags = THICKMATERIAL
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	slowdown = 3
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
-	armor = list(MELEE = 80, BULLET = 80, LASER = 50, ENERGY = 50, BOMB = 100, BIO = 100, RAD = 100, FIRE = 90, ACID = 90)
+	armor = list(MELEE = 80, BULLET = 80, LASER = 50, ENERGY = 50, BOMB = 100, BIO = 100, FIRE = 90, ACID = 90)
 
 /obj/item/clothing/suit/armor/tdome
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -224,7 +267,7 @@
 	clothing_flags = THICKMATERIAL
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	armor = list(MELEE = 80, BULLET = 80, LASER = 50, ENERGY = 50, BOMB = 100, BIO = 100, RAD = 100, FIRE = 90, ACID = 90)
+	armor = list(MELEE = 80, BULLET = 80, LASER = 50, ENERGY = 50, BOMB = 100, BIO = 100, FIRE = 90, ACID = 90)
 
 /obj/item/clothing/suit/armor/tdome/red
 	name = "thunderdome suit"
@@ -238,6 +281,21 @@
 	icon_state = "tdgreen"
 	inhand_icon_state = "tdgreen"
 
+/obj/item/clothing/suit/armor/tdome/holosuit
+	name = "thunderdome suit"
+	armor = list(MELEE = 10, BULLET = 10, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
+	cold_protection = null
+	heat_protection = null
+
+/obj/item/clothing/suit/armor/tdome/holosuit/red
+	desc = "Reddish armor."
+	icon_state = "tdred"
+	inhand_icon_state = "tdred"
+
+/obj/item/clothing/suit/armor/tdome/holosuit/green
+	desc = "Pukish armor."
+	icon_state = "tdgreen"
+	inhand_icon_state = "tdgreen"
 
 /obj/item/clothing/suit/armor/riot/knight
 	name = "plate armour"
@@ -263,8 +321,8 @@
 	desc = "A classic suit of armour, able to be made from many different materials."
 	icon_state = "knight_greyscale"
 	inhand_icon_state = "knight_greyscale"
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS//Can change color and add prefix
-	armor = list(MELEE = 35, BULLET = 10, LASER = 10, ENERGY = 10, BOMB = 10, BIO = 10, RAD = 10, FIRE = 40, ACID = 40, WOUND = 15)
+	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS//Can change color and add prefix
+	armor = list(MELEE = 35, BULLET = 10, LASER = 10, ENERGY = 10, BOMB = 10, BIO = 10, FIRE = 40, ACID = 40, WOUND = 15)
 
 /obj/item/clothing/suit/armor/vest/durathread
 	name = "durathread vest"
@@ -275,14 +333,14 @@
 	equip_delay_other = 40
 	max_integrity = 200
 	resistance_flags = FLAMMABLE
-	armor = list(MELEE = 20, BULLET = 10, LASER = 30, ENERGY = 40, BOMB = 15, BIO = 0, RAD = 0, FIRE = 40, ACID = 50)
+	armor = list(MELEE = 20, BULLET = 10, LASER = 30, ENERGY = 40, BOMB = 15, BIO = 0, FIRE = 40, ACID = 50)
 
 /obj/item/clothing/suit/armor/vest/russian
 	name = "russian vest"
 	desc = "A bulletproof vest with forest camo. Good thing there's plenty of forests to hide in around here, right?"
 	icon_state = "rus_armor"
 	inhand_icon_state = "rus_armor"
-	armor = list(MELEE = 25, BULLET = 30, LASER = 0, ENERGY = 10, BOMB = 10, BIO = 0, RAD = 20, FIRE = 20, ACID = 50, WOUND = 10)
+	armor = list(MELEE = 25, BULLET = 30, LASER = 0, ENERGY = 10, BOMB = 10, BIO = 0, FIRE = 20, ACID = 50, WOUND = 10)
 
 /obj/item/clothing/suit/armor/vest/russian_coat
 	name = "russian battle coat"
@@ -292,24 +350,34 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
-	armor = list(MELEE = 25, BULLET = 20, LASER = 20, ENERGY = 30, BOMB = 20, BIO = 50, RAD = 20, FIRE = -10, ACID = 50, WOUND = 10)
+	armor = list(MELEE = 25, BULLET = 20, LASER = 20, ENERGY = 30, BOMB = 20, BIO = 50, FIRE = -10, ACID = 50, WOUND = 10)
 
 /obj/item/clothing/suit/armor/elder_atmosian
-	name = "Elder Atmosian Armor"
+	name = "\improper Elder Atmosian Armor"
 	desc = "A superb armor made with the toughest and rarest materials available to man."
-	icon_state = "knight_grey"
-	inhand_icon_state = "knight_greyscale"
-	material_flags = MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS//Can change color and add prefix
-	armor = list(MELEE = 15, BULLET = 10, LASER = 30, ENERGY = 30, BOMB = 10, BIO = 10, RAD = 20, FIRE = 65, ACID = 40, WOUND = 15)
+	icon_state = "h2armor"
+	inhand_icon_state = "h2armor"
+	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS//Can change color and add prefix
+	armor = list(MELEE = 25, BULLET = 20, LASER = 30, ENERGY = 30, BOMB = 85, BIO = 10, FIRE = 65, ACID = 40, WOUND = 15)
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 
-/obj/item/clothing/suit/armor/vest/centcom_formal
-	name = "\improper CentCom Formal Coat"
+/obj/item/clothing/suit/armor/centcom_formal
+	name = "\improper CentCom formal coat"
 	desc = "A stylish coat given to CentCom Commanders. Perfect for sending ERTs to suicide missions with style!"
 	icon_state = "centcom_formal"
 	inhand_icon_state = "centcom"
 	body_parts_covered = CHEST|GROIN|ARMS
-	armor = list(MELEE = 35, BULLET = 40, LASER = 40, ENERGY = 50, BOMB = 35, BIO = 10, RAD = 10, FIRE = 10, ACID = 60)
+	armor = list(MELEE = 35, BULLET = 40, LASER = 40, ENERGY = 50, BOMB = 35, BIO = 10, FIRE = 10, ACID = 60)
 
+/obj/item/clothing/suit/armor/centcom_formal/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/toggle_icon)
+
+/obj/item/clothing/suit/armor/vest/hop
+	name = "head of personnel's coat"
+	desc = "A stylish coat given to a Head of Personnel."
+	icon_state = "hop_coat"
+	inhand_icon_state = "b_suit"
+	body_parts_covered = CHEST|GROIN|ARMS

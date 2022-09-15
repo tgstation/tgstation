@@ -22,15 +22,15 @@
 /obj/effect/landmark/sc_bible_spawner
 	name = "Safecode hint spawner"
 
-/obj/effect/landmark/sc_bible_spawner/Initialize()
+/obj/effect/landmark/sc_bible_spawner/Initialize(mapload)
 	..()
 	var/obj/item/storage/book/bible/B = new /obj/item/storage/book/bible/booze(loc)
 	B.name = "The Holy book of the Geometer"
 	B.deity_name = "Narsie"
 	B.icon_state = "melted"
 	B.inhand_icon_state = "melted"
-	B.lefthand_file = 'icons/mob/inhands/misc/books_lefthand.dmi'
-	B.righthand_file = 'icons/mob/inhands/misc/books_righthand.dmi'
+	B.lefthand_file = 'icons/mob/inhands/items/books_lefthand.dmi'
+	B.righthand_file = 'icons/mob/inhands/items/books_righthand.dmi'
 	new /obj/item/paper/fluff/awaymissions/stationcollision/safehint_paper_bible(B)
 	new /obj/item/pen(B)
 	return INITIALIZE_HINT_QDEL
@@ -48,7 +48,7 @@
 //Syndicate sub-machine guns.
 /obj/item/gun/ballistic/automatic/c20r/sc_c20r
 
-/obj/item/gun/ballistic/automatic/c20r/sc_c20r/Initialize()
+/obj/item/gun/ballistic/automatic/c20r/sc_c20r/Initialize(mapload)
 	. = ..()
 	for(var/ammo in magazine.stored_ammo)
 		if(prob(95)) //95% chance
@@ -57,7 +57,7 @@
 //Barman's shotgun
 /obj/item/gun/ballistic/shotgun/sc_pump
 
-/obj/item/gun/ballistic/shotgun/sc_pump/Initialize()
+/obj/item/gun/ballistic/shotgun/sc_pump/Initialize(mapload)
 	. = ..()
 	for(var/ammo in magazine.stored_ammo)
 		if(prob(95)) //95% chance
@@ -84,31 +84,33 @@ GLOBAL_VAR_INIT(sc_safecode5, "[rand(0,9)]")
 /obj/item/paper/fluff/awaymissions/stationcollision/safehint_paper_prison
 	name = "smudged paper"
 
-/obj/item/paper/fluff/awaymissions/stationcollision/safehint_paper_prison/Initialize()
-	. = ..()
-	info = "<i>The ink is smudged, you can only make out a couple numbers:</i> '[GLOB.sc_safecode1]**[GLOB.sc_safecode4]*'"
+/obj/item/paper/fluff/awaymissions/stationcollision/safehint_paper_prison/Initialize(mapload)
+	default_raw_text = "<i>The ink is smudged, you can only make out a couple numbers:</i> '[GLOB.sc_safecode1]**[GLOB.sc_safecode4]*'"
+	return ..()
 
 /obj/item/paper/fluff/awaymissions/stationcollision/safehint_paper_hydro
 	name = "shredded paper"
-/obj/item/paper/fluff/awaymissions/stationcollision/safehint_paper_hydro/Initialize()
-	. = ..()
-	info = "<i>Although the paper is shredded, you can clearly see the number:</i> '[GLOB.sc_safecode2]'"
+
+/obj/item/paper/fluff/awaymissions/stationcollision/safehint_paper_hydro/Initialize(mapload)
+	default_raw_text = "<i>Although the paper is shredded, you can clearly see the number:</i> '[GLOB.sc_safecode2]'"
+	return ..()
 
 /obj/item/paper/fluff/awaymissions/stationcollision/safehint_paper_caf
 	name = "blood-soaked paper"
 	//This does not have to be in New() because it is a constant. There are no variables in it i.e. [sc_safcode]
-	info = "<font color=red><i>This paper is soaked in blood, it is impossible to read any text.</i></font>"
+	default_raw_text = "<font color=red><i>This paper is soaked in blood, it is impossible to read any text.</i></font>"
 
 /obj/item/paper/fluff/awaymissions/stationcollision/safehint_paper_bible
 	name = "hidden paper"
-/obj/item/paper/fluff/awaymissions/stationcollision/safehint_paper_bible/Initialize()
-	. = ..()
-	info = {"<i>It would appear that the pen hidden with the paper had leaked ink over the paper.
+
+/obj/item/paper/fluff/awaymissions/stationcollision/safehint_paper_bible/Initialize(mapload)
+	default_raw_text = {"<i>It would appear that the pen hidden with the paper had leaked ink over the paper.
 			However you can make out the last three digits:</i>'[GLOB.sc_safecode3][GLOB.sc_safecode4][GLOB.sc_safecode5]'
 			"}
+	return ..()
 
 /obj/item/paper/fluff/awaymissions/stationcollision/safehint_paper_shuttle
-	info = {"<b>Target:</b> Research-station Epsilon<br>
+	default_raw_text = {"<b>Target:</b> Research-station Epsilon<br>
 			<b>Objective:</b> Prototype weaponry. The captain likely keeps them locked in her safe.<br>
 			<br>
 			Our on-board spy has learned the code and has hidden away a few copies of the code around the station. Unfortunately he has been captured by security
@@ -126,12 +128,11 @@ GLOBAL_VAR_INIT(sc_safecode5, "[rand(0,9)]")
 /obj/item/storage/secure/safe/sc_ssafe
 	name = "Captain's secure safe"
 
-/obj/item/storage/secure/safe/sc_ssafe/Initialize()
+/obj/item/storage/secure/safe/sc_ssafe/Initialize(mapload)
 	. = ..()
-	l_code = "[GLOB.sc_safecode1][GLOB.sc_safecode2][GLOB.sc_safecode3][GLOB.sc_safecode4][GLOB.sc_safecode5]"
-	l_set = 1
+	lock_code = "[GLOB.sc_safecode1][GLOB.sc_safecode2][GLOB.sc_safecode3][GLOB.sc_safecode4][GLOB.sc_safecode5]"
+	lock_set = TRUE
 	new /obj/item/gun/energy/mindflayer(src)
 	new /obj/item/soulstone(src)
-	new /obj/item/clothing/suit/space/hardsuit/cult(src)
-	//new /obj/item/teleportation_scroll(src)
+	new /obj/item/clothing/suit/hooded/cultrobes/hardened(src)
 	new /obj/item/stack/ore/diamond(src)

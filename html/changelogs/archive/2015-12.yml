@@ -1,0 +1,448 @@
+2015-12-01:
+  Kor:
+  - rscadd: The away mission Listening Post, originally mapped by Petethegoat, has
+      removed as a mission. It is now present in normal deep space.
+  neersighted:
+  - tweak: Attack animations are now directional!
+  - rscadd: Nanotrasen brand Airlock Electronics now sport our latest NanoUI interface!
+      Upgrade your electronics today!
+  - bugfix: Cryo now knocks you out.
+  - bugfix: Resisting out of cryo has a delay.
+  - rscadd: Cryo auto-ejection can now be configured.
+  - rscdel: Remove Cryo eject verb (resist out).
+  - bugfix: Cryo works... Love, neersighted
+  swankcookie:
+  - tweak: Switches cloak usage to overclothing slot
+2015-12-02:
+  GunHog:
+  - bugfix: Nanotrasen has discovered a flaw in the weapon recharging station's design
+      that makes it incompatible with the Rapid Part Exchange Device. This has been
+      corrected.
+  neersighted:
+  - tweak: You can now stop pulling by trying to pull the same object again.
+  - rscadd: Nanotrasen is proud to announce that even the dead can use our state of
+      the art NanoUI technology.
+2015-12-03:
+  Joan:
+  - rscadd: Artificers now have feedback when healing other constructs, showing how
+      much health the target has.
+  - tweak: Constructs can move in space.
+  - imageadd: Fixes cult flooring not lining up with normal floors.
+  - imageadd: Fixes a juggernaut back spine not glowing where it should.
+  Spudboy:
+  - tweak: Realigned the librarian's PDA.
+  Swankcookie:
+  - bugfix: Cakehat now creates light
+  YotaXP:
+  - rscadd: Rolled out a new line of space heaters around the station.  This new model
+      has the functionality to cool down the environment, as well as heat it.  Additionally,
+      they can be built and upgraded like any other machine.
+  neersighted:
+  - bugfix: Dominator now shows the correct area name on non-Box maps.
+  - bugfix: Unwrenching atmos pipes is less... nuts...
+  - bugfix: You don't get hopelessly spun when standing on a unwrenched pipe... Don't
+      try it, though.
+  - tweak: You can now cancel pulling by Ctrl+Clicking anything else
+  - tweak: Chemistry Dispensers now have a built-in drain!
+2015-12-05:
+  Joan:
+  - rscdel: Magic missiles no longer do damage.
+2015-12-06:
+  Gun Hog:
+  - rscadd: Nanotrasen is proud to announce that it has improved its Diagnostic HUD
+      firmware to include the station's automated robot population! New features include
+      integrity tracking, Off/On status, and mode tracking! If your little robot friend
+      suddenly manages to acquire free will, you will be able to track that as well!
+  - tweak: Artificial Intelligence units may find that their bot management interface
+      now shows when a robot gains free will. This is also displayed on the Personal
+      Data Assistant's bot control interface.
+  neersighted:
+  - bugfix: Cryo now properly checks it is on before healing...
+2015-12-07:
+  octareenroon91:
+  - rscadd: Wallets now use the access of all IDs stored inside them.
+  - rscadd: As the accesses of all IDs are merged, two IDs in a wallet may grant access
+      to a door that neither one alone would open.
+  - bugfix: Wallets used to be useless for access if the first ID card put into it
+      was taken out, until another ID card was put back in.  That should not happen
+      anymore.
+2015-12-08:
+  Joan:
+  - experiment: Revenants can no longer move through walls and windows while revealed,
+      though they can move through tables, plastic flaps, mobs, and other similarly
+      thin objects.
+  - tweak: Defile now reveals for 4 seconds, from 8.
+  - tweak: Overload lights now reveals for 10 seconds, from 8.
+  - tweak: Blight now reveals for 6 seconds, from 8.
+  - rscadd: Blight has a higher chance of applying stamina damage to the infected.
+  Kor:
+  - rscadd: The blocking system has been completely overhauled. Any held item, exosuit,
+      or jumpsuit can now have a chance to block, or a custom on hit effect. Different
+      shields can now have different block chances.
+  - rscadd: The clowns jumpsuit now honks when you beat the owner.
+  - rscadd: There is a new (admin only for now) suit of reactive armour that ignites
+      attackers instead of warping you.
+  - rscadd: Shields will no longer block hugs. Give peace a chance.
+  neersighted:
+  - tweak: MC tab reworked, more items made available.
+  - rscadd: Admins can now click entries in the MC tab to debug.
+2015-12-09:
+  GunHog:
+  - tweak: Nanotrasen has discovered new strains of Xenomorph which resist penetration
+      by known injection devices, including syringes. This seems to only extend to
+      the large 'Royal' strains, designed 'Queen' and 'Praetorian'. Extreme caution
+      is advised should these specimens escape containment.
+  - rscadd: Ghosts may now use Diagnostic HUD.
+  - tweak: Feedback added for which HUD is active.
+  Kor:
+  - rscadd: Security barricades now block gunfire 80% of the time while deployed.
+  - rscadd: Standing adjacent to barricades will allow you to shoot over them.
+  MrStonedOne:
+  - rscadd: noslip floors make you slightly faster
+  Shadowlight213:
+  - rscadd: Admins can now interact with mos of the station's machinery as if they
+      were an AI when ghosting.
+  incoming5643:
+  - rscadd: a mutation of glowshrooms, glowcaps, have recently been discovered in
+      botany.
+  ktccd:
+  - bugfix: Blobs now require the correct amount of blobs to win that scales depending
+      on number of blobs, instead of a set value of 700.
+2015-12-12:
+  Joan:
+  - tweak: The blob Split Consciousness ability now requires a node under the overmind's
+      selector, instead of picking the oldest living node to spawn a core on.
+  - bugfix: Revenant antagonist preference can once again be toggled from the Game
+      Preferences menu.
+  Kor:
+  - rscadd: You now have a chance to flip while attacking with a dualsaber.
+  - rscadd: Bluespace survival capsules have been added to escape pod safes.
+  - rscadd: Standing between activating shield generators now has disastrous consequences.
+  Lo6a4evskiy:
+  - bugfix: Ninja drains power properly, no more infinite stealth.
+  RemieRichards:
+  - rscadd: Adds a Synth Species
+  - rscadd: Species can now react to being force set by admins, used for Synth species
+2015-12-13:
+  Kor:
+  - rscadd: Adds reactive stealth armor. Admin spawn only.
+2015-12-15:
+  Incoming5643:
+  - rscadd: The summon events... event "RPG loot" now allows for items to have bonuses
+      of up to +15!
+  - rscadd: The "RPG loot" event now also improves the damage reduction of armor!
+  - rscadd: <s>Check out the item mall for new item fortification scrolls!</s>
+  as334:
+  - rscadd: New research has shown that when when plasma reaches a high enough temperature
+      in the presence of a carbon catalyst, it undergoes a violent and powerful fusion
+      reaction.
+  - rscadd: Adds a new gas reaction, fusion. Heat up plasma and carbon dioxide in
+      order to produce large amounts of energy and heat.
+  oranges:
+  - tweak: hulk no longer stuns
+  - tweak: John Cena
+2015-12-16:
+  AnturK:
+  - rscadd: Medical Beam Gun now available for Nuclear Operatives and ERT Medics.
+  Joan:
+  - tweak: Revenant Overload Lights reveal time lowered from 10 seconds to 8 seconds,
+      shock damage increased from 18 to 20.
+  - tweak: Revenant Blight reveal time lowered from 6 seconds to 5 seconds.
+  Kor:
+  - rscadd: Styptic once again works in patches.
+  - rscadd: Nuke Op team leaders can now activate challenge mode if more than 50 players
+      are online.
+  - rscadd: Xenobio mobs will no longer spontaneously murder their friends if you
+      give them sentience
+  The-Albinobigfoot:
+  - bugfix: The Wishgranter now displays its faith in humans with curbed enthusiasm.
+  Tkdrg:
+  - experiment: Cult has been overhauled in an attempt to make the gamemode more fun.
+  - rscdel: Cult onversion and stunpapers have been removed. So have most cult objectives.
+  - tweak: The cult's single objective is now defend and feed a large construct shell
+      in order to summon the Geometer.
+  - tweak: The cult must sacrifice souls in order to acquire summoning orbs, which
+      must be inserted inside said shell.
+  - tweak: The large construct shell can be procured by using a summoning orb in hand,
+      but it is vulnerable to attack.
+  - tweak: Once enough orbs are inserted, the station will go Delta. After three minutes,
+      the cult will have won.
+  - rscadd: Cult communications now no longer damage you when done without a tome.
+  - rscadd: Cultists now start with a sacrificial dagger, with bleeding effects and
+      high throwing damage.
+  - rscadd: Most existing runes were buffed, merged, or removed. A Immolate rune and
+      a Time Stop rune were added. Experiment!
+  - experiment: Each cultist now gets a random set of runes in their tomes. Pool together
+      your knowledge in order to thrive.
+  neersighted:
+  - experiment: NanoUI 3.0
+  - experiment: Completely rewrite NanoUI frontend; rework backend.
+  - tweak: Re-design NanoUI interface to be much more attractive.
+  - tweak: Reduce NanoUI LOC count/resource size.
+  - tweak: Reduce NanoUI tickrate; make UIs update properly.
+  - rscadd: Add chromeless NanoUI mode.
+  - rscadd: NanoUI's chromeless mode can be toggled with the 'Fancy NanoUI' preference.
+  - bugfix: Allow NanoUI to work on IE8-IE11, and Edge.
+  - bugfix: Close holes that allow NanoUI href spoofing.
+2015-12-17:
+  Kor:
+  - rscadd: Security barricades are now deployed via grenade. You can no longer move
+      them after they've been deployed, you must destroy them.
+  - rscadd: You can now shoot through wooden barricades while adjacent, while any
+      other gunfire has a 50% chance of being blocked.
+  - rscadd: There are no longer restrictions against implanting the nuclear disk in
+      people.
+  - rscadd: If the station is destroyed in a nuclear blast, any surviving traitors
+      will complete their "escape alive" objective regardless of their location.
+  - rscadd: Hulks now lose hulk when going into crit, rather than at 25 health.
+  - rscadd: Shuttles will no longer drag random tiles of space with them. This means
+      you can be thrown out of partially destroyed escape shuttles very easily.
+  - rscadd: The people and objects on destroyed tiles won't be along for the ride
+      when the shuttle moves either.
+  - rscadd: Adds hardsuits with built in energy shielding. CTF and security versions
+      are admin only.
+  - rscadd: Nuclear operatives can buy a shielded hardsuit for 30tc.
+  - rscadd: Traitors can now buy a Mulligan for 4 telecrystals, a syringe that completely
+      randomizes your name and appearance.
+  - rscadd: The spy bundle now includes a switchblade and Mulligan.
+  MMMiracles:
+  - rscadd: A set of coordinates have recently reappeared on the Nanotrasen gateway
+      project. Ask your local central official about participation.
+  MrStonedOne:
+  - tweak: 'Ghosts can now double click on ANY movable thing (ie: not a turf) to orbit
+      it'
+  PKPenguin321:
+  - rscadd: Dope golden necklaces have been added. They're a jumpsuit attachment like
+      ties and are completely cosmetic.
+  - rscadd: Dope necklaces can be bought from the clothesmate with a coin. Three are
+      in the clothesmate by default, so you can get your posse going. Gangs that aren't
+      Sleeping Carp can also purchase necklaces for 1 influence each. Dope.
+  xxalpha:
+  - tweak: Restores the ability to bolt and unbolt operating airlocks.
+2015-12-18:
+  Incoming5643:
+  - rscadd: Soon to be blobs in blob mode can now burst at their choosing. However
+      they will still burst if they wait too long.
+  - rscadd: Burst responsibly.
+  Joan:
+  - rscadd: 'New blob chemicals:'
+  - rscadd: Pressurized Slime, which is grey, does low brute, oxygen, and stamina
+      damage, but releases water when damaged or destroyed.
+  - rscadd: Energized Fibers, which is light yellow, does low burn damage, high stamina
+      damage, and heals if hit with stamina damage.
+  - rscadd: Hallucinogenic Nectar, which is pink, does low toxin damage, causes vivid
+      hallucinations, and does some bonus toxin damage over time.
+  - tweak: Replaces Kinetic Gelatin with Reactive Gelatin, which does less brute damage,
+      but if hit with brute damage in melee, damages all nearby objects.
+  - wip: 'Changes three of the old blob chemicals:'
+  - tweak: Ripping Tendrils does slightly more stamina damage
+  - tweak: Envenomed Filaments no longer causes hallucinations, but does some stamina
+      damage in addition to toxin damage over time.
+  - tweak: Cryogenic Liquid will freeze targets more effectively.
+  Kor:
+  - rscadd: Shooting someone who is holding a grenade has a chance to set the grenade
+      off.
+  - rscadd: Shooting someone who is holding a flamethrower has a chance to rupture
+      the fuel tank.
+  - tweak: Shields have a bonus against blocking thrown projectiles.
+  Swankcookie:
+  - rscadd: lanterns no longer turn into flashlights when you pick them up.
+  bgobandit:
+  - rscadd: Lizard tails can now be severed by surgeons with a circular saw and cautery,
+      and attached the same way augmented limbs are.
+  - rscadd: The Animal Rights Consortium is horrified by Nanotrasen stations' sudden
+      rise of illegal lizard tail trade, with such atrocities as lizardskin hats,
+      lizard whips, lizard clubs and even lizard kebab!
+  neersighted:
+  - tweak: NanoUI should now load much faster, as the filesize and file count have
+      been reduced
+2015-12-20:
+  Joan:
+  - tweak: Reduces Lexorin Jelly's oxygen damage significantly.
+  - experiment: Blobbernaut chemical application on attack is back, but much less
+      absurd this time; blobbernauts with an overmind will do 70% of the normal chem
+      damage(plus 4) and attack at a much slower rate than the blob itself can.
+  - wip: As an example, a blobbernaut with the Ripping Tendrils chemical would do
+      14.5 brute and 10.5 stamina damage per hit.
+  Kor:
+  - rscadd: Adds reactive tesla armour. Adminspawn only.
+  - rscadd: Adds the legendary spear, Grey Tide. Admin only.
+  - rscadd: Nuke Ops can now purchase penetrator rounds for their sniper rifles.
+  - rscadd: Nuke ops can now purchase additional team members for 25 telecrystals.
+      They don't come with any gear other than a pistol however, so remember to save
+      some points for them.
+  - rscadd: Nuke Ops now have an assault pod. A 30tc targeting device will allow you
+      to select any area on the station as its landing zone. The pod is one way, so
+      don't forget your nuke.
+  - rscdel: The teleporter board is no longer available for purchase in the uplink.
+  - rscdel: After finding absolutely nothing of value, Nanotrasen away teams placed
+      charges and scuttled the abandoned space hotel.
+  - rscadd: Metastation now has xenobiology computers.
+  - rscadd: Metastation now has escape pod computers.
+  - rscadd: A distress signal has been detected broadcasting in an asteroid field
+      near Space Station 13.
+  - rscadd: Clicking the (F) follow link for AI speech will now make you orbit their
+      camera eye.
+  MMMiracles:
+  - tweak: The SAW has been revamped slightly. It now requires a free hand to fire,
+      but includes 4 new ammo variants along with a TC cost decrease for both the
+      gun and the ammo boxes.
+  MrStonedOne:
+  - bugfix: Fixes ghost orbit breaking ghost floating
+  - bugfix: Fixes orbiting ever breaking golem spawning
+  - bugfix: 'Fixes orbiting ever preventing that ghost from showing up in pictures
+      taken by ghost cameras resdel: Fixes being able to break your ghost sprite by
+      multiple quick consecutive orbits (FINAL SOLUTION, PROVE ME WRONG YOU CAN''T)'
+  Remie:
+  - rscadd: 'Byond members can now choose how their ghost orbits things, their choices
+      are: Circle, Triangle, Square, Pentagon and Hexagon!'
+  - tweak: orbit() should be much cheaper for clients now, allowing those of you with
+      potato PCs to survive mega ghost swirling better.
+  incoming5643:
+  - bugfix: the terror of double tailed lizards and featureless clones should now
+      be over
+  - rscdel: the emote *stopwag no longer works, just *wag again to stop instead
+2015-12-21:
+  AnturK:
+  - tweak: Ghost HUD and Ghost Inquisitiveness  toggles are now persistent between
+      rounds.
+  Kor:
+  - rscadd: Malfunctioning AIs have been merged with traitor AIs. They no longer appear
+      in their own mode.
+  - rscadd: Hacking APCs now gives you points to spend on your modules. Save up enough
+      points and you can buy a doomsday device on a 450 second timer.
+  - rscadd: The detectives revolver reskins on alt click now.
+  - rscadd: You can now dual wield guns. Firing a gun will automatically fire the
+      gun held in your off hand if you are on harm intent.
+  LanCartwright:
+  - tweak: The TC costs for nuke ops have been rebalanced. Guns, viscerators and mechs
+      are cheaper, ammo and borgs are more expensive.
+  - rscadd: Most guns can now be bought in bundles, together with some ammo and freebies
+      for a special discount.
+  The-Albinobigfoot:
+  - rscadd: Nuclear Operative families may once again requisition ultra-adhesive footwear.
+2015-12-22:
+  Iamgoofball:
+  - rscadd: Tesla engine has been added alongside the singularity engine to all maps.
+  Joan:
+  - wip: 'Adds three new blob chemicals:'
+  - rscadd: Replicating Foam, which is brown, does brute damage, has bonus expansion,
+      and has a chance to expand when damaged.
+  - rscadd: Sporing Pods, which is light orange, does low toxin damage, and has a
+      chance to produce weak spores when expanding or killed.
+  - rscadd: Synchronous Mesh, which is teal, does brute damage and bonus damage for
+      each blob tile near the target, and splits damage taken between nearby blobs.
+  - experiment: Synchronous Mesh blobs take 25% more damage, to compensate for the
+      spread damage.
+  Kor:
+  - rscadd: Cayenne will no longer be targeted by the syndicate turrets.
+  - tweak: Energy shields now only reflect energy projectiles.
+  - rscadd: Added accelerator sniper rounds to uplink, a weak projectile that ramps
+      up damage the farther it flies.
+  MMMiracles:
+  - bugfix: Saber magazines have been dropped to 21 per magazine. When asked, Nanotrasens
+      official ballistic department replied "There is indeed such a thing as too much
+      bullet."
+  Xhuis:
+  - tweak: Stun batons can now be blocked by shields, blocked hits don't deduct charge.
+  xxalpha:
+  - rscadd: Janitor cyborgs now have a bottle of drying agent.
+2015-12-25:
+  Joan:
+  - rscdel: The blob Split Consciousness ability has been removed.
+  - tweak: The blob mode now spawns more roundstart blobs, instead.
+  Kor:
+  - rscadd: AI holograms no longer drift in zero gravity
+  LanCartwright:
+  - tweak: Shotguns shells now have one extra pellet.
+  MrStonedOne:
+  - bugfix: Screen shakes will no longer allow you to see through walls
+  - tweak: Screen shakes will now move with you when moving rather than lag your client
+      behind your mob
+  - tweak: Screen shakes are now less laggy in higher tickrates
+2015-12-26:
+  Buggy123:
+  - tweak: Salicyclic Acid now rapidly heals severe bruising and slowly heals minor
+      ones.
+  Iamgoofball:
+  - tweak: Telsa energy ball now shoots only a single, powerful beam of lightning
+      that can arc between mobs.
+  - soundadd: Energy ball can now be heard when near-by.
+  Incoming5643:
+  - tweak: Animated objects now revert if they have no one to attack for a while.
+  - rscadd: Added Golden revolver, a powerful sounding gun with large recoil.
+  Kor:
+  - rscadd: Transform Sting is now actually functional.
+  MrStonedOne:
+  - tweak: Movement in no gravity now allows you to push off of things only dense
+      to some mobs if it is dense to you (such as tables/blob tiles) rather than just
+      objects that are only dense to all mobs.
+  - bugfix: Long/timed actions will now cancel properly if you move and quickly move
+      back to the right location.
+2015-12-27:
+  Joan:
+  - rscadd: Overmind-created blobbernauts are now player-controlled if possible.
+  - tweak: Creating a blobbernaut no longer destroys the factory, instead doing heavy
+      damage to it and preventing it from spawning spores for one minute.
+  - tweak: You cannot spawn blobbernauts from overly damaged factories.
+  - rscadd: Procedure 5-6 may be issued for biohazard containment under certain situations.
+  - tweak: Blobs will now burst slightly later on average, and the nuke report with
+      the nuke code will arrive slightly earlier.
+  Kor:
+  - soundadd: Spacemen now announce when they are changing magazines.
+  - rscadd: Command headsets now have a toggle to let you have larger radio speech.
+  LanCartwright:
+  - rscdel: The Syndicate Ship no longer spawns with Bulldog shotguns, operative have
+      been given 10 extra telecrystals instead.
+  MrStonedOne:
+  - bugfix: Flashes that were emp'ed were incorrectly flashing people in range of
+      the emper, not in range of the flash.
+  - tweak: Flashes in a mob's inventory that are emp'ed will only aoe stun if it is
+      not inside of a container like a backpack/box
+2015-12-28:
+  AnturK:
+  - rscadd: You can now write an entire word with crayons by setting it as a buffer
+      and then clicking the target tiles in the right order.
+  Joan:
+  - rscdel: Blobbernauts can no longer smash walls of any type.
+  MrStonedOne:
+  - tweak: Progress bars now have 20 states instead of 5.
+  - bugfix: Bump mining should be fixed.
+  - tweak: Long actions now checks for movement/changed hands/etc more often to prevent
+      edge cases.
+  - tweak: Multiple progress bars will now stack properly, rather than fight each
+      other for focus.
+  Ressler:
+  - rscadd: Adds the reagent Haloperidol.
+  - rscadd: It is an anti-drug reagent, good for stopping assistants hyped up on meth,
+      bath salts, and equally illegal drugs.
+  - rscadd: It can be made with Chlorine, Fluorine, Aluminum, Potassium Iodide, and
+      Oil.
+  neersighted:
+  - bugfix: Make NanoUIs transfer upon (un)ghosting.
+  - bugfix: Fix NanoUIs jumping when resized/dragged.
+  - bugfix: Lots of other NanoUI bugs.
+2015-12-31:
+  Bawhoppen:
+  - rscadd: Nanotrasen has opened the availability of tactical SWAT gear to station's
+      cargo department
+  - rscadd: Due to a new trade agreement with Chinese space suit manufacturers, Nanotrasen
+      can now obtain basic space suits much cheaper; This has been reflected in the
+      cargo prices
+  - rscadd: Amateur medieval enthusiasts have found a quick way to easily make wooden
+      bucklers.
+  Joan:
+  - imageadd: Replaced every book sprite in the game with new, consistent versions.
+  - imageadd: Except the one-use wizard spellbooks, which already got new sprites.
+  PKPenguin321:
+  - rscadd: Chest implants have been added that allow you to morph your arms into
+      a gun and back at will. There are two variants, a taser version and a laser
+      version. Both versions are self-charging. Getting EMPed with one of these implants
+      results in the implant breaking and loads of fire damage. The implants are currently
+      admin-only.
+  - tweak: The telecrystal price for thermal imaging goggles has been lowered from
+      6 to 4.
+  incoming5643:
+  - rscadd: The wizard federation has finally updated their assortment of guns for
+      the summon guns event. Look forward to getting shot in the face with a whole
+      new batch of interesting and rarely seen weaponry!

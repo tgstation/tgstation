@@ -8,7 +8,7 @@
 	icon_state = "core_off"
 	circuit = /obj/item/circuitboard/machine/HFR_core
 	use_power = IDLE_POWER_USE
-	idle_power_usage = 50
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION
 	///Vars for the state of the icon of the object (open, off, active)
 	icon_state_open = "core_open"
 	icon_state_off = "core_off"
@@ -24,6 +24,8 @@
 	var/start_cooling = FALSE
 	///Checks for the fuel to be injected
 	var/start_fuel = FALSE
+	///Checks for the moderators to be injected
+	var/start_moderator = FALSE
 
 	/**
 	 * Hypertorus internal objects and gasmixes
@@ -39,12 +41,20 @@
 	var/obj/machinery/atmospherics/components/unary/hypertorus/waste_output/linked_output
 	///Stores the information of the corners of the machine
 	var/list/corners = list()
+	///Stores the three inputs/outputs of the HFR, needed for cracking the parts
+	var/list/machine_parts = list()
 	///Stores the information of the fusion gasmix
 	var/datum/gas_mixture/internal_fusion
 	///Stores the information of the moderators gasmix
 	var/datum/gas_mixture/moderator_internal
-	///Set the filtering type of the waste remove
-	var/filter_type = null
+	///Set the filtering list of the waste remove
+	var/list/moderator_scrubbing = list(
+		/datum/gas/helium,
+		)
+	///Set the amount of moles per tick should be removed from the moderator by filtering
+	var/moderator_filtering_rate = 100
+	///Stores the current fuel mix that the user has selected
+	var/datum/hfr_fuel/selected_fuel
 
 	/**
 	 * Fusion vars
@@ -66,8 +76,6 @@
 	var/power_output = 0
 	///Instability effects how chaotic the behavior of the reaction is
 	var/instability = 0
-	///Amount of radiation that the machine can output
-	var/rad_power = 0
 	///Difference between the gases temperature and the internal temperature of the reaction
 	var/delta_temperature = 0
 	///Energy from the reaction lost from the molecule colliding between themselves.
@@ -78,35 +86,19 @@
 	var/efficiency = 0
 	///Hotter air is easier to heat up and cool down
 	var/heat_limiter_modifier = 0
+	///How much the reaction can cool itself
+	var/heat_output_max = 0
+	///How much the reaction can heat itself
+	var/heat_output_min = 0
 	///The amount of heat that is finally emitted, based on the power output. Min and max are variables that depends of the modifier
 	var/heat_output = 0
-
-	///Stores the moles of the gases (the ones with m_ are of the moderator mix)
-	var/tritium = 0
-	var/hydrogen = 0
-	var/helium = 0
-
-	var/m_plasma = 0
-	var/m_nitrogen = 0
-	var/m_oxygen = 0
-	var/m_co2 = 0
-	var/m_h2o = 0
-	var/m_n2o = 0
-	var/m_no2 = 0
-	var/m_freon = 0
-	var/m_bz = 0
-	var/m_proto_nitrate = 0
-	var/m_healium = 0
-	var/m_zauker = 0
-	var/m_antinoblium = 0
-	var/m_hypernoblium = 0
 
 	///Check if the user want to remove the waste gases
 	var/waste_remove = FALSE
 	///User controlled variable to control the flow of the fusion by changing the contact of the material
 	var/heating_conductor = 100
 	///User controlled variable to control the flow of the fusion by changing the volume of the gasmix by controlling the power of the magnetic fields
-	var/magnetic_constrictor  = 100
+	var/magnetic_constrictor = 100
 	///User controlled variable to control the flow of the fusion by changing the instability of the reaction
 	var/current_damper = 0
 	///Stores the current fusion mix power level
@@ -114,9 +106,9 @@
 	///Stores the iron content produced by the fusion
 	var/iron_content = 0
 	///User controlled variable to control the flow of the fusion by changing the amount of fuel injected
-	var/fuel_injection_rate = 250
+	var/fuel_injection_rate = 25
 	///User controlled variable to control the flow of the fusion by changing the amount of moderators injected
-	var/moderator_injection_rate = 250
+	var/moderator_injection_rate = 25
 
 	///Integrity of the machine, if reaches 900 the machine will explode
 	var/critical_threshold_proximity = 0
@@ -154,24 +146,43 @@
 	var/last_accent_sound = 0
 
 	///These vars store the temperatures to be used in the GUI
+	var/fusion_temperature_archived = 0
 	var/fusion_temperature = 0
+	var/moderator_temperature_archived = 0
 	var/moderator_temperature = 0
+	var/coolant_temperature_archived = 0
 	var/coolant_temperature = 0
+	var/output_temperature_archived = 0
 	var/output_temperature = 0
+	///Time between current and _archived temperatures
+	var/temperature_period = 1
 	///Var used in the meltdown phase
 	var/final_countdown = FALSE
 
-/obj/machinery/atmospherics/components/unary/hypertorus/core/Initialize()
+	///Flags used in the alert proc to select what messages to show when the HFR is delaminating (HYPERTORUS_FLAG_HIGH_POWER_DAMAGE | HYPERTORUS_FLAG_HIGH_FUEL_MIX_MOLE | HYPERTORUS_FLAG_IRON_CONTENT_DAMAGE | HYPERTORUS_FLAG_IRON_CONTENT_INCREASE | HYPERTORUS_FLAG_EMPED)
+	var/warning_damage_flags = NONE
+
+/obj/machinery/atmospherics/components/unary/hypertorus/core/Initialize(mapload)
 	. = ..()
 	internal_fusion = new
-	internal_fusion.assert_gases(/datum/gas/hydrogen, /datum/gas/tritium)
+	internal_fusion.volume = 5000
 	moderator_internal = new
+	moderator_internal.volume = 10000
 
 	radio = new(src)
 	radio.keyslot = new radio_key
-	radio.listening = 0
+	radio.set_listening(FALSE)
 	radio.recalculateChannels()
 	investigate_log("has been created.", INVESTIGATE_HYPERTORUS)
+
+	RegisterSignal(src.loc, COMSIG_ATOM_ENTERED, .proc/on_entered)
+
+	for(var/atom/movable/movable_object in src.loc)
+		SEND_SIGNAL(movable_object, COMSIG_MOVABLE_SECLUDED_LOCATION)
+
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/on_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	SIGNAL_HANDLER
+	SEND_SIGNAL(arrived, COMSIG_MOVABLE_SECLUDED_LOCATION) // to prevent stationloving items (eg. nuke disk) being teleported onto core
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/Destroy()
 	unregister_signals(TRUE)
@@ -191,4 +202,5 @@
 		QDEL_NULL(corner)
 	QDEL_NULL(radio)
 	QDEL_NULL(soundloop)
+	machine_parts = null
 	return..()

@@ -1,7 +1,7 @@
 /obj/item/reagent_containers/pill/patch
 	name = "chemical patch"
 	desc = "A chemical patch for touch based applications."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "bandaid"
 	inhand_icon_state = "bandaid"
 	possible_transfer_amounts = list()
@@ -15,10 +15,10 @@
 	if(ishuman(L))
 		var/obj/item/bodypart/affecting = L.get_bodypart(check_zone(user.zone_selected))
 		if(!affecting)
-			to_chat(user, "<span class='warning'>The limb is missing!</span>")
+			to_chat(user, span_warning("The limb is missing!"))
 			return
-		if(affecting.status != BODYPART_ORGANIC)
-			to_chat(user, "<span class='notice'>Medicine won't work on a robotic limb!</span>")
+		if(!IS_ORGANIC_LIMB(affecting))
+			to_chat(user, span_notice("Medicine won't work on a robotic limb!"))
 			return
 	..()
 

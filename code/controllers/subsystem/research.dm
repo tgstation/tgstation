@@ -14,18 +14,27 @@ SUBSYSTEM_DEF(research)
 	var/datum/design/error_design/error_design
 
 	//ERROR LOGGING
-	var/list/invalid_design_ids = list() //associative id = number of times
-	var/list/invalid_node_ids = list() //associative id = number of times
-	var/list/invalid_node_boost = list() //associative id = error message
+	///associative id = number of times
+	var/list/invalid_design_ids = list()
+	///associative id = number of times
+	var/list/invalid_node_ids = list()
+	///associative id = error message
+	var/list/invalid_node_boost = list()
 
 	var/list/obj/machinery/rnd/server/servers = list()
 
-	var/list/techweb_nodes_starting = list() //associative id = TRUE
-	var/list/techweb_categories = list() //category name = list(node.id = TRUE)
-	var/list/techweb_boost_items = list() //associative double-layer path = list(id = list(point_type = point_discount))
-	var/list/techweb_nodes_hidden = list() //Node ids that should be hidden by default.
-	var/list/techweb_nodes_experimental = list() //Node ids that are exclusive to the BEPIS.
-	var/list/techweb_point_items = list( //path = list(point type = value)
+	///associative id = TRUE
+	var/list/techweb_nodes_starting = list()
+	///category name = list(node.id = TRUE)
+	var/list/techweb_categories = list()
+	///associative double-layer path = list(id = list(point_type = point_discount))
+	var/list/techweb_boost_items = list()
+	///Node ids that should be hidden by default.
+	var/list/techweb_nodes_hidden = list()
+	///Node ids that are exclusive to the BEPIS.
+	var/list/techweb_nodes_experimental = list()
+	///path = list(point type = value)
+	var/list/techweb_point_items = list(
 	/obj/item/assembly/signaler/anomaly = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 	)
 	var/list/errored_datums = list()
@@ -35,6 +44,11 @@ SUBSYSTEM_DEF(research)
 	var/last_income
 	//^^^^^^^^ ALL OF THESE ARE PER SECOND! ^^^^^^^^
 
+	/// A list of all master servers. If none of these have a source code HDD, research point generation is lowered.
+	var/list/obj/machinery/rnd/server/master/master_servers = list()
+	/// A multiplier applied to all research gain.
+	var/income_modifier = 1
+
 	//Aiming for 1.5 hours to max R&D
 	//[88nodes * 5000points/node] / [1.5hr * 90min/hr * 60s/min]
 	//Around 450000 points max???
@@ -43,17 +57,25 @@ SUBSYSTEM_DEF(research)
 	var/list/created_anomaly_types = list()
 	/// The hard limits of cores created for each anomaly type. For faster code lookup without switch statements.
 	var/list/anomaly_hard_limit_by_type = list(
-	ANOMALY_CORE_BLUESPACE = MAX_CORES_BLUESPACE,
-	ANOMALY_CORE_PYRO = MAX_CORES_PYRO,
-	ANOMALY_CORE_GRAVITATIONAL = MAX_CORES_GRAVITATIONAL,
-	ANOMALY_CORE_VORTEX = MAX_CORES_VORTEX,
-	ANOMALY_CORE_FLUX = MAX_CORES_FLUX
+		/obj/item/assembly/signaler/anomaly/bluespace = MAX_CORES_BLUESPACE,
+		/obj/item/assembly/signaler/anomaly/pyro = MAX_CORES_PYRO,
+		/obj/item/assembly/signaler/anomaly/grav = MAX_CORES_GRAVITATIONAL,
+		/obj/item/assembly/signaler/anomaly/vortex = MAX_CORES_VORTEX,
+		/obj/item/assembly/signaler/anomaly/flux = MAX_CORES_FLUX,
+		/obj/item/assembly/signaler/anomaly/hallucination = MAX_CORES_HALLUCINATION,
+		/obj/item/assembly/signaler/anomaly/bioscrambler = MAX_CORES_BIOSCRAMBLER,
 	)
+
+	/// Lookup list for ordnance briefers.
+	var/list/ordnance_experiments
+	/// Lookup list for scipaper partners.
+	var/list/scientific_partners
 
 /datum/controller/subsystem/research/Initialize()
 	point_types = TECHWEB_POINT_TYPE_LIST_ASSOCIATIVE_NAMES
 	initialize_all_techweb_designs()
 	initialize_all_techweb_nodes()
+	populate_ordnance_experiments()
 	science_tech = new /datum/techweb/science
 	admin_tech = new /datum/techweb/admin
 	autosort_categories()
@@ -63,16 +85,18 @@ SUBSYSTEM_DEF(research)
 
 /datum/controller/subsystem/research/fire()
 	var/list/bitcoins = list()
-	for(var/obj/machinery/rnd/server/miner in servers)
+	for(var/obj/machinery/rnd/server/miner as anything in servers)
 		if(miner.working)
 			bitcoins = single_server_income.Copy()
 			break //Just need one to work.
+
 	if (!isnull(last_income))
 		var/income_time_difference = world.time - last_income
 		science_tech.last_bitcoins = bitcoins  // Doesn't take tick drift into account
 		for(var/i in bitcoins)
-			bitcoins[i] *= income_time_difference / 10
+			bitcoins[i] *= (income_time_difference / 10) * income_modifier
 		science_tech.add_point_list(bitcoins)
+
 	last_income = world.time
 
 /datum/controller/subsystem/research/proc/calculate_server_coefficient() //Diminishing returns.
@@ -279,3 +303,17 @@ SUBSYSTEM_DEF(research)
 			else
 				techweb_boost_items[path] = list(node.id = node.boost_item_paths[path])
 		CHECK_TICK
+
+/datum/controller/subsystem/research/proc/populate_ordnance_experiments()
+	ordnance_experiments = list()
+	scientific_partners = list()
+
+	for (var/datum/experiment/ordnance/experiment_path as anything in subtypesof(/datum/experiment/ordnance))
+		if (initial(experiment_path.experiment_proper))
+			ordnance_experiments += new experiment_path()
+	for(var/partner_path in subtypesof(/datum/scientific_partner))
+		var/datum/scientific_partner/partner = new partner_path
+		if(!partner.accepted_experiments.len)
+			for (var/datum/experiment/ordnance/ordnance_experiment as anything in ordnance_experiments)
+				partner.accepted_experiments += ordnance_experiment.type
+		scientific_partners += partner

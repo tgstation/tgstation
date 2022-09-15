@@ -9,7 +9,7 @@
 				mod_list(target, null, "list", "contents", target_index, autodetect_class = FALSE)
 			if(href_list[VV_HK_LIST_REMOVE])
 				var/variable = target[target_index]
-				var/prompt = alert("Do you want to remove item number [target_index] from list?", "Confirm", "Yes", "No")
+				var/prompt = tgui_alert(usr,"Do you want to remove item number [target_index] from list?", "Confirm", list("Yes", "No"))
 				if (prompt != "Yes")
 					return
 				target.Cut(target_index, target_index+1)
@@ -19,12 +19,12 @@
 		if(href_list[VV_HK_LIST_ADD])
 			mod_list_add(target, null, "list", "contents")
 		if(href_list[VV_HK_LIST_ERASE_DUPES])
-			uniqueList_inplace(target)
+			unique_list_in_place(target)
 			log_world("### ListVarEdit by [src]: /list contents: CLEAR DUPES")
 			log_admin("[key_name(src)] modified list's contents: CLEAR DUPES")
 			message_admins("[key_name_admin(src)] modified list's contents: CLEAR DUPES")
 		if(href_list[VV_HK_LIST_ERASE_NULLS])
-			listclearnulls(target)
+			list_clear_nulls(target)
 			log_world("### ListVarEdit by [src]: /list contents: CLEAR NULLS")
 			log_admin("[key_name(src)] modified list's contents: CLEAR NULLS")
 			message_admins("[key_name_admin(src)] modified list's contents: CLEAR NULLS")

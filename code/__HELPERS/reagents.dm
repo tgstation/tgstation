@@ -51,39 +51,41 @@
 		//there is at least one unique catalyst for the short reaction, so there is no conflict
 		return FALSE
 
-	//if we got this far, the longer reaction will be impossible to create if the shorter one is earlier in GLOB.chemical_reactions_list, and will require the reagents to be added in a particular order otherwise
+	//if we got this far, the longer reaction will be impossible to create if the shorter one is earlier in GLOB.chemical_reactions_list_reactant_index, and will require the reagents to be added in a particular order otherwise
 	return TRUE
 
 /proc/get_chemical_reaction(id)
-	if(!GLOB.chemical_reactions_list)
+	if(!GLOB.chemical_reactions_list_reactant_index)
 		return
-	for(var/reagent in GLOB.chemical_reactions_list)
-		for(var/R in GLOB.chemical_reactions_list[reagent])
+	for(var/reagent in GLOB.chemical_reactions_list_reactant_index)
+		for(var/R in GLOB.chemical_reactions_list_reactant_index[reagent])
 			var/datum/reac = R
 			if(reac.type == id)
 				return R
 
 /proc/remove_chemical_reaction(datum/chemical_reaction/R)
-	if(!GLOB.chemical_reactions_list || !R)
+	if(!GLOB.chemical_reactions_list_reactant_index || !R)
 		return
 	for(var/rid in R.required_reagents)
-		GLOB.chemical_reactions_list[rid] -= R
+		GLOB.chemical_reactions_list_reactant_index[rid] -= R
 
 //see build_chemical_reactions_list in holder.dm for explanations
 /proc/add_chemical_reaction(datum/chemical_reaction/R)
-	if(!GLOB.chemical_reactions_list || !R.required_reagents || !R.required_reagents.len)
+	if(!GLOB.chemical_reactions_list_reactant_index || !R.required_reagents || !R.required_reagents.len)
 		return
 	var/primary_reagent = R.required_reagents[1]
-	if(!GLOB.chemical_reactions_list[primary_reagent])
-		GLOB.chemical_reactions_list[primary_reagent] = list()
-	GLOB.chemical_reactions_list[primary_reagent] += R
+	if(!GLOB.chemical_reactions_list_reactant_index[primary_reagent])
+		GLOB.chemical_reactions_list_reactant_index[primary_reagent] = list()
+	GLOB.chemical_reactions_list_reactant_index[primary_reagent] += R
 
 //Creates foam from the reagent. Metaltype is for metal foam, notification is what to show people in textbox
-/datum/reagents/proc/create_foam(foamtype,foam_volume,metaltype = 0,notification = null)
+/datum/reagents/proc/create_foam(foamtype, foam_volume, result_type = null, notification = null, log = FALSE)
 	var/location = get_turf(my_atom)
-	var/datum/effect_system/foam_spread/foam = new foamtype()
-	foam.set_up(foam_volume, location, src, metaltype)
-	foam.start()
+
+	var/datum/effect_system/fluid_spread/foam/foam = new foamtype()
+	foam.set_up(amount = foam_volume, holder = my_atom, location = location, carry = src, result_type = result_type)
+	foam.start(log = log)
+
 	clear_reagents()
 	if(!notification)
 		return
@@ -202,3 +204,11 @@
 		return
 	var/list/matching_reactions = GLOB.chemical_reactions_list_product_index[input_type]
 	return matching_reactions
+
+/proc/reagent_paths_list_to_text(list/reagents, addendum)
+	var/list/temp = list()
+	for(var/datum/reagent/R as anything in reagents)
+		temp |= initial(R.name)
+	if(addendum)
+		temp += addendum
+	return jointext(temp, ", ")

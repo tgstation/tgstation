@@ -2,7 +2,7 @@
 /mob/living/simple_animal/hostile/asteroid/basilisk
 	name = "basilisk"
 	desc = "A territorial beast, covered in a thick shell that absorbs energy. Its stare causes victims to freeze from the inside."
-	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	icon_state = "Basilisk"
 	icon_living = "Basilisk"
 	icon_aggro = "Basilisk_alert"
@@ -28,6 +28,7 @@
 	attack_verb_simple = "bite into"
 	speak_emote = list("chitters")
 	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_vis_effect = ATTACK_EFFECT_BITE
 	aggro_vision_range = 9
 	turns_per_move = 5
 	gold_core_spawnable = HOSTILE_SPAWN
@@ -39,11 +40,18 @@
 /obj/projectile/temp/basilisk
 	name = "freezing blast"
 	icon_state = "ice_2"
-	damage = 0
+	damage = 10
 	damage_type = BURN
-	nodamage = TRUE
-	flag = ENERGY
+	nodamage = FALSE
+	armor_flag = ENERGY
 	temperature = -50 // Cools you down! per hit!
+	var/slowdown = TRUE //Determines if the projectile applies a slowdown status effect on carbons or not
+
+/obj/projectile/temp/basilisk/on_hit(atom/target, blocked = 0)
+	. = ..()
+	if(iscarbon(target) && slowdown)
+		var/mob/living/carbon/carbon_target = target
+		carbon_target.apply_status_effect(/datum/status_effect/freezing_blast)
 
 /obj/projectile/temp/basilisk/heated
 	name = "energy blast"
@@ -52,28 +60,30 @@
 	damage_type = BRUTE
 	nodamage = FALSE
 	temperature = 0
+	slowdown = FALSE
 
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/GiveTarget(new_target)
 	if(..()) //we have a target
-		if(isliving(target) && !target.Adjacent(targets_from) && ranged_cooldown <= world.time)//No more being shot at point blank or spammed with RNG beams
+		var/atom/target_from = GET_TARGETS_FROM(src)
+		if(isliving(target) && !target.Adjacent(target_from) && ranged_cooldown <= world.time)//No more being shot at point blank or spammed with RNG beams
 			OpenFire(target)
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/ex_act(severity, target)
 	switch(severity)
-		if(1)
+		if(EXPLODE_DEVASTATE)
 			gib()
-		if(2)
+		if(EXPLODE_HEAVY)
 			adjustBruteLoss(140)
-		if(3)
+		if(EXPLODE_LIGHT)
 			adjustBruteLoss(110)
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/AttackingTarget()
 	. = ..()
-	if(lava_drinker && !warmed_up && istype(target, /turf/open/lava))
-		visible_message("<span class='warning'>[src] begins to drink from [target]...</span>")
+	if(lava_drinker && !warmed_up && islava(target))
+		visible_message(span_warning("[src] begins to drink from [target]..."))
 		if(do_after(src, 70, target = target))
-			visible_message("<span class='warning'>[src] begins to fire up!</span>")
+			visible_message(span_warning("[src] begins to fire up!"))
 			fully_heal()
 			icon_state = "Basilisk_alert"
 			set_varspeed(0)
@@ -82,7 +92,7 @@
 			addtimer(CALLBACK(src, .proc/cool_down), 3000)
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/proc/cool_down()
-	visible_message("<span class='warning'>[src] appears to be cooling down...</span>")
+	visible_message(span_warning("[src] appears to be cooling down..."))
 	if(stat != DEAD)
 		icon_state = "Basilisk"
 	set_varspeed(3)
@@ -93,7 +103,7 @@
 /mob/living/simple_animal/hostile/asteroid/basilisk/watcher
 	name = "watcher"
 	desc = "A levitating, eye-like creature held aloft by winglike formations of sinew. A sharp spine of crystal protrudes from its body."
-	icon = 'icons/mob/lavaland/watcher.dmi'
+	icon = 'icons/mob/simple/lavaland/watcher.dmi'
 	icon_state = "watcher"
 	icon_living = "watcher"
 	icon_aggro = "watcher"
@@ -109,8 +119,8 @@
 	combat_mode = TRUE
 	speak_emote = list("telepathically cries")
 	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_vis_effect = null // doesn't bite unlike the parent type.
 	stat_attack = HARD_CRIT
-	is_flying_animal = TRUE
 	robust_searching = 1
 	crusher_loot = /obj/item/crusher_trophy/watcher_wing
 	gold_core_spawnable = NO_SPAWN
@@ -120,30 +130,25 @@
 	search_objects = 1
 	wanted_objects = list(/obj/item/pen/survival, /obj/item/stack/ore/diamond)
 
+/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/simple_flying)
+
 /mob/living/simple_animal/hostile/asteroid/basilisk/watcher/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	if(stat == CONSCIOUS)
 		consume_bait()
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/watcher/proc/consume_bait()
-	var/obj/item/stack/ore/diamond/diamonds = locate(/obj/item/stack/ore/diamond) in oview(src, 9)
-	var/obj/item/pen/survival/bait = locate(/obj/item/pen/survival) in oview(src, 9)
-	if(!diamonds && !bait)
-		return
-	if(diamonds)
-		var/distanced = 0
-		distanced = get_dist(loc,diamonds.loc)
-		if(distanced <= 1 && diamonds)
-			qdel(diamonds)
-			src.visible_message("<span class='notice'>[src] consumes [diamonds], and it disappears! ...At least, you think.</span>")
-	if(bait)
-		var/distanceb = 0
-		distanceb = get_dist(loc,bait.loc)
-		if(distanceb <= 1 && bait)
-			qdel(bait)
-			src.visible_message("<span class='notice'>[src] examines [bait] closer, and telekinetically shatters the pen.</span>")
+	for(var/obj/potential_consumption in view(1, src))
+		if(istype(potential_consumption, /obj/item/stack/ore/diamond))
+			qdel(potential_consumption)
+			visible_message(span_notice("[src] consumes [potential_consumption], and it disappears! ...At least, you think."))
+		else if(istype(potential_consumption, /obj/item/pen/survival))
+			qdel(potential_consumption)
+			visible_message(span_notice("[src] examines [potential_consumption] closer, and telekinetically shatters the pen."))
 
-/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/random/Initialize()
+/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/random/Initialize(mapload)
 	. = ..()
 	if(prob(1))
 		if(prob(75))
@@ -190,6 +195,7 @@
 	damage_type = BURN
 	nodamage = FALSE
 	temperature = 200 // Heats you up! per hit!
+	slowdown = FALSE
 
 /obj/projectile/temp/basilisk/magmawing/on_hit(atom/target, blocked = FALSE)
 	. = ..()
@@ -197,7 +203,7 @@
 		var/mob/living/L = target
 		if (istype(L))
 			L.adjust_fire_stacks(0.1)
-			L.IgniteMob()
+			L.ignite_mob()
 
 /obj/projectile/temp/basilisk/icewing
 	damage = 5

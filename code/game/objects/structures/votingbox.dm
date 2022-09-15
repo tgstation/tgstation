@@ -28,7 +28,7 @@
 		if(voting_active)
 			apply_vote(I,user)
 		else
-			to_chat(user,"<span class='warning'>[src] is in maintenance mode. Voting is not possible at the moment.</span>")
+			to_chat(user,span_warning("[src] is in maintenance mode. Voting is not possible at the moment."))
 		return
 	return ..()
 
@@ -64,7 +64,7 @@
 	if(!can_interact(user))
 		return
 	if(!is_operator(user))
-		to_chat(user,"<span class='warning'>Voting box operator authorization required!</span>")
+		to_chat(user,span_warning("Voting box operator authorization required!"))
 		return
 
 	if(href_list["act"])
@@ -77,7 +77,7 @@
 			if("reset_voted")
 				if(voted)
 					voted.Cut()
-				to_chat(user,"<span class='notice'>You reset the voter buffer. Everyone can vote again.</span>")
+				to_chat(user,span_notice("You reset the voter buffer. Everyone can vote again."))
 			if("raffle")
 				raffle(user)
 			if("shred")
@@ -90,11 +90,11 @@
 
 /obj/structure/votebox/proc/register_owner(obj/item/card/id/I,mob/living/user)
 	owner = I
-	to_chat(user,"<span class='notice'>You register [src] to your ID card.</span>")
+	to_chat(user,span_notice("You register [src] to your ID card."))
 	ui_interact(user)
 
 /obj/structure/votebox/proc/set_description(mob/user)
-	var/new_description = stripped_multiline_input(user,"Enter new description","Vote Description",vote_description)
+	var/new_description = tgui_input_text(user, "Enter a new description", "Vote Description", vote_description, multiline = TRUE)
 	if(new_description)
 		vote_description = new_description
 
@@ -105,39 +105,43 @@
 	var/obj/item/card/id/voter_card = user.get_idcard()
 	if(id_auth)
 		if(!voter_card)
-			to_chat(user,"<span class='warning'>[src] requires a valid ID card to vote!</span>")
+			to_chat(user,span_warning("[src] requires a valid ID card to vote!"))
 			return
 		if(voted && (voter_card in voted))
-			to_chat(user,"<span class='warning'>[src] allows only one vote per person.</span>")
+			to_chat(user,span_warning("[src] allows only one vote per person."))
 			return
 	if(user.transferItemToLoc(I,src))
 		if(!voted)
 			voted = list()
 		voted += voter_card
-		to_chat(user,"<span class='notice'>You cast your vote.</span>")
+		to_chat(user,span_notice("You cast your vote."))
 
-/obj/structure/votebox/proc/valid_vote(obj/item/paper/I)
-	if(length_char(I.info) > VOTE_TEXT_LIMIT || findtext(I.info,"<h1>Voting Results:</h1><hr><ol>"))
+/obj/structure/votebox/proc/valid_vote(obj/item/paper/voting_slip)
+	if(voting_slip.get_total_length() > VOTE_TEXT_LIMIT)
 		return FALSE
+
+	for(var/datum/paper_input/text as anything in voting_slip.raw_text_inputs)
+		if(findtext(text.raw_text, "<h1>Voting Results:</h1><hr><ol>"))
+			return FALSE
 	return TRUE
 
 /obj/structure/votebox/proc/shred(mob/user)
 	for(var/obj/item/paper/P in contents)
 		qdel(P)
-	to_chat(user,"<span class='notice'>You shred the current votes.</span>")
+	to_chat(user,span_notice("You shred the current votes."))
 
-/obj/structure/votebox/wrench_act(mob/living/user, obj/item/I)
+/obj/structure/votebox/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
-	default_unfasten_wrench(user, I, 40)
-	return TRUE
+	default_unfasten_wrench(user, tool, time = 4 SECONDS)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/structure/votebox/crowbar_act(mob/living/user, obj/item/I)
 	. = ..()
 	if(voting_active)
-		to_chat(user,"<span class='warning'>You can only retrieve votes if maintenance mode is active!</span>")
+		to_chat(user,span_warning("You can only retrieve votes if maintenance mode is active!"))
 		return FALSE
 	dump_contents()
-	to_chat(user,"<span class='notice'>You open vote retrieval hatch and dump all the votes.</span>")
+	to_chat(user,span_notice("You open vote retrieval hatch and dump all the votes."))
 	return TRUE
 
 /obj/structure/votebox/dump_contents()
@@ -154,30 +158,35 @@
 	for(var/obj/item/paper/P in contents)
 		options += P
 	if(!length(options))
-		to_chat(user,"<span class='warning>[src] is empty!</span>")
+		to_chat(user, span_warning("[src] is empty!"))
 	else
 		var/obj/item/paper/P = pick(options)
 		user.put_in_hands(P)
-		to_chat(user,"<span class='notice'>[src] pops out random vote.</span>")
+		to_chat(user, span_notice("[src] pops out random vote."))
 
 /obj/structure/votebox/proc/print_tally(mob/user)
 	var/list/results = list()
 	var/i = 0
-	for(var/obj/item/paper/P in contents)
+	for(var/obj/item/paper/paper_content in contents)
 		if(i++ > MAX_VOTES)
 			break
-		var/text = P.info
-		if(!valid_vote(P))
+		if(!valid_vote(paper_content))
 			continue
-		if(!results[text])
-			results[text] = 1
+
+		var/full_vote_text = ""
+		for(var/datum/paper_input/text as anything in paper_content.raw_text_inputs)
+			full_vote_text += "[text.raw_text]<br>"
+
+		if(!results[full_vote_text])
+			results[full_vote_text] = 1
 		else
-			results[text] += 1
+			results[full_vote_text] += 1
+
 	sortTim(results, cmp=/proc/cmp_numeric_dsc, associative = TRUE)
 	if(!COOLDOWN_FINISHED(src, vote_print_cooldown))
 		return
 	COOLDOWN_START(src, vote_print_cooldown, 60 SECONDS)
-	var/obj/item/paper/P = new(drop_location())
+	var/obj/item/paper/vote_tally_paper = new(drop_location())
 	var/list/tally = list()
 	tally += {"
 		<style>
@@ -203,11 +212,11 @@
 		tally += "<li>\"<div class='vote_box_content'>[option]</div>\" - [results[option]] Vote[results[option] > 1 ? "s" : ""].</li>"
 	tally += "</ol>"
 
-	P.info = tally.Join()
-	P.name = "Voting Results"
-	P.update_appearance()
-	user.put_in_hands(P)
-	to_chat(user,"<span class='notice'>[src] prints out the voting tally.</span>")
+	vote_tally_paper.add_raw_text(tally.Join())
+	vote_tally_paper.name = "Voting Results"
+	vote_tally_paper.update_appearance()
+	user.put_in_hands(vote_tally_paper)
+	to_chat(user,span_notice("[src] prints out the voting tally."))
 
 /obj/structure/votebox/update_icon_state()
 	icon_state = "votebox_[voting_active ? "active" : "maint"]"

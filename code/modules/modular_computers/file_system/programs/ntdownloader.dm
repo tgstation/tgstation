@@ -18,19 +18,18 @@
 	var/download_completion = FALSE //GQ of downloaded data.
 	var/download_netspeed = 0
 	var/downloaderror = ""
-	var/obj/item/modular_computer/my_computer = null
 	var/emagged = FALSE
 	var/list/main_repo
 	var/list/antag_repo
 	var/list/show_categories = list(
 		PROGRAM_CATEGORY_CREW,
 		PROGRAM_CATEGORY_ENGI,
-		PROGRAM_CATEGORY_ROBO,
+		PROGRAM_CATEGORY_SCI,
 		PROGRAM_CATEGORY_SUPL,
 		PROGRAM_CATEGORY_MISC,
 	)
 
-/datum/computer_file/program/ntnetdownload/run_program()
+/datum/computer_file/program/ntnetdownload/on_start()
 	. = ..()
 	main_repo = SSnetworks.station_network.available_station_software
 	antag_repo = SSnetworks.station_network.available_antag_software
@@ -130,9 +129,7 @@
 	return FALSE
 
 /datum/computer_file/program/ntnetdownload/ui_data(mob/user)
-	my_computer = computer
-
-	if(!istype(my_computer))
+	if(!istype(computer))
 		return
 	var/obj/item/computer_hardware/card_slot/card_slot = computer.all_components[MC_CARD]
 	var/list/access = card_slot?.GetAccess()
@@ -150,7 +147,7 @@
 		data["downloadspeed"] = download_netspeed
 		data["downloadcompletion"] = round(download_completion, 0.1)
 
-	var/obj/item/computer_hardware/hard_drive/hard_drive = my_computer.all_components[MC_HDD]
+	var/obj/item/computer_hardware/hard_drive/hard_drive = computer.all_components[MC_HDD]
 	data["disk_size"] = hard_drive.max_capacity
 	data["disk_used"] = hard_drive.used_capacity
 	data["emagged"] = emagged
@@ -206,7 +203,7 @@
 	tgui_id = "NtosNetDownloader"
 	emagged = TRUE
 
-/datum/computer_file/program/ntnetdownload/syndicate/run_program()
+/datum/computer_file/program/ntnetdownload/syndicate/on_start()
 	. = ..()
 	main_repo = SSnetworks.station_network.available_antag_software
 	antag_repo = null

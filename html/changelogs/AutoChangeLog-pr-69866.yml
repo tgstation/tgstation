@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes: 
+  - code_imp: "major_dust is now a space_dust subtype, rather than a meteor_wave subtype orphaned in its own file."

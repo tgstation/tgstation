@@ -17,15 +17,15 @@
 	var/obj/item/I = parent
 	if(container.contents.len)
 		if(user)
-			to_chat(user, "<span class='warning'>There's already something in [container].</span>")
+			to_chat(user, span_warning("There's already something in [container]."))
 		return TRUE
 	if(user)
 		if(!user.transferItemToLoc(I, container))
 			return TRUE
-		to_chat(user, "<span class='notice'>You put [I] into [container].</span>")
+		to_chat(user, span_notice("You put [I] into [container]."))
 	else
 		I.forceMove(container)
 	container.tank = I
-	container.density = make_density
+	container.set_density(make_density)
 	container.icon_state = tank_holder_icon_state
 	return TRUE

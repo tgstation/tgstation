@@ -4,13 +4,14 @@
 	typepath = /datum/round_event/wizard/magicarp
 	max_occurrences = 1
 	earliest_start = 0 MINUTES
+	description = "Summons a school of carps with magic projectiles."
 
 /datum/round_event/wizard/magicarp
-	announceWhen = 3
-	startWhen = 50
+	announce_when = 3
+	start_when = 50
 
 /datum/round_event/wizard/magicarp/setup()
-	startWhen = rand(40, 60)
+	start_when = rand(40, 60)
 
 /datum/round_event/wizard/magicarp/announce(fake)
 	priority_announce("Unknown magical entities have been detected near [station_name()], please stand-by.", "Lifesign Alert")
@@ -38,16 +39,24 @@
 	health = 50
 	gold_core_spawnable = NO_SPAWN
 	random_color = FALSE
-	food_type = list()
-	tame_chance = 0
-	bonus_tame_chance = 0
-	var/allowed_projectile_types = list(/obj/projectile/magic/change, /obj/projectile/magic/animate, /obj/projectile/magic/resurrection,
-	/obj/projectile/magic/death, /obj/projectile/magic/teleport, /obj/projectile/magic/door, /obj/projectile/magic/aoe/fireball,
-	/obj/projectile/magic/spellblade, /obj/projectile/magic/arcane_barrage)
 
-/mob/living/simple_animal/hostile/carp/ranged/Initialize()
+	/// List of all projectiles we can fire.
+	/// Non-static, because subtypes can have their own lists.
+	var/list/allowed_projectile_types = list(
+		/obj/projectile/magic/animate,
+		/obj/projectile/magic/arcane_barrage,
+		/obj/projectile/magic/change,
+		/obj/projectile/magic/death,
+		/obj/projectile/magic/door,
+		/obj/projectile/magic/fireball,
+		/obj/projectile/magic/resurrection,
+		/obj/projectile/magic/spellblade,
+		/obj/projectile/magic/teleport,
+	)
+
+/mob/living/simple_animal/hostile/carp/ranged/Initialize(mapload)
 	projectiletype = pick(allowed_projectile_types)
-	. = ..()
+	return ..()
 
 /mob/living/simple_animal/hostile/carp/ranged/chaos
 	name = "chaos magicarp"
@@ -59,14 +68,27 @@
 
 /mob/living/simple_animal/hostile/carp/ranged/chaos/Shoot()
 	projectiletype = pick(allowed_projectile_types)
-	..()
+	return ..()
 
 /mob/living/simple_animal/hostile/carp/ranged/xenobiology // these are for the xenobio gold slime pool
 	gold_core_spawnable = HOSTILE_SPAWN
-	allowed_projectile_types = list(/obj/projectile/magic/animate, /obj/projectile/magic/teleport,
-	/obj/projectile/magic/door, /obj/projectile/magic/aoe/fireball, /obj/projectile/magic/spellblade, /obj/projectile/magic/arcane_barrage) //thanks Lett1
+
+	allowed_projectile_types = list(
+		/obj/projectile/magic/animate,
+		/obj/projectile/magic/teleport,
+		/obj/projectile/magic/door,
+		/obj/projectile/magic/fireball,
+		/obj/projectile/magic/spellblade,
+		/obj/projectile/magic/arcane_barrage,
+	) //thanks Lett1
 
 /mob/living/simple_animal/hostile/carp/ranged/chaos/xenobiology
 	gold_core_spawnable = HOSTILE_SPAWN
-	allowed_projectile_types = list(/obj/projectile/magic/animate, /obj/projectile/magic/teleport,
-	/obj/projectile/magic/door, /obj/projectile/magic/aoe/fireball, /obj/projectile/magic/spellblade, /obj/projectile/magic/arcane_barrage)
+	allowed_projectile_types = list(
+		/obj/projectile/magic/animate,
+		/obj/projectile/magic/teleport,
+		/obj/projectile/magic/door,
+		/obj/projectile/magic/fireball,
+		/obj/projectile/magic/spellblade,
+		/obj/projectile/magic/arcane_barrage,
+	)

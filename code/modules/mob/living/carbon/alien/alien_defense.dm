@@ -14,11 +14,7 @@ As such, they can either help or harm other aliens. Help works like the human he
 In all, this is a lot like the monkey code. /N
 */
 /mob/living/carbon/alien/attack_alien(mob/living/carbon/alien/user, list/modifiers)
-	if(isturf(loc) && istype(loc.loc, /area/start))
-		to_chat(user, "No attacking people at spawn, you jackass.")
-		return
-
-	if(user.combat_mode)
+	if(!user.combat_mode)
 		if(user == src && check_self_for_injuries())
 			return
 		set_resting(FALSE)
@@ -28,22 +24,21 @@ In all, this is a lot like the monkey code. /N
 		AdjustParalyzed(-60)
 		AdjustUnconscious(-60)
 		AdjustSleeping(-100)
-		visible_message("<span class='notice'>[user.name] nuzzles [src] trying to wake [p_them()] up!</span>")
+		visible_message(span_notice("[user.name] nuzzles [src] trying to wake [p_them()] up!"))
 	else if(health > 0)
 		user.do_attack_animation(src, ATTACK_EFFECT_BITE)
 		playsound(loc, 'sound/weapons/bite.ogg', 50, TRUE, -1)
-		visible_message("<span class='danger'>[user.name] bites [src]!</span>", \
-						"<span class='userdanger'>[user.name] bites you!</span>", "<span class='hear'>You hear a chomp!</span>", COMBAT_MESSAGE_RANGE, user)
-		to_chat(user, "<span class='danger'>You bite [src]!</span>")
+		visible_message(span_danger("[user.name] bites [src]!"), \
+						span_userdanger("[user.name] bites you!"), span_hear("You hear a chomp!"), COMBAT_MESSAGE_RANGE, user)
+		to_chat(user, span_danger("You bite [src]!"))
 		adjustBruteLoss(1)
 		log_combat(user, src, "attacked")
 		updatehealth()
 	else
-		to_chat(user, "<span class='warning'>[name] is too injured for that.</span>")
+		to_chat(user, span_warning("[name] is too injured for that."))
 
 
-
-/mob/living/carbon/alien/attack_larva(mob/living/carbon/alien/larva/L)
+/mob/living/carbon/alien/attack_larva(mob/living/carbon/alien/larva/L, list/modifiers)
 	return attack_alien(L)
 
 
@@ -69,7 +64,7 @@ In all, this is a lot like the monkey code. /N
 /mob/living/carbon/alien/attack_paw(mob/living/carbon/human/user, list/modifiers)
 	if(..())
 		if (stat != DEAD)
-			var/obj/item/bodypart/affecting = get_bodypart(ran_zone(user.zone_selected))
+			var/obj/item/bodypart/affecting = get_bodypart(get_random_valid_zone(user.zone_selected))
 			apply_damage(rand(1, 3), BRUTE, affecting)
 
 
@@ -91,7 +86,7 @@ In all, this is a lot like the monkey code. /N
 			if(STAMINA)
 				adjustStaminaLoss(damage)
 
-/mob/living/carbon/alien/attack_slime(mob/living/simple_animal/slime/M)
+/mob/living/carbon/alien/attack_slime(mob/living/simple_animal/slime/M, list/modifiers)
 	if(..()) //successful slime attack
 		var/damage = rand(5, 35)
 		if(M.is_adult)
@@ -102,11 +97,13 @@ In all, this is a lot like the monkey code. /N
 
 /mob/living/carbon/alien/ex_act(severity, target, origin)
 	if(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src))
-		return
-	..()
+		return FALSE
+
+	. = ..()
 	if(QDELETED(src))
 		return
-	var/obj/item/organ/ears/ears = getorganslot(ORGAN_SLOT_EARS)
+
+	var/obj/item/organ/internal/ears/ears = getorganslot(ORGAN_SLOT_EARS)
 	switch (severity)
 		if (EXPLODE_DEVASTATE)
 			gib()
@@ -129,3 +126,6 @@ In all, this is a lot like the monkey code. /N
 
 /mob/living/carbon/alien/acid_act(acidpwr, acid_volume)
 	return FALSE//aliens are immune to acid.
+
+/mob/living/carbon/alien/on_fire_stack(delta_time, times_fired, datum/status_effect/fire_handler/fire_stacks/fire_handler)
+	adjust_bodytemperature((BODYTEMP_HEATING_MAX + (fire_handler.stacks * 12)) * 0.5 * delta_time)

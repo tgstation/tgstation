@@ -8,188 +8,15 @@
 "ac" = (
 /turf/closed/mineral/volcanic/lava_land_surface,
 /area/ruin/unpowered/elephant_graveyard)
-"ad" = (
-/obj/effect/decal/cleanable/cobweb,
-/obj/structure/closet/crate/grave/lead_researcher,
-/obj/effect/decal/cleanable/blood/gibs/old,
-/obj/effect/mob_spawn/human/skeleton,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"ae" = (
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"af" = (
-/obj/effect/decal/cleanable/blood/drip,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"ag" = (
-/obj/effect/decal/cleanable/vomit,
-/obj/item/shovel,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"ah" = (
-/obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"ai" = (
-/obj/effect/decal/cleanable/blood/tracks{
-	dir = 4
-	},
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"aj" = (
-/obj/effect/decal/cleanable/blood/tracks{
-	dir = 4
-	},
-/obj/item/paper/fluff/ruins/elephant_graveyard/final_message,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"ak" = (
-/turf/open/floor/plating/asteroid/basalt/wasteland{
-	icon_state = "wasteland_dug"
-	},
-/area/ruin/unpowered/elephant_graveyard)
-"al" = (
-/obj/structure/cable,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"an" = (
-/obj/item/food/deadmouse,
-/obj/item/assembly/mousetrap,
-/turf/open/floor/plating/asteroid/basalt/wasteland{
-	icon_state = "wasteland_dug"
-	},
-/area/ruin/unpowered/elephant_graveyard)
-"ao" = (
-/obj/structure/statue/bone/skull/half,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"ap" = (
-/obj/structure/statue/bone/skull/half{
-	dir = 1
-	},
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"aq" = (
-/obj/structure/flora/rock,
-/obj/structure/cable,
-/obj/item/pickaxe{
-	layer = 2.5;
-	pixel_x = -8;
-	pixel_y = 5
-	},
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"ar" = (
-/obj/structure/flora/rock,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"as" = (
-/obj/structure/table,
-/obj/structure/cable,
-/obj/item/t_scanner/adv_mining_scanner/lesser,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
 "at" = (
 /turf/closed/mineral/strong/wasteland,
 /area/lavaland/surface)
-"au" = (
-/obj/structure/table,
-/obj/structure/cable,
-/obj/item/paper/crumpled/muddy/fluff/elephant_graveyard/rnd_notes,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"av" = (
-/obj/structure/barricade/wooden/crude,
-/obj/structure/barricade/wooden,
-/obj/effect/decal/cleanable/blood/splatter,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"aw" = (
-/obj/structure/table,
-/obj/machinery/power/floodlight,
-/obj/structure/cable,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"ax" = (
-/obj/structure/statue/bone/rib{
-	dir = 1
-	},
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"ay" = (
-/obj/structure/statue/bone/rib,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"az" = (
-/obj/structure/table,
-/obj/item/pen,
-/obj/item/pen,
-/obj/item/pen,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
 "aA" = (
 /turf/closed/wall,
-/area/ruin/unpowered/elephant_graveyard)
-"aB" = (
-/obj/item/chair,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"aC" = (
-/obj/effect/decal/remains/human,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"aD" = (
-/obj/structure/table,
-/obj/structure/cable,
-/obj/item/clipboard,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"aE" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"aF" = (
-/obj/structure/table,
-/obj/structure/cable,
-/obj/item/reagent_containers/glass/bottle/plasma{
-	volume = 25
-	},
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"aG" = (
-/obj/structure/table,
-/obj/effect/spawner/lootdrop/glowstick,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
 "aH" = (
 /turf/closed/wall/mineral/titanium,
 /area/ruin/powered/graveyard_shuttle)
-"aI" = (
-/obj/effect/spawner/structure/window/shuttle,
-/obj/structure/grille,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/ruin/powered/graveyard_shuttle)
-"aJ" = (
-/obj/structure/table,
-/obj/structure/cable,
-/obj/item/paper_bin,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"aK" = (
-/obj/item/cigbutt,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"aL" = (
-/obj/machinery/power/floodlight,
-/obj/structure/cable,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"aM" = (
-/obj/structure/table,
-/obj/item/clothing/gloves/color/black,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
 "aN" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/ruin/powered/graveyard_shuttle)
@@ -198,97 +25,18 @@
 /obj/machinery/computer,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/powered/graveyard_shuttle)
-"aP" = (
-/obj/structure/bed,
-/obj/item/flashlight/lantern,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"aQ" = (
-/obj/structure/cable,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"aR" = (
-/obj/structure/table,
-/obj/item/taperecorder,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"aS" = (
-/obj/structure/table,
-/obj/item/tape/random,
-/obj/item/tape/random,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"aT" = (
-/obj/structure/closet/crate/bin,
-/obj/item/trash/candle,
-/obj/item/trash/can/food/beans,
-/obj/item/trash/can,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/item/cigbutt,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"aU" = (
-/obj/structure/bed,
-/obj/item/bedsheet/brown,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"aV" = (
-/obj/structure/bed,
-/obj/item/bedsheet/brown,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
 "aW" = (
 /obj/structure/filingcabinet/chestdrawer,
 /obj/item/clothing/mask/gas/explorer/folded,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/powered/graveyard_shuttle)
-"aX" = (
-/obj/structure/reagent_dispensers/fueltank,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"aY" = (
-/obj/structure/sign/warning/nosmoking/circle,
-/turf/closed/wall,
-/area/ruin/unpowered/elephant_graveyard)
-"aZ" = (
-/obj/item/organ/brain,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"ba" = (
-/obj/structure/headpike/bone,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"bb" = (
-/obj/effect/decal/cleanable/oil/streak,
-/obj/effect/decal/cleanable/glass,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
 "bc" = (
 /obj/structure/sign/poster/ripped,
 /turf/closed/wall,
 /area/ruin/unpowered/elephant_graveyard)
-"bd" = (
-/obj/item/organ/heart,
-/obj/item/organ/eyes,
-/obj/item/organ/ears,
-/obj/effect/decal/cleanable/blood/gibs/old,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"be" = (
-/obj/item/organ/lungs,
-/obj/item/organ/liver,
-/obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
 "bf" = (
 /turf/closed/mineral/strong/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
-"bg" = (
-/obj/structure/sign/warning/securearea,
-/turf/closed/wall/mineral/titanium,
-/area/ruin/powered/graveyard_shuttle)
 "bh" = (
 /obj/effect/decal/cleanable/oil,
 /obj/structure/chair/office/light,
@@ -298,34 +46,6 @@
 /obj/effect/turf_decal/delivery/white,
 /turf/open/floor/circuit/off,
 /area/ruin/powered/graveyard_shuttle)
-"bj" = (
-/obj/structure/barricade/wooden,
-/obj/structure/mineral_door/wood,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"bk" = (
-/obj/item/kitchen/knife/combat/bone,
-/obj/item/organ/tongue,
-/obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"bl" = (
-/obj/effect/decal/cleanable/shreds,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"bm" = (
-/obj/structure/closet/wardrobe/curator,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"bn" = (
-/obj/structure/sink/oil_well,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"bo" = (
-/obj/item/stack/medical/gauze/improvised,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
 "bp" = (
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/powered/graveyard_shuttle)
@@ -333,41 +53,9 @@
 /obj/machinery/iv_drip,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/powered/graveyard_shuttle)
-"br" = (
-/obj/structure/sign/warning/nosmoking/circle,
-/turf/closed/wall/mineral/titanium,
-/area/ruin/powered/graveyard_shuttle)
-"bs" = (
-/obj/structure/fence/door,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
 "bt" = (
 /obj/structure/table,
 /turf/closed/mineral/strong/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"bu" = (
-/obj/structure/bed,
-/obj/item/trash/pistachios,
-/obj/item/trash/chips,
-/obj/item/bedsheet/brown,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"bv" = (
-/obj/effect/decal/remains/human,
-/obj/item/clothing/under/misc/overalls,
-/obj/item/clothing/mask/bandana/green,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"bw" = (
-/obj/structure/cable,
-/obj/machinery/power/floodlight,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"bx" = (
-/obj/machinery/power/port_gen/pacman,
-/obj/structure/cable,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
 "by" = (
 /obj/structure/closet/emcloset,
@@ -375,28 +63,11 @@
 /obj/effect/turf_decal/box/white,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/graveyard_shuttle)
-"bz" = (
-/obj/item/paper/crumpled/muddy/fluff/elephant_graveyard/mutiny,
-/obj/item/cigbutt,
-/obj/item/cigbutt,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
 "bA" = (
 /obj/machinery/suit_storage_unit/mining/eva,
 /obj/effect/turf_decal/box/white,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/graveyard_shuttle)
-"bB" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"bC" = (
-/obj/structure/barricade/sandbags,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"bD" = (
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered/elephant_graveyard)
 "bE" = (
 /obj/structure/shuttle/engine/heater,
 /obj/structure/window{
@@ -404,24 +75,6 @@
 	},
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/mineral/titanium/purple,
-/area/ruin/powered/graveyard_shuttle)
-"bF" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered/elephant_graveyard)
-"bG" = (
-/obj/effect/decal/remains/human,
-/obj/item/tank/internals/emergency_oxygen/empty,
-/obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"bH" = (
-/obj/item/paper/fluff/ruins/elephant_graveyard,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface)
-"bI" = (
-/obj/structure/shuttle/engine/propulsion,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/powered/graveyard_shuttle)
 "bJ" = (
 /obj/structure/sign/warning/xeno_mining,
@@ -431,30 +84,6 @@
 /obj/structure/sign/warning/explosives,
 /turf/closed/wall,
 /area/ruin/unpowered/elephant_graveyard)
-"bL" = (
-/obj/effect/decal/cleanable/blood/gibs/old,
-/obj/effect/decal/cleanable/blood/splatter,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"bM" = (
-/obj/item/storage/fancy/cigarettes/cigpack_mindbreaker,
-/obj/structure/closet/crate/grave,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"bN" = (
-/obj/structure/sign/warning/securearea,
-/obj/structure/sign/warning/securearea,
-/turf/closed/mineral/strong/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"bO" = (
-/obj/item/paper/fluff/ruins/elephant_graveyard,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"bP" = (
-/obj/structure/barricade/wooden/crude,
-/obj/item/paper/fluff/ruins/elephant_graveyard,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered/elephant_graveyard)
 "bQ" = (
 /obj/structure/filingcabinet/chestdrawer,
 /obj/effect/decal/cleanable/cobweb,
@@ -462,21 +91,11 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/powered/graveyard_shuttle)
-"bR" = (
-/obj/effect/decal/cleanable/generic,
-/obj/item/cigbutt,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
 "bS" = (
 /obj/effect/decal/cleanable/oil/slippery,
 /obj/machinery/rnd/destructive_analyzer,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/powered/graveyard_shuttle)
-"bT" = (
-/obj/structure/barricade/wooden,
-/obj/item/paper/fluff/ruins/elephant_graveyard,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
 "bU" = (
 /obj/item/light/bulb/broken,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -490,7 +109,7 @@
 /obj/effect/decal/cleanable/glass,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/door/airlock/shuttle{
-	name = "archaeology shuttle airlock"
+	name = "Archaeology Shuttle Airlock"
 	},
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/graveyard_shuttle)
@@ -498,157 +117,532 @@
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/clothing/head/fedora/curator,
-/obj/item/clothing/suit/curator,
+/obj/item/clothing/suit/jacket/curator,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/powered/graveyard_shuttle)
-"bY" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/item/cigbutt,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"bZ" = (
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface)
-"ca" = (
-/obj/structure/table,
-/obj/item/storage/firstaid/o2,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"cb" = (
-/obj/structure/cable,
-/obj/item/reagent_containers/glass/bottle/frostoil{
-	desc = "A small bottle. Contains cold sauce. There's a label on here: APPLY ON SEVERE BURNS.";
-	volume = 10
-	},
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"cc" = (
-/obj/effect/decal/remains/human,
-/obj/effect/decal/cleanable/blood/old,
-/obj/effect/decal/cleanable/shreds,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"cd" = (
-/obj/item/trash/can,
-/obj/structure/bedsheetbin/empty,
-/obj/structure/table,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"ce" = (
-/obj/structure/stone_tile/slab/cracked,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"cf" = (
-/obj/structure/bed,
-/obj/item/wirecutters,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"cg" = (
-/obj/structure/stone_tile/center/cracked,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"ch" = (
-/obj/effect/decal/remains/human,
-/obj/item/restraints/handcuffs/cable/zipties/used,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"ci" = (
-/obj/structure/stone_tile/surrounding_tile,
-/turf/open/floor/plating/asteroid/basalt/wasteland{
-	icon_state = "wasteland_dug"
-	},
-/area/ruin/unpowered/elephant_graveyard)
-"cj" = (
-/obj/structure/stone_tile/block/cracked,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"ck" = (
-/obj/structure/reagent_dispensers/water_cooler,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"cl" = (
-/obj/structure/closet/crate/grave,
-/obj/effect/mob_spawn/human/skeleton,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
 "cm" = (
 /obj/structure/table/optable,
 /obj/item/storage/backpack/explorer,
-/obj/item/reagent_containers/food/drinks/soda_cans/cola,
+/obj/item/reagent_containers/cup/soda_cans/cola,
 /obj/item/restraints/handcuffs/cable/zipties/used,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/powered/graveyard_shuttle)
-"cn" = (
-/obj/structure/stone_tile/cracked,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"co" = (
-/obj/effect/decal/cleanable/blood/drip,
-/obj/structure/stone_tile/cracked,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"cp" = (
-/obj/structure/rack,
-/obj/item/shovel,
-/obj/structure/cable,
-/obj/item/wrench,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"cq" = (
-/obj/structure/stone_tile/block/cracked{
-	dir = 4
-	},
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"cr" = (
-/obj/structure/bonfire/prelit,
-/obj/effect/decal/cleanable/ash,
-/obj/item/organ/tail/lizard,
-/obj/effect/decal/cleanable/blood/old,
-/obj/structure/stone_tile/slab/cracked,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"cs" = (
-/obj/structure/ore_box,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"ct" = (
-/obj/structure/stone_tile,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"cu" = (
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
 "cv" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/powered/graveyard_shuttle)
-"cw" = (
-/obj/structure/closet/crate/grave,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/mob_spawn/human/skeleton,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
 "cx" = (
 /obj/item/light/bulb/broken,
 /obj/effect/turf_decal/caution/stand_clear/white,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/graveyard_shuttle)
-"cz" = (
+"cZ" = (
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"do" = (
+/obj/structure/stone_tile/block/cracked,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"dr" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"ei" = (
+/obj/effect/decal/cleanable/blood/gibs/old,
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"eq" = (
 /obj/structure/stone_tile,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
+/turf/open/misc/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
-"cA" = (
+"eu" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"eG" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/cigbutt,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"gl" = (
+/obj/effect/decal/remains/human,
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/shreds,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"gu" = (
+/obj/structure/ore_box,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"gB" = (
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"gY" = (
+/obj/structure/table,
+/obj/machinery/power/floodlight,
+/obj/structure/cable,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"iE" = (
+/obj/structure/barricade/wooden/crude,
+/obj/item/paper/fluff/ruins/elephant_graveyard,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/elephant_graveyard)
+"iR" = (
+/obj/structure/statue/bone/skull/half{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"jx" = (
+/obj/structure/shuttle/engine/propulsion,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/ruin/powered/graveyard_shuttle)
+"jK" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"km" = (
+/obj/structure/headpike/bone,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"kQ" = (
+/obj/structure/table,
+/obj/item/clothing/gloves/color/black,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"lt" = (
+/obj/structure/table,
+/obj/structure/cable,
+/obj/item/clipboard,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"lK" = (
+/obj/structure/cable,
+/obj/item/reagent_containers/cup/bottle/frostoil{
+	desc = "A small bottle. Contains cold sauce. There's a label on here: APPLY ON SEVERE BURNS.";
+	volume = 10
+	},
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"mH" = (
+/obj/structure/table,
+/obj/effect/spawner/random/decoration/glowstick,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"mO" = (
+/obj/item/stack/medical/gauze/improvised,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"nl" = (
+/obj/structure/table,
+/obj/item/pen,
+/obj/item/pen,
+/obj/item/pen,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"nt" = (
+/obj/structure/bed,
+/obj/item/trash/pistachios,
+/obj/item/trash/chips,
+/obj/item/bedsheet/brown,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"nv" = (
+/obj/structure/reagent_dispensers/water_cooler,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"nA" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"nX" = (
+/obj/item/trash/can,
+/obj/structure/bedsheetbin/empty,
+/obj/structure/table,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"ov" = (
+/obj/effect/decal/cleanable/blood/drip,
+/obj/structure/stone_tile/cracked,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"oK" = (
+/obj/effect/decal/remains/human,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"oL" = (
+/obj/structure/bonfire/prelit,
+/obj/effect/decal/cleanable/ash,
+/obj/item/organ/external/tail/lizard,
+/obj/effect/decal/cleanable/blood/old,
+/obj/structure/stone_tile/slab/cracked,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"rb" = (
+/obj/item/chair,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"rg" = (
+/obj/structure/rack,
+/obj/item/shovel,
+/obj/structure/cable,
+/obj/item/wrench,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"sc" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"sg" = (
+/obj/structure/table,
+/obj/structure/cable,
+/obj/item/t_scanner/adv_mining_scanner/lesser,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"tf" = (
+/turf/open/misc/asteroid/basalt/wasteland{
+	icon_state = "wasteland_dug"
+	},
+/area/ruin/unpowered/elephant_graveyard)
+"uj" = (
+/obj/structure/bed,
+/obj/item/flashlight/lantern,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"uy" = (
+/obj/effect/decal/cleanable/cobweb,
+/obj/structure/closet/crate/grave/filled/lead_researcher,
+/obj/effect/decal/cleanable/blood/gibs/old,
+/obj/effect/mob_spawn/corpse/human/skeleton,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"vc" = (
+/obj/structure/closet/crate/grave/filled,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/mob_spawn/corpse/human/skeleton,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"wk" = (
+/obj/structure/table,
+/obj/item/tape/random,
+/obj/item/tape/random,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"wp" = (
+/obj/item/knife/combat/bone,
+/obj/item/organ/internal/tongue,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"xr" = (
+/obj/effect/decal/cleanable/vomit,
+/obj/item/shovel,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"yy" = (
+/obj/item/storage/fancy/cigarettes/cigpack_mindbreaker,
+/obj/structure/closet/crate/grave/filled,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"yG" = (
+/obj/effect/decal/cleanable/oil/streak,
+/obj/effect/decal/cleanable/glass,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"zY" = (
+/obj/effect/decal/cleanable/blood/drip,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"AB" = (
+/obj/structure/bed,
+/obj/item/wirecutters,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"AG" = (
+/obj/item/paper/crumpled/muddy/fluff/elephant_graveyard/mutiny,
+/obj/item/cigbutt,
+/obj/item/cigbutt,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"AI" = (
+/obj/structure/stone_tile/center/cracked,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"AT" = (
 /obj/structure/cable,
 /obj/item/food/deadmouse,
 /obj/item/assembly/mousetrap,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"Br" = (
+/obj/structure/cable,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"Bu" = (
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/elephant_graveyard)
+"Cn" = (
+/obj/structure/flora/rock/style_random,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"Cu" = (
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface)
+"Di" = (
+/obj/item/organ/internal/lungs,
+/obj/item/organ/internal/liver,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"Dw" = (
+/obj/structure/statue/bone/rib{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"DB" = (
+/obj/structure/stone_tile,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"DU" = (
+/obj/structure/closet/wardrobe/curator,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"Eh" = (
+/obj/item/organ/internal/brain,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"EI" = (
+/obj/effect/decal/remains/human,
+/obj/item/restraints/handcuffs/cable/zipties/used,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"EW" = (
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"Hq" = (
+/obj/structure/barricade/wooden,
+/obj/structure/mineral_door/wood,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"Ix" = (
+/obj/structure/bed,
+/obj/item/bedsheet/brown,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"Iy" = (
+/obj/item/paper/fluff/ruins/elephant_graveyard,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface)
+"Iz" = (
+/obj/structure/table,
+/obj/structure/cable,
+/obj/item/paper_bin,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"Jd" = (
+/obj/structure/stone_tile/cracked,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"JT" = (
+/obj/structure/table,
+/obj/item/taperecorder,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"Kj" = (
+/obj/item/organ/internal/heart,
+/obj/item/organ/internal/eyes,
+/obj/item/organ/internal/ears,
+/obj/effect/decal/cleanable/blood/gibs/old,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"Kq" = (
+/obj/structure/barricade/wooden/crude,
+/obj/structure/barricade/wooden,
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"Ks" = (
+/obj/structure/barricade/sandbags,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"LN" = (
+/obj/structure/sign/warning/no_smoking/circle,
+/turf/closed/wall,
+/area/ruin/unpowered/elephant_graveyard)
+"LR" = (
+/obj/item/paper/fluff/ruins/elephant_graveyard,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"Mx" = (
+/obj/structure/flora/rock/style_random,
+/obj/structure/cable,
+/obj/item/pickaxe{
+	layer = 2.5;
+	pixel_x = -8;
+	pixel_y = 5
+	},
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"MF" = (
+/obj/effect/decal/remains/human,
+/obj/item/tank/internals/emergency_oxygen/empty,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"MI" = (
+/obj/structure/cable,
+/obj/machinery/power/floodlight,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"NO" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/elephant_graveyard)
+"Oa" = (
+/obj/effect/decal/cleanable/generic,
+/obj/item/cigbutt,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"Ou" = (
+/obj/structure/statue/bone/rib,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"OC" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"PM" = (
+/obj/structure/stone_tile/slab/cracked,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"PN" = (
+/obj/machinery/power/floodlight,
+/obj/structure/cable,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"Ql" = (
+/obj/structure/barricade/wooden,
+/obj/item/paper/fluff/ruins/elephant_graveyard,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"SR" = (
+/obj/structure/sign/warning/no_smoking/circle,
+/turf/closed/wall/mineral/titanium,
+/area/ruin/powered/graveyard_shuttle)
+"Td" = (
+/obj/structure/table,
+/obj/structure/cable,
+/obj/item/paper/crumpled/muddy/fluff/elephant_graveyard/rnd_notes,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"UC" = (
+/obj/structure/table,
+/obj/item/storage/medkit/o2,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"UE" = (
+/obj/structure/sink/oil_well,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"UK" = (
+/obj/structure/bed,
+/obj/item/bedsheet/brown,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"UN" = (
+/obj/structure/closet/crate/bin,
+/obj/item/trash/candle,
+/obj/item/trash/can/food/beans,
+/obj/item/trash/can,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/cigbutt,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"Vv" = (
+/obj/item/cigbutt,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"WF" = (
+/obj/structure/fence/door,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"WI" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/item/paper/fluff/ruins/elephant_graveyard/final_message,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"WW" = (
+/obj/effect/decal/remains/human,
+/obj/item/clothing/under/misc/overalls,
+/obj/item/clothing/mask/bandana/green,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"WX" = (
+/obj/structure/statue/bone/skull/half,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"WZ" = (
+/obj/effect/decal/cleanable/shreds,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"Xe" = (
+/obj/structure/closet/crate/grave/filled,
+/obj/effect/mob_spawn/corpse/human/skeleton,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"XK" = (
+/obj/item/food/deadmouse,
+/obj/item/assembly/mousetrap,
+/turf/open/misc/asteroid/basalt/wasteland{
+	icon_state = "wasteland_dug"
+	},
+/area/ruin/unpowered/elephant_graveyard)
+"XY" = (
+/obj/structure/table,
+/obj/structure/cable,
+/obj/item/reagent_containers/cup/bottle/plasma{
+	volume = 25
+	},
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"Yq" = (
+/obj/machinery/power/port_gen/pacman,
+/obj/structure/cable,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
+"YM" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/ruin/powered/graveyard_shuttle)
+"ZC" = (
+/obj/structure/sign/warning/secure_area,
+/turf/closed/wall/mineral/titanium,
+/area/ruin/powered/graveyard_shuttle)
+"ZH" = (
+/obj/structure/stone_tile/surrounding_tile,
+/turf/open/misc/asteroid/basalt/wasteland{
+	icon_state = "wasteland_dug"
+	},
 /area/ruin/unpowered/elephant_graveyard)
 
 (1,1,1) = {"
@@ -774,8 +768,8 @@ ab
 ab
 bf
 bf
-aT
-bR
+UN
+Oa
 bf
 bf
 bf
@@ -811,15 +805,15 @@ ab
 bf
 bf
 bf
-bz
-aK
-bY
-ae
+AG
+Vv
+eG
+gB
 bf
 bf
 bf
-cs
-aE
+gu
+sc
 bJ
 bf
 bf
@@ -850,18 +844,18 @@ bf
 aA
 bc
 aA
-aY
-ae
-bv
-ae
-cl
-ae
-ae
-aC
-bs
-bO
-ae
-ae
+LN
+gB
+WW
+gB
+Xe
+gB
+gB
+oK
+WF
+LR
+gB
+gB
 ac
 ac
 ac
@@ -882,23 +876,23 @@ ab
 bf
 bf
 bf
-cb
-al
-al
-al
-aL
-ae
-ae
-ak
-ae
-ae
-ae
-ae
+lK
+Br
+Br
+Br
+PN
+gB
+gB
+tf
+gB
+gB
+gB
+gB
 bK
 bf
 bf
 bf
-ae
+gB
 ac
 ac
 ac
@@ -918,24 +912,24 @@ ab
 ab
 bf
 bf
-al
-al
-ar
-ae
-ae
-ae
-ar
-aZ
-ae
-ba
-ae
-ba
-ae
-ae
-ae
-ae
+Br
+Br
+Cn
+gB
+gB
+gB
+Cn
+Eh
+gB
+km
+gB
+km
+gB
+gB
+gB
+gB
 bf
-ae
+gB
 ac
 ac
 ac
@@ -954,26 +948,26 @@ ab
 bf
 bf
 bf
-al
-al
-ak
-ae
-aE
-ae
-ae
-ae
-ba
-ae
-af
-ae
-ae
-ae
-ba
-ae
-ak
+Br
+Br
+tf
+gB
+sc
+gB
+gB
+gB
+km
+gB
+zY
+gB
+gB
+gB
+km
+gB
+tf
 bf
-ae
-ae
+gB
+gB
 ac
 ac
 ac
@@ -990,34 +984,34 @@ ab
 bf
 bf
 bf
-al
-aQ
-ae
-ae
-ae
-ae
-cl
-ae
-ae
-ae
-co
-bd
-bk
-ae
-ae
-ae
-ae
-aE
+Br
+OC
+gB
+gB
+gB
+gB
+Xe
+gB
+gB
+gB
+ov
+Kj
+wp
+gB
+gB
+gB
+gB
+sc
 bf
 bf
-ae
-ae
+gB
+gB
 ac
 ac
 ac
 ac
-bG
-bM
+MF
+yy
 ac
 ac
 "}
@@ -1027,35 +1021,35 @@ bf
 bf
 bf
 bf
-al
-ae
-ae
-ao
-ae
-ax
-ax
-ax
-ax
-ae
-ae
-be
-cr
-ae
-cz
-ae
-ae
-bn
-cw
+Br
+gB
+gB
+WX
+gB
+Dw
+Dw
+Dw
+Dw
+gB
+gB
+Di
+oL
+gB
+eq
+gB
+gB
+UE
+vc
 bf
 bf
-bB
+dr
 ac
 ac
 ac
 ac
-bL
-ae
-ae
+ei
+gB
+gB
 ac
 "}
 (12,1,1) = {"
@@ -1064,292 +1058,292 @@ bf
 bf
 bf
 bf
-al
-cl
-ae
-ae
-ae
-ae
-ci
-cj
-ce
-ae
-cj
-ae
-cq
-ae
-ae
-cu
-ae
-ae
-ae
+Br
+Xe
+gB
+gB
+gB
+gB
+ZH
+do
+PM
+gB
+do
+gB
+nA
+gB
+gB
+cZ
+gB
+gB
+gB
 bf
 bf
-bC
+Ks
 ac
 ac
 ac
 ac
 ac
 ac
-bD
+Bu
 ac
 "}
 (13,1,1) = {"
 bf
-ad
-ae
+uy
+gB
 bf
-cl
-al
-ae
-ae
-ae
-ae
-cg
-ae
-ak
-ak
-cn
-ae
-cq
-ae
-ct
-ar
-ae
-cl
-ae
-ae
+Xe
+Br
+gB
+gB
+gB
+gB
+AI
+gB
+tf
+tf
+Jd
+gB
+nA
+gB
+DB
+Cn
+gB
+Xe
+gB
+gB
 bf
 bf
-ae
+gB
 ac
 ac
 ac
 ac
 ac
 ac
-ae
+gB
 ac
 "}
 (14,1,1) = {"
 bf
-aj
-ae
+WI
+gB
 bf
-ae
-al
-aE
-ae
-ap
-ae
-ay
-ay
-ay
-ay
-ae
-ae
-ak
-ae
-ae
-bn
-ae
-ae
-aE
-bw
+gB
+Br
+sc
+gB
+iR
+gB
+Ou
+Ou
+Ou
+Ou
+gB
+gB
+tf
+gB
+gB
+UE
+gB
+gB
+sc
+MI
 bf
-cl
-bB
-ae
+Xe
+dr
+gB
 ac
 ac
 ac
 ac
 ac
-ae
+gB
 ac
 "}
 (15,1,1) = {"
 bf
-ai
-ag
+jK
+xr
 bf
-an
-al
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-cw
-ae
-ae
-ae
-ae
-ae
-al
+XK
+Br
+gB
+gB
+gB
+gB
+gB
+gB
+gB
+gB
+gB
+gB
+gB
+vc
+gB
+gB
+gB
+gB
+gB
+Br
 bf
 ac
-ae
-ae
-bB
+gB
+gB
+dr
 ac
 ac
 ac
 ac
-bD
+Bu
 ac
 "}
 (16,1,1) = {"
 bf
-ai
+jK
 bf
 bf
 bf
-al
-al
-al
-ae
-ae
-aE
-ae
-ar
-ae
-ba
-ae
-ae
-ae
-ae
-ae
-ba
-ae
-ae
-al
+Br
+Br
+Br
+gB
+gB
+sc
+gB
+Cn
+gB
+km
+gB
+gB
+gB
+gB
+gB
+km
+gB
+gB
+Br
 bf
 ac
 ac
-ae
-ae
-bB
+gB
+gB
+dr
 ac
 ac
 ac
-bB
-bP
+dr
+iE
 "}
 (17,1,1) = {"
 bf
-ae
-af
+gB
+zY
 bf
 bf
-aE
+sc
 bf
-al
-aq
-as
-az
-aG
-aM
-aR
-ae
-ae
-ba
-ae
-ba
-ae
-ae
-aE
-cl
-al
+Br
+Mx
+sg
+nl
+mH
+kQ
+JT
+gB
+gB
+km
+gB
+km
+gB
+gB
+sc
+Xe
+Br
 bf
 bf
 ac
 ac
-ae
-bD
+gB
+Bu
 ac
 ac
 ac
-bF
-bT
+NO
+Ql
 "}
 (18,1,1) = {"
 at
 bf
-ah
+eu
 bf
 bf
-af
+zY
 bf
-ae
-ae
-au
-aB
-ae
-ae
-aS
-ae
-ae
-aE
-ae
-ae
-ae
-ae
-ae
-ae
-al
-bx
+gB
+gB
+Td
+rb
+gB
+gB
+wk
+gB
+gB
+sc
+gB
+gB
+gB
+gB
+gB
+gB
+Br
+Yq
 bf
 ac
 ac
 ac
-ae
-bB
-bB
-bF
-bB
-bP
+gB
+dr
+dr
+NO
+dr
+iE
 "}
 (19,1,1) = {"
 ab
 bf
-af
-av
-af
-ae
+zY
+Kq
+zY
+gB
 bf
-ae
+gB
 bt
-aF
-ch
-ae
-ae
-ca
-ae
-al
-al
-al
-al
-al
-al
-al
-al
-cA
+XY
+EI
+gB
+gB
+UC
+gB
+Br
+Br
+Br
+Br
+Br
+Br
+Br
+Br
+AT
 bf
 bf
 ac
 ac
 ac
 ac
-bF
-bB
+NO
+dr
 bV
 ac
 ac
@@ -1362,20 +1356,20 @@ bf
 bf
 bf
 bf
-bj
+Hq
 bf
-aw
-aD
-aJ
-al
-al
-al
-cp
+gY
+lt
+Iz
+Br
+Br
+Br
+rg
 bf
 ac
-bm
-ae
-bn
+DU
+gB
+UE
 bf
 bf
 bf
@@ -1398,15 +1392,15 @@ ab
 ac
 ac
 bf
-aU
-aE
+UK
+sc
 bf
 bf
 bf
 bf
-ck
-aX
-ae
+nv
+EW
+gB
 bf
 bf
 bf
@@ -1435,15 +1429,15 @@ ab
 ab
 ac
 bf
-aU
-ae
-bl
-cd
+UK
+gB
+WZ
+nX
 bf
 bf
 bf
-bN
-ae
+bf
+gB
 bf
 bf
 bf
@@ -1462,8 +1456,8 @@ ab
 ab
 ab
 ab
-bZ
-bZ
+Cu
+Cu
 "}
 (23,1,1) = {"
 aa
@@ -1472,15 +1466,15 @@ aa
 ab
 ab
 bf
-aV
-bl
-aE
-bu
+Ix
+WZ
+sc
+nt
 bf
 bf
 bf
 bf
-bb
+yG
 bf
 bf
 bf
@@ -1493,13 +1487,13 @@ ab
 ab
 ab
 ab
-bZ
-bZ
-bZ
-bH
-bZ
-bZ
-bZ
+Cu
+Cu
+Cu
+Iy
+Cu
+Cu
+Cu
 ab
 "}
 (24,1,1) = {"
@@ -1509,32 +1503,32 @@ aa
 aa
 ab
 at
-aP
-bo
-cc
-cf
+uj
+mO
+gl
+AB
 bf
 aH
 aH
-bg
+ZC
 bW
-bg
+ZC
 aH
 aH
 aH
-bH
-bZ
-bZ
-bZ
-bZ
-bZ
-bZ
-bZ
-bZ
-bZ
-bZ
-bZ
-bZ
+Iy
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
 ab
 ab
 ab
@@ -1559,16 +1553,16 @@ bU
 by
 aH
 aH
-bI
-bZ
-bZ
-bZ
-bZ
-bZ
-bZ
-bZ
-bZ
-bZ
+jx
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
 ab
 ab
 ab
@@ -1587,7 +1581,7 @@ ab
 ab
 ab
 ab
-aI
+YM
 aO
 bX
 bi
@@ -1596,11 +1590,11 @@ bi
 cx
 bE
 aH
-bI
-bZ
-bZ
-bZ
-bZ
+jx
+Cu
+Cu
+Cu
+Cu
 ab
 ab
 ab
@@ -1633,10 +1627,10 @@ bS
 bA
 aH
 aH
-bI
-bZ
-bZ
-bZ
+jx
+Cu
+Cu
+Cu
 ab
 ab
 ab
@@ -1665,13 +1659,13 @@ ab
 aH
 aH
 aH
-br
+SR
 aH
 aH
 aH
 aH
-bZ
-bZ
+Cu
+Cu
 ab
 ab
 ab

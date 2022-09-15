@@ -2,7 +2,7 @@
 	name = "space cash"
 	singular_name = "bill"
 	icon = 'icons/obj/economy.dmi'
-	icon_state = "spacecash"
+	icon_state = null
 	amount = 1
 	max_amount = INFINITY
 	throwforce = 0
@@ -30,35 +30,24 @@
 	. = ..()
 	update_desc()
 
-/obj/item/stack/spacecash/use(used, transfer = FALSE)
+/obj/item/stack/spacecash/use(used, transfer = FALSE, check = TRUE)
 	. = ..()
 	update_desc()
 
 /obj/item/stack/spacecash/update_icon_state()
 	. = ..()
-	var/cash_value = get_item_credit_value()
-	switch(cash_value)
-		if(1 to 9)
-			icon_state = "spacecash"
-		if(10 to 19)
-			icon_state = "spacecash10"
-		if(20 to 49)
-			icon_state = "spacecash20"
-		if(50 to 99)
-			icon_state = "spacecash50"
-		if(100 to 199)
-			icon_state = "spacecash100"
-		if(200 to 499)
-			icon_state = "spacecash200"
-		if(500 to 999)
-			icon_state = "spacecash500"
-		if(1000 to 9999)
-			icon_state = "spacecash1000"
-		if(10000 to INFINITY)
-			icon_state = "spacecash10000"
+	switch(amount)
+		if(1)
+			icon_state = initial(icon_state)
+		if(2 to 9)
+			icon_state = "[initial(icon_state)]_2"
+		if(10 to 24)
+			icon_state = "[initial(icon_state)]_3"
+		if(25 to INFINITY)
+			icon_state = "[initial(icon_state)]_4"
 
 /obj/item/stack/spacecash/c1
-	icon_state = "spacecash"
+	icon_state = "spacecash1"
 	singular_name = "one credit bill"
 	value = 1
 	merge_type = /obj/item/stack/spacecash/c1

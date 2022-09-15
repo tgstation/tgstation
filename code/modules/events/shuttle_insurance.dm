@@ -3,13 +3,14 @@
 /datum/round_event_control/shuttle_insurance
 	name = "Shuttle Insurance"
 	typepath = /datum/round_event/shuttle_insurance
-	weight = 200 //you're basically bound to get it
 	max_occurrences = 1
+	category = EVENT_CATEGORY_BUREAUCRATIC
+	description = "A sketchy but legit insurance offer."
 
-/datum/round_event_control/shuttle_insurance/canSpawnEvent(players, gamemode)
+/datum/round_event_control/shuttle_insurance/canSpawnEvent(players)
 	if(!SSeconomy.get_dep_account(ACCOUNT_CAR))
 		return FALSE //They can't pay?
-	if(SSshuttle.shuttle_purchased != SHUTTLEPURCHASE_FORCED)
+	if(SSshuttle.shuttle_purchased == SHUTTLEPURCHASE_FORCED)
 		return FALSE //don't do it if there's nothing to insure
 	if(EMERGENCY_AT_LEAST_DOCKED)
 		return FALSE //catastrophes won't trigger so no point
@@ -41,6 +42,7 @@
 /datum/round_event/shuttle_insurance/proc/answered()
 	if(EMERGENCY_AT_LEAST_DOCKED)
 		priority_announce("You are definitely too late to purchase insurance, my friends. Our agents don't work on site.",sender_override = ship_name)
+		return
 	if(insurance_message && insurance_message.answered == 1)
 		var/datum/bank_account/station_balance = SSeconomy.get_dep_account(ACCOUNT_CAR)
 		if(!station_balance?.adjust_money(-insurance_evaluation))

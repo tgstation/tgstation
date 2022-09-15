@@ -24,7 +24,7 @@
 			target.set_light_range(0)
 			target.set_light_on(FALSE)
 
-/datum/element/light_eaten/Detach(datum/source, force)
+/datum/element/light_eaten/Detach(datum/source)
 	UnregisterSignal(source, list(
 		COMSIG_ATOM_SET_LIGHT_POWER,
 		COMSIG_ATOM_SET_LIGHT_RANGE,
@@ -63,10 +63,10 @@
 /// Signal handler for light eater flavortext
 /datum/element/light_eaten/proc/on_examine(atom/eaten_light, mob/examiner, list/examine_text)
 	SIGNAL_HANDLER
-	examine_text += "<span class='warning'>It's dark and empty...</span>"
+	examine_text += span_warning("It's dark and empty...")
 	if(isliving(examiner) && prob(20))
 		var/mob/living/target = examiner
-		examine_text += "<span class='danger'>You can feel something in [eaten_light.p_them()] gnash at your eyes!</span>"
-		target.blind_eyes(5)
+		examine_text += span_danger("You can feel something in [eaten_light.p_them()] gnash at your eyes!")
+		target.adjust_blindness(5)
 		target.blur_eyes(10)
 	return NONE

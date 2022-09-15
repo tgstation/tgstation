@@ -12,12 +12,12 @@
 	density = TRUE //This will prevent hostile mobs from pathing into chasms, while the canpass override will still let it function like an open turf
 	bullet_bounce_sound = null //abandon all hope ye who enter
 
-/turf/open/chasm/Initialize()
+/turf/open/chasm/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/chasm, SSmapping.get_turf_below(src))
 
 /// Lets people walk into chasms.
-/turf/open/chasm/CanAllowThrough(atom/movable/AM, turf/target)
+/turf/open/chasm/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	return TRUE
 
@@ -44,9 +44,12 @@
 /turf/open/chasm/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
 	switch(passed_mode)
 		if(RCD_FLOORWALL)
-			to_chat(user, "<span class='notice'>You build a floor.</span>")
+			to_chat(user, span_notice("You build a floor."))
 			PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 			return TRUE
+	return FALSE
+
+/turf/open/chasm/rust_heretic_act()
 	return FALSE
 
 /turf/open/chasm/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
@@ -59,29 +62,18 @@
 	if(istype(C, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = C
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
-		if(!L)
-			if(R.use(1))
-				to_chat(user, "<span class='notice'>You construct a lattice.</span>")
-				playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
-				// Create a lattice, without reverting to our baseturf
-				new /obj/structure/lattice(src)
-			else
-				to_chat(user, "<span class='warning'>You need one rod to build a lattice.</span>")
-			return
-	if(istype(C, /obj/item/stack/tile/iron))
-		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 		if(L)
-			var/obj/item/stack/tile/iron/S = C
-			if(S.use(1))
-				qdel(L)
-				playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
-				to_chat(user, "<span class='notice'>You build a floor.</span>")
-				// Create a floor, which has this chasm underneath it
-				PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
-			else
-				to_chat(user, "<span class='warning'>You need one floor tile to build a floor!</span>")
-		else
-			to_chat(user, "<span class='warning'>The plating is going to need some support! Place iron rods first.</span>")
+			return
+		if(!R.use(1))
+			to_chat(user, span_warning("You need one rod to build a lattice."))
+			return
+		to_chat(user, span_notice("You construct a lattice."))
+		playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+		// Create a lattice, without reverting to our baseturf
+		new /obj/structure/lattice(src)
+		return
+	else if(istype(C, /obj/item/stack/tile/iron))
+		build_with_floor_tiles(C, user)
 
 // Chasms for Lavaland, with planetary atmos and lava glow
 /turf/open/chasm/lavaland

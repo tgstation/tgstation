@@ -2,7 +2,7 @@
 /obj/structure/guncase
 	name = "gun locker"
 	desc = "A locker that holds guns."
-	icon = 'icons/obj/closet.dmi'
+	icon = 'icons/obj/storage/closet.dmi'
 	icon_state = "shotguncase"
 	anchored = FALSE
 	density = TRUE
@@ -38,10 +38,10 @@
 		if(LAZYLEN(contents) < capacity)
 			if(!user.transferItemToLoc(I, src))
 				return
-			to_chat(user, "<span class='notice'>You place [I] in [src].</span>")
+			to_chat(user, span_notice("You place [I] in [src]."))
 			update_appearance()
 		else
-			to_chat(user, "<span class='warning'>[src] is full.</span>")
+			to_chat(user, span_warning("[src] is full."))
 		return
 
 	else if(!user.combat_mode)
@@ -113,14 +113,13 @@
 	update_appearance()
 
 /obj/structure/guncase/contents_explosion(severity, target)
-	for(var/thing in contents)
-		switch(severity)
-			if(EXPLODE_DEVASTATE)
-				SSexplosions.high_mov_atom += thing
-			if(EXPLODE_HEAVY)
-				SSexplosions.med_mov_atom += thing
-			if(EXPLODE_LIGHT)
-				SSexplosions.low_mov_atom += thing
+	switch(severity)
+		if(EXPLODE_DEVASTATE)
+			SSexplosions.high_mov_atom += contents
+		if(EXPLODE_HEAVY)
+			SSexplosions.med_mov_atom += contents
+		if(EXPLODE_LIGHT)
+			SSexplosions.low_mov_atom += contents
 
 /obj/structure/guncase/shotgun
 	name = "shotgun locker"

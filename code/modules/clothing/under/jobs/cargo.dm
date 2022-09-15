@@ -15,7 +15,8 @@
 	inhand_icon_state = "lb_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
-	fitted = FEMALE_UNIFORM_TOP
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/under/rank/cargo/tech
 	name = "cargo technician's jumpsuit"
@@ -23,25 +24,26 @@
 	icon_state = "cargotech"
 	inhand_icon_state = "lb_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
-	mutantrace_variation = MUTANTRACE_VARIATION
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 	alt_covers_chest = TRUE
+
 
 /obj/item/clothing/under/rank/cargo/tech/skirt
 	name = "cargo technician's jumpskirt"
-	desc = "Skiiiiirts! They're comfy and easy to wear"
+	desc = "Skiiiiirts! They're comfy and easy to wear!"
 	icon_state = "cargo_skirt"
 	inhand_icon_state = "lb_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 	dying_key = DYE_REGISTRY_JUMPSKIRT
-	fitted = FEMALE_UNIFORM_TOP
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 
 /obj/item/clothing/under/rank/cargo/miner
 	desc = "It's a snappy jumpsuit with a sturdy set of overalls. It is very dirty."
 	name = "shaft miner's jumpsuit"
 	icon_state = "miner"
 	inhand_icon_state = "miner"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 0, WOUND = 10)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 80, ACID = 0, WOUND = 10)
 	resistance_flags = NONE
 
 /obj/item/clothing/under/rank/cargo/miner/lavaland
@@ -49,4 +51,3 @@
 	name = "shaft miner's jumpsuit"
 	icon_state = "explorer"
 	inhand_icon_state = "explorer"
-	can_adjust = FALSE

@@ -12,8 +12,8 @@
 	if(slot != ITEM_SLOT_EYES)
 		return
 	if(hud_type)
-		var/datum/atom_hud/H = GLOB.huds[hud_type]
-		H.add_hud_to(user)
+		var/datum/atom_hud/our_hud = GLOB.huds[hud_type]
+		our_hud.show_to(user)
 	if(hud_trait)
 		ADD_TRAIT(user, hud_trait, GLASSES_TRAIT)
 
@@ -22,8 +22,8 @@
 	if(!istype(user) || user.glasses != src)
 		return
 	if(hud_type)
-		var/datum/atom_hud/H = GLOB.huds[hud_type]
-		H.remove_hud_from(user)
+		var/datum/atom_hud/our_hud = GLOB.huds[hud_type]
+		our_hud.hide_from(user)
 	if(hud_trait)
 		REMOVE_TRAIT(user, hud_trait, GLASSES_TRAIT)
 
@@ -38,8 +38,22 @@
 	if(obj_flags & EMAGGED)
 		return
 	obj_flags |= EMAGGED
-	to_chat(user, "<span class='warning'>PZZTTPFFFT</span>")
+	to_chat(user, span_warning("PZZTTPFFFT"))
 	desc = "[desc] The display is flickering slightly."
+
+/obj/item/clothing/glasses/hud/suicide_act(mob/user)
+	if(user.is_blind() || !isliving(user))
+		return ..()
+	var/mob/living/living_user = user
+	user.visible_message(span_suicide("[user] looks through [src] and looks overwhelmed with the information! It looks like [user.p_theyre()] trying to commit suicide!"))
+	if(living_user.getOrganLoss(ORGAN_SLOT_BRAIN) >= BRAIN_DAMAGE_SEVERE)
+		var/mob/thing = pick((/mob in view()) - user)
+		if(thing)
+			user.say("VALID MAN IS WANTER, ARREST HE!!")
+			user.pointed(thing)
+		else
+			user.say("WHY IS THERE A BAR ON MY HEAD?!!")
+	return OXYLOSS
 
 /obj/item/clothing/glasses/hud/health
 	name = "health scanner HUD"
@@ -111,13 +125,14 @@
 	// have multiple inheritance, okay?
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/clothing/glasses/hud/security/chameleon/Initialize()
+/obj/item/clothing/glasses/hud/security/chameleon/Initialize(mapload)
 	. = ..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/glasses
 	chameleon_action.chameleon_name = "Glasses"
 	chameleon_action.chameleon_blacklist = typecacheof(/obj/item/clothing/glasses/changeling, only_root_path = TRUE)
 	chameleon_action.initialize_disguises()
+	add_item_action(chameleon_action)
 
 /obj/item/clothing/glasses/hud/security/chameleon/emp_act(severity)
 	. = ..()
@@ -152,8 +167,9 @@
 /obj/item/clothing/glasses/hud/security/sunglasses/gars
 	name = "\improper HUD gar glasses"
 	desc = "GAR glasses with a HUD."
-	icon_state = "gars"
-	inhand_icon_state = "garb"
+	icon_state = "gar_sec"
+	inhand_icon_state = "gar_black"
+	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 	force = 10
 	throwforce = 10
 	throw_speed = 4
@@ -162,11 +178,10 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = SHARP_EDGED
 
-/obj/item/clothing/glasses/hud/security/sunglasses/gars/supergars
+/obj/item/clothing/glasses/hud/security/sunglasses/gars/giga
 	name = "giga HUD gar glasses"
 	desc = "GIGA GAR glasses with a HUD."
-	icon_state = "supergars"
-	inhand_icon_state = "garb"
+	icon_state = "gigagar_sec"
 	force = 12
 	throwforce = 12
 
@@ -183,8 +198,8 @@
 		return
 
 	if (hud_type)
-		var/datum/atom_hud/H = GLOB.huds[hud_type]
-		H.remove_hud_from(user)
+		var/datum/atom_hud/our_hud = GLOB.huds[hud_type]
+		our_hud.hide_from(user)
 
 	if (hud_type == DATA_HUD_MEDICAL_ADVANCED)
 		hud_type = null
@@ -194,8 +209,11 @@
 		hud_type = DATA_HUD_SECURITY_ADVANCED
 
 	if (hud_type)
-		var/datum/atom_hud/H = GLOB.huds[hud_type]
-		H.add_hud_to(user)
+		var/datum/atom_hud/our_hud = GLOB.huds[hud_type]
+		our_hud.show_to(user)
+
+/datum/action/item_action/switch_hud
+	name = "Switch HUD"
 
 /obj/item/clothing/glasses/hud/toggle/thermal
 	name = "thermal HUD scanner"
@@ -218,7 +236,7 @@
 		else
 			icon_state = "purple"
 			change_glass_color(user, /datum/client_colour/glass_colour/purple)
-	user.update_inv_glasses()
+	user.update_worn_glasses()
 
 /obj/item/clothing/glasses/hud/toggle/thermal/emp_act(severity)
 	. = ..()
@@ -230,7 +248,6 @@
 	name = "police aviators"
 	desc = "For thinking you look cool while brutalizing protestors and minorities."
 	icon_state = "bigsunglasses"
-	hud_type = ANTAG_HUD_GANGSTER
 	darkness_view = 1
 	flash_protect = FLASH_PROTECTION_FLASH
 	tint = 1
@@ -242,4 +259,3 @@
 	desc = "These sunglasses are special, and let you view potential criminals."
 	icon_state = "sun"
 	inhand_icon_state = "sunglasses"
-

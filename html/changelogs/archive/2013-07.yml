@@ -1,0 +1,40 @@
+2013-07-07:
+  Giacom:
+  - rscadd: Revamped blob mode and the blob random event to spawn a player controlled
+      overmind that can expand the blob and upgrade pieces that perform particular
+      functions. This will use resources which the core can slowly generate or you
+      can place blob pieces that will give you more resources.
+2013-07-15:
+  Giacom:
+  - rscadd: A new item has been added to the syndicate catalog. The AI detector is
+      a device disguised as a multitool; it is not only able to be used as a real
+      multitool but when it detects an AI looking at it, or it's holder, it will turn
+      red to indicate to the holder that he should cease supiscious activities. A
+      great and cheap, to produce, tool for undercover operations involving an AI
+      as the security system.
+2013-07-16:
+  Malkevin:
+  - tweak: 'Summary of my recent changes: Added a muzzle and a box of Prisoner ID
+      cards to the perma wing, RnD can make a new combined gas mask with welding visor,
+      added some atmos analyzers to atmospherics, air alarm circuit boards have their
+      own sprites, package wrapped objects will now loop back round to the mail chute
+      instead of auto-rerouting to disposals, and the detective and captain have access
+      to securitrons through their PDA cartridges.'
+2013-07-21:
+  Cheridan:
+  - rscadd: Instead of a level-up system where it is possible to acquire all the skills,
+      each skill now costs 1 point, and you can pick up to 5.Husking people, instead
+      of giving you more XP to buy skills, now gives you a skill reset, allowing you
+      to pick new ones.
+  - rscadd: DNA Extract Sting is now free, and is your main mode of acquiring DNA.
+      You can hold up to 5 DNAs, and as you acquire more, the oldest one is removed.
+      If you're currently using the oldest DNA strand, you will be required to transform
+      before gaining more.
+  - rscadd: New abilities! An UI indicator for chemical storage! Fun!
+  Malkevin:
+  - rscadd: Cultists now start with two words each, and the starting talisman no longer
+      damages you when you use it
+2013-07-31:
+  Ricotez:
+  - rscadd: Atmospherics now has its own hardsuit. Instead of radiation protection
+      it offers fire protection.

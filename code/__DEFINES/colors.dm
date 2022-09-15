@@ -1,29 +1,47 @@
 // This is eventually for wjohn to add more color standardization stuff like I keep asking him >:(
 
-#define COLOR_INPUT_DISABLED "#F0F0F0"
-#define COLOR_INPUT_ENABLED "#D3B5B5"
+//different types of atom colorations
+/// Only used by rare effects like greentext coloring mobs and when admins varedit color
+#define ADMIN_COLOUR_PRIORITY 1
+/// e.g. purple effect of the revenant on a mob, black effect when mob electrocuted
+#define TEMPORARY_COLOUR_PRIORITY 2
+/// Color splashed onto an atom (e.g. paint on turf)
+#define WASHABLE_COLOUR_PRIORITY 3
+/// Color inherent to the atom (e.g. blob color)
+#define FIXED_COLOUR_PRIORITY 4
+///how many colour priority levels there are.
+#define COLOUR_PRIORITY_AMOUNT 4
 
 #define COLOR_DARKMODE_BACKGROUND "#202020"
 #define COLOR_DARKMODE_DARKBACKGROUND "#171717"
 #define COLOR_DARKMODE_TEXT "#a4bad6"
 
 #define COLOR_WHITE "#FFFFFF"
+#define COLOR_OFF_WHITE "#FFF5ED"
 #define COLOR_VERY_LIGHT_GRAY "#EEEEEE"
 #define COLOR_SILVER "#C0C0C0"
 #define COLOR_GRAY "#808080"
 #define COLOR_FLOORTILE_GRAY "#8D8B8B"
+#define COLOR_ASSISTANT_GRAY "#6E6E6E"
+#define COLOR_DARK "#454545"
+#define COLOR_WEBSAFE_DARK_GRAY "#484848"
 #define COLOR_ALMOST_BLACK "#333333"
+#define COLOR_FULL_TONER_BLACK "#101010"
+#define COLOR_PRISONER_BLACK "#292929"
 #define COLOR_BLACK "#000000"
 #define COLOR_HALF_TRANSPARENT_BLACK    "#0000007A"
 
 #define COLOR_RED "#FF0000"
+#define COLOR_SYNDIE_RED "#F10303"
 #define COLOR_MOSTLY_PURE_RED "#FF3300"
 #define COLOR_DARK_RED "#A50824"
 #define COLOR_RED_LIGHT "#FF3333"
 #define COLOR_MAROON "#800000"
+#define COLOR_SECURITY_RED "#CB0000"
 #define COLOR_VIVID_RED "#FF3232"
 #define COLOR_LIGHT_GRAYISH_RED "#E4C7C5"
 #define COLOR_SOFT_RED "#FA8282"
+#define COLOR_CULT_RED "#960000"
 #define COLOR_BUBBLEGUM_RED "#950A0A"
 
 #define COLOR_YELLOW "#FFFF00"
@@ -31,35 +49,47 @@
 #define COLOR_VERY_SOFT_YELLOW "#FAE48E"
 
 #define COLOR_OLIVE "#808000"
+#define COLOR_ASSISTANT_OLIVE "#828163"
 #define COLOR_VIBRANT_LIME "#00FF00"
+#define COLOR_SERVICE_LIME "#58C800"
 #define COLOR_LIME "#32CD32"
 #define COLOR_DARK_LIME "#00aa00"
 #define COLOR_VERY_PALE_LIME_GREEN "#DDFFD3"
 #define COLOR_VERY_DARK_LIME_GREEN "#003300"
 #define COLOR_GREEN "#008000"
 #define COLOR_DARK_MODERATE_LIME_GREEN "#44964A"
+#define COLOR_PAI_GREEN "#00FF88"
 
 #define COLOR_CYAN "#00FFFF"
 #define COLOR_DARK_CYAN "#00A2FF"
 #define COLOR_TEAL "#008080"
 #define COLOR_BLUE "#0000FF"
 #define COLOR_STRONG_BLUE "#1919c8"
+#define COLOR_CENTCOM_BLUE "#134975"
 #define COLOR_BRIGHT_BLUE "#2CB2E8"
+#define COLOR_COMMAND_BLUE "#1B67A5"
+#define COLOR_MEDICAL_BLUE "#5B97BC"
 #define COLOR_MODERATE_BLUE "#555CC2"
+#define COLOR_AMETHYST "#822BFF"
 #define COLOR_BLUE_LIGHT "#33CCFF"
 #define COLOR_NAVY "#000080"
 #define COLOR_BLUE_GRAY "#75A2BB"
 
 #define COLOR_PINK "#FFC0CB"
 #define COLOR_LIGHT_PINK "#ff3cc8"
+#define COLOR_SCIENCE_PINK "#C96DBF"
 #define COLOR_MOSTLY_PURE_PINK "#E4005B"
+#define COLOR_BLUSH_PINK "#DE5D83"
+#define COLOR_FADED_PINK "#ff80d5"
 #define COLOR_MAGENTA "#FF00FF"
 #define COLOR_STRONG_MAGENTA "#B800B8"
 #define COLOR_PURPLE "#800080"
 #define COLOR_VIOLET "#B900F7"
 #define COLOR_STRONG_VIOLET "#6927c5"
+#define COLOR_DARK_PURPLE "#551A8B"
 
 #define COLOR_ORANGE "#FF9900"
+#define COLOR_ENGINEERING_ORANGE "#FFA62B"
 #define COLOR_MOSTLY_PURE_ORANGE "#ff8000"
 #define COLOR_TAN_ORANGE "#FF7B00"
 #define COLOR_BRIGHT_ORANGE "#E2853D"
@@ -67,10 +97,21 @@
 #define COLOR_PALE_ORANGE "#FFBE9D"
 #define COLOR_BEIGE "#CEB689"
 #define COLOR_DARK_ORANGE "#C3630C"
+#define COLOR_PRISONER_ORANGE "#A54900"
 #define COLOR_DARK_MODERATE_ORANGE "#8B633B"
 
 #define COLOR_BROWN "#BA9F6D"
 #define COLOR_DARK_BROWN "#997C4F"
+#define COLOR_ORANGE_BROWN "#a9734f"
+#define COLOR_CARGO_BROWN "#B18644"
+
+//Color defines used by the soapstone (based on readability against grey tiles)
+#define COLOR_SOAPSTONE_PLASTIC "#a19d94"
+#define COLOR_SOAPSTONE_IRON "#b2b2b2"
+#define COLOR_SOAPSTONE_BRONZE "#FE8001"
+#define COLOR_SOAPSTONE_SILVER "#FFFFFF"
+#define COLOR_SOAPSTONE_GOLD "#FFD900"
+#define COLOR_SOAPSTONE_DIAMOND "#00ffee"
 
 #define COLOR_GREEN_GRAY       "#99BB76"
 #define COLOR_RED_GRAY         "#B4696A"
@@ -104,6 +145,17 @@
 #define COLOR_SAMPLE_BROWN "#91542d"
 #define COLOR_SAMPLE_GRAY "#5e5856"
 
+///Main colors for UI themes
+#define COLOR_THEME_MIDNIGHT "#6086A0"
+#define COLOR_THEME_PLASMAFIRE "#FFB200"
+#define COLOR_THEME_RETRO "#24CA00"
+#define COLOR_THEME_SLIMECORE "#4FB259"
+#define COLOR_THEME_OPERATIVE "#B8221F"
+#define COLOR_THEME_GLASS "#75A4C4"
+#define COLOR_THEME_CLOCKWORK "#CFBA47"
+
+///Colors for eigenstates
+#define COLOR_PERIWINKLEE "#9999FF"
 /**
  * Some defines to generalise colours used in lighting.
  *
@@ -121,7 +173,7 @@
 #define LIGHT_COLOR_CYAN       "#7DE1E1"
 /// Electric cyan rgb(0, 255, 255)
 #define LIGHT_COLOR_ELECTRIC_CYAN "#00FFFF"
-/// More-saturated cyan. rgb(16, 21, 22)
+/// More-saturated cyan. rgb(64, 206, 255)
 #define LIGHT_COLOR_LIGHT_CYAN "#40CEFF"
 /// Saturated blue. rgb(51, 117, 248)
 #define LIGHT_COLOR_DARK_BLUE  "#6496FA"
@@ -155,3 +207,32 @@
 #define LIGHT_COLOR_TUNGSTEN   "#FAE1AF"
 /// Barely visible cyan-ish hue, as the doctor prescribed. rgb(240, 250, 250)
 #define LIGHT_COLOR_HALOGEN    "#F0FAFA"
+
+//The GAGS greyscale_colors for each department's computer/machine circuits
+#define CIRCUIT_COLOR_GENERIC "#1A7A13"
+#define CIRCUIT_COLOR_COMMAND "#1B4594"
+#define CIRCUIT_COLOR_SECURITY "#9A151E"
+#define CIRCUIT_COLOR_SCIENCE "#BC4A9B"
+#define CIRCUIT_COLOR_SERVICE "#92DCBA"
+#define CIRCUIT_COLOR_MEDICAL "#00CCFF"
+#define CIRCUIT_COLOR_ENGINEERING "#F8D700"
+#define CIRCUIT_COLOR_SUPPLY "#C47749"
+
+/// Colors for pride week
+#define COLOR_PRIDE_RED "#FF6666"
+#define COLOR_PRIDE_ORANGE "#FC9F3C"
+#define COLOR_PRIDE_YELLOW "#EAFF51"
+#define COLOR_PRIDE_GREEN "#41FC66"
+#define COLOR_PRIDE_BLUE "#42FFF2"
+#define COLOR_PRIDE_PURPLE "#5D5DFC"
+
+/// The default color for admin say, used as a fallback when the preference is not enabled
+#define DEFAULT_ASAY_COLOR COLOR_MOSTLY_PURE_RED
+
+#define DEFAULT_HEX_COLOR_LEN 6
+
+// Color filters
+/// Icon filter that creates ambient occlusion
+#define AMBIENT_OCCLUSION filter(type="drop_shadow", x=0, y=-2, size=4, color="#04080FAA")
+/// Icon filter that creates gaussian blur
+#define GAUSSIAN_BLUR(filter_size) filter(type="blur", size=filter_size)

@@ -1,11 +1,11 @@
 /obj/item/implantpad
 	name = "implant pad"
 	desc = "Used to modify implants."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "implantpad-0"
 	inhand_icon_state = "electronic"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
@@ -20,10 +20,10 @@
 	if(Adjacent(user))
 		. += "It [case ? "contains \a [case]" : "is currently empty"]."
 		if(case)
-			. += "<span class='info'>Alt-click to remove [case].</span>"
+			. += span_info("Alt-click to remove [case].")
 	else
 		if(case)
-			. += "<span class='warning'>There seems to be something inside it, but you can't quite tell what from here...</span>"
+			. += span_warning("There seems to be something inside it, but you can't quite tell what from here...")
 
 /obj/item/implantpad/handle_atom_del(atom/A)
 	if(A == case)
@@ -37,7 +37,7 @@
 	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 	if(!case)
-		to_chat(user, "<span class='warning'>There's no implant to remove from [src].</span>")
+		to_chat(user, span_warning("There's no implant to remove from [src]."))
 		return
 
 	user.put_in_hands(case)

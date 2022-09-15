@@ -4,8 +4,8 @@
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "electropack0"
 	inhand_icon_state = "electropack"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_HUGE
@@ -16,7 +16,7 @@
 	var/frequency = FREQ_ELECTROPACK
 	var/shock_cooldown = FALSE
 
-/obj/item/electropack/Initialize()
+/obj/item/electropack/Initialize(mapload)
 	. = ..()
 	set_frequency(frequency)
 
@@ -25,7 +25,7 @@
 	return ..()
 
 /obj/item/electropack/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] hooks [user.p_them()]self to the electropack and spams the trigger! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] hooks [user.p_them()]self to the electropack and spams the trigger! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return (FIRELOSS)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
@@ -33,17 +33,17 @@
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		if(src == C.back)
-			to_chat(user, "<span class='warning'>You need help taking this off!</span>")
+			to_chat(user, span_warning("You need help taking this off!"))
 			return
 	return ..()
 
 /obj/item/electropack/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/clothing/head/helmet))
 		var/obj/item/assembly/shock_kit/A = new /obj/item/assembly/shock_kit(user)
-		A.icon = 'icons/obj/assemblies.dmi'
+		A.icon = 'icons/obj/assemblies/assemblies.dmi'
 
 		if(!user.transferItemToLoc(W, A))
-			to_chat(user, "<span class='warning'>[W] is stuck to your hand, you cannot attach it to [src]!</span>")
+			to_chat(user, span_warning("[W] is stuck to your hand, you cannot attach it to [src]!"))
 			return
 		W.master = A
 		A.helmet_part = W
@@ -68,7 +68,7 @@
 		var/mob/living/L = loc
 		step(L, pick(GLOB.cardinals))
 
-		to_chat(L, "<span class='danger'>You feel a sharp shock!</span>")
+		to_chat(L, span_danger("You feel a sharp shock!"))
 		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 		s.set_up(3, 1, L)
 		s.start()

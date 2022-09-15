@@ -1,7 +1,7 @@
 /obj/item/toy/plush
 	name = "plush"
 	desc = "This is the special coder plush, do not steal."
-	icon = 'icons/obj/plushes.dmi'
+	icon = 'icons/obj/toys/plushes.dmi'
 	icon_state = "debug"
 	worn_icon_state = "plushie"
 	attack_verb_continuous = list("thumps", "whomps", "bumps")
@@ -35,7 +35,7 @@
 	var/normal_desc
 	//--end of love :'(--
 
-/obj/item/toy/plush/Initialize()
+/obj/item/toy/plush/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/squeak, squeak_override)
 	AddElement(/datum/element/bed_tuckable, 6, -5, 90)
@@ -110,56 +110,53 @@
 /obj/item/toy/plush/attack_self(mob/user)
 	. = ..()
 	if(stuffed || grenade)
-		to_chat(user, "<span class='notice'>You pet [src]. D'awww.</span>")
+		to_chat(user, span_notice("You pet [src]. D'awww."))
 		if(grenade && !grenade.active)
-			log_game("[key_name(user)] activated a hidden grenade in [src].")
+			user.log_message("activated a hidden grenade in [src].", LOG_VICTIM)
 			grenade.arm_grenade(user, msg = FALSE, volume = 10)
 	else
-		to_chat(user, "<span class='notice'>You try to pet [src], but it has no stuffing. Aww...</span>")
+		to_chat(user, span_notice("You try to pet [src], but it has no stuffing. Aww..."))
 
 /obj/item/toy/plush/attackby(obj/item/I, mob/living/user, params)
 	if(I.get_sharpness())
 		if(!grenade)
 			if(!stuffed)
-				to_chat(user, "<span class='warning'>You already murdered it!</span>")
+				to_chat(user, span_warning("You already murdered it!"))
 				return
 			if(!divine)
-				user.visible_message("<span class='notice'>[user] tears out the stuffing from [src]!</span>", "<span class='notice'>You rip a bunch of the stuffing from [src]. Murderer.</span>")
+				user.visible_message(span_notice("[user] tears out the stuffing from [src]!"), span_notice("You rip a bunch of the stuffing from [src]. Murderer."))
 				I.play_tool_sound(src)
 				stuffed = FALSE
 			else
-				to_chat(user, "<span class='notice'>What a fool you are. [src] is a god, how can you kill a god? What a grand and intoxicating innocence.</span>")
-				if(iscarbon(user))
-					var/mob/living/carbon/C = user
-					if(C.drunkenness < 50)
-						C.drunkenness = min(C.drunkenness + 20, 50)
+				to_chat(user, span_notice("What a fool you are. [src] is a god, how can you kill a god? What a grand and intoxicating innocence."))
+				user.adjust_drunk_effect(20, up_to = 50)
+
 				var/turf/current_location = get_turf(user)
 				var/area/current_area = current_location.loc //copied from hand tele code
 				if(current_location && current_area && (current_area.area_flags & NOTELEPORT))
-					to_chat(user, "<span class='notice'>There is no escape. No recall or intervention can work in this place.</span>")
+					to_chat(user, span_notice("There is no escape. No recall or intervention can work in this place."))
 				else
-					to_chat(user, "<span class='notice'>There is no escape. Although recall or intervention can work in this place, attempting to flee from [src]'s immense power would be futile.</span>")
-				user.visible_message("<span class='notice'>[user] lays down their weapons and begs for [src]'s mercy!</span>", "<span class='notice'>You lay down your weapons and beg for [src]'s mercy.</span>")
+					to_chat(user, span_notice("There is no escape. Although recall or intervention can work in this place, attempting to flee from [src]'s immense power would be futile."))
+				user.visible_message(span_notice("[user] lays down their weapons and begs for [src]'s mercy!"), span_notice("You lay down your weapons and beg for [src]'s mercy."))
 				user.drop_all_held_items()
 		else
-			to_chat(user, "<span class='notice'>You remove the grenade from [src].</span>")
+			to_chat(user, span_notice("You remove the grenade from [src]."))
 			user.put_in_hands(grenade)
 			grenade = null
 		return
-	if(istype(I, /obj/item/grenade))
+	if(isgrenade(I))
 		if(stuffed)
-			to_chat(user, "<span class='warning'>You need to remove some stuffing first!</span>")
+			to_chat(user, span_warning("You need to remove some stuffing first!"))
 			return
 		if(grenade)
-			to_chat(user, "<span class='warning'>[src] already has a grenade!</span>")
+			to_chat(user, span_warning("[src] already has a grenade!"))
 			return
 		if(!user.transferItemToLoc(I, src))
 			return
-		user.visible_message("<span class='warning'>[user] slides [grenade] into [src].</span>", \
-		"<span class='danger'>You slide [I] into [src].</span>")
+		user.visible_message(span_warning("[user] slides [grenade] into [src]."), \
+		span_danger("You slide [I] into [src]."))
 		grenade = I
-		var/turf/grenade_turf = get_turf(src)
-		log_game("[key_name(user)] added a grenade ([I.name]) to [src] at [AREACOORD(grenade_turf)].")
+		user.log_message("added a grenade ([I.name]) to [src]", LOG_GAME)
 		return
 	if(istype(I, /obj/item/toy/plush))
 		love(I, user)
@@ -174,19 +171,19 @@
 
 	//we are not catholic
 	if(young == TRUE || Kisser.young == TRUE)
-		user.show_message("<span class='notice'>[src] plays tag with [Kisser].</span>", MSG_VISUAL,
-			"<span class='notice'>They're happy.</span>", NONE)
+		user.show_message(span_notice("[src] plays tag with [Kisser]."), MSG_VISUAL,
+			span_notice("They're happy."), NONE)
 		Kisser.cheer_up()
 		cheer_up()
 
 	//never again
 	else if(Kisser in scorned)
 		//message, visible, alternate message, neither visible nor audible
-		user.show_message("<span class='notice'>[src] rejects the advances of [Kisser]!</span>", MSG_VISUAL,
-			"<span class='notice'>That didn't feel like it worked.</span>", NONE)
+		user.show_message(span_notice("[src] rejects the advances of [Kisser]!"), MSG_VISUAL,
+			span_notice("That didn't feel like it worked."), NONE)
 	else if(src in Kisser.scorned)
-		user.show_message("<span class='notice'>[Kisser] realises who [src] is and turns away.</span>", MSG_VISUAL,
-			"<span class='notice'>That didn't feel like it worked.</span>", NONE)
+		user.show_message(span_notice("[Kisser] realises who [src] is and turns away."), MSG_VISUAL,
+			span_notice("That didn't feel like it worked."), NONE)
 
 	//first comes love
 	else if(Kisser.lover != src && Kisser.partner != src) //cannot be lovers or married
@@ -199,45 +196,44 @@
 			chance -= duty //do we mate for life?
 
 		if(prob(chance)) //did we bag a date?
-			user.visible_message("<span class='notice'>[user] makes [Kisser] kiss [src]!</span>",
-									"<span class='notice'>You make [Kisser] kiss [src]!</span>")
+			user.visible_message(span_notice("[user] makes [Kisser] kiss [src]!"),
+									span_notice("You make [Kisser] kiss [src]!"))
 			if(lover) //who cares for the past, we live in the present
 				lover.heartbreak(src)
 			new_lover(Kisser)
 			Kisser.new_lover(src)
 		else
-			user.show_message("<span class='notice'>[src] rejects the advances of [Kisser], maybe next time?</span>", MSG_VISUAL,
-								"<span class='notice'>That didn't feel like it worked, this time.</span>", NONE)
+			user.show_message(span_notice("[src] rejects the advances of [Kisser], maybe next time?"), MSG_VISUAL,
+								span_notice("That didn't feel like it worked, this time."), NONE)
 
 	//then comes marriage
 	else if(Kisser.lover == src && Kisser.partner != src) //need to be lovers (assumes loving is a two way street) but not married (also assumes similar)
-		user.visible_message("<span class='notice'>[user] pronounces [Kisser] and [src] married! D'aw.</span>",
-									"<span class='notice'>You pronounce [Kisser] and [src] married!</span>")
+		user.visible_message(span_notice("[user] pronounces [Kisser] and [src] married! D'aw."),
+									span_notice("You pronounce [Kisser] and [src] married!"))
 		new_partner(Kisser)
 		Kisser.new_partner(src)
 
 	//then comes a baby in a baby's carriage, or an adoption in an adoption's orphanage
 	else if(Kisser.partner == src && !plush_child) //the one advancing does not take ownership of the child and we have a one child policy in the toyshop
-		user.visible_message("<span class='notice'>[user] is going to break [Kisser] and [src] by bashing them like that.</span>",
-									"<span class='notice'>[Kisser] passionately embraces [src] in your hands. Look away you perv!</span>")
+		user.visible_message(span_notice("[user] is going to break [Kisser] and [src] by bashing them like that."),
+									span_notice("[Kisser] passionately embraces [src] in your hands. Look away you perv!"))
 		user.client.give_award(/datum/award/achievement/misc/rule8, user)
 		if(plop(Kisser))
-			user.visible_message("<span class='notice'>Something drops at the feet of [user].</span>",
-							"<span class='notice'>The miracle of oh god did that just come out of [src]?!</span>")
+			user.visible_message(span_notice("Something drops at the feet of [user]."),
+							span_notice("The miracle of oh god did that just come out of [src]?!"))
 
 	//then comes protection, or abstinence if we are catholic
 	else if(Kisser.partner == src && plush_child)
-		user.visible_message("<span class='notice'>[user] makes [Kisser] nuzzle [src]!</span>",
-									"<span class='notice'>You make [Kisser] nuzzle [src]!</span>")
+		user.visible_message(span_notice("[user] makes [Kisser] nuzzle [src]!"),
+									span_notice("You make [Kisser] nuzzle [src]!"))
 
 	//then oh fuck something unexpected happened
 	else
-		user.show_message("<span class='warning'>[Kisser] and [src] don't know what to do with one another.</span>", NONE)
+		user.show_message(span_warning("[Kisser] and [src] don't know what to do with one another."), NONE)
 
 /obj/item/toy/plush/proc/heartbreak(obj/item/toy/plush/Brutus)
 	if(lover != Brutus)
-		to_chat(world, "lover != Brutus")
-		return //why are we considering someone we don't love?
+		CRASH("plushie heartbroken by a plushie that is not their lover")
 
 	scorned.Add(Brutus)
 	Brutus.scorned_by(src)
@@ -406,7 +402,7 @@
 	var/obj/item/toy/plush/narplush/clash_target
 	gender = MALE //he's a boy, right?
 
-/obj/item/toy/plush/ratplush/Moved()
+/obj/item/toy/plush/ratplush/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(clash_target)
 		return
@@ -429,7 +425,7 @@
 			clash_target = null
 			return
 		if(!Adjacent(P))
-			visible_message("<span class='warning'>The two plushies angrily flail at each other before giving up.</span>")
+			visible_message(span_warning("The two plushies angrily flail at each other before giving up."))
 			clash_target = null
 			P.clashing = FALSE
 			return
@@ -473,7 +469,7 @@
 		P.say(pick("Nooooo...", "Not die. To y-", "Die. Ratv-", "Sas tyen re-"))
 		playsound(src, 'sound/magic/clockwork/anima_fragment_attack.ogg', 50, TRUE, frequency = 2)
 		playsound(P, 'sound/magic/demon_dies.ogg', 50, TRUE, frequency = 2)
-		explosion(P, 0, 0, 1)
+		explosion(P, light_impact_range = 1)
 		qdel(P)
 		clash_target = null
 	else
@@ -481,7 +477,7 @@
 		P.say(pick("Ha.", "Ra'sha fonn dest.", "You fool. To come here."))
 		playsound(src, 'sound/magic/clockwork/anima_fragment_death.ogg', 62, TRUE, frequency = 2)
 		playsound(P, 'sound/magic/demon_attack1.ogg', 50, TRUE, frequency = 2)
-		explosion(src, 0, 0, 1)
+		explosion(src, light_impact_range = 1)
 		qdel(src)
 		P.clashing = FALSE
 
@@ -493,26 +489,49 @@
 	var/clashing
 	gender = FEMALE //it's canon if the toy is
 
-/obj/item/toy/plush/narplush/Moved()
+/obj/item/toy/plush/narplush/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	var/obj/item/toy/plush/ratplush/P = locate() in range(1, src)
 	if(P && istype(P.loc, /turf/open) && !P.clash_target && !clashing)
 		P.clash_of_the_plushies(src)
 
-/obj/item/toy/plush/lizardplushie
+/obj/item/toy/plush/lizard_plushie
 	name = "lizard plushie"
 	desc = "An adorable stuffed toy that resembles a lizardperson."
-	icon_state = "plushie_lizard"
-	inhand_icon_state = "plushie_lizard"
+	icon_state = "map_plushie_lizard"
+	greyscale_config = /datum/greyscale_config/plush_lizard
 	attack_verb_continuous = list("claws", "hisses", "tail slaps")
 	attack_verb_simple = list("claw", "hiss", "tail slap")
 	squeak_override = list('sound/weapons/slash.ogg' = 1)
 
-/obj/item/toy/plush/lizardplushie/space
+/obj/item/toy/plush/lizard_plushie/Initialize(mapload)
+	. = ..()
+	if(!greyscale_colors)
+		// Generate a random valid lizard color for our plushie friend
+		var/generated_lizard_color = "#" + random_color()
+		var/temp_hsv = RGBtoHSV(generated_lizard_color)
+
+		// If our color is too dark, use the classic green lizard plush color
+		if(ReadHSV(temp_hsv)[3] < ReadHSV("#7F7F7F")[3])
+			generated_lizard_color = "#66ff33"
+
+		// Set our greyscale colors to the lizard color we made + black eyes
+		set_greyscale(colors = list(generated_lizard_color, "#000000"))
+
+// Preset lizard plushie that uses the original lizard plush green. (Or close to it)
+/obj/item/toy/plush/lizard_plushie/green
+	desc = "An adorable stuffed toy that resembles a green lizardperson. This one fills you with nostalgia and soul."
+	greyscale_colors = "#66ff33#000000"
+
+/obj/item/toy/plush/space_lizard_plushie
 	name = "space lizard plushie"
 	desc = "An adorable stuffed toy that resembles a very determined spacefaring lizardperson. To infinity and beyond, little guy."
 	icon_state = "plushie_spacelizard"
 	inhand_icon_state = "plushie_spacelizard"
+	// space lizards can't hit people with their tail, it's stuck in their suit
+	attack_verb_continuous = list("claws", "hisses", "bops")
+	attack_verb_simple = list("claw", "hiss", "bops")
+	squeak_override = list('sound/weapons/slash.ogg' = 1)
 
 /obj/item/toy/plush/snakeplushie
 	name = "snake plushie"
@@ -557,7 +576,7 @@
 	icon_state = "plushie_awake"
 	inhand_icon_state = "plushie_awake"
 
-/obj/item/toy/plush/awakenedplushie/ComponentInitialize()
+/obj/item/toy/plush/awakenedplushie/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/edit_complainer)
 
@@ -576,6 +595,58 @@
 	icon_state = "goat"
 	desc = "Despite its cuddly appearance and plush nature, it will beat you up all the same. Goats never change."
 	squeak_override = list('sound/weapons/punch1.ogg'=1)
+	/// Whether or not this goat is currently taking in a monsterous doink
+	var/going_hard = FALSE
+	/// Whether or not this goat has been flattened like a funny pancake
+	var/splat = FALSE
+
+/obj/item/toy/plush/goatplushie/Initialize(mapload)
+	. = ..()
+	var/static/list/loc_connections = list(
+		COMSIG_TURF_INDUSTRIAL_LIFT_ENTER = .proc/splat,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+
+/obj/item/toy/plush/goatplushie/attackby(obj/item/clothing/mask/cigarette/rollie/fat_dart, mob/user, params)
+	if(!istype(fat_dart))
+		return ..()
+	if(splat)
+		to_chat(user, span_notice("[src] doesn't seem to be able to go hard right now."))
+		return
+	if(going_hard)
+		to_chat(user, span_notice("[src] is already going too hard!"))
+		return
+	if(!fat_dart.lit)
+		to_chat(user, span_notice("You'll have to light that first!"))
+		return
+	to_chat(user, span_notice("You put [fat_dart] into [src]'s mouth."))
+	qdel(fat_dart)
+	going_hard = TRUE
+	update_icon(UPDATE_OVERLAYS)
+
+/obj/item/toy/plush/goatplushie/proc/splat(datum/source)
+	SIGNAL_HANDLER
+	if(splat)
+		return
+	if(going_hard)
+		going_hard = FALSE
+		update_icon(UPDATE_OVERLAYS)
+	icon_state = "goat_splat"
+	playsound(src, SFX_DESECRATION, 50, TRUE)
+	visible_message(span_danger("[src] gets absolutely flattened!"))
+	splat = TRUE
+
+/obj/item/toy/plush/goatplushie/examine()
+	. = ..()
+	if(splat)
+		. += span_notice("[src] might need medical attention.")
+	if(going_hard)
+		. += span_notice("[src] is going so hard, feel free to take a picture.")
+
+/obj/item/toy/plush/goatplushie/update_overlays()
+	. = ..()
+	if(going_hard)
+		. += "goat_dart"
 
 /obj/item/toy/plush/moth
 	name = "moth plushie"
@@ -589,7 +660,7 @@
 	var/suicide_count = 0
 
 /obj/item/toy/plush/moth/suicide_act(mob/living/user)
-	user.visible_message("<span class='suicide'>[user] stares deeply into the eyes of [src] and it begins consuming [user.p_them()]!  It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] stares deeply into the eyes of [src] and it begins consuming [user.p_them()]!  It looks like [user.p_theyre()] trying to commit suicide!"))
 	suicide_count++
 	if(suicide_count < 3)
 		desc = "A plushie depicting an unsettling mothperson. After killing [suicide_count] [suicide_count == 1 ? "person" : "people"] it's not looking so huggable now..."
@@ -613,3 +684,45 @@
 	attack_verb_continuous = list("hugs", "squeezes")
 	attack_verb_simple = list("hug", "squeeze")
 	squeak_override = list('sound/weapons/thudswoosh.ogg'=1)
+
+/obj/item/toy/plush/rouny
+	name = "runner plushie"
+	desc = "A plushie depicting a xenomorph runner, made to commemorate the centenary of the Battle of LV-426. Much cuddlier than the real thing."
+	icon_state = "rouny"
+	inhand_icon_state = "rouny"
+	attack_verb_continuous = list("slashes", "bites", "charges")
+	attack_verb_simple = list("slash", "bite", "charge")
+	squeak_override = list('sound/items/intents/Help.ogg' = 1)
+
+/obj/item/toy/plush/abductor
+	name = "abductor plushie"
+	desc = "A plushie depicting an alien abductor. The tag on it is in an indecipherable language."
+	icon_state = "abductor"
+	inhand_icon_state = "abductor"
+	attack_verb_continuous = list("abducts", "probes")
+	attack_verb_continuous = list("abduct", "probe")
+	squeak_override = list('sound/weather/ashstorm/inside/weak_end.ogg' = 1) //very faint sound since abductors are silent as far as "speaking" is concerned.
+
+/obj/item/toy/plush/abductor/agent
+	name = "abductor agent plushie"
+	desc = "A plushie depicting an alien abductor agent. The stun baton is attached to the hand of the plushie, and appears to be inert. I wouldn't stay alone with it."
+	icon_state = "abductor_agent"
+	inhand_icon_state = "abductor_agent"
+	attack_verb_continuous = list("abducts", "probes", "stuns")
+	attack_verb_continuous = list("abduct", "probe", "stun")
+	squeak_override = list(
+		'sound/weapons/egloves.ogg' = 2,
+		'sound/weapons/cablecuff.ogg' = 1,
+	)
+
+/obj/item/toy/plush/greek_cucumber
+	name = "cucumber greek"
+	desc = "A plushie depicting a large cucumber with eyes, it seems that according to the manufacturer of the toy, the human race will look like in the future."
+	icon_state = "cucumber"
+	inhand_icon_state = "cucumber"
+	attack_verb_continuous = list("squishуы", "creakes", "crunches")
+	attack_verb_simple = list("squish", "creak", "crunch")
+	squeak_override = list(
+		'sound/effects/slosh.ogg' = 1,
+		'sound/effects/splat.ogg' = 2
+	)

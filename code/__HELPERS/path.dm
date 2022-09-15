@@ -5,7 +5,8 @@
  */
 
 /**
- * This is the proc you use whenever you want to have pathfinding more complex than "try stepping towards the thing"
+ * This is the proc you use whenever you want to have pathfinding more complex than "try stepping towards the thing".
+ * If no path was found, returns an empty list, which is important for bots like medibots who expect an empty list rather than nothing.
  *
  * Arguments:
  * * caller: The movable atom that's trying to find the path
@@ -15,8 +16,10 @@
  * * id: An ID card representing what access we have and what doors we can open. Its location relative to the pathing atom is irrelevant
  * * simulated_only: Whether we consider turfs without atmos simulation (AKA do we want to ignore space)
  * * exclude: If we want to avoid a specific turf, like if we're a mulebot who already got blocked by some turf
+ * * skip_first: Whether or not to delete the first item in the path. This would be done because the first item is the starting tile, which can break movement for some creatures.
+ * * diagonal_safety: ensures diagonal moves won't use invalid midstep turfs by splitting them into two orthogonal moves if necessary
  */
-/proc/get_path_to(caller, end, max_distance = 30, mintargetdist, id=null, simulated_only = TRUE, turf/exclude)
+/proc/get_path_to(caller, end, max_distance = 30, mintargetdist, id=null, simulated_only = TRUE, turf/exclude, skip_first=TRUE, diagonal_safety=TRUE)
 	if(!caller || !get_turf(end))
 		return
 
@@ -26,19 +29,24 @@
 		l = SSpathfinder.mobs.getfree(caller)
 
 	var/list/path
-	var/datum/pathfind/pathfind_datum = new(caller, end, id, max_distance, mintargetdist, simulated_only, exclude)
+	var/datum/pathfind/pathfind_datum = new(caller, end, id, max_distance, mintargetdist, simulated_only, exclude, diagonal_safety)
 	path = pathfind_datum.search()
 	qdel(pathfind_datum)
 
 	SSpathfinder.mobs.found(l)
+	if(!path)
+		path = list()
+	if(length(path) > 0 && skip_first)
+		path.Cut(1,2)
 	return path
 
 /**
  * A helper macro to see if it's possible to step from the first turf into the second one, minding things like door access and directional windows.
- * Note that this can only be used inside the [datum/pathfind][pathfind datum] since it uses variables from said datum
- * If you really want to optimize things, optimize this, cuz this gets called a lot
+ * Note that this can only be used inside the [datum/pathfind][pathfind datum] since it uses variables from said datum.
+ * If you really want to optimize things, optimize this, cuz this gets called a lot.
+ * We do early next.density check despite it being already checked in LinkBlockedWithAccess for short-circuit performance
  */
-#define CAN_STEP(cur_turf, next) (next && !next.density && cur_turf.Adjacent(next) && !(simulated_only && SSpathfinder.space_type_cache[next.type]) && !cur_turf.LinkBlockedWithAccess(next,caller, id) && (next != avoid))
+#define CAN_STEP(cur_turf, next) (next && !next.density && !(simulated_only && SSpathfinder.space_type_cache[next.type]) && !cur_turf.LinkBlockedWithAccess(next,caller, id) && (next != avoid))
 /// Another helper macro for JPS, for telling when a node has forced neighbors that need expanding
 #define STEP_NOT_HERE_BUT_THERE(cur_turf, dirA, dirB) ((!CAN_STEP(cur_turf, get_step(cur_turf, dirA)) && CAN_STEP(cur_turf, get_step(cur_turf, dirB))))
 
@@ -114,8 +122,10 @@
 	var/simulated_only
 	/// A specific turf we're avoiding, like if a mulebot is being blocked by someone t-posing in a doorway we're trying to get through
 	var/turf/avoid
+	/// Ensures diagonal moves won't use invalid midstep turfs by splitting them into two orthogonal moves if necessary
+	var/diagonal_safety = TRUE
 
-/datum/pathfind/New(atom/movable/caller, atom/goal, id, max_distance, mintargetdist, simulated_only, avoid)
+/datum/pathfind/New(atom/movable/caller, atom/goal, id, max_distance, mintargetdist, simulated_only, avoid, diagonal_safety)
 	src.caller = caller
 	end = get_turf(goal)
 	open = new /datum/heap(/proc/HeapPathWeightCompare)
@@ -125,17 +135,23 @@
 	src.mintargetdist = mintargetdist
 	src.simulated_only = simulated_only
 	src.avoid = avoid
+	src.diagonal_safety = diagonal_safety
 
-/// The proc you use to run the search, returns a list with the steps to the destination if one is available, or nothing if one couldn't be found
+/**
+ * search() is the proc you call to kick off and handle the actual pathfinding, and kills the pathfind datum instance when it's done.
+ *
+ * If a valid path was found, it's returned as a list. If invalid or cross-z-level params are entered, or if there's no valid path found, we
+ * return null, which [/proc/get_path_to] translates to an empty list (notable for simple bots, who need empty lists)
+ */
 /datum/pathfind/proc/search()
 	start = get_turf(caller)
 	if(!start || !end)
 		stack_trace("Invalid A* start or destination")
-		return FALSE
+		return
 	if(start.z != end.z || start == end ) //no pathfinding between z levels
-		return FALSE
+		return
 	if(max_distance && (max_distance < get_dist(start, end))) //if start turf is farther than max_distance from end turf, no need to do anything
-		return FALSE
+		return
 
 	//initialization
 	var/datum/jps_node/current_processed_node = new (start, -1, 0, end)
@@ -163,8 +179,13 @@
 	if(path)
 		for(var/i = 1 to round(0.5 * length(path)))
 			path.Swap(i, length(path) - i + 1)
+
 	sources = null
 	qdel(open)
+
+	if(diagonal_safety)
+		path = diagonal_movement_safety()
+
 	return path
 
 /// Called when we've hit the goal with the node that represents the last tile, then sets the path var to that path so it can be returned by [datum/pathfind/proc/search]
@@ -179,6 +200,35 @@
 			iter_turf = get_step(iter_turf,dir_goal)
 			path.Add(iter_turf)
 		unwind_node = unwind_node.previous_node
+
+/datum/pathfind/proc/diagonal_movement_safety()
+	if(length(path) < 2)
+		return
+	var/list/modified_path = list()
+
+	for(var/i in 1 to length(path) - 1)
+		var/turf/current_turf = path[i]
+		var/turf/next_turf = path[i+1]
+		var/movement_dir = get_dir(current_turf, next_turf)
+		if(!(movement_dir & (movement_dir - 1))) //cardinal movement, no need to verify
+			modified_path += current_turf
+			continue
+		//If default diagonal movement step is invalid, replace with alternative two steps
+		if(movement_dir & NORTH)
+			if(!CAN_STEP(current_turf,get_step(current_turf,NORTH)))
+				modified_path += current_turf
+				modified_path += get_step(current_turf, movement_dir & ~NORTH)
+			else
+				modified_path += current_turf
+		else
+			if(!CAN_STEP(current_turf,get_step(current_turf,SOUTH)))
+				modified_path += current_turf
+				modified_path += get_step(current_turf, movement_dir & ~SOUTH)
+			else
+				modified_path += current_turf
+	modified_path += path[length(path)]
+
+	return modified_path
 
 /**
  * For performing lateral scans from a given starting turf.
@@ -320,25 +370,62 @@
 /**
  * For seeing if we can actually move between 2 given turfs while accounting for our access and the caller's pass_flags
  *
+ * Assumes destinantion turf is non-dense - check and shortcircuit in code invoking this proc to avoid overhead.
+ *
  * Arguments:
  * * caller: The movable, if one exists, being used for mobility checks to see what tiles it can reach
  * * ID: An ID card that decides if we can gain access to doors that would otherwise block a turf
  * * simulated_only: Do we only worry about turfs with simulated atmos, most notably things that aren't space?
+ * * no_id: When true, doors with public access will count as impassible
 */
-/turf/proc/LinkBlockedWithAccess(turf/destination_turf, caller, ID)
+/turf/proc/LinkBlockedWithAccess(turf/destination_turf, caller, ID, no_id = FALSE)
+	if(destination_turf.x != x && destination_turf.y != y) //diagonal
+		var/in_dir = get_dir(destination_turf,src) // eg. northwest (1+8) = 9 (00001001)
+		var/first_step_direction_a = in_dir & 3 // eg. north   (1+8)&3 (0000 0011) = 1 (0000 0001)
+		var/first_step_direction_b = in_dir & 12 // eg. west   (1+8)&12 (0000 1100) = 8 (0000 1000)
+
+		for(var/first_step_direction in list(first_step_direction_a,first_step_direction_b))
+			var/turf/midstep_turf = get_step(destination_turf,first_step_direction)
+			var/way_blocked = midstep_turf.density || LinkBlockedWithAccess(midstep_turf,caller,ID, no_id = no_id) || midstep_turf.LinkBlockedWithAccess(destination_turf,caller,ID, no_id = no_id)
+			if(!way_blocked)
+				return FALSE
+		return TRUE
+
 	var/actual_dir = get_dir(src, destination_turf)
 
+	/// These are generally cheaper than looping contents so they go first
+	switch(destination_turf.pathing_pass_method)
+		// This is already assumed to be true
+		//if(TURF_PATHING_PASS_DENSITY)
+		//	if(destination_turf.density)
+		//		return TRUE
+		if(TURF_PATHING_PASS_PROC)
+			if(!destination_turf.CanAStarPass(ID, actual_dir , caller, no_id = no_id))
+				return TRUE
+		if(TURF_PATHING_PASS_NO)
+			return TRUE
+
+	// Source border object checks
 	for(var/obj/structure/window/iter_window in src)
-		if(!iter_window.CanAStarPass(ID, actual_dir))
+		if(!iter_window.CanAStarPass(ID, actual_dir, no_id = no_id))
 			return TRUE
 
 	for(var/obj/machinery/door/window/iter_windoor in src)
-		if(!iter_windoor.CanAStarPass(ID, actual_dir))
+		if(!iter_windoor.CanAStarPass(ID, actual_dir, no_id = no_id))
 			return TRUE
 
+	for(var/obj/structure/railing/iter_rail in src)
+		if(!iter_rail.CanAStarPass(ID, actual_dir, no_id = no_id))
+			return TRUE
+
+	for(var/obj/machinery/door/firedoor/border_only/firedoor in src)
+		if(!firedoor.CanAStarPass(ID, actual_dir, no_id = no_id))
+			return TRUE
+
+	// Destination blockers check
 	var/reverse_dir = get_dir(destination_turf, src)
 	for(var/obj/iter_object in destination_turf)
-		if(!iter_object.CanAStarPass(ID, reverse_dir, caller))
+		if(!iter_object.CanAStarPass(ID, reverse_dir, caller, no_id = no_id))
 			return TRUE
 
 	return FALSE

@@ -340,7 +340,7 @@
 	reqs = list(
 		/obj/item/food/pastrybase = 1,
 		/obj/item/food/meatball = 1,
-		/obj/item/food/grown/chili
+		/obj/item/food/grown/chili = 1
 	)
 	result = /obj/item/food/donkpocket/spicy
 	subcategory = CAT_PASTRY
@@ -394,7 +394,7 @@
 	reqs = list(
 		/obj/item/food/pastrybase = 1,
 		/obj/item/food/meatball = 1,
-		/datum/reagent/tranquility = 5
+		/datum/reagent/gondola_mutation_toxin = 5
 	)
 	result = /obj/item/food/donkpocket/gondola
 	subcategory = CAT_PASTRY
@@ -432,35 +432,15 @@
 	result = /obj/item/food/muffin/booberry
 	subcategory = CAT_PASTRY
 
-
 ////////////////////////////////////////////OTHER////////////////////////////////////////////
 
-/datum/crafting_recipe/food/hotdog
-	name = "Hot dog"
-	reqs = list(
-		/datum/reagent/consumable/ketchup = 5,
-		/obj/item/food/bun = 1,
-		/obj/item/food/sausage = 1
-	)
-	result = /obj/item/food/hotdog
-	subcategory = CAT_PASTRY
-
-/datum/crafting_recipe/food/meatbun
-	name = "Meat bun"
-	reqs = list(
-		/datum/reagent/consumable/soysauce = 5,
-		/obj/item/food/bun = 1,
-		/obj/item/food/meatball = 1,
-		/obj/item/food/grown/cabbage = 1
-	)
-	result = /obj/item/food/meatbun
-	subcategory = CAT_PASTRY
 
 /datum/crafting_recipe/food/khachapuri
 	name = "Khachapuri"
 	reqs = list(
-		/datum/reagent/consumable/eggyolk = 5,
-		/obj/item/food/cheese = 1,
+		/datum/reagent/consumable/eggyolk = 2,
+		/datum/reagent/consumable/eggwhite = 4,
+		/obj/item/food/cheese/wedge = 1,
 		/obj/item/food/bread/plain = 1
 	)
 	result = /obj/item/food/khachapuri
@@ -474,6 +454,28 @@
 		/obj/item/food/pastrybase = 1
 	)
 	result = /obj/item/food/cookie/sugar
+	subcategory = CAT_PASTRY
+
+/datum/crafting_recipe/food/spookyskull
+	time = 15
+	name = "Skull cookie"
+	reqs = list(
+		/obj/item/food/pastrybase = 1,
+		/datum/reagent/consumable/sugar = 5,
+		/datum/reagent/consumable/milk = 5
+	)
+	result = /obj/item/food/cookie/sugar/spookyskull
+	subcategory = CAT_PASTRY
+
+/datum/crafting_recipe/food/spookycoffin
+	time = 15
+	name = "Coffin cookie"
+	reqs = list(
+		/obj/item/food/pastrybase = 1,
+		/datum/reagent/consumable/sugar = 5,
+		/datum/reagent/consumable/coffee = 5
+	)
+	result = /obj/item/food/cookie/sugar/spookycoffin
 	subcategory = CAT_PASTRY
 
 /datum/crafting_recipe/food/fortunecookie
@@ -583,4 +585,25 @@
 		/datum/reagent/consumable/sugar = 3
 	)
 	result = /obj/item/food/cannoli
+	subcategory = CAT_PASTRY
+
+/datum/crafting_recipe/food/peanut_butter_cookie
+	name = "Peanut butter cookie"
+	reqs = list(
+		/datum/reagent/consumable/peanut_butter = 5,
+		/obj/item/food/pastrybase = 1
+	)
+	result = /obj/item/food/cookie/peanut_butter
+	subcategory = CAT_PASTRY
+
+/datum/crafting_recipe/food/raw_brownie_batter
+	name = "Raw brownie batter"
+	reqs = list(
+		/datum/reagent/consumable/flour = 5,
+		/datum/reagent/consumable/sugar = 5,
+		/obj/item/food/egg = 2,
+		/datum/reagent/consumable/coco = 5,
+		/obj/item/food/butter = 1
+	)
+	result = /obj/item/food/raw_brownie_batter
 	subcategory = CAT_PASTRY

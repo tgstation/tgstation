@@ -33,10 +33,10 @@
 /obj/item/assembly/health/AltClick(mob/living/user)
 	if(alarm_health == HEALTH_THRESHOLD_CRIT)
 		alarm_health = HEALTH_THRESHOLD_DEAD
-		to_chat(user, "<span class='notice'>You toggle [src] to \"detect death\" mode.</span>")
+		to_chat(user, span_notice("You toggle [src] to \"detect death\" mode."))
 	else
 		alarm_health = HEALTH_THRESHOLD_CRIT
-		to_chat(user, "<span class='notice'>You toggle [src] to \"detect critical state\" mode.</span>")
+		to_chat(user, span_notice("You toggle [src] to \"detect critical state\" mode."))
 
 /obj/item/assembly/health/process()
 	if(!scanning || !secured)
@@ -53,7 +53,7 @@
 		health_scan = M.health
 		if(health_scan <= alarm_health)
 			pulse()
-			audible_message("[icon2html(src, hearers(src))] *beep* *beep* *beep*")
+			audible_message("<span class='infoplain'>[icon2html(src, hearers(src))] *beep* *beep* *beep*</span>")
 			playsound(src, 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
 			toggle_scan()
 		return
@@ -71,5 +71,8 @@
 
 /obj/item/assembly/health/attack_self(mob/user)
 	. = ..()
-	to_chat(user, "<span class='notice'>You toggle [src] [src.scanning ? "off" : "on"].</span>")
+	if (secured)
+		balloon_alert(user, "scanning [scanning ? "disabled" : "enabled"]")
+	else
+		balloon_alert(user, span_warning("secure it first!"))
 	toggle_scan()

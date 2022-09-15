@@ -6,8 +6,8 @@
 	icon_state = "Jaunter"
 	inhand_icon_state = "electronic"
 	worn_icon_state = "electronic"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	throwforce = 0
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
@@ -15,18 +15,19 @@
 	slot_flags = ITEM_SLOT_BELT
 
 /obj/item/wormhole_jaunter/attack_self(mob/user)
-	user.visible_message("<span class='notice'>[user.name] activates the [src.name]!</span>")
+	user.visible_message(span_notice("[user.name] activates the [src.name]!"))
 	SSblackbox.record_feedback("tally", "jaunter", 1, "User") // user activated
 	activate(user, TRUE)
 
 /obj/item/wormhole_jaunter/proc/turf_check(mob/user)
-	var/turf/device_turf = get_turf(user)
+	var/turf/device_turf = get_turf(src)
 	if(!device_turf || is_centcom_level(device_turf.z) || is_reserved_level(device_turf.z))
-		to_chat(user, "<span class='notice'>You're having difficulties getting the [src.name] to work.</span>")
+		if(user)
+			to_chat(user, span_notice("You're having difficulties getting the [src.name] to work."))
 		return FALSE
 	return TRUE
 
-/obj/item/wormhole_jaunter/proc/get_destinations(mob/user)
+/obj/item/wormhole_jaunter/proc/get_destinations()
 	var/list/destinations = list()
 
 	for(var/obj/item/beacon/B in GLOB.teleportbeacons)
@@ -36,53 +37,67 @@
 
 	return destinations
 
-/obj/item/wormhole_jaunter/proc/activate(mob/user, adjacent)
-	if(!turf_check(user))
-		return
+/obj/item/wormhole_jaunter/proc/can_jaunter_teleport()
+	var/list/destinations = get_destinations()
+	return destinations.len > 0
 
-	var/list/L = get_destinations(user)
-	if(!L.len)
-		to_chat(user, "<span class='notice'>The [src.name] found no beacons in the world to anchor a wormhole to.</span>")
-		return
-	var/chosen_beacon = pick(L)
-	var/obj/effect/portal/jaunt_tunnel/J = new (get_turf(src), 100, null, FALSE, get_turf(chosen_beacon))
-	if(adjacent)
-		try_move_adjacent(J)
+/obj/item/wormhole_jaunter/proc/activate(mob/user, adjacent, teleport)
+	if(!turf_check(user))
+		return FALSE
+
+	if(!can_jaunter_teleport())
+		if(user)
+			to_chat(user, span_notice("\The [src] found no beacons in the world to anchor a wormhole to."))
+		else
+			visible_message(span_notice("\The [src] found no beacons in the world to anchor a wormhole to!"))
+		return TRUE // used for chasm code
+
+	var/list/destinations = get_destinations()
+	var/chosen_beacon = pick(destinations)
+
+	var/obj/effect/portal/jaunt_tunnel/tunnel = new (get_turf(src), 100, null, FALSE, get_turf(chosen_beacon))
+	if(teleport)
+		tunnel.teleport(user)
+	else if(adjacent)
+		try_move_adjacent(tunnel)
+
 	playsound(src,'sound/effects/sparks4.ogg',50,TRUE)
 	qdel(src)
+	return FALSE // used for chasm code
 
 /obj/item/wormhole_jaunter/emp_act(power)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
 
-	var/mob/M = loc
-	if(istype(M))
-		var/triggered = FALSE
-		if(M.get_item_by_slot(ITEM_SLOT_BELT) == src)
-			if(power == 1)
-				triggered = TRUE
-			else if(power == 2 && prob(50))
-				triggered = TRUE
+	var/triggered = FALSE
+	if(power == 1)
+		triggered = TRUE
+	else if(power == 2 && prob(50))
+		triggered = TRUE
 
-		if(triggered)
-			M.visible_message("<span class='warning'>[src] overloads and activates!</span>")
-			SSblackbox.record_feedback("tally", "jaunter", 1, "EMP") // EMP accidental activation
-			activate(M)
+	var/mob/M = loc
+	if(istype(M) && triggered)
+		M.visible_message(span_warning("Your [src.name] overloads and activates!"))
+		SSblackbox.record_feedback("tally", "jaunter", 1, "EMP") // EMP accidental activation
+		activate(M, FALSE, TRUE)
+	else if(triggered)
+		visible_message(span_warning("\The [src] overloads and activates!"))
+		activate()
 
 /obj/item/wormhole_jaunter/proc/chasm_react(mob/user)
-	if(user.get_item_by_slot(ITEM_SLOT_BELT) == src)
-		to_chat(user, "<span class='notice'>Your [name] activates, saving you from the chasm!</span>")
+	var/fall_into_chasm = activate(user, FALSE, TRUE)
+
+	if(!fall_into_chasm)
+		to_chat(user, span_notice("Your [src.name] activates, saving you from the chasm!"))
 		SSblackbox.record_feedback("tally", "jaunter", 1, "Chasm") // chasm automatic activation
-		activate(user, FALSE)
-	else
-		to_chat(user, "<span class='userdanger'>[src] is not attached to your belt, preventing it from saving you from the chasm. RIP.</span>")
+	return fall_into_chasm
 
 //jaunter tunnel
 /obj/effect/portal/jaunt_tunnel
 	name = "jaunt tunnel"
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "bhole3"
+	icon = 'icons/effects/anomalies.dmi'
+	icon_state = "vortex"
 	desc = "A stable hole in the universe made by a wormhole jaunter. Turbulent doesn't even begin to describe how rough passage through one of these is, but at least it will always get you somewhere near a beacon."
 	mech_sized = TRUE //save your ripley
 	innate_accuracy_penalty = 6

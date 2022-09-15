@@ -1,0 +1,3691 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ai" = (
+/obj/effect/turf_decal/siding/blue/corner{
+	dir = 4
+	},
+/turf/open/floor/carpet/blue,
+/area/centcom/ctf)
+"aG" = (
+/obj/effect/portal/permanent{
+	id = "portal1"
+	},
+/turf/open/floor/circuit/green/off,
+/area/centcom/ctf)
+"aM" = (
+/obj/effect/portal/permanent{
+	icon_state = "portal1";
+	id = "door13"
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/ctf)
+"aU" = (
+/obj/effect/portal/permanent{
+	icon_state = "portal1";
+	id = "door1"
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/ctf)
+"bk" = (
+/obj/structure/trap/ctf/yellow,
+/turf/open/floor/carpet/orange,
+/area/centcom/ctf)
+"bv" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/blue/corner{
+	dir = 8
+	},
+/turf/open/floor/carpet/blue,
+/area/centcom/ctf)
+"bH" = (
+/obj/effect/turf_decal/siding/wood/corner,
+/turf/open/floor/carpet/red,
+/area/centcom/ctf)
+"ce" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/cult,
+/area/centcom/ctf)
+"cu" = (
+/obj/effect/turf_decal/tile/green/fourcorners,
+/turf/open/floor/cult,
+/area/centcom/ctf)
+"cV" = (
+/obj/structure/ladder/unbreakable/rune{
+	height = 1;
+	id = "blue_team"
+	},
+/turf/open/floor/carpet/blue,
+/area/centcom/ctf)
+"ef" = (
+/obj/structure/window/reinforced/fulltile{
+	color = "#008000";
+	max_integrity = 5000;
+	name = "hardened window";
+	atom_integrity = 5000
+	},
+/turf/open/floor/plating,
+/area/centcom/ctf)
+"eg" = (
+/obj/effect/turf_decal/siding/yellow{
+	dir = 1
+	},
+/turf/open/floor/carpet/orange,
+/area/centcom/ctf)
+"ep" = (
+/obj/structure/barricade/security/ctf,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/cult,
+/area/centcom/ctf)
+"fs" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red,
+/turf/open/floor/cult,
+/area/centcom/ctf)
+"fH" = (
+/obj/effect/turf_decal/siding/wood/corner,
+/obj/effect/turf_decal/siding/red{
+	dir = 1
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/ctf)
+"fK" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/cult,
+/area/centcom/ctf)
+"gq" = (
+/obj/structure/barricade/security/ctf,
+/turf/open/floor/carpet/orange,
+/area/centcom/ctf)
+"gJ" = (
+/obj/effect/portal/permanent{
+	id = "portal3"
+	},
+/turf/open/floor/circuit/green/off,
+/area/centcom/ctf)
+"hl" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/ctf)
+"hB" = (
+/turf/closed/indestructible/cult,
+/area/centcom/ctf)
+"hW" = (
+/obj/structure/trap/ctf/blue,
+/obj/effect/turf_decal/siding/blue{
+	dir = 4
+	},
+/turf/open/floor/carpet/blue,
+/area/centcom/ctf)
+"in" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/ctf)
+"is" = (
+/obj/effect/portal/permanent{
+	icon_state = "portal1";
+	id = "door9"
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/ctf)
+"iv" = (
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/cult,
+/area/centcom/ctf)
+"iN" = (
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/cult,
+/area/centcom/ctf)
+"jz" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 1
+	},
+/turf/open/floor/carpet/blue,
+/area/centcom/ctf)
+"jK" = (
+/obj/effect/portal/permanent{
+	icon_state = "portal1";
+	id = "door6"
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/ctf)
+"kW" = (
+/obj/machinery/door/airlock/wood{
+	resistance_flags = 64
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/ctf)
+"lt" = (
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/turf/open/floor/cult,
+/area/centcom/ctf)
+"mG" = (
+/obj/effect/turf_decal/siding/yellow{
+	dir = 10
+	},
+/turf/open/floor/carpet/orange,
+/area/centcom/ctf)
+"mP" = (
+/obj/structure/barricade/security/ctf,
+/turf/open/floor/cult,
+/area/centcom/ctf)
+"ng" = (
+/obj/effect/turf_decal/siding/yellow{
+	dir = 5
+	},
+/obj/structure/bookcase/random{
+	resistance_flags = 64
+	},
+/turf/open/floor/carpet/orange,
+/area/centcom/ctf)
+"ny" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/cult,
+/area/centcom/ctf)
+"nB" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/red,
+/turf/open/floor/carpet/red,
+/area/centcom/ctf)
+"nP" = (
+/obj/effect/portal/permanent{
+	id = "portal2"
+	},
+/turf/open/floor/circuit/green/off,
+/area/centcom/ctf)
+"nQ" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/red{
+	dir = 1
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/ctf)
+"od" = (
+/obj/effect/turf_decal/siding/blue,
+/obj/effect/turf_decal/siding/blue/corner{
+	dir = 4
+	},
+/obj/structure/bookcase/random{
+	resistance_flags = 64
+	},
+/turf/open/floor/carpet/blue,
+/area/centcom/ctf)
+"om" = (
+/obj/effect/turf_decal/siding/blue/corner,
+/turf/open/floor/carpet/blue,
+/area/centcom/ctf)
+"oy" = (
+/obj/machinery/control_point,
+/turf/open/floor/circuit/green/off,
+/area/centcom/ctf)
+"oK" = (
+/obj/effect/turf_decal/siding/yellow/corner{
+	dir = 1
+	},
+/turf/open/floor/carpet/orange,
+/area/centcom/ctf)
+"oL" = (
+/turf/open/floor/circuit/green/off,
+/area/centcom/ctf)
+"oT" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 10
+	},
+/turf/open/floor/carpet/blue,
+/area/centcom/ctf)
+"pb" = (
+/obj/structure/barricade/security/ctf,
+/turf/open/floor/carpet/blue,
+/area/centcom/ctf)
+"pi" = (
+/obj/effect/turf_decal/siding/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/yellow/corner,
+/obj/structure/bookcase/random{
+	resistance_flags = 64
+	},
+/turf/open/floor/carpet/orange,
+/area/centcom/ctf)
+"pz" = (
+/turf/open/floor/wood,
+/area/centcom/ctf)
+"pD" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/cult,
+/area/centcom/ctf)
+"pF" = (
+/obj/effect/portal/permanent{
+	icon_state = "portal1";
+	id = "door5"
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/ctf)
+"pR" = (
+/obj/effect/turf_decal/siding/yellow/corner{
+	dir = 4
+	},
+/turf/open/floor/carpet/orange,
+/area/centcom/ctf)
+"pX" = (
+/obj/effect/portal/permanent{
+	icon_state = "portal1";
+	id = "door8"
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/ctf)
+"qc" = (
+/obj/effect/portal/permanent{
+	icon_state = "portal1";
+	id = "door4"
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/ctf)
+"qd" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/ctf)
+"qs" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/table/wood{
+	resistance_flags = 64
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/ctf)
+"qH" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/red,
+/turf/open/floor/carpet/red,
+/area/centcom/ctf)
+"rm" = (
+/obj/machinery/capture_the_flag/blue,
+/turf/open/floor/circuit/green/off,
+/area/centcom/ctf)
+"rB" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/red{
+	dir = 4
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/ctf)
+"rZ" = (
+/obj/effect/portal/permanent{
+	icon_state = "portal1";
+	id = "door10"
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/ctf)
+"sl" = (
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/turf/open/floor/cult,
+/area/centcom/ctf)
+"st" = (
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/turf/open/floor/cult,
+/area/centcom/ctf)
+"tm" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/ctf)
+"tS" = (
+/obj/effect/turf_decal/siding/yellow{
+	dir = 6
+	},
+/turf/open/floor/carpet/orange,
+/area/centcom/ctf)
+"uh" = (
+/turf/template_noop,
+/area/template_noop)
+"vw" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/red,
+/turf/open/floor/carpet/red,
+/area/centcom/ctf)
+"vK" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/ctf)
+"wg" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/ctf)
+"wu" = (
+/obj/effect/turf_decal/siding/blue,
+/turf/open/floor/carpet/blue,
+/area/centcom/ctf)
+"wy" = (
+/obj/structure/table/wood{
+	resistance_flags = 64
+	},
+/turf/open/floor/circuit/green/off,
+/area/centcom/ctf)
+"wE" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/cult,
+/area/centcom/ctf)
+"wS" = (
+/obj/effect/portal/permanent{
+	icon_state = "portal1";
+	id = "door15"
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/ctf)
+"wW" = (
+/obj/structure/trap/ctf/blue,
+/obj/effect/turf_decal/siding/blue{
+	dir = 8
+	},
+/turf/open/floor/carpet/blue,
+/area/centcom/ctf)
+"xw" = (
+/obj/structure/trap/ctf/yellow,
+/obj/effect/turf_decal/siding/yellow{
+	dir = 4
+	},
+/turf/open/floor/carpet/orange,
+/area/centcom/ctf)
+"xC" = (
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/cult,
+/area/centcom/ctf)
+"yo" = (
+/turf/closed/indestructible/wood,
+/area/centcom/ctf)
+"yD" = (
+/obj/effect/portal/permanent{
+	icon_state = "portal1";
+	id = "door7"
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/ctf)
+"yL" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/blue{
+	dir = 8
+	},
+/turf/open/floor/carpet/blue,
+/area/centcom/ctf)
+"zH" = (
+/obj/effect/turf_decal/siding/wood/corner,
+/obj/effect/turf_decal/siding/red{
+	dir = 8
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/ctf)
+"Ah" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/turf/open/floor/cult,
+/area/centcom/ctf)
+"AD" = (
+/obj/structure/ladder/unbreakable/rune{
+	id = "blue_team"
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/ctf)
+"Bf" = (
+/obj/effect/turf_decal/siding/yellow{
+	dir = 5
+	},
+/turf/open/floor/carpet/orange,
+/area/centcom/ctf)
+"Bj" = (
+/obj/effect/portal/permanent{
+	icon_state = "portal1";
+	id = "door3"
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/ctf)
+"Bl" = (
+/obj/structure/barricade/security/ctf,
+/turf/open/floor/circuit/green/off,
+/area/centcom/ctf)
+"Bw" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 10
+	},
+/obj/structure/bookcase/random{
+	resistance_flags = 64
+	},
+/turf/open/floor/carpet/blue,
+/area/centcom/ctf)
+"Bx" = (
+/obj/machinery/door/airlock/wood{
+	resistance_flags = 64
+	},
+/obj/structure/trap/ctf/blue,
+/turf/open/floor/carpet/red,
+/area/centcom/ctf)
+"BK" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/cult,
+/area/centcom/ctf)
+"Cf" = (
+/obj/effect/turf_decal/siding/blue/corner{
+	dir = 8
+	},
+/turf/open/floor/carpet/blue,
+/area/centcom/ctf)
+"Ch" = (
+/obj/effect/turf_decal/tile/yellow,
+/turf/open/floor/cult,
+/area/centcom/ctf)
+"Cn" = (
+/obj/effect/portal/permanent{
+	icon_state = "portal1";
+	id = "door16"
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/ctf)
+"CV" = (
+/obj/structure/toilet{
+	dir = 4
+	},
+/turf/open/floor/iron/freezer,
+/area/centcom/ctf)
+"Df" = (
+/obj/effect/turf_decal/siding/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/yellow/corner,
+/turf/open/floor/carpet/orange,
+/area/centcom/ctf)
+"Dp" = (
+/obj/machinery/door/airlock/wood{
+	resistance_flags = 64
+	},
+/turf/open/floor/iron/freezer,
+/area/centcom/ctf)
+"Ea" = (
+/obj/effect/turf_decal/siding/yellow{
+	dir = 8
+	},
+/turf/open/floor/carpet/orange,
+/area/centcom/ctf)
+"Em" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/blue/corner{
+	dir = 1
+	},
+/turf/open/floor/carpet/blue,
+/area/centcom/ctf)
+"Eq" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/turf/open/floor/cult,
+/area/centcom/ctf)
+"Ez" = (
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/turf/open/floor/cult,
+/area/centcom/ctf)
+"EE" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/red{
+	dir = 4
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/ctf)
+"EY" = (
+/obj/effect/turf_decal/siding/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/yellow{
+	dir = 8
+	},
+/turf/open/floor/carpet/orange,
+/area/centcom/ctf)
+"Fo" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/cult,
+/area/centcom/ctf)
+"FH" = (
+/obj/effect/turf_decal/siding/blue/corner{
+	dir = 1
+	},
+/turf/open/floor/carpet/blue,
+/area/centcom/ctf)
+"Ga" = (
+/obj/structure/barricade/security/ctf,
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/turf/open/floor/cult,
+/area/centcom/ctf)
+"GC" = (
+/obj/effect/turf_decal/siding/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/yellow/corner{
+	dir = 8
+	},
+/turf/open/floor/carpet/orange,
+/area/centcom/ctf)
+"GZ" = (
+/obj/effect/portal/permanent{
+	icon_state = "portal1";
+	id = "door11"
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/ctf)
+"Ha" = (
+/obj/effect/turf_decal/siding/yellow,
+/turf/open/floor/carpet/orange,
+/area/centcom/ctf)
+"Hn" = (
+/obj/effect/turf_decal/siding/yellow/corner{
+	dir = 8
+	},
+/turf/open/floor/carpet/orange,
+/area/centcom/ctf)
+"Ho" = (
+/obj/effect/turf_decal/siding/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/yellow/corner{
+	dir = 8
+	},
+/obj/structure/bookcase/random{
+	resistance_flags = 64
+	},
+/turf/open/floor/carpet/orange,
+/area/centcom/ctf)
+"Hs" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 8
+	},
+/turf/open/floor/carpet/blue,
+/area/centcom/ctf)
+"HK" = (
+/obj/structure/ladder/unbreakable/rune{
+	color = "#ffff00";
+	height = 1;
+	id = "yellow_team"
+	},
+/turf/open/floor/carpet/orange,
+/area/centcom/ctf)
+"HU" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/cult,
+/area/centcom/ctf)
+"Ia" = (
+/turf/open/floor/carpet/orange,
+/area/centcom/ctf)
+"Is" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 6
+	},
+/obj/structure/bookcase/random{
+	resistance_flags = 64
+	},
+/turf/open/floor/carpet/blue,
+/area/centcom/ctf)
+"Iu" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/red{
+	dir = 4
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/ctf)
+"IF" = (
+/obj/effect/turf_decal/siding/yellow{
+	dir = 9
+	},
+/turf/open/floor/carpet/orange,
+/area/centcom/ctf)
+"KY" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/cult,
+/area/centcom/ctf)
+"Ly" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/turf/open/floor/cult,
+/area/centcom/ctf)
+"LC" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/cult,
+/area/centcom/ctf)
+"LX" = (
+/obj/machinery/capture_the_flag/yellow,
+/turf/open/floor/circuit/green/off,
+/area/centcom/ctf)
+"Mc" = (
+/obj/effect/portal/permanent{
+	icon_state = "portal1";
+	id = "door12"
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/ctf)
+"Mr" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/red{
+	dir = 8
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/ctf)
+"My" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/ctf)
+"MB" = (
+/obj/machinery/door/airlock/wood{
+	resistance_flags = 64
+	},
+/obj/structure/trap/ctf/yellow,
+/turf/open/floor/carpet/red,
+/area/centcom/ctf)
+"ME" = (
+/obj/effect/turf_decal/siding/blue,
+/obj/effect/turf_decal/siding/blue/corner{
+	dir = 1
+	},
+/obj/structure/bookcase/random{
+	resistance_flags = 64
+	},
+/turf/open/floor/carpet/blue,
+/area/centcom/ctf)
+"Nd" = (
+/obj/effect/turf_decal/siding/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/yellow/corner{
+	dir = 1
+	},
+/turf/open/floor/carpet/orange,
+/area/centcom/ctf)
+"Nh" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 5
+	},
+/turf/open/floor/carpet/blue,
+/area/centcom/ctf)
+"Np" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/red{
+	dir = 1
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/ctf)
+"Nw" = (
+/turf/open/lava,
+/area/centcom/ctf)
+"NQ" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/blue/corner{
+	dir = 4
+	},
+/turf/open/floor/carpet/blue,
+/area/centcom/ctf)
+"Oq" = (
+/obj/structure/trap/ctf/blue,
+/turf/open/floor/carpet/blue,
+/area/centcom/ctf)
+"OD" = (
+/obj/structure/barricade/security/ctf,
+/turf/open/floor/wood,
+/area/centcom/ctf)
+"OF" = (
+/obj/effect/turf_decal/siding/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/yellow{
+	dir = 4
+	},
+/turf/open/floor/carpet/orange,
+/area/centcom/ctf)
+"Pi" = (
+/obj/effect/portal/permanent{
+	icon_state = "portal1";
+	id = "door2"
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/ctf)
+"Pp" = (
+/obj/effect/turf_decal/siding/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/yellow,
+/obj/structure/showcase/wizard,
+/turf/open/floor/carpet/orange,
+/area/centcom/ctf)
+"PO" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red,
+/turf/open/floor/cult,
+/area/centcom/ctf)
+"QJ" = (
+/obj/effect/turf_decal/siding/blue,
+/obj/effect/turf_decal/siding/blue{
+	dir = 1
+	},
+/obj/structure/showcase/wizard,
+/turf/open/floor/carpet/blue,
+/area/centcom/ctf)
+"QY" = (
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/carpet/red,
+/area/centcom/ctf)
+"Rg" = (
+/obj/effect/turf_decal/siding/yellow{
+	dir = 4
+	},
+/turf/open/floor/carpet/orange,
+/area/centcom/ctf)
+"Rm" = (
+/turf/open/floor/carpet/blue,
+/area/centcom/ctf)
+"RI" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow,
+/turf/open/floor/cult,
+/area/centcom/ctf)
+"Sh" = (
+/obj/structure/trap/ctf/yellow,
+/obj/effect/turf_decal/siding/yellow{
+	dir = 8
+	},
+/turf/open/floor/carpet/orange,
+/area/centcom/ctf)
+"SB" = (
+/obj/structure/toilet{
+	dir = 8
+	},
+/turf/open/floor/iron/freezer,
+/area/centcom/ctf)
+"SL" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 9
+	},
+/turf/open/floor/carpet/blue,
+/area/centcom/ctf)
+"Tw" = (
+/turf/open/floor/cult,
+/area/centcom/ctf)
+"TK" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 6
+	},
+/turf/open/floor/carpet/blue,
+/area/centcom/ctf)
+"TN" = (
+/obj/structure/ladder/unbreakable/rune{
+	color = "#ffff00";
+	id = "yellow_team"
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/ctf)
+"Ul" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/blue/corner,
+/turf/open/floor/carpet/blue,
+/area/centcom/ctf)
+"Uy" = (
+/obj/effect/turf_decal/tile/green,
+/turf/open/floor/cult,
+/area/centcom/ctf)
+"UN" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/table/wood{
+	resistance_flags = 64
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/ctf)
+"US" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/red{
+	dir = 8
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/ctf)
+"Vd" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/ctf)
+"Vz" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/turf/open/floor/cult,
+/area/centcom/ctf)
+"VE" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 4
+	},
+/turf/open/floor/carpet/blue,
+/area/centcom/ctf)
+"WG" = (
+/obj/effect/turf_decal/siding/yellow/corner,
+/turf/open/floor/carpet/orange,
+/area/centcom/ctf)
+"Xl" = (
+/turf/closed/indestructible/riveted/uranium,
+/area/centcom/ctf)
+"Yl" = (
+/obj/effect/portal/permanent{
+	icon_state = "portal1";
+	id = "door14"
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/ctf)
+"Yq" = (
+/obj/effect/turf_decal/siding/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/yellow/corner{
+	dir = 4
+	},
+/turf/open/floor/carpet/orange,
+/area/centcom/ctf)
+"YT" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/cult,
+/area/centcom/ctf)
+"Zi" = (
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/cult,
+/area/centcom/ctf)
+"Zr" = (
+/obj/effect/turf_decal/siding/yellow{
+	dir = 9
+	},
+/obj/structure/bookcase/random{
+	resistance_flags = 64
+	},
+/turf/open/floor/carpet/orange,
+/area/centcom/ctf)
+"ZT" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/turf/open/floor/cult,
+/area/centcom/ctf)
+
+(1,1,1) = {"
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+yo
+yo
+yo
+uh
+uh
+uh
+yo
+yo
+yo
+yo
+yo
+yo
+yo
+yo
+yo
+uh
+uh
+uh
+uh
+Xl
+Xl
+Xl
+Xl
+Xl
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+yo
+yo
+yo
+yo
+yo
+yo
+yo
+yo
+yo
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+"}
+(2,1,1) = {"
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+yo
+CV
+yo
+uh
+uh
+uh
+yo
+Mc
+yo
+yo
+aM
+yo
+yo
+wS
+yo
+uh
+uh
+uh
+uh
+Xl
+aG
+nP
+gJ
+Xl
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+yo
+is
+yo
+yo
+yD
+yo
+yo
+pF
+yo
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+"}
+(3,1,1) = {"
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+yo
+yo
+Dp
+yo
+yo
+yo
+yo
+yo
+kW
+yo
+yo
+kW
+yo
+yo
+kW
+yo
+yo
+yo
+yo
+yo
+Xl
+Tw
+Tw
+Tw
+Xl
+Xl
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+yo
+kW
+yo
+yo
+kW
+yo
+yo
+kW
+yo
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+"}
+(4,1,1) = {"
+Xl
+Xl
+Xl
+Xl
+Xl
+uh
+uh
+uh
+uh
+yo
+yo
+qd
+qd
+qd
+qd
+UN
+UN
+qd
+qd
+qd
+qd
+qd
+UN
+UN
+qd
+qd
+qd
+qd
+vw
+Tw
+Tw
+Tw
+mP
+Tw
+Tw
+Xl
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+yo
+yo
+yo
+bH
+qd
+qd
+qd
+qd
+qd
+vK
+yo
+yo
+yo
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+"}
+(5,1,1) = {"
+Xl
+SL
+Hs
+oT
+Xl
+uh
+uh
+yo
+yo
+yo
+QY
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+nB
+Tw
+Tw
+mP
+mP
+mP
+Tw
+Xl
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+yo
+Pi
+kW
+QY
+OD
+OD
+pz
+OD
+OD
+wg
+kW
+aU
+yo
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+"}
+(6,1,1) = {"
+Xl
+jz
+cV
+wu
+Xl
+uh
+uh
+yo
+AD
+Bx
+QY
+pz
+in
+My
+My
+My
+My
+My
+My
+qs
+qs
+My
+My
+My
+My
+My
+qs
+qs
+qH
+Tw
+Tw
+Tw
+mP
+Tw
+Tw
+Xl
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+yo
+yo
+yo
+tm
+My
+My
+My
+My
+My
+hl
+yo
+yo
+yo
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+"}
+(7,1,1) = {"
+Xl
+jz
+Rm
+wu
+Xl
+uh
+uh
+yo
+yo
+yo
+QY
+pz
+wg
+yo
+yo
+yo
+yo
+yo
+kW
+yo
+yo
+kW
+yo
+yo
+kW
+yo
+yo
+yo
+yo
+yo
+Xl
+Tw
+Tw
+Tw
+hB
+hB
+hB
+hB
+hB
+hB
+hB
+hB
+hB
+hB
+uh
+yo
+kW
+yo
+yo
+kW
+yo
+yo
+kW
+yo
+uh
+Xl
+Xl
+Xl
+Xl
+Xl
+Xl
+Xl
+Xl
+Xl
+uh
+"}
+(8,1,1) = {"
+Xl
+jz
+Rm
+wu
+Xl
+uh
+uh
+yo
+yo
+yo
+QY
+pz
+wg
+yo
+yo
+yo
+uh
+yo
+GZ
+yo
+yo
+Yl
+yo
+yo
+Cn
+yo
+uh
+uh
+uh
+Xl
+Xl
+Tw
+Tw
+Tw
+Tw
+BK
+Nw
+Nw
+Nw
+Nw
+Nw
+Nw
+Nw
+hB
+uh
+yo
+rZ
+yo
+yo
+pX
+yo
+yo
+jK
+yo
+uh
+Xl
+Zr
+Df
+OF
+Yq
+Ea
+Ea
+mG
+Xl
+Xl
+"}
+(9,1,1) = {"
+Xl
+jz
+Rm
+wu
+Xl
+uh
+uh
+yo
+Bj
+kW
+QY
+pz
+wg
+kW
+qc
+yo
+uh
+yo
+yo
+yo
+yo
+yo
+yo
+yo
+yo
+yo
+uh
+uh
+uh
+Xl
+Tw
+Tw
+mP
+Tw
+KY
+BK
+fK
+fK
+fK
+fK
+fK
+fK
+Nw
+hB
+uh
+yo
+yo
+yo
+yo
+yo
+yo
+yo
+yo
+yo
+uh
+Xl
+pi
+tS
+oL
+Bf
+pR
+Ia
+Hn
+mG
+Xl
+"}
+(10,1,1) = {"
+Xl
+jz
+Rm
+wu
+Xl
+uh
+uh
+yo
+yo
+yo
+QY
+pz
+wg
+yo
+yo
+yo
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+Xl
+Tw
+Tw
+Tw
+Tw
+Tw
+Ah
+Nw
+Nw
+Nw
+Nw
+Nw
+fK
+Nw
+hB
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+Xl
+Pp
+oL
+LX
+oL
+eg
+Ia
+Ia
+Ha
+Xl
+"}
+(11,1,1) = {"
+Xl
+jz
+Rm
+wu
+Xl
+uh
+uh
+uh
+uh
+yo
+EE
+Iu
+rB
+yo
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+Xl
+Xl
+Tw
+Tw
+Xl
+Tw
+Tw
+hB
+hB
+hB
+hB
+hB
+Nw
+fK
+Nw
+hB
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+Xl
+Ho
+mG
+oL
+IF
+oK
+Ia
+Ia
+Ha
+Xl
+"}
+(12,1,1) = {"
+Xl
+jz
+Rm
+wu
+Xl
+uh
+uh
+uh
+uh
+yo
+ny
+ny
+ny
+yo
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+Xl
+Tw
+Tw
+Tw
+ef
+Tw
+Tw
+Tw
+Xl
+uh
+uh
+hB
+Nw
+fK
+Nw
+hB
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+Xl
+ng
+GC
+EY
+Nd
+pR
+Ia
+Ia
+Ha
+Xl
+"}
+(13,1,1) = {"
+Xl
+jz
+Rm
+wu
+Xl
+Xl
+Xl
+Xl
+Xl
+Xl
+ny
+ny
+ny
+Xl
+Xl
+Xl
+Xl
+Xl
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+Xl
+Tw
+Tw
+Tw
+ef
+Tw
+Tw
+Tw
+Xl
+uh
+uh
+hB
+Nw
+fK
+Nw
+hB
+uh
+uh
+uh
+Xl
+Xl
+Xl
+Xl
+Xl
+Xl
+Xl
+Xl
+Xl
+Xl
+Xl
+Xl
+Xl
+Bf
+pR
+Ia
+Ha
+Xl
+"}
+(14,1,1) = {"
+Xl
+jz
+Rm
+wu
+Xl
+Xl
+SL
+Hs
+wW
+ny
+ny
+ny
+ny
+Xl
+ny
+ny
+ny
+Xl
+Xl
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+Xl
+Tw
+Tw
+Xl
+Xl
+Xl
+Tw
+Tw
+Xl
+uh
+uh
+hB
+Nw
+fK
+Nw
+hB
+uh
+uh
+Xl
+Xl
+sl
+sl
+sl
+Xl
+sl
+sl
+sl
+sl
+Sh
+Ea
+mG
+Xl
+Xl
+eg
+Ia
+Ha
+Xl
+"}
+(15,1,1) = {"
+Xl
+jz
+Rm
+wu
+Xl
+SL
+FH
+Rm
+Oq
+ny
+ny
+ny
+ny
+Xl
+ny
+ny
+ny
+ny
+Xl
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+Xl
+Tw
+Tw
+Xl
+Xl
+Xl
+Tw
+Tw
+Xl
+uh
+uh
+hB
+Nw
+fK
+Nw
+hB
+uh
+uh
+Xl
+sl
+sl
+sl
+sl
+Xl
+sl
+sl
+sl
+sl
+bk
+Ia
+Hn
+mG
+Xl
+eg
+Ia
+Ha
+Xl
+"}
+(16,1,1) = {"
+Xl
+jz
+Rm
+wu
+Xl
+jz
+Rm
+om
+hW
+ny
+ny
+ny
+ny
+Xl
+ny
+ny
+ny
+ny
+Xl
+Xl
+Xl
+Xl
+Xl
+Xl
+Xl
+Xl
+Xl
+Xl
+Xl
+Tw
+Uy
+st
+cu
+st
+Eq
+Tw
+Xl
+Xl
+Xl
+hB
+fs
+fs
+fs
+hB
+Xl
+Xl
+Xl
+sl
+sl
+sl
+sl
+Xl
+sl
+sl
+sl
+sl
+xw
+pR
+Ia
+Ha
+Xl
+eg
+Ia
+Ha
+Xl
+"}
+(17,1,1) = {"
+Xl
+jz
+Rm
+wu
+Xl
+jz
+pb
+wu
+Xl
+ny
+ny
+ny
+ny
+Xl
+ny
+ny
+ny
+ny
+Ez
+Ez
+Ez
+LC
+Tw
+Tw
+Tw
+Tw
+Tw
+Xl
+Tw
+Uy
+Zi
+Bl
+Bl
+Bl
+lt
+Eq
+Tw
+Xl
+Tw
+Tw
+Tw
+wE
+Tw
+Ch
+RI
+RI
+RI
+sl
+sl
+sl
+sl
+Xl
+sl
+sl
+sl
+sl
+Xl
+eg
+gq
+Ha
+Xl
+eg
+Ia
+Ha
+Xl
+"}
+(18,1,1) = {"
+Xl
+jz
+Rm
+wu
+Xl
+jz
+pb
+wu
+Xl
+ny
+ny
+ny
+Xl
+Xl
+ny
+ny
+ny
+ny
+Ez
+Ez
+Ez
+ZT
+Tw
+Tw
+Tw
+Tw
+Tw
+Xl
+Uy
+Zi
+oL
+oL
+wy
+oL
+oL
+lt
+Eq
+Xl
+Tw
+Tw
+Tw
+Tw
+Tw
+HU
+sl
+sl
+sl
+sl
+sl
+sl
+sl
+Xl
+Xl
+sl
+sl
+sl
+Xl
+eg
+gq
+Ha
+Xl
+eg
+Ia
+Ha
+Xl
+"}
+(19,1,1) = {"
+Xl
+jz
+Rm
+Cf
+Hs
+FH
+pb
+wu
+Xl
+ny
+ny
+ny
+ny
+ny
+ny
+ep
+ny
+ny
+Xl
+ef
+ef
+ef
+ef
+Xl
+Tw
+mP
+Tw
+Tw
+iv
+Bl
+oL
+oL
+oL
+oL
+oL
+Bl
+Ly
+Tw
+Tw
+mP
+Tw
+Xl
+ef
+ef
+ef
+ef
+Xl
+sl
+sl
+Ga
+sl
+sl
+sl
+sl
+sl
+sl
+Xl
+eg
+gq
+Hn
+Ea
+oK
+Ia
+Ha
+Xl
+"}
+(20,1,1) = {"
+Xl
+jz
+Rm
+Rm
+Rm
+Rm
+Rm
+wu
+Xl
+ny
+ny
+ny
+ny
+ny
+ep
+ep
+ep
+ny
+Xl
+uh
+uh
+uh
+uh
+Xl
+Tw
+mP
+Tw
+Tw
+cu
+Bl
+wy
+oL
+oy
+oL
+wy
+Bl
+cu
+Tw
+Tw
+mP
+Tw
+Xl
+uh
+uh
+uh
+uh
+Xl
+sl
+Ga
+Ga
+Ga
+sl
+sl
+sl
+sl
+sl
+Xl
+eg
+Ia
+Ia
+Ia
+Ia
+Ia
+Ha
+Xl
+"}
+(21,1,1) = {"
+Xl
+jz
+Rm
+om
+VE
+ai
+pb
+wu
+Xl
+ny
+ny
+ny
+ny
+ny
+ny
+ep
+ny
+ny
+Xl
+ef
+ef
+ef
+ef
+Xl
+Tw
+mP
+Tw
+Tw
+iv
+Bl
+oL
+oL
+oL
+oL
+oL
+Bl
+Ly
+Tw
+Tw
+mP
+Tw
+Xl
+ef
+ef
+ef
+ef
+Xl
+sl
+sl
+Ga
+sl
+sl
+sl
+sl
+sl
+sl
+Xl
+eg
+gq
+WG
+Rg
+pR
+Ia
+Ha
+Xl
+"}
+(22,1,1) = {"
+Xl
+jz
+Rm
+wu
+Xl
+jz
+pb
+wu
+Xl
+ny
+ny
+ny
+Xl
+Xl
+ny
+ny
+ny
+ny
+Ez
+Ez
+Ez
+LC
+Tw
+Tw
+Tw
+Tw
+Tw
+Xl
+ce
+iN
+oL
+oL
+wy
+oL
+oL
+pD
+Vz
+Xl
+Tw
+Tw
+Tw
+Tw
+Tw
+Ch
+sl
+sl
+sl
+sl
+sl
+sl
+sl
+Xl
+Xl
+sl
+sl
+sl
+Xl
+eg
+gq
+Ha
+Xl
+eg
+Ia
+Ha
+Xl
+"}
+(23,1,1) = {"
+Xl
+jz
+Rm
+wu
+Xl
+jz
+pb
+wu
+Xl
+ny
+ny
+ny
+ny
+Xl
+ny
+ny
+ny
+ny
+Ez
+Ez
+Ez
+ZT
+Tw
+PO
+Tw
+Tw
+Tw
+Xl
+Tw
+ce
+iN
+Bl
+Bl
+Bl
+pD
+Vz
+Tw
+Xl
+Tw
+Tw
+Tw
+Tw
+Tw
+HU
+xC
+xC
+xC
+sl
+sl
+sl
+sl
+Xl
+sl
+sl
+sl
+sl
+Xl
+eg
+gq
+Ha
+Xl
+eg
+Ia
+Ha
+Xl
+"}
+(24,1,1) = {"
+Xl
+jz
+Rm
+wu
+Xl
+jz
+Rm
+Cf
+wW
+ny
+ny
+ny
+ny
+Xl
+ny
+ny
+ny
+ny
+Xl
+Xl
+Xl
+hB
+BK
+BK
+BK
+hB
+Xl
+Xl
+Xl
+Tw
+ce
+Fo
+cu
+Fo
+Vz
+Tw
+Xl
+Xl
+Xl
+Xl
+Xl
+Xl
+Xl
+Xl
+Xl
+Xl
+Xl
+sl
+sl
+sl
+sl
+Xl
+sl
+sl
+sl
+sl
+Sh
+oK
+Ia
+Ha
+Xl
+eg
+Ia
+Ha
+Xl
+"}
+(25,1,1) = {"
+Xl
+jz
+Rm
+wu
+Xl
+Nh
+ai
+Rm
+Oq
+ny
+ny
+ny
+ny
+Xl
+ny
+ny
+ny
+ny
+Xl
+uh
+uh
+hB
+Nw
+BK
+Nw
+hB
+uh
+uh
+Xl
+Tw
+Tw
+Xl
+Xl
+Xl
+Tw
+Tw
+Xl
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+Xl
+sl
+sl
+sl
+sl
+Xl
+sl
+sl
+sl
+sl
+bk
+Ia
+WG
+tS
+Xl
+eg
+Ia
+Ha
+Xl
+"}
+(26,1,1) = {"
+Xl
+jz
+Rm
+wu
+Xl
+Xl
+Nh
+VE
+hW
+ny
+ny
+ny
+ny
+Xl
+ny
+ny
+ny
+Xl
+Xl
+uh
+uh
+hB
+Nw
+BK
+Nw
+hB
+uh
+uh
+Xl
+Tw
+Tw
+Xl
+Xl
+Xl
+Tw
+Tw
+Xl
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+Xl
+Xl
+sl
+sl
+sl
+Xl
+sl
+sl
+sl
+sl
+xw
+Rg
+tS
+Xl
+Xl
+eg
+Ia
+Ha
+Xl
+"}
+(27,1,1) = {"
+Xl
+jz
+Rm
+Cf
+oT
+Xl
+Xl
+Xl
+Xl
+Xl
+Xl
+Xl
+Xl
+Xl
+Xl
+Xl
+Xl
+Xl
+uh
+uh
+uh
+hB
+Nw
+BK
+Nw
+hB
+uh
+uh
+Xl
+Tw
+Tw
+Tw
+ef
+Tw
+Tw
+Tw
+Xl
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+Xl
+Xl
+Xl
+Xl
+Xl
+sl
+sl
+sl
+Xl
+Xl
+Xl
+Xl
+Xl
+Xl
+eg
+Ia
+Ha
+Xl
+"}
+(28,1,1) = {"
+Xl
+jz
+Rm
+Rm
+Cf
+Ul
+yL
+NQ
+Bw
+Xl
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+hB
+Nw
+BK
+Nw
+hB
+uh
+uh
+Xl
+Tw
+Tw
+Tw
+ef
+Tw
+Tw
+Tw
+Xl
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+yo
+sl
+sl
+sl
+yo
+uh
+uh
+uh
+uh
+Xl
+eg
+Ia
+Ha
+Xl
+"}
+(29,1,1) = {"
+Xl
+jz
+Rm
+Rm
+om
+TK
+oL
+Nh
+od
+Xl
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+hB
+Nw
+BK
+Nw
+hB
+hB
+hB
+hB
+hB
+Tw
+Tw
+Xl
+Tw
+Tw
+Xl
+Xl
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+yo
+zH
+Mr
+US
+yo
+uh
+uh
+uh
+uh
+Xl
+eg
+Ia
+Ha
+Xl
+"}
+(30,1,1) = {"
+Xl
+jz
+Rm
+Rm
+wu
+oL
+rm
+oL
+QJ
+Xl
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+hB
+Nw
+BK
+Nw
+Nw
+Nw
+Nw
+Nw
+BK
+Tw
+Tw
+Tw
+Tw
+Tw
+Xl
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+yo
+yo
+yo
+QY
+pz
+wg
+yo
+yo
+yo
+uh
+uh
+Xl
+eg
+Ia
+Ha
+Xl
+"}
+(31,1,1) = {"
+Xl
+Nh
+ai
+Rm
+Cf
+oT
+oL
+SL
+ME
+Xl
+uh
+yo
+yo
+yo
+yo
+yo
+yo
+yo
+yo
+yo
+uh
+hB
+Nw
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+YT
+Tw
+mP
+Tw
+Tw
+Xl
+uh
+uh
+uh
+yo
+yo
+yo
+yo
+yo
+yo
+yo
+yo
+yo
+uh
+yo
+aU
+kW
+QY
+pz
+wg
+kW
+Pi
+yo
+uh
+uh
+Xl
+eg
+Ia
+Ha
+Xl
+"}
+(32,1,1) = {"
+Xl
+Xl
+Nh
+VE
+VE
+bv
+yL
+Em
+Is
+Xl
+uh
+yo
+GZ
+yo
+yo
+Yl
+yo
+yo
+Cn
+yo
+uh
+hB
+Nw
+Nw
+Nw
+Nw
+Nw
+Nw
+Nw
+BK
+Tw
+Tw
+Tw
+Tw
+Xl
+Xl
+uh
+uh
+uh
+yo
+rZ
+yo
+yo
+pX
+yo
+yo
+jK
+yo
+uh
+yo
+yo
+yo
+QY
+pz
+wg
+yo
+yo
+yo
+uh
+uh
+Xl
+eg
+Ia
+Ha
+Xl
+"}
+(33,1,1) = {"
+uh
+Xl
+Xl
+Xl
+Xl
+Xl
+Xl
+Xl
+Xl
+Xl
+uh
+yo
+kW
+yo
+yo
+kW
+yo
+yo
+kW
+yo
+uh
+hB
+hB
+hB
+hB
+hB
+hB
+hB
+hB
+hB
+hB
+Tw
+Tw
+Tw
+Xl
+yo
+yo
+yo
+yo
+yo
+kW
+yo
+yo
+kW
+yo
+yo
+kW
+yo
+yo
+yo
+yo
+yo
+QY
+pz
+wg
+yo
+yo
+yo
+uh
+uh
+Xl
+eg
+Ia
+Ha
+Xl
+"}
+(34,1,1) = {"
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+yo
+yo
+yo
+bH
+qd
+qd
+qd
+qd
+qd
+vK
+yo
+yo
+yo
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+Xl
+Tw
+Tw
+mP
+Tw
+Tw
+Tw
+fH
+UN
+UN
+qd
+qd
+qd
+qd
+qd
+UN
+UN
+qd
+qd
+qd
+qd
+qd
+qd
+Vd
+pz
+wg
+MB
+TN
+yo
+uh
+uh
+Xl
+eg
+HK
+Ha
+Xl
+"}
+(35,1,1) = {"
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+yo
+qc
+kW
+QY
+OD
+OD
+pz
+OD
+OD
+wg
+kW
+Bj
+yo
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+Xl
+Tw
+mP
+mP
+mP
+Tw
+Tw
+Np
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+wg
+yo
+yo
+yo
+uh
+uh
+Xl
+Bf
+Rg
+tS
+Xl
+"}
+(36,1,1) = {"
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+yo
+yo
+yo
+tm
+My
+My
+My
+My
+My
+hl
+yo
+yo
+yo
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+Xl
+Tw
+Tw
+mP
+Tw
+Tw
+Tw
+nQ
+My
+My
+My
+My
+qs
+qs
+My
+My
+My
+My
+My
+qs
+qs
+My
+My
+My
+My
+yo
+yo
+uh
+uh
+uh
+uh
+Xl
+Xl
+Xl
+Xl
+Xl
+"}
+(37,1,1) = {"
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+yo
+kW
+yo
+yo
+kW
+yo
+yo
+kW
+yo
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+Xl
+Xl
+Tw
+Tw
+Tw
+Xl
+yo
+yo
+yo
+yo
+yo
+kW
+yo
+yo
+kW
+yo
+yo
+kW
+yo
+yo
+yo
+yo
+yo
+Dp
+yo
+yo
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+"}
+(38,1,1) = {"
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+yo
+Mc
+yo
+yo
+aM
+yo
+yo
+wS
+yo
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+Xl
+aG
+nP
+gJ
+Xl
+uh
+uh
+uh
+uh
+yo
+is
+yo
+yo
+yD
+yo
+yo
+pF
+yo
+uh
+uh
+uh
+yo
+SB
+yo
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+"}
+(39,1,1) = {"
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+yo
+yo
+yo
+yo
+yo
+yo
+yo
+yo
+yo
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+Xl
+Xl
+Xl
+Xl
+Xl
+uh
+uh
+uh
+uh
+yo
+yo
+yo
+yo
+yo
+yo
+yo
+yo
+yo
+uh
+uh
+uh
+yo
+yo
+yo
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+uh
+"}

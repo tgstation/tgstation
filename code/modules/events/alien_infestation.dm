@@ -6,6 +6,8 @@
 	min_players = 10
 
 	dynamic_should_hijack = TRUE
+	category = EVENT_CATEGORY_ENTITIES
+	description = "A xenomorph larva spawns on a random vent."
 
 /datum/round_event_control/alien_infestation/canSpawnEvent()
 	. = ..()
@@ -17,7 +19,7 @@
 			return FALSE
 
 /datum/round_event/ghost_role/alien_infestation
-	announceWhen = 400
+	announce_when = 400
 
 	minimum_required = 1
 	role_name = "alien larva"
@@ -28,7 +30,7 @@
 
 
 /datum/round_event/ghost_role/alien_infestation/setup()
-	announceWhen = rand(announceWhen, announceWhen + 50)
+	announce_when = rand(announce_when, announce_when + 50)
 	if(prob(50))
 		spawncount++
 
@@ -53,28 +55,28 @@
 				continue//no parent vent
 			//Stops Aliens getting stuck in small networks.
 			//See: Security, Virology
-			if(temp_vent_parent.other_atmosmch.len > 20)
+			if(temp_vent_parent.other_atmos_machines.len > 20)
 				vents += temp_vent
 
 	if(!vents.len)
 		message_admins("An event attempted to spawn an alien but no suitable vents were found. Shutting down.")
 		return MAP_ERROR
 
-	var/list/candidates = get_candidates(ROLE_ALIEN, null, ROLE_ALIEN)
+	var/list/candidates = get_candidates(ROLE_ALIEN, ROLE_ALIEN)
 
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
 
 	while(spawncount > 0 && vents.len && candidates.len)
 		var/obj/vent = pick_n_take(vents)
-		var/client/C = pick_n_take(candidates)
-
+		var/mob/dead/observer/selected = pick_n_take(candidates)
 		var/mob/living/carbon/alien/larva/new_xeno = new(vent.loc)
-		new_xeno.key = C.key
+		new_xeno.key = selected.key
+		new_xeno.move_into_vent(vent)
 
 		spawncount--
 		message_admins("[ADMIN_LOOKUPFLW(new_xeno)] has been made into an alien by an event.")
-		log_game("[key_name(new_xeno)] was spawned as an alien by an event.")
+		new_xeno.log_message("was spawned as an alien by an event.", LOG_GAME)
 		spawned_mobs += new_xeno
 
 	return SUCCESSFUL_SPAWN

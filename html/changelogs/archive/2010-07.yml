@@ -1,0 +1,34 @@
+2010-07-06:
+  /tg/station ss13 team:
+  - unknown: Prayer command added.
+  - unknown: State Laws command for AI added.
+  - unknown: Disabled Lockdown command for AI. Too server heavy.
+  - unknown: Crew manifest and various station databases should properly update when
+      late arrivals join the game, now.
+  - unknown: Quartermasters will receive 10 points every five minutes. This will probably
+      be nerfed heavily, but we'll give it a shot anyhow.
+  - unknown: Fixed a bug with doors/airlocks. (Thanks Mport2004)
+2010-07-09:
+  /tg/station ss13 team:
+  - unknown: Tweaked crate costs for Quartermaster.
+  - unknown: Increased metal available in Robotics.
+  - unknown: <b>Added department-specific headsets.</b> Engineering, Medical, Command,
+      and Security all receive special headsets capable of broadcasting on a standard
+      frequency PLUS a secure frequency only available to headsets of the same type.
+      Precede say messages with ":h" to use.
+2010-07-10:
+  /tg/station ss13 team:
+  - unknown: Examining a player will now tell you if their client has disconnected.
+  - unknown: Examining a brain will now tell you if it's owner is still connected
+      to the game.
+  - unknown: Alien Queens can make facehuggers. Facehuggers can make larva. Larva
+      can grow into xenos! Xenos can become queens! The circle of life~
+  - unknown: 'Some powernet bug fixes: Bad list and division by zero.'
+2010-07-13:
+  /tg/station ss13 team:
+  - unknown: <strong>Singularity Engine Added</strong> Oh God we're all going to die
+      (All credit on this one goes to Mport2004)
+  - unknown: '''Purge'' AI module added - purges ALL laws (except for law 0). Will
+      probably change this to a Syndicate only item'
+  - unknown: Cyborgs now spawn with a power cell. Should prevent stupid cyborg deaths
+      (and also pave the way for starting as a cyborg once more bugs are fixed)

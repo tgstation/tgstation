@@ -1,0 +1,100 @@
+2012-04-01:
+  PolymorphBlue:
+  - tweak: Minor bugfixes to borg deathsquad, adds borg deathsquad to potential tensioner
+      (set so high it's never going to happen)
+  - rscadd: Adds consiterable support for ERP!  (If enabled.)
+  - tweak: 'Increases cost for changeling unstun to 45 '
+2012-04-02:
+  PolymorphBlue:
+  - rscdel: ERP is gone. Hope you enjoyed it while it lasted!
+2012-04-08:
+  PolymorphBlue:
+  - rscadd: Secret little rooms now spawn on the mining asteroid, containing various
+      artifacts.
+  - rscadd: Added the beginnings of a borg upgrade system.  Currently, can be used
+      to reset a borg's module.
+2012-04-09:
+  Petethegoat:
+  - experiment: TORE OUT DETECTIVE WORK! THIS IS A TEMPORARY PATCH TO SEE IF THIS
+      FIXES THE CRASHING.
+  - experiment: DETECTIVE SCANNERS AND EVIDENCE BAGS (AND FINGERPRINTS) ARE GONE.
+2012-04-10:
+  Nodrak:
+  - tweak: Merged 'Game' and 'Lobby' tabs during pre-game into one tab
+  - rscadd: Added the little red x to the late-join job list
+  - rscadd: Late-joiners are warned if the shuttle is past the point of recall, and
+      if the shuttle has already left the station
+  - rscadd: Late-joiners now see how long the round has been going on.
+  - bugfix: Mining shuttle computer no longer spits out both 'Shuttle has been sent'
+      and 'The shuttle is already moving' every time.
+2012-04-11:
+  PolymorphBlue:
+  - tweak: Droppers are now used at the eyes, and thus, access to the eyes is required
+      to have an effect.
+2012-04-12:
+  Agouri:
+  - tweak: Fixed the ability to move while lying down/resting.
+  - tweak: Sleep has been fixed and works as intended again. Anaesthetic and toxins
+      can now properly put people to sleep, permanently if you keep the administration
+      stable. Sleeplocs are now viable again. The sleep button and *faint emote work
+      again.
+2012-04-13:
+  Petethegoat:
+  - tweak: Nerfed the librarian by removing the r-walls from his cubbyhole thing,
+      fuck WGW readers hiding out in there.
+2012-04-17:
+  Erro:
+  - tweak: Examining humans now works a bit differently. Some external suits and helmets
+      can hide certain pieces of clothing so you don't see them when examining. Glasses
+      are also now displayed when examining.
+  - tweak: The job selection screen has been changed a little to hopefully make making
+      changes there easier.
+2012-04-19:
+  Carn:
+  - bugfix: Rewrote the cinematic system to try and simplify and optimise it. Please
+      report any bugs asap to me or coderbus, thanks.
+2012-04-20:
+  Erro:
+  - rscadd: Added a verb to the PDA which you can use to remove an ID in it. If your
+      active hand is empy, it puts it there otherwise it puts it on the floor under
+      you.
+2012-04-21:
+  Errorage:
+  - bugfix: Maintenance door outside of tech storage now requires maintenance OR tech
+      storage access instead of maintenance AND robotics accesses.
+2012-04-22:
+  Cheridan:
+  - rscadd: 'CATCHING UP ON MY CHANGELOG. Some of this has been in for a while: -Added
+      carved pumpkins and corncob pipes. -Added mutations for ambrosia and lemon trees.
+      -Added more wood items for tower cap wood construction. -Added soil to plant
+      seeds in. Make it by crushing up sandstone. Soil does not have indicators like
+      trays do! Watch your plants carefully!'
+  - rscadd: '-The biogenerator is now more robust. It can dispense fertilizer in batches,
+      and make simple leather items. -RnD can create a new tool for botanists: The
+      floral somatoray. Has two modes. Use it on your plants to induce mutations or
+      boost yield.'
+  - rscadd: -Added plump helmet biscuits, mushroom soup, pumpkin pie and slices, chawanmushi,
+      and beet soup recipes for the chef to make.
+  - tweak: -Added transparency to biohelmets. -Normalized grass harvests. -Changed
+      the name of "Generic Weeds". -Blenders can now be filled directly from plant
+      bags. -Added low chance for a species mutation whenever a plant's stats mutate.
+      -You now get more descriptive messages when applying mutagen to plant trays.
+      -Removed sugarcane seeds from the vending machine. Added the sugarcane seeds
+      to the seeds crate.
+  Petethegoat:
+  - imageadd: New gasmask sprites. Removed emergency gasmasks, so there's only one
+      type now.
+  - imageadd: New shotgun sprites by Khodoque!
+  - rscadd: The barman's double-barrel actually works like a double-barrel instead
+      of a pump-action! Rejoice!
+  - wip: Sneaky barmen may be able to illegally modify their shotgun, if they so choose.
+  - tweak: Trimmed the changelog, vastly.
+2012-04-24:
+  Petethegoat:
+  - imageadd: Added Invisty's field generator sprites.
+2012-04-27:
+  Cheridan:
+  - imageadd: -New sprites for lemons, oranges, and walking mushroom critters. -Added
+      Invisty's new blob sprites.
+  - rscadd: '-Added a new chemical: lipozine, a weight loss drug. Made with sodium
+      chloride, ethanol, and radium.'

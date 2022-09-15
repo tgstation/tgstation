@@ -38,7 +38,7 @@
 	name = ".38 Rubber bullet"
 	damage = 10
 	stamina = 30
-	armour_penetration = -30
+	weak_against_armour = TRUE
 	ricochets_max = 6
 	ricochet_incidence_leeway = 0
 	ricochet_chance = 130
@@ -51,7 +51,7 @@
 /obj/projectile/bullet/c38/dumdum
 	name = ".38 DumDum bullet"
 	damage = 15
-	armour_penetration = -30
+	weak_against_armour = TRUE
 	ricochets_max = 0
 	sharpness = SHARP_EDGED
 	wound_bonus = 20
@@ -88,7 +88,7 @@
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
 		M.adjust_fire_stacks(6)
-		M.IgniteMob()
+		M.ignite_mob()
 
 /obj/projectile/bullet/c38/iceblox //see /obj/projectile/temp for the original code
 	name = ".38 Iceblox bullet"

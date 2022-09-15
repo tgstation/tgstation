@@ -42,9 +42,9 @@
 /obj/machinery/power/smes/examine(user)
 	. = ..()
 	if(!terminal)
-		. += "<span class='warning'>This SMES has no power terminal!</span>"
+		. += span_warning("This SMES has no power terminal!")
 
-/obj/machinery/power/smes/Initialize()
+/obj/machinery/power/smes/Initialize(mapload)
 	. = ..()
 	dir_loop:
 		for(var/d in GLOB.cardinals)
@@ -55,12 +55,13 @@
 					break dir_loop
 
 	if(!terminal)
-		obj_break()
+		atom_break()
 		return
 	terminal.master = src
 	update_appearance()
 
 /obj/machinery/power/smes/RefreshParts()
+	SHOULD_CALL_PARENT(FALSE)
 	var/IO = 0
 	var/MC = 0
 	var/C
@@ -92,10 +93,10 @@
 			if(term && term.dir == turn(dir, 180))
 				terminal = term
 				terminal.master = src
-				to_chat(user, "<span class='notice'>Terminal found.</span>")
+				to_chat(user, span_notice("Terminal found."))
 				break
 		if(!terminal)
-			to_chat(user, "<span class='alert'>No power terminal found.</span>")
+			to_chat(user, span_alert("No power terminal found."))
 			return
 		set_machine_stat(machine_stat & ~BROKEN)
 		update_appearance()
@@ -108,25 +109,25 @@
 			return
 
 		if(terminal) //is there already a terminal ?
-			to_chat(user, "<span class='warning'>This SMES already has a power terminal!</span>")
+			to_chat(user, span_warning("This SMES already has a power terminal!"))
 			return
 
 		if(!panel_open) //is the panel open ?
-			to_chat(user, "<span class='warning'>You must open the maintenance panel first!</span>")
+			to_chat(user, span_warning("You must open the maintenance panel first!"))
 			return
 
 		var/turf/T = get_turf(user)
-		if (T.intact) //is the floor plating removed ?
-			to_chat(user, "<span class='warning'>You must first remove the floor plating!</span>")
+		if (T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE) //can we get to the underfloor?
+			to_chat(user, span_warning("You must first remove the floor plating!"))
 			return
 
 
 		var/obj/item/stack/cable_coil/C = I
 		if(C.get_amount() < 10)
-			to_chat(user, "<span class='warning'>You need more wires!</span>")
+			to_chat(user, span_warning("You need more wires!"))
 			return
 
-		to_chat(user, "<span class='notice'>You start building the power terminal...</span>")
+		to_chat(user, span_notice("You start building the power terminal..."))
 		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 
 		if(do_after(user, 20, target = src))
@@ -138,8 +139,8 @@
 				return
 			if(!terminal)
 				C.use(10)
-				user.visible_message("<span class='notice'>[user.name] builds a power terminal.</span>",\
-					"<span class='notice'>You build the power terminal.</span>")
+				user.visible_message(span_notice("[user.name] builds a power terminal."),\
+					span_notice("You build the power terminal."))
 
 				//build the terminal and link it to the network
 				make_terminal(T)
@@ -150,9 +151,9 @@
 	//crowbarring it !
 	var/turf/T = get_turf(src)
 	if(default_deconstruction_crowbar(I))
-		message_admins("[src] has been deconstructed by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(T)]")
-		log_game("[src] has been deconstructed by [key_name(user)] at [AREACOORD(src)]")
-		investigate_log("SMES deconstructed by [key_name(user)] at [AREACOORD(src)]", INVESTIGATE_SINGULO)
+		message_admins("[src] has been deconstructed by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(T)].")
+		user.log_message("deconstructed [src]", LOG_GAME)
+		investigate_log("deconstructed by [key_name(user)] at [AREACOORD(src)].", INVESTIGATE_ENGINE)
 		return
 	else if(panel_open && I.tool_behaviour == TOOL_CROWBAR)
 		return
@@ -169,7 +170,7 @@
 
 /obj/machinery/power/smes/default_deconstruction_crowbar(obj/item/crowbar/C)
 	if(istype(C) && terminal)
-		to_chat(usr, "<span class='warning'>You must first remove the power terminal!</span>")
+		to_chat(usr, span_warning("You must first remove the power terminal!"))
 		return FALSE
 
 	return ..()
@@ -181,9 +182,9 @@
 /obj/machinery/power/smes/Destroy()
 	if(SSticker.IsRoundInProgress())
 		var/turf/T = get_turf(src)
-		message_admins("SMES deleted at [ADMIN_VERBOSEJMP(T)]")
-		log_game("SMES deleted at [AREACOORD(T)]")
-		investigate_log("<font color='red'>deleted</font> at [AREACOORD(T)]", INVESTIGATE_SINGULO)
+		message_admins("[src] deleted at [ADMIN_VERBOSEJMP(T)]")
+		log_game("[src] deleted at [AREACOORD(T)]")
+		investigate_log("deleted at [AREACOORD(T)]", INVESTIGATE_ENGINE)
 	if(terminal)
 		disconnect_terminal()
 	return ..()
@@ -200,7 +201,7 @@
 	if(terminal)
 		terminal.master = null
 		terminal = null
-		obj_break()
+		atom_break()
 
 
 /obj/machinery/power/smes/update_overlays()
@@ -265,7 +266,7 @@
 
 			if(output_used < 0.0001) // either from no charge or set to 0
 				outputting = FALSE
-				investigate_log("lost power and turned <font color='red'>off</font>", INVESTIGATE_SINGULO)
+				investigate_log("lost power and turned off", INVESTIGATE_ENGINE)
 		else if(output_attempt && charge > output_level && output_level > 0)
 			outputting = TRUE
 		else
@@ -323,13 +324,13 @@
 		"inputAttempt" = input_attempt,
 		"inputting" = inputting,
 		"inputLevel" = input_level,
-		"inputLevel_text" = DisplayPower(input_level),
+		"inputLevel_text" = display_power(input_level),
 		"inputLevelMax" = input_level_max,
 		"inputAvailable" = input_available,
 		"outputAttempt" = output_attempt,
 		"outputting" = outputting,
 		"outputLevel" = output_level,
-		"outputLevel_text" = DisplayPower(output_level),
+		"outputLevel_text" = display_power(output_level),
 		"outputLevelMax" = output_level_max,
 		"outputUsed" = output_used,
 	)
@@ -388,8 +389,7 @@
 				log_smes(usr)
 
 /obj/machinery/power/smes/proc/log_smes(mob/user)
-	investigate_log("input/output; [input_level>output_level?"<font color='green'>":"<font color='red'>"][input_level]/[output_level]</font> | Charge: [charge] | Output-mode: [output_attempt?"<font color='green'>on</font>":"<font color='red'>off</font>"] | Input-mode: [input_attempt?"<font color='green'>auto</font>":"<font color='red'>off</font>"] by [user ? key_name(user) : "outside forces"]", INVESTIGATE_SINGULO)
-
+	investigate_log("Input/Output: [input_level]/[output_level] | Charge: [charge] | Output-mode: [output_attempt?"ON":"OFF"] | Input-mode: [input_attempt?"AUTO":"OFF"] by [user ? key_name(user) : "outside forces"]", INVESTIGATE_ENGINE)
 
 /obj/machinery/power/smes/emp_act(severity)
 	. = ..()
@@ -408,7 +408,8 @@
 	log_smes()
 
 /obj/machinery/power/smes/engineering
-	charge = 1.5e6 // Engineering starts with some charge for singulo
+	charge = 2.5e6 // Engineering starts with some charge for singulo //sorry little one, singulo as engine is gone
+	output_level = 90000
 
 /obj/machinery/power/smes/magical
 	name = "magical power storage unit"

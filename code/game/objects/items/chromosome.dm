@@ -34,9 +34,13 @@
 		HM.power_coeff = power_coeff
 	if(HM.energy_coeff != -1)
 		HM.energy_coeff = energy_coeff
-	HM.can_chromosome = 2
+	HM.can_chromosome = CHROMOSOME_USED
 	HM.chromosome_name = name
-	HM.modify()
+
+	// Do the actual modification
+	if(HM.modify())
+		HM.modified = TRUE
+
 	qdel(src)
 
 /proc/generate_chromosome()
@@ -48,7 +52,7 @@
 			if(!initial(CM.weight))
 				break
 			chromosomes[A] = initial(CM.weight)
-	return pickweight(chromosomes)
+	return pick_weight(chromosomes)
 
 
 /obj/item/chromosome/stabilizer

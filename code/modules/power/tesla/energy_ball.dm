@@ -14,12 +14,13 @@
 /obj/energy_ball
 	name = "energy ball"
 	desc = "An energy ball."
-	icon = 'icons/obj/tesla_engine/energy_ball.dmi'
+	icon = 'icons/obj/engine/energy_ball.dmi'
 	icon_state = "energy_ball"
 	anchored = TRUE
 	appearance_flags = LONG_GLIDE
 	density = TRUE
-	layer = MASSIVE_OBJ_LAYER
+	plane = MASSIVE_OBJ_PLANE
+	plane = ABOVE_LIGHTING_PLANE
 	light_range = 6
 	move_resist = INFINITY
 	obj_flags = CAN_BE_HIT | DANGEROUS_POSSESSION
@@ -49,7 +50,7 @@
 
 		var/turf/spawned_turf = get_turf(src)
 		message_admins("A tesla has been created at [ADMIN_VERBOSEJMP(spawned_turf)].")
-		investigate_log("(tesla) was created at [AREACOORD(spawned_turf)].", INVESTIGATE_SINGULO)
+		investigate_log("was created at [AREACOORD(spawned_turf)].", INVESTIGATE_ENGINE)
 
 /obj/energy_ball/Destroy()
 	if(orbiting && istype(orbiting.parent, /obj/energy_ball))
@@ -162,8 +163,8 @@
 	if(!iscarbon(user))
 		return
 	var/mob/living/carbon/jedi = user
-	to_chat(jedi, "<span class='userdanger'>That was a shockingly dumb idea.</span>")
-	var/obj/item/organ/brain/rip_u = locate(/obj/item/organ/brain) in jedi.internal_organs
+	to_chat(jedi, span_userdanger("That was a shockingly dumb idea."))
+	var/obj/item/organ/internal/brain/rip_u = locate(/obj/item/organ/internal/brain) in jedi.internal_organs
 	jedi.ghostize(jedi)
 	if(rip_u)
 		qdel(rip_u)
@@ -191,7 +192,7 @@
 			return
 	if(!iscarbon(A))
 		return
-	for(var/obj/machinery/power/grounding_rod/GR in orange(src, 2))
+	for(var/obj/machinery/power/energy_accumulator/grounding_rod/GR in orange(src, 2))
 		if(GR.anchored)
 			return
 	var/mob/living/carbon/C = A
@@ -211,22 +212,30 @@
 	*/
 	var/atom/closest_atom
 	var/closest_type = 0
-	var/static/things_to_shock = typecacheof(list(/obj/machinery, /mob/living, /obj/structure, /obj/vehicle/ridden))
-	var/static/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
-										/obj/machinery/portable_atmospherics,
-										/obj/machinery/power/emitter,
-										/obj/machinery/field/generator,
-										/mob/living/simple_animal,
-										/obj/machinery/field/containment,
-										/obj/structure/disposalpipe,
-										/obj/structure/disposaloutlet,
-										/obj/machinery/disposal/delivery_chute,
-										/obj/machinery/camera,
-										/obj/structure/sign,
-										/obj/machinery/gateway,
-										/obj/structure/lattice,
-										/obj/structure/grille,
-										/obj/structure/frame/machine))
+	var/static/list/things_to_shock = zebra_typecacheof(list(
+		// Things that we want to shock.
+		/obj/machinery = TRUE,
+		/mob/living = TRUE,
+		/obj/structure = TRUE,
+		/obj/vehicle/ridden = TRUE,
+
+		// Things that we don't want to shock.
+		/obj/machinery/atmospherics = FALSE,
+		/obj/machinery/portable_atmospherics = FALSE,
+		/obj/machinery/power/emitter = FALSE,
+		/obj/machinery/field/generator = FALSE,
+		/obj/machinery/field/containment = FALSE,
+		/obj/machinery/camera = FALSE,
+		/obj/machinery/gateway = FALSE,
+		/mob/living/simple_animal = FALSE,
+		/obj/structure/disposalpipe = FALSE,
+		/obj/structure/disposaloutlet = FALSE,
+		/obj/machinery/disposal/delivery_chute = FALSE,
+		/obj/structure/sign = FALSE,
+		/obj/structure/lattice = FALSE,
+		/obj/structure/grille = FALSE,
+		/obj/structure/frame/machine = FALSE,
+	))
 
 	//Ok so we are making an assumption here. We assume that view() still calculates from the center out.
 	//This means that if we find an object we can assume it is the closest one of its type. This is somewhat of a speed increase.
@@ -234,10 +243,12 @@
 
 	//Darkness fucks oview up hard. I've tried dview() but it doesn't seem to work
 	//I hate existance
-	for(var/a in typecache_filter_multi_list_exclusion(oview(zap_range+2, source), things_to_shock, blacklisted_tesla_types))
+	for(var/a in typecache_filter_list(oview(zap_range+2, source), things_to_shock))
 		var/atom/A = a
 		if(!(zap_flags & ZAP_ALLOW_DUPLICATES) && LAZYACCESS(shocked_targets, A))
 			continue
+		// NOTE: these type checks are safe because CURRENTLY the range family of procs returns turfs in least to greatest distance order
+		// This is unspecified behavior tho, so if it ever starts acting up just remove these optimizations and include a distance check
 		if(closest_type >= BIKE)
 			break
 
@@ -252,8 +263,8 @@
 		else if(closest_type >= COIL)
 			continue //no need checking these other things
 
-		else if(istype(A, /obj/machinery/power/tesla_coil))
-			var/obj/machinery/power/tesla_coil/C = A
+		else if(istype(A, /obj/machinery/power/energy_accumulator/tesla_coil))
+			var/obj/machinery/power/energy_accumulator/tesla_coil/C = A
 			if(!(C.obj_flags & BEING_SHOCKED))
 				closest_type = COIL
 				closest_atom = C
@@ -261,7 +272,7 @@
 		else if(closest_type >= ROD)
 			continue
 
-		else if(istype(A, /obj/machinery/power/grounding_rod))
+		else if(istype(A, /obj/machinery/power/energy_accumulator/grounding_rod))
 			closest_type = ROD
 			closest_atom = A
 

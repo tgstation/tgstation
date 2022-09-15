@@ -10,12 +10,18 @@
 	name = null
 	icon = 'icons/obj/power.dmi'
 	anchored = TRUE
-	obj_flags = CAN_BE_HIT | ON_BLUEPRINTS
+	obj_flags = CAN_BE_HIT
 	var/datum/powernet/powernet = null
 	use_power = NO_POWER_USE
 	idle_power_usage = 0
 	active_power_usage = 0
 	var/machinery_layer = MACHINERY_LAYER_1 //cable layer to which the machine is connected
+
+/obj/machinery/power/Initialize(mapload)
+	. = ..()
+	if(isturf(loc))
+		var/turf/turf_loc = loc
+		turf_loc.add_blueprints_preround(src)
 
 /obj/machinery/power/Destroy()
 	disconnect_from_network()
@@ -79,27 +85,23 @@
 
 // returns true if the area has power on given channel (or doesn't require power).
 // defaults to power_channel
-/obj/machinery/proc/powered(chan = -1) // defaults to power_channel
+/obj/machinery/proc/powered(chan = power_channel, ignore_use_power = FALSE)
 	if(!loc)
 		return FALSE
-	if(!use_power)
+	if(!use_power && !ignore_use_power)
 		return TRUE
 
 	var/area/A = get_area(src) // make sure it's in an area
 	if(!A)
 		return FALSE // if not, then not powered
-	if(chan == -1)
-		chan = power_channel
+
 	return A.powered(chan) // return power status of the area
 
 // increment the power usage stats for an area
-/obj/machinery/proc/use_power(amount, chan = -1) // defaults to power_channel
+/obj/machinery/proc/use_power(amount, chan = power_channel)
+	amount = max(amount * machine_power_rectifier, 0) // make sure we don't use negative power
 	var/area/A = get_area(src) // make sure it's in an area
-	if(!A)
-		return
-	if(chan == -1)
-		chan = power_channel
-	A.use_power(amount, chan)
+	A?.use_power(amount, chan)
 
 /**
  * An alternative to 'use_power', this proc directly costs the APC in direct charge, as opposed to being calculated periodically.
@@ -110,7 +112,7 @@
 	var/obj/machinery/power/apc/local_apc
 	if(!A)
 		return FALSE
-	local_apc = A.get_apc()
+	local_apc = A.apc
 	if(!local_apc)
 		return FALSE
 	if(!local_apc.cell)
@@ -139,7 +141,7 @@
 	if(!home.requires_power)
 		return amount //Shuttles get free power, don't ask why
 
-	var/obj/machinery/power/apc/local_apc = home?.get_apc()
+	var/obj/machinery/power/apc/local_apc = home.apc
 	if(!local_apc)
 		return FALSE
 	var/surplus = local_apc.surplus()
@@ -154,9 +156,7 @@
 
 /obj/machinery/proc/addStaticPower(value, powerchannel)
 	var/area/A = get_area(src)
-	if(!A)
-		return
-	A.addStaticPower(value, powerchannel)
+	A?.addStaticPower(value, powerchannel)
 
 /obj/machinery/proc/removeStaticPower(value, powerchannel)
 	addStaticPower(-value, powerchannel)
@@ -174,16 +174,17 @@
 
 	if(machine_stat & BROKEN)
 		return
+	var/initial_stat = machine_stat
 	if(powered(power_channel))
-		if(machine_stat & NOPOWER)
+		set_machine_stat(machine_stat & ~NOPOWER)
+		if(initial_stat & NOPOWER)
 			SEND_SIGNAL(src, COMSIG_MACHINERY_POWER_RESTORED)
 			. = TRUE
-		set_machine_stat(machine_stat & ~NOPOWER)
 	else
-		if(!(machine_stat & NOPOWER))
+		set_machine_stat(machine_stat | NOPOWER)
+		if(!(initial_stat & NOPOWER))
 			SEND_SIGNAL(src, COMSIG_MACHINERY_POWER_LOST)
 			. = TRUE
-		set_machine_stat(machine_stat | NOPOWER)
 	update_appearance()
 
 // connect the machine to a powernet if a node cable or a terminal is present on the turf
@@ -217,7 +218,7 @@
 	if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/coil = W
 		var/turf/T = user.loc
-		if(T.intact || !isfloorturf(T))
+		if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE || !isfloorturf(T))
 			return
 		if(get_dist(src, user) > 1)
 			return
@@ -333,7 +334,7 @@
 	var/area/source_area
 	if (isarea(power_source))
 		source_area = power_source
-		power_source = source_area.get_apc()
+		power_source = source_area.apc
 	else if (istype(power_source, /obj/structure/cable))
 		var/obj/structure/cable/Cable = power_source
 		power_source = Cable.powernet
@@ -404,9 +405,9 @@
 
 	if (isarea(power_source))
 		var/area/source_area = power_source
-		source_area.use_power(drained_energy/GLOB.CELLRATE)
+		source_area.use_power(drained_energy WATTS)
 	else if (istype(power_source, /datum/powernet))
-		var/drained_power = drained_energy/GLOB.CELLRATE //convert from "joules" to "watts"
+		var/drained_power = drained_energy WATTS //convert from "joules" to "watts"
 		PN.delayedload += (min(drained_power, max(PN.newavail - PN.delayedload, 0)))
 	else if (istype(power_source, /obj/item/stock_parts/cell))
 		cell.use(drained_energy)
@@ -425,8 +426,3 @@
 			C.update_appearance()
 			return C
 	return null
-
-/area/proc/get_apc()
-	for(var/obj/machinery/power/apc/APC in GLOB.apcs_list)
-		if(APC.area == src)
-			return APC

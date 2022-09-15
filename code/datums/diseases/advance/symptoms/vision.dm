@@ -1,22 +1,12 @@
-/*
-//////////////////////////////////////
-
-Hyphema (Eye bleeding)
-
-	Slightly noticable.
-	Lowers resistance tremendously.
-	Decreases stage speed tremendously.
-	Decreases transmittablity.
-	Critical Level.
-
-Bonus
-	Causes blindness.
-
-//////////////////////////////////////
+/*Hyphema (Eye bleeding)
+ * Slightly reduces stealth
+ * Tremendously reduces resistance
+ * Tremendously reduces stage speed
+ * Greatly reduces transmissibility
+ * Critical level
+ * Bonus: Causes blindness.
 */
-
 /datum/symptom/visionloss
-
 	name = "Hyphema"
 	desc = "The virus causes inflammation of the retina, leading to eye damage and eventually blindness."
 	stealth = -1
@@ -48,14 +38,14 @@ Bonus
 	if(!.)
 		return
 	var/mob/living/carbon/M = A.affected_mob
-	var/obj/item/organ/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/internal/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
 	if(eyes)
 		switch(A.stage)
 			if(1, 2)
 				if(prob(base_message_chance) && !suppress_warning)
-					to_chat(M, "<span class='warning'>Your eyes itch.</span>")
+					to_chat(M, span_warning("Your eyes itch."))
 			if(3, 4)
-				to_chat(M, "<span class='warning'><b>Your eyes burn!</b></span>")
+				to_chat(M, span_warning("<b>Your eyes burn!</b>"))
 				M.blur_eyes(10)
 				eyes.applyOrganDamage(1)
 			else
@@ -66,11 +56,11 @@ Bonus
 				if(prob(eyes.damage - 10 + 1))
 					if(!remove_eyes)
 						if(!M.is_blind())
-							to_chat(M, "<span class='userdanger'>You go blind!</span>")
+							to_chat(M, span_userdanger("You go blind!"))
 							eyes.applyOrganDamage(eyes.maxHealth)
 					else
-						M.visible_message("<span class='warning'>[M]'s eyes fall out of their sockets!</span>", "<span class='userdanger'>Your eyes fall out of their sockets!</span>")
+						M.visible_message(span_warning("[M]'s eyes fall out of their sockets!"), span_userdanger("Your eyes fall out of their sockets!"))
 						eyes.Remove(M)
 						eyes.forceMove(get_turf(M))
 				else
-					to_chat(M, "<span class='userdanger'>Your eyes burn horrifically!</span>")
+					to_chat(M, span_userdanger("Your eyes burn horrifically!"))

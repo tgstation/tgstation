@@ -10,7 +10,7 @@
 	emote_see = list("clacks.")
 	speak_chance = 1
 	turns_per_move = 5
-	butcher_results = list(/obj/item/food/meat/rawcrab = 2)
+	butcher_results = list(/obj/item/food/meat/slab/rawcrab = 2)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
@@ -23,8 +23,13 @@
 	var/obj/item/inventory_head
 	var/obj/item/inventory_mask
 	gold_core_spawnable = FRIENDLY_SPAWN
+	///In the case 'melee_damage_upper' is somehow raised above 0
+	attack_verb_continuous = "snips"
+	attack_verb_simple = "snip"
+	attack_sound = 'sound/weapons/bite.ogg'
+	attack_vis_effect = ATTACK_EFFECT_BITE
 
-/mob/living/simple_animal/crab/Initialize()
+/mob/living/simple_animal/crab/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
@@ -47,6 +52,11 @@
 	real_name = "Coffee"
 	desc = "It's Coffee, the other pet!"
 	gender = FEMALE
+	gold_core_spawnable = NO_SPAWN
+
+/mob/living/simple_animal/crab/jon //holodeck crab
+	name = "Jon"
+	real_name = "Jon"
 	gold_core_spawnable = NO_SPAWN
 
 /mob/living/simple_animal/crab/evil

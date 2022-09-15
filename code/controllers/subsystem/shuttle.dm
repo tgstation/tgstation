@@ -2,112 +2,185 @@
 
 SUBSYSTEM_DEF(shuttle)
 	name = "Shuttle"
-	wait = 10
+	wait = 1 SECONDS
 	init_order = INIT_ORDER_SHUTTLE
-	flags = SS_KEEP_TIMING|SS_NO_TICK_CHECK
+	flags = SS_KEEP_TIMING
 	runlevels = RUNLEVEL_SETUP | RUNLEVEL_GAME
 
-	var/list/mobile = list()
-	var/list/stationary = list()
-	var/list/beacons = list()
-	var/list/transit = list()
+	/// A list of all the mobile docking ports.
+	var/list/mobile_docking_ports = list()
+	/// A list of all the stationary docking ports.
+	var/list/stationary_docking_ports = list()
+	/// A list of all the beacons that can be docked to.
+	var/list/beacon_list = list()
+	/// A list of all the transit docking ports.
+	var/list/transit_docking_ports = list()
 
-	//Now it only for ID generation
+	/// Now it's only for ID generation in /obj/docking_port/mobile/register()
 	var/list/assoc_mobile = list()
+	/// Now it's only for ID generation in /obj/docking_port/stationary/register()
 	var/list/assoc_stationary = list()
 
+	/// A list of all the mobile docking ports currently requesting a spot in hyperspace.
 	var/list/transit_requesters = list()
+	/// An associative list of the mobile docking ports that have failed a transit request, with the amount of times they've actually failed that transit request, up to MAX_TRANSIT_REQUEST_RETRIES
 	var/list/transit_request_failures = list()
 
-		//emergency shuttle stuff
+	/**
+	 * Emergency shuttle stuff
+	 */
+
+	/// The mobile docking port of the emergency shuttle.
 	var/obj/docking_port/mobile/emergency/emergency
+	/// The mobile docking port of the arrivals shuttle.
 	var/obj/docking_port/mobile/arrivals/arrivals
+	/// The mobile docking port of the backup emergency shuttle.
 	var/obj/docking_port/mobile/emergency/backup/backup_shuttle
-	var/emergencyCallTime = 6000 //time taken for emergency shuttle to reach the station when called (in deciseconds)
-	var/emergencyDockTime = 1800 //time taken for emergency shuttle to leave again once it has docked (in deciseconds)
-	var/emergencyEscapeTime = 1200 //time taken for emergency shuttle to reach a safe distance after leaving station (in deciseconds)
-	var/area/emergencyLastCallLoc
-	var/emergencyCallAmount = 0 //how many times the escape shuttle was called
-	var/emergencyNoEscape
-	var/emergencyNoRecall = FALSE
-	var/adminEmergencyNoRecall = FALSE
-	var/lastMode = SHUTTLE_IDLE
-	var/lastCallTime = 6000
-	var/list/hostileEnvironments = list() //Things blocking escape shuttle from leaving
-	var/list/tradeBlockade = list() //Things blocking cargo from leaving.
-	var/supplyBlocked = FALSE
+	/// Time taken for emergency shuttle to reach the station when called (in deciseconds).
+	var/emergency_call_time = 10 MINUTES
+	/// Time taken for emergency shuttle to leave again once it has docked (in deciseconds).
+	var/emergency_dock_time = 3 MINUTES
+	/// Time taken for emergency shuttle to reach a safe distance after leaving station (in deciseconds).
+	var/emergency_escape_time = 2 MINUTES
+	/// Where was the emergency shuttle last called from?
+	var/area/emergency_last_call_loc
+	/// How many times was the escape shuttle called?
+	var/emergencyCallAmount = 0
+	/// Is the departure of the shuttle currently prevented? FALSE for no, any other number for yes (thanks shuttle code).
+	var/emergency_no_escape = FALSE
+	/// Do we prevent the recall of the shuttle?
+	var/emergency_no_recall = FALSE
+	/// Did admins force-prevent the recall of the shuttle?
+	var/admin_emergency_no_recall = FALSE
+	/// Previous mode of the shuttle before it was forcefully disabled by admins.
+	var/last_mode = SHUTTLE_IDLE
+	/// Previous time left to the call, only useful for disabling and re-enabling the shuttle for admins so it doesn't have to start the whole timer again.
+	var/last_call_time = 10 MINUTES
 
-		//supply shuttle stuff
+	/// Things blocking escape shuttle from leaving.
+	var/list/hostile_environments = list()
+
+	/**
+	 * Supply shuttle stuff
+	 */
+
+	/// The current cargo shuttle's mobile docking port.
 	var/obj/docking_port/mobile/supply/supply
-	var/ordernum = 1 //order number given to next order
-	var/points = 5000 //number of trade-points we have
-	var/centcom_message = "" //Remarks from CentCom on how well you checked the last order.
-	var/list/discoveredPlants = list() //Typepaths for unusual plants we've already sent CentCom, associated with their potencies
+	/// Order number given to next order.
+	var/order_number = 1
+	/// Number of trade-points we have (basically money).
+	var/points = 5000
+	/// Remarks from CentCom on how well you checked the last order.
+	var/centcom_message = ""
+	/// Typepaths for unusual plants we've already sent CentCom, associated with their potencies.
+	var/list/discovered_plants = list()
 
+	/// Things blocking the cargo shuttle from leaving.
+	var/list/trade_blockade = list()
+	/// Is the cargo shuttle currently blocked from leaving?
+	var/supply_blocked = FALSE
+
+	/// All of the possible supply packs that can be purchased by cargo.
 	var/list/supply_packs = list()
+
+	/// Queued supplies to be purchased for the chef.
 	var/list/chef_groceries = list()
-	var/list/shoppinglist = list()
-	var/list/requestlist = list()
-	var/list/orderhistory = list()
 
-	var/list/hidden_shuttle_turfs = list() //all turfs hidden from navigation computers associated with a list containing the image hiding them and the type of the turf they are pretending to be
-	var/list/hidden_shuttle_turf_images = list() //only the images from the above list
+	/// Queued supply packs to be purchased.
+	var/list/shopping_list = list()
 
+	/// Wishlist items made by crew for cargo to purchase at their leisure.
+	var/list/request_list = list()
+
+	/// A listing of previously delivered supply packs.
+	var/list/order_history = list()
+
+	/// A list of job accesses that are able to purchase any shuttles.
+	var/list/has_purchase_shuttle_access
+
+	/// All turfs hidden from navigation computers associated with a list containing the image hiding them and the type of the turf they are pretending to be
+	var/list/hidden_shuttle_turfs = list()
+	/// Only the images from the [/datum/controller/subsystem/shuttle/hidden_shuttle_turfs] list.
+	var/list/hidden_shuttle_turf_images = list()
+
+	/// The current shuttle loan event, if any.
 	var/datum/round_event/shuttle_loan/shuttle_loan
 
-	///If the event happens where the crew can purchase shuttle insurance, catastrophe can't run.
+	/// If the event happens where the crew can purchase shuttle insurance, catastrophe can't run.
 	var/shuttle_insurance = FALSE
-	var/shuttle_purchased = SHUTTLEPURCHASE_PURCHASABLE //If the station has purchased a replacement escape shuttle this round
-	var/list/shuttle_purchase_requirements_met = list() //For keeping track of ingame events that would unlock new shuttles, such as defeating a boss or discovering a secret item
+	// If the station has purchased a replacement escape shuttle this round.
+	var/shuttle_purchased = SHUTTLEPURCHASE_PURCHASABLE
+	/// For keeping track of ingame events that would unlock new shuttles, such as defeating a boss or discovering a secret item.
+	var/list/shuttle_purchase_requirements_met = list()
 
-	var/lockdown = FALSE //disallow transit after nuke goes off
+	/// Disallow transit after nuke goes off
+	var/lockdown = FALSE
 
+	/// The currently selected shuttle map_template in the shuttle manipulator's template viewer.
 	var/datum/map_template/shuttle/selected
 
+	/// The existing shuttle associated with the selected shuttle map_template.
 	var/obj/docking_port/mobile/existing_shuttle
 
-	var/obj/docking_port/mobile/preview_shuttle
+	/// The shuttle map_template of the shuttle we want to preview.
 	var/datum/map_template/shuttle/preview_template
+	/// The docking port associated to the preview_template that's currently being previewed.
+	var/obj/docking_port/mobile/preview_shuttle
 
+	/// The turf reservation for the current previewed shuttle.
 	var/datum/turf_reservation/preview_reservation
 
+	/// Are we currently in the process of loading a shuttle? Useful to ensure we don't load more than one at once, to avoid weird inconsistencies and possible runtimes.
 	var/shuttle_loading
+	/// Did the supermatter start a cascade event?
+	var/supermatter_cascade = FALSE
 
 /datum/controller/subsystem/shuttle/Initialize(timeofday)
-	ordernum = rand(1, 9000)
+	order_number = rand(1, 9000)
 
-	for(var/pack in subtypesof(/datum/supply_pack))
-		var/datum/supply_pack/P = new pack()
-		if(!P.contains)
+	var/list/pack_processing = subtypesof(/datum/supply_pack)
+	while(length(pack_processing))
+		var/datum/supply_pack/pack = pack_processing[length(pack_processing)]
+		pack_processing.len--
+		if(ispath(pack, /datum/supply_pack))
+			pack = new pack
+
+		var/list/generated_packs = pack.generate_supply_packs()
+		if(generated_packs)
+			pack_processing += generated_packs
 			continue
-		supply_packs[P.type] = P
 
-	initial_load()
+		if(!pack.contains)
+			continue
+
+		supply_packs[pack.id] = pack
+
+	setup_shuttles(stationary_docking_ports)
+	has_purchase_shuttle_access = init_has_purchase_shuttle_access()
 
 	if(!arrivals)
-		WARNING("No /obj/docking_port/mobile/arrivals placed on the map!")
+		log_mapping("No /obj/docking_port/mobile/arrivals placed on the map!")
 	if(!emergency)
-		WARNING("No /obj/docking_port/mobile/emergency placed on the map!")
+		log_mapping("No /obj/docking_port/mobile/emergency placed on the map!")
 	if(!backup_shuttle)
-		WARNING("No /obj/docking_port/mobile/emergency/backup placed on the map!")
+		log_mapping("No /obj/docking_port/mobile/emergency/backup placed on the map!")
 	if(!supply)
-		WARNING("No /obj/docking_port/mobile/supply placed on the map!")
+		log_mapping("No /obj/docking_port/mobile/supply placed on the map!")
 	return ..()
 
-/datum/controller/subsystem/shuttle/proc/initial_load()
-	for(var/s in stationary)
-		var/obj/docking_port/stationary/S = s
-		S.load_roundstart()
+/datum/controller/subsystem/shuttle/proc/setup_shuttles(list/stationary)
+	for(var/obj/docking_port/stationary/port as anything in stationary)
+		port.load_roundstart()
 		CHECK_TICK
 
 /datum/controller/subsystem/shuttle/fire()
-	for(var/thing in mobile)
+	for(var/thing in mobile_docking_ports)
 		if(!thing)
-			mobile.Remove(thing)
+			mobile_docking_ports.Remove(thing)
 			continue
 		var/obj/docking_port/mobile/P = thing
 		P.check()
-	for(var/thing in transit)
+	for(var/thing in transit_docking_ports)
 		var/obj/docking_port/stationary/transit/T = thing
 		if(!T.owner)
 			qdel(T, force=TRUE)
@@ -138,7 +211,7 @@ SUBSYSTEM_DEF(shuttle)
 				break
 
 /datum/controller/subsystem/shuttle/proc/CheckAutoEvac()
-	if(emergencyNoEscape || adminEmergencyNoRecall || emergencyNoRecall || !emergency || !SSticker.HasRoundStarted())
+	if(emergency_no_escape || admin_emergency_no_recall || emergency_no_recall || !emergency || !SSticker.HasRoundStarted())
 		return
 
 	var/threshold = CONFIG_GET(number/emergency_shuttle_autocall_threshold)
@@ -159,43 +232,43 @@ SUBSYSTEM_DEF(shuttle)
 		var/msg = "Automatically dispatching emergency shuttle due to crew death."
 		message_admins(msg)
 		log_shuttle("[msg] Alive: [alive], Roundstart: [total], Threshold: [threshold]")
-		emergencyNoRecall = TRUE
+		emergency_no_recall = TRUE
 		priority_announce("Catastrophic casualties detected: crisis shuttle protocols activated - jamming recall signals across all frequencies.")
-		if(emergency.timeLeft(1) > emergencyCallTime * 0.4)
+		if(emergency.timeLeft(1) > emergency_call_time * 0.4)
 			emergency.request(null, set_coefficient = 0.4)
 
 /datum/controller/subsystem/shuttle/proc/block_recall(lockout_timer)
-	if(adminEmergencyNoRecall)
+	if(admin_emergency_no_recall)
 		priority_announce("Error!", "Emergency Shuttle Uplink Alert", 'sound/misc/announce_dig.ogg')
 		addtimer(CALLBACK(src, .proc/unblock_recall), lockout_timer)
 		return
-	emergencyNoRecall = TRUE
+	emergency_no_recall = TRUE
 	addtimer(CALLBACK(src, .proc/unblock_recall), lockout_timer)
 
 /datum/controller/subsystem/shuttle/proc/unblock_recall()
-	if(adminEmergencyNoRecall)
+	if(admin_emergency_no_recall)
 		priority_announce("Error!", "Emergency Shuttle Uplink Alert", 'sound/misc/announce_dig.ogg')
 		return
-	emergencyNoRecall = FALSE
+	emergency_no_recall = FALSE
 
 /datum/controller/subsystem/shuttle/proc/getShuttle(id)
-	for(var/obj/docking_port/mobile/M in mobile)
-		if(M.id == id)
+	for(var/obj/docking_port/mobile/M in mobile_docking_ports)
+		if(M.shuttle_id == id)
 			return M
 	WARNING("couldn't find shuttle with id: [id]")
 
 /datum/controller/subsystem/shuttle/proc/getDock(id)
-	for(var/obj/docking_port/stationary/S in stationary)
-		if(S.id == id)
+	for(var/obj/docking_port/stationary/S in stationary_docking_ports)
+		if(S.shuttle_id == id)
 			return S
 	WARNING("couldn't find dock with id: [id]")
 
 /// Check if we can call the evac shuttle.
 /// Returns TRUE if we can. Otherwise, returns a string detailing the problem.
-/datum/controller/subsystem/shuttle/proc/canEvac(mob/user)
-	var/srd = CONFIG_GET(number/shuttle_refuel_delay)
-	if(world.time - SSticker.round_start_time < srd)
-		return "The emergency shuttle is refueling. Please wait [DisplayTimeText(srd - (world.time - SSticker.round_start_time))] before attempting to call."
+/datum/controller/subsystem/shuttle/proc/canEvac()
+	var/shuttle_refuel_delay = CONFIG_GET(number/shuttle_refuel_delay)
+	if(world.time - SSticker.round_start_time < shuttle_refuel_delay)
+		return "The emergency shuttle is refueling. Please wait [DisplayTimeText(shuttle_refuel_delay - (world.time - SSticker.round_start_time))] before attempting to call."
 
 	switch(emergency.mode)
 		if(SHUTTLE_RECALL)
@@ -213,57 +286,72 @@ SUBSYSTEM_DEF(shuttle)
 
 	return TRUE
 
-/datum/controller/subsystem/shuttle/proc/requestEvac(mob/user, call_reason)
-	if(!emergency)
-		WARNING("requestEvac(): There is no emergency shuttle, but the \
-			shuttle was called. Using the backup shuttle instead.")
-		if(!backup_shuttle)
-			CRASH("requestEvac(): There is no emergency shuttle, \
-			or backup shuttle! The game will be unresolvable. This is \
-			possibly a mapping error, more likely a bug with the shuttle \
-			manipulation system, or badminry. It is possible to manually \
-			resolve this problem by loading an emergency shuttle template \
-			manually, and then calling register() on the mobile docking port. \
-			Good luck.")
-		emergency = backup_shuttle
+/datum/controller/subsystem/shuttle/proc/check_backup_emergency_shuttle()
+	if(emergency)
+		return TRUE
 
-	var/can_evac_or_fail_reason = SSshuttle.canEvac(user)
-	if(can_evac_or_fail_reason != TRUE)
-		to_chat(user, "<span class='alert'>[can_evac_or_fail_reason]</span>")
+	WARNING("check_backup_emergency_shuttle(): There is no emergency shuttle, but the \
+		shuttle was called. Using the backup shuttle instead.")
+
+	if(!backup_shuttle)
+		CRASH("check_backup_emergency_shuttle(): There is no emergency shuttle, \
+		or backup shuttle! The game will be unresolvable. This is \
+		possibly a mapping error, more likely a bug with the shuttle \
+		manipulation system, or badminry. It is possible to manually \
+		resolve this problem by loading an emergency shuttle template \
+		manually, and then calling register() on the mobile docking port. \
+		Good luck.")
+	emergency = backup_shuttle
+
+	return TRUE
+
+/datum/controller/subsystem/shuttle/proc/requestEvac(mob/user, call_reason)
+	if (!check_backup_emergency_shuttle())
 		return
 
-	call_reason = trim(html_encode(call_reason))
+	var/can_evac_or_fail_reason = SSshuttle.canEvac()
+	if(can_evac_or_fail_reason != TRUE)
+		to_chat(user, span_alert("[can_evac_or_fail_reason]"))
+		return
 
-	if(length(call_reason) < CALL_SHUTTLE_REASON_LENGTH && seclevel2num(get_security_level()) > SEC_LEVEL_GREEN)
-		to_chat(user, "<span class='alert'>You must provide a reason.</span>")
+	if(length(trim(call_reason)) < CALL_SHUTTLE_REASON_LENGTH && SSsecurity_level.get_current_level_as_number() > SEC_LEVEL_GREEN)
+		to_chat(user, span_alert("You must provide a reason."))
 		return
 
 	var/area/signal_origin = get_area(user)
-	var/emergency_reason = "\nNature of emergency:\n\n[call_reason]"
-	var/security_num = seclevel2num(get_security_level())
-	switch(security_num)
-		if(SEC_LEVEL_RED,SEC_LEVEL_DELTA)
-			emergency.request(null, signal_origin, html_decode(emergency_reason), 1) //There is a serious threat we gotta move no time to give them five minutes.
-		else
-			emergency.request(null, signal_origin, html_decode(emergency_reason), 0)
-
-	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
-
-	if(!frequency)
-		return
-
-	var/datum/signal/status_signal = new(list("command" = "update")) // Start processing shuttle-mode displays to display the timer
-	frequency.post_signal(src, status_signal)
-
-	var/area/A = get_area(user)
+	call_evac_shuttle(call_reason, signal_origin)
 
 	log_shuttle("[key_name(user)] has called the emergency shuttle.")
-	deadchat_broadcast(" has called the shuttle at <span class='name'>[A.name]</span>.", "<span class='name'>[user.real_name]</span>", user, message_type=DEADCHAT_ANNOUNCEMENT)
+	deadchat_broadcast(" has called the shuttle at [span_name("[signal_origin.name]")].", span_name("[user.real_name]"), user, message_type=DEADCHAT_ANNOUNCEMENT)
 	if(call_reason)
 		SSblackbox.record_feedback("text", "shuttle_reason", 1, "[call_reason]")
 		log_shuttle("Shuttle call reason: [call_reason]")
 		SSticker.emergency_reason = call_reason
 	message_admins("[ADMIN_LOOKUPFLW(user)] has called the shuttle. (<A HREF='?_src_=holder;[HrefToken()];trigger_centcom_recall=1'>TRIGGER CENTCOM RECALL</A>)")
+
+/// Call the emergency shuttle.
+/// If you are doing this on behalf of a player, use requestEvac instead.
+/// `signal_origin` is fluff occasionally provided to players.
+/datum/controller/subsystem/shuttle/proc/call_evac_shuttle(call_reason, signal_origin)
+	if (!check_backup_emergency_shuttle())
+		return
+
+	call_reason = trim(html_encode(call_reason))
+
+	var/emergency_reason = "\nNature of emergency:\n\n[call_reason]"
+
+	emergency.request(
+		signal_origin = signal_origin,
+		reason = html_decode(emergency_reason),
+		red_alert = (SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED)
+	)
+
+	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
+
+	if(frequency)
+		// Start processing shuttle-mode displays to display the timer
+		var/datum/signal/status_signal = new(list("command" = "update"))
+		frequency.post_signal(src, status_signal)
 
 /datum/controller/subsystem/shuttle/proc/centcom_recall(old_timer, admiral_message)
 	if(emergency.mode != SHUTTLE_CALL || emergency.timer != old_timer)
@@ -297,27 +385,27 @@ SUBSYSTEM_DEF(shuttle)
 		emergency.cancel(get_area(user))
 		log_shuttle("[key_name(user)] has recalled the shuttle.")
 		message_admins("[ADMIN_LOOKUPFLW(user)] has recalled the shuttle.")
-		deadchat_broadcast(" has recalled the shuttle from <span class='name'>[get_area_name(user, TRUE)]</span>.", "<span class='name'>[user.real_name]</span>", user, message_type=DEADCHAT_ANNOUNCEMENT)
+		deadchat_broadcast(" has recalled the shuttle from [span_name("[get_area_name(user, TRUE)]")].", span_name("[user.real_name]"), user, message_type=DEADCHAT_ANNOUNCEMENT)
 		return 1
 
 /datum/controller/subsystem/shuttle/proc/canRecall()
-	if(!emergency || emergency.mode != SHUTTLE_CALL || adminEmergencyNoRecall || emergencyNoRecall || SSticker.mode.name == "meteor")
+	if(!emergency || emergency.mode != SHUTTLE_CALL || admin_emergency_no_recall || emergency_no_recall)
 		return
-	var/security_num = seclevel2num(get_security_level())
+	var/security_num = SSsecurity_level.get_current_level_as_number()
 	switch(security_num)
 		if(SEC_LEVEL_GREEN)
-			if(emergency.timeLeft(1) < emergencyCallTime)
+			if(emergency.timeLeft(1) < emergency_call_time)
 				return
 		if(SEC_LEVEL_BLUE)
-			if(emergency.timeLeft(1) < emergencyCallTime * 0.5)
+			if(emergency.timeLeft(1) < emergency_call_time * 0.5)
 				return
 		else
-			if(emergency.timeLeft(1) < emergencyCallTime * 0.25)
+			if(emergency.timeLeft(1) < emergency_call_time * 0.25)
 				return
 	return 1
 
 /datum/controller/subsystem/shuttle/proc/autoEvac()
-	if (!SSticker.IsRoundInProgress())
+	if (!SSticker.IsRoundInProgress() || supermatter_cascade)
 		return
 
 	var/callShuttle = TRUE
@@ -346,88 +434,88 @@ SUBSYSTEM_DEF(shuttle)
 			message_admins("All the communications consoles were destroyed and all AIs are inactive. Shuttle called.")
 
 /datum/controller/subsystem/shuttle/proc/registerHostileEnvironment(datum/bad)
-	hostileEnvironments[bad] = TRUE
+	hostile_environments[bad] = TRUE
 	checkHostileEnvironment()
 
 /datum/controller/subsystem/shuttle/proc/clearHostileEnvironment(datum/bad)
-	hostileEnvironments -= bad
+	hostile_environments -= bad
 	checkHostileEnvironment()
 
 
 /datum/controller/subsystem/shuttle/proc/registerTradeBlockade(datum/bad)
-	tradeBlockade[bad] = TRUE
+	trade_blockade[bad] = TRUE
 	checkTradeBlockade()
 
 /datum/controller/subsystem/shuttle/proc/clearTradeBlockade(datum/bad)
-	tradeBlockade -= bad
+	trade_blockade -= bad
 	checkTradeBlockade()
 
 
 /datum/controller/subsystem/shuttle/proc/checkTradeBlockade()
-	for(var/datum/d in tradeBlockade)
+	for(var/datum/d in trade_blockade)
 		if(!istype(d) || QDELETED(d))
-			tradeBlockade -= d
-	supplyBlocked = tradeBlockade.len
+			trade_blockade -= d
+	supply_blocked = trade_blockade.len
 
-	if(supplyBlocked && (supply.mode == SHUTTLE_IGNITING))
+	if(supply_blocked && (supply.mode == SHUTTLE_IGNITING))
 		supply.mode = SHUTTLE_STRANDED
 		supply.timer = null
 		//Make all cargo consoles speak up
-	if(!supplyBlocked && (supply.mode == SHUTTLE_STRANDED))
+	if(!supply_blocked && (supply.mode == SHUTTLE_STRANDED))
 		supply.mode = SHUTTLE_DOCKED
 		//Make all cargo consoles speak up
 
 /datum/controller/subsystem/shuttle/proc/checkHostileEnvironment()
-	for(var/datum/d in hostileEnvironments)
+	for(var/datum/d in hostile_environments)
 		if(!istype(d) || QDELETED(d))
-			hostileEnvironments -= d
-	emergencyNoEscape = hostileEnvironments.len
+			hostile_environments -= d
+	emergency_no_escape = hostile_environments.len
 
-	if(emergencyNoEscape && (emergency.mode == SHUTTLE_IGNITING))
+	if(emergency_no_escape && (emergency.mode == SHUTTLE_IGNITING))
 		emergency.mode = SHUTTLE_STRANDED
 		emergency.timer = null
 		emergency.sound_played = FALSE
 		priority_announce("Hostile environment detected. \
 			Departure has been postponed indefinitely pending \
 			conflict resolution.", null, 'sound/misc/notice1.ogg', "Priority")
-	if(!emergencyNoEscape && (emergency.mode == SHUTTLE_STRANDED))
+	if(!emergency_no_escape && (emergency.mode == SHUTTLE_STRANDED))
 		emergency.mode = SHUTTLE_DOCKED
-		emergency.setTimer(emergencyDockTime)
+		emergency.setTimer(emergency_dock_time)
 		priority_announce("Hostile environment resolved. \
 			You have 3 minutes to board the Emergency Shuttle.",
 			null, ANNOUNCER_SHUTTLEDOCK, "Priority")
 
-//try to move/request to dockHome if possible, otherwise dockAway. Mainly used for admin buttons
-/datum/controller/subsystem/shuttle/proc/toggleShuttle(shuttleId, dockHome, dockAway, timed)
-	var/obj/docking_port/mobile/M = getShuttle(shuttleId)
-	if(!M)
-		return 1
-	var/obj/docking_port/stationary/dockedAt = M.get_docked()
-	var/destination = dockHome
-	if(dockedAt && dockedAt.id == dockHome)
-		destination = dockAway
+//try to move/request to dock_home if possible, otherwise dock_away. Mainly used for admin buttons
+/datum/controller/subsystem/shuttle/proc/toggleShuttle(shuttle_id, dock_home, dock_away, timed)
+	var/obj/docking_port/mobile/shuttle_port = getShuttle(shuttle_id)
+	if(!shuttle_port)
+		return DOCKING_BLOCKED
+	var/obj/docking_port/stationary/docked_at = shuttle_port.get_docked()
+	var/destination = dock_home
+	if(docked_at && docked_at.shuttle_id == dock_home)
+		destination = dock_away
 	if(timed)
-		if(M.request(getDock(destination)))
-			return 2
+		if(shuttle_port.request(getDock(destination)))
+			return DOCKING_IMMOBILIZED
 	else
-		if(M.initiate_docking(getDock(destination)) != DOCKING_SUCCESS)
-			return 2
-	return 0 //dock successful
+		if(shuttle_port.initiate_docking(getDock(destination)) != DOCKING_SUCCESS)
+			return DOCKING_IMMOBILIZED
+	return DOCKING_SUCCESS //dock successful
 
 
-/datum/controller/subsystem/shuttle/proc/moveShuttle(shuttleId, dockId, timed)
-	var/obj/docking_port/mobile/M = getShuttle(shuttleId)
-	var/obj/docking_port/stationary/D = getDock(dockId)
+/datum/controller/subsystem/shuttle/proc/moveShuttle(shuttle_id, dock_id, timed)
+	var/obj/docking_port/mobile/shuttle_port = getShuttle(shuttle_id)
+	var/obj/docking_port/stationary/docking_target = getDock(dock_id)
 
-	if(!M)
-		return 1
+	if(!shuttle_port)
+		return DOCKING_BLOCKED
 	if(timed)
-		if(M.request(D))
-			return 2
+		if(shuttle_port.request(docking_target))
+			return DOCKING_IMMOBILIZED
 	else
-		if(M.initiate_docking(D) != DOCKING_SUCCESS)
-			return 2
-	return 0 //dock successful
+		if(shuttle_port.initiate_docking(docking_target) != DOCKING_SUCCESS)
+			return DOCKING_IMMOBILIZED
+	return DOCKING_SUCCESS //dock successful
 
 /datum/controller/subsystem/shuttle/proc/request_transit_dock(obj/docking_port/mobile/M)
 	if(!istype(M))
@@ -513,7 +601,7 @@ SUBSYSTEM_DEF(shuttle)
 	A.contents = proposal.reserved_turfs
 	var/obj/docking_port/stationary/transit/new_transit_dock = new(midpoint)
 	new_transit_dock.reserved_area = proposal
-	new_transit_dock.name = "Transit for [M.id]/[M.name]"
+	new_transit_dock.name = "Transit for [M.shuttle_id]/[M.name]"
 	new_transit_dock.owner = M
 	new_transit_dock.assigned_area = A
 
@@ -524,12 +612,13 @@ SUBSYSTEM_DEF(shuttle)
 	return new_transit_dock
 
 /datum/controller/subsystem/shuttle/Recover()
-	if (istype(SSshuttle.mobile))
-		mobile = SSshuttle.mobile
-	if (istype(SSshuttle.stationary))
-		stationary = SSshuttle.stationary
-	if (istype(SSshuttle.transit))
-		transit = SSshuttle.transit
+	initialized = SSshuttle.initialized
+	if (istype(SSshuttle.mobile_docking_ports))
+		mobile_docking_ports = SSshuttle.mobile_docking_ports
+	if (istype(SSshuttle.stationary_docking_ports))
+		stationary_docking_ports = SSshuttle.stationary_docking_ports
+	if (istype(SSshuttle.transit_docking_ports))
+		transit_docking_ports = SSshuttle.transit_docking_ports
 	if (istype(SSshuttle.transit_requesters))
 		transit_requesters = SSshuttle.transit_requesters
 	if (istype(SSshuttle.transit_request_failures))
@@ -542,24 +631,24 @@ SUBSYSTEM_DEF(shuttle)
 	if (istype(SSshuttle.backup_shuttle))
 		backup_shuttle = SSshuttle.backup_shuttle
 
-	if (istype(SSshuttle.emergencyLastCallLoc))
-		emergencyLastCallLoc = SSshuttle.emergencyLastCallLoc
+	if (istype(SSshuttle.emergency_last_call_loc))
+		emergency_last_call_loc = SSshuttle.emergency_last_call_loc
 
-	if (istype(SSshuttle.hostileEnvironments))
-		hostileEnvironments = SSshuttle.hostileEnvironments
+	if (istype(SSshuttle.hostile_environments))
+		hostile_environments = SSshuttle.hostile_environments
 
 	if (istype(SSshuttle.supply))
 		supply = SSshuttle.supply
 
-	if (istype(SSshuttle.discoveredPlants))
-		discoveredPlants = SSshuttle.discoveredPlants
+	if (istype(SSshuttle.discovered_plants))
+		discovered_plants = SSshuttle.discovered_plants
 
-	if (istype(SSshuttle.shoppinglist))
-		shoppinglist = SSshuttle.shoppinglist
-	if (istype(SSshuttle.requestlist))
-		requestlist = SSshuttle.requestlist
-	if (istype(SSshuttle.orderhistory))
-		orderhistory = SSshuttle.orderhistory
+	if (istype(SSshuttle.shopping_list))
+		shopping_list = SSshuttle.shopping_list
+	if (istype(SSshuttle.request_list))
+		request_list = SSshuttle.request_list
+	if (istype(SSshuttle.order_history))
+		order_history = SSshuttle.order_history
 
 	if (istype(SSshuttle.shuttle_loan))
 		shuttle_loan = SSshuttle.shuttle_loan
@@ -569,9 +658,9 @@ SUBSYSTEM_DEF(shuttle)
 
 	var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	centcom_message = SSshuttle.centcom_message
-	ordernum = SSshuttle.ordernum
+	order_number = SSshuttle.order_number
 	points = D.account_balance
-	emergencyNoEscape = SSshuttle.emergencyNoEscape
+	emergency_no_escape = SSshuttle.emergency_no_escape
 	emergencyCallAmount = SSshuttle.emergencyCallAmount
 	shuttle_purchased = SSshuttle.shuttle_purchased
 	lockdown = SSshuttle.lockdown
@@ -589,30 +678,30 @@ SUBSYSTEM_DEF(shuttle)
 	var/area/current = get_area(A)
 	if(istype(current, /area/shuttle) && !istype(current, /area/shuttle/transit))
 		return TRUE
-	for(var/obj/docking_port/mobile/M in mobile)
+	for(var/obj/docking_port/mobile/M in mobile_docking_ports)
 		if(M.is_in_shuttle_bounds(A))
 			return TRUE
 
 /datum/controller/subsystem/shuttle/proc/get_containing_shuttle(atom/A)
-	var/list/mobile_cache = mobile
-	for(var/i in 1 to mobile_cache.len)
-		var/obj/docking_port/port = mobile_cache[i]
+	var/list/mobile_docking_ports_cache = mobile_docking_ports
+	for(var/i in 1 to mobile_docking_ports_cache.len)
+		var/obj/docking_port/port = mobile_docking_ports_cache[i]
 		if(port.is_in_shuttle_bounds(A))
 			return port
 
 /datum/controller/subsystem/shuttle/proc/get_containing_dock(atom/A)
 	. = list()
-	var/list/stationary_cache = stationary
-	for(var/i in 1 to stationary_cache.len)
-		var/obj/docking_port/port = stationary_cache[i]
+	var/list/stationary_docking_ports_cache = stationary_docking_ports
+	for(var/i in 1 to stationary_docking_ports_cache.len)
+		var/obj/docking_port/port = stationary_docking_ports_cache[i]
 		if(port.is_in_shuttle_bounds(A))
 			. += port
 
 /datum/controller/subsystem/shuttle/proc/get_dock_overlap(x0, y0, x1, y1, z)
 	. = list()
-	var/list/stationary_cache = stationary
-	for(var/i in 1 to stationary_cache.len)
-		var/obj/docking_port/port = stationary_cache[i]
+	var/list/stationary_docking_ports_cache = stationary_docking_ports
+	for(var/i in 1 to stationary_docking_ports_cache.len)
+		var/obj/docking_port/port = stationary_docking_ports_cache[i]
 		if(!port || port.z != z)
 			continue
 		var/list/bounds = port.return_coords()
@@ -694,8 +783,7 @@ SUBSYSTEM_DEF(shuttle)
 	// but we can ignore the someone else docked error because we'll
 	// be moving into their place shortly
 	if((result != SHUTTLE_CAN_DOCK) && (result != SHUTTLE_SOMEONE_ELSE_DOCKED))
-		WARNING("Template shuttle [preview_shuttle] cannot dock at [D] ([result]).")
-		return
+		CRASH("Template shuttle [preview_shuttle] cannot dock at [D] ([result]).")
 
 	if(existing_shuttle && replace)
 		existing_shuttle.jumpToNullSpace()
@@ -746,11 +834,11 @@ SUBSYSTEM_DEF(shuttle)
 				found++
 				if(found > 1)
 					qdel(P, force=TRUE)
-					log_world("Map warning: Shuttle Template [S.mappath] has multiple mobile docking ports.")
+					log_mapping("Shuttle Template [S.mappath] has multiple mobile docking ports.")
 				else
 					preview_shuttle = P
 			if(istype(P, /obj/docking_port/stationary))
-				log_world("Map warning: Shuttle Template [S.mappath] has a stationary docking port.")
+				log_mapping("Shuttle Template [S.mappath] has a stationary docking port.")
 	if(!found)
 		var/msg = "load_template(): Shuttle Template [S.mappath] has no mobile docking port. Aborting import."
 		for(var/T in affected)
@@ -809,18 +897,18 @@ SUBSYSTEM_DEF(shuttle)
 
 		templates[S.port_id]["templates"] += list(L)
 
-	data["templates_tabs"] = sortList(data["templates_tabs"])
+	data["templates_tabs"] = sort_list(data["templates_tabs"])
 
 	data["existing_shuttle"] = null
 
 	// Status panel
 	data["shuttles"] = list()
-	for(var/i in mobile)
+	for(var/i in mobile_docking_ports)
 		var/obj/docking_port/mobile/M = i
 		var/timeleft = M.timeLeft(1)
 		var/list/L = list()
 		L["name"] = M.name
-		L["id"] = M.id
+		L["id"] = M.shuttle_id
 		L["timer"] = M.timer
 		L["timeleft"] = M.getTimerStr()
 		if (timeleft > 1 HOURS)
@@ -860,25 +948,25 @@ SUBSYSTEM_DEF(shuttle)
 				. = TRUE
 		if("jump_to")
 			if(params["type"] == "mobile")
-				for(var/i in mobile)
+				for(var/i in mobile_docking_ports)
 					var/obj/docking_port/mobile/M = i
-					if(M.id == params["id"])
+					if(M.shuttle_id == params["id"])
 						user.forceMove(get_turf(M))
 						. = TRUE
 						break
 
 		if("fly")
-			for(var/i in mobile)
+			for(var/i in mobile_docking_ports)
 				var/obj/docking_port/mobile/M = i
-				if(M.id == params["id"])
+				if(M.shuttle_id == params["id"])
 					. = TRUE
 					M.admin_fly_shuttle(user)
 					break
 
 		if("fast_travel")
-			for(var/i in mobile)
+			for(var/i in mobile_docking_ports)
 				var/obj/docking_port/mobile/M = i
-				if(M.id == params["id"] && M.timer && M.timeLeft(1) >= 50)
+				if(M.shuttle_id == params["id"] && M.timer && M.timeLeft(1) >= 50)
 					M.setTimer(50)
 					. = TRUE
 					message_admins("[key_name_admin(usr)] fast travelled [M]")
@@ -929,6 +1017,16 @@ SUBSYSTEM_DEF(shuttle)
 					SSblackbox.record_feedback("text", "shuttle_manipulator", 1, "[mdp.name]")
 				shuttle_loading = FALSE
 				if(emergency == mdp) //you just changed the emergency shuttle, there are events in game + captains that can change your snowflake choice.
-					var/set_purchase = alert(usr, "Do you want to also disable shuttle purchases/random events that would change the shuttle?", "Butthurt Admin Prevention", "Yes, disable purchases/events", "No, I want to possibly get owned")
+					var/set_purchase = tgui_alert(usr, "Do you want to also disable shuttle purchases/random events that would change the shuttle?", "Butthurt Admin Prevention", list("Yes, disable purchases/events", "No, I want to possibly get owned"))
 					if(set_purchase == "Yes, disable purchases/events")
 						SSshuttle.shuttle_purchased = SHUTTLEPURCHASE_FORCED
+
+/datum/controller/subsystem/shuttle/proc/init_has_purchase_shuttle_access()
+	var/list/has_purchase_shuttle_access = list()
+
+	for (var/shuttle_id in SSmapping.shuttle_templates)
+		var/datum/map_template/shuttle/shuttle_template = SSmapping.shuttle_templates[shuttle_id]
+		if (!isnull(shuttle_template.who_can_purchase))
+			has_purchase_shuttle_access |= shuttle_template.who_can_purchase
+
+	return has_purchase_shuttle_access

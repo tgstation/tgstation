@@ -6,8 +6,8 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/escape)
 "c" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
-/turf/open/floor/iron/elevatorshaft,
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/plating/elevatorshaft,
 /area/shuttle/escape)
 "d" = (
 /obj/structure/table/wood,
@@ -69,8 +69,8 @@
 "n" = (
 /obj/structure/table/wood/poker,
 /obj/item/storage/box/drinkingglasses,
-/obj/item/reagent_containers/food/drinks/bottle/whiskey,
-/obj/machinery/light,
+/obj/item/reagent_containers/cup/glass/bottle/whiskey,
+/obj/machinery/light/directional/south,
 /turf/open/floor/mineral/gold,
 /area/shuttle/escape)
 "o" = (
@@ -80,9 +80,8 @@
 /turf/open/floor/mineral/gold,
 /area/shuttle/escape)
 "p" = (
-/obj/machinery/door/airlock/gold{
-	req_access_txt = "19"
-	},
+/obj/machinery/door/airlock/gold,
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/mineral/gold,
 /area/shuttle/escape)
 "q" = (
@@ -106,7 +105,7 @@
 	name = "Disco Inferno"
 	},
 /obj/machinery/door/airlock/gold{
-	armor = list("melee" = 30, "bullet" = 30, "laser" = 20, "energy" = 20, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100);
+	armor = list("melee" = 30, "bullet" = 30, "laser" = 20, "energy" = 20, "bomb" = 10, "bio" = 0, "fire" = 100, "acid" = 100);
 	heat_proof = 1;
 	resistance_flags = 2
 	},
@@ -132,19 +131,17 @@
 /area/shuttle/escape)
 "A" = (
 /obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/food/drinks/bottle/cognac,
+/obj/item/reagent_containers/cup/glass/bottle/cognac,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "B" = (
 /obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/food/drinks/bottle/vodka/badminka,
+/obj/item/reagent_containers/cup/glass/bottle/vodka/badminka,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "C" = (
 /obj/machinery/computer/slot_machine,
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "D" = (
@@ -172,20 +169,16 @@
 /area/shuttle/escape)
 "H" = (
 /obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass,
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass,
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass,
+/obj/machinery/light/directional/east,
 /obj/item/coin/plasma,
 /obj/item/coin/plasma,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "I" = (
-/obj/machinery/computer/slot_machine{
-	dir = 3
-	},
+/obj/machinery/computer/slot_machine,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "J" = (
@@ -196,17 +189,17 @@
 /area/shuttle/escape)
 "K" = (
 /obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/food/drinks/bottle/absinthe,
+/obj/item/reagent_containers/cup/glass/bottle/absinthe,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "L" = (
 /obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/food/drinks/bottle/lizardwine,
+/obj/item/reagent_containers/cup/glass/bottle/lizardwine,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "M" = (
 /obj/structure/shuttle/engine/heater,
-/obj/structure/window/plasma/reinforced{
+/obj/structure/window/reinforced/plasma{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,

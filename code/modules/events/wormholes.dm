@@ -6,11 +6,13 @@ GLOBAL_LIST_EMPTY(all_wormholes) // So we can pick wormholes to teleport to
 	max_occurrences = 3
 	weight = 2
 	min_players = 2
+	category = EVENT_CATEGORY_SPACE
+	description = "Space time anomalies appear on the station, randomly teleporting people who walk into them."
 
 
 /datum/round_event/wormholes
-	announceWhen = 10
-	endWhen = 60
+	announce_when = 10
+	end_when = 60
 
 	var/list/pick_turfs = list()
 	var/list/wormholes = list()
@@ -18,15 +20,15 @@ GLOBAL_LIST_EMPTY(all_wormholes) // So we can pick wormholes to teleport to
 	var/number_of_wormholes = 400
 
 /datum/round_event/wormholes/setup()
-	announceWhen = rand(0, 20)
-	endWhen = rand(40, 80)
+	announce_when = rand(0, 20)
+	end_when = rand(40, 80)
 
 /datum/round_event/wormholes/start()
 	for(var/turf/open/floor/T in world)
 		if(is_station_level(T.z))
 			pick_turfs += T
 
-	for(var/i = 1, i <= number_of_wormholes, i++)
+	for(var/i in 1 to number_of_wormholes)
 		var/turf/T = pick(pick_turfs)
 		wormholes += new /obj/effect/portal/wormhole(T, 0, null, FALSE)
 
@@ -52,7 +54,7 @@ GLOBAL_LIST_EMPTY(all_wormholes) // So we can pick wormholes to teleport to
 	mech_sized = TRUE
 
 
-/obj/effect/portal/wormhole/Initialize(mapload, _creator, _lifespan = 0, obj/effect/portal/_linked, automatic_link = FALSE, turf/hard_target_override, atmos_link_override)
+/obj/effect/portal/wormhole/Initialize(mapload, _creator, _lifespan = 0, obj/effect/portal/_linked, automatic_link = FALSE, turf/hard_target_override)
 	. = ..()
 	GLOB.all_wormholes += src
 
@@ -74,4 +76,4 @@ GLOBAL_LIST_EMPTY(all_wormholes) // So we can pick wormholes to teleport to
 				hard_target = P.loc
 		if(!hard_target)
 			return
-		do_teleport(M, hard_target, 1, 1, 0, 0, channel = TELEPORT_CHANNEL_WORMHOLE) ///You will appear adjacent to the beacon
+		do_teleport(M, hard_target, 1, null, null, channel = TELEPORT_CHANNEL_WORMHOLE) ///You will appear adjacent to the beacon

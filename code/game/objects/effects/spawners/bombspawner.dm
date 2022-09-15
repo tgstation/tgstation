@@ -1,67 +1,123 @@
-#define CELSIUS_TO_KELVIN(T_K) ((T_K) + T0C)
-
-#define OPTIMAL_TEMP_K_PLA_BURN_SCALE(PRESSURE_P,PRESSURE_O,TEMP_O) (((PRESSURE_P) * GLOB.meta_gas_info[/datum/gas/plasma][META_GAS_SPECIFIC_HEAT]) / (((PRESSURE_P) * GLOB.meta_gas_info[/datum/gas/plasma][META_GAS_SPECIFIC_HEAT] + (PRESSURE_O) * GLOB.meta_gas_info[/datum/gas/oxygen][META_GAS_SPECIFIC_HEAT]) / PLASMA_UPPER_TEMPERATURE - (PRESSURE_O) * GLOB.meta_gas_info[/datum/gas/oxygen][META_GAS_SPECIFIC_HEAT] / CELSIUS_TO_KELVIN(TEMP_O)))
-#define OPTIMAL_TEMP_K_PLA_BURN_RATIO(PRESSURE_P,PRESSURE_O,TEMP_O) (CELSIUS_TO_KELVIN(TEMP_O) * PLASMA_OXYGEN_FULLBURN * (PRESSURE_P) / (PRESSURE_O))
-
+/**
+ * Spawns a TTV.
+ *
+ */
 /obj/effect/spawner/newbomb
 	name = "bomb"
 	icon = 'icons/hud/screen_gen.dmi'
 	icon_state = "x"
-	var/temp_p = 1500
-	var/temp_o = 1000 // tank temperatures
-	var/pressure_p = 10 * ONE_ATMOSPHERE
-	var/pressure_o = 10 * ONE_ATMOSPHERE //tank pressures
-	var/assembly_type
+	/* Gasmixes for tank_one and tank_two of the ttv respectively. 
+	 * Populated on /obj/effect/spawner/newbomb/Initialize, depopulated right after by the children procs.
+	 */
+	var/datum/gas_mixture/first_gasmix
+	var/datum/gas_mixture/second_gasmix
 
-/obj/effect/spawner/newbomb/Initialize()
+/** 
+ * The part of code that actually spawns the bomb. Always call the parent's initialize first for subtypes of these.
+ *
+ * Arguments: 
+ * * assembly - An assembly typepath to add to the ttv.
+ */
+/obj/effect/spawner/newbomb/Initialize(mapload, assembly = null)
 	. = ..()
-	var/obj/item/transfer_valve/V = new(src.loc)
-	var/obj/item/tank/internals/plasma/PT = new(V)
-	var/obj/item/tank/internals/oxygen/OT = new(V)
-
-	PT.air_contents.assert_gas(/datum/gas/plasma)
-	PT.air_contents.gases[/datum/gas/plasma][MOLES] = pressure_p*PT.volume/(R_IDEAL_GAS_EQUATION*CELSIUS_TO_KELVIN(temp_p))
-	PT.air_contents.temperature = CELSIUS_TO_KELVIN(temp_p)
-
-	OT.air_contents.assert_gas(/datum/gas/oxygen)
-	OT.air_contents.gases[/datum/gas/oxygen][MOLES] = pressure_o*OT.volume/(R_IDEAL_GAS_EQUATION*CELSIUS_TO_KELVIN(temp_o))
-	OT.air_contents.temperature = CELSIUS_TO_KELVIN(temp_o)
-
-	V.tank_one = PT
-	V.tank_two = OT
-	PT.master = V
-	OT.master = V
-
-	if(assembly_type)
-		var/obj/item/assembly/A = new assembly_type(V)
-		V.attached_device = A
-		A.holder = V
-
-	V.update_appearance()
-
+	var/obj/item/transfer_valve/ttv = new(loc)
+	ttv.tank_one = new /obj/item/tank/internals/plasma (ttv)
+	ttv.tank_two = new /obj/item/tank/internals/oxygen (ttv)
+	first_gasmix = ttv.tank_one.return_air()
+	second_gasmix = ttv.tank_two.return_air()
+	first_gasmix.remove_ratio(1)
+	second_gasmix.remove_ratio(1)
+	if(ispath(assembly, /obj/item/assembly))
+		var/obj/item/assembly/newassembly = new assembly (ttv)
+		ttv.attached_device = newassembly
+		newassembly.on_attach()
+		newassembly.holder = ttv
+	ttv.update_appearance()
 	return INITIALIZE_HINT_QDEL
 
-/obj/effect/spawner/newbomb/timer/syndicate/Initialize()
-	temp_p = (OPTIMAL_TEMP_K_PLA_BURN_SCALE(pressure_p, pressure_o, temp_o)/2 + OPTIMAL_TEMP_K_PLA_BURN_RATIO(pressure_p, pressure_o, temp_o)/2) - T0C
+/obj/effect/spawner/newbomb/proc/calculate_pressure(datum/gas_mixture/gasmix, pressure)
+	return pressure * gasmix.volume/(R_IDEAL_GAS_EQUATION*gasmix.temperature)
+
+/obj/effect/spawner/newbomb/plasma
+
+/obj/effect/spawner/newbomb/plasma/Initialize(mapload)
 	. = ..()
+	if(!first_gasmix || !second_gasmix)
+		return
 
-/obj/effect/spawner/newbomb/timer
-	assembly_type = /obj/item/assembly/timer
+	first_gasmix.temperature = 1413
+	second_gasmix.temperature = 141.3
 
-/obj/effect/spawner/newbomb/timer/syndicate
-	pressure_o = TANK_LEAK_PRESSURE - 1
-	temp_o = 20
+	first_gasmix.assert_gas(/datum/gas/plasma)
+	second_gasmix.assert_gas(/datum/gas/oxygen)
 
-	pressure_p = TANK_LEAK_PRESSURE - 1
+	first_gasmix.gases[/datum/gas/plasma][MOLES] = calculate_pressure(first_gasmix, TANK_LEAK_PRESSURE - 1)
+	second_gasmix.gases[/datum/gas/oxygen][MOLES] = calculate_pressure(second_gasmix, TANK_LEAK_PRESSURE - 1)
 
-/obj/effect/spawner/newbomb/proximity
-	assembly_type = /obj/item/assembly/prox_sensor
+/obj/effect/spawner/newbomb/tritium
 
-/obj/effect/spawner/newbomb/radio
-	assembly_type = /obj/item/assembly/signaler
+/obj/effect/spawner/newbomb/tritium/Initialize(mapload, obj/item/assembly)
+	. = ..()
+	if(!first_gasmix || !second_gasmix)
+		return
 
+	first_gasmix.temperature = 8000
+	second_gasmix.temperature = 43
 
-#undef CELSIUS_TO_KELVIN
+	first_gasmix.assert_gas(/datum/gas/plasma)
+	second_gasmix.assert_gas(/datum/gas/oxygen)
+	second_gasmix.assert_gas(/datum/gas/tritium)
 
-#undef OPTIMAL_TEMP_K_PLA_BURN_SCALE
-#undef OPTIMAL_TEMP_K_PLA_BURN_RATIO
+	first_gasmix.gases[/datum/gas/plasma][MOLES] = calculate_pressure(first_gasmix, TANK_LEAK_PRESSURE - 1)
+	second_gasmix.gases[/datum/gas/oxygen][MOLES] = 0.67 * calculate_pressure(second_gasmix, TANK_LEAK_PRESSURE - 1)
+	second_gasmix.gases[/datum/gas/tritium][MOLES] = 0.33 * calculate_pressure(second_gasmix, TANK_LEAK_PRESSURE - 1)
+
+/obj/effect/spawner/newbomb/isolated_tritium
+
+/obj/effect/spawner/newbomb/isolated_tritium/Initialize(mapload)
+	. = ..()
+	if(!first_gasmix || !second_gasmix)
+		return
+
+	first_gasmix.temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST + 1
+	second_gasmix.temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST + 1
+
+	first_gasmix.assert_gas(/datum/gas/hypernoblium)
+	first_gasmix.assert_gas(/datum/gas/tritium)
+	second_gasmix.assert_gas(/datum/gas/oxygen)
+	
+	first_gasmix.gases[/datum/gas/hypernoblium][MOLES] = REACTION_OPPRESSION_THRESHOLD - 0.01
+	first_gasmix.gases[/datum/gas/tritium][MOLES] = 0.5 * calculate_pressure(first_gasmix, TANK_LEAK_PRESSURE - 1)
+	second_gasmix.gases[/datum/gas/oxygen][MOLES] = calculate_pressure(second_gasmix, TANK_LEAK_PRESSURE-1)
+
+/obj/effect/spawner/newbomb/noblium
+
+/obj/effect/spawner/newbomb/noblium/Initialize(mapload)
+	. = ..()
+	if(!first_gasmix || !second_gasmix)
+		return
+
+	first_gasmix.temperature = 2.7
+	second_gasmix.temperature = 2.7
+
+	first_gasmix.assert_gas(/datum/gas/nitrogen)
+	second_gasmix.assert_gas(/datum/gas/tritium)
+
+	first_gasmix.gases[/datum/gas/nitrogen][MOLES] = calculate_pressure(first_gasmix, TANK_LEAK_PRESSURE - 1)
+	second_gasmix.gases[/datum/gas/tritium][MOLES] = calculate_pressure(second_gasmix, TANK_LEAK_PRESSURE - 1)
+
+/obj/effect/spawner/newbomb/pressure
+
+/obj/effect/spawner/newbomb/pressure/Initialize(mapload)
+	. = ..()
+	if(!first_gasmix || !second_gasmix)
+		return
+
+	first_gasmix.temperature = 20000
+	second_gasmix.temperature = 2.7
+
+	first_gasmix.assert_gas(/datum/gas/hypernoblium)
+	second_gasmix.assert_gas(/datum/gas/tritium)
+
+	first_gasmix.gases[/datum/gas/hypernoblium][MOLES] = calculate_pressure(first_gasmix, TANK_LEAK_PRESSURE - 1)
+	second_gasmix.gases[/datum/gas/tritium][MOLES] = calculate_pressure(second_gasmix, TANK_LEAK_PRESSURE - 1)

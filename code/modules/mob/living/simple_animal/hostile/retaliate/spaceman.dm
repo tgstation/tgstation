@@ -6,6 +6,7 @@
 	icon_dead = "old_dead"
 	icon_gib = "clown_gib"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	sentience_type = SENTIENCE_HUMANOID
 	gender = MALE
 	turns_per_move = 5
 	response_disarm_continuous = "gently pushes aside"
@@ -30,7 +31,7 @@
 /mob/living/simple_animal/hostile/retaliate/nanotrasenpeace //this should be in a different file
 	name = "\improper Nanotrasen Private Security Officer"
 	desc = "An officer part of Nanotrasen's private security force."
-	icon = 'icons/mob/simple_human.dmi'
+	icon = 'icons/mob/simple/simple_human.dmi'
 	icon_state = "nanotrasen"
 	icon_living = "nanotrasen"
 	icon_dead = null
@@ -49,9 +50,11 @@
 	attack_verb_simple = "punch"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	faction = list("nanotrasenprivate")
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	sentience_type = SENTIENCE_HUMANOID
 	combat_mode = TRUE
-	loot = list(/obj/effect/mob_spawn/human/corpse/nanotrasensoldier)
-	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
+	loot = list(/obj/effect/mob_spawn/corpse/human/nanotrasensoldier)
+	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 7.5
 	status_flags = CANPUSH
 	search_objects = 1
@@ -72,4 +75,4 @@
 	casingtype = /obj/item/ammo_casing/c46x30mm
 	projectilesound = 'sound/weapons/gun/smg/shot.ogg'
 	loot = list(/obj/item/gun/ballistic/automatic/wt550,
-				/obj/effect/mob_spawn/human/corpse/nanotrasensoldier)
+				/obj/effect/mob_spawn/corpse/human/nanotrasensoldier)

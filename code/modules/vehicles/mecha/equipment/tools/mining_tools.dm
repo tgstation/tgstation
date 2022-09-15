@@ -16,15 +16,21 @@
 	range = MECHA_MELEE
 	tool_behaviour = TOOL_DRILL
 	toolspeed = 0.9
+	mech_flags = EXOSUIT_MODULE_WORKING | EXOSUIT_MODULE_COMBAT
 	var/drill_delay = 7
 	var/drill_level = DRILL_BASIC
-	mech_flags = EXOSUIT_MODULE_WORKING | EXOSUIT_MODULE_COMBAT
 
-/obj/item/mecha_parts/mecha_equipment/drill/Initialize()
+/obj/item/mecha_parts/mecha_equipment/drill/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/butchering, 50, 100, null, null, TRUE)
+	AddComponent(/datum/component/butchering/mecha, \
+	speed = 5 SECONDS, \
+	effectiveness = 100, \
+	bonus_modifier = null, \
+	butcher_sound = null, \
+	disabled = TRUE, \
+	)
 
-/obj/item/mecha_parts/mecha_equipment/drill/action(mob/source, atom/target, params)
+/obj/item/mecha_parts/mecha_equipment/drill/action(mob/source, atom/target, list/modifiers)
 	// Check if we can even use the equipment to begin with.
 	if(!action_checks(target))
 		return
@@ -43,9 +49,9 @@
 	// You can't drill harder by clicking more.
 	if(!DOING_INTERACTION_WITH_TARGET(source, target) && do_after_cooldown(target, source, DOAFTER_SOURCE_MECHADRILL))
 
-		target.visible_message("<span class='warning'>[chassis] starts to drill [target].</span>", \
-					"<span class='userdanger'>[chassis] starts to drill [target]...</span>", \
-					"<span class='hear'>You hear drilling.</span>")
+		target.visible_message(span_warning("[chassis] starts to drill [target]."), \
+					span_userdanger("[chassis] starts to drill [target]..."), \
+					span_hear("You hear drilling."))
 
 		log_message("Started drilling [target]", LOG_MECHA)
 		// Drilling a turf is a one-and-done procedure.
@@ -84,7 +90,7 @@
 			drill.log_message("Drilled through [src]", LOG_MECHA)
 			dismantle_wall(TRUE, FALSE)
 	else
-		to_chat(user, "[icon2html(src, user)]<span class='danger'>[src] is too durable to drill through.</span>")
+		to_chat(user, "[icon2html(src, user)][span_danger("[src] is too durable to drill through.")]")
 
 /turf/closed/mineral/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill, mob/user)
 	for(var/turf/closed/mineral/M in range(drill.chassis,1))
@@ -93,49 +99,38 @@
 	drill.log_message("[user] drilled through [src]", LOG_MECHA)
 	drill.move_ores()
 
-/turf/open/floor/plating/asteroid/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill)
-	for(var/turf/open/floor/plating/asteroid/M in range(1, drill.chassis))
-		if((get_dir(drill.chassis,M)&drill.chassis.dir) && !M.dug)
+/turf/open/misc/asteroid/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill)
+	for(var/turf/open/misc/asteroid/M in range(1, drill.chassis))
+		if((get_dir(drill.chassis,M) & drill.chassis.dir) && !M.dug)
 			M.getDug()
 	drill.log_message("Drilled through [src]", LOG_MECHA)
 	drill.move_ores()
 
 
 /obj/item/mecha_parts/mecha_equipment/drill/proc/move_ores()
-	if(locate(/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp) in chassis.equipment && istype(chassis, /obj/vehicle/sealed/mecha/working/ripley))
+	if(locate(/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp) in chassis.flat_equipment && istype(chassis, /obj/vehicle/sealed/mecha/working/ripley))
 		var/obj/vehicle/sealed/mecha/working/ripley/R = chassis //we could assume that it's a ripley because it has a clamp, but that's ~unsafe~ and ~bad practice~
 		R.collect_ore()
 
-/obj/item/mecha_parts/mecha_equipment/drill/can_attach(obj/vehicle/sealed/mecha/M as obj)
+/obj/item/mecha_parts/mecha_equipment/drill/can_attach(obj/vehicle/sealed/mecha/M, attach_right = FALSE)
 	if(..())
 		if(istype(M, /obj/vehicle/sealed/mecha/working) || istype(M, /obj/vehicle/sealed/mecha/combat))
 			return TRUE
 	return FALSE
 
-/obj/item/mecha_parts/mecha_equipment/drill/attach(obj/vehicle/sealed/mecha/M)
-	..()
-	var/datum/component/butchering/butchering = src.GetComponent(/datum/component/butchering)
-	butchering.butchering_enabled = TRUE
-
-/obj/item/mecha_parts/mecha_equipment/drill/detach(atom/moveto)
-	..()
-	var/datum/component/butchering/butchering = src.GetComponent(/datum/component/butchering)
-	butchering.butchering_enabled = FALSE
-
 /obj/item/mecha_parts/mecha_equipment/drill/proc/drill_mob(mob/living/target, mob/living/user)
-	target.visible_message("<span class='danger'>[chassis] is drilling [target] with [src]!</span>", \
-						"<span class='userdanger'>[chassis] is drilling you with [src]!</span>")
+	target.visible_message(span_danger("[chassis] is drilling [target] with [src]!"), \
+						span_userdanger("[chassis] is drilling you with [src]!"))
 	log_combat(user, target, "drilled", "[name]", "Combat mode: [user.combat_mode ? "On" : "Off"])(DAMTYPE: [uppertext(damtype)])")
 	if(target.stat == DEAD && target.getBruteLoss() >= (target.maxHealth * 2))
 		log_combat(user, target, "gibbed", name)
 		if(LAZYLEN(target.butcher_results) || LAZYLEN(target.guaranteed_butcher_results))
-			var/datum/component/butchering/butchering = src.GetComponent(/datum/component/butchering)
-			butchering.Butcher(chassis, target)
+			SEND_SIGNAL(src, COMSIG_MECHA_DRILL_MOB, chassis, target)
 		else
 			target.gib()
 	else
 		//drill makes a hole
-		var/obj/item/bodypart/target_part = target.get_bodypart(ran_zone(BODY_ZONE_CHEST))
+		var/obj/item/bodypart/target_part = target.get_bodypart(target.get_random_valid_zone(BODY_ZONE_CHEST))
 		target.apply_damage(10, BRUTE, BODY_ZONE_CHEST, target.run_armor_check(target_part, MELEE))
 
 		//blood splatters
@@ -164,20 +159,14 @@
 	name = "exosuit mining scanner"
 	desc = "Equipment for working exosuits. It will automatically check surrounding rock for useful minerals."
 	icon_state = "mecha_analyzer"
-	selectable = 0
 	equip_cooldown = 15
-	var/scanning_time = 0
+	equipment_slot = MECHA_UTILITY
 	mech_flags = EXOSUIT_MODULE_WORKING
+	var/scanning_time = 0
 
-/obj/item/mecha_parts/mecha_equipment/mining_scanner/Initialize()
+/obj/item/mecha_parts/mecha_equipment/mining_scanner/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSfastprocess, src)
-
-/obj/item/mecha_parts/mecha_equipment/mining_scanner/can_attach(obj/vehicle/sealed/mecha/M as obj)
-	if(..())
-		if(istype(M, /obj/vehicle/sealed/mecha/working))
-			return TRUE
-	return FALSE
 
 /obj/item/mecha_parts/mecha_equipment/mining_scanner/process()
 	if(!loc)

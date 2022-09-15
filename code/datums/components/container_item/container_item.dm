@@ -7,4 +7,5 @@
 
 /// Called when parent is added to the container.
 /datum/component/container_item/proc/try_attach(datum/source, atom/container, mob/user)
+	SIGNAL_HANDLER
 	return FALSE

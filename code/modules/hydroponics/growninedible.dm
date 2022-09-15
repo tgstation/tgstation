@@ -5,6 +5,7 @@
 /obj/item/grown // Grown weapons
 	name = "grown_weapon"
 	icon = 'icons/obj/hydroponics/harvest.dmi'
+	worn_icon = 'icons/mob/clothing/head/hydroponics.dmi'
 	resistance_flags = FLAMMABLE
 	var/obj/item/seeds/seed = null // type path, gets converted to item on New(). It's safe to assume it's always a seed item.
 
@@ -12,8 +13,9 @@
 	. = ..()
 	create_reagents(100)
 
-	if(new_seed)
+	if(istype(new_seed))
 		seed = new_seed.Copy()
+
 	else if(ispath(seed))
 		// This is for adminspawn or map-placed growns. They get the default stats of their seed type.
 		seed = new seed()
@@ -31,6 +33,11 @@
 			seed.prepare_result(src)
 		transform *= TRANSFORM_USING_VARIABLE(seed.potency, 100) + 0.5
 		add_juice()
+
+/obj/item/grown/Destroy()
+	if(isatom(seed))
+		QDEL_NULL(seed)
+	return ..()
 
 /obj/item/grown/proc/add_juice()
 	if(reagents)

@@ -1,22 +1,36 @@
 #define DUMPTIME 3000
 
 /datum/bank_account
+	///Name listed on the account, reflected on the ID card.
 	var/account_holder = "Rusty Venture"
+	///How many credits are currently held in the bank account.
 	var/account_balance = 0
+	///If there are things effecting how much income a player will get, it's reflected here 1 is standard for humans.
 	var/payday_modifier
+	///The job datum of the account owner.
 	var/datum/job/account_job
+	///List of the physical ID card objects that are associated with this bank_account
 	var/list/bank_cards = list()
+	///Should this ID be added to the global list of accounts? If true, will be subject to station-bound economy effects as well as income.
 	var/add_to_accounts = TRUE
+	///The Unique ID number code associated with the owner's bank account, assigned at round start.
 	var/account_id
-	var/being_dumped = FALSE //pink levels are rising
+	///Is there a CRAB 17 on the station draining funds? Prevents manual fund transfer. pink levels are rising
+	var/being_dumped = FALSE
+	///Reference to the current civilian bounty that the account is working on.
 	var/datum/bounty/civilian_bounty
+	///If player is currently picking a civilian bounty to do, these options are held here to prevent soft-resetting through the UI.
 	var/list/datum/bounty/bounties
-	var/bounty_timer = 0
+	///Can this account be replaced? Set to true for default IDs not recognized by the station.
+	var/replaceable = FALSE
+	///Cooldown timer on replacing a civilain bounty. Bounties can only be replaced once every 5 minutes.
+	COOLDOWN_DECLARE(bounty_timer)
 
-/datum/bank_account/New(newname, job, modifier = 1)
+/datum/bank_account/New(newname, job, modifier = 1, player_account = TRUE)
 	account_holder = newname
 	account_job = job
 	payday_modifier = modifier
+	add_to_accounts = player_account
 	setup_unique_account_id()
 
 /datum/bank_account/Destroy()
@@ -24,8 +38,14 @@
 		SSeconomy.bank_accounts_by_id -= "[account_id]"
 	return ..()
 
-/// Proc guarantees the account_id possesses a unique number. If it doesn't, it tries to find a unique alternative. It then adds it to the `SSeconomy.bank_accounts_by_id` global list.
+/**
+ * Proc guarantees the account_id possesses a unique number.
+ * If it doesn't, it tries to find a unique alternative.
+ * It then adds it to the `SSeconomy.bank_accounts_by_id` global list.
+ */
 /datum/bank_account/proc/setup_unique_account_id()
+	if (!add_to_accounts)
+		return
 	if(account_id && !SSeconomy.bank_accounts_by_id["[account_id]"])
 		SSeconomy.bank_accounts_by_id["[account_id]"] = src
 		return //Already unique
@@ -51,23 +71,41 @@
 			else
 				SSeconomy.bank_accounts_by_id -= "[account_id]"
 
+/**
+ * Sets the bank_account to behave as though a CRAB-17 event is happening.
+ */
 /datum/bank_account/proc/dumpeet()
 	being_dumped = TRUE
 
+/**
+ * Performs the math component of adjusting a bank account balance.
+ */
 /datum/bank_account/proc/_adjust_money(amt)
 	account_balance += amt
 	if(account_balance < 0)
 		account_balance = 0
 
+/**
+ * Returns TRUE if a bank account has more than or equal to the amount, amt.
+ * Otherwise returns false.
+ */
 /datum/bank_account/proc/has_money(amt)
 	return account_balance >= amt
 
+/**
+ * Adjusts the balance of a bank_account as well as sanitizes the numerical input.
+ */
 /datum/bank_account/proc/adjust_money(amt)
 	if((amt < 0 && has_money(-amt)) || amt > 0)
 		_adjust_money(amt)
 		return TRUE
 	return FALSE
 
+/**
+ * Performs a transfer of credits to the bank_account datum from another bank account.
+ * *datum/bank_account/from: The bank account that is sending the credits to this bank_account datum.
+ * *amount: the quantity of credits that are being moved between bank_account datums.
+ */
 /datum/bank_account/proc/transfer_money(datum/bank_account/from, amount)
 	if(from.has_money(amount))
 		adjust_money(amount)
@@ -77,10 +115,16 @@
 		return TRUE
 	return FALSE
 
+/**
+ * This proc handles passive income gain for players, using their job's paycheck value.
+ * Funds are taken from the parent department account to hand out to players. This can result in payment brown-outs if too many people are in one department.
+ */
 /datum/bank_account/proc/payday(amt_of_paychecks, free = FALSE)
 	if(!account_job)
 		return
 	var/money_to_transfer = round(account_job.paycheck * payday_modifier * amt_of_paychecks)
+	if(amt_of_paychecks == 1)
+		money_to_transfer = clamp(money_to_transfer, 0, PAYCHECK_CREW) //We want to limit single, passive paychecks to regular crew income.
 	if(free)
 		adjust_money(money_to_transfer)
 		SSblackbox.record_feedback("amount", "free_income", money_to_transfer)
@@ -98,13 +142,17 @@
 	bank_card_talk("ERROR: Payday aborted, unable to contact departmental account.")
 	return FALSE
 
+/**
+ * This sends a local chat message to the owner of a bank account, on all ID cards registered to the bank_account.
+ * If not held, sends out a message to all nearby players.
+ */
 /datum/bank_account/proc/bank_card_talk(message, force)
 	if(!message || !bank_cards.len)
 		return
 	for(var/obj/A in bank_cards)
 		var/icon_source = A
-		if(istype(A, /obj/item/card/id/advanced))
-			var/obj/item/card/id/advanced/id_card = A
+		if(isidcard(A))
+			var/obj/item/card/id/id_card = A
 			icon_source = id_card.get_cached_flat_icon()
 		var/mob/card_holder = recursive_loc_check(A, /mob)
 		if(ismob(card_holder)) //If on a mob
@@ -113,7 +161,7 @@
 
 			if(card_holder.can_hear())
 				card_holder.playsound_local(get_turf(card_holder), 'sound/machines/twobeep_high.ogg', 50, TRUE)
-				to_chat(card_holder, "[icon2html(icon_source, card_holder)] <span class='notice'>[message]</span>")
+				to_chat(card_holder, "[icon2html(icon_source, card_holder)] [span_notice("[message]")]")
 		else if(isturf(A.loc)) //If on the ground
 			var/turf/T = A.loc
 			for(var/mob/M in hearers(1,T))
@@ -121,7 +169,7 @@
 					continue
 				if(M.can_hear())
 					M.playsound_local(T, 'sound/machines/twobeep_high.ogg', 50, TRUE)
-					to_chat(M, "[icon2html(icon_source, M)] <span class='notice'>[message]</span>")
+					to_chat(M, "[icon2html(icon_source, M)] [span_notice("[message]")]")
 		else
 			var/atom/sound_atom
 			for(var/mob/M in A.loc) //If inside a container with other mobs (e.g. locker)
@@ -131,7 +179,7 @@
 					sound_atom = A.drop_location() //in case we're inside a bodybag in a crate or something. doing this here to only process it if there's a valid mob who can hear the sound.
 				if(M.can_hear())
 					M.playsound_local(get_turf(sound_atom), 'sound/machines/twobeep_high.ogg', 50, TRUE)
-					to_chat(M, "[icon2html(icon_source, M)] <span class='notice'>[message]</span>")
+					to_chat(M, "[icon2html(icon_source, M)] [span_notice("[message]")]")
 
 /**
  * Returns a string with the civilian bounty's description on it.
@@ -170,14 +218,14 @@
  */
 /datum/bank_account/proc/reset_bounty()
 	civilian_bounty = null
-	bounty_timer = 0
+	COOLDOWN_RESET(src, bounty_timer)
 
 /datum/bank_account/department
 	account_holder = "Guild Credit Agency"
 	var/department_id = "REPLACE_ME"
 	add_to_accounts = FALSE
 
-/datum/bank_account/department/New(dep_id, budget)
+/datum/bank_account/department/New(dep_id, budget, player_account = FALSE)
 	department_id = dep_id
 	account_balance = budget
 	account_holder = SSeconomy.department_accounts[dep_id]

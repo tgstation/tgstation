@@ -1,3 +1,55 @@
+//Basically the assistant suit
+/obj/item/clothing/under/plasmaman
+	name = "plasma envirosuit"
+	desc = "A special containment suit that allows plasma-based lifeforms to exist safely in an oxygenated environment, and automatically extinguishes them in a crisis. Despite being airtight, it's not spaceworthy."
+	icon_state = "plasmaman"
+	inhand_icon_state = "plasmaman"
+	icon = 'icons/obj/clothing/under/plasmaman.dmi'
+	worn_icon = 'icons/mob/clothing/under/plasmaman.dmi'
+	clothing_flags = PLASMAMAN_PREVENT_IGNITION
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 95, ACID = 95)
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	can_adjust = FALSE
+	strip_delay = 80
+	var/next_extinguish = 0
+	var/extinguish_cooldown = 100
+	var/extinguishes_left = 5
+
+/obj/item/clothing/under/plasmaman/examine(mob/user)
+	. = ..()
+	. += span_notice("There are [extinguishes_left] extinguisher charges left in this suit.")
+
+/obj/item/clothing/under/plasmaman/proc/Extinguish(mob/living/carbon/human/H)
+	if(!istype(H))
+		return
+
+	if(H.on_fire)
+		if(extinguishes_left)
+			if(next_extinguish > world.time)
+				return
+			next_extinguish = world.time + extinguish_cooldown
+			extinguishes_left--
+			H.visible_message(span_warning("[H]'s suit automatically extinguishes [H.p_them()]!"),span_warning("Your suit automatically extinguishes you."))
+			H.extinguish_mob()
+			new /obj/effect/particle_effect/water(get_turf(H))
+
+/obj/item/clothing/under/plasmaman/attackby(obj/item/E, mob/user, params)
+	..()
+	if (istype(E, /obj/item/extinguisher_refill))
+		if (extinguishes_left == 5)
+			to_chat(user, span_notice("The inbuilt extinguisher is full."))
+		else
+			extinguishes_left = 5
+			to_chat(user, span_notice("You refill the suit's built-in extinguisher, using up the cartridge."))
+			qdel(E)
+
+/obj/item/extinguisher_refill
+	name = "envirosuit extinguisher cartridge"
+	desc = "A cartridge loaded with a compressed extinguisher mix, used to refill the automatic extinguisher on plasma envirosuits."
+	icon_state = "plasmarefill"
+	icon = 'icons/obj/device.dmi'
+
+
 /obj/item/clothing/under/plasmaman/cargo
 	name = "cargo plasma envirosuit"
 	desc = "A joint envirosuit used by plasmamen quartermasters and cargo techs alike, due to the logistical problems of differenciating the two with the length of their pant legs."
@@ -9,7 +61,6 @@
 	desc = "An air-tight khaki suit designed for operations on lavaland by plasmamen."
 	icon_state = "explorer_envirosuit"
 	inhand_icon_state = "explorer_envirosuit"
-
 
 /obj/item/clothing/under/plasmaman/chef
 	name = "chef's plasma envirosuit"
@@ -47,7 +98,6 @@
 	icon_state = "botany_envirosuit"
 	inhand_icon_state = "botany_envirosuit"
 
-
 /obj/item/clothing/under/plasmaman/mime
 	name = "mime envirosuit"
 	desc = "It's not very colourful."
@@ -62,9 +112,12 @@
 
 /obj/item/clothing/under/plasmaman/prisoner
 	name = "prisoner envirosuit"
-	desc = "An orange envirosuit identifying and protecting a criminal plasmaman."
+	desc = "An orange envirosuit identifying and protecting a criminal plasmaman. Its suit sensors are stuck in the \"Fully On\" position."
 	icon_state = "prisoner_envirosuit"
 	inhand_icon_state = "prisoner_envirosuit"
+	has_sensor = LOCKED_SENSORS
+	sensor_mode = SENSOR_COORDS
+	random_sensor = FALSE
 
 /obj/item/clothing/under/plasmaman/clown/Extinguish(mob/living/carbon/human/H)
 	if(!istype(H))
@@ -76,6 +129,6 @@
 				return
 			next_extinguish = world.time + extinguish_cooldown
 			extinguishes_left--
-			H.visible_message("<span class='warning'>[H]'s suit spews space lube everywhere!</span>","<span class='warning'>Your suit spews space lube everywhere!</span>")
+			H.visible_message(span_warning("[H]'s suit spews space lube everywhere!"),span_warning("Your suit spews space lube everywhere!"))
 			H.extinguish_mob()
-			new /obj/effect/particle_effect/foam(loc) //Truely terrifying.
+			new /obj/effect/particle_effect/fluid/foam(loc) //Truely terrifying.

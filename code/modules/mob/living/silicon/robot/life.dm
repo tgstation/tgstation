@@ -59,34 +59,14 @@
 		var/cellcharge = cell.charge/cell.maxcharge
 		switch(cellcharge)
 			if(0.75 to INFINITY)
-				clear_alert("charge")
+				clear_alert(ALERT_CHARGE)
 			if(0.5 to 0.75)
-				throw_alert("charge", /atom/movable/screen/alert/lowcell, 1)
+				throw_alert(ALERT_CHARGE, /atom/movable/screen/alert/lowcell, 1)
 			if(0.25 to 0.5)
-				throw_alert("charge", /atom/movable/screen/alert/lowcell, 2)
+				throw_alert(ALERT_CHARGE, /atom/movable/screen/alert/lowcell, 2)
 			if(0.01 to 0.25)
-				throw_alert("charge", /atom/movable/screen/alert/lowcell, 3)
+				throw_alert(ALERT_CHARGE, /atom/movable/screen/alert/lowcell, 3)
 			else
-				throw_alert("charge", /atom/movable/screen/alert/emptycell)
+				throw_alert(ALERT_CHARGE, /atom/movable/screen/alert/emptycell)
 	else
-		throw_alert("charge", /atom/movable/screen/alert/nocell)
-
-//Robots on fire
-/mob/living/silicon/robot/handle_fire(delta_time, times_fired)
-	. = ..()
-	if(.) //if the mob isn't on fire anymore
-		return
-	if(fire_stacks > 0)
-		adjust_fire_stacks(-0.5 * delta_time)
-	else
-		extinguish_mob()
-		return TRUE
-
-	//adjustFireLoss(3)
-
-/mob/living/silicon/robot/update_fire()
-	var/mutable_appearance/fire_overlay = mutable_appearance('icons/mob/OnFire.dmi', "Generic_mob_burning")
-	if(on_fire)
-		add_overlay(fire_overlay)
-	else
-		cut_overlay(fire_overlay)
+		throw_alert(ALERT_CHARGE, /atom/movable/screen/alert/nocell)

@@ -1,0 +1,215 @@
+2017-08-06:
+  Anonmare:
+  - rscadd: Surgical toolarm to protolathe and exofab
+  - tweak: Toolarm tools are less robust but more efficient at surgery
+  - tweak: Arm augments are no longer a huge item
+  AnturK:
+  - balance: Cyborg remote control range is now limited to 7 tiles.
+  Ergovisavi:
+  - rscadd: Adds the "seedling" planetstation mob to the backend
+  Floyd:
+  - bugfix: No longer does everyone look like a sick, nauseated weirdo!
+  Galactic Corgi Breeding Mills, LLC:
+  - bugfix: Fixed corgis being able to wear spacesuit helmets despite lacking the
+      proper code and sprites for them.
+  Joan:
+  - tweak: Colossus's shotgun is now a static-spread blast of 6 bolts, making it more
+      predictable.
+  - balance: Geis now mutes for 12-14 seconds and "stuns" the target, via a binding
+      effect, for 25 seconds instead of initiating a conversion.
+  - experiment: Geis's "stun" restrains the target and prevents them from taking actions,
+      but its duration is halved if the binding is not being pulled by a Servant.
+  - wip: Using Geis on a target prevents you from taking actions other than attempting
+      to pull the binding. If you are pulling the binding, you can dispel it at any
+      time.
+  - wip: As should be obvious, if the binding is destroyed or dispelled, you can once
+      again take normal actions.
+  - tweak: Sigils of Submission are now permanent and have been moved from the Script
+      tier to the Driver tier, with an according cost adjustment. They still do not
+      penetrate mindshield implants.
+  - rscdel: Removed Taunting Tirade.
+  - rscdel: Removed Sigils of Accession.
+  Lexorion:
+  - imageadd: Hearty Punch has a new, fancier sprite.
+  More Robust Than You:
+  - bugfix: RCL and Ghetto RCLs are no longer invisible
+  - bugfix: RCL action button now has a sprite
+  - bugfix: RCLs can no longer go inside you
+  XDTM:
+  - bugfix: Eyes can now be properly damaged.
+  Xhuis:
+  - spellcheck: Removed an improper period from the supermatter sliver theft objective's
+      name.
+  - bugfix: Alien hunters can no longer pounce through shields.
+  - bugfix: Observing mobs that have no HUD will no longer cause intense lighting
+      glare.
+  - bugfix: Objects on shuttles now rotate in the correct directions.
+  - soundadd: The speakers in the ceiling have been upgraded, and many sounds are
+      now less tinny.
+  Xhuis and oranges:
+  - bugfix: Banana cream pies no longer splat when they're caught by someone.
+  - soundadd: Throwing a pie in someone's face now has a splat sound.
+  kingofkosmos:
+  - bugfix: Fixed hair sticking through headgear.
+2017-08-13:
+  JStheguy:
+  - imageadd: Laptops now have actual sprites for using the supermatter monitoring
+      instead of defaulting to a generic one.
+  Joan:
+  - imageadd: Belligerent now has a visible indicator over the caster.
+  More Robust Than You:
+  - tweak: Mulligan and non-continuous completion checks will not consider afk/logged
+      out people to be "living crew".
+  - tweak: The wiki button now asks what page you want to be taken to
+  - tweak: His Grace now shows up on the orbit list
+  Pubby:
+  - rscadd: The Curator job is now available on PubbyStation
+  - rscadd: Beekeeping has been added to PubbyStation's monastery
+  - tweak: PubbyStation's bar has been rearranged
+  Xhuis:
+  - bugfix: Swarmer shells now have ghost notifications again.
+  - bugfix: Minebots no longer lack icons for their action buttons.
+  kingofkosmos:
+  - imageadd: Adds icon_states to the unused and used Eldritch whetstones. Sprites
+      by Fury McFlurry.
+2017-08-14:
+  Joan:
+  - imageadd: Ported CEV-Eris's APC sprites.
+  More Robust Than You:
+  - bugfix: Fixes a typo in the blobbernaut spawn text
+  WJohnston:
+  - rscadd: Adds an ore box and shuttle console to aux bases on all stations.
+  Xhuis:
+  - bugfix: The Resurrect Cultist rune now works as intended.
+  - bugfix: Cyborg energy swords now properly have an icon.
+  kingofkosmos:
+  - tweak: Canisters don't flash red lights anymore when empty.
+2017-08-19:
+  Anonmare:
+  - balance: Raised airlock deflection by one point
+  BeeSting12:
+  - balance: The meth explosion temperature has been raised.
+  FrozenGuy5/PraiseRatvar:
+  - balance: Nerfs L6 SAW Hollow Point Bullets from -10 armour penetration to -60
+      armour penetration.
+  Joan:
+  - balance: Deathsquads no longer get shielded hardsuits.
+  More Robust Than You:
+  - rscadd: Blobs can now sense when they're being cuddled!
+  - bugfix: Fixes mining hardsuit heat_protection
+  - bugfix: RCL icons are now better at updating
+  NewSta:
+  - bugfix: Fixes the wiki button
+  - spellcheck: Fixes a typo in the wiki button description
+  XDTM:
+  - rscadd: You can now click on symptoms in the Pandemic to see their description
+      and stats
+  Xhuis:
+  - soundadd: The station's explosion now uses a new (or old) sound.
+  - rscadd: Adds smart metal foam, which conforms to area borders and walls. It can
+      be made through chemistry by mixing foaming agent, acetone, and iron.
+  - rscadd: Smart metal foam will create foamed plating on tiles exposed to space.
+      Foamed plating can be struck with floor tiles to turn it into regular plating!
+  - spellcheck: The chat message has been removed from *spin. I hope you're happy.
+  nicbn:
+  - imageadd: Nanotrasen redesigned the area power controllers!
+  - imageadd: Thanks Xhuis for the contrast tweak on APCs
+2017-08-23:
+  Cobby:
+  - balance: Planting kudzu now has a short delay with a visible message to users
+      around you. Hit-N-Run planting is no longer possible.
+  - rscdel: kudzu bluespace mutation and spacewalk mutation are removed.
+  Cruix:
+  - rscadd: The syndicate shuttle now has a navigation computer that allows it to
+      fly to any unoccupied location on the station z-level.
+  Ergovisavi:
+  - tweak: Slightly increased the radius of the atmos resin launcher, and resin now
+      makes floors unslippery
+  Pubby:
+  - rscadd: Gorillas
+  - rscadd: Irradiating monkeys can now turn them into hostile gorillas
+  Shadowlight213:
+  - experiment: The amount of time spent playing, and jobs played are now tracked
+      per player.
+  - experiment: This tracking can be used as a requirement of playtime to unlock jobs.
+  ShizCalev:
+  - balance: Morphlings now have to restore to their original form before taking a
+      new one.
+  - bugfix: Morphlings will no longer have combined object appearances
+  Supermichael777:
+  - bugfix: Boss tiles have been reconstructed out of an unstoppable force.
+  TehZombehz:
+  - rscadd: Nanotrasen Culinary Division has authorized the construction of pancakes,
+      including blueberry and chocolate chip pancakes. Pancakes can be stacked on
+      top of each other.
+2017-08-26:
+  Cyberboss:
+  - rscadd: Added the credits roll
+  Iamgoofball:
+  - rscadd: Plasmamen now hallucinate with blackpowder in their system
+  Joan:
+  - balance: Geis bindings no longer decay faster if not pulled by a Servant, but
+      last for 20 seconds, from 25.
+  - tweak: Geis bindings will decay slower when on a Sigil of Submission, and, if
+      being pulled by a Servant when crossing a Sigil of Submission, will helpfully
+      remove the pull.
+  - tweak: Removing Geis bindings is no longer instant and can be done by any Servant
+      with a slab, not just the initiator.
+  - wip: Geis no longer prevents you from taking actions, but you remain unable to
+      recite scripture while the target is bound. In addition, dealing damage to a
+      bound target will cause the bindings to decay much more rapidly.
+  - rscadd: You can now remove sigils by hitting them with a clockwork slab for a
+      small refund.
+  More Robust Than You:
+  - balance: Lowers the chance for monkeys to become gorillas
+  - rscadd: Holoparasite prompts now have a "Never For This Round" option
+  Naksu:
+  - spellcheck: fixed inconsistent grammar between machines that derive from /obj/machinery/chem_dispenser
+  - spellcheck: touched up some chat messages to include references to objects instead
+      of "that" or "the machine" etc., also removed references to beakers being loaded
+      in machines that can accept any container
+2017-08-30:
+  CPTANT:
+  - balance: Hacked AI module cost is reduced to 9TC
+  Cobby & Cyberboss:
+  - rscadd: A stealth option for the traitor microlaser has been added. When used,
+      it adds 30 seconds to the cooldown of the device.
+  Cyberboss (unwillingly by Kor's hand):
+  - balance: You no longer take damage/are as heavily blinded in crit while above
+      -30HP
+  - balance: Whispering in crit above -30HP will not cause you to succumb
+  - balance: You can now hear in crit above -30HP
+  Joan:
+  - imageadd: Cult blades have updated item and inhand sprites.
+  Kor:
+  - rscadd: Added Shadow Walk, a new form of jaunt that lasts for an unlimited amount
+      of time, but ends if you enter a well lit tile. It is planned for use in a Shadowling
+      rework, but feel free to hassle admins to test it out in the mean time.
+  - balance: Slime people can consume meat and dairy again.
+  Lzimann:
+  - rscadd: Ghosts now have a way to see all available ghost roles! Check your ghost
+      tab!
+  MMMiracles:
+  - rscdel: Cerestation has been decommissioned. Nanotrasen apologizes for any spikes
+      of suicidal tendencies, sporadic outbursts of primitive anger, and other issues
+      that may of been caused during the station's run.
+  Naksu:
+  - bugfix: fixed portable chem dispensers charging 50% slower than intended when
+      initialized.
+  - bugfix: fixed portable chem dispensers getting faster charging rate every time
+      refreshparts() is called
+  Pubby:
+  - rscadd: Crew-tracking pinpointers to replace laggy crew monitoring console functionality
+  - rscadd: Crew-tracking pinpointers in medical vendors and the detective's office
+  RemieRichards:
+  - rscadd: AltClick listing now updates instantly on AltClick
+  - bugfix: AltClick listing no longer reveals obscured items
+  ShizCalev:
+  - tweak: The singularity now poses a threat towards asteroids as well as stations.
+  - tweak: All power systems will now report their wattage values in Watts, Kilowatts,
+      Megawatts, and Gigawatts. Gone are the days of seeing 48760 W total load when
+      working with an APC!
+  kingofkosmos:
+  - tweak: You can now unbuckle out a chair/bed by moving.
+  ninjanomnom:
+  - bugfix: Fixed a problem with shuttles being unrepairable under certain circumstances.

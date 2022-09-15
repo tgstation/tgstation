@@ -1,10 +1,11 @@
 /datum/antagonist/valentine
-	name = "valentine"
+	name = "\improper Valentine"
 	roundend_category = "valentines" //there's going to be a ton of them so put them in separate category
 	show_in_antagpanel = FALSE
 	prevent_roundtype_conversion = FALSE
+	suicide_cry = "FOR MY LOVE!!"
 	var/datum/mind/date
-	soft_antag = TRUE
+	count_against_dynamic_roll_chance = FALSE
 
 /datum/antagonist/valentine/proc/forge_objectives()
 	var/datum/objective/protect/protect_objective = new /datum/objective/protect
@@ -19,17 +20,17 @@
 	forge_objectives()
 	if(isliving(owner.current))
 		var/mob/living/L = owner.current
-		L.apply_status_effect(STATUS_EFFECT_INLOVE, date.current)
+		L.apply_status_effect(/datum/status_effect/in_love, date.current)
 	. = ..()
 
 /datum/antagonist/valentine/on_removal()
 	if(isliving(owner.current))
 		var/mob/living/L = owner.current
-		L.remove_status_effect(STATUS_EFFECT_INLOVE)
+		L.remove_status_effect(/datum/status_effect/in_love)
 	. = ..()
 
 /datum/antagonist/valentine/greet()
-	to_chat(owner, "<span class='warning'><B>You're on a date with [date.name]! Protect [date.p_them()] at all costs. This takes priority over all other loyalties.</B></span>")
+	to_chat(owner, span_warning("<B>You're on a date with [date.name]! Protect [date.p_them()] at all costs. This takes priority over all other loyalties.</B>"))
 
 //Squashed up a bit
 /datum/antagonist/valentine/roundend_report()

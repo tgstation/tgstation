@@ -1,3 +1,10 @@
+/* Mind Restoration
+ * Slight stealth reduction
+ * Reduces resistance
+ * Slight increase to stage speed
+ * Greatly decreases transmissibility
+ * Critical level
+*/
 /datum/symptom/mind_restoration
 	name = "Mind Restoration"
 	desc = "The virus strengthens the bonds between neurons, reducing the duration of any ailments of the mind."
@@ -36,18 +43,16 @@
 
 
 	if(A.stage >= 3)
-		M.dizziness = max(0, M.dizziness - 2)
-		M.drowsyness = max(0, M.drowsyness - 2)
-		M.slurring = max(0, M.slurring - 2)
-		M.set_confusion(max(0, M.get_confusion() - 2))
+		M.adjust_timed_status_effect(-4 SECONDS, /datum/status_effect/dizziness)
+		M.adjust_drowsyness(-2)
+		M.adjust_timed_status_effect(-1 SECONDS, /datum/status_effect/speech/slurring/drunk)
+		M.adjust_timed_status_effect(-2 SECONDS, /datum/status_effect/confusion)
 		if(purge_alcohol)
 			M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 3)
-			if(ishuman(M))
-				var/mob/living/carbon/human/H = M
-				H.drunkenness = max(H.drunkenness - 5, 0)
+			M.adjust_drunk_effect(-5)
 
 	if(A.stage >= 4)
-		M.drowsyness = max(0, M.drowsyness - 2)
+		M.adjust_drowsyness(-2)
 		if(M.reagents.has_reagent(/datum/reagent/toxin/mindbreaker))
 			M.reagents.remove_reagent(/datum/reagent/toxin/mindbreaker, 5)
 		if(M.reagents.has_reagent(/datum/reagent/toxin/histamine))
@@ -85,25 +90,25 @@
 	var/mob/living/carbon/M = A.affected_mob
 	switch(A.stage)
 		if(4, 5)
-			var/obj/item/organ/ears/ears = M.getorganslot(ORGAN_SLOT_EARS)
+			var/obj/item/organ/internal/ears/ears = M.getorganslot(ORGAN_SLOT_EARS)
 			if(ears)
 				ears.adjustEarDamage(-4, -4)
 			M.adjust_blindness(-2)
 			M.adjust_blurriness(-2)
-			var/obj/item/organ/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
+			var/obj/item/organ/internal/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
 			if(!eyes) // only dealing with eye stuff from here on out
 				return
 			eyes.applyOrganDamage(-2)
 			if(HAS_TRAIT_FROM(M, TRAIT_BLIND, EYE_DAMAGE))
 				if(prob(20))
-					to_chat(M, "<span class='warning'>Your vision slowly returns...</span>")
+					to_chat(M, span_warning("Your vision slowly returns..."))
 					M.cure_blind(EYE_DAMAGE)
 					M.cure_nearsighted(EYE_DAMAGE)
 					M.blur_eyes(35)
 			else if(HAS_TRAIT_FROM(M, TRAIT_NEARSIGHT, EYE_DAMAGE))
-				to_chat(M, "<span class='warning'>The blackness in your peripheral vision fades.</span>")
+				to_chat(M, span_warning("The blackness in your peripheral vision fades."))
 				M.cure_nearsighted(EYE_DAMAGE)
 				M.blur_eyes(10)
 		else
 			if(prob(base_message_chance))
-				to_chat(M, "<span class='notice'>[pick("Your eyes feel great.","You feel like your eyes can focus more clearly.", "You don't feel the need to blink.","Your ears feel great.","Your hearing feels more acute.")]</span>")
+				to_chat(M, span_notice("[pick("Your eyes feel great.","You feel like your eyes can focus more clearly.", "You don't feel the need to blink.","Your ears feel great.","Your hearing feels more acute.")]"))

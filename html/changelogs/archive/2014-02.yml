@@ -1,0 +1,133 @@
+2014-02-01:
+  Ergovisavi:
+  - rscadd: Walking Mushrooms will now attack and eat each other! They're all a little
+      unique from each other, no two shrooms are exactly alike, and a better quality
+      harvest means stronger Walking Shrooms. Pit them against each other for your
+      entertainment.
+  - rscadd: Each mushroom will have a different colored cap to identify them. When
+      mushrooms eat each other, they get stronger. The resulting mushroom will drop
+      more slices when cut down to harvest, and will have better quality slices.
+  - rscadd: Don't hurt them yourself, though, or you'll bruise them, and mushrooms
+      won't get stronger from eating a bruised mushroom. If your mushroom faints,
+      feed it a mushroom such as a plump helmet to get it back on its feet. It will
+      slowly regenerate to full health eventually.
+2014-02-02:
+  Demas:
+  - rscadd: Attack sounds for all melee weapons! No more silent attacks.
+  - tweak: The volume of an object's attack sound is based on the weapon's force and/or
+      weight class.
+  - rscadd: Welders, lighters, matches, cigarettes, energy swords and energy axes
+      have different attack sounds based on whether they're on or off.
+  - rscadd: Weapons that do no damage play a tap sound. The exceptions are the bike
+      horn, which still honks, and the banhammer, which plays adminhelp.ogg. Surely
+      nothing can go wrong with that last one.
+  - tweak: When you tap someone with an object, the message now uses "tapped" or "patted"
+      instead of attacked. The horn still uses HONKED, and the banhammer still uses
+      BANNED.
+  - bugfix: You won't get the "armour has blocked an attack" message for harmless
+      attacks anymore.
+  - rscadd: Adds 5 force to the lighter when it's lit. Same as when you accidentally
+      burn yourself lighting it.
+  - rscadd: Removes boldness from item attack messages on non-human mobs. The attack
+      is bolded for a player controlling a non-human mob. Now your eyes won't jump
+      to the chat when it's Pun Pun who's being brutalised.
+  - bugfix: Blood will no longer come out of non-human mobs if the attack is harmless.
+  - tweak: Adds a period at the end of the catatonic human examine message. That's
+      been bugging me for years.
+  - tweak: The activation and deactivation sounds of toy swords, energy swords and
+      energy shields are slightly quieter. Energy swords and shields are now slightly
+      louder than toys.
+  - bugfix: You can no longer light things with burnt matches.
+  - tweak: Match, cigarette and lighter attack verbs, forces and damage types change
+      based on whether the object is lit or not.
+  - bugfix: Fixes a bug with the energy blade that kept it at weight class 5 after
+      it was deactivated. Who cares, it disappears upon deactivation.
+  - tweak: Changes the welder out of fuel message slightly to be less fragmented.
+  - tweak: Removes dead air from a lot of weapon sound effects to make them more responsive.
+      In other words, the fire extinguisher attack sound will play a lot sooner after
+      you attack than before.
+  - tweak: Equalised the peak volumes of most weapon sounds to be -0.1dB in an attempt
+      to make volumes based on force more consistent across different sounds.
+2014-02-03:
+  Demas:
+  - tweak: Changes windoor and newscaster attack messages to be consistent with windows
+      and grilles. This removes the distracting boldness from windoor attack messages,
+      which is reserved for userdanger, and names the attacker.
+  - rscadd: Thrown items now play a sound effect on impact. The volume of the sound
+      is based on the item's throwforce and/or weight class.
+  - tweak: The fireaxe now has 15 throwforce, when previously it had only 1. But why
+      would you throw it away, anyway?
+  - rscadd: Projectiles now play a sound upon impact. The volume of the sound depends
+      on the damage done by the projectile. Damageless projectiles such as electrodes
+      have static volumes. Practise laser and laser tag beams have no impact sound.
+  - soundadd: Added sear.ogg for the impacts of damaging beams such as lasers. It
+      may be replaced if player feedback proves negative.
+2014-02-05:
+  Yota:
+  - tweak: Handling a couple flashlights will no longer transform you into the sun.  Each
+      light source will have deminishing returns.
+  - bugfix: Inserting lights into containers should no longer dim other lights.
+2014-02-08:
+  Razharas:
+  - rscadd: Adds more constructible and deconstructable machines!
+  - rscadd: Added constructible miniature chemical dispensers, upgradable
+  - rscadd: Sleepers are now constructible and upgradable, open and close like DNA
+      scanners, and don't require a console
+  - rscadd: Cryogenic tubes are now constructible and upgradable, open and close like
+      DNA scanners, and you can set the cryogenic tube's pipe's direction by opening
+      its panel and wrenching it to connect it to piping
+  - rscadd: Telescience pads are now constructible and upgradable
+  - rscadd: Telescience consoles are now constructible
+  - rscadd: Telescience tweaked (you can save data on GPS units now)
+  - rscadd: Teleporters are now constructible and upgradable, the console has a new
+      interface and you can lock onto places saved to GPS units in telescience
+  - tweak: Teleporters start unconnected. You need to manually reconnect the console,
+      station and hub by opening the panel of the station and applying wire cutters
+      to it.
+  - rscadd: Biogenerators are now constructible and upgradable
+  - rscadd: Atmospherics heaters and freezers are now constructible and upgradable
+      and can be rotated with a wrench when their panel is open to connect them to
+      pipes. Screw the board to switch between heater and freezer.
+  - rscadd: Mech chargers are now constructible and upgradable
+  - rscadd: Microwaves are now constructible and upgradable
+  - rscadd: All kitchen machinery can now be wrenched free
+  - rscadd: SMES are now constructible
+  - rscadd: Dragging a human's sprite to a cryogenic tube or sleeper will put them
+      inside and activate it if it's cryo
+  - rscadd: Constructible newscasters, their frames are made with autolathes
+  - rscadd: Constructible pandemics
+  - rscadd: Constructible power turbines and their computers
+  - rscadd: Constructible power compressors
+  - rscadd: Constructible vending machines. Screw the board to switch vendor type.
+  - rscadd: Constructible hydroponics trays
+  - imageadd: Sprites for all this
+  - wip: This update will have unforeseen bugs, please report those you find at https://github.com/tgstation/-tg-station/issues/new
+      if you want them fixed.
+  - rscadd: As usual, machines are deconstructed by screwing open their panels and
+      crowbarring them. While constructing machines, examining them will tell you
+      what parts you're missing.
+2014-02-09:
+  adrix89:
+  - tweak: Spray Bottles can no longer  wet up to three tiles with water.
+  - tweak: Spray Bottles have a third higher release volume that wets a single tile.
+  - tweak: Water slip times are reduced to the same stun times as soap.
+2014-02-17:
+  Yota:
+  - tweak: Photograph now rendered crisp and clean, so that we may enjoy them in their
+      0.009 megapixel goodness.
+  - bugfix: Cameras should now capture more of what they should, and less of what
+      they shouldn't.
+2014-02-19:
+  Perakp:
+  - imageadd: Added Iatot's cyborg module selection transformation animations.
+2014-02-24:
+  Razharas:
+  - bugfix: Fixed infinite telecrystal exploit.
+2014-02-25:
+  Incoming5643:
+  - rscadd: Colored burgers! Include a crayon in your microwave when cooking a burger
+      and it'll come out just like a Pretty Pattie.
+  - bugfix: Fixed AI's being able to interact with syndicate bombs.
+2014-02-26:
+  Incoming5643:
+  - rscadd: Color blending Kitty Ears have returned.

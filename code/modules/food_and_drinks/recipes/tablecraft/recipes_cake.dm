@@ -16,7 +16,7 @@
 	name = "Cheese cake"
 	reqs = list(
 		/obj/item/food/cake/plain = 1,
-		/obj/item/food/cheese = 2
+		/obj/item/food/cheese/wedge = 2
 	)
 	result = /obj/item/food/cake/cheese
 	subcategory = CAT_CAKE
@@ -81,7 +81,7 @@
 	name = "Energy cake"
 	reqs = list(
 		/obj/item/food/cake/birthday = 1,
-		/obj/item/melee/transforming/energy/sword = 1,
+		/obj/item/melee/energy/sword = 1,
 	)
 	blacklist = list(/obj/item/food/cake/birthday/energy)
 	result = /obj/item/food/cake/birthday/energy
@@ -90,7 +90,7 @@
 /datum/crafting_recipe/food/braincake
 	name = "Brain cake"
 	reqs = list(
-		/obj/item/organ/brain = 1,
+		/obj/item/organ/internal/brain = 1,
 		/obj/item/food/cake/plain = 1
 	)
 	result = /obj/item/food/cake/brain
@@ -151,6 +151,32 @@
 	result = /obj/item/food/cake/bscc
 	subcategory = CAT_CAKE
 
+/datum/crafting_recipe/food/pavlovacream
+	name = "Pavlova with cream"
+	reqs = list(
+		/datum/reagent/consumable/eggwhite = 12,
+		/datum/reagent/consumable/sugar = 15,
+		/datum/reagent/consumable/whipped_cream = 10,
+		/obj/item/food/grown/berries = 5
+	)
+	result = /obj/item/food/cake/pavlova
+	subcategory = CAT_CAKE
+
+/datum/crafting_recipe/food/pavlovakorta
+	name = "Pavlova with korta cream"
+	reqs = list(
+		/datum/reagent/consumable/eggwhite = 12,
+		/datum/reagent/consumable/sugar = 15,
+		/datum/reagent/consumable/korta_milk = 10,
+		/obj/item/food/grown/berries = 5
+	)
+	result = /obj/item/food/cake/pavlova
+	subcategory = CAT_CAKE
+
+/datum/crafting_recipe/food/pavlovakorta/on_craft_completion(mob/user, obj/item/food/cake/pavlova/result)
+	result.foodtypes = NUTS | FRUIT | SUGAR
+	result.AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cakeslice/pavlova/nuts, 5, 30)
+
 /datum/crafting_recipe/food/bscvcake
 	name = "blackberry and strawberry vanilla cake"
 	reqs = list(
@@ -196,8 +222,8 @@
 /datum/crafting_recipe/food/cak
 	name = "Living cat/cake hybrid"
 	reqs = list(
-		/obj/item/organ/brain = 1,
-		/obj/item/organ/heart = 1,
+		/obj/item/organ/internal/brain = 1,
+		/obj/item/organ/internal/heart = 1,
 		/obj/item/food/cake/birthday = 1,
 		/obj/item/food/meat/slab = 3,
 		/datum/reagent/blood = 30,
@@ -206,3 +232,23 @@
 	)
 	result = /mob/living/simple_animal/pet/cat/cak
 	subcategory = CAT_CAKE //Cat! Haha, get it? CAT? GET IT? We get it - Love Felines
+
+/datum/crafting_recipe/food/fruitcake
+	name = "english fruitcake"
+	reqs = list(
+		/obj/item/food/cake/plain = 1,
+		/obj/item/food/no_raisin = 1,
+		/obj/item/food/grown/cherries = 1,
+		/datum/reagent/consumable/ethanol/rum = 5
+	)
+	result = /obj/item/food/cake/fruit
+	subcategory = CAT_CAKE
+
+/datum/crafting_recipe/food/plumcake
+	name = "Plum cake"
+	reqs = list(
+		/obj/item/food/cake/plain = 1,
+		/obj/item/food/grown/plum = 2
+	)
+	result = /obj/item/food/cake/plum
+	subcategory = CAT_CAKE

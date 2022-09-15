@@ -9,9 +9,9 @@
 	if(!istype(I, /obj/item/petri_dish))
 		return ..()
 	if(current_dish)
-		to_chat(user, "<span class='warning'>There is already a petridish in \the [src].</span>")
+		to_chat(user, span_warning("There is already a petridish in \the [src]."))
 		return
-	to_chat(user, "<span class='notice'>You put [I] into \the [src].</span>")
+	to_chat(user, span_notice("You put [I] into \the [src]."))
 	current_dish = I
 	current_dish.forceMove(src)
 
@@ -79,3 +79,16 @@
 			current_dish = null
 			. = TRUE
 	update_appearance()
+
+/datum/crafting_recipe/microscope
+	name = "Microscope"
+	result = /obj/structure/microscope
+	time = 30
+	tool_behaviors = list(TOOL_SCREWDRIVER)
+	reqs = list(
+		/obj/item/stack/sheet/glass = 1,
+		/obj/item/stack/sheet/plastic = 1,
+		/obj/item/stock_parts/scanning_module = 1,
+		/obj/item/flashlight = 1,
+	)
+	category = CAT_CHEMISTRY

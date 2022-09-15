@@ -15,30 +15,35 @@ export class Color {
   }
 
   toString() {
-    return `rgba(${this.r | 0}, ${this.g | 0}, ${this.b | 0}, ${this.a | 0})`;
+    // Alpha component needs to permit fractional values, so cannot use |
+    let alpha = parseFloat(this.a);
+    if (isNaN(alpha)) {
+      alpha = 1;
+    }
+    return `rgba(${this.r | 0}, ${this.g | 0}, ${this.b | 0}, ${alpha})`;
   }
 }
 
 /**
  * Creates a color from the CSS hex color notation.
  */
-Color.fromHex = hex => (
+Color.fromHex = (hex) =>
   new Color(
     parseInt(hex.substr(1, 2), 16),
     parseInt(hex.substr(3, 2), 16),
-    parseInt(hex.substr(5, 2), 16))
-);
+    parseInt(hex.substr(5, 2), 16)
+  );
 
 /**
  * Linear interpolation of two colors.
  */
-Color.lerp = (c1, c2, n) => (
+Color.lerp = (c1, c2, n) =>
   new Color(
     (c2.r - c1.r) * n + c1.r,
     (c2.g - c1.g) * n + c1.g,
     (c2.b - c1.b) * n + c1.b,
-    (c2.a - c1.a) * n + c1.a)
-);
+    (c2.a - c1.a) * n + c1.a
+  );
 
 /**
  * Loops up the color in the provided list of colors

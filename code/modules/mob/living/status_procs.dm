@@ -2,11 +2,11 @@
 //The effects include: stun, knockdown, unconscious, sleeping, resting, jitteriness, dizziness,
 // eye damage, eye_blind, eye_blurry, druggy, TRAIT_BLIND trait, and TRAIT_NEARSIGHT trait.
 
+#define IS_STUN_IMMUNE(source, ignore_canstun) ((source.status_flags & GODMODE) || (!ignore_canstun && (!(source.status_flags & CANKNOCKDOWN) || HAS_TRAIT(source, TRAIT_STUNIMMUNE))))
 
-////////////////////////////// STUN ////////////////////////////////////
-
+/* STUN */
 /mob/living/proc/IsStun() //If we're stunned
-	return has_status_effect(STATUS_EFFECT_STUN)
+	return has_status_effect(/datum/status_effect/incapacitating/stun)
 
 /mob/living/proc/AmountStun() //How many deciseconds remain in our stun
 	var/datum/status_effect/incapacitating/stun/S = IsStun()
@@ -17,56 +17,52 @@
 /mob/living/proc/Stun(amount, ignore_canstun = FALSE) //Can't go below remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_STUN, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
-	if(status_flags & GODMODE)
+	if(IS_STUN_IMMUNE(src, ignore_canstun))
 		return
-	if(((status_flags & CANSTUN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
-		if(absorb_stun(amount, ignore_canstun))
-			return
-		var/datum/status_effect/incapacitating/stun/S = IsStun()
-		if(S)
-			S.duration = max(world.time + amount, S.duration)
-		else if(amount > 0)
-			S = apply_status_effect(STATUS_EFFECT_STUN, amount)
-		return S
+	if(absorb_stun(amount, ignore_canstun))
+		return
+	var/datum/status_effect/incapacitating/stun/S = IsStun()
+	if(S)
+		S.duration = max(world.time + amount, S.duration)
+	else if(amount > 0)
+		S = apply_status_effect(/datum/status_effect/incapacitating/stun, amount)
+	return S
 
 /mob/living/proc/SetStun(amount, ignore_canstun = FALSE) //Sets remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_STUN, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
-	if(status_flags & GODMODE)
+	if(IS_STUN_IMMUNE(src, ignore_canstun))
 		return
-	if(((status_flags & CANSTUN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
-		var/datum/status_effect/incapacitating/stun/S = IsStun()
-		if(amount <= 0)
-			if(S)
-				qdel(S)
+	var/datum/status_effect/incapacitating/stun/S = IsStun()
+	if(amount <= 0)
+		if(S)
+			qdel(S)
+	else
+		if(absorb_stun(amount, ignore_canstun))
+			return
+		if(S)
+			S.duration = world.time + amount
 		else
-			if(absorb_stun(amount, ignore_canstun))
-				return
-			if(S)
-				S.duration = world.time + amount
-			else
-				S = apply_status_effect(STATUS_EFFECT_STUN, amount)
-		return S
+			S = apply_status_effect(/datum/status_effect/incapacitating/stun, amount)
+	return S
 
 /mob/living/proc/AdjustStun(amount, ignore_canstun = FALSE) //Adds to remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_STUN, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
-	if(status_flags & GODMODE)
+	if(IS_STUN_IMMUNE(src, ignore_canstun))
 		return
-	if(((status_flags & CANSTUN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
-		if(absorb_stun(amount, ignore_canstun))
-			return
-		var/datum/status_effect/incapacitating/stun/S = IsStun()
-		if(S)
-			S.duration += amount
-		else if(amount > 0)
-			S = apply_status_effect(STATUS_EFFECT_STUN, amount)
-		return S
+	if(absorb_stun(amount, ignore_canstun))
+		return
+	var/datum/status_effect/incapacitating/stun/S = IsStun()
+	if(S)
+		S.duration += amount
+	else if(amount > 0)
+		S = apply_status_effect(/datum/status_effect/incapacitating/stun, amount)
+	return S
 
-///////////////////////////////// KNOCKDOWN /////////////////////////////////////
-
+/* KNOCKDOWN */
 /mob/living/proc/IsKnockdown() //If we're knocked down
-	return has_status_effect(STATUS_EFFECT_KNOCKDOWN)
+	return has_status_effect(/datum/status_effect/incapacitating/knockdown)
 
 /mob/living/proc/AmountKnockdown() //How many deciseconds remain in our knockdown
 	var/datum/status_effect/incapacitating/knockdown/K = IsKnockdown()
@@ -77,55 +73,52 @@
 /mob/living/proc/Knockdown(amount, ignore_canstun = FALSE) //Can't go below remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_KNOCKDOWN, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
-	if(status_flags & GODMODE)
+	if(IS_STUN_IMMUNE(src, ignore_canstun))
 		return
-	if(((status_flags & CANKNOCKDOWN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
-		if(absorb_stun(amount, ignore_canstun))
-			return
-		var/datum/status_effect/incapacitating/knockdown/K = IsKnockdown()
-		if(K)
-			K.duration = max(world.time + amount, K.duration)
-		else if(amount > 0)
-			K = apply_status_effect(STATUS_EFFECT_KNOCKDOWN, amount)
-		return K
+	if(absorb_stun(amount, ignore_canstun))
+		return
+	var/datum/status_effect/incapacitating/knockdown/K = IsKnockdown()
+	if(K)
+		K.duration = max(world.time + amount, K.duration)
+	else if(amount > 0)
+		K = apply_status_effect(/datum/status_effect/incapacitating/knockdown, amount)
+	return K
 
 /mob/living/proc/SetKnockdown(amount, ignore_canstun = FALSE) //Sets remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_KNOCKDOWN, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
-	if(status_flags & GODMODE)
+	if(IS_STUN_IMMUNE(src, ignore_canstun))
 		return
-	if(((status_flags & CANKNOCKDOWN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
-		var/datum/status_effect/incapacitating/knockdown/K = IsKnockdown()
-		if(amount <= 0)
-			if(K)
-				qdel(K)
+	var/datum/status_effect/incapacitating/knockdown/K = IsKnockdown()
+	if(amount <= 0)
+		if(K)
+			qdel(K)
+	else
+		if(absorb_stun(amount, ignore_canstun))
+			return
+		if(K)
+			K.duration = world.time + amount
 		else
-			if(absorb_stun(amount, ignore_canstun))
-				return
-			if(K)
-				K.duration = world.time + amount
-			else
-				K = apply_status_effect(STATUS_EFFECT_KNOCKDOWN, amount)
-		return K
+			K = apply_status_effect(/datum/status_effect/incapacitating/knockdown, amount)
+	return K
 
 /mob/living/proc/AdjustKnockdown(amount, ignore_canstun = FALSE) //Adds to remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_KNOCKDOWN, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
-	if(status_flags & GODMODE)
+	if(IS_STUN_IMMUNE(src, ignore_canstun))
 		return
-	if(((status_flags & CANKNOCKDOWN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
-		if(absorb_stun(amount, ignore_canstun))
-			return
-		var/datum/status_effect/incapacitating/knockdown/K = IsKnockdown()
-		if(K)
-			K.duration += amount
-		else if(amount > 0)
-			K = apply_status_effect(STATUS_EFFECT_KNOCKDOWN, amount)
-		return K
+	if(absorb_stun(amount, ignore_canstun))
+		return
+	var/datum/status_effect/incapacitating/knockdown/K = IsKnockdown()
+	if(K)
+		K.duration += amount
+	else if(amount > 0)
+		K = apply_status_effect(/datum/status_effect/incapacitating/knockdown, amount)
+	return K
 
-///////////////////////////////// IMMOBILIZED ////////////////////////////////////
+/* IMMOBILIZED */
 /mob/living/proc/IsImmobilized() //If we're immobilized
-	return has_status_effect(STATUS_EFFECT_IMMOBILIZED)
+	return has_status_effect(/datum/status_effect/incapacitating/immobilized)
 
 /mob/living/proc/AmountImmobilized() //How many deciseconds remain in our Immobilized status effect
 	var/datum/status_effect/incapacitating/immobilized/I = IsImmobilized()
@@ -136,55 +129,52 @@
 /mob/living/proc/Immobilize(amount, ignore_canstun = FALSE) //Can't go below remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_IMMOBILIZE, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
-	if(status_flags & GODMODE)
+	if(IS_STUN_IMMUNE(src, ignore_canstun))
 		return
-	if(((status_flags & CANKNOCKDOWN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
-		if(absorb_stun(amount, ignore_canstun))
-			return
-		var/datum/status_effect/incapacitating/immobilized/I = IsImmobilized()
-		if(I)
-			I.duration = max(world.time + amount, I.duration)
-		else if(amount > 0)
-			I = apply_status_effect(STATUS_EFFECT_IMMOBILIZED, amount)
-		return I
+	if(absorb_stun(amount, ignore_canstun))
+		return
+	var/datum/status_effect/incapacitating/immobilized/I = IsImmobilized()
+	if(I)
+		I.duration = max(world.time + amount, I.duration)
+	else if(amount > 0)
+		I = apply_status_effect(/datum/status_effect/incapacitating/immobilized, amount)
+	return I
 
 /mob/living/proc/SetImmobilized(amount, ignore_canstun = FALSE) //Sets remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_IMMOBILIZE, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
-	if(status_flags & GODMODE)
+	if(IS_STUN_IMMUNE(src, ignore_canstun))
 		return
-	if(((status_flags & CANKNOCKDOWN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
-		var/datum/status_effect/incapacitating/immobilized/I = IsImmobilized()
-		if(amount <= 0)
-			if(I)
-				qdel(I)
+	var/datum/status_effect/incapacitating/immobilized/I = IsImmobilized()
+	if(amount <= 0)
+		if(I)
+			qdel(I)
+	else
+		if(absorb_stun(amount, ignore_canstun))
+			return
+		if(I)
+			I.duration = world.time + amount
 		else
-			if(absorb_stun(amount, ignore_canstun))
-				return
-			if(I)
-				I.duration = world.time + amount
-			else
-				I = apply_status_effect(STATUS_EFFECT_IMMOBILIZED, amount)
-		return I
+			I = apply_status_effect(/datum/status_effect/incapacitating/immobilized, amount)
+	return I
 
 /mob/living/proc/AdjustImmobilized(amount, ignore_canstun = FALSE) //Adds to remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_IMMOBILIZE, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
-	if(status_flags & GODMODE)
+	if(IS_STUN_IMMUNE(src, ignore_canstun))
 		return
-	if(((status_flags & CANKNOCKDOWN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
-		if(absorb_stun(amount, ignore_canstun))
-			return
-		var/datum/status_effect/incapacitating/immobilized/I = IsImmobilized()
-		if(I)
-			I.duration += amount
-		else if(amount > 0)
-			I = apply_status_effect(STATUS_EFFECT_IMMOBILIZED, amount)
-		return I
+	if(absorb_stun(amount, ignore_canstun))
+		return
+	var/datum/status_effect/incapacitating/immobilized/I = IsImmobilized()
+	if(I)
+		I.duration += amount
+	else if(amount > 0)
+		I = apply_status_effect(/datum/status_effect/incapacitating/immobilized, amount)
+	return I
 
-///////////////////////////////// PARALYZED //////////////////////////////////
+/* PARALYZED */
 /mob/living/proc/IsParalyzed() //If we're paralyzed
-	return has_status_effect(STATUS_EFFECT_PARALYZED)
+	return has_status_effect(/datum/status_effect/incapacitating/paralyzed)
 
 /mob/living/proc/AmountParalyzed() //How many deciseconds remain in our Paralyzed status effect
 	var/datum/status_effect/incapacitating/paralyzed/P = IsParalyzed(FALSE)
@@ -195,51 +185,116 @@
 /mob/living/proc/Paralyze(amount, ignore_canstun = FALSE) //Can't go below remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_PARALYZE, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
-	if(status_flags & GODMODE)
+	if(IS_STUN_IMMUNE(src, ignore_canstun))
 		return
-	if(((status_flags & CANKNOCKDOWN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
-		if(absorb_stun(amount, ignore_canstun))
-			return
-		var/datum/status_effect/incapacitating/paralyzed/P = IsParalyzed(FALSE)
-		if(P)
-			P.duration = max(world.time + amount, P.duration)
-		else if(amount > 0)
-			P = apply_status_effect(STATUS_EFFECT_PARALYZED, amount)
-		return P
+	if(absorb_stun(amount, ignore_canstun))
+		return
+	var/datum/status_effect/incapacitating/paralyzed/P = IsParalyzed(FALSE)
+	if(P)
+		P.duration = max(world.time + amount, P.duration)
+	else if(amount > 0)
+		P = apply_status_effect(/datum/status_effect/incapacitating/paralyzed, amount)
+	return P
 
 /mob/living/proc/SetParalyzed(amount, ignore_canstun = FALSE) //Sets remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_PARALYZE, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
-	if(status_flags & GODMODE)
+	if(IS_STUN_IMMUNE(src, ignore_canstun))
 		return
-	if(((status_flags & CANKNOCKDOWN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
-		var/datum/status_effect/incapacitating/paralyzed/P = IsParalyzed(FALSE)
-		if(amount <= 0)
-			if(P)
-				qdel(P)
+	var/datum/status_effect/incapacitating/paralyzed/P = IsParalyzed(FALSE)
+	if(amount <= 0)
+		if(P)
+			qdel(P)
+	else
+		if(absorb_stun(amount, ignore_canstun))
+			return
+		if(P)
+			P.duration = world.time + amount
 		else
-			if(absorb_stun(amount, ignore_canstun))
-				return
-			if(P)
-				P.duration = world.time + amount
-			else
-				P = apply_status_effect(STATUS_EFFECT_PARALYZED, amount)
-		return P
+			P = apply_status_effect(/datum/status_effect/incapacitating/paralyzed, amount)
+	return P
 
 /mob/living/proc/AdjustParalyzed(amount, ignore_canstun = FALSE) //Adds to remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_PARALYZE, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
-	if(status_flags & GODMODE)
+	if(IS_STUN_IMMUNE(src, ignore_canstun))
 		return
-	if(((status_flags & CANKNOCKDOWN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
+	if(absorb_stun(amount, ignore_canstun))
+		return
+	var/datum/status_effect/incapacitating/paralyzed/P = IsParalyzed(FALSE)
+	if(P)
+		P.duration += amount
+	else if(amount > 0)
+		P = apply_status_effect(/datum/status_effect/incapacitating/paralyzed, amount)
+	return P
+
+/* INCAPACITATED */
+
+
+/// Proc that returns the remaining duration of the status efect in deciseconds.
+/mob/living/proc/amount_incapacitated()
+	var/datum/status_effect/incapacitating/incapacitated/incapacitated_status_effect = has_status_effect(/datum/status_effect/incapacitating/incapacitated)
+	if (incapacitated_status_effect)
+		return incapacitated_status_effect.duration - world.time
+	else
+		return 0
+
+/** Proc that actually applies the status effect.
+ * Applies the Incapacitated status effect to a mob/living.
+ * * amount - Amount of time the status effect should be applied for, in deciseconds.
+ * * ignore_canstun - If TRUE, the mob's resistance to stuns is ignored.
+ */
+/mob/living/proc/incapacitate(amount, ignore_canstun = FALSE)
+	if(IS_STUN_IMMUNE(src, ignore_canstun))
+		return
+	if(absorb_stun(amount, ignore_canstun))
+		return
+	var/datum/status_effect/incapacitating/incapacitated/incapacitated_status_effect = has_status_effect(/datum/status_effect/incapacitating/incapacitated)
+	if(incapacitated_status_effect)
+		incapacitated_status_effect.duration = max(world.time + amount, incapacitated_status_effect.duration)
+	else if(amount > 0)
+		incapacitated_status_effect = apply_status_effect(/datum/status_effect/incapacitating/incapacitated, amount)
+	return incapacitated_status_effect
+
+/** Proc that set the incapacitated status effect's remaining duration to a certain time.
+ * Checks if the mob has the status effect. If yes, it sets the duration to the amount passed in arguments. If not, applies the status effect
+ * and sets the duration to the amount passed in arguments.
+ * * amount - Amount of time the status effect should be set to, in deciseconds.
+ * * ignore_canstun - If TRUE, the mob's resistance to stuns is ignored.
+ */
+/mob/living/proc/set_incapacitated(amount, ignore_canstun = FALSE)
+	if(IS_STUN_IMMUNE(src, ignore_canstun))
+		return
+	var/datum/status_effect/incapacitating/incapacitated/incapacitated_status_effect = has_status_effect(/datum/status_effect/incapacitating/incapacitated)
+	if(amount <= 0)
+		if(incapacitated_status_effect)
+			qdel(incapacitated_status_effect)
+	else
 		if(absorb_stun(amount, ignore_canstun))
 			return
-		var/datum/status_effect/incapacitating/paralyzed/P = IsParalyzed(FALSE)
-		if(P)
-			P.duration += amount
-		else if(amount > 0)
-			P = apply_status_effect(STATUS_EFFECT_PARALYZED, amount)
-		return P
+		if(incapacitated_status_effect)
+			incapacitated_status_effect.duration = world.time + amount
+		else
+			incapacitated_status_effect = apply_status_effect(/datum/status_effect/incapacitating/incapacitated, amount)
+	return incapacitated_status_effect
+
+/** Proc that adds duration to an incapacitated status effect.
+ * Checks if the mob has the status effect. If yes, it adds the amount passed in arguments to the remaining duration. If not, applies the status effect
+ * and sets the duration to the amount passed in arguments.
+ * * amount - Amount of time the status effect should be set to, in deciseconds.
+ * * ignore_canstun - If TRUE, the mob's resistance to stuns is ignored.
+ */
+/mob/living/proc/adjust_incapacitated(amount, ignore_canstun = FALSE) //Adds to remaining duration
+	if(IS_STUN_IMMUNE(src, ignore_canstun))
+		return
+	if(absorb_stun(amount, ignore_canstun))
+		return
+	var/datum/status_effect/incapacitating/incapacitated/incapacitated_status_effect = has_status_effect(/datum/status_effect/incapacitating/incapacitated)
+	if(incapacitated_status_effect)
+		incapacitated_status_effect.duration += amount
+	else if(amount > 0)
+		incapacitated_status_effect = apply_status_effect(/datum/status_effect/incapacitating/incapacitated, amount)
+	return incapacitated_status_effect
 
 //Blanket
 /mob/living/proc/AllImmobility(amount)
@@ -263,9 +318,9 @@
 	AdjustImmobilized(amount)
 
 
-//////////////////UNCONSCIOUS
+/* UNCONSCIOUS */
 /mob/living/proc/IsUnconscious() //If we're unconscious
-	return has_status_effect(STATUS_EFFECT_UNCONSCIOUS)
+	return has_status_effect(/datum/status_effect/incapacitating/unconscious)
 
 /mob/living/proc/AmountUnconscious() //How many deciseconds remain in our unconsciousness
 	var/datum/status_effect/incapacitating/unconscious/U = IsUnconscious()
@@ -276,50 +331,46 @@
 /mob/living/proc/Unconscious(amount, ignore_canstun = FALSE) //Can't go below remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_UNCONSCIOUS, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
-	if(status_flags & GODMODE)
+	if(IS_STUN_IMMUNE(src, ignore_canstun))
 		return
-	if(((status_flags & CANUNCONSCIOUS) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE))  || ignore_canstun)
-		var/datum/status_effect/incapacitating/unconscious/U = IsUnconscious()
-		if(U)
-			U.duration = max(world.time + amount, U.duration)
-		else if(amount > 0)
-			U = apply_status_effect(STATUS_EFFECT_UNCONSCIOUS, amount)
-		return U
+	var/datum/status_effect/incapacitating/unconscious/U = IsUnconscious()
+	if(U)
+		U.duration = max(world.time + amount, U.duration)
+	else if(amount > 0)
+		U = apply_status_effect(/datum/status_effect/incapacitating/unconscious, amount)
+	return U
 
 /mob/living/proc/SetUnconscious(amount, ignore_canstun = FALSE) //Sets remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_UNCONSCIOUS, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
-	if(status_flags & GODMODE)
+	if(IS_STUN_IMMUNE(src, ignore_canstun))
 		return
-	if(((status_flags & CANUNCONSCIOUS) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
-		var/datum/status_effect/incapacitating/unconscious/U = IsUnconscious()
-		if(amount <= 0)
-			if(U)
-				qdel(U)
-		else if(U)
-			U.duration = world.time + amount
-		else
-			U = apply_status_effect(STATUS_EFFECT_UNCONSCIOUS, amount)
-		return U
+	var/datum/status_effect/incapacitating/unconscious/U = IsUnconscious()
+	if(amount <= 0)
+		if(U)
+			qdel(U)
+	else if(U)
+		U.duration = world.time + amount
+	else
+		U = apply_status_effect(/datum/status_effect/incapacitating/unconscious, amount)
+	return U
 
 /mob/living/proc/AdjustUnconscious(amount, ignore_canstun = FALSE) //Adds to remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_UNCONSCIOUS, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
-	if(status_flags & GODMODE)
+	if(IS_STUN_IMMUNE(src, ignore_canstun))
 		return
-	if(((status_flags & CANUNCONSCIOUS) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
-		var/datum/status_effect/incapacitating/unconscious/U = IsUnconscious()
-		if(U)
-			U.duration += amount
-		else if(amount > 0)
-			U = apply_status_effect(STATUS_EFFECT_UNCONSCIOUS, amount)
-		return U
+	var/datum/status_effect/incapacitating/unconscious/U = IsUnconscious()
+	if(U)
+		U.duration += amount
+	else if(amount > 0)
+		U = apply_status_effect(/datum/status_effect/incapacitating/unconscious, amount)
+	return U
 
-/////////////////////////////////// SLEEPING ////////////////////////////////////
-
+/* SLEEPING */
 /mob/living/proc/IsSleeping() //If we're asleep
 	if(!HAS_TRAIT(src, TRAIT_SLEEPIMMUNE))
-		return has_status_effect(STATUS_EFFECT_SLEEPING)
+		return has_status_effect(/datum/status_effect/incapacitating/sleeping)
 
 /mob/living/proc/AmountSleeping() //How many deciseconds remain in our sleep
 	var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
@@ -336,7 +387,7 @@
 	if(S)
 		S.duration = max(world.time + amount, S.duration)
 	else if(amount > 0)
-		S = apply_status_effect(STATUS_EFFECT_SLEEPING, amount)
+		S = apply_status_effect(/datum/status_effect/incapacitating/sleeping, amount)
 	return S
 
 /mob/living/proc/SetSleeping(amount) //Sets remaining duration
@@ -351,7 +402,7 @@
 	else if(S)
 		S.duration = world.time + amount
 	else
-		S = apply_status_effect(STATUS_EFFECT_SLEEPING, amount)
+		S = apply_status_effect(/datum/status_effect/incapacitating/sleeping, amount)
 	return S
 
 /mob/living/proc/AdjustSleeping(amount) //Adds to remaining duration
@@ -363,7 +414,7 @@
 	if(S)
 		S.duration += amount
 	else if(amount > 0)
-		S = apply_status_effect(STATUS_EFFECT_SLEEPING, amount)
+		S = apply_status_effect(/datum/status_effect/incapacitating/sleeping, amount)
 	return S
 
 ///Allows us to set a permanent sleep on a player (use with caution and remember to unset it with SetSleeping() after the effect is over)
@@ -376,16 +427,27 @@
 	if(S)
 		S.duration = -1
 	else
-		S = apply_status_effect(STATUS_EFFECT_SLEEPING, -1)
+		S = apply_status_effect(/datum/status_effect/incapacitating/sleeping, -1)
 	return S
+
+///////////////////////// CLEAR STATUS /////////////////////////
+
+/mob/living/proc/adjust_status_effects_on_shake_up()
+	AdjustStun(-60)
+	AdjustKnockdown(-60)
+	AdjustUnconscious(-60)
+	AdjustSleeping(-100)
+	AdjustParalyzed(-60)
+	AdjustImmobilized(-60)
 
 ///////////////////////////////// FROZEN /////////////////////////////////////
 
+/* FROZEN */
 /mob/living/proc/IsFrozen()
 	return has_status_effect(/datum/status_effect/freon)
 
-///////////////////////////////////// STUN ABSORPTION /////////////////////////////////////
 
+/* STUN ABSORPTION*/
 /mob/living/proc/add_stun_absorption(key, duration, priority, message, self_message, examine_message)
 //adds a stun absorption with a key, a duration in deciseconds, its priority, and the messages it makes when you're stun/examined, if any
 	if(!islist(stun_absorption))
@@ -413,42 +475,46 @@
 		if(amount) //don't spam up the chat for continuous stuns
 			if(priority_absorb_key["visible_message"] || priority_absorb_key["self_message"])
 				if(priority_absorb_key["visible_message"] && priority_absorb_key["self_message"])
-					visible_message("<span class='warning'>[src][priority_absorb_key["visible_message"]]</span>", "<span class='boldwarning'>[priority_absorb_key["self_message"]]</span>")
+					visible_message(span_warning("[src][priority_absorb_key["visible_message"]]"), span_boldwarning("[priority_absorb_key["self_message"]]"))
 				else if(priority_absorb_key["visible_message"])
-					visible_message("<span class='warning'>[src][priority_absorb_key["visible_message"]]</span>")
+					visible_message(span_warning("[src][priority_absorb_key["visible_message"]]"))
 				else if(priority_absorb_key["self_message"])
-					to_chat(src, "<span class='boldwarning'>[priority_absorb_key["self_message"]]</span>")
+					to_chat(src, span_boldwarning("[priority_absorb_key["self_message"]]"))
 			priority_absorb_key["stuns_absorbed"] += amount
 		return TRUE
 
-/////////////////////////////////// DISABILITIES ////////////////////////////////////
-/mob/living/proc/add_quirk(quirktype, spawn_effects) //separate proc due to the way these ones are handled
+/mob/living/proc/add_quirk(quirktype) //separate proc due to the way these ones are handled
 	if(HAS_TRAIT(src, quirktype))
 		return
-	var/datum/quirk/T = quirktype
-	var/qname = initial(T.name)
+	var/datum/quirk/quirk = quirktype
+	var/qname = initial(quirk.name)
 	if(!SSquirks || !SSquirks.quirks[qname])
 		return
-	new quirktype (src, spawn_effects)
-	return TRUE
+	quirk = new quirktype()
+	if(quirk.add_to_holder(src))
+		return TRUE
+	qdel(quirk)
+	return FALSE
 
 /mob/living/proc/remove_quirk(quirktype)
-	for(var/datum/quirk/Q in roundstart_quirks)
-		if(Q.type == quirktype)
-			qdel(Q)
+	for(var/datum/quirk/quirk in quirks)
+		if(quirk.type == quirktype)
+			qdel(quirk)
 			return TRUE
 	return FALSE
 
 /mob/living/proc/has_quirk(quirktype)
-	for(var/datum/quirk/Q in roundstart_quirks)
-		if(Q.type == quirktype)
+	for(var/datum/quirk/quirk in quirks)
+		if(quirk.type == quirktype)
 			return TRUE
 	return FALSE
 
-/////////////////////////////////// TRAIT PROCS ////////////////////////////////////
-
+/* TRAIT PROCS */
 /mob/living/proc/cure_blind(source)
-	REMOVE_TRAIT(src, TRAIT_BLIND, source)
+	if(source)
+		REMOVE_TRAIT(src, TRAIT_BLIND, source)
+	else
+		REMOVE_TRAIT_NOT_FROM(src, TRAIT_BLIND, list(QUIRK_TRAIT, EYES_COVERED, BLINDFOLD_TRAIT))
 	if(!HAS_TRAIT(src, TRAIT_BLIND))
 		update_blindness()
 
@@ -490,7 +556,7 @@
 	if(stat != DEAD)
 		tod = null
 
-
+/// Induces fake death on a living mob.
 /mob/living/proc/fakedeath(source, silent = FALSE)
 	if(stat == DEAD)
 		return
@@ -539,22 +605,171 @@
 	if(update)
 		update_movespeed()
 
-/// Gets the amount of confusion on the mob.
-/mob/living/proc/get_confusion()
-	var/datum/status_effect/confusion/confusion = has_status_effect(STATUS_EFFECT_CONFUSION)
-	return confusion ? confusion.strength : 0
+/**
+ * Sets the [SHOCKED_1] flag on this mob.
+ */
+/mob/living/proc/set_shocked()
+	flags_1 |= SHOCKED_1
 
-/// Set the confusion of the mob. Confusion will make the mob walk randomly.
-/mob/living/proc/set_confusion(new_confusion)
-	new_confusion = max(new_confusion, 0)
+/**
+ * Unsets the [SHOCKED_1] flag on this mob.
+ */
+/mob/living/proc/reset_shocked()
+	flags_1 &= ~ SHOCKED_1
 
-	if (new_confusion)
-		var/datum/status_effect/confusion/confusion_status = has_status_effect(STATUS_EFFECT_CONFUSION) || apply_status_effect(STATUS_EFFECT_CONFUSION)
-		confusion_status.set_strength(new_confusion)
-	else
-		remove_status_effect(STATUS_EFFECT_CONFUSION)
+/**
+ * Adjusts a timed status effect on the mob,taking into account any existing timed status effects.
+ * This can be any status effect that takes into account "duration" with their initialize arguments.
+ *
+ * Positive durations will add deciseconds to the duration of existing status effects
+ * or apply a new status effect of that duration to the mob.
+ *
+ * Negative durations will remove deciseconds from the duration of an existing version of the status effect,
+ * removing the status effect entirely if the duration becomes less than zero (less than the current world time).
+ *
+ * duration - the duration, in deciseconds, to add or remove from the effect
+ * effect - the type of status effect being adjusted on the mob
+ * max_duration - optional - if set, positive durations will only be added UP TO the passed max duration
+ */
+/mob/living/proc/adjust_timed_status_effect(duration, effect, max_duration)
+	if(!isnum(duration))
+		CRASH("adjust_timed_status_effect: called with an invalid duration. (Got: [duration])")
 
-/// Add confusion to the mob. Confusion will make the mob walk randomly.
-/// Shorthand for set_confusion(confusion + x).
-/mob/living/proc/add_confusion(confusion_to_add)
-	set_confusion(get_confusion() + confusion_to_add)
+	if(!ispath(effect, /datum/status_effect))
+		CRASH("adjust_timed_status_effect: called with an invalid effect type. (Got: [effect])")
+
+	// If we have a max duration set, we need to check our duration does not exceed it
+	if(isnum(max_duration))
+		if(max_duration <= 0)
+			CRASH("adjust_timed_status_effect: Called with an invalid max_duration. (Got: [max_duration])")
+
+		if(duration >= max_duration)
+			duration = max_duration
+
+	var/datum/status_effect/existing = has_status_effect(effect)
+	if(existing)
+		if(isnum(max_duration) && duration > 0)
+			// Check the duration remaining on the existing status effect
+			// If it's greater than / equal to our passed max duration, we don't need to do anything
+			var/remaining_duration = existing.duration - world.time
+			if(remaining_duration >= max_duration)
+				return
+
+			// Otherwise, add duration up to the max (max_duration - remaining_duration),
+			// or just add duration if it doesn't exceed our max at all
+			existing.duration += min(max_duration - remaining_duration, duration)
+
+		else
+			existing.duration += duration
+
+		// If the duration was decreased and is now less 0 seconds,
+		// qdel it / clean up the status effect immediately
+		// (rather than waiting for the process tick to handle it)
+		if(existing.duration <= world.time)
+			qdel(existing)
+
+	else if(duration > 0)
+		apply_status_effect(effect, duration)
+
+/**
+ * Sets a timed status effect of some kind on a mob to a specific value.
+ * If only_if_higher is TRUE, it will only set the value up to the passed duration,
+ * so any pre-existing status effects of the same type won't be reduced down
+ *
+ * duration - the duration, in deciseconds, of the effect. 0 or lower will either remove the current effect or do nothing if none are present
+ * effect - the type of status effect given to the mob
+ * only_if_higher - if TRUE, we will only set the effect to the new duration if the new duration is longer than any existing duration
+ */
+/mob/living/proc/set_timed_status_effect(duration, effect, only_if_higher = FALSE)
+	if(!isnum(duration))
+		CRASH("set_timed_status_effect: called with an invalid duration. (Got: [duration])")
+
+	if(!ispath(effect, /datum/status_effect))
+		CRASH("set_timed_status_effect: called with an invalid effect type. (Got: [effect])")
+
+	var/datum/status_effect/existing = has_status_effect(effect)
+	if(existing)
+		// set_timed_status_effect to 0 technically acts as a way to clear effects,
+		// though remove_status_effect would achieve the same goal more explicitly.
+		if(duration <= 0)
+			qdel(existing)
+			return
+
+		if(only_if_higher)
+			// If the existing status effect has a higher remaining duration
+			// than what we aim to set it to, don't downgrade it - do nothing (return)
+			var/remaining_duration = existing.duration - world.time
+			if(remaining_duration >= duration)
+				return
+
+		// Set the duration accordingly
+		existing.duration = world.time + duration
+
+	else if(duration > 0)
+		apply_status_effect(effect, duration)
+
+/**
+ * Gets how many deciseconds are remaining in
+ * the duration of the passed status effect on this mob.
+ *
+ * If the mob is unaffected by the passed effect, returns 0.
+ */
+/mob/living/proc/get_timed_status_effect_duration(effect)
+	if(!ispath(effect, /datum/status_effect))
+		CRASH("get_timed_status_effect_duration: called with an invalid effect type. (Got: [effect])")
+
+	var/datum/status_effect/existing = has_status_effect(effect)
+	if(!existing)
+		return 0
+	// Infinite duration status effects technically are not "timed status effects"
+	// by name or nature, but support is included just in case.
+	if(existing.duration == -1)
+		return INFINITY
+
+	return existing.duration - world.time
+
+/**
+ * Adjust the "drunk value" the mob is currently experiencing,
+ * or applies a drunk effect if the mob isn't currently drunk (or tipsy)
+ *
+ * The drunk effect doesn't have a set duration, like dizziness or drugginess,
+ * but instead relies on a value that decreases every status effect tick (2 seconds) by:
+ * 4% the current drunk_value + 0.01
+ *
+ * A "drunk value" of 6 is the border between "tipsy" and "drunk".
+ *
+ * amount - the amount of "drunkness" to apply to the mob.
+ * down_to - the lower end of the clamp, when adding the value
+ * up_to - the upper end of the clamp, when adding the value
+ */
+/mob/living/proc/adjust_drunk_effect(amount, down_to = 0, up_to = INFINITY)
+	if(!isnum(amount))
+		CRASH("adjust_drunk_effect: called with an invalid amount. (Got: [amount])")
+
+	var/datum/status_effect/inebriated/inebriation = has_status_effect(/datum/status_effect/inebriated)
+	if(inebriation)
+		inebriation.set_drunk_value(clamp(inebriation.drunk_value + amount, down_to, up_to))
+	else if(amount > 0)
+		apply_status_effect(/datum/status_effect/inebriated/tipsy, amount)
+
+
+/**
+ * Directly sets the "drunk value" the mob is currently experiencing to the passed value,
+ * or applies a drunk effect with the passed value if the mob isn't currently drunk
+ *
+ * set_to - the amount of "drunkness" to set on the mob.
+ */
+/mob/living/proc/set_drunk_effect(set_to)
+	if(!isnum(set_to) || set_to < 0)
+		CRASH("set_drunk_effect: called with an invalid value. (Got: [set_to])")
+
+	var/datum/status_effect/inebriated/inebriation = has_status_effect(/datum/status_effect/inebriated)
+	if(inebriation)
+		inebriation.set_drunk_value(set_to)
+	else if(set_to > 0)
+		apply_status_effect(/datum/status_effect/inebriated/tipsy, set_to)
+
+/// Helper to get the amount of drunkness the mob's currently experiencing.
+/mob/living/proc/get_drunk_amount()
+	var/datum/status_effect/inebriated/inebriation = has_status_effect(/datum/status_effect/inebriated)
+	return inebriation?.drunk_value || 0

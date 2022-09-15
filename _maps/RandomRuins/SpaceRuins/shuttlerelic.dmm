@@ -33,7 +33,8 @@
 "i" = (
 /obj/structure/closet{
 	icon_state = "oldcloset";
-	name = "strange closet"
+	name = "strange closet";
+	enable_door_overlay = 0
 	},
 /turf/open/floor/oldshuttle,
 /area/ruin/powered)
@@ -62,11 +63,7 @@
 /obj/structure/chair/old{
 	dir = 1
 	},
-/obj/item/crowbar/large{
-	desc = "It's a big crowbar. It doesn't fit in your pockets, because it's big. It feels oddly heavy..";
-	force = 20;
-	name = "heavy crowbar"
-	},
+/obj/item/crowbar/large/heavy,
 /turf/open/floor/oldshuttle,
 /area/ruin/powered)
 "o" = (

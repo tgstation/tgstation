@@ -10,7 +10,7 @@ A datum that can be added to any atom in the game. Similarly to components, they
 
 These datums handle both the normal movement of mobs, but also their decision making, deciding which actions they will take based on the checks you put into their SelectBehaviors proc.
 
-If behaviors are selected, and the AI is in range, it will try to perform them. It runs all the behaviors it currently has in parallel; allowing for it to for example screech at someone while trying to attack them. Aslong as it has behaviors running, it will not try to generate new plans, making it not waste CPU when it already has an active goal.
+If behaviors are selected, and the AI is in range, it will try to perform them. It runs all the behaviors it currently has in parallel; allowing for it to for example screech at someone while trying to attack them. As long as it has behaviors running, it will not try to generate new plans, making it not waste CPU when it already has an active goal.
 
 They also hold data for any of the actions they might need to use, such as cooldowns, whether or not they're currently fighting, etcetera this is stored in the blackboard, more information on that below.
 
@@ -19,3 +19,8 @@ The blackboard is an associated list keyed with strings and with values of whate
 
 ## AI Behavior
 AI behaviors are the actions an AI can take. These can range from "Do an emote" to "Attack this target until he is dead". They are singletons and should contain nothing but static data. Any dynamic data should be stored in the blackboard, to allow different controllers to use the same behaviors.
+
+
+# Guides:
+
+[Making Your AI](./making_your_ai.md): Quickly runs through how to make an ai controller for anything with a step by step development of one.

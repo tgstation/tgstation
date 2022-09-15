@@ -9,18 +9,38 @@
 	var/max_capacity = 128
 	var/used_capacity = 0
 	var/list/stored_files = list() // List of stored files on this drive. DO NOT MODIFY DIRECTLY!
+	var/default_installs = TRUE // install the default progs
 
-/obj/item/computer_hardware/hard_drive/on_remove(obj/item/modular_computer/MC, mob/user)
-	MC.shutdown_computer()
+/obj/item/computer_hardware/hard_drive/Initialize(mapload)
+	. = ..()
+
+	if(default_installs)
+		install_default_programs()
+
+/obj/item/computer_hardware/hard_drive/Destroy()
+	QDEL_LIST(stored_files)
+	return ..()
+
+/obj/item/computer_hardware/hard_drive/on_install(obj/item/modular_computer/install_into, mob/living/user)
+	. = ..()
+	// whoever tried to set the ref to the computer in new, is it okay if i could come to your house someday, yeah?
+	for(var/datum/computer_file/file as anything in stored_files)
+		file.computer = holder
+
+/obj/item/computer_hardware/hard_drive/on_remove(obj/item/modular_computer/remove_from, mob/user)
+	remove_from.shutdown_computer()
+	for(var/datum/computer_file/program in stored_files)
+		program.computer = null
+	return ..()
 
 /obj/item/computer_hardware/hard_drive/proc/install_default_programs()
-	store_file(new/datum/computer_file/program/computerconfig(src)) // Computer configuration utility, allows hardware control and displays more info than status bar
-	store_file(new/datum/computer_file/program/ntnetdownload(src)) // NTNet Downloader Utility, allows users to download more software from NTNet repository
-	store_file(new/datum/computer_file/program/filemanager(src)) // File manager, allows text editor functions and basic file manipulation.
+	store_file(new /datum/computer_file/program/computerconfig) // Computer configuration utility, allows hardware control and displays more info than status bar
+	store_file(new /datum/computer_file/program/ntnetdownload) // NTNet Downloader Utility, allows users to download more software from NTNet repository
+	store_file(new /datum/computer_file/program/filemanager) // File manager, allows text editor functions and basic file manipulation.
 
 /obj/item/computer_hardware/hard_drive/examine(user)
 	. = ..()
-	. += "<span class='notice'>It has [max_capacity] GQ of storage capacity.</span>"
+	. += span_notice("It has [max_capacity] GQ of storage capacity.")
 
 /obj/item/computer_hardware/hard_drive/diagnostics(mob/user)
 	..()
@@ -46,9 +66,14 @@
 	if(F in stored_files)
 		return FALSE
 
+	SEND_SIGNAL(F, COMSIG_MODULAR_COMPUTER_FILE_ADDING)
+
 	F.holder = src
+	F.computer = holder
 	stored_files.Add(F)
 	recalculate_size()
+
+	SEND_SIGNAL(F, COMSIG_MODULAR_COMPUTER_FILE_ADDED)
 	return TRUE
 
 // Use this proc to remove file from the drive. Returns 1 on success and 0 on failure. Contains necessary sanity checks.
@@ -63,8 +88,10 @@
 		return FALSE
 
 	if(F in stored_files)
+		SEND_SIGNAL(F, COMSIG_MODULAR_COMPUTER_FILE_DELETING)
 		stored_files -= F
 		recalculate_size()
+		SEND_SIGNAL(F, COMSIG_MODULAR_COMPUTER_FILE_DELETED)
 		return TRUE
 	else
 		return FALSE
@@ -111,19 +138,10 @@
 	if(!stored_files)
 		return null
 
-	for(var/datum/computer_file/F in stored_files)
+	for(var/datum/computer_file/F as anything in stored_files)
 		if(F.filename == filename)
 			return F
 	return null
-
-/obj/item/computer_hardware/hard_drive/Destroy()
-	stored_files = null
-	return ..()
-
-/obj/item/computer_hardware/hard_drive/Initialize()
-	. = ..()
-	install_default_programs()
-
 
 /obj/item/computer_hardware/hard_drive/advanced
 	name = "advanced hard disk drive"
@@ -157,17 +175,27 @@
 	max_capacity = 64
 	icon_state = "ssd_mini"
 	w_class = WEIGHT_CLASS_TINY
-	custom_price = PAYCHECK_MEDIUM * 2
+	custom_price = PAYCHECK_CREW * 2
+
+/obj/item/computer_hardware/hard_drive/small/install_default_programs()
+	. = ..()
+
+	store_file(new /datum/computer_file/program/messenger)
+	store_file(new /datum/computer_file/program/notepad)
 
 // For borg integrated tablets. No downloader.
-/obj/item/computer_hardware/hard_drive/small/integrated/install_default_programs()
-	store_file(new /datum/computer_file/program/computerconfig(src)) // Computer configuration utility, allows hardware control and displays more info than status bar
-	store_file(new /datum/computer_file/program/filemanager(src)) // File manager, allows text editor functions and basic file manipulation.
-	store_file(new /datum/computer_file/program/robotact(src))
+/obj/item/computer_hardware/hard_drive/small/ai/install_default_programs()
+	var/datum/computer_file/program/messenger/messenger = new
+	messenger.is_silicon = TRUE
+	store_file(messenger)
 
+/obj/item/computer_hardware/hard_drive/small/robot/install_default_programs()
+	store_file(new /datum/computer_file/program/computerconfig) // Computer configuration utility, allows hardware control and displays more info than status bar
+	store_file(new /datum/computer_file/program/filemanager) // File manager, allows text editor functions and basic file manipulation.
+	store_file(new /datum/computer_file/program/robotact)
 
 // Syndicate variant - very slight better
-/obj/item/computer_hardware/hard_drive/small/syndicate
+/obj/item/computer_hardware/hard_drive/portable/syndicate
 	desc = "An efficient SSD for portable devices developed by a rival organisation."
 	power_usage = 8
 	max_capacity = 70
@@ -179,10 +207,10 @@
 	max_capacity = 70
 
 /obj/item/computer_hardware/hard_drive/small/nukeops/install_default_programs()
-	store_file(new/datum/computer_file/program/computerconfig(src))
-	store_file(new/datum/computer_file/program/ntnetdownload/syndicate(src)) // Syndicate version; automatic access to syndicate apps and no NT apps
-	store_file(new/datum/computer_file/program/filemanager(src))
-	store_file(new/datum/computer_file/program/radar/fission360(src)) //I am legitimately afraid if I don't do this, Ops players will think they just don't get a pinpointer anymore.
+	store_file(new/datum/computer_file/program/computerconfig)
+	store_file(new/datum/computer_file/program/ntnetdownload/syndicate) // Syndicate version; automatic access to syndicate apps and no NT apps
+	store_file(new/datum/computer_file/program/filemanager)
+	store_file(new/datum/computer_file/program/radar/fission360) //I am legitimately afraid if I don't do this, Ops players will think they just don't get a pinpointer anymore.
 
 /obj/item/computer_hardware/hard_drive/micro
 	name = "micro solid state drive"

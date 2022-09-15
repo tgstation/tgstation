@@ -1,0 +1,10 @@
+{
+	"disk_mouth": [
+		{
+			"type": "icon_state",
+			"icon_state": "disk_mouth",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}

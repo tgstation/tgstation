@@ -9,10 +9,10 @@
 	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/device.dmi'
 	icon_state = "experiscanner"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 
-/obj/item/experi_scanner/Initialize()
+/obj/item/experi_scanner/Initialize(mapload)
 	..()
 	return INITIALIZE_HINT_LATELOAD
 

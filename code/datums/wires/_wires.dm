@@ -6,7 +6,7 @@
 
 	if(I.tool_behaviour == TOOL_WIRECUTTER || I.tool_behaviour == TOOL_MULTITOOL)
 		return TRUE
-	if(istype(I, /obj/item/assembly))
+	if(isassembly(I))
 		var/obj/item/assembly/A = I
 		if(A.attachable)
 			return TRUE
@@ -87,8 +87,9 @@
 	"crimson",
 	"cyan",
 	"gold",
-	"grey",
 	"green",
+	"grey",
+	"lime",
 	"magenta",
 	"orange",
 	"pink",
@@ -97,7 +98,7 @@
 	"silver",
 	"violet",
 	"white",
-	"yellow"
+	"yellow",
 	)
 
 	var/list/my_possible_colors = possible_colors.Copy()
@@ -110,7 +111,7 @@
 	randomize()
 
 /datum/wires/proc/repair()
-	cut_wires.Cut()
+	cut_wires.Cut()//a negative times a negative equals a positive
 
 /datum/wires/proc/get_wire(color)
 	return colors[color]
@@ -164,18 +165,18 @@
 	for(var/wire in wires)
 		cut(wire)
 
-/datum/wires/proc/pulse(wire, user)
-	if(is_cut(wire))
+/datum/wires/proc/pulse(wire, user, force=FALSE)
+	if(!force && is_cut(wire))
 		return
 	on_pulse(wire, user)
 
-/datum/wires/proc/pulse_color(color, mob/living/user)
-	pulse(get_wire(color), user)
+/datum/wires/proc/pulse_color(color, mob/living/user, force=FALSE)
+	pulse(get_wire(color), user, force)
 
 /datum/wires/proc/pulse_assembly(obj/item/assembly/S)
 	for(var/color in assemblies)
 		if(S == assemblies[color])
-			pulse_color(color)
+			pulse_color(color, force=TRUE)
 			return TRUE
 
 /datum/wires/proc/attach_assembly(color, obj/item/assembly/S)
@@ -207,6 +208,9 @@
 
 // Overridable Procs
 /datum/wires/proc/interactable(mob/user)
+	SHOULD_CALL_PARENT(TRUE)
+	if((SEND_SIGNAL(user, COMSIG_TRY_WIRES_INTERACT, holder) & COMPONENT_CANT_INTERACT_WIRES))
+		return FALSE
 	return TRUE
 
 /datum/wires/proc/get_status()
@@ -312,7 +316,7 @@
 				cut_color(target_wire)
 				. = TRUE
 			else
-				to_chat(L, "<span class='warning'>You need wirecutters!</span>")
+				to_chat(L, span_warning("You need wirecutters!"))
 		if("pulse")
 			I = L.is_holding_tool_quality(TOOL_MULTITOOL)
 			if(I || isAdminGhostAI(usr))
@@ -321,7 +325,7 @@
 				pulse_color(target_wire, L)
 				. = TRUE
 			else
-				to_chat(L, "<span class='warning'>You need a multitool!</span>")
+				to_chat(L, span_warning("You need a multitool!"))
 		if("attach")
 			if(is_attached(target_wire))
 				I = detach_assembly(target_wire)
@@ -330,7 +334,7 @@
 					. = TRUE
 			else
 				I = L.get_active_held_item()
-				if(istype(I, /obj/item/assembly))
+				if(isassembly(I))
 					var/obj/item/assembly/A = I
 					if(A.attachable)
 						if(!L.temporarilyRemoveItemFromInventory(A))
@@ -339,6 +343,6 @@
 							A.forceMove(L.drop_location())
 						. = TRUE
 					else
-						to_chat(L, "<span class='warning'>You need an attachable assembly!</span>")
+						to_chat(L, span_warning("You need an attachable assembly!"))
 
 #undef MAXIMUM_EMP_WIRES

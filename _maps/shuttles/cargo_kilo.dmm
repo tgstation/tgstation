@@ -108,21 +108,19 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/supply)
 "m" = (
 /obj/machinery/door/airlock/shuttle{
-	name = "Supply Shuttle Airlock";
-	req_access_txt = "31"
+	name = "Supply Shuttle Airlock"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/docking_port/mobile/supply{
 	dir = 4;
 	dwidth = 4
 	},
+/obj/effect/mapping_helpers/airlock/access/all/supply/general,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/supply)
 "n" = (
@@ -156,21 +154,17 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/button/door{
+/obj/machinery/button/door/directional/west{
 	id = "QMLoaddoor";
-	layer = 4;
 	name = "Off Ramp Toggle";
-	pixel_x = -24;
-	pixel_y = 6;
-	req_access_txt = "31"
+	pixel_y = 8;
+	req_access = list("cargo")
 	},
-/obj/machinery/button/door{
+/obj/machinery/button/door/directional/west{
 	id = "QMLoaddoor2";
-	layer = 4;
 	name = "On Ramp Toggle";
-	pixel_x = -24;
-	pixel_y = -6;
-	req_access_txt = "31"
+	pixel_y = -8;
+	req_access = list("cargo")
 	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/supply)
@@ -182,17 +176,15 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/structure/sign/departments/cargo{
-	pixel_x = 32
-	},
+/obj/structure/sign/departments/cargo/directional/east,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/supply)
 "r" = (
 /obj/machinery/door/airlock/shuttle{
-	name = "Supply Shuttle Airlock";
-	req_access_txt = "31"
+	name = "Supply Shuttle Airlock"
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/access/all/supply/general,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/supply)
 "s" = (
@@ -265,7 +257,7 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/supply)
 "A" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/structure/shuttle/engine/heater,
 /turf/open/floor/plating,
 /area/shuttle/supply)

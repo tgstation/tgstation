@@ -4,13 +4,15 @@
 /datum/station_goal/station_shield
 	name = "Station Shield"
 	var/coverage_goal = 500
+	requires_space = TRUE
 
 /datum/station_goal/station_shield/get_report()
-	return {"The station is located in a zone full of space debris.
-		We have a prototype shielding system you must deploy to reduce collision-related accidents.
-
-		You can order the satellites and control systems at cargo.
-		"}
+	return list(
+		"<blockquote>The station is located in a zone full of space debris.",
+		"We have a prototype shielding system you must deploy to reduce collision-related accidents.",
+		"",
+		"You can order the satellites and control systems at cargo.</blockquote>",
+	).Join("\n")
 
 
 /datum/station_goal/station_shield/on_report()
@@ -43,6 +45,7 @@
 	var/notice
 
 /obj/machinery/computer/sat_control/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "SatelliteControl", name)
@@ -59,8 +62,9 @@
 			. = TRUE
 
 /obj/machinery/computer/sat_control/proc/toggle(id)
+	var/turf/current_turf = get_turf(src)
 	for(var/obj/machinery/satellite/S in GLOB.machines)
-		if(S.id == id && S.z == z)
+		if(S.id == id && is_valid_z_level(get_turf(S), current_turf))
 			S.toggle()
 
 /obj/machinery/computer/sat_control/ui_data()
@@ -76,7 +80,7 @@
 	data["notice"] = notice
 
 
-	var/datum/station_goal/station_shield/G = locate() in SSticker.mode.station_goals
+	var/datum/station_goal/station_shield/G = locate() in GLOB.station_goals
 	if(G)
 		data["meteor_shield"] = 1
 		data["meteor_shield_coverage"] = G.get_coverage()
@@ -92,13 +96,13 @@
 	base_icon_state = "sat"
 	anchored = FALSE
 	density = TRUE
-	use_power = FALSE
+	use_power = NO_POWER_USE
 	var/mode = "NTPROBEV0.8"
 	var/active = FALSE
 	var/static/gid = 0
 	var/id = 0
 
-/obj/machinery/satellite/Initialize()
+/obj/machinery/satellite/Initialize(mapload)
 	. = ..()
 	id = gid++
 
@@ -121,10 +125,10 @@
 /obj/machinery/satellite/proc/toggle(mob/user)
 	if(!active && !isinspace())
 		if(user)
-			to_chat(user, "<span class='warning'>You can only activate [src] in space.</span>")
+			to_chat(user, span_warning("You can only activate [src] in space."))
 		return FALSE
 	if(user)
-		to_chat(user, "<span class='notice'>You [active ? "deactivate": "activate"] [src].</span>")
+		to_chat(user, span_notice("You [active ? "deactivate": "activate"] [src]."))
 	set_anchored(!anchored)
 	return TRUE
 
@@ -134,7 +138,7 @@
 
 /obj/machinery/satellite/multitool_act(mob/living/user, obj/item/I)
 	..()
-	to_chat(user, "<span class='notice'>// NTSAT-[id] // Mode : [active ? "PRIMARY" : "STANDBY"] //[(obj_flags & EMAGGED) ? "DEBUG_MODE //" : ""]</span>")
+	to_chat(user, span_notice("// NTSAT-[id] // Mode : [active ? "PRIMARY" : "STANDBY"] //[(obj_flags & EMAGGED) ? "DEBUG_MODE //" : ""]"))
 	return TRUE
 
 /obj/machinery/satellite/meteor_shield
@@ -146,7 +150,7 @@
 	var/kill_range = 14
 
 /obj/machinery/satellite/meteor_shield/proc/space_los(meteor)
-	for(var/turf/T in getline(src,meteor))
+	for(var/turf/T in get_line(src,meteor))
 		if(!isspaceturf(T))
 			return FALSE
 	return TRUE
@@ -176,6 +180,8 @@
 	// Update the weight of all meteor events
 	for(var/datum/round_event_control/meteor_wave/meteors in SSevents.control)
 		meteors.weight *= mod
+	for(var/datum/round_event_control/stray_meteor/stray_meteor in SSevents.control)
+		stray_meteor.weight *= mod
 
 /obj/machinery/satellite/meteor_shield/Destroy()
 	. = ..()
@@ -186,6 +192,6 @@
 	if(obj_flags & EMAGGED)
 		return
 	obj_flags |= EMAGGED
-	to_chat(user, "<span class='notice'>You access the satellite's debug mode, increasing the chance of meteor strikes.</span>")
+	to_chat(user, span_notice("You access the satellite's debug mode, increasing the chance of meteor strikes."))
 	if(active)
 		change_meteor_chance(2)

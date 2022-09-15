@@ -9,9 +9,12 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/ore_silo
 
-	var/list/holds = list()
-	var/list/datum/component/remote_materials/connected = list()
+	/// The machine UI's page of logs showing ore history.
 	var/log_page = 1
+	/// List of all connected components that are on hold from accessing materials.
+	var/list/holds = list()
+	/// List of all components that are sharing ores with this silo.
+	var/list/datum/component/remote_materials/ore_connected_machines = list()
 
 /obj/machinery/ore_silo/Initialize(mapload)
 	. = ..()
@@ -36,11 +39,10 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	if (GLOB.ore_silo_default == src)
 		GLOB.ore_silo_default = null
 
-	for(var/C in connected)
-		var/datum/component/remote_materials/mats = C
+	for(var/datum/component/remote_materials/mats as anything in ore_connected_machines)
 		mats.disconnect_from(src)
 
-	connected = null
+	ore_connected_machines = null
 
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	materials.retrieve_all()
@@ -55,11 +57,11 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	if(I.item_flags & ABSTRACT)
 		return
 	if(!istype(I) || (I.flags_1 & HOLOGRAM_1) || (I.item_flags & NO_MAT_REDEMPTION))
-		to_chat(user, "<span class='warning'>[M] won't accept [I]!</span>")
+		to_chat(user, span_warning("[M] won't accept [I]!"))
 		return
 	var/item_mats = materials.get_item_material_amount(I, breakdown_flags)
 	if(!item_mats)
-		to_chat(user, "<span class='warning'>[I] does not contain sufficient materials to be accepted by [M].</span>")
+		to_chat(user, span_warning("[I] does not contain sufficient materials to be accepted by [M]."))
 		return
 	// assumes unlimited space...
 	var/amount = I.amount
@@ -77,7 +79,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	if(!powered())
 		return ..()
 
-	if (istype(W, /obj/item/stack))
+	if (isstack(W))
 		return remote_attackby(src, user, W)
 
 	return ..()
@@ -112,14 +114,13 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		ui += "Nothing!"
 
 	ui += "</div><div class='statusDisplay'><h2>Connected Machines:</h2>"
-	for(var/C in connected)
-		var/datum/component/remote_materials/mats = C
+	for(var/datum/component/remote_materials/mats as anything in ore_connected_machines)
 		var/atom/parent = mats.parent
 		var/hold_key = "[get_area(parent)]/[mats.category]"
 		ui += "<a href='?src=[REF(src)];remove=[REF(mats)]'>Remove</a>"
 		ui += "<a href='?src=[REF(src)];hold[!holds[hold_key]]=[url_encode(hold_key)]'>[holds[hold_key] ? "Allow" : "Hold"]</a>"
 		ui += " <b>[parent.name]</b> in [get_area_name(parent, TRUE)]<br>"
-	if(!connected.len)
+	if(!ore_connected_machines.len)
 		ui += "Nothing!"
 
 	ui += "</div><div class='statusDisplay'><h2>Access Logs:</h2>"
@@ -153,10 +154,10 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	usr.set_machine(src)
 
 	if(href_list["remove"])
-		var/datum/component/remote_materials/mats = locate(href_list["remove"]) in connected
+		var/datum/component/remote_materials/mats = locate(href_list["remove"]) in ore_connected_machines
 		if (mats)
 			mats.disconnect_from(src)
-			connected -= mats
+			ore_connected_machines -= mats
 			updateUsrDialog()
 			return TRUE
 	else if(href_list["hold1"])
@@ -183,7 +184,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 /obj/machinery/ore_silo/multitool_act(mob/living/user, obj/item/multitool/I)
 	. = ..()
 	if (istype(I))
-		to_chat(user, "<span class='notice'>You log [src] in the multitool's buffer.</span>")
+		to_chat(user, span_notice("You log [src] in the multitool's buffer."))
 		I.buffer = src
 		return TRUE
 
@@ -203,7 +204,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 
 /obj/machinery/ore_silo/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>[src] can be linked to techfabs, circuit printers and protolathes with a multitool.</span>"
+	. += span_notice("[src] can be linked to techfabs, circuit printers and protolathes with a multitool.")
 
 /datum/ore_silo_log
 	var/name  // for VV

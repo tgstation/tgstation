@@ -22,7 +22,6 @@
 	name = "onion"
 	desc = "Nothing to cry over."
 	icon_state = "onion"
-	bite_consumption_mod = 2
 	tastes = list("onions" = 1)
 	wine_power = 30
 
@@ -38,6 +37,7 @@
 	weed_chance = 1
 	product = /obj/item/food/grown/onion/red
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1, /datum/reagent/consumable/tearjuice = 0.05)
+	mutatelist = null
 
 /obj/item/food/grown/onion/red
 	seed = /obj/item/seeds/onion/red
@@ -50,12 +50,12 @@
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/onion_slice/red, 2, 15)
 
 /obj/item/food/grown/onion/UsedforProcessing(mob/living/user, obj/item/I, list/chosen_option)
-	var/datum/effect_system/smoke_spread/chem/S = new //Since the onion is destroyed when it's sliced,
+	var/datum/effect_system/fluid_spread/smoke/chem/cry_about_it = new //Since the onion is destroyed when it's sliced,
 	var/splat_location = get_turf(src) //we need to set up the smoke beforehand
-	S.attach(splat_location)
-	S.set_up(reagents, 0, splat_location, 0)
-	S.start()
-	qdel(S)
+	cry_about_it.attach(splat_location)
+	cry_about_it.set_up(0, holder = src, location = splat_location, carry = reagents, silent = FALSE)
+	cry_about_it.start()
+	qdel(cry_about_it)
 	return ..()
 
 /obj/item/food/onion_slice

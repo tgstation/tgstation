@@ -3,7 +3,7 @@
 	icon_state = "syringeproj"
 	var/obj/item/dnainjector/injector
 	damage = 5
-	hitsound_wall = "shatter"
+	hitsound_wall = SFX_SHATTER
 	embedding = null
 	shrapnel_type = null
 
@@ -17,8 +17,8 @@
 					return BULLET_ACT_HIT
 			else
 				blocked = 100
-				target.visible_message("<span class='danger'>\The [src] is deflected!</span>", \
-									   "<span class='userdanger'>You are protected against \the [src]!</span>")
+				target.visible_message(span_danger("\The [src] is deflected!"), \
+									   span_userdanger("You are protected against \the [src]!"))
 	return ..()
 
 /obj/projectile/bullet/dnainjector/Destroy()

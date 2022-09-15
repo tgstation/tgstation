@@ -19,7 +19,6 @@
 	var/credits = 0
 
 	// Device loadout
-	var/dev_cpu = 1 // 1: Default, 2: Upgraded
 	var/dev_battery = 1 // 1: Default, 2: Upgraded, 3: Advanced
 	var/dev_disk = 1 // 1: Default, 2: Upgraded, 3: Advanced
 	var/dev_netcard = 0 // 0: None, 1: Basic, 2: Long-Range
@@ -37,7 +36,6 @@
 	if(fabricated_tablet)
 		qdel(fabricated_tablet)
 		fabricated_tablet = null
-	dev_cpu = 1
 	dev_battery = 1
 	dev_disk = 1
 	dev_netcard = 0
@@ -56,14 +54,6 @@
 			fabricated_laptop.install_component(new /obj/item/computer_hardware/battery)
 			battery_module = fabricated_laptop.all_components[MC_CELL]
 		total_price = 99
-		switch(dev_cpu)
-			if(1)
-				if(fabricate)
-					fabricated_laptop.install_component(new /obj/item/computer_hardware/processor_unit/small)
-			if(2)
-				if(fabricate)
-					fabricated_laptop.install_component(new /obj/item/computer_hardware/processor_unit)
-				total_price += 299
 		switch(dev_battery)
 			if(1) // Basic(750C)
 				if(fabricate)
@@ -116,7 +106,6 @@
 		if(fabricate)
 			fabricated_tablet = new(src)
 			fabricated_tablet.install_component(new /obj/item/computer_hardware/battery)
-			fabricated_tablet.install_component(new /obj/item/computer_hardware/processor_unit/small)
 			fabricated_tablet.install_component(new/obj/item/computer_hardware/card_slot)
 			battery_module = fabricated_tablet.all_components[MC_CELL]
 		total_price = 199
@@ -194,10 +183,6 @@
 			state = 2 // Wait for ID swipe for payment processing
 			fabricate_and_recalc_price(FALSE)
 			return TRUE
-		if("hw_cpu")
-			dev_cpu = text2num(params["cpu"])
-			fabricate_and_recalc_price(FALSE)
-			return TRUE
 		if("hw_battery")
 			dev_battery = text2num(params["battery"])
 			fabricate_and_recalc_price(FALSE)
@@ -241,16 +226,16 @@
 		if(!user.temporarilyRemoveItemFromInventory(c))
 			return
 		credits += c.value
-		visible_message("<span class='info'><span class='name'>[user]</span> inserts [c.value] cr into [src].</span>")
+		visible_message(span_info("[span_name("[user]")] inserts [c.value] cr into [src]."))
 		qdel(c)
 		return
 	else if(istype(I, /obj/item/holochip))
 		var/obj/item/holochip/HC = I
 		credits += HC.credits
-		visible_message("<span class='info'>[user] inserts a [HC.credits] cr holocredit chip into [src].</span>")
+		visible_message(span_info("[user] inserts a [HC.credits] cr holocredit chip into [src]."))
 		qdel(HC)
 		return
-	else if(istype(I, /obj/item/card/id))
+	else if(isidcard(I))
 		if(state != 2)
 			return
 		var/obj/item/card/id/ID = I
@@ -284,7 +269,6 @@
 		data["hw_tesla"] = dev_apc_recharger
 		data["hw_nanoprint"] = dev_printer
 		data["hw_card"] = dev_card
-		data["hw_cpu"] = dev_cpu
 	if(state == 1 || state == 2)
 		data["totalprice"] = total_price
 		data["credits"] = credits

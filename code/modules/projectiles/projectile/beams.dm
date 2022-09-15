@@ -6,7 +6,7 @@
 	damage_type = BURN
 	hitsound = 'sound/weapons/sear.ogg'
 	hitsound_wall = 'sound/weapons/effects/searwall.ogg'
-	flag = LASER
+	armor_flag = LASER
 	eyeblur = 2
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
 	light_system = MOVABLE_LIGHT
@@ -34,7 +34,7 @@
 	damage = 25
 	speed = 0.6 // higher power = faster, that's how light works right
 
-/obj/projectile/beam/laser/hellfire/Initialize()
+/obj/projectile/beam/laser/hellfire/Initialize(mapload)
 	. = ..()
 	transform *= 2
 
@@ -50,7 +50,7 @@
 	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
-		M.IgniteMob()
+		M.ignite_mob()
 	else if(isturf(target))
 		impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser/wall
 
@@ -73,10 +73,9 @@
 /obj/projectile/beam/xray
 	name = "\improper X-ray beam"
 	icon_state = "xray"
-	flag = RAD
 	damage = 15
-	irradiate = 300
 	range = 15
+	armour_penetration = 100
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
 
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
@@ -90,7 +89,7 @@
 	icon_state = "omnilaser"
 	damage = 30
 	damage_type = STAMINA
-	flag = ENERGY
+	armor_flag = ENERGY
 	hitsound = 'sound/weapons/tap.ogg'
 	eyeblur = 0
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
@@ -112,7 +111,7 @@
 
 /obj/projectile/beam/pulse/on_hit(atom/target, blocked = FALSE)
 	. = ..()
-	if (!QDELETED(target) && (isturf(target) || istype(target, /obj/structure/)))
+	if (!QDELETED(target) && (isturf(target) || isstructure(target)))
 		if(isobj(target))
 			SSexplosions.med_mov_atom += target
 		else
@@ -167,7 +166,6 @@
 	hitsound = null
 	damage = 0
 	damage_type = STAMINA
-	flag = LASER
 	var/suit_types = list(/obj/item/clothing/suit/redtag, /obj/item/clothing/suit/bluetag)
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 	light_color = LIGHT_COLOR_BLUE
@@ -202,31 +200,6 @@
 /obj/projectile/beam/lasertag/bluetag/hitscan
 	hitscan = TRUE
 
-/obj/projectile/beam/instakill
-	name = "instagib laser"
-	icon_state = "purple_laser"
-	damage = 200
-	damage_type = BURN
-	impact_effect_type = /obj/effect/temp_visual/impact_effect/purple_laser
-	light_color = LIGHT_COLOR_PURPLE
-
-/obj/projectile/beam/instakill/blue
-	icon_state = "blue_laser"
-	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
-	light_color = LIGHT_COLOR_BLUE
-
-/obj/projectile/beam/instakill/red
-	icon_state = "red_laser"
-	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
-	light_color = COLOR_SOFT_RED
-
-/obj/projectile/beam/instakill/on_hit(atom/target)
-	. = ..()
-	if(iscarbon(target))
-		var/mob/living/carbon/M = target
-		M.visible_message("<span class='danger'>[M] explodes into a shower of gibs!</span>")
-		M.gib()
-
 //a shrink ray that shrinks stuff, which grows back after a short while.
 /obj/projectile/beam/shrink
 	name = "shrink ray"
@@ -234,13 +207,13 @@
 	hitsound = 'sound/weapons/shrink_hit.ogg'
 	damage = 0
 	damage_type = STAMINA
-	flag = ENERGY
+	armor_flag = ENERGY
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/shrink
 	light_color = LIGHT_COLOR_BLUE
 	var/shrink_time = 90
 
 /obj/projectile/beam/shrink/on_hit(atom/target, blocked = FALSE)
 	. = ..()
-	if(isopenturf(target) || istype(target, /turf/closed/indestructible))//shrunk floors wouldnt do anything except look weird, i-walls shouldn't be bypassable
+	if(isopenturf(target) || isindestructiblewall(target))//shrunk floors wouldnt do anything except look weird, i-walls shouldn't be bypassable
 		return
 	target.AddComponent(/datum/component/shrink, shrink_time)

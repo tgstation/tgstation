@@ -8,7 +8,7 @@
 	var/desc = "A trauma caused by brain damage, which causes issues to the patient."
 	var/scan_desc = "generic brain trauma" //description when detected by a health scanner
 	var/mob/living/carbon/owner //the poor bastard
-	var/obj/item/organ/brain/brain //the poor bastard's brain
+	var/obj/item/organ/internal/brain/brain //the poor bastard's brain
 	var/gain_text = "<span class='notice'>You feel traumatized.</span>"
 	var/lose_text = "<span class='notice'>You no longer feel traumatized.</span>"
 	var/can_gain = TRUE
@@ -34,13 +34,14 @@
 
 //Called when given to a mob
 /datum/brain_trauma/proc/on_gain()
-	to_chat(owner, gain_text)
+	if(gain_text)
+		to_chat(owner, gain_text)
 	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
 	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, .proc/handle_hearing)
 
 //Called when removed from a mob
 /datum/brain_trauma/proc/on_lose(silent)
-	if(!silent)
+	if(!silent && lose_text)
 		to_chat(owner, lose_text)
 	UnregisterSignal(owner, COMSIG_MOB_SAY)
 	UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)

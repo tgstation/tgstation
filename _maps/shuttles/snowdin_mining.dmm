@@ -7,7 +7,7 @@
 	dir = 4;
 	dwidth = 2;
 	height = 5;
-	id = "snowdin_mining";
+	shuttle_id = "snowdin_mining";
 	name = "mining elevator";
 	width = 5
 	},
@@ -35,13 +35,11 @@
 /turf/open/floor/engine,
 /area/shuttle/snowdin/elevator2)
 "g" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/engine,
 /area/shuttle/snowdin/elevator2)
 "i" = (
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/engine,
 /area/shuttle/snowdin/elevator2)
 "j" = (

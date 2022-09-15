@@ -64,23 +64,23 @@
 
 	if(chest_covered && head_covered)
 		return ONE_ATMOSPHERE
+	if(ismovable(loc))
+		/// If we're in a space with 0.5 content pressure protection, it averages the values, for example.
+		var/atom/movable/occupied_space = loc
+		return (occupied_space.contents_pressure_protection * ONE_ATMOSPHERE + (1 - occupied_space.contents_pressure_protection) * pressure)
 	return pressure
 
 
 /mob/living/carbon/human/handle_traits(delta_time, times_fired)
 	if (getOrganLoss(ORGAN_SLOT_BRAIN) >= 60)
-		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "brain_damage", /datum/mood_event/brain_damage)
+		add_mood_event("brain_damage", /datum/mood_event/brain_damage)
 	else
-		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "brain_damage")
+		clear_mood_event("brain_damage")
 	return ..()
 
-/mob/living/carbon/human/handle_mutations_and_radiation(delta_time, times_fired)
-	if(!dna || !dna.species.handle_mutations_and_radiation(src, delta_time, times_fired))
-		..()
-
 /mob/living/carbon/human/breathe()
-	if(!dna.species.breathe(src))
-		..()
+	if(!HAS_TRAIT(src, TRAIT_NOBREATH))
+		return ..()
 
 /mob/living/carbon/human/check_breath(datum/gas_mixture/breath)
 
@@ -97,18 +97,18 @@
 		var/datum/species/S = dna.species
 
 		if(S.breathid == "o2")
-			throw_alert("not_enough_oxy", /atom/movable/screen/alert/not_enough_oxy)
-		else if(S.breathid == "tox")
-			throw_alert("not_enough_tox", /atom/movable/screen/alert/not_enough_tox)
+			throw_alert(ALERT_NOT_ENOUGH_OXYGEN, /atom/movable/screen/alert/not_enough_oxy)
+		else if(S.breathid == "plas")
+			throw_alert(ALERT_NOT_ENOUGH_PLASMA, /atom/movable/screen/alert/not_enough_plas)
 		else if(S.breathid == "co2")
-			throw_alert("not_enough_co2", /atom/movable/screen/alert/not_enough_co2)
+			throw_alert(ALERT_NOT_ENOUGH_CO2, /atom/movable/screen/alert/not_enough_co2)
 		else if(S.breathid == "n2")
-			throw_alert("not_enough_nitro", /atom/movable/screen/alert/not_enough_nitro)
+			throw_alert(ALERT_NOT_ENOUGH_NITRO, /atom/movable/screen/alert/not_enough_nitro)
 
 		return FALSE
 	else
-		if(istype(L, /obj/item/organ/lungs))
-			var/obj/item/organ/lungs/lun = L
+		if(istype(L, /obj/item/organ/internal/lungs))
+			var/obj/item/organ/internal/lungs/lun = L
 			lun.check_breath(breath,src)
 
 /// Environment handlers for species
@@ -128,7 +128,11 @@
  * * max_temp (optional) The maximum body temperature after adjustment
  */
 /mob/living/carbon/human/proc/adjust_coretemperature(amount, min_temp=0, max_temp=INFINITY)
-	coretemperature = clamp(coretemperature + amount, min_temp, max_temp)
+	set_coretemperature(clamp(coretemperature + amount, min_temp, max_temp))
+
+/mob/living/carbon/human/proc/set_coretemperature(value)
+	SEND_SIGNAL(src, COMSIG_HUMAN_CORETEMP_CHANGE, coretemperature, value)
+	coretemperature = value
 
 /**
  * get_body_temperature Returns the body temperature with any modifications applied
@@ -144,46 +148,24 @@
 		return dna.species.bodytemp_normal
 	return dna.species.bodytemp_normal + get_body_temp_normal_change()
 
-///FIRE CODE
-/mob/living/carbon/human/handle_fire(delta_time, times_fired)
-	. = ..()
-	if(.) //if the mob isn't on fire anymore
-		return
+/mob/living/carbon/human/get_body_temp_heat_damage_limit()
+	return dna.species.bodytemp_heat_damage_limit
 
-	if(dna)
-		. = dna.species.handle_fire(src, delta_time, times_fired) //do special handling based on the mob's species. TRUE = they are immune to the effects of the fire.
-
-	if(!last_fire_update)
-		last_fire_update = fire_stacks
-	if((fire_stacks > HUMAN_FIRE_STACK_ICON_NUM && last_fire_update <= HUMAN_FIRE_STACK_ICON_NUM) || (fire_stacks <= HUMAN_FIRE_STACK_ICON_NUM && last_fire_update > HUMAN_FIRE_STACK_ICON_NUM))
-		last_fire_update = fire_stacks
-		update_fire()
-
+/mob/living/carbon/human/get_body_temp_cold_damage_limit()
+	return dna.species.bodytemp_cold_damage_limit
 
 /mob/living/carbon/human/proc/get_thermal_protection()
 	var/thermal_protection = 0 //Simple check to estimate how protected we are against multiple temperatures
 	if(wear_suit)
-		if(wear_suit.max_heat_protection_temperature >= FIRE_SUIT_MAX_TEMP_PROTECT)
-			thermal_protection += (wear_suit.max_heat_protection_temperature*0.7)
+		if((wear_suit.heat_protection & CHEST) && (wear_suit.max_heat_protection_temperature >= FIRE_SUIT_MAX_TEMP_PROTECT))
+			thermal_protection += (wear_suit.max_heat_protection_temperature * 0.7)
 	if(head)
-		if(head.max_heat_protection_temperature >= FIRE_HELM_MAX_TEMP_PROTECT)
-			thermal_protection += (head.max_heat_protection_temperature*THERMAL_PROTECTION_HEAD)
+		if((head.heat_protection & HEAD) && (head.max_heat_protection_temperature >= FIRE_HELM_MAX_TEMP_PROTECT))
+			thermal_protection += (head.max_heat_protection_temperature * THERMAL_PROTECTION_HEAD)
 	thermal_protection = round(thermal_protection)
 	return thermal_protection
 
-/mob/living/carbon/human/IgniteMob()
-	//If have no DNA or can be Ignited, call parent handling to light user
-	//If firestacks are high enough
-	if(!dna || dna.species.CanIgniteMob(src))
-		return ..()
-	. = FALSE //No ignition
-
-/mob/living/carbon/human/extinguish_mob()
-	if(!dna || !dna.species.extinguish_mob(src))
-		last_fire_update = null
-		..()
 //END FIRE CODE
-
 
 //This proc returns a number made up of the flags for body parts which you are protected on. (such as HEAD, CHEST, GROIN, etc. See setup.dm for the full list)
 /mob/living/carbon/human/proc/get_heat_protection_flags(temperature) //Temperature is the temperature you're being exposed to.

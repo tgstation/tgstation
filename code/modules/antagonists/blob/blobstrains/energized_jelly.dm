@@ -10,7 +10,7 @@
 	reagent = /datum/reagent/blob/energized_jelly
 
 /datum/blobstrain/reagent/energized_jelly/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
-	if((damage_flag == MELEE || damage_flag == BULLET || damage_flag == LASER) && B.obj_integrity - damage <= 0 && prob(10))
+	if((damage_flag == MELEE || damage_flag == BULLET || damage_flag == LASER) && B.get_integrity() - damage <= 0 && prob(10))
 		do_sparks(rand(2, 4), FALSE, B)
 	return ..()
 
@@ -22,7 +22,7 @@
 	B.take_damage(damage, BURN, ENERGY)
 
 /datum/reagent/blob/energized_jelly
-	name = "Energized Jelly"
+	name = "Energized Blob Jelly"
 	taste_description = "gelatin"
 	color = "#EFD65A"
 

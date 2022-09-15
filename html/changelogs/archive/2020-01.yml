@@ -1,0 +1,544 @@
+2020-01-01:
+  Cyberboss:
+  - bugfix: Fixed crafting not working in most scenarios
+  Fikou:
+  - admin: the debug outfit now has an omnitool
+  - imageadd: Adjusted hypertool sprite.
+  Krysonism:
+  - rscadd: A set of amputation shears have been added to the medivend.
+  - rscadd: Added sparklers and firecrackers to the HoP's office during new years
+      eve.
+  - rscadd: Ian can now wear the festive hat, one is provided to him at the end of
+      the year.
+  ShizCalev:
+  - bugfix: Fixed firing pins not dropping while being replaced when the gun containing
+      it is held by a mob.
+  - tweak: Hacking a firing pin out of a gun is no longer done via a crafting menu
+      - you can now do it by simply holding the gun in your hand and clicking it with
+      a welder/screwdriver/wirecutters.
+  Skoglol:
+  - bugfix: Orion trail will no longer give you a radio for winning. Arcades have
+      vending sound.
+  - bugfix: Syndicate codewords can now be locations.
+  - bugfix: Voice of god no longer causes you to get muted.
+  - bugfix: Blood contract can no longer target someone on the centcom z-level.
+  StonebayKyle:
+  - tweak: Plumbing-surgery connection on Meta is now not considered maintenance.
+  - tweak: Viro-medbay connection on Delta is now not considered maintenance.
+  - rscdel: Nanotrasen has removed expensive maintenance-exclusive radiation shields
+      in specific areas on two of their research stations.
+  WarlockD:
+  - rscadd: Crafting recipe for construction bags.
+  actioninja:
+  - bugfix: Offstation vending machines are free again
+  - bugfix: Cargo ui has tooltip descriptions again
+  cacogen:
+  - tweak: Ian's birthday is now the date of his creation in 2011, not the date he
+      was given age
+  - rscadd: Adds a couple of relevant station prefixes to Ian's birthday holiday
+  - tweak: MetaStation and KiloStation doctors can turn on and modify behaviour of
+      Scrubs, MD
+  iain0:
+  - bugfix: MetaStation Port Aft Solar Control SMES input isolated from main power
+      line, like all other solar control rooms.
+  nightred:
+  - rscadd: Species body temperature handling
+  - balance: Plasmamen, Lizardpeople, Ethereal have custom body temperatures to deal
+      with
+  - refactor: clean up of the environment handles for mobs and species
+2020-01-04:
+  ArcaneMusic:
+  - rscadd: Nanotrasen Plastic Labs has sat down and developed new designs exclusively
+      using plastic for station use. Station productivity has dropped by 2.7 percent.
+  - rscadd: Adds Plastic Potted Trees, Plastic Can holders, Plastic Bead Necklaces,
+      and Plastic Boxes.
+  - tweak: Space Carp have been noticed to actively lunge after and attack Plastic
+      Can holders, as though they were Space Jellyfish, leading to incremental population
+      decline.
+  - tweak: Adds 6 packs of cola and beer to the Party Crate, increasing the price
+      to 2500.
+  - bugfix: The Polycircuit Stack item no longer leaps through space and time until
+      a circuit is removed.
+  Arkatos (original by kevinz000):
+  - bugfix: Megafauna mobs are no longer deaf.
+  Bumtickley00:
+  - tweak: Slightly adjusted the dosage of brute/burn medigels
+  - tweak: Changed description of instabitaluri sprays/patches to reflect the medicine's
+      toxicity
+  CitrusGender:
+  - rscadd: Added hedges as fluff
+  - imageadd: added hedge sprites
+  Cobby Touches Medical Again:
+  - balance: Ups a variety of surgeries to give more XP
+  - bugfix: Surgeries not giving XP
+  - bugfix: Failing surgeries causing the rest of the surgery (specifically TW) to
+      act up.
+  EOBGames:
+  - tweak: modernised the brain damage strings
+  JMoldy:
+  - bugfix: Fixed wand recharge to prevent recharge counter increasing when full
+  Mickyan:
+  - imageadd: Added new trim floor decal styles for mapping
+  OnlineGirlfriend:
+  - rscadd: Sol Dry
+  - rscadd: Moscow Mule
+  - balance: Drinking Sol Dry slightly reduces disgust
+  - imageadd: Sprites for Sol Dry, Moscow Mule
+  ShizCalev:
+  - bugfix: Fixed humans stepping on and getting hurt by glass shards when they're
+      thrown past them.
+  - bugfix: Fixed humans stepping on, getting hurt by, and shattering lightbulbs when
+      they're thrown past them.
+  - bugfix: Fixed lightbulbs shattering when a buckled mob passes over them.
+  - bugfix: Fixed lightbulbs shattering when a flying mob (including revenants) flies
+      over them.
+  - bugfix: Fixed glass shards and light bulbs playing sounds when a flying mob (including
+      revenants) flies over them.
+  - bugfix: Fixed lightbulbs and glass shards not triggering their effects in low
+      gravity when a human wearing activated magboots walks over them.
+  - bugfix: Fixed glass shards and lightbulbs playing stepping sounds when a buckled
+      mob passes over them.
+  Skoglol:
+  - balance: Metastation maint loot overhauled. Most static loot spawns have been
+      replaced with random spawners instead.
+  - rscadd: Maint loot table has been adjusted, may now contain some special stuff.
+      Get hunting!
+  - bugfix: Waddling works again.
+  TheChosenEvilOne:
+  - tweak: Border firelocks no longer crush mobs.
+  TheVekter:
+  - tweak: Geneticists are now purely under the purview of the Science department.
+      They will report directly to the Research Director.
+  - tweak: Moved the Genetics lab to the Science wing, replacing the Experimentor
+      and associated lab. This is a change on Metastation, Boxstation, Pubbystation,
+      Deltastation, and Kilostation.
+  - tweak: Geneticist access updated to grant access to the Science wing.
+  - tweak: Changed the Geneticist's outfit item sprites and bags to match their correct
+      color.
+  - rscdel: Removed the Experimentor from all labs as part of a full R&D rework.
+  - bugfix: Relocated the B.E.P.I.S. on both Delta and Metastation
+  Thebleh:
+  - bugfix: Public Nanite Chamber cloud IDs can be changed again.
+  - bugfix: Tank Dispensers, Ore Boxes and Coin Presses are no longer usable by ghosts
+  actioninja:
+  - rscadd: Reworked the Contractor Uplink for tgui-next
+  - rscadd: Emergency Shuttle Console tgui-next
+  - rscadd: Intellicard tgui-next
+  - rscadd: Slime Body Swapper tgui-next
+  - rscadd: Gulag Teleporter Console tgui-next
+  - rscadd: Notification Preferences tgui-next
+  - rscadd: MULEbot tgui-next
+  - rscadd: Sleeper tgui-next
+  - rscadd: tgui next hardware confguration and ntnet relay
+  - rscadd: tgui-next magic eight ball
+  - tweak: haunted eight ball is now shook for 30 seconds, which gives it a 30 second
+      ghost vote time instead of 15
+  - bugfix: Haunted eight ball actually clears its vote list after counting votes,
+      so it functions after over two years.
+  - rscadd: briefcase launchpad and launchpad console tgui-next
+  - bugfix: Nuke console updates when you click arm, making the ui slightly more responsive.
+  swindly:
+  - bugfix: Fixed being able to craft with blacklisted items
+2020-01-07:
+  Anonmare:
+  - rscadd: Adds champagne to the service borg shaker
+  - bugfix: Returns two reagents back to the service borg shaker
+  ArcaneMusic:
+  - rscadd: Mice will now eat cheese, and multiply.
+  Arkatos:
+  - bugfix: Borg shells, mechs and AI cores will now only accept MMI brains in a pristine
+      condition, which means they are active, healthy and are not a product of a suicide.
+  - bugfix: Head Revolutionary implanted cybernetic HUD vision is now properly removed
+      upon surgery, demotion or antagonist status removal.
+  MMMiracles (Donutstation):
+  - rscadd: Added a plumbing section below Medical
+  - rscadd: Several waypoint markers have been adding around key locations to help
+      alleviate trouble when exploring the map.
+  - rscdel: To make room for plumbing, the lower section of Medical's maintenance
+      was stripped to an extent.
+  - tweak: Original chemistry has been rebranded to the Pharmacy with access levels
+      adjusted
+  - tweak: Chapel now has pews instead of stools for proper communion
+  - tweak: Genetics is slightly more science-y colored.
+  - bugfix: Fixes a few spots that was missing disposal/piping in the main loop
+  - bugfix: Surgery B now has a camera
+  Skoglol:
+  - balance: EVA RCD replaced with four smart metal foam grenades.
+  - tweak: Foam now spreads properly on space tiles.
+  - balance: Engineering vendor RCD's are now premium at 1700 cr with 2 stock. Reminder
+      that these can be printed in the engineering lathe with the relevant tech.
+  - bugfix: You can now only craft strobe shields using proper riot shields.
+  - bugfix: Shadowshrooms now emit shadows again.
+  - bugfix: Floodlights can no longer be run in wireless power mode.
+  - bugfix: Floodlights now accept light tubes from light replacers.
+  - bugfix: Floodlights now only requires a single wrenching after construction to
+      connect.
+  - tweak: Map votes and rotation tweaked further. Map vote will automatically run
+      as the shuttle leaves, and if no map vote has been run by round end map rotation
+      will trigger.
+  - tweak: The last 3 maps are now stored, up from 2. This means any map run twice
+      in the last four (including current) rounds are disqualified from map vote and
+      map rotation.
+  - bugfix: Various ruin mapping fixes. Stray pipes, double cables gone.
+  - bugfix: Fixed some metastation mapping issues. Mostly double cables, dead end
+      atmos. Added two new APC's, Medbay Central and Kitchen Cold Room.
+  - bugfix: Various Kilo Station mapping fixes. Station connected caves are now properly
+      low pressure.
+  - balance: Kilo Station solars are no longer connected roundstart.
+  - bugfix: Fixed some DeltaStation mapping issues. Removed a couple duplicate APC's,
+      some cables, some dead end pipes.
+  - bugfix: PubbyStation mapping fixes. Replaced emp-proof cams in engine room with
+      normal ones, fixed a scrubber, some doubled cables.
+  - bugfix: Removed stray pixel from bot path icon.
+  - rscadd: Ghost rolls failing to spawn due to too few candidates now report this
+      to deadchat.
+  TheChosenEvilOne:
+  - rscadd: The black market, craft yourself an uplink from a subspace amplifier,
+      some cable, a radio and an analyzer.
+  Thebleh:
+  - bugfix: Cyborgs now receive proper text feedback when attempting to cancel a surgery.
+  Vondiech:
+  - tweak: The armory now no longer has 2 air alarms
+  WarlockD:
+  - bugfix: Fixed nanite damage sensor and rule for sesnsor <!-- -->
+  actioninja:
+  - bugfix: repeal button on emergency shuttle console works again
+  bandit:
+  - tweak: Clicking a sign examines it.
+  cacogen:
+  - rscadd: Struggling to find your way around Kilo, Delta, Donut or even Box and
+      Meta? Look for the pinpointer dispenser at arrivals.
+  - bugfix: Modifying a navigation beacon's codes list or location name now correctly
+      updates the associated global lists (this is an IC thing, try it)
+  floyd:
+  - code_imp: skills now use dictionaries for modifiers
+  nemvar:
+  - bugfix: Fixes a material duplication bug.
+  wesoda25:
+  - balance: The speed buffs from Nuka Cola, Monkey Energy, Speed DNA Vault Option,
+      Thruster Implant, Ephedrine, Meth, Nitryl, and Stabilized Light Pink and Sepia
+      cores have been reduced. Gas powered Jetpacks have been sped up.
+2020-01-08:
+  Skoglol:
+  - admin: Admin basic disease trigger and custom disease renaming should now work
+      properly.
+  floyd:
+  - bugfix: Everything made from glass in the game has a little more tegridy and doesnt
+      break from a single punch
+2020-01-18:
+  ArcaneMusic:
+  - rscadd: A new Technology has been implemented as a major reward in the B.E.P.I.S.,
+      Specialized Engineering, to appeal to engineering utility and new construction
+      horizons.
+  - tweak: Watchers will now actively consume diamond ore left lying around, alongside
+      the new survival pens.
+  - rscadd: Adds a new surgery, Stomach Pump, which allows you to purge a patient's
+      stomach via surgery while surgically dead.
+  Arkatos:
+  - rscadd: Simple mobs will now receive an alert about being in too hot/cold environment.
+  - rscadd: Simple mobs will now receive an alert about choking to death.
+  - imageadd: Added sprites to a several clothing items that were missing them.
+  - tweak: Silencer, Blank paper and Nothing reagents will now only heal you if are
+      keeping your Vow of Silence. Better not break it, mimes!
+  - rscadd: Teleporter Control Console now uses tgui-next.
+  Atlanta Ned:
+  - server: Your ahelps are now stored in the database!
+  Bawhoppen:
+  - rscadd: Luxury shuttle has been even further adjusted.
+  Buggy123:
+  - rscadd: Centcomm has updated their emergency temporal response protocols, and
+      will now correctly stand down if a major threat is destroyed before countermeasures
+      can be deployed.
+  Dennok:
+  - tweak: You do not lose the storage window on storage pickup.
+  Denton:
+  - tweak: Added an air tank and vents to the seed vault lavaland ruin
+  - bugfix: Fixed active turfs in the seed vault lavaland ruin
+  - bugfix: Fixed shield wall generators in the abandoned space zoo ruin attempting
+      to spawn powered
+  - tweak: Replaced the magical infinite charge SMES in the abandoned space zoo ruin
+      with a regular one
+  - bugfix: 'Boxstation: Roundstart Paramedics now properly start in medbay.'
+  Dorsidwarf:
+  - tweak: Added ethereals & tails to the limbgrower and removed flypeople
+  - rscadd: Limbgrower limbs are now appropriately randomly coloured instead of plain
+      white.
+  EOBGames:
+  - imageadd: added resting sprites for the corgi pAI.
+  - balance: removed gas miners from Kilo and Donut
+  ExcessiveUseOfCobblestone:
+  - bugfix: Players who are old (and wrinkly) will no longer receive the waypoint
+      unless they have the quirk now.
+  Fhaxaris:
+  - bugfix: flying and floating mobs are no longer affected by the turf under them.
+  - bugfix: the bluespace randomness generator is no longer being used incorrectly
+  - bugfix: nanites getting removed all at once when you get shocked, heavy sleeping
+      being really random if it actually increases the time you sleep, the scary cloning
+      sound (???), and lightbulbs randomly pretending you have insulated gloves are
+      all fixed.
+  Fikou:
+  - rscadd: The limb grower now grows a bunch of organella
+  - rscadd: Added ERP
+  - bugfix: champion belt sprite now shows again
+  - bugfix: centcom commanders and officials have mindshield implants
+  - imageadd: a couple of ert related sprites have been added
+  - tweak: ert members start with hailers on instead of them being in backpack
+  - balance: colossus now enrages on sandstone golems
+  Ghommie:
+  - rscadd: ':b: emoji.'
+  - bugfix: Fixed shock paddles being insertable in BoHs
+  JJRcop:
+  - rscadd: New proximity crew pinpointer.
+  - balance: Paramedic's crew pinpointer replaced with proximity crew pinpointer.
+  - balance: The crew monitor was moved to premium items in nanomed, same with the
+      handheld crew pinpointer
+  - bugfix: Fixed unwanted behavior with pinpointer icons.
+  - rscadd: Intercom description tells you about the :i radio key.
+  JMoldy:
+  - balance: Removes hitstun on meathook
+  - balance: Changes meathook's damage from 25 brute at 100 armor penetration to 20
+      brute, 20 stamina at 60 armor penetration
+  - balance: Changes the bounty hunter's meathook to do 40 stamina damage instead
+      of a stun, adds a half-second knockdown.
+  Krysonism:
+  - balance: 5u+ rezadone now unhusks bodies.
+  LemonInTheDark:
+  - balance: See the below, optimal power setups may have changed, try out those 100%
+      plasma hell setups of yours, it should actually give you a power benefit now.
+      Oh and Pluoxium should be a bit more of a safety gas now.
+  - bugfix: Fixed the SM not increasing/decreasing rad output with most gasses.
+  OnlineGirlfriend:
+  - rscadd: Sausages can be sliced into salami
+  Paxilmaniac:
+  - bugfix: many masks, mostly clown masks, are now the same height all around
+  ShizCalev:
+  - bugfix: Fixed tesla immunity being lost if you have reactive armor and refund
+      the lighting bolt spell / vice versa
+  - admin: Added missing traits to the admin trait panel.
+  Skoglol:
+  - balance: Reduced heart decay, effectively extending the defib timer slightly to
+      a little under four minutes before requiring heart surgery.
+  - balance: Slightly reduced the probability of ear damage causing you to intermittently
+      go deaf.
+  - tweak: Defib timer is gone, its all organ decay now. The defib hud icon is also
+      gone since any corpse is now defibbable, also making fakedeath a bit more convincing.
+  - bugfix: Fugitives now reports the correct amount minimum candidates to deadchat
+      if it fails.
+  - bugfix: Straight jackets can now be broken out of
+  - tweak: Metastation hydroponics entrance back to its old version. No more bushes
+      and directional windows.
+  SteelSlayer:
+  - imageadd: Changes the look of the supermatter's electricity arcs to appear more
+      like electricity.
+  - rscadd: Remote signalers now use tgui-next
+  TheChosenEvilOne:
+  - bugfix: Fixed codex gigas, you can now properly input devil names.
+  - bugfix: fixed SM arcs using the old icon as it was accidentally reverted in a
+      recent change.
+  Twaticus:
+  - imageadd: lizard/cat tailwhip inhand sprites
+  - imageadd: meathook inhand sprite
+  Vondiech:
+  - bugfix: Metastation medical lobby vent no longer over-pressurizes the lobby room.
+  WarlockD:
+  - bugfix: Fixed nanite damage sensor, verified it worked in game this time around.
+  actioninja:
+  - rscadd: tgui-next roulette
+  - bugfix: mule bot interface not working properly
+  - rscadd: tgui-next ntos chat
+  - bugfix: Corrected a cable loop on kilo that was likely preventing proper power
+  bandit:
+  - rscadd: New valentines and Valentines-themed arcade machines will arrive next
+      month. Y-you have a valentine, right?
+  cacogen:
+  - tweak: The wayfinding pinpointer dispenser is different who cares. Recycle discarded
+      pinpointers at the dispenser for 40 cr.
+  - bugfix: Decapitated heads with destroyed brains no longer mislead you into thinking
+      they're unrevivable when examined
+  carshalash:
+  - bugfix: Hex color typo fix
+  kevinz000:
+  - bugfix: Mobs without MOBILITY_MOVE  can no longer move by users trying to ride
+      them around.
+  mrhugo13:
+  - tweak: Cleaned up medbay slighty on Metastation.
+  - balance: Electrified the grilles into the Medbay Security post on Metastation.
+  nemvar:
+  - admin: 'Added another SDQL option. Using "UPDATE selectors SET #null=value" will
+      now resolve value and discard the return. This is useful if you only care about
+      the side effect of a proc.'
+  - bugfix: Fixed an edge case where the mining vendor wouldn't vend your gamer gear.
+  nightred:
+  - rscadd: Species body temperature handling
+  - balance: Plasmamen, Lizardpeople, Ethereal have custom body temperatures to deal
+      with
+  - bugfix: natural body temp stabilization now returns proper values
+  - refactor: clean up of the environment handles for mobs and species
+  ninjanomnom:
+  - bugfix: Blob structures and hierophant barriers should no longer let the wrong
+      things just walk through them
+  wesoda25:
+  - rscadd: You can now charge through APC's and Energy Cells as an Ethereal! Click
+      an APC on harm intent to drain its energy, or on grab intent to give it your
+      own energy! Click the energy cell while its in your hand to siphon its energy.
+  - balance: You now receive less charge from light as an Ethereal.
+  zxaber:
+  - bugfix: Law 0 for emagged borgs is no longer being suppressed.
+2020-01-20:
+  AnturK:
+  - rscadd: Canvases are now available again.
+  - rscadd: Painting frames can be built from wood. Use a pen to name your masterpiece.
+  ArcaneMusic:
+  - imageadd: the Rapid Service Fabricator now actually has and uses it's own sprite
+      instead of the RCD.
+  Couls:
+  - tweak: hardsuit helmets are now repairable by using a lightbulb on the hardsuit
+  Fikou:
+  - tweak: highlanders can no longer be dismembered
+  - tweak: you can no longer put broken chameleon hats or any space helmets on borgs
+  Improvedname:
+  - rscadd: Adds a sprite for the way-finding pinpointer.
+  JJRcop:
+  - bugfix: Jobs missing spawns will spawn on the arrivals shuttle.
+  Mickyan:
+  - rscadd: 'Added Thocks socks: dress to impress with thongs for your feet'
+  Paxilmaniac:
+  - rscadd: "new Nanotrasen\u2122 Space Pods"
+  - bugfix: earmuffs actually make you deaf now
+  Skoglol:
+  - balance: Husking now requires more burn damage before it happens.
+  - balance: 100u instabitaluri (synthflesh) can now cure husking when burn damage
+      is below 50.
+  - balance: Roundstart beaker of instabitaluri removed from all stations.
+  - bugfix: Atmospherics, janitors closet and virology areas no longer block cult
+      runes.
+  - bugfix: Kilo and Donut now has the right amount of gas in the atmos gas tanks.
+  Skoglol, sprites by ArcaneMusic:
+  - rscadd: New basic tier of cybernetic organs, available roundstart. Worse than
+      bio organs, but printable en masse.
+  - balance: Changed emp effect on cybernetic heart, lungs, liver. Now applies an
+      instant (on cooldown) effect, and has a chance to trigger organ decay.
+  TheChosenEvilOne:
+  - balance: Dry Heat Sterilization (converting miasma to oxygen with heat) no longer
+      generates research points.
+  armhulen:
+  - rscadd: 'new genetic powers are in the pool: tongue spike, chem spike, stimmed,
+      and web laying'
+  carshalash:
+  - tweak: Adds flavor text to spider meat
+2020-01-28:
+  ATHATH:
+  - bugfix: You can no longer use growth serum and a stasis bed to enter the quantum
+      realm.
+  - bugfix: You also can no longer use the red queen drink and a stasis bed to enter
+      the quantum realm or to become much, much larger than you're supposed to be.
+  - bugfix: Increases the amount of shadowperson mutation toxin found in each of the
+      black pills that legion corpses sometimes have in their pockets from 1u to 5u.
+      They should actually turn you into a shadowperson if you eat them now.
+  AcapitalA:
+  - tweak: BoxStation's abandoned bar has gotten some love from the local assistants.
+  Anonmare:
+  - balance: AI and Cyborg Upload consoles require bluespace crystals and diamond
+      to print now
+  - balance: Law modules now require bluespace crystals to print now
+  ArcaneMusic:
+  - tweak: Wood is now a datum material, and behaves like other datum materials.
+  - rscadd: Adds a new weight loss bar to the contraband on snack vending machines.
+  - bugfix: The B.E.P.I.S. no longer shunts rewards into the walls and windows of
+      the station.
+  - tweak: The BEPIS now shows the odds of success of obtaining a tech in the UI.
+  Archanial:
+  - rscadd: Operation tables and stasis beds now link to operation computer when built
+  - tweak: Stasis beds needs to be placed on the next tile to a computer
+  - bugfix: Stasis bed will now display patient's data onto the computer
+  Arkatos:
+  - bugfix: Removed rogue pixel on salbutamol pen inhand sprite.
+  - rscadd: Timer assembly now uses tgui-next.
+  - bugfix: Trashbag will now properly update its icon.
+  Buggy123:
+  - tweak: Be advised, the Nanotrasen Weaponized Experimental E-graculture Deparment
+      has discovered a series of mutations in space-born vine clusters. Stations in
+      the cluster are advised to keep a eye out for any germinating vine spores, as
+      they may be unusually potent and dangerous!
+  Dennok:
+  - bugfix: Now closets, crates, bodybags block interaction with storages in contents.
+  Denton:
+  - tweak: Plant analyzers can now scan replica pods for the blood DNA (also known
+      as UE) of any blood samples inside. The blood DNA is listed in the medical records
+      and verifiable with forensics scanners.
+  - bugfix: Stasis beds now show messages when they're turned on/off.
+  Dingo-Dongler:
+  - rscadd: The CMO's suit storage unit now starts with an oxygen tank.
+  Fikou:
+  - imageadd: new hud icons for ert, service hud icons recolored, some hud icons simplified
+      or small recolors, some job id card icons recolored and changed job id cards
+      for ert
+  - rscadd: you can now craft canvases with cloth!
+  - bugfix: genetics scanner is now available in the science lathe
+  - imageadd: oranges now have stems and leaves
+  - tweak: security and medical inquisition ert are now holy
+  - bugfix: fixes category on easter foods
+  FlufflyCthulu:
+  - bugfix: PubbyStation fixes
+  Kryson & Qustinnus:
+  - rscadd: New BEPIS design; a self heating mug
+  Mickyan:
+  - balance: Xenobio-spawned magicarps can no longer cast resurrection bolt
+  Mopby:
+  - rscadd: The Cleaning Skill
+  Names-Are-Hard:
+  - bugfix: phobia quirk properly saves now
+  - bugfix: Fixed moth markings not saving properly
+  - bugfix: borgs can go through medical holobarriers
+  - bugfix: pAIs can get additional laws again
+  OnlineGirlfriend:
+  - rscadd: changshan, cheongsam available in Autodrobe
+  - imageadd: sprites for red and blue changshan/cheongsam
+  QualityVan:
+  - rscadd: Smoking damages your lungs
+  - bugfix: Junkie relapses don't disappear any more.
+  Ryll/Shaps:
+  - tweak: Clowns are now unable to conceptualize death and think corpses of people
+      are simply sleeping.
+  - bugfix: You can now shove people into the trash (disposal bins) like God (actionninja)
+      intended
+  Skoglol:
+  - admin: Podlauncher now supports sending a single random item instead of the entire
+      turfs contents.
+  - bugfix: 'Various donut station fixes: Toxins igniter works, distro pipe moved.
+      Sinks flipped. Genetics access. Hydroponics disposals. Brig double window.'
+  - rscadd: Added alt click actions to the All-In-One Grinder and Biogenerator, ejects
+      beaker and puts it in your hand.
+  - tweak: OOC and Boh bomb confirmation buttons swapped around, now in the OK / Cancel
+      order.
+  - bugfix: After murmurs about "health and safety" and "who the fuck designed this
+      shit" the APC in delta station surgery B is now wired and will recharge.
+  - bugfix: Mulebot ui on button now works again.
+  TheChosenEvilOne:
+  - tweak: passive vent now shares temperature too, this stops it from getting stuck
+      when heating/cooling.
+  TheVekter:
+  - rscadd: Added the ability for Xenobiologists to spend slime extracts for research
+      points. Only one of each extract can be used for points.
+  - bugfix: Fixes the Mauna Mug research being available from roundstart.
+  Thebleh:
+  - bugfix: Roundstart implant cases now properly display their content
+  - bugfix: Wallets icons work again
+  Time-Green:
+  - bugfix: fixes plumbing ducts usually appearing disconnected
+  Tlaltecuhtli:
+  - rscadd: contraband crate with british police outfit
+  - bugfix: chem tongue is now only available by combo'ing
+  itseasytosee:
+  - tweak: droppers are now available at autolathes and medical protolathes
+  - tweak: pill bottles now require plastic instead of metal to print
+  kevinz000:
+  - admin: harm alarm logging now goes into user attack logs instead of game logs
+  kittymaster0:
+  - bugfix: fixes missing floor under window in plumbing area on box
+  nightred:
+  - balance: Temperature based projectiles respect insulation
+  tralezab:
+  - rscadd: new health hud for simple critters!
+  wesoda25:
+  - bugfix: Removed duplicate morgue trays on meta

@@ -3,6 +3,8 @@
 	typepath = /datum/round_event/obsessed
 	max_occurrences = 1
 	min_players = 20
+	category = EVENT_CATEGORY_HEALTH
+	description = "A random crewmember becomes obsessed with another."
 
 /datum/round_event/obsessed
 	fakeable = FALSE
@@ -13,11 +15,11 @@
 			continue
 		if(H.stat == DEAD)
 			continue
-		if(!SSjob.GetJob(H.mind.assigned_role) || (H.mind.assigned_role in GLOB.nonhuman_positions)) //only station jobs sans nonhuman roles, prevents ashwalkers trying to stalk with crewmembers they never met
+		if(!(H.mind.assigned_role.job_flags & JOB_CREW_MEMBER)) //only station jobs sans nonhuman roles, prevents ashwalkers trying to stalk with crewmembers they never met
 			continue
 		if(H.mind.has_antag_datum(/datum/antagonist/obsessed))
 			continue
-		if(!H.getorgan(/obj/item/organ/brain))
+		if(!H.getorgan(/obj/item/organ/internal/brain))
 			continue
 		H.gain_trauma(/datum/brain_trauma/special/obsessed)
 		announce_to_ghosts(H)

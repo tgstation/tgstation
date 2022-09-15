@@ -20,8 +20,8 @@
 	rate_up_lim = 1
 	purity_min = 0
 
-/datum/chemical_reaction/medical_speed_catalyst/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
+/datum/chemical_reaction/medical_speed_catalyst/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, step_volume_added)
 	explode_invert_smoke(holder, equilibrium) //Will be better when the inputs have proper invert chems
 
-/datum/chemical_reaction/medical_speed_catalyst/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
+/datum/chemical_reaction/medical_speed_catalyst/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium, step_volume_added)
 	explode_invert_smoke(holder, equilibrium)

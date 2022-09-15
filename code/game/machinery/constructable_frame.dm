@@ -30,40 +30,50 @@
 
 /obj/structure/frame/machine/examine(user)
 	. = ..()
-	if(state == 3 && req_components && req_component_names)
-		var/hasContent = FALSE
-		var/requires = "It requires"
+	if(state != 3)
+		return
 
-		for(var/i = 1 to req_components.len)
-			var/tname = req_components[i]
-			var/amt = req_components[tname]
-			if(amt == 0)
-				continue
-			var/use_and = i == req_components.len
-			requires += "[(hasContent ? (use_and ? ", and" : ",") : "")] [amt] [amt == 1 ? req_component_names[tname] : "[req_component_names[tname]]\s"]"
-			hasContent = TRUE
+	if(!length(req_components))
+		. += span_info("It requires no components.")
+		return .
 
-		if(hasContent)
-			. +=  "[requires]."
-		else
-			. += "It does not require any more components."
+	if(!req_component_names)
+		stack_trace("[src]'s req_components list has items but its req_component_names list is null!")
+		return
+
+	var/list/nice_list = list()
+	for(var/atom/component as anything in req_components)
+		if(!ispath(component))
+			stack_trace("An item in [src]'s req_components list is not a path!")
+			continue
+		if(!req_components[component])
+			continue
+
+		nice_list += list("[req_components[component]] [req_component_names[component]]\s")
+	. += span_info("It requires [english_list(nice_list, "no more components")].")
+
 
 /obj/structure/frame/machine/proc/update_namelist()
 	if(!req_components)
 		return
 
-	req_component_names = new()
-	for(var/tname in req_components)
-		if(ispath(tname, /obj/item/stack))
-			var/obj/item/stack/S = tname
-			var/singular_name = initial(S.singular_name)
-			if(singular_name)
-				req_component_names[tname] = singular_name
-			else
-				req_component_names[tname] = initial(S.name)
-		else
-			var/obj/O = tname
-			req_component_names[tname] = initial(O.name)
+	req_component_names = list()
+	for(var/atom/component_path as anything in req_components)
+		if(!ispath(component_path))
+			continue
+
+		req_component_names[component_path] = initial(component_path.name)
+
+		if(ispath(component_path, /obj/item/stack))
+			var/obj/item/stack/stack_path = component_path
+			if(initial(stack_path.singular_name))
+				req_component_names[component_path] = initial(stack_path.singular_name)
+				continue
+
+		if(ispath(component_path, /obj/item/stock_parts))
+			var/obj/item/stock_parts/stock_part = component_path
+			if(initial(stock_part.base_name))
+				req_component_names[component_path] = initial(stock_part.base_name)
 
 /obj/structure/frame/machine/proc/get_req_components_amt()
 	var/amt = 0
@@ -75,60 +85,65 @@
 	switch(state)
 		if(1)
 			if(istype(P, /obj/item/circuitboard/machine))
-				to_chat(user, "<span class='warning'>The frame needs wiring first!</span>")
+				to_chat(user, span_warning("The frame needs wiring first!"))
 				return
 			else if(istype(P, /obj/item/circuitboard))
-				to_chat(user, "<span class='warning'>This frame does not accept circuit boards of this type!</span>")
+				to_chat(user, span_warning("This frame does not accept circuit boards of this type!"))
 				return
 			if(istype(P, /obj/item/stack/cable_coil))
 				if(!P.tool_start_check(user, amount=5))
 					return
 
-				to_chat(user, "<span class='notice'>You start to add cables to the frame...</span>")
+				to_chat(user, span_notice("You start to add cables to the frame..."))
 				if(P.use_tool(src, user, 20, volume=50, amount=5))
-					to_chat(user, "<span class='notice'>You add cables to the frame.</span>")
+					to_chat(user, span_notice("You add cables to the frame."))
 					state = 2
 					icon_state = "box_1"
 
 				return
 			if(P.tool_behaviour == TOOL_SCREWDRIVER && !anchored)
-				user.visible_message("<span class='warning'>[user] disassembles the frame.</span>", \
-									"<span class='notice'>You start to disassemble the frame...</span>", "<span class='hear'>You hear banging and clanking.</span>")
+				user.visible_message(span_warning("[user] disassembles the frame."), \
+									span_notice("You start to disassemble the frame..."), span_hear("You hear banging and clanking."))
 				if(P.use_tool(src, user, 40, volume=50))
 					if(state == 1)
-						to_chat(user, "<span class='notice'>You disassemble the frame.</span>")
+						to_chat(user, span_notice("You disassemble the frame."))
 						var/obj/item/stack/sheet/iron/M = new (loc, 5)
-						M.add_fingerprint(user)
+						if (!QDELETED(M))
+							M.add_fingerprint(user)
 						qdel(src)
 				return
 			if(P.tool_behaviour == TOOL_WRENCH)
-				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [src]...</span>")
+				var/turf/ground = get_turf(src)
+				if(!anchored && ground.is_blocked_turf(exclude_mobs = TRUE, source_atom = src))
+					to_chat(user, span_notice("You fail to secure [src]."))
+					return
+				to_chat(user, span_notice("You start [anchored ? "un" : ""]securing [src]..."))
 				if(P.use_tool(src, user, 40, volume=75))
 					if(state == 1)
-						to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [src].</span>")
+						to_chat(user, span_notice("You [anchored ? "un" : ""]secure [src]."))
 						set_anchored(!anchored)
 				return
 
 		if(2)
 			if(P.tool_behaviour == TOOL_WRENCH)
-				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [src]...</span>")
+				to_chat(user, span_notice("You start [anchored ? "un" : ""]securing [src]..."))
 				if(P.use_tool(src, user, 40, volume=75))
-					to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [src].</span>")
+					to_chat(user, span_notice("You [anchored ? "un" : ""]secure [src]."))
 					set_anchored(!anchored)
 				return
 
 			if(istype(P, /obj/item/circuitboard/machine))
 				var/obj/item/circuitboard/machine/B = P
 				if(!B.build_path)
-					to_chat(user, "<span class='warning'>This circuitboard seems to be broken.</span>")
+					to_chat(user, span_warning("This circuitboard seems to be broken."))
 					return
 				if(!anchored && B.needs_anchored)
-					to_chat(user, "<span class='warning'>The frame needs to be secured first!</span>")
+					to_chat(user, span_warning("The frame needs to be secured first!"))
 					return
 				if(!user.transferItemToLoc(B, src))
 					return
 				playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
-				to_chat(user, "<span class='notice'>You add the circuit board to the frame.</span>")
+				to_chat(user, span_notice("You add the circuit board to the frame."))
 				circuit = B
 				icon_state = "box_2"
 				state = 3
@@ -138,12 +153,12 @@
 				return
 
 			else if(istype(P, /obj/item/circuitboard))
-				to_chat(user, "<span class='warning'>This frame does not accept circuit boards of this type!</span>")
+				to_chat(user, span_warning("This frame does not accept circuit boards of this type!"))
 				return
 
 			if(P.tool_behaviour == TOOL_WIRECUTTER)
 				P.play_tool_sound(src)
-				to_chat(user, "<span class='notice'>You remove the cables.</span>")
+				to_chat(user, span_notice("You remove the cables."))
 				state = 1
 				icon_state = "box_0"
 				new /obj/item/stack/cable_coil(drop_location(), 5)
@@ -157,9 +172,9 @@
 				components.Remove(circuit)
 				circuit = null
 				if(components.len == 0)
-					to_chat(user, "<span class='notice'>You remove the circuit board.</span>")
+					to_chat(user, span_notice("You remove the circuit board."))
 				else
-					to_chat(user, "<span class='notice'>You remove the circuit board and other components.</span>")
+					to_chat(user, span_notice("You remove the circuit board and other components."))
 					for(var/atom/movable/AM in components)
 						AM.forceMove(drop_location())
 				desc = initial(desc)
@@ -169,9 +184,9 @@
 				return
 
 			if(P.tool_behaviour == TOOL_WRENCH && !circuit.needs_anchored)
-				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [src]...</span>")
+				to_chat(user, span_notice("You start [anchored ? "un" : ""]securing [src]..."))
 				if(P.use_tool(src, user, 40, volume=75))
-					to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [src].</span>")
+					to_chat(user, span_notice("You [anchored ? "un" : ""]secure [src]."))
 					set_anchored(!anchored)
 				return
 
@@ -240,7 +255,7 @@
 							req_components[path] -= used_amt
 						else
 							added_components[part] = path
-							if(SEND_SIGNAL(replacer, COMSIG_TRY_STORAGE_TAKE, part, src))
+							if(replacer.atom_storage.attempt_remove(part, src))
 								req_components[path]--
 
 				for(var/obj/item/part in added_components)
@@ -254,7 +269,7 @@
 					if(!QDELETED(part)) //If we're a stack and we merged we might not exist anymore
 						components += part
 						part.forceMove(src)
-					to_chat(user, "<span class='notice'>[part.name] applied.</span>")
+					to_chat(user, span_notice("You add [part] to [src]."))
 				if(added_components.len)
 					replacer.play_rped_sound()
 				return
@@ -262,7 +277,7 @@
 			if(isitem(P) && get_req_components_amt())
 				for(var/I in req_components)
 					if(istype(P, I) && (req_components[I] > 0))
-						if(istype(P, /obj/item/stack))
+						if(isstack(P))
 							var/obj/item/stack/S = P
 							var/used_amt = min(round(S.get_amount()), req_components[I])
 
@@ -276,15 +291,15 @@
 									NS.add(used_amt)
 
 								req_components[I] -= used_amt
-								to_chat(user, "<span class='notice'>You add [P] to [src].</span>")
+								to_chat(user, span_notice("You add [P] to [src]."))
 							return
 						if(!user.transferItemToLoc(P, src))
 							break
-						to_chat(user, "<span class='notice'>You add [P] to [src].</span>")
+						to_chat(user, span_notice("You add [P] to [src]."))
 						components += P
 						req_components[I]--
 						return TRUE
-				to_chat(user, "<span class='warning'>You cannot add that to the machine!</span>")
+				to_chat(user, span_warning("You cannot add that to the machine!"))
 				return FALSE
 	if(user.combat_mode)
 		return ..()

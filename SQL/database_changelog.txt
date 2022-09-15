@@ -1,12 +1,170 @@
 Any time you make a change to the schema files, remember to increment the database schema version. Generally increment the minor number, major should be reserved for significant changes to the schema. Both values go up to 255.
 
-The latest database version is 5.12; The query to update the schema revision table is:
+Make sure to also update `DB_MAJOR_VERSION` and `DB_MINOR_VERSION`, which can be found in `code/__DEFINES/subsystem.dm`.
 
-INSERT INTO `schema_revision` (`major`, `minor`) VALUES (5, 12);
+The latest database version is 5.21; The query to update the schema revision table is:
+
+INSERT INTO `schema_revision` (`major`, `minor`) VALUES (5, 22);
 or
-INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (5, 12);
+INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (5, 22);
 
 In any query remember to add a prefix to the table names if you use one.
+
+Version 5.22, 22 December 2021, by Mothblocks
+Fixes a bug in `telemetry_connections` that limited the range of IPs.
+
+```
+ALTER TABLE `telemetry_connections` MODIFY COLUMN `address` INT(10) UNSIGNED NOT NULL;
+```
+-----------------------------------------------------
+
+Version 5.21, 15 December 2021, by Mothblocks
+Adds `telemetry_connections` table for tracking tgui telemetry.
+
+```
+CREATE TABLE `telemetry_connections` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `ckey` VARCHAR(32) NOT NULL,
+    `telemetry_ckey` VARCHAR(32) NOT NULL,
+    `address` INT(10) NOT NULL,
+    `computer_id` VARCHAR(32) NOT NULL,
+    `first_round_id` INT(11) UNSIGNED NULL,
+    `latest_round_id` INT(11) UNSIGNED NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE INDEX `unique_constraints` (`ckey` , `telemetry_ckey` , `address` , `computer_id`)
+);
+```
+-----------------------------------------------------
+
+Version 5.20, 11 November 2021, by Mothblocks
+Adds `admin_ckey` field to the `known_alts` table to track who added what.
+
+```
+ALTER TABLE `known_alts`
+ADD COLUMN `admin_ckey` VARCHAR(32) NOT NULL DEFAULT '*no key*' AFTER `ckey2`;
+```
+
+-----------------------------------------------------
+Version 5.19, 10 November 2021, by WalterMeldron
+Adds an urgent column to tickets for ahelps marked as urgent.
+
+```
+ALTER TABLE `ticket` ADD COLUMN `urgent` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0' AFTER `sender`;
+```
+
+-----------------------------------------------------
+Version 5.18, 1 November 2021, by Mothblocks
+Added `known_alts` table for tracking who not to create suspicious logins for.
+
+```
+CREATE TABLE `known_alts` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `ckey1` VARCHAR(32) NOT NULL,
+    `ckey2` VARCHAR(32) NOT NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE INDEX `unique_contraints` (`ckey1` , `ckey2`)
+);
+```
+
+-----------------------------------------------------
+Version 5.17, 8 October 2021, by MrStonedOne + Mothblocks
+Changes any table that requrired a NOT NULL round ID to now accept NULL. In the BSQL past, these were handled as 0, but in the move to rust-g this behavior was lost.
+
+```
+ALTER TABLE `admin_log` CHANGE `round_id` `round_id` INT(11) UNSIGNED NULL;
+ALTER TABLE `ban` CHANGE `round_id` `round_id` INT(11) UNSIGNED NULL;
+ALTER TABLE `citation` CHANGE `round_id` `round_id` INT(11) UNSIGNED NULL;
+ALTER TABLE `connection_log` CHANGE `round_id` `round_id` INT(11) UNSIGNED NULL;
+ALTER TABLE `death` CHANGE `round_id` `round_id` INT(11) UNSIGNED NULL;
+ALTER TABLE `feedback` CHANGE `round_id` `round_id` INT(11) UNSIGNED NULL;
+ALTER TABLE `legacy_population` CHANGE `round_id` `round_id` INT(11) UNSIGNED NULL;
+ALTER TABLE `library` CHANGE `round_id_created` `round_id_created` INT(11) UNSIGNED NULL;
+ALTER TABLE `messages` CHANGE `round_id` `round_id` INT(11) UNSIGNED NULL;
+ALTER TABLE `player` CHANGE `firstseen_round_id` `firstseen_round_id` INT(11) UNSIGNED NULL;
+ALTER TABLE `player` CHANGE `lastseen_round_id` `lastseen_round_id` INT(11) UNSIGNED NULL;
+ALTER TABLE `ticket` CHANGE `round_id` `round_id` INT(11) UNSIGNED NULL;
+```
+
+-----------------------------------------------------
+Version 5.16, 31 July 2021, by Atlanta-Ned
+Added `library_action` table for tracking reported library books and actions taken on them.
+
+```
+DROP TABLE IF EXISTS `library_action`;
+CREATE TABLE `library_action` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `book` int(10) unsigned NOT NULL,
+  `reason` longtext DEFAULT NULL,
+  `ckey` varchar(11) NOT NULL DEFAULT '',
+  `datetime` datetime NOT NULL DEFAULT current_timestamp(),
+  `action` varchar(11) NOT NULL DEFAULT '',
+  `ip_addr` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
+```
+
+
+-----------------------------------------------------
+Version 5.15, 2 June 2021, by Mothblocks
+Added verified admin connection log used for 2FA
+
+```
+DROP TABLE IF EXISTS `admin_connections`;
+CREATE TABLE `admin_connections` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `ckey` VARCHAR(32) NOT NULL,
+  `ip` INT(11) UNSIGNED NOT NULL,
+  `cid` VARCHAR(32) NOT NULL,
+  `verification_time` DATETIME NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `unique_constraints` (`ckey`, `ip`, `cid`));
+```
+
+-----------------------------------------------------
+
+Version 5.14, xx May 2021, by Anturke
+Added exploration drone adventure table
+
+```
+DROP TABLE IF EXISTS `text_adventures`;
+CREATE TABLE `text_adventures` (
+	`id` int(11) NOT NULL AUTO_INCREMENT,
+	`adventure_data` LONGTEXT NOT NULL,
+	`uploader` VARCHAR(32) NOT NULL,
+	`timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`approved` TINYINT(1) NOT NULL DEFAULT FALSE,
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+```
+
+-----------------------------------------------------
+
+Version 5.13, 30 April 2021, by Atlanta Ned
+Added the `citation` table for tracking security citations in the database.
+
+```
+CREATE TABLE `citation` (
+	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`round_id` INT(11) UNSIGNED NOT NULL,
+	`server_ip` INT(11) UNSIGNED NOT NULL,
+	`server_port` INT(11) UNSIGNED NOT NULL,
+	`citation` TEXT NOT NULL COLLATE 'utf8mb4_general_ci',
+	`action` VARCHAR(20) NOT NULL DEFAULT '' COLLATE 'utf8mb4_general_ci',
+	`sender` VARCHAR(32) NOT NULL DEFAULT '' COLLATE 'utf8mb4_general_ci',
+	`sender_ic` VARCHAR(64) NOT NULL DEFAULT '' COMMENT 'Longer because this is the character name, not the ckey' COLLATE 'utf8mb4_general_ci',
+	`recipient` VARCHAR(64) NOT NULL DEFAULT '' COMMENT 'Longer because this is the character name, not the ckey' COLLATE 'utf8mb4_general_ci',
+	`crime` TEXT NOT NULL COLLATE 'utf8mb4_general_ci',
+	`fine` INT(4) NULL DEFAULT NULL,
+	`paid` INT(4) NULL DEFAULT '0',
+	`timestamp` DATETIME NOT NULL,
+	PRIMARY KEY (`id`) USING BTREE,
+	UNIQUE INDEX `idx_constraints` (`round_id`, `server_ip`, `server_port`, `citation`(100)) USING BTREE
+)
+COLLATE='utf8mb4_general_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=1
+;
+```
 
 -----------------------------------------------------
 
@@ -17,14 +175,15 @@ ALTER TABLE `messages` ADD `playtime` INT(11) NULL DEFAULT(NULL) AFTER `severity
 
 -----------------------------------------------------
 
-Version 5.11, 7 September 2020, by bobbahbrown, MrStonedOne, and Jordie0608
+Version 5.11, 7 September 2020, by bobbahbrown, MrStonedOne, and Jordie0608 (Updated 26 March 2021 by bobbahbrown)
 
 Adds indices to support search operations on the adminhelp ticket tables. This is to support improved performance on Atlanta Ned's Statbus.
 
-CREATE INDEX `idx_ticket_act_recip` (`action`, `recipient`)
-CREATE INDEX `idx_ticket_act_send` (`action`, `sender`)
-CREATE INDEX `idx_ticket_tic_rid` (`ticket`, `round_id`)
-CREATE INDEX `idx_ticket_act_time_rid` (`action`, `timestamp`, `round_id`)
+ALTER TABLE `ticket`
+	ADD INDEX `idx_ticket_act_recip` (`action`, `recipient`),
+	ADD INDEX `idx_ticket_act_send` (`action`, `sender`),
+	ADD INDEX `idx_ticket_tic_rid` (`ticket`, `round_id`),
+	ADD INDEX `idx_ticket_act_time_rid` (`action`, `timestamp`, `round_id`);
 
 -----------------------------------------------------
 

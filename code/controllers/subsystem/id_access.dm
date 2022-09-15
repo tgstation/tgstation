@@ -38,7 +38,6 @@ SUBSYSTEM_DEF(id_access)
 
 /datum/controller/subsystem/id_access/Initialize(timeofday)
 	// We use this because creating the trim singletons requires the config to be loaded.
-	SSmapping.HACK_LoadMapConfig()
 	setup_access_flags()
 	setup_region_lists()
 	setup_trim_singletons()
@@ -155,37 +154,43 @@ SUBSYSTEM_DEF(id_access)
 	sub_department_managers_tgui = list(
 		"[ACCESS_CAPTAIN]" = list(
 			"regions" = list(REGION_COMMAND),
-			"head" = "Captain",
+			"head" = JOB_CAPTAIN,
 			"templates" = list(),
 			"pdas" = list(),
 		),
 		"[ACCESS_HOP]" = list(
 			"regions" = list(REGION_GENERAL, REGION_SUPPLY),
-			"head" = "Head of Personnel",
+			"head" = JOB_HEAD_OF_PERSONNEL,
 			"templates" = list(),
 			"pdas" = list(),
 		),
 		"[ACCESS_HOS]" = list(
 			"regions" = list(REGION_SECURITY),
-			"head" = "Head of Security",
+			"head" = JOB_HEAD_OF_SECURITY,
 			"templates" = list(),
 			"pdas" = list(),
 		),
 		"[ACCESS_CMO]" = list(
 			"regions" = list(REGION_MEDBAY),
-			"head" = "Chief Medical Officer",
+			"head" = JOB_CHIEF_MEDICAL_OFFICER,
 			"templates" = list(),
 			"pdas" = list(),
 		),
 		"[ACCESS_RD]" = list(
 			"regions" = list(REGION_RESEARCH),
-			"head" = "Research Director",
+			"head" = JOB_RESEARCH_DIRECTOR,
 			"templates" = list(),
 			"pdas" = list(),
 		),
 		"[ACCESS_CE]" = list(
 			"regions" = list(REGION_ENGINEERING),
-			"head" = "Chief Engineer",
+			"head" = JOB_CHIEF_ENGINEER,
+			"templates" = list(),
+			"pdas" = list(),
+		),
+		"[ACCESS_QM]" = list(
+			"regions" = list(REGION_SUPPLY),
+			"head" = JOB_QUARTERMASTER,
 			"templates" = list(),
 			"pdas" = list(),
 		),
@@ -212,7 +217,7 @@ SUBSYSTEM_DEF(id_access)
 		var/datum/id_trim/trim = trim_singletons_by_path[trim_path]
 		centcom_job_templates[trim_path] = trim.assignment
 
-	var/list/all_pda_paths = typesof(/obj/item/pda)
+	var/list/all_pda_paths = typesof(/obj/item/modular_computer/tablet/pda)
 	var/list/pda_regions = PDA_PAINTING_REGIONS
 	for(var/pda_path in all_pda_paths)
 		if(!(pda_path in pda_regions))
@@ -226,7 +231,7 @@ SUBSYSTEM_DEF(id_access)
 				if(!(whitelisted_region in manager_regions))
 					continue
 				var/list/manager_pdas = manager_info["pdas"]
-				var/obj/item/pda/fake_pda = pda_path
+				var/obj/item/modular_computer/tablet/pda/fake_pda = pda_path
 				manager_pdas[pda_path] = initial(fake_pda.name)
 				station_pda_templates[pda_path] = initial(fake_pda.name)
 
@@ -249,18 +254,18 @@ SUBSYSTEM_DEF(id_access)
 	desc_by_access["[ACCESS_SECURITY]"] = "Security"
 	desc_by_access["[ACCESS_BRIG]"] = "Holding Cells"
 	desc_by_access["[ACCESS_COURT]"] = "Courtroom"
-	desc_by_access["[ACCESS_FORENSICS_LOCKERS]"] = "Forensics"
+	desc_by_access["[ACCESS_DETECTIVE]"] = "Detective Office"
 	desc_by_access["[ACCESS_MEDICAL]"] = "Medical"
 	desc_by_access["[ACCESS_GENETICS]"] = "Genetics Lab"
 	desc_by_access["[ACCESS_MORGUE]"] = "Morgue"
-	desc_by_access["[ACCESS_RND]"] = "R&D Lab"
-	desc_by_access["[ACCESS_TOXINS]"] = "Toxins Lab"
-	desc_by_access["[ACCESS_TOXINS_STORAGE]"] = "Toxins Storage"
-	desc_by_access["[ACCESS_CHEMISTRY]"] = "Chemistry Lab"
+	desc_by_access["[ACCESS_SCIENCE]"] = "R&D Lab"
+	desc_by_access["[ACCESS_ORDNANCE]"] = "Ordnance Lab"
+	desc_by_access["[ACCESS_ORDNANCE_STORAGE]"] = "Ordnance Storage"
+	desc_by_access["[ACCESS_PLUMBING]"] = "Chemistry Lab"
 	desc_by_access["[ACCESS_RD]"] = "RD Office"
 	desc_by_access["[ACCESS_BAR]"] = "Bar"
 	desc_by_access["[ACCESS_JANITOR]"] = "Custodial Closet"
-	desc_by_access["[ACCESS_ENGINE]"] = "Engineering"
+	desc_by_access["[ACCESS_ENGINEERING]"] = "Engineering"
 	desc_by_access["[ACCESS_ENGINE_EQUIP]"] = "Power and Engineering Equipment"
 	desc_by_access["[ACCESS_MAINT_TUNNELS]"] = "Maintenance"
 	desc_by_access["[ACCESS_EXTERNAL_AIRLOCKS]"] = "External Airlocks"
@@ -268,7 +273,7 @@ SUBSYSTEM_DEF(id_access)
 	desc_by_access["[ACCESS_AI_UPLOAD]"] = "AI Chambers"
 	desc_by_access["[ACCESS_TELEPORTER]"] = "Teleporter"
 	desc_by_access["[ACCESS_EVA]"] = "EVA"
-	desc_by_access["[ACCESS_HEADS]"] = "Bridge"
+	desc_by_access["[ACCESS_COMMAND]"] = "Command"
 	desc_by_access["[ACCESS_CAPTAIN]"] = "Captain"
 	desc_by_access["[ACCESS_ALL_PERSONAL_LOCKERS]"] = "Personal Lockers"
 	desc_by_access["[ACCESS_CHAPEL_OFFICE]"] = "Chapel Office"
@@ -289,10 +294,10 @@ SUBSYSTEM_DEF(id_access)
 	desc_by_access["[ACCESS_SURGERY]"] = "Surgery"
 	desc_by_access["[ACCESS_THEATRE]"] = "Theatre"
 	desc_by_access["[ACCESS_RESEARCH]"] = "Science"
-	desc_by_access["[ACCESS_MINING]"] = "Mining"
-	desc_by_access["[ACCESS_MAILSORTING]"] = "Cargo Office"
+	desc_by_access["[ACCESS_MINING]"] = "Mining Dock"
+	desc_by_access["[ACCESS_SHIPPING]"] = "Cargo Shipping"
 	desc_by_access["[ACCESS_VAULT]"] = "Main Vault"
-	desc_by_access["[ACCESS_MINING_STATION]"] = "Mining EVA"
+	desc_by_access["[ACCESS_MINING_STATION]"] = "Mining Outpost"
 	desc_by_access["[ACCESS_XENOBIOLOGY]"] = "Xenobiology Lab"
 	desc_by_access["[ACCESS_HOP]"] = "HoP Office"
 	desc_by_access["[ACCESS_HOS]"] = "HoS Office"
@@ -300,9 +305,9 @@ SUBSYSTEM_DEF(id_access)
 	desc_by_access["[ACCESS_PHARMACY]"] = "Pharmacy"
 	desc_by_access["[ACCESS_RC_ANNOUNCE]"] = "RC Announcements"
 	desc_by_access["[ACCESS_KEYCARD_AUTH]"] = "Keycode Auth."
-	desc_by_access["[ACCESS_TCOMSAT]"] = "Telecommunications"
+	desc_by_access["[ACCESS_TCOMMS]"] = "Telecommunications"
 	desc_by_access["[ACCESS_GATEWAY]"] = "Gateway"
-	desc_by_access["[ACCESS_SEC_DOORS]"] = "Brig"
+	desc_by_access["[ACCESS_BRIG_ENTRANCE]"] = "Brig"
 	desc_by_access["[ACCESS_MINERAL_STOREROOM]"] = "Mineral Storage"
 	desc_by_access["[ACCESS_MINISAT]"] = "AI Satellite"
 	desc_by_access["[ACCESS_WEAPONS]"] = "Weapon Permit"
@@ -313,6 +318,7 @@ SUBSYSTEM_DEF(id_access)
 	desc_by_access["[ACCESS_MECH_SCIENCE]"] = "Science Mech Access"
 	desc_by_access["[ACCESS_MECH_ENGINE]"] = "Engineering Mech Access"
 	desc_by_access["[ACCESS_AUX_BASE]"] = "Auxiliary Base"
+	desc_by_access["[ACCESS_SERVICE]"] = "Service Hallway"
 	desc_by_access["[ACCESS_CENT_GENERAL]"] = "Code Grey"
 	desc_by_access["[ACCESS_CENT_THUNDER]"] = "Code Yellow"
 	desc_by_access["[ACCESS_CENT_STORAGE]"] = "Code Orange"
@@ -428,6 +434,11 @@ SUBSYSTEM_DEF(id_access)
 	var/datum/id_trim/trim = trim_singletons_by_path[trim_path]
 	id_card.trim_icon_override = trim.trim_icon
 	id_card.trim_state_override = trim.trim_state
+	id_card.trim_assignment_override = trim.assignment
+	id_card.sechud_icon_state_override = trim.sechud_icon_state
+	id_card.department_color_override = trim.department_color
+	id_card.department_state_override = trim.department_state
+	id_card.subdepartment_color_override = trim.subdepartment_color
 
 	if(!check_forged || !id_card.forged)
 		id_card.assignment = trim.assignment
@@ -443,6 +454,11 @@ SUBSYSTEM_DEF(id_access)
 /datum/controller/subsystem/id_access/proc/remove_trim_from_chameleon_card(obj/item/card/id/advanced/chameleon/id_card)
 	id_card.trim_icon_override = null
 	id_card.trim_state_override = null
+	id_card.trim_assignment_override = null
+	id_card.sechud_icon_state_override = null
+	id_card.department_color_override = null
+	id_card.department_state_override = null
+	id_card.subdepartment_color_override = null
 
 /**
  * Adds the accesses associated with a trim to an ID card.
@@ -461,6 +477,9 @@ SUBSYSTEM_DEF(id_access)
 
 	id_card.add_access(trim.access, mode = TRY_ADD_ALL_NO_WILDCARD)
 	id_card.add_wildcards(trim.wildcard_access, mode = TRY_ADD_ALL)
+	if(istype(trim, /datum/id_trim/job))
+		var/datum/id_trim/job/job_trim = trim // Here is where we update a player's paycheck department for the purposes of discounts/paychecks.
+		id_card.registered_account.account_job.paycheck_department = job_trim.job.paycheck_department
 
 /**
  * Tallies up all accesses the card has that have flags greater than or equal to the access_flag supplied.

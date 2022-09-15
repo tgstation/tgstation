@@ -16,6 +16,16 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	GLOB.GPS_list -= src
 	return ..()
 
+/datum/component/gps/kheiral_cuffs
+
+/datum/component/gps/kheiral_cuffs/Initialize(_gpstag = "COM0")
+	. = ..()
+	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/deactivate_kheiral_cuffs)
+
+/datum/component/gps/kheiral_cuffs/proc/deactivate_kheiral_cuffs(datum/source)
+	SIGNAL_HANDLER
+	qdel(src)
+
 ///GPS component subtype. Only gps/item's can be used to open the UI.
 /datum/component/gps/item
 	var/updating = TRUE //Automatic updating of GPS list. Can be set to manual by user.
@@ -23,7 +33,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	/// UI state of GPS, altering when it can be used.
 	var/datum/ui_state/state = null
 
-/datum/component/gps/item/Initialize(_gpstag = "COM0", emp_proof = FALSE, state = null)
+/datum/component/gps/item/Initialize(_gpstag = "COM0", emp_proof = FALSE, state = null, overlay_state = "working")
 	. = ..()
 	if(. == COMPONENT_INCOMPATIBLE || !isitem(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -33,7 +43,8 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	src.state = state
 
 	var/atom/A = parent
-	A.add_overlay("working")
+	if(overlay_state)
+		A.add_overlay(overlay_state)
 	A.name = "[initial(A.name)] ([gpstag])"
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/interact)
 	if(!emp_proof)
@@ -52,7 +63,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 /datum/component/gps/item/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	examine_list += "<span class='notice'>Alt-click to switch it [tracking ? "off":"on"].</span>"
+	examine_list += span_notice("Alt-click to switch it [tracking ? "off":"on"].")
 
 ///Called on COMSIG_ATOM_EMP_ACT
 /datum/component/gps/item/proc/on_emp_act(datum/source, severity)
@@ -83,21 +94,21 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	if(!user.canUseTopic(parent, BE_CLOSE))
 		return //user not valid to use gps
 	if(emped)
-		to_chat(user, "<span class='warning'>It's busted!</span>")
+		to_chat(user, span_warning("It's busted!"))
 		return
 	var/atom/A = parent
 	if(tracking)
 		A.cut_overlay("working")
-		to_chat(user, "<span class='notice'>[parent] is no longer tracking, or visible to other GPS devices.</span>")
+		to_chat(user, span_notice("[parent] is no longer tracking, or visible to other GPS devices."))
 		tracking = FALSE
 	else
 		A.add_overlay("working")
-		to_chat(user, "<span class='notice'>[parent] is now tracking, and visible to other GPS devices.</span>")
+		to_chat(user, span_notice("[parent] is now tracking, and visible to other GPS devices."))
 		tracking = TRUE
 
 /datum/component/gps/item/ui_interact(mob/user, datum/tgui/ui)
 	if(emped)
-		to_chat(user, "<span class='hear'>[parent] fizzles weakly.</span>")
+		to_chat(user, span_hear("[parent] fizzles weakly."))
 		return
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -136,7 +147,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 		signal["coords"] = "[pos.x], [pos.y], [pos.z]"
 		if(pos.z == curr.z) //Distance/Direction calculations for same z-level only
 			signal["dist"] = max(get_dist(curr, pos), 0) //Distance between the src and remote GPS turfs
-			signal["degrees"] = round(Get_Angle(curr, pos)) //0-360 degree directional bearing, for more precision.
+			signal["degrees"] = round(get_angle(curr, pos)) //0-360 degree directional bearing, for more precision.
 		signals += list(signal) //Add this signal to the list of signals
 	data["signals"] = signals
 	return data
@@ -149,15 +160,15 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	switch(action)
 		if("rename")
 			var/atom/parentasatom = parent
-			var/a = stripped_input(usr, "Please enter desired tag.", parentasatom.name, gpstag, 20)
+			var/a = tgui_input_text(usr, "Enter the desired tag", "GPS Tag", gpstag, 20)
 
 			if (!a)
 				return
 
 			gpstag = a
 			. = TRUE
-			log_game("[key_name(usr)] renamed [parentasatom] to \"global positioning system ([gpstag])\".")
-			parentasatom.name = "global positioning system ([gpstag])"
+			usr.log_message("renamed [parentasatom] to \"[initial(parentasatom.name)] ([gpstag])\".", LOG_GAME)
+			parentasatom.name = "[initial(parentasatom.name)] ([gpstag])"
 
 		if("power")
 			toggletracking(usr)

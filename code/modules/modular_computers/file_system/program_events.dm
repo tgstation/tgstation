@@ -13,6 +13,6 @@
 /datum/computer_file/program/proc/event_networkfailure(background)
 	kill_program(forced = TRUE)
 	if(background)
-		computer.visible_message("<span class='danger'>\The [computer]'s screen displays a \"Process [filename].[filetype] (PID [rand(100,999)]) terminated - Network Error\" error</span>")
+		computer.visible_message(span_danger("\The [computer]'s screen displays a \"Process [filename].[filetype] (PID [rand(100,999)]) terminated - Network Error\" error"))
 	else
-		computer.visible_message("<span class='danger'>\The [computer]'s screen briefly freezes and then shows \"NETWORK ERROR - NTNet connection lost. Please retry. If problem persists contact your system administrator.\" error.</span>")
+		computer.visible_message(span_danger("\The [computer]'s screen briefly freezes and then shows \"NETWORK ERROR - NTNet connection lost. Please retry. If problem persists contact your system administrator.\" error."))

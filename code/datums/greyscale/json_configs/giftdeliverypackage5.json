@@ -1,0 +1,16 @@
+{
+	"": [
+		{
+			"type": "icon_state",
+			"icon_state": "giftdeliverypackage5_base",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "giftdeliverypackage5_ribbon",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		}
+	]
+}

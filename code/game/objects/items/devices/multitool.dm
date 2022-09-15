@@ -25,9 +25,9 @@
 	throw_range = 7
 	throw_speed = 3
 	drop_sound = 'sound/items/handling/multitool_drop.ogg'
-	pickup_sound =  'sound/items/handling/multitool_pickup.ogg'
+	pickup_sound = 'sound/items/handling/multitool_pickup.ogg'
 	custom_materials = list(/datum/material/iron=50, /datum/material/glass=20)
-	custom_premium_price = PAYCHECK_HARD * 3
+	custom_premium_price = PAYCHECK_COMMAND * 3
 	toolspeed = 1
 	usesound = 'sound/weapons/empty.ogg'
 	var/obj/machinery/buffer // simple machine buffer for device linkage
@@ -35,137 +35,103 @@
 
 /obj/item/multitool/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>Its buffer [buffer ? "contains [buffer]." : "is empty."]</span>"
+	. += span_notice("Its buffer [buffer ? "contains [buffer]." : "is empty."]")
 
 /obj/item/multitool/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user] puts the [src] to [user.p_their()] chest. It looks like [user.p_theyre()] trying to pulse [user.p_their()] heart off!</span>")
+	user.visible_message(span_suicide("[user] puts the [src] to [user.p_their()] chest. It looks like [user.p_theyre()] trying to pulse [user.p_their()] heart off!"))
 	return OXYLOSS//theres a reason it wasn't recommended by doctors
 
 
 // Syndicate device disguised as a multitool; it will turn red when an AI camera is nearby.
 
 /obj/item/multitool/ai_detect
-	var/track_cooldown = 0
-	var/track_delay = 10 //How often it checks for proximity
+	actions_types = list(/datum/action/item_action/toggle_multitool)
 	var/detect_state = PROXIMITY_NONE
 	var/rangealert = 8 //Glows red when inside
 	var/rangewarning = 20 //Glows yellow when inside
 	var/hud_type = DATA_HUD_AI_DETECT
-	var/hud_on = FALSE
-	var/mob/camera/ai_eye/remote/ai_detector/eye
-	var/datum/action/item_action/toggle_multitool/toggle_action
-
-/obj/item/multitool/ai_detect/Initialize()
-	. = ..()
-	START_PROCESSING(SSobj, src)
-	eye = new /mob/camera/ai_eye/remote/ai_detector()
-	toggle_action = new /datum/action/item_action/toggle_multitool(src)
+	var/detecting = FALSE
 
 /obj/item/multitool/ai_detect/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	if(hud_on && ismob(loc))
-		remove_hud(loc)
-	QDEL_NULL(toggle_action)
-	QDEL_NULL(eye)
+	STOP_PROCESSING(SSfastprocess, src)
 	return ..()
 
 /obj/item/multitool/ai_detect/ui_action_click()
 	return
 
-/obj/item/multitool/ai_detect/equipped(mob/living/carbon/human/user, slot)
-	..()
-	if(hud_on)
-		show_hud(user)
-
-/obj/item/multitool/ai_detect/dropped(mob/living/carbon/human/user)
-	..()
-	if(hud_on)
-		remove_hud(user)
+/obj/item/multitool/ai_detect/update_icon_state()
+	. = ..()
+	icon_state = "[initial(icon_state)][detect_state]"
 
 /obj/item/multitool/ai_detect/process()
-	if(track_cooldown > world.time)
-		return
-	detect_state = PROXIMITY_NONE
-	if(eye.eye_user)
-		eye.setLoc(get_turf(src))
+	var/old_detect_state = detect_state
 	multitool_detect()
-	update_appearance()
-	track_cooldown = world.time + track_delay
+	if(detect_state != old_detect_state)
+		update_appearance()
 
-/obj/item/multitool/ai_detect/proc/toggle_hud(mob/user)
-	hud_on = !hud_on
+/obj/item/multitool/ai_detect/proc/toggle_detect(mob/user)
+	detecting = !detecting
 	if(user)
-		to_chat(user, "<span class='notice'>You toggle the ai detection HUD on [src] [hud_on ? "on" : "off"].</span>")
-	if(hud_on)
-		show_hud(user)
-	else
-		remove_hud(user)
-
-/obj/item/multitool/ai_detect/proc/show_hud(mob/user)
-	if(user && hud_type)
-		var/atom/movable/screen/plane_master/camera_static/PM = user.hud_used.plane_masters["[CAMERA_STATIC_PLANE]"]
-		PM.alpha = 150
-		var/datum/atom_hud/H = GLOB.huds[hud_type]
-		if(!H.hudusers[user])
-			H.add_hud_to(user)
-		eye.eye_user = user
-		eye.setLoc(get_turf(src))
-
-/obj/item/multitool/ai_detect/proc/remove_hud(mob/user)
-	if(user && hud_type)
-		var/atom/movable/screen/plane_master/camera_static/PM = user.hud_used.plane_masters["[CAMERA_STATIC_PLANE]"]
-		PM.alpha = 255
-		var/datum/atom_hud/H = GLOB.huds[hud_type]
-		H.remove_hud_from(user)
-		if(eye)
-			eye.setLoc(null)
-			eye.eye_user = null
+		to_chat(user, span_notice("You toggle the ai detection feature on [src] [detecting ? "on" : "off"]."))
+	if(!detecting)
+		detect_state = PROXIMITY_NONE
+		update_appearance()
+		STOP_PROCESSING(SSfastprocess, src)
+		return
+	if(detecting)
+		START_PROCESSING(SSfastprocess, src)
 
 /obj/item/multitool/ai_detect/proc/multitool_detect()
 	var/turf/our_turf = get_turf(src)
-	for(var/mob/living/silicon/ai/AI in GLOB.ai_list)
+	detect_state = PROXIMITY_NONE
+	for(var/mob/living/silicon/ai/AI as anything in GLOB.ai_list)
 		if(AI.cameraFollow == src)
 			detect_state = PROXIMITY_ON_SCREEN
-			break
+			return
 
-	if(detect_state)
-		return
-	var/datum/camerachunk/chunk = GLOB.cameranet.chunkGenerated(our_turf.x, our_turf.y, our_turf.z)
-	if(chunk?.seenby.len)
-		for(var/mob/camera/ai_eye/A in chunk.seenby)
-			if(!A.ai_detector_visible)
-				continue
-			var/turf/detect_turf = get_turf(A)
-			if(get_dist(our_turf, detect_turf) < rangealert)
+	for(var/mob/camera/ai_eye/AI_eye as anything in GLOB.aiEyes)
+		if(!AI_eye.ai_detector_visible)
+			continue
+
+		var/distance = get_dist(our_turf, get_turf(AI_eye))
+
+		if(distance == -1) //get_dist() returns -1 for distances greater than 127 (and for errors, so assume -1 is just max range)
+			if(our_turf == get_turf(AI_eye)) // EXCEPT if the AI is on our TURF(ITS RIGHT ONTOP OF US!!!!)
 				detect_state = PROXIMITY_ON_SCREEN
 				break
-			if(get_dist(our_turf, detect_turf) < rangewarning)
-				detect_state = PROXIMITY_NEAR
-				break
+			continue
+
+		if(distance < rangealert) //ai should be able to see us
+			detect_state = PROXIMITY_ON_SCREEN
+			break
+		if(distance < rangewarning) //ai cant see us but is close
+			detect_state = PROXIMITY_NEAR
 
 /mob/camera/ai_eye/remote/ai_detector
 	name = "AI detector eye"
 	ai_detector_visible = FALSE
-	use_static = USE_STATIC_TRANSPARENT
 	visible_icon = FALSE
+	use_static = FALSE
 
 /datum/action/item_action/toggle_multitool
-	name = "Toggle AI detector HUD"
+	name = "Toggle AI detecting mode"
 	check_flags = NONE
 
-/datum/action/item_action/toggle_multitool/Trigger()
+/datum/action/item_action/toggle_multitool/Trigger(trigger_flags)
 	if(!..())
-		return 0
+		return FALSE
 	if(target)
 		var/obj/item/multitool/ai_detect/M = target
-		M.toggle_hud(owner)
-	return 1
+		M.toggle_detect(owner)
+	return TRUE
 
 /obj/item/multitool/abductor
 	name = "alien multitool"
 	desc = "An omni-technological interface."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "multitool"
+	belt_icon_state = "multitool_alien"
+	custom_materials = list(/datum/material/iron = 5000, /datum/material/silver = 2500, /datum/material/plasma = 5000, /datum/material/titanium = 2000, /datum/material/diamond = 2000)
 	toolspeed = 0.1
 
 /obj/item/multitool/cyborg

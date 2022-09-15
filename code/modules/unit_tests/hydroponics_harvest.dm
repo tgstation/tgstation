@@ -27,9 +27,8 @@
 
 	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human)
 
-	hydroponics_tray.loc = run_loc_floor_bottom_left
-	human.loc = hydroponics_tray.loc
-	human.x += 1
+	hydroponics_tray.forceMove(run_loc_floor_bottom_left)
+	human.forceMove(locate((run_loc_floor_bottom_left.x + 1), run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
 
 	// Apples should harvest 10 apples with 10u nutrients and 4u vitamins.
 	test_seed(hydroponics_tray, planted_food_seed, human)
@@ -43,13 +42,13 @@
 	seed.set_potency(100) // Sets the seed potency to 100.
 	seed.set_instability(0) // Sets the seed instability to 0, to prevent mutations.
 
-	tray.myseed = seed
-	seed.loc = tray
+	tray.set_seed(seed)
+	seed.forceMove(tray)
 	tray.name = tray.myseed ? "[initial(tray.name)] ([tray.myseed.plantname])" : initial(tray.name)
 
-	tray.plant_health = seed.endurance
+	tray.set_plant_health(seed.endurance)
 	tray.age = 20
-	tray.harvest = TRUE
+	tray.set_plant_status(HYDROTRAY_PLANT_HARVESTABLE)
 
 /datum/unit_test/hydroponics_harvest/proc/test_seed(obj/machinery/hydroponics/tray, obj/item/seeds/seed, mob/living/carbon/user)
 	tray.reagents.add_reagent(/datum/reagent/plantnutriment/eznutriment, 20)
@@ -57,10 +56,10 @@
 	var/saved_name = tray.name // Name gets cleared when some plants are harvested.
 
 	if(!tray.myseed)
-		Fail("Hydroponics harvest from [saved_name] had no seed set properly to test.")
+		TEST_FAIL("Hydroponics harvest from [saved_name] had no seed set properly to test.")
 
 	if(tray.myseed != seed)
-		Fail("Hydroponics harvest from [saved_name] had [tray.myseed] planted when it was testing [seed].")
+		TEST_FAIL("Hydroponics harvest from [saved_name] had [tray.myseed] planted when it was testing [seed].")
 
 	var/double_chemicals = seed.get_gene(/datum/plant_gene/trait/maxchem)
 	var/expected_yield = seed.getYield()
@@ -75,7 +74,7 @@
 		all_harvested_items += harvested_food
 
 	if(!all_harvested_items.len)
-		Fail("Hydroponics harvest from [saved_name] resulted in 0 harvest.")
+		TEST_FAIL("Hydroponics harvest from [saved_name] resulted in 0 harvest.")
 
 	TEST_ASSERT_EQUAL(all_harvested_items.len, expected_yield, "Hydroponics harvest from [saved_name] only harvested [all_harvested_items.len] items instead of [expected_yield] items.")
 	TEST_ASSERT(all_harvested_items[1].reagents, "Hydroponics harvest from [saved_name] had no reagent container.")
@@ -92,9 +91,8 @@
 	TEST_ASSERT_EQUAL(found_vitamins, expected_vitamins * max_volume, "Hydroponics harvest from [saved_name] has a [expected_vitamins] vitamin gene (expecting [expected_nutriments * max_volume]) but only had [found_vitamins] units of vitamins inside.")
 
 	if(tray.myseed)
-		tray.harvest = FALSE
 		tray.age = 0
-		tray.plant_health = 0
+		tray.set_plant_health(0)
 
-		QDEL_NULL(tray.myseed)
+		tray.set_seed(null)
 		tray.name = tray.myseed ? "[initial(tray.name)] ([tray.myseed.plantname])" : initial(tray.name)

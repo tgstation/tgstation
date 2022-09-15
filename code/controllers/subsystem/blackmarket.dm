@@ -1,7 +1,7 @@
 SUBSYSTEM_DEF(blackmarket)
-	name  = "Blackmarket"
-	flags  = SS_BACKGROUND
-	init_order  = INIT_ORDER_DEFAULT
+	name = "Blackmarket"
+	flags = SS_BACKGROUND
+	init_order = INIT_ORDER_DEFAULT
 
 	/// Descriptions for each shipping methods.
 	var/shipping_method_descriptions = list(
@@ -11,18 +11,18 @@ SUBSYSTEM_DEF(blackmarket)
 	)
 
 	/// List of all existing markets.
-	var/list/datum/blackmarket_market/markets = list()
+	var/list/datum/market/markets = list()
 	/// List of existing ltsrbts.
 	var/list/obj/machinery/ltsrbt/telepads = list()
 	/// Currently queued purchases.
 	var/list/queued_purchases = list()
 
 /datum/controller/subsystem/blackmarket/Initialize(timeofday)
-	for(var/market in subtypesof(/datum/blackmarket_market))
+	for(var/market in subtypesof(/datum/market))
 		markets[market] += new market
 
-	for(var/item in subtypesof(/datum/blackmarket_item))
-		var/datum/blackmarket_item/I = new item()
+	for(var/item in subtypesof(/datum/market_item))
+		var/datum/market_item/I = new item()
 		if(!I.item)
 			continue
 
@@ -36,7 +36,7 @@ SUBSYSTEM_DEF(blackmarket)
 
 /datum/controller/subsystem/blackmarket/fire(resumed)
 	while(length(queued_purchases))
-		var/datum/blackmarket_purchase/purchase = queued_purchases[1]
+		var/datum/market_purchase/purchase = queued_purchases[1]
 		queued_purchases.Cut(1,2)
 
 		// Uh oh, uplink is gone. We will just keep the money and you will not get your order.
@@ -65,7 +65,7 @@ SUBSYSTEM_DEF(blackmarket)
 
 				var/obj/machinery/ltsrbt/pad = pick(telepads)
 
-				to_chat(recursive_loc_check(purchase.uplink.loc, /mob), "<span class='notice'>[purchase.uplink] flashes a message noting that the order is being processed by [pad].</span>")
+				to_chat(recursive_loc_check(purchase.uplink.loc, /mob), span_notice("[purchase.uplink] flashes a message noting that the order is being processed by [pad]."))
 
 				queued_purchases -= purchase
 				pad.add_to_queue(purchase)
@@ -76,7 +76,7 @@ SUBSYSTEM_DEF(blackmarket)
 				if (!targetturf)
 					continue
 
-				to_chat(recursive_loc_check(purchase.uplink.loc, /mob), "<span class='notice'>[purchase.uplink] flashes a message noting that the order is being teleported to [get_area(targetturf)] in 60 seconds.</span>")
+				to_chat(recursive_loc_check(purchase.uplink.loc, /mob), span_notice("[purchase.uplink] flashes a message noting that the order is being teleported to [get_area(targetturf)] in 60 seconds."))
 
 				// do_teleport does not want to teleport items from nullspace, so it just forceMoves and does sparks.
 				addtimer(CALLBACK(src, /datum/controller/subsystem/blackmarket/proc/fake_teleport, purchase.entry.spawn_item(), targetturf), 60 SECONDS)
@@ -91,7 +91,7 @@ SUBSYSTEM_DEF(blackmarket)
 				var/atom/movable/item = purchase.entry.spawn_item(pickedloc)
 				item.throw_at(purchase.uplink, 3, 3, spin = FALSE)
 
-				to_chat(recursive_loc_check(purchase.uplink.loc, /mob), "<span class='notice'>[purchase.uplink] flashes a message noting the order is being launched at the station from [dir2text(startSide)].</span>")
+				to_chat(recursive_loc_check(purchase.uplink.loc, /mob), span_notice("[purchase.uplink] flashes a message noting the order is being launched at the station from [dir2text(startSide)]."))
 
 				queued_purchases -= purchase
 				qdel(purchase)
@@ -107,8 +107,8 @@ SUBSYSTEM_DEF(blackmarket)
 	sparks.attach(item)
 	sparks.start()
 
-/// Used to add /datum/blackmarket_purchase to queued_purchases var. Returns TRUE when queued.
-/datum/controller/subsystem/blackmarket/proc/queue_item(datum/blackmarket_purchase/P)
+/// Used to add /datum/market_purchase to queued_purchases var. Returns TRUE when queued.
+/datum/controller/subsystem/blackmarket/proc/queue_item(datum/market_purchase/P)
 	if(P.method == SHIPPING_METHOD_LTSRBT && !telepads.len)
 		return FALSE
 	queued_purchases += P

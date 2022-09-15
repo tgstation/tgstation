@@ -1,23 +1,11 @@
-/*
-//////////////////////////////////////
-
-Weight Loss
-
-	Very Very Noticable.
-	Decreases resistance.
-	Decreases stage speed.
-	Reduced Transmittable.
-	High level.
-
-Bonus
-	Decreases the weight of the mob,
-	forcing it to be skinny.
-
-//////////////////////////////////////
+/*Weight Loss
+ * Reduces stealth
+ * Increases resistance
+ * Reduces stage speed
+ * Reduces transmissibility
+ * Bonus: Drains nutrition from the host
 */
-
 /datum/symptom/weight_loss
-
 	name = "Weight Loss"
 	desc = "The virus mutates the host's metabolism, making it almost unable to gain nutrition from food."
 	stealth = -2
@@ -48,8 +36,8 @@ Bonus
 	switch(A.stage)
 		if(1, 2, 3, 4)
 			if(prob(base_message_chance))
-				to_chat(M, "<span class='warning'>[pick("You feel hungry.", "You crave for food.")]</span>")
+				to_chat(M, span_warning("[pick("You feel hungry.", "You crave for food.")]"))
 		else
-			to_chat(M, "<span class='warning'><i>[pick("So hungry...", "You'd kill someone for a bite of food...", "Hunger cramps seize you...")]</i></span>")
+			to_chat(M, span_warning("<i>[pick("So hungry...", "You'd kill someone for a bite of food...", "Hunger cramps seize you...")]</i>"))
 			M.overeatduration = max(M.overeatduration - 200 SECONDS, 0)
 			M.adjust_nutrition(-100)

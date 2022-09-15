@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"map_name": "Tramstation",
+	"map_path": "map_files/tramstation",
+	"map_file": "tramstation.dmm",
+	"shuttles": {
+		"cargo": "cargo_box",
+		"ferry": "ferry_fancy",
+		"whiteship": "whiteship_tram",
+		"emergency": "emergency_tram"
+	},
+	"traits": [
+		{
+			"Up": 1,
+			"Baseturf": "/turf/open/misc/asteroid/airless",
+			"Linkage": "Cross"
+		},
+		{
+			"Down": -1,
+			"Baseturf": "/turf/open/openspace",
+			"Linkage": "Cross"
+		}
+	],
+	"job_changes": {
+		"Cook": {
+			"additional_cqc_areas": ["/area/station/service/kitchen/diner"]
+		},
+		"Captain": {
+			"special_charter": "asteroid"
+		}
+	}
+}

@@ -1,0 +1,161 @@
+2011-07-04:
+  Agouri:
+  - unknown: Sleepers are now able to heal every kind of damage. Drag your ass to
+      medbay and ask a doctor to get you in one.
+  - unknown: A lil' bit faster cloning (about 30% faster) due to popular demand.
+  - unknown: Sleepers are now all located in the inner part of medbay, except for
+      the examination room one.
+  - unknown: Added Dermaline, burn-healing drug that outpowers kelotane (and kelotane
+      is getting a major nerf, so be sure to know how to get this). Recipe is on the
+      wiki if you need to make it.
+  - unknown: Drugs no longer heal or metabolise when injected in dead bodies, fuck.
+      Thank god you guys missed this major bug or we'd have cloning-by-injecting-healing-drugs.
+  - unknown: "Reminder to coders: Goddamn, update the changelog.\n\t"
+  Doohl:
+  - unknown: '<font color="red">A new alien race: Metroids!</font> They are a mostly
+      non-sentient race of jellyfish-like organisms that float in the air and feed
+      on the life energy of other organisms. While most Metroids have never shown
+      signs of self-awareness, they do exhibit signs of basic logic and reasoning
+      skills as well as very sophisticated perception. Nanotrasen has shipped two
+      baby Metroids for the xenobiology department. They should be handled with the
+      utmost care - they are some of the deadliest beings in the known universe!'
+  - unknown: 'R&amp;D gets a new toy: the freeze gun. Despite popular belief, this
+      will not literally freeze things!'
+  - unknown: Every single chemical reagent has been assigned a color.
+  - unknown: You can now see beakers fill up with chemicals. You can also observe
+      how the colors mix inside the beakers. Spray bottles also will also show the
+      color of whatever you're spraying.
+  - unknown: Added a timestamp to combat logs.
+  - unknown: Non-insulated gloves now need to be wrapped in wire in order to be electrified.
+  - unknown: You can now shoot at people on the ground by simply clicking on the tile
+      they're on.
+  - unknown: 'Changeling husks are now uncloneable. To clarify: when a changeling
+      sucks out a victim''s DNA, the victim is said to become a "husk".'
+  Errorage:
+  - unknown: Increased environmental damage by a factor of 1.5.
+  - unknown: Made firesuits a lot more resistant to heat. Previously, they stopped
+      protecting at around 4,500 degrees. They now go up to around 10,000 (which is
+      also the temperature which the floor starts melting)
+  - unknown: Edited the quartermaster's office a bit.
+  - unknown: Cargo technicians now have access to a cargo ordering console.
+  - unknown: Added different-colored hardhats. The CE gets a white hardhat.
+  Firecage:
+  - unknown: A whole bunch of new drinks and food. Seriously, there's alot!
+  - unknown: New weapons such as the shock revolver and large energy crossbow.
+  - unknown: Hydroponics can now grow a bunch more stuff. A lot of these new crops
+      have some very interesting mutations.
+  - unknown: Added a command for AIs to change their icon.
+  - unknown: New costumes to the costume room.
+  Matty:
+  - unknown: New engineering backpacks. Enjoy!
+  Microwave:
+  - unknown: 'Monkey boxes:'
+  - unknown: Contains a score of monkey cubes, which you apply water to create monkies.
+      Nanotrasen provides only the finest technology!
+  - unknown: You can order monkey crates from the cargo bay. They contain monkey boxes.
+  - unknown: Changed the amount of labels labelers have to 30. 10 was too low and
+      30 should not be <i>too</i> griefy.
+  - unknown: Maximum label text length increased from 10 to 64.
+  - unknown: You can no longer label people because they can just peel the labels
+      off. Sorry, clowns!
+  - unknown: Jelly dooonnuuuutsss! Happy birthday, officers!
+  - unknown: Made xenomeat not give any nutrition.
+  - unknown: Added some new reagents.
+  - unknown: Made it possible to feed monkies and xenos things, as well as making
+      it possible for them to eat themselves (please don't read that too literally).
+  - unknown: Added in synthiflesh.
+  - unknown: Plasma is now not used in reactions, instead, is treated as a catalyst
+      that is not used up. This only applies to certain reactions.
+  - unknown: Made it possible to grind more things in the chemistry grinder.
+  Muskets:
+  - unknown: The prepackaged songs (Space Asshole, Cuban Pete, Darkest Honk, etc)
+      have been removed. This doesn't mean admins can't play midis, this just gets
+      rid of a lot of unnecessary download time.
+  Rastaf.Zero:
+  - unknown: 'Botanists get a new toy: Biogenerator. Insert biological items, recieve
+      biological items.'
+  - unknown: Added roller beds, otherwise known as stretchers, to medbay. You can
+      buckle people onto them and pull them.
+  - unknown: Added egg-smashing and tomato-smashing decals.
+  Superxpdude updated:
+  - unknown: Added in the Submachine Gun to R&amp;D.
+  - unknown: Syndicate agents now have Mini-Uzis.
+  - unknown: Added an exosuit recharged to the mining station.
+  - unknown: New labcoats for scientists, virologists, chemists, and genetecists.
+  - unknown: Moved the vault and added a bridge meeting room next to the HoP's office.
+  - unknown: Deathsquad armor now functions like a space suit.
+  - unknown: Added in security jackboots.
+  Trubble Bass updated:
+  - unknown: Hat crates. Hat Station 13.
+  Uhangi:
+  - unknown: Traitors can now purchase syndicate balloons, which serve no purpose
+      other than to blow your cover. For a limited time only, you can get them at
+      a bargain price - just 10 telecrystals!
+  - unknown: Removed security shotguns from the armory. No fun allowed.
+  - unknown: Changed some bullet damage stuff.
+  Urist McDorf:
+  - unknown: Adding shading to pills.
+  - unknown: Detective's office noir look has been removed. The icon operations required
+      to render everything in monochrome was too heavy on the players.
+  - unknown: Added in an uplink implant.
+2011-07-29:
+  /tg/station team:
+  - unknown: ' Day of Forum revival!'
+  Agouri updated:
+  - unknown: I was always bothered by how unprofessional it was of Nanotransen (in
+      before &gt;Nanotransen &gt;professionalism) to just lay expensive spacesuits
+      in racks and just let them be. Well, no more. Introducing...
+  - unknown: Suit Storage Units. Rumored to actually be repurposed space radiators,
+      these wondrous machines will store any kind of spacesuit in a clean and sterile
+      environment.
+  - unknown: The user can interact with the unit in various ways. You can start a
+      UV cauterisation cycle to disinfect its contents, effectively sterilising and
+      cleaning eveyrthing from the suits/helmets stored inside.
+  - unknown: A sneaky yordle can also hide in it, if he so desires, or hack it, or
+      lock it or do a plethora of shady stuff with it. Beware, though, there's plenty
+      of dangerous things you can do with it, both to you and your target.
+  - unknown: The Unit's control panel can be accessed by screwdriving it. That's all
+      I'm willing to say, I'd like to let the players find out what each hack option
+      does and doesn't. Will add more stuff later.
+  - unknown: Added Command Space suit, Chief Engineer space suit and Chief Medical
+      Officer spacesuit (In a new space that you'll probably notice by yourself) to
+      make it easier for you to look like a special snowflake.
+  - unknown: EVA and CMO office modified to accomodate the new suits and SSUs. Look,
+      I'm not a competent mapper, okay? Fuck you too. A mapper is strongly recommended
+      to rearrange my half assed shit.
+  - unknown: Soda cans, cigarette packets, cigarettes and cigars as well as bullet
+      casings are now considered trash and can be picked up by the trashbag. Now you
+      can annoy the janitor even more!
+  - unknown: 'Sprite credit goes to Alex Jones, his portfolio can be found here: <a
+      href="http://bspbox.com/">http://bspbox.com</a>. Thanks a lot, bro.'
+  - unknown: With the recent forum fuss and all that, I've got a thread to specifically
+      contain  rants and bug reports about this update. <a href="http://tgstation13.servehttp.com/phpBB3/viewtopic.php?f=3&amp;t=5569&amp;p=45549&amp;sid=a4a96f5b0e896cd3e3f7c1db73f09f1b#p45549">Click
+      me</a>
+  Doohl updated:
+  - unknown: 'Bugfix: Metroids should never "shut down" and just die in a corner when
+      they begin starving. And so, hungry Metroids are a force to be feared.'
+  - unknown: The Cargo computers now have the ability to cancel pending orders to
+      refund credits. This was put in place so that idiots couldn't waste all the
+      cargo points and run off. However, if the shuttle is en route to the station
+      you won't be able to cancel orders.
+  - unknown: 'Bugfix: the manifest has been fixed! Additionally, the manfiest is now
+      updated realtime; job changes and new arrivals will be automatically updated
+      into the manifest. Joy!'
+  - unknown: Metroids, when wrestled off of someone's head or beaten off, now get
+      stunned for a few seconds.
+  Errorage updated:
+  - unknown: Hopefully fixed the derelict 'hotspots'. Derelict medbay has also been
+      fixed.
+  Uhangi updated:
+  - unknown: EVA redesigned
+  - unknown: An electropack is now available once again on the prison station
+2011-07-30:
+  Doohl updated:
+  - unknown: 'New virus: Retrovirus. It basically screws over your DNA.'
+  - unknown: "You can now do CTRL+MOVEMENT to face any direction you want. See those\
+      \ chairs in Medbay and the Escape Wing? You can do CTRL+EAST to actually RP\
+      \ that you're sitting on them. Is this cool or what?!\n\t"
+  Rockdtben updated:
+  - unknown: 'Bugfix: Fixed a bug where you could dupe diamonds'
+  Superxpdude Updated:
+  - unknown: Engineer and CE space helmets now have built-in lights.

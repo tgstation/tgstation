@@ -1,7 +1,8 @@
 /atom/movable/screen/ghost
 	icon = 'icons/hud/screen_ghost.dmi'
 
-/atom/movable/screen/ghost/MouseEntered()
+/atom/movable/screen/ghost/MouseEntered(location, control, params)
+	. = ..()
 	flick(icon_state + "_anim", src)
 
 /atom/movable/screen/ghost/spawners_menu
@@ -44,13 +45,13 @@
 	var/mob/dead/observer/G = usr
 	G.register_pai()
 
-/atom/movable/screen/ghost/mafia
-	name = "Mafia Signup"
-	icon_state = "mafia"
-
-/atom/movable/screen/ghost/mafia/Click()
-	var/mob/dead/observer/G = usr
-	G.mafia_signup()
+/atom/movable/screen/ghost/minigames_menu
+	name ="Minigames"
+	icon_state = "minigames"
+	
+/atom/movable/screen/ghost/minigames_menu/Click()
+	var/mob/dead/observer/observer = usr
+	observer.open_minigames_menu()
 
 /datum/hud/ghost/New(mob/owner)
 	..()
@@ -81,8 +82,8 @@
 	using.hud = src
 	static_inventory += using
 
-	using = new /atom/movable/screen/ghost/mafia()
-	using.screen_loc = ui_ghost_mafia
+	using = new /atom/movable/screen/ghost/minigames_menu()
+	using.screen_loc = ui_ghost_minigames
 	using.hud = src
 	static_inventory += using
 
@@ -103,10 +104,10 @@
 	if(!.)
 		return
 	var/mob/screenmob = viewmob || mymob
-	if(!screenmob.client.prefs.ghost_hud)
-		screenmob.client.screen -= static_inventory
-	else
+	if(screenmob.client.prefs.read_preference(/datum/preference/toggle/ghost_hud))
 		screenmob.client.screen += static_inventory
+	else
+		screenmob.client.screen -= static_inventory
 
 //We should only see observed mob alerts.
 /datum/hud/ghost/reorganize_alerts(mob/viewmob)

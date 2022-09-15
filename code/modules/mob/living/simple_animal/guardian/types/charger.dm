@@ -19,16 +19,16 @@
 	. = ..()
 	if(ranged_cooldown <= world.time)
 		if(!chargealert)
-			chargealert = throw_alert("charge", /atom/movable/screen/alert/cancharge)
+			chargealert = throw_alert(ALERT_CHARGE, /atom/movable/screen/alert/cancharge)
 	else
-		clear_alert("charge")
+		clear_alert(ALERT_CHARGE)
 		chargealert = null
 
 /mob/living/simple_animal/hostile/guardian/charger/OpenFire(atom/A)
 	if(!charging)
-		visible_message("<span class='danger'><b>[src]</b> [ranged_message] at [A]!</span>")
+		visible_message(span_danger("<b>[src]</b> [ranged_message] at [A]!"))
 		ranged_cooldown = world.time + ranged_cooldown_time
-		clear_alert("charge")
+		clear_alert(ALERT_CHARGE)
 		chargealert = null
 		Shoot(A)
 
@@ -64,7 +64,7 @@
 					blocked = TRUE
 			if(!blocked)
 				L.drop_all_held_items()
-				L.visible_message("<span class='danger'>[src] slams into [L]!</span>", "<span class='userdanger'>[src] slams into you!</span>")
+				L.visible_message(span_danger("[src] slams into [L]!"), span_userdanger("[src] slams into you!"))
 				L.apply_damage(20, BRUTE)
 				playsound(get_turf(L), 'sound/effects/meteorimpact.ogg', 100, TRUE)
 				shake_camera(L, 4, 3)

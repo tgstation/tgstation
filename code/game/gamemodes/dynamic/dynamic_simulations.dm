@@ -76,7 +76,7 @@
 	var/roundstart_players = input(usr, "Enter number of round start players") as num
 	var/forced_threat_level = input(usr, "Enter forced threat level, if you want one") as num | null
 
-	SSticker.mode = config.pick_mode("dynamic")
+	SSticker.mode = new /datum/game_mode/dynamic
 	message_admins("Running dynamic simulations...")
 
 	var/list/outputs = list()
@@ -118,20 +118,5 @@
 		)
 
 	return export
-
-/client/proc/export_dynamic_json()
-	set name = "Export dynamic.json"
-	set category = "Debug"
-
-	var/datum/game_mode/dynamic/dynamic = SSticker.mode
-
-	var/list/export = list()
-	export["Roundstart"] = export_dynamic_json_of(dynamic.roundstart_rules)
-	export["Midround"] = export_dynamic_json_of(dynamic.midround_rules)
-	export["Latejoin"] = export_dynamic_json_of(dynamic.latejoin_rules)
-
-	message_admins("Writing file...")
-	WRITE_FILE(file("[GLOB.log_directory]/dynamic.json"), json_encode(export))
-	message_admins("Writing complete.")
 
 #endif

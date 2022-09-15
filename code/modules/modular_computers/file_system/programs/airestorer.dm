@@ -1,13 +1,13 @@
 /datum/computer_file/program/aidiag
 	filename = "aidiag"
 	filedesc = "NT FRK"
-	category = PROGRAM_CATEGORY_ROBO
+	category = PROGRAM_CATEGORY_SCI
 	program_icon_state = "generic"
 	extended_desc = "Firmware Restoration Kit, capable of reconstructing damaged AI systems. Requires direct AI connection via intellicard slot."
 	size = 12
 	requires_ntnet = FALSE
 	usage_flags = PROGRAM_CONSOLE | PROGRAM_LAPTOP
-	transfer_access = ACCESS_HEADS
+	transfer_access = list(ACCESS_COMMAND)
 	available_on_ntnet = TRUE
 	tgui_id = "NtosAiRestorer"
 	program_icon = "laptop-code"

@@ -1,22 +1,14 @@
 /*
-//////////////////////////////////////
-
 Necrotizing Fasciitis (AKA Flesh-Eating Disease)
-
 	Very very noticable.
 	Lowers resistance tremendously.
 	No changes to stage speed.
-	Decreases transmittablity temrendously.
+	Decreases transmissibility tremendously.
 	Fatal Level.
-
 Bonus
 	Deals brute damage over time.
-
-//////////////////////////////////////
 */
-
 /datum/symptom/flesh_eating
-
 	name = "Necrotizing Fasciitis"
 	desc = "The virus aggressively attacks body cells, necrotizing tissues and organs."
 	stealth = -3
@@ -52,21 +44,21 @@ Bonus
 	switch(A.stage)
 		if(2,3)
 			if(prob(base_message_chance))
-				to_chat(M, "<span class='warning'>[pick("You feel a sudden pain across your body.", "Drops of blood appear suddenly on your skin.")]</span>")
+				to_chat(M, span_warning("[pick("You feel a sudden pain across your body.", "Drops of blood appear suddenly on your skin.")]"))
 		if(4,5)
-			to_chat(M, "<span class='userdanger'>[pick("You cringe as a violent pain takes over your body.", "It feels like your body is eating itself inside out.", "IT HURTS.")]</span>")
+			to_chat(M, span_userdanger("[pick("You cringe as a violent pain takes over your body.", "It feels like your body is eating itself inside out.", "IT HURTS.")]"))
 			Flesheat(M, A)
 
 /datum/symptom/flesh_eating/proc/Flesheat(mob/living/M, datum/disease/advance/A)
 	var/get_damage = rand(15,25) * power
-	M.take_overall_damage(brute = get_damage, required_status = BODYPART_ORGANIC)
+	M.take_overall_damage(brute = get_damage, required_status = BODYTYPE_ORGANIC)
 	if(pain)
 		M.adjustStaminaLoss(get_damage * 2)
 	if(bleed)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			var/obj/item/bodypart/random_part = pick(H.bodyparts)
-			random_part.generic_bleedstacks += 5 * power
+			random_part.adjustBleedStacks(5 * power)
 	return 1
 
 /*
@@ -123,15 +115,15 @@ Bonus
 	switch(A.stage)
 		if(2,3)
 			if(prob(base_message_chance) && !suppress_warning)
-				to_chat(M, "<span class='warning'>[pick("You feel your body break apart.", "Your skin rubs off like dust.")]</span>")
+				to_chat(M, span_warning("[pick("You feel your body break apart.", "Your skin rubs off like dust.")]"))
 		if(4,5)
 			if(prob(base_message_chance / 2)) //reduce spam
-				to_chat(M, "<span class='userdanger'>[pick("You feel your muscles weakening.", "Some of your skin detaches itself.", "You feel sandy.")]</span>")
+				to_chat(M, span_userdanger("[pick("You feel your muscles weakening.", "Some of your skin detaches itself.", "You feel sandy.")]"))
 			Flesh_death(M, A)
 
 /datum/symptom/flesh_death/proc/Flesh_death(mob/living/M, datum/disease/advance/A)
 	var/get_damage = rand(6,10)
-	M.take_overall_damage(brute = get_damage, required_status = BODYPART_ORGANIC)
+	M.take_overall_damage(brute = get_damage, required_status = BODYTYPE_ORGANIC)
 	if(chems)
 		M.reagents.add_reagent_list(list(/datum/reagent/toxin/heparin = 2, /datum/reagent/toxin/lipolicide = 2))
 	if(zombie)

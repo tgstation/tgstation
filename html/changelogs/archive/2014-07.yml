@@ -1,0 +1,68 @@
+2014-07-01:
+  Ikarrus:
+  - wip: <b>Central Security has approved an upgrade of the Securitron line of bots
+      to a newer model.</b><br/> Highlights include:<br/>
+  - rscadd: -An optional setting to arrest personnel without an ID on their uniform
+      (Disabled by default)
+  - rscadd: -An optional setting to notify security personnel of arrests made by the
+      bots (Enabled by default)
+  - rscadd: -A new "Weapon Permit" access type that securitrons will use during their
+      weapons checks. Personnel who work with weapons will be granted this access
+      by default. More can be assigned by the station's Head of Security and Personnel.
+  - tweak: -A more robust threat assessment algorithm to improve accuracy in identifying
+      perpetrators.
+  Rolan7:
+  - rscadd: Fixed the irrigation system in hydroponics trays.  Adding at least 30
+      units of liquid at once will activate the system, sharing the reagents between
+      all connected trays.
+  - bugfix: Changelings can communicate while muzzled or monkified, and being monkified
+      doesn't stop them from taking human form.
+  - bugfix: Mimes cannot break the laws of physics unless their vow is currently active.
+  - rscadd: Trays are rewritten to make sense and so borgs can actually use them.  Service
+      borgs can discretely carry small objects, hint hint.  The items are easily knocked
+      out of them.
+2014-07-03:
+  Miauw:
+  - rscadd: Added slot machines to the game
+  - rscadd: Slot machines use reels. All prizes except for jackpots can be won on
+      all lines
+  - rscadd: Simply put a coin into one of the slot machines in the bar to play!
+  - rscadd: Slot machines can also be emagged.
+2014-07-05:
+  Firecage:
+  - rscadd: Recently the Space Wizard Federation, with some assistance from the Cult
+      of Nar-Sie, recently created a new strain of Killer Tomato. A sad side effect
+      is this effected all current and future Killer Tomato strains in our galaxy.
+      They are now reported to be extremely violent and deadly, use extreme caution
+      when growing them.
+2014-07-07:
+  Firecage:
+  - rscadd: We, of the NanoTrasen Botany Research and Developent(NTBiRD), has some
+      important announcements for the Botany staff aboard our stations.
+  - rscadd: We have recently released a new strain of Tower Cap. It is now ensured
+      that more planks can be gotten from a single log.
+  - rscadd: Head Scientist [REDACTED] is thanked for his new strain of Blood Tomatoes.
+      It now not only contains human blood, but also chunks of human flesh!
+  - rscadd: We have also discovered a way to replant the infamous Cash Trees and 'Eggy'
+      plants. We can now harvest their seeds, and the rare products are inside the
+      fruit shells.
+  - rscadd: Similar to the new variety of Tower Caps, it is now possible to get various
+      grass flooring depending on the plants potency!
+  - rscadd: Our sponsors at Knitters United has released a new variation of the botany
+      Aprons and Coveralls which can hold a larger variety of items!
+  - rscadd: A new version of Plant-B-Gone was produced which are much more lethal
+      to plants, yet at the same time has no extra effect on humans besides the norm.
+  Paprika:
+  - tweak: Tweaked mining turf mineral droprates and reverted mesons to the 'old'
+      style of mesons. This means mesons will be more powerful with the added side
+      effect of not being able to track individual light sources through walls and
+      such. This is a trial run; please provide feedback on the /tg/ codebase section
+      of the forum.
+2014-07-14:
+  Miauw:
+  - rscadd: Added a new mutetoxin that can be made with 2 parts uranium, 1 part water
+      and 1 part carbon and makes people mute temporarily
+  - rscdel: Parapens were renamed to sleepy pens and now contain 30 units of mutetoxin
+      and 30 units of sleeptoxin instead of zombie powder.
+  - rscdel: C4 can no longer be attached to mobs
+  - tweak: Reduced the C4 price to 1 telecrystal

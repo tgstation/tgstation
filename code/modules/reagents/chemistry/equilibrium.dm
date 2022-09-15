@@ -204,17 +204,18 @@
 * Checks overheated() and overly_impure() of a reaction
 * This was moved from the start, to the end - after a reaction, so post reaction temperature changes aren't ignored.
 * overheated() is first - so double explosions can't happen (i.e. explosions that blow up the holder)
+* step_volume_added is how much product (across all products) was added for this single step
 */
-/datum/equilibrium/proc/check_fail_states(vol_added)
+/datum/equilibrium/proc/check_fail_states(step_volume_added)
 	//Are we overheated?
 	if(reaction.is_cold_recipe)
 		if(holder.chem_temp < reaction.overheat_temp && reaction.overheat_temp != NO_OVERHEAT) //This is before the process - this is here so that overly_impure and overheated() share the same code location (and therefore vars) for calls.
 			SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] overheated reaction steps")
-			reaction.overheated(holder, src, vol_added)
+			reaction.overheated(holder, src, step_volume_added)
 	else
 		if(holder.chem_temp > reaction.overheat_temp)
 			SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] overheated reaction steps")
-			reaction.overheated(holder, src, vol_added)
+			reaction.overheated(holder, src, step_volume_added)
 
 	//is our product too impure?
 	for(var/product in reaction.results)
@@ -223,7 +224,7 @@
 			continue
 		if (reagent.purity < reaction.purity_min)//If purity is below the min, call the proc
 			SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] overly impure reaction steps")
-			reaction.overly_impure(holder, src, vol_added)
+			reaction.overly_impure(holder, src, step_volume_added)
 
 	//did we explode?
 	if(!holder.my_atom || holder.reagent_list.len == 0)
@@ -302,7 +303,7 @@
 			return
 
 	//Call any special reaction steps BEFORE addition
-	if(reaction.reaction_step(src, holder, delta_t, delta_ph, step_target_vol) == END_REACTION)
+	if(reaction.reaction_step(holder, src, delta_t, delta_ph, step_target_vol) == END_REACTION)
 		to_delete = TRUE
 		return
 
@@ -344,21 +345,8 @@
 	for(var/product in reaction.results)
 		//create the products
 		step_add = delta_chem_factor * reaction.results[product]
-		//If we make purities in real time
-		if(reaction.reaction_flags & REACTION_REAL_TIME_SPLIT && purity < 1)
-			var/datum/reagent/product_ref = GLOB.chemical_reagents_list[product]
-			if(purity < reaction.purity_min && product_ref.failed_chem) //If we're failed
-				holder.add_reagent(product_ref.failed_chem, step_add, null, cached_temp, (1-purity), override_base_ph = TRUE)
-			else if(purity < product_ref.inverse_chem_val && product_ref.inverse_chem) //If we're inverse
-				holder.add_reagent(product_ref.inverse_chem, step_add, null, cached_temp, (1-purity), override_base_ph = TRUE)
-			else if(product_ref.impure_chem && product_ref.impure_chem) //if we're impure
-				holder.add_reagent(product*purity, step_add, null, cached_temp, purity, override_base_ph = TRUE)
-				holder.add_reagent(product_ref.impure_chem*(1-purity), step_add, null, cached_temp, (1-purity), override_base_ph = TRUE)
-			else //We can get here if the flag is set, but there's no associated impure_chem assigned. In some cases this is desired (i.e. multiver only wants to real time split it's inverse chem)
-				holder.add_reagent(product, step_add, null, cached_temp, purity, override_base_ph = TRUE)
 		//Default handiling
-		else
-			holder.add_reagent(product, step_add, null, cached_temp, purity, override_base_ph = TRUE)
+		holder.add_reagent(product, step_add, null, cached_temp, purity, override_base_ph = TRUE)
 
 		//Apply pH changes
 		var/pH_adjust
@@ -372,9 +360,9 @@
 
 	#ifdef REAGENTS_TESTING //Kept in so that people who want to write fermireactions can contact me with this log so I can help them
 	if(GLOB.Debug2) //I want my spans for my sanity
-		message_admins("<span class='green'>Reaction step active for:[reaction.type]</spans>")
-		message_admins("<span class='notice'>|Reaction conditions| Temp: [holder.chem_temp], pH: [holder.ph], reactions: [length(holder.reaction_list)], awaiting reactions: [length(holder.failed_but_capable_reactions)], no. reagents:[length(holder.reagent_list)], no. prev reagents: [length(holder.previous_reagent_list)]<spans>")
-		message_admins("<span class='warning'>Reaction vars: PreReacted:[reacted_vol] of [step_target_vol] of total [target_vol]. delta_t [delta_t], multiplier [multiplier], delta_chem_factor [delta_chem_factor] Pfactor [product_ratio], purity of [purity] from a delta_ph of [delta_ph]. DeltaTime: [delta_time]")
+		message_admins("<span class='green'>Reaction step active for:[reaction.type]</span>")
+		message_admins("<span class='notice'>|Reaction conditions| Temp: [holder.chem_temp], pH: [holder.ph], reactions: [length(holder.reaction_list)], awaiting reactions: [length(holder.failed_but_capable_reactions)], no. reagents:[length(holder.reagent_list)], no. prev reagents: [length(holder.previous_reagent_list)]</span>")
+		message_admins("<span class='warning'>Reaction vars: PreReacted:[reacted_vol] of [step_target_vol] of total [target_vol]. delta_t [delta_t], multiplier [multiplier], delta_chem_factor [delta_chem_factor] Pfactor [product_ratio], purity of [purity] from a delta_ph of [delta_ph]. DeltaTime: [delta_time]</span>")
 	#endif
 
 	//Apply thermal output of reaction to beaker
@@ -386,7 +374,7 @@
 
 	//Give a chance of sounds
 	if(prob(5))
-		holder.my_atom.audible_message("<span class='notice'>[icon2html(holder.my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [reaction.mix_message]</span>")
+		holder.my_atom.audible_message(span_notice("[icon2html(holder.my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [reaction.mix_message]"))
 		if(reaction.mix_sound)
 			playsound(get_turf(holder.my_atom), reaction.mix_sound, 80, TRUE)
 

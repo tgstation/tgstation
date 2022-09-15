@@ -37,7 +37,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "h" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "i" = (
@@ -165,7 +165,7 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/stack/sheet/titaniumglass{
+/obj/item/stack/sheet/titaniumglass/fifty{
 	pixel_x = -2;
 	pixel_y = -2
 	},

@@ -8,6 +8,7 @@
 	var/role_name = "debug rat with cancer" // Q U A L I T Y  M E M E S
 	var/list/spawned_mobs = list()
 	var/status
+	var/cached_announcement_chance
 	fakeable = FALSE
 
 /datum/round_event/ghost_role/start()
@@ -19,13 +20,16 @@
 	processing = FALSE
 
 	status = spawn_role()
+	if(isnull(cached_announcement_chance))
+		cached_announcement_chance = announce_chance //only announce once we've finished the spawning loop.
+	announce_chance = (status == SUCCESSFUL_SPAWN ? cached_announcement_chance : 0)
 	if((status == WAITING_FOR_SOMETHING))
 		if(retry >= MAX_SPAWN_ATTEMPT)
 			message_admins("[role_name] event has exceeded maximum spawn attempts. Aborting and refunding.")
 			if(control && control.occurrences > 0) //Don't refund if it hasn't
 				control.occurrences--
 			return
-		var/waittime = 300 * (2^retry)
+		var/waittime = 300 * (2**retry)
 		message_admins("The event will not spawn a [role_name] until certain \
 			conditions are met. Waiting [waittime/10]s and then retrying.")
 		addtimer(CALLBACK(src, .proc/try_spawning, 0, ++retry), waittime)
@@ -56,14 +60,14 @@
 	// players could be found, and just runtime if anything else happens
 	return TRUE
 
-/datum/round_event/ghost_role/proc/get_candidates(jobban, gametypecheck, be_special)
+/datum/round_event/ghost_role/proc/get_candidates(jobban, be_special)
 	// Returns a list of candidates in priority order, with candidates from
 	// `priority_candidates` first, and ghost roles randomly shuffled and
 	// appended after
 	var/list/mob/dead/observer/regular_candidates
 	// don't get their hopes up
 	if(priority_candidates.len < minimum_required)
-		regular_candidates = pollGhostCandidates("Do you wish to be considered for the special role of '[role_name]'?", jobban, gametypecheck, be_special)
+		regular_candidates = poll_ghost_candidates("Do you wish to be considered for the special role of '[role_name]'?", jobban, be_special)
 	else
 		regular_candidates = list()
 

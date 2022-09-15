@@ -4,29 +4,28 @@
  * @license MIT
  */
 
-import glob from 'glob';
-import { resolve as resolvePath } from 'path';
 import fs from 'fs';
-import { promisify } from 'util';
+import path from 'path';
+import { require } from './require.js';
 
-export { resolvePath };
+const globPkg = require('glob');
+
+export const resolvePath = path.resolve;
 
 /**
  * Combines path.resolve with glob patterns.
  */
-export const resolveGlob = async (...sections) => {
-  const unsafePaths = await promisify(glob)(
-    resolvePath(...sections), {
-      strict: false,
-      silent: true,
-    });
+export const resolveGlob = (...sections) => {
+  const unsafePaths = globPkg.sync(path.resolve(...sections), {
+    strict: false,
+    silent: true,
+  });
   const safePaths = [];
   for (let path of unsafePaths) {
     try {
-      await promisify(fs.stat)(path);
+      fs.statSync(path);
       safePaths.push(path);
-    }
-    catch {}
+    } catch {}
   }
   return safePaths;
 };

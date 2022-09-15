@@ -1,0 +1,55 @@
+2014-11-04:
+  MrPerson:
+  - rscadd: You can use AI Upload modules directly on unslaved cyborgs to change their
+      laws. The panel has to be open to do this.
+  - bugfix: Newly emagged cyborgs get locked down for a little bit until their new
+      laws get shown. Thank you to whoever bitched about it on singulo and filed an
+      issue report.
+  Paprika:
+  - rscadd: Added an advanced mop for the janitor, available at the protolathe. This
+      hi-tech custodian's friend can mop twice as many floor tiles before needing
+      to return to your bucket!
+  - tweak: Moved holosign projector to the protolathe and gave the janitor back his
+      old signs. We hope you've enjoyed this free trial run of holo projectors, but
+      our budget is tight!
+  - rscadd: Added a holosign projector to the janitor module for cyborgs.
+  - tweak: Soap now has a delay. Different soap types clean faster than others, but
+      expect to put it some extra arm work if you want to clean that fresh blood!
+  Tkdrg:
+  - rscadd: Cutting-edge research in a secret Nanotransen lab has shed light into
+      a revolutionary form of communication technology known as 'chat'. The Personal
+      Data Assistants of Space Station 13 have been deployed with an experimental
+      module implementing this system, dubbed 'Nanotransen Relay Chat'.
+2014-11-10:
+  Menshin:
+  - tweak: Made meteors more threatening.
+  - rscadd: Added three levels of danger for meteors waves, randomly selected at spawn.
+  - rscadd: Rumors speaks of a very rare meteor of unfathomable destructive power
+      in the station sector...
+  - bugfix: Fixed infinigib/infinisplosion with meteors bumping
+  Paprika:
+  - rscadd: Added a defibrillator and an EMT alternative clothing set for medical
+      doctors. These defibrillators will revive the recently deceased as long as their
+      souls are occupying their body and they have no outstanding brute or burn damage.
+  - bugfix: Yes, they actually work now too!
+  - rscadd: Added a way for you to unload a round from a chambered projectile weapon.
+      Simply click on the gun when it is in your active hand, and assuming it does
+      not have a magazine, the round should pop out. You can also use this system
+      to unload individual bullets from magazines and ammo boxes, like the detective's
+      speed loaders.
+  - rscadd: Added glass tables and overhauled how table construction works. Now, you
+      need to build a frame using either metal rods or wood planks, and then place
+      a top on the table.
+  - tweak: Table disassembly now works in two stages. Screwdriver the table to remove
+      the top of it and reduce it back to a frame. Frames can be moved around and
+      walked on top of. Wrench the table to deconstruct it entirely back to parts,
+      this is quicker and much more like the old fashion. To deconstruct a frame,
+      use your wrench on it as well.
+  - bugfix: Fixed traitor med analyzers not fitting in medical belts.
+  - bugfix: Fixed syringe box bug with medipens.
+  Perakp:
+  - rscadd: Added escape-with-identity objective for changelings. Completion requires
+      the changeling to have transformed to their target and be wearing an ID card
+      with the target's name on it when escaping.
+  - tweak: Changelings can absorb someone even if they have that DNA in storage already.
+  - bugfix: Fixes hivemind being lost when readapting evolutions.

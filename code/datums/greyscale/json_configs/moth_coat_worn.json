@@ -1,0 +1,15 @@
+{
+	"mothcoat": [
+		{
+			"type": "icon_state",
+			"icon_state": "mothcoat_worn",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "mothcoat_details_worn",
+			"blend_mode": "overlay"
+		}
+	]
+}

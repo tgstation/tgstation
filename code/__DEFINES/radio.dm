@@ -48,6 +48,8 @@
 
 #define RADIO_CHANNEL_CTF_RED "Red Team"
 #define RADIO_CHANNEL_CTF_BLUE "Blue Team"
+#define RADIO_CHANNEL_CTF_GREEN "Green Team"
+#define RADIO_CHANNEL_CTF_YELLOW "Yellow Team"
 
 
 #define MIN_FREE_FREQ 1201 // -------------------------------------------------
@@ -56,6 +58,8 @@
 #define FREQ_SYNDICATE 1213  // Nuke op comms frequency, dark brown
 #define FREQ_CTF_RED 1215  // CTF red team comms frequency, red
 #define FREQ_CTF_BLUE 1217  // CTF blue team comms frequency, blue
+#define FREQ_CTF_GREEN 1219  // CTF green team comms frequency, green
+#define FREQ_CTF_YELLOW 1221  // CTF yellow team comms frequency, yellow
 #define FREQ_CENTCOM 1337  // CentCom comms frequency, gray
 #define FREQ_SUPPLY 1347  // Supply comms frequency, light brown
 #define FREQ_SERVICE 1349  // Service comms frequency, green
@@ -114,3 +118,6 @@
 #define REQ_DEP_TYPE_ASSISTANCE (1<<0)
 #define REQ_DEP_TYPE_SUPPLIES (1<<1)
 #define REQ_DEP_TYPE_INFORMATION (1<<2)
+
+///give this to can_receive to specify that there is no restriction on what z level this signal is sent to
+#define RADIO_NO_Z_LEVEL_RESTRICTION 0

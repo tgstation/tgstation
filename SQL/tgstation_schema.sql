@@ -34,7 +34,7 @@ DROP TABLE IF EXISTS `admin_log`;
 CREATE TABLE `admin_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `datetime` datetime NOT NULL,
-  `round_id` int(11) unsigned NOT NULL,
+  `round_id` int(11) unsigned NULL,
   `adminckey` varchar(32) NOT NULL,
   `adminip` int(10) unsigned NOT NULL,
   `operation` enum('add admin','remove admin','change admin rank','add rank','remove rank','change rank flags') NOT NULL,
@@ -72,7 +72,7 @@ CREATE TABLE `ban` (
   `bantime` DATETIME NOT NULL,
   `server_ip` INT(10) UNSIGNED NOT NULL,
   `server_port` SMALLINT(5) UNSIGNED NOT NULL,
-  `round_id` INT(11) UNSIGNED NOT NULL,
+  `round_id` INT(11) UNSIGNED NULL,
   `role` VARCHAR(32) NULL DEFAULT NULL,
   `expiration_time` DATETIME NULL DEFAULT NULL,
   `applies_to_admins` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
@@ -99,6 +99,31 @@ CREATE TABLE `ban` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `citation`
+--
+DROP TABLE IF EXISTS `citation`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE IF NOT EXISTS `citation` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `round_id` int(11) unsigned NULL,
+  `server_ip` int(11) unsigned NOT NULL,
+  `server_port` int(11) unsigned NOT NULL,
+  `citation` text NOT NULL,
+  `action` varchar(20) NOT NULL DEFAULT '',
+  `sender` varchar(32) NOT NULL DEFAULT '',
+  `sender_ic` varchar(64) NOT NULL DEFAULT '' COMMENT 'Longer because this is the character name, not the ckey',
+  `recipient` varchar(64) NOT NULL DEFAULT '' COMMENT 'Longer because this is the character name, not the ckey',
+  `crime` text NOT NULL,
+  `fine` int(4) DEFAULT NULL,
+  `paid` int(4) DEFAULT 0,
+  `timestamp` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `idx_constraints` (`round_id`,`server_ip`,`server_port`,`citation`(100)) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `connection_log`
 --
 
@@ -110,7 +135,7 @@ CREATE TABLE `connection_log` (
   `datetime` datetime DEFAULT NULL,
   `server_ip` int(10) unsigned NOT NULL,
   `server_port` smallint(5) unsigned NOT NULL,
-  `round_id` int(11) unsigned NOT NULL,
+  `round_id` int(11) unsigned NULL,
   `ckey` varchar(45) DEFAULT NULL,
   `ip` int(10) unsigned NOT NULL,
   `computerid` varchar(45) DEFAULT NULL,
@@ -134,7 +159,7 @@ CREATE TABLE `death` (
   `mapname` varchar(32) NOT NULL,
   `server_ip` int(10) unsigned NOT NULL,
   `server_port` smallint(5) unsigned NOT NULL,
-  `round_id` int(11) NOT NULL,
+  `round_id` int(11) unsigned NULL,
   `tod` datetime NOT NULL COMMENT 'Time of death',
   `job` varchar(32) NOT NULL,
   `special` varchar(32) DEFAULT NULL,
@@ -165,7 +190,7 @@ DROP TABLE IF EXISTS `feedback`;
 CREATE TABLE `feedback` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `datetime` datetime NOT NULL,
-  `round_id` int(11) unsigned NOT NULL,
+  `round_id` int(11) unsigned NULL,
   `key_name` varchar(32) NOT NULL,
   `key_type` enum('text', 'amount', 'tally', 'nested tally', 'associative') NOT NULL,
   `version` tinyint(3) unsigned NOT NULL,
@@ -204,7 +229,7 @@ CREATE TABLE `legacy_population` (
   `time` datetime NOT NULL,
   `server_ip` int(10) unsigned NOT NULL,
   `server_port` smallint(5) unsigned NOT NULL,
-  `round_id` int(11) unsigned NOT NULL,
+  `round_id` int(11) unsigned NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -225,13 +250,32 @@ CREATE TABLE `library` (
   `ckey` varchar(32) NOT NULL DEFAULT 'LEGACY',
   `datetime` datetime NOT NULL,
   `deleted` tinyint(1) unsigned DEFAULT NULL,
-  `round_id_created` int(11) unsigned NOT NULL,
+  `round_id_created` int(11) unsigned NULL,
   PRIMARY KEY (`id`),
   KEY `deleted_idx` (`deleted`),
   KEY `idx_lib_id_del` (`id`,`deleted`),
   KEY `idx_lib_del_title` (`deleted`,`title`),
   KEY `idx_lib_search` (`deleted`,`author`,`title`,`category`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `library_action`
+--
+
+DROP TABLE IF EXISTS `library_action`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `library_action` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `book` int(10) unsigned NOT NULL,
+  `reason` longtext DEFAULT NULL,
+  `ckey` varchar(11) NOT NULL DEFAULT '',
+  `datetime` datetime NOT NULL DEFAULT current_timestamp(),
+  `action` varchar(11) NOT NULL DEFAULT '',
+  `ip_addr` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -251,7 +295,7 @@ CREATE TABLE `messages` (
   `server` varchar(32) DEFAULT NULL,
   `server_ip` int(10) unsigned NOT NULL,
   `server_port` smallint(5) unsigned NOT NULL,
-  `round_id` int(11) unsigned NOT NULL,
+  `round_id` int(11) unsigned NULL,
   `secret` tinyint(1) unsigned NOT NULL,
   `expire_timestamp` datetime DEFAULT NULL,
   `severity` enum('high','medium','minor','none') DEFAULT NULL,
@@ -315,9 +359,9 @@ CREATE TABLE `player` (
   `ckey` varchar(32) NOT NULL,
   `byond_key` varchar(32) DEFAULT NULL,
   `firstseen` datetime NOT NULL,
-  `firstseen_round_id` int(11) unsigned NOT NULL,
+  `firstseen_round_id` int(11) unsigned NULL,
   `lastseen` datetime NOT NULL,
-  `lastseen_round_id` int(11) unsigned NOT NULL,
+  `lastseen_round_id` int(11) unsigned NULL,
   `ip` int(10) unsigned NOT NULL,
   `computerid` varchar(32) NOT NULL,
   `lastadminrank` varchar(32) NOT NULL DEFAULT 'Player',
@@ -541,9 +585,10 @@ CREATE TABLE `ticket` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `server_ip` int(10) unsigned NOT NULL,
   `server_port` smallint(5) unsigned NOT NULL,
-  `round_id` int(11) unsigned NOT NULL,
+  `round_id` int(11) unsigned NULL,
   `ticket` smallint(11) unsigned NOT NULL,
   `action` varchar(20) NOT NULL DEFAULT 'Message',
+  `urgent` TINYINT(1) unsigned NOT NULL DEFAULT '0',
   `message` text NOT NULL,
   `timestamp` datetime NOT NULL,
   `recipient` varchar(32) DEFAULT NULL,
@@ -591,6 +636,62 @@ CREATE TABLE `discord_links` (
   	`valid` BOOLEAN NOT NULL DEFAULT FALSE,
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
+
+--
+-- Table structure for table `text_adventures`
+--
+DROP TABLE IF EXISTS `text_adventures`;
+CREATE TABLE `text_adventures` (
+	`id` int(11) NOT NULL AUTO_INCREMENT,
+	`adventure_data` LONGTEXT NOT NULL,
+	`uploader` VARCHAR(32) NOT NULL,
+	`timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`approved` TINYINT(1) NOT NULL DEFAULT FALSE,
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+--
+-- Table structure for table `admin_connections`
+--
+DROP TABLE IF EXISTS `admin_connections`;
+CREATE TABLE `admin_connections` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `ckey` VARCHAR(32) NOT NULL,
+  `ip` INT(11) UNSIGNED NOT NULL,
+  `cid` VARCHAR(32) NOT NULL,
+  `verification_time` DATETIME NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `unique_constraints` (`ckey`, `ip`, `cid`)
+) ENGINE=InnoDB;
+
+--
+-- Table structure for table `known_alts`
+--
+DROP TABLE IF EXISTS `known_alts`;
+CREATE TABLE `known_alts` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `ckey1` VARCHAR(32) NOT NULL,
+    `ckey2` VARCHAR(32) NOT NULL,
+    `admin_ckey` VARCHAR(32) NOT NULL DEFAULT '*no key*',
+    PRIMARY KEY (`id`),
+    UNIQUE INDEX `unique_contraints` (`ckey1` , `ckey2`)
+);
+
+--
+-- Table structure for table `telemetry_connections`
+--
+DROP TABLE IF EXISTS `telemetry_connections`;
+CREATE TABLE `telemetry_connections` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `ckey` VARCHAR(32) NOT NULL,
+    `telemetry_ckey` VARCHAR(32) NOT NULL,
+    `address` INT(10) UNSIGNED NOT NULL,
+    `computer_id` VARCHAR(32) NOT NULL,
+    `first_round_id` INT(11) UNSIGNED NULL,
+    `latest_round_id` INT(11) UNSIGNED NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE INDEX `unique_constraints` (`ckey` , `telemetry_ckey` , `address` , `computer_id`)
+);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

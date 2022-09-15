@@ -3,6 +3,7 @@
 	icon = 'icons/hud/blob.dmi'
 
 /atom/movable/screen/blob/MouseEntered(location,control,params)
+	. = ..()
 	openToolTip(usr,src,params,title = name,content = desc, theme = "blob")
 
 /atom/movable/screen/blob/MouseExited()
@@ -42,13 +43,13 @@
 		else
 			name = initial(name)
 			desc = initial(desc)
-	..()
+	return ..()
 
 /atom/movable/screen/blob/jump_to_core/Click()
 	if(isovermind(usr))
 		var/mob/camera/blob/B = usr
 		if(!B.placed)
-			B.place_blob_core(0)
+			B.place_blob_core(BLOB_NORMAL_PLACEMENT)
 		B.transport_core()
 
 /atom/movable/screen/blob/blobbernaut
@@ -57,7 +58,7 @@
 	name = "Produce Blobbernaut (ERROR)"
 	desc = "Produces a strong, smart blobbernaut from a factory blob for (ERROR) resources.<br>The factory blob used will become fragile and unable to produce spores."
 
-/atom/movable/screen/blob/blobbernaut/Initialize()
+/atom/movable/screen/blob/blobbernaut/Initialize(mapload)
 	. = ..()
 	name = "Produce Blobbernaut ([BLOBMOB_BLOBBERNAUT_RESOURCE_COST])"
 	desc = "Produces a strong, smart blobbernaut from a factory blob for [BLOBMOB_BLOBBERNAUT_RESOURCE_COST] resources.<br>The factory blob used will become fragile and unable to produce spores."
@@ -73,7 +74,7 @@
 	name = "Produce Resource Blob (ERROR)"
 	desc = "Produces a resource blob for ERROR resources.<br>Resource blobs will give you resources every few seconds."
 
-/atom/movable/screen/blob/resource_blob/Initialize()
+/atom/movable/screen/blob/resource_blob/Initialize(mapload)
 	. = ..()
 	name = "Produce Resource Blob ([BLOB_STRUCTURE_RESOURCE_COST])"
 	desc = "Produces a resource blob for [BLOB_STRUCTURE_RESOURCE_COST] resources.<br>Resource blobs will give you resources every few seconds."
@@ -89,7 +90,7 @@
 	name = "Produce Node Blob (ERROR)"
 	desc = "Produces a node blob for ERROR resources.<br>Node blobs will expand and activate nearby resource and factory blobs."
 
-/atom/movable/screen/blob/node_blob/Initialize()
+/atom/movable/screen/blob/node_blob/Initialize(mapload)
 	. = ..()
 	name = "Produce Node Blob ([BLOB_STRUCTURE_NODE_COST])"
 	desc = "Produces a node blob for [BLOB_STRUCTURE_NODE_COST] resources.<br>Node blobs will expand and activate nearby resource and factory blobs."
@@ -105,7 +106,7 @@
 	name = "Produce Factory Blob (ERROR)"
 	desc = "Produces a factory blob for ERROR resources.<br>Factory blobs will produce spores every few seconds."
 
-/atom/movable/screen/blob/factory_blob/Initialize()
+/atom/movable/screen/blob/factory_blob/Initialize(mapload)
 	. = ..()
 	name = "Produce Factory Blob ([BLOB_STRUCTURE_FACTORY_COST])"
 	desc = "Produces a factory blob for [BLOB_STRUCTURE_FACTORY_COST] resources.<br>Factory blobs will produce spores every few seconds."
@@ -130,7 +131,7 @@
 		else
 			name = "[initial(name)] ([BLOB_POWER_REROLL_COST])"
 			desc = "Allows you to choose a new strain from [BLOB_POWER_REROLL_CHOICES] random choices for [BLOB_POWER_REROLL_COST] resources."
-	..()
+	return ..()
 
 /atom/movable/screen/blob/readapt_strain/Click()
 	if(isovermind(usr))
@@ -143,7 +144,7 @@
 	name = "Relocate Core (ERROR)"
 	desc = "Swaps a node and your core for ERROR resources."
 
-/atom/movable/screen/blob/relocate_core/Initialize()
+/atom/movable/screen/blob/relocate_core/Initialize(mapload)
 	. = ..()
 	name = "Relocate Core ([BLOB_POWER_RELOCATE_COST])"
 	desc = "Swaps a node and your core for [BLOB_POWER_RELOCATE_COST] resources."
@@ -162,7 +163,6 @@
 	blobpwrdisplay.icon_state = "block"
 	blobpwrdisplay.screen_loc = ui_health
 	blobpwrdisplay.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	blobpwrdisplay.layer = ABOVE_HUD_LAYER
 	blobpwrdisplay.plane = ABOVE_HUD_PLANE
 	blobpwrdisplay.hud = src
 	infodisplay += blobpwrdisplay

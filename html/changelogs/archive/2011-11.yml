@@ -1,0 +1,43 @@
+2011-11-07:
+  Kor:
+  - unknown: Repair bots (mechs) are now adminspawn only
+  - unknown: Extra loyalty implants are now orderable via cargo bay (60 points for
+      4 implants)
+  - unknown: Changeling regen stasis now takes two full minutes to use, but can be
+      used while dead. Burning and gibbing are the only way to keep them dead now.
+2011-11-16:
+  Petethegoat:
+  - unknown: Security, Engineer, Medical, and Janitor borgs no longer get a choice
+      of skin. This is for purposes of quick recognition, and is the first part of
+      a series of upcoming cyborg updates.
+  Tobba:
+  - unknown: Report any issues with the updated vending machines!
+2011-11-19:
+  Doohl:
+  - unknown: Toggling admin midis will now <font color="red"><b>DISABLE THE CURRENT
+      MIDI OH MY GOSH!</b></font>
+  Kor:
+  - unknown: The PALADIN lawset in the AI upload has been replaced with the corporate
+      lawset
+  Petethegoat:
+  - unknown: Diagonal movement is gone on account of them proving to be a bad idea
+      in practice. A grand experiment nonetheless.
+  Tobba:
+  - unknown: We're looking for feedback on the updated chem dispenser! It no longer
+      dispenses beakers of the reagent, and instead places a variable amount of the
+      reagent into the beaker of your choosing.
+2011-11-22:
+  Doohl:
+  - unknown: The firing range now has a purpose. Go check it out; there's a few surprises!
+2011-11-27:
+  Kor:
+  - unknown: Changeling husks are now borgable again (though not clonable) and genome
+      requirements were lowered
+  - unknown: De-revved revolutionaries had their message clarified a bit. You remember
+      the person who flashed you, and so can out ONE revhead
+  - unknown: Light tubes/bulbs can now be created in the autolathe. Recycle those
+      broken lights!
+2011-11-30:
+  Vinyl Scratch:
+  - unknown: New ambient sounds for the station and AI Sat.
+  - unknown: <b>He's b<i>aaaaaa</i>ck...</b>

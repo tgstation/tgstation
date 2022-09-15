@@ -19,14 +19,14 @@ export const ChameleonCard = (props, context) => {
     ourTrimAccess,
   } = data;
 
-  const parsedAccess = accesses.flatMap(region => {
+  const parsedAccess = accesses.flatMap((region) => {
     const regionName = region.name;
     const regionAccess = region.accesses;
     const parsedRegion = {
       name: regionName,
       accesses: [],
     };
-    parsedRegion.accesses = regionAccess.filter(access => {
+    parsedRegion.accesses = regionAccess.filter((access) => {
       // Snip everything that's part of our trim.
       if (ourTrimAccess.includes(access.ref)) {
         return false;
@@ -45,9 +45,7 @@ export const ChameleonCard = (props, context) => {
   });
 
   return (
-    <Window
-      width={500}
-      height={620}>
+    <Window width={500} height={620}>
       <Window.Content scrollable>
         <AccessList
           accesses={parsedAccess}
@@ -58,10 +56,13 @@ export const ChameleonCard = (props, context) => {
           accessFlags={accessFlags}
           accessFlagNames={accessFlagNames}
           showBasic={!!showBasic}
-          accessMod={(ref, wildcard) => act('mod_access', {
-            access_target: ref,
-            access_wildcard: wildcard,
-          })} />
+          accessMod={(ref, wildcard) =>
+            act('mod_access', {
+              access_target: ref,
+              access_wildcard: wildcard,
+            })
+          }
+        />
       </Window.Content>
     </Window>
   );

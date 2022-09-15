@@ -1,0 +1,117 @@
+2010-10-05:
+  /tg/station ss13 team:
+  - unknown: Fixes to various nonworking cocktails.
+  - unknown: More map and runtime error fixes.
+  - unknown: Nuke operative headsets should be on an unreachable frequency like department
+      headsets.
+  - unknown: 'Another AI Malfunction change:  Now once the AI thinks enough APCs have
+      been hacked, it must press a button to start the timer, which alerts the station
+      to its treachery.'
+  - unknown: Blob reskinned to magma and increased in power.
+  - unknown: The HoS now has an armored greatcoat instead of a regular armor vest.
+  - unknown: Admin logs now show who killswitched a cyborg.
+  - unknown: The roboticist terminal now lets you see which AI a cyborg is linked
+      to.
+  - unknown: Malf AIs are no longer treated as inactive for the purpose of law updates
+      and cyborg sync while hacking APCs.
+  - unknown: Traitor AIs are now affected by Reset/Purge/Asimov modules, except law
+      0.
+  - unknown: AI core construction sprites updated.
+  - unknown: Securitrons removed from the Thunderdome.
+  - unknown: An APC now supplies power to the bomb testing area, and has external
+      cabling to supply it in turn.
+  - unknown: A new variant freeform module has been added to the AI Upload room.
+  - unknown: The changeling's neurotoxic dart has been made more powerful - this will
+      likely be an optional upgrade from a set of choices, akin to wizard spells.
+  - unknown: Some gimmick clothes moved to a different object path.
+  - unknown: <b>The chameleon jumpsuit should now be more useful - it includes job-specific
+      jumpsuits as well as flat colours.</b>
+2010-10-06:
+  /tg/station ss13 team:
+  - unknown: Fixed the Librarian's suit - its worn iconstate wasn't set.
+  - unknown: Fixed some typos.
+  - unknown: Monkey crates are now available from the quartermasters for 20 points.
+  - unknown: Corpse props removed from zlevel 8 as they were causing issues with admin
+      tools and the communications intercept.
+  - unknown: Cleaned up the default config.txt
+  - unknown: Added a readme.txt with installation instructions.
+  - unknown: Changed the ban appeals link to point to our forums for now - this'll
+      be a config file setting soon.
+2010-10-10:
+  /tg/station ss13 team:
+  - unknown: Scrubbers in the area can be controlled by air alarms. Air alarm interface
+      must be unlocked with an ID card (minimum access level - atmospheric technician),
+      usable only by humans and AI. Panic syphon drains the air from affected room
+      (simple syphoning does too, but much slower).
+  - unknown: Sleeper consoles inject soporific and track the amounts of rejuvination
+      chemicals and sleep toxins in occupants bloodstream.
+  - unknown: Flashlights can be used to check if mob is dead, blind or has certain
+      superpower. Aim for the eyes.
+  - unknown: Radiation collectors and collector controls can be moved. Secured\unsecured
+      with a wrench.
+  - unknown: Air sensors report nitrogen and carbon dioxide in air composition(if
+      set to).
+  - unknown: Air Control console in Toxins.
+  - unknown: Additional DNA console in genetics
+  - unknown: Enough equipment to build another singularity engine can be found in
+      engineering secure storage
+  - unknown: Air scrubber, vent and air alarm added to library
+  - unknown: Air alarm added to brig
+  - unknown: Air scrubbers in Toxins turned on, set to filter toxins
+  - unknown: Empty tanks, portable air pumps and similar can be filled with air in
+      Aft Primary Hallway, just connect them to the port. Target pressure is set by
+      Mixed Air Supply console in Atmospherics (defaults to 4000kPa).
+2010-10-13:
+  /tg/station ss13 team:
+  - unknown: Crawling through vents (alien) now takes time. The farther destination
+      vent is, the more time it takes.
+  - unknown: Cryo cell healing ability depends on wound severity. Grave wounds will
+      heal slower. Use proper chemicals to speed up the process.
+  - unknown: 'Added sink to the medbay. '
+  - unknown: "Bugfixes:\n    \t<ul class=\"sec\">\n        \t<li>- Some reagents were\
+      \ not metabolized, remaining in mob indefinitely (this includes Space Cola,\
+      \ Cryoxadone and cocktails Kahlua, Irish Cream and The Manly Dorf).</li>\n \
+      \           <li>- Fixed placement bug with container contents window. Also,\
+      \ utility belt window now doesn't obscure view.</li>\n\t\t</ul>    \n    "
+2010-10-18:
+  /tg/station ss13 team:
+  - unknown: Added virology profession with a cosy lab in northwestern part of medbay.
+  - unknown: Virology related things, like taking blood samples, making vaccines,
+      splashing contagious blood all over the station and so on.
+  - unknown: Added one pathetic disease.
+  - unknown: Virus crates are now available from the quartermasters for 20 points.
+  - unknown: 'The DNA console bug (issue #40) was fixed, but I still made the DNA
+      pod to lock itself while mutating someone.'
+  - unknown: Added icons for unpowered CheMaster and Pandemic computers
+  - unknown: Added some sign decals. The icons were already there, but unused for
+      reasons unknown.
+  - unknown: Some map-related changes.
+2010-10-28:
+  /tg/station ss13 team:
+  - unknown: Sleepers and disposals now require two seconds to climb inside
+  - unknown: Hydroponics crate ordered in QMs doesnt spawn too many items
+  - unknown: Replacement lights crate can be ordered in QM.
+  - unknown: Added space cleaner and hand labeler to Virology.
+  - unknown: Welder fuel tanks now explode when you try to refuel a lit welder.
+  - unknown: Made clown's mask work as a gas mask.
+  - unknown: '9 new cocktails: Irish Coffee, B-52, Margarita, Long Island Iced Tea,
+      Whiskey Soda, Black Russian, Manhattan, Vodka and Tonic, Gin Fizz. Refer to
+      the wiki for the recipes.'
+  - unknown: "Kitchen update:\n    \t<ul class=\"sec\">\n            <li>-New Microwave\
+      \ Recipies: Carrot Cake (3 Flour, 3 egg, 1 milk, 1 Carrot), Soylen Viridians\
+      \ (3 flour, 1 soybeans), Eggplant Parmigania (2 cheese, 1 eggplant), and Jelly\
+      \ Donuts (1 flour, 1 egg, 1 Berry Jam), Regular Cake (3 flour, 3 egg, 1 milk),\
+      \ Cheese Cake (3 flour, 3 egg, 1 milk), Meat Pies (1 meat of any kind, 2 flour),\
+      \ Wing Fang Chu (1 soysauce, 1 xeno meat), and Human and Monkey Kabob (2 human\
+      \ or monkey meat, metal rods). </li>\n            <li>- Ingredients from Processor:\
+      \ Soysauce, Coldsauce, Soylent Green, Berry Jam.</li>\n            <li>- Sink\
+      \ added to kitchen to clean all the inevitable blood stains and as preperation\
+      \ for future cooking changes.</li>\n            <li>- The food processor can't\
+      \ be abused to make tons of food now.</li>\n       \n\t\t</ul> \n    "
+  - unknown: "Multiple tweaks to virology and diseases:\n    \t<ul class=\"sec\">\n\
+      \t    <li>- Added wizarditis disease.</li>\n            <li>- Spaceacillin no\
+      \ longer heals all viruses. </li>\n            <li>- Some diseases must be cured\
+      \ with two or more chemicals simultaneously.</li>\n\t    <li>- New Virology\
+      \ design including an airlock and quarantine chambers.</li>\n\t    <li>- Made\
+      \ vaccine bottles contain 3 portions of vaccine.</li>\n            <li>- Lots\
+      \ of minor bug fixes.</li>\n       \n\t\t</ul> \n \n"

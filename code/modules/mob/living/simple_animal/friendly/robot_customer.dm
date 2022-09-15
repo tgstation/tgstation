@@ -1,11 +1,11 @@
 ///Robot customers
 /mob/living/simple_animal/robot_customer
 	name = "space-tourist bot"
-	maxHealth = 1000 //go fuck yourself
-	health = 1000
+	maxHealth = 150
+	health = 150
 	desc = "I wonder what they'll order..."
 	gender = NEUTER
-	icon = 'icons/mob/tourists.dmi'
+	icon = 'icons/mob/simple/tourists.dmi'
 	icon_state = "amerifat"
 	icon_living = "amerifat"
 	///Override so it uses datum ai
@@ -25,7 +25,8 @@
 /mob/living/simple_animal/robot_customer/Initialize(mapload, datum/customer_data/customer_data = /datum/customer_data/american, datum/venue/attending_venue = SSrestaurant.all_venues[/datum/venue/restaurant])
 	ADD_TRAIT(src, TRAIT_NOMOBSWAP, INNATE_TRAIT) //dont push me bitch
 	ADD_TRAIT(src, TRAIT_NO_TELEPORT, INNATE_TRAIT) //dont teleport me bitch
-	AddComponent(/datum/component/footstep, FOOTSTEP_OBJ_ROBOT, 1, -6, vary = TRUE)
+	ADD_TRAIT(src, TRAIT_STRONG_GRABBER, INNATE_TRAIT) //strong arms bitch
+	AddElement(/datum/element/footstep, FOOTSTEP_OBJ_ROBOT, 1, -6, sound_vary = TRUE)
 	var/datum/customer_data/customer_info = SSrestaurant.all_customers[customer_data]
 	clothes_set = pick(customer_info.clothing_sets)
 	ai_controller = customer_info.ai_controller_used
@@ -33,16 +34,20 @@
 	ai_controller.blackboard[BB_CUSTOMER_CUSTOMERINFO] = customer_info
 	ai_controller.blackboard[BB_CUSTOMER_ATTENDING_VENUE] = attending_venue
 	ai_controller.blackboard[BB_CUSTOMER_PATIENCE] = customer_info.total_patience
-	icon_state = customer_info.base_icon
-	name = "[pick(customer_info.name_prefixes)]-bot ([customer_info.nationality])"
-	color = rgb(rand(150,255), rand(150,255), rand(150,255))
+	icon = customer_info.base_icon
+	icon_state = customer_info.base_icon_state
+	name = "[pick(customer_info.name_prefixes)]-bot"
+	color = rgb(rand(80,255), rand(80,255), rand(80,255))
 	update_icon()
 
 ///Clean up on the mobs seat etc when its deleted (Either by murder or because it left)
 /mob/living/simple_animal/robot_customer/Destroy()
 	var/datum/venue/attending_venue = ai_controller.blackboard[BB_CUSTOMER_ATTENDING_VENUE]
 	attending_venue.current_visitors -= src
-	SSrestaurant.claimed_seats[ai_controller.blackboard[BB_CUSTOMER_MY_SEAT]] = null
+	var/datum/weakref/seat_ref = ai_controller.blackboard[BB_CUSTOMER_MY_SEAT]
+	var/obj/structure/holosign/robot_seat/our_seat = seat_ref?.resolve()
+	if(attending_venue.linked_seats[our_seat])
+		attending_venue.linked_seats[our_seat] = null
 	QDEL_NULL(hud_to_show_on_hover)
 	return ..()
 
@@ -52,14 +57,22 @@
 
 /mob/living/simple_animal/robot_customer/MouseEntered(location, control, params)
 	. = ..()
-	hud_to_show_on_hover?.add_hud_to(usr)
+	hud_to_show_on_hover?.show_to(usr)
 
 /mob/living/simple_animal/robot_customer/MouseExited(location, control, params)
 	. = ..()
-	hud_to_show_on_hover?.remove_hud_from(usr)
+	hud_to_show_on_hover?.hide_from(usr)
 
 /mob/living/simple_animal/robot_customer/update_overlays()
 	. = ..()
+
+	var/datum/customer_data/customer_info = ai_controller.blackboard[BB_CUSTOMER_CUSTOMERINFO]
+
+	var/new_underlays = customer_info.get_underlays(src)
+	if (new_underlays)
+		underlays.Cut()
+		underlays += new_underlays
+
 	var/mutable_appearance/features = mutable_appearance(icon, "[icon_state]_features")
 	features.appearance_flags = RESET_COLOR
 	. += features
@@ -67,8 +80,6 @@
 	var/mutable_appearance/clothes = mutable_appearance(icon, clothes_set)
 	clothes.appearance_flags = RESET_COLOR
 	. += clothes
-
-	var/datum/customer_data/customer_info = ai_controller.blackboard[BB_CUSTOMER_CUSTOMERINFO]
 
 	var/bonus_overlays = customer_info.get_overlays(src)
 	if(bonus_overlays)
@@ -83,5 +94,11 @@
 	. = ..()
 	if(ai_controller.blackboard[BB_CUSTOMER_CURRENT_ORDER])
 		var/datum/venue/attending_venue = ai_controller.blackboard[BB_CUSTOMER_ATTENDING_VENUE]
-		. += "<span class='notice'>Their order was: \"[attending_venue.order_food_line(ai_controller.blackboard[BB_CUSTOMER_CURRENT_ORDER])].\"</span>"
-
+		var/wanted_item = ai_controller.blackboard[BB_CUSTOMER_CURRENT_ORDER]
+		var/order
+		if(istype(wanted_item, /datum/custom_order))
+			var/datum/custom_order/custom_order = wanted_item
+			order = custom_order.get_order_line(attending_venue)
+		else
+			order = attending_venue.order_food_line(wanted_item)
+		. += span_notice("Their order was: \"[order].\"")

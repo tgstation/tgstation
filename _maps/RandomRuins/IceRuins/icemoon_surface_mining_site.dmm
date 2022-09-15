@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/closed/mineral/random/snow,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/nospawn)
 "b" = (
 /turf/closed/wall/mineral/wood/nonmetal,
 /area/ruin/unpowered)
@@ -17,7 +17,7 @@
 /area/ruin/unpowered)
 "d" = (
 /turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/nospawn)
 "e" = (
 /obj/item/clothing/suit/hooded/explorer,
 /obj/item/clothing/mask/gas/explorer,
@@ -37,11 +37,11 @@
 /turf/open/floor/wood,
 /area/ruin/unpowered)
 "h" = (
-/obj/structure/flora/rock/icy,
+/obj/structure/flora/rock/icy/style_random,
 /turf/closed/mineral/random/snow,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/nospawn)
 "j" = (
-/obj/structure/sink/kitchen,
+/obj/structure/sink/kitchen/directional/south,
 /turf/open/floor/wood,
 /area/ruin/unpowered)
 "k" = (
@@ -57,23 +57,19 @@
 /turf/open/floor/wood,
 /area/ruin/unpowered)
 "o" = (
-/obj/item/reagent_containers/food/drinks/beer,
+/obj/item/reagent_containers/cup/glass/bottle/beer,
 /turf/open/floor/wood,
 /area/ruin/unpowered)
 "p" = (
-/obj/machinery/light/broken{
-	dir = 4
-	},
+/obj/machinery/light/broken/directional/east,
 /turf/open/floor/wood,
 /area/ruin/unpowered)
 "q" = (
 /obj/structure/table/wood,
 /obj/item/pen,
-/obj/machinery/light/broken{
-	dir = 8
-	},
+/obj/machinery/light/broken/directional/west,
 /obj/item/paper/crumpled/bloody{
-	info = "help...";
+	default_raw_text = "help...";
 	text = ""
 	},
 /turf/open/floor/wood,
@@ -81,7 +77,7 @@
 "r" = (
 /obj/item/chair/wood,
 /obj/effect/decal/cleanable/blood/splatter,
-/obj/effect/mob_spawn/human/miner/explorer,
+/obj/effect/mob_spawn/corpse/human/miner/explorer,
 /obj/effect/decal/cleanable/blood/drip,
 /turf/open/floor/wood,
 /area/ruin/unpowered)
@@ -103,7 +99,7 @@
 /area/template_noop)
 "Y" = (
 /turf/open/openspace/icemoon/ruins,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/nospawn)
 
 (1,1,1) = {"
 t

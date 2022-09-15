@@ -41,36 +41,38 @@
 	if(!istype(A))
 		return
 	if(loc == summoner)
-		to_chat(src, "<span class='danger'><B>You must be manifested to create bombs!</B></span>")
+		to_chat(src, span_danger("<B>You must be manifested to create bombs!</B>"))
 		return
 	if(isobj(A) && Adjacent(A))
 		if(bomb_cooldown <= world.time && !stat)
-			to_chat(src, "<span class='danger'><B>Success! Bomb armed!</B></span>")
+			to_chat(src, span_danger("<B>Success! Bomb armed!</B>"))
 			bomb_cooldown = world.time + 200
 			RegisterSignal(A, COMSIG_PARENT_EXAMINE, .proc/display_examine)
 			RegisterSignal(A, boom_signals, .proc/kaboom)
 			addtimer(CALLBACK(src, .proc/disable, A), 600, TIMER_UNIQUE|TIMER_OVERRIDE)
 		else
-			to_chat(src, "<span class='danger'><B>Your powers are on cooldown! You must wait 20 seconds between bombs.</B></span>")
+			to_chat(src, span_danger("<B>Your powers are on cooldown! You must wait 20 seconds between bombs.</B>"))
 
 /mob/living/simple_animal/hostile/guardian/bomb/proc/kaboom(atom/source, mob/living/explodee)
+	SIGNAL_HANDLER
 	if(!istype(explodee))
 		return
 	if(explodee == src || explodee == summoner || hasmatchingsummoner(explodee))
 		return
-	to_chat(explodee, "<span class='danger'><B>[source] was boobytrapped!</B></span>")
-	to_chat(src, "<span class='danger'><B>Success! Your trap caught [explodee]</B></span>")
+	to_chat(explodee, span_danger("<B>[source] was boobytrapped!</B>"))
+	to_chat(src, span_danger("<B>Success! Your trap caught [explodee]</B>"))
 	var/turf/T = get_turf(source)
 	playsound(T,'sound/effects/explosion2.ogg', 200, TRUE)
 	new /obj/effect/temp_visual/explosion(T)
-	explodee.ex_act(EXPLODE_HEAVY)
+	EX_ACT(explodee, EXPLODE_HEAVY)
 	UNREGISTER_BOMB_SIGNALS(source)
 
 /mob/living/simple_animal/hostile/guardian/bomb/proc/disable(atom/A)
-	to_chat(src, "<span class='danger'><B>Failure! Your trap didn't catch anyone this time.</B></span>")
+	to_chat(src, span_danger("<B>Failure! Your trap didn't catch anyone this time.</B>"))
 	UNREGISTER_BOMB_SIGNALS(A)
 
 /mob/living/simple_animal/hostile/guardian/bomb/proc/display_examine(datum/source, mob/user, text)
-	text += "<span class='holoparasite'>It glows with a strange <font color=\"[guardiancolor]\">light</font>!</span>"
+	SIGNAL_HANDLER
+	text += span_holoparasite("It glows with a strange <font color=\"[guardiancolor]\">light</font>!")
 
 #undef UNREGISTER_BOMB_SIGNALS

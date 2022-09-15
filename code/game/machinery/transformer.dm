@@ -6,7 +6,9 @@
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "separator-AO1"
 	layer = ABOVE_ALL_MOB_LAYER // Overhead
+	plane = ABOVE_GAME_PLANE
 	density = FALSE
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 5
 	var/transform_dead = 0
 	var/transform_standing = 0
 	var/cooldown_duration = 600 // 1 minute
@@ -16,7 +18,7 @@
 	var/obj/effect/countdown/transformer/countdown
 	var/mob/living/silicon/ai/masterAI
 
-/obj/machinery/transformer/Initialize()
+/obj/machinery/transformer/Initialize(mapload)
 	// On us
 	. = ..()
 	new /obj/machinery/conveyor/auto(locate(x - 1, y, z), WEST)
@@ -55,7 +57,7 @@
 			do_transform(AM)
 
 
-/obj/machinery/transformer/CanAllowThrough(atom/movable/mover, turf/target)
+/obj/machinery/transformer/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	// Allows items to go through,
 	// to stop them from blocking the conveyor belt.
@@ -91,7 +93,7 @@
 	// Sleep for a couple of ticks to allow the human to see the pain
 	sleep(5)
 
-	use_power(5000) // Use a lot of power.
+	use_power(active_power_usage) // Use a lot of power.
 	var/mob/living/silicon/robot/R = H.Robotize()
 	R.cell = new /obj/item/stock_parts/cell/upgraded/plus(R, robot_cell_charge)
 
@@ -100,12 +102,12 @@
 	if(masterAI)
 		R.set_connected_ai(masterAI)
 		R.lawsync()
-		R.lawupdate = 1
+		R.lawupdate = TRUE
 	addtimer(CALLBACK(src, .proc/unlock_new_robot, R), 50)
 
 /obj/machinery/transformer/proc/unlock_new_robot(mob/living/silicon/robot/R)
 	playsound(src.loc, 'sound/machines/ping.ogg', 50, FALSE)
 	sleep(30)
 	if(R)
-		R.SetLockdown(0)
-		R.notify_ai(NEW_BORG)
+		R.SetLockdown(FALSE)
+		R.notify_ai(AI_NOTIFICATION_NEW_BORG)

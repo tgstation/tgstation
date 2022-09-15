@@ -23,12 +23,12 @@
 
 /obj/projectile/hallucination/fire()
 	..()
-	fake_icon = image('icons/obj/guns/projectiles.dmi', src, hal_icon_state, ABOVE_MOB_LAYER)
+	fake_icon = image('icons/obj/weapons/guns/projectiles.dmi', src, hal_icon_state, ABOVE_MOB_LAYER)
 	if(hal_target.client)
 		hal_target.client.images += fake_icon
 
 /obj/projectile/hallucination/Destroy()
-	if(hal_target.client)
+	if(hal_target?.client)
 		hal_target.client.images -= fake_icon
 	QDEL_NULL(fake_icon)
 	return ..()
@@ -48,10 +48,10 @@
 
 /obj/projectile/hallucination/proc/target_on_hit(mob/M)
 	if(M == hal_target)
-		to_chat(hal_target, "<span class='userdanger'>[M] is hit by \a [src] in the chest!</span>")
+		to_chat(hal_target, span_userdanger("[M] is hit by \a [src] in the chest!"))
 		hal_apply_effect()
 	else if(M in view(hal_target))
-		to_chat(hal_target, "<span class='danger'>[M] is hit by \a [src] in the chest!!</span>")
+		to_chat(hal_target, span_danger("[M] is hit by \a [src] in the chest!!"))
 	if(damage_type == BRUTE)
 		var/splatter_dir = dir
 		if(starting)
@@ -128,7 +128,7 @@
 	hal_icon_state = "bullet"
 	hal_fire_sound = "gunshot"
 	hal_hitsound = 'sound/weapons/pierce.ogg'
-	hal_hitsound_wall = "ricochet"
+	hal_hitsound_wall = SFX_RICOCHET
 	hal_impact_effect = "impact_bullet"
 	hal_impact_effect_wall = "impact_bullet"
 	hit_duration = 5
@@ -167,8 +167,8 @@
 
 /obj/projectile/hallucination/taser/hal_apply_effect()
 	hal_target.Paralyze(100)
-	hal_target.stuttering += 20
-	if(hal_target.dna && hal_target.dna.check_mutation(HULK))
+	hal_target.adjust_timed_status_effect(40 SECONDS, /datum/status_effect/speech/stutter)
+	if(hal_target.dna && hal_target.dna.check_mutation(/datum/mutation/human/hulk))
 		hal_target.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ), forced = "hulk")
 	else if((hal_target.status_flags & CANKNOCKDOWN) && !HAS_TRAIT(hal_target, TRAIT_STUNIMMUNE))
 		addtimer(CALLBACK(hal_target, /mob/living/carbon.proc/do_jitter_animation, 20), 5)
@@ -200,7 +200,7 @@
 
 /obj/projectile/hallucination/ebow/hal_apply_effect()
 	hal_target.Paralyze(100)
-	hal_target.stuttering += 5
+	hal_target.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/speech/stutter)
 	hal_target.adjustStaminaLoss(8)
 
 /obj/projectile/hallucination/change

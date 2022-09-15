@@ -11,7 +11,7 @@
 	gender = NEUTER
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	speak_emote = list("roars")
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	health = 250
 	maxHealth = 250
 	damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 1, CLONE = 2, STAMINA = 0, OXY = 1)
@@ -22,24 +22,16 @@
 	attack_sound = 'sound/weapons/punch3.ogg'
 	attack_verb_continuous = "slaps"
 	attack_verb_simple = "slap"
-	food_type = list(/obj/item/food/fries, /obj/item/food/cheesyfries, /obj/item/food/cornchips, /obj/item/food/carrotfries)
-	tame_chance = 30
 
-	var/obj/effect/proc_holder/tentacle_slap/tentacle_slap
-
-/mob/living/simple_animal/hostile/vatbeast/Initialize()
+/mob/living/simple_animal/hostile/vatbeast/Initialize(mapload)
 	. = ..()
-	tentacle_slap = new(src)
-	AddAbility(tentacle_slap)
+	var/datum/action/cooldown/tentacle_slap/slapper = new(src)
+	slapper.Grant(src)
+
 	add_cell_sample()
+	AddComponent(/datum/component/tameable, list(/obj/item/food/fries, /obj/item/food/cheesyfries, /obj/item/food/cornchips, /obj/item/food/carrotfries), tame_chance = 30, bonus_tame_chance = 0, after_tame = CALLBACK(src, .proc/tamed))
 
-/mob/living/simple_animal/hostile/vatbeast/Destroy()
-	. = ..()
-	QDEL_NULL(tentacle_slap)
-
-/mob/living/simple_animal/hostile/vatbeast/tamed()
-	. = ..()
-	can_buckle = TRUE
+/mob/living/simple_animal/hostile/vatbeast/proc/tamed(mob/living/tamer)
 	buckle_lying = 0
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/vatbeast)
 	faction = list("neutral")
@@ -47,55 +39,75 @@
 /mob/living/simple_animal/hostile/vatbeast/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_VATBEAST, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
-///Ability that allows the owner to slap other mobs a short distance away
-/obj/effect/proc_holder/tentacle_slap
+/// Ability that allows the owner to slap other mobs a short distance away.
+/// For vatbeats, this ability is shared with the rider.
+/datum/action/cooldown/tentacle_slap
 	name = "Tentacle slap"
 	desc = "Slap a creature with your tentacles."
-	active = FALSE
-	action_icon = 'icons/mob/actions/actions_animal.dmi'
-	action_icon_state = "tentacle_slap"
-	action_background_icon_state = "bg_revenant"
+	background_icon_state = "bg_revenant"
+	icon_icon = 'icons/mob/actions/actions_animal.dmi'
+	button_icon_state = "tentacle_slap"
+	check_flags = AB_CHECK_CONSCIOUS
+	cooldown_time = 12 SECONDS
+	melee_cooldown_time = 0 SECONDS
+	click_to_activate = TRUE
 	ranged_mousepointer = 'icons/effects/mouse_pointers/supplypod_target.dmi'
-	var/cooldown = 12 SECONDS
-	var/current_cooldown = 0
 
-/obj/effect/proc_holder/tentacle_slap/Click(location, control, params)
+/datum/action/cooldown/tentacle_slap/UpdateButton(atom/movable/screen/movable/action_button/button, status_only, force)
 	. = ..()
-	if(!isliving(usr))
-		return TRUE
-	fire(usr)
-
-/obj/effect/proc_holder/tentacle_slap/fire(mob/living/carbon/user)
-	if(current_cooldown > world.time)
-		to_chat(user, "<span class='notice'>This ability is still on cooldown.</span>")
+	if(!button)
 		return
-	if(active)
-		remove_ranged_ability("<span class='notice'>You stop preparing to tentacle slap.</span>")
-	else
-		add_ranged_ability(user, "<span class='notice'>You prepare your pimp-tentacle. <B>Left-click to slap a target!</B></span>", TRUE)
+	if(!status_only && button.our_hud.mymob != owner)
+		button.name = "Command Tentacle Slap"
+		button.desc = "Command your steed to slap a creature with its tentacles."
 
-/obj/effect/proc_holder/tentacle_slap/InterceptClickOn(mob/living/caller, params, atom/target)
+/datum/action/cooldown/tentacle_slap/set_click_ability(mob/on_who)
 	. = ..()
-	if(.)
+	if(!.)
 		return
 
-	if(owner.stat)
-		remove_ranged_ability()
+	to_chat(on_who, span_notice("You prepare your [on_who == owner ? "":"steed's "]pimp-tentacle. <b>Left-click to slap a target!</b>"))
+
+/datum/action/cooldown/tentacle_slap/unset_click_ability(mob/on_who, refund_cooldown = TRUE)
+	. = ..()
+	if(!.)
 		return
 
-	if(!caller.Adjacent(target))
-		return
+	if(refund_cooldown)
+		to_chat(on_who, span_notice("You stop preparing your [on_who == owner ? "":"steed's "]pimp-tentacle."))
 
-	if(!isliving(target))
-		return
+/datum/action/cooldown/tentacle_slap/InterceptClickOn(mob/living/caller, params, atom/target)
+	// Check if we can slap
+	if(!isliving(target) || target == owner)
+		return FALSE
 
-	var/mob/living/living_target = target
+	if(!owner.Adjacent(target))
+		owner.balloon_alert(caller, "too far!")
+		return FALSE
 
-	owner.visible_message("<span class='warning>[owner] slaps [living_target] with its tentacle!</span>", "<span class='notice'>You slap [living_target] with your tentacle.</span>")
+	// Do the slap
+	. =  ..()
+	if(!.)
+		return FALSE
+
+	// Give feedback from the slap.
+	// Additional feedback for if a rider did it
+	if(caller != owner)
+		to_chat(caller, span_notice("You command [owner] to slap [target] with its tentacles."))
+
+	return TRUE
+
+/datum/action/cooldown/tentacle_slap/Activate(atom/to_slap)
+	var/mob/living/living_to_slap = to_slap
+
+	owner.visible_message(
+		span_warning("[owner] slaps [to_slap] with its tentacle!"),
+		span_notice("You slap [to_slap] with your tentacle."),
+	)
 	playsound(owner, 'sound/effects/assslap.ogg', 90)
-	var/atom/throw_target = get_edge_target_turf(target, ranged_ability_user.dir)
-	living_target.throw_at(throw_target, 6, 4, owner)
-	living_target.apply_damage(30)
-	current_cooldown = world.time + cooldown
-	remove_ranged_ability()
+	var/atom/throw_target = get_edge_target_turf(to_slap, owner.dir)
+	living_to_slap.throw_at(throw_target, 6, 4, owner)
+	living_to_slap.apply_damage(30, BRUTE)
+
+	StartCooldown()
 	return TRUE

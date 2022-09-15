@@ -5,7 +5,6 @@ if(!(Test-Path -Path "C:/byond")){
 }
 
 bash tools/ci/install_node.sh
-bash tgui/bin/tgui --build
+bash tools/build/build -Werror
 
-&"C:/byond/bin/dm.exe" -max_errors 0 tgstation.dme
 exit $LASTEXITCODE

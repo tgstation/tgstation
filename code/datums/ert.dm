@@ -41,6 +41,13 @@
 	mission = "Leave no witnesses."
 	polldesc = "an elite Nanotrasen Strike Team"
 
+/datum/ert/marine
+	leader_role = /datum/antagonist/ert/marine
+	roles = list(/datum/antagonist/ert/marine/security, /datum/antagonist/ert/marine/engineer, /datum/antagonist/ert/marine/medic)
+	rename_team = "Marine Squad"
+	polldesc = "an 'elite' Nanotrasen Strike Team"
+	opendoors = FALSE
+
 /datum/ert/centcom_official
 	code = "Green"
 	teamsize = 1
@@ -94,3 +101,13 @@
 	mission = "Create entertainment for the crew."
 	polldesc = "a Code Rainbow Nanotrasen Emergency Response Party"
 	code = "Rainbow"
+
+/datum/ert/bounty_hunters
+	roles = list(/datum/antagonist/ert/bounty_armor, /datum/antagonist/ert/bounty_hook, /datum/antagonist/ert/bounty_synth)
+	leader_role = /datum/antagonist/ert/bounty_armor
+	teamsize = 3
+	opendoors = FALSE
+	rename_team = "Bounty Hunters"
+	mission = "Assist the station in catching perps, dead or alive."
+	polldesc = "a Centcom-hired bounty hunting gang"
+	random_names = FALSE

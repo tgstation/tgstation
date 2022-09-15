@@ -12,7 +12,7 @@ const pod_grey = {
   color: 'grey',
 };
 
-const useCompact = context => {
+const useCompact = (context) => {
   const [compact, setCompact] = useLocalState(context, 'compact', false);
   const toggleCompact = () => setCompact(!compact);
   return [compact, toggleCompact];
@@ -329,7 +329,7 @@ const EFFECTS_NORMAL = [
   },
 ];
 
-const EFFECTS_HARM =[
+const EFFECTS_HARM = [
   {
     title: 'Explosion Custom',
     icon: 'bomb',
@@ -394,91 +394,98 @@ const EFFECTS_HARM =[
 const EFFECTS_ALL = [
   {
     list: EFFECTS_LOAD,
-    label: "Load From",
-    alt_label: "Load",
-    tooltipPosition: "right",
+    label: 'Load From',
+    alt_label: 'Load',
+    tooltipPosition: 'right',
   },
   {
     list: EFFECTS_NORMAL,
-    label: "Normal Effects",
-    tooltipPosition: "bottom",
+    label: 'Normal Effects',
+    tooltipPosition: 'bottom',
   },
   {
     list: EFFECTS_HARM,
-    label: "Harmful Effects",
-    tooltipPosition: "bottom",
+    label: 'Harmful Effects',
+    tooltipPosition: 'bottom',
   },
 ];
 
 const ViewTabHolder = (props, context) => {
   const { act, data } = useBackend(context);
-  const [
-    tabPageIndex,
-    setTabPageIndex,
-  ] = useLocalState(context, 'tabPageIndex', 1);
+  const [tabPageIndex, setTabPageIndex] = useLocalState(
+    context,
+    'tabPageIndex',
+    1
+  );
   const { mapRef } = data;
   const TabPageComponent = TABPAGES[tabPageIndex].component();
   return (
-    <Section fill title="View" buttons={(
-      <>
-        {(!!data.customDropoff && data.effectReverse===1) && (
+    <Section
+      fill
+      title="View"
+      buttons={
+        <>
+          {!!data.customDropoff && data.effectReverse === 1 && (
+            <Button
+              inline
+              color="transparent"
+              tooltip="View Dropoff Location"
+              icon="arrow-circle-down"
+              selected={2 === tabPageIndex}
+              onClick={() => {
+                setTabPageIndex(2);
+                act('tabSwitch', { tabIndex: 2 });
+              }}
+            />
+          )}
           <Button
             inline
             color="transparent"
-            tooltip="View Dropoff Location"
-            icon="arrow-circle-down"
-            selected={2 === tabPageIndex}
+            tooltip="View Pod"
+            icon="rocket"
+            selected={0 === tabPageIndex}
             onClick={() => {
-              setTabPageIndex(2);
-              act('tabSwitch', { tabIndex: 2 });
-            }} />
-        )}
-        <Button
-          inline
-          color="transparent"
-          tooltip="View Pod"
-          icon="rocket"
-          selected={0 === tabPageIndex}
-          onClick={() => {
-            setTabPageIndex(0);
-            act('tabSwitch', { tabIndex: 0 });
-          }} />
-        <Button
-          inline
-          color="transparent"
-          tooltip="View Source Bay"
-          icon="th"
-          selected={1 === tabPageIndex}
-          onClick={() => {
-            setTabPageIndex(1);
-            act('tabSwitch', { tabIndex: 1 });
-          }} />
-        <span style={pod_grey}>|</span>
-        {(!!data.customDropoff && data.effectReverse===1) && (
+              setTabPageIndex(0);
+              act('tabSwitch', { tabIndex: 0 });
+            }}
+          />
           <Button
             inline
             color="transparent"
-            icon="lightbulb"
-            selected={data.renderLighting}
-            tooltip="Render Lighting for the dropoff view"
+            tooltip="View Source Bay"
+            icon="th"
+            selected={1 === tabPageIndex}
             onClick={() => {
-              act('renderLighting');
+              setTabPageIndex(1);
+              act('tabSwitch', { tabIndex: 1 });
+            }}
+          />
+          <span style={pod_grey}>|</span>
+          {!!data.customDropoff && data.effectReverse === 1 && (
+            <Button
+              inline
+              color="transparent"
+              icon="lightbulb"
+              selected={data.renderLighting}
+              tooltip="Render Lighting for the dropoff view"
+              onClick={() => {
+                act('renderLighting');
+                act('refreshView');
+              }}
+            />
+          )}
+          <Button
+            inline
+            color="transparent"
+            icon="sync-alt"
+            tooltip="Refresh view window in case it breaks"
+            onClick={() => {
+              setTabPageIndex(tabPageIndex);
               act('refreshView');
             }}
           />
-        )}
-        <Button
-          inline
-          color="transparent"
-          icon="sync-alt"
-          tooltip="Refresh view window in case it breaks"
-          onClick={() => {
-            setTabPageIndex(tabPageIndex);
-            act('refreshView');
-          }}
-        />
-      </>
-    )}>
+        </>
+      }>
       <Stack fill vertical>
         <Stack.Item>
           <TabPageComponent />
@@ -490,7 +497,8 @@ const ViewTabHolder = (props, context) => {
               zoom: 0,
               id: mapRef,
               type: 'map',
-            }} />
+            }}
+          />
         </Stack.Item>
       </Stack>
     </Section>
@@ -514,12 +522,14 @@ const TabBay = (props, context) => {
       <Button
         content="Teleport"
         icon="street-view"
-        onClick={() => act('teleportCentcom')} />
+        onClick={() => act('teleportCentcom')}
+      />
       <Button
         content={data.oldArea ? data.oldArea.substring(0, 17) : 'Go Back'}
         disabled={!data.oldArea}
         icon="undo-alt"
-        onClick={() => act('teleportBack')} />
+        onClick={() => act('teleportBack')}
+      />
     </>
   );
 };
@@ -531,12 +541,14 @@ const TabDrop = (props, context) => {
       <Button
         content="Teleport"
         icon="street-view"
-        onClick={() => act('teleportDropoff')} />
+        onClick={() => act('teleportDropoff')}
+      />
       <Button
         content={data.oldArea ? data.oldArea.substring(0, 17) : 'Go Back'}
         disabled={!data.oldArea}
         icon="undo-alt"
-        onClick={() => act('teleportBack')} />
+        onClick={() => act('teleportBack')}
+      />
     </>
   );
 };
@@ -551,53 +563,57 @@ const PodStatusPage = (props, context) => {
           <Fragment key={i}>
             <Stack.Item>
               <Box bold color="label" mb={1}>
-                {(compact === 1 && list.alt_label)
-                  ? list.alt_label
-                  : list.label}:
+                {compact === 1 && list.alt_label ? list.alt_label : list.label}:
               </Box>
               <Box>
                 {list.list.map((effect, j) => (
                   <Fragment key={j}>
                     {effect.divider && (
-                      <span style={pod_grey}><b>|</b></span>
+                      <span style={pod_grey}>
+                        <b>|</b>
+                      </span>
                     )}
-                    {!effect.divider &&(
+                    {!effect.divider && (
                       <Button
-                        tooltip={effect.details
-                          ? (data.effectShrapnel
-                            ? effect.title
-                            +"\n"+data.shrapnelType
-                            +"\nMagnitude:"
-                            +data.shrapnelMagnitude
-                            : effect.title)
-                          : effect.title}
+                        tooltip={
+                          effect.details
+                            ? data.effectShrapnel
+                              ? effect.title +
+                              '\n' +
+                              data.shrapnelType +
+                              '\nMagnitude:' +
+                              data.shrapnelMagnitude
+                              : effect.title
+                            : effect.title
+                        }
                         tooltipPosition={list.tooltipPosition}
-                        tooltipOverrideLong
                         icon={effect.icon}
                         content={effect.content}
-                        selected={effect.soloSelected
-                          ? data[effect.soloSelected]
-                          : (data[effect.selected] === effect.choiceNumber)}
-                        onClick={() => data.payload !== 0
-                          ? act(effect.act, effect.payload)
-                          : act(effect.act)}
+                        selected={
+                          effect.soloSelected
+                            ? data[effect.soloSelected]
+                            : data[effect.selected] === effect.choiceNumber
+                        }
+                        onClick={() =>
+                          data.payload !== 0
+                            ? act(effect.act, effect.payload)
+                            : act(effect.act)
+                        }
                         style={{
                           'vertical-align': 'middle',
-                          'margin-left': (j !== 0 ? '1px' : '0px'),
-                          'margin-right': (
-                            j !== list.list.length-1 ? '1px' : '0px'
-                          ),
+                          'margin-left': j !== 0 ? '1px' : '0px',
+                          'margin-right':
+                            j !== list.list.length - 1 ? '1px' : '0px',
                           'border-radius': '5px',
-                        }} />
+                        }}
+                      />
                     )}
                   </Fragment>
                 ))}
               </Box>
             </Stack.Item>
-            {i < EFFECTS_ALL.length && (
-              <Stack.Divider />
-            )}
-            {i === EFFECTS_ALL.length - 1 &&(
+            {i < EFFECTS_ALL.length && <Stack.Divider />}
+            {i === EFFECTS_ALL.length - 1 && (
               <Stack.Item>
                 <Box color="label" mb={1}>
                   <b>Extras:</b>
@@ -609,37 +625,41 @@ const PodStatusPage = (props, context) => {
                     color="transparent"
                     icon="list-alt"
                     tooltip="Game Panel"
-                    tooltipPosition="top-left"
-                    onClick={() => act('gamePanel')} />
+                    tooltipPosition="top-start"
+                    onClick={() => act('gamePanel')}
+                  />
                   <Button
                     inline
                     m={0}
                     color="transparent"
                     icon="hammer"
                     tooltip="Build Mode"
-                    tooltipPosition="top-left"
-                    onClick={() => act('buildMode')} />
-                  {compact && (
+                    tooltipPosition="top-start"
+                    onClick={() => act('buildMode')}
+                  />
+                  {(compact && (
                     <Button
                       inline
                       m={0}
                       color="transparent"
                       icon="expand"
                       tooltip="Maximize"
-                      tooltipPosition="top-left"
+                      tooltipPosition="top-start"
                       onClick={() => {
                         toggleCompact();
                         act('refreshView');
-                      }} />
-                  ) || (
+                      }}
+                    />
+                  )) || (
                     <Button
                       m={0}
                       inline
                       color="transparent"
                       icon="compress"
                       tooltip="Compact mode"
-                      tooltipPosition="top-left"
-                      onClick={() => toggleCompact()} />
+                      tooltipPosition="top-start"
+                      onClick={() => toggleCompact()}
+                    />
                   )}
                 </Box>
               </Stack.Item>
@@ -653,34 +673,35 @@ const PodStatusPage = (props, context) => {
 
 const ReverseMenu = (props, context) => {
   const { act, data } = useBackend(context);
-  const [
-    tabPageIndex,
-    setTabPageIndex,
-  ] = useLocalState(context, 'tabPageIndex', 1);
+  const [tabPageIndex, setTabPageIndex] = useLocalState(
+    context,
+    'tabPageIndex',
+    1
+  );
   return (
     <Section
       fill
       height="100%"
       title="Reverse"
-      buttons={(
+      buttons={
         <Button
-          icon={data.effectReverse === 1 ? "toggle-on" : "toggle-off"}
+          icon={data.effectReverse === 1 ? 'toggle-on' : 'toggle-off'}
           selected={data.effectReverse}
           tooltip={multiline`
             Doesn't send items.
             Afer landing, returns to
             dropoff turf (or bay
             if none specified).`}
-          tooltipOverrideLong
-          tooltipPosition="top-left"
+          tooltipPosition="top-start"
           onClick={() => {
             act('effectReverse');
             if (tabPageIndex === 2) {
               setTabPageIndex(1);
               act('tabSwitch', { tabIndex: 1 });
             }
-          }} />
-      )}>
+          }}
+        />
+      }>
       {data.effectReverse === 1 && (
         <Stack fill vertical>
           <Stack.Item maxHeight="20px">
@@ -691,9 +712,9 @@ const ReverseMenu = (props, context) => {
               tooltip={multiline`
                 Where reverse pods
                 go after landing`}
-              tooltipOverrideLong
-              tooltipPosition="bottom-right"
-              onClick={() => act('pickDropoffTurf')} />
+              tooltipPosition="bottom-end"
+              onClick={() => act('pickDropoffTurf')}
+            />
             <Button
               inline
               icon="trash"
@@ -703,7 +724,6 @@ const ReverseMenu = (props, context) => {
                 location. Reverse pods will
                 instead dropoff at the
                 selected bay.`}
-              tooltipOverrideLong
               tooltipPosition="bottom"
               onClick={() => {
                 act('clearDropoffTurf');
@@ -711,7 +731,8 @@ const ReverseMenu = (props, context) => {
                   setTabPageIndex(1);
                   act('tabSwitch', { tabIndex: 1 });
                 }
-              }} />
+              }}
+            />
           </Stack.Item>
           <Stack.Divider />
           <Stack.Item maxHeight="20px">
@@ -727,11 +748,12 @@ const ReverseMenu = (props, context) => {
                     : data.reverse_option_list[option.title]
                 }
                 tooltip={option.title}
-                tooltipOverrideLong
-                onClick={() => act('reverseOption', {
-                  reverseOption: option.key
-                    ? option.key
-                    : option.title })} />
+                onClick={() =>
+                  act('reverseOption', {
+                    reverseOption: option.key ? option.key : option.title,
+                  })
+                }
+              />
             ))}
           </Stack.Item>
         </Stack>
@@ -757,13 +779,13 @@ class PresetsPage extends Component {
   }
 
   saveDataToPreset(id, data) {
-    storage.set("podlauncher_preset_" + id, data);
+    storage.set('podlauncher_preset_' + id, data);
   }
 
   async loadDataFromPreset(id, context) {
     const { act } = useBackend(this.context);
-    act("loadDataFromPreset", {
-      payload: await storage.get("podlauncher_preset_" + id),
+    act('loadDataFromPreset', {
+      payload: await storage.get('podlauncher_preset_' + id),
     });
   }
 
@@ -771,17 +793,17 @@ class PresetsPage extends Component {
     let { presets } = this.state;
     if (!presets) {
       presets = [];
-      presets.push("hi!");
+      presets.push('hi!');
     }
     const id = createUuid();
     const thing = { id, title: presetName, hue };
     presets.push(thing);
-    storage.set("podlauncher_presetlist", presets);
+    storage.set('podlauncher_presetlist', presets);
     this.saveDataToPreset(id, data);
   }
 
   async getPresets() {
-    let thing = await storage.get("podlauncher_presetlist");
+    let thing = await storage.get('podlauncher_presetlist');
     if (thing === undefined) {
       thing = [];
     }
@@ -793,35 +815,44 @@ class PresetsPage extends Component {
     for (let i = 0; i < presets.length; i++) {
       if (presets[i].id === deleteID) {
         presets.splice(i, 1);
+        break;
       }
     }
-    storage.set("podlauncher_presetlist", presets);
+    storage.set('podlauncher_presetlist', presets);
   }
   render() {
     const { presets } = this.state;
     const { act, data } = useBackend(this.context);
-    const [
-      presetIndex,
-      setSelectedPreset,
-    ] = useLocalState(this.context, 'presetIndex', 0);
-    const [
-      settingName,
-      setEditingNameStatus,
-    ] = useLocalState(this.context, 'settingName', 0);
-    const [newNameText, setText] = useLocalState(this.context, 'newNameText', "");
+    const [presetIndex, setSelectedPreset] = useLocalState(
+      this.context,
+      'presetIndex',
+      0
+    );
+    const [settingName, setEditingNameStatus] = useLocalState(
+      this.context,
+      'settingName',
+      0
+    );
+    const [newNameText, setText] = useLocalState(
+      this.context,
+      'newNameText',
+      ''
+    );
     const [hue, setHue] = useLocalState(this.context, 'hue', 0);
     return (
-      <Section scrollable
+      <Section
+        scrollable
         fill
         title="Presets"
-        buttons={(
+        buttons={
           <>
             {settingName === 0 && (
               <Button
                 color="transparent"
                 icon="plus"
                 tooltip="New Preset"
-                onClick={() => setEditingNameStatus(1)} />
+                onClick={() => setEditingNameStatus(1)}
+              />
             )}
             <Button
               inline
@@ -829,9 +860,9 @@ class PresetsPage extends Component {
               content=""
               icon="download"
               tooltip="Saves preset"
-              tooltipOverrideLong
               tooltipPosition="bottom"
-              onClick={() => this.saveDataToPreset(presetIndex, data)} />
+              onClick={() => this.saveDataToPreset(presetIndex, data)}
+            />
             <Button
               inline
               color="transparent"
@@ -840,16 +871,18 @@ class PresetsPage extends Component {
               tooltip="Loads preset"
               onClick={() => {
                 this.loadDataFromPreset(presetIndex);
-              }} />
+              }}
+            />
             <Button
               inline
               color="transparent"
               icon="trash"
               tooltip="Deletes the selected preset"
-              tooltipPosition="bottom-left"
-              onClick={() => this.deletePreset(presetIndex)} />
+              tooltipPosition="bottom-start"
+              onClick={() => this.deletePreset(presetIndex)}
+            />
           </>
-        )}>
+        }>
         {settingName === 1 && (
           <>
             <Button
@@ -860,15 +893,17 @@ class PresetsPage extends Component {
               onClick={() => {
                 this.newPreset(newNameText, hue, data);
                 setEditingNameStatus(0);
-              }} />
+              }}
+            />
             <Button
               inline
               icon="window-close"
               tooltip="Cancel"
               onClick={() => {
-                setText("");
+                setText('');
                 setEditingNameStatus(0);
-              }} />
+              }}
+            />
             <span color="label"> Hue: </span>
             <NumberInput
               inline
@@ -879,34 +914,44 @@ class PresetsPage extends Component {
               value={hue}
               minValue={0}
               maxValue={360}
-              onChange={(e, value) => setHue(value)} />
+              onChange={(e, value) => setHue(value)}
+            />
             <Input
               inline
               autofocus
               placeholder="Preset Name"
-              onChange={(e, value) => setText(value)} />
+              onChange={(e, value) => setText(value)}
+            />
             <Divider horizontal />
           </>
         )}
         {(!presets || presets.length === 0) && (
           <span style={pod_grey}>
-            Click [+] to define a new preset.
-            They are persistent across rounds/servers!
+            Click [+] to define a new preset. They are persistent across
+            rounds/servers!
           </span>
         )}
-        {presets ? presets.map((preset, i) => (
-          <Button
-            key={i}
-            width="100%"
-            backgroundColor={`hsl(${preset.hue}, 50%, 50%)`}
-            onClick={() => setSelectedPreset(preset.id)}
-            content={preset.title}
-            style={presetIndex === preset.id ? {
-              'border-width': '1px',
-              'border-style': 'solid',
-              'border-color': `hsl(${preset.hue}, 80%, 80%)`,
-            } : ''} />
-        )) : ""}
+        {presets
+          ? presets.map((preset, i) => (
+            <Button
+              key={i}
+              width="100%"
+              backgroundColor={`hsl(${preset.hue}, 50%, 50%)`}
+              onClick={() => setSelectedPreset(preset.id)}
+              onDblClick={() => this.loadDataFromPreset(preset.id)}
+              content={preset.title}
+              style={
+                presetIndex === preset.id
+                  ? {
+                    'border-width': '1px',
+                    'border-style': 'solid',
+                    'border-color': `hsl(${preset.hue}, 80%, 80%)`,
+                  }
+                  : ''
+              }
+            />
+          ))
+          : ''}
         <span style={pod_grey}>
           <br />
           <br />
@@ -927,17 +972,13 @@ const LaunchPage = (props, context) => {
       tooltip={multiline`
         You should know what the
         Codex Astartes says about this`}
-      tooltipOverrideLong
       selected={data.giveLauncher}
       tooltipPosition="top"
-      content={(
-        <Box
-          bold
-          fontSize="1.4em"
-          lineHeight={compact ? 1.5 : 3}>
+      content={
+        <Box bold fontSize="1.4em" lineHeight={compact ? 1.5 : 3}>
           LAUNCH
         </Box>
-      )}
+      }
       onClick={() => act('giveLauncher')}
     />
   );
@@ -950,7 +991,7 @@ const StylePage = (props, context) => {
       fill
       scrollable
       title="Style"
-      buttons={(
+      buttons={
         <Button
           content="Name"
           color="transparent"
@@ -959,18 +1000,23 @@ const StylePage = (props, context) => {
           tooltip={multiline`
             Edit pod's
             name/desc.`}
-          tooltipPosition="bottom-left"
-          onClick={() => act('effectName')} />
-      )}>
+          tooltipPosition="bottom-start"
+          onClick={() => act('effectName')}
+        />
+      }>
       {STYLES.map((page, i) => (
         <Button
           key={i}
           width="45px"
           height="45px"
           tooltipPosition={
-            i >= STYLES.length-2
-              ? (i%2===1 ? "top-left" : "top-right")
-              : (i%2===1 ? "bottom-left" : "bottom-right")
+            i >= STYLES.length - 2
+              ? i % 2 === 1
+                ? 'top-start'
+                : 'top-end'
+              : i % 2 === 1
+                ? 'bottom-start'
+                : 'bottom-end'
           }
           tooltip={page.title}
           style={{
@@ -978,13 +1024,15 @@ const StylePage = (props, context) => {
             'margin-right': '5px',
             'border-radius': '20px',
           }}
-          selected={data.styleChoice-1 === i}
+          selected={data.styleChoice - 1 === i}
           onClick={() => act('setStyle', { style: i })}>
           <Box
-            className={classes(['supplypods64x64', 'pod_asset'+(i+1)])}
+            className={classes(['supplypods64x64', 'pod_asset' + (i + 1)])}
             style={{
-              'transform': 'rotate(45deg) translate(-25%,-10%)', 'pointer-events': 'none',
-            }} />
+              'transform': 'rotate(45deg) translate(-25%,-10%)',
+              'pointer-events': 'none',
+            }}
+          />
         </Button>
       ))}
     </Section>
@@ -998,7 +1046,7 @@ const Bays = (props, context) => {
     <Section
       fill
       title="Bay"
-      buttons={(
+      buttons={
         <>
           <Button
             icon="trash"
@@ -1006,9 +1054,9 @@ const Bays = (props, context) => {
             tooltip={multiline`
               Clears everything
               from the selected bay`}
-            tooltipOverrideLong
-            tooltipPosition="bottom-right"
-            onClick={() => act('clearBay')} />
+            tooltipPosition="bottom-end"
+            onClick={() => act('clearBay')}
+          />
           <Button
             icon="question"
             color="transparent"
@@ -1020,17 +1068,18 @@ const Bays = (props, context) => {
               in these areas according
               to the "Load from Bay"
               options at the top left.`}
-            tooltipOverrideLong
-            tooltipPosition="bottom-right" />
+            tooltipPosition="bottom-end"
+          />
         </>
-      )}>
+      }>
       {BAYS.map((bay, i) => (
         <Button
           key={i}
           content={bay.title}
-          tooltipPosition={"bottom-right"}
-          selected={data.bayNumber === ""+(i+1)}
-          onClick={() => act('switchBay', { bayNumber: (""+(i+1)) })} />
+          tooltipPosition="bottom-end"
+          selected={data.bayNumber === '' + (i + 1)}
+          onClick={() => act('switchBay', { bayNumber: '' + (i + 1) })}
+        />
       ))}
     </Section>
   );
@@ -1042,7 +1091,7 @@ const Timing = (props, context) => {
     <Section
       fill
       title="Time"
-      buttons={(
+      buttons={
         <>
           <Button
             icon="undo"
@@ -1050,11 +1099,11 @@ const Timing = (props, context) => {
             tooltip={multiline`
             Reset all pod
             timings/delays`}
-            tooltipOverrideLong
-            tooltipPosition="bottom-right"
-            onClick={() => act('resetTiming')} />
+            tooltipPosition="bottom-end"
+            onClick={() => act('resetTiming')}
+          />
           <Button
-            icon={data.custom_rev_delay === 1 ? "toggle-on" : "toggle-off"}
+            icon={data.custom_rev_delay === 1 ? 'toggle-on' : 'toggle-off'}
             selected={data.custom_rev_delay}
             disabled={!data.effectReverse}
             color="transparent"
@@ -1063,58 +1112,55 @@ const Timing = (props, context) => {
             Note: Top set is
             normal delays, bottom set
             is reversing pod's delays`}
-            tooltipOverrideLong
-            tooltipPosition="bottom-right"
-            onClick={() => act('toggleRevDelays')} />
-        </>
-      )}>
-      <DelayHelper
-        delay_list={DELAYS}
-      />
-      {data.custom_rev_delay && (
-        <>
-          <Divider horizontal />
-          <DelayHelper
-            delay_list={REV_DELAYS}
-            reverse
+            tooltipPosition="bottom-end"
+            onClick={() => act('toggleRevDelays')}
           />
         </>
-      )||""}
+      }>
+      <DelayHelper delay_list={DELAYS} />
+      {(data.custom_rev_delay && (
+        <>
+          <Divider horizontal />
+          <DelayHelper delay_list={REV_DELAYS} reverse />
+        </>
+      )) ||
+        ''}
     </Section>
   );
 };
 
 const DelayHelper = (props, context) => {
   const { act, data } = useBackend(context);
-  const {
-    delay_list,
-    reverse = false,
-  } = props;
+  const { delay_list, reverse = false } = props;
   return (
     <LabeledControls wrap>
       {delay_list.map((delay, i) => (
         <LabeledControls.Item
           key={i}
-          label={data.custom_rev_delay ? "" : delay.title}>
+          label={data.custom_rev_delay ? '' : delay.title}>
           <Knob
             inline
             step={0.02}
             size={data.custom_rev_delay ? 0.75 : 1}
-            value={(reverse ? data.rev_delays[i+1] : data.delays[i+1]) / 10}
+            value={(reverse ? data.rev_delays[i + 1] : data.delays[i + 1]) / 10}
             unclamped
             minValue={0}
-            unit={"s"}
-            format={value => toFixed(value, 2)}
+            unit={'s'}
+            format={(value) => toFixed(value, 2)}
             maxValue={10}
-            color={((reverse ? data.rev_delays[i+1] : data.delays[i+1]) / 10)
-              > 10 ? "orange" : "default"}
+            color={
+              (reverse ? data.rev_delays[i + 1] : data.delays[i + 1]) / 10 > 10
+                ? 'orange'
+                : 'default'
+            }
             onDrag={(e, value) => {
               act('editTiming', {
-                timer: ""+(i + 1),
+                timer: '' + (i + 1),
                 value: Math.max(value, 0),
                 reverse: reverse,
               });
-            }} />
+            }}
+          />
         </LabeledControls.Item>
       ))}
     </LabeledControls>
@@ -1124,26 +1170,30 @@ const DelayHelper = (props, context) => {
 const Sounds = (props, context) => {
   const { act, data } = useBackend(context);
   return (
-    <Section fill title="Sounds"
-      buttons={(
+    <Section
+      fill
+      title="Sounds"
+      buttons={
         <Button
           icon="volume-up"
           color="transparent"
           selected={data.soundVolume !== data.defaultSoundVolume}
-          tooltip={multiline`
-            Sound Volume:` + data.soundVolume}
-          tooltipOverrideLong
-          onClick={() => act('soundVolume')} />
-      )}>
+          tooltip={
+            multiline`
+            Sound Volume:` + data.soundVolume
+          }
+          onClick={() => act('soundVolume')}
+        />
+      }>
       {SOUNDS.map((sound, i) => (
         <Button
           key={i}
           content={sound.title}
           tooltip={sound.tooltip}
-          tooltipPosition="top-right"
-          tooltipOverrideLong
+          tooltipPosition="top-end"
           selected={data[sound.act]}
-          onClick={() => act(sound.act)} />
+          onClick={() => act(sound.act)}
+        />
       ))}
     </Section>
   );

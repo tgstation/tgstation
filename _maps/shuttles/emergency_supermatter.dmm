@@ -7,7 +7,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "ad" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ae" = (
@@ -34,9 +34,7 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "al" = (
-/obj/machinery/shower{
-	dir = 8
-	},
+/obj/machinery/shower/directional/west,
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "am" = (
@@ -62,9 +60,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ap" = (
-/obj/machinery/shower{
-	dir = 4
-	},
+/obj/machinery/shower/directional/east,
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "ar" = (
@@ -109,7 +105,7 @@
 /area/shuttle/escape)
 "aD" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/firstaid/toxin,
+/obj/item/storage/medkit/toxin,
 /obj/item/crowbar/red,
 /obj/item/storage/box/snappops{
 	pixel_x = 4;
@@ -135,10 +131,10 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "aL" = (
-/obj/machinery/door/airlock/external{
-	name = "Emergency Launch Catwalk";
-	req_access_txt = "10;13"
+/obj/machinery/door/airlock/external/ruin{
+	name = "Emergency Launch Catwalk"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "aM" = (
@@ -268,9 +264,7 @@
 	anchored = 1
 	},
 /obj/item/clothing/glasses/meson/engine,
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "bj" = (
@@ -278,27 +272,21 @@
 	anchored = 1
 	},
 /obj/item/clothing/glasses/meson/engine,
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "bk" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bl" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "hD" = (

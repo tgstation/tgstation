@@ -11,7 +11,7 @@
 	icon_state = "gaussphase"
 	damage = 20
 	armour_penetration = 70
-	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
+	projectile_phasing =  PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
 
 // 7.62 (Nagant Rifle)
 
@@ -22,7 +22,7 @@
 	wound_bonus = -45
 	wound_falloff_tile = 0
 
-/obj/projectile/bullet/a762_enchanted
+/obj/projectile/bullet/a762/enchanted
 	name = "enchanted 7.62 bullet"
 	damage = 20
 	stamina = 80

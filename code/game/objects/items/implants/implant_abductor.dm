@@ -3,7 +3,6 @@
 	desc = "Returns you to the mothership."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "implant"
-	activated = 1
 	var/obj/machinery/abductor/pad/home
 	var/cooldown = 60 SECONDS
 	var/on_cooldown
@@ -11,7 +10,7 @@
 /obj/item/implant/abductor/activate()
 	. = ..()
 	if(on_cooldown)
-		to_chat(imp_in, "<span class='warning'>You must wait [timeleft(on_cooldown)*0.1] seconds to use [src] again!</span>")
+		to_chat(imp_in, span_warning("You must wait [timeleft(on_cooldown)*0.1] seconds to use [src] again!"))
 		return
 
 	home.Retrieve(imp_in,1)

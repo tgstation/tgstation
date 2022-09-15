@@ -1,19 +1,11 @@
-/*
-//////////////////////////////////////
-Polyvitiligo
-
-	Noticeable.
-	Increases resistance.
-	Increases stage speed slightly.
-	Increases transmission.
-	Critical Level.
-
-BONUS
-	Makes the mob gain a random crayon powder colorful reagent.
-
-//////////////////////////////////////
+/*Polyvitiligo
+ * Slight reduction to stealth
+ * Greatly increases resistance
+ * Slightly increases stage speed
+ * Increases transmissibility
+ * Critical level
+ * Bonus: Makes the mob gain a random crayon powder colorful reagent.
 */
-
 /datum/symptom/polyvitiligo
 	name = "Polyvitiligo"
 	desc = "The virus replaces the melanin in the skin with reactive pigment."
@@ -39,4 +31,4 @@ BONUS
 				M.reagents.add_reagent(color, 5)
 		else
 			if (prob(50)) // spam
-				M.visible_message("<span class='warning'>[M] looks rather vibrant...</span>", "<span class='notice'>The colors, man, the colors...</span>")
+				M.visible_message(span_warning("[M] looks rather vibrant..."), span_notice("The colors, man, the colors..."))

@@ -6,11 +6,12 @@
 		var/typename = "[type]"
 		var/static/list/TYPES_SHORTCUTS = list(
 			/obj/effect/decal/cleanable = "CLEANABLE",
+			/obj/item/bodypart = "BODYPART",
 			/obj/item/radio/headset = "HEADSET",
 			/obj/item/clothing/head/helmet/space = "SPESSHELMET",
 			/obj/item/book/manual = "MANUAL",
-			/obj/item/reagent_containers/food/drinks = "DRINK", //longest paths comes first
-			/obj/item/reagent_containers/food = "FOOD",
+			/obj/item/reagent_containers/cup/glass = "DRINK", //longest paths comes first
+			/obj/item/food = "FOOD",
 			/obj/item/reagent_containers = "REAGENT_CONTAINERS",
 			/obj/machinery/atmospherics = "ATMOS_MECH",
 			/obj/machinery/portable_atmospherics = "PORT_ATMOS",
@@ -46,7 +47,7 @@
 /proc/get_fancy_list_of_datum_types()
 	var/static/list/pre_generated_list
 	if (!pre_generated_list) //init
-		pre_generated_list = make_types_fancy(sortList(typesof(/datum) - typesof(/atom)))
+		pre_generated_list = make_types_fancy(sort_list(typesof(/datum) - typesof(/atom)))
 	return pre_generated_list
 
 
@@ -63,3 +64,6 @@
 		if(findtext("[key]", filter, -end_len) || findtext("[value]", filter, -end_len))
 			matches[key] = value
 	return matches
+
+/proc/return_typenames(type)
+	return splittext("[type]", "/")

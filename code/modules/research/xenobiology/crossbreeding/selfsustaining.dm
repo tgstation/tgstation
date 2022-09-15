@@ -15,10 +15,10 @@ Self-sustaining extracts:
 	var/effect_desc = "A self-sustaining slime extract. When used, lets you choose which reaction you want."
 
 //Just divides into the actual item.
-/obj/item/slimecross/selfsustaining/Initialize()
+/obj/item/slimecross/selfsustaining/Initialize(mapload)
 	..()
-	visible_message("<span class='warning'>The [src] shudders, and splits into four smaller extracts.</span>")
-	for(var/i = 0, i < 4, i++)
+	visible_message(span_warning("The [src] shudders, and splits into four smaller extracts."))
+	for(var/i in 1 to 4)
 		var/obj/item/autoslime/A = new /obj/item/autoslime(src.loc)
 		var/obj/item/slime_extract/X = new extract_type(A)
 		A.extract = X
@@ -28,11 +28,13 @@ Self-sustaining extracts:
 		A.name = "self-sustaining " + colour + " extract"
 	return INITIALIZE_HINT_QDEL
 
-/obj/item/autoslime/Initialize()
+/obj/item/autoslime/Initialize(mapload)
 	return ..()
 
 /obj/item/autoslime/attack_self(mob/user)
-	var/reagentselect = input(user, "Choose the reagent the extract will produce.", "Self-sustaining Reaction") as null|anything in sortList(extract.activate_reagents, /proc/cmp_typepaths_asc)
+	var/reagentselect = tgui_input_list(user, "Reagent the extract will produce.", "Self-sustaining Reaction", sort_list(extract.activate_reagents, /proc/cmp_typepaths_asc))
+	if(isnull(reagentselect))
+		return
 	var/amount = 5
 	var/secondary
 
@@ -56,7 +58,7 @@ Self-sustaining extracts:
 /obj/item/autoslime/examine(mob/user)
 	. = ..()
 	if(effect_desc)
-		. += "<span class='notice'>[effect_desc]</span>"
+		. += span_notice("[effect_desc]")
 
 //Different types.
 

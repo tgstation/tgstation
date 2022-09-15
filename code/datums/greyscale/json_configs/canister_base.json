@@ -1,0 +1,20 @@
+{
+	"": [
+		{
+			"type": "icon_state",
+			"icon_state": "base",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "add_shader",
+			"blend_mode": "add"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "multi_shader",
+			"blend_mode": "multiply"
+		}
+	]
+}

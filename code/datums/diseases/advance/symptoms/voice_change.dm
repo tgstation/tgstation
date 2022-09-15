@@ -1,22 +1,13 @@
-/*
-//////////////////////////////////////
-
-Voice Change
-
-	Noticeable.
-	Lowers resistance.
-	Decreases stage speed.
-	Increased transmittable.
-	Fatal Level.
-
-Bonus
-	Changes the voice of the affected mob. Causing confusion in communication.
-
-//////////////////////////////////////
+/*Voice Change
+ * Slight stealth reduction
+ * Reduces resistance
+ * Reduces stage speed
+ * Increases transmissibility
+ * Fatal level
+ * Bonus: Changes the voice of the affected mob. Causing confusion in communication.
 */
 
 /datum/symptom/voice_change
-
 	name = "Voice Change"
 	desc = "The virus alters the pitch and tone of the host's vocal cords, changing how their voice sounds."
 	stealth = -1
@@ -57,7 +48,7 @@ Bonus
 	switch(A.stage)
 		if(1, 2, 3, 4)
 			if(prob(base_message_chance) && !suppress_warning)
-				to_chat(M, "<span class='warning'>[pick("Your throat hurts.", "You clear your throat.")]</span>")
+				to_chat(M, span_warning("[pick("Your throat hurts.", "You clear your throat.")]"))
 		else
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M

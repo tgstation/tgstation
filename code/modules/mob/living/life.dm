@@ -12,6 +12,8 @@
 /mob/living/proc/Life(delta_time = SSMOBS_DT, times_fired)
 	set waitfor = FALSE
 
+	SEND_SIGNAL(src, COMSIG_LIVING_LIFE, delta_time, times_fired)
+
 	if (client)
 		var/turf/T = get_turf(src)
 		if(!T)
@@ -19,7 +21,7 @@
 			var/msg = "[ADMIN_LOOKUPFLW(src)] was found to have no .loc with an attached client, if the cause is unknown it would be wise to ask how this was accomplished."
 			message_admins(msg)
 			send2tgs_adminless_only("Mob", msg, R_ADMIN)
-			log_game("[key_name(src)] was found to have no .loc with an attached client.")
+			src.log_message("was found to have no .loc with an attached client.", LOG_GAME)
 
 		// This is a temporary error tracker to make sure we've caught everything
 		else if (registered_z != T.z)
@@ -41,7 +43,7 @@
 
 		if(stat != DEAD)
 			//Mutations and radiation
-			handle_mutations_and_radiation(delta_time, times_fired)
+			handle_mutations(delta_time, times_fired)
 
 		if(stat != DEAD)
 			//Breathing, if applicable
@@ -69,8 +71,6 @@
 			handle_traits(delta_time, times_fired) // eye, ear, brain damages
 			handle_status_effects(delta_time, times_fired) //all special effects, stun, knockdown, jitteryness, hallucination, sleeping, etc
 
-	handle_fire(delta_time, times_fired)
-
 	if(machine)
 		machine.check_eye(src)
 
@@ -78,10 +78,10 @@
 		return 1
 
 /mob/living/proc/handle_breathing(delta_time, times_fired)
+	SEND_SIGNAL(src, COMSIG_LIVING_HANDLE_BREATHING, delta_time, times_fired)
 	return
 
-/mob/living/proc/handle_mutations_and_radiation(delta_time, times_fired)
-	radiation = 0 //so radiation don't accumulate in simple animals
+/mob/living/proc/handle_mutations(delta_time, times_fired)
 	return
 
 /mob/living/proc/handle_diseases(delta_time, times_fired)
@@ -98,28 +98,15 @@
 	var/loc_temp = get_temperature(environment)
 	var/temp_delta = loc_temp - bodytemperature
 
+	if(ismovable(loc))
+		var/atom/movable/occupied_space = loc
+		temp_delta *= (1 - occupied_space.contents_thermal_insulation)
+
 	if(temp_delta < 0) // it is cold here
 		if(!on_fire) // do not reduce body temp when on fire
 			adjust_bodytemperature(max(max(temp_delta / BODYTEMP_DIVISOR, BODYTEMP_COOLING_MAX) * delta_time, temp_delta))
 	else // this is a hot place
 		adjust_bodytemperature(min(min(temp_delta / BODYTEMP_DIVISOR, BODYTEMP_HEATING_MAX) * delta_time, temp_delta))
-
-/mob/living/proc/handle_fire(delta_time, times_fired)
-	if(fire_stacks < 0) //If we've doused ourselves in water to avoid fire, dry off slowly
-		set_fire_stacks(min(0, fire_stacks + (0.5 * delta_time))) //So we dry ourselves back to default, nonflammable.
-	if(!on_fire)
-		return TRUE //the mob is no longer on fire, no need to do the rest.
-	if(fire_stacks > 0)
-		adjust_fire_stacks(-0.05 * delta_time) //the fire is slowly consumed
-	else
-		extinguish_mob()
-		return TRUE //mob was put out, on_fire = FALSE via extinguish_mob(), no need to update everything down the chain.
-	var/datum/gas_mixture/G = loc.return_air() // Check if we're standing in an oxygenless environment
-	if(!G.gases[/datum/gas/oxygen] || G.gases[/datum/gas/oxygen][MOLES] < 1)
-		extinguish_mob() //If there's no oxygen in the tile we're on, put out the fire
-		return TRUE
-	var/turf/location = get_turf(src)
-	location.hotspot_expose(700, 25 * delta_time, TRUE)
 
 /**
  * Get the fullness of the mob
@@ -150,7 +137,15 @@
 /mob/living/proc/has_reagent(reagent, amount = -1, needs_metabolizing = FALSE)
 	return reagents.has_reagent(reagent, amount, needs_metabolizing)
 
-//this updates all special effects: knockdown, druggy, stuttering, etc..
+/*
+ * this updates some effects: mostly old stuff such as drunkness, druggy, etc.
+ * that should be converted to status effect datums one day.
+ * ^ March 4th, 2021
+ * Stuttering and slurring has been removed,
+ * but carbons still have a ton of effects that need to be moved over
+ * Good luck reader
+ * ^ April 6th, 2022
+ */
 /mob/living/proc/handle_status_effects(delta_time, times_fired)
 	return
 
@@ -168,12 +163,14 @@
 	return
 
 /mob/living/proc/handle_gravity(delta_time, times_fired)
-	var/gravity = mob_has_gravity()
+	var/gravity = has_gravity()
 	update_gravity(gravity)
 
 	if(gravity > STANDARD_GRAVITY)
 		gravity_animate()
 		handle_high_gravity(gravity, delta_time, times_fired)
+	else if(get_filter("gravity"))
+		remove_filter("gravity")
 
 /mob/living/proc/gravity_animate()
 	if(!get_filter("gravity"))

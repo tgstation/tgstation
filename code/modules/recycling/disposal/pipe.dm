@@ -6,12 +6,11 @@
 	icon = 'icons/obj/atmospherics/pipes/disposal.dmi'
 	anchored = TRUE
 	density = FALSE
-	obj_flags = CAN_BE_HIT | ON_BLUEPRINTS
+	obj_flags = CAN_BE_HIT
 	dir = NONE // dir will contain dominant direction for junction pipes
 	max_integrity = 200
-	armor = list(MELEE = 25, BULLET = 10, LASER = 10, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 90, ACID = 30)
+	armor = list(MELEE = 25, BULLET = 10, LASER = 10, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 90, ACID = 30)
 	layer = DISPOSAL_PIPE_LAYER // slightly lower than wires and other pipes
-	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
 	damage_deflection = 10
 	var/dpdir = NONE // bitmask of pipe directions
 	var/initialize_dirs = NONE // bitflags of pipe directions added on init, see \code\_DEFINES\pipe_construction.dm
@@ -43,6 +42,9 @@
 			dpdir |= turn(dir, 180)
 
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
+	if(isturf(loc))
+		var/turf/turf_loc = loc
+		turf_loc.add_blueprints_preround(src)
 
 // pipe is deleted
 // ensure if holder is present, it is expelled
@@ -51,7 +53,7 @@
 	if(H)
 		H.active = FALSE
 		expel(H, get_turf(src), 0)
-	QDEL_NULL(stored)
+	stored = null //The qdel is handled in expel()
 	return ..()
 
 /obj/structure/disposalpipe/handle_atom_del(atom/A)
@@ -93,7 +95,7 @@
 	var/eject_range = 5
 	var/turf/open/floor/floorturf
 
-	if(isfloorturf(T) && T.intact) //intact floor, pop the tile
+	if(isfloorturf(T) && T.overfloor_placed) // pop the tile if present
 		floorturf = T
 		if(floorturf.floor_tile)
 			new floorturf.floor_tile(T)
@@ -119,8 +121,7 @@
 // pipe affected by explosion
 /obj/structure/disposalpipe/contents_explosion(severity, target)
 	var/obj/structure/disposalholder/H = locate() in src
-	if(H)
-		H.contents_explosion(severity, target)
+	H?.contents_explosion(severity, target)
 
 
 //welding tool: unfasten and convert to obj/disposalconstruct
@@ -132,10 +133,10 @@
 	if(!I.tool_start_check(user, amount=0))
 		return TRUE
 
-	to_chat(user, "<span class='notice'>You start slicing [src]...</span>")
+	to_chat(user, span_notice("You start slicing [src]..."))
 	if(I.use_tool(src, user, 30, volume=50))
 		deconstruct()
-		to_chat(user, "<span class='notice'>You slice [src].</span>")
+		to_chat(user, span_notice("You slice [src]."))
 	return TRUE
 
 //checks if something is blocking the deconstruction (e.g. trunk with a bin still linked to it)
@@ -151,6 +152,9 @@
 				transfer_fingerprints_to(stored)
 				stored.setDir(dir)
 				stored = null
+			if (contents.len > 1) // if there is actually something in the pipe
+				var/obj/structure/disposalholder/holder = locate() in src
+				expel(holder, loc, dir)
 		else
 			var/turf/T = get_turf(src)
 			for(var/D in GLOB.cardinals)
@@ -217,7 +221,7 @@
 	icon_state = "pipe-t"
 	var/obj/linked // the linked obj/machinery/disposal or obj/disposaloutlet
 
-/obj/structure/disposalpipe/trunk/Initialize()
+/obj/structure/disposalpipe/trunk/Initialize(mapload)
 	. = ..()
 	getlinked()
 
@@ -247,7 +251,7 @@
 
 /obj/structure/disposalpipe/trunk/can_be_deconstructed(mob/user)
 	if(linked)
-		to_chat(user, "<span class='warning'>You need to deconstruct disposal machinery above this pipe!</span>")
+		to_chat(user, span_warning("You need to deconstruct disposal machinery above this pipe!"))
 		return FALSE
 	return TRUE
 

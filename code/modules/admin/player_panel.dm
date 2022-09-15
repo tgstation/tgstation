@@ -216,7 +216,7 @@
 		<span id='maintable_data_archive'>
 		<table width='560' align='center' cellspacing='0' cellpadding='5' id='maintable_data'>"}
 
-	var/list/mobs = sortmobs()
+	var/list/mobs = sort_mobs()
 	var/i = 1
 	for(var/mob/M in mobs)
 		if(M.ckey)
@@ -276,6 +276,9 @@
 
 			var/M_name = html_encode(M.name)
 			var/M_rname = html_encode(M.real_name)
+			var/M_rname_as_key = html_encode(ckey(M.real_name)) // so you can ignore punctuation
+			if(M_rname == M_rname_as_key)
+				M_rname_as_key = null
 			var/M_key = html_encode(M.key)
 			var/previous_names = ""
 			if(M_key)
@@ -294,10 +297,11 @@
 						onmouseover='expand("data[i]","item[i]")'
 						>
 						<b id='search[i]'>[M_name] - [M_rname] - [M_key] ([M_job])</b>
-						<span hidden class='filter_data'>[M_name] [M_rname] [M_key] [M_job] [previous_names]</span>
+						<span hidden class='filter_data'>[M_name] [M_rname] [M_rname_as_key] [M_key] [M_job] [previous_names]</span>
 						<span hidden id="data[i]_name">[M_name]</span>
 						<span hidden id="data[i]_job">[M_job]</span>
 						<span hidden id="data[i]_rname">[M_rname]</span>
+						<span hidden id="data[i]_rname_as_key">[M_rname_as_key]</span>
 						<span hidden id="data[i]_prevnames">[previous_names]</span>
 						<span hidden id="data[i]_key">[M_key]</span>
 						<span hidden id="data[i]_lastip">[M.lastKnownIP]</span>

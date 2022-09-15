@@ -22,4 +22,5 @@
 	TEST_ASSERT_EQUAL(emotes_used, 2, "Human could not deathgasp while unconscious")
 
 /datum/unit_test/emoting/proc/on_emote_used()
+	SIGNAL_HANDLER
 	emotes_used += 1

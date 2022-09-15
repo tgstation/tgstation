@@ -2,16 +2,23 @@
 	dying_key = DYE_REGISTRY_GLOVES
 
 /obj/item/clothing/gloves/color/yellow
-	desc = "These gloves provide protection against electric shock."
+	desc = "These gloves provide protection against electric shock. The thickness of the rubber makes your fingers seem bigger."
 	name = "insulated gloves"
 	icon_state = "yellow"
 	inhand_icon_state = "ygloves"
 	siemens_coefficient = 0
-	permeability_coefficient = 0.05
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 50, FIRE = 0, ACID = 0)
 	resistance_flags = NONE
-	custom_price = PAYCHECK_MEDIUM * 10
+	custom_price = PAYCHECK_CREW * 10
 	custom_premium_price = PAYCHECK_COMMAND * 6
 	cut_type = /obj/item/clothing/gloves/cut
+	clothing_traits = list(TRAIT_CHUNKYFINGERS)
+
+/obj/item/clothing/gloves/color/yellow/heavy
+	name = "ceramic-lined insulated gloves"
+	desc = "A cheaper make of the standard insulated gloves, using internal ceramic lining to make up for the sub-par rubber material. The extra weight makes them more bulky to use."
+	slowdown = 1
+	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/toy/sprayoncan
 	name = "spray-on insulation applicator"
@@ -26,11 +33,11 @@
 		var/success = C.equip_to_slot_if_possible(new /obj/item/clothing/gloves/color/yellow/sprayon, ITEM_SLOT_GLOVES, qdel_on_fail = TRUE, disable_warning = TRUE)
 		if(success)
 			if(C == user)
-				C.visible_message("<span class='notice'>[U] sprays their hands with glittery rubber!</span>")
+				C.visible_message(span_notice("[U] sprays their hands with glittery rubber!"))
 			else
-				C.visible_message("<span class='warning'>[U] sprays glittery rubber on the hands of [C]!</span>")
+				C.visible_message(span_warning("[U] sprays glittery rubber on the hands of [C]!"))
 		else
-			C.visible_message("<span class='warning'>The rubber fails to stick to [C]'s hands!</span>")
+			C.visible_message(span_warning("The rubber fails to stick to [C]'s hands!"))
 
 /obj/item/clothing/gloves/color/yellow/sprayon
 	desc = "How're you gonna get 'em off, nerd?"
@@ -38,11 +45,11 @@
 	icon_state = "sprayon"
 	inhand_icon_state = "sprayon"
 	item_flags = DROPDEL
-	permeability_coefficient = 0
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
 	resistance_flags = ACID_PROOF
 	var/charges_remaining = 10
 
-/obj/item/clothing/gloves/color/yellow/sprayon/Initialize()
+/obj/item/clothing/gloves/color/yellow/sprayon/Initialize(mapload)
 	.=..()
 	ADD_TRAIT(src, TRAIT_NODROP, INNATE_TRAIT)
 
@@ -57,7 +64,7 @@
 	charges_remaining--
 	if(charges_remaining <= 0)
 		var/turf/location = get_turf(src)
-		location.visible_message("<span class='warning'>[src] crumble[p_s()] away into nothing.</span>") // just like my dreams after working with .dm
+		location.visible_message(span_warning("[src] crumble[p_s()] away into nothing.")) // just like my dreams after working with .dm
 		qdel(src)
 
 /obj/item/clothing/gloves/color/fyellow                             //Cheap Chinese Crap
@@ -66,11 +73,11 @@
 	icon_state = "yellow"
 	inhand_icon_state = "ygloves"
 	siemens_coefficient = 1 //Set to a default of 1, gets overridden in Initialize()
-	permeability_coefficient = 0.05
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 25, FIRE = 0, ACID = 0)
 	resistance_flags = NONE
 	cut_type = /obj/item/clothing/gloves/cut
 
-/obj/item/clothing/gloves/color/fyellow/Initialize()
+/obj/item/clothing/gloves/color/fyellow/Initialize(mapload)
 	. = ..()
 	siemens_coefficient = pick(0,0.5,0.5,0.5,0.5,0.75,1.5)
 
@@ -78,7 +85,7 @@
 	desc = "Old and worn out insulated gloves, hopefully they still work."
 	name = "worn out insulated gloves"
 
-/obj/item/clothing/gloves/color/fyellow/old/Initialize()
+/obj/item/clothing/gloves/color/fyellow/old/Initialize(mapload)
 	. = ..()
 	siemens_coefficient = pick(0,0,0,0.5,0.5,0.5,0.75)
 
@@ -87,7 +94,7 @@
 	name = "fingerless insulated gloves"
 	icon_state = "yellowcut"
 	inhand_icon_state = "ygloves"
-	transfer_prints = TRUE
+	clothing_traits = list(TRAIT_FINGERPRINT_PASSTHROUGH)
 
 /obj/item/clothing/gloves/cut/heirloom
 	desc = "The old gloves your great grandfather stole from Engineering, many moons ago. They've seen some tough times recently."
@@ -103,6 +110,19 @@
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
 	cut_type = /obj/item/clothing/gloves/fingerless
+
+/obj/item/clothing/gloves/fingerless
+	name = "fingerless gloves"
+	desc = "Plain black gloves without fingertips for the hard working."
+	icon_state = "fingerless"
+	inhand_icon_state = "fingerless"
+	strip_delay = 40
+	equip_delay_other = 20
+	cold_protection = HANDS
+	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
+	custom_price = PAYCHECK_CREW * 1.5
+	undyeable = TRUE
+	clothing_traits = list(TRAIT_FINGERPRINT_PASSTHROUGH)
 
 /obj/item/clothing/gloves/color/orange
 	name = "orange gloves"
@@ -121,7 +141,7 @@
 	name = "insulated gloves"
 	desc = "These gloves provide protection against electric shock."
 	siemens_coefficient = 0
-	permeability_coefficient = 0.05
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 50, FIRE = 0, ACID = 0)
 	resistance_flags = NONE
 
 /obj/item/clothing/gloves/color/rainbow
@@ -154,6 +174,16 @@
 	icon_state = "gray"
 	inhand_icon_state = "graygloves"
 
+// Grey gloves intended to be paired with winter coats (specifically EVA winter coats)
+/obj/item/clothing/gloves/color/grey/protects_cold
+	name = "\proper Endotherm gloves"
+	desc = "A pair of thick grey gloves, lined to protect the wearer from freezing cold."
+	w_class = WEIGHT_CLASS_NORMAL
+	cold_protection = HANDS
+	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
+	resistance_flags = NONE
+	clothing_flags = THICKMATERIAL
+
 /obj/item/clothing/gloves/color/light_brown
 	name = "light brown gloves"
 	desc = "A pair of gloves, they don't look special in any way."
@@ -172,48 +202,61 @@
 	icon_state = "captain"
 	inhand_icon_state = "egloves"
 	siemens_coefficient = 0
-	permeability_coefficient = 0.05
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	strip_delay = 60
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 70, ACID = 50)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 90, FIRE = 70, ACID = 50)
+	resistance_flags = NONE
+
+/obj/item/clothing/gloves/color/chief_engineer
+	desc = "These gloves provide excellent heat and electric insulation. They are so thin you can barely feel them."
+	name = "advanced insulated gloves"
+	icon_state = "ce_insuls"
+	inhand_icon_state = "lgloves"
+	siemens_coefficient = 0
+	cold_protection = HANDS
+	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
+	heat_protection = HANDS
+	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
+	resistance_flags = NONE
 
 /obj/item/clothing/gloves/color/latex
 	name = "latex gloves"
-	desc = "Cheap sterile gloves made from latex. Transfers minor paramedic knowledge to the user via budget nanochips."
+	desc = "Cheap sterile gloves made from latex. Provides quicker carrying from a good grip."
 	icon_state = "latex"
 	inhand_icon_state = "latex"
 	siemens_coefficient = 0.3
-	permeability_coefficient = 0.01
-	transfer_prints = TRUE
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 0, ACID = 0)
+	clothing_traits = list(TRAIT_QUICK_CARRY, TRAIT_FINGERPRINT_PASSTHROUGH)
 	resistance_flags = NONE
 
 /obj/item/clothing/gloves/color/latex/nitrile
 	name = "nitrile gloves"
-	desc = "Pricy sterile gloves that are thicker than latex. Transfers intimate paramedic knowledge into the user via nanochips."
+	desc = "Pricy sterile gloves that are thicker than latex. Excellent grip ensures very fast carrying of patients along with the faster use time of various chemical related items."
 	icon_state = "nitrile"
 	inhand_icon_state = "nitrilegloves"
-	transfer_prints = FALSE
+	clothing_traits = list(TRAIT_QUICKER_CARRY, TRAIT_FASTMED)
 
-/obj/item/clothing/gloves/color/latex/nitrile/infiltrator
+/obj/item/clothing/gloves/color/infiltrator
 	name = "infiltrator gloves"
-	desc = "Specialized combat gloves for carrying people around. Transfers tactical kidnapping knowledge into the user via nanochips."
+	desc = "Specialized tactical gloves for carrying people around. Has tactical rubber grips for tactical ease of kidnapping. Tactically."
 	icon_state = "infiltrator"
 	inhand_icon_state = "infiltrator"
 	siemens_coefficient = 0
-	permeability_coefficient = 0.3
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 70, FIRE = 0, ACID = 0)
+	clothing_traits = list(TRAIT_QUICKER_CARRY)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /obj/item/clothing/gloves/color/latex/engineering
 	name = "tinker's gloves"
 	desc = "Overdesigned engineering gloves that have automated construction subrutines dialed in, allowing for faster construction while worn."
-	icon = 'icons/obj/clothing/clockwork_garb.dmi'
+	icon = 'icons/obj/clothing/gloves.dmi'
 	icon_state = "clockwork_gauntlets"
 	inhand_icon_state = "clockwork_gauntlets"
 	siemens_coefficient = 0.8
-	permeability_coefficient = 0.3
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 70, FIRE = 0, ACID = 0)
 	clothing_traits = list(TRAIT_QUICK_BUILD)
 	custom_materials = list(/datum/material/iron=2000, /datum/material/silver=1500, /datum/material/gold = 1000)
 
@@ -222,21 +265,15 @@
 	desc = "These look pretty fancy."
 	icon_state = "white"
 	inhand_icon_state = "wgloves"
-	custom_price = PAYCHECK_MINIMAL
+	custom_price = PAYCHECK_CREW
 
-/obj/effect/spawner/lootdrop/gloves
-	name = "random gloves"
-	desc = "These gloves are supposed to be a random color..."
-	icon = 'icons/obj/clothing/gloves.dmi'
-	icon_state = "random_gloves"
-	loot = list(
-		/obj/item/clothing/gloves/color/orange = 1,
-		/obj/item/clothing/gloves/color/red = 1,
-		/obj/item/clothing/gloves/color/blue = 1,
-		/obj/item/clothing/gloves/color/purple = 1,
-		/obj/item/clothing/gloves/color/green = 1,
-		/obj/item/clothing/gloves/color/grey = 1,
-		/obj/item/clothing/gloves/color/light_brown = 1,
-		/obj/item/clothing/gloves/color/brown = 1,
-		/obj/item/clothing/gloves/color/white = 1,
-		/obj/item/clothing/gloves/color/rainbow = 1)
+/obj/item/clothing/gloves/kim
+	name = "aerostatic gloves"
+	desc = "Breathable red gloves for expert handling of a pen and notebook."
+	icon_state = "aerostatic_gloves"
+	inhand_icon_state = "aerostatic_gloves"
+
+/obj/item/clothing/gloves/maid
+	name = "maid arm covers"
+	desc = "Cylindrical looking tubes that go over your arm, weird."
+	icon_state = "maid_arms"

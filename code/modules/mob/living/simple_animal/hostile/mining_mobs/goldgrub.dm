@@ -2,7 +2,7 @@
 /mob/living/simple_animal/hostile/asteroid/goldgrub
 	name = "goldgrub"
 	desc = "A worm that grows fat from eating everything in its sight. Seems to enjoy precious metals and other shiny things, hence the name."
-	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	icon_state = "Goldgrub"
 	icon_living = "Goldgrub"
 	icon_aggro = "Goldgrub_alert"
@@ -25,7 +25,7 @@
 	combat_mode = FALSE
 	speak_emote = list("screeches")
 	throw_message = "sinks in slowly, before being pushed out of "
-	deathmessage = "stops moving as green liquid oozes from the carcass!"
+	death_message = "stops moving as green liquid oozes from the carcass!"
 	status_flags = CANPUSH
 	gold_core_spawnable = HOSTILE_SPAWN
 	search_objects = 1
@@ -38,7 +38,7 @@
 	var/datum/action/innate/goldgrub/burrow/burrow
 	var/is_burrowed = FALSE
 
-/mob/living/simple_animal/hostile/asteroid/goldgrub/Initialize()
+/mob/living/simple_animal/hostile/asteroid/goldgrub/Initialize(mapload)
 	. = ..()
 	var/i = rand(1,3)
 	while(i)
@@ -72,34 +72,33 @@
 	if(G.stat == DEAD)
 		return
 	var/turf/T = get_turf(G)
-	if (!istype(T, /turf/open/floor/plating/asteroid) || !do_after(G, 30, target = T))
-		to_chat(G, "<span class='warning'>You can only burrow in and out of mining turfs and must stay still!</span>")
+	if (!istype(T, /turf/open/misc/asteroid) || !do_after(G, 30, target = T))
+		to_chat(G, span_warning("You can only burrow in and out of mining turfs and must stay still!"))
 		return
 	if (get_dist(G, T) != 0)
-		to_chat(G, "<span class='warning'>Action cancelled, as you moved while reappearing.</span>")
+		to_chat(G, span_warning("Action cancelled, as you moved while reappearing."))
 		return
 	if(G.is_burrowed)
 		holder = G.loc
-		G.forceMove(T)
-		QDEL_NULL(holder)
+		holder.eject_jaunter()
+		holder = null
 		G.is_burrowed = FALSE
-		G.visible_message("<span class='danger'>[G] emerges from the ground!</span>")
+		G.visible_message(span_danger("[G] emerges from the ground!"))
 		playsound(get_turf(G), 'sound/effects/break_stone.ogg', 50, TRUE, -1)
 	else
-		G.visible_message("<span class='danger'>[G] buries into the ground, vanishing from sight!</span>")
+		G.visible_message(span_danger("[G] buries into the ground, vanishing from sight!"))
 		playsound(get_turf(G), 'sound/effects/break_stone.ogg', 50, TRUE, -1)
-		holder = new /obj/effect/dummy/phased_mob(T)
-		G.forceMove(holder)
+		holder = new /obj/effect/dummy/phased_mob(T, G)
 		G.is_burrowed = TRUE
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/GiveTarget(new_target)
-	target = new_target
+	add_target(new_target)
 	if(target != null)
 		if(istype(target, /obj/item/stack/ore))
-			visible_message("<span class='notice'>The [name] looks at [target.name] with hungry eyes.</span>")
+			visible_message(span_notice("The [name] looks at [target.name] with hungry eyes."))
 		else if(isliving(target))
 			Aggro()
-			visible_message("<span class='danger'>The [name] tries to flee from [target.name]!</span>")
+			visible_message(span_danger("The [name] tries to flee from [target.name]!"))
 			retreat_distance = 10
 			minimum_distance = 10
 			if(will_burrow)
@@ -122,18 +121,18 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/proc/barf_contents()
-	visible_message("<span class='danger'>[src] spits out its consumed ores!</span>")
+	visible_message(span_danger("[src] spits out its consumed ores!"))
 	playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
 	for(var/atom/movable/AM in src)
 		AM.forceMove(loc)
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/proc/Burrow()//Begin the chase to kill the goldgrub in time
 	if(!stat)
-		visible_message("<span class='danger'>The [name] buries into the ground, vanishing from sight!</span>")
+		visible_message(span_danger("The [name] buries into the ground, vanishing from sight!"))
 		qdel(src)
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/bullet_act(obj/projectile/P)
-	visible_message("<span class='danger'>The [P.name] is repelled by [name]'s girth!</span>")
+	visible_message(span_danger("The [P.name] is repelled by [name]'s girth!"))
 	return BULLET_ACT_BLOCK
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/adjustHealth(amount, updating_health = TRUE, forced = FALSE)

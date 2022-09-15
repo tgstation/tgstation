@@ -11,11 +11,11 @@
 /obj/machinery/chem_heater
 	name = "reaction chamber" //Maybe this name is more accurate?
 	density = TRUE
-	icon = 'icons/obj/chemical.dmi'
+	pass_flags_self = PASSMACHINE | LETPASSTHROW
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "mixer0b"
 	base_icon_state = "mixer"
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 40
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.4
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	circuit = /obj/item/circuitboard/machine/chem_heater
 
@@ -31,7 +31,7 @@
 	///What state we're at in the tutorial
 	var/tutorial_state = 0
 
-/obj/machinery/chem_heater/Initialize()
+/obj/machinery/chem_heater/Initialize(mapload)
 	. = ..()
 	create_reagents(200, NO_REACT)//Lets save some calculations here
 	//TODO: comsig reaction_start and reaction_end to enable/disable the UI autoupdater - this doesn't work presently as there's a hard divide between instant and processed reactions
@@ -60,11 +60,20 @@
 	icon_state = "[base_icon_state][beaker ? 1 : 0]b"
 	return ..()
 
-/obj/machinery/chem_heater/AltClick(mob/living/user)
+/obj/machinery/chem_heater/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
-	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	if(!can_interact(user) || !user.canUseTopic(src, !issilicon(user), FALSE, NO_TK))
 		return
 	replace_beaker(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/machinery/chem_heater/attack_robot_secondary(mob/user, list/modifiers)
+	return attack_hand_secondary(user, modifiers)
+
+/obj/machinery/chem_heater/attack_ai_secondary(mob/user, list/modifiers)
+	return attack_hand_secondary(user, modifiers)
 
 /obj/machinery/chem_heater/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
 	if(!user)
@@ -80,6 +89,7 @@
 	return TRUE
 
 /obj/machinery/chem_heater/RefreshParts()
+	. = ..()
 	heater_coefficient = 0.1
 	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
 		heater_coefficient *= M.rating
@@ -87,7 +97,7 @@
 /obj/machinery/chem_heater/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += "<span class='notice'>The status display reads: Heating reagents at <b>[heater_coefficient*1000]%</b> speed.</span>"
+		. += span_notice("The status display reads: Heating reagents at <b>[heater_coefficient*1000]%</b> speed.")
 
 /obj/machinery/chem_heater/process(delta_time)
 	..()
@@ -144,6 +154,8 @@
 			beaker.reagents.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * heater_coefficient * delta_time * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
 			beaker.reagents.handle_reactions()
 
+			use_power(active_power_usage * delta_time)
+
 /obj/machinery/chem_heater/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "mixer0b", "mixer0b", I))
 		return
@@ -151,14 +163,14 @@
 	if(default_deconstruction_crowbar(I))
 		return
 
-	if(istype(I, /obj/item/reagent_containers) && !(I.item_flags & ABSTRACT) && I.is_open_container())
+	if(is_reagent_container(I) && !(I.item_flags & ABSTRACT) && I.is_open_container())
 		. = TRUE //no afterattack
 		var/obj/item/reagent_containers/B = I
 		if(!user.transferItemToLoc(B, src))
 			return
 		replace_beaker(user, B)
-		to_chat(user, "<span class='notice'>You add [B] to [src].</span>")
-		updateUsrDialog()
+		to_chat(user, span_notice("You add [B] to [src]."))
+		ui_interact(user)
 		update_appearance()
 		return
 
@@ -357,7 +369,7 @@ To continue set your target temperature to 390K."}
 						data["tutorialMessage"] = "You did it! Congratulations! I can tell you that your final purity was [calo.purity]. You got pretty close to optimal! Feel free to try again if you like by double pressing the help button, but this is a respectable purity."
 					if(0.99 to 1)
 						data["tutorialMessage"] = "You did it! Congratulations! I can tell you that your final purity was [calo.purity]. Your calomel is as pure as they come! You've mastered the basics of chemistry, but there's plenty more challenges on the horizon. Good luck!"
-						user.client?.give_award(/datum/award/achievement/misc/chemistry_tut, user)
+						user.client?.give_award(/datum/award/achievement/jobs/chemistry_tut, user)
 				data["tutorialMessage"] += "\n\nDid you notice that your temperature increased past 390K while reacting too? That's because this reaction is exothermic (heat producing), so for some reactions you might have to adjust your target to compensate. Oh, and you can check your purity by researching and printing off a chemical analyzer at the medlathe (for now)!"
 			if(TUT_MISSING) //Missing
 				data["tutorialMessage"] = "Uh oh, something went wrong. Did you take the beaker out, heat it up too fast, or have other things in the beaker? Try restarting the tutorial by double pressing the help button."
@@ -457,24 +469,24 @@ To continue set your target temperature to 390K."}
 /obj/machinery/chem_heater/proc/get_purity_color(datum/equilibrium/equilibrium)
 	var/_reagent = equilibrium.reaction.results[1]
 	var/datum/reagent/reagent = equilibrium.holder.get_reagent(_reagent)
-	switch(reagent.purity)
-		if(1 to INFINITY)
-			return "blue"
-		if(0.8 to 1)
-			return "green"
-		if(reagent.inverse_chem_val to 0.8)
-			return "olive"
-		if(equilibrium.reaction.purity_min to reagent.inverse_chem_val)
-			return "orange"
-		if(-INFINITY to equilibrium.reaction.purity_min)
-			return "red"
+	// Can't be a switch due to http://www.byond.com/forum/post/2750423
+	if(reagent.purity in 1 to INFINITY)
+		return "blue"
+	else if(reagent.purity in 0.8 to 1)
+		return "green"
+	else if(reagent.purity in reagent.inverse_chem_val to 0.8)
+		return "olive"
+	else if(reagent.purity in equilibrium.reaction.purity_min to reagent.inverse_chem_val)
+		return "orange"
+	else if(reagent.purity in -INFINITY to equilibrium.reaction.purity_min)
+		return "red"
 
 //Has a lot of buffer and is upgraded
 /obj/machinery/chem_heater/debug
 	name = "Debug Reaction Chamber"
 	desc = "Now with even more buffers!"
 
-/obj/machinery/chem_heater/debug/Initialize()
+/obj/machinery/chem_heater/debug/Initialize(mapload)
 	. = ..()
 	reagents.maximum_volume = 2000
 	reagents.add_reagent(/datum/reagent/reaction_agent/basic_buffer, 1000)
@@ -485,7 +497,7 @@ To continue set your target temperature to 390K."}
 /obj/machinery/chem_heater/withbuffer
 	desc = "This Reaction Chamber comes with a bit of buffer to help get you started."
 
-/obj/machinery/chem_heater/withbuffer/Initialize()
+/obj/machinery/chem_heater/withbuffer/Initialize(mapload)
 	. = ..()
 	reagents.add_reagent(/datum/reagent/reaction_agent/basic_buffer, 20)
 	reagents.add_reagent(/datum/reagent/reaction_agent/acidic_buffer, 20)

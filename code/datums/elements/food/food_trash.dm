@@ -6,24 +6,25 @@
 	var/atom/trash
 	///Flags of the trash element that change its behavior
 	var/flags
-	///Generate trash callback
-	var/datum/callback/generate_trash_callback
+	///Generate trash proc path
+	var/generate_trash_procpath
 
-/datum/element/food_trash/Attach(datum/target, atom/trash, flags, generate_trash)
+/datum/element/food_trash/Attach(datum/target, atom/trash, flags, generate_trash_proc)
 	. = ..()
 	if(!isatom(target))
 		return ELEMENT_INCOMPATIBLE
 	src.trash = trash
 	src.flags = flags
 	RegisterSignal(target, COMSIG_FOOD_CONSUMED, .proc/generate_trash)
-	if(!src.generate_trash_callback && generate_trash)
-		generate_trash_callback = CALLBACK(target, generate_trash)
+	if(!generate_trash_procpath && generate_trash_proc)
+		generate_trash_procpath = generate_trash_proc
 	if(flags & FOOD_TRASH_OPENABLE)
 		RegisterSignal(target, COMSIG_ITEM_ATTACK_SELF, .proc/open_trash)
 	if(flags & FOOD_TRASH_POPABLE)
 		RegisterSignal(target, COMSIG_FOOD_CROSSED, .proc/food_crossed)
 	RegisterSignal(target, COMSIG_ITEM_ON_GRIND, .proc/generate_trash)
 	RegisterSignal(target, COMSIG_ITEM_ON_JUICE, .proc/generate_trash)
+	RegisterSignal(target, COMSIG_ITEM_USED_AS_INGREDIENT, .proc/generate_trash)
 	RegisterSignal(target, COMSIG_ITEM_ON_COMPOSTED, .proc/generate_trash)
 	RegisterSignal(target, COMSIG_ITEM_SOLD_TO_CUSTOMER, .proc/generate_trash)
 
@@ -38,17 +39,14 @@
 	INVOKE_ASYNC(src, .proc/async_generate_trash, source)
 
 /datum/element/food_trash/proc/async_generate_trash(datum/source)
-
-	var/obj/item/trash_item =  generate_trash_callback ? generate_trash_callback.Invoke(source) : new trash()
-
 	var/atom/edible_object = source
 
-	var/mob/living/mob_location = edible_object.loc //The foods location
+	var/obj/item/trash_item = generate_trash_procpath ? call(source, generate_trash_procpath)() : new trash(edible_object.drop_location())
 
-	if(istype(mob_location))
-		mob_location.put_in_hands(trash_item)
-	else
-		trash_item.forceMove(get_turf(edible_object))
+	if(isliving(edible_object.loc))
+		var/mob/living/food_holding_mob = edible_object.loc
+		food_holding_mob.dropItemToGround(edible_object)
+		food_holding_mob.put_in_hands(trash_item)
 
 /datum/element/food_trash/proc/food_crossed(datum/source, mob/crosser, bitecount)
 	SIGNAL_HANDLER
@@ -61,7 +59,7 @@
 
 	playsound(source, 'sound/effects/chipbagpop.ogg', 100)
 
-	popper.visible_message("<span class='danger'>[popper] steps on \the [source], popping the bag!</span>", "<span class='danger'>You step on \the [source], popping the bag!</span>", "<span class='danger'>You hear a sharp crack!</span>", COMBAT_MESSAGE_RANGE)
+	popper.visible_message(span_danger("[popper] steps on \the [source], popping the bag!"), span_danger("You step on \the [source], popping the bag!"), span_danger("You hear a sharp crack!"), COMBAT_MESSAGE_RANGE)
 	INVOKE_ASYNC(src, .proc/async_generate_trash, source)
 	qdel(source)
 
@@ -69,7 +67,7 @@
 /datum/element/food_trash/proc/open_trash(datum/source, mob/user)
 	SIGNAL_HANDLER
 
-	to_chat(user, "<span class='notice'>You open the [source], revealing \a [initial(trash.name)].</span>")
+	to_chat(user, span_notice("You open the [source], revealing \a [initial(trash.name)]."))
 
 	INVOKE_ASYNC(src, .proc/async_generate_trash, source)
 	qdel(source)

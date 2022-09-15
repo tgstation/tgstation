@@ -7,64 +7,64 @@
  */
 
 import { classes, pureComponentHooks } from 'common/react';
-import { Box } from './Box';
+import { computeBoxClassName, computeBoxProps } from './Box';
 
 const FA_OUTLINE_REGEX = /-o$/;
 
-export const Icon = props => {
-  const {
-    name,
-    size,
-    spin,
-    className,
-    style = {},
-    rotation,
-    inverse,
-    ...rest
-  } = props;
+export const Icon = (props) => {
+  const { name, size, spin, className, rotation, inverse, ...rest } = props;
+
   if (size) {
-    style['font-size'] = (size * 100) + '%';
+    if (!rest.style) {
+      rest.style = {};
+    }
+    rest.style['font-size'] = size * 100 + '%';
   }
   if (typeof rotation === 'number') {
-    style['transform'] = `rotate(${rotation}deg)`;
+    if (!rest.style) {
+      rest.style = {};
+    }
+    rest.style['transform'] = `rotate(${rotation}deg)`;
   }
-  const faRegular = FA_OUTLINE_REGEX.test(name);
-  const faName = name.replace(FA_OUTLINE_REGEX, '');
+
+  const boxProps = computeBoxProps(rest);
+
+  let iconClass = '';
+  if (name.startsWith('tg-')) {
+    // tgfont icon
+    iconClass = name;
+  } else {
+    // font awesome icon
+    const faRegular = FA_OUTLINE_REGEX.test(name);
+    const faName = name.replace(FA_OUTLINE_REGEX, '');
+    // prettier-ignore
+    iconClass = (faRegular ? 'far ' : 'fas ')
+      + 'fa-' + faName
+      + (spin ? ' fa-spin' : '');
+  }
   return (
-    <Box
-      as="i"
+    <i
       className={classes([
         'Icon',
+        iconClass,
         className,
-        faRegular ? 'far' : 'fas',
-        'fa-' + faName,
-        spin && 'fa-spin',
+        computeBoxClassName(rest),
       ])}
-      style={style}
-      {...rest} />
+      {...boxProps}
+    />
   );
 };
 
 Icon.defaultHooks = pureComponentHooks;
 
-export const IconStack = props => {
-  const {
-    className,
-    style = {},
-    children,
-    ...rest
-  } = props;
+export const IconStack = (props) => {
+  const { className, children, ...rest } = props;
   return (
-    <Box
-      as="span"
-      class={classes([
-        'IconStack',
-        className,
-      ])}
-      style={style}
-      {...rest}>
+    <span
+      class={classes(['IconStack', className, computeBoxClassName(rest)])}
+      {...computeBoxProps(rest)}>
       {children}
-    </Box>
+    </span>
   );
 };
 
