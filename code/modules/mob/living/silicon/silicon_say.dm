@@ -54,7 +54,7 @@
 			to_chat(
 				M,
 				span_binarysay("\
-				 	[follow_link] \
+					[follow_link] \
 					Robotic Talk, \
 					[span_name("[name]")] <span class='message'>[quoted_message]</span>\
 				"),
