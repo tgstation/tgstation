@@ -286,6 +286,9 @@
 	modifies_speech = TRUE
 	taste_sensitivity = 32
 
+// List of english words that translate to zombie phrases
+GLOBAL_LIST_INIT(english_to_zombie, list())
+
 /obj/item/organ/internal/tongue/zombie/modify_speech(datum/source, list/speech_args)
 	var/mob/living/carbon/human/user = source
 
@@ -294,7 +297,27 @@
 		return
 
 	var/message = speech_args[SPEECH_MESSAGE]
-	if(message)
+	if(message[1] != "*")
+		// setup the global list for translation if it hasn't already been done
+		if(!length(GLOB.english_to_zombie))
+			var/list/zombie_translation = strings("zombie_replacement.json", "zombie")
+			for(var/zombie_word in zombie_translation)
+				// since zombie words are a reverse list, we gotta do this backwards
+				var/data = zombie_translation[zombie_word]
+				if(islist(data))
+					for(var/english_word in data)
+						GLOB.english_to_zombie[english_word] = zombie_word
+				else
+					var/english_word = data
+					GLOB.english_to_zombie[english_word] = zombie_word
+
+		// make a list of all words that can be translated
+		var/list/message_word_list = splittext(message, " ")
+		var/list/translated_word_list = list()
+		for(var/word in message_word_list)
+			word = GLOB.english_to_zombie[lowertext(word)])
+			translated_word_list += word ? word : FALSE
+
 		// all occurrences of characters "eiou" (case-insensitive) are replaced with "r"
 		message = replacetext(message, regex(@"[eiou]", "ig"), "r")
 		// all characters other than "zhrgbmna .!?-" (case-insensitive) are stripped
@@ -310,6 +333,10 @@
 			// an "a" or "A" by itself will be replaced with "hra"
 			word = replacetext(word, regex(@"\b[Aa]\b"), "hra")
 			new_words += word
+
+		// if words were not translated, then we apply our zombie speech patterns
+		for(var/i in 1 to length(new_words))
+			new_words[i] = translated_word_list[i] ? translated_word_list[i] : new_words[i]
 
 		message = new_words.Join(" ")
 		message = capitalize(message)
