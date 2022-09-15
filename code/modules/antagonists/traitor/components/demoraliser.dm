@@ -48,7 +48,7 @@
 		return
 	if (!should_demoralise(viewer))
 		return
-	if(!viewer.can_read(host, (moods.text_based ? (READING_CHECK_LITERACY|READING_CHECK_LIGHT) : (READING_CHECK_LIGHT)), FALSE)) //if it's a text based demoralization aton, make sure the mob has the capability to read. if it's only an image, make sure it's just bright enough for them to see it.
+	if(!viewer.can_read(host, (moods.text_based ? (READING_CHECK_LITERACY|READING_CHECK_LIGHT) : (READING_CHECK_LIGHT)), TRUE)) //if it's a text based demoralization aton, make sure the mob has the capability to read. if it's only an image, make sure it's just bright enough for them to see it.
 		return
 
 
