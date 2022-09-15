@@ -133,7 +133,7 @@
 /obj/machinery/plumbing/reaction_chamber/chem/Destroy()
 	QDEL_NULL(acidic_beaker)
 	QDEL_NULL(alkaline_beaker)
-	. = ..()
+	return ..()
 
 /obj/machinery/plumbing/reaction_chamber/chem/process(delta_time)
 	//add acidic/alkaine buffer if over/under limit
