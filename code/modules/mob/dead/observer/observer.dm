@@ -846,7 +846,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/is_literate()
 	return TRUE
 
-/mob/dead/observer/can_read(atom/viewed_atom, check_for_light = FALSE, check_literacy = TRUE, chat_messages = TRUE)
+/mob/dead/observer/can_read(atom/viewed_atom, reading_check_flags, silent)
 	return TRUE // we want to bypass all the checks
 
 /mob/dead/observer/vv_edit_var(var_name, var_value)

@@ -1187,15 +1187,16 @@
 	var/turf/mob_location = get_turf(src)
 	return mob_location.get_lumcount() > light_amount
 
+
 /// Can this mob read
-/mob/proc/can_read(atom/viewed_atom, check_for_light = TRUE, check_literacy = TRUE, chat_messages = TRUE)
-	if(check_literacy && !is_literate())
-		if(chat_messages)
+/mob/proc/can_read(atom/viewed_atom, reading_check_flags = (READING_CHECK_LITERACY|READING_CHECK_LIGHT), silent = FALSE)
+	if((reading_check_flags & READING_CHECK_LITERACY) && !is_literate())
+		if(!silent)
 			to_chat(src, span_warning("You try to read [viewed_atom], but can't comprehend any of it."))
 		return FALSE
 
-	if(check_for_light && !has_light_nearby() && !has_nightvision())
-		if(chat_messages)
+	if((reading_check_flags & READING_CHECK_LIGHT) && !has_light_nearby() && !has_nightvision())
+		if(!silent)
 			to_chat(src, span_warning("It's too dark in here to read!"))
 		return FALSE
 
