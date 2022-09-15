@@ -400,8 +400,15 @@
 			playsound(get_turf(user),A.load_audio,50,TRUE)
 			to_chat(user, span_notice("You add [ammo_needed] [A.ammo_type][ammo_needed > 1?"s":""] to the [gun.name]"))
 			A.rounds = A.rounds - ammo_needed
-			if(A.custom_materials)
-				A.set_custom_materials(A.custom_materials, A.rounds / initial(A.rounds))
+			if(A.custom_materials)	//Change material content of the ammo box according to the amount of ammo deposited into the weapon
+				/// list of materials contained in the ammo box after we put it through the equation so we can stick this list into set_custom_materials()
+				var/list/new_material_content = list()
+				for(var/datum/material/current_material in A.custom_materials)
+					if(istype(current_material, /datum/material/iron))	//we can flatten an empty ammo box into a sheet of iron (2000 units) so we have to make sure the box always has this amount at minimum
+						new_material_content[current_material] = (A.custom_materials[current_material] - 2000) * (A.rounds / initial(A.rounds)) + 2000
+					else
+						new_material_content[current_material] = A.custom_materials[current_material] * (A.rounds / initial(A.rounds))
+				A.set_custom_materials(new_material_content)
 			A.update_name()
 			return TRUE
 
