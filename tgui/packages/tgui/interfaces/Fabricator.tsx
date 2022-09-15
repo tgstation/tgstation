@@ -185,9 +185,10 @@ const PrintButton = (props: PrintButtonProps, context) => {
 
   return (
     <Button
-      className={`Fabricator__PrintAmount ${
-        !canPrint ? 'Fabricator__PrintAmount--disabled' : ''
-      }`}
+      className={classes([
+        'Fabricator__PrintAmount',
+        !canPrint && 'Fabricator__PrintAmount--disabled',
+      ])}
       tooltip={
         <MaterialCost design={design} amount={quantity} available={available} />
       }
@@ -209,13 +210,14 @@ const Recipe = (props: { design: Design; available: MaterialMap }, context) => {
 
   return (
     <div className="Fabricator__Recipe">
-      <Flex justify={'space-between'} align={'center'}>
+      <Flex justify={'space-between'} align={'stretch'}>
         <Flex.Item grow={1}>
           <Button
             color={'transparent'}
-            className={`Fabricator__Button ${
-              !canPrint ? 'Fabricator__Button--disabled' : ''
-            }`}
+            className={classes([
+              'Fabricator__Button',
+              !canPrint && 'Fabricator__Button--disabled',
+            ])}
             fluid
             tooltip={
               <MaterialCost design={design} amount={1} available={available} />
@@ -238,18 +240,10 @@ const Recipe = (props: { design: Design; available: MaterialMap }, context) => {
           </Button>
         </Flex.Item>
         <Flex.Item>
-          <Flex align={'flex-end'}>
-            <Flex.Item>
-              <PrintButton design={design} quantity={5} available={available} />
-            </Flex.Item>
-            <Flex.Item>
-              <PrintButton
-                design={design}
-                quantity={10}
-                available={available}
-              />
-            </Flex.Item>
-          </Flex>
+          <PrintButton design={design} quantity={5} available={available} />
+        </Flex.Item>
+        <Flex.Item>
+          <PrintButton design={design} quantity={10} available={available} />
         </Flex.Item>
       </Flex>
     </div>

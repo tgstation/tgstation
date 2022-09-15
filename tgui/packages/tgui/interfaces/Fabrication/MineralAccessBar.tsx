@@ -65,18 +65,19 @@ const MATERIAL_ICONS: Record<string, [number, string][]> = {
 };
 
 type MaterialIconProps = {
-  material: Material;
+  materialName: string;
+  amount?: number;
 };
 
 const MaterialIcon = (props: MaterialIconProps) => {
-  const { material } = props;
-  const icons = MATERIAL_ICONS[material.name];
+  const { materialName, amount } = props;
+  const icons = MATERIAL_ICONS[materialName];
   let className = '';
 
   if (icons) {
     let idx = 0;
 
-    while (icons[idx + 1] && icons[idx + 1][0] <= material.amount / 2_000) {
+    while (icons[idx + 1] && icons[idx + 1][0] <= (amount ?? 200_000) / 2_000) {
       idx += 1;
     }
 
@@ -161,7 +162,10 @@ const MaterialCounter = (props: MaterialCounterProps, context) => {
           onClick={() => onEjectRequested(1)}
           className="MaterialDock__Label">
           <Flex.Item>
-            <MaterialIcon material={material} />
+            <MaterialIcon
+              materialName={material.name}
+              amount={material.amount}
+            />
           </Flex.Item>
           <Flex.Item>
             <AnimatedNumber value={material.amount} format={LABEL_FORMAT} />

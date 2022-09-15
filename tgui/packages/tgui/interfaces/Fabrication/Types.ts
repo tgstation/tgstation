@@ -42,8 +42,8 @@ export type Design = {
 
   /**
    * The icon used to represent this design, generated in
-   * /datum/asset/spritesheet/research_designs, if any. **The image may not be
-   * 32x32; make sure to scale it accordingly.**
+   * /datum/asset/spritesheet/research_designs. **The image within may not be
+   * 32x32;.**
    */
   icon: string;
 };
