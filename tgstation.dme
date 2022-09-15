@@ -3258,6 +3258,7 @@
 #include "code\modules\keybindings\bindings_client.dm"
 #include "code\modules\keybindings\focus.dm"
 #include "code\modules\keybindings\setup.dm"
+#include "code\modules\language\aphasia.dm"
 #include "code\modules\language\beachbum.dm"
 #include "code\modules\language\buzzwords.dm"
 #include "code\modules\language\calcic.dm"
