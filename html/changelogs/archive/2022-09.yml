@@ -523,3 +523,45 @@
   dragomagol:
   - bugfix: scrubber overflow event is now properly categorized and has a description
       in the trigger event menu
+2022-09-15:
+  GoblinBackwards:
+  - bugfix: Fixed the Adjust Suit Sensors verb opening a list of all nearby mobs
+  JohnFulpWillard:
+  - bugfix: Engines now calculate their thrust power as they used to, preventing edge
+      cases of inconsistent shuttle call timers.
+  - qol: Juice cartons now splash their reagents with right-click.
+  KirbyDaMaster:
+  - bugfix: Enabled flag for morgue body containers to allow you to interact with
+      them while standing diagonally with the hatch open.
+  Profakos:
+  - bugfix: cyborg eye sockets no longer bleed
+  Rhials:
+  - admin: Stray Meteor trigger now gives the option to throw a random meteor instead
+      of selecting a specific one.
+  - code_imp: major_dust is now a space_dust subtype, rather than a meteor_wave subtype
+      orphaned in its own file.
+  ShizCalev:
+  - bugfix: Free vending machine purchases are now tracked by SSEconomy
+  - bugfix: Fixed examine messages stating what materials something is made out of
+      not working properly.
+  - bugfix: Fixed the Space Carp DNA harvest traitor objective not starting a carp
+      migration when taken
+  - spellcheck: Slightly reworded the examine text on bowls / customizable reagent
+      containers.
+  - bugfix: Fixed a runtime when removing beakers from a chem grenade with a wrench.
+  - bugfix: Fixed messages sometimes not showing properly when melting shards with
+      a welder.
+  - bugfix: Fixed glass generated from melting shards teleporting to someone when
+      using TK.
+  SpookyTheFox:
+  - bugfix: fixed the name of the ammo printed from the lathe
+  SuperNovaa41:
+  - rscadd: Shoe stealing is back! *shoesteal, and lie down, to take someone's shoes.
+  san7890:
+  - bugfix: Players should now once again get the reason as to why they can not start
+      any specific vote at any given time in the TGUI vote menu.
+  scriptis:
+  - qol: AIs are now loudmode in binary chat
+  skylord-a52:
+  - rscadd: The Syndicate is now branching off into cheap tourist merchandise -- collect
+      your limited edition t-shirt today by entering the nearest kidnapping pod!

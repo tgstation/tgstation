@@ -1,0 +1,5 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - admin: "Setting machine_stat flags on machinery will now call the set_machine_stat proc so things update properly lol."
+  - bugfix: "Fixed a runtime when deconstructing newscaster w/ a wrench."

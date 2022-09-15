@@ -14,7 +14,7 @@ SUBSYSTEM_DEF(events)
 	var/list/holidays //List of all holidays occuring today or null if no holidays
 	var/wizardmode = FALSE
 
-/datum/controller/subsystem/events/Initialize(time, zlevel)
+/datum/controller/subsystem/events/Initialize()
 	for(var/type in typesof(/datum/round_event_control))
 		var/datum/round_event_control/E = new type()
 		if(!E.typepath)
@@ -22,7 +22,7 @@ SUBSYSTEM_DEF(events)
 		control += E //add it to the list of all events (controls)
 	reschedule()
 	getHoliday()
-	return ..()
+	return SS_INIT_SUCCESS
 
 
 /datum/controller/subsystem/events/fire(resumed = FALSE)
