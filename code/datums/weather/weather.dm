@@ -252,7 +252,7 @@
 		var/list/mutable_appearance/overlays = list()
 		// List of offsets this area wants, based off its z range
 		var/list/offsets = list()
-		for(var/z_index in N.zs_we_have)
+		for(var/z_index in 1 to length(N.zs_we_have))
 			if(!N.zs_we_have[z_index])
 				continue
 			offsets |= GET_Z_PLANE_OFFSET(z_index)

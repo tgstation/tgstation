@@ -111,7 +111,7 @@
 
 	/// List of z levels we have, in the form index (z) -> TRUE/FALSE
 	/// Not guarenteed to overdraw, but it will always at LEAST be accurate
-	var/list/zs_we_have = new /list(100) // (100) because of init immediate, we need to have this filled as soon as possible
+	var/list/zs_we_have = new /list(10)// (10) because of init immediate, and centcom. we need to have this filled as soon as possible
 
 /**
  * A list of teleport locations
