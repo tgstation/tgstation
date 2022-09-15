@@ -97,10 +97,11 @@
 
 /mob/living/simple_animal/bot/cleanbot/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/cleaner, CLEANBOT_CLEANING_TIME, on_cleaned_callback=CALLBACK(src, /atom/.proc/update_icon_state))
+	AddComponent(/datum/component/cleaner, CLEANBOT_CLEANING_TIME, \
+		on_cleaned_callback = CALLBACK(src, /atom/.proc/update_appearance))
 
 	get_targets()
-	update_icon_state()
+	update_appearance()
 
 	// Doing this hurts my soul, but simplebot access reworks are for another day.
 	var/datum/id_trim/job/jani_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/janitor]
@@ -132,6 +133,11 @@
 			icon_state = "[base_icon]-c"
 		else
 			icon_state = "[base_icon][get_bot_flag(bot_mode_flags, BOT_MODE_ON)]"
+
+/mob/living/simple_animal/bot/cleanbot/vv_edit_var(var_name, var_value)
+	. = ..()
+	if(var_name == NAMEOF(src, base_icon))
+		update_appearance()
 
 /mob/living/simple_animal/bot/cleanbot/proc/deputize(obj/item/knife, mob/user)
 	if(!in_range(src, user) || !user.transferItemToLoc(knife, src))
@@ -215,6 +221,12 @@
 		return scan_carbon
 	if(is_type_in_typecache(scan_target, target_types))
 		return scan_target
+
+/mob/living/simple_animal/bot/cleanbot/handle_atom_del(atom/deleting_atom)
+	if(deleting_atom == weapon)
+		weapon = null
+		update_appearance()
+	return ..()
 
 /mob/living/simple_animal/bot/cleanbot/handle_automated_action()
 	. = ..()
