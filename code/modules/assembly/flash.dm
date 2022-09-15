@@ -1,6 +1,5 @@
 #define CONFUSION_STACK_MAX_MULTIPLIER 2
 
-#define FLASH_PROTECTION_SENSITIVE -1
 
 /// No deviation at all. Flashed from the front or front-left/front-right. Alternatively, flashed in direct view.
 #define DEVIATION_NONE 0
@@ -420,4 +419,3 @@
 #undef DEVIATION_NONE
 #undef DEVIATION_PARTIAL
 #undef DEVIATION_FULL
-#undef FLASH_PROTECTION_SENSITIVE
