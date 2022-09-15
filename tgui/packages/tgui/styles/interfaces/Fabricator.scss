@@ -1,14 +1,25 @@
 .Fabricator__Recipe {
   padding: 0.25em 0;
   border-bottom: 1px solid #000;
+  position: relative;
 }
 
 .Fabricator__Button {
   white-space: normal;
 }
 
-Fabricator__Icon {
-  vertical-align: middle;
+.Fabricator__Button,
+.Fabricator__PrintAmount {
+  min-height: 100%;
+}
+
+.Fabricator__Icon {
+  margin-right: 1em;
+}
+
+.Fabricator__Button,
+.Fabricator__PrintAmount {
+  transition: opacity 0.5s ease-out;
 }
 
 .Fabricator__Button--disabled,
@@ -33,7 +44,11 @@ Fabricator__Icon {
   transition: background-color 0.125s ease-out;
 }
 
-.MaterialDock--disabled {
+.MaterialDock__Label {
+  transition: opacity 0.5s ease-out;
+}
+
+.MaterialDock--disabled .MaterialDock__Label {
   opacity: 0.5;
 }
 

@@ -82,6 +82,7 @@
 /obj/machinery/rnd/production/ui_assets(mob/user)
 	return list(
 		get_asset_datum(/datum/asset/spritesheet/sheetmaterials),
+		get_asset_datum(/datum/asset/spritesheet/research_designs)
 	)
 
 /obj/machinery/rnd/production/ui_interact(mob/user, datum/tgui/ui)
@@ -97,6 +98,9 @@
 	var/list/data = list()
 	var/list/designs = list()
 
+	var/datum/asset/spritesheet/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet/research_designs)
+	var/size32x32 = "[spritesheet.name]32x32"
+
 	for(var/datum/design/design in cached_designs)
 		var/cost = list()
 
@@ -104,12 +108,15 @@
 			var/coefficient = efficient_with(design.build_path) ? efficiency_coeff : 1
 			cost[material.name] = design.materials[material] * coefficient
 
+		var/icon_size = spritesheet.icon_size_id(design.id)
+
 		designs[design.id] = list(
 			"name" = design.name,
 			"desc" = design.get_description(),
 			"cost" = cost,
 			"id" = design.id,
-			"categories" = design.category
+			"categories" = design.category,
+			"icon" = "[icon_size == size32x32 ? "" : "[icon_size] "][design.id]"
 		)
 
 	data["designs"] = designs

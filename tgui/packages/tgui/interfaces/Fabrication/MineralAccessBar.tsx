@@ -26,41 +26,41 @@ const MATERIAL_ICONS: Record<string, [number, string][]> = {
   'iron': [
     [0, 'sheet-metal'],
     [17, 'sheet-metal_2'],
-    [50, 'sheet-metal_3'],
+    [34, 'sheet-metal_3'],
   ],
   'glass': [
     [0, 'sheet-glass'],
     [17, 'sheet-glass_2'],
-    [50, 'sheet-glass_3'],
+    [34, 'sheet-glass_3'],
   ],
   'silver': [
     [0, 'sheet-silver'],
     [17, 'sheet-silver_2'],
-    [50, 'sheet-silver_3'],
+    [34, 'sheet-silver_3'],
   ],
   'gold': [
     [0, 'sheet-gold'],
     [17, 'sheet-gold_2'],
-    [50, 'sheet-gold_3'],
+    [34, 'sheet-gold_3'],
   ],
   'diamond': [[0, 'sheet-diamond']],
   'plasma': [
     [0, 'sheet-plasma'],
     [17, 'sheet-plasma_2'],
-    [50, 'sheet-plasma_3'],
+    [34, 'sheet-plasma_3'],
   ],
   'uranium': [[0, 'sheet-uranium']],
   'bananium': [[0, 'sheet-bananium']],
   'titanium': [
     [0, 'sheet-titanium'],
     [17, 'sheet-titanium_2'],
-    [50, 'sheet-titanium_3'],
+    [34, 'sheet-titanium_3'],
   ],
   'bluespace crystal': [[0, 'bluespace_crystal']],
   'plastic': [
     [0, 'sheet-plastic'],
     [17, 'sheet-plastic_2'],
-    [50, 'sheet-plastic_3'],
+    [34, 'sheet-plastic_3'],
   ],
 };
 
@@ -76,7 +76,7 @@ const MaterialIcon = (props: MaterialIconProps) => {
   if (icons) {
     let idx = 0;
 
-    while (icons[idx + 1] && icons[idx][0] < material.amount / 2_000) {
+    while (icons[idx + 1] && icons[idx + 1][0] <= material.amount / 2_000) {
       idx += 1;
     }
 
@@ -151,14 +151,15 @@ const MaterialCounter = (props: MaterialCounterProps, context) => {
       onMouseLeave={() => setHovering(false)}
       className={classes([
         'MaterialDock',
-        canEject && hovering && 'MaterialDock--active',
+        hovering && 'MaterialDock--active',
         !canEject && 'MaterialDock--disabled',
       ])}>
       <Stack vertial direction={'column-reverse'}>
         <Flex
           direction="column"
           textAlign="center"
-          onClick={() => onEjectRequested(1)}>
+          onClick={() => onEjectRequested(1)}
+          className="MaterialDock__Label">
           <Flex.Item>
             <MaterialIcon material={material} />
           </Flex.Item>
@@ -166,7 +167,7 @@ const MaterialCounter = (props: MaterialCounterProps, context) => {
             <AnimatedNumber value={material.amount} format={LABEL_FORMAT} />
           </Flex.Item>
         </Flex>
-        {canEject && hovering && (
+        {hovering && (
           <div className={'MaterialDock__Dock'}>
             <Flex vertical direction={'column-reverse'}>
               <EjectButton
@@ -215,9 +216,10 @@ const EjectButton = (props: EjectButtonProps, context) => {
     <Button
       fluid
       color={'transparent'}
-      className={`Fabricator__PrintAmount ${
-        amount * 2_000 > available ? 'Fabricator__PrintAmount--disabled' : ''
-      }`}
+      className={classes([
+        'Fabricator__PrintAmount',
+        amount * 2_000 > available && 'Fabricator__PrintAmount--disabled',
+      ])}
       onClick={() => onEject(amount)}>
       &times;{amount}
     </Button>

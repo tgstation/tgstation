@@ -1,5 +1,5 @@
 import { useBackend, useSharedState } from '../backend';
-import { Stack, Section, Button, Icon, Dimmer } from '../components';
+import { Stack, Section, Button, Icon, Dimmer, Box, Flex } from '../components';
 import { Window } from '../layouts';
 import { Material, MaterialAmount, MaterialFormatting, MATERIAL_KEYS } from './common/Materials';
 import { sortBy } from 'common/collections';
@@ -7,6 +7,7 @@ import { MaterialAccessBar } from './Fabrication/MineralAccessBar';
 import { SearchBar } from './Fabrication/SearchBar';
 import { DesignCategoryTabs } from './Fabrication/DesignCategoryTabs';
 import { FabricatorData, Design, MaterialMap } from './Fabrication/Types';
+import { classes } from 'common/react';
 
 /**
  * A dummy category that, when selected, renders ALL recipes to the UI.
@@ -207,17 +208,9 @@ const Recipe = (props: { design: Design; available: MaterialMap }, context) => {
   );
 
   return (
-    <div class="Fabricator__Recipe">
-      <Stack justify="space-between" align="stretch">
-        <Stack.Item>
-          <Button
-            icon="question-circle"
-            color="transparent"
-            tooltip={design.desc}
-            tooltipPosition="left"
-          />
-        </Stack.Item>
-        <Stack.Item grow>
+    <div className="Fabricator__Recipe">
+      <Flex justify={'space-between'} align={'center'}>
+        <Flex.Item grow={1}>
           <Button
             color={'transparent'}
             className={`Fabricator__Button ${
@@ -228,16 +221,37 @@ const Recipe = (props: { design: Design; available: MaterialMap }, context) => {
               <MaterialCost design={design} amount={1} available={available} />
             }
             onClick={() => act('build', { ref: design.id, amount: 1 })}>
-            {design.name}
+            <Flex align={'center'}>
+              <Flex.Item>
+                <Box
+                  width={'32px'}
+                  height={'32px'}
+                  className={classes([
+                    'Fabricator__Icon',
+                    'design32x32',
+                    design.icon,
+                  ])}
+                />
+              </Flex.Item>
+              <Flex.Item>{design.name}</Flex.Item>
+            </Flex>
           </Button>
-        </Stack.Item>
-        <Stack.Item>
-          <PrintButton design={design} quantity={5} available={available} />
-        </Stack.Item>
-        <Stack.Item>
-          <PrintButton design={design} quantity={10} available={available} />
-        </Stack.Item>
-      </Stack>
+        </Flex.Item>
+        <Flex.Item>
+          <Flex align={'flex-end'}>
+            <Flex.Item>
+              <PrintButton design={design} quantity={5} available={available} />
+            </Flex.Item>
+            <Flex.Item>
+              <PrintButton
+                design={design}
+                quantity={10}
+                available={available}
+              />
+            </Flex.Item>
+          </Flex>
+        </Flex.Item>
+      </Flex>
     </div>
   );
 };
