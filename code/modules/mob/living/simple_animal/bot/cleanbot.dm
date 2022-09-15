@@ -113,18 +113,19 @@
 /mob/living/simple_animal/bot/cleanbot/Destroy()
 	GLOB.janitor_devices -= src
 	if(weapon)
-		var/atom/Tsec = drop_location()
+		var/atom/drop_loc = drop_location()
 		weapon.force = initial(weapon.force)
-		drop_part(weapon, Tsec)
+		drop_part(weapon, drop_loc)
 	return ..()
 
 /mob/living/simple_animal/bot/cleanbot/examine(mob/user)
 	. = ..()
-	if(weapon)
-		. += "[span_warning("Is that \a [weapon] taped to it...?")]"
+	if(!weapon)
+		return
+	. += "[span_warning("Is that \a [weapon] taped to it...?")]"
 
-		if(ascended && user.stat == CONSCIOUS && user.client)
-			user.client.give_award(/datum/award/achievement/misc/cleanboss, user)
+	if(ascended && user.stat == CONSCIOUS && user.client)
+		user.client.give_award(/datum/award/achievement/misc/cleanboss, user)
 
 /mob/living/simple_animal/bot/cleanbot/update_icon_state()
 	. = ..()
@@ -336,8 +337,8 @@
 	if(ismopable(attack_target))
 		mode = BOT_CLEANING
 		update_icon_state()
-		var/turf/T = get_turf(attack_target)
-		start_cleaning(src, T, src)
+		var/turf/turf_to_clean = get_turf(attack_target)
+		start_cleaning(src, turf_to_clean, src)
 		target = null
 		mode = BOT_IDLE
 
@@ -389,9 +390,9 @@
 				new /obj/effect/particle_effect/fluid/foam(loc)
 
 /mob/living/simple_animal/bot/cleanbot/explode()
-	var/atom/Tsec = drop_location()
-	new /obj/item/reagent_containers/cup/bucket(Tsec)
-	new /obj/item/assembly/prox_sensor(Tsec)
+	var/atom/drop_loc = drop_location()
+	new /obj/item/reagent_containers/cup/bucket(drop_loc)
+	new /obj/item/assembly/prox_sensor(drop_loc)
 	return ..()
 
 // Variables sent to TGUI
