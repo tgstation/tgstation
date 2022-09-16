@@ -328,7 +328,7 @@ Nothing else in the console has ID requirements.
 				if(design.build_type & (AUTOLATHE|PROTOLATHE|AWAY_LATHE)) // Specifically excludes circuit imprinter and mechfab
 					if(design.autolathe_exportable && !design.reagents_list.len)
 						design.build_type |= AUTOLATHE
-					design.category |= "Imported"
+					design.category |= RND_CATEGORY_IMPORTED
 				d_disk.blueprints[slot] = design
 			return TRUE
 		if ("uploadDesignSlot")

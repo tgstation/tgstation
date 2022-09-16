@@ -28,7 +28,7 @@
 	modkit_design = /datum/design/unique_modkit/bounty
 
 /datum/design/unique_modkit
-	category = list("Mining Designs", "Cyborg Upgrade Modules") //can't be normally obtained
+	category = list(RND_CATEGORY_MINING_DESIGNS, RND_CATEGORY_CYBORG_UPGRADE_MODULES) //can't be normally obtained
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO
 
@@ -168,7 +168,7 @@
 /obj/item/clothing/neck/necklace/memento_mori/proc/check_health(mob/living/source)
 	SIGNAL_HANDLER
 
-	var/list/guardians = source.hasparasites()
+	var/list/guardians = source.get_all_linked_holoparasites()
 	if(!length(guardians))
 		return
 	if(source.health <= HEALTH_THRESHOLD_DEAD)
@@ -478,6 +478,7 @@
 	if(!user.can_read(src))
 		return FALSE
 	to_chat(user, span_notice("You flip through the pages of the book, quickly and conveniently learning every language in existence. Somewhat less conveniently, the aging book crumbles to dust in the process. Whoops."))
+	user.remove_blocked_language(GLOB.all_languages, source = LANGUAGE_ALL)
 	user.grant_all_languages()
 	new /obj/effect/decal/cleanable/ash(get_turf(user))
 	qdel(src)
@@ -585,7 +586,7 @@
 
 /obj/item/clothing/gloves/gauntlets/proc/rocksmash(mob/living/carbon/human/H, atom/A, proximity)
 	SIGNAL_HANDLER
-	if(!istype(A, /turf/closed/mineral))
+	if(!ismineralturf(A))
 		return
 	A.attackby(src, H)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
@@ -594,6 +595,7 @@
 	name = "berserker armor"
 	desc = "Voices echo from the armor, driving the user insane. Is not space-proof."
 	icon_state = "berserker"
+	icon = 'icons/obj/clothing/suits/armor.dmi'
 	worn_icon = 'icons/mob/clothing/suits/armor.dmi'
 	hoodtype = /obj/item/clothing/head/hooded/berserker
 	armor = list(MELEE = 30, BULLET = 30, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 0, FIRE = 100, ACID = 100)

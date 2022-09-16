@@ -120,10 +120,11 @@
 	slowdown_inactive = 1.5
 	slowdown_active = 1
 	allowed_suit_storage = list(
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
 		/obj/item/construction/rcd,
+		/obj/item/fireaxe/metal_h2_axe,
+		/obj/item/flashlight,
 		/obj/item/storage/bag/construction,
+		/obj/item/tank/internals,
 	)
 	skins = list(
 		"engineering" = list(
@@ -168,11 +169,12 @@
 	slowdown_inactive = 1.5
 	slowdown_active = 1
 	allowed_suit_storage = list(
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
 		/obj/item/analyzer,
-		/obj/item/t_scanner,
+		/obj/item/fireaxe/metal_h2_axe,
+		/obj/item/flashlight,
 		/obj/item/pipe_dispenser,
+		/obj/item/t_scanner,
+		/obj/item/tank/internals,
 	)
 	skins = list(
 		"atmospheric" = list(
@@ -220,14 +222,15 @@
 	slowdown_active = 0.5
 	inbuilt_modules = list(/obj/item/mod/module/magboot/advanced)
 	allowed_suit_storage = list(
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
 		/obj/item/analyzer,
-		/obj/item/t_scanner,
-		/obj/item/pipe_dispenser,
 		/obj/item/construction/rcd,
-		/obj/item/storage/bag/construction,
+		/obj/item/fireaxe/metal_h2_axe,
+		/obj/item/flashlight,
 		/obj/item/melee/baton/telescopic,
+		/obj/item/pipe_dispenser,
+		/obj/item/storage/bag/construction,
+		/obj/item/t_scanner,
+		/obj/item/tank/internals,
 	)
 	skins = list(
 		"advanced" = list(
@@ -604,7 +607,7 @@
 
 /datum/mod_theme/security
 	name = "security"
-	desc = "An Apadyne Technologies security suit, offering shock protection and quicker speed, at the cost of carrying capacity."
+	desc = "An Apadyne Technologies security suit, offering quicker speed at the cost of carrying capacity."
 	extended_desc = "An Apadyne Technologies classic, this model of MODsuit has been designed for quick response to \
 		hostile situations. These suits have been layered with plating worthy enough for fires or corrosive environments, \
 		and come with composite cushioning and an advanced honeycomb structure underneath the hull to ensure protection \

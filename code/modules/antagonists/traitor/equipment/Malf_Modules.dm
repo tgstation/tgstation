@@ -401,7 +401,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	if(caller.incapacitated())
 		unset_ranged_ability(caller)
 		return FALSE
-	if(!istype(clicked_on, /obj/machinery))
+	if(!ismachinery(clicked_on))
 		to_chat(caller, span_warning("You can only animate machines!"))
 		return FALSE
 	var/obj/machinery/clicked_machine = clicked_on
@@ -489,7 +489,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	if(caller.incapacitated())
 		unset_ranged_ability(caller)
 		return FALSE
-	if(!istype(clicked_on, /obj/machinery))
+	if(!ismachinery(clicked_on))
 		to_chat(caller, span_warning("You can only overload machines!"))
 		return FALSE
 	var/obj/machinery/clicked_machine = clicked_on

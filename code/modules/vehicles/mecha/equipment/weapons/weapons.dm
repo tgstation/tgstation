@@ -63,6 +63,7 @@
 				spread = round((i / projectiles_per_shot - 0.5) * variance)
 
 		var/obj/projectile/projectile_obj = new projectile(get_turf(src))
+		projectile_obj.log_override = TRUE //we log being fired ourselves a little further down.
 		projectile_obj.firer = chassis
 		projectile_obj.preparePixelProjectile(target, source, modifiers, spread)
 		if(source.client && isliving(source)) //dont want it to happen from syndie mecha npc mobs, they do direct fire anyways
@@ -73,11 +74,13 @@
 			new firing_effect_type(get_turf(src), chassis.dir)
 		playsound(chassis, fire_sound, 50, TRUE)
 
+		log_combat(source, target, "fired [projectile_obj] at", src, "from [chassis] at [get_area_name(src, TRUE)]")
+
 		sleep(max(0, projectile_delay))
 
 		if(kickback)
 			chassis.newtonian_move(newtonian_target)
-	chassis.log_message("Fired from [name], targeting [target].", LOG_ATTACK)
+	chassis.log_message("[key_name(source)] fired [src], targeting [target].", LOG_ATTACK)
 
 //Base energy weapon type
 /obj/item/mecha_parts/mecha_equipment/weapon/energy

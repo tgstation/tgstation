@@ -84,7 +84,7 @@
 
 /obj/effect/temp_visual/dir_setting/ninja
 	name = "ninja shadow"
-	icon = 'icons/mob/mob.dmi'
+	icon = 'icons/mob/simple/mob.dmi'
 	icon_state = "uncloak"
 	duration = 9
 
@@ -103,7 +103,7 @@
 
 /obj/effect/temp_visual/dir_setting/wraith
 	name = "shadow"
-	icon = 'icons/mob/cult.dmi'
+	icon = 'icons/mob/nonhuman-player/cult.dmi'
 	icon_state = "phase_shift2_cult"
 	duration = 0.6 SECONDS
 
@@ -176,7 +176,7 @@
 
 /obj/effect/temp_visual/wizard
 	name = "water"
-	icon = 'icons/mob/mob.dmi'
+	icon = 'icons/mob/simple/mob.dmi'
 	icon_state = "reappear"
 	duration = 5
 
@@ -185,7 +185,7 @@
 	duration = 12
 
 /obj/effect/temp_visual/monkeyify
-	icon = 'icons/mob/mob.dmi'
+	icon = 'icons/mob/simple/mob.dmi'
 	icon_state = "h2monkey"
 	duration = 22
 
@@ -193,7 +193,7 @@
 	icon_state = "monkey2h"
 
 /obj/effect/temp_visual/borgflash
-	icon = 'icons/mob/mob.dmi'
+	icon = 'icons/mob/simple/mob.dmi'
 	icon_state = "blspell"
 	duration = 5
 
@@ -282,7 +282,7 @@
 	duration = 9
 
 /obj/effect/temp_visual/gib_animation
-	icon = 'icons/mob/mob.dmi'
+	icon = 'icons/mob/simple/mob.dmi'
 	duration = 15
 
 /obj/effect/temp_visual/gib_animation/Initialize(mapload, gib_icon)
@@ -290,10 +290,10 @@
 	. = ..()
 
 /obj/effect/temp_visual/gib_animation/animal
-	icon = 'icons/mob/animal.dmi'
+	icon = 'icons/mob/simple/animal.dmi'
 
 /obj/effect/temp_visual/dust_animation
-	icon = 'icons/mob/mob.dmi'
+	icon = 'icons/mob/simple/mob.dmi'
 	duration = 15
 
 /obj/effect/temp_visual/dust_animation/Initialize(mapload, dust_icon)
@@ -301,7 +301,7 @@
 	. = ..()
 
 /obj/effect/temp_visual/mummy_animation
-	icon = 'icons/mob/mob.dmi'
+	icon = 'icons/mob/simple/mob.dmi'
 	icon_state = "mummy_revive"
 	duration = 20
 
@@ -319,7 +319,7 @@
 
 /obj/effect/temp_visual/kinetic_blast
 	name = "kinetic explosion"
-	icon = 'icons/obj/guns/projectiles.dmi'
+	icon = 'icons/obj/weapons/guns/projectiles.dmi'
 	icon_state = "kinetic_blast"
 	layer = ABOVE_ALL_MOB_LAYER
 	plane = ABOVE_GAME_PLANE
@@ -399,7 +399,7 @@
 
 /obj/effect/temp_visual/heart
 	name = "heart"
-	icon = 'icons/mob/animal.dmi'
+	icon = 'icons/mob/simple/animal.dmi'
 	icon_state = "heart"
 	duration = 25
 

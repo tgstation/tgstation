@@ -222,7 +222,7 @@ Behavior that's still missing from this component that original food items had t
 	volume = max(volume, ROUND_UP(original_atom.reagents.maximum_volume / chosen_processing_option[TOOL_PROCESSING_AMOUNT]))
 
 	this_food.create_reagents(volume)
-	original_atom.reagents.copy_to(this_food, original_atom.reagents.total_volume, 1 / chosen_processing_option[TOOL_PROCESSING_AMOUNT])
+	original_atom.reagents.copy_to(this_food, original_atom.reagents.total_volume / chosen_processing_option[TOOL_PROCESSING_AMOUNT], 1)
 
 	if(original_atom.name != initial(original_atom.name))
 		this_food.name = "slice of [original_atom.name]"
@@ -380,14 +380,14 @@ Behavior that's still missing from this component that original food items had t
 				span_userdanger("[feeder] attempts to [eater.get_bodypart(BODY_ZONE_HEAD) ? "feed you [parent]." : "stuff [parent] down your throat hole! Gross."]")
 			)
 			if(eater.is_blind())
-				to_chat(eater, span_danger("You feel someone trying to feed you something!"))
+				to_chat(eater, span_userdanger("You feel someone trying to feed you something!"))
 		else
 			eater.visible_message(
 				span_danger("[feeder] cannot force any more of [parent] down [eater]'s [eater.get_bodypart(BODY_ZONE_HEAD) ? "throat!" : "throat hole! Eugh."]"),
 				span_userdanger("[feeder] cannot force any more of [parent] down your [eater.get_bodypart(BODY_ZONE_HEAD) ? "throat!" : "throat hole! Eugh."]")
 			)
 			if(eater.is_blind())
-				to_chat(eater, span_danger("You're too full to eat what's being fed to you!"))
+				to_chat(eater, span_userdanger("You're too full to eat what's being fed to you!"))
 			return
 		if(!do_mob(feeder, eater, time = time_to_eat)) //Wait 3-ish seconds before you can feed
 			return
@@ -399,7 +399,7 @@ Behavior that's still missing from this component that original food items had t
 			span_userdanger("[feeder] forces you to eat [parent]!")
 		)
 		if(eater.is_blind())
-			to_chat(eater, span_danger("You're forced to eat something!"))
+			to_chat(eater, span_userdanger("You're forced to eat something!"))
 
 	TakeBite(eater, feeder)
 

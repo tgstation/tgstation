@@ -1,7 +1,7 @@
 /obj/structure/statue
 	name = "statue"
 	desc = "Placeholder. Yell at Firecage if you SOMEHOW see this."
-	icon = 'icons/obj/statue.dmi'
+	icon = 'icons/obj/art/statue.dmi'
 	icon_state = ""
 	density = TRUE
 	anchored = FALSE
@@ -205,7 +205,7 @@
 /obj/structure/statue/sandstone/venus //call me when we add marble i guess
 	name = "statue of a pure maiden"
 	desc = "An ancient marble statue. The subject is depicted with a floor-length braid and is wielding a toolbox. By Jove, it's easily the most gorgeous depiction of a woman you've ever seen. The artist must truly be a master of his craft. Shame about the broken arm, though."
-	icon = 'icons/obj/statuelarge.dmi'
+	icon = 'icons/obj/art/statuelarge.dmi'
 	icon_state = "venus"
 
 /////////////////////snow/////////////////////////////////////////
@@ -248,10 +248,18 @@
 	impressiveness = 100
 	abstract_type = /obj/structure/statue/elder_atmosian //This one is uncarvable
 
+///////////Goliath//////////////////////////////////////////////////
+/obj/structure/statue/goliath
+	desc = "A lifelike statue of a horrifying monster."
+	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
+	icon_state = "goliath"
+	name = "goliath"
+
+///////////Other Stuff//////////////////////////////////////////////
 /obj/item/chisel
 	name = "chisel"
 	desc = "Breaking and making art since 4000 BC. This one uses advanced technology to allow the creation of lifelike moving statues."
-	icon = 'icons/obj/statue.dmi'
+	icon = 'icons/obj/art/statue.dmi'
 	icon_state = "chisel"
 	inhand_icon_state = "screwdriver_nuke"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
@@ -382,7 +390,7 @@ Moving interrupts
 /obj/structure/carving_block
 	name = "block"
 	desc = "ready for sculpting."
-	icon = 'icons/obj/statue.dmi'
+	icon = 'icons/obj/art/statue.dmi'
 	icon_state = "block"
 	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS | MATERIAL_ADD_PREFIX
 	density = TRUE

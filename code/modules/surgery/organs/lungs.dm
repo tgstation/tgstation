@@ -34,8 +34,8 @@
 	var/safe_plasma_min = 0
 	///How much breath partial pressure is a safe amount of plasma. 0 means that we are immune to plasma.
 	var/safe_plasma_max = 0.05
-	var/SA_para_min = 1 //Sleeping agent
-	var/SA_sleep_min = 5 //Sleeping agent
+	var/n2o_para_min = 1 //Sleeping agent
+	var/n2o_sleep_min = 5 //Sleeping agent
 	var/BZ_trip_balls_min = 1 //BZ gas
 	var/BZ_brain_damage_min = 10 //Give people some room to play around without killing the station
 	var/gas_stimulation_min = 0.002 //nitrium and Freon
@@ -265,15 +265,23 @@
 
 	if(breath) // If there's some other shit in the air lets deal with it here.
 
+	// Pluoxium
+		var/pluoxium_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/pluoxium][MOLES])
+		if(pluoxium_pp > gas_stimulation_min)
+			var/existing = breather.reagents.get_reagent_amount(/datum/reagent/pluoxium)
+			breather.reagents.add_reagent(/datum/reagent/pluoxium, max(0, 1 - existing))
+		gas_breathed = breath_gases[/datum/gas/pluoxium][MOLES]
+		breath_gases[/datum/gas/pluoxium][MOLES] -= gas_breathed
+
 	// N2O
 
-		var/SA_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/nitrous_oxide][MOLES])
-		if(SA_pp > SA_para_min) // Enough to make us stunned for a bit
+		var/n2o_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/nitrous_oxide][MOLES])
+		if(n2o_pp > n2o_para_min) // Enough to make us stunned for a bit
 			breather.throw_alert(ALERT_TOO_MUCH_N2O, /atom/movable/screen/alert/too_much_n2o)
 			breather.Unconscious(60) // 60 gives them one second to wake up and run away a bit!
-			if(SA_pp > SA_sleep_min) // Enough to make us sleep as well
+			if(n2o_pp > n2o_sleep_min) // Enough to make us sleep as well
 				breather.Sleeping(min(breather.AmountSleeping() + 100, 200))
-		else if(SA_pp > 0.01) // There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
+		else if(n2o_pp > 0.01) // There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
 			breather.clear_alert(ALERT_TOO_MUCH_N2O)
 			if(prob(20))
 				n2o_euphoria = EUPHORIA_ACTIVE
@@ -359,14 +367,6 @@
 				breather.reagents.add_reagent(/datum/reagent/healium,max(0, 1 - existing))
 		gas_breathed = breath_gases[/datum/gas/healium][MOLES]
 		breath_gases[/datum/gas/healium][MOLES]-=gas_breathed
-
-	//Pluoxium
-		var/pluoxium_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/pluoxium][MOLES])
-		if(pluoxium_pp > gas_stimulation_min)
-			var/existing = breather.reagents.get_reagent_amount(/datum/reagent/pluoxium)
-			breather.reagents.add_reagent(/datum/reagent/pluoxium, max(0, 1 - existing))
-		gas_breathed = breath_gases[/datum/gas/pluoxium][MOLES]
-		breath_gases[/datum/gas/pluoxium][MOLES] -= gas_breathed
 
 	// Proto Nitrate
 		// Inert
@@ -540,6 +540,7 @@
 	name = "plasma filter"
 	desc = "A spongy rib-shaped mass for filtering plasma from the air."
 	icon_state = "lungs-plasma"
+	organ_traits = list(TRAIT_NOHUNGER) // A fresh breakfast of plasma is a great start to any morning.
 
 	safe_oxygen_min = 0 //We don't breathe this
 	safe_plasma_min = 4 //We breathe THIS!

@@ -49,7 +49,7 @@
 		take_holo_damage(2)
 		return
 	visible_message(span_notice("Responding to its master's touch, [src] disengages its holochassis emitter, rapidly losing coherence."))
-	if(!do_after(user, 1 SECONDS, TRUE, src))
+	if(!do_after(user, 1 SECONDS, src))
 		return
 	fold_in()
 	if(user.put_in_hands(card))

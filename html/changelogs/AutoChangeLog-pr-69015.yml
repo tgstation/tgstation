@@ -1,7 +1,0 @@
-author: "vincentiusvin"
-delete-after: True
-changes: 
-  - qol: "made the operating computer go off on body position instead of the resting intent."
-  - qol: "aliens show up on operating computer now."
-  - bugfix: "fixed the operating computer UI showing empty progress bars. Should just tell you no patient in text now."
-  - refactor: "refactored how operating tables fetches it's patient."

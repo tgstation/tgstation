@@ -14,6 +14,33 @@
 	var/old_grab_state = null
 	var/mob/restraining_mob
 
+/datum/martial_art/cqc/teach(mob/living/cqc_user, make_temporary)
+	. = ..()
+	RegisterSignal(cqc_user, COMSIG_PARENT_ATTACKBY, .proc/on_attackby)
+
+/datum/martial_art/cqc/on_remove(mob/living/cqc_user)
+	UnregisterSignal(cqc_user, COMSIG_PARENT_ATTACKBY)
+	. = ..()
+
+///Signal from getting attacked with an item, for a special interaction with touch spells
+/datum/martial_art/cqc/proc/on_attackby(mob/living/cqc_user, obj/item/attack_weapon, mob/attacker, params)
+	SIGNAL_HANDLER
+
+	if(!istype(attack_weapon, /obj/item/melee/touch_attack))
+		return
+	if(!can_use(cqc_user))
+		return
+	cqc_user.visible_message(
+		span_danger("[cqc_user] twists [attacker]'s arm, sending their [attack_weapon] back towards them!"),
+		span_userdanger("Making sure to avoid [attacker]'s [attack_weapon], you twist their arm to send it right back at them!"),
+	)
+	var/obj/item/melee/touch_attack/touch_weapon = attack_weapon
+	var/datum/action/cooldown/spell/touch/touch_spell = touch_weapon.spell_which_made_us?.resolve()
+	if(!touch_spell)
+		return
+	INVOKE_ASYNC(touch_spell, /datum/action/cooldown/spell/touch.proc/do_hand_hit, touch_weapon, attacker, attacker)
+	return COMPONENT_NO_AFTERATTACK
+
 /datum/martial_art/cqc/reset_streak(mob/living/new_target)
 	if(new_target && new_target != restraining_mob)
 		restraining_mob = null

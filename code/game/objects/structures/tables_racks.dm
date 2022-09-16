@@ -178,8 +178,8 @@
 	if(user.mind?.martial_art.smashes_tables && user.mind?.martial_art.can_use(user))
 		deconstruct(FALSE)
 	playsound(pushed_mob, 'sound/effects/bang.ogg', 90, TRUE)
-	pushed_mob.visible_message(span_danger("[user] smashes [pushed_mob]'s [banged_limb.name] against \the [src]!"),
-								span_userdanger("[user] smashes your [banged_limb.name] against \the [src]"))
+	pushed_mob.visible_message(span_danger("[user] smashes [pushed_mob]'s [banged_limb.plaintext_zone] against \the [src]!"),
+								span_userdanger("[user] smashes your [banged_limb.plaintext_zone] against \the [src]"))
 	log_combat(user, pushed_mob, "head slammed", null, "against [src]")
 	pushed_mob.add_mood_event("table", /datum/mood_event/table_limbsmash, banged_limb)
 
@@ -330,6 +330,14 @@
 	base_icon_state = "table_greyscale"
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	buildstack = null //No buildstack, so generate from mat datums
+
+/obj/structure/table/greyscale/set_custom_materials(list/materials, multiplier)
+	. = ..()
+	var/list/materials_list = list()
+	for(var/custom_material in custom_materials)
+		var/datum/material/current_material = GET_MATERIAL_REF(custom_material)
+		materials_list += "[current_material.name]"
+	desc = "A square [(materials_list.len > 1) ? "amalgamation" : "piece"] of [english_list(materials_list)] on four legs. It can not move."
 
 ///Table on wheels
 /obj/structure/table/rolling
@@ -671,8 +679,8 @@
 /obj/structure/table/optable
 	name = "operating table"
 	desc = "Used for advanced medical procedures."
-	icon = 'icons/obj/surgery.dmi'
-	icon_state = "optable"
+	icon = 'icons/obj/medical/surgery_table.dmi'
+	icon_state = "surgery_table"
 	buildstack = /obj/item/stack/sheet/mineral/silver
 	smoothing_flags = NONE
 	smoothing_groups = null
@@ -735,7 +743,7 @@
 	if(potential_patient.body_position == LYING_DOWN && potential_patient.loc == loc)
 		patient = potential_patient
 		return
-	
+
 	// Find another lying mob as a replacement.
 	for (var/mob/living/carbon/replacement_patient in loc.contents)
 		if(replacement_patient.body_position == LYING_DOWN)
@@ -770,7 +778,7 @@
 
 /obj/structure/rack/MouseDrop_T(obj/O, mob/user)
 	. = ..()
-	if ((!( istype(O, /obj/item) ) || user.get_active_held_item() != O))
+	if ((!( isitem(O) ) || user.get_active_held_item() != O))
 		return
 	if(!user.dropItemToGround(O))
 		return
@@ -831,7 +839,7 @@
 /obj/item/rack_parts
 	name = "rack parts"
 	desc = "Parts of a rack."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "rack_parts"
 	flags_1 = CONDUCT_1
 	custom_materials = list(/datum/material/iron=2000)

@@ -1,7 +1,7 @@
 /obj/item/gun/magic
 	name = "staff of nothing"
 	desc = "This staff is boring to watch because even though it came first you've seen everything it can do in other staves for years."
-	icon = 'icons/obj/guns/magic.dmi'
+	icon = 'icons/obj/weapons/guns/magic.dmi'
 	icon_state = "staffofnothing"
 	inhand_icon_state = "staff"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi' //not really a gun and some toys use these inhands

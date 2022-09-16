@@ -708,7 +708,19 @@
 	switch(random)
 		if(1)
 			to_chat(user, span_danger("Your appearance morphs to that of a very small humanoid ash dragon! You get to look like a freak without the cool abilities."))
-			consumer.dna.features = list("mcolor" = "#A02720", "tail_lizard" = "Dark Tiger", "tail_human" = "None", "snout" = "Sharp", "horns" = "Curled", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "Long", "body_markings" = "Dark Tiger Body", "legs" = "Digitigrade Legs")
+			consumer.dna.features = list(
+				"mcolor" = "#A02720",
+				"tail_lizard" = "Dark Tiger",
+				"tail_human" = "None",
+				"snout" = "Sharp",
+				"horns" = "Curled",
+				"ears" = "None",
+				"wings" = "None",
+				"frills" = "None",
+				"spines" = "Long",
+				"body_markings" = "Dark Tiger Body",
+				"legs" = DIGITIGRADE_LEGS,
+			)
 			consumer.eye_color_left = "#FEE5A3"
 			consumer.eye_color_right = "#FEE5A3"
 			consumer.set_species(/datum/species/lizard)
@@ -732,7 +744,7 @@
 	icon_state = "lavastaff"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
-	icon = 'icons/obj/guns/magic.dmi'
+	icon = 'icons/obj/weapons/guns/magic.dmi'
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 18
@@ -761,7 +773,7 @@
 		var/turf/open/T = get_turf(target)
 		if(!istype(T))
 			return
-		if(!istype(T, /turf/open/lava))
+		if(!islava(T))
 			var/obj/effect/temp_visual/lavastaff/L = new /obj/effect/temp_visual/lavastaff(T)
 			L.alpha = 0
 			animate(L, alpha = 255, time = create_delay)
@@ -923,7 +935,7 @@
 	name = "staff of storms"
 	desc = "An ancient staff retrieved from the remains of Legion. The wind stirs as you move it."
 	icon_state = "staffofstorms"
-	icon = 'icons/obj/guns/magic.dmi'
+	icon = 'icons/obj/weapons/guns/magic.dmi'
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	slot_flags = ITEM_SLOT_BACK

@@ -51,7 +51,7 @@
 
 /datum/component/wet_floor/proc/update_overlay()
 	var/intended
-	if(!istype(parent, /turf/open/floor))
+	if(!isfloorturf(parent))
 		intended = generic_turf_overlay
 	else
 		switch(highest_strength)

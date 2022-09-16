@@ -1,6 +1,6 @@
 /obj/item/storage/bag/garment
 	name = "garment bag"
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/storage/storage.dmi'
 	icon_state = "garment_bag"
 	desc = "A bag for storing extra clothes and shoes."
 	slot_flags = NONE
@@ -54,7 +54,7 @@
 	new /obj/item/clothing/head/caphat/parade(src)
 	new /obj/item/clothing/head/crown/fancy(src)
 	new /obj/item/clothing/neck/cloak/cap(src)
-	new /obj/item/clothing/shoes/sneakers/brown(src)
+	new /obj/item/clothing/shoes/laceup(src)
 	new /obj/item/clothing/suit/hooded/wintercoat/captain(src)
 
 

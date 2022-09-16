@@ -20,6 +20,9 @@
 		"c-reader",
 		"circuit_imprinter",
 		"circuit_imprinter_offstation",
+		"coffeemaker",
+		"coffeepot",
+		"coffee_cartridge",
 		"conveyor_belt",
 		"conveyor_switch",
 		"design_disk",
@@ -62,6 +65,7 @@
 		"titaniumglass",
 		"toner",
 		"toner_large",
+		"trapdoor_electronics",
 		"turbine_part_compressor",
 		"turbine_part_rotor",
 		"turbine_part_stator",
@@ -215,6 +219,7 @@
 		"petri_dish",
 		"pillbottle",
 		"plumbing_rcd",
+		"plumbing_rcd_service",
 		"plumbing_rcd_sci",
 		"portable_chem_mixer",
 		"retractor",
@@ -357,7 +362,7 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 	required_experiments = list(/datum/experiment/dissection/nonhuman)
-	discount_experiments = list(/datum/experiment/scanning/random/material/meat = 4000) //Big discount to reinforce doing it.
+	discount_experiments = list(/datum/experiment/scanning/random/material/meat = 4000)
 
 /datum/techweb_node/xenoorgan_biotech
 	id = "xenoorgan_bio"
@@ -548,9 +553,11 @@
 		"sheetifier",
 		"weldingmask",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
-	required_experiments = list(/datum/experiment/ordnance/gaseous/bz)
-	discount_experiments = list(/datum/experiment/scanning/random/material/medium/one = 4000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 15000)
+	discount_experiments = list(
+		/datum/experiment/scanning/random/material/medium/one = 4000,
+		/datum/experiment/ordnance/gaseous/bz = 10000,
+	)
 
 /datum/techweb_node/anomaly
 	id = "anomaly_research"
@@ -660,6 +667,7 @@
 	design_ids = list(
 		"bluespacebeaker",
 		"bluespacesyringe",
+		"bluespace_coffeepot",
 		"bs_rped",
 		"minerbag_holding",
 		"ore_silo",
@@ -739,6 +747,7 @@
 		"dispenser_shell",
 		"door_shell",
 		"gun_shell",
+		"keyboard_shell",
 		"module_shell",
 		"money_bot_shell",
 		"scanner_gate_shell",
@@ -983,9 +992,11 @@
 	design_ids = list(
 		"quadultra_micro_laser",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
-	discount_experiments = list(/datum/experiment/scanning/points/machinery_pinpoint_scan/tier3_microlaser = 4000)
-	required_experiments = list(/datum/experiment/ordnance/gaseous/noblium)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 15000)
+	discount_experiments = list(
+		/datum/experiment/scanning/points/machinery_pinpoint_scan/tier3_microlaser = 4000,
+		/datum/experiment/ordnance/gaseous/noblium = 10000,
+	)
 
 /////////////////////////Clown tech/////////////////////////
 /datum/techweb_node/clown
@@ -1402,8 +1413,8 @@
 		"pin_testing",
 		"tele_shield",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
-	required_experiments = list(/datum/experiment/ordnance/explosive/pressurebomb)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 20000)
+	discount_experiments = list(/datum/experiment/ordnance/explosive/pressurebomb = 10000)
 
 /datum/techweb_node/adv_weaponry
 	id = "adv_weaponry"
@@ -1552,8 +1563,21 @@
 		"mod_injector",
 		"mod_organ_thrower",
 		"mod_dna_lock",
+		"mod_patienttransport",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+
+/datum/techweb_node/mod_advanced_medical
+	id = "mod_advanced_medical"
+	display_name = "Advanced Medical Modular Suits"
+	description = "Advanced medical suits for quicker rescue purposes."
+	prereq_ids = list("mod_medical", "adv_biotech")
+	design_ids = list(
+		"mod_defib",
+		"mod_threadripper",
+		"mod_surgicalprocessor",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3500)
 
 /datum/techweb_node/mod_security
 	id = "mod_security"
@@ -1569,6 +1593,7 @@
 		"mod_holster",
 		"mod_sonar",
 		"mod_projectile_dampener",
+		"mod_criminalcapture",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
@@ -1986,8 +2011,8 @@
 		/obj/item/wrench/abductor,
 	)
 
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-	required_experiments = list(/datum/experiment/scanning/points/slime/hard)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 12500)
+	discount_experiments = list(/datum/experiment/scanning/points/slime/hard = 10000)
 	hidden = TRUE
 
 /datum/techweb_node/alien_engi

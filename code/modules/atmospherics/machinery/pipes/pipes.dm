@@ -124,7 +124,7 @@
 /obj/machinery/atmospherics/pipe/paint(paint_color)
 	if(paintable)
 		add_atom_colour(paint_color, FIXED_COLOUR_PRIORITY)
-		pipe_color = paint_color
+		set_pipe_color(pipe_color)
 		update_node_icon()
 	return paintable
 

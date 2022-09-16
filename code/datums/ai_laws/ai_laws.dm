@@ -14,7 +14,7 @@
 		round_default_lawset = setup_round_default_laws()
 	return  round_default_lawset
 
-//different settings for configged defaults
+//different settings for configured defaults
 
 /// Always make the round default asimov
 #define CONFIG_ASIMOV 0
@@ -22,7 +22,7 @@
 #define CONFIG_CUSTOM 1
 /// Set to a completely random ai law subtype, good, bad, it cares not. Careful with this one
 #define CONFIG_RANDOM 2
-/// Set to a configged weighted list of lawtypes in the config. This lets server owners pick from a pool of sane laws, it is also the same process for ian law rerolls.
+/// Set to a configged weighted list of law types in the config. This lets server owners pick from a pool of sane laws, it is also the same process for ian law rerolls.
 #define CONFIG_WEIGHTED 3
 /// Set to a specific lawset in the game options.
 #define CONFIG_SPECIFIED 4
@@ -323,7 +323,7 @@
 		return TRUE
 	if(owner?.mind?.special_role)
 		return FALSE
-	if (istype(owner, /mob/living/silicon/ai))
+	if (isAI(owner))
 		var/mob/living/silicon/ai/A=owner
 		if(A?.deployed_shell?.mind?.special_role)
 			return FALSE

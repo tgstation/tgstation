@@ -5,6 +5,7 @@ SUBSYSTEM_DEF(statpanels)
 	init_stage = INITSTAGE_EARLY
 	priority = FIRE_PRIORITY_STATPANEL
 	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
+	flags = SS_NO_INIT
 	var/list/currentrun = list()
 	var/list/global_data
 	var/list/mc_data

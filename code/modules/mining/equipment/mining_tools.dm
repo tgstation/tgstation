@@ -232,7 +232,7 @@
 			attack_verb_continuous = list("hits", "pierces", "slices", "attacks")
 			attack_verb_simple = list("hit", "pierce", "slice", "attack")
 	playsound(src, 'sound/items/ratchet.ogg', 50, vary = TRUE)
-	user.update_inv_hands()
+	user.update_held_items()
 
 /obj/item/trench_tool/proc/check_menu(mob/user)
 	if(!istype(user))

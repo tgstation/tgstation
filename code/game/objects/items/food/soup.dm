@@ -160,7 +160,7 @@
 	foodtypes = MEAT | GORE
 
 /obj/item/food/soup/miso
-	name = "misosoup"
+	name = "miso soup"
 	desc = "The universes best soup! Yum!!!"
 	icon_state = "misosoup"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/water = 5, /datum/reagent/consumable/nutriment/vitamin = 4)
@@ -307,3 +307,10 @@
 	tastes = list("creamy vegetables"= 2, "sausage" = 1)
 	foodtypes = VEGETABLES | MEAT | GRAIN | BREAKFAST
 
+/obj/item/food/soup/cullen_skink
+	name = "cullen skink"
+	desc = "A thick Scottish soup made of smoked fish, potatoes and onions."
+	icon_state = "cullen_skink"
+	food_reagents = list (/datum/reagent/consumable/nutriment = 12, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/consumable/nutriment/protein = 6)
+	tastes = list("creamy broth"= 1, "fish" = 1, "vegetables" = 1)
+	foodtypes = VEGETABLES | SEAFOOD | DAIRY

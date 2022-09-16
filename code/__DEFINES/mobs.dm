@@ -57,7 +57,7 @@
 #define ORGAN_ORGANIC 1
 #define ORGAN_ROBOTIC 2
 
-#define DEFAULT_BODYPART_ICON_ORGANIC 'icons/mob/human_parts_greyscale.dmi'
+#define DEFAULT_BODYPART_ICON_ORGANIC 'icons/mob/species/human/bodyparts_greyscale.dmi'
 #define DEFAULT_BODYPART_ICON_ROBOTIC 'icons/mob/augmentation/augments.dmi'
 
 #define MONKEY_BODYPART "monkey"
@@ -123,6 +123,9 @@
 #define DIGITIGRADE_OPTIONAL 1
 ///The species is forced to have digitigrade legs in generation.
 #define DIGITIGRADE_FORCED 2
+
+///Digitigrade's prefs, used in features for legs if you're meant to be a Digitigrade.
+#define DIGITIGRADE_LEGS "Digitigrade Legs"
 
 //TODO: Remove entirely in favor of the BODYTYPE system
 ///Body type bitfields for allowed_animal_origin used to check compatible surgery body types (use NONE for no matching body type)
@@ -483,6 +486,16 @@
 #define SLIME_EXTRACT (1<<5)
 //Wabbacjack staff projectiles
 #define WABBAJACK (1<<6)
+
+// Randomization keys for calling wabbajack with.
+// Note the contents of these keys are important, as they're displayed to the player
+// Ex: (You turn into a "monkey", You turn into a "xenomorph")
+#define WABBAJACK_MONKEY "monkey"
+#define WABBAJACK_ROBOT "robot"
+#define WABBAJACK_SLIME "slime"
+#define WABBAJACK_XENO "xenomorph"
+#define WABBAJACK_HUMAN "humanoid"
+#define WABBAJACK_ANIMAL "animal"
 
 // Reasons a defibrilation might fail
 #define DEFIB_POSSIBLE (1<<0)

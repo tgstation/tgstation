@@ -6,10 +6,8 @@
 	say_mod = "hisses"
 	species_traits = list(MUTCOLORS, EYECOLOR, LIPS, HAS_FLESH, HAS_BONE)
 	inherent_traits = list(
-		TRAIT_ADVANCEDTOOLUSER,
-		TRAIT_CAN_STRIP,
 		TRAIT_CAN_USE_FLIGHT_POTION,
-		TRAIT_LITERATE,
+		TRAIT_TACKLING_TAILED_DEFENDER,
 	)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_REPTILE
 	mutant_bodyparts = list("body_markings" = "None", "legs" = "Normal Legs")
@@ -71,11 +69,10 @@
 
 	return randname
 
-/datum/species/lizard/randomize_main_appearance_element(mob/living/carbon/human/human_mob)
-	var/tail = pick(GLOB.tails_list_lizard)
-	human_mob.dna.features["tail_lizard"] = tail
-	mutant_bodyparts["tail_lizard"] = tail
-	human_mob.update_body()
+
+/datum/species/lizard/randomize_features(mob/living/carbon/human/human_mob)
+	human_mob.dna.features["body_markings"] = pick(GLOB.body_markings_list)
+	randomize_external_organs(human_mob)
 
 /datum/species/lizard/get_scream_sound(mob/living/carbon/human/lizard)
 	return pick(
@@ -132,9 +129,8 @@ Lizard subspecies: ASHWALKERS
 	id = SPECIES_LIZARD_ASH
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAS_FLESH,HAS_BONE)
 	mutantlungs = /obj/item/organ/internal/lungs/ashwalker
+	mutantbrain = /obj/item/organ/internal/brain/primitive
 	inherent_traits = list(
-		TRAIT_ADVANCEDTOOLUSER,
-		TRAIT_CAN_STRIP,
 		TRAIT_CHUNKYFINGERS,
 		//TRAIT_LITERATE,
 		TRAIT_VIRUSIMMUNE,
@@ -150,9 +146,6 @@ Lizard subspecies: SILVER SCALED
 	id = SPECIES_LIZARD_SILVER
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_REPTILE
 	inherent_traits = list(
-		TRAIT_ADVANCEDTOOLUSER,
-		TRAIT_CAN_STRIP,
-		TRAIT_LITERATE,
 		TRAIT_HOLY,
 		TRAIT_NOBREATH,
 		TRAIT_PIERCEIMMUNE,

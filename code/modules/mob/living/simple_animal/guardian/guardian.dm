@@ -18,7 +18,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	response_disarm_simple = "flail at"
 	response_harm_continuous = "punches"
 	response_harm_simple = "punch"
-	icon = 'icons/mob/guardian.dmi'
+	icon = 'icons/mob/nonhuman-player/guardian.dmi'
 	icon_state = "magicbase"
 	icon_living = "magicbase"
 	icon_dead = "magicbase"
@@ -68,7 +68,43 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	GLOB.parasites += src
 	updatetheme(theme)
 	AddElement(/datum/element/simple_flying)
-	. = ..()
+	return ..()
+
+/// Setter for our summoner mob.
+/mob/living/simple_animal/hostile/guardian/proc/set_summoner(mob/to_who)
+	if(summoner)
+		UnregisterSignal(summoner, list(COMSIG_LIVING_ON_WABBAJACKED, COMSIG_LIVING_SHAPESHIFTED, COMSIG_LIVING_UNSHAPESHIFTED))
+
+	summoner = to_who
+	Recall(TRUE)
+	RegisterSignal(to_who, COMSIG_LIVING_ON_WABBAJACKED, .proc/on_owner_wabbajacked)
+	RegisterSignal(to_who, COMSIG_LIVING_SHAPESHIFTED, .proc/on_owner_shapeshifted)
+	RegisterSignal(to_who, COMSIG_LIVING_UNSHAPESHIFTED, .proc/on_owner_unshapeshifted)
+
+/// Signal proc for [COMSIG_LIVING_ON_WABBAJACKED], when our summoner is wabbajacked we should be alerted.
+/mob/living/simple_animal/hostile/guardian/proc/on_owner_wabbajacked(mob/living/source, mob/living/new_mob)
+	SIGNAL_HANDLER
+
+	set_summoner(new_mob)
+	to_chat(src, span_holoparasite("Your summoner has changed form!"))
+
+/// Signal proc for [COMSIG_LIVING_SHAPESHIFTED], when our summoner is shapeshifted we should change to the new mob
+/mob/living/simple_animal/hostile/guardian/proc/on_owner_shapeshifted(mob/living/source, mob/living/new_shape)
+	SIGNAL_HANDLER
+
+	set_summoner(new_shape)
+	to_chat(src, span_holoparasite("Your summoner has shapeshifted into that of a [new_shape]!"))
+
+/// Signal proc for [COMSIG_LIVING_UNSHAPESHIFTED], when our summoner unshapeshifts go back to that mob
+/mob/living/simple_animal/hostile/guardian/proc/on_owner_unshapeshifted(mob/living/source, mob/living/old_summoner)
+	SIGNAL_HANDLER
+
+	set_summoner(old_summoner)
+	to_chat(src, span_holoparasite("Your summoner has shapeshifted back into their normal form!"))
+
+// Ha, no
+/mob/living/simple_animal/hostile/guardian/wabbajack(what_to_randomize, change_flags = WABBAJACK)
+	visible_message(span_warning("[src] resists the polymorph!"))
 
 /mob/living/simple_animal/hostile/guardian/med_hud_set_health()
 	if(summoner)
@@ -298,7 +334,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	var/index = get_held_index_of_item(I)
 	if(index)
 		held_items[index] = null
-		update_inv_hands()
+		update_held_items()
 
 	if(I.pulledby)
 		I.pulledby.stop_pulling()
@@ -318,7 +354,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		cut_overlay(I)
 		guardian_overlays[cache_index] = null
 
-/mob/living/simple_animal/hostile/guardian/update_inv_hands()
+/mob/living/simple_animal/hostile/guardian/update_held_items()
 	remove_overlay(GUARDIAN_HANDS_LAYER)
 	var/list/hands_overlays = list()
 	var/obj/item/l_hand = get_item_for_held_index(1)
@@ -345,7 +381,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	apply_overlay(GUARDIAN_HANDS_LAYER)
 
 /mob/living/simple_animal/hostile/guardian/regenerate_icons()
-	update_inv_hands()
+	update_held_items()
 
 //MANIFEST, RECALL, TOGGLE MODE/LIGHT, SHOW TYPE
 
@@ -401,7 +437,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		var/my_message = "<font color=\"[guardiancolor]\"><b><i>[src]:</i></b></font> [preliminary_message]" //add source, color source with the guardian's color
 
 		to_chat(summoner, "<span class='say'>[my_message]</span>")
-		var/list/guardians = summoner.hasparasites()
+		var/list/guardians = summoner.get_all_linked_holoparasites()
 		for(var/para in guardians)
 			to_chat(para, "<span class='say'>[my_message]</span>")
 		for(var/M in GLOB.dead_mob_list)
@@ -422,7 +458,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	var/my_message = "<span class='holoparasite bold'><i>[src]:</i> [preliminary_message]</span>" //add source, color source with default grey...
 
 	to_chat(src, "<span class='say'>[my_message]</span>")
-	var/list/guardians = hasparasites()
+	var/list/guardians = get_all_linked_holoparasites()
 	for(var/para in guardians)
 		var/mob/living/simple_animal/hostile/guardian/G = para
 		to_chat(G, "<span class='say'><font color=\"[G.guardiancolor]\"><b><i>[src]:</i></b></font> [preliminary_message]</span>" )
@@ -438,7 +474,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	set name = "Recall Guardian"
 	set category = "Guardian"
 	set desc = "Forcibly recall your guardian."
-	var/list/guardians = hasparasites()
+	var/list/guardians = get_all_linked_holoparasites()
 	for(var/para in guardians)
 		var/mob/living/simple_animal/hostile/guardian/G = para
 		G.Recall()
@@ -448,7 +484,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	set category = "Guardian"
 	set desc = "Re-rolls which ghost will control your Guardian. One use per Guardian."
 
-	var/list/guardians = hasparasites()
+	var/list/guardians = get_all_linked_holoparasites()
 	for(var/para in guardians)
 		var/mob/living/simple_animal/hostile/guardian/P = para
 		if(P.reset)
@@ -492,23 +528,26 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 ////////parasite tracking/finding procs
 
-/mob/living/proc/hasparasites() //returns a list of guardians the mob is a summoner for
-	. = list()
-	for(var/P in GLOB.parasites)
-		var/mob/living/simple_animal/hostile/guardian/G = P
-		if(G.summoner == src)
-			. += G
+/// Returns a list of all holoparasites that has this mob as a summoner.
+/mob/living/proc/get_all_linked_holoparasites()
+	RETURN_TYPE(/list)
+	var/list/all_parasites = list()
+	for(var/mob/living/simple_animal/hostile/guardian/stand as anything in GLOB.parasites)
+		if(stand.summoner != src)
+			continue
+		all_parasites += stand
+	return all_parasites
 
-/mob/living/simple_animal/hostile/guardian/proc/hasmatchingsummoner(mob/living/simple_animal/hostile/guardian/G) //returns 1 if the summoner matches the target's summoner
-	return (istype(G) && G.summoner == summoner)
-
+/// Returns true if this holoparasite has the same summoner as the passed holoparasite.
+/mob/living/simple_animal/hostile/guardian/proc/hasmatchingsummoner(mob/living/simple_animal/hostile/guardian/other_guardian)
+	return istype(other_guardian) && other_guardian.summoner == summoner
 
 ////////Creation
 
 /obj/item/guardiancreator
 	name = "enchanted deck of tarot cards"
 	desc = "An enchanted deck of tarot cards, rumored to be a source of unimaginable power."
-	icon = 'icons/obj/playing_cards.dmi'
+	icon = 'icons/obj/toys/playing_cards.dmi'
 	icon_state = "deck_tarot_full"
 	var/used = FALSE
 	var/theme = "magic"
@@ -528,7 +567,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	if(isguardian(user) && !allowguardian)
 		to_chat(user, span_holoparasite("[mob_name] chains are not allowed."))
 		return
-	var/list/guardians = user.hasparasites()
+	var/list/guardians = user.get_all_linked_holoparasites()
 	if(length(guardians) && !allowmultiple)
 		to_chat(user, span_holoparasite("You already have a [mob_name]!"))
 		return
@@ -596,14 +635,14 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		if("Gravitokinetic")
 			pickedtype = /mob/living/simple_animal/hostile/guardian/gravitokinetic
 
-	var/list/guardians = user.hasparasites()
+	var/list/guardians = user.get_all_linked_holoparasites()
 	if(length(guardians) && !allowmultiple)
 		to_chat(user, span_holoparasite("You already have a [mob_name]!") )
 		used = FALSE
 		return
 	var/mob/living/simple_animal/hostile/guardian/G = new pickedtype(user, theme)
 	G.name = mob_name
-	G.summoner = user
+	G.set_summoner(user)
 	G.key = candidate.key
 	G.mind.enslave_mind_to_creator(user)
 	G.copy_languages(user, LANGUAGE_MASTER) // make sure holoparasites speak same language as master
@@ -654,7 +693,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /obj/item/guardiancreator/tech
 	name = "holoparasite injector"
 	desc = "It contains an alien nanoswarm of unknown origin. Though capable of near sorcerous feats via use of hardlight holograms and nanomachines, it requires an organic host as a home base and source of fuel."
-	icon = 'icons/obj/syringe.dmi'
+	icon = 'icons/obj/medical/syringe.dmi'
 	icon_state = "combat_hypo"
 	theme = "tech"
 	mob_name = "Holoparasite"

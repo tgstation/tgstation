@@ -5,9 +5,9 @@
 	icon_living = "mothroach"
 	icon_dead = "mothroach_dead"
 	held_state = "mothroach"
-	held_lh = 'icons/mob/animal_item_lh.dmi'
-	held_rh = 'icons/mob/animal_item_rh.dmi'
-	head_icon = 'icons/mob/animal_item_head.dmi'
+	held_lh = 'icons/mob/inhands/animal_item_lh.dmi'
+	held_rh = 'icons/mob/inhands/animal_item_rh.dmi'
+	head_icon = 'icons/mob/clothing/head/animal_item_head.dmi'
 	butcher_results = list(/obj/item/food/meat/slab/mothroach = 3, /obj/item/stack/sheet/animalhide/mothroach = 1)
 	mob_biotypes = MOB_ORGANIC|MOB_BUG
 	mob_size = MOB_SIZE_SMALL

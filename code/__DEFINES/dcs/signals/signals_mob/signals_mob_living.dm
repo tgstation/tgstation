@@ -94,5 +94,20 @@
 
 ///From obj/item/toy/crayon/spraycan
 #define COMSIG_LIVING_MOB_PAINTED "living_mob_painted"
-///From mob/living/proc/wabbajack_act
-#define COMSIG_LIVING_WABBAJACKED "living_wabbajacked"
+
+///From mob/living/proc/wabbajack(): (randomize_type)
+#define COMSIG_LIVING_PRE_WABBAJACKED "living_mob_wabbajacked"
+	/// Return to stop the rest of the wabbajack from triggering.
+	#define STOP_WABBAJACK (1<<0)
+///From mob/living/proc/on_wabbajack(): (mob/living/new_mob)
+#define COMSIG_LIVING_ON_WABBAJACKED "living_wabbajacked"
+
+/// From /datum/status_effect/shapechange_mob/on_apply(): (mob/living/shape)
+#define COMSIG_LIVING_SHAPESHIFTED "living_shapeshifted"
+/// From /datum/status_effect/shapechange_mob/after_unchange(): (mob/living/caster)
+#define COMSIG_LIVING_UNSHAPESHIFTED "living_unshapeshifted"
+
+///From /obj/effect/rune/convert/do_sacrifice() : (list/invokers)
+#define COMSIG_LIVING_CULT_SACRIFICED "living_cult_sacrificed"
+	/// Return to stop the sac from occurring
+	#define STOP_SACRIFICE (1<<0)

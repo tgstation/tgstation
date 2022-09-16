@@ -15,7 +15,7 @@
 	name = "chem dispenser"
 	desc = "Creates and dispenses chemicals."
 	density = TRUE
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "dispenser"
 	base_icon_state = "dispenser"
 	interaction_flags_machine = INTERACT_MACHINE_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OFFLINE
@@ -364,7 +364,7 @@
 		return
 	if(default_deconstruction_crowbar(I))
 		return
-	if(istype(I, /obj/item/reagent_containers) && !(I.item_flags & ABSTRACT) && I.is_open_container())
+	if(is_reagent_container(I) && !(I.item_flags & ABSTRACT) && I.is_open_container())
 		var/obj/item/reagent_containers/B = I
 		. = TRUE //no afterattack
 		if(!user.transferItemToLoc(B, src))
@@ -459,7 +459,7 @@
 /obj/machinery/chem_dispenser/drinks
 	name = "soda dispenser"
 	desc = "Contains a large reservoir of soft drinks."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "soda_dispenser"
 	base_icon_state = "soda_dispenser"
 	has_panel_overlay = FALSE
@@ -472,29 +472,29 @@
 	pass_flags = PASSTABLE
 	show_ph = FALSE
 	dispensable_reagents = list(
-		/datum/reagent/water,
-		/datum/reagent/consumable/ice,
 		/datum/reagent/consumable/coffee,
-		/datum/reagent/consumable/cream,
-		/datum/reagent/consumable/tea,
-		/datum/reagent/consumable/icetea,
 		/datum/reagent/consumable/space_cola,
-		/datum/reagent/consumable/spacemountainwind,
+		/datum/reagent/consumable/cream,
 		/datum/reagent/consumable/dr_gibb,
-		/datum/reagent/consumable/space_up,
-		/datum/reagent/consumable/tonic,
-		/datum/reagent/consumable/sodawater,
+		/datum/reagent/consumable/grenadine,
+		/datum/reagent/consumable/ice,
+		/datum/reagent/consumable/icetea,
+		/datum/reagent/consumable/lemonjuice,
 		/datum/reagent/consumable/lemon_lime,
+		/datum/reagent/consumable/limejuice,
+		/datum/reagent/consumable/menthol,
+		/datum/reagent/consumable/orangejuice,
+		/datum/reagent/consumable/pineapplejuice,
 		/datum/reagent/consumable/pwr_game,
 		/datum/reagent/consumable/shamblers,
+		/datum/reagent/consumable/spacemountainwind,
+		/datum/reagent/consumable/sodawater,
+		/datum/reagent/consumable/space_up,
 		/datum/reagent/consumable/sugar,
-		/datum/reagent/consumable/pineapplejuice,
-		/datum/reagent/consumable/orangejuice,
-		/datum/reagent/consumable/grenadine,
-		/datum/reagent/consumable/limejuice,
+		/datum/reagent/consumable/tea,
 		/datum/reagent/consumable/tomatojuice,
-		/datum/reagent/consumable/lemonjuice,
-		/datum/reagent/consumable/menthol
+		/datum/reagent/consumable/tonic,
+		/datum/reagent/water,
 	)
 	upgrade_reagents = null
 	emagged_reagents = list(
@@ -544,34 +544,34 @@
 /obj/machinery/chem_dispenser/drinks/beer
 	name = "booze dispenser"
 	desc = "Contains a large reservoir of the good stuff."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "booze_dispenser"
 	base_icon_state = "booze_dispenser"
 	dispensed_temperature = WATER_MATTERSTATE_CHANGE_TEMP
 	circuit = /obj/item/circuitboard/machine/chem_dispenser/drinks/beer
 	dispensable_reagents = list(
-		/datum/reagent/consumable/ethanol/beer,
-		/datum/reagent/consumable/ethanol/beer/maltliquor,
-		/datum/reagent/consumable/ethanol/kahlua,
-		/datum/reagent/consumable/ethanol/whiskey,
-		/datum/reagent/consumable/ethanol/wine,
-		/datum/reagent/consumable/ethanol/vodka,
-		/datum/reagent/consumable/ethanol/gin,
-		/datum/reagent/consumable/ethanol/rum,
-		/datum/reagent/consumable/ethanol/navy_rum,
-		/datum/reagent/consumable/ethanol/tequila,
-		/datum/reagent/consumable/ethanol/vermouth,
-		/datum/reagent/consumable/ethanol/cognac,
-		/datum/reagent/consumable/ethanol/ale,
 		/datum/reagent/consumable/ethanol/absinthe,
-		/datum/reagent/consumable/ethanol/hcider,
-		/datum/reagent/consumable/ethanol/creme_de_menthe,
+		/datum/reagent/consumable/ethanol/ale,
+		/datum/reagent/consumable/ethanol/applejack,
+		/datum/reagent/consumable/ethanol/beer,
+		/datum/reagent/consumable/ethanol/cognac,
 		/datum/reagent/consumable/ethanol/creme_de_cacao,
 		/datum/reagent/consumable/ethanol/creme_de_coconut,
-		/datum/reagent/consumable/ethanol/triple_sec,
+		/datum/reagent/consumable/ethanol/creme_de_menthe,
 		/datum/reagent/consumable/ethanol/curacao,
+		/datum/reagent/consumable/ethanol/gin,
+		/datum/reagent/consumable/ethanol/hcider,
+		/datum/reagent/consumable/ethanol/kahlua,
+		/datum/reagent/consumable/ethanol/beer/maltliquor,
+		/datum/reagent/consumable/ethanol/navy_rum,
+		/datum/reagent/consumable/ethanol/rum,
 		/datum/reagent/consumable/ethanol/sake,
-		/datum/reagent/consumable/ethanol/applejack
+		/datum/reagent/consumable/ethanol/tequila,
+		/datum/reagent/consumable/ethanol/triple_sec,
+		/datum/reagent/consumable/ethanol/vermouth,
+		/datum/reagent/consumable/ethanol/vodka,
+		/datum/reagent/consumable/ethanol/whiskey,
+		/datum/reagent/consumable/ethanol/wine,
 	)
 	upgrade_reagents = null
 	emagged_reagents = list(

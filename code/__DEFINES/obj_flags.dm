@@ -6,14 +6,13 @@
 #define CAN_BE_HIT (1<<2) //can this be bludgeoned by items?
 #define BEING_SHOCKED (1<<3) // Whether this thing is currently (already) being shocked by a tesla
 #define DANGEROUS_POSSESSION (1<<4) //Admin possession yes/no
-#define ON_BLUEPRINTS (1<<5)  //Are we visible on the station blueprints at roundstart?
-#define UNIQUE_RENAME (1<<6) // can you customize the description/name of the thing?
-#define USES_TGUI (1<<7) //put on things that use tgui on ui_interact instead of custom/old UI.
-#define BLOCK_Z_OUT_DOWN (1<<8)  // Should this object block z falling from loc?
-#define BLOCK_Z_OUT_UP (1<<9) // Should this object block z uprise from loc?
-#define BLOCK_Z_IN_DOWN (1<<10) // Should this object block z falling from above?
-#define BLOCK_Z_IN_UP (1<<11) // Should this object block z uprise from below?
-#define NO_BUILD (1<<12) // Can we build on this object?
+#define UNIQUE_RENAME (1<<5) // can you customize the description/name of the thing?
+#define USES_TGUI (1<<6) //put on things that use tgui on ui_interact instead of custom/old UI.
+#define BLOCK_Z_OUT_DOWN (1<<7)  // Should this object block z falling from loc?
+#define BLOCK_Z_OUT_UP (1<<8) // Should this object block z uprise from loc?
+#define BLOCK_Z_IN_DOWN (1<<9) // Should this object block z falling from above?
+#define BLOCK_Z_IN_UP (1<<10) // Should this object block z uprise from below?
+#define NO_BUILD (1<<11) // Can we build on this object?
 
 // If you add new ones, be sure to add them to /obj/Initialize as well for complete mapping support
 

@@ -46,11 +46,11 @@
 	if(!target || !isliving(target))
 		return ..()
 
+	if(!isGlass)
+		return ..()
+
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, span_warning("You don't want to harm [target]!"))
-		return FALSE
-
-	if(!isGlass)
 		return FALSE
 
 	var/mob/living/living_target = target
@@ -135,7 +135,7 @@
 /// Takes the broken bottle to mimic, and the thing the bottle was broken agaisnt as args
 /obj/item/broken_bottle/proc/mimic_broken(obj/item/reagent_containers/cup/glass/to_mimic, atom/target)
 	icon_state = to_mimic.icon_state
-	var/icon/drink_icon = new('icons/obj/drinks.dmi', icon_state)
+	var/icon/drink_icon = new(to_mimic.icon, icon_state)
 	drink_icon.Blend(broken_outline, ICON_OVERLAY, rand(5), 1)
 	drink_icon.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
 	icon = drink_icon
@@ -579,6 +579,9 @@
 			isGlass = FALSE
 	return
 
+/obj/item/reagent_containers/cup/glass/bottle/molotov/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum, do_splash = FALSE)
+	..(hit_atom, throwingdatum, do_splash = FALSE)
+
 /obj/item/reagent_containers/cup/glass/bottle/molotov/smash(atom/target, mob/thrower, ranged = FALSE)
 	var/firestarter = 0
 	for(var/datum/reagent/contained_reagent in reagents.reagent_list)
@@ -647,7 +650,7 @@
 
 /obj/item/reagent_containers/cup/glass/bottle/pruno/proc/check_fermentation()
 	SIGNAL_HANDLER
-	if (!(istype(loc, /obj/machinery) || istype(loc, /obj/structure)))
+	if (!(ismachinery(loc) || isstructure(loc)))
 		if(fermentation_timer)
 			fermentation_time_remaining = timeleft(fermentation_timer)
 			deltimer(fermentation_timer)

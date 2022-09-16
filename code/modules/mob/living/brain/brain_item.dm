@@ -20,6 +20,8 @@
 	low_threshold = 45
 	high_threshold = 120
 
+	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE, TRAIT_CAN_STRIP)
+
 	var/suicided = FALSE
 	var/mob/living/brain/brainmob = null
 	/// If it's a fake brain with no brainmob assigned. Feedback messages will be faked as if it does have a brainmob. See changelings & dullahans.
@@ -46,7 +48,7 @@
 		if(brainmob && !(C.stat == DEAD || (HAS_TRAIT(C, TRAIT_DEATHCOMA))))
 			to_chat(brainmob, span_danger("You can't feel your body! You're still just a brain!"))
 		forceMove(C)
-		C.update_hair()
+		C.update_body_parts()
 		return
 
 	if(brainmob)
@@ -71,7 +73,7 @@
 		BT.on_gain()
 
 	//Update the body's icon so it doesnt appear debrained anymore
-	C.update_hair()
+	C.update_body_parts()
 
 /obj/item/organ/internal/brain/Remove(mob/living/carbon/C, special = 0, no_id_transfer = FALSE)
 	// Delete skillchips first as parent proc sets owner to null, and skillchips need to know the brain's owner.
@@ -91,7 +93,7 @@
 
 	if((!gc_destroyed || (owner && !owner.gc_destroyed)) && !no_id_transfer)
 		transfer_identity(C)
-	C.update_hair()
+	C.update_body_parts()
 
 /obj/item/organ/internal/brain/proc/transfer_identity(mob/living/L)
 	name = "[L.name]'s brain"
@@ -321,7 +323,12 @@
 	name = "alien brain"
 	desc = "We barely understand the brains of terrestial animals. Who knows what we may find in the brain of such an advanced species?"
 	icon_state = "brain-x"
+	organ_traits = list(TRAIT_CAN_STRIP)
 
+/obj/item/organ/internal/brain/primitive //No like books and stompy metal men
+	name = "Primative Brain"
+	desc = "This juicy piece of meat has a clearly underdeveloped frontal lobe."
+	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_CAN_STRIP, TRAIT_PRIMITIVE) // No literacy
 
 ////////////////////////////////////TRAUMAS////////////////////////////////////////
 

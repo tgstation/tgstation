@@ -97,13 +97,12 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 
 	return ..()
 
-/datum/dna/proc/transfer_identity(mob/living/carbon/destination, transfer_SE = 0)
+/datum/dna/proc/transfer_identity(mob/living/carbon/destination, transfer_SE = FALSE, transfer_species = TRUE)
 	if(!istype(destination))
 		return
 	destination.dna.unique_enzymes = unique_enzymes
 	destination.dna.unique_identity = unique_identity
 	destination.dna.blood_type = blood_type
-	destination.set_species(species.type, icon_update=0)
 	destination.dna.unique_features = unique_features
 	destination.dna.features = features.Copy()
 	destination.dna.real_name = real_name
@@ -111,6 +110,8 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	if(transfer_SE)
 		destination.dna.mutation_index = mutation_index
 		destination.dna.default_mutation_genes = default_mutation_genes
+	if(transfer_species)
+		destination.set_species(species.type, icon_update=0)
 
 /datum/dna/proc/copy_dna(datum/dna/new_dna)
 	new_dna.unique_enzymes = unique_enzymes
@@ -608,8 +609,8 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		external_organ.mutate_feature(features, src)
 
 	if(icon_update)
-		dna.species.handle_body(src) // We want 'update_body_parts()' to be called only if mutcolor_update is TRUE, so no 'update_body()' here.
-		update_hair(is_creating = TRUE)
+		dna.species.handle_body(src) // We want 'update_body_parts(update_limb_data = TRUE)' to be called only if mutcolor_update is TRUE, so no 'update_body()' here.
+		update_body_parts() //We can call this because it doesnt refresh limb data, and it handles hair and such.
 		if(mutcolor_update)
 			update_body_parts(update_limb_data = TRUE)
 		if(mutations_overlay_update)

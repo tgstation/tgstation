@@ -20,7 +20,7 @@ Difficulty: Hard
 	icon_state = "wendigo"
 	icon_living = "wendigo"
 	icon_dead = "wendigo_dead"
-	icon = 'icons/mob/icemoon/64x64megafauna.dmi'
+	icon = 'icons/mob/simple/icemoon/64x64megafauna.dmi'
 	attack_verb_continuous = "claws"
 	attack_verb_simple = "claw"
 	attack_sound = 'sound/magic/demon_attack1.ogg'

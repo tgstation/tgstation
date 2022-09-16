@@ -1,7 +1,0 @@
-author: "Onule, PositiveEntropy, TetraZeta, Axietheaxolotl, Thgvr, AdipemDragon"
-delete-after: True
-changes: 
-  - imageadd: "Completely resprites all medkits!"
-  - imageadd: "Completely resprites all medical tools!"
-  - imageadd: "Removes the clamp sprite and instead creates separate hemostat and retractor inhand sprites!"
-  - imageadd: "Adds missing inhands for the bonesetter, advanced med tools, tactical medkit, surgical drill and bone gel!"

@@ -121,7 +121,7 @@
 		w_items += I.w_class
 		to_chat(user, span_notice("You carefully place [I] into the cistern."))
 
-	else if(istype(I, /obj/item/reagent_containers) && !user.combat_mode)
+	else if(is_reagent_container(I) && !user.combat_mode)
 		if (!open)
 			return
 		if(istype(I, /obj/item/food/monkeycube))
@@ -226,7 +226,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 /obj/item/food/urinalcake
 	name = "urinal cake"
 	desc = "The noble urinal cake, protecting the station's pipes from the station's pee. Do not eat."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "urinalcake"
 	w_class = WEIGHT_CLASS_TINY
 	food_reagents = list(/datum/reagent/chlorine = 3, /datum/reagent/ammonia = 1)
@@ -360,7 +360,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 		to_chat(user, span_warning("Someone's already washing here!"))
 		return
 
-	if(istype(O, /obj/item/reagent_containers))
+	if(is_reagent_container(O))
 		var/obj/item/reagent_containers/RG = O
 		if(reagents.total_volume <= 0)
 			to_chat(user, span_notice("\The [src] is dry."))
@@ -441,6 +441,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 		qdel(O)
 		has_water_reclaimer = TRUE
 		begin_reclamation()
+		return
+
+	if(istype(O, /obj/item/storage/fancy/pickles_jar))
+		if(O.contents.len)
+			to_chat(user, span_notice("Looks like there's something left in the jar"))
+			return
+		new /obj/item/reagent_containers/cup/beaker/large(loc)
+		to_chat(user, span_notice("You washed the jar, ridding it of the brine."))
+		qdel(O)
 		return
 
 	if(!istype(O))
@@ -604,7 +613,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 		to_chat(user, span_warning("Someone's already washing here!"))
 		return
 
-	if(istype(O, /obj/item/reagent_containers))
+	if(is_reagent_container(O))
 		var/obj/item/reagent_containers/container = O
 		if(container.is_refillable())
 			if(!container.reagents.holder_full())
@@ -813,8 +822,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 	. = ..()
 	GLOB.curtains += src
 
-/obj/structure/curtain/cloth/fancy/mechanical/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
-	id = "[port.id]_[id]"
+/obj/structure/curtain/cloth/fancy/mechanical/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
+	id = "[port.shuttle_id]_[id]"
 
 /obj/structure/curtain/cloth/fancy/mechanical/proc/open()
 	icon_state = "[icon_type]-open"

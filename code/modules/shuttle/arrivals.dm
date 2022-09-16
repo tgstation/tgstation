@@ -1,6 +1,6 @@
 /obj/docking_port/mobile/arrivals
 	name = "arrivals shuttle"
-	id = "arrivals"
+	shuttle_id = "arrival"
 
 	dwidth = 3
 	width = 7
@@ -181,7 +181,7 @@
 			console.say(pickingup ? "Departing immediately for new employee pickup." : "Shuttle departing.")
 		var/obj/docking_port/stationary/target = target_dock
 		if(QDELETED(target))
-			target = SSshuttle.getDock("arrivals_stationary")
+			target = SSshuttle.getDock("arrival_stationary")
 		request(target) //we will intentionally never return SHUTTLE_ALREADY_DOCKED
 
 /obj/docking_port/mobile/arrivals/proc/RequireUndocked(mob/user)

@@ -44,7 +44,7 @@
 	. = ..()
 
 	//Manage species digestion
-	if(istype(owner, /mob/living/carbon/human))
+	if(ishuman(owner))
 		var/mob/living/carbon/human/humi = owner
 		if(!(organ_flags & ORGAN_FAILING))
 			handle_hunger(humi, delta_time, times_fired)
@@ -126,15 +126,15 @@
 			to_chat(human, span_notice("You feel fit again!"))
 			REMOVE_TRAIT(human, TRAIT_FAT, OBESITY)
 			human.remove_movespeed_modifier(/datum/movespeed_modifier/obesity)
-			human.update_inv_w_uniform()
-			human.update_inv_wear_suit()
+			human.update_worn_undersuit()
+			human.update_worn_oversuit()
 	else
 		if(human.overeatduration >= (200 SECONDS))
 			to_chat(human, span_danger("You suddenly feel blubbery!"))
 			ADD_TRAIT(human, TRAIT_FAT, OBESITY)
 			human.add_movespeed_modifier(/datum/movespeed_modifier/obesity)
-			human.update_inv_w_uniform()
-			human.update_inv_wear_suit()
+			human.update_worn_undersuit()
+			human.update_worn_oversuit()
 
 	// nutrition decrease and satiety
 	if (human.nutrition > 0 && human.stat != DEAD)
@@ -206,7 +206,7 @@
 		human.remove_movespeed_modifier(/datum/movespeed_modifier/hunger)
 
 /obj/item/organ/internal/stomach/get_availability(datum/species/owner_species)
-	return !(NOSTOMACH in owner_species.inherent_traits)
+	return !((TRAIT_NOHUNGER in owner_species.inherent_traits) || (NOSTOMACH in owner_species.species_traits))
 
 /obj/item/organ/internal/stomach/proc/handle_disgust(mob/living/carbon/human/disgusted, delta_time, times_fired)
 	var/old_disgust = disgusted.old_disgust
@@ -266,6 +266,7 @@
 /obj/item/organ/internal/stomach/bone
 	desc = "You have no idea what this strange ball of bones does."
 	metabolism_efficiency = 0.025 //very bad
+	organ_traits = list(TRAIT_NOHUNGER)
 	/// How much [BRUTE] damage milk heals every second
 	var/milk_brute_healing = 2.5
 	/// How much [BURN] damage milk heals every second
@@ -288,6 +289,7 @@
 /obj/item/organ/internal/stomach/bone/plasmaman
 	name = "digestive crystal"
 	icon_state = "stomach-p"
+	organ_traits = list()
 	desc = "A strange crystal that is responsible for metabolizing the unseen energy force that feeds plasmamen."
 	metabolism_efficiency = 0.06
 	milk_burn_healing = 0

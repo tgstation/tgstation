@@ -393,6 +393,3 @@ GLOBAL_LIST_INIT(ratking_coins, list(//Coins: Used by the regal rat mob when spa
 			/obj/item/coin/silver,
 			/obj/item/coin/titanium,
 		))
-
-// List of all maintenance loot spawners, for easy finding at roundstart.
-GLOBAL_LIST_EMPTY(maintenance_loot_spawners)

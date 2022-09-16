@@ -102,5 +102,7 @@
 		if(iter_wound.blood_flow && (iter_wound.blood_flow > bloodiest_wound?.blood_flow))
 			bloodiest_wound = iter_wound
 
-	if(bloodiest_wound)
-		bloodiest_wound.set_blood_flow(max(0, bloodiest_wound.blood_flow - 0.5))
+	if(!bloodiest_wound)
+		return
+
+	bloodiest_wound.adjust_blood_flow(-0.5)

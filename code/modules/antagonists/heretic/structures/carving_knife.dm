@@ -243,6 +243,6 @@
 	carbon_victim.adjust_confusion(5 SECONDS)
 	carbon_victim.set_jitter_if_lower(20 SECONDS)
 	carbon_victim.set_dizzy_if_lower(40 SECONDS)
-	carbon_victim.blind_eyes(2)
+	carbon_victim.adjust_blindness(2)
 	carbon_victim.add_mood_event("gates_of_mansus", /datum/mood_event/gates_of_mansus)
 	playsound(src, 'sound/magic/blind.ogg', 75, TRUE)

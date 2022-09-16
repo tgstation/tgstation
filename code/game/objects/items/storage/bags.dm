@@ -151,7 +151,7 @@
 			if(box)
 				user.transferItemToLoc(thing, box)
 				show_message = TRUE
-			else if(atom_storage.attempt_insert(src, thing, user))
+			else if(atom_storage.attempt_insert(thing, user))
 				show_message = TRUE
 			else
 				if(!spam_protection)
@@ -398,7 +398,7 @@
 
 /obj/item/storage/bag/chemistry
 	name = "chemistry bag"
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "bag"
 	worn_icon_state = "chembag"
 	desc = "A bag for storing pills, patches, and bottles."
@@ -425,7 +425,7 @@
 
 /obj/item/storage/bag/bio
 	name = "bio bag"
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "biobag"
 	worn_icon_state = "biobag"
 	desc = "A bag for the safe transportation and disposal of biowaste and other virulent materials."
@@ -454,7 +454,7 @@
 
 /obj/item/storage/bag/xeno
 	name = "science bag"
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "xenobag"
 	worn_icon_state = "xenobag"
 	desc = "A bag for the storage and transport of anomalous materials."

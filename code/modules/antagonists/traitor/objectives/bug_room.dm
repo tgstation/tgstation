@@ -109,7 +109,7 @@
 	desc = "It looks dangerous."
 	item_flags = EXAMINE_SKIP
 
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "bug"
 
 	/// The area at which this bug can be planted at. Has to be a type.
@@ -195,7 +195,7 @@
 
 	anchored = TRUE
 
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "bug-animated"
 
 /obj/structure/traitor_bug/Initialize(mapload)
