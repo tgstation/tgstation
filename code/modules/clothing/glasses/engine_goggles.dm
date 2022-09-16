@@ -146,9 +146,8 @@
 	desc = "Used by engineering staff to see underfloor objects such as cables and pipes."
 	range = 2
 
-	darkness_view = 1
 
-	modes = list(MODE_NONE = MODE_TRAY, MODE_TRAY = MODE_PIPE_CONNECTABLE, MODE_PIPE_CONNECTABLE = MODE_NONE)
+	modes = list(MODE_NONE = MODE_TRAY, MODE_TRAY = MODE_PIPE_CONNECTABLE, MODE_PIPE_CONNECTABLE = MODE_ATMOS_THERMAL, MODE_ATMOS_THERMAL = MODE_NONE) // atmos techs now finally have 3 modes on their  goggles!
 
 /obj/item/clothing/glasses/meson/engine/tray/dropped(mob/user)
 	. = ..()
