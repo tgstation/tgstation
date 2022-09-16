@@ -6,7 +6,6 @@ import { MaterialCostSequence } from './Fabrication/MaterialCostSequence';
 import { sortBy } from 'common/collections';
 import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
 import { SearchBar } from './Fabrication/SearchBar';
-import { DesignCategoryTabs } from './Fabrication/DesignCategoryTabs';
 import { FabricatorData, Design, MaterialMap } from './Fabrication/Types';
 import { classes } from 'common/react';
 
@@ -30,10 +29,33 @@ export const Fabricator = (props, context) => {
     ''
   );
 
+  const categoryCounts: Record<string, number> = {};
+  const categorySubs: Record<string, Record<string, number>> = {};
+  let totalRecipes = 0;
+
   // Sort the designs by name.
   const sortedDesigns = sortBy((design: Design) => design.name)(
     Object.values(designs)
   );
+
+  for (const design of sortedDesigns) {
+    totalRecipes += 1;
+
+    for (const category of design.categories) {
+      categoryCounts[category] = (categoryCounts[category] ?? 0) + 1;
+    }
+
+    for (const [category, subcategory] of Object.entries(
+      design.subcategories
+    )) {
+      if (!categorySubs[category]) {
+        categorySubs[category] = {};
+      }
+
+      categorySubs[category][subcategory] =
+        (categorySubs[category]![subcategory] ?? 0) + 1;
+    }
+  }
 
   // Reduce the material count array to a map of actually available materials.
   const availableMaterials: MaterialMap = {};
@@ -72,14 +94,90 @@ export const Fabricator = (props, context) => {
           <Stack.Item grow>
             <Stack fill>
               <Stack.Item width={'200px'}>
-                <DesignCategoryTabs
-                  currentCategory={selectedCategory}
-                  onCategorySelected={(category) => {
-                    setSelectedCategory(category);
-                    setSearchText('');
-                  }}
-                  designs={sortedDesigns}
-                />
+                <Section fill>
+                  <Stack vertical fill>
+                    <Stack.Item>
+                      <Section title="Categories" fitted />
+                    </Stack.Item>
+                    <Stack.Item grow>
+                      <Section fill style={{ 'overflow': 'auto' }}>
+                        <div className="FabricatorTabs">
+                          <div
+                            className={classes([
+                              'FabricatorTabs__Tab',
+                              selectedCategory === ALL_CATEGORY &&
+                                'FabricatorTabs__Tab--active',
+                            ])}
+                            onClick={() => setSelectedCategory(ALL_CATEGORY)}>
+                            <div className="FabricatorTabs__Label">
+                              <div className="FabricatorTabs__CategoryName">
+                                All Designs
+                              </div>
+                              <div className="FabricatorTabs__CategoryCount">
+                                ({totalRecipes})
+                              </div>
+                            </div>
+                          </div>
+                          {sortBy(
+                            (_: [categoryName: string, count: number]) => _[0]
+                          )(Object.entries(categoryCounts)).map(
+                            ([categoryName, categoryQuantity]) => (
+                              <div
+                                className={classes([
+                                  'FabricatorTabs__Tab',
+                                  selectedCategory === categoryName &&
+                                    'FabricatorTabs__Tab--active',
+                                ])}
+                                onClick={() =>
+                                  setSelectedCategory(categoryName)
+                                }
+                                key={categoryName}>
+                                <div className="FabricatorTabs__Label">
+                                  <div className="FabricatorTabs__CategoryName">
+                                    {categoryName}
+                                  </div>
+                                  <div className="FabricatorTabs__CategoryCount">
+                                    ({categoryQuantity})
+                                  </div>
+                                </div>
+                                {selectedCategory === categoryName &&
+                                  categorySubs[categoryName] && (
+                                    <div className="FabricatorTabs">
+                                      {sortBy(
+                                        (pair: [string, number]) => pair[0]
+                                      )(
+                                        Object.entries(
+                                          categorySubs[categoryName]
+                                        )
+                                      ).map(([subcategory, count]) => (
+                                        <div
+                                          key={subcategory}
+                                          className="FabricatorTabs__Tab"
+                                          onClick={() =>
+                                            document
+                                              .getElementById(
+                                                subcategory.replace(/ /g, '')
+                                              )!
+                                              .scrollIntoView(true)
+                                          }>
+                                          <div
+                                            className={'FabricatorTabs__Label'}>
+                                            <div className="FabricatorTabs__CategoryName">
+                                              {subcategory}
+                                            </div>
+                                          </div>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  )}
+                              </div>
+                            )
+                          )}
+                        </div>
+                      </Section>
+                    </Stack.Item>
+                  </Stack>
+                </Section>
               </Stack.Item>
               <Stack.Item grow>
                 <Section
@@ -104,7 +202,10 @@ export const Fabricator = (props, context) => {
                         {Object.keys(subcategories)
                           .sort()
                           .map((categoryName) => (
-                            <Section title={categoryName} key={categoryName}>
+                            <Section
+                              title={categoryName}
+                              key={categoryName}
+                              id={categoryName.replace(/ /g, '')}>
                               {subcategories[categoryName]!.map((design) => (
                                 <Recipe
                                   key={design.name}
@@ -230,11 +331,7 @@ const Recipe = (props: { design: Design; available: MaterialMap }, context) => {
             <Box
               width={'32px'}
               height={'32px'}
-              className={classes([
-                'Fabricator__Icon',
-                'design32x32',
-                design.icon,
-              ])}
+              className={classes(['design32x32', design.icon])}
             />
           </div>
           <div className="FabricatorRecipe__Label">{design.name}</div>
