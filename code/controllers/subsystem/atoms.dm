@@ -73,16 +73,6 @@ SUBSYSTEM_DEF(atoms)
 	for (var/queued_deletion in queued_deletions)
 		qdel(queued_deletion)
 
-	// We're gonna walk all our areas. If any have z levels that require plane offsetting, we'll do that in a batch here
-	// Note, yes, I know this is slower then it should be, but what can you do man... what can you do
-	for(var/area/to_check in atoms_to_return)
-		for(var/z in to_check.zs_we_have)
-			if(!to_check.zs_we_have[z] || !SSmapping.z_level_to_plane_offset[z])
-				continue
-			// I'm sorry
-			for(var/turf/open/space in to_check)
-				SET_PLANE(space, initial(space.plane), space)
-
 	testing("[queued_deletions.len] atoms were queued for deletion.")
 	queued_deletions.Cut()
 

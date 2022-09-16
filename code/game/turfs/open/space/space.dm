@@ -54,6 +54,7 @@
 
 	var/area/our_area = loc
 	our_area.zs_we_have[z] = TRUE
+	SET_PLANE(src, plane, src)
 
 	if(!our_area.area_has_base_lighting && always_lit) //Only provide your own lighting if the area doesn't for you
 		// Intentionally not add_overlay for performance reasons.
@@ -62,9 +63,6 @@
 		overlays += GLOB.fullbright_overlays[GET_TURF_PLANE_OFFSET(src) + 1]
 
 	if (!mapload)
-		// If this is mapload, we'll do this in a batch later
-		// This is a space optimization, not suited to normal code
-		SET_PLANE(src, plane, src)
 		if(requires_activation)
 			SSair.add_to_active(src, TRUE)
 
