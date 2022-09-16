@@ -958,7 +958,7 @@
 	subcategory = list(
 		RND_CATEGORY_MACHINE = RND_SUBCATEGORY_MACHINE_SERVICE
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_CARGO
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_BITFLAG_CARGO
 
 //Hypertorus fusion reactor designs
 

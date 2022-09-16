@@ -38,7 +38,12 @@ export type Design = {
   /**
    * The categories the design should be present in.
    */
-  categories?: string[];
+  categories: string[];
+
+  /**
+   * For each category this design is present in, an optional subcategory.
+   */
+  subcategories: Record<string, string>;
 
   /**
    * The icon used to represent this design, generated in

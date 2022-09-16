@@ -116,6 +116,7 @@
 			"cost" = cost,
 			"id" = design.id,
 			"categories" = design.category,
+			"subcategories" = design.subcategory,
 			"icon" = "[icon_size == size32x32 ? "" : "[icon_size] "][design.id]"
 		)
 

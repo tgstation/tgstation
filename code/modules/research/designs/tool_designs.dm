@@ -201,9 +201,9 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 4000, /datum/material/glass = 3000)
 	build_path = /obj/item/biopsy_tool
-	category = list(RND_CATEGORY_TOOLS)
+	category = list(RND_CATEGORY_EQUIPMENT)
 	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_XENOBIOLOGY_TOOLS
+		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_XENOBIOLOGY_EQUIPMENT
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
