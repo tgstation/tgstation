@@ -129,7 +129,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/plasmarefiller
-	name = "Plasma-Man Jumpsuit Refill"
+	name = "Plasmaman Jumpsuit Refill"
 	desc = "A refill pack for the auto-extinguisher on Plasma-man suits."
 	id = "plasmarefiller" //Why did this have no plasmatech
 	build_type = PROTOLATHE | AWAY_LATHE
@@ -139,6 +139,7 @@
 	subcategory = list(
 		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_EQUIPMENT_GAS_TANKS
 	)
+	departmental_flags = ALL
 
 /datum/design/crewpinpointer
 	name = "Crew Pinpointer"

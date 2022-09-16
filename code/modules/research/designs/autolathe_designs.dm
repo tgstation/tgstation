@@ -1540,7 +1540,7 @@
 	subcategory = list(
 		RND_CATEGORY_MODULAR_COMPUTERS = RND_SUBCATEGORY_MODULAR_COMPUTER_FRAMES
 	)
-	departmental_flags = ALL
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/tablet
 	name = "Tablet Frame"
@@ -1552,7 +1552,7 @@
 	subcategory = list(
 		RND_CATEGORY_MODULAR_COMPUTERS = RND_SUBCATEGORY_MODULAR_COMPUTER_FRAMES
 	)
-	departmental_flags = ALL
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/slime_scanner
 	name = "Slime Scanner"
