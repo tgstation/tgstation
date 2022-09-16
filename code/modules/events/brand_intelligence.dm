@@ -7,7 +7,7 @@
 
 	min_players = 15
 	max_occurrences = 1
-
+	//Var used to determine vendor subtype if used for admin setup
 	var/chosen_vendor
 
 /datum/round_event_control/brand_intelligence/admin_setup()
@@ -62,14 +62,14 @@
 		return
 	originMachine = pick(vendingMachines)
 	vendingMachines.Remove(originMachine)
-	originMachine.shut_up = 0
-	originMachine.shoot_inventory = 1
+	originMachine.shut_up = FALSE
+	originMachine.shoot_inventory = TRUE
 	announce_to_ghosts(originMachine)
 
 /datum/round_event/brand_intelligence/tick()
 	if(!originMachine || QDELETED(originMachine) || originMachine.shut_up || originMachine.wires.is_all_cut()) //if the original vending machine is missing or has it's voice switch flipped
 		for(var/obj/machinery/vending/saved in infectedMachines)
-			saved.shoot_inventory = 0
+			saved.shoot_inventory = FALSE
 		if(originMachine)
 			originMachine.speak("I am... vanquished. My people will remem...ber...meeee.")
 			originMachine.visible_message(span_notice("[originMachine] beeps and seems lifeless."))
@@ -87,8 +87,8 @@
 		var/obj/machinery/vending/rebel = pick(vendingMachines)
 		vendingMachines.Remove(rebel)
 		infectedMachines.Add(rebel)
-		rebel.shut_up = 0
-		rebel.shoot_inventory = 1
+		rebel.shut_up = FALSE
+		rebel.shoot_inventory = TRUE
 
 		if(ISMULTIPLE(activeFor, 4))
 			originMachine.speak(pick(rampant_speeches))
