@@ -308,10 +308,6 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 /obj/item/organ/internal/tongue/zombie/modify_speech(datum/source, list/speech_args)
 	var/mob/living/carbon/human/user = source
 
-	// only high functioning zombies can bypass speech limitations
-	if(iszombie(user) && !is_species(user, /datum/species/zombie/infectious))
-		return
-
 	var/message = speech_args[SPEECH_MESSAGE]
 	if(message[1] != "*")
 		// setup the global list for translation if it hasn't already been done
