@@ -565,3 +565,64 @@
   skylord-a52:
   - rscadd: The Syndicate is now branching off into cheap tourist merchandise -- collect
       your limited edition t-shirt today by entering the nearest kidnapping pod!
+2022-09-16:
+  JohnFulpWillard:
+  - bugfix: Pods should now properly know whether or not to send itself off, and won't
+      break other pods at the same time.
+  Pizzie11:
+  - rscadd: Added a unique service department version of the Plumbing Constructor,
+      the Service Plumbing Constructor. This can be fabricated in the service protolate.
+  - rscadd: 'New plumbing machines have been added for the Service Plumbing Constructor:
+      Soda Synthesizer, Booze Synthesizer, Mixing Chamber, and Output Tap.'
+  - rscadd: The Chemical Receiver board can now be printed at the service protolathe
+  RandomGamer123, idea by Pickle-Coding:
+  - rscadd: You can now insert a hypernoblium crystal into portable atmospheric devices
+      (ie. canisters, pumps, and scrubbers) to allow you to toggle reactions inside
+      the can on and off, similar to how wrenching and unwrenching it on a connector
+      did previously.
+  - rscadd: The crystal once inserted cannot be removed without deconstructing the
+      canister. However, hypernoblium crystals are now single-use items, and their
+      cost has been halved to account for it.
+  - code_imp: Variable names in canister, pump, and scrubber UI code have been changed
+      to camel case for consistency.
+  - code_imp: The canister UI has been slightly changed in terms of how it displays
+      cell charge.
+  Rhials:
+  - bugfix: Surgically removed a stack of 50 glass sheets from the rocks of Tramstation's
+      lower decks.
+  - balance: Sepia and Timefreeze cameras are no longer single use. Refilling them
+      with camera film now restores their ability to rewind/freeze targets (you still
+      only get one picture before you run out of film).
+  ShizCalev:
+  - bugfix: Fixed a minor runtime when trying to track a human that's is no longer
+      trackable.
+  - balance: Things inside disposals pipes are now protected from weather (ashstorms,
+      radstorms, ect.)
+  - bugfix: Check power mapping debug option now properly supports multilayer wiring.
+  - admin: Setting machine_stat flags on machinery will now call the set_machine_stat
+      proc so things update properly lol.
+  - bugfix: Fixed a runtime when deconstructing newscaster w/ a wrench.
+  - admin: Improved some varedit handling for anything w/ the /obj/structure/closet
+      path (closets / lockers / crates)
+  itseasytosee:
+  - bugfix: Skeletons can drink milk again, sorry about that.
+  san7890:
+  - bugfix: When you are smited into an enbreaded tomb, you can no longer pick up
+      said tomb.
+  - admin: When you add a watchlist expiration date without having previously set
+      one, the logged message should now be more clear as to this.
+  timothymtorres:
+  - rscadd: Add planks used on doors creates crude barricades.  Can also be used on
+      fulltile windows.  Barricades can now be crowbarred to disassemble them quickly.
+  - soundadd: Add hammering_wood.ogg from soundcloud public domain to barricade and
+      wooden wall construction.
+  - bugfix: Fix plasma cutter or guns that burn not being able to ignite plasma
+  - balance: Change plasma cutters damage type to BURN and this will cause reduced
+      damage to mining mobs
+  - balance: Explodable stuff now detonates when hit by a BURN projectile.
+  - qol: Add screentips for objects that use rotation (chairs, windows, pipes, etc.)
+  - qol: Add Alt RMB and Ctrl RMB screentips options.  Instead of Alt + Ctrl being
+      one line, they are now split on separate lines.
+  zxaber:
+  - balance: Airlocks with an unrestricted side no longer function as a light source.
+      The indicator will now be visible even in the dark.

@@ -1,4 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes: 
-  - balance: "Sepia and Timefreeze cameras are no longer single use. Refilling them with camera film now restores their ability to rewind/freeze targets (you still only get one picture before you run out of film)."
