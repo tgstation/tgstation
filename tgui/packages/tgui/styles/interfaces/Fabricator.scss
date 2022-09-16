@@ -1,3 +1,8 @@
+@use '../base.scss';
+@use '../colors.scss';
+@use '../functions.scss' as *;
+@use '../components/Button.scss' as button;
+
 .Fabricator__Recipe {
   padding: 0.25em 0;
   border-bottom: 1px solid #000;
@@ -88,4 +93,57 @@
   padding-bottom: 100%;
   position: relative;
   box-shadow: 0 0 3px #000;
+}
+
+.FabricatorRecipe {
+  display: -ms-flexbox;
+  display: flex;
+  width: auto;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  &__About,
+  &__Title,
+  &__Button {
+    @include button.button-color(base.$color-bg);
+    background-color: rgba(base.$color-bg, 0);
+    color: button.$color-transparent-text;
+
+    display: -ms-flexbox;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0.25em 0.5em;
+    border-radius: 0;
+    margin: 0;
+
+    &:first-child {
+      border-radius: 4px 0 0 4px;
+    }
+
+    &:last-child {
+      border-radius: 0 4px 4px 0;
+    }
+  }
+
+  &__About {
+    padding: 0 1em;
+  }
+
+  &__Title {
+    flex-grow: 1;
+  }
+
+  &__Icon {
+    width: 32px;
+    height: 32px;
+    margin-right: 1em;
+  }
+
+  &__Button {
+    justify-self: flex-end;
+  }
 }

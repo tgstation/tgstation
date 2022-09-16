@@ -31,7 +31,7 @@ export const MaterialCostSequence = (
                 color:
                   amount * quantity * 2 < available[material]
                     ? '#fff'
-                    : amount * quantity < available['material']
+                    : amount * quantity < available[material]
                       ? '#f08f11'
                       : '#db2828',
               }}>
