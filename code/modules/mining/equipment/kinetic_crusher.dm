@@ -198,13 +198,7 @@
 	if(ismineralturf(target_turf))
 		var/turf/closed/mineral/M = target_turf
 		new /obj/effect/temp_visual/kinetic_blast(M)
-		M.gets_drilled(firer)
-		if(iscarbon(firer))
-			var/mob/living/carbon/carbon_firer = firer
-			var/skill_modifier = 1
-			// If there is a mind, check for skill modifier to allow them to reload faster.
-			if(carbon_firer.mind)
-				skill_modifier = carbon_firer.mind.get_skill_modifier(/datum/skill/mining, SKILL_SPEED_MODIFIER)
+		M.gets_drilled(firer,TRUE)
 	..()
 
 //trophies
@@ -455,14 +449,8 @@
 /obj/item/crusher_trophy/syndicate_trophy
 	name= "Syndicate trophy"
 	desc = "An odd super conducting material that the syndicate has stolen from the mitts of the ash lizards during a lavaland exploretory team deployment, it seems to cackle with power"
-	icon_state ="gibonite_igniter"
+	icon_state ="Gibtonite_igniter"
 	denied_type = /obj/item/crusher_trophy/syndicate_trophy
 
 /obj/item/crusher_trophy/syndicate_trophy/effect_desc()
 	return "mark can effect humanoid creatures"
-
-/obj/item/crusher_trophy/syndicate_trophy/on_mark_application(mob/living/target, datum/status_effect/crusher_mark/mark, had_mark)
-	if(ishuman(target))
-		target.apply_status_effect(/datum/status_effect/crusher_mark, hammer_synced)
-	
-		
