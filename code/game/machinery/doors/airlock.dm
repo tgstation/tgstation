@@ -361,8 +361,7 @@
 	if(isElectrified() && shock(user, 100))
 		return
 
-	else if(user.has_status_effect(/datum/status_effect/hallucination) && carbon_user.should_electrocute() && !operating && prob(1))
-		user.cause_hallucination(/datum/hallucination/shock, "hallucinated shock from [src]",)
+	if(SEND_SIGNAL(user, COMSIG_CARBON_BUMPED_AIRLOCK_OPEN, src) & STOP_BUMP)
 		return
 
 	return ..()
