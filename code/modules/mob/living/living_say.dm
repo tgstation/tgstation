@@ -337,18 +337,23 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	show_message(message, MSG_AUDIBLE, deaf_message, deaf_type, avoid_highlight)
 	return message
 
-/mob/living/send_speech(message, message_range = 6, obj/source = src, bubble_type = bubble_icon, list/spans, datum/language/message_language=null, list/message_mods = list())
-	var/eavesdrop_range = 0
+/mob/living/send_speech(message_raw, message_range = 6, obj/source = src, bubble_type = bubble_icon, list/spans, datum/language/message_language=null, list/message_mods = list())
+	var/whisper_range = 0
+	var/is_speaker_whispering = FALSE
+
 	if(message_mods[WHISPER_MODE]) //If we're whispering
-		eavesdrop_range = EAVESDROP_EXTRA_RANGE
-	var/list/listening = get_hearers_in_view(message_range+eavesdrop_range, source)
+		whisper_range = EAVESDROP_EXTRA_RANGE
+		is_speaker_whispering = TRUE
+
+	var/list/listening = get_hearers_in_view(message_range + whisper_range, source)
 	var/list/the_dead = list()
+
 	if(HAS_TRAIT(src, TRAIT_SIGN_LANG))	// Sign language
 		var/mob/living/carbon/mute = src
 		if(istype(mute))
 			switch(mute.check_signables_state())
 				if(SIGN_ONE_HAND) // One arm
-					message = stars(message)
+					message_raw = stars(message_raw)
 				if(SIGN_HANDS_FULL) // Full hands
 					mute.visible_message("tries to sign, but can't with [src.p_their()] hands full!", visible_message_flags = EMOTE_MESSAGE)
 					return FALSE
@@ -361,6 +366,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 				if(SIGN_CUFFED) // Cuffed
 					mute.visible_message("tries to sign, but can't with [src.p_their()] hands bound!", visible_message_flags = EMOTE_MESSAGE)
 					return FALSE
+
 	if(client) //client is so that ghosts don't have to listen to mice
 		for(var/mob/player_mob as anything in GLOB.player_list)
 			if(QDELETED(player_mob)) //Some times nulls and deleteds stay in this list. This is a workaround to prevent ic chat breaking for everyone when they do.
@@ -368,7 +374,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 			if(player_mob.stat != DEAD) //not dead, not important
 				continue
 			if(player_mob.z != z || get_dist(player_mob, src) > 7) //they're out of range of normal hearing
-				if(eavesdrop_range)
+				if(is_speaker_whispering)
 					if(!(player_mob.client?.prefs.chat_toggles & CHAT_GHOSTWHISPER)) //they're whispering and we have hearing whispers at any range off
 						continue
 				else if(!(player_mob.client?.prefs.chat_toggles & CHAT_GHOSTEARS)) //they're talking normally and we have hearing at any range off
@@ -376,29 +382,46 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 			listening |= player_mob
 			the_dead[player_mob] = TRUE
 
-	var/eavesdropping
-	var/eavesrendered
-	if(eavesdrop_range)
-		eavesdropping = stars(message)
-		eavesrendered = compose_message(src, message_language, eavesdropping, , spans, message_mods)
+	var/raw_translated_message
+	var/talk_icon_state = say_test(message_raw)
 
-	var/rendered = compose_message(src, message_language, message, , spans, message_mods)
+	// this signal ignores whispers or language translations (only used by beetlejuice component)
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_LIVING_SAY_SPECIAL, src, message_raw)
+
+	// this means a custom emote is being used and it doesn't need to be translated
+	if(!message_mods[MODE_CUSTOM_SAY_ERASE_INPUT])
+		// translate our message into appropriate language
+		message_raw = lang_treat(src, message_language, message_raw, spans, message_mods) // translate
+
+	var/translated_raw = message_raw
+
+	// message has been formatted to have all the different <span class> applied to it
+	var/message = compose_message(src, message_language, message_raw, null, spans, message_mods)
+	var/whisper // this whisper is also formatted
+	var/whisper_raw
+	// if someone is whispering we make an extra type of message that is obfuscated for people out of range
+	if(is_speaker_whispering)
+		whisper_raw = stars(message_raw)
+		whisper = compose_message(src, message_language, whisper_raw, null, spans, message_mods)
+
 	for(var/atom/movable/listening_movable as anything in listening)
 		if(!listening_movable)
 			stack_trace("somehow theres a null returned from get_hearers_in_view() in send_speech!")
 			continue
-		if(eavesdrop_range && get_dist(source, listening_movable) > message_range && !(the_dead[listening_movable]))
-			listening_movable.Hear(eavesrendered, src, message_language, eavesdropping, , spans, message_mods)
+
+		var/can_listener_hear_whisper = get_dist(source, listening_movable) <= message_range
+		var/is_listener_observer = the_dead[listening_movable] // ghosts can hear all messages clearly
+		if(is_speaker_whispering && !can_listener_hear_whisper && !is_listener_observer)
+			listening_movable.Hear(whisper, src, message_language, whisper_raw, null, spans, message_mods)
 		else
-			listening_movable.Hear(rendered, src, message_language, message, , spans, message_mods)
-	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_LIVING_SAY_SPECIAL, src, message)
+			listening_movable.Hear(message, src, message_language, message_raw, null, spans, message_mods)
 
 	//speech bubble
 	var/list/speech_bubble_recipients = list()
 	for(var/mob/M in listening)
 		if(M.client && (!M.client.prefs.read_preference(/datum/preference/toggle/enable_runechat) || (SSlag_switch.measures[DISABLE_RUNECHAT] && !HAS_TRAIT(src, TRAIT_BYPASS_MEASURES))))
 			speech_bubble_recipients.Add(M.client)
-	var/image/I = image('icons/mob/effects/talk.dmi', src, "[bubble_type][say_test(message)]", FLY_LAYER)
+	var/image/I = image('icons/mob/effects/talk.dmi', src, "[bubble_type][talk_icon_state]", FLY_LAYER)
 	I.plane = ABOVE_GAME_PLANE
 	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	INVOKE_ASYNC(GLOBAL_PROC, /.proc/flick_overlay, I, speech_bubble_recipients, 30)
