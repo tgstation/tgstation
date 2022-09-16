@@ -2,6 +2,10 @@
   padding: 0.25em 0;
   border-bottom: 1px solid #000;
   position: relative;
+
+  &:last-child {
+    border-bottom: 0;
+  }
 }
 
 .Fabricator__Button {

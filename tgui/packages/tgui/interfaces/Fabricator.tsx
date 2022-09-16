@@ -41,6 +41,29 @@ export const Fabricator = (props, context) => {
     availableMaterials[material.name] = material.amount;
   }
 
+  const visibleDesigns = sortedDesigns
+    .filter(
+      (design) =>
+        selectedCategory === ALL_CATEGORY ||
+        design.categories?.indexOf(selectedCategory) !== -1
+    )
+    .filter((design) =>
+      design.name.toLowerCase().includes(searchText.toLowerCase())
+    );
+
+  const subcategories: Record<string, Design[]> = {};
+
+  for (const design of visibleDesigns) {
+    const subcategory =
+      design.subcategories[selectedCategory] || 'Uncategorized';
+
+    if (!subcategories[subcategory]) {
+      subcategories[subcategory] = [];
+    }
+
+    subcategories[subcategory]!.push(design);
+  }
+
   return (
     <Window title={fab_name} width={670} height={600}>
       <Window.Content>
@@ -77,24 +100,18 @@ export const Fabricator = (props, context) => {
                     </Stack.Item>
                     <Stack.Item grow>
                       <Section fill style={{ 'overflow': 'auto' }}>
-                        {sortedDesigns
-                          .filter(
-                            (design) =>
-                              selectedCategory === ALL_CATEGORY ||
-                              design.categories?.indexOf(selectedCategory) !==
-                                -1
-                          )
-                          .filter((design) =>
-                            design.name
-                              .toLowerCase()
-                              .includes(searchText.toLowerCase())
-                          )
-                          .map((design) => (
-                            <Recipe
-                              key={design.name}
-                              design={design}
-                              available={availableMaterials}
-                            />
+                        {Object.keys(subcategories)
+                          .sort()
+                          .map((categoryName) => (
+                            <Section title={categoryName} key={categoryName}>
+                              {subcategories[categoryName]!.map((design) => (
+                                <Recipe
+                                  key={design.name}
+                                  design={design}
+                                  available={availableMaterials}
+                                />
+                              ))}
+                            </Section>
                           ))}
                       </Section>
                       {!!busy && (
