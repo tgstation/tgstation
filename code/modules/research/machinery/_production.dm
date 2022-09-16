@@ -59,10 +59,12 @@
 
 	// We're probably going to get more than one update (design) at a time, so batch
 	// them together.
-	addtimer(CALLBACK(src, .proc/update_designs), 0.25 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
+	addtimer(CALLBACK(src, .proc/update_designs), 2 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 /// Updates the list of designs this fabricator can print.
 /obj/machinery/rnd/production/proc/update_designs()
+	var/previous_design_count = cached_designs.len
+
 	cached_designs.Cut()
 
 	for(var/design_id in stored_research.researched_designs)
@@ -70,6 +72,12 @@
 
 		if((isnull(allowed_department_flags) || (design.departmental_flags & allowed_department_flags)) && (design.build_type & allowed_buildtypes))
 			cached_designs |= design
+
+	var/design_delta = cached_designs.len - previous_design_count
+
+	if(design_delta > 0)
+		say("Received [design_delta] new design[design_delta == 1 ? "" : "s"].")
+		playsound(src, 'sound/machines/twobeep_high.ogg', 50, TRUE)
 
 	update_static_data_for_all_viewers()
 
