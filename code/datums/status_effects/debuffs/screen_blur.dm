@@ -2,6 +2,7 @@
 /// of the eye blur status effect to determine the intensity of the blur on the user
 #define BLUR_DURATION_TO_INTENSITY 0.05
 
+/// Applies a blur to the user's screen, increasing in strength depending on duration remaining.
 /datum/status_effect/eye_blur
 	id = "eye_blur"
 	tick_interval = 1 SECONDS
