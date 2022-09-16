@@ -59,7 +59,6 @@
 			vendingMachines.Add(vendor)
 	if(!vendingMachines.len)
 		kill()
-		priority_announce("AINT GOT NOTHING CHIEF")
 		return
 	originMachine = pick(vendingMachines)
 	vendingMachines.Remove(originMachine)
