@@ -19,7 +19,7 @@
 		chosen_vendor = tgui_input_list(usr, "Pick Me!","Vendor Selector", vendors)
 
 /datum/round_event/brand_intelligence
-	announce_when = 21
+	announce_when = 1 //TIME FOR TESTING PURPOSES PLEASE REVERT TO 21
 	end_when = 1000 //Ends when all vending machines are subverted anyway.
 	var/list/obj/machinery/vending/vendingMachines = list()
 	var/list/obj/machinery/vending/infectedMachines = list()
@@ -48,7 +48,7 @@
 	var/datum/round_event_control/brand_intelligence/brand_event = control
 	if(brand_event.chosen_vendor)
 		var/chosen_vendor = brand_event.chosen_vendor
-		for(var/obj/vendor_type_path/vendor in GLOB.machines) //trying to typecast chosen_vendor to whatever the admin selected subtype is
+		for(var/obj/machinery/vending/vendor in GLOB.machines)
 			if(!is_station_level(vendor.z) || !istype(vendor, chosen_vendor))
 				continue
 			vendingMachines.Add(vendor)
@@ -59,6 +59,7 @@
 			vendingMachines.Add(vendor)
 	if(!vendingMachines.len)
 		kill()
+		priority_announce("AINT GOT NOTHING CHIEF")
 		return
 	originMachine = pick(vendingMachines)
 	vendingMachines.Remove(originMachine)
