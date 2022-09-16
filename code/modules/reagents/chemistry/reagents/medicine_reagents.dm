@@ -125,7 +125,7 @@
 	M.AdjustParalyzed(-20 * REM * delta_time)
 	if(holder.has_reagent(/datum/reagent/toxin/mindbreaker))
 		holder.remove_reagent(/datum/reagent/toxin/mindbreaker, 5 * REM * delta_time)
-	M.adjust_timed_status_effect(-20 SECONDS * REM * delta_time, /datum/status_effect/hallucination)
+	M.adjust_hallucinations(-20 SECONDS * REM * delta_time)
 	if(DT_PROB(16, delta_time))
 		M.adjustToxLoss(1, 0)
 		. = TRUE
@@ -144,7 +144,7 @@
 		holder.remove_reagent(/datum/reagent/toxin/mindbreaker, 5 * REM * delta_time)
 	if(holder.has_reagent(/datum/reagent/toxin/histamine))
 		holder.remove_reagent(/datum/reagent/toxin/histamine, 5 * REM * delta_time)
-	M.adjust_timed_status_effect(-20 SECONDS * REM * delta_time, /datum/status_effect/hallucination)
+	M.adjust_hallucinations(-20 SECONDS * REM * delta_time)
 	if(DT_PROB(16, delta_time))
 		M.adjustToxLoss(1, 0)
 		. = TRUE
@@ -1161,7 +1161,7 @@
 	..()
 
 /datum/reagent/medicine/earthsblood/overdose_process(mob/living/M, delta_time, times_fired)
-	M.adjust_timed_status_effect(10 SECONDS * REM * delta_time, /datum/status_effect/hallucination, max_duration = 120 SECONDS)
+	M.adjust_hallucinations_up_to(10 SECONDS * REM * delta_time, 120 SECONDS)
 	if(current_cycle > 25)
 		M.adjustToxLoss(4 * REM * delta_time, 0)
 		if(current_cycle > 100) //podpeople get out reeeeeeeeeeeeeeeeeeeee
@@ -1191,7 +1191,7 @@
 		M.adjust_timed_status_effect(-6 SECONDS * REM * delta_time, /datum/status_effect/jitter)
 
 	if (M.get_timed_status_effect_duration(/datum/status_effect/hallucination) >= 10 SECONDS)
-		M.adjust_timed_status_effect(-10 SECONDS * REM * delta_time, /datum/status_effect/hallucination)
+		M.adjust_hallucinations(-10 SECONDS * REM * delta_time)
 
 	if(DT_PROB(10, delta_time))
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1, 50)
@@ -1395,7 +1395,7 @@
 	. = TRUE
 
 /datum/reagent/medicine/psicodine/overdose_process(mob/living/M, delta_time, times_fired)
-	M.adjust_timed_status_effect(10 SECONDS * REM * delta_time, /datum/status_effect/hallucination, max_duration = 120 SECONDS)
+	M.adjust_hallucinations_up_to(10 SECONDS * REM * delta_time, 120 SECONDS)
 	M.adjustToxLoss(1 * REM * delta_time, 0)
 	..()
 	. = TRUE

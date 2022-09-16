@@ -168,7 +168,7 @@
 	if(istype(chem, /datum/reagent/gunpowder))
 		H.set_timed_status_effect(15 SECONDS * delta_time, /datum/status_effect/drugginess)
 		if(H.get_timed_status_effect_duration(/datum/status_effect/hallucination) / 10 < chem.volume)
-			H.adjust_timed_status_effect(2.5 SECONDS * delta_time, /datum/status_effect/hallucination)
+			H.adjust_hallucinations(2.5 SECONDS * delta_time)
 		// Do normal metabolism
 		return FALSE
 

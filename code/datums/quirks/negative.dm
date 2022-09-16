@@ -477,7 +477,6 @@
 	lose_text = span_notice("You feel in tune with the world again.")
 	medical_record_text = "Patient suffers from acute Reality Dissociation Syndrome and experiences vivid hallucinations."
 	hardcore_value = 6
-	processing_quirk = TRUE
 
 /datum/quirk/insanity/add()
 	if(!iscarbon(quirk_holder))

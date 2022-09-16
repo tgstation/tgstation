@@ -26,7 +26,7 @@
 
 		//Hilariously enough, running into a closet should make you get hit the hardest.
 		var/hallucination_amount = max(100 SECONDS, min(600 SECONDS, DETONATION_HALLUCINATION * sqrt(1 / (get_dist(victim, src) + 1))))
-		victim.adjust_timed_status_effect(hallucination_amount, /datum/status_effect/hallucination)
+		victim.adjust_hallucinations(hallucination_amount)
 
 	for(var/mob/victim as anything in GLOB.player_list)
 		var/turf/victim_turf = get_turf(victim)

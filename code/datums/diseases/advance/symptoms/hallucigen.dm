@@ -61,4 +61,4 @@
 					to_chat(M, span_userdanger("[pick("Oh, your head...", "Your head pounds.", "They're everywhere! Run!", "Something in the shadows...")]"))
 				else
 					to_chat(M, span_notice("[pick(healthy_messages)]"))
-			M.adjust_timed_status_effect(90 SECONDS * power, /datum/status_effect/hallucination)
+			M.adjust_hallucinations(90 SECONDS * power)

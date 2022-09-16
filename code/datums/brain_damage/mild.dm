@@ -17,7 +17,7 @@
 	if(HAS_TRAIT(owner, TRAIT_HALLUCINATION_SUPPRESSED))
 		return
 
-	owner.adjust_timed_status_effect(10 SECONDS * delta_time, /datum/status_effect/hallucination, max_duration = 100 SECONDS)
+	owner.adjust_hallucinations_up_to(10 SECONDS * delta_time, 100 SECONDS)
 
 /datum/brain_trauma/mild/hallucinations/on_lose()
 	owner.remove_status_effect(/datum/status_effect/hallucination)

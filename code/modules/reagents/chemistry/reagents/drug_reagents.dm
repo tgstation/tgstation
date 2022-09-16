@@ -32,7 +32,7 @@
 /datum/reagent/drug/space_drugs/overdose_process(mob/living/M, delta_time, times_fired)
 	var/hallucination_duration_in_seconds = (M.get_timed_status_effect_duration(/datum/status_effect/hallucination) / 10)
 	if(hallucination_duration_in_seconds < volume && DT_PROB(10, delta_time))
-		M.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/hallucination)
+		M.adjust_hallucinations(10 SECONDS)
 	..()
 
 /datum/reagent/drug/cannabis
@@ -221,7 +221,7 @@
 	M.add_mood_event("salted", /datum/mood_event/stimulant_heavy, name)
 	M.adjustStaminaLoss(-5 * REM * delta_time, 0)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 4 * REM * delta_time)
-	M.adjust_timed_status_effect(10 SECONDS * REM * delta_time, /datum/status_effect/hallucination)
+	M.adjust_hallucinations(10 SECONDS * REM * delta_time)
 	if(!HAS_TRAIT(M, TRAIT_IMMOBILIZED) && !ismovable(M.loc))
 		step(M, pick(GLOB.cardinals))
 		step(M, pick(GLOB.cardinals))
@@ -229,7 +229,7 @@
 	. = TRUE
 
 /datum/reagent/drug/bath_salts/overdose_process(mob/living/M, delta_time, times_fired)
-	M.adjust_timed_status_effect(10 SECONDS * REM * delta_time, /datum/status_effect/hallucination)
+	M.adjust_hallucinations(10 SECONDS * REM * delta_time)
 	if(!HAS_TRAIT(M, TRAIT_IMMOBILIZED) && !ismovable(M.loc))
 		for(var/i in 1 to round(8 * REM * delta_time, 1))
 			step(M, pick(GLOB.cardinals))

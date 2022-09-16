@@ -58,7 +58,7 @@
 		if(M.reagents.has_reagent(/datum/reagent/toxin/histamine))
 			M.reagents.remove_reagent(/datum/reagent/toxin/histamine, 5)
 
-		M.adjust_timed_status_effect(-20 SECONDS, /datum/status_effect/hallucination)
+		M.adjust_hallucinations(-20 SECONDS)
 
 	if(A.stage >= 5)
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -3)

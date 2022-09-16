@@ -200,7 +200,7 @@
 		if(3, 4)
 			if(high_stress)
 				to_chat(owner, span_warning("You're going mad with loneliness!"))
-				owner.adjust_timed_status_effect(60 SECONDS, /datum/status_effect/hallucination)
+				owner.adjust_hallucinations(60 SECONDS)
 			else
 				to_chat(owner, span_warning("You feel really lonely..."))
 
@@ -307,7 +307,7 @@
 	scan_desc = "dyslexia"
 	gain_text = "<span class='warning'>You have trouble reading or writing...</span>"
 	lose_text = "<span class='notice'>Your suddenly remember how to read and write.</span>"
-	
+
 /datum/brain_trauma/severe/dyslexia/on_gain()
 	ADD_TRAIT(owner, TRAIT_ILLITERATE, TRAUMA_TRAIT)
 	..()

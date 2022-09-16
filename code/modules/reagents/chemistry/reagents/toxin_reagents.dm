@@ -320,7 +320,7 @@
 
 	// otherwise it creates hallucinations. truly a miracle medicine.
 	else
-		metabolizer.adjust_timed_status_effect(10 SECONDS * REM * delta_time, /datum/status_effect/hallucination)
+		metabolizer.adjust_hallucinations(10 SECONDS * REM * delta_time)
 
 	return ..()
 

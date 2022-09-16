@@ -239,9 +239,9 @@
 	if(breath_gases[/datum/gas/bz])
 		var/bz_partialpressure = (breath_gases[/datum/gas/bz][MOLES]/breath.total_moles())*breath_pressure
 		if(bz_partialpressure > 1)
-			adjust_timed_status_effect(20 SECONDS, /datum/status_effect/hallucination)
+			adjust_hallucinations(20 SECONDS)
 		else if(bz_partialpressure > 0.01)
-			adjust_timed_status_effect(10 SECONDS, /datum/status_effect/hallucination)
+			adjust_hallucinations(10 SECONDS)
 
 	//NITRIUM
 	if(breath_gases[/datum/gas/nitrium])

@@ -355,7 +355,7 @@
 
 /obj/item/clothing/suit/armor/reactive/hallucinating/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	owner.visible_message(span_danger("[src] blocks [attack_text], but pulls a massive charge of mental energy into [owner] from the surrounding environment!"))
-	owner.adjust_timed_status_effect(50 SECONDS, /datum/status_effect/hallucination, max_duration = 300 SECONDS)
+	owner.adjust_hallucinations_up_to(50 SECONDS, 300 SECONDS)
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 	return TRUE
 

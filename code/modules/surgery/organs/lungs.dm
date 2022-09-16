@@ -295,7 +295,7 @@
 
 		var/bz_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/bz][MOLES])
 		if(bz_pp > BZ_trip_balls_min)
-			breather.adjust_timed_status_effect(20 SECONDS, /datum/status_effect/hallucination)
+			breather.adjust_hallucinations(20 SECONDS)
 			breather.reagents.add_reagent(/datum/reagent/bz_metabolites,5)
 		if(bz_pp > BZ_brain_damage_min && prob(33))
 			breather.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3, 150)

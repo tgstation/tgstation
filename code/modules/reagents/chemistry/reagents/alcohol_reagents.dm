@@ -207,7 +207,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/whiskey/candycorn/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
 	if(DT_PROB(5, delta_time))
-		drinker.adjust_timed_status_effect(4 SECONDS * REM * delta_time, /datum/status_effect/hallucination)
+		drinker.adjust_hallucinations(4 SECONDS * REM * delta_time)
 	..()
 
 /datum/reagent/consumable/ethanol/thirteenloko
@@ -466,7 +466,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/absinthe/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
 	if(DT_PROB(5, delta_time) && !HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE))
-		drinker.adjust_timed_status_effect(8 SECONDS, /datum/status_effect/hallucination)
+		drinker.adjust_hallucinations(8 SECONDS)
 	..()
 
 /datum/reagent/consumable/ethanol/hooch
@@ -2905,7 +2905,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/helianthus/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
 	if(DT_PROB(5, delta_time))
-		drinker.adjust_timed_status_effect(4 SECONDS * REM * delta_time, /datum/status_effect/hallucination, max_duration = 48 SECONDS)
+		drinker.adjust_hallucinations_up_to(4 SECONDS * REM * delta_time, 48 SECONDS)
 
 	..()
 
