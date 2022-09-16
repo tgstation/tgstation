@@ -1,13 +1,13 @@
 ///////////////////Computer Boards///////////////////////////////////
 
 /datum/design/board
-	name = "Computer Design ( NULL ENTRY )"
+	name = "NULL ENTRY Board"
 	desc = "I promise this doesn't give you syndicate goodies!"
 	build_type = IMPRINTER | AWAY_IMPRINTER
 	materials = list(/datum/material/glass = 1000)
 
 /datum/design/board/arcade_battle
-	name = "Computer Design (Battle Arcade Machine)"
+	name = "Battle Arcade Machine Board"
 	desc = "Allows for the construction of circuit boards used to build a new arcade machine."
 	id = "arcade_battle"
 	build_path = /obj/item/circuitboard/computer/arcade/battle
@@ -18,7 +18,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
 /datum/design/board/orion_trail
-	name = "Computer Design (Orion Trail Arcade Machine)"
+	name = "Orion Trail Arcade Machine Board"
 	desc = "Allows for the construction of circuit boards used to build a new Orion Trail machine."
 	id = "arcade_orion"
 	build_path = /obj/item/circuitboard/computer/arcade/orion_trail
@@ -29,7 +29,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
 /datum/design/board/seccamera
-	name = "Computer Design (Security Camera)"
+	name = "Security Camera Board"
 	desc = "Allows for the construction of circuit boards used to build security camera computers."
 	id = "seccamera"
 	build_path = /obj/item/circuitboard/computer/security
@@ -40,7 +40,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/board/rdcamera
-	name = "Computer Design (Research Monitor)"
+	name = "Research Monitor Board"
 	desc = "Allows for the construction of circuit boards used to build research camera computers."
 	id = "rdcamera"
 	build_path = /obj/item/circuitboard/computer/research
@@ -51,7 +51,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/xenobiocamera
-	name = "Computer Design (Xenobiology Console)"
+	name = "Xenobiology Console Board"
 	desc = "Allows for the construction of circuit boards used to build xenobiology camera computers."
 	id = "xenobioconsole"
 	build_path = /obj/item/circuitboard/computer/xenobiology
@@ -62,7 +62,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/aiupload
-	name = "Computer Design (AI Upload)"
+	name = "AI Upload Board"
 	desc = "Allows for the construction of circuit boards used to build an AI Upload Console."
 	id = "aiupload"
 	materials = list(/datum/material/glass = 1000, /datum/material/gold = 2000, /datum/material/diamond = 2000, /datum/material/bluespace = 2000)
@@ -74,7 +74,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/borgupload
-	name = "Computer Design (Cyborg Upload)"
+	name = "Cyborg Upload Board"
 	desc = "Allows for the construction of circuit boards used to build a Cyborg Upload Console."
 	id = "borgupload"
 	materials = list(/datum/material/glass = 1000, /datum/material/gold = 2000, /datum/material/diamond = 2000, /datum/material/bluespace = 2000)
@@ -86,7 +86,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/med_data
-	name = "Computer Design (Medical Records)"
+	name = "Medical Records Board"
 	desc = "Allows for the construction of circuit boards used to build a medical records console."
 	id = "med_data"
 	build_path = /obj/item/circuitboard/computer/med_data
@@ -97,7 +97,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
 /datum/design/board/operating
-	name = "Computer Design (Operating Computer)"
+	name = "Operating Computer Board"
 	desc = "Allows for the construction of circuit boards used to build an operating computer console."
 	id = "operating"
 	build_path = /obj/item/circuitboard/computer/operating
@@ -108,7 +108,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/pandemic
-	name = "Computer Design (PanD.E.M.I.C. 2200)"
+	name = "PanD.E.M.I.C. 2200 Board"
 	desc = "Allows for the construction of circuit boards used to build a PanD.E.M.I.C. 2200 console."
 	id = "pandemic"
 	build_path = /obj/item/circuitboard/computer/pandemic
@@ -119,7 +119,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
 /datum/design/board/comconsole
-	name = "Computer Design (Communications)"
+	name = "Communications Board"
 	desc = "Allows for the construction of circuit boards used to build a communications console."
 	id = "comconsole"
 	build_path = /obj/item/circuitboard/computer/communications
@@ -130,7 +130,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SECURITY //Honestly should have a bridge techfab for this sometime.
 
 /datum/design/board/crewconsole
-	name = "Computer Design (Crew monitoring computer)"
+	name = "Crew monitoring computer Board"
 	desc = "Allows for the construction of circuit boards used to build a Crew monitoring computer."
 	id = "crewconsole"
 	build_type = IMPRINTER
@@ -142,7 +142,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY | DEPARTMENT_BITFLAG_MEDICAL
 
 /datum/design/board/secdata
-	name = "Computer Design (Security Records Console)"
+	name = "Security Records Console Board"
 	desc = "Allows for the construction of circuit boards used to build a security records console."
 	id = "secdata"
 	build_path = /obj/item/circuitboard/computer/secure_data
@@ -153,7 +153,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/board/atmosalerts
-	name = "Computer Design (Atmosphere Alert)"
+	name = "Atmosphere Alert Board"
 	desc = "Allows for the construction of circuit boards used to build an atmosphere alert console."
 	id = "atmosalerts"
 	build_path = /obj/item/circuitboard/computer/atmos_alert
@@ -164,7 +164,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/board/atmos_control
-	name = "Computer Design (Atmospheric Monitor)"
+	name = "Atmospheric Monitor Board"
 	desc = "Allows for the construction of circuit boards used to build an Atmospheric Monitor."
 	id = "atmos_control"
 	build_path = /obj/item/circuitboard/computer/atmos_control
@@ -175,7 +175,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/board/robocontrol
-	name = "Computer Design (Robotics Control Console)"
+	name = "Robotics Control Console Board"
 	desc = "Allows for the construction of circuit boards used to build a Robotics Control console."
 	id = "robocontrol"
 	materials = list(/datum/material/glass = 1000, /datum/material/gold = 1000, /datum/material/silver = 1000, /datum/material/bluespace = 2000)
@@ -187,7 +187,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/slot_machine
-	name = "Computer Design (Slot Machine)"
+	name = "Slot Machine Board"
 	desc = "Allows for the construction of circuit boards used to build a new slot machine."
 	id = "slotmachine"
 	build_path = /obj/item/circuitboard/computer/slot_machine
@@ -199,7 +199,7 @@
 
 
 /datum/design/board/powermonitor
-	name = "Computer Design (Power Monitor)"
+	name = "Power Monitor Board"
 	desc = "Allows for the construction of circuit boards used to build a new power monitor."
 	id = "powermonitor"
 	build_path = /obj/item/circuitboard/computer/powermonitor
@@ -210,7 +210,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/board/solarcontrol
-	name = "Computer Design (Solar Control)"
+	name = "Solar Control Board"
 	desc = "Allows for the construction of circuit boards used to build a solar control console."
 	id = "solarcontrol"
 	build_path = /obj/item/circuitboard/computer/solar_control
@@ -221,7 +221,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/board/prisonmanage
-	name = "Computer Design (Prisoner Management Console)"
+	name = "Prisoner Management Console Board"
 	desc = "Allows for the construction of circuit boards used to build a prisoner management console."
 	id = "prisonmanage"
 	build_path = /obj/item/circuitboard/computer/prisoner
@@ -232,7 +232,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/board/mechacontrol
-	name = "Computer Design (Exosuit Control Console)"
+	name = "Exosuit Control Console Board"
 	desc = "Allows for the construction of circuit boards used to build an exosuit control console."
 	id = "mechacontrol"
 	build_path = /obj/item/circuitboard/computer/mecha_control
@@ -243,7 +243,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/mechapower
-	name = "Computer Design (Mech Bay Power Control Console)"
+	name = "Mech Bay Power Control Console Board"
 	desc = "Allows for the construction of circuit boards used to build a mech bay power control console."
 	id = "mechapower"
 	build_path = /obj/item/circuitboard/computer/mech_bay_power_console
@@ -254,7 +254,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/rdconsole
-	name = "Computer Design (R&D Console)"
+	name = "R&D Console Board"
 	desc = "Allows for the construction of circuit boards used to build a new R&D console."
 	id = "rdconsole"
 	build_path = /obj/item/circuitboard/computer/rdconsole
@@ -265,7 +265,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/cargo
-	name = "Computer Design (Supply Console)"
+	name = "Supply Console Board"
 	desc = "Allows for the construction of circuit boards used to build a Supply Console."
 	id = "cargo"
 	build_type = IMPRINTER
@@ -277,7 +277,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO
 
 /datum/design/board/cargorequest
-	name = "Computer Design (Supply Request Console)"
+	name = "Supply Request Console Board"
 	desc = "Allows for the construction of circuit boards used to build a Supply Request Console."
 	id = "cargorequest"
 	build_type = IMPRINTER
@@ -289,7 +289,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO
 
 /datum/design/board/mining
-	name = "Computer Design (Outpost Status Display)"
+	name = "Outpost Status Display Board"
 	desc = "Allows for the construction of circuit boards used to build an outpost status display console."
 	id = "mining"
 	build_path = /obj/item/circuitboard/computer/mining
@@ -300,7 +300,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/board/comm_monitor
-	name = "Computer Design (Telecommunications Monitoring Console)"
+	name = "Telecommunications Monitoring Console Board"
 	desc = "Allows for the construction of circuit boards used to build a telecommunications monitor."
 	id = "comm_monitor"
 	build_path = /obj/item/circuitboard/computer/comm_monitor
@@ -311,7 +311,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/board/comm_server
-	name = "Computer Design (Telecommunications Server Monitoring Console)"
+	name = "Telecommunications Server Monitoring Console Board"
 	desc = "Allows for the construction of circuit boards used to build a telecommunication server browser and monitor."
 	id = "comm_server"
 	build_path = /obj/item/circuitboard/computer/comm_server
@@ -322,7 +322,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/board/message_monitor
-	name = "Computer Design (Messaging Monitor Console)"
+	name = "Messaging Monitor Console Board"
 	desc = "Allows for the construction of circuit boards used to build a messaging monitor console."
 	id = "message_monitor"
 	build_path = /obj/item/circuitboard/computer/message_monitor
@@ -333,7 +333,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/board/aifixer
-	name = "Computer Design (AI Integrity Restorer)"
+	name = "AI Integrity Restorer Board"
 	desc = "Allows for the construction of circuit boards used to build an AI Integrity Restorer."
 	id = "aifixer"
 	build_path = /obj/item/circuitboard/computer/aifixer
@@ -344,7 +344,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/libraryconsole
-	name = "Computer Design (Library Console)"
+	name = "Library Console Board"
 	desc = "Allows for the construction of circuit boards used to build a new library console."
 	id = "libraryconsole"
 	build_path = /obj/item/circuitboard/computer/libraryconsole
@@ -355,7 +355,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
 /datum/design/board/apc_control
-	name = "Computer Design (APC Control)"
+	name = "APC Control Board"
 	desc = "Allows for the construction of circuit boards used to build a new APC control console."
 	id = "apc_control"
 	build_path = /obj/item/circuitboard/computer/apc_control
@@ -366,7 +366,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/board/advanced_camera
-	name = "Computer Design (Advanced Camera Console)"
+	name = "Advanced Camera Console Board"
 	desc = "Allows for the construction of circuit boards used to build advanced camera consoles."
 	id = "advanced_camera"
 	build_path = /obj/item/circuitboard/computer/advanced_camera
@@ -377,7 +377,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/board/bountypad_control
-	name = "Computer Design (Civilian Bounty Pad Control)"
+	name = "Civilian Bounty Pad Control Board"
 	desc = "Allows for the construction of circuit boards used to build a new civilian bounty pad console."
 	id = "bounty_pad_control"
 	build_path = /obj/item/circuitboard/computer/bountypad
@@ -388,7 +388,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO
 
 /datum/design/board/exoscanner_console
-	name = "Computer Design (Scanner Array Control Console)"
+	name = "Scanner Array Control Console Board"
 	desc = "Allows for the construction of circuit boards used to build a new scanner array control console."
 	id = "exoscanner_console"
 	build_type = IMPRINTER
@@ -400,7 +400,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/exodrone_console
-	name = "Computer Design (Exploration Drone Control Console)"
+	name = "Exploration Drone Control Console Board"
 	desc = "Allows for the construction of circuit boards used to build a new exploration drone control console."
 	id = "exodrone_console"
 	build_type = IMPRINTER
@@ -412,7 +412,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/accounting_console
-	name = "Computer Design (Account Lookup Console)"
+	name = "Account Lookup Console Board"
 	desc = "Allows for the construction of circuit boards used to assess the wealth of crewmates on station."
 	id = "account_console"
 	build_type = IMPRINTER
