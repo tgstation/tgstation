@@ -115,10 +115,11 @@
 	tool_behaviour = TOOL_ROLLINGPIN
 
 /obj/item/kitchen/rollingpin/illegal
-	name = "illegal rolling pin"
-	desc = "A heavy metalic rolling pin to bash in those annoying ingredients"
+	name = "metal rolling pin"
+	desc = "A heavy metallic rolling pin used to bash in those annoying ingredients"
 	icon_state = "metal_rolling_pin"
 	force = 12
+	flags_1 = CONDUCT_1
 	custom_materials = list(/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 1.5, /datum/material/plastic = MINERAL_MATERIAL_AMOUNT * 1.5)
 	custom_price = PAYCHECK_CREW * 2
 	bare_wound_bonus = 14
