@@ -30,7 +30,7 @@
 	build_path = /obj/item/circuitboard/machine/announcement_system
 	category = list(RND_CATEGORY_MACHINE)
 	subcategory = list(
-		RND_CATEGORY_MACHINE = RND_SUBCATEGORY_MACHINE_ENGINEERING
+		RND_CATEGORY_MACHINE = RND_SUBCATEGORY_MACHINE_TELECOMMS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -702,7 +702,7 @@
 	build_path = /obj/item/circuitboard/machine/ntnet_relay
 	category = list(RND_CATEGORY_MACHINE)
 	subcategory = list(
-		RND_CATEGORY_MACHINE = RND_SUBCATEGORY_MACHINE_ENGINEERING
+		RND_CATEGORY_MACHINE = RND_SUBCATEGORY_MACHINE_TELECOMMS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 

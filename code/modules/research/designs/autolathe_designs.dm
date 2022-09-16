@@ -1188,7 +1188,7 @@
 /datum/design/newscaster_frame
 	name = "Newscaster Frame"
 	id = "newscaster_frame"
-	build_type = AUTOLATHE
+	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 14000, /datum/material/glass = 8000)
 	build_path = /obj/item/wallframe/newscaster
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_CONSTRUCTION)
@@ -1200,7 +1200,7 @@
 /datum/design/status_display_frame
 	name = "Status Display Frame"
 	id = "status_display_frame"
-	build_type = AUTOLATHE
+	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 14000, /datum/material/glass = 8000)
 	build_path = /obj/item/wallframe/status_display
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_CONSTRUCTION)
@@ -1533,24 +1533,26 @@
 /datum/design/laptop
 	name = "Laptop Frame"
 	id = "laptop"
-	build_type = AUTOLATHE
+	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 10000, /datum/material/glass = 1000)
 	build_path = /obj/item/modular_computer/laptop/buildable
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_MODULAR_COMPUTERS)
 	subcategory = list(
 		RND_CATEGORY_MODULAR_COMPUTERS = RND_SUBCATEGORY_MODULAR_COMPUTER_FRAMES
 	)
+	departmental_flags = ALL
 
 /datum/design/tablet
 	name = "Tablet Frame"
 	id = "tablet"
-	build_type = AUTOLATHE
+	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 2000, /datum/material/glass = 1000)
 	build_path = /obj/item/modular_computer/tablet
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_MODULAR_COMPUTERS)
 	subcategory = list(
 		RND_CATEGORY_MODULAR_COMPUTERS = RND_SUBCATEGORY_MODULAR_COMPUTER_FRAMES
 	)
+	departmental_flags = ALL
 
 /datum/design/slime_scanner
 	name = "Slime Scanner"
