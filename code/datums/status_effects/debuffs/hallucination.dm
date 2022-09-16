@@ -73,14 +73,11 @@
 /datum/status_effect/hallucination/proc/on_bump_airlock(mob/living/carbon/source, obj/machinery/door/airlock/bumped)
 	SIGNAL_HANDLER
 
-	if(!COOLDOWN_FINISHED(src, hallucination_cooldown))
-		return
 	// 1% chance to fake a shock.
 	if(prob(99) || !source.should_electrocute() || bumped.operating)
 		return
 
 	source.cause_hallucination(/datum/hallucination/shock, "hallucinated shock from [bumped]",)
-	COOLDOWN_START(src, hallucination_cooldown, rand(lower_tick_interval, upper_tick_interval))
 	return STOP_BUMP
 
 /datum/status_effect/hallucination/tick(delta_time, times_fired)

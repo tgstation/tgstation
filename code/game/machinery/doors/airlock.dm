@@ -357,7 +357,6 @@
 	if(issilicon(user) || !iscarbon(user))
 		return ..()
 
-	var/mob/living/carbon/carbon_user = user
 	if(isElectrified() && shock(user, 100))
 		return
 
