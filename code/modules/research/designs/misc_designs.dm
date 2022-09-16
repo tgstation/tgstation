@@ -341,7 +341,7 @@
 	subcategory = list(
 		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_EQUIPMENT_SCIENCE
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/donksoft_refill
 	name = "Donksoft Toy Vendor Refill"
@@ -367,7 +367,7 @@
 	subcategory = list(
 		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_EQUIPMENT_GAS_TANKS
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_CARGO
 
 /datum/design/plasma_tank
 	name = "Plasma Tank"
