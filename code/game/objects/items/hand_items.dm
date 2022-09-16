@@ -200,7 +200,31 @@
 	iteration++
 	noogie_loop(user, target, iteration)
 
+//Completing the holy trinity of bullying
+/obj/item/hand_item/wedgie
+	name = "wedgie"
+	desc = "grab someone from behind with this to give them a wedgie"
+	icon_state = "fleshtostone"
+	inhand_icon_state = "nothing"
 
+/obj/item/hand_item/wedgie/attack(mob/living/carbon/human/poorsap, mob/living/the_bully)
+	if(!iscarbon(poorsap))
+		to_chat(the_bully, span_warning("You can't give this a wedgie silly"))
+		return
+	if(!poorsap.underwear) //cant give them a wedgie if they have no undies
+		to_chat(the_bully, span_alert ("They don't seem to be wearing undies, you can't give them a wedgie"))
+		return 
+	if(HAS_TRAIT(the_bully, TRAIT_PACIFISM))
+		to_chat(the_bully, span_warning("You cannot bring yourself to bully this individual!"))
+		return
+	if(the_bully.zone_selected != BODY_ZONE_PRECISE_GROIN)
+		to_chat(the_bully, span_warning("You must target the groin!"))
+		return
+	var/poorsap_dir = poorsap.dir
+	var/bully_location = get_step(poorsap, REVERSE_DIR(poorsap_dir))
+	if(poorsap_dir == the_bully.dir && the_bully.loc == bully_location)
+		to_chat(the_bully, span_alert("You give them a wedgie!"))
+		
 /obj/item/hand_item/slapper
 	name = "slapper"
 	desc = "This is how real men fight."
