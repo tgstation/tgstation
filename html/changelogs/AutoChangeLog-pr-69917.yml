@@ -1,0 +1,5 @@
+author: "NamelessFairy"
+delete-after: True
+changes: 
+  - bugfix: "CTF Instagib mode can now be toggled without breaking CTF"
+  - admin: "Admins can now toggle CTF Instagib mode while CTF is not running"
