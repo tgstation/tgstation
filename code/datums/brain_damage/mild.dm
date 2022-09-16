@@ -89,7 +89,7 @@
 				owner.adjust_timed_status_effect(20 SECONDS, /datum/status_effect/dizziness)
 			if(4,5)
 				owner.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/confusion)
-				owner.blur_eyes(10)
+				owner.set_eye_blur_if_lower(20 SECONDS)
 			if(6 to 9)
 				owner.adjust_timed_status_effect(1 MINUTES, /datum/status_effect/speech/slurring/drunk)
 			if(10)

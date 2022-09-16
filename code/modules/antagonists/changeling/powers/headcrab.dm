@@ -24,7 +24,7 @@
 			continue
 		to_chat(blinded_humans, span_userdanger("You are blinded by a shower of blood!"))
 		blinded_humans.Stun(20)
-		blinded_humans.blur_eyes(20)
+		blinded_humans.set_eye_blur_if_lower(40 SECONDS)
 		blinded_humans.adjust_timed_status_effect(3 SECONDS, /datum/status_effect/confusion)
 
 	for(var/mob/living/silicon/blinded_silicons in range(2,user))

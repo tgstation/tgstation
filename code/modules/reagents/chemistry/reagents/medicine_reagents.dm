@@ -689,7 +689,7 @@
 
 /datum/reagent/medicine/oculine/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
 	owner.adjust_blindness(-2 * REM * delta_time * normalise_creation_purity())
-	owner.adjust_blurriness(-2 * REM * delta_time * normalise_creation_purity())
+	owner.adjust_eye_blue(-4 SECONDS * REM * delta_time * normalise_creation_purity())
 	var/obj/item/organ/internal/eyes/eyes = owner.getorganslot(ORGAN_SLOT_EYES)
 	if (!eyes)
 		return ..()
@@ -702,11 +702,11 @@
 			to_chat(owner, span_warning("Your vision slowly returns..."))
 			owner.cure_blind(EYE_DAMAGE)
 			owner.cure_nearsighted(EYE_DAMAGE)
-			owner.blur_eyes(35)
+			owner.set_eye_blur_if_lower(70 SECONDS)
 	else if(HAS_TRAIT_FROM(owner, TRAIT_NEARSIGHT, EYE_DAMAGE))
 		to_chat(owner, span_warning("The blackness in your peripheral vision fades."))
 		owner.cure_nearsighted(EYE_DAMAGE)
-		owner.blur_eyes(10)
+		owner.set_eye_blur_if_lower(20 SECONDS)
 	..()
 
 /datum/reagent/medicine/oculine/on_mob_delete(mob/living/owner)

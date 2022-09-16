@@ -95,7 +95,7 @@
 	switch(rand(1, 100))
 		if(1 to 40)
 			INVOKE_ASYNC(owner, /mob.proc/emote, pick("blink", "blink_r"))
-			owner.blur_eyes(10)
+			owner.set_eye_blur_if_lower(20 SECONDS)
 			to_chat(owner, span_userdanger("You sweat profusely and have a hard time focusing..."))
 		if(41 to 80)
 			INVOKE_ASYNC(owner, /mob.proc/emote, "pale")

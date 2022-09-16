@@ -229,7 +229,7 @@
 			disgusted.set_timed_status_effect(10 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
 		if(disgust >= DISGUST_LEVEL_DISGUSTED)
 			if(DT_PROB(13, delta_time))
-				disgusted.blur_eyes(3) //We need to add more shit down here
+				disgusted.set_eye_blur_if_lower(6 SECONDS) //We need to add more shit down here
 
 		disgusted.adjust_disgust(-0.25 * disgust_metabolism * delta_time)
 

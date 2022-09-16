@@ -251,18 +251,16 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	addiction_types = list(/datum/addiction/medicine = 1.5)
 	liver_damage = 0.1
 	//blurriness at the start of taking the med
-	var/cached_blurriness
+	var/amount_applied = 0 SECONDS
 
 /datum/reagent/impurity/aiuri/on_mob_add(mob/living/owner, amount)
 	. = ..()
-	cached_blurriness = owner.eye_blurry
-	owner.set_blurriness(((creation_purity*10)*(volume/metabolization_rate)) + cached_blurriness)
+	amount_applied = creation_purity * (volume / metabolization_rate) * 2 SECONDS
+	owner.adjust_eye_blur(amount_applied)
 
 /datum/reagent/impurity/aiuri/on_mob_delete(mob/living/owner, amount)
 	. = ..()
-	if(owner.eye_blurry <= cached_blurriness)
-		return
-	owner.set_blurriness(cached_blurriness)
+	owner.adjust_eye_blur(-amount_applied)
 
 //Hercuri
 //inverse

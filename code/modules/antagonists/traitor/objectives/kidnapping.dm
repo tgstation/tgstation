@@ -241,7 +241,7 @@
 	sent_mob.flash_act()
 	sent_mob.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/confusion)
 	sent_mob.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/dizziness)
-	sent_mob.blur_eyes(5 SECONDS)
+	sent_mob.set_eye_blur_if_lower(100 SECONDS)
 	to_chat(sent_mob, span_hypnophrase(span_reallybig("A million voices echo in your head... <i>\"Your mind held many valuable secrets - \
 		we thank you for providing them. Your value is expended, and you will be ransomed back to your station. We always get paid, \
 		so it's only a matter of time before we ship you back...\"</i>")))
@@ -287,9 +287,6 @@
 	sent_mob.flash_act()
 	sent_mob.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/confusion)
 	sent_mob.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/dizziness)
-	sent_mob.blur_eyes(5 SECONDS)
+	sent_mob.set_eye_blur_if_lower(100 SECONDS)
 
 	new /obj/effect/pod_landingzone(pick(possible_turfs), return_pod)
-
-
-

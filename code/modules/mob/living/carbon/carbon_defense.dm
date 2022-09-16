@@ -554,7 +554,7 @@
 
 		if(eyes.damage > 10)
 			adjust_blindness(damage)
-			blur_eyes(damage * rand(3, 6))
+			set_eye_blur_if_lower(damage * rand(6 SECONDS, 12 SECONDS))
 
 			if(eyes.damage > 20)
 				if(prob(eyes.damage - 20))

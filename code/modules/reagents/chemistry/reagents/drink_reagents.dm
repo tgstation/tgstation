@@ -65,7 +65,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/carrotjuice/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjust_blurriness(-1 * REM * delta_time)
+	M.adjust_eye_blue(-2 SECONDS * REM * delta_time)
 	M.adjust_blindness(-1 * REM * delta_time)
 	switch(current_cycle)
 		if(1 to 20)

@@ -415,7 +415,7 @@
 /datum/reagent/toxin/spore/on_mob_life(mob/living/carbon/C, delta_time, times_fired)
 	C.damageoverlaytemp = 60
 	C.update_damage_hud()
-	C.blur_eyes(3 * REM * delta_time)
+	C.set_eye_blur_if_lower(6 SECONDS * REM * delta_time)
 	return ..()
 
 /datum/reagent/toxin/spore_burning
@@ -574,7 +574,7 @@
 		switch(pick(1, 2, 3, 4))
 			if(1)
 				to_chat(M, span_danger("You can barely see!"))
-				M.blur_eyes(3)
+				M.set_eye_blur_if_lower(6 SECONDS)
 			if(2)
 				M.emote("cough")
 			if(3)

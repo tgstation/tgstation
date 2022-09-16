@@ -94,7 +94,7 @@
 			if(ears)
 				ears.adjustEarDamage(-4, -4)
 			M.adjust_blindness(-2)
-			M.adjust_blurriness(-2)
+			M.adjust_eye_blur(-4 SECONDS)
 			var/obj/item/organ/internal/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
 			if(!eyes) // only dealing with eye stuff from here on out
 				return
@@ -104,11 +104,11 @@
 					to_chat(M, span_warning("Your vision slowly returns..."))
 					M.cure_blind(EYE_DAMAGE)
 					M.cure_nearsighted(EYE_DAMAGE)
-					M.blur_eyes(35)
+					M.set_eye_blur_if_lower(70 SECONDS)
 			else if(HAS_TRAIT_FROM(M, TRAIT_NEARSIGHT, EYE_DAMAGE))
 				to_chat(M, span_warning("The blackness in your peripheral vision fades."))
 				M.cure_nearsighted(EYE_DAMAGE)
-				M.blur_eyes(10)
+				M.set_eye_blur_if_lower(20 SECONDS)
 		else
 			if(prob(base_message_chance))
 				to_chat(M, span_notice("[pick("Your eyes feel great.","You feel like your eyes can focus more clearly.", "You don't feel the need to blink.","Your ears feel great.","Your hearing feels more acute.")]"))

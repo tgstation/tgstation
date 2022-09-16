@@ -35,6 +35,6 @@
 	if(owner.resting)
 		duration -= 3 SECONDS
 
-	owner.blur_eyes(2)
+	owner.set_eye_blur_if_lower(4 SECONDS)
 	if(prob(5))
 		owner.AdjustSleeping(10 SECONDS)

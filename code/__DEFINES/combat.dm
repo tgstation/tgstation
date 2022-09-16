@@ -54,9 +54,6 @@
 #define EFFECT_UNCONSCIOUS "unconscious"
 #define EFFECT_PARALYZE "paralyze"
 #define EFFECT_IMMOBILIZE "immobilize"
-#define EFFECT_EYE_BLUR "eye_blur"
-#define EFFECT_DROWSY "drowsy"
-
 //Bitflags defining which status effects could be or are inflicted on a mob
 #define CANSTUN (1<<0)
 #define CANKNOCKDOWN (1<<1)

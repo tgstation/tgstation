@@ -70,7 +70,7 @@
 
 	to_chat(target, span_danger("A bright green light burns your eyes horrifically!"))
 	target.adjustOrganLoss(ORGAN_SLOT_EYES, 15)
-	target.blur_eyes(10)
+	target.set_eye_blur_if_lower(20 SECONDS)
 
 /datum/heretic_knowledge/spell/ash_passage
 	name = "Ashen Passage"

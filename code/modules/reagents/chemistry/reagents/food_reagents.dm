@@ -381,7 +381,7 @@
 			if(prob(5))
 				victim.emote("scream")
 			victim.emote("cry")
-			victim.blur_eyes(5) // 10 seconds
+			victim.set_eye_blur_if_lower(10 SECONDS)
 			victim.adjust_blindness(3) // 6 seconds
 			victim.set_timed_status_effect(5 SECONDS, /datum/status_effect/confusion, only_if_higher = TRUE)
 			victim.Knockdown(3 SECONDS)
@@ -393,7 +393,7 @@
 			if(prob(15))
 				to_chat(exposed_mob, span_danger("[pick("Your head pounds.", "Your mouth feels like it's on fire.", "You feel dizzy.")]"))
 			if(prob(10))
-				victim.blur_eyes(1)
+				victim.set_eye_blur_if_lower(2 SECONDS)
 			if(prob(10))
 				victim.set_timed_status_effect(2 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
 			if(prob(5))
@@ -709,18 +709,20 @@
 	if(!exposed_mob.getorganslot(ORGAN_SLOT_EYES)) //can't blind somebody with no eyes
 		to_chat(exposed_mob, span_notice("Your eye sockets feel wet."))
 	else
-		if(!exposed_mob.eye_blurry)
+		if(!exposed_mob.has_status_effect(/datum/status_effect/eye_blur))
 			to_chat(exposed_mob, span_warning("Tears well up in your eyes!"))
 		exposed_mob.adjust_blindness(2)
-		exposed_mob.blur_eyes(5)
+		exposed_mob.set_eye_blur_if_lower(10 SECONDS)
 
 /datum/reagent/consumable/tearjuice/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	..()
-	if(M.eye_blurry) //Don't worsen vision if it was otherwise fine
-		M.blur_eyes(4 * REM * delta_time)
-		if(DT_PROB(5, delta_time))
-			to_chat(M, span_warning("Your eyes sting!"))
-			M.adjust_blindness(2)
+	if(!M.has_status_effect(/datum/status_effect/eye_blur))
+		return
+
+	M.adjust_eye_blur(8 SECONDS * REM * delta_time)
+	if(DT_PROB(5, delta_time))
+		to_chat(M, span_warning("Your eyes sting!"))
+		M.adjust_blindness(2)
 
 
 /datum/reagent/consumable/nutriment/stabilized
@@ -756,7 +758,7 @@
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2*REM, 150)
 		M.adjustToxLoss(3*REM,0)
 		M.adjustStaminaLoss(10*REM,0)
-		M.blur_eyes(5)
+		M.set_eye_blur_if_lower(10 SECONDS)
 		. = TRUE
 	..()
 

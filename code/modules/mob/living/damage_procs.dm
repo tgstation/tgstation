@@ -104,8 +104,7 @@
 			Immobilize(effect * hit_percent)
 		if(EFFECT_UNCONSCIOUS)
 			Unconscious(effect * hit_percent)
-		if(EFFECT_EYE_BLUR)
-			blur_eyes(effect * hit_percent)
+
 	return TRUE
 
 /**
@@ -120,7 +119,7 @@
 		unconscious = 0,
 		slur = 0 SECONDS, // Speech impediment, not technically an effect
 		stutter = 0 SECONDS, // Ditto
-		eyeblur = 0,
+		eyeblur = 0 SECONDS,
 		drowsy = 0 SECONDS,
 		blocked = 0, // This one's not an effect, don't be confused - it's block chance
 		stamina = 0, // This one's a damage type, and not an effect
@@ -142,14 +141,14 @@
 		apply_effect(paralyze, EFFECT_PARALYZE, blocked)
 	if(immobilize)
 		apply_effect(immobilize, EFFECT_IMMOBILIZE, blocked)
-	if(eyeblur)
-		apply_effect(eyeblur, EFFECT_EYE_BLUR, blocked)
 
 	if(stamina)
 		apply_damage(stamina, STAMINA, null, blocked)
 
 	if(drowsy)
 		adjust_drowsiness(drowsy)
+	if(eyeblur)
+		adjust_eye_blur(eyeblur)
 	if(jitter && (status_flags & CANSTUN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE))
 		adjust_timed_status_effect(jitter, /datum/status_effect/jitter)
 	if(slur)

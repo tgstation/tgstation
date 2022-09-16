@@ -1274,7 +1274,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 						human.visible_message(span_danger("[human] is knocked senseless!"), \
 										span_userdanger("You're knocked senseless!"))
 						human.set_timed_status_effect(20 SECONDS, /datum/status_effect/confusion, only_if_higher = TRUE)
-						human.adjust_blurriness(10)
+						human.adjust_eye_blur(20 SECONDS)
 					if(prob(10))
 						human.gain_trauma(/datum/brain_trauma/mild/concussion)
 				else

@@ -1215,6 +1215,7 @@
 #include "code\datums\status_effects\debuffs\drunk.dm"
 #include "code\datums\status_effects\debuffs\fire_stacks.dm"
 #include "code\datums\status_effects\debuffs\jitteriness.dm"
+#include "code\datums\status_effects\debuffs\screen_blur.dm"
 #include "code\datums\status_effects\debuffs\speech_debuffs.dm"
 #include "code\datums\status_effects\debuffs\strandling.dm"
 #include "code\datums\storage\storage.dm"
