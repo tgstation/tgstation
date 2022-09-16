@@ -224,7 +224,7 @@
 	var/bully_location = get_step(poorsap, REVERSE_DIR(poorsap_dir))
 	if(poorsap_dir == the_bully.dir && the_bully.loc == bully_location)
 		playsound(poorsap, 'sound/effects/cloth_ripping_fast.ogg', 80)
-		to_chat(the_bully, span_alert("You give them a wedgie!"))
+		to_chat(the_bully, span_alert("You give [poorsap] a wedgie!"))
 		to_chat(poorsap, span_boldwarning("You have been given wedgie by [the_bully]!"))
 		poorsap.adjustBruteLoss(3)//should hurt a little 
 
