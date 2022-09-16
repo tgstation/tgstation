@@ -889,7 +889,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/mecha_kineticgun
-	name = "Exosuit Mining (Proto-kinetic Accelerator)"
+	name = "Exosuit Proto-Kinetic Accelerator"
 	desc = "An exosuit-mounted mining tool that does increased damage in low pressure. Drawing from an onboard power source allows it to project further than the handheld version."
 	id = "mecha_kineticgun"
 	build_type = MECHFAB
