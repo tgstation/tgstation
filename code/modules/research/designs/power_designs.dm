@@ -14,6 +14,7 @@
 	subcategory = list(
 		RND_CATEGORY_STOCK_PARTS = RND_SUBCATEGORY_STOCK_PARTS_1
 	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/high_cell
 	name = "High-Capacity Power Cell"
@@ -85,8 +86,8 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/board/pacman
-	name = "Machine Design (PACMAN-type Generator Board)"
-	desc = "The circuit board that for a PACMAN-type portable generator."
+	name = "PACMAN Board"
+	desc = "The circuit board for a PACMAN-type portable generator."
 	id = "pacman"
 	build_path = /obj/item/circuitboard/machine/pacman
 	category = list(RND_CATEGORY_MACHINE)

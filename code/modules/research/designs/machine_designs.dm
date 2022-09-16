@@ -35,8 +35,8 @@
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/board/turbine_computer
-	name = "Computer Design (Power Turbine Console Board"
-	desc = "The circuit board for a power turbine console."
+	name = "Turbine Power Console Board"
+	desc = "The circuit board for a turbine power console."
 	id = "power_turbine_console"
 	build_path = /obj/item/circuitboard/computer/turbine_computer
 	category = list(RND_CATEGORY_MACHINE)
@@ -85,7 +85,7 @@
 	build_path = /obj/item/circuitboard/machine/turbine_stator
 	category = list(RND_CATEGORY_MACHINE)
 	subcategory = list(
-		RND_CATEGORY_MACHINERY = RND_SUBCATEGORY_MACHINE_ATMOS
+		RND_CATEGORY_MACHINE = RND_SUBCATEGORY_MACHINE_ATMOS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -109,7 +109,7 @@
 	subcategory = list(
 		RND_CATEGORY_MACHINE = RND_SUBCATEGORY_MACHINE_ATMOS
 	)
-	departmental_flags = ALL
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/teleport_station
 	name = "Teleportation Station Board"
@@ -160,7 +160,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/launchpad_console
-	name = "Computer Design (Bluespace Launchpad Console Board"
+	name = "Bluespace Launchpad Console Board"
 	desc = "The circuit board for a bluespace launchpad Console."
 	id = "launchpad_console"
 	build_type = IMPRINTER
@@ -172,7 +172,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/teleconsole
-	name = "Computer Design (Teleporter Console Board"
+	name = "Teleporter Console Board"
 	desc = "Allows for the construction of circuit boards used to build a teleporter control console."
 	id = "teleconsole"
 	build_type = IMPRINTER
@@ -374,7 +374,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/rdservercontrol
-	name = "Computer Design (R&D Server Control Console Board"
+	name = "R&D Server Control Console Board"
 	desc = "The circuit board for an R&D Server Control Console."
 	id = "rdservercontrol"
 	build_path = /obj/item/circuitboard/computer/rdservercontrol
@@ -440,7 +440,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/scan_console
-	name = "Computer Design (DNA Console Board"
+	name = "DNA Console Board"
 	desc = "Allows for the construction of circuit boards used to build a new DNA console."
 	id = "scan_console"
 	build_path = /obj/item/circuitboard/computer/scan_consolenew
@@ -636,7 +636,7 @@
 	subcategory = list(
 		RND_CATEGORY_MACHINE = RND_SUBCATEGORY_MACHINE_SECURITY
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/board/vendor
 	name = "Vendor Board"
@@ -645,12 +645,12 @@
 	build_path = /obj/item/circuitboard/machine/vendor
 	category = list(RND_CATEGORY_MACHINE)
 	subcategory = list(
-		RND_CATEGORY_MACHINERY = RND_SUBCATEGORY_MACHINE_SERVICE
+		RND_CATEGORY_MACHINE = RND_SUBCATEGORY_MACHINE_SERVICE
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
 /datum/design/board/ore_redemption
-	name = "Ore Redemption Board"
+	name = "Ore Redemption Machine Board"
 	desc = "The circuit board for an Ore Redemption machine."
 	id = "ore_redemption"
 	build_path = /obj/item/circuitboard/machine/ore_redemption

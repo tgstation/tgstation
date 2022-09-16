@@ -41,7 +41,7 @@
 	subcategory = list(
 		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_ADVANCED_ENGINEERING_TOOLS
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/rangedanalyzer
 	name = "Experimental Long-range Gas Analyzer"
@@ -54,7 +54,7 @@
 	subcategory = list(
 		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_ADVANCED_ENGINEERING_TOOLS
 	)
-	departmental_flags= DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/rpd
 	name = "Rapid Pipe Dispenser (RPD)"
@@ -66,7 +66,7 @@
 	subcategory = list(
 		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_ADVANCED_ENGINEERING_TOOLS
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/rcd_loaded
 	name = "Rapid Construction Device"
@@ -79,10 +79,10 @@
 	subcategory = list(
 		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_ADVANCED_ENGINEERING_TOOLS
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/rcd_ammo
-	name = "Matter Cartridge"
+	name = "RCD Matter Cartridge"
 	id = "rcd_ammo"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 12000, /datum/material/glass = 8000)
@@ -91,6 +91,7 @@
 	subcategory = list(
 		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_ADVANCED_ENGINEERING_TOOLS
 	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/rcd_upgrade/frames
 	name = "RCD frames designs upgrade"
@@ -379,7 +380,7 @@
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS)
 	materials = list(/datum/material/iron = 200, /datum/material/glass = 200)
 	build_path = /obj/item/wirebrush
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list(RND_CATEGORY_TOOLS)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 	subcategory = list(
 		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_JANITORIAL_TOOLS

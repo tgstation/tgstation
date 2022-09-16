@@ -259,9 +259,9 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 2500, /datum/material/glass = 1000)
 	build_path = /obj/item/forcefield_projector
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list(RND_CATEGORY_TOOLS)
 	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_ENGINEERING_EQUIPMENT
+		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_ENGINEERING_TOOLS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -328,7 +328,7 @@
 	subcategory = list(
 		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_EQUIPMENT_SCIENCE
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/anomaly_neutralizer
 	name = "Anomaly Neutralizer"
@@ -341,7 +341,7 @@
 	subcategory = list(
 		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_EQUIPMENT_SCIENCE
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/donksoft_refill
 	name = "Donksoft Toy Vendor Refill"
@@ -596,7 +596,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 2000, /datum/material/glass = 1000)
 	build_path = /obj/item/holosign_creator
-	category = list(RND_CATEGORY_TOOLS)
+	category = list(RND_CATEGORY_EQUIPMENT)
 	subcategory = list(
 		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_SERVICE_EQUIPMENT
 	)
@@ -681,7 +681,7 @@
 	subcategory = list(
 		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_EQUIPMENT_SCIENCE
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/knight_armour
 	name = "Knight Armour"
@@ -807,7 +807,7 @@
 	build_path = /obj/item/construction/plumbing
 	category = list(RND_CATEGORY_TOOLS)
 	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_PLUMBING_TOOLS
+		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_PLUMBING_TOOLS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 

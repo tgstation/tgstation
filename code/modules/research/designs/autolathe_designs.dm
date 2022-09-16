@@ -32,7 +32,7 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 1000)
 	build_path = /obj/item/mop
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT, RND_CATEGORY_TOOLS)
+	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS)
 	subcategory = list(
 		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_JANITORIAL_TOOLS
 	)
@@ -482,6 +482,7 @@
 		RND_CATEGORY_CONSTRUCTION = RND_SUBCATEGORY_CONSTRUCTION_MATERIALS
 	)
 	maxstack = 50
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/silver
 	name = "Silver"
@@ -1293,6 +1294,14 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
+/datum/design/handcuffs/sec
+	build_type = PROTOLATHE | AWAY_LATHE
+	category = list(RND_CATEGORY_EQUIPMENT)
+	subcategory = list(
+		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_SECURITY_EQUIPMENT
+	)
+	autolathe_exportable = FALSE
+
 /datum/design/receiver
 	name = "Modular Receiver"
 	id = "receiver"
@@ -1647,7 +1656,7 @@
 /datum/design/custom_vendor_refill
 	name = "Custom Vendor Refill"
 	id = "custom_vendor_refill"
-	build_type = AUTOLATHE
+	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 5000, /datum/material/glass = 2000)
 	build_path = /obj/item/vending_refill/custom
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_STOCK_PARTS)
@@ -1786,7 +1795,7 @@
 	build_path = /obj/item/stack/sticky_tape/surgical
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
 	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_MEDICAL_TOOLS
+		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_MEDICAL_EQUIPMENT
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
@@ -1884,7 +1893,7 @@
 	subcategory = list(
 		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_SERVICE_EQUIPMENT
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SERVICE
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
 /datum/design/solar
 	name = "Solar Panel Frame"

@@ -370,7 +370,7 @@
 	subcategory = list(
 		RND_CATEGORY_WEAPONS = RND_SUBCATEGORY_AMMO
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_SECURITY | DEPARTMENT_BITFLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/suppressor
 	name = "Suppressor"
