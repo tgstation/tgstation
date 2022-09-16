@@ -389,8 +389,9 @@ SUBSYSTEM_DEF(air)
 		EG.dismantle_cooldown++
 		if(EG.breakdown_cooldown >= EXCITED_GROUP_BREAKDOWN_CYCLES)
 			EG.self_breakdown(poke_turfs = TRUE)
-		else if(EG.dismantle_cooldown >= EXCITED_GROUP_DISMANTLE_CYCLES)
+		else if(EG.dismantle_cooldown >= EXCITED_GROUP_DISMANTLE_CYCLES && !(EG.turf_reactions & (REACTING | STOP_REACTIONS)))
 			EG.dismantle()
+		EG.turf_reactions = NONE
 		if (MC_TICK_CHECK)
 			return
 
