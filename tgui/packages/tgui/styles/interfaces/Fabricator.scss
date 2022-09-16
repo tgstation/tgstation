@@ -127,6 +127,10 @@
     &:last-child {
       border-radius: 0 4px 4px 0;
     }
+
+    &--disabled {
+      opacity: 0.5;
+    }
   }
 
   &__About {
@@ -145,5 +149,9 @@
 
   &__Button {
     justify-self: flex-end;
+
+    &--disabled {
+      text-decoration: line-through;
+    }
   }
 }

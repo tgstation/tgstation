@@ -1,5 +1,5 @@
 import { useBackend, useSharedState } from '../backend';
-import { Stack, Section, Button, Icon, Dimmer, Box, Tooltip } from '../components';
+import { Stack, Section, Icon, Dimmer, Box, Tooltip } from '../components';
 import { Window } from '../layouts';
 import { Material } from './common/Materials';
 import { MaterialCostSequence } from './Fabrication/MaterialCostSequence';
@@ -171,22 +171,24 @@ const PrintButton = (props: PrintButtonProps, context) => {
   );
 
   return (
-    <Button
-      className={classes([
-        'Fabricator__PrintAmount',
-        !canPrint && 'Fabricator__PrintAmount--disabled',
-      ])}
-      tooltip={
+    <Tooltip
+      content={
         <MaterialCostSequence
           design={design}
           amount={quantity}
           available={available}
         />
-      }
-      color={'transparent'}
-      onClick={() => act('build', { ref: design.id, amount: quantity })}>
-      &times;{quantity}
-    </Button>
+      }>
+      <div
+        className={classes([
+          'FabricatorRecipe__Button',
+          !canPrint && 'FabricatorRecipe__Button--disabled',
+        ])}
+        color={'transparent'}
+        onClick={() => act('build', { ref: design.id, amount: quantity })}>
+        &times;{quantity}
+      </div>
+    </Tooltip>
   );
 };
 
@@ -202,7 +204,11 @@ const Recipe = (props: { design: Design; available: MaterialMap }, context) => {
   return (
     <div className="FabricatorRecipe">
       <Tooltip content={design.desc} position="right">
-        <div className="FabricatorRecipe__About">
+        <div
+          className={classes([
+            'FabricatorRecipe__About',
+            !canPrint && 'FabricatorRecipe__Title--disabled',
+          ])}>
           <Icon name="question-circle" />
         </div>
       </Tooltip>
@@ -215,7 +221,10 @@ const Recipe = (props: { design: Design; available: MaterialMap }, context) => {
           />
         }>
         <div
-          className="FabricatorRecipe__Title"
+          className={classes([
+            'FabricatorRecipe__Title',
+            !canPrint && 'FabricatorRecipe__Title--disabled',
+          ])}
           onClick={() => act('build', { ref: design.id, amount: 1 })}>
           <div className="FabricatorRecipe__Icon">
             <Box
@@ -231,76 +240,8 @@ const Recipe = (props: { design: Design; available: MaterialMap }, context) => {
           <div className="FabricatorRecipe__Label">{design.name}</div>
         </div>
       </Tooltip>
-      <Tooltip
-        content={
-          <MaterialCostSequence
-            design={design}
-            amount={5}
-            available={available}
-          />
-        }>
-        <div
-          className="FabricatorRecipe__Button"
-          onClick={() => act('build', { ref: design.id, amount: 5 })}>
-          &times;5
-        </div>
-      </Tooltip>
-      <Tooltip
-        content={
-          <MaterialCostSequence
-            design={design}
-            amount={10}
-            available={available}
-          />
-        }>
-        <div
-          className="FabricatorRecipe__Button"
-          onClick={() => act('build', { ref: design.id, amount: 10 })}>
-          &times;10
-        </div>
-      </Tooltip>
+      <PrintButton design={design} quantity={5} available={available} />
+      <PrintButton design={design} quantity={10} available={available} />
     </div>
-    // <div className="Fabricator__Recipe">
-    //   <Flex justify={'space-between'} align={'stretch'}>
-    //     <Flex.Item grow={1}>
-    //       <Button
-    //         color={'transparent'}
-    //         className={classes([
-    //           'Fabricator__Button',
-    //           !canPrint && 'Fabricator__Button--disabled',
-    //         ])}
-    //         fluid
-    //         tooltip={
-    //           <MaterialCostSequence
-    //             design={design}
-    //             amount={1}
-    //             available={available}
-    //           />
-    //         }
-    //         onClick={() => act('build', { ref: design.id, amount: 1 })}>
-    //         <Flex align={'center'}>
-    //           <Flex.Item>
-    //             <Box
-    //               width={'32px'}
-    //               height={'32px'}
-    //               className={classes([
-    //                 'Fabricator__Icon',
-    //                 'design32x32',
-    //                 design.icon,
-    //               ])}
-    //             />
-    //           </Flex.Item>
-    //           <Flex.Item>{design.name}</Flex.Item>
-    //         </Flex>
-    //       </Button>
-    //     </Flex.Item>
-    //     <Flex.Item>
-    //       <PrintButton design={design} quantity={5} available={available} />
-    //     </Flex.Item>
-    //     <Flex.Item>
-    //       <PrintButton design={design} quantity={10} available={available} />
-    //     </Flex.Item>
-    //   </Flex>
-    // </div>
   );
 };
