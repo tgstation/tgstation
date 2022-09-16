@@ -203,7 +203,7 @@
 //Completing the holy trinity of bullying
 /obj/item/hand_item/wedgie
 	name = "wedgie"
-	desc = "grab someone from behind with this to give them a wedgie"
+	desc = "Sneak up behind someone and give them a wedgie."
 	icon_state = "fleshtostone"
 	inhand_icon_state = "nothing"
 
@@ -226,7 +226,7 @@
 		playsound(poorsap, 'sound/effects/cloth_ripping_fast.ogg', 80)
 		to_chat(the_bully, span_alert("You give them a wedgie!"))
 		to_chat(poorsap, span_boldwarning("You have been given wedgie by [the_bully]!"))
-		poorsap.adjustBruteLoss(3)
+		poorsap.adjustBruteLoss(3)//should hurt a little 
 
 /obj/item/hand_item/slapper
 	name = "slapper"
