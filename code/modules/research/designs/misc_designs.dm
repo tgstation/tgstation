@@ -300,7 +300,7 @@
 	build_path = /obj/item/melee/roastingstick
 	category = list(RND_CATEGORY_EQUIPMENT)
 	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_SERVICE_EQUIPMENT
+		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_EQUIPMENT_KITCHEN
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -812,7 +812,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
 /datum/design/gas_filter
-	name = "Gas filter"
+	name = "Gas Filter"
 	id = "gas_filter"
 	build_type = PROTOLATHE | AUTOLATHE
 	materials = list(/datum/material/iron = 100)
@@ -821,9 +821,10 @@
 	subcategory = list(
 		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_EQUIPMENT_GAS_TANKS
 	)
+	departmental_flags = ALL
 
 /datum/design/plasmaman_gas_filter
-	name = "Plasmaman gas filter"
+	name = "Plasmaman Gas Filter"
 	id = "plasmaman_gas_filter"
 	build_type = PROTOLATHE | AUTOLATHE
 	materials = list(/datum/material/iron = 100)
@@ -832,6 +833,7 @@
 	subcategory = list(
 		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_EQUIPMENT_GAS_TANKS
 	)
+	departmental_flags = ALL
 
 /////////////////////////////////////////
 /////////////////Tape////////////////////
@@ -942,7 +944,7 @@
 	build_path = /obj/item/plate/oven_tray
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
 	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_SERVICE_EQUIPMENT
+		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_EQUIPMENT_KITCHEN
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -974,7 +976,7 @@
 	build_path = /obj/item/reagent_containers/cup/coffeepot
 	category = list(RND_CATEGORY_EQUIPMENT)
 	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_SERVICE_EQUIPMENT
+		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_EQUIPMENT_KITCHEN
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -986,7 +988,7 @@
 	build_path = /obj/item/reagent_containers/cup/coffeepot/bluespace
 	category = list(RND_CATEGORY_EQUIPMENT)
 	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_SERVICE_EQUIPMENT
+		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_EQUIPMENT_KITCHEN
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -998,6 +1000,6 @@
 	build_path = /obj/item/blank_coffee_cartridge
 	category = list(RND_CATEGORY_EQUIPMENT)
 	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_SERVICE_EQUIPMENT
+		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_EQUIPMENT_KITCHEN
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE

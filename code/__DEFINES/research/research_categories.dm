@@ -85,6 +85,7 @@
 #define RND_SUBCATEGORY_XENOBIOLOGY_EQUIPMENT "Xenobiology Equipment"
 #define RND_SUBCATEGORY_EQUIPMENT_GENETICS "Genetics Equipment"
 #define RND_SUBCATEGORY_EQUIPMENT_JANITOR "Janitorial Equipment"
+#define RND_SUBCATEGORY_EQUIPMENT_KITCHEN "Bar & Kitchen Equipment"
 
 #define RND_CATEGORY_AI "Artificial Intelligence"
 #define RND_SUBCATEGORY_AI_LAW_MODULES "Law Modules"

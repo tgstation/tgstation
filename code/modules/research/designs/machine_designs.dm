@@ -258,6 +258,7 @@
 		RND_CATEGORY_MACHINE = RND_SUBCATEGORY_MACHINE_CHEMISTRY
 	)
 	category = list(RND_CATEGORY_MACHINE)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SERVICE
 
 /datum/design/board/hypnochair
 	name = "Enhanced Interrogation Chamber Board"
@@ -939,7 +940,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO
 
 /datum/design/board/skill_station
-	name = "Skill station Board"
+	name = "Skill Station Board"
 	desc = "The circuit board for Skill station."
 	id = "skill_station"
 	build_path = /obj/item/circuitboard/machine/skill_station

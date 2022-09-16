@@ -421,7 +421,7 @@
 	subcategory = list(
 		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_EQUIPMENT_GAS_TANKS
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO
+	departmental_flags = ALL
 
 /datum/design/generic_gas_tank
 	name = "Generic Gas Tank"
@@ -588,7 +588,7 @@
 	build_path = /obj/item/knife/kitchen
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
 	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_SERVICE_EQUIPMENT
+		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_EQUIPMENT_KITCHEN
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -600,7 +600,7 @@
 	build_path = /obj/item/knife/plastic
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
 	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_SERVICE_EQUIPMENT
+		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_EQUIPMENT_KITCHEN
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -612,7 +612,7 @@
 	build_path = /obj/item/kitchen/fork
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
 	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_SERVICE_EQUIPMENT
+		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_EQUIPMENT_KITCHEN
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -624,7 +624,7 @@
 	build_path = /obj/item/kitchen/fork/plastic
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
 	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_SERVICE_EQUIPMENT
+		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_EQUIPMENT_KITCHEN
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -636,7 +636,7 @@
 	build_path = /obj/item/kitchen/spoon
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
 	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_SERVICE_EQUIPMENT
+		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_EQUIPMENT_KITCHEN
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -648,7 +648,7 @@
 	build_path = /obj/item/kitchen/spoon/plastic
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
 	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_SERVICE_EQUIPMENT
+		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_EQUIPMENT_KITCHEN
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -660,7 +660,7 @@
 	build_path = /obj/item/storage/bag/tray
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
 	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_SERVICE_EQUIPMENT
+		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_EQUIPMENT_KITCHEN
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -672,7 +672,7 @@
 	build_path = /obj/item/plate
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
 	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_SERVICE_EQUIPMENT
+		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_EQUIPMENT_KITCHEN
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -684,7 +684,7 @@
 	build_path = /obj/item/storage/bag/tray/cafeteria
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
 	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_SERVICE_EQUIPMENT
+		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_EQUIPMENT_KITCHEN
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -696,7 +696,7 @@
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
 	build_path = /obj/item/reagent_containers/cup/bowl
 	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_SERVICE_EQUIPMENT
+		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_EQUIPMENT_KITCHEN
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -708,7 +708,7 @@
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
 	build_path = /obj/item/reagent_containers/cup/glass/drinkingglass
 	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_SERVICE_EQUIPMENT
+		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_EQUIPMENT_KITCHEN
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -720,7 +720,7 @@
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
 	build_path = /obj/item/reagent_containers/cup/glass/drinkingglass/shotglass
 	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_SERVICE_EQUIPMENT
+		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_EQUIPMENT_KITCHEN
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -732,7 +732,7 @@
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
 	build_path = /obj/item/reagent_containers/cup/glass/shaker
 	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_SERVICE_EQUIPMENT
+		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_EQUIPMENT_KITCHEN
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -1884,7 +1884,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
 /datum/design/toner/large
-	name = "Large Toner Cartridge"
+	name = "Toner Cartridge (Large)"
 	id = "toner_large"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 35, /datum/material/glass = 35)
