@@ -171,8 +171,7 @@
 
 .FabricatorTabs {
   .FabricatorTabs {
-    margin-top: 1em;
-    margin-bottom: 0.5em;
+    margin-top: 0.5em;
     padding-left: 0.25em;
   }
 
@@ -182,7 +181,7 @@
     border-right: math.div(1em, 6) solid transparent;
     border-radius: 0.25em 0 0 0.25em;
     padding: 0.5em 0 0.5em 0.5em;
-    padding-right: 1em;
+    padding-right: 1.25em;
     margin-right: -0.5em;
     padding-right: 0.5em;
 
@@ -193,6 +192,7 @@
 
     &--active {
       color: #fff;
+      border-right: 2px solid colors.$primary;
     }
   }
 
