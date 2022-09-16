@@ -458,6 +458,9 @@
 	icon_state ="gibonite_igniter"
 	denied_type = /obj/item/crusher_trophy/syndicate_trophy
 
+/obj/item/crusher_trophy/syndicate_trophy/effect_desc()
+	return "mark can effect humanoid creatures"
+
 /obj/item/crusher_trophy/syndicate_trophy/on_hit(mob/living/target)
 	if(ishuman(target))
 		target.apply_status_effect(/datum/status_effect/crusher_mark, hammer_synced)
