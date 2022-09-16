@@ -450,3 +450,10 @@
 		chaser.monster_damage_boost = FALSE // Weaker cuz no cooldown
 		chaser.damage = 20
 		log_combat(user, target, "fired a chaser at", src)
+
+//Syndicate Trophy
+/obj/item/crusher_trophy/syndicate_trophy
+	name= "Syndicate trophy"
+	desc = "An odd super conducting material that the syndicate has stolen from the mitts of the ash lizards during a lavaland exploretory team deployment, it seems to cackle with power"
+	icon_state ="gibonite_igniter"
+	denied_type = /obj/item/crusher_trophy/syndicate_trophy
