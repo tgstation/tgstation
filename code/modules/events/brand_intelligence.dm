@@ -42,7 +42,7 @@
 		source = initial(example.name)
 	else if(originMachine)
 		source = originMachine.name
-	priority_announce("Rampant brand intelligence has been detected aboard [station_name()]. Please inspect any [source] vendors for aggressive marketing tactics, and reboot them if necessary.", "Machine Learning Alert")
+	priority_announce("Rampant brand intelligence has been detected aboard [station_name()]. Please inspect any [source] brand vendors for aggressive marketing tactics, and reboot them if necessary.", "Machine Learning Alert")
 
 /datum/round_event/brand_intelligence/start()
 	var/datum/round_event_control/brand_intelligence/brand_event = control
