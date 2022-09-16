@@ -54,7 +54,7 @@
 			vendingMachines.Add(vendor)
 	else
 		for(var/obj/machinery/vending/vendor in GLOB.machines)
-			if(!is_station_level(vendor.z))
+			if(!is_station_level(vendor.z) || !istype(vendor, /obj/machinery/vending/custom))
 				continue
 			vendingMachines.Add(vendor)
 	if(!vendingMachines.len)
