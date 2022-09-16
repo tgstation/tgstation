@@ -95,7 +95,7 @@
 	inhand_icon_state = "void_blade"
 	after_use_message = "The Aristocrat hears your call..."
 
-// Path of the Blade's... blade
+// Path of the Blade's... blade.
 // Opting for /dark instead of /blade to avoid "sickly_blade/blade".
 /obj/item/melee/sickly_blade/dark
 	name = "\improper sundered blade"
