@@ -193,7 +193,14 @@
 	cost = 5 //you need two for full damage, so total of 10 for maximum damage
 	limited_stock = 2 //you can't use more than two!
 	restricted_roles = list("Shaft Miner")
-
+	
+/datum/uplink_item/role_restricted/syndicate_trophy
+	name = "Syndicate Crusher Trophy"
+	desc = "A relic seized by the syndicate that enables the Proto Kinetic Crusher to mark humanoid targets instead of the gross beasts of lavaland"
+	progression_minimum = 30 MINUTES
+	cost = 17
+	limited_stock = 1
+	restricted_roles = list("Shaft Miner")
 /datum/uplink_item/role_restricted/mimery
 	name = "Guide to Advanced Mimery Series"
 	desc = "The classical two part series on how to further hone your mime skills. Upon studying the series, the user should be able to make 3x1 invisible walls, and shoot bullets out of their fingers. \
