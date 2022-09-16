@@ -8,6 +8,16 @@
 	min_players = 15
 	max_occurrences = 1
 
+	var/chosen_vendor
+
+/datum/round_event_control/brand_intelligence/admin_setup()
+	if(!check_rights(R_FUN))
+		return
+	if(tgui_alert(usr, "Select a vendor type?", "Capitalism-ho!", list("Yes", "No")) == "Yes")
+		var/list/vendors = list()
+		vendors += subtypesof(/obj/machinery/vending)
+		chosen_vendor = tgui_input_list(usr, "Pick Me!","Vendor Selector", vendors)
+
 /datum/round_event/brand_intelligence
 	announce_when = 21
 	end_when = 1000 //Ends when all vending machines are subverted anyway.
@@ -28,17 +38,25 @@
 /datum/round_event/brand_intelligence/announce(fake)
 	var/source = "unknown machine"
 	if(fake)
-		var/obj/machinery/vending/cola/example = /obj/machinery/vending/cola
+		var/obj/machinery/vending/example = pick(subtypesof(/obj/machinery/vending))
 		source = initial(example.name)
 	else if(originMachine)
 		source = originMachine.name
-	priority_announce("Rampant brand intelligence has been detected aboard [station_name()]. Please stand by. The origin is believed to be \a [source].", "Machine Learning Alert")
+	priority_announce("Rampant brand intelligence has been detected aboard [station_name()]. Please inspect any [source] vendors for aggressive marketing tactics, and reboot them if necessary.", "Machine Learning Alert")
 
 /datum/round_event/brand_intelligence/start()
-	for(var/obj/machinery/vending/V in GLOB.machines)
-		if(!is_station_level(V.z))
-			continue
-		vendingMachines.Add(V)
+	var/datum/round_event_control/brand_intelligence/brand_event = control
+	if(brand_event.chosen_vendor)
+		var/chosen_vendor = brand_event.chosen_vendor
+		for(var/chosen_vendor in GLOB.machines) //trying to typecast chosen_vendor to whatever the admin selected subtype is
+			if(!is_station_level(chosen_vendor.z))
+				continue
+			vendingMachines.Add(chosen_vendor)
+	else
+		for(var/obj/machinery/vending/V in GLOB.machines)
+			if(!is_station_level(V.z))
+				continue
+			vendingMachines.Add(V)
 	if(!vendingMachines.len)
 		kill()
 		return
