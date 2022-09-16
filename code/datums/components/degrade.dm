@@ -23,20 +23,21 @@
 	RegisterSignal(parent, list(COMSIG_TOOL_ATOM_ACTED_PRIMARY(initial(potential_tool.tool_behaviour)),
 				COMSIG_TOOL_ATOM_ACTED_SECONDARY(initial(potential_tool.tool_behaviour)), COMSIG_MOB_SURGERY_STEP_SUCCESS), .proc/wear_down_tool)
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE_MORE, .proc/on_examine_more)
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE_MORE, .proc/on_examine_more)
+	RegisterSignal(parent, list(COMSIG_PARENT_ATTACKBY, COMSIG_PARENT_ATTACKBY_SECONDARY), .proc/wear_down_tool)
 
-
-/datum/component/degrade/proc/wear_down_tool(tool_misused = FALSE)
+/**
+ * Proc de-increments the current_durability variable, and decreases force as well as tool speed.
+ */
+/datum/component/degrade/proc/wear_down_tool()
 	SIGNAL_HANDLER
 	if(current_durability <= 0)
 		return
 	current_durability--
 	current_durability = clamp(current_durability, 0, maximum_durability)
-	if(current_durability < (maximum_durability/2)) //todo: make sure this works right
+	if(current_durability < (maximum_durability/2))
 		var/obj/item/current_tool = parent
 		var/tools_speed = initial(current_tool.toolspeed)
 		var/tools_force = initial(current_tool.force)
-		//todo: Make sure these are not only sane, but also good? Like damn homie this shit probably sucks.
 		current_tool.toolspeed = (tools_speed) + ((maximum_durability/4)/current_durability) //Here we change the tool's use speed.
 		current_tool.force = clamp((tools_force * (current_durability/ maximum_durability)), 0, tools_force) //Here we change the tool's attack force. Clamp prevents div by zero.
 
