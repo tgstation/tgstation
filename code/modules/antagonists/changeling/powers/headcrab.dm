@@ -20,7 +20,7 @@
 	explosion(user, light_impact_range = 2, adminlog = TRUE, explosion_cause = src)
 	for(var/mob/living/carbon/human/blinded_humans in range(2, user))
 		var/obj/item/organ/internal/eyes/eyes = blinded_humans.getorganslot(ORGAN_SLOT_EYES)
-		if(!eyes || blinded_humans.is_blind())
+		if(!eyes || is_blind(blinded_humans))
 			continue
 		to_chat(blinded_humans, span_userdanger("You are blinded by a shower of blood!"))
 		blinded_humans.Stun(20)

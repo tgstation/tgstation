@@ -1,6 +1,5 @@
 //Here are the procs used to modify status effects of a mob.
-//The effects include: stun, knockdown, unconscious, sleeping, resting, jitteriness, dizziness,
-// eye damage, eye_blind, TRAIT_BLIND trait, and TRAIT_NEARSIGHT trait.
+//The effects include: stun, knockdown, unconscious, sleeping, resting
 
 #define IS_STUN_IMMUNE(source, ignore_canstun) ((source.status_flags & GODMODE) || (!ignore_canstun && (!(source.status_flags & CANKNOCKDOWN) || HAS_TRAIT(source, TRAIT_STUNIMMUNE))))
 
@@ -508,32 +507,6 @@
 		if(quirk.type == quirktype)
 			return TRUE
 	return FALSE
-
-/* TRAIT PROCS */
-/mob/living/proc/cure_blind(source)
-	if(source)
-		REMOVE_TRAIT(src, TRAIT_BLIND, source)
-	else
-		REMOVE_TRAIT_NOT_FROM(src, TRAIT_BLIND, list(QUIRK_TRAIT, EYES_COVERED, BLINDFOLD_TRAIT))
-	if(!HAS_TRAIT(src, TRAIT_BLIND))
-		update_blindness()
-
-/mob/living/proc/become_blind(source)
-	if(!HAS_TRAIT(src, TRAIT_BLIND)) // not blind already, add trait then overlay
-		ADD_TRAIT(src, TRAIT_BLIND, source)
-		update_blindness()
-	else
-		ADD_TRAIT(src, TRAIT_BLIND, source)
-
-/mob/living/proc/cure_nearsighted(source)
-	REMOVE_TRAIT(src, TRAIT_NEARSIGHT, source)
-	if(!HAS_TRAIT(src, TRAIT_NEARSIGHT))
-		clear_fullscreen("nearsighted")
-
-/mob/living/proc/become_nearsighted(source)
-	if(!HAS_TRAIT(src, TRAIT_NEARSIGHT))
-		overlay_fullscreen("nearsighted", /atom/movable/screen/fullscreen/impaired, 1)
-	ADD_TRAIT(src, TRAIT_NEARSIGHT, source)
 
 /mob/living/proc/cure_husk(source)
 	REMOVE_TRAIT(src, TRAIT_HUSK, source)

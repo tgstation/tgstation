@@ -686,7 +686,7 @@
 
 		if(C.client)
 			C.set_eye_blur_if_lower(6 SECONDS)
-			C.adjust_blindness(1)
+			C.adjust_temp_blindness(2 SECONDS)
 		if(C.get_eye_protection() <= 0) // no eye protection? ARGH IT BURNS. Warning: don't add a stun here. It's a roundstart item with some quirks.
 			C.apply_effects(eyeblur = 5, jitter = 10)
 			flash_color(C, flash_color=paint_color, flash_time=40)

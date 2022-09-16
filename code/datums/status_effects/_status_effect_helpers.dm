@@ -79,6 +79,28 @@
 	return null
 
 /**
+ * Checks if this mob has a status effect that shares the passed effect's ID
+ * and has the passed source in its list of sources (ONLY works for grouped efects!)
+ *
+ * checked_effect - TYPEPATH of a status effect to check for. Checks for its ID, not it's typepath
+ *
+ * Returns an instance of a status effect, or NULL if none were found.
+ */
+/mob/living/proc/has_status_effect_from_source(datum/status_effect/grouped/checked_effect, source)
+	RETURN_TYPE(/datum/status_effect)
+
+	if(!ispath(checked_effect) || !source)
+		CRASH("has_status_effect_from_source passed with improper arguments ([checked_effect || "null path"] and [source || "null source"]).")
+
+	for(var/datum/status_effect/grouped/present_effect in status_effects)
+		if(present_effect.id != initial(checked_effect.id))
+			continue
+		if(source in present_effect.sources)
+			return present_effect
+
+	return null
+
+/**
  * Returns a list of all status effects that share the passed effect type's ID
  *
  * checked_effect - TYPEPATH of a status effect to check for. Checks for its ID, not it's typepath

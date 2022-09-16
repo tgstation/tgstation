@@ -66,15 +66,15 @@
 
 /datum/reagent/consumable/carrotjuice/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjust_eye_blue(-2 SECONDS * REM * delta_time)
-	M.adjust_blindness(-1 * REM * delta_time)
+	M.adjust_temp_blindness(-2 SECONDS * REM * delta_time)
 	switch(current_cycle)
 		if(1 to 20)
 			//nothing
 		if(21 to 110)
 			if(DT_PROB(100 * (1 - (sqrt(110 - current_cycle) / 10)), delta_time))
-				M.cure_nearsighted(list(EYE_DAMAGE))
+				M.cure_nearsighted(EYE_DAMAGE)
 		if(110 to INFINITY)
-			M.cure_nearsighted(list(EYE_DAMAGE))
+			M.cure_nearsighted(EYE_DAMAGE)
 	..()
 	return
 

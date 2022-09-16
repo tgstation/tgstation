@@ -283,7 +283,7 @@
 	set category = "Object"
 	set src in usr
 
-	if(!usr.can_read(src) || usr.is_blind() || usr.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB) || (isobserver(usr) && !isAdminGhostAI(usr)))
+	if(!usr.can_read(src) || is_blind(usr) || usr.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB) || (isobserver(usr) && !isAdminGhostAI(usr)))
 		return
 	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
@@ -310,7 +310,7 @@
 		. += span_warning("You're too far away to read it!")
 		return
 
-	if(user.is_blind())
+	if(is_blind(user))
 		to_chat(user, span_warning("You are blind and can't read anything!"))
 		return
 
@@ -335,7 +335,7 @@
 		return UI_UPDATE
 	// Even harder to read if your blind...braile? humm
 	// .. or if you cannot read
-	if(user.is_blind())
+	if(is_blind(user))
 		to_chat(user, span_warning("You are blind and can't read anything!"))
 		return UI_CLOSE
 	if(!user.can_read(src))
@@ -398,7 +398,7 @@
 
 	// Handle stamping items.
 	if(writing_stats["interaction_mode"] == MODE_STAMPING)
-		if(!user.can_read(src) || user.is_blind())
+		if(!user.can_read(src) || is_blind(user))
 			//The paper's stampable window area is assumed approx 400x500
 			add_stamp(writing_stats["stamp_class"], rand(0, 400), rand(0, 500), rand(0, 360), writing_stats["stamp_icon_state"])
 			user.visible_message(span_notice("[user] blindly stamps [src] with \the [attacking_item]!"))

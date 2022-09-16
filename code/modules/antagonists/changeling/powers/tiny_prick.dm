@@ -204,7 +204,7 @@
 	log_combat(user, target, "stung", "blind sting")
 	to_chat(target, span_danger("Your eyes burn horrifically!"))
 	target.become_nearsighted(EYE_DAMAGE)
-	target.adjust_blindness(20)
+	target.adjust_temp_blindness(40 SECONDS)
 	target.set_eye_blur_if_lower(80 SECONDS)
 	return TRUE
 

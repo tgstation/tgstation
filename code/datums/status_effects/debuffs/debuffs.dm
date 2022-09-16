@@ -190,7 +190,7 @@
 		var/is_sleeping_in_darkness = rest_turf.get_lumcount() <= LIGHTING_TILE_IS_DARK
 
 		// sleeping with a blindfold or in the dark helps us rest
-		if(HAS_TRAIT_FROM(owner, TRAIT_BLIND, BLINDFOLD_TRAIT) || is_sleeping_in_darkness)
+		if(owner.is_blind_from(EYES_COVERED) || is_sleeping_in_darkness)
 			healing += 0.1
 
 		// sleeping in silence is always better

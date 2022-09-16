@@ -38,7 +38,7 @@
 	..()
 	if(HAS_TRAIT(owner, TRAIT_FEARLESS))
 		return
-	if(owner.is_blind())
+	if(is_blind(owner))
 		return
 
 	if(!COOLDOWN_FINISHED(src, check_cooldown) || !COOLDOWN_FINISHED(src, scare_cooldown))
@@ -121,7 +121,7 @@
 		if(3)
 			to_chat(owner, span_warning("You shut your eyes in terror!"))
 			owner.set_timed_status_effect(10 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
-			owner.adjust_blindness(10)
+			owner.adjust_temp_blindness(20 SECONDS)
 		if(4)
 			owner.adjust_timed_status_effect(20 SECONDS, /datum/status_effect/dizziness)
 			owner.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/confusion)

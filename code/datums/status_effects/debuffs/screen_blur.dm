@@ -30,6 +30,10 @@
 	// Blur lessens the closer we are to expiring, so we update per tick.
 	update_blur()
 
+	// Blur heals faster if our eyes are covered
+	if(owner.stat != DEAD && owner.is_blind_from(EYES_COVERED))
+		duration -= 2 SECONDS
+
 /// Signal proc for [COMSIG_LIVING_POST_FULLY_HEAL]. When ahealed, self delete
 /datum/status_effect/eye_blur/proc/clear_blur(datum/source)
 	SIGNAL_HANDLER

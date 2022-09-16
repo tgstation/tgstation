@@ -4,11 +4,11 @@
 	. = ..()
 	if(HAS_TRAIT_NOT_FROM(src, TRAIT_BLIND, list(UNCONSCIOUS_TRAIT, HYPNOCHAIR_TRAIT)))
 		return INFINITY //For all my homies that can not see in the world
-	var/obj/item/organ/internal/eyes/E = getorganslot(ORGAN_SLOT_EYES)
-	if(!E)
+	var/obj/item/organ/internal/eyes/eyes = getorganslot(ORGAN_SLOT_EYES)
+	if(!eyes)
 		return INFINITY //Can't get flashed without eyes
 	else
-		. += E.flash_protect
+		. += eyes.flash_protect
 	if(isclothing(head)) //Adds head protection
 		. += head.flash_protect
 	if(isclothing(glasses)) //Glasses
@@ -553,7 +553,7 @@
 			eyes.applyOrganDamage(rand(12, 16))
 
 		if(eyes.damage > 10)
-			adjust_blindness(damage)
+			adjust_temp_blindness(damage * 2 SECONDS)
 			set_eye_blur_if_lower(damage * rand(6 SECONDS, 12 SECONDS))
 
 			if(eyes.damage > 20)
@@ -563,7 +563,7 @@
 					become_nearsighted(EYE_DAMAGE)
 
 				else if(prob(eyes.damage - 25))
-					if(!is_blind())
+					if(!is_blind(src))
 						to_chat(src, span_warning("You can't see anything!"))
 					eyes.applyOrganDamage(eyes.maxHealth)
 

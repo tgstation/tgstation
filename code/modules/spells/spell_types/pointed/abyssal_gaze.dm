@@ -34,21 +34,8 @@
 	to_chat(cast_on, span_userdanger("A freezing darkness surrounds you..."))
 	cast_on.playsound_local(get_turf(cast_on), 'sound/hallucinations/i_see_you1.ogg', 50, 1)
 	owner.playsound_local(get_turf(owner), 'sound/effects/ghost2.ogg', 50, 1)
-	cast_on.become_blind(ABYSSAL_GAZE_BLIND)
-	addtimer(CALLBACK(src, .proc/cure_blindness, cast_on), blind_duration)
+	cast_on.adjust_temp_blindness(blind_duration)
 	if(ishuman(cast_on))
 		var/mob/living/carbon/human/human_cast_on = cast_on
 		human_cast_on.adjust_coretemperature(-amount_to_cool)
 	cast_on.adjust_bodytemperature(-amount_to_cool)
-
-/**
- * cure_blidness: Cures Abyssal Gaze blindness from the target
- *
- * Arguments:
- * * target The mob that is being cured of the blindness.
- */
-/datum/action/cooldown/spell/pointed/abyssal_gaze/proc/cure_blindness(mob/living/carbon/cast_on)
-	if(QDELETED(cast_on) || !istype(cast_on))
-		return
-
-	cast_on.cure_blind(ABYSSAL_GAZE_BLIND)

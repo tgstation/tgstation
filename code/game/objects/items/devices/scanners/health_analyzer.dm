@@ -40,7 +40,7 @@
 	return BRUTELOSS
 
 /obj/item/healthanalyzer/attack_self(mob/user)
-	if(!user.can_read(src) || user.is_blind())
+	if(!user.can_read(src) || is_blind(user))
 		return
 
 	scanmode = (scanmode + 1) % SCANMODE_COUNT
@@ -51,7 +51,7 @@
 			to_chat(user, span_notice("You switch the health analyzer to report extra info on wounds."))
 
 /obj/item/healthanalyzer/attack(mob/living/M, mob/living/carbon/human/user)
-	if(!user.can_read(src) || user.is_blind())
+	if(!user.can_read(src) || is_blind(user))
 		return
 
 	flick("[icon_state]-scan", src) //makes it so that it plays the scan animation upon scanning, including clumsy scanning
@@ -82,7 +82,7 @@
 	add_fingerprint(user)
 
 /obj/item/healthanalyzer/attack_secondary(mob/living/victim, mob/living/user, params)
-	if(!user.can_read(src) || user.is_blind())
+	if(!user.can_read(src) || is_blind(user))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	chemscan(user, victim)
@@ -213,9 +213,9 @@
 		// Eye status
 		var/obj/item/organ/internal/eyes/eyes = carbontarget.getorganslot(ORGAN_SLOT_EYES)
 		if(istype(eyes))
-			if(carbontarget.is_blind())
+			if(is_blind(carbontarget))
 				render_list += "<span class='alert ml-2'>Subject is blind.\n</span>"
-			else if(HAS_TRAIT(carbontarget, TRAIT_NEARSIGHT))
+			else if(is_nearsighted(carbontarget))
 				render_list += "<span class='alert ml-2'>Subject is nearsighted.\n</span>"
 
 	// Body part damage report
@@ -443,7 +443,7 @@
 /obj/item/healthanalyzer/AltClick(mob/user)
 	..()
 
-	if(!user.canUseTopic(src, BE_CLOSE) || !user.can_read(src) || user.is_blind())
+	if(!user.canUseTopic(src, BE_CLOSE) || !user.can_read(src) || is_blind(user))
 		return
 
 	mode = !mode
@@ -506,7 +506,7 @@
 			L.dropItemToGround(src)
 
 /obj/item/healthanalyzer/wound/attack(mob/living/carbon/patient, mob/living/carbon/human/user)
-	if(!user.can_read(src) || user.is_blind())
+	if(!user.can_read(src) || is_blind(user))
 		return
 
 	add_fingerprint(user)

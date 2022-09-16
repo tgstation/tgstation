@@ -481,7 +481,7 @@
 
 /mob/living/simple_animal/bot/medbot/examinate(atom/A as mob|obj|turf in view())
 	..()
-	if(!is_blind())
+	if(!is_blind(src))
 		chemscan(src, A)
 
 /mob/living/simple_animal/bot/medbot/proc/medicate_patient(mob/living/carbon/C)

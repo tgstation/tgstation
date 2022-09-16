@@ -44,7 +44,7 @@
 	return 1
 
 /obj/item/flashlight/suicide_act(mob/living/carbon/human/user)
-	if (user.is_blind())
+	if (is_blind(user))
 		user.visible_message(span_suicide("[user] is putting [src] close to [user.p_their()] eyes and turning it on... but [user.p_theyre()] blind!"))
 		return SHAME
 	user.visible_message(span_suicide("[user] is putting [src] close to [user.p_their()] eyes and turning it on! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -88,7 +88,7 @@
 				else
 					user.visible_message(span_warning("[user] directs [src] to [M]'s eyes."), \
 						span_danger("You direct [src] to [M]'s eyes."))
-					if(M.stat == DEAD || (M.is_blind()) || !M.flash_act(visual = 1)) //mob is dead or fully blind
+					if(M.stat == DEAD || (is_blind(M)) || !M.flash_act(visual = 1)) //mob is dead or fully blind
 						to_chat(user, span_warning("[M]'s pupils don't react to the light!"))
 					else if(M.dna && M.dna.check_mutation(/datum/mutation/human/xray)) //mob has X-ray vision
 						to_chat(user, span_danger("[M]'s pupils give an eerie glow!"))

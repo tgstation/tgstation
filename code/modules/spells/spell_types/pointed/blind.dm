@@ -16,11 +16,9 @@
 	active_msg = "You prepare to blind a target..."
 
 	/// The amount of blind to apply
-	var/eye_blind_amount = 10
+	var/eye_blind_duration = 20 SECONDS
 	/// The amount of blurriness to apply
 	var/eye_blur_duration = 40 SECONDS
-	/// The duration of the blind mutation placed on the person
-	var/blind_mutation_duration = 30 SECONDS
 
 /datum/action/cooldown/spell/pointed/blind/is_valid_target(atom/cast_on)
 	. = ..()
@@ -30,7 +28,7 @@
 		return FALSE
 
 	var/mob/living/carbon/human/human_target = cast_on
-	return !human_target.is_blind()
+	return !human_target.is_blind
 
 /datum/action/cooldown/spell/pointed/blind/cast(mob/living/carbon/human/cast_on)
 	. = ..()
@@ -40,12 +38,6 @@
 		return FALSE
 
 	to_chat(cast_on, span_warning("Your eyes cry out in pain!"))
-	cast_on.adjust_blindness(eye_blind_amount)
+	cast_on.adjust_temp_blindness(eye_blind_amount)
 	cast_on.set_eye_blur_if_lower(eye_blur_duration)
-	if(cast_on.dna && blind_mutation_duration > 0 SECONDS)
-		cast_on.dna.add_mutation(/datum/mutation/human/blind)
-		addtimer(CALLBACK(src, .proc/fix_eyes, cast_on), blind_mutation_duration)
 	return TRUE
-
-/datum/action/cooldown/spell/pointed/blind/proc/fix_eyes(mob/living/carbon/human/cast_on)
-	cast_on.dna?.remove_mutation(/datum/mutation/human/blind)

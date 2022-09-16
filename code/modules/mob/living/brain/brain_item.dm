@@ -443,3 +443,12 @@
 		qdel(X)
 		amount_cured++
 	return amount_cured
+
+/obj/item/organ/internal/brain/check_failing_thresholds(damage_amount, maximum = maxHealth)
+	. = ..()
+	if(!owner)
+		return
+	if(damage >= 60)
+		owner.add_mood_event("brain_damage", /datum/mood_event/brain_damage)
+	else
+		owner.clear_mood_event("brain_damage")

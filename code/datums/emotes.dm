@@ -116,7 +116,7 @@
 		user.visible_message(msg, visible_message_flags = EMOTE_MESSAGE)
 	if(emote_type & EMOTE_IMPORTANT)
 		for(var/mob/living/viewer in viewers())
-			if(viewer.is_blind() && !viewer.can_hear())
+			if(is_blind(viewer) && !viewer.can_hear())
 				to_chat(viewer, msg)
 
 	SEND_SIGNAL(user, COMSIG_MOB_EMOTED(key))

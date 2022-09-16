@@ -382,7 +382,7 @@
 				victim.emote("scream")
 			victim.emote("cry")
 			victim.set_eye_blur_if_lower(10 SECONDS)
-			victim.adjust_blindness(3) // 6 seconds
+			victim.adjust_temp_blindness(6 SECONDS)
 			victim.set_timed_status_effect(5 SECONDS, /datum/status_effect/confusion, only_if_higher = TRUE)
 			victim.Knockdown(3 SECONDS)
 			victim.add_movespeed_modifier(/datum/movespeed_modifier/reagent/pepperspray)
@@ -711,7 +711,7 @@
 	else
 		if(!exposed_mob.has_status_effect(/datum/status_effect/eye_blur))
 			to_chat(exposed_mob, span_warning("Tears well up in your eyes!"))
-		exposed_mob.adjust_blindness(2)
+		exposed_mob.adjust_temp_blindness(4 SECONDS)
 		exposed_mob.set_eye_blur_if_lower(10 SECONDS)
 
 /datum/reagent/consumable/tearjuice/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -722,7 +722,7 @@
 	M.adjust_eye_blur(8 SECONDS * REM * delta_time)
 	if(DT_PROB(5, delta_time))
 		to_chat(M, span_warning("Your eyes sting!"))
-		M.adjust_blindness(2)
+		M.adjust_temp_blindness(4 SECONDS)
 
 
 /datum/reagent/consumable/nutriment/stabilized

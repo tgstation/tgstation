@@ -206,7 +206,7 @@
 	msg = copytext_char(msg, 1, MAX_MESSAGE_LEN)
 
 	if(type)
-		if(type & MSG_VISUAL && is_blind() )//Vision related
+		if(type & MSG_VISUAL && is_blind(src))//Vision related
 			if(!alt_msg)
 				return
 			else
@@ -219,7 +219,7 @@
 			else
 				msg = alt_msg
 				type = alt_type
-				if(type & MSG_VISUAL && is_blind())
+				if(type & MSG_VISUAL && is_blind(src))
 					return
 	// voice muffling
 	if(stat == UNCONSCIOUS || stat == HARD_CRIT)
@@ -283,7 +283,7 @@
 		if(!msg)
 			continue
 
-		if(visible_message_flags & EMOTE_MESSAGE && runechat_prefs_check(M, visible_message_flags) && !M.is_blind())
+		if(visible_message_flags & EMOTE_MESSAGE && runechat_prefs_check(M, visible_message_flags) && !is_blind(M))
 			M.create_chat_message(src, raw_message = raw_msg, runechat_flags = visible_message_flags)
 
 		M.show_message(msg, msg_type, blind_message, MSG_AUDIBLE)
@@ -531,7 +531,7 @@
 		// shift-click catcher may issue examinate() calls for out-of-sight turfs
 		return
 
-	if(is_blind() && !blind_examine_check(examinify)) //blind people see things differently (through touch)
+	if(is_blind(src) && !blind_examine_check(examinify)) //blind people see things differently (through touch)
 		return
 
 	face_atom(examinify)
@@ -1135,10 +1135,6 @@
 /mob/proc/has_nightvision()
 	return see_in_dark >= NIGHTVISION_FOV_RANGE
 
-/// Is this mob affected by nearsight
-/mob/proc/is_nearsighted()
-	return HAS_TRAIT(src, TRAIT_NEARSIGHT)
-
 /// This mob is abile to read books
 /mob/proc/is_literate()
 	return HAS_TRAIT(src, TRAIT_LITERATE) && !HAS_TRAIT(src, TRAIT_ILLITERATE)
@@ -1336,9 +1332,6 @@
 			. = TRUE
 		if(NAMEOF(src, stat))
 			set_stat(var_value)
-			. = TRUE
-		if(NAMEOF(src, eye_blind))
-			set_blindness(var_value)
 			. = TRUE
 
 	if(!isnull(.))

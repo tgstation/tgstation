@@ -827,10 +827,6 @@
 	losebreath = 0
 	set_nutrition(NUTRITION_LEVEL_FED + 50)
 	bodytemperature = get_body_temp_normal(apply_change=FALSE)
-	set_blindness(0)
-	set_blurriness(0)
-	cure_nearsighted()
-	cure_blind()
 	cure_husk()
 	hallucination = 0
 	heal_overall_damage(INFINITY, INFINITY, INFINITY, null, TRUE) //heal brute and burn dmg on both organic and robotic limbs, and update health right away.

@@ -83,32 +83,37 @@
 	symptom_delay_min = 1
 	symptom_delay_max = 1
 
-/datum/symptom/sensory_restoration/Activate(datum/disease/advance/A)
+/datum/symptom/sensory_restoration/Activate(datum/disease/advance/source_disease)
 	. = ..()
 	if(!.)
 		return
-	var/mob/living/carbon/M = A.affected_mob
-	switch(A.stage)
+	var/mob/living/carbon/ill_mob = source_disease.affected_mob
+	switch(source_disease.stage)
 		if(4, 5)
-			var/obj/item/organ/internal/ears/ears = M.getorganslot(ORGAN_SLOT_EARS)
+			var/obj/item/organ/internal/ears/ears = ill_mob.getorganslot(ORGAN_SLOT_EARS)
 			if(ears)
 				ears.adjustEarDamage(-4, -4)
-			M.adjust_blindness(-2)
-			M.adjust_eye_blur(-4 SECONDS)
-			var/obj/item/organ/internal/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
+
+			ill_mob.adjust_temp_blindness(-4 SECONDS)
+			ill_mob.adjust_eye_blur(-4 SECONDS)
+
+			var/obj/item/organ/internal/eyes/eyes = ill_mob.getorganslot(ORGAN_SLOT_EYES)
 			if(!eyes) // only dealing with eye stuff from here on out
 				return
+
 			eyes.applyOrganDamage(-2)
-			if(HAS_TRAIT_FROM(M, TRAIT_BLIND, EYE_DAMAGE))
+			if(ill_mob.is_blind_from(EYE_DAMAGE))
 				if(prob(20))
-					to_chat(M, span_warning("Your vision slowly returns..."))
-					M.cure_blind(EYE_DAMAGE)
-					M.cure_nearsighted(EYE_DAMAGE)
-					M.set_eye_blur_if_lower(70 SECONDS)
-			else if(HAS_TRAIT_FROM(M, TRAIT_NEARSIGHT, EYE_DAMAGE))
-				to_chat(M, span_warning("The blackness in your peripheral vision fades."))
-				M.cure_nearsighted(EYE_DAMAGE)
-				M.set_eye_blur_if_lower(20 SECONDS)
+					to_chat(ill_mob, span_warning("Your vision slowly returns..."))
+					ill_mob.cure_blind(EYE_DAMAGE)
+					ill_mob.cure_nearsighted(EYE_DAMAGE)
+					ill_mob.set_eye_blur_if_lower(70 SECONDS)
+
+			else if(ill_mob.is_nearsighted_from(EYE_DAMAGE))
+				to_chat(ill_mob, span_warning("The blackness in your peripheral vision fades."))
+				ill_mob.cure_nearsighted(EYE_DAMAGE)
+				ill_mob.set_eye_blur_if_lower(20 SECONDS)
+
 		else
 			if(prob(base_message_chance))
-				to_chat(M, span_notice("[pick("Your eyes feel great.","You feel like your eyes can focus more clearly.", "You don't feel the need to blink.","Your ears feel great.","Your hearing feels more acute.")]"))
+				to_chat(ill_mob, span_notice("[pick("Your eyes feel great.","You feel like your eyes can focus more clearly.", "You don't feel the need to blink.","Your ears feel great.","Your hearing feels more acute.")]"))

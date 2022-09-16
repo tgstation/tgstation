@@ -168,7 +168,7 @@
 		stress = max(stress - (2 * delta_time), 0)
 
 /datum/brain_trauma/severe/monophobia/proc/check_alone()
-	if(owner.is_blind())
+	if(is_blind(owner))
 		return TRUE
 	for(var/mob/M in oview(owner, 7))
 		if(!isliving(M)) //ghosts ain't people

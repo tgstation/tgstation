@@ -23,14 +23,10 @@
  */
 /datum/mind/proc/add_memory(memory_type, extra_info, story_value, memory_flags)
 	if(current)
-		if(!(memory_flags & MEMORY_SKIP_UNCONSCIOUS) && current.stat >= UNCONSCIOUS)
-			return
-		var/is_blind = FALSE
-		if(memory_flags & MEMORY_CHECK_BLINDNESS && current.is_blind())
-			if(!(memory_flags & MEMORY_CHECK_DEAFNESS)) // Only check for blindness
-				return
-			is_blind = TRUE // Otherwise check if the mob is both blind and deaf
-		if(memory_flags & MEMORY_CHECK_DEAFNESS && HAS_TRAIT(current, TRAIT_DEAF) && (!(memory_flags & MEMORY_CHECK_BLINDNESS) || is_blind))
+		var/check_for_consciousness = !(memory_flags & MEMORY_SKIP_UNCONSCIOUS) && (current.stat >= UNCONSCIOUS)
+		var/check_for_blindness = (memory_flags & MEMORY_CHECK_BLINDNESS) && !!is_blind(current)
+		var/check_for_deafness = (memory_flags & MEMORY_CHECK_DEAFNESS) && HAS_TRAIT(current, TRAIT_DEAF)
+		if(check_for_consciousness || check_for_blindness || check_for_deafness)
 			return
 
 	var/story_mood = MOODLESS_MEMORY

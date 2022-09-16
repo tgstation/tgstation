@@ -48,7 +48,7 @@
 
 /obj/structure/sign/attack_hand(mob/user, list/modifiers)
 	. = ..()
-	if(. || user.is_blind())
+	if(. || is_blind(user))
 		return
 	user.examinate(src)
 

@@ -42,7 +42,7 @@
 	desc = "[desc] The display is flickering slightly."
 
 /obj/item/clothing/glasses/hud/suicide_act(mob/user)
-	if(user.is_blind() || !isliving(user))
+	if(is_blind(user) || !isliving(user))
 		return ..()
 	var/mob/living/living_user = user
 	user.visible_message(span_suicide("[user] looks through [src] and looks overwhelmed with the information! It looks like [user.p_theyre()] trying to commit suicide!"))

@@ -252,7 +252,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 	if(DT_PROB(2.5, delta_time) && iscarbon(drinker))
 		var/obj/item/organ/internal/eyes/eyes = drinker.getorganslot(ORGAN_SLOT_EYES)
-		if(drinker.is_blind())
+		if(is_blind(drinker))
 			if(istype(eyes))
 				eyes.Remove(drinker)
 				eyes.forceMove(get_turf(drinker))

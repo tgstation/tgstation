@@ -314,7 +314,7 @@
 				playsound(src, hitsound, volume, TRUE, -1)
 			L.visible_message(span_danger("[L] is hit by \a [src][organ_hit_text]!"), \
 					span_userdanger("You're hit by \a [src][organ_hit_text]!"), null, COMBAT_MESSAGE_RANGE)
-			if(L.is_blind())
+			if(is_blind(L))
 				to_chat(L, span_userdanger("You feel something hit you[organ_hit_text]!"))
 		L.on_hit(src)
 

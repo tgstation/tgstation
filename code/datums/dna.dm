@@ -864,7 +864,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 				addtimer(CALLBACK(src, .proc/something_horrible_mindmelt), 30)
 
 /mob/living/carbon/human/proc/something_horrible_mindmelt()
-	if(!is_blind())
+	if(!is_blind(src))
 		var/obj/item/organ/internal/eyes/eyes = locate(/obj/item/organ/internal/eyes) in internal_organs
 		if(!eyes)
 			return

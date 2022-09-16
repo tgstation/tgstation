@@ -441,7 +441,7 @@
 		return FALSE
 	if(get_eye_protection() >= intensity)
 		return FALSE
-	if(is_blind() && !(override_blindness_check || affect_silicon))
+	if(is_blind(src) && !(override_blindness_check || affect_silicon))
 		return FALSE
 
 	// this forces any kind of flash (namely normal and static) to use a black screen for photosensitive players

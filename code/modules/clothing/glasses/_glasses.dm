@@ -20,8 +20,6 @@
 	var/lighting_alpha
 	/// The current hud icons
 	var/list/icon/current = list()
-	/// Does wearing these glasses correct some of our vision defects?
-	var/vision_correction = FALSE
 	/// Colors your vision when worn
 	var/glass_colour_type
 	/// Whether or not vision coloring is forcing
@@ -59,11 +57,11 @@
 	if(ishuman(src.loc))
 		var/mob/living/carbon/human/H = src.loc
 		var/obj/item/organ/internal/eyes/eyes = H.getorganslot(ORGAN_SLOT_EYES)
-		if(!H.is_blind())
+		if(!is_blind(H))
 			if(H.glasses == src)
 				to_chat(H, span_danger("[src] overloads and blinds you!"))
 				H.flash_act(visual = 1)
-				H.adjust_blindness(3)
+				H.adjust_temp_blindness(6 SECONDS)
 				H.set_eye_blur_if_lower(10 SECONDS)
 				eyes.applyOrganDamage(5)
 
@@ -225,7 +223,7 @@
 	desc = "Made by Nerd. Co."
 	icon_state = "glasses"
 	inhand_icon_state = "glasses"
-	vision_correction = TRUE //corrects nearsightedness
+	clothing_traits = list(TRAIT_NEARSIGHTED_CORRECTED)
 
 /obj/item/clothing/glasses/regular/Initialize(mapload)
 	. = ..()
@@ -251,7 +249,7 @@
 
 /obj/item/clothing/glasses/regular/atom_destruction(damage_flag)
 	. = ..()
-	vision_correction = FALSE
+	clothing_traits -= TRAIT_NEARSIGHTED_CORRECTED
 
 /obj/item/clothing/glasses/regular/welder_act(mob/living/user, obj/item/I)
 	. = ..()
@@ -267,7 +265,7 @@
 
 /obj/item/clothing/glasses/regular/repair()
 	. = ..()
-	vision_correction = TRUE
+	clothing_traits |= TRAIT_NEARSIGHTED_CORRECTED
 
 /obj/item/clothing/glasses/regular/thin
 	name = "thin prescription glasses"
@@ -385,11 +383,11 @@
 /obj/item/clothing/glasses/blindfold/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
 	if(slot == ITEM_SLOT_EYES)
-		user.become_blind(BLINDFOLD_TRAIT)
+		user.become_blind(EYES_COVERED)
 
 /obj/item/clothing/glasses/blindfold/dropped(mob/living/carbon/human/user)
-	..()
-	user.cure_blind(BLINDFOLD_TRAIT)
+	. = ..()
+	user.cure_blind(EYES_COVERED)
 
 /obj/item/clothing/glasses/trickblindfold
 	name = "blindfold"

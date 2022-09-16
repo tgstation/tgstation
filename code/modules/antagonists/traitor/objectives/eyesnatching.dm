@@ -187,7 +187,7 @@
 	if(!do_after(user, 5 SECONDS, target = victim, extra_checks = CALLBACK(src, .proc/eyeballs_exist, eyeballies, head, victim)))
 		return
 
-	if(!HAS_TRAIT(victim, TRAIT_BLIND))
+	if(!is_blind(victim))
 		to_chat(victim, span_userdanger("You suddenly go blind!"))
 
 	to_chat(user, span_notice("You successfully extract [victim]'s eyeballs using [src]."))

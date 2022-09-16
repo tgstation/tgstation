@@ -91,9 +91,9 @@
 		human_owner.update_body()
 	eye_owner.cure_blind(EYE_DAMAGE)
 	eye_owner.cure_nearsighted(EYE_DAMAGE)
-	eye_owner.set_blindness(0)
-	eye_owner.set_blurriness(0)
-	eye_owner.clear_fullscreen("eye_damage", 0)
+	remove_status_effect(/datum/status_effect/eye_blur)
+	remove_status_effect(/datum/status_effect/temporary_blindness)
+	eye_owner.clear_fullscreen(EYE_DAMAGE, 0)
 	eye_owner.update_sight()
 
 #define OFFSET_X 1
@@ -142,29 +142,25 @@
 
 /obj/item/organ/internal/eyes/on_life(delta_time, times_fired)
 	. = ..()
-	var/mob/living/carbon/eye_owner = owner
 	//various degrees of "oh fuck my eyes", from "point a laser at your eye" to "staring at the Sun" intensities
 	if(damage > 20)
 		damaged = TRUE
-		if((organ_flags & ORGAN_FAILING))
-			eye_owner.become_blind(EYE_DAMAGE)
+		if(organ_flags & ORGAN_FAILING)
+			owner.become_blind(EYE_DAMAGE)
 			return
 
-		var/obj/item/clothing/glasses/eyewear = eye_owner.glasses
-		var/has_prescription_glasses = istype(eyewear) && eyewear.vision_correction
-
-		if(has_prescription_glasses)
+		if(HAS_TRAIT(owner, TRAIT_NEARSIGHTED_CORRECTED))
 			return
 
 		var/severity = damage > 30 ? 2 : 1
-		eye_owner.overlay_fullscreen("eye_damage", /atom/movable/screen/fullscreen/impaired, severity)
+		owner.overlay_fullscreen(EYE_DAMAGE, /atom/movable/screen/fullscreen/impaired, severity)
 		return
 
 	//called once since we don't want to keep clearing the screen of eye damage for people who are below 20 damage
 	if(damaged)
 		damaged = FALSE
-		eye_owner.clear_fullscreen("eye_damage")
-		eye_owner.cure_blind(EYE_DAMAGE)
+		owner.clear_fullscreen(EYE_DAMAGE)
+		owner.cure_blind(EYE_DAMAGE)
 
 /obj/item/organ/internal/eyes/night_vision
 	see_in_dark = NIGHTVISION_FOV_RANGE

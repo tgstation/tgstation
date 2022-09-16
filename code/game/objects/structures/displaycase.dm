@@ -204,7 +204,7 @@
 		if (!Adjacent(user))
 			return
 		if (!user.combat_mode)
-			if(!user.is_blind())
+			if(!is_blind(user))
 				user.examinate(src)
 			return
 		user.visible_message(span_danger("[user] kicks the display case."), null, null, COMBAT_MESSAGE_RANGE)
@@ -593,4 +593,3 @@
 /obj/structure/displaycase/forsale/kitchen
 	desc = "A display case with an ID-card swiper. Use your ID to purchase the contents. Meant for the bartender and chef."
 	req_one_access = list(ACCESS_KITCHEN, ACCESS_BAR)
-

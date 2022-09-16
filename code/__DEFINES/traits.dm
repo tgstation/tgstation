@@ -144,11 +144,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_LITERATE "literate"
 /// Blacklist for mobs that can't read or write
 #define TRAIT_ILLITERATE "illiterate"
-#define TRAIT_BLIND "blind"
 #define TRAIT_MUTE "mute"
 #define TRAIT_EMOTEMUTE "emotemute"
 #define TRAIT_DEAF "deaf"
-#define TRAIT_NEARSIGHT "nearsighted"
 #define TRAIT_FAT "fat"
 #define TRAIT_HUSK "husk"
 ///Blacklisted from being revived via defibrilator
@@ -282,6 +280,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_QUICK_BUILD "quick-build"
 /// We can handle 'dangerous' plants in botany safely
 #define TRAIT_PLANT_SAFE "plant_safe"
+/// Prevents the overlay from nearsighted
+#define TRAIT_NEARSIGHTED_CORRECTED "fixes_nearsighted"
 #define TRAIT_UNINTELLIGIBLE_SPEECH "unintelligible-speech"
 #define TRAIT_UNSTABLE "unstable"
 #define TRAIT_OIL_FRIED "oil_fried"
@@ -739,7 +739,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 // unique trait sources, still defines
 #define STATUE_MUTE "statue"
 #define CHANGELING_DRAIN "drain"
-#define ABYSSAL_GAZE_BLIND "abyssal_gaze"
 #define HIGHLANDER "highlander"
 #define TRAIT_HULK "hulk"
 #define STASIS_MUTE "stasis"
@@ -748,7 +747,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define HYPNOCHAIR_TRAIT "hypnochair"
 #define FLASHLIGHT_EYES "flashlight_eyes"
 #define IMPURE_OCULINE "impure_oculine"
-#define BLINDFOLD_TRAIT "blindfolded"
 #define TRAIT_SANTA "santa"
 #define SCRYING_ORB "scrying-orb"
 #define ABDUCTOR_ANTAGONIST "abductor-antagonist"
@@ -831,8 +829,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define ORBITING_TRAIT "orbiting"
 /// From the item_scaling element
 #define ITEM_SCALING_TRAIT "item_scaling"
-/// Trait given by Objects that provide blindsight
-#define ITEM_BLIND_TRAIT "blind_item_trait"
 
 /**
 * Trait granted by [/mob/living/carbon/Initialize] and

@@ -148,7 +148,7 @@
 	if(QDELETED(victim))
 		victim = null
 		return
-	victim.cure_blind("hypnochair")
+	victim.cure_blind(HYPNOCHAIR_TRAIT)
 	REMOVE_TRAIT(victim, TRAIT_DEAF, HYPNOCHAIR_TRAIT)
 	if(!(victim.get_eye_protection() > 0))
 		var/time_diff = world.time - start_time

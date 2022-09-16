@@ -62,7 +62,7 @@
 		dynamic_heat_resistance = 0
 		gasmix_power_ratio = 0
 		powerloss_dynamic_scaling = 0
-		
+
 		for (var/gas_path in absorbed_gasmix.gases)
 			var/datum/sm_gas/sm_gas = GLOB.sm_gas_behavior[gas_path]
 			gas_percentage[gas_path] = absorbed_gasmix.gases[gas_path][MOLES] / combined_gas
@@ -71,7 +71,7 @@
 			dynamic_heat_resistance += sm_gas.heat_resistance * gas_percentage[gas_path]
 			gasmix_power_ratio += sm_gas.powermix * gas_percentage[gas_path]
 			powerloss_dynamic_scaling += sm_gas.powerloss_inhibition * gas_percentage[gas_path]
-		
+
 		gasmix_power_ratio = clamp(gasmix_power_ratio, 0, 1)
 		dynamic_heat_modifier = max(dynamic_heat_modifier, 0.5)
 		dynamic_heat_resistance = max(dynamic_heat_resistance, 1)
@@ -268,7 +268,7 @@
 			continue
 
 		// Blind people don't get supermatter hallucinations.
-		if (seen_by_sm.is_blind())
+		if (is_blind(seen_by_sm))
 			continue
 
 		// Everyone else gets hallucinations.
@@ -332,7 +332,7 @@
  * * priority: Truthy values means a forced delam. If current forced_delam is higher than priority we dont run.
  * Set to a number higher than [SM_DELAM_PRIO_IN_GAME] to fully force an admin delam.
  * * delam_path: Typepath of a [/datum/sm_delam]. [SM_DELAM_STRATEGY_PURGE] means reset and put prio back to zero.
- * 
+ *
  * Returns: Not used for anything, just returns true on succesful set, manual and automatic. Helps admins check stuffs.
  */
 /obj/machinery/power/supermatter_crystal/proc/set_delam(priority = SM_DELAM_PRIO_NONE, manual_delam_path = SM_DELAM_STRATEGY_PURGE)

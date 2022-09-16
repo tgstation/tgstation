@@ -1,6 +1,5 @@
 //Here are the procs used to modify status effects of a mob.
-//The effects include: stun, knockdown, unconscious, sleeping, resting, jitteriness, dizziness, ear damage,
-// eye damage, eye_blind, TRAIT_BLIND trait, and TRAIT_NEARSIGHT trait.
+//The effects include: stun, knockdown, unconscious, sleeping, resting
 
 /////////////////////////////////// STUN ////////////////////////////////////
 

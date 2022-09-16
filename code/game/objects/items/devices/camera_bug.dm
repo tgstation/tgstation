@@ -62,7 +62,7 @@
 	interact(user)
 
 /obj/item/camera_bug/check_eye(mob/user)
-	if ( loc != user || user.incapacitated() || user.is_blind() || !current )
+	if ( loc != user || user.incapacitated() || is_blind(user) || !current )
 		user.unset_machine()
 		return FALSE
 	if(!is_valid_z_level(get_turf(current), get_turf(user.loc)) || !current.can_use())

@@ -110,7 +110,7 @@
 					var/list/new_entry = list(list(user.name, "tried equipping you with [equipping]", world.time))
 					LAZYADD(victim_human.afk_thefts, new_entry)
 
-			else if(victim_human.is_blind())
+			else if(is_blind(victim_human))
 				to_chat(source, span_userdanger("You feel someone trying to put something on you."))
 
 	to_chat(user, span_notice("You try to put [equipping] on [source]..."))
@@ -173,7 +173,7 @@
 				var/list/new_entry = list(list(user.name, "tried unequipping your [item.name]", world.time))
 				LAZYADD(victim_human.afk_thefts, new_entry)
 
-		else if(victim_human.is_blind())
+		else if(is_blind(victim_human))
 			to_chat(source, span_userdanger("You feel someone fumble with your belongings."))
 
 	return TRUE
