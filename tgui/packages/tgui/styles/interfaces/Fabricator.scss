@@ -156,3 +156,24 @@
     }
   }
 }
+
+.FabricatorMaterialIcon {
+  display: inline-block;
+  position: relative;
+  width: 32px;
+  height: 32px;
+
+  &__Icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.5s ease-out;
+
+    &--active {
+      opacity: 1;
+    }
+  }
+}

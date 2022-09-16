@@ -1,4 +1,5 @@
-import { Box } from '../../components';
+import { classes } from 'common/react';
+import { Icon } from '../../components';
 
 const MATERIAL_ICONS: Record<string, [number, string][]> = {
   'iron': [
@@ -52,15 +53,35 @@ export const MaterialIcon = (props: MaterialIconProps) => {
   const icons = MATERIAL_ICONS[materialName];
   let className = '';
 
-  if (icons) {
-    let idx = 0;
-
-    while (icons[idx + 1] && icons[idx + 1][0] <= (amount ?? 200_000) / 2_000) {
-      idx += 1;
-    }
-
-    className = `sheetmaterials32x32 ${icons[idx][1]}`;
+  if (!icons) {
+    return <Icon name="question-circle" />;
   }
 
-  return <Box width={'32px'} height={'32px'} className={className} />;
+  let activeIdx = 0;
+
+  while (
+    icons[activeIdx + 1] &&
+    icons[activeIdx + 1][0] <= (amount ?? 200_000) / 2_000
+  ) {
+    activeIdx += 1;
+  }
+
+  className = `FabricatorMaterialIcon sheetmaterials32x32 ${icons[activeIdx][1]}`;
+
+  return (
+    <div className={'FabricatorMaterialIcon'}>
+      {icons.map(([_, iconState], idx) => (
+        <div
+          key={idx}
+          className={classes([
+            'FabricatorMaterialIcon__Icon',
+            idx === activeIdx && 'FabricatorMaterialIcon__Icon--active',
+            'sheetmaterials32x32',
+            iconState,
+          ])}
+        />
+      ))}
+    </div>
+  );
+  // <div className={classes(["FabricatorMaterialIcon__Icon sheetmaterials32x32 "])}
 };
