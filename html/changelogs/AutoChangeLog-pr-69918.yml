@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - admin: "Debugging / admin omnitool now stabs eyes when in screwdriver mode."
