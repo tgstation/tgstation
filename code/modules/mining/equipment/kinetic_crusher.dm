@@ -461,7 +461,7 @@
 /obj/item/crusher_trophy/syndicate_trophy/effect_desc()
 	return "mark can effect humanoid creatures"
 
-/obj/item/crusher_trophy/syndicate_trophy/on_hit(mob/living/target)
+/obj/item/crusher_trophy/syndicate_trophy/on_mark_application(mob/living/target, datum/status_effect/crusher_mark/mark, had_mark)
 	if(ishuman(target))
 		target.apply_status_effect(/datum/status_effect/crusher_mark, hammer_synced)
 	
