@@ -1,9 +1,10 @@
 import { useBackend, useSharedState } from '../backend';
 import { Stack, Section, Button, Icon, Dimmer, Box, Flex } from '../components';
 import { Window } from '../layouts';
-import { Material, MaterialAmount, MaterialFormatting, MATERIAL_KEYS } from './common/Materials';
+import { Material } from './common/Materials';
+import { MaterialCostSequence } from './Fabrication/MaterialCostSequence';
 import { sortBy } from 'common/collections';
-import { MaterialAccessBar } from './Fabrication/MineralAccessBar';
+import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
 import { SearchBar } from './Fabrication/SearchBar';
 import { DesignCategoryTabs } from './Fabrication/DesignCategoryTabs';
 import { FabricatorData, Design, MaterialMap } from './Fabrication/Types';
@@ -154,37 +155,6 @@ export const Fabricator = (props, context) => {
   );
 };
 
-type MaterialCostProps = {
-  design: Design;
-  amount: number;
-  available: MaterialMap;
-};
-
-const MaterialCost = (props: MaterialCostProps, context) => {
-  const { design, amount, available } = props;
-
-  return (
-    <Stack wrap justify="space-around">
-      {Object.entries(design.cost).map(([material, cost]) => (
-        <Stack.Item key={material}>
-          <MaterialAmount
-            name={material as keyof typeof MATERIAL_KEYS}
-            amount={cost * amount}
-            formatting={MaterialFormatting.SIUnits}
-            color={
-              cost * amount > available[material]
-                ? 'bad'
-                : cost * amount * 2 > available[material]
-                  ? 'average'
-                  : 'normal'
-            }
-          />
-        </Stack.Item>
-      ))}
-    </Stack>
-  );
-};
-
 type PrintButtonProps = {
   design: Design;
   quantity: number;
@@ -207,7 +177,11 @@ const PrintButton = (props: PrintButtonProps, context) => {
         !canPrint && 'Fabricator__PrintAmount--disabled',
       ])}
       tooltip={
-        <MaterialCost design={design} amount={quantity} available={available} />
+        <MaterialCostSequence
+          design={design}
+          amount={quantity}
+          available={available}
+        />
       }
       color={'transparent'}
       onClick={() => act('build', { ref: design.id, amount: quantity })}>
@@ -237,7 +211,11 @@ const Recipe = (props: { design: Design; available: MaterialMap }, context) => {
             ])}
             fluid
             tooltip={
-              <MaterialCost design={design} amount={1} available={available} />
+              <MaterialCostSequence
+                design={design}
+                amount={1}
+                available={available}
+              />
             }
             onClick={() => act('build', { ref: design.id, amount: 1 })}>
             <Flex align={'center'}>
