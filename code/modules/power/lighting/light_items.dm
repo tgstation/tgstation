@@ -91,18 +91,6 @@
 		if(status == LIGHT_BURNED || status == LIGHT_OK)
 			shatter(moving_mob)
 
-/obj/item/light/create_reagents(max_vol, flags)
-	. = ..()
-	RegisterSignal(reagents, COMSIG_PARENT_QDELETING, .proc/on_reagents_del)
-
-/**
- * Handles the reagent holder datum being deleted for some reason. Probably someone making pizza lights.
- */
-/obj/item/light/proc/on_reagents_del(datum/reagents/holder)
-	SIGNAL_HANDLER
-	UnregisterSignal(holder, list(COMSIG_PARENT_QDELETING))
-	return NONE
-
 /obj/item/light/attack(mob/living/M, mob/living/user, def_zone)
 	..()
 	shatter(M)
