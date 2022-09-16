@@ -306,8 +306,6 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	GLOB.english_to_zombie = sort_list(GLOB.english_to_zombie) // Alphabetizes the list (for debugging)
 
 /obj/item/organ/internal/tongue/zombie/modify_speech(datum/source, list/speech_args)
-	var/mob/living/carbon/human/user = source
-
 	var/message = speech_args[SPEECH_MESSAGE]
 	if(message[1] != "*")
 		// setup the global list for translation if it hasn't already been done
