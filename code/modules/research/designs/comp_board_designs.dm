@@ -130,7 +130,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SECURITY //Honestly should have a bridge techfab for this sometime.
 
 /datum/design/board/crewconsole
-	name = "Crew monitoring computer Board"
+	name = "Crew Monitoring Computer Board"
 	desc = "Allows for the construction of circuit boards used to build a Crew monitoring computer."
 	id = "crewconsole"
 	build_type = IMPRINTER
