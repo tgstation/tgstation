@@ -48,15 +48,15 @@
 	var/datum/round_event_control/brand_intelligence/brand_event = control
 	if(brand_event.chosen_vendor)
 		var/chosen_vendor = brand_event.chosen_vendor
-		for(var/chosen_vendor in GLOB.machines) //trying to typecast chosen_vendor to whatever the admin selected subtype is
-			if(!is_station_level(chosen_vendor.z))
+		for(var/obj/vendor_type_path/vendor in GLOB.machines) //trying to typecast chosen_vendor to whatever the admin selected subtype is
+			if(!is_station_level(vendor.z) || !istype(vendor, chosen_vendor))
 				continue
-			vendingMachines.Add(chosen_vendor)
+			vendingMachines.Add(vendor)
 	else
-		for(var/obj/machinery/vending/V in GLOB.machines)
-			if(!is_station_level(V.z))
+		for(var/obj/machinery/vending/vendor in GLOB.machines)
+			if(!is_station_level(vendor.z))
 				continue
-			vendingMachines.Add(V)
+			vendingMachines.Add(vendor)
 	if(!vendingMachines.len)
 		kill()
 		return
