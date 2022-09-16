@@ -251,18 +251,18 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	addiction_types = list(/datum/addiction/medicine = 1.5)
 	liver_damage = 0.1
 	//blurriness at the start of taking the med
-	var/amount_applied = 0 SECONDS
+	var/amount_of_blur_applied = 0 SECONDS
 
 /datum/reagent/impurity/aiuri/on_mob_add(mob/living/owner, amount)
 	. = ..()
 	// Melbert todo: double check the values on this. conversion was kinda weird,
 	// and I think the initial version applied like 3500 seconds of blur
-	amount_applied = creation_purity * (volume / metabolization_rate) * 2 SECONDS
-	owner.adjust_eye_blur(amount_applied)
+	amount_of_blur_applied = creation_purity * (volume / metabolization_rate) * 2 SECONDS
+	owner.adjust_eye_blur(amount_of_blur_applied)
 
 /datum/reagent/impurity/aiuri/on_mob_delete(mob/living/owner, amount)
 	. = ..()
-	owner.adjust_eye_blur(-amount_applied)
+	owner.adjust_eye_blur(-amount_of_blur_applied)
 
 //Hercuri
 //inverse
