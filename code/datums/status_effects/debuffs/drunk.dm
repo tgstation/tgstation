@@ -74,8 +74,8 @@
 		qdel(src)
 
 /datum/status_effect/inebriated/tick()
-	// Drunk value does not decrease while dead
-	if(owner.stat == DEAD)
+	// Drunk value does not decrease while dead or in stasis
+	if(owner.stat == DEAD || IS_IN_STASIS(owner))
 		return
 
 	// Every tick, the drunk value decrases by

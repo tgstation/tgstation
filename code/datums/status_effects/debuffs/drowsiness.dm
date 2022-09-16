@@ -30,6 +30,10 @@
 		qdel(src)
 
 /datum/status_effect/drowsiness/tick(delta_time)
+	// You do not feel drowsy while unconscious or in stasis
+	if(owner.stat >= UNCONSCIOUS || IS_IN_STASIS(owner))
+		return
+
 	// If our owner's resting, lose another 3 seconds of duration every tick
 	// (Effectively meaning we lose 5 seconds of duration per tick while resting instead of 2 seconds)
 	if(owner.resting)

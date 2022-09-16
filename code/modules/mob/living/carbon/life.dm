@@ -399,7 +399,7 @@
 			dna.remove_mutation(HM.type)
 
 // This updates all special effects that really should be status effect datums: Druggy, Hallucinations, Drunkenness, Mute, etc..
-/mob/living/carbon/handle_status_effects()
+/mob/living/carbon/handle_status_effects(delta_time, times_fired)
 	. = ..()
 
 	if(silent)

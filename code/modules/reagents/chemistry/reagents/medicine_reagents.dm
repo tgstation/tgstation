@@ -995,7 +995,7 @@
 
 /datum/reagent/medicine/antihol/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	for(var/effect in statis_effects_to_clear)
-		M.remove_status_effect(these_mean_youre_drunk)
+		M.remove_status_effect(effect)
 	M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 3 * REM * delta_time * normalise_creation_purity(), FALSE, TRUE)
 	M.adjustToxLoss(-0.2 * REM * delta_time, 0)
 	M.adjust_drunk_effect(-10 * REM * delta_time * normalise_creation_purity())

@@ -255,6 +255,8 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 /datum/reagent/impurity/aiuri/on_mob_add(mob/living/owner, amount)
 	. = ..()
+	// Melbert todo: double check the values on this. conversion was kinda weird,
+	// and I think the initial version applied like 3500 seconds of blur
 	amount_applied = creation_purity * (volume / metabolization_rate) * 2 SECONDS
 	owner.adjust_eye_blur(amount_applied)
 
