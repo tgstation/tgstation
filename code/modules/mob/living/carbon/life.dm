@@ -399,16 +399,8 @@
 			dna.remove_mutation(HM.type)
 
 // This updates all special effects that really should be status effect datums: Druggy, Hallucinations, Drunkenness, Mute, etc..
-/mob/living/carbon/handle_status_effects(delta_time, times_fired)
-	..()
-
-	var/restingpwr = 0.5 + 2 * resting
-
-	if(drowsyness)
-		adjust_drowsyness(-1 * restingpwr * delta_time)
-		blur_eyes(1 * delta_time)
-		if(DT_PROB(2.5, delta_time))
-			AdjustSleeping(10 SECONDS)
+/mob/living/carbon/handle_status_effects()
+	. = ..()
 
 	if(silent)
 		silent = max(silent - (0.5 * delta_time), 0)

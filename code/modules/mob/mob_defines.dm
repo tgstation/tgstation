@@ -106,8 +106,7 @@
 	var/bodytemperature = BODYTEMP_NORMAL //310.15K / 98.6F
 	/// Our body temperatue as of the last process, prevents pointless work when handling alerts
 	var/old_bodytemperature = 0
-	/// Drowsyness level of the mob
-	var/drowsyness = 0//Carbon
+
 	/// Hunger level of the mob
 	var/nutrition = NUTRITION_LEVEL_START_MIN // randomised in Initialize
 	/// Satiation level of the mob

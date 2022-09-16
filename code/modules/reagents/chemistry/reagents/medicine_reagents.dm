@@ -82,7 +82,7 @@
 	M.silent = FALSE
 	M.remove_status_effect(/datum/status_effect/dizziness)
 	M.disgust = 0
-	M.drowsyness = 0
+	M.remove_status_effect(/datum/status_effect/drowsiness)
 	// Remove all speech related status effects
 	for(var/effect in typesof(/datum/status_effect/speech))
 		M.remove_status_effect(effect)
@@ -117,7 +117,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/synaptizine/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjust_drowsyness(-5 * REM * delta_time)
+	M.adjust_drowsiness(-10 SECONDS * REM * delta_time)
 	M.AdjustStun(-20 * REM * delta_time)
 	M.AdjustKnockdown(-20 * REM * delta_time)
 	M.AdjustUnconscious(-20 * REM * delta_time)
@@ -139,7 +139,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/synaphydramine/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjust_drowsyness(-5 * REM * delta_time)
+	M.adjust_drowsiness(-10 SECONDS * REM * delta_time)
 	if(holder.has_reagent(/datum/reagent/toxin/mindbreaker))
 		holder.remove_reagent(/datum/reagent/toxin/mindbreaker, 5 * REM * delta_time)
 	if(holder.has_reagent(/datum/reagent/toxin/histamine))
@@ -589,7 +589,7 @@
 
 /datum/reagent/medicine/diphenhydramine/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(DT_PROB(5, delta_time))
-		M.adjust_drowsyness(1)
+		M.adjust_drowsiness(2 SECONDS)
 	M.adjust_timed_status_effect(-2 SECONDS * REM * delta_time, /datum/status_effect/jitter)
 	holder.remove_reagent(/datum/reagent/toxin/histamine, 3 * REM * delta_time)
 	..()
@@ -620,7 +620,7 @@
 		if(11)
 			to_chat(M, span_warning("You start to feel tired...") )
 		if(12 to 24)
-			M.adjust_drowsyness(1 * REM * delta_time)
+			M.adjust_drowsiness(2 SECONDS * REM * delta_time)
 		if(24 to INFINITY)
 			M.Sleeping(40 * REM * delta_time)
 			. = TRUE
@@ -984,12 +984,18 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	inverse_chem_val = 0.35
 	inverse_chem = /datum/reagent/inverse/antihol
+	/// All status effects we remove on metabolize.
+	/// Does not include drunk as that's decresed gradually
+	var/static/list/statis_effects_to_clear = list(
+		/datum/status_effect/confusion,
+		/datum/status_effect/dizziness,
+		/datum/status_effect/drowsiness,
+		/datum/status_effect/speech/slurring/drunk,
+	)
 
 /datum/reagent/medicine/antihol/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.remove_status_effect(/datum/status_effect/dizziness)
-	M.set_drowsyness(0)
-	M.remove_status_effect(/datum/status_effect/speech/slurring/drunk)
-	M.remove_status_effect(/datum/status_effect/confusion)
+	for(var/effect in statis_effects_to_clear)
+		M.remove_status_effect(these_mean_youre_drunk)
 	M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 3 * REM * delta_time * normalise_creation_purity(), FALSE, TRUE)
 	M.adjustToxLoss(-0.2 * REM * delta_time, 0)
 	M.adjust_drunk_effect(-10 * REM * delta_time * normalise_creation_purity())
@@ -1184,7 +1190,7 @@
 /datum/reagent/medicine/haloperidol/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	for(var/datum/reagent/drug/R in M.reagents.reagent_list)
 		M.reagents.remove_reagent(R.type, 5 * REM * delta_time)
-	M.adjust_drowsyness(2 * REM * delta_time)
+	M.adjust_drowsiness(4 SECONDS * REM * delta_time)
 
 	if(M.get_timed_status_effect_duration(/datum/status_effect/jitter) >= 6 SECONDS)
 		M.adjust_timed_status_effect(-6 SECONDS * REM * delta_time, /datum/status_effect/jitter)

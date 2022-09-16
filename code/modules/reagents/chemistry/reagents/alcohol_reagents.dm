@@ -165,7 +165,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/kahlua/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
 	drinker.set_timed_status_effect(10 SECONDS * REM * delta_time, /datum/status_effect/dizziness, only_if_higher = TRUE)
-	drinker.adjust_drowsyness(-3 * REM * delta_time)
+	drinker.adjust_drowsiness(-6 SECONDS * REM * delta_time)
 	drinker.AdjustSleeping(-40 * REM * delta_time)
 	if(!HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE))
 		drinker.set_timed_status_effect(10 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
@@ -226,7 +226,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/ethanol/thirteenloko/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	drinker.adjust_drowsyness(-7 * REM * delta_time)
+	drinker.adjust_drowsiness(-14 SECONDS * REM * delta_time)
 	drinker.AdjustSleeping(-40 * REM * delta_time)
 	drinker.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, drinker.get_body_temp_normal())
 	if(!HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE))
@@ -2930,7 +2930,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/gin_garden
 	name = "Gin Garden"
 	description = "Excellent cooling alcoholic drink with not so ordinary taste."
-	color = "#6cd87a" 
+	color = "#6cd87a"
 	taste_description = "light gin with sweet ginger and cucumber"
 	glass_icon_state = "gin_garden"
 	glass_name = "gin garden"

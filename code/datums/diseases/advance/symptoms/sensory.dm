@@ -44,7 +44,7 @@
 
 	if(A.stage >= 3)
 		M.adjust_timed_status_effect(-4 SECONDS, /datum/status_effect/dizziness)
-		M.adjust_drowsyness(-2)
+		M.adjust_drowsiness(-4 SECONDS)
 		M.adjust_timed_status_effect(-1 SECONDS, /datum/status_effect/speech/slurring/drunk)
 		M.adjust_timed_status_effect(-2 SECONDS, /datum/status_effect/confusion)
 		if(purge_alcohol)
@@ -52,7 +52,7 @@
 			M.adjust_drunk_effect(-5)
 
 	if(A.stage >= 4)
-		M.adjust_drowsyness(-2)
+		M.adjust_drowsiness(-4 SECONDS)
 		if(M.reagents.has_reagent(/datum/reagent/toxin/mindbreaker))
 			M.reagents.remove_reagent(/datum/reagent/toxin/mindbreaker, 5)
 		if(M.reagents.has_reagent(/datum/reagent/toxin/histamine))

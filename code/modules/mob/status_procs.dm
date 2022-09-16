@@ -1,17 +1,4 @@
 //Here are the procs used to modify status effects of a mob.
-
-/**
-* Set drowsyness of a mob to passed value
-*/
-/mob/proc/set_drowsyness(amount)
-	drowsyness = max(amount, 0)
-
-/**
- * Adds passed value to the drowsyness of a mob
- */
-/mob/proc/adjust_drowsyness(amount)
-	drowsyness = max(drowsyness + amount, 0)
-
 /**
  * Adjust a mobs blindness by an amount
  *

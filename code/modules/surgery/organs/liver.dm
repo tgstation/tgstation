@@ -1,6 +1,8 @@
 #define LIVER_DEFAULT_TOX_TOLERANCE 3 //amount of toxins the liver can filter out
 #define LIVER_DEFAULT_TOX_LETHALITY 0.005 //lower values lower how harmful toxins are to the liver
 #define LIVER_FAILURE_STAGE_SECONDS 60 //amount of seconds before liver failure reaches a new stage
+
+
 /obj/item/organ/internal/liver
 	name = "liver"
 	icon_state = "liver"
@@ -146,13 +148,13 @@
 
 		if(2 * LIVER_FAILURE_STAGE_SECONDS to 3 * LIVER_FAILURE_STAGE_SECONDS - 1)
 			owner.adjustToxLoss(0.4 * delta_time,forced = TRUE)
-			owner.adjust_drowsyness(0.25 * delta_time)
+			owner.adjust_drowsiness(0.5 SECONDS * delta_time)
 			owner.adjust_disgust(0.3 * delta_time)
 
 		if(3 * LIVER_FAILURE_STAGE_SECONDS to 4 * LIVER_FAILURE_STAGE_SECONDS - 1)
 			owner.adjustToxLoss(0.6 * delta_time,forced = TRUE)
 			owner.adjustOrganLoss(pick(ORGAN_SLOT_HEART,ORGAN_SLOT_LUNGS,ORGAN_SLOT_STOMACH,ORGAN_SLOT_EYES,ORGAN_SLOT_EARS),0.2 * delta_time)
-			owner.adjust_drowsyness(0.5 * delta_time)
+			owner.adjust_drowsiness(1 SECONDS * delta_time)
 			owner.adjust_disgust(0.6 * delta_time)
 
 			if(DT_PROB(1.5, delta_time))
@@ -161,7 +163,7 @@
 		if(4 * LIVER_FAILURE_STAGE_SECONDS to INFINITY)
 			owner.adjustToxLoss(0.8 * delta_time,forced = TRUE)
 			owner.adjustOrganLoss(pick(ORGAN_SLOT_HEART,ORGAN_SLOT_LUNGS,ORGAN_SLOT_STOMACH,ORGAN_SLOT_EYES,ORGAN_SLOT_EARS),0.5 * delta_time)
-			owner.adjust_drowsyness(0.8 * delta_time)
+			owner.adjust_drowsiness(1.6 SECONDS * delta_time)
 			owner.adjust_disgust(1.2 * delta_time)
 
 			if(DT_PROB(3, delta_time))
@@ -255,5 +257,3 @@
 		COOLDOWN_START(src, severe_cooldown, 10 SECONDS)
 	if(prob(emp_vulnerability/severity)) //Chance of permanent effects
 		organ_flags |= ORGAN_SYNTHETIC_EMP //Starts organ faliure - gonna need replacing soon.
-
-

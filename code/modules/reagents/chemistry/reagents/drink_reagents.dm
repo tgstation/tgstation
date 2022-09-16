@@ -299,7 +299,7 @@
 
 /datum/reagent/consumable/coffee/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjust_timed_status_effect(-10 SECONDS * REM * delta_time, /datum/status_effect/dizziness)
-	M.adjust_drowsyness(-3 * REM * delta_time)
+	M.adjust_drowsiness(-6 SECONDS * REM * delta_time)
 	M.AdjustSleeping(-40 * REM * delta_time)
 	//310.15 is the normal bodytemp.
 	M.adjust_bodytemperature(25 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, M.get_body_temp_normal())
@@ -322,7 +322,7 @@
 
 /datum/reagent/consumable/tea/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjust_timed_status_effect(-4 SECONDS * REM * delta_time, /datum/status_effect/dizziness)
-	M.adjust_drowsyness(-1 * REM * delta_time)
+	M.adjust_drowsiness(-2 SECONDS * REM * delta_time)
 	M.adjust_timed_status_effect(-6 SECONDS * REM * delta_time, /datum/status_effect/jitter)
 	M.AdjustSleeping(-20 * REM * delta_time)
 	if(M.getToxLoss() && DT_PROB(10, delta_time))
@@ -374,7 +374,7 @@
 
 /datum/reagent/consumable/icecoffee/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjust_timed_status_effect(-10 SECONDS * REM * delta_time, /datum/status_effect/dizziness)
-	M.adjust_drowsyness(-3 * REM * delta_time)
+	M.adjust_drowsiness(-6 SECONDS * REM * delta_time)
 	M.AdjustSleeping(-40 * REM * delta_time)
 	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
 	M.set_timed_status_effect(10 SECONDS * REM * delta_time, /datum/status_effect/jitter, only_if_higher = TRUE)
@@ -394,7 +394,7 @@
 
 /datum/reagent/consumable/hot_ice_coffee/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjust_timed_status_effect(-10 SECONDS * REM * delta_time, /datum/status_effect/dizziness)
-	M.adjust_drowsyness(-3 * REM * delta_time)
+	M.adjust_drowsiness(-6 SECONDS * REM * delta_time)
 	M.AdjustSleeping(-60 * REM * delta_time)
 	M.adjust_bodytemperature(-7 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
 	M.set_timed_status_effect(10 SECONDS * REM * delta_time, /datum/status_effect/jitter, only_if_higher = TRUE)
@@ -415,7 +415,7 @@
 
 /datum/reagent/consumable/icetea/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjust_timed_status_effect(-4 SECONDS * REM * delta_time, /datum/status_effect/dizziness)
-	M.adjust_drowsyness(-1 * REM * delta_time)
+	M.adjust_drowsiness(-2 SECONDS * REM * delta_time)
 	M.AdjustSleeping(-40 * REM * delta_time)
 	if(M.getToxLoss() && DT_PROB(10, delta_time))
 		M.adjustToxLoss(-1, 0)
@@ -434,7 +434,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/space_cola/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjust_drowsyness(-5 * REM * delta_time)
+	M.adjust_drowsiness(-10 SECONDS * REM * delta_time)
 	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
 	..()
 
@@ -451,7 +451,7 @@
 
 /datum/reagent/consumable/roy_rogers/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.set_timed_status_effect(12 SECONDS * REM * delta_time, /datum/status_effect/jitter, only_if_higher = TRUE)
-	M.adjust_drowsyness(-5 * REM * delta_time)
+	M.adjust_drowsiness(-10 SECONDS * REM * delta_time)
 	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
 	return ..()
 
@@ -478,7 +478,7 @@
 	M.set_timed_status_effect(40 SECONDS * REM * delta_time, /datum/status_effect/jitter, only_if_higher = TRUE)
 	M.set_timed_status_effect(1 MINUTES * REM * delta_time, /datum/status_effect/drugginess)
 	M.adjust_timed_status_effect(3 SECONDS * REM * delta_time, /datum/status_effect/dizziness)
-	M.set_drowsyness(0)
+	M.remove_status_effect(/datum/status_effect/drowsiness)
 	M.AdjustSleeping(-40 * REM * delta_time)
 	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
 	..()
@@ -505,7 +505,7 @@
 	if(current_cycle > 10)
 		to_chat(L, span_warning("You feel kinda tired as your sugar rush wears off..."))
 		L.adjustStaminaLoss(min(80, current_cycle * 3))
-		L.adjust_drowsyness(current_cycle)
+		L.adjust_drowsiness(current_cycle * 2 SECONDS)
 	..()
 
 /datum/reagent/consumable/rootbeer/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -545,7 +545,7 @@
 /datum/reagent/consumable/grey_bull/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.set_timed_status_effect(40 SECONDS * REM * delta_time, /datum/status_effect/jitter, only_if_higher = TRUE)
 	M.adjust_timed_status_effect(2 SECONDS * REM * delta_time, /datum/status_effect/dizziness)
-	M.set_drowsyness(0)
+	M.remove_status_effect(/datum/status_effect/drowsiness)
 	M.AdjustSleeping(-40 * REM * delta_time)
 	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
 	..()
@@ -561,7 +561,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/spacemountainwind/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjust_drowsyness(-7 * REM * delta_time)
+	M.adjust_drowsiness(-14 SECONDS * REM * delta_time)
 	M.AdjustSleeping(-20 * REM * delta_time)
 	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
 	M.set_timed_status_effect(10 SECONDS * REM * delta_time, /datum/status_effect/jitter, only_if_higher = TRUE)
@@ -579,7 +579,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/dr_gibb/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjust_drowsyness(-6 * REM * delta_time)
+	M.adjust_drowsiness(-12 SECONDS * REM * delta_time)
 	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
 	..()
 
@@ -672,7 +672,7 @@
 
 /datum/reagent/consumable/sodawater/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjust_timed_status_effect(-10 SECONDS * REM * delta_time, /datum/status_effect/dizziness)
-	M.adjust_drowsyness(-3 * REM * delta_time)
+	M.adjust_drowsiness(-6 SECONDS * REM * delta_time)
 	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
 	..()
 
@@ -688,7 +688,7 @@
 
 /datum/reagent/consumable/tonic/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjust_timed_status_effect(-10 SECONDS * REM * delta_time, /datum/status_effect/dizziness)
-	M.adjust_drowsyness(-3 * REM * delta_time)
+	M.adjust_drowsiness(-6 SECONDS * REM * delta_time)
 	M.AdjustSleeping(-40 * REM * delta_time)
 	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
 	..()
@@ -708,7 +708,7 @@
 /datum/reagent/consumable/monkey_energy/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.set_timed_status_effect(80 SECONDS * REM * delta_time, /datum/status_effect/jitter, only_if_higher = TRUE)
 	M.adjust_timed_status_effect(2 SECONDS * REM * delta_time, /datum/status_effect/dizziness)
-	M.set_drowsyness(0)
+	M.remove_status_effect(/datum/status_effect/drowsiness)
 	M.AdjustSleeping(-40 * REM * delta_time)
 	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
 	..()
@@ -756,7 +756,7 @@
 
 /datum/reagent/consumable/soy_latte/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjust_timed_status_effect(-10 SECONDS * REM * delta_time, /datum/status_effect/dizziness)
-	M.adjust_drowsyness(-3 *REM * delta_time)
+	M.adjust_drowsiness(-6 SECONDS * REM * delta_time)
 	M.SetSleeping(0)
 	M.adjust_bodytemperature(5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, M.get_body_temp_normal())
 	M.set_timed_status_effect(10 SECONDS * REM * delta_time, /datum/status_effect/jitter, only_if_higher = TRUE)
@@ -779,7 +779,7 @@
 
 /datum/reagent/consumable/cafe_latte/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjust_timed_status_effect(-10 SECONDS * REM * delta_time, /datum/status_effect/dizziness)
-	M.adjust_drowsyness(-6 * REM * delta_time)
+	M.adjust_drowsiness(-12 SECONDS * REM * delta_time)
 	M.SetSleeping(0)
 	M.adjust_bodytemperature(5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, M.get_body_temp_normal())
 	M.set_timed_status_effect(10 SECONDS * REM * delta_time, /datum/status_effect/jitter, only_if_higher = TRUE)
@@ -1284,7 +1284,7 @@
 /datum/reagent/consumable/cucumberjuice
 	name = "Cucumber Juice"
 	description = "Ordinary cucumber juice, nothing from the fantasy world."
-	color = "#6cd87a" 
+	color = "#6cd87a"
 	taste_description = "light cucumber"
 	glass_icon_state = "glass_cucumber"
 	glass_name = "glass of cucumber juice"
@@ -1295,7 +1295,7 @@
 /datum/reagent/consumable/cucumberlemonade
 	name = "Cucumber Lemonade"
 	description = "Cucumber juice, sugar and soda, what else is needed for happiness?"
-	color = "#6cd87a" 
+	color = "#6cd87a"
 	taste_description = "citrus soda with cucumber"
 	glass_icon_state = "cucumber_lemonade"
 	glass_name = "cucumber lemonade"

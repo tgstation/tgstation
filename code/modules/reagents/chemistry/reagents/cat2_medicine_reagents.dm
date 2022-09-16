@@ -131,7 +131,7 @@
 /datum/reagent/medicine/c2/probital/overdose_process(mob/living/M, delta_time, times_fired)
 	M.adjustStaminaLoss(3 * REM * delta_time, 0)
 	if(M.getStaminaLoss() >= 80)
-		M.adjust_drowsyness(1 * REM * delta_time)
+		M.adjust_drowsiness(2 SECONDS * REM * delta_time)
 	if(M.getStaminaLoss() >= 100)
 		to_chat(M,span_warning("You feel more tired than you usually do, perhaps if you rest your eyes for a bit..."))
 		M.adjustStaminaLoss(-100, TRUE)
@@ -266,16 +266,16 @@
 	ph = 5.6
 	inverse_chem = /datum/reagent/inverse/healing/tirimol
 	inverse_chem_val = 0.4
-	/// A cooldown for spacing bursts of stamina damage
-	COOLDOWN_DECLARE(drowsycd)
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+	/// A cooldown for spacing bursts of stamina damage
+	COOLDOWN_DECLARE(drowsycd)
 
 /datum/reagent/medicine/c2/tirimol/on_mob_life(mob/living/carbon/human/M, delta_time, times_fired)
 	M.adjustOxyLoss(-3 * REM * delta_time * normalise_creation_purity())
 	M.adjustStaminaLoss(2 * REM * delta_time)
 	if(drowsycd && COOLDOWN_FINISHED(src, drowsycd))
-		M.adjust_drowsyness(10)
+		M.adjust_drowsiness(20 SECONDS)
 		COOLDOWN_START(src, drowsycd, 45 SECONDS)
 	else if(!drowsycd)
 		COOLDOWN_START(src, drowsycd, 15 SECONDS)

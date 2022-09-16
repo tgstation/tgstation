@@ -38,3 +38,8 @@
 #define STASIS_CHEMICAL_EFFECT "stasis_chemical"
 
 #define STASIS_SHAPECHANGE_EFFECT "stasis_shapechange"
+
+#define adjust_drowsiness(duration) adjust_timed_status_effect(duration, /datum/status_effect/drowsiness)
+#define adjust_drowsiness_up_to(duration, up_to) adjust_timed_status_effect(duration, /datum/status_effect/drowsiness, up_to)
+#define set_drowsiness(duration) set_timed_status_effect(duration, /datum/status_effect/drowsiness)
+#define set_drowsiness_if_lower(duration) set_timed_status_effect(duration, /datum/status_effect/drowsiness, TRUE)

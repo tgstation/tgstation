@@ -257,7 +257,7 @@
 	switch(current_cycle)
 		if(1 to 5)
 			M.adjust_timed_status_effect(1 SECONDS * REM * delta_time, /datum/status_effect/confusion)
-			M.adjust_drowsyness(1 * REM * delta_time)
+			M.adjust_drowsiness(2 SECONDS * REM * delta_time)
 			M.adjust_timed_status_effect(6 SECONDS * REM * delta_time, /datum/status_effect/speech/slurring/drunk)
 		if(5 to 8)
 			M.adjustStaminaLoss(40 * REM * delta_time, 0)
@@ -450,7 +450,7 @@
 	switch(current_cycle)
 		if(1 to 10)
 			M.adjust_timed_status_effect(2 SECONDS * REM * normalise_creation_purity() * delta_time, /datum/status_effect/confusion)
-			M.adjust_drowsyness(2 * REM * normalise_creation_purity() * delta_time)
+			M.adjust_drowsiness(4 SECONDS * REM * normalise_creation_purity() * delta_time)
 		if(10 to 50)
 			M.Sleeping(40 * REM * normalise_creation_purity() * delta_time)
 			. = TRUE

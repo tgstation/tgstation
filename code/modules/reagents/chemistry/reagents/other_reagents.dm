@@ -369,7 +369,7 @@
 
 /datum/reagent/fuel/unholywater/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(IS_CULTIST(M))
-		M.adjust_drowsyness(-5 * REM * delta_time)
+		M.adjust_drowsiness(-10 SECONDS * REM * delta_time)
 		M.AdjustAllImmobility(-40 * REM * delta_time)
 		M.adjustStaminaLoss(-10 * REM * delta_time, 0)
 		M.adjustToxLoss(-2 * REM * delta_time, 0)
@@ -1266,7 +1266,7 @@
 	if(DT_PROB(55, delta_time))
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2)
 	if(DT_PROB(30, delta_time))
-		M.adjust_drowsyness(3)
+		M.adjust_drowsiness(6 SECONDS)
 	if(DT_PROB(5, delta_time))
 		M.emote("drool")
 	..()
@@ -1417,10 +1417,12 @@
 /datum/reagent/nitrous_oxide/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
 	if(methods & VAPOR)
-		exposed_mob.adjust_drowsyness(max(round(reac_volume, 1), 2))
+		// apply 2 seconds of drowsiness per unit applied, with a min duration of 4 seconds
+		var/drowsiness_to_apply = max(round(reac_volume, 1) * 2 SECONDS, 4 SECONDS)
+		exposed_mob.adjust_drowsiness(drowsiness_to_apply)
 
 /datum/reagent/nitrous_oxide/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjust_drowsyness(2 * REM * delta_time)
+	M.adjust_drowsiness(4 SECONDS * REM * delta_time)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.blood_volume = max(H.blood_volume - (10 * REM * delta_time), 0)
@@ -2642,7 +2644,7 @@
 
 /datum/reagent/eldritch/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
 	if(IS_HERETIC(drinker))
-		drinker.adjust_drowsyness(-5 * REM * delta_time)
+		drinker.adjust_drowsiness(-10 * REM * delta_time)
 		drinker.AdjustAllImmobility(-40 * REM * delta_time)
 		drinker.adjustStaminaLoss(-10 * REM * delta_time, FALSE)
 		drinker.adjustToxLoss(-2 * REM * delta_time, FALSE, forced = TRUE)
