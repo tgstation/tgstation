@@ -24,18 +24,15 @@
 
 /// Test to verify COMSIG_MOB_SAY is sent the exact same list as the message args, as they're operated on
 /datum/unit_test/say_signal
-	var/test_message = "Make sure the say signal gets the arglist say is past, no copies!"
 
 /datum/unit_test/say_signal/Run()
 	var/mob/living/dummy = allocate(/mob/living)
 
 	RegisterSignal(dummy, COMSIG_MOB_SAY, .proc/check_say)
-	dummy.say(test_message)
+	dummy.say("Make sure the say signal gets the arglist say is past, no copies!")
 
 /datum/unit_test/say_signal/proc/check_say(mob/living/source, list/say_args)
 	SIGNAL_HANDLER
-
-	TEST_ASSERT_EQUAL(say_args[SPEECH_MESSAGE], test_message, "Say signal's first arg of the arglist wasn't the expected message.")
 
 	TEST_ASSERT_EQUAL(REF(say_args), source.last_say_args_ref, "Say signal didn't get the argslist of say as a reference. \
 		This is required for the signal to function in most places - do not create a new instance of a list when passing it in to the signal.")
