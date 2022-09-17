@@ -128,7 +128,6 @@
 			if(QDELETED(B))
 				continue
 			if(!B.owner)
-				message_admins("BEAM WITHOUT AN OWNER. SOMETHING IS TERRIBLY WRONG, YELL AT A CODER")
 				stack_trace("beam without an owner! [B]")
 				continue
 			if(B.owner.origin != current_beam.origin)
