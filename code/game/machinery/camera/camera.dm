@@ -91,9 +91,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		assembly_ref = WEAKREF(assembly)
 	GLOB.cameranet.cameras += src
 	GLOB.cameranet.addCamera(src)
-	if (isturf(loc))
-		myarea = get_area(src)
-		LAZYADD(myarea.cameras, src)
+	myarea = get_room_area()
+
+	LAZYADD(myarea.cameras, src)
 
 	if(mapload && is_station_level(z) && prob(3) && !start_active)
 		toggle_cam()
