@@ -53,7 +53,13 @@
 
 	send2otherserver(station_name(), null, "incoming_exile", youre_on_your_way_to, exile_info)
 	//exilee_client << link(youre_on_your_way_to)
+	testing("Putting [exilee] in new player body")
+	var/mob/dead/new_player/NP = new()
+	NP.ckey = exilee.ckey
+	testing("[NP] is now [NP.ckey]")
 	exilee.dust()
+
+	test_exile()
 	qdel(src)
 
 /// If the exilee breaks their course before hitting the z-level, they saved themselves

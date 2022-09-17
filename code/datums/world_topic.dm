@@ -269,10 +269,6 @@
 	var/datum/refugee/new_refugee = new(exp_ckey, force_name, launching_dir)
 	GLOB.refugees += new_refugee
 
-	var/mob/dead/new_player/NP = new()
-	NP.ckey = exp_ckey
-	qdel(exilee)
-
 	testing("before exec loop")
 	if(SSticker.current_state >= GAME_STATE_PLAYING)
 		for(var/datum/refugee/possible_match as anything in GLOB.refugees)
