@@ -3,7 +3,7 @@
 	desc = "The finest in spring-loaded piston toy technology, now on a space station near you."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "mass_driver"
-	use_power = 0
+	active_power_usage = 500
 	var/power = 4
 	var/code = 1
 	var/id = 1
@@ -45,11 +45,9 @@
 			if(O_limit >= 20)
 				audible_message("<span class='notice'>[src] lets out a screech, it doesn't seem to be able to handle the load.</span>")
 				break
-			use_power(500)
 			if(isliving(O))
 				var/mob/living/possible_exilee = O
 				if(possible_exilee.client)
-					testing("adding exile to [O]")
 					possible_exilee.AddComponent(/datum/component/exile, dir)
 			O.throw_at(target, drive_range * power, power)
 	flick("mass_driver1", src)
