@@ -41,7 +41,7 @@
 		span_notice("[user] completes the surgery on [target]'s eyes."))
 	display_pain(target, "Your vision blurs, but it seems like you can see a little better now!")
 	target.cure_blind(EYE_DAMAGE)
-	target.remove_status_effect(/datum/status_effect/temporary_blindless)
+	target.remove_status_effect(/datum/status_effect/temporary_blindness)
 	target.cure_nearsighted(EYE_DAMAGE)
 	target.set_eye_blur_if_lower(70 SECONDS) //this will fix itself slowly.
 	target_eyes.setOrganDamage(0)

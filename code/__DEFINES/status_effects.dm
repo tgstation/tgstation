@@ -54,12 +54,14 @@
 #define set_temp_blindness(duration) set_timed_status_effect(duration, /datum/status_effect/temporary_blindness)
 #define set_temp_blindness_if_lower(duration) set_timed_status_effect(duration, /datum/status_effect/temporary_blindness, TRUE)
 
-#define is_blind(mob) mob.has_status_effect(/datum/status_effect/grouped/visually_impaired/blindness)
+#define is_blind(mob) (isliving(mob) ? mob:has_status_effect(/datum/status_effect/grouped/visually_impaired/blindness) : FALSE)
+
+
 #define is_blind_from(source) has_status_effect_from_source(/datum/status_effect/grouped/visually_impaired/blindness, source)
 #define become_blind(source) apply_status_effect(/datum/status_effect/grouped/visually_impaired/blindness, source)
 #define cure_blind(source) remove_status_effect(/datum/status_effect/grouped/visually_impaired/blindness, source)
 
-#define is_nearsighted(mob) has_status_effect(/datum/status_effect/grouped/visually_impaired/nearsighted)
+#define is_nearsighted(mob) (isliving(mob) ? mob:has_status_effect(/datum/status_effect/grouped/visually_impaired/nearsighted) : FALSE)
 #define is_nearsighted_currently(mob) (!HAS_TRAIT(mob, TRAIT_NEARSIGHTED_CORRECTED) && mob.has_status_effect(/datum/status_effect/grouped/visually_impaired/nearsighted))
 #define is_nearsighted_from(source) has_status_effect_from_source(/datum/status_effect/grouped/visually_impaired/nearsighted, source)
 #define become_nearsighted(source) apply_status_effect(/datum/status_effect/grouped/visually_impaired/nearsighted, source)

@@ -40,7 +40,7 @@
 	if(!.)
 		return
 	var/mob/living/carbon/ill_mob = source_disease.affected_mob
-	var/obj/item/organ/internal/eyes/eyes = source_disease.getorganslot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/internal/eyes/eyes = ill_mob.getorganslot(ORGAN_SLOT_EYES)
 	if(!eyes)
 		return // can't do much
 
@@ -72,4 +72,4 @@
 					eyes.applyOrganDamage(eyes.maxHealth)
 
 			else
-				to_chat(M, span_userdanger("Your eyes burn horrifically!"))
+				to_chat(ill_mob, span_userdanger("Your eyes burn horrifically!"))

@@ -91,7 +91,7 @@
 
 /// This status effect handles applying a temporary blind to the mob.
 /datum/status_effect/temporary_blindness
-	id = "temporary_blindless"
+	id = "temporary_blindness"
 	tick_interval = 2 SECONDS
 	alert_type = null
 

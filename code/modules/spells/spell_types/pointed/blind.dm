@@ -28,7 +28,7 @@
 		return FALSE
 
 	var/mob/living/carbon/human/human_target = cast_on
-	return !human_target.is_blind
+	return !is_blind(human_target)
 
 /datum/action/cooldown/spell/pointed/blind/cast(mob/living/carbon/human/cast_on)
 	. = ..()
@@ -38,6 +38,6 @@
 		return FALSE
 
 	to_chat(cast_on, span_warning("Your eyes cry out in pain!"))
-	cast_on.adjust_temp_blindness(eye_blind_amount)
+	cast_on.adjust_temp_blindness(eye_blind_duration)
 	cast_on.set_eye_blur_if_lower(eye_blur_duration)
 	return TRUE

@@ -91,8 +91,8 @@
 		human_owner.update_body()
 	eye_owner.cure_blind(EYE_DAMAGE)
 	eye_owner.cure_nearsighted(EYE_DAMAGE)
-	remove_status_effect(/datum/status_effect/eye_blur)
-	remove_status_effect(/datum/status_effect/temporary_blindness)
+	eye_owner.remove_status_effect(/datum/status_effect/eye_blur)
+	eye_owner.remove_status_effect(/datum/status_effect/temporary_blindness)
 	eye_owner.clear_fullscreen(EYE_DAMAGE, 0)
 	eye_owner.update_sight()
 

@@ -53,9 +53,7 @@
 		REMOVE_TRAIT(src, TRAIT_NODROP, CLOTHING_TRAIT)
 
 	for(var/mob/living/carbon/human/human_in_range in view(local_user))
-		if(IS_HERETIC_OR_MONSTER(human_in_range))
-			continue
-		if(human_in_range.is_blind(src))
+		if(IS_HERETIC_OR_MONSTER(human_in_range) || is_blind(human_in_range))
 			continue
 
 		human_in_range.mob_mood.direct_sanity_drain(rand(-2, -20) * delta_time)
