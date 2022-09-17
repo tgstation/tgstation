@@ -5,7 +5,7 @@
 	///A list of turfs on which we make ourself transparent
 	var/list/watched_turfs
 	///Associate list, with client = trickery_image. Track which client is being tricked with which image
-	var/list/tricked_clients = list()
+	var/list/tricked_mobs = list()
 
 	///Which alpha do we animate towards?
 	var/target_alpha
@@ -57,25 +57,14 @@
 
 	var/mob/mob = entered
 
-	if(!mob.client || (mob.client in tricked_clients))
+	if(!mob.client)
+		RegisterSignal(mob, COMSIG_MOB_LOGIN, .proc/trick_mob)
 		return
 
-	var/image/user_overlay = new(parent)
-	user_overlay.loc = parent
-	user_overlay.override = TRUE
-	//Special plane so we can click through the overlay
-	user_overlay.plane = ABOVE_GAME_NO_MOUSE_PLANE
+	if(mob in tricked_mobs)
+		return
 
-	//These are inherited, but we already use the atom's loc so we end up at double the pixel offset
-	user_overlay.pixel_x = 0
-	user_overlay.pixel_y = 0
-
-	mob.client.images += user_overlay
-
-	animate(user_overlay, alpha = target_alpha, time = animation_time)
-
-	tricked_clients[mob.client] = user_overlay
-	RegisterSignal(mob.client, COMSIG_PARENT_QDELETING, .proc/on_client_disconnect)
+	trick_mob(mob)
 
 ///Remove the screen object and make us appear solid to the client again
 /datum/component/seethrough/proc/on_exited(atom/source, atom/movable/exited, direction)
@@ -87,6 +76,7 @@
 	var/mob/mob = exited
 
 	if(!mob.client)
+		UnregisterSignal(mob, COMSIG_MOB_LOGIN)
 		return
 
 	var/turf/moving_to = get_turf(exited)
@@ -94,14 +84,34 @@
 		return
 
 	//Check if we're being 'tricked'
-	if(mob.client in tricked_clients)
-		var/image/trickery_image = tricked_clients[mob.client]
+	if(mob in tricked_mobs)
+		var/image/trickery_image = tricked_mobs[mob]
 		animate(trickery_image, alpha = 255, time = animation_time)
-		tricked_clients.Remove(mob.client)
-		UnregisterSignal(mob.client, COMSIG_PARENT_QDELETING)
+		tricked_mobs.Remove(mob)
+		UnregisterSignal(mob, COMSIG_MOB_LOGOUT)
 
 		//after playing the fade-in animation, remove the screen obj
 		addtimer(CALLBACK(src, /datum/component/seethrough/proc/clear_image, trickery_image, mob.client), animation_time)
+
+///Apply the trickery image and animation
+/datum/component/seethrough/proc/trick_mob(mob/fool)
+	var/image/user_overlay = new(parent)
+	user_overlay.loc = parent
+	user_overlay.override = TRUE
+	//Special plane so we can click through the overlay
+	user_overlay.plane = ABOVE_GAME_NO_MOUSE_PLANE
+
+	//These are inherited, but we already use the atom's loc so we end up at double the pixel offset
+	user_overlay.pixel_x = 0
+	user_overlay.pixel_y = 0
+
+	fool.client.images += user_overlay
+
+	animate(user_overlay, alpha = target_alpha, time = animation_time)
+
+	tricked_mobs[fool] = user_overlay
+	RegisterSignal(fool, COMSIG_MOB_LOGOUT, .proc/on_client_disconnect)
+
 
 ///Unrout ourselves after we somehow moved, and start a timer so we can re-restablish our behind area after standing still for a bit
 /datum/component/seethrough/proc/dismantle_perimeter()
@@ -118,18 +128,20 @@
 
 ///Remove a screen image from a client
 /datum/component/seethrough/proc/clear_image(image/removee, client/remove_from)
-	remove_from.images -= removee
+	remove_from?.images -= removee //player could've logged out during the animation, so check just in case
 
 /datum/component/seethrough/proc/clear_all_images()
-	for(var/client/client in tricked_clients)
-		var/image/trickery_image = tricked_clients[client]
-		client.images -= trickery_image
-		UnregisterSignal(client, COMSIG_PARENT_QDELETING)
+	for(var/mob/fool in tricked_mobs)
+		var/image/trickery_image = tricked_mobs[fool]
+		fool.client?.images -= trickery_image
+		UnregisterSignal(fool, COMSIG_MOB_LOGOUT)
 
-	tricked_clients.Cut()
+	tricked_mobs.Cut()
 
-/datum/component/seethrough/proc/on_client_disconnect(client/source)
+///Image is removed when they log out because client gets deleted, so drop the mob reference
+/datum/component/seethrough/proc/on_client_disconnect(mob/fool)
 	SIGNAL_HANDLER
 
-	tricked_clients.Remove(source)
-	UnregisterSignal(source, COMSIG_PARENT_QDELETING)
+	tricked_mobs.Remove(fool)
+	UnregisterSignal(fool, COMSIG_MOB_LOGOUT)
+	RegisterSignal(fool, COMSIG_MOB_LOGIN, .proc/trick_mob)
