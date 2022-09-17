@@ -35,7 +35,7 @@
 		qdel(src)
 		return
 
-	to_chat(exilee, span_userdanger("Oh no! You've been shot into space and are flying towards another station!")
+	to_chat(exilee, span_userdanger("Oh no! You've been shot into space and are flying towards another station!"))
 	var/list/exile_info = list()
 	exile_info["expected_ckey"] = exilee.ckey
 	exile_info["name"] = exilee.real_name
