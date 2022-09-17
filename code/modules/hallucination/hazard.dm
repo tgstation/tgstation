@@ -35,7 +35,7 @@
 	. = ..()
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/atom_touched_holder,
-		COMSIG_ATOM_EXITED, .proc/atom_touched_holder,
+		COMSIG_ATOM_EXITED = .proc/atom_touched_holder,
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
