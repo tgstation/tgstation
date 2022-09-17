@@ -19,8 +19,8 @@
 	 * By default in byond if you define a proc on datums, that proc will exist on nearly every single type
 	 * from icons to images to atoms to mobs to objs to turfs to areas, it won't however, appear on client
 	 *
-	 * instead by default they act like their own independent type so while you can do istype(icon, /datum)
-	 * and have it return true, you can't do istype(client, /datum), it will always return false.
+	 * instead by default they act like their own independent type so while you can do isdatum(icon)
+	 * and have it return true, you can't do isdatum(client), it will always return false.
 	 *
 	 * This makes writing oo code hard, when you have to consider this extra special case
 	 *
@@ -50,6 +50,8 @@
 
 	///Used to cache this client's bans to save on DB queries
 	var/ban_cache = null
+	///If we are currently building this client's ban cache, this var stores the timeofday we started at
+	var/ban_cache_start = 0
 	///Contains the last message sent by this client - used to protect against copy-paste spamming.
 	var/last_message = ""
 	///contins a number of how many times a message identical to last_message was sent.
@@ -174,6 +176,11 @@
 
 	/// Messages currently seen by this client
 	var/list/seen_messages
+
+	//Hide top bars
+	var/fullscreen = FALSE
+	//Hide status bar (bottom left)
+	var/show_status_bar = TRUE
 
 	/// datum wrapper for client view
 	var/datum/view_data/view_size

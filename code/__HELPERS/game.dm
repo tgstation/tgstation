@@ -35,11 +35,11 @@
 
 		var/atom/object_to_check = processing_list[index]
 
-		if(istype(object_to_check, /obj/item/organ))
+		if(isorgan(object_to_check))
 			found_organ = object_to_check
 			found_organ.organ_flags ^= ORGAN_FROZEN
 
-		else if(istype(object_to_check, /mob/living/carbon))
+		else if(iscarbon(object_to_check))
 			var/mob/living/carbon/mob_to_check = object_to_check
 			for(var/organ in mob_to_check.internal_organs)
 				found_organ = organ
@@ -162,6 +162,14 @@
 /proc/show_candidate_poll_window(mob/candidate_mob, poll_time, question, list/candidates, ignore_category, time_passed, flashwindow = TRUE)
 	set waitfor = 0
 
+	// Universal opt-out for all players.
+	if ((!candidate_mob.client.prefs.read_preference(/datum/preference/toggle/ghost_roles)))
+		return
+
+	// Opt-out for admins whom are currently adminned.
+	if ((!candidate_mob.client.prefs.read_preference(/datum/preference/toggle/ghost_roles_as_admin)) && candidate_mob.client.holder)
+		return
+
 	SEND_SOUND(candidate_mob, 'sound/misc/notice2.ogg') //Alerting them to their consideration
 	if(flashwindow)
 		window_flash(candidate_mob.client)
@@ -205,8 +213,7 @@
 	if (!question)
 		question = "Would you like to be a special role?"
 	var/list/result = list()
-	for(var/candidate in group)
-		var/mob/candidate_mob = candidate
+	for(var/mob/candidate_mob as anything in group)
 		if(!candidate_mob.key || !candidate_mob.client || (ignore_category && GLOB.poll_ignore[ignore_category] && (candidate_mob.ckey in GLOB.poll_ignore[ignore_category])))
 			continue
 		if(be_special_flag)
@@ -238,10 +245,10 @@
  * Arguments:
  * * question - question to show players as part of poll
  * * jobban_type - Type of jobban to use to filter out potential candidates.
- * * be_special_flag - Unknown/needs further documentation.
+ * * be_special_flag - The required role that the player has to have enabled to see the prompt.
  * * poll_time - Length of time in deciseconds that the poll input box exists before closing.
  * * target_mob - The mob that is being polled for.
- * * ignore_category - Unknown/needs further documentation.
+ * * ignore_category -  The notification preference that hides the prompt.
  */
 /proc/poll_candidates_for_mob(question, jobban_type, be_special_flag = 0, poll_time = 30 SECONDS, mob/target_mob, ignore_category = null)
 	var/static/list/mob/currently_polling_mobs = list()
@@ -265,10 +272,10 @@
  * Arguments:
  * * question - question to show players as part of poll
  * * jobban_type - Type of jobban to use to filter out potential candidates.
- * * be_special_flag - Unknown/needs further documentation.
+ * * be_special_flag - The required role that the player has to have enabled to see the prompt.
  * * poll_time - Length of time in deciseconds that the poll input box exists before closing.
  * * mobs - The list of mobs being polled for. This list is mutated and invalid mobs are removed from it before the proc returns.
- * * ignore_category - Unknown/needs further documentation.
+ * * ignore_category - The notification preference that hides the prompt.
  */
 /proc/poll_candidates_for_mobs(question, jobban_type, be_special_flag = 0, poll_time = 30 SECONDS, list/mobs, ignore_category = null)
 	var/list/candidate_list = poll_ghost_candidates(question, jobban_type, be_special_flag, poll_time, ignore_category)
@@ -373,8 +380,12 @@
 
 	return pick(possible_loc)
 
+///Prevents power_failure message spam if a traitor purchases repeatedly.
+GLOBAL_VAR_INIT(power_failure_message_cooldown, 0)
+
 ///Disable power in the station APCs
 /proc/power_fail(duration_min, duration_max)
+	var/message_cooldown
 	for(var/obj/machinery/power/apc/current_apc as anything in GLOB.apcs_list)
 		if(!current_apc.cell || !SSmapping.level_trait(current_apc.z, ZTRAIT_STATION))
 			continue
@@ -382,7 +393,10 @@
 		if(GLOB.typecache_powerfailure_safe_areas[apc_area.type])
 			continue
 
-		current_apc.energy_fail(rand(duration_min,duration_max))
+		var/duration = rand(duration_min,duration_max)
+		message_cooldown = max(duration, message_cooldown)
+		current_apc.energy_fail(duration)
+	GLOB.power_failure_message_cooldown = world.time + message_cooldown
 
 /**
  * Sends a round tip to a target. If selected_tip is null, a random tip will be sent instead (5% chance of it being silly).
@@ -407,4 +421,4 @@
 		message = html_encode(message)
 	else
 		message = copytext(message, 2)
-	to_chat(target, span_purple("<span class='oocplain'><b>Tip of the round: </b>[message]</span>"))
+	to_chat(target, span_purple(examine_block("<span class='oocplain'><b>Tip of the round: </b>[message]</span>")))

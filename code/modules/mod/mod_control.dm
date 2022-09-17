@@ -247,31 +247,19 @@
 
 /obj/item/mod/control/dropped(mob/user)
 	. = ..()
-	if(wearer)
-		unset_wearer()
+	if(!wearer)
+		return
+	clean_up()
 
 /obj/item/mod/control/item_action_slot_check(slot)
 	if(slot == slot_flags)
 		return TRUE
 
-/obj/item/mod/control/Moved(atom/old_loc, movement_dir, forced = FALSE, list/old_locs)
+/obj/item/mod/control/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(!wearer || old_loc != wearer || loc == wearer)
 		return
-	if(active || activating)
-		for(var/obj/item/mod/module/module as anything in modules)
-			if(!module.active)
-				continue
-			module.on_deactivation(display_message = FALSE)
-		for(var/obj/item/part as anything in mod_parts)
-			seal_part(part, seal = FALSE)
-	for(var/obj/item/part as anything in mod_parts)
-		retract(null, part)
-	if(active)
-		finish_activation(on = FALSE)
-	unset_wearer()
-	var/mob/old_wearer = old_loc
-	old_wearer.temporarilyRemoveItemFromInventory(src)
+	clean_up()
 
 /obj/item/mod/control/allow_attack_hand_drop(mob/user)
 	if(user != wearer)
@@ -471,6 +459,22 @@
 	SEND_SIGNAL(src, COMSIG_MOD_WEARER_UNSET, wearer)
 	wearer = null
 
+/obj/item/mod/control/proc/clean_up()
+	if(active || activating)
+		for(var/obj/item/mod/module/module as anything in modules)
+			if(!module.active)
+				continue
+			module.on_deactivation(display_message = FALSE)
+		for(var/obj/item/part as anything in mod_parts)
+			seal_part(part, seal = FALSE)
+	for(var/obj/item/part as anything in mod_parts)
+		retract(null, part)
+	if(active)
+		finish_activation(on = FALSE)
+	var/mob/old_wearer = wearer
+	unset_wearer()
+	old_wearer.temporarilyRemoveItemFromInventory(src)
+
 /obj/item/mod/control/proc/on_species_gain(datum/source, datum/species/new_species, datum/species/old_species)
 	SIGNAL_HANDLER
 
@@ -545,13 +549,7 @@
 	new_module.on_install()
 	if(wearer)
 		new_module.on_equip()
-		var/datum/action/item_action/mod/pinned_module/action = new_module.pinned_to[REF(wearer)]
-		if(action)
-			action.Grant(wearer)
-	if(ai)
-		var/datum/action/item_action/mod/pinned_module/action = new_module.pinned_to[REF(ai)]
-		if(action)
-			action.Grant(ai)
+
 	if(user)
 		balloon_alert(user, "[new_module] added")
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
@@ -564,7 +562,7 @@
 		if(old_module.active)
 			old_module.on_deactivation(display_message = !deleting, deleting = deleting)
 	old_module.on_uninstall(deleting = deleting)
-	QDEL_LIST(old_module.pinned_to)
+	QDEL_LIST_ASSOC_VAL(old_module.pinned_to)
 	old_module.mod = null
 
 /obj/item/mod/control/proc/update_access(mob/user, obj/item/card/id/card)
@@ -694,7 +692,7 @@
 		return
 	atom_destruction(damage_flag)
 
-/obj/item/mod/control/proc/on_part_deletion(obj/item/part)
+/obj/item/mod/control/proc/on_part_deletion(obj/item/part) //the part doesnt count as being qdeleted, so our destroying does an infinite loop, fix later
 	SIGNAL_HANDLER
 
 	if(QDELETED(src))

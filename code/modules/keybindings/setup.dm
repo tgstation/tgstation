@@ -38,9 +38,4 @@
 			window.mouse_event_macro_set = FALSE
 			window.set_mouse_macro()
 
-	if(hotkeys)
-		winset(src, null, "input.focus=true input.background-color=[COLOR_INPUT_ENABLED]")
-	else
-		winset(src, null, "input.focus=true input.background-color=[COLOR_INPUT_DISABLED]")
-
 	update_special_keybinds()

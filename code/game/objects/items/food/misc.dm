@@ -213,6 +213,7 @@
 /obj/item/food/spidereggs
 	name = "spider eggs"
 	desc = "A cluster of juicy spider eggs. A great side dish for when you care not for your health."
+	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "spidereggs"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/toxin = 2)
 	tastes = list("cobwebs" = 1)
@@ -231,6 +232,7 @@
 /obj/item/food/spiderling
 	name = "spiderling"
 	desc = "It's slightly twitching in your hand. Ew..."
+	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "spiderling"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/toxin = 4)
 	tastes = list("cobwebs" = 1, "guts" = 2)
@@ -363,7 +365,7 @@
 /obj/item/food/lollipop
 	name = "lollipop"
 	desc = "A delicious lollipop. Makes for a great Valentine's present."
-	icon = 'icons/obj/lollipop.dmi'
+	icon = 'icons/obj/food/lollipop.dmi'
 	icon_state = "lollipop_stick"
 	inhand_icon_state = "lollipop_stick"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/iron = 10, /datum/reagent/consumable/sugar = 5, /datum/reagent/medicine/omnizine = 2) //Honk
@@ -378,7 +380,7 @@
 
 /obj/item/food/lollipop/Initialize(mapload)
 	. = ..()
-	head = mutable_appearance('icons/obj/lollipop.dmi', "lollipop_head")
+	head = mutable_appearance('icons/obj/food/lollipop.dmi', "lollipop_head")
 	change_head_color(rgb(rand(0, 255), rand(0, 255), rand(0, 255)))
 	AddElement(/datum/element/chewable)
 
@@ -438,7 +440,7 @@
 	desc = "A rubbery strip of gum. You don't feel like eating it is a good idea."
 	color = "#913D3D"
 	food_reagents = list(/datum/reagent/blood = 15)
-	tastes = list("hell" = 1)
+	tastes = list("hell" = 1, "people" = 1)
 	metabolization_amount = REAGENTS_METABOLISM
 	/// What the player hears from the bubblegum hallucination, and also says one of these when suiciding
 	var/static/list/hallucination_lines = list("I AM IMMORTAL.", "I SHALL TAKE YOUR WORLD.", "I SEE YOU.", "YOU CANNOT ESCAPE ME FOREVER.", "NOTHING CAN HOLD ME.")
@@ -483,7 +485,7 @@
 /obj/item/food/gumball
 	name = "gumball"
 	desc = "A colorful, sugary gumball."
-	icon = 'icons/obj/lollipop.dmi'
+	icon = 'icons/obj/food/lollipop.dmi'
 	icon_state = "gumball"
 	worn_icon_state = "bubblegum"
 	food_reagents = list(/datum/reagent/consumable/sugar = 5, /datum/reagent/medicine/sal_acid = 2, /datum/reagent/medicine/oxandrolone = 2) //Kek
@@ -867,3 +869,65 @@
 /obj/item/food/seaweedsheet/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/sushi/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 6)
+
+/obj/item/food/granola_bar
+	name = "granola bar"
+	desc = "A dried mixture of oats, nuts, fruits, and chocolate condensed into a chewy bar. Makes a great snack while space-hiking."
+	icon = 'icons/obj/food/food.dmi'
+	icon_state = "granola_bar"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/consumable/nutriment/protein = 4)
+	tastes = list("granola" = 1, "nuts" = 1, "chocolate" = 1, "raisin" = 1)
+	foodtypes = GRAIN | NUTS | FRUIT | SUGAR | DAIRY
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/onigiri
+	name = "onigiri"
+	desc = "A ball of cooked rice surrounding a filling formed into a triangular shape and wrapped in seaweed. Can be added fillings!"
+	icon = 'icons/obj/food/food.dmi'
+	icon_state = "onigiri"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 2)
+	tastes = list("rice" = 1, "dried seaweed" = 1)
+	foodtypes = VEGETABLES
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/onigiri/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/onigiri/empty, CUSTOM_INGREDIENT_ICON_NOCHANGE, max_ingredients = 4)
+
+// empty onigiri for custom onigiri
+/obj/item/food/onigiri/empty
+	name = "onigiri"
+	foodtypes = VEGETABLES
+	tastes = list()
+	icon_state = "onigiri"
+	desc = "A ball of cooked rice surrounding a filling formed into a triangular shape and wrapped in seaweed."
+
+/obj/item/food/mashed_potatoes
+	name = "mashed potatoes"
+	desc = "A creamy serving of mashed potatoes, a staple of many Thanksgiving dinners."
+	icon = 'icons/obj/food/food.dmi'
+	icon_state = "mashed_potatoes"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
+	tastes = list("creamy mashed potatoes" = 1, "garlic" = 1)
+	foodtypes = VEGETABLES | DAIRY
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/pacoca
+	name = "pacoca"
+	desc = "A traditional Brazilian treat made of ground peanuts, sugar, and salt compressed into a cylinder."
+	icon = 'icons/obj/food/food.dmi'
+	icon_state = "pacoca"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/nutriment/protein = 2)
+	tastes = list("peanuts" = 1, "sweetness" = 1)
+	foodtypes = NUTS | SUGAR
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/pickle
+	name = "pickle"
+	desc = "Slightly shriveled darkish cucumber. Smelling something sour, but incredibly inviting."
+	icon = 'icons/obj/food/food.dmi'
+	icon_state = "pickle"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/medicine/antihol = 2)
+	tastes = list("pickle" = 1, "spices" = 1, "salt water" = 2)
+	foodtypes = VEGETABLES
+	w_class = WEIGHT_CLASS_SMALL

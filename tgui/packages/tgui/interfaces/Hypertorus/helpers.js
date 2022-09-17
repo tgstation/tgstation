@@ -11,13 +11,11 @@ export const to_exponential_if_big = (value) => {
 };
 
 // Simple question mark icon with a hover tooltip
-export const HoverHelp = props => (
+export const HoverHelp = (props) => (
   <Tooltip content={props.content}>
     <Icon name="question-circle" width="12px" mr="6px" />
   </Tooltip>
 );
 
 // When no hover help is available, but we want a placeholder for spacing
-export const HelpDummy = props => (
-  <Icon name="" width="12px" mr="6px" />
-);
+export const HelpDummy = (props) => <Icon name="" width="12px" mr="6px" />;

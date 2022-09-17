@@ -12,6 +12,8 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	var/target_amount = 0 //If they are focused on a particular number. Steal objectives have their own counter.
 	var/completed = FALSE //currently only used for custom objectives.
 	var/martyr_compatible = FALSE //If the objective is compatible with martyr objective, i.e. if you can still do it while dead.
+	///can this be granted by admins?
+	var/admin_grantable = FALSE
 
 /datum/objective/New(text)
 	if(text)
@@ -157,35 +159,38 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 					receiver.failed_special_equipment += equipment_path
 					receiver.try_give_equipment_fallback()
 
-/obj/effect/proc_holder/spell/self/special_equipment_fallback
+/datum/action/special_equipment_fallback
 	name = "Request Objective-specific Equipment"
 	desc = "Call down a supply pod containing the equipment required for specific objectives."
-	action_icon = 'icons/obj/device.dmi'
-	action_icon_state = "beacon"
-	charge_max = 0
-	clothes_req = FALSE
-	nonabstract_req = TRUE
-	phase_allowed = TRUE
-	antimagic_flags = NONE
-	invocation_type = INVOCATION_NONE
+	icon_icon = 'icons/obj/device.dmi'
+	button_icon_state = "beacon"
 
-/obj/effect/proc_holder/spell/self/special_equipment_fallback/cast(list/targets, mob/user)
-	var/datum/mind/mind = user.mind
-	if(!mind)
-		CRASH("[src] has no owner!")
-	if(mind.failed_special_equipment?.len)
+/datum/action/special_equipment_fallback/Trigger(trigger_flags)
+	. = ..()
+	if(!.)
+		return FALSE
+
+	var/datum/mind/our_mind = target
+	if(!istype(our_mind))
+		CRASH("[type] - [src] has an incorrect target!")
+	if(our_mind.current != owner)
+		CRASH("[type] - [src] was owned by a mob which was not the current of the target mind!")
+
+	if(LAZYLEN(our_mind.failed_special_equipment))
 		podspawn(list(
-			"target" = get_turf(user),
+			"target" = get_turf(owner),
 			"style" = STYLE_SYNDICATE,
-			"spawn" = mind.failed_special_equipment
+			"spawn" = our_mind.failed_special_equipment,
 		))
-		mind.failed_special_equipment = null
-	mind.RemoveSpell(src)
+		our_mind.failed_special_equipment = null
+	qdel(src)
+	return TRUE
 
 /datum/objective/assassinate
 	name = "assasinate"
-	var/target_role_type=FALSE
 	martyr_compatible = TRUE
+	admin_grantable = TRUE
+	var/target_role_type = FALSE
 
 
 /datum/objective/assassinate/check_completion()
@@ -203,8 +208,8 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 
 /datum/objective/mutiny
 	name = "mutiny"
-	var/target_role_type=FALSE
 	martyr_compatible = 1
+	var/target_role_type = FALSE
 
 
 /datum/objective/mutiny/check_completion()
@@ -222,8 +227,9 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 
 /datum/objective/maroon
 	name = "maroon"
-	var/target_role_type=FALSE
 	martyr_compatible = TRUE
+	admin_grantable = TRUE
+	var/target_role_type = FALSE
 
 
 /datum/objective/maroon/check_completion()
@@ -246,7 +252,8 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 
 /datum/objective/debrain
 	name = "debrain"
-	var/target_role_type=0
+	admin_grantable = TRUE
+	var/target_role_type = FALSE
 
 
 /datum/objective/debrain/check_completion()
@@ -277,6 +284,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/protect//The opposite of killing a dude.
 	name = "protect"
 	martyr_compatible = TRUE
+	admin_grantable = TRUE
 	var/target_role_type = FALSE
 	var/human_check = TRUE
 
@@ -301,10 +309,12 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/protect/nonhuman
 	name = "protect nonhuman"
 	human_check = FALSE
+	admin_grantable = FALSE
 
 /datum/objective/jailbreak
 	name = "jailbreak"
 	martyr_compatible = TRUE //why not?
+	admin_grantable = TRUE
 	var/target_role_type
 
 
@@ -340,6 +350,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	team_explanation_text = "Hijack the emergency shuttle by hacking its navigational protocols through the control console (alt click emergency shuttle console). Leave no team member behind."
 	martyr_compatible = FALSE //Technically you won't get both anyway.
 	/// Overrides the hijack speed of any antagonist datum it is on ONLY, no other datums are impacted.
+	admin_grantable = TRUE
 	var/hijack_speed_override = 1
 
 /datum/objective/hijack/check_completion() // Requires all owners to escape.
@@ -429,6 +440,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	name = "escape"
 	explanation_text = "Escape on the shuttle or an escape pod alive and without being in custody."
 	team_explanation_text = "Have all members of your team escape on a shuttle or pod alive, without being in custody."
+	admin_grantable = TRUE
 
 /datum/objective/escape/check_completion()
 	// Require all owners escape safely.
@@ -481,6 +493,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/survive
 	name = "survive"
 	explanation_text = "Stay alive until the end."
+	admin_grantable = TRUE
 
 /datum/objective/survive/check_completion()
 	var/list/datum/mind/owners = get_owners()
@@ -492,11 +505,12 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/survive/malf //Like survive, but for Malf AIs
 	name = "survive AI"
 	explanation_text = "Prevent your own deactivation."
+	admin_grantable = FALSE
 
 /datum/objective/survive/malf/check_completion()
 	var/list/datum/mind/owners = get_owners()
 	for(var/datum/mind/mindobj in owners)
-		if(!istype(mindobj, /mob/living/silicon/robot) && !considered_alive(mindobj, FALSE)) //Shells (and normal borgs for that matter) are considered alive for Malf
+		if(!iscyborg(mindobj) && !considered_alive(mindobj, FALSE)) //Shells (and normal borgs for that matter) are considered alive for Malf
 			return FALSE
 		return TRUE
 
@@ -516,6 +530,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/martyr
 	name = "martyr"
 	explanation_text = "Die a glorious death."
+	admin_grantable = TRUE
 
 /datum/objective/martyr/check_completion()
 	var/list/datum/mind/owners = get_owners()
@@ -530,6 +545,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	name = "nuclear"
 	explanation_text = "Destroy the station with a nuclear device."
 	martyr_compatible = TRUE
+	admin_grantable = TRUE
 
 /datum/objective/nuclear/check_completion()
 	if(GLOB.station_was_nuked)
@@ -539,9 +555,10 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 GLOBAL_LIST_EMPTY(possible_items)
 /datum/objective/steal
 	name = "steal"
+	martyr_compatible = FALSE
+	admin_grantable = TRUE
 	var/datum/objective_item/targetinfo = null //Save the chosen item datum so we can access it later.
 	var/obj/item/steal_target = null //Needed for custom objectives (they're just items, not datums).
-	martyr_compatible = FALSE
 
 /datum/objective/steal/get_target()
 	return steal_target
@@ -640,6 +657,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 /datum/objective/capture
 	name = "capture"
+	admin_grantable = TRUE
 
 /datum/objective/capture/proc/gen_amount_goal()
 	target_amount = rand(5,10)
@@ -667,7 +685,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 			continue
 		captured_amount+=1
 	for(var/mob/living/carbon/alien/humanoid/M in A)//Aliens are worth twice as much as humans.
-		if(istype(M, /mob/living/carbon/alien/humanoid/royal/queen))//Queens are worth three times as much as humans.
+		if(isalienqueen(M))//Queens are worth three times as much as humans.
 			if(M.stat == DEAD)
 				captured_amount+=1.5
 			else
@@ -707,6 +725,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 /datum/objective/absorb
 	name = "absorb"
+	admin_grantable = TRUE
 
 /datum/objective/absorb/proc/gen_amount_goal(lowbound = 4, highbound = 6)
 	target_amount = rand (lowbound,highbound)
@@ -843,10 +862,14 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		if(!isliving(M.current))
 			continue
 		var/list/all_items = M.current.get_all_contents() //this should get things in cheesewheels, books, etc.
-		for(var/obj/I in all_items) //Check for wanted items
-			if(is_type_in_typecache(I, wanted_items))
-				stolen_count++
+		for(var/obj/current_item in all_items) //Check for wanted items
+			if(is_type_in_typecache(current_item, wanted_items))
+				if(check_if_valid_item(current_item))
+					stolen_count++
 	return stolen_count >= amount
+
+/datum/objective/steal_n_of_type/proc/check_if_valid_item(obj/item/current_item)
+	return TRUE
 
 /datum/objective/steal_n_of_type/summon_guns
 	name = "steal guns"
@@ -854,9 +877,9 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	wanted_items = list(/obj/item/gun)
 	amount = 5
 
-/datum/objective/steal_n_of_type/summon_guns/thief
-	explanation_text = "Steal at least 3 guns!"
-	amount = 3
+/datum/objective/steal_n_of_type/summon_guns/check_if_valid_item(obj/item/current_item)
+	var/obj/item/gun/gun = current_item
+	return !(gun.gun_flags & NOT_A_REAL_GUN)
 
 /datum/objective/steal_n_of_type/summon_magic
 	name = "steal magic"
@@ -875,12 +898,12 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		if(!isliving(M.current))
 			continue
 		var/list/all_items = M.current.get_all_contents() //this should get things in cheesewheels, books, etc.
-		for(var/obj/I in all_items) //Check for wanted items
-			if(istype(I, /obj/item/book/granter/spell))
-				var/obj/item/book/granter/spell/spellbook = I
-				if(!spellbook.used || !spellbook.oneuse) //if the book still has powers...
+		for(var/obj/thing in all_items) //Check for wanted items
+			if(istype(thing, /obj/item/book/granter/action/spell))
+				var/obj/item/book/granter/action/spell/spellbook = thing
+				if(spellbook.uses > 0) //if the book still has powers...
 					stolen_count++ //it counts. nice.
-			else if(is_type_in_typecache(I, wanted_items))
+			else if(is_type_in_typecache(thing, wanted_items))
 				stolen_count++
 	return stolen_count >= amount
 
@@ -914,6 +937,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 //Created by admin tools
 /datum/objective/custom
 	name = "custom"
+	admin_grantable = TRUE
 
 /datum/objective/custom/admin_edit(mob/admin)
 	var/expl = stripped_input(admin, "Custom objective:", "Objective", explanation_text)
@@ -924,28 +948,12 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 /proc/generate_admin_objective_list()
 	GLOB.admin_objective_list = list()
 
-	var/list/allowed_types = sort_list(list(
-		/datum/objective/assassinate,
-		/datum/objective/maroon,
-		/datum/objective/debrain,
-		/datum/objective/protect,
-		/datum/objective/jailbreak,
-		/datum/objective/jailbreak/detain,
-		/datum/objective/destroy,
-		/datum/objective/hijack,
-		/datum/objective/escape,
-		/datum/objective/survive,
-		/datum/objective/martyr,
-		/datum/objective/steal,
-		/datum/objective/nuclear,
-		/datum/objective/capture,
-		/datum/objective/absorb,
-		/datum/objective/custom
-	),/proc/cmp_typepaths_asc)
+	var/list/allowed_types = sort_list(subtypesof(/datum/objective), /proc/cmp_typepaths_asc)
 
-	for(var/T in allowed_types)
-		var/datum/objective/X = T
-		GLOB.admin_objective_list[initial(X.name)] = T
+	for(var/datum/objective/goal as anything in allowed_types)
+		if(!initial(goal.admin_grantable))
+			continue
+		GLOB.admin_objective_list[initial(goal.name)] = goal
 
 /datum/objective/contract
 	var/payout = 0

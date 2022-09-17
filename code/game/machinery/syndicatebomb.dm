@@ -2,7 +2,7 @@
 #define BUTTON_DELAY 50 //five seconds
 
 /obj/machinery/syndicatebomb
-	icon = 'icons/obj/assemblies.dmi'
+	icon = 'icons/obj/assemblies/assemblies.dmi'
 	name = "syndicate bomb"
 	icon_state = "syndicate-bomb"
 	desc = "A large and menacing device. Can be bolted down with a wrench."
@@ -207,7 +207,7 @@
 	notify_ghosts("\A [src] has been activated at [get_area(src)]!", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Bomb Planted")
 
 /obj/machinery/syndicatebomb/proc/settings(mob/user)
-	if(!user.canUseTopic(src, !issilicon(user)))
+	if(!user.canUseTopic(src, !issilicon(user)) || !user.can_interact_with(src))
 		return
 	var/new_timer = tgui_input_number(user, "Set the timer", "Countdown", timer_set, maximum_timer, minimum_timer)
 	if(!new_timer || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
@@ -216,8 +216,6 @@
 	loc.visible_message(span_notice("[icon2html(src, viewers(src))] timer set for [timer_set] seconds."))
 	var/choice = tgui_alert(user, "Would you like to start the countdown now?", "Bomb Timer", list("Yes","No"))
 	if(choice != "Yes")
-		return
-	if(!user.canUseTopic(src, !issilicon(user)))
 		return
 	if(active)
 		to_chat(user, span_warning("The bomb is already active!"))
@@ -230,6 +228,7 @@
 	if(payload && !istype(payload, /obj/item/bombcore/training))
 		log_bomber(user, "has primed a", src, "for detonation (Payload: [payload.name])")
 		payload.adminlog = "The [name] that [key_name(user)] had primed detonated!"
+		user.log_message("primed the [src]. (Payload: [payload.name])", LOG_GAME, log_globally = FALSE)
 
 ///Bomb Subtypes///
 
@@ -279,7 +278,7 @@
 /obj/item/bombcore
 	name = "bomb payload"
 	desc = "A powerful secondary explosive of syndicate design and unknown composition, it should be stable under normal conditions..."
-	icon = 'icons/obj/assemblies.dmi'
+	icon = 'icons/obj/assemblies/assemblies.dmi'
 	icon_state = "bombcore"
 	inhand_icon_state = "eshield0"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
@@ -442,12 +441,12 @@
 
 	var/list/reactants = list()
 
-	for(var/obj/item/reagent_containers/glass/G in beakers)
+	for(var/obj/item/reagent_containers/cup/G in beakers)
 		reactants += G.reagents
 
 	for(var/obj/item/slime_extract/S in beakers)
 		if(S.Uses)
-			for(var/obj/item/reagent_containers/glass/G in beakers)
+			for(var/obj/item/reagent_containers/cup/G in beakers)
 				G.reagents.trans_to(S, G.reagents.total_volume)
 
 			if(S && S.reagents && S.reagents.total_volume)
@@ -470,7 +469,7 @@
 			B.forceMove(drop_location())
 			beakers -= B
 		return
-	else if(istype(I, /obj/item/reagent_containers/glass/beaker) || istype(I, /obj/item/reagent_containers/glass/bottle))
+	else if(istype(I, /obj/item/reagent_containers/cup/beaker) || istype(I, /obj/item/reagent_containers/cup/bottle))
 		if(beakers.len < max_beakers)
 			if(!user.transferItemToLoc(I, src))
 				return
@@ -512,7 +511,7 @@
 		if(istype(G, /obj/item/grenade/chem_grenade/adv_release))
 			time_release += 50 // A typical bomb, using basic beakers, will explode over 2-4 seconds. Using two will make the reaction last for less time, but it will be more dangerous overall.
 
-		for(var/obj/item/reagent_containers/glass/B in G)
+		for(var/obj/item/reagent_containers/cup/B in G)
 			if(beakers.len < max_beakers)
 				beakers += B
 				B.forceMove(src)
@@ -541,11 +540,11 @@
 /obj/item/syndicatedetonator
 	name = "big red button"
 	desc = "Your standard issue bomb synchronizing button. Five second safety delay to prevent 'accidents'."
-	icon = 'icons/obj/assemblies.dmi'
+	icon = 'icons/obj/assemblies/assemblies.dmi'
 	icon_state = "bigred"
 	inhand_icon_state = "electronic"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	var/timer = 0
 	var/detonated = 0

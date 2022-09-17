@@ -157,7 +157,7 @@
 	"<span class='italics>You hear organic matter ripping and tearing!</span>")
 
 	qdel(blade)
-	target.update_inv_hands()
+	target.update_held_items()
 
 /datum/action/changeling/sting/extract_dna
 	name = "Extract DNA Sting"
@@ -204,7 +204,7 @@
 	log_combat(user, target, "stung", "blind sting")
 	to_chat(target, span_danger("Your eyes burn horrifically!"))
 	target.become_nearsighted(EYE_DAMAGE)
-	target.blind_eyes(20)
+	target.adjust_blindness(20)
 	target.blur_eyes(40)
 	return TRUE
 

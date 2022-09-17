@@ -50,3 +50,15 @@
 		return FALSE
 
 	return is_admin(preferences.parent)
+
+/// When enabled, prevents any and all ghost role pop-ups WHILE ADMINNED.
+/datum/preference/toggle/ghost_roles_as_admin
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	savefile_key = "ghost_roles_as_admin"
+	savefile_identifier = PREFERENCE_PLAYER
+
+/datum/preference/toggle/ghost_roles_as_admin/is_accessible(datum/preferences/preferences)
+	if (!..(preferences))
+		return FALSE
+
+	return is_admin(preferences.parent)

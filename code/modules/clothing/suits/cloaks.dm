@@ -62,7 +62,7 @@
 	. += span_notice("You notice a powerful aura about this cloak, suggesting that only the truly experienced may wield it.")
 
 /obj/item/clothing/neck/cloak/skill_reward/proc/check_wearable(mob/user)
-	return user.mind?.get_skill_level(associated_skill_path) < SKILL_LEVEL_LEGENDARY
+	return user.mind?.get_skill_level(associated_skill_path) >= SKILL_LEVEL_LEGENDARY
 
 /obj/item/clothing/neck/cloak/skill_reward/proc/unworthy_unequip(mob/user)
 	to_chat(user, span_warning("You feel completely and utterly unworthy to even touch \the [src]."))
@@ -72,12 +72,12 @@
 	return FALSE
 
 /obj/item/clothing/neck/cloak/skill_reward/equipped(mob/user, slot)
-	if (check_wearable(user))
+	if (!check_wearable(user))
 		unworthy_unequip(user)
 	return ..()
 
 /obj/item/clothing/neck/cloak/skill_reward/attack_hand(mob/user, list/modifiers)
-	if (check_wearable(user))
+	if (!check_wearable(user))
 		unworthy_unequip(user)
 	return ..()
 

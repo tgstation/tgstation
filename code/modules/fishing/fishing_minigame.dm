@@ -4,8 +4,6 @@
 #define BITING_PHASE 2
 // UI minigame phase
 #define MINIGAME_PHASE 3
-// Shortest time the minigame can be won
-#define MINIMUM_MINIGAME_DURATION 140
 
 /datum/fishing_challenge
 	/// When the ui minigame phase started
@@ -73,13 +71,13 @@
 		QDEL_NULL(lure)
 	. = ..()
 
-/datum/fishing_challenge/proc/start(mob/user)
+/datum/fishing_challenge/proc/start(mob/living/user)
 	/// Create fishing line visuals
 	fishing_line = used_rod.create_fishing_line(lure, target_py = 5)
 	// If fishing line breaks los / rod gets dropped / deleted
 	RegisterSignal(fishing_line, COMSIG_FISHING_LINE_SNAPPED, .proc/interrupt)
 	ADD_TRAIT(user, TRAIT_GONE_FISHING, REF(src))
-	SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "fishing", /datum/mood_event/fishing)
+	user.add_mood_event("fishing", /datum/mood_event/fishing)
 	RegisterSignal(user, COMSIG_MOB_CLICKON, .proc/handle_click)
 	start_baiting_phase()
 	to_chat(user, span_notice("You start fishing..."))
@@ -114,13 +112,6 @@
 		UnregisterSignal(used_rod, COMSIG_ITEM_DROPPED)
 		if(phase == MINIGAME_PHASE)
 			used_rod.consume_bait()
-	if(win)
-		// validate timings to have at least basic abuse prevention, though it's kinda impossible task here
-		// 140 from minimum completion bar fill time
-		var/minimum_time = start_time + MINIMUM_MINIGAME_DURATION
-		if(world.time < minimum_time)
-			win = FALSE
-			stack_trace("Fishing minimum time check failed")
 	if(win)
 		if(reward_path != FISHING_DUD)
 			playsound(lure, 'sound/effects/bigsplash.ogg', 100)
@@ -212,4 +203,3 @@
 #undef WAIT_PHASE
 #undef BITING_PHASE
 #undef MINIGAME_PHASE
-#undef MINIMUM_MINIGAME_DURATION

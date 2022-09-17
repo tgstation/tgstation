@@ -8,9 +8,13 @@
 	taste_description = "bitterness"
 	taste_mult = 1.2
 	harmful = TRUE
-	var/toxpwr = 1.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	var/silent_toxin = FALSE //won't produce a pain message when processed by liver/life() if there isn't another non-silent toxin present.
+	///How much damage this toxin does
+	var/toxpwr = 1.5
+	///won't produce a pain message when processed by liver/life() if there isn't another non-silent toxin present if true
+	var/silent_toxin = FALSE
+	///The afflicted must be above this health value in order for the toxin to deal damage
+	var/health_required = -100
 
 // Are you a bad enough dude to poison your own plants?
 /datum/reagent/toxin/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
@@ -19,7 +23,7 @@
 		mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 2))
 
 /datum/reagent/toxin/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(toxpwr)
+	if(toxpwr && M.health > health_required)
 		M.adjustToxLoss(toxpwr * REM * normalise_creation_purity() * delta_time, 0)
 		. = TRUE
 	..()
@@ -296,8 +300,7 @@
 	creation_purity = REAGENT_STANDARD_PURITY
 	purity = REAGENT_STANDARD_PURITY
 	ph = 11
-	impure_chem = /datum/reagent/impurity/rosenol
-	inverse_chem = null
+	inverse_chem = /datum/reagent/impurity/rosenol
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/hallucinogens = 18)  //7.2 per 2 seconds
 
@@ -440,7 +443,7 @@
 	toxpwr = 0
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 	ph = 11
-	impure_chem = /datum/reagent/impurity/chloralax
+	inverse_chem = /datum/reagent/impurity/chloralax
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/chloralhydrate/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -602,7 +605,7 @@
 	purity = REAGENT_STANDARD_PURITY
 	toxpwr = 1
 	ph = 2.0
-	impure_chem = /datum/reagent/impurity/methanol
+	inverse_chem = /datum/reagent/impurity/methanol
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/formaldehyde/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -662,7 +665,7 @@
 	if(M.toxloss <= 60)
 		M.adjustToxLoss(1 * REM * normalise_creation_purity() * delta_time, 0)
 	if(current_cycle >= 4)
-		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "smacked out", /datum/mood_event/narcotic_heavy, name)
+		M.add_mood_event("smacked out", /datum/mood_event/narcotic_heavy, name)
 	if(current_cycle >= 18)
 		M.Sleeping(40 * REM * normalise_creation_purity() * delta_time)
 	..()
@@ -858,7 +861,7 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	toxpwr = 0
 	ph = 6
-	impure_chem = /datum/reagent/impurity/ipecacide
+	inverse_chem = /datum/reagent/impurity/ipecacide
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/lipolicide/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -1208,4 +1211,19 @@
 	if(DT_PROB(0.5, delta_time))
 		to_chat(M, span_notice("Ah, what was that? You thought you heard something..."))
 		M.adjust_timed_status_effect(5 SECONDS, /datum/status_effect/confusion)
+	return ..()
+
+/datum/reagent/toxin/hunterspider
+	name = "Spider Toxin"
+	description = "A toxic chemical produced by spiders to weaken prey."
+	health_required = 40
+
+/datum/reagent/toxin/viperspider
+	name = "Viper Spider Toxin"
+	toxpwr = 5
+	description = "An extremely toxic chemical produced by the rare viper spider. Brings their prey to the brink of death and causes hallucinations."
+	health_required = 10
+
+/datum/reagent/toxin/viperspider/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	M.hallucination += 5 * REM * delta_time
 	return ..()

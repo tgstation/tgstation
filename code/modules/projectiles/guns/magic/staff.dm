@@ -6,6 +6,8 @@
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	item_flags = NEEDS_PERMIT | NO_MAT_REDEMPTION
+	/// Can non-magic folk use our staff?
+	/// If FALSE, only wizards or survivalists can use the staff to its full potential - If TRUE, anyone can
 	var/allow_intruder_use = FALSE
 
 /obj/item/gun/magic/staff/proc/is_wizard_or_friend(mob/user)
@@ -34,6 +36,10 @@
 	icon_state = "staffofchange"
 	inhand_icon_state = "staffofchange"
 	school = SCHOOL_TRANSMUTATION
+	/// If set, all wabbajacks this staff produces will be of this type, instead of random
+	var/preset_wabbajack_type
+	/// If set, all wabbajacks this staff produces will be of this changeflag, instead of only WABBAJACK
+	var/preset_wabbajack_changeflag
 
 /obj/item/gun/magic/staff/change/unrestricted
 	allow_intruder_use = TRUE
@@ -46,8 +52,11 @@
 
 /obj/item/gun/magic/staff/change/on_intruder_use(mob/living/user, atom/target)
 	user.dropItemToGround(src, TRUE)
-	var/randomize = pick("monkey","humanoid","animal")
-	var/mob/new_body = user.wabbajack(randomize)
+	var/wabbajack_into = preset_wabbajack_type || pick(WABBAJACK_MONKEY, WABBAJACK_HUMAN, WABBAJACK_ANIMAL)
+	var/mob/living/new_body = user.wabbajack(wabbajack_into, preset_wabbajack_changeflag)
+	if(!new_body)
+		return
+
 	balloon_alert(new_body, "wabbajack, wabbajack!")
 
 /obj/item/gun/magic/staff/animate
@@ -67,6 +76,7 @@
 	icon_state = "staffofhealing"
 	inhand_icon_state = "staffofhealing"
 	school = SCHOOL_RESTORATION
+	/// Our internal healbeam, used if an intruder (non-magic person) tries to use our staff
 	var/obj/item/gun/medbeam/healing_beam
 
 /obj/item/gun/magic/staff/healing/pickup(mob/user)
@@ -81,7 +91,7 @@
 	healing_beam.mounted = TRUE
 
 /obj/item/gun/magic/staff/healing/Destroy()
-	qdel(healing_beam)
+	QDEL_NULL(healing_beam)
 	return ..()
 
 /obj/item/gun/magic/staff/healing/unrestricted
@@ -111,18 +121,36 @@
 	recharge_rate = 2
 	no_den_usage = 1
 	school = SCHOOL_FORBIDDEN //this staff is evil. okay? it just is. look at this projectile type list. this is wrong.
-	var/allowed_projectile_types = list(/obj/projectile/magic/change, /obj/projectile/magic/animate, /obj/projectile/magic/resurrection,
-	/obj/projectile/magic/death, /obj/projectile/magic/teleport, /obj/projectile/magic/door, /obj/projectile/magic/fireball,
-	/obj/projectile/magic/spellblade, /obj/projectile/magic/arcane_barrage, /obj/projectile/magic/locker, /obj/projectile/magic/flying,
-	/obj/projectile/magic/bounty, /obj/projectile/magic/antimagic, /obj/projectile/magic/fetch, /obj/projectile/magic/sapping,
-	/obj/projectile/magic/necropotence, /obj/projectile/magic, /obj/projectile/temp/chill, /obj/projectile/magic/wipe)
+
+	/// Static list of all projectiles we can fire from our staff.
+	/// Doesn't contain all subtypes of magic projectiles, unlike what it looks like
+	var/static/list/allowed_projectile_types = list(
+		/obj/projectile/magic/animate,
+		/obj/projectile/magic/antimagic,
+		/obj/projectile/magic/arcane_barrage,
+		/obj/projectile/magic/bounty,
+		/obj/projectile/magic/change,
+		/obj/projectile/magic/death,
+		/obj/projectile/magic/door,
+		/obj/projectile/magic/fetch,
+		/obj/projectile/magic/fireball,
+		/obj/projectile/magic/flying,
+		/obj/projectile/magic/locker,
+		/obj/projectile/magic/necropotence,
+		/obj/projectile/magic/resurrection,
+		/obj/projectile/magic/sapping,
+		/obj/projectile/magic/spellblade,
+		/obj/projectile/magic/teleport,
+		/obj/projectile/magic/wipe,
+		/obj/projectile/temp/chill,
+	)
 
 /obj/item/gun/magic/staff/chaos/unrestricted
 	allow_intruder_use = TRUE
 
 /obj/item/gun/magic/staff/chaos/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	chambered.projectile_type = pick(allowed_projectile_types)
-	. = ..()
+	return ..()
 
 /obj/item/gun/magic/staff/chaos/on_intruder_use(mob/living/user)
 	if(!user.can_cast_magic()) // Don't let people with antimagic use the staff of chaos.
@@ -178,7 +206,12 @@
 
 /obj/item/gun/magic/staff/spellblade/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/butchering, 15, 125, 0, hitsound)
+	AddComponent(/datum/component/butchering, \
+		speed = 1.5 SECONDS, \
+		effectiveness = 125, \
+		bonus_modifier = 0, \
+		butcher_sound = hitsound, \
+	)
 
 /obj/item/gun/magic/staff/spellblade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(attack_type == PROJECTILE_ATTACK)

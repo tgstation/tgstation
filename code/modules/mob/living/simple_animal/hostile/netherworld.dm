@@ -20,13 +20,12 @@
 	minbodytemp = 0
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	var/phaser = TRUE
-	var/datum/action/innate/creature/teleport/teleport
 	var/is_phased = FALSE
 
 /mob/living/simple_animal/hostile/netherworld/Initialize(mapload)
 	. = ..()
 	if(phaser)
-		teleport = new
+		var/datum/action/innate/creature/teleport/teleport = new(src)
 		teleport.Grant(src)
 	add_cell_sample()
 
@@ -54,14 +53,13 @@
 		return
 	if(N.is_phased)
 		holder = N.loc
-		N.forceMove(T)
-		QDEL_NULL(holder)
+		holder.eject_jaunter()
+		holder = null
 		N.is_phased = FALSE
 		playsound(get_turf(N), 'sound/effects/podwoosh.ogg', 50, TRUE, -1)
 	else
 		playsound(get_turf(N), 'sound/effects/podwoosh.ogg', 50, TRUE, -1)
-		holder = new /obj/effect/dummy/phased_mob(T)
-		N.forceMove(holder)
+		holder = new /obj/effect/dummy/phased_mob(T, N)
 		N.is_phased = TRUE
 
 /mob/living/simple_animal/hostile/netherworld/proc/can_be_seen(turf/location)
@@ -101,8 +99,8 @@
 	attack_verb_simple = "lacerate"
 	speed = -0.5
 	var/static/list/migo_sounds
-	deathmessage = "wails as its form turns into a pulpy mush."
-	deathsound = 'sound/voice/hiss6.ogg'
+	death_message = "wails as its form turns into a pulpy mush."
+	death_sound = 'sound/voice/hiss6.ogg'
 	phaser = FALSE
 
 /mob/living/simple_animal/hostile/netherworld/migo/Initialize(mapload)
@@ -137,7 +135,7 @@
 	melee_damage_upper = 10
 	attack_verb_continuous = "punches"
 	attack_verb_simple = "punch"
-	deathmessage = "falls apart into a fine dust."
+	death_message = "falls apart into a fine dust."
 	phaser = FALSE
 
 /obj/structure/spawner/nether
@@ -147,7 +145,7 @@
 	max_integrity = 50
 	spawn_time = 600 //1 minute
 	max_mobs = 15
-	icon = 'icons/mob/nest.dmi'
+	icon = 'icons/mob/simple/lavaland/nest.dmi'
 	spawn_text = "crawls through"
 	mob_types = list(/mob/living/simple_animal/hostile/netherworld/migo, /mob/living/simple_animal/hostile/netherworld, /mob/living/simple_animal/hostile/netherworld/blankbody)
 	faction = list("nether")

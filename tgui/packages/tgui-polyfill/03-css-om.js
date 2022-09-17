@@ -9,6 +9,7 @@
  */
 
 /* eslint-disable */
+// prettier-ignore
 (function(Proto) {
   'use strict';
 

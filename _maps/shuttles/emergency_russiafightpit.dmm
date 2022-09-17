@@ -58,7 +58,7 @@
 "am" = (
 /obj/structure/table,
 /obj/item/storage/fancy/cigarettes/cigars/cohiba,
-/obj/item/reagent_containers/food/drinks/bottle/vodka/badminka{
+/obj/item/reagent_containers/cup/glass/bottle/vodka/badminka{
 	pixel_x = 5;
 	pixel_y = 18
 	},
@@ -312,7 +312,7 @@
 /area/shuttle/escape)
 "be" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/drinks/bottle/vodka,
+/obj/item/reagent_containers/cup/glass/bottle/vodka,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "bf" = (
@@ -407,7 +407,7 @@
 "bt" = (
 /obj/structure/extinguisher_cabinet/directional/east,
 /obj/structure/table,
-/obj/item/reagent_containers/food/drinks/bottle/vodka,
+/obj/item/reagent_containers/cup/glass/bottle/vodka,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "bu" = (
@@ -471,12 +471,12 @@
 /area/shuttle/escape)
 "bH" = (
 /obj/structure/closet,
-/obj/item/reagent_containers/food/drinks/bottle/beer,
-/obj/item/reagent_containers/food/drinks/bottle/beer,
-/obj/item/reagent_containers/food/drinks/bottle/beer,
-/obj/item/reagent_containers/food/drinks/bottle/beer,
-/obj/item/reagent_containers/food/drinks/bottle/beer,
-/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/item/reagent_containers/cup/glass/bottle/beer,
+/obj/item/reagent_containers/cup/glass/bottle/beer,
+/obj/item/reagent_containers/cup/glass/bottle/beer,
+/obj/item/reagent_containers/cup/glass/bottle/beer,
+/obj/item/reagent_containers/cup/glass/bottle/beer,
+/obj/item/reagent_containers/cup/glass/bottle/beer,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bI" = (

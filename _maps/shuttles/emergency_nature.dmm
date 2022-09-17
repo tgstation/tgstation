@@ -59,19 +59,11 @@
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/plating,
 /area/shuttle/escape)
-"cL" = (
-/obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 3
-	},
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
 "cR" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 5
 	},
-/obj/structure/sign/warning/no_smoking{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/no_smoking/directional/north,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "cZ" = (
@@ -82,13 +74,11 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "dj" = (
-/obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 3
-	},
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /obj/item/radio/intercom/directional/south,
+/obj/effect/turf_decal/trimline/green/filled/line,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "dP" = (
@@ -392,7 +382,7 @@
 /obj/item/food/soup/monkeysdelight{
 	pixel_y = 4
 	},
-/obj/item/reagent_containers/food/drinks/soda_cans/monkey_energy{
+/obj/item/reagent_containers/cup/soda_cans/monkey_energy{
 	pixel_x = 6;
 	pixel_y = 5
 	},
@@ -402,9 +392,7 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 9
 	},
-/obj/structure/sign/warning/no_smoking{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/no_smoking/directional/north,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "mq" = (
@@ -849,7 +837,7 @@
 /obj/item/food/monkeycube{
 	pixel_x = 5
 	},
-/obj/item/paicard{
+/obj/item/pai_card{
 	pixel_x = -6;
 	pixel_y = 1
 	},
@@ -897,7 +885,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Iw" = (
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/cup/bucket,
 /mob/living/simple_animal/hostile/retaliate/frog,
 /turf/open/floor/grass,
 /area/shuttle/escape)
@@ -962,12 +950,10 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "Kx" = (
-/obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 3
-	},
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
+/obj/effect/turf_decal/trimline/green/filled/line,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "KT" = (
@@ -1034,10 +1020,8 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "OS" = (
-/obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 3
-	},
 /obj/machinery/vending/coffee,
+/obj/effect/turf_decal/trimline/green/filled/line,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Ps" = (
@@ -1111,7 +1095,7 @@
 	dir = 6
 	},
 /obj/structure/table/glass,
-/obj/item/clothing/suit/monkeysuit{
+/obj/item/clothing/suit/costume/monkeysuit{
 	pixel_x = -2;
 	pixel_y = 4
 	},
@@ -1296,20 +1280,16 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "YW" = (
-/obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 3
-	},
 /obj/machinery/vending/wardrobe/hydro_wardrobe,
+/obj/effect/turf_decal/trimline/green/filled/line,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Zd" = (
-/obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 3
-	},
 /obj/machinery/light/directional/south,
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
+/obj/effect/turf_decal/trimline/green/filled/line,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Zg" = (
@@ -1680,7 +1660,7 @@ Bt
 ST
 wg
 PG
-cL
+Zt
 gj
 Um
 cm

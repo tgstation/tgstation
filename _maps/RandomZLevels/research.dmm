@@ -282,11 +282,8 @@
 /turf/closed/wall/r_wall,
 /area/awaymission/research/interior/gateway)
 "bm" = (
-/obj/machinery/power/apc/highcap/ten_k{
-	auto_name = 1;
-	dir = 4;
-	name = "Engineering APC";
-	pixel_x = 25
+/obj/machinery/power/apc/highcap/ten_k/directional/east{
+	name = "Engineering APC"
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -453,9 +450,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/engineering)
 "bP" = (
-/obj/structure/sign/warning/vacuum{
-	pixel_x = 32
-	},
+/obj/structure/sign/warning/vacuum/directional/east,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "bQ" = (
@@ -486,9 +481,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/gateway)
 "bV" = (
-/obj/structure/sign/warning/no_smoking/circle{
-	pixel_x = -32
-	},
+/obj/structure/sign/warning/no_smoking/circle/directional/west,
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -530,10 +523,8 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/gateway)
 "cb" = (
-/obj/machinery/power/apc/highcap/ten_k{
-	dir = 4;
-	name = "Gateway APC";
-	pixel_x = 25
+/obj/machinery/power/apc/highcap/ten_k/directional/east{
+	name = "Gateway APC"
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -709,10 +700,8 @@
 /turf/open/floor/plating,
 /area/awaymission/research/interior/gateway)
 "cS" = (
-/obj/machinery/power/apc/highcap/five_k{
-	dir = 4;
-	name = "Genetics APC";
-	pixel_x = 25
+/obj/machinery/power/apc/highcap/five_k/directional/east{
+	name = "Genetics APC"
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -1241,11 +1230,11 @@
 /area/awaymission/research/interior/cryo)
 "fd" = (
 /obj/structure/table/glass,
-/obj/item/reagent_containers/glass/beaker/cryoxadone{
+/obj/item/reagent_containers/cup/beaker/cryoxadone{
 	pixel_x = -7;
 	pixel_y = 1
 	},
-/obj/item/reagent_containers/glass/beaker/cryoxadone{
+/obj/item/reagent_containers/cup/beaker/cryoxadone{
 	pixel_x = -7;
 	pixel_y = 1
 	},
@@ -1253,11 +1242,11 @@
 /area/awaymission/research/interior/cryo)
 "fe" = (
 /obj/structure/table/glass,
-/obj/item/reagent_containers/glass/beaker/cryoxadone{
+/obj/item/reagent_containers/cup/beaker/cryoxadone{
 	pixel_x = 7;
 	pixel_y = 1
 	},
-/obj/item/reagent_containers/glass/beaker/cryoxadone{
+/obj/item/reagent_containers/cup/beaker/cryoxadone{
 	pixel_x = 7;
 	pixel_y = 1
 	},
@@ -1376,10 +1365,8 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/secure)
 "fy" = (
-/obj/machinery/power/apc/highcap/ten_k{
-	dir = 4;
-	name = "Vault APC";
-	pixel_x = 25
+/obj/machinery/power/apc/highcap/ten_k/directional/east{
+	name = "Vault APC"
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -2157,11 +2144,7 @@
 /area/awaymission/research/interior/secure)
 "io" = (
 /obj/structure/mirror/directional/west,
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12;
-	pixel_y = 2
-	},
+/obj/structure/sink/directional/east,
 /turf/open/floor/iron/freezer,
 /area/awaymission/research/interior/bathroom)
 "ip" = (
@@ -2245,9 +2228,7 @@
 /turf/closed/wall,
 /area/awaymission/research/interior/bathroom)
 "iN" = (
-/obj/machinery/shower{
-	dir = 8
-	},
+/obj/machinery/shower/directional/west,
 /turf/open/floor/iron/freezer,
 /area/awaymission/research/interior/bathroom)
 "iO" = (
@@ -2333,11 +2314,7 @@
 /turf/closed/wall,
 /area/awaymission/research/interior/medbay)
 "jg" = (
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12;
-	pixel_y = 2
-	},
+/obj/structure/sink/directional/east,
 /obj/effect/turf_decal/tile/blue,
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/medbay)
@@ -2652,10 +2629,8 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/medbay)
 "kp" = (
-/obj/machinery/power/apc/highcap/five_k{
-	dir = 4;
-	name = "Dorms APC";
-	pixel_x = 25
+/obj/machinery/power/apc/highcap/five_k/directional/east{
+	name = "Dorms APC"
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -3198,15 +3173,11 @@
 /area/awaymission/research/exterior)
 "mg" = (
 /obj/structure/closet/emcloset,
-/obj/structure/sign/warning/vacuum{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/vacuum/directional/north,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/escapepods)
 "mh" = (
-/obj/structure/sign/warning/pods{
-	pixel_x = -32
-	},
+/obj/structure/sign/warning/pods/directional/west,
 /obj/effect/turf_decal/tile/green,
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/escapepods)
@@ -3399,9 +3370,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/escapepods)
 "mI" = (
-/obj/structure/sign/warning/pods{
-	pixel_x = -32
-	},
+/obj/structure/sign/warning/pods/directional/west,
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
 	dir = 4
@@ -3497,9 +3466,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/escapepods)
 "mU" = (
-/obj/structure/sign/warning/vacuum{
-	pixel_y = -32
-	},
+/obj/structure/sign/warning/vacuum/directional/south,
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/green{
 	dir = 1
@@ -3520,9 +3487,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/escapepods)
 "mW" = (
-/obj/structure/sign/warning/vacuum{
-	pixel_y = -32
-	},
+/obj/structure/sign/warning/vacuum/directional/south,
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
@@ -4489,10 +4454,8 @@
 /turf/open/misc/asteroid,
 /area/awaymission/research/exterior)
 "Ta" = (
-/obj/machinery/power/apc/highcap/five_k{
-	dir = 4;
-	name = "Cryostatis APC";
-	pixel_x = 25
+/obj/machinery/power/apc/highcap/five_k/directional/east{
+	name = "Cryostasis APC"
 	},
 /obj/effect/turf_decal/tile/purple/fourcorners,
 /obj/structure/cable,

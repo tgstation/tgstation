@@ -21,9 +21,9 @@
 	var/on = FALSE
 
 
-/obj/item/clothing/head/hardhat/ComponentInitialize()
+/obj/item/clothing/head/hardhat/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob)
+	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HEAD)
 
 /obj/item/clothing/head/hardhat/attack_self(mob/living/user)
 	toggle_helmet_light(user)
@@ -135,6 +135,13 @@
 /obj/item/clothing/head/hardhat/weldhat/AltClick(mob/user)
 	if(user.canUseTopic(src, BE_CLOSE))
 		toggle_welding_screen(user)
+
+/obj/item/clothing/head/hardhat/weldhat/ui_action_click(mob/user, actiontype)
+	if(istype(actiontype, /datum/action/item_action/toggle_welding_screen))
+		toggle_welding_screen(user)
+		return
+
+	return ..()
 
 /obj/item/clothing/head/hardhat/weldhat/proc/toggle_welding_screen(mob/living/user)
 	if(weldingvisortoggle(user))

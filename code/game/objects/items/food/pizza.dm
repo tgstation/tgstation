@@ -1,6 +1,6 @@
 // Pizza (Whole)
 /obj/item/food/pizza
-	icon = 'icons/obj/food/pizzaspaghetti.dmi'
+	icon = 'icons/obj/food/pizza.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	max_volume = 80
 	food_reagents = list(/datum/reagent/consumable/nutriment = 28, /datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/tomatojuice = 6, /datum/reagent/consumable/nutriment/vitamin = 5)
@@ -23,20 +23,20 @@
 
 /obj/item/food/pizza/MakeProcessable()
 	if (slice_type)
-		AddElement(/datum/element/processable, TOOL_KNIFE, slice_type, 6, 30, table_required = TRUE)
-		AddElement(/datum/element/processable, TOOL_SAW, slice_type, 6, 45, table_required = TRUE)
-		AddElement(/datum/element/processable, TOOL_SCALPEL, slice_type, 6, 60, table_required = TRUE)
+		AddElement(/datum/element/processable, TOOL_KNIFE, slice_type, 6, 3 SECONDS, table_required = TRUE)
+		AddElement(/datum/element/processable, TOOL_SAW, slice_type, 6, 4.5 SECONDS, table_required = TRUE)
+		AddElement(/datum/element/processable, TOOL_SCALPEL, slice_type, 6, 6 SECONDS, table_required = TRUE)
 
 // Pizza Slice
 /obj/item/food/pizzaslice
-	icon = 'icons/obj/food/pizzaspaghetti.dmi'
+	icon = 'icons/obj/food/pizza.dmi'
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5)
 	foodtypes = GRAIN | DAIRY | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	decomp_type = /obj/item/food/pizzaslice/moldy
 
 /obj/item/food/pizzaslice/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_ROLLINGPIN, /obj/item/stack/sheet/pizza, 1, 10, table_required = TRUE)
+	AddElement(/datum/element/processable, TOOL_ROLLINGPIN, /obj/item/stack/sheet/pizza, 1, 1 SECONDS, table_required = TRUE)
 
 
 /obj/item/food/pizza/margherita

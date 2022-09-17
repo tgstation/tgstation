@@ -282,6 +282,19 @@
 	owner.say("Thank you for the fun ride, [clown.name]!")
 	clown_car.increment_thanks_counter()
 
+/datum/action/vehicle/ridden/wheelchair/bell
+	name = "Bell Ring"
+	desc = "Ring the bell."
+	icon_icon = 'icons/obj/bureaucracy.dmi'
+	button_icon_state = "desk_bell"
+	check_flags = AB_CHECK_CONSCIOUS
+	var/bell_cooldown
+
+/datum/action/vehicle/ridden/wheelchair/bell/Trigger(trigger_flags)
+	if(TIMER_COOLDOWN_CHECK(src, bell_cooldown))
+		return
+	TIMER_COOLDOWN_START(src, bell_cooldown, 0.5 SECONDS)
+	playsound(vehicle_ridden_target, 'sound/machines/microwave/microwave-end.ogg', 70)
 
 /datum/action/vehicle/ridden/scooter/skateboard/ollie
 	name = "Ollie"

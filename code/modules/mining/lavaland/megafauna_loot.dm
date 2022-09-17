@@ -20,33 +20,26 @@
 	var/dist = get_dist(user, target)
 	if(dist > HIEROPHANT_BLINK_RANGE)
 		user.balloon_alert(user, "destination out of range!")
-		return
+		return FALSE
 	var/turf/target_turf = get_turf(target)
 	if(target_turf.is_blocked_turf_ignore_climbable())
 		user.balloon_alert(user, "destination blocked!")
-		return
+		return FALSE
+
 	. = ..()
-	if(!current_charges)
-		var/obj/item/hierophant_club/club = src.target
-		if(istype(club))
-			club.blink_charged = FALSE
-			club.update_appearance()
+	var/obj/item/hierophant_club/club = target
+	if(!istype(club))
+		return
+
+	club.update_appearance(UPDATE_ICON_STATE)
 
 /datum/action/innate/dash/hierophant/charge()
+	. = ..()
 	var/obj/item/hierophant_club/club = target
-	if(istype(club))
-		club.blink_charged = TRUE
-		club.update_appearance()
-
-	current_charges = clamp(current_charges + 1, 0, max_charges)
-
-	if(recharge_sound)
-		playsound(dashing_item, recharge_sound, 50, TRUE)
-
-	if(!owner)
+	if(!istype(club))
 		return
-	owner.update_action_buttons_icon()
-	to_chat(owner, span_notice("[src] now has [current_charges]/[max_charges] charges."))
+
+	club.update_appearance(UPDATE_ICON_STATE)
 
 /obj/item/hierophant_club
 	name = "hierophant club"
@@ -74,20 +67,15 @@
 	var/datum/action/innate/dash/hierophant/blink
 	/// Whether the blink ability is activated. IF TRUE, left clicking a location will blink to it. If FALSE, this is disabled.
 	var/blink_activated = TRUE
-	/// Whether the blink is charged. Set and unset by the blink action. Used as part of setting the appropriate icon states.
-	var/blink_charged = TRUE
 
 /obj/item/hierophant_club/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
 	blink = new(src)
 
 /obj/item/hierophant_club/Destroy()
-	. = ..()
 	QDEL_NULL(blink)
-
-/obj/item/hierophant_club/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob)
+	return ..()
 
 /obj/item/hierophant_club/examine(mob/user)
 	. = ..()
@@ -120,7 +108,7 @@
 		blink.teleport(user, target)
 
 /obj/item/hierophant_club/update_icon_state()
-	icon_state = inhand_icon_state = "hierophant_club[blink_charged ? "_ready":""][(!QDELETED(beacon)) ? "":"_beacon"]"
+	icon_state = inhand_icon_state = "hierophant_club[blink?.current_charges > 0 ? "_ready":""][(!QDELETED(beacon)) ? "":"_beacon"]"
 	return ..()
 
 /obj/item/hierophant_club/ui_action_click(mob/user, action)
@@ -185,7 +173,7 @@
 			user.update_action_buttons_icon()
 			beacon.icon_state = "hierophant_tele_off"
 			return
-		user.log_message("teleported self from [AREACOORD(source)] to [beacon]", LOG_GAME)
+		user.log_message("teleported self from [AREACOORD(source)] to [beacon].", LOG_GAME)
 		new /obj/effect/temp_visual/hierophant/telegraph/teleport(T, user)
 		new /obj/effect/temp_visual/hierophant/telegraph/teleport(source, user)
 		for(var/t in RANGE_TURFS(1, T))
@@ -318,29 +306,25 @@
 /obj/item/clothing/head/hooded/hostile_environment/Initialize(mapload)
 	. = ..()
 	update_appearance()
-	AddComponent(/datum/component/butchering, 5, 150, null, null, null, TRUE, CALLBACK(src, .proc/consume))
+	AddComponent(/datum/component/butchering/wearable, \
+	speed = 0.5 SECONDS, \
+	effectiveness = 150, \
+	bonus_modifier = 0, \
+	butcher_sound = null, \
+	disabled = null, \
+	can_be_blunt = TRUE, \
+	butcher_callback = CALLBACK(src, .proc/consume), \
+	)
 	AddElement(/datum/element/radiation_protected_clothing)
 	AddComponent(/datum/component/gags_recolorable)
 
 /obj/item/clothing/head/hooded/hostile_environment/equipped(mob/user, slot, initial = FALSE)
 	. = ..()
-	RegisterSignal(user, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, .proc/butcher_target)
-	var/datum/component/butchering/butchering = GetComponent(/datum/component/butchering)
-	butchering.butchering_enabled = TRUE
 	to_chat(user, span_notice("You feel a bloodlust. You can now butcher corpses with your bare arms."))
 
 /obj/item/clothing/head/hooded/hostile_environment/dropped(mob/user, silent = FALSE)
 	. = ..()
-	UnregisterSignal(user, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
-	var/datum/component/butchering/butchering = GetComponent(/datum/component/butchering)
-	butchering.butchering_enabled = FALSE
 	to_chat(user, span_notice("You lose your bloodlust."))
-
-/obj/item/clothing/head/hooded/hostile_environment/proc/butcher_target(mob/user, atom/target, proximity)
-	SIGNAL_HANDLER
-	if(!isliving(target))
-		return
-	return SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, target, user)
 
 /obj/item/clothing/head/hooded/hostile_environment/proc/consume(mob/living/user, mob/living/butchered)
 	if(butchered.mob_biotypes & (MOB_ROBOTIC | MOB_SPIRIT))
@@ -642,7 +626,10 @@
 	spirits = list()
 	START_PROCESSING(SSobj, src)
 	SSpoints_of_interest.make_point_of_interest(src)
-	AddComponent(/datum/component/butchering, 150, 90)
+	AddComponent(/datum/component/butchering, \
+	speed = 15 SECONDS, \
+	effectiveness = 90, \
+	)
 
 /obj/item/melee/ghost_sword/Destroy()
 	for(var/mob/dead/observer/G in spirits)
@@ -721,7 +708,19 @@
 	switch(random)
 		if(1)
 			to_chat(user, span_danger("Your appearance morphs to that of a very small humanoid ash dragon! You get to look like a freak without the cool abilities."))
-			consumer.dna.features = list("mcolor" = "#A02720", "tail_lizard" = "Dark Tiger", "tail_human" = "None", "snout" = "Sharp", "horns" = "Curled", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "Long", "body_markings" = "Dark Tiger Body", "legs" = "Digitigrade Legs")
+			consumer.dna.features = list(
+				"mcolor" = "#A02720",
+				"tail_lizard" = "Dark Tiger",
+				"tail_human" = "None",
+				"snout" = "Sharp",
+				"horns" = "Curled",
+				"ears" = "None",
+				"wings" = "None",
+				"frills" = "None",
+				"spines" = "Long",
+				"body_markings" = "Dark Tiger Body",
+				"legs" = DIGITIGRADE_LEGS,
+			)
 			consumer.eye_color_left = "#FEE5A3"
 			consumer.eye_color_right = "#FEE5A3"
 			consumer.set_species(/datum/species/lizard)
@@ -730,9 +729,8 @@
 			consumer.set_species(/datum/species/skeleton)
 		if(3)
 			to_chat(user, span_danger("Power courses through you! You can now shift your form at will."))
-			if(user.mind)
-				var/obj/effect/proc_holder/spell/targeted/shapeshift/dragon/dragon_shapeshift = new
-				user.mind.AddSpell(dragon_shapeshift)
+			var/datum/action/cooldown/spell/shapeshift/dragon/dragon_shapeshift = new(user.mind || user)
+			dragon_shapeshift.Grant(user)
 		if(4)
 			to_chat(user, span_danger("You feel like you could walk straight through lava now."))
 			ADD_TRAIT(user, TRAIT_LAVA_IMMUNE, type)
@@ -746,7 +744,7 @@
 	icon_state = "lavastaff"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
-	icon = 'icons/obj/guns/magic.dmi'
+	icon = 'icons/obj/weapons/guns/magic.dmi'
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 18
@@ -775,7 +773,7 @@
 		var/turf/open/T = get_turf(target)
 		if(!istype(T))
 			return
-		if(!istype(T, /turf/open/lava))
+		if(!islava(T))
 			var/obj/effect/temp_visual/lavastaff/L = new /obj/effect/temp_visual/lavastaff(T)
 			L.alpha = 0
 			animate(L, alpha = 255, time = create_delay)
@@ -786,7 +784,7 @@
 				if(T.TerraformTurf(turf_type, flags = CHANGETURF_INHERIT_AIR))
 					user.visible_message(span_danger("[user] turns \the [old_name] into [transform_string]!"))
 					message_admins("[ADMIN_LOOKUPFLW(user)] fired the lava staff at [ADMIN_VERBOSEJMP(T)]")
-					log_game("[key_name(user)] fired the lava staff at [AREACOORD(T)].")
+					user.log_message("fired the lava staff at [AREACOORD(T)].", LOG_ATTACK)
 					timer = world.time + create_cooldown
 					playsound(T,'sound/magic/fireball.ogg', 200, TRUE)
 			else
@@ -937,7 +935,7 @@
 	name = "staff of storms"
 	desc = "An ancient staff retrieved from the remains of Legion. The wind stirs as you move it."
 	icon_state = "staffofstorms"
-	icon = 'icons/obj/guns/magic.dmi'
+	icon = 'icons/obj/weapons/guns/magic.dmi'
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	slot_flags = ITEM_SLOT_BACK
@@ -993,7 +991,7 @@
 	user.transform *= 1.2
 	animate(user, color = old_color, transform = old_transform, time = 1 SECONDS)
 	affected_weather.wind_down()
-	log_game("[user] ([key_name(user)]) has dispelled a storm at [AREACOORD(user_turf)]")
+	user.log_message("has dispelled a storm at [AREACOORD(user_turf)].", LOG_GAME)
 
 /obj/item/storm_staff/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
@@ -1025,7 +1023,7 @@
 	addtimer(CALLBACK(src, .proc/throw_thunderbolt, target_turf, power_boosted), 1.5 SECONDS)
 	thunder_charges--
 	addtimer(CALLBACK(src, .proc/recharge), thunder_charge_time)
-	log_game("[key_name(user)] fired the staff of storms at [AREACOORD(target_turf)].")
+	user.log_message("fired the staff of storms at [AREACOORD(target_turf)].", LOG_ATTACK)
 
 /obj/item/storm_staff/proc/recharge(mob/user)
 	thunder_charges = min(thunder_charges + 1, max_thunder_charges)

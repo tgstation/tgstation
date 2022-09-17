@@ -1,4 +1,4 @@
-/obj/item/reagent_containers/glass/maunamug
+/obj/item/reagent_containers/cup/maunamug
 	name = "mauna mug"
 	desc = "A drink served in a classy mug. Now with built-in heating!"
 	icon = 'icons/obj/mauna_mug.dmi'
@@ -12,14 +12,14 @@
 	var/open = FALSE
 	var/on = FALSE
 
-/obj/item/reagent_containers/glass/maunamug/Initialize(mapload, vol)
+/obj/item/reagent_containers/cup/maunamug/Initialize(mapload, vol)
 	. = ..()
 	cell = new /obj/item/stock_parts/cell(src)
 
-/obj/item/reagent_containers/glass/maunamug/get_cell()
+/obj/item/reagent_containers/cup/maunamug/get_cell()
 	return cell
 
-/obj/item/reagent_containers/glass/maunamug/examine(mob/user)
+/obj/item/reagent_containers/cup/maunamug/examine(mob/user)
 	. = ..()
 	. += span_notice("The status display reads: Current temperature: <b>[reagents.chem_temp]K</b> Current Charge:[cell ? "[cell.charge / cell.maxcharge * 100]%" : "No cell found"].")
 	if(open)
@@ -27,7 +27,7 @@
 	if(cell && cell.charge > 0)
 		. += span_notice("<b>Ctrl+Click</b> to toggle the power.")
 
-/obj/item/reagent_containers/glass/maunamug/process(delta_time)
+/obj/item/reagent_containers/cup/maunamug/process(delta_time)
 	..()
 	if(on && (!cell || cell.charge <= 0)) //Check if we ran out of power
 		change_power_status(FALSE)
@@ -44,13 +44,13 @@
 		audible_message(span_notice("The Mauna Mug lets out a happy beep and turns off!"))
 		playsound(src, 'sound/machines/chime.ogg', 50)
 
-/obj/item/reagent_containers/glass/maunamug/Destroy()
+/obj/item/reagent_containers/cup/maunamug/Destroy()
 	if(cell)
 		QDEL_NULL(cell)
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
 
-/obj/item/reagent_containers/glass/maunamug/CtrlClick(mob/living/user)
+/obj/item/reagent_containers/cup/maunamug/CtrlClick(mob/living/user)
 	if(on)
 		change_power_status(FALSE)
 	else
@@ -58,7 +58,7 @@
 			return FALSE //No power, so don't turn on
 		change_power_status(TRUE)
 
-/obj/item/reagent_containers/glass/maunamug/proc/change_power_status(status)
+/obj/item/reagent_containers/cup/maunamug/proc/change_power_status(status)
 	on = status
 	if(on)
 		START_PROCESSING(SSobj, src)
@@ -66,13 +66,13 @@
 		STOP_PROCESSING(SSobj, src)
 	update_appearance()
 
-/obj/item/reagent_containers/glass/maunamug/screwdriver_act(mob/living/user, obj/item/I)
+/obj/item/reagent_containers/cup/maunamug/screwdriver_act(mob/living/user, obj/item/I)
 	. = ..()
 	open = !open
 	to_chat(user, span_notice("You screw the battery case on [src] [open ? "open" : "closed"] ."))
 	update_appearance()
 
-/obj/item/reagent_containers/glass/maunamug/attackby(obj/item/I, mob/user, params)
+/obj/item/reagent_containers/cup/maunamug/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
 	if(!istype(I, /obj/item/stock_parts/cell))
 		return ..()
@@ -88,7 +88,7 @@
 	user.visible_message(span_notice("[user] inserts a power cell into [src]."), span_notice("You insert the power cell into [src]."))
 	update_appearance()
 
-/obj/item/reagent_containers/glass/maunamug/attack_hand(mob/living/user, list/modifiers)
+/obj/item/reagent_containers/cup/maunamug/attack_hand(mob/living/user, list/modifiers)
 	if(cell && open)
 		cell.update_appearance()
 		user.put_in_hands(cell)
@@ -99,14 +99,14 @@
 		return TRUE
 	return ..()
 
-/obj/item/reagent_containers/glass/maunamug/update_icon_state()
+/obj/item/reagent_containers/cup/maunamug/update_icon_state()
 	if(open)
 		icon_state = "[base_icon_state][cell ? null : "_no"]_bat"
 		return ..()
 	icon_state = "[base_icon_state][on ? "_on" : null]"
 	return ..()
 
-/obj/item/reagent_containers/glass/maunamug/update_overlays()
+/obj/item/reagent_containers/cup/maunamug/update_overlays()
 	. = ..()
 	if(!reagents.total_volume || reagents.chem_temp < 400)
 		return
@@ -116,11 +116,11 @@
 	mug_glow.alpha = 255 * intensity
 	. += mug_glow
 
-/obj/item/reagent_containers/glass/rag
+/obj/item/reagent_containers/cup/rag
 	name = "damp rag"
 	desc = "For cleaning up messes, you suppose."
 	w_class = WEIGHT_CLASS_TINY
-	icon = 'icons/obj/toy.dmi'
+	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "rag"
 	item_flags = NOBLUDGEON
 	reagent_flags = OPENCONTAINER
@@ -129,11 +129,15 @@
 	volume = 5
 	spillable = FALSE
 
-/obj/item/reagent_containers/glass/rag/suicide_act(mob/user)
+/obj/item/reagent_containers/cup/rag/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cleaner, 3 SECONDS)
+
+/obj/item/reagent_containers/cup/rag/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is smothering [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return (OXYLOSS)
 
-/obj/item/reagent_containers/glass/rag/afterattack(atom/A as obj|turf|area, mob/living/user,proximity)
+/obj/item/reagent_containers/cup/rag/afterattack(atom/A as obj|turf|area, mob/living/user,proximity)
 	. = ..()
 	if(!proximity)
 		return
@@ -152,7 +156,4 @@
 			log_combat(user, C, "touched", src, log_object)
 
 	else if(istype(A) && (src in user))
-		user.visible_message(span_notice("[user] starts to wipe down [A] with [src]!"), span_notice("You start to wipe down [A] with [src]..."))
-		if(do_after(user,30, target = A))
-			user.visible_message(span_notice("[user] finishes wiping off [A]!"), span_notice("You finish wiping off [A]."))
-			A.wash(CLEAN_SCRUB)
+		start_cleaning(src, A, user)

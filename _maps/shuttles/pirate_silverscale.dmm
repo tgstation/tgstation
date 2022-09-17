@@ -31,6 +31,14 @@
 /obj/effect/turf_decal/bot_red,
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
+"bp" = (
+/obj/machinery/computer/monitor{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/side{
+	dir = 8
+	},
+/area/shuttle/pirate)
 "bH" = (
 /obj/machinery/airalarm/all_access{
 	dir = 4;
@@ -49,7 +57,7 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "cE" = (
-/obj/structure/chair/sofa/corp/right{
+/obj/structure/chair/sofa/corp/left{
 	dir = 1
 	},
 /obj/machinery/light/directional/west,
@@ -186,34 +194,6 @@
 "je" = (
 /turf/template_noop,
 /area/template_noop)
-"jm" = (
-/obj/machinery/door/airlock/external/glass/ruin{
-	id_tag = "piratestarboardexternal"
-	},
-/obj/docking_port/stationary{
-	dir = 4;
-	dwidth = 13;
-	height = 3;
-	id = "pirateship_home";
-	name = "Deep Space";
-	width = 26
-	},
-/obj/docking_port/mobile/pirate{
-	dir = 4;
-	dwidth = 13;
-	height = 3;
-	launch_status = 0;
-	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
-	name = "Silverscale Cruiser";
-	preferred_direction = 4;
-	width = 26
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/obj/effect/mapping_helpers/airlock/cutaiwire,
-/turf/open/floor/pod/light,
-/area/shuttle/pirate)
 "jG" = (
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 9
@@ -240,9 +220,7 @@
 	dir = 8
 	},
 /obj/structure/mirror/directional/north,
-/obj/structure/sink{
-	pixel_y = 17
-	},
+/obj/structure/sink/directional/south,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
@@ -293,14 +271,6 @@
 	dir = 5
 	},
 /turf/open/floor/carpet/royalblack,
-/area/shuttle/pirate)
-"nh" = (
-/obj/machinery/computer/monitor/secret{
-	dir = 8
-	},
-/turf/open/floor/iron/dark/side{
-	dir = 8
-	},
 /area/shuttle/pirate)
 "nm" = (
 /obj/structure/shuttle/engine/propulsion{
@@ -513,7 +483,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "Aj" = (
-/obj/structure/chair/sofa/corp/right{
+/obj/structure/chair/sofa/corp/left{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
@@ -531,21 +501,47 @@
 	dir = 8
 	},
 /obj/structure/mirror/directional/north,
-/obj/structure/sink{
-	pixel_y = 17
-	},
+/obj/structure/sink/directional/south,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
+"Bl" = (
+/obj/machinery/door/airlock/external/glass/ruin{
+	id_tag = "piratestarboardexternal"
+	},
+/obj/docking_port/stationary{
+	dir = 4;
+	dwidth = 13;
+	height = 3;
+	shuttle_id = "pirate_home";
+	name = "Deep Space";
+	width = 26
+	},
+/obj/docking_port/mobile/pirate{
+	dir = 4;
+	dwidth = 13;
+	height = 3;
+	launch_status = 0;
+	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
+	name = "Silverscale Cruiser";
+	preferred_direction = 4;
+	width = 26
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/turf/open/floor/pod/light,
+/area/shuttle/pirate)
 "Ch" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "CH" = (
-/obj/structure/chair/sofa/corp/left{
+/obj/structure/chair/sofa/corp/right{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
@@ -586,19 +582,19 @@
 "Gy" = (
 /obj/structure/table/glass,
 /obj/machinery/light/small/directional/west,
-/obj/item/reagent_containers/food/drinks/bottle/patron{
+/obj/item/reagent_containers/cup/glass/bottle/patron{
 	pixel_x = -5;
 	pixel_y = 16
 	},
-/obj/item/reagent_containers/food/drinks/bottle/cognac{
+/obj/item/reagent_containers/cup/glass/bottle/cognac{
 	pixel_x = -10;
 	pixel_y = 7
 	},
-/obj/item/reagent_containers/food/drinks/bottle/grappa{
+/obj/item/reagent_containers/cup/glass/bottle/grappa{
 	pixel_x = 10;
 	pixel_y = 15
 	},
-/obj/item/reagent_containers/food/drinks/bottle/vodka{
+/obj/item/reagent_containers/cup/glass/bottle/vodka{
 	pixel_x = 2;
 	pixel_y = 4
 	},
@@ -612,9 +608,7 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "HS" = (
-/obj/structure/musician/piano{
-	icon_state = "piano"
-	},
+/obj/structure/musician/piano,
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
@@ -634,14 +628,14 @@
 /area/shuttle/pirate)
 "Jc" = (
 /obj/structure/table/glass,
-/obj/item/reagent_containers/food/drinks/drinkingglass{
+/obj/item/reagent_containers/cup/glass/drinkingglass{
 	pixel_x = -8
 	},
-/obj/item/reagent_containers/food/drinks/drinkingglass{
+/obj/item/reagent_containers/cup/glass/drinkingglass{
 	pixel_x = 9;
 	pixel_y = 9
 	},
-/obj/item/reagent_containers/food/drinks/bottle/wine{
+/obj/item/reagent_containers/cup/glass/bottle/wine{
 	pixel_y = 6
 	},
 /obj/machinery/newscaster/directional/west,
@@ -739,29 +733,29 @@
 /area/shuttle/pirate)
 "Oo" = (
 /obj/structure/table/glass,
-/obj/item/reagent_containers/food/drinks/bottle/tequila{
+/obj/item/reagent_containers/cup/glass/bottle/tequila{
 	pixel_x = 10;
 	pixel_y = 10
 	},
-/obj/item/reagent_containers/food/drinks/bottle/hcider{
+/obj/item/reagent_containers/cup/glass/bottle/hcider{
 	layer = 3.1;
 	pixel_x = -6;
 	pixel_y = 8
 	},
-/obj/item/reagent_containers/food/drinks/bottle/rum{
+/obj/item/reagent_containers/cup/glass/bottle/rum{
 	layer = 3.2;
 	pixel_x = -15;
 	pixel_y = 4
 	},
-/obj/item/reagent_containers/food/drinks/shaker{
+/obj/item/reagent_containers/cup/glass/shaker{
 	pixel_x = 1;
 	pixel_y = 13
 	},
-/obj/item/reagent_containers/food/drinks/bottle/gin{
+/obj/item/reagent_containers/cup/glass/bottle/gin{
 	pixel_x = -10;
 	pixel_y = 15
 	},
-/obj/item/reagent_containers/food/drinks/bottle/wine{
+/obj/item/reagent_containers/cup/glass/bottle/wine{
 	layer = 3.1;
 	pixel_x = 3;
 	pixel_y = 5
@@ -950,7 +944,7 @@
 /area/shuttle/pirate)
 "Xw" = (
 /obj/structure/table/glass,
-/obj/item/reagent_containers/food/drinks/drinkingglass{
+/obj/item/reagent_containers/cup/glass/drinkingglass{
 	pixel_x = 9;
 	pixel_y = 9
 	},
@@ -964,7 +958,7 @@
 	pixel_y = 9
 	},
 /obj/item/lighter,
-/obj/item/reagent_containers/food/drinks/drinkingglass{
+/obj/item/reagent_containers/cup/glass/drinkingglass{
 	pixel_x = -8
 	},
 /turf/open/floor/carpet/royalblack,
@@ -1013,7 +1007,7 @@
 /turf/open/floor/pod/light,
 /area/shuttle/pirate)
 "ZU" = (
-/obj/structure/chair/sofa/corp/left{
+/obj/structure/chair/sofa/corp/right{
 	dir = 1
 	},
 /obj/machinery/light/directional/east,
@@ -1034,7 +1028,7 @@ jG
 Gr
 Gr
 rB
-jm
+Bl
 rB
 je
 je
@@ -1277,7 +1271,7 @@ rB
 HD
 Mo
 fj
-nh
+bp
 HD
 rB
 rB

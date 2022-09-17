@@ -6,8 +6,8 @@
 	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/food/food.dmi'
 	icon_state = null
-	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/food_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/food_righthand.dmi'
 	obj_flags = UNIQUE_RENAME
 	grind_results = list()
 	///List of reagents this food gets on creation
@@ -116,3 +116,8 @@
 /obj/item/food/proc/MakeDecompose(mapload)
 	if(!preserved_food)
 		AddComponent(/datum/component/decomposition, mapload, decomp_req_handle, decomp_flags = foodtypes, decomp_result = decomp_type, ant_attracting = ant_attracting, custom_time = decomposition_time)
+
+/obj/item/food/mark_silver_slime_reaction()
+	//Adds this flag to prevent it from exporting for profit from cargo
+	food_flags |= FOOD_SILVER_SPAWNED
+	return ..()

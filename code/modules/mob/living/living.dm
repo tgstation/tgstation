@@ -1,5 +1,6 @@
 /mob/living/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/movetype_handler)
 	register_init_signals()
 	if(unique_name)
 		set_name()
@@ -11,10 +12,6 @@
 	GLOB.mob_living_list += src
 	SSpoints_of_interest.make_point_of_interest(src)
 	update_fov()
-
-/mob/living/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/movetype_handler)
 
 /mob/living/prepare_huds()
 	..()
@@ -33,8 +30,6 @@
 		else
 			effect.be_replaced()
 
-	if(ranged_ability)
-		ranged_ability.remove_ranged_ability(src)
 	if(buckled)
 		buckled.unbuckle_mob(src,force=1)
 
@@ -83,6 +78,10 @@
 
 //Called when we bump onto a mob
 /mob/living/proc/MobBump(mob/M)
+	//No bumping/swapping/pushing others if you are on walk intent
+	if(m_intent == MOVE_INTENT_WALK)
+		return TRUE
+
 	SEND_SIGNAL(src, COMSIG_LIVING_MOB_BUMP, M)
 	//Even if we don't push/swap places, we "touched" them, so spread fire
 	spreadFire(M)
@@ -190,7 +189,7 @@
 			return TRUE
 	//anti-riot equipment is also anti-push
 	for(var/obj/item/I in M.held_items)
-		if(!istype(M, /obj/item/clothing))
+		if(!isclothing(M))
 			if(prob(I.block_chance*2))
 				return
 
@@ -420,12 +419,14 @@
 /mob/living/pointed(atom/A as mob|obj|turf in view(client.view, src))
 	if(incapacitated())
 		return FALSE
+
+	return ..()
+
+/mob/living/_pointed(atom/pointing_at)
 	if(!..())
 		return FALSE
-	visible_message("<span class='infoplain'>[span_name("[src]")] points at [A].</span>", span_notice("You point at [A]."))
-	log_message("points at [A]", LOG_EMOTE)
-	return TRUE
-
+	log_message("points at [pointing_at]", LOG_EMOTE)
+	visible_message("<span class='infoplain'>[span_name("[src]")] points at [pointing_at].</span>", span_notice("You point at [pointing_at]."))
 
 /mob/living/verb/succumb(whispered as null)
 	set hidden = TRUE
@@ -632,7 +633,7 @@
 	var/list/ret = list()
 	ret |= contents //add our contents
 	for(var/atom/iter_atom as anything in ret.Copy()) //iterate storage objects
-		SEND_SIGNAL(iter_atom, COMSIG_TRY_STORAGE_RETURN_INVENTORY, ret)
+		iter_atom.atom_storage?.return_inv(ret)
 	for(var/obj/item/folder/F in ret.Copy()) //very snowflakey-ly iterate folders
 		ret |= F.contents
 	return ret
@@ -726,11 +727,10 @@
 			if(!(C.dna?.species && (NOBLOOD in C.dna.species.species_traits)))
 				C.blood_volume += (excess_healing*2)//1 excess = 10 blood
 
-			for(var/i in C.internal_organs)
-				var/obj/item/organ/O = i
-				if(O.organ_flags & ORGAN_SYNTHETIC)
+			for(var/obj/item/organ/organ as anything in C.internal_organs)
+				if(organ.organ_flags & ORGAN_SYNTHETIC)
 					continue
-				O.applyOrganDamage(excess_healing*-1)//1 excess = 5 organ damage healed
+				organ.applyOrganDamage(excess_healing * -1)//1 excess = 5 organ damage healed
 
 		adjustOxyLoss(-20, TRUE)
 		adjustToxLoss(-20, TRUE, TRUE) //slime friendly
@@ -748,10 +748,6 @@
 		clear_alert(ALERT_NOT_ENOUGH_OXYGEN)
 		reload_fullscreen()
 		. = TRUE
-		if(mind)
-			for(var/S in mind.spell_list)
-				var/obj/effect/proc_holder/spell/spell = S
-				spell.updateButtons()
 		if(excess_healing)
 			INVOKE_ASYNC(src, .proc/emote, "gasp")
 			log_combat(src, src, "revived")
@@ -879,8 +875,8 @@
 		var/mob/living/L = pulledby
 		L.set_pull_offsets(src, pulledby.grab_state)
 
-	if(active_storage && !(CanReach(active_storage.parent,view_only = TRUE)))
-		active_storage.close(src)
+	if(active_storage && !((active_storage.parent?.resolve() in important_recursive_contents?[RECURSIVE_CONTENTS_ACTIVE_STORAGE]) || CanReach(active_storage.parent?.resolve(),view_only = TRUE)))
+		active_storage.hide_contents(src)
 
 	if(body_position == LYING_DOWN && !buckled && prob(getBruteLoss()*200/maxHealth))
 		makeTrail(newloc, T, old_direction)
@@ -994,6 +990,10 @@
 	set name = "Resist"
 	set category = "IC"
 
+	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, .proc/execute_resist))
+
+///proc extender of [/mob/living/verb/resist] meant to make the process queable if the server is overloaded when the verb is called
+/mob/living/proc/execute_resist()
 	if(!can_resist())
 		return
 	changeNext_move(CLICK_CD_RESIST)
@@ -1018,7 +1018,6 @@
 			resist_fire() //stop, drop, and roll
 		else if(last_special <= world.time)
 			resist_restraints() //trying to remove cuffs.
-
 
 /mob/proc/resist_grab(moving_resist)
 	return 1 //returning 0 means we successfully broke free
@@ -1194,16 +1193,20 @@
 	. = ..()
 
 // Used in polymorph code to shapeshift mobs into other creatures
-/mob/living/proc/wabbajack(randomize)
-	// If the mob has a shapeshifted form, we want to pull out the reference of the caster's original body from it.
-	// We then want to restore this original body through the shapeshift holder itself.
-	var/obj/shapeshift_holder/shapeshift = locate() in src
-	if(shapeshift)
-		shapeshift.restore()
-		if(shapeshift.stored != src) // To reduce the risk of an infinite loop.
-			return shapeshift.stored.wabbajack(randomize)
-
+/**
+ * Polymorphs our mob into another mob.
+ * If successful, our current mob is qdeleted!
+ *
+ * what_to_randomize - what are we randomizing the mob into? See the defines for valid options.
+ * change_flags - only used for humanoid randomization (currently), what pool of changeflags should we draw from?
+ *
+ * Returns a mob (what our mob turned into) or null (if we failed).
+ */
+/mob/living/proc/wabbajack(what_to_randomize, change_flags = WABBAJACK)
 	if(stat == DEAD || notransform || (GODMODE & status_flags))
+		return
+
+	if(SEND_SIGNAL(src, COMSIG_LIVING_PRE_WABBAJACKED, what_to_randomize) & STOP_WABBAJACK)
 		return
 
 	notransform = TRUE
@@ -1232,51 +1235,64 @@
 
 	var/mob/living/new_mob
 
-	if(!randomize)
-		randomize = pick("monkey","robot","slime","xeno","humanoid","animal")
-	switch(randomize)
-		if("monkey")
+	var/static/list/possible_results = list(
+		WABBAJACK_MONKEY,
+		WABBAJACK_ROBOT,
+		WABBAJACK_SLIME,
+		WABBAJACK_XENO,
+		WABBAJACK_HUMAN,
+		WABBAJACK_ANIMAL,
+	)
+
+	// If we weren't passed one, pick a default one
+	what_to_randomize ||= pick(possible_results)
+
+	switch(what_to_randomize)
+		if(WABBAJACK_MONKEY)
 			new_mob = new /mob/living/carbon/human/species/monkey(loc)
 
-		if("robot")
-			var/robot = pick(
-				200 ; /mob/living/silicon/robot,
-				/mob/living/silicon/robot/model/syndicate,
-				/mob/living/silicon/robot/model/syndicate/medical,
-				/mob/living/silicon/robot/model/syndicate/saboteur,
-				200 ; /mob/living/simple_animal/drone/polymorphed,
+		if(WABBAJACK_ROBOT)
+			var/static/list/robot_options = list(
+				/mob/living/silicon/robot = 200,
+				/mob/living/simple_animal/drone/polymorphed = 200,
+				/mob/living/silicon/robot/model/syndicate = 1,
+				/mob/living/silicon/robot/model/syndicate/medical = 1,
+				/mob/living/silicon/robot/model/syndicate/saboteur = 1,
 			)
-			new_mob = new robot(loc)
+
+			var/picked_robot = pick(robot_options)
+			new_mob = new picked_robot(loc)
 			if(issilicon(new_mob))
+				var/mob/living/silicon/robot/created_robot = new_mob
 				new_mob.gender = gender
 				new_mob.invisibility = 0
 				new_mob.job = JOB_CYBORG
-				var/mob/living/silicon/robot/Robot = new_mob
-				Robot.lawupdate = FALSE
-				Robot.connected_ai = null
-				Robot.mmi.transfer_identity(src) //Does not transfer key/client.
-				Robot.clear_inherent_laws(announce = FALSE)
-				Robot.clear_zeroth_law(announce = FALSE)
+				created_robot.lawupdate = FALSE
+				created_robot.connected_ai = null
+				created_robot.mmi.transfer_identity(src) //Does not transfer key/client.
+				created_robot.clear_inherent_laws(announce = FALSE)
+				created_robot.clear_zeroth_law(announce = FALSE)
 
-		if("slime")
+		if(WABBAJACK_SLIME)
 			new_mob = new /mob/living/simple_animal/slime/random(loc)
 
-		if("xeno")
-			var/xeno_type
+		if(WABBAJACK_XENO)
+			var/picked_xeno_type
+
 			if(ckey)
-				xeno_type = pick(
+				picked_xeno_type = pick(
 					/mob/living/carbon/alien/humanoid/hunter,
 					/mob/living/carbon/alien/humanoid/sentinel,
 				)
 			else
-				xeno_type = pick(
+				picked_xeno_type = pick(
 					/mob/living/carbon/alien/humanoid/hunter,
 					/mob/living/simple_animal/hostile/alien/sentinel,
 				)
-			new_mob = new xeno_type(loc)
+			new_mob = new picked_xeno_type(loc)
 
-		if("animal")
-			var/path = pick(
+		if(WABBAJACK_ANIMAL)
+			var/picked_animal = pick(
 				/mob/living/simple_animal/hostile/carp,
 				/mob/living/simple_animal/hostile/bear,
 				/mob/living/simple_animal/hostile/mushroom,
@@ -1309,19 +1325,20 @@
 				/mob/living/simple_animal/pet/fox,
 				/mob/living/simple_animal/butterfly,
 				/mob/living/simple_animal/pet/cat/cak,
+				/mob/living/simple_animal/pet/dog/breaddog,
 				/mob/living/simple_animal/chick,
 			)
-			new_mob = new path(loc)
+			new_mob = new picked_animal(loc)
 
-		if("humanoid")
-			var/mob/living/carbon/human/new_human = new (loc)
+		if(WABBAJACK_HUMAN)
+			var/mob/living/carbon/human/new_human = new(loc)
 
+			// 50% chance that we'll also randomice race
 			if(prob(50))
 				var/list/chooseable_races = list()
-				for(var/speciestype in subtypesof(/datum/species))
-					var/datum/species/S = speciestype
-					if(initial(S.changesource_flags) & WABBAJACK)
-						chooseable_races += speciestype
+				for(var/datum/species/species_type as anything in subtypesof(/datum/species))
+					if(initial(species_type.changesource_flags) & change_flags)
+						chooseable_races += species_type
 
 				if(length(chooseable_races))
 					new_human.set_species(pick(chooseable_races))
@@ -1332,44 +1349,49 @@
 			new_human.dna.update_dna_identity()
 			new_mob = new_human
 
+		else
+			stack_trace("wabbajack() was called without an invalid randomization choice. ([what_to_randomize])")
+
 	if(!new_mob)
 		return
+
+	to_chat(src, span_hypnophrase(span_big("Your form morphs into that of a [what_to_randomize]!")))
+
+	// And of course, make sure they get policy for being transformed
+	var/poly_msg = get_policy(POLICY_POLYMORPH)
+	if(poly_msg)
+		to_chat(src, poly_msg)
 
 	// Some forms can still wear some items
 	for(var/obj/item/item as anything in item_contents)
 		new_mob.equip_to_appropriate_slot(item)
 
-	log_message("became [new_mob.name]([new_mob.type])", LOG_ATTACK, color="orange")
+	// I don't actually know why we do this
 	new_mob.set_combat_mode(TRUE)
-	wabbajack_act(new_mob)
-	to_chat(new_mob, span_warning("Your form morphs into that of a [randomize]."))
 
-	var/poly_msg = get_policy(POLICY_POLYMORPH)
-	if(poly_msg)
-		to_chat(new_mob, poly_msg)
+	// on_wabbajack is where we handle setting up the name,
+	// transfering the mind and observerse, and other miscellaneous
+	// actions that should be done before we delete the original mob.
+	on_wabbajacked(new_mob)
 
-	transfer_observers_to(new_mob)
-
-	. = new_mob
 	qdel(src)
+	return new_mob
 
 // Called when we are hit by a bolt of polymorph and changed
 // Generally the mob we are currently in is about to be deleted
-/mob/living/proc/wabbajack_act(mob/living/new_mob)
-	log_game("[key_name(src)] is being wabbajack polymorphed into: [new_mob.name]([new_mob.type]).")
+/mob/living/proc/on_wabbajacked(mob/living/new_mob)
+	log_message("became [new_mob.name] ([new_mob.type])", LOG_ATTACK, color = "orange")
+	SEND_SIGNAL(src, COMSIG_LIVING_ON_WABBAJACKED, new_mob)
 	new_mob.name = real_name
 	new_mob.real_name = real_name
 
+	// Transfer mind to the new mob (also handles actions and observers and stuff)
 	if(mind)
 		mind.transfer_to(new_mob)
-	else
-		new_mob.key = key
 
-	for(var/para in hasparasites())
-		var/mob/living/simple_animal/hostile/guardian/G = para
-		G.summoner = new_mob
-		G.Recall()
-		to_chat(G, span_holoparasite("Your summoner has changed form!"))
+	// Well, no mmind, guess we should try to move a key over
+	else if(key)
+		new_mob.key = key
 
 /mob/living/proc/unfry_mob() //Callback proc to tone down spam from multiple sizzling frying oil dipping.
 	REMOVE_TRAIT(src, TRAIT_OIL_FRIED, "cooking_oil_react")
@@ -1404,6 +1426,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	var/datum/status_effect/fire_handler/fire_stacks/fire_status = has_status_effect(/datum/status_effect/fire_handler/fire_stacks)
 	if(!fire_status || !fire_status.on_fire)
 		return
+
 	remove_status_effect(/datum/status_effect/fire_handler/fire_stacks)
 
 /**
@@ -1487,7 +1510,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		adjust_fire_stacks(-fire_stacks / 2, fire_status.type)
 		spread_to.adjust_fire_stacks(fire_stacks, fire_status.type)
 		if(spread_to.ignite_mob())
-			log_game("[key_name(src)] bumped into [key_name(spread_to)] and set them on fire")
+			log_message("bumped into [key_name(spread_to)] and set them on fire.", LOG_ATTACK)
 		return
 
 	if(!their_fire_status || !their_fire_status.on_fire)
@@ -1545,24 +1568,6 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /// Called when mob changes from a standing position into a prone while lacking the ability to stand up at the moment.
 /mob/living/proc/on_fall()
 	return
-
-/mob/living/proc/AddAbility(obj/effect/proc_holder/A)
-	abilities.Add(A)
-	A.on_gain(src)
-	if(A.has_action)
-		A.action.Grant(src)
-
-/mob/living/proc/RemoveAbility(obj/effect/proc_holder/A)
-	abilities.Remove(A)
-	A.on_lose(src)
-	if(A.action)
-		A.action.Remove(src)
-
-/mob/living/proc/add_abilities_to_panel()
-	var/list/L = list()
-	for(var/obj/effect/proc_holder/A in abilities)
-		L[++L.len] = list("[A.panel]",A.get_panel_text(),A.name,"[REF(A)]")
-	return L
 
 /mob/living/forceMove(atom/destination)
 	if(!currently_z_moving)
@@ -1669,12 +1674,6 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	else
 		clear_fullscreen("remote_view", 0)
 
-/mob/living/update_mouse_pointer()
-	..()
-	if (client && ranged_ability?.ranged_mousepointer)
-		client.mouse_pointer_icon = ranged_ability.ranged_mousepointer
-
-
 /mob/living/vv_edit_var(var_name, var_value)
 	switch(var_name)
 		if (NAMEOF(src, maxHealth))
@@ -1742,6 +1741,8 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	. = ..()
 	VV_DROPDOWN_OPTION("", "---------")
 	VV_DROPDOWN_OPTION(VV_HK_GIVE_SPEECH_IMPEDIMENT, "Impede Speech (Slurring, stuttering, etc)")
+	VV_DROPDOWN_OPTION(VV_HK_ADD_MOOD, "Add Mood Event")
+	VV_DROPDOWN_OPTION(VV_HK_REMOVE_MOOD, "Remove Mood Event")
 
 /mob/living/vv_do_topic(list/href_list)
 	. = ..()
@@ -1750,6 +1751,10 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		if(!check_rights(NONE))
 			return
 		admin_give_speech_impediment(usr)
+	if (href_list[VV_HK_ADD_MOOD])
+		admin_add_mood_event(usr)
+	if (href_list[VV_HK_REMOVE_MOOD])
+		admin_remove_mood_event(usr)
 
 /mob/living/proc/move_to_error_room()
 	var/obj/effect/landmark/error/error_landmark = locate(/obj/effect/landmark/error) in GLOB.landmarks_list
@@ -2139,8 +2144,8 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 		REMOVE_TRAIT(src, TRAIT_FAT, OBESITY)
 		remove_movespeed_modifier(/datum/movespeed_modifier/obesity)
-		update_inv_w_uniform()
-		update_inv_wear_suit()
+		update_worn_undersuit()
+		update_worn_oversuit()
 
 	// Reset overeat duration.
 	overeatduration = 0
@@ -2241,10 +2246,10 @@ GLOBAL_LIST_EMPTY(fire_appearances)
  * extra damage, so jokers can't use half a stack of iron rods to make getting hit by the tram immediately lethal.
  */
 /mob/living/proc/tram_slam_land()
-	if(!istype(loc, /turf/open/openspace) && !istype(loc, /turf/open/floor/plating))
+	if(!istype(loc, /turf/open/openspace) && !isplatingturf(loc))
 		return
 
-	if(istype(loc, /turf/open/floor/plating))
+	if(isplatingturf(loc))
 		var/turf/open/floor/smashed_plating = loc
 		visible_message(span_danger("[src] is thrown violently into [smashed_plating], smashing through it and punching straight through!"),
 				span_userdanger("You're thrown violently into [smashed_plating], smashing through it and punching straight through!"))
@@ -2292,3 +2297,47 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		return
 
 	adjust_timed_status_effect(duration SECONDS, impediments[chosen])
+
+/mob/living/proc/admin_add_mood_event(mob/admin)
+	if (!admin || !check_rights(NONE))
+		return
+
+	var/list/mood_events = typesof(/datum/mood_event)
+
+	var/chosen = tgui_input_list(admin, "What mood event?", "Add Mood Event", mood_events)
+	if (!chosen || QDELETED(src) || !check_rights(NONE))
+		return
+
+	mob_mood.add_mood_event("[rand(1, 50)]", chosen)
+
+/mob/living/proc/admin_remove_mood_event(mob/admin)
+	if (!admin || !check_rights(NONE))
+		return
+
+	var/list/mood_events = list()
+	for (var/category in mob_mood.mood_events)
+		var/datum/mood_event/event = mob_mood.mood_events[category]
+		mood_events[event] = category
+
+
+	var/datum/mood_event/chosen = tgui_input_list(admin, "What mood event?", "Remove Mood Event", mood_events)
+	if (!chosen || QDELETED(src) || !check_rights(NONE))
+		return
+
+	mob_mood.clear_mood_event(mood_events[chosen])
+
+/// Adds a mood event to the mob
+/mob/living/proc/add_mood_event(category, type, ...)
+	if(QDELETED(mob_mood))
+		return
+	mob_mood.add_mood_event(arglist(args))
+
+/// Clears a mood event from the mob
+/mob/living/proc/clear_mood_event(category)
+	if(QDELETED(mob_mood))
+		return
+	mob_mood.clear_mood_event(category)
+
+/mob/living/played_game()
+	. = ..()
+	add_mood_event("gaming", /datum/mood_event/gaming)

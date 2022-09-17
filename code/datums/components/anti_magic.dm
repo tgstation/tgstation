@@ -74,7 +74,10 @@
 
 	if(!casting_restriction_alert)
 		// Check to see if we have any spells that are blocked due to antimagic
-		for(var/obj/effect/proc_holder/spell/magic_spell in equipper.mind?.spell_list)
+		for(var/datum/action/cooldown/spell/magic_spell in equipper.actions)
+			if(!(magic_spell.spell_requirements & SPELL_REQUIRES_NO_ANTIMAGIC))
+				continue
+
 			if(antimagic_flags & magic_spell.antimagic_flags)
 				to_chat(equipper, span_warning("[parent] is interfering with your ability to cast magic!"))
 				casting_restriction_alert = TRUE

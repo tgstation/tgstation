@@ -189,5 +189,19 @@
 			message += span_notice("Volume: [volume] L") // don't want to change the order volume appears in, suck it
 
 	// we let the join apply newlines so we do need handholding
-	to_chat(user, jointext(message, "\n"), type = MESSAGE_TYPE_INFO)
+	to_chat(user, examine_block(jointext(message, "\n")), type = MESSAGE_TYPE_INFO)
 	return TRUE
+
+/obj/item/analyzer/ranged
+	desc = "A hand-held long-range environmental scanner which reports current gas levels."
+	name = "long-range gas analyzer"
+	icon_state = "analyzerranged"
+	w_class = WEIGHT_CLASS_NORMAL
+	custom_materials = list(/datum/material/iron = 100, /datum/material/glass = 20, /datum/material/gold = 300, /datum/material/bluespace=200)
+	grind_results = list(/datum/reagent/mercury = 5, /datum/reagent/iron = 5, /datum/reagent/silicon = 5)
+
+/obj/item/analyzer/ranged/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+	. = ..()
+	if(!can_see(user, target, 15))
+		return
+	atmos_scan(user, (target.return_analyzable_air() ? target : get_turf(target)))

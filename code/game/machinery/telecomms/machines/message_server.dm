@@ -180,9 +180,11 @@
 	if (!logged)  // Can only go through if a message server logs it
 		return
 	for (var/obj/item/modular_computer/comp in data["targets"])
-		var/obj/item/computer_hardware/hard_drive/drive = comp.all_components[MC_HDD]
-		for(var/datum/computer_file/program/messenger/app in drive.stored_files)
-			app.receive_message(src)
+		if(!QDELETED(comp))
+			var/obj/item/computer_hardware/hard_drive/drive = comp.all_components[MC_HDD]
+			for(var/datum/computer_file/program/messenger/app in drive.stored_files)
+				if(!QDELETED(app))
+					app.receive_message(src)
 
 // Request Console signal datum
 /datum/signal/subspace/messaging/rc/broadcast()

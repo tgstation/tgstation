@@ -36,11 +36,11 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/handle_movement)
 	RegisterSignal(parent, list(
 		COMSIG_ITEM_PICKUP, //person picks up an item
-		COMSIG_STORAGE_ENTERED), //Object enters a storage object (boxes, etc.)
+		COMSIG_ATOM_ENTERED), //Object enters a storage object (boxes, etc.)
 		.proc/picked_up)
 	RegisterSignal(parent, list(
 		COMSIG_ITEM_DROPPED, //Object is dropped anywhere
-		COMSIG_STORAGE_EXITED), //Object exits a storage object (boxes, etc)
+		COMSIG_ATOM_EXITED), //Object exits a storage object (boxes, etc)
 		.proc/dropped)
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/examine)
 
@@ -59,10 +59,10 @@
 /datum/component/decomposition/UnregisterFromParent()
 	UnregisterSignal(parent, list(
 		COMSIG_ITEM_PICKUP,
-		COMSIG_STORAGE_ENTERED,
+		COMSIG_ATOM_ENTERED,
 		COMSIG_MOVABLE_MOVED,
 		COMSIG_ITEM_DROPPED,
-		COMSIG_STORAGE_EXITED,
+		COMSIG_ATOM_EXITED,
 		COMSIG_PARENT_EXAMINE))
 
 /datum/component/decomposition/proc/handle_movement()

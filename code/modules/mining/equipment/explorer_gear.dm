@@ -3,6 +3,8 @@
 	name = "explorer suit"
 	desc = "An armoured suit for exploring harsh environments."
 	icon_state = "explorer"
+	icon = 'icons/obj/clothing/suits/utility.dmi'
+	worn_icon = 'icons/mob/clothing/suits/utility.dmi'
 	inhand_icon_state = "explorer"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	cold_protection = CHEST|GROIN|LEGS|ARMS
@@ -61,12 +63,26 @@
 	adjustmask(user)
 
 /obj/item/clothing/mask/gas/explorer/adjustmask(user)
-	..()
-	w_class = mask_adjusted ? WEIGHT_CLASS_NORMAL : WEIGHT_CLASS_SMALL
+	. = ..()
+	// adjusted = out of the way = smaller = can fit in boxes
+	w_class = mask_adjusted ? WEIGHT_CLASS_SMALL : WEIGHT_CLASS_NORMAL
+
+/obj/item/clothing/mask/gas/explorer/examine(mob/user)
+	. = ..()
+	if(mask_adjusted || w_class == WEIGHT_CLASS_SMALL)
+		return
+	. += span_notice("You could fit this into a box if you adjusted it.")
+
+/obj/item/clothing/mask/gas/explorer/folded
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/clothing/mask/gas/explorer/folded/Initialize(mapload)
 	. = ..()
 	adjustmask()
+
+/obj/item/clothing/suit/hooded/cloak
+	icon = 'icons/obj/clothing/suits/armor.dmi'
+	worn_icon = 'icons/mob/clothing/suits/armor.dmi'
 
 /obj/item/clothing/suit/hooded/cloak/goliath
 	name = "goliath cloak"
@@ -76,7 +92,7 @@
 		/obj/item/flashlight,
 		/obj/item/knife/combat/bone,
 		/obj/item/knife/combat/survival,
-		/obj/item/organ/regenerative_core/legion,
+		/obj/item/organ/internal/regenerative_core/legion,
 		/obj/item/pickaxe,
 		/obj/item/spear,
 		/obj/item/tank/internals,

@@ -201,6 +201,9 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 		playsound(src, 'sound/misc/whistle.ogg', 75, FALSE, 4)
 		cooldown = world.time
 
+/datum/action/item_action/halt
+	name = "HALT!"
+
 #undef PHRASE_COOLDOWN
 #undef OVERUSE_COOLDOWN
 #undef AGGR_GOOD_COP

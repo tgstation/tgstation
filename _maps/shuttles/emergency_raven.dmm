@@ -3,8 +3,7 @@
 /turf/template_noop,
 /area/template_noop)
 "ab" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/plasma/plastitanium,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /obj/machinery/door/poddoor/preopen{
 	id = "escape_cockpit_windows";
 	name = "Cockpit Blast Door"
@@ -278,7 +277,7 @@
 	},
 /obj/structure/rack,
 /obj/item/tank/internals/oxygen/red,
-/obj/item/clothing/suit/fire/firefighter,
+/obj/item/clothing/suit/utility/fire/firefighter,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/head/hardhat/red,
 /obj/effect/decal/cleanable/dirt,
@@ -737,17 +736,17 @@
 /turf/open/floor/iron/white/side,
 /area/shuttle/escape)
 "bL" = (
-/obj/item/reagent_containers/glass/bottle/epinephrine{
+/obj/item/reagent_containers/cup/bottle/epinephrine{
 	pixel_x = 6
 	},
-/obj/item/reagent_containers/glass/bottle/multiver{
+/obj/item/reagent_containers/cup/bottle/multiver{
 	pixel_x = -3
 	},
-/obj/item/reagent_containers/glass/bottle/epinephrine{
+/obj/item/reagent_containers/cup/bottle/epinephrine{
 	pixel_x = -3;
 	pixel_y = 8
 	},
-/obj/item/reagent_containers/glass/bottle/multiver{
+/obj/item/reagent_containers/cup/bottle/multiver{
 	pixel_x = 6;
 	pixel_y = 8
 	},
@@ -1473,7 +1472,7 @@
 	},
 /obj/structure/rack,
 /obj/item/tank/internals/oxygen/red,
-/obj/item/clothing/suit/fire/firefighter,
+/obj/item/clothing/suit/utility/fire/firefighter,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/head/hardhat/red,
 /turf/open/floor/iron/dark,
@@ -1860,9 +1859,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "dL" = (
-/obj/structure/sign/warning/electric_shock{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/electric_shock/directional/north,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "dM" = (
@@ -2078,7 +2075,6 @@
 	lethal = 1;
 	pixel_x = 5;
 	pixel_y = 32;
-	req_access = null;
 	req_access = list("command")
 	},
 /turf/open/floor/iron/dark,

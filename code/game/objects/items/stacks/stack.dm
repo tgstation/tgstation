@@ -262,7 +262,7 @@
 /obj/item/stack/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "Stack", name)
+		ui = new(user, src, "StackCrafting", name)
 		ui.open()
 
 /obj/item/stack/ui_data(mob/user)
@@ -357,7 +357,8 @@
 		return
 	if(!is_valid_recipe(recipe, recipes)) //href exploit protection
 		return
-	if(!multiplier || multiplier < 1) //href exploit protection
+	if(!multiplier || multiplier < 1 || !IS_FINITE(multiplier)) //href exploit protection
+		stack_trace("Invalid multiplier value in stack creation [multiplier], [usr] is likely attempting an exploit")
 		return
 	if(!building_checks(builder, recipe, multiplier))
 		return
@@ -459,9 +460,13 @@
 			builder.balloon_alert(builder, "must be made on a tram!")
 			return FALSE
 
-	if(recipe.on_floor)
-		if(!isfloorturf(dest_turf))
-			builder.balloon_alert(builder, "must be made on a floor!")
+	if(recipe.on_solid_ground)
+		if(isclosedturf(dest_turf))
+			builder.balloon_alert(builder, "cannot be made on a wall!")
+			return FALSE
+
+		if(is_type_in_typecache(dest_turf, GLOB.turfs_without_ground))
+			builder.balloon_alert(builder, "must be made on solid ground!")
 			return FALSE
 
 		for(var/obj/object in dest_turf)
@@ -571,6 +576,10 @@
 		return FALSE
 	if(ismob(loc) && !inhand) // no merging with items that are on the mob
 		return FALSE
+	if(istype(loc, /obj/machinery)) // no merging items in machines that aren't both in componentparts
+		var/obj/machinery/machine = loc
+		if(!(src in machine.component_parts) || !(check in machine.component_parts))
+			return FALSE
 	return TRUE
 
 /**
@@ -670,6 +679,7 @@
 	var/obj/item/stack/F = new type(user? user : drop_location(), amount, FALSE, mats_per_unit)
 	. = F
 	F.copy_evidences(src)
+	loc.atom_storage?.refresh_views()
 	if(user)
 		if(!user.put_in_hands(F, merge_stacks = FALSE))
 			F.forceMove(user.drop_location())

@@ -6,7 +6,7 @@
 	name = "\improper Nanotrasen minebot"
 	desc = "The instructions printed on the side read: This is a small robot used to support miners, can be set to search and collect loose ore, or to help fend off wildlife."
 	gender = NEUTER
-	icon = 'icons/mob/aibots.dmi'
+	icon = 'icons/mob/silicon/aibots.dmi'
 	icon_state = "mining_drone"
 	icon_living = "mining_drone"
 	status_flags = CANSTUN|CANKNOCKDOWN|CANPUSH
@@ -119,7 +119,7 @@
 	if(stored_gun)
 		for(var/obj/item/borg/upgrade/modkit/modkit as anything in stored_gun.modkits)
 			modkit.uninstall(stored_gun)
-	deathmessage = "blows apart!"
+	death_message = "blows apart!"
 	..()
 
 /mob/living/simple_animal/hostile/mining_drone/attack_hand(mob/living/carbon/human/user, list/modifiers)

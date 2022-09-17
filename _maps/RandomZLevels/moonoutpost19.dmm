@@ -185,7 +185,6 @@
 "bo" = (
 /obj/machinery/airalarm/directional/north{
 	pixel_y = 23;
-	req_access = null;
 	req_access = list("syndicate")
 	},
 /obj/effect/turf_decal/tile/bar,
@@ -275,9 +274,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "bv" = (
-/obj/structure/sink{
-	pixel_y = 28
-	},
+/obj/structure/sink/directional/south,
 /obj/machinery/light/small/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/freezer{
@@ -354,7 +351,6 @@
 /obj/machinery/light/directional/east,
 /obj/machinery/airalarm/directional/east{
 	pixel_x = 23;
-	req_access = null;
 	req_access = list("syndicate")
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -497,7 +493,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "bS" = (
-/obj/machinery/computer/monitor/secret,
+/obj/machinery/computer/monitor,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
@@ -521,7 +517,6 @@
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/machinery/airalarm/directional/north{
 	pixel_y = 23;
-	req_access = null;
 	req_access = list("syndicate")
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -619,7 +614,6 @@
 /obj/machinery/airalarm/unlocked{
 	dir = 1;
 	pixel_y = 23;
-	req_access = null;
 	req_access = list("syndicate")
 	},
 /obj/effect/mapping_helpers/burnt_floor,
@@ -631,9 +625,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "ce" = (
-/obj/structure/sign/warning/biohazard{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/biohazard/directional/north,
 /obj/structure/alien/weeds/node,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
@@ -761,8 +753,11 @@
 /obj/machinery/door/airlock/public/glass{
 	density = 0;
 	icon_state = "open";
-	name = "Dormitories";
-	set_obj_flags = "EMAGGED"
+	name = "Dormitories"
+	},
+/obj/effect/mapping_helpers/atom_injector/obj_flag{
+	inject_flags = 1;
+	target_type = /obj/machinery/door/airlock
 	},
 /obj/item/stack/rods,
 /obj/item/shard{
@@ -872,9 +867,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "cD" = (
-/obj/machinery/mineral/processing_unit_console{
-	machinedir = 8
-	},
+/obj/machinery/mineral/processing_unit_console,
 /turf/closed/wall,
 /area/awaymission/moonoutpost19/syndicate)
 "cE" = (
@@ -949,11 +942,10 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "cK" = (
-/obj/machinery/power/apc/highcap/ten_k{
-	name = "Worn-out APC";
-	pixel_y = -25;
-	req_access = list("syndicate");
-	start_charge = 0
+/obj/machinery/power/apc/highcap/ten_k/directional/south{
+	locked = 0;
+	name = "Worn Out APC";
+	start_charge = 100
 	},
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -1039,7 +1031,6 @@
 "cS" = (
 /obj/machinery/airalarm/directional/east{
 	pixel_x = 23;
-	req_access = null;
 	req_access = list("syndicate")
 	},
 /obj/machinery/light/broken/directional/east,
@@ -1060,8 +1051,11 @@
 	icon_state = "open";
 	id_tag = "awaydorm4";
 	name = "Dorm 1";
-	opacity = 0;
-	set_obj_flags = "EMAGGED"
+	opacity = 0
+	},
+/obj/effect/mapping_helpers/atom_injector/obj_flag{
+	inject_flags = 1;
+	target_type = /obj/machinery/door/airlock
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood{
@@ -1165,9 +1159,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "df" = (
-/obj/machinery/mineral/stacking_unit_console{
-	machinedir = 8
-	},
+/obj/machinery/mineral/stacking_unit_console,
 /turf/closed/wall,
 /area/awaymission/moonoutpost19/syndicate)
 "dg" = (
@@ -1190,7 +1182,6 @@
 /obj/structure/chair/wood,
 /obj/machinery/airalarm/directional/west{
 	pixel_x = -23;
-	req_access = null;
 	req_access = list("syndicate")
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -1215,7 +1206,6 @@
 "dk" = (
 /obj/machinery/airalarm/directional/east{
 	pixel_x = 23;
-	req_access = null;
 	req_access = list("syndicate")
 	},
 /turf/open/floor/wood{
@@ -1327,8 +1317,11 @@
 /obj/machinery/door/airlock/external/ruin{
 	density = 0;
 	icon_state = "open";
-	opacity = 0;
-	set_obj_flags = "EMAGGED"
+	opacity = 0
+	},
+/obj/effect/mapping_helpers/atom_injector/obj_flag{
+	inject_flags = 1;
+	target_type = /obj/machinery/door/airlock
 	},
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
@@ -1377,10 +1370,9 @@
 /turf/closed/mineral/random,
 /area/awaymission/moonoutpost19/main)
 "dB" = (
-/obj/structure/sign/warning/vacuum{
+/obj/structure/sign/warning/vacuum/directional/south{
 	desc = "A warning sign which reads 'HOSTILE ATMOSPHERE AHEAD'";
-	name = "\improper HOSTILE ATMOSPHERE AHEAD";
-	pixel_y = -32
+	name = "\improper HOSTILE ATMOSPHERE AHEAD"
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/effect/turf_decal/stripes/line{
@@ -1417,8 +1409,11 @@
 /obj/machinery/door/airlock/external/ruin{
 	density = 0;
 	icon_state = "open";
-	opacity = 0;
-	set_obj_flags = "EMAGGED"
+	opacity = 0
+	},
+/obj/effect/mapping_helpers/atom_injector/obj_flag{
+	inject_flags = 1;
+	target_type = /obj/machinery/door/airlock
 	},
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -1943,8 +1938,11 @@
 	density = 0;
 	icon_state = "open";
 	name = "Xenobiology Lab";
-	opacity = 0;
-	set_obj_flags = "EMAGGED"
+	opacity = 0
+	},
+/obj/effect/mapping_helpers/atom_injector/obj_flag{
+	inject_flags = 1;
+	target_type = /obj/machinery/door/airlock
 	},
 /obj/effect/mapping_helpers/airlock/access/all/away/maintenance,
 /obj/structure/cable,
@@ -2138,7 +2136,7 @@
 /obj/item/reagent_containers/spray/pepper,
 /obj/item/grenade/flashbang,
 /obj/item/storage/belt/security,
-/obj/item/reagent_containers/food/drinks/bottle/beer{
+/obj/item/reagent_containers/cup/glass/bottle/beer{
 	pixel_x = -3;
 	pixel_y = -2
 	},
@@ -2192,9 +2190,7 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "fX" = (
-/obj/structure/sign/warning/biohazard{
-	pixel_x = 32
-	},
+/obj/structure/sign/warning/biohazard/directional/east,
 /obj/structure/alien/weeds,
 /obj/effect/turf_decal/tile/purple,
 /obj/structure/cable,
@@ -2364,11 +2360,7 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "gr" = (
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12;
-	pixel_y = 2
-	},
+/obj/structure/sink/directional/east,
 /turf/open/floor/iron/white,
 /area/awaymission/moonoutpost19/research)
 "gs" = (
@@ -2455,7 +2447,7 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "gA" = (
-/obj/machinery/computer/monitor/secret{
+/obj/machinery/computer/monitor{
 	dir = 1
 	},
 /obj/structure/cable,
@@ -2510,11 +2502,9 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "gG" = (
-/obj/machinery/power/apc/highcap/ten_k{
-	dir = 4;
+/obj/machinery/power/apc/highcap/ten_k/directional/east{
 	locked = 0;
-	name = "Worn-out APC";
-	pixel_x = 25;
+	name = "Worn Out APC";
 	start_charge = 100
 	},
 /obj/effect/turf_decal/tile/purple,
@@ -2917,8 +2907,11 @@
 	density = 0;
 	icon_state = "open";
 	name = "Research Director's Office";
-	opacity = 0;
-	set_obj_flags = "EMAGGED"
+	opacity = 0
+	},
+/obj/effect/mapping_helpers/atom_injector/obj_flag{
+	inject_flags = 1;
+	target_type = /obj/machinery/door/airlock
 	},
 /obj/effect/mapping_helpers/airlock/access/all/away/maintenance,
 /turf/open/floor/iron/cafeteria{
@@ -3027,10 +3020,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "hS" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = 11
-	},
+/obj/structure/sink/directional/west,
 /obj/structure/urinal/directional/north,
 /obj/structure/mirror/directional/east,
 /obj/effect/decal/cleanable/dirt,
@@ -3039,17 +3029,13 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "hT" = (
-/obj/machinery/shower{
-	pixel_y = 16
-	},
+/obj/machinery/shower/directional/south,
 /turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "hU" = (
-/obj/machinery/shower{
-	pixel_y = 16
-	},
+/obj/machinery/shower/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
@@ -3127,7 +3113,7 @@
 /area/awaymission/moonoutpost19/research)
 "ic" = (
 /obj/structure/rack,
-/obj/item/paicard{
+/obj/item/pai_card{
 	pixel_x = 4
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -3201,10 +3187,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "ik" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = 11
-	},
+/obj/structure/sink/directional/west,
 /obj/structure/mirror/directional/east{
 	icon_state = "mirror_broke"
 	},
@@ -3225,9 +3208,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "in" = (
-/obj/machinery/shower{
-	dir = 8
-	},
+/obj/machinery/shower/directional/west,
 /turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
 	},
@@ -3339,9 +3320,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "iA" = (
-/obj/machinery/shower{
-	dir = 8
-	},
+/obj/machinery/shower/directional/west,
 /obj/item/bikehorn/rubberducky,
 /turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
@@ -3381,9 +3360,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "iF" = (
-/obj/structure/sink{
-	pixel_y = 28
-	},
+/obj/structure/sink/directional/south,
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
@@ -3454,11 +3431,7 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "iN" = (
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12;
-	pixel_y = 2
-	},
+/obj/structure/sink/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -3478,9 +3451,7 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "iP" = (
-/obj/machinery/shower{
-	dir = 1
-	},
+/obj/machinery/shower/directional/north,
 /turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
 	},
@@ -3658,10 +3629,10 @@
 "jm" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/item/reagent_containers/food/condiment/peppermill{
+/obj/item/reagent_containers/condiment/peppermill{
 	pixel_x = 3
 	},
-/obj/item/reagent_containers/food/condiment/saltshaker{
+/obj/item/reagent_containers/condiment/saltshaker{
 	pixel_x = -3
 	},
 /obj/machinery/door/poddoor/shutters{
@@ -3745,9 +3716,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "jx" = (
-/obj/structure/sign/departments/science{
-	pixel_y = 32
-	},
+/obj/structure/sign/departments/science/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
@@ -3836,11 +3805,9 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "jH" = (
-/obj/machinery/power/apc/highcap/ten_k{
-	dir = 1;
+/obj/machinery/power/apc/highcap/ten_k/directional/north{
 	locked = 0;
-	name = "Worn-out APC";
-	pixel_y = 25;
+	name = "Worn Out APC";
 	start_charge = 100
 	},
 /obj/structure/cable,
@@ -3913,7 +3880,7 @@
 /obj/item/book/manual/wiki/barman_recipes{
 	pixel_y = 5
 	},
-/obj/item/reagent_containers/food/drinks/shaker,
+/obj/item/reagent_containers/cup/glass/shaker,
 /turf/open/floor/iron/cafeteria{
 	dir = 5
 	},
@@ -4082,7 +4049,7 @@
 "kn" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/item/reagent_containers/glass/rag{
+/obj/item/reagent_containers/cup/rag{
 	pixel_y = 5
 	},
 /obj/machinery/door/poddoor/shutters{
@@ -4606,10 +4573,9 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "lw" = (
-/obj/structure/sink/kitchen{
+/obj/structure/sink/kitchen/directional/south{
 	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
-	name = "old sink";
-	pixel_y = 28
+	name = "old sink"
 	},
 /turf/open/floor/iron/showroomfloor{
 	heat_capacity = 1e+006;
@@ -4858,9 +4824,9 @@
 	name = "kitchen Cabinet";
 	req_access = list("away_maintenance")
 	},
-/obj/item/reagent_containers/food/condiment/flour,
-/obj/item/reagent_containers/food/condiment/flour,
-/obj/item/reagent_containers/food/condiment/sugar,
+/obj/item/reagent_containers/condiment/flour,
+/obj/item/reagent_containers/condiment/flour,
+/obj/item/reagent_containers/condiment/sugar,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/showroomfloor{
 	heat_capacity = 1e+006;
@@ -4888,9 +4854,9 @@
 	name = "refrigerator";
 	req_access = list("away_maintenance")
 	},
-/obj/item/reagent_containers/food/condiment/milk,
-/obj/item/reagent_containers/food/condiment/milk,
-/obj/item/reagent_containers/food/condiment/milk,
+/obj/item/reagent_containers/condiment/milk,
+/obj/item/reagent_containers/condiment/milk,
+/obj/item/reagent_containers/condiment/milk,
 /obj/item/storage/fancy/egg_box,
 /turf/open/floor/iron/showroomfloor{
 	heat_capacity = 1e+006;
@@ -5000,15 +4966,15 @@
 /area/awaymission/moonoutpost19/arrivals)
 "mE" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/drinks/bottle/whiskey{
+/obj/item/reagent_containers/cup/glass/bottle/whiskey{
 	pixel_x = -6;
 	pixel_y = 6
 	},
-/obj/item/reagent_containers/food/drinks/drinkingglass{
+/obj/item/reagent_containers/cup/glass/drinkingglass{
 	pixel_x = 6;
 	pixel_y = 8
 	},
-/obj/item/reagent_containers/food/drinks/drinkingglass{
+/obj/item/reagent_containers/cup/glass/drinkingglass{
 	pixel_x = 3
 	},
 /turf/open/floor/iron/dark,
@@ -5264,10 +5230,9 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "nm" = (
-/obj/structure/sign/warning/vacuum{
+/obj/structure/sign/warning/vacuum/directional/north{
 	desc = "A warning sign which reads 'HOSTILE ATMOSPHERE AHEAD'";
-	name = "\improper HOSTILE ATMOSPHERE AHEAD";
-	pixel_y = 32
+	name = "\improper HOSTILE ATMOSPHERE AHEAD"
 	},
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
@@ -5497,10 +5462,9 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "nK" = (
-/obj/structure/sign/warning/vacuum{
+/obj/structure/sign/warning/vacuum/directional/west{
 	desc = "A warning sign which reads 'HOSTILE ATMOSPHERE AHEAD'";
-	name = "\improper HOSTILE ATMOSPHERE AHEAD";
-	pixel_x = -32
+	name = "\improper HOSTILE ATMOSPHERE AHEAD"
 	},
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
@@ -6006,9 +5970,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "zR" = (
-/obj/structure/sign/warning/secure_area{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/secure_area/directional/north,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
@@ -6115,9 +6077,7 @@
 	},
 /area/awaymission/moonoutpost19/main)
 "HP" = (
-/obj/structure/sign/warning/secure_area{
-	pixel_x = 32
-	},
+/obj/structure/sign/warning/secure_area/directional/east,
 /obj/structure/alien/weeds,
 /obj/effect/turf_decal/tile/purple,
 /obj/structure/cable,
@@ -6156,11 +6116,8 @@
 	},
 /area/awaymission/moonoutpost19/main)
 "Jr" = (
-/obj/structure/sign/warning/secure_area{
-	pixel_y = 32
-	},
-/obj/machinery/shower{
-	dir = 4;
+/obj/structure/sign/warning/secure_area/directional/north,
+/obj/machinery/shower/directional/east{
 	name = "emergency shower"
 	},
 /obj/effect/turf_decal/stripes/line{

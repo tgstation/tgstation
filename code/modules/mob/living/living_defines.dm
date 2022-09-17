@@ -62,6 +62,12 @@
 	var/last_special = 0
 	var/timeofdeath = 0
 
+	///A message sent when the mob dies, with the *deathgasp emote
+	var/death_message = ""
+	///A sound sent when the mob dies, with the *deathgasp emote
+	var/death_sound
+
+
 	/// Helper vars for quick access to firestacks, these should be updated every time firestacks are adjusted
 	var/on_fire = FALSE
 	var/fire_stacks = 0
@@ -145,21 +151,16 @@
 
 	///how much blood the mob has
 	var/blood_volume = 0
-	///Any ranged ability the mob has, as a click override
-	var/obj/effect/proc_holder/ranged_ability
 
 	///0 for no override, sets see_invisible = see_override in silicon & carbon life process via update_sight()
 	var/see_override = 0
 
 	///a list of all status effects the mob has
 	var/list/status_effects
-
 	var/list/implants = null
 
 	///used for database logging
 	var/last_words
-
-	var/list/obj/effect/proc_holder/abilities = list()
 
 	///whether this can be picked up and held.
 	var/can_be_held = FALSE
@@ -184,11 +185,11 @@
 
 	//this stuff is here to make it simple for admins to mess with custom held sprites
 	///left hand icon for holding mobs
-	var/icon/held_lh = 'icons/mob/pets_held_lh.dmi'
+	var/icon/held_lh = 'icons/mob/inhands/pets_held_lh.dmi'
 	///right hand icon for holding mobs
-	var/icon/held_rh = 'icons/mob/pets_held_rh.dmi'
+	var/icon/held_rh = 'icons/mob/inhands/pets_held_rh.dmi'
 	///what it looks like when the mob is held on your head
-	var/icon/head_icon = 'icons/mob/pets_held.dmi'
+	var/icon/head_icon = 'icons/mob/clothing/head/pets_held.dmi'
 	/// icon_state for holding mobs.
 	var/held_state = ""
 
@@ -209,3 +210,8 @@
 	var/native_fov = FOV_90_DEGREES
 	/// Lazy list of FOV traits that will apply a FOV view when handled.
 	var/list/fov_traits
+	///what multiplicative slowdown we get from turfs currently.
+	var/current_turf_slowdown = 0
+
+	/// Living mob's mood datum
+	var/datum/mood/mob_mood

@@ -197,6 +197,7 @@
 		to_chat(user, span_notice("You change [src]'s I/O settings, setting the input to [dir2text(input_dir)] and the output to [dir2text(output_dir)]."))
 		unregister_input_turf() // someone just rotated the input and output directions, unregister the old turf
 		register_input_turf() // register the new one
+		update_appearance(UPDATE_OVERLAYS)
 		return TRUE
 
 /obj/machinery/mineral/ore_redemption/ui_interact(mob/user, datum/tgui/ui)
@@ -359,3 +360,45 @@
 /obj/machinery/mineral/ore_redemption/update_icon_state()
 	icon_state = "[initial(icon_state)][powered() ? null : "-off"]"
 	return ..()
+
+/obj/machinery/mineral/ore_redemption/update_overlays()
+	. = ..()
+	if((machine_stat & NOPOWER))
+		return
+	var/image/ore_input
+	var/image/ore_output
+
+	switch(input_dir)
+		if(NORTH)
+			ore_input = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_n")
+			ore_input.pixel_y = 32
+			ore_output = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_s")
+			ore_output.pixel_y = -32
+		if(SOUTH)
+			ore_input = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_s")
+			ore_input.pixel_y = -32
+			ore_output = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_n")
+			ore_output.pixel_y = 32
+		if(EAST)
+			ore_input = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_e")
+			ore_input.pixel_x = 32
+			ore_output = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_w")
+			ore_output.pixel_x = -32
+		if(WEST)
+			ore_input = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_w")
+			ore_input.pixel_x = -32
+			ore_output = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_e")
+			ore_output.pixel_x = 32
+	ore_input.color = COLOR_MODERATE_BLUE
+	ore_output.color = COLOR_SECURITY_RED
+	var/mutable_appearance/light_in = emissive_appearance(ore_input.icon, ore_input.icon_state, alpha = ore_input.alpha)
+	light_in.pixel_y = ore_input.pixel_y
+	light_in.pixel_x = ore_input.pixel_x
+	var/mutable_appearance/light_out = emissive_appearance(ore_output.icon, ore_output.icon_state, alpha = ore_output.alpha)
+	light_out.pixel_y = ore_output.pixel_y
+	light_out.pixel_x = ore_output.pixel_x
+	. += ore_input
+	. += ore_output
+	. += light_in
+	. += light_out
+

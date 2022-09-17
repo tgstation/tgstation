@@ -20,7 +20,7 @@ Difficulty: Hard
 	icon_state = "wendigo"
 	icon_living = "wendigo"
 	icon_dead = "wendigo_dead"
-	icon = 'icons/mob/icemoon/64x64megafauna.dmi'
+	icon = 'icons/mob/simple/icemoon/64x64megafauna.dmi'
 	attack_verb_continuous = "claws"
 	attack_verb_simple = "claw"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
@@ -50,8 +50,8 @@ Difficulty: Hard
 	achievement_type = /datum/award/achievement/boss/wendigo_kill
 	crusher_achievement_type = /datum/award/achievement/boss/wendigo_crusher
 	score_achievement_type = /datum/award/score/wendigo_score
-	deathmessage = "falls, shaking the ground around it"
-	deathsound = 'sound/effects/gravhit.ogg'
+	death_message = "falls, shaking the ground around it"
+	death_sound = 'sound/effects/gravhit.ogg'
 	footstep_type = FOOTSTEP_MOB_HEAVY
 	attack_action_types = list(/datum/action/innate/megafauna_attack/heavy_stomp,
 							   /datum/action/innate/megafauna_attack/teleport,
@@ -137,9 +137,9 @@ Difficulty: Hard
 	stored_move_dirs |= direct
 	return ..()
 
-/mob/living/simple_animal/hostile/megafauna/wendigo/Moved(atom/oldloc, direct)
+/mob/living/simple_animal/hostile/megafauna/wendigo/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
-	stored_move_dirs &= ~direct
+	stored_move_dirs &= ~movement_dir
 	if(!stored_move_dirs)
 		INVOKE_ASYNC(GLOBAL_PROC, .proc/wendigo_slam, src, stomp_range, 1, 8)
 
@@ -303,16 +303,10 @@ Difficulty: Hard
 	if(!human_user.mind)
 		return
 	to_chat(human_user, span_danger("Power courses through you! You can now shift your form at will."))
-	var/obj/effect/proc_holder/spell/targeted/shapeshift/polar_bear/transformation_spell = new
-	human_user.mind.AddSpell(transformation_spell)
+	var/datum/action/cooldown/spell/shapeshift/polar_bear/transformation_spell = new(user.mind || user)
+	transformation_spell.Grant(user)
 	playsound(human_user.loc, 'sound/items/drink.ogg', rand(10,50), TRUE)
 	qdel(src)
-
-/obj/effect/proc_holder/spell/targeted/shapeshift/polar_bear
-	name = "Polar Bear Form"
-	desc = "Take on the shape of a polar bear."
-	invocation = "RAAAAAAAAWR!"
-	shapeshift_type = /mob/living/simple_animal/hostile/asteroid/polarbear/lesser
 
 /obj/item/crusher_trophy/wendigo_horn
 	name = "wendigo horn"

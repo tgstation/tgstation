@@ -42,6 +42,7 @@
 	desc = "Just looking at it makes you want to buy an SKS, go into the woods, and -operate-."
 	icon_state = "tactifool"
 	inhand_icon_state = "bl_suit"
+	has_sensor = HAS_SENSORS
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 50, ACID = 40)
 
 /obj/item/clothing/under/syndicate/tacticool/skirt
@@ -89,3 +90,12 @@
 	can_adjust = FALSE
 	armor = list(MELEE = 5, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 0, ACID = 0)
 	resistance_flags = NONE
+
+/obj/item/clothing/under/syndicate/scrubs
+	name = "tactical scrubs"
+	desc = "A deep burgundy set of scrubs, made tactically for tactical reasons."
+	icon = 'icons/obj/clothing/under/medical.dmi'
+	worn_icon = 'icons/mob/clothing/under/medical.dmi'
+	icon_state = "scrubswine"
+	can_adjust = FALSE
+	armor = list(MELEE = 10, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 50, FIRE = 50, ACID = 40)

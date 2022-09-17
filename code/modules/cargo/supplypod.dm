@@ -233,6 +233,7 @@
 /obj/structure/closet/supplypod/proc/preOpen() //Called before the open_pod() proc. Handles anything that occurs right as the pod lands.
 	var/turf/turf_underneath = get_turf(src)
 	var/list/B = explosionSize //Mostly because B is more readable than explosionSize :p
+	resistance_flags = initial(resistance_flags)
 	set_density(TRUE) //Density is originally false so the pod doesn't block anything while it's still falling through the air
 	AddComponent(/datum/component/pellet_cloud, projectile_type=shrapnel_type, magnitude=shrapnel_magnitude)
 	if(effectShrapnel)
@@ -249,9 +250,8 @@
 							break
 			if (effectOrgans) //effectOrgans means remove every organ in our mob
 				var/mob/living/carbon/carbon_target_mob = target_living
-				for(var/organ in carbon_target_mob.internal_organs)
+				for(var/obj/item/organ/organ_to_yeet as anything in carbon_target_mob.internal_organs)
 					var/destination = get_edge_target_turf(turf_underneath, pick(GLOB.alldirs)) //Pick a random direction to toss them in
-					var/obj/item/organ/organ_to_yeet = organ
 					organ_to_yeet.Remove(carbon_target_mob) //Note that this isn't the same proc as for lists
 					organ_to_yeet.forceMove(turf_underneath) //Move the organ outta the body
 					organ_to_yeet.throw_at(destination, 2, 3) //Thow the organ at a random tile 3 spots away
@@ -377,7 +377,7 @@
 
 	else if(isobj(to_insert))
 		var/obj/obj_to_insert = to_insert
-		if(istype(obj_to_insert, /obj/structure/closet/supplypod))
+		if(issupplypod(obj_to_insert))
 			return FALSE
 		if(istype(obj_to_insert, /obj/effect/supplypod_smoke))
 			return FALSE
@@ -447,7 +447,7 @@
 	rubble.setStyle(rubble_type, src)
 	update_appearance()
 
-/obj/structure/closet/supplypod/Moved()
+/obj/structure/closet/supplypod/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	deleteRubble()
 	return ..()
 
@@ -585,6 +585,7 @@
 	if (ispath(podParam)) //We can pass either a path for a pod (as expressconsoles do), or a reference to an instantiated pod (as the centcom_podlauncher does)
 		podParam = new podParam() //If its just a path, instantiate it
 	pod = podParam
+	pod.resistance_flags |= (INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF)
 	if (!pod.effectStealth)
 		helper = new (drop_location(), pod)
 		alpha = 255

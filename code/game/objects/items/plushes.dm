@@ -1,7 +1,7 @@
 /obj/item/toy/plush
 	name = "plush"
 	desc = "This is the special coder plush, do not steal."
-	icon = 'icons/obj/plushes.dmi'
+	icon = 'icons/obj/toys/plushes.dmi'
 	icon_state = "debug"
 	worn_icon_state = "plushie"
 	attack_verb_continuous = list("thumps", "whomps", "bumps")
@@ -112,7 +112,7 @@
 	if(stuffed || grenade)
 		to_chat(user, span_notice("You pet [src]. D'awww."))
 		if(grenade && !grenade.active)
-			log_game("[key_name(user)] activated a hidden grenade in [src].")
+			user.log_message("activated a hidden grenade in [src].", LOG_VICTIM)
 			grenade.arm_grenade(user, msg = FALSE, volume = 10)
 	else
 		to_chat(user, span_notice("You try to pet [src], but it has no stuffing. Aww..."))
@@ -144,7 +144,7 @@
 			user.put_in_hands(grenade)
 			grenade = null
 		return
-	if(istype(I, /obj/item/grenade))
+	if(isgrenade(I))
 		if(stuffed)
 			to_chat(user, span_warning("You need to remove some stuffing first!"))
 			return
@@ -156,8 +156,7 @@
 		user.visible_message(span_warning("[user] slides [grenade] into [src]."), \
 		span_danger("You slide [I] into [src]."))
 		grenade = I
-		var/turf/grenade_turf = get_turf(src)
-		log_game("[key_name(user)] added a grenade ([I.name]) to [src] at [AREACOORD(grenade_turf)].")
+		user.log_message("added a grenade ([I.name]) to [src]", LOG_GAME)
 		return
 	if(istype(I, /obj/item/toy/plush))
 		love(I, user)
@@ -403,7 +402,7 @@
 	var/obj/item/toy/plush/narplush/clash_target
 	gender = MALE //he's a boy, right?
 
-/obj/item/toy/plush/ratplush/Moved()
+/obj/item/toy/plush/ratplush/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(clash_target)
 		return
@@ -490,7 +489,7 @@
 	var/clashing
 	gender = FEMALE //it's canon if the toy is
 
-/obj/item/toy/plush/narplush/Moved()
+/obj/item/toy/plush/narplush/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	var/obj/item/toy/plush/ratplush/P = locate() in range(1, src)
 	if(P && istype(P.loc, /turf/open) && !P.clash_target && !clashing)
@@ -577,7 +576,7 @@
 	icon_state = "plushie_awake"
 	inhand_icon_state = "plushie_awake"
 
-/obj/item/toy/plush/awakenedplushie/ComponentInitialize()
+/obj/item/toy/plush/awakenedplushie/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/edit_complainer)
 
@@ -714,4 +713,16 @@
 	squeak_override = list(
 		'sound/weapons/egloves.ogg' = 2,
 		'sound/weapons/cablecuff.ogg' = 1,
+	)
+
+/obj/item/toy/plush/greek_cucumber
+	name = "cucumber greek"
+	desc = "A plushie depicting a large cucumber with eyes, it seems that according to the manufacturer of the toy, the human race will look like in the future."
+	icon_state = "cucumber"
+	inhand_icon_state = "cucumber"
+	attack_verb_continuous = list("squishуы", "creakes", "crunches")
+	attack_verb_simple = list("squish", "creak", "crunch")
+	squeak_override = list(
+		'sound/effects/slosh.ogg' = 1,
+		'sound/effects/splat.ogg' = 2
 	)

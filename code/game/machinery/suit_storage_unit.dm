@@ -112,6 +112,7 @@
 
 /obj/machinery/suit_storage_unit/rd
 	mask_type = /obj/item/clothing/mask/breath
+	storage_type = /obj/item/tank/internals/oxygen
 	mod_type = /obj/item/mod/control/pre_equipped/research
 
 /obj/machinery/suit_storage_unit/syndicate
@@ -121,7 +122,7 @@
 
 /obj/machinery/suit_storage_unit/radsuit
 	name = "radiation suit storage unit"
-	suit_type = /obj/item/clothing/suit/radiation
+	suit_type = /obj/item/clothing/suit/utility/radiation
 	helmet_type = /obj/item/clothing/head/radiation
 	storage_type = /obj/item/geiger_counter
 

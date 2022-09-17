@@ -16,7 +16,6 @@
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/attackby_hit)
 	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_WRENCH), .proc/tool_hit)
 	RegisterSignal(parent, COMSIG_ATOM_BUMPED, .proc/bumped_hit)
-	RegisterSignal(parent, COMSIG_MOVABLE_BUMP, .proc/bump_hit)
 	RegisterSignal(parent, COMSIG_ATOM_INTERCEPT_Z_FALL, .proc/intercept_z_fall)
 
 	src.tool_act_callback = tool_act_callback
@@ -33,7 +32,6 @@
 		COMSIG_PARENT_ATTACKBY,
 		COMSIG_ATOM_TOOL_ACT(TOOL_WRENCH),
 		COMSIG_ATOM_BUMPED,
-		COMSIG_MOVABLE_BUMP,
 		COMSIG_ATOM_INTERCEPT_Z_FALL,
 	)
 
@@ -208,50 +206,6 @@
 
 	playsound(get_turf(atom_source), 'sound/effects/supermatter.ogg', 50, TRUE)
 	consume(atom_source, hit_object)
-
-/datum/component/supermatter_crystal/proc/bump_hit(datum/source, atom/bumped_atom)
-	SIGNAL_HANDLER
-	var/atom/atom_source = source
-	if(isturf(bumped_atom))
-		var/turf/bumped_turf = bumped_atom
-		var/bumped_name = "\the [bumped_atom]"
-		var/bumped_text = span_danger("\The [atom_source] smacks into [bumped_name] and [bumped_atom.p_they()] rapidly flashes to ash!")
-		if(!bumped_turf.Melt())
-			return
-
-		atom_source.visible_message(
-			bumped_text,
-			null,
-			span_hear("You hear a loud crack as you are washed with a wave of heat.")
-		)
-		playsound(atom_source, 'sound/effects/supermatter.ogg', 50, TRUE)
-
-		var/suspicion = null
-		if (atom_source.fingerprintslast)
-			suspicion = "- and was last touched by [atom_source.fingerprintslast]"
-			message_admins("\The [atom_source] has consumed [bumped_name][suspicion].")
-		atom_source.investigate_log("has consumed [bumped_name][suspicion].")
-
-		radiation_pulse(atom_source, max_range = 6, threshold = 0.2, chance = 50)
-		return
-
-	if(isliving(bumped_atom))
-		atom_source.visible_message(
-			span_danger("\The [atom_source] slams into \the [bumped_atom] inducing a resonance... [bumped_atom.p_their()] body starts to glow and burst into flames before flashing into dust!"),
-			span_userdanger("\The [atom_source] slams into you as your ears are filled with unearthly ringing. Your last thought is \"Oh, fuck.\""),
-			span_hear("You hear an unearthly noise as a wave of heat washes over you.")
-		)
-	else if(isobj(bumped_atom) && !iseffect(bumped_atom))
-		atom_source.visible_message(
-			span_danger("\The [atom_source] smacks into \the [bumped_atom] and [bumped_atom.p_they()] rapidly flashes to ash."),
-			null,
-			span_hear("You hear a loud crack as you are washed with a wave of heat.")
-		)
-	else
-		return
-
-	playsound(atom_source, 'sound/effects/supermatter.ogg', 50, TRUE)
-	consume(atom_source, bumped_atom)
 
 /datum/component/supermatter_crystal/proc/intercept_z_fall(datum/source, list/falling_movables, levels)
 	SIGNAL_HANDLER

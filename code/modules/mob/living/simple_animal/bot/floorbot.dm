@@ -2,7 +2,7 @@
 /mob/living/simple_animal/bot/floorbot
 	name = "\improper Floorbot"
 	desc = "A little floor repairing robot, he looks so excited!"
-	icon = 'icons/mob/aibots.dmi'
+	icon = 'icons/mob/silicon/aibots.dmi'
 	icon_state = "floorbot0"
 	density = FALSE
 	health = 25
@@ -369,7 +369,7 @@
 			else if(F.broken || F.burnt)	//repair the tile and reset it to be undamaged (rather than replacing it)
 				F.broken = FALSE
 				F.burnt = FALSE
-				F.icon_state = initial(F.icon_state)
+				F.update_appearance()
 			else if(istype(is_this_maints, /area/station/maintenance))	//place catwalk if it's plating and we're in maints
 				F.PlaceOnTop(/turf/open/floor/catwalk_floor, flags = CHANGETURF_INHERIT_AIR)
 			else	//place normal tile if it's plating anywhere else

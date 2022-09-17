@@ -275,10 +275,6 @@
 	rest_icon.hud = src
 	static_inventory += rest_icon
 
-	internals = new /atom/movable/screen/internals()
-	internals.hud = src
-	infodisplay += internals
-
 	spacesuit = new /atom/movable/screen/spacesuit
 	spacesuit.hud = src
 	infodisplay += spacesuit

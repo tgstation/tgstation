@@ -115,7 +115,7 @@
 		/obj/item/storage/box/hug/plushes = 1,
 		/obj/item/storage/box/survival/engineer = 1,
 	)
-	belt = /obj/item/storage/belt/medical
+	belt = /obj/item/storage/belt/medical/ert
 	glasses = /obj/item/clothing/glasses/hud/health
 	l_hand = /obj/item/storage/medkit/regular
 	r_hand = /obj/item/gun/energy/e_gun
@@ -293,7 +293,7 @@
 		/obj/item/grenade/clusterbuster/cleaner = 1,
 		/obj/item/melee/baton/security/loaded = 1,
 		/obj/item/mop/advanced = 1,
-		/obj/item/reagent_containers/glass/bucket = 1,
+		/obj/item/reagent_containers/cup/bucket = 1,
 		/obj/item/storage/box/lights/mixed = 1,
 		/obj/item/storage/box/survival/engineer = 1,
 	)
@@ -417,7 +417,7 @@
 	back = /obj/item/storage/backpack/ert/janitor
 	backpack_contents = list(
 		/obj/item/mop/advanced = 1,
-		/obj/item/reagent_containers/glass/bucket = 1,
+		/obj/item/reagent_containers/cup/bucket = 1,
 		/obj/item/storage/box/lights/mixed = 1,
 		/obj/item/storage/box/survival/engineer = 1,
 	)
@@ -436,7 +436,7 @@
 	suit_store = null
 	back = /obj/item/storage/backpack/ert/security
 	backpack_contents = list(
-		/obj/item/clothing/head/helmet/police = 1,
+		/obj/item/clothing/head/warden/police = 1,
 		/obj/item/storage/box/handcuffs = 1,
 		/obj/item/storage/box/survival/engineer = 1,
 	)

@@ -15,7 +15,7 @@
 /mob/living/silicon/ai
 	name = "AI"
 	real_name = "AI"
-	icon = 'icons/mob/ai.dmi'
+	icon = 'icons/mob/silicon/ai.dmi'
 	icon_state = "ai"
 	move_resist = MOVE_FORCE_OVERPOWERING
 	density = TRUE
@@ -68,7 +68,7 @@
 
 	var/datum/trackable/track = new
 
-	var/last_paper_seen = null
+	var/last_tablet_note_seen = null
 	var/can_shunt = TRUE
 	var/last_announcement = "" // For AI VOX, if enabled
 	var/turf/waypoint //Holds the turf of the currently selected waypoint.
@@ -105,9 +105,15 @@
 	var/datum/station_alert/alert_control
 	///remember AI's last location
 	var/atom/lastloc
-	interaction_range = null
+	interaction_range = INFINITY
 
 	var/atom/movable/screen/ai/modpc/interfaceButton
+	///whether its mmi is a posibrain or regular mmi when going ai mob to ai core structure
+	var/posibrain_inside = FALSE
+	///whether its cover is opened, so you can wirecut it for deconstruction
+	var/opened = FALSE
+	///whether AI is anchored or not, used for checks
+	var/is_anchored = TRUE
 
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
 	. = ..()
@@ -133,6 +139,8 @@
 		if(mind.special_role)
 			to_chat(src, span_userdanger("You have been installed as an AI! "))
 			to_chat(src, span_danger("You must obey your silicon laws above all else. Your objectives will consider you to be dead."))
+		if(!mind.has_ever_been_ai)
+			mind.has_ever_been_ai = TRUE
 
 	to_chat(src, "<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>")
 	to_chat(src, "<B>To look at other parts of the station, click on yourself to get a camera menu.</B>")
@@ -146,13 +154,16 @@
 	job = "AI"
 
 	create_eye()
+
+	create_modularInterface()
+
 	if(client)
 		INVOKE_ASYNC(src, .proc/apply_pref_name, /datum/preference/name/ai, client)
 
 	INVOKE_ASYNC(src, .proc/set_core_display_icon)
 
 
-	holo_icon = getHologramIcon(icon('icons/mob/ai.dmi',"default"))
+	holo_icon = getHologramIcon(icon('icons/mob/silicon/ai.dmi',"default"))
 
 	spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(5, 0, src)
@@ -160,7 +171,6 @@
 
 	add_verb(src, /mob/living/silicon/ai/proc/show_laws_verb)
 
-	create_modularInterface()
 
 	aiMulti = new(src)
 	aicamera = new/obj/item/camera/siliconcam/ai_camera(src)
@@ -186,8 +196,8 @@
 	ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, ROUNDSTART_TRAIT)
 
 	alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER, ALARM_CAMERA, ALARM_BURGLAR, ALARM_MOTION), list(z), camera_view = TRUE)
-	RegisterSignal(alert_control.listener, COMSIG_ALARM_TRIGGERED, .proc/alarm_triggered)
-	RegisterSignal(alert_control.listener, COMSIG_ALARM_CLEARED, .proc/alarm_cleared)
+	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_TRIGGERED, .proc/alarm_triggered)
+	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_CLEARED, .proc/alarm_cleared)
 
 /mob/living/silicon/ai/key_down(_key, client/user)
 	if(findtext(_key, "numpad")) //if it's a numpad number, we can convert it to just the number
@@ -308,7 +318,7 @@
 		to_chat(usr, span_warning("Wireless control is disabled!"))
 		return
 
-	var/can_evac_or_fail_reason = SSshuttle.canEvac(src)
+	var/can_evac_or_fail_reason = SSshuttle.canEvac()
 	if(can_evac_or_fail_reason != TRUE)
 		to_chat(usr, span_alert("[can_evac_or_fail_reason]"))
 		return
@@ -327,25 +337,26 @@
 		if(C)
 			C.post_status("shuttle")
 
-/mob/living/silicon/ai/can_interact_with(atom/A)
+/mob/living/silicon/ai/can_interact_with(atom/A, treat_mob_as_adjacent)
 	. = ..()
-	var/turf/ai = get_turf(src)
-	var/turf/target = get_turf(A)
 	if (.)
 		return
+	var/turf/ai_turf = get_turf(src)
+	var/turf/target_turf = get_turf(A)
 
-	if(!target)
+	if(!target_turf)
 		return
 
-	if ((ai.z != target.z) && !is_station_level(ai.z))
+	if (!is_valid_z_level(ai_turf, target_turf))
 		return FALSE
 
 	if (istype(loc, /obj/item/aicard))
-		if (!ai || !target)
+		if (!ai_turf)
 			return FALSE
-		return ISINRANGE(target.x, ai.x - interaction_range, ai.x + interaction_range) && ISINRANGE(target.y, ai.y - interaction_range, ai.y + interaction_range)
+		return ISINRANGE(target_turf.x, ai_turf.x - interaction_range, ai_turf.x + interaction_range) \
+			&& ISINRANGE(target_turf.y, ai_turf.y - interaction_range, ai_turf.y + interaction_range)
 	else
-		return GLOB.cameranet.checkTurfVis(get_turf(A))
+		return GLOB.cameranet.checkTurfVis(target_turf)
 
 /mob/living/silicon/ai/cancel_camera()
 	view_core()
@@ -363,20 +374,61 @@
 			return
 		battery = battery - 50
 		to_chat(src, span_notice("You route power from your backup battery to move the bolts."))
-	var/is_anchored = FALSE
-	if(move_resist == MOVE_FORCE_OVERPOWERING)
+	flip_anchored()
+	to_chat(src, "<b>You are now [is_anchored ? "" : "un"]anchored.</b>")
+
+/mob/living/silicon/ai/proc/flip_anchored()
+	if(is_anchored)
+		is_anchored = !is_anchored
 		move_resist = MOVE_FORCE_NORMAL
 		status_flags |= CANPUSH //we want the core to be push-able when un-anchored
 		REMOVE_TRAIT(src, TRAIT_NO_TELEPORT, AI_ANCHOR_TRAIT)
 	else
-		is_anchored = TRUE
+		is_anchored = !is_anchored
 		move_resist = MOVE_FORCE_OVERPOWERING
 		status_flags &= ~CANPUSH //we dont want the core to be push-able when anchored
 		ADD_TRAIT(src, TRAIT_NO_TELEPORT, AI_ANCHOR_TRAIT)
 
-	to_chat(src, "<b>You are now [is_anchored ? "" : "un"]anchored.</b>")
-	// the message in the [] will change depending whether or not the AI is anchored
+/mob/living/silicon/ai/proc/ai_mob_to_structure()
+	disconnect_shell()
+	ShutOffDoomsdayDevice()
+	var/obj/structure/ai_core/deactivated/ai_core = new(get_turf(src), /* skip_mmi_creation = */ TRUE)
+	if(!make_mmi_drop_and_transfer(ai_core.core_mmi, the_core = ai_core))
+		return FALSE
+	qdel(src)
+	return TRUE
 
+/mob/living/silicon/ai/proc/make_mmi_drop_and_transfer(obj/item/mmi/the_mmi, the_core)
+	var/mmi_type
+	if(posibrain_inside)
+		mmi_type = new/obj/item/mmi/posibrain(src, /* autoping = */ FALSE)
+	else
+		mmi_type = new/obj/item/mmi(src)
+	if(hack_software)
+		new/obj/item/malf_upgrade(get_turf(src))
+	the_mmi = mmi_type
+	the_mmi.brain = new /obj/item/organ/internal/brain(the_mmi)
+	the_mmi.brain.organ_flags |= ORGAN_FROZEN
+	the_mmi.brain.name = "[real_name]'s brain"
+	the_mmi.name = "[initial(the_mmi.name)]: [real_name]"
+	the_mmi.set_brainmob(new /mob/living/brain(the_mmi))
+	the_mmi.brainmob.name = src.real_name
+	the_mmi.brainmob.real_name = src.real_name
+	the_mmi.brainmob.container = the_mmi
+	the_mmi.brainmob.set_suicide(suiciding)
+	the_mmi.brain.suicided = suiciding
+	if(the_core)
+		var/obj/structure/ai_core/core = the_core
+		core.core_mmi = the_mmi
+		the_mmi.forceMove(the_core)
+	else
+		the_mmi.forceMove(get_turf(src))
+	if(the_mmi.brainmob.stat == DEAD && !suiciding)
+		the_mmi.brainmob.set_stat(CONSCIOUS)
+	if(mind)
+		mind.transfer_to(the_mmi.brainmob)
+	the_mmi.update_appearance()
+	return TRUE
 
 /mob/living/silicon/ai/Topic(href, href_list)
 	..()
@@ -406,9 +458,9 @@
 		play_vox_word(href_list["say_word"], null, src)
 		return
 #endif
-	if(href_list["show_paper"])
-		if(last_paper_seen)
-			src << browse(last_paper_seen, "window=show_paper")
+	if(href_list["show_tablet_note"])
+		if(last_tablet_note_seen)
+			src << browse(last_tablet_note_seen, "window=show_tablet")
 	//Carn: holopad requests
 	if(href_list["jump_to_holopad"])
 		var/obj/machinery/holopad/Holopad = locate(href_list["jump_to_holopad"]) in GLOB.machines
@@ -455,7 +507,7 @@
 			break
 		if(!can_dominate_mechs && !mech_has_controlbeacon)
 			message_admins("Warning: possible href exploit by [key_name(usr)] - attempted control of a mecha without can_dominate_mechs or a control beacon in the mech.")
-			log_game("Warning: possible href exploit by [key_name(usr)] - attempted control of a mecha without can_dominate_mechs or a control beacon in the mech.")
+			usr.log_message("possibly attempting href exploit - attempted control of a mecha without can_dominate_mechs or a control beacon in the mech.", LOG_ADMIN)
 			return
 
 		if(controlled_equipment)
@@ -469,6 +521,12 @@
 			return
 		if(M)
 			M.transfer_ai(AI_MECH_HACK, src, usr) //Called om the mech itself.
+	if(href_list["show_paper_note"])
+		var/obj/item/paper/paper_note = locate(href_list["show_paper_note"])
+		if(!paper_note)
+			return
+
+		paper_note.show_through_camera(usr)
 
 
 /mob/living/silicon/ai/proc/switchCamera(obj/machinery/camera/C)
@@ -603,7 +661,7 @@
 					var/list/personnel_list = list()
 
 					for(var/datum/data/record/record_datum in GLOB.data_core.locked)//Look in data core locked.
-						personnel_list["[record_datum.fields["name"]]: [record_datum.fields["rank"]]"] = record_datum.fields["image"]//Pull names, rank, and image.
+						personnel_list["[record_datum.fields["name"]]: [record_datum.fields["rank"]]"] = record_datum.fields["character_appearance"]//Pull names, rank, and image.
 
 					if(!length(personnel_list))
 						tgui_alert(usr,"No suitable records found. Aborting.")
@@ -613,10 +671,13 @@
 						return
 					if(isnull(personnel_list[input]))
 						return
-					var/icon/character_icon = personnel_list[input]
+					var/mutable_appearance/character_icon = personnel_list[input]
 					if(character_icon)
 						qdel(holo_icon)//Clear old icon so we're not storing it in memory.
-						holo_icon = getHologramIcon(icon(character_icon))
+						character_icon.setDir(SOUTH)
+
+						var/icon/icon_for_holo = getFlatIcon(character_icon)
+						holo_icon = getHologramIcon(icon(icon_for_holo))
 
 				if("My Character")
 					switch(tgui_alert(usr,"WARNING: Your AI hologram will take the appearance of your currently selected character ([usr.client.prefs?.read_preference(/datum/preference/name/real_name)]). Are you sure you want to proceed?", "Customize", list("Yes","No")))
@@ -633,19 +694,19 @@
 
 		if("Animal")
 			var/list/icon_list = list(
-			"bear" = 'icons/mob/animal.dmi',
-			"carp" = 'icons/mob/carp.dmi',
-			"chicken" = 'icons/mob/animal.dmi',
-			"corgi" = 'icons/mob/pets.dmi',
-			"cow" = 'icons/mob/animal.dmi',
-			"crab" = 'icons/mob/animal.dmi',
-			"fox" = 'icons/mob/pets.dmi',
-			"goat" = 'icons/mob/animal.dmi',
-			"cat" = 'icons/mob/pets.dmi',
-			"cat2" = 'icons/mob/pets.dmi',
-			"poly" = 'icons/mob/animal.dmi',
-			"pug" = 'icons/mob/pets.dmi',
-			"spider" = 'icons/mob/animal.dmi'
+			"bear" = 'icons/mob/simple/animal.dmi',
+			"carp" = 'icons/mob/simple/carp.dmi',
+			"chicken" = 'icons/mob/simple/animal.dmi',
+			"corgi" = 'icons/mob/simple/pets.dmi',
+			"cow" = 'icons/mob/simple/animal.dmi',
+			"crab" = 'icons/mob/simple/animal.dmi',
+			"fox" = 'icons/mob/simple/pets.dmi',
+			"goat" = 'icons/mob/simple/animal.dmi',
+			"cat" = 'icons/mob/simple/pets.dmi',
+			"cat2" = 'icons/mob/simple/pets.dmi',
+			"poly" = 'icons/mob/simple/animal.dmi',
+			"pug" = 'icons/mob/simple/pets.dmi',
+			"spider" = 'icons/mob/simple/animal.dmi'
 			)
 
 			input = tgui_input_list(usr, "Select a hologram", "Hologram", sort_list(icon_list))
@@ -665,11 +726,11 @@
 					holo_icon = getHologramIcon(icon(icon_list[input], input))
 		else
 			var/list/icon_list = list(
-				"default" = 'icons/mob/ai.dmi',
-				"floating face" = 'icons/mob/ai.dmi',
-				"xeno queen" = 'icons/mob/alien.dmi',
-				"horror" = 'icons/mob/ai.dmi',
-				"clock" = 'icons/mob/ai.dmi'
+				"default" = 'icons/mob/silicon/ai.dmi',
+				"floating face" = 'icons/mob/silicon/ai.dmi',
+				"xeno queen" = 'icons/mob/nonhuman-player/alien.dmi',
+				"horror" = 'icons/mob/silicon/ai.dmi',
+				"clock" = 'icons/mob/silicon/ai.dmi'
 				)
 
 			input = tgui_input_list(usr, "Select a hologram", "Hologram", sort_list(icon_list))
@@ -774,7 +835,7 @@
 			to_chat(user, span_warning("No intelligence patterns detected."))
 			return
 		ShutOffDoomsdayDevice()
-		var/obj/structure/ai_core/new_core = new /obj/structure/ai_core/deactivated(loc)//Spawns a deactivated terminal at AI location.
+		var/obj/structure/ai_core/new_core = new /obj/structure/ai_core/deactivated(loc, posibrain_inside)//Spawns a deactivated terminal at AI location.
 		new_core.circuit.battery = battery
 		ai_restore_power()//So the AI initially has power.
 		control_disabled = TRUE //Can't control things remotely if you're stuck in a card!

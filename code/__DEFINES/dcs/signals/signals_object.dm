@@ -59,6 +59,9 @@
 /// from /obj/machinery/atmospherics/components/unary/cryo_cell/set_on(bool): (on)
 #define COMSIG_CRYO_SET_ON "cryo_set_on"
 
+/// from /obj/proc/unfreeze()
+#define COMSIG_OBJ_UNFREEZE "obj_unfreeze"
+
 // /obj/machinery/atmospherics/components/binary/valve signals
 
 /// from /obj/machinery/atmospherics/components/binary/valve/toggle(): (on)
@@ -228,8 +231,6 @@
 
 ///from [/mob/living/carbon/human/Move]: ()
 #define COMSIG_SHOES_STEP_ACTION "shoes_step_action"
-///from base of /obj/item/clothing/suit/space/proc/toggle_spacesuit(): (obj/item/clothing/suit/space/suit)
-#define COMSIG_SUIT_SPACE_TOGGLE "suit_space_toggle"
 
 // /obj/item/implant signals
 ///from base of /obj/item/implant/proc/activate(): ()
@@ -312,31 +313,6 @@
 //called in /obj/item/organ/cyberimp/chest/thrusters/proc/toggle() : ()
 #define COMSIG_THRUSTER_DEACTIVATED "jetmodule_deactivated"
 
-// /obj/effect/proc_holder/spell signals
-
-///called from /obj/effect/proc_holder/spell/cast_check (src)
-#define COMSIG_MOB_PRE_CAST_SPELL "mob_cast_spell"
-	/// Return to cancel the cast from beginning.
-	#define COMPONENT_CANCEL_SPELL (1<<0)
-///called from /obj/effect/proc_holder/spell/perform (src)
-#define COMSIG_MOB_CAST_SPELL "mob_cast_spell"
-
-/// Sent from /obj/effect/proc_holder/spell/targeted/lichdom/cast(), to the item being imbued: (mob/user)
-#define COMSIG_ITEM_IMBUE_SOUL "item_imbue_soul"
-	/// Returns to block this item from being imbued into a phylactery
-	#define COMPONENT_BLOCK_IMBUE (1 << 0)
-/// Sent from /obj/effect/proc_holder/spell/targeted/summonitem/cast(), to the item being marked : ()
-#define COMSIG_ITEM_MARK_RETRIEVAL "item_mark_retrieval"
-	/// Returns to block this item from being marked for instant summons
-	#define COMPONENT_BLOCK_MARK_RETRIEVAL (1<<0)
-
-/// Sent from /obj/effect/proc_holder/spell/targeted/charge/cast(), to the item in hand being charged: (obj/effect/proc_holder/spell/targeted/charge/spell, mob/living/caster)
-#define COMSIG_ITEM_MAGICALLY_CHARGED "item_magic_charged"
-	/// Returns if an item was successfuly recharged
-	#define COMPONENT_ITEM_CHARGED (1 << 0)
-	/// Returns if the item had a negative side effect occur while recharging
-	#define COMPONENT_ITEM_BURNT_OUT (1 << 1)
-
 // /obj/item/camera signals
 
 ///from /obj/item/camera/captureimage(): (atom/target, mob/user)
@@ -363,7 +339,9 @@
 #define COMSIG_PROJECTILE_FIRE "projectile_fire"
 ///sent to targets during the process_hit proc of projectiles
 #define COMSIG_PROJECTILE_PREHIT "com_proj_prehit"
-///sent to targets during the process_hit proc of projectiles
+///from the base of /obj/projectile/Range(): ()
+#define COMSIG_PROJECTILE_RANGE "projectile_range"
+///from the base of /obj/projectile/on_range(): ()
 #define COMSIG_PROJECTILE_RANGE_OUT "projectile_range_out"
 ///from [/obj/item/proc/tryEmbed] sent when trying to force an embed (mainly for projectiles and eating glass)
 #define COMSIG_EMBED_TRY_FORCE "item_try_embed"
@@ -384,6 +362,13 @@
 #define COMSIG_VIM_HEADLIGHTS_TOGGLED "vim_headlights_toggled"
 
 // /obj/vehicle/sealed/mecha signals
+
+/// sent if you attach equipment to mecha
+#define COMSIG_MECHA_EQUIPMENT_ATTACHED "mecha_equipment_attached"
+/// sent if you detach equipment to mecha
+#define COMSIG_MECHA_EQUIPMENT_DETACHED "mecha_equipment_detached"
+/// sent when you are able to drill through a mob
+#define COMSIG_MECHA_DRILL_MOB "mecha_drill_mob"
 
 ///sent from mecha action buttons to the mecha they're linked to
 #define COMSIG_MECHA_ACTION_TRIGGER "mecha_action_activate"
@@ -420,7 +405,7 @@
 ///from base of obj/item/attack_qdeleted(): (atom/target, mob/user, params)
 #define COMSIG_ITEM_ATTACK_QDELETED "item_attack_qdeleted"
 
-///from /obj/item/assembly/proc/pulsed()
+///from /obj/item/assembly/proc/pulsed(mob/pulser)
 #define COMSIG_ASSEMBLY_PULSED "assembly_pulsed"
 
 ///from base of /obj/item/mmi/set_brainmob(): (mob/living/brain/new_brainmob)
@@ -429,3 +414,6 @@
 /// from base of /obj/item/slimepotion/speed/afterattack(): (obj/target, /obj/src, mob/user)
 #define COMSIG_SPEED_POTION_APPLIED "speed_potion"
 	#define SPEED_POTION_STOP (1<<0)
+
+/// from /obj/structure/sign/poster/trap_succeeded() : (mob/user)
+#define COMSIG_POSTER_TRAP_SUCCEED "poster_trap_succeed"

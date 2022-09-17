@@ -18,8 +18,6 @@
 		add_overlay(overlay)
 	return ..()
 
-
-
 //[[[[BRAIN]]]]
 
 /obj/item/organ/internal/cyberimp/brain
@@ -120,7 +118,7 @@
 	. = ..()
 	UnregisterSignal(implant_owner, signalCache)
 
-/obj/item/organ/internal/cyberimp/brain/anti_stun/Insert()
+/obj/item/organ/internal/cyberimp/brain/anti_stun/Insert(special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
 	RegisterSignal(owner, signalCache, .proc/on_signal)
 
@@ -172,10 +170,10 @@
 	desc = "A sleek, sturdy box."
 	icon_state = "cyber_implants"
 	var/list/boxed = list(
-		/obj/item/autosurgeon/organ/syndicate/thermal_eyes,
-		/obj/item/autosurgeon/organ/syndicate/xray_eyes,
-		/obj/item/autosurgeon/organ/syndicate/anti_stun,
-		/obj/item/autosurgeon/organ/syndicate/reviver)
+		/obj/item/autosurgeon/syndicate/thermal_eyes,
+		/obj/item/autosurgeon/syndicate/xray_eyes,
+		/obj/item/autosurgeon/syndicate/anti_stun,
+		/obj/item/autosurgeon/syndicate/reviver)
 	var/amount = 5
 
 /obj/item/storage/box/cyber_implants/PopulateContents()

@@ -25,7 +25,7 @@
 		JOB_CHIEF_ENGINEER = /area/station/command/heads_quarters/ce,
 		JOB_HEAD_OF_PERSONNEL = /area/station/command/heads_quarters/hop,
 		JOB_CAPTAIN = /area/station/command/heads_quarters/captain, // For head roles so that they can still get this objective.
-		JOB_QUARTERMASTER = /area/station/cargo/qm,
+		JOB_QUARTERMASTER = /area/station/command/heads_quarters/qm,
 	)
 	var/datum/job/target_office
 	var/requires_head_as_supervisor = TRUE
@@ -109,7 +109,7 @@
 	desc = "It looks dangerous."
 	item_flags = EXAMINE_SKIP
 
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "bug"
 
 	/// The area at which this bug can be planted at. Has to be a type.
@@ -181,7 +181,7 @@
 		planted_on.vis_contents -= src
 	return ..()
 
-/obj/item/traitor_bug/Moved(atom/OldLoc, Dir)
+/obj/item/traitor_bug/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(planted_on)
 		planted_on.vis_contents -= src
@@ -195,7 +195,7 @@
 
 	anchored = TRUE
 
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "bug-animated"
 
 /obj/structure/traitor_bug/Initialize(mapload)

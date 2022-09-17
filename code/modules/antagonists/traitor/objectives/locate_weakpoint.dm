@@ -3,6 +3,7 @@
 	objectives = list(
 		/datum/traitor_objective/locate_weakpoint = 1,
 	)
+	weight = OBJECTIVE_WEIGHT_TINY
 
 /datum/traitor_objective/locate_weakpoint
 	name = "Triangulate station's structural weakpoint and detonate an explosive charge nearby."
@@ -43,7 +44,6 @@
 		weakpoint_areas = list()
 		/// List of high-security areas that we pick required ones from
 		var/list/allowed_areas = typecacheof(list(/area/station/command,
-			/area/station/cargo/qm,
 			/area/station/comms,
 			/area/station/engineering,
 			/area/station/science,
@@ -70,8 +70,11 @@
 	var/area/weakpoint_area2 = weakpoint_areas[2]
 	replace_in_name("%AREA1%", initial(weakpoint_area1.name))
 	replace_in_name("%AREA2%", initial(weakpoint_area2.name))
-	RegisterSignal(generating_for, COMSIG_GLOB_TRAITOR_OBJECTIVE_COMPLETED, .proc/on_global_obj_completed)
+	RegisterSignal(SSdcs, COMSIG_GLOB_TRAITOR_OBJECTIVE_COMPLETED, .proc/on_global_obj_completed)
 	return TRUE
+
+/datum/traitor_objective/locate_weakpoint/ungenerate_objective()
+	UnregisterSignal(SSdcs, COMSIG_GLOB_TRAITOR_OBJECTIVE_COMPLETED)
 
 /datum/traitor_objective/locate_weakpoint/proc/on_global_obj_completed(datum/source, datum/traitor_objective/objective)
 	SIGNAL_HANDLER
@@ -110,29 +113,12 @@
 	weakpoint_found = TRUE
 
 /datum/traitor_objective/locate_weakpoint/proc/create_shockwave(center_x, center_y, center_z)
-	var/severity = list(EXPLODE_LIGHT, EXPLODE_LIGHT, EXPLODE_LIGHT, EXPLODE_LIGHT, EXPLODE_HEAVY, EXPLODE_HEAVY, EXPLODE_DEVASTATE) //Can't use pick_weight because explode defines are numbers
-	var/wave_amount = rand(5, 8)
-	var/list/bombed_turfs = list()
-	for(var/i in 1 to wave_amount)
-		var/wave_angle = rand(-10, 10) + 360 / wave_amount * i
-		var/wave_distance = rand(17, 25)
-		var/turf/tentacle_ending = locate(clamp(center_x + round(cos(wave_angle) * wave_distance), 1, world.maxx), clamp(center_y + round(sin(wave_angle) * wave_distance), 1, world.maxy), center_z)
-		if(!tentacle_ending) //WUT
-			continue
-
-		var/turf/epicenter = locate(center_x, center_y, center_z)
-		for(var/turf/line_turf in get_line(epicenter, tentacle_ending))
-			for(var/turf/bomb_turf in range(1, line_turf))
-				if((bomb_turf in bombed_turfs) || bomb_turf == epicenter)
-					continue
-				bombed_turfs += bomb_turf
-				var/turf_severity = pick(severity)
-				EX_ACT(line_turf, turf_severity)
-				for(var/atom/victim in line_turf)
-					EX_ACT(victim, turf_severity - 1)
-
-		explosion(tentacle_ending, devastation_range = 1, heavy_impact_range = 3, light_impact_range = 5, explosion_cause = src)
-
+	var/turf/epicenter = locate(center_x, center_y, center_z)
+	var/lowpop = (length(GLOB.clients) <= CONFIG_GET(number/minimal_access_threshold))
+	if(lowpop)
+		explosion(epicenter, devastation_range = 2, heavy_impact_range = 4, light_impact_range = 6, explosion_cause = src)
+	else
+		explosion(epicenter, devastation_range = 3, heavy_impact_range = 6, light_impact_range = 9, explosion_cause = src)
 	priority_announce(
 				"Attention crew, it appears that a high-power explosive charge has been detonated in your station's weakpoint, causing severe structural damage.",
 				"[command_name()] High-Priority Update"
@@ -146,8 +132,8 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "weakpoint_locator"
 	inhand_icon_state = "weakpoint_locator"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	throwforce = 0
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
@@ -270,6 +256,10 @@
 	if (target_area.type != objective.weakpoint_areas[3])
 		var/area/weakpoint_area = objective.weakpoint_areas[3]
 		to_chat(user, span_warning("[src] can only be detonated in [initial(weakpoint_area.name)]."))
+		return
+
+	if(!isfloorturf(target) && !iswallturf(target))
+		to_chat(user, span_warning("[src] can only be planted on a wall or the floor!"))
 		return
 
 	return ..()

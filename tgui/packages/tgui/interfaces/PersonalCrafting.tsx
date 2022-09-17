@@ -122,7 +122,9 @@ const remapData = (rawData: RawData): Data => {
       continue;
     }
 
-    throw new Error(`Invalid entry in 'crafting_recipes', neither '{ has_subcats: 1 }' nor 'Recipe[]'`);
+    throw new Error(
+      `Invalid entry in 'crafting_recipes', neither '{ has_subcats: 1 }' nor 'Recipe[]'`
+    );
   }
 
   return {
@@ -134,34 +136,26 @@ const remapData = (rawData: RawData): Data => {
   };
 };
 
-const isCategorySelected = (data: Data, item: Category | Recipe) => (
-  data.dm_category === item.dm_category
-  && (!data.dm_subcategory || data.dm_subcategory === item.dm_subcategory)
-);
+const isCategorySelected = (data: Data, item: Category | Recipe) =>
+  data.dm_category === item.dm_category &&
+  (!data.dm_subcategory || data.dm_subcategory === item.dm_subcategory);
 
 export const PersonalCrafting = (props, context) => {
   const { act, data: rawData } = useBackend<RawData>(context);
   const data = remapData(rawData);
 
-  const {
-    busy,
-    display_craftable_only,
-    display_compact,
-    recipes,
-    groups,
-  } = data;
+  const { busy, display_craftable_only, display_compact, recipes, groups } =
+    data;
 
   const shownRecipes = flow([
-    filter<Recipe>((recipe) => (
-      // Show selected category only
-      isCategorySelected(data, recipe)
-      // If craftable only is selected, then filter by craftability
-      && (!display_craftable_only || recipe.craftable)
-    )),
-    sortBy<Recipe>((recipe) => [
-      -recipe.craftable,
-      recipe.name,
-    ]),
+    filter<Recipe>(
+      (recipe) =>
+        // Show selected category only
+        isCategorySelected(data, recipe) &&
+        // If craftable only is selected, then filter by craftability
+        (!display_craftable_only || recipe.craftable)
+    ),
+    sortBy<Recipe>((recipe) => [-recipe.craftable, recipe.name]),
   ])(recipes);
 
   return (
@@ -178,10 +172,12 @@ export const PersonalCrafting = (props, context) => {
                       fluid
                       color="transparent"
                       selected={isCategorySelected(data, category)}
-                      onClick={() => act('set_category', {
-                        category: category.dm_category,
-                        subcategory: category.dm_subcategory,
-                      })}>
+                      onClick={() =>
+                        act('set_category', {
+                          category: category.dm_category,
+                          subcategory: category.dm_subcategory,
+                        })
+                      }>
                       {category.name}
                     </Button>
                   ))}
@@ -216,7 +212,8 @@ export const PersonalCrafting = (props, context) => {
                 ) : (
                   <CraftingList
                     recipes={shownRecipes}
-                    compact={Boolean(display_compact)} />
+                    compact={Boolean(display_compact)}
+                  />
                 )}
               </Section>
             </Section>
@@ -256,16 +253,13 @@ const CraftingList = (props: CraftingListProps, context) => {
         }
       }}>
       <div className="PersonalCraftingGridItem__content">
-        <div className="PersonalCraftingGridItem__name">
-          {recipe.name}
-        </div>
-        {!!recipe.req_text && (
+        <div className="PersonalCraftingGridItem__name">{recipe.name}</div>
+        {!!recipe.req_text &&
           recipe.req_text.split(', ').map((req, i) => (
             <div key={req + i} className="PersonalCraftingGridItem__prereq">
               {req}
             </div>
-          ))
-        )}
+          ))}
         {!!recipe.catalyst_text && (
           <div className="PersonalCraftingGridItem__extra">
             <b>Catalyst:</b> {recipe.catalyst_text}
@@ -295,21 +289,20 @@ const CompactCraftingList = (props: CraftingListProps, context) => {
           <Table.Cell bold maxWidth="250px">
             {recipe.name}
           </Table.Cell>
-          <Table.Cell opacity={0.6}>
-            {recipe.req_text}
-          </Table.Cell>
+          <Table.Cell opacity={0.6}>{recipe.req_text}</Table.Cell>
           <Table.Cell collapsing>
             <Button
               icon="cog"
               content="Craft"
               disabled={!recipe.craftable}
-              tooltip={
-                recipe.tool_text && 'Tools needed: ' + recipe.tool_text
-              }
+              tooltip={recipe.tool_text && 'Tools needed: ' + recipe.tool_text}
               tooltipPosition="left"
-              onClick={() => act('make', {
-                recipe: recipe.ref,
-              })} />
+              onClick={() =>
+                act('make', {
+                  recipe: recipe.ref,
+                })
+              }
+            />
           </Table.Cell>
         </tr>
       ))}

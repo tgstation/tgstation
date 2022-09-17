@@ -2,24 +2,27 @@
 	name = "Brand Intelligence"
 	typepath = /datum/round_event/brand_intelligence
 	weight = 5
+	category = EVENT_CATEGORY_AI
+	description = "Vending machines will attack people until the Patient Zero is disabled."
 
 	min_players = 15
 	max_occurrences = 1
 
 /datum/round_event/brand_intelligence
-	announceWhen = 21
-	endWhen = 1000 //Ends when all vending machines are subverted anyway.
+	announce_when = 21
+	end_when = 1000 //Ends when all vending machines are subverted anyway.
 	var/list/obj/machinery/vending/vendingMachines = list()
 	var/list/obj/machinery/vending/infectedMachines = list()
 	var/obj/machinery/vending/originMachine
 	var/list/rampant_speeches = list(
-		"Try our aggressive new marketing strategies!", \
-		"You should buy products to feed your lifestyle obsession!", \
-		"Consume!", \
-		"Your money can buy happiness!", \
-		"Engage direct marketing!", \
-		"Advertising is legalized lying! But don't let that put you off our great deals!", \
-		"You don't want to buy anything? Yeah, well, I didn't want to buy your mom either.")
+		"Try our aggressive new marketing strategies!",
+		"You should buy products to feed your lifestyle obsession!",
+		"Consume!",
+		"Your money can buy happiness!",
+		"Engage direct marketing!",
+		"Advertising is legalized lying! But don't let that put you off our great deals!",
+		"You don't want to buy anything? Yeah, well, I didn't want to buy your mom either.",
+	)
 
 
 /datum/round_event/brand_intelligence/announce(fake)

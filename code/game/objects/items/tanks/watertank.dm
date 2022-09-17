@@ -311,7 +311,7 @@
 		COOLDOWN_START(src, resin_cooldown, 10 SECONDS)
 		R.remove_any(100)
 		var/obj/effect/resin_container/resin = new (get_turf(src))
-		log_game("[key_name(user)] used Resin Launcher at [AREACOORD(user)].")
+		user.log_message("used Resin Launcher", LOG_GAME)
 		playsound(src,'sound/items/syringeproj.ogg',40,TRUE)
 		var/delay = 2
 		var/datum/move_loop/loop = SSmove_manager.move_towards(resin, target, delay, timeout = delay * 5, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
@@ -469,4 +469,7 @@
 	var/used_amount = inj_am / usage_ratio
 	reagents.trans_to(user, used_amount, multiplier=usage_ratio, methods = INJECT)
 	update_appearance()
-	user.update_inv_back() //for overlays update
+	user.update_worn_back() //for overlays update
+
+/datum/action/item_action/activate_injector
+	name = "Activate Injector"

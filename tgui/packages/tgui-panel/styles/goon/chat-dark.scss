@@ -86,13 +86,13 @@ a.popt {
   color: #333;
 }
 
-.popup input[type=text]:hover,
-.popup input[type=text]:active,
-.popup input[type=text]:focus {
+.popup input[type='text']:hover,
+.popup input[type='text']:active,
+.popup input[type='text']:focus {
   border-color: green;
 }
 
-.popup input[type=submit] {
+.popup input[type='submit'] {
   padding: 5px 10px;
   background: #999;
   color: #ddd;
@@ -101,9 +101,9 @@ a.popt {
   font-weight: bold;
 }
 
-.popup input[type=submit]:hover,
-.popup input[type=submit]:focus,
-.popup input[type=submit]:active {
+.popup input[type='submit']:hover,
+.popup input[type='submit']:focus,
+.popup input[type='submit']:active {
   background: #aaa;
   cursor: pointer;
 }
@@ -128,7 +128,7 @@ a.popt {
   text-align: center;
 }
 
-.highlightPopup input[type=text] {
+.highlightPopup input[type='text'] {
   display: block;
   width: 215px;
   text-align: left;
@@ -136,17 +136,14 @@ a.popt {
 }
 
 .highlightPopup input.highlightColor {
-  background-color: #FFFF00;
+  background-color: #ffff00;
 }
 
 .highlightPopup input.highlightTermSubmit {
   margin-top: 5px;
 }
 
-
-
 /* ADMIN CONTEXT MENU */
-
 
 .contextMenu {
   background-color: #ddd;
@@ -166,10 +163,7 @@ a.popt {
   background-color: #ccc;
 }
 
-
-
 /* ADMIN FILTER MESSAGES MENU */
-
 
 .filterMessages {
   padding: 5px;
@@ -193,21 +187,13 @@ a.popt {
   margin-top: -2px;
 }
 
-
-
-
 /*****************************************
 *
 * OUTPUT ACTUALLY RELATED TO MESSAGES
 *
 ******************************************/
 
-
-
-
-
 /* MOTD */
-
 
 .motd {
   color: #a4bad6;
@@ -233,10 +219,7 @@ a.popt {
   color: #a4bad6;
 }
 
-
-
 /* ADD HERE FOR BOLD */
-
 
 .bold,
 .name,
@@ -250,30 +233,31 @@ a.popt {
   font-weight: bold;
 }
 
-
-
 /* ADD HERE FOR ITALIC */
 
-
-.italic, .italics {
+.italic,
+.italics {
   font-style: italic;
 }
 
-
-
 /* OUTPUT COLORS */
-
 
 .highlight {
   background: yellow;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: #a4bad6;
   font-family: Georgia, Verdana, sans-serif;
 }
 
-h1.alert, h2.alert {
+h1.alert,
+h2.alert {
   color: #a4bad6;
 }
 
@@ -311,7 +295,11 @@ em {
   font-weight: bold;
 }
 
-.say, .emote, .infoplain, .oocplain, .warningplain {
+.say,
+.emote,
+.infoplain,
+.oocplain,
+.warningplain {
 }
 
 .deadsay {
@@ -326,7 +314,8 @@ em {
   color: #00ff00;
 }
 
-.binarysay a:active, .binarysay a:visited {
+.binarysay a:active,
+.binarysay a:visited {
   color: #88ff88;
 }
 
@@ -426,7 +415,7 @@ em {
 }
 
 .alertwarning {
-  color: #FF0000;
+  color: #ff0000;
   font-weight: bold;
 }
 
@@ -528,7 +517,7 @@ em {
 }
 
 .red {
-  color: #FF0000;
+  color: #ff0000;
 }
 
 .blue {
@@ -584,7 +573,7 @@ em {
 }
 
 .colossus {
-  color: #7F282A;
+  color: #7f282a;
   font-size: 310%;
 }
 
@@ -668,7 +657,7 @@ em {
 }
 
 .alertsyndie {
-  color: #FF0000;
+  color: #ff0000;
   font-size: 185%;
   font-weight: bold;
 }
@@ -684,20 +673,20 @@ em {
 }
 
 .sans {
-  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
 }
 
 .papyrus {
-  font-family: "Papyrus", cursive, sans-serif;
+  font-family: 'Papyrus', cursive, sans-serif;
 }
 
 .robot {
-  font-family: "Courier New", cursive, sans-serif;
+  font-family: 'Courier New', cursive, sans-serif;
 }
 
 .tape_recorder {
-  color: #FF0000;
-  font-family: "Courier New", cursive, sans-serif;
+  color: #ff0000;
+  font-family: 'Courier New', cursive, sans-serif;
 }
 
 .command_headset {
@@ -734,18 +723,18 @@ em {
 .clown {
   color: #ff70c1;
   font-size: 160%;
-  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
   font-weight: bold;
 }
 
 .singing {
-  font-family: "Trebuchet MS", cursive, sans-serif;
+  font-family: 'Trebuchet MS', cursive, sans-serif;
   font-style: italic;
 }
 
 .his_grace {
-  color: #15D512;
-  font-family: "Courier New", cursive, sans-serif;
+  color: #15d512;
+  font-family: 'Courier New', cursive, sans-serif;
   font-style: italic;
 }
 
@@ -830,7 +819,7 @@ em {
 }
 
 .slime {
-  color: #00CED1;
+  color: #00ced1;
 }
 
 .drone {
@@ -842,11 +831,11 @@ em {
 }
 
 .swarmer {
-  color: #2C75FF;
+  color: #2c75ff;
 }
 
 .resonate {
-  color: #298F85;
+  color: #298f85;
 }
 
 .monkeyhive {
@@ -858,7 +847,8 @@ em {
   font-size: 80%;
 }
 
-.connectionClosed, .fatalError {
+.connectionClosed,
+.fatalError {
   background: red;
   color: white;
   padding: 5px;
@@ -873,10 +863,7 @@ em {
   font-weight: bold;
 }
 
-
-
 /* HELPER CLASSES */
-
 
 .text-normal {
   font-weight: normal;
@@ -898,6 +885,13 @@ em {
 
 .ml-3 {
   margin-left: 3em;
+}
+
+.examine_block {
+  background: #1b1c1e;
+  border: 1px solid #a4bad6;
+  margin: 0.5em;
+  padding: 0.5em 0.75em;
 }
 
 .tooltip {

@@ -16,6 +16,10 @@
 	var/tomail = FALSE // contains wrapped package
 	var/hasmob = FALSE // contains a mob
 
+/obj/structure/disposalholder/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_WEATHER_IMMUNE, REF(src))
+
 /obj/structure/disposalholder/Destroy()
 	active = FALSE
 	last_pipe = null
@@ -92,7 +96,7 @@
 	active = FALSE
 
 //failsafe in the case the holder is somehow forcemoved somewhere that's not a disposal pipe. Otherwise the above loop breaks.
-/obj/structure/disposalholder/Moved(atom/oldLoc, dir)
+/obj/structure/disposalholder/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	var/static/list/pipes_typecache = typecacheof(/obj/structure/disposalpipe)
 	//Moved to nullspace gang

@@ -9,7 +9,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	name = "Blob Overmind"
 	real_name = "Blob Overmind"
 	desc = "The overmind. It controls the blob."
-	icon = 'icons/mob/cameramob.dmi'
+	icon = 'icons/mob/silicon/cameramob.dmi'
 	icon_state = "marker"
 	mouse_opacity = MOUSE_OPACITY_ICON
 	move_on_shuttle = 1
@@ -139,7 +139,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	else if(!victory_in_progress && (blobs_legit.len >= blobwincount))
 		victory_in_progress = TRUE
 		priority_announce("Biohazard has reached critical mass. Station loss is imminent.", "Biohazard Alert")
-		set_security_level("delta")
+		SSsecurity_level.set_level(SEC_LEVEL_DELTA)
 		max_blob_points = INFINITY
 		blob_points = INFINITY
 		addtimer(CALLBACK(src, .proc/victory), 450)
@@ -185,7 +185,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 				continue
 			A.color = blobstrain.color
 			A.name = "blob"
-			A.icon = 'icons/mob/blob.dmi'
+			A.icon = 'icons/mob/nonhuman-player/blob.dmi'
 			A.icon_state = "blob_shield"
 			A.layer = BELOW_MOB_LAYER
 			A.invisibility = 0
@@ -281,7 +281,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	var/rendered = span_big("<font color=\"#EE4000\"><b>\[Blob Telepathy\] [name](<font color=\"[blobstrain.color]\">[blobstrain.name]</font>)</b> [message_a]</font>")
 
 	for(var/mob/M in GLOB.mob_list)
-		if(isovermind(M) || istype(M, /mob/living/simple_animal/hostile/blob))
+		if(isovermind(M) || isblobmonster(M))
 			to_chat(M, rendered)
 		if(isobserver(M))
 			var/link = FOLLOW_LINK(M, src)

@@ -40,7 +40,6 @@
   left: 5px;
 }
 
-
 .fishing .main .bait {
   position: absolute;
   width: 100%;
@@ -57,7 +56,6 @@
   height: 500px;
   left: 95px;
   top: 0;
-
 }
 
 .fishing .completion .background {
@@ -67,7 +65,7 @@
   border-radius: 5px;
   border: 2px black solid;
   background: rgb(186, 217, 231);
-  box-shadow: 5px 5px 2px rgba(0,0,0,0.3);
+  box-shadow: 5px 5px 2px rgba(0, 0, 0, 0.3);
 }
 
 .fishing .completion .bar {

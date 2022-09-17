@@ -2,7 +2,7 @@
 /mob/living/simple_animal/hostile/asteroid/goldgrub
 	name = "goldgrub"
 	desc = "A worm that grows fat from eating everything in its sight. Seems to enjoy precious metals and other shiny things, hence the name."
-	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	icon_state = "Goldgrub"
 	icon_living = "Goldgrub"
 	icon_aggro = "Goldgrub_alert"
@@ -25,7 +25,7 @@
 	combat_mode = FALSE
 	speak_emote = list("screeches")
 	throw_message = "sinks in slowly, before being pushed out of "
-	deathmessage = "stops moving as green liquid oozes from the carcass!"
+	death_message = "stops moving as green liquid oozes from the carcass!"
 	status_flags = CANPUSH
 	gold_core_spawnable = HOSTILE_SPAWN
 	search_objects = 1
@@ -80,16 +80,15 @@
 		return
 	if(G.is_burrowed)
 		holder = G.loc
-		G.forceMove(T)
-		QDEL_NULL(holder)
+		holder.eject_jaunter()
+		holder = null
 		G.is_burrowed = FALSE
 		G.visible_message(span_danger("[G] emerges from the ground!"))
 		playsound(get_turf(G), 'sound/effects/break_stone.ogg', 50, TRUE, -1)
 	else
 		G.visible_message(span_danger("[G] buries into the ground, vanishing from sight!"))
 		playsound(get_turf(G), 'sound/effects/break_stone.ogg', 50, TRUE, -1)
-		holder = new /obj/effect/dummy/phased_mob(T)
-		G.forceMove(holder)
+		holder = new /obj/effect/dummy/phased_mob(T, G)
 		G.is_burrowed = TRUE
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/GiveTarget(new_target)

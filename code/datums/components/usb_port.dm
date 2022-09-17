@@ -24,7 +24,7 @@
 
 	circuit_components = list()
 
-	set_circuit_components(circuit_component_types)
+	src.circuit_component_types = circuit_component_types
 
 /datum/component/usb_port/proc/set_circuit_components(list/components)
 	var/should_register = FALSE
@@ -37,6 +37,8 @@
 		var/obj/item/circuit_component/component = circuit_component
 		if(ispath(circuit_component))
 			component = new circuit_component(null)
+		if(!should_register)
+			component.register_usb_parent(parent)
 		RegisterSignal(component, COMSIG_CIRCUIT_COMPONENT_SAVE, .proc/save_component)
 		circuit_components += component
 
@@ -136,6 +138,9 @@
 /datum/component/usb_port/proc/on_atom_usb_cable_try_attach(datum/source, obj/item/usb_cable/connecting_cable, mob/user)
 	SIGNAL_HANDLER
 
+	if (!length(circuit_components))
+		set_circuit_components(circuit_component_types)
+
 	var/atom/atom_parent = parent
 
 	if (!isnull(attached_circuit))
@@ -156,7 +161,7 @@
 	if (connecting_cable.attached_circuit.locked)
 		connecting_cable.balloon_alert(user, "shell is locked!")
 		return COMSIG_CANCEL_USB_CABLE_ATTACK
-	
+
 	usb_cable_ref = WEAKREF(connecting_cable)
 	attached_circuit = connecting_cable.attached_circuit
 

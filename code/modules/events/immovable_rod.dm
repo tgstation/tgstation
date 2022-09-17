@@ -14,6 +14,8 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	max_occurrences = 5
 	var/atom/special_target
 	var/force_looping = FALSE
+	category = EVENT_CATEGORY_SPACE
+	description = "The station passes through an immovable rod."
 
 /datum/round_event_control/immovable_rod/admin_setup()
 	if(!check_rights(R_FUN))
@@ -29,7 +31,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	log_admin("[key_name_admin(usr)] has aimed an immovable rod [force_looping ? "(forced looping)" : ""] at [AREACOORD(special_target)].")
 
 /datum/round_event/immovable_rod
-	announceWhen = 5
+	announce_when = 5
 
 /datum/round_event/immovable_rod/announce(fake)
 	priority_announce("What the fuck was that?!", "General Alert")
@@ -129,7 +131,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	if(destination.density && isturf(destination))
 		Bump(destination)
 
-/obj/effect/immovablerod/Moved()
+/obj/effect/immovablerod/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	if(!loc)
 		return ..()
 

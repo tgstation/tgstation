@@ -16,16 +16,11 @@ const TAB2NAME = [
 
 const ShoppingTab = (props, context) => {
   const { data, act } = useBackend(context);
-  const {
-    order_datums,
-  } = data;
-  const [
-    shopIndex,
-    setShopIndex,
-  ] = useLocalState(context, 'shop-index', 1);
-  const mapped_food = order_datums.filter(food => (
-    food && food.cat === shopIndex
-  ));
+  const { order_datums } = data;
+  const [shopIndex, setShopIndex] = useLocalState(context, 'shop-index', 1);
+  const mapped_food = order_datums.filter(
+    (food) => food && food.cat === shopIndex
+  );
   return (
     <Stack fill vertical>
       <Section mb={-0.9}>
@@ -36,21 +31,24 @@ const ShoppingTab = (props, context) => {
                 fluid
                 color="green"
                 content="Fruits and Veggies"
-                onClick={() => setShopIndex(1)} />
+                onClick={() => setShopIndex(1)}
+              />
             </Stack.Item>
             <Stack.Item grow>
               <Button
                 fluid
                 color="white"
                 content="Milk and Eggs"
-                onClick={() => setShopIndex(2)} />
+                onClick={() => setShopIndex(2)}
+              />
             </Stack.Item>
             <Stack.Item grow>
               <Button
                 fluid
                 color="olive"
                 content="Sauces and Reagents"
-                onClick={() => setShopIndex(3)} />
+                onClick={() => setShopIndex(3)}
+              />
             </Stack.Item>
           </Stack>
         </Stack.Item>
@@ -59,30 +57,31 @@ const ShoppingTab = (props, context) => {
         <Section fill scrollable>
           <Stack vertical mt={-2}>
             <Divider />
-            {mapped_food.map(item => (
+            {mapped_food.map((item) => (
               <Stack.Item key={item}>
                 <Stack>
-                  <Stack.Item grow>
-                    {item.name}
-                  </Stack.Item>
+                  <Stack.Item grow>{item.name}</Stack.Item>
                   <Stack.Item mt={-1} color="label" fontSize="10px">
-                    {"\""+item.desc+"\""}
+                    {'"' + item.desc + '"'}
                     <br />
                     <Box textAlign="right">
-                      {item.name+" costs "+item.cost+" per order."}
+                      {item.name + ' costs ' + item.cost + ' per order.'}
                     </Box>
                   </Stack.Item>
                   <Stack.Item mt={-0.5}>
                     <NumberInput
                       animated
-                      value={item.amt && item.amt || 0}
+                      value={(item.amt && item.amt) || 0}
                       width="41px"
                       minValue={0}
                       maxValue={20}
-                      onChange={(e, value) => act('cart_set', {
-                        target: item.ref,
-                        amt: value,
-                      })} />
+                      onChange={(e, value) =>
+                        act('cart_set', {
+                          target: item.ref,
+                          amt: value,
+                        })
+                      }
+                    />
                   </Stack.Item>
                 </Stack>
                 <Divider />
@@ -97,21 +96,14 @@ const ShoppingTab = (props, context) => {
 
 const CheckoutTab = (props, context) => {
   const { data, act } = useBackend(context);
-  const {
-    order_datums,
-    total_cost,
-  } = data;
-  const checkout_list = order_datums.filter(food => (
-    food && food.amt
-  ));
+  const { order_datums, total_cost } = data;
+  const checkout_list = order_datums.filter((food) => food && food.amt);
   return (
     <Stack vertical fill>
       <Stack.Item grow>
         <Section fill scrollable>
           <Stack vertical fill>
-            <Stack.Item textAlign="center">
-              Checkout list:
-            </Stack.Item>
+            <Stack.Item textAlign="center">Checkout list:</Stack.Item>
             <Divider />
             {!checkout_list.length && (
               <>
@@ -125,29 +117,30 @@ const CheckoutTab = (props, context) => {
               </>
             )}
             <Stack.Item grow>
-              {checkout_list.map(item => (
+              {checkout_list.map((item) => (
                 <Stack.Item key={item}>
                   <Stack>
-                    <Stack.Item grow>
-                      {item.name}
-                    </Stack.Item>
+                    <Stack.Item grow>{item.name}</Stack.Item>
                     <Stack.Item mt={-1} color="label" fontSize="10px">
-                      {"\""+item.desc+"\""}
+                      {'"' + item.desc + '"'}
                       <br />
                       <Box textAlign="right">
-                        {item.name+" costs "+item.cost+" per order."}
+                        {item.name + ' costs ' + item.cost + ' per order.'}
                       </Box>
                     </Stack.Item>
                     <Stack.Item mt={-0.5}>
                       <NumberInput
-                        value={item.amt && item.amt || 0}
+                        value={(item.amt && item.amt) || 0}
                         width="41px"
                         minValue={0}
-                        maxValue={item.cost > 10 && 50 || 10}
-                        onChange={(e, value) => act('cart_set', {
-                          target: item.ref,
-                          amt: value,
-                        })} />
+                        maxValue={(item.cost > 10 && 50) || 10}
+                        onChange={(e, value) =>
+                          act('cart_set', {
+                            target: item.ref,
+                            amt: value,
+                          })
+                        }
+                      />
                     </Stack.Item>
                   </Stack>
                   <Divider />
@@ -173,7 +166,8 @@ const CheckoutTab = (props, context) => {
                 and hopefully get delivered by them.
                 `}
                 tooltipPosition="top"
-                onClick={() => act('purchase')} />
+                onClick={() => act('purchase')}
+              />
             </Stack.Item>
             <Stack.Item grow textAlign="center">
               <Button
@@ -186,7 +180,8 @@ const CheckoutTab = (props, context) => {
                 and locks the console longer. Doubles the price!
                 `}
                 tooltipPosition="top-start"
-                onClick={() => act('express')} />
+                onClick={() => act('express')}
+              />
             </Stack.Item>
           </Stack>
         </Section>
@@ -201,12 +196,7 @@ const OrderSent = (props, context) => {
     <Dimmer>
       <Stack vertical>
         <Stack.Item>
-          <Icon
-            ml="28%"
-            color="green"
-            name="plane-arrival"
-            size={10}
-          />
+          <Icon ml="28%" color="green" name="plane-arrival" size={10} />
         </Stack.Item>
         <Stack.Item fontSize="18px" color="green">
           Order sent! Machine on cooldown...
@@ -218,23 +208,13 @@ const OrderSent = (props, context) => {
 
 export const ProduceConsole = (props, context) => {
   const { act, data } = useBackend(context);
-  const {
-    off_cooldown,
-  } = data;
-  const [
-    tabIndex,
-    setTabIndex,
-  ] = useLocalState(context, 'tab-index', 1);
-  const TabComponent = TAB2NAME[tabIndex-1].component();
+  const { off_cooldown } = data;
+  const [tabIndex, setTabIndex] = useLocalState(context, 'tab-index', 1);
+  const TabComponent = TAB2NAME[tabIndex - 1].component();
   return (
-    <Window
-      title="Produce Orders"
-      width={500}
-      height={400}>
+    <Window title="Produce Orders" width={500} height={400}>
       <Window.Content>
-        {!off_cooldown && (
-          <OrderSent />
-        )}
+        {!off_cooldown && <OrderSent />}
         <Stack vertical fill>
           <Stack.Item>
             <Section fill>
@@ -246,7 +226,8 @@ export const ProduceConsole = (props, context) => {
                     lineHeight={buttonWidth}
                     icon="cart-plus"
                     content="Shopping"
-                    onClick={() => setTabIndex(1)} />
+                    onClick={() => setTabIndex(1)}
+                  />
                 </Stack.Item>
                 <Stack.Item grow>
                   <Button
@@ -255,7 +236,8 @@ export const ProduceConsole = (props, context) => {
                     lineHeight={buttonWidth}
                     icon="dollar-sign"
                     content="Checkout"
-                    onClick={() => setTabIndex(2)} />
+                    onClick={() => setTabIndex(2)}
+                  />
                 </Stack.Item>
               </Stack>
             </Section>

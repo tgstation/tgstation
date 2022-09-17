@@ -6,7 +6,7 @@
 	name = "Inactive AI Eye"
 
 	icon_state = "ai_camera"
-	icon = 'icons/mob/cameramob.dmi'
+	icon = 'icons/mob/silicon/cameramob.dmi'
 	invisibility = INVISIBILITY_MAXIMUM
 	hud_possible = list(ANTAG_HUD, AI_DETECT_HUD = HUD_LIST_LIST)
 	var/list/visibleCameraChunks = list()
@@ -16,7 +16,7 @@
 	var/static_visibility_range = 16
 	var/ai_detector_visible = TRUE
 	var/ai_detector_color = COLOR_RED
-	interaction_range = null
+	interaction_range = INFINITY
 
 /mob/camera/ai_eye/Initialize(mapload)
 	. = ..()

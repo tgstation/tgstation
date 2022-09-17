@@ -7,7 +7,7 @@
 	name = "pirate outfits"
 	},
 /obj/item/clothing/head/collectable/pirate,
-/obj/item/clothing/suit/pirate,
+/obj/item/clothing/suit/costume/pirate,
 /obj/item/clothing/under/costume/pirate,
 /obj/item/clothing/shoes/jackboots,
 /obj/item/clothing/head/bandana,
@@ -240,7 +240,7 @@
 	name = "pirate outfits"
 	},
 /obj/item/clothing/head/collectable/pirate,
-/obj/item/clothing/suit/pirate,
+/obj/item/clothing/suit/costume/pirate,
 /obj/item/clothing/under/costume/pirate,
 /obj/item/clothing/shoes/jackboots,
 /obj/item/clothing/head/bandana,
@@ -311,7 +311,7 @@
 /obj/item/storage/box/donkpockets{
 	pixel_x = -6
 	},
-/obj/item/reagent_containers/food/drinks/bottle/rum{
+/obj/item/reagent_containers/cup/glass/bottle/rum{
 	pixel_x = 8;
 	pixel_y = 3
 	},
@@ -322,7 +322,7 @@
 /area/shuttle/caravan/pirate)
 "qX" = (
 /obj/structure/reagent_dispensers/watertank,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/cup/bucket,
 /obj/item/mop,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -355,11 +355,11 @@
 /area/shuttle/caravan/pirate)
 "to" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/drinks/bottle/rum{
+/obj/item/reagent_containers/cup/glass/bottle/rum{
 	pixel_x = 3;
 	pixel_y = 6
 	},
-/obj/item/reagent_containers/food/drinks/bottle/rum,
+/obj/item/reagent_containers/cup/glass/bottle/rum,
 /turf/open/floor/iron/dark,
 /area/shuttle/caravan/pirate)
 "tM" = (
@@ -669,7 +669,7 @@
 	dir = 2;
 	dwidth = 14;
 	height = 13;
-	id = "caravanpirate";
+	shuttle_id = "caravanpirate";
 	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
 	name = "Pirate Cutter";
 	port_direction = 8;
@@ -813,9 +813,7 @@
 /area/shuttle/caravan/pirate)
 "Sd" = (
 /obj/machinery/light/small/directional/west,
-/obj/structure/sign/warning/vacuum{
-	pixel_x = -32
-	},
+/obj/structure/sign/warning/vacuum/directional/west,
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "Sk" = (

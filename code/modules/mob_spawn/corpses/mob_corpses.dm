@@ -86,7 +86,7 @@
 
 /datum/outfit/piratecorpse/ranged
 	name = "Pirate Gunner Corpse"
-	suit = /obj/item/clothing/suit/pirate
+	suit = /obj/item/clothing/suit/costume/pirate
 	head = /obj/item/clothing/head/pirate
 
 
@@ -135,7 +135,7 @@
 /datum/outfit/russiancorpse/officer
 	name = "Russian Officer Corpse"
 	uniform = /obj/item/clothing/under/costume/russian_officer
-	suit = /obj/item/clothing/suit/security/officer/russian
+	suit = /obj/item/clothing/suit/jacket/officer/tan
 	shoes = /obj/item/clothing/shoes/combat
 	ears = /obj/item/radio/headset
 	head = /obj/item/clothing/head/ushanka

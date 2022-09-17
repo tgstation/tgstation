@@ -29,7 +29,7 @@
 	var/ascended = FALSE
 	/// The path our heretic has chosen. Mostly used for flavor.
 	var/heretic_path = PATH_START
-	/// A list of how many knowledge points this heretic CURRENTLY has. Used to research.
+	/// A sum of how many knowledge points this heretic CURRENTLY has. Used to research.
 	var/knowledge_points = 1
 	/// The time between gaining influence passively. The heretic gain +1 knowledge points every this duration of time.
 	var/passive_gain_timer = 20 MINUTES
@@ -39,9 +39,9 @@
 	var/living_heart_organ_slot = ORGAN_SLOT_HEART
 	/// A list of TOTAL how many sacrifices completed. (Includes high value sacrifices)
 	var/total_sacrifices = 0
-	/// A list of TOTAL how many high value sacrifices completed.
+	/// A list of TOTAL how many high value sacrifices completed. (Heads of staff)
 	var/high_value_sacrifices = 0
-	/// Lazy assoc list of [weakrefs to humans] to [image previews of the human]. Humans that we have as sacrifice targets.
+	/// Lazy assoc list of [refs to humans] to [image previews of the human]. Humans that we have as sacrifice targets.
 	var/list/mob/living/carbon/human/sac_targets
 	/// Whether we're drawing a rune or not
 	var/drawing_rune = FALSE
@@ -181,7 +181,6 @@
 	return ..()
 
 /datum/antagonist/heretic/on_removal()
-
 	for(var/knowledge_index in researched_knowledge)
 		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_index]
 		knowledge.on_lose(owner.current)
@@ -194,15 +193,24 @@
 	var/mob/living/our_mob = mob_override || owner.current
 	handle_clown_mutation(our_mob, "Ancient knowledge described to you has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 	our_mob.faction |= FACTION_HERETIC
-	RegisterSignal(our_mob, COMSIG_MOB_PRE_CAST_SPELL, .proc/on_spell_cast)
+
+	RegisterSignal(our_mob, list(COMSIG_MOB_BEFORE_SPELL_CAST, COMSIG_MOB_SPELL_ACTIVATED), .proc/on_spell_cast)
 	RegisterSignal(our_mob, COMSIG_MOB_ITEM_AFTERATTACK, .proc/on_item_afterattack)
 	RegisterSignal(our_mob, COMSIG_MOB_LOGIN, .proc/fix_influence_network)
+	RegisterSignal(our_mob, COMSIG_LIVING_POST_FULLY_HEAL, .proc/after_fully_healed)
 
 /datum/antagonist/heretic/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/our_mob = mob_override || owner.current
 	handle_clown_mutation(our_mob, removing = FALSE)
 	our_mob.faction -= FACTION_HERETIC
-	UnregisterSignal(our_mob, list(COMSIG_MOB_PRE_CAST_SPELL, COMSIG_MOB_ITEM_AFTERATTACK, COMSIG_MOB_LOGIN))
+
+	UnregisterSignal(our_mob, list(
+		COMSIG_MOB_BEFORE_SPELL_CAST,
+		COMSIG_MOB_SPELL_ACTIVATED,
+		COMSIG_MOB_ITEM_AFTERATTACK,
+		COMSIG_MOB_LOGIN,
+		COMSIG_LIVING_POST_FULLY_HEAL,
+	))
 
 /datum/antagonist/heretic/on_body_transfer(mob/living/old_body, mob/living/new_body)
 	. = ..()
@@ -212,13 +220,13 @@
 		knowledge.on_gain(new_body)
 
 /*
- * Signal proc for [COMSIG_MOB_PRE_CAST_SPELL].
+ * Signal proc for [COMSIG_MOB_BEFORE_SPELL_CAST] and [COMSIG_MOB_SPELL_ACTIVATED].
  *
- * Checks if our heretic has TRAIT_ALLOW_HERETIC_CASTING.
+ * Checks if our heretic has [TRAIT_ALLOW_HERETIC_CASTING] or is ascended.
  * If so, allow them to cast like normal.
- * If not, cancel the cast.
+ * If not, cancel the cast, and returns [SPELL_CANCEL_CAST].
  */
-/datum/antagonist/heretic/proc/on_spell_cast(mob/living/source, obj/effect/proc_holder/spell/spell)
+/datum/antagonist/heretic/proc/on_spell_cast(mob/living/source, datum/action/cooldown/spell/spell)
 	SIGNAL_HANDLER
 
 	// Heretic spells are of the forbidden school, otherwise we don't care
@@ -234,7 +242,7 @@
 
 	// We shouldn't be able to cast this! Cancel it.
 	source.balloon_alert(source, "you need a focus!")
-	return COMPONENT_CANCEL_SPELL
+	return SPELL_CANCEL_CAST
 
 /*
  * Signal proc for [COMSIG_MOB_ITEM_AFTERATTACK].
@@ -326,6 +334,17 @@
 	SIGNAL_HANDLER
 
 	GLOB.reality_smash_track.rework_network()
+
+/// Signal proc for [COMSIG_LIVING_POST_FULLY_HEAL], when we get fullhealed / ahealed,
+/// all of our organs are "deleted" and regenerated (cause it's a full heal)
+/// which unfortunately means we lose our living heart.
+/// So, we'll give them some lee-way and give them back the living heart afterwards
+/// (Maybe put this behind only admin_revives only? Not sure.)
+/datum/antagonist/heretic/proc/after_fully_healed(mob/living/source, admin_revive)
+	SIGNAL_HANDLER
+
+	var/datum/heretic_knowledge/living_heart/heart_knowledge = get_knowledge(/datum/heretic_knowledge/living_heart)
+	heart_knowledge.on_research(source)
 
 /**
  * Create our objectives for our heretic.

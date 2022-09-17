@@ -18,7 +18,7 @@
 /turf/open/floor/plating,
 /area/centcom/mafia)
 "h" = (
-/obj/structure/grille/indestructable,
+/obj/structure/grille/indestructible,
 /turf/open/floor/plating,
 /area/centcom/mafia)
 "i" = (

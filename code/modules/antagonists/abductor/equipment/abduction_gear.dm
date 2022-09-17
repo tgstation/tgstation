@@ -55,7 +55,7 @@
 			icon_state = "vest_stealth"
 	if(ishuman(loc))
 		var/mob/living/carbon/human/H = loc
-		H.update_inv_wear_suit()
+		H.update_worn_oversuit()
 	update_action_buttons()
 
 /obj/item/clothing/suit/armor/abductor/vest/item_action_slot_check(slot, mob/user)
@@ -77,7 +77,7 @@
 		M.icon_state = disguise.icon_state
 		M.cut_overlays()
 		M.add_overlay(disguise.overlays)
-		M.update_inv_hands()
+		M.update_held_items()
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/DeactivateStealth()
 	if(!stealth_active)
@@ -391,6 +391,7 @@
 	desc = "This is a piece of frightening alien tech that enhances the magnetic pull of atoms in a localized space to temporarily make an object shrink. \
 			That or it's just space magic. Either way, it shrinks stuff."
 	ammo_type = list(/obj/item/ammo_casing/energy/shrink)
+	pin = /obj/item/firing_pin/abductor
 	inhand_icon_state = "shrink_ray"
 	icon_state = "shrink_ray"
 	automatic_charge_overlays = FALSE
@@ -402,7 +403,7 @@
 	name = "Dissection Guide"
 	icon_state = "alienpaper_words"
 	show_written_words = FALSE
-	info = {"<b>Dissection for Dummies</b><br>
+	default_raw_text = {"<b>Dissection for Dummies</b><br>
 
 <br>
 1.Acquire fresh specimen.<br>
@@ -456,9 +457,9 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	var/sleep_time = 2 MINUTES
 	var/time_to_cuff = 3 SECONDS
 
-/obj/item/melee/baton/abductor/ComponentInitialize()
+/obj/item/melee/baton/abductor/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob)
+	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HANDS)
 
 /obj/item/melee/baton/abductor/proc/toggle(mob/living/user=usr)
 	if(!AbductorCheck(user))
@@ -646,11 +647,8 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 /obj/item/radio/headset/abductor/Initialize(mapload)
 	. = ..()
-	make_syndie()
-
-/obj/item/radio/headset/abductor/ComponentInitialize()
-	. = ..()
 	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
+	make_syndie()
 
 // Stops humans from disassembling abductor headsets.
 /obj/item/radio/headset/abductor/screwdriver_act(mob/living/user, obj/item/tool)

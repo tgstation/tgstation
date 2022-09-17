@@ -13,9 +13,11 @@
 		if(initial(D.research_icon) && initial(D.research_icon_state)) //If the design has an icon replacement skip the rest
 			icon_file = initial(D.research_icon)
 			icon_state = initial(D.research_icon_state)
+			#ifdef UNIT_TESTS
 			if(!(icon_state in icon_states(icon_file)))
-				warning("design [D] with icon '[icon_file]' missing state '[icon_state]'")
+				stack_trace("design [D] with icon '[icon_file]' missing state '[icon_state]'")
 				continue
+			#endif
 			I = icon(icon_file, icon_state, SOUTH)
 
 		else
@@ -24,7 +26,7 @@
 			if (!ispath(item, /atom))
 				// biogenerator outputs to beakers by default
 				if (initial(D.build_type) & BIOGENERATOR)
-					item = /obj/item/reagent_containers/glass/beaker/large
+					item = /obj/item/reagent_containers/cup/beaker/large
 				else
 					continue  // shouldn't happen, but just in case
 
@@ -44,9 +46,11 @@
 				icon_file = initial(item.icon)
 
 			icon_state = initial(item.icon_state)
+			#ifdef UNIT_TESTS
 			if(!(icon_state in icon_states(icon_file)))
-				warning("design [D] with icon '[icon_file]' missing state '[icon_state]'")
+				stack_trace("design [D] with icon '[icon_file]' missing state '[icon_state]'")
 				continue
+			#endif
 			I = icon(icon_file, icon_state, SOUTH)
 
 			// computers (and snowflakes) get their screen and keyboard sprites

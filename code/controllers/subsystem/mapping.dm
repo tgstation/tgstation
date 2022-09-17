@@ -9,7 +9,12 @@ SUBSYSTEM_DEF(mapping)
 	var/datum/map_config/config
 	var/datum/map_config/next_map_config
 
+	/// Has the map for the next round been voted for already?
 	var/map_voted = FALSE
+	/// Has the map for the next round been deliberately chosen by an admin?
+	var/map_force_chosen = FALSE
+	/// Has the map vote been rocked?
+	var/map_vote_rocked = FALSE
 
 	var/list/map_templates = list()
 
@@ -40,15 +45,25 @@ SUBSYSTEM_DEF(mapping)
 	// Z-manager stuff
 	var/station_start  // should only be used for maploading-related tasks
 	var/space_levels_so_far = 0
-	///list of all the z level datums created representing the z levels in the world
-	var/list/z_list
+	///list of all z level datums in the order of their z (z level 1 is at index 1, etc.)
+	var/list/datum/space_level/z_list
+	///list of all z level indices that form multiz connections and whether theyre linked up or down.
+	///list of lists, inner lists are of the form: list("up or down link direction" = TRUE)
+	var/list/multiz_levels = list()
 	var/datum/space_level/transit
 	var/datum/space_level/empty_space
 	var/num_of_res_levels = 1
 	/// True when in the process of adding a new Z-level, global locking
 	var/adding_new_zlevel = FALSE
 
-/datum/controller/subsystem/mapping/New()
+	///shows the default gravity value for each z level. recalculated when gravity generators change.
+	///associative list of the form: list("[z level num]" = max generator gravity in that z level OR the gravity level trait)
+	var/list/gravity_by_z_level = list()
+
+	/// list of traits and their associated z leves
+	var/list/z_trait_levels = list()
+
+/datum/controller/subsystem/mapping/PreInit()
 	..()
 #ifdef FORCE_MAP
 	config = load_map_config(FORCE_MAP, FORCE_MAP_DIRECTORY)
@@ -56,9 +71,9 @@ SUBSYSTEM_DEF(mapping)
 	config = load_map_config(error_if_missing = FALSE)
 #endif
 
-/datum/controller/subsystem/mapping/Initialize(timeofday)
+/datum/controller/subsystem/mapping/Initialize()
 	if(initialized)
-		return
+		return SS_INIT_SUCCESS
 	if(config.defaulted)
 		var/old_config = config
 		config = global.config.defaultmap
@@ -100,8 +115,47 @@ SUBSYSTEM_DEF(mapping)
 	setup_map_transitions()
 	generate_station_area_list()
 	initialize_reserved_level(transit.z_value)
-	SSticker.OnRoundstart(CALLBACK(src, .proc/spawn_maintenance_loot))
-	return ..()
+	generate_z_level_linkages()
+	calculate_default_z_level_gravities()
+
+	return SS_INIT_SUCCESS
+
+/datum/controller/subsystem/mapping/proc/calculate_default_z_level_gravities()
+	for(var/z_level in 1 to length(z_list))
+		calculate_z_level_gravity(z_level)
+
+/datum/controller/subsystem/mapping/proc/generate_z_level_linkages()
+	for(var/z_level in 1 to length(z_list))
+		generate_linkages_for_z_level(z_level)
+
+/datum/controller/subsystem/mapping/proc/generate_linkages_for_z_level(z_level)
+	if(!isnum(z_level) || z_level <= 0)
+		return FALSE
+
+	if(multiz_levels.len < z_level)
+		multiz_levels.len = z_level
+
+	var/linked_down = level_trait(z_level, ZTRAIT_DOWN)
+	var/linked_up = level_trait(z_level, ZTRAIT_UP)
+	multiz_levels[z_level] = list()
+	if(linked_down)
+		multiz_levels[z_level]["[DOWN]"] = TRUE
+	if(linked_up)
+		multiz_levels[z_level]["[UP]"] = TRUE
+
+/datum/controller/subsystem/mapping/proc/calculate_z_level_gravity(z_level_number)
+	if(!isnum(z_level_number) || z_level_number < 1)
+		return FALSE
+
+	var/max_gravity = 0
+
+	for(var/obj/machinery/gravity_generator/main/grav_gen as anything in GLOB.gravity_generators["[z_level_number]"])
+		max_gravity = max(grav_gen.setting, max_gravity)
+
+	max_gravity = max_gravity || level_trait(z_level_number, ZTRAIT_GRAVITY) || 0//just to make sure no nulls
+	gravity_by_z_level["[z_level_number]"] = max_gravity
+	return max_gravity
+
 
 /**
  * ##setup_ruins
@@ -215,6 +269,7 @@ Used by the AI doomsday and the self-destruct nuke.
 	clearing_reserved_turfs = SSmapping.clearing_reserved_turfs
 
 	z_list = SSmapping.z_list
+	multiz_levels = SSmapping.multiz_levels
 
 #define INIT_ANNOUNCE(X) to_chat(world, span_boldannounce("[X]")); log_world(X)
 /datum/controller/subsystem/mapping/proc/LoadGroup(list/errorList, name, path, files, list/traits, list/default_traits, silent = FALSE)
@@ -609,10 +664,3 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		isolated_ruins_z = add_new_zlevel("Isolated Ruins/Reserved", list(ZTRAIT_RESERVED = TRUE, ZTRAIT_ISOLATED_RUINS = TRUE))
 		initialize_reserved_level(isolated_ruins_z.z_value)
 	return isolated_ruins_z.z_value
-
-/datum/controller/subsystem/mapping/proc/spawn_maintenance_loot()
-	for(var/obj/effect/spawner/random/maintenance/spawner as anything in GLOB.maintenance_loot_spawners)
-		CHECK_TICK
-
-		spawner.spawn_loot()
-		qdel(spawner)

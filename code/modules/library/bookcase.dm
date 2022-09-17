@@ -25,6 +25,7 @@
 	. = ..()
 	if(!mapload || QDELETED(src))
 		return
+	// Only mapload from here on
 	set_anchored(TRUE)
 	state = BOOKCASE_FINISHED
 	for(var/obj/item/I in loc)
@@ -32,7 +33,11 @@
 			continue
 		I.forceMove(src)
 	update_appearance()
-	SSlibrary.shelves_to_load += src
+
+	if(SSlibrary.initialized)
+		INVOKE_ASYNC(src, .proc/load_shelf)
+	else
+		SSlibrary.shelves_to_load += src
 
 ///Loads the shelf, both by allowing it to generate random items, and by adding its contents to a list used by library machines
 /obj/structure/bookcase/proc/load_shelf()
@@ -107,15 +112,14 @@
 				set_anchored(FALSE)
 
 		if(BOOKCASE_FINISHED)
-			var/datum/component/storage/STR = I.GetComponent(/datum/component/storage)
 			if(isbook(I))
 				if(!user.transferItemToLoc(I, src))
 					return
 				update_appearance()
-			else if(STR)
+			else if(atom_storage)
 				for(var/obj/item/T in I.contents)
 					if(istype(T, /obj/item/book) || istype(T, /obj/item/spellbook))
-						STR.remove_from_storage(T, src)
+						atom_storage.attempt_remove(T, src)
 				to_chat(user, span_notice("You empty \the [I] into \the [src]."))
 				update_appearance()
 			else if(istype(I, /obj/item/pen))

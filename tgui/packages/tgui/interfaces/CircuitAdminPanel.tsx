@@ -1,7 +1,7 @@
-import { BooleanLike } from "common/react";
-import { useBackend } from "../backend";
-import { Button, Stack, Table } from "../components";
-import { Window } from "../layouts";
+import { BooleanLike } from 'common/react';
+import { useBackend } from '../backend';
+import { Button, Stack, Table } from '../components';
+import { Window } from '../layouts';
 
 type CircuitAdminPanelData = {
   circuits: {
@@ -9,8 +9,8 @@ type CircuitAdminPanelData = {
     name: string;
     creator: string;
     has_inserter: BooleanLike;
-  }[]
-}
+  }[];
+};
 
 export const CircuitAdminPanel = (props, context) => {
   const { act, data } = useBackend<CircuitAdminPanelData>(context);
@@ -23,9 +23,10 @@ export const CircuitAdminPanel = (props, context) => {
             <Stack>
               <Stack.Item grow />
               <Stack.Item>
-                <Button onClick={() => {
-                  act("disable_circuit_sound");
-                }}>
+                <Button
+                  onClick={() => {
+                    act('disable_circuit_sound');
+                  }}>
                   Disable all circuit sound emitters
                 </Button>
               </Stack.Item>
@@ -34,57 +35,41 @@ export const CircuitAdminPanel = (props, context) => {
           <Stack.Item>
             <Table>
               <Table.Row header>
-                <Table.Cell>
-                  Circuit name
-                </Table.Cell>
+                <Table.Cell>Circuit name</Table.Cell>
 
-                <Table.Cell>
-                  Creator
-                </Table.Cell>
+                <Table.Cell>Creator</Table.Cell>
 
-                <Table.Cell>
-                  Actions
-                </Table.Cell>
+                <Table.Cell>Actions</Table.Cell>
               </Table.Row>
 
-              {data.circuits.map(circuit => {
+              {data.circuits.map((circuit) => {
                 const createAct = (action: string) => () => {
                   act(action, { circuit: circuit.ref });
                 };
 
                 return (
                   <Table.Row key={circuit.ref}>
-                    <Table.Cell>
-                      {circuit.name}
-                    </Table.Cell>
+                    <Table.Cell>{circuit.name}</Table.Cell>
+
+                    <Table.Cell>{circuit.creator}</Table.Cell>
 
                     <Table.Cell>
-                      {circuit.creator}
-                    </Table.Cell>
-
-                    <Table.Cell>
-                      <Button onClick={createAct("follow_circuit")}>
+                      <Button onClick={createAct('follow_circuit')}>
                         Follow
                       </Button>
 
-                      <Button onClick={createAct("open_circuit")}>
-                        Open
-                      </Button>
+                      <Button onClick={createAct('open_circuit')}>Open</Button>
 
-                      <Button onClick={createAct("vv_circuit")}>
-                        VV
-                      </Button>
+                      <Button onClick={createAct('vv_circuit')}>VV</Button>
 
-                      <Button onClick={createAct("save_circuit")}>
-                        Save
-                      </Button>
+                      <Button onClick={createAct('save_circuit')}>Save</Button>
 
-                      <Button onClick={createAct("duplicate_circuit")}>
+                      <Button onClick={createAct('duplicate_circuit')}>
                         Duplicate
                       </Button>
 
                       {!!circuit.has_inserter && (
-                        <Button onClick={createAct("open_player_panel")}>
+                        <Button onClick={createAct('open_player_panel')}>
                           Player Panel
                         </Button>
                       )}

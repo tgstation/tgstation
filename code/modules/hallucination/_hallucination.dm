@@ -94,7 +94,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	var/mob/living/carbon/target = null
 
 /obj/effect/hallucination/simple
-	var/image_icon = 'icons/mob/alien.dmi'
+	var/image_icon = 'icons/mob/nonhuman-player/alien.dmi'
 	var/image_state = "alienh_pounce"
 	var/px = 0
 	var/py = 0
@@ -149,7 +149,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	. = ..()
 	Show()
 
-/obj/effect/hallucination/simple/Moved(atom/OldLoc, Dir)
+/obj/effect/hallucination/simple/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(!loc)
 		return

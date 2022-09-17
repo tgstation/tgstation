@@ -15,6 +15,7 @@ export class TguiSay extends Component<{}, State> {
     lightMode: false,
     maxLength: 1024,
     radioPrefix: '',
+    tempHistory: '',
     value: '',
   };
   state: Modal['state'] = {
@@ -62,7 +63,7 @@ export class TguiSay extends Component<{}, State> {
             onEnter={onEnter}
             onEscape={onEscape}
             onInput={onInput}
-            onKeyDown={onKeyDown}
+            onKey={onKeyDown}
             selfClear
             value={edited && value}
           />

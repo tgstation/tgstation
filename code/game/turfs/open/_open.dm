@@ -1,6 +1,7 @@
 /turf/open
 	plane = FLOOR_PLANE
-	var/slowdown = 0 //negative for faster, positive for slower
+	///negative for faster, positive for slower
+	var/slowdown = 0
 
 	var/footstep = null
 	var/barefootstep = null
@@ -69,7 +70,7 @@
 /turf/open/indestructible/permalube
 	icon_state = "darkfull"
 
-/turf/open/indestructible/permalube/ComponentInitialize()
+/turf/open/indestructible/permalube/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/wet_floor, TURF_WET_LUBE, INFINITY, 0, INFINITY, TRUE)
 
@@ -82,7 +83,7 @@
 	heavyfootstep = null
 	var/sound = 'sound/effects/clownstep1.ogg'
 
-/turf/open/indestructible/honk/ComponentInitialize()
+/turf/open/indestructible/honk/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/wet_floor, TURF_WET_SUPERLUBE, INFINITY, 0, INFINITY, TRUE)
 
@@ -159,21 +160,23 @@
 /turf/open/indestructible/airblock
 	icon_state = "bluespace"
 	blocks_air = TRUE
+	init_air = FALSE
 	baseturfs = /turf/open/indestructible/airblock
 
-/turf/open/Initalize_Atmos(times_fired)
+/turf/open/Initalize_Atmos(time)
 	excited = FALSE
 	update_visuals()
 
-	current_cycle = times_fired
-	immediate_calculate_adjacent_turfs()
-	for(var/i in atmos_adjacent_turfs)
-		var/turf/open/enemy_tile = i
-		var/datum/gas_mixture/enemy_air = enemy_tile.return_air()
-		if(!excited && air.compare(enemy_air))
+	current_cycle = time
+
+	init_immediate_calculate_adjacent_turfs()
+	for(var/turf/open/enemy_tile as anything in atmos_adjacent_turfs)
+		if(air.compare(enemy_tile.return_air()))
 			//testing("Active turf found. Return value of compare(): [is_active]")
 			excited = TRUE
 			SSair.active_turfs += src
+			// No sense continuing to iterate
+			return
 
 /turf/open/GetHeatCapacity()
 	. = air.heat_capacity()
@@ -187,10 +190,9 @@
 
 /turf/open/proc/freeze_turf()
 	for(var/obj/I in contents)
-		if(I.resistance_flags & FREEZE_PROOF)
-			continue
-		if(!(I.obj_flags & FROZEN))
-			I.make_frozen_visual()
+		if(!HAS_TRAIT(I, TRAIT_FROZEN) && !(I.obj_flags & FREEZE_PROOF))
+			I.AddElement(/datum/element/frozen)
+
 	for(var/mob/living/L in contents)
 		if(L.bodytemperature <= 50)
 			L.apply_status_effect(/datum/status_effect/freon)
@@ -204,8 +206,7 @@
 		M.apply_water()
 
 	wash(CLEAN_WASH)
-	for(var/am in src)
-		var/atom/movable/movable_content = am
+	for(var/atom/movable/movable_content as anything in src)
 		if(ismopable(movable_content)) // Will have already been washed by the wash call above at this point.
 			continue
 		movable_content.wash(CLEAN_WASH)
@@ -230,6 +231,7 @@
 			playsound(slipper.loc, 'sound/misc/slip.ogg', 50, TRUE, -3)
 
 		SEND_SIGNAL(slipper, COMSIG_ON_CARBON_SLIP)
+		slipper.add_mood_event("slipped", /datum/mood_event/slipped)
 		if(force_drop)
 			for(var/obj/item/I in slipper.held_items)
 				slipper.accident(I)

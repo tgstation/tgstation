@@ -48,25 +48,14 @@
 	//NAME
 	//!style='background-color:#FFEE88;'|{{anchor|Synthetic-derived growth factor}}Synthetic-derived growth factor<span style="color:#A502E0;background-color:white">▮</span>
 	var/outstring = "!style='background-color:#FFEE88;'|{{anchor|[reagent.name]}}[reagent.name]<span style=\"color:[reagent.color];background-color:white\">▮</span>"
-	//Impurities
-	if(istype(reagent, /datum/reagent/impurity))
-		outstring += "\n<br>Impure reagent"
 
 	if(istype(reagent, /datum/reagent/inverse))
 		outstring += "\n<br>Inverse reagent"
 
 	else
-		var/datum/reagent/impure_reagent = GLOB.chemical_reagents_list[reagent.impure_chem]
-		if(impure_reagent)
-			outstring += "\n<br>Impurity: \[\[#[impure_reagent.name]|[impure_reagent.name]\]\]"
-
 		var/datum/reagent/inverse_reagent = GLOB.chemical_reagents_list[reagent.inverse_chem]
 		if(inverse_reagent)
 			outstring += "\n<br>Inverse: \[\[#[inverse_reagent.name]|[inverse_reagent.name]\]\] <[reagent.inverse_chem_val*100]%"
-
-		var/datum/reagent/failed_reagent = GLOB.chemical_reagents_list[reagent.failed_chem]
-		if(failed_reagent && reaction)
-			outstring += "\n<br>Failed: \[\[#[failed_reagent.name]|[failed_reagent.name]\]\] <[reaction.purity_min*100]%"
 	var/ph_color
 	CONVERT_PH_TO_COLOR(reagent.ph, ph_color)
 	outstring += "\n<br>pH: [reagent.ph]<span style=\"color:[ph_color];background-color:white\">▮</span>"

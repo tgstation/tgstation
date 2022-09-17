@@ -10,7 +10,7 @@
 	name = "pH indicator booklet"
 	desc = "A booklet containing paper soaked in universal indicator."
 	icon_state = "pHbooklet"
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	item_flags = NOBLUDGEON
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_TINY
@@ -70,7 +70,7 @@
 	name = "pH indicator strip"
 	desc = "A piece of paper that will change colour depending on the pH of a solution."
 	icon_state = "pHpaper"
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	item_flags = NOBLUDGEON
 	color = "#f5c352"
 	resistance_flags = FLAMMABLE
@@ -99,7 +99,7 @@
 	name = "Chemical Analyzer"
 	desc = "An electrode attached to a small circuit box that will display details of a solution. Can be toggled to provide a description of each of the reagents. The screen currently displays nothing."
 	icon_state = "pHmeter"
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	///level of detail for output for the meter
 	var/scanmode = DETAILED_CHEM_OUTPUT
@@ -126,15 +126,9 @@
 	if(cont.reagents.is_reacting)
 		out_message += "[span_warning("A reaction appears to be occuring currently.")]<span class='notice'>\n"
 	for(var/datum/reagent/reagent in cont.reagents.reagent_list)
-		if(reagent.purity < 1) //If the reagent is impure
-			if(reagent.purity < reagent.inverse_chem_val && reagent.inverse_chem) //Below level and has an inverse
-				var/datum/reagent/inverse_reagent = GLOB.chemical_reagents_list[reagent.inverse_chem]
-				out_message += "[span_warning("Inverted reagent detected: ")]<span class='notice'><b>[round(reagent.volume, 0.01)]u of [inverse_reagent.name]</b>, <b>Purity:</b> [round(1 - reagent.purity, 0.01)*100]%, [(scanmode?"[(inverse_reagent.overdose_threshold?"<b>Overdose:</b> [inverse_reagent.overdose_threshold]u, ":"")]<b>Base pH:</b> [initial(inverse_reagent.ph)], <b>Current pH:</b> [reagent.ph].":"<b>Current pH:</b> [reagent.ph].")]\n"
-			else //Otherwise it is an impure reagent
-				out_message += "<b>[round(reagent.volume, 0.01)]u of [reagent.name]</b>, <b>Purity:</b> [round(reagent.purity, 0.01)*100]%, [(scanmode?"[(reagent.overdose_threshold?"<b>Overdose:</b> [reagent.overdose_threshold]u, ":"")]<b>Base pH:</b> [initial(reagent.ph)], <b>Current pH:</b> [reagent.ph].":"<b>Current pH:</b> [reagent.ph].")]\n"
-				if(reagent.impure_chem) // might not have impure chem, like multiver
-					var/datum/reagent/impure_reagent = GLOB.chemical_reagents_list[reagent.impure_chem]
-					out_message += "[span_warning("Impurities detected: ")]<span class='notice'><b>[round(reagent.volume - (reagent.volume * reagent.purity), 0.01)]u of [impure_reagent.name]</b>, [(scanmode?"[(reagent.overdose_threshold?"<b>Overdose:</b> [reagent.overdose_threshold]u, ":"")]":"")]\n"
+		if(reagent.purity < reagent.inverse_chem_val && reagent.inverse_chem) //If the reagent is impure
+			var/datum/reagent/inverse_reagent = GLOB.chemical_reagents_list[reagent.inverse_chem]
+			out_message += "[span_warning("Inverted reagent detected: ")]<span class='notice'><b>[round(reagent.volume, 0.01)]u of [inverse_reagent.name]</b>, <b>Purity:</b> [round(1 - reagent.purity, 0.01)*100]%, [(scanmode?"[(inverse_reagent.overdose_threshold?"<b>Overdose:</b> [inverse_reagent.overdose_threshold]u, ":"")]<b>Base pH:</b> [initial(inverse_reagent.ph)], <b>Current pH:</b> [reagent.ph].":"<b>Current pH:</b> [reagent.ph].")]\n"
 		else
 			out_message += "<b>[round(reagent.volume, 0.01)]u of [reagent.name]</b>, <b>Purity:</b> [round(reagent.purity, 0.01)*100]%, [(scanmode?"[(reagent.overdose_threshold?"<b>Overdose:</b> [reagent.overdose_threshold]u, ":"")]<b>Base pH:</b> [initial(reagent.ph)], <b>Current pH:</b> [reagent.ph].":"<b>Current pH:</b> [reagent.ph].")]\n"
 		if(scanmode)
@@ -145,7 +139,7 @@
 /obj/item/burner
 	name = "Alcohol burner"
 	desc = "A small table size burner used for heating up beakers."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "burner"
 	grind_results = list(/datum/reagent/consumable/ethanol = 5, /datum/reagent/silicon = 10)
 	item_flags = NOBLUDGEON
@@ -244,7 +238,8 @@
 /obj/item/burner/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(lit && M.ignite_mob())
 		message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(M)] on fire with [src] at [AREACOORD(user)]")
-		log_game("[key_name(user)] set [key_name(M)] on fire with [src] at [AREACOORD(user)]")
+		user.log_message("set [key_name(M)] on fire with [src]", LOG_GAME)
+		M.log_message("was set on fire by [key_name(user)] with [src]", LOG_VICTIM, log_globally = FALSE)
 	return ..()
 
 /obj/item/burner/process()
@@ -283,7 +278,7 @@
 	name = "thermometer"
 	desc = "A thermometer for checking a beaker's temperature"
 	icon_state = "thermometer"
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	item_flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_TINY
 	grind_results = list(/datum/reagent/mercury = 5)

@@ -11,10 +11,8 @@
 	name = "Consumable"
 	taste_description = "generic food"
 	taste_mult = 4
-	impure_chem = /datum/reagent/water
 	inverse_chem_val = 0.1
 	inverse_chem = null
-	failed_chem = /datum/reagent/consumable/nutriment
 	/// How much nutrition this reagent supplies
 	var/nutriment_factor = 1 * REAGENTS_METABOLISM
 	var/quality = 0 //affects mood, typically higher for mixed drinks with more complex recipes'
@@ -35,16 +33,16 @@
 		return
 	switch(quality)
 		if (DRINK_NICE)
-			SEND_SIGNAL(exposed_mob, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/quality_nice)
+			exposed_mob.add_mood_event("quality_drink", /datum/mood_event/quality_nice)
 		if (DRINK_GOOD)
-			SEND_SIGNAL(exposed_mob, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/quality_good)
+			exposed_mob.add_mood_event("quality_drink", /datum/mood_event/quality_good)
 		if (DRINK_VERYGOOD)
-			SEND_SIGNAL(exposed_mob, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/quality_verygood)
+			exposed_mob.add_mood_event("quality_drink", /datum/mood_event/quality_verygood)
 		if (DRINK_FANTASTIC)
-			SEND_SIGNAL(exposed_mob, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/quality_fantastic)
+			exposed_mob.add_mood_event("quality_drink", /datum/mood_event/quality_fantastic)
 			exposed_mob.mind?.add_memory(MEMORY_DRINK, list(DETAIL_DRINK = src), story_value = STORY_VALUE_OKAY)
 		if (FOOD_AMAZING)
-			SEND_SIGNAL(exposed_mob, COMSIG_ADD_MOOD_EVENT, "quality_food", /datum/mood_event/amazingtaste)
+			exposed_mob.add_mood_event("quality_food", /datum/mood_event/amazingtaste)
 
 /datum/reagent/consumable/nutriment
 	name = "Nutriment"
@@ -177,7 +175,7 @@
 	if(is_type_in_typecache(exposed_obj, GLOB.oilfry_blacklisted_items) || (exposed_obj.resistance_flags & INDESTRUCTIBLE))
 		exposed_obj.loc.visible_message(span_notice("The hot oil has no effect on [exposed_obj]!"))
 		return
-	if(SEND_SIGNAL(exposed_obj, COMSIG_CONTAINS_STORAGE))
+	if(exposed_obj.atom_storage)
 		exposed_obj.loc.visible_message(span_notice("The hot oil splatters about as [exposed_obj] touches it. It seems too full to cook properly!"))
 		return
 	exposed_obj.loc.visible_message(span_warning("[exposed_obj] rapidly fries as it's splashed with hot oil! Somehow."))
@@ -382,8 +380,9 @@
 		if (!(pepper_proof)) // you need both eye and mouth protection
 			if(prob(5))
 				victim.emote("scream")
+			victim.emote("cry")
 			victim.blur_eyes(5) // 10 seconds
-			victim.blind_eyes(3) // 6 seconds
+			victim.adjust_blindness(3) // 6 seconds
 			victim.set_timed_status_effect(5 SECONDS, /datum/status_effect/confusion, only_if_higher = TRUE)
 			victim.Knockdown(3 SECONDS)
 			victim.add_movespeed_modifier(/datum/movespeed_modifier/reagent/pepperspray)
@@ -572,6 +571,7 @@
 /datum/reagent/consumable/cherryjelly
 	name = "Cherry Jelly"
 	description = "Totally the best. Only to be spread on foods with excellent lateral symmetry."
+	nutriment_factor = 10 * REAGENTS_METABOLISM
 	color = "#801E28" // rgb: 128, 30, 40
 	taste_description = "cherry"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -711,7 +711,7 @@
 	else
 		if(!exposed_mob.eye_blurry)
 			to_chat(exposed_mob, span_warning("Tears well up in your eyes!"))
-		exposed_mob.blind_eyes(2)
+		exposed_mob.adjust_blindness(2)
 		exposed_mob.blur_eyes(5)
 
 /datum/reagent/consumable/tearjuice/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -720,7 +720,7 @@
 		M.blur_eyes(4 * REM * delta_time)
 		if(DT_PROB(5, delta_time))
 			to_chat(M, span_warning("Your eyes sting!"))
-			M.blind_eyes(2)
+			M.adjust_blindness(2)
 
 
 /datum/reagent/consumable/nutriment/stabilized
@@ -1010,12 +1010,14 @@
 	name = "Peanut Butter"
 	description = "A rich, creamy spread produced by grinding peanuts."
 	taste_description = "peanuts"
+	reagent_state = SOLID
 	color = "#D9A066"
+	nutriment_factor = 15 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/peanut_butter/on_mob_life(mob/living/carbon/M, delta_time, times_fired) //ET loves peanut butter
 	if(isabductor(M))
-		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "ET_pieces", /datum/mood_event/et_pieces, name)
+		M.add_mood_event("ET_pieces", /datum/mood_event/et_pieces, name)
 		M.set_timed_status_effect(30 SECONDS * REM * delta_time, /datum/status_effect/drugginess)
 	..()
 
@@ -1063,3 +1065,10 @@
 	color = "#adcf77"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/consumable/creamer
+	name = "Coffee Creamer"
+	description = "Powdered milk for cheap coffee. How delightful."
+	taste_description = "milk"
+	color = "#efeff0"
+	nutriment_factor = 1.5 * REAGENTS_METABOLISM
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED

@@ -10,7 +10,7 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 \nLeft click with a beaker to add it to the input slot, Right click with a beaker to add it to the output slot. Alt + left/right click can let you quickly remove the corresponding beaker."}
 	density = TRUE
 	layer = BELOW_OBJ_LAYER
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "HPLC"
 	base_icon_state = "HPLC"
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.2
@@ -39,7 +39,13 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 	. = ..()
 	ADD_TRAIT(src, DO_NOT_SPLASH, src.type)
 	if(mapload)
-		beaker2 = new /obj/item/reagent_containers/glass/beaker/large(src)
+		beaker2 = new /obj/item/reagent_containers/cup/beaker/large(src)
+
+	AddElement( \
+		/datum/element/contextual_screentip_bare_hands, \
+		lmb_text = "Add input beaker", \
+		rmb_text = "Add output beaker", \
+	)
 
 /obj/machinery/chem_mass_spec/Destroy()
 	QDEL_NULL(beaker1)
@@ -81,7 +87,7 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 		update_appearance()
 		return
 
-	if(istype(item, /obj/item/reagent_containers) && !(item.item_flags & ABSTRACT) && item.is_open_container())
+	if(is_reagent_container(item) && !(item.item_flags & ABSTRACT) && item.is_open_container())
 		var/obj/item/reagent_containers/beaker = item
 		. = TRUE //no afterattack
 		if(!user.transferItemToLoc(beaker, src))
@@ -103,7 +109,7 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 	if(default_deconstruction_crowbar(item))
 		return
 
-	if(istype(item, /obj/item/reagent_containers) && !(item.item_flags & ABSTRACT) && item.is_open_container())
+	if(is_reagent_container(item) && !(item.item_flags & ABSTRACT) && item.is_open_container())
 		var/obj/item/reagent_containers/beaker = item
 		if(!user.transferItemToLoc(beaker, src))
 			return
@@ -212,18 +218,14 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 				var/datum/reagent/inverse_reagent = GLOB.chemical_reagents_list[reagent.inverse_chem]
 				if(inverse_reagent.mass < lower_mass_range || inverse_reagent.mass > upper_mass_range)
 					in_range = FALSE
-				beakerContents.Add(list(list("name" = inverse_reagent.name, "volume" = round(reagent.volume, 0.01), "mass" = inverse_reagent.mass, "purity" = 1-reagent.purity, "selected" = in_range, "color" = "#b60046", "type" = "Inverted")))
+				beakerContents.Add(list(list("name" = inverse_reagent.name, "volume" = round(reagent.volume, 0.01), "mass" = inverse_reagent.mass, "purity" = round(1-reagent.purity, 0.01)*100, "selected" = in_range, "color" = "#b60046", "type" = "Inverted")))
 				data["peakHeight"] = max(data["peakHeight"], reagent.volume)
 				continue
 			if(reagent.mass < lower_mass_range || reagent.mass > upper_mass_range)
 				in_range = FALSE
 			///We want to be sure that the impure chem appears after the parent chem in the list so that it always overshadows pure reagents
-			beakerContents.Add(list(list("name" = reagent.name, "volume" = round(reagent.volume * reagent.purity, 0.01), "mass" = reagent.mass, "purity" = reagent.purity, "selected" = in_range, "color" = "#3cf096", "type" = "Clean")))
-			if(1 > reagent.purity && reagent.impure_chem)
-				var/datum/reagent/impure_reagent = GLOB.chemical_reagents_list[reagent.impure_chem]
-				beakerContents.Add(list(list("name" = impure_reagent.name, "volume" = round(reagent.volume * (1-reagent.purity), 0.01), "mass" = reagent.mass, "purity" = 1-reagent.purity, "selected" = in_range, "color" = "#fc9738", "type" = "Impurity")))
-				data["peakHeight"] = max(data["peakHeight"], reagent.volume * (1-reagent.purity))
-			data["peakHeight"] = max(data["peakHeight"], reagent.volume * reagent.purity)
+			beakerContents.Add(list(list("name" = reagent.name, "volume" = round(reagent.volume, 0.01), "mass" = reagent.mass, "purity" = round(reagent.purity, 0.01)*100, "selected" = in_range, "color" = "#3cf096", "type" = "Clean")))
+			data["peakHeight"] = max(data["peakHeight"], reagent.volume)
 
 		data["beaker1CurrentVolume"] = beaker1.reagents.total_volume
 		data["beaker1MaxVolume"] = beaker1.reagents.maximum_volume
@@ -234,11 +236,7 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 	if(beaker2 && beaker2.reagents)
 		for(var/datum/reagent/reagent in beaker2.reagents.reagent_list)
 			///Normal stuff
-			beakerContents.Add(list(list("name" = reagent.name, "volume" = round(reagent.volume * reagent.purity, 0.01), "mass" = reagent.mass, "purity" = reagent.purity, "color" = "#3cf096", "type" = "Clean", log = log[reagent.type])))
-			///Impure stuff
-			if(1 > reagent.purity && reagent.impure_chem)
-				var/datum/reagent/impure_reagent = GLOB.chemical_reagents_list[reagent.impure_chem]
-				beakerContents.Add(list(list("name" = impure_reagent.name, "volume" = round(reagent.volume * (1-reagent.purity), 0.01), "mass" = reagent.mass, "purity" = 1-reagent.purity, "color" = "#fc9738", "type" = "Impurity")))
+			beakerContents.Add(list(list("name" = reagent.name, "volume" = round(reagent.volume, 0.01), "mass" = reagent.mass, "purity" = round(reagent.purity, 0.01)*100, "color" = "#3cf096", "type" = "Clean", log = log[reagent.type])))
 		data["beaker2CurrentVolume"] = beaker2.reagents.total_volume
 		data["beaker2MaxVolume"] = beaker2.reagents.maximum_volume
 	data["beaker2Contents"] = beakerContents

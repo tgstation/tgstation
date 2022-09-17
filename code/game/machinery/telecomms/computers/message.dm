@@ -21,7 +21,7 @@
 	//Server linked to.
 	var/obj/machinery/telecomms/message_server/linkedServer = null
 	//Sparks effect - For emag
-	var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread
+	var/datum/effect_system/spark_spread/spark_system
 	//Messages - Saves me time if I want to change something.
 	var/noserver = "<span class='alert'>ALERT: No server detected.</span>"
 	var/incorrectkey = "<span class='warning'>ALERT: Incorrect decryption key!</span>"
@@ -33,6 +33,13 @@
 	var/message = "<span class='notice'>System bootup complete. Please select an option.</span>" // The message that shows on the main menu.
 	var/auth = FALSE // Are they authenticated?
 	var/optioncount = 7
+	// Custom Message Properties
+	var/customsender = "System Administrator"
+	var/customrecepient = null
+	var/customjob = "Admin"
+	var/custommessage = "This is a test, please ignore."
+
+
 
 /obj/machinery/computer/message_monitor/screwdriver_act(mob/living/user, obj/item/I)
 	if(obj_flags & EMAGGED)
@@ -49,9 +56,9 @@
 		screen = MSG_MON_SCREEN_HACKED
 		spark_system.set_up(5, 0, src)
 		spark_system.start()
-		var/obj/item/paper/monitorkey/MK = new(loc, linkedServer)
+		var/obj/item/paper/monitorkey/monitor_key_paper = new(loc, linkedServer)
 		// Will help make emagging the console not so easy to get away with.
-		MK.info += "<br><br><font color='red'>£%@%(*$%&(£&?*(%&£/{}</font>"
+		monitor_key_paper.add_raw_text("<br><br><font color='red'>£%@%(*$%&(£&?*(%&£/{}</font>")
 		var/time = 100 * length(linkedServer.decryptkey)
 		addtimer(CALLBACK(src, .proc/UnmagConsole), time)
 		message = rebootmsg
@@ -60,6 +67,7 @@
 
 /obj/machinery/computer/message_monitor/Initialize(mapload)
 	..()
+	spark_system = new
 	GLOB.telecomms_list += src
 	return INITIALIZE_HINT_LATELOAD
 
@@ -183,6 +191,24 @@
 				10010000001110100011010000110000101110100001000000111010<br>
 				001101001011011010110010100101110"}
 
+		//Fake messages
+		if(MSG_MON_SCREEN_CUSTOM_MSG)
+			dat += "<center><A href='?src=[REF(src)];back=1'>Back</a> - <A href='?src=[REF(src)];Reset=1'>Reset</a></center><hr>"
+
+			dat += {"<table border='1' width='100%'>
+					<tr><td width='20%'><A href='?src=[REF(src)];select=Sender'>Sender</a></td>
+					<td width='20%'><A href='?src=[REF(src)];select=RecJob'>Sender's Job</a></td>
+					<td width='20%'><A href='?src=[REF(src)];select=Recepient'>Recipient</a></td>
+					<td width='300px' word-wrap: break-word><A href='?src=[REF(src)];select=Message'>Message</a></td></tr>"}
+				//Sender  - Sender's Job  - Recepient - Message
+				//Al Green- Your Dad   - Your Mom  - WHAT UP!?
+
+			dat += {"<tr><td width='20%'>[customsender]</td>
+			<td width='20%'>[customjob]</td>
+			<td width='20%'>[customrecepient ? customrecepient : "NONE"]</td>
+			<td width='300px'>[custommessage]</td></tr>"}
+			dat += "</table><br><center><A href='?src=[REF(src)];select=Send'>Send</a>"
+
 		//Request Console Logs
 		if(MSG_MON_SCREEN_REQUEST_LOGS)
 
@@ -225,6 +251,12 @@
 
 /obj/machinery/computer/message_monitor/proc/UnmagConsole()
 	obj_flags &= ~EMAGGED
+
+/obj/machinery/computer/message_monitor/proc/ResetMessage()
+	customsender = "System Administrator"
+	customrecepient = null
+	custommessage = "This is a test, please ignore."
+	customjob = "Admin"
 
 /obj/machinery/computer/message_monitor/Topic(href, href_list)
 	if(..())
@@ -334,6 +366,77 @@
 					linkedServer.rc_msgs -= locate(href_list["delete_requests"]) in linkedServer.rc_msgs
 					message = span_notice("NOTICE: Log Deleted!")
 
+		//Create a custom message
+		if (href_list["msg"])
+			if(LINKED_SERVER_NONRESPONSIVE)
+				message = noserver
+			else if(auth)
+				screen = MSG_MON_SCREEN_CUSTOM_MSG
+
+		//Fake messaging selection - KEY REQUIRED
+		if (href_list["select"])
+			if(LINKED_SERVER_NONRESPONSIVE)
+				message = noserver
+				screen = MSG_MON_SCREEN_MAIN
+			else
+				switch(href_list["select"])
+
+					//Reset
+					if("Reset")
+						ResetMessage()
+
+					//Select Your Name
+					if("Sender")
+						customsender = tgui_input_text(usr, "Please enter the sender's name.", "Sender") || customsender
+
+					//Select Receiver
+					if("Recepient")
+						// Get out list of viable tablets
+						var/list/viewable_tablets = list()
+						for (var/obj/item/modular_computer/tablet in GLOB.TabletMessengers)
+							if(!tablet.saved_identification || tablet.invisible)
+								continue
+							viewable_tablets += tablet
+						if(length(viewable_tablets) > 0)
+							customrecepient = tgui_input_list(usr, "Select a tablet from the list", "Tablet Selection", viewable_tablets)
+						else
+							customrecepient = null
+
+					//Enter custom job
+					if("RecJob")
+						customjob = tgui_input_text(usr, "Please enter the sender's job.", "Job") || customjob
+
+					//Enter message
+					if("Message")
+						custommessage = tgui_input_text(usr, "Please enter your message.", "Message") || custommessage
+
+					//Send message
+					if("Send")
+						if(isnull(customsender) || customsender == "")
+							customsender = "UNKNOWN"
+
+						if(isnull(customrecepient))
+							message = span_notice("NOTICE: No recepient selected!")
+							return attack_hand(usr)
+
+						if(isnull(custommessage) || custommessage == "")
+							message = span_notice("NOTICE: No message entered!")
+							return attack_hand(usr)
+
+						var/datum/signal/subspace/messaging/tablet_msg/signal = new(src, list(
+							"name" = "[customsender]",
+							"job" = "[customjob]",
+							"message" = html_decode(custommessage),
+							"ref" = REF(src),
+							"targets" = list(customrecepient),
+							"emojis" = FALSE,
+							"rigged" = FALSE,
+							"automated" = FALSE,
+						))
+						// this will log the signal and transmit it to the target
+						linkedServer.receive_information(signal, null)
+						usr.log_message("(Tablet: [name] | [usr.real_name]) sent \"[custommessage]\" to [signal.format_target()]", LOG_PDA)
+
 		//Request Console Logs - KEY REQUIRED
 		if(href_list["view_requests"])
 			if(LINKED_SERVER_NONRESPONSIVE)
@@ -373,8 +476,9 @@
 		return INITIALIZE_HINT_LATELOAD
 
 /obj/item/paper/monitorkey/proc/print(obj/machinery/telecomms/message_server/server)
-	info = "<center><h2>Daily Key Reset</h2></center><br>The new message monitor key is '[server.decryptkey]'.<br>Please keep this a secret and away from the clown.<br>If necessary, change the password to a more secure one."
+	add_raw_text("<center><h2>Daily Key Reset</h2></center><br>The new message monitor key is '[server.decryptkey]'.<br>Please keep this a secret and away from the clown.<br>If necessary, change the password to a more secure one.")
 	add_overlay("paper_words")
+	update_appearance()
 
 /obj/item/paper/monitorkey/LateInitialize()
 	for (var/obj/machinery/telecomms/message_server/preset/server in GLOB.telecomms_list)

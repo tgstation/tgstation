@@ -14,8 +14,11 @@
 	terminal.setDir(dir)
 	terminal.master = src
 
-/obj/machinery/power/apc/proc/toggle_nightshift_lights(mob/living/user)
-	if(last_nightshift_switch > world.time - 100) //~10 seconds between each toggle to prevent spamming
+/obj/machinery/power/apc/proc/toggle_nightshift_lights(mob/user)
+	if(low_power_nightshift_lights)
+		balloon_alert(user, "power is too low!")
+		return
+	if(last_nightshift_switch > world.time - 10 SECONDS) //~10 seconds between each toggle to prevent spamming
 		balloon_alert(user, "night breaker is cycling!")
 		return
 	last_nightshift_switch = world.time
@@ -26,10 +29,12 @@
 		area.power_light = (lighting > APC_CHANNEL_AUTO_OFF)
 		area.power_equip = (equipment > APC_CHANNEL_AUTO_OFF)
 		area.power_environ = (environ > APC_CHANNEL_AUTO_OFF)
+		playsound(src.loc, 'sound/machines/terminal_on.ogg', 50, FALSE)
 	else
 		area.power_light = FALSE
 		area.power_equip = FALSE
 		area.power_environ = FALSE
+		playsound(src.loc, 'sound/machines/terminal_off.ogg', 50, FALSE)
 	area.power_change()
 
 /obj/machinery/power/apc/proc/toggle_breaker(mob/user)
@@ -37,7 +42,7 @@
 		return
 	operating = !operating
 	add_hiddenprint(user)
-	log_game("[key_name(user)] turned [operating ? "on" : "off"] the [src] in [AREACOORD(src)]")
+	user.log_message("turned [operating ? "on" : "off"] the [src]", LOG_GAME)
 	update()
 	update_appearance()
 
@@ -119,9 +124,15 @@
 			return
 
 	failure_timer = max(failure_timer, round(duration))
+	update()
+	queue_icon_update()
 
 /obj/machinery/power/apc/proc/set_nightshift(on)
 	set waitfor = FALSE
+	if(low_power_nightshift_lights && !on)
+		return
+	if(nightshift_lights == on)
+		return //no change
 	nightshift_lights = on
 	for(var/obj/machinery/light/night_light in area)
 		if(night_light.nightshift_allowed)

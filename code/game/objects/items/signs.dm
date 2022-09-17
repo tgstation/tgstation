@@ -56,6 +56,15 @@
 		animate(pixel_y = user.pixel_y + (1 * direction), time = 1, easing = SINE_EASING)
 	user.changeNext_move(CLICK_CD_MELEE)
 
+/datum/action/item_action/nano_picket_sign
+	name = "Retext Nano Picket Sign"
+
+/datum/action/item_action/nano_picket_sign/Trigger(trigger_flags)
+	if(!istype(target, /obj/item/picket_sign))
+		return
+	var/obj/item/picket_sign/sign = target
+	sign.retext(owner)
+
 /datum/crafting_recipe/picket_sign
 	name = "Picket Sign"
 	result = /obj/item/picket_sign

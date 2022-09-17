@@ -29,7 +29,7 @@
 		/datum/heretic_knowledge/spell/void_phase,
 		/datum/heretic_knowledge/summon/raw_prophet,
 	)
-	spell_to_add = /obj/effect/proc_holder/spell/pointed/blood_siphon
+	spell_to_add = /datum/action/cooldown/spell/pointed/blood_siphon
 	cost = 1
 	route = PATH_SIDE
 
@@ -43,6 +43,6 @@
 		/datum/heretic_knowledge/summon/stalker,
 		/datum/heretic_knowledge/spell/void_pull,
 	)
-	spell_to_add = /obj/effect/proc_holder/spell/pointed/cleave
+	spell_to_add = /datum/action/cooldown/spell/pointed/cleave
 	cost = 1
 	route = PATH_SIDE

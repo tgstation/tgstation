@@ -48,6 +48,8 @@
 	if(paying_account)
 		C = new /obj/structure/closet/crate/secure/owned(A, paying_account)
 		C.name = "[crate_name] - Purchased by [paying_account.account_holder]"
+	else if(!crate_type)
+		CRASH("tried to generate a supply pack without a valid crate type")
 	else
 		C = new crate_type(A)
 		C.name = crate_name
@@ -140,7 +142,7 @@
 	desc = "Science gone bonkers? Beeping behind the airlock? Buy now and be the hero the station des... I mean needs! (time not included)"
 	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/item/clothing/head/bomb_hood,
-					/obj/item/clothing/suit/bomb_suit,
+					/obj/item/clothing/suit/utility/bomb_suit,
 					/obj/item/clothing/mask/gas,
 					/obj/item/screwdriver,
 					/obj/item/wirecutters,
@@ -151,8 +153,8 @@
 	name = "Firefighting Crate"
 	desc = "Only you can prevent station fires. Partner up with two firefighter suits, gas masks, flashlights, large oxygen tanks, extinguishers, and hardhats!"
 	cost = CARGO_CRATE_VALUE * 2
-	contains = list(/obj/item/clothing/suit/fire/firefighter,
-					/obj/item/clothing/suit/fire/firefighter,
+	contains = list(/obj/item/clothing/suit/utility/fire/firefighter,
+					/obj/item/clothing/suit/utility/fire/firefighter,
 					/obj/item/clothing/mask/gas,
 					/obj/item/clothing/mask/gas,
 					/obj/item/flashlight,
@@ -232,13 +234,13 @@
 	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/item/clothing/head/radiation,
 					/obj/item/clothing/head/radiation,
-					/obj/item/clothing/suit/radiation,
-					/obj/item/clothing/suit/radiation,
+					/obj/item/clothing/suit/utility/radiation,
+					/obj/item/clothing/suit/utility/radiation,
 					/obj/item/geiger_counter,
 					/obj/item/geiger_counter,
-					/obj/item/reagent_containers/food/drinks/bottle/vodka,
-					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
-					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass)
+					/obj/item/reagent_containers/cup/glass/bottle/vodka,
+					/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass,
+					/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass)
 	crate_name = "radiation protection crate"
 	crate_type = /obj/structure/closet/crate/radiation
 
@@ -385,15 +387,15 @@
 	access_view = ACCESS_SECURITY
 	contains = list(/obj/item/clothing/under/rank/security/officer/formal,
 					/obj/item/clothing/under/rank/security/officer/formal,
-					/obj/item/clothing/suit/security/officer,
-					/obj/item/clothing/suit/security/officer,
+					/obj/item/clothing/suit/jacket/officer/blue,
+					/obj/item/clothing/suit/jacket/officer/blue,
 					/obj/item/clothing/head/beret/sec/navyofficer,
 					/obj/item/clothing/head/beret/sec/navyofficer,
 					/obj/item/clothing/under/rank/security/warden/formal,
-					/obj/item/clothing/suit/security/warden,
+					/obj/item/clothing/suit/jacket/warden/blue,
 					/obj/item/clothing/head/beret/sec/navywarden,
 					/obj/item/clothing/under/rank/security/head_of_security/formal,
-					/obj/item/clothing/suit/security/hos,
+					/obj/item/clothing/suit/jacket/hos/blue,
 					/obj/item/clothing/head/hos/beret/navyhos)
 	crate_name = "security clothing crate"
 
@@ -1201,19 +1203,19 @@
 	name = "Chemical Starter Kit Crate"
 	desc = "Contains thirteen different chemicals, for all the fun experiments you can make."
 	cost = CARGO_CRATE_VALUE * 2.6
-	contains = list(/obj/item/reagent_containers/glass/bottle/hydrogen,
-					/obj/item/reagent_containers/glass/bottle/carbon,
-					/obj/item/reagent_containers/glass/bottle/nitrogen,
-					/obj/item/reagent_containers/glass/bottle/oxygen,
-					/obj/item/reagent_containers/glass/bottle/fluorine,
-					/obj/item/reagent_containers/glass/bottle/phosphorus,
-					/obj/item/reagent_containers/glass/bottle/silicon,
-					/obj/item/reagent_containers/glass/bottle/chlorine,
-					/obj/item/reagent_containers/glass/bottle/radium,
-					/obj/item/reagent_containers/glass/bottle/sacid,
-					/obj/item/reagent_containers/glass/bottle/ethanol,
-					/obj/item/reagent_containers/glass/bottle/potassium,
-					/obj/item/reagent_containers/glass/bottle/sugar,
+	contains = list(/obj/item/reagent_containers/cup/bottle/hydrogen,
+					/obj/item/reagent_containers/cup/bottle/carbon,
+					/obj/item/reagent_containers/cup/bottle/nitrogen,
+					/obj/item/reagent_containers/cup/bottle/oxygen,
+					/obj/item/reagent_containers/cup/bottle/fluorine,
+					/obj/item/reagent_containers/cup/bottle/phosphorus,
+					/obj/item/reagent_containers/cup/bottle/silicon,
+					/obj/item/reagent_containers/cup/bottle/chlorine,
+					/obj/item/reagent_containers/cup/bottle/radium,
+					/obj/item/reagent_containers/cup/bottle/sacid,
+					/obj/item/reagent_containers/cup/bottle/ethanol,
+					/obj/item/reagent_containers/cup/bottle/potassium,
+					/obj/item/reagent_containers/cup/bottle/sugar,
 					/obj/item/clothing/glasses/science,
 					/obj/item/reagent_containers/dropper,
 					/obj/item/storage/box/beakers)
@@ -1238,11 +1240,11 @@
 	name = "Medical Supplies Crate"
 	desc = "Contains several medical supplies. German doctor not included."
 	cost = CARGO_CRATE_VALUE * 4
-	contains = list(/obj/item/reagent_containers/glass/bottle/multiver,
-					/obj/item/reagent_containers/glass/bottle/epinephrine,
-					/obj/item/reagent_containers/glass/bottle/morphine,
-					/obj/item/reagent_containers/glass/bottle/toxin,
-					/obj/item/reagent_containers/glass/beaker/large,
+	contains = list(/obj/item/reagent_containers/cup/bottle/multiver,
+					/obj/item/reagent_containers/cup/bottle/epinephrine,
+					/obj/item/reagent_containers/cup/bottle/morphine,
+					/obj/item/reagent_containers/cup/bottle/toxin,
+					/obj/item/reagent_containers/cup/beaker/large,
 					/obj/item/reagent_containers/pill/insulin,
 					/obj/item/stack/medical/gauze,
 					/obj/item/storage/box/beakers,
@@ -1291,21 +1293,21 @@
 	cost = CARGO_CRATE_VALUE * 5
 	access = ACCESS_CMO
 	access_view = ACCESS_VIROLOGY
-	contains = list(/obj/item/reagent_containers/glass/bottle/flu_virion,
-					/obj/item/reagent_containers/glass/bottle/cold,
-					/obj/item/reagent_containers/glass/bottle/random_virus,
-					/obj/item/reagent_containers/glass/bottle/random_virus,
-					/obj/item/reagent_containers/glass/bottle/random_virus,
-					/obj/item/reagent_containers/glass/bottle/random_virus,
-					/obj/item/reagent_containers/glass/bottle/fake_gbs,
-					/obj/item/reagent_containers/glass/bottle/magnitis,
-					/obj/item/reagent_containers/glass/bottle/pierrot_throat,
-					/obj/item/reagent_containers/glass/bottle/brainrot,
-					/obj/item/reagent_containers/glass/bottle/anxiety,
-					/obj/item/reagent_containers/glass/bottle/beesease,
+	contains = list(/obj/item/reagent_containers/cup/bottle/flu_virion,
+					/obj/item/reagent_containers/cup/bottle/cold,
+					/obj/item/reagent_containers/cup/bottle/random_virus,
+					/obj/item/reagent_containers/cup/bottle/random_virus,
+					/obj/item/reagent_containers/cup/bottle/random_virus,
+					/obj/item/reagent_containers/cup/bottle/random_virus,
+					/obj/item/reagent_containers/cup/bottle/fake_gbs,
+					/obj/item/reagent_containers/cup/bottle/magnitis,
+					/obj/item/reagent_containers/cup/bottle/pierrot_throat,
+					/obj/item/reagent_containers/cup/bottle/brainrot,
+					/obj/item/reagent_containers/cup/bottle/anxiety,
+					/obj/item/reagent_containers/cup/bottle/beesease,
 					/obj/item/storage/box/syringes,
 					/obj/item/storage/box/beakers,
-					/obj/item/reagent_containers/glass/bottle/mutagen)
+					/obj/item/reagent_containers/cup/bottle/mutagen)
 	crate_name = "virus crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
 	dangerous = TRUE
@@ -1408,14 +1410,24 @@
 	crate_name = "raw pyro anomaly"
 	crate_type = /obj/structure/closet/crate/secure/science
 
-/datum/supply_pack/science/raw_delimber_anomaly
-	name = "Raw Delimber Anomaly"
-	desc = "The raw core of a delimber anomaly, ready to be implosion-compressed into a powerful artifact."
+/datum/supply_pack/science/raw_bioscrambler_anomaly
+	name = "Raw Bioscrambler Anomaly"
+	desc = "The raw core of a bioscrambler anomaly, ready to be implosion-compressed into a powerful artifact."
 	cost = CARGO_CRATE_VALUE * 10
 	access = ACCESS_ORDNANCE
 	access_view = ACCESS_ORDNANCE
-	contains = list(/obj/item/raw_anomaly_core/delimber)
-	crate_name = "raw delimber anomaly"
+	contains = list(/obj/item/raw_anomaly_core/bioscrambler)
+	crate_name = "raw bioscrambler anomaly"
+	crate_type = /obj/structure/closet/crate/secure/science
+
+/datum/supply_pack/science/raw_dimensional_anomaly
+	name = "Raw Dimensional Anomaly"
+	desc = "The raw core of a dimensional anomaly, ready to be implosion-compressed into a powerful artifact."
+	cost = CARGO_CRATE_VALUE * 10
+	access = ACCESS_ORDNANCE
+	access_view = ACCESS_ORDNANCE
+	contains = list(/obj/item/raw_anomaly_core/dimensional)
+	crate_name = "raw dimensional anomaly"
 	crate_type = /obj/structure/closet/crate/secure/science
 
 
@@ -1539,9 +1551,9 @@
 	desc = "Fight back against dirt and grime with Nanotrasen's Janitorial Essentials(tm)! Contains three buckets, caution signs, and cleaner grenades. Also has a single mop, broom, spray cleaner, rag, and trash bag."
 	cost = CARGO_CRATE_VALUE * 2
 	access_view = ACCESS_JANITOR
-	contains = list(/obj/item/reagent_containers/glass/bucket,
-					/obj/item/reagent_containers/glass/bucket,
-					/obj/item/reagent_containers/glass/bucket,
+	contains = list(/obj/item/reagent_containers/cup/bucket,
+					/obj/item/reagent_containers/cup/bucket,
+					/obj/item/reagent_containers/cup/bucket,
 					/obj/item/mop,
 					/obj/item/pushbroom,
 					/obj/item/clothing/suit/caution,
@@ -1549,7 +1561,7 @@
 					/obj/item/clothing/suit/caution,
 					/obj/item/storage/bag/trash,
 					/obj/item/reagent_containers/spray/cleaner,
-					/obj/item/reagent_containers/glass/rag,
+					/obj/item/reagent_containers/cup/rag,
 					/obj/item/grenade/chem_grenade/cleaner,
 					/obj/item/grenade/chem_grenade/cleaner,
 					/obj/item/grenade/chem_grenade/cleaner)
@@ -1586,11 +1598,11 @@
 	desc = "Celebrate both life and death on the station with Nanotrasen's Party Essentials(tm)! Contains seven colored glowsticks, six beers, six sodas, two ales, and a bottle of patron, goldschlager, and shaker!"
 	cost = CARGO_CRATE_VALUE * 5
 	contains = list(/obj/item/storage/box/drinkingglasses,
-					/obj/item/reagent_containers/food/drinks/shaker,
-					/obj/item/reagent_containers/food/drinks/bottle/patron,
-					/obj/item/reagent_containers/food/drinks/bottle/goldschlager,
-					/obj/item/reagent_containers/food/drinks/bottle/ale,
-					/obj/item/reagent_containers/food/drinks/bottle/ale,
+					/obj/item/reagent_containers/cup/glass/shaker,
+					/obj/item/reagent_containers/cup/glass/bottle/patron,
+					/obj/item/reagent_containers/cup/glass/bottle/goldschlager,
+					/obj/item/reagent_containers/cup/glass/bottle/ale,
+					/obj/item/reagent_containers/cup/glass/bottle/ale,
 					/obj/item/storage/cans/sixbeer,
 					/obj/item/storage/cans/sixsoda,
 					/obj/item/flashlight/glowstick,
@@ -1707,7 +1719,7 @@
 					/obj/item/bouquet,
 					/obj/item/bouquet/sunflower,
 					/obj/item/bouquet/poppy,
-					/obj/item/reagent_containers/food/drinks/bottle/champagne)
+					/obj/item/reagent_containers/cup/glass/bottle/champagne)
 	crate_name = "wedding crate"
 
 /// Box of 7 grey IDs.
@@ -1779,9 +1791,9 @@
 	desc = "Bee business booming? Better be benevolent and boost botany by bestowing bi-Beekeeper-suits! Contains two beekeeper suits and matching headwear."
 	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/item/clothing/head/beekeeper_head,
-					/obj/item/clothing/suit/beekeeper_suit,
+					/obj/item/clothing/suit/utility/beekeeper_suit,
 					/obj/item/clothing/head/beekeeper_head,
-					/obj/item/clothing/suit/beekeeper_suit)
+					/obj/item/clothing/suit/utility/beekeeper_suit)
 	crate_name = "beekeeper suits"
 	crate_type = /obj/structure/closet/crate/hydroponics
 
@@ -1795,7 +1807,7 @@
 					/obj/item/honey_frame,
 					/obj/item/queen_bee/bought,
 					/obj/item/clothing/head/beekeeper_head,
-					/obj/item/clothing/suit/beekeeper_suit,
+					/obj/item/clothing/suit/utility/beekeeper_suit,
 					/obj/item/melee/flyswatter)
 	crate_name = "beekeeping starter crate"
 	crate_type = /obj/structure/closet/crate/hydroponics
@@ -1845,15 +1857,15 @@
 	name = "Food Crate"
 	desc = "Get things cooking with this crate full of useful ingredients! Contains a dozen eggs, three bananas, and some flour, rice, milk, soymilk, salt, pepper, enzyme, sugar, and monkeymeat."
 	cost = CARGO_CRATE_VALUE * 2
-	contains = list(/obj/item/reagent_containers/food/condiment/flour,
-					/obj/item/reagent_containers/food/condiment/rice,
-					/obj/item/reagent_containers/food/condiment/milk,
-					/obj/item/reagent_containers/food/condiment/soymilk,
-					/obj/item/reagent_containers/food/condiment/saltshaker,
-					/obj/item/reagent_containers/food/condiment/peppermill,
+	contains = list(/obj/item/reagent_containers/condiment/flour,
+					/obj/item/reagent_containers/condiment/rice,
+					/obj/item/reagent_containers/condiment/milk,
+					/obj/item/reagent_containers/condiment/soymilk,
+					/obj/item/reagent_containers/condiment/saltshaker,
+					/obj/item/reagent_containers/condiment/peppermill,
 					/obj/item/storage/fancy/egg_box,
-					/obj/item/reagent_containers/food/condiment/enzyme,
-					/obj/item/reagent_containers/food/condiment/sugar,
+					/obj/item/reagent_containers/condiment/enzyme,
+					/obj/item/reagent_containers/condiment/sugar,
 					/obj/item/food/meat/slab/monkey,
 					/obj/item/food/grown/banana,
 					/obj/item/food/grown/banana,
@@ -1889,8 +1901,8 @@
 	cost = CARGO_CRATE_VALUE * 3
 	contains = list(/obj/item/reagent_containers/spray/plantbgone,
 					/obj/item/reagent_containers/spray/plantbgone,
-					/obj/item/reagent_containers/glass/bottle/ammonia,
-					/obj/item/reagent_containers/glass/bottle/ammonia,
+					/obj/item/reagent_containers/cup/bottle/ammonia,
+					/obj/item/reagent_containers/cup/bottle/ammonia,
 					/obj/item/hatchet,
 					/obj/item/cultivator,
 					/obj/item/plant_analyzer,
@@ -1952,9 +1964,10 @@
 				fourfiveeight.update_appearance()
 				qdel(P)
 				anomalous_box_provided = TRUE
-				log_game("An anomalous pizza box was provided in a pizza crate at during cargo delivery")
+				log_game("An anomalous pizza box was provided in a pizza crate at during cargo delivery.")
 				if(prob(50))
 					addtimer(CALLBACK(src, .proc/anomalous_pizza_report), rand(300, 1800))
+					message_admins("An anomalous pizza box was provided in a pizza crate at during cargo delivery.")
 				else
 					message_admins("An anomalous pizza box was silently created with no command report in a pizza crate delivery.")
 				continue
@@ -1972,8 +1985,8 @@
 				new boombox_type(C)
 				qdel(P)
 				boombox_provided = TRUE
-				log_game("A bomb pizza box was created by a pizza crate delivery.")
-				message_admins("A bomb pizza box has arrived in a pizza crate delivery.")
+				log_game("A pizza box bomb was created by a pizza crate delivery.")
+				message_admins("A pizza box bomb has arrived in a pizza crate delivery.")
 				continue
 
 		//here we randomly replace our pizzas for a chance at the full range
@@ -2022,7 +2035,8 @@
 					/obj/item/seeds/rose,
 					/obj/item/seeds/chanter,
 					/obj/item/seeds/potato,
-					/obj/item/seeds/sugarcane)
+					/obj/item/seeds/sugarcane,
+					/obj/item/seeds/cucumber)
 	crate_name = "seeds crate"
 	crate_type = /obj/structure/closet/crate/hydroponics
 
@@ -2037,7 +2051,8 @@
 					/obj/item/food/grown/carrot,
 					/obj/item/food/grown/mushroom/chanterelle,
 					/obj/item/food/grown/onion,
-					/obj/item/food/grown/pumpkin)
+					/obj/item/food/grown/pumpkin,
+					/obj/item/food/grown/cucumber)
 	crate_name = "food crate"
 
 /datum/supply_pack/organic/grill
@@ -2047,7 +2062,7 @@
 	crate_type = /obj/structure/closet/crate
 	contains = list(/obj/item/stack/sheet/mineral/coal/five,
 					/obj/machinery/grill/unwrenched,
-					/obj/item/reagent_containers/food/drinks/soda_cans/monkey_energy
+					/obj/item/reagent_containers/cup/soda_cans/monkey_energy
 					)
 	crate_name = "grilling starter kit crate"
 
@@ -2057,7 +2072,7 @@
 	cost = CARGO_CRATE_VALUE * 4
 	crate_type = /obj/structure/closet/crate
 	contains = list(/obj/item/stack/sheet/mineral/coal/ten,
-					/obj/item/reagent_containers/food/drinks/soda_cans/monkey_energy
+					/obj/item/reagent_containers/cup/soda_cans/monkey_energy
 					)
 	crate_name = "grilling fuel kit crate"
 
@@ -2166,6 +2181,22 @@
 	contains = list(/mob/living/basic/cow)
 	crate_name = "cow crate"
 
+/datum/supply_pack/critter/sheep
+	name = "Sheep Crate"
+	desc = "The sheep goes BAAAA!"
+	cost = CARGO_CRATE_VALUE * 6
+	access_view = ACCESS_HYDROPONICS
+	contains = list(/mob/living/basic/sheep)
+	crate_name = "sheep crate"
+
+/datum/supply_pack/critter/pig
+	name = "Pig Crate"
+	desc = "The pig goes oink!"
+	cost = CARGO_CRATE_VALUE * 6
+	access_view = ACCESS_KITCHEN
+	contains = list(/mob/living/basic/pig)
+	crate_name = "pig crate"
+
 /datum/supply_pack/critter/crab
 	name = "Crab Rocket"
 	desc = "CRAAAAAAB ROCKET. CRAB ROCKET. CRAB ROCKET. CRAB CRAB CRAB CRAB CRAB CRAB CRAB CRAB CRAB CRAB CRAB CRAB CRAB CRAB CRAB CRAB CRAB CRAB CRAB CRAB CRAB CRAB CRAB CRAB CRAB CRAB CRAB CRAB CRAB CRAB CRAB CRAB CRAB CRAB CRAB CRAB CRAB CRAB CRAB CRAB CRAB CRAB CRAB CRAB CRAB CRAB CRAB ROCKET. CRAFT. ROCKET. BUY. CRAFT ROCKET. CRAB ROOOCKET. CRAB ROOOOCKET. CRAB CRAB CRAB CRAB CRAB CRAB CRAB CRAB ROOOOOOOOOOOOOOOOOOOOOOCK EEEEEEEEEEEEEEEEEEEEEEEEE EEEETTTTTTTTTTTTAAAAAAAAA AAAHHHHHHHHHHHHH. CRAB ROCKET. CRAAAB ROCKEEEEEEEEEGGGGHHHHTT CRAB CRAB CRAABROCKET CRAB ROCKEEEET."//fun fact: i actually spent like 10 minutes and transcribed the entire video.
@@ -2205,6 +2236,13 @@
 	contains = list(/mob/living/simple_animal/hostile/retaliate/goat)
 	crate_name = "goat crate"
 
+/datum/supply_pack/critter/mothroach
+	name = "Mothroach Crate"
+	desc = "Put the mothroach on your head and find out what true cuteness looks like."
+	cost = CARGO_CRATE_VALUE * 4
+	contains = list(/mob/living/basic/mothroach)
+	crate_name = "mothroach crate"
+
 /datum/supply_pack/critter/monkey
 	name = "Monkey Cube Crate"
 	desc = "Stop monkeying around! Contains seven monkey cubes. Just add water!"
@@ -2238,6 +2276,14 @@
 					/mob/living/simple_animal/hostile/retaliate/snake,
 					/mob/living/simple_animal/hostile/retaliate/snake)
 	crate_name = "snake crate"
+
+/datum/supply_pack/critter/lizard
+	name = "Lizard Crate"
+	desc = "Hisss! Containssss a friendly lizard. Not to be confusssed with a lizardperssson."
+	cost = CARGO_CRATE_VALUE * 4
+	access_view = ACCESS_JANITOR
+	contains = list(/mob/living/simple_animal/hostile/lizard)
+	crate_name = "lizard crate"
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Costumes & Toys /////////////////////////////////
@@ -2293,7 +2339,7 @@
 					/obj/item/storage/pill_bottle/aranesp,
 					/obj/item/storage/pill_bottle/stimulant,
 					/obj/item/toy/cards/deck/syndicate,
-					/obj/item/reagent_containers/food/drinks/bottle/absinthe,
+					/obj/item/reagent_containers/cup/glass/bottle/absinthe,
 					/obj/item/clothing/under/syndicate/tacticool,
 					/obj/item/storage/fancy/cigarettes/cigpack_syndicate,
 					/obj/item/storage/fancy/cigarettes/cigpack_shadyjims,
@@ -2331,7 +2377,7 @@
 	name = "Formalwear Crate"
 	desc = "You're gonna like the way you look, I guaranteed it. Contains an asston of fancy clothing."
 	cost = CARGO_CRATE_VALUE * 4 //Lots of very expensive items. You gotta pay up to look good!
-	contains = list(/obj/item/clothing/under/dress/blacktango,
+	contains = list(/obj/item/clothing/under/dress/tango,
 					/obj/item/clothing/under/misc/assistantformal,
 					/obj/item/clothing/under/misc/assistantformal,
 					/obj/item/clothing/under/rank/civilian/lawyer/bluesuit,
@@ -2417,15 +2463,15 @@
 	desc = "Reenact Shakespearean plays with this assortment of outfits. Contains eight different costumes!"
 	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/item/clothing/head/snowman,
-					/obj/item/clothing/suit/snowman,
+					/obj/item/clothing/suit/costume/snowman,
 					/obj/item/clothing/head/chicken,
-					/obj/item/clothing/suit/chickensuit,
+					/obj/item/clothing/suit/costume/chickensuit,
 					/obj/item/clothing/mask/gas/monkeymask,
-					/obj/item/clothing/suit/monkeysuit,
+					/obj/item/clothing/suit/costume/monkeysuit,
 					/obj/item/clothing/head/cardborg,
-					/obj/item/clothing/suit/cardborg,
+					/obj/item/clothing/suit/costume/cardborg,
 					/obj/item/clothing/head/xenos,
-					/obj/item/clothing/suit/xenos,
+					/obj/item/clothing/suit/costume/xenos,
 					/obj/item/clothing/suit/hooded/ian_costume,
 					/obj/item/clothing/suit/hooded/carp_costume,
 					/obj/item/clothing/suit/hooded/bee_costume)
@@ -2448,7 +2494,7 @@
 					/obj/item/clothing/mask/gas/mime,
 					/obj/item/clothing/head/frenchberet,
 					/obj/item/clothing/suit/toggle/suspenders,
-					/obj/item/reagent_containers/food/drinks/bottle/bottleofnothing,
+					/obj/item/reagent_containers/cup/glass/bottle/bottleofnothing,
 					/obj/item/storage/backpack/mime)
 	crate_name = "standard costume crate"
 	crate_type = /obj/structure/closet/crate/wooden
@@ -2487,6 +2533,26 @@
 	for(var/i in 1 to num_contained)
 		var/item = pick_n_take(L)
 		new item(C)
+
+/datum/supply_pack/costumes_toys/trekkie
+	name = "Trekkie Costume Crate"
+	desc = "Wear the scrapped concepts for Nanotrasen's jumpsuits, based off popular late-20th century Earth media! While they couldn't be used for the official jumpsuits due to copyright infringement, it's been assured that they can still legally be sold under the label of being 'failed designs'."
+	cost = CARGO_CRATE_VALUE * 2
+	contains = list(
+		/obj/item/clothing/under/trek/command,
+		/obj/item/clothing/under/trek/command/next,
+		/obj/item/clothing/under/trek/command/voy,
+		/obj/item/clothing/under/trek/command/ent,
+		/obj/item/clothing/under/trek/engsec,
+		/obj/item/clothing/under/trek/engsec/next,
+		/obj/item/clothing/under/trek/engsec/voy,
+		/obj/item/clothing/under/trek/engsec/ent,
+		/obj/item/clothing/under/trek/medsci,
+		/obj/item/clothing/under/trek/medsci/next,
+		/obj/item/clothing/under/trek/medsci/voy,
+		/obj/item/clothing/under/trek/medsci/ent,
+	)
+	crate_type = /obj/structure/closet/crate/wooden
 
 /datum/supply_pack/costumes_toys/mafia
 	name = "Cosa Nostra Starter Pack"
@@ -2729,13 +2795,16 @@
 	crate_type = null
 	special_pod = /obj/structure/closet/supplypod/bluespacepod
 
+/datum/supply_pack/misc/empty/generate(atom/A, datum/bank_account/paying_account)
+	return
+
 /datum/supply_pack/misc/religious_supplies
 	name = "Religious Supplies Crate"
 	desc = "Keep your local chaplain happy and well-supplied, lest they call down judgement upon your cargo bay. Contains two bottles of holywater, bibles, chaplain robes, and burial garmets."
 	cost = CARGO_CRATE_VALUE * 6 // it costs so much because the Space Church needs funding to build a cathedral
 	access_view = ACCESS_CHAPEL_OFFICE
-	contains = list(/obj/item/reagent_containers/food/drinks/bottle/holywater,
-					/obj/item/reagent_containers/food/drinks/bottle/holywater,
+	contains = list(/obj/item/reagent_containers/cup/glass/bottle/holywater,
+					/obj/item/reagent_containers/cup/glass/bottle/holywater,
 					/obj/item/storage/book/bible/booze,
 					/obj/item/storage/book/bible/booze,
 					/obj/item/clothing/suit/hooded/chaplain_hoodie,

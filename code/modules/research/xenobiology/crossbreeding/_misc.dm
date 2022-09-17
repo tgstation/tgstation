@@ -12,7 +12,6 @@ Slimecrossing Items
 	pictures_max = 1
 	can_customise = FALSE
 	default_picture_name = "A nostalgic picture"
-	var/used = FALSE
 
 /datum/saved_bodypart
 	var/obj/item/bodypart/old_part
@@ -58,16 +57,15 @@ Slimecrossing Items
 /obj/item/camera/rewind/afterattack(atom/target, mob/user, flag)
 	if(!on || !pictures_left || !isturf(target.loc))
 		return
-	if(!used)//selfie time
-		if(user == target)
-			to_chat(user, span_notice("You take a selfie!"))
-		else
-			to_chat(user, span_notice("You take a photo with [target]!"))
-			to_chat(target, span_notice("[user] takes a photo with you!"))
-		to_chat(target, span_boldnotice("You'll remember this moment forever!"))
 
-		used = TRUE
-		target.AddComponent(/datum/component/dejavu, 2)
+	if(user == target)
+		to_chat(user, span_notice("You take a selfie!"))
+	else
+		to_chat(user, span_notice("You take a photo with [target]!"))
+		to_chat(target, span_notice("[user] takes a photo with you!"))
+	to_chat(target, span_boldnotice("You'll remember this moment forever!"))
+
+	target.AddComponent(/datum/component/dejavu, 2)
 	.=..()
 
 
@@ -78,22 +76,18 @@ Slimecrossing Items
 	desc = "They say a picture is like a moment stopped in time."
 	pictures_left = 1
 	pictures_max = 1
-	var/used = FALSE
 
 /obj/item/camera/timefreeze/afterattack(atom/target, mob/user, flag)
 	if(!on || !pictures_left || !isturf(target.loc))
 		return
-	if(!used) //refilling the film does not refill the timestop
-		new /obj/effect/timestop(get_turf(target), 2, 50, list(user))
-		used = TRUE
-		desc = "This camera has seen better days."
+	new /obj/effect/timestop(get_turf(target), 2, 50, list(user))
 	. = ..()
 
 //Hypercharged slime cell - Charged Yellow
 /obj/item/stock_parts/cell/high/slime_hypercharged
 	name = "hypercharged slime core"
 	desc = "A charged yellow slime extract, infused with plasma. It almost hurts to touch."
-	icon = 'icons/mob/slimes.dmi'
+	icon = 'icons/mob/simple/slimes.dmi'
 	icon_state = "yellow slime extract"
 	rating = 7
 	custom_materials = null
@@ -106,7 +100,7 @@ Slimecrossing Items
 /obj/item/barriercube
 	name = "barrier cube"
 	desc = "A compressed cube of slime. When squeezed, it grows to massive size!"
-	icon = 'icons/obj/slimecrossing.dmi'
+	icon = 'icons/obj/xenobiology/slimecrossing.dmi'
 	icon_state = "barriercube"
 	w_class = WEIGHT_CLASS_TINY
 
@@ -123,7 +117,7 @@ Slimecrossing Items
 /obj/structure/barricade/slime
 	name = "gelatinous barrier"
 	desc = "A huge chunk of grey slime. Bullets might get stuck in it."
-	icon = 'icons/obj/slimecrossing.dmi'
+	icon = 'icons/obj/xenobiology/slimecrossing.dmi'
 	icon_state = "slimebarrier"
 	proj_pass_rate = 40
 	max_integrity = 60
@@ -132,11 +126,11 @@ Slimecrossing Items
 /obj/effect/forcefield/slimewall
 	name = "solidified gel"
 	desc = "A mass of solidified slime gel - completely impenetrable, but it's melting away!"
-	icon = 'icons/obj/slimecrossing.dmi'
+	icon = 'icons/obj/xenobiology/slimecrossing.dmi'
 	icon_state = "slimebarrier_thick"
 	can_atmos_pass = ATMOS_PASS_NO
 	opacity = TRUE
-	timeleft = 100
+	initial_duration = 10 SECONDS
 
 //Rainbow barrier - Chilling Rainbow
 /obj/effect/forcefield/slimewall/rainbow
@@ -148,7 +142,7 @@ Slimecrossing Items
 /obj/structure/ice_stasis
 	name = "ice block"
 	desc = "A massive block of ice. You can see something vaguely humanoid inside."
-	icon = 'icons/obj/slimecrossing.dmi'
+	icon = 'icons/obj/xenobiology/slimecrossing.dmi'
 	icon_state = "frozen"
 	density = TRUE
 	max_integrity = 100
@@ -169,7 +163,7 @@ Slimecrossing Items
 	name = "gold capture device"
 	desc = "Bluespace technology packed into a roughly egg-shaped device, used to store nonhuman creatures. Can't catch them all, though - it only fits one."
 	w_class = WEIGHT_CLASS_SMALL
-	icon = 'icons/obj/slimecrossing.dmi'
+	icon = 'icons/obj/xenobiology/slimecrossing.dmi'
 	icon_state = "capturedevice"
 
 /obj/item/capturedevice/attack(mob/living/M, mob/user)
@@ -193,7 +187,7 @@ Slimecrossing Items
 			to_chat(user, span_warning("[M] refused to enter the device."))
 			return
 	else
-		if(istype(M, /mob/living/simple_animal/hostile) && !("neutral" in M.faction))
+		if(ishostile(M) && !("neutral" in M.faction))
 			to_chat(user, span_warning("This creature is too aggressive to capture."))
 			return
 	to_chat(user, span_notice("You store [M] in the capture device."))

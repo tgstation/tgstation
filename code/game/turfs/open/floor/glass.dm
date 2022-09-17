@@ -45,8 +45,6 @@
 	base_icon_state = "reinf_glass"
 	floor_tile = /obj/item/stack/tile/rglass
 
-/turf/open/floor/glass/reinforced/setup_broken_states()
-	return list("reinf_glass-damaged1", "reinf_glass-damaged2", "reinf_glass-damaged3")
 
 /turf/open/floor/glass/reinforced/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
@@ -62,9 +60,6 @@
 	base_icon_state = "plasma_glass"
 	floor_tile = /obj/item/stack/tile/glass/plasma
 
-/turf/open/floor/glass/plasma/setup_broken_states()
-	return list("plasma_glass-damaged1", "plasma_glass-damaged2", "plasma_glass-damaged3")
-
 /turf/open/floor/glass/plasma/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 
@@ -78,9 +73,6 @@
 	icon_state = "reinf_plasma_glass-0"
 	base_icon_state = "reinf_plasma_glass"
 	floor_tile = /obj/item/stack/tile/rglass/plasma
-
-/turf/open/floor/glass/reinforced/plasma/setup_broken_states()
-	return list("reinf_plasma_glass-damaged1", "reinf_plasma_glass-damaged2", "reinf_plasma_glass-damaged3")
 
 /turf/open/floor/glass/reinforced/plasma/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS

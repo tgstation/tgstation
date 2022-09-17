@@ -1,7 +1,7 @@
 /obj/structure/closet/crate
 	name = "crate"
 	desc = "A rectangular steel crate."
-	icon = 'icons/obj/crates.dmi'
+	icon = 'icons/obj/storage/crates.dmi'
 	icon_state = "crate"
 	req_access = null
 	can_weld_shut = FALSE
@@ -113,12 +113,23 @@
 
 /obj/structure/closet/crate/maint/Initialize(mapload)
 	..()
+
+	var/static/list/possible_crates = RANDOM_CRATE_LOOT
+
+	var/crate_path = pick_weight(possible_crates)
+
+	var/obj/structure/closet/crate = new crate_path(loc)
+	crate.RegisterSignal(crate, COMSIG_CLOSET_POPULATE_CONTENTS, /obj/structure/closet/.proc/populate_with_random_maint_loot)
+	if (prob(50))
+		crate.opened = TRUE
+		crate.update_appearance()
+
 	return INITIALIZE_HINT_QDEL
 
-/obj/structure/closet/crate/maint/PopulateContents()
-	. = ..()
-	new /obj/effect/spawner/random/structure/crate_empty(loc)
-	for(var/i in 1 to rand(2,6))
+/obj/structure/closet/proc/populate_with_random_maint_loot()
+	SIGNAL_HANDLER
+
+	for (var/i in 1 to rand(2,6))
 		new /obj/effect/spawner/random/maintenance(src)
 
 /obj/structure/closet/crate/trashcart/Initialize(mapload)
@@ -146,7 +157,7 @@
 	icon_state = "trashcart"
 	can_install_electronics = FALSE
 
-/obj/structure/closet/crate/trashcart/Moved()
+/obj/structure/closet/crate/trashcart/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(has_gravity())
 		playsound(src, 'sound/effects/roll.ogg', 100, TRUE)
@@ -270,9 +281,14 @@
 
 /obj/structure/closet/crate/goldcrate/PopulateContents()
 	..()
+	new /obj/item/storage/belt/champion(src)
+
+/obj/structure/closet/crate/goldcrate/populate_contents_immediate()
+	. = ..()
+
+	// /datum/objective_item/stack/gold
 	for(var/i in 1 to 3)
 		new /obj/item/stack/sheet/mineral/gold(src, 1, FALSE)
-	new /obj/item/storage/belt/champion(src)
 
 /obj/structure/closet/crate/silvercrate
 	name = "silver crate"

@@ -78,9 +78,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	var/datum/picture/saved_image // the saved image used for messaging purpose like come on dude
 
 	/// Stored pAI in the computer
-	var/obj/item/paicard/inserted_pai = null
-
-	var/datum/action/item_action/toggle_computer_light/light_butt
+	var/obj/item/pai_card/inserted_pai = null
 
 /obj/item/modular_computer/Initialize(mapload)
 	. = ..()
@@ -95,7 +93,8 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		soundloop = new(src, enabled)
 	UpdateDisplay()
 	if(has_light)
-		light_butt = new(src)
+		add_item_action(/datum/action/item_action/toggle_computer_light)
+
 	update_appearance()
 	register_context()
 	Add_Messenger()
@@ -116,18 +115,9 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 	if(istype(inserted_pai))
 		QDEL_NULL(inserted_pai)
-	if(istype(light_butt))
-		QDEL_NULL(light_butt)
 
 	physical = null
 	return ..()
-
-/obj/item/modular_computer/ui_action_click(mob/user, actiontype)
-	if(istype(actiontype, light_butt))
-		toggle_flashlight()
-	else
-		..()
-
 
 /obj/item/modular_computer/pre_attack_secondary(atom/A, mob/living/user, params)
 	if(active_program?.tap(A, user, params))
@@ -355,7 +345,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		user.put_in_hands(ssd)
 		playsound(src, 'sound/machines/card_slide.ogg', 50)
 
-/obj/item/modular_computer/proc/turn_on(mob/user)
+/obj/item/modular_computer/proc/turn_on(mob/user, open_ui = TRUE)
 	var/issynth = issilicon(user) // Robots and AIs get different activation messages.
 	if(atom_integrity <= integrity_failure * max_integrity)
 		if(issynth)
@@ -378,7 +368,8 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 			soundloop.start()
 		enabled = 1
 		update_appearance()
-		ui_interact(user)
+		if(open_ui)
+			ui_interact(user)
 		return TRUE
 	else // Unpowered
 		if(issynth)
@@ -531,6 +522,44 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		INVOKE_ASYNC(src, /datum/proc/ui_interact, user) // Re-open the UI on this computer. It should show the main screen now.
 	update_appearance()
 
+/obj/item/modular_computer/proc/open_program(mob/user, datum/computer_file/program/program)
+	if(program.computer != src)
+		CRASH("tried to open program that does not belong to this computer")
+
+	if(!program || !istype(program)) // Program not found or it's not executable program.
+		to_chat(user, span_danger("\The [src]'s screen shows \"I/O ERROR - Unable to run program\" warning."))
+		return FALSE
+
+	if(!program.is_supported_by_hardware(hardware_flag, 1, user))
+		return FALSE
+
+	// The program is already running. Resume it.
+	if(program in idle_threads)
+		program.program_state = PROGRAM_STATE_ACTIVE
+		active_program = program
+		program.alert_pending = FALSE
+		idle_threads.Remove(program)
+		update_appearance()
+		updateUsrDialog()
+		return TRUE
+
+	if(idle_threads.len > max_idle_programs)
+		to_chat(user, span_danger("\The [src] displays a \"Maximal CPU load reached. Unable to run another program.\" error."))
+		return FALSE
+
+	if(program.requires_ntnet && !get_ntnet_status(program.requires_ntnet_feature)) // The program requires NTNet connection, but we are not connected to NTNet.
+		to_chat(user, span_danger("\The [src]'s screen shows \"Unable to connect to NTNet. Please retry. If problem persists contact your system administrator.\" warning."))
+		return FALSE
+
+	if(!program.on_start(user))
+		return FALSE
+
+	active_program = program
+	program.alert_pending = FALSE
+	update_appearance()
+	updateUsrDialog()
+	return TRUE
+
 // Returns 0 for No Signal, 1 for Low Signal and 2 for Good Signal. 3 is for wired connection (always-on)
 /obj/item/modular_computer/proc/get_ntnet_status(specific_action = 0)
 	var/obj/item/computer_hardware/network_card/network_card = all_components[MC_NET]
@@ -557,6 +586,13 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		physical.visible_message(span_notice("\The [src] shuts down."))
 	enabled = 0
 	update_appearance()
+
+/obj/item/modular_computer/ui_action_click(mob/user, actiontype)
+	if(istype(actiontype, /datum/action/item_action/toggle_computer_light))
+		toggle_flashlight()
+		return
+
+	return ..()
 
 /**
  * Toggles the computer's flashlight, if it has one.
@@ -621,15 +657,14 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 /obj/item/modular_computer/attackby(obj/item/attacking_item, mob/user, params)
 	// Check for ID first
-	if(istype(attacking_item, /obj/item/card/id) && InsertID(attacking_item))
+	if(isidcard(attacking_item) && InsertID(attacking_item))
 		return
 
 	// Insert a PAI.
-	if(istype(attacking_item, /obj/item/paicard) && !inserted_pai)
+	if(istype(attacking_item, /obj/item/pai_card) && !inserted_pai)
 		if(!user.transferItemToLoc(attacking_item, src))
 			return
 		inserted_pai = attacking_item
-		inserted_pai.slotted = TRUE
 		to_chat(user, span_notice("You slot \the [attacking_item] into [src]."))
 		return
 

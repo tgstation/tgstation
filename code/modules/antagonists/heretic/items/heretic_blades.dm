@@ -12,9 +12,11 @@
 	flags_1 = CONDUCT_1
 	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_NORMAL
-	force = 17
+	force = 20
 	throwforce = 10
+	demolition_mod = 0.8
 	hitsound = 'sound/weapons/bladeslice.ogg'
+	armour_penetration = 35
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "rends")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
 	var/after_use_message = ""
@@ -73,7 +75,7 @@
 		Unmade, it aspires to be more than it is, and shears soot-filled wounds with a blunt edge."
 	icon_state = "ash_blade"
 	inhand_icon_state = "ash_blade"
-	after_use_message = "The Nightwater hears your call..."
+	after_use_message = "The Nightwatcher hears your call..."
 
 // Path of Flesh's blade
 /obj/item/melee/sickly_blade/flesh
@@ -100,4 +102,4 @@
 	desc = "A blade made of brilliant silver that shines gloriously. Unknown rage is bottled within."
 	icon_state = "dark_blade"
 	inhand_icon_state = "dark_blade"
-	after_use_message = "The Colonel hears your call..."
+	after_use_message = "The Torn Champion hears your call..."

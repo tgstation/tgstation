@@ -297,9 +297,7 @@
 /turf/open/floor/plating,
 /area/shuttle/mining/large)
 "K" = (
-/obj/structure/sign/warning/vacuum/external{
-	pixel_x = 32
-	},
+/obj/structure/sign/warning/vacuum/external/directional/east,
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -323,7 +321,7 @@
 /obj/docking_port/mobile{
 	dwidth = 3;
 	height = 10;
-	id = "mining";
+	shuttle_id = "mining";
 	name = "mining shuttle";
 	port_direction = 2;
 	width = 7

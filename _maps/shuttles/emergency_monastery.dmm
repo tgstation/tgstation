@@ -142,7 +142,7 @@
 	pixel_y = -32
 	},
 /obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/glass/mortar{
+/obj/item/reagent_containers/cup/mortar{
 	pixel_y = 8
 	},
 /obj/item/pestle,
@@ -970,8 +970,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "nK" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/tinted/fulltile,
+/obj/effect/spawner/structure/window/reinforced/tinted,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "nQ" = (
@@ -1360,7 +1359,7 @@
 	pixel_y = -32
 	},
 /obj/machinery/light/dim/directional/south,
-/obj/item/reagent_containers/food/drinks/trophy{
+/obj/item/reagent_containers/cup/glass/trophy{
 	pixel_y = 10
 	},
 /turf/open/floor/iron/dark,
@@ -1617,10 +1616,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "xm" = (
-/obj/machinery/shower{
-	dir = 8;
-	pixel_y = -4
-	},
+/obj/machinery/shower/directional/west,
 /obj/machinery/light/small/directional/west,
 /obj/item/bikehorn/rubberducky,
 /turf/open/floor/iron/showroomfloor,
@@ -1727,9 +1723,9 @@
 /obj/structure/closet{
 	name = "beekeeping wardrobe"
 	},
-/obj/item/clothing/suit/beekeeper_suit,
-/obj/item/clothing/suit/beekeeper_suit,
-/obj/item/clothing/suit/beekeeper_suit,
+/obj/item/clothing/suit/utility/beekeeper_suit,
+/obj/item/clothing/suit/utility/beekeeper_suit,
+/obj/item/clothing/suit/utility/beekeeper_suit,
 /obj/item/clothing/head/beekeeper_head,
 /obj/item/clothing/head/beekeeper_head,
 /obj/item/clothing/head/beekeeper_head,
@@ -1740,12 +1736,12 @@
 /area/shuttle/escape)
 "yP" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/condiment/saltshaker{
+/obj/item/reagent_containers/condiment/saltshaker{
 	layer = 3.1;
 	pixel_x = -2;
 	pixel_y = 2
 	},
-/obj/item/reagent_containers/food/condiment/peppermill{
+/obj/item/reagent_containers/condiment/peppermill{
 	pixel_x = 5;
 	pixel_y = 6
 	},
@@ -1821,7 +1817,7 @@
 /area/shuttle/escape)
 "zP" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/mug/tea,
+/obj/item/reagent_containers/cup/glass/mug/tea,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "zQ" = (
@@ -1855,7 +1851,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "Ac" = (
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/cup/bucket,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "Ad" = (
@@ -2024,8 +2020,8 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "Cn" = (
-/obj/item/reagent_containers/glass/bucket,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/cup/bucket,
+/obj/item/reagent_containers/cup/bucket,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 9
 	},
@@ -2171,7 +2167,7 @@
 /area/shuttle/escape)
 "Eb" = (
 /obj/structure/water_source/puddle,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/cup/bucket,
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/grass,
 /area/shuttle/escape)
@@ -2261,7 +2257,7 @@
 /area/shuttle/escape)
 "Fm" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/bottle/holywater{
+/obj/item/reagent_containers/cup/glass/bottle/holywater{
 	pixel_x = -2;
 	pixel_y = 2
 	},
@@ -2274,11 +2270,11 @@
 /area/shuttle/escape)
 "Fx" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/condiment/saltshaker{
+/obj/item/reagent_containers/condiment/saltshaker{
 	pixel_x = 3;
 	pixel_y = 4
 	},
-/obj/item/reagent_containers/food/condiment/peppermill,
+/obj/item/reagent_containers/condiment/peppermill,
 /obj/item/storage/box/ingredients/wildcard{
 	layer = 3.1
 	},
@@ -2629,17 +2625,14 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "JX" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = 11
-	},
+/obj/structure/sink/directional/west,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "JZ" = (
 /obj/docking_port/mobile/emergency{
 	dwidth = 40;
 	height = 43;
-	movement_force = list("KNOCKDOWN" = 3, "THROW" = 6);
+	movement_force = list("KNOCKDOWN"=3,"THROW"=6);
 	name = "\proper a monastery with engines strapped to it";
 	port_direction = 1;
 	width = 80
@@ -2719,9 +2712,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Ll" = (
-/obj/structure/sign/warning/vacuum/external{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/vacuum/external/directional/north,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -2864,7 +2855,7 @@
 /area/shuttle/escape)
 "Nf" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/condiment/flour,
 /obj/item/kitchen/rollingpin,
 /obj/item/knife/kitchen,
 /obj/machinery/light/small/directional/south,
@@ -2958,9 +2949,7 @@
 /area/shuttle/escape)
 "Oi" = (
 /obj/machinery/light/small/directional/west,
-/obj/structure/sign/warning/vacuum/external{
-	pixel_x = -32
-	},
+/obj/structure/sign/warning/vacuum/external/directional/west,
 /obj/machinery/camera/directional/west{
 	c_tag = "Monastery Cemetery";
 	network = list("ss13","monastery")
@@ -3132,7 +3121,7 @@
 "Qs" = (
 /obj/structure/table/wood,
 /obj/item/newspaper,
-/obj/item/reagent_containers/food/drinks/coffee,
+/obj/item/reagent_containers/cup/glass/coffee,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Qt" = (
@@ -3398,7 +3387,7 @@
 /area/shuttle/escape)
 "SR" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/bottle/wine{
+/obj/item/reagent_containers/cup/glass/bottle/wine{
 	pixel_y = 8
 	},
 /turf/open/floor/iron/dark,
@@ -3490,7 +3479,7 @@
 /area/shuttle/escape)
 "Tx" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/trophy{
+/obj/item/reagent_containers/cup/glass/trophy{
 	pixel_y = 8
 	},
 /turf/open/floor/carpet,
@@ -3507,10 +3496,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "TJ" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = 11
-	},
+/obj/structure/sink/directional/west,
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
 "TR" = (
@@ -3740,10 +3726,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "WJ" = (
-/obj/machinery/shower{
-	dir = 8;
-	pixel_y = -4
-	},
+/obj/machinery/shower/directional/west,
 /obj/item/soap/homemade,
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
@@ -3822,7 +3805,7 @@
 /area/shuttle/escape)
 "XK" = (
 /obj/structure/closet/crate/bin,
-/obj/item/reagent_containers/glass/rag,
+/obj/item/reagent_containers/cup/rag,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)

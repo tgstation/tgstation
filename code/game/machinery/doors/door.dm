@@ -24,13 +24,10 @@
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.1
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.2
 
-	var/secondsElectrified = MACHINE_NOT_ELECTRIFIED
-	var/shockedby
 	var/visible = TRUE
 	var/operating = FALSE
 	var/glass = FALSE
 	var/welded = FALSE
-	var/normalspeed = 1
 	var/heat_proof = FALSE // For rglass-windowed airlocks and firedoors
 	var/emergency = FALSE // Emergency access override
 	var/sub_door = FALSE // true if it's meant to go under another door.
@@ -38,11 +35,13 @@
 	var/autoclose = FALSE //does it automatically close after some time
 	var/safe = TRUE //whether the door detects things and mobs in its way and reopen or crushes them.
 	var/locked = FALSE //whether the door is bolted or not.
-	var/assemblytype //the type of door frame to drop during deconstruction
 	var/datum/effect_system/spark_spread/spark_system
 	var/real_explosion_block //ignore this, just use explosion_block
 	var/red_alert_access = FALSE //if TRUE, this door will always open on red alert
-	var/unres_sides = 0 //Unrestricted sides. A bitflag for which direction (if any) can open the door with no access
+	/// Checks to see if this airlock has an unrestricted "sensor" within (will set to TRUE if present).
+	var/unres_sensor = FALSE
+	/// Unrestricted sides. A bitflag for which direction (if any) can open the door with no access
+	var/unres_sides = NONE
 	var/can_crush = TRUE /// Whether or not the door can crush mobs.
 	var/can_open_with_hands = TRUE /// Whether or not the door can be opened by hand (used for blast doors and shutters)
 
@@ -65,10 +64,16 @@
 	explosion_block = EXPLOSION_BLOCK_PROC
 	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, .proc/check_security_level)
 
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_MAGICALLY_UNLOCKED = .proc/on_magic_unlock,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+	AddElement(/datum/element/can_barricade)
+
 /obj/machinery/door/examine(mob/user)
 	. = ..()
 	if(red_alert_access)
-		if(SSsecurity_level.current_level >= SEC_LEVEL_RED)
+		if(SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED)
 			. += span_notice("Due to a security threat, its access requirements have been lifted!")
 		else
 			. += span_notice("In the event of a red alert, its access requirements will automatically lift.")
@@ -83,12 +88,12 @@
 	if(isaicamera(user) || issilicon(user))
 		return .
 
-	if (isnull(held_item) && Adjacent(user))
+	if(isnull(held_item) && Adjacent(user))
 		context[SCREENTIP_CONTEXT_LMB] = "Open"
 		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/door/check_access_list(list/access_list)
-	if(red_alert_access && SSsecurity_level.current_level >= SEC_LEVEL_RED)
+	if(red_alert_access && SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED)
 		return TRUE
 	return ..()
 
@@ -270,6 +275,8 @@
 		return TRUE
 	else if(I.item_flags & NOBLUDGEON || user.combat_mode)
 		return ..()
+	else if(!user.combat_mode && istype(I, /obj/item/stack/sheet/mineral/wood))
+		return ..() // we need this so our can_barricade element can be called using COMSIG_PARENT_ATTACKBY
 	else if(try_to_activate_door(user))
 		return TRUE
 	return ..()
@@ -310,14 +317,6 @@
 		return
 	if(prob(20/severity) && (istype(src, /obj/machinery/door/airlock) || istype(src, /obj/machinery/door/window)) )
 		INVOKE_ASYNC(src, .proc/open)
-	if(prob(severity*10 - 20))
-		if(secondsElectrified == MACHINE_NOT_ELECTRIFIED)
-			secondsElectrified = MACHINE_ELECTRIFIED_PERMANENT
-			LAZYADD(shockedby, "\[[time_stamp()]\]EM Pulse")
-			addtimer(CALLBACK(src, .proc/unelectrify), 300)
-
-/obj/machinery/door/proc/unelectrify()
-	secondsElectrified = MACHINE_NOT_ELECTRIFIED
 
 /obj/machinery/door/update_icon_state()
 	icon_state = "[base_icon_state][density]"
@@ -483,5 +482,10 @@
 	zap_flags &= ~ZAP_OBJ_DAMAGE
 	. = ..()
 
+/// Signal proc for [COMSIG_ATOM_MAGICALLY_UNLOCKED]. Open up when someone casts knock.
+/obj/machinery/door/proc/on_magic_unlock(datum/source, datum/action/cooldown/spell/aoe/knock/spell, mob/living/caster)
+	SIGNAL_HANDLER
+
+	INVOKE_ASYNC(src, .proc/open)
 
 #undef DOOR_CLOSE_WAIT

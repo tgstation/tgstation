@@ -5,17 +5,13 @@
 	say_mod = "rattles"
 	sexes = 0
 	meat = /obj/item/stack/sheet/mineral/plasma
-	species_traits = list(NOBLOOD,NOTRANSSTING, HAS_BONE)
+	species_traits = list(NOBLOOD, NOTRANSSTING, HAS_BONE, NOAPPENDIX)
 	// plasmemes get hard to wound since they only need a severe bone wound to dismember, but unlike skellies, they can't pop their bones back into place
 	inherent_traits = list(
-		TRAIT_ADVANCEDTOOLUSER,
-		TRAIT_CAN_STRIP,
 		TRAIT_GENELESS,
 		TRAIT_HARDLY_WOUNDED,
-		TRAIT_LITERATE,
 		TRAIT_RADIMMUNE,
 		TRAIT_RESISTCOLD,
-		TRAIT_NOHUNGER,
 	)
 
 	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL
@@ -32,7 +28,7 @@
 	disliked_food = FRUIT | CLOTH
 	liked_food = VEGETABLES
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
-	species_cookie = /obj/item/reagent_containers/food/condiment/milk
+	species_cookie = /obj/item/reagent_containers/condiment/milk
 	outfit_important_for_life = /datum/outfit/plasmaman
 	species_language_holder = /datum/language_holder/skeleton
 
@@ -122,8 +118,6 @@
 	if(job.plasmaman_outfit)
 		equipping.equipOutfit(job.plasmaman_outfit, visuals_only)
 	equipping.internal = equipping.get_item_for_held_index(2)
-	equipping.update_internals_hud_icon(1)
-
 
 /datum/species/plasmaman/random_name(gender,unique,lastname)
 	if(unique)

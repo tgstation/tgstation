@@ -10,12 +10,14 @@
 #define BEE_POLLINATE_PEST_CHANCE 33
 #define BEE_POLLINATE_POTENCY_CHANCE 50
 
+#define BEE_FOODGROUPS RAW | MEAT | GORE | BUGS
+
 /mob/living/simple_animal/hostile/bee
 	name = "bee"
 	desc = "Buzzy buzzy bee, stingy sti- Ouch!"
 	icon_state = ""
 	icon_living = ""
-	icon = 'icons/mob/bees.dmi'
+	icon = 'icons/mob/simple/bees.dmi'
 	gender = FEMALE
 	speak_emote = list("buzzes")
 	emote_hear = list("buzzes")
@@ -75,7 +77,7 @@
 	var/list/reee = list(/datum/reagent/consumable/nutriment/vitamin = 5)
 	if(beegent)
 		reee[beegent.type] = 5
-	holder.AddComponent(/datum/component/edible, reee, null, RAW | MEAT | GROSS, 10, 0, list("bee"), null, 10)
+	holder.AddComponent(/datum/component/edible, reee, null, BEE_FOODGROUPS, 10, 0, list("bee"), null, 10)
 	L.visible_message(span_warning("[L] scoops up [src]!"))
 	L.put_in_hands(holder)
 
@@ -133,7 +135,7 @@
 	add_overlay("[icon_base]_base")
 
 	var/static/mutable_appearance/greyscale_overlay
-	greyscale_overlay = greyscale_overlay || mutable_appearance('icons/mob/bees.dmi')
+	greyscale_overlay = greyscale_overlay || mutable_appearance('icons/mob/simple/bees.dmi')
 	greyscale_overlay.icon_state = "[icon_base]_grey"
 	greyscale_overlay.color = col
 	add_overlay(greyscale_overlay)
@@ -305,7 +307,7 @@
 	desc = "She's the queen of bees, BZZ BZZ!"
 	icon_state = "queen_item"
 	inhand_icon_state = ""
-	icon = 'icons/mob/bees.dmi'
+	icon = 'icons/mob/simple/bees.dmi'
 	/// The actual mob that our bee item corresponds to
 	var/mob/living/simple_animal/hostile/bee/queen/queen
 
@@ -372,13 +374,13 @@
 /obj/item/trash/bee
 	name = "bee"
 	desc = "No wonder the bees are dying out, you monster."
-	icon = 'icons/mob/bees.dmi'
+	icon = 'icons/mob/simple/bees.dmi'
 	icon_state = "bee_item"
 	var/datum/reagent/beegent
 
 /obj/item/trash/bee/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/edible, list(/datum/reagent/consumable/nutriment/vitamin = 5), null, RAW | MEAT | GROSS, 10, 0, list("bee"), null, 10)
+	AddComponent(/datum/component/edible, list(/datum/reagent/consumable/nutriment/vitamin = 5), null, BEE_FOODGROUPS, 10, 0, list("bee"), null, 10)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_QUEEN_BEE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /obj/item/trash/bee/update_overlays()
@@ -386,3 +388,5 @@
 	var/mutable_appearance/body_overlay = mutable_appearance(icon = icon, icon_state = "bee_item_overlay")
 	body_overlay.color = beegent ? beegent.color : BEE_DEFAULT_COLOUR
 	. += body_overlay
+
+#undef BEE_FOODGROUPS

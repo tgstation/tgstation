@@ -283,15 +283,12 @@
 	. = ..()
 	if(!.)
 		return
-	var/obj/projectile/flame = new /obj/projectile/bullet/incendiary/backblast/flamethrower(mod.wearer.loc)
+	var/obj/projectile/flame = new /obj/projectile/bullet/incendiary/fire(mod.wearer.loc)
 	flame.preparePixelProjectile(target, mod.wearer)
 	flame.firer = mod.wearer
 	playsound(src, 'sound/items/modsuit/flamethrower.ogg', 75, TRUE)
 	INVOKE_ASYNC(flame, /obj/projectile.proc/fire)
 	drain_power(use_power_cost)
-
-/obj/projectile/bullet/incendiary/backblast/flamethrower
-	range = 6
 
 ///Power kick - Lets the user launch themselves at someone to kick them.
 /obj/item/mod/module/power_kick
@@ -300,7 +297,7 @@
 	icon_state = "power_kick"
 	module_type = MODULE_ACTIVE
 	removable = FALSE
-	use_power_cost = DEFAULT_CHARGE_DRAIN*5
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
 	incompatible_modules = list(/obj/item/mod/module/power_kick)
 	cooldown_time = 5 SECONDS
 	/// Damage on kick.
@@ -450,7 +447,7 @@
 	old_size = null
 	if(!mod.loc)
 		return
-	var/datum/component/storage/holding_storage = mod.loc.GetComponent(/datum/component/storage)
-	if(!holding_storage || holding_storage.max_w_class >= mod.w_class)
+	var/datum/storage/holding_storage = mod.loc.atom_storage
+	if(!holding_storage || holding_storage.max_specific_storage >= mod.w_class)
 		return
 	mod.forceMove(drop_location())

@@ -1,0 +1,10 @@
+{
+    "tape_piece": [
+        {
+            "type": "icon_state",
+            "icon_state": "tape_piece",
+            "blend_mode": "overlay",
+            "color_ids": [ 1 ]
+        }
+    ]
+}

@@ -1,6 +1,6 @@
 /mob/living/carbon/alien
 	name = "alien"
-	icon = 'icons/mob/alien.dmi'
+	icon = 'icons/mob/nonhuman-player/alien.dmi'
 	gender = FEMALE //All xenos are girls!!
 	dna = null
 	faction = list(ROLE_ALIEN)
@@ -32,7 +32,6 @@
 
 	create_internal_organs()
 
-	ADD_TRAIT(src, TRAIT_CAN_STRIP, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_NEVER_WOUNDED, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
@@ -94,7 +93,7 @@ Des: Gives the client of the alien an image on each infected mob.
 			if(HAS_TRAIT(L, TRAIT_XENO_HOST))
 				var/obj/item/organ/internal/body_egg/alien_embryo/A = L.getorgan(/obj/item/organ/internal/body_egg/alien_embryo)
 				if(A)
-					var/I = image('icons/mob/alien.dmi', loc = L, icon_state = "infected[A.stage]")
+					var/I = image('icons/mob/nonhuman-player/alien.dmi', loc = L, icon_state = "infected[A.stage]")
 					client.images += I
 	return
 
@@ -117,8 +116,10 @@ Des: Removes all infected images from the alien.
 	return TRUE
 
 /mob/living/carbon/alien/proc/alien_evolve(mob/living/carbon/alien/new_xeno)
-	to_chat(src, span_noticealien("You begin to evolve!"))
-	visible_message(span_alertalien("[src] begins to twist and contort!"))
+	visible_message(
+		span_alertalien("[src] begins to twist and contort!"),
+		span_noticealien("You begin to evolve!"),
+	)
 	new_xeno.setDir(dir)
 	if(numba && unique_name)
 		new_xeno.numba = numba

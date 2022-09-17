@@ -1,0 +1,87 @@
+import { BooleanLike } from 'common/react';
+import { useBackend } from '../backend';
+import { Button, LabeledList, Section } from '../components';
+import { Window } from '../layouts';
+
+type Data = {
+  has_cap: BooleanLike;
+  can_change_colour: BooleanLike;
+  drawables: Drawable[];
+  is_capped: BooleanLike;
+  selected_stencil: string;
+  text_buffer: string;
+};
+
+type Drawable = {
+  items: { item: string }[];
+  name: string;
+};
+
+export const Crayon = (props, context) => {
+  const { act, data } = useBackend<Data>(context);
+  const {
+    has_cap,
+    can_change_colour,
+    drawables = [],
+    is_capped,
+    selected_stencil,
+    text_buffer,
+  } = data;
+  const capOrChanges = has_cap || can_change_colour;
+
+  return (
+    <Window width={600} height={600}>
+      <Window.Content scrollable>
+        {!!capOrChanges && (
+          <Section title="Basic">
+            <LabeledList>
+              <LabeledList.Item label="Cap">
+                <Button
+                  icon={is_capped ? 'power-off' : 'times'}
+                  content={is_capped ? 'On' : 'Off'}
+                  selected={is_capped}
+                  onClick={() => act('toggle_cap')}
+                />
+              </LabeledList.Item>
+            </LabeledList>
+            <Button
+              content="Select New Color"
+              onClick={() => act('select_colour')}
+            />
+          </Section>
+        )}
+        <Section title="Stencil">
+          <LabeledList>
+            {drawables.map((drawable) => {
+              const items = drawable.items || [];
+              return (
+                <LabeledList.Item key={drawable.name} label={drawable.name}>
+                  {items.map((item) => (
+                    <Button
+                      key={item.item}
+                      content={item.item}
+                      selected={item.item === selected_stencil}
+                      onClick={() =>
+                        act('select_stencil', {
+                          item: item.item,
+                        })
+                      }
+                    />
+                  ))}
+                </LabeledList.Item>
+              );
+            })}
+          </LabeledList>
+        </Section>
+        <Section title="Text">
+          <LabeledList>
+            <LabeledList.Item label="Current Buffer">
+              {text_buffer}
+            </LabeledList.Item>
+          </LabeledList>
+          <Button content="New Text" onClick={() => act('enter_text')} />
+        </Section>
+      </Window.Content>
+    </Window>
+  );
+};

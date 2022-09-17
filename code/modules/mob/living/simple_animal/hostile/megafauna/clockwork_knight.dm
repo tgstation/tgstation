@@ -13,7 +13,7 @@ I'd rather there be something than the clockwork ruin be entirely empty though s
 	maxHealth = 300
 	icon_state = "clockwork_defender"
 	icon_living = "clockwork_defender"
-	icon = 'icons/mob/icemoon/icemoon_monsters.dmi'
+	icon = 'icons/mob/simple/icemoon/icemoon_monsters.dmi'
 	attack_verb_continuous = "slashes"
 	attack_verb_simple = "slash"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
@@ -35,8 +35,8 @@ I'd rather there be something than the clockwork ruin be entirely empty though s
 	crusher_loot = list(/obj/item/clockwork_alloy)
 	wander = FALSE
 	del_on_death = TRUE
-	deathmessage = "falls, quickly decaying into centuries old dust."
-	deathsound = SFX_BODYFALL
+	death_message = "falls, quickly decaying into centuries old dust."
+	death_sound = SFX_BODYFALL
 	footstep_type = FOOTSTEP_MOB_HEAVY
 	attack_action_types = list()
 

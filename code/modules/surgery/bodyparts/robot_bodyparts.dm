@@ -13,7 +13,7 @@
 /obj/item/bodypart/l_arm/robot
 	name = "cyborg left arm"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
-	limb_id = "robotic"
+	limb_id = BODYPART_TYPE_ROBOTIC
 	attack_verb_simple = list("slapped", "punched")
 	inhand_icon_state = "buildpipe"
 	icon = 'icons/mob/augmentation/augments.dmi'
@@ -43,7 +43,7 @@
 	inhand_icon_state = "buildpipe"
 	icon_static = 'icons/mob/augmentation/augments.dmi'
 	icon = 'icons/mob/augmentation/augments.dmi'
-	limb_id = "robotic"
+	limb_id = BODYPART_TYPE_ROBOTIC
 	flags_1 = CONDUCT_1
 	icon_state = "borg_r_arm"
 	is_dimorphic = FALSE
@@ -69,7 +69,7 @@
 	inhand_icon_state = "buildpipe"
 	icon_static = 'icons/mob/augmentation/augments.dmi'
 	icon = 'icons/mob/augmentation/augments.dmi'
-	limb_id = "robotic"
+	limb_id = BODYPART_TYPE_ROBOTIC
 	flags_1 = CONDUCT_1
 	icon_state = "borg_l_leg"
 	is_dimorphic = FALSE
@@ -95,7 +95,7 @@
 	inhand_icon_state = "buildpipe"
 	icon_static =  'icons/mob/augmentation/augments.dmi'
 	icon = 'icons/mob/augmentation/augments.dmi'
-	limb_id = "robotic"
+	limb_id = BODYPART_TYPE_ROBOTIC
 	flags_1 = CONDUCT_1
 	icon_state = "borg_r_leg"
 	is_dimorphic = FALSE
@@ -120,7 +120,7 @@
 	inhand_icon_state = "buildpipe"
 	icon_static =  'icons/mob/augmentation/augments.dmi'
 	icon = 'icons/mob/augmentation/augments.dmi'
-	limb_id = "robotic"
+	limb_id = BODYPART_TYPE_ROBOTIC
 	flags_1 = CONDUCT_1
 	icon_state = "borg_chest"
 	is_dimorphic = FALSE
@@ -213,11 +213,12 @@
 		. += span_info("It has a couple spots that still need to be <b>wired</b>.")
 
 /obj/item/bodypart/chest/robot/drop_organs(mob/user, violent_removal)
+	var/atom/drop_loc = drop_location()
 	if(wired)
-		new /obj/item/stack/cable_coil(drop_location(), 1)
+		new /obj/item/stack/cable_coil(drop_loc, 1)
 		wired = FALSE
 	if(cell)
-		cell.forceMove(drop_location())
+		cell.forceMove(drop_loc)
 		cell = null
 	..()
 
@@ -228,7 +229,7 @@
 	inhand_icon_state = "buildpipe"
 	icon_static = 'icons/mob/augmentation/augments.dmi'
 	icon = 'icons/mob/augmentation/augments.dmi'
-	limb_id = "robotic"
+	limb_id = BODYPART_TYPE_ROBOTIC
 	flags_1 = CONDUCT_1
 	icon_state = "borg_head"
 	is_dimorphic = FALSE
@@ -313,11 +314,12 @@
 
 
 /obj/item/bodypart/head/robot/drop_organs(mob/user, violent_removal)
+	var/atom/drop_loc = drop_location()
 	if(flash1)
-		flash1.forceMove(user.loc)
+		flash1.forceMove(drop_loc)
 		flash1 = null
 	if(flash2)
-		flash2.forceMove(user.loc)
+		flash2.forceMove(drop_loc)
 		flash2 = null
 	..()
 

@@ -30,7 +30,7 @@
 	desc = "Opens up the path of blades to you. \
 		Allows you to transmute a knife with two bars of silver to create a Darkened Blade. \
 		You can create up to five at a time."
-	gain_text = "Our great ancestors forged swords and practiced sparring on the even of great battles."
+	gain_text = "Our great ancestors forged swords and practiced sparring on the eve of great battles."
 	next_knowledge = list(/datum/heretic_knowledge/blade_grasp)
 	required_atoms = list(
 		/obj/item/knife = 1,
@@ -96,9 +96,10 @@
 
 /datum/heretic_knowledge/blade_dance
 	name = "Dance of the Brand"
-	desc = "Being attacked while wielding a Darkened Blade in either hand will deliver a riposte \
+	desc = "Being attacked while wielding a Heretic Blade in either hand will deliver a riposte \
 		towards your attacker. This effect can only trigger once every 20 seconds."
-	gain_text = "Having the prowess to wield such a thing requires great dedication and terror."
+	gain_text = "The footsoldier was known to be a fearsome duelist. \
+		Their general quickly appointed them as their personal Champion."
 	next_knowledge = list(
 		/datum/heretic_knowledge/limited_amount/risen_corpse,
 		/datum/heretic_knowledge/mark/blade_mark,
@@ -192,8 +193,8 @@
 		the victim will be unable to leave their current room until it expires or is triggered. \
 		Triggering the mark will summon a knife that will orbit you for a short time. \
 		The knife will block any attack directed towards you, but is consumed on use."
-	gain_text = "There was no room for cowardace here. Those who ran were scolded. \
-		That is how I met them. Their name was The Colonel."
+	gain_text = "His general wished to end the war, but the Champion knew there could be no life without death. \
+		He would slay the coward himself, and anyone who tried to run."
 	next_knowledge = list(/datum/heretic_knowledge/knowledge_ritual/blade)
 	route = PATH_BLADE
 	mark_type = /datum/status_effect/eldritch/blade
@@ -217,16 +218,16 @@
 	next_knowledge = list(/datum/heretic_knowledge/duel_stance)
 	route = PATH_BLADE
 
-/// The amount of blood flow reduced per level of severity of gained bleeding wounds for Stance of the Scarred Duelist.
-#define BLOOD_FLOW_PER_SEVEIRTY 1
+/// The amount of blood flow reduced per level of severity of gained bleeding wounds for Stance of the Torn Champion.
+#define BLOOD_FLOW_PER_SEVEIRTY -1
 
 /datum/heretic_knowledge/duel_stance
-	name = "Stance of the Scarred Duelist"
+	name = "Stance of the Torn Champion"
 	desc = "Grants resilience to blood loss from wounds and immunity to having your limbs dismembered. \
 		Additionally, when damaged below 50% of your maximum health, \
 		you gain increased resistance to gaining wounds and resistance to batons."
-	gain_text = "The Colonel was many things though out the age. But now, he is blind; he is deaf; \
-		he cannot be wounded; and he cannot be denied. His methods ensure that."
+	gain_text = "In time, it was he who stood alone among the bodies of his former comrades, awash in blood, none of it his own. \
+		He was without rival, equal, or purpose."
 	next_knowledge = list(
 		/datum/heretic_knowledge/blade_upgrade/blade,
 		/datum/heretic_knowledge/reroll_targets,
@@ -267,7 +268,7 @@
 	if(gained_wound.blood_flow <= 0)
 		return
 
-	gained_wound.blood_flow -= (gained_wound.severity * BLOOD_FLOW_PER_SEVEIRTY)
+	gained_wound.adjust_blood_flow(gained_wound.severity * BLOOD_FLOW_PER_SEVEIRTY)
 
 /datum/heretic_knowledge/duel_stance/proc/on_health_update(mob/living/source)
 	SIGNAL_HANDLER
@@ -293,7 +294,8 @@
 	desc = "Attacking someone with a Darkened Blade in both hands \
 		will now deliver a blow with both at once, dealing two attacks in rapid succession. \
 		The second blow will be slightly weaker."
-	gain_text = "From here, I began to learn the Colonel's arts. The prowess was finally mine to have."
+	gain_text = "I found him cleaved in twain, halves locked in a duel without end; \
+		a flurry of blades, neither hitting their mark, for the Champion was indomitable."
 	next_knowledge = list(/datum/heretic_knowledge/spell/furious_steel)
 	route = PATH_BLADE
 
@@ -334,13 +336,14 @@
 		orbiting blades around you. These blades will protect you from all attacks, \
 		but are consumed on use. Additionally, you can click to fire the blades \
 		at a target, dealing damage and causing bleeding."
-	gain_text = "His arts were those that ensured an ending."
+	gain_text = "Without thinking, I took the knife of a fallen soldier and threw with all my might. My aim was true! \
+		The Torn Champion smiled at their first taste of agony, and with a nod, their blades became my own."
 	next_knowledge = list(
 		/datum/heretic_knowledge/summon/maid_in_mirror,
 		/datum/heretic_knowledge/final/blade_final,
 		/datum/heretic_knowledge/rifle,
 	)
-	spell_to_add = /obj/effect/proc_holder/spell/aimed/furious_steel
+	spell_to_add = /datum/action/cooldown/spell/pointed/projectile/furious_steel
 	cost = 1
 	route = PATH_BLADE
 
@@ -353,8 +356,7 @@
 		Your Furious Steel spell will also have a shorter cooldown. \
 		Additionally, you become a master of combat, gaining full wound and stun immunity. \
 		Your Darkened Blades deal bonus damage and healing you on attack for a portion of the damage dealt."
-	gain_text = "The Colonel, in all of his expertise, revealed to me the three roots of victory. \
-		Cunning. Strength. And agony! This was their secret doctrine! With this knowledge in my potential, \
+	gain_text = "The Torn Champion is freed! I will become the blade reunited, and with my greater ambition, \
 		I AM UNMATCHED! A STORM OF STEEL AND SILVER IS UPON US! WITNESS MY ASCENSION!"
 	route = PATH_BLADE
 
@@ -367,15 +369,15 @@
 
 /datum/heretic_knowledge/final/blade_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
-	priority_announce("[generate_heretic_text()] Master of blades, the Colonel's disciple, [user.real_name] has ascended! Their steel is that which will cut reality in a maelstom of silver! [generate_heretic_text()]","[generate_heretic_text()]", ANNOUNCER_SPANOMALIES)
+	priority_announce("[generate_heretic_text()] Master of blades, the Torn Champion's disciple, [user.real_name] has ascended! Their steel is that which will cut reality in a maelstom of silver! [generate_heretic_text()]","[generate_heretic_text()]", ANNOUNCER_SPANOMALIES)
 	user.client?.give_award(/datum/award/achievement/misc/blade_ascension, user)
 	ADD_TRAIT(user, TRAIT_STUNIMMUNE, name)
 	ADD_TRAIT(user, TRAIT_NEVER_WOUNDED, name)
 	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
 	user.apply_status_effect(/datum/status_effect/protective_blades/recharging, null, 8, 30, 0.25 SECONDS, 1 MINUTES)
 
-	var/obj/effect/proc_holder/spell/aimed/furious_steel/steel_spell = locate() in user.mind.spell_list
-	steel_spell?.charge_max /= 3
+	var/datum/action/cooldown/spell/pointed/projectile/furious_steel/steel_spell = locate() in user.actions
+	steel_spell?.cooldown_time /= 3
 
 /datum/heretic_knowledge/final/blade_final/proc/on_eldritch_blade(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	SIGNAL_HANDLER

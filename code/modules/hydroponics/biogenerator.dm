@@ -6,13 +6,13 @@
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/biogenerator
 	var/processing = FALSE
-	var/obj/item/reagent_containers/glass/beaker = null
+	var/obj/item/reagent_containers/cup/beaker = null
 	var/points = 0
 	var/efficiency = 0
 	var/productivity = 0
 	var/max_items = 40
 	var/datum/techweb/stored_research
-	var/list/show_categories = list("Food", "Botany Chemicals", "Organic Materials")
+	var/list/show_categories = list(RND_CATEGORY_FOOD, RND_CATEGORY_BOTANY_CHEMICALS, RND_CATEGORY_ORGANIC_MATERIALS)
 	/// Currently selected category in the UI
 	var/selected_cat
 
@@ -85,7 +85,7 @@
 
 	if(default_deconstruction_screwdriver(user, "biogen-empty-o", "biogen-empty", O))
 		if(beaker)
-			var/obj/item/reagent_containers/glass/B = beaker
+			var/obj/item/reagent_containers/cup/B = beaker
 			B.forceMove(drop_location())
 			beaker = null
 		update_appearance()
@@ -94,7 +94,7 @@
 	if(default_deconstruction_crowbar(O))
 		return
 
-	if(istype(O, /obj/item/reagent_containers/glass))
+	if(istype(O, /obj/item/reagent_containers/cup))
 		if(panel_open)
 			to_chat(user, span_warning("Close the maintenance panel first."))
 		else
@@ -113,7 +113,7 @@
 			for(var/obj/item/food/grown/G in PB.contents)
 				if(i >= max_items)
 					break
-				if(SEND_SIGNAL(PB, COMSIG_TRY_STORAGE_TAKE, G, src))
+				if(PB.atom_storage.attempt_remove(G, src))
 					i++
 			if(i<max_items)
 				to_chat(user, span_info("You empty the plant bag into the biogenerator."))
@@ -242,7 +242,7 @@
  * user - the mob inserting the beaker
  * inserted_beaker - the beaker we're inserting into the biogen
  */
-/obj/machinery/biogenerator/proc/insert_beaker(mob/living/user, obj/item/reagent_containers/glass/inserted_beaker)
+/obj/machinery/biogenerator/proc/insert_beaker(mob/living/user, obj/item/reagent_containers/cup/inserted_beaker)
 	if(!can_interact(user))
 		return
 

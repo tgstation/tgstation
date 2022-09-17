@@ -16,7 +16,7 @@
 	user.real_name += " (suicide)"
 	// no conflicts with their identification card
 	for(var/atom/A in user.get_all_contents())
-		if(istype(A, /obj/item/card/id))
+		if(isidcard(A))
 			var/obj/item/card/id/their_card = A
 
 			// only renames their card, as opposed to tagging everyone's
@@ -88,7 +88,7 @@
 		qdel(I)
 		labels_left = initial(labels_left) //Yes, it's capped at its initial value
 
-/obj/item/hand_labeler/attackby_storage_insert(datum/component/storage, atom/storage_holder, mob/user)
+/obj/item/hand_labeler/attackby_storage_insert(datum/storage, atom/storage_holder, mob/user)
 	return !mode
 
 /obj/item/hand_labeler/borg
@@ -121,6 +121,6 @@
 	desc = "A roll of paper. Use it on a hand labeler to refill it."
 	icon_state = "labeler_refill"
 	inhand_icon_state = "electropack"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
