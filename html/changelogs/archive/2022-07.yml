@@ -1061,3 +1061,56 @@
       Blood-Red Magboots (the standalone ones, not the modules), Power Beacon, Bioterror
       everything (including the bundle), Stechkin APS machine pistol and ammo, AI
       Detector.'
+2022-07-31:
+  CPTANT:
+  - balance: Regular Windows are now stronger and take about 10 toolbox hits to destroy
+  ChakatStormCloud:
+  - bugfix: Basic cyberstomach digestion speed dropped down to be in line with the
+      other stomachs
+  CoffeeDragon16:
+  - bugfix: RPEDs can pick up beakers and assemblies once again
+  - bugfix: holoparasite renaming text will no longer display to others
+  Fikou:
+  - bugfix: everyone is a traitor mode disables progression
+  - bugfix: fixes nuke ops leaders not spawning
+  Higgin:
+  - balance: Non-functional livers and stomachs can now be repaired with their respective
+      surgeries once in the organ's lifetime.
+  Jacquerel:
+  - bugfix: Construction and ape-crushing behaviour should be more consistent between
+      manual and motorised wheelchairs.
+  JohnFulpWillard:
+  - bugfix: Using candy bars as an ingredient in salad now drops a candy wrapper.
+  Melbert:
+  - bugfix: Slime Transformation doesn't require wizard clothes
+  - bugfix: Plant bags transfer seeds in bulk again.
+  OrionTheFox:
+  - bugfix: The Pants Altar's pants' icons are now fixed
+  RigglePrime:
+  - admin: Admins can now put any human species on purrbation
+  ShizCalev:
+  - bugfix: Transferring a carded AI to an empty core will no longer result in a second
+      AI core appearing.
+  - balance: People with epilepsy now have a chance to have a seizure when they're
+      flashed!
+  - bugfix: Leather satchels no longer have a rogue crotch height pixel sticking through
+      your clothing when facing left.
+  - bugfix: Necropolis chest will no longer consume your key if it fails to generate
+      a reward. Also, if it fails to generate, it'll allow you to attempt it again.
+  Watermelon914:
+  - bugfix: Fixed some cases where the highlighted text in the lua editor was out
+      of place with the actual text.
+  distributivgesetz:
+  - bugfix: Fixes APCs clicking constantly during a Grid Check.
+  ghommie, dragomagol:
+  - bugfix: admin-triggered xeno event now works!
+  magatsuchi:
+  - bugfix: storage UI no longer gets stuck on the screen due to an oversight
+  orthography:
+  - bugfix: the all-in-one-grinder shakes (again?)
+  - spellcheck: adds extra information to objective explanation text.
+  - bugfix: makes the photo objective more specific
+  san7890:
+  - bugfix: Nanotrasen should no longer place single bedsheets on double beds.
+  timothymtorres:
+  - rscadd: Bubblegum now spawns demonic bubblegum candy when they devour corpses.

@@ -1,5 +1,0 @@
-author: "orthography"
-delete-after: True
-changes: 
-  - spellcheck: "adds extra information to objective explanation text."
-  - bugfix: "makes the photo objective more specific"

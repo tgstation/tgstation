@@ -10,7 +10,7 @@
 #define HARM_ALARM_SAFETY_COOLDOWN (20 SECONDS)
 
 /obj/item/borg
-	icon = 'icons/mob/robot_items.dmi'
+	icon = 'icons/mob/silicon/robot_items.dmi'
 
 /obj/item/borg/stun
 	name = "electrically-charged arm"
@@ -331,7 +331,7 @@
 		audible_message("<font color='red' size='7'>HUMAN HARM</font>")
 		playsound(get_turf(src), 'sound/ai/harmalarm.ogg', 70, 3)
 		COOLDOWN_START(src, alarm_cooldown, HARM_ALARM_SAFETY_COOLDOWN)
-		user.log_message("used a Cyborg Harm Alarm in [AREACOORD(user)]", LOG_ATTACK)
+		user.log_message("used a Cyborg Harm Alarm", LOG_ATTACK)
 		if(iscyborg(user))
 			var/mob/living/silicon/robot/robot_user = user
 			to_chat(robot_user.connected_ai, "<br>[span_notice("NOTICE - Peacekeeping 'HARM ALARM' used by: [user]")]<br>")
@@ -351,4 +351,4 @@
 					carbon.adjust_timed_status_effect(50 SECONDS, /datum/status_effect/jitter)
 		playsound(get_turf(src), 'sound/machines/warning-buzzer.ogg', 130, 3)
 		COOLDOWN_START(src, alarm_cooldown, HARM_ALARM_NO_SAFETY_COOLDOWN)
-		user.log_message("used an emagged Cyborg Harm Alarm in [AREACOORD(user)]", LOG_ATTACK)
+		user.log_message("used an emagged Cyborg Harm Alarm", LOG_ATTACK)

@@ -4,7 +4,7 @@
 
 /obj/projectile
 	name = "projectile"
-	icon = 'icons/obj/guns/projectiles.dmi'
+	icon = 'icons/obj/weapons/guns/projectiles.dmi'
 	icon_state = "bullet"
 	density = FALSE
 	anchored = TRUE
@@ -72,7 +72,19 @@
 	/// If objects are below this layer, we pass through them
 	var/hit_threshhold = PROJECTILE_HIT_THRESHHOLD_LAYER
 
-	var/speed = 0.8 //Amount of deciseconds it takes for projectile to travel
+	/// During each fire of SSprojectiles, the number of deciseconds since the last fire of SSprojectiles
+	/// is divided by this var, and the result truncated to the next lowest integer is
+	/// the number of times the projectile's `pixel_move` proc will be called.
+	var/speed = 0.8
+
+	/// This var is multiplied by SSprojectiles.global_pixel_speed to get how many pixels
+	/// the projectile moves during each iteration of the movement loop
+	///
+	/// If you want to make a fast-moving projectile, you should keep this equal to 1 and
+	/// reduce the value of `speed`. If you want to make a slow-moving projectile, make
+	/// `speed` a modest value like 1 and set this to a low value like 0.2.
+	var/pixel_speed_multiplier = 1
+
 	var/Angle = 0
 	var/original_angle = 0 //Angle at firing
 	var/nondirectional_sprite = FALSE //Set TRUE to prevent projectiles from having their sprites rotated based on firing angle
@@ -200,6 +212,7 @@
 		bare_wound_bonus = max(0, bare_wound_bonus + wound_falloff_tile)
 	if(embedding)
 		embedding["embed_chance"] += embed_falloff_tile
+	SEND_SIGNAL(src, COMSIG_PROJECTILE_RANGE)
 	if(range <= 0 && loc)
 		on_range()
 
@@ -300,19 +313,29 @@
 				playsound(src, hitsound, volume, TRUE, -1)
 			L.visible_message(span_danger("[L] is hit by \a [src][organ_hit_text]!"), \
 					span_userdanger("You're hit by \a [src][organ_hit_text]!"), null, COMBAT_MESSAGE_RANGE)
+			if(L.is_blind())
+				to_chat(L, span_userdanger("You feel something hit you[organ_hit_text]!"))
 		L.on_hit(src)
 
 	var/reagent_note
 	if(reagents?.reagent_list)
-		reagent_note = " REAGENTS:"
-		for(var/datum/reagent/R in reagents.reagent_list)
-			reagent_note += "[R.name] ([num2text(R.volume)])"
+		reagent_note = "REAGENTS: [pretty_string_from_reagent_list(reagents.reagent_list)]"
 
 	if(ismob(firer))
 		log_combat(firer, L, "shot", src, reagent_note)
-	else
-		L.log_message("has been shot by [firer] with [src]", LOG_ATTACK, color="orange")
+		return BULLET_ACT_HIT
 
+	if(isvehicle(firer))
+		var/obj/vehicle/firing_vehicle = firer
+
+		var/list/logging_mobs = firing_vehicle.return_controllers_with_flag(VEHICLE_CONTROL_EQUIPMENT)
+		if(!LAZYLEN(logging_mobs))
+			logging_mobs = firing_vehicle.return_drivers()
+		for(var/mob/logged_mob as anything in logging_mobs)
+			log_combat(logged_mob, L, "shot", src, "from inside [firing_vehicle][logging_mobs.len > 1 ? " with multiple occupants" : null][reagent_note ? " and contained [reagent_note]" : null]")
+		return BULLET_ACT_HIT
+
+	L.log_message("has been shot by [firer] with [src][reagent_note ? " containing [reagent_note]" : null]", LOG_VICTIM, color="orange", log_globally=FALSE)
 	return BULLET_ACT_HIT
 
 /obj/projectile/proc/vol_by_damage()
@@ -672,7 +695,7 @@
 		time_offset += MODULUS(elapsed_time_deciseconds, speed)
 
 	for(var/i in 1 to required_moves)
-		pixel_move(1, FALSE)
+		pixel_move(pixel_speed_multiplier, FALSE)
 
 /obj/projectile/proc/fire(angle, atom/direct_target)
 	LAZYINITLIST(impacted)
@@ -683,6 +706,7 @@
 		AddElement(/datum/element/embed, projectile_payload = shrapnel_type)
 	if(!log_override && firer && original)
 		log_combat(firer, original, "fired at", src, "from [get_area_name(src, TRUE)]")
+			//note: mecha projectile logging is handled in /obj/item/mecha_parts/mecha_equipment/weapon/action(). try to keep these messages roughly the sameish just for consistency's sake.
 	if(direct_target && (get_dist(direct_target, get_turf(src)) <= 1)) // point blank shots
 		process_hit(get_turf(direct_target), direct_target)
 		if(QDELETED(src))
@@ -716,7 +740,7 @@
 		process_hitscan()
 	if(!(datum_flags & DF_ISPROCESSING))
 		START_PROCESSING(SSprojectiles, src)
-	pixel_move(1, FALSE) //move it now!
+	pixel_move(pixel_speed_multiplier, FALSE) //move it now!
 
 /obj/projectile/proc/set_angle(new_angle) //wrapper for overrides.
 	Angle = new_angle

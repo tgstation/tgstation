@@ -1,4 +1,0 @@
-author: "magatsuchi"
-delete-after: True
-changes: 
-  - bugfix: "storage UI no longer gets stuck on the screen due to an oversight"

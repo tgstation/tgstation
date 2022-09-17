@@ -135,7 +135,7 @@ SUBSYSTEM_DEF(shuttle)
 	/// Did the supermatter start a cascade event?
 	var/supermatter_cascade = FALSE
 
-/datum/controller/subsystem/shuttle/Initialize(timeofday)
+/datum/controller/subsystem/shuttle/Initialize()
 	order_number = rand(1, 9000)
 
 	var/list/pack_processing = subtypesof(/datum/supply_pack)
@@ -166,7 +166,7 @@ SUBSYSTEM_DEF(shuttle)
 		log_mapping("No /obj/docking_port/mobile/emergency/backup placed on the map!")
 	if(!supply)
 		log_mapping("No /obj/docking_port/mobile/supply placed on the map!")
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/shuttle/proc/setup_shuttles(list/stationary)
 	for(var/obj/docking_port/stationary/port as anything in stationary)
@@ -253,22 +253,22 @@ SUBSYSTEM_DEF(shuttle)
 
 /datum/controller/subsystem/shuttle/proc/getShuttle(id)
 	for(var/obj/docking_port/mobile/M in mobile_docking_ports)
-		if(M.id == id)
+		if(M.shuttle_id == id)
 			return M
 	WARNING("couldn't find shuttle with id: [id]")
 
 /datum/controller/subsystem/shuttle/proc/getDock(id)
 	for(var/obj/docking_port/stationary/S in stationary_docking_ports)
-		if(S.id == id)
+		if(S.shuttle_id == id)
 			return S
 	WARNING("couldn't find dock with id: [id]")
 
 /// Check if we can call the evac shuttle.
 /// Returns TRUE if we can. Otherwise, returns a string detailing the problem.
-/datum/controller/subsystem/shuttle/proc/canEvac(mob/user)
-	var/srd = CONFIG_GET(number/shuttle_refuel_delay)
-	if(world.time - SSticker.round_start_time < srd)
-		return "The emergency shuttle is refueling. Please wait [DisplayTimeText(srd - (world.time - SSticker.round_start_time))] before attempting to call."
+/datum/controller/subsystem/shuttle/proc/canEvac()
+	var/shuttle_refuel_delay = CONFIG_GET(number/shuttle_refuel_delay)
+	if(world.time - SSticker.round_start_time < shuttle_refuel_delay)
+		return "The emergency shuttle is refueling. Please wait [DisplayTimeText(shuttle_refuel_delay - (world.time - SSticker.round_start_time))] before attempting to call."
 
 	switch(emergency.mode)
 		if(SHUTTLE_RECALL)
@@ -286,57 +286,72 @@ SUBSYSTEM_DEF(shuttle)
 
 	return TRUE
 
-/datum/controller/subsystem/shuttle/proc/requestEvac(mob/user, call_reason)
-	if(!emergency)
-		WARNING("requestEvac(): There is no emergency shuttle, but the \
-			shuttle was called. Using the backup shuttle instead.")
-		if(!backup_shuttle)
-			CRASH("requestEvac(): There is no emergency shuttle, \
-			or backup shuttle! The game will be unresolvable. This is \
-			possibly a mapping error, more likely a bug with the shuttle \
-			manipulation system, or badminry. It is possible to manually \
-			resolve this problem by loading an emergency shuttle template \
-			manually, and then calling register() on the mobile docking port. \
-			Good luck.")
-		emergency = backup_shuttle
+/datum/controller/subsystem/shuttle/proc/check_backup_emergency_shuttle()
+	if(emergency)
+		return TRUE
 
-	var/can_evac_or_fail_reason = SSshuttle.canEvac(user)
+	WARNING("check_backup_emergency_shuttle(): There is no emergency shuttle, but the \
+		shuttle was called. Using the backup shuttle instead.")
+
+	if(!backup_shuttle)
+		CRASH("check_backup_emergency_shuttle(): There is no emergency shuttle, \
+		or backup shuttle! The game will be unresolvable. This is \
+		possibly a mapping error, more likely a bug with the shuttle \
+		manipulation system, or badminry. It is possible to manually \
+		resolve this problem by loading an emergency shuttle template \
+		manually, and then calling register() on the mobile docking port. \
+		Good luck.")
+	emergency = backup_shuttle
+
+	return TRUE
+
+/datum/controller/subsystem/shuttle/proc/requestEvac(mob/user, call_reason)
+	if (!check_backup_emergency_shuttle())
+		return
+
+	var/can_evac_or_fail_reason = SSshuttle.canEvac()
 	if(can_evac_or_fail_reason != TRUE)
 		to_chat(user, span_alert("[can_evac_or_fail_reason]"))
 		return
 
-	call_reason = trim(html_encode(call_reason))
-
-	if(length(call_reason) < CALL_SHUTTLE_REASON_LENGTH && SSsecurity_level.get_current_level_as_number() > SEC_LEVEL_GREEN)
+	if(length(trim(call_reason)) < CALL_SHUTTLE_REASON_LENGTH && SSsecurity_level.get_current_level_as_number() > SEC_LEVEL_GREEN)
 		to_chat(user, span_alert("You must provide a reason."))
 		return
 
 	var/area/signal_origin = get_area(user)
-	var/emergency_reason = "\nNature of emergency:\n\n[call_reason]"
-	var/security_num = SSsecurity_level.get_current_level_as_number()
-	switch(security_num)
-		if(SEC_LEVEL_RED,SEC_LEVEL_DELTA)
-			emergency.request(null, signal_origin, html_decode(emergency_reason), 1) //There is a serious threat we gotta move no time to give them five minutes.
-		else
-			emergency.request(null, signal_origin, html_decode(emergency_reason), 0)
-
-	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
-
-	if(!frequency)
-		return
-
-	var/datum/signal/status_signal = new(list("command" = "update")) // Start processing shuttle-mode displays to display the timer
-	frequency.post_signal(src, status_signal)
-
-	var/area/A = get_area(user)
+	call_evac_shuttle(call_reason, signal_origin)
 
 	log_shuttle("[key_name(user)] has called the emergency shuttle.")
-	deadchat_broadcast(" has called the shuttle at [span_name("[A.name]")].", span_name("[user.real_name]"), user, message_type=DEADCHAT_ANNOUNCEMENT)
+	deadchat_broadcast(" has called the shuttle at [span_name("[signal_origin.name]")].", span_name("[user.real_name]"), user, message_type=DEADCHAT_ANNOUNCEMENT)
 	if(call_reason)
 		SSblackbox.record_feedback("text", "shuttle_reason", 1, "[call_reason]")
 		log_shuttle("Shuttle call reason: [call_reason]")
 		SSticker.emergency_reason = call_reason
 	message_admins("[ADMIN_LOOKUPFLW(user)] has called the shuttle. (<A HREF='?_src_=holder;[HrefToken()];trigger_centcom_recall=1'>TRIGGER CENTCOM RECALL</A>)")
+
+/// Call the emergency shuttle.
+/// If you are doing this on behalf of a player, use requestEvac instead.
+/// `signal_origin` is fluff occasionally provided to players.
+/datum/controller/subsystem/shuttle/proc/call_evac_shuttle(call_reason, signal_origin)
+	if (!check_backup_emergency_shuttle())
+		return
+
+	call_reason = trim(html_encode(call_reason))
+
+	var/emergency_reason = "\nNature of emergency:\n\n[call_reason]"
+
+	emergency.request(
+		signal_origin = signal_origin,
+		reason = html_decode(emergency_reason),
+		red_alert = (SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED)
+	)
+
+	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
+
+	if(frequency)
+		// Start processing shuttle-mode displays to display the timer
+		var/datum/signal/status_signal = new(list("command" = "update"))
+		frequency.post_signal(src, status_signal)
 
 /datum/controller/subsystem/shuttle/proc/centcom_recall(old_timer, admiral_message)
 	if(emergency.mode != SHUTTLE_CALL || emergency.timer != old_timer)
@@ -477,7 +492,7 @@ SUBSYSTEM_DEF(shuttle)
 		return DOCKING_BLOCKED
 	var/obj/docking_port/stationary/docked_at = shuttle_port.get_docked()
 	var/destination = dock_home
-	if(docked_at && docked_at.id == dock_home)
+	if(docked_at && docked_at.shuttle_id == dock_home)
 		destination = dock_away
 	if(timed)
 		if(shuttle_port.request(getDock(destination)))
@@ -586,7 +601,7 @@ SUBSYSTEM_DEF(shuttle)
 	A.contents = proposal.reserved_turfs
 	var/obj/docking_port/stationary/transit/new_transit_dock = new(midpoint)
 	new_transit_dock.reserved_area = proposal
-	new_transit_dock.name = "Transit for [M.id]/[M.name]"
+	new_transit_dock.name = "Transit for [M.shuttle_id]/[M.name]"
 	new_transit_dock.owner = M
 	new_transit_dock.assigned_area = A
 
@@ -893,7 +908,7 @@ SUBSYSTEM_DEF(shuttle)
 		var/timeleft = M.timeLeft(1)
 		var/list/L = list()
 		L["name"] = M.name
-		L["id"] = M.id
+		L["id"] = M.shuttle_id
 		L["timer"] = M.timer
 		L["timeleft"] = M.getTimerStr()
 		if (timeleft > 1 HOURS)
@@ -935,7 +950,7 @@ SUBSYSTEM_DEF(shuttle)
 			if(params["type"] == "mobile")
 				for(var/i in mobile_docking_ports)
 					var/obj/docking_port/mobile/M = i
-					if(M.id == params["id"])
+					if(M.shuttle_id == params["id"])
 						user.forceMove(get_turf(M))
 						. = TRUE
 						break
@@ -943,7 +958,7 @@ SUBSYSTEM_DEF(shuttle)
 		if("fly")
 			for(var/i in mobile_docking_ports)
 				var/obj/docking_port/mobile/M = i
-				if(M.id == params["id"])
+				if(M.shuttle_id == params["id"])
 					. = TRUE
 					M.admin_fly_shuttle(user)
 					break
@@ -951,7 +966,7 @@ SUBSYSTEM_DEF(shuttle)
 		if("fast_travel")
 			for(var/i in mobile_docking_ports)
 				var/obj/docking_port/mobile/M = i
-				if(M.id == params["id"] && M.timer && M.timeLeft(1) >= 50)
+				if(M.shuttle_id == params["id"] && M.timer && M.timeLeft(1) >= 50)
 					M.setTimer(50)
 					. = TRUE
 					message_admins("[key_name_admin(usr)] fast travelled [M]")

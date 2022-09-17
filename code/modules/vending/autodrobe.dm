@@ -142,6 +142,11 @@
 		/obj/item/clothing/under/rank/medical/doctor/nurse = 1,
 		/obj/item/clothing/mask/gas/prop = 4,
 		/obj/item/clothing/mask/gas/atmosprop = 3,
+		/obj/item/storage/backpack/henchmen = 5,
+		/obj/item/clothing/under/suit/henchmen = 5,
+		/obj/item/clothing/head/jackbros = 5,
+		/obj/item/clothing/under/costume/jackbros = 5,
+		/obj/item/clothing/under/costume/deckers = 5,
 	)
 	contraband = list(
 		/obj/item/clothing/suit/costume/judgerobe = 1,
@@ -151,6 +156,7 @@
 		/obj/item/clothing/glasses/blindfold = 1,
 		/obj/item/clothing/mask/muzzle = 2,
 		/obj/item/clothing/head/tv_head = 1,
+		/obj/item/clothing/shoes/clown_shoes/meown_shoes = 1,
 	)
 	premium = list(
 		/obj/item/clothing/suit/costume/pirate/captain = 2,

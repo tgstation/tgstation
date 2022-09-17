@@ -11,7 +11,7 @@
 	..()
 	ADD_TRAIT(owner, TRAIT_SHOCKIMMUNE, "abductor_gland")
 
-/obj/item/organ/internal/heart/gland/electric/Remove(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/heart/gland/electric/Remove(mob/living/carbon/M, special = FALSE)
 	REMOVE_TRAIT(owner, TRAIT_SHOCKIMMUNE, "abductor_gland")
 	..()
 

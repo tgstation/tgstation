@@ -31,6 +31,16 @@ $border-radius: Input.$border-radius !default;
   height: auto;
 }
 
+.TextArea--noborder {
+  border: 0px;
+}
+
+.TextArea__textarea.TextArea__textarea--scrollable {
+  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
 .TextArea__textarea {
   display: block;
   position: absolute;

@@ -4,7 +4,13 @@
 	name = "Base Shuttle Template"
 	var/prefix = "_maps/shuttles/"
 	var/suffix
+	/**
+	 * Port ID is the place this template should be docking at, set on '/obj/docking_port/stationary'
+	 * Because getShuttle() compares port_id to shuttle_id to find an already existing shuttle,
+	 * you should set shuttle_id to be the same as port_id if you want them to be replacable.
+	 */
 	var/port_id
+	///ID of the shuttle, make sure it matches port_id if necessary.
 	var/shuttle_id
 
 	var/description
@@ -52,7 +58,7 @@
 							locate(.[MAP_MAXX], .[MAP_MAXY], .[MAP_MAXZ]))
 	for(var/i in 1 to turfs.len)
 		var/turf/place = turfs[i]
-		if(istype(place, /turf/open/space)) // This assumes all shuttles are loaded in a single spot then moved to their real destination.
+		if(isspaceturf(place)) // This assumes all shuttles are loaded in a single spot then moved to their real destination.
 			continue
 		if(length(place.baseturfs) < 2) // Some snowflake shuttle shit
 			continue

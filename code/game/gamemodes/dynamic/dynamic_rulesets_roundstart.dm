@@ -221,9 +221,9 @@
 	)
 	required_candidates = 1
 	weight = 3
-	cost = 15
+	cost = 10
 	scaling_cost = 9
-	requirements = list(101,101,101,40,35,20,20,15,10,10)
+	requirements = list(101,101,60,30,30,25,20,15,10,10)
 	antag_cap = list("denominator" = 24)
 
 
@@ -411,16 +411,16 @@
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/nuclear/execute()
-	var/most_experienced = get_most_experienced(assigned, required_role)
+	var/datum/mind/most_experienced = get_most_experienced(assigned, required_role)
 	if(!most_experienced)
 		most_experienced = assigned[1]
+	var/datum/antagonist/nukeop/leader/leader = most_experienced.add_antag_datum(antag_leader_datum)
+	nuke_team = leader.nuke_team
 	for(var/datum/mind/assigned_player in assigned)
 		if(assigned_player == most_experienced)
-			var/datum/antagonist/nukeop/leader/new_op = assigned_player.add_antag_datum(antag_leader_datum)
-			nuke_team = new_op.nuke_team
-		else
-			var/datum/antagonist/nukeop/new_op = new antag_datum()
-			assigned_player.add_antag_datum(new_op)
+			continue
+		var/datum/antagonist/nukeop/new_op = new antag_datum()
+		assigned_player.add_antag_datum(new_op)
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/nuclear/round_result()
@@ -495,8 +495,6 @@
 	blocking_rules = list(/datum/dynamic_ruleset/latejoin/provocateur)
 	// I give up, just there should be enough heads with 35 players...
 	minimum_players = 35
-	/// How much threat should be injected when the revolution wins?
-	var/revs_win_threat_injection = 20
 	var/datum/team/revolution/revolution
 	var/finished = FALSE
 
@@ -539,7 +537,7 @@
 	..()
 
 /datum/dynamic_ruleset/roundstart/revs/rule_process()
-	var/winner = revolution.process_victory(revs_win_threat_injection)
+	var/winner = revolution.process_victory()
 	if (isnull(winner))
 		return
 
@@ -646,51 +644,6 @@
 	var/ramp_up_final = clamp(round(meteorminutes/rampupdelta), 1, 10)
 
 	spawn_meteors(ramp_up_final, wavetype)
-
-/// Ruleset for thieves
-/datum/dynamic_ruleset/roundstart/thieves
-	name = "Thieves"
-	antag_flag = ROLE_THIEF
-	antag_datum = /datum/antagonist/thief
-	protected_roles = list(
-		JOB_CAPTAIN,
-		JOB_DETECTIVE,
-		JOB_HEAD_OF_SECURITY,
-		JOB_PRISONER,
-		JOB_SECURITY_OFFICER,
-		JOB_WARDEN,
-	)
-	restricted_roles = list(
-		JOB_AI,
-		JOB_CYBORG,
-	)
-	required_candidates = 1
-	weight = 3
-	cost = 4 //very cheap cost for the round
-	scaling_cost = 0
-	requirements = list(8,8,8,8,8,8,8,8,8,8)
-	antag_cap = list("denominator" = 24, "offset" = 2)
-	flags = LONE_RULESET
-
-/datum/dynamic_ruleset/roundstart/thieves/pre_execute(population)
-	. = ..()
-	var/num_thieves = get_antag_cap(population) * (scaled_times + 1)
-	for (var/i = 1 to num_thieves)
-		if(candidates.len <= 0)
-			break
-		var/mob/chosen_mind = pick_n_take(candidates)
-		assigned += chosen_mind.mind
-		chosen_mind.mind.restricted_roles = restricted_roles
-		chosen_mind.mind.special_role = ROLE_THIEF
-		GLOB.pre_setup_antags += chosen_mind.mind
-	return TRUE
-
-/datum/dynamic_ruleset/roundstart/thieves/execute()
-	for(var/datum/mind/chosen_mind as anything in assigned)
-		var/datum/antagonist/thief/new_antag = new antag_datum
-		chosen_mind.add_antag_datum(new_antag)
-		GLOB.pre_setup_antags -= chosen_mind
-	return TRUE
 
 /// Ruleset for Nations
 /datum/dynamic_ruleset/roundstart/nations

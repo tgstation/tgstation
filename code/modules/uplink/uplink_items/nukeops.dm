@@ -100,7 +100,7 @@
 
 /datum/uplink_item/dangerous/shotgun
 	name = "Bulldog Shotgun"
-	desc = "A fully-loaded semi-automatic drum-fed shotgun. Compatible with all 12g rounds. Designed for close \
+	desc = "A fully-loaded semi-automatic drum-fed shotgun, complete with a secondary magazine. Compatible with all 12g rounds. Designed for close \
 			quarter anti-personnel engagements."
 	item = /obj/item/gun/ballistic/shotgun/bulldog
 	cost = 8

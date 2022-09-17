@@ -1,0 +1,135 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall,
+/area/station/maintenance/department/science)
+"j" = (
+/obj/structure/table,
+/obj/item/stock_parts/matter_bin,
+/obj/item/stock_parts/matter_bin{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/science)
+"u" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/science)
+"z" = (
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/obj/structure/rack,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/science)
+"C" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/item/storage/box/monkeycubes{
+	pixel_x = 6;
+	pixel_y = 7
+	},
+/obj/item/storage/box/monkeycubes{
+	pixel_x = -5;
+	pixel_y = 1
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/science)
+"F" = (
+/obj/structure/rack,
+/obj/item/storage/toolbox/electrical,
+/obj/item/clothing/glasses/welding,
+/obj/item/weldingtool,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/science)
+"H" = (
+/obj/structure/table,
+/obj/item/stock_parts/scanning_module{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/stock_parts/scanning_module,
+/obj/item/stock_parts/manipulator{
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/obj/item/stock_parts/manipulator,
+/obj/item/stack/cable_coil,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/science)
+"J" = (
+/obj/structure/table,
+/obj/item/assembly/igniter,
+/obj/item/assembly/timer{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/screwdriver,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/science)
+"W" = (
+/turf/template_noop,
+/area/template_noop)
+"Z" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Science Storage"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/science/general,
+/obj/effect/decal/cleanable/dirt,
+/obj/modular_map_connector,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/science)
+
+(1,1,1) = {"
+W
+W
+W
+W
+a
+"}
+(2,1,1) = {"
+W
+z
+C
+F
+a
+"}
+(3,1,1) = {"
+W
+u
+u
+u
+a
+"}
+(4,1,1) = {"
+W
+u
+u
+H
+a
+"}
+(5,1,1) = {"
+Z
+u
+J
+j
+a
+"}
+(6,1,1) = {"
+W
+a
+a
+a
+a
+"}
+(7,1,1) = {"
+W
+W
+W
+W
+a
+"}

@@ -1,4 +1,0 @@
-author: "distributivgesetz"
-delete-after: True
-changes: 
-  - bugfix: "Fixes APCs clicking constantly during a Grid Check."

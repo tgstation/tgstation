@@ -44,33 +44,32 @@
 	// If you're not conscious you're too busy or dead to look at propaganda
 	if (viewer.stat != CONSCIOUS)
 		return
-	if (was_demoralised(viewer))
+	if (!should_demoralise(viewer))
 		return
 
 	if (is_special_character(viewer))
 		to_chat(viewer, span_notice("[moods.antag_notification]"))
-		SEND_SIGNAL(viewer, COMSIG_ADD_MOOD_EVENT, moods.mood_category, moods.antag_mood)
+		viewer.add_mood_event(moods.mood_category, moods.antag_mood)
 	else if (viewer.mind.assigned_role.departments_bitflags & (DEPARTMENT_BITFLAG_SECURITY|DEPARTMENT_BITFLAG_COMMAND))
 		to_chat(viewer, span_notice("[moods.authority_notification]"))
-		SEND_SIGNAL(viewer, COMSIG_ADD_MOOD_EVENT, moods.mood_category, moods.authority_mood)
+		viewer.add_mood_event(moods.mood_category, moods.authority_mood)
 	else
 		to_chat(viewer, span_notice("[moods.crew_notification]"))
-		SEND_SIGNAL(viewer, COMSIG_ADD_MOOD_EVENT, moods.mood_category, moods.crew_mood)
+		viewer.add_mood_event(moods.mood_category, moods.crew_mood)
 
 	SEND_SIGNAL(host, COMSIG_DEMORALISING_EVENT, viewer.mind)
 
 /**
- * Returns true if the viewer already has been given feelings, false if they haven't.
+ * Returns true if user is capable of experiencing moods and doesn't already have the one relevant to this datum, false otherwise.
  *
  * Arguments
  * * viewer - Whoever just saw the parent.
  */
-/datum/proximity_monitor/advanced/demoraliser/proc/was_demoralised(mob/living/viewer)
-	var/datum/component/mood/mood = viewer.GetComponent(/datum/component/mood)
-	if (!mood)
+/datum/proximity_monitor/advanced/demoraliser/proc/should_demoralise(mob/living/viewer)
+	if (!viewer.mob_mood)
 		return FALSE
 
-	return mood.has_mood_of_category(moods.mood_category)
+	return !viewer.mob_mood.has_mood_of_category(moods.mood_category)
 
 /// Mood application categories for this objective
 /// Used to reduce duplicate code for applying moods to players based on their state

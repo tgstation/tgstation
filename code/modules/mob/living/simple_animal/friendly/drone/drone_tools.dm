@@ -6,7 +6,7 @@
 	item_flags = ABSTRACT
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-/obj/item/storage/drone_tools/Initialize()
+/obj/item/storage/drone_tools/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 
@@ -16,10 +16,14 @@
 		/obj/item/wrench/drone,
 		/obj/item/weldingtool/drone,
 		/obj/item/wirecutters/drone,
+		/obj/item/multitool/drone,
+		/obj/item/pipe_dispenser,
+		/obj/item/t_scanner,
+		/obj/item/analyzer,
 	)
 	atom_storage.max_total_storage = 40
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
-	atom_storage.max_slots = 5
+	atom_storage.max_slots = 9
 	atom_storage.rustle_sound = FALSE
 	atom_storage.set_holdable(drone_builtins)
 
@@ -31,6 +35,10 @@
 	builtintools += new /obj/item/wrench/drone(src)
 	builtintools += new /obj/item/weldingtool/drone(src)
 	builtintools += new /obj/item/wirecutters/drone(src)
+	builtintools += new /obj/item/multitool/drone(src)
+	builtintools += new /obj/item/pipe_dispenser(src)
+	builtintools += new /obj/item/t_scanner(src)
+	builtintools += new /obj/item/analyzer(src)
 
 	for(var/obj/item/tool as anything in builtintools)
 		tool.AddComponent(/datum/component/holderloving, src, TRUE)
@@ -87,3 +95,10 @@
 	item_flags = NO_MAT_REDEMPTION
 	random_color = FALSE
 
+/obj/item/multitool/drone
+	name = "built-in multitool"
+	desc = "A multitool built into your chassis."
+	icon = 'icons/obj/items_cyborg.dmi'
+	icon_state = "multitool_cyborg"
+	item_flags = NO_MAT_REDEMPTION
+	toolspeed = 0.5

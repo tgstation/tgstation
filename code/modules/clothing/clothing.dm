@@ -14,10 +14,8 @@
 	var/visor_flags = 0 //flags that are added/removed when an item is adjusted up/down
 	var/visor_flags_inv = 0 //same as visor_flags, but for flags_inv
 	var/visor_flags_cover = 0 //same as above, but for flags_cover
-//what to toggle when toggled with weldingvisortoggle()
+	///What to toggle when toggled with weldingvisortoggle()
 	var/visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT | VISOR_VISIONFLAGS | VISOR_DARKNESSVIEW | VISOR_INVISVIEW
-	lefthand_file = 'icons/mob/inhands/clothing_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/clothing_righthand.dmi'
 	var/alt_desc = null
 	var/toggle_message = null
 	var/alt_toggle_message = null
@@ -38,8 +36,6 @@
 	/// Trait modification, lazylist of traits to add/take away, on equipment/drop in the correct slot
 	var/list/clothing_traits
 
-	var/pocket_storage_component_path
-
 	/// How much clothing damage has been dealt to each of the limbs of the clothing, assuming it covers more than one limb
 	var/list/damage_by_parts
 	/// How much integrity is in a specific limb before that limb is disabled (for use in [/obj/item/clothing/proc/take_damage_zone], and only if we cover multiple zones.) Set to 0 to disable shredding.
@@ -55,8 +51,6 @@
 		actions_types += /datum/action/item_action/toggle_voice_box
 	. = ..()
 	AddElement(/datum/element/venue_price, FOOD_PRICE_CHEAP)
-	if(ispath(pocket_storage_component_path))
-		LoadComponent(pocket_storage_component_path)
 	if(can_be_bloody && ((body_parts_covered & FEET) || (flags_inv & HIDESHOES)))
 		LoadComponent(/datum/component/bloodysoles)
 	if(!icon_state)
@@ -210,8 +204,7 @@
 		RegisterSignal(C, COMSIG_MOVABLE_MOVED, .proc/bristle, override = TRUE)
 
 	zones_disabled++
-	for(var/i in body_zone2cover_flags(def_zone))
-		body_parts_covered &= ~i
+	body_parts_covered &= ~body_zone2cover_flags(def_zone)
 
 	if(body_parts_covered == NONE) // if there are no more parts to break then the whole thing is kaput
 		atom_destruction((damage_type == BRUTE ? MELEE : LASER)) // melee/laser is good enough since this only procs from direct attacks anyway and not from fire/bombs
@@ -239,7 +232,7 @@
 		return
 	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 	for(var/trait in clothing_traits)
-		REMOVE_TRAIT(user, trait, "[CLOTHING_TRAIT] [REF(src)]")
+		REMOVE_TRAIT(user, trait, "[CLOTHING_TRAIT]_[REF(src)]")
 
 
 	if(LAZYLEN(user_vars_remembered))
@@ -257,7 +250,7 @@
 		if(iscarbon(user) && LAZYLEN(zones_disabled))
 			RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/bristle, override = TRUE)
 		for(var/trait in clothing_traits)
-			ADD_TRAIT(user, trait, "[CLOTHING_TRAIT] [REF(src)]")
+			ADD_TRAIT(user, trait, "[CLOTHING_TRAIT]_[REF(src)]")
 		if (LAZYLEN(user_vars_to_edit))
 			for(var/variable in user_vars_to_edit)
 				if(variable in user.vars)

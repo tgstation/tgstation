@@ -222,7 +222,7 @@ Behavior that's still missing from this component that original food items had t
 	volume = max(volume, ROUND_UP(original_atom.reagents.maximum_volume / chosen_processing_option[TOOL_PROCESSING_AMOUNT]))
 
 	this_food.create_reagents(volume)
-	original_atom.reagents.copy_to(this_food, original_atom.reagents.total_volume, 1 / chosen_processing_option[TOOL_PROCESSING_AMOUNT])
+	original_atom.reagents.copy_to(this_food, original_atom.reagents.total_volume / chosen_processing_option[TOOL_PROCESSING_AMOUNT], 1)
 
 	if(original_atom.name != initial(original_atom.name))
 		this_food.name = "slice of [original_atom.name]"
@@ -379,11 +379,15 @@ Behavior that's still missing from this component that original food items had t
 				span_danger("[feeder] attempts to [eater.get_bodypart(BODY_ZONE_HEAD) ? "feed [eater] [parent]." : "stuff [parent] down [eater]'s throat hole! Gross."]"),
 				span_userdanger("[feeder] attempts to [eater.get_bodypart(BODY_ZONE_HEAD) ? "feed you [parent]." : "stuff [parent] down your throat hole! Gross."]")
 			)
+			if(eater.is_blind())
+				to_chat(eater, span_userdanger("You feel someone trying to feed you something!"))
 		else
 			eater.visible_message(
 				span_danger("[feeder] cannot force any more of [parent] down [eater]'s [eater.get_bodypart(BODY_ZONE_HEAD) ? "throat!" : "throat hole! Eugh."]"),
 				span_userdanger("[feeder] cannot force any more of [parent] down your [eater.get_bodypart(BODY_ZONE_HEAD) ? "throat!" : "throat hole! Eugh."]")
 			)
+			if(eater.is_blind())
+				to_chat(eater, span_userdanger("You're too full to eat what's being fed to you!"))
 			return
 		if(!do_mob(feeder, eater, time = time_to_eat)) //Wait 3-ish seconds before you can feed
 			return
@@ -394,6 +398,8 @@ Behavior that's still missing from this component that original food items had t
 			span_danger("[feeder] forces [eater] to eat [parent]!"),
 			span_userdanger("[feeder] forces you to eat [parent]!")
 		)
+		if(eater.is_blind())
+			to_chat(eater, span_userdanger("You're forced to eat something!"))
 
 	TakeBite(eater, feeder)
 
@@ -457,7 +463,7 @@ Behavior that's still missing from this component that original food items had t
 
 	//Bruh this breakfast thing is cringe and shouldve been handled separately from food-types, remove this in the future (Actually, just kill foodtypes in general)
 	if((foodtypes & BREAKFAST) && world.time - SSticker.round_start_time < STOP_SERVING_BREAKFAST)
-		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "breakfast", /datum/mood_event/breakfast)
+		H.add_mood_event("breakfast", /datum/mood_event/breakfast)
 	last_check_time = world.time
 
 	if(HAS_TRAIT(H, TRAIT_AGEUSIA))
@@ -485,15 +491,15 @@ Behavior that's still missing from this component that original food items had t
 		if(FOOD_TOXIC)
 			to_chat(H,span_warning("What the hell was that thing?!"))
 			H.adjust_disgust(25 + 30 * fraction)
-			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "toxic_food", /datum/mood_event/disgusting_food)
+			H.add_mood_event("toxic_food", /datum/mood_event/disgusting_food)
 		if(FOOD_DISLIKED)
 			to_chat(H,span_notice("That didn't taste very good..."))
 			H.adjust_disgust(11 + 15 * fraction)
-			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "gross_food", /datum/mood_event/gross_food)
+			H.add_mood_event("gross_food", /datum/mood_event/gross_food)
 		if(FOOD_LIKED)
 			to_chat(H,span_notice("I love this taste!"))
 			H.adjust_disgust(-5 + -2.5 * fraction)
-			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "fav_food", /datum/mood_event/favorite_food)
+			H.add_mood_event("fav_food", /datum/mood_event/favorite_food)
 			if(istype(parent, /obj/item/food))
 				var/obj/item/food/memorable_food = parent
 				if(memorable_food.venue_value >= FOOD_PRICE_EXOTIC)

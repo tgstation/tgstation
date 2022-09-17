@@ -123,6 +123,7 @@
 /obj/item/food/hotdog
 	name = "hotdog"
 	desc = "Fresh footlong ready to go down on."
+	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "hotdog"
 	bite_consumption = 3
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/consumable/ketchup = 3, /datum/reagent/consumable/nutriment/vitamin = 6)
@@ -131,8 +132,21 @@
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_CHEAP
 
+// Used for unit tests, do not delete
 /obj/item/food/hotdog/debug
 	eat_time = 0
+
+/obj/item/food/danish_hotdog
+	name = "danish hotdog"
+	desc = "Appetizing bun, with a sausage in the middle, covered with sauce, fried onion and pickles rings"
+	icon = 'icons/obj/food/meat.dmi'
+	icon_state = "danish_hotdog"
+	bite_consumption = 4
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/consumable/ketchup = 3, /datum/reagent/consumable/nutriment/vitamin = 7)
+	tastes = list("bun" = 3, "meat" = 2, "fried onion" = 1, "pickles" = 1)
+	foodtypes = GRAIN | MEAT | VEGETABLES 
+	w_class = WEIGHT_CLASS_SMALL
+	venue_value = FOOD_PRICE_NORMAL
 
 /obj/item/food/blt
 	name = "\improper BLT"

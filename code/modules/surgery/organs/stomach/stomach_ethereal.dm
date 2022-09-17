@@ -2,6 +2,7 @@
 	name = "biological battery"
 	icon_state = "stomach-p" //Welp. At least it's more unique in functionaliy.
 	desc = "A crystal-like organ that stores the electric charge of ethereals."
+	organ_traits = list(TRAIT_NOHUNGER) // We have our own hunger mechanic.
 	///basically satiety but electrical
 	var/crystal_charge = ETHEREAL_CHARGE_FULL
 	///used to keep ethereals from spam draining power sources
@@ -16,14 +17,12 @@
 	. = ..()
 	RegisterSignal(owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, .proc/charge)
 	RegisterSignal(owner, COMSIG_LIVING_ELECTROCUTE_ACT, .proc/on_electrocute)
-	ADD_TRAIT(owner, TRAIT_NOHUNGER, REF(src))
 
-/obj/item/organ/internal/stomach/ethereal/Remove(mob/living/carbon/carbon, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/stomach/ethereal/Remove(mob/living/carbon/carbon, special = FALSE)
 	UnregisterSignal(owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT)
 	UnregisterSignal(owner, COMSIG_LIVING_ELECTROCUTE_ACT)
-	REMOVE_TRAIT(owner, TRAIT_NOHUNGER, REF(src))
 
-	SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "charge")
+	owner.clear_mood_event("charge")
 	carbon.clear_alert(ALERT_ETHEREAL_CHARGE)
 	carbon.clear_alert(ALERT_ETHEREAL_OVERCHARGE)
 
@@ -49,32 +48,32 @@
 /obj/item/organ/internal/stomach/ethereal/proc/handle_charge(mob/living/carbon/carbon, delta_time, times_fired)
 	switch(crystal_charge)
 		if(-INFINITY to ETHEREAL_CHARGE_NONE)
-			SEND_SIGNAL(carbon, COMSIG_ADD_MOOD_EVENT, "charge", /datum/mood_event/decharged)
+			carbon.add_mood_event("charge", /datum/mood_event/decharged)
 			carbon.throw_alert(ALERT_ETHEREAL_CHARGE, /atom/movable/screen/alert/emptycell/ethereal)
 			if(carbon.health > 10.5)
 				carbon.apply_damage(0.65, TOX, null, null, carbon)
 		if(ETHEREAL_CHARGE_NONE to ETHEREAL_CHARGE_LOWPOWER)
-			SEND_SIGNAL(carbon, COMSIG_ADD_MOOD_EVENT, "charge", /datum/mood_event/decharged)
+			carbon.add_mood_event("charge", /datum/mood_event/decharged)
 			carbon.throw_alert(ALERT_ETHEREAL_CHARGE, /atom/movable/screen/alert/lowcell/ethereal, 3)
 			if(carbon.health > 10.5)
 				carbon.apply_damage(0.325 * delta_time, TOX, null, null, carbon)
 		if(ETHEREAL_CHARGE_LOWPOWER to ETHEREAL_CHARGE_NORMAL)
-			SEND_SIGNAL(carbon, COMSIG_ADD_MOOD_EVENT, "charge", /datum/mood_event/lowpower)
+			carbon.add_mood_event("charge", /datum/mood_event/lowpower)
 			carbon.throw_alert(ALERT_ETHEREAL_CHARGE, /atom/movable/screen/alert/lowcell/ethereal, 2)
 		if(ETHEREAL_CHARGE_ALMOSTFULL to ETHEREAL_CHARGE_FULL)
-			SEND_SIGNAL(carbon, COMSIG_ADD_MOOD_EVENT, "charge", /datum/mood_event/charged)
+			carbon.add_mood_event("charge", /datum/mood_event/charged)
 		if(ETHEREAL_CHARGE_FULL to ETHEREAL_CHARGE_OVERLOAD)
-			SEND_SIGNAL(carbon, COMSIG_ADD_MOOD_EVENT, "charge", /datum/mood_event/overcharged)
+			carbon.add_mood_event("charge", /datum/mood_event/overcharged)
 			carbon.throw_alert(ALERT_ETHEREAL_OVERCHARGE, /atom/movable/screen/alert/ethereal_overcharge, 1)
 			carbon.apply_damage(0.2, TOX, null, null, carbon)
 		if(ETHEREAL_CHARGE_OVERLOAD to ETHEREAL_CHARGE_DANGEROUS)
-			SEND_SIGNAL(carbon, COMSIG_ADD_MOOD_EVENT, "charge", /datum/mood_event/supercharged)
+			carbon.add_mood_event("charge", /datum/mood_event/supercharged)
 			carbon.throw_alert(ALERT_ETHEREAL_OVERCHARGE, /atom/movable/screen/alert/ethereal_overcharge, 2)
 			carbon.apply_damage(0.325 * delta_time, TOX, null, null, carbon)
 			if(DT_PROB(5, delta_time)) // 5% each seacond for ethereals to explosively release excess energy if it reaches dangerous levels
 				discharge_process(carbon)
 		else
-			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "charge")
+			owner.clear_mood_event("charge")
 			carbon.clear_alert(ALERT_ETHEREAL_CHARGE)
 			carbon.clear_alert(ALERT_ETHEREAL_OVERCHARGE)
 

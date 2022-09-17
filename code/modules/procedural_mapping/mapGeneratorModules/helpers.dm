@@ -14,7 +14,7 @@
 		SSair.remove_from_active(T)
 	for(var/turf/open/T in map)
 		if(T.air)
-			T.air.copy_from_turf(T)
+			T.air = T.create_gas_mixture()
 		SSair.add_to_active(T, TRUE)
 
 /datum/map_generator_module/bottom_layer/massdelete

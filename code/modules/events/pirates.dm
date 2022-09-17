@@ -5,6 +5,8 @@
 	max_occurrences = 1
 	min_players = 20
 	dynamic_should_hijack = TRUE
+	category = EVENT_CATEGORY_INVASION
+	description = "The crew will either pay up, or face a pirate assault."
 
 #define PIRATES_ROGUES "Rogues"
 #define PIRATES_SILVERSCALES "Silverscales"
@@ -183,25 +185,25 @@
 
 /obj/machinery/computer/shuttle/pirate
 	name = "pirate shuttle console"
-	shuttleId = "pirateship"
+	shuttleId = "pirate"
 	icon_screen = "syndishuttle"
 	icon_keyboard = "syndie_key"
 	light_color = COLOR_SOFT_RED
-	possible_destinations = "pirateship_away;pirateship_home;pirateship_custom"
+	possible_destinations = "pirate_away;pirate_home;pirate_custom"
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/pirate
 	name = "pirate shuttle navigation computer"
 	desc = "Used to designate a precise transit location for the pirate shuttle."
-	shuttleId = "pirateship"
+	shuttleId = "pirate"
 	lock_override = CAMERA_LOCK_STATION
-	shuttlePortId = "pirateship_custom"
+	shuttlePortId = "pirate_custom"
 	x_offset = 9
 	y_offset = 0
 	see_hidden = FALSE
 
 /obj/docking_port/mobile/pirate
 	name = "pirate shuttle"
-	id = "pirateship"
+	shuttle_id = "pirate"
 	rechargeTime = 3 MINUTES
 
 /obj/machinery/suit_storage_unit/pirate

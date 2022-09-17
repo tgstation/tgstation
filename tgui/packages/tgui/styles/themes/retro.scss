@@ -28,7 +28,7 @@
     '../components/Button.scss',
     $with: (
       'color-default': #e8e4c9,
-      'color-disabled': #363636,
+      'color-disabled': #505046,
       'color-selected': #9d0808,
       'color-caution': #be6209,
       'color-danger': #9a9d00
@@ -53,6 +53,17 @@
     color: #161613;
     border: base.em(2px) outset #e8e4c9;
     outline: base.em(1px) solid #161613;
+  }
+
+  .Button--disabled {
+    color: #c5c5c2;
+    font-family: monospace;
+    &:hover {
+      color: #ffffff;
+    }
+    &:focus {
+      color: #ffffff;
+    }
   }
 
   .Layout__content {

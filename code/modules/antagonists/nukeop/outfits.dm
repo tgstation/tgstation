@@ -88,7 +88,7 @@
 /datum/outfit/syndicate/reinforcement/cybersun
 	name = "Syndicate Operative - Cybersun Reinforcement"
 	uniform = /obj/item/clothing/under/syndicate/combat
-	suit = /obj/item/clothing/suit/jacket/det_suit/dark
+	suit = /obj/item/clothing/suit/jacket/oversized
 	gloves = /obj/item/clothing/gloves/fingerless
 	glasses = /obj/item/clothing/glasses/sunglasses
 	mask = /obj/item/clothing/mask/cigarette/cigar

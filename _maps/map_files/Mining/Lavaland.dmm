@@ -325,10 +325,10 @@
 "ck" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/reagent_containers/food/condiment/peppermill{
+/obj/item/reagent_containers/condiment/peppermill{
 	pixel_x = 3
 	},
-/obj/item/reagent_containers/food/condiment/saltshaker{
+/obj/item/reagent_containers/condiment/saltshaker{
 	pixel_x = -3;
 	pixel_y = 5
 	},
@@ -408,7 +408,7 @@
 /turf/open/floor/iron/dark,
 /area/mine/production)
 "cK" = (
-/obj/structure/chair/sofa/corp/left{
+/obj/structure/chair/sofa/corp/right{
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/blue/filled/line,
@@ -1284,7 +1284,7 @@
 /area/mine/storage/public)
 "hW" = (
 /obj/structure/table,
-/obj/item/reagent_containers/glass/bowl,
+/obj/item/reagent_containers/cup/bowl,
 /obj/item/kitchen/spoon,
 /turf/open/floor/iron/checker,
 /area/mine/laborcamp)
@@ -2232,7 +2232,7 @@
 /obj/docking_port/stationary{
 	dwidth = 2;
 	height = 5;
-	id = "laborcamp_away";
+	shuttle_id = "laborcamp_away";
 	name = "labor camp";
 	width = 9
 	},
@@ -2483,7 +2483,7 @@
 	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
 	name = "old sink"
 	},
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/cup/bucket,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 1
 	},
@@ -2981,11 +2981,11 @@
 /obj/effect/turf_decal/tile/bar/opposingcorners{
 	dir = 1
 	},
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
 	pixel_x = -3;
 	pixel_y = 7
 	},
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
 	pixel_x = 6;
 	pixel_y = 5
 	},
@@ -3320,15 +3320,15 @@
 /area/lavaland/surface/outdoors)
 "sW" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/drinks/bottle/beer{
+/obj/item/reagent_containers/cup/glass/bottle/beer{
 	pixel_x = 7;
 	pixel_y = 5
 	},
-/obj/item/reagent_containers/food/drinks/bottle/beer{
+/obj/item/reagent_containers/cup/glass/bottle/beer{
 	pixel_x = -1;
 	pixel_y = 9
 	},
-/obj/item/reagent_containers/food/drinks/bottle/beer{
+/obj/item/reagent_containers/cup/glass/bottle/beer{
 	pixel_x = -8
 	},
 /turf/open/floor/iron/white/smooth_edge{
@@ -3984,7 +3984,7 @@
 /area/mine/cafeteria)
 "xr" = (
 /obj/structure/sink/directional/east,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/cup/bucket,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
@@ -4088,7 +4088,7 @@
 /obj/effect/spawner/random/food_or_drink/booze,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/poster/contraband/random/directional/north,
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
 	pixel_x = -7;
 	pixel_y = 7
 	},
@@ -4111,7 +4111,7 @@
 	dir = 2;
 	dwidth = 11;
 	height = 22;
-	id = "whiteship_lavaland";
+	shuttle_id = "whiteship_lavaland";
 	name = "lavaland wastes";
 	width = 35
 	},
@@ -4373,9 +4373,7 @@
 /turf/open/floor/iron,
 /area/mine/cafeteria)
 "zJ" = (
-/obj/machinery/mineral/processing_unit_console{
-	machinedir = 5
-	},
+/obj/machinery/mineral/processing_unit_console,
 /turf/closed/wall,
 /area/mine/production)
 "zK" = (
@@ -4553,9 +4551,9 @@
 /area/lavaland/surface/outdoors)
 "AV" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
-/obj/item/reagent_containers/food/drinks/bottle/beer,
-/obj/item/reagent_containers/food/drinks/bottle/beer,
-/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/item/reagent_containers/cup/glass/bottle/beer,
+/obj/item/reagent_containers/cup/glass/bottle/beer,
+/obj/item/reagent_containers/cup/glass/bottle/beer,
 /obj/effect/spawner/random/food_or_drink/booze,
 /turf/open/floor/iron/white,
 /area/mine/cafeteria)
@@ -4799,7 +4797,7 @@
 	dir = 8;
 	pixel_y = 6
 	},
-/obj/structure/window/reinforced/tinted,
+/obj/structure/window/reinforced,
 /obj/structure/curtain,
 /turf/open/floor/iron/freezer,
 /area/mine/living_quarters)
@@ -4947,7 +4945,7 @@
 	dir = 2;
 	dwidth = 3;
 	height = 10;
-	id = "mining_away";
+	shuttle_id = "mining_away";
 	name = "lavaland mine";
 	width = 7
 	},
@@ -5166,7 +5164,7 @@
 	dir = 4;
 	dwidth = 3;
 	height = 7;
-	id = "lavaland_common_away";
+	shuttle_id = "lavaland_common_away";
 	name = "Mining base public dock";
 	width = 7
 	},
@@ -5248,7 +5246,7 @@
 /turf/open/floor/iron/smooth,
 /area/mine/laborcamp/production)
 "Gl" = (
-/obj/item/reagent_containers/food/drinks/colocup,
+/obj/item/reagent_containers/cup/glass/colocup,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "Gm" = (
@@ -5361,6 +5359,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/holopad/secure,
 /turf/open/floor/iron/smooth_large,
 /area/mine/laborcamp/production)
 "Hf" = (
@@ -5951,9 +5950,7 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "Kv" = (
-/obj/machinery/mineral/processing_unit_console{
-	machinedir = 2
-	},
+/obj/machinery/mineral/processing_unit_console,
 /turf/closed/wall,
 /area/mine/laborcamp/production)
 "Kw" = (
@@ -7607,7 +7604,7 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "Vc" = (
-/obj/item/reagent_containers/food/drinks/colocup{
+/obj/item/reagent_containers/cup/glass/colocup{
 	pixel_x = -5;
 	pixel_y = -3
 	},
@@ -7707,7 +7704,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
 	},
-/obj/item/radio/intercom/prison/directional/east,
+/obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 8
 	},

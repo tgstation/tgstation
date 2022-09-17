@@ -48,8 +48,8 @@
 
 	if(!new_name)
 		return
-	log_game("[key_name(user)] has proposed to name the station as \
-		[new_name]")
+	user.log_message("has proposed to name the station as \
+		[new_name]", LOG_GAME)
 
 	if(standard_station_regex.Find(new_name))
 		to_chat(user, span_notice("Your name has been automatically approved."))

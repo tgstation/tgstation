@@ -83,7 +83,7 @@
 	throw_speed = 2
 	degrade_enabled = FALSE //With a description like that, I have to, don't I?
 
-/obj/item/crowbar/large/old/Initialize()
+/obj/item/crowbar/large/old/Initialize(mapload)
 	. = ..()
 	if(prob(50))
 		icon_state = "crowbar_powergame"

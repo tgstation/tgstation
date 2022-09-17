@@ -57,7 +57,7 @@
 #define ORGAN_ORGANIC 1
 #define ORGAN_ROBOTIC 2
 
-#define DEFAULT_BODYPART_ICON_ORGANIC 'icons/mob/human_parts_greyscale.dmi'
+#define DEFAULT_BODYPART_ICON_ORGANIC 'icons/mob/species/human/bodyparts_greyscale.dmi'
 #define DEFAULT_BODYPART_ICON_ROBOTIC 'icons/mob/augmentation/augments.dmi'
 
 #define MONKEY_BODYPART "monkey"
@@ -123,6 +123,9 @@
 #define DIGITIGRADE_OPTIONAL 1
 ///The species is forced to have digitigrade legs in generation.
 #define DIGITIGRADE_FORCED 2
+
+///Digitigrade's prefs, used in features for legs if you're meant to be a Digitigrade.
+#define DIGITIGRADE_LEGS "Digitigrade Legs"
 
 //TODO: Remove entirely in favor of the BODYTYPE system
 ///Body type bitfields for allowed_animal_origin used to check compatible surgery body types (use NONE for no matching body type)
@@ -221,15 +224,26 @@
 #define BEAUTY_LEVEL_GREAT 100
 
 //Moods levels for humans
-#define MOOD_LEVEL_HAPPY4 15
-#define MOOD_LEVEL_HAPPY3 10
-#define MOOD_LEVEL_HAPPY2 6
-#define MOOD_LEVEL_HAPPY1 2
-#define MOOD_LEVEL_NEUTRAL 0
-#define MOOD_LEVEL_SAD1 -3
-#define MOOD_LEVEL_SAD2 -7
-#define MOOD_LEVEL_SAD3 -15
-#define MOOD_LEVEL_SAD4 -20
+#define MOOD_HAPPY4 15
+#define MOOD_HAPPY3 10
+#define MOOD_HAPPY2 6
+#define MOOD_HAPPY1 2
+#define MOOD_NEUTRAL 0
+#define MOOD_SAD1 -3
+#define MOOD_SAD2 -7
+#define MOOD_SAD3 -15
+#define MOOD_SAD4 -20
+
+//Moods levels for humans
+#define MOOD_LEVEL_HAPPY4 9
+#define MOOD_LEVEL_HAPPY3 8
+#define MOOD_LEVEL_HAPPY2 7
+#define MOOD_LEVEL_HAPPY1 6
+#define MOOD_LEVEL_NEUTRAL 5
+#define MOOD_LEVEL_SAD1 4
+#define MOOD_LEVEL_SAD2 3
+#define MOOD_LEVEL_SAD3 2
+#define MOOD_LEVEL_SAD4 1
 
 //Sanity values for humans
 #define SANITY_MAXIMUM 150
@@ -440,6 +454,13 @@
 #define MAX_REVIVE_FIRE_DAMAGE 180
 #define MAX_REVIVE_BRUTE_DAMAGE 180
 
+#define DEFAULT_BRUTE_EXAMINE_TEXT "bruising"
+#define DEFAULT_BURN_EXAMINE_TEXT "burns"
+#define DEFAULT_CLONE_EXAMINE_TEXT "cellular damage"
+
+#define ROBOTIC_BRUTE_EXAMINE_TEXT "denting"
+#define ROBOTIC_BURN_EXAMINE_TEXT "charring"
+
 // If a mob has a higher threshold than this, the icon shown will be increased to the big fire icon.
 #define MOB_BIG_FIRE_STACK_THRESHOLD 3
 
@@ -465,6 +486,16 @@
 #define SLIME_EXTRACT (1<<5)
 //Wabbacjack staff projectiles
 #define WABBAJACK (1<<6)
+
+// Randomization keys for calling wabbajack with.
+// Note the contents of these keys are important, as they're displayed to the player
+// Ex: (You turn into a "monkey", You turn into a "xenomorph")
+#define WABBAJACK_MONKEY "monkey"
+#define WABBAJACK_ROBOT "robot"
+#define WABBAJACK_SLIME "slime"
+#define WABBAJACK_XENO "xenomorph"
+#define WABBAJACK_HUMAN "humanoid"
+#define WABBAJACK_ANIMAL "animal"
 
 // Reasons a defibrilation might fail
 #define DEFIB_POSSIBLE (1<<0)

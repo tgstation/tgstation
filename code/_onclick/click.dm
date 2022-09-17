@@ -37,9 +37,10 @@
  *
  * Note that this proc can be overridden, and is in the case of screen objects.
  */
-/atom/Click(location,control,params)
+/atom/Click(location, control, params)
 	if(flags_1 & INITIALIZED_1)
 		SEND_SIGNAL(src, COMSIG_CLICK, location, control, params, usr)
+
 		usr.ClickOn(src, params)
 
 /atom/DblClick(location,control,params)
@@ -68,10 +69,7 @@
 		return
 	next_click = world.time + 1
 
-	if(check_click_intercept(params,A))
-		return
-
-	if(notransform)
+	if(check_click_intercept(params,A) || notransform)
 		return
 
 	var/list/modifiers = params2list(params)
@@ -130,11 +128,11 @@
 	if(W == A)
 		if(LAZYACCESS(modifiers, RIGHT_CLICK))
 			W.attack_self_secondary(src, modifiers)
-			update_inv_hands()
+			update_held_items()
 			return
 		else
 			W.attack_self(src, modifiers)
-			update_inv_hands()
+			update_held_items()
 			return
 
 	//These are always reachable.
@@ -414,12 +412,12 @@
 	A.AltClick(src)
 
 /atom/proc/AltClick(mob/user)
-	if(!can_interact(user))
+	if(!user.can_interact_with(src))
 		return FALSE
 	if(SEND_SIGNAL(src, COMSIG_CLICK_ALT, user) & COMPONENT_CANCEL_CLICK_ALT)
 		return
 	var/turf/T = get_turf(src)
-	if(T && (isturf(loc) || isturf(src)) && user.TurfAdjacent(T))
+	if(T && (isturf(loc) || isturf(src)) && user.TurfAdjacent(T) && !HAS_TRAIT(user, TRAIT_MOVE_VENTCRAWLING))
 		user.listed_turf = T
 		user.client.stat_panel.send_message("create_listedturf", T.name)
 
@@ -432,7 +430,7 @@
 
 ///The base proc of when something is right clicked on when alt is held
 /atom/proc/alt_click_secondary(mob/user)
-	if(!can_interact(user))
+	if(!user.can_interact_with(src))
 		return FALSE
 	if(SEND_SIGNAL(src, COMSIG_CLICK_ALT_SECONDARY, user) & COMPONENT_CANCEL_CLICK_ALT_SECONDARY)
 		return

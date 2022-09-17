@@ -113,15 +113,23 @@
 		return
 	if(playing)
 		return ..()
-	if(istype(W, /obj/item/card/id))
-		playsound(src, 'sound/machines/card_slide.ogg', 50, TRUE)
+	var/obj/item/card/id/player_card = W.GetID()
+	if(player_card)
+		if(isidcard(W))
+			playsound(src, 'sound/machines/card_slide.ogg', 50, TRUE)
+		else
+			playsound(src, 'sound/machines/terminal_success.ogg', 50, TRUE)
 
 		if(machine_stat & MAINT || !on || locked)
 			to_chat(user, span_notice("The machine appears to be disabled."))
 			return FALSE
 
+		if(!player_card.registered_account)
+			say("You don't have a bank account!")
+			playsound(src, 'sound/machines/buzz-two.ogg', 30, TRUE)
+			return FALSE
+
 		if(my_card)
-			var/obj/item/card/id/player_card = W
 			if(istype(player_card, /obj/item/card/id/departmental_budget)) // Are they using a department ID
 				say("You cannot gamble with the department budget!")
 				playsound(src, 'sound/machines/buzz-two.ogg', 30, TRUE)
@@ -170,18 +178,16 @@
 			addtimer(CALLBACK(src, .proc/play, user, player_card, chosen_bet_type, chosen_bet_amount, potential_payout), 4) //Animation first
 			return TRUE
 		else
-			var/obj/item/card/id/new_card = W
-			if(new_card.registered_account)
-				var/msg = tgui_input_text(user, "Name of your roulette wheel", "Roulette Customization", "Roulette Machine", MAX_NAME_LEN)
-				if(!msg)
-					return
-				name = msg
-				desc = "Owned by [new_card.registered_account.account_holder], draws directly from [user.p_their()] account."
-				my_card = new_card
-				RegisterSignal(my_card, COMSIG_PARENT_QDELETING, .proc/on_my_card_deleted)
-				to_chat(user, span_notice("You link the wheel to your account."))
-				power_change()
+			var/msg = tgui_input_text(user, "Name of your roulette wheel", "Roulette Customization", "Roulette Machine", MAX_NAME_LEN)
+			if(!msg)
 				return
+			name = msg
+			desc = "Owned by [player_card.registered_account.account_holder], draws directly from [user.p_their()] account."
+			my_card = player_card
+			RegisterSignal(my_card, COMSIG_PARENT_QDELETING, .proc/on_my_card_deleted)
+			to_chat(user, span_notice("You link the wheel to your account."))
+			power_change()
+			return
 	return ..()
 
 ///deletes the my_card ref to prevent harddels
