@@ -45,14 +45,14 @@
 	if(client.interviewee)
 		register_for_interview()
 		return
-
+	/*
 	if(SSticker.current_state >= GAME_STATE_PLAYING)
 		for(var/datum/refugee/possible_match as anything in GLOB.refugees)
 			if(possible_match.expected_ckey == client.ckey)
 				possible_match.execute_introduction(src)
 				GLOB.refugees -= possible_match
 				return
-
+*/
 	if(SSticker.current_state < GAME_STATE_SETTING_UP)
 		var/tl = SSticker.GetTimeLeft()
 		to_chat(src, "Please set up your character and select \"Ready\". The game will start [tl > 0 ? "in about [DisplayTimeText(tl)]" : "soon"].")

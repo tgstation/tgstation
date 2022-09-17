@@ -4,6 +4,13 @@
 /datum/component/exile
 	var/launch_dir
 
+	var/fails_allowed = 3
+
+/datum/component/exile/Destroy(force, silent)
+	testing("Removing exile from [parent]")
+	. = ..()
+
+
 /datum/component/exile/Initialize(direction)
 	if(!ismob(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -21,6 +28,7 @@
 /datum/component/exile/proc/check_z()
 	SIGNAL_HANDLER
 
+	testing("checking new z-level")
 	var/mob/living/exilee = parent
 	if(!istype(exilee) || !exilee.client)
 		qdel(src)
@@ -29,6 +37,7 @@
 	if(world.url == CONFIG_GET(string/hell))
 		youre_on_your_way_to = CONFIG_GET(string/the_abyss)
 	if(!youre_on_your_way_to)
+		testing("not on way anywhere")
 		qdel(src)
 		return
 
@@ -43,12 +52,16 @@
 	message_admins("[exilee.real_name] ([exilee.ckey]) has been shot towards another server ([youre_on_your_way_to]) by a mass-driver.")
 
 	send2otherserver(station_name(), null, "incoming_exile", youre_on_your_way_to, exile_info)
-	exilee_client << link(youre_on_your_way_to)
+	//exilee_client << link(youre_on_your_way_to)
 	exilee.dust()
 	qdel(src)
 
 /// If the exilee breaks their course before hitting the z-level, they saved themselves
 /datum/component/exile/proc/check_move(datum/source, OldLoc, Dir, Forced)
 	SIGNAL_HANDLER
+	testing("moved")
 	if(Dir != launch_dir)
-		qdel(src)
+		fails_allowed--
+		testing("checkmove failed [fails_allowed]")
+		if(fails_allowed <= 0)
+			qdel(src)

@@ -236,6 +236,55 @@
 		.["shuttle_timer"] = SSshuttle.emergency.timeLeft()
 		// Shuttle timer, in seconds
 
+/proc/test_exile()
+	var/list/exile_info = list()
+	exile_info["expected_ckey"] = "shaps"
+	exile_info["name"] = "Betty"
+	exile_info["dir"] = WEST
+	var/client/exilee_client
+	var/mob/exilee
+
+	//deadchat_broadcast("[exilee] has been shot towards another station by a mass-driver!")
+	//message_admins("[exilee.real_name] ([exilee.ckey]) has been shot towards another server ([youre_on_your_way_to]) by a mass-driver.")
+
+	var/list/input = exile_info
+
+	var/exp_ckey = "shaps" // this should already be ckey form anyway, but let's be safe
+	var/force_name = "Sandy"
+	var/launching_dir = input["dir"]
+
+	for(var/client/iter_client in GLOB.clients)
+		if(iter_client.ckey == exp_ckey)
+			exilee_client = iter_client
+			exilee = exilee_client.mob
+			testing("found client")
+			break
+
+	for(var/client/iter_client in GLOB.joined_player_list)
+		if(iter_client.ckey == exp_ckey) // they're already here in hell
+			return
+	for(var/datum/refugee/iter_refugee in GLOB.refugees)
+		if(iter_refugee.expected_ckey == exp_ckey) // they're already on their way here to hell
+			return
+	var/datum/refugee/new_refugee = new(exp_ckey, force_name, launching_dir)
+	GLOB.refugees += new_refugee
+
+	var/mob/dead/new_player/NP = new()
+	NP.ckey = exp_ckey
+	qdel(exilee)
+
+	testing("before exec loop")
+	if(SSticker.current_state >= GAME_STATE_PLAYING)
+		for(var/datum/refugee/possible_match as anything in GLOB.refugees)
+			if(possible_match.expected_ckey == exile_info["expected_ckey"])
+				var/mob/dead/new_player/the_thing = exilee_client.mob
+				testing("the thing [the_thing] client [exilee_client]")
+				possible_match.execute_introduction(the_thing)
+				GLOB.refugees -= possible_match
+				return
+	testing("made it to end of test exile")
+
+
 /datum/world_topic/incoming_exile
 	keyword = "incoming_exile"
 	require_comms_key = TRUE

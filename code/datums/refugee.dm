@@ -14,15 +14,20 @@
 
 /datum/refugee/proc/execute_introduction(mob/dead/new_player/our_new_player)
 	GLOB.refugees -= src
-	var/mob/living/carbon/human/new_body = our_new_player.create_character(TRUE)
+	var/turf/random_standby = pick(GLOB.blobstart)
+	var/mob/living/carbon/human/new_body = our_new_player.create_character(random_standby)
 	new_body.real_name = char_name
 	deadchat_broadcast("[char_name] has been shot towards this station from another server!", follow_target=new_body)
 	message_admins("[ADMIN_LOOKUPFLW(new_body)] has been shot towards this station from another server.")
 	ADD_TRAIT(new_body, TRAIT_XRAY_VISION, MAFIA_TRAIT) // so they see the spawn splash screen instead of the spawn box area area
+	new_body.status_flags &= GODMODE
 	new_body.update_sight()
-	addtimer(CALLBACK(src, .proc/delayed_spawn, new_body), 10 SECONDS) // delay actually spawning them and flinging them at the station a bit in case they're loading so they can see it
+	addtimer(CALLBACK(src, .proc/delayed_spawn, new_body, our_new_player), 4 SECONDS) // delay actually spawning them and flinging them at the station a bit in case they're loading so they can see it
 
-/datum/refugee/proc/delayed_spawn(mob/living/carbon/human/the_body)
+/datum/refugee/proc/delayed_spawn(mob/living/carbon/human/the_body, mob/dead/new_player/our_new_player)
+	testing("doing delayed spawn with [our_new_player] into [the_body]")
+	our_new_player.transfer_character()
+	testing("transfer complete")
 	var/turf/pickedstart
 	var/turf/pickedgoal
 	var/max_i = 10//number of tries to spawn the incoming body
@@ -35,6 +40,7 @@
 			break
 
 	the_body.forceMove(pickedstart)
+	the_body.status_flags &= ~GODMODE
 	REMOVE_TRAIT(the_body, TRAIT_XRAY_VISION, MAFIA_TRAIT)
 	the_body.update_sight()
 	var/obj/machinery/mass_driver/typical_driver = /obj/machinery/mass_driver
