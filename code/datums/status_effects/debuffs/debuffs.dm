@@ -344,22 +344,16 @@
 	duration = 300 //if you leave for 30 seconds you lose the mark, deal with it
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
-	var/ignoresize = FALSE
 	var/mutable_appearance/marked_underlay
 	var/obj/item/kinetic_crusher/hammer_synced
 
 
-/datum/status_effect/crusher_mark/on_creation(mob/living/new_owner, obj/item/kinetic_crusher/new_hammer_synced, var/ignoresize)
+/datum/status_effect/crusher_mark/on_creation(mob/living/new_owner, obj/item/kinetic_crusher/new_hammer_synced)
 	. = ..()
 	if(.)
 		hammer_synced = new_hammer_synced
-		for(var/t in new_hammer_synced.trophies)
-			if(istype(t,/obj/item/crusher_trophy/syndicate_trophy))
-				ignoresize = TRUE
 
 /datum/status_effect/crusher_mark/on_apply()
-	if(ignoresize)
-		return TRUE
 	if(owner.mob_size >= MOB_SIZE_LARGE)
 		marked_underlay = mutable_appearance('icons/effects/effects.dmi', "shield2")
 		marked_underlay.pixel_x = -owner.pixel_x
