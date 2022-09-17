@@ -193,6 +193,8 @@
 		if(hammer_synced)
 			for(var/t in hammer_synced.trophies)
 				var/obj/item/crusher_trophy/T = t
+				if(istype(t,/obj/item/crusher_trophy/syndicate_trophy))
+					L.mob_size = MOB_SIZE_LARGE
 				T.on_mark_application(target, CM, had_effect)
 	var/target_turf = get_turf(target)
 	if(ismineralturf(target_turf))
@@ -449,6 +451,7 @@
 /obj/item/crusher_trophy/syndicate_trophy
 	name= "Syndicate trophy"
 	desc = "An odd super conducting material that the syndicate has stolen from the mitts of the ash lizards during a lavaland exploretory team deployment, it seems to cackle with power"
+	icon = 'icons/obj/mining.dmi'
 	icon_state ="Gibtonite_igniter"
 	denied_type = /obj/item/crusher_trophy/syndicate_trophy
 
