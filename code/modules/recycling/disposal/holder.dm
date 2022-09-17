@@ -113,7 +113,7 @@
 	if(do_after(escapee, 20 SECONDS, get_turf(loc)))
 		for(var/mob/living/jailbird in contents)
 			jailbird.apply_damage(rand(5,15), damagetype = BRUTE)
-		loc.take_damage(loc.atom_integrity)
+		loc.take_damage(loc.max_integrity)
 
 //failsafe in the case the holder is somehow forcemoved somewhere that's not a disposal pipe. Otherwise the above loop breaks.
 /obj/structure/disposalholder/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
