@@ -263,27 +263,21 @@
 	. = ..()
 	if(!.)
 		return FALSE
-<<<<<<< HEAD
-	var/declaration_message = "[targets[1]]! By the divine light of [GLOB.deity], You are an evil of this world that must be wrought low!"
-	if(!user.can_speak_vocal())
-		to_chat(user, span_warning("You can't get the declaration out!"))
-=======
 
 	// This shouldn't technically be a possible state, but you never know
 	if(!honor_mutation)
->>>>>>> master
 		return FALSE
+
 	if(GLOB.religious_sect.favor < required_favor)
 		if(feedback)
 			to_chat(owner, span_warning("You need at least 150 favor to declare someone evil!"))
 		return FALSE
-<<<<<<< HEAD
-	GLOB.religious_sect.adjust_favor(-150, user)
-	user.say(declaration_message, forced = name)
-	honormut.guilty(targets[1], declaration = TRUE)
-=======
 
->>>>>>> master
+	if(!owner.can_speak_vocal())
+		if(feedback)
+			to_chat(owner, span_warning("You can't get the declaration out!"))
+		return FALSE
+
 	return TRUE
 
 /datum/action/cooldown/spell/pointed/declare_evil/is_valid_target(atom/cast_on)

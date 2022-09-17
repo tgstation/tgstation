@@ -189,7 +189,7 @@
 
 /datum/action/changeling/sting/mute/sting_action(mob/user, mob/living/carbon/target)
 	log_combat(user, target, "stung", "mute sting")
-	target.adjust_timed_status_effect(1 MINUTES, /datum/status_effect/silenced)
+	target.adjust_silence(1 MINUTES)
 	return TRUE
 
 /datum/action/changeling/sting/blind

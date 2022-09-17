@@ -111,16 +111,8 @@
 					span_userdanger("Your neck is karate chopped by [attacker], rendering you unable to speak!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, attacker)
 	to_chat(attacker, span_danger("You karate chop [defender]'s neck, rendering [defender.p_them()] unable to speak!"))
 	playsound(get_turf(attacker), 'sound/effects/hit_punch.ogg', 50, TRUE, -1)
-<<<<<<< HEAD
-	defender.apply_damage(5, attacker.get_attack_type())
-	defender.adjust_timed_status_effect(20 SECONDS, /datum/status_effect/silenced, max_duration = 20 SECONDS)
-=======
 	defender.apply_damage(10, attacker.get_attack_type(), BODY_ZONE_HEAD)
-	if(iscarbon(defender))
-		var/mob/living/carbon/carbon_defender = defender
-		if(carbon_defender.silent <= 10)
-			carbon_defender.silent = clamp(carbon_defender.silent + 10, 0, 10)
->>>>>>> master
+	defender.adjust_silence_up_to(20 SECONDS, 20 SECONDS)
 	log_combat(attacker, defender, "neck chopped")
 	return TRUE
 

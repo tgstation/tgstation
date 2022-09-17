@@ -238,7 +238,7 @@
 		return
 	var/mob/living/carbon/carbon_victim = victim
 	carbon_victim.adjustStaminaLoss(80)
-	carbon_victim.adjust_timed_status_effect(20 SECONDS, /datum/status_effect/silenced)
+	carbon_victim.adjust_silence(20 SECONDS)
 	carbon_victim.adjust_timed_status_effect(1 MINUTES, /datum/status_effect/speech/stutter)
 	carbon_victim.adjust_timed_status_effect(5 SECONDS, /datum/status_effect/confusion)
 	carbon_victim.set_timed_status_effect(20 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)

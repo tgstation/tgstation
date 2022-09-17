@@ -1416,7 +1416,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/silencer/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
 	if(ishuman(drinker) && drinker.mind?.miming)
-		drinker.set_timed_status_effect(MIMEDRINK_SILENCE_DURATION, /datum/status_effect/silenced, only_if_higher = TRUE)
+		drinker.set_silence_if_lower(MIMEDRINK_SILENCE_DURATION)
 		drinker.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time)
 		. = TRUE
 	return ..() || .
@@ -2167,7 +2167,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/blank_paper/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
 	if(ishuman(drinker) && drinker.mind?.miming)
-		drinker.set_timed_status_effect(MIMEDRINK_SILENCE_DURATION, /datum/status_effect/silenced, only_if_higher = TRUE)
+		drinker.set_silence_if_lower(MIMEDRINK_SILENCE_DURATION)
 		drinker.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time)
 		. = TRUE
 	return ..()
@@ -2930,7 +2930,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/gin_garden
 	name = "Gin Garden"
 	description = "Excellent cooling alcoholic drink with not so ordinary taste."
-	color = "#6cd87a" 
+	color = "#6cd87a"
 	taste_description = "light gin with sweet ginger and cucumber"
 	glass_icon_state = "gin_garden"
 	glass_name = "gin garden"

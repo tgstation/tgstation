@@ -5,7 +5,7 @@
 	..()
 	target.set_screwyhud(SCREWYHUD_DEAD)
 	target.Paralyze(30 SECONDS)
-	target.adjust_timed_status_effect(20 SECONDS, /datum/status_effect/silenced)
+	target.adjust_silence(20 SECONDS)
 	to_chat(target, span_deadsay("<b>[target.real_name]</b> has died at <b>[get_area_name(target)]</b>."))
 
 	var/delay = 0

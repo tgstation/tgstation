@@ -420,13 +420,6 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 	return TRUE
 
-<<<<<<< HEAD
-/**
- * Treats the message according to traits, flags, status effects, whatever's set on the mob. Example: Stuttering.
- * Also handles captilization of the message.
- */
-/mob/living/proc/treat_message(message)
-=======
 
 /**
  * Treats the passed message with things that may modify speech (stuttering, slurring etc).
@@ -435,7 +428,6 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
  * capitalize_message - Whether we run capitalize() on the message after we're done.
  */
 /mob/living/proc/treat_message(message, capitalize_message = TRUE)
->>>>>>> master
 	if(HAS_TRAIT(src, TRAIT_UNINTELLIGIBLE_SPEECH))
 		message = unintelligize(message)
 

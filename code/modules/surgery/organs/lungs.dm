@@ -341,7 +341,7 @@
 			breather.adjustFireLoss(15)
 			if (prob(freon_pp/2))
 				to_chat(breather, span_alert("Your throat closes up!"))
-				breather.set_timed_status_effect(6 SECONDS, /datum/status_effect/silenced, only_if_higher = TRUE)
+				breather.set_silence_if_lower(6 SECONDS)
 
 		else
 			breather.adjustFireLoss(freon_pp/4)

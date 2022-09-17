@@ -76,15 +76,8 @@
 		return
 
 	var/mob/living/carbon/carbon_target = target
-<<<<<<< HEAD
-	var/turf/open/target_turf = get_turf(carbon_target)
-	target_turf.TakeTemperature(-20)
-	carbon_target.adjust_bodytemperature(-40)
-	carbon_target.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/silenced)
-=======
-	carbon_target.silent += 5
+	carbon_target.adjust_silence(10 SECONDS)
 	carbon_target.apply_status_effect(/datum/status_effect/void_chill)
->>>>>>> master
 
 /datum/heretic_knowledge/cold_snap
 	name = "Aristocrat's Way"
@@ -229,19 +222,7 @@
 	for(var/mob/living/carbon/close_carbon in view(5, source))
 		if(IS_HERETIC_OR_MONSTER(close_carbon))
 			continue
-<<<<<<< HEAD
-		close_carbon.adjust_timed_status_effect(2 SECONDS, /datum/status_effect/silenced)
-		close_carbon.adjust_bodytemperature(-20)
-
-	var/turf/open/source_turf = get_turf(source)
-	if(!isopenturf(source_turf))
-		return
-	source_turf.TakeTemperature(-20)
-
-	var/area/source_area = get_area(source)
-=======
-		close_carbon.silent += 1
->>>>>>> master
+		close_carbon.adjust_silence_up_to(2 SECONDS, 20 SECONDS)
 
 	// Telegraph the storm in every area on the station.
 	var/list/station_levels = SSmapping.levels_by_trait(ZTRAIT_STATION)

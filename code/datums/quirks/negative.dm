@@ -535,7 +535,7 @@
 			if(prob(max(5,(nearby_people*12.5*moodmod))) && word != message_split[1]) //Minimum 1/20 chance of filler
 				new_message += pick("uh,","erm,","um,")
 				if(prob(min(5,(0.05*(nearby_people*12.5)*moodmod)))) //Max 1 in 20 chance of cutoff after a succesful filler roll, for 50% odds in a 15 word sentence
-					quirker.set_timed_status_effect(6 SECONDS, /datum/status_effect/silenced, only_if_higher = TRUE)
+					quirker.set_silence_if_lower(6 SECONDS)
 					to_chat(quirker, span_danger("You feel self-conscious and stop talking. You need a moment to recover!"))
 					break
 			if(prob(max(5,(nearby_people*12.5*moodmod)))) //Minimum 1/20 chance of stutter
@@ -558,7 +558,7 @@
 			to_chat(quirk_holder, span_warning("You think that wouldn't add much to the conversation and decide not to say it."))
 			if(prob(min(25,(0.25*(nearby_people*12.75)*moodmod)))) //Max 25% chance of silence stacks after succesful not talking roll
 				to_chat(quirker, span_danger("You retreat into yourself. You <i>really</i> don't feel up to talking."))
-				quirker.set_timed_status_effect(10 SECONDS, /datum/status_effect/silenced, only_if_higher = TRUE)
+				quirker.set_silence_if_lower(10 SECONDS)
 
 		speech_args[SPEECH_MESSAGE] = pick("Uh.","Erm.","Um.")
 	else

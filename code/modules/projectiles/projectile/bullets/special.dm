@@ -37,4 +37,4 @@
 		return
 
 	var/mob/living/living_target = target
-	living_target.set_timed_status_effect(20 SECONDS, /datum/status_effect/silenced, only_if_higher = TRUE)
+	living_target.set_silence_if_lower(20 SECONDS)

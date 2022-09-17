@@ -160,7 +160,7 @@
 
 /datum/reagent/consumable/nothing/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
 	if(ishuman(drinker) && drinker.mind?.miming)
-		drinker.set_timed_status_effect(MIMEDRINK_SILENCE_DURATION, /datum/status_effect/silenced, only_if_higher = TRUE)
+		drinker.set_silence_if_lower(MIMEDRINK_SILENCE_DURATION)
 		drinker.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time)
 		. = TRUE
 	..()
@@ -1284,7 +1284,7 @@
 /datum/reagent/consumable/cucumberjuice
 	name = "Cucumber Juice"
 	description = "Ordinary cucumber juice, nothing from the fantasy world."
-	color = "#6cd87a" 
+	color = "#6cd87a"
 	taste_description = "light cucumber"
 	glass_icon_state = "glass_cucumber"
 	glass_name = "glass of cucumber juice"
@@ -1295,7 +1295,7 @@
 /datum/reagent/consumable/cucumberlemonade
 	name = "Cucumber Lemonade"
 	description = "Cucumber juice, sugar and soda, what else is needed for happiness?"
-	color = "#6cd87a" 
+	color = "#6cd87a"
 	taste_description = "citrus soda with cucumber"
 	glass_icon_state = "cucumber_lemonade"
 	glass_name = "cucumber lemonade"

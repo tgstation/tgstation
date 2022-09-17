@@ -519,7 +519,6 @@
 /obj/item/organ/internal/tongue/tied/proc/on_use_radio(atom/movable/source, obj/item/radio/radio)
 	SIGNAL_HANDLER
 
-<<<<<<< HEAD
 	return HAS_TRAIT(source, TRAIT_CAN_SIGN_ON_COMMS) ? NONE : COMPONENT_CANNOT_USE_RADIO
 
 /// Checks to see what state this person is in and if they are able to sign or not.
@@ -550,12 +549,9 @@
 
 	return SIGN_OKAY
 
-/obj/item/organ/internal/tongue/tied/modify_speech(datum/source, list/speech_args)
-	//Thank you Jwapplephobia for helping me with the literal hellcode below //Shoutout to Jwapplephobia
-=======
+//Thank you Jwapplephobia for helping me with the literal hellcode below //Shoutout to Jwapplephobia
 /obj/item/organ/internal/tongue/tied/modify_speech(datum/source, list/speech_args)
 	// The message we send instead of our normal one
->>>>>>> master
 	var/new_message
 	// The original message
 	var/message = speech_args[SPEECH_MESSAGE]
@@ -570,21 +566,6 @@
 		new_message = replacetext(new_message, "?", ".")
 	speech_args[SPEECH_MESSAGE] = new_message
 
-<<<<<<< HEAD
-	if(exclamation_found && question_found)
-		owner.visible_message(span_notice("[owner] lowers one of [owner.p_their()] eyebrows, raising the other."))
-	else if(exclamation_found)
-		owner.visible_message(span_notice("[owner] raises [owner.p_their()] eyebrows."))
-	else if(question_found)
-		owner.visible_message(span_notice("[owner] lowers [owner.p_their()] eyebrows."))
-
-#undef SIGN_OKAY
-#undef SIGN_ONE_HAND
-#undef SIGN_HANDS_FULL
-#undef SIGN_ARMLESS
-#undef SIGN_TRAIT_BLOCKED
-#undef SIGN_CUFFED
-=======
 	// Cut our last overlay before we replace it
 	if(timeleft(tonal_timerid) > 0)
 		remove_tonal_indicator()
@@ -608,4 +589,10 @@
 		return
 	owner.cut_overlay(tonal_indicator)
 	tonal_indicator = null
->>>>>>> master
+
+#undef SIGN_OKAY
+#undef SIGN_ONE_HAND
+#undef SIGN_HANDS_FULL
+#undef SIGN_ARMLESS
+#undef SIGN_TRAIT_BLOCKED
+#undef SIGN_CUFFED
