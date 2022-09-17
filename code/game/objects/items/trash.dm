@@ -153,3 +153,8 @@
 	name = "empty Ready-donk"
 	desc = "It's been Donk-decimated."
 	icon_state = "ready_donk"
+
+/obj/item/trash/pillow_tag
+	name = "pillow tag"
+	desc = "taken from a fallen opponent this tag represent your victory in gruesome pillow battle"
+	icon_state = "pillow_tag"
