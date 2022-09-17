@@ -456,4 +456,4 @@
 	denied_type = /obj/item/crusher_trophy/syndicate_trophy
 
 /obj/item/crusher_trophy/syndicate_trophy/effect_desc()
-	return "mark can effect humanoid creatures"
+	return "The first marking of a humanoid will implant them with a microscopic fragment of the superconductor, the second mark will actually apply the mark"
