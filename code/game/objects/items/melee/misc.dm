@@ -450,3 +450,24 @@
 	armour_penetration = 50
 	attack_verb_continuous = list("smacks", "strikes", "cracks", "beats")
 	attack_verb_simple = list("smack", "strike", "crack", "beat")
+
+/obj/item/melee/pillow 
+	name = "pillow"
+	desc = "A soft and fluffy pillow, you can smack people with this!"
+	icon = 'icons/obj/weapons/pillow.dmi'
+	icon_state = "pillow_with_tag"
+	inhand_icon_state = "pillow"
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
+	var/fluffy_dammage = 10
+
+/obj/item/melee/pillow/attack(mob/living/carbon/target_mob, mob/living/user, params)
+	. = ..()
+	if(!iscarbon(target_mob))
+		return
+	target_mob.adjustStaminaLoss(fluffy_dammage) //gotta take down your opponent somehow
+
+/obj/item/melee/pillow/tag_less
+	desc = "A soft and fluffy pillow, this one seems to have its tag removed"
+	icon = 'icons/obj/weapons/pillow.dmi'
+	icon_state = "pillow_no_tag"
