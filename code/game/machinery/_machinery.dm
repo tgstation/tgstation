@@ -1012,6 +1012,11 @@
 		set_occupant(vval)
 		datum_flags |= DF_VAR_EDITED
 		return TRUE
+	if(vname == NAMEOF(src, machine_stat))
+		set_machine_stat(vval)
+		datum_flags |= DF_VAR_EDITED
+		return TRUE
+
 	return ..()
 
 /**

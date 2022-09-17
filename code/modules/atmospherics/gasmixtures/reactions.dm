@@ -106,16 +106,19 @@
 		return
 
 	var/turf/open/location = holder
+	var/consumed = 0
 	switch(air.temperature)
 		if(-INFINITY to WATER_VAPOR_DEPOSITION_POINT)
 			if(location?.freeze_turf())
-				SET_REACTION_RESULTS(0)
-			. = REACTING
+				consumed = MOLES_GAS_VISIBLE
 		if(WATER_VAPOR_DEPOSITION_POINT to WATER_VAPOR_CONDENSATION_POINT)
 			location.water_vapor_gas_act()
-			air.gases[/datum/gas/water_vapor][MOLES] -= MOLES_GAS_VISIBLE
-			SET_REACTION_RESULTS(MOLES_GAS_VISIBLE)
-			. = REACTING
+			consumed = MOLES_GAS_VISIBLE
+
+	if(consumed)
+		air.gases[/datum/gas/water_vapor][MOLES] -= consumed
+		SET_REACTION_RESULTS(consumed)
+		. = REACTING
 
 
 /**
