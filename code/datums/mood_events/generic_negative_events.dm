@@ -312,6 +312,11 @@
 	mood_change = -4
 	timeout = 60 SECONDS
 
+/datum/mood_event/wedgie
+	description = "Ow! This is like space high school all over again..."
+	mood_change = -4
+	timeout = 60 SECONDS
+
 /datum/mood_event/aquarium_negative
 	description = "All the fish are dead..."
 	mood_change = -3

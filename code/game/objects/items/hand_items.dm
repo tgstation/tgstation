@@ -200,7 +200,6 @@
 	iteration++
 	noogie_loop(user, target, iteration)
 
-//Completing the holy trinity of bullying
 /obj/item/hand_item/wedgie
 	name = "wedgie"
 	desc = "Sneak up behind someone and give them a wedgie."
@@ -222,15 +221,17 @@
 		return
 	if(is_species(poorsap,/datum/species/golem) || is_species(poorsap, /datum/species/skeleton))
 		to_chat(the_bully, span_boldwarning("You stumped your fingers trying to wedgie [poorsap]"))
+		the_bully.adjustBruteLoss(2)
 		return
 	var/poorsap_dir = poorsap.dir
 	var/bully_location = get_step(poorsap, REVERSE_DIR(poorsap_dir))
 	if(poorsap_dir == the_bully.dir && the_bully.loc == bully_location && do_after(the_bully, 2 SECONDS))
-		playsound(poorsap, 'sound/effects/cloth_ripping_fast.ogg', 80)
+		playsound(poorsap, 'sound/effects/cloth_ripping_fast.ogg', 50)
 		poorsap.emote("scream")
-		to_chat(the_bully, span_alert("You give [poorsap] a wedgie!"))
 		to_chat(poorsap, span_boldwarning("You have been given wedgie by [the_bully]!"))
+		the_bully.visible_message(span_alertwarning("[the_bully] has given [poorsap] a wedgie"), span_warning("You give [poorsap] a wedgie!"), vision_distance = COMBAT_MESSAGE_RANGE, ignored_mobs = poorsap)
 		poorsap.adjustBruteLoss(3)//should hurt a little 
+		poorsap.add_mood_event("wedgie", /datum/mood_event/wedgie)
 
 /obj/item/hand_item/slapper
 	name = "slapper"
