@@ -459,6 +459,7 @@
 	inhand_icon_state = "pillow"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
+	w_class = WEIGHT_CLASS_NORMAL
 	var/fluffy_dammage = 10
 
 /obj/item/melee/pillow/attack(mob/living/carbon/target_mob, mob/living/user, params)
