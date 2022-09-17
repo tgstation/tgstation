@@ -43,7 +43,7 @@
 	///Does this item have tool degredation?
 	var/degrade_enabled = TRUE
 
-/obj/item/hemostat/ComponentInitialize()
+/obj/item/hemostat/Initialize(mapload)
 	. = ..()
 	if(degrade_enabled)
 		AddComponent(/datum/component/degrade, maximum_durability = 100, current_durability = 100)
@@ -72,7 +72,7 @@
 	///Does this item have tool degredation?
 	var/degrade_enabled = TRUE
 
-/obj/item/cautery/ComponentInitialize()
+/obj/item/cautery/Initialize(mapload)
 	. = ..()
 	if(degrade_enabled)
 		AddComponent(/datum/component/degrade)
@@ -156,7 +156,7 @@
 	. = ..()
 	AddElement(/datum/element/eyestab)
 
-/obj/item/surgicaldrill/ComponentInitialize()
+/obj/item/surgicaldrill/Initialize(mapload)
 	. = ..()
 	if(degrade_enabled)
 		AddComponent(/datum/component/degrade)
@@ -251,7 +251,7 @@
 	///Does this item have tool degredation?
 	var/degrade_enabled = TRUE
 
-/obj/item/circular_saw/ComponentInitialize()
+/obj/item/circular_saw/Initialize(mapload)
 	. = ..()
 	if(degrade_enabled)
 		AddComponent(/datum/component/degrade)
@@ -527,7 +527,7 @@
 	///Does this item have tool degredation?
 	var/degrade_enabled = TRUE
 
-/obj/item/bonesetter/ComponentInitialize()
+/obj/item/bonesetter/Initialize(mapload)
 	. = ..()
 	if(degrade_enabled)
 		AddComponent(/datum/component/degrade, maximum_durability = 40, current_durability = 40)
