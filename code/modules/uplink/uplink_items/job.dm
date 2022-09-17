@@ -196,7 +196,7 @@
 	
 /datum/uplink_item/role_restricted/syndicate_trophy
 	name = "Syndicate Crusher Trophy"
-	desc = "A relic seized by the syndicate that enables the Proto Kinetic Crusher to mark humanoid targets instead of the gross beasts of lavaland"
+	desc = "A relic seized by the Syndicate that enables the proto-kinetic crusher to mark humanoid targets instead of the gross beasts of Lavaland."
 	progression_minimum = 30 MINUTES
 	item = /obj/item/crusher_trophy/syndicate_trophy
 	cost = 17
