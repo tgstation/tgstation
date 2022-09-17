@@ -96,6 +96,6 @@
 /obj/structure/sign/poster/wanted/roll_and_drop(atom/location)
 	pixel_x = 0
 	pixel_y = 0
-	var/obj/item/poster/P = new poster_item_type(location, original_icon, wanted_name, desc, posterHeaderText, posterHeaderColor)
-	forceMove(P)
-	return P
+	var/obj/item/poster/rolled_poster = new poster_item_type(location, original_icon, wanted_name, desc, posterHeaderText, posterHeaderColor)
+	forceMove(rolled_poster)
+	return rolled_poster
