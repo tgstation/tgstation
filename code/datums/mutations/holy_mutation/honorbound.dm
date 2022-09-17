@@ -273,11 +273,6 @@
 			to_chat(owner, span_warning("You need at least 150 favor to declare someone evil!"))
 		return FALSE
 
-	if(!owner.can_speak_vocal())
-		if(feedback)
-			to_chat(owner, span_warning("You can't get the declaration out!"))
-		return FALSE
-
 	return TRUE
 
 /datum/action/cooldown/spell/pointed/declare_evil/is_valid_target(atom/cast_on)
