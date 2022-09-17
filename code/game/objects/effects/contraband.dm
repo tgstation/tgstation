@@ -191,10 +191,10 @@
 		return FALSE
 	return (!user.gloves && !HAS_TRAIT(user, TRAIT_PIERCEIMMUNE))
 
-/obj/structure/sign/poster/proc/roll_and_drop(loc)
+/obj/structure/sign/poster/proc/roll_and_drop(atom/location)
 	pixel_x = 0
 	pixel_y = 0
-	var/obj/item/poster/P = new poster_item_type(loc, src)
+	var/obj/item/poster/P = new poster_item_type(location, src) // /obj/structure/sign/poster/wanted/roll_and_drop() has some snowflake handling due to icon memes, if you make a major change to this, don't forget to update it too. <3
 	forceMove(P)
 	return P
 
@@ -223,23 +223,22 @@
 
 	to_chat(user, span_notice("You start placing the poster on the wall...") )
 
-	var/obj/structure/sign/poster/D = P.poster_structure
+	var/obj/structure/sign/poster/placed_poster = P.poster_structure
 
-	var/temp_loc = get_turf(user)
-	flick("poster_being_set",D)
-	D.forceMove(src) //deletion of the poster is handled in poster/Exited(), so don't have to worry about P anymore.
-	playsound(D.loc, 'sound/items/poster_being_created.ogg', 100, TRUE)
+	flick("poster_being_set", placed_poster)
+	placed_poster.forceMove(src) //deletion of the poster is handled in poster/Exited(), so don't have to worry about P anymore.
+	playsound(src, 'sound/items/poster_being_created.ogg', 100, TRUE)
 
-	if(do_after(user, PLACE_SPEED, target=src))
-		if(!D || QDELETED(D))
-			return
+	var/atom/user_drop_location = user.drop_location() //cache this so it just falls to the ground if they move.
+	if(!do_after(user, PLACE_SPEED, placed_poster, extra_checks = CALLBACK(placed_poster, /obj/structure/sign/poster.proc/snowflake_wall_turf_check, src)))
+		to_chat(user, span_notice("The poster falls down!"))
+		placed_poster.roll_and_drop(user_drop_location)
+		return
 
-		if(iswallturf(src) && user && user.loc == temp_loc) //Let's check if everything is still there
-			D.on_placed_poster(user)
-			return
+	placed_poster.on_placed_poster(user)
 
-	to_chat(user, span_notice("The poster falls down!"))
-	D.roll_and_drop(get_turf(user))
+/obj/structure/sign/poster/proc/snowflake_wall_turf_check(atom/hopefully_still_a_wall_turf) //since turfs never get deleted but instead change type, make sure we're still being placed on a wall.
+	return iswallturf(hopefully_still_a_wall_turf)
 
 /obj/structure/sign/poster/proc/on_placed_poster(mob/user)
 	to_chat(user, span_notice("You place the poster!"))
