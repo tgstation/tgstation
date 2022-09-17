@@ -449,10 +449,10 @@
 
 //Syndicate Trophy
 /obj/item/crusher_trophy/syndicate_trophy
-	name= "Syndicate trophy"
+	name = "Syndicate trophy"
 	desc = "An odd super conducting material that the syndicate has stolen from the mitts of the ash lizards during a lavaland exploretory team deployment, it seems to cackle with power"
 	icon = 'icons/obj/mining.dmi'
-	icon_state ="Gibtonite_igniter"
+	icon_state ="gibtonite_igniter"
 	denied_type = /obj/item/crusher_trophy/syndicate_trophy
 
 /obj/item/crusher_trophy/syndicate_trophy/effect_desc()
