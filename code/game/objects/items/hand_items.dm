@@ -220,9 +220,12 @@
 	if(the_bully.zone_selected != BODY_ZONE_PRECISE_GROIN)
 		to_chat(the_bully, span_warning("You must target the groin!"))
 		return
+	if(is_species(poorsap,/datum/species/golem) || is_species(poorsap, /datum/species/skeleton))
+		to_chat(the_bully, span_boldwarning("You stumped your fingers trying to wedgie [poorsap]"))
+		return
 	var/poorsap_dir = poorsap.dir
 	var/bully_location = get_step(poorsap, REVERSE_DIR(poorsap_dir))
-	if(poorsap_dir == the_bully.dir && the_bully.loc == bully_location)
+	if(poorsap_dir == the_bully.dir && the_bully.loc == bully_location && do_after(the_bully, 2 SECONDS))
 		playsound(poorsap, 'sound/effects/cloth_ripping_fast.ogg', 80)
 		poorsap.emote("scream")
 		to_chat(the_bully, span_alert("You give [poorsap] a wedgie!"))
