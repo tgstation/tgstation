@@ -155,7 +155,7 @@
 			qdel(src)
 		else
 			to_chat(user, span_notice("You carefully remove the poster from the wall."))
-			roll_and_drop(Adjacent(user) ? user.loc : loc)
+			roll_and_drop(Adjacent(user) ? get_turf(user) : loc)
 
 /obj/structure/sign/poster/attack_hand(mob/user, list/modifiers)
 	. = ..()
