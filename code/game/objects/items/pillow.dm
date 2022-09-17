@@ -9,7 +9,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	var/fluffy_dammage = 10
-	var/pillow_trophy = new /obj/item/pillow_tag()
+	var/pillow_trophy = new /obj/item/trash/pillow_tag()
 
 /obj/item/pillow/attack(mob/living/carbon/target_mob, mob/living/user, params)
 	. = ..()
