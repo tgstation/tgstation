@@ -1595,6 +1595,7 @@
 #include "code\game\objects\items\paint.dm"
 #include "code\game\objects\items\paiwire.dm"
 #include "code\game\objects\items\pet_carrier.dm"
+#include "code\game\objects\items\pillow.dm"
 #include "code\game\objects\items\pinpointer.dm"
 #include "code\game\objects\items\pitchfork.dm"
 #include "code\game\objects\items\plushes.dm"
