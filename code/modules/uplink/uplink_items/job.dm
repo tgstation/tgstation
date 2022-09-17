@@ -198,7 +198,7 @@
 	name = "Syndicate Crusher Trophy"
 	desc = "A relic seized by the syndicate that enables the Proto Kinetic Crusher to mark humanoid targets instead of the gross beasts of lavaland"
 	progression_minimum = 30 MINUTES
-	item = obj/item/crusher_trophy/syndicate_trophy
+	item = /obj/item/crusher_trophy/syndicate_trophy
 	cost = 17
 	limited_stock = 1
 	restricted_roles = list("Shaft Miner")
