@@ -9,12 +9,13 @@
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	damtype = STAMINA
-	var/pillow_trophy 
+	var/pillow_trophy = /obj/item/trash/pillow_tag
 
 
 /obj/item/pillow/Initialize(mapload)
 	. = ..()
-	pillow_trophy = new /obj/item/trash/pillow_tag(src)
+	if(!pillow_trophy)
+		pillow_trophy = new(src)
 	AddComponent(/datum/component/two_handed, \
 		force_unwielded = 10, \
 		force_wielded = 20, \
