@@ -116,7 +116,7 @@
 
 /obj/item/kitchen/rollingpin/illegal
 	name = "metal rolling pin"
-	desc = "A heavy metallic rolling pin used to bash in those annoying ingredients"
+	desc = "A heavy metallic rolling pin used to bash in those annoying ingredients."
 	icon_state = "metal_rolling_pin"
 	force = 12
 	flags_1 = CONDUCT_1
