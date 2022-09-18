@@ -7,7 +7,7 @@
 
 	min_players = 15
 	max_occurrences = 1
-	//Var used to determine vendor subtype if used for admin setup
+	///Var used to determine vendor subtype if used for admin setup
 	var/chosen_vendor
 
 /datum/round_event_control/brand_intelligence/admin_setup()
