@@ -419,6 +419,8 @@
 			else
 				stored_research.remove_design(D)
 
+	update_static_data_for_all_viewers()
+
 /obj/machinery/autolathe/hacked/Initialize(mapload)
 	. = ..()
 	adjust_hacked(TRUE)
