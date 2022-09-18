@@ -22144,9 +22144,6 @@
 /obj/structure/sign/warning/fire,
 /turf/closed/wall/r_wall,
 /area/station/maintenance/aft)
-"grK" = (
-/turf/open/space/basic,
-/area/station/maintenance/disposal/incinerator)
 "grQ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/hatch{
@@ -116743,7 +116740,7 @@ qpI
 lNn
 rTi
 acm
-grK
+aaa
 gGF
 aaa
 cmU
