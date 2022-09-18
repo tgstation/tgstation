@@ -194,7 +194,7 @@
 
 /obj/item/analyzer/ranged
 	desc = "A hand-held long-range environmental scanner which reports current gas levels."
-	name = "Long-range gas analyzer"
+	name = "long-range gas analyzer"
 	icon_state = "analyzerranged"
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/iron = 100, /datum/material/glass = 20, /datum/material/gold = 300, /datum/material/bluespace=200)
@@ -202,4 +202,6 @@
 
 /obj/item/analyzer/ranged/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	atmos_scan(user, target)
+	if(!can_see(user, target, 15))
+		return
+	atmos_scan(user, (target.return_analyzable_air() ? target : get_turf(target)))

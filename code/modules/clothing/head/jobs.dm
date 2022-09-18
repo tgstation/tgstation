@@ -19,7 +19,7 @@
 
 /obj/item/clothing/head/chefhat/Initialize(mapload)
 	. = ..()
-	
+
 	create_storage(type = /datum/storage/pockets/chefhat)
 
 /obj/item/clothing/head/chefhat/i_am_assuming_direct_control
@@ -36,7 +36,7 @@
 	return(FIRELOSS)
 
 /obj/item/clothing/head/chefhat/relaymove(mob/living/user, direction)
-	if(!istype(user, /mob/living/simple_animal/mouse) || !isliving(loc) || !prob(mouse_control_probability))
+	if(!ismouse(user) || !isliving(loc) || !prob(mouse_control_probability))
 		return
 	var/mob/living/L = loc
 	if(L.incapacitated(IGNORE_RESTRAINTS)) //just in case
@@ -105,7 +105,7 @@
 
 	create_storage(type = /datum/storage/pockets/small/fedora/detective)
 
-	new /obj/item/reagent_containers/food/drinks/flask/det(src)
+	new /obj/item/reagent_containers/cup/glass/flask/det(src)
 
 /obj/item/clothing/head/fedora/det_hat/examine(mob/user)
 	. = ..()
@@ -176,6 +176,10 @@
 	armor = list(MELEE = 40, BULLET = 30, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, FIRE = 30, ACID = 60, WOUND = 6)
 	strip_delay = 60
 	dog_fashion = /datum/dog_fashion/head/warden
+
+/obj/item/clothing/head/warden/police
+	name = "police officer's hat"
+	desc = "A police officer's hat. This hat emphasizes that you are THE LAW."
 
 /obj/item/clothing/head/warden/red
 	name = "warden's hat"
@@ -311,6 +315,26 @@
 	name = "chief medical officer beret"
 	desc = "A beret in a distinct surgical turquoise!"
 	greyscale_colors = "#5EB8B8"
+
+/obj/item/clothing/head/surgerycap
+	name = "blue surgery cap"
+	icon_state = "surgicalcap"
+	desc = "A blue medical surgery cap to prevent the surgeon's hair from entering the insides of the patient!"
+
+/obj/item/clothing/head/surgerycap/purple
+	name = "burgundy surgery cap"
+	icon_state = "surgicalcapwine"
+	desc = "A burgundy medical surgery cap to prevent the surgeon's hair from entering the insides of the patient!"
+
+/obj/item/clothing/head/surgerycap/green
+	name = "green surgery cap"
+	icon_state = "surgicalcapgreen"
+	desc = "A green medical surgery cap to prevent the surgeon's hair from entering the insides of the patient!"
+
+/obj/item/clothing/head/surgerycap/cmo
+	name = "turquoise surgery cap"
+	icon_state = "surgicalcapcmo"
+	desc = "The CMO's medical surgery cap to prevent their hair from entering the insides of the patient!"
 
 
 //Engineering

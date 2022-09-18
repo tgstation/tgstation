@@ -33,7 +33,7 @@ All ShuttleMove procs go here
 				M.stop_pulling()
 				M.visible_message(span_warning("[shuttle] slams into [M]!"))
 				SSblackbox.record_feedback("tally", "shuttle_gib", 1, M.type)
-				log_attack("[key_name(M)] was shuttle gibbed by [shuttle].")
+				log_shuttle("[key_name(M)] was shuttle gibbed by [shuttle].")
 				M.gib()
 
 
@@ -375,4 +375,4 @@ All ShuttleMove procs go here
 	return TRUE
 
 /obj/docking_port/stationary/public_mining_dock/onShuttleMove(turf/newT, turf/oldT, list/movement_force, move_dir, obj/docking_port/stationary/old_dock, obj/docking_port/mobile/moving_dock)
-	id = "mining_public" //It will not move with the base, but will become enabled as a docking point.
+	shuttle_id = "mining_public" //It will not move with the base, but will become enabled as a docking point.

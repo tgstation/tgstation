@@ -170,7 +170,7 @@ Primarily used in reagents/reaction_agents
 
 /// Called when this reagent is removed while inside a mob
 /datum/reagent/proc/on_mob_delete(mob/living/L)
-	SEND_SIGNAL(L, COMSIG_CLEAR_MOOD_EVENT, "[type]_overdose")
+	L.clear_mood_event("[type]_overdose")
 	return
 
 /// Called when this reagent first starts being metabolized by a liver
@@ -214,7 +214,7 @@ Primarily used in reagents/reaction_agents
 /// Called when an overdose starts
 /datum/reagent/proc/overdose_start(mob/living/M)
 	to_chat(M, span_userdanger("You feel like you took too much of [name]!"))
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[type]_overdose", /datum/mood_event/overdose, name)
+	M.add_mood_event("[type]_overdose", /datum/mood_event/overdose, name)
 	return
 
 /**
@@ -245,12 +245,37 @@ Primarily used in reagents/reaction_agents
 		creation_purity = src.creation_purity
 	return creation_purity / normalise_num_to
 
-/proc/pretty_string_from_reagent_list(list/reagent_list)
+/**
+ * Input a reagent_list, outputs pretty readable text!
+ * Default output will be formatted as
+ * * water, 5 | silicon, 6 | soup, 4 | space lube, 8
+ *
+ * * names_only will remove the amount displays, showing
+ * * water | silicon | soup | space lube
+ *
+ * * join_text will alter the text between reagents
+ * * setting to ", " will result in
+ * * water, 5, silicon, 6, soup, 4, space lube, 8
+ *
+ * * final_and should be combined with the above. will format as
+ * * water, 5, silicon, 6, soup, 4, and space lube, 8
+ *
+ * * capitalize_names will result in
+ * * Water, 5 | Silicon, 6 | Soup, 4 | Space lube, 8
+ *
+ * * * use (reagents.reagent_list, names_only, join_text = ", ", final_and, capitalize_names) for the formatting
+ * * * Water, Silicon, Soup, and Space Lube
+ */
+/proc/pretty_string_from_reagent_list(list/reagent_list, names_only, join_text = " | ", final_and, capitalize_names)
 	//Convert reagent list to a printable string for logging etc
-	var/list/rs = list()
-	for (var/datum/reagent/R in reagent_list)
-		rs += "[R.name], [R.volume]"
+	var/list/reagent_strings = list()
+	var/reagents_left = reagent_list.len
+	var/intial_list_length = reagents_left
+	for (var/datum/reagent/reagent as anything in reagent_list)
+		reagents_left--
+		if(final_and && intial_list_length > 1 && reagents_left == 0)
+			reagent_strings += "and [capitalize_names ? capitalize(reagent.name) : reagent.name][names_only ? null : ", [reagent.volume]"]"
+		else
+			reagent_strings += "[capitalize_names ? capitalize(reagent.name) : reagent.name][names_only ? null : ", [reagent.volume]"]"
 
-	return rs.Join(" | ")
-
-
+	return reagent_strings.Join(join_text)

@@ -26,22 +26,22 @@
 				A = image('icons/effects/effects.dmi',H,"nothing")
 				A.name = "..."
 			if("monkey")//Monkey
-				A = image('icons/mob/human.dmi',H,"monkey")
+				A = image('icons/mob/species/human/human.dmi',H,"monkey")
 				A.name = "Monkey ([rand(1,999)])"
 			if("carp")//Carp
-				A = image('icons/mob/carp.dmi',H,"carp")
+				A = image('icons/mob/simple/carp.dmi',H,"carp")
 				A.name = "Space Carp"
 			if("corgi")//Corgi
-				A = image('icons/mob/pets.dmi',H,"corgi")
+				A = image('icons/mob/simple/pets.dmi',H,"corgi")
 				A.name = "Corgi"
 			if("skeleton")//Skeletons
-				A = image('icons/mob/human.dmi',H,"skeleton")
+				A = image('icons/mob/species/human/human.dmi',H,"skeleton")
 				A.name = "Skeleton"
 			if("zombie")//Zombies
-				A = image('icons/mob/human.dmi',H,"zombie")
+				A = image('icons/mob/species/human/human.dmi',H,"zombie")
 				A.name = "Zombie"
 			if("demon")//Demon
-				A = image('icons/mob/mob.dmi',H,"daemon")
+				A = image('icons/mob/simple/mob.dmi',H,"daemon")
 				A.name = "Demon"
 			if("custom")
 				A = image(custom_icon_file, H, custom_icon)
@@ -70,19 +70,19 @@
 	feedback_details += "Type: [kind]"
 	switch(kind)
 		if("monkey")//Monkey
-			A = image('icons/mob/human.dmi',target,"monkey")
+			A = image('icons/mob/species/human/human.dmi',target,"monkey")
 		if("carp")//Carp
-			A = image('icons/mob/animal.dmi',target,"carp")
+			A = image('icons/mob/simple/animal.dmi',target,"carp")
 		if("corgi")//Corgi
-			A = image('icons/mob/pets.dmi',target,"corgi")
+			A = image('icons/mob/simple/pets.dmi',target,"corgi")
 		if("skeleton")//Skeletons
-			A = image('icons/mob/human.dmi',target,"skeleton")
+			A = image('icons/mob/species/human/human.dmi',target,"skeleton")
 		if("zombie")//Zombies
-			A = image('icons/mob/human.dmi',target,"zombie")
+			A = image('icons/mob/species/human/human.dmi',target,"zombie")
 		if("demon")//Demon
-			A = image('icons/mob/mob.dmi',target,"daemon")
+			A = image('icons/mob/simple/mob.dmi',target,"daemon")
 		if("robot")//Cyborg
-			A = image('icons/mob/robots.dmi',target,"robot")
+			A = image('icons/mob/silicon/robots.dmi',target,"robot")
 			target.playsound_local(target,'sound/voice/liveagain.ogg', 75, 1)
 		if("custom")
 			A = image(custom_icon_file, target, custom_icon)

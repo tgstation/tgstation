@@ -5,19 +5,15 @@
 	say_mod = "rattles"
 	sexes = 0
 	meat = /obj/item/food/meat/slab/human/mutant/skeleton
-	species_traits = list(NOBLOOD, HAS_BONE, NOTRANSSTING, NOEYESPRITES, NO_DNA_COPY)
+	species_traits = list(NOBLOOD, HAS_BONE, NOTRANSSTING, NOEYESPRITES, NO_DNA_COPY, NOAPPENDIX)
 	inherent_traits = list(
-		TRAIT_ADVANCEDTOOLUSER,
-		TRAIT_CAN_STRIP,
 		TRAIT_CAN_USE_FLIGHT_POTION,
 		TRAIT_EASYDISMEMBER,
 		TRAIT_FAKEDEATH,
 		TRAIT_GENELESS,
 		TRAIT_LIMBATTACHMENT,
-		TRAIT_LITERATE,
 		TRAIT_NOBREATH,
 		TRAIT_NOCLONELOSS,
-		TRAIT_NOHUNGER,
 		TRAIT_NOMETABOLISM,
 		TRAIT_RADIMMUNE,
 		TRAIT_PIERCEIMMUNE,
@@ -33,11 +29,11 @@
 	mutantstomach = /obj/item/organ/internal/stomach/bone
 	damage_overlay_type = ""//let's not show bloody wounds or burns over bones.
 	disliked_food = NONE
-	liked_food = GROSS | MEAT | RAW
+	liked_food = GROSS | MEAT | RAW | GORE
 	wings_icons = list("Skeleton")
 	//They can technically be in an ERT
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
-	species_cookie = /obj/item/reagent_containers/food/condiment/milk
+	species_cookie = /obj/item/reagent_containers/condiment/milk
 	species_language_holder = /datum/language_holder/skeleton
 
 	bodypart_overrides = list(

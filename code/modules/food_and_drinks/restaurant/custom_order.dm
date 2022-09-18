@@ -21,7 +21,7 @@
 /// Returns the appearance of the order that appears when hovering over the mob with the cursor
 /datum/custom_order/proc/get_order_appearance()
 	stack_trace("[type]/get_order_appearance() not set")
-	return image(icon = 'icons/obj/machines/restaurant_portal.dmi' , icon_state = "thought_bubble") // empty thought bubble
+	return image(icon = 'icons/effects/effects.dmi' , icon_state = "thought_bubble") // empty thought bubble
 
 /// Returns the order line shout by the mob and also shown to the player when examining it.
 /datum/custom_order/proc/get_order_line()
@@ -98,7 +98,7 @@
 	return "I'll take \a [icecream_name]"
 
 /datum/custom_order/icecream/get_order_appearance(datum/venue/our_venue)
-	var/image/food_image = image(icon = 'icons/obj/machines/restaurant_portal.dmi' , icon_state = "thought_bubble")
+	var/image/food_image = image(icon = 'icons/effects/effects.dmi' , icon_state = "thought_bubble")
 	var/image/i_scream = image('icons/obj/kitchen.dmi', initial(cone_type.icon_state))
 
 	var/added_offset = 0

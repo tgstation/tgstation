@@ -48,6 +48,27 @@
 	AddComponent(/datum/component/payment, 5, SSeconomy.get_dep_account(ACCOUNT_CIV), PAYMENT_CLINICAL)
 	toner_cartridge = new(src)
 
+/obj/machinery/photocopier/handle_atom_del(atom/deleting_atom)
+	if(deleting_atom == paper_copy)
+		paper_copy = null
+	if(deleting_atom == photo_copy)
+		photo_copy = null
+	if(deleting_atom == document_copy)
+		document_copy = null
+	if(deleting_atom == ass)
+		ass = null
+	if(deleting_atom == toner_cartridge)
+		toner_cartridge = null
+	return ..()
+
+/obj/machinery/photocopier/Destroy()
+	QDEL_NULL(paper_copy)
+	QDEL_NULL(photo_copy)
+	QDEL_NULL(toner_cartridge)
+	ass = null //the mob isn't actually contained and just referenced, no need to delete it.
+	return ..()
+
+
 /obj/machinery/photocopier/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -103,7 +124,7 @@
 				to_chat(usr, span_warning("[src] is currently busy copying something. Please wait until it is finished."))
 				return FALSE
 			if(paper_copy)
-				if(!paper_copy.get_info_length())
+				if(!paper_copy.get_total_length())
 					to_chat(usr, span_warning("An error message flashes across [src]'s screen: \"The supplied paper is blank. Aborting.\""))
 					return FALSE
 				// Basic paper
@@ -161,6 +182,9 @@
 
 		// Remove the toner cartridge from the copier.
 		if("remove_toner")
+			if(busy)
+				to_chat(usr, span_warning("[src] is currently busy copying something. Please wait until it is finished."))
+				return
 			if(issilicon(usr) || (ishuman(usr) && !usr.put_in_hands(toner_cartridge)))
 				toner_cartridge.forceMove(drop_location())
 			toner_cartridge = null
@@ -184,12 +208,13 @@
 				return FALSE
 			do_copy_loop(CALLBACK(src, .proc/make_blank_print), usr)
 			var/obj/item/paper/printblank = new /obj/item/paper (loc)
-			var/printname = params["name"]
+			var/printname = sanitize(params["name"])
 			var/list/printinfo
 			for(var/infoline as anything in params["info"])
 				printinfo += infoline
 			printblank.name = printname
-			printblank.info = printinfo
+			printblank.add_raw_text(printinfo)
+			printblank.update_appearance()
 			return printblank
 
 /**
@@ -218,6 +243,8 @@
 	update_use_power(ACTIVE_POWER_USE)
 	var/i
 	for(i in 1 to num_copies)
+		if(!toner_cartridge) //someone removed the toner cartridge during printing lol.
+			break
 		if(attempt_charge(src, user) & COMPONENT_OBJ_CANCEL_CHARGE)
 			break
 		addtimer(copy_cb, i SECONDS)
@@ -248,16 +275,15 @@
  * Checks first if `paper_copy` exists. Since this proc is called from a timer, it's possible that it was removed.
  */
 /obj/machinery/photocopier/proc/make_paper_copy()
-	if(!paper_copy)
+	if(!paper_copy || !toner_cartridge)
 		return
-	var/obj/item/paper/copied_paper = paper_copy.copy(/obj/item/paper, loc, FALSE)
+
+	var/copy_colour = toner_cartridge.charges > 10 ? COLOR_FULL_TONER_BLACK : COLOR_GRAY;
+
+	var/obj/item/paper/copied_paper = paper_copy.copy(/obj/item/paper, loc, FALSE, copy_colour)
+
 	give_pixel_offset(copied_paper)
 
-	//the font color dependant on the amount of toner left.
-	var/chosen_color = toner_cartridge.charges > 10 ? "#101010" : "#808080"
-	copied_paper.info = "<font color = [chosen_color]>[copied_paper.info]</font>"
-	for(var/list/style as anything in copied_paper.add_info_style)
-		style[ADD_INFO_COLOR] = chosen_color
 	copied_paper.name = paper_copy.name
 
 	toner_cartridge.charges -= PAPER_TONER_USE
@@ -268,7 +294,7 @@
  * Checks first if `photo_copy` exists. Since this proc is called from a timer, it's possible that it was removed.
  */
 /obj/machinery/photocopier/proc/make_photo_copy()
-	if(!photo_copy)
+	if(!photo_copy || !toner_cartridge)
 		return
 	var/obj/item/photo/copied_pic = new(loc, photo_copy.picture.Copy(color_mode == PHOTO_GREYSCALE ? TRUE : FALSE))
 	give_pixel_offset(copied_pic)
@@ -280,7 +306,7 @@
  * Checks first if `document_copy` exists. Since this proc is called from a timer, it's possible that it was removed.
  */
 /obj/machinery/photocopier/proc/make_document_copy()
-	if(!document_copy)
+	if(!document_copy || !toner_cartridge)
 		return
 	var/obj/item/documents/photocopy/copied_doc = new(loc, document_copy)
 	give_pixel_offset(copied_doc)
@@ -290,6 +316,8 @@
  * The procedure is called when printing a blank to write off toner consumption.
  */
 /obj/machinery/photocopier/proc/make_blank_print()
+	if(!toner_cartridge)
+		return
 	toner_cartridge.charges -= PAPER_TONER_USE
 
 /**
@@ -299,7 +327,7 @@
  * Additionally checks that the mob has their clothes off.
  */
 /obj/machinery/photocopier/proc/make_ass_copy()
-	if(!check_ass())
+	if(!check_ass() || !toner_cartridge)
 		return
 	if(ishuman(ass) && (ass.get_item_by_slot(ITEM_SLOT_ICLOTHING) || ass.get_item_by_slot(ITEM_SLOT_OCLOTHING)))
 		to_chat(usr, span_notice("You feel kind of silly, copying [ass == usr ? "your" : ass][ass == usr ? "" : "\'s"] ass with [ass == usr ? "your" : "[ass.p_their()]"] clothes on.") )
@@ -501,6 +529,10 @@
 	grind_results = list(/datum/reagent/iodine = 40, /datum/reagent/iron = 10)
 	var/charges = 5
 	var/max_charges = 5
+
+/obj/item/toner/examine(mob/user)
+	. = ..()
+	. += span_notice("The ink level gauge on the side reads [round(charges / max_charges * 100)]%")
 
 /obj/item/toner/large
 	name = "large toner cartridge"

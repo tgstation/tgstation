@@ -41,6 +41,16 @@
 		return
 	content = trim(html_encode(_content), MAX_PAPER_LENGTH)
 
+/datum/book_info/proc/set_content_using_paper(obj/item/paper/paper)
+	// Just the paper's raw data.
+	var/raw_content = ""
+
+	for(var/datum/paper_input/text_input as anything in paper.raw_text_inputs)
+		raw_content += text_input.raw_text
+
+	// Content from paper is never trusted. It it raw, unsanitised, unparsed user input.
+	content = trim(html_encode(raw_content), MAX_PAPER_LENGTH)
+
 /datum/book_info/proc/get_content(default="N/A")
 	return html_decode(content) || "N/A"
 
@@ -96,11 +106,11 @@
 	///Maximum icon state number
 	var/maximum_book_state = 8
 
-/obj/item/book/Initialize()
+/obj/item/book/Initialize(mapload)
 	. = ..()
 	book_data = new(starting_title, starting_author, starting_content)
 
-/obj/item/book/proc/on_read(mob/user)
+/obj/item/book/proc/on_read(mob/living/user)
 	if(book_data?.content)
 		user << browse("<meta charset=UTF-8><TT><I>Penned by [book_data.author].</I></TT> <BR>" + "[book_data.content]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
 
@@ -108,7 +118,7 @@
 		var/has_not_read_book = isnull(user.mind?.book_titles_read[starting_title])
 
 		if(has_not_read_book) // any new books give bonus mood
-			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "book_nerd", /datum/mood_event/book_nerd)
+			user.add_mood_event("book_nerd", /datum/mood_event/book_nerd)
 			user.mind?.book_titles_read[starting_title] = TRUE
 		onclose(user, "book")
 	else

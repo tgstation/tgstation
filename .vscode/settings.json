@@ -39,5 +39,9 @@
 		"editor.rulers": [80],
 		"editor.defaultFormatter": "esbenp.prettier-vscode",
 		"editor.formatOnSave": true
-	}
+	},
+	"workbench.editorAssociations": {
+		"*.dmi": "dmiEditor.dmiEditor"
+	},
+	"Lua.diagnostics.enable": false
 }

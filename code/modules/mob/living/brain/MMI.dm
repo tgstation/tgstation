@@ -1,7 +1,7 @@
 /obj/item/mmi
 	name = "\improper Man-Machine Interface"
 	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity, that nevertheless has become standard-issue on Nanotrasen stations."
-	icon = 'icons/obj/assemblies.dmi'
+	icon = 'icons/obj/assemblies/assemblies.dmi'
 	icon_state = "mmi_off"
 	base_icon_state = "mmi"
 	w_class = WEIGHT_CLASS_NORMAL
@@ -107,7 +107,7 @@
 
 		SSblackbox.record_feedback("amount", "mmis_filled", 1)
 
-		log_game("[key_name(user)] has put the brain of [key_name(brainmob)] into an MMI at [AREACOORD(src)]")
+		user.log_message("has put the brain of [key_name(brainmob)] into an MMI", LOG_GAME)
 
 	else if(brainmob)
 		O.attack(brainmob, user) //Oh noooeeeee
@@ -125,14 +125,14 @@
 		to_chat(user, span_notice("You unlock and upend [src], spilling the brain onto the floor."))
 
 /obj/item/mmi/proc/eject_brain(mob/user)
-	if(brain.brainmob)
+	if(brainmob)
 		brainmob.container = null //Reset brainmob mmi var.
 		brainmob.forceMove(brain) //Throw mob into brain.
 		brainmob.set_stat(DEAD)
 		brainmob.emp_damage = 0
 		brainmob.reset_perspective() //so the brainmob follows the brain organ instead of the mmi. And to update our vision
 		brain.brainmob = brainmob //Set the brain to use the brainmob
-		log_game("[key_name(user)] has ejected the brain of [key_name(brainmob)] from an MMI at [AREACOORD(src)]")
+		user.log_message("has ejected the brain of [key_name(brainmob)] from an MMI", LOG_GAME)
 		brainmob = null //Set mmi brainmob var to null
 	brain.forceMove(drop_location())
 	if(Adjacent(user))

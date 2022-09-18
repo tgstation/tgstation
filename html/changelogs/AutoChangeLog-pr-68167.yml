@@ -1,4 +1,0 @@
-author: "raffclar"
-delete-after: True
-changes: 
-  - bugfix: "Fixed mecha cargo names breaking the utility module interface"

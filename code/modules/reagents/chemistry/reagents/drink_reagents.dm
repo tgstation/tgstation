@@ -175,7 +175,7 @@
 
 /datum/reagent/consumable/laughter/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.emote("laugh")
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "chemical_laughter", /datum/mood_event/chemical_laughter)
+	M.add_mood_event("chemical_laughter", /datum/mood_event/chemical_laughter)
 	..()
 
 /datum/reagent/consumable/superlaughter
@@ -190,7 +190,7 @@
 	if(DT_PROB(16, delta_time))
 		M.visible_message(span_danger("[M] bursts out into a fit of uncontrollable laughter!"), span_userdanger("You burst out in a fit of uncontrollable laughter!"))
 		M.Stun(5)
-		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "chemical_laughter", /datum/mood_event/chemical_superlaughter)
+		M.add_mood_event("chemical_laughter", /datum/mood_event/chemical_superlaughter)
 	..()
 
 /datum/reagent/consumable/potato_juice
@@ -1280,3 +1280,30 @@
 	glass_name = "vanilla dream smoothie"
 	glass_desc = "A classic drink made with vanilla and fresh cream."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/cucumberjuice
+	name = "Cucumber Juice"
+	description = "Ordinary cucumber juice, nothing from the fantasy world."
+	color = "#6cd87a" 
+	taste_description = "light cucumber"
+	glass_icon_state = "glass_cucumber"
+	glass_name = "glass of cucumber juice"
+	glass_desc = "A glass of cucumber juice."
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+
+/datum/reagent/consumable/cucumberlemonade
+	name = "Cucumber Lemonade"
+	description = "Cucumber juice, sugar and soda, what else is needed for happiness?"
+	color = "#6cd87a" 
+	taste_description = "citrus soda with cucumber"
+	glass_icon_state = "cucumber_lemonade"
+	glass_name = "cucumber lemonade"
+	glass_desc = "The smell of cucumber from lemonade, I'm sure I won't get poisoned?."
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/cucumberlemonade/on_mob_life(mob/living/carbon/doll, delta_time, times_fired)
+	doll.adjust_bodytemperature(-8 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, doll.get_body_temp_normal())
+	if(doll.getToxLoss() && DT_PROB(10, delta_time))
+		doll.adjustToxLoss(-0.5, 0)
+	return ..()

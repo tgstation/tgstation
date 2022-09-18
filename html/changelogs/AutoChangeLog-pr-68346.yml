@@ -1,7 +1,0 @@
-author: "Twaticus"
-delete-after: True
-changes: 
-  - bugfix: "centcom gasmask appears on mob again"
-  - bugfix: "tile reskinner correctly shows new tiles"
-  - bugfix: "plasmaman glove inhands no longer appear as a plasmaman suit"
-  - bugfix: "wheelchairs gained their wheel back"

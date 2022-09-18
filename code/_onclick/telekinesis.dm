@@ -238,7 +238,7 @@
 	focus.throw_at(target, focus.tk_throw_range, 1,user)
 	var/turf/start_turf = get_turf(focus)
 	var/turf/end_turf = get_turf(target)
-	user.log_message("has thrown [focus] from [AREACOORD(start_turf)] towards [AREACOORD(end_turf)] using Telekinesis", LOG_ATTACK)
+	user.log_message("has thrown [focus] from [AREACOORD(start_turf)] towards [AREACOORD(end_turf)] using Telekinesis.", LOG_ATTACK)
 	user.changeNext_move(CLICK_CD_MELEE)
 	update_appearance()
 

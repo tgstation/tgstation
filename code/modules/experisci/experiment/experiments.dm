@@ -56,7 +56,7 @@
 
 /datum/experiment/ordnance/explosive/lowyieldbomb
 	name = "Low-Yield Explosives"
-	description = "Low-yield explosives may prove useful for our asset protection teams. Perform research and publish papers on this field. Explosion from any source is allowed."
+	description = "Low-yield explosives may prove useful for our asset protection teams. Capture a small explosion with a Doppler Array and publish the data in a paper."
 	gain = list(10,15,20)
 	target_amount = list(5,10,20)
 	experiment_proper = TRUE
@@ -66,7 +66,7 @@
 
 /datum/experiment/ordnance/explosive/highyieldbomb
 	name = "High-Yield Explosives"
-	description =  "Several reactions react very energetically and can be utilized for bigger explosives. Perform research and publish papers on this field. Any gas reaction is allowed."
+	description =  "Several reactions react very energetically and can be utilized for bigger explosives. Capture any tank explosion with a Doppler Array and publish the data in a paper. Any gas reaction is allowed."
 	gain = list(10,50,100)
 	target_amount = list(50,100,300)
 	experiment_proper = TRUE
@@ -75,7 +75,7 @@
 
 /datum/experiment/ordnance/explosive/hydrogenbomb
 	name = "Hydrogen Explosives"
-	description = "Combustion of Hydrogen and it's derivatives can be very powerful. Perform research and publish papers on this field. Only the specified gas reactions are allowed."
+	description = "Combustion of Hydrogen and it's derivatives can be very powerful. Capture any tank explosion with a Doppler Array and publish the data in a paper. Only Hydrogen or Tritium Fires are allowed."
 	gain = list(15,40,60)
 	target_amount = list(50,75,150)
 	experiment_proper = TRUE
@@ -86,7 +86,7 @@
 
 /datum/experiment/ordnance/explosive/nobliumbomb
 	name = "Noblium Explosives"
-	description = "The formation of Hyper-Noblium is very energetic and can be harnessed for explosives. Perform research and publish papers on this field. Only the specified gas reaction is allowed."
+	description = "The formation of Hyper-Noblium is very energetic and can be harnessed for explosives. Capture any tank explosion with a Doppler Array and publish the data in a paper. Only Hyper-Noblium Condensation is allowed."
 	gain = list(15,60,120)
 	target_amount = list(50,100,300)
 	experiment_proper = TRUE
@@ -96,7 +96,7 @@
 
 /datum/experiment/ordnance/explosive/pressurebomb
 	name = "Reactionless Explosives"
-	description = "Gases with high specific heat can heat up those with a low one and produce a lot of pressure. Perform research and publish papers on this field. No gas reactions are allowed."
+	description = "Gases with high specific heat can heat up those with a low one and produce a lot of pressure.Capture any tank explosion with a Doppler Array and publish the data in a paper. No gas reactions are allowed."
 	gain = list(10,50,100)
 	target_amount = list(20,50,100)
 	experiment_proper = TRUE
@@ -105,7 +105,7 @@
 
 /datum/experiment/ordnance/gaseous/nitrous_oxide
 	name = "Nitrous Oxide Gas Shells"
-	description = "The delivery of N2O into an area of operation might prove useful. Perform research and publish papers on this field."
+	description = "The delivery of N2O into an area of operation might prove useful. Pack the specified gas into a tank and burst it using a Tank Compressor. Publish the data in a paper."
 	gain = list(10,40)
 	target_amount = list(200,600)
 	experiment_proper = TRUE
@@ -113,7 +113,7 @@
 
 /datum/experiment/ordnance/gaseous/bz
 	name = "BZ Gas Shells"
-	description = "The delivery of BZ gas into an area of operation might prove useful. Perform research and publish papers on this field."
+	description = "The delivery of BZ gas into an area of operation might prove useful. Pack the specified gas into a tank and burst it using a Tank Compressor. Publish the data in a paper."
 	gain = list(10,30,60)
 	target_amount = list(50,125,400)
 	experiment_proper = TRUE
@@ -121,7 +121,7 @@
 
 /datum/experiment/ordnance/gaseous/noblium
 	name = "Hypernoblium Gas Shells"
-	description = "The delivery of Hypernoblium gas into an area of operation might prove useful. Perform research and publish papers on this field."
+	description = "The delivery of Hypernoblium gas into an area of operation might prove useful. Pack the specified gas into a tank and burst it using a Tank Compressor. Publish the data in a paper."
 	gain = list(10,40,80)
 	target_amount = list(15,55,250)
 	experiment_proper = TRUE
@@ -321,11 +321,11 @@
 	. = ..()
 	damage_percent = rand(15, 95)
 	//updating the description with the damage_percent var set
-	description = "Your exosuit fabricators allow for rapid production on a small scale, but the structural integrity of created parts is inferior to those made with more traditional means. Damage a few exosuits to exactly [damage_percent]% integrity and scan them to help us determine how the armor fails under stress."
+	description = "Your exosuit fabricators allow for rapid production on a small scale, but the structural integrity of created parts is inferior to those made with more traditional means. Damage a few exosuits to around [damage_percent]% integrity and scan them to help us determine how the armor fails under stress."
 
 /datum/experiment/scanning/random/mecha_damage_scan/final_contributing_index_checks(atom/target, typepath)
-	var/found_percent = round(target.get_integrity() / target.max_integrity, 0.01) * 100
-	return ..() && (found_percent == damage_percent)
+	var/found_percent = round((target.get_integrity() / target.max_integrity) * 100)
+	return ..() && (found_percent <= (damage_percent + 2) && found_percent >= (damage_percent - 2))
 
 /datum/experiment/scanning/random/mecha_destroyed_scan
 	name = "Exosuit Materials 2: Excessive Damage Test"

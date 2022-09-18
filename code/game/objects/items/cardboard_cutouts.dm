@@ -2,7 +2,7 @@
 /obj/item/cardboard_cutout
 	name = "cardboard cutout"
 	desc = "A vaguely humanoid cardboard cutout. It's completely blank."
-	icon = 'icons/obj/cardboard_cutout.dmi'
+	icon = 'icons/obj/art/cardboard_cutout.dmi'
 	icon_state = "cutout_basic"
 	w_class = WEIGHT_CLASS_BULKY
 	resistance_flags = FLAMMABLE
@@ -31,8 +31,8 @@
 		"Ash Walker" = image(icon = src.icon, icon_state = "cutout_free_antag"),
 		"Deathsquad Officer" = image(icon = src.icon, icon_state = "cutout_deathsquad"),
 		"Ian" = image(icon = src.icon, icon_state = "cutout_ian"),
-		"Slaughter Demon" = image(icon = 'icons/mob/mob.dmi', icon_state = "daemon"),
-		"Laughter Demon" = image(icon = 'icons/mob/mob.dmi', icon_state = "bowmon"),
+		"Slaughter Demon" = image(icon = 'icons/mob/simple/mob.dmi', icon_state = "daemon"),
+		"Laughter Demon" = image(icon = 'icons/mob/simple/mob.dmi', icon_state = "bowmon"),
 		"Private Security Officer" = image(icon = src.icon, icon_state = "cutout_ntsec")
 	))
 
@@ -180,12 +180,12 @@
 		if("Slaughter Demon")
 			name = "slaughter demon"
 			desc = "A cardboard cutout of a slaughter demon."
-			icon = 'icons/mob/mob.dmi'
+			icon = 'icons/mob/simple/mob.dmi'
 			icon_state = "daemon"
 		if("Laughter Demon")
 			name = "laughter demon"
 			desc = "A cardboard cutout of a laughter demon."
-			icon = 'icons/mob/mob.dmi'
+			icon = 'icons/mob/simple/mob.dmi'
 			icon_state = "bowmon"
 		if("Private Security Officer")
 			name = "Private Security Officer"

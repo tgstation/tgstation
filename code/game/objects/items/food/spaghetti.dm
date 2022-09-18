@@ -1,6 +1,6 @@
 ///spaghetti prototype used by all subtypes
 /obj/item/food/spaghetti
-	icon = 'icons/obj/food/pizzaspaghetti.dmi'
+	icon = 'icons/obj/food/spaghetti.dmi'
 	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
 	foodtypes = GRAIN
 	venue_value = FOOD_PRICE_CHEAP
@@ -69,16 +69,16 @@
 	desc = "A nice mix of noodles and fried vegetables."
 	icon_state = "chowmein"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 6)
-	tastes = list("noodle" = 1, "tomato" = 1)
+	tastes = list("noodle" = 1, "meat" = 1, "fried vegetables" = 1)
 	foodtypes = GRAIN | MEAT | VEGETABLES
 
 /obj/item/food/spaghetti/beefnoodle
 	name = "beef noodle"
 	desc = "Nutritious, beefy and noodly."
 	icon_state = "beefnoodle"
-	trash_type = /obj/item/reagent_containers/glass/bowl
+	trash_type = /obj/item/reagent_containers/cup/bowl
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 6, /datum/reagent/liquidgibs = 3)
-	tastes = list("noodle" = 1, "meat" = 1)
+	tastes = list("noodles" = 1, "meat" = 1)
 	foodtypes = GRAIN | MEAT | VEGETABLES
 
 /obj/item/food/spaghetti/butternoodles
@@ -86,7 +86,7 @@
 	desc = "Noodles covered in savory butter. Simple and slippery, but delicious."
 	icon_state = "butternoodles"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 9, /datum/reagent/consumable/nutriment/vitamin = 2)
-	tastes = list("noodle" = 1, "butter" = 1)
+	tastes = list("noodles" = 1, "butter" = 1)
 	foodtypes = GRAIN | DAIRY
 
 /obj/item/food/spaghetti/mac_n_cheese

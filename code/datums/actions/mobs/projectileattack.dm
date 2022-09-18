@@ -17,17 +17,8 @@
 	/// The multiplier to the projectiles speed (a value of 2 makes it twice as slow, 0.5 makes it twice as fast)
 	var/projectile_speed_multiplier = 1
 
-/datum/action/cooldown/mob_cooldown/projectile_attack/New(Target, projectile, homing, spread)
-	. = ..()
-	if(projectile)
-		projectile_type = projectile
-	if(homing)
-		has_homing = homing
-	if(spread)
-		default_projectile_spread = spread
-
 /datum/action/cooldown/mob_cooldown/projectile_attack/Activate(atom/target_atom)
-	StartCooldown(10 SECONDS)
+	StartCooldown(360 SECONDS, 360 SECONDS)
 	attack_sequence(owner, target_atom)
 	StartCooldown()
 
@@ -62,7 +53,7 @@
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire
 	name = "Rapid Fire"
-	icon_icon = 'icons/obj/guns/energy.dmi'
+	icon_icon = 'icons/obj/weapons/guns/energy.dmi'
 	button_icon_state = "kineticgun"
 	desc = "Fires projectiles repeatedly at a given target."
 	cooldown_time = 1.5 SECONDS
@@ -78,6 +69,10 @@
 		shoot_projectile(firer, target, null, firer, rand(-default_projectile_spread, default_projectile_spread), null)
 		SLEEP_CHECK_DEATH(shot_delay, src)
 
+/datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/direct
+	shot_count = 40
+	default_projectile_spread = 5
+
 /datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/shrapnel
 	name = "Shrapnel Fire"
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
@@ -91,7 +86,7 @@
 	shot_delay = 1 SECONDS
 	var/shrapnel_projectile_type = /obj/projectile/colossus/ice_blast
 	var/shrapnel_angles = list(0, 60, 120, 180, 240, 300)
-	var/shrapnel_spread = 10
+	var/shrapnel_spread = 60
 	var/break_time = 2 SECONDS
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/shrapnel/attack_sequence(mob/living/firer, atom/target)
@@ -107,6 +102,11 @@
 		// no speed multiplier for shrapnel
 		shoot_projectile(to_explode, target, angle + rand(-shrapnel_spread, shrapnel_spread), firer, null, 1, shrapnel_projectile_type, FALSE)
 	qdel(to_explode)
+
+/datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/shrapnel/strong
+	name = "Strong Shrapnel Fire"
+	shot_count = 16
+	shot_delay = 0.5 SECONDS
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/spiral_shots
 	name = "Spiral Shots"
@@ -173,18 +173,13 @@
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/shotgun_blast
 	name = "Shotgun Fire"
-	icon_icon = 'icons/obj/guns/ballistic.dmi'
+	icon_icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	button_icon_state = "shotgun"
 	desc = "Fires projectiles in a shotgun pattern."
 	cooldown_time = 2 SECONDS
 	projectile_type = /obj/projectile/colossus
 	projectile_sound = 'sound/magic/clockwork/invoke_general.ogg'
 	var/list/shot_angles = list(12.5, 7.5, 2.5, -2.5, -7.5, -12.5)
-
-/datum/action/cooldown/mob_cooldown/projectile_attack/shotgun_blast/New(Target, projectile, homing, spread, list/angles)
-	. = ..()
-	if(angles)
-		shot_angles = angles
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/shotgun_blast/attack_sequence(mob/living/firer, atom/target)
 	fire_shotgun(firer, target, shot_angles)
@@ -216,9 +211,17 @@
 		fire_shotgun(firer, target, pattern)
 		SLEEP_CHECK_DEATH(0.8 SECONDS, firer)
 
+
+/datum/action/cooldown/mob_cooldown/projectile_attack/shotgun_blast/pattern/circular
+	name = "Circular Shotgun Fire"
+	shot_angles = list(list(0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330), list(-30, -15, 0, 15, 30))
+
+/datum/action/cooldown/mob_cooldown/projectile_attack/shotgun_blast/pattern/circular/complete
+	shot_angles = list(list(-180, -140, -100, -60, -20, 20, 60, 100, 140), list(-160, -120, -80, -40, 0, 40, 80, 120, 160))
+
 /datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots
 	name = "Directional Shots"
-	icon_icon = 'icons/obj/guns/ballistic.dmi'
+	icon_icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	button_icon_state = "pistol"
 	desc = "Fires projectiles in specific directions."
 	cooldown_time = 4 SECONDS
@@ -226,11 +229,9 @@
 	projectile_sound = 'sound/magic/clockwork/invoke_general.ogg'
 	var/list/firing_directions
 
-/datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/New(Target, projectile, homing, spread, list/dirs)
+/datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/New(Target)
 	. = ..()
-	if(dirs)
-		firing_directions = dirs
-	else
+	if(!firing_directions)
 		firing_directions = GLOB.alldirs.Copy()
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/attack_sequence(mob/living/firer, atom/target)
@@ -240,9 +241,8 @@
 	if(!islist(dirs))
 		dirs = GLOB.alldirs.Copy()
 	playsound(firer, projectile_sound, 200, TRUE, 2)
-	for(var/d in dirs)
-		var/turf/E = get_step(firer, d)
-		shoot_projectile(firer, E, null, firer, null, null)
+	for(var/dir in dirs)
+		shoot_projectile(firer, target, dir2angle(dir), firer)
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/alternating
 	name = "Alternating Shots"
@@ -266,7 +266,7 @@
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/kinetic_accelerator
 	name = "Fire Kinetic Accelerator"
-	icon_icon = 'icons/obj/guns/energy.dmi'
+	icon_icon = 'icons/obj/weapons/guns/energy.dmi'
 	button_icon_state = "kineticgun"
 	desc = "Fires a kinetic accelerator projectile at the target."
 	cooldown_time = 1.5 SECONDS
@@ -286,7 +286,7 @@
 	cooldown_time = 2.5 SECONDS
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/colossus_final/Activate(atom/target_atom)
-	StartCooldown(30 SECONDS)
+	StartCooldown(360 SECONDS, 360 SECONDS)
 	attack_sequence(owner, target_atom)
 	StartCooldown()
 	Remove(owner)
@@ -296,7 +296,7 @@
 	if(istype(firer, /mob/living/simple_animal/hostile/megafauna/colossus))
 		colossus = firer
 		colossus.say("Perish.", spans = list("colossus", "yell"))
-	
+
 	var/finale_counter = 10
 	for(var/i in 1 to 20)
 		if(finale_counter > 4 && colossus)

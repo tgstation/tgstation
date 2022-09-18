@@ -153,10 +153,10 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "hydrotray3"
 
-/obj/machinery/hydroponics/constructable/ComponentInitialize()
+/obj/machinery/hydroponics/constructable/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/simple_rotation)
-	AddComponent(/datum/component/plumbing/simple_demand)
+	AddComponent(/datum/component/plumbing/hydroponics)
 	AddComponent(/datum/component/usb_port, list(/obj/item/circuit_component/hydroponics))
 
 /obj/machinery/hydroponics/constructable/RefreshParts()
@@ -208,6 +208,76 @@
 			return
 
 	return ..()
+
+/// Special demand connector that consumes as normal, but redirects water into the magical water space.
+/datum/component/plumbing/hydroponics
+	demand_connects = SOUTH
+	/// Alternate reagents container to buffer incoming water
+	var/datum/reagents/water_reagents
+	/// Actual parent reagents that has nutrients
+	var/datum/reagents/nutri_reagents
+
+/datum/component/plumbing/hydroponics/Initialize(start=TRUE, _ducting_layer, _turn_connects=TRUE, datum/reagents/custom_receiver)
+	. = ..()
+
+	if(!istype(parent, /obj/machinery/hydroponics/constructable))
+		return COMPONENT_INCOMPATIBLE
+
+	var/obj/machinery/hydroponics/constructable/hydro_parent = parent
+
+	water_reagents = new(hydro_parent.maxwater)
+	water_reagents.my_atom = hydro_parent
+
+	nutri_reagents = reagents
+
+/datum/component/plumbing/hydroponics/Destroy()
+	qdel(water_reagents)
+	nutri_reagents = null
+	return ..()
+
+/datum/component/plumbing/hydroponics/send_request(dir)
+	var/obj/machinery/hydroponics/constructable/hydro_parent = parent
+
+	var/initial_nutri_amount = nutri_reagents.total_volume
+	if(initial_nutri_amount < nutri_reagents.maximum_volume)
+		// Well boy howdy, we have no way to tell a supply to not mix the water with everything else,
+		// So we'll let it leak in, and move the water over.
+		set_recipient_reagents_holder(nutri_reagents)
+		reagents = nutri_reagents
+		process_request(
+			amount = MACHINE_REAGENT_TRANSFER,
+			reagent = null,
+			dir = dir
+		)
+
+		// Move the leaked water from nutrients to... water
+		var/leaking_water_amount = nutri_reagents.get_reagent_amount(/datum/reagent/water)
+		if(leaking_water_amount)
+			nutri_reagents.trans_id_to(water_reagents, /datum/reagent/water, leaking_water_amount)
+
+	// We should only take MACHINE_REAGENT_TRANSFER every tick; this is the remaining amount we can take
+	var/remaining_transfer_amount = max(MACHINE_REAGENT_TRANSFER - (nutri_reagents.total_volume - initial_nutri_amount), 0)
+
+	// How much extra water we should gather this tick to try to fill the water tray.
+	var/extra_water_to_gather = clamp(hydro_parent.maxwater - hydro_parent.waterlevel - water_reagents.total_volume, 0, remaining_transfer_amount)
+	if(extra_water_to_gather > 0)
+		set_recipient_reagents_holder(water_reagents)
+		reagents = water_reagents
+		process_request(
+			amount = extra_water_to_gather,
+			reagent = /datum/reagent/water,
+			dir = dir,
+		)
+
+	// Now transfer all remaining water in that buffer and clear it out.
+	var/final_water_amount = water_reagents.total_volume
+	if(final_water_amount)
+		hydro_parent.adjust_waterlevel(round(final_water_amount))
+		// Using a pipe doesn't afford you extra water storage and the baseline behavior for trays is that excess water goes into the shadow realm.
+		water_reagents.del_reagent(/datum/reagent/water)
+
+	// Plumbing pauses if reagents is full.. so let's cheat and make sure it ticks unless both trays are happy
+	reagents = hydro_parent.waterlevel < hydro_parent.maxwater ? water_reagents : nutri_reagents
 
 /obj/machinery/hydroponics/bullet_act(obj/projectile/Proj) //Works with the Somatoray to modify plant variables.
 	if(!myseed)
@@ -728,8 +798,8 @@
  */
 /obj/machinery/hydroponics/proc/mutatepest(mob/user)
 	if(pestlevel > 5)
-		message_admins("[ADMIN_LOOKUPFLW(user)] last altered a hydro tray's contents which spawned spiderlings")
-		log_game("[key_name(user)] last altered a hydro tray, which spiderlings spawned from.")
+		message_admins("[ADMIN_LOOKUPFLW(user)] last altered a hydro tray's contents which spawned spiderlings.")
+		user.log_message("last altered a hydro tray, which spiderlings spawned from.", LOG_GAME)
 		visible_message(span_warning("The pests seem to behave oddly..."))
 		spawn_atom_to_turf(/obj/structure/spider/spiderling/hunter, src, 3, FALSE)
 	else if(myseed)
@@ -742,7 +812,7 @@
 
 /obj/machinery/hydroponics/attackby(obj/item/O, mob/user, params)
 	//Called when mob user "attacks" it with object O
-	if(IS_EDIBLE(O) || istype(O, /obj/item/reagent_containers))  // Syringe stuff (and other reagent containers now too)
+	if(IS_EDIBLE(O) || is_reagent_container(O))  // Syringe stuff (and other reagent containers now too)
 		var/obj/item/reagent_containers/reagent_source = O
 
 		if(!reagent_source.reagents.total_volume)
@@ -891,7 +961,7 @@
 	else if(istype(O, /obj/item/storage/bag/plants))
 		attack_hand(user)
 		for(var/obj/item/food/grown/G in locate(user.x,user.y,user.z))
-			O.atom_storage?.attempt_insert(O, G, user, TRUE)
+			O.atom_storage?.attempt_insert(G, user, TRUE)
 		return
 
 	else if(istype(O, /obj/item/shovel/spade))

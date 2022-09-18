@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "Thermal Vision mutation is no longer 1/10th its intended duration"

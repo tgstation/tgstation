@@ -5,10 +5,11 @@
 	min_players = 10
 	max_occurrences = 5
 	weight = 20
+	description = "This anomaly causes you to hallucinate."
 
 /datum/round_event/anomaly/anomaly_hallucination
-	startWhen = 10
-	announceWhen = 3
+	start_when = 10
+	announce_when = 3
 	anomaly_path = /obj/effect/anomaly/hallucination
 
 /datum/round_event/anomaly/anomaly_hallucination/announce(fake)

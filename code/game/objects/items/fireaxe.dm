@@ -2,6 +2,7 @@
  * Fireaxe
  */
 /obj/item/fireaxe  // DEM AXES MAN, marker -Agouri
+	icon = 'icons/obj/weapons/fireaxe.dmi'
 	icon_state = "fireaxe0"
 	base_icon_state = "fireaxe"
 	lefthand_file = 'icons/mob/inhands/weapons/axes_lefthand.dmi'
@@ -29,10 +30,13 @@
 
 /obj/item/fireaxe/Initialize(mapload)
 	. = ..()
-
-/obj/item/fireaxe/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/butchering, 100, 80, 0 , hitsound) //axes are not known for being precision butchering tools
+	AddComponent(/datum/component/butchering, \
+		speed = 10 SECONDS, \
+		effectiveness = 80, \
+		bonus_modifier = 0 , \
+		butcher_sound = hitsound, \
+	)
+	//axes are not known for being precision butchering tools
 	AddComponent(/datum/component/two_handed, force_unwielded=force_unwielded, force_wielded=force_wielded, icon_wielded="[base_icon_state]1")
 
 /obj/item/fireaxe/update_icon_state()
@@ -66,10 +70,13 @@
 /*
  * Metal Hydrogen Axe
  */
-/obj/item/fireaxe/metal_h2_axe  // Blatant imitation of the fireaxe, but made out of metallic hydrogen
+/obj/item/fireaxe/metal_h2_axe
 	icon_state = "metalh2_axe0"
 	base_icon_state = "metalh2_axe"
 	name = "metallic hydrogen axe"
-	desc = "A large, menacing axe made of an unknown substance that the eldest atmosians call Metallic Hydrogen. Truly an otherworldly weapon."
+	desc = "A lightweight crowbar with an extreme sharp fire axe head attached. It trades it's hefty as a weapon by making it easier to carry around when holstered to suits without having to sacrifice your backpack."
 	force_unwielded = 5
-	force_wielded = 23
+	force_wielded = 15
+	demolition_mod = 2
+	tool_behaviour = TOOL_CROWBAR
+	toolspeed = 1

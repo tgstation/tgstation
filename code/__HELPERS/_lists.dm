@@ -206,7 +206,7 @@
  * Arguments:
  * - [type_to_check][/datum]: An instance to check.
  * - [list_to_check][/list]: A list of typepaths to check the type_to_check against.
- * - zebra: Whether to use the value of the mathing type in the list instead of just returning true when a match is found.
+ * - zebra: Whether to use the value of the matching type in the list instead of just returning true when a match is found.
  */
 /proc/is_type_in_list(datum/type_to_check, list/list_to_check, zebra = FALSE)
 	if(!LAZYLEN(list_to_check) || !type_to_check)
@@ -811,3 +811,206 @@
 		return ref.resolve()
 	else
 		return element
+
+/// Returns a copy of the list where any element that is a datum or the world is converted into a ref
+/proc/refify_list(list/target_list, list/visited, path_accumulator = "list")
+	if(!visited)
+		visited = list()
+	var/list/ret = list()
+	visited[target_list] = path_accumulator
+	for(var/i in 1 to target_list.len)
+		var/key = target_list[i]
+		var/new_key = key
+		if(isweakref(key))
+			var/datum/weakref/ref = key
+			var/resolved = ref.resolve()
+			if(resolved)
+				new_key = "[resolved] [REF(resolved)]"
+			else
+				new_key = "null weakref [REF(key)]"
+		else if(isdatum(key))
+			new_key = "[key] [REF(key)]"
+		else if(key == world)
+			new_key = "world [REF(world)]"
+		else if(islist(key))
+			if(visited.Find(key))
+				new_key = visited[key]
+			else
+				new_key = refify_list(key, visited, path_accumulator + "\[[i]\]")
+		var/value
+		if(istext(key) || islist(key) || ispath(key) || isdatum(key) || key == world)
+			value = target_list[key]
+		if(isweakref(value))
+			var/datum/weakref/ref = value
+			var/resolved = ref.resolve()
+			if(resolved)
+				value = "[resolved] [REF(resolved)]"
+			else
+				value = "null weakref [REF(key)]"
+		else if(isdatum(value))
+			value = "[value] [REF(value)]"
+		else if(value == world)
+			value = "world [REF(world)]"
+		else if(islist(value))
+			if(visited.Find(value))
+				value = visited[value]
+			else
+				value = refify_list(value, visited, path_accumulator + "\[[key]\]")
+		var/list/to_add = list(new_key)
+		if(value)
+			to_add[new_key] = value
+		ret += to_add
+		if(i < target_list.len)
+			CHECK_TICK
+	return ret
+
+/**
+ * Converts a list into a list of assoc lists of the form ("key" = key, "value" = value)
+ * so that list keys that are themselves lists can be fully json-encoded
+ */
+/proc/kvpify_list(list/target_list, depth = INFINITY, list/visited, path_accumulator = "list")
+	if(!visited)
+		visited = list()
+	var/list/ret = list()
+	visited[target_list] = path_accumulator
+	for(var/i in 1 to target_list.len)
+		var/key = target_list[i]
+		var/new_key = key
+		if(islist(key) && depth)
+			if(visited.Find(key))
+				new_key = visited[key]
+			else
+				new_key = kvpify_list(key, depth-1, visited, path_accumulator + "\[[i]\]")
+		var/value
+		if(istext(key) || islist(key) || ispath(key) || isdatum(key) || key == world)
+			value = target_list[key]
+		if(islist(value) && depth)
+			if(visited.Find(value))
+				value = visited[value]
+			else
+				value = kvpify_list(value, depth-1, visited, path_accumulator + "\[[key]\]")
+		if(value)
+			ret += list(list("key" = new_key, "value" = value))
+		else
+			ret += list(list("key" = i, "value" = new_key))
+		if(i < target_list.len)
+			CHECK_TICK
+	return ret
+
+/// Compares 2 lists, returns TRUE if they are the same
+/proc/deep_compare_list(list/list_1, list/list_2)
+	if(!islist(list_1) || !islist(list_2))
+		return FALSE
+
+	if(list_1 == list_2)
+		return TRUE
+
+	if(list_1.len != list_2.len)
+		return FALSE
+
+	for(var/i in 1 to list_1.len)
+		var/key_1 = list_1[i]
+		var/key_2 = list_2[i]
+		if (islist(key_1) && islist(key_2))
+			if(!deep_compare_list(key_1, key_2))
+				return FALSE
+		else if(key_1 != key_2)
+			return FALSE
+		if(istext(key_1) || islist(key_1) || ispath(key_1) || isdatum(key_1) || key_1 == world)
+			var/value_1 = list_1[key_1]
+			var/value_2 = list_2[key_1]
+			if (islist(value_1) && islist(value_2))
+				if(!deep_compare_list(value_1, value_2))
+					return FALSE
+			else if(value_1 != value_2)
+				return FALSE
+	return TRUE
+
+/// Returns a copy of the list where any element that is a datum is converted into a weakref
+/proc/weakrefify_list(list/target_list, list/visited, path_accumulator = "list")
+	if(!visited)
+		visited = list()
+	var/list/ret = list()
+	visited[target_list] = path_accumulator
+	for(var/i in 1 to target_list.len)
+		var/key = target_list[i]
+		var/new_key = key
+		if(isdatum(key))
+			new_key = WEAKREF(key)
+		else if(islist(key))
+			if(visited.Find(key))
+				new_key = visited[key]
+			else
+				new_key = weakrefify_list(key, visited, path_accumulator + "\[[i]\]")
+		var/value
+		if(istext(key) || islist(key) || ispath(key) || isdatum(key) || key == world)
+			value = target_list[key]
+		if(isdatum(value))
+			value = WEAKREF(value)
+		else if(islist(value))
+			if(visited.Find(value))
+				value = visited[value]
+			else
+				value = weakrefify_list(value, visited, path_accumulator + "\[[key]\]")
+		var/list/to_add = list(new_key)
+		if(value)
+			to_add[new_key] = value
+		ret += to_add
+		if(i < target_list.len)
+			CHECK_TICK
+	return ret
+
+/// Returns a copy of a list where text values (except assoc-keys and string representations of lua-only values) are
+/// wrapped in quotes and existing quote marks are escaped,
+/// and nulls are replaced with the string "null"
+/proc/encode_text_and_nulls(list/target_list, list/visited)
+	var/static/regex/lua_reference_regex
+	if(!lua_reference_regex)
+		lua_reference_regex = regex(@"^((function)|(table)|(thread)|(userdata)): 0x[0-9a-fA-F]+$")
+	if(!visited)
+		visited = list()
+	var/list/ret = list()
+	visited[target_list] = TRUE
+	for(var/i in 1 to target_list.len)
+		var/key = target_list[i]
+		var/new_key = key
+		if(istext(key) && !target_list[key] && !lua_reference_regex.Find(key))
+			new_key = "\"[replacetext(key, "\"", "\\\"")]\""
+		else if(islist(key))
+			var/found_index = visited.Find(key)
+			if(found_index)
+				new_key = visited[found_index]
+			else
+				new_key = encode_text_and_nulls(key, visited)
+		else if(isnull(key))
+			new_key = "null"
+		var/value
+		if(istext(key) || islist(key) || ispath(key) || isdatum(key) || key == world)
+			value = target_list[key]
+		if(istext(value) && !lua_reference_regex.Find(value))
+			value = "\"[replacetext(value, "\"", "\\\"")]\""
+		else if(islist(value))
+			var/found_index = visited.Find(value)
+			if(found_index)
+				value = visited[found_index]
+			else
+				value = encode_text_and_nulls(value, visited)
+		var/list/to_add = list(new_key)
+		if(value)
+			to_add[new_key] = value
+		ret += to_add
+		if(i < target_list.len)
+			CHECK_TICK
+	return ret
+
+/// Runtimes if the passed in list is not sorted
+/proc/assert_sorted(list/list, name, cmp = /proc/cmp_numeric_asc)
+	var/last_value = list[1]
+
+	for (var/index in 2 to list.len)
+		var/value = list[index]
+
+		if (call(cmp)(value, last_value) < 0)
+			stack_trace("[name] is not sorted. value at [index] ([value]) is in the wrong place compared to the previous value of [last_value] (when compared to by [cmp])")
+
+		last_value = value

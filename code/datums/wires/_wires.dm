@@ -6,7 +6,7 @@
 
 	if(I.tool_behaviour == TOOL_WIRECUTTER || I.tool_behaviour == TOOL_MULTITOOL)
 		return TRUE
-	if(istype(I, /obj/item/assembly))
+	if(isassembly(I))
 		var/obj/item/assembly/A = I
 		if(A.attachable)
 			return TRUE
@@ -87,8 +87,9 @@
 	"crimson",
 	"cyan",
 	"gold",
-	"grey",
 	"green",
+	"grey",
+	"lime",
 	"magenta",
 	"orange",
 	"pink",
@@ -97,7 +98,7 @@
 	"silver",
 	"violet",
 	"white",
-	"yellow"
+	"yellow",
 	)
 
 	var/list/my_possible_colors = possible_colors.Copy()
@@ -333,7 +334,7 @@
 					. = TRUE
 			else
 				I = L.get_active_held_item()
-				if(istype(I, /obj/item/assembly))
+				if(isassembly(I))
 					var/obj/item/assembly/A = I
 					if(A.attachable)
 						if(!L.temporarilyRemoveItemFromInventory(A))

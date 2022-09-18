@@ -5,7 +5,7 @@
 
 //Do not spawn
 /mob/living/simple_animal/hostile/blob
-	icon = 'icons/mob/blob.dmi'
+	icon = 'icons/mob/nonhuman-player/blob.dmi'
 	pass_flags = PASSBLOB
 	faction = list(ROLE_BLOB)
 	bubble_icon = "blob"
@@ -91,7 +91,7 @@
 	var/spanned_message = say_quote(message)
 	var/rendered = "<font color=\"#EE4000\"><b>\[Blob Telepathy\] [real_name]</b> [spanned_message]</font>"
 	for(var/M in GLOB.mob_list)
-		if(isovermind(M) || istype(M, /mob/living/simple_animal/hostile/blob))
+		if(isovermind(M) || isblobmonster(M))
 			to_chat(M, rendered)
 		if(isobserver(M))
 			var/link = FOLLOW_LINK(M, src)
@@ -121,7 +121,7 @@
 	attack_verb_simple = "hit"
 	attack_sound = 'sound/weapons/genhit1.ogg'
 	del_on_death = TRUE
-	deathmessage = "explodes into a cloud of gas!"
+	death_message = "explodes into a cloud of gas!"
 	gold_core_spawnable = NO_SPAWN //gold slime cores should only spawn the independent subtype
 	var/death_cloud_size = 1 //size of cloud produced from a dying spore
 	var/mob/living/carbon/human/oldguy
@@ -140,12 +140,12 @@
 		add_cell_sample()
 
 /mob/living/simple_animal/hostile/blob/blobspore/Life(delta_time = SSMOBS_DT, times_fired)
-	if(!is_zombie && isturf(src.loc))
+	if(!is_zombie && isturf(loc))
 		for(var/mob/living/carbon/human/H in view(src,1)) //Only for corpse right next to/on same tile
 			if(!is_weak && H.stat == DEAD)
 				Zombify(H)
 				break
-	if(factory && z != factory.z)
+	if(!is_valid_z_level(get_turf(src), get_turf(factory)))
 		death()
 	return ..()
 
@@ -167,7 +167,7 @@
 		to_chat(user, span_warning("Someone else already took this spore!"))
 		return
 	key = user.key
-	log_game("[key_name(src)] took control of [name].")
+	src.log_message("took control of [name].", LOG_GAME)
 
 /mob/living/simple_animal/hostile/blob/blobspore/proc/Zombify(mob/living/carbon/human/H)
 	is_zombie = 1
@@ -188,7 +188,7 @@
 	icon = H.icon
 	icon_state = "zombie"
 	H.hairstyle = null
-	H.update_hair()
+	H.update_body_parts()
 	H.forceMove(src)
 	oldguy = H
 	update_icons()
@@ -236,7 +236,7 @@
 		remove_atom_colour(FIXED_COLOUR_PRIORITY)
 	if(is_zombie)
 		copy_overlays(oldguy, TRUE)
-		var/mutable_appearance/blob_head_overlay = mutable_appearance('icons/mob/blob.dmi', "blob_head")
+		var/mutable_appearance/blob_head_overlay = mutable_appearance('icons/mob/nonhuman-player/blob.dmi', "blob_head")
 		if(overmind)
 			blob_head_overlay.color = overmind.blobstrain.complementary_color
 		color = initial(color)//looks better.
@@ -323,7 +323,7 @@
 
 	if(damagesources)
 		adjustHealth(maxHealth * BLOBMOB_BLOBBERNAUT_HEALTH_DECAY * damagesources * delta_time) //take 2.5% of max health as damage when not near the blob or if the naut has no factory, 5% if both
-		var/image/I = new('icons/mob/blob.dmi', src, "nautdamage", MOB_LAYER+0.01)
+		var/image/I = new('icons/mob/nonhuman-player/blob.dmi', src, "nautdamage", MOB_LAYER+0.01)
 		I.appearance_flags = RESET_COLOR
 		if(overmind)
 			I.color = overmind.blobstrain.complementary_color

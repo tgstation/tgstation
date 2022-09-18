@@ -9,12 +9,10 @@
 	circuit = /obj/item/circuitboard/machine/stacking_unit_console
 	/// Connected stacking machine
 	var/obj/machinery/mineral/stacking_machine/machine
-	/// Direction for which console looks for stacking machine to connect to
-	var/machinedir = SOUTHEAST
 
 /obj/machinery/mineral/stacking_unit_console/Initialize(mapload)
 	. = ..()
-	machine = locate(/obj/machinery/mineral/stacking_machine, get_step(src, machinedir))
+	machine = locate(/obj/machinery/mineral/stacking_machine) in view(2, src)
 	if (machine)
 		machine.console = src
 
@@ -87,7 +85,7 @@
 	var/obj/machinery/mineral/stacking_unit_console/console
 	var/stk_types = list()
 	var/stk_amt = list()
-	var/stack_list[0] //Key: Type.  Value: Instance of type.
+	var/stack_list[0] //Key: Type. Value: Instance of type.
 	var/stack_amt = 50 //amount to stack before releassing
 	var/datum/component/remote_materials/materials
 	var/force_connect = FALSE
@@ -97,7 +95,7 @@
 /obj/machinery/mineral/stacking_machine/Initialize(mapload)
 	. = ..()
 	proximity_monitor = new(src, 1)
-	materials = AddComponent(/datum/component/remote_materials, "stacking", mapload, FALSE, mapload && force_connect)
+	materials = AddComponent(/datum/component/remote_materials, "stacking", mapload, FALSE, (mapload && force_connect))
 
 /obj/machinery/mineral/stacking_machine/Destroy()
 	if(console)

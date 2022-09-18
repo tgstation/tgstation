@@ -4,14 +4,16 @@
 	force = 3
 	throwforce = 3
 	w_class = WEIGHT_CLASS_SMALL
-	icon = 'icons/mob/human_parts.dmi'
+	icon = 'icons/mob/species/human/bodyparts.dmi'
 	icon_state = "" //Leave this blank! Bodyparts are built using overlays
 	/// The icon for Organic limbs using greyscale
 	VAR_PROTECTED/icon_greyscale = DEFAULT_BODYPART_ICON_ORGANIC
 	///The icon for non-greyscale limbs
-	VAR_PROTECTED/icon_static = 'icons/mob/human_parts.dmi'
+	VAR_PROTECTED/icon_static = 'icons/mob/species/human/bodyparts.dmi'
 	///The icon for husked limbs
-	VAR_PROTECTED/icon_husk = 'icons/mob/human_parts.dmi'
+	VAR_PROTECTED/icon_husk = 'icons/mob/species/human/bodyparts.dmi'
+	///The icon for invisible limbs
+	VAR_PROTECTED/icon_invisible = 'icons/mob/species/human/bodyparts.dmi'
 	///The type of husk for building an iconstate
 	var/husk_type = "humanoid"
 	layer = BELOW_MOB_LAYER //so it isn't hidden behind objects when on the floor
@@ -25,13 +27,14 @@
 	///Defines when a bodypart should not be changed. Example: BP_BLOCK_CHANGE_SPECIES prevents the limb from being overwritten on species gain
 	var/change_exempt_flags
 
+	///Whether the bodypart (and the owner) is husked.
 	var/is_husked = FALSE
+	///Whether the bodypart (and the owner) is invisible through invisibleman trait.
+	var/is_invisible = FALSE
 	///The ID of a species used to generate the icon. Needs to match the icon_state portion in the limbs file!
 	var/limb_id = SPECIES_HUMAN
 	//Defines what sprite the limb should use if it is also sexually dimorphic.
 	VAR_PROTECTED/limb_gender = "m"
-	///Does this limb have a greyscale version?
-	var/uses_mutcolor = TRUE
 	///Is there a sprite difference between male and female?
 	var/is_dimorphic = FALSE
 	///The actual color a limb is drawn as, set by /proc/update_limb()
@@ -243,14 +246,14 @@
 /obj/item/bodypart/proc/drop_organs(mob/user, violent_removal)
 	SHOULD_CALL_PARENT(TRUE)
 
-	var/turf/bodypart_turf = get_turf(src)
+	var/atom/drop_loc = drop_location()
 	if(IS_ORGANIC_LIMB(src))
-		playsound(bodypart_turf, 'sound/misc/splort.ogg', 50, TRUE, -1)
+		playsound(drop_loc, 'sound/misc/splort.ogg', 50, TRUE, -1)
 	seep_gauze(9999) // destroy any existing gauze if any exists
 	for(var/obj/item/organ/bodypart_organ in get_organs())
 		bodypart_organ.transfer_to_limb(src, owner)
 	for(var/obj/item/item_in_bodypart in src)
-		item_in_bodypart.forceMove(bodypart_turf)
+		item_in_bodypart.forceMove(drop_loc)
 
 ///since organs aren't actually stored in the bodypart themselves while attached to a person, we have to query the owner for what we should have
 /obj/item/bodypart/proc/get_organs()
@@ -315,46 +318,46 @@
 	var/wounding_type = (brute > burn ? WOUND_BLUNT : WOUND_BURN)
 	var/wounding_dmg = max(brute, burn)
 
-	var/mangled_state = get_mangled_state()
-	var/bio_state = owner.get_biological_state()
-	var/easy_dismember = HAS_TRAIT(owner, TRAIT_EASYDISMEMBER) // if we have easydismember, we don't reduce damage when redirecting damage to different types (slashing weapons on mangled/skinless limbs attack at 100% instead of 50%)
-
 	if(wounding_type == WOUND_BLUNT && sharpness)
 		if(sharpness & SHARP_EDGED)
 			wounding_type = WOUND_SLASH
 		else if (sharpness & SHARP_POINTY)
 			wounding_type = WOUND_PIERCE
 
-	//Handling for bone only/flesh only(none right now)/flesh and bone targets
-	switch(bio_state)
-		// if we're bone only, all cutting attacks go straight to the bone
-		if(BIO_JUST_BONE)
-			if(wounding_type == WOUND_SLASH)
-				wounding_type = WOUND_BLUNT
-				wounding_dmg *= (easy_dismember ? 1 : 0.6)
-			else if(wounding_type == WOUND_PIERCE)
-				wounding_type = WOUND_BLUNT
-				wounding_dmg *= (easy_dismember ? 1 : 0.75)
-			if((mangled_state & BODYPART_MANGLED_BONE) && try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus))
-				return
-		// note that there's no handling for BIO_JUST_FLESH since we don't have any that are that right now (slimepeople maybe someday)
-		// standard humanoids
-		if(BIO_FLESH_BONE)
-			// if we've already mangled the skin (critical slash or piercing wound), then the bone is exposed, and we can damage it with sharp weapons at a reduced rate
-			// So a big sharp weapon is still all you need to destroy a limb
-			if(mangled_state == BODYPART_MANGLED_FLESH && sharpness)
-				playsound(src, "sound/effects/wounds/crackandbleed.ogg", 100)
-				if(wounding_type == WOUND_SLASH && !easy_dismember)
-					wounding_dmg *= 0.6 // edged weapons pass along 60% of their wounding damage to the bone since the power is spread out over a larger area
-				if(wounding_type == WOUND_PIERCE && !easy_dismember)
-					wounding_dmg *= 0.75 // piercing weapons pass along 75% of their wounding damage to the bone since it's more concentrated
-				wounding_type = WOUND_BLUNT
-			else if(mangled_state == BODYPART_MANGLED_BOTH && try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus))
-				return
+	if(owner)
+		var/mangled_state = get_mangled_state()
+		var/easy_dismember = HAS_TRAIT(owner, TRAIT_EASYDISMEMBER) // if we have easydismember, we don't reduce damage when redirecting damage to different types (slashing weapons on mangled/skinless limbs attack at 100% instead of 50%)
 
-	// now we have our wounding_type and are ready to carry on with wounds and dealing the actual damage
-	if(owner && wounding_dmg >= WOUND_MINIMUM_DAMAGE && wound_bonus != CANT_WOUND)
-		check_wounding(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus, attack_direction)
+		//Handling for bone only/flesh only(none right now)/flesh and bone targets
+		switch(owner.get_biological_state())
+			// if we're bone only, all cutting attacks go straight to the bone
+			if(BIO_JUST_BONE)
+				if(wounding_type == WOUND_SLASH)
+					wounding_type = WOUND_BLUNT
+					wounding_dmg *= (easy_dismember ? 1 : 0.6)
+				else if(wounding_type == WOUND_PIERCE)
+					wounding_type = WOUND_BLUNT
+					wounding_dmg *= (easy_dismember ? 1 : 0.75)
+				if((mangled_state & BODYPART_MANGLED_BONE) && try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus))
+					return
+			// note that there's no handling for BIO_JUST_FLESH since we don't have any that are that right now (slimepeople maybe someday)
+			// standard humanoids
+			if(BIO_FLESH_BONE)
+				// if we've already mangled the skin (critical slash or piercing wound), then the bone is exposed, and we can damage it with sharp weapons at a reduced rate
+				// So a big sharp weapon is still all you need to destroy a limb
+				if(mangled_state == BODYPART_MANGLED_FLESH && sharpness)
+					playsound(src, "sound/effects/wounds/crackandbleed.ogg", 100)
+					if(wounding_type == WOUND_SLASH && !easy_dismember)
+						wounding_dmg *= 0.6 // edged weapons pass along 60% of their wounding damage to the bone since the power is spread out over a larger area
+					if(wounding_type == WOUND_PIERCE && !easy_dismember)
+						wounding_dmg *= 0.75 // piercing weapons pass along 75% of their wounding damage to the bone since it's more concentrated
+					wounding_type = WOUND_BLUNT
+				else if(mangled_state == BODYPART_MANGLED_BOTH && try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus))
+					return
+
+		// now we have our wounding_type and are ready to carry on with wounds and dealing the actual damage
+		if(wounding_dmg >= WOUND_MINIMUM_DAMAGE && wound_bonus != CANT_WOUND)
+			check_wounding(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus, attack_direction)
 
 	for(var/datum/wound/iter_wound as anything in wounds)
 		iter_wound.receive_damage(wounding_type, wounding_dmg, wound_bonus)
@@ -626,12 +629,17 @@
 /obj/item/bodypart/proc/update_limb(dropping_limb = FALSE, is_creating = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if(HAS_TRAIT(owner, TRAIT_HUSK) && IS_ORGANIC_LIMB(src))
-		dmg_overlay_type = "" //no damage overlay shown when husked
-		is_husked = TRUE
-	else
-		dmg_overlay_type = initial(dmg_overlay_type)
-		is_husked = FALSE
+	if(IS_ORGANIC_LIMB(src))
+		if(HAS_TRAIT(owner, TRAIT_HUSK))
+			dmg_overlay_type = "" //no damage overlay shown when husked
+			is_husked = TRUE
+		else if(HAS_TRAIT(owner, TRAIT_INVISIBLE_MAN))
+			dmg_overlay_type = "" //no damage overlay shown when invisible since the wounds themselves are invisible.
+			is_invisible = TRUE
+		else
+			dmg_overlay_type = initial(dmg_overlay_type)
+			is_husked = FALSE
+			is_invisible = FALSE
 
 	if(!dropping_limb && owner.dna?.check_mutation(/datum/mutation/human/hulk))
 		mutation_color = "#00aa00"
@@ -660,7 +668,7 @@
 		else
 			skin_tone = ""
 
-		if(((MUTCOLORS in owner_species.species_traits) || (DYNCOLORS in owner_species.species_traits)) && uses_mutcolor) //Ethereal code. Motherfuckers.
+		if(((MUTCOLORS in owner_species.species_traits) || (DYNCOLORS in owner_species.species_traits))) //Ethereal code. Motherfuckers.
 			if(owner_species.fixed_mut_color)
 				species_color = owner_species.fixed_mut_color
 			else
@@ -711,16 +719,21 @@
 		image_dir = SOUTH
 		if(dmg_overlay_type)
 			if(brutestate)
-				. += image('icons/mob/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_[brutestate]0", -DAMAGE_LAYER, image_dir)
+				. += image('icons/mob/effects/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_[brutestate]0", -DAMAGE_LAYER, image_dir)
 			if(burnstate)
-				. += image('icons/mob/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_0[burnstate]", -DAMAGE_LAYER, image_dir)
+				. += image('icons/mob/effects/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_0[burnstate]", -DAMAGE_LAYER, image_dir)
 
 	var/image/limb = image(layer = -BODYPARTS_LAYER, dir = image_dir)
 	var/image/aux
 
 	if(animal_origin)
 		if(IS_ORGANIC_LIMB(src))
-			limb.icon = 'icons/mob/animal_parts.dmi'
+
+			if (animal_origin == MONKEY_BODYPART)
+				limb.icon = 'icons/mob/species/monkey/bodyparts.dmi'
+			else
+				limb.icon = 'icons/mob/species/alien/bodyparts.dmi'
+
 			if(limb_id == "husk")
 				limb.icon_state = "[animal_origin]_husk_[body_zone]"
 			else
@@ -747,6 +760,12 @@
 			. += aux
 		return .
 	//END HUSK SHIIIIT
+	//invisibility
+	if(is_invisible)
+		limb.icon = icon_invisible
+		limb.icon_state = "invisible_[body_zone]"
+		. += limb
+		return .
 
 	////This is the MEAT of limb icon code
 	limb.icon = icon_greyscale

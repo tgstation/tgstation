@@ -82,7 +82,7 @@
 		return
 
 	if(aicamera.in_camera_mode)
-		aicamera.camera_mode_off()
+		aicamera.toggle_camera_mode(sound = FALSE)
 		aicamera.captureimage(pixel_turf, usr)
 		return
 	if(waypoint_mode)

@@ -16,6 +16,8 @@
 	/// This is who currently owns the action, and most often, this is who is using the action if it is triggered
 	/// This can be the same as "target" but is not ALWAYS the same - this is set and unset with Grant() and Remove()
 	var/mob/owner
+	/// If False, the owner of this action does not get a hud and cannot activate it on their own
+	var/owner_has_control = TRUE
 	/// Flags that will determine of the owner / user of the action can... use the action
 	var/check_flags = NONE
 	/// The style the button's tooltips appear to be
@@ -30,6 +32,7 @@
 	var/icon_icon = 'icons/hud/actions.dmi'
 	/// This is the icon state for the icon that appears OVER the button background
 	var/button_icon_state = "default"
+	var/button_overlay_state
 	///List of all mobs that are viewing our action button -> A unique movable for them to view.
 	var/list/viewers = list()
 
@@ -87,7 +90,8 @@
 	if(check_flags & AB_CHECK_LYING)
 		RegisterSignal(owner, COMSIG_LIVING_SET_BODY_POSITION, .proc/update_icon_on_signal)
 
-	GiveAction(grant_to)
+	if(owner_has_control)
+		GiveAction(grant_to)
 
 /// Remove the passed mob from being owner of our action
 /datum/action/proc/Remove(mob/remove_from)
@@ -165,6 +169,11 @@
 				button.icon_state = background_icon_state
 
 		ApplyIcon(button, force)
+
+	if(button_overlay_state)
+		button.cut_overlay(button.button_overlay)
+		button.button_overlay = mutable_appearance(icon = 'icons/hud/actions.dmi', icon_state = button_overlay_state)
+		button.add_overlay(button.button_overlay)
 
 	var/available = IsAvailable()
 	if(available)

@@ -142,7 +142,8 @@
 		id_goal_not_set = TRUE
 		contained_id.goal = default_goal
 		say("[contained_id]'s ID card goal defaulting to [contained_id.goal] points.")
-	log_game("[key_name(user)] teleported [key_name(prisoner)] to the Labor Camp [COORD(beacon)] for [id_goal_not_set ? "default goal of ":""][contained_id.goal] points.")
+	user.log_message("teleported [key_name(prisoner)] to the Labor Camp [COORD(beacon)] for [id_goal_not_set ? "default goal of ":""][contained_id.goal] points.", LOG_GAME)
+	prisoner.log_message("teleported to Labor Camp [COORD(beacon)] by [key_name(user)] for [id_goal_not_set ? "default goal of ":""][contained_id.goal] points.", LOG_GAME, log_globally = FALSE)
 	teleporter.handle_prisoner(contained_id, temporary_record)
 	playsound(src, 'sound/weapons/emitter.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	prisoner.forceMove(get_turf(beacon))

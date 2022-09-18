@@ -14,8 +14,8 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "powersink0"
 	inhand_icon_state = "electronic"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	flags_1 = CONDUCT_1
 	item_flags = NO_PIXEL_RANDOM_DROP
@@ -123,7 +123,7 @@
 				span_notice("You activate \the [src]."),
 				span_hear("You hear a click."))
 			message_admins("Power sink activated by [ADMIN_LOOKUPFLW(user)] at [ADMIN_VERBOSEJMP(src)]")
-			log_game("Power sink activated by [key_name(user)] at [AREACOORD(src)]")
+			user.log_message("activated a powersink", LOG_GAME)
 			set_mode(OPERATING)
 
 		if(OPERATING)
@@ -131,6 +131,7 @@
 				"[user] deactivates \the [src]!", \
 				span_notice("You deactivate \the [src]."),
 				span_hear("You hear a click."))
+			user.log_message("deactivated the powersink", LOG_GAME)
 			set_mode(CLAMPED_OFF)
 
 /// Removes internal heat and shares it with the atmosphere.

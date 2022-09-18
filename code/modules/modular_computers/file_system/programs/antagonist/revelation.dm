@@ -12,7 +12,7 @@
 	program_icon = "magnet"
 	var/armed = 0
 
-/datum/computer_file/program/revelation/run_program(mob/living/user)
+/datum/computer_file/program/revelation/on_start(mob/living/user)
 	. = ..(user)
 	if(armed)
 		activate()

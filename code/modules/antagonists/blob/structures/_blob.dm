@@ -1,7 +1,7 @@
 //I will need to recode parts of this but I am way too tired atm //I don't know who left this comment but they never did come back
 /obj/structure/blob
 	name = "blob"
-	icon = 'icons/mob/blob.dmi'
+	icon = 'icons/mob/nonhuman-player/blob.dmi'
 	light_range = 2
 	desc = "A thick wall of writhing tendrils."
 	density = TRUE

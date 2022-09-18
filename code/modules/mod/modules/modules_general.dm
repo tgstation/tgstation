@@ -25,6 +25,7 @@
 	var/datum/storage/modstorage = mod.create_storage(max_specific_storage = max_w_class, max_total_storage = max_combined_w_class, max_slots = max_items)
 	modstorage.set_real_location(src)
 	atom_storage.locked = FALSE
+	RegisterSignal(mod.chestplate, COMSIG_ITEM_PRE_UNEQUIP, .proc/on_chestplate_unequip)
 
 /obj/item/mod/module/storage/on_uninstall(deleting = FALSE)
 	var/datum/storage/modstorage = mod.atom_storage
@@ -38,7 +39,8 @@
 	if(QDELETED(source) || !mod.wearer || newloc == mod.wearer || !mod.wearer.s_store)
 		return
 	to_chat(mod.wearer, span_notice("[src] tries to store [mod.wearer.s_store] inside itself."))
-	atom_storage?.attempt_insert(src, mod.wearer.s_store, mod.wearer, TRUE)
+	if(atom_storage?.attempt_insert(mod.wearer.s_store, mod.wearer, override = TRUE))
+		mod.wearer.temporarilyRemoveItemFromInventory(mod.wearer.s_store)
 
 /obj/item/mod/module/storage/large_capacity
 	name = "MOD expanded storage module"
@@ -481,7 +483,7 @@
 	/// Whitelist of attachable hats, read note in Initialize() below this line
 	var/static/list/attachable_hats_list
 
-/obj/item/mod/module/hat_stabilizer/Initialize()
+/obj/item/mod/module/hat_stabilizer/Initialize(mapload)
 	. = ..()
 	attachable_hats_list = typecacheof(
 	//List of attachable hats. Make sure these and their subtypes are all tested, so they dont appear janky.
@@ -505,8 +507,8 @@
 			/obj/item/clothing/head/nursehat,
 			/obj/item/clothing/head/chefhat,
 			/obj/item/clothing/head/papersack,
-			)) - /obj/item/clothing/head/caphat/beret
-			//Need to subtract the beret because its annoying
+			/obj/item/clothing/head/caphat/beret,
+			))
 
 /obj/item/mod/module/hat_stabilizer/on_suit_activation()
 	RegisterSignal(mod.helmet, COMSIG_PARENT_EXAMINE, .proc/add_examine)

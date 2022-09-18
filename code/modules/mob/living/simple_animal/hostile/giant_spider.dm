@@ -29,8 +29,10 @@
 	maxHealth = 80
 	health = 80
 	damage_coeff = list(BRUTE = 1, BURN = 1.25, TOX = 1, CLONE = 1, STAMINA = 1, OXY = 1)
-	unsuitable_cold_damage = 8
-	unsuitable_heat_damage = 8
+	flammable = TRUE
+	status_flags = NONE
+	unsuitable_cold_damage = 4
+	unsuitable_heat_damage = 4
 	obj_damage = 30
 	melee_damage_lower = 20
 	melee_damage_upper = 25
@@ -50,7 +52,7 @@
 	///How much of a reagent the mob injects on attack
 	var/poison_per_bite = 0
 	///What reagent the mob injects targets with
-	var/poison_type = /datum/reagent/toxin
+	var/poison_type = /datum/reagent/toxin/hunterspider
 	///How quickly the spider can place down webbing.  One is base speed, larger numbers are slower.
 	var/web_speed = 1
 	///Whether or not the spider can create sealed webs.
@@ -87,6 +89,11 @@
 	if(locate(/obj/structure/spider/stickyweb) in loc)
 		return TRUE
 	return ..()
+
+/mob/living/simple_animal/hostile/giant_spider/expose_reagents(list/reagents, datum/reagents/source, methods=TOUCH, volume_modifier=1, show_message=TRUE)
+	. = ..()
+	for(var/datum/reagent/toxin/pestkiller/current_reagent in reagents)
+		apply_damage(50 * volume_modifier, STAMINA, BODY_ZONE_CHEST)
 
 /**
  * # Spider Hunter
@@ -130,7 +137,6 @@
 	health = 40
 	melee_damage_lower = 5
 	melee_damage_upper = 10
-	poison_per_bite = 3
 	web_speed = 0.25
 	web_sealer = TRUE
 	menu_description = "Support spider variant specializing in healing their brethren and placing webbings very swiftly, but has very low amount of health and deals low damage."
@@ -145,7 +151,7 @@
 /mob/living/simple_animal/hostile/giant_spider/nurse/AttackingTarget()
 	if(DOING_INTERACTION(src, INTERACTION_SPIDER_KEY))
 		return
-	if(!istype(target, /mob/living/simple_animal/hostile/giant_spider))
+	if(!isspider(target))
 		return ..()
 	var/mob/living/simple_animal/hostile/giant_spider/hurt_spider = target
 	if(hurt_spider == src)
@@ -192,10 +198,8 @@
 	melee_damage_upper = 40
 	obj_damage = 100
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
-	poison_per_bite = 0
 	move_to_delay = 8
 	speed = 1
-	status_flags = NONE
 	mob_size = MOB_SIZE_LARGE
 	gold_core_spawnable = NO_SPAWN
 	menu_description = "Tank spider variant with an enormous amount of health and damage, but is very slow when not on webbing. It also has a charge ability to close distance with a target after a small windup."
@@ -248,7 +252,7 @@
 	melee_damage_upper = 5
 	poison_per_bite = 5
 	move_to_delay = 4
-	poison_type = /datum/reagent/toxin/venom
+	poison_type = /datum/reagent/toxin/viperspider
 	speed = -0.5
 	gold_core_spawnable = NO_SPAWN
 	menu_description = "Assassin spider variant with an unmatched speed and very deadly poison, but has very low amount of health and damage."
@@ -270,12 +274,12 @@
 	icon_state = "midwife"
 	icon_living = "midwife"
 	icon_dead = "midwife_dead"
-	maxHealth = 40
-	health = 40
-	melee_damage_lower = 5
-	melee_damage_upper = 10
-	poison_per_bite = 3
+	maxHealth = 60
+	health = 60
+	melee_damage_lower = 10
+	melee_damage_upper = 15
 	gold_core_spawnable = NO_SPAWN
+	web_speed = 0.5
 	web_sealer = TRUE
 	menu_description = "Royal spider variant specializing in reproduction and leadership, but has very low amount of health and deals low damage."
 
@@ -462,7 +466,7 @@
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "lay_eggs"
 	///How long it takes for a broodmother to lay eggs.
-	var/egg_lay_time = 15 SECONDS
+	var/egg_lay_time = 12 SECONDS
 	///The type of egg we create
 	var/egg_type = /obj/effect/mob_spawn/ghost_role/spider
 
@@ -520,17 +524,17 @@
 	button_icon_state = "directive"
 
 /datum/action/innate/spider/set_directive/IsAvailable()
-	return ..() && istype(owner, /mob/living/simple_animal/hostile/giant_spider)
+	return ..() && isspider(owner)
 
 /datum/action/innate/spider/set_directive/Activate()
-	var/mob/living/simple_animal/hostile/giant_spider/midwife/spider = owner
+	var/mob/living/simple_animal/hostile/giant_spider/spider = owner
 
 	spider.directive = tgui_input_text(spider, "Enter the new directive", "Create directive", "[spider.directive]")
 	if(isnull(spider.directive) || QDELETED(src) || QDELETED(owner) || !IsAvailable())
 		return FALSE
 
 	message_admins("[ADMIN_LOOKUPFLW(owner)] set its directive to: '[spider.directive]'.")
-	log_game("[key_name(owner)] set its directive to: '[spider.directive]'.")
+	owner.log_message("set its directive to: '[spider.directive]'.", LOG_GAME)
 	return TRUE
 
 /datum/action/innate/spider/comm
@@ -696,12 +700,15 @@
 	if(DOING_INTERACTION(src, INTERACTION_SPIDER_KEY))
 		return
 	if(src == target)
+		if(on_fire)
+			to_chat(src, span_warning("Your self regeneration won't work when you're on fire!"))
+			return
 		if(health >= maxHealth)
 			to_chat(src, span_warning("You're not injured, there's no reason to heal."))
 			return
 		visible_message(span_notice("[src] begins mending themselves..."),span_notice("You begin mending your wounds..."))
 		if(do_after(src, 2 SECONDS, target = src, interaction_key = INTERACTION_SPIDER_KEY))
-			heal_overall_damage(50, 50)
+			heal_overall_damage(maxHealth * 0.5, maxHealth * 0.5)
 			new /obj/effect/temp_visual/heal(get_turf(src), "#80F5FF")
 			visible_message(span_notice("[src]'s wounds mend together."),span_notice("You mend your wounds together."))
 		return

@@ -154,9 +154,9 @@
 		flash.burnt_out = FALSE
 		flash.update_appearance()
 
-/datum/antagonist/rev/head/proc/admin_demote(datum/mind/target,mob/user)
-	message_admins("[key_name_admin(user)] has demoted [key_name_admin(owner)] from head revolutionary.")
-	log_admin("[key_name(user)] has demoted [key_name(owner)] from head revolutionary.")
+/datum/antagonist/rev/head/proc/admin_demote(mob/admin)
+	message_admins("[key_name_admin(admin)] has demoted [key_name_admin(owner)] from head revolutionary.")
+	log_admin("[key_name(admin)] has demoted [key_name(owner)] from head revolutionary.")
 	demote()
 
 /datum/antagonist/rev/head
@@ -206,7 +206,7 @@
 /datum/antagonist/rev/head/proc/make_assistant_icon(hairstyle)
 	var/mob/living/carbon/human/dummy/consistent/assistant = new
 	assistant.hairstyle = hairstyle
-	assistant.update_hair()
+	assistant.update_body_parts()
 
 	var/icon/assistant_icon = render_preview_outfit(/datum/outfit/job/assistant/consistent, assistant)
 	assistant_icon.ChangeOpacity(0.5)
@@ -405,8 +405,7 @@
 
 /// Updates the state of the world depending on if revs won or loss.
 /// Returns who won, at which case this method should no longer be called.
-/// If revs_win_injection_amount is passed, then that amount of threat will be added if the revs win.
-/datum/team/revolution/proc/process_victory(revs_win_injection_amount)
+/datum/team/revolution/proc/process_victory()
 	if (check_rev_victory())
 		. = REVOLUTION_VICTORY
 	else if (check_heads_victory())
@@ -416,8 +415,6 @@
 
 	SSshuttle.clearHostileEnvironment(src)
 	save_members()
-
-	var/charter_given = FALSE
 
 	// Remove everyone as a revolutionary
 	for (var/_rev_mind in members)
@@ -441,56 +438,106 @@
 		priority_announce("It appears the mutiny has been quelled. Please return yourself and your incapacitated colleagues to work. \
 		We have remotely blacklisted the head revolutionaries in your medical records to prevent accidental revival.", null, null, null, "Central Command Loyalty Monitoring Division")
 	else
-		for(var/datum/mind/headrev_mind as anything in ex_headrevs)
-			if(charter_given)
-				break
-			if(!headrev_mind.current || headrev_mind.current.stat != CONSCIOUS)
-				continue
-			charter_given = TRUE
-			podspawn(list(
-				"target" = get_turf(headrev_mind.current),
-				"style" = STYLE_SYNDICATE,
-				"spawn" = /obj/item/station_charter/revolution,
-			))
-			to_chat(headrev_mind.current, span_hear("You hear something crackle in your ears for a moment before a voice speaks. \
-				\"Please stand by for a message from your benefactor. Message as follows, provocateur. \
-				<b>You have been chosen out of your fellow provocateurs to rename the station. Choose wisely.</b> Message ends.\""))
-		SEND_GLOBAL_SIGNAL(COMSIG_GLOB_REVOLUTION_TAX_REMOVAL)
+		victory_effects()
 
-		for (var/mob/living/player as anything in GLOB.player_list)
-			var/datum/mind/player_mind = player.mind
+/datum/team/revolution/proc/victory_effects(revs_win_injection_amount)
+	var/charter_given = FALSE
 
-			if (isnull(player_mind))
-				continue
+	for(var/datum/mind/headrev_mind as anything in ex_headrevs)
+		if(charter_given)
+			break
+		if(!headrev_mind.current || headrev_mind.current.stat != CONSCIOUS)
+			continue
+		charter_given = TRUE
+		podspawn(list(
+			"target" = get_turf(headrev_mind.current),
+			"style" = STYLE_SYNDICATE,
+			"spawn" = /obj/item/station_charter/revolution,
+		))
+		to_chat(headrev_mind.current, span_hear("You hear something crackle in your ears for a moment before a voice speaks. \
+			\"Please stand by for a message from your benefactor. Message as follows, provocateur. \
+			<b>You have been chosen out of your fellow provocateurs to rename the station. Choose wisely.</b> Message ends.\""))
 
-			if (!(player_mind.assigned_role.departments_bitflags & (DEPARTMENT_BITFLAG_SECURITY|DEPARTMENT_BITFLAG_COMMAND)))
-				continue
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_REVOLUTION_VICTORY)
 
-			if (player_mind in ex_revs + ex_headrevs)
-				continue
+	for (var/mob/living/player as anything in GLOB.player_list)
+		var/datum/mind/player_mind = player.mind
 
-			player_mind.add_antag_datum(/datum/antagonist/enemy_of_the_revolution)
+		if (isnull(player_mind))
+			continue
 
-			if (!istype(player))
-				continue
+		if (!(player_mind.assigned_role.departments_bitflags & (DEPARTMENT_BITFLAG_SECURITY|DEPARTMENT_BITFLAG_COMMAND)))
+			continue
 
-			if(player_mind.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
-				ADD_TRAIT(player, TRAIT_DEFIB_BLACKLISTED, REF(src))
-				player.med_hud_set_status()
+		if (player_mind in ex_revs + ex_headrevs)
+			continue
 
-		for(var/datum/job/job as anything in SSjob.joinable_occupations)
-			if(!(job.departments_bitflags & (DEPARTMENT_BITFLAG_SECURITY|DEPARTMENT_BITFLAG_COMMAND)))
-				continue
-			job.allow_bureaucratic_error = FALSE
-			job.total_positions = 0
+		player_mind.add_antag_datum(/datum/antagonist/enemy_of_the_revolution)
 
-		if (revs_win_injection_amount)
-			var/datum/game_mode/dynamic/dynamic = SSticker.mode
-			dynamic.unfavorable_situation()
+		if (!istype(player))
+			continue
 
-		priority_announce("A recent assessment of your station has marked your station as a severe risk area for high ranking Nanotrasen officials. \
-		For the safety of our staff, we have blacklisted your station for new employment of security and command. \
-		[pick(world.file2list("strings/anti_union_propaganda.txt"))]", null, null, null, "Central Command Loyalty Monitoring Division")
+		if(player_mind.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
+			ADD_TRAIT(player, TRAIT_DEFIB_BLACKLISTED, REF(src))
+			player.med_hud_set_status()
+
+	for(var/datum/job/job as anything in SSjob.joinable_occupations)
+		if(!(job.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY|DEPARTMENT_BITFLAG_COMMAND))
+			continue
+		job.allow_bureaucratic_error = FALSE
+		job.total_positions = 0
+
+	var/datum/game_mode/dynamic/dynamic = SSticker.mode
+	dynamic.unfavorable_situation()
+
+	var/message_header = "A recent assessment of your station has marked your station as a severe risk area for high ranking Nanotrasen officials."
+	var/extra_detail = try_auto_call_shuttle() \
+		? "For the safety of our staff, we are expediting an emergency shuttle for remaining members of security and command." \
+		: "For the safety of our staff, we have blacklisted your station for new employment of security and command."
+	var/propaganda = pick(world.file2list("strings/anti_union_propaganda.txt"))
+
+	priority_announce(
+		"[message_header]\n\n[extra_detail]\n\n[propaganda]",
+		sender_override = "Central Command Loyalty Monitoring Division"
+	)
+
+/// How much of the station, ignoring sec and command, should be revs before a shuttle will be automatically called?
+#define REV_AUTO_CALL_THRESHOLD 0.65
+
+/datum/team/revolution/proc/try_auto_call_shuttle()
+	var/total_revs = ex_revs.len + ex_headrevs.len
+	var/total_candidates = 0
+
+	for (var/mob/player as anything in GLOB.player_list)
+		if (player.mind.has_antag_datum(/datum/antagonist/enemy_of_the_revolution))
+			continue
+
+		total_candidates += 1
+
+	var/display_percent = round(total_revs / total_candidates * 100)
+
+	if (total_revs / total_candidates < REV_AUTO_CALL_THRESHOLD)
+		log_game("REVOLUTION: Not calling the shuttle, [display_percent]% are revs")
+		return FALSE
+
+	// Do it later so everyone has time to see the messages
+	addtimer(CALLBACK(src, .proc/perform_auto_shuttle_call), 20 SECONDS)
+
+	var/log = "REVOLUTION: Auto-calling the shuttle, [display_percent]% are revs"
+	log_game(log)
+	message_admins(log)
+
+	return TRUE
+
+#undef REV_AUTO_CALL_THRESHOLD
+
+/datum/team/revolution/proc/perform_auto_shuttle_call()
+	var/can_evac_result = SSshuttle.canEvac()
+	if (can_evac_result != TRUE)
+		log_game("REVOLUTION: Not calling the shuttle, canEvac() returned [can_evac_result]")
+		return
+
+	SSshuttle.call_evac_shuttle("Sending emergency shuttle to rescue command and security staff.")
 
 /// Mutates the ticker to report that the revs have won
 /datum/team/revolution/proc/round_result(finished)

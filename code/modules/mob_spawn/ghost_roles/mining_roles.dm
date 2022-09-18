@@ -96,7 +96,7 @@
 	glasses = /obj/item/clothing/glasses/sunglasses
 	r_pocket = /obj/item/storage/wallet/random
 	l_pocket = /obj/item/food/pizzaslice/dank
-	uniform = /obj/item/clothing/under/pants/youngfolksjeans
+	uniform = /obj/item/clothing/under/pants/jeans
 	id = /obj/item/card/id/advanced
 
 /datum/outfit/beachbum/post_equip(mob/living/carbon/human/bum, visualsOnly = FALSE)
@@ -168,7 +168,7 @@
 /obj/structure/ash_walker_eggshell
 	name = "ash walker egg"
 	desc = "A man-sized yellow egg, spawned from some unfathomable creature. A humanoid silhouette lurks within. The egg shell looks resistant to temperature but otherwise rather brittle."
-	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	icon_state = "large_egg"
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | FREEZE_PROOF
 	max_integrity = 80
@@ -207,7 +207,7 @@
 	name = "ash walker egg"
 	desc = "A man-sized yellow egg, spawned from some unfathomable creature. A humanoid silhouette lurks within."
 	prompt_name = "necropolis ash walker"
-	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	icon_state = "large_egg"
 	mob_species = /datum/species/lizard/ashwalker
 	outfit = /datum/outfit/ashwalker
@@ -238,7 +238,6 @@
 
 	spawned_human.mind.add_antag_datum(/datum/antagonist/ashwalker, team)
 
-	ADD_TRAIT(spawned_human, TRAIT_PRIMITIVE, ROUNDSTART_TRAIT)
 	spawned_human.remove_language(/datum/language/common)
 	team.players_spawned += (spawned_human.key)
 	eggshell.egg = null

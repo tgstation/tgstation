@@ -6,7 +6,7 @@
 	faction = FACTION_STATION
 	total_positions = 5
 	spawn_positions = 3
-	supervisors = "the chief medical officer"
+	supervisors = SUPERVISOR_CMO
 	selection_color = "#ffeef0"
 	exp_granted_type = EXP_TYPE_CREW
 
@@ -24,14 +24,14 @@
 		/datum/job_department/medical,
 		)
 
-	family_heirlooms = list(/obj/item/storage/medkit/ancient/heirloom)
+	family_heirlooms = list(/obj/item/storage/medkit/ancient/heirloom, /obj/item/scalpel, /obj/item/hemostat, /obj/item/circular_saw, /obj/item/retractor, /obj/item/cautery)
 
 	mail_goodies = list(
 		/obj/item/healthanalyzer/advanced = 15,
 		/obj/item/scalpel/advanced = 6,
 		/obj/item/retractor/advanced = 6,
 		/obj/item/cautery/advanced = 6,
-		/obj/item/reagent_containers/glass/bottle/formaldehyde = 6,
+		/obj/item/reagent_containers/cup/bottle/formaldehyde = 6,
 		/obj/effect/spawner/random/medical/organs = 5,
 		/obj/effect/spawner/random/medical/memeorgans = 1
 	)
@@ -49,6 +49,7 @@
 	suit_store = /obj/item/flashlight/pen
 	belt = /obj/item/modular_computer/tablet/pda/medical
 	ears = /obj/item/radio/headset/headset_med
+	head = /obj/item/clothing/head/surgerycap
 	shoes = /obj/item/clothing/shoes/sneakers/white
 	l_hand = /obj/item/storage/medkit/surgery
 
@@ -66,6 +67,8 @@
 	suit_store = /obj/item/tank/internals/oxygen
 	back = /obj/item/mod/control/pre_equipped/medical
 	suit = null
+	head = null
+	uniform = /obj/item/clothing/under/rank/medical/doctor
 	mask = /obj/item/clothing/mask/breath/medical
 	r_pocket = /obj/item/flashlight/pen
 	internals_slot = ITEM_SLOT_SUITSTORE

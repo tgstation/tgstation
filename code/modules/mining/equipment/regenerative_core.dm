@@ -1,7 +1,7 @@
 /*********************Hivelord stabilizer****************/
 /obj/item/hivelordstabilizer
 	name = "stabilizing serum"
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "bottle19"
 	desc = "Inject certain types of monster organs with this stabilizer to preserve their healing powers indefinitely."
 	w_class = WEIGHT_CLASS_TINY
@@ -88,7 +88,7 @@
 				to_chat(user, span_notice("You start to smear [src] on yourself. Disgusting tendrils hold you together and allow you to keep moving, but for how long?"))
 				SSblackbox.record_feedback("nested tally", "hivelord_core", 1, list("[type]", "used", "self"))
 			target_human.apply_status_effect(/datum/status_effect/regenerative_core)
-			SEND_SIGNAL(target_human, COMSIG_ADD_MOOD_EVENT, "core", /datum/mood_event/healsbadman) //Now THIS is a miner buff (fixed - nerf)
+			target_human.add_mood_event("core", /datum/mood_event/healsbadman) //Now THIS is a miner buff (fixed - nerf)
 			qdel(src)
 
 /obj/item/organ/internal/regenerative_core/afterattack(atom/target, mob/user, proximity_flag)

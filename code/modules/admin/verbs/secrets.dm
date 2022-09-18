@@ -414,7 +414,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 				if (prefs["announce_players"]["value"] == "Yes")
 					portalAnnounce(prefs["announcement"]["value"], (prefs["playlightning"]["value"] == "Yes" ? TRUE : FALSE))
 
-				var/mutable_appearance/storm = mutable_appearance('icons/obj/tesla_engine/energy_ball.dmi', "energy_ball_fast", FLY_LAYER)
+				var/mutable_appearance/storm = mutable_appearance('icons/obj/engine/energy_ball.dmi', "energy_ball_fast", FLY_LAYER)
 				storm.plane =  ABOVE_GAME_PLANE
 				storm.color = prefs["color"]["value"]
 
@@ -572,21 +572,21 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 				candidates -= chosen_candidate
 				nerd = new /mob/living/simple_animal/drone/classic(spawnpoint)
 				nerd.key = chosen_candidate.key
-				log_game("[key_name(nerd)] has been selected as a Nanotrasen emergency response drone")
+				nerd.log_message("has been selected as a Nanotrasen emergency response drone.", LOG_GAME)
 				teamsize--
 
 			return TRUE
 	if(E)
 		E.processing = FALSE
-		if(E.announceWhen>0)
+		if(E.announce_when>0)
 			switch(tgui_alert(holder, "Would you like to alert the crew?", "Alert", list("Yes", "No", "Cancel")))
 				if("Yes")
-					E.announceChance = 100
+					E.announce_chance = 100
 				if("Cancel")
 					E.kill()
 					return
 				if("No")
-					E.announceChance = 0
+					E.announce_chance = 0
 		E.processing = TRUE
 	if(holder)
 		log_admin("[key_name(holder)] used secret [action]")
@@ -643,6 +643,9 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 		new_objective.explanation_text = objective
 		traitor_datum.objectives += new_objective
 		player.mind.add_antag_datum(traitor_datum)
+		var/datum/uplink_handler/uplink = traitor_datum.uplink_handler
+		uplink.has_progression = FALSE
+		uplink.has_objectives = FALSE
 	else if(isAI(player))
 		var/datum/antagonist/malf_ai/malfunction_datum = new(give_objectives = FALSE)
 		var/datum/objective/new_objective = new

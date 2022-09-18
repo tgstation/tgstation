@@ -150,7 +150,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 /obj/effect/statclick/ticket_list/Click()
 	if (!usr.client?.holder)
 		message_admins("[key_name_admin(usr)] non-holder clicked on a ticket list statclick! ([src])")
-		log_game("[key_name(usr)] non-holder clicked on a ticket list statclick! ([src])")
+		usr.log_message("non-holder clicked on a ticket list statclick! ([src])", LOG_ADMIN)
 		return
 
 	GLOB.ahelp_tickets.BrowseTickets(current_state)
@@ -395,7 +395,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	msg = sanitize(copytext_char(msg, 1, MAX_MESSAGE_LEN))
 	var/ref_src = "[REF(src)]"
 	//Message to be sent to all admins
-	var/admin_msg = span_adminnotice(span_adminhelp("Ticket [TicketHref("#[id]", ref_src)]</span><b>: [LinkedReplyName(ref_src)] [FullMonty(ref_src)]:</b> <span class='linkify'>[keywords_lookup(msg)]"))
+	var/admin_msg = span_adminnotice(span_adminhelp("Ticket [TicketHref("#[id]", ref_src)]</span><b>: [LinkedReplyName(ref_src)] [FullMonty(ref_src)]:</b> [span_linkify(keywords_lookup(msg))]"))
 
 	AddInteraction("<font color='red'>[LinkedReplyName(ref_src)]: [msg]</font>", player_message = "<font color='red'>[LinkedReplyName(ref_src)]: [msg]</font>")
 	log_admin_private("Ticket #[id]: [key_name(initiator)]: [msg]")
@@ -413,7 +413,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	//show it to the person adminhelping too
 	to_chat(initiator,
 		type = MESSAGE_TYPE_ADMINPM,
-		html = span_adminnotice("PM to-<b>Admins</b>: <span class='linkify'>[msg]</span>"),
+		html = span_adminnotice("PM to-<b>Admins</b>: [span_linkify(msg)]"),
 		confidential = TRUE)
 	SSblackbox.LogAhelp(id, "Ticket Opened", msg, null, initiator.ckey, urgent = urgent)
 
@@ -670,7 +670,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 /obj/effect/statclick/ahelp/Click()
 	if (!usr.client?.holder)
 		message_admins("[key_name_admin(usr)] non-holder clicked on an ahelp statclick! ([src])")
-		log_game("[key_name(usr)] non-holder clicked on an ahelp statclick! ([src])")
+		usr.log_message("non-holder clicked on an ahelp statclick! ([src])", LOG_ADMIN)
 		return
 
 	ahelp_datum.TicketPanel()

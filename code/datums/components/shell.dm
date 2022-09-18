@@ -179,7 +179,7 @@
 			source.balloon_alert(attacker, "[locked ? "locked" : "unlocked"] [source]")
 			return COMPONENT_NO_AFTERATTACK
 
-		if(!attached_circuit.owner_id && istype(item, /obj/item/card/id))
+		if(!attached_circuit.owner_id && isidcard(item))
 			source.balloon_alert(attacker, "owner id set for [item]")
 			attached_circuit.owner_id = WEAKREF(item)
 			return COMPONENT_NO_AFTERATTACK

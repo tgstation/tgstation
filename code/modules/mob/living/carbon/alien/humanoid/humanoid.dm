@@ -9,11 +9,11 @@
 	melee_damage_upper = 20
 	max_grab = GRAB_AGGRESSIVE
 	var/caste = ""
-	var/alt_icon = 'icons/mob/alienleap.dmi' //used to switch between the two alien icon files.
+	var/alt_icon = 'icons/mob/nonhuman-player/alienleap.dmi' //used to switch between the two alien icon files.
 	var/leap_on_click = 0
 	var/pounce_cooldown = 0
 	var/pounce_cooldown_time = 30
-	deathsound = 'sound/voice/hiss6.ogg'
+	death_sound = 'sound/voice/hiss6.ogg'
 	bodyparts = list(
 		/obj/item/bodypart/chest/alien,
 		/obj/item/bodypart/head/alien,
@@ -148,6 +148,6 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 	lucky_winner.audible_message(span_danger("You hear a deep groan, and a harsh snap like a mantrap."))
 	lucky_winner.visible_message(span_danger("[src] devours [lucky_winner]!"), \
 			span_userdanger("[lucky_winner] devours you!"))
-	melting_pot.consume_thing(lucky_winner)
 	log_combat(src, lucky_winner, "devoured")
+	melting_pot.consume_thing(lucky_winner)
 	return TRUE

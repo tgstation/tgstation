@@ -17,7 +17,7 @@
 		return
 	..()
 
-/mob/living/silicon/ai/attack_slime(mob/living/simple_animal/slime/user)
+/mob/living/silicon/ai/attack_slime(mob/living/simple_animal/slime/user, list/modifiers)
 	return //immune to slimes
 
 /mob/living/silicon/ai/blob_act(obj/structure/blob/B)
@@ -68,6 +68,19 @@
 	balloon_alert(user, "access panel lock shorted")
 	to_chat(src, span_warning("[user] shorts out your access panel lock!"))
 	emagged = TRUE
+
+/mob/living/silicon/ai/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(user.combat_mode)
+		return
+	balloon_alert(user, "[!is_anchored ? "tightening" : "loosening"] bolts...")
+	balloon_alert(src, "bolts being [!is_anchored ? "tightened" : "loosened"]...")
+	if(!tool.use_tool(src, user, 4 SECONDS))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	flip_anchored()
+	balloon_alert(user, "bolts [is_anchored ? "tightened" : "loosened"]")
+	balloon_alert(src, "bolts [is_anchored ? "tightened" : "loosened"]")
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /mob/living/silicon/ai/crowbar_act(mob/living/user, obj/item/tool)
 	. = ..()

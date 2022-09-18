@@ -216,3 +216,14 @@
 #define BB_BASIC_MOB_CURRENT_TARGET "BB_basic_current_target"
 #define BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION "BB_basic_current_target_hiding_location"
 #define BB_TARGETTING_DATUM "targetting_datum"
+///some behaviors that check current_target also set this on deep crit mobs
+#define BB_BASIC_MOB_EXECUTION_TARGET "BB_basic_execution_target"
+
+///list of foods this mob likes
+#define BB_BASIC_FOODS "BB_basic_foods"
+
+///Bileworm AI keys
+
+#define BB_BILEWORM_SPEW_BILE "BB_bileworm_spew_bile"
+#define BB_BILEWORM_RESURFACE "BB_bileworm_resurface"
+#define BB_BILEWORM_DEVOUR "BB_bileworm_devour"

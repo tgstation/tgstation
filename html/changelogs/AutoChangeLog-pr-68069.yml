@@ -1,5 +1,0 @@
-author: "kawoppi"
-delete-after: True
-changes: 
-  - rscadd: "added animation for cleaning things with soap, mops, rags or cleanbots"
-  - imageadd: "added cleaning bubbles animation"

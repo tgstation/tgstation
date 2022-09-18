@@ -1,39 +1,32 @@
 /obj/item/bodypart/head/lizard
 	icon_greyscale = 'icons/mob/species/lizard/bodyparts.dmi'
 	limb_id = SPECIES_LIZARD
-	uses_mutcolor = TRUE
 	is_dimorphic = FALSE
 
 /obj/item/bodypart/chest/lizard
 	icon_greyscale = 'icons/mob/species/lizard/bodyparts.dmi'
-	uses_mutcolor = TRUE
 	limb_id = SPECIES_LIZARD
 	is_dimorphic = TRUE
 
 /obj/item/bodypart/l_arm/lizard
 	icon_greyscale = 'icons/mob/species/lizard/bodyparts.dmi'
-	uses_mutcolor = TRUE
 	limb_id = SPECIES_LIZARD
 
 /obj/item/bodypart/r_arm/lizard
 	icon_greyscale = 'icons/mob/species/lizard/bodyparts.dmi'
-	uses_mutcolor = TRUE
 	limb_id = SPECIES_LIZARD
 
 /obj/item/bodypart/l_leg/lizard
 	icon_greyscale = 'icons/mob/species/lizard/bodyparts.dmi'
-	uses_mutcolor = TRUE
 	limb_id = SPECIES_LIZARD
 
 /obj/item/bodypart/r_leg/lizard
 	icon_greyscale = 'icons/mob/species/lizard/bodyparts.dmi'
-	uses_mutcolor = TRUE
 	limb_id = SPECIES_LIZARD
 
 /obj/item/bodypart/l_leg/digitigrade
 	icon_greyscale = 'icons/mob/species/lizard/bodyparts.dmi'
-	uses_mutcolor = TRUE
-	limb_id = "digitigrade"
+	limb_id = BODYPART_TYPE_DIGITIGRADE
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC | BODYTYPE_DIGITIGRADE
 
 /obj/item/bodypart/l_leg/digitigrade/update_limb(dropping_limb = FALSE, is_creating = FALSE)
@@ -52,15 +45,14 @@
 			shoes_compatible = TRUE
 
 		if((uniform_compatible && suit_compatible && shoes_compatible) || (suit_compatible && shoes_compatible && human_owner.wear_suit?.flags_inv & HIDEJUMPSUIT)) //If the uniform is hidden, it doesnt matter if its compatible
-			limb_id = "digitigrade"
+			limb_id = BODYPART_TYPE_DIGITIGRADE
 
 		else
-			limb_id = "lizard"
+			limb_id = SPECIES_LIZARD
 
 /obj/item/bodypart/r_leg/digitigrade
 	icon_greyscale = 'icons/mob/species/lizard/bodyparts.dmi'
-	uses_mutcolor = TRUE
-	limb_id = "digitigrade"
+	limb_id = BODYPART_TYPE_DIGITIGRADE
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC | BODYTYPE_DIGITIGRADE
 
 /obj/item/bodypart/r_leg/digitigrade/update_limb(dropping_limb = FALSE, is_creating = FALSE)
@@ -79,7 +71,7 @@
 			shoes_compatible = TRUE
 
 		if((uniform_compatible && suit_compatible && shoes_compatible) || (suit_compatible && shoes_compatible && human_owner.wear_suit?.flags_inv & HIDEJUMPSUIT)) //If the uniform is hidden, it doesnt matter if its compatible
-			limb_id = "digitigrade"
+			limb_id = BODYPART_TYPE_DIGITIGRADE
 
 		else
-			limb_id = "lizard"
+			limb_id = SPECIES_LIZARD

@@ -15,7 +15,7 @@
 /datum/scientific_partner/baron
 	name = "Ghost Writing"
 	flufftext = "A nearby research station ran by a very wealthy captain seems to be struggling with their scientific output. They might reward us handsomely if we ghostwrite for them."
-	multipliers = list(SCIPAPER_COOPERATION_INDEX = 0.25, SCIPAPER_FUNDING_INDEX = 5)
+	multipliers = list(SCIPAPER_COOPERATION_INDEX = 0.25, SCIPAPER_FUNDING_INDEX = 2)
 	boosted_nodes = list(
 		"comp_recordkeeping" = 500, 
 		"computer_hardware_basic" = 500,
@@ -42,7 +42,7 @@
 
 /datum/scientific_partner/medical
 	name = "Biological Research Division"
-	flufftext = "A collegiate of the best medical researchers Nanotrason employs. They seem to be interested in the biological effects of some more exotic gases. Especially stimulants and neurosupressants."
+	flufftext = "A collegiate of the best medical researchers Nanotrasen employs. They seem to be interested in the biological effects of some more exotic gases. Especially stimulants and neurosupressants."
 	accepted_experiments = list(
 		/datum/experiment/ordnance/gaseous/nitrous_oxide, 
 		/datum/experiment/ordnance/gaseous/bz,

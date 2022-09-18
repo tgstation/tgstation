@@ -44,7 +44,6 @@
 		weakpoint_areas = list()
 		/// List of high-security areas that we pick required ones from
 		var/list/allowed_areas = typecacheof(list(/area/station/command,
-			/area/station/cargo/qm,
 			/area/station/comms,
 			/area/station/engineering,
 			/area/station/science,
@@ -71,8 +70,11 @@
 	var/area/weakpoint_area2 = weakpoint_areas[2]
 	replace_in_name("%AREA1%", initial(weakpoint_area1.name))
 	replace_in_name("%AREA2%", initial(weakpoint_area2.name))
-	RegisterSignal(generating_for, COMSIG_GLOB_TRAITOR_OBJECTIVE_COMPLETED, .proc/on_global_obj_completed)
+	RegisterSignal(SSdcs, COMSIG_GLOB_TRAITOR_OBJECTIVE_COMPLETED, .proc/on_global_obj_completed)
 	return TRUE
+
+/datum/traitor_objective/locate_weakpoint/ungenerate_objective()
+	UnregisterSignal(SSdcs, COMSIG_GLOB_TRAITOR_OBJECTIVE_COMPLETED)
 
 /datum/traitor_objective/locate_weakpoint/proc/on_global_obj_completed(datum/source, datum/traitor_objective/objective)
 	SIGNAL_HANDLER
@@ -130,8 +132,8 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "weakpoint_locator"
 	inhand_icon_state = "weakpoint_locator"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	throwforce = 0
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
@@ -254,6 +256,10 @@
 	if (target_area.type != objective.weakpoint_areas[3])
 		var/area/weakpoint_area = objective.weakpoint_areas[3]
 		to_chat(user, span_warning("[src] can only be detonated in [initial(weakpoint_area.name)]."))
+		return
+
+	if(!isfloorturf(target) && !iswallturf(target))
+		to_chat(user, span_warning("[src] can only be planted on a wall or the floor!"))
 		return
 
 	return ..()

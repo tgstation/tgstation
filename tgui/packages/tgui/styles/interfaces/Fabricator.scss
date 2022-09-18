@@ -1,0 +1,67 @@
+.Fabricator__Recipe {
+  padding: 0.25em 0;
+  border-bottom: 1px solid #000;
+}
+
+.Fabricator__Button {
+  white-space: normal;
+}
+
+Fabricator__Icon {
+  vertical-align: middle;
+}
+
+.Fabricator__Button--disabled,
+.Fabricator__PrintAmount--disabled {
+  opacity: 0.5;
+  background-color: transparent;
+}
+
+.Fabricator__PrintAmount--disabled {
+  text-decoration: line-through;
+}
+
+.MaterialDock {
+  position: relative;
+  padding: 0.5em;
+  border-radius: 0 0 0.25em 0.25em;
+}
+
+.MaterialDock--active {
+  background-color: #111;
+  transition: background-color 0.125s ease-out;
+}
+
+.MaterialDock__Dock {
+  position: absolute;
+  background-color: #111;
+  bottom: 100%;
+  left: 0;
+  width: 100%;
+  padding: 1em;
+  border-radius: 0.25em 0.25em 0 0;
+  text-align: center;
+  box-shadow: 0 0 3px #000;
+}
+
+.MaterialDock--active .MaterialDock__Dock {
+  @keyframes materialdock-open {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+
+  animation: materialdock-open 0.125s ease-out;
+}
+
+.MaterialDock__Button {
+  width: 100%;
+  height: 0;
+  padding-bottom: 100%;
+  position: relative;
+  box-shadow: 0 0 3px #000;
+}
