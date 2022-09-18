@@ -136,10 +136,6 @@
     }
   }
 
-  &__Button--icon {
-    padding: 0 1em;
-  }
-
   &__Title {
     flex-grow: 1;
   }
@@ -152,6 +148,10 @@
 
   &__Button {
     justify-self: flex-end;
+
+    &--icon {
+      padding: 0 1em;
+    }
 
     &--disabled {
       text-decoration: line-through;

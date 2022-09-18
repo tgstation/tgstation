@@ -198,7 +198,6 @@ const Queue = (props: { availableMaterials: MaterialMap }, context) => {
               </>
             }>
             <MaterialCostSequence
-              justify={'left'}
               available={availableMaterials}
               costMap={materialCosts}
             />
@@ -222,7 +221,7 @@ const QueueList = (props: { availableMaterials: MaterialMap }, context) => {
   const designs = data.designs;
 
   if (!queue.length) {
-    return <>No designs in queue.</>;
+    return null;
   }
 
   const accumulatedCosts: MaterialMap = {};
