@@ -4,14 +4,49 @@ import { MaterialIcon } from './MaterialIcon';
 import { formatSiUnit } from '../../format';
 
 export type MaterialCostSequenceProps = {
+  /**
+   * A map of available materials.
+   */
   available?: MaterialMap;
+
+  /**
+   * If provided, the materials to be consumed. By default, generated from
+   * `design`; otherwise, an empty list.
+   */
   costMap?: MaterialMap;
+
+  /**
+   * A design to generate the cost map from.
+   */
   design?: Design;
+
+  /**
+   * The amount of times the provided design will be printed. By default, one.
+   */
   amount?: number;
+
+  /**
+   * The `align-items` flex property provided to the generated list.
+   */
   align?: string;
+
+  /**
+   * The `justify-content` flex property provided to the generated list.
+   */
   justify?: string;
 };
 
+/**
+ * A horizontal list of material costs, with labels.
+ *
+ * For a given material set that can only be printed once, the label for
+ * offending materials is orange.
+ *
+ * For a given material set that can't be printed at all, the label for
+ * offending materials is red.
+ *
+ * Otherwise, the labels are white.
+ */
 export const MaterialCostSequence = (
   props: MaterialCostSequenceProps,
   context

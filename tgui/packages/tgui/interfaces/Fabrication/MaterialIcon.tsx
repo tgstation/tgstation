@@ -44,10 +44,22 @@ const MATERIAL_ICONS: Record<string, [number, string][]> = {
 };
 
 export type MaterialIconProps = {
+  /**
+   * The name of the material.
+   */
   materialName: string;
+
+  /**
+   * The amount of material. One sheet is 2,000 units. By default, the icon
+   * attempts to render a full stack (200,000 units).
+   */
   amount?: number;
 };
 
+/**
+ * A 32x32 material icon. Animates between different stack sizes of the given
+ * material.
+ */
 export const MaterialIcon = (props: MaterialIconProps) => {
   const { materialName, amount } = props;
   const icons = MATERIAL_ICONS[materialName];
