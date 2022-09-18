@@ -16,9 +16,6 @@
 		}
 	],
 	"job_changes": {
-		"Cook": {
-			"additional_cqc_areas": ["/area/station/service/bar/atrium"]
-		},
 		"Captain": {
 			"special_charter": "asteroid"
 		}

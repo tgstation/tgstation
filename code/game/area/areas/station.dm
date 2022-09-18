@@ -566,13 +566,13 @@
 	icon_state = "kitchen_cold"
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 
-/area/station/service/kitchen/diner
-	name = "\improper Diner"
-	icon_state = "diner"
-
 /area/station/service/kitchen/abandoned
 	name = "\improper Abandoned Kitchen"
 	icon_state = "abandoned_kitchen"
+
+/area/station/service/diner
+	name = "\improper Diner"
+	icon_state = "diner"
 
 /area/station/service/bar
 	name = "\improper Bar"
