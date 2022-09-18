@@ -104,7 +104,7 @@
     height: 4px;
     background-color: rgba(255, 255, 255, 0.25);
     border-radius: 4px;
-    transition: width 0.5s ease;
+    transition: width 1s linear;
   }
 
   &__Title,
