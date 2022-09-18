@@ -71,17 +71,17 @@ GLOBAL_LIST_EMPTY(antagonist_teams)
 	return "<div class='panel redborder'>[report.Join("<br>")]</div>"
 
 /datum/team/proc/get_team_antags(antag_datum, include_subtypes = TRUE)
-	var/datum/list = list()
+	var/list/antag_list = list()
 	for(var/datum/antagonist/antagonists as anything in GLOB.antagonists)
 		if(!(antagonists.owner in members))
 			continue
 
 		if(include_subtypes && istype(antagonists, antag_datum))
-			list += antagonists
+			antag_list += antagonists
 		else if(antagonists.type == antag_datum)
-			list += antagonists
+			antag_list += antagonists
 
-	return list
+	return antag_list
 
 /// Builds section for the team
 /datum/team/proc/antag_listing_entry()
