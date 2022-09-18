@@ -18,7 +18,7 @@
 		vendors += subtypesof(/obj/machinery/vending)
 		chosen_vendor = tgui_input_list(usr, "Vendor type must have at least one instance on the station for this to work!","Vendor Selector", vendors)
 /datum/round_event/brand_intelligence
-	announce_when = 1 //TIME FOR TESTING PURPOSES PLEASE REVERT TO 21
+	announce_when = 21
 	end_when = 1000 //Ends when all vending machines are subverted anyway.
 	var/list/obj/machinery/vending/vendingMachines = list()
 	var/list/obj/machinery/vending/infectedMachines = list()
@@ -86,7 +86,7 @@
 			if(!QDELETED(upriser))
 				upriser.ai_controller = new /datum/ai_controller/vending_machine(upriser)
 				infectedMachines.Remove(upriser)
-		kill()
+		kill()d
 		return
 	if(ISMULTIPLE(activeFor, 2))
 		var/obj/machinery/vending/rebel = pick(vendingMachines)
