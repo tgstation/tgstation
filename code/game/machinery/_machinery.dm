@@ -489,7 +489,7 @@
 /obj/machinery/proc/get_room_area(area/machine_room)
 	var/area/machine_area = get_area(src)
 	if(machine_area.always_unpowered == FALSE)///check our loc first to see if its a powered area
-		machine_room= machine_area
+		machine_room = machine_area
 		return machine_room
 	var/turf/mounted_wall = get_step(src,dir)
 	if(mounted_wall && istype(mounted_wall, /turf/closed))
