@@ -6149,14 +6149,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/misc/asteroid/airless,
 /area/space/nearstation)
-"bUA" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/corner,
-/obj/structure/flora/grass/jungle/b/style_random,
-/turf/open/misc/asteroid/airless,
-/area/space/nearstation)
 "bUC" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -127006,7 +126998,7 @@ bUN
 bUN
 bUN
 bUN
-bUA
+bUe
 bUF
 aeu
 rCi
