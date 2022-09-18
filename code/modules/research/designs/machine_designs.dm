@@ -813,8 +813,7 @@
 	category = list(
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_CHEMISTRY
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
-
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SERVICE
 
 /datum/design/board/sheetifier
 	name = "Sheet-meister 2000 Board"

@@ -904,10 +904,11 @@
 // attempts to locate /obj/machinery/computer/shuttle with matching ID inside the shuttle
 /obj/docking_port/mobile/proc/get_control_console()
 	for(var/area/shuttle/shuttle_area as anything in shuttle_areas)
-		for(var/obj/machinery/computer/shuttle/shuttle_computers as anything in shuttle_area)
-			if(shuttle_computers.shuttleId != shuttle_id)
-				continue
-			return shuttle_computers
+		var/obj/machinery/computer/shuttle/shuttle_computer = locate(/obj/machinery/computer/shuttle) in shuttle_area
+		if(!shuttle_computer)
+			continue
+		if(shuttle_computer.shuttleId == shuttle_id)
+			return shuttle_computer
 	return null
 
 /obj/docking_port/mobile/proc/hyperspace_sound(phase, list/areas)

@@ -22,7 +22,7 @@ SUBSYSTEM_DEF(assets)
 
 
 
-/datum/controller/subsystem/assets/Initialize(timeofday)
+/datum/controller/subsystem/assets/Initialize()
 	for(var/type in typesof(/datum/asset))
 		var/datum/asset/A = type
 		if (type != initial(A._abstract))
@@ -30,7 +30,7 @@ SUBSYSTEM_DEF(assets)
 
 	transport.Initialize(cache)
 
-	..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/assets/Recover()
 	cache = SSassets.cache
