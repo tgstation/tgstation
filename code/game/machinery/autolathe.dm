@@ -374,8 +374,13 @@
 	var/coeff = (ispath(design.build_path, /obj/item/stack) ? 1 : creation_efficiency)
 	var/list/cost = list()
 
-	for(var/datum/material/material in design.materials)
-		cost[material.name] = design.materials[material] * coeff
+	for(var/material in design.materials)
+		if (istext(material))
+			// Wildcard materials
+			cost[material] = design.materials[material] * coeff
+		else
+			var/datum/material/cast = material
+			cost[cast.name] = design.materials[cast] * coeff
 
 	return cost
 
