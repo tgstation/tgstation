@@ -16,7 +16,7 @@
 	if(tgui_alert(usr, "Select a specific vendor path?", "Capitalism-ho!", list("Yes", "No")) == "Yes")
 		var/list/vendors = list()
 		vendors += subtypesof(/obj/machinery/vending)
-		chosen_vendor = tgui_input_list(usr, "Vendor type must have at least one instance on the station!","Vendor Selector", vendors)
+		chosen_vendor = tgui_input_list(usr, "Vendor type must have at least one instance on the station for this to work!","Vendor Selector", vendors)
 /datum/round_event/brand_intelligence
 	announce_when = 1 //TIME FOR TESTING PURPOSES PLEASE REVERT TO 21
 	end_when = 1000 //Ends when all vending machines are subverted anyway.
