@@ -34,6 +34,150 @@
 
 #undef BLUSH_DURATION
 
+// Visual effect emotes
+/// Overlay animation sprite-file
+#define EMOTE_OVERLAYS 'icons/effects/overlay_effects.dmi'
+
+/datum/emote/living/sigh
+	key = "sigh"
+	key_third_person = "sighs"
+	message = "sighs."
+	message_mime = "acts out an exaggerated silent sigh."
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+
+/datum/emote/living/carbon/human/sigh/can_run_emote(mob/user, status_check = TRUE, intentional)
+	if(!ishuman(user))
+		return FALSE
+	return ..()
+
+/datum/emote/living/carbon/human/sigh/run_emote(mob/living/carbon/human/user, params, type_override, intentional)
+	. = ..()
+
+	flick_overlay_static(mutable_appearance(EMOTE_OVERLAYS, "sigh", ABOVE_MOB_LAYER), user, 50)
+
+/datum/emote/living/sweatdrop
+	key = "sweatdrop"
+	key_third_person = "sweatdrops"
+
+/datum/emote/living/sweatdrop/can_run_emote(mob/user, status_check = TRUE, intentional)
+	if(!isliving(user))
+		return FALSE
+	return ..()
+
+/datum/emote/living/sweatdrop/get_sound(mob/user)
+	return 'sound/effects/sweatdrop.ogg'
+
+/datum/emote/living/sweatdrop/run_emote(mob/living/user, params, type_override, intentional)
+	. = ..()
+
+	var/mutable_appearance/overlay = mutable_appearance(EMOTE_OVERLAYS, "sweatdrop", ABOVE_MOB_LAYER)
+	overlay.pixel_x = 10
+	overlay.pixel_y = 10
+	flick_overlay_static(overlay, user, 50)
+
+/datum/emote/living/realize
+	key = "realize"
+	key_third_person = "realizes"
+
+/datum/emote/living/realize/can_run_emote(mob/user, status_check = TRUE, intentional)
+	if(!isliving(user))
+		return FALSE
+	return ..()
+
+/datum/emote/living/realize/get_sound(mob/user)
+	return 'sound/effects/realize.ogg'
+
+/datum/emote/living/realize/run_emote(mob/living/user, params, type_override, intentional)
+	. = ..()
+
+	var/mutable_appearance/overlay = mutable_appearance(EMOTE_OVERLAYS, "realize", ABOVE_MOB_LAYER)
+	overlay.pixel_y = 15
+	flick_overlay_static(overlay, user, 50)
+
+/datum/emote/living/annoyed
+	key = "annoyed"
+	key_third_person = "is annoyed"
+
+/datum/emote/living/annoyed/can_run_emote(mob/user, status_check = TRUE, intentional)
+	if(!isliving(user))
+		return FALSE
+	return ..()
+
+/datum/emote/living/annoyed/get_sound(mob/user)
+	return 'sound/effects/annoyed.ogg'
+
+/datum/emote/living/annoyed/run_emote(mob/living/user, params, type_override, intentional)
+	. = ..()
+
+	var/mutable_appearance/overlay = mutable_appearance(EMOTE_OVERLAYS, "annoyed", ABOVE_MOB_LAYER)
+	overlay.pixel_x = 10
+	overlay.pixel_y = 10
+	flick_overlay_static(overlay, user, 50)
+
+/datum/emote/living/exclaim
+	key = "exclaim"
+	key_third_person = "exclaims"
+
+/datum/emote/living/exclaim/can_run_emote(mob/user, status_check = TRUE, intentional)
+	if(!isliving(user))
+		return FALSE
+	return ..()
+
+/datum/emote/living/exclaim/get_sound(mob/user)
+	return 'sound/machines/chime.ogg'
+
+/datum/emote/living/exclaim/run_emote(mob/living/user, params, type_override, intentional)
+	. = ..()
+
+	var/mutable_appearance/overlay = mutable_appearance(EMOTE_OVERLAYS, "exclamation", ABOVE_MOB_LAYER)
+	overlay.pixel_x = 10
+	overlay.pixel_y = 28
+	flick_overlay_static(overlay, user, 50)
+
+/datum/emote/living/question
+	key = "question"
+	key_third_person = "questions"
+
+/datum/emote/living/question/can_run_emote(mob/user, status_check = TRUE, intentional)
+	if(!isliving(user))
+		return FALSE
+	return ..()
+
+/datum/emote/living/question/get_sound(mob/user)
+	return 'sound/effects/question.ogg'
+
+/datum/emote/living/question/run_emote(mob/living/user, params, type_override, intentional)
+	. = ..()
+
+	var/mutable_appearance/overlay = mutable_appearance(EMOTE_OVERLAYS, "question", ABOVE_MOB_LAYER)
+	overlay.pixel_x = 10
+	overlay.pixel_y = 28
+	flick_overlay_static(overlay, user, 50)
+
+/datum/emote/living/carbon/human/glasses
+	key = "glasses"
+	key_third_person = "glasses"
+	message = "pushes up their glasses."
+
+/datum/emote/living/carbon/human/glasses/can_run_emote(mob/user, status_check = TRUE, intentional)
+	if(!ishuman(user))
+		return FALSE
+
+	var/obj/O = user.get_item_by_slot(ITEM_SLOT_EYES)
+	if(!(istype(O, /obj/item/clothing/glasses/regular)))
+		return FALSE
+
+	return ..()
+
+/datum/emote/living/glasses/run_emote(mob/living/carbon/human/user, params, type_override, intentional)
+	. = ..()
+
+	var/mutable_appearance/overlay = mutable_appearance(EMOTE_OVERLAYS, "glasses", ABOVE_MOB_LAYER)
+	flick_overlay_static(overlay, user, 10)
+
+#undef EMOTE_OVERLAYS
+
+
 /datum/emote/living/sing_tune
 	key = "tunesing"
 	key_third_person = "sings a tune"
@@ -337,13 +481,6 @@
 	key = "shiver"
 	key_third_person = "shiver"
 	message = "shivers."
-
-/datum/emote/living/sigh
-	key = "sigh"
-	key_third_person = "sighs"
-	message = "sighs."
-	message_mime = "acts out an exaggerated silent sigh."
-	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 
 /datum/emote/living/sit
 	key = "sit"
