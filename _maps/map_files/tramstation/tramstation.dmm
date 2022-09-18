@@ -890,8 +890,8 @@
 	pixel_x = -8
 	},
 /obj/item/reagent_containers/cup/glass/coffee{
-	pixel_y = 7;
-	pixel_x = 5
+	pixel_x = 5;
+	pixel_y = 7
 	},
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
@@ -4099,14 +4099,6 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/openspace,
 /area/station/security/interrogation)
-"bGh" = (
-/obj/machinery/camera/motion{
-	c_tag = "Secure - AI Upper External West";
-	dir = 6;
-	network = list("aicore")
-	},
-/turf/open/space/openspace,
-/area/station/ai_monitored/turret_protected/aisat/hallway)
 "bGj" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 1
@@ -4780,8 +4772,8 @@
 "bQr" = (
 /obj/docking_port/stationary/random{
 	dir = 8;
-	shuttle_id = "pod_lavaland";
-	name = "lavaland"
+	name = "lavaland";
+	shuttle_id = "pod_lavaland"
 	},
 /turf/open/space/openspace,
 /area/space)
@@ -8312,9 +8304,9 @@
 	dir = 2;
 	dwidth = 4;
 	height = 9;
-	shuttle_id = "aux_base_zone";
 	name = "Aux Base Zone";
 	roundstart_template = /datum/map_template/shuttle/aux_base/default;
+	shuttle_id = "aux_base_zone";
 	width = 9
 	},
 /turf/open/floor/plating,
@@ -9910,6 +9902,15 @@
 /obj/effect/mapping_helpers/airlock/access/all/engineering/ce,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/ce)
+"dza" = (
+/obj/structure/lattice,
+/obj/machinery/camera/motion{
+	c_tag = "Secure - AI Lower External West";
+	dir = 6;
+	network = list("ss13","minisat")
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "dzm" = (
 /obj/structure/railing{
 	dir = 4
@@ -14029,9 +14030,9 @@
 	dir = 8;
 	dwidth = 3;
 	height = 15;
-	shuttle_id = "arrival_stationary";
 	name = "arrivals";
 	roundstart_template = /datum/map_template/shuttle/arrival/box;
+	shuttle_id = "arrival_stationary";
 	width = 7
 	},
 /turf/open/space/openspace,
@@ -15918,12 +15919,12 @@
 	},
 /obj/structure/table,
 /obj/item/storage/fancy/coffee_cart_rack{
-	pixel_y = 2;
-	pixel_x = 8
+	pixel_x = 8;
+	pixel_y = 2
 	},
 /obj/item/food/donut/plain{
-	pixel_y = 6;
-	pixel_x = -4
+	pixel_x = -4;
+	pixel_y = 6
 	},
 /turf/open/floor/iron,
 /area/station/security/brig)
@@ -22681,9 +22682,9 @@
 /obj/docking_port/stationary{
 	dwidth = 2;
 	height = 5;
-	shuttle_id = "laborcamp_home";
 	name = "fore bay 1";
 	roundstart_template = /datum/map_template/shuttle/labour/generic;
+	shuttle_id = "laborcamp_home";
 	width = 9
 	},
 /turf/open/misc/asteroid/airless,
@@ -23130,8 +23131,8 @@
 	},
 /obj/structure/table/glass,
 /obj/item/storage/fancy/coffee_cart_rack{
-	pixel_y = 6;
-	pixel_x = 8
+	pixel_x = 8;
+	pixel_y = 6
 	},
 /obj/item/reagent_containers/cup/glass/coffee{
 	pixel_x = -4;
@@ -23905,15 +23906,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/construction/engineering)
-"iEz" = (
-/obj/structure/lattice,
-/obj/machinery/camera/motion{
-	c_tag = "Secure - AI Lower External East";
-	dir = 10;
-	network = list("ss13","minisat")
-	},
-/turf/open/space/basic,
-/area/station/ai_monitored/turret_protected/aisat_interior)
 "iEG" = (
 /obj/effect/turf_decal/siding/thinplating/corner{
 	dir = 8
@@ -25504,15 +25496,6 @@
 /obj/machinery/computer/security/telescreen/entertainment/directional/east,
 /turf/open/floor/iron/checker,
 /area/station/commons/lounge)
-"jjG" = (
-/obj/structure/lattice,
-/obj/machinery/camera/motion{
-	c_tag = "Secure - AI Lower External West";
-	dir = 6;
-	network = list("ss13","minisat")
-	},
-/turf/open/space/basic,
-/area/station/ai_monitored/turret_protected/aisat_interior)
 "jjL" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
@@ -27092,12 +27075,12 @@
 	dir = 8
 	},
 /obj/item/storage/fancy/coffee_cart_rack{
-	pixel_y = 6;
-	pixel_x = -8
+	pixel_x = -8;
+	pixel_y = 6
 	},
 /obj/effect/spawner/random/food_or_drink/donkpockets{
-	pixel_y = 6;
-	pixel_x = 4
+	pixel_x = 4;
+	pixel_y = 6
 	},
 /turf/open/floor/iron/dark,
 /area/station/medical/break_room)
@@ -29234,8 +29217,8 @@
 	dir = 4;
 	dwidth = 12;
 	height = 18;
-	shuttle_id = "emergency_home";
 	name = "Tramstation emergency evac bay";
+	shuttle_id = "emergency_home";
 	width = 32
 	},
 /turf/open/space/openspace,
@@ -32457,8 +32440,8 @@
 	pixel_x = -7
 	},
 /obj/item/reagent_containers/cup/glass/coffee{
-	pixel_y = 4;
-	pixel_x = 8
+	pixel_x = 8;
+	pixel_y = 4
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
@@ -33609,13 +33592,6 @@
 /obj/machinery/duct,
 /turf/open/floor/iron,
 /area/station/security/prison)
-"mbe" = (
-/obj/machinery/camera/motion/directional/south{
-	c_tag = "Secure - AI Lower External North";
-	network = list("ss13","minisat")
-	},
-/turf/open/space/basic,
-/area/station/ai_monitored/turret_protected/aisat/foyer)
 "mbm" = (
 /obj/structure/rack,
 /obj/item/pickaxe,
@@ -35428,8 +35404,8 @@
 /obj/machinery/button/door/directional/north{
 	id = "robotics2";
 	name = "Robotics Privacy Shuttles Control";
-	req_access = list("robotics");
-	pixel_x = 8
+	pixel_x = 8;
+	req_access = list("robotics")
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
@@ -36317,6 +36293,15 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"mVS" = (
+/obj/structure/lattice,
+/obj/machinery/camera/motion{
+	c_tag = "Secure - AI Lower External East";
+	dir = 10;
+	network = list("ss13","minisat")
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "mWi" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
@@ -40110,6 +40095,13 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
+"osn" = (
+/obj/machinery/camera/motion/directional/south{
+	c_tag = "Secure - AI Lower External North";
+	network = list("ss13","minisat")
+	},
+/turf/open/space/basic,
+/area/space)
 "osA" = (
 /obj/machinery/door/airlock/security{
 	name = "Courtroom Holding Area"
@@ -40501,8 +40493,8 @@
 /obj/docking_port/stationary{
 	dwidth = 5;
 	height = 7;
-	shuttle_id = "cargo_home";
 	name = "Cargo Bay";
+	shuttle_id = "cargo_home";
 	width = 12
 	},
 /turf/open/misc/asteroid/airless,
@@ -42447,6 +42439,14 @@
 /obj/effect/landmark/navigate_destination/med,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
+"plE" = (
+/obj/machinery/camera/motion{
+	c_tag = "Secure - AI Upper External East";
+	dir = 10;
+	network = list("aicore")
+	},
+/turf/open/space/openspace,
+/area/space/nearstation)
 "plI" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -43652,8 +43652,8 @@
 	dir = 2;
 	dwidth = 11;
 	height = 22;
-	shuttle_id = "whiteship_home";
 	name = "SS13: Auxiliary Dock, Station-Port";
+	shuttle_id = "whiteship_home";
 	width = 35
 	},
 /turf/open/space/openspace,
@@ -43714,6 +43714,14 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
+"pFW" = (
+/obj/machinery/camera/motion{
+	c_tag = "Secure - AI Upper External West";
+	dir = 6;
+	network = list("aicore")
+	},
+/turf/open/space/openspace,
+/area/space/nearstation)
 "pFX" = (
 /obj/structure/rack,
 /obj/item/reagent_containers/cup/bottle/epinephrine{
@@ -48812,14 +48820,6 @@
 	},
 /turf/open/floor/cult,
 /area/station/service/chapel/office)
-"rva" = (
-/obj/machinery/camera/motion/directional/south{
-	c_tag = "Secure - AI Upper External North";
-	network = list("aicore")
-	},
-/obj/structure/cable/multilayer/connected,
-/turf/open/floor/engine/hull/reinforced,
-/area/station/ai_monitored/turret_protected/aisat/hallway)
 "rvd" = (
 /obj/effect/turf_decal/siding/thinplating,
 /obj/structure/cable,
@@ -52399,8 +52399,8 @@
 "sIm" = (
 /obj/docking_port/stationary/random{
 	dir = 4;
-	shuttle_id = "pod_lavaland";
-	name = "lavaland"
+	name = "lavaland";
+	shuttle_id = "pod_lavaland"
 	},
 /turf/open/misc/asteroid/airless,
 /area/mine/explored)
@@ -57186,8 +57186,8 @@
 	dir = 1
 	},
 /mob/living/simple_animal/bot/medbot/autopatrol{
-	name = "T.R.A.M Unit";
-	desc = "A Trauma Response Activation Medibot. It seems overwhelmed."
+	desc = "A Trauma Response Activation Medibot. It seems overwhelmed.";
+	name = "T.R.A.M Unit"
 	},
 /turf/open/floor/iron,
 /area/station/maintenance/tram/left)
@@ -58524,8 +58524,8 @@
 /obj/structure/rack,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/mask/gas{
-	pixel_y = 3;
-	pixel_x = 5
+	pixel_x = 5;
+	pixel_y = 3
 	},
 /obj/structure/sign/warning/vacuum/external/directional/west,
 /turf/open/floor/iron/smooth,
@@ -58717,8 +58717,8 @@
 	dir = 8;
 	dwidth = 2;
 	height = 13;
-	shuttle_id = "ferry_home";
 	name = "port bay 2";
+	shuttle_id = "ferry_home";
 	width = 5
 	},
 /turf/open/space/openspace,
@@ -60742,15 +60742,6 @@
 /obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/grass,
 /area/station/science/genetics)
-"vGk" = (
-/obj/structure/lattice,
-/obj/machinery/camera/motion{
-	c_tag = "Secure - AI Lower External South";
-	dir = 9;
-	network = list("ss13","minisat")
-	},
-/turf/open/space/basic,
-/area/station/ai_monitored/turret_protected/aisat_interior)
 "vGA" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -65350,6 +65341,14 @@
 "xnj" = (
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
+"xnM" = (
+/obj/machinery/camera/motion/directional/south{
+	c_tag = "Secure - AI Upper External North";
+	network = list("aicore")
+	},
+/obj/structure/cable/multilayer/connected,
+/turf/open/floor/engine/hull/reinforced,
+/area/space/nearstation)
 "xof" = (
 /obj/structure/industrial_lift/tram{
 	icon_state = "titanium"
@@ -66342,6 +66341,15 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
+"xHf" = (
+/obj/structure/lattice,
+/obj/machinery/camera/motion{
+	c_tag = "Secure - AI Lower External South";
+	dir = 9;
+	network = list("ss13","minisat")
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "xHn" = (
 /obj/machinery/holopad,
 /obj/effect/turf_decal/trimline/neutral/corner{
@@ -67932,8 +67940,8 @@
 "yky" = (
 /obj/structure/table/glass,
 /obj/item/paper_bin{
-	pixel_y = 3;
-	pixel_x = 6
+	pixel_x = 6;
+	pixel_y = 3
 	},
 /obj/item/pen{
 	pixel_x = 6;
@@ -67941,8 +67949,8 @@
 	},
 /obj/structure/sign/clock/directional/east,
 /obj/item/storage/fancy/coffee_cart_rack{
-	pixel_y = 1;
-	pixel_x = -7
+	pixel_x = -7;
+	pixel_y = 1
 	},
 /turf/open/floor/iron/cafeteria{
 	dir = 5
@@ -68005,14 +68013,6 @@
 	},
 /turf/open/floor/plating/airless,
 /area/station/science/ordnance/bomb)
-"ylt" = (
-/obj/machinery/camera/motion{
-	c_tag = "Secure - AI Upper External East";
-	dir = 10;
-	network = list("aicore")
-	},
-/turf/open/space/openspace,
-/area/station/ai_monitored/turret_protected/aisat/hallway)
 "ylF" = (
 /obj/structure/railing{
 	dir = 1
@@ -112711,7 +112711,7 @@ vXM
 vXM
 vXM
 vXM
-jjG
+dza
 vXM
 vXM
 vXM
@@ -114752,7 +114752,7 @@ vXM
 vXM
 vXM
 vXM
-mbe
+osn
 xvl
 nFD
 xly
@@ -115294,7 +115294,7 @@ pMG
 pAC
 wWM
 oqp
-vGk
+xHf
 rxw
 vXM
 vXM
@@ -117851,7 +117851,7 @@ vXM
 vXM
 vXM
 vXM
-iEz
+mVS
 vXM
 vXM
 vXM
@@ -178247,7 +178247,7 @@ avE
 jhd
 jhd
 jhd
-bGh
+pFW
 jhd
 jhd
 avE
@@ -180807,7 +180807,7 @@ xSS
 lwj
 tqN
 tqN
-rva
+xnM
 wOq
 wOq
 ksR
@@ -183387,7 +183387,7 @@ avE
 jhd
 jhd
 jhd
-ylt
+plE
 jhd
 jhd
 avE
