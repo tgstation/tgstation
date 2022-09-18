@@ -414,8 +414,8 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 750)
 	build_path = /obj/item/tank/internals/emergency_oxygen/engi/empty
-	category = list(RND_CATEGORY_HACKED, RND_CATEGORY_EQUIPMENT)
 	category = list(
+		RND_CATEGORY_HACKED,
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_GAS_TANKS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO
@@ -426,8 +426,8 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 800)
 	build_path = /obj/item/tank/internals/plasmaman/belt/empty
-	category = list(RND_CATEGORY_HACKED, RND_CATEGORY_EQUIPMENT)
 	category = list(
+		RND_CATEGORY_HACKED,
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_GAS_TANKS
 	)
 	departmental_flags = ALL
@@ -823,8 +823,8 @@
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 5500)
 	build_path = /obj/item/clothing/head/foilhat
-	category = list(RND_CATEGORY_HACKED, RND_CATEGORY_EQUIPMENT)
 	category = list(
+		RND_CATEGORY_HACKED,
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_JOKE
 	)
 
@@ -1265,8 +1265,8 @@
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 500)
 	build_path = /obj/item/flamethrower/full
-	category = list(RND_CATEGORY_HACKED, RND_CATEGORY_WEAPONS)
 	category = list(
+		RND_CATEGORY_HACKED,
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_RANGED
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
@@ -1277,8 +1277,8 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 10000, /datum/material/glass = 2500)
 	build_path = /obj/item/electropack
-	category = list(RND_CATEGORY_HACKED, RND_CATEGORY_EQUIPMENT)
 	category = list(
+		RND_CATEGORY_HACKED,
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SECURITY
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
@@ -1289,8 +1289,8 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 70, /datum/material/glass = 60)
 	build_path = /obj/item/weldingtool/largetank
-	category = list(RND_CATEGORY_HACKED, RND_CATEGORY_TOOLS)
 	category = list(
+		RND_CATEGORY_HACKED,
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
@@ -1301,8 +1301,8 @@
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 500)
 	build_path = /obj/item/restraints/handcuffs
-	category = list(RND_CATEGORY_HACKED, RND_CATEGORY_EQUIPMENT)
 	category = list(
+		RND_CATEGORY_HACKED,
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SECURITY
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
@@ -1310,7 +1310,6 @@
 /datum/design/handcuffs/sec
 	id = "handcuffs_s"
 	build_type = PROTOLATHE | AWAY_LATHE
-	category = list(RND_CATEGORY_EQUIPMENT)
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SECURITY
 	)
@@ -1322,8 +1321,8 @@
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 15000)
 	build_path = /obj/item/weaponcrafting/receiver
-	category = list(RND_CATEGORY_HACKED, RND_CATEGORY_WEAPONS)
 	category = list(
+		RND_CATEGORY_HACKED,
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_PARTS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
@@ -1334,8 +1333,8 @@
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 4000)
 	build_path = /obj/item/ammo_casing/shotgun/dart
-	category = list(RND_CATEGORY_HACKED, RND_CATEGORY_WEAPONS)
 	category = list(
+		RND_CATEGORY_HACKED,
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
@@ -1346,7 +1345,7 @@
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 4000)
 	build_path = /obj/item/ammo_casing/shotgun/incendiary
-	category = list(RND_CATEGORY_HACKED, RND_CATEGORY_WEAPONS)
+	RND_CATEGORY_HACKED,
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
 	)
@@ -1358,8 +1357,8 @@
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 1000) //Discount for making individually - no box = less iron!
 	build_path = /obj/item/ammo_casing/caseless/foam_dart/riot
-	category = list(RND_CATEGORY_HACKED, RND_CATEGORY_WEAPONS)
 	category = list(
+		RND_CATEGORY_HACKED,
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
@@ -1370,8 +1369,8 @@
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 50000) //Comes with 40 darts
 	build_path = /obj/item/ammo_box/foambox/riot
-	category = list(RND_CATEGORY_HACKED, RND_CATEGORY_WEAPONS)
 	category = list(
+		RND_CATEGORY_HACKED,
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
@@ -1382,8 +1381,8 @@
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 4000)
 	build_path = /obj/item/ammo_casing/a357
-	category = list(RND_CATEGORY_HACKED, RND_CATEGORY_WEAPONS)
 	category = list(
+		RND_CATEGORY_HACKED,
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
@@ -1394,8 +1393,8 @@
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 30000)
 	build_path = /obj/item/ammo_box/c10mm
-	category = list(RND_CATEGORY_HACKED, RND_CATEGORY_WEAPONS)
 	category = list(
+		RND_CATEGORY_HACKED,
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
@@ -1406,8 +1405,8 @@
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 30000)
 	build_path = /obj/item/ammo_box/c45
-	category = list(RND_CATEGORY_HACKED, RND_CATEGORY_WEAPONS)
 	category = list(
+		RND_CATEGORY_HACKED,
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
@@ -1418,8 +1417,8 @@
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 30000)
 	build_path = /obj/item/ammo_box/c9mm
-	category = list(RND_CATEGORY_HACKED, RND_CATEGORY_WEAPONS)
 	category = list(
+		RND_CATEGORY_HACKED,
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
@@ -1430,8 +1429,8 @@
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 18000)
 	build_path = /obj/item/knife/butcher
-	category = list(RND_CATEGORY_HACKED, RND_CATEGORY_EQUIPMENT)
 	category = list(
+		RND_CATEGORY_HACKED,
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE
 	)
 
@@ -1700,8 +1699,8 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 100, /datum/material/glass = 50)
 	build_path = /obj/item/toy/gun
-	category = list(RND_CATEGORY_HACKED, RND_CATEGORY_EQUIPMENT)
 	category = list(
+		RND_CATEGORY_HACKED,
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
@@ -1712,8 +1711,8 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 20, /datum/material/glass = 5)
 	build_path = /obj/item/toy/ammo/gun
-	category = list(RND_CATEGORY_HACKED, RND_CATEGORY_EQUIPMENT)
 	category = list(
+		RND_CATEGORY_HACKED,
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
@@ -1724,8 +1723,8 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/plastic = 1200)
 	build_path = /obj/item/toy/balloon
-	category = list(RND_CATEGORY_HACKED, RND_CATEGORY_EQUIPMENT)
 	category = list(
+		RND_CATEGORY_HACKED,
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
@@ -1736,8 +1735,8 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/plastic = 2000)
 	build_path = /obj/item/toy/foamblade
-	category = list(RND_CATEGORY_HACKED, RND_CATEGORY_EQUIPMENT)
 	category = list(
+		RND_CATEGORY_HACKED,
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
