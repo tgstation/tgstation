@@ -28,6 +28,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	var/max_fire_temperature_sustained = 0
 
 	var/blocks_air = FALSE
+	// If this turf should initialize atmos adjacent turfs or not
+	// Optimization, not for setting outside of initialize
+	var/init_air = TRUE
 
 	var/list/image/blueprint_data //for the station blueprints, images of objects eg: pipes
 
@@ -110,17 +113,25 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	levelupdate()
 
 	if (length(smoothing_groups))
-		sortTim(smoothing_groups) //In case it's not properly ordered, let's avoid duplicate entries with the same values.
+		#ifdef UNIT_TESTS
+		assert_sorted(smoothing_groups, "[type].smoothing_groups")
+		#endif
+
 		SET_BITFLAG_LIST(smoothing_groups)
 	if (length(canSmoothWith))
-		sortTim(canSmoothWith)
+		#ifdef UNIT_TESTS
+		assert_sorted(canSmoothWith, "[type].canSmoothWith")
+		#endif
+
 		if(canSmoothWith[length(canSmoothWith)] > MAX_S_TURF) //If the last element is higher than the maximum turf-only value, then it must scan turf contents for smoothing targets.
 			smoothing_flags |= SMOOTH_OBJ
 		SET_BITFLAG_LIST(canSmoothWith)
 	if (smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
 		QUEUE_SMOOTH(src)
 
-	visibilityChanged()
+	// visibilityChanged() will never hit any path with side effects during mapload
+	if (!mapload)
+		visibilityChanged()
 
 	for(var/atom/movable/content as anything in src)
 		Entered(content, null)
@@ -146,7 +157,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		directional_opacity = ALL_CARDINALS
 
 	// apply materials properly from the default custom_materials value
-	set_custom_materials(custom_materials)
+	if (!length(custom_materials))
+		set_custom_materials(custom_materials)
 
 	if(uses_integrity)
 		atom_integrity = max_integrity
@@ -158,7 +170,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	return INITIALIZE_HINT_NORMAL
 
-/turf/proc/Initalize_Atmos(times_fired)
+/// Initializes our adjacent turfs. If you want to avoid this, do not override it, instead set init_air to FALSE
+/turf/proc/Initalize_Atmos(time)
 	CALCULATE_ADJACENT_TURFS(src, NORMAL_TURF)
 
 /turf/Destroy(force)
@@ -451,24 +464,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /turf/proc/Bless()
 	new /obj/effect/blessing(src)
-
-/turf/storage_contents_dump_act(atom/src_object, mob/user)
-	. = ..()
-	if(.)
-		return
-	if(!src_object.atom_storage)
-		return
-	var/atom/resolve_parent = src_object.atom_storage.real_location?.resolve()
-	if(!resolve_parent)
-		return FALSE
-	if(length(resolve_parent.contents))
-		to_chat(user, span_notice("You start dumping out the contents of [src_object]..."))
-		if(!do_after(user, 20, target=resolve_parent))
-			return FALSE
-
-	src_object.atom_storage.remove_all(src)
-
-	return TRUE
 
 //////////////////////////////
 //Distance procs

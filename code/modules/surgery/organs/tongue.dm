@@ -1,7 +1,7 @@
 /obj/item/organ/internal/tongue
 	name = "tongue"
 	desc = "A fleshy muscle mostly used for lying."
-	icon_state = "tonguenormal"
+	icon_state = "tongue"
 	visual = FALSE
 	zone = BODY_ZONE_PRECISE_MOUTH
 	slot = ORGAN_SLOT_TONGUE
@@ -188,7 +188,7 @@
 /obj/item/organ/internal/tongue/fly
 	name = "proboscis"
 	desc = "A freakish looking meat tube that apparently can take in liquids."
-	icon_state = "tonguefly"
+	icon = 'icons/obj/medical/organs/fly_organs.dmi'
 	say_mod = "buzzes"
 	taste_sensitivity = 25 // you eat vomit, this is a mercy
 	modifies_speech = TRUE
@@ -484,16 +484,18 @@
 	speech_args[SPEECH_MESSAGE] = new_message
 
 	// Cut our last overlay before we replace it
-	if(timeleft(tonal_timerid) > 0 && (question_found || exclamation_found))
+	if(timeleft(tonal_timerid) > 0)
 		remove_tonal_indicator()
 		deltimer(tonal_timerid)
-	if(question_found) // Prioritize questions
-		tonal_indicator = mutable_appearance('icons/mob/talk.dmi', "signlang1", TYPING_LAYER)
+	// Prioritize questions
+	if(question_found)
+		tonal_indicator = mutable_appearance('icons/mob/effects/talk.dmi', "signlang1", TYPING_LAYER)
 		owner.visible_message(span_notice("[owner] lowers [owner.p_their()] eyebrows."))
 	else if(exclamation_found)
-		tonal_indicator = mutable_appearance('icons/mob/talk.dmi', "signlang2", TYPING_LAYER)
+		tonal_indicator = mutable_appearance('icons/mob/effects/talk.dmi', "signlang2", TYPING_LAYER)
 		owner.visible_message(span_notice("[owner] raises [owner.p_their()] eyebrows."))
-	if(!isnull(tonal_indicator) && owner?.client.typing_indicators)
+	// If either an exclamation or question are found
+	if(!isnull(tonal_indicator) && owner.client?.typing_indicators)
 		owner.add_overlay(tonal_indicator)
 		tonal_timerid = addtimer(CALLBACK(src, .proc/remove_tonal_indicator), 2.5 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_STOPPABLE | TIMER_DELETE_ME)
 	else // If we're not gonna use it, just be sure we get rid of it

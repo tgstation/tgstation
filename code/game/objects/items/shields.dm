@@ -1,6 +1,6 @@
 /obj/item/shield
 	name = "shield"
-	icon = 'icons/obj/shields.dmi'
+	icon = 'icons/obj/weapons/shields.dmi'
 	block_chance = 50
 	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 0, BOMB = 30, BIO = 0, FIRE = 80, ACID = 70)
 	var/transparent = FALSE // makes beam projectiles pass through the shield
@@ -129,7 +129,7 @@
 /obj/item/shield/riot/flash/Initialize(mapload)
 	. = ..()
 	embedded_flash = new(src)
-	AddElement(/datum/element/update_icon_updates_onmob)
+	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HANDS)
 
 /obj/item/shield/riot/flash/attack(mob/living/M, mob/user)
 	. = embedded_flash.attack(M, user)

@@ -8,6 +8,7 @@
 	var/role_name = "debug rat with cancer" // Q U A L I T Y  M E M E S
 	var/list/spawned_mobs = list()
 	var/status
+	var/cached_announcement_chance
 	fakeable = FALSE
 
 /datum/round_event/ghost_role/start()
@@ -19,6 +20,9 @@
 	processing = FALSE
 
 	status = spawn_role()
+	if(isnull(cached_announcement_chance))
+		cached_announcement_chance = announce_chance //only announce once we've finished the spawning loop.
+	announce_chance = (status == SUCCESSFUL_SPAWN ? cached_announcement_chance : 0)
 	if((status == WAITING_FOR_SOMETHING))
 		if(retry >= MAX_SPAWN_ATTEMPT)
 			message_admins("[role_name] event has exceeded maximum spawn attempts. Aborting and refunding.")

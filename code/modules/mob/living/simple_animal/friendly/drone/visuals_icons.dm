@@ -18,7 +18,7 @@
 		drone_overlays[cache_index] = null
 
 
-/mob/living/simple_animal/drone/update_inv_hands()
+/mob/living/simple_animal/drone/update_held_items()
 	remove_overlay(DRONE_HANDS_LAYER)
 	var/list/hands_overlays = list()
 
@@ -63,7 +63,7 @@
 		client.screen += internal_storage
 
 
-/mob/living/simple_animal/drone/update_inv_head()
+/mob/living/simple_animal/drone/update_worn_head()
 	remove_overlay(DRONE_HEAD_LAYER)
 
 	if(head)
@@ -80,14 +80,14 @@
 
 	apply_overlay(DRONE_HEAD_LAYER)
 
-/mob/living/simple_animal/drone/update_inv_wear_mask()
-	update_inv_head()
+/mob/living/simple_animal/drone/update_worn_mask()
+	update_worn_head()
 
 /mob/living/simple_animal/drone/regenerate_icons()
 	// Drones only have 4 slots, which in this specific instance
 	// is a small blessing.
-	update_inv_hands()
-	update_inv_head()
+	update_held_items()
+	update_worn_head()
 	update_inv_internal_storage()
 
 /**
@@ -100,21 +100,21 @@
 /mob/living/simple_animal/drone/proc/pickVisualAppearance()
 	picked = FALSE
 	var/list/drone_icons = list(
-		"Maintenance Drone" = image(icon = 'icons/mob/drone.dmi', icon_state = "[MAINTDRONE]_grey"),
-		"Repair Drone" = image(icon = 'icons/mob/drone.dmi', icon_state = REPAIRDRONE),
-		"Scout Drone" = image(icon = 'icons/mob/drone.dmi', icon_state = SCOUTDRONE)
+		"Maintenance Drone" = image(icon = 'icons/mob/silicon/drone.dmi', icon_state = "[MAINTDRONE]_grey"),
+		"Repair Drone" = image(icon = 'icons/mob/silicon/drone.dmi', icon_state = REPAIRDRONE),
+		"Scout Drone" = image(icon = 'icons/mob/silicon/drone.dmi', icon_state = SCOUTDRONE)
 		)
 	var/picked_icon = show_radial_menu(src, src, drone_icons, custom_check = CALLBACK(src, .proc/check_menu), radius = 38, require_near = TRUE)
 	switch(picked_icon)
 		if("Maintenance Drone")
 			visualAppearance = MAINTDRONE
 			var/list/drone_colors = list(
-				"blue" = image(icon = 'icons/mob/drone.dmi', icon_state = "[visualAppearance]_blue"),
-				"green" = image(icon = 'icons/mob/drone.dmi', icon_state = "[visualAppearance]_green"),
-				"grey" = image(icon = 'icons/mob/drone.dmi', icon_state = "[visualAppearance]_grey"),
-				"orange" = image(icon = 'icons/mob/drone.dmi', icon_state = "[visualAppearance]_orange"),
-				"pink" = image(icon = 'icons/mob/drone.dmi', icon_state = "[visualAppearance]_pink"),
-				"red" = image(icon = 'icons/mob/drone.dmi', icon_state = "[visualAppearance]_red")
+				"blue" = image(icon = 'icons/mob/silicon/drone.dmi', icon_state = "[visualAppearance]_blue"),
+				"green" = image(icon = 'icons/mob/silicon/drone.dmi', icon_state = "[visualAppearance]_green"),
+				"grey" = image(icon = 'icons/mob/silicon/drone.dmi', icon_state = "[visualAppearance]_grey"),
+				"orange" = image(icon = 'icons/mob/silicon/drone.dmi', icon_state = "[visualAppearance]_orange"),
+				"pink" = image(icon = 'icons/mob/silicon/drone.dmi', icon_state = "[visualAppearance]_pink"),
+				"red" = image(icon = 'icons/mob/silicon/drone.dmi', icon_state = "[visualAppearance]_red")
 				)
 			var/picked_color = show_radial_menu(src, src, drone_colors, custom_check = CALLBACK(src, .proc/check_menu), radius = 38, require_near = TRUE)
 			if(picked_color)

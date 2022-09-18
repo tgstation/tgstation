@@ -168,7 +168,7 @@
 /obj/item/clothing/neck/necklace/memento_mori/proc/check_health(mob/living/source)
 	SIGNAL_HANDLER
 
-	var/list/guardians = source.hasparasites()
+	var/list/guardians = source.get_all_linked_holoparasites()
 	if(!length(guardians))
 		return
 	if(source.health <= HEALTH_THRESHOLD_DEAD)
@@ -478,6 +478,7 @@
 	if(!user.can_read(src))
 		return FALSE
 	to_chat(user, span_notice("You flip through the pages of the book, quickly and conveniently learning every language in existence. Somewhat less conveniently, the aging book crumbles to dust in the process. Whoops."))
+	user.remove_blocked_language(GLOB.all_languages, source = LANGUAGE_ALL)
 	user.grant_all_languages()
 	new /obj/effect/decal/cleanable/ash(get_turf(user))
 	qdel(src)
@@ -585,7 +586,7 @@
 
 /obj/item/clothing/gloves/gauntlets/proc/rocksmash(mob/living/carbon/human/H, atom/A, proximity)
 	SIGNAL_HANDLER
-	if(!istype(A, /turf/closed/mineral))
+	if(!ismineralturf(A))
 		return
 	A.attackby(src, H)
 	return COMPONENT_CANCEL_ATTACK_CHAIN

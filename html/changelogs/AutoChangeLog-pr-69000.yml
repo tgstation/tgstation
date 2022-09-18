@@ -1,0 +1,5 @@
+author: "MMMiracles"
+delete-after: True
+changes: 
+  - rscadd: "Tramstation's maintenance has been completely overhauled with modular parts for more variety and differing routes between rounds."
+  - qol: "Tramstation's maintenance is now more antag-friendly when it comes to dark-dwelling roles and traversing."

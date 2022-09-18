@@ -1,7 +1,7 @@
 /mob/living/simple_animal/hostile/wizard
 	name = "Space Wizard"
 	desc = "EI NATH?"
-	icon = 'icons/mob/simple_human.dmi'
+	icon = 'icons/mob/simple/simple_human.dmi'
 	icon_state = "wizard"
 	icon_living = "wizard"
 	icon_dead = "wizard_dead"

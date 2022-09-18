@@ -643,7 +643,7 @@
 	id = "plumbing_receiver"
 	build_path = /obj/item/circuitboard/machine/plumbing_receiver
 	category = list (RND_CATEGORY_TELEPORTATION_MACHINERY)
-	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SERVICE
 
 
 /datum/design/board/sheetifier
@@ -780,3 +780,11 @@
 	build_path = /obj/item/circuitboard/machine/module_duplicator
 	category = list(RND_CATEGORY_MISC_MACHINERY)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/board/coffeemaker
+	name = "Machine Design (Coffeemaker)"
+	desc = "The circuit board for a coffeemaker."
+	id = "coffeemaker"
+	build_path = /obj/item/circuitboard/machine/coffeemaker
+	category = list(RND_CATEGORY_MISC_MACHINERY)
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE

@@ -179,7 +179,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	///Species-only traits. Can be found in [code/__DEFINES/DNA.dm]
 	var/list/species_traits = list()
 	///Generic traits tied to having the species.
-	var/list/inherent_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_CAN_STRIP, TRAIT_LITERATE)
+	var/list/inherent_traits = list()
 	/// List of biotypes the mob belongs to. Used by diseases.
 	var/inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	///List of factions the mob gain upon gaining this species.
@@ -201,7 +201,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/gib_anim = "gibbed-h"
 
 
-	//Do NOT remove by setting to null. use OR make a RESPECTIVE TRAIT (removing stomach? add the NOSTOMACH trait to your species)
+	//Do NOT remove by setting to null. use OR make an ASSOCIATED TRAIT.
 	//why does it work this way? because traits also disable the downsides of not having an organ, removing organs but not having the trait will make your species die
 
 	///Replaces default brain with a different organ
@@ -253,6 +253,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	///Was the species changed from its original type at the start of the round?
 	var/roundstart_changed = FALSE
+
+	/// This supresses the "dosen't appear to be himself" examine text for if the mob is run by an AI controller. Should be used on any NPC human subtypes. Monkeys are the prime example.
+	var/ai_controlled_species = FALSE
 
 ///////////
 // PROCS //
@@ -563,7 +566,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(noggin && !(HAS_TRAIT(species_human, TRAIT_HUSK)))
 		// lipstick
 		if(species_human.lip_style && (LIPS in species_traits))
-			var/mutable_appearance/lip_overlay = mutable_appearance('icons/mob/human_face.dmi', "lips_[species_human.lip_style]", -BODY_LAYER)
+			var/mutable_appearance/lip_overlay = mutable_appearance('icons/mob/species/human/human_face.dmi', "lips_[species_human.lip_style]", -BODY_LAYER)
 			lip_overlay.color = species_human.lip_color
 			if(OFFSET_FACE in species_human.dna.species.offset_features)
 				lip_overlay.pixel_x += species_human.dna.species.offset_features[OFFSET_FACE][1]
@@ -585,7 +588,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				add_pixel_y = species_human.dna.species.offset_features[OFFSET_FACE][2]
 
 			if(!eye_organ)
-				no_eyeslay = mutable_appearance('icons/mob/human_face.dmi', "eyes_missing", -BODY_LAYER)
+				no_eyeslay = mutable_appearance('icons/mob/species/human/human_face.dmi', "eyes_missing", -BODY_LAYER)
 				no_eyeslay.pixel_x += add_pixel_x
 				no_eyeslay.pixel_y += add_pixel_y
 				standing += no_eyeslay
@@ -595,12 +598,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if(!no_eyeslay)
 				for(var/eye_overlay in eye_organ.generate_body_overlay(species_human))
 					standing += eye_overlay
-
-		// blush
-		if (HAS_TRAIT(species_human, TRAIT_BLUSHING)) // Caused by either the *blush emote or the "drunk" mood event
-			var/mutable_appearance/blush_overlay = mutable_appearance('icons/mob/human_face.dmi', "blush", -BODY_ADJ_LAYER) //should appear behind the eyes
-			blush_overlay.color = COLOR_BLUSH_PINK
-			standing += blush_overlay
 
 	// organic body markings
 	if(HAS_MARKINGS in species_traits)
@@ -789,7 +786,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 ///Proc that will randomise the hair, or primary appearance element (i.e. for moths wings) of a species' associated mob
 /datum/species/proc/randomize_main_appearance_element(mob/living/carbon/human/human_mob)
 	human_mob.hairstyle = random_hairstyle(human_mob.gender)
-	human_mob.update_hair(is_creating = TRUE)
+	human_mob.update_body_parts()
 
 ///Proc that will randomise the underwear (i.e. top, pants and socks) of a species' associated mob
 /datum/species/proc/randomize_active_underwear(mob/living/carbon/human/human_mob)
@@ -797,6 +794,19 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	human_mob.underwear = random_underwear(human_mob.gender)
 	human_mob.socks = random_socks(human_mob.gender)
 	human_mob.update_body()
+
+///Proc that will randomize all the external organs (i.e. horns, frills, tails etc.) of a species' associated mob
+/datum/species/proc/randomize_external_organs(mob/living/carbon/human/human_mob)
+	for(var/obj/item/organ/external/organ_path as anything in external_organs)
+		var/obj/item/organ/external/randomized_organ = human_mob.getorgan(organ_path)
+		if(randomized_organ)
+			var/new_look = pick(randomized_organ.get_global_feature_list())
+			human_mob.dna.features["[randomized_organ.feature_key]"] = new_look
+			mutant_bodyparts["[randomized_organ.feature_key]"] = new_look
+
+///Proc that randomizes all the appearance elements (external organs, markings, hair etc.) of a species' associated mob. Function set by child procs
+/datum/species/proc/randomize_features(mob/living/carbon/human/human_mob)
+	return
 
 /datum/species/proc/spec_life(mob/living/carbon/human/H, delta_time, times_fired)
 	if(HAS_TRAIT(H, TRAIT_NOBREATH))
@@ -1038,7 +1048,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		return
 	target.facial_hairstyle = "Shaved"
 	target.hairstyle = "Bald"
-	target.update_hair(is_creating = TRUE)
+	target.update_body_parts()
 
 //////////////////
 // ATTACK PROCS //
@@ -1101,7 +1111,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 		var/damage = rand(user.dna.species.punchdamagelow, user.dna.species.punchdamagehigh)
 
-		var/obj/item/bodypart/affecting = target.get_bodypart(ran_zone(user.zone_selected))
+		var/obj/item/bodypart/affecting = target.get_bodypart(target.get_random_valid_zone(user.zone_selected))
 
 		var/miss_chance = 100//calculate the odds that a punch misses entirely. considers stamina and brute damage of the puncher. punches miss by default to prevent weird cases
 		if(user.dna.species.punchdamagelow)
@@ -1278,13 +1288,13 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if(bloody) //Apply blood
 				if(human.wear_mask)
 					human.wear_mask.add_mob_blood(human)
-					human.update_inv_wear_mask()
+					human.update_worn_mask()
 				if(human.head)
 					human.head.add_mob_blood(human)
-					human.update_inv_head()
+					human.update_worn_head()
 				if(human.glasses && prob(33))
 					human.glasses.add_mob_blood(human)
-					human.update_inv_glasses()
+					human.update_worn_glasses()
 
 		if(BODY_ZONE_CHEST)
 			if(human.stat == CONSCIOUS && !weapon.get_sharpness() && armor_block < 50)
@@ -1296,10 +1306,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if(bloody)
 				if(human.wear_suit)
 					human.wear_suit.add_mob_blood(human)
-					human.update_inv_wear_suit()
+					human.update_worn_oversuit()
 				if(human.w_uniform)
 					human.w_uniform.add_mob_blood(human)
-					human.update_inv_w_uniform()
+					human.update_worn_undersuit()
 
 	/// Triggers force say events
 	if(weapon.force > 10 || weapon.force >= 5 && prob(33))
@@ -1320,7 +1330,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			BP = def_zone
 		else
 			if(!def_zone)
-				def_zone = ran_zone(def_zone)
+				def_zone = H.get_random_valid_zone(def_zone)
 			BP = H.get_bodypart(check_zone(def_zone))
 			if(!BP)
 				BP = H.bodyparts[1]
@@ -2207,7 +2217,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	new_species ||= target.dna.species //If no new species is provided, assume its src.
 	//Note for future: Potentionally add a new C.dna.species() to build a template species for more accurate limb replacement
 
-	if((new_species.digitigrade_customization == DIGITIGRADE_OPTIONAL && target.dna.features["legs"] == "Digitigrade Legs") || new_species.digitigrade_customization == DIGITIGRADE_FORCED)
+	if((new_species.digitigrade_customization == DIGITIGRADE_OPTIONAL && target.dna.features["legs"] == DIGITIGRADE_LEGS) || new_species.digitigrade_customization == DIGITIGRADE_FORCED)
 		new_species.bodypart_overrides[BODY_ZONE_R_LEG] = /obj/item/bodypart/r_leg/digitigrade
 		new_species.bodypart_overrides[BODY_ZONE_L_LEG] = /obj/item/bodypart/l_leg/digitigrade
 

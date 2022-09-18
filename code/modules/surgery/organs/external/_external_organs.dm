@@ -381,6 +381,9 @@
 
 	color_source = ORGAN_COLOR_OVERRIDE
 
+/obj/item/organ/external/pod_hair/get_global_feature_list()
+	return GLOB.pod_hair_list
+
 /obj/item/organ/external/pod_hair/can_draw_on_bodypart(mob/living/carbon/human/human)
 	if(!(human.head?.flags_inv & HIDEHAIR) || (human.wear_mask?.flags_inv & HIDEHAIR))
 		return TRUE

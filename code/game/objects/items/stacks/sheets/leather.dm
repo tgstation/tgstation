@@ -125,7 +125,7 @@ GLOBAL_LIST_INIT(xeno_recipes, list ( \
 	name = "alien chitin"
 	desc = "A piece of the hide of a terrible creature."
 	singular_name = "alien hide piece"
-	icon = 'icons/mob/alien.dmi'
+	icon = 'icons/mob/nonhuman-player/alien.dmi'
 	icon_state = "chitin"
 	novariants = TRUE
 	merge_type = /obj/item/stack/sheet/xenochitin
@@ -133,13 +133,13 @@ GLOBAL_LIST_INIT(xeno_recipes, list ( \
 /obj/item/xenos_claw
 	name = "alien claw"
 	desc = "The claw of a terrible creature."
-	icon = 'icons/mob/alien.dmi'
+	icon = 'icons/mob/nonhuman-player/alien.dmi'
 	icon_state = "claw"
 
 /obj/item/weed_extract
 	name = "weed extract"
 	desc = "A piece of slimy, purplish weed."
-	icon = 'icons/mob/alien.dmi'
+	icon = 'icons/mob/nonhuman-player/alien.dmi'
 	icon_state = "weed_extract"
 
 /obj/item/stack/sheet/hairlesshide
@@ -240,7 +240,7 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 /obj/item/stack/sheet/animalhide/goliath_hide
 	name = "goliath hide plates"
 	desc = "Pieces of a goliath's rocky hide, these might be able to make your suit a bit more durable to attack from the local fauna."
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/stack_objects.dmi'
 	icon_state = "goliath_hide"
 	singular_name = "hide plate"
 	max_amount = 6
@@ -260,7 +260,7 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 /obj/item/stack/sheet/animalhide/ashdrake
 	name = "ash drake hide"
 	desc = "The strong, scaled hide of an ash drake."
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/stack_objects.dmi'
 	icon_state = "dragon_hide"
 	singular_name = "drake plate"
 	max_amount = 10

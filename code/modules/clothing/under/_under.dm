@@ -2,6 +2,8 @@
 	name = "under"
 	icon = 'icons/obj/clothing/under/default.dmi'
 	worn_icon = 'icons/mob/clothing/under/default.dmi'
+	lefthand_file = 'icons/mob/inhands/clothing/suits_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	slot_flags = ITEM_SLOT_ICLOTHING
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 0, ACID = 0, WOUND = 5)
@@ -61,7 +63,7 @@
 	..()
 	if(ismob(loc))
 		var/mob/M = loc
-		M.update_inv_w_uniform()
+		M.update_worn_undersuit()
 	if(damaged_state == CLOTHING_SHREDDED && has_sensor > NO_SENSORS)
 		has_sensor = BROKEN_SENSORS
 	else if(damaged_state == CLOTHING_PRISTINE && has_sensor == BROKEN_SENSORS)
@@ -100,14 +102,14 @@
 		var/mob/living/carbon/human/H = user
 		if(H.dna.species.bodytype & BODYTYPE_DIGITIGRADE)
 			adjusted = DIGITIGRADE_STYLE
-		H.update_inv_w_uniform()
+		H.update_worn_undersuit()
 
 	if(attached_accessory && slot != ITEM_SLOT_HANDS && ishuman(user))
 		var/mob/living/carbon/human/H = user
 		attached_accessory.on_uniform_equip(src, user)
 		H.fan_hud_set_fandom()
 		if(attached_accessory.above_suit)
-			H.update_inv_wear_suit()
+			H.update_worn_oversuit()
 
 /obj/item/clothing/under/equipped(mob/living/user, slot)
 	..()
@@ -122,7 +124,7 @@
 			var/mob/living/carbon/human/H = user
 			H.fan_hud_set_fandom()
 			if(attached_accessory.above_suit)
-				H.update_inv_wear_suit()
+				H.update_worn_oversuit()
 	..()
 
 /mob/living/carbon/human/update_suit_sensors()
@@ -170,8 +172,8 @@
 		return
 
 	var/mob/living/carbon/human/holder = loc
-	holder.update_inv_w_uniform()
-	holder.update_inv_wear_suit()
+	holder.update_worn_undersuit()
+	holder.update_worn_oversuit()
 	holder.fan_hud_set_fandom()
 
 /obj/item/clothing/under/proc/remove_accessory(mob/user)
@@ -197,8 +199,8 @@
 		return
 
 	var/mob/living/carbon/human/holder = loc
-	holder.update_inv_w_uniform()
-	holder.update_inv_wear_suit()
+	holder.update_worn_undersuit()
+	holder.update_worn_oversuit()
 	holder.fan_hud_set_fandom()
 
 
@@ -230,39 +232,52 @@
 	set name = "Adjust Suit Sensors"
 	set category = "Object"
 	set src in usr
-	var/mob/M = usr
-	if (istype(M, /mob/dead/))
+	var/mob/user_mob = usr
+	if (isdead(user_mob))
 		return
-	if (!can_use(M))
+	if (!can_use(user_mob))
 		return
 	if(has_sensor == LOCKED_SENSORS)
-		to_chat(usr, "The controls are locked.")
+		to_chat(user_mob, "The controls are locked.")
 		return
 	if(has_sensor == BROKEN_SENSORS)
-		to_chat(usr, "The sensors have shorted out!")
+		to_chat(user_mob, "The sensors have shorted out!")
 		return
 	if(has_sensor <= NO_SENSORS)
-		to_chat(usr, "This suit does not have any sensors.")
+		to_chat(user_mob, "This suit does not have any sensors.")
 		return
 
 	var/list/modes = list("Off", "Binary vitals", "Exact vitals", "Tracking beacon")
-	var/switchMode = tgui_input_list(M, "Select a sensor mode", "Suit Sensors", modes, modes[sensor_mode + 1])
+	var/switchMode = tgui_input_list(user_mob, "Select a sensor mode", "Suit Sensors", modes, modes[sensor_mode + 1])
 	if(isnull(switchMode))
 		return
-	if(get_dist(usr, src) > 1)
-		to_chat(usr, span_warning("You have moved too far away!"))
+
+	if (!can_use(user_mob)) //make sure they didn't hold the window open.
+		return
+	if(get_dist(user_mob, src) > 1)
+		to_chat(user_mob, span_warning("You have moved too far away!"))
+		return
+
+	if(has_sensor == LOCKED_SENSORS)
+		to_chat(user_mob, "The controls are locked.")
+		return
+	if(has_sensor == BROKEN_SENSORS)
+		to_chat(user_mob, "The sensors have shorted out!")
+		return
+	if(has_sensor <= NO_SENSORS)
+		to_chat(user_mob, "This suit does not have any sensors.")
 		return
 	sensor_mode = modes.Find(switchMode) - 1
-	if (loc == usr)
+	if (loc == user_mob)
 		switch(sensor_mode)
 			if(SENSOR_OFF)
-				to_chat(usr, span_notice("You disable your suit's remote sensing equipment."))
+				to_chat(user_mob, span_notice("You disable your suit's remote sensing equipment."))
 			if(SENSOR_LIVING)
-				to_chat(usr, span_notice("Your suit will now only report whether you are alive or dead."))
+				to_chat(user_mob, span_notice("Your suit will now only report whether you are alive or dead."))
 			if(SENSOR_VITALS)
-				to_chat(usr, span_notice("Your suit will now only report your exact vital lifesigns."))
+				to_chat(user_mob, span_notice("Your suit will now only report your exact vital lifesigns."))
 			if(SENSOR_COORDS)
-				to_chat(usr, span_notice("Your suit will now report your exact vital lifesigns as well as your coordinate position."))
+				to_chat(user_mob, span_notice("Your suit will now report your exact vital lifesigns as well as your coordinate position."))
 
 	if(ishuman(loc))
 		var/mob/living/carbon/human/H = loc
@@ -299,7 +314,7 @@
 		to_chat(usr, span_notice("You adjust the suit back to normal."))
 	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
-		H.update_inv_w_uniform()
+		H.update_worn_undersuit()
 		H.update_body()
 
 /obj/item/clothing/under/proc/toggle_jumpsuit_adjust()
@@ -321,8 +336,7 @@
 				return adjusted
 			for(var/zone in list(BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)) // ugly check to make sure we don't reenable protection on a disabled part
 				if(damage_by_parts[zone] > limb_integrity)
-					for(var/part in body_zone2cover_flags(zone))
-						body_parts_covered &= part
+					body_parts_covered &= body_zone2cover_flags(zone)
 	return adjusted
 
 /obj/item/clothing/under/rank

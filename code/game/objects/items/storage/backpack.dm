@@ -36,7 +36,7 @@
 /obj/item/bag_of_holding_inert
 	name = "inert bag of holding"
 	desc = "What is currently a just an unwieldly block of metal with a slot ready to accept a bluespace anomaly core."
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/storage/storage.dmi'
 	icon_state = "brokenpack"
 	inhand_icon_state = "brokenpack"
 	lefthand_file = 'icons/mob/inhands/equipment/backpack_lefthand.dmi'
@@ -97,7 +97,7 @@
 	if(user.mind && HAS_TRAIT(user.mind, TRAIT_CANNOT_OPEN_PRESENTS))
 		var/turf/floor = get_turf(src)
 		var/obj/item/thing = new /obj/item/a_gift/anything(floor)
-		if(!atom_storage.attempt_insert(src, thing, user, override = TRUE))
+		if(!atom_storage.attempt_insert(thing, user, override = TRUE))
 			qdel(thing)
 
 
@@ -211,6 +211,17 @@
 	name = "emergency response team clown backpack"
 	desc = "A spacious backpack with lots of pockets, worn by Clowns of an Emergency Response Team."
 	icon_state = "ert_clown"
+
+/obj/item/storage/backpack/saddlepack
+	name = "saddlepack"
+	desc = "A backpack designed to be saddled on a mount or carried on your back, and switch between the two on the fly. It's quite spacious, at the cost of making you feel like a literal pack mule."
+	worn_icon = 'icons/mob/clothing/back/ethereal.dmi'
+	icon_state = "saddlepack"
+
+/obj/item/storage/backpack/saddlepack/Initialize(mapload)
+	. = ..()
+	atom_storage.max_total_storage = 26
+
 /*
  * Satchel Types
  */

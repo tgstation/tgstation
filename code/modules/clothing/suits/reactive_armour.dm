@@ -13,6 +13,7 @@
 		/obj/effect/anomaly/bluespace = /obj/item/clothing/suit/armor/reactive/teleport,
 		/obj/effect/anomaly/bioscrambler = /obj/item/clothing/suit/armor/reactive/bioscrambling,
 		/obj/effect/anomaly/hallucination = /obj/item/clothing/suit/armor/reactive/hallucinating,
+		/obj/effect/anomaly/dimensional = /obj/item/clothing/suit/armor/reactive/barricade,
 		)
 
 	if(istype(weapon, /obj/item/assembly/signaler/anomaly))
@@ -52,7 +53,7 @@
 
 /obj/item/clothing/suit/armor/reactive/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob)
+	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_OCLOTHING)
 
 /obj/item/clothing/suit/armor/reactive/update_icon_state()
 	. = ..()
@@ -454,3 +455,66 @@
 		qdel(picked_user_part)
 		nearby.update_body(TRUE)
 		balloon_alert(nearby, "something has changed about you")
+
+// When the wearer gets hit, this armor will push people nearby and spawn some blocking objects.
+/obj/item/clothing/suit/armor/reactive/barricade
+	name = "reactive barricade armor"
+	desc = "An experimental suit of armor that generates barriers from another world when it detects its bearer is in danger."
+	emp_message = span_warning("The reactive armor's dimensional coordinates are scrambled!")
+	cooldown_message = span_danger("The reactive barrier system is still recharging! It fails to activate!")
+	reactivearmor_cooldown_duration = 10 SECONDS
+
+/obj/item/clothing/suit/armor/reactive/barricade/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	playsound(get_turf(owner),'sound/magic/repulse.ogg', 100, TRUE)
+	owner.visible_message(span_danger("The reactive armor interposes matter from another world between [src] and [attack_text]!"))
+	for (var/atom/movable/target in repulse_targets(owner))
+		repulse(target, owner)
+
+	var/datum/armour_dimensional_theme/theme = new()
+	theme.apply_random(get_turf(owner), dangerous = FALSE)
+	qdel(theme)
+
+	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
+	return TRUE
+
+/**
+ * Returns a list of all atoms around the source which can be moved away from it.
+ *
+ * Arguments
+ * * source - Thing to try to move things away from.
+ */
+/obj/item/clothing/suit/armor/reactive/barricade/proc/repulse_targets(atom/source)
+	var/list/push_targets = list()
+	for (var/atom/movable/nearby_movable in view(1, source))
+		if(nearby_movable == source)
+			continue
+		if(nearby_movable.anchored)
+			continue
+		push_targets += nearby_movable
+	return push_targets
+
+/**
+ * Pushes something one tile away from the source.
+ *
+ * Arguments
+ * * victim - Thing being moved.
+ * * source - Thing to move it away from.
+ */
+/obj/item/clothing/suit/armor/reactive/barricade/proc/repulse(atom/movable/victim, atom/source)
+	var/dist_from_caster = get_dist(victim, source)
+
+	if(dist_from_caster == 0)
+		return
+
+	if (isliving(victim))
+		to_chat(victim, span_userdanger("You're thrown back by a wave of pressure!"))
+	var/turf/throwtarget = get_edge_target_turf(source, get_dir(source, get_step_away(victim, source, 1)))
+	victim.safe_throw_at(throwtarget, 1, 1, source, force = MOVE_FORCE_EXTREMELY_STRONG)
+
+/obj/item/clothing/suit/armor/reactive/barricade/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	owner.visible_message(span_danger("The reactive armor shunts matter from an unstable dimension!"))
+	var/datum/armour_dimensional_theme/theme = new()
+	theme.apply_random(get_turf(owner), dangerous = TRUE)
+	qdel(theme)
+	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
+	return FALSE

@@ -88,7 +88,7 @@
 	trash_type = /obj/item/trash/waffles
 	bite_consumption = 4
 	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/drug/mushroomhallucinogen = 2, /datum/reagent/consumable/nutriment/vitamin = 4)
-	tastes = list("waffle" = 1, "mushrooms" = 1)
+	tastes = list("waffles" = 1, "mushrooms" = 1)
 	foodtypes = GRAIN | VEGETABLES | SUGAR | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
 
@@ -116,7 +116,7 @@
 	name = "fortune cookie"
 	desc = "A true prophecy in each cookie!"
 	icon_state = "fortune_cookie"
-	trash_type = /obj/item/paper
+	trash_type = /obj/item/paperslip
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5)
 	tastes = list("cookie" = 1)
 	foodtypes = GRAIN | SUGAR
@@ -131,9 +131,14 @@
 	if (fortune)
 		fortune.forceMove(drop_location)
 		return fortune
-	// Otherwise, make a blank page.
-	var/out_paper = new trash_type(drop_location)
-	return out_paper
+
+	// Otherwise, use a generic one
+	var/obj/item/paperslip/fortune_slip = new trash_type(drop_location)
+	fortune_slip.name = "fortune slip"
+	// if someone adds lottery tickets in the future, be sure to add random numbers to this
+	fortune_slip.desc = pick(GLOB.wisdoms)
+
+	return fortune_slip
 
 /obj/item/food/fortunecookie/MakeLeaveTrash()
 	if(trash_type)

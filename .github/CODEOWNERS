@@ -121,7 +121,9 @@
 # Kapu1178
 
 /code/modules/surgery/bodyparts/ @Kapu1178
+/code/modules/surgery/organs/ @Kapu1178
 /code/modules/mob/living/carbon/carbon_update_icons.dm @Kapu1178
+/code/modules/mob/living/carbon/human/human_update_icons.dm @Kapu1178
 
 # MrStonedOne
 
@@ -168,6 +170,8 @@
 /tools/build/ @MrStonedOne @stylemistake
 /tools/LinuxOneShot/ @Cyberboss @MrStonedOne
 /tools/tgs4_scripts/ @Cyberboss @MrStonedOne
+
+/tools/WebhookProcessor/ @BraveMole @TiviPlus
 
 # SIC SEMPER TYRANNIS
 

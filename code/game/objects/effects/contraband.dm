@@ -14,6 +14,14 @@
 
 /obj/item/poster/Initialize(mapload, obj/structure/sign/poster/new_poster_structure)
 	. = ..()
+
+	var/static/list/hovering_item_typechecks = list(
+		/obj/item/shard = list(
+			SCREENTIP_CONTEXT_LMB = "Booby trap poster",
+		),
+	)
+	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
+
 	poster_structure = new_poster_structure
 	if(!new_poster_structure && poster_type)
 		poster_structure = new poster_type(src)
@@ -29,8 +37,6 @@
 		icon_state = poster_structure.poster_item_icon_state
 
 		name = "[name] - [poster_structure.original_name]"
-		//If the poster structure is being deleted something has gone wrong, kill yourself off too
-		RegisterSignal(poster_structure, COMSIG_PARENT_QDELETING, .proc/react_to_deletion)
 
 /obj/item/poster/attackby(obj/item/I, mob/user, params)
 	if(!istype(I, /obj/item/shard))
@@ -46,13 +52,21 @@
 	poster_structure.trap = WEAKREF(I)
 	to_chat(user, span_notice("You conceal the [I.name] inside the rolled up poster."))
 
-/obj/item/poster/Destroy()
-	poster_structure = null
+/obj/item/poster/Exited(atom/movable/gone, direction)
 	. = ..()
+	if(gone == poster_structure)
+		poster_structure = null
+		if(!QDELING(src))
+			qdel(src) //we're now a poster, huzzah!
 
-/obj/item/poster/proc/react_to_deletion()
-	SIGNAL_HANDLER
-	qdel(src)
+/obj/item/poster/handle_atom_del(atom/deleting_atom)
+	if(deleting_atom == poster_structure)
+		poster_structure.moveToNullspace() //get it the fuck out of us since atom/destroy qdels contents and it'll cause a qdel loop
+	return ..()
+
+/obj/item/poster/Destroy(force)
+	QDEL_NULL(poster_structure)
+	return ..()
 
 // These icon_states may be overridden, but are for mapper's convinence
 /obj/item/poster/random_contraband
@@ -87,6 +101,7 @@
 
 /obj/structure/sign/poster/Initialize(mapload)
 	. = ..()
+	register_context()
 	if(random_basetype)
 		randomise(random_basetype)
 	if(!ruined)
@@ -95,6 +110,23 @@
 		desc = "A large piece of space-resistant printed paper. [desc]"
 
 	AddElement(/datum/element/beauty, 300)
+
+/// Adds contextual screentips
+/obj/structure/sign/poster/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if (!held_item)
+		if (ruined)
+			return .
+		context[SCREENTIP_CONTEXT_LMB] = "Rip up poster"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if (held_item.tool_behaviour == TOOL_WIRECUTTER)
+		if (ruined)
+			context[SCREENTIP_CONTEXT_LMB] = "Clean up remnants"
+			return CONTEXTUAL_SCREENTIP_SET
+		context[SCREENTIP_CONTEXT_LMB] = "Take down poster"
+		return CONTEXTUAL_SCREENTIP_SET
+	return .
 
 /obj/structure/sign/poster/proc/randomise(base_type)
 	var/list/poster_types = subtypesof(base_type)
@@ -113,6 +145,7 @@
 	poster_item_desc = initial(selected.poster_item_desc)
 	poster_item_icon_state = initial(selected.poster_item_icon_state)
 	ruined = initial(selected.ruined)
+	update_appearance()
 
 /obj/structure/sign/poster/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_WIRECUTTER)
@@ -194,8 +227,7 @@
 
 	var/temp_loc = get_turf(user)
 	flick("poster_being_set",D)
-	D.forceMove(src)
-	qdel(P) //delete it now to cut down on sanity checks afterwards. Agouri's code supports rerolling it anyway
+	D.forceMove(src) //deletion of the poster is handled in poster/Exited(), so don't have to worry about P anymore.
 	playsound(D.loc, 'sound/items/poster_being_created.ogg', 100, TRUE)
 
 	if(do_after(user, PLACE_SPEED, target=src))

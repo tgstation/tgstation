@@ -283,6 +283,17 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 /obj/effect/mapping_helpers/atom_injector/proc/generate_stack_trace()
 	. = "[name] found no targets at ([x], [y], [z]). First Match Only: [first_match_only ? "true" : "false"] target type: [target_type] | target name: [target_name]"
 
+/obj/effect/mapping_helpers/atom_injector/obj_flag
+	name = "Obj Flag Injector"
+	icon_state = "objflag_helper"
+	var/inject_flags = NONE
+
+/obj/effect/mapping_helpers/atom_injector/obj_flag/inject(atom/target)
+	if(!isobj(target))
+		return
+	var/obj/obj_target = target
+	obj_target.obj_flags |= inject_flags
+
 ///This helper applies components to things on the map directly.
 /obj/effect/mapping_helpers/atom_injector/component_injector
 	name = "Component Injector"
@@ -474,18 +485,19 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 
 	var/reuse_trays = (trays.len < bodycount) //are we going to spawn more trays than bodies?
 
-	var/use_species = CONFIG_GET(flag/morgue_cadaver_disable_nonhumans)
+	var/use_species = !(CONFIG_GET(flag/morgue_cadaver_disable_nonhumans))
 	var/species_probability = CONFIG_GET(number/morgue_cadaver_other_species_probability)
 	var/override_species = CONFIG_GET(string/morgue_cadaver_override_species)
 	var/list/usable_races
 	if(use_species)
-		usable_races = GLOB.roundstart_races.Copy()
+		var/list/temp_list = get_selectable_species()
+		usable_races = temp_list.Copy()
 		usable_races -= SPECIES_ETHEREAL //they revive on death which is bad juju
 		LAZYREMOVE(usable_races, SPECIES_HUMAN)
 		if(!usable_races)
-			stack_trace("morgue_cadaver_disable_nonhumans. THERE ARE NO VALID NONHUMANS ENABLED")
+			notice("morgue_cadaver_disable_nonhumans. There are no valid roundstart nonhuman races enabled. Defaulting to humans only!")
 		if(override_species)
-			stack_trace("WARNING: BOTH use_all_roundstart_races_for_cadavers & morgue_cadaver_override_species CONFIGS ENABLED. morgue_cadaver_override_species BEING OVERRIDEN.")
+			warning("morgue_cadaver_override_species BEING OVERRIDEN since morgue_cadaver_disable_nonhumans is disabled.")
 	else if(override_species)
 		usable_races += override_species
 
@@ -504,7 +516,8 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 				var/datum/species/new_human_species = GLOB.species_list[species_to_pick]
 				if(new_human_species)
 					new_human.set_species(new_human_species)
-					new_human_species.randomize_main_appearance_element(new_human)
+					new_human_species = new_human.dna.species
+					new_human_species.randomize_features(new_human)
 					new_human.fully_replace_character_name(new_human.real_name, new_human_species.random_name(new_human.gender, TRUE, TRUE))
 				else
 					stack_trace("failed to spawn cadaver with species ID [species_to_pick]") //if it's invalid they'll just be a human, so no need to worry too much aside from yelling at the server owner lol.

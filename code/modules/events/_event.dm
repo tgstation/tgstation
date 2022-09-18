@@ -115,7 +115,7 @@ Runs the event
 	occurrences++
 
 	if(announce_chance_override != null)
-		E.announceChance = announce_chance_override
+		E.announce_chance = announce_chance_override
 
 	testing("[time2text(world.time, "hh:mm:ss")] [E.type]")
 	triggering = TRUE
@@ -134,7 +134,7 @@ Runs the event
 		log_game("Random Event triggering: [name] ([typepath]).")
 
 	if(alert_observers)
-		deadchat_broadcast(" has just been[random ? " randomly" : ""] triggered!", "<b>[name]</b>.", message_type=DEADCHAT_ANNOUNCEMENT) //STOP ASSUMING IT'S BADMINS!
+		deadchat_broadcast(" has just been[random ? " randomly" : ""] triggered!", "<b>[name]</b>", message_type=DEADCHAT_ANNOUNCEMENT) //STOP ASSUMING IT'S BADMINS!
 
 	SSblackbox.record_feedback("tally", "event_ran", 1, "[E]")
 	return E
@@ -152,20 +152,27 @@ Runs the event
 	var/processing = TRUE
 	var/datum/round_event_control/control
 
-	var/startWhen = 0 //When in the lifetime to call start().
-	var/announceWhen = 0 //When in the lifetime to call announce(). If you don't want it to announce use announceChance, below.
-	var/announceChance = 100 // Probability of announcing, used in prob(), 0 to 100, default 100. Called in process, and for a second time in the ion storm event.
-	var/endWhen = 0 //When in the lifetime the event should end.
+	/// When in the lifetime to call start().
+	var/start_when = 0
+	/// When in the lifetime to call announce(). If you don't want it to announce use announce_chance, below.
+	var/announce_when = 0
+	/// Probability of announcing, used in prob(), 0 to 100, default 100. Called in process, and for a second time in the ion storm event.
+	var/announce_chance = 100
+	/// When in the lifetime the event should end.
+	var/end_when = 0
 
-	var/activeFor = 0 //How long the event has existed. You don't need to change this.
-	var/current_players = 0 //Amount of of alive, non-AFK human players on server at the time of event start
-	var/fakeable = TRUE //Can be faked by fake news event.
+	/// How long the event has existed. You don't need to change this.
+	var/activeFor = 0
+	/// Amount of of alive, non-AFK human players on server at the time of event start
+	var/current_players = 0
+	/// Can be faked by fake news event.
+	var/fakeable = TRUE
 	/// Whether a admin wants this event to be cancelled
 	var/cancel_event = FALSE
 
 //Called first before processing.
 //Allows you to setup your event, such as randomly
-//setting the startWhen and or announceWhen variables.
+//setting the start_when and or announce_when variables.
 //Only called once.
 //EDIT: if there's anything you want to override within the new() call, it will not be overridden by the time this proc is called.
 //It will only have been overridden by the time we get to announce() start() tick() or end() (anything but setup basically).
@@ -173,7 +180,7 @@ Runs the event
 /datum/round_event/proc/setup()
 	return
 
-//Called when the tick is equal to the startWhen variable.
+//Called when the tick is equal to the start_when variable.
 //Allows you to start before announcing or vice versa.
 //Only called once.
 /datum/round_event/proc/start()
@@ -188,20 +195,20 @@ Runs the event
 			notify_ghosts("[control.name] has an object of interest: [atom_of_interest]!", source=atom_of_interest, action=NOTIFY_ORBIT, header="Something's Interesting!")
 	return
 
-//Called when the tick is equal to the announceWhen variable.
+//Called when the tick is equal to the announce_when variable.
 //Allows you to announce before starting or vice versa.
 //Only called once.
 /datum/round_event/proc/announce(fake)
 	return
 
-//Called on or after the tick counter is equal to startWhen.
+//Called on or after the tick counter is equal to start_when.
 //You can include code related to your event or add your own
 //time stamped events.
 //Called more than once.
 /datum/round_event/proc/tick()
 	return
 
-//Called on or after the tick is equal or more than endWhen
+//Called on or after the tick is equal or more than end_when
 //You can include code related to the event ending.
 //Do not place spawn() in here, instead use tick() to check for
 //the activeFor variable.
@@ -224,28 +231,28 @@ Runs the event
 		kill()
 		return
 
-	if(activeFor == startWhen)
+	if(activeFor == start_when)
 		processing = FALSE
 		start()
 		processing = TRUE
 
-	if(activeFor == announceWhen && prob(announceChance))
+	if(activeFor == announce_when && prob(announce_chance))
 		processing = FALSE
 		announce(FALSE)
 		processing = TRUE
 
-	if(startWhen < activeFor && activeFor < endWhen)
+	if(start_when < activeFor && activeFor < end_when)
 		processing = FALSE
 		tick()
 		processing = TRUE
 
-	if(activeFor == endWhen)
+	if(activeFor == end_when)
 		processing = FALSE
 		end()
 		processing = TRUE
 
 	// Everything is done, let's clean up.
-	if(activeFor >= endWhen && activeFor >= announceWhen && activeFor >= startWhen)
+	if(activeFor >= end_when && activeFor >= announce_when && activeFor >= start_when)
 		processing = FALSE
 		kill()
 

@@ -1,7 +1,7 @@
 /obj/item/retractor
 	name = "retractor"
 	desc = "Retracts stuff."
-	icon = 'icons/obj/surgery.dmi'
+	icon = 'icons/obj/medical/surgery_tools.dmi'
 	icon_state = "retractor"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
@@ -20,7 +20,7 @@
 /obj/item/hemostat
 	name = "hemostat"
 	desc = "You think you have seen this before."
-	icon = 'icons/obj/surgery.dmi'
+	icon = 'icons/obj/medical/surgery_tools.dmi'
 	icon_state = "hemostat"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
@@ -41,7 +41,7 @@
 /obj/item/cautery
 	name = "cautery"
 	desc = "This stops bleeding."
-	icon = 'icons/obj/surgery.dmi'
+	icon = 'icons/obj/medical/surgery_tools.dmi'
 	icon_state = "cautery"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
@@ -64,7 +64,7 @@
 /obj/item/cautery/advanced
 	name = "searing tool"
 	desc = "It projects a high power laser used for medical applications."
-	icon = 'icons/obj/surgery.dmi'
+	icon = 'icons/obj/medical/surgery_tools.dmi'
 	icon_state = "e_cautery"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
@@ -106,7 +106,7 @@
 /obj/item/surgicaldrill
 	name = "surgical drill"
 	desc = "You can drill using this item. You dig?"
-	icon = 'icons/obj/surgery.dmi'
+	icon = 'icons/obj/medical/surgery_tools.dmi'
 	icon_state = "drill"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
@@ -146,7 +146,7 @@
 /obj/item/scalpel
 	name = "scalpel"
 	desc = "Cut, cut, and once more cut."
-	icon = 'icons/obj/surgery.dmi'
+	icon = 'icons/obj/medical/surgery_tools.dmi'
 	icon_state = "scalpel"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
@@ -189,7 +189,7 @@
 /obj/item/circular_saw
 	name = "circular saw"
 	desc = "For heavy duty cutting."
-	icon = 'icons/obj/surgery.dmi'
+	icon = 'icons/obj/medical/surgery_tools.dmi'
 	icon_state = "saw"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
@@ -230,7 +230,7 @@
 /obj/item/surgical_drapes
 	name = "surgical drapes"
 	desc = "Nanotrasen brand surgical drapes provide optimal safety and infection control."
-	icon = 'icons/obj/surgery.dmi'
+	icon = 'icons/obj/medical/surgery_tools.dmi'
 	icon_state = "surgical_drapes"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
@@ -245,35 +245,56 @@
 
 
 /obj/item/surgical_processor //allows medical cyborgs to scan and initiate advanced surgeries
-	name = "\improper Surgical Processor"
+	name = "surgical processor"
 	desc = "A device for scanning and initiating surgeries from a disk or operating computer."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "spectrometer"
 	item_flags = NOBLUDGEON
-	var/list/advanced_surgeries = list()
+	var/list/loaded_surgeries = list()
 
-/obj/item/surgical_processor/afterattack(obj/item/design_holder, mob/user, proximity)
+/obj/item/surgical_processor/equipped(mob/user, slot, initial)
 	. = ..()
-	if(!proximity)
+	if(slot != ITEM_SLOT_HANDS)
+		UnregisterSignal(user, COMSIG_SURGERY_STARTING)
 		return
-	if(istype(design_holder, /obj/item/disk/surgery))
-		to_chat(user, span_notice("You load the surgery protocol from [design_holder] into [src]."))
-		var/obj/item/disk/surgery/surgery_disk = design_holder
-		if(do_after(user, 10, target = design_holder))
-			advanced_surgeries |= surgery_disk.surgeries
-		return TRUE
-	if(istype(design_holder, /obj/machinery/computer/operating))
-		to_chat(user, span_notice("You copy surgery protocols from [design_holder] into [src]."))
-		var/obj/machinery/computer/operating/OC = design_holder
-		if(do_after(user, 10, target = design_holder))
-			advanced_surgeries |= OC.advanced_surgeries
-		return TRUE
-	return
+	RegisterSignal(user, COMSIG_SURGERY_STARTING, .proc/check_surgery)
+
+/obj/item/surgical_processor/dropped(mob/user, silent)
+	. = ..()
+	UnregisterSignal(user, COMSIG_SURGERY_STARTING)
+
+/obj/item/surgical_processor/cyborg_unequip(mob/user)
+	. = ..()
+	UnregisterSignal(user, COMSIG_SURGERY_STARTING)
+
+/obj/item/surgical_processor/afterattack(atom/design_holder, mob/user, proximity)
+	if(!proximity)
+		return ..()
+	if(!istype(design_holder, /obj/item/disk/surgery) && !istype(design_holder, /obj/machinery/computer/operating))
+		return ..()
+	balloon_alert(user, "copying designs...")
+	playsound(src, 'sound/machines/terminal_processing.ogg', 25, TRUE)
+	if(do_after(user, 1 SECONDS, target = design_holder))
+		if(istype(design_holder, /obj/item/disk/surgery))
+			var/obj/item/disk/surgery/surgery_disk = design_holder
+			loaded_surgeries |= surgery_disk.surgeries
+		else
+			var/obj/machinery/computer/operating/surgery_computer = design_holder
+			loaded_surgeries |= surgery_computer.advanced_surgeries
+		playsound(src, 'sound/machines/terminal_success.ogg', 25, TRUE)
+	return TRUE
+
+/obj/item/surgical_processor/proc/check_surgery(mob/user, datum/surgery/surgery, mob/patient)
+	SIGNAL_HANDLER
+
+	if(surgery.replaced_by in loaded_surgeries)
+		return COMPONENT_CANCEL_SURGERY
+	if(surgery.type in loaded_surgeries)
+		return COMPONENT_FORCE_SURGERY
 
 /obj/item/scalpel/advanced
 	name = "laser scalpel"
 	desc = "An advanced scalpel which uses laser technology to cut."
-	icon = 'icons/obj/surgery.dmi'
 	icon_state = "e_scalpel"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
@@ -325,7 +346,7 @@
 /obj/item/retractor/advanced
 	name = "mechanical pinches"
 	desc = "An agglomerate of rods and gears."
-	icon = 'icons/obj/surgery.dmi'
+	icon = 'icons/obj/medical/surgery_tools.dmi'
 	custom_materials = list(/datum/material/iron = 12000, /datum/material/glass = 4000, /datum/material/silver = 4000, /datum/material/titanium = 5000)
 	icon_state = "adv_retractor"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
@@ -363,7 +384,7 @@
 /obj/item/shears
 	name = "amputation shears"
 	desc = "A type of heavy duty surgical shears used for achieving a clean separation between limb and patient. Keeping the patient still is imperative to be able to secure and align the shears."
-	icon = 'icons/obj/surgery.dmi'
+	icon = 'icons/obj/medical/surgery_tools.dmi'
 	icon_state = "shears"
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
@@ -443,7 +464,7 @@
 /obj/item/bonesetter
 	name = "bonesetter"
 	desc = "For setting things right."
-	icon = 'icons/obj/surgery.dmi'
+	icon = 'icons/obj/medical/surgery_tools.dmi'
 	icon_state = "bonesetter"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
@@ -459,7 +480,7 @@
 /obj/item/blood_filter
 	name = "blood filter"
 	desc = "For filtering the blood."
-	icon = 'icons/obj/surgery.dmi'
+	icon = 'icons/obj/medical/surgery_tools.dmi'
 	icon_state = "bloodfilter"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'

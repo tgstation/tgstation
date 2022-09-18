@@ -10,16 +10,12 @@
 
 	///set to null to get it greyscaled from "[icon_state]_soup". Not very usable with the whole random thing, but more types can be added if you change the spawn prob
 	var/erupting_state = null
-	//whether we are active and generating chems
-	var/activated = FALSE
 	///what chem do we produce?
 	var/reagent_id = /datum/reagent/fuel/oil
 	///how much reagents we add every process (2 seconds)
 	var/potency = 2
 	///maximum volume
 	var/max_volume = 500
-	///how much we start with after getting activated
-	var/start_volume = 50
 
 	///Have we been discovered with a mining scanner?
 	var/discovered = FALSE
@@ -35,12 +31,11 @@
 
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_NETHER, CELL_VIRUS_TABLE_GENERIC, 1, 5)
 
-///start producing chems, should be called just once
-/obj/structure/geyser/proc/start_chemming()
-	activated = TRUE
 	create_reagents(max_volume, DRAINABLE)
-	reagents.add_reagent(reagent_id, start_volume)
-	START_PROCESSING(SSplumbing, src) //It's main function is to be plumbed, so use SSplumbing
+	reagents.add_reagent(reagent_id, max_volume)
+
+	RegisterSignal(src, list(COMSIG_REAGENTS_REM_REAGENT, COMSIG_REAGENTS_DEL_REAGENT), .proc/start_chemming)
+
 	if(erupting_state)
 		icon_state = erupting_state
 	else
@@ -48,21 +43,21 @@
 		I.color = mix_color_from_reagents(reagents.reagent_list)
 		add_overlay(I)
 
+
+///start making those CHHHHHEEEEEEMS. Called whenever chems are removed, it's fine because START_PROCESSING checks if we arent already processing
+/obj/structure/geyser/proc/start_chemming()
+	START_PROCESSING(SSplumbing, src) //It's main function is to be plumbed, so use SSplumbing
+
+///We're full so stop processing
+/obj/structure/geyser/proc/stop_chemming()
+	STOP_PROCESSING(SSplumbing, src)
+
+///Add reagents until we are full
 /obj/structure/geyser/process()
-	if(activated && reagents.total_volume <= reagents.maximum_volume) //this is also evaluated in add_reagent, but from my understanding proc calls are expensive
+	if(reagents.total_volume <= reagents.maximum_volume)
 		reagents.add_reagent(reagent_id, potency)
-
-/obj/structure/geyser/plunger_act(obj/item/plunger/P, mob/living/user, _reinforced)
-	if(!_reinforced)
-		to_chat(user, span_warning("The [P.name] isn't strong enough!"))
-		return
-	if(activated)
-		to_chat(user, span_warning("The [name] is already active!"))
-		return
-
-	to_chat(user, span_notice("You start vigorously plunging [src]!"))
-	if(do_after(user, 50 * P.plunge_mod, target = src) && !activated)
-		start_chemming()
+	else
+		stop_chemming() //we're full
 
 /obj/structure/geyser/attackby(obj/item/item, mob/user, params)
 	if(!istype(item, /obj/item/mining_scanner) && !istype(item, /obj/item/t_scanner/adv_mining_scanner))

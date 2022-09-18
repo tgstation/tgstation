@@ -145,7 +145,7 @@
 			beaker.forceMove(drop_location())
 			if(!beaker.reagents)
 				continue
-			var/reagent_list = pretty_string_from_reagent_list(beaker.reagents)
+			var/reagent_list = pretty_string_from_reagent_list(beaker.reagents.reagent_list)
 			user.log_message("removed [beaker] ([reagent_list]) from [src]", LOG_GAME)
 		beakers = list()
 		to_chat(user, span_notice("You open the [initial(name)] assembly and remove the payload."))
@@ -157,7 +157,7 @@
 	to_chat(user, span_notice("You remove the activation mechanism from the [initial(name)] assembly."))
 
 /obj/item/grenade/chem_grenade/attackby(obj/item/item, mob/user, params)
-	if(istype(item, /obj/item/assembly) && stage == GRENADE_WIRED)
+	if(isassembly(item) && stage == GRENADE_WIRED)
 		wires.interact(user)
 	else if(stage == GRENADE_WIRED && is_type_in_list(item, allowed_containers))
 		. = TRUE //no afterattack

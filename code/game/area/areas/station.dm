@@ -1001,6 +1001,7 @@
 /area/station/medical/virology
 	name = "Virology"
 	icon_state = "virology"
+	ambience_index = AMBIENCE_VIROLOGY
 
 /area/station/medical/morgue
 	name = "\improper Morgue"
@@ -1369,7 +1370,7 @@
 
 // Useless room
 /area/station/science/auxlab
-	name = "\improper Auxillary Lab"
+	name = "\improper Auxiliary Lab"
 	icon_state = "aux_lab"
 
 /area/station/science/auxlab/firing_range

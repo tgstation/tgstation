@@ -31,7 +31,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	log_admin("[key_name_admin(usr)] has aimed an immovable rod [force_looping ? "(forced looping)" : ""] at [AREACOORD(special_target)].")
 
 /datum/round_event/immovable_rod
-	announceWhen = 5
+	announce_when = 5
 
 /datum/round_event/immovable_rod/announce(fake)
 	priority_announce("What the fuck was that?!", "General Alert")

@@ -36,7 +36,7 @@
 	return(FIRELOSS)
 
 /obj/item/clothing/head/chefhat/relaymove(mob/living/user, direction)
-	if(!istype(user, /mob/living/simple_animal/mouse) || !isliving(loc) || !prob(mouse_control_probability))
+	if(!ismouse(user) || !isliving(loc) || !prob(mouse_control_probability))
 		return
 	var/mob/living/L = loc
 	if(L.incapacitated(IGNORE_RESTRAINTS)) //just in case
@@ -176,6 +176,10 @@
 	armor = list(MELEE = 40, BULLET = 30, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, FIRE = 30, ACID = 60, WOUND = 6)
 	strip_delay = 60
 	dog_fashion = /datum/dog_fashion/head/warden
+
+/obj/item/clothing/head/warden/police
+	name = "police officer's hat"
+	desc = "A police officer's hat. This hat emphasizes that you are THE LAW."
 
 /obj/item/clothing/head/warden/red
 	name = "warden's hat"

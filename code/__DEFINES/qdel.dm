@@ -40,7 +40,6 @@
 #define QDEL_ITEM_SUSPENDED_FOR_LAG (1<<1) //! Set when a type can no longer be hard deleted on failure because of lag it causes while this happens.
 
 // Defines for the [gc_destroyed][/datum/var/gc_destroyed] var.
-#define GC_QUEUED_FOR_QUEUING -1
 #define GC_CURRENTLY_BEING_QDELETED -2
 
 #define QDELING(X) (X.gc_destroyed)

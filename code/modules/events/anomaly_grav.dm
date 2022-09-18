@@ -7,8 +7,8 @@
 	description = "This anomaly throws things around."
 
 /datum/round_event/anomaly/anomaly_grav
-	startWhen = 3
-	announceWhen = 20
+	start_when = 3
+	announce_when = 20
 	anomaly_path = /obj/effect/anomaly/grav
 
 /datum/round_event_control/anomaly/anomaly_grav/high
@@ -20,8 +20,8 @@
 	description = "This anomaly has an intense gravitational field, and can disable the gravity generator."
 
 /datum/round_event/anomaly/anomaly_grav/high
-	startWhen = 3
-	announceWhen = 20
+	start_when = 3
+	announce_when = 20
 	anomaly_path = /obj/effect/anomaly/grav/high
 
 /datum/round_event/anomaly/anomaly_grav/announce(fake)

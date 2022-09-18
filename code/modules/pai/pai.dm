@@ -4,11 +4,11 @@
 	density = FALSE
 	desc = "A generic pAI hard-light holographics emitter."
 	health = 500
-	held_lh = 'icons/mob/pai_item_lh.dmi'
-	held_rh = 'icons/mob/pai_item_rh.dmi'
-	head_icon = 'icons/mob/pai_item_head.dmi'
+	held_lh = 'icons/mob/inhands/pai_item_lh.dmi'
+	held_rh = 'icons/mob/inhands/pai_item_rh.dmi'
+	head_icon = 'icons/mob/clothing/head/pai_item_head.dmi'
 	hud_type = /datum/hud/pai
-	icon = 'icons/mob/pai.dmi'
+	icon = 'icons/mob/silicon/pai.dmi'
 	icon_state = "repairbot"
 	job = JOB_PERSONAL_AI
 	layer = LOW_MOB_LAYER
@@ -108,6 +108,7 @@
 		"bat" = FALSE,
 		"butterfly" = FALSE,
 		"cat" = TRUE,
+		"chicken" = FALSE,
 		"corgi" = FALSE,
 		"crow" = TRUE,
 		"duffel" = TRUE,
@@ -225,6 +226,8 @@
 		ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, PAI_FOLDED)
 	desc = "A pAI hard-light holographics emitter. This one appears in the form of a [chassis]."
 
+	RegisterSignal(src, COMSIG_LIVING_CULT_SACRIFICED, .proc/on_cult_sacrificed)
+
 /mob/living/silicon/pai/make_laws()
 	laws = new /datum/ai_laws/pai()
 	return TRUE
@@ -288,7 +291,7 @@
 	var/mob/living/carbon/holder
 	if(!holoform && iscarbon(card.loc))
 		holder = card.loc
-	if(holoform && istype(loc, /obj/item/clothing/head/mob_holder) && iscarbon(loc.loc))
+	if(holoform && ispickedupmob(loc) && iscarbon(loc.loc))
 		holder = loc.loc
 	if(!holder || !iscarbon(holder))
 		return FALSE
@@ -416,3 +419,11 @@
 	playsound(src, "sound/machines/buzz-two.ogg", 30, TRUE)
 	qdel(src)
 	return TRUE
+
+/// Signal proc for [COMSIG_LIVING_CULT_SACRIFICED] to give a funny message when a pai is attempted to be sac'd
+/mob/living/silicon/pai/proc/on_cult_sacrificed(datum/source, list/invokers)
+	SIGNAL_HANDLER
+
+	for(var/mob/living/cultist as anything in invokers)
+		to_chat(cultist, span_cultitalic("You don't think this is what Nar'Sie had in mind when She asked for blood sacrifices..."))
+	return STOP_SACRIFICE

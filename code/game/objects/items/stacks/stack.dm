@@ -460,9 +460,13 @@
 			builder.balloon_alert(builder, "must be made on a tram!")
 			return FALSE
 
-	if(recipe.on_floor)
-		if(!isfloorturf(dest_turf))
-			builder.balloon_alert(builder, "must be made on a floor!")
+	if(recipe.on_solid_ground)
+		if(isclosedturf(dest_turf))
+			builder.balloon_alert(builder, "cannot be made on a wall!")
+			return FALSE
+
+		if(is_type_in_typecache(dest_turf, GLOB.turfs_without_ground))
+			builder.balloon_alert(builder, "must be made on solid ground!")
 			return FALSE
 
 		for(var/obj/object in dest_turf)
@@ -572,6 +576,10 @@
 		return FALSE
 	if(ismob(loc) && !inhand) // no merging with items that are on the mob
 		return FALSE
+	if(istype(loc, /obj/machinery)) // no merging items in machines that aren't both in componentparts
+		var/obj/machinery/machine = loc
+		if(!(src in machine.component_parts) || !(check in machine.component_parts))
+			return FALSE
 	return TRUE
 
 /**

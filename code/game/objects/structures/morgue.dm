@@ -21,7 +21,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	density = TRUE
 	anchored = TRUE
 	max_integrity = 400
-
+	pass_flags_self = LETPASSTHROW | PASSSTRUCTURE
 	var/obj/structure/tray/connected = null
 	var/locked = FALSE
 	dir = SOUTH
@@ -240,8 +240,8 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	GLOB.crematoriums -= src
 	return ..()
 
-/obj/structure/bodycontainer/crematorium/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
-	id = "[port.id]_[id]"
+/obj/structure/bodycontainer/crematorium/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
+	id = "[port.shuttle_id]_[id]"
 
 /obj/structure/bodycontainer/crematorium/update_icon_state()
 	if(!connected || connected.loc != src)
@@ -322,7 +322,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	density = TRUE
 	var/obj/structure/bodycontainer/connected = null
 	anchored = TRUE
-	pass_flags_self = LETPASSTHROW
+	pass_flags_self = PASSTABLE | LETPASSTHROW
 	max_integrity = 350
 
 /obj/structure/tray/Destroy()
@@ -399,7 +399,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	name = "morgue tray"
 	desc = "Apply corpse before closing."
 	icon_state = "morguet"
-	pass_flags_self = PASSTABLE
+	pass_flags_self = PASSTABLE | LETPASSTHROW
 
 /obj/structure/tray/m_tray/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
