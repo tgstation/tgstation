@@ -28,6 +28,8 @@
 	var/harmful = FALSE
 	///Sound file: Sound to play when this equipment is destroyed while still attached to the mech
 	var/destroy_sound = 'sound/mecha/critdestr.ogg'
+	///Whether this equipment piece should require the mech to stand in one place to work (see drills, clamps, RCD)
+	var/requires_stationary = FALSE
 
 /obj/item/mecha_parts/mecha_equipment/Destroy()
 	if(chassis)
@@ -121,8 +123,11 @@
 
 /// do after checks for the mecha equipment do afters
 /obj/item/mecha_parts/mecha_equipment/proc/do_after_checks(atom/target, prev_chassis_loc)
+	if(!requires_stationary)
+		return (chassis) && (get_dir(chassis, target) & chassis.dir)
 	return chassis && (get_dir(chassis, target) & chassis.dir) && check_chassis_loc(prev_chassis_loc)
 
+///Checks for whether the mech is still in the same spot as it was when starting the do_after. do_after checks for user.loc, which is always the mech
 /obj/item/mecha_parts/mecha_equipment/proc/check_chassis_loc(chassis_loc)
 	if(chassis.loc != chassis_loc)
 		return FALSE

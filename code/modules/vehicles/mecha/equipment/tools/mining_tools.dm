@@ -17,6 +17,7 @@
 	tool_behaviour = TOOL_DRILL
 	toolspeed = 0.9
 	mech_flags = EXOSUIT_MODULE_WORKING | EXOSUIT_MODULE_COMBAT
+	requires_stationary = TRUE
 	var/drill_delay = 7
 	var/drill_level = DRILL_BASIC
 

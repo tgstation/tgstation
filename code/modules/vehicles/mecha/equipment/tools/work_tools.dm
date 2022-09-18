@@ -13,6 +13,7 @@
 	toolspeed = 0.8
 	harmful = TRUE
 	mech_flags = EXOSUIT_MODULE_RIPLEY
+	requires_stationary = TRUE
 	///Bool for whether we beat the hell out of things we punch (and tear off their arms)
 	var/killer_clamp = FALSE
 	///How much base damage this clamp does
@@ -228,6 +229,7 @@
 	energy_drain = 250
 	range = MECHA_MELEE|MECHA_RANGED
 	item_flags = NO_MAT_REDEMPTION
+	requires_stationary = TRUE
 	///determines what we'll so when clicking on a turf
 	var/mode = MODE_DECONSTRUCT
 
