@@ -6,10 +6,8 @@
 	icon_dead = "axolotl_dead"
 	maxHealth = 10
 	health = 10
-	attack_verb_continuous = "nibbles"
+	attack_verb_continuous = "nibbles" //their teeth are just for gripping food, not used for self defense nor even chewing
 	attack_verb_simple = "nibble"
-	melee_damage_lower = 0
-	melee_damage_upper = 0 //their teeth are just for gripping food, not used for self defense nor even chewing
 	butcher_results = list(/obj/item/food/nugget = 1)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
