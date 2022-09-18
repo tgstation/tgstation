@@ -9,7 +9,6 @@
 	materials = list(/datum/material/biomass= 20)
 	make_reagents = list(/datum/reagent/consumable/milk = 10)
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_FOOD)
-	subcategory = list()
 
 /datum/design/soymilk
 	name = "10u Soy Milk"
@@ -18,7 +17,6 @@
 	materials = list(/datum/material/biomass= 20)
 	make_reagents = list(/datum/reagent/consumable/soymilk = 10)
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_FOOD)
-	subcategory = list()
 
 /datum/design/ethanol
 	name = "10u Ethanol"
@@ -27,7 +25,6 @@
 	materials = list(/datum/material/biomass= 30)
 	make_reagents = list(/datum/reagent/consumable/ethanol = 10)
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_FOOD)
-	subcategory = list()
 
 /datum/design/cream
 	name = "10u Cream"
@@ -36,7 +33,6 @@
 	materials = list(/datum/material/biomass= 30)
 	make_reagents = list(/datum/reagent/consumable/cream = 10)
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_FOOD)
-	subcategory = list()
 
 /datum/design/black_pepper
 	name = "10u Black Pepper"
@@ -45,7 +41,6 @@
 	materials = list(/datum/material/biomass= 25)
 	make_reagents = list(/datum/reagent/consumable/blackpepper = 10)
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_FOOD)
-	subcategory = list()
 
 /datum/design/enzyme
 	name = "10u Universal Enzyme"
@@ -54,7 +49,6 @@
 	materials = list(/datum/material/biomass= 30)
 	make_reagents = list(/datum/reagent/consumable/enzyme = 10)
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_FOOD)
-	subcategory = list()
 
 /datum/design/flour
 	name = "10u Flour"
@@ -63,7 +57,6 @@
 	materials = list(/datum/material/biomass= 30)
 	make_reagents = list(/datum/reagent/consumable/flour = 10)
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_FOOD)
-	subcategory = list()
 
 /datum/design/sugar
 	name = "10u Sugar"
@@ -72,7 +65,6 @@
 	materials = list(/datum/material/biomass= 30)
 	make_reagents = list(/datum/reagent/consumable/sugar = 10)
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_FOOD)
-	subcategory = list()
 
 /datum/design/monkey_cube
 	name = "Monkey Cube"
@@ -81,7 +73,6 @@
 	materials = list(/datum/material/biomass= 250)
 	build_path = /obj/item/food/monkeycube
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_FOOD)
-	subcategory = list()
 
 /datum/design/seaweed_sheet
 	name = "Seaweed sheet"
@@ -90,7 +81,6 @@
 	materials = list(/datum/material/biomass= 30)
 	build_path = /obj/item/food/seaweedsheet
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_FOOD)
-	subcategory = list()
 
 /datum/design/ez_nut   //easy nut :)
 	name = "25u E-Z Nutrient"
@@ -99,7 +89,6 @@
 	materials = list(/datum/material/biomass= 10)
 	make_reagents = list(/datum/reagent/plantnutriment/eznutriment = 25)
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BOTANY_CHEMICALS)
-	subcategory = list()
 
 /datum/design/l4z_nut
 	name = "25u Left 4 Zed"
@@ -108,7 +97,6 @@
 	materials = list(/datum/material/biomass= 20)
 	make_reagents = list(/datum/reagent/plantnutriment/left4zednutriment = 25)
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BOTANY_CHEMICALS)
-	subcategory = list()
 
 /datum/design/rh_nut
 	name = "25u Robust Harvest"
@@ -117,7 +105,6 @@
 	materials = list(/datum/material/biomass= 25)
 	make_reagents = list(/datum/reagent/plantnutriment/robustharvestnutriment = 25)
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BOTANY_CHEMICALS)
-	subcategory = list()
 
 /datum/design/end_gro
 	name = "25u Enduro Grow"
@@ -126,7 +113,6 @@
 	materials = list(/datum/material/biomass= 30)
 	make_reagents = list(/datum/reagent/plantnutriment/endurogrow = 25)
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BOTANY_CHEMICALS)
-	subcategory = list()
 
 /datum/design/liq_earth
 	name = "25u Liquid Earthquake"
@@ -135,7 +121,6 @@
 	materials = list(/datum/material/biomass= 30)
 	make_reagents = list(/datum/reagent/plantnutriment/liquidearthquake = 25)
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BOTANY_CHEMICALS)
-	subcategory = list()
 
 /datum/design/weed_killer
 	name = "25u Weed Killer"
@@ -144,7 +129,6 @@
 	materials = list(/datum/material/biomass= 50)
 	make_reagents = list(/datum/reagent/toxin/plantbgone/weedkiller = 25)
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BOTANY_CHEMICALS)
-	subcategory = list()
 
 /datum/design/pest_spray
 	name = "25u Pest Killer"
@@ -153,7 +137,6 @@
 	materials = list(/datum/material/biomass= 50)
 	make_reagents = list(/datum/reagent/toxin/pestkiller = 25)
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BOTANY_CHEMICALS)
-	subcategory = list()
 
 /datum/design/org_pest_spray
 	name = "25u Organic Pest Killer"
@@ -162,7 +145,6 @@
 	materials = list(/datum/material/biomass= 80)
 	make_reagents = list(/datum/reagent/toxin/pestkiller/organic = 25)
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BOTANY_CHEMICALS)
-	subcategory = list()
 
 /datum/design/cloth
 	name = "Roll of Cloth"
@@ -171,7 +153,6 @@
 	materials = list(/datum/material/biomass= 50)
 	build_path = /obj/item/stack/sheet/cloth
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_ORGANIC_MATERIALS)
-	subcategory = list()
 
 /datum/design/cardboard
 	name = "Sheet of Cardboard"
@@ -180,7 +161,6 @@
 	materials = list(/datum/material/biomass= 25)
 	build_path = /obj/item/stack/sheet/cardboard
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_ORGANIC_MATERIALS)
-	subcategory = list()
 
 /datum/design/rolling_paper_pack
 	name = "Rolling Paper Pack"
@@ -189,7 +169,6 @@
 	materials = list(/datum/material/biomass= 50)
 	build_path = /obj/item/storage/fancy/rollingpapers
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_ORGANIC_MATERIALS)
-	subcategory = list()
 
 /datum/design/leather
 	name = "Sheet of Leather"
@@ -198,7 +177,6 @@
 	materials = list(/datum/material/biomass= 150)
 	build_path = /obj/item/stack/sheet/leather
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_ORGANIC_MATERIALS)
-	subcategory = list()
 
 /datum/design/secbelt
 	name = "Security Belt"
@@ -207,7 +185,6 @@
 	materials = list(/datum/material/biomass= 300)
 	build_path = /obj/item/storage/belt/security
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_ORGANIC_MATERIALS)
-	subcategory = list()
 
 /datum/design/medbelt
 	name = "Medical Belt"
@@ -216,7 +193,6 @@
 	materials = list(/datum/material/biomass= 300)
 	build_path = /obj/item/storage/belt/medical
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_ORGANIC_MATERIALS)
-	subcategory = list()
 
 /datum/design/janibelt
 	name = "Janitorial Belt"
@@ -225,7 +201,6 @@
 	materials = list(/datum/material/biomass= 300)
 	build_path = /obj/item/storage/belt/janitor
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_ORGANIC_MATERIALS)
-	subcategory = list()
 
 /datum/design/plantbelt
 	name = "Botanical Belt"
@@ -234,7 +209,6 @@
 	materials = list(/datum/material/biomass= 300)
 	build_path = /obj/item/storage/belt/plant
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_ORGANIC_MATERIALS)
-	subcategory = list()
 
 /datum/design/s_holster
 	name = "Shoulder Holster"
@@ -243,7 +217,6 @@
 	materials = list(/datum/material/biomass= 400)
 	build_path = /obj/item/storage/belt/holster
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_ORGANIC_MATERIALS)
-	subcategory = list()
 
 /datum/design/rice_hat
 	name = "Rice Hat"
@@ -252,4 +225,3 @@
 	materials = list(/datum/material/biomass= 300)
 	build_path = /obj/item/clothing/head/rice_hat
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_ORGANIC_MATERIALS)
-	subcategory = list()

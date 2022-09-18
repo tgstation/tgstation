@@ -6,9 +6,8 @@
 	build_path = /obj/item/robot_suit
 	materials = list(/datum/material/iron=15000)
 	construction_time = 500
-	category = list(RND_CATEGORY_MECHFAB_CYBORG)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_CYBORG = RND_SUBCATEGORY_MECHFAB_CYBORG_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG + RND_SUBCATEGORY_MECHFAB_CYBORG_CHASSIS
 	)
 
 /datum/design/borg_chest
@@ -18,9 +17,8 @@
 	build_path = /obj/item/bodypart/chest/robot
 	materials = list(/datum/material/iron=40000)
 	construction_time = 350
-	category = list(RND_CATEGORY_MECHFAB_CYBORG)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_CYBORG = RND_SUBCATEGORY_MECHFAB_CYBORG_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG + RND_SUBCATEGORY_MECHFAB_CYBORG_CHASSIS
 	)
 
 /datum/design/borg_head
@@ -30,9 +28,8 @@
 	build_path = /obj/item/bodypart/head/robot
 	materials = list(/datum/material/iron=5000)
 	construction_time = 350
-	category = list(RND_CATEGORY_MECHFAB_CYBORG)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_CYBORG = RND_SUBCATEGORY_MECHFAB_CYBORG_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG + RND_SUBCATEGORY_MECHFAB_CYBORG_CHASSIS
 	)
 
 /datum/design/borg_l_arm
@@ -42,9 +39,8 @@
 	build_path = /obj/item/bodypart/l_arm/robot
 	materials = list(/datum/material/iron=10000)
 	construction_time = 200
-	category = list(RND_CATEGORY_MECHFAB_CYBORG)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_CYBORG = RND_SUBCATEGORY_MECHFAB_CYBORG_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG + RND_SUBCATEGORY_MECHFAB_CYBORG_CHASSIS
 	)
 
 /datum/design/borg_r_arm
@@ -54,9 +50,8 @@
 	build_path = /obj/item/bodypart/r_arm/robot
 	materials = list(/datum/material/iron=10000)
 	construction_time = 200
-	category = list(RND_CATEGORY_MECHFAB_CYBORG)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_CYBORG = RND_SUBCATEGORY_MECHFAB_CYBORG_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG + RND_SUBCATEGORY_MECHFAB_CYBORG_CHASSIS
 	)
 
 /datum/design/borg_l_leg
@@ -66,9 +61,8 @@
 	build_path = /obj/item/bodypart/l_leg/robot
 	materials = list(/datum/material/iron=10000)
 	construction_time = 200
-	category = list(RND_CATEGORY_MECHFAB_CYBORG)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_CYBORG = RND_SUBCATEGORY_MECHFAB_CYBORG_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG + RND_SUBCATEGORY_MECHFAB_CYBORG_CHASSIS
 	)
 
 /datum/design/borg_r_leg
@@ -78,9 +72,8 @@
 	build_path = /obj/item/bodypart/r_leg/robot
 	materials = list(/datum/material/iron=10000)
 	construction_time = 200
-	category = list(RND_CATEGORY_MECHFAB_CYBORG)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_CYBORG = RND_SUBCATEGORY_MECHFAB_CYBORG_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG + RND_SUBCATEGORY_MECHFAB_CYBORG_CHASSIS
 	)
 
 //Ripley
@@ -91,9 +84,8 @@
 	build_path = /obj/item/mecha_parts/chassis/ripley
 	materials = list(/datum/material/iron=20000)
 	construction_time = 100
-	category = list(RND_CATEGORY_MECHFAB_RIPLEY)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_RIPLEY = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 /datum/design/ripley_torso
@@ -103,9 +95,8 @@
 	build_path = /obj/item/mecha_parts/part/ripley_torso
 	materials = list(/datum/material/iron=20000,/datum/material/glass = 7500)
 	construction_time = 200
-	category = list(RND_CATEGORY_MECHFAB_RIPLEY)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_RIPLEY = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 /datum/design/ripley_left_arm
@@ -115,9 +106,8 @@
 	build_path = /obj/item/mecha_parts/part/ripley_left_arm
 	materials = list(/datum/material/iron=15000)
 	construction_time = 150
-	category = list(RND_CATEGORY_MECHFAB_RIPLEY)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_RIPLEY = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 /datum/design/ripley_right_arm
@@ -127,9 +117,8 @@
 	build_path = /obj/item/mecha_parts/part/ripley_right_arm
 	materials = list(/datum/material/iron=15000)
 	construction_time = 150
-	category = list(RND_CATEGORY_MECHFAB_RIPLEY)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_RIPLEY = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 /datum/design/ripley_left_leg
@@ -139,9 +128,8 @@
 	build_path = /obj/item/mecha_parts/part/ripley_left_leg
 	materials = list(/datum/material/iron=15000)
 	construction_time = 150
-	category = list(RND_CATEGORY_MECHFAB_RIPLEY)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_RIPLEY = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 /datum/design/ripley_right_leg
@@ -151,9 +139,8 @@
 	build_path = /obj/item/mecha_parts/part/ripley_right_leg
 	materials = list(/datum/material/iron=15000)
 	construction_time = 150
-	category = list(RND_CATEGORY_MECHFAB_RIPLEY)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_RIPLEY = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 //Odysseus
@@ -164,9 +151,8 @@
 	build_path = /obj/item/mecha_parts/chassis/odysseus
 	materials = list(/datum/material/iron=20000)
 	construction_time = 100
-	category = list(RND_CATEGORY_MECHFAB_ODYSSEUS)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_ODYSSEUS = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_ODYSSEUS + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 /datum/design/odysseus_torso
@@ -176,9 +162,8 @@
 	build_path = /obj/item/mecha_parts/part/odysseus_torso
 	materials = list(/datum/material/iron=12000)
 	construction_time = 180
-	category = list(RND_CATEGORY_MECHFAB_ODYSSEUS)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_ODYSSEUS = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_ODYSSEUS + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 /datum/design/odysseus_head
@@ -188,9 +173,8 @@
 	build_path = /obj/item/mecha_parts/part/odysseus_head
 	materials = list(/datum/material/iron=6000,/datum/material/glass = 10000)
 	construction_time = 100
-	category = list(RND_CATEGORY_MECHFAB_ODYSSEUS)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_ODYSSEUS = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_ODYSSEUS + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 /datum/design/odysseus_left_arm
@@ -200,9 +184,8 @@
 	build_path = /obj/item/mecha_parts/part/odysseus_left_arm
 	materials = list(/datum/material/iron=6000)
 	construction_time = 120
-	category = list(RND_CATEGORY_MECHFAB_ODYSSEUS)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_ODYSSEUS = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_ODYSSEUS + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 /datum/design/odysseus_right_arm
@@ -212,9 +195,8 @@
 	build_path = /obj/item/mecha_parts/part/odysseus_right_arm
 	materials = list(/datum/material/iron=6000)
 	construction_time = 120
-	category = list(RND_CATEGORY_MECHFAB_ODYSSEUS)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_ODYSSEUS = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_ODYSSEUS + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 /datum/design/odysseus_left_leg
@@ -224,9 +206,8 @@
 	build_path = /obj/item/mecha_parts/part/odysseus_left_leg
 	materials = list(/datum/material/iron=7000)
 	construction_time = 130
-	category = list(RND_CATEGORY_MECHFAB_ODYSSEUS)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_ODYSSEUS = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_ODYSSEUS + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 /datum/design/odysseus_right_leg
@@ -236,9 +217,8 @@
 	build_path = /obj/item/mecha_parts/part/odysseus_right_leg
 	materials = list(/datum/material/iron=7000)
 	construction_time = 130
-	category = list(RND_CATEGORY_MECHFAB_ODYSSEUS)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_ODYSSEUS = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_ODYSSEUS + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 //Gygax
@@ -249,9 +229,8 @@
 	build_path = /obj/item/mecha_parts/chassis/gygax
 	materials = list(/datum/material/iron=20000)
 	construction_time = 100
-	category = list(RND_CATEGORY_MECHFAB_GYGAX)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_GYGAX = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 /datum/design/gygax_torso
@@ -261,9 +240,8 @@
 	build_path = /obj/item/mecha_parts/part/gygax_torso
 	materials = list(/datum/material/iron=20000,/datum/material/glass = 10000,/datum/material/gold=2000, /datum/material/silver=2000)
 	construction_time = 300
-	category = list(RND_CATEGORY_MECHFAB_GYGAX)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_GYGAX = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 /datum/design/gygax_head
@@ -273,9 +251,8 @@
 	build_path = /obj/item/mecha_parts/part/gygax_head
 	materials = list(/datum/material/iron=10000,/datum/material/glass = 5000, /datum/material/gold=2000, /datum/material/silver=2000)
 	construction_time = 200
-	category = list(RND_CATEGORY_MECHFAB_GYGAX)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_GYGAX = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 /datum/design/gygax_left_arm
@@ -285,9 +262,8 @@
 	build_path = /obj/item/mecha_parts/part/gygax_left_arm
 	materials = list(/datum/material/iron=15000, /datum/material/gold=1000, /datum/material/silver=1000)
 	construction_time = 200
-	category = list(RND_CATEGORY_MECHFAB_GYGAX)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_GYGAX = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 /datum/design/gygax_right_arm
@@ -297,9 +273,8 @@
 	build_path = /obj/item/mecha_parts/part/gygax_right_arm
 	materials = list(/datum/material/iron=15000, /datum/material/gold=1000, /datum/material/silver=1000)
 	construction_time = 200
-	category = list(RND_CATEGORY_MECHFAB_GYGAX)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_GYGAX = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 /datum/design/gygax_left_leg
@@ -309,9 +284,8 @@
 	build_path = /obj/item/mecha_parts/part/gygax_left_leg
 	materials = list(/datum/material/iron=15000, /datum/material/gold=2000, /datum/material/silver=2000)
 	construction_time = 200
-	category = list(RND_CATEGORY_MECHFAB_GYGAX)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_GYGAX = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 /datum/design/gygax_right_leg
@@ -321,9 +295,8 @@
 	build_path = /obj/item/mecha_parts/part/gygax_right_leg
 	materials = list(/datum/material/iron=15000, /datum/material/gold=2000, /datum/material/silver=2000)
 	construction_time = 200
-	category = list(RND_CATEGORY_MECHFAB_GYGAX)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_GYGAX = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 /datum/design/gygax_armor
@@ -333,9 +306,8 @@
 	build_path = /obj/item/mecha_parts/part/gygax_armor
 	materials = list(/datum/material/iron=15000,/datum/material/gold=10000, /datum/material/silver=10000, /datum/material/titanium=10000)
 	construction_time = 600
-	category = list(RND_CATEGORY_MECHFAB_GYGAX)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_GYGAX = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 //Durand
@@ -346,9 +318,8 @@
 	build_path = /obj/item/mecha_parts/chassis/durand
 	materials = list(/datum/material/iron=25000)
 	construction_time = 100
-	category = list(RND_CATEGORY_MECHFAB_DURAND)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_DURAND = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 /datum/design/durand_torso
@@ -358,9 +329,8 @@
 	build_path = /obj/item/mecha_parts/part/durand_torso
 	materials = list(/datum/material/iron=25000, /datum/material/glass = 10000,/datum/material/silver=10000)
 	construction_time = 300
-	category = list(RND_CATEGORY_MECHFAB_DURAND)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_DURAND = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 /datum/design/durand_head
@@ -370,9 +340,8 @@
 	build_path = /obj/item/mecha_parts/part/durand_head
 	materials = list(/datum/material/iron=10000,/datum/material/glass = 15000,/datum/material/silver=2000)
 	construction_time = 200
-	category = list(RND_CATEGORY_MECHFAB_DURAND)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_DURAND = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 /datum/design/durand_left_arm
@@ -382,9 +351,8 @@
 	build_path = /obj/item/mecha_parts/part/durand_left_arm
 	materials = list(/datum/material/iron=10000,/datum/material/silver=4000)
 	construction_time = 200
-	category = list(RND_CATEGORY_MECHFAB_DURAND)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_DURAND = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 /datum/design/durand_right_arm
@@ -394,9 +362,8 @@
 	build_path = /obj/item/mecha_parts/part/durand_right_arm
 	materials = list(/datum/material/iron=10000,/datum/material/silver=4000)
 	construction_time = 200
-	category = list(RND_CATEGORY_MECHFAB_DURAND)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_DURAND = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 /datum/design/durand_left_leg
@@ -406,9 +373,8 @@
 	build_path = /obj/item/mecha_parts/part/durand_left_leg
 	materials = list(/datum/material/iron=15000,/datum/material/silver=4000)
 	construction_time = 200
-	category = list(RND_CATEGORY_MECHFAB_DURAND)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_DURAND = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 /datum/design/durand_right_leg
@@ -418,9 +384,8 @@
 	build_path = /obj/item/mecha_parts/part/durand_right_leg
 	materials = list(/datum/material/iron=15000,/datum/material/silver=4000)
 	construction_time = 200
-	category = list(RND_CATEGORY_MECHFAB_DURAND)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_DURAND = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 /datum/design/durand_armor
@@ -430,9 +395,8 @@
 	build_path = /obj/item/mecha_parts/part/durand_armor
 	materials = list(/datum/material/iron=30000,/datum/material/uranium=25000,/datum/material/titanium=20000)
 	construction_time = 600
-	category = list(RND_CATEGORY_MECHFAB_DURAND)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_DURAND = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 //H.O.N.K
@@ -443,9 +407,8 @@
 	build_path = /obj/item/mecha_parts/chassis/honker
 	materials = list(/datum/material/iron=20000)
 	construction_time = 100
-	category = list(RND_CATEGORY_MECHFAB_HONK)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_HONK = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 /datum/design/honk_torso
@@ -455,9 +418,8 @@
 	build_path = /obj/item/mecha_parts/part/honker_torso
 	materials = list(/datum/material/iron=20000,/datum/material/glass = 10000,/datum/material/bananium=10000)
 	construction_time = 300
-	category = list(RND_CATEGORY_MECHFAB_HONK)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_HONK = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 /datum/design/honk_head
@@ -467,9 +429,8 @@
 	build_path = /obj/item/mecha_parts/part/honker_head
 	materials = list(/datum/material/iron=10000,/datum/material/glass = 5000,/datum/material/bananium=5000)
 	construction_time = 200
-	category = list(RND_CATEGORY_MECHFAB_HONK)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_HONK = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 /datum/design/honk_left_arm
@@ -479,9 +440,8 @@
 	build_path = /obj/item/mecha_parts/part/honker_left_arm
 	materials = list(/datum/material/iron=15000,/datum/material/bananium=5000)
 	construction_time = 200
-	category = list(RND_CATEGORY_MECHFAB_HONK)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_HONK = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 /datum/design/honk_right_arm
@@ -491,9 +451,8 @@
 	build_path = /obj/item/mecha_parts/part/honker_right_arm
 	materials = list(/datum/material/iron=15000,/datum/material/bananium=5000)
 	construction_time = 200
-	category = list(RND_CATEGORY_MECHFAB_HONK)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_HONK = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 /datum/design/honk_left_leg
@@ -503,9 +462,8 @@
 	build_path =/obj/item/mecha_parts/part/honker_left_leg
 	materials = list(/datum/material/iron=20000,/datum/material/bananium=5000)
 	construction_time = 200
-	category = list(RND_CATEGORY_MECHFAB_HONK)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_HONK = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 /datum/design/honk_right_leg
@@ -515,9 +473,8 @@
 	build_path = /obj/item/mecha_parts/part/honker_right_leg
 	materials = list(/datum/material/iron=20000,/datum/material/bananium=5000)
 	construction_time = 200
-	category = list(RND_CATEGORY_MECHFAB_HONK)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_HONK = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 //Phazon
@@ -528,9 +485,8 @@
 	build_path = /obj/item/mecha_parts/chassis/phazon
 	materials = list(/datum/material/iron=20000)
 	construction_time = 100
-	category = list(RND_CATEGORY_MECHFAB_PHAZON)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_PHAZON = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 /datum/design/phazon_torso
@@ -540,9 +496,8 @@
 	build_path = /obj/item/mecha_parts/part/phazon_torso
 	materials = list(/datum/material/iron=35000,/datum/material/glass = 10000,/datum/material/plasma=20000)
 	construction_time = 300
-	category = list(RND_CATEGORY_MECHFAB_PHAZON)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_PHAZON = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 /datum/design/phazon_head
@@ -552,9 +507,8 @@
 	build_path = /obj/item/mecha_parts/part/phazon_head
 	materials = list(/datum/material/iron=15000,/datum/material/glass = 5000,/datum/material/plasma=10000)
 	construction_time = 200
-	category = list(RND_CATEGORY_MECHFAB_PHAZON)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_PHAZON = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 /datum/design/phazon_left_arm
@@ -564,9 +518,8 @@
 	build_path = /obj/item/mecha_parts/part/phazon_left_arm
 	materials = list(/datum/material/iron=20000,/datum/material/plasma=10000)
 	construction_time = 200
-	category = list(RND_CATEGORY_MECHFAB_PHAZON)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_PHAZON = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 /datum/design/phazon_right_arm
@@ -576,9 +529,8 @@
 	build_path = /obj/item/mecha_parts/part/phazon_right_arm
 	materials = list(/datum/material/iron=20000,/datum/material/plasma=10000)
 	construction_time = 200
-	category = list(RND_CATEGORY_MECHFAB_PHAZON)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_PHAZON = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 /datum/design/phazon_left_leg
@@ -588,9 +540,8 @@
 	build_path = /obj/item/mecha_parts/part/phazon_left_leg
 	materials = list(/datum/material/iron=20000,/datum/material/plasma=10000)
 	construction_time = 200
-	category = list(RND_CATEGORY_MECHFAB_PHAZON)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_PHAZON = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 /datum/design/phazon_right_leg
@@ -600,9 +551,8 @@
 	build_path = /obj/item/mecha_parts/part/phazon_right_leg
 	materials = list(/datum/material/iron=20000,/datum/material/plasma=10000)
 	construction_time = 200
-	category = list(RND_CATEGORY_MECHFAB_PHAZON)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_PHAZON = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 /datum/design/phazon_armor
@@ -612,9 +562,8 @@
 	build_path = /obj/item/mecha_parts/part/phazon_armor
 	materials = list(/datum/material/iron=25000,/datum/material/plasma=20000,/datum/material/titanium=20000)
 	construction_time = 300
-	category = list(RND_CATEGORY_MECHFAB_PHAZON)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_PHAZON = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 //Savannah-Ivanov
@@ -625,9 +574,8 @@
 	build_path = /obj/item/mecha_parts/chassis/savannah_ivanov
 	materials = list(/datum/material/iron=20000)
 	construction_time = 100
-	category = list(RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 /datum/design/savannah_ivanov_torso
@@ -637,9 +585,8 @@
 	build_path = /obj/item/mecha_parts/part/savannah_ivanov_torso
 	materials = list(/datum/material/iron=20000,/datum/material/glass = 7500)
 	construction_time = 200
-	category = list(RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 /datum/design/savannah_ivanov_head
@@ -649,9 +596,8 @@
 	build_path = /obj/item/mecha_parts/part/savannah_ivanov_head
 	materials = list(/datum/material/iron=6000,/datum/material/glass = 10000)
 	construction_time = 100
-	category = list(RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 /datum/design/savannah_ivanov_left_arm
@@ -661,9 +607,8 @@
 	build_path = /obj/item/mecha_parts/part/savannah_ivanov_left_arm
 	materials = list(/datum/material/iron=15000)
 	construction_time = 150
-	category = list(RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 /datum/design/savannah_ivanov_right_arm
@@ -673,9 +618,8 @@
 	build_path = /obj/item/mecha_parts/part/savannah_ivanov_right_arm
 	materials = list(/datum/material/iron=15000)
 	construction_time = 150
-	category = list(RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 /datum/design/savannah_ivanov_chassis
@@ -685,9 +629,8 @@
 	build_path = /obj/item/mecha_parts/chassis/savannah_ivanov
 	materials = list(/datum/material/iron=25000)
 	construction_time = 100
-	category = list(RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 /datum/design/savannah_ivanov_torso
@@ -697,9 +640,8 @@
 	build_path = /obj/item/mecha_parts/part/savannah_ivanov_torso
 	materials = list(/datum/material/iron=25000, /datum/material/glass = 10000,/datum/material/silver=10000)
 	construction_time = 300
-	category = list(RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 /datum/design/savannah_ivanov_head
@@ -709,9 +651,8 @@
 	build_path = /obj/item/mecha_parts/part/savannah_ivanov_head
 	materials = list(/datum/material/iron=10000,/datum/material/glass = 15000,/datum/material/silver=2000)
 	construction_time = 200
-	category = list(RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 /datum/design/savannah_ivanov_left_arm
@@ -721,9 +662,8 @@
 	build_path = /obj/item/mecha_parts/part/savannah_ivanov_left_arm
 	materials = list(/datum/material/iron=10000,/datum/material/silver=4000)
 	construction_time = 200
-	category = list(RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 /datum/design/savannah_ivanov_right_arm
@@ -733,9 +673,8 @@
 	build_path = /obj/item/mecha_parts/part/savannah_ivanov_right_arm
 	materials = list(/datum/material/iron=10000,/datum/material/silver=4000)
 	construction_time = 200
-	category = list(RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 /datum/design/savannah_ivanov_left_leg
@@ -745,9 +684,8 @@
 	build_path = /obj/item/mecha_parts/part/savannah_ivanov_left_leg
 	materials = list(/datum/material/iron=15000,/datum/material/silver=4000)
 	construction_time = 200
-	category = list(RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 /datum/design/savannah_ivanov_right_leg
@@ -757,9 +695,8 @@
 	build_path = /obj/item/mecha_parts/part/savannah_ivanov_right_leg
 	materials = list(/datum/material/iron=15000,/datum/material/silver=4000)
 	construction_time = 200
-	category = list(RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 /datum/design/savannah_ivanov_armor
@@ -769,9 +706,8 @@
 	build_path = /obj/item/mecha_parts/part/savannah_ivanov_armor
 	materials = list(/datum/material/iron=30000,/datum/material/uranium=25000,/datum/material/titanium=20000)
 	construction_time = 600
-	category = list(RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 //Clarke
@@ -782,9 +718,8 @@
 	build_path = /obj/item/mecha_parts/chassis/clarke
 	materials = list(/datum/material/iron=20000)
 	construction_time = 100
-	category = list(RND_CATEGORY_MECHFAB_CLARKE)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_CLARKE = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 /datum/design/clarke_torso
@@ -794,9 +729,8 @@
 	build_path = /obj/item/mecha_parts/part/clarke_torso
 	materials = list(/datum/material/iron=20000,/datum/material/glass = 7500)
 	construction_time = 200
-	category = list(RND_CATEGORY_MECHFAB_CLARKE)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_CLARKE = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 /datum/design/clarke_head
@@ -806,9 +740,8 @@
 	build_path = /obj/item/mecha_parts/part/clarke_head
 	materials = list(/datum/material/iron=6000,/datum/material/glass = 10000)
 	construction_time = 100
-	category = list(RND_CATEGORY_MECHFAB_CLARKE)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_CLARKE = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 /datum/design/clarke_left_arm
@@ -818,9 +751,8 @@
 	build_path = /obj/item/mecha_parts/part/clarke_left_arm
 	materials = list(/datum/material/iron=15000)
 	construction_time = 150
-	category = list(RND_CATEGORY_MECHFAB_CLARKE)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_CLARKE = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 /datum/design/clarke_right_arm
@@ -830,9 +762,8 @@
 	build_path = /obj/item/mecha_parts/part/clarke_right_arm
 	materials = list(/datum/material/iron=15000)
 	construction_time = 150
-	category = list(RND_CATEGORY_MECHFAB_CLARKE)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_CLARKE = RND_SUBCATEGORY_MECHFAB_CHASSIS
+	category = list(
+		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
 //Exosuit Equipment
@@ -847,9 +778,9 @@
 		RND_CATEGORY_MECHFAB_EQUIPMENT,
 		RND_CATEGORY_MECHFAB_RIPLEY
 	)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT = RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MODULES,
-		RND_CATEGORY_MECHFAB_RIPLEY = RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+	category = list(
+		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MODULES,
+		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
 	)
 
 /datum/design/mech_hydraulic_clamp
@@ -863,9 +794,9 @@
 		RND_CATEGORY_MECHFAB_EQUIPMENT,
 		RND_CATEGORY_MECHFAB_RIPLEY
 	)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT = RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
-		RND_CATEGORY_MECHFAB_RIPLEY = RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+	category = list(
+		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
+		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
 	)
 
 /datum/design/mech_drill
@@ -884,14 +815,14 @@
 		RND_CATEGORY_MECHFAB_PHAZON,
 		RND_CATEGORY_MECHFAB_CLARKE
 	)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT = RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MINING,
-		RND_CATEGORY_MECHFAB_RIPLEY = RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_GYGAX = RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_DURAND = RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_HONK = RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_PHAZON = RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_CLARKE = RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
+	category = list(
+		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MINING,
+		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -907,10 +838,10 @@
 		RND_CATEGORY_MECHFAB_RIPLEY,
 		RND_CATEGORY_MECHFAB_CLARKE
 	)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT = RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MINING,
-		RND_CATEGORY_MECHFAB_RIPLEY = RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_CLARKE = RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
+	category = list(
+		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MINING,
+		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
 	)
 
 /datum/design/mech_extinguisher
@@ -925,10 +856,10 @@
 		RND_CATEGORY_MECHFAB_RIPLEY,
 		RND_CATEGORY_MECHFAB_CLARKE
 	)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT = RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
-		RND_CATEGORY_MECHFAB_RIPLEY = RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_CLARKE = RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
+	category = list(
+		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
+		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
 	)
 
 /datum/design/mech_generator
@@ -947,14 +878,14 @@
 		RND_CATEGORY_MECHFAB_PHAZON,
 		RND_CATEGORY_MECHFAB_CLARKE
 	)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT = RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
-		RND_CATEGORY_MECHFAB_RIPLEY = RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_GYGAX = RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_DURAND = RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_HONK = RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_PHAZON = RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_CLARKE = RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
+	category = list(
+		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
+		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -969,9 +900,9 @@
 		RND_CATEGORY_MECHFAB_EQUIPMENT,
 		RND_CATEGORY_MECHFAB_HONK
 	)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT = RND_SUBCATEGORY_MECHFAB_EQUIPMENT_HONK,
-		RND_CATEGORY_MECHFAB_HONK = RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
+	category = list(
+		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_HONK,
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -986,9 +917,9 @@
 		RND_CATEGORY_MECHFAB_EQUIPMENT,
 		RND_CATEGORY_MECHFAB_HONK
 	)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT = RND_SUBCATEGORY_MECHFAB_EQUIPMENT_HONK,
-		RND_CATEGORY_MECHFAB_HONK = RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
+	category = list(
+		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_HONK,
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -1003,9 +934,9 @@
 		RND_CATEGORY_MECHFAB_EQUIPMENT,
 		RND_CATEGORY_MECHFAB_HONK
 	)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT = RND_SUBCATEGORY_MECHFAB_EQUIPMENT_HONK,
-		RND_CATEGORY_MECHFAB_HONK = RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
+	category = list(
+		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_HONK,
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -1020,9 +951,9 @@
 		RND_CATEGORY_MECHFAB_EQUIPMENT,
 		RND_CATEGORY_MECHFAB_HONK
 	)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT = RND_SUBCATEGORY_MECHFAB_EQUIPMENT_HONK,
-		RND_CATEGORY_MECHFAB_HONK = RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
+	category = list(
+		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_HONK,
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -1037,9 +968,8 @@
 	build_path = /obj/item/borg/upgrade/rename
 	materials = list(/datum/material/iron = 5000)
 	construction_time = 120
-	category = list(RND_CATEGORY_MECHFAB_CYBORG_MODULES)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_CYBORG_MODULES = RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ALL
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ALL
 	)
 
 /datum/design/borg_upgrade_restart
@@ -1049,9 +979,8 @@
 	build_path = /obj/item/borg_restart_board
 	materials = list(/datum/material/iron = 20000 , /datum/material/glass = 5000)
 	construction_time = 120
-	category = list(RND_CATEGORY_MECHFAB_CYBORG_MODULES)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_CYBORG_MODULES = RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ALL
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ALL
 	)
 
 /datum/design/borg_upgrade_thrusters
@@ -1061,9 +990,8 @@
 	build_path = /obj/item/borg/upgrade/thrusters
 	materials = list(/datum/material/iron = 10000, /datum/material/glass = 6000, /datum/material/plasma = 5000, /datum/material/uranium = 6000)
 	construction_time = 120
-	category = list(RND_CATEGORY_MECHFAB_CYBORG_MODULES)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_CYBORG_MODULES = RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ALL
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ALL
 	)
 
 /datum/design/borg_upgrade_disablercooler
@@ -1073,9 +1001,8 @@
 	build_path = /obj/item/borg/upgrade/disablercooler
 	materials = list(/datum/material/iron = 20000 , /datum/material/glass = 6000, /datum/material/gold = 2000, /datum/material/diamond = 2000)
 	construction_time = 120
-	category = list(RND_CATEGORY_MECHFAB_CYBORG_MODULES)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_CYBORG_MODULES = RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SECURITY
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SECURITY
 	)
 
 /datum/design/borg_upgrade_diamonddrill
@@ -1085,9 +1012,8 @@
 	build_path = /obj/item/borg/upgrade/ddrill
 	materials = list(/datum/material/iron=10000, /datum/material/glass = 6000, /datum/material/diamond = 2000)
 	construction_time = 80
-	category = list(RND_CATEGORY_MECHFAB_CYBORG_MODULES)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_CYBORG_MODULES = RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MINING
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MINING
 	)
 
 /datum/design/borg_upgrade_holding
@@ -1097,9 +1023,8 @@
 	build_path = /obj/item/borg/upgrade/soh
 	materials = list(/datum/material/iron = 10000, /datum/material/gold = 2000, /datum/material/uranium = 1000)
 	construction_time = 40
-	category = list(RND_CATEGORY_MECHFAB_CYBORG_MODULES)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_CYBORG_MODULES = RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MINING
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MINING
 	)
 
 /datum/design/borg_upgrade_lavaproof
@@ -1109,9 +1034,8 @@
 	build_path = /obj/item/borg/upgrade/lavaproof
 	materials = list(/datum/material/iron = 10000, /datum/material/plasma = 4000, /datum/material/titanium = 5000)
 	construction_time = 120
-	category = list(RND_CATEGORY_MECHFAB_CYBORG_MODULES)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_CYBORG_MODULES = RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MINING
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MINING
 	)
 
 /datum/design/borg_syndicate_module
@@ -1121,9 +1045,8 @@
 	build_path = /obj/item/borg/upgrade/syndicate
 	materials = list(/datum/material/iron = 15000, /datum/material/glass = 15000, /datum/material/diamond = 10000)
 	construction_time = 120
-	category = list(RND_CATEGORY_MECHFAB_CYBORG_MODULES)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_CYBORG_MODULES = RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ALL
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ALL
 	)
 
 /datum/design/borg_transform_clown
@@ -1133,9 +1056,8 @@
 	build_path = /obj/item/borg/upgrade/transform/clown
 	materials = list(/datum/material/iron = 15000, /datum/material/glass = 15000, /datum/material/bananium = 1000)
 	construction_time = 120
-	category = list(RND_CATEGORY_MECHFAB_CYBORG_MODULES)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_CYBORG_MODULES = RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ALL
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ALL
 	)
 
 /datum/design/borg_upgrade_selfrepair
@@ -1145,9 +1067,8 @@
 	build_path = /obj/item/borg/upgrade/selfrepair
 	materials = list(/datum/material/iron = 15000, /datum/material/glass = 15000)
 	construction_time = 80
-	category = list(RND_CATEGORY_MECHFAB_CYBORG_MODULES)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_CYBORG_MODULES = RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ALL
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ALL
 	)
 
 /datum/design/borg_upgrade_expandedsynthesiser
@@ -1157,9 +1078,8 @@
 	build_path = /obj/item/borg/upgrade/hypospray/expanded
 	materials = list(/datum/material/iron = 15000, /datum/material/glass = 15000, /datum/material/plasma = 8000, /datum/material/uranium = 8000)
 	construction_time = 80
-	category = list(RND_CATEGORY_MECHFAB_CYBORG_MODULES)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_CYBORG_MODULES = RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
 	)
 
 /datum/design/borg_upgrade_piercinghypospray
@@ -1169,9 +1089,8 @@
 	build_path = /obj/item/borg/upgrade/piercing_hypospray
 	materials = list(/datum/material/iron = 15000, /datum/material/glass = 15000, /datum/material/titanium = 5000, /datum/material/diamond = 3000)
 	construction_time = 80
-	category = list(RND_CATEGORY_MECHFAB_CYBORG_MODULES)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_CYBORG_MODULES = RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
 	)
 
 /datum/design/borg_upgrade_defibrillator
@@ -1181,9 +1100,8 @@
 	build_path = /obj/item/borg/upgrade/defib
 	materials = list(/datum/material/iron = 8000, /datum/material/glass = 5000, /datum/material/silver = 4000, /datum/material/gold = 3000)
 	construction_time = 80
-	category = list(RND_CATEGORY_MECHFAB_CYBORG_MODULES)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_CYBORG_MODULES = RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
 	)
 
 /datum/design/borg_upgrade_surgicalprocessor
@@ -1193,9 +1111,8 @@
 	build_path = /obj/item/borg/upgrade/processor
 	materials = list(/datum/material/iron = 5000, /datum/material/glass = 4000, /datum/material/silver = 4000)
 	construction_time = 40
-	category = list(RND_CATEGORY_MECHFAB_CYBORG_MODULES)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_CYBORG_MODULES = RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
 	)
 
 /datum/design/borg_upgrade_trashofholding
@@ -1205,9 +1122,8 @@
 	build_path = /obj/item/borg/upgrade/tboh
 	materials = list(/datum/material/gold = 2000, /datum/material/uranium = 1000)
 	construction_time = 40
-	category = list(RND_CATEGORY_MECHFAB_CYBORG_MODULES)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_CYBORG_MODULES = RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_JANITOR
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_JANITOR
 	)
 
 /datum/design/borg_upgrade_advancedmop
@@ -1217,9 +1133,8 @@
 	build_path = /obj/item/borg/upgrade/amop
 	materials = list(/datum/material/iron = 2000, /datum/material/glass = 2000)
 	construction_time = 40
-	category = list(RND_CATEGORY_MECHFAB_CYBORG_MODULES)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_CYBORG_MODULES = RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_JANITOR
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_JANITOR
 	)
 
 /datum/design/borg_upgrade_prt
@@ -1229,9 +1144,8 @@
 	build_path = /obj/item/borg/upgrade/prt
 	materials = list(/datum/material/iron = 2500, /datum/material/glass = 750) //same price as a cautery
 	construction_time = 40
-	category = list(RND_CATEGORY_MECHFAB_CYBORG_MODULES)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_CYBORG_MODULES = RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_JANITOR
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_JANITOR
 	)
 
 /datum/design/borg_upgrade_expand
@@ -1241,9 +1155,8 @@
 	build_path = /obj/item/borg/upgrade/expand
 	materials = list(/datum/material/iron = 200000, /datum/material/titanium = 5000)
 	construction_time = 120
-	category = list(RND_CATEGORY_MECHFAB_CYBORG_MODULES)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_CYBORG_MODULES = RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ALL
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ALL
 	)
 
 /datum/design/boris_ai_controller
@@ -1253,9 +1166,8 @@
 	build_path = /obj/item/borg/upgrade/ai
 	materials = list(/datum/material/iron = 1200, /datum/material/glass = 1500, /datum/material/gold = 200)
 	construction_time = 50
-	category = list(RND_CATEGORY_MECHFAB_CYBORG)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_CYBORG = RND_SUBCATEGORY_MECHFAB_CYBORG_CONTROL_INTERFACES
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG + RND_SUBCATEGORY_MECHFAB_CYBORG_CONTROL_INTERFACES
 	)
 	search_metadata = "boris"
 
@@ -1266,9 +1178,8 @@
 	build_path = /obj/item/borg/upgrade/rped
 	materials = list(/datum/material/iron = 10000, /datum/material/glass = 5000)
 	construction_time = 120
-	category = list(RND_CATEGORY_MECHFAB_CYBORG_MODULES)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_CYBORG_MODULES = RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ENGINEERING
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ENGINEERING
 	)
 
 /datum/design/borg_upgrade_circuit_app
@@ -1278,9 +1189,8 @@
 	build_path = /obj/item/borg/upgrade/circuit_app
 	materials = list(/datum/material/iron = 2000, /datum/material/titanium = 500)
 	construction_time = 120
-	category = list(RND_CATEGORY_MECHFAB_CYBORG_MODULES)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_CYBORG_MODULES = RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ENGINEERING
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ENGINEERING
 	)
 
 /datum/design/borg_upgrade_beaker_app
@@ -1290,9 +1200,8 @@
 	build_path = /obj/item/borg/upgrade/beaker_app
 	materials = list(/datum/material/iron = 2000, /datum/material/glass = 2250) //Need glass for the new beaker too
 	construction_time = 120
-	category = list(RND_CATEGORY_MECHFAB_CYBORG_MODULES)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_CYBORG_MODULES = RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
 	)
 
 /datum/design/borg_upgrade_pinpointer
@@ -1302,9 +1211,8 @@
 	build_path = /obj/item/borg/upgrade/pinpointer
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 500)
 	construction_time = 120
-	category = list(RND_CATEGORY_MECHFAB_CYBORG_MODULES)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_CYBORG_MODULES = RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
 	)
 
 /datum/design/borg_upgrade_broomer
@@ -1314,9 +1222,8 @@
 	build_path = /obj/item/borg/upgrade/broomer
 	materials = list(/datum/material/iron = 4000, /datum/material/glass = 500)
 	construction_time = 120
-	category = list(RND_CATEGORY_MECHFAB_CYBORG_MODULES)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_CYBORG_MODULES = RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_JANITOR
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_JANITOR
 	)
 
 /datum/design/mmi
@@ -1327,9 +1234,8 @@
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 500)
 	construction_time = 75
 	build_path = /obj/item/mmi
-	category = list(RND_CATEGORY_MECHFAB_CYBORG)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_CYBORG = RND_SUBCATEGORY_MECHFAB_CYBORG_CONTROL_INTERFACES
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG + RND_SUBCATEGORY_MECHFAB_CYBORG_CONTROL_INTERFACES
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -1341,9 +1247,8 @@
 	materials = list(/datum/material/iron = 1700, /datum/material/glass = 1350, /datum/material/gold = 500)
 	construction_time = 75
 	build_path = /obj/item/mmi/posibrain
-	category = list(RND_CATEGORY_MECHFAB_CYBORG)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_CYBORG = RND_SUBCATEGORY_MECHFAB_CYBORG_CONTROL_INTERFACES
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG + RND_SUBCATEGORY_MECHFAB_CYBORG_CONTROL_INTERFACES
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -1364,14 +1269,14 @@
 		RND_CATEGORY_MECHFAB_PHAZON,
 		RND_CATEGORY_MECHFAB_CLARKE
 	)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT = RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
-		RND_CATEGORY_MECHFAB_RIPLEY = RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_GYGAX = RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_DURAND = RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_HONK = RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_PHAZON = RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_CLARKE = RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
+	category = list(
+		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
+		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -1391,14 +1296,14 @@
 		RND_CATEGORY_MECHFAB_PHAZON,
 		RND_CATEGORY_MECHFAB_CLARKE
 	)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT = RND_SUBCATEGORY_MECHFAB_EQUIPMENT_CONTROL_INTERFACES,
-		RND_CATEGORY_MECHFAB_RIPLEY = RND_SUBCATEGORY_MECHFAB_CONTROL_INTERFACES,
-		RND_CATEGORY_MECHFAB_GYGAX = RND_SUBCATEGORY_MECHFAB_CONTROL_INTERFACES,
-		RND_CATEGORY_MECHFAB_DURAND = RND_SUBCATEGORY_MECHFAB_CONTROL_INTERFACES,
-		RND_CATEGORY_MECHFAB_HONK = RND_SUBCATEGORY_MECHFAB_CONTROL_INTERFACES,
-		RND_CATEGORY_MECHFAB_PHAZON = RND_SUBCATEGORY_MECHFAB_CONTROL_INTERFACES,
-		RND_CATEGORY_MECHFAB_CLARKE = RND_SUBCATEGORY_MECHFAB_CONTROL_INTERFACES
+	category = list(
+		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_CONTROL_INTERFACES,
+		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_CONTROL_INTERFACES,
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_CONTROL_INTERFACES,
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_CONTROL_INTERFACES,
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_CONTROL_INTERFACES,
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_CONTROL_INTERFACES,
+		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_CONTROL_INTERFACES
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -1413,8 +1318,8 @@
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG
 	)
-	subcategory = list(
-		RND_CATEGORY_MECHFAB_CYBORG = RND_SUBCATEGORY_MECHFAB_CYBORG_COMPONENTS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG + RND_SUBCATEGORY_MECHFAB_CYBORG_COMPONENTS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -1428,9 +1333,8 @@
 	materials = list(/datum/material/iron = 10000, /datum/material/plasma = 5000)
 	construction_time = 25 SECONDS
 	build_path = /obj/item/mod/construction/shell
-	category = list(RND_CATEGORY_MODSUITS)
-	subcategory = list(
-		RND_CATEGORY_MODSUITS = RND_SUBCATEGORY_MODUITS_CHASSIS
+	category = list(
+		RND_CATEGORY_MODSUITS + RND_SUBCATEGORY_MODUITS_CHASSIS
 	)
 
 /datum/design/mod_helmet
@@ -1441,9 +1345,8 @@
 	materials = list(/datum/material/iron = 5000)
 	construction_time = 10 SECONDS
 	build_path = /obj/item/mod/construction/helmet
-	category = list(RND_CATEGORY_MODSUITS)
-	subcategory = list(
-		RND_CATEGORY_MODSUITS = RND_SUBCATEGORY_MODUITS_CHASSIS
+	category = list(
+		RND_CATEGORY_MODSUITS + RND_SUBCATEGORY_MODUITS_CHASSIS
 	)
 
 /datum/design/mod_chestplate
@@ -1454,9 +1357,8 @@
 	materials = list(/datum/material/iron = 5000)
 	construction_time = 10 SECONDS
 	build_path = /obj/item/mod/construction/chestplate
-	category = list(RND_CATEGORY_MODSUITS)
-	subcategory = list(
-		RND_CATEGORY_MODSUITS = RND_SUBCATEGORY_MODUITS_CHASSIS
+	category = list(
+		RND_CATEGORY_MODSUITS + RND_SUBCATEGORY_MODUITS_CHASSIS
 	)
 
 /datum/design/mod_gauntlets
@@ -1467,9 +1369,8 @@
 	materials = list(/datum/material/iron = 5000)
 	construction_time = 10 SECONDS
 	build_path = /obj/item/mod/construction/gauntlets
-	category = list(RND_CATEGORY_MODSUITS)
-	subcategory = list(
-		RND_CATEGORY_MODSUITS = RND_SUBCATEGORY_MODUITS_CHASSIS
+	category = list(
+		RND_CATEGORY_MODSUITS + RND_SUBCATEGORY_MODUITS_CHASSIS
 	)
 
 /datum/design/mod_boots
@@ -1480,9 +1381,8 @@
 	materials = list(/datum/material/iron = 5000)
 	construction_time = 10 SECONDS
 	build_path = /obj/item/mod/construction/boots
-	category = list(RND_CATEGORY_MODSUITS)
-	subcategory = list(
-		RND_CATEGORY_MODSUITS = RND_SUBCATEGORY_MODUITS_CHASSIS
+	category = list(
+		RND_CATEGORY_MODSUITS + RND_SUBCATEGORY_MODUITS_CHASSIS
 	)
 
 /datum/design/mod_plating
@@ -1493,9 +1393,8 @@
 	materials = list(/datum/material/iron = 6000, /datum/material/glass = 3000, /datum/material/plasma = 1000)
 	construction_time = 15 SECONDS
 	build_path = /obj/item/mod/construction/plating
-	category = list(RND_CATEGORY_MODSUITS)
-	subcategory = list(
-		RND_CATEGORY_MODSUITS = RND_SUBCATEGORY_MODSUITS_PLATING
+	category = list(
+		RND_CATEGORY_MODSUITS + RND_SUBCATEGORY_MODSUITS_PLATING
 	)
 	research_icon = 'icons/obj/clothing/modsuit/mod_construction.dmi'
 	research_icon_state = "standard-plating"
@@ -1550,9 +1449,8 @@
 	materials = list(/datum/material/iron = 1000, /datum/material/plastic = 500)
 	construction_time = 5 SECONDS
 	build_path = /obj/item/mod/paint
-	category = list(RND_CATEGORY_MODSUITS)
-	subcategory = list(
-		RND_CATEGORY_MODSUITS = RND_SUBCATEGORY_MODSUITS_MISC
+	category = list(
+		RND_CATEGORY_MODSUITS + RND_SUBCATEGORY_MODSUITS_MISC
 	)
 
 //MODsuit modules

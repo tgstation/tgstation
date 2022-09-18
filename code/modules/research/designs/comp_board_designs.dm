@@ -11,9 +11,8 @@
 	desc = "Allows for the construction of circuit boards used to build a new arcade machine."
 	id = "arcade_battle"
 	build_path = /obj/item/circuitboard/computer/arcade/battle
-	category = list(RND_CATEGORY_COMPUTER)
-	subcategory = list(
-		RND_CATEGORY_COMPUTER = RND_SUBCATEGORY_COMPUTER_ENTERTAINMENT
+	category = list(
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_ENTERTAINMENT
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -22,9 +21,8 @@
 	desc = "Allows for the construction of circuit boards used to build a new Orion Trail machine."
 	id = "arcade_orion"
 	build_path = /obj/item/circuitboard/computer/arcade/orion_trail
-	category = list(RND_CATEGORY_COMPUTER)
-	subcategory = list(
-		RND_CATEGORY_COMPUTER = RND_SUBCATEGORY_COMPUTER_ENTERTAINMENT
+	category = list(
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_ENTERTAINMENT
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -33,9 +31,8 @@
 	desc = "Allows for the construction of circuit boards used to build security camera computers."
 	id = "seccamera"
 	build_path = /obj/item/circuitboard/computer/security
-	category = list(RND_CATEGORY_COMPUTER)
-	subcategory = list(
-		RND_CATEGORY_COMPUTER = RND_SUBCATEGORY_COMPUTER_SECURITY
+	category = list(
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_SECURITY
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
@@ -44,9 +41,8 @@
 	desc = "Allows for the construction of circuit boards used to build research camera computers."
 	id = "rdcamera"
 	build_path = /obj/item/circuitboard/computer/research
-	category = list(RND_CATEGORY_COMPUTER)
-	subcategory = list(
-		RND_CATEGORY_COMPUTER = RND_SUBCATEGORY_COMPUTER_RESEARCH
+	category = list(
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_RESEARCH
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -55,9 +51,8 @@
 	desc = "Allows for the construction of circuit boards used to build xenobiology camera computers."
 	id = "xenobioconsole"
 	build_path = /obj/item/circuitboard/computer/xenobiology
-	category = list(RND_CATEGORY_COMPUTER)
-	subcategory = list(
-		RND_CATEGORY_COMPUTER = RND_SUBCATEGORY_COMPUTER_RESEARCH
+	category = list(
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_RESEARCH
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -67,9 +62,8 @@
 	id = "aiupload"
 	materials = list(/datum/material/glass = 1000, /datum/material/gold = 2000, /datum/material/diamond = 2000, /datum/material/bluespace = 2000)
 	build_path = /obj/item/circuitboard/computer/aiupload
-	category = list(RND_CATEGORY_COMPUTER)
-	subcategory = list(
-		RND_CATEGORY_COMPUTER = RND_SUBCATEGORY_COMPUTER_ROBOTICS
+	category = list(
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_ROBOTICS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -79,9 +73,8 @@
 	id = "borgupload"
 	materials = list(/datum/material/glass = 1000, /datum/material/gold = 2000, /datum/material/diamond = 2000, /datum/material/bluespace = 2000)
 	build_path = /obj/item/circuitboard/computer/borgupload
-	category = list(RND_CATEGORY_COMPUTER)
-	subcategory = list(
-		RND_CATEGORY_COMPUTER = RND_SUBCATEGORY_COMPUTER_ROBOTICS
+	category = list(
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_ROBOTICS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -90,9 +83,8 @@
 	desc = "Allows for the construction of circuit boards used to build a medical records console."
 	id = "med_data"
 	build_path = /obj/item/circuitboard/computer/med_data
-	category = list(RND_CATEGORY_COMPUTER)
-	subcategory = list(
-		RND_CATEGORY_COMPUTER = RND_SUBCATEGORY_COMPUTER_MEDICAL
+	category = list(
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_MEDICAL
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
@@ -101,9 +93,8 @@
 	desc = "Allows for the construction of circuit boards used to build an operating computer console."
 	id = "operating"
 	build_path = /obj/item/circuitboard/computer/operating
-	category = list(RND_CATEGORY_COMPUTER)
-	subcategory = list(
-		RND_CATEGORY_COMPUTER = RND_SUBCATEGORY_COMPUTER_MEDICAL
+	category = list(
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_MEDICAL
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -112,9 +103,8 @@
 	desc = "Allows for the construction of circuit boards used to build a PanD.E.M.I.C. 2200 console."
 	id = "pandemic"
 	build_path = /obj/item/circuitboard/computer/pandemic
-	category = list(RND_CATEGORY_COMPUTER)
-	subcategory = list(
-		RND_CATEGORY_COMPUTER = RND_SUBCATEGORY_COMPUTER_MEDICAL
+	category = list(
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_MEDICAL
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
@@ -123,9 +113,8 @@
 	desc = "Allows for the construction of circuit boards used to build a communications console."
 	id = "comconsole"
 	build_path = /obj/item/circuitboard/computer/communications
-	category = list(RND_CATEGORY_COMPUTER)
-	subcategory = list(
-		RND_CATEGORY_COMPUTER = RND_SUBCATEGORY_COMPUTER_COMMAND
+	category = list(
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_COMMAND
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SECURITY //Honestly should have a bridge techfab for this sometime.
 
@@ -135,9 +124,8 @@
 	id = "crewconsole"
 	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/computer/crew
-	category = list(RND_CATEGORY_COMPUTER)
-	subcategory = list(
-		RND_CATEGORY_COMPUTER = RND_SUBCATEGORY_COMPUTER_MEDICAL
+	category = list(
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_MEDICAL
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY | DEPARTMENT_BITFLAG_MEDICAL
 
@@ -146,9 +134,8 @@
 	desc = "Allows for the construction of circuit boards used to build a security records console."
 	id = "secdata"
 	build_path = /obj/item/circuitboard/computer/secure_data
-	category = list(RND_CATEGORY_COMPUTER)
-	subcategory = list(
-		RND_CATEGORY_COMPUTER = RND_SUBCATEGORY_COMPUTER_SECURITY
+	category = list(
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_SECURITY
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
@@ -157,9 +144,8 @@
 	desc = "Allows for the construction of circuit boards used to build an atmosphere alert console."
 	id = "atmosalerts"
 	build_path = /obj/item/circuitboard/computer/atmos_alert
-	category = list(RND_CATEGORY_COMPUTER)
-	subcategory = list(
-		RND_CATEGORY_COMPUTER = RND_SUBCATEGORY_COMPUTER_ENGINEERING
+	category = list(
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_ENGINEERING
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -168,9 +154,8 @@
 	desc = "Allows for the construction of circuit boards used to build an Atmospheric Monitor."
 	id = "atmos_control"
 	build_path = /obj/item/circuitboard/computer/atmos_control
-	category = list(RND_CATEGORY_COMPUTER)
-	subcategory = list(
-		RND_CATEGORY_COMPUTER = RND_SUBCATEGORY_COMPUTER_ENGINEERING
+	category = list(
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_ENGINEERING
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -180,9 +165,8 @@
 	id = "robocontrol"
 	materials = list(/datum/material/glass = 1000, /datum/material/gold = 1000, /datum/material/silver = 1000, /datum/material/bluespace = 2000)
 	build_path = /obj/item/circuitboard/computer/robotics
-	category = list(RND_CATEGORY_COMPUTER)
-	subcategory = list(
-		RND_CATEGORY_COMPUTER = RND_SUBCATEGORY_COMPUTER_ROBOTICS
+	category = list(
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_ROBOTICS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -191,9 +175,8 @@
 	desc = "Allows for the construction of circuit boards used to build a new slot machine."
 	id = "slotmachine"
 	build_path = /obj/item/circuitboard/computer/slot_machine
-	category = list(RND_CATEGORY_COMPUTER)
-	subcategory = list(
-		RND_CATEGORY_COMPUTER = RND_SUBCATEGORY_COMPUTER_ENTERTAINMENT
+	category = list(
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_ENTERTAINMENT
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -203,9 +186,8 @@
 	desc = "Allows for the construction of circuit boards used to build a new power monitor."
 	id = "powermonitor"
 	build_path = /obj/item/circuitboard/computer/powermonitor
-	category = list(RND_CATEGORY_COMPUTER)
-	subcategory = list(
-		RND_CATEGORY_COMPUTER = RND_SUBCATEGORY_COMPUTER_ENGINEERING
+	category = list(
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_ENGINEERING
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -214,9 +196,8 @@
 	desc = "Allows for the construction of circuit boards used to build a solar control console."
 	id = "solarcontrol"
 	build_path = /obj/item/circuitboard/computer/solar_control
-	category = list(RND_CATEGORY_COMPUTER)
-	subcategory = list(
-		RND_CATEGORY_COMPUTER = RND_SUBCATEGORY_COMPUTER_ENGINEERING
+	category = list(
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_ENGINEERING
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -225,9 +206,8 @@
 	desc = "Allows for the construction of circuit boards used to build a prisoner management console."
 	id = "prisonmanage"
 	build_path = /obj/item/circuitboard/computer/prisoner
-	category = list(RND_CATEGORY_COMPUTER)
-	subcategory = list(
-		RND_CATEGORY_COMPUTER = RND_SUBCATEGORY_COMPUTER_SECURITY
+	category = list(
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_SECURITY
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
@@ -236,9 +216,8 @@
 	desc = "Allows for the construction of circuit boards used to build an exosuit control console."
 	id = "mechacontrol"
 	build_path = /obj/item/circuitboard/computer/mecha_control
-	category = list(RND_CATEGORY_COMPUTER)
-	subcategory = list(
-		RND_CATEGORY_COMPUTER = RND_SUBCATEGORY_COMPUTER_ROBOTICS
+	category = list(
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_ROBOTICS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -247,9 +226,8 @@
 	desc = "Allows for the construction of circuit boards used to build a mech bay power control console."
 	id = "mechapower"
 	build_path = /obj/item/circuitboard/computer/mech_bay_power_console
-	category = list(RND_CATEGORY_COMPUTER)
-	subcategory = list(
-		RND_CATEGORY_COMPUTER = RND_SUBCATEGORY_COMPUTER_ROBOTICS
+	category = list(
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_ROBOTICS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -258,9 +236,8 @@
 	desc = "Allows for the construction of circuit boards used to build a new R&D console."
 	id = "rdconsole"
 	build_path = /obj/item/circuitboard/computer/rdconsole
-	category = list(RND_CATEGORY_COMPUTER)
-	subcategory = list(
-		RND_CATEGORY_COMPUTER = RND_SUBCATEGORY_COMPUTER_RESEARCH
+	category = list(
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_RESEARCH
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -270,9 +247,8 @@
 	id = "cargo"
 	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/computer/cargo
-	category = list(RND_CATEGORY_COMPUTER)
-	subcategory = list(
-		RND_CATEGORY_COMPUTER = RND_SUBCATEGORY_COMPUTER_CARGO
+	category = list(
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_CARGO
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO
 
@@ -282,9 +258,8 @@
 	id = "cargorequest"
 	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/computer/cargo/request
-	category = list(RND_CATEGORY_COMPUTER)
-	subcategory = list(
-		RND_CATEGORY_COMPUTER = RND_SUBCATEGORY_COMPUTER_CARGO
+	category = list(
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_CARGO
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO
 
@@ -293,9 +268,8 @@
 	desc = "Allows for the construction of circuit boards used to build an outpost status display console."
 	id = "mining"
 	build_path = /obj/item/circuitboard/computer/mining
-	category = list(RND_CATEGORY_COMPUTER)
-	subcategory = list(
-		RND_CATEGORY_COMPUTER = RND_SUBCATEGORY_COMPUTER_CARGO
+	category = list(
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_CARGO
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_SECURITY
 
@@ -304,9 +278,8 @@
 	desc = "Allows for the construction of circuit boards used to build a telecommunications monitor."
 	id = "comm_monitor"
 	build_path = /obj/item/circuitboard/computer/comm_monitor
-	category = list(RND_CATEGORY_COMPUTER)
-	subcategory = list(
-		RND_CATEGORY_COMPUTER = RND_SUBCATEGORY_COMPUTER_ENGINEERING
+	category = list(
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_ENGINEERING
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -315,9 +288,8 @@
 	desc = "Allows for the construction of circuit boards used to build a telecommunication server browser and monitor."
 	id = "comm_server"
 	build_path = /obj/item/circuitboard/computer/comm_server
-	category = list(RND_CATEGORY_COMPUTER)
-	subcategory = list(
-		RND_CATEGORY_COMPUTER = RND_SUBCATEGORY_COMPUTER_ENGINEERING
+	category = list(
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_ENGINEERING
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -326,9 +298,8 @@
 	desc = "Allows for the construction of circuit boards used to build a messaging monitor console."
 	id = "message_monitor"
 	build_path = /obj/item/circuitboard/computer/message_monitor
-	category = list(RND_CATEGORY_COMPUTER)
-	subcategory = list(
-		RND_CATEGORY_COMPUTER = RND_SUBCATEGORY_COMPUTER_ENGINEERING
+	category = list(
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_ENGINEERING
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -337,9 +308,8 @@
 	desc = "Allows for the construction of circuit boards used to build an AI Integrity Restorer."
 	id = "aifixer"
 	build_path = /obj/item/circuitboard/computer/aifixer
-	category = list(RND_CATEGORY_COMPUTER)
-	subcategory = list(
-		RND_CATEGORY_COMPUTER = RND_SUBCATEGORY_COMPUTER_ROBOTICS
+	category = list(
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_ROBOTICS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -348,9 +318,8 @@
 	desc = "Allows for the construction of circuit boards used to build a new library console."
 	id = "libraryconsole"
 	build_path = /obj/item/circuitboard/computer/libraryconsole
-	category = list(RND_CATEGORY_COMPUTER)
-	subcategory = list(
-		RND_CATEGORY_COMPUTER = RND_SUBCATEGORY_COMPUTER_ENTERTAINMENT
+	category = list(
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_ENTERTAINMENT
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -359,9 +328,8 @@
 	desc = "Allows for the construction of circuit boards used to build a new APC control console."
 	id = "apc_control"
 	build_path = /obj/item/circuitboard/computer/apc_control
-	category = list(RND_CATEGORY_COMPUTER)
-	subcategory = list(
-		RND_CATEGORY_COMPUTER = RND_SUBCATEGORY_COMPUTER_ENGINEERING
+	category = list(
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_ENGINEERING
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -370,9 +338,8 @@
 	desc = "Allows for the construction of circuit boards used to build advanced camera consoles."
 	id = "advanced_camera"
 	build_path = /obj/item/circuitboard/computer/advanced_camera
-	category = list(RND_CATEGORY_COMPUTER)
-	subcategory = list(
-		RND_CATEGORY_COMPUTER = RND_SUBCATEGORY_COMPUTER_SECURITY
+	category = list(
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_SECURITY
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
@@ -381,9 +348,8 @@
 	desc = "Allows for the construction of circuit boards used to build a new civilian bounty pad console."
 	id = "bounty_pad_control"
 	build_path = /obj/item/circuitboard/computer/bountypad
-	category = list(RND_CATEGORY_COMPUTER)
-	subcategory = list(
-		RND_CATEGORY_COMPUTER = RND_SUBCATEGORY_COMPUTER_CARGO
+	category = list(
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_CARGO
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO
 
@@ -393,9 +359,8 @@
 	id = "exoscanner_console"
 	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/computer/exoscanner_console
-	category = list(RND_CATEGORY_COMPUTER)
-	subcategory = list(
-		RND_CATEGORY_COMPUTER = RND_SUBCATEGORY_COMPUTER_RESEARCH
+	category = list(
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_RESEARCH
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -405,9 +370,8 @@
 	id = "exodrone_console"
 	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/computer/exodrone_console
-	category = list(RND_CATEGORY_COMPUTER)
-	subcategory = list(
-		RND_CATEGORY_COMPUTER = RND_SUBCATEGORY_COMPUTER_RESEARCH
+	category = list(
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_RESEARCH
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -417,8 +381,7 @@
 	id = "account_console"
 	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/computer/accounting
-	category = list(RND_CATEGORY_COMPUTER)
-	subcategory = list(
-		RND_CATEGORY_COMPUTER = RND_SUBCATEGORY_COMPUTER_SECURITY
+	category = list(
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_SECURITY
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY

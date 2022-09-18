@@ -10,9 +10,8 @@
 	materials = list(/datum/material/iron = 700, /datum/material/glass = 50)
 	construction_time=100
 	build_path = /obj/item/stock_parts/cell/empty
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_STOCK_PARTS)
-	subcategory = list(
-		RND_CATEGORY_STOCK_PARTS = RND_SUBCATEGORY_STOCK_PARTS_1
+	category = list(
+		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_1
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -24,9 +23,8 @@
 	materials = list(/datum/material/iron = 700, /datum/material/glass = 60)
 	construction_time=100
 	build_path = /obj/item/stock_parts/cell/high/empty
-	category = list(RND_CATEGORY_STOCK_PARTS)
-	subcategory = list(
-		RND_CATEGORY_STOCK_PARTS = RND_SUBCATEGORY_STOCK_PARTS_2
+	category = list(
+		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_2
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -38,9 +36,8 @@
 	materials = list(/datum/material/iron = 700, /datum/material/glass = 70)
 	construction_time=100
 	build_path = /obj/item/stock_parts/cell/super/empty
-	category = list(RND_CATEGORY_STOCK_PARTS)
-	subcategory = list(
-		RND_CATEGORY_STOCK_PARTS = RND_SUBCATEGORY_STOCK_PARTS_3
+	category = list(
+		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_3
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -52,9 +49,8 @@
 	materials = list(/datum/material/iron = 700, /datum/material/gold = 150, /datum/material/silver = 150, /datum/material/glass = 80)
 	construction_time=100
 	build_path = /obj/item/stock_parts/cell/hyper/empty
-	category = list(RND_CATEGORY_STOCK_PARTS)
-	subcategory = list(
-		RND_CATEGORY_STOCK_PARTS = RND_SUBCATEGORY_STOCK_PARTS_3
+	category = list(
+		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_3
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -66,9 +62,8 @@
 	materials = list(/datum/material/iron = 800, /datum/material/gold = 120, /datum/material/glass = 160, /datum/material/diamond = 160, /datum/material/titanium = 300, /datum/material/bluespace = 100)
 	construction_time=100
 	build_path = /obj/item/stock_parts/cell/bluespace/empty
-	category = list(RND_CATEGORY_STOCK_PARTS)
-	subcategory = list(
-		RND_CATEGORY_STOCK_PARTS = RND_SUBCATEGORY_STOCK_PARTS_4
+	category = list(
+		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_4
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -79,9 +74,8 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 3000, /datum/material/glass = 1000)
 	build_path = /obj/item/inducer/sci
-	category = list(RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_ENGINEERING_TOOLS
+	category = list(
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -90,9 +84,8 @@
 	desc = "The circuit board for a PACMAN-type portable generator."
 	id = "pacman"
 	build_path = /obj/item/circuitboard/machine/pacman
-	category = list(RND_CATEGORY_MACHINE)
-	subcategory = list(
-		RND_CATEGORY_MACHINE = RND_SUBCATEGORY_MACHINE_ENGINEERING
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -104,9 +97,8 @@
 	materials = list(/datum/material/iron = 500)
 	construction_time = 100
 	build_path = /obj/item/turbine_parts/compressor
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_STOCK_PARTS)
-	subcategory = list(
-		RND_CATEGORY_STOCK_PARTS = RND_SUBCATEGORY_STOCK_PARTS_TURBINE
+	category = list(
+		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_TURBINE
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -118,9 +110,8 @@
 	materials = list(/datum/material/iron = 500)
 	construction_time = 100
 	build_path = /obj/item/turbine_parts/rotor
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_STOCK_PARTS)
-	subcategory = list(
-		RND_CATEGORY_STOCK_PARTS = RND_SUBCATEGORY_STOCK_PARTS_TURBINE
+	category = list(
+		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_TURBINE
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -132,8 +123,7 @@
 	materials = list(/datum/material/iron = 500)
 	construction_time = 100
 	build_path = /obj/item/turbine_parts/stator
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_STOCK_PARTS)
-	subcategory = list(
-		RND_CATEGORY_STOCK_PARTS = RND_SUBCATEGORY_STOCK_PARTS_TURBINE
+	category = list(
+		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_TURBINE
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING

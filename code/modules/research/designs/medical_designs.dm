@@ -8,9 +8,8 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 50)
 	build_path = /obj/item/healthanalyzer
-	category = list(RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_MEDICAL_TOOLS
+	category = list(
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -20,9 +19,8 @@
 	id = "bluespacebeaker"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/glass = 5000, /datum/material/plastic = 3000, /datum/material/diamond = 1000, /datum/material/bluespace = 1000)
-	category = list(RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_CHEMISTRY_EQUIPMENT
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY
 	)
 	build_path = /obj/item/reagent_containers/cup/beaker/bluespace
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
@@ -33,9 +31,8 @@
 	id = "splitbeaker"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 3000)
-	category = list(RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_CHEMISTRY_EQUIPMENT
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY
 	)
 	build_path = /obj/item/reagent_containers/cup/beaker/noreact
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
@@ -45,9 +42,8 @@
 	id = "xlarge_beaker"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/glass = 2500, /datum/material/plastic = 3000)
-	category = list(RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_CHEMISTRY_EQUIPMENT
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY
 	)
 	build_path = /obj/item/reagent_containers/cup/beaker/plastic
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
@@ -57,9 +53,8 @@
 	id = "meta_beaker"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/glass = 2500, /datum/material/plastic = 3000, /datum/material/gold = 1000, /datum/material/titanium = 1000)
-	category = list(RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_CHEMISTRY_EQUIPMENT
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY
 	)
 	build_path = /obj/item/reagent_containers/cup/beaker/meta
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
@@ -70,9 +65,8 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/glass = 2500, /datum/material/gold = 1000, /datum/material/titanium = 1000)
 	build_path = /obj/item/ph_meter
-	category = list(RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_CHEMISTRY_EQUIPMENT
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -83,9 +77,8 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/glass = 2000, /datum/material/plasma = 1000, /datum/material/diamond = 1000, /datum/material/bluespace = 500)
 	build_path = /obj/item/reagent_containers/syringe/bluespace
-	category = list(RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_CHEMISTRY_EQUIPMENT
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -96,9 +89,8 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 300, /datum/material/glass = 100, /datum/material/silver = 50)
 	build_path = /obj/item/disk/data
-	category = list(RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_EQUIPMENT_GENETICS
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_GENETICS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -109,9 +101,8 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/glass = 2000, /datum/material/diamond = 1000)
 	build_path = /obj/item/reagent_containers/syringe/piercing
-	category = list(RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_CHEMISTRY_EQUIPMENT
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -122,9 +113,8 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 3000, /datum/material/plasma = 2000, /datum/material/diamond = 500, /datum/material/bluespace = 500)
 	build_path = /obj/item/bodybag/bluespace
-	category = list(RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_MEDICAL_EQUIPMENT
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_TOOLS_MEDICAL
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -135,9 +125,8 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 4000, /datum/material/plasma = 1000)
 	build_path = /obj/item/extinguisher_refill
-	category = list(RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_EQUIPMENT_GAS_TANKS
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_GAS_TANKS
 	)
 	departmental_flags = ALL
 
@@ -148,9 +137,8 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 3000, /datum/material/glass = 1500, /datum/material/gold = 500)
 	build_path = /obj/item/pinpointer/crew
-	category = list(RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_MEDICAL_EQUIPMENT
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_TOOLS_MEDICAL
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
@@ -161,9 +149,8 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	build_path = /obj/item/defibrillator
 	materials = list(/datum/material/iron = 8000, /datum/material/glass = 4000, /datum/material/silver = 3000, /datum/material/gold = 1500)
-	category = list(RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_MEDICAL_EQUIPMENT
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_TOOLS_MEDICAL
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
@@ -174,9 +161,8 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 2000, /datum/material/glass = 1000)
 	build_path = /obj/item/wallframe/defib_mount
-	category = list(RND_CATEGORY_CONSTRUCTION)
-	subcategory = list(
-		RND_CATEGORY_CONSTRUCTION = RND_SUBCATEGORY_CONSTRUCTION_MOUNTS
+	category = list(
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MOUNTS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
@@ -187,9 +173,8 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 2000, /datum/material/glass = 1000, /datum/material/silver = 500)
 	build_path = /obj/item/wallframe/defib_mount/charging
-	category = list(RND_CATEGORY_CONSTRUCTION)
-	subcategory = list(
-		RND_CATEGORY_CONSTRUCTION = RND_SUBCATEGORY_CONSTRUCTION_MOUNTS
+	category = list(
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MOUNTS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
@@ -200,9 +185,8 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	build_path = /obj/item/defibrillator/compact
 	materials = list(/datum/material/iron = 16000, /datum/material/glass = 8000, /datum/material/silver = 6000, /datum/material/gold = 3000)
-	category = list(RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_MEDICAL_EQUIPMENT
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_TOOLS_MEDICAL
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
@@ -213,9 +197,8 @@
 	build_path = /obj/item/sequence_scanner
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 500)
-	category = list(RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_EQUIPMENT_GENETICS
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_GENETICS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -226,9 +209,8 @@
 	build_path = /obj/item/healthanalyzer/advanced
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 5000, /datum/material/glass = 2500, /datum/material/silver = 2000, /datum/material/gold = 1500)
-	category = list(RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_ADVANCED_MEDICAL_TOOLS
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_TOOLS_MEDICAL_ADVANCED
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
@@ -239,9 +221,8 @@
 	build_path = /obj/item/reagent_containers/medigel
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 2500, /datum/material/glass = 500)
-	category = list(RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_MEDICAL_EQUIPMENT
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_TOOLS_MEDICAL
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
@@ -251,9 +232,8 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/plastic = 2000)
 	build_path = /obj/item/surgical_drapes
-	category = list(RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_MEDICAL_TOOLS
+	category = list(
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -264,9 +244,8 @@
 	build_path = /obj/item/scalpel/advanced
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 6000, /datum/material/glass = 1500, /datum/material/silver = 2000, /datum/material/gold = 1500, /datum/material/diamond = 200, /datum/material/titanium = 4000)
-	category = list(RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_ADVANCED_MEDICAL_TOOLS
+	category = list(
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL_ADVANCED
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
@@ -277,9 +256,8 @@
 	build_path = /obj/item/retractor/advanced
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 12000, /datum/material/glass = 4000, /datum/material/silver = 4000, /datum/material/titanium = 5000)
-	category = list(RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_ADVANCED_MEDICAL_TOOLS
+	category = list(
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL_ADVANCED
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
@@ -290,9 +268,8 @@
 	build_path = /obj/item/cautery/advanced
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 4000, /datum/material/glass = 2000, /datum/material/plasma = 2000, /datum/material/uranium = 3000, /datum/material/titanium = 3000)
-	category = list(RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_ADVANCED_MEDICAL_TOOLS
+	category = list(
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL_ADVANCED
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
@@ -303,9 +280,8 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/plastic = 2000)
 	build_path = /obj/item/reagent_containers/spray/medical
-	category = list(RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_MEDICAL_EQUIPMENT
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_TOOLS_MEDICAL
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
@@ -317,9 +293,8 @@
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 	materials = list(/datum/material/plastic = 2000)
 	build_path = /obj/item/reagent_containers/chem_pack
-	category = list(RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_MEDICAL_EQUIPMENT
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_TOOLS_MEDICAL
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
@@ -331,9 +306,8 @@
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 	materials = list(/datum/material/plastic = 1000)
 	build_path = /obj/item/reagent_containers/blood
-	category = list(RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_MEDICAL_EQUIPMENT
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_TOOLS_MEDICAL
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
@@ -345,9 +319,8 @@
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 	materials = list(/datum/material/plastic = 5000, /datum/material/iron = 10000, /datum/material/glass = 3000)
 	build_path = /obj/item/storage/portable_chem_mixer
-	category = list(RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_CHEMISTRY_EQUIPMENT
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
@@ -363,9 +336,8 @@
 	construction_time = 40
 	materials = list(/datum/material/iron = 600, /datum/material/glass = 400)
 	build_path = /obj/item/organ/internal/eyes/robotic/shield
-	category = list(RND_CATEGORY_CYBERNETICS)
-	subcategory = list(
-		RND_CATEGORY_CYBERNETICS = RND_SUBCATEGORY_CYBERNETICS_ORGANS
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
@@ -377,9 +349,8 @@
 	construction_time = 40
 	materials = list(/datum/material/iron = 600, /datum/material/glass = 1000)
 	build_path = /obj/item/organ/internal/eyes/robotic/glow
-	category = list(RND_CATEGORY_CYBERNETICS)
-	subcategory = list(
-		RND_CATEGORY_CYBERNETICS = RND_SUBCATEGORY_CYBERNETICS_ORGANS
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
@@ -391,9 +362,8 @@
 	construction_time = 35
 	materials = list(/datum/material/iron = 600, /datum/material/glass = 250)
 	build_path = /obj/item/organ/internal/cyberimp/mouth/breathing_tube
-	category = list(RND_CATEGORY_CYBERNETICS)
-	subcategory = list(
-		RND_CATEGORY_CYBERNETICS = RND_SUBCATEGORY_CYBERNETICS_IMPLANTS
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
@@ -405,9 +375,8 @@
 	materials = list (/datum/material/iron = 2500, /datum/material/glass = 1500, /datum/material/silver = 1500)
 	construction_time = 200
 	build_path = /obj/item/organ/internal/cyberimp/arm/surgery
-	category = list(RND_CATEGORY_CYBERNETICS)
-	subcategory = list(
-		RND_CATEGORY_CYBERNETICS = RND_SUBCATEGORY_CYBERNETICS_IMPLANTS
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
@@ -419,9 +388,8 @@
 	materials = list (/datum/material/iron = 2500, /datum/material/glass = 1500, /datum/material/silver = 1500)
 	construction_time = 200
 	build_path = /obj/item/organ/internal/cyberimp/arm/toolset
-	category = list(RND_CATEGORY_CYBERNETICS)
-	subcategory = list(
-		RND_CATEGORY_CYBERNETICS = RND_SUBCATEGORY_CYBERNETICS_IMPLANTS
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
@@ -433,9 +401,8 @@
 	construction_time = 50
 	materials = list(/datum/material/iron = 600, /datum/material/glass = 600, /datum/material/silver = 500, /datum/material/gold = 500)
 	build_path = /obj/item/organ/internal/cyberimp/eyes/hud/medical
-	category = list(RND_CATEGORY_CYBERNETICS)
-	subcategory = list(
-		RND_CATEGORY_CYBERNETICS = RND_SUBCATEGORY_CYBERNETICS_IMPLANTS
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
@@ -447,9 +414,8 @@
 	construction_time = 50
 	materials = list(/datum/material/iron = 600, /datum/material/glass = 600, /datum/material/silver = 750, /datum/material/gold = 750)
 	build_path = /obj/item/organ/internal/cyberimp/eyes/hud/security
-	category = list(RND_CATEGORY_CYBERNETICS)
-	subcategory = list(
-		RND_CATEGORY_CYBERNETICS = RND_SUBCATEGORY_CYBERNETICS_IMPLANTS
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
@@ -461,9 +427,8 @@
 	construction_time = 50
 	materials = list(/datum/material/iron = 600, /datum/material/glass = 600, /datum/material/silver = 600, /datum/material/gold = 600)
 	build_path = /obj/item/organ/internal/cyberimp/eyes/hud/diagnostic
-	category = list(RND_CATEGORY_CYBERNETICS)
-	subcategory = list(
-		RND_CATEGORY_CYBERNETICS = RND_SUBCATEGORY_CYBERNETICS_IMPLANTS
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
@@ -475,9 +440,8 @@
 	construction_time = 60
 	materials = list(/datum/material/iron = 600, /datum/material/glass = 600, /datum/material/silver = 600, /datum/material/gold = 600, /datum/material/plasma = 1000, /datum/material/uranium = 1000, /datum/material/diamond = 1000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/organ/internal/eyes/robotic/xray
-	category = list(RND_CATEGORY_CYBERNETICS)
-	subcategory = list(
-		RND_CATEGORY_CYBERNETICS = RND_SUBCATEGORY_CYBERNETICS_ORGANS
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
@@ -489,9 +453,8 @@
 	construction_time = 60
 	materials = list(/datum/material/iron = 600, /datum/material/glass = 600, /datum/material/silver = 600, /datum/material/gold = 600, /datum/material/plasma = 1000, /datum/material/diamond = 2000)
 	build_path = /obj/item/organ/internal/eyes/robotic/thermals
-	category = list(RND_CATEGORY_CYBERNETICS)
-	subcategory = list(
-		RND_CATEGORY_CYBERNETICS = RND_SUBCATEGORY_CYBERNETICS_ORGANS
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
@@ -503,9 +466,8 @@
 	construction_time = 60
 	materials = list(/datum/material/iron = 600, /datum/material/glass = 600, /datum/material/silver = 400, /datum/material/gold = 400)
 	build_path = /obj/item/organ/internal/cyberimp/brain/anti_drop
-	category = list(RND_CATEGORY_CYBERNETICS)
-	subcategory = list(
-		RND_CATEGORY_CYBERNETICS = RND_SUBCATEGORY_CYBERNETICS_IMPLANTS
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
@@ -517,9 +479,8 @@
 	construction_time = 60
 	materials = list(/datum/material/iron = 600, /datum/material/glass = 600, /datum/material/silver = 500, /datum/material/gold = 1000)
 	build_path = /obj/item/organ/internal/cyberimp/brain/anti_stun
-	category = list(RND_CATEGORY_CYBERNETICS)
-	subcategory = list(
-		RND_CATEGORY_CYBERNETICS = RND_SUBCATEGORY_CYBERNETICS_IMPLANTS
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
@@ -531,9 +492,8 @@
 	construction_time = 40
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 500, /datum/material/gold = 500)
 	build_path = /obj/item/organ/internal/cyberimp/chest/nutriment
-	category = list(RND_CATEGORY_CYBERNETICS)
-	subcategory = list(
-		RND_CATEGORY_CYBERNETICS = RND_SUBCATEGORY_CYBERNETICS_IMPLANTS
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
@@ -545,9 +505,8 @@
 	construction_time = 50
 	materials = list(/datum/material/iron = 600, /datum/material/glass = 600, /datum/material/gold = 500, /datum/material/uranium = 750)
 	build_path = /obj/item/organ/internal/cyberimp/chest/nutriment/plus
-	category = list(RND_CATEGORY_CYBERNETICS)
-	subcategory = list(
-		RND_CATEGORY_CYBERNETICS = RND_SUBCATEGORY_CYBERNETICS_IMPLANTS
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
@@ -559,9 +518,8 @@
 	construction_time = 60
 	materials = list(/datum/material/iron = 800, /datum/material/glass = 800, /datum/material/gold = 300, /datum/material/uranium = 500)
 	build_path = /obj/item/organ/internal/cyberimp/chest/reviver
-	category = list(RND_CATEGORY_CYBERNETICS)
-	subcategory = list(
-		RND_CATEGORY_CYBERNETICS = RND_SUBCATEGORY_CYBERNETICS_IMPLANTS
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
@@ -573,9 +531,8 @@
 	construction_time = 80
 	materials = list(/datum/material/iron = 4000, /datum/material/glass = 2000, /datum/material/silver = 1000, /datum/material/diamond = 1000)
 	build_path = /obj/item/organ/internal/cyberimp/chest/thrusters
-	category = list(RND_CATEGORY_CYBERNETICS)
-	subcategory = list(
-		RND_CATEGORY_CYBERNETICS = RND_SUBCATEGORY_CYBERNETICS_IMPLANTS
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
@@ -643,9 +600,8 @@
 	construction_time = 40
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
 	build_path = /obj/item/organ/internal/liver/cybernetic
-	category = list(RND_CATEGORY_CYBERNETICS)
-	subcategory = list(
-		RND_CATEGORY_CYBERNETICS = RND_SUBCATEGORY_CYBERNETICS_ORGANS
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
@@ -672,9 +628,8 @@
 	construction_time = 40
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
 	build_path = /obj/item/organ/internal/heart/cybernetic
-	category = list(RND_CATEGORY_CYBERNETICS)
-	subcategory = list(
-		RND_CATEGORY_CYBERNETICS = RND_SUBCATEGORY_CYBERNETICS_ORGANS
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
@@ -701,9 +656,8 @@
 	construction_time = 40
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
 	build_path = /obj/item/organ/internal/lungs/cybernetic
-	category = list(RND_CATEGORY_CYBERNETICS)
-	subcategory = list(
-		RND_CATEGORY_CYBERNETICS = RND_SUBCATEGORY_CYBERNETICS_ORGANS
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
@@ -730,9 +684,8 @@
 	construction_time = 40
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
 	build_path = /obj/item/organ/internal/stomach/cybernetic
-	category = list(RND_CATEGORY_CYBERNETICS)
-	subcategory = list(
-		RND_CATEGORY_CYBERNETICS = RND_SUBCATEGORY_CYBERNETICS_ORGANS
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
@@ -759,9 +712,8 @@
 	construction_time = 30
 	materials = list(/datum/material/iron = 250, /datum/material/glass = 400)
 	build_path = /obj/item/organ/internal/ears/cybernetic
-	category = list(RND_CATEGORY_CYBERNETICS)
-	subcategory = list(
-		RND_CATEGORY_CYBERNETICS = RND_SUBCATEGORY_CYBERNETICS_ORGANS
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
@@ -773,9 +725,8 @@
 	construction_time = 40
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 500, /datum/material/silver = 500)
 	build_path = /obj/item/organ/internal/ears/cybernetic/upgraded
-	category = list(RND_CATEGORY_CYBERNETICS)
-	subcategory = list(
-		RND_CATEGORY_CYBERNETICS = RND_SUBCATEGORY_CYBERNETICS_ORGANS
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
@@ -787,9 +738,8 @@
 	construction_time = 30
 	materials = list(/datum/material/iron = 250, /datum/material/glass = 400)
 	build_path = /obj/item/organ/internal/eyes/robotic/basic
-	category = list(RND_CATEGORY_CYBERNETICS)
-	subcategory = list(
-		RND_CATEGORY_CYBERNETICS = RND_SUBCATEGORY_CYBERNETICS_ORGANS
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 

@@ -29,8 +29,8 @@
 
 /datum/design/unique_modkit
 	category = list(RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_TOOLS_PKA_MODS
+	category = list(
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_PKA_MODS
 	)
 	build_type = PROTOLATHE
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO

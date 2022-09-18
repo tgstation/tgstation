@@ -39,9 +39,6 @@ other types of metals and chemistry for reagents).
 	var/list/make_reagents = list()
 	/// What categories this design falls under. Used for sorting in production machines, mostly the mechfab.
 	var/list/category = list()
-	/// A map of categories to subcategories. If a subcategory is present, techfab UIs will group this design with
-	/// other designs of the same subcategory.
-	var/list/subcategory = list()
 	/// List of reagents required to create one unit of the product.
 	var/list/reagents_list = list()
 	/// The maximum number of units of whatever is produced by this can be produced in one go.

@@ -8,9 +8,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 200)
 	build_path = /obj/item/reagent_containers/cup/bucket
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_JANITORIAL_TOOLS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_JANITORIAL
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -20,9 +20,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 200)
 	build_path = /obj/item/reagent_containers/cup/watering_can
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_BOTANY_TOOLS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_BOTANY
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -32,9 +32,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 1000)
 	build_path = /obj/item/mop
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_JANITORIAL_TOOLS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_JANITORIAL
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -44,9 +44,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 2000)
 	build_path = /obj/item/pushbroom
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_JANITORIAL_TOOLS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_JANITORIAL
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -56,9 +56,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 50)
 	build_path = /obj/item/crowbar
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_ENGINEERING_TOOLS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -68,8 +68,10 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 50, /datum/material/glass = 20)
 	build_path = /obj/item/flashlight
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS)
-	subcategory = list()
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS
+	)
 	departmental_flags = ALL
 
 /datum/design/extinguisher
@@ -78,9 +80,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 90)
 	build_path = /obj/item/extinguisher
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_ATMOPSHERICS_TOOLS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ATMOSPHERICS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -90,9 +92,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 50, /datum/material/glass = 40)
 	build_path = /obj/item/extinguisher/mini
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_ATMOPSHERICS_TOOLS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ATMOSPHERICS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -102,9 +104,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 50, /datum/material/glass = 20)
 	build_path = /obj/item/multitool
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_ENGINEERING_TOOLS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -114,9 +116,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 30, /datum/material/glass = 20)
 	build_path = /obj/item/analyzer
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_ATMOPSHERICS_TOOLS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ATMOSPHERICS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_CARGO
 
@@ -126,9 +128,9 @@
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 150)
 	build_path = /obj/item/t_scanner
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_ENGINEERING_TOOLS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -138,9 +140,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 70, /datum/material/glass = 20)
 	build_path = /obj/item/weldingtool
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_ENGINEERING_TOOLS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -150,9 +152,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 30, /datum/material/glass = 10)
 	build_path = /obj/item/weldingtool/mini
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_ENGINEERING_TOOLS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING
 	)
 
 /datum/design/screwdriver
@@ -161,9 +163,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 75)
 	build_path = /obj/item/screwdriver
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_ENGINEERING_TOOLS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -173,9 +175,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 80)
 	build_path = /obj/item/wirecutters
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_ENGINEERING_TOOLS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -185,9 +187,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 150)
 	build_path = /obj/item/wrench
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_ENGINEERING_TOOLS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -197,9 +199,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 150)
 	build_path = /obj/item/plunger
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_PLUMBING_TOOLS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_PLUMBING
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_SERVICE
 
@@ -209,9 +211,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 1750, /datum/material/glass = 400)
 	build_path = /obj/item/clothing/head/welding
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_ENGINEERING_EQUIPMENT
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_ENGINEERING
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -221,9 +223,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 10, /datum/material/glass = 5)
 	build_path = /obj/item/stack/cable_coil
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_ENGINEERING_TOOLS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING
 	)
 	maxstack = MAXCOIL
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
@@ -234,9 +236,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(MAT_CATEGORY_ITEM_MATERIAL = 500)
 	build_path = /obj/item/storage/toolbox
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_ENGINEERING_EQUIPMENT
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_EQUIPMENT_ENGINEERING
 	)
 
 /datum/design/apc_board
@@ -245,9 +247,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 100, /datum/material/glass = 100)
 	build_path = /obj/item/electronics/apc
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_CONSTRUCTION)
-	subcategory = list(
-		RND_CATEGORY_CONSTRUCTION = RND_SUBCATEGORY_CONSTRUCTION_ELECTRONICS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_ELECTRONICS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -257,9 +259,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 50, /datum/material/glass = 50)
 	build_path = /obj/item/electronics/airlock
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_CONSTRUCTION)
-	subcategory = list(
-		RND_CATEGORY_CONSTRUCTION = RND_SUBCATEGORY_CONSTRUCTION_ELECTRONICS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_ELECTRONICS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -269,9 +271,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 50, /datum/material/glass = 50)
 	build_path = /obj/item/electronics/firelock
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_CONSTRUCTION)
-	subcategory = list(
-		RND_CATEGORY_CONSTRUCTION = RND_SUBCATEGORY_CONSTRUCTION_ELECTRONICS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_ELECTRONICS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -281,9 +283,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 50, /datum/material/glass = 50)
 	build_path = /obj/item/electronics/airalarm
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_CONSTRUCTION)
-	subcategory = list(
-		RND_CATEGORY_CONSTRUCTION = RND_SUBCATEGORY_CONSTRUCTION_ELECTRONICS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_ELECTRONICS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -293,9 +295,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 50, /datum/material/glass = 50)
 	build_path = /obj/item/electronics/firealarm
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_CONSTRUCTION)
-	subcategory = list(
-		RND_CATEGORY_CONSTRUCTION = RND_SUBCATEGORY_CONSTRUCTION_ELECTRONICS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_ELECTRONICS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -305,9 +307,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 50, /datum/material/glass = 50)
 	build_path = /obj/item/assembly/trapdoor
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_CONSTRUCTION)
-	subcategory = list(
-		RND_CATEGORY_CONSTRUCTION = RND_SUBCATEGORY_CONSTRUCTION_ELECTRONICS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_ELECTRONICS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -317,9 +319,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 50, /datum/material/glass = 100)
 	build_path = /obj/item/camera
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_SERVICE_TOOLS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_SERVICE
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -329,9 +331,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 10, /datum/material/glass = 10)
 	build_path = /obj/item/camera_film
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_SERVICE_TOOLS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_SERVICE
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -341,9 +343,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
 	build_path = /obj/item/clothing/ears/earmuffs
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_ENGINEERING_EQUIPMENT
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_ENGINEERING
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -353,9 +355,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 5000, /datum/material/glass = 2000)
 	build_path = /obj/item/pipe_painter
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_ENGINEERING_TOOLS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -365,9 +367,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 50, /datum/material/glass = 50)
 	build_path = /obj/item/airlock_painter
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_ENGINEERING_TOOLS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -377,9 +379,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 50, /datum/material/glass = 50)
 	build_path = /obj/item/airlock_painter/decal
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_ENGINEERING_TOOLS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -389,9 +391,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 50, /datum/material/glass = 50)
 	build_path = /obj/item/airlock_painter/decal/tile
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_ENGINEERING_TOOLS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -401,9 +403,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 500)
 	build_path = /obj/item/tank/internals/emergency_oxygen/empty
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_EQUIPMENT_GAS_TANKS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_GAS_TANKS
 	)
 
 /datum/design/emergency_oxygen_engi
@@ -413,8 +415,8 @@
 	materials = list(/datum/material/iron = 750)
 	build_path = /obj/item/tank/internals/emergency_oxygen/engi/empty
 	category = list(RND_CATEGORY_HACKED, RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_EQUIPMENT_GAS_TANKS
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_GAS_TANKS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO
 
@@ -425,8 +427,8 @@
 	materials = list(/datum/material/iron = 800)
 	build_path = /obj/item/tank/internals/plasmaman/belt/empty
 	category = list(RND_CATEGORY_HACKED, RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_EQUIPMENT_GAS_TANKS
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_GAS_TANKS
 	)
 	departmental_flags = ALL
 
@@ -436,9 +438,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 1000)
 	build_path = /obj/item/tank/internals/generic
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_EQUIPMENT_GAS_TANKS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_GAS_TANKS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO
 
@@ -448,9 +450,9 @@
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sheet/iron
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_CONSTRUCTION)
-	subcategory = list(
-		RND_CATEGORY_CONSTRUCTION = RND_SUBCATEGORY_CONSTRUCTION_MATERIALS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS
 	)
 	maxstack = 50
 
@@ -460,9 +462,9 @@
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 1000)
 	build_path = /obj/item/stack/rods
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_CONSTRUCTION)
-	subcategory = list(
-		RND_CATEGORY_CONSTRUCTION = RND_SUBCATEGORY_CONSTRUCTION_MATERIALS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS
 	)
 	maxstack = 50
 
@@ -472,9 +474,9 @@
 	build_type = AUTOLATHE
 	materials = list(/datum/material/glass = MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sheet/glass
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_CONSTRUCTION)
-	subcategory = list(
-		RND_CATEGORY_CONSTRUCTION = RND_SUBCATEGORY_CONSTRUCTION_MATERIALS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS
 	)
 	maxstack = 50
 
@@ -484,9 +486,9 @@
 	build_type = AUTOLATHE | SMELTER | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sheet/rglass
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_CONSTRUCTION)
-	subcategory = list(
-		RND_CATEGORY_CONSTRUCTION = RND_SUBCATEGORY_CONSTRUCTION_MATERIALS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS
 	)
 	maxstack = 50
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
@@ -497,9 +499,9 @@
 	build_type = AUTOLATHE
 	materials = list(/datum/material/silver = MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sheet/mineral/silver
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_CONSTRUCTION)
-	subcategory = list(
-		RND_CATEGORY_CONSTRUCTION = RND_SUBCATEGORY_CONSTRUCTION_MATERIALS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS
 	)
 	maxstack = 50
 
@@ -509,9 +511,9 @@
 	build_type = AUTOLATHE
 	materials = list(/datum/material/gold = MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sheet/mineral/gold
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_CONSTRUCTION)
-	subcategory = list(
-		RND_CATEGORY_CONSTRUCTION = RND_SUBCATEGORY_CONSTRUCTION_MATERIALS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS
 	)
 	maxstack = 50
 
@@ -521,9 +523,9 @@
 	build_type = AUTOLATHE
 	materials = list(/datum/material/diamond = MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sheet/mineral/diamond
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_CONSTRUCTION)
-	subcategory = list(
-		RND_CATEGORY_CONSTRUCTION = RND_SUBCATEGORY_CONSTRUCTION_MATERIALS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS
 	)
 	maxstack = 50
 
@@ -533,9 +535,9 @@
 	build_type = AUTOLATHE
 	materials = list(/datum/material/plasma = MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sheet/mineral/plasma
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_CONSTRUCTION)
-	subcategory = list(
-		RND_CATEGORY_CONSTRUCTION = RND_SUBCATEGORY_CONSTRUCTION_MATERIALS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS
 	)
 	maxstack = 50
 
@@ -545,9 +547,9 @@
 	build_type = AUTOLATHE
 	materials = list(/datum/material/uranium = MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sheet/mineral/uranium
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_CONSTRUCTION)
-	subcategory = list(
-		RND_CATEGORY_CONSTRUCTION = RND_SUBCATEGORY_CONSTRUCTION_MATERIALS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS
 	)
 	maxstack = 50
 
@@ -557,9 +559,9 @@
 	build_type = AUTOLATHE
 	materials = list(/datum/material/bananium = MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sheet/mineral/bananium
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_CONSTRUCTION)
-	subcategory = list(
-		RND_CATEGORY_CONSTRUCTION = RND_SUBCATEGORY_CONSTRUCTION_MATERIALS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS
 	)
 	maxstack = 50
 
@@ -569,9 +571,9 @@
 	build_type = AUTOLATHE
 	materials = list(/datum/material/titanium = MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sheet/mineral/titanium
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_CONSTRUCTION)
-	subcategory = list(
-		RND_CATEGORY_CONSTRUCTION = RND_SUBCATEGORY_CONSTRUCTION_MATERIALS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS
 	)
 	maxstack = 50
 
@@ -581,9 +583,9 @@
 	build_type = AUTOLATHE
 	materials = list(/datum/material/plastic= MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sheet/plastic
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_CONSTRUCTION)
-	subcategory = list(
-		RND_CATEGORY_CONSTRUCTION = RND_SUBCATEGORY_CONSTRUCTION_MATERIALS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS
 	)
 	maxstack = 50
 
@@ -593,9 +595,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 12000)
 	build_path = /obj/item/knife/kitchen
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_EQUIPMENT_KITCHEN
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_KITCHEN
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -605,9 +607,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/plastic = 100)
 	build_path = /obj/item/knife/plastic
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_EQUIPMENT_KITCHEN
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_KITCHEN
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -617,9 +619,9 @@
 	build_type =  AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 80)
 	build_path = /obj/item/kitchen/fork
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_EQUIPMENT_KITCHEN
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_KITCHEN
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -629,9 +631,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/plastic = 80)
 	build_path = /obj/item/kitchen/fork/plastic
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_EQUIPMENT_KITCHEN
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_KITCHEN
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -641,9 +643,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 120)
 	build_path = /obj/item/kitchen/spoon
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_EQUIPMENT_KITCHEN
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_KITCHEN
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -653,9 +655,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/plastic = 120)
 	build_path = /obj/item/kitchen/spoon/plastic
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_EQUIPMENT_KITCHEN
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_KITCHEN
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -665,9 +667,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 3000)
 	build_path = /obj/item/storage/bag/tray
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_EQUIPMENT_KITCHEN
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_KITCHEN
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -677,9 +679,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 3500)
 	build_path = /obj/item/plate
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_EQUIPMENT_KITCHEN
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_KITCHEN
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -689,9 +691,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 3000)
 	build_path = /obj/item/storage/bag/tray/cafeteria
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_EQUIPMENT_KITCHEN
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_KITCHEN
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -702,8 +704,8 @@
 	materials = list(/datum/material/glass = 500)
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
 	build_path = /obj/item/reagent_containers/cup/bowl
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_EQUIPMENT_KITCHEN
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_KITCHEN
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -714,8 +716,8 @@
 	materials = list(/datum/material/glass = 500)
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
 	build_path = /obj/item/reagent_containers/cup/glass/drinkingglass
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_EQUIPMENT_KITCHEN
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_KITCHEN
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -726,8 +728,8 @@
 	materials = list(/datum/material/glass = 100)
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
 	build_path = /obj/item/reagent_containers/cup/glass/drinkingglass/shotglass
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_EQUIPMENT_KITCHEN
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_KITCHEN
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -738,8 +740,8 @@
 	materials = list(/datum/material/iron = 1500)
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
 	build_path = /obj/item/reagent_containers/cup/glass/shaker
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_EQUIPMENT_KITCHEN
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_KITCHEN
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -749,9 +751,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron=50)
 	build_path = /obj/item/cultivator
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_BOTANY_TOOLS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_BOTANY
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -761,9 +763,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 30, /datum/material/glass = 20)
 	build_path = /obj/item/plant_analyzer
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_BOTANY_TOOLS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_BOTANY
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -773,9 +775,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 50)
 	build_path = /obj/item/shovel
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_BOTANY_TOOLS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_BOTANY
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -785,9 +787,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 50)
 	build_path = /obj/item/shovel/spade
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_BOTANY_TOOLS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_BOTANY
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -797,9 +799,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 15000)
 	build_path = /obj/item/hatchet
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_BOTANY_TOOLS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_BOTANY
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -809,9 +811,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 4000)
 	build_path = /obj/item/secateurs
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_BOTANY_TOOLS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_BOTANY
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -822,8 +824,8 @@
 	materials = list(/datum/material/iron = 5500)
 	build_path = /obj/item/clothing/head/foilhat
 	category = list(RND_CATEGORY_HACKED, RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_TOP_SECRET_EQUIPMENT
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_JOKE
 	)
 
 /datum/design/blood_filter
@@ -832,9 +834,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 4000, /datum/material/glass = 1500, /datum/material/silver = 500)
 	build_path = /obj/item/blood_filter
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_MEDICAL_TOOLS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -844,9 +846,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 4000, /datum/material/glass = 1000)
 	build_path = /obj/item/scalpel
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_MEDICAL_TOOLS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -856,9 +858,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 10000, /datum/material/glass = 6000)
 	build_path = /obj/item/circular_saw
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_MEDICAL_TOOLS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -868,9 +870,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 5000,  /datum/material/glass = 2500)
 	build_path = /obj/item/bonesetter
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_MEDICAL_TOOLS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -880,9 +882,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 10000, /datum/material/glass = 6000)
 	build_path = /obj/item/surgicaldrill
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_MEDICAL_TOOLS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -892,9 +894,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 6000, /datum/material/glass = 3000)
 	build_path = /obj/item/retractor
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_MEDICAL_TOOLS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -904,9 +906,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 2500, /datum/material/glass = 750)
 	build_path = /obj/item/cautery
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_MEDICAL_TOOLS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -916,9 +918,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 5000, /datum/material/glass = 2500)
 	build_path = /obj/item/hemostat
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_MEDICAL_TOOLS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -928,9 +930,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 1000)
 	build_path = /obj/item/clothing/neck/stethoscope
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_MEDICAL_EQUIPMENT
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_MEDICAL
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
@@ -939,9 +941,9 @@
 	id = "beaker"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/glass = 500)
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_CHEMISTRY_EQUIPMENT
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY
 	)
 	build_path = /obj/item/reagent_containers/cup/beaker
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_BITFLAG_SCIENCE
@@ -951,9 +953,9 @@
 	id = "large_beaker"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/glass = 2500)
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_CHEMISTRY_EQUIPMENT
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY
 	)
 	build_path = /obj/item/reagent_containers/cup/beaker/large
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_BITFLAG_SCIENCE
@@ -964,9 +966,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/plastic = 20, /datum/material/glass = 100)
 	build_path = /obj/item/storage/pill_bottle
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_CHEMISTRY_EQUIPMENT
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
@@ -976,9 +978,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 2000)
 	build_path = /obj/item/ammo_casing/shotgun/beanbag
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_WEAPONS)
-	subcategory = list(
-		RND_CATEGORY_WEAPONS = RND_SUBCATEGORY_AMMO
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
@@ -988,9 +990,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 4000)
 	build_path = /obj/item/ammo_casing/shotgun/rubbershot
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_WEAPONS)
-	subcategory = list(
-		RND_CATEGORY_WEAPONS = RND_SUBCATEGORY_AMMO
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
@@ -1000,9 +1002,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 20000)
 	build_path = /obj/item/ammo_box/c38
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_WEAPONS)
-	subcategory = list(
-		RND_CATEGORY_WEAPONS = RND_SUBCATEGORY_AMMO
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
@@ -1012,9 +1014,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 60, /datum/material/glass = 30)
 	build_path = /obj/item/taperecorder/empty
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_SECURITY_EQUIPMENT
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SECURITY
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
@@ -1024,9 +1026,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 20, /datum/material/glass = 5)
 	build_path = /obj/item/tape/random
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_SECURITY_EQUIPMENT
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SECURITY
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
@@ -1036,9 +1038,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 50)
 	build_path = /obj/item/assembly/igniter
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_CONSTRUCTION)
-	subcategory = list(
-		RND_CATEGORY_CONSTRUCTION = RND_SUBCATEGORY_CONSTRUCTION_ELECTRONICS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_ELECTRONICS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -1048,9 +1050,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron=250, /datum/material/glass=300)
 	build_path = /obj/item/assembly/igniter/condenser
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_CONSTRUCTION)
-	subcategory = list(
-		RND_CATEGORY_CONSTRUCTION = RND_SUBCATEGORY_CONSTRUCTION_ELECTRONICS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_ELECTRONICS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -1060,8 +1062,8 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 400, /datum/material/glass = 120)
 	build_path = /obj/item/assembly/signaler
-	subcategory = list(
-		RND_CATEGORY_CONSTRUCTION = RND_SUBCATEGORY_CONSTRUCTION_ELECTRONICS
+	category = list(
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_ELECTRONICS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -1071,9 +1073,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 75)
 	build_path = /obj/item/radio/headset
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_COMMS_EQUIPMENT
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_TELECOMMS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -1083,9 +1085,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 75, /datum/material/glass = 25)
 	build_path = /obj/item/radio/off
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_COMMS_EQUIPMENT
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_TELECOMMS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -1095,9 +1097,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 75, /datum/material/glass = 25)
 	build_path = /obj/item/wallframe/intercom
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_CONSTRUCTION)
-	subcategory = list(
-		RND_CATEGORY_CONSTRUCTION = RND_SUBCATEGORY_CONSTRUCTION_MOUNTS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MOUNTS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -1107,9 +1109,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 500)
 	build_path = /obj/item/assembly/infra
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_CONSTRUCTION)
-	subcategory = list(
-		RND_CATEGORY_CONSTRUCTION = RND_SUBCATEGORY_CONSTRUCTION_ELECTRONICS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_ELECTRONICS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -1119,9 +1121,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 800, /datum/material/glass = 200)
 	build_path = /obj/item/assembly/health
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_CONSTRUCTION)
-	subcategory = list(
-		RND_CATEGORY_CONSTRUCTION = RND_SUBCATEGORY_CONSTRUCTION_ELECTRONICS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_ELECTRONICS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -1131,9 +1133,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 50)
 	build_path = /obj/item/assembly/timer
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_CONSTRUCTION)
-	subcategory = list(
-		RND_CATEGORY_CONSTRUCTION = RND_SUBCATEGORY_CONSTRUCTION_ELECTRONICS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_ELECTRONICS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -1143,9 +1145,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 50)
 	build_path = /obj/item/assembly/voice
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_CONSTRUCTION)
-	subcategory = list(
-		RND_CATEGORY_CONSTRUCTION = RND_SUBCATEGORY_CONSTRUCTION_ELECTRONICS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_ELECTRONICS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -1155,9 +1157,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/glass = 100)
 	build_path = /obj/item/light/tube
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_CONSTRUCTION)
-	subcategory = list(
-		RND_CATEGORY_CONSTRUCTION = RND_SUBCATEGORY_CONSTRUCTION_LIGHTING
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_LIGHTING
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -1167,9 +1169,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/glass = 100)
 	build_path = /obj/item/light/bulb
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_CONSTRUCTION)
-	subcategory = list(
-		RND_CATEGORY_CONSTRUCTION = RND_SUBCATEGORY_CONSTRUCTION_LIGHTING
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_LIGHTING
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -1179,9 +1181,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 400, /datum/material/glass = 250)
 	build_path = /obj/item/wallframe/camera
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_CONSTRUCTION)
-	subcategory = list(
-		RND_CATEGORY_CONSTRUCTION = RND_SUBCATEGORY_CONSTRUCTION_MOUNTS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MOUNTS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -1191,9 +1193,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 14000, /datum/material/glass = 8000)
 	build_path = /obj/item/wallframe/newscaster
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_CONSTRUCTION)
-	subcategory = list(
-		RND_CATEGORY_CONSTRUCTION = RND_SUBCATEGORY_CONSTRUCTION_MOUNTS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MOUNTS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -1203,9 +1205,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 14000, /datum/material/glass = 8000)
 	build_path = /obj/item/wallframe/status_display
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_CONSTRUCTION)
-	subcategory = list(
-		RND_CATEGORY_CONSTRUCTION = RND_SUBCATEGORY_CONSTRUCTION_MOUNTS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MOUNTS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -1215,9 +1217,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 10, /datum/material/glass = 20)
 	build_path = /obj/item/reagent_containers/syringe
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_CHEMISTRY_EQUIPMENT
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -1227,9 +1229,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/glass = 10, /datum/material/plastic = 30)
 	build_path = /obj/item/reagent_containers/dropper
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_CHEMISTRY_EQUIPMENT
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -1239,9 +1241,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 800, /datum/material/glass = 200)
 	build_path = /obj/item/assembly/prox_sensor
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_CONSTRUCTION)
-	subcategory = list(
-		RND_CATEGORY_CONSTRUCTION = RND_SUBCATEGORY_CONSTRUCTION_ELECTRONICS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_ELECTRONICS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -1251,9 +1253,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 500)
 	build_path = /obj/item/ammo_box/foambox
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_WEAPONS)
-	subcategory = list(
-		RND_CATEGORY_WEAPONS = RND_SUBCATEGORY_AMMO
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
@@ -1264,8 +1266,8 @@
 	materials = list(/datum/material/iron = 500)
 	build_path = /obj/item/flamethrower/full
 	category = list(RND_CATEGORY_HACKED, RND_CATEGORY_WEAPONS)
-	subcategory = list(
-		RND_CATEGORY_WEAPONS = RND_SUBCATEGORY_RANGED_WEAPONS
+	category = list(
+		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_RANGED
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
@@ -1276,8 +1278,8 @@
 	materials = list(/datum/material/iron = 10000, /datum/material/glass = 2500)
 	build_path = /obj/item/electropack
 	category = list(RND_CATEGORY_HACKED, RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_SECURITY_EQUIPMENT
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SECURITY
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
@@ -1288,8 +1290,8 @@
 	materials = list(/datum/material/iron = 70, /datum/material/glass = 60)
 	build_path = /obj/item/weldingtool/largetank
 	category = list(RND_CATEGORY_HACKED, RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_ENGINEERING_TOOLS
+	category = list(
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -1300,8 +1302,8 @@
 	materials = list(/datum/material/iron = 500)
 	build_path = /obj/item/restraints/handcuffs
 	category = list(RND_CATEGORY_HACKED, RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_SECURITY_EQUIPMENT
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SECURITY
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
@@ -1309,8 +1311,8 @@
 	id = "handcuffs_s"
 	build_type = PROTOLATHE | AWAY_LATHE
 	category = list(RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_SECURITY_EQUIPMENT
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SECURITY
 	)
 	autolathe_exportable = FALSE
 
@@ -1321,8 +1323,8 @@
 	materials = list(/datum/material/iron = 15000)
 	build_path = /obj/item/weaponcrafting/receiver
 	category = list(RND_CATEGORY_HACKED, RND_CATEGORY_WEAPONS)
-	subcategory = list(
-		RND_CATEGORY_WEAPONS = RND_SUBCATEGORY_WEAPON_PARTS
+	category = list(
+		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_PARTS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
@@ -1333,8 +1335,8 @@
 	materials = list(/datum/material/iron = 4000)
 	build_path = /obj/item/ammo_casing/shotgun/dart
 	category = list(RND_CATEGORY_HACKED, RND_CATEGORY_WEAPONS)
-	subcategory = list(
-		RND_CATEGORY_WEAPONS = RND_SUBCATEGORY_AMMO
+	category = list(
+		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
@@ -1345,8 +1347,8 @@
 	materials = list(/datum/material/iron = 4000)
 	build_path = /obj/item/ammo_casing/shotgun/incendiary
 	category = list(RND_CATEGORY_HACKED, RND_CATEGORY_WEAPONS)
-	subcategory = list(
-		RND_CATEGORY_WEAPONS = RND_SUBCATEGORY_AMMO
+	category = list(
+		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
@@ -1357,8 +1359,8 @@
 	materials = list(/datum/material/iron = 1000) //Discount for making individually - no box = less iron!
 	build_path = /obj/item/ammo_casing/caseless/foam_dart/riot
 	category = list(RND_CATEGORY_HACKED, RND_CATEGORY_WEAPONS)
-	subcategory = list(
-		RND_CATEGORY_WEAPONS = RND_SUBCATEGORY_AMMO
+	category = list(
+		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
@@ -1369,8 +1371,8 @@
 	materials = list(/datum/material/iron = 50000) //Comes with 40 darts
 	build_path = /obj/item/ammo_box/foambox/riot
 	category = list(RND_CATEGORY_HACKED, RND_CATEGORY_WEAPONS)
-	subcategory = list(
-		RND_CATEGORY_WEAPONS = RND_SUBCATEGORY_AMMO
+	category = list(
+		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
@@ -1381,8 +1383,8 @@
 	materials = list(/datum/material/iron = 4000)
 	build_path = /obj/item/ammo_casing/a357
 	category = list(RND_CATEGORY_HACKED, RND_CATEGORY_WEAPONS)
-	subcategory = list(
-		RND_CATEGORY_WEAPONS = RND_SUBCATEGORY_AMMO
+	category = list(
+		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
@@ -1393,8 +1395,8 @@
 	materials = list(/datum/material/iron = 30000)
 	build_path = /obj/item/ammo_box/c10mm
 	category = list(RND_CATEGORY_HACKED, RND_CATEGORY_WEAPONS)
-	subcategory = list(
-		RND_CATEGORY_WEAPONS = RND_SUBCATEGORY_AMMO
+	category = list(
+		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
@@ -1405,8 +1407,8 @@
 	materials = list(/datum/material/iron = 30000)
 	build_path = /obj/item/ammo_box/c45
 	category = list(RND_CATEGORY_HACKED, RND_CATEGORY_WEAPONS)
-	subcategory = list(
-		RND_CATEGORY_WEAPONS = RND_SUBCATEGORY_AMMO
+	category = list(
+		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
@@ -1417,8 +1419,8 @@
 	materials = list(/datum/material/iron = 30000)
 	build_path = /obj/item/ammo_box/c9mm
 	category = list(RND_CATEGORY_HACKED, RND_CATEGORY_WEAPONS)
-	subcategory = list(
-		RND_CATEGORY_WEAPONS = RND_SUBCATEGORY_AMMO
+	category = list(
+		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
@@ -1429,8 +1431,8 @@
 	materials = list(/datum/material/iron = 18000)
 	build_path = /obj/item/knife/butcher
 	category = list(RND_CATEGORY_HACKED, RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_SERVICE_EQUIPMENT
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE
 	)
 
 /datum/design/spraycan
@@ -1439,9 +1441,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 100, /datum/material/glass = 100)
 	build_path = /obj/item/toy/crayon/spraycan
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_SERVICE_TOOLS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_SERVICE
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -1451,9 +1453,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 250, /datum/material/glass = 125)
 	build_path = /obj/item/dest_tagger
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_CARGO_TOOLS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_CARGO
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_SERVICE
 
@@ -1463,9 +1465,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 700, /datum/material/glass = 200)
 	build_path = /obj/item/sales_tagger
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_CARGO_TOOLS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_CARGO
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_SERVICE
 
@@ -1475,9 +1477,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 150, /datum/material/glass = 125)
 	build_path = /obj/item/hand_labeler
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_SERVICE_TOOLS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_SERVICE
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -1487,9 +1489,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 150, /datum/material/glass = 150)
 	build_path = /obj/item/geiger_counter
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_ENGINEERING_TOOLS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -1499,9 +1501,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 12000)
 	build_path = /obj/item/wallframe/turret_control
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_CONSTRUCTION)
-	subcategory = list(
-		RND_CATEGORY_CONSTRUCTION = RND_SUBCATEGORY_CONSTRUCTION_MOUNTS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MOUNTS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -1512,9 +1514,9 @@
 	materials = list(/datum/material/iron = 3000)
 	build_path = /obj/item/stack/conveyor
 	maxstack = 30
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_CONSTRUCTION)
-	subcategory = list(
-		RND_CATEGORY_CONSTRUCTION = RND_SUBCATEGORY_CONSTRUCTION_MACHINERY
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MACHINERY
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_CARGO
 
@@ -1524,9 +1526,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 450, /datum/material/glass = 190)
 	build_path = /obj/item/conveyor_switch_construct
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_CONSTRUCTION)
-	subcategory = list(
-		RND_CATEGORY_CONSTRUCTION = RND_SUBCATEGORY_CONSTRUCTION_MACHINERY
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MACHINERY
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_CARGO
 
@@ -1536,9 +1538,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 10000, /datum/material/glass = 1000)
 	build_path = /obj/item/modular_computer/laptop/buildable
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_MODULAR_COMPUTERS)
-	subcategory = list(
-		RND_CATEGORY_MODULAR_COMPUTERS = RND_SUBCATEGORY_MODULAR_COMPUTER_FRAMES
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_MODULAR_COMPUTERS + RND_SUBCATEGORY_MODULAR_COMPUTERS_FRAMES
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -1548,9 +1550,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 2000, /datum/material/glass = 1000)
 	build_path = /obj/item/modular_computer/tablet
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_MODULAR_COMPUTERS)
-	subcategory = list(
-		RND_CATEGORY_MODULAR_COMPUTERS = RND_SUBCATEGORY_MODULAR_COMPUTER_FRAMES
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_MODULAR_COMPUTERS + RND_SUBCATEGORY_MODULAR_COMPUTERS_FRAMES
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -1560,9 +1562,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 300, /datum/material/glass = 200)
 	build_path = /obj/item/slime_scanner
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_XENOBIOLOGY_EQUIPMENT
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_XENOBIOLOGY
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -1572,9 +1574,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 7500, /datum/material/glass = 100)
 	build_path = /obj/item/pet_carrier
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_SERVICE_EQUIPMENT
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -1584,9 +1586,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/glass = 20)
 	build_path = /obj/item/stock_parts/cell/emergency_light
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_CONSTRUCTION)
-	subcategory = list(
-		RND_CATEGORY_CONSTRUCTION = RND_SUBCATEGORY_CONSTRUCTION_LIGHTING
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_LIGHTING
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -1596,9 +1598,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 200, /datum/material/glass = 200)
 	build_path = /obj/item/stack/package_wrap
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_SERVICE_EQUIPMENT
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE
 	)
 	maxstack = 30
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_BITFLAG_CARGO
@@ -1609,9 +1611,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 100, /datum/material/glass = 100)
 	build_path = /obj/item/disk/holodisk
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_CONSTRUCTION)
-	subcategory = list(
-		RND_CATEGORY_CONSTRUCTION = RND_SUBCATEGORY_CONSTRUCTION_ELECTRONICS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_ELECTRONICS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -1622,9 +1624,9 @@
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
 	build_path = /obj/item/stack/tile/circuit
 	maxstack = 50
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_CONSTRUCTION)
-	subcategory = list(
-		RND_CATEGORY_CONSTRUCTION = RND_SUBCATEGORY_CONSTRUCTION_MATERIALS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -1636,9 +1638,9 @@
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
 	build_path = /obj/item/stack/tile/circuit/green
 	maxstack = 50
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_CONSTRUCTION)
-	subcategory = list(
-		RND_CATEGORY_CONSTRUCTION = RND_SUBCATEGORY_CONSTRUCTION_MATERIALS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -1649,9 +1651,9 @@
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
 	build_path = /obj/item/stack/tile/circuit/red
 	maxstack = 50
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_CONSTRUCTION)
-	subcategory = list(
-		RND_CATEGORY_CONSTRUCTION = RND_SUBCATEGORY_CONSTRUCTION_MATERIALS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -1661,9 +1663,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 1500, /datum/material/glass = 500)
 	build_path = /obj/item/price_tagger
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_CARGO_TOOLS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_CARGO
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO
 
@@ -1673,9 +1675,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 5000, /datum/material/glass = 2000)
 	build_path = /obj/item/vending_refill/custom
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_STOCK_PARTS)
-	subcategory = list(
-		RND_CATEGORY_STOCK_PARTS = RND_SUBCATEGORY_STOCK_PARTS_MISC
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_MISC
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -1686,9 +1688,9 @@
 	materials = list(/datum/material/iron = 500)
 	build_path = /obj/item/stack/ducts
 	maxstack = 50
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_PLUMBING_TOOLS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_PLUMBING
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_SERVICE
 
@@ -1699,8 +1701,8 @@
 	materials = list(/datum/material/iron = 100, /datum/material/glass = 50)
 	build_path = /obj/item/toy/gun
 	category = list(RND_CATEGORY_HACKED, RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_SERVICE_EQUIPMENT
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -1711,8 +1713,8 @@
 	materials = list(/datum/material/iron = 20, /datum/material/glass = 5)
 	build_path = /obj/item/toy/ammo/gun
 	category = list(RND_CATEGORY_HACKED, RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_SERVICE_EQUIPMENT
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -1723,8 +1725,8 @@
 	materials = list(/datum/material/plastic = 1200)
 	build_path = /obj/item/toy/balloon
 	category = list(RND_CATEGORY_HACKED, RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_SERVICE_EQUIPMENT
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -1735,8 +1737,8 @@
 	materials = list(/datum/material/plastic = 2000)
 	build_path = /obj/item/toy/foamblade
 	category = list(RND_CATEGORY_HACKED, RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_SERVICE_EQUIPMENT
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -1746,9 +1748,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/plastic = 8000)
 	build_path = /obj/item/kirbyplants/fullysynthetic
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_SERVICE_EQUIPMENT
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -1758,9 +1760,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/plastic = 500)
 	build_path = /obj/item/clothing/neck/beads
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_SERVICE_EQUIPMENT
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -1770,9 +1772,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/plastic = 1200)
 	build_path = /obj/item/storage/cans
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_SERVICE_EQUIPMENT
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -1782,9 +1784,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/plastic = 1000)
 	build_path = /obj/item/storage/box/plastic
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_SERVICE_EQUIPMENT
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -1796,8 +1798,8 @@
 	build_path = /obj/item/stack/sticky_tape
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
 	maxstack = 5
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_SERVICE_EQUIPMENT
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -1807,9 +1809,9 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/plastic = 500)
 	build_path = /obj/item/stack/sticky_tape/surgical
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_MEDICAL_EQUIPMENT
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_MEDICAL
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
@@ -1819,9 +1821,9 @@
 	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
 	materials = list(/datum/material/glass = 500)
 	build_path = /obj/item/petri_dish
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_XENOBIOLOGY_EQUIPMENT
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_XENOBIOLOGY
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -1831,9 +1833,9 @@
 	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
 	materials = list(/datum/material/plastic = 200)
 	build_path = /obj/item/swab
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_XENOBIOLOGY_EQUIPMENT
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_XENOBIOLOGY
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -1843,9 +1845,9 @@
 	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
 	materials = list(/datum/material/iron = 75)
 	build_path = /obj/item/chisel
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_SERVICE_TOOLS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_SERVICE
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -1855,9 +1857,9 @@
 	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
 	materials = list(/datum/material/iron = 100, /datum/material/glass = 50)
 	build_path = /obj/item/assembly/control
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_CONSTRUCTION)
-	subcategory = list(
-		RND_CATEGORY_CONSTRUCTION = RND_SUBCATEGORY_CONSTRUCTION_ELECTRONICS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_ELECTRONICS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -1867,9 +1869,9 @@
 	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
 	materials = list(/datum/material/iron = 75)
 	build_path = /obj/item/razor
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_SERVICE_TOOLS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_SERVICE
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SECURITY
 
@@ -1879,9 +1881,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 50, /datum/material/glass = 25)
 	build_path = /obj/item/hand_labeler_refill
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_SERVICE_TOOLS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_SERVICE
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -1891,9 +1893,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 10, /datum/material/glass = 10)
 	build_path = /obj/item/toner
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_SERVICE_EQUIPMENT
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -1903,9 +1905,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 35, /datum/material/glass = 35)
 	build_path = /obj/item/toner/large
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
-	subcategory = list(
-		RND_CATEGORY_EQUIPMENT = RND_SUBCATEGORY_SERVICE_EQUIPMENT
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -1915,9 +1917,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 3500, /datum/material/glass = 1000)
 	build_path = /obj/item/solar_assembly
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_CONSTRUCTION)
-	subcategory = list(
-		RND_CATEGORY_CONSTRUCTION = RND_SUBCATEGORY_CONSTRUCTION_MOUNTS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MOUNTS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -1927,9 +1929,9 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 100, /datum/material/glass = 500)
 	build_path = /obj/item/electronics/tracker
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_CONSTRUCTION)
-	subcategory = list(
-		RND_CATEGORY_CONSTRUCTION = RND_SUBCATEGORY_CONSTRUCTION_ELECTRONICS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_ELECTRONICS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -1939,8 +1941,8 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 200, /datum/material/glass = 200)
 	build_path = /obj/item/fishing_rod
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS)
-	subcategory = list(
-		RND_CATEGORY_TOOLS = RND_SUBCATEGORY_SERVICE_TOOLS
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_SERVICE
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE

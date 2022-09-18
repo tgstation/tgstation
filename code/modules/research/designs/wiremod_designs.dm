@@ -4,9 +4,8 @@
 	id = "integrated_circuit"
 	build_path = /obj/item/integrated_circuit
 	build_type = COMPONENT_PRINTER
-	category = list(RND_CATEGORY_CIRCUITRY)
-	subcategory = list(
-		RND_CATEGORY_CIRCUITRY = RND_CATEGORY_CIRCUITRY_CORE
+	category = list(
+		RND_CATEGORY_CIRCUITRY + RND_CATEGORY_CIRCUITRY_CORE
 	)
 	materials = list(/datum/material/glass = 1000, /datum/material/iron = 1000)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
@@ -17,9 +16,8 @@
 	id = "circuit_multitool"
 	build_path = /obj/item/multitool/circuit
 	build_type = COMPONENT_PRINTER
-	category = list(RND_CATEGORY_CIRCUITRY)
-	subcategory = list(
-		RND_CATEGORY_CIRCUITRY = RND_CATEGORY_CIRCUITRY_CORE
+	category = list(
+		RND_CATEGORY_CIRCUITRY + RND_CATEGORY_CIRCUITRY_CORE
 	)
 	materials = list(/datum/material/glass = 1000, /datum/material/iron = 1000)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
@@ -30,9 +28,8 @@
 	id = "usb_cable"
 	build_path = /obj/item/usb_cable
 	build_type = COMPONENT_PRINTER
-	category = list(RND_CATEGORY_CIRCUITRY)
-	subcategory = list(
-		RND_CATEGORY_CIRCUITRY = RND_CATEGORY_CIRCUITRY_CORE
+	category = list(
+		RND_CATEGORY_CIRCUITRY + RND_CATEGORY_CIRCUITRY_CORE
 	)
 	// Yes, it would make sense to make them take plastic, but then less people would make them, and I think they're cool
 	materials = list(/datum/material/iron = 2500)
@@ -44,9 +41,8 @@
 	build_type = COMPONENT_PRINTER
 	materials = list(/datum/material/glass = 1000)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
-	category = list(RND_CATEGORY_CIRCUITRY)
-	subcategory = list(
-		RND_CATEGORY_CIRCUITRY = RND_SUBCATEGORY_COMPONENTS
+	category = list(
+		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_COMPONENTS
 	)
 
 /datum/design/component/New()
@@ -346,9 +342,8 @@
 	build_path = /obj/item/circuit_component/pinpointer
 
 /datum/design/component/bci
-	category = list(RND_CATEGORY_CIRCUITRY)
-	subcategory = list(
-		RND_CATEGORY_CIRCUITRY = RND_SUBCATEGORY_BCI_COMPONENTS
+	category = list(
+		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_BCI_COMPONENTS
 	)
 
 /datum/design/component/bci/bci_action
@@ -438,9 +433,8 @@
 	build_path = /obj/item/compact_remote
 	materials = list(/datum/material/glass = 2000, /datum/material/iron = 5000)
 	build_type = COMPONENT_PRINTER
-	category = list(RND_CATEGORY_CIRCUITRY)
-	subcategory = list(
-		RND_CATEGORY_CIRCUITRY = RND_SUBCATEGORY_SHELLS
+	category = list(
+		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_SHELLS
 	)
 
 /datum/design/controller_shell
@@ -450,9 +444,8 @@
 	build_path = /obj/item/controller
 	build_type = COMPONENT_PRINTER
 	materials = list(/datum/material/glass = 2000, /datum/material/iron = 7000)
-	category = list(RND_CATEGORY_CIRCUITRY)
-	subcategory = list(
-		RND_CATEGORY_CIRCUITRY = RND_SUBCATEGORY_SHELLS
+	category = list(
+		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_SHELLS
 	)
 
 /datum/design/scanner_shell
@@ -462,9 +455,8 @@
 	build_path = /obj/item/wiremod_scanner
 	build_type = COMPONENT_PRINTER
 	materials = list(/datum/material/glass = 2000, /datum/material/iron = 7000)
-	category = list(RND_CATEGORY_CIRCUITRY)
-	subcategory = list(
-		RND_CATEGORY_CIRCUITRY = RND_SUBCATEGORY_SHELLS
+	category = list(
+		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_SHELLS
 	)
 
 /datum/design/keyboard_shell
@@ -474,9 +466,8 @@
 	build_path = /obj/item/keyboard_shell
 	materials = list(/datum/material/glass = 2000, /datum/material/iron = 10000)
 	build_type = COMPONENT_PRINTER
-	category = list(RND_CATEGORY_CIRCUITRY)
-	subcategory = list(
-		RND_CATEGORY_CIRCUITRY = RND_SUBCATEGORY_SHELLS
+	category = list(
+		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_SHELLS
 	)
 
 /datum/design/gun_shell
@@ -486,9 +477,8 @@
 	build_path = /obj/item/gun/energy/wiremod_gun
 	build_type = COMPONENT_PRINTER
 	materials = list(/datum/material/glass = 2000, /datum/material/iron = 10000, /datum/material/plasma = 100)
-	category = list(RND_CATEGORY_CIRCUITRY)
-	subcategory = list(
-		RND_CATEGORY_CIRCUITRY = RND_SUBCATEGORY_SHELLS
+	category = list(
+		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_SHELLS
 	)
 
 /datum/design/bot_shell
@@ -498,9 +488,8 @@
 	build_path = /obj/item/shell/bot
 	build_type = COMPONENT_PRINTER
 	materials = list(/datum/material/glass = 2000, /datum/material/iron = 10000)
-	category = list(RND_CATEGORY_CIRCUITRY)
-	subcategory = list(
-		RND_CATEGORY_CIRCUITRY = RND_SUBCATEGORY_SHELLS
+	category = list(
+		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_SHELLS
 	)
 
 /datum/design/money_bot_shell
@@ -510,9 +499,8 @@
 	build_path = /obj/item/shell/money_bot
 	build_type = COMPONENT_PRINTER
 	materials = list(/datum/material/glass = 2000, /datum/material/iron = 10000, /datum/material/gold = 50)
-	category = list(RND_CATEGORY_CIRCUITRY)
-	subcategory = list(
-		RND_CATEGORY_CIRCUITRY = RND_SUBCATEGORY_SHELLS
+	category = list(
+		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_SHELLS
 	)
 
 /datum/design/drone_shell
@@ -526,9 +514,8 @@
 		/datum/material/iron = 11000,
 		/datum/material/gold = 500,
 	)
-	category = list(RND_CATEGORY_CIRCUITRY)
-	subcategory = list(
-		RND_CATEGORY_CIRCUITRY = RND_SUBCATEGORY_SHELLS
+	category = list(
+		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_SHELLS
 	)
 
 /datum/design/server_shell
@@ -542,9 +529,8 @@
 	)
 	build_path = /obj/item/shell/server
 	build_type = COMPONENT_PRINTER
-	category = list(RND_CATEGORY_CIRCUITRY)
-	subcategory = list(
-		RND_CATEGORY_CIRCUITRY = RND_SUBCATEGORY_SHELLS
+	category = list(
+		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_SHELLS
 	)
 
 /datum/design/airlock_shell
@@ -557,9 +543,8 @@
 	)
 	build_path = /obj/item/shell/airlock
 	build_type = COMPONENT_PRINTER
-	category = list(RND_CATEGORY_CIRCUITRY)
-	subcategory = list(
-		RND_CATEGORY_CIRCUITRY = RND_SUBCATEGORY_SHELLS
+	category = list(
+		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_SHELLS
 	)
 
 /datum/design/dispenser_shell
@@ -572,9 +557,8 @@
 	)
 	build_path = /obj/item/shell/dispenser
 	build_type = COMPONENT_PRINTER
-	category = list(RND_CATEGORY_CIRCUITRY)
-	subcategory = list(
-		RND_CATEGORY_CIRCUITRY = RND_SUBCATEGORY_SHELLS
+	category = list(
+		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_SHELLS
 	)
 
 /datum/design/bci_shell
@@ -587,9 +571,8 @@
 	)
 	build_path = /obj/item/shell/bci
 	build_type = COMPONENT_PRINTER
-	category = list(RND_CATEGORY_CIRCUITRY)
-	subcategory = list(
-		RND_CATEGORY_CIRCUITRY = RND_SUBCATEGORY_SHELLS
+	category = list(
+		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_SHELLS
 	)
 
 /datum/design/scanner_gate_shell
@@ -602,9 +585,8 @@
 	)
 	build_path = /obj/item/shell/scanner_gate
 	build_type = COMPONENT_PRINTER
-	category = list(RND_CATEGORY_CIRCUITRY)
-	subcategory = list(
-		RND_CATEGORY_CIRCUITRY = RND_SUBCATEGORY_SHELLS
+	category = list(
+		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_SHELLS
 	)
 
 /datum/design/board/bci_implanter
@@ -613,9 +595,8 @@
 	id = "bci_implanter"
 	build_path = /obj/item/circuitboard/machine/bci_implanter
 	build_type = COMPONENT_PRINTER
-	category = list(RND_CATEGORY_CIRCUITRY)
-	subcategory = list(
-		RND_CATEGORY_CIRCUITRY = RND_CATEGORY_CIRCUITRY_CORE
+	category = list(
+		RND_CATEGORY_CIRCUITRY + RND_CATEGORY_CIRCUITRY_CORE
 	)
 
 /datum/design/assembly_shell
@@ -625,9 +606,8 @@
 	materials = list(/datum/material/glass = 2000, /datum/material/iron = 5000)
 	build_path = /obj/item/assembly/wiremod
 	build_type = COMPONENT_PRINTER
-	category = list(RND_CATEGORY_CIRCUITRY)
-	subcategory = list(
-		RND_CATEGORY_CIRCUITRY = RND_SUBCATEGORY_SHELLS
+	category = list(
+		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_SHELLS
 	)
 
 /datum/design/mod_module_shell
@@ -637,7 +617,6 @@
 	materials = list(/datum/material/glass = 2000)
 	build_path = /obj/item/mod/module/circuit
 	build_type = COMPONENT_PRINTER
-	category = list(RND_CATEGORY_CIRCUITRY)
-	subcategory = list(
-		RND_CATEGORY_CIRCUITRY = RND_SUBCATEGORY_SHELLS
+	category = list(
+		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_SHELLS
 	)
