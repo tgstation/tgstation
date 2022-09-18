@@ -37,8 +37,6 @@
 /datum/round_event/brand_intelligence/announce(fake)
 	var/source = "unknown machine"
 	if(fake)
-		var/obj/machinery/vending/example = pick(subtypesof(/obj/machinery/vending))
-		source = initial(example.name)
 		for(var/obj/machinery/vending/vendor in GLOB.machines)
 			if(!is_station_level(vendor.z))
 				continue
