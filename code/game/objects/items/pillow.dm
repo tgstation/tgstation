@@ -11,11 +11,6 @@
 	damtype = STAMINA
 	var/pillow_trophy 
 
-/obj/item/pillow/attack(mob/living/carbon/target_mob, mob/living/user, params)
-	. = ..()
-	if(!iscarbon(target_mob))
-		return
-	playsound(user, 'sound/items/pillow_hit.ogg', 80) //the basic 50 vol is barely audible
 
 /obj/item/pillow/Initialize(mapload)
 	. = ..()
@@ -24,6 +19,18 @@
 		force_unwielded = 10, \
 		force_wielded = 20, \
 	)
+
+/obj/item/pillow/Destroy(force)
+	. = ..()
+	pillow_trophy = null
+
+/obj/item/pillow/attack(mob/living/carbon/target_mob, mob/living/user, params)
+	. = ..()
+	if(!iscarbon(target_mob))
+		return
+	if(HAS_TRAIT(src, TRAIT_WIELDED))
+		user.apply_damage(10, STAMINA) // when hitting with such force we should prolly be getting tired too
+	playsound(user, 'sound/items/pillow_hit.ogg', 80) //the basic 50 vol is barely audible
 
 /obj/item/pillow/examine(mob/user)
 	. = ..()
