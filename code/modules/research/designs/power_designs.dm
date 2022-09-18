@@ -93,7 +93,7 @@
 	name = "Turbine Compressor"
 	desc = "The basic tier of a compressor blade."
 	id = "turbine_part_compressor"
-	build_type = PROTOLATHE | AUTOLATHE
+	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 500)
 	construction_time = 100
 	build_path = /obj/item/turbine_parts/compressor
@@ -106,7 +106,7 @@
 	name = "Turbine Rotor"
 	desc = "The basic tier of a rotor shaft."
 	id = "turbine_part_rotor"
-	build_type = PROTOLATHE | AUTOLATHE
+	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 500)
 	construction_time = 100
 	build_path = /obj/item/turbine_parts/rotor
@@ -119,7 +119,7 @@
 	name = "Turbine Stator"
 	desc = "The basic tier of a stator."
 	id = "turbine_part_stator"
-	build_type = PROTOLATHE | AUTOLATHE
+	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 500)
 	construction_time = 100
 	build_path = /obj/item/turbine_parts/stator

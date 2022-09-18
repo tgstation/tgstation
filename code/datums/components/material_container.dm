@@ -444,6 +444,7 @@
 			"amount" = amount,
 			"sheets" = round(amount / MINERAL_MATERIAL_AMOUNT),
 			"removable" = amount >= MINERAL_MATERIAL_AMOUNT,
+			"color" = material.greyscale_colors
 		))
 
 	return data

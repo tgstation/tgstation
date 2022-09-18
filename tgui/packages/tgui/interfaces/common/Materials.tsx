@@ -25,6 +25,7 @@ export type Material = {
   amount: number;
   sheets: number;
   removable: BooleanLike;
+  color: string;
 };
 
 type MaterialIconProps = BoxProps & {
