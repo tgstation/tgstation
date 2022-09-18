@@ -187,7 +187,9 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 75000, /datum/material/glass = 37500, /datum/material/plastic = 1000)
 	build_path = /obj/item/construction/plumbing/service
-	category = list(RND_CATEGORY_TOOL_DESIGNS)
+	category = list(
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_PLUMBING
+	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
 /datum/design/biopsy_tool
