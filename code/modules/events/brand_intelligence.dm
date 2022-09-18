@@ -39,6 +39,12 @@
 	if(fake)
 		var/obj/machinery/vending/example = pick(subtypesof(/obj/machinery/vending))
 		source = initial(example.name)
+		for(var/obj/machinery/vending/vendor in GLOB.machines)
+			if(!is_station_level(vendor.z))
+				continue
+			vendingMachines.Add(vendor)
+		var/obj/machinery/vending/chosen_vendor = pick(vendingMachines)
+		source = chosen_vendor.name
 	else if(originMachine)
 		source = originMachine.name
 	priority_announce("Rampant brand intelligence has been detected aboard [station_name()]. Please inspect any [source] brand vendors for aggressive marketing tactics, and reboot them if necessary.", "Machine Learning Alert")
