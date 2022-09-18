@@ -1,4 +1,0 @@
-author: "itseasytosee"
-delete-after: True
-changes: 
-  - code_imp: "Being able to be flashed from all sides is now based on or not you have a negative flash resistance, rather than randomly applying to specific pairs of eyes."

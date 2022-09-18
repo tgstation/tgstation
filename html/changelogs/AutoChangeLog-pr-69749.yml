@@ -1,5 +1,0 @@
-author: "Pickle-Coding"
-delete-after: True
-changes: 
-  - balance: "Radiation range from tritium combustion and proto-nitrate tritium to hydrogen conversion increased by 3 times."
-  - balance: "Sets the radiation threshold for all gas reactions that release radiation to 0.3"

@@ -656,3 +656,13 @@
   skylord-a52:
   - refactor: Scientists have recently reclassified jean shorts as a subtype of the
       broader shorts clade, instead of a separate genus.
+2022-09-18:
+  Pickle-Coding:
+  - balance: Radiation range from tritium combustion and proto-nitrate tritium to
+      hydrogen conversion increased by 3 times.
+  - balance: Sets the radiation threshold for all gas reactions that release radiation
+      to 0.3
+  itseasytosee:
+  - code_imp: Being able to be flashed from all sides is now based on or not you have
+      a negative flash resistance, rather than randomly applying to specific pairs
+      of eyes.
