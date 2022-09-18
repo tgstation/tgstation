@@ -86,7 +86,7 @@
 			if(!QDELETED(upriser))
 				upriser.ai_controller = new /datum/ai_controller/vending_machine(upriser)
 				infectedMachines.Remove(upriser)
-		kill()d
+		kill()
 		return
 	if(ISMULTIPLE(activeFor, 2))
 		var/obj/machinery/vending/rebel = pick(vendingMachines)
