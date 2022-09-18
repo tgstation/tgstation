@@ -1,0 +1,6 @@
+author: "dragomagol"
+delete-after: True
+changes: 
+  - bugfix: "moved an air vent out from underneath a disposals bin in the Meta incinerator"
+  - bugfix: "replaced a regular intercom with a prisoner intercom in the Icebox prisoner transfer"
+  - bugfix: "replaced the window spawners in Meta departures (the ones in the middle of the room) with plain windows so you can see the flowers"

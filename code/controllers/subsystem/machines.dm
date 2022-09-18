@@ -10,7 +10,7 @@ SUBSYSTEM_DEF(machines)
 /datum/controller/subsystem/machines/Initialize()
 	makepowernets()
 	fire()
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/machines/proc/makepowernets()
 	for(var/datum/powernet/power_network as anything in powernets)
