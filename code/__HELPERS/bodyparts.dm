@@ -1,6 +1,7 @@
 #define IS_ORGANIC_LIMB(limb) (limb.bodytype & BODYTYPE_ORGANIC)
 
-/proc/replace_body_part(mob/living/carbon/human/human_holder, zone, obj/item/bodypart/prosthetic)
-	var/obj/item/bodypart/old_limb = human_holder.get_bodypart(zone)
-	prosthetic.replace_limb(human_holder, special = TRUE)
-	qdel(old_limb)
+/mob/living/carbon/proc/del_and_replace_bodypart(obj/item/bodypart/new_limb, special)
+	var/obj/item/bodypart/old_limb = src.get_bodypart(new_limb.body_zone)
+	if(old_limb)
+		qdel(old_limb)
+	new_limb.attach_limb(src, special = special)
