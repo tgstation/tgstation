@@ -1,14 +1,45 @@
-import { Material, MATERIAL_KEYS } from '../common/Materials';
-
-/**
- * A named material.
- */
-export type MaterialName = keyof typeof MATERIAL_KEYS;
+import { BooleanLike } from 'common/react';
 
 /**
  * A map of keyed materials to a quantity.
  */
-export type MaterialMap = Partial<Record<MaterialName, number>>;
+export type MaterialMap = Record<string, number>;
+
+/**
+ * A single, uniquely identifiable material.
+ */
+export type Material = {
+  /**
+   * The human-readable name of the material.
+   */
+  name: string;
+
+  /**
+   * An internal reference to the material that the server can use to uniquely
+   * identify the material.
+   */
+  ref: string;
+
+  /**
+   * The amount of material; 2,000 units is one sheet.
+   */
+  amount: number;
+
+  /**
+   * The number of sheets.
+   */
+  sheets: number;
+
+  /**
+   * Whether the material can be removed.
+   */
+  removable: BooleanLike;
+
+  /**
+   * The color of the material.
+   */
+  color: string;
+};
 
 /**
  * A single design that the fabricator can print.
@@ -72,7 +103,7 @@ export type FabricatorData = {
    * Whether mineral access is disabled from the ore silo (contact the
    * quartermaster).
    */
-  onHold: boolean;
+  onHold: BooleanLike;
 
   /**
    * The set of designs that this fabricator can print, indexed by their ID.
@@ -82,7 +113,7 @@ export type FabricatorData = {
   /**
    * Whether the fabricator is currently printing an item.
    */
-  busy: boolean;
+  busy: BooleanLike;
 
   /**
    * The maximum quantity of material that the fabricator can hold, or `-1`
@@ -110,7 +141,7 @@ export type FabricatorData = {
      * If `true`, this design is currently being fabricated, and `timeLeft`
      * is actively decreasing.
      */
-    processing: boolean;
+    processing: BooleanLike;
 
     /**
      * The time left in this design's fabrication, in deciseconds.

@@ -24,7 +24,7 @@ export const Fabricator = (props, context) => {
         <Stack vertical fill>
           <Stack.Item grow>
             <DesignBrowser
-              busy={busy}
+              busy={!!busy}
               designs={Object.values(designs)}
               availableMaterials={availableMaterials}
               buildRecipeElement={(

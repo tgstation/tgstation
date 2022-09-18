@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Material } from './common/Materials';
+import { Material } from './Fabrication/Types';
 import { Window } from '../layouts';
 import { Box, Tooltip, Icon, Stack, Section } from '../components';
 import { Design } from './Fabrication/Types';

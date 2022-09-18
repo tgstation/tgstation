@@ -6,7 +6,7 @@ import { Design, MaterialMap } from './Fabrication/Types';
 import { DesignBrowser } from './Fabrication/DesignBrowser';
 import { classes } from 'common/react';
 import { MaterialCostSequence } from './Fabrication/MaterialCostSequence';
-import { Material } from './common/Materials';
+import { Material } from './common/Material';
 
 type AutolatheDesign = Design & {
   buildable: boolean;

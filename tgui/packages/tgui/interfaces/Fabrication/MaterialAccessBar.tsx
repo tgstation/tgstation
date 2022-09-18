@@ -3,13 +3,12 @@ import { classes } from 'common/react';
 import { useLocalState } from '../../backend';
 import { Flex, Button, Stack, AnimatedNumber } from '../../components';
 import { formatSiUnit } from '../../format';
-import { Material } from '../common/Materials';
 import { MaterialIcon } from './MaterialIcon';
-import { MaterialName } from './Types';
+import { Material } from './Types';
 
 // by popular demand of discord people (who are always right and never wrong)
 // this is completely made up
-const MATERIAL_RARITY: Record<MaterialName, number> = {
+const MATERIAL_RARITY: Record<string, number> = {
   'glass': 0,
   'iron': 1,
   'plastic': 2,
