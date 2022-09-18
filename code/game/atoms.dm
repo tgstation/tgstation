@@ -1951,8 +1951,7 @@
 
 	active_hud.screentip_text.maptext_y = 0
 	var/lmb_rmb_line = ""
-	var/ctrl_lmb_ctrl_rmb_line = ""
-	var/alt_lmb_alt_rmb_line = ""
+	var/ctrl_lmb_alt_lmb_line = ""
 	var/shift_lmb_ctrl_shift_lmb_line = ""
 	var/extra_lines = 0
 	var/extra_context = ""
@@ -1979,31 +1978,20 @@
 				else if (rmb_text)
 					lmb_rmb_line = rmb_text
 
-				// Ctrl-LMB, Ctrl-RMB on one line...
+				// Ctrl-LMB, Alt-LMB on one line...
 				if (lmb_rmb_line != "")
 					lmb_rmb_line += "<br>"
 					extra_lines++
 				if (SCREENTIP_CONTEXT_CTRL_LMB in context)
-					ctrl_lmb_ctrl_rmb_line += "[SCREENTIP_CONTEXT_CTRL_LMB]: [context[SCREENTIP_CONTEXT_CTRL_LMB]]"
-				if (SCREENTIP_CONTEXT_CTRL_RMB in context)
-					if (ctrl_lmb_ctrl_rmb_line != "")
-						ctrl_lmb_ctrl_rmb_line += " | "
-					ctrl_lmb_ctrl_rmb_line += "[SCREENTIP_CONTEXT_CTRL_RMB]: [context[SCREENTIP_CONTEXT_CTRL_RMB]]"
-
-				// Alt-LMB, Alt-RMB on one line...
-				if (ctrl_lmb_ctrl_rmb_line != "")
-					ctrl_lmb_ctrl_rmb_line += "<br>"
-					extra_lines++
+					ctrl_lmb_alt_lmb_line += "[SCREENTIP_CONTEXT_CTRL_LMB]: [context[SCREENTIP_CONTEXT_CTRL_LMB]]"
 				if (SCREENTIP_CONTEXT_ALT_LMB in context)
-					alt_lmb_alt_rmb_line += "[SCREENTIP_CONTEXT_ALT_LMB]: [context[SCREENTIP_CONTEXT_ALT_LMB]]"
-				if (SCREENTIP_CONTEXT_ALT_RMB in context)
-					if (alt_lmb_alt_rmb_line != "")
-						alt_lmb_alt_rmb_line += " | "
-					alt_lmb_alt_rmb_line += "[SCREENTIP_CONTEXT_ALT_RMB]: [context[SCREENTIP_CONTEXT_ALT_RMB]]"
+					if (ctrl_lmb_alt_lmb_line != "")
+						ctrl_lmb_alt_lmb_line += " | "
+					ctrl_lmb_alt_lmb_line += "[SCREENTIP_CONTEXT_ALT_LMB]: [context[SCREENTIP_CONTEXT_ALT_LMB]]"
 
 				// Shift-LMB, Ctrl-Shift-LMB on one line...
-				if (alt_lmb_alt_rmb_line != "")
-					alt_lmb_alt_rmb_line += "<br>"
+				if (ctrl_lmb_alt_lmb_line != "")
+					ctrl_lmb_alt_lmb_line += "<br>"
 					extra_lines++
 				if (SCREENTIP_CONTEXT_SHIFT_LMB in context)
 					shift_lmb_ctrl_shift_lmb_line += "[SCREENTIP_CONTEXT_SHIFT_LMB]: [context[SCREENTIP_CONTEXT_SHIFT_LMB]]"
@@ -2016,7 +2004,7 @@
 					extra_lines++
 
 				if(extra_lines)
-					extra_context = "<br><span style='font-size: 7px'>[lmb_rmb_line][ctrl_lmb_ctrl_rmb_line][alt_lmb_alt_rmb_line][shift_lmb_ctrl_shift_lmb_line]</span>"
+					extra_context = "<br><span style='font-size: 7px'>[lmb_rmb_line][ctrl_lmb_alt_lmb_line][shift_lmb_ctrl_shift_lmb_line]</span>"
 					//first extra line pushes atom name line up 10px, subsequent lines push it up 9px, this offsets that and keeps the first line in the same place
 					active_hud.screentip_text.maptext_y = -10 + (extra_lines - 1) * -9
 
