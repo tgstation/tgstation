@@ -91,17 +91,28 @@
   display: flex;
   width: auto;
   border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+  position: relative;
 
   &:last-child {
     border-bottom: 0;
   }
 
-  &__About,
+  &__Progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 4px;
+    background-color: rgba(255, 255, 255, 0.25);
+    border-radius: 4px;
+    transition: width 0.5s ease;
+  }
+
   &__Title,
   &__Button {
     @include button.button-color(base.$color-bg);
     background-color: rgba(base.$color-bg, 0);
     color: button.$color-transparent-text;
+    position: relative;
 
     display: -ms-flexbox;
     display: flex;
@@ -125,7 +136,7 @@
     }
   }
 
-  &__About {
+  &__Button--icon {
     padding: 0 1em;
   }
 

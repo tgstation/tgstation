@@ -171,13 +171,13 @@
 #define RND_SUBCATEGORY_IMPLANTS "/Implants"
 
 // Limb Categories
-#define RND_CATEGORY_LIMBS_DIGITIGRADE "/Digitigrade"
-#define RND_CATEGORY_LIMBS_OTHER "/Other Limbs"
+#define RND_CATEGORY_LIMBS_DIGITIGRADE "Digitigrade"
+#define RND_CATEGORY_LIMBS_OTHER "Other Limbs"
 
 /// Biogenerator Categories
-#define RND_CATEGORY_FOOD "/Food"
-#define RND_CATEGORY_BOTANY_CHEMICALS "/Botany Chemicals"
-#define RND_CATEGORY_ORGANIC_MATERIALS "/Organic Materials"
+#define RND_CATEGORY_FOOD "Food"
+#define RND_CATEGORY_BOTANY_CHEMICALS "Botany Chemicals"
+#define RND_CATEGORY_ORGANIC_MATERIALS "Organic Materials"
 
 // Meta categories
 #define RND_CATEGORY_INITIAL "initial"

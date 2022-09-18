@@ -124,11 +124,12 @@
 			"cost" = cost,
 			"id" = design.id,
 			"categories" = design.category,
-			"icon" = "[icon_size == size32x32 ? "" : "[icon_size] "][design.id]"
+			"icon" = "[icon_size == size32x32 ? "" : "[icon_size] "][design.id]",
+			"constructionTime" = 0
 		)
 
 	data["designs"] = designs
-	data["fab_name"] = name
+	data["fabName"] = name
 
 	return data
 
@@ -136,8 +137,10 @@
 	var/list/data = list()
 
 	data["materials"] = materials.mat_container?.ui_data()
-	data["on_hold"] = materials.on_hold()
+	data["onHold"] = materials.on_hold()
 	data["busy"] = busy
+	data["materialMaximum"] = materials.
+	data["queue"] = list()
 
 	return data
 

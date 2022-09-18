@@ -7,14 +7,9 @@ import { FabricatorData, Design, MaterialMap } from './Fabrication/Types';
 import { classes } from 'common/react';
 import { DesignBrowser } from './Fabrication/DesignBrowser';
 
-/**
- * A dummy category that, when selected, renders ALL recipes to the UI.
- */
-const ALL_CATEGORY = '__ALL';
-
 export const Fabricator = (props, context) => {
   const { act, data } = useBackend<FabricatorData>(context);
-  const { fab_name, on_hold, designs, busy } = data;
+  const { fabName, onHold, designs, busy } = data;
 
   // Reduce the material count array to a map of actually available materials.
   const availableMaterials: MaterialMap = {};
@@ -24,7 +19,7 @@ export const Fabricator = (props, context) => {
   }
 
   return (
-    <Window title={fab_name} width={670} height={600}>
+    <Window title={fabName} width={670} height={600}>
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item grow>
@@ -50,7 +45,7 @@ export const Fabricator = (props, context) => {
             </Section>
           </Stack.Item>
         </Stack>
-        {!!on_hold && (
+        {!!onHold && (
           <Dimmer style={{ 'font-size': '2em', 'text-align': 'center' }}>
             Mineral access is on hold, please contact the quartermaster.
           </Dimmer>
@@ -111,8 +106,9 @@ const Recipe = (props: { design: Design; available: MaterialMap }, context) => {
       <Tooltip content={design.desc} position="right">
         <div
           className={classes([
-            'FabricatorRecipe__About',
-            !canPrint && 'FabricatorRecipe__Title--disabled',
+            'FabricatorRecipe__Button',
+            'FabricatorRecipe__Button--icon',
+            !canPrint && 'FabricatorRecipe__Button--disabled',
           ])}>
           <Icon name="question-circle" />
         </div>
