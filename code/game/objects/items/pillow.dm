@@ -9,9 +9,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	damtype = STAMINA
-	force = 10
-	var/fluffy_dammage = 10
-	var/pillow_trophy = new /obj/item/trash/pillow_tag()
+	var/pillow_trophy 
 
 /obj/item/pillow/attack(mob/living/carbon/target_mob, mob/living/user, params)
 	. = ..()
@@ -19,14 +17,24 @@
 		return
 	playsound(user, 'sound/items/pillow_hit.ogg', 80) //the basic 50 vol is barely audible
 
+/obj/item/pillow/Initialize(mapload)
+	. = ..()
+	pillow_trophy = new /obj/item/trash/pillow_tag(src)
+	AddComponent(/datum/component/two_handed, \
+		force_unwielded = 10, \
+		force_wielded = 20, \
+	)
+
+/obj/item/pillow/examine(mob/user)
+	. = ..()
+	. += span_notice("<i>There's more information below, you can look again to take a closer look...</i>")
+
 /obj/item/pillow/examine_more(mob/user)
 	. = ..()
 	. += span_notice("Alt-click to remove the tag!")
 
 /obj/item/pillow/AltClick(mob/user)
 	. = ..()
-	if(!.)
-		return
 	if(!pillow_trophy)
 		balloon_alert(user, span_notice("no tag!"))
 		return
