@@ -80,9 +80,9 @@
 /// The minimum released energy necessary for tritium to release radiation during combustion. (at a mix volume of [CELL_VOLUME]).
 #define TRITIUM_RADIATION_RELEASE_THRESHOLD (FIRE_TRITIUM_ENERGY_RELEASED)
 /// A scaling factor for the range of radiation pulses produced by tritium fires.
-#define TRITIUM_RADIATION_RANGE_DIVISOR 1.5
-/// A scaling factor for the irradiation threshold of radiation pulses produced by tritium fires.
-#define TRITIUM_RADIATION_THRESHOLD_BASE 15
+#define TRITIUM_RADIATION_RANGE_DIVISOR 0.5
+/// The threshold of the tritium combustion's radiation. Lower values means it will be able to penetrate through more structures.
+#define TRITIUM_RADIATION_THRESHOLD 0.3
 
 // - Freon:
 /// The maximum temperature freon can combust at.
@@ -235,9 +235,9 @@
 /// The minimum released energy necessary for proto-nitrate to release radiation when converting tritium. (With a reaction vessel volume of [CELL_VOLUME])
 #define PN_TRITIUM_CONVERSION_RAD_RELEASE_THRESHOLD 10000
 /// A scaling factor for the range of the radiation pulses generated when proto-nitrate converts tritium to hydrogen.
-#define PN_TRITIUM_RAD_RANGE_DIVISOR 1.5
-/// A scaling factor for the threshold of the radiation pulses generated when proto-nitrate converts tritium to hydrogen.
-#define PN_TRITIUM_RAD_THRESHOLD_BASE 15
+#define PN_TRITIUM_RAD_RANGE_DIVISOR 0.5
+/// The threshold of the radiation pulse released when proto-nitrate converts tritium into hydrogen. Lower values means it will be able to penetrate through more structures.
+#define PN_TRITIUM_RAD_THRESHOLD 0.3
 
 /// The minimum temperature proto-nitrate can break BZ down at.
 #define PN_BZASE_MIN_TEMP 260
@@ -249,8 +249,8 @@
 #define PN_BZASE_RAD_RELEASE_THRESHOLD 60000
 /// A scaling factor for the range of the radiation pulses generated when proto-nitrate breaks down BZ.
 #define PN_BZASE_RAD_RANGE_DIVISOR 1.5
-/// A scaling factor for the threshold of the radiation pulses generated when proto-nitrate breaks down BZ.
-#define PN_BZASE_RAD_THRESHOLD_BASE 15
+/// The threshold of the radiation pulse released when proto-nitrate breaks down BZ. Lower values means it will be able to penetrate through more structures.
+#define PN_BZASE_RAD_THRESHOLD 0.3
 /// A scaling factor for the nuclear particle production generated when proto-nitrate breaks down BZ.
 #define PN_BZASE_NUCLEAR_PARTICLE_DIVISOR 5
 /// The maximum amount of nuclear particles that can be produced from proto-nitrate breaking down BZ.

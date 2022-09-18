@@ -626,3 +626,43 @@
   zxaber:
   - balance: Airlocks with an unrestricted side no longer function as a light source.
       The indicator will now be visible even in the dark.
+2022-09-17:
+  NamelessFairy:
+  - bugfix: CTF Instagib mode can now be toggled without breaking CTF
+  - admin: Admins can now toggle CTF Instagib mode while CTF is not running
+  - bugfix: The Chapel bookshelf is now actually inside the chapel
+  - bugfix: The funeral parlor airlock access has been amended back to public access
+  Pickle-Coding:
+  - bugfix: Fixes water vapour not consuming water vapour when freezing turfs.
+  - code_imp: Turfs will not sleep during an ongoing gas reaction, and excited groups
+      won't dismantle if one of their turfs are reacting.
+  - code_imp: Fixes gas mixer node concentration logging.
+  ShizCalev:
+  - bugfix: Fixed voice of god breaking if someone resisted your command.
+  - admin: Debugging / admin omnitool now stabs eyes when in screwdriver mode.
+  - bugfix: Fixed not being able to scoop up holochassis pAIs.
+  Thunder12345:
+  - bugfix: You can now pin medals to buttondown shirts.
+  Watermelon914:
+  - bugfix: USB ports for circuits now work again
+  dopamiin:
+  - bugfix: several foods now taste like what they should
+  san7890:
+  - admin: Prisoners returning from the gulag as well as reclaiming their items from
+      the gulag item reclaimer are now both logged.
+  scriptis:
+  - bugfix: ghost follow links no longer appear above binary messages using light
+      theme
+  skylord-a52:
+  - refactor: Scientists have recently reclassified jean shorts as a subtype of the
+      broader shorts clade, instead of a separate genus.
+2022-09-18:
+  Pickle-Coding:
+  - balance: Radiation range from tritium combustion and proto-nitrate tritium to
+      hydrogen conversion increased by 3 times.
+  - balance: Sets the radiation threshold for all gas reactions that release radiation
+      to 0.3
+  itseasytosee:
+  - code_imp: Being able to be flashed from all sides is now based on or not you have
+      a negative flash resistance, rather than randomly applying to specific pairs
+      of eyes.
