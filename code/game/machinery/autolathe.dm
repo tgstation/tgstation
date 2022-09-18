@@ -136,7 +136,7 @@
 /obj/machinery/autolathe/ui_assets(mob/user)
 	return list(
 		get_asset_datum(/datum/asset/spritesheet/sheetmaterials),
-		get_asset_datum(/datum/asset/spritesheet/research_designs)
+		get_asset_datum(/datum/asset/spritesheet/research_designs),
 	)
 
 /obj/machinery/autolathe/ui_act(action, list/params)
