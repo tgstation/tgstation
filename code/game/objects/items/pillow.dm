@@ -38,3 +38,4 @@
 	icon_state = "pillow_no_tag"
 	desc = "A soft and fluffy pillow. This one seems to have its tag removed"
 	
+	
