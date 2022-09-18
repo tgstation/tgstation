@@ -36,12 +36,13 @@
 /// Overlay animation sprite-file
 #define EMOTE_OVERLAYS 'icons/effects/overlay_effects.dmi'
 
-/datum/emote/living/sigh
+/datum/emote/living/carbon/human/sigh
 	key = "sigh"
 	key_third_person = "sighs"
 	message = "sighs."
 	message_mime = "acts out an exaggerated silent sigh."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+	cooldown = 2 SECONDS
 
 /datum/emote/living/carbon/human/sigh/can_run_emote(mob/user, status_check = TRUE, intentional)
 	if(!ishuman(user))
@@ -56,6 +57,7 @@
 /datum/emote/living/sweatdrop
 	key = "sweatdrop"
 	key_third_person = "sweatdrops"
+	cooldown = 2 SECONDS
 
 /datum/emote/living/sweatdrop/can_run_emote(mob/user, status_check = TRUE, intentional)
 	if(!isliving(user))
@@ -75,6 +77,7 @@
 /datum/emote/living/realize
 	key = "realize"
 	key_third_person = "realizes"
+	cooldown = 2 SECONDS
 
 /datum/emote/living/realize/can_run_emote(mob/user, status_check = TRUE, intentional)
 	if(!isliving(user))
@@ -93,6 +96,7 @@
 /datum/emote/living/annoyed
 	key = "annoyed"
 	key_third_person = "is annoyed"
+	cooldown = 2 SECONDS
 
 /datum/emote/living/annoyed/can_run_emote(mob/user, status_check = TRUE, intentional)
 	if(!isliving(user))
@@ -112,6 +116,7 @@
 /datum/emote/living/exclaim
 	key = "exclaim"
 	key_third_person = "exclaims"
+	cooldown = 2 SECONDS
 
 /datum/emote/living/exclaim/can_run_emote(mob/user, status_check = TRUE, intentional)
 	if(!isliving(user))
@@ -131,6 +136,7 @@
 /datum/emote/living/question
 	key = "question"
 	key_third_person = "questions"
+	cooldown = 2 SECONDS
 
 /datum/emote/living/question/can_run_emote(mob/user, status_check = TRUE, intentional)
 	if(!isliving(user))
@@ -151,6 +157,7 @@
 	key = "glasses"
 	key_third_person = "glasses"
 	message = "pushes up their glasses."
+	cooldown = 2 SECONDS
 
 /datum/emote/living/carbon/human/glasses/can_run_emote(mob/user, status_check = TRUE, intentional)
 	if(!ishuman(user))
@@ -162,7 +169,7 @@
 
 	return ..()
 
-/datum/emote/living/glasses/run_emote(mob/living/carbon/human/user, params, type_override, intentional)
+/datum/emote/living/carbon/human/glasses/run_emote(mob/living/carbon/human/user, params, type_override, intentional)
 	. = ..()
 
 	var/mutable_appearance/overlay = mutable_appearance(EMOTE_OVERLAYS, "glasses", ABOVE_MOB_LAYER)
