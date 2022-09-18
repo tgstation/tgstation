@@ -256,7 +256,7 @@ const QueueList = (props: { availableMaterials: MaterialMap }, context) => {
                 style={{
                   width:
                     (entry.job.timeLeft /
-                      (entry.design ? entry.design.constructionTime : 0)) *
+                      (entry.design ? entry.design.constructionTime / 10 : 0)) *
                       100 +
                     '%',
                 }}

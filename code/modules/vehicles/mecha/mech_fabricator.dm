@@ -400,7 +400,7 @@
 			"jobId" = top_job_id,
 			"designId" = being_built.id,
 			"processing" = TRUE,
-			"timeLeft" = (build_finish - world.time) / 10
+			"timeLeft" = (build_finish - world.time)
 		))
 
 	var/offset = 0

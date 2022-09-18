@@ -113,7 +113,7 @@ export type FabricatorData = {
     processing: boolean;
 
     /**
-     * The time left in this design's fabrication, in seconds.
+     * The time left in this design's fabrication, in deciseconds.
      */
     timeLeft: number;
   }[];
