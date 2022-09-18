@@ -169,10 +169,10 @@
 #define INIT_ORDER_AIR -1
 #define INIT_ORDER_PERSISTENCE -2
 #define INIT_ORDER_PERSISTENT_PAINTINGS -3 // Assets relies on this
-#define INIT_ORDER_VOTE -3.5 // Needs to be after persistence so that recent maps are not loaded.
-#define INIT_ORDER_ASSETS -4
-#define INIT_ORDER_ICON_SMOOTHING -5
-#define INIT_ORDER_OVERLAY -6
+#define INIT_ORDER_VOTE -4 // Needs to be after persistence so that recent maps are not loaded.
+#define INIT_ORDER_ASSETS -5
+#define INIT_ORDER_ICON_SMOOTHING -6
+#define INIT_ORDER_OVERLAY -7
 #define INIT_ORDER_XKEYSCORE -10
 #define INIT_ORDER_STICKY_BAN -10
 #define INIT_ORDER_LIGHTING -20
