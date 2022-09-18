@@ -69,6 +69,7 @@
 	. = ..()
 
 	var/mutable_appearance/overlay = mutable_appearance(EMOTE_OVERLAYS, "sweatdrop", ABOVE_MOB_LAYER)
+
 	overlay.pixel_x = 10
 	overlay.pixel_y = 10
 	flick_overlay_static(overlay, user, 50)
@@ -89,6 +90,7 @@
 	. = ..()
 
 	var/mutable_appearance/overlay = mutable_appearance(EMOTE_OVERLAYS, "realize", ABOVE_MOB_LAYER)
+
 	overlay.pixel_y = 15
 	flick_overlay_static(overlay, user, 50)
 
@@ -108,6 +110,7 @@
 	. = ..()
 
 	var/mutable_appearance/overlay = mutable_appearance(EMOTE_OVERLAYS, "annoyed", ABOVE_MOB_LAYER)
+
 	overlay.pixel_x = 10
 	overlay.pixel_y = 10
 	flick_overlay_static(overlay, user, 50)
@@ -128,6 +131,7 @@
 	. = ..()
 
 	var/mutable_appearance/overlay = mutable_appearance(EMOTE_OVERLAYS, "exclamation", ABOVE_MOB_LAYER)
+
 	overlay.pixel_x = 10
 	overlay.pixel_y = 28
 	flick_overlay_static(overlay, user, 50)
@@ -148,6 +152,7 @@
 	. = ..()
 
 	var/mutable_appearance/overlay = mutable_appearance(EMOTE_OVERLAYS, "question", ABOVE_MOB_LAYER)
+
 	overlay.pixel_x = 10
 	overlay.pixel_y = 28
 	flick_overlay_static(overlay, user, 50)
@@ -171,10 +176,10 @@
 	. = ..()
 
 	var/mutable_appearance/overlay = mutable_appearance(EMOTE_OVERLAYS, "glasses", ABOVE_MOB_LAYER)
+
 	flick_overlay_static(overlay, user, 10)
 
 #undef EMOTE_OVERLAYS
-
 
 /datum/emote/living/sing_tune
 	key = "tunesing"
