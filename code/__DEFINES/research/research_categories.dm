@@ -110,7 +110,7 @@
 #define RND_SUBCATEGORY_STOCK_PARTS_4 "/Tier 4 Parts"
 #define RND_SUBCATEGORY_STOCK_PARTS_EXCHANGERS "/Exchange Devices"
 
-#define RND_CATEGORY_SYNDICATE "/Syndicate Designs"
+#define RND_CATEGORY_SYNDICATE "/Illegal Designs"
 
 #define RND_CATEGORY_EXOSUIT_BOARDS "/Exosuit Boards"
 #define RND_SUBCATEGORY_EXOSUIT_BOARDS_RIPLEY "/Ripley"
