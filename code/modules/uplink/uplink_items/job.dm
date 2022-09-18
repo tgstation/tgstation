@@ -194,15 +194,6 @@
 	limited_stock = 2 //you can't use more than two!
 	restricted_roles = list("Shaft Miner")
 	
-/datum/uplink_item/role_restricted/syndicate_trophy
-	name = "Syndicate Crusher Trophy"
-	desc = "A relic seized by the Syndicate that enables the proto-kinetic crusher to mark humanoid targets instead of the gross beasts of Lavaland."
-	progression_minimum = 30 MINUTES
-	item = /obj/item/crusher_trophy/syndicate_trophy
-	cost = 17
-	limited_stock = 1
-	restricted_roles = list("Shaft Miner")
-	
 /datum/uplink_item/role_restricted/mimery
 	name = "Guide to Advanced Mimery Series"
 	desc = "The classical two part series on how to further hone your mime skills. Upon studying the series, the user should be able to make 3x1 invisible walls, and shoot bullets out of their fingers. \
