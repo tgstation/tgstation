@@ -25,12 +25,6 @@
 		/obj/item/stock_parts/cell/microfusion/advanced,
 		/obj/item/stock_parts/cell/microfusion/advanced,
 		/obj/item/stock_parts/cell/microfusion/advanced,
-		/obj/item/microfusion_cell_attachment/rechargeable,
-		/obj/item/microfusion_cell_attachment/rechargeable,
-		/obj/item/microfusion_cell_attachment/rechargeable,
-		/obj/item/microfusion_cell_attachment/rechargeable,
-		/obj/item/microfusion_cell_attachment/rechargeable,
-		/obj/item/microfusion_cell_attachment/rechargeable,
 	)
 	crate_name = "Microfusion Cell Crate"
 
@@ -39,10 +33,6 @@
 	desc = "Micron Control Systems Incorporated supplied MCR-01 Military spec attachments! This crate comes with two utilitarian repeater loadout."
 	cost = CARGO_CRATE_VALUE * 14
 	contains = list(
-		/obj/item/microfusion_cell_attachment/tactical,
-		/obj/item/microfusion_cell_attachment/tactical,
-		/obj/item/microfusion_cell_attachment/tactical,
-		/obj/item/microfusion_cell_attachment/tactical,
 		/obj/item/microfusion_gun_attachment/grip,
 		/obj/item/microfusion_gun_attachment/grip,
 		/obj/item/microfusion_gun_attachment/rail,

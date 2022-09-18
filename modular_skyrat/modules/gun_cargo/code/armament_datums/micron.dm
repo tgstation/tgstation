@@ -8,9 +8,9 @@
 	subcategory = ARMAMENT_SUBCATEGORY_ASSAULTRIFLE
 
 /datum/armament_entry/cargo_gun/micron/rifle/mcr
-	item_type = /obj/item/gun/microfusion/mcr01
-	lower_cost = CARGO_CRATE_VALUE * 12
-	upper_cost = CARGO_CRATE_VALUE * 16
+	item_type = /obj/item/gun/microfusion/mcr01 // Considering that you also have to buy mods, this is about as expensive as an allstar SC-2
+	lower_cost = CARGO_CRATE_VALUE * 6
+	upper_cost = CARGO_CRATE_VALUE * 8
 
 /datum/armament_entry/cargo_gun/micron/ammo
 	subcategory = ARMAMENT_SUBCATEGORY_AMMO
@@ -22,7 +22,7 @@
 	upper_cost = CARGO_CRATE_VALUE * 1
 
 /datum/armament_entry/cargo_gun/micron/ammo/cell_bulk
-	item_type = /obj/item/storage/box/ammo_box/microfusion/bagless
+	item_type = /obj/item/storage/box/ammo_box/microfusion
 	lower_cost = CARGO_CRATE_VALUE * 1
 	upper_cost = CARGO_CRATE_VALUE * 2
 	interest_addition = COMPANY_INTEREST_AMMO_BULK
@@ -33,7 +33,7 @@
 	upper_cost = CARGO_CRATE_VALUE * 2
 
 /datum/armament_entry/cargo_gun/micron/ammo/cell_adv_bulk
-	item_type = /obj/item/storage/box/ammo_box/microfusion/advanced/bagless
+	item_type = /obj/item/storage/box/ammo_box/microfusion/advanced
 	lower_cost = CARGO_CRATE_VALUE * 2
 	upper_cost = CARGO_CRATE_VALUE * 3
 	interest_addition = COMPANY_INTEREST_AMMO_BULK
@@ -45,7 +45,7 @@
 	upper_cost = CARGO_CRATE_VALUE * 3
 
 /datum/armament_entry/cargo_gun/micron/ammo/cell_blue_bulk
-	item_type = /obj/item/storage/box/ammo_box/microfusion/bluespace/bagless
+	item_type = /obj/item/storage/box/ammo_box/microfusion/bluespace
 	interest_required = HIGH_INTEREST
 	lower_cost = CARGO_CRATE_VALUE * 3
 	upper_cost = CARGO_CRATE_VALUE * 4
@@ -110,11 +110,6 @@
 	subcategory = ARMAMENT_SUBCATEGORY_CELL_UPGRADE
 	interest_addition = COMPANY_INTEREST_ATTACHMENT
 
-/datum/armament_entry/cargo_gun/micron/cell_upgrade/recharge
-	item_type = /obj/item/microfusion_cell_attachment/rechargeable
-	lower_cost = CARGO_CRATE_VALUE * 4
-	upper_cost = CARGO_CRATE_VALUE * 6
-
 /datum/armament_entry/cargo_gun/micron/cell_upgrade/stabilize
 	item_type = /obj/item/microfusion_cell_attachment/stabiliser
 	lower_cost = CARGO_CRATE_VALUE * 2
@@ -130,13 +125,3 @@
 	interest_required = HIGH_INTEREST
 	lower_cost = CARGO_CRATE_VALUE * 5
 	upper_cost = CARGO_CRATE_VALUE * 6
-
-/datum/armament_entry/cargo_gun/micron/cell_upgrade/tactical
-	item_type = /obj/item/microfusion_cell_attachment/tactical
-	lower_cost = CARGO_CRATE_VALUE * 2
-	upper_cost = CARGO_CRATE_VALUE * 3
-
-/datum/armament_entry/cargo_gun/micron/cell_upgrade/reloader
-	item_type = /obj/item/microfusion_cell_attachment/reloader
-	lower_cost = CARGO_CRATE_VALUE * 2
-	upper_cost = CARGO_CRATE_VALUE * 3

@@ -1,3 +1,18 @@
+/obj/item/ammo_box
+	w_class = WEIGHT_CLASS_NORMAL
+
+/obj/item/ammo_box/magazine
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/ammo_box/a762
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/ammo_box/a357
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/ammo_box/c38
+	w_class = WEIGHT_CLASS_SMALL
+
 /obj/item/ammo_box/c9mm/ap
 	name = "ammo box (9mm AP)"
 	ammo_type = /obj/item/ammo_casing/c9mm/ap
@@ -102,29 +117,6 @@
 	desc = "A box filled with microfusion cells."
 
 /obj/item/storage/box/ammo_box/microfusion/bluespace/PopulateContents()
-	new /obj/item/storage/bag/ammo(src)
 	new /obj/item/stock_parts/cell/microfusion/bluespace(src)
 	new /obj/item/stock_parts/cell/microfusion/bluespace(src)
 	new /obj/item/stock_parts/cell/microfusion/bluespace(src)
-
-/obj/item/storage/box/ammo_box/microfusion/bluespace/bagless
-
-/obj/item/storage/box/ammo_box/microfusion/bluespace/bagless/PopulateContents()
-	new /obj/item/stock_parts/cell/microfusion/bluespace(src)
-	new /obj/item/stock_parts/cell/microfusion/bluespace(src)
-	new /obj/item/stock_parts/cell/microfusion/bluespace(src)
-
-/obj/item/ammo_box/b10mm
-	name = "ammo box (10mm Auto)"
-	ammo_type = /obj/item/ammo_casing/b10mm
-	max_ammo = 20
-
-/obj/item/ammo_box/b10mm/hp
-	name = "ammo box (10mm Auto HP)"
-	ammo_type = /obj/item/ammo_casing/b10mm/hp
-	max_ammo = 20
-
-/obj/item/ammo_box/b10mm/rubber
-	name = "ammo box (10mm Auto Rubber)"
-	ammo_type = /obj/item/ammo_casing/b10mm/rubber
-	max_ammo = 20

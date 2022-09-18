@@ -93,9 +93,9 @@
 	name = "Micron Control Systems"
 	can_roundstart_pick = FALSE
 	company_flag = COMPANY_MICRON
-	cost_change_lower = -2250
-	cost_change_upper = 12500 //This is an alternative to R&D, so it's expensive as hell
-	cost = 10000
+	cost_change_lower = -2000
+	cost_change_upper = 10000
+	cost = 7500
 
 /datum/gun_company/interdyne
 	name = "Interdyne Pharmaceuticals"
