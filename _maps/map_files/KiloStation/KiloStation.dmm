@@ -308,13 +308,6 @@
 /obj/structure/cable/layer3,
 /turf/open/floor/engine,
 /area/station/ai_monitored/turret_protected/aisat_interior)
-"acy" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/marker_beacon/burgundy{
-	name = "landing marker"
-	},
-/turf/open/space/basic,
-/area/space)
 "acD" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral,
@@ -595,10 +588,6 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron,
 /area/station/engineering/main)
-"afI" = (
-/obj/structure/lattice/catwalk,
-/turf/open/space/basic,
-/area/space)
 "afL" = (
 /turf/closed/wall,
 /area/station/command/heads_quarters/hos)
@@ -7605,10 +7594,6 @@
 "cml" = (
 /turf/closed/wall/rust,
 /area/station/service/library)
-"cmJ" = (
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space)
 "cmQ" = (
 /turf/open/floor/cult,
 /area/station/service/chapel/office)
@@ -125901,7 +125886,7 @@ aaa
 aaa
 aaa
 aaa
-acy
+qJs
 aDT
 beK
 jbt
@@ -126158,7 +126143,7 @@ aaa
 aaa
 aaa
 aaa
-afI
+acK
 aDU
 cry
 aaa
@@ -126415,7 +126400,7 @@ aaa
 aaa
 aaa
 aaa
-cmJ
+acm
 iak
 cry
 aaa
@@ -126672,7 +126657,7 @@ aaa
 aaB
 aaa
 aaa
-afI
+acK
 aDU
 cry
 aaa
@@ -126929,7 +126914,7 @@ aaa
 aaa
 aaa
 aaa
-acy
+qJs
 aKr
 aeZ
 jbt
