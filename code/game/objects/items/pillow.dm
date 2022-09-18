@@ -25,6 +25,8 @@
 
 /obj/item/pillow/AltClick(mob/user)
 	. = ..()
+	if(!.)
+		return
 	if(!pillow_trophy)
 		balloon_alert(user, span_notice("no tag!"))
 		return
@@ -37,5 +39,4 @@
 	playsound(user,'sound/items/poster_ripped.ogg', 50)
 	icon_state = "pillow_no_tag"
 	desc = "A soft and fluffy pillow. This one seems to have its tag removed"
-	
 	
