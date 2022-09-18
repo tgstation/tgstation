@@ -140,6 +140,15 @@ export const DesignBrowser = <T extends Design = Design>(
     ''
   );
 
+  const onCategorySelected = (newCategory: string) => {
+    if (newCategory === selectedCategory) {
+      return;
+    }
+
+    setSelectedCategory(newCategory);
+    setSearchText('');
+  };
+
   // Build a root category from the designs.
   const root: Category<T> = {
     title: ALL_CATEGORY,
@@ -213,7 +222,7 @@ export const DesignBrowser = <T extends Design = Design>(
                       selectedCategory === ALL_CATEGORY &&
                         'FabricatorTabs__Tab--active',
                     ])}
-                    onClick={() => setSelectedCategory(ALL_CATEGORY)}>
+                    onClick={() => onCategorySelected(ALL_CATEGORY)}>
                     <div className="FabricatorTabs__Label">
                       <div className="FabricatorTabs__CategoryName">
                         All Designs
@@ -231,7 +240,7 @@ export const DesignBrowser = <T extends Design = Design>(
                       key={category.title}
                       category={category}
                       selectedCategory={selectedCategory}
-                      setSelectedCategory={setSelectedCategory}
+                      setSelectedCategory={onCategorySelected}
                     />
                   ))}
                 </div>
