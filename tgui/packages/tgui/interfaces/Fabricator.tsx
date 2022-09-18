@@ -1,13 +1,11 @@
-import { useBackend, useSharedState } from '../backend';
+import { useBackend } from '../backend';
 import { Stack, Section, Icon, Dimmer, Box, Tooltip } from '../components';
 import { Window } from '../layouts';
-import { Material } from './common/Materials';
 import { MaterialCostSequence } from './Fabrication/MaterialCostSequence';
-import { sortBy } from 'common/collections';
 import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
-import { SearchBar } from './Fabrication/SearchBar';
 import { FabricatorData, Design, MaterialMap } from './Fabrication/Types';
 import { classes } from 'common/react';
+import { DesignBrowser } from './Fabrication/DesignBrowser';
 
 /**
  * A dummy category that, when selected, renders ALL recipes to the UI.
@@ -18,45 +16,6 @@ export const Fabricator = (props, context) => {
   const { act, data } = useBackend<FabricatorData>(context);
   const { fab_name, on_hold, designs, busy } = data;
 
-  const [selectedCategory, setSelectedCategory] = useSharedState(
-    context,
-    'selected_category',
-    ALL_CATEGORY
-  );
-  const [searchText, setSearchText] = useSharedState(
-    context,
-    'search_text',
-    ''
-  );
-
-  const categoryCounts: Record<string, number> = {};
-  const categorySubs: Record<string, Record<string, number>> = {};
-  let totalRecipes = 0;
-
-  // Sort the designs by name.
-  const sortedDesigns = sortBy((design: Design) => design.name)(
-    Object.values(designs)
-  );
-
-  for (const design of sortedDesigns) {
-    totalRecipes += 1;
-
-    for (const category of design.categories) {
-      categoryCounts[category] = (categoryCounts[category] ?? 0) + 1;
-    }
-
-    for (const [category, subcategory] of Object.entries(
-      design.subcategories
-    )) {
-      if (!categorySubs[category]) {
-        categorySubs[category] = {};
-      }
-
-      categorySubs[category][subcategory] =
-        (categorySubs[category]![subcategory] ?? 0) + 1;
-    }
-  }
-
   // Reduce the material count array to a map of actually available materials.
   const availableMaterials: MaterialMap = {};
 
@@ -64,186 +23,26 @@ export const Fabricator = (props, context) => {
     availableMaterials[material.name] = material.amount;
   }
 
-  const visibleDesigns = sortedDesigns
-    .filter(
-      (design) =>
-        selectedCategory === ALL_CATEGORY ||
-        design.categories?.indexOf(selectedCategory) !== -1
-    )
-    .filter((design) =>
-      design.name.toLowerCase().includes(searchText.toLowerCase())
-    );
-
-  const subcategories: Record<string, Design[]> = {};
-
-  for (const design of visibleDesigns) {
-    const subcategory =
-      design.subcategories[selectedCategory] || 'Uncategorized';
-
-    if (!subcategories[subcategory]) {
-      subcategories[subcategory] = [];
-    }
-
-    subcategories[subcategory]!.push(design);
-  }
-
   return (
     <Window title={fab_name} width={670} height={600}>
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item grow>
-            <Stack fill>
-              <Stack.Item width={'200px'}>
-                <Section fill>
-                  <Stack vertical fill>
-                    <Stack.Item>
-                      <Section title="Categories" fitted />
-                    </Stack.Item>
-                    <Stack.Item grow>
-                      <Section fill style={{ 'overflow': 'auto' }}>
-                        <div className="FabricatorTabs">
-                          <div
-                            className={classes([
-                              'FabricatorTabs__Tab',
-                              selectedCategory === ALL_CATEGORY &&
-                                'FabricatorTabs__Tab--active',
-                            ])}
-                            onClick={() => setSelectedCategory(ALL_CATEGORY)}>
-                            <div className="FabricatorTabs__Label">
-                              <div className="FabricatorTabs__CategoryName">
-                                All Designs
-                              </div>
-                              <div className="FabricatorTabs__CategoryCount">
-                                ({totalRecipes})
-                              </div>
-                            </div>
-                          </div>
-                          {sortBy(
-                            (_: [categoryName: string, count: number]) => _[0]
-                          )(Object.entries(categoryCounts)).map(
-                            ([categoryName, categoryQuantity]) => (
-                              <div
-                                className={classes([
-                                  'FabricatorTabs__Tab',
-                                  selectedCategory === categoryName &&
-                                    'FabricatorTabs__Tab--active',
-                                ])}
-                                onClick={() =>
-                                  setSelectedCategory(categoryName)
-                                }
-                                key={categoryName}>
-                                <div className="FabricatorTabs__Label">
-                                  <div className="FabricatorTabs__CategoryName">
-                                    {categoryName}
-                                  </div>
-                                  <div className="FabricatorTabs__CategoryCount">
-                                    ({categoryQuantity})
-                                  </div>
-                                </div>
-                                {selectedCategory === categoryName &&
-                                  categorySubs[categoryName] && (
-                                    <div className="FabricatorTabs">
-                                      {sortBy(
-                                        (pair: [string, number]) => pair[0]
-                                      )(
-                                        Object.entries(
-                                          categorySubs[categoryName]
-                                        )
-                                      ).map(([subcategory, count]) => (
-                                        <div
-                                          key={subcategory}
-                                          className="FabricatorTabs__Tab"
-                                          onClick={() =>
-                                            document
-                                              .getElementById(
-                                                subcategory.replace(/ /g, '')
-                                              )!
-                                              .scrollIntoView(true)
-                                          }>
-                                          <div
-                                            className={'FabricatorTabs__Label'}>
-                                            <div className="FabricatorTabs__CategoryName">
-                                              {subcategory}
-                                            </div>
-                                          </div>
-                                        </div>
-                                      ))}
-                                    </div>
-                                  )}
-                              </div>
-                            )
-                          )}
-                        </div>
-                      </Section>
-                    </Stack.Item>
-                  </Stack>
-                </Section>
-              </Stack.Item>
-              <Stack.Item grow>
-                <Section
-                  title={
-                    selectedCategory === ALL_CATEGORY
-                      ? 'All Designs'
-                      : selectedCategory
-                  }
-                  fill>
-                  <Stack vertical fill>
-                    <Stack.Item>
-                      <Section>
-                        <SearchBar
-                          searchText={searchText}
-                          onSearchTextChanged={setSearchText}
-                          hint={'Search this category...'}
-                        />
-                      </Section>
-                    </Stack.Item>
-                    <Stack.Item grow>
-                      <Section fill style={{ 'overflow': 'auto' }}>
-                        {Object.keys(subcategories)
-                          .sort()
-                          .map((categoryName) => (
-                            <Section
-                              title={categoryName}
-                              key={categoryName}
-                              id={categoryName.replace(/ /g, '')}>
-                              {subcategories[categoryName]!.map((design) => (
-                                <Recipe
-                                  key={design.name}
-                                  design={design}
-                                  available={availableMaterials}
-                                />
-                              ))}
-                            </Section>
-                          ))}
-                      </Section>
-                      {!!busy && (
-                        <Dimmer
-                          style={{
-                            'font-size': '2em',
-                            'text-align': 'center',
-                          }}>
-                          <Icon name="cog" spin />
-                          {' Building items...'}
-                        </Dimmer>
-                      )}
-                    </Stack.Item>
-                  </Stack>
-                </Section>
-                {!!on_hold && (
-                  <Dimmer
-                    style={{ 'font-size': '2em', 'text-align': 'center' }}>
-                    Mineral access is on hold, please contact the quartermaster.
-                  </Dimmer>
-                )}
-              </Stack.Item>
-            </Stack>
+            <DesignBrowser
+              busy={busy}
+              designs={Object.values(designs)}
+              availableMaterials={availableMaterials}
+              buildRecipeElement={(
+                design,
+                availableMaterials,
+                onPrintDesign
+              ) => <Recipe design={design} available={availableMaterials} />}
+            />
           </Stack.Item>
           <Stack.Item>
             <Section>
               <MaterialAccessBar
-                availableMaterials={sortBy((a: Material) => a.name)(
-                  data.materials ?? []
-                )}
+                availableMaterials={data.materials ?? []}
                 onEjectRequested={(material, amount) =>
                   act('remove_mat', { ref: material.ref, amount })
                 }
@@ -251,6 +50,11 @@ export const Fabricator = (props, context) => {
             </Section>
           </Stack.Item>
         </Stack>
+        {!!on_hold && (
+          <Dimmer style={{ 'font-size': '2em', 'text-align': 'center' }}>
+            Mineral access is on hold, please contact the quartermaster.
+          </Dimmer>
+        )}
       </Window.Content>
     </Window>
   );

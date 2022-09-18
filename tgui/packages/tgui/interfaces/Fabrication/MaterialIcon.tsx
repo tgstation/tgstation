@@ -83,5 +83,4 @@ export const MaterialIcon = (props: MaterialIconProps) => {
       ))}
     </div>
   );
-  // <div className={classes(["FabricatorMaterialIcon__Icon sheetmaterials32x32 "])}
 };

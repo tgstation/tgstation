@@ -70,7 +70,7 @@
 	build_path = /obj/item/flashlight
 	category = list(
 		RND_CATEGORY_INITIAL,
-		RND_CATEGORY_TOOLS
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MISC
 	)
 	departmental_flags = ALL
 

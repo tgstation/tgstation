@@ -32,6 +32,7 @@
 #define RND_SUBCATEGORY_TOOLS_CARGO "/Cargo Tools"
 #define RND_SUBCATEGORY_TOOLS_PKA_MODS "/PKA Modkits"
 #define RND_SUBCATEGORY_TOOLS_SECURITY "/Security Tools"
+#define RND_SUBCATEGORY_TOOLS_MISC "/Miscellaneous Tools"
 
 #define RND_CATEGORY_CONSTRUCTION "/Construction"
 #define RND_SUBCATEGORY_CONSTRUCTION_MOUNTS "/Frames & Mounts"
@@ -87,6 +88,7 @@
 #define RND_SUBCATEGORY_EQUIPMENT_GENETICS "/Genetics Equipment"
 #define RND_SUBCATEGORY_EQUIPMENT_JANITOR "/Janitorial Equipment"
 #define RND_SUBCATEGORY_EQUIPMENT_KITCHEN "/Bar & Kitchen Equipment"
+#define RND_SUBCATEGORY_EQUIPMENT_MISC "/Miscellaneous Equipment"
 
 #define RND_CATEGORY_AI "/Artificial Intelligence"
 #define RND_SUBCATEGORY_AI_CORE "/AI Construction"
@@ -178,7 +180,7 @@
 #define RND_CATEGORY_ORGANIC_MATERIALS "/Organic Materials"
 
 // Meta categories
-#define RND_CATEGORY_INITIAL "/initial"
-#define RND_CATEGORY_HACKED "/hacked"
-#define RND_CATEGORY_EMAGGED "/emagged"
+#define RND_CATEGORY_INITIAL "initial"
+#define RND_CATEGORY_HACKED "hacked"
+#define RND_CATEGORY_EMAGGED "emagged"
 #define RND_CATEGORY_IMPORTED "/Imported Designs"
