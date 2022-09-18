@@ -29,7 +29,7 @@
 
 /datum/design/unique_modkit
 	category = list(
-		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_PKA_MODS
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_PKA_MODS,
 	)
 	build_type = PROTOLATHE
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO
