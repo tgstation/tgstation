@@ -13,11 +13,10 @@
 /datum/round_event_control/brand_intelligence/admin_setup()
 	if(!check_rights(R_FUN))
 		return
-	if(tgui_alert(usr, "Select a vendor type?", "Capitalism-ho!", list("Yes", "No")) == "Yes")
+	if(tgui_alert(usr, "Select a specific vendor path?", "Capitalism-ho!", list("Yes", "No")) == "Yes")
 		var/list/vendors = list()
 		vendors += subtypesof(/obj/machinery/vending)
-		chosen_vendor = tgui_input_list(usr, "Pick Me!","Vendor Selector", vendors)
-
+		chosen_vendor = tgui_input_list(usr, "Vendor type must have at least one instance on the station!","Vendor Selector", vendors)
 /datum/round_event/brand_intelligence
 	announce_when = 1 //TIME FOR TESTING PURPOSES PLEASE REVERT TO 21
 	end_when = 1000 //Ends when all vending machines are subverted anyway.
@@ -54,7 +53,7 @@
 			vendingMachines.Add(vendor)
 	else
 		for(var/obj/machinery/vending/vendor in GLOB.machines)
-			if(!is_station_level(vendor.z) || !istype(vendor, /obj/machinery/vending/custom))
+			if(!is_station_level(vendor.z))
 				continue
 			vendingMachines.Add(vendor)
 	if(!vendingMachines.len)
