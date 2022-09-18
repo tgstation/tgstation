@@ -1159,10 +1159,12 @@
 		return FALSE
 	if(be_close && !Adjacent(M) && (M.loc != src))
 		if(no_tk)
+			stack_trace("[src] (\ref[src]) is too far away from [M] (\ref[M])")
 			to_chat(src, span_warning("You are too far away!"))
 			return FALSE
 		var/datum/dna/D = has_dna()
 		if(!D || !D.check_mutation(/datum/mutation/human/telekinesis) || !tkMaxRangeCheck(src, M))
+			stack_trace("[src] (\ref[src]) is too far away from [M] (\ref[M])")
 			to_chat(src, span_warning("You are too far away!"))
 			return FALSE
 	if(need_hands && !can_hold_items(isitem(M) ? M : null)) //almost redundant if it weren't for mobs,
