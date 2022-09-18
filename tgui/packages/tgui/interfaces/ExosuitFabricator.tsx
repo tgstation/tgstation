@@ -7,10 +7,14 @@ import { Design, FabricatorData, MaterialMap } from './Fabrication/Types';
 import { DesignBrowser } from './Fabrication/DesignBrowser';
 import { MaterialCostSequence } from './Fabrication/MaterialCostSequence';
 import { Tooltip } from '../components';
-import { classes } from 'common/react';
+import { BooleanLike, classes } from 'common/react';
+
+type ExosuitFabricatorData = FabricatorData & {
+  processing: BooleanLike;
+};
 
 export const ExosuitFabricator = (props, context) => {
-  const { act, data } = useBackend<FabricatorData>(context);
+  const { act, data } = useBackend<ExosuitFabricatorData>(context);
 
   const availableMaterials: MaterialMap = {};
 
@@ -66,7 +70,7 @@ export const ExosuitFabricator = (props, context) => {
 };
 
 const Recipe = (props: { design: Design; available: MaterialMap }, context) => {
-  const { act, data } = useBackend<FabricatorData>(context);
+  const { act, data } = useBackend<ExosuitFabricatorData>(context);
   const { design, available } = props;
 
   const canPrint = !Object.entries(design.cost).some(
@@ -142,12 +146,11 @@ const Recipe = (props: { design: Design; available: MaterialMap }, context) => {
 };
 
 const Queue = (props: { availableMaterials: MaterialMap }, context) => {
-  const { act, data } = useBackend<FabricatorData>(context);
+  const { act, data } = useBackend<ExosuitFabricatorData>(context);
   const { availableMaterials } = props;
-  const { designs } = data;
+  const { designs, processing } = data;
 
   const queue = data.queue || [];
-  const isProcessingQueue = queue.length > 0 && queue[0]!.processing;
 
   const materialCosts: MaterialMap = {};
 
@@ -180,7 +183,7 @@ const Queue = (props: { availableMaterials: MaterialMap }, context) => {
                   content="Clear Queue"
                   onClick={() => act('clear_queue')}
                 />
-                {(!!isProcessingQueue && (
+                {(!!processing && (
                   <Button
                     disabled={!queue.length}
                     content="Stop"
@@ -214,7 +217,7 @@ const Queue = (props: { availableMaterials: MaterialMap }, context) => {
 };
 
 const QueueList = (props: { availableMaterials: MaterialMap }, context) => {
-  const { act, data } = useBackend<FabricatorData>(context);
+  const { act, data } = useBackend<ExosuitFabricatorData>(context);
   const { availableMaterials } = props;
 
   const queue = data.queue || [];
@@ -299,7 +302,9 @@ const QueueList = (props: { availableMaterials: MaterialMap }, context) => {
                   'FabricatorRecipe__Button--icon',
                 ])}
                 onClick={() => {
-                  act('del_queue_part', { index: entry.index + 1 });
+                  act('del_queue_part', {
+                    index: entry.index + (queue[0]!.processing ? 0 : 1),
+                  });
                 }}>
                 <Tooltip content={'Remove from Queue'}>
                   <Icon name="minus-circle" />

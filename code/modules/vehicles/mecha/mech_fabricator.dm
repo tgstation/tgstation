@@ -394,6 +394,7 @@
 
 	data["materials"] = rmat.mat_container?.ui_data()
 	data["queue"] = list()
+	data["processing"] = process_queue
 
 	if(being_built)
 		data["queue"] += list(list(
