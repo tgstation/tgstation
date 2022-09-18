@@ -863,7 +863,12 @@
 	return get_dist(src, A) <= max(viewscale[1]*0.5,viewscale[2]*0.5)
 
 /mob/living/silicon/ai/proc/relay_speech(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
-	var/treated_message = lang_treat(speaker, message_language, raw_message, spans, message_mods)
+	var/raw_translation = translate_language(speaker, message_language, raw_message)
+
+	// double check if we can refactor this better.. ?
+	var/atom/movable/source = speaker.GetSource() || speaker //is the speaker virtual/radio
+	var/treated_message = source.say_quote(raw_translation, spans, message_mods)
+
 	var/start = "Relayed Speech: "
 	var/namepart = "[speaker.GetVoice()][speaker.get_alt_name()]"
 	var/hrefpart = "<a href='?src=[REF(src)];track=[html_encode(namepart)]'>"

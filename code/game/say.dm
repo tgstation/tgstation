@@ -69,11 +69,14 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	if (message_mods[MODE_CUSTOM_SAY_ERASE_INPUT])
 		messagepart = message_mods[MODE_CUSTOM_SAY_EMOTE]
 	else
-		messagepart = lang_treat(speaker, message_language, raw_message, spans, message_mods)
 
-		var/datum/language/D = GLOB.language_datum_instances[message_language]
-		if(istype(D) && D.display_icon(src))
-			languageicon = "[D.get_icon()] "
+		messagepart = translate_language(speaker, message_language, raw_message) //, spans, message_mods)
+		//return no_quote ? raw_message : source.say_quote(raw_message, spans, message_mods)
+		messagepart = src.say_quote(messagepart, spans, message_mods)
+
+		var/datum/language/dialect = GLOB.language_datum_instances[message_language]
+		if(istype(dialect) && dialect.display_icon(src))
+			languageicon = "[dialect.get_icon()] "
 
 	messagepart = " <span class='message'>[say_emphasis(messagepart)]</span></span>"
 
@@ -128,16 +131,19 @@ GLOBAL_LIST_INIT(freqtospan, list(
 
 #undef ENCODE_HTML_EMPHASIS
 
-/atom/movable/proc/lang_treat(atom/movable/speaker, datum/language/language, raw_message, list/spans, list/message_mods = list(), no_quote = FALSE)
-	var/atom/movable/source = speaker.GetSource() || speaker //is the speaker virtual
-	if(has_language(language))
-		return no_quote ? raw_message : source.say_quote(raw_message, spans, message_mods)
-	else if(language)
-		var/datum/language/D = GLOB.language_datum_instances[language]
-		raw_message = D.scramble(raw_message)
-		return no_quote ? raw_message : source.say_quote(raw_message, spans, message_mods)
-	else
+///	Modifies the message by comparing the languages of the speaker with the languages of the hearer. Called on the hearer.
+/atom/movable/proc/translate_language(atom/movable/speaker, datum/language/language, raw_message, list/spans, list/message_mods = list(), no_quote = FALSE)
+	//var/atom/movable/source = speaker.GetSource() || speaker //is the speaker virtual
+
+	if(!language)
 		return "makes a strange sound."
+
+	if(!has_language(language))
+		var/datum/language/dialect = GLOB.language_datum_instances[language]
+		raw_message = dialect.scramble(raw_message)
+
+	return raw_message
+
 
 /proc/get_radio_span(freq)
 	var/returntext = GLOB.freqtospan["[freq]"]

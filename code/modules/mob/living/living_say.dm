@@ -382,18 +382,17 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 			listening |= player_mob
 			the_dead[player_mob] = TRUE
 
-	var/raw_translated_message
-	var/talk_icon_state = say_test(message_raw)
-
 	// this signal ignores whispers or language translations (only used by beetlejuice component)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_LIVING_SAY_SPECIAL, src, message_raw)
 
-	// this means a custom emote is being used and it doesn't need to be translated
-	if(!message_mods[MODE_CUSTOM_SAY_ERASE_INPUT])
-		// translate our message into appropriate language
-		message_raw = lang_treat(src, message_language, message_raw, spans, message_mods) // translate
+	var/is_custom_emote = message_mods[MODE_CUSTOM_SAY_ERASE_INPUT]
+	if(!is_custom_emote) // we do not translate emotes
+		message_raw = translate_language(src, message_language, message_raw) // translate
 
 	var/translated_raw = message_raw
+
+
+	//return no_quote ? raw_message : source.say_quote(raw_message, spans, message_mods)
 
 	// message has been formatted to have all the different <span class> applied to it
 	var/message = compose_message(src, message_language, message_raw, null, spans, message_mods)
@@ -418,6 +417,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 	//speech bubble
 	var/list/speech_bubble_recipients = list()
+	var/talk_icon_state = say_test(message_raw)
 	for(var/mob/M in listening)
 		if(M.client && (!M.client.prefs.read_preference(/datum/preference/toggle/enable_runechat) || (SSlag_switch.measures[DISABLE_RUNECHAT] && !HAS_TRAIT(src, TRAIT_BYPASS_MEASURES))))
 			speech_bubble_recipients.Add(M.client)
