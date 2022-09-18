@@ -20,10 +20,10 @@
 	morphing_human.set_species(/datum/species/monkey)
 
 	var/obj/item/clothing/neck/petcollar/collar = new
-	morphing_human.equip_to_slot_or_del(collar, slot_flags)
+	morphing_human.equip_to_slot_or_del(collar, collar.slot_flags)
 
-	var/obj/item/equipped_collar = morphing_human.get_item_by_slot(ITEM_SLOT_NECK)
+	var/obj/item/equipped_collar = morphing_human.get_item_by_slot(collar.slot_flags)
 	morphing_human.set_species(/datum/species/human)
-	var/obj/item/human_collar = morphing_human.get_item_by_slot(ITEM_SLOT_NECK)
+	var/obj/item/human_collar = morphing_human.get_item_by_slot(collar.slot_flags)
 
 	TEST_ASSERT_NOTEQUAL(equipped_collar, human_collar, "Human still has a Monkey collar after changing species.")
