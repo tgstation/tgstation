@@ -139,7 +139,7 @@
 	data["materials"] = materials.mat_container?.ui_data()
 	data["onHold"] = materials.on_hold()
 	data["busy"] = busy
-	data["materialMaximum"] = materials.
+	data["materialMaximum"] = materials.local_size
 	data["queue"] = list()
 
 	return data
