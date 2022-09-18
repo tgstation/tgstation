@@ -62,9 +62,6 @@
 		return FALSE
 	return ..()
 
-/datum/emote/living/sweatdrop/get_sound(mob/user)
-	return 'sound/effects/sweatdrop.ogg'
-
 /datum/emote/living/sweatdrop/run_emote(mob/living/user, params, type_override, intentional)
 	. = ..()
 
@@ -73,6 +70,7 @@
 	overlay.pixel_x = 10
 	overlay.pixel_y = 10
 	flick_overlay_static(overlay, user, 50)
+	playsound(user, 'sound/effects/sweatdrop.ogg', 25, TRUE)
 
 /datum/emote/living/realize
 	key = "realize"
@@ -83,9 +81,6 @@
 		return FALSE
 	return ..()
 
-/datum/emote/living/realize/get_sound(mob/user)
-	return 'sound/effects/realize.ogg'
-
 /datum/emote/living/realize/run_emote(mob/living/user, params, type_override, intentional)
 	. = ..()
 
@@ -93,6 +88,7 @@
 
 	overlay.pixel_y = 15
 	flick_overlay_static(overlay, user, 50)
+	playsound(user, 'sound/effects/realize.ogg', 25, TRUE)
 
 /datum/emote/living/annoyed
 	key = "annoyed"
@@ -103,9 +99,6 @@
 		return FALSE
 	return ..()
 
-/datum/emote/living/annoyed/get_sound(mob/user)
-	return 'sound/effects/annoyed.ogg'
-
 /datum/emote/living/annoyed/run_emote(mob/living/user, params, type_override, intentional)
 	. = ..()
 
@@ -114,6 +107,7 @@
 	overlay.pixel_x = 10
 	overlay.pixel_y = 10
 	flick_overlay_static(overlay, user, 50)
+	playsound(user, 'sound/effects/annoyed.ogg', 25, TRUE)
 
 /datum/emote/living/exclaim
 	key = "exclaim"
@@ -124,9 +118,6 @@
 		return FALSE
 	return ..()
 
-/datum/emote/living/exclaim/get_sound(mob/user)
-	return 'sound/machines/chime.ogg'
-
 /datum/emote/living/exclaim/run_emote(mob/living/user, params, type_override, intentional)
 	. = ..()
 
@@ -135,6 +126,7 @@
 	overlay.pixel_x = 10
 	overlay.pixel_y = 28
 	flick_overlay_static(overlay, user, 50)
+	playsound(user, 'sound/machines/chime.ogg', 25, TRUE)
 
 /datum/emote/living/question
 	key = "question"
@@ -145,9 +137,6 @@
 		return FALSE
 	return ..()
 
-/datum/emote/living/question/get_sound(mob/user)
-	return 'sound/effects/question.ogg'
-
 /datum/emote/living/question/run_emote(mob/living/user, params, type_override, intentional)
 	. = ..()
 
@@ -156,6 +145,7 @@
 	overlay.pixel_x = 10
 	overlay.pixel_y = 28
 	flick_overlay_static(overlay, user, 50)
+	playsound(user, 'sound/effects/question.ogg', 25, TRUE)
 
 /datum/emote/living/carbon/human/glasses
 	key = "glasses"
