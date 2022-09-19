@@ -144,7 +144,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 				continue
 			if(cultist == user)
 				continue
-			if(!cultist.can_speak_vocal(allow_mimes = TRUE))
+			if(!cultist.can_speak(allow_mimes = TRUE))
 				continue
 			if(cultist.stat != CONSCIOUS)
 				continue

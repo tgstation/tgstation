@@ -121,7 +121,7 @@
 	. = ..()
 	message_simple = initial(message_simple)
 	if(. && user.death_sound)
-		if(!user.can_speak_vocal() || user.oxyloss >= 50)
+		if(!user.can_speak() || user.oxyloss >= 50)
 			return //stop the sound if oxyloss too high/cant speak
 		playsound(user, user.death_sound, 200, TRUE, TRUE)
 
@@ -256,7 +256,7 @@
 	vary = TRUE
 
 /datum/emote/living/laugh/can_run_emote(mob/living/user, status_check = TRUE , intentional)
-	return ..() && user.can_speak_vocal(allow_mimes = TRUE)
+	return ..() && user.can_speak(allow_mimes = TRUE)
 
 /datum/emote/living/laugh/get_sound(mob/living/user)
 	if(ishuman(user))

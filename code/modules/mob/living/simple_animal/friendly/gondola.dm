@@ -60,7 +60,7 @@
 	add_overlay(eyes_overlay)
 	add_overlay(moustache_overlay)
 
-/mob/living/simple_animal/pet/gondola/can_speak_vocal(allow_mimes = FALSE)
+/mob/living/simple_animal/pet/gondola/can_speak(allow_mimes = FALSE)
 	return FALSE // Gondolas are the silent walker.
 
 /// Special handling for gondolas, as they don't use icon_states and instead rely on overlays. The parent of this proc deletes all our overlays, so we're overriding it.

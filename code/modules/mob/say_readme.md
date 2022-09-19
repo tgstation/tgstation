@@ -60,7 +60,7 @@ global procs
 		Checks that our atom can speak the passed messages.
 		Includes feedback to the speaker if they cannot speak.
 
-	can_speak_vocal()
+	can_speak()
 		Checks that our atom can vocally speak at all.
 		Does not (and should not) include any feedback on its own.
 

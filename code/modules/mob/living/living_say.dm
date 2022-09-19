@@ -399,7 +399,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	if(sigreturn & COMPONENT_CANNOT_SPEAK)
 		return FALSE
 
-	if(!can_speak_vocal())
+	if(!can_speak())
 		if(mind?.miming)
 			to_chat(src, span_green("Your vow of silence prevents you from speaking!"))
 		else
@@ -408,7 +408,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 	return TRUE
 
-/mob/living/can_speak_vocal(allow_mimes = FALSE)
+/mob/living/can_speak(allow_mimes = FALSE)
 	if(!allow_mimes && mind?.miming)
 		return FALSE
 

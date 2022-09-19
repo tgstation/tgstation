@@ -41,7 +41,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
  * CAN include feedback messages about why someone can or can't speak
  *
  * Used in [proc/say] and other methods of speech (radios) after a movable has inputted some message.
- * If you just want to check if the movable is able to speak in character, use [proc/can_speak_vocal] instead.
+ * If you just want to check if the movable is able to speak in character, use [proc/can_speak] instead.
  */
 /atom/movable/proc/try_speak(message, ignore_spam = FALSE, forced = FALSE)
 	return TRUE
@@ -60,7 +60,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
  * If FALSE, this check will always fail if the movable has a mind and is miming.
  * if TRUE, we will check if the movable can speak REGARDLESS of if they have an active mime vow.
  */
-/atom/movable/proc/can_speak_vocal(allow_mimes = FALSE)
+/atom/movable/proc/can_speak(allow_mimes = FALSE)
 	return TRUE
 
 /atom/movable/proc/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans, datum/language/message_language, list/message_mods = list())

@@ -9,7 +9,7 @@
 		message = tongueless_upper.Replace(message, pick("AA","OO","'"))
 		speech_args[SPEECH_MESSAGE] = message
 
-/mob/living/carbon/can_speak_vocal(allow_mimes = FALSE)
+/mob/living/carbon/can_speak(allow_mimes = FALSE)
 	// If we're not a nobreath species, and we don't have lungs, we can't talk
 	if(dna?.species && !HAS_TRAIT_FROM(src, TRAIT_NOBREATH, SPECIES_TRAIT) && !getorganslot(ORGAN_SLOT_LUNGS))
 		// How do species that don't breathe, talk? Magic, that's what.

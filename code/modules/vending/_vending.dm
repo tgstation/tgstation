@@ -236,7 +236,7 @@
 	QDEL_NULL(Radio)
 	return ..()
 
-/obj/machinery/vending/can_speak_vocal()
+/obj/machinery/vending/can_speak()
 	return !shut_up
 
 //Better would be to make constructable child
