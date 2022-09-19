@@ -26,6 +26,14 @@
 	weapon_weight = WEAPON_HEAVY
 
 	pb_knockback = 2
+	
+	initial_caliber = CALIBER_SHOTGUN
+	alternative_caliber = CALIBER_IMPROV_SHOTGUN
+	can_modify_ammo = TRUE
+	alternative_ammo_misfires = TRUE
+	can_misfire = FALSE
+	misfire_probability = 10 // 10% chance for your improvised shells to blow up in your face on the first fire.
+	misfire_percentage_increment = 25 //about 1 in 4 rounds, which increases rapidly every shot
 
 /obj/item/gun/ballistic/shotgun/blow_up(mob/user)
 	. = 0
