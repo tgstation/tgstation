@@ -1,3 +1,5 @@
+#define HALLUCINATION_MUTE_SOURCE "hallucinated_mute"
+
 /datum/hallucination/death
 
 /datum/hallucination/death/New(mob/living/carbon/C, forced = TRUE)
@@ -5,7 +7,7 @@
 	..()
 	target.set_screwyhud(SCREWYHUD_DEAD)
 	target.Paralyze(30 SECONDS)
-	target.adjust_silence(20 SECONDS)
+	ADD_TRAIT(target, TRAIT_MUTE, HALLUCINATION_MUTE_SOURCE)
 	to_chat(target, span_deadsay("<b>[target.real_name]</b> has died at <b>[get_area_name(target)]</b>."))
 
 	var/delay = 0
@@ -30,6 +32,8 @@
 	if(!QDELETED(target))
 		target.set_screwyhud(SCREWYHUD_NONE)
 		target.SetParalyzed(0 SECONDS)
-		target.remove_status_effect(/datum/status_effect/silenced)
+		REMOVE_TRAIT(target, TRAIT_MUTE, HALLUCINATION_MUTE_SOURCE)
 
 	qdel(src)
+
+#undef HALLUCINATION_MUTE_SOURCE
