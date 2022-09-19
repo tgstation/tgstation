@@ -36,6 +36,8 @@
 #define CALIBER_A762 "a762"
 /// The caliber used by shotguns.
 #define CALIBER_SHOTGUN "shotgun"
+/// The caliber used by improvised shotgun shells.
+#define CALIBER_IMPROV_SHOTGUN "improvised_shotgun"
 /// The caliber used by grenade launchers.
 #define CALIBER_40MM "40mm"
 /// The caliber used by rocket launchers.
