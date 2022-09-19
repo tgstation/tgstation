@@ -9,7 +9,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	damtype = STAMINA
-	var/pillow_trophy = /obj/item/trash/pillow_tag
+	var/obj/item/trash/pillow_tag/pillow_trophy
 
 
 /obj/item/pillow/Initialize(mapload)
