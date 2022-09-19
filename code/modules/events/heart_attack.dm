@@ -53,7 +53,7 @@
 /datum/round_event/heart_attack/tick()
 	if(attack_heart(victims))
 		attacks_left--
-		if(attacks_left > 0)
+		if(attacks_left <= 0)
 			activeFor = end_when //Skip to the end, we're done
 
 /datum/round_event/heart_attack/proc/attack_heart(var/list/victims)
