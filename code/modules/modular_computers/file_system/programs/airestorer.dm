@@ -17,15 +17,8 @@
 	/// Variable dictating if we are in the process of restoring the AI in the inserted intellicard
 	var/restoring = FALSE
 
-/datum/computer_file/program/ai_restorer/New()
-	. = ..()
-	RegisterSignal(computer, COMSIG_PARENT_EXAMINE, .proc/on_examine)
-
-/datum/computer_file/program/ai_restorer/Destroy(force)
-	UnregisterSignal(computer, COMSIG_PARENT_EXAMINE)
-	return ..()
-
-/datum/computer_file/program/ai_restorer/proc/on_examine(datum/source, mob/examiner, list/examine_text)
+/datum/computer_file/program/ai_restorer/on_examine(obj/item/modular_computer/source, mob/user)
+	var/list/examine_text = list()
 	if(!stored_card)
 		examine_text += "It has a slot installed for an intelliCard."
 		return
@@ -35,6 +28,7 @@
 	else
 		examine_text += "It has a slot installed for an intelliCard, which appears to be occupied."
 	examine_text += span_info("Alt-click to eject the intelliCard.")
+	return examine_text
 
 /datum/computer_file/program/ai_restorer/kill_program(forced)
 	try_eject(forced = TRUE)

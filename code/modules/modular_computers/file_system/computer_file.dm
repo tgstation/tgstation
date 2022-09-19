@@ -38,6 +38,17 @@
 	temp.filetype = filetype
 	return temp
 
+/**
+ * Called when examining a modular computer
+ * Args:
+ * Source - The tablet that's being examined
+ * User - Person examining the computer
+ *
+ * note: please replace this with signals when hdd's are removed and program's New() already has the tablet set.
+ */
+/datum/computer_file/proc/on_examine(obj/item/modular_computer/source, mob/user)
+	return FALSE
+
 /// Called when someone tries to insert something one of your applications needs, like an Intellicard for AI restoration.
 /datum/computer_file/proc/try_insert(obj/item/attacking_item, mob/living/user)
 	return FALSE

@@ -295,6 +295,11 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	else if(atom_integrity < max_integrity)
 		. += span_warning("It is damaged.")
 
+	var/obj/item/computer_hardware/hard_drive/hdd = all_components[MC_HDD]
+	for(var/datum/computer_file/app_examine as anything in hdd.stored_files)
+		if(app_examine.on_examine(src, user))
+			. += app_examine.on_examine(src, user)
+
 	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
 	var/obj/item/computer_hardware/card_slot/card_slot2 = all_components[MC_CARD2]
 	var/multiple_slots = istype(card_slot) && istype(card_slot2)
