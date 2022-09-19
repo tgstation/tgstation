@@ -18,8 +18,8 @@
 	if(!pillow_trophy)
 		pillow_trophy = new(src)
 	AddComponent(/datum/component/two_handed, \
-		force_unwielded = 10, \
-		force_wielded = 20, \
+		force_unwielded = 5, \
+		force_wielded = 10, \
 	)
 
 /obj/item/pillow/Destroy(force)
