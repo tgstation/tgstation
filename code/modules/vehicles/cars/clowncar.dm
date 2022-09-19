@@ -121,8 +121,8 @@
 		for(var/mob/living/carbon/human/target_pancake in loc)
 			if(target_pancake.body_position == LYING_DOWN && !HAS_TRAIT(target_pancake, TRAIT_INCAPACITATED))
 				target_pancake.visible_message(span_warning("[src] runs over [target_pancake], flattening [target_pancake.p_them()] like a pancake!"))
-				target_pancake.AddElement(/datum/element/squish, 10 SECONDS)
-				target_pancake.Paralyze(40)
+				target_pancake.AddElement(/datum/element/squish, 5 SECONDS)
+				target_pancake.Paralyze(20)
 				playsound(target_pancake, 'sound/effects/cartoon_splat.ogg', 100)
 
 /obj/vehicle/sealed/car/clowncar/emag_act(mob/user)
