@@ -89,7 +89,7 @@
 #define COMSIG_LIVING_Z_IMPACT "living_z_impact"
 	#define NO_Z_IMPACT_DAMAGE (1<<0)
 
-/// From mob/living/can_speak(): (message, ignore_spam, forced)
+/// From mob/living/try_speak(): (message, ignore_spam, forced)
 #define COMSIG_LIVING_SPEECH_CHECK "living_vocal_speech"
 	/// Return if the mob can speak the message, regardless of any other signal returns or checks.
 	#define COMPONENT_CAN_ALWAYS_SPEAK (1<<0)

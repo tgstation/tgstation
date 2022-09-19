@@ -56,12 +56,12 @@ global procs
 		Say() is the "mother-proc". It calls all the other procs required for speaking, but does little itself.
 		At the atom/movable level, say() just calls send_speech.
 
-	can_speak()
-		Checks that our atom can speak according to OOC reasons.
+	try_speak()
+		Checks that our atom can speak the passed messages.
 		Includes feedback to the speaker if they cannot speak.
 
 	can_speak_vocal()
-		Checks that our atom can vocally speak IC.
+		Checks that our atom can vocally speak at all.
 		Does not (and should not) include any feedback on its own.
 
 	Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, message_mods)

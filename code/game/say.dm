@@ -21,7 +21,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	))
 
 /atom/movable/proc/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null, range = 7)
-	if(!can_speak(message, ignore_spam, forced))
+	if(!try_speak(message, ignore_spam, forced))
 		return
 	if(sanitize)
 		message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
@@ -37,19 +37,19 @@ GLOBAL_LIST_INIT(freqtospan, list(
 
 
 /**
- * Checks if our movable can speak the passed message.
- * Primarily contains OOC checks (admin muted, config, etc).
+ * Attempts to / checks if our movable can speak the passed message.
+ * CAN include feedback messages about why someone can or can't speak
  *
  * Used in [proc/say] and other methods of speech (radios) after a movable has inputted some message.
  * If you just want to check if the movable is able to speak in character, use [proc/can_speak_vocal] instead.
  */
-/atom/movable/proc/can_speak(message, ignore_spam = FALSE, forced = FALSE)
+/atom/movable/proc/try_speak(message, ignore_spam = FALSE, forced = FALSE)
 	return TRUE
 
 /**
  * Checks if our movable can currently speak, vocally, in general.
- * Primarily contains IC checks (mute status effect, miming).
- *
+ * Should NOT include feedback messages about why someone can or can't speak
+
  * Used in various places to check if a movable is simply able to speak in general,
  * regardless of OOC status (being muted) and regardless of what they're actually saying.
  *

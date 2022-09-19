@@ -26,7 +26,7 @@
 	projectile_type = /obj/projectile/bullet/mime
 	projectile_amount = 3
 
-/datum/action/cooldown/spell/pointed/projectile/finger_guns/can_invoke(feedback = TRUE)
+/datum/action/cooldown/spell/pointed/projectile/finger_guns/try_invoke(feedback = TRUE)
 	if(invocation_type == INVOCATION_EMOTE)
 		if(!ishuman(owner))
 			return FALSE

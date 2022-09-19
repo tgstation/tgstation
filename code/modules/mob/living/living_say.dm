@@ -179,15 +179,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	if(!language)
 		language = get_selected_language()
 
-	if(!can_speak(original_message, ignore_spam, forced))
-		if(mind?.miming)
-			if(HAS_TRAIT(src, TRAIT_SIGN_LANG))
-				to_chat(src, span_green("You stop yourself from signing in favor of the artform of mimery!"))
-			else
-				to_chat(src, span_green("Your vow of silence prevents you from speaking!"))
-
-		else
-			to_chat(src, span_warning("You find yourself unable to speak!"))
+	if(!try_speak(original_message, ignore_spam, forced))
 		return
 
 	var/message_range = 7
@@ -392,12 +384,13 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 /mob/proc/binarycheck()
 	return FALSE
 
-/mob/living/can_speak(message, ignore_spam = FALSE, forced = FALSE)
-	if(client?.prefs.muted & MUTE_IC)
-		to_chat(src, span_danger("You cannot speak IC (muted)."))
-		return FALSE
-	if(!(ignore_spam || forced) && client?.handle_spam_prevention(message, MUTE_IC))
-		return FALSE
+/mob/living/try_speak(message, ignore_spam = FALSE, forced = FALSE)
+	if(client && !(ignore_spam || forced))
+		if(client.prefs.muted & MUTE_IC)
+			to_chat(src, span_danger("You cannot speak IC (muted)."))
+			return FALSE
+		if(client.handle_spam_prevention(message, MUTE_IC))
+			return FALSE
 
 	var/sigreturn = SEND_SIGNAL(src, COMSIG_LIVING_SPEECH_CHECK, message, ignore_spam, forced)
 	if(sigreturn & COMPONENT_CAN_ALWAYS_SPEAK)
@@ -406,7 +399,14 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	if(sigreturn & COMPONENT_CANNOT_SPEAK)
 		return FALSE
 
-	return can_speak_vocal()
+	if(!can_speak_vocal())
+		if(mind?.miming)
+			to_chat(src, span_green("Your vow of silence prevents you from speaking!"))
+		else
+			to_chat(src, span_warning("You find yourself unable to speak!"))
+		return FALSE
+
+	return TRUE
 
 /mob/living/can_speak_vocal(allow_mimes = FALSE)
 	if(!allow_mimes && mind?.miming)

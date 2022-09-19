@@ -484,6 +484,7 @@
 	SIGNAL_HANDLER
 
 	if(source.mind?.miming)
+		to_chat(source, span_green("You stop yourself from signing in favor of the artform of mimery!"))
 		return COMPONENT_CANNOT_SPEAK
 
 	switch(check_signables_state())

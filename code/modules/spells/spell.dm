@@ -11,7 +11,7 @@
  * - [is_valid_target][/datum/action/cooldown/spell/is_valid_target] checks if the TARGET
  * THE SPELL IS BEING CAST ON is a valid target for the spell. NOTE: The CAST TARGET is often THE SAME as THE OWNER OF THE SPELL,
  * but is not always - depending on how [Pre Activate][/datum/action/cooldown/spell/PreActivate] is resolved.
- * - [can_invoke][/datum/action/cooldown/spell/can_invoke] is run in can_cast_spell to check if
+ * - [try_invoke][/datum/action/cooldown/spell/try_invoke] is run in can_cast_spell to check if
  * the OWNER of the spell is able to say the current invocation.
  *
  * ## The spell chain:
@@ -175,7 +175,7 @@
 			to_chat(owner, span_warning("[src] cannot be cast unless you are completely manifested in the material plane!"))
 		return FALSE
 
-	if(!can_invoke(feedback = feedback))
+	if(!try_invoke(feedback = feedback))
 		return FALSE
 
 	if(ishuman(owner))
@@ -338,7 +338,7 @@
 			owner.visible_message(invocation, invocation_self_message)
 
 /// Checks if the current OWNER of the spell is in a valid state to say the spell's invocation
-/datum/action/cooldown/spell/proc/can_invoke(feedback = TRUE)
+/datum/action/cooldown/spell/proc/try_invoke(feedback = TRUE)
 	if(spell_requirements & SPELL_CASTABLE_WITHOUT_INVOCATION)
 		return TRUE
 
@@ -357,7 +357,7 @@
 			to_chat(owner, span_warning("You can't position your hands correctly to invoke [src]!"))
 		return FALSE
 
-	if((invocation_type == INVOCATION_WHISPER || invocation_type == INVOCATION_SHOUT) && !living_owner.can_speak_vocal())
+	if((invocation_type == INVOCATION_WHISPER || invocation_type == INVOCATION_SHOUT) && !living_owner.try_speak(invocation, TRUE, TRUE))
 		if(feedback)
 			to_chat(owner, span_warning("You can't get the words out to invoke [src]!"))
 		return FALSE

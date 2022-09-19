@@ -719,14 +719,13 @@
 	var/input = tgui_input_text(user, "Message to announce to the station crew", "Announcement")
 	if(!input || !user.canUseTopic(src, !issilicon(usr)))
 		return
-	if(user.can_speak(input))
+	if(user.try_speak(input))
 		//Adds slurs and so on. Someone should make this use languages too.
 		input = user.treat_message(input)
 	else
 		//No cheating, mime/random mute guy!
 		input = "..."
-		to_chat(user, span_danger("You find yourself unable to speak, which unfortunately, \
-			is required for making public announcements. You leave the mic on in awkward silence."))
+		to_chat(user, span_notice("You leave the mic on in awkward silence..."))
 
 	var/list/players = get_communication_players()
 	SScommunications.make_announcement(user, is_ai, input, syndicate || (obj_flags & EMAGGED), players)
