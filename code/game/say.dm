@@ -73,7 +73,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		//messagepart = translate_language(speaker, message_language, raw_message) //, spans, message_mods)
 		//return no_quote ? raw_message : source.say_quote(raw_message, spans, message_mods)
 		// var/our_source = src.GetSource()
-		messagepart = src.say_quote(messagepart, spans, message_mods)
+		messagepart = src.say_quote(raw_message, spans, message_mods)
 
 		var/datum/language/dialect = GLOB.language_datum_instances[message_language]
 		if(istype(dialect) && dialect.display_icon(src))
