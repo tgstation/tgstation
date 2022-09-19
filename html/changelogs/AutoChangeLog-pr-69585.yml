@@ -1,0 +1,6 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - refactor: "Teams used by Antagonists have been refactored, please report any bugs you might find."
+  - spellcheck: "Team antagonists are now improper."
+  - spellcheck: "Bloodbrothers now show their team antagonist name in admin panels."
