@@ -1,0 +1,6 @@
+author: "Sealed101"
+delete-after: True
+changes: 
+  - bugfix: "fixed cyborg energy saw lacking a sprite"
+  - bugfix: "fixed debug omnitool lacking sprites for surgery tools"
+  - bugfix: "fixed lacking sprite for taster"

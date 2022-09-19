@@ -656,3 +656,48 @@
   skylord-a52:
   - refactor: Scientists have recently reclassified jean shorts as a subtype of the
       broader shorts clade, instead of a separate genus.
+2022-09-18:
+  Pickle-Coding:
+  - balance: Radiation range from tritium combustion and proto-nitrate tritium to
+      hydrogen conversion increased by 3 times.
+  - balance: Sets the radiation threshold for all gas reactions that release radiation
+      to 0.3
+  itseasytosee:
+  - code_imp: Being able to be flashed from all sides is now based on or not you have
+      a negative flash resistance, rather than randomly applying to specific pairs
+      of eyes.
+2022-09-19:
+  Jackraxxus:
+  - spellcheck: Updates liver failure examine text to make better use of pronoun helpers.
+  LemonInTheDark:
+  - bugfix: The alt click tab (obj tab?) will no longer cause massive clientside lag
+      (unless you alt click that 2000 obj large tofu pile)
+  - bugfix: The alt click menu is snappier now, try usin it and let me know if anything
+      blows up yeah?
+  MMMiracles:
+  - rscadd: Tramstation's maintenance has been completely overhauled with modular
+      parts for more variety and differing routes between rounds.
+  - qol: Tramstation's maintenance is now more antag-friendly when it comes to dark-dwelling
+      roles and traversing.
+  Sealed101:
+  - bugfix: fixed exosuit ammo boxes not updating their sprite/description properly
+      when emptied
+  - qol: adds an examine tip about folding & recycling on empty exosuit ammo boxes
+  - bugfix: fixed exosuit ammo being almost universal for all guns
+  - bugfix: fixed iron cost for BRM-6 missile ammo and SGL-6 Flashbang launcher ammo
+      (flashbang 500 -> 4000; missiles 500 -> 8000)
+  - bugfix: exosuit ammo boxes can be recycled in an autolathe, as they were apparently
+      intended to be. Partially depleted ammo boxes will have less material in them.
+  ShizCalev:
+  - bugfix: Fixed medibeams sometimes crossing themselves!
+  TheBoondock:
+  - balance: the contraband rollingpin in chef's vendor is now made of metal and yes
+      it hurts alot more when being hit
+  dragomagol:
+  - bugfix: moved an air vent out from underneath a disposals bin in the Meta incinerator
+  - bugfix: replaced a regular intercom with a prisoner intercom in the Icebox prisoner
+      transfer
+  - bugfix: replaced the window spawners in Meta departures (the ones in the middle
+      of the room) with plain windows so you can see the flowers
+  private-tristan:
+  - rscadd: medical doctors and CMOs now have surgical tool heirlooms
