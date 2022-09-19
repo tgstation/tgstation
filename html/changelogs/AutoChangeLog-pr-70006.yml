@@ -1,0 +1,4 @@
+author: "Watermelon914"
+delete-after: True
+changes: 
+  - bugfix: "Fixed map vote including maps that have already been played twice in the last 3 rounds."
