@@ -106,6 +106,7 @@
 	icon_state = "improvshell"
 	projectile_type = /obj/projectile/bullet/pellet/shotgun_improvised
 	custom_materials = list(/datum/material/iron=250)
+	caliber = CALIBER_IMPROV_SHOTGUN
 	pellets = 10
 	variance = 25
 
