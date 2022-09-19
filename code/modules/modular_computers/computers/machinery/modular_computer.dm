@@ -66,27 +66,33 @@
 	if(!cpu)
 		to_chat(user, span_warning("You'd need to turn the [src] on first."))
 		return FALSE
-	return (cpu.emag_act(user))
+	return cpu.emag_act(user)
 
 /obj/machinery/modular_computer/update_appearance(updates)
 	. = ..()
 	set_light(cpu?.enabled ? light_strength : 0)
 
 /obj/machinery/modular_computer/update_icon_state()
-	icon_state = (cpu?.enabled || (!(machine_stat & NOPOWER) && cpu?.use_power())) ? icon_state_powered : icon_state_unpowered
+	if(!cpu || !cpu.enabled || !cpu.use_power() || (machine_stat & NOPOWER)))
+		icon_state = icon_state_unpowered
+	else
+		icon_state = icon_state_powered
 	return ..()
 
 /obj/machinery/modular_computer/update_overlays()
 	. = ..()
-	if(!cpu?.enabled)
-		if (!(machine_stat & NOPOWER) && (cpu?.use_power()))
-			. += screen_icon_screensaver
-	else
-		. += cpu.active_program?.program_icon_state || screen_icon_state_menu
+	if(!cpu)
+		return .
 
-	if(cpu && cpu.get_integrity() <= cpu.integrity_failure * cpu.max_integrity)
+	if(cpu.enabled)
+		. += cpu.active_program?.program_icon_state || screen_icon_state_menu
+	else if(!(machine_stat & NOPOWER) && (cpu?.use_power()))
+		. += screen_icon_screensaver
+
+	if(cpu.get_integrity() <= cpu.integrity_failure * cpu.max_integrity)
 		. += "bsod"
 		. += "broken"
+	return .
 
 /// Eats the "source" arg because update_icon actually expects args now.
 /obj/machinery/modular_computer/proc/relay_icon_update(datum/source, updates, updated)
@@ -114,16 +120,6 @@
 		cpu.name = name
 		cpu.process(delta_time)
 
-// Used in following function to reduce copypaste
-/obj/machinery/modular_computer/proc/power_failure(malfunction = 0)
-	var/obj/item/computer_hardware/battery/battery_module = cpu.all_components[MC_CELL]
-	if(cpu?.enabled) // Shut down the computer
-		visible_message(span_danger("\The [src]'s screen flickers [battery_module ? "\"BATTERY [malfunction ? "MALFUNCTION" : "CRITICAL"]\"" : "\"EXTERNAL POWER LOSS\""] warning as it shuts down unexpectedly."))
-		if(cpu)
-			cpu.shutdown_computer(0)
-	set_machine_stat(machine_stat | NOPOWER)
-	update_appearance()
-
 // Modular computers can have battery in them, we handle power in previous proc, so prevent this from messing it up for us.
 /obj/machinery/modular_computer/power_change()
 	if(cpu?.use_power()) // If it still has a power source, PC wouldn't go offline.
@@ -135,12 +131,12 @@
 /obj/machinery/modular_computer/screwdriver_act(mob/user, obj/item/tool)
 	if(cpu)
 		return cpu.screwdriver_act(user, tool)
-
-/obj/machinery/modular_computer/attackby(obj/item/W as obj, mob/living/user)
-	if (!user.combat_mode && cpu && !(flags_1 & NODECONSTRUCT_1))
-		return cpu.attackby(W, user)
 	return ..()
 
+/obj/machinery/modular_computer/attackby(obj/item/W as obj, mob/living/user)
+	if (cpu && !user.combat_mode && !(flags_1 & NODECONSTRUCT_1))
+		return cpu.attackby(W, user)
+	return ..()
 
 // Stronger explosions cause serious damage to internal components
 // Minor explosions are mostly mitigitated by casing.

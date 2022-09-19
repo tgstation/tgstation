@@ -6,7 +6,6 @@
 	icon_state = "console"
 	icon_state_powered = "console"
 	icon_state_unpowered = "console-off"
-	screen_icon_state_menu = "menu"
 	hardware_flag = PROGRAM_CONSOLE
 	density = TRUE
 	base_idle_power_usage = 100
