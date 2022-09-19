@@ -1,0 +1,4 @@
+author: "Salex08"
+delete-after: True
+changes: 
+  - bugfix: "removes duplicate paper bin with pen in caps office"
