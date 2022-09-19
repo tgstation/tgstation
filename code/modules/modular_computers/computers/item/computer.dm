@@ -702,8 +702,8 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 			return
 
 	// Insert items into applications
-	for(var/datum/computer_file/messenger as anything in hdd.stored_files)
-		if(messenger.try_insert(attacking_item, user))
+	for(var/datum/computer_file/item_holding_app as anything in hdd.stored_files)
+		if(messenger.try_insert(item_holding_app, user))
 			return
 
 	// Insert new hardware
