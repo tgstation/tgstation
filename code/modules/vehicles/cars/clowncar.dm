@@ -115,6 +115,16 @@
 	dump_mobs(TRUE)
 	log_combat(src, bumped, "crashed into", null, "dumping all passengers")
 
+/obj/vehicle/sealed/car/clowncar/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+	if(has_gravity())
+		for(var/mob/living/carbon/human/target_pancake in loc)
+			if(target_pancake.body_position == LYING_DOWN && !HAS_TRAIT(target_pancake, TRAIT_INCAPACITATED))
+				target_pancake.visible_message(span_warning("[src] runs over [target_pancake], flattening [target_pancake.p_them()] like a pancake!"))
+				target_pancake.AddElement(/datum/element/squish, 10 SECONDS)
+				target_pancake.Paralyze(40)
+				playsound(target_pancake, 'sound/effects/cartoon_splat.ogg', 100)
+
 /obj/vehicle/sealed/car/clowncar/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
 		return
