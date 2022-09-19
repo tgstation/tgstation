@@ -1,0 +1,5 @@
+author: "axietheaxolotl"
+delete-after: True
+changes: 
+  - imageadd: "A complete overhaul of security sprites. See #69948 for more details."
+  - spellcheck: "Replaced all instances of \"Jumpsuit\" and \"Jumpskirt\" within sec items to be \"uniform\" and \"skirt\" respectively."
