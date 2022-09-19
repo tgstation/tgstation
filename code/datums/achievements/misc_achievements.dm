@@ -210,4 +210,4 @@
 	name = "The Picture of Health"
 	desc = "Shrug off a heart attack with your shredded physique and dedication to lifting heavy objects."
 	database_id = MEDAL_HEALTHY
-	icon = "springlock" //GET A NEW ICON
+	icon = "picofhealth"
