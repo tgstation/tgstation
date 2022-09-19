@@ -44,7 +44,6 @@
 			heart_attack_candidates[candidate] = 1
 
 /datum/round_event/heart_attack
-	end_when = 10
 	///A list of prime candidates for heart attacking
 	var/list/victims = list()
 	///Number of heart attacks to distribute
@@ -55,13 +54,10 @@
 
 	attacks_left = heart_attack_event.quantity
 	victims += heart_attack_event.heart_attack_candidates
-	end_when += attacks_left //The ten are there just for padding
 
-/datum/round_event/heart_attack/tick()
-	if(attack_heart(victims))
-		attacks_left--
-		if(attacks_left <= 0)
-			activeFor = end_when //Skip to the end, we're done
+	while(attacks_left >= 0)
+		if(attack_heart(victims))
+			attacks_left--
 
 
 /**
@@ -81,5 +77,6 @@
 	else
 		var/datum/disease/heart_disease = new /datum/disease/heart_failure()
 		winner.ForceContractDisease(heart_disease, FALSE, TRUE)
+		announce_to_ghosts(winner)
 		return TRUE
 	return FALSE
