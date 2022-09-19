@@ -21,9 +21,9 @@
 	var/list/examine_text = list()
 	if(!stored_card)
 		examine_text += "It has a slot installed for an intelliCard."
-		return
+		return examine_text
 
-	if(computer.Adjacent(examiner))
+	if(computer.Adjacent(user))
 		examine_text += "It has a slot installed for an intelliCard which contains: [stored_card.name]"
 	else
 		examine_text += "It has a slot installed for an intelliCard, which appears to be occupied."
