@@ -865,6 +865,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 		character.name = new_guy.mind.name
 		new_guy.mind.transfer_to(character)
 		qdel(new_guy)
+		character.mock_client = new
 
 		// Then equip up the human with job gear.
 		SSjob.EquipRank(character, job)
@@ -873,6 +874,8 @@ GLOBAL_PROTECT(admin_verbs_poll)
 		// Finally, ensure the minds are tracked and in the manifest.
 		SSticker.minds += character.mind
 		if(ishuman(character))
+			GLOB.player_list += character
+			GLOB.joined_player_list += character
 			GLOB.data_core.manifest_inject(character)
 
 		number_made++
