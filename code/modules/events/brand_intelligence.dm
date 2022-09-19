@@ -49,18 +49,18 @@
 
 /datum/round_event/brand_intelligence/start()
 	var/datum/round_event_control/brand_intelligence/brand_event = control
-	if(brand_event.chosen_vendor)
+	if(brand_event.chosen_vendor) //Attempt to search for vendors of the selected admin subtype
 		var/chosen_vendor = brand_event.chosen_vendor
 		for(var/obj/machinery/vending/vendor in GLOB.machines)
 			if(!is_station_level(vendor.z) || !istype(vendor, chosen_vendor))
 				continue
 			vendingMachines.Add(vendor)
-	else
+	if(!length(vendingMachines)) //If no vendors are in vendingMachines, setup defaults back to randomly selecting one.
 		for(var/obj/machinery/vending/vendor in GLOB.machines)
 			if(!is_station_level(vendor.z))
 				continue
 			vendingMachines.Add(vendor)
-	if(!vendingMachines.len)
+	if(!length(vendingMachines)) //If somehow there are still no elligible vendors, give up.
 		kill()
 		return
 	originMachine = pick(vendingMachines)
