@@ -389,11 +389,6 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	if(!is_custom_emote) // we do not translate emotes
 		message_raw = translate_language(src, message_language, message_raw) // translate
 
-	var/translated_raw = message_raw
-
-
-	//return no_quote ? raw_message : source.say_quote(raw_message, spans, message_mods)
-
 	// message has been formatted to have all the different <span class> applied to it
 	var/message = compose_message(src, message_language, message_raw, null, spans, message_mods)
 	var/whisper // this whisper is also formatted

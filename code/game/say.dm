@@ -66,12 +66,13 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	//Message
 	var/messagepart
 	var/languageicon = ""
-	if (message_mods[MODE_CUSTOM_SAY_ERASE_INPUT])
+	if(message_mods[MODE_CUSTOM_SAY_ERASE_INPUT])
 		messagepart = message_mods[MODE_CUSTOM_SAY_EMOTE]
 	else
 
-		messagepart = translate_language(speaker, message_language, raw_message) //, spans, message_mods)
+		//messagepart = translate_language(speaker, message_language, raw_message) //, spans, message_mods)
 		//return no_quote ? raw_message : source.say_quote(raw_message, spans, message_mods)
+		// var/our_source = src.GetSource()
 		messagepart = src.say_quote(messagepart, spans, message_mods)
 
 		var/datum/language/dialect = GLOB.language_datum_instances[message_language]
@@ -132,7 +133,8 @@ GLOBAL_LIST_INIT(freqtospan, list(
 #undef ENCODE_HTML_EMPHASIS
 
 ///	Modifies the message by comparing the languages of the speaker with the languages of the hearer. Called on the hearer.
-/atom/movable/proc/translate_language(atom/movable/speaker, datum/language/language, raw_message, list/spans, list/message_mods = list(), no_quote = FALSE)
+/atom/movable/proc/translate_language(atom/movable/speaker, datum/language/language, raw_message, list/spans, list/message_mods = list())
+	// pretty sure this is deprecated and can be safely removed (test with radios, holopads, and AI tracking?)
 	//var/atom/movable/source = speaker.GetSource() || speaker //is the speaker virtual
 
 	if(!language)
