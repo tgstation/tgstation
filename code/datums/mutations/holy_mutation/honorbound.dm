@@ -267,7 +267,6 @@
 	// This shouldn't technically be a possible state, but you never know
 	if(!honor_mutation)
 		return FALSE
-
 	if(GLOB.religious_sect.favor < required_favor)
 		if(feedback)
 			to_chat(owner, span_warning("You need at least 150 favor to declare someone evil!"))
