@@ -21,7 +21,7 @@
 	name = "captain PDA"
 	greyscale_config = /datum/greyscale_config/tablet/captain
 	greyscale_colors = "#2C7CB2#FF0000#FFFFFF#FFD55B"
-	insert_type = /obj/item/pen/fountain/captain
+	inserted_item = /obj/item/pen/fountain/captain
 
 /obj/item/modular_computer/tablet/pda/heads/captain/Initialize(mapload)
 	. = ..()
@@ -92,7 +92,7 @@
 	name = "research director PDA"
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick/head
 	greyscale_colors = "#FAFAFA#000099#B347BC"
-	insert_type = /obj/item/pen/fountain
+	inserted_item = /obj/item/pen/fountain
 	default_applications = list(
 		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/status,
@@ -111,7 +111,7 @@
 	name = "quartermaster PDA"
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
 	greyscale_colors = "#D6B328#6506CA#927444"
-	insert_type = /obj/item/pen/survival
+	inserted_item = /obj/item/pen/survival
 	default_applications = list(
 		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/status,
@@ -287,7 +287,7 @@
 /obj/item/modular_computer/tablet/pda/lawyer
 	name = "lawyer PDA"
 	greyscale_colors = "#4C76C8#FFE243"
-	insert_type = /obj/item/pen/fountain
+	inserted_item = /obj/item/pen/fountain
 	default_applications = list(
 		/datum/computer_file/program/records/security,
 	)
@@ -319,7 +319,7 @@
 	icon_state = "pda-clown"
 	greyscale_config = null
 	greyscale_colors = null
-	insert_type = /obj/item/toy/crayon/rainbow
+	inserted_item = /obj/item/toy/crayon/rainbow
 
 /obj/item/modular_computer/tablet/pda/clown/Initialize(mapload)
 	. = ..()
@@ -345,7 +345,7 @@
 	loaded_cartridge = /obj/item/computer_hardware/hard_drive/portable/virus/mime
 	greyscale_config = /datum/greyscale_config/tablet/mime
 	greyscale_colors = "#FAFAFA#EA3232"
-	insert_type = /obj/item/toy/crayon/mime
+	inserted_item = /obj/item/toy/crayon/mime
 
 /obj/item/modular_computer/tablet/pda/mime/Initialize(mapload)
 	. = ..()
@@ -361,7 +361,7 @@
 	greyscale_config = null
 	greyscale_colors = null
 	icon_state = "pda-library"
-	insert_type = /obj/item/pen/fountain
+	inserted_item = /obj/item/pen/fountain
 	default_applications = list(
 		/datum/computer_file/program/newscaster,
 	)

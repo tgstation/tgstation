@@ -330,14 +330,18 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 			return
 
 	// OTHER
-	if(istype(attacking_item, /obj/item/modular_computer/tablet) && isliving(user))
+	if(istype(attacking_item, /obj/item/modular_computer/tablet))
 		var/itemname = ""
 		var/info = ""
 
 		var/obj/item/modular_computer/tablet/computer = attacking_item
-		itemname = computer.name
-		info = computer.note
+		var/obj/item/computer_hardware/hard_drive/hdd = computer.all_components[MC_HDD]
+		if(hdd)
+			for(var/datum/computer_file/program/notepad/notepad_app in hdd.stored_files)
+				info = notepad_app.written_note
+				break
 
+		itemname = computer.name
 		itemname = sanitize(itemname)
 		info = sanitize(info)
 		to_chat(user, span_notice("You hold \the [itemname] up to the camera..."))

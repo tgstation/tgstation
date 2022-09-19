@@ -24,10 +24,7 @@
 	var/finish_color = null
 
 	var/list/contained_item = list(/obj/item/pen, /obj/item/toy/crayon, /obj/item/lipstick, /obj/item/flashlight/pen, /obj/item/clothing/mask/cigarette)
-	var/obj/item/insert_type = /obj/item/pen
-	var/obj/item/inserted_item
-
-	var/note = "Congratulations on your station upgrading to the new NtOS and Thinktronic based collaboration effort, bringing you the best in electronics and software since 2467!"  // the note used by the notekeeping app, stored here for convenience
+	var/obj/item/inserted_item = /obj/item/pen
 
 /obj/item/modular_computer/tablet/update_icon_state()
 	if(has_variants && !bypass_state)
@@ -323,5 +320,5 @@
 		var/obj/item/computer_hardware/hard_drive/portable/disk = new loaded_cartridge(src)
 		install_component(disk)
 
-	if(insert_type)
-		inserted_item = new insert_type(src)
+	if(inserted_item)
+		inserted_item = new inserted_item(src)

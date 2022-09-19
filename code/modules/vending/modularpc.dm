@@ -21,7 +21,6 @@
 		/obj/item/computer_hardware/ai_slot = 2,
 		/obj/item/computer_hardware/card_slot = 2,
 		/obj/item/computer_hardware/printer/mini = 2,
-		/obj/item/computer_hardware/recharger/apc_recharger = 2,
 		/obj/item/pai_card = 2,
 	)
 	refill_canister = /obj/item/vending_refill/modularpc

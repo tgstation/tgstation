@@ -1050,7 +1050,6 @@
 	description = "How computer hardware is made."
 	prereq_ids = list("comptech")
 	design_ids = list(
-		"APClink",
 		"aislot",
 		"bat_advanced",
 		"bat_control",
