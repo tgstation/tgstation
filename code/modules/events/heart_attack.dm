@@ -59,7 +59,6 @@
 		if(attack_heart(victims))
 			attacks_left--
 
-
 /**
  * Picks a victim from a list and attempts to give them a heart attack
  *
@@ -74,6 +73,7 @@
 	if(winner.has_status_effect(/datum/status_effect/exercised))
 		winner.visible_message("[winner] grunts and clutches their chest for a moment, catching their breath.", "Your chest lurches in pain for a brief moment, which quickly fades. \
 								You feel like you've just avoided a serious health disaster.", "You hear someone's breathing sharpen for a moment, followed by a sigh of relief.", 4)
+		winner.client.give_award(/datum/award/achievement/misc/healthy, winner)
 	else
 		var/datum/disease/heart_disease = new /datum/disease/heart_failure()
 		winner.ForceContractDisease(heart_disease, FALSE, TRUE)
