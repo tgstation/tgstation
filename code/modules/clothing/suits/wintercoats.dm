@@ -19,11 +19,11 @@
 		/obj/item/lighter,
 		/obj/item/modular_computer/tablet/pda,
 		/obj/item/radio,
+		/obj/item/storage/bag/books,
 		/obj/item/storage/fancy/cigarettes,
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/tank/internals/plasmaman,
 		/obj/item/toy,
-		/obj/item/storage/bag/books,
 	)
 
 /obj/item/clothing/head/hooded/winterhood
@@ -180,15 +180,6 @@
 	icon_state = "hood_security"
 	armor = list(MELEE = 25, BULLET = 15, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, FIRE = 0, ACID = 45)
 
-// Head of Security
-/obj/item/clothing/suit/armor/hos/trenchcoat/winter
-	name = "head of security's winter coat"
-	desc = "A trenchcoat enhanced with a special lightweight kevlar, padded with wool on the collar and inside. You feel strangely lonely wearing this coat."
-	icon_state = "coathos"
-	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
-	icon = 'icons/obj/clothing/suits/wintercoat.dmi'
-	worn_icon = 'icons/mob/clothing/suits/wintercoat.dmi'
-
 // Medical Doctor
 /obj/item/clothing/suit/hooded/wintercoat/medical
 	name = "medical winter coat"
@@ -296,8 +287,8 @@
 		/obj/item/reagent_containers/hypospray,
 		/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/syringe,
-		/obj/item/storage/pill_bottle,
 		/obj/item/storage/bag/xeno,
+		/obj/item/storage/pill_bottle,
 	)
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, FIRE = 20, ACID = 0)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/science
@@ -363,8 +354,8 @@
 		/obj/item/construction/rcd,
 		/obj/item/fireaxe/metal_h2_axe,
 		/obj/item/pipe_dispenser,
-		/obj/item/t_scanner,
 		/obj/item/storage/bag/construction,
+		/obj/item/t_scanner,
 	)
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 20, ACID = 0)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/engineering
@@ -459,9 +450,9 @@
 		/obj/item/mining_scanner,
 		/obj/item/pickaxe,
 		/obj/item/resonator,
+		/obj/item/storage/bag/ore,
 		/obj/item/t_scanner/adv_mining_scanner,
 		/obj/item/tank/internals,
-		/obj/item/storage/bag/ore,
 	)
 	armor = list(MELEE = 10, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/miner
