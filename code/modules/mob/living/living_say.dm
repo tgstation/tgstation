@@ -173,14 +173,13 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 			return
 		COOLDOWN_START(client, say_slowmode, SSlag_switch.slowmode_cooldown)
 
+	if(!try_speak(original_message, ignore_spam, forced))
+		return
 
 	language = message_mods[LANGUAGE_EXTENSION]
 
 	if(!language)
 		language = get_selected_language()
-
-	if(!try_speak(original_message, ignore_spam, forced))
-		return
 
 	var/message_range = 7
 	var/succumbed = FALSE
