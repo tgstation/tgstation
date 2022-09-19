@@ -55,7 +55,7 @@
 	attacks_left = heart_attack_event.quantity
 	victims += heart_attack_event.heart_attack_candidates
 
-	while(attacks_left >= 0)
+	while(attacks_left > 0)
 		if(attack_heart(victims))
 			attacks_left--
 
