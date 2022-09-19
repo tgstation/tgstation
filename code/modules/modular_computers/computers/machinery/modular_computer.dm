@@ -39,7 +39,7 @@
 	var/base_idle_power_usage = 10
 
 	///CPU that handles most logic while this type only handles power and other specific things.
-	var/obj/item/modular_computer/processor/cpu = null
+	var/obj/item/modular_computer/processor/cpu
 
 /obj/machinery/modular_computer/Initialize(mapload)
 	. = ..()
@@ -51,7 +51,9 @@
 	return ..()
 
 /obj/machinery/modular_computer/examine(mob/user)
-	return cpu.examine(user)
+	if(cpu)
+		return cpu.examine(user)
+	return ..()
 
 /obj/machinery/modular_computer/attack_ghost(mob/dead/observer/user)
 	. = ..()
@@ -102,9 +104,8 @@
 // On-click handling. Turns on the computer if it's off and opens the GUI.
 /obj/machinery/modular_computer/interact(mob/user)
 	if(cpu)
-		return cpu.interact(user) // CPU is an item, that's why we route attack_hand to attack_self
-	else
-		return ..()
+		return cpu.interact(user)
+	return ..()
 
 // Process currently calls handle_power(), may be expanded in future if more things are added.
 /obj/machinery/modular_computer/process(delta_time)
@@ -129,7 +130,7 @@
 		set_machine_stat(machine_stat & ~NOPOWER)
 		update_appearance()
 		return
-	. = ..()
+	return ..()
 
 /obj/machinery/modular_computer/screwdriver_act(mob/user, obj/item/tool)
 	if(cpu)
@@ -169,4 +170,5 @@
 // "Brute" damage mostly damages the casing.
 /obj/machinery/modular_computer/bullet_act(obj/projectile/Proj)
 	if(cpu)
-		cpu.bullet_act(Proj)
+		return cpu.bullet_act(Proj)
+	return ..()
