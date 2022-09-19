@@ -110,6 +110,7 @@
 /// or when a status effect with on_remove_on_mob_delete
 /// set to FALSE has its mob deleted
 /datum/status_effect/proc/be_replaced()
+	linked_alert = null
 	owner.clear_alert(id)
 	LAZYREMOVE(owner.status_effects, src)
 	owner = null
