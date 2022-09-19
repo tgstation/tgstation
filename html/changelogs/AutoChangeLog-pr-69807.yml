@@ -1,8 +1,0 @@
-author: "Sealed101"
-delete-after: True
-changes: 
-  - bugfix: "fixed exosuit ammo boxes not updating their sprite/description properly when emptied"
-  - qol: "adds an examine tip about folding & recycling on empty exosuit ammo boxes"
-  - bugfix: "fixed exosuit ammo being almost universal for all guns"
-  - bugfix: "fixed iron cost for BRM-6 missile ammo and SGL-6 Flashbang launcher ammo (flashbang 500 -> 4000; missiles 500 -> 8000)"
-  - bugfix: "exosuit ammo boxes can be recycled in an autolathe, as they were apparently intended to be. Partially depleted ammo boxes will have less material in them."
