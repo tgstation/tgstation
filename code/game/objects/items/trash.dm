@@ -156,5 +156,5 @@
 
 /obj/item/trash/pillow_tag
 	name = "pillow tag"
-	desc = "taken from a fallen opponent this tag represent your victory in gruesome pillow battle"
+	desc = "a price tag for the pillow. It appears to have space to fill names in."
 	icon_state = "pillow_tag"

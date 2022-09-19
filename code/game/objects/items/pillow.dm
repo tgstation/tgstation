@@ -9,6 +9,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	damtype = STAMINA
+	var/last_fighter
 	var/obj/item/trash/pillow_tag/pillow_trophy
 
 
@@ -31,6 +32,7 @@
 		return
 	if(HAS_TRAIT(src, TRAIT_WIELDED))
 		user.apply_damage(10, STAMINA) // when hitting with such force we should prolly be getting tired too
+	last_fighter = user
 	playsound(user, 'sound/items/pillow_hit.ogg', 80) //the basic 50 vol is barely audible
 
 /obj/item/pillow/examine(mob/user)
@@ -49,6 +51,8 @@
 	balloon_alert(user, span_notice("removing tag..."))
 	if(!do_after(user, 2 SECONDS, src))
 		return
+	if(last_fighter)
+		pillow_trophy.desc = "a pillow tag taken from [last_fighter] after a gruesome pillow fight."
 	user.put_in_hands(pillow_trophy)
 	balloon_alert(user, span_notice("tag removed"))
 	pillow_trophy = null
