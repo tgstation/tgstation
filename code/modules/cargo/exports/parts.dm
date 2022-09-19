@@ -141,12 +141,6 @@
 	export_types = list(/obj/item/computer_hardware/card_slot)
 	include_subtypes = TRUE
 
-/datum/export/modular_part/intellicard
-	cost = CARGO_CRATE_VALUE * 0.2
-	unit_name = "computer intellicard slot"
-	export_types = list(/obj/item/computer_hardware/ai_slot)
-	include_subtypes = TRUE
-
 /datum/export/modular_part/miniprinter
 	cost = CARGO_CRATE_VALUE * 0.2
 	unit_name = "miniprinter"

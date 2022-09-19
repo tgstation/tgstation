@@ -18,7 +18,6 @@
 		/obj/item/stock_parts/cell/computer = 8,
 	)
 	premium = list(
-		/obj/item/computer_hardware/ai_slot = 2,
 		/obj/item/computer_hardware/card_slot = 2,
 		/obj/item/computer_hardware/printer/mini = 2,
 		/obj/item/pai_card = 2,

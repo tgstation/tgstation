@@ -197,7 +197,7 @@
 	computer.setDir(get_dir(here_turf, target_turf))
 
 //We can use process_tick to restart fast processing, since the computer will be running this constantly either way.
-/datum/computer_file/program/radar/process_tick()
+/datum/computer_file/program/radar/process_tick(delta_time)
 	if(computer.active_program == src)
 		START_PROCESSING(SSfastprocess, src)
 

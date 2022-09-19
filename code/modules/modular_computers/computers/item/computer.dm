@@ -295,7 +295,28 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	else if(atom_integrity < max_integrity)
 		. += span_warning("It is damaged.")
 
-	. += get_modular_computer_parts_examine(user)
+	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
+	var/obj/item/computer_hardware/card_slot/card_slot2 = all_components[MC_CARD2]
+	var/multiple_slots = istype(card_slot) && istype(card_slot2)
+	if(card_slot)
+		if(card_slot?.stored_card || card_slot2?.stored_card)
+			var/obj/item/card/id/first_ID = card_slot?.stored_card
+			var/obj/item/card/id/second_ID = card_slot2?.stored_card
+			var/multiple_cards = istype(first_ID) && istype(second_ID)
+			if(Adjacent(user))
+				. += "It has [multiple_slots ? "two slots" : "a slot"] for identification cards installed[multiple_cards ? " which contain [first_ID] and [second_ID]" : ", one of which contains [first_ID ? first_ID : second_ID]"]."
+			else
+				. += "It has [multiple_slots ? "two slots" : "a slot"] for identification cards installed, [multiple_cards ? "both of which appear" : "and one of them appears"] to be occupied."
+			. += span_info("Alt-click [src] to eject the identification card[multiple_cards ? "s":""].")
+		else
+			. += "It has [multiple_slots ? "two slots" : "a slot"] installed for identification cards."
+
+	var/obj/item/computer_hardware/printer/printer_slot = all_components[MC_PRINT]
+	if(printer_slot)
+		. += "It has a printer installed."
+		if(Adjacent(user))
+			. += "The printer's paper levels are at: [printer_slot.stored_paper]/[printer_slot.max_paper].</span>"
+
 
 /obj/item/modular_computer/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -398,8 +419,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		else
 			active_program = null
 
-	for(var/I in idle_threads)
-		var/datum/computer_file/program/P = I
+	for(var/datum/computer_file/program/P as anything in idle_threads)
 		if(P.program_state != PROGRAM_STATE_KILLED)
 			P.process_tick(delta_time)
 			P.ntnet_status = get_ntnet_status()
@@ -659,9 +679,10 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		to_chat(user, span_notice("You slot \the [attacking_item] into [src]."))
 		return
 
+	var/obj/item/computer_hardware/hard_drive/hdd = all_components[MC_HDD]
+
 	// Scan a photo.
 	if(istype(attacking_item, /obj/item/photo))
-		var/obj/item/computer_hardware/hard_drive/hdd = all_components[MC_HDD]
 		var/obj/item/photo/pic = attacking_item
 		if(hdd)
 			for(var/datum/computer_file/program/messenger/messenger in hdd.stored_files)
@@ -673,6 +694,11 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	for(var/h in all_components)
 		var/obj/item/computer_hardware/H = all_components[h]
 		if(H.try_insert(attacking_item, user))
+			return
+
+	// Insert items into applications
+	for(var/datum/computer_file/messenger as anything in hdd.stored_files)
+		if(messenger.try_insert(attacking_item, user))
 			return
 
 	// Insert new hardware

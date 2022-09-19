@@ -2,7 +2,7 @@
 //TODO: REFACTOR THIS SPAGHETTI CODE, MAKE IT A COMPUTER_HARDWARE COMPONENT OR REMOVE IT
 /obj/item/modular_computer/processor
 	name = "processing unit"
-	desc = "You shouldn't see this. If you do, report it."
+	desc = "An advanced computer." //modular PCs examine us
 	icon = null
 	icon_state = null
 	icon_state_unpowered = null

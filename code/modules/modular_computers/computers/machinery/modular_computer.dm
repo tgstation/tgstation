@@ -2,7 +2,7 @@
 // DO NOT SPAWN THIS TYPE. Use /laptop/ or /console/ instead.
 /obj/machinery/modular_computer
 	name = "modular computer"
-	desc = "An advanced computer."
+	desc = "You shouldn't see this. If you do, report it." //they should be examining the processor instead
 
 	// Modular computers can run on various devices. Each DEVICE (Laptop, Console, Tablet,..)
 	// must have it's own DMI file. Icon states must be called exactly the same in all files, but may look differently
@@ -51,8 +51,7 @@
 	return ..()
 
 /obj/machinery/modular_computer/examine(mob/user)
-	. = ..()
-	. += get_modular_computer_parts_examine(user)
+	return cpu.examine(user)
 
 /obj/machinery/modular_computer/attack_ghost(mob/dead/observer/user)
 	. = ..()

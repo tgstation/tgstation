@@ -13,7 +13,7 @@
 	..()
 	uid = file_uid++
 
-/datum/computer_file/Destroy()
+/datum/computer_file/Destroy(force)
 	if(!holder)
 		return ..()
 
@@ -37,3 +37,18 @@
 		temp.filename = filename
 	temp.filetype = filetype
 	return temp
+
+/// Called when someone tries to insert something one of your applications needs, like an Intellicard for AI restoration.
+/datum/computer_file/proc/try_insert(obj/item/attacking_item, mob/living/user)
+	return FALSE
+
+/**
+ * Implement this when your program has an object that the user can eject.
+ *
+ * Examples include ejecting cells AI intellicards.
+ * Arguments:
+ * * user - The mob requesting the eject.
+ * * forced - Whether we are forced to eject everything (usually by the app being deleted)
+ */
+/datum/computer_file/proc/try_eject(mob/living/user, forced = FALSE)
+	return FALSE
