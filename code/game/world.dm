@@ -160,6 +160,7 @@ GLOBAL_VAR(restart_counter)
 	GLOB.world_virus_log = "[GLOB.log_directory]/virus.log"
 
 	GLOB.lua_log = "[GLOB.log_directory]/lua.log"
+	GLOB.signals_log = "[GLOB.log_directory]/signals.log"
 
 #ifdef UNIT_TESTS
 	GLOB.test_log = "[GLOB.log_directory]/tests.log"

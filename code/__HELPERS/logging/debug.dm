@@ -62,3 +62,6 @@
 /// Logging for lua scripting
 /proc/log_lua(text)
 	WRITE_LOG(GLOB.lua_log, text)
+
+/proc/log_signal(text)
+	WRITE_LOG(GLOB.signals_log, text)
