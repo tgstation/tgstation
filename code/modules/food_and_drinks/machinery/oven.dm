@@ -165,12 +165,11 @@
 			particles = new /particles/smoke/steam/mild
 
 /obj/machinery/oven/crowbar_act(mob/living/user, obj/item/I)
-	if(flags_1 & NODECONSTRUCT_1)
-		return
 	return default_deconstruction_crowbar(I, ignore_panel = TRUE)
 
 /obj/machinery/oven/wrench_act(mob/living/user, obj/item/tool)
-	return default_unfasten_wrench(user, tool, time = 2 SECONDS)
+	default_unfasten_wrench(user, tool, time = 2 SECONDS)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/item/plate/oven_tray
 	name = "oven tray"
