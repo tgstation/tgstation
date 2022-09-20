@@ -249,7 +249,7 @@
 	current.remove_status_effect(/datum/status_effect/cult_master)
 
 /datum/team/cult
-	name = "Cult"
+	name = "\improper Cult"
 
 	///The blood mark target
 	var/atom/blood_target

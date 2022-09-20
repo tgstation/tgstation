@@ -502,7 +502,7 @@
 	game_plane_master_controller.remove_filter("psilocybin_wave")
 
 /datum/reagent/drug/blastoff
-	name = "bLaSToFF"
+	name = "bLaStOoF"
 	description = "A drug for the hardcore party crowd said to enhance ones abilities on the dance floor.\nMost old heads refuse to touch this stuff, perhaps because memories of the luna discoteque incident are seared into their brains."
 	reagent_state = LIQUID
 	color = "#9015a9"
@@ -626,7 +626,7 @@
 		dance_partner.throw_at(target = throwtarget, range = 4, speed = 1) //superspeed
 
 /datum/reagent/drug/saturnx
-	name = "SaturnX"
+	name = "Saturn-X"
 	description = "This compound was first discovered during the infancy of cloaking technology and at the time thought to be a promising candidate agent. It was withdrawn for consideration after the researchers discovered a slew of associated safety issues including thought disorders and hepatoxicity."
 	reagent_state = SOLID
 	taste_description = "metallic bitterness"

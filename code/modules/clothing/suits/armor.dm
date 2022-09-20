@@ -31,6 +31,9 @@
 	icon_state = "armor"
 	inhand_icon_state = "armor"
 
+/obj/item/clothing/suit/armor/vest/alt/sec
+	icon_state = "armor_sec"
+
 /obj/item/clothing/suit/armor/vest/marine
 	name = "tactical armor vest"
 	desc = "A set of the finest mass produced, stamped plasteel armor plates, containing an environmental protection unit for all-condition door kicking."

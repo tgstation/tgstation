@@ -57,15 +57,15 @@
 		"Analyzer" = image(icon = 'icons/obj/device.dmi', icon_state = "analyzer"),
 		"Pickaxe" = image(icon = 'icons/obj/mining.dmi', icon_state = "minipick"),
 		"Shovel" = image(icon = 'icons/obj/mining.dmi', icon_state = "spade"),
-		"Retractor" = image(icon = 'icons/obj/medical/organs/organs.dmi', icon_state = "retractor"),
-		"Hemostat" = image(icon = 'icons/obj/medical/organs/organs.dmi', icon_state = "hemostat"),
-		"Cautery" = image(icon = 'icons/obj/medical/organs/organs.dmi', icon_state = "cautery"),
-		"Drill" = image(icon = 'icons/obj/medical/organs/organs.dmi', icon_state = "drill"),
-		"Scalpel" = image(icon = 'icons/obj/medical/organs/organs.dmi', icon_state = "scalpel"),
-		"Saw" = image(icon = 'icons/obj/medical/organs/organs.dmi', icon_state = "saw"),
-		"Bonesetter" = image(icon = 'icons/obj/medical/organs/organs.dmi', icon_state = "bone setter"),
+		"Retractor" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "retractor"),
+		"Hemostat" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "hemostat"),
+		"Cautery" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "cautery"),
+		"Drill" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "drill"),
+		"Scalpel" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "scalpel"),
+		"Saw" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "saw"),
+		"Bonesetter" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "bonesetter"),
 		"Knife" = image(icon = 'icons/obj/kitchen.dmi', icon_state = "knife"),
-		"Blood Filter" = image(icon = 'icons/obj/medical/organs/organs.dmi', icon_state = "bloodfilter"),
+		"Blood Filter" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "bloodfilter"),
 		"Rolling Pin" = image(icon = 'icons/obj/kitchen.dmi', icon_state = "rolling_pin"),
 		"Wire Brush" = image(icon = 'icons/obj/tools.dmi', icon_state = "wirebrush"),
 		)
@@ -113,3 +113,10 @@
 			tool_behaviour = TOOL_ROLLINGPIN
 		if("Wire Brush")
 			tool_behaviour = TOOL_RUSTSCRAPER
+
+	if(tool_behaviour == TOOL_SCREWDRIVER)
+		AddElement(/datum/element/eyestab)
+	else
+		RemoveElement(/datum/element/eyestab)
+
+

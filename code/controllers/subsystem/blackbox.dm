@@ -23,7 +23,7 @@ SUBSYSTEM_DEF(blackbox)
 	record_feedback("amount", "dm_build", DM_BUILD)
 	record_feedback("amount", "byond_version", world.byond_version)
 	record_feedback("amount", "byond_build", world.byond_build)
-	. = ..()
+	return SS_INIT_SUCCESS
 
 //poll population
 /datum/controller/subsystem/blackbox/fire()

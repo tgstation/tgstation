@@ -324,7 +324,7 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 
 	var/list/z_list = SSmapping.z_list
 	var/list/messages = list()
-	messages += "<b>World</b>: [world.maxx] x [world.maxy] x [world.maxz]<br>"
+	messages += "<b>World</b>: [world.maxx] x [world.maxy] x [world.maxz]<br><br>"
 
 	var/list/linked_levels = list()
 	var/min_x = INFINITY
@@ -368,7 +368,7 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 	for(var/datum/space_level/S in linked_levels)
 		grid[S.xi - min_x + 1][S.yi - min_y + 1] = S.z_value
 
-	messages += "<table border='1'>"
+	messages += "<br><table border='1'>"
 	for(var/y in max_y to min_y step -1)
 		var/list/part = list()
 		for(var/x in min_x to max_x)
@@ -376,7 +376,7 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 		messages += "<tr><td>[part.Join("</td><td>")]</td></tr>"
 	messages += "</table>"
 
-	to_chat(src, messages.Join(""), confidential = TRUE)
+	to_chat(src, examine_block(messages.Join("")), confidential = TRUE)
 
 /client/proc/station_food_debug()
 	set name = "Count Station Food"

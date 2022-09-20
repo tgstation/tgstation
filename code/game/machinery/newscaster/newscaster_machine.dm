@@ -458,48 +458,57 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			bounty_text = pre_bounty_text
 	return TRUE
 
+/obj/machinery/newscaster/on_set_machine_stat(old_value)
+	. = ..()
+	update_appearance()
 
-/obj/machinery/newscaster/attackby(obj/item/I, mob/living/user, params)
-	if(I.tool_behaviour == TOOL_WRENCH)
-		to_chat(user, span_notice("You start [anchored ? "un" : ""]securing [name]..."))
-		I.play_tool_sound(src)
-		if(I.use_tool(src, user, 60))
-			playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
-			if(machine_stat & BROKEN)
-				to_chat(user, span_warning("The broken remains of [src] fall on the ground."))
-				new /obj/item/stack/sheet/iron(loc, 5)
-				new /obj/item/shard(loc)
-				new /obj/item/shard(loc)
-			else
-				to_chat(user, span_notice("You [anchored ? "un" : ""]secure [name]."))
-				new /obj/item/wallframe/newscaster(loc)
-			qdel(src)
-	else if(I.tool_behaviour == TOOL_WELDER && !user.combat_mode)
-		if(machine_stat & BROKEN)
-			if(!I.tool_start_check(user, amount=0))
-				return
-			user.visible_message(span_notice("[user] is repairing [src]."), \
-							span_notice("You begin repairing [src]..."), \
-							span_hear("You hear welding."))
-			if(I.use_tool(src, user, 40, volume=50))
-				if(!(machine_stat & BROKEN))
-					return
-				to_chat(user, span_notice("You repair [src]."))
-				atom_integrity = max_integrity
-				set_machine_stat(machine_stat & ~BROKEN)
-				update_appearance()
-		else
-			to_chat(user, span_notice("[src] does not need repairs."))
-
-	else if(istype(I, /obj/item/paper))
-		if(!user.temporarilyRemoveItemFromInventory(I))
+/obj/machinery/newscaster/attackby(obj/item/attacking_item, mob/living/user, params)
+	if(istype(attacking_item, /obj/item/paper))
+		if(!user.temporarilyRemoveItemFromInventory(attacking_item))
 			return
-		else
-			paper_remaining ++
-			to_chat(user, span_notice("You insert the [I] into \the [src]! It now holds [paper_remaining] sheets of paper."))
-			qdel(I)
-			return
+		paper_remaining++
+		to_chat(user, span_notice("You insert [attacking_item] into [src]! It now holds [paper_remaining] sheet\s of paper."))
+		qdel(attacking_item)
+		return
 	return ..()
+
+///returns (machine_stat & broken)
+/obj/machinery/newscaster/proc/needs_repair()
+	return (machine_stat & BROKEN)
+
+/obj/machinery/newscaster/welder_act(mob/living/user, obj/item/tool)
+	if(user.combat_mode)
+		return
+	. = TOOL_ACT_TOOLTYPE_SUCCESS
+	if(!(machine_stat & BROKEN))
+		to_chat(user, span_notice("[src] does not need repairs."))
+		return
+	if(!tool.tool_start_check(user, amount=0))
+		return
+	user.balloon_alert_to_viewers("started welding...", "started repairing...")
+	audible_message(span_hear("You hear welding."))
+	if(!tool.use_tool(src, user, 40, volume=50, extra_checks = CALLBACK(src, .proc/needs_repair)))
+		user.balloon_alert_to_viewers("stopped welding!", "interrupted the repair!")
+		return
+	user.balloon_alert_to_viewers("repaired [src]")
+	atom_integrity = max_integrity
+	set_machine_stat(machine_stat & ~BROKEN)
+
+/obj/machinery/newscaster/wrench_act(mob/living/user, obj/item/tool)
+	to_chat(user, span_notice("You start [anchored ? "un" : ""]securing [src]..."))
+	if(!tool.use_tool(src, user, 60, volume=50))
+		return
+	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+	if((machine_stat & BROKEN))
+		to_chat(user, span_warning("The broken remains of [src] fall on the ground."))
+		new /obj/item/stack/sheet/iron(loc, 5)
+		new /obj/item/shard(loc)
+		new /obj/item/shard(loc)
+	else
+		to_chat(user, span_notice("You [anchored ? "un" : ""]secure [src]."))
+		new /obj/item/wallframe/newscaster(loc)
+	qdel(src)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/newscaster/play_attack_sound(damage, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)

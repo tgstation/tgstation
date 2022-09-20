@@ -219,6 +219,7 @@
 		"petri_dish",
 		"pillbottle",
 		"plumbing_rcd",
+		"plumbing_rcd_service",
 		"plumbing_rcd_sci",
 		"portable_chem_mixer",
 		"retractor",
@@ -528,6 +529,7 @@
 		"welding_goggles",
 		"anomaly_refinery",
 		"tank_compressor",
+		"atmos_thermal",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 12500)
 	discount_experiments = list(/datum/experiment/scanning/random/material/easy = 7500)
