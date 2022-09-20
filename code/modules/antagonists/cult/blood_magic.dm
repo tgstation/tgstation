@@ -237,7 +237,7 @@
 
 	return ..()
 
-/datum/action/innate/cult/blood_spell/horror/do_ability(mob/living/caller, params, mob/living/carbon/human/clicked_on)
+/datum/action/innate/cult/blood_spell/horror/do_ability(mob/living/caller, mob/living/carbon/human/clicked_on)
 
 	clicked_on.hallucination = max(clicked_on.hallucination, 120)
 	SEND_SOUND(caller, sound('sound/effects/ghost.ogg', FALSE, TRUE, 50))
