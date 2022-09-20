@@ -56,7 +56,7 @@
 	attacks_left = heart_attack_event.quantity
 	victims = heart_attack_event.heart_attack_candidates
 
-	while(attacks_left > 0)
+	while(attacks_left > 0 && length(victims))
 		if(attack_heart())
 			attacks_left--
 
@@ -74,7 +74,9 @@
 	if(winner.has_status_effect(/datum/status_effect/exercised)) //Stuff that should "block" a heart attack rather than just deny eligibility for one goes here.
 		winner.visible_message("[winner] grunts and clutches their chest for a moment, catching their breath.", "Your chest lurches in pain for a brief moment, which quickly fades. \
 								You feel like you've just avoided a serious health disaster.", "You hear someone's breathing sharpen for a moment, followed by a sigh of relief.", 4)
-		winner.client.give_award(/datum/award/achievement/misc/healthy, winner)
+		if(winner.client)
+			winner.client.give_award(/datum/award/achievement/misc/healthy, winner)
+		message_admins("[winner] has just survived a random heart attack!")
 		victims -= winner
 	else
 		var/datum/disease/heart_disease = new /datum/disease/heart_failure()
