@@ -253,9 +253,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	else
 		if(viewmob.hud_used)
 			viewmob.hud_used.plane_masters_update()
-		// melbert todo figure dis out
-		// for(var/datum/action/action as anything in mymob.actions)
-		// 	action.ShowTo(viewmob)
 
 	return TRUE
 

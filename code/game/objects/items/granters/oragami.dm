@@ -22,12 +22,14 @@
 
 /datum/action/innate/origami/Activate()
 	to_chat(owner, span_notice("You will now fold origami planes."))
-	button_icon_state = "origami_on"
 	active = TRUE
-	build_all_button_icons()
+	build_all_button_icons(UPDATE_BUTTON_ICON)
 
 /datum/action/innate/origami/Deactivate()
 	to_chat(owner, span_notice("You will no longer fold origami planes."))
-	button_icon_state = "origami_off"
 	active = FALSE
-	build_all_button_icons()
+	build_all_button_icons(UPDATE_BUTTON_ICON)
+
+/datum/action/innate/origami/apply_button_icon(atom/movable/screen/movable/action_button/current_button, force)
+	button_icon_state = "origami_[active ? "on":"off"]"
+	return ..()

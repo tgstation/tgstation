@@ -32,7 +32,7 @@
 			button_uses_target_icon = FALSE
 			qdel(GetComponent(/datum/component/action_item_overlay))
 
-		build_all_button_icons()
+		build_all_button_icons(UPDATE_BUTTON_OVERLAY)
 
 	// vv-ing the button icon state to null will add component, or off of null will remove the component
 	if(var_name == NAMEOF(src, button_icon_state))
@@ -44,7 +44,7 @@
 			button_uses_target_icon = TRUE
 			AddComponent(/datum/component/action_item_overlay)
 
-		build_all_button_icons()
+		build_all_button_icons(UPDATE_BUTTON_OVERLAY)
 
 /datum/action/item_action/Trigger(trigger_flags)
 	. = ..()

@@ -37,7 +37,7 @@
 	if(item_appearance_cached)
 		if(item_appearance_cached.icon == muse.icon && item_appearance_cached.icon_state == muse.icon_state && !force)
 			return
-		current_button.cut_overlay(item_appearance_cached) // melbert todo test this
+		current_button.cut_overlay(item_appearance_cached)
 
 	COMPILE_OVERLAYS(muse)
 	var/mutable_appearance/muse_appearance = new(muse.appearance)
