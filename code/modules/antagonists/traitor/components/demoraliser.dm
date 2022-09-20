@@ -48,7 +48,7 @@
 		return
 	if (!should_demoralise(viewer))
 		return
-	if(!viewer.can_read(host, (moods.text_based ? (READING_CHECK_LITERACY|READING_CHECK_LIGHT) : (READING_CHECK_LIGHT)), TRUE)) //if it's a text based demoralization datum, make sure the mob has the capability to read. if it's only an image, make sure it's just bright enough for them to see it.
+	if(!viewer.can_read(host, moods.reading_requirements, TRUE)) //if it's a text based demoralization datum, make sure the mob has the capability to read. if it's only an image, make sure it's just bright enough for them to see it.
 		return
 
 
@@ -92,7 +92,7 @@
 	/// Text to display to a head of staff upon receiving this mood
 	var/authority_notification
 	/// For literacy checks
-	var/text_based = FALSE
+	var/reading_requirements = READING_CHECK_LIGHT
 	/// Mood datum to apply to a head of staff or security
 	var/datum/mood_event/authority_mood
 
@@ -104,7 +104,7 @@
 	crew_mood = /datum/mood_event/traitor_poster_crew
 	authority_notification = "Hey! Who put up that poster?"
 	authority_mood = /datum/mood_event/traitor_poster_auth
-	text_based = TRUE
+	reading_requirements = (READING_CHECK_LITERACY | READING_CHECK_LIGHT)
 
 /datum/mood_event/traitor_poster_antag
 	description = "I am doing the right thing."
