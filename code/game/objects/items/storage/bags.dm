@@ -213,8 +213,8 @@
 //          Mini Plant Bag
 // -----------------------------
 
-/obj/item/storage/bag/smallplants
-	name = "Small plant bag"
+/obj/item/storage/bag/plants/small
+	name = "small plant bag"
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "plantbag"
 	worn_icon_state = "plantbag"
@@ -223,6 +223,7 @@
 /obj/item/storage/bag/plants/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
+	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_POCKETS
 	atom_storage.max_total_storage = 25
 	atom_storage.max_slots = 25
 	atom_storage.set_holdable(list(
