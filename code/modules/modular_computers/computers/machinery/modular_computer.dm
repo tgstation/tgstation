@@ -73,7 +73,7 @@
 	set_light(cpu?.enabled ? light_strength : 0)
 
 /obj/machinery/modular_computer/update_icon_state()
-	if(!cpu || !cpu.enabled || !cpu.use_power() || (machine_stat & NOPOWER)))
+	if(!cpu || !cpu.enabled || !cpu.use_power() || (machine_stat & NOPOWER))
 		icon_state = icon_state_unpowered
 	else
 		icon_state = icon_state_powered
