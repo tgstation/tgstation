@@ -99,6 +99,11 @@
 		RegisterSignal(owner, COMSIG_MOVABLE_Z_CHANGED, .proc/update_icon_on_signal)
 	if(spell_requirements & (SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_WIZARD_GARB))
 		RegisterSignal(owner, COMSIG_MOB_EQUIPPED_ITEM, .proc/update_icon_on_signal)
+	if(invocation_type == INVOCATION_EMOTE)
+		RegisterSignal(owner, list(SIGNAL_ADDTRAIT(TRAIT_EMOTEMUTE), SIGNAL_REMOVETRAIT(TRAIT_EMOTEMUTE)), .proc/update_icon_on_signal)
+	if(invocation_type == INVOCATION_SHOUT || invocation_type == INVOCATION_WHISPER)
+		RegisterSignal(owner, list(SIGNAL_ADDTRAIT(TRAIT_MUTE), SIGNAL_REMOVETRAIT(TRAIT_MUTE)), .proc/update_icon_on_signal)
+
 	RegisterSignal(owner, list(COMSIG_MOB_ENTER_JAUNT, COMSIG_MOB_AFTER_EXIT_JAUNT), .proc/update_icon_on_signal)
 	owner.client?.stat_panel.send_message("check_spells")
 
@@ -110,6 +115,10 @@
 		COMSIG_MOB_ENTER_JAUNT,
 		COMSIG_MOB_EQUIPPED_ITEM,
 		COMSIG_MOVABLE_Z_CHANGED,
+		SIGNAL_ADDTRAIT(TRAIT_EMOTEMUTE),
+		SIGNAL_REMOVETRAIT(TRAIT_EMOTEMUTE),
+		SIGNAL_ADDTRAIT(TRAIT_MUTE),
+		SIGNAL_REMOVETRAIT(TRAIT_MUTE),
 	))
 
 	return ..()
