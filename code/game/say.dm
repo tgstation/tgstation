@@ -69,10 +69,6 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	if(message_mods[MODE_CUSTOM_SAY_ERASE_INPUT])
 		messagepart = message_mods[MODE_CUSTOM_SAY_EMOTE]
 	else
-
-		//messagepart = translate_language(speaker, message_language, raw_message) //, spans, message_mods)
-		//return no_quote ? raw_message : source.say_quote(raw_message, spans, message_mods)
-		// var/our_source = src.GetSource()
 		messagepart = src.say_quote(raw_message, spans, message_mods)
 
 		var/datum/language/dialect = GLOB.language_datum_instances[message_language]
