@@ -1,4 +1,0 @@
-author: "Sealed101"
-delete-after: True
-changes: 
-  - bugfix: "glockroaches (and maybe other unreported simplemobs that can shoot) now properly shoot"

@@ -1,5 +1,0 @@
-author: "TheBoondock, Wallemations"
-delete-after: True
-changes: 
-  - rscadd: "Adds a new pair of goggles to atmospheric, the thermal imaging goggles help highlight the hot/cold and normal temperature for atmos tech to quickly identify the temp without having to use an analyzer. Hotter temperatures will have red colors while colder temperatures will have blue colors"
-  - rscadd: "Add temperature imaging to the t-ray goggles as well."
