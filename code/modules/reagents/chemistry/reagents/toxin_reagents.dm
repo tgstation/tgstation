@@ -73,6 +73,7 @@
 		mytray.adjust_toxic(3) //It is still toxic, mind you, but not to the same degree.
 
 #define LIQUID_PLASMA_BP (50+T0C)
+#define LIQUID_PLASMA_IG (325+T0C)
 
 /datum/reagent/toxin/plasma
 	name = "Plasma"
@@ -110,7 +111,8 @@
 		return
 	if(!holder.my_atom)
 		return
-
+	if((holder.flags & SEALED_CONTAINER) && (holder.chem_temp < LIQUID_PLASMA_IG))
+		return
 	var/atom/A = holder.my_atom
 	A.atmos_spawn_air("plasma=[volume];TEMP=[holder.chem_temp]")
 	holder.del_reagent(type)
