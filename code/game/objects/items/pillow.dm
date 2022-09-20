@@ -5,8 +5,8 @@
 	icon = 'icons/obj/pillow.dmi'
 	icon_state = "pillow_with_tag"
 	inhand_icon_state = "pillow"
-	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/pillow_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/pillow_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	damtype = STAMINA
 	var/last_fighter
@@ -60,3 +60,15 @@
 	icon_state = "pillow_no_tag"
 	desc = "A soft and fluffy pillow. This one seems to have its tag removed"
 	
+/obj/item/clothing/suit/hooded/pillow_suit
+	name = "pillow suit"
+	desc = "Part man, part pillow. All CARNAGE!"
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS|FEET
+	cold_protection = CHEST|GROIN|ARMS|LEGS //a pillow suit must be hella warm
+	allowed = list(/obj/item/pillow) //moar pillow carnage 
+	hood = /obj/item/clothing/head/hooded/pillow_hood
+
+/obj/item/clothing/head/hooded/pillow_hood
+	name = "pillow hood"
+	desc = "The final piece of the pillow juggernaut"
+	body_parts_covered = HEAD
