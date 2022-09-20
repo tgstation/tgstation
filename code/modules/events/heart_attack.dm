@@ -1,9 +1,9 @@
 /datum/round_event_control/heart_attack
 	name = "Random Heart Attack"
 	typepath = /datum/round_event/heart_attack
-	weight = 200000 //DEBUG VALUE :)
+	weight = 20
 	max_occurrences = 2
-	min_players = 20 //DEBUG VALUE :)
+	min_players = 40
 	category = EVENT_CATEGORY_HEALTH
 	description = "A random crewmember's heart gives out."
 	///Candidates for recieving a healthy dose of heart disease

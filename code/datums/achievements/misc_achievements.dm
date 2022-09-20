@@ -208,6 +208,6 @@
 
 /datum/award/achievement/misc/healthy
 	name = "The Picture of Health"
-	desc = "Shrug off a heart attack with your shredded physique and dedication to lifting heavy objects."
+	desc = "Don't be such a baby, it's just a heart attack. You've bounced back from worse!"
 	database_id = MEDAL_HEALTHY
 	icon = "picofhealth"

@@ -43,7 +43,7 @@
 #define MEDAL_CLICKBAIT "Clickbait"
 #define MEDAL_NARSUPREME "Narsupreme"
 #define MEDAL_SPRINGLOCK "The Man Inside the Modsuit"
-#define MEDAL_HEALTHY "Stay Strong, King"
+#define MEDAL_HEALTHY "Heart Healthy"
 
 //Skill medal hub IDs
 #define MEDAL_LEGENDARY_MINER "Legendary Miner"
