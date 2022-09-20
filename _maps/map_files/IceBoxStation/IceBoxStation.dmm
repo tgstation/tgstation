@@ -7388,11 +7388,8 @@
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "cin" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 1
-	},
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/iron/large,
+/turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "ciG" = (
 /obj/machinery/door/airlock/external{
@@ -46670,6 +46667,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/warden)
+"okG" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/iron/large,
+/area/station/hallway/primary/starboard)
 "okH" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing{
@@ -257127,7 +257130,7 @@ bMY
 cxd
 cYE
 avb
-avb
+okG
 cin
 eKl
 pxL
