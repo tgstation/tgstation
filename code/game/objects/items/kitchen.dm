@@ -114,6 +114,16 @@
 	custom_price = PAYCHECK_CREW * 1.5
 	tool_behaviour = TOOL_ROLLINGPIN
 
+/obj/item/kitchen/rollingpin/illegal
+	name = "metal rolling pin"
+	desc = "A heavy metallic rolling pin used to bash in those annoying ingredients."
+	icon_state = "metal_rolling_pin"
+	force = 12
+	flags_1 = CONDUCT_1
+	custom_materials = list(/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 1.5, /datum/material/plastic = MINERAL_MATERIAL_AMOUNT * 1.5)
+	custom_price = PAYCHECK_CREW * 2
+	bare_wound_bonus = 14
+
 /obj/item/kitchen/rollingpin/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins flattening [user.p_their()] head with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS

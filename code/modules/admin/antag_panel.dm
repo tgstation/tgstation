@@ -40,7 +40,7 @@ GLOBAL_VAR(antag_prototypes)
 	return parts.Join("<br>")
 
 /datum/antagonist/proc/antag_panel_objectives()
-	var/result = "<i><b>Objectives</b></i>:<br>"
+	var/result = "<i><b>Personal Objectives</b></i>:<br>"
 	if (objectives.len == 0)
 		result += "EMPTY<br>"
 	else
