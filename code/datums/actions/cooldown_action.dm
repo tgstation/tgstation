@@ -37,14 +37,15 @@
 	var/base_overlay_icon_state
 	/// The active icon_state of the overlay we apply
 	var/active_overlay_icon_state
-	/// The base icon state of the spell's button icon, used for editing the icon "on" and "off"
+	/// The base icon state of the spell's button icon, used for editing the icon "off"
 	var/base_icon_state
+	/// The active icon state of the spell's button icon, used for editing the icon "on"
+	var/active_icon_state
 
 /datum/action/cooldown/New(Target, original = TRUE)
 	. = ..()
-	// If we have an active overlay and an overlay, but no base overlay set, the base overlay should become the initial overlay
-	if(active_overlay_icon_state && overlay_icon_state && !base_overlay_icon_state)
-		base_overlay_icon_state = overlay_icon_state
+	base_overlay_icon_state ||= overlay_icon_state
+	base_icon_state ||= button_icon_state
 
 	if(isnull(melee_cooldown_time))
 		melee_cooldown_time = cooldown_time
@@ -76,21 +77,17 @@
 	button.color = COLOR_GREEN
 
 /datum/action/cooldown/apply_button_icon(atom/movable/screen/movable/action_button/current_button, force)
-	if(!base_icon_state)
-		return ..()
-
-	overlay_icon_state = is_action_active(current_button) ? "[base_icon_state]_active" : base_icon_state
+	if(active_icon_state)
+		button_icon_state = is_action_active(current_button) ? active_icon_state : base_icon_state
 	return ..()
 
-/datum/action/cooldown/apply_button_overlay(atom/movable/screen/movable/action_button/current_button, force = FALSE)
-	if(!active_overlay_icon_state)
-		return ..()
-
-	overlay_icon_state = is_action_active(current_button) ? active_overlay_icon_state : base_overlay_icon_state
+/datum/action/cooldown/apply_button_overlay(atom/movable/screen/movable/action_button/current_button, force)
+	if(active_overlay_icon_state)
+		overlay_icon_state = is_action_active(current_button) ? active_overlay_icon_state : base_overlay_icon_state
 	return ..()
 
 /datum/action/cooldown/is_action_active(atom/movable/screen/movable/action_button/current_button)
-	return click_to_activate && current_button.our_hud.mymob.click_intercept == src
+	return click_to_activate && current_button.our_hud?.mymob?.click_intercept == src
 
 /datum/action/cooldown/Destroy()
 	QDEL_LIST(initialized_actions)

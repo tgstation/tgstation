@@ -39,7 +39,7 @@
 
 /datum/action/innate/is_action_active(atom/movable/screen/movable/action_button/current_button)
 	if(click_action)
-		return current_button.our_hud.mymob.click_intercept == src
+		return current_button.our_hud?.mymob?.click_intercept == src
 	else
 		return active
 
