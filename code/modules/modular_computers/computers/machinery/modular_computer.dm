@@ -7,7 +7,7 @@
 	// Modular computers can run on various devices. Each DEVICE (Laptop, Console, Tablet,..)
 	// must have it's own DMI file. Icon states must be called exactly the same in all files, but may look differently
 	// If you create a program which is limited to Laptops and Consoles you don't have to add it's icon_state overlay for Tablets too, for example.
-	icon = null
+	icon = 'icons/obj/modular_console.dmi'
 	icon_state = null
 
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
@@ -84,9 +84,9 @@
 	if(!cpu)
 		return .
 
-	if(cpu.enabled)
+	if(cpu.enabled && cpu.use_power())
 		. += cpu.active_program?.program_icon_state || screen_icon_state_menu
-	else if(!(machine_stat & NOPOWER) && (cpu?.use_power()))
+	else if(!(machine_stat & NOPOWER)))
 		. += screen_icon_screensaver
 
 	if(cpu.get_integrity() <= cpu.integrity_failure * cpu.max_integrity)

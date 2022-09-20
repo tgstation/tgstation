@@ -437,7 +437,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 /**
  * Displays notification text alongside a soundbeep when requested to by a program.
  *
- * After checking tha the requesting program is allowed to send an alert, creates
+ * After checking that the requesting program is allowed to send an alert, creates
  * a visible message of the requested text alongside a soundbeep. This proc adds
  * text to indicate that the message is coming from this device and the program
  * on it, so the supplied text should be the exact message and ending punctuation.
@@ -446,15 +446,11 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
  * The program calling this proc.
  * The message that the program wishes to display.
  */
-
 /obj/item/modular_computer/proc/alert_call(datum/computer_file/program/caller, alerttext, sound = 'sound/machines/twobeep_high.ogg')
 	if(!caller || !caller.alert_able || caller.alert_silenced || !alerttext) //Yeah, we're checking alert_able. No, you don't get to make alerts that the user can't silence.
-		return
+		return FALSE
 	playsound(src, sound, 50, TRUE)
-	visible_message(span_notice("The [src] displays a [caller.filedesc] notification: [alerttext]"))
-	var/mob/living/holder = loc
-	if(istype(holder))
-		to_chat(holder, "[icon2html(src)] [span_notice("The [src] displays a [caller.filedesc] notification: [alerttext]")]")
+	visible_message(span_notice("[icon2html(src)] [span_notice("The [src] displays a [caller.filedesc] notification: [alerttext]")]"))
 
 /obj/item/modular_computer/proc/ring(ringtone) // bring bring
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_PDA_GLITCHED))
@@ -598,9 +594,9 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		idle_threads.Remove(P)
 	if(looping_sound)
 		soundloop.stop()
-	if(loud)
+	if(physical && loud)
 		physical.visible_message(span_notice("\The [src] shuts down."))
-	enabled = 0
+	enabled = FALSE
 	update_appearance()
 
 /obj/item/modular_computer/ui_action_click(mob/user, actiontype)
