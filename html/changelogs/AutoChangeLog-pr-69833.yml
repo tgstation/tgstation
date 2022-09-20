@@ -1,0 +1,5 @@
+author: "Rhials"
+delete-after: True
+changes: 
+  - rscadd: "Rigging light fixtures now works with more reagents than just plasma. Light fixtures will heat the reagents of their inserted lightbulb, up to a maximum of 1000 degrees. Lightbulb tubes now hold 20 reagents to make this more usable."
+  - rscadd: "Lightbulbs will now splash their contents on whatever they're shattered by. Their contents are also now visible upon examination."
