@@ -86,7 +86,7 @@
 
 	if(cpu.enabled && cpu.use_power())
 		. += cpu.active_program?.program_icon_state || screen_icon_state_menu
-	else if(!(machine_stat & NOPOWER)))
+	else if(!(machine_stat & NOPOWER))
 		. += screen_icon_screensaver
 
 	if(cpu.get_integrity() <= cpu.integrity_failure * cpu.max_integrity)
