@@ -13,7 +13,7 @@
 
 /datum/round_event_control/heart_attack/canSpawnEvent()
 	..()
-	generate_candidates() //generating candidates and checking in canSpawnEvent prevents extreme edge case of there being the 40 minimum players, with all being inlligible for a heart attack, wasting the event
+	generate_candidates() //generating candidates and checking in canSpawnEvent prevents extreme edge case of there being the 40 minimum players, with all being inelligible for a heart attack, wasting the event
 	if(length(heart_attack_candidates))
 		return TRUE
 	message_admins("An event tried to give someone a heart attack, but no candidates could be found.")
