@@ -4420,10 +4420,6 @@
 /obj/effect/turf_decal/trimline/red/filled/line,
 /turf/open/floor/iron,
 /area/station/security/prison/workout)
-"bLM" = (
-/obj/machinery/fax,
-/turf/open/floor/iron,
-/area/station/cargo/storage)
 "bLP" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
@@ -177622,7 +177618,7 @@ akr
 akr
 cTU
 ett
-bLM
+uax
 uax
 qpG
 bTx

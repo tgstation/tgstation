@@ -285,7 +285,7 @@
 	id = "mech_grenade_launcher_ammo"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	build_path = /obj/item/mecha_ammo/flashbang
-	materials = list(/datum/material/iron=4000,/datum/material/gold=500,/datum/material/iron=500)
+	materials = list(/datum/material/iron=4000,/datum/material/gold=500)
 	construction_time = 20
 	category = list(RND_CATEGORY_EXOSUIT_AMMUNIATION, RND_CATEGORY_AMMO)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
@@ -306,7 +306,7 @@
 	id = "mech_missile_rack_ammo"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	build_path = /obj/item/mecha_ammo/missiles_br
-	materials = list(/datum/material/iron=8000,/datum/material/gold=500,/datum/material/iron=500)
+	materials = list(/datum/material/iron=8000,/datum/material/gold=500)
 	construction_time = 20
 	category = list(RND_CATEGORY_EXOSUIT_AMMUNIATION, RND_CATEGORY_AMMO)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
