@@ -151,8 +151,8 @@
 		return FALSE
 
 	COOLDOWN_START(src, track_cooldown, track_cooldown_lenth)
-	UpdateButtons()
-	addtimer(CALLBACK(src, .proc/UpdateButtons), track_cooldown_lenth + 1)
+	build_all_button_icons()
+	addtimer(CALLBACK(src, .proc/build_all_button_icons), track_cooldown_lenth + 1)
 	playsound(owner, 'sound/effects/singlebeat.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
 	owner.balloon_alert(owner, get_balloon_message(tracked_mob))
 

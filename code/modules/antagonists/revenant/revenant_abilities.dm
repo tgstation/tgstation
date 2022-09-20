@@ -411,7 +411,6 @@
 	name = "Haunt Object"
 	desc = "Empower nearby objects to you with ghostly energy, causing them to attack nearby mortals. \
 		Items closer to you are more likely to be haunted."
-	icon_icon = 'icons/mob/actions/actions_revenant.dmi'
 	button_icon_state = "r_haunt"
 	max_targets = 7
 	aoe_radius = 5
