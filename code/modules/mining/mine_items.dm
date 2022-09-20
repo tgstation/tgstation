@@ -58,7 +58,7 @@
 	new /obj/item/pickaxe/mini(src)
 	new /obj/item/radio/headset/headset_cargo/mining(src)
 	new /obj/item/flashlight/seclite(src)
-	new /obj/item/storage/bag/smallplants(src)
+	new /obj/item/storage/bag/plants/small(src)
 	new /obj/item/storage/bag/ore(src)
 	new /obj/item/t_scanner/adv_mining_scanner/lesser(src)
 	new /obj/item/gun/energy/recharge/kinetic_accelerator(src)
