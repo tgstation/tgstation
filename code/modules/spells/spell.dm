@@ -357,7 +357,7 @@
 			to_chat(owner, span_warning("You can't position your hands correctly to invoke [src]!"))
 		return FALSE
 
-	if((invocation_type == INVOCATION_WHISPER || invocation_type == INVOCATION_SHOUT) && !living_owner.try_speak(invocation, TRUE, TRUE))
+	if((invocation_type == INVOCATION_WHISPER || invocation_type == INVOCATION_SHOUT) && !living_owner.can_speak())
 		if(feedback)
 			to_chat(owner, span_warning("You can't get the words out to invoke [src]!"))
 		return FALSE

@@ -468,7 +468,7 @@
 	RegisterSignal(signer, COMSIG_MOVABLE_USING_RADIO, .proc/on_use_radio)
 
 /obj/item/organ/internal/tongue/tied/Remove(mob/living/carbon/speaker, special = FALSE)
-	..()
+	. = ..()
 	speaker.verb_ask = initial(speaker.verb_ask)
 	speaker.verb_exclaim = initial(speaker.verb_exclaim)
 	speaker.verb_whisper = initial(speaker.verb_whisper)
