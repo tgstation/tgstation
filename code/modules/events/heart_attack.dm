@@ -13,9 +13,10 @@
 
 /datum/round_event_control/heart_attack/canSpawnEvent()
 	..()
-	generate_candidates()
-	if(LAZYLEN(heart_attack_candidates))
+	generate_candidates() //generating candidates and checking in canSpawnEvent prevents extreme edge case of there being the 40 minimum players, with all being inlligible for a heart attack, wasting the event
+	if(length(heart_attack_candidates))
 		return TRUE
+	message_admins("An event tried to give someone a heart attack, but no candidates could be found.")
 	return FALSE
 
 /datum/round_event_control/heart_attack/admin_setup()
@@ -23,7 +24,7 @@
 		return
 
 	generate_candidates() //canSpawnEvent() is bypassed by admin_setup, so this makes sure that the candidates are still generated
-	quantity = tgui_input_number(usr, "There are [length(heart_attack_candidates)] potential candidates. How many heart attacks would you like to give?", "Shia Hato Atakku!", 1, length(heart_attack_candidates))
+	quantity = tgui_input_number(usr, "There are [length(heart_attack_candidates)] crewmembers eligible for a heart attack. Please select a number of people's days you wish to ruin.", "Shia Hato Atakku!", 1, length(heart_attack_candidates))
 
 /**
  * Performs initial analysis of which living players are eligible to be selected for a heart attack
@@ -35,12 +36,12 @@
 /datum/round_event_control/heart_attack/proc/generate_candidates()
 	for(var/mob/living/carbon/human/candidate in shuffle(GLOB.player_list))
 		if(candidate.stat == DEAD || HAS_TRAIT(candidate, TRAIT_CRITICAL_CONDITION) || !candidate.can_heartattack() || (/datum/disease/heart_failure in candidate.diseases) || candidate.undergoing_cardiac_arrest())
-			continue //
+			continue
 		if(!(candidate.mind.assigned_role.job_flags & JOB_CREW_MEMBER))//only crewmembers can get one, a bit unfair for some ghost roles and it wastes the event
-			continue //
+			continue
 		if(candidate.satiety <= -60 && !candidate.has_status_effect(/datum/status_effect/exercised)) //Multiple junk food items recently //No foodmaxxing for the achievement
 			heart_attack_candidates[candidate] = 3
-		else //
+		else
 			heart_attack_candidates[candidate] = 1
 
 /datum/round_event/heart_attack
@@ -53,7 +54,7 @@
 	var/datum/round_event_control/heart_attack/heart_attack_event = control
 
 	attacks_left = heart_attack_event.quantity
-	victims += heart_attack_event.heart_attack_candidates
+	victims = heart_attack_event.heart_attack_candidates
 
 	while(attacks_left > 0)
 		if(attack_heart(victims))
@@ -74,9 +75,11 @@
 		winner.visible_message("[winner] grunts and clutches their chest for a moment, catching their breath.", "Your chest lurches in pain for a brief moment, which quickly fades. \
 								You feel like you've just avoided a serious health disaster.", "You hear someone's breathing sharpen for a moment, followed by a sigh of relief.", 4)
 		winner.client.give_award(/datum/award/achievement/misc/healthy, winner)
+		victims -= winner
 	else
 		var/datum/disease/heart_disease = new /datum/disease/heart_failure()
 		winner.ForceContractDisease(heart_disease, FALSE, TRUE)
 		announce_to_ghosts(winner)
+		victims -= winner
 		return TRUE
 	return FALSE
