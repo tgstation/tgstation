@@ -35,6 +35,27 @@
 	last_fighter = user
 	playsound(user, 'sound/items/pillow_hit.ogg', 80) //the basic 50 vol is barely audible
 
+/obj/item/pillow/attack_secondary(mob/living/victim, mob/living/user, params)
+	. = ..()
+	var/is_smothering
+	if(!iscarbon(victim))
+		balloon_alert(user, span_notice("can't smother  this!"))
+		return
+	if(HAS_TRAIT(victim, TRAIT_NOBREATH))
+		balloon_alert(user, span_notice("doesn't seem to be effective..."))
+		return
+	balloon_alert(user, span_notice("attempting to smother..."))
+	if(do_after(user, 5 SECONDS))
+		return
+	if(user.zone_selected == HEAD && victim.body_position == LYING_DOWN)
+		balloon_alert(user, span_notice("now smothering [victim]!"))
+		is_smothering = TRUE
+		while(is_smothering)
+			if(victim.resist_grab())
+				is_smothering = FALSE
+			else
+				victim.apply_damage(0.5, OXY)
+
 /obj/item/pillow/examine(mob/user)
 	. = ..()
 	. += span_notice("<i>There's more information below, you can look again to take a closer look...</i>")
