@@ -170,7 +170,7 @@
 	if(I == internal)
 		internal = null
 		if(!QDELETED(src))
-			update_action_buttons_icon(status_only = TRUE)
+			update_mob_action_buttons(UPDATE_BUTTON_STATUS)
 
 	update_equipment_speed_mods()
 
