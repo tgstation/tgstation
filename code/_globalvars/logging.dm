@@ -32,14 +32,13 @@ GLOBAL_PROTECT(harddel_log)
 GLOBAL_LIST_EMPTY(IClog)
 GLOBAL_PROTECT(IClog)
 
-/// Stores who uploaded laws to which silicon-based lifeform, and what the law was
-GLOBAL_LIST_EMPTY(lawchanges)
-GLOBAL_PROTECT(lawchanges)
-
 /// Keeps last 100 signals here in format: "[src] used [REF(src)] @ location [src.loc]: [freq]/[code]"
 GLOBAL_LIST_EMPTY(lastsignalers)
 GLOBAL_PROTECT(lastsignalers)
 
+/// Stores who uploaded laws to which silicon-based lifeform, and what the law was
+GLOBAL_LIST_EMPTY(lawchanges)
+GLOBAL_PROTECT(lawchanges)
 GLOBAL_VAR(log_directory)
 GLOBAL_PROTECT(log_directory)
 
