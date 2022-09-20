@@ -57,7 +57,7 @@
 	victims = heart_attack_event.heart_attack_candidates
 
 	while(attacks_left > 0)
-		if(attack_heart(victims))
+		if(attack_heart())
 			attacks_left--
 
 /**
@@ -69,7 +69,7 @@
  * Arguments:
  * * victims - the list of people who have passed the initial heart attack candidacy checks (performed in the round event control)
  */
-/datum/round_event/heart_attack/proc/attack_heart(var/list/victims)
+/datum/round_event/heart_attack/proc/attack_heart()
 	var/mob/living/carbon/human/winner = pick_weight(victims)
 	if(winner.has_status_effect(/datum/status_effect/exercised))
 		winner.visible_message("[winner] grunts and clutches their chest for a moment, catching their breath.", "Your chest lurches in pain for a brief moment, which quickly fades. \
