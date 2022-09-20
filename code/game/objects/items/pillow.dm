@@ -60,15 +60,23 @@
 	icon_state = "pillow_no_tag"
 	desc = "A soft and fluffy pillow. This one seems to have its tag removed"
 	
-/obj/item/clothing/suit/hooded/pillow_suit
+/obj/item/clothing/suit/pillow_suit
 	name = "pillow suit"
 	desc = "Part man, part pillow. All CARNAGE!"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS|FEET
 	cold_protection = CHEST|GROIN|ARMS|LEGS //a pillow suit must be hella warm
 	allowed = list(/obj/item/pillow) //moar pillow carnage 
-	hood = /obj/item/clothing/head/hooded/pillow_hood
+	icon = 'icons/obj/pillow.dmi'
+	worn_icon = 'icons/mob/clothing/suits/pillow.dmi'
+	icon_state = "pillow_suit"
 
-/obj/item/clothing/head/hooded/pillow_hood
+
+/obj/item/clothing/head/pillow_hood
 	name = "pillow hood"
 	desc = "The final piece of the pillow juggernaut"
 	body_parts_covered = HEAD
+	icon = 'icons/obj/pillow.dmi'
+	worn_icon = 'icons/mob/clothing/suits/pillow.dmi'
+	icon_state = "pillowcase_hat"
+	body_parts_covered = HEAD
+	flags_inv = HIDEHAIR|HIDEEARS
