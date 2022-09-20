@@ -132,6 +132,7 @@
 	// about why the ability is unavailable.
 	// It is otherwise redundant, however, as IsAvailable() checks can_cast_spell as well.
 	if(!can_cast_spell())
+		UpdateButtons(TRUE)
 		return FALSE
 
 	return ..()
