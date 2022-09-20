@@ -864,9 +864,7 @@
 
 /mob/living/silicon/ai/proc/relay_speech(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
 	var/raw_translation = translate_language(speaker, message_language, raw_message)
-
-	// double check if we can refactor this better.. ?
-	var/atom/movable/source = speaker.GetSource() || speaker //is the speaker virtual/radio
+	var/atom/movable/source = speaker.GetSource() || speaker // is the speaker virtual/radio
 	var/treated_message = source.say_quote(raw_translation, spans, message_mods)
 
 	var/start = "Relayed Speech: "
