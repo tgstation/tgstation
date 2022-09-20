@@ -31,7 +31,7 @@
 	if(!length(heart_attack_candidates))
 		message_admins("There are no candidates eligible to recieve a heart attack!")
 		return
-	quantity = tgui_input_number(usr, "There are [length(heart_attack_candidates)] crewmembers eligible for a heart attack. Please select a number of people's days you wish to ruin.", "Shia Hato Atakku!", 1, length(heart_attack_candidates))
+	quantity = tgui_input_number(usr, "There are [length(heart_attack_candidates)] crewmembers eligible for a heart attack. Please select how many people's days you wish to ruin.", "Shia Hato Atakku!", 1, length(heart_attack_candidates))
 
 /**
  * Performs initial analysis of which living players are eligible to be selected for a heart attack.
@@ -81,7 +81,7 @@
 								You feel like you've just avoided a serious health disaster.", "You hear someone's breathing sharpen for a moment, followed by a sigh of relief.", 4)
 		if(winner.client)
 			winner.client.give_award(/datum/award/achievement/misc/healthy, winner)
-		message_admins("[winner] has just survived a random heart attack!")
+		message_admins("[winner] has just survived a random heart attack!") //time to spawn them a trophy :)
 		victims -= winner
 	else
 		var/datum/disease/heart_disease = new /datum/disease/heart_failure()
