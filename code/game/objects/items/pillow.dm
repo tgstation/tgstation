@@ -69,6 +69,7 @@
 	icon = 'icons/obj/pillow.dmi'
 	worn_icon = 'icons/mob/clothing/suits/pillow.dmi'
 	icon_state = "pillow_suit"
+	armor = list(MELEE = 5, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 75) //fluffy amor
 
 
 /obj/item/clothing/head/pillow_hood
@@ -80,3 +81,4 @@
 	icon_state = "pillowcase_hat"
 	body_parts_covered = HEAD
 	flags_inv = HIDEHAIR|HIDEEARS
+	armor = list(MELEE = 5, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 75) //fluffy amor
