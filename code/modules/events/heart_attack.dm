@@ -1,9 +1,9 @@
 /datum/round_event_control/heart_attack
 	name = "Random Heart Attack"
 	typepath = /datum/round_event/heart_attack
-	weight = 20
+	weight = 20000
 	max_occurrences = 2
-	min_players = 40 // To avoid shafting lowpop
+	min_players = 20 // To avoid shafting lowpop
 	category = EVENT_CATEGORY_HEALTH
 	description = "A random crewmember's heart gives out."
 	///Candidates for recieving a healthy dose of heart disease
@@ -11,9 +11,12 @@
 	///Number of candidates to be smote
 	var/quantity = 1
 
-/datum/round_event_control/heart_attack/canSpawnEvent()
-	..()
-	generate_candidates() //generating candidates and checking in canSpawnEvent prevents extreme edge case of there being the 40 minimum players, with all being inelligible for a heart attack, wasting the event
+/datum/round_event_control/heart_attack/canSpawnEvent(players_amt)
+	if(occurrences >= max_occurrences)
+		return FALSE
+	if(players_amt < min_players)
+		return FALSE
+	generate_candidates() //generating candidates and checking in canSpawnEvent prevents extreme edge case of there being the 40 minimum players, with all being ineligible for a heart attack, wasting the event
 	if(length(heart_attack_candidates))
 		return TRUE
 	message_admins("An event tried to give someone a heart attack, but no candidates could be found.")
@@ -24,6 +27,10 @@
 		return
 
 	generate_candidates() //canSpawnEvent() is bypassed by admin_setup, so this makes sure that the candidates are still generated
+
+	if(!length(heart_attack_candidates))
+		message_admins("There are no candidates eligible to recieve a heart attack!")
+		return
 	quantity = tgui_input_number(usr, "There are [length(heart_attack_candidates)] crewmembers eligible for a heart attack. Please select a number of people's days you wish to ruin.", "Shia Hato Atakku!", 1, length(heart_attack_candidates))
 
 /**
@@ -31,7 +38,7 @@
  *
  * Traverses player_list and checks entries against a series of reviews to see if they should even be considered for a heart attack,
  * and at what weight should they be eligible to recieve it. The check for whether or not a heart attack should be "blocked" by something is done
- * later, at the round_event level, and this proc mostly just checks users for whether or not a heart attack should be possible.
+ * later, at the round_event level, so this proc mostly just checks users for whether or not a heart attack should be possible.
  */
 /datum/round_event_control/heart_attack/proc/generate_candidates()
 	for(var/mob/living/carbon/human/candidate in shuffle(GLOB.player_list))
