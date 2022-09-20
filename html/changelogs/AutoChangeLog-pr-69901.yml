@@ -1,0 +1,4 @@
+author: "VexingRaven"
+delete-after: True
+changes: 
+  - bugfix: "Fixed a bug where it was possible to call the shuttle while buying a new one, resulting in a second shuttle that gibs everyone aboard."
