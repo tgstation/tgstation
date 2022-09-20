@@ -27,11 +27,11 @@
 	quantity = tgui_input_number(usr, "There are [length(heart_attack_candidates)] crewmembers eligible for a heart attack. Please select a number of people's days you wish to ruin.", "Shia Hato Atakku!", 1, length(heart_attack_candidates))
 
 /**
- * Performs initial analysis of which living players are eligible to be selected for a heart attack
+ * Performs initial analysis of which living players are eligible to be selected for a heart attack.
  *
- * Traverses player_list and checks entries against a series of initial reviews to see if they should even be considered for a heart attack,
- * and at what weight should they be eligible to recieve it. This does not check for anything that should "block" a heart attack, as that
- * is done during the event itself.
+ * Traverses player_list and checks entries against a series of reviews to see if they should even be considered for a heart attack,
+ * and at what weight should they be eligible to recieve it. The check for whether or not a heart attack should be "blocked" by something is done
+ * later, at the round_event level, and this proc mostly just checks users for whether or not a heart attack should be possible.
  */
 /datum/round_event_control/heart_attack/proc/generate_candidates()
 	for(var/mob/living/carbon/human/candidate in shuffle(GLOB.player_list))
@@ -65,13 +65,11 @@
  *
  * Performs a pick_weight on a list of potential victims. Once selected, the "winner"
  * will recieve heart disease. Returns TRUE if a heart attack is successfully given, and
- * FALSE if something blocks it (currently just the exercised status effect).
- * Arguments:
- * * victims - the list of people who have passed the initial heart attack candidacy checks (performed in the round event control)
+ * FALSE if something blocks it.
  */
 /datum/round_event/heart_attack/proc/attack_heart()
 	var/mob/living/carbon/human/winner = pick_weight(victims)
-	if(winner.has_status_effect(/datum/status_effect/exercised)) //Stuff that should "block" a heart attack rather than just deny eligibility for one goes here.
+	if(winner.has_status_effect(/datum/status_effect/exercised) || winner.reagents.has_reagent(/datum/reagent/medicine/c2/penthrite)) //Stuff that should "block" a heart attack rather than just deny eligibility for one goes here.
 		winner.visible_message("[winner] grunts and clutches their chest for a moment, catching their breath.", "Your chest lurches in pain for a brief moment, which quickly fades. \
 								You feel like you've just avoided a serious health disaster.", "You hear someone's breathing sharpen for a moment, followed by a sigh of relief.", 4)
 		if(winner.client)
