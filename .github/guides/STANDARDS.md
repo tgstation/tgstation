@@ -97,7 +97,9 @@ While we normally encourage (and in some cases, even require) bringing out of da
 
 * Files and path accessed and referenced by code above simply being #included should be strictly lowercase to avoid issues on filesystems where case matters.
 
-### RegisterSignal() - Signal Handlers
+### RegisterSignal()
+
+#### Signal Handlers
 
 All procs that are registered to listen for signals using `RegisterSignal()` must contain at the start of the proc `SIGNAL_HANDLER` eg;
 ```
@@ -109,7 +111,7 @@ This is to ensure that it is clear the proc handles signals and turns on a lint 
 
 Any sleeping behaviour that you need to perform inside a `SIGNAL_HANDLER` proc must be called asynchronously (e.g. with `INVOKE_ASYNC()`) or be redone to work asynchronously. 
 
-### RegisterSignal() - override
+#### `override`
 
 Each atom can only register a signal on the same object once, or else you will get a runtime. Overriding signals is usually a bug, but if you are confident that it is not, you can silence this runtime with `override = TRUE`.
 
