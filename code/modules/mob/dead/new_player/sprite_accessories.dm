@@ -2049,7 +2049,7 @@
 	name = "Normal Legs"
 
 /datum/sprite_accessory/legs/digitigrade_lizard
-	name = "Digitigrade Legs"
+	name = DIGITIGRADE_LEGS
 
 /datum/sprite_accessory/caps
 	icon = 'icons/mob/species/mutant_bodyparts.dmi'

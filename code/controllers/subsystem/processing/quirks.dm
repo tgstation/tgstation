@@ -30,9 +30,9 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		list("Quadruple Amputee", "Paraplegic","Frail"),
 	)
 
-/datum/controller/subsystem/processing/quirks/Initialize(timeofday)
+/datum/controller/subsystem/processing/quirks/Initialize()
 	get_quirks()
-	return ..()
+	return SS_INIT_SUCCESS
 
 /// Returns the list of possible quirks
 /datum/controller/subsystem/processing/quirks/proc/get_quirks()

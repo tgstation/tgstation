@@ -2,7 +2,7 @@
 
 /datum/quirk/badback
 	name = "Bad Back"
-	desc = "Thanks to your poor posture, backpacks and other bags never sit right on your back. More evently weighted objects are fine, though."
+	desc = "Thanks to your poor posture, backpacks and other bags never sit right on your back. More evenly weighted objects are fine, though."
 	icon = "hiking"
 	value = -8
 	mood_quirk = TRUE
@@ -201,7 +201,7 @@
 
 	var/obj/family_heirloom = heirloom?.resolve()
 	if(!family_heirloom)
-		to_chat(quirk_holder, "<span class='boldnotice'>A wave of existential dread runs over you as you realise your precious family heirloom is missing. Perhaps the Gods will show mercy on your cursed soul?</span>")
+		to_chat(quirk_holder, "<span class='boldnotice'>A wave of existential dread runs over you as you realize your precious family heirloom is missing. Perhaps the Gods will show mercy on your cursed soul?</span>")
 		return
 	family_heirloom.AddComponent(/datum/component/heirloom, quirk_holder.mind, family_name)
 
@@ -232,7 +232,7 @@
 	mob_trait = TRAIT_EASILY_WOUNDED
 	gain_text = "<span class='danger'>You feel frail.</span>"
 	lose_text = "<span class='notice'>You feel sturdy again.</span>"
-	medical_record_text = "Patient is absurdly easy to injure. Please take all due dilligence to avoid possible malpractice suits."
+	medical_record_text = "Patient is absurdly easy to injure. Please take all due diligence to avoid possible malpractice suits."
 	hardcore_value = 4
 
 /datum/quirk/heavy_sleeper
@@ -308,7 +308,7 @@
 
 /datum/quirk/nyctophobia
 	name = "Nyctophobia"
-	desc = "As far as you can remember, you've always been afraid of the dark. While in the dark without a light source, you instinctually act careful, and constantly feel a sense of dread."
+	desc = "As far as you can remember, you've always been afraid of the dark. While in the dark without a light source, you instinctively act careful, and constantly feel a sense of dread."
 	icon = "lightbulb"
 	value = -3
 	medical_record_text = "Patient demonstrates a fear of the dark. (Seriously?)"
@@ -486,28 +486,41 @@
 
 /datum/quirk/insanity
 	name = "Reality Dissociation Syndrome"
-	desc = "You suffer from a severe disorder that causes very vivid hallucinations. Mindbreaker toxin can suppress its effects, and you are immune to mindbreaker's hallucinogenic properties. THIS IS NOT A LICENSE TO GRIEF."
+	desc = "You suffer from a severe disorder that causes very vivid hallucinations. \
+		Mindbreaker toxin can suppress its effects, and you are immune to mindbreaker's hallucinogenic properties. \
+		THIS IS NOT A LICENSE TO GRIEF."
 	icon = "grin-tongue-wink"
 	value = -8
-	mob_trait = TRAIT_INSANITY
-	gain_text = "<span class='userdanger'>...</span>"
-	lose_text = "<span class='notice'>You feel in tune with the world again.</span>"
+	gain_text = span_userdanger("...")
+	lose_text = span_notice("You feel in tune with the world again.")
 	medical_record_text = "Patient suffers from acute Reality Dissociation Syndrome and experiences vivid hallucinations."
 	hardcore_value = 6
-	processing_quirk = TRUE
 
-/datum/quirk/insanity/process(delta_time)
-	if(quirk_holder.stat != CONSCIOUS || quirk_holder.IsSleeping() || quirk_holder.IsUnconscious())
+/datum/quirk/insanity/add()
+	if(!iscarbon(quirk_holder))
 		return
+	var/mob/living/carbon/carbon_quirk_holder = quirk_holder
 
-	if(DT_PROB(2, delta_time))
-		quirk_holder.hallucination += rand(10, 25)
+	// Setup our special RDS mild hallucination.
+	// Not a unique subtype so not to plague subtypesof,
+	// also as we inherit the names and values from our quirk.
+	var/datum/brain_trauma/mild/hallucinations/added_trauma = new()
+	added_trauma.resilience = TRAUMA_RESILIENCE_ABSOLUTE
+	added_trauma.name = name
+	added_trauma.desc = medical_record_text
+	added_trauma.scan_desc = lowertext(name)
+	added_trauma.gain_text = null
+	added_trauma.lose_text = null
 
-/datum/quirk/insanity/post_add() //I don't /think/ we'll need this but for newbies who think "roleplay as insane" = "license to kill" it's probably a good thing to have
+	carbon_quirk_holder.gain_trauma(added_trauma)
+
+/datum/quirk/insanity/post_add()
 	if(!quirk_holder.mind || quirk_holder.mind.special_role)
 		return
-	to_chat(quirk_holder, "<span class='big bold info'>Please note that your dissociation syndrome does NOT give you the right to attack people or otherwise cause any interference to \
-	the round. You are not an antagonist, and the rules will treat you the same as other crew members.</span>")
+	// I don't /think/ we'll need this, but for newbies who think "roleplay as insane" = "license to kill",
+	// it's probably a good thing to have.
+	to_chat(quirk_holder, "<span class='big bold info'>Please note that your [lowertext(name)] does NOT give you the right to attack people or otherwise cause any interference to \
+		the round. You are not an antagonist, and the rules will treat you the same as other crewmembers.</span>")
 
 /datum/quirk/social_anxiety
 	name = "Social Anxiety"

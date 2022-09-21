@@ -257,24 +257,17 @@
 	// no supermatter soothers are nearby.
 	var/psy_coeff_diff = -0.05
 	for(var/mob/living/carbon/human/seen_by_sm in view(src, HALLUCINATION_RANGE(power)))
-		// Someone (generally a Psychologist), when looking at the SM
-		// within hallucination range makes it easier to manage.
+		// Someone (generally a Psychologist), when looking at the SM within hallucination range makes it easier to manage.
 		if(HAS_TRAIT(seen_by_sm, TRAIT_SUPERMATTER_SOOTHER) || (seen_by_sm.mind && HAS_TRAIT(seen_by_sm.mind, TRAIT_SUPERMATTER_SOOTHER)))
 			psy_coeff_diff = 0.05
 			psy_overlay = TRUE
 
-		// If they are immune to supermatter hallucinations.
-		if (HAS_TRAIT(seen_by_sm, TRAIT_MADNESS_IMMUNE) || (seen_by_sm.mind && HAS_TRAIT(seen_by_sm.mind, TRAIT_MADNESS_IMMUNE)))
-			continue
-
-		// Blind people don't get supermatter hallucinations.
-		if (seen_by_sm.is_blind())
-			continue
-
-		// Everyone else gets hallucinations.
-		var/dist = sqrt(1 / max(1, get_dist(seen_by_sm, src)))
-		seen_by_sm.hallucination += power * hallucination_power * dist
-		seen_by_sm.hallucination = clamp(seen_by_sm.hallucination, 0, 200)
+	visible_hallucination_pulse(
+		center = src,
+		radius = HALLUCINATION_RANGE(power),
+		hallucination_duration = power * hallucination_power,
+		hallucination_max_duration = 400 SECONDS,
+	)
 	psyCoeff = clamp(psyCoeff + psy_coeff_diff, 0, 1)
 
 /obj/machinery/power/supermatter_crystal/proc/handle_high_power(datum/gas_mixture/removed)

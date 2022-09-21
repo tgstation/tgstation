@@ -37,8 +37,6 @@
 		icon_state = poster_structure.poster_item_icon_state
 
 		name = "[name] - [poster_structure.original_name]"
-		//If the poster structure is being deleted something has gone wrong, kill yourself off too
-		RegisterSignal(poster_structure, COMSIG_PARENT_QDELETING, .proc/react_to_deletion)
 
 /obj/item/poster/attackby(obj/item/I, mob/user, params)
 	if(!istype(I, /obj/item/shard))
@@ -54,13 +52,21 @@
 	poster_structure.trap = WEAKREF(I)
 	to_chat(user, span_notice("You conceal the [I.name] inside the rolled up poster."))
 
-/obj/item/poster/Destroy()
-	poster_structure = null
+/obj/item/poster/Exited(atom/movable/gone, direction)
 	. = ..()
+	if(gone == poster_structure)
+		poster_structure = null
+		if(!QDELING(src))
+			qdel(src) //we're now a poster, huzzah!
 
-/obj/item/poster/proc/react_to_deletion()
-	SIGNAL_HANDLER
-	qdel(src)
+/obj/item/poster/handle_atom_del(atom/deleting_atom)
+	if(deleting_atom == poster_structure)
+		poster_structure.moveToNullspace() //get it the fuck out of us since atom/destroy qdels contents and it'll cause a qdel loop
+	return ..()
+
+/obj/item/poster/Destroy(force)
+	QDEL_NULL(poster_structure)
+	return ..()
 
 // These icon_states may be overridden, but are for mapper's convinence
 /obj/item/poster/random_contraband
@@ -221,8 +227,7 @@
 
 	var/temp_loc = get_turf(user)
 	flick("poster_being_set",D)
-	D.forceMove(src)
-	qdel(P) //delete it now to cut down on sanity checks afterwards. Agouri's code supports rerolling it anyway
+	D.forceMove(src) //deletion of the poster is handled in poster/Exited(), so don't have to worry about P anymore.
 	playsound(D.loc, 'sound/items/poster_being_created.ogg', 100, TRUE)
 
 	if(do_after(user, PLACE_SPEED, target=src))

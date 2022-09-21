@@ -1,7 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "Delta: Engineering, Library Backroom, and Security Hall APCs are wired"
-  - bugfix: "Delta: Armory camera is no longer on a windoor, and outside armory camera is back"
-  - bugfix: "Delta: Genetics has a corrected clothes vendor"
-  - qol: "Delta: Moved the engineering fax machine to a less in-the-way-place (break room)"

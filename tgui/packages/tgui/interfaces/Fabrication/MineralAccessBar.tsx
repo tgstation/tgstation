@@ -1,8 +1,8 @@
 import { sortBy } from 'common/collections';
 import { useLocalState } from '../../backend';
-import { Flex, Button, Stack } from '../../components';
+import { Flex, Button, Stack, AnimatedNumber } from '../../components';
+import { formatSiUnit } from '../../format';
 import { Material, MaterialIcon } from '../common/Materials';
-import { AnimatedQuantityLabel } from './AnimatedQuantityLabel';
 import { MaterialName } from './Types';
 
 // by popular demand of discord people (who are always right and never wrong)
@@ -32,6 +32,11 @@ export type MineralAccessBarProps = {
    */
   onEjectRequested?: (material: Material, quantity: number) => void;
 };
+
+/**
+ * The formatting function applied to the quantity labels in the bar.
+ */
+const LABEL_FORMAT = (value: number) => formatSiUnit(value, 0);
 
 /**
  * A bottom-docked bar for viewing and ejecting materials from local storage or
@@ -87,7 +92,7 @@ const MineralCounter = (props: MineralCounterProps, context) => {
             <MaterialIcon material={material.name} />
           </Flex.Item>
           <Flex.Item>
-            <AnimatedQuantityLabel targetValue={material.amount} />
+            <AnimatedNumber value={material.amount} format={LABEL_FORMAT} />
           </Flex.Item>
         </Flex>
         {hovering && (

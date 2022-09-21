@@ -31,6 +31,14 @@
 /obj/effect/turf_decal/bot_red,
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
+"bp" = (
+/obj/machinery/computer/monitor{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/side{
+	dir = 8
+	},
+/area/shuttle/pirate)
 "bH" = (
 /obj/machinery/airalarm/all_access{
 	dir = 4;
@@ -186,34 +194,6 @@
 "je" = (
 /turf/template_noop,
 /area/template_noop)
-"jm" = (
-/obj/machinery/door/airlock/external/glass/ruin{
-	id_tag = "piratestarboardexternal"
-	},
-/obj/docking_port/stationary{
-	dir = 4;
-	dwidth = 13;
-	height = 3;
-	id = "pirateship_home";
-	name = "Deep Space";
-	width = 26
-	},
-/obj/docking_port/mobile/pirate{
-	dir = 4;
-	dwidth = 13;
-	height = 3;
-	launch_status = 0;
-	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
-	name = "Silverscale Cruiser";
-	preferred_direction = 4;
-	width = 26
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/obj/effect/mapping_helpers/airlock/cutaiwire,
-/turf/open/floor/pod/light,
-/area/shuttle/pirate)
 "jG" = (
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 9
@@ -291,14 +271,6 @@
 	dir = 5
 	},
 /turf/open/floor/carpet/royalblack,
-/area/shuttle/pirate)
-"nh" = (
-/obj/machinery/computer/monitor{
-	dir = 8
-	},
-/turf/open/floor/iron/dark/side{
-	dir = 8
-	},
 /area/shuttle/pirate)
 "nm" = (
 /obj/structure/shuttle/engine/propulsion{
@@ -535,6 +507,34 @@
 	},
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/pod/dark,
+/area/shuttle/pirate)
+"Bl" = (
+/obj/machinery/door/airlock/external/glass/ruin{
+	id_tag = "piratestarboardexternal"
+	},
+/obj/docking_port/stationary{
+	dir = 4;
+	dwidth = 13;
+	height = 3;
+	shuttle_id = "pirate_home";
+	name = "Deep Space";
+	width = 26
+	},
+/obj/docking_port/mobile/pirate{
+	dir = 4;
+	dwidth = 13;
+	height = 3;
+	launch_status = 0;
+	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
+	name = "Silverscale Cruiser";
+	preferred_direction = 4;
+	width = 26
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/turf/open/floor/pod/light,
 /area/shuttle/pirate)
 "Ch" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
@@ -1028,7 +1028,7 @@ jG
 Gr
 Gr
 rB
-jm
+Bl
 rB
 je
 je
@@ -1271,7 +1271,7 @@ rB
 HD
 Mo
 fj
-nh
+bp
 HD
 rB
 rB

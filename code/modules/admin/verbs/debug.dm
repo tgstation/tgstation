@@ -717,6 +717,13 @@
 	else
 		to_chat(src, span_warning("Failed to place [template.name]."), confidential = TRUE)
 
+/client/proc/unload_ctf()
+	set category = "Debug"
+	set name = "Unload CTF"
+	set desc = "Despawns the majority of CTF"
+
+	toggle_id_ctf(usr, unload=TRUE)
+
 /client/proc/run_empty_query(val as num)
 	set category = "Debug"
 	set name = "Run empty query"

@@ -347,6 +347,36 @@
 		taker.add_mood_event("high_five", /datum/mood_event/high_five)
 	qdel(src)
 
+/obj/item/hand_item/stealer
+	name = "steal"
+	desc = "Your filthy little fingers are ready to commit crimes."
+	icon_state = "latexballon"
+	inhand_icon_state = "nothing"
+	attack_verb_continuous = list("steals")
+	attack_verb_simple = list("steal")
+
+/obj/item/hand_item/stealer/attack(mob/living/target_mob, mob/living/user, params)
+	. = ..()
+	if (!ishuman(target_mob))
+		return
+	var/mob/living/carbon/human/target_human = target_mob
+	if (!target_human.shoes)
+		return
+	if (user.body_position != LYING_DOWN)
+		return
+	var/obj/item/item_to_strip = target_human.shoes
+	user.visible_message(span_warning("[user] starts stealing [target_human]'s [item_to_strip.name]!"), \
+		span_danger("You start stealing [target_human]'s [item_to_strip.name]..."))
+	to_chat(target_human, span_userdanger("[user] starts stealing your [item_to_strip.name]!"))
+	if (!do_after(user, item_to_strip.strip_delay, target_human))
+		return
+	if(!target_human.dropItemToGround(item_to_strip))
+		return
+	user.put_in_hands(item_to_strip)
+	user.visible_message(span_warning("[user] stole [target_human]'s [item_to_strip.name]!"), \
+		span_notice("You stole [target_human]'s [item_to_strip.name]!"))
+	to_chat(target_human, span_userdanger("[user] stole your [item_to_strip.name]!"))
+
 /obj/item/hand_item/kisser
 	name = "kiss"
 	desc = "I want you all to know, everyone and anyone, to seal it with a kiss."

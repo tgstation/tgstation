@@ -109,8 +109,8 @@
 		else if(deconstruction == BLASTDOOR_NEEDS_WIRES)
 			. += span_notice("The <i>wires</i> have been removed and it's ready to be <b>sliced apart</b>.")
 
-/obj/machinery/door/poddoor/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
-	id = "[port.id]_[id]"
+/obj/machinery/door/poddoor/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
+	id = "[port.shuttle_id]_[id]"
 
 //"BLAST" doors are obviously stronger than regular doors when it comes to BLASTS.
 /obj/machinery/door/poddoor/ex_act(severity, target)

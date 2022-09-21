@@ -71,7 +71,7 @@ Idle Behavior is very similar, datum that decides what the AI should do when it 
 
 ### AI Traits 
 
-AI traits are flags you can set to modify generic idle and movement behavior. In this case, we want farm animals to be able to be coralled, so we're going to add the `STOP_MOVING_WHEN_PULLED` flag.
+AI traits are flags you can set to modify generic idle and movement behavior. In this case, we want farm animals to be able to be corralled, so we're going to add the `STOP_MOVING_WHEN_PULLED` flag.
 
 ```dm
 /datum/ai_controller/basic_controller/cow

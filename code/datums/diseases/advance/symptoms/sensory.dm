@@ -57,7 +57,8 @@
 			M.reagents.remove_reagent(/datum/reagent/toxin/mindbreaker, 5)
 		if(M.reagents.has_reagent(/datum/reagent/toxin/histamine))
 			M.reagents.remove_reagent(/datum/reagent/toxin/histamine, 5)
-		M.hallucination = max(0, M.hallucination - 10)
+
+		M.adjust_hallucinations(-20 SECONDS)
 
 	if(A.stage >= 5)
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -3)
