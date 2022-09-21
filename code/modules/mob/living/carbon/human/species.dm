@@ -425,7 +425,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/worn_items_fit_body_check(mob/living/carbon/wearer)
 	for(var/obj/item/equipped_item in wearer.get_all_worn_items())
 		var/equipped_item_slot = wearer.get_slot_by_item(equipped_item)
-		if(!can_equip(equipped_item, equipped_item_slot, H = wearer,  bypass_equip_delay_self = TRUE, ignore_equipped = TRUE))
+		if(!equipped_item.mob_can_equip(wearer, equipped_item_slot, bypass_equip_delay_self = TRUE, ignore_equipped = TRUE))
 			wearer.dropItemToGround(equipped_item)
 
 /**
