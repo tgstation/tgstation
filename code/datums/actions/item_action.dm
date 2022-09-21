@@ -8,12 +8,12 @@
 	. = ..()
 
 	// If our button state is null, use the target's icon instead
-	if(isnull(button_icon_state))
+	if(target && isnull(button_icon_state))
 		AddComponent(/datum/component/action_item_overlay, target)
 
 /datum/action/item_action/vv_edit_var(var_name, var_value)
 	. = ..()
-	if(!.)
+	if(!. || !target)
 		return
 
 	if(var_name == NAMEOF(src, button_icon_state))
