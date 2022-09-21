@@ -21,7 +21,7 @@
 /area/station/maintenance/starboard/greater)
 "m" = (
 /obj/item/shovel,
-/obj/item/clothing/head/hardhat,
+/obj/item/clothing/head/utility/hardhat,
 /turf/open/misc/asteroid,
 /area/station/maintenance/starboard/greater)
 "p" = (

@@ -124,7 +124,7 @@
 	name = "Birthday of Space Station 13"
 	begin_day = 16
 	begin_month = FEBRUARY
-	drone_hat = /obj/item/clothing/head/festive
+	drone_hat = /obj/item/clothing/head/costume/festive
 
 /datum/holiday/birthday/greet()
 	var/game_age = text2num(time2text(world.timeofday, "YYYY")) - 2003
@@ -251,7 +251,7 @@
 	name = "Labor Day"
 	begin_day = 1
 	begin_month = MAY
-	drone_hat = /obj/item/clothing/head/hardhat
+	drone_hat = /obj/item/clothing/head/utility/hardhat
 	mail_holiday = TRUE
 
 //Draconic Day is celebrated on May 3rd, the date on which the Draconic language was merged (#26780)
@@ -270,7 +270,7 @@
 	name = "Firefighter's Day"
 	begin_day = 4
 	begin_month = MAY
-	drone_hat = /obj/item/clothing/head/hardhat/red
+	drone_hat = /obj/item/clothing/head/utility/hardhat/red
 
 /datum/holiday/firefighter/getStationPrefix()
 	return pick("Burning","Blazing","Plasma","Fire")
@@ -339,7 +339,7 @@
 	name = "Doctor's Day"
 	begin_day = 1
 	begin_month = JULY
-	drone_hat = /obj/item/clothing/head/nursehat
+	drone_hat = /obj/item/clothing/head/costume/nursehat
 
 /datum/holiday/ufo
 	name = "UFO Day"
@@ -455,7 +455,7 @@
 	name = "Talk-Like-a-Pirate Day"
 	begin_day = 19
 	begin_month = SEPTEMBER
-	drone_hat = /obj/item/clothing/head/pirate
+	drone_hat = /obj/item/clothing/head/costume/pirate
 
 /datum/holiday/pirate/greet()
 	return "Ye be talkin' like a pirate today or else ye'r walkin' tha plank, matey!"
@@ -485,13 +485,13 @@
 	name = "Smiling Day"
 	begin_day = 7
 	begin_month = OCTOBER
-	drone_hat = /obj/item/clothing/head/papersack/smiley
+	drone_hat = /obj/item/clothing/head/costume/papersack/smiley
 
 /datum/holiday/boss
 	name = "Boss' Day"
 	begin_day = 16
 	begin_month = OCTOBER
-	drone_hat = /obj/item/clothing/head/that
+	drone_hat = /obj/item/clothing/head/hats/tophat
 
 /datum/holiday/un_day
 	name = "Anniversary of the Foundation of the United Nations"
@@ -591,7 +591,7 @@
 	begin_day = 1
 	begin_month = DECEMBER
 	end_day = 31
-	drone_hat = /obj/item/clothing/head/santa
+	drone_hat = /obj/item/clothing/head/costume/santa
 
 /datum/holiday/festive_season/greet()
 	return "Have a nice festive season!"
@@ -618,7 +618,7 @@
 	begin_day = 23
 	begin_month = DECEMBER
 	end_day = 27
-	drone_hat = /obj/item/clothing/head/santa
+	drone_hat = /obj/item/clothing/head/costume/santa
 	mail_holiday = TRUE
 
 /datum/holiday/xmas/greet()
@@ -635,7 +635,7 @@
 	begin_month = DECEMBER
 	end_day = 2
 	end_month = JANUARY
-	drone_hat = /obj/item/clothing/head/festive
+	drone_hat = /obj/item/clothing/head/costume/festive
 	mail_holiday = TRUE
 
 /datum/holiday/new_year/getStationPrefix()
@@ -734,7 +734,7 @@
 	GLOB.maintenance_loot += list(
 		list(
 			/obj/item/toy/xmas_cracker = 3,
-			/obj/item/clothing/head/santa = 1,
+			/obj/item/clothing/head/costume/santa = 1,
 			/obj/item/a_gift/anything = 1
 		) = maint_holiday_weight,
 	)
@@ -751,7 +751,7 @@
 
 /datum/holiday/easter
 	name = EASTER
-	drone_hat = /obj/item/clothing/head/rabbitears
+	drone_hat = /obj/item/clothing/head/costume/rabbitears
 	var/const/days_early = 1 //to make editing the holiday easier
 	var/const/days_extra = 1
 

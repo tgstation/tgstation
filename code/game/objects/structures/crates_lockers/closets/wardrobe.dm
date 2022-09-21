@@ -42,7 +42,7 @@
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/shoes/sneakers/black(src)
 	for(var/i in 1 to 3)
-		new /obj/item/clothing/head/that(src)
+		new /obj/item/clothing/head/hats/tophat(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/head/soft/black(src)
 	new /obj/item/clothing/mask/bandana/black(src)

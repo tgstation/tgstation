@@ -3731,7 +3731,7 @@
 /turf/open/floor/plating/snowed/smoothed,
 /area/awaymission/snowdin/outside)
 "kt" = (
-/obj/item/clothing/head/santa,
+/obj/item/clothing/head/costume/santa,
 /turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "ku" = (
@@ -5884,7 +5884,7 @@
 /area/awaymission/snowdin/post/engineering)
 "qd" = (
 /obj/structure/reagent_dispensers/fueltank,
-/obj/item/clothing/head/welding,
+/obj/item/clothing/head/utility/welding,
 /obj/item/weldingtool/largetank,
 /obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible{
@@ -9600,7 +9600,7 @@
 /area/awaymission/snowdin/post/mining_main/robotics)
 "Gy" = (
 /obj/structure/table,
-/obj/item/clothing/head/welding{
+/obj/item/clothing/head/utility/welding{
 	pixel_x = -3;
 	pixel_y = 5
 	},
@@ -9671,7 +9671,7 @@
 /obj/structure/statue/snow/snowman{
 	anchored = 1
 	},
-/obj/item/clothing/head/bowler{
+/obj/item/clothing/head/hats/bowler{
 	pixel_y = 13
 	},
 /turf/open/misc/asteroid/snow,
@@ -12381,7 +12381,7 @@
 /obj/structure/statue/snow/snowman{
 	name = "Snow-Luc Price"
 	},
-/obj/item/clothing/head/hos{
+/obj/item/clothing/head/hats/hos{
 	pixel_y = 10
 	},
 /turf/open/misc/asteroid/snow,

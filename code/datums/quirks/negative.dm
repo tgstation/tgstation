@@ -884,7 +884,7 @@
 	if(istype(possible_saint_nick.back, /obj/item/storage/backpack/santabag))
 		return TRUE
 
-	if(istype(possible_saint_nick.head, /obj/item/clothing/head/santa))
+	if(istype(possible_saint_nick.head, /obj/item/clothing/head/costume/santa))
 		return TRUE
 
 	if(istype(possible_saint_nick.wear_suit, /obj/item/clothing/suit/space/santa))

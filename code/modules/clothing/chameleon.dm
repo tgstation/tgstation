@@ -496,8 +496,8 @@
 /obj/item/clothing/head/chameleon
 	name = "grey cap"
 	desc = "It's a baseball hat in a tasteful grey colour."
+	icon = 'icons/obj/clothing/head/hats.dmi'
 	icon_state = "greysoft"
-
 	resistance_flags = NONE
 	armor = list(MELEE = 5, BULLET = 5, LASER = 5, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 50)
 

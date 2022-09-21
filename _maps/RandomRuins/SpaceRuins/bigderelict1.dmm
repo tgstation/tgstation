@@ -195,7 +195,7 @@
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "aQ" = (
 /obj/structure/closet/crate/radiation,
-/obj/item/clothing/head/radiation,
+/obj/item/clothing/head/utility/radiation,
 /obj/item/clothing/suit/utility/radiation,
 /obj/item/geiger_counter,
 /turf/open/floor/mineral/titanium/yellow,

@@ -1,4 +1,4 @@
-/obj/item/clothing/head/foilhat
+/obj/item/clothing/head/costume/foilhat
 	name = "tinfoil hat"
 	desc = "Thought control rays, psychotronic scanning. Don't mind that, I'm protected cause I made this hat."
 	icon_state = "foilhat"
@@ -9,7 +9,7 @@
 	var/datum/brain_trauma/mild/phobia/conspiracies/paranoia
 	var/warped = FALSE
 
-/obj/item/clothing/head/foilhat/Initialize(mapload)
+/obj/item/clothing/head/costume/foilhat/Initialize(mapload)
 	. = ..()
 	if(!warped)
 		AddComponent(/datum/component/anti_magic, \
@@ -22,7 +22,7 @@
 	else
 		warp_up()
 
-/obj/item/clothing/head/foilhat/equipped(mob/living/carbon/human/user, slot)
+/obj/item/clothing/head/costume/foilhat/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
 	if(slot != ITEM_SLOT_HEAD || warped)
 		return
@@ -35,7 +35,7 @@
 	user.gain_trauma(paranoia, TRAUMA_RESILIENCE_MAGIC)
 	to_chat(user, span_warning("As you don the foiled hat, an entire world of conspiracy theories and seemingly insane ideas suddenly rush into your mind. What you once thought unbelievable suddenly seems.. undeniable. Everything is connected and nothing happens just by accident. You know too much and now they're out to get you. "))
 
-/obj/item/clothing/head/foilhat/MouseDrop(atom/over_object)
+/obj/item/clothing/head/costume/foilhat/MouseDrop(atom/over_object)
 	//God Im sorry
 	if(!warped && iscarbon(usr))
 		var/mob/living/carbon/C = usr
@@ -44,17 +44,17 @@
 			return
 	return ..()
 
-/obj/item/clothing/head/foilhat/dropped(mob/user)
+/obj/item/clothing/head/costume/foilhat/dropped(mob/user)
 	. = ..()
 	if(paranoia)
 		QDEL_NULL(paranoia)
 	UnregisterSignal(user, COMSIG_HUMAN_SUICIDE_ACT)
 
 /// When the foilhat is drained an anti-magic charge.
-/obj/item/clothing/head/foilhat/proc/drain_antimagic(mob/user)
+/obj/item/clothing/head/costume/foilhat/proc/drain_antimagic(mob/user)
 	to_chat(user, span_warning("[src] crumples slightly. Something is trying to get inside your mind!"))
 
-/obj/item/clothing/head/foilhat/proc/warp_up()
+/obj/item/clothing/head/costume/foilhat/proc/warp_up()
 	name = "scorched tinfoil hat"
 	desc = "A badly warped up hat. Quite unprobable this will still work against any of fictional and contemporary dangers it used to."
 	warped = TRUE
@@ -69,7 +69,7 @@
 	if(target.stat < UNCONSCIOUS)
 		to_chat(target, span_warning("Your zealous conspirationism rapidly dissipates as the donned hat warps up into a ruined mess. All those theories starting to sound like nothing but a ridicolous fanfare."))
 
-/obj/item/clothing/head/foilhat/attack_hand(mob/user, list/modifiers)
+/obj/item/clothing/head/costume/foilhat/attack_hand(mob/user, list/modifiers)
 	if(!warped && iscarbon(user))
 		var/mob/living/carbon/wearer = user
 		if(src == wearer.head)
@@ -77,17 +77,17 @@
 			return
 	return ..()
 
-/obj/item/clothing/head/foilhat/microwave_act(obj/machinery/microwave/M)
+/obj/item/clothing/head/costume/foilhat/microwave_act(obj/machinery/microwave/M)
 	. = ..()
 	if(!warped)
 		warp_up()
 
-/obj/item/clothing/head/foilhat/proc/call_suicide(datum/source)
+/obj/item/clothing/head/costume/foilhat/proc/call_suicide(datum/source)
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, .proc/suicide_act, source) //SIGNAL_HANDLER doesn't like things waiting; INVOKE_ASYNC bypasses that
 	return OXYLOSS
 
-/obj/item/clothing/head/foilhat/suicide_act(mob/living/user)
+/obj/item/clothing/head/costume/foilhat/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] gets a crazed look in [user.p_their()] eyes! [capitalize(user.p_they())] [user.p_have()] witnessed the truth, and try to commit suicide!"))
 	var/static/list/conspiracy_line = list(
 		";THEY'RE HIDING CAMERAS IN THE CEILINGS! THEY WITNESS EVERYTHING WE DO!!",

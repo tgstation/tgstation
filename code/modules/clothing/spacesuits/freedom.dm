@@ -1,6 +1,7 @@
 /obj/item/clothing/head/helmet/space/freedom
 	name = "eagle helmet"
 	desc = "An advanced, space-proof helmet. It appears to be modeled after an old-world eagle."
+	icon = 'icons/obj/clothing/head/costume.dmi'
 	icon_state = "griffinhat"
 	inhand_icon_state = "griffinhat"
 	armor = list(MELEE = 20, BULLET = 40, LASER = 30, ENERGY = 40, BOMB = 100, BIO = 100, FIRE = 80, ACID = 80)

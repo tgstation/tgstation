@@ -11397,7 +11397,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/item/clothing/head/festive{
+/obj/item/clothing/head/costume/festive{
 	pixel_x = -4;
 	pixel_y = 6
 	},
@@ -13630,7 +13630,7 @@
 "Oe" = (
 /obj/structure/closet/crate/bin,
 /obj/item/clothing/suit/costume/xenos,
-/obj/item/clothing/head/xenos,
+/obj/item/clothing/head/costume/xenos,
 /obj/item/xenos_claw,
 /obj/item/grown/log/bamboo,
 /obj/item/grown/log/bamboo,
@@ -16565,7 +16565,7 @@
 /obj/structure/rack,
 /obj/item/storage/box/donkpockets,
 /obj/item/storage/box/donkpockets,
-/obj/item/clothing/head/chefhat,
+/obj/item/clothing/head/utility/chefhat,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/status_display/evac/directional/west,
 /turf/open/floor/iron/dark,

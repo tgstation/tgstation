@@ -1,6 +1,7 @@
-/obj/item/clothing/head/hardhat/cakehat
+/obj/item/clothing/head/utility/hardhat/cakehat
 	name = "cakehat"
 	desc = "You put the cake on your head. Brilliant."
+	icon = 'icons/obj/clothing/head/costume.dmi'
 	icon_state = "hardhat0_cakehat"
 	inhand_icon_state = "hardhat0_cakehat"
 	hat_type = "cakehat"
@@ -21,7 +22,7 @@
 
 	dog_fashion = /datum/dog_fashion/head
 
-/obj/item/clothing/head/hardhat/cakehat/process()
+/obj/item/clothing/head/utility/hardhat/cakehat/process()
 	var/turf/location = src.loc
 	if(ishuman(location))
 		var/mob/living/carbon/human/wearer = location
@@ -31,7 +32,7 @@
 	if(isturf(location))
 		location.hotspot_expose(700, 1)
 
-/obj/item/clothing/head/hardhat/cakehat/turn_on(mob/living/user)
+/obj/item/clothing/head/utility/hardhat/cakehat/turn_on(mob/living/user)
 	..()
 	force = force_on
 	throwforce = throwforce_on
@@ -39,7 +40,7 @@
 	hitsound = hitsound_on
 	START_PROCESSING(SSobj, src)
 
-/obj/item/clothing/head/hardhat/cakehat/turn_off(mob/living/user)
+/obj/item/clothing/head/utility/hardhat/cakehat/turn_off(mob/living/user)
 	..()
 	force = 0
 	throwforce = 0
@@ -47,10 +48,10 @@
 	hitsound = hitsound_off
 	STOP_PROCESSING(SSobj, src)
 
-/obj/item/clothing/head/hardhat/cakehat/get_temperature()
+/obj/item/clothing/head/utility/hardhat/cakehat/get_temperature()
 	return on * heat
 
-/obj/item/clothing/head/hardhat/cakehat/energycake
+/obj/item/clothing/head/utility/hardhat/cakehat/energycake
 	name = "energy cake"
 	desc = "You put the energy sword on your cake. Brilliant."
 	icon_state = "hardhat0_energycake"
@@ -64,12 +65,12 @@
 	light_range = 3 //ditto
 	heat = 0
 
-/obj/item/clothing/head/hardhat/cakehat/energycake/turn_on(mob/living/user)
+/obj/item/clothing/head/utility/hardhat/cakehat/energycake/turn_on(mob/living/user)
 	playsound(user, 'sound/weapons/saberon.ogg', 5, TRUE)
 	to_chat(user, span_warning("You turn on \the [src]."))
 	..()
 
-/obj/item/clothing/head/hardhat/cakehat/energycake/turn_off(mob/living/user)
+/obj/item/clothing/head/utility/hardhat/cakehat/energycake/turn_off(mob/living/user)
 	playsound(user, 'sound/weapons/saberoff.ogg', 5, TRUE)
 	to_chat(user, span_warning("You turn off \the [src]."))
 	..()

@@ -63,7 +63,7 @@
 		)
 	belt = /obj/item/modular_computer/tablet/pda/heads/cmo
 	ears = /obj/item/radio/headset/heads/cmo
-	head = /obj/item/clothing/head/surgerycap/cmo
+	head = /obj/item/clothing/head/utility/surgerycap/cmo
 	shoes = /obj/item/clothing/shoes/sneakers/blue
 	l_pocket = /obj/item/pinpointer/crew
 	l_hand = /obj/item/storage/medkit/surgery

@@ -1,6 +1,6 @@
 /obj/item/clothing/head
 	name = BODY_ZONE_HEAD
-	icon = 'icons/obj/clothing/hats.dmi'
+	icon = 'icons/obj/clothing/head/default.dmi'
 	lefthand_file = 'icons/mob/inhands/clothing/hats_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing/hats_righthand.dmi'
 	body_parts_covered = HEAD

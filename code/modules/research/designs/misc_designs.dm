@@ -93,7 +93,7 @@
 	id = "bright_helmet"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 4000, /datum/material/glass = 1000, /datum/material/plastic = 3000, /datum/material/silver = 500)
-	build_path = /obj/item/clothing/head/hardhat/red/upgraded
+	build_path = /obj/item/clothing/head/utility/hardhat/red/upgraded
 	category = list(RND_CATEGORY_EQUIPMENT)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SECURITY | DEPARTMENT_BITFLAG_CARGO
 

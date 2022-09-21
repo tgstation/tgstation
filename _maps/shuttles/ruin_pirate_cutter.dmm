@@ -10,7 +10,7 @@
 /obj/item/clothing/suit/costume/pirate,
 /obj/item/clothing/under/costume/pirate,
 /obj/item/clothing/shoes/jackboots,
-/obj/item/clothing/head/bandana,
+/obj/item/clothing/head/costume/pirate/bandana,
 /turf/open/floor/iron/dark/side{
 	dir = 5
 	},
@@ -243,7 +243,7 @@
 /obj/item/clothing/suit/costume/pirate,
 /obj/item/clothing/under/costume/pirate,
 /obj/item/clothing/shoes/jackboots,
-/obj/item/clothing/head/bandana,
+/obj/item/clothing/head/costume/pirate/bandana,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},

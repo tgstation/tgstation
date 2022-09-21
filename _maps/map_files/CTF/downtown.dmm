@@ -1538,7 +1538,7 @@
 /obj/structure/rack{
 	resistance_flags = 64
 	},
-/obj/item/clothing/head/hardhat/dblue{
+/obj/item/clothing/head/utility/hardhat/dblue{
 	name = "blue hardhat"
 	},
 /turf/open/floor/carpet/blue,
@@ -1739,7 +1739,7 @@
 /obj/structure/rack{
 	resistance_flags = 64
 	},
-/obj/item/clothing/head/hardhat/red,
+/obj/item/clothing/head/utility/hardhat/red,
 /turf/open/floor/carpet/red,
 /area/centcom/ctf)
 "JM" = (

@@ -58,11 +58,11 @@
 		/obj/item/clothing/suit/hooded/wintercoat/medical/paramedic = 4,
 		/obj/item/clothing/under/rank/medical/paramedic = 4,
 		/obj/item/clothing/under/rank/medical/paramedic/skirt = 4,
-		/obj/item/clothing/head/nursehat = 4,
+		/obj/item/clothing/head/costume/nursehat = 4,
 		/obj/item/clothing/head/beret/medical = 4,
-		/obj/item/clothing/head/surgerycap = 4,
-		/obj/item/clothing/head/surgerycap/purple = 4,
-		/obj/item/clothing/head/surgerycap/green = 4,
+		/obj/item/clothing/head/utility/surgerycap = 4,
+		/obj/item/clothing/head/utility/surgerycap/purple = 4,
+		/obj/item/clothing/head/utility/surgerycap/green = 4,
 		/obj/item/clothing/mask/bandana/striped/medical = 4,
 		/obj/item/clothing/under/rank/medical/doctor = 4,
 		/obj/item/clothing/under/rank/medical/doctor/skirt = 4,
@@ -103,8 +103,8 @@
 		/obj/item/clothing/shoes/workboots = 3,
 		/obj/item/clothing/head/beret/engi = 3,
 		/obj/item/clothing/mask/bandana/striped/engineering = 3,
-		/obj/item/clothing/head/hardhat = 3,
-		/obj/item/clothing/head/hardhat/weldhat = 3,
+		/obj/item/clothing/head/utility/hardhat = 3,
+		/obj/item/clothing/head/utility/hardhat/weldhat = 3,
 		)
 	refill_canister = /obj/item/vending_refill/wardrobe/engi_wardrobe
 	payment_department = ACCOUNT_ENG
@@ -157,7 +157,7 @@
 	)
 	premium = list(
 		/obj/item/clothing/under/rank/cargo/miner = 3,
-		/obj/item/clothing/head/mailman = 1,
+		/obj/item/clothing/head/costume/mailman = 1,
 		/obj/item/clothing/under/misc/mailman = 1,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/cargo_wardrobe
@@ -283,7 +283,7 @@
 	product_ads = "Guaranteed to prevent stains from spilled drinks!"
 	vend_reply = "Thank you for using the BarDrobe!"
 	products = list(
-		/obj/item/clothing/head/that = 2,
+		/obj/item/clothing/head/hats/tophat = 2,
 		/obj/item/radio/headset/headset_srv = 2,
 		/obj/item/clothing/under/suit/sl = 2,
 		/obj/item/clothing/under/rank/civilian/bartender = 2,
@@ -329,7 +329,7 @@
 		/obj/item/clothing/suit/toggle/chef = 1,
 		/obj/item/clothing/under/rank/civilian/chef = 1,
 		/obj/item/clothing/under/rank/civilian/chef/skirt = 2,
-		/obj/item/clothing/head/chefhat = 1,
+		/obj/item/clothing/head/utility/chefhat = 1,
 		/obj/item/clothing/under/rank/civilian/cookjorts = 2,
 		/obj/item/clothing/shoes/cookflops = 2,
 		/obj/item/reagent_containers/cup/rag = 1,
@@ -425,27 +425,27 @@
 		/obj/item/clothing/under/rank/civilian/chaplain/skirt = 2,
 		/obj/item/clothing/shoes/sneakers/black = 1,
 		/obj/item/clothing/suit/chaplainsuit/nun = 1,
-		/obj/item/clothing/head/nun_hood = 1,
+		/obj/item/clothing/head/chaplain/nun_hood = 1,
 		/obj/item/clothing/suit/chaplainsuit/holidaypriest = 1,
 		/obj/item/clothing/suit/hooded/chaplainsuit/monkhabit = 1,
 		/obj/item/storage/fancy/candle_box = 2,
-		/obj/item/clothing/head/kippah = 3,
+		/obj/item/clothing/head/chaplain/kippah = 3,
 		/obj/item/clothing/suit/chaplainsuit/whiterobe = 1,
-		/obj/item/clothing/head/taqiyahwhite = 1,
-		/obj/item/clothing/head/taqiyahred = 3,
+		/obj/item/clothing/head/chaplain/taqiyah/white = 1,
+		/obj/item/clothing/head/chaplain/taqiyah/red = 3,
 		/obj/item/clothing/suit/chaplainsuit/monkrobeeast = 1,
 		/obj/item/clothing/head/rasta = 1,
 		)
 	contraband = list(
 		/obj/item/toy/plush/ratplush = 1,
 		/obj/item/toy/plush/narplush = 1,
-		/obj/item/clothing/head/medievaljewhat = 3,
+		/obj/item/clothing/head/chaplain/medievaljewhat = 3,
 		/obj/item/clothing/suit/chaplainsuit/clownpriest = 1,
-		/obj/item/clothing/head/clownmitre = 1,
+		/obj/item/clothing/head/chaplain/clownmitre = 1,
 		)
 	premium = list(
 		/obj/item/clothing/suit/chaplainsuit/bishoprobe = 1,
-		/obj/item/clothing/head/bishopmitre = 1,
+		/obj/item/clothing/head/chaplain/bishopmitre = 1,
 		)
 	refill_canister = /obj/item/vending_refill/wardrobe/chap_wardrobe
 	payment_department = ACCOUNT_SRV

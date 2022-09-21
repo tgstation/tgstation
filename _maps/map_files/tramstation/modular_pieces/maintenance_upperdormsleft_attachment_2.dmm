@@ -4,7 +4,7 @@
 /area/station/maintenance/port/aft)
 "c" = (
 /obj/effect/turf_decal/sand/plating,
-/obj/item/clothing/head/hardhat/weldhat/orange,
+/obj/item/clothing/head/utility/hardhat/weldhat/orange,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "f" = (

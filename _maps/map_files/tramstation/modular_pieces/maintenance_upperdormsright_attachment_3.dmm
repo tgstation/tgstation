@@ -129,7 +129,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/remains/human,
 /obj/item/storage/belt/utility/full/engi,
-/obj/item/clothing/head/hardhat,
+/obj/item/clothing/head/utility/hardhat,
 /obj/structure/spider/stickyweb,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/medical)

@@ -54,7 +54,7 @@
 "K" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/item/clothing/suit/hazardvest,
-/obj/item/clothing/head/hardhat/orange,
+/obj/item/clothing/head/utility/hardhat/orange,
 /turf/open/misc/asteroid,
 /area/station/maintenance/department/medical)
 "M" = (

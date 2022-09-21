@@ -65,7 +65,7 @@
 	uniform = /obj/item/clothing/under/rank/civilian/head_of_personnel
 	suit = /obj/item/clothing/suit/armor/vest/alt
 	shoes = /obj/item/clothing/shoes/sneakers/brown
-	head = /obj/item/clothing/head/hopcap
+	head = /obj/item/clothing/head/hats/hopcap
 	glasses = /obj/item/clothing/glasses/sunglasses
 
 /datum/outfit/mafia/hos
@@ -85,7 +85,7 @@
 	shoes = /obj/item/clothing/shoes/jackboots
 	suit = /obj/item/clothing/suit/armor/vest/warden/alt
 	gloves = /obj/item/clothing/gloves/color/black
-	head = /obj/item/clothing/head/warden
+	head = /obj/item/clothing/head/hats/warden
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 
 //mafia

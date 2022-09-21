@@ -333,6 +333,7 @@ Striking a noncultist, however, will tear their flesh."}
 
 /obj/item/clothing/head/hooded/cult_hoodie
 	name = "ancient cultist hood"
+	icon = 'icons/obj/clothing/head/helmet.dmi'
 	icon_state = "culthood"
 	desc = "A torn, dust-caked hood. Strange letters line the inside."
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEEARS
@@ -381,8 +382,7 @@ Striking a noncultist, however, will tear their flesh."}
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CULT_TRAIT)
 
-
-/obj/item/clothing/head/magus
+/obj/item/clothing/head/wizard/magus
 	name = "magus helm"
 	icon_state = "magus"
 	inhand_icon_state = "magus"

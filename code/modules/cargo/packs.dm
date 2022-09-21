@@ -141,7 +141,7 @@
 	name = "Explosive Emergency Crate"
 	desc = "Science gone bonkers? Beeping behind the airlock? Buy now and be the hero the station des... I mean needs! (time not included)"
 	cost = CARGO_CRATE_VALUE * 2
-	contains = list(/obj/item/clothing/head/bomb_hood,
+	contains = list(/obj/item/clothing/head/utility/bomb_hood,
 					/obj/item/clothing/suit/utility/bomb_suit,
 					/obj/item/clothing/mask/gas,
 					/obj/item/screwdriver,
@@ -163,8 +163,8 @@
 					/obj/item/tank/internals/oxygen/red,
 					/obj/item/extinguisher/advanced,
 					/obj/item/extinguisher/advanced,
-					/obj/item/clothing/head/hardhat/red,
-					/obj/item/clothing/head/hardhat/red)
+					/obj/item/clothing/head/utility/hardhat/red,
+					/obj/item/clothing/head/utility/hardhat/red)
 	crate_name = "firefighting crate"
 
 /datum/supply_pack/emergency/atmostank
@@ -232,8 +232,8 @@
 	name = "Radiation Protection Crate"
 	desc = "Survive the Nuclear Apocalypse and Supermatter Engine alike with two sets of Radiation suits. Each set contains a helmet, suit, and Geiger counter. We'll even throw in a bottle of vodka and some glasses too, considering the life-expectancy of people who order this."
 	cost = CARGO_CRATE_VALUE * 2
-	contains = list(/obj/item/clothing/head/radiation,
-					/obj/item/clothing/head/radiation,
+	contains = list(/obj/item/clothing/head/utility/radiation,
+					/obj/item/clothing/head/utility/radiation,
 					/obj/item/clothing/suit/utility/radiation,
 					/obj/item/clothing/suit/utility/radiation,
 					/obj/item/geiger_counter,
@@ -471,7 +471,7 @@
 	cost = CARGO_CRATE_VALUE * 2.2
 	contraband = TRUE
 	contains = list(/obj/item/clothing/under/rank/security/constable,
-					/obj/item/clothing/head/constable,
+					/obj/item/clothing/head/costume/constable,
 					/obj/item/clothing/gloves/color/white,
 					/obj/item/clothing/mask/whistle,
 					/obj/item/conversion_kit)
@@ -724,12 +724,12 @@
 					/obj/item/clothing/suit/hazardvest,
 					/obj/item/clothing/suit/hazardvest,
 					/obj/item/clothing/suit/hazardvest,
-					/obj/item/clothing/head/welding,
-					/obj/item/clothing/head/welding,
-					/obj/item/clothing/head/welding,
-					/obj/item/clothing/head/hardhat,
-					/obj/item/clothing/head/hardhat,
-					/obj/item/clothing/head/hardhat,
+					/obj/item/clothing/head/utility/welding,
+					/obj/item/clothing/head/utility/welding,
+					/obj/item/clothing/head/utility/welding,
+					/obj/item/clothing/head/utility/hardhat,
+					/obj/item/clothing/head/utility/hardhat,
+					/obj/item/clothing/head/utility/hardhat,
 					/obj/item/clothing/glasses/meson/engine,
 					/obj/item/clothing/glasses/meson/engine)
 	crate_name = "engineering gear crate"
@@ -1445,8 +1445,8 @@
 					/obj/item/storage/medkit,
 					/obj/item/healthanalyzer,
 					/obj/item/healthanalyzer,
-					/obj/item/clothing/head/hardhat/red,
-					/obj/item/clothing/head/hardhat/red,
+					/obj/item/clothing/head/utility/hardhat/red,
+					/obj/item/clothing/head/utility/hardhat/red,
 					/obj/item/storage/toolbox/mechanical,
 					/obj/item/storage/toolbox/mechanical,
 					/obj/item/bot_assembly/cleanbot,
@@ -1715,7 +1715,7 @@
 	contains = list(/obj/item/clothing/under/dress/wedding_dress,
 					/obj/item/clothing/under/suit/tuxedo,
 					/obj/item/storage/belt/cummerbund,
-					/obj/item/clothing/head/weddingveil,
+					/obj/item/clothing/head/costume/weddingveil,
 					/obj/item/bouquet,
 					/obj/item/bouquet/sunflower,
 					/obj/item/bouquet/poppy,
@@ -1790,9 +1790,9 @@
 	name = "Beekeeper Suit Crate"
 	desc = "Bee business booming? Better be benevolent and boost botany by bestowing bi-Beekeeper-suits! Contains two beekeeper suits and matching headwear."
 	cost = CARGO_CRATE_VALUE * 2
-	contains = list(/obj/item/clothing/head/beekeeper_head,
+	contains = list(/obj/item/clothing/head/utility/beekeeper_head,
 					/obj/item/clothing/suit/utility/beekeeper_suit,
-					/obj/item/clothing/head/beekeeper_head,
+					/obj/item/clothing/head/utility/beekeeper_head,
 					/obj/item/clothing/suit/utility/beekeeper_suit)
 	crate_name = "beekeeper suits"
 	crate_type = /obj/structure/closet/crate/hydroponics
@@ -1806,7 +1806,7 @@
 					/obj/item/honey_frame,
 					/obj/item/honey_frame,
 					/obj/item/queen_bee/bought,
-					/obj/item/clothing/head/beekeeper_head,
+					/obj/item/clothing/head/utility/beekeeper_head,
 					/obj/item/clothing/suit/utility/beekeeper_suit,
 					/obj/item/melee/flyswatter)
 	crate_name = "beekeeping starter crate"
@@ -2389,11 +2389,11 @@
 					/obj/item/clothing/neck/tie/blue,
 					/obj/item/clothing/neck/tie/red,
 					/obj/item/clothing/neck/tie/black,
-					/obj/item/clothing/head/bowler,
+					/obj/item/clothing/head/hats/bowler,
 					/obj/item/clothing/head/fedora,
 					/obj/item/clothing/head/flatcap,
 					/obj/item/clothing/head/beret,
-					/obj/item/clothing/head/that,
+					/obj/item/clothing/head/hats/tophat,
 					/obj/item/clothing/shoes/laceup,
 					/obj/item/clothing/shoes/laceup,
 					/obj/item/clothing/shoes/laceup,
@@ -2462,15 +2462,15 @@
 	name = "Original Costume Crate"
 	desc = "Reenact Shakespearean plays with this assortment of outfits. Contains eight different costumes!"
 	cost = CARGO_CRATE_VALUE * 2
-	contains = list(/obj/item/clothing/head/snowman,
+	contains = list(/obj/item/clothing/head/costume/snowman,
 					/obj/item/clothing/suit/costume/snowman,
-					/obj/item/clothing/head/chicken,
+					/obj/item/clothing/head/costume/chicken,
 					/obj/item/clothing/suit/costume/chickensuit,
 					/obj/item/clothing/mask/gas/monkeymask,
 					/obj/item/clothing/suit/costume/monkeysuit,
-					/obj/item/clothing/head/cardborg,
+					/obj/item/clothing/head/costume/cardborg,
 					/obj/item/clothing/suit/costume/cardborg,
-					/obj/item/clothing/head/xenos,
+					/obj/item/clothing/head/costume/xenos,
 					/obj/item/clothing/suit/costume/xenos,
 					/obj/item/clothing/suit/hooded/ian_costume,
 					/obj/item/clothing/suit/hooded/carp_costume,

@@ -501,6 +501,7 @@
 
 /obj/item/clothing/head/helmet/space/changeling
 	name = "flesh mass"
+	icon = 'icons/obj/clothing/head/costume.dmi'
 	icon_state = "lingspacehelmet"
 	desc = "A covering of pressure and temperature-resistant organic tissue with a glass-like chitin front."
 	item_flags = DROPDEL

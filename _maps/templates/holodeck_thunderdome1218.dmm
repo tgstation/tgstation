@@ -64,7 +64,7 @@
 /area/template_noop)
 "C" = (
 /obj/structure/table/wood/fancy,
-/obj/item/clothing/head/crown/fancy{
+/obj/item/clothing/head/costume/crown/fancy{
 	pixel_y = 6
 	},
 /turf/open/floor/holofloor/grass,

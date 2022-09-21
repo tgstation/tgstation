@@ -93,7 +93,7 @@
 /obj/structure/cable,
 /obj/machinery/light/small/directional/south,
 /obj/structure/closet/crate,
-/obj/item/clothing/head/ushanka,
+/obj/item/clothing/head/costume/ushanka,
 /obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/plating,
 /area/ruin/space/djstation/service)

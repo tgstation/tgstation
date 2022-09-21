@@ -97,7 +97,7 @@
 /datum/outfit/syndicate/reinforcement/donk
 	name = "Syndicate Operative - Donk Reinforcement"
 	suit = /obj/item/clothing/suit/hazardvest
-	head = /obj/item/clothing/head/hardhat/orange
+	head = /obj/item/clothing/head/utility/hardhat/orange
 	shoes = /obj/item/clothing/shoes/workboots
 	glasses = /obj/item/clothing/glasses/meson
 	faction = "the Donk Corporation"

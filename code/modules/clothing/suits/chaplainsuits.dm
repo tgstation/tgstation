@@ -69,6 +69,7 @@
 /obj/item/clothing/head/hooded/monkhabit
 	name = "monk's hood"
 	desc = "For when a man wants to cover up his tonsure."
+	icon = 'icons/obj/clothing/head/chaplain.dmi'
 	icon_state = "monkhood"
 	inhand_icon_state = "monkhood"
 	body_parts_covered = HEAD
@@ -122,6 +123,7 @@
 /obj/item/clothing/head/helmet/chaplain
 	name = "crusader helmet"
 	desc = "Deus Vult."
+	icon = 'icons/obj/clothing/head/chaplain.dmi'
 	icon_state = "knight_templar"
 	inhand_icon_state = "knight_templar"
 	armor = list(MELEE = 50, BULLET = 10, LASER = 10, ENERGY = 10, BOMB = 0, BIO = 0, FIRE = 80, ACID = 80)
@@ -210,6 +212,7 @@
 /obj/item/clothing/head/hooded/chaplain_hood
 	name = "follower hood"
 	desc = "Hood made for acolytes of the chaplain."
+	icon = 'icons/obj/clothing/head/chaplain.dmi'
 	icon_state = "chaplain_hood"
 	body_parts_covered = HEAD
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS

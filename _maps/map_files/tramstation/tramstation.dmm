@@ -4915,12 +4915,12 @@
 /obj/structure/closet{
 	name = "Beekeeper Uniform"
 	},
-/obj/item/clothing/head/beekeeper_head,
+/obj/item/clothing/head/utility/beekeeper_head,
 /obj/item/melee/flyswatter,
 /obj/effect/turf_decal/trimline/green/filled/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/item/clothing/suit/utility/beekeeper_suit,
-/obj/item/clothing/head/beekeeper_head,
+/obj/item/clothing/head/utility/beekeeper_head,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "bSP" = (
@@ -14598,7 +14598,7 @@
 /area/station/medical/storage)
 "fkc" = (
 /obj/structure/safe,
-/obj/item/clothing/head/bearpelt,
+/obj/item/clothing/head/costume/bearpelt,
 /obj/item/gun/ballistic/revolver/russian,
 /obj/item/ammo_box/a357,
 /obj/effect/turf_decal/bot_white/left,
@@ -16151,7 +16151,7 @@
 	dir = 9
 	},
 /obj/item/storage/toolbox/mechanical,
-/obj/item/clothing/head/welding,
+/obj/item/clothing/head/utility/welding,
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
 "fOw" = (
@@ -17013,7 +17013,7 @@
 /area/station/cargo/lobby)
 "ggv" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/head/radiation,
+/obj/item/clothing/head/utility/radiation,
 /obj/item/clothing/glasses/meson,
 /obj/item/geiger_counter,
 /obj/item/geiger_counter,
@@ -23317,11 +23317,11 @@
 /area/station/security/warden)
 "ivk" = (
 /obj/structure/table,
-/obj/item/clothing/head/welding{
+/obj/item/clothing/head/utility/welding{
 	pixel_x = -3;
 	pixel_y = 7
 	},
-/obj/item/clothing/head/welding{
+/obj/item/clothing/head/utility/welding{
 	pixel_x = -5;
 	pixel_y = 3
 	},
@@ -33005,7 +33005,7 @@
 "lOM" = (
 /obj/structure/table,
 /obj/item/storage/box/tail_pin,
-/obj/item/clothing/head/festive,
+/obj/item/clothing/head/costume/festive,
 /turf/open/floor/eighties/red,
 /area/station/commons/fitness/recreation/entertainment)
 "lPe" = (
@@ -39447,7 +39447,7 @@
 	pixel_y = 3
 	},
 /obj/item/storage/toolbox/electrical,
-/obj/item/clothing/head/welding,
+/obj/item/clothing/head/utility/welding,
 /obj/item/clothing/glasses/welding,
 /obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron/dark,
@@ -46297,7 +46297,7 @@
 /area/station/engineering/atmos)
 "qzD" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/head/radiation,
+/obj/item/clothing/head/utility/radiation,
 /obj/item/clothing/glasses/meson,
 /obj/item/clothing/glasses/meson,
 /obj/effect/turf_decal/stripes/line{
@@ -53591,7 +53591,7 @@
 "tcD" = (
 /obj/item/wrench,
 /obj/item/weldingtool,
-/obj/item/clothing/head/welding{
+/obj/item/clothing/head/utility/welding{
 	pixel_x = -3;
 	pixel_y = 5
 	},

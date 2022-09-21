@@ -11,7 +11,7 @@
 /area/template_noop)
 "U" = (
 /obj/effect/holodeck_effect/mobspawner/bee,
-/obj/item/clothing/head/beekeeper_head,
+/obj/item/clothing/head/utility/beekeeper_head,
 /turf/open/floor/holofloor/asteroid,
 /area/template_noop)
 "W" = (

@@ -135,11 +135,11 @@
 	pixel_x = -3;
 	pixel_y = -3
 	},
-/obj/item/clothing/head/hardhat/orange{
+/obj/item/clothing/head/utility/hardhat/orange{
 	name = "protective hat";
 	pixel_y = 9
 	},
-/obj/item/clothing/head/hardhat/orange{
+/obj/item/clothing/head/utility/hardhat/orange{
 	name = "protective hat";
 	pixel_y = 9
 	},
@@ -492,11 +492,11 @@
 	pixel_x = -3;
 	pixel_y = -3
 	},
-/obj/item/clothing/head/hardhat/orange{
+/obj/item/clothing/head/utility/hardhat/orange{
 	name = "protective hat";
 	pixel_y = 9
 	},
-/obj/item/clothing/head/hardhat/orange{
+/obj/item/clothing/head/utility/hardhat/orange{
 	name = "protective hat";
 	pixel_y = 9
 	},

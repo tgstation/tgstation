@@ -6,6 +6,7 @@
 /obj/item/clothing/head/beanie
 	name = "beanie"
 	desc = "A stylish beanie. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their heads."
+	icon = 'icons/obj/clothing/head/beanie.dmi'
 	icon_state = "beanie"
 	custom_price = PAYCHECK_CREW * 1.2
 	greyscale_colors = "#EEEEEE#EEEEEE"
@@ -46,11 +47,13 @@
 /obj/item/clothing/head/rasta
 	name = "rastacap"
 	desc = "Perfect for tucking in those dreadlocks."
+	icon = 'icons/obj/clothing/head/beanie.dmi'
 	icon_state = "beanierasta"
 
 /obj/item/clothing/head/waldo
 	name = "red striped bobble hat"
 	desc = "If you're going on a worldwide hike, you'll need some cold protection."
+	icon = 'icons/obj/clothing/head/beanie.dmi'
 	icon_state = "waldo_hat"
 
 //No dog fashion sprites yet :(  poor Ian can't be dope like the rest of us yet

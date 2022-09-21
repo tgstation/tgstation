@@ -139,7 +139,7 @@
 /obj/structure/rack,
 /obj/item/storage/toolbox/mechanical,
 /obj/item/multitool,
-/obj/item/clothing/head/welding,
+/obj/item/clothing/head/utility/welding,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/window/reinforced/survival_pod{
 	dir = 8

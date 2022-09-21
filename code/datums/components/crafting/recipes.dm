@@ -429,7 +429,7 @@
 	reqs = list(/obj/item/extinguisher = 1,
 				/obj/item/bodypart/r_arm/robot = 1,
 				/obj/item/assembly/prox_sensor = 1,
-				/obj/item/clothing/head/hardhat/red = 1)
+				/obj/item/clothing/head/utility/hardhat/red = 1)
 	time = 4 SECONDS
 	category = CAT_ROBOT
 
@@ -642,21 +642,21 @@
 
 /datum/crafting_recipe/lizardhat
 	name = "Lizard Cloche Hat"
-	result = /obj/item/clothing/head/lizard
+	result = /obj/item/clothing/head/costume/lizard
 	time = 1 SECONDS
 	reqs = list(/obj/item/organ/external/tail/lizard = 1)
 	category = CAT_CLOTHING
 
 /datum/crafting_recipe/lizardhat_alternate
 	name = "Lizard Cloche Hat"
-	result = /obj/item/clothing/head/lizard
+	result = /obj/item/clothing/head/costume/lizard
 	time = 1 SECONDS
 	reqs = list(/obj/item/stack/sheet/animalhide/lizard = 1)
 	category = CAT_CLOTHING
 
 /datum/crafting_recipe/kittyears
 	name = "Kitty Ears"
-	result = /obj/item/clothing/head/kitty/genuine
+	result = /obj/item/clothing/head/costume/kitty/genuine
 	time = 1 SECONDS
 	reqs = list(/obj/item/organ/external/tail/cat = 1,
 				/obj/item/organ/internal/ears/cat = 1)
@@ -1116,7 +1116,7 @@
 
 /datum/crafting_recipe/flower_garland
 	name = "Flower Garland"
-	result = /obj/item/clothing/head/garland
+	result = /obj/item/clothing/head/costume/garland
 	time = 1 SECONDS
 	reqs = list(/obj/item/food/grown/poppy = 4,
 				/obj/item/food/grown/harebell = 4,

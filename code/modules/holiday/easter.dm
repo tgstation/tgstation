@@ -56,7 +56,7 @@
 	countEggs()
 
 //Bunny Suit
-/obj/item/clothing/head/bunnyhead
+/obj/item/clothing/head/costume/bunnyhead
 	name = "Easter Bunny Head"
 	icon_state = "bunnyhead"
 	inhand_icon_state = "bunnyhead"
@@ -102,7 +102,7 @@
 	icon_state = "egg-[eggcolor]"
 
 /obj/item/surprise_egg/proc/dispensePrize(turf/where)
-	var/static/list/prize_list = list(/obj/item/clothing/head/bunnyhead,
+	var/static/list/prize_list = list(/obj/item/clothing/head/costume/bunnyhead,
 		/obj/item/clothing/suit/costume/bunnysuit,
 		/obj/item/storage/backpack/satchel/bunnysatchel,
 		/obj/item/food/grown/carrot,

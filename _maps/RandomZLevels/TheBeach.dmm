@@ -123,7 +123,7 @@
 	desc = "Now this is what island exploration is all about.";
 	name = "Treasure Chest"
 	},
-/obj/item/clothing/head/pirate,
+/obj/item/clothing/head/costume/pirate,
 /obj/item/clothing/glasses/eyepatch,
 /obj/item/clothing/suit/costume/pirate,
 /obj/item/claymore/cutlass{

@@ -229,7 +229,7 @@
 	suit = /obj/item/clothing/suit/armor/vest/capcarapace/syndicate
 	suit_store = /obj/item/gun/ballistic/revolver/mateba
 	back = /obj/item/storage/backpack/satchel/leather
-	head = /obj/item/clothing/head/hos/syndicate
+	head = /obj/item/clothing/head/hats/hos/syndicate
 	mask = /obj/item/clothing/mask/cigarette/cigar/havana
 	ears = /obj/item/radio/headset/syndicate/alt/leader
 	glasses = /obj/item/clothing/glasses/thermal/eyepatch

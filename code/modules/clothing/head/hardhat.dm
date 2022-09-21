@@ -1,4 +1,7 @@
-/obj/item/clothing/head/hardhat
+/obj/item/clothing/head/utility
+	icon = 'icons/obj/clothing/head/utility.dmi'
+
+/obj/item/clothing/head/utility/hardhat
 	name = "hard hat"
 	desc = "A piece of headgear used in dangerous working conditions to protect the head. Comes with a built-in flashlight."
 	icon_state = "hardhat0_yellow"
@@ -21,14 +24,14 @@
 	var/on = FALSE
 
 
-/obj/item/clothing/head/hardhat/Initialize(mapload)
+/obj/item/clothing/head/utility/hardhat/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HEAD)
 
-/obj/item/clothing/head/hardhat/attack_self(mob/living/user)
+/obj/item/clothing/head/utility/hardhat/attack_self(mob/living/user)
 	toggle_helmet_light(user)
 
-/obj/item/clothing/head/hardhat/proc/toggle_helmet_light(mob/living/user)
+/obj/item/clothing/head/utility/hardhat/proc/toggle_helmet_light(mob/living/user)
 	on = !on
 	if(on)
 		turn_on(user)
@@ -36,23 +39,23 @@
 		turn_off(user)
 	update_appearance()
 
-/obj/item/clothing/head/hardhat/update_icon_state()
+/obj/item/clothing/head/utility/hardhat/update_icon_state()
 	icon_state = inhand_icon_state = "hardhat[on]_[hat_type]"
 	return ..()
 
-/obj/item/clothing/head/hardhat/proc/turn_on(mob/user)
+/obj/item/clothing/head/utility/hardhat/proc/turn_on(mob/user)
 	set_light_on(TRUE)
 
-/obj/item/clothing/head/hardhat/proc/turn_off(mob/user)
+/obj/item/clothing/head/utility/hardhat/proc/turn_off(mob/user)
 	set_light_on(FALSE)
 
-/obj/item/clothing/head/hardhat/orange
+/obj/item/clothing/head/utility/hardhat/orange
 	icon_state = "hardhat0_orange"
 	inhand_icon_state = "hardhat0_orange"
 	hat_type = "orange"
 	dog_fashion = null
 
-/obj/item/clothing/head/hardhat/red
+/obj/item/clothing/head/utility/hardhat/red
 	icon_state = "hardhat0_red"
 	inhand_icon_state = "hardhat0_red"
 	hat_type = "red"
@@ -64,7 +67,7 @@
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 
-/obj/item/clothing/head/hardhat/red/upgraded
+/obj/item/clothing/head/utility/hardhat/red/upgraded
 	name = "workplace-ready firefighter helmet"
 	desc = "By applying state of the art lighting technology to a fire helmet, and using photo-chemical hardening methods, this hardhat will protect you from robust workplace hazards."
 	icon_state = "hardhat0_purple"
@@ -74,7 +77,7 @@
 	custom_materials = list(/datum/material/iron = 4000, /datum/material/glass = 1000, /datum/material/plastic = 3000, /datum/material/silver = 500)
 	hat_type = "purple"
 
-/obj/item/clothing/head/hardhat/white
+/obj/item/clothing/head/utility/hardhat/white
 	icon_state = "hardhat0_white"
 	inhand_icon_state = "hardhat0_white"
 	hat_type = "white"
@@ -85,13 +88,13 @@
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 	dog_fashion = /datum/dog_fashion/head
 
-/obj/item/clothing/head/hardhat/dblue
+/obj/item/clothing/head/utility/hardhat/dblue
 	icon_state = "hardhat0_dblue"
 	inhand_icon_state = "hardhat0_dblue"
 	hat_type = "dblue"
 	dog_fashion = null
 
-/obj/item/clothing/head/hardhat/atmos
+/obj/item/clothing/head/utility/hardhat/atmos
 	icon_state = "hardhat0_atmos"
 	inhand_icon_state = "hardhat0_atmos"
 	hat_type = "atmos"
@@ -106,12 +109,12 @@
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 
-/obj/item/clothing/head/hardhat/atmos/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+/obj/item/clothing/head/utility/hardhat/atmos/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
 	if(!isinhands)
 		. += emissive_appearance(icon_file, "[icon_state]-emissive", alpha = src.alpha)
 
-/obj/item/clothing/head/hardhat/weldhat
+/obj/item/clothing/head/utility/hardhat/weldhat
 	name = "welding hard hat"
 	desc = "A piece of headgear used in dangerous working conditions to protect the head. Comes with a built-in flashlight AND welding shield! The bulb seems a little smaller though."
 	light_range = 3 //Needs a little bit of tradeoff
@@ -125,30 +128,30 @@
 	visor_flags_inv = HIDEEYES | HIDEFACE | HIDESNOUT
 	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 
-/obj/item/clothing/head/hardhat/weldhat/Initialize(mapload)
+/obj/item/clothing/head/utility/hardhat/weldhat/Initialize(mapload)
 	. = ..()
 	update_appearance()
 
-/obj/item/clothing/head/hardhat/weldhat/attack_self(mob/living/user)
+/obj/item/clothing/head/utility/hardhat/weldhat/attack_self(mob/living/user)
 	toggle_helmet_light(user)
 
-/obj/item/clothing/head/hardhat/weldhat/AltClick(mob/user)
+/obj/item/clothing/head/utility/hardhat/weldhat/AltClick(mob/user)
 	if(user.canUseTopic(src, BE_CLOSE))
 		toggle_welding_screen(user)
 
-/obj/item/clothing/head/hardhat/weldhat/ui_action_click(mob/user, actiontype)
+/obj/item/clothing/head/utility/hardhat/weldhat/ui_action_click(mob/user, actiontype)
 	if(istype(actiontype, /datum/action/item_action/toggle_welding_screen))
 		toggle_welding_screen(user)
 		return
 
 	return ..()
 
-/obj/item/clothing/head/hardhat/weldhat/proc/toggle_welding_screen(mob/living/user)
+/obj/item/clothing/head/utility/hardhat/weldhat/proc/toggle_welding_screen(mob/living/user)
 	if(weldingvisortoggle(user))
 		playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE) //Visors don't just come from nothing
 	update_appearance()
 
-/obj/item/clothing/head/hardhat/weldhat/worn_overlays(mutable_appearance/standing, isinhands)
+/obj/item/clothing/head/utility/hardhat/weldhat/worn_overlays(mutable_appearance/standing, isinhands)
 	. = ..()
 	if(isinhands)
 		return
@@ -157,17 +160,17 @@
 	if(!up)
 		. += mutable_appearance('icons/mob/clothing/head.dmi', "weldvisor")
 
-/obj/item/clothing/head/hardhat/weldhat/update_overlays()
+/obj/item/clothing/head/utility/hardhat/weldhat/update_overlays()
 	. = ..()
 	if(!up)
 		. += "weldvisor"
 
-/obj/item/clothing/head/hardhat/weldhat/orange
+/obj/item/clothing/head/utility/hardhat/weldhat/orange
 	icon_state = "hardhat0_orange"
 	inhand_icon_state = "hardhat0_orange"
 	hat_type = "orange"
 
-/obj/item/clothing/head/hardhat/weldhat/white
+/obj/item/clothing/head/utility/hardhat/weldhat/white
 	desc = "A piece of headgear used in dangerous working conditions to protect the head. Comes with a built-in flashlight AND welding shield!" //This bulb is not smaller
 	icon_state = "hardhat0_white"
 	inhand_icon_state = "hardhat0_white"
@@ -179,14 +182,15 @@
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 
-/obj/item/clothing/head/hardhat/weldhat/dblue
+/obj/item/clothing/head/utility/hardhat/weldhat/dblue
 	icon_state = "hardhat0_dblue"
 	inhand_icon_state = "hardhat0_dblue"
 	hat_type = "dblue"
 
-/obj/item/clothing/head/hardhat/pumpkinhead
+/obj/item/clothing/head/utility/hardhat/pumpkinhead
 	name = "carved pumpkin"
 	desc = "A jack o' lantern! Believed to ward off evil spirits."
+	icon = 'icons/obj/clothing/head/costume.dmi'
 	icon_state = "hardhat0_pumpkin"
 	inhand_icon_state = "hardhat0_pumpkin"
 	hat_type = "pumpkin"
@@ -199,31 +203,31 @@
 	worn_y_offset = 1
 	dog_fashion = /datum/dog_fashion/head/pumpkin/unlit
 
-/obj/item/clothing/head/hardhat/pumpkinhead/set_light_on(new_value)
+/obj/item/clothing/head/utility/hardhat/pumpkinhead/set_light_on(new_value)
 	. = ..()
 	if(isnull(.))
 		return
 	update_icon(UPDATE_OVERLAYS)
 
-/obj/item/clothing/head/hardhat/pumpkinhead/update_overlays()
+/obj/item/clothing/head/utility/hardhat/pumpkinhead/update_overlays()
 	. = ..()
 	if(light_on)
 		. += emissive_appearance(icon, "carved_pumpkin-emissive", alpha = src.alpha)
 
-/obj/item/clothing/head/hardhat/pumpkinhead/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+/obj/item/clothing/head/utility/hardhat/pumpkinhead/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
 	if(light_on && !isinhands)
 		. += emissive_appearance(icon_file, "carved_pumpkin-emissive", alpha = src.alpha)
 
-/obj/item/clothing/head/hardhat/pumpkinhead/turn_on(mob/user)
+/obj/item/clothing/head/utility/hardhat/pumpkinhead/turn_on(mob/user)
 	. = ..()
 	dog_fashion = /datum/dog_fashion/head/pumpkin/lit
 
-/obj/item/clothing/head/hardhat/pumpkinhead/turn_off(mob/user)
+/obj/item/clothing/head/utility/hardhat/pumpkinhead/turn_off(mob/user)
 	. = ..()
 	dog_fashion = /datum/dog_fashion/head/pumpkin/unlit
 
-/obj/item/clothing/head/hardhat/pumpkinhead/blumpkin
+/obj/item/clothing/head/utility/hardhat/pumpkinhead/blumpkin
 	name = "carved blumpkin"
 	desc = "A very blue jack o' lantern! Believed to ward off vengeful chemists."
 	icon_state = "hardhat0_blumpkin"
@@ -232,17 +236,18 @@
 	light_color = "#76ff8e"
 	dog_fashion = /datum/dog_fashion/head/blumpkin/unlit
 
-/obj/item/clothing/head/hardhat/pumpkinhead/blumpkin/turn_on(mob/user)
+/obj/item/clothing/head/utility/hardhat/pumpkinhead/blumpkin/turn_on(mob/user)
 	. = ..()
 	dog_fashion = /datum/dog_fashion/head/blumpkin/lit
 
-/obj/item/clothing/head/hardhat/pumpkinhead/blumpkin/turn_off(mob/user)
+/obj/item/clothing/head/utility/hardhat/pumpkinhead/blumpkin/turn_off(mob/user)
 	. = ..()
 	dog_fashion = /datum/dog_fashion/head/blumpkin/unlit
 
-/obj/item/clothing/head/hardhat/reindeer
+/obj/item/clothing/head/utility/hardhat/reindeer
 	name = "novelty reindeer hat"
 	desc = "Some fake antlers and a very fake red nose."
+	icon = 'icons/obj/clothing/head/costume.dmi'
 	icon_state = "hardhat0_reindeer"
 	inhand_icon_state = "hardhat0_reindeer"
 	hat_type = "reindeer"

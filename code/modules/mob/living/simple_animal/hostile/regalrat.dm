@@ -12,7 +12,7 @@
 	see_in_dark = 15
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	obj_damage = 10
-	butcher_results = list(/obj/item/clothing/head/crown = 1,)
+	butcher_results = list(/obj/item/clothing/head/costume/crown = 1,)
 	response_help_continuous = "glares at"
 	response_help_simple = "glare at"
 	response_disarm_continuous = "skoffs at"

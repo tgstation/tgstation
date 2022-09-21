@@ -201,7 +201,7 @@ GLOBAL_LIST_INIT(gold_recipes, list ( \
 	new/datum/stack_recipe("golden door", /obj/structure/mineral_door/gold, 10, one_per_turf = 1, on_solid_ground = 1, applies_mats = TRUE), \
 	new/datum/stack_recipe("gold tile", /obj/item/stack/tile/mineral/gold, 1, 4, 20), \
 	new/datum/stack_recipe("blank plaque", /obj/item/plaque, 1), \
-	new/datum/stack_recipe("Simple Crown", /obj/item/clothing/head/crown, 5), \
+	new/datum/stack_recipe("Simple Crown", /obj/item/clothing/head/costume/crown, 5), \
 	))
 
 /obj/item/stack/sheet/mineral/gold/get_main_recipes()

@@ -1,12 +1,13 @@
 /obj/item/clothing/head/fedora
 	name = "fedora"
+	icon = 'icons/obj/clothing/head/hats.dmi'
 	icon_state = "fedora"
 	inhand_icon_state = "fedora"
 	desc = "A really cool hat if you're a mobster. A really lame hat if you're not."
 
 /obj/item/clothing/head/fedora/Initialize(mapload)
 	. = ..()
-	
+
 	create_storage(type = /datum/storage/pockets/small/fedora)
 
 /obj/item/clothing/head/fedora/white

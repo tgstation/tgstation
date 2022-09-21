@@ -639,7 +639,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/rack,
 /obj/item/storage/toolbox/mechanical,
-/obj/item/clothing/head/welding{
+/obj/item/clothing/head/utility/welding{
 	pixel_x = -3;
 	pixel_y = 5
 	},
@@ -716,7 +716,7 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/clothing/head/welding{
+/obj/item/clothing/head/utility/welding{
 	pixel_x = -2;
 	pixel_y = 1
 	},
@@ -1111,7 +1111,7 @@
 	desc = "They look like human remains, and have clearly been gnawed at."
 	},
 /obj/effect/decal/cleanable/blood/gibs/old,
-/obj/item/clothing/head/centhat{
+/obj/item/clothing/head/hats/centhat{
 	desc = "There's a gouge through the top where something has clawed clean through it. Whoever was wearing it probably doesn't need a hat any more.";
 	name = "\improper damaged CentCom hat";
 	pixel_x = 2;

@@ -1,11 +1,10 @@
 
-/obj/item/clothing/head/beekeeper_head
+/obj/item/clothing/head/utility/beekeeper_head
 	name = "beekeeper hat"
 	desc = "Keeps the lil buzzing buggers out of your eyes."
 	icon_state = "beekeeper"
 	inhand_icon_state = "beekeeper"
 	clothing_flags = THICKMATERIAL | SNUG_FIT
-
 
 /obj/item/clothing/suit/utility/beekeeper_suit
 	name = "beekeeper suit"

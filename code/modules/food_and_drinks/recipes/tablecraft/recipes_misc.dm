@@ -187,7 +187,7 @@
 	name = "Royal Cheese"
 	reqs = list(
 		/obj/item/food/cheese/wheel = 1,
-		/obj/item/clothing/head/crown = 1,
+		/obj/item/clothing/head/costume/crown = 1,
 		/datum/reagent/medicine/strange_reagent = 5,
 		/datum/reagent/toxin/mutagen = 5
 	)

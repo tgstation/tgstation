@@ -279,7 +279,7 @@
 /obj/item/tank/internals/oxygen/red,
 /obj/item/clothing/suit/utility/fire/firefighter,
 /obj/item/clothing/mask/gas,
-/obj/item/clothing/head/hardhat/red,
+/obj/item/clothing/head/utility/hardhat/red,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/extinguisher,
 /turf/open/floor/iron/dark,
@@ -1403,23 +1403,23 @@
 	pixel_x = -3;
 	pixel_y = -3
 	},
-/obj/item/clothing/head/hardhat/orange{
+/obj/item/clothing/head/utility/hardhat/orange{
 	name = "protective hat";
 	pixel_y = 9
 	},
-/obj/item/clothing/head/hardhat/orange{
+/obj/item/clothing/head/utility/hardhat/orange{
 	name = "protective hat";
 	pixel_y = 9
 	},
-/obj/item/clothing/head/hardhat/orange{
+/obj/item/clothing/head/utility/hardhat/orange{
 	name = "protective hat";
 	pixel_y = 9
 	},
-/obj/item/clothing/head/hardhat/orange{
+/obj/item/clothing/head/utility/hardhat/orange{
 	name = "protective hat";
 	pixel_y = 9
 	},
-/obj/item/clothing/head/hardhat/orange{
+/obj/item/clothing/head/utility/hardhat/orange{
 	name = "protective hat";
 	pixel_y = 9
 	},
@@ -1474,7 +1474,7 @@
 /obj/item/tank/internals/oxygen/red,
 /obj/item/clothing/suit/utility/fire/firefighter,
 /obj/item/clothing/mask/gas,
-/obj/item/clothing/head/hardhat/red,
+/obj/item/clothing/head/utility/hardhat/red,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "da" = (
@@ -1783,7 +1783,7 @@
 "dy" = (
 /obj/effect/turf_decal/bot_white,
 /obj/structure/rack,
-/obj/item/clothing/head/welding{
+/obj/item/clothing/head/utility/welding{
 	pixel_x = -3;
 	pixel_y = 5
 	},

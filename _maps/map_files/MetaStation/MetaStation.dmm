@@ -2711,7 +2711,7 @@
 /area/station/science/xenobiology)
 "aWB" = (
 /obj/effect/spawner/random/structure/closet_maintenance,
-/obj/item/clothing/head/festive,
+/obj/item/clothing/head/costume/festive,
 /obj/effect/spawner/random/maintenance/two,
 /obj/item/clothing/gloves/color/fyellow,
 /turf/open/floor/plating,
@@ -10091,7 +10091,7 @@
 /area/station/security/prison/safe)
 "dLY" = (
 /obj/structure/table/wood,
-/obj/item/clothing/head/sombrero,
+/obj/item/clothing/head/costume/sombrero,
 /obj/structure/sign/poster/random/directional/east,
 /turf/open/floor/wood,
 /area/station/service/theater)
@@ -20103,7 +20103,7 @@
 /area/station/command/teleporter)
 "huF" = (
 /obj/item/clothing/suit/costume/snowman,
-/obj/item/clothing/head/snowman,
+/obj/item/clothing/head/costume/snowman,
 /turf/open/floor/fake_snow,
 /area/station/maintenance/port/aft)
 "huG" = (
@@ -23219,7 +23219,7 @@
 	},
 /obj/item/storage/toolbox/electrical,
 /obj/item/multitool,
-/obj/item/clothing/head/welding,
+/obj/item/clothing/head/utility/welding,
 /obj/item/clothing/glasses/welding,
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
@@ -26081,15 +26081,15 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/obj/item/clothing/head/welding{
+/obj/item/clothing/head/utility/welding{
 	pixel_y = 9
 	},
 /obj/machinery/power/apc/auto_name/directional/north,
-/obj/item/clothing/head/welding{
+/obj/item/clothing/head/utility/welding{
 	pixel_x = -3;
 	pixel_y = 7
 	},
-/obj/item/clothing/head/welding{
+/obj/item/clothing/head/utility/welding{
 	pixel_x = -5;
 	pixel_y = 3
 	},
@@ -30258,7 +30258,7 @@
 "kQx" = (
 /obj/structure/reagent_dispensers/fueltank,
 /obj/item/weldingtool,
-/obj/item/clothing/head/welding,
+/obj/item/clothing/head/utility/welding,
 /turf/open/floor/iron,
 /area/station/construction/storage_wing)
 "kQz" = (
@@ -37021,7 +37021,7 @@
 	amount = 4
 	},
 /obj/item/clothing/suit/apron/chef,
-/obj/item/clothing/head/chefhat,
+/obj/item/clothing/head/utility/chefhat,
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
@@ -42282,10 +42282,10 @@
 /obj/structure/rack,
 /obj/item/clothing/suit/hazardvest,
 /obj/item/clothing/suit/hazardvest,
-/obj/item/clothing/head/hardhat/orange{
+/obj/item/clothing/head/utility/hardhat/orange{
 	name = "protective hat"
 	},
-/obj/item/clothing/head/hardhat/orange{
+/obj/item/clothing/head/utility/hardhat/orange{
 	name = "protective hat"
 	},
 /obj/item/clothing/mask/breath,
@@ -57487,7 +57487,7 @@
 	dir = 8
 	},
 /obj/item/cultivator,
-/obj/item/clothing/head/chefhat,
+/obj/item/clothing/head/utility/chefhat,
 /obj/machinery/camera/directional/west{
 	c_tag = "Service - Starboard"
 	},
@@ -57901,7 +57901,7 @@
 /obj/structure/table/reinforced,
 /obj/item/stack/package_wrap,
 /obj/item/hand_labeler,
-/obj/item/clothing/head/welding,
+/obj/item/clothing/head/utility/welding,
 /turf/open/floor/iron,
 /area/station/science/robotics/mechbay)
 "ush" = (
@@ -63252,7 +63252,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/obj/item/clothing/head/that,
+/obj/item/clothing/head/hats/tophat,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/table,
@@ -64903,7 +64903,7 @@
 /obj/structure/sign/warning/electric_shock/directional/east,
 /obj/structure/table,
 /obj/item/storage/toolbox/mechanical,
-/obj/item/clothing/head/welding,
+/obj/item/clothing/head/utility/welding,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 4
 	},

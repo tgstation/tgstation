@@ -124,7 +124,7 @@
 
 /mob/living/simple_animal/drone/derelict
 	name = "derelict drone"
-	default_hatmask = /obj/item/clothing/head/ushanka
+	default_hatmask = /obj/item/clothing/head/costume/ushanka
 	laws = \
 	"1. You may not involve yourself in the matters of another sentient being outside the station that housed your activation, even if such matters conflict with Law Two or Law Three, unless the other being is another Drone.\n"+\
 	"2. You may not harm any sentient being, regardless of intent or circumstance.\n"+\

@@ -292,6 +292,7 @@
 
 /obj/item/clothing/head/hooded/techpriest
 	name = "techpriest's hood"
+	icon = 'icons/obj/clothing/head/costume.dmi'
 	desc = "A hood for those who REALLY love their toasters."
 	icon_state = "techpriesthood"
 	inhand_icon_state = "techpriesthood"

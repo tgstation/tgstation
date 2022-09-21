@@ -1239,7 +1239,7 @@
 /obj/item/tank/internals/oxygen,
 /obj/item/clothing/mask/gas,
 /obj/item/extinguisher,
-/obj/item/clothing/head/hardhat/red,
+/obj/item/clothing/head/utility/hardhat/red,
 /obj/item/clothing/glasses/meson,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -2231,7 +2231,7 @@
 "aLG" = (
 /obj/structure/rack,
 /obj/structure/window/reinforced/spawner/east,
-/obj/item/clothing/head/fancy,
+/obj/item/clothing/head/costume/fancy,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/prison)
 "aLJ" = (
@@ -2746,7 +2746,7 @@
 /obj/item/storage/belt/utility,
 /obj/item/wrench,
 /obj/item/weldingtool,
-/obj/item/clothing/head/welding{
+/obj/item/clothing/head/utility/welding{
 	pixel_x = -3;
 	pixel_y = 5
 	},
@@ -7245,7 +7245,7 @@
 /obj/item/clothing/suit/costume/snowman{
 	name = "Man of Snow"
 	},
-/obj/item/clothing/head/snowman{
+/obj/item/clothing/head/costume/snowman{
 	name = "Head of Snow";
 	pixel_y = 9
 	},
@@ -8676,7 +8676,7 @@
 /area/station/commons/locker)
 "cBj" = (
 /obj/structure/closet/emcloset,
-/obj/item/clothing/head/festive,
+/obj/item/clothing/head/costume/festive,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "cBn" = (
@@ -9825,7 +9825,7 @@
 /obj/item/honey_frame,
 /obj/item/clothing/suit/utility/beekeeper_suit,
 /obj/item/clothing/suit/hooded/bee_costume,
-/obj/item/clothing/head/beekeeper_head,
+/obj/item/clothing/head/utility/beekeeper_head,
 /obj/item/clothing/head/hooded/bee_hood,
 /obj/item/melee/flyswatter,
 /obj/item/queen_bee/bought,
@@ -22020,7 +22020,7 @@
 "gFR" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/suit/utility/radiation,
-/obj/item/clothing/head/radiation,
+/obj/item/clothing/head/utility/radiation,
 /obj/item/geiger_counter,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -22804,7 +22804,7 @@
 "gSr" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/suit/utility/radiation,
-/obj/item/clothing/head/radiation,
+/obj/item/clothing/head/utility/radiation,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -25647,7 +25647,7 @@
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "hPf" = (
 /obj/structure/safe,
-/obj/item/clothing/head/bearpelt,
+/obj/item/clothing/head/costume/bearpelt,
 /obj/item/reagent_containers/cup/glass/drinkingglass/shotglass,
 /obj/item/reagent_containers/cup/glass/drinkingglass/shotglass,
 /obj/item/gun/ballistic/revolver/russian,
@@ -32702,7 +32702,7 @@
 /area/station/engineering/main)
 "jWO" = (
 /obj/item/soap/nanotrasen,
-/obj/item/clothing/head/sombrero,
+/obj/item/clothing/head/costume/sombrero,
 /obj/structure/table/wood,
 /obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/wood/tile,
@@ -35024,7 +35024,7 @@
 /obj/structure/closet/secure_closet/personal{
 	anchored = 1
 	},
-/obj/item/clothing/head/bandana,
+/obj/item/clothing/head/costume/pirate/bandana,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/fore)
 "kHn" = (
@@ -35050,7 +35050,7 @@
 /obj/structure/table,
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/glass/fifty,
-/obj/item/clothing/head/welding,
+/obj/item/clothing/head/utility/welding,
 /obj/item/stack/sheet/mineral/plasma{
 	amount = 35
 	},
@@ -39357,7 +39357,7 @@
 "maY" = (
 /obj/item/wrench,
 /obj/item/weldingtool,
-/obj/item/clothing/head/welding{
+/obj/item/clothing/head/utility/welding{
 	pixel_x = -3;
 	pixel_y = 5
 	},
@@ -44080,7 +44080,7 @@
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/item/storage/toolbox/mechanical,
-/obj/item/clothing/head/welding,
+/obj/item/clothing/head/utility/welding,
 /turf/open/floor/iron/dark/textured_half{
 	dir = 1
 	},
@@ -44978,7 +44978,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
 "nME" = (
-/obj/item/clothing/head/hardhat,
+/obj/item/clothing/head/utility/hardhat,
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "nMN" = (
@@ -47448,11 +47448,11 @@
 /obj/structure/table,
 /obj/item/storage/box,
 /obj/item/storage/box,
-/obj/item/clothing/head/welding{
+/obj/item/clothing/head/utility/welding{
 	pixel_x = -3;
 	pixel_y = 7
 	},
-/obj/item/clothing/head/welding{
+/obj/item/clothing/head/utility/welding{
 	pixel_x = -5;
 	pixel_y = 3
 	},
@@ -57221,7 +57221,7 @@
 	pixel_x = 1;
 	pixel_y = 6
 	},
-/obj/item/clothing/head/welding{
+/obj/item/clothing/head/utility/welding{
 	pixel_x = -3;
 	pixel_y = 5
 	},
@@ -57244,15 +57244,15 @@
 	dir = 1
 	},
 /obj/structure/table,
-/obj/item/clothing/head/welding{
+/obj/item/clothing/head/utility/welding{
 	pixel_x = 4;
 	pixel_y = 5
 	},
-/obj/item/clothing/head/welding{
+/obj/item/clothing/head/utility/welding{
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/clothing/head/welding,
+/obj/item/clothing/head/utility/welding,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/sign/poster/official/safety_internals{
 	pixel_x = 31
@@ -66323,7 +66323,7 @@
 	pixel_x = -2;
 	pixel_y = -1
 	},
-/obj/item/clothing/head/welding{
+/obj/item/clothing/head/utility/welding{
 	pixel_x = -3;
 	pixel_y = 5
 	},

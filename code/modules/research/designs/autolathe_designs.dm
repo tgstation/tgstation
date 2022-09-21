@@ -156,7 +156,7 @@
 	id = "welding_helmet"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 1750, /datum/material/glass = 400)
-	build_path = /obj/item/clothing/head/welding
+	build_path = /obj/item/clothing/head/utility/welding
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS, RND_CATEGORY_EQUIPMENT)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -609,7 +609,7 @@
 	id = "tinfoil_hat"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 5500)
-	build_path = /obj/item/clothing/head/foilhat
+	build_path = /obj/item/clothing/head/costume/foilhat
 	category = list(RND_CATEGORY_HACKED, RND_CATEGORY_MISC)
 
 /datum/design/blood_filter
