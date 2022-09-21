@@ -126,9 +126,9 @@
 	if(!stored_card)
 		data["error"] = "Please insert an intelliCard."
 	else if(!stored_card.AI)
-		data["error"] = "No AI located"
+		data["error"] = "No AI located..."
 	else if(stored_card.flush)
-		data["error"] = "Flush in progress"
+		data["error"] = "Flush in progress!"
 	else
 		data["name"] = stored_card.AI.name
 		data["restoring"] = restoring
