@@ -235,7 +235,7 @@
 	var/list/speak_dejavu = list()
 
 /datum/brain_trauma/mild/mind_echo/handle_hearing(datum/source, list/hearing_args)
-	if(!owner.can_hear() || owner == hearing_args[HEARING_SPEAKER] || !owner.has_language(hearing_args[HEARING_LANGUAGE]))
+	if(!owner.can_hear() || owner == hearing_args[HEARING_SPEAKER])
 		return
 
 	if(hear_dejavu.len >= 5)
