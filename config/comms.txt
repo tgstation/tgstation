@@ -14,9 +14,3 @@
 ## Servers that do not match this network-name will have their messages discarded.
 ## Leaving this commented will allow all messages through, regardless of network.
 #CROSS_COMMS_NETWORK default_network
-
-## Where the mass driver shoots people, preferably somewhere just absolutely awful
-HELL byond:\\terry.tgstation13.org:3336
-
-## If we're already in hell, go to an empty, desolate void instead
-THE_ABYSS byond:\\campbell.tgstation13.org:6337

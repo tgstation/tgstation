@@ -1,3 +1,8 @@
+/// euros
+#define HELL "byond:\\terry.tgstation13.org:3336"
+/// lack of even euros
+#define VOID "byond:\\campbell.tgstation13.org:6337"
+
 /**
  * The exile component: When you really, really want to get rid of someone, shoot them into space!
  */
@@ -28,9 +33,9 @@
 	if(!istype(exilee) || !exilee.client)
 		qdel(src)
 		return
-	var/youre_on_your_way_to = CONFIG_GET(string/hell)
-	if(world.url == CONFIG_GET(string/hell))
-		youre_on_your_way_to = CONFIG_GET(string/the_abyss)
+	var/youre_on_your_way_to = HELL//CONFIG_GET(string/hell)
+	if(world.url == HELL)
+		youre_on_your_way_to = VOID
 	if(!youre_on_your_way_to)
 		qdel(src)
 		return
@@ -58,3 +63,6 @@
 		fails_allowed-- // actually hitting the z-level transition counts as a failed move so we give a few freebies
 		if(fails_allowed <= 0)
 			qdel(src)
+
+#undef HELL
+#undef VOID
