@@ -79,9 +79,6 @@
 /datum/unit_test/speech/proc/handle_hearing(datum/source, list/hearing_args)
 	SIGNAL_HANDLER
 
-	//if(!owner.can_hear() || owner == hearing_args[HEARING_SPEAKER] || !owner.has_language(hearing_args[HEARING_LANGUAGE]))
-	//	return
-
 	var/message = hearing_args[HEARING_MESSAGE]
 	TEST_ASSERT(message, "Handle hearing signal does not have a message arg")
 	var/speaker = hearing_args[HEARING_SPEAKER]
