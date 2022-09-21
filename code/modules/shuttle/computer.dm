@@ -1,3 +1,11 @@
+#define SHUTTLE_CONSOLE_ACCESSDENIED "accessdenied"
+#define SHUTTLE_CONSOLE_ENDGAME "endgame"
+#define SHUTTLE_CONSOLE_RECHARGING "recharging"
+#define SHUTTLE_CONSOLE_INTRANSIT "intransit"
+#define SHUTTLE_CONSOLE_DESTINVALID "destinvalid"
+#define SHUTTLE_CONSOLE_SUCCESS "success"
+#define SHUTTLE_CONSOLE_ERROR "error"
+
 /obj/machinery/computer/shuttle
 	name = "shuttle console"
 	desc = "A shuttle control computer."
@@ -39,28 +47,17 @@
 	if(!user.can_read(src, check_for_light = FALSE)) //Illiterate mobs which aren't otherwise blocked from using computers will send the shuttle to a random valid destination
 		to_chat(user, span_warning("You start mashing buttons at random!"))
 		if(do_after(user, 10 SECONDS, target = src))
-			if(!allowed(usr))
-				to_chat(usr, span_danger("Access denied."))
+			var/list/dest_list = get_valid_destinations()
+			if(!dest_list.len)
+				to_chat(user, span_warning("Nothing seems to happen."))
 				return
-			var/obj/docking_port/mobile/mobile_docking_port = SSshuttle.getShuttle(shuttleId)
-			if(no_destination_swap)
-				if(mobile_docking_port.mode == SHUTTLE_RECHARGING)
-					to_chat(usr, span_warning("Shuttle engines are not ready for use."))
+			var/list/destination = pick(dest_list)
+			switch (send_shuttle(destination["id"], user))
+				if (SHUTTLE_CONSOLE_SUCCESS)
 					return
-				if(mobile_docking_port.mode != SHUTTLE_IDLE)
-					to_chat(usr, span_warning("Shuttle already in transit."))
-					return
-			var/list/destination = pick(get_valid_destinations())
-			switch(SSshuttle.moveShuttle(shuttleId, destination["id"], 1))
-				if(0)
-					say("Shuttle departing. Please stand away from the doors.")
-					log_shuttle("[key_name(usr)] has sent shuttle \"[mobile_docking_port]\" towards \"[destination["name"]]\", using [src].")
-					return TRUE
-				if(1)
-					to_chat(usr, span_warning("Invalid shuttle requested."))
 				else
-					to_chat(usr, span_warning("Unable to comply."))
-
+					to_chat(user, span_warning("The console shows a flashing error message, but you can't comprehend it."))
+					return
 		return
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -104,12 +101,14 @@
 	return data
 
 /**
- * Checks if we are allowed to launch the shuttle, for special cases
+ * Checks if we are allowed to launch the shuttle
  *
  * Arguments:
  * * user - The mob trying to initiate the launch
  */
 /obj/machinery/computer/shuttle/proc/launch_check(mob/user)
+	if(!allowed(user)) //Normally this is already checked via interaction code but some cases may skip that so check it explicitly here (illiterates launching randomly)
+		return FALSE
 	return TRUE
 
 /**
@@ -132,6 +131,42 @@
 		valid_destinations += list(location_data)
 	return valid_destinations
 
+/**
+ * Attempts to send the linked shuttle to dest_id, checking various sanity checks to see if it can move or not
+ *
+ * Arguments:
+ * * dest_id - The ID of the stationary docking port to send the shuttle to
+ * * user - The mob that used the console
+ */
+/obj/machinery/computer/shuttle/proc/send_shuttle(dest_id, mob/user)
+	if(!launch_check(user))
+		return SHUTTLE_CONSOLE_ACCESSDENIED
+	var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleId)
+	if(M.launch_status == ENDGAME_LAUNCHED)
+		return SHUTTLE_CONSOLE_ENDGAME
+	if(no_destination_swap)
+		if(M.mode == SHUTTLE_RECHARGING)
+			return SHUTTLE_CONSOLE_RECHARGING
+		if(M.mode != SHUTTLE_IDLE)
+			return SHUTTLE_CONSOLE_INTRANSIT
+	var/list/dest_list = get_valid_destinations()
+	var/validdest = FALSE
+	for(var/list/dest_data in dest_list)
+		if(dest_data["id"] == dest_id)
+			validdest = TRUE
+			break
+	if(!validdest)
+		log_admin("[user] attempted to href dock exploit on [src] with target location \"[dest_id]\"")
+		message_admins("[user] just attempted to href dock exploit on [src] with target location \"[dest_id]\"")
+		return SHUTTLE_CONSOLE_DESTINVALID
+	switch(SSshuttle.moveShuttle(shuttleId, dest_id, TRUE))
+		if(DOCKING_SUCCESS)
+			say("Shuttle departing. Please stand away from the doors.")
+			log_shuttle("[key_name(user)] has sent shuttle \"[shuttleId]\" towards \"[dest_id]\", using [src].")
+			return SHUTTLE_CONSOLE_SUCCESS
+		else
+			return SHUTTLE_CONSOLE_ERROR
+
 /obj/machinery/computer/shuttle/ui_act(action, params)
 	. = ..()
 	if(.)
@@ -142,34 +177,27 @@
 
 	switch(action)
 		if("move")
-			if(!launch_check(usr))
-				return
-			var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleId)
-			if(M.launch_status == ENDGAME_LAUNCHED)
-				to_chat(usr, span_warning("You've already escaped. Never going back to that place again!"))
-				return
-			if(no_destination_swap)
-				if(M.mode == SHUTTLE_RECHARGING)
+			switch (send_shuttle(params["shuttle_id"], usr))
+				if (SHUTTLE_CONSOLE_ACCESSDENIED)
+					to_chat(usr, span_warning("Access denied."))
+					return
+				if (SHUTTLE_CONSOLE_ENDGAME)
+					to_chat(usr, span_warning("You've already escaped. Never going back to that place again!"))
+					return
+				if (SHUTTLE_CONSOLE_RECHARGING)
 					to_chat(usr, span_warning("Shuttle engines are not ready for use."))
 					return
-				if(M.mode != SHUTTLE_IDLE)
+				if (SHUTTLE_CONSOLE_INTRANSIT)
 					to_chat(usr, span_warning("Shuttle already in transit."))
 					return
-			var/list/options = params2list(possible_destinations)
-			var/obj/docking_port/stationary/S = SSshuttle.getDock(params["shuttle_id"])
-			if(!(S.port_destinations in options))
-				log_admin("[usr] attempted to href dock exploit on [src] with target location \"[params["shuttle_id"]]\"")
-				message_admins("[usr] just attempted to href dock exploit on [src] with target location \"[params["shuttle_id"]]\"")
-				return
-			switch(SSshuttle.moveShuttle(shuttleId, params["shuttle_id"], 1))
-				if(0)
-					say("Shuttle departing. Please stand away from the doors.")
-					log_shuttle("[key_name(usr)] has sent shuttle \"[M]\" towards \"[params["shuttle_id"]]\", using [src].")
-					return TRUE
-				if(1)
-					to_chat(usr, span_warning("Invalid shuttle requested."))
-				else
+				if (SHUTTLE_CONSOLE_DESTINVALID)
+					to_chat(usr, span_warning("Invalid destination."))
+					return
+				if (SHUTTLE_CONSOLE_ERROR)
 					to_chat(usr, span_warning("Unable to comply."))
+					return
+				if (SHUTTLE_CONSOLE_SUCCESS)
+					return TRUE //No chat message here because the send_shuttle proc makes the console itself speak
 		if("set_destination")
 			var/target_destination = params["destination"]
 			if(target_destination)
@@ -202,3 +230,11 @@
 		possible_destinations = replacetext(replacetextEx(possible_destinations, "[shuttleId]_custom", ""), ";;", ";")
 	shuttleId = port.shuttle_id
 	possible_destinations += ";[port.shuttle_id]_custom"
+
+#undef SHUTTLE_CONSOLE_ACCESSDENIED
+#undef  SHUTTLE_CONSOLE_ENDGAME
+#undef  SHUTTLE_CONSOLE_RECHARGING
+#undef  SHUTTLE_CONSOLE_INTRANSIT
+#undef  SHUTTLE_CONSOLE_DESTINVALID
+#undef  SHUTTLE_CONSOLE_SUCCESS
+#undef  SHUTTLE_CONSOLE_ERROR
