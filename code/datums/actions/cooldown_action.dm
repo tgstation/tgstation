@@ -17,14 +17,6 @@
 	var/next_melee_use_time = 0
 	/// Whether or not you want the cooldown for the ability to display in text form
 	var/text_cooldown = TRUE
-	/// Setting for intercepting clicks before activating the ability
-	var/click_to_activate = FALSE
-	/// What icon to replace our mouse cursor with when active. Optional, Requires click_to_activate
-	var/ranged_mousepointer
-	/// The cooldown added onto the user's next click. Requires click_to_activate
-	var/click_cd_override = CLICK_CD_CLICK_ABILITY
-	/// If TRUE, we will unset after using our click intercept. Requires click_to_activate
-	var/unset_after_click = TRUE
 	/// Shares cooldowns with other abiliies, bitflag
 	var/shared_cooldown
 	/// List of prerequisite actions that are used in this sequenced ability, you cannot put other sequenced abilities in this
@@ -33,6 +25,14 @@
 	var/list/initialized_actions
 
 	// These are only used for click_to_activate actions
+	/// Setting for intercepting clicks before activating the ability
+	var/click_to_activate = FALSE
+	/// The cooldown added onto the user's next click.
+	var/click_cd_override = CLICK_CD_CLICK_ABILITY
+	/// If TRUE, we will unset after using our click intercept.
+	var/unset_after_click = TRUE
+	/// What icon to replace our mouse cursor with when active. Optional
+	var/ranged_mousepointer
 	/// The base icon_state of the overlay we apply
 	var/base_overlay_icon_state
 	/// The active icon_state of the overlay we apply
