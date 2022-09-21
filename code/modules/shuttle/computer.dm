@@ -141,13 +141,13 @@
 /obj/machinery/computer/shuttle/proc/send_shuttle(dest_id, mob/user)
 	if(!launch_check(user))
 		return SHUTTLE_CONSOLE_ACCESSDENIED
-	var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleId)
-	if(M.launch_status == ENDGAME_LAUNCHED)
+	var/obj/docking_port/mobile/shuttle_port = SSshuttle.getShuttle(shuttleId)
+	if(shuttle_port.launch_status == ENDGAME_LAUNCHED)
 		return SHUTTLE_CONSOLE_ENDGAME
 	if(no_destination_swap)
-		if(M.mode == SHUTTLE_RECHARGING)
+		if(shuttle_port.mode == SHUTTLE_RECHARGING)
 			return SHUTTLE_CONSOLE_RECHARGING
-		if(M.mode != SHUTTLE_IDLE)
+		if(shuttle_port.mode != SHUTTLE_IDLE)
 			return SHUTTLE_CONSOLE_INTRANSIT
 	var/list/dest_list = get_valid_destinations()
 	var/validdest = FALSE
