@@ -4,8 +4,8 @@
 /// Default cell drain per process on MODsuits
 #define DEFAULT_CHARGE_DRAIN 5
 
-/// Default time for a part to seal
-#define MOD_ACTIVATION_STEP_TIME 2 SECONDS
+/// Default time for the suit to seal.
+#define MOD_ACTIVATION_TIME 10 SECONDS
 
 /// Passive module, just acts when put in naturally.
 #define MODULE_PASSIVE 0
@@ -18,10 +18,6 @@
 
 //Defines used by the theme for clothing flags and similar
 #define CONTROL_LAYER "control_layer"
-#define HELMET_FLAGS "helmet_flags"
-#define CHESTPLATE_FLAGS "chestplate_flags"
-#define GAUNTLETS_FLAGS "gauntlets_flags"
-#define BOOTS_FLAGS "boots_flags"
 
 #define UNSEALED_LAYER "unsealed_layer"
 #define UNSEALED_CLOTHING "unsealed_clothing"

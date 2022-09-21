@@ -7,10 +7,6 @@
 	for(var/modpath in paths)
 		var/obj/item/mod/control/mod = new modpath()
 		TEST_ASSERT(mod.theme, "[modpath] spawned without a theme.")
-		TEST_ASSERT(mod.helmet, "[modpath] spawned without a helmet.")
-		TEST_ASSERT(mod.chestplate, "[modpath] spawned without a chestplate.")
-		TEST_ASSERT(mod.gauntlets, "[modpath] spawned without gauntlets.")
-		TEST_ASSERT(mod.boots, "[modpath] spawned without boots.")
 		var/list/modules = list()
 		var/complexity_max = mod.complexity_max
 		var/complexity = 0

@@ -43,8 +43,7 @@
 	actual_speed_added = max(0, min(mod.slowdown_active, speed_added))
 	mod.slowdown -= actual_speed_added
 	mod.wearer.update_equipment_speed_mods()
-	var/list/parts = mod.mod_parts + mod
-	for(var/obj/item/part as anything in parts)
+	for(var/obj/item/part as anything in mod.get_parts(items = TRUE, all = TRUE))
 		part.armor = part.armor.modifyRating(arglist(armor_values))
 		if(!remove_pressure_protection || !isclothing(part))
 			continue
@@ -61,11 +60,10 @@
 		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	mod.slowdown += actual_speed_added
 	mod.wearer.update_equipment_speed_mods()
-	var/list/parts = mod.mod_parts + mod
 	var/list/removed_armor = armor_values.Copy()
 	for(var/armor_type in removed_armor)
 		removed_armor[armor_type] = -removed_armor[armor_type]
-	for(var/obj/item/part as anything in parts)
+	for(var/obj/item/part as anything in mod.get_parts(items = TRUE, all = TRUE))
 		part.armor = part.armor.modifyRating(arglist(removed_armor))
 		if(!remove_pressure_protection || !isclothing(part))
 			continue
@@ -254,10 +252,10 @@
 	use_power_cost = initial(the_dna_lock_behind_the_slaughter.use_power_cost)
 
 /obj/item/mod/module/springlock/bite_of_87/on_install()
-	mod.activation_step_time *= 0.1
+	mod.activation_time *= 0.1
 
 /obj/item/mod/module/springlock/bite_of_87/on_uninstall(deleting = FALSE)
-	mod.activation_step_time *= 10
+	mod.activation_time *= 10
 
 /obj/item/mod/module/springlock/bite_of_87/on_suit_activation()
 	..()

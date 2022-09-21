@@ -412,11 +412,10 @@
 	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
 	if(!traveled_tiles)
 		return
-	var/list/parts = mod.mod_parts + mod
 	var/list/removed_armor = armor_values.Copy()
 	for(var/armor_type in removed_armor)
 		removed_armor[armor_type] = -removed_armor[armor_type] * traveled_tiles
-	for(var/obj/item/part as anything in parts)
+	for(var/obj/item/part as anything in mod.get_parts(items = TRUE, all = TRUE))
 		part.armor = part.armor.modifyRating(arglist(removed_armor))
 	if(traveled_tiles == max_traveled_tiles)
 		mod.slowdown += speed_added
@@ -436,8 +435,7 @@
 		if(traveled_tiles >= max_traveled_tiles)
 			return
 		traveled_tiles++
-		var/list/parts = mod.mod_parts + mod
-		for(var/obj/item/part as anything in parts)
+		for(var/obj/item/part as anything in mod.get_parts(items = TRUE, all = TRUE))
 			part.armor = part.armor.modifyRating(arglist(armor_values))
 		if(traveled_tiles >= max_traveled_tiles)
 			balloon_alert(mod.wearer, "fully ash covered")
@@ -456,11 +454,10 @@
 			mod.slowdown += actual_speed_added
 			mod.wearer.update_equipment_speed_mods()
 		traveled_tiles--
-		var/list/parts = mod.mod_parts + mod
 		var/list/removed_armor = armor_values.Copy()
 		for(var/armor_type in removed_armor)
 			removed_armor[armor_type] = -removed_armor[armor_type]
-		for(var/obj/item/part as anything in parts)
+		for(var/obj/item/part as anything in mod.get_parts(items = TRUE, all = TRUE))
 			part.armor = part.armor.modifyRating(arglist(removed_armor))
 		if(traveled_tiles <= 0)
 			balloon_alert(mod.wearer, "ran out of ash!")
