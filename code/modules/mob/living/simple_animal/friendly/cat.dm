@@ -34,7 +34,9 @@
 	collar_type = "cat"
 	can_be_held = TRUE
 	held_state = "cat2"
-	///In the case 'melee_damage_upper' is somehow raised above 0
+	///only for attacking rats
+	melee_damage_upper = 6
+	melee_damage_lower = 4
 	attack_verb_continuous = "claws"
 	attack_verb_simple = "claw"
 	attack_sound = 'sound/weapons/slash.ogg'
@@ -221,7 +223,7 @@
 			else
 				manual_emote(pick("grooms [p_their()] fur.", "twitches [p_their()] whiskers.", "shakes out [p_their()] coat."))
 
-	//MICE!
+	//MICE! RATS! OH MY!
 	if((src.loc) && isturf(src.loc))
 		if(!stat && !resting && !buckled)
 			for(var/mob/living/simple_animal/mouse/M in view(1,src))
@@ -237,6 +239,17 @@
 					movement_target = null
 					stop_automated_movement = 0
 					break
+			//Scratching anything in the rat faction, this includes people who overdosed on rat spit!
+			for (var/mob/living/M in view(1,src))
+				if(!M.stat && Adjacent(M))
+					if(faction_check(M.faction.Copy(), list("rat")))
+						//Copied from hostile simple animal code
+						//in_melee = TRUE
+						if(SEND_SIGNAL(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, M) & COMPONENT_HOSTILE_NO_ATTACK)
+							return FALSE //but more importantly return before attack_animal called
+						var/result = M.attack_animal(src)
+						SEND_SIGNAL(src, COMSIG_HOSTILE_POST_ATTACKINGTARGET, M, result)
+						break
 			for(var/obj/item/toy/cattoy/T in view(1,src))
 				if (T.cooldown < (world.time - 400))
 					manual_emote("bats \the [T] around with \his paw!")
@@ -261,6 +274,12 @@
 					if(isturf(snack.loc) && !snack.stat)
 						movement_target = snack
 						break
+				//Targeting mobs in the rat faction
+				for(var/mob/living/rat in oview(src,3))
+					if(isturf(rat.loc) && !rat.stat)
+						if(faction_check(rat.faction.Copy(), list("rat")))
+							movement_target = rat
+							break
 			if(movement_target)
 				stop_automated_movement = 1
 				SSmove_manager.move_to(src, movement_target, 0, 3)
