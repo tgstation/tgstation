@@ -483,8 +483,6 @@
 	var/mob/living/carbon/victim = exposed_mob
 	if(methods & (INGEST | VAPOR))
 		var/tear_proof = victim.is_eyes_covered()
-
-		//check for protection
 		if (!tear_proof)
 			to_chat(exposed_mob, span_warning("Your eyes sting!"))
 			victim.emote("cry")
