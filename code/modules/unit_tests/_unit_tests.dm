@@ -96,6 +96,7 @@
 #include "gas_transfer.dm"
 #include "get_turf_pixel.dm"
 #include "greyscale_config.dm"
+#include "hallucination_icons.dm"
 #include "heretic_knowledge.dm"
 #include "heretic_rituals.dm"
 #include "holidays.dm"

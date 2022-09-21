@@ -353,16 +353,17 @@
 		seal = null
 		update_appearance()
 
-/obj/machinery/door/airlock/bumpopen(mob/living/user) //Airlocks now zap you when you 'bump' them open when they're electrified. --NeoFite
-	if(!issilicon(usr))
-		if(isElectrified() && shock(user, 100))
-			return
-		else if(user.hallucinating() && iscarbon(user) && prob(1) && !operating)
-			var/mob/living/carbon/C = user
-			if(!C.wearing_shock_proof_gloves())
-				new /datum/hallucination/shock(C)
-				return
-	..()
+/obj/machinery/door/airlock/bumpopen(mob/living/user)
+	if(issilicon(user) || !iscarbon(user))
+		return ..()
+
+	if(isElectrified() && shock(user, 100))
+		return
+
+	if(SEND_SIGNAL(user, COMSIG_CARBON_BUMPED_AIRLOCK_OPEN, src) & STOP_BUMP)
+		return
+
+	return ..()
 
 /obj/machinery/door/airlock/proc/isElectrified()
 	return (secondsElectrified != MACHINE_NOT_ELECTRIFIED)
