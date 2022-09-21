@@ -250,9 +250,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 		plane_masters_update()
 		for(var/M in mymob.observers)
 			show_hud(hud_version, M)
-	else
-		if(viewmob.hud_used)
-			viewmob.hud_used.plane_masters_update()
+	else if(viewmob.hud_used)
+		viewmob.hud_used.plane_masters_update()
 
 	return TRUE
 
