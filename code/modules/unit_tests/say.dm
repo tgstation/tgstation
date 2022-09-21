@@ -41,7 +41,7 @@
 /mob/living
 	var/last_say_args_ref
 
-/// This unit test trnanslates a string from one language to another depending on if the person can understand the
+/// This unit test translates a string from one language to another depending on if the person can understand the
 /datum/unit_test/translate_language
 	var/mob/host_mob
 
