@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes: 
-  - bugfix: "Removes a duplicated fax machine from the tram cargo lobby which wasn't supposed to be there."
