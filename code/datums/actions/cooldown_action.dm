@@ -72,7 +72,7 @@
 
 	// If we don't change the icon state, or don't apply a special overlay,
 	// we need to show it's active somehow. So, make it greeeen
-	if(base_icon_state || active_overlay_icon_state || !IsAvailable() || !is_action_active(button))
+	if(active_icon_state || active_overlay_icon_state || !IsAvailable() || !is_action_active(button))
 		return
 	button.color = COLOR_GREEN
 
