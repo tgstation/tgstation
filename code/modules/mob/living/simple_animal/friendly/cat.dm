@@ -226,7 +226,7 @@
 	//MICE! RATS! OH MY!
 	if((src.loc) && isturf(src.loc))
 		if(!stat && !resting && !buckled)
-			for(var/mob/living/simple_animal/mouse/M in view(1,src))
+			for(var/mob/living/M in view(1,src))
 				if(istype(M, /mob/living/simple_animal/mouse/brown/tom) && inept_hunter)
 					if(COOLDOWN_FINISHED(src, emote_cooldown))
 						visible_message(span_warning("[src] chases [M] around, to no avail!"))
@@ -234,17 +234,17 @@
 						COOLDOWN_START(src, emote_cooldown, 1 MINUTES)
 					break
 				if(!M.stat && Adjacent(M))
-					manual_emote("splats \the [M]!")
-					M.splat()
-					movement_target = null
-					stop_automated_movement = 0
-					break
-			//Scratching anything in the rat faction, this includes people who overdosed on rat spit!
-			for (var/mob/living/M in view(1,src))
-				if(!M.stat && Adjacent(M))
+					//Mouse splatting
+					if(istype(M, /mob/living/simple_animal/mouse))
+						manual_emote("splats \the [M]!")
+						var/mob/living/simple_animal/mouse/snack = M
+						snack.splat()
+						movement_target = null
+						stop_automated_movement = 0
+						break
+					//Rat scratching, or anything in the rat faction
 					if(faction_check(M.faction.Copy(), list("rat")))
 						//Copied from hostile simple animal code
-						//in_melee = TRUE
 						if(SEND_SIGNAL(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, M) & COMPONENT_HOSTILE_NO_ATTACK)
 							return FALSE //but more importantly return before attack_animal called
 						var/result = M.attack_animal(src)
@@ -270,15 +270,11 @@
 			if( !movement_target || !(movement_target.loc in oview(src, 3)) )
 				movement_target = null
 				stop_automated_movement = 0
-				for(var/mob/living/simple_animal/mouse/snack in oview(src,3))
-					if(isturf(snack.loc) && !snack.stat)
-						movement_target = snack
-						break
-				//Targeting mobs in the rat faction
-				for(var/mob/living/rat in oview(src,3))
-					if(isturf(rat.loc) && !rat.stat)
-						if(faction_check(rat.faction.Copy(), list("rat")))
-							movement_target = rat
+				//Targeting mice and mobs in the rat faction
+				for(var/mob/living/target in oview(src,3))
+					if(isturf(target.loc) && !target.stat)
+						if(faction_check(target.faction.Copy(), list("rat")) || istype(target, /mob/living/simple_animal/mouse))
+							movement_target = target
 							break
 			if(movement_target)
 				stop_automated_movement = 1
