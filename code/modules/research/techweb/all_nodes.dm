@@ -272,6 +272,7 @@
 		"dropper",
 		"hemostat",
 		"large_beaker",
+		"mmi_m",
 		"operating",
 		"petri_dish",
 		"pillbottle",
