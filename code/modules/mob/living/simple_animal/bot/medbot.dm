@@ -63,6 +63,8 @@
 	///The name we got when we were tipped
 	var/tipper_name
 
+	var/alt_heal_desc = "NULL"  // log description for alt heal
+
 	///Last announced healing a person in critical condition
 	COOLDOWN_DECLARE(last_patient_message)
 	///Last announced trying to catch up to a new patient
@@ -547,7 +549,9 @@
 					var/obj/item/storage/medkit/medkit = medkit_type
 					if(treatment_method == BRUTE && initial(medkit.damagetype_healed) == BRUTE) //specialized brute gets a bit of bonus, as a snack.
 						healies *= 1.1
-					if(bot_cover_flags & BOT_COVER_EMAGGED)
+					if(alt_heal(patient))
+						log_combat(src, patient, "alt healed", "internal tools", "([uppertext(alt_heal_desc)])")
+					else if(bot_cover_flags & BOT_COVER_EMAGGED)
 						patient.reagents.add_reagent(/datum/reagent/toxin/chloralhydrate, 5)
 						patient.apply_damage_type((healies*1),treatment_method)
 						log_combat(src, patient, "pretended to tend wounds on", "internal tools", "([uppertext(treatment_method)]) (EMAGGED)")
@@ -570,6 +574,9 @@
 		else
 			tending = FALSE
 
+/mob/living/simple_animal/bot/medbot/alt_heal(mob/living/carbon/C)
+	return
+
 /mob/living/simple_animal/bot/medbot/explode()
 	var/atom/Tsec = drop_location()
 
@@ -587,6 +594,76 @@
 	COOLDOWN_START(src, last_patient_message, MEDBOT_PATIENTSPEAK_DELAY)
 	var/area/location = get_area(src)
 	speak("Medical emergency! [crit_patient || "A patient"] is in critical condition at [location]!", radio_channel)
+
+/mob/living/simple_animal/bot/medbot/cola
+	name = "Sponsored Medibot"
+	desc = "Even medical isn't safe from corporate greed. May contain cola."
+	radio_key = /obj/item/encryptionkey/medical_sponsor  // grants cargo
+	COOLDOWN_STATIC_DECLARE(fund)
+	var/static/bot_budget = 1000  // initial value (will get refilled instantly)
+	var/static/bot_budget_refill_size = 1000
+	var/cola_cost = 250  // at start, uses entire budget in 8 heals
+	skin = "advanced"  // looks cola-y
+
+/mob/living/simple_animal/bot/medbot/cola/New()
+	START_PROCESSING(SSobj, src)
+
+/mob/living/simple_animal/bot/medbot/cola/process()
+	if(COOLDOWN_FINISHED(src, fund))
+		refill()
+		COOLDOWN_START(src, fund, 2 MINUTES)
+
+/obj/item/mop/advanced/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/mob/living/simple_animal/bot/medbot/explode()
+	. = ..()
+	new /obj/item/reagent_containers/food/drinks/soda_cans/cola(drop_location())
+
+/mob/living/simple_animal/bot/medbot/cola/proc/refill()
+	speak("Sponsorship payout for [bot_budget_refill_size] credits processed.")
+	playsound(src, 'sound/voice/medbot/funding.ogg', 50)
+	bot_budget += bot_budget_refill_size
+	soft_reset()
+
+/mob/living/simple_animal/bot/medbot/cola/alt_heal(mob/living/carbon/patient)
+	if(emagged == 2)  // always 13loko if emagged
+		patient.reagents.add_reagent(/datum/reagent/consumable/ethanol/thirteenloko, 10)  // od's in 6 ticks
+		patient.apply_damage_type(2,TOX)  // extra toxic loko
+		return TRUE
+	if(prob(80))
+		return FALSE
+	if(!pay_out())
+		say("Budget dropped below profit margins, entering conserve mode...")
+		return FALSE
+
+	// alright, no special cases, prob check passed, run the standard cola inject
+
+	patient.reagents.add_reagent(/datum/reagent/consumable/space_cola, 10)
+	var/list/messagevoice = list(  // assorted space cola quotes
+		"The taste that can't be beat!" = 'sound/voice/medbot/beat.ogg',
+		"Please, have a drink!" = 'sound/voice/medbot/haveone.ogg',
+		"Refreshing!" = 'sound/voice/medbot/refreshing.ogg',
+		"Space Cola is our sponsor!" = 'sound/voice/medbot/sponsor.ogg',
+		"The best drinks in space!" = 'sound/voice/medbot/thebest.ogg',
+		"Hope you're thirsty!" = 'sound/voice/medbot/thirsty.ogg')
+	var/message = pick(messagevoice)
+	speak(message)
+	playsound(src, messagevoice[message], 50)
+
+	return TRUE
+
+/mob/living/simple_animal/bot/medbot/cola/proc/pay_out(announce = TRUE)
+	var/new_bot_budget = bot_budget - cola_cost
+	if(new_bot_budget <= 0)
+		return FALSE
+	bot_budget = new_bot_budget
+	var/datum/bank_account/bank_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
+	bank_account.adjust_money(cola_cost)
+	if(announce)
+		speak("[cola_cost] credits paid out from sponsors.", RADIO_CHANNEL_SUPPLY)
+	return TRUE
 
 #undef MEDBOT_NEW_PATIENTSPEAK_DELAY
 #undef MEDBOT_PATIENTSPEAK_DELAY

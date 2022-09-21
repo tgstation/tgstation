@@ -105,6 +105,10 @@
 	greyscale_config = /datum/greyscale_config/encryptionkey_service
 	greyscale_colors = "#ebebeb#3bca5a"
 
+/obj/item/encryptionkey/medical_sponsor
+	name = "inaccessible radio encryption key"
+	channels = list(RADIO_CHANNEL_SUPPLY = 1, RADIO_CHANNEL_MEDICAL = 1)
+
 /obj/item/encryptionkey/headset_com
 	name = "command radio encryption key"
 	icon_state = "cypherkey_cube"

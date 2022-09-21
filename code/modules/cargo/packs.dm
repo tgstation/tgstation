@@ -116,6 +116,17 @@
 					/obj/item/clothing/gloves/color/latex/nitrile)
 	crate_name = "bio suit crate"
 
+/datum/supply_pack/emergency/cola_bot
+	name = "Robust Softdrinks branded Medibots"
+	desc = "A pack of cheap medibots, sponsored by Robust Softdrinks!."
+	cost = 500
+	contains = list(
+		/mob/living/simple_animal/bot/medbot/cola,
+		/mob/living/simple_animal/bot/medbot/cola,
+		/mob/living/simple_animal/bot/medbot/cola,
+		/mob/living/simple_animal/bot/medbot/cola,
+	)
+
 /datum/supply_pack/emergency/equipment
 	name = "Emergency Bot/Internals Crate"
 	desc = "Explosions got you down? These supplies are guaranteed to patch up holes, in stations and people alike! Comes with two floorbots, two medbots, five oxygen masks and five small oxygen tanks."

@@ -2896,6 +2896,7 @@
 #include "code\modules\events\bureaucratic_error.dm"
 #include "code\modules\events\camerafailure.dm"
 #include "code\modules\events\carp_migration.dm"
+#include "code\modules\events\cola_medbot.dm"
 #include "code\modules\events\communications_blackout.dm"
 #include "code\modules\events\creep_awakening.dm"
 #include "code\modules\events\disease_outbreak.dm"
