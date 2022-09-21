@@ -226,30 +226,32 @@
 	//MICE! RATS! OH MY!
 	if((src.loc) && isturf(src.loc))
 		if(!stat && !resting && !buckled)
+			//Targeting anything in the rat faction nearby
 			for(var/mob/living/M in view(1,src))
-				if(istype(M, /mob/living/simple_animal/mouse/brown/tom) && inept_hunter)
-					if(COOLDOWN_FINISHED(src, emote_cooldown))
-						visible_message(span_warning("[src] chases [M] around, to no avail!"))
-						step(M, pick(GLOB.cardinals))
-						COOLDOWN_START(src, emote_cooldown, 1 MINUTES)
-					break
 				if(!M.stat && Adjacent(M))
-					//Mouse splatting
-					if(istype(M, /mob/living/simple_animal/mouse))
-						manual_emote("splats \the [M]!")
-						var/mob/living/simple_animal/mouse/snack = M
-						snack.splat()
-						movement_target = null
-						stop_automated_movement = 0
-						break
-					//Rat scratching, or anything in the rat faction
-					if(faction_check(M.faction.Copy(), list("rat")))
+					if (faction_check(M.faction.Copy(), list("rat")))
+						//Jerry can never catch Tom snowflaking
+						if(istype(M, /mob/living/simple_animal/mouse/brown/tom) && inept_hunter)
+							if(COOLDOWN_FINISHED(src, emote_cooldown))
+								visible_message(span_warning("[src] chases [M] around, to no avail!"))
+								step(M, pick(GLOB.cardinals))
+								COOLDOWN_START(src, emote_cooldown, 1 MINUTES)
+							break
+						//Mouse splatting
+						if(istype(M, /mob/living/simple_animal/mouse))
+							manual_emote("splats \the [M]!")
+							var/mob/living/simple_animal/mouse/snack = M
+							snack.splat()
+							movement_target = null
+							stop_automated_movement = 0
+							break
+						//Rat scratching, or anything else that could be in the rat faction
 						//Copied from hostile simple animal code
 						if(SEND_SIGNAL(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, M) & COMPONENT_HOSTILE_NO_ATTACK)
 							return FALSE //but more importantly return before attack_animal called
 						var/result = M.attack_animal(src)
 						SEND_SIGNAL(src, COMSIG_HOSTILE_POST_ATTACKINGTARGET, M, result)
-						break
+
 			for(var/obj/item/toy/cattoy/T in view(1,src))
 				if (T.cooldown < (world.time - 400))
 					manual_emote("bats \the [T] around with \his paw!")
@@ -273,7 +275,7 @@
 				//Targeting mice and mobs in the rat faction
 				for(var/mob/living/target in oview(src,3))
 					if(isturf(target.loc) && !target.stat)
-						if(faction_check(target.faction.Copy(), list("rat")) || istype(target, /mob/living/simple_animal/mouse))
+						if(faction_check(target.faction.Copy(), list("rat")))
 							movement_target = target
 							break
 			if(movement_target)
