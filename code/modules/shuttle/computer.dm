@@ -48,8 +48,8 @@
 		to_chat(user, span_warning("You start mashing buttons at random!"))
 		if(do_after(user, 10 SECONDS, target = src))
 			var/list/dest_list = get_valid_destinations()
-			if(!dest_list.len)
-				to_chat(user, span_warning("Nothing seems to happen."))
+			if(!dest_list.len) //No valid destinations
+				to_chat(user, span_warning("The console shows a flashing error message, but you can't comprehend it."))
 				return
 			var/list/destination = pick(dest_list)
 			switch (send_shuttle(destination["id"], user))
@@ -149,13 +149,14 @@
 			return SHUTTLE_CONSOLE_RECHARGING
 		if(shuttle_port.mode != SHUTTLE_IDLE)
 			return SHUTTLE_CONSOLE_INTRANSIT
+	//check to see if the dest_id passed from tgui is actually a valid destination
 	var/list/dest_list = get_valid_destinations()
 	var/validdest = FALSE
 	for(var/list/dest_data in dest_list)
 		if(dest_data["id"] == dest_id)
-			validdest = TRUE
+			validdest = TRUE //Found our destination, we can skip ahead now
 			break
-	if(!validdest)
+	if(!validdest) //Didn't find our destination in the list of valid destinations, something bad happening
 		log_admin("[user] attempted to href dock exploit on [src] with target location \"[dest_id]\"")
 		message_admins("[user] just attempted to href dock exploit on [src] with target location \"[dest_id]\"")
 		return SHUTTLE_CONSOLE_DESTINVALID
@@ -177,7 +178,7 @@
 
 	switch(action)
 		if("move")
-			switch (send_shuttle(params["shuttle_id"], usr))
+			switch (send_shuttle(params["shuttle_id"], usr)) //Try to send the shuttle, tell the user what happened
 				if (SHUTTLE_CONSOLE_ACCESSDENIED)
 					to_chat(usr, span_warning("Access denied."))
 					return
