@@ -41,6 +41,7 @@
 /mob/living
 	var/last_say_args_ref
 
+/// This unit test trnanslates a string from one language to another depending on if the person can understand the
 /datum/unit_test/translate_language
 	var/mob/host_mob
 
@@ -55,19 +56,10 @@
 	host_mob.grant_language(/datum/language/beachbum, spoken=TRUE, understood=TRUE) // can now understand
 	TEST_ASSERT_EQUAL(surfer_quote, host_mob.translate_language(host_mob, /datum/language/beachbum, surfer_quote), "Language test failed. Mob was supposed NOT to understand: [surfer_quote]")
 
+/// This runs some simple speech tests on a speaker and listener and determines if a person can hear whispering or speaking as they are moved a distance away
 /datum/unit_test/speech
-	var/handle_raw_speech_result
 	var/handle_speech_result
 	var/handle_hearing_result
-
-/datum/unit_test/speech/proc/handle_raw_speech(datum/source, mob/speaker, message)
-	SIGNAL_HANDLER
-
-	// check if source == speaker?
-	TEST_ASSERT(speaker, "Handle raw speech signal does not have a speaker arg")
-	TEST_ASSERT(message, "Handle raw speech signal does not have a message arg")
-
-	handle_raw_speech_result = TRUE
 
 /datum/unit_test/speech/proc/handle_speech(datum/source, mob/speech_args)
 	SIGNAL_HANDLER
@@ -112,20 +104,54 @@
 	var/mob/living/carbon/human/speaker = allocate(/mob/living/carbon/human)
 	var/mob/living/carbon/human/listener = allocate(/mob/living/carbon/human)
 
-	RegisterSignal(speaker, COMSIG_GLOB_LIVING_SAY_SPECIAL, .proc/handle_raw_speech)
 	RegisterSignal(speaker, COMSIG_MOB_SAY, .proc/handle_speech)
 	RegisterSignal(listener, COMSIG_MOVABLE_HEAR, .proc/handle_hearing)
 
 	speaker.forceMove(run_loc_floor_bottom_left)
 	// move listener 1 tiles away
 	listener.forceMove(locate(run_loc_floor_bottom_left.x + 1, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
-	speaker.say("The quick brown fox jumps over the lazy dog", spans = list(SPAN_YELL))
 
-	TEST_ASSERT(handle_raw_speech_result, "Handle raw speech signal was not fired")
+	// speaking
+	speaker.say("The quick brown fox jumps over the lazy dog")
 	TEST_ASSERT(handle_speech_result, "Handle speech signal was not fired")
 	TEST_ASSERT(handle_hearing_result, "Handle hearing signal was not fired")
+	handle_speech_result = FALSE
+	handle_hearing_result = FALSE
+	// whispering
+	speaker.whisper("The quick brown fox jumps over the lazy dog")
+	TEST_ASSERT(handle_speech_result, "Handle speech signal was not fired")
+	TEST_ASSERT(handle_hearing_result, "Handle hearing signal was not fired")
+	handle_speech_result = FALSE
+	handle_hearing_result = FALSE
 
 	// move listener 5 tiles away (for whisper testing)
 	listener.forceMove(locate(run_loc_floor_bottom_left.x + 5, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
+
+	// speaking
+	speaker.say("The quick brown fox jumps over the lazy dog")
+	TEST_ASSERT(handle_speech_result, "Handle speech signal was not fired")
+	TEST_ASSERT(handle_hearing_result, "Handle hearing signal was not fired")
+	handle_speech_result = FALSE
+	handle_hearing_result = FALSE
+	// whispering
+	speaker.whisper("The quick brown fox jumps over the lazy dog")
+	TEST_ASSERT(handle_speech_result, "Handle speech signal was not fired")
+	TEST_ASSERT(!handle_hearing_result, "Handle hearing signal was not fired") // shouldn't be able to hear from this distance
+	handle_speech_result = FALSE
+	handle_hearing_result = FALSE
+
 	// move listener 10 tiles away (should be out of range of speaker)
 	listener.forceMove(locate(run_loc_floor_bottom_left.x + 10, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
+
+	// speaking
+	speaker.say("The quick brown fox jumps over the lazy dog")
+	TEST_ASSERT(handle_speech_result, "Handle speech signal was not fired")
+	TEST_ASSERT(!handle_hearing_result, "Handle hearing signal was not fired") // shouldn't be able to hear from this distance
+	handle_speech_result = FALSE
+	handle_hearing_result = FALSE
+	// whispering
+	speaker.whisper("The quick brown fox jumps over the lazy dog")
+	TEST_ASSERT(handle_speech_result, "Handle speech signal was not fired")
+	TEST_ASSERT(!handle_hearing_result, "Handle hearing signal was not fired") // shouldn't be able to hear from this distance
+	handle_speech_result = FALSE
+	handle_hearing_result = FALSE
