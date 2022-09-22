@@ -575,7 +575,7 @@
 		else
 			tending = FALSE
 
-/mob/living/simple_animal/bot/medbot/alt_heal(mob/living/carbon/C)
+/mob/living/simple_animal/bot/medbot/proc/alt_heal(mob/living/carbon/C)
 	return
 
 /mob/living/simple_animal/bot/medbot/explode()
@@ -600,7 +600,7 @@
 	name = "Sponsored Medibot"
 	desc = "Even medical isn't safe from corporate greed. May contain cola."
 	radio_key = /obj/item/encryptionkey/medical_sponsor  // grants cargo
-	COOLDOWN_STATIC_DECLARE(fund)
+	COOLDOWN_DECLARE(fund)
 	var/static/bot_budget = 1000  // initial value (will get refilled instantly)
 	var/static/bot_budget_refill_size = 1000
 	var/cola_cost = 250  // at start, uses entire budget in 8 heals

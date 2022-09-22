@@ -22,10 +22,6 @@
 	if(alert("Spawn at current location?","Targeted Delivery", "Yes", "No") == "Yes")
 		special_target = get_turf(usr)
 
-
-/datum/round_event/cola_bot
-	announceWhen = 0
-
 /datum/round_event/cola_bot/announce(fake)
 	priority_announce("After many negotiations, Robust Softdrinks has agreed to sponsor our station, in return for supplying specially modified medical bots. Nanotrasen and Robust Softdrinks are not responsible for any injuries or death that may occur as a result.", "General Alert")
 
