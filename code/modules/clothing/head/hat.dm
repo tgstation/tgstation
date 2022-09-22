@@ -77,8 +77,8 @@
 /obj/item/clothing/head/cowboy
 	name = "bounty hunting hat"
 	desc = "Ain't nobody gonna cheat the hangman in my town."
-	icon = 'icons/obj/clothing/head/billycock.dmi'
-	worn_icon = 'icons/mob/clothing/head/billycock.dmi'
+	icon = 'icons/obj/clothing/head/cowboy.dmi'
+	worn_icon = 'icons/mob/clothing/head/cowboy.dmi'
 	icon_state = "cowboy"
 	worn_icon_state = "hunter"
 	inhand_icon_state = "hunter"
