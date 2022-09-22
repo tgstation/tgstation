@@ -18,6 +18,10 @@
 	var/seconds_electrified = MACHINE_NOT_ELECTRIFIED
 	/// If true, the fax machine is jammed and needs cleaning
 	var/jammed = FALSE
+	/// Determines the possibility of sending papers to the additional faxes.
+	var/access_additional_faxes = FALSE
+	/// Defines a list of accesses whose owners can open a connection with the additional faxes.
+	var/static/access_additional_faxes_required = list(ACCESS_CAPTAIN)
 	/// Necessary to hide syndicate faxes from the general list. Doesn't mean he's EMAGGED!
 	var/syndicate_network = FALSE
 	/// True if the fax machine should be visible to other fax machines in general.
@@ -150,6 +154,31 @@
 		return
 	return ..()
 
+/obj/machinery/fax/CtrlClick(mob/living/user)
+	. = ..()
+	if(access_additional_faxes_check(user))
+		access_additional_faxes_toggle()
+
+// Checks if the card has access to switch "legal" faxes of administrators.
+/obj/machinery/fax/proc/access_additional_faxes_check(mob/living/user)
+	if(isAdminGhostAI(user))
+		return TRUE
+
+	var/obj/item/card/id/used_id = user.get_idcard(TRUE)
+	// We check if it makes sense to check access at all.
+	if(!access_additional_faxes_required || !used_id.access)
+		return FALSE
+
+	for(var/requested_access in access_additional_faxes_required)
+		if(requested_access in used_id.access)
+			return TRUE
+	return FALSE
+
+// Switches access to the "legal" administrator's fax list. Access to the "illegal" is switched by hacking.
+/obj/machinery/fax/proc/access_additional_faxes_toggle()
+	access_additional_faxes = !access_additional_faxes
+	say("The channel of communication with CentCom is [access_additional_faxes ? "open" : "close"].")
+
 /**
  * Attempts to clean out a jammed machine using a passed item.
  * Returns true if successful.
@@ -223,8 +252,11 @@
 	data["fax_id"] = fax_id
 	data["fax_name"] = fax_name
 	data["visible"] = visible_to_network
+	data["access_additional_faxes"] = access_additional_faxes
 	// In this case, we don't care if the fax is hacked or in the syndicate's network. The main thing is to check the visibility of other faxes.
 	data["syndicate_network"] = (syndicate_network || (obj_flags & EMAGGED))
+	data["additional_faxes_list"] = GLOB.additional_faxes_list
+	data["syndicate_faxes_list"] = GLOB.syndicate_faxes_list
 	data["has_paper"] = !!loaded_item_ref?.resolve()
 	data["fax_history"] = fax_history
 	return data
@@ -255,6 +287,17 @@
 				loaded_item_ref = null
 				update_appearance()
 				return TRUE
+		if("send_to_additional_fax")
+			var/obj/item/loaded = loaded_item_ref?.resolve()
+			if (!loaded)
+				return
+			if(istype(loaded, /obj/item/paper))
+				if(send_to_additional_faxes(loaded, usr, params["name"], params["color"]))
+					loaded_item_ref = null
+					update_appearance()
+					return TRUE
+			else
+				say("The destination fax blocks the reception of this item.")
 		if("history_clear")
 			history_clear()
 			return TRUE
@@ -298,6 +341,24 @@
 		playsound(src, 'sound/machines/high_tech_confirm.ogg', 50, FALSE)
 		return TRUE
 	return FALSE
+
+/**
+ * The procedure for sending a paper to virtual admins fax machine.
+ *
+ * This procedure is similar to the send procedure except that it sends the paper to
+ * a "virtual" fax to a special administrator list.
+ * Arguments:
+ * * paper - The paper to be sent.
+ * * sender - Reference to the sender's substance.
+ * * receiver_name - The recipient's fax name, which will be displayed in the administrator's list.
+ * * receiver_color - The color the receiver_name will be colored in.
+ */
+/obj/machinery/fax/proc/send_to_additional_faxes(obj/item/paper/paper, mob/sender, receiver_name, receiver_color)
+	GLOB.fax_manager.receive_request(sender, src, receiver_name, paper, receiver_color)
+	history_add("Send", receiver_name)
+	INVOKE_ASYNC(src, .proc/animate_object_travel, paper, "fax_receive", find_overlay_state(paper, "send"))
+	playsound(src, 'sound/machines/high_tech_confirm.ogg', 50, FALSE)
+	return TRUE
 
 /**
  * Procedure for accepting papers from another fax machine.

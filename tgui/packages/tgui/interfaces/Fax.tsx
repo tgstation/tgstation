@@ -9,7 +9,10 @@ type FaxData = {
   fax_name: string;
   visible: boolean;
   has_paper: string;
+  access_additional_faxes: boolean;
+  additional_faxes_list: AdditionalFaxesList[];
   syndicate_network: boolean;
+  syndicate_faxes_list: AdditionalFaxesList[];
   fax_history: FaxHistory[];
 };
 
@@ -19,6 +22,11 @@ type FaxInfo = {
   visible: boolean;
   has_paper: boolean;
   syndicate_network: boolean;
+};
+
+type AdditionalFaxesList = {
+  fax_name: string;
+  button_color: string;
 };
 
 type FaxHistory = {
@@ -34,9 +42,9 @@ export const Fax = (props, context) => {
     data.syndicate_network
       ? data.faxes.filter((filterFax: FaxInfo) => filterFax.visible)
       : data.faxes.filter(
-        (filterFax: FaxInfo) =>
-          filterFax.visible && !filterFax.syndicate_network
-      )
+          (filterFax: FaxInfo) =>
+            filterFax.visible && !filterFax.syndicate_network
+        )
   );
   return (
     <Window width={340} height={540}>
@@ -69,6 +77,38 @@ export const Fax = (props, context) => {
         </Section>
         <Section title="Send">
           <Box mt={0.4}>
+            {!!data.access_additional_faxes &&
+              data.additional_faxes_list.map((fax: AdditionalFaxesList) => (
+                <Button
+                  key={fax.fax_name}
+                  title={fax.fax_name}
+                  disabled={!data.has_paper}
+                  backgroundColor={fax.button_color}
+                  onClick={() =>
+                    act('send_to_additional_fax', {
+                      name: fax.fax_name,
+                      color: fax.button_color,
+                    })
+                  }>
+                  {fax.fax_name}
+                </Button>
+              ))}
+            {!!data.syndicate_network &&
+              data.syndicate_faxes_list.map((fax: AdditionalFaxesList) => (
+                <Button
+                  key={fax.fax_name}
+                  title={fax.fax_name}
+                  disabled={!data.has_paper}
+                  backgroundColor={fax.button_color}
+                  onClick={() =>
+                    act('send_to_additional_fax', {
+                      name: fax.fax_name,
+                      color: fax.button_color,
+                    })
+                  }>
+                  {fax.fax_name}
+                </Button>
+              ))}
             {faxes.map((fax: FaxInfo) => (
               <Button
                 key={fax.fax_id}
@@ -99,18 +139,18 @@ export const Fax = (props, context) => {
             <Table.Cell>
               {data.fax_history !== null
                 ? data.fax_history.map((history: FaxHistory) => (
-                  <Table.Row key={history.history_type}>
-                    {
-                      <Box
-                        color={
-                          history.history_type === 'Send' ? 'Green' : 'Red'
-                        }>
-                        {history.history_type}
-                      </Box>
-                    }
-                    {history.history_fax_name} - {history.history_time}
-                  </Table.Row>
-                ))
+                    <Table.Row key={history.history_type}>
+                      {
+                        <Box
+                          color={
+                            history.history_type === 'Send' ? 'Green' : 'Red'
+                          }>
+                          {history.history_type}
+                        </Box>
+                      }
+                      {history.history_fax_name} - {history.history_time}
+                    </Table.Row>
+                  ))
                 : null}
             </Table.Cell>
           </Table>

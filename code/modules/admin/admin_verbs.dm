@@ -20,7 +20,8 @@ GLOBAL_PROTECT(admin_verbs_default)
 	/client/proc/tag_datum_mapview,
 	/client/proc/debugstatpanel,
 	/client/proc/fix_air, /*resets air in designated radius to its default atmos composition*/
-	/client/proc/requests
+	/client/proc/requests,
+	/client/proc/fax
 	)
 GLOBAL_LIST_INIT(admin_verbs_admin, world.AVerbsAdmin())
 GLOBAL_PROTECT(admin_verbs_admin)
