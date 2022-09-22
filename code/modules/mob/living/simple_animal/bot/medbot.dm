@@ -63,7 +63,8 @@
 	///The name we got when we were tipped
 	var/tipper_name
 
-	var/alt_heal_desc = "NULL"  // log description for alt heal
+	/// admin log desc for the alternate heal
+	var/alt_heal_desc = "NULL"
 
 	///Last announced healing a person in critical condition
 	COOLDOWN_DECLARE(last_patient_message)

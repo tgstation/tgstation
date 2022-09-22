@@ -1,7 +1,6 @@
 /*
 	spawns medibots that sometimes inject cola, and also pays cargo.
 	check medbot.dm for more info
-	-candycane/etherware
 */
 
 /datum/round_event_control/cola_bot
@@ -12,14 +11,15 @@
 	earliest_start = 5 MINUTES
 	max_occurrences = 20
 	category = EVENT_CATEGORY_FRIENDLY
+
+	/// saves a turf in case an admin wants to target a specific tile when spawning
 	var/atom/special_target
 
 /datum/round_event_control/cola_bot/admin_setup()
 	if(!check_rights(R_FUN))
 		return
 
-	var/aimed = alert("Spawn at current location?","Targeted Delivery", "Yes", "No")
-	if(aimed == "Yes")
+	if(alert("Spawn at current location?","Targeted Delivery", "Yes", "No") == "Yes")
 		special_target = get_turf(usr)
 
 
@@ -31,8 +31,8 @@
 
 
 /datum/round_event/cola_bot/start()
-	var/datum/round_event_control/cola_bot/C = control
-	var/turf/special_target = C.special_target  // typecast and simplify in the same line wow
+	var/datum/round_event_control/cola_bot/controller = control
+	var/turf/special_target = controller.special_target  // typecast and simplify in the same line wow
 	for(var/I in 1 to rand(5, 10))
 
 		var/turf/airdrop = special_target || find_safe_turf(extended_safety_checks = TRUE, dense_atoms = FALSE)
