@@ -707,77 +707,8 @@
 		missing -= body_part.body_zone
 		if(body_part.is_pseudopart) //don't show injury text for fake bodyparts; ie chainsaw arms or synthetic armblades
 			continue
-		var/self_aware = FALSE
-		if(HAS_TRAIT(src, TRAIT_SELF_AWARE))
-			self_aware = TRUE
-		var/limb_max_damage = body_part.max_damage
-		var/status = ""
-		var/brutedamage = body_part.brute_dam
-		var/burndamage = body_part.burn_dam
-		if(hallucination)
-			if(prob(30))
-				brutedamage += rand(30,40)
-			if(prob(30))
-				burndamage += rand(30,40)
 
-		if(HAS_TRAIT(src, TRAIT_SELF_AWARE))
-			status = "[brutedamage] brute damage and [burndamage] burn damage"
-			if(!brutedamage && !burndamage)
-				status = "no damage"
-
-		else
-			if(body_part.type in hal_screwydoll)//Are we halucinating?
-				brutedamage = (hal_screwydoll[body_part.type] * 0.2)*limb_max_damage
-
-			if(brutedamage > 0)
-				status = body_part.light_brute_msg
-			if(brutedamage > (limb_max_damage*0.4))
-				status = body_part.medium_brute_msg
-			if(brutedamage > (limb_max_damage*0.8))
-				status = body_part.heavy_brute_msg
-			if(brutedamage > 0 && burndamage > 0)
-				status += " and "
-
-			if(burndamage > (limb_max_damage*0.8))
-				status += body_part.heavy_burn_msg
-			else if(burndamage > (limb_max_damage*0.2))
-				status += body_part.medium_burn_msg
-			else if(burndamage > 0)
-				status += body_part.light_burn_msg
-
-			if(status == "")
-				status = "OK"
-		var/no_damage
-		if(status == "OK" || status == "no damage")
-			no_damage = TRUE
-		var/isdisabled = ""
-		if(body_part.bodypart_disabled)
-			isdisabled = " is disabled"
-			if(no_damage)
-				isdisabled += " but otherwise"
-			else
-				isdisabled += " and"
-		combined_msg += "\t <span class='[no_damage ? "notice" : "warning"]'>Your [body_part.name][isdisabled][self_aware ? " has " : " is "][status].</span>"
-
-		for(var/thing in body_part.wounds)
-			var/datum/wound/W = thing
-			var/msg
-			switch(W.severity)
-				if(WOUND_SEVERITY_TRIVIAL)
-					msg = "\t [span_danger("Your [body_part.name] is suffering [W.a_or_from] [lowertext(W.name)].")]"
-				if(WOUND_SEVERITY_MODERATE)
-					msg = "\t [span_warning("Your [body_part.name] is suffering [W.a_or_from] [lowertext(W.name)]!")]"
-				if(WOUND_SEVERITY_SEVERE)
-					msg = "\t [span_warning("<b>Your [body_part.name] is suffering [W.a_or_from] [lowertext(W.name)]!</b>")]"
-				if(WOUND_SEVERITY_CRITICAL)
-					msg = "\t [span_warning("<b>Your [body_part.name] is suffering [W.a_or_from] [lowertext(W.name)]!!</b>")]"
-			combined_msg += msg
-
-		for(var/obj/item/I in body_part.embedded_objects)
-			if(I.isEmbedHarmless())
-				combined_msg += "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(body_part)]' class='warning'>There is \a [I] stuck to your [body_part.name]!</a>"
-			else
-				combined_msg += "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(body_part)]' class='warning'>There is \a [I] embedded in your [body_part.name]!</a>"
+		body_part.check_for_injuries(src, combined_msg)
 
 	for(var/t in missing)
 		combined_msg += span_boldannounce("Your [parse_zone(t)] is missing!")

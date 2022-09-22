@@ -73,6 +73,7 @@
 		mytray.adjust_toxic(3) //It is still toxic, mind you, but not to the same degree.
 
 #define LIQUID_PLASMA_BP (50+T0C)
+#define LIQUID_PLASMA_IG (325+T0C)
 
 /datum/reagent/toxin/plasma
 	name = "Plasma"
@@ -110,7 +111,8 @@
 		return
 	if(!holder.my_atom)
 		return
-
+	if((holder.flags & SEALED_CONTAINER) && (holder.chem_temp < LIQUID_PLASMA_IG))
+		return
 	var/atom/A = holder.my_atom
 	A.atmos_spawn_air("plasma=[volume];TEMP=[holder.chem_temp]")
 	holder.del_reagent(type)
@@ -304,11 +306,23 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/hallucinogens = 18)  //7.2 per 2 seconds
 
-/datum/reagent/toxin/mindbreaker/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(HAS_TRAIT(M, TRAIT_INSANITY))
-		M.hallucination = 0
+
+/datum/reagent/toxin/mindbreaker/on_mob_metabolize(mob/living/metabolizer)
+	. = ..()
+	ADD_TRAIT(metabolizer, TRAIT_HALLUCINATION_SUPPRESSED, type)
+
+/datum/reagent/toxin/mindbreaker/on_mob_end_metabolize(mob/living/metabolizer)
+	. = ..()
+	REMOVE_TRAIT(metabolizer, TRAIT_HALLUCINATION_SUPPRESSED, type)
+
+/datum/reagent/toxin/mindbreaker/on_mob_life(mob/living/carbon/metabolizer, delta_time, times_fired)
+	// mindbreaker toxin assuages hallucinations in those plagued with it, mentally
+	if(metabolizer.has_trauma_type(/datum/brain_trauma/mild/hallucinations))
+		metabolizer.remove_status_effect(/datum/status_effect/hallucination)
+
+	// otherwise it creates hallucinations. truly a miracle medicine.
 	else
-		M.hallucination += 5 * REM * delta_time
+		metabolizer.adjust_hallucinations(10 SECONDS * REM * delta_time)
 
 	return ..()
 
