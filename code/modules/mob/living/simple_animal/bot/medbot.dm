@@ -645,7 +645,7 @@
 	// alright, no special cases, prob check passed, run the standard cola inject
 
 	patient.reagents.add_reagent(/datum/reagent/consumable/space_cola, 10)
-	var/list/messagevoice = list(  // assorted space cola quotes
+	var/static/list/messagevoice = list(  // assorted space cola quotes
 		"The taste that can't be beat!" = 'sound/voice/medbot/beat.ogg',
 		"Please, have a drink!" = 'sound/voice/medbot/haveone.ogg',
 		"Refreshing!" = 'sound/voice/medbot/refreshing.ogg',

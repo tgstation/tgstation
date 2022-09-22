@@ -119,7 +119,7 @@
 /datum/supply_pack/emergency/cola_bot
 	name = "Robust Softdrinks Branded Medibots"
 	desc = "A pack of cheap medibots, sponsored by Robust Softdrinks!"
-	cost = 500
+	cost = CARGO_CRATE_VALUE * 1.5 // cheap plastic garbage
 	contains = list(
 		/mob/living/simple_animal/bot/medbot/cola,
 		/mob/living/simple_animal/bot/medbot/cola,
