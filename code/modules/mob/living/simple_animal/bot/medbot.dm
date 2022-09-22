@@ -617,7 +617,7 @@
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/mob/living/simple_animal/bot/medbot/explode()
+/mob/living/simple_animal/bot/medbot/cola/explode()
 	. = ..()
 	if(bot_cover_flags & BOT_COVER_EMAGGED)
 		new /obj/item/reagent_containers/cup/soda_cans/thirteenloko(drop_location())
@@ -625,7 +625,7 @@
 	new /obj/item/reagent_containers/cup/soda_cans/cola(drop_location())
 
 /mob/living/simple_animal/bot/medbot/cola/proc/refill()
-	speak("Sponsorship payout for [bot_budget_refill_size] credits processed.")
+	speak("Sponsorship payout for [bot_budget_refill_size] credits processed.", RADIO_CHANNEL_SUPPLY)
 	playsound(src, 'sound/voice/medbot/funding.ogg', 50)
 	bot_budget += bot_budget_refill_size
 	soft_reset()
@@ -638,7 +638,7 @@
 	if(prob(80))
 		return FALSE
 	if(!pay_out())
-		say("Budget dropped below profit margins, entering conserve mode...")
+		speak("Budget dropped below profit margins, entering conserve mode...", RADIO_CHANNEL_SUPPLY)
 		return FALSE
 
 	// alright, no special cases, prob check passed, run the standard cola inject
