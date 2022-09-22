@@ -9,6 +9,24 @@
 	help_verb = /mob/living/proc/sleeping_carp_help
 	display_combos = TRUE
 
+/datum/martial_art/the_sleeping_carp/teach(mob/living/target, make_temporary = FALSE)
+	. = ..()
+	if(!.)
+		return
+	ADD_TRAIT(target, TRAIT_NOGUNS, SLEEPING_CARP_TRAIT)
+	ADD_TRAIT(target, TRAIT_HARDLY_WOUNDED, SLEEPING_CARP_TRAIT)
+	ADD_TRAIT(target, TRAIT_NODISMEMBER, SLEEPING_CARP_TRAIT)
+	RegisterSignal(target, COMSIG_PARENT_ATTACKBY, .proc/on_attackby)
+	target.faction |= "carp" //:D
+
+/datum/martial_art/the_sleeping_carp/on_remove(mob/living/target)
+	REMOVE_TRAIT(target, TRAIT_NOGUNS, SLEEPING_CARP_TRAIT)
+	REMOVE_TRAIT(target, TRAIT_HARDLY_WOUNDED, SLEEPING_CARP_TRAIT)
+	REMOVE_TRAIT(target, TRAIT_NODISMEMBER, SLEEPING_CARP_TRAIT)
+	UnregisterSignal(target, COMSIG_PARENT_ATTACKBY)
+	target.faction -= "carp" //:(
+	. = ..()
+
 /datum/martial_art/the_sleeping_carp/proc/check_streak(mob/living/A, mob/living/D)
 	if(findtext(streak,STRONG_PUNCH_COMBO))
 		reset_streak()
@@ -98,42 +116,44 @@
 	log_combat(A, D, "disarmed (Sleeping Carp)")
 	return ..()
 
-/datum/martial_art/the_sleeping_carp/on_projectile_hit(mob/living/A, obj/projectile/P, def_zone)
-	. = ..()
-	if(A.incapacitated(IGNORE_GRAB)) //NO STUN
-		return BULLET_ACT_HIT
-	if(!(A.mobility_flags & MOBILITY_USE)) //NO UNABLE TO USE
-		return BULLET_ACT_HIT
-	var/datum/dna/dna = A.has_dna()
+/datum/martial_art/the_sleeping_carp/proc/can_deflect(mob/living/carp_user)
+	if(carp_user.incapacitated(IGNORE_GRAB)) //NO STUN
+		return FALSE
+	if(!(carp_user.mobility_flags & MOBILITY_USE)) //NO UNABLE TO USE
+		return FALSE
+	var/datum/dna/dna = carp_user.has_dna()
 	if(dna?.check_mutation(/datum/mutation/human/hulk)) //NO HULK
+		return FALSE
+	if(!isturf(carp_user.loc)) //NO MOTHERFLIPPIN MECHS!
+		return FALSE
+	return TRUE
+
+/datum/martial_art/the_sleeping_carp/on_projectile_hit(mob/living/carp_user, obj/projectile/P, def_zone)
+	. = ..()
+	if(!can_deflect(carp_user))
 		return BULLET_ACT_HIT
-	if(!isturf(A.loc)) //NO MOTHERFLIPPIN MECHS!
-		return BULLET_ACT_HIT
-	if(A.throw_mode)
-		A.visible_message(span_danger("[A] effortlessly swats the projectile aside! They can block bullets with their bare hands!"), span_userdanger("You deflect the projectile!"))
-		playsound(get_turf(A), pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
-		P.firer = A
+	if(carp_user.throw_mode)
+		carp_user.visible_message(span_danger("[carp_user] effortlessly swats the projectile aside! They can block bullets with their bare hands!"), span_userdanger("You deflect the projectile!"))
+		playsound(get_turf(carp_user), pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
+		P.firer = carp_user
 		P.set_angle(rand(0, 360))//SHING
 		return BULLET_ACT_FORCE_PIERCE
 	return BULLET_ACT_HIT
 
-/datum/martial_art/the_sleeping_carp/teach(mob/living/H, make_temporary = FALSE)
-	. = ..()
-	if(!.)
+///Signal from getting attacked with an item, for a special interaction with touch spells
+/datum/martial_art/the_sleeping_carp/proc/on_attackby(mob/living/carp_user, obj/item/attack_weapon, mob/attacker, params)
+	SIGNAL_HANDLER
+
+	if(!istype(attack_weapon, /obj/item/melee/touch_attack))
 		return
-	ADD_TRAIT(H, TRAIT_NOGUNS, SLEEPING_CARP_TRAIT)
-	ADD_TRAIT(H, TRAIT_HARDLY_WOUNDED, SLEEPING_CARP_TRAIT)
-	ADD_TRAIT(H, TRAIT_NODISMEMBER, SLEEPING_CARP_TRAIT)
-	H.faction |= "carp" //:D
-
-/datum/martial_art/the_sleeping_carp/on_remove(mob/living/H)
-	. = ..()
-	REMOVE_TRAIT(H, TRAIT_NOGUNS, SLEEPING_CARP_TRAIT)
-	REMOVE_TRAIT(H, TRAIT_HARDLY_WOUNDED, SLEEPING_CARP_TRAIT)
-	REMOVE_TRAIT(H, TRAIT_NODISMEMBER, SLEEPING_CARP_TRAIT)
-
-	H.faction -= "carp" //:(
-
+	if(!can_deflect(carp_user))
+		return
+	var/obj/item/melee/touch_attack/touch_weapon = attack_weapon
+	carp_user.visible_message(
+		span_danger("[carp_user] carefully dodges [attacker]'s [touch_weapon]!"),
+		span_userdanger("You take great care to remain untouched by [attacker]'s [touch_weapon]!"),
+	)
+	return COMPONENT_NO_AFTERATTACK
 
 /// Verb added to humans who learn the art of the sleeping carp.
 /mob/living/proc/sleeping_carp_help()

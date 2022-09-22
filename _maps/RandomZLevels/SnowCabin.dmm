@@ -3709,7 +3709,7 @@
 "sK" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/item/clothing/shoes/sneakers/brown,
-/obj/item/clothing/head/helmet/police{
+/obj/item/clothing/head/warden/police{
 	armor = list("melee" = 5, "bullet" = 5, "laser" = 5, "energy" = 2, "bomb" = 15, "bio" = 0, "fire" = 20, "acid" = 20);
 	desc = "I am the law!"
 	},

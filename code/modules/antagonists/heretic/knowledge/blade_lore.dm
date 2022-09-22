@@ -28,7 +28,7 @@
 /datum/heretic_knowledge/limited_amount/starting/base_blade
 	name = "The Cutting Edge"
 	desc = "Opens up the path of blades to you. \
-		Allows you to transmute a knife with two bars of silver to create a Darkened Blade. \
+		Allows you to transmute a knife with two bars of silver to create a Sundered Blade. \
 		You can create up to five at a time."
 	gain_text = "Our great ancestors forged swords and practiced sparring on the eve of great battles."
 	next_knowledge = list(/datum/heretic_knowledge/blade_grasp)
@@ -219,7 +219,7 @@
 	route = PATH_BLADE
 
 /// The amount of blood flow reduced per level of severity of gained bleeding wounds for Stance of the Torn Champion.
-#define BLOOD_FLOW_PER_SEVEIRTY 1
+#define BLOOD_FLOW_PER_SEVEIRTY -1
 
 /datum/heretic_knowledge/duel_stance
 	name = "Stance of the Torn Champion"
@@ -268,7 +268,7 @@
 	if(gained_wound.blood_flow <= 0)
 		return
 
-	gained_wound.blood_flow -= (gained_wound.severity * BLOOD_FLOW_PER_SEVEIRTY)
+	gained_wound.adjust_blood_flow(gained_wound.severity * BLOOD_FLOW_PER_SEVEIRTY)
 
 /datum/heretic_knowledge/duel_stance/proc/on_health_update(mob/living/source)
 	SIGNAL_HANDLER
@@ -291,7 +291,7 @@
 
 /datum/heretic_knowledge/blade_upgrade/blade
 	name = "Swift Blades"
-	desc = "Attacking someone with a Darkened Blade in both hands \
+	desc = "Attacking someone with a Sundered Blade in both hands \
 		will now deliver a blow with both at once, dealing two attacks in rapid succession. \
 		The second blow will be slightly weaker."
 	gain_text = "I found him cleaved in twain, halves locked in a duel without end; \
@@ -355,7 +355,7 @@
 		These blades will protect you from all attacks, but are consumed on use. \
 		Your Furious Steel spell will also have a shorter cooldown. \
 		Additionally, you become a master of combat, gaining full wound and stun immunity. \
-		Your Darkened Blades deal bonus damage and healing you on attack for a portion of the damage dealt."
+		Your Sundered Blades deal bonus damage and healing you on attack for a portion of the damage dealt."
 	gain_text = "The Torn Champion is freed! I will become the blade reunited, and with my greater ambition, \
 		I AM UNMATCHED! A STORM OF STEEL AND SILVER IS UPON US! WITNESS MY ASCENSION!"
 	route = PATH_BLADE

@@ -21,7 +21,7 @@
 		/obj/item/bodypart/r_arm/alien,
 		/obj/item/bodypart/r_leg/alien,
 		/obj/item/bodypart/l_leg/alien,
-		)
+	)
 
 GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 	/datum/strippable_item/hand/left,

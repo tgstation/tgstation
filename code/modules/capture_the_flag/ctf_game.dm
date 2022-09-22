@@ -178,8 +178,21 @@
 #define CTF_LOADING_LOADING 1
 #define CTF_LOADING_LOADED 2
 
-/proc/toggle_id_ctf(user, activated_id, automated = FALSE)
+/proc/toggle_id_ctf(user, activated_id, automated = FALSE, unload = FALSE)
 	var/static/loading = CTF_LOADING_UNLOADED
+	if(unload == TRUE)
+		log_admin("[key_name_admin(user)] is attempting to unload CTF.")
+		message_admins("[key_name_admin(user)] is attempting to unload CTF.")
+		if(loading == CTF_LOADING_UNLOADED)
+			to_chat(user, span_warning("CTF cannot be unloaded if it was not loaded in the first place"))
+			return
+		to_chat(user, span_warning("CTF is being unloaded"))
+		for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
+			CTF.unload()
+		log_admin("[key_name_admin(user)] has unloaded CTF.")
+		message_admins("[key_name_admin(user)] has unloaded CTF.")
+		loading = CTF_LOADING_UNLOADED
+		return
 	switch (loading)
 		if (CTF_LOADING_UNLOADED)
 			if (isnull(GLOB.ctf_spawner))
@@ -189,7 +202,10 @@
 			to_chat(user, span_notice("Loading CTF..."))
 
 			loading = CTF_LOADING_LOADING
-			GLOB.ctf_spawner.load_map()
+			if(!GLOB.ctf_spawner.load_map(user))
+				to_chat(user, span_warning("CTF loading was cancelled"))
+				loading = CTF_LOADING_UNLOADED
+				return
 			loading = CTF_LOADING_LOADED
 		if (CTF_LOADING_LOADING)
 			to_chat(user, span_warning("CTF is loading!"))
@@ -244,7 +260,8 @@
 	var/ctf_enabled = FALSE
 	///assoc list for classes. If there's only one, it'll just equip. Otherwise, it lets you pick which outfit!
 	var/list/ctf_gear = list("Rifleman" = /datum/outfit/ctf, "Assaulter" = /datum/outfit/ctf/assault, "Marksman" = /datum/outfit/ctf/marksman)
-	var/instagib_gear = /datum/outfit/ctf/instagib
+	var/list/instagib_gear = list("Instagib" = /datum/outfit/ctf/instagib)
+	var/list/default_gear
 	var/ammo_type = /obj/effect/powerup/ammo/ctf
 	// Fast paced gameplay, no real time for burn infections.
 	var/player_traits = list(TRAIT_NEVER_WOUNDED)
@@ -260,6 +277,7 @@
 /obj/machinery/capture_the_flag/Initialize(mapload)
 	. = ..()
 	SSpoints_of_interest.make_point_of_interest(src)
+	default_gear = ctf_gear
 	ctf_landmark = GLOB.ctf_spawner
 
 /obj/machinery/capture_the_flag/Destroy()
@@ -287,7 +305,7 @@
 	team = RED_TEAM
 	team_span = "redteamradio"
 	ctf_gear = list("Rifleman" = /datum/outfit/ctf/red, "Assaulter" = /datum/outfit/ctf/assault/red, "Marksman" = /datum/outfit/ctf/marksman/red)
-	instagib_gear = /datum/outfit/ctf/red/instagib
+	instagib_gear = list("Instagib" = /datum/outfit/ctf/red/instagib)
 
 /obj/machinery/capture_the_flag/blue
 	name = "Blue CTF Controller"
@@ -295,7 +313,7 @@
 	team = BLUE_TEAM
 	team_span = "blueteamradio"
 	ctf_gear = list("Rifleman" = /datum/outfit/ctf/blue, "Assaulter" = /datum/outfit/ctf/assault/blue, "Marksman" = /datum/outfit/ctf/marksman/blue)
-	instagib_gear = /datum/outfit/ctf/blue/instagib
+	instagib_gear = list("Instagib" = /datum/outfit/ctf/blue/instagib)
 
 /obj/machinery/capture_the_flag/green
 	name = "Green CTF Controller"
@@ -303,7 +321,7 @@
 	team = GREEN_TEAM
 	team_span = "greenteamradio"
 	ctf_gear = list("Rifleman" = /datum/outfit/ctf/green, "Assaulter" = /datum/outfit/ctf/assault/green, "Marksman" = /datum/outfit/ctf/marksman/green)
-	instagib_gear = /datum/outfit/ctf/green/instagib
+	instagib_gear = list("Instagib" = /datum/outfit/ctf/green/instagib)
 
 /obj/machinery/capture_the_flag/yellow
 	name = "Yellow CTF Controller"
@@ -311,7 +329,7 @@
 	team = YELLOW_TEAM
 	team_span = "yellowteamradio"
 	ctf_gear = list("Rifleman" = /datum/outfit/ctf/yellow, "Assaulter" = /datum/outfit/ctf/assault/yellow, "Marksman" = /datum/outfit/ctf/marksman/yellow)
-	instagib_gear = /datum/outfit/ctf/yellow/instagib
+	instagib_gear = list("Instagib" = /datum/outfit/ctf/yellow/instagib)
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/machinery/capture_the_flag/attack_ghost(mob/user)
@@ -445,18 +463,12 @@
 			for(var/obj/item/ctf/W in competitor)
 				competitor.dropItemToGround(W)
 			competitor.dust()
-	for(var/obj/machinery/control_point/control in GLOB.machines)
-		control.icon_state = "dominator"
-		control.controlling = null
+	control_point_reset()
 	for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
 		if(CTF.game_id != game_id)
 			continue
 		if(CTF.ctf_enabled == TRUE)
-			CTF.points = 0
-			CTF.control_points = 0
-			CTF.ctf_enabled = FALSE
-			CTF.team_members = list()
-			CTF.arena_reset = FALSE
+			machine_reset(CTF)
 
 /obj/machinery/capture_the_flag/proc/toggle_ctf()
 	if(!ctf_enabled)
@@ -476,17 +488,28 @@
 
 	notify_ghosts("[name] has been activated!", source = src, action=NOTIFY_ORBIT, header = "CTF has been activated")
 
-/obj/machinery/capture_the_flag/proc/reset_the_arena()
+/obj/machinery/capture_the_flag/proc/machine_reset(obj/machinery/capture_the_flag/CTF)
+	CTF.points = 0
+	CTF.control_points = 0
+	CTF.ctf_enabled = FALSE
+	CTF.team_members = list()
+	CTF.arena_reset = FALSE
+
+/obj/machinery/capture_the_flag/proc/control_point_reset()
+	for(var/obj/machinery/control_point/control in GLOB.machines)
+		control.icon_state = "dominator"
+		control.controlling = null
+
+/obj/machinery/capture_the_flag/proc/unload()
 	if(!ctf_landmark)
 		return
 
 	if(ctf_landmark == GLOB.ctf_spawner)
+		stop_ctf()
 		new /obj/effect/landmark/ctf(get_turf(GLOB.ctf_spawner))
 
 
 /obj/machinery/capture_the_flag/proc/stop_ctf()
-	ctf_enabled = FALSE
-	arena_reset = FALSE
 	var/area/A = get_area(src)
 	for(var/_competitor in GLOB.mob_living_list)
 		var/mob/living/competitor = _competitor
@@ -495,23 +518,22 @@
 	team_members.Cut()
 	spawned_mobs.Cut()
 	recently_dead_ckeys.Cut()
-	reset_the_arena()
+	control_point_reset()
+	machine_reset(src)
 
 /obj/machinery/capture_the_flag/proc/instagib_mode()
 	for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
 		if(CTF.game_id != game_id)
 			continue
-		if(CTF.ctf_enabled == TRUE)
-			CTF.ctf_gear = CTF.instagib_gear
-			CTF.respawn_cooldown = INSTAGIB_RESPAWN
+		CTF.ctf_gear = CTF.instagib_gear
+		CTF.respawn_cooldown = INSTAGIB_RESPAWN
 
 /obj/machinery/capture_the_flag/proc/normal_mode()
 	for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
 		if(CTF.game_id != game_id)
 			continue
-		if(CTF.ctf_enabled == TRUE)
-			CTF.ctf_gear = initial(ctf_gear)
-			CTF.respawn_cooldown = DEFAULT_RESPAWN
+		CTF.ctf_gear = CTF.default_gear
+		CTF.respawn_cooldown = DEFAULT_RESPAWN
 
 /obj/structure/trap/ctf
 	name = "Spawn protection"

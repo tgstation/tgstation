@@ -54,7 +54,7 @@
 	new /obj/item/clothing/head/caphat/parade(src)
 	new /obj/item/clothing/head/crown/fancy(src)
 	new /obj/item/clothing/neck/cloak/cap(src)
-	new /obj/item/clothing/shoes/sneakers/brown(src)
+	new /obj/item/clothing/shoes/laceup(src)
 	new /obj/item/clothing/suit/hooded/wintercoat/captain(src)
 
 
@@ -83,7 +83,7 @@
 	new /obj/item/clothing/head/hos(src)
 	new /obj/item/clothing/mask/gas/sechailer/swat(src)
 	new /obj/item/clothing/neck/cloak/hos(src)
-	new /obj/item/clothing/suit/hooded/wintercoat/security/hos(src)
+	new /obj/item/clothing/suit/armor/hos/trenchcoat/winter(src)
 
 /obj/item/storage/bag/garment/research_director/PopulateContents()
 	new /obj/item/clothing/under/rank/rnd/research_director(src)

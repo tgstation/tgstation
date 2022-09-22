@@ -21,3 +21,22 @@
 
 	TEST_ASSERT(!expected_mods.len,
 		"Some message mods were expected, but were not returned by get_message_mods: [json_encode(expected_mods)]. Message: [message]")
+
+/// Test to verify COMSIG_MOB_SAY is sent the exact same list as the message args, as they're operated on
+/datum/unit_test/say_signal
+
+/datum/unit_test/say_signal/Run()
+	var/mob/living/dummy = allocate(/mob/living)
+
+	RegisterSignal(dummy, COMSIG_MOB_SAY, .proc/check_say)
+	dummy.say("Make sure the say signal gets the arglist say is past, no copies!")
+
+/datum/unit_test/say_signal/proc/check_say(mob/living/source, list/say_args)
+	SIGNAL_HANDLER
+
+	TEST_ASSERT_EQUAL(REF(say_args), source.last_say_args_ref, "Say signal didn't get the argslist of say as a reference. \
+		This is required for the signal to function in most places - do not create a new instance of a list when passing it in to the signal.")
+
+// For the above test to track the last use of say's message args.
+/mob/living
+	var/last_say_args_ref

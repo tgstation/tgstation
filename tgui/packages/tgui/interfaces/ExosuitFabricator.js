@@ -153,15 +153,7 @@ export const ExosuitFabricator = (props, context) => {
           <Stack.Item grow>
             <Stack fill>
               <Stack.Item>
-                <Section
-                  fill
-                  title="Categories"
-                  buttons={
-                    <Button
-                      content="R&D Sync"
-                      onClick={() => act('sync_rnd')}
-                    />
-                  }>
+                <Section fill title="Categories">
                   <PartSets />
                 </Section>
               </Stack.Item>

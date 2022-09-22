@@ -39,7 +39,6 @@
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | ERT_SPAWN | SLIME_EXTRACT
 	liked_food = MEAT | FRUIT | BUGS
 	disliked_food = CLOTH
-	damage_overlay_type = "monkey"
 	sexes = FALSE
 	punchdamagelow = 1
 	punchdamagehigh = 3
@@ -211,7 +210,7 @@
 	else
 		monkey_brain.tripping = TRUE
 		background_icon_state = "bg_default_on"
-		to_chat(monkey_brain.owner, span_notice("You will not stumble while while colliding with people who are in combat mode."))
+		to_chat(monkey_brain.owner, span_notice("You will now stumble while while colliding with people who are in combat mode."))
 	UpdateButtons()
 
 

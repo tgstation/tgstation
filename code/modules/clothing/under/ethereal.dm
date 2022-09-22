@@ -8,6 +8,7 @@
 	greyscale_config = /datum/greyscale_config/eth_tunic
 	greyscale_config_worn = /datum/greyscale_config/eth_tunic_worn
 	flags_1 = IS_PLAYER_COLORABLE_1
+	can_adjust = FALSE
 
 /obj/item/clothing/under/ethereal_tunic/Initialize(mapload)
 	. = ..()

@@ -192,7 +192,7 @@
 
 	for(var/sig_type in (islist(sig_type_or_types) ? sig_type_or_types : list(sig_type_or_types)))
 		if(!override && target_procs[sig_type])
-			stack_trace("[sig_type] overridden. Use override = TRUE to suppress this warning")
+			log_signal("[sig_type] overridden. Use override = TRUE to suppress this warning.\nTarget: [target] ([target.type]) Proc: [proctype]")
 
 		target_procs[sig_type] = proctype
 		var/list/looked_up = lookup[sig_type]
