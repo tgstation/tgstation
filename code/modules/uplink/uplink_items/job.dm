@@ -231,15 +231,18 @@
 
 /datum/uplink_item/role_restricted/clown_bomb
 	name = "Clown Bomb"
-	desc = "The Clown bomb is a hilarious device capable of massive pranks. It has an adjustable timer, \
-			with a minimum of 60 seconds, and can be bolted to the floor with a wrench to prevent \
-			movement. The bomb is bulky and cannot be moved; upon ordering this item, a smaller beacon will be \
-			transported to you that will teleport the actual bomb to it upon activation. Note that this bomb can \
-			be defused, and some crew may attempt to do so."
 	progression_minimum = 30 MINUTES
 	item = /obj/item/sbeacondrop/clownbomb
 	cost = 15
 	restricted_roles = list(JOB_CLOWN)
+
+/datum/uplink_item/role_restricted/clown_bomb/New()
+	. = ..()
+	desc = "The Clown bomb is a hilarious device capable of massive pranks. It has an adjustable timer, \
+		with a minimum of [SYNDIEBOMB_MIN_TIMER_SECONDS] seconds, and can be bolted to the floor with a wrench to prevent \
+		movement. The bomb is bulky and cannot be moved; upon ordering this item, a smaller beacon will be \
+		transported to you that will teleport the actual bomb to it upon activation. Note that this bomb can \
+		be defused, and some crew may attempt to do so."
 
 /datum/uplink_item/role_restricted/clowncar
 	name = "Clown Car"
