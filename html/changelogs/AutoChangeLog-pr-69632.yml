@@ -1,0 +1,4 @@
+author: "LemonInTheDark"
+delete-after: True
+changes: 
+  - refactor: "Maploading has been optimized significantly, as has ruin generation and other lavaland stuff. Let me know if anything goes fucky"
