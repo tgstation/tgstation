@@ -34,9 +34,10 @@
 		var/turf/airdrop = special_target || find_safe_turf(extended_safety_checks = TRUE, dense_atoms = FALSE)
 		special_target = null  // only spawns on loc the first time
 
-		var/obj/structure/closet/supplypod/bluespacepod/pod = new()
-		pod.explosionSize = list(0,0,0,0)
-		var/mob/living/simple_animal/bot/medbot/cola/shipment = new()
-		shipment.forceMove(pod)
+		podspawn(list(
+			"target" = airdrop,
+			"style" = STYLE_BLUESPACE,
+			"spawn" = /mob/living/simple_animal/bot/medbot/cola,
+		))
 
 		new /obj/effect/pod_landingzone(airdrop, pod)
