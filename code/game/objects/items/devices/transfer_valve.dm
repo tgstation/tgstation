@@ -195,7 +195,7 @@
 			admin_bomber_message = "The bomb's most recent set of fingerprints indicate it was last touched by [ADMIN_LOOKUPFLW(bomber)]"
 			bomber_message = " - Last touched by: [key_name_admin(bomber)]"
 
-		if(isvoice(attachment))
+		if(istype(attachment, /obj/item/assembly/voice))
 			var/obj/item/assembly/voice/spoken_trigger = attachment
 			attachment_message += " with the following activation message: \"[spoken_trigger.recorded]\""
 			admin_attachment_message += " with the following activation message: \"[spoken_trigger.recorded]\""

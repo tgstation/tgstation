@@ -63,7 +63,7 @@
 	var/obj/item/grenade/chem_grenade/grenade = holder
 	var/obj/item/assembly/pulser = get_attached(get_wire(1))
 	var/message = "\An [pulser] has pulsed [grenade] ([grenade.type]), which was installed by [fingerprint]"
-	if(isvoice(pulser))
+	if(istype(pulser, /obj/item/assembly/voice))
 		var/obj/item/assembly/voice/spoken_trigger = pulser
 		message +=  " with the following activation message: \"[spoken_trigger.recorded]\""
 	if(!grenade.dud_flags)
