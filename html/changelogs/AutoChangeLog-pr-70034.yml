@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - admin: "Moved signal overriden stack_trace warnings to it's own log file."

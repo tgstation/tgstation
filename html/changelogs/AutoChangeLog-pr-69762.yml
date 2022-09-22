@@ -1,6 +1,0 @@
-author: "Nari Harimoto"
-delete-after: True
-changes: 
-  - bugfix: "you can now rotate machines even when the room has no power again"
-  - bugfix: "if you enable the AIs ability to interact with machines while in an AI-Card, they can now actually interact again"
-  - bugfix: "you can no longer open the UI for a syndie bomb and walk away and activate it from range, it now checks if you actually can interact with it including range before letting you activate it"

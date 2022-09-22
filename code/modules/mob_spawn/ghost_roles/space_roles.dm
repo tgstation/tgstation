@@ -125,7 +125,7 @@
 	mob_mind.add_antag_datum(antag_datum_to_give, antag_team)
 
 /datum/team/battlecruiser
-	name = "Battlecruiser Crew"
+	name = "\improper Battlecruiser Crew"
 	member_name = "crewmember"
 	/// The central objective of this battlecruiser
 	var/core_objective = /datum/objective/nuclear
