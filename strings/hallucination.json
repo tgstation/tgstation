@@ -81,6 +81,7 @@
 	"help": [
 		"HELP HER",
 		"HELP HIM",
+		"HELP MAINT",
 		"HELP ME",
 		"HELP THEM",
 		"HELP US",
@@ -88,8 +89,8 @@
 		"HELP",
 		"HELP",
 		"HELP",
-		"HELP",
-		"HELP"
+		"Help",
+		"Help"
 	],
 
 	"escape": [
@@ -111,41 +112,50 @@
 	"people": [
 		"%TARGETNAME%",
 		"AI",
+		"Borg",
 		"Captain",
 		"Ce",
 		"Cmo",
+		"Geneticist",
 		"Hop",
 		"Hos",
 		"Janitor",
 		"Qm",
 		"Rd",
+		"Robo",
 		"Viro"
 	],
 
 	"accusations": [
 		"a changeling",
-		"a clock cultist",
 		"a cultist",
 		"a gang leader",
-		"a gangster",
+		"a heretic",
 		"a ling",
 		"a rev",
 		"a revhead",
 		"a tator",
 		"a traitor",
-		"clockcult",
+		"a wizard",
+		"bad",
 		"cult",
 		"dead",
-		"rogue"
+		"mindswapped",
+		"rogue",
+		"the traitor",
+		"the wizard"
 	],
 
 	"threat": [
 		"%TARGETNAME%",
 		"Blob",
 		"Blue APC",
+		"Changeling",
 		"Cult",
 		"Harm",
 		"Help",
+		"Heretics",
+		"Heretic",
 		"I hear flashing",
 		"Ling",
 		"Ops",

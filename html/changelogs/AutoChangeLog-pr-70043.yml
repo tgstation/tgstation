@@ -1,0 +1,4 @@
+author: "Thunder12345"
+delete-after: True
+changes: 
+  - bugfix: "The air vent outside RnD on Icebox is no longer hidden by the Experimental Destructive Scanner"

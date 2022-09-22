@@ -1,7 +1,0 @@
-author: "NamelessFairy"
-delete-after: True
-changes: 
-  - bugfix: "A duplicate mass driver controller on Kilo has been deleted, you can no longer operate the toxins mass driver from maintenance."
-  - bugfix: "Kilo's north escape pod now correctly has its catwalk in the nearstation area."
-  - bugfix: "Kilo no longer has a random incinerator area in space."
-  - bugfix: "removed a random decal from arrivals on Kilo."

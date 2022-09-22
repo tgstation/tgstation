@@ -186,10 +186,10 @@
 
 	var/rotation_screentip = FALSE
 
-	if(CanBeRotated(user, ROTATION_CLOCKWISE, silent=TRUE) && CanUserRotate(user, ROTATION_CLOCKWISE))
+	if(CanBeRotated(user, ROTATION_CLOCKWISE, silent=TRUE))
 		context[SCREENTIP_CONTEXT_ALT_LMB] = "Rotate left"
 		rotation_screentip = TRUE
-	if(CanBeRotated(user, ROTATION_COUNTERCLOCKWISE, silent=TRUE) && CanUserRotate(user, ROTATION_COUNTERCLOCKWISE))
+	if(CanBeRotated(user, ROTATION_COUNTERCLOCKWISE, silent=TRUE))
 		context[SCREENTIP_CONTEXT_ALT_RMB] = "Rotate right"
 		rotation_screentip = TRUE
 

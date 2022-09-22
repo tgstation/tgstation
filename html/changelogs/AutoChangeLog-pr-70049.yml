@@ -1,0 +1,4 @@
+author: "moocowswag"
+delete-after: True
+changes: 
+  - bugfix: "Adds Missing GPSs to Icebox Public Mining."
