@@ -195,6 +195,11 @@
 			admin_bomber_message = "The bomb's most recent set of fingerprints indicate it was last touched by [ADMIN_LOOKUPFLW(bomber)]"
 			bomber_message = " - Last touched by: [key_name_admin(bomber)]"
 
+		if(isvoice(attachment))
+			var/obj/item/assembly/voice/spoken_trigger = attachment
+			attachment_message += " with the following activation message: \"[spoken_trigger.recorded]\""
+			admin_attachment_message += " with the following activation message: \"[spoken_trigger.recorded]\""
+
 		var/admin_bomb_message = "Bomb valve opened in [ADMIN_VERBOSEJMP(bombturf)]<br>[admin_attachment_message]<br>[admin_bomber_message]<br>[attachment_signal_log]"
 		GLOB.bombers += admin_bomb_message
 		message_admins(admin_bomb_message)

@@ -235,6 +235,8 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define isprox(O) (istype(O, /obj/item/assembly/prox_sensor))
 
+#define isvoice(O) (istype(O, /obj/item/assembly/voice))
+
 #define issignaler(O) (istype(O, /obj/item/assembly/signaler))
 
 GLOBAL_LIST_INIT(glass_sheet_types, typecacheof(list(

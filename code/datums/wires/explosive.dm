@@ -61,10 +61,14 @@
 
 /datum/wires/explosive/chem_grenade/explode()
 	var/obj/item/grenade/chem_grenade/grenade = holder
-	var/obj/item/assembly/assembly = get_attached(get_wire(1))
+	var/obj/item/assembly/pulser = get_attached(get_wire(1))
+	var/message = "\An [pulser] has pulsed [grenade] ([grenade.type]), which was installed by [fingerprint]"
+	if(isvoice(pulser))
+		var/obj/item/assembly/voice/spoken_trigger = pulser
+		message +=  " with the following activation message: \"[spoken_trigger.recorded]\""
 	if(!grenade.dud_flags)
-		message_admins("\An [assembly] has pulsed [grenade] ([grenade.type]), which was installed by [fingerprint].")
-	log_game("\An [assembly] has pulsed [grenade] ([grenade.type]), which was installed by [fingerprint].")
+		message_admins(message)
+	log_game(message)
 	var/mob/M = get_mob_by_ckey(fingerprint)
 	grenade.log_grenade(M) //Used in arm_grenade() too but this one conveys where the mob who triggered the bomb is
 	if(grenade.landminemode)
