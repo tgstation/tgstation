@@ -243,8 +243,7 @@
 
 	//Darkness fucks oview up hard. I've tried dview() but it doesn't seem to work
 	//I hate existance
-	for(var/a in typecache_filter_list(oview(zap_range+2, source), things_to_shock))
-		var/atom/A = a
+	for(var/atom/A as anything in typecache_filter_list(oview(zap_range+2, source), things_to_shock))
 		if(!(zap_flags & ZAP_ALLOW_DUPLICATES) && LAZYACCESS(shocked_targets, A))
 			continue
 		// NOTE: these type checks are safe because CURRENTLY the range family of procs returns turfs in least to greatest distance order
@@ -266,7 +265,7 @@
 		else if(istype(A, /obj/machinery/power/energy_accumulator/tesla_coil))
 			if(!HAS_TRAIT(A, TRAIT_BEING_SHOCKED))
 				closest_type = COIL
-				closest_atom = C
+				closest_atom = A
 
 		else if(closest_type >= ROD)
 			continue
