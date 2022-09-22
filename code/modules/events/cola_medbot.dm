@@ -40,4 +40,3 @@
 			"spawn" = /mob/living/simple_animal/bot/medbot/cola,
 		))
 
-		new /obj/effect/pod_landingzone(airdrop, pod)
