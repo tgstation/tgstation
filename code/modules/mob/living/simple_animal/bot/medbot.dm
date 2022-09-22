@@ -619,7 +619,10 @@
 
 /mob/living/simple_animal/bot/medbot/explode()
 	. = ..()
-	new /obj/item/reagent_containers/food/drinks/soda_cans/cola(drop_location())
+	if(bot_cover_flags & BOT_COVER_EMAGGED)
+		new /obj/item/reagent_containers/cup/soda_cans/thirteenloko(drop_location())
+		return
+	new /obj/item/reagent_containers/cup/soda_cans/cola(drop_location())
 
 /mob/living/simple_animal/bot/medbot/cola/proc/refill()
 	speak("Sponsorship payout for [bot_budget_refill_size] credits processed.")
@@ -628,7 +631,7 @@
 	soft_reset()
 
 /mob/living/simple_animal/bot/medbot/cola/alt_heal(mob/living/carbon/patient)
-	if(emagged == 2)  // always 13loko if emagged
+	if(bot_cover_flags & BOT_COVER_EMAGGED)  // always 13loko if emagged
 		patient.reagents.add_reagent(/datum/reagent/consumable/ethanol/thirteenloko, 10)  // od's in 6 ticks
 		patient.apply_damage_type(2,TOX)  // extra toxic loko
 		return TRUE
