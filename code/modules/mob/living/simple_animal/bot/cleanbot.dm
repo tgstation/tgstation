@@ -208,7 +208,7 @@
 		weapon.force = initial(weapon.force)
 	if(user)
 		to_chat(user, span_danger("[src] buzzes and beeps."))
-	get_targets() //recallibrate target list
+	get_targets() //recalibrate target list
 
 /mob/living/simple_animal/bot/cleanbot/process_scan(atom/scan_target)
 	if(iscarbon(scan_target))
