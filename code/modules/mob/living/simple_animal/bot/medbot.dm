@@ -606,7 +606,8 @@
 	var/cola_cost = 250  // at start, uses entire budget in 8 heals
 	skin = "advanced"  // looks cola-y
 
-/mob/living/simple_animal/bot/medbot/cola/New()
+/mob/living/simple_animal/bot/medbot/cola/Initialize(mapload, new_skin)
+	. = ..()
 	START_PROCESSING(SSobj, src)
 
 /mob/living/simple_animal/bot/medbot/cola/process()
