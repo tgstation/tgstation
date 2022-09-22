@@ -809,6 +809,8 @@ SUBSYSTEM_DEF(shuttle)
 	preview_shuttle.timer = timer
 	preview_shuttle.mode = mode
 
+	preview_shuttle.postregister(replace)
+
 	// TODO indicate to the user that success happened, rather than just
 	// blanking the modification tab
 	preview_shuttle = null
