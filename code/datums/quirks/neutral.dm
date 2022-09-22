@@ -10,6 +10,7 @@
 	gain_text = "<span class='notice'>You feel like hanging out with other people.</span>"
 	lose_text = "<span class='danger'>You feel like you're over the bar scene.</span>"
 	medical_record_text = "Patient will not shut the hell up."
+	mail_goodies = list(/obj/effect/spawner/random/food_or_drink/booze)
 
 /datum/quirk/introvert
 	name = "Introvert"
@@ -20,6 +21,7 @@
 	gain_text = "<span class='notice'>You feel like reading a good book quietly.</span>"
 	lose_text = "<span class='danger'>You feel like libraries are boring.</span>"
 	medical_record_text = "Patient doesn't seem to say much."
+	mail_goodies = list(/obj/item/book/random)
 
 /datum/quirk/no_taste
 	name = "Ageusia"
@@ -39,6 +41,7 @@
 	gain_text = "<span class='notice'>The words being spoken around you don't make any sense."
 	lose_text = "<span class='notice'>You've developed fluency in Galactic Common."
 	medical_record_text = "Patient does not speak Galactic Common and may require an interpreter."
+	mail_goodies = list(/obj/item/taperecorder) // for translation
 
 /datum/quirk/foreigner/add()
 	var/mob/living/carbon/human/human_holder = quirk_holder
@@ -60,6 +63,7 @@
 	gain_text = "<span class='notice'>You feel repulsion at the idea of eating meat.</span>"
 	lose_text = "<span class='notice'>You feel like eating meat isn't that bad.</span>"
 	medical_record_text = "Patient reports a vegetarian diet."
+	mail_goodies = list(/obj/effect/spawner/random/food_or_drink/salad)
 
 /datum/quirk/vegetarian/add()
 	var/mob/living/carbon/human/human_holder = quirk_holder
@@ -92,6 +96,7 @@
 	lose_text = "<span class='notice'>Well who cares about deco anyways?</span>"
 	medical_record_text = "Patient seems to be rather stuck up."
 	mob_trait = TRAIT_SNOB
+	mail_goodies = list(/obj/item/chisel)
 
 /datum/quirk/pineapple_liker
 	name = "Ananas Affinity"
@@ -101,6 +106,7 @@
 	gain_text = "<span class='notice'>You feel an intense craving for pineapple.</span>"
 	lose_text = "<span class='notice'>Your feelings towards pineapples seem to return to a lukewarm state.</span>"
 	medical_record_text = "Patient demonstrates a pathological love of pineapple."
+	mail_goodies = list(/obj/item/food/grown/pineapple)
 
 /datum/quirk/pineapple_liker/add()
 	var/mob/living/carbon/human/human_holder = quirk_holder
@@ -252,6 +258,7 @@
 	value = 0
 	medical_record_text = "Patient has an irrational fear of something."
 	var/phobia
+	mail_goodies = list(/obj/item/clothing/glasses/blindfold, /obj/item/clothing/ears/earmuffs)
 
 /datum/quirk/phobia/add()
 	phobia = phobia || quirk_holder.client?.prefs?.read_preference(/datum/preference/choiced/phobia)
@@ -287,6 +294,7 @@
 	gain_text = "<span class='notice'>Your head is as smooth as can be, it's terrible.</span>"
 	lose_text = "<span class='notice'>Your head itches, could it be... growing hair?!</span>"
 	medical_record_text = "Patient starkly refused to take off headwear during examination."
+	mail_goodies = list(/obj/item/clothing/head/wig/random)
 	/// The user's starting hairstyle
 	var/old_hair
 
@@ -368,6 +376,7 @@
 	gain_text = "<span class='notice'>You know everything about photography.</span>"
 	lose_text = "<span class='danger'>You forget how photo cameras work.</span>"
 	medical_record_text = "Patient mentions photography as a stress-relieving hobby."
+	mail_goodies = list(/obj/item/camera_film)
 
 /datum/quirk/item_quirk/photographer/add_unique()
 	var/mob/living/carbon/human/human_holder = quirk_holder
@@ -408,6 +417,7 @@
 	lose_text = span_notice("You've lost all interest in gaming.")
 	medical_record_text = "Patient has a severe video game addiction."
 	mob_trait = TRAIT_GAMER
+	mail_goodies = list(/obj/item/toy/intento)
 	/// Timer for gaming withdrawal to kick in
 	var/gaming_withdrawal_timer = TIMER_ID_NULL
 
