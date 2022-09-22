@@ -1,0 +1,4 @@
+author: "Pizzie11"
+delete-after: True
+changes: 
+  - bugfix: "Important Documents received in the mail are now visible"
