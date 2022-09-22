@@ -772,3 +772,16 @@
       one, resulting in a second shuttle that gibs everyone aboard.
   Watermelon914:
   - bugfix: Fixed bypassing gasmask FOV.
+2022-09-22:
+  JohnFulpWillard:
+  - bugfix: You no longer keep items you shouldn't be wearing (collars) when changing
+      into a species that can't wear them anymore.
+  - admin: Antag panels now properly show team antagonists, instead of showing them
+      as empty.
+  Salex08:
+  - spellcheck: corrects plural spelling when slicing objects
+  ShizCalev:
+  - admin: Moved signal overriden stack_trace warnings to it's own log file.
+  - bugfix: Fixed a bunch of cult abilities not working.
+  dragomagol:
+  - bugfix: cutting onions actually makes you cry (better put some goggles on!)
