@@ -2,7 +2,7 @@
 	RETURN_TYPE(/singleton/slist)
 	var/key = data.Join()
 	var/singleton/slist/singleton = FIND_SINGLETON(/list, key)
-	singleton ||= new /singleton/slist(key, data)
+	singleton ||= new /singleton/slist(data, key)
 	return singleton
 
 /// ///Singleton lists. When these are mutated, it instead creates a new list based on the mutation and returns it, leaving the original untouched.
@@ -11,8 +11,12 @@
 	///The actual list
 	VAR_PRIVATE/list/data
 
-/singleton/slist/New(key, _data)
-	..(/list, key)
+/singleton/slist/New(_data, key)
+	if(!global.singleton_repo[/list])
+		global.singleton_repo[/list] = list()
+
+	global.singleton_repo[/list][key] = src
+
 	data = _data
 
 /singleton/slist/proc/get()

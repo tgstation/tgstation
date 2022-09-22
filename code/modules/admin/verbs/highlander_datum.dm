@@ -1,13 +1,10 @@
-
-GLOBAL_DATUM(highlander_controller, /datum/highlander_controller)
-
 /**
  * The highlander controller handles the admin highlander mode, if enabled.
  * It is first created when "there can only be one" triggers it, and it can be referenced from GLOB.highlander_controller
  */
-/datum/highlander_controller
+/singleton/highlander_controller
 
-/datum/highlander_controller/New()
+/singleton/highlander_controller/New()
 	. = ..()
 	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, .proc/new_highlander)
 	sound_to_playing_players('sound/misc/highlander.ogg')
@@ -38,10 +35,6 @@ GLOBAL_DATUM(highlander_controller, /datum/highlander_controller)
 		robot.make_scottish()
 	addtimer(CALLBACK(SSshuttle.emergency, /obj/docking_port/mobile/emergency.proc/request, null, 1), 50)
 
-/datum/highlander_controller/Destroy(force, ...)
-	. = ..()
-	UnregisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED)
-
 /**
  * Triggers at beginning of the game when there is a confirmed list of valid, ready players.
  * Creates a 100% ready game that has NOT started (no players in bodies)
@@ -56,7 +49,7 @@ GLOBAL_DATUM(highlander_controller, /datum/highlander_controller)
  * * setup_list: list of all the datum setups (fancy list of roles) that would work for the game
  * * ready_players: list of filtered, sane players (so not playing or disconnected) for the game to put into roles
  */
-/datum/highlander_controller/proc/new_highlander(datum/source, mob/living/new_crewmember, rank)
+/singleton/highlander_controller/proc/new_highlander(datum/source, mob/living/new_crewmember, rank)
 	SIGNAL_HANDLER
 
 	to_chat(new_crewmember, span_userdanger("<i>THERE CAN BE ONLY ONE!!!</i>"))
@@ -82,7 +75,7 @@ GLOBAL_DATUM(highlander_controller, /datum/highlander_controller)
 		message_admins(span_adminnotice("[key_name_admin(usr)] used THERE CAN BE ONLY ONE!"))
 		log_admin("[key_name(usr)] used THERE CAN BE ONLY ONE.")
 
-	GLOB.highlander_controller = new /datum/highlander_controller
+	SINGLETON(/singleton/highlander_controller)
 
 /client/proc/only_one_delayed()
 	send_to_playing_players(span_userdanger("Bagpipes begin to blare. You feel Scottish pride coming over you."))

@@ -1,10 +1,15 @@
+#define SINGTYPE_ABSTRACT "abstract"
+#define SINGTYPE_COMPLEX "complex"
+
+///Find or create an abstract singleton of the desired type.
+#define SINGLETON(_datatype) _singleton(_datatype)
+///Return a single or null using the given search arguments.
+#define FIND_SINGLETON(_datatype, args...) (islist(global.singleton_repo[_datatype]) ? (global.singleton_repo[_datatype][list(##args).Join()]) : (global.singleton_repo[_datatype]))
 ///Find or create a datum singleton and return its data.
-#define SINGLETON_DATUM(_datatype, args...) _singleton_datum(_datatype, list(##args))
-
-///Return null or a singleton with the desired args
-#define FIND_SINGLETON(_datatype, args...) global.singleton_repo[_datatype]?[list(##args).Join()]
-
-///Return null or a singleton's data with the desired args
+#define SINGLETON_DATUM(_datatype, args...) _singleton_datum(list(##args), _datatype)
+///Find or create an abstract complex singleton with the desired args
+#define SINGLETON_COMPLEX(_datatype, args...) _complex_singleton(list(##args), _datatype)
+///Return null or a singleton with the desired args.
 #define FIND_SINGLETON_DATA(_datatype, args...) FIND_SINGLETON(_datatype, ##args)?:data
 
 
