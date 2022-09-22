@@ -42,9 +42,9 @@ export const Fax = (props, context) => {
     data.syndicate_network
       ? data.faxes.filter((filterFax: FaxInfo) => filterFax.visible)
       : data.faxes.filter(
-          (filterFax: FaxInfo) =>
-            filterFax.visible && !filterFax.syndicate_network
-        )
+        (filterFax: FaxInfo) =>
+          filterFax.visible && !filterFax.syndicate_network
+      )
   );
   return (
     <Window width={340} height={540}>
@@ -139,18 +139,18 @@ export const Fax = (props, context) => {
             <Table.Cell>
               {data.fax_history !== null
                 ? data.fax_history.map((history: FaxHistory) => (
-                    <Table.Row key={history.history_type}>
-                      {
-                        <Box
-                          color={
-                            history.history_type === 'Send' ? 'Green' : 'Red'
-                          }>
-                          {history.history_type}
-                        </Box>
-                      }
-                      {history.history_fax_name} - {history.history_time}
-                    </Table.Row>
-                  ))
+                  <Table.Row key={history.history_type}>
+                    {
+                      <Box
+                        color={
+                          history.history_type === 'Send' ? 'Green' : 'Red'
+                        }>
+                        {history.history_type}
+                      </Box>
+                    }
+                    {history.history_fax_name} - {history.history_time}
+                  </Table.Row>
+                ))
                 : null}
             </Table.Cell>
           </Table>

@@ -1,15 +1,6 @@
 import { sortBy } from '../../common/collections';
 import { useBackend, useLocalState } from '../backend';
-import {
-  Button,
-  LabeledList,
-  Flex,
-  Dropdown,
-  Section,
-  Modal,
-  TextArea,
-  Input,
-} from '../components';
+import { Button, LabeledList, Flex, Dropdown, Section, Modal, TextArea, Input } from '../components';
 import { Window } from '../layouts';
 
 type FaxManagerData = {
@@ -198,10 +189,10 @@ const FaxMessageModal = (props, context) => {
               !messageInput || messageInput.length === 0
                 ? true
                 : selectedSenderName === 'Custom Name'
-                ? !сustomSenderName || сustomSenderName.length === 0
-                  ? true
+                  ? !сustomSenderName || сustomSenderName.length === 0
+                    ? true
+                    : false
                   : false
-                : false
             }
             onClick={() => {
               if (messageInput && messageInput.length !== 0) {
