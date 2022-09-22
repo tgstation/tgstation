@@ -480,8 +480,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			continue
 
 		if(ismachinery(test))
-			var/obj/machinery/machine = test
-			if(!HAS_TRAIT(machine, TRAIT_BEING_SHOCKED) && prob(40))
+			if(!HAS_TRAIT(test, TRAIT_BEING_SHOCKED) && prob(40))
 				if(target_type != MACHINERY)
 					arc_targets = list()
 				arc_targets += test
@@ -491,8 +490,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			continue
 
 		if(isobj(test))
-			var/obj/object = test
-			if(!HAS_TRAIT(object, TRAIT_BEING_SHOCKED))
+			if(!HAS_TRAIT(test, TRAIT_BEING_SHOCKED))
 				if(target_type != OBJECT)
 					arc_targets = list()
 				arc_targets += test

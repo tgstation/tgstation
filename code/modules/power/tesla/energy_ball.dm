@@ -264,8 +264,7 @@
 			continue //no need checking these other things
 
 		else if(istype(A, /obj/machinery/power/energy_accumulator/tesla_coil))
-			var/obj/machinery/power/energy_accumulator/tesla_coil/C = A
-			if(!HAS_TRAIT(C, TRAIT_BEING_SHOCKED))
+			if(!HAS_TRAIT(A, TRAIT_BEING_SHOCKED))
 				closest_type = COIL
 				closest_atom = C
 
@@ -298,8 +297,7 @@
 			continue
 
 		else if(ismachinery(A))
-			var/obj/machinery/M = A
-			if(!HAS_TRAIT(M, TRAIT_BEING_SHOCKED))
+			if(!HAS_TRAIT(A, TRAIT_BEING_SHOCKED))
 				closest_type = MACHINERY
 				closest_atom = A
 
@@ -307,8 +305,7 @@
 			continue
 
 		else if(istype(A, /obj/structure/blob))
-			var/obj/structure/blob/B = A
-			if(!HAS_TRAIT(B, TRAIT_BEING_SHOCKED))
+			if(!HAS_TRAIT(A, TRAIT_BEING_SHOCKED))
 				closest_type = BLOB
 				closest_atom = A
 
@@ -316,8 +313,7 @@
 			continue
 
 		else if(isstructure(A))
-			var/obj/structure/S = A
-			if(!HAS_TRAIT(S, TRAIT_BEING_SHOCKED))
+			if(!HAS_TRAIT(A, TRAIT_BEING_SHOCKED))
 				closest_type = STRUCTURE
 				closest_atom = A
 
