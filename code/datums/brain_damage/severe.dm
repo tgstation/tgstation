@@ -200,7 +200,7 @@
 		if(3, 4)
 			if(high_stress)
 				to_chat(owner, span_warning("You're going mad with loneliness!"))
-				owner.hallucination += 30
+				owner.adjust_hallucinations(60 SECONDS)
 			else
 				to_chat(owner, span_warning("You feel really lonely..."))
 

@@ -468,6 +468,26 @@
 				. = TRUE
 	..()
 
+/datum/reagent/consumable/tearjuice
+	name = "Tear Juice"
+	description = "A blinding substance extracted from certain onions."
+	color = "#c0c9a0"
+	taste_description = "bitterness"
+	ph = 5
+
+/datum/reagent/consumable/tearjuice/expose_mob(mob/living/exposed_mob, methods = INGEST, reac_volume)
+	. = ..()
+	if(!ishuman(exposed_mob))
+		return
+
+	var/mob/living/carbon/victim = exposed_mob
+	if(methods & (INGEST | VAPOR))
+		var/tear_proof = victim.is_eyes_covered()
+		if (!tear_proof)
+			to_chat(exposed_mob, span_warning("Your eyes sting!"))
+			victim.emote("cry")
+			victim.blur_eyes(3) // 6 seconds
+
 /datum/reagent/consumable/sprinkles
 	name = "Sprinkles"
 	description = "Multi-colored little bits of sugar, commonly found on donuts. Loved by cops."
@@ -692,36 +712,6 @@
 	color ="#708a88"
 	taste_description = "rotten eggs"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/consumable/tearjuice
-	name = "Tear Juice"
-	description = "A blinding substance extracted from certain onions."
-	color = "#c0c9a0"
-	taste_description = "bitterness"
-	ph = 5
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/consumable/tearjuice/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
-	. = ..()
-	if(!(methods & INGEST) || !((methods & (TOUCH|PATCH|VAPOR)) && (exposed_mob.is_mouth_covered() || exposed_mob.is_eyes_covered())))
-		return
-
-	if(!exposed_mob.getorganslot(ORGAN_SLOT_EYES)) //can't blind somebody with no eyes
-		to_chat(exposed_mob, span_notice("Your eye sockets feel wet."))
-	else
-		if(!exposed_mob.eye_blurry)
-			to_chat(exposed_mob, span_warning("Tears well up in your eyes!"))
-		exposed_mob.adjust_blindness(2)
-		exposed_mob.blur_eyes(5)
-
-/datum/reagent/consumable/tearjuice/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	..()
-	if(M.eye_blurry) //Don't worsen vision if it was otherwise fine
-		M.blur_eyes(4 * REM * delta_time)
-		if(DT_PROB(5, delta_time))
-			to_chat(M, span_warning("Your eyes sting!"))
-			M.adjust_blindness(2)
-
 
 /datum/reagent/consumable/nutriment/stabilized
 	name = "Stabilized Nutriment"
