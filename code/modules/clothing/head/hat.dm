@@ -1,5 +1,6 @@
 /obj/item/clothing/head/hats
 	icon = 'icons/obj/clothing/head/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head/hats.dmi'
 
 /obj/item/clothing/head/hats/centhat
 	name = "\improper CentCom hat"
@@ -77,6 +78,7 @@
 	name = "bounty hunting hat"
 	desc = "Ain't nobody gonna cheat the hangman in my town."
 	icon = 'icons/obj/clothing/head/billycock.dmi'
+	worn_icon = 'icons/mob/clothing/head/billycock.dmi'
 	icon_state = "cowboy"
 	worn_icon_state = "hunter"
 	inhand_icon_state = "hunter"
@@ -87,30 +89,35 @@
 	name = "desperado hat"
 	desc = "People with ropes around their necks don't always hang."
 	icon_state = "cowboy_hat_black"
+	worn_icon_state = "cowboy_hat_black"
 	inhand_icon_state = "cowboy_hat_black"
 
 /obj/item/clothing/head/cowboy/white
 	name = "ten-gallon hat"
 	desc = "There are two kinds of people in the world: those with guns and those that dig. You dig?"
 	icon_state = "cowboy_hat_white"
+	worn_icon_state = "cowboy_hat_white"
 	inhand_icon_state = "cowboy_hat_white"
 
 /obj/item/clothing/head/cowboy/grey
 	name = "drifter hat"
 	desc = "The hat for an assistant with no name."
 	icon_state = "cowboy_hat_grey"
+	worn_icon_state = "cowboy_hat_grey"
 	inhand_icon_state = "cowboy_hat_grey"
 
 /obj/item/clothing/head/cowboy/red
 	name = "deputy hat"
 	desc = "Don't let the garish coloration fool you. This hat has seen some terrible things."
 	icon_state = "cowboy_hat_red"
+	worn_icon_state = "cowboy_hat_red"
 	inhand_icon_state = "cowboy_hat_red"
 
 /obj/item/clothing/head/cowboy/brown
 	name = "sheriff hat"
 	desc = "Reach for the skies, pardner."
 	icon_state = "cowboy_hat_brown"
+	worn_icon_state = "cowboy_hat_brown"
 	inhand_icon_state = "cowboy_hat_brown"
 
 /obj/item/clothing/head/costume/santa

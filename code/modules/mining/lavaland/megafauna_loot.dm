@@ -286,6 +286,7 @@
 /obj/item/clothing/head/hooded/hostile_environment
 	name = "H.E.C.K. helmet"
 	icon = 'icons/obj/clothing/head/helmet.dmi'
+	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
 	desc = "Hostile Environiment Cross-Kinetic Helmet: A helmet designed to withstand the wide variety of hazards from Lavaland. It wasn't enough for its last owner."
 	icon_state = "hostile_env"
 	w_class = WEIGHT_CLASS_NORMAL

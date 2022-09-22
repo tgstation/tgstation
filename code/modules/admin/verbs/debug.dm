@@ -928,7 +928,7 @@
 				if(!(sprite.worn_icon_state in icon_states(actual_file_name)))
 					to_chat(src, span_warning("ERROR sprites for [sprite.type]. Back slot."), confidential = TRUE)
 			if(sprite.slot_flags & ITEM_SLOT_HEAD)
-				actual_file_name = 'icons/mob/clothing/head.dmi'
+				actual_file_name = 'icons/mob/clothing/head/default.dmi'
 				if(!(sprite.worn_icon_state in icon_states(actual_file_name)))
 					to_chat(src, span_warning("ERROR sprites for [sprite.type]. Head slot."), confidential = TRUE)
 			if(sprite.slot_flags & ITEM_SLOT_BELT)
@@ -953,7 +953,7 @@
 				if(!(sprite.icon_state in icon_states(actual_file_name)))
 					to_chat(src, span_warning("ERROR sprites for [sprite.type]. Back slot."), confidential = TRUE)
 			if(sprite.slot_flags & ITEM_SLOT_HEAD)
-				actual_file_name = 'icons/mob/clothing/head.dmi'
+				actual_file_name = 'icons/mob/clothing/head/default.dmi'
 				if(!(sprite.icon_state in icon_states(actual_file_name)))
 					to_chat(src, span_warning("ERROR sprites for [sprite.type]. Head slot."), confidential = TRUE)
 			if(sprite.slot_flags & ITEM_SLOT_BELT)

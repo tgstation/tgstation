@@ -2,6 +2,7 @@
 	name = "wizard hat"
 	desc = "Strange-looking hat-wear that most certainly belongs to a real magic user."
 	icon = 'icons/obj/clothing/head/wizard.dmi'
+	worn_icon = 'icons/mob/clothing/head/wizard.dmi'
 	icon_state = "wizard"
 	inhand_icon_state = "wizhat"
 	armor = list(MELEE = 30, BULLET = 20, LASER = 20, ENERGY = 30, BOMB = 20, BIO = 100, FIRE = 100, ACID = 100,  WOUND = 20)

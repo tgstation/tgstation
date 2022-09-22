@@ -334,6 +334,7 @@ Striking a noncultist, however, will tear their flesh."}
 /obj/item/clothing/head/hooded/cult_hoodie
 	name = "ancient cultist hood"
 	icon = 'icons/obj/clothing/head/helmet.dmi'
+	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
 	icon_state = "culthood"
 	desc = "A torn, dust-caked hood. Strange letters line the inside."
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEEARS

@@ -5,6 +5,7 @@
 /obj/item/clothing/head/helmet/space
 	name = "space helmet"
 	icon = 'icons/obj/clothing/head/spacehelm.dmi'
+	worn_icon = 'icons/mob/clothing/head/spacehelm.dmi'
 	icon_state = "spaceold"
 	desc = "A special helmet with solar UV shielding to protect your eyes from harmful rays."
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT | PLASMAMAN_HELMET_EXEMPT

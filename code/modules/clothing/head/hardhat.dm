@@ -1,5 +1,6 @@
 /obj/item/clothing/head/utility
 	icon = 'icons/obj/clothing/head/utility.dmi'
+	worn_icon = 'icons/mob/clothing/head/utility.dmi'
 
 /obj/item/clothing/head/utility/hardhat
 	name = "hard hat"
@@ -156,9 +157,9 @@
 	if(isinhands)
 		return
 
-	. += mutable_appearance('icons/mob/clothing/head.dmi', "weldhelmet")
+	. += mutable_appearance('icons/mob/clothing/head/utility.dmi', "weldhelmet")
 	if(!up)
-		. += mutable_appearance('icons/mob/clothing/head.dmi', "weldvisor")
+		. += mutable_appearance('icons/mob/clothing/head/utility.dmi', "weldvisor")
 
 /obj/item/clothing/head/utility/hardhat/weldhat/update_overlays()
 	. = ..()
@@ -191,6 +192,7 @@
 	name = "carved pumpkin"
 	desc = "A jack o' lantern! Believed to ward off evil spirits."
 	icon = 'icons/obj/clothing/head/costume.dmi'
+	worn_icon = 'icons/mob/clothing/head/costume.dmi'
 	icon_state = "hardhat0_pumpkin"
 	inhand_icon_state = "hardhat0_pumpkin"
 	hat_type = "pumpkin"
@@ -248,6 +250,7 @@
 	name = "novelty reindeer hat"
 	desc = "Some fake antlers and a very fake red nose."
 	icon = 'icons/obj/clothing/head/costume.dmi'
+	worn_icon = 'icons/mob/clothing/head/costume.dmi'
 	icon_state = "hardhat0_reindeer"
 	inhand_icon_state = "hardhat0_reindeer"
 	hat_type = "reindeer"

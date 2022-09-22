@@ -2,6 +2,7 @@
 	name = "cakehat"
 	desc = "You put the cake on your head. Brilliant."
 	icon = 'icons/obj/clothing/head/costume.dmi'
+	worn_icon = 'icons/mob/clothing/head/costume.dmi'
 	icon_state = "hardhat0_cakehat"
 	inhand_icon_state = "hardhat0_cakehat"
 	hat_type = "cakehat"

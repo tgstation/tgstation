@@ -423,6 +423,7 @@
 	inhand_icon_state = "fedora"
 	slot_flags = ITEM_SLOT_HEAD
 	icon = 'icons/obj/clothing/head/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head/hats.dmi'
 	force = 0
 	throw_speed = 4
 	throw_range = 7

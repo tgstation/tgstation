@@ -16,6 +16,7 @@
 	name = "flash button"
 	desc = "You will learn to fear the flash."
 	icon = 'icons/obj/clothing/head/costume.dmi'
+	worn_icon = 'icons/mob/clothing/head/costume.dmi'
 	icon_state = "flashsuit"
 	body_parts_covered = HEAD
 	flags_inv = HIDEHAIR|HIDEEARS|HIDEFACIALHAIR|HIDEFACE|HIDEMASK|HIDESNOUT
@@ -246,6 +247,7 @@
 	name = "carp hood"
 	desc = "A hood attached to a carp costume."
 	icon = 'icons/obj/clothing/head/costume.dmi'
+	worn_icon = 'icons/mob/clothing/head/costume.dmi'
 	icon_state = "carp_casual"
 	body_parts_covered = HEAD
 	cold_protection = HEAD
@@ -321,6 +323,7 @@
 	name = "corgi hood"
 	desc = "A hood that looks just like a corgi's head, it won't guarantee dog biscuits."
 	icon = 'icons/obj/clothing/head/costume.dmi'
+	worn_icon = 'icons/mob/clothing/head/costume.dmi'
 	icon_state = "ian"
 	body_parts_covered = HEAD
 	//cold_protection = HEAD
@@ -342,6 +345,7 @@
 	name = "bee hood"
 	desc = "A hood attached to a bee costume."
 	icon = 'icons/obj/clothing/head/costume.dmi'
+	worn_icon = 'icons/mob/clothing/head/costume.dmi'
 	icon_state = "bee"
 	body_parts_covered = HEAD
 	clothing_flags = THICKMATERIAL
@@ -364,6 +368,7 @@
 	name = "bloated human head"
 	desc = "A horribly bloated and mismatched human head."
 	icon = 'icons/obj/clothing/head/costume.dmi'
+	worn_icon = 'icons/mob/clothing/head/costume.dmi'
 	icon_state = "lingspacehelmet"
 	body_parts_covered = HEAD
 	flags_cover = HEADCOVERSEYES
@@ -467,6 +472,7 @@
 	name = "mystic's hood"
 	desc = "The balance of reality tips towards order."
 	icon = 'icons/obj/clothing/head/costume.dmi'
+	worn_icon = 'icons/mob/clothing/head/costume.dmi'
 	icon_state = "mystichood"
 	inhand_icon_state = "mystichood"
 	body_parts_covered = HEAD

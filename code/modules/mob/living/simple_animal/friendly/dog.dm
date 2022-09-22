@@ -717,7 +717,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	icon_state = "breaddog"
 	icon_living = "breaddog"
 	icon_dead = "breaddog_dead"
-	head_icon = 'icons/mob/clothing/head/pets_held_head.dmi'
+	head_icon = 'icons/mob/clothing/head/pets_head.dmi'
 	health = 50
 	maxHealth = 50
 	gender = NEUTER

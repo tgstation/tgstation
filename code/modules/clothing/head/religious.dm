@@ -1,5 +1,6 @@
 /obj/item/clothing/head/chaplain/
 	icon = 'icons/obj/clothing/head/chaplain.dmi'
+	worn_icon = 'icons/mob/clothing/head/chaplain.dmi'
 
 /obj/item/clothing/head/chaplain/clownmitre
 	name = "Hat of the Honkmother"

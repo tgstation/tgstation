@@ -587,7 +587,7 @@
 
 /datum/greyscale_config/heck_helmet/worn
 	name = "H.E.C.K. Helmet Worn"
-	icon_file = 'icons/mob/clothing/head.dmi'
+	icon_file = 'icons/mob/clothing/head/helmet.dmi'
 	json_config = 'code/datums/greyscale/json_configs/heck_helmet_worn.json'
 
 /datum/greyscale_config/plaidskirt
@@ -637,7 +637,7 @@
 
 /datum/greyscale_config/beanie_worn
 	name = "Worn Beanie"
-	icon_file = 'icons/mob/clothing/head.dmi'
+	icon_file = 'icons/mob/clothing/head/beanie.dmi'
 	json_config = 'code/datums/greyscale/json_configs/beanie_worn.json'
 
 /datum/greyscale_config/scarf
@@ -787,7 +787,7 @@
 
 /datum/greyscale_config/football_helmet_worn
 	name = "Worn Football Helmet"
-	icon_file = 'icons/mob/clothing/head.dmi'
+	icon_file = 'icons/mob/clothing/head/costume.dmi'
 	json_config = 'code/datums/greyscale/json_configs/football_helmet_worn.json'
 
 /datum/greyscale_config/football_suit
@@ -827,7 +827,7 @@
 
 /datum/greyscale_config/fancy_hat_worn
 	name = "Worn Fancy Hat"
-	icon_file = 'icons/mob/clothing/head.dmi'
+	icon_file = 'icons/mob/clothing/head/costume.dmi'
 	json_config = 'code/datums/greyscale/json_configs/fancy_hat_worn.json'
 
 /datum/greyscale_config/fancy_coat

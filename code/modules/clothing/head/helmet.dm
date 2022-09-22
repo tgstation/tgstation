@@ -2,6 +2,7 @@
 	name = "helmet"
 	desc = "Standard Security gear. Protects the head from impacts."
 	icon = 'icons/obj/clothing/head/helmet.dmi'
+	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
 	icon_state = "helmet"
 	inhand_icon_state = "helmet"
 	armor = list(MELEE = 35, BULLET = 30, LASER = 30,ENERGY = 40, BOMB = 25, BIO = 0, FIRE = 50, ACID = 50, WOUND = 10)

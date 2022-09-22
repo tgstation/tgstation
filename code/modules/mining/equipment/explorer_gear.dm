@@ -29,6 +29,7 @@
 	name = "explorer hood"
 	desc = "An armoured hood for exploring harsh environments."
 	icon = 'icons/obj/clothing/head/utility.dmi'
+	worn_icon = 'icons/mob/clothing/head/utility.dmi'
 	icon_state = "explorer"
 	body_parts_covered = HEAD
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
@@ -105,6 +106,7 @@
 /obj/item/clothing/head/hooded/cloakhood/goliath
 	name = "goliath cloak hood"
 	icon = 'icons/obj/clothing/head/helmet.dmi'
+	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
 	icon_state = "golhood"
 	desc = "A protective & concealing hood."
 	armor = list(MELEE = 35, BULLET = 10, LASER = 25, ENERGY = 35, BOMB = 25, BIO = 0, FIRE = 60, ACID = 60)
@@ -139,6 +141,7 @@
 /obj/item/clothing/head/hooded/cloakhood/drake
 	name = "drake helm"
 	icon = 'icons/obj/clothing/head/helmet.dmi'
+	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
 	icon_state = "dragon"
 	desc = "The skull of a dragon."
 	armor = list(MELEE = 65, BULLET = 15, LASER = 40, ENERGY = 40, BOMB = 70, BIO = 60, FIRE = 100, ACID = 100)
@@ -184,6 +187,7 @@
 /obj/item/clothing/head/hooded/cloakhood/godslayer
 	name = "godslayer helm"
 	icon = 'icons/obj/clothing/head/helmet.dmi'
+	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
 	icon_state = "godslayer"
 	desc = "The horns and skull of a wendigo, held together by the remaining icey energy of a demonic miner."
 	armor = list(MELEE = 50, BULLET = 25, LASER = 25, ENERGY = 25, BOMB = 50, BIO = 50, FIRE = 100, ACID = 100)

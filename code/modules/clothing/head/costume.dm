@@ -1,5 +1,6 @@
 /obj/item/clothing/head/costume
 	icon = 'icons/obj/clothing/head/costume.dmi'
+	worn_icon = 'icons/mob/clothing/head/costume.dmi'
 
 /obj/item/clothing/head/costume/powdered_wig
 	name = "powdered wig"
@@ -17,6 +18,7 @@
 /obj/item/clothing/head/syndicatefake
 	name = "black space-helmet replica"
 	icon = 'icons/obj/clothing/head/helmet.dmi'
+	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
 	icon_state = "syndicate-helm-black-red"
 	inhand_icon_state = "syndicate-helm-black-red"
 	desc = "A plastic replica of a Syndicate agent's space helmet. You'll look just like a real murderous Syndicate agent in this! This is a toy, it is not made for use in space!"
