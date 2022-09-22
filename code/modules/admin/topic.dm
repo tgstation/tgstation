@@ -1145,7 +1145,7 @@
 		if(!paths)
 			tgui_alert(usr,"The path list you sent is empty.")
 			return
-		if(length(paths) > 999)
+		if(length(paths) > 5)
 			tgui_alert(usr,"Select fewer object types, (max 5).")
 			return
 
