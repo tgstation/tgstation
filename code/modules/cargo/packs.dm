@@ -117,7 +117,7 @@
 	crate_name = "bio suit crate"
 
 /datum/supply_pack/emergency/cola_bot
-	name = "Robust Softdrinks branded Medibots"
+	name = "Robust Softdrinks Branded Medibots"
 	desc = "A pack of cheap medibots, sponsored by Robust Softdrinks!"
 	cost = 500
 	contains = list(
