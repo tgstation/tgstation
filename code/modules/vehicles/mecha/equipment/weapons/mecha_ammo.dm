@@ -22,7 +22,7 @@
 	desc = rounds ? initial(desc) : "An exosuit ammuniton box that has since been emptied. It can be safely folded for recycling."
 
 /obj/item/mecha_ammo/update_icon_state()
-	icon_state = rounds ? initial(icon_state) : initial(icon_state) + "_e"
+	icon_state = rounds ? initial(icon_state) : "[initial(icon_state)]_e"
 	return ..()
 
 /obj/item/mecha_ammo/attack_self(mob/user)
