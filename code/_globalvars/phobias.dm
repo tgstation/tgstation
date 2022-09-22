@@ -107,7 +107,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 	)),
 	"spiders" = typecacheof(list(/obj/structure/spider)),
 	"security" = typecacheof(list(
-		/obj/effect/hallucination/simple/securitron,
+		/obj/effect/client_image_holder/securitron,
 		/obj/item/clothing/under/rank/security/detective,
 		/obj/item/clothing/under/rank/security/head_of_security,
 		/obj/item/clothing/under/rank/security/officer,
@@ -293,7 +293,6 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/clothing/neck/cloak/cap,
 		/obj/item/clothing/neck/cloak/hop,
 		/obj/item/clothing/suit/hooded/wintercoat/captain,
-		/obj/item/clothing/suit/hooded/wintercoat/security/hos,
 		/obj/item/clothing/head/hooded/winterhood/engineering/ce,
 		/obj/item/clothing/suit/hooded/wintercoat/science/rd,
 		/obj/item/clothing/suit/hooded/wintercoat/hop,

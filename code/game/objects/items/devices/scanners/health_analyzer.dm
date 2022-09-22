@@ -188,9 +188,6 @@
 	if (HAS_TRAIT(target, TRAIT_IRRADIATED))
 		render_list += "<span class='alert ml-1'>Subject is irradiated. Supply toxin healing.</span>\n"
 
-	if(advanced && target.hallucinating())
-		render_list += "<span class='info ml-1'>Subject is hallucinating.</span>\n"
-
 	//Eyes and ears
 	if(advanced && iscarbon(target))
 		var/mob/living/carbon/carbontarget = target

@@ -203,12 +203,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	taste_description = "pancake syrup"
 	glass_name = "glass of candy corn liquor"
 	glass_desc = "Good for your Imagination."
-	var/hal_amt = 4
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/ethanol/whiskey/candycorn/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
 	if(DT_PROB(5, delta_time))
-		drinker.hallucination += hal_amt //conscious dreamers can be treasurers to their own currency
+		drinker.adjust_hallucinations(4 SECONDS * REM * delta_time)
 	..()
 
 /datum/reagent/consumable/ethanol/thirteenloko
@@ -467,7 +466,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/absinthe/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
 	if(DT_PROB(5, delta_time) && !HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE))
-		drinker.hallucination += 4 //Reference to the urban myth
+		drinker.adjust_hallucinations(8 SECONDS)
 	..()
 
 /datum/reagent/consumable/ethanol/hooch
@@ -801,13 +800,14 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	var/obj/item/organ/internal/liver/liver = drinker.getorganslot(ORGAN_SLOT_LIVER)
 	// if you have a liver and that liver is an officer's liver
 	if(liver && HAS_TRAIT(liver, TRAIT_LAW_ENFORCEMENT_METABOLISM))
+		. = TRUE
 		drinker.adjustStaminaLoss(-10 * REM * delta_time, 0)
 		if(DT_PROB(10, delta_time))
-			new /datum/hallucination/items_other(drinker)
+			drinker.cause_hallucination(get_random_valid_hallucination_subtype(/datum/hallucination/nearby_fake_item), name)
 		if(DT_PROB(5, delta_time))
-			new /datum/hallucination/stray_bullet(drinker)
+			drinker.cause_hallucination(/datum/hallucination/stray_bullet, name)
+
 	..()
-	. = TRUE
 
 /datum/reagent/consumable/ethanol/beepsky_smash/on_mob_end_metabolize(mob/living/carbon/drinker)
 	if(beepsky_hallucination)
@@ -2649,9 +2649,16 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/ethanol/drunken_espatier/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	drinker.hal_screwyhud = SCREWYHUD_HEALTHY //almost makes you forget how much it hurts
 	drinker.add_mood_event("numb", /datum/mood_event/narcotic_medium, name) //comfortably numb
 	..()
+
+/datum/reagent/consumable/ethanol/drunken_espatier/on_mob_metabolize(mob/living/drinker)
+	. = ..()
+	drinker.apply_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)
+
+/datum/reagent/consumable/ethanol/drunken_espatier/on_mob_end_metabolize(mob/living/drinker)
+	. = ..()
+	drinker.remove_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)
 
 /datum/reagent/consumable/ethanol/protein_blend
 	name = "Protein Blend"
@@ -2897,8 +2904,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/ethanol/helianthus/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	if(drinker.hallucination < hal_cap && DT_PROB(5, delta_time))
-		drinker.hallucination += hal_amt
+	if(DT_PROB(5, delta_time))
+		drinker.adjust_hallucinations_up_to(4 SECONDS * REM * delta_time, 48 SECONDS)
+
 	..()
 
 /datum/reagent/consumable/ethanol/plumwine

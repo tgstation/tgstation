@@ -329,7 +329,7 @@
 		to_chat(C, "Your eyes have been implanted with a cybernetic security HUD which will help you keep track of who is mindshield-implanted, and therefore unable to be recruited.")
 
 /datum/team/revolution
-	name = "Revolution"
+	name = "\improper Revolution"
 	var/max_headrevs = 3
 	var/list/ex_headrevs = list() // Dynamic removes revs on loss, used to keep a list for the roundend report.
 	var/list/ex_revs = list()
@@ -614,13 +614,12 @@
 	parts += "<b>[antag_listing_name()]</b><br>"
 	parts += "<table cellspacing=5>"
 
-	var/list/heads = get_team_antags(/datum/antagonist/rev/head,TRUE)
+	var/list/heads = get_team_antags(/datum/antagonist/rev/head, FALSE)
 
 	for(var/datum/antagonist/A in heads | get_team_antags())
 		parts += A.antag_listing_entry()
 
 	parts += "</table>"
-	parts += antag_listing_footer()
 	common_part = parts.Join()
 
 	var/heads_report = "<b>Heads of Staff</b><br>"

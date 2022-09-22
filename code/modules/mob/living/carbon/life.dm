@@ -239,9 +239,9 @@
 	if(breath_gases[/datum/gas/bz])
 		var/bz_partialpressure = (breath_gases[/datum/gas/bz][MOLES]/breath.total_moles())*breath_pressure
 		if(bz_partialpressure > 1)
-			hallucination += 10
+			adjust_hallucinations(20 SECONDS)
 		else if(bz_partialpressure > 0.01)
-			hallucination += 5
+			adjust_hallucinations(10 SECONDS)
 
 	//NITRIUM
 	if(breath_gases[/datum/gas/nitrium])
@@ -409,9 +409,6 @@
 		blur_eyes(1 * delta_time)
 		if(DT_PROB(2.5, delta_time))
 			AdjustSleeping(10 SECONDS)
-
-	if(hallucination)
-		handle_hallucinations(delta_time, times_fired)
 
 /// Base carbon environment handler, adds natural stabilization
 /mob/living/carbon/handle_environment(datum/gas_mixture/environment, delta_time, times_fired)

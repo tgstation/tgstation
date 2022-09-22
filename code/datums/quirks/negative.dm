@@ -468,28 +468,41 @@
 
 /datum/quirk/insanity
 	name = "Reality Dissociation Syndrome"
-	desc = "You suffer from a severe disorder that causes very vivid hallucinations. Mindbreaker toxin can suppress its effects, and you are immune to mindbreaker's hallucinogenic properties. THIS IS NOT A LICENSE TO GRIEF."
+	desc = "You suffer from a severe disorder that causes very vivid hallucinations. \
+		Mindbreaker toxin can suppress its effects, and you are immune to mindbreaker's hallucinogenic properties. \
+		THIS IS NOT A LICENSE TO GRIEF."
 	icon = "grin-tongue-wink"
 	value = -8
-	mob_trait = TRAIT_INSANITY
-	gain_text = "<span class='userdanger'>...</span>"
-	lose_text = "<span class='notice'>You feel in tune with the world again.</span>"
+	gain_text = span_userdanger("...")
+	lose_text = span_notice("You feel in tune with the world again.")
 	medical_record_text = "Patient suffers from acute Reality Dissociation Syndrome and experiences vivid hallucinations."
 	hardcore_value = 6
-	processing_quirk = TRUE
 
-/datum/quirk/insanity/process(delta_time)
-	if(quirk_holder.stat != CONSCIOUS || quirk_holder.IsSleeping() || quirk_holder.IsUnconscious())
+/datum/quirk/insanity/add()
+	if(!iscarbon(quirk_holder))
 		return
+	var/mob/living/carbon/carbon_quirk_holder = quirk_holder
 
-	if(DT_PROB(2, delta_time))
-		quirk_holder.hallucination += rand(10, 25)
+	// Setup our special RDS mild hallucination.
+	// Not a unique subtype so not to plague subtypesof,
+	// also as we inherit the names and values from our quirk.
+	var/datum/brain_trauma/mild/hallucinations/added_trauma = new()
+	added_trauma.resilience = TRAUMA_RESILIENCE_ABSOLUTE
+	added_trauma.name = name
+	added_trauma.desc = medical_record_text
+	added_trauma.scan_desc = lowertext(name)
+	added_trauma.gain_text = null
+	added_trauma.lose_text = null
 
-/datum/quirk/insanity/post_add() //I don't /think/ we'll need this but for newbies who think "roleplay as insane" = "license to kill" it's probably a good thing to have
+	carbon_quirk_holder.gain_trauma(added_trauma)
+
+/datum/quirk/insanity/post_add()
 	if(!quirk_holder.mind || quirk_holder.mind.special_role)
 		return
-	to_chat(quirk_holder, "<span class='big bold info'>Please note that your dissociation syndrome does NOT give you the right to attack people or otherwise cause any interference to \
-	the round. You are not an antagonist, and the rules will treat you the same as other crewmembers.</span>")
+	// I don't /think/ we'll need this, but for newbies who think "roleplay as insane" = "license to kill",
+	// it's probably a good thing to have.
+	to_chat(quirk_holder, "<span class='big bold info'>Please note that your [lowertext(name)] does NOT give you the right to attack people or otherwise cause any interference to \
+		the round. You are not an antagonist, and the rules will treat you the same as other crewmembers.</span>")
 
 /datum/quirk/social_anxiety
 	name = "Social Anxiety"
