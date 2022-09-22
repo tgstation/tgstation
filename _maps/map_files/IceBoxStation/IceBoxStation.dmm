@@ -59442,7 +59442,7 @@
 	dir = 8
 	},
 /obj/item/crowbar,
-/obj/item/implant/radio,
+/obj/item/radio,
 /turf/open/floor/iron/dark,
 /area/station/commons/storage/primary)
 "snj" = (
