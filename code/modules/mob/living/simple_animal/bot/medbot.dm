@@ -606,6 +606,15 @@
 	var/cola_cost = 250  // at start, uses entire budget in 8 heals
 	skin = "cola"
 
+	/// the possible messages said when injecting, and the corresponding ogg
+	var/static/list/messagevoice = list(
+		"The taste that can't be beat!" = 'sound/voice/medbot/beat.ogg',
+		"Please, have a drink!" = 'sound/voice/medbot/haveone.ogg',
+		"Refreshing!" = 'sound/voice/medbot/refreshing.ogg',
+		"Space Cola is our sponsor!" = 'sound/voice/medbot/sponsor.ogg',
+		"The best drinks in space!" = 'sound/voice/medbot/thebest.ogg',
+		"Hope you're thirsty!" = 'sound/voice/medbot/thirsty.ogg')
+
 /mob/living/simple_animal/bot/medbot/cola/Initialize(mapload, new_skin)
 	. = ..()
 	START_PROCESSING(SSobj, src)
@@ -646,13 +655,6 @@
 	// alright, no special cases, prob check passed, run the standard cola inject
 
 	patient.reagents.add_reagent(/datum/reagent/consumable/space_cola, 10)
-	var/static/list/messagevoice = list(  // assorted space cola quotes
-		"The taste that can't be beat!" = 'sound/voice/medbot/beat.ogg',
-		"Please, have a drink!" = 'sound/voice/medbot/haveone.ogg',
-		"Refreshing!" = 'sound/voice/medbot/refreshing.ogg',
-		"Space Cola is our sponsor!" = 'sound/voice/medbot/sponsor.ogg',
-		"The best drinks in space!" = 'sound/voice/medbot/thebest.ogg',
-		"Hope you're thirsty!" = 'sound/voice/medbot/thirsty.ogg')
 	var/message = pick(messagevoice)
 	speak(message)
 	playsound(src, messagevoice[message], 50)
