@@ -429,7 +429,7 @@
 							else
 								grinded.on_grind()
 								reagents.add_reagent_list(grinded.grind_results)
-								if(grinded.reagents)
+								if(grinded.reagents) //If grinded item has reagents within, transfer them to the mortar
 									grinded.reagents.trans_to(src, grinded.reagents.total_volume, transfered_by = user)
 								to_chat(user, span_notice("You try to juice [grinded] but there is no liquids in it. Instead you get nice powder."))
 								QDEL_NULL(grinded)
@@ -438,7 +438,7 @@
 							if(grinded.grind_results)
 								grinded.on_grind()
 								reagents.add_reagent_list(grinded.grind_results)
-								if(grinded.reagents)
+								if(grinded.reagents) //If grinded item has reagents within, transfer them to the mortar
 									grinded.reagents.trans_to(src, grinded.reagents.total_volume, transfered_by = user)
 								to_chat(user, span_notice("You break [grinded] into powder."))
 								QDEL_NULL(grinded)
