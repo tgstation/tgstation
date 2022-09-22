@@ -604,7 +604,7 @@
 	var/static/bot_budget = 1000  // initial value (will get refilled instantly)
 	var/static/bot_budget_refill_size = 1000
 	var/cola_cost = 250  // at start, uses entire budget in 8 heals
-	skin = "advanced"  // looks cola-y
+	skin = "cola"
 
 /mob/living/simple_animal/bot/medbot/cola/Initialize(mapload, new_skin)
 	. = ..()
@@ -615,7 +615,7 @@
 		refill()
 		COOLDOWN_START(src, fund, 2 MINUTES)
 
-/obj/item/mop/advanced/Destroy()
+/mob/living/simple_animal/bot/medbot/cola/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
