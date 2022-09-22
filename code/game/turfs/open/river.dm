@@ -88,34 +88,33 @@
 			continue
 
 		if(!logged_turf_type && ismineralturf(canidate))
-			var/turf/closed/mineral/M = canidate
-			logged_turf_type = M.turf_type
+			var/turf/closed/mineral/mineral_canidate = canidate
+			logged_turf_type = mineral_canidate.turf_type
 
 		if(get_dir(src, canidate) in GLOB.cardinals)
 			cardinal_turfs += canidate
 		else
 			diagonal_turfs += canidate
 
-	for(var/F in cardinal_turfs) //cardinal turfs are always changed but don't always spread
-		var/turf/cardi_canidate = F
+	for(var/turf/cardinal_canidate as anything in cardinal_turfs) //cardinal turfs are always changed but don't always spread
 		// NOTE: WE ARE SKIPPING CHANGETURF HERE
 		// The calls in this proc only serve to provide a satisfactory (if it's not ALREADY this) check. They do not actually call changeturf
 		// This is safe because this proc can only be run during mapload, and nothing has initialized by now so there's nothing to inherit or delete
-		if(!istype(cardi_canidate, logged_turf_type) && cardi_canidate.ChangeTurf(type, baseturfs, CHANGETURF_SKIP) && prob(probability))
+		if(!istype(cardinal_canidate, logged_turf_type) && cardinal_canidate.ChangeTurf(type, baseturfs, CHANGETURF_SKIP) && prob(probability))
 			if(baseturfs)
-				cardi_canidate.baseturfs = baseturfs
-			cardi_canidate.Spread(probability - prob_loss, prob_loss, whitelisted_area)
+				cardinal_canidate.baseturfs = baseturfs
+			cardinal_canidate.Spread(probability - prob_loss, prob_loss, whitelisted_area)
 
-	for(var/turf/diag_canidate in diagonal_turfs) //diagonal turfs only sometimes change, but will always spread if changed
+	for(var/turf/diagonal_canidate as anything in diagonal_turfs) //diagonal turfs only sometimes change, but will always spread if changed
 		// Important NOTE: SEE ABOVE
-		if(!istype(diag_canidate, logged_turf_type) && prob(probability) && diag_canidate.ChangeTurf(type, baseturfs, CHANGETURF_SKIP))
+		if(!istype(diagonal_canidate, logged_turf_type) && prob(probability) && diagonal_canidate.ChangeTurf(type, baseturfs, CHANGETURF_SKIP))
 			if(baseturfs)
-				diag_canidate.baseturfs = baseturfs
-			diag_canidate.Spread(probability - prob_loss, prob_loss, whitelisted_area)
-		else if(ismineralturf(diag_canidate))
-			var/turf/closed/mineral/M = diag_canidate
+				diagonal_canidate.baseturfs = baseturfs
+			diagonal_canidate.Spread(probability - prob_loss, prob_loss, whitelisted_area)
+		else if(ismineralturf(diagonal_canidate))
+			var/turf/closed/mineral/diagonal_mineral = diagonal_canidate
 			// SEE ABOVE, THIS IS ONLY VERY RARELY SAFE
-			new M.turf_type(M)
+			new diagonal_mineral.turf_type(diagonal_mineral)
 
 #undef RANDOM_UPPER_X
 #undef RANDOM_UPPER_Y

@@ -76,10 +76,10 @@
 	string_gen = rustg_cnoise_generate("[initial_closed_chance]", "[smoothing_iterations]", "[birth_limit]", "[death_limit]", "[world.maxx]", "[world.maxy]") //Generate the raw CA data
 
 	// Area var pullouts to make accessing in the loop faster
-	var/flora_allowed = generate_in.area_flags & FLORA_ALLOWED && length(flora_spawn_list)
-	var/feature_allowed = generate_in.area_flags & FLORA_ALLOWED && length(feature_spawn_list)
-	var/mobs_allowed = generate_in.area_flags & MOB_SPAWN_ALLOWED && length(mob_spawn_list)
-	var/megas_allowed = generate_in.area_flags & MEGAFAUNA_SPAWN_ALLOWED && length(megafauna_spawn_list)
+	var/flora_allowed = (generate_in.area_flags & FLORA_ALLOWED) && length(flora_spawn_list)
+	var/feature_allowed = (generate_in.area_flags & FLORA_ALLOWED) && length(feature_spawn_list)
+	var/mobs_allowed = (generate_in.area_flags & MOB_SPAWN_ALLOWED) && length(mob_spawn_list)
+	var/megas_allowed = (generate_in.area_flags & MEGAFAUNA_SPAWN_ALLOWED) && length(megafauna_spawn_list)
 
 	for(var/i in turfs) //Go through all the turfs and generate them
 		var/turf/gen_turf = i
@@ -114,8 +114,8 @@
 
 			var/atom/picked_feature = pick(feature_spawn_list)
 
-			for(var/obj/structure/F in range(7, new_turf))
-				if(istype(F, picked_feature))
+			for(var/obj/structure/existing_feature in range(7, new_turf))
+				if(istype(existing_feature, picked_feature))
 					can_spawn = FALSE
 					break
 
