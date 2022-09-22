@@ -427,6 +427,7 @@
 
 /datum/uplink_item/explosives/clown_bomb_clownops
 	name = "Clown Bomb"
+	desc = null
 	item = /obj/item/sbeacondrop/clownbomb
 	cost = 15
 	surplus = 0
@@ -434,7 +435,7 @@
 
 /datum/uplink_item/explosives/clown_bomb_clownops/New()
 	. = ..()
-	desc = "The Clown bomb is a hilarious device capable of massive pranks. It has an adjustable timer, \
+	desc ||= "The Clown bomb is a hilarious device capable of massive pranks. It has an adjustable timer, \
 		with a minimum of [SYNDIEBOMB_MIN_TIMER_SECONDS] seconds, and can be bolted to the floor with a wrench to prevent \
 		movement. The bomb is bulky and cannot be moved; upon ordering this item, a smaller beacon will be \
 		transported to you that will teleport the actual bomb to it upon activation. Note that this bomb can \
