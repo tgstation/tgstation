@@ -1,0 +1,5 @@
+author: "VexingRaven"
+delete-after: True
+changes: 
+  - bugfix: "The illiteracy quirk will no longer break the mining shuttle"
+  - refactor: "Refactored some checks on the shuttle console to apply to all consoles"
