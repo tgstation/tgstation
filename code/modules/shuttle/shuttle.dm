@@ -548,32 +548,37 @@
 /obj/docking_port/mobile/proc/transit_failure()
 	message_admins("Shuttle [src] repeatedly failed to create transit zone.")
 
-//call the shuttle to destination S
-/obj/docking_port/mobile/proc/request(obj/docking_port/stationary/S)
-	if(!check_dock(S))
+/**
+ * Calls the shuttle to the destination port, respecting its ignition and call timers
+ *
+ * Arguments:
+ * * destination_port - Stationary docking port to move the shuttle to
+ */
+/obj/docking_port/mobile/proc/request(obj/docking_port/stationary/destination_port)
+	if(!check_dock(destination_port))
 		testing("check_dock failed on request for [src]")
 		return
 
-	if(mode == SHUTTLE_IGNITING && destination == S)
+	if(mode == SHUTTLE_IGNITING && destination == destination_port)
 		return
 
 	switch(mode)
 		if(SHUTTLE_CALL)
-			if(S == destination)
+			if(destination_port == destination)
 				if(timeLeft(1) < callTime * engine_coeff)
 					setTimer(callTime * engine_coeff)
 			else
-				destination = S
+				destination = destination_port
 				setTimer(callTime * engine_coeff)
 		if(SHUTTLE_RECALL)
-			if(S == destination)
+			if(destination_port == destination)
 				setTimer(callTime * engine_coeff - timeLeft(1))
 			else
-				destination = S
+				destination = destination_port
 				setTimer(callTime * engine_coeff)
 			mode = SHUTTLE_CALL
 		if(SHUTTLE_IDLE, SHUTTLE_IGNITING)
-			destination = S
+			destination = destination_port
 			mode = SHUTTLE_IGNITING
 			setTimer(ignitionTime)
 
@@ -644,6 +649,10 @@
 
 	qdel(src, force=TRUE)
 
+/**
+ * Ghosts and marks as escaped (for greentext purposes) all mobs, then deletes the shuttle.
+ * Used by the Shuttle Manipulator
+ */
 /obj/docking_port/mobile/proc/intoTheSunset()
 	// Loop over mobs
 	for(var/turf/turfs as anything in return_turfs())
