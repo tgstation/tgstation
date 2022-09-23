@@ -148,24 +148,17 @@ GLOBAL_LIST_INIT(possible_abductor_names, list("Alpha","Beta","Gamma","Delta","E
 			H.equipOutfit(/datum/outfit/abductor/scientist)
 
 /datum/team/abductor_team
-	member_name = "abductor"
+	member_name = "\improper Abductor"
 	var/team_number
-	var/list/datum/mind/abductees = list()
 	var/static/team_count = 1
+	///List of all brainwashed victims' minds
+	var/list/datum/mind/abductees = list()
 
 /datum/team/abductor_team/New()
 	..()
 	team_number = team_count++
 	name = "Mothership [pick(GLOB.possible_abductor_names)]" //TODO Ensure unique and actual alieny names
-	add_objective(new/datum/objective/experiment)
-
-/datum/team/abductor_team/is_solo()
-	return FALSE
-
-/datum/team/abductor_team/proc/add_objective(datum/objective/O)
-	O.team = src
-	O.update_explanation_text()
-	objectives += O
+	add_objective(new /datum/objective/experiment)
 
 /datum/team/abductor_team/roundend_report()
 	var/list/result = list()

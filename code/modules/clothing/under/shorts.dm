@@ -8,21 +8,18 @@
 	gender = PLURAL
 	body_parts_covered = GROIN
 	female_sprite_flags = NO_FEMALE_UNIFORM
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
+	supports_variations_flags = CLOTHING_NO_VARIATION
 	can_adjust = FALSE
 	species_exception = list(/datum/species/golem)
 	flags_1 = IS_PLAYER_COLORABLE_1
 
-/obj/item/clothing/under/jeanshorts
+/obj/item/clothing/under/shorts/jeanshorts
 	name = "jean shorts"
 	desc = "A nondescript pair of tough jean shorts."
 	icon_state = "jeanshorts"
-	can_adjust = FALSE
-	female_sprite_flags = NO_FEMALE_UNIFORM
 	greyscale_config = /datum/greyscale_config/jeanshorts
 	greyscale_config_worn = /datum/greyscale_config/jeanshorts_worn
 	greyscale_colors = "#787878#723E0E#4D7EAC"
-	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/under/shorts/red
 	name = "athletic shorts"

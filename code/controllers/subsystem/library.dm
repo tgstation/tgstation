@@ -19,10 +19,10 @@ SUBSYSTEM_DEF(library)
 	var/list/library_areas = list()
 
 /datum/controller/subsystem/library/Initialize()
-	. = ..()
 	prepare_official_posters()
 	prepare_library_areas()
 	load_shelves()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/library/proc/load_shelves()
 	for(var/obj/structure/bookcase/case_to_load as anything in shelves_to_load)
