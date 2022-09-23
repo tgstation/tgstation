@@ -91,6 +91,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			sec_job.total_positions = -1
 			sec_job.spawn_positions = -1
 			message_admins("[key_name_admin(holder)] has removed the cap on security officers.")
+
 		//Buttons for helpful stuff. This is where people land in the tgui
 		if("clear_virus")
 			var/choice = tgui_alert(usr, "Are you sure you want to cure all disease?",, list("Yes", "Cancel"))
@@ -99,51 +100,31 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 				for(var/thing in SSdisease.active_diseases)
 					var/datum/disease/D = thing
 					D.cure(0)
+
 		if("list_bombers")
-			var/dat = "<B>Bombing List</B><HR>"
-			for(var/l in GLOB.bombers)
-				dat += text("[l]<BR>")
-			holder << browse(dat, "window=bombers")
+			holder.list_bombers()
 
 		if("list_signalers")
-			var/dat = "<B>Showing last [length(GLOB.lastsignalers)] signalers.</B><HR>"
-			for(var/sig in GLOB.lastsignalers)
-				dat += "[sig]<BR>"
-			holder << browse(dat, "window=lastsignalers;size=800x500")
+			holder.list_signallers()
+
 		if("list_lawchanges")
-			var/dat = "<B>Showing last [length(GLOB.lawchanges)] law changes.</B><HR>"
-			for(var/sig in GLOB.lawchanges)
-				dat += "[sig]<BR>"
-			holder << browse(dat, "window=lawchanges;size=800x500")
+			holder.list_law_changes()
+
 		if("showailaws")
-			holder.holder.output_ai_laws()//huh, inconvenient var naming, huh?
+			holder.check_ai_laws()
+
 		if("manifest")
-			var/dat = "<B>Showing Crew Manifest.</B><HR>"
-			dat += "<table cellspacing=5><tr><th>Name</th><th>Position</th></tr>"
-			for(var/datum/data/record/t in GLOB.data_core.general)
-				dat += "<tr><td>[t.fields["name"]]</td><td>[t.fields["rank"]][t.fields["rank"] != t.fields["trim"] ? " ([t.fields["trim"]])" : ""]</td></tr>"
-			dat += "</table>"
-			holder << browse(dat, "window=manifest;size=440x410")
+			holder.show_manifest()
+
 		if("dna")
-			var/dat = "<B>Showing DNA from blood.</B><HR>"
-			dat += "<table cellspacing=5><tr><th>Name</th><th>DNA</th><th>Blood Type</th></tr>"
-			for(var/i in GLOB.human_list)
-				var/mob/living/carbon/human/H = i
-				if(H.ckey)
-					dat += "<tr><td>[H]</td><td>[H.dna.unique_enzymes]</td><td>[H.dna.blood_type]</td></tr>"
-			dat += "</table>"
-			holder << browse(dat, "window=DNA;size=440x410")
+			holder.list_dna()
+
 		if("fingerprints")
-			var/dat = "<B>Showing Fingerprints.</B><HR>"
-			dat += "<table cellspacing=5><tr><th>Name</th><th>Fingerprints</th></tr>"
-			for(var/i in GLOB.human_list)
-				var/mob/living/carbon/human/H = i
-				if(H.ckey)
-					dat += "<tr><td>[H]</td><td>[md5(H.dna.unique_identity)]</td></tr>"
-			dat += "</table>"
-			holder << browse(dat, "window=fingerprints;size=440x410")
+			holder.list_fingerprints()
+
 		if("ctfbutton")
 			toggle_id_ctf(holder, "centcom")
+
 		if("tdomereset")
 			var/delete_mobs = tgui_alert(usr,"Clear all mobs?","Confirm",list("Yes","No","Cancel"))
 			if(delete_mobs == "Cancel")
