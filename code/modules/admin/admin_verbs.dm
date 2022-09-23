@@ -364,12 +364,12 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "List Bombers") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/list_signalers()
-	set name = "List signalers"
+	set name = "List Signalers"
 	set category = "Admin.Game"
 	if(!holder)
 		return
 	holder.list_signalers()
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "List signalers") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "List Signalers") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/list_law_changes()
 	set name = "List Law Changes"
