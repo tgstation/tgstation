@@ -54,7 +54,7 @@
 		power_failure()
 		return FALSE
 
-///Used by subtypes for special cases for power usage
+///Used by subtypes for special cases for power usage, returns TRUE if it should stop the use_power chain.
 /obj/item/modular_computer/proc/check_power_override()
 	return FALSE
 

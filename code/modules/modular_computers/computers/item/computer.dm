@@ -304,10 +304,10 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	var/obj/item/computer_hardware/card_slot/card_slot2 = all_components[MC_CARD2]
 	var/multiple_slots = istype(card_slot) && istype(card_slot2)
 	if(card_slot)
-		if(card_slot?.stored_card || card_slot2?.stored_card)
+		if(card_slot.stored_card || card_slot2?.stored_card)
 			var/obj/item/card/id/first_ID = card_slot?.stored_card
 			var/obj/item/card/id/second_ID = card_slot2?.stored_card
-			var/multiple_cards = istype(first_ID) && istype(second_ID)
+			var/multiple_cards = (first_ID && second_ID)
 			if(Adjacent(user))
 				. += "It has [multiple_slots ? "two slots" : "a slot"] for identification cards installed[multiple_cards ? " which contain [first_ID] and [second_ID]" : ", one of which contains [first_ID ? first_ID : second_ID]"]."
 			else
