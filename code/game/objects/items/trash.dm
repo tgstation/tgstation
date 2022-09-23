@@ -154,7 +154,3 @@
 	desc = "It's been Donk-decimated."
 	icon_state = "ready_donk"
 
-/obj/item/trash/pillow_tag
-	name = "pillow tag"
-	desc = "a price tag for the pillow. It appears to have space to fill names in."
-	icon_state = "pillow_tag"

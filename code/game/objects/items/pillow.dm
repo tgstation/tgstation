@@ -3,14 +3,16 @@
 	name = "pillow"
 	desc = "A soft and fluffy pillow. You can smack someone with this!"
 	icon = 'icons/obj/pillow.dmi'
-	icon_state = "pillow_with_tag"
-	inhand_icon_state = "pillow"
+	icon_state = "pillow_1_t"
+	inhand_icon_state = "pillow_t"
 	lefthand_file = 'icons/mob/inhands/items/pillow_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/pillow_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	damtype = STAMINA
 	var/last_fighter
-	var/obj/item/trash/pillow_tag/pillow_trophy
+	var/obj/item/clothing/neck/pillow_tag/pillow_trophy
+	var/static/tag_desc = "This one seems to have its tag removed" 
+	var/static/variation
 
 
 /obj/item/pillow/Initialize(mapload)
@@ -53,8 +55,8 @@
 		while(is_smothering)
 			if(victim.resist_grab())
 				is_smothering = FALSE
-			else
-				victim.apply_damage(0.5, OXY)
+			else if(prob(30))
+				victim.apply_damage(5, OXY)
 
 /obj/item/pillow/examine(mob/user)
 	. = ..()
@@ -76,10 +78,21 @@
 		pillow_trophy.desc = "a pillow tag taken from [last_fighter] after a gruesome pillow fight."
 	user.put_in_hands(pillow_trophy)
 	balloon_alert(user, span_notice("tag removed"))
-	pillow_trophy = null
 	playsound(user,'sound/items/poster_ripped.ogg', 50)
-	icon_state = "pillow_no_tag"
-	desc = "A soft and fluffy pillow. This one seems to have its tag removed"
+	update_state()
+	pillow_trophy = null
+
+/obj/item/pillow/proc/update_state()	
+	desc = "A soft and fluffy pillow. You can smack someone with this! [tag_desc]"
+	icon_state = "pillow_[variation]"
+
+/obj/item/pillow/random
+
+/obj/item/pillow/random/Initialize(mapload)
+	. = ..()
+	variation = rand(1, 4)
+	icon_state = "pillow_[variation]_t"
+
 	
 /obj/item/clothing/suit/pillow_suit
 	name = "pillow suit"
@@ -92,6 +105,9 @@
 	icon_state = "pillow_suit"
 	armor = list(MELEE = 5, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 75) //fluffy amor
 
+/obj/item/clothing/suit/pillow_suit/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/bumpattack, proxy_weapon = /obj/item/pillow)
 
 /obj/item/clothing/head/pillow_hood
 	name = "pillow hood"
@@ -103,3 +119,28 @@
 	body_parts_covered = HEAD
 	flags_inv = HIDEHAIR|HIDEEARS
 	armor = list(MELEE = 5, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 75) //fluffy amor
+
+/obj/item/clothing/neck/pillow_tag
+	name = "pillow tag"
+	desc = "a price tag for the pillow. It appears to have space to fill names in."
+	icon = 'icons/obj/pillow.dmi'
+	icon_state = "pillow_tag"
+	worn_icon = 'icons/mob/clothing/neck.dmi'
+	worn_icon_state = "pillow_tag"
+	body_parts_covered = NECK
+
+/obj/item/pillow/clown
+	name = "clown pillow"
+	desc = "daww look at that little clown!"
+	icon_state = "pillow_5_t"
+
+/obj/item/pillow/clown/update_state()
+	icon_state = "pillow_5"
+
+/obj/item/pillow/mime
+	name = "mime pillow"
+	desc = "daww look at that little mime!"
+	icon_state = "pillow_6_t"
+
+/obj/item/pillow/mime/update_state()
+	icon_state = "pillow_6"
