@@ -20,11 +20,12 @@
 	var/goodie_count = 1
 	/// Goodies which can be given to anyone. The base weight for cash is 56. For there to be a 50/50 chance of getting a department item, they need 56 weight as well.
 	var/list/generic_goodies = list(
-		/obj/item/stack/spacecash/c50 = 10,
-		/obj/item/stack/spacecash/c100 = 25,
-		/obj/item/stack/spacecash/c200 = 15,
-		/obj/item/stack/spacecash/c500 = 5,
-		/obj/item/stack/spacecash/c1000 = 1,
+		/obj/effect/spawner/random/entertainment/money_medium,
+		/obj/effect/spawner/random/entertainment/coin,
+		/obj/effect/spawner/random/entertainment/toy,
+		/obj/effect/spawner/random/food_or_drink/refreshing_beverage,
+		/obj/effect/spawner/random/food_or_drink/snack,
+
 	)
 	// Overlays (pure fluff)
 	/// Does the letter have the postmark overlay?
@@ -156,6 +157,10 @@
 				goodies = job_goodies
 			else
 				goodies += job_goodies
+
+	for(var/datum/quirk/quirk as anything in body.quirks)
+		if(LAZYLEN(quirk.mail_goodies))
+			goodies += quirk.mail_goodies
 
 	for(var/iterator in 1 to goodie_count)
 		var/target_good = pick_weight(goodies)

@@ -88,6 +88,17 @@
 		/obj/item/stack/spacecash/c100 = 1,
 	)
 
+/obj/effect/spawner/random/entertainment/money_medium
+	name = "money spawner"
+	icon_state = "cash"
+	loot = list(
+		/obj/item/stack/spacecash/c100 = 25,
+		/obj/item/stack/spacecash/c200 = 15,
+		/obj/item/stack/spacecash/c50 = 10,
+		/obj/item/stack/spacecash/c500 = 5,
+		/obj/item/stack/spacecash/c1000 = 1,
+	)
+
 /obj/effect/spawner/random/entertainment/money_large
 	name = "large money spawner"
 	icon_state = "cash"
