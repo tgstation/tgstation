@@ -51,7 +51,7 @@
 
 /// Attempt to get the turf below the provided one according to Z traits
 /datum/controller/subsystem/mapping/proc/get_turf_below(turf/T)
-	if (!T || !initialized)
+	if (!T || !multiz_levels)
 		return
 	var/offset = multiz_levels[T.z]["[DOWN]"]
 	if (!offset)
@@ -60,7 +60,7 @@
 
 /// Attempt to get the turf above the provided one according to Z traits
 /datum/controller/subsystem/mapping/proc/get_turf_above(turf/T)
-	if (!T || !initialized)
+	if (!T || !multiz_levels)
 		return
 
 	var/offset = multiz_levels[T.z]["[UP]"]
