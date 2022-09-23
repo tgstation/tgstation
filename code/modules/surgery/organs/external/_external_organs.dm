@@ -44,7 +44,7 @@
 	var/color_source = ORGAN_COLOR_INHERIT
 
 	///Does this organ have any bodytypes to pass to it's ownerlimb?
-	var/external_bodytypes = NONE
+	var/datum/immutable_list/external_bodytypes = null
 
 /**mob_sprite is optional if you havent set sprite_datums for the object, and is used mostly to generate sprite_datums from a persons DNA
 * For _mob_sprite we make a distinction between "Round Snout" and "round". Round Snout is the name of the sprite datum, while "round" would be part of the sprite
@@ -52,6 +52,8 @@
 */
 /obj/item/organ/external/Initialize(mapload, mob_sprite)
 	. = ..()
+	if(external_bodytypes)
+		external_bodytypes = IMMUTABLE_STRING_LIST(external_bodytypes)
 	if(mob_sprite)
 		set_sprite(mob_sprite)
 
@@ -293,7 +295,7 @@
 
 	feature_key = "snout"
 	preference = "feature_lizard_snout"
-	external_bodytypes = BODYTYPE_SNOUTED
+	external_bodytypes = list(BODYTYPE_SNOUTED)
 
 	dna_block = DNA_SNOUT_BLOCK
 

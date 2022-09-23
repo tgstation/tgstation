@@ -70,17 +70,17 @@
 
 //Bodytype defines for how things can be worn, surgery, and other misc things.
 ///The limb is organic
-#define BODYTYPE_ORGANIC (1<<0)
+#define BODYTYPE_ORGANIC "BTYPE_ORGANIC"
 ///The limb is robotic
-#define BODYTYPE_ROBOTIC (1<<1)
+#define BODYTYPE_ROBOTIC "BTYPE_ROBOTIC"
 ///The limb fits the human mold
-#define BODYTYPE_HUMANOID (1<<2)
+#define BODYTYPE_HUMANOID "BTYPE_HUMANOID"
 ///The limb is digitigrade
-#define BODYTYPE_DIGITIGRADE (1<<3) //Cancer
+#define BODYTYPE_DIGITIGRADE "BTYPE_DIGITIGRADE"
 ///The limb fits the monkey mold
-#define BODYTYPE_MONKEY (1<<4)
+#define BODYTYPE_MONKEY "BTYPE_MONKEY"
 ///The limb is snouted
-#define BODYTYPE_SNOUTED (1<<5)
+#define BODYTYPE_SNOUTED "BTYPE_SNOUTED"
 
 // Defines for Species IDs. Used to refer to the name of a species, for things like bodypart names or species preferences.
 #define SPECIES_ABDUCTOR "abductor"

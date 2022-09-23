@@ -148,8 +148,8 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 	var/list/attack_verb_simple
 	///list() of species types, if a species cannot put items in a certain slot, but species type is in list, it will be able to wear that item
 	var/list/species_exception = null
-	///This is a bitfield that defines what variations exist for bodyparts like Digi legs. See: code\_DEFINES\inventory.dm
-	var/supports_variations_flags = NONE
+	///This is an immutable list that defines what variations exist for bodyparts like Digi legs. See: code\_DEFINES\inventory.dm
+	var/datum/immutable_list/alt_appearances_by_bodytype = null //Gets created in Initialize()
 
 	///A weakref to the mob who threw the item
 	var/datum/weakref/thrownby = null //I cannot verbally describe how much I hate this var
@@ -211,6 +211,18 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 	var/offensive_notes
 	/// Used in obj/item/examine to determines whether or not to detail an item's statistics even if it does not meet the force requirements
 	var/override_notes = FALSE
+
+/obj/item/New()
+	if(alt_appearances_by_bodytype)
+		//Magic BS to make default appearances work nicely
+		var/list/magic = alt_appearances_by_bodytype
+		for(var/bodytype in magic)
+			if(alt_appearances_by_bodytype[bodytype] == USE_DEFAULT_ICON)
+				alt_appearances_by_bodytype[bodytype] = worn_icon
+
+		alt_appearances_by_bodytype = IMMUTABLE_ASSOC_LIST(alt_appearances_by_bodytype)
+
+	..()
 
 /obj/item/Initialize(mapload)
 

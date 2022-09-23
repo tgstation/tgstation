@@ -18,7 +18,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY|FEMALE_UNIFORM_NO_BREASTS
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	alt_appearances_by_bodytype = list(BODYTYPE_DIGITIGRADE = USE_DEFAULT_ICON)
 
 /obj/item/clothing/under/suit/sl
 	desc = "It's a very amish looking suit."
@@ -30,7 +30,7 @@
 	desc = "It's a very smart uniform with a special pocket for tip."
 	icon_state = "waiter"
 	inhand_icon_state = "waiter"
-	supports_variations_flags = CLOTHING_MONKEY_VARIATION
+	alt_appearances_by_bodytype = list(BODYTYPE_MONKEY = 'icons/mob/species/monkey/uniform.dmi')
 
 /obj/item/clothing/under/suit/blacktwopiece
 	name = "black two piece suit"
@@ -55,7 +55,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY|FEMALE_UNIFORM_NO_BREASTS
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	alt_appearances_by_bodytype = list(BODYTYPE_DIGITIGRADE = USE_DEFAULT_ICON)
 
 /obj/item/clothing/under/suit/black_really
 	name = "executive suit"
@@ -71,7 +71,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY|FEMALE_UNIFORM_NO_BREASTS
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	alt_appearances_by_bodytype = list(BODYTYPE_DIGITIGRADE = USE_DEFAULT_ICON)
 
 /obj/item/clothing/under/suit/green
 	name = "green suit"

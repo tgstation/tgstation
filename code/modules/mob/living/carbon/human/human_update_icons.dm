@@ -100,32 +100,35 @@ There are several things that need to be remembered:
 		//handled_by_bodytype MUST be set to FALSE under the if(!icon_exists()) statement, or everything breaks.
 		//"override_file = handled_by_bodytype ? icon_file : null" MUST be added to the arguments of build_worn_icon()
 		//Friendly reminder that icon_exists(file, state, scream = TRUE) is your friend when debugging this code.
-		var/handled_by_bodytype = TRUE
+		var/handled_by_bodytype
 		var/icon_file
 		var/woman
 		if(!uniform_overlay)
 			//BEGIN SPECIES HANDLING
-			if((dna?.species.bodytype & BODYTYPE_DIGITIGRADE) && (uniform.supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION))
-				icon_file = DIGITIGRADE_UNIFORM_FILE
-			if((dna?.species.bodytype & BODYTYPE_MONKEY) && (uniform.supports_variations_flags & CLOTHING_MONKEY_VARIATION))
-				icon_file = MONKEY_UNIFORM_FILE
+			if(uniform.alt_appearances_by_bodytype)
+				for(var/bodytype in bodytypes.Get())
+					icon_file = uniform.alt_appearances_by_bodytype[bodytype]
+					if(icon_file)
+						handled_by_bodytype = bodytype
+						break
 
 			//Female sprites have lower priority than digitigrade sprites
-			else if(dna.species.sexes && (dna.species.bodytype & BODYTYPE_HUMANOID) && physique == FEMALE && uniform.female_sprite_flags != NO_FEMALE_UNIFORM) //Agggggggghhhhh
+			if(!icon_file && dna.species.sexes && (bodytypes.Locate(BODYTYPE_HUMANOID)) && physique == FEMALE && uniform.female_sprite_flags != NO_FEMALE_UNIFORM) //Agggggggghhhhh
 				woman = TRUE
 
-			if(!icon_exists(icon_file, RESOLVE_ICON_STATE(uniform)))
-				icon_file = DEFAULT_UNIFORM_FILE
-				handled_by_bodytype = FALSE
+			if(icon_file && !icon_exists(icon_file, RESOLVE_ICON_STATE(uniform)))
+				icon_file = null
+				uniform.alt_appearances_by_bodytype = uniform.alt_appearances_by_bodytype.Remove(handled_by_bodytype)
+				stack_trace("[uniform] said it had a unique appearance for [handled_by_bodytype], but it's state could not be found!")
 
 			//END SPECIES HANDLING
 			uniform_overlay = uniform.build_worn_icon(
 				default_layer = UNIFORM_LAYER,
-				default_icon_file = icon_file,
+				default_icon_file = icon_file || RESOLVE_ICON_STATE(uniform),
 				isinhands = FALSE,
 				female_uniform = woman ? uniform.female_sprite_flags : null,
 				override_state = target_overlay,
-				override_file = handled_by_bodytype ? icon_file : null,
+				override_file = icon_file || null,
 			)
 
 		if(OFFSET_UNIFORM in dna.species.offset_features)
@@ -313,16 +316,20 @@ There are several things that need to be remembered:
 		var/icon_file
 		update_hud_shoes(worn_item)
 
-		//(Currently) unused digitigrade handling
-		/*if((dna.species.bodytype & BODYTYPE_DIGITIGRADE) && (worn_item.supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION))
-			var/obj/item/bodypart/leg = src.get_bodypart(BODY_ZONE_L_LEG)
-			if(leg.limb_id == "digitigrade")//Snowflakey and bad. But it makes it look consistent.
-				icon_file = DIGITIGRADE_SHOES_FILE*/
+		//(Currently) unused custom shoe sprite code
+		/*
+		for(var/bodytype in bodytypes.Get())
+			icon_file = shoes.alt_appearances_by_bodytype[bodytype]
+			if(icon_file)
+				handled_by_bodytype = bodytype
+				break
 
-		if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item))))
-			icon_file = DEFAULT_SHOES_FILE
-
-		shoes_overlay = shoes.build_worn_icon(default_layer = SHOES_LAYER, default_icon_file = icon_file)
+		if(icon_file && !icon_exists(icon_file, RESOLVE_ICON_STATE(shoes)))
+			icon_file = null
+			alt_appearances_by_bodytype = alt_appearances_by_bodytype.Remove(handled_by_bodytype)
+			stack_trace("[shoes] said it had a unique appearance for [handled_by_bodytype], but it's state could not be found!")
+		*/
+		shoes_overlay = shoes.build_worn_icon(default_layer = SHOES_LAYER, default_icon_file = icon_file || RESOLVE_ICON_STATE(shoes))
 
 		if(!shoes_overlay)
 			return
@@ -425,15 +432,21 @@ There are several things that need to be remembered:
 		update_hud_wear_suit(worn_item)
 		var/icon_file
 
-		//More currently unused digitigrade handling
-		/*if(dna.species.bodytype & BODYTYPE_DIGITIGRADE)
-			if(worn_item.supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION)
-				icon_file = DIGITIGRADE_SUIT_FILE*/
+		//(Currently) unused custom suit sprite code
+		/*
+		for(var/bodytype in bodytypes.Get())
+			icon_file = worn_item.alt_appearances_by_bodytype[bodytype]
+			if(icon_file)
+				handled_by_bodytype = bodytype
+				break
 
-		if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item))))
-			icon_file = DEFAULT_SUIT_FILE
+		if(icon_file && !icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item)))
+			icon_file = null
+			alt_appearances_by_bodytype = alt_appearances_.Remove(handled_by_bodytype)
+			stack_trace("[worn_item] said it had a unique appearance for [handled_by_bodytype], but it's state could not be found!")
+		*/
 
-		suit_overlay = wear_suit.build_worn_icon(default_layer = SUIT_LAYER, default_icon_file = icon_file)
+		suit_overlay = wear_suit.build_worn_icon(default_layer = SUIT_LAYER, default_icon_file = icon_file || RESOLVE_ICON_STATE(worn_item))
 
 		if(!suit_overlay)
 			return

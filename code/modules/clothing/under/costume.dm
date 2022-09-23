@@ -98,7 +98,7 @@
 	inhand_icon_state = "gladiator"
 	body_parts_covered = CHEST|GROIN|ARMS
 	female_sprite_flags = NO_FEMALE_UNIFORM
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	alt_appearances_by_bodytype = list(BODYTYPE_DIGITIGRADE = USE_DEFAULT_ICON)
 	can_adjust = FALSE
 	resistance_flags = NONE
 
@@ -113,7 +113,7 @@
 	inhand_icon_state = "maid"
 	body_parts_covered = CHEST|GROIN
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	alt_appearances_by_bodytype = list(BODYTYPE_DIGITIGRADE = USE_DEFAULT_ICON)
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/maid/Initialize(mapload)

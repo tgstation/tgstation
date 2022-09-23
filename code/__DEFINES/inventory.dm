@@ -124,16 +124,8 @@
 #define NORMAL_STYLE 0
 #define ALT_STYLE 1
 #define DIGITIGRADE_STYLE 2
-
-//Flags (actual flags, fucker ^) for /obj/item/var/supports_variations_flags
-///No alternative sprites based on bodytype
-#define CLOTHING_NO_VARIATION (1<<0)
-///Has a sprite for digitigrade legs specifically.
-#define CLOTHING_DIGITIGRADE_VARIATION (1<<1)
-///The sprite works fine for digitigrade legs as-is.
-#define CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON (1<<2)
-///has a sprite for monkeys
-#define CLOTHING_MONKEY_VARIATION (1<<3)
+///Setting a bodytype equivalent to this value will use the item's default appearance for mob rendering
+#define USE_DEFAULT_ICON "magicbullshit"
 
 //flags for covering body parts
 #define GLASSESCOVERSEYES (1<<0)

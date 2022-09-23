@@ -220,7 +220,7 @@
 					facial_overlay.color = facial_hair_color
 					facial_overlay.alpha = hair_alpha
 					. += facial_overlay
-				
+
 			if(!eyes)
 				. += image('icons/mob/species/human/human_face.dmi', "eyes_missing", -BODY_LAYER, SOUTH)
 
@@ -320,7 +320,7 @@
 	icon_state = "default_monkey_head"
 	limb_id = SPECIES_MONKEY
 	animal_origin = MONKEY_BODYPART
-	bodytype = BODYTYPE_MONKEY | BODYTYPE_ORGANIC
+	bodytype = list(BODYTYPE_MONKEY, BODYTYPE_ORGANIC)
 
 /obj/item/bodypart/head/alien
 	icon = 'icons/mob/species/alien/bodyparts.dmi'

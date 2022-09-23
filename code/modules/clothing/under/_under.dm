@@ -98,9 +98,9 @@
 		if(!alt_covers_chest)
 			body_parts_covered |= CHEST
 
-	if((supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION) && ishuman(user))
+	if(alt_appearances_by_bodytype?[BODYTYPE_DIGITIGRADE] && ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.dna.species.bodytype & BODYTYPE_DIGITIGRADE)
+		if(H.bodytypes.Locate(BODYTYPE_DIGITIGRADE))
 			adjusted = DIGITIGRADE_STYLE
 		H.update_worn_undersuit()
 

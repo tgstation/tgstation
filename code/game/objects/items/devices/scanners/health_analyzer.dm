@@ -235,7 +235,7 @@
 
 			if(mode == SCANNER_VERBOSE)
 				for(var/obj/item/bodypart/limb as anything in damaged)
-					if(limb.bodytype & BODYTYPE_ROBOTIC)
+					if(limb.bodytype.Locate(BODYTYPE_ROBOTIC))
 						dmgreport += "<tr><td><font color='#cc3333'>[capitalize(limb.name)]:</font></td>"
 					else
 						dmgreport += "<tr><td><font color='#cc3333'>[capitalize(limb.plaintext_zone)]:</font></td>"

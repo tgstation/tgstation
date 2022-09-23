@@ -505,7 +505,7 @@
 	icon_state = "decker_suit"
 	inhand_icon_state = "decker_suit"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	alt_appearances_by_bodytype = list(BODYTYPE_DIGITIGRADE = USE_DEFAULT_ICON)
 
 /obj/item/clothing/suit/costume/soviet
 	name = "soviet armored coat"
@@ -527,7 +527,7 @@
 	icon_state = "tmc_suit"
 	inhand_icon_state = "tmc_suit"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	alt_appearances_by_bodytype = list(BODYTYPE_DIGITIGRADE = USE_DEFAULT_ICON)
 
 /obj/item/clothing/suit/costume/pg
 	name = "powder ganger jacket"
@@ -535,4 +535,4 @@
 	icon_state = "pg_suit"
 	inhand_icon_state = "pg_suit"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	alt_appearances_by_bodytype = list(BODYTYPE_DIGITIGRADE = USE_DEFAULT_ICON)

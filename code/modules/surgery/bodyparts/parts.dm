@@ -42,7 +42,7 @@
 	should_draw_greyscale = FALSE
 	animal_origin = MONKEY_BODYPART
 	wound_resistance = -10
-	bodytype = BODYTYPE_MONKEY | BODYTYPE_ORGANIC
+	bodytype = list(BODYTYPE_MONKEY, BODYTYPE_ORGANIC)
 	acceptable_bodytype = BODYTYPE_MONKEY
 
 /obj/item/bodypart/chest/alien
@@ -147,7 +147,7 @@
 	limb_id = SPECIES_MONKEY
 	should_draw_greyscale = FALSE
 	animal_origin = MONKEY_BODYPART
-	bodytype = BODYTYPE_MONKEY | BODYTYPE_ORGANIC
+	bodytype = list(BODYTYPE_MONKEY, BODYTYPE_ORGANIC)
 	wound_resistance = -10
 	px_x = -5
 	px_y = -3
@@ -246,7 +246,7 @@
 	icon_static = 'icons/mob/species/monkey/bodyparts.dmi'
 	icon_state = "default_monkey_r_arm"
 	limb_id = SPECIES_MONKEY
-	bodytype = BODYTYPE_MONKEY | BODYTYPE_ORGANIC
+	bodytype = list(BODYTYPE_MONKEY, BODYTYPE_ORGANIC)
 	animal_origin = MONKEY_BODYPART
 	wound_resistance = -10
 	px_x = 5
@@ -338,7 +338,7 @@
 	limb_id = SPECIES_MONKEY
 	should_draw_greyscale = FALSE
 	animal_origin = MONKEY_BODYPART
-	bodytype = BODYTYPE_MONKEY | BODYTYPE_ORGANIC
+	bodytype = list(BODYTYPE_MONKEY, BODYTYPE_ORGANIC)
 	wound_resistance = -10
 	px_y = 4
 
@@ -436,7 +436,7 @@
 	limb_id = SPECIES_MONKEY
 	should_draw_greyscale = FALSE
 	animal_origin = MONKEY_BODYPART
-	bodytype = BODYTYPE_MONKEY | BODYTYPE_ORGANIC
+	bodytype = list(BODYTYPE_MONKEY, BODYTYPE_ORGANIC)
 	wound_resistance = -10
 	px_y = 4
 

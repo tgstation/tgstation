@@ -14,8 +14,11 @@ GLOBAL_LIST_INIT(immutable_list_repo, global._immutable_list_repo)
 	for(var/argument in data)
 		refs += ref(argument) //Ignore datum tags, we don't care.
 
-	. = global._immutable_list_repo[refs.Join()]
-	. ||= new /datum/immutable_list(data)
+	var/key = refs.Join()
+	. = global._immutable_list_repo[key]
+	if(!.)
+		. =new /datum/immutable_list(data)
+		global._immutable_list_repo[key] = .
 	return .
 
 ///Constructor for immutable associative lists, use the macro IMMUTABLE_ASSOC_LIST()
@@ -26,14 +29,20 @@ GLOBAL_LIST_INIT(immutable_list_repo, global._immutable_list_repo)
 		refs += "PAIR" // This is required, otherwise list("Foo", "Bar")` would be keyed the same as `list("Foo" = "Bar")
 		refs += ref(data[key])
 
-	. = global._immutable_list_repo[refs.Join()]
-	. ||= new /datum/immutable_list(data)
+	var/key = refs.Join()
+	. = global._immutable_list_repo[key]
+	if(!.)
+		. = new /datum/immutable_list(data)
+		global._immutable_list_repo[key] = .
 	return .
 
 ///Constructor for immutable lists containing ONLY strings, skips the expensive \ref bits. Use IMMUTABLE_STRING_LIST().
 /proc/__immutable_string_list(list/data)
-	. = global._immutable_list_repo[data.Join()]
-	. ||= new /datum/immutable_list/string(data)
+	var/key = data.Join()
+	. = global._immutable_list_repo[key]
+	if(!.)
+		. = new /datum/immutable_list/string(data)
+		global._immutable_list_repo[key] = .
 	return .
 
 ///Directly access a data member from data. []= is a different operator, and will throw a compile error if someone tries to use it.
@@ -43,6 +52,10 @@ GLOBAL_LIST_INIT(immutable_list_repo, global._immutable_list_repo)
 ///Return the contained list.
 /datum/immutable_list/proc/Get()
 	return data.Copy()
+
+///Return the length of the contained list
+/datum/immutable_list/proc/Length()
+	return length(data)
 
 ///Find and return a needle
 /datum/immutable_list/proc/Locate(needle)
@@ -89,36 +102,36 @@ GLOBAL_LIST_INIT(immutable_list_repo, global._immutable_list_repo)
 
 
 ///Set data[key] equal to [value]
-/datum/immutable_list/proc/string/Set(key, value)
+/datum/immutable_list/string/Set(key, value)
 	. = data.Copy()
 	.[key] = value
 	return __immutable_string_list(.)
 
 ///Add any number of items to data
-/datum/immutable_list/string/proc/Add(...)
+/datum/immutable_list/string/Add(...)
 	. = data.Copy()
 	for(var/argument in args)
 		. += argument
 	return __immutable_string_list(.)
 
 ///Remove any number of items from data
-/datum/immutable_list/string/proc/Remove(...)
+/datum/immutable_list/string/Remove(...)
 	. = data.Copy()
 	for(var/argument in args)
 		. -= argument
 	return __immutable_string_list(.)
 
 ///Functional equivalent of [list_A | list_B]
-/datum/immutable_list/string/proc/Or(list/other)
+/datum/immutable_list/string/Or(list/other)
 	. = data.Copy() | other
 	return __immutable_string_list(.)
 
 ///Functional equivalent of [list_A & list_B]
-/datum/immutable_list/string/proc/And(list/other)
+/datum/immutable_list/string/And(list/other)
 	. = data.Copy() & other
 	return __immutable_string_list(.)
 
 ///Functional equivlanet of [list_A ^ list_B]
-/datum/immutable_list/string/proc/Xor(list/other)
+/datum/immutable_list/string/Xor(list/other)
 	. = data.Copy() ^ other
 	return __immutable_string_list(.)

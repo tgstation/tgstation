@@ -23,7 +23,7 @@
 	var/mob/living/carbon/owner
 
 	///A bitfield of bodytypes for clothing, surgery, and misc information
-	var/bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC
+	var/datum/immutable_list/bodytype = list(BODYTYPE_HUMANOID, BODYTYPE_ORGANIC) //This is converted to an immutable_list on Initialize()
 	///Defines when a bodypart should not be changed. Example: BP_BLOCK_CHANGE_SPECIES prevents the limb from being overwritten on species gain
 	var/change_exempt_flags
 
@@ -143,6 +143,10 @@
 
 	///A list of all the external organs we've got stored to draw horns, wings and stuff with (special because we are actually in the limbs unlike normal organs :/ )
 	var/list/obj/item/organ/external/external_organs = list()
+
+/obj/item/bodypart/New()
+	bodytype = IMMUTABLE_STRING_LIST(bodytype)
+	return ..()
 
 /obj/item/bodypart/Initialize(mapload)
 	. = ..()
@@ -363,7 +367,7 @@
 		return FALSE
 	if(owner && (owner.status_flags & GODMODE))
 		return FALSE	//godmode
-	if(required_status && !(bodytype & required_status))
+	if(required_status && !(bodytype.Locate(required_status)))
 		return FALSE
 
 	var/dmg_multi = CONFIG_GET(number/damage_multiplier) * hit_percent
@@ -475,7 +479,7 @@
 /obj/item/bodypart/proc/heal_damage(brute, burn, stamina, required_status, updating_health = TRUE)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if(required_status && !(bodytype & required_status)) //So we can only heal certain kinds of limbs, ie robotic vs organic.
+	if(required_status && !(bodytype.Locate(required_status))) //So we can only heal certain kinds of limbs, ie robotic vs organic.
 		return
 
 	if(brute)

@@ -68,6 +68,8 @@
 	/// Total level of visualy impairing items
 	var/tinttotal = 0
 
+	///Populated by [synchronize_bodyparts()][/obj/item/bodypart/proc/synchronize_bodytype()].
+	var/datum/immutable_list/bodytypes
 	///Gets filled up in [create_bodyparts()][/mob/living/carbon/proc/create_bodyparts]
 	var/list/bodyparts = list(
 		/obj/item/bodypart/chest,
@@ -76,7 +78,7 @@
 		/obj/item/bodypart/r_arm,
 		/obj/item/bodypart/r_leg,
 		/obj/item/bodypart/l_leg,
-		)
+	)
 
 	/// A collection of arms (or actually whatever the fug /bodyparts you monsters use to wreck my systems)
 	var/list/hand_bodyparts = list()

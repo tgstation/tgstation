@@ -34,7 +34,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	alt_appearances_by_bodytype = list(BODYTYPE_DIGITIGRADE = USE_DEFAULT_ICON)
 	greyscale_config = /datum/greyscale_config/fancy_coat
 	greyscale_config_worn = /datum/greyscale_config/fancy_coat_worn
 	greyscale_colors = "#EDE3DC#414344"

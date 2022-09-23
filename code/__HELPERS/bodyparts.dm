@@ -1,1 +1,1 @@
-#define IS_ORGANIC_LIMB(limb) (limb.bodytype & BODYTYPE_ORGANIC)
+#define IS_ORGANIC_LIMB(limb) (limb.bodytype.Locate(BODYTYPE_ORGANIC))
