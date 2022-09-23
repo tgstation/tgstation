@@ -105,7 +105,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			holder.list_bombers()
 
 		if("list_signalers")
-			holder.list_signallers()
+			holder.list_signalers()
 
 		if("list_lawchanges")
 			holder.list_law_changes()

@@ -80,7 +80,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/datum/admins/proc/display_tags,
 	/datum/admins/proc/fishing_calculator,
 	/client/proc/list_bombers,
-	/client/proc/list_signallers,
+	/client/proc/list_signalers,
 	/client/proc/list_law_changes,
 	/client/proc/show_manifest,
 	/client/proc/list_dna,
@@ -363,13 +363,13 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	holder.list_bombers()
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "List Bombers") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/list_signallers()
-	set name = "List Signallers"
+/client/proc/list_signalers()
+	set name = "List signalers"
 	set category = "Admin.Game"
 	if(!holder)
 		return
-	holder.list_signallers()
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "List Signallers") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	holder.list_signalers()
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "List signalers") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/list_law_changes()
 	set name = "List Law Changes"

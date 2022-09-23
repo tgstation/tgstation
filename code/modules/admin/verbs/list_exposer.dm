@@ -9,7 +9,7 @@
 		data += text("[entry]<br>")
 	usr << browse(data, "window=bombers;size=800x500")
 
-/datum/admins/proc/list_signallers()
+/datum/admins/proc/list_signalers()
 	if(!SSticker.HasRoundStarted())
 		tgui_alert(usr, "The game hasn't started yet!")
 		return
