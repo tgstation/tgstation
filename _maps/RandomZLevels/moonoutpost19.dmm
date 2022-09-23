@@ -493,7 +493,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "bS" = (
-/obj/machinery/computer/monitor/secret,
+/obj/machinery/computer/monitor,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
@@ -753,8 +753,11 @@
 /obj/machinery/door/airlock/public/glass{
 	density = 0;
 	icon_state = "open";
-	name = "Dormitories";
-	set_obj_flags = "EMAGGED"
+	name = "Dormitories"
+	},
+/obj/effect/mapping_helpers/atom_injector/obj_flag{
+	inject_flags = 1;
+	target_type = /obj/machinery/door/airlock
 	},
 /obj/item/stack/rods,
 /obj/item/shard{
@@ -1048,8 +1051,11 @@
 	icon_state = "open";
 	id_tag = "awaydorm4";
 	name = "Dorm 1";
-	opacity = 0;
-	set_obj_flags = "EMAGGED"
+	opacity = 0
+	},
+/obj/effect/mapping_helpers/atom_injector/obj_flag{
+	inject_flags = 1;
+	target_type = /obj/machinery/door/airlock
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood{
@@ -1311,8 +1317,11 @@
 /obj/machinery/door/airlock/external/ruin{
 	density = 0;
 	icon_state = "open";
-	opacity = 0;
-	set_obj_flags = "EMAGGED"
+	opacity = 0
+	},
+/obj/effect/mapping_helpers/atom_injector/obj_flag{
+	inject_flags = 1;
+	target_type = /obj/machinery/door/airlock
 	},
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
@@ -1400,8 +1409,11 @@
 /obj/machinery/door/airlock/external/ruin{
 	density = 0;
 	icon_state = "open";
-	opacity = 0;
-	set_obj_flags = "EMAGGED"
+	opacity = 0
+	},
+/obj/effect/mapping_helpers/atom_injector/obj_flag{
+	inject_flags = 1;
+	target_type = /obj/machinery/door/airlock
 	},
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -1926,8 +1938,11 @@
 	density = 0;
 	icon_state = "open";
 	name = "Xenobiology Lab";
-	opacity = 0;
-	set_obj_flags = "EMAGGED"
+	opacity = 0
+	},
+/obj/effect/mapping_helpers/atom_injector/obj_flag{
+	inject_flags = 1;
+	target_type = /obj/machinery/door/airlock
 	},
 /obj/effect/mapping_helpers/airlock/access/all/away/maintenance,
 /obj/structure/cable,
@@ -2432,7 +2447,7 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "gA" = (
-/obj/machinery/computer/monitor/secret{
+/obj/machinery/computer/monitor{
 	dir = 1
 	},
 /obj/structure/cable,
@@ -2892,8 +2907,11 @@
 	density = 0;
 	icon_state = "open";
 	name = "Research Director's Office";
-	opacity = 0;
-	set_obj_flags = "EMAGGED"
+	opacity = 0
+	},
+/obj/effect/mapping_helpers/atom_injector/obj_flag{
+	inject_flags = 1;
+	target_type = /obj/machinery/door/airlock
 	},
 /obj/effect/mapping_helpers/airlock/access/all/away/maintenance,
 /turf/open/floor/iron/cafeteria{

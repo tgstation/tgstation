@@ -37,5 +37,9 @@
 
 #define STASIS_CHEMICAL_EFFECT "stasis_chemical"
 
-#define STASIS_ASCENSION_EFFECT "heretic_ascension"
+#define STASIS_SHAPECHANGE_EFFECT "stasis_shapechange"
 
+#define adjust_hallucinations(duration) adjust_timed_status_effect(duration, /datum/status_effect/hallucination)
+#define adjust_hallucinations_up_to(duration, up_to) adjust_timed_status_effect(duration, /datum/status_effect/hallucination, up_to)
+#define set_hallucinations(duration) set_timed_status_effect(duration, /datum/status_effect/hallucination)
+#define set_hallucinations_if_lower(duration) set_timed_status_effect(duration, /datum/status_effect/hallucination, TRUE)

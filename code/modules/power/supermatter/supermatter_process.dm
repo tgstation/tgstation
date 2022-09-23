@@ -22,10 +22,11 @@
 	environment_total_moles = env.total_moles()
 	if(produces_gas)
 		//Remove gas from surrounding area
-		absorbed_gasmix = env.remove(absorption_ratio * env.total_moles())
+		absorbed_gasmix = env.remove_ratio(absorption_ratio)
 	else
 		// Pass all the gas related code an empty gas container
 		absorbed_gasmix = new()
+
 	overlays -= psyOverlay
 	if(psy_overlay)
 		overlays -= psyOverlay
@@ -53,14 +54,38 @@
 			env.merge(absorbed_gasmix)
 			air_update_turf(FALSE, FALSE)
 	else
+		combined_gas = absorbed_gasmix.total_moles()
+		gas_percentage = list()
+
+		power_transmission_bonus = 0
+		dynamic_heat_modifier = 0
+		dynamic_heat_resistance = 0
+		gasmix_power_ratio = 0
+		powerloss_dynamic_scaling = 0
+		
+		for (var/gas_path in absorbed_gasmix.gases)
+			var/datum/sm_gas/sm_gas = GLOB.sm_gas_behavior[gas_path]
+			gas_percentage[gas_path] = absorbed_gasmix.gases[gas_path][MOLES] / combined_gas
+			power_transmission_bonus += sm_gas.transmit_modifier * gas_percentage[gas_path]
+			dynamic_heat_modifier += sm_gas.heat_penalty * gas_percentage[gas_path]
+			dynamic_heat_resistance += sm_gas.heat_resistance * gas_percentage[gas_path]
+			gasmix_power_ratio += sm_gas.powermix * gas_percentage[gas_path]
+			powerloss_dynamic_scaling += sm_gas.powerloss_inhibition * gas_percentage[gas_path]
+		
+		gasmix_power_ratio = clamp(gasmix_power_ratio, 0, 1)
+		dynamic_heat_modifier = max(dynamic_heat_modifier, 0.5)
+		dynamic_heat_resistance = max(dynamic_heat_resistance, 1)
+
+		// Extra effects should always fire after the compositions are all finished
+		// Some extra effects like [/datum/sm_gas/carbon_dioxide/extra_effects] needs more than one gas.
+		for (var/gas_path in absorbed_gasmix.gases)
+			var/datum/sm_gas/sm_gas = GLOB.sm_gas_behavior[gas_path]
+			sm_gas.extra_effects(src, env)
+
 		if(takes_damage)
 			//causing damage
 			deal_damage(absorbed_gasmix)
 
-		//registers the current enviromental gases in the various lists and vars
-		setup_lists(absorbed_gasmix)
-		//some gases can have special interactions
-		special_gases_interactions(env, absorbed_gasmix)
 		//main power calculations proc
 		power_calculations(env, absorbed_gasmix)
 		//irradiate at this point
@@ -128,6 +153,8 @@
 			break
 
 	var/delam_damage_multipler = delamination_strategy.damage_multiplier(src)
+	//more moles of gases are harder to heat than fewer, so let's scale heat damage around them
+	mole_heat_penalty = max(combined_gas / MOLE_HEAT_PENALTY, 0.25)
 
 	//Due to DAMAGE_INCREASE_MULTIPLIER, we only deal one 4th of the damage the statements otherwise would cause
 	//((((some value between 0.5 and 1 * temp - ((273.15 + 40) * some values between 1 and 10)) * some number between 0.25 and knock your socks off / 150) * 0.25
@@ -150,93 +177,10 @@
 	//This means we can only deal 1.8 damage per function call
 	damage = min(damage_archived + (DAMAGE_HARDCAP * explosion_point),damage)
 
-/obj/machinery/power/supermatter_crystal/proc/setup_lists(datum/gas_mixture/removed)
-
-	for(var/gas_id in gases_we_care_about)
-		removed.assert_gas(gas_id)
-
-	//calculating gas related values
-	//Wanna know a secret? See that max() to zero? it's used for error checking. If we get a mol count in the negative, we'll get a divide by zero error //Old me, you're insane
-	combined_gas = max(removed.total_moles(), 0)
-
-	//This is more error prevention, according to all known laws of atmos, gas_mix.remove() should never make negative mol values.
-	//But this is tg
-
-	//Lets get the proportions of the gasses in the mix for scaling stuff later
-	//They range between 0 and 1
-	for(var/gas_id in gases_we_care_about)
-		gas_comp[gas_id] = clamp(removed.gases[gas_id][MOLES] / combined_gas, 0, 1)
-
-	var/list/heat_mod = gases_we_care_about.Copy()
-	var/list/transit_mod = gases_we_care_about.Copy()
-	var/list/resistance_mod = gases_we_care_about.Copy()
-
-	//No less then zero, and no greater then one, we use this to do explosions and heat to power transfer
-	//Be very careful with modifing this var by large amounts, and for the love of god do not push it past 1
-	gasmix_power_ratio = 0
-	for(var/gas_id in gas_powermix)
-		gasmix_power_ratio += gas_comp[gas_id] * gas_powermix[gas_id]
-	gasmix_power_ratio = clamp(gasmix_power_ratio, 0, 1)
-
-	//Minimum value of -10, maximum value of 23. Effects plasma and o2 output and the output heat
-	dynamic_heat_modifier = 0
-	for(var/gas_id in gas_heat)
-		dynamic_heat_modifier += gas_comp[gas_id] * gas_heat[gas_id] * (isnull(heat_mod[gas_id]) ? 1 : heat_mod[gas_id])
-	dynamic_heat_modifier = max(dynamic_heat_modifier, 0.5)
-
-	//Value between 1 and 10. Effects the damage heat does to the crystal
-	dynamic_heat_resistance = 0
-	for(var/gas_id in gas_resist)
-		dynamic_heat_resistance += gas_comp[gas_id] * gas_resist[gas_id] * (isnull(resistance_mod[gas_id]) ? 1 : resistance_mod[gas_id])
-	dynamic_heat_resistance = max(dynamic_heat_resistance, 1)
-
-	//Value between -5 and 30, used to determine radiation output as it concerns things like collectors.
-	power_transmission_bonus = 0
-	for(var/gas_id in gas_trans)
-		power_transmission_bonus += gas_comp[gas_id] * gas_trans[gas_id] * (isnull(transit_mod[gas_id]) ? 1 : transit_mod[gas_id])
-
-/obj/machinery/power/supermatter_crystal/proc/special_gases_interactions(datum/gas_mixture/env, datum/gas_mixture/removed)
-	//Miasma is really just microscopic particulate. It gets consumed like anything else that touches the crystal.
-	if(gas_comp[/datum/gas/miasma])
-		var/miasma_pp = env.return_pressure() * gas_comp[/datum/gas/miasma]
-		var/consumed_miasma = clamp(((miasma_pp - MIASMA_CONSUMPTION_PP) / (miasma_pp + MIASMA_PRESSURE_SCALING)) * (1 + (gasmix_power_ratio * MIASMA_GASMIX_SCALING)), MIASMA_CONSUMPTION_RATIO_MIN, MIASMA_CONSUMPTION_RATIO_MAX)
-		consumed_miasma *= gas_comp[/datum/gas/miasma] * combined_gas
-		if(consumed_miasma)
-			removed.gases[/datum/gas/miasma][MOLES] -= consumed_miasma
-			matter_power += consumed_miasma * MIASMA_POWER_GAIN
-
-	//Let's say that the CO2 touches the SM surface and the radiation turns it into Pluoxium.
-	if(gas_comp[/datum/gas/carbon_dioxide] && gas_comp[/datum/gas/oxygen])
-		var/carbon_dioxide_pp = env.return_pressure() * gas_comp[/datum/gas/carbon_dioxide]
-		var/consumed_carbon_dioxide = clamp(((carbon_dioxide_pp - CO2_CONSUMPTION_PP) / (carbon_dioxide_pp + CO2_PRESSURE_SCALING)), CO2_CONSUMPTION_RATIO_MIN, CO2_CONSUMPTION_RATIO_MAX)
-		consumed_carbon_dioxide = min(consumed_carbon_dioxide * gas_comp[/datum/gas/carbon_dioxide] * combined_gas, removed.gases[/datum/gas/carbon_dioxide][MOLES] * INVERSE(0.5), removed.gases[/datum/gas/oxygen][MOLES] * INVERSE(0.5))
-		if(consumed_carbon_dioxide)
-			removed.gases[/datum/gas/carbon_dioxide][MOLES] -= consumed_carbon_dioxide * 0.5
-			removed.gases[/datum/gas/oxygen][MOLES] -= consumed_carbon_dioxide * 0.5
-			removed.gases[/datum/gas/pluoxium][MOLES] += consumed_carbon_dioxide * 0.25
-
-	if(prob(gas_comp[/datum/gas/zauker]))
-		playsound(loc, 'sound/weapons/emitter2.ogg', 100, TRUE, extrarange = 10)
-		supermatter_zap(src, 6, clamp(power * 2, 4000, 20000), ZAP_MOB_STUN, zap_cutoff = src.zap_cutoff, power_level = power, zap_icon = src.zap_icon)
-
-	if(gas_comp[/datum/gas/bz] >= 0.4 && prob(30 * gas_comp[/datum/gas/bz]))
-		fire_nuclear_particle()        // Start to emit radballs at a maximum of 30% chance per tick
-
-
 /obj/machinery/power/supermatter_crystal/proc/power_calculations(datum/gas_mixture/env, datum/gas_mixture/removed)
-	//more moles of gases are harder to heat than fewer, so let's scale heat damage around them
-	mole_heat_penalty = max(combined_gas / MOLE_HEAT_PENALTY, 0.25)
-
-	//Ramps up or down in increments of 0.02 up to the proportion of co2
-	//Given infinite time, powerloss_dynamic_scaling = co2comp
-	//Some value between 0 and 1
-	if (combined_gas > POWERLOSS_INHIBITION_MOLE_THRESHOLD && gas_comp[/datum/gas/carbon_dioxide] > POWERLOSS_INHIBITION_GAS_THRESHOLD) //If there are more then 20 mols, and more then 20% co2
-		powerloss_dynamic_scaling = clamp(powerloss_dynamic_scaling + clamp(gas_comp[/datum/gas/carbon_dioxide] - powerloss_dynamic_scaling, -0.02, 0.02), 0, 1)
-	else
-		powerloss_dynamic_scaling = clamp(powerloss_dynamic_scaling - 0.05, 0, 1)
 	//Ranges from 0 to 1(1-(value between 0 and 1 * ranges from 1 to 1.5(mol / 500)))
 	//We take the mol count, and scale it to be our inhibitor
-	powerloss_inhibitor = clamp(1-(powerloss_dynamic_scaling * clamp(combined_gas/POWERLOSS_INHIBITION_MOLE_BOOST_THRESHOLD, 1, 1.5)), 0, 1)
+	powerloss_inhibitor = clamp(1-powerloss_dynamic_scaling, 0, 1)
 
 	//Releases stored power into the general pool
 	//We get this by consuming shit or being scalpeled
@@ -297,6 +241,8 @@
 
 	//Calculate how much gas to release
 	//Varies based on power and gas content
+
+	absorbed_gasmix.assert_gases(/datum/gas/plasma, /datum/gas/oxygen)
 	removed.gases[/datum/gas/plasma][MOLES] += max((device_energy * dynamic_heat_modifier) / PLASMA_RELEASE_MODIFIER, 0)
 	//Varies based on power, gas content, and heat
 	removed.gases[/datum/gas/oxygen][MOLES] += max(((device_energy + removed.temperature * dynamic_heat_modifier) - T0C) / OXYGEN_RELEASE_MODIFIER, 0)
@@ -311,24 +257,17 @@
 	// no supermatter soothers are nearby.
 	var/psy_coeff_diff = -0.05
 	for(var/mob/living/carbon/human/seen_by_sm in view(src, HALLUCINATION_RANGE(power)))
-		// Someone (generally a Psychologist), when looking at the SM
-		// within hallucination range makes it easier to manage.
+		// Someone (generally a Psychologist), when looking at the SM within hallucination range makes it easier to manage.
 		if(HAS_TRAIT(seen_by_sm, TRAIT_SUPERMATTER_SOOTHER) || (seen_by_sm.mind && HAS_TRAIT(seen_by_sm.mind, TRAIT_SUPERMATTER_SOOTHER)))
 			psy_coeff_diff = 0.05
 			psy_overlay = TRUE
 
-		// If they are immune to supermatter hallucinations.
-		if (HAS_TRAIT(seen_by_sm, TRAIT_MADNESS_IMMUNE) || (seen_by_sm.mind && HAS_TRAIT(seen_by_sm.mind, TRAIT_MADNESS_IMMUNE)))
-			continue
-
-		// Blind people don't get supermatter hallucinations.
-		if (seen_by_sm.is_blind())
-			continue
-
-		// Everyone else gets hallucinations.
-		var/dist = sqrt(1 / max(1, get_dist(seen_by_sm, src)))
-		seen_by_sm.hallucination += power * hallucination_power * dist
-		seen_by_sm.hallucination = clamp(seen_by_sm.hallucination, 0, 200)
+	visible_hallucination_pulse(
+		center = src,
+		radius = HALLUCINATION_RANGE(power),
+		hallucination_duration = power * hallucination_power,
+		hallucination_max_duration = 400 SECONDS,
+	)
 	psyCoeff = clamp(psyCoeff + psy_coeff_diff, 0, 1)
 
 /obj/machinery/power/supermatter_crystal/proc/handle_high_power(datum/gas_mixture/removed)

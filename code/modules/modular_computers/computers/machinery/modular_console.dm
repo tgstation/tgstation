@@ -6,7 +6,6 @@
 	icon_state = "console"
 	icon_state_powered = "console"
 	icon_state_unpowered = "console-off"
-	screen_icon_state_menu = "menu"
 	hardware_flag = PROGRAM_CONSOLE
 	density = TRUE
 	base_idle_power_usage = 100
@@ -24,10 +23,8 @@
 	// User-built consoles start as empty frames.
 	var/obj/item/computer_hardware/hard_drive/hard_drive = cpu.all_components[MC_HDD]
 	var/obj/item/computer_hardware/hard_drive/network_card = cpu.all_components[MC_NET]
-	var/obj/item/computer_hardware/hard_drive/recharger = cpu.all_components[MC_CHARGE]
-	qdel(recharger)
-	qdel(network_card)
 	qdel(hard_drive)
+	qdel(network_card)
 
 /obj/machinery/modular_computer/console/Initialize(mapload)
 	. = ..()
@@ -38,7 +35,6 @@
 	var/obj/item/computer_hardware/network_card/wired/network_card = new()
 
 	cpu.install_component(network_card)
-	cpu.install_component(new /obj/item/computer_hardware/recharger/apc_recharger)
 	cpu.install_component(new /obj/item/computer_hardware/hard_drive/super) // Consoles generally have better HDDs due to lower space limitations
 
 	var/area/A = get_area(src)

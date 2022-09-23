@@ -6,6 +6,7 @@
 	id = SPECIES_NIGHTMARE
 	examine_limb_id = SPECIES_SHADOW
 	burnmod = 1.5
+	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE
 	no_equip = list(ITEM_SLOT_MASK, ITEM_SLOT_OCLOTHING, ITEM_SLOT_GLOVES, ITEM_SLOT_FEET, ITEM_SLOT_ICLOTHING, ITEM_SLOT_SUITSTORE)
 	species_traits = list(NOBLOOD,NO_UNDERWEAR,NO_DNA_COPY,NOTRANSSTING,NOEYESPRITES)
 	inherent_traits = list(
@@ -22,9 +23,9 @@
 		TRAIT_NODISMEMBER,
 		TRAIT_NOHUNGER,
 	)
-	mutanteyes = /obj/item/organ/internal/eyes/night_vision/nightmare
+
 	mutantheart = /obj/item/organ/internal/heart/nightmare
-	mutantbrain = /obj/item/organ/internal/brain/nightmare
+	mutantbrain = /obj/item/organ/internal/brain/shadow/nightmare
 
 /datum/species/shadow/nightmare/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()

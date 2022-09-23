@@ -200,6 +200,12 @@ ID_CONSOLE_JOBSLOT_DELAY 30
 ## allow players to initiate a map-change vote
 #ALLOW_VOTE_MAP
 
+## allow players to rock the vote, or to vote on the map again if they didn't like the last results
+#ALLOW_ROCK_THE_VOTE
+
+## the number of times you wish to allow players to rock the vote in a given shift
+MAX_ROCKING_VOTES 1
+
 ## min delay (deciseconds) between voting sessions (default 10 minutes)
 VOTE_DELAY 6000
 

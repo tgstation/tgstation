@@ -3709,7 +3709,7 @@
 "sK" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/item/clothing/shoes/sneakers/brown,
-/obj/item/clothing/head/helmet/police{
+/obj/item/clothing/head/warden/police{
 	armor = list("melee" = 5, "bullet" = 5, "laser" = 5, "energy" = 2, "bomb" = 15, "bio" = 0, "fire" = 20, "acid" = 20);
 	desc = "I am the law!"
 	},
@@ -3853,9 +3853,8 @@
 /obj/effect/turf_decal/weather/snow,
 /obj/item/modular_computer/tablet/pda/syndicate{
 	loaded_cartridge = /obj/item/computer_hardware/hard_drive/portable/virus/clown;
-	desc = "A portable microcomputer by Thinktronic Systems, LTD. Seems like it may have useful information on it.";
-	name = "soviet tablet";
-	note = "TRANSLATED TO GALACTIC COMMON: DO NOT GO SOUTH."
+	desc = "A portable microcomputer by Thinktronic Systems, LTD.";
+	name = "soviet tablet"
 	},
 /obj/effect/decal/remains/human{
 	color = "#72e4fa"
@@ -4001,9 +4000,8 @@
 /obj/structure/table/reinforced,
 /obj/item/modular_computer/tablet/pda/syndicate{
 	loaded_cartridge = /obj/item/computer_hardware/hard_drive/portable/virus/mime;
-	desc = "A portable microcomputer by Thinktronic Systems, LTD. Seems like it may have useful information on it.";
-	name = "soviet tablet";
-	note = "TRANSLATED TO GALACTIC COMMON: My partner has left to help those Nanotrasen fucks three days ago. They said that a distress signal came from down south and they had to check it out. How fucking long does it take to investigate a mining outpost? Either those Nanotrasen fuckers betrayed us or something really did go wrong. Either way, I'm leaving before this becomes an issue for me and anyone else here. That dumb idiot."
+	desc = "A portable microcomputer by Thinktronic Systems, LTD.";
+	name = "soviet tablet"
 	},
 /turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)

@@ -158,7 +158,7 @@
 	icon_state = "beret_badge"
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
-	greyscale_colors = "#3F3C40#FFCE5B"
+	greyscale_colors = "#39393f#FFCE5B"
 
 /obj/item/clothing/head/hos/beret/navyhos
 	name = "head of security's formal beret"
@@ -176,6 +176,10 @@
 	armor = list(MELEE = 40, BULLET = 30, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, FIRE = 30, ACID = 60, WOUND = 6)
 	strip_delay = 60
 	dog_fashion = /datum/dog_fashion/head/warden
+
+/obj/item/clothing/head/warden/police
+	name = "police officer's hat"
+	desc = "A police officer's hat. This hat emphasizes that you are THE LAW."
 
 /obj/item/clothing/head/warden/red
 	name = "warden's hat"
@@ -260,7 +264,7 @@
 	icon_state = "beret_badge"
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
-	greyscale_colors = "#972A2A#F2F2F2"
+	greyscale_colors = "#a52f29#F2F2F2"
 	armor = list(MELEE = 35, BULLET = 30, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, FIRE = 20, ACID = 50, WOUND = 4)
 	strip_delay = 60
 	dog_fashion = null

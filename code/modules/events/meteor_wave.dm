@@ -11,9 +11,9 @@
 	description = "A regular meteor wave."
 
 /datum/round_event/meteor_wave
-	startWhen = 6
-	endWhen = 66
-	announceWhen = 1
+	start_when = 6
+	end_when = 66
+	announce_when = 1
 	var/list/wave_type
 	var/wave_name = "normal"
 

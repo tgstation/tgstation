@@ -90,6 +90,7 @@
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /obj/crystal_mass/Destroy()
+	STOP_PROCESSING(SSsupermatter_cascade, src)
 	sm_comp = null
 	return ..()
 

@@ -88,6 +88,10 @@
 /obj/item/clothing/head/mob_holder/container_resist_act()
 	release()
 
+/obj/item/clothing/head/mob_holder/Exited(atom/movable/gone, direction)
+	if(held_mob && held_mob == gone)
+		release()
+
 /obj/item/clothing/head/mob_holder/on_found(mob/finder)
 	if(held_mob?.will_escape_storage())
 		to_chat(finder, span_warning("\A [held_mob.name] pops out! "))
@@ -112,7 +116,7 @@
 	var/mob/living/simple_animal/drone/D = L
 	if(!D)
 		return ..()
-	icon = 'icons/mob/drone.dmi'
+	icon = 'icons/mob/silicon/drone.dmi'
 	icon_state = "[D.visualAppearance]_hat"
 
 /obj/item/clothing/head/mob_holder/destructible

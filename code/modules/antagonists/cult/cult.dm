@@ -249,7 +249,7 @@
 	current.remove_status_effect(/datum/status_effect/cult_master)
 
 /datum/team/cult
-	name = "Cult"
+	name = "\improper Cult"
 
 	///The blood mark target
 	var/atom/blood_target
@@ -284,7 +284,9 @@
 				++cultplayers
 			else
 				++alive
-	var/ratio = cultplayers/alive
+
+	ASSERT(cultplayers) //we shouldn't be here.
+	var/ratio = alive ? cultplayers/alive : 1
 	if(ratio > CULT_RISEN && !cult_risen)
 		for(var/datum/mind/mind as anything in members)
 			if(mind.current)
