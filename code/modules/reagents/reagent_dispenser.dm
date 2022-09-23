@@ -36,6 +36,11 @@
 /obj/structure/reagent_dispensers/Destroy()
 	QDEL_NULL(rig)
 	return ..()
+
+/**
+ * rig_boom: Wrapper to log a reagent_dispenser set off by an assembly
+ *
+ */
 /obj/structure/reagent_dispensers/proc/rig_boom()
 	log_bomber(last_rigger, "rigged [src] exploded", src)
 	boom()

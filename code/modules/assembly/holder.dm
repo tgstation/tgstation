@@ -28,7 +28,6 @@
 /obj/item/assembly_holder/IsAssemblyHolder()
 	return TRUE
 
-
 /obj/item/assembly_holder/proc/assemble(obj/item/assembly/A, obj/item/assembly/A2, mob/user)
 	attach(A,user)
 	attach(A2,user)
@@ -36,6 +35,10 @@
 	update_appearance()
 	SSblackbox.record_feedback("tally", "assembly_made", 1, "[initial(A.name)]-[initial(A2.name)]")
 
+/**
+ * on_attach: Pass on_attach message to child assemblies
+ *
+ */
 /obj/item/assembly_holder/proc/on_attach()
 	var/obj/item/newloc = loc
 	if(!newloc.IsSpecialAssembly() && !newloc.IsAssemblyHolder())
@@ -156,7 +159,7 @@
 /obj/item/assembly_holder/proc/process_activation(obj/device, normal = TRUE, special = TRUE)
 	if(!device)
 		return FALSE
-	if(normal && assemblies.len >= 2)
+	if(normal && LAZYLEN(assemblies.len))
 		for(var/obj/item/assembly/assembly as anything in assemblies)
 			if(assembly != device)
 				assembly.pulsed(FALSE)

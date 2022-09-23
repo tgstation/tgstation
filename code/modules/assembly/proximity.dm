@@ -36,28 +36,36 @@
 		scanning = FALSE
 	update_appearance()
 	return TRUE
+
 /obj/item/assembly/prox_sensor/dropped()
 	. = ..()
-	if(connected)
-		proximity_monitor.set_host(connected.holder,src)
-	else
-		proximity_monitor.set_host(holder?.master || holder || src, src)
+	// Pick the first valid object in this list:
+	// Wiring datum's owner
+	// assembly holder's attached object
+	// assembly holder itself
+	// us
+	proximity_monitor.set_host(connected?.holder || holder?.master || holder || src, src)
+
 /obj/item/assembly/prox_sensor/on_attach()
 	. = ..()
-	if(connected)
-		proximity_monitor.set_host(connected.holder,src)
-	else
-		proximity_monitor.set_host(holder?.master || holder || src, src)
+	// Pick the first valid object in this list:
+	// Wiring datum's owner
+	// assembly holder's attached object
+	// assembly holder itself
+	// us
+	proximity_monitor.set_host(connected?.holder || holder?.master || holder || src, src)
 
 /obj/item/assembly/prox_sensor/on_detach()
 	. = ..()
 	if(!.)
 		return
 	else
-		if(connected)
-			proximity_monitor.set_host(connected.holder,src)
-		else
-			proximity_monitor.set_host(holder?.master || holder || src, src)
+		// Pick the first valid object in this list:
+		// Wiring datum's owner
+		// assembly holder's attached object
+		// assembly holder itself
+		// us
+		proximity_monitor.set_host(connected?.holder || holder?.master || holder || src, src)
 
 /obj/item/assembly/prox_sensor/toggle_secure()
 	secured = !secured

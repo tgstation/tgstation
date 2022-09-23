@@ -137,9 +137,12 @@
 	return ui_interact(user)
 
 /obj/item/assembly/ui_host(mob/user)
-	if(connected)
-		return connected.holder
-	return holder?.master || holder || src
+	// In order, return:
+	// - The conencted wiring datum's owner, or
+	// - The thing your assembly holder is attached to, or
+	// - the assembly holder itself, or
+	// - us
+	return connected?.holder || holder?.master || holder || src
 
 /obj/item/assembly/ui_state(mob/user)
 	return GLOB.hands_state

@@ -11,12 +11,21 @@
 	var/obj/item/host = null
 	var/turf/host_turf = null
 
+/**
+ * update_host: automatically setup host and host_turf
+ *
+ * Arguments:
+ * * force: Re-register signals even if the host or loc is unchanged
+ */
 /obj/item/assembly/mousetrap/proc/update_host(force = FALSE)
 	var/obj/item/newhost
-	if(connected)
-		newhost = connected.holder // this won't actually do anything unless someone makes opening a wiring panel call on_found (which would be boss)
-	else
-		newhost = holder?.master || holder || src
+	// Pick the first valid object in this list:
+	// Wiring datum's owner
+	// assembly holder's attached object
+	// assembly holder itself
+	// us
+	newhost = connected?.holder || holder?.master || holder || src
+
 	// ok look
 	// previously this wasn't working and thus no concern, but I made mousetraps work with wires
 	// specifically in step-on-the-mousetrap mode, ie, when you enter its turf
@@ -29,6 +38,8 @@
 	// and (whether reasonable or not) mousetraps that do this do still trigger wires
 	// the point is for now step-on-mousetrap mode should only work on items
 	// maybe it should never have been an assembly in the first place.
+
+	// tl;dr only trigger step-on mode if the host is an item
 	if(!istype(newhost,/obj/item))
 		if(host)
 			UnregisterSignal(host,COMSIG_MOVABLE_MOVED)
@@ -37,16 +48,19 @@
 			UnregisterSignal(host_turf,COMSIG_ATOM_ENTERED)
 			host_turf = null
 		return
+
+	// If host changed
 	if((newhost != host) || force)
 		if(host)
 			UnregisterSignal(host,COMSIG_MOVABLE_MOVED)
 		host = newhost
 		RegisterSignal(host,COMSIG_MOVABLE_MOVED,.proc/holder_movement)
+
+	// If host moved
 	if((host_turf != host.loc) || force)
 		if(isturf(host_turf))
 			UnregisterSignal(host_turf,COMSIG_ATOM_ENTERED)
 			host_turf = null
-
 		if(isturf(host.loc))
 			host_turf = host.loc
 			RegisterSignal(host_turf,COMSIG_ATOM_ENTERED,.proc/on_entered)
@@ -59,7 +73,7 @@
 
 /obj/item/assembly/mousetrap/Initialize(mapload)
 	. = ..()
-	update_host(TRUE)
+	update_host(force = TRUE)
 
 /obj/item/assembly/mousetrap/examine(mob/user)
 	. = ..()

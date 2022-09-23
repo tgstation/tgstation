@@ -184,7 +184,7 @@
 		assemblies[color] = S
 		S.forceMove(holder)
 		S.connected = src
-		S.on_attach()
+		S.on_attach() // Notify assembly that it is attached
 		return S
 
 /datum/wires/proc/detach_assembly(color)
@@ -192,9 +192,9 @@
 	if(S && istype(S))
 		assemblies -= color
 		S.connected = null
-		if(S.holder == holder)
-			S.on_detach()
-			if(S.holder == holder)
+		if(S.holder == holder)	// This should be the case
+			S.on_detach()		// Notify the assembly.  This should remove the reference to our holder
+			if(S.holder == holder) // If it didn't remove the reference, force it.  So sue me, I'm paranoid.
 				S.holder = null
 		S.forceMove(holder.drop_location())
 		return S
