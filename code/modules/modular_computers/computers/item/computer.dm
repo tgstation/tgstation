@@ -309,7 +309,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 			var/obj/item/card/id/second_ID = card_slot2?.stored_card
 			var/multiple_cards = istype(first_ID) && istype(second_ID)
 			if(Adjacent(user))
-				. += "It has [multiple_slots ? "two slots" : "a slot"] for identification cards installed[multiple_cards ? " which contain [first_ID] and [second_ID]" : ", one of which contains [first_ID ? first_ID : second_ID]"]."
+				. += "It has [multiple_slots ? "two slots" : "a slot"] for identification cards installed[multiple_cards ? " which contain [first_ID] and [second_ID]" : ", one of which contains [first_ID || second_ID]"]."
 			else
 				. += "It has [multiple_slots ? "two slots" : "a slot"] for identification cards installed, [multiple_cards ? "both of which appear" : "and one of them appears"] to be occupied."
 			. += span_info("Alt-click [src] to eject the identification card[multiple_cards ? "s":""].")
