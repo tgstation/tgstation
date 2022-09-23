@@ -167,7 +167,7 @@
 			update_worn_legcuffs()
 
 	// Not an else-if because we're probably equipped in another slot
-	if(I == internal)
+	if(I == internal && (QDELETED(src) || QDELETED(I) || I.loc != src))
 		internal = null
 		if(!QDELETED(src))
 			update_action_buttons_icon(status_only = TRUE)
