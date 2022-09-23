@@ -785,3 +785,26 @@
   - bugfix: Fixed a bunch of cult abilities not working.
   dragomagol:
   - bugfix: cutting onions actually makes you cry (better put some goggles on!)
+2022-09-23:
+  Capsandi:
+  - bugfix: The radio in icebox tool storage is no longer an implant
+  Kapu1178:
+  - bugfix: Robotic limbs are once again style-able using a spraycan.
+  LemonInTheDark:
+  - refactor: Maploading has been optimized significantly, as has ruin generation
+      and other lavaland stuff. Let me know if anything goes fucky
+  Pizzie11:
+  - bugfix: Important Documents received in the mail are now visible
+  ShizCalev:
+  - bugfix: Fixed crowbars hitting ovens during deconstruction.
+  - imageadd: Tablets and PDAs now have inhand icons.
+  Thunder12345:
+  - bugfix: The air vent outside RnD on Icebox is no longer hidden by the Experimental
+      Destructive Scanner
+  Watermelon914:
+  - bugfix: Fixed non-printed airlock shells from not triggering the 'Airlock Access
+      Event' circuit component.
+  moocowswag:
+  - bugfix: Adds Missing GPSs to Icebox Public Mining.
+  san7890:
+  - admin: Admins can now View Notes directly from a Ticket Panel.

@@ -81,6 +81,10 @@
 #define BODYTYPE_MONKEY "BTYPE_MONKEY"
 ///The limb is snouted
 #define BODYTYPE_SNOUTED "BTYPE_SNOUTED"
+///A placeholder bodytype for xeno larva, so their limbs cannot be attached to anything.
+#define BODYTYPE_LARVA_PLACEHOLDER "BTYPE_ALIEN"
+///The limb is from a xenomorph.
+#define BODYTYPE_ALIEN "BTYPE_ALIEN"
 
 // Defines for Species IDs. Used to refer to the name of a species, for things like bodypart names or species preferences.
 #define SPECIES_ABDUCTOR "abductor"
@@ -112,9 +116,10 @@
 #define SPECIES_ZOMBIE_KROKODIL "krokodil_zombie"
 
 // Like species IDs, but not specifically attached a species.
-#define BODYPART_TYPE_ALIEN "alien"
-#define BODYPART_TYPE_ROBOTIC "robotic"
-#define BODYPART_TYPE_DIGITIGRADE "digitigrade"
+#define BODYPART_ID_ALIEN "alien"
+#define BODYPART_ID_ROBOTIC "robotic"
+#define BODYPART_ID_DIGITIGRADE "digitigrade"
+#define BODYPART_ID_LARVA "larva"
 
 //See: datum/species/var/digitigrade_customization
 ///The species does not have digitigrade legs in generation.
@@ -126,14 +131,6 @@
 
 ///Digitigrade's prefs, used in features for legs if you're meant to be a Digitigrade.
 #define DIGITIGRADE_LEGS "Digitigrade Legs"
-
-//TODO: Remove entirely in favor of the BODYTYPE system
-///Body type bitfields for allowed_animal_origin used to check compatible surgery body types (use NONE for no matching body type)
-#define HUMAN_BODY (1 << 0)
-#define MONKEY_BODY (1 << 1)
-#define ALIEN_BODY (1 << 2)
-#define LARVA_BODY (1 << 3)
-/*see __DEFINES/inventory.dm for bodypart bitflag defines*/
 
 // Health/damage defines
 #define MAX_LIVING_HEALTH 100

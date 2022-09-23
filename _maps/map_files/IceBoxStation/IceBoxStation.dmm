@@ -32343,6 +32343,7 @@
 /obj/item/mining_scanner,
 /obj/item/flashlight,
 /obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/gps/mining,
 /turf/open/floor/iron,
 /area/station/commons/storage/mining)
 "jQS" = (
@@ -44536,6 +44537,7 @@
 /obj/item/flashlight,
 /obj/machinery/light/directional/west,
 /obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/gps/mining,
 /turf/open/floor/iron,
 /area/station/commons/storage/mining)
 "nFU" = (
@@ -46138,7 +46140,7 @@
 /area/station/science/xenobiology)
 "ocF" = (
 /mob/living/simple_animal/hostile/retaliate/goat{
-	atmos_requirements = list("min_oxy" = 1, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0);
+	atmos_requirements = list("min_oxy"=1,"max_oxy"=0,"min_plas"=0,"max_plas"=1,"min_co2"=0,"max_co2"=5,"min_n2"=0,"max_n2"=0);
 	desc = "Not known for their pleasant disposition. This one seems a bit more hardy to the cold.";
 	minbodytemp = 150;
 	name = "Snowy Pete"
@@ -59440,7 +59442,7 @@
 	dir = 8
 	},
 /obj/item/crowbar,
-/obj/item/implant/radio,
+/obj/item/radio,
 /turf/open/floor/iron/dark,
 /area/station/commons/storage/primary)
 "snj" = (
@@ -67353,6 +67355,7 @@
 /obj/item/flashlight,
 /obj/machinery/light/directional/east,
 /obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/gps/mining,
 /turf/open/floor/iron,
 /area/station/commons/storage/mining)
 "uLp" = (

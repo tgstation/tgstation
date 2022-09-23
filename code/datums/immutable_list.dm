@@ -7,7 +7,6 @@ GLOBAL_LIST_INIT(immutable_list_repo, global._immutable_list_repo)
 
 /datum/immutable_list/New(list/data)
 	src.data = data
-	var/testvar
 
 ///Constructor for immutable lists. Returns an ilist with the desired arguments.
 /proc/immutable_list(list/data)
