@@ -1482,8 +1482,7 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 	return null
 
 /**
- *  When called on an item, and given a body targeting zone, this will return TRUE if the item slot matches the target zone, and FALSE otherwise.
- *
+ * When called on an item, and given a body targeting zone, this will return TRUE if the item slot matches the target zone, and FALSE otherwise.
  * Currently supports the jumpsuit, outersuit, backpack, belt, gloves, hat, ears, neck, mask, eyes, and feet slots. All other slots will auto return FALSE.
  */
 /obj/item/proc/compare_zone_to_item_slot(zone)
@@ -1504,10 +1503,14 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 			return (zone == BODY_ZONE_L_LEG || zone == BODY_ZONE_R_LEG)
 	return FALSE
 
+/**
+ * This proc calls at the begining of anytime an item is being equiped to a target by another mob.
+ * It handles initial messages, AFK stripping, and initial logging.
+ */
 /obj/item/proc/item_start_equip(atom/target, obj/item/equipping, mob/user, warn_dangerous = TRUE)
 
-	if(warn_dangerous && isclothing(target))
-		var/obj/item/clothing/clothing = target
+	if(warn_dangerous && isclothing(equipping))
+		var/obj/item/clothing/clothing = equipping
 		if(clothing.clothing_flags & DANGEROUS_OBJECT)
 			target.visible_message(
 				span_danger("[user] tries to put [equipping] on [target]."),
@@ -1531,6 +1534,7 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 
 			else if(victim_human.is_blind())
 				to_chat(target, span_userdanger("You feel someone trying to put something on you."))
+	user.do_item_attack_animation(target, used_item = equipping)
 
 	to_chat(user, span_notice("You try to put [equipping] on [target]..."))
 

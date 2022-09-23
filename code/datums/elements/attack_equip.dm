@@ -38,27 +38,8 @@
 		to_chat(user, span_warning("You can't put [attire] on [sharp_dresser], it's stuck to your hand!"))
 		return
 	var/equip_time = attire.equip_delay_other
-	if(isclothing(attire))
-		var/obj/item/clothing/fancy_tux = attire
-		if(fancy_tux.clothing_flags == DANGEROUS_OBJECT) // give us danger text if we have a dangerous object on our hands
-			sharp_dresser.visible_message(
-				span_danger("[user] tries to put [attire] on [sharp_dresser]."),
-				span_userdanger("[user] tries to put [attire] on you."),
-				ignored_mobs = user,
-			)
-		else
-			sharp_dresser.visible_message(
-				span_notice("[user] tries to put [attire] on [sharp_dresser]."),
-				span_notice("[user] tries to put [attire] on you."),
-				ignored_mobs = user,
-			)
-	if(sharp_dresser.is_blind())
-		to_chat(sharp_dresser, span_userdanger("You feel someone trying to put something on you."))
 
-	to_chat(user, span_notice("You try to put [attire] on [sharp_dresser]..."))
-
-	user.log_message("is putting [attire] on [key_name(sharp_dresser)]", LOG_ATTACK, color="red")
-	sharp_dresser.log_message("is having [attire] put on them by [key_name(user)]", LOG_VICTIM, color="orange", log_globally=FALSE)
+	attire.item_start_equip(sharp_dresser, attire, user)
 
 	if(!do_mob(user, sharp_dresser, equip_time))
 		return
