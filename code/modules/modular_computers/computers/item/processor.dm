@@ -2,7 +2,7 @@
 //TODO: REFACTOR THIS SPAGHETTI CODE, MAKE IT A COMPUTER_HARDWARE COMPONENT OR REMOVE IT
 /obj/item/modular_computer/processor
 	name = "processing unit"
-	desc = "You shouldn't see this. If you do, report it."
+	desc = "An advanced computer." //modular PCs examine us
 	icon = null
 	icon_state = null
 	icon_state_unpowered = null
@@ -50,12 +50,3 @@
 	..()
 	machinery_computer.update_appearance()
 	return
-
-/obj/item/modular_computer/processor/attack_ghost(mob/user)
-	ui_interact(user)
-
-/obj/item/modular_computer/processor/alert_call(datum/computer_file/program/caller, alerttext)
-	if(!caller || !caller.alert_able || caller.alert_silenced || !alerttext)
-		return
-	playsound(src, 'sound/machines/twobeep_high.ogg', 50, TRUE)
-	machinery_computer.visible_message(span_notice("The [src] displays a [caller.filedesc] notification: [alerttext]"))
