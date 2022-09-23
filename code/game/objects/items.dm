@@ -212,6 +212,8 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 	/// Used in obj/item/examine to determines whether or not to detail an item's statistics even if it does not meet the force requirements
 	var/override_notes = FALSE
 
+///This is here for a VERY, VERY, VERY good reason. alt_appearances_by_bodytype must be built as soon as possible, as
+///it can be referenced before SSatoms can init the object, notably in character creation.
 /obj/item/New()
 	if(alt_appearances_by_bodytype)
 		//Magic BS to make default appearances work nicely
@@ -220,7 +222,7 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 			if(alt_appearances_by_bodytype[bodytype] == USE_DEFAULT_ICON)
 				alt_appearances_by_bodytype[bodytype] = worn_icon
 
-		alt_appearances_by_bodytype = IMMUTABLE_ASSOC_LIST(alt_appearances_by_bodytype)
+		alt_appearances_by_bodytype = immutable_assoc_list(alt_appearances_by_bodytype)
 
 	..()
 

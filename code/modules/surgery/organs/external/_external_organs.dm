@@ -52,8 +52,10 @@
 */
 /obj/item/organ/external/Initialize(mapload, mob_sprite)
 	. = ..()
+	//This does NOT need to be in New() because organs are immediately initialized. If that EVER CHANGES, put this if statement in New().
 	if(external_bodytypes)
-		external_bodytypes = IMMUTABLE_STRING_LIST(external_bodytypes)
+		external_bodytypes = immutable_string_list(external_bodytypes)
+
 	if(mob_sprite)
 		set_sprite(mob_sprite)
 

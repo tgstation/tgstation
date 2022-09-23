@@ -144,8 +144,10 @@
 	///A list of all the external organs we've got stored to draw horns, wings and stuff with (special because we are actually in the limbs unlike normal organs :/ )
 	var/list/obj/item/organ/external/external_organs = list()
 
+///This is here for a VERY, VERY, VERY good reason. bodytype must be built as soon as possible, as
+///it can be referenced before SSatoms can init the object, notably in character creation.
 /obj/item/bodypart/New()
-	bodytype = IMMUTABLE_STRING_LIST(bodytype)
+	bodytype = immutable_string_list(bodytype)
 	return ..()
 
 /obj/item/bodypart/Initialize(mapload)

@@ -449,7 +449,7 @@
 			all_limb_flags |= ext_organ.external_bodytypes?.Get()
 		all_limb_flags |= limb.bodytype.Get()
 
-	carbon_owner.bodytypes = IMMUTABLE_STRING_LIST(all_limb_flags) //We set this to immutable AFTER to avoid all of the Copy() operations.
+	carbon_owner.bodytypes = immutable_string_list(all_limb_flags) //We set this to immutable AFTER to avoid all of the Copy() operations.
 
 //Regenerates all limbs. Returns amount of limbs regenerated
 /mob/living/proc/regenerate_limbs(list/excluded_zones = list())

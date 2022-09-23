@@ -89,7 +89,7 @@
 		if(affecting)
 			if(!surgery.requires_bodypart)
 				continue
-			if(surgery.requires_bodypart_type && !(surgery.requires_bodypart_type))
+			if(surgery.requires_bodypart_type && !(affecting.bodytype.Locate(surgery.requires_bodypart_type)))
 				continue
 			if(surgery.requires_real_bodypart && affecting.is_pseudopart)
 				continue
