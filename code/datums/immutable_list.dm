@@ -31,7 +31,7 @@ GLOBAL_LIST_INIT(immutable_list_repo, global._immutable_list_repo)
 	for(var/argument in immutize)
 		#ifdef UNIT_TESTS
 		if(isdatum(argument) && !isweakref(argument))
-			stack_trace("Sent a hardref of [argument.type] to an immutable list, this will cause a harddel if the referenced object is deleted!")
+			stack_trace("Sent a hardref of [argument:type] to an immutable list, this will cause a harddel if the referenced object is deleted!")
 		#endif
 		refs += ref(argument) //Ignore datum tags, we don't care.
 
@@ -48,9 +48,9 @@ GLOBAL_LIST_INIT(immutable_list_repo, global._immutable_list_repo)
 		refs += "\ref[(key)]=\ref[immutize[key]]"
 		#ifdef UNIT_TESTS
 		if((isdatum(key) && !isweakref(key)))
-			stack_trace("Sent a hardref of [key.type] to an immutable list, this will cause a harddel if the referenced object is deleted!")
+			stack_trace("Sent a hardref of [key:type] to an immutable list, this will cause a harddel if the referenced object is deleted!")
 		else if(isdatum(immutize[key]) && !isweakref(immutize[key]))
-			stack_trace("Sent a hardref of [immutize[key].type] to an immutable list, this will cause a harddel if the referenced object is deleted!")
+			stack_trace("Sent a hardref of [immutize[key]:type] to an immutable list, this will cause a harddel if the referenced object is deleted!")
 		#endif
 
 	var/key = refs.Join()
