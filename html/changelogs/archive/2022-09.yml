@@ -666,3 +666,145 @@
   - code_imp: Being able to be flashed from all sides is now based on or not you have
       a negative flash resistance, rather than randomly applying to specific pairs
       of eyes.
+2022-09-19:
+  Jackraxxus:
+  - spellcheck: Updates liver failure examine text to make better use of pronoun helpers.
+  LemonInTheDark:
+  - bugfix: The alt click tab (obj tab?) will no longer cause massive clientside lag
+      (unless you alt click that 2000 obj large tofu pile)
+  - bugfix: The alt click menu is snappier now, try usin it and let me know if anything
+      blows up yeah?
+  MMMiracles:
+  - rscadd: Tramstation's maintenance has been completely overhauled with modular
+      parts for more variety and differing routes between rounds.
+  - qol: Tramstation's maintenance is now more antag-friendly when it comes to dark-dwelling
+      roles and traversing.
+  Sealed101:
+  - bugfix: fixed exosuit ammo boxes not updating their sprite/description properly
+      when emptied
+  - qol: adds an examine tip about folding & recycling on empty exosuit ammo boxes
+  - bugfix: fixed exosuit ammo being almost universal for all guns
+  - bugfix: fixed iron cost for BRM-6 missile ammo and SGL-6 Flashbang launcher ammo
+      (flashbang 500 -> 4000; missiles 500 -> 8000)
+  - bugfix: exosuit ammo boxes can be recycled in an autolathe, as they were apparently
+      intended to be. Partially depleted ammo boxes will have less material in them.
+  ShizCalev:
+  - bugfix: Fixed medibeams sometimes crossing themselves!
+  TheBoondock:
+  - balance: the contraband rollingpin in chef's vendor is now made of metal and yes
+      it hurts alot more when being hit
+  dragomagol:
+  - bugfix: moved an air vent out from underneath a disposals bin in the Meta incinerator
+  - bugfix: replaced a regular intercom with a prisoner intercom in the Icebox prisoner
+      transfer
+  - bugfix: replaced the window spawners in Meta departures (the ones in the middle
+      of the room) with plain windows so you can see the flowers
+  private-tristan:
+  - rscadd: medical doctors and CMOs now have surgical tool heirlooms
+2022-09-20:
+  JohnFulpWillard:
+  - refactor: Teams used by Antagonists have been refactored, please report any bugs
+      you might find.
+  - spellcheck: Team antagonists are now improper.
+  - spellcheck: Bloodbrothers now show their team antagonist name in admin panels.
+  NamelessFairy:
+  - bugfix: A duplicate mass driver controller on Kilo has been deleted, you can no
+      longer operate the toxins mass driver from maintenance.
+  - bugfix: Kilo's north escape pod now correctly has its catwalk in the nearstation
+      area.
+  - bugfix: Kilo no longer has a random incinerator area in space.
+  - bugfix: removed a random decal from arrivals on Kilo.
+  Profakos:
+  - rscadd: Icebox's mining aux base can now teleport to your chosen underground location
+      on the icemoon.
+  ReinaCoder:
+  - imageadd: The station bounced radio has been resprited
+  Salex08:
+  - bugfix: removes duplicate paper bin with pen in caps office
+  Sealed101:
+  - bugfix: glockroaches (and maybe other unreported simplemobs that can shoot) now
+      properly shoot
+  - bugfix: fixed cyborg energy saw lacking a sprite
+  - bugfix: fixed debug omnitool lacking sprites for surgery tools
+  - bugfix: fixed lacking sprite for taster
+  TheBoondock, Wallemations:
+  - rscadd: Adds a new pair of goggles to atmospheric, the thermal imaging goggles
+      help highlight the hot/cold and normal temperature for atmos tech to quickly
+      identify the temp without having to use an analyzer. Hotter temperatures will
+      have red colors while colder temperatures will have blue colors
+  - rscadd: Add temperature imaging to the t-ray goggles as well.
+  Watermelon914:
+  - bugfix: Fixed map vote including maps that have already been played twice in the
+      last 3 rounds.
+  axietheaxolotl:
+  - imageadd: 'A complete overhaul of security sprites. See #69948 for more details.'
+  - spellcheck: Replaced all instances of "Jumpsuit" and "Jumpskirt" within sec items
+      to be "uniform" and "skirt" respectively.
+  kawoppi:
+  - rscadd: axolotls have taken refuge in the station's moisture traps
+  timothymtorres:
+  - rscadd: Change infectious zombies to be illiterate
+2022-09-21:
+  Jacquerel:
+  - bugfix: Removes a duplicated fax machine from the tram cargo lobby which wasn't
+      supposed to be there.
+  JohnFulpWillard:
+  - bugfix: Items that rotate will no longer spam you with error messages when you
+      hover your mouse over them.
+  NecromancerAnne, quinn:
+  - imageadd: 'Updates the Darkened Blade: New name (Sundered Blade), new description,
+      new sprites.'
+  Pickle-Coding:
+  - bugfix: The experimentor can no longer create negative temperature.
+  - code_imp: Simplifies experimentor atmos interactions. Shouldn't have an impact
+      in gameplay.
+  Rhials:
+  - rscadd: Rigging light fixtures now works with more reagents than just plasma.
+      Light fixtures will heat the reagents of their inserted lightbulb, up to a maximum
+      of 1000 degrees. Lightbulb tubes now hold 20 reagents to make this more usable.
+  - rscadd: Lightbulbs will now splash their contents on whatever they're shattered
+      by. Their contents are also now visible upon examination.
+  VexingRaven:
+  - bugfix: The Deltastation kitchen no longer has 2 newscasters.
+  - bugfix: The Deltastation kitchen APC has been moved to the kitchen storage area
+      to the north.
+  - bugfix: Fixed a bug where it was possible to call the shuttle while buying a new
+      one, resulting in a second shuttle that gibs everyone aboard.
+  Watermelon914:
+  - bugfix: Fixed bypassing gasmask FOV.
+2022-09-22:
+  JohnFulpWillard:
+  - bugfix: You no longer keep items you shouldn't be wearing (collars) when changing
+      into a species that can't wear them anymore.
+  - admin: Antag panels now properly show team antagonists, instead of showing them
+      as empty.
+  Salex08:
+  - spellcheck: corrects plural spelling when slicing objects
+  ShizCalev:
+  - admin: Moved signal overriden stack_trace warnings to it's own log file.
+  - bugfix: Fixed a bunch of cult abilities not working.
+  dragomagol:
+  - bugfix: cutting onions actually makes you cry (better put some goggles on!)
+2022-09-23:
+  Capsandi:
+  - bugfix: The radio in icebox tool storage is no longer an implant
+  Kapu1178:
+  - bugfix: Robotic limbs are once again style-able using a spraycan.
+  LemonInTheDark:
+  - refactor: Maploading has been optimized significantly, as has ruin generation
+      and other lavaland stuff. Let me know if anything goes fucky
+  Pizzie11:
+  - bugfix: Important Documents received in the mail are now visible
+  ShizCalev:
+  - bugfix: Fixed crowbars hitting ovens during deconstruction.
+  - imageadd: Tablets and PDAs now have inhand icons.
+  Thunder12345:
+  - bugfix: The air vent outside RnD on Icebox is no longer hidden by the Experimental
+      Destructive Scanner
+  Watermelon914:
+  - bugfix: Fixed non-printed airlock shells from not triggering the 'Airlock Access
+      Event' circuit component.
+  moocowswag:
+  - bugfix: Adds Missing GPSs to Icebox Public Mining.
+  san7890:
+  - admin: Admins can now View Notes directly from a Ticket Panel.

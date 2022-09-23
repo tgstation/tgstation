@@ -58,7 +58,6 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/disk/micro
-	name = "Micro Solid State Drive"
 	id = "ssd_micro"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 400, /datum/material/glass = 100)
@@ -148,18 +147,6 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
-// Intellicard slot
-/datum/design/aislot
-	name = "Intellicard Slot"
-	id = "aislot"
-	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 600)
-	build_path = /obj/item/computer_hardware/ai_slot
-	category = list(
-		RND_CATEGORY_MODULAR_COMPUTERS + RND_SUBCATEGORY_MODULAR_COMPUTERS_PARTS
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
-
 // Mini printer
 /datum/design/miniprinter
 	name = "Miniprinter"
@@ -167,18 +154,6 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 600)
 	build_path = /obj/item/computer_hardware/printer/mini
-	category = list(
-		RND_CATEGORY_MODULAR_COMPUTERS + RND_SUBCATEGORY_MODULAR_COMPUTERS_PARTS
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
-
-// APC Link
-/datum/design/apc_link
-	name = "Area Power Connector"
-	id = "APClink"
-	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 2000)
-	build_path = /obj/item/computer_hardware/recharger/apc_recharger
 	category = list(
 		RND_CATEGORY_MODULAR_COMPUTERS + RND_SUBCATEGORY_MODULAR_COMPUTERS_PARTS
 	)

@@ -25,7 +25,17 @@
 //Variables declared to change how items in the launch bay are picked and launched. (Almost) all of these are changed in the ui_act proc
 //Some effect groups are choices, while other are booleans. This is because some effects can stack, while others dont (ex: you can stack explosion and quiet, but you cant stack ordered launch and random launch)
 /datum/centcom_podlauncher
-	var/static/list/ignored_atoms = typecacheof(list(null, /mob/dead, /obj/effect/landmark, /obj/docking_port, /obj/effect/particle_effect/sparks, /obj/effect/pod_landingzone, /obj/effect/hallucination/simple/supplypod_selector,  /obj/effect/hallucination/simple/dropoff_location))
+	/// Static typecache of atoms we won't lift up, or pod or whatever.
+	var/static/list/ignored_atoms = typecacheof(list(
+		null, // I don't know why null is the first element of this typepache but it was there when I found it
+		/mob/dead,
+		/obj/effect/landmark,
+		/obj/docking_port,
+		/obj/effect/particle_effect/sparks,
+		/obj/effect/pod_landingzone,
+		/obj/effect/client_image_holder,
+	))
+
 	var/turf/oldTurf //Keeps track of where the user was at if they use the "teleport to centcom" button, so they can go back
 	var/client/holder //client of whoever is using this datum
 	var/area/centcom/central_command_areas/supplypod/loading/bay //What bay we're using to launch shit from.
@@ -46,8 +56,12 @@
 	var/list/orderedArea = list() //Contains an ordered list of turfs in an area (filled in the createOrderedArea() proc), read top-left to bottom-right. Used for the "ordered" launch mode (launchChoice = 1)
 	var/list/turf/acceptableTurfs = list() //Contians a list of turfs (in the "bay" area on centcom) that have items that can be launched. Taken from orderedArea
 	var/list/launchList = list() //Contains whatever is going to be put in the supplypod and fired. Taken from acceptableTurfs
-	var/obj/effect/hallucination/simple/supplypod_selector/selector //An effect used for keeping track of what item is going to be launched when in "ordered" mode (launchChoice = 1)
-	var/obj/effect/hallucination/simple/dropoff_location/indicator
+
+	/// An effect used for showing where a reverse pod will land
+	var/obj/effect/client_image_holder/dropoff_location/indicator
+	/// An effect used for keeping track of what item is going to be launched next when in "ordered" mode (launchChoice = 1)
+	var/obj/effect/client_image_holder/supplypod_selector/selector
+
 	var/obj/structure/closet/supplypod/centcompod/temp_pod //The temporary pod that is modified by this datum, then cloned. The buildObject() clone of this pod is what is launched
 	// Stuff needed to render the map
 	var/map_name
@@ -794,7 +808,7 @@
 	QDEL_NULL(temp_pod) //Delete the temp_pod
 	QDEL_NULL(selector) //Delete the selector effect
 	QDEL_NULL(indicator)
-	. = ..()
+	return ..()
 
 /datum/centcom_podlauncher/proc/supplypod_punish_log(list/whoDyin)
 	var/podString = effectBurst ? "5 pods" : "a pod"
@@ -874,7 +888,7 @@ GLOBAL_DATUM_INIT(podlauncher, /datum/centcom_podlauncher, new)
 	temp_pod.reverse_dropoff_coords = list(target_turf.x, target_turf.y, target_turf.z)
 	indicator.forceMove(target_turf)
 
-/obj/effect/hallucination/simple/supplypod_selector
+/obj/effect/client_image_holder/supplypod_selector // Shows which item will be taken next
 	name = "Supply Selector (Only you can see this)"
 	image_icon = 'icons/obj/supplypods_32x32.dmi'
 	image_state = "selector"
@@ -883,7 +897,7 @@ GLOBAL_DATUM_INIT(podlauncher, /datum/centcom_podlauncher, new)
 	plane = ABOVE_GAME_PLANE
 	alpha = 150
 
-/obj/effect/hallucination/simple/dropoff_location
+/obj/effect/client_image_holder/dropoff_location // Shows where revese pods lands
 	name = "Dropoff Location (Only you can see this)"
 	image_icon = 'icons/obj/supplypods_32x32.dmi'
 	image_state = "dropoff_indicator"

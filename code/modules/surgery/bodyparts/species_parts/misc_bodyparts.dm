@@ -50,22 +50,28 @@
 /obj/item/bodypart/head/jelly
 	limb_id = SPECIES_JELLYPERSON
 	is_dimorphic = TRUE
+	dmg_overlay_type = null
 
 /obj/item/bodypart/chest/jelly
 	limb_id = SPECIES_JELLYPERSON
 	is_dimorphic = TRUE
+	dmg_overlay_type = null
 
 /obj/item/bodypart/l_arm/jelly
 	limb_id = SPECIES_JELLYPERSON
+	dmg_overlay_type = null
 
 /obj/item/bodypart/r_arm/jelly
 	limb_id = SPECIES_JELLYPERSON
+	dmg_overlay_type = null
 
 /obj/item/bodypart/l_leg/jelly
 	limb_id = SPECIES_JELLYPERSON
+	dmg_overlay_type = null
 
 /obj/item/bodypart/r_leg/jelly
 	limb_id = SPECIES_JELLYPERSON
+	dmg_overlay_type = null
 
 ///SLIME
 /obj/item/bodypart/head/slime
@@ -216,27 +222,33 @@
 	limb_id = SPECIES_SKELETON
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
+	dmg_overlay_type = null
 
 /obj/item/bodypart/chest/skeleton
 	limb_id = SPECIES_SKELETON
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
+	dmg_overlay_type = null
 
 /obj/item/bodypart/l_arm/skeleton
 	limb_id = SPECIES_SKELETON
 	should_draw_greyscale = FALSE
+	dmg_overlay_type = null
 
 /obj/item/bodypart/r_arm/skeleton
 	limb_id = SPECIES_SKELETON
 	should_draw_greyscale = FALSE
+	dmg_overlay_type = null
 
 /obj/item/bodypart/l_leg/skeleton
 	limb_id = SPECIES_SKELETON
 	should_draw_greyscale = FALSE
+	dmg_overlay_type = null
 
 /obj/item/bodypart/r_leg/skeleton
 	limb_id = SPECIES_SKELETON
 	should_draw_greyscale = FALSE
+	dmg_overlay_type = null
 
 ///MUSHROOM
 /obj/item/bodypart/head/mushroom
@@ -263,22 +275,28 @@
 /obj/item/bodypart/head/golem
 	limb_id = SPECIES_GOLEM
 	is_dimorphic = FALSE
+	dmg_overlay_type = null
 
 /obj/item/bodypart/chest/golem
 	limb_id = SPECIES_GOLEM
 	is_dimorphic = TRUE
+	dmg_overlay_type = null
 
 /obj/item/bodypart/l_arm/golem
 	limb_id = SPECIES_GOLEM
+	dmg_overlay_type = null
 
 /obj/item/bodypart/r_arm/golem
 	limb_id = SPECIES_GOLEM
+	dmg_overlay_type = null
 
 /obj/item/bodypart/l_leg/golem
 	limb_id = SPECIES_GOLEM
+	dmg_overlay_type = null
 
 /obj/item/bodypart/r_leg/golem
 	limb_id = SPECIES_GOLEM
+	dmg_overlay_type = null
 
 ///
 /obj/item/bodypart/head/golem/cult
