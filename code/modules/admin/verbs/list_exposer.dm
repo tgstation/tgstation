@@ -29,7 +29,7 @@
 
 /datum/admins/proc/list_dna()
 	var/data = "<b>Showing DNA from blood.</b><hr>"
-	data += "<table cellspacing=5><tr><th>Name</th><th>DNA</th><th>Blood Type</th></tr>"
+	data += "<table cellspacing=5 border=1><tr><th>Name</th><th>DNA</th><th>Blood Type</th></tr>"
 	for(var/entry in GLOB.human_list)
 		var/mob/living/carbon/human/subject = entry
 		if(subject.ckey)
@@ -39,7 +39,7 @@
 
 /datum/admins/proc/list_fingerprints() //kid named fingerprints
 	var/data = "<b>Showing Fingerprints.</b><hr>"
-	data += "<table cellspacing=5><tr><th>Name</th><th>Fingerprints</th></tr>"
+	data += "<table cellspacing=5 border=1><tr><th>Name</th><th>Fingerprints</th></tr>"
 	for(var/entry in GLOB.human_list)
 		var/mob/living/carbon/human/subject = entry
 		if(subject.ckey)
@@ -52,7 +52,7 @@
 		tgui_alert(usr, "The game hasn't started yet!")
 		return
 	var/data = "<b>Showing Crew Manifest.</b><hr>"
-	data += "<table cellspacing=5><tr><th>Name</th><th>Position</th></tr>"
+	data += "<table cellspacing=5 border=1><tr><th>Name</th><th>Position</th></tr>"
 	for(var/datum/data/record/entry in GLOB.data_core.general)
 		data += "<tr><td>[entry.fields["name"]]</td><td>[entry.fields["rank"]][entry.fields["rank"] != entry.fields["trim"] ? " ([entry.fields["trim"]])" : ""]</td></tr>"
 	data += "</table>"
