@@ -12,7 +12,7 @@
 	var/last_fighter
 	var/obj/item/clothing/neck/pillow_tag/pillow_trophy
 	var/static/tag_desc = "This one seems to have its tag removed" 
-	var/static/variation
+	var/variation
 
 
 /obj/item/pillow/Initialize(mapload)
