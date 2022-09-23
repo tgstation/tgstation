@@ -20,6 +20,8 @@
 	/// The icon to show in the preferences menu.
 	/// This references a tgui icon, so it can be FontAwesome or a tgfont (with a tg- prefix).
 	var/icon
+	/// A list of items people can receive from mail who have this quirk enabled
+	var/mail_goodies = list()
 
 /datum/quirk/Destroy()
 	if(quirk_holder)

@@ -60,6 +60,7 @@
 	medical_record_text = "Patient requires regular treatment for blood loss due to low production of blood."
 	hardcore_value = 8
 	processing_quirk = TRUE
+	mail_goodies = list(/obj/item/reagent_containers/blood/o_minus) // universal blood type that is safe for all
 
 /datum/quirk/blooddeficiency/process(delta_time)
 	if(quirk_holder.stat == DEAD)
@@ -106,6 +107,7 @@
 	medical_record_text = "Patient has a tumor in their brain that is slowly driving them to brain death."
 	hardcore_value = 12
 	processing_quirk = TRUE
+	mail_goodies = list(/obj/item/storage/pill_bottle/mannitol/braintumor)
 
 /datum/quirk/item_quirk/brainproblems/add_unique()
 	give_item_to_holder(
@@ -150,6 +152,7 @@
 	medical_record_text = "Patient has a mild mood disorder causing them to experience acute episodes of depression."
 	mood_quirk = TRUE
 	hardcore_value = 2
+	mail_goodies = list(/obj/item/storage/pill_bottle/happinesspsych)
 
 /datum/quirk/item_quirk/family_heirloom
 	name = "Family Heirloom"
@@ -234,6 +237,7 @@
 	lose_text = "<span class='notice'>You feel sturdy again.</span>"
 	medical_record_text = "Patient is absurdly easy to injure. Please take all due diligence to avoid possible malpractice suits."
 	hardcore_value = 4
+	mail_goodies = list(/obj/effect/spawner/random/medical/minor_healing)
 
 /datum/quirk/heavy_sleeper
 	name = "Heavy Sleeper"
@@ -245,6 +249,7 @@
 	lose_text = "<span class='notice'>You feel awake again.</span>"
 	medical_record_text = "Patient has abnormal sleep study results and is difficult to wake up."
 	hardcore_value = 2
+	mail_goodies = list(/obj/item/clothing/glasses/blindfold, /obj/item/bedsheet/random)
 
 /datum/quirk/hypersensitive
 	name = "Hypersensitive"
@@ -274,6 +279,7 @@
 	lose_text = "<span class='danger'>You're no longer severely affected by alcohol.</span>"
 	medical_record_text = "Patient demonstrates a low tolerance for alcohol. (Wimp)"
 	hardcore_value = 3
+	mail_goodies = list(/obj/item/storage/pill_bottle/multiver/less)
 
 /datum/quirk/item_quirk/nearsighted
 	name = "Nearsighted"
@@ -284,6 +290,7 @@
 	lose_text = "<span class='notice'>You start seeing faraway things normally again.</span>"
 	medical_record_text = "Patient requires prescription glasses in order to counteract nearsightedness."
 	hardcore_value = 5
+	mail_goodies = list(/obj/item/clothing/glasses/regular) // extra pair if orginal one gets broken by somebody mean
 	var/glasses
 
 /datum/quirk/item_quirk/nearsighted/add_unique()
@@ -313,6 +320,7 @@
 	value = -3
 	medical_record_text = "Patient demonstrates a fear of the dark. (Seriously?)"
 	hardcore_value = 5
+	mail_goodies = list(/obj/effect/spawner/random/engineering/flashlight)
 
 /datum/quirk/nyctophobia/add()
 	RegisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED, .proc/on_holder_moved)
@@ -359,6 +367,7 @@
 	lose_text = "<span class='notice'>You think you can defend yourself again.</span>"
 	medical_record_text = "Patient is unusually pacifistic and cannot bring themselves to cause physical harm."
 	hardcore_value = 6
+	mail_goodies = list(/obj/effect/spawner/random/decoration/flower, /obj/effect/spawner/random/contraband/cannabis) // flower power
 
 /datum/quirk/paraplegic
 	name = "Paraplegic"
@@ -410,6 +419,7 @@
 	mob_trait = TRAIT_POOR_AIM
 	medical_record_text = "Patient possesses a strong tremor in both hands."
 	hardcore_value = 3
+	mail_goodies = list(/obj/item/cardboard_cutout) // for target practice
 
 /datum/quirk/prosopagnosia
 	name = "Prosopagnosia"
@@ -477,6 +487,7 @@
 	lose_text = span_notice("You feel in tune with the world again.")
 	medical_record_text = "Patient suffers from acute Reality Dissociation Syndrome and experiences vivid hallucinations."
 	hardcore_value = 6
+	mail_goodies = list(/obj/item/storage/pill_bottle/lsdpsych)
 
 /datum/quirk/insanity/add()
 	if(!iscarbon(quirk_holder))
@@ -626,6 +637,7 @@
 	medical_record_text = "Patient has a history of hard drugs."
 	hardcore_value = 4
 	processing_quirk = TRUE
+	mail_goodies = list(/obj/effect/spawner/random/contraband/narcotics)
 	var/drug_list = list(/datum/reagent/drug/blastoff, /datum/reagent/drug/krokodil, /datum/reagent/medicine/morphine, /datum/reagent/drug/happiness, /datum/reagent/drug/methamphetamine) //List of possible IDs
 	var/datum/reagent/reagent_type //!If this is defined, reagent_id will be unused and the defined reagent type will be instead.
 	var/datum/reagent/reagent_instance //! actual instanced version of the reagent
@@ -718,6 +730,12 @@
 	mob_trait = TRAIT_SMOKER
 	hardcore_value = 1
 	drug_flavour_text = "Make sure you get your favorite brand when you run out."
+	mail_goodies = list(
+		/obj/effect/spawner/random/entertainment/cigarette_pack,
+		/obj/effect/spawner/random/entertainment/cigar,
+		/obj/effect/spawner/random/entertainment/lighter,
+		/obj/item/clothing/mask/cigarette/pipe,
+	)
 
 /datum/quirk/item_quirk/junkie/smoker/New()
 	drug_container_type = pick(/obj/item/storage/fancy/cigarettes,

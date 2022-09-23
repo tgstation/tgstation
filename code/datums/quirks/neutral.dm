@@ -10,7 +10,7 @@
 	gain_text = "<span class='notice'>You feel like hanging out with other people.</span>"
 	lose_text = "<span class='danger'>You feel like you're over the bar scene.</span>"
 	medical_record_text = "Patient will not shut the hell up."
-	mail_goodies = list(/obj/effect/spawner/random/food_or_drink/booze)
+	mail_goodies = list(/obj/item/reagent_containers/cup/glass/flask)
 
 /datum/quirk/introvert
 	name = "Introvert"
@@ -96,7 +96,7 @@
 	lose_text = "<span class='notice'>Well who cares about deco anyways?</span>"
 	medical_record_text = "Patient seems to be rather stuck up."
 	mob_trait = TRAIT_SNOB
-	mail_goodies = list(/obj/item/chisel)
+	mail_goodies = list(/obj/item/chisel, /obj/item/paint_palette)
 
 /datum/quirk/pineapple_liker
 	name = "Ananas Affinity"
@@ -403,6 +403,7 @@
 	icon = "fill-drip"
 	value = 0
 	medical_record_text = "Patient enjoys dyeing their hair with pretty colors."
+	mail_goodies = list(/obj/item/dyespray)
 
 /datum/quirk/item_quirk/colorist/add_unique()
 	give_item_to_holder(/obj/item/dyespray, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
