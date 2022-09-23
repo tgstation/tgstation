@@ -10,6 +10,7 @@
 	lose_text = "<span class='notice'>Your back feels better.</span>"
 	medical_record_text = "Patient scans indicate severe and chronic back pain."
 	hardcore_value = 4
+	mail_goodies = list(/obj/item/cane)
 	var/datum/weakref/backpack
 
 /datum/quirk/badback/add()
@@ -82,6 +83,7 @@
 	lose_text = "<span class='notice'>You miraculously gain back your vision.</span>"
 	medical_record_text = "Patient has permanent blindness."
 	hardcore_value = 15
+	mail_goodies = list(/obj/item/clothing/glasses/sunglasses, /obj/item/cane/white)
 
 /datum/quirk/item_quirk/blindness/add_unique()
 	give_item_to_holder(/obj/item/clothing/glasses/blindfold/white, list(LOCATION_EYES = ITEM_SLOT_EYES, LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
@@ -260,6 +262,16 @@
 	lose_text = "<span class='notice'>You don't seem to make a big deal out of everything anymore.</span>"
 	medical_record_text = "Patient demonstrates a high level of emotional volatility."
 	hardcore_value = 3
+	mail_goodies = list(
+		/obj/item/toy/plush/carpplushie,
+		/obj/item/toy/plush/slimeplushie,
+		/obj/item/toy/plush/lizard_plushie,
+		/obj/item/toy/plush/snakeplushie,
+		/obj/item/toy/plush/plasmamanplushie,
+		/obj/item/toy/plush/beeplushie,
+		/obj/item/toy/plush/moth,
+		/obj/item/toy/plush/pkplush,
+	)
 
 /datum/quirk/hypersensitive/add()
 	if (quirk_holder.mob_mood)
@@ -279,7 +291,7 @@
 	lose_text = "<span class='danger'>You're no longer severely affected by alcohol.</span>"
 	medical_record_text = "Patient demonstrates a low tolerance for alcohol. (Wimp)"
 	hardcore_value = 3
-	mail_goodies = list(/obj/item/storage/pill_bottle/multiver/less)
+	mail_goodies = list(/obj/item/reagent_containers/cup/glass/waterbottle)
 
 /datum/quirk/item_quirk/nearsighted
 	name = "Nearsighted"
@@ -438,6 +450,7 @@
 	var/slot_string = "limb"
 	medical_record_text = "During physical examination, patient was found to have a prosthetic limb."
 	hardcore_value = 3
+	mail_goodies = list(/obj/item/weldingtool/mini, /obj/item/stack/cable_coil/five)
 
 /datum/quirk/prosthetic_limb/add_unique()
 	var/limb_slot = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
