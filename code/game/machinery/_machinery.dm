@@ -488,16 +488,16 @@
 ///Get a valid powered area to reference for power use, mainly for wall-mounted machinery that isn't always mapped directly in a powered location.
 /obj/machinery/proc/get_room_area(area/machine_room)
 	var/area/machine_area = get_area(src)
-	if(machine_area.always_unpowered == FALSE)///check our loc first to see if its a powered area
+	if(!machine_area.always_unpowered) ///check our loc first to see if its a powered area
 		machine_room = machine_area
 		return machine_room
 	var/turf/mounted_wall = get_step(src,dir)
-	if(mounted_wall && istype(mounted_wall, /turf/closed))
+	if (mounted_wall && istype(mounted_wall, /turf/closed))
 		var/area/wall_area = get_area(mounted_wall)
-		if(wall_area.always_unpowered == FALSE)///loc area wasn't good, checking adjacent wall for a good area to use
+		if(!wall_area.always_unpowered )///loc area wasn't good, checking adjacent wall for a good area to use
 			machine_room = wall_area
 			return machine_room
-	machine_room = machine_area///couldn't find a proper powered area on loc or adjacent wall, defaulting back to loc and blaming mappers
+	machine_room = machine_area ///couldn't find a proper powered area on loc or adjacent wall, defaulting back to loc and blaming mappers
 	return machine_room
 
 ///makes this machine draw power from its area according to which use_power mode it is set to
