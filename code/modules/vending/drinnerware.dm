@@ -24,7 +24,7 @@
 		/obj/item/plate/large = 5,
 	)
 	contraband = list(
-		/obj/item/kitchen/rollingpin = 2,
+		/obj/item/kitchen/rollingpin/illegal = 2,
 		/obj/item/knife/butcher = 2,
 	)
 	refill_canister = /obj/item/vending_refill/dinnerware

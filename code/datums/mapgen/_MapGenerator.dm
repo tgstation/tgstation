@@ -2,5 +2,5 @@
 /datum/map_generator
 
 ///This proc will be ran by areas on Initialize, and provides the areas turfs as argument to allow for generation.
-/datum/map_generator/proc/generate_terrain(list/turfs)
+/datum/map_generator/proc/generate_terrain(list/turfs, area/generate_in)
 	return

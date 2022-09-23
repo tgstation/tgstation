@@ -17,7 +17,7 @@
 #define LIGHT_POWER_GAIN 35
 
 ///How many reagents the lights can hold
-#define LIGHT_REAGENT_CAPACITY 5
+#define LIGHT_REAGENT_CAPACITY 20
 
 //Status for light constructs
 #define LIGHT_CONSTRUCT_EMPTY 1
