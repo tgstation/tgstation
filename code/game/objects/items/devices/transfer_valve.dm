@@ -194,6 +194,7 @@
 		if(bomber)
 			admin_bomber_message = "The bomb's most recent set of fingerprints indicate it was last touched by [ADMIN_LOOKUPFLW(bomber)]"
 			bomber_message = " - Last touched by: [key_name_admin(bomber)]"
+			bomber.log_message("opened bomb valve", LOG_GAME, log_globally = FALSE)
 
 		if(istype(attachment, /obj/item/assembly/voice))
 			var/obj/item/assembly/voice/spoken_trigger = attachment
@@ -204,7 +205,6 @@
 		GLOB.bombers += admin_bomb_message
 		message_admins(admin_bomb_message)
 		log_game("Bomb valve opened in [AREACOORD(bombturf)][attachment_message][bomber_message]")
-		bomber.log_message("opened bomb valve", LOG_GAME, log_globally = FALSE)
 
 		valve_open = merge_gases(target, change_volume)
 
