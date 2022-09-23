@@ -62,9 +62,9 @@ GLOBAL_LIST_INIT(immutable_list_repo, global._immutable_list_repo)
 
 /datum/immutable_list/string/newme(list/immutize)
 	#ifdef UNIT_TESTS
-		for(var/element in immutize)
-			if(!istext(element))
-				stack_trace("Non-string found in immutable string list! [element]")
+	for(var/element in immutize)
+		if(!istext(element))
+			stack_trace("Non-string found in immutable string list! [element]")
 	#endif
 
 	var/key = immutize.Join()
