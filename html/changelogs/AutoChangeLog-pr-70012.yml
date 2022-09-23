@@ -1,0 +1,7 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - balance: "AI restorer app now requires RD access to download."
+  - bugfix: "Nukie tablets now properly show when a nuke is going off in their examine."
+  - balance: "Tablet's charge and AI holder parts have been removed entirely. Tablets now only have a cell, and computers only use their area's APC."
+  - code_imp: "Modular computer's power handling, the AI restorer app's functionality, and modular computer's examining has been refactored, please report any bugs you might find."
