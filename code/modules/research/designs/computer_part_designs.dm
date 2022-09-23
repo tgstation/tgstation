@@ -58,6 +58,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/disk/micro
+	name = "Micro Solid State Drive"
 	id = "ssd_micro"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 400, /datum/material/glass = 100)
