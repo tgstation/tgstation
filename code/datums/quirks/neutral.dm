@@ -418,7 +418,7 @@
 	lose_text = span_notice("You've lost all interest in gaming.")
 	medical_record_text = "Patient has a severe video game addiction."
 	mob_trait = TRAIT_GAMER
-	mail_goodies = list(/obj/item/toy/intento)
+	mail_goodies = list(/obj/item/toy/intento, /obj/item/clothing/head/fedora)
 	/// Timer for gaming withdrawal to kick in
 	var/gaming_withdrawal_timer = TIMER_ID_NULL
 
