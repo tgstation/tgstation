@@ -82,11 +82,11 @@ SUBSYSTEM_DEF(mapping)
 			config = old_config
 	initialize_biomes()
 	loadWorld()
+	generate_z_level_linkages()
 	determine_fake_sale()
 	repopulate_sorted_areas()
 	process_teleport_locs() //Sets up the wizard teleport locations
 	preloadTemplates()
-	generate_z_level_linkages()
 
 #ifndef LOWMEMORYMODE
 	// Create space ruin levels
