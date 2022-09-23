@@ -7,11 +7,29 @@ GLOBAL_LIST_INIT(immutable_list_repo, global._immutable_list_repo)
 
 /datum/immutable_list/New(list/data)
 	src.data = data
+	var/testvar
 
 ///Constructor for immutable lists. Returns an ilist with the desired arguments.
 /proc/immutable_list(list/data)
+	var/static/datum/immutable_list/holder = new
+	return holder.newme(data)
+
+///Constructor for immutable associative lists. Returns an associative ilist with the desired arguments.
+/proc/immutable_assoc_list(list/data)
+	var/static/datum/immutable_list/assoc/holder = new
+	return holder.newme(data)
+
+///Constructor for immutable lists containing ONLY strings, skips the expensive \ref bits. Returns a string ilist with the desired arguments.
+/proc/immutable_string_list(list/data)
+	var/static/datum/immutable_list/string/holder = new
+	return holder.newme(data)
+
+/////////////////////////////////////////////////CLASS PROCS////////////////////////////////////////////////////////////
+
+///The actual constructor. Why is it like this? We can't hijack the return value of New(), so this is the best I could think of.
+/datum/immutable_list/proc/newme(list/immutize)
 	var/list/refs = list()
-	for(var/argument in data)
+	for(var/argument in immutize)
 		#ifdef UNIT_TESTS
 		if(isdatum(argument) && !isweakref(argument))
 			stack_trace("Sent a hardref of [argument.type] to an immutable list, this will cause a harddel if the referenced object is deleted!")
@@ -21,41 +39,39 @@ GLOBAL_LIST_INIT(immutable_list_repo, global._immutable_list_repo)
 	var/key = refs.Join("-")
 	. = global._immutable_list_repo[key]
 	if(!.)
-		. = new /datum/immutable_list(data)
+		. = new /datum/immutable_list(immutize)
 		global._immutable_list_repo[key] = .
 	return .
 
-///Constructor for immutable associative lists. Returns an associative ilist with the desired arguments.
-/proc/immutable_assoc_list(list/data)
+/datum/immutable_list/assoc/newme(list/immutize)
 	var/list/refs = list()
-	for(var/key in data)
-		refs += "\ref[(key)]=\ref[data[key]]"
+	for(var/key in immutize)
+		refs += "\ref[(key)]=\ref[immutize[key]]"
 		#ifdef UNIT_TESTS
 		if((isdatum(key) && !isweakref(key)))
 			stack_trace("Sent a hardref of [key.type] to an immutable list, this will cause a harddel if the referenced object is deleted!")
-		else if(isdatum(data[key]) && !isweakref(data[key]))
-			stack_trace("Sent a hardref of [data[key].type] to an immutable list, this will cause a harddel if the referenced object is deleted!")
+		else if(isdatum(immutize[key]) && !isweakref(immutize[key]))
+			stack_trace("Sent a hardref of [immutize[key].type] to an immutable list, this will cause a harddel if the referenced object is deleted!")
 		#endif
 
 	var/key = refs.Join()
 	. = global._immutable_list_repo[key]
 	if(!.)
-		. = new /datum/immutable_list(data)
+		. = new /datum/immutable_list/assoc(immutize)
 		global._immutable_list_repo[key] = .
 	return .
 
-///Constructor for immutable lists containing ONLY strings, skips the expensive \ref bits. Returns a string ilist with the desired arguments.
-/proc/immutable_string_list(list/data)
+/datum/immutable_list/string/newme(list/immutize)
 	#ifdef UNIT_TESTS
-		for(var/element in data)
+		for(var/element in immutize)
 			if(!istext(element))
 				stack_trace("Non-string found in immutable string list! [element]")
 	#endif
 
-	var/key = data.Join()
+	var/key = immutize.Join()
 	. = global._immutable_list_repo[key]
 	if(!.)
-		. = new /datum/immutable_list/string(data)
+		. = new /datum/immutable_list/string(immutize)
 		global._immutable_list_repo[key] = .
 	return .
 
@@ -83,69 +99,34 @@ GLOBAL_LIST_INIT(immutable_list_repo, global._immutable_list_repo)
 /datum/immutable_list/proc/Set(key, value)
 	. = data.Copy()
 	.[key] = value
-	return immutable_list(.)
+	return newme(.)
 
 ///Add any number of items to data
 /datum/immutable_list/proc/Add(...)
 	. = data.Copy()
 	for(var/argument in args)
 		. += argument
-	return immutable_list(.)
+	return newme(.)
 
 ///Remove any number of items from data
 /datum/immutable_list/proc/Remove(...)
 	. = data.Copy()
 	for(var/argument in args)
 		. -= argument
-	return immutable_list(.)
+	return newme(.)
 
 ///Functional equivalent of [list_A | list_B]
 /datum/immutable_list/proc/Or(list/other)
 	. = data.Copy() | other
-	return immutable_list(.)
+	return newme(.)
 
 ///Functional equivalent of [list_A & list_B]
 /datum/immutable_list/proc/And(list/other)
 	. = data.Copy() & other
-	return immutable_list(.)
+	return newme(.)
 
 ///Functional equivlanet of [list_A ^ list_B]
 /datum/immutable_list/proc/Xor(list/other)
 	. = data.Copy() ^ other
-	return immutable_list(.)
+	return newme(.)
 
-
-///Set data[key] equal to [value]
-/datum/immutable_list/string/Set(key, value)
-	. = data.Copy()
-	.[key] = value
-	return immutable_string_list(.)
-
-///Add any number of items to data
-/datum/immutable_list/string/Add(...)
-	. = data.Copy()
-	for(var/argument in args)
-		. += argument
-	return immutable_string_list(.)
-
-///Remove any number of items from data
-/datum/immutable_list/string/Remove(...)
-	. = data.Copy()
-	for(var/argument in args)
-		. -= argument
-	return immutable_string_list(.)
-
-///Functional equivalent of [list_A | list_B]
-/datum/immutable_list/string/Or(list/other)
-	. = data.Copy() | other
-	return immutable_string_list(.)
-
-///Functional equivalent of [list_A & list_B]
-/datum/immutable_list/string/And(list/other)
-	. = data.Copy() & other
-	return immutable_string_list(.)
-
-///Functional equivlanet of [list_A ^ list_B]
-/datum/immutable_list/string/Xor(list/other)
-	. = data.Copy() ^ other
-	return immutable_string_list(.)
