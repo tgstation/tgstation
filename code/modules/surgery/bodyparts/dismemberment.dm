@@ -448,7 +448,8 @@
 	var/list/all_limb_flags = list()
 	for(var/obj/item/bodypart/limb as anything in carbon_owner.bodyparts)
 		for(var/obj/item/organ/external/ext_organ as anything in limb.external_organs)
-			all_limb_flags |= ext_organ.external_bodytypes?.Get()
+			if(ext_organ.external_bodytypes) //We don't want to be inserting nulls into an imutable string list
+				all_limb_flags |= ext_organ.external_bodytypes.Get()
 		all_limb_flags |= limb.bodytype.Get()
 
 	carbon_owner.bodytypes = immutable_string_list(all_limb_flags) //We set this to immutable AFTER to avoid all of the Copy() operations.
