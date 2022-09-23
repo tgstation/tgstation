@@ -51,11 +51,10 @@
 	id_trim = /datum/id_trim/job/warden
 	uniform = /obj/item/clothing/under/rank/security/warden
 	suit = /obj/item/clothing/suit/armor/vest/warden/alt
-	suit_store = /obj/item/gun/energy/disabler
 	backpack_contents = list(
-		/obj/item/evidencebag = 1,
+		/obj/item/evidencebag = 1, /obj/item/modular_computer/tablet/pda/warden = 1,
 		)
-	belt = /obj/item/modular_computer/tablet/pda/warden
+	belt = /obj/item/gun/energy/disabler
 	ears = /obj/item/radio/headset/headset_sec/alt
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 	gloves = /obj/item/clothing/gloves/color/black

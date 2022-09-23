@@ -16,6 +16,7 @@
 #define ROLE_OPERATIVE "Operative"
 #define ROLE_TRAITOR "Traitor"
 #define ROLE_WIZARD "Wizard"
+#define ROLE_NT_AGENT "NT Agent"
 
 // Midround roles
 #define ROLE_ABDUCTOR "Abductor"
@@ -108,6 +109,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_CLOWN_OPERATIVE = 14,
 	ROLE_CULTIST = 14,
 	ROLE_HERETIC = 0,
+	ROLE_NT_AGENT = 0,
 	ROLE_MALF = 0,
 	ROLE_OPERATIVE = 14,
 	ROLE_REV_HEAD = 14,

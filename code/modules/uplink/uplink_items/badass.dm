@@ -13,6 +13,7 @@
 	item = /obj/item/toy/balloon/syndicate
 	cost = 20
 	cant_discount = TRUE
+	purchasable_from = UPLINK_TRAITORS
 	illegal_tech = FALSE
 
 /datum/uplink_item/badass/syndiecards
@@ -23,6 +24,7 @@
 	item = /obj/item/toy/cards/deck/syndicate
 	cost = 1
 	surplus = 40
+	purchasable_from = UPLINK_TRAITORS
 	illegal_tech = FALSE
 
 /datum/uplink_item/badass/syndiecigs
@@ -30,12 +32,13 @@
 	desc = "Strong flavor, dense smoke, infused with omnizine."
 	item = /obj/item/storage/fancy/cigarettes/cigpack_syndicate
 	cost = 2
+	purchasable_from = UPLINK_TRAITORS
 	illegal_tech = FALSE
 
 // Low progression
 
 /datum/uplink_item/badass/syndiecash
-	name = "Syndicate Briefcase Full of Cash"
+	name = "Briefcase Full of Cash"
 	desc = "A secure briefcase containing 5000 space credits. Useful for bribing personnel, or purchasing goods \
 			and services at lucrative prices. The briefcase also feels a little heavier to hold; it has been \
 			manufactured to pack a little bit more of a punch if your client needs some convincing."

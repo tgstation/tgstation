@@ -27,7 +27,7 @@
 		wave_name = pick_weight(list(
 			"normal" = 50,
 			"threatening" = 40,
-			"catastrophic" = 10))
+			"catastrophic" = 0))
 	switch(wave_name)
 		if("normal")
 			wave_type = GLOB.meteors_normal
