@@ -253,9 +253,9 @@
 
 /obj/structure/trap/teleport/trap_effect(mob/living/L)
 	to_chat(L, span_danger("<B>Vücudunun fiziksel evrenden bağının koptuğunu hissediyorsun!</B>"))
-	var/turf/safe_turf = find_safe_turf(zlevels = z, extended_safety_checks = TRUE)
+	var/turf/safe_turf = find_safe_turf()
 	playsound(get_turf(L), SFX_SPARKS, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
-	do_teleport(L, safe_turf, channel = TELEPORT_CHANNEL_MAGIC)
+	do_teleport(L, safe_turf, channel = TELEPORT_CHANNEL_MAGIC, forced = TRUE)
 	L.playsound_local(get_turf(L), 'sound/hallucinations/i_see_you1.ogg', 50, 1)
 	playsound(get_turf(L), 'sound/effects/phasein.ogg', 25, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 	playsound(get_turf(L), SFX_SPARKS, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
@@ -270,6 +270,53 @@
 /obj/structure/trap/flashbang/trap_effect(mob/living/L)
 	to_chat(L, span_danger("<B>Çarpılıyorsun ve gözlerin acıyor.</B>"))
 	L.electrocute_act(5, src, flags = SHOCK_NOGLOVES)
+	L.Paralyze(30)
 	explosion(src, flash_range = 7, adminlog = FALSE)
 	playsound(get_turf(L), 'sound/voice/human/hihiha.ogg', 100,)
 
+/obj/structure/trap/wall
+	name = "wall trap"
+	desc = "Yerde ne olduğunu anlamlandıramadığın bir şey var. Çok yaklaşmaman iyi olur."
+
+/obj/structure/trap/wall/trap_effect(mob/living/L)
+	visible_message(span_warning("Duvarlar hareket ediyor!"))
+	playsound(get_turf(L), 'sound/machines/clockcult/brass_skewer.ogg', 100, ignore_walls = TRUE, use_reverb = TRUE)
+	var/turf/T = src.loc
+	addtimer(CALLBACK(T, T.PlaceOnTop(/turf/closed/wall, flags = CHANGETURF_INHERIT_AIR),), 5 SECONDS)
+	QDEL_IN(src, 10)
+/obj/structure/trap/zombie
+	name = "zombie trap"
+	desc = "Yerde ne olduğunu anlamlandıramadığın bir şey var. Çok yaklaşmaman iyi olur."
+
+/obj/structure/trap/zombie/trap_effect(mob/living/L)
+
+	to_chat(L, span_danger("<B>Yerden zombiler çıkıyor!</B>"))
+	L.Paralyze(5)
+	new /mob/living/simple_animal/hostile/zombie(loc)
+	new /mob/living/simple_animal/hostile/zombie(loc)
+	QDEL_IN(src, 30)
+	playsound(get_turf(L), 'sound/voice/ghost_whisper.ogg', 70, ignore_walls = TRUE, use_reverb = TRUE)
+
+/obj/structure/trap/imp/
+	name = "imp trap"
+	desc = "Yerde ne olduğunu anlamlandıramadığın bir şey var. Çok yaklaşmaman iyi olur."
+
+/obj/structure/trap/imp/trap_effect(mob/living/L)
+
+	visible_message(span_danger("<B>Cehennem sıcağını hissediyorsun!"))
+	L.Paralyze(10)
+	new	/mob/living/simple_animal/hostile/imp(loc)
+	QDEL_IN(src, 30)
+	playsound(get_turf(L), SFX_DESECRATION, 70, ignore_walls = TRUE)
+
+/obj/structure/trap/blind
+	name = "blind trap"
+	desc = "Yerde ne olduğunu anlamlandıramadığın bir şey var. Çok yaklaşmaman iyi olur."
+
+/obj/structure/trap/blind/trap_effect(mob/living/L)
+
+	to_chat(L, span_danger("<B>Gözlerin acıyor!</B>"))
+	L.Paralyze(10)
+	L.become_blind(15)
+	playsound(get_turf(L), SFX_SPARKS, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
+	addtimer(CALLBACK(L, /mob/living/proc/cure_blind,), 30 SECONDS)
