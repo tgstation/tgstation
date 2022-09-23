@@ -146,6 +146,9 @@
 /obj/vehicle/sealed/car/clowncar/atom_destruction(damage_flag)
 	playsound(src, 'sound/vehicles/clowncar_fart.ogg', 100)
 	STOP_PROCESSING(SSobj,src)
+	return ..()
+
+/obj/vehicle/sealed/car/clowncar/Destroy(force)
 	UnregisterSignal(src, COMSIG_MOVABLE_BUMP)
 	UnregisterSignal(src, COMSIG_MOVABLE_CROSS_OVER)
 	return ..()
