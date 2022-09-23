@@ -1,4 +1,6 @@
-/datum/component/ghost_role_spawnpoint //Small component, but it helps to consolidate general observer role spawning behavior/checks into one place.
+//Small component, but it helps to consolidate general observer role spawning behavior/checks into one place.
+//This should only be for observer role checks that are universal. All case-specific checks (like rolebans) should be checked before the COMSIG_ATTEMPT_POSITION signal is sent
+/datum/component/ghost_role_spawnpoint
 	var/mob/living/spawnpoint
 
 /datum/component/ghost_role_spawnpoint/Initialize()
