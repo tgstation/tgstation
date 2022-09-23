@@ -229,7 +229,7 @@
 			//Targeting anything in the rat faction nearby
 			for(var/mob/living/M in view(1,src))
 				if(!M.stat && Adjacent(M))
-					if (faction_check(M.faction.Copy(), list("rat")))
+					if (FACTION_RAT in M.faction)
 						//Jerry can never catch Tom snowflaking
 						if(istype(M, /mob/living/simple_animal/mouse/brown/tom) && inept_hunter)
 							if(COOLDOWN_FINISHED(src, emote_cooldown))
@@ -275,7 +275,7 @@
 				//Targeting mice and mobs in the rat faction
 				for(var/mob/living/target in oview(src,3))
 					if(isturf(target.loc) && !target.stat)
-						if(faction_check(target.faction.Copy(), list("rat")))
+						if(FACTION_RAT in target.faction)
 							movement_target = target
 							break
 			if(movement_target)
