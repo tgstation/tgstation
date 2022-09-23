@@ -186,6 +186,7 @@
 	gain_text = "<span class='notice'>The shadows seem a little less dark.</span>"
 	lose_text = "<span class='danger'>Everything seems a little darker.</span>"
 	medical_record_text = "Patient's eyes show above-average acclimation to darkness."
+	mail_goodies = list(/obj/item/flashlight/flashdark)
 
 /datum/quirk/night_vision/add()
 	refresh_quirk_holder_eyes()
@@ -247,7 +248,13 @@
 	gain_text = "<span class='notice'>You know how to tag walls efficiently.</span>"
 	lose_text = "<span class='danger'>You forget how to tag walls properly.</span>"
 	medical_record_text = "Patient was recently seen for possible paint huffing incident."
-	mail_goodies = list(/obj/item/toy/crayon/spraycan)
+	mail_goodies = list(
+		/obj/item/toy/crayon/spraycan, 
+		/obj/item/canvas, 
+		/obj/item/canvas/nineteen_nineteen, 
+		/obj/item/canvas/twentythree_nineteen, 
+		/obj/item/canvas/twentythree_twentythree
+	)
 
 /datum/quirk/item_quirk/tagger/add_unique()
 	give_item_to_holder(/obj/item/toy/crayon/spraycan, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
@@ -260,4 +267,4 @@
 	mob_trait = TRAIT_VORACIOUS
 	gain_text = "<span class='notice'>You feel HONGRY.</span>"
 	lose_text = "<span class='danger'>You no longer feel HONGRY.</span>"
-	mail_goodies = list(/obj/effect/spawner/random/food_or_drink/snack)
+	mail_goodies = list(/obj/effect/spawner/random/food_or_drink/dinner)
