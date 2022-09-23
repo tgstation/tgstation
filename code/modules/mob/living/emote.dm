@@ -34,7 +34,7 @@
 
 // Visual effect emotes
 /// Overlay animation sprite-file
-#define EMOTE_OVERLAYS 'icons/effects/overlay_effects.dmi'
+#define EMOTE_OVERLAYS 'icons/mob/species/human/human_face.dmi'
 
 /datum/emote/living/carbon/human/sigh
 	key = "sigh"
@@ -46,76 +46,7 @@
 
 /datum/emote/living/carbon/human/sigh/run_emote(mob/living/carbon/human/user, params, type_override, intentional)
 	. = ..()
-	flick_overlay_static(mutable_appearance(EMOTE_OVERLAYS, "sigh", ABOVE_MOB_LAYER), user, 50)
-
-/datum/emote/living/sweatdrop
-	key = "sweatdrop"
-	key_third_person = "sweatdrops"
-	cooldown = 2 SECONDS
-
-/datum/emote/living/sweatdrop/run_emote(mob/living/user, params, type_override, intentional)
-	. = ..()
-	var/mutable_appearance/overlay = mutable_appearance(EMOTE_OVERLAYS, "sweatdrop", ABOVE_MOB_LAYER)
-
-	overlay.pixel_x = 10
-	overlay.pixel_y = 10
-	flick_overlay_static(overlay, user, 50)
-	playsound(user, 'sound/effects/sweatdrop.ogg', 25, TRUE)
-
-/datum/emote/living/carbon/realize
-	key = "realize"
-	key_third_person = "realizes"
-	cooldown = 2 SECONDS
-
-/datum/emote/living/carbon/realize/run_emote(mob/living/user, params, type_override, intentional)
-	. = ..()
-	var/mutable_appearance/overlay = mutable_appearance(EMOTE_OVERLAYS, "realize", ABOVE_MOB_LAYER)
-
-	overlay.pixel_y = 15
-	flick_overlay_static(overlay, user, 50)
-	playsound(user, 'sound/effects/realize.ogg', 25, TRUE)
-
-/datum/emote/living/carbon/annoyed
-	key = "annoyed"
-	key_third_person = "is annoyed"
-	cooldown = 2 SECONDS
-
-/datum/emote/living/carbon/annoyed/run_emote(mob/living/user, params, type_override, intentional)
-	. = ..()
-	var/mutable_appearance/overlay = mutable_appearance(EMOTE_OVERLAYS, "annoyed", ABOVE_MOB_LAYER)
-
-	overlay.pixel_x = 10
-	overlay.pixel_y = 10
-	flick_overlay_static(overlay, user, 50)
-	playsound(user, 'sound/effects/annoyed.ogg', 25, TRUE)
-
-/datum/emote/living/exclaim
-	key = "exclaim"
-	key_third_person = "exclaims"
-	cooldown = 2 SECONDS
-
-/datum/emote/living/exclaim/run_emote(mob/living/user, params, type_override, intentional)
-	. = ..()
-	var/mutable_appearance/overlay = mutable_appearance(EMOTE_OVERLAYS, "exclamation", ABOVE_MOB_LAYER)
-
-	overlay.pixel_x = 10
-	overlay.pixel_y = 28
-	flick_overlay_static(overlay, user, 50)
-	playsound(user, 'sound/machines/chime.ogg', 25, TRUE)
-
-/datum/emote/living/question
-	key = "question"
-	key_third_person = "questions"
-	cooldown = 2 SECONDS
-
-/datum/emote/living/question/run_emote(mob/living/user, params, type_override, intentional)
-	. = ..()
-	var/mutable_appearance/overlay = mutable_appearance(EMOTE_OVERLAYS, "question", ABOVE_MOB_LAYER)
-
-	overlay.pixel_x = 10
-	overlay.pixel_y = 28
-	flick_overlay_static(overlay, user, 50)
-	playsound(user, 'sound/effects/question.ogg', 25, TRUE)
+	flick_overlay_static(mutable_appearance(EMOTE_OVERLAYS, "sigh", ABOVE_MOB_LAYER), user, 25)
 
 /datum/emote/living/carbon/human/glasses
 	key = "glasses"
@@ -124,8 +55,8 @@
 	cooldown = 2 SECONDS
 
 /datum/emote/living/carbon/human/glasses/can_run_emote(mob/user, status_check = TRUE, intentional)
-	var/obj/O = user.get_item_by_slot(ITEM_SLOT_EYES)
-	if(!(istype(O, /obj/item/clothing/glasses/regular)))
+	var/obj/eyes_slot = user.get_item_by_slot(ITEM_SLOT_EYES)
+	if(!(istype(eyes_slot, /obj/item/clothing/glasses/regular)) || !(istype(eyes_slot, /obj/item/clothing/glasses/sunglasses)))
 		return FALSE
 
 	return ..()
@@ -134,7 +65,7 @@
 	. = ..()
 	var/mutable_appearance/overlay = mutable_appearance(EMOTE_OVERLAYS, "glasses", ABOVE_MOB_LAYER)
 
-	flick_overlay_static(overlay, user, 10)
+	flick_overlay_static(overlay, user, 25)
 
 #undef EMOTE_OVERLAYS
 
