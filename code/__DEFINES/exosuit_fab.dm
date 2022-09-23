@@ -27,6 +27,9 @@
 #define EXOSUIT_MODULE_PHAZON (1<<7)
 /// Module is compatible with Savannah Exosuit models
 #define EXOSUIT_MODULE_SAVANNAH (1<<8)
+/// Module is compatible with Decouverte Exosuit models
+#define EXOSUIT_MODULE_DECOUVERTE (1<<9)
+
 
 /// Module is compatible with "Working" Exosuit models - Ripley and Clarke
 #define EXOSUIT_MODULE_WORKING EXOSUIT_MODULE_RIPLEY | EXOSUIT_MODULE_CLARKE
@@ -34,6 +37,8 @@
 #define EXOSUIT_MODULE_COMBAT EXOSUIT_MODULE_GYGAX | EXOSUIT_MODULE_HONK | EXOSUIT_MODULE_DURAND | EXOSUIT_MODULE_PHAZON | EXOSUIT_MODULE_SAVANNAH | EXOSUIT_MODULE_CONCEALED_WEP_BAY
 /// Module is compatible with "Medical" Exosuit modelsm - Odysseus
 #define EXOSUIT_MODULE_MEDICAL EXOSUIT_MODULE_ODYSSEUS
+/// Module is compatible with "Voyager" Exosuit models - Abuzer mech (Decouverte)
+#define EXOSUIT_MODULE_VOYAGER EXOSUIT_MODULE_DECOUVERTE
 
 /// Module is standard in use
 #define MODULE_GENERAL "General"

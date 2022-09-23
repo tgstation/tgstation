@@ -469,6 +469,12 @@
 		return TRUE
 	return FALSE
 
+/obj/item/mecha_parts/mecha_equipment/thrusters/exploration
+	name = "Quantum-swap thruster package"
+	desc = "A set of thrusters that allow for voyager class exosuits to move extremely fast in a vaccum environment. Can only be attached to voyager class mechs."
+	detachable = FALSE
+	effect_type = /obj/effect/particle_effect/flame_trails
+	mech_flags = EXOSUIT_MODULE_VOYAGER
 ///////////////////////////////////// CONCEALED WEAPON BAY ////////////////////////////////////////
 
 /obj/item/mecha_parts/mecha_equipment/concealed_weapon_bay

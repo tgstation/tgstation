@@ -1660,6 +1660,24 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
+/datum/techweb_node/decouverte
+	id = "mecha_decouverte"
+	display_name = "EXOSUIT: Decouverte"
+	description = "Decouverte exosuit designs"
+	prereq_ids = list("engineering", "practical_bluespace")
+	design_ids = list(
+		"decouverte_chassis",
+		"decouverte_head",
+		"decouverte_left_arm",
+		"decouverte_left_leg",
+		"decouverte_main",
+		"decouverte_peri",
+		"decouverte_right_leg",
+		"decouverte_right_arm",
+		"decouverte_torso",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+
 /datum/techweb_node/clarke
 	id = "mecha_clarke"
 	display_name = "EXOSUIT: Clarke"

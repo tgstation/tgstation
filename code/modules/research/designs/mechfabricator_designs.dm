@@ -117,6 +117,61 @@
 	construction_time = 150
 	category = list(RND_CATEGORY_RIPLEY)
 
+//Abuzer mech (Decouverte)
+/datum/design/decouverte_chassis
+	name = "Exosuit Chassis (\"Decouverte\")"
+	id = "decouverte_chassis"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/chassis/decouverte
+	materials = list(/datum/material/iron=20000)
+	construction_time = 100
+	category = list("Decouverte")
+
+/datum/design/decouverte_torso
+	name = "Exosuit Torso (\"Decouverte\")"
+	id = "decouverte_torso"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/decouverte_torso
+	materials = list(/datum/material/iron=20000,/datum/material/glass = 7500)
+	construction_time = 200
+	category = list("Decouverte")
+
+/datum/design/decouverte_left_arm
+	name = "Exosuit Left Arm (\"Decouverte\")"
+	id = "decouverte_left_arm"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/decouverte_left_arm
+	materials = list(/datum/material/iron=15000)
+	construction_time = 150
+	category = list("Decouverte")
+
+/datum/design/decouverte_right_arm
+	name = "Exosuit Right Arm (\"Decouverte\")"
+	id = "decouverte_right_arm"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/decouverte_right_arm
+	materials = list(/datum/material/iron=15000)
+	construction_time = 150
+	category = list("Decouverte")
+
+/datum/design/decouverte_left_leg
+	name = "Exosuit Left Leg (\"Decouverte\")"
+	id = "decouverte_left_leg"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/decouverte_left_leg
+	materials = list(/datum/material/iron=15000)
+	construction_time = 150
+	category = list("Decouverte")
+
+/datum/design/decouverte_right_leg
+	name = "Exosuit Right Leg (\"Decouverte\")"
+	id = "decouverte_right_leg"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/decouverte_right_leg
+	materials = list(/datum/material/iron=15000)
+	construction_time = 150
+	category = list("Decouverte")
+
 //Odysseus
 /datum/design/odysseus_chassis
 	name = "Exosuit Chassis (\"Odysseus\")"
