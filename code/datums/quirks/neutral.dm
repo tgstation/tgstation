@@ -239,6 +239,7 @@
 	icon = "adjust"
 	value = 0
 	medical_record_text = "Patient is afflicted with almost complete color blindness."
+	mail_goodies = list(/obj/item/clothing/suit/jacket/det_suit/noir)
 
 /datum/quirk/monochromatic/add()
 	quirk_holder.add_client_colour(/datum/client_colour/monochrome)
