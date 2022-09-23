@@ -132,21 +132,20 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_PACIFISM, INNATE_TRAIT)
 	AddComponent(/datum/component/crate_carrier)
+	AddComponent(/datum/component/ghost_role_spawnpoint)
 
 /mob/living/simple_animal/hostile/gorilla/cargo_domestic/attack_ghost(mob/user)
-	if(being_polled_for || mind || client || (flags_1 & ADMIN_SPAWNED_1))
+	if(being_polled_for || (flags_1 & ADMIN_SPAWNED_1))
 		return ..()
 
 	if(is_banned_from(user.ckey, list(ROLE_SENTIENCE, ROLE_SYNDICATE)))
-		return ..()
-
-	if(!SSticker.HasRoundStarted())
 		return ..()
 
 	var/become_gorilla = tgui_alert(user, "Become a Cargorilla?", "Confirm", list("Yes", "No"))
 	if(become_gorilla != "Yes" || QDELETED(src) || QDELETED(user) || being_polled_for || mind || client)
 		return
 
+	SEND_SIGNAL(src, COMSIG_ATTEMPT_POSSESSION, user)
 	enter_ghost(user)
 
 /// Poll ghosts for control of the gorilla.
@@ -170,7 +169,6 @@
 
 /// Brings in the a ghost to take control of the gorilla.
 /mob/living/simple_animal/hostile/gorilla/cargo_domestic/proc/enter_ghost(mob/dead/user)
-	key = user.key
 	if(!mind)
 		CRASH("[type] - enter_ghost didn't end up with a mind.")
 

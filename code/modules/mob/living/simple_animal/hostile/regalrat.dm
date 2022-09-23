@@ -41,6 +41,7 @@
 	domain.Grant(src)
 	riot.Grant(src)
 	AddElement(/datum/element/waddling)
+	AddComponent(/datum/component/ghost_role_spawnpoint)
 
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
@@ -74,17 +75,11 @@
 /mob/living/simple_animal/hostile/regalrat/proc/get_clicked_player(mob/user)
 	if(key || stat)
 		return
-	if(SSticker.current_state != GAME_STATE_PLAYING)
-		to_chat(user, span_warning("You cannot assume control of this until after the round has started!"))
-		return
 	var/rat_ask = tgui_alert(usr, "Become the Royal Rat?", "Are you sure?", list("Yes", "No"))
 	if(rat_ask != "Yes" || QDELETED(src))
 		return
-	if(key)
-		to_chat(user, span_warning("Someone else already took the rat!"))
-		return
-	key = user.key
-	src.log_message("took control of [name].", LOG_GAME)
+
+	SEND_SIGNAL(src, COMSIG_ATTEMPT_POSSESSION, user)
 
 /mob/living/simple_animal/hostile/regalrat/handle_automated_action()
 	if(prob(20))
