@@ -246,12 +246,7 @@
 							stop_automated_movement = 0
 							break
 						//Rat scratching, or anything else that could be in the rat faction
-						//Copied from hostile simple animal code
-						if(SEND_SIGNAL(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, M) & COMPONENT_HOSTILE_NO_ATTACK)
-							return FALSE //but more importantly return before attack_animal called
-						var/result = M.attack_animal(src)
-						SEND_SIGNAL(src, COMSIG_HOSTILE_POST_ATTACKINGTARGET, M, result)
-
+						M.attack_animal(src)
 			for(var/obj/item/toy/cattoy/T in view(1,src))
 				if (T.cooldown < (world.time - 400))
 					manual_emote("bats \the [T] around with \his paw!")
