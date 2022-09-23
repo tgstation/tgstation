@@ -251,7 +251,7 @@
 	lose_text = "<span class='notice'>You feel awake again.</span>"
 	medical_record_text = "Patient has abnormal sleep study results and is difficult to wake up."
 	hardcore_value = 2
-	mail_goodies = list(/obj/item/clothing/glasses/blindfold, /obj/item/bedsheet/random)
+	mail_goodies = list(/obj/item/clothing/glasses/blindfold, /obj/item/bedsheet/random, /obj/item/clothing/under/misc/pj/red, /obj/item/clothing/under/misc/pj/blue)
 
 /datum/quirk/hypersensitive
 	name = "Hypersensitive"
