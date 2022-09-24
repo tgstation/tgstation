@@ -35,11 +35,11 @@
 	var/normal_desc
 	//--end of love :'(--
 
-/**
-  * If you add a new plushie please add it to the lists at both:
-  * /obj/effect/spawner/random/entertainment/plushie
-  * /obj/effect/spawner/random/entertainment/plushie_delux
-**/
+/*
+** If you add a new plushie please add it to the lists at both:
+** /obj/effect/spawner/random/entertainment/plushie
+** /obj/effect/spawner/random/entertainment/plushie_delux
+*/
 
 /obj/item/toy/plush/Initialize(mapload)
 	. = ..()
