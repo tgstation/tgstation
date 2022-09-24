@@ -10,8 +10,8 @@
  * * button_color - The color of this fax button in the list of all faxes.
  */
 GLOBAL_LIST_INIT(additional_faxes_list, list(
-	list("fax_name" = "Central Command", "button_color" = "#00ff00"),
-	list("fax_name" = "Clown Planet", "button_color" = "#ffe135"),
+	list("fax_name" = "Central Command", "button_color" = "#34c924"),
+	list("fax_name" = "Clown Planet", "button_color" = "#f4c800"),
 ))
 
 GLOBAL_LIST_INIT(syndicate_faxes_list, list(

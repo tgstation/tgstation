@@ -38,7 +38,8 @@ GLOBAL_DATUM_INIT(fax_manager, /datum/fax_manager, new)
 		var/list/request = list()
 		request["id_message"] = REQUEST["id_message"]
 		request["time"] = REQUEST["time"]
-		request["sender_name"] = REQUEST["sender"].name
+		var/mob/sender = REQUEST["sender"]
+		request["sender_name"] = sender.name
 		request["sender_fax_id"] = REQUEST["sender_fax_id"]
 		request["sender_fax_name"] = REQUEST["sender_fax_name"]
 		request["receiver_fax_name"] = REQUEST["receiver_fax_name"]
@@ -65,7 +66,8 @@ GLOBAL_DATUM_INIT(fax_manager, /datum/fax_manager, new)
 					return TRUE
 		if("read_message")
 			var/list/REQUEST = get_request(params["id_message"])
-			REQUEST["paper"].ui_interact(usr)
+			var/obj/item/paper/request/paper = REQUEST["paper"]
+			paper.ui_interact(usr)
 			return TRUE
 		if("flw")
 			var/list/REQUEST = get_request(params["id_message"])
