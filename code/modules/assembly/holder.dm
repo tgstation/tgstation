@@ -114,7 +114,7 @@
 	if(.)
 		return
 	for(var/obj/item/assembly/assembly as anything in assemblies)
-		assembly.attack_hand()
+		assembly.attack_hand(user, modifiers) // Note override in assembly.dm to prevent side effects here
 
 /obj/item/assembly_holder/attackby(obj/item/weapon, mob/user, params)
 	if(isassembly(weapon))
@@ -159,7 +159,7 @@
 /obj/item/assembly_holder/proc/process_activation(obj/device, normal = TRUE, special = TRUE)
 	if(!device)
 		return FALSE
-	if(normal && LAZYLEN(assemblies.len))
+	if(normal && LAZYLEN(assemblies))
 		for(var/obj/item/assembly/assembly as anything in assemblies)
 			if(assembly != device)
 				assembly.pulsed(FALSE)

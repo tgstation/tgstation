@@ -191,11 +191,7 @@
 	var/obj/item/assembly/S = get_attached(color)
 	if(S && istype(S))
 		assemblies -= color
-		S.connected = null
-		if(S.holder == holder)	// This should be the case
-			S.on_detach()		// Notify the assembly.  This should remove the reference to our holder
-			if(S.holder == holder) // If it didn't remove the reference, force it.  So sue me, I'm paranoid.
-				S.holder = null
+		S.on_detach()		// Notify the assembly.  This should remove the reference to our holder
 		S.forceMove(holder.drop_location())
 		return S
 

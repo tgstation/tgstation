@@ -161,9 +161,6 @@ GLOBAL_LIST_INIT(reverseradiochannels, list(
 	//Send the data
 	for(var/current_filter in filter_list)
 		for(var/datum/weakref/device_ref as anything in devices[current_filter])
-			if(isnull(device_ref))
-				devices[current_filter] -= null
-				continue
 			var/obj/device = device_ref.resolve()
 			if(!device)
 				devices[current_filter] -= device_ref
@@ -183,10 +180,13 @@ GLOBAL_LIST_INIT(reverseradiochannels, list(
 	if (!filter)
 		filter = "_default"
 
+	var/datum/weakref/new_listener = WEAKREF(device)
+	if(isnull(new_listener))
+		return stack_trace("null, non-datum, or qdeleted device")
 	var/list/devices_line = devices[filter]
 	if(!devices_line)
 		devices[filter] = devices_line = list()
-	devices_line += WEAKREF(device)
+	devices_line += new_listener
 
 /datum/radio_frequency/proc/remove_listener(obj/device)
 	for(var/devices_filter in devices)

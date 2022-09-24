@@ -145,18 +145,30 @@
 	playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
 	pulse(FALSE)
 
+/*
+ * clumsy_check: Sets off the mousetrap if handled by a clown (with some probability)
+ *
+ * Arguments:
+ * * user: The mob handling the trap
+ */
+/obj/item/assembly/mousetrap/proc/clumsy_check(mob/living/carbon/human/user)
+	if(!armed)
+		return FALSE
+	if((HAS_TRAIT(user, TRAIT_DUMB) || HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
+		var/which_hand = BODY_ZONE_PRECISE_L_HAND
+		if(!(user.active_hand_index % 2))
+			which_hand = BODY_ZONE_PRECISE_R_HAND
+		triggered(user, which_hand)
+		user.visible_message(span_warning("[user] accidentally sets off [src], breaking their fingers."), \
+			span_warning("You accidentally trigger [src]!"))
+		return TRUE
+	return FALSE
 
 /obj/item/assembly/mousetrap/attack_self(mob/living/carbon/human/user)
 	if(!armed)
 		to_chat(user, span_notice("You arm [src]."))
 	else
-		if((HAS_TRAIT(user, TRAIT_DUMB) || HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
-			var/which_hand = BODY_ZONE_PRECISE_L_HAND
-			if(!(user.active_hand_index % 2))
-				which_hand = BODY_ZONE_PRECISE_R_HAND
-			triggered(user, which_hand)
-			user.visible_message(span_warning("[user] accidentally sets off [src], breaking their fingers."), \
-				span_warning("You accidentally trigger [src]!"))
+		if(clumsy_check(user))
 			return
 		to_chat(user, span_notice("You disarm [src]."))
 	armed = !armed
@@ -164,17 +176,10 @@
 	playsound(src, 'sound/weapons/handcuffs.ogg', 30, TRUE, -3)
 
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
+// Clumsy check only
 /obj/item/assembly/mousetrap/attack_hand(mob/living/carbon/human/user, list/modifiers)
-	if(armed)
-		if((HAS_TRAIT(user, TRAIT_DUMB) || HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
-			var/which_hand = BODY_ZONE_PRECISE_L_HAND
-			if(!(user.active_hand_index % 2))
-				which_hand = BODY_ZONE_PRECISE_R_HAND
-			triggered(user, which_hand)
-			user.visible_message(span_warning("[user] accidentally sets off [src], breaking their fingers."), \
-					span_warning("You accidentally trigger [src]!"))
-			return
+	if(clumsy_check(user))
+		return
 	return ..()
 
 

@@ -45,6 +45,8 @@
 
 //Call this when detaching it from a device. handles any special functions that need to be updated ex post facto
 /obj/item/assembly/proc/on_detach()
+	if(connected)
+		connected = null
 	if(!holder)
 		return FALSE
 	forceMove(holder.drop_location())
@@ -95,6 +97,15 @@
 	secured = !secured
 	update_appearance()
 	return secured
+
+// This is overwritten so that clumsy people can set off mousetraps even when in a holder.
+// We are not going deeper than that however (won't set off if in a tank bomb or anything with wires)
+// That would need to be added to all parent objects, or a signal created, whatever.
+// Anyway this return check prevents you from picking up every assembly inside the holder at once.
+/obj/item/assembly/attack_hand(mob/living/user, list/modifiers)
+	if(holder || connected)
+		return
+	. = ..()
 
 /obj/item/assembly/attackby(obj/item/W, mob/user, params)
 	if(isassembly(W))
