@@ -18,15 +18,16 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 /// Called when the count down has been finished, do the nasty work.
 /// [/obj/machinery/power/supermatter_crystal/proc/count_down]
 /datum/sm_delam/proc/delaminate(obj/machinery/power/supermatter_crystal/sm)
+	SSpersistence.rounds_since_engine_exploded = ROUNDCOUNT_ENGINE_JUST_EXPLODED
 	qdel(sm)
 
-/// Whatever we're supposed to do when a delam is currently in progress. 
+/// Whatever we're supposed to do when a delam is currently in progress.
 /// Mostly just to tell people how useless engi is, and play some alarm sounds.
 /// Returns TRUE if we just told people a delam is going on. FALSE if its healing or we didnt say anything.
 /// [/obj/machinery/power/supermatter_crystal/proc/process_atmos]
 /datum/sm_delam/proc/delam_progress(obj/machinery/power/supermatter_crystal/sm)
 	if(sm.damage <= sm.warning_point) // Damage is too low, lets not
-		return FALSE 
+		return FALSE
 
 	if (sm.damage >= sm.emergency_point && sm.damage_archived < sm.emergency_point)
 		sm.investigate_log("has entered the emergency point.", INVESTIGATE_ENGINE)
