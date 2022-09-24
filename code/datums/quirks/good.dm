@@ -241,6 +241,7 @@
 		/obj/item/reagent_containers/cup/glass/bottle/holywater,
 		/obj/item/bedsheet/chaplain,
 		/obj/item/toy/cards/deck/tarot,
+		/obj/item/storage/fancy/candle_box,
 	)
 
 /datum/quirk/item_quirk/spiritual/add_unique()
