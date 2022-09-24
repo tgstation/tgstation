@@ -387,12 +387,8 @@ There are several things that need to be remembered:
 		var/obj/item/worn_item = belt
 		var/mutable_appearance/belt_overlay
 		update_hud_belt(worn_item)
-		var/icon_file
 
-		if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item))))
-			icon_file = 'icons/mob/clothing/belt.dmi'
-
-		belt_overlay = belt.build_worn_icon(default_layer = BELT_LAYER)
+		belt_overlay = belt.build_worn_icon(default_layer = BELT_LAYER, custom_icon_file = 'icons/mob/clothing/belt.dmi')
 
 		if(!belt_overlay)
 			return
@@ -495,12 +491,8 @@ There are several things that need to be remembered:
 		var/obj/item/worn_item = back
 		var/mutable_appearance/back_overlay
 		update_hud_back(worn_item)
-		var/icon_file = 'icons/mob/clothing/back.dmi'
 
-		if(!icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item)))
-			icon_file = 'icons/mob/clothing/back.dmi'
-
-		back_overlay = back.build_worn_icon(default_layer = BACK_LAYER)
+		back_overlay = back.build_worn_icon(default_layer = BACK_LAYER, custom_icon_file = 'icons/mob/clothing/back.dmi')
 
 		if(!back_overlay)
 			return

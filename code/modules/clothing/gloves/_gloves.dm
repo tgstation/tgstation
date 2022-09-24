@@ -3,6 +3,7 @@
 	gender = PLURAL //Carn: for grammarically correct text-parsing
 	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/clothing/gloves.dmi'
+	worn_icon = 'icons/mob/clothing/hands.dmi'
 	lefthand_file = 'icons/mob/inhands/clothing/gloves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing/gloves_righthand.dmi'
 	siemens_coefficient = 0.5
