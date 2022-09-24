@@ -470,6 +470,9 @@ SUBSYSTEM_DEF(persistence)
 	if (!fexists(path))
 		return
 	rounds_since_engine_exploded = text2num(file2text(path))
+	for (var/obj/structure/sign/delamination_counter/sign in GLOB.map_delamination_counters)
+		sign.update_count(rounds_since_engine_exploded)
+	GLOB.map_delamination_counters = list()
 
 /datum/controller/subsystem/persistence/proc/save_delamination_counter()
 	var/path = "data/rounds_since_delamination.txt"

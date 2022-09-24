@@ -23070,6 +23070,7 @@
 	name = "Engineering Security Doors"
 	},
 /obj/effect/turf_decal/caution/stand_clear,
+/obj/structure/sign/delamination_counter/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/engineering/break_room)
 "iug" = (
@@ -34118,6 +34119,7 @@
 	dir = 4;
 	name = "Gas to Chamber"
 	},
+/obj/structure/sign/delamination_counter/directional/north,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "mkO" = (

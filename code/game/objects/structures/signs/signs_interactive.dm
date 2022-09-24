@@ -25,18 +25,29 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/calendar, 32)
 		for(var/holidayname in SSevents.holidays)
 			. += span_info("[holidayname]")
 
+GLOBAL_LIST_EMPTY(map_delamination_counters)
+
 /obj/structure/sign/delamination_counter
 	name = "delamination counter"
 	desc = "A pair of flip signs describe how long it's been since the last delamination incident."
 	icon_state = "days_since_explosion"
-	buildable_sign = FALSE
 	var/since_last = 0
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/delamination_counter, 32)
 
 /obj/structure/sign/delamination_counter/Initialize(mapload)
 	. = ..()
-	since_last = min(SSpersistence.rounds_since_engine_exploded, 99)
+	if (mapload)
+		GLOB.map_delamination_counters += src
+	else
+		update_count(SSpersistence.rounds_since_engine_exploded)
+
+/obj/structure/sign/delamination_counter/proc/update_count(new_count)
+	since_last = min(new_count, 99)
+	build_overlays()
+
+/obj/structure/sign/delamination_counter/proc/build_overlays()
+	overlays = list()
 
 	var/ones = since_last % 10
 	var/mutable_appearance/ones_overlay = mutable_appearance('icons/obj/signs.dmi', "days_[ones]")

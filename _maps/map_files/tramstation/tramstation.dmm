@@ -12219,6 +12219,7 @@
 	},
 /obj/machinery/newscaster/directional/south,
 /obj/structure/reagent_dispensers/water_cooler,
+/obj/structure/sign/delamination_counter/directional/west,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "eqA" = (
@@ -17562,6 +17563,7 @@
 	dir = 10;
 	network = list("ss13","engine","engineering")
 	},
+/obj/structure/sign/delamination_counter/directional/south,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "gpR" = (
