@@ -240,3 +240,45 @@
 	loot += GLOB.arcade_prize_pool
 	. = ..()
 	return INITIALIZE_HINT_QDEL
+
+/obj/effect/spawner/random/entertainment/plushie
+	name = "plushie spawner"
+	icon_state = "toy" // needs it's own icon
+	loot = list( // the plushies that aren't of things trying to kill you
+		/obj/item/toy/plush/carpplushie, // well, maybe they can be something that tries to kill you a little bit
+		/obj/item/toy/plush/slimeplushie,
+		/obj/item/toy/plush/lizard_plushie,
+		/obj/item/toy/plush/snakeplushie,
+		/obj/item/toy/plush/plasmamanplushie,
+		/obj/item/toy/plush/beeplushie,
+		/obj/item/toy/plush/moth,
+		/obj/item/toy/plush/pkplush,
+	)
+
+/obj/effect/spawner/random/entertainment/plushie_delux
+	name = "plushie delux spawner"
+	icon_state = "toy" // needs it's own icon
+	loot = list(
+		// common plushies
+		/obj/item/toy/plush/slimeplushie = 5,
+		/obj/item/toy/plush/lizard_plushie = 5,
+		/obj/item/toy/plush/snakeplushie = 5,
+		/obj/item/toy/plush/plasmamanplushie = 5,
+		/obj/item/toy/plush/beeplushie = 5,
+		/obj/item/toy/plush/moth = 5,
+		/obj/item/toy/plush/pkplush = 5,
+		// rare plushies
+		/obj/item/toy/plush/carpplushie = 3,
+		/obj/item/toy/plush/lizard_plushie/green = 3,
+		/obj/item/toy/plush/space_lizard_plushie = 3,
+		/obj/item/toy/plush/awakenedplushie = 3,
+		/obj/item/toy/plush/goatplushie = 3,
+		/obj/item/toy/plush/rouny = 3,
+		/obj/item/toy/plush/abductor = 3,
+		/obj/item/toy/plush/abductor/agent = 3,
+		/obj/item/toy/plush/greek_cucumber = 3,
+		// super rare plushies
+		/obj/item/toy/plush/bubbleplush = 2,
+		/obj/item/toy/plush/ratplush = 2,
+		/obj/item/toy/plush/narplush = 2,
+	)

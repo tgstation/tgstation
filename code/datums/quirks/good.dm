@@ -19,6 +19,7 @@
 	value = 4
 	mood_quirk = TRUE
 	medical_record_text = "Patient was administered the Apathy Evaluation Scale but did not bother to complete it."
+	mail_goodies = list(/obj/item/hourglass)
 
 /datum/quirk/apathetic/add()
 	if (quirk_holder.mob_mood)
@@ -130,7 +131,7 @@
 	gain_text = "<span class='notice'>You feel lithe on your feet!</span>"
 	lose_text = "<span class='danger'>You feel clumsy again.</span>"
 	medical_record_text = "Patient scored highly on cardio tests."
-	mail_goodies = list(/obj/item/melee/skateboard)
+	mail_goodies = list(/obj/item/melee/skateboard, /obj/item/clothing/shoes/wheelys/rollerskates)
 
 /datum/quirk/friendly
 	name = "Friendly"
@@ -152,6 +153,7 @@
 	mob_trait = TRAIT_JOLLY
 	mood_quirk = TRUE
 	medical_record_text = "Patient demonstrates constant euthymia irregular for environment. It's a bit much, to be honest."
+	mail_goodies = list(/obj/item/clothing/mask/joy)
 
 /datum/quirk/light_step
 	name = "Light Step"
@@ -162,6 +164,7 @@
 	gain_text = "<span class='notice'>You walk with a little more litheness.</span>"
 	lose_text = "<span class='danger'>You start tromping around like a barbarian.</span>"
 	medical_record_text = "Patient's dexterity belies a strong capacity for stealth."
+	mail_goodies = list(/obj/item/clothing/shoes/sandal)
 
 /datum/quirk/item_quirk/musician
 	name = "Musician"
@@ -186,7 +189,11 @@
 	gain_text = "<span class='notice'>The shadows seem a little less dark.</span>"
 	lose_text = "<span class='danger'>Everything seems a little darker.</span>"
 	medical_record_text = "Patient's eyes show above-average acclimation to darkness."
-	mail_goodies = list(/obj/item/flashlight/flashdark)
+	mail_goodies = list(
+		/obj/item/flashlight/flashdark,
+		/obj/item/food/grown/mushroom/glowshroom/shadowshroom,
+		/obj/item/skillchip/light_remover,
+	)
 
 /datum/quirk/night_vision/add()
 	refresh_quirk_holder_eyes()
@@ -209,6 +216,7 @@
 	value = 8
 	mob_trait = TRAIT_SELF_AWARE
 	medical_record_text = "Patient demonstrates an uncanny knack for self-diagnosis."
+	mail_goodies = list(/obj/item/clothing/neck/stethoscope, /obj/item/skillchip/entrails_reader)
 
 /datum/quirk/skittish
 	name = "Skittish"
@@ -249,10 +257,9 @@
 	lose_text = "<span class='danger'>You forget how to tag walls properly.</span>"
 	medical_record_text = "Patient was recently seen for possible paint huffing incident."
 	mail_goodies = list(
-		/obj/item/toy/crayon/spraycan, 
-		/obj/item/canvas, 
-		/obj/item/canvas/nineteen_nineteen, 
-		/obj/item/canvas/twentythree_nineteen, 
+		/obj/item/toy/crayon/spraycan,
+		/obj/item/canvas/nineteen_nineteen,
+		/obj/item/canvas/twentythree_nineteen,
 		/obj/item/canvas/twentythree_twentythree
 	)
 

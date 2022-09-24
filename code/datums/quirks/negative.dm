@@ -142,6 +142,7 @@
 	lose_text = "<span class='notice'>You're able to hear again!</span>"
 	medical_record_text = "Patient's cochlear nerve is incurably damaged."
 	hardcore_value = 12
+	mail_goodies = list(/obj/item/clothing/mask/whistle)
 
 /datum/quirk/depression
 	name = "Depression"
@@ -167,6 +168,7 @@
 	processing_quirk = TRUE
 	/// A weak reference to our heirloom.
 	var/datum/weakref/heirloom
+	mail_goodies = list(/obj/item/storage/secure/briefcase)
 
 /datum/quirk/item_quirk/family_heirloom/add_unique()
 	var/mob/living/carbon/human/human_holder = quirk_holder
@@ -262,16 +264,7 @@
 	lose_text = "<span class='notice'>You don't seem to make a big deal out of everything anymore.</span>"
 	medical_record_text = "Patient demonstrates a high level of emotional volatility."
 	hardcore_value = 3
-	mail_goodies = list(
-		/obj/item/toy/plush/carpplushie,
-		/obj/item/toy/plush/slimeplushie,
-		/obj/item/toy/plush/lizard_plushie,
-		/obj/item/toy/plush/snakeplushie,
-		/obj/item/toy/plush/plasmamanplushie,
-		/obj/item/toy/plush/beeplushie,
-		/obj/item/toy/plush/moth,
-		/obj/item/toy/plush/pkplush,
-	)
+	mail_goodies = list(/obj/effect/spawner/random/entertainment/plushie_delux)
 
 /datum/quirk/hypersensitive/add()
 	if (quirk_holder.mob_mood)
@@ -391,6 +384,7 @@
 	lose_text = null
 	medical_record_text = "Patient has an untreatable impairment in motor function in the lower extremities."
 	hardcore_value = 15
+	mail_goodies = list(/obj/item/wheelchair/gold)
 
 /datum/quirk/paraplegic/add_unique()
 	if(quirk_holder.buckled) // Handle late joins being buckled to arrival shuttle chairs.
@@ -441,6 +435,7 @@
 	mob_trait = TRAIT_PROSOPAGNOSIA
 	medical_record_text = "Patient suffers from prosopagnosia and cannot recognize faces."
 	hardcore_value = 5
+	mail_goodies = list(/obj/item/skillchip/appraiser) // bad at recognizing faces but good at recognizing IDs
 
 /datum/quirk/prosthetic_limb
 	name = "Prosthetic Limb"
@@ -488,6 +483,7 @@
 	lose_text = "<span class='notice'>You feel like standing up for yourself.</span>"
 	medical_record_text = "Patient presents a notably unassertive personality and is easy to manipulate."
 	hardcore_value = 4
+	mail_goodies = list(/obj/item/clothing/gloves/cargo_gauntlet)
 
 /datum/quirk/insanity
 	name = "Reality Dissociation Syndrome"
@@ -538,6 +534,7 @@
 	medical_record_text = "Patient is usually anxious in social encounters and prefers to avoid them."
 	hardcore_value = 4
 	mob_trait = TRAIT_ANXIOUS
+	mail_goodies = list(/obj/item/storage/pill_bottle/psicodine)
 	var/dumb_thing = TRUE
 
 /datum/quirk/social_anxiety/add()
@@ -791,6 +788,7 @@
 	lose_text = "<span class='notice'>Your mind finally feels calm.</span>"
 	medical_record_text = "Patient's mind is in a vulnerable state, and cannot recover from traumatic events."
 	hardcore_value = 9
+	mail_goodies = list(/obj/effect/spawner/random/entertainment/plushie)
 
 /datum/quirk/item_quirk/allergic
 	name = "Extreme Medicine Allergy"
@@ -802,6 +800,7 @@
 	medical_record_text = "Patient's immune system responds violently to certain chemicals."
 	hardcore_value = 3
 	processing_quirk = TRUE
+	mail_goodies = list(/obj/item/reagent_containers/hypospray/medipen) // epinephrine medipen stops allergic reactions
 	var/list/allergies = list()
 	var/list/blacklist = list(/datum/reagent/medicine/c2,/datum/reagent/medicine/epinephrine,/datum/reagent/medicine/adminordrazine,/datum/reagent/medicine/omnizine/godblood,/datum/reagent/medicine/cordiolis_hepatico,/datum/reagent/medicine/synaphydramine,/datum/reagent/medicine/diphenhydramine)
 	var/allergy_string
@@ -865,6 +864,7 @@
 	medical_record_text = "Patient has disdain for being touched. Potentially has undiagnosed haphephobia."
 	mood_quirk = TRUE
 	hardcore_value = 1
+	mail_goodies = list(/obj/item/reagent_containers/spray/pepper) // show me on the doll where the bad man touched you
 
 /datum/quirk/bad_touch/add()
 	RegisterSignal(quirk_holder, list(COMSIG_LIVING_GET_PULLED, COMSIG_CARBON_HELP_ACT), .proc/uncomfortable_touch)
@@ -893,6 +893,7 @@
 	medical_record_text = "Patient demonstrates a fear of tight spaces."
 	hardcore_value = 5
 	processing_quirk = TRUE
+	mail_goodies = list(/obj/item/reagent_containers/syringe/convermol) // to help breathing
 
 /datum/quirk/claustrophobia/remove()
 	quirk_holder.clear_mood_event("claustrophobia")
@@ -944,3 +945,4 @@
 	mob_trait = TRAIT_ILLITERATE
 	medical_record_text = "Patient is not literate."
 	hardcore_value = 8
+	mail_goodies = list(/obj/item/pai_card) // can read things for you

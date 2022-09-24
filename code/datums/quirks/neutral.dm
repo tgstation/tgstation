@@ -32,6 +32,7 @@
 	gain_text = "<span class='notice'>You can't taste anything!</span>"
 	lose_text = "<span class='notice'>You can taste again!</span>"
 	medical_record_text = "Patient suffers from ageusia and is incapable of tasting food or reagents."
+	mail_goodies = list(/obj/effect/spawner/random/food_or_drink/condiment) // but can you taste the salt? CAN YOU?!
 
 /datum/quirk/foreigner
 	name = "Foreigner"
@@ -106,7 +107,7 @@
 	gain_text = "<span class='notice'>You feel an intense craving for pineapple.</span>"
 	lose_text = "<span class='notice'>Your feelings towards pineapples seem to return to a lukewarm state.</span>"
 	medical_record_text = "Patient demonstrates a pathological love of pineapple."
-	mail_goodies = list(/obj/item/food/grown/pineapple)
+	mail_goodies = list(/obj/item/food/pizzaslice/pineapple)
 
 /datum/quirk/pineapple_liker/add()
 	var/mob/living/carbon/human/human_holder = quirk_holder
@@ -132,6 +133,13 @@
 	gain_text = "<span class='notice'>You find yourself pondering what kind of idiot actually enjoys pineapples...</span>"
 	lose_text = "<span class='notice'>Your feelings towards pineapples seem to return to a lukewarm state.</span>"
 	medical_record_text = "Patient is correct to think that pineapple is disgusting."
+	mail_goodies = list( // basic pizza slices
+		/obj/item/food/pizzaslice/margherita,
+		/obj/item/food/pizzaslice/meat,
+		/obj/item/food/pizzaslice/mushroom,
+		/obj/item/food/pizzaslice/vegetable,
+		/obj/item/food/pizzaslice/sassysage,
+	)
 
 /datum/quirk/pineapple_hater/add()
 	var/mob/living/carbon/human/human_holder = quirk_holder
@@ -157,6 +165,7 @@
 	gain_text = "<span class='notice'>You start craving something that tastes strange.</span>"
 	lose_text = "<span class='notice'>You feel like eating normal food again.</span>"
 	medical_record_text = "Patient demonstrates irregular nutrition preferences."
+	mail_goodies = list(/obj/item/food/urinalcake, /obj/item/food/badrecipe) // Mhhhmmm yummy
 
 /datum/quirk/deviant_tastes/add()
 	var/mob/living/carbon/human/human_holder = quirk_holder
@@ -184,6 +193,7 @@
 	desc = "One of your eyes is a different color than the other!"
 	icon = "eye-low-vision" // Ignore the icon name, its actually a fairly good representation of different color eyes
 	value = 0
+	mail_goodies = list(/obj/item/clothing/glasses/eyepatch)
 	var/color
 
 /datum/quirk/heterochromatic/add()
@@ -259,7 +269,7 @@
 	value = 0
 	medical_record_text = "Patient has an irrational fear of something."
 	var/phobia
-	mail_goodies = list(/obj/item/clothing/glasses/blindfold, /obj/item/clothing/ears/earmuffs)
+	mail_goodies = list(/obj/item/clothing/glasses/blindfold, /obj/item/storage/pill_bottle/psicodine)
 
 /datum/quirk/phobia/add()
 	phobia = phobia || quirk_holder.client?.prefs?.read_preference(/datum/preference/choiced/phobia)
@@ -285,6 +295,7 @@
 	value = 0
 	medical_record_text = "Fucking creep kept staring at me the whole damn checkup. I'm only diagnosing this because it's less awkward than thinking it was on purpose."
 	mob_trait = TRAIT_SHIFTY_EYES
+	mail_goodies = list(/obj/item/clothing/head/papersack, /obj/item/clothing/head/papersack/smiley)
 
 /datum/quirk/item_quirk/bald
 	name = "Smooth-Headed"
@@ -348,6 +359,7 @@
 	icon = "sign-language"
 	value = 0
 	medical_record_text = "During physical examination, patient's tongue was found to be uniquely damaged."
+	mail_goodies = list(/obj/item/clothing/gloves/radio)
 
 /datum/quirk/item_quirk/tongue_tied/add_unique()
 	var/mob/living/carbon/human/human_holder = quirk_holder
