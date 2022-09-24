@@ -181,6 +181,51 @@
 			S.Remove(C)
 	return ..()
 
+/datum/antagonist/rev/head/apply_innate_effects(mob/living/mob_override)
+	. = ..()
+	var/mob/living/real_mob = mob_override || owner.current
+	RegisterSignal(real_mob, COMSIG_MOB_FLASHED_CARBON, .proc/on_flash)
+
+/datum/antagonist/rev/head/remove_innate_effects(mob/living/mob_override)
+	. = ..()
+	var/mob/living/real_mob = mob_override || owner.current
+	UnregisterSignal(real_mob, COMSIG_MOB_FLASHED_CARBON)
+
+/// Signal proc for [COMSIG_MOB_FLASHED_CARBON].
+/// The bread and butter of head revolutionary conversions.
+/datum/antagonist/rev/head/proc/on_flash(mob/living/source, mob/living/carbon/flashed, obj/item/assembly/flash/flash, deviation)
+	SIGNAL_HANDLER
+
+	if(flashed.stat == DEAD)
+		return
+	else if(flashed.stat != CONSCIOUS)
+		to_chat(source, span_warning("[flashed.p_they(TRUE)] must be conscious before you can convert [flashed.p_them()]!"))
+		return
+
+	if(!flashed.mind || !flashed.client)
+		to_chat(source, span_warning("[flashed]'s mind is so vacant that it is not susceptible to influence!"))
+		return
+
+	var/holiday_meme_chance = prob(0.01) || SSevents.holidays?[APRIL_FOOLS]
+
+	if(add_revolutionary(flashed.mind, stun = !holiday_meme_chance)) // don't stun if we roll the meme holiday chance
+		if(holiday_meme_chance)
+			INVOKE_ASYNC(src, .proc/_async_holiday_meme_say, flashed)
+		flash.times_used-- // Flashes are less likely to burn out for headrevs, when used for conversion
+
+	else
+		to_chat(source, span_warning("[flashed] seems resistant to the flash!"))
+
+	// Always partial flash at the very least
+	return (deviation == DEVIATION_FULL) ? DEVIATION_OVERRIDE_PARTIAL : NONE
+
+/// Used / called async from [proc/on_flash] to deliver a funny meme line
+/datum/antagonist/rev/head/proc/_async_holiday_meme_say(mob/living/carbon/flashed)
+	if(ishuman(flashed))
+		var/mob/living/carbon/human/human_flashed = flashed
+		human_flashed.force_say()
+	flashed.say("You son of a bitch! I'm in.", forced = "That son of a bitch! They're in.")
+
 /datum/antagonist/rev/head/antag_listing_name()
 	return ..() + "(Leader)"
 
