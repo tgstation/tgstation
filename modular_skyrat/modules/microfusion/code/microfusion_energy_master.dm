@@ -98,6 +98,7 @@
 	else
 		cell = new(src)
 	cell.parent_gun = src
+	cell.chargerate = 300
 	if(!dead_cell)
 		cell.give(cell.maxcharge)
 	if(phase_emitter_type)
