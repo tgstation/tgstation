@@ -1359,8 +1359,8 @@
 		available_hands -= 1
 
 	// items like slappers/zombie claws/etc. should be ignored
-	for(var/obj/item/I in held_items)
-		if(I.item_flags & HAND_ITEM)
+	for(var/obj/item/held_item as anything in held_items)
+		if(held_item.item_flags & HAND_ITEM)
 			available_hands += 1
 
 	if(handcuffed) // Cuffed, usually will show visual effort to sign
