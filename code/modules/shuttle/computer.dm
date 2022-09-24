@@ -44,7 +44,7 @@
 	if (HAS_TRAIT(user, TRAIT_FORBID_MINING_SHUTTLE_CONSOLE_OUTSIDE_STATION) && !is_station_level(user.z)) //Free golems and other mobs with this trait will not be able to use the shuttle from outside the station Z
 		to_chat(user, span_warning("You get the feeling you shouldn't mess with this."))
 		return
-	if(!user.can_read(src, reading_check_flags = (READING_CHECK_LITERACY))) //Illiterate mobs which aren't otherwise blocked from using computers will send the shuttle to a random valid destination
+	if(!user.can_read(src, reading_check_flags = READING_CHECK_LITERACY)) //Illiterate mobs which aren't otherwise blocked from using computers will send the shuttle to a random valid destination
 		to_chat(user, span_warning("You start mashing buttons at random!"))
 		if(do_after(user, 10 SECONDS, target = src))
 			var/list/dest_list = get_valid_destinations()
