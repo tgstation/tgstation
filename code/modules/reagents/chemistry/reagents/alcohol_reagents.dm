@@ -2938,7 +2938,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/gin_garden
 	name = "Gin Garden"
 	description = "Excellent cooling alcoholic drink with not so ordinary taste."
+	boozepwr = 20
 	color = "#6cd87a"
+	quality = DRINK_VERYGOOD
 	taste_description = "light gin with sweet ginger and cucumber"
 	glass_icon_state = "gin_garden"
 	glass_name = "gin garden"
