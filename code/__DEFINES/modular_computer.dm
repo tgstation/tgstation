@@ -41,3 +41,13 @@
 
 #define DETOMATIX_RESIST_MINOR 1
 #define DETOMATIX_RESIST_MAJOR 2
+
+// NTNet connection signals
+///When you're away from the station/mining base and not on a console, you can't access the internet
+#define NTNET_NO_SIGNAL 0
+///Low signal, so away from the station, but still connected
+#define NTNET_LOW_SIGNAL 1
+///On station, good signal
+#define NTNET_GOOD_SIGNAL 2
+///Using a Computer, ethernet-connected.
+#define NTNET_ETHERNET_SIGNAL 3

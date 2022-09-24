@@ -509,13 +509,13 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		data["PC_showbatteryicon"] = battery_module ? 1 : 0
 
 	switch(get_ntnet_status())
-		if(0)
+		if(NTNET_NO_SIGNAL)
 			data["PC_ntneticon"] = "sig_none.gif"
-		if(1)
+		if(NTNET_LOW_SIGNAL)
 			data["PC_ntneticon"] = "sig_low.gif"
-		if(2)
+		if(NTNET_GOOD_SIGNAL)
 			data["PC_ntneticon"] = "sig_high.gif"
-		if(3)
+		if(NTNET_ETHERNET_SIGNAL)
 			data["PC_ntneticon"] = "sig_lan.gif"
 
 	if(length(idle_threads))
@@ -592,21 +592,21 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 // Returns 0 for No Signal, 1 for Low Signal and 2 for Good Signal. 3 is for wired connection (always-on)
 /obj/item/modular_computer/proc/get_ntnet_status(specific_action = 0)
 	if(!SSnetworks.station_network || !SSnetworks.station_network.check_function(specific_action)) // NTNet is down and we are not connected via wired connection. No signal.
-		return 0
+		return NTNET_NO_SIGNAL
 
 	// physical computers are always connected through ethernet
 	if(istype(physical, /obj/machinery/modular_computer))
-		return 3
+		return NTNET_ETHERNET_SIGNAL
 
 	var/turf/current_turf = get_turf(src)
 	if(!current_turf || !istype(current_turf))
-		return 0
+		return NTNET_NO_SIGNAL
 	if(is_station_level(current_turf.z))
-		return 2
+		return NTNET_GOOD_SIGNAL
 	else if(is_mining_level(current_turf.z))
-		return 1
+		return NTNET_LOW_SIGNAL
 
-	return 0
+	return NTNET_NO_SIGNAL
 
 /obj/item/modular_computer/proc/add_log(text)
 	if(!get_ntnet_status())
