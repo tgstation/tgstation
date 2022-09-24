@@ -34881,9 +34881,8 @@
 	icon_state = "plating"
 	},
 /obj/structure/tramwall/titanium,
-/obj/machinery/power/shuttle_engine/propulsion/in_wall/tram{
-	dir = 4;
-	pixel_x = 32
+/obj/machinery/power/shuttle_engine/propulsion/tram{
+	dir = 4
 	},
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
@@ -43367,9 +43366,8 @@
 	icon_state = "plating"
 	},
 /obj/structure/tramwall/titanium,
-/obj/machinery/power/shuttle_engine/propulsion/in_wall/tram{
-	dir = 8;
-	pixel_x = -32
+/obj/machinery/power/shuttle_engine/propulsion/tram{
+	dir = 8
 	},
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)

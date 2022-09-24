@@ -230,20 +230,13 @@
 /obj/structure/fluff/tram_rail{
 	dir = 1
 	},
-/obj/structure/window/reinforced/survival_pod{
-	dir = 4
-	},
-/obj/structure/window/reinforced/survival_pod{
-	dir = 1
-	},
-/obj/machinery/power/shuttle_engine/propulsion/in_wall/tram{
-	dir = 4;
-	pixel_x = 32
-	},
 /obj/structure/industrial_lift/tram{
 	icon_state = "titanium_purple"
 	},
-/turf/open/floor/engine,
+/obj/machinery/power/shuttle_engine/propulsion/tram{
+	dir = 4
+	},
+/turf/closed/indestructible/riveted/plastinum,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "gv" = (
 /obj/structure/fluff/tram_rail,
@@ -998,18 +991,13 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "xI" = (
 /obj/structure/fluff/tram_rail,
-/obj/structure/window/reinforced/survival_pod{
-	dir = 4
-	},
-/obj/structure/window/reinforced/survival_pod,
-/obj/machinery/power/shuttle_engine/propulsion/in_wall/tram{
-	dir = 4;
-	pixel_x = 32
-	},
 /obj/structure/industrial_lift/tram{
 	icon_state = "titanium_purple"
 	},
-/turf/open/floor/engine,
+/obj/machinery/power/shuttle_engine/propulsion/tram{
+	dir = 4
+	},
+/turf/closed/indestructible/riveted/plastinum,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "xO" = (
 /obj/machinery/power/shuttle_engine/propulsion/burst{
@@ -1635,18 +1623,13 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Jd" = (
 /obj/structure/fluff/tram_rail,
-/obj/structure/window/reinforced/survival_pod{
-	dir = 8
-	},
-/obj/structure/window/reinforced/survival_pod,
-/obj/machinery/power/shuttle_engine/propulsion/in_wall/tram{
-	dir = 8;
-	pixel_x = -32
-	},
 /obj/structure/industrial_lift/tram{
 	icon_state = "titanium_purple"
 	},
-/turf/open/floor/engine,
+/obj/machinery/power/shuttle_engine/propulsion/tram{
+	dir = 8
+	},
+/turf/closed/indestructible/riveted/plastinum,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Jh" = (
 /obj/structure/fluff/tram_rail/anchor,
@@ -2349,20 +2332,13 @@
 /obj/structure/fluff/tram_rail{
 	dir = 1
 	},
-/obj/structure/window/reinforced/survival_pod{
-	dir = 8
-	},
-/obj/structure/window/reinforced/survival_pod{
-	dir = 1
-	},
-/obj/machinery/power/shuttle_engine/propulsion/in_wall/tram{
-	dir = 8;
-	pixel_x = -32
-	},
 /obj/structure/industrial_lift/tram{
 	icon_state = "titanium_purple"
 	},
-/turf/open/floor/engine,
+/obj/machinery/power/shuttle_engine/propulsion/tram{
+	dir = 8
+	},
+/turf/closed/indestructible/riveted/plastinum,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Yv" = (
 /obj/item/kirbyplants/random,

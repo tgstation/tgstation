@@ -153,13 +153,6 @@
 	name = "right burst engine"
 	icon_state = "burst_r"
 
-/obj/machinery/power/shuttle_engine/propulsion/in_wall
-	name = "in-wall propulsion engine"
-	icon_state = "propulsion_w"
-	density = FALSE
-	opacity = FALSE
-	smoothing_groups = list()
-
 /obj/machinery/power/shuttle_engine/large
 	name = "engine"
 	icon = 'icons/obj/2x2.dmi'
@@ -171,13 +164,6 @@
 	bound_height = 64
 	appearance_flags = LONG_GLIDE
 
-/obj/machinery/power/shuttle_engine/large/in_wall
-	name = "in-wall engine"
-	icon_state = "large_engine_w"
-	density = FALSE
-	opacity = FALSE
-	smoothing_groups = list()
-
 /obj/machinery/power/shuttle_engine/huge
 	name = "engine"
 	icon = 'icons/obj/3x3.dmi'
@@ -188,13 +174,6 @@
 	bound_width = 96
 	bound_height = 96
 	appearance_flags = LONG_GLIDE
-
-/obj/machinery/power/shuttle_engine/huge/in_wall
-	name = "in-wall engine"
-	icon_state = "huge_engine_w"
-	density = FALSE
-	opacity = FALSE
-	smoothing_groups = list()
 
 #undef ENGINE_UNWRENCHED
 #undef ENGINE_WRENCHED
