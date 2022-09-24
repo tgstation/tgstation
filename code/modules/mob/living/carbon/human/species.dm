@@ -886,7 +886,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(ITEM_SLOT_ICLOTHING)
 			var/obj/item/bodypart/chest = H.get_bodypart(BODY_ZONE_CHEST)
 			if(chest && (chest.bodytype.Locate(BODYTYPE_MONKEY)))
-				if(!(I.alt_appearances_by_bodytype?[BODYTYPE_MONKEY]))
+				if(!(I.alt_appearances_by_bodytype?.Index(BODYTYPE_MONKEY)))
 					if(!disable_warning)
 						to_chat(H, span_warning("[I] doesn't fit your [chest.name]!"))
 					return FALSE

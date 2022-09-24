@@ -8,16 +8,19 @@ GLOBAL_LIST_INIT(immutable_list_repo, list())
 
 ///Constructor for immutable lists. Returns an ilist with the desired arguments.
 /proc/immutable_list(list/data)
+	RETURN_TYPE(/datum/immutable_list)
 	var/static/datum/immutable_list/holder = new
 	return holder.newme(data)
 
 ///Constructor for immutable associative lists. Returns an associative ilist with the desired arguments.
 /proc/immutable_assoc_list(list/data)
+	RETURN_TYPE(/datum/immutable_list)
 	var/static/datum/immutable_list/assoc/holder = new
 	return holder.newme(data)
 
 ///Constructor for immutable lists containing ONLY strings, skips the expensive \ref bits. Returns a string ilist with the desired arguments.
 /proc/immutable_string_list(list/data)
+	RETURN_TYPE(/datum/immutable_list)
 	var/static/datum/immutable_list/string/holder = new
 	return holder.newme(data)
 
@@ -25,6 +28,9 @@ GLOBAL_LIST_INIT(immutable_list_repo, list())
 
 ///The actual constructor. Why is it like this? We can't hijack the return value of New(), so this is the best I could think of.
 /datum/immutable_list/proc/newme(list/immutize)
+	RETURN_TYPE(/datum/immutable_list)
+	PROTECTED_PROC(TRUE)
+
 	var/list/refs = list()
 	for(var/argument in immutize)
 		#ifdef UNIT_TESTS
@@ -41,6 +47,9 @@ GLOBAL_LIST_INIT(immutable_list_repo, list())
 	return .
 
 /datum/immutable_list/assoc/newme(list/immutize)
+	RETURN_TYPE(/datum/immutable_list)
+	PROTECTED_PROC(TRUE)
+
 	var/list/refs = list()
 	for(var/key in immutize)
 		refs += "\ref[(key)]=\ref[immutize[key]]"
@@ -59,6 +68,9 @@ GLOBAL_LIST_INIT(immutable_list_repo, list())
 	return .
 
 /datum/immutable_list/string/newme(list/immutize)
+	RETURN_TYPE(/datum/immutable_list)
+	PROTECTED_PROC(TRUE)
+
 	#ifdef UNIT_TESTS
 	for(var/element in immutize)
 		if(isnull(element))
@@ -80,6 +92,7 @@ GLOBAL_LIST_INIT(immutable_list_repo, list())
 
 ///Return the contained list.
 /datum/immutable_list/proc/Get()
+	RETURN_TYPE(/list)
 	return data.Copy()
 
 ///Return the length of the contained list
@@ -96,12 +109,14 @@ GLOBAL_LIST_INIT(immutable_list_repo, list())
 
 ///Set data[key] equal to [value]
 /datum/immutable_list/proc/Set(key, value)
+	RETURN_TYPE(/datum/immutable_list)
 	. = data.Copy()
 	.[key] = value
 	return newme(.)
 
 ///Add any number of items to data
 /datum/immutable_list/proc/Add(...)
+	RETURN_TYPE(/datum/immutable_list)
 	. = data.Copy()
 	for(var/argument in args)
 		. += argument
@@ -109,6 +124,7 @@ GLOBAL_LIST_INIT(immutable_list_repo, list())
 
 ///Remove any number of items from data
 /datum/immutable_list/proc/Remove(...)
+	RETURN_TYPE(/datum/immutable_list)
 	. = data.Copy()
 	for(var/argument in args)
 		. -= argument
@@ -116,16 +132,19 @@ GLOBAL_LIST_INIT(immutable_list_repo, list())
 
 ///Functional equivalent of [list_A | list_B]
 /datum/immutable_list/proc/Or(list/other)
+	RETURN_TYPE(/datum/immutable_list)
 	. = data.Copy() | other
 	return newme(.)
 
 ///Functional equivalent of [list_A & list_B]
 /datum/immutable_list/proc/And(list/other)
+	RETURN_TYPE(/datum/immutable_list)
 	. = data.Copy() & other
 	return newme(.)
 
 ///Functional equivlanet of [list_A ^ list_B]
 /datum/immutable_list/proc/Xor(list/other)
+	RETURN_TYPE(/datum/immutable_list)
 	. = data.Copy() ^ other
 	return newme(.)
 
