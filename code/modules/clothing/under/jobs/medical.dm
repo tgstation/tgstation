@@ -128,7 +128,7 @@
 
 /obj/item/clothing/under/rank/medical/paramedic/dark
 	name = "emt uniform"
-	desc = "A navy blue uniform that denotes the wearer as a trained EMT, has special fibers that provide protection against biohazards."
+	desc = "A navy blue uniform that denotes the wearer as a trained EMT. Has extra pockets for the little things, like your tools."
 	icon_state = "paramedic_dark"
 
 /obj/item/clothing/under/rank/medical/paramedic/dark/skirt
