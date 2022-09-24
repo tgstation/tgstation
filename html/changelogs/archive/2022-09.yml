@@ -808,3 +808,25 @@
   - bugfix: Adds Missing GPSs to Icebox Public Mining.
   san7890:
   - admin: Admins can now View Notes directly from a Ticket Panel.
+2022-09-24:
+  JohnFulpWillard:
+  - balance: AI restorer app now requires RD access to download.
+  - bugfix: Nukie tablets now properly show when a nuke is going off in their examine.
+  - balance: Tablet's charge and AI holder parts have been removed entirely. Tablets
+      now only have a cell, and computers only use their area's APC.
+  - code_imp: Modular computer's power handling, the AI restorer app's functionality,
+      and modular computer's examining has been refactored, please report any bugs
+      you might find.
+  VexingRaven:
+  - bugfix: The illiteracy quirk will no longer break the mining shuttle
+  - refactor: Refactored some checks on the shuttle console to apply to all consoles
+  - bugfix: Mortar and pestle no longer create infinite reagents
+  dalmationer:
+  - bugfix: fixed two broken sprites for drinking and shot glasses.
+  san7890:
+  - admin: When a voice analyzer is attached to a bomb or a chemical grenade, the
+      respective logs to game as well as the message_admins will contain the recorded
+      phrase on that voice analyzer.
+  - bugfix: Voice analyzers should now properly trigger TTVs to blow up.
+  skylord-a52:
+  - imageadd: Nanotrasen Grilling Jorts have received a cosmetic upgrade
