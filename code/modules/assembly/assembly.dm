@@ -39,11 +39,18 @@
 /obj/item/assembly/get_part_rating()
 	return 1
 
+/**
+ * on_attach: Called when attached to a holder, wiring datum, or other special assembly
+ *
+ * Will also be called if the assembly holder is attached to a plasma (internals) tank or welding fuel (dispenser) tank.
+ */
 /obj/item/assembly/proc/on_attach()
 	if(!holder && connected)
 		holder = connected.holder
 
-//Call this when detaching it from a device. handles any special functions that need to be updated ex post facto
+/**
+ * on_detach: Called when removed from an assembly holder or wiring datum
+ */
 /obj/item/assembly/proc/on_detach()
 	if(connected)
 		connected = null
@@ -53,7 +60,9 @@
 	holder = null
 	return TRUE
 
-//Called when the holder is moved
+/**
+ * holder_movement: Called when the assembly's holder detects movement
+ */
 /obj/item/assembly/proc/holder_movement()
 	if(!holder)
 		return FALSE

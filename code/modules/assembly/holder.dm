@@ -159,7 +159,7 @@
 /obj/item/assembly_holder/proc/process_activation(obj/device, normal = TRUE, special = TRUE)
 	if(!device)
 		return FALSE
-	if(normal && LAZYLEN(assemblies))
+	if(normal && LAZYLEN(assemblies) >= 2)
 		for(var/obj/item/assembly/assembly as anything in assemblies)
 			if(assembly != device)
 				assembly.pulsed(FALSE)

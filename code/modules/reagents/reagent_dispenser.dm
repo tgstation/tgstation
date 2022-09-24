@@ -7,29 +7,30 @@
 	anchored = FALSE
 	pressure_resistance = 2*ONE_ATMOSPHERE
 	max_integrity = 300
-	///In units, how much the dispenser can hold
+	/// In units, how much the dispenser can hold
 	var/tank_volume = 1000
-	///The ID of the reagent that the dispenser uses
+	/// The ID of the reagent that the dispenser uses
 	var/reagent_id = /datum/reagent/water
-	///Can you turn this into a plumbing tank?
+	/// Can you turn this into a plumbing tank?
 	var/can_be_tanked = TRUE
-	///Is this source self-replenishing?
+	/// Is this source self-replenishing?
 	var/refilling = FALSE
-	///Can this dispenser be opened using a wrench?
+	/// Can this dispenser be opened using a wrench?
 	var/openable = FALSE
-	///Is this dispenser slowly leaking its reagent?
+	/// Is this dispenser slowly leaking its reagent?
 	var/leaking = FALSE
-	///How much reagent to leak
+	/// How much reagent to leak
 	var/amount_to_leak = 10
-	//an assembly attached to the tank - for flammable tanks
+	/// An assembly attached to the tank - if this dispenser accepts_rig
 	var/obj/item/assembly_holder/rig = null
-	//whether it accepts assemblies or not
+	/// Whether this dispenser can be rigged with an assembly (and blown up with an igniter)
 	var/accepts_rig = FALSE
 	//overlay of attached assemblies
 	var/mutable_appearance/assembliesoverlay
-	/// The last person to rig this fuel tank - Stored with the object. Only the last person matters for investigation
+	/// The person who attached an assembly to this dispenser, for bomb logging purposes
 	var/last_rigger = ""
 
+// This check is necessary for assemblies to automatically detect that we are compatible
 /obj/structure/reagent_dispensers/IsSpecialAssembly()
 	return accepts_rig
 
@@ -38,7 +39,7 @@
 	return ..()
 
 /**
- * rig_boom: Wrapper to log a reagent_dispenser set off by an assembly
+ * rig_boom: Wrapper to log when a reagent_dispenser is set off by an assembly
  *
  */
 /obj/structure/reagent_dispensers/proc/rig_boom()
@@ -147,6 +148,12 @@
 		reagents.add_reagent(reagent_id, tank_volume)
 	. = ..()
 
+/**
+ * boom: Detonate a reagent dispenser.
+ *
+ * This is most dangerous for fuel tanks, which will explosion().
+ * Other dispensers will scatter their contents within range.
+ */
 /obj/structure/reagent_dispensers/proc/boom()
 	var/datum/reagent/fuel/volatiles = reagents.has_reagent(/datum/reagent/fuel)
 	var/fuel_amt = 0

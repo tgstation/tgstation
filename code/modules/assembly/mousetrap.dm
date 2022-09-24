@@ -145,7 +145,7 @@
 	playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
 	pulse(FALSE)
 
-/*
+/**
  * clumsy_check: Sets off the mousetrap if handled by a clown (with some probability)
  *
  * Arguments:
