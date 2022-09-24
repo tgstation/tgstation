@@ -93,6 +93,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	name = "cutlass"
 	desc = "A piratey sword used by buckaneers to \"negotiate\" the transfer of treasure."
 	icon_state = "cutlass"
+	worn_icon = 'icons/mob/clothing/back.dmi'
 	inhand_icon_state = "cutlass"
 	worn_icon_state = "cutlass"
 	slot_flags = ITEM_SLOT_BACK
@@ -924,6 +925,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "Don't tell anyone you put any points into dex, though."
 	icon_state = "swordon"
 	inhand_icon_state = "swordon"
+	worn_icon = 'icons/mob/clothing/back.dmi'
 	worn_icon_state = "swordon"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
@@ -944,6 +946,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "A sword reinforced by a powerful alternating current and resonating at extremely high vibration frequencies. \
 		This oscillation weakens the molecular bonds of anything it cuts, thereby increasing its cutting ability."
 	icon_state = "hfrequency0"
+	worn_icon = 'icons/mob/clothing/back.dmi'
 	worn_icon_state = "hfrequency0"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'

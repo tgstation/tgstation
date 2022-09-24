@@ -8,6 +8,7 @@
 	Has a rear bracket for attachments to wall mounts and medical cyborgs."
 	icon = 'icons/obj/medical/defib.dmi'
 	icon_state = "defibunit"
+	worn_icon = 'icons/mob/clothing/back.dmi'
 	inhand_icon_state = "defibunit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'

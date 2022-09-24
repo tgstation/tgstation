@@ -1,6 +1,7 @@
 /obj/item/gun/magic/staff
 	slot_flags = ITEM_SLOT_BACK
 	ammo_type = /obj/item/ammo_casing/magic/nothing
+	worn_icon = 'icons/mob/clothing/back.dmi'
 	worn_icon_state = null
 	icon_state = "staff"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'

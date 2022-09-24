@@ -487,7 +487,7 @@ There are several things that need to be remembered:
 		var/mutable_appearance/back_overlay
 		update_hud_back(worn_item)
 
-		back_overlay = back.build_worn_icon(default_layer = BACK_LAYER, custom_icon_file = 'icons/mob/clothing/back.dmi')
+		back_overlay = back.build_worn_icon(default_layer = BACK_LAYER)
 
 		if(!back_overlay)
 			return

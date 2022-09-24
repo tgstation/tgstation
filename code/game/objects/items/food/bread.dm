@@ -250,6 +250,7 @@
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "baguette"
 	inhand_icon_state = "baguette"
+	worn_icon = 'icons/mob/clothing/back.dmi'
 	worn_icon_state = "baguette"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 3)
 	bite_consumption = 3

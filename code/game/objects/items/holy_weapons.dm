@@ -4,6 +4,7 @@
 	name = "null rod"
 	desc = "A rod of pure obsidian; its very presence disrupts and dampens 'magical forces'. That's what the guidebook says, anyway."
 	icon_state = "nullrod"
+	worn_icon = 'icons/mob/clothing/back.dmi' //Technically this is stupid, but you can't "wear" a nullrod otherwise, right?
 	inhand_icon_state = "nullrod"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'

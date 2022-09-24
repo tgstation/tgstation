@@ -3,6 +3,7 @@
 	desc = "A man-portable anti-armor weapon designed to disable mechanical threats at range."
 	icon_state = "ionrifle"
 	inhand_icon_state = null //so the human update icon uses the icon_state instead.
+	worn_icon = 'icons/mob/clothing/back.dmi'
 	worn_icon_state = null
 	shaded_charge = TRUE
 	w_class = WEIGHT_CLASS_HUGE

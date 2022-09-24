@@ -218,6 +218,7 @@
 	desc = "A folded and unloaded heavy machine gun, ready to be deployed and used."
 	icon = 'icons/obj/weapons/turrets.dmi'
 	icon_state = "folded_hmg"
+	worn_icon = 'icons/mob/clothing/back.dmi'
 	max_integrity = 250
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK

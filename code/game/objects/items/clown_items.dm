@@ -166,6 +166,7 @@
 	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "bike_horn"
 	inhand_icon_state = "bike_horn"
+	worn_icon = 'icons/mob/clothing/back.dmi'
 	worn_icon_state = "horn"
 	lefthand_file = 'icons/mob/inhands/equipment/horns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/horns_righthand.dmi'
