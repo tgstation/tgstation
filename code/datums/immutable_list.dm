@@ -22,7 +22,7 @@ GLOBAL_LIST_INIT(immutable_list_repo, list())
 /proc/immutable_string_list(list/data)
 	RETURN_TYPE(/datum/immutable_list)
 	var/static/datum/immutable_list/string/holder = new
-	return Uholder.newme(data)
+	return holder.newme(data)
 
 /////////////////////////////////////////////////CLASS PROCS////////////////////////////////////////////////////////////
 
