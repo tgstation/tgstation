@@ -54,3 +54,10 @@
 	desc = "The adorable sound they make when you walk will mean making friends is more likely."
 	icon_state = "meown_shoes"
 	squeak_sound = list('sound/effects/meowstep1.ogg'=1) //mew mew mew mew
+
+/obj/item/clothing/shoes/clown_shoes/ducky_shoes
+	name = "ducky shoes"
+	desc = "I got boots, that go *quack quack quack quack quack."
+	icon_state = "ducky_shoes"
+	inhand_icon_state = "ducky_shoes"
+	squeak_sound = list('sound/effects/quack.ogg'=1) //quack quack quack quack
