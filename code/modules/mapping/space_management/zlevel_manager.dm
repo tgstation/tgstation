@@ -15,6 +15,7 @@
 		var/list/features = default_map_traits[I]
 		var/datum/space_level/S = new(I, features[DL_NAME], features[DL_TRAITS])
 		z_list += S
+	generate_z_level_linkages() // Default Zs don't use add_new_z_level() so they don't automatically generate z-linkages.
 
 /datum/controller/subsystem/mapping/proc/add_new_zlevel(name, traits = list(), z_type = /datum/space_level)
 	UNTIL(!adding_new_zlevel)
