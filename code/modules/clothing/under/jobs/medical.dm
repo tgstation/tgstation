@@ -134,6 +134,7 @@
 /obj/item/clothing/under/rank/medical/paramedic/dark/skirt
 	name = "emt skirt"
 	desc = "A navy blue uniform that denotes the wearer as a trained EMT, this one has a skirt replacing the legs."
+	icon_state = "paramedic_dark_skirt"
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
