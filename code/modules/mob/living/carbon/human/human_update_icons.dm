@@ -107,7 +107,7 @@ There are several things that need to be remembered:
 			//BEGIN SPECIES HANDLING
 			if(uniform.alt_appearances_by_bodytype)
 				for(var/bodytype in bodytypes.Get())
-					icon_file = uniform.alt_appearances_by_bodytype[bodytype]
+					icon_file = uniform.alt_appearances_by_bodytype.Index(bodytype)
 					if(icon_file)
 						handled_by_bodytype = bodytype
 						break
@@ -124,11 +124,9 @@ There are several things that need to be remembered:
 			//END SPECIES HANDLING
 			uniform_overlay = uniform.build_worn_icon(
 				default_layer = UNIFORM_LAYER,
-				default_icon_file = icon_file || RESOLVE_ICON_STATE(uniform),
-				isinhands = FALSE,
+				custom_icon_file = icon_file, //If icon file is null, BWI handles it accordingly
+				custom_state = target_overlay,
 				female_uniform = woman ? uniform.female_sprite_flags : null,
-				override_state = target_overlay,
-				override_file = icon_file || null,
 			)
 
 		if(OFFSET_UNIFORM in dna.species.offset_features)
@@ -156,7 +154,7 @@ There are several things that need to be remembered:
 		if(!icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item)))
 			icon_file = 'icons/mob/simple/mob.dmi'
 
-		id_overlay = wear_id.build_worn_icon(default_layer = ID_LAYER, default_icon_file = icon_file)
+		id_overlay = wear_id.build_worn_icon(default_layer = ID_LAYER)
 
 		if(!id_overlay)
 			return
@@ -198,7 +196,7 @@ There are several things that need to be remembered:
 		if(!icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item)))
 			icon_file = 'icons/mob/clothing/hands.dmi'
 
-		gloves_overlay = gloves.build_worn_icon(default_layer = GLOVES_LAYER, default_icon_file = icon_file)
+		gloves_overlay = gloves.build_worn_icon(default_layer = GLOVES_LAYER)
 
 		if(!gloves_overlay)
 			return
@@ -230,7 +228,7 @@ There are several things that need to be remembered:
 			if(!icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item)))
 				icon_file = 'icons/mob/clothing/eyes.dmi'
 
-			glasses_overlay = glasses.build_worn_icon(default_layer = GLASSES_LAYER, default_icon_file = icon_file)
+			glasses_overlay = glasses.build_worn_icon(default_layer = GLASSES_LAYER)
 
 		if(!glasses_overlay)
 			return
@@ -261,7 +259,7 @@ There are several things that need to be remembered:
 		if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item))))
 			icon_file = 'icons/mob/clothing/ears.dmi'
 
-		ears_overlay = ears.build_worn_icon(default_layer = EARS_LAYER, default_icon_file = icon_file)
+		ears_overlay = ears.build_worn_icon(default_layer = EARS_LAYER)
 
 		if(!ears_overlay)
 			return
@@ -288,7 +286,7 @@ There are several things that need to be remembered:
 			if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item))))
 				icon_file = 'icons/mob/clothing/neck.dmi'
 
-			neck_overlay = worn_item.build_worn_icon(default_layer = NECK_LAYER, default_icon_file = icon_file)
+			neck_overlay = worn_item.build_worn_icon(default_layer = NECK_LAYER)
 
 			if(!neck_overlay)
 				return
@@ -313,23 +311,9 @@ There are several things that need to be remembered:
 	if(shoes)
 		var/obj/item/worn_item = shoes
 		var/mutable_appearance/shoes_overlay
-		var/icon_file
 		update_hud_shoes(worn_item)
 
-		//(Currently) unused custom shoe sprite code
-		/*
-		for(var/bodytype in bodytypes.Get())
-			icon_file = shoes.alt_appearances_by_bodytype[bodytype]
-			if(icon_file)
-				handled_by_bodytype = bodytype
-				break
-
-		if(icon_file && !icon_exists(icon_file, RESOLVE_ICON_STATE(shoes)))
-			icon_file = null
-			alt_appearances_by_bodytype = alt_appearances_by_bodytype.Remove(handled_by_bodytype)
-			stack_trace("[shoes] said it had a unique appearance for [handled_by_bodytype], but it's state could not be found!")
-		*/
-		shoes_overlay = shoes.build_worn_icon(default_layer = SHOES_LAYER, default_icon_file = icon_file || RESOLVE_ICON_STATE(shoes))
+		shoes_overlay = shoes.build_worn_icon(default_layer = SHOES_LAYER)
 
 		if(!shoes_overlay)
 			return
@@ -355,7 +339,7 @@ There are several things that need to be remembered:
 		var/mutable_appearance/s_store_overlay
 		update_hud_s_store(worn_item)
 
-		s_store_overlay = worn_item.build_worn_icon(default_layer = SUIT_STORE_LAYER, default_icon_file = 'icons/mob/clothing/belt_mirror.dmi')
+		s_store_overlay = worn_item.build_worn_icon(default_layer = SUIT_STORE_LAYER, custom_icon_file = 'icons/mob/clothing/belt_mirror.dmi')
 
 		if(!s_store_overlay)
 			return
@@ -380,7 +364,7 @@ There are several things that need to be remembered:
 		if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item))))
 			icon_file = 'icons/mob/clothing/head.dmi'
 
-		head_overlay = head.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = icon_file)
+		head_overlay = head.build_worn_icon(default_layer = HEAD_LAYER)
 
 		if(!head_overlay)
 			return
@@ -408,7 +392,7 @@ There are several things that need to be remembered:
 		if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item))))
 			icon_file = 'icons/mob/clothing/belt.dmi'
 
-		belt_overlay = belt.build_worn_icon(default_layer = BELT_LAYER, default_icon_file = icon_file)
+		belt_overlay = belt.build_worn_icon(default_layer = BELT_LAYER)
 
 		if(!belt_overlay)
 			return
@@ -430,23 +414,8 @@ There are several things that need to be remembered:
 		var/obj/item/worn_item = wear_suit
 		var/mutable_appearance/suit_overlay
 		update_hud_wear_suit(worn_item)
-		var/icon_file
 
-		//(Currently) unused custom suit sprite code
-		/*
-		for(var/bodytype in bodytypes.Get())
-			icon_file = worn_item.alt_appearances_by_bodytype[bodytype]
-			if(icon_file)
-				handled_by_bodytype = bodytype
-				break
-
-		if(icon_file && !icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item)))
-			icon_file = null
-			alt_appearances_by_bodytype = alt_appearances_.Remove(handled_by_bodytype)
-			stack_trace("[worn_item] said it had a unique appearance for [handled_by_bodytype], but it's state could not be found!")
-		*/
-
-		suit_overlay = wear_suit.build_worn_icon(default_layer = SUIT_LAYER, default_icon_file = icon_file || RESOLVE_ICON_STATE(worn_item))
+		suit_overlay = wear_suit.build_worn_icon(default_layer = SUIT_LAYER)
 
 		if(!suit_overlay)
 			return
@@ -502,7 +471,7 @@ There are several things that need to be remembered:
 			if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item))))
 				icon_file = 'icons/mob/clothing/mask.dmi'
 
-			mask_overlay = wear_mask.build_worn_icon(default_layer = FACEMASK_LAYER, default_icon_file = icon_file)
+			mask_overlay = wear_mask.build_worn_icon(default_layer = FACEMASK_LAYER)
 
 		if(!mask_overlay)
 			return
@@ -531,7 +500,7 @@ There are several things that need to be remembered:
 		if(!icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item)))
 			icon_file = 'icons/mob/clothing/back.dmi'
 
-		back_overlay = back.build_worn_icon(default_layer = BACK_LAYER, default_icon_file = icon_file)
+		back_overlay = back.build_worn_icon(default_layer = BACK_LAYER)
 
 		if(!back_overlay)
 			return
@@ -579,9 +548,9 @@ There are several things that need to be remembered:
 		var/mutable_appearance/hand_overlay
 		if(get_held_index_of_item(worn_item) % 2 == 0)
 			icon_file = worn_item.righthand_file
-			hand_overlay = worn_item.build_worn_icon(default_layer = HANDS_LAYER, default_icon_file = icon_file, isinhands = TRUE)
+			hand_overlay = worn_item.build_worn_icon(default_layer = HANDS_LAYER, custom_icon_file = icon_file, isinhands = TRUE)
 		else
-			hand_overlay = worn_item.build_worn_icon(default_layer = HANDS_LAYER, default_icon_file = icon_file, isinhands = TRUE)
+			hand_overlay = worn_item.build_worn_icon(default_layer = HANDS_LAYER, custom_icon_file = icon_file, isinhands = TRUE)
 
 		hands += hand_overlay
 	overlays_standing[HANDS_LAYER] = hands
@@ -696,51 +665,46 @@ Layering appearances on custom layers
 Building appearances from custom icon files
 
 By Remie Richards (yes I'm taking credit because this just removed 90% of the copypaste in update_icons())
+De-bloated by Kapu (yes I'm taking credit because I made this code parsable by humans)
 
-state: A string to use as the state, this is FAR too complex to solve in this proc thanks to shitty old code
-so it's specified as an argument instead.
+Arguments:
+	default_layer: The layer to draw this on if no other layer is specified
 
-default_layer: The layer to draw this on if no other layer is specified
+	custom_icon_file: The icon file to draw states from, if null, the code will try to figure it out.
 
-default_icon_file: The icon file to draw states from if no other icon file is specified
+	custom_state: The icon_state to use, otherwise the code will try to figure it out.
 
-isinhands: If true then alternate_worn_icon is skipped so that default_icon_file is used,
-in this situation default_icon_file is expected to match either the lefthand_ or righthand_ file var
+	isinhands: If TRUE, will attempt to use an inhand_icon_state.
+		in this situation custom_icon_file is expected to match either the lefthand_ or righthand_ file var
 
-female_uniform: A value matching a uniform item's female_sprite_flags var, if this is anything but NO_FEMALE_UNIFORM, we
-generate/load female uniform sprites matching all previously decided variables
+	female_uniform: A value matching a uniform item's female_sprite_flags var, if this is anything but NO_FEMALE_UNIFORM, we
+	generate/load female uniform sprites matching all previously decided variables
 
 
 */
-/obj/item/proc/build_worn_icon(default_layer = 0, default_icon_file = null, isinhands = FALSE, female_uniform = NO_FEMALE_UNIFORM, override_state = null, override_file = null)
+/obj/item/proc/build_worn_icon(default_layer = 0, custom_icon_file = null, custom_state = null, isinhands = FALSE, female_uniform = NO_FEMALE_UNIFORM)
 
-	//Find a valid icon_state from variables+arguments
+	//Try to find a valid icon_state from variables+arguments
 	var/t_state
-	if(override_state)
-		t_state = override_state
+	if(custom_state)
+		t_state = custom_state
 	else
-		t_state = !isinhands ? (worn_icon_state ? worn_icon_state : icon_state) : (inhand_icon_state ? inhand_icon_state : icon_state)
+		t_state = isinhands ? (inhand_icon_state || icon_state) : (worn_icon_state || icon_state)
 
-	//Find a valid icon file from variables+arguments
-	var/file2use
-	if(override_file)
-		file2use = override_file
-	else
-		file2use = !isinhands ? (worn_icon ? worn_icon : default_icon_file) : default_icon_file
-	//Find a valid layer from variables+arguments
-	var/layer2use = alternate_worn_layer ? alternate_worn_layer : default_layer
+	//Sets the icon file to the item's default if none was specified.
+	var/file2use = custom_icon_file || worn_icon
+	//Set which layer to use, prioritizing the item's set layer over the argument.
+	var/layer2use = alternate_worn_layer || default_layer
 
 	var/mutable_appearance/standing
 	if(female_uniform)
-		standing = wear_female_version(t_state, file2use, layer2use, female_uniform, greyscale_colors) //should layer2use be in sync with the adjusted value below? needs testing - shiz
-	if(!standing)
-		standing = mutable_appearance(file2use, t_state, -layer2use)
+		standing = wear_female_version(t_state, file2use, layer2use, female_uniform, greyscale_colors) //should layer2use be in sync with the adjusted value below? needs testing - shiz | Fucking hell who put float layers all over carbon code? - Kapu
+
+	standing ||= mutable_appearance(file2use, t_state, -layer2use)
 
 	//Get the overlays for this item when it's being worn
 	//eg: ammo counters, primed grenade flashes, etc.
-	var/list/worn_overlays = worn_overlays(standing, isinhands, file2use)
-	if(worn_overlays?.len)
-		standing.overlays.Add(worn_overlays)
+	standing.overlays.Add(worn_overlays(standing, isinhands, file2use))
 
 	standing = center_image(standing, isinhands ? inhand_x_dimension : worn_x_dimension, isinhands ? inhand_y_dimension : worn_y_dimension)
 

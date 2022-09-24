@@ -134,7 +134,7 @@
 		M.color = smile_color
 		. += M
 	if(!isinhands && attached_hat)
-		. += attached_hat.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = 'icons/mob/clothing/head.dmi')
+		. += attached_hat.build_worn_icon(default_layer = HEAD_LAYER)
 	if(!isinhands && !up)
 		. += mutable_appearance('icons/mob/clothing/head/plasmaman_head.dmi', visor_icon)
 	else

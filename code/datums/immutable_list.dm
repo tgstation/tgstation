@@ -1,6 +1,4 @@
-///Real globals have no datum access overhead, so we do both to maintain GLOB having all the important bits.
-GLOBAL_REAL(_immutable_list_repo, /list) = list()
-GLOBAL_LIST_INIT(immutable_list_repo, global._immutable_list_repo)
+GLOBAL_LIST_INIT(immutable_list_repo, list())
 
 /datum/immutable_list
 	VAR_PRIVATE/list/data
@@ -36,10 +34,10 @@ GLOBAL_LIST_INIT(immutable_list_repo, global._immutable_list_repo)
 		refs += ref(argument) //Ignore datum tags, we don't care.
 
 	var/key = refs.Join("-")
-	. = global._immutable_list_repo[key]
+	. = GLOB.immutable_list_repo[key]
 	if(!.)
 		. = new /datum/immutable_list(immutize)
-		global._immutable_list_repo[key] = .
+		GLOB.immutable_list_repo[key] = .
 	return .
 
 /datum/immutable_list/assoc/newme(list/immutize)
@@ -54,10 +52,10 @@ GLOBAL_LIST_INIT(immutable_list_repo, global._immutable_list_repo)
 		#endif
 
 	var/key = refs.Join()
-	. = global._immutable_list_repo[key]
+	. = GLOB.immutable_list_repo[key]
 	if(!.)
 		. = new /datum/immutable_list/assoc(immutize)
-		global._immutable_list_repo[key] = .
+		GLOB.immutable_list_repo[key] = .
 	return .
 
 /datum/immutable_list/string/newme(list/immutize)
@@ -70,14 +68,14 @@ GLOBAL_LIST_INIT(immutable_list_repo, global._immutable_list_repo)
 	#endif
 
 	var/key = immutize.Join()
-	. = global._immutable_list_repo[key]
+	. = GLOB.immutable_list_repo[key]
 	if(!.)
 		. = new /datum/immutable_list/string(immutize)
-		global._immutable_list_repo[key] = .
+		GLOB.immutable_list_repo[key] = .
 	return .
 
-///Directly access a data member from data. []= is a different operator, and will throw a compile error if someone tries to use it.
-/datum/immutable_list/proc/operator[](key)
+///Access an element from data.
+/datum/immutable_list/proc/Index(key)
 	return data[key]
 
 ///Return the contained list.
@@ -131,3 +129,5 @@ GLOBAL_LIST_INIT(immutable_list_repo, global._immutable_list_repo)
 	. = data.Copy() ^ other
 	return newme(.)
 
+/datum/immutable_list/proc/operator[]()
+	CRASH("You're attempting to index vars[], use Index() to index the list!")

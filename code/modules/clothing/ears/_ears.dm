@@ -2,6 +2,7 @@
 //Ears: currently only used for headsets and earmuffs
 /obj/item/clothing/ears
 	name = "ears"
+	worn_icon = 'icons/mob/clothing/ears.dmi'
 	lefthand_file = 'icons/mob/inhands/clothing/ears_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing/ears_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY

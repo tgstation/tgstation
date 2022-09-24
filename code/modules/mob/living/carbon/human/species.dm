@@ -855,7 +855,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if(H.num_legs < 2)
 				return FALSE
 			if((H.bodytypes.Locate(BODYTYPE_DIGITIGRADE)) && !(I.item_flags & IGNORE_DIGITIGRADE))
-				if(!(I.alt_appearances_by_bodytype?[BODYTYPE_DIGITIGRADE]))
+				if(!I.alt_appearances_by_bodytype?.Index(BODYTYPE_DIGITIGRADE))
 					if(!disable_warning)
 						to_chat(H, span_warning("The footwear around here isn't compatible with your feet!"))
 					return FALSE

@@ -33,12 +33,12 @@
 	var/obj/item/r_hand = get_item_for_held_index(2)
 
 	if(r_hand)
-		var/mutable_appearance/r_hand_overlay = r_hand.build_worn_icon(default_layer = GORILLA_HANDS_LAYER, default_icon_file = r_hand.righthand_file, isinhands = TRUE)
+		var/mutable_appearance/r_hand_overlay = r_hand.build_worn_icon(default_layer = GORILLA_HANDS_LAYER, custom_icon_file = r_hand.righthand_file, isinhands = TRUE)
 		r_hand_overlay.pixel_y -= 1
 		hands_overlays += r_hand_overlay
 
 	if(l_hand)
-		var/mutable_appearance/l_hand_overlay = l_hand.build_worn_icon(default_layer = GORILLA_HANDS_LAYER, default_icon_file = l_hand.lefthand_file, isinhands = TRUE)
+		var/mutable_appearance/l_hand_overlay = l_hand.build_worn_icon(default_layer = GORILLA_HANDS_LAYER, custom_icon_file = l_hand.lefthand_file, isinhands = TRUE)
 		l_hand_overlay.pixel_y -= 1
 		hands_overlays += l_hand_overlay
 

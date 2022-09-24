@@ -219,10 +219,10 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 		//Magic BS to make default appearances work nicely
 		var/list/magic = alt_appearances_by_bodytype
 		for(var/bodytype in magic)
-			if(alt_appearances_by_bodytype[bodytype] == USE_DEFAULT_ICON)
-				alt_appearances_by_bodytype[bodytype] = worn_icon
+			if(magic[bodytype] == USE_DEFAULT_ICON)
+				magic[bodytype] = worn_icon
 
-		alt_appearances_by_bodytype = immutable_assoc_list(alt_appearances_by_bodytype)
+		alt_appearances_by_bodytype = immutable_assoc_list(magic)
 
 	..()
 
