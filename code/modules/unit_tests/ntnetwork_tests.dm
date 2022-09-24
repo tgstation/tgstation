@@ -16,7 +16,7 @@
 				__NETWORK_DOORS, __NETWORK_ATMOS, __NETWORK_SCUBBERS,
 				__NETWORK_AIRALARMS, __NETWORK_CONTROL, __NETWORK_STORAGE,
 				__NETWORK_CARGO, __NETWORK_BOTS, __NETWORK_COMPUTER,
-				__NETWORK_CARDS)
+				__NETWORK_TABLETS)
 
 	var/number_of_names_to_test = 50
 	var/length_of_test_network = 5

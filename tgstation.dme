@@ -3865,7 +3865,6 @@
 #include "code\modules\modular_computers\hardware\battery_module.dm"
 #include "code\modules\modular_computers\hardware\card_slot.dm"
 #include "code\modules\modular_computers\hardware\hard_drive.dm"
-#include "code\modules\modular_computers\hardware\network_card.dm"
 #include "code\modules\modular_computers\hardware\portable_disk.dm"
 #include "code\modules\modular_computers\hardware\printer.dm"
 #include "code\modules\modular_computers\hardware\program_disks.dm"

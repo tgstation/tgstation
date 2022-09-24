@@ -199,6 +199,23 @@
 		return ..()
 	return FALSE
 
+/obj/item/modular_computer/tablet/integrated/get_ntnet_status(specific_action = 0)
+	//No borg found
+	if(!borgo)
+		return FALSE
+	// no AIs/pAIs
+	var/mob/living/silicon/robot/borgs_ONLY = borgo
+	if(!istype(borgs_ONLY))
+		return ..()
+	//lockdown restricts borg networking
+	if(borgs_ONLY.lockcharge)
+		return FALSE
+	//borg cell dying restricts borg networking
+	if(!borgs_ONLY.cell || borgs_ONLY.cell.charge == 0)
+		return FALSE
+
+	return ..()
+
 /**
  * Returns a ref to the RoboTact app, creating the app if need be.
  *
@@ -305,7 +322,6 @@
 	. = ..()
 	install_component(new /obj/item/computer_hardware/hard_drive/small)
 	install_component(new /obj/item/computer_hardware/battery(src, /obj/item/stock_parts/cell/computer))
-	install_component(new /obj/item/computer_hardware/network_card)
 	install_component(new /obj/item/computer_hardware/card_slot)
 
 	if(!isnull(default_applications))

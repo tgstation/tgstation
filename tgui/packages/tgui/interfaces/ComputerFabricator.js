@@ -182,53 +182,6 @@ const CfStep2 = (props, context) => {
           <Table.Cell bold position="relative">
             <Tooltip
               content={multiline`
-                Allows your device to wirelessly connect to stationwide NTNet
-                network. Basic cards are limited to on-station use, while
-                advanced cards can operate anywhere near the station, which
-                includes asteroid outposts
-              `}
-              position="right">
-              Network Card:
-            </Tooltip>
-          </Table.Cell>
-          <Table.Cell>
-            <Button
-              content="None"
-              selected={data.hw_netcard === 0}
-              onClick={() =>
-                act('hw_netcard', {
-                  netcard: '0',
-                })
-              }
-            />
-          </Table.Cell>
-          <Table.Cell>
-            <Button
-              content="Standard"
-              selected={data.hw_netcard === 1}
-              onClick={() =>
-                act('hw_netcard', {
-                  netcard: '1',
-                })
-              }
-            />
-          </Table.Cell>
-          <Table.Cell>
-            <Button
-              content="Advanced"
-              selected={data.hw_netcard === 2}
-              onClick={() =>
-                act('hw_netcard', {
-                  netcard: '2',
-                })
-              }
-            />
-          </Table.Cell>
-        </Table.Row>
-        <Table.Row>
-          <Table.Cell bold position="relative">
-            <Tooltip
-              content={multiline`
                 A device that allows for various paperwork manipulations,
                 such as, scanning of documents or printing new ones.
                 This device was certified EcoFriendlyPlus and is capable of

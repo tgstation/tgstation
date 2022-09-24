@@ -97,6 +97,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 	update_appearance()
 	register_context()
+	init_network_id(NETWORK_TABLETS)
 	Add_Messenger()
 
 /obj/item/modular_computer/Destroy()
@@ -574,18 +575,28 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 // Returns 0 for No Signal, 1 for Low Signal and 2 for Good Signal. 3 is for wired connection (always-on)
 /obj/item/modular_computer/proc/get_ntnet_status(specific_action = 0)
-	var/obj/item/computer_hardware/network_card/network_card = all_components[MC_NET]
-	if(network_card)
-		return network_card.get_signal(specific_action)
-	else
+	if(!SSnetworks.station_network || !SSnetworks.station_network.check_function(specific_action)) // NTNet is down and we are not connected via wired connection. No signal.
 		return 0
+
+	// physical computers are always connected through ethernet
+	if(istype(physical, /obj/machinery/modular_computer))
+		return 3
+
+	var/turf/current_turf = get_turf(src)
+	if(!current_turf || !istype(current_turf))
+		return 0
+	if(is_station_level(current_turf.z))
+		return 2
+	else if(is_mining_level(current_turf.z))
+		return 1
+
+	return 0
 
 /obj/item/modular_computer/proc/add_log(text)
 	if(!get_ntnet_status())
 		return FALSE
-	var/obj/item/computer_hardware/network_card/network_card = all_components[MC_NET]
 
-	return SSnetworks.add_log(text, network_card.network_id, network_card.hardware_id)
+	return SSnetworks.add_log(text, network_id)
 
 /obj/item/modular_computer/proc/shutdown_computer(loud = 1)
 	kill_program(forced = TRUE)
