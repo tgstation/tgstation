@@ -571,7 +571,7 @@
 					break
 			if(prob(max(5,(nearby_people*12.5*moodmod)))) //Minimum 1/20 chance of stutter
 				// Add a short stutter, THEN treat our word
-				quirker.adjust_timed_status_effect(0.5 SECONDS, /datum/status_effect/speech/stutter)
+				quirker.adjust_stutter(0.5 SECONDS)
 				new_message += quirker.treat_message(word, capitalize_message = FALSE)
 
 			else
@@ -617,10 +617,10 @@
 
 	switch(rand(1,3))
 		if(1)
-			quirk_holder.set_timed_status_effect(20 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
+			quirk_holder.set_jitter_if_lower(20 SECONDS)
 			msg += "causing you to start fidgeting!"
 		if(2)
-			quirk_holder.set_timed_status_effect(6 SECONDS, /datum/status_effect/speech/stutter, only_if_higher = TRUE)
+			quirk_holder.set_stutter_if_lower(6 SECONDS)
 			msg += "causing you to start stuttering!"
 		if(3)
 			quirk_holder.Stun(2 SECONDS)
