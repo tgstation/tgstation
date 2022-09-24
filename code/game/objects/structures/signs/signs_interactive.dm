@@ -29,8 +29,10 @@ GLOBAL_LIST_EMPTY(map_delamination_counters)
 
 /obj/structure/sign/delamination_counter
 	name = "delamination counter"
+	sign_change_name = "Flip Sign- Supermatter Delamination"
 	desc = "A pair of flip signs describe how long it's been since the last delamination incident."
 	icon_state = "days_since_explosion"
+	is_editable = TRUE
 	var/since_last = 0
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/delamination_counter, 32)
@@ -42,22 +44,26 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/delamination_counter, 32)
 	else
 		update_count(SSpersistence.rounds_since_engine_exploded)
 
+/obj/structure/sign/delamination_counter/Destroy()
+	GLOB.map_delamination_counters -= src // Just in case.
+	return ..()
+
 /obj/structure/sign/delamination_counter/proc/update_count(new_count)
 	since_last = min(new_count, 99)
-	build_overlays()
+	update_appearance()
 
-/obj/structure/sign/delamination_counter/proc/build_overlays()
-	overlays = list()
+/obj/structure/sign/delamination_counter/update_overlays()
+	. = ..()
 
 	var/ones = since_last % 10
 	var/mutable_appearance/ones_overlay = mutable_appearance('icons/obj/signs.dmi', "days_[ones]")
 	ones_overlay.pixel_x = 4
-	overlays += ones_overlay
+	. += ones_overlay
 
 	var/tens = (since_last / 10) % 10
 	var/mutable_appearance/tens_overlay = mutable_appearance('icons/obj/signs.dmi', "days_[tens]")
 	tens_overlay.pixel_x = -5
-	overlays += tens_overlay
+	. += tens_overlay
 
 /obj/structure/sign/delamination_counter/examine(mob/user)
 	. = ..()
