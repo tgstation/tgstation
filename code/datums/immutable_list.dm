@@ -22,14 +22,13 @@ GLOBAL_LIST_INIT(immutable_list_repo, list())
 /proc/immutable_string_list(list/data)
 	RETURN_TYPE(/datum/immutable_list)
 	var/static/datum/immutable_list/string/holder = new
-	return holder.newme(data)
+	return Uholder.newme(data)
 
 /////////////////////////////////////////////////CLASS PROCS////////////////////////////////////////////////////////////
 
 ///The actual constructor. Why is it like this? We can't hijack the return value of New(), so this is the best I could think of.
 /datum/immutable_list/proc/newme(list/immutize)
 	RETURN_TYPE(/datum/immutable_list)
-	PROTECTED_PROC(TRUE)
 
 	var/list/refs = list()
 	for(var/argument in immutize)
@@ -48,7 +47,6 @@ GLOBAL_LIST_INIT(immutable_list_repo, list())
 
 /datum/immutable_list/assoc/newme(list/immutize)
 	RETURN_TYPE(/datum/immutable_list)
-	PROTECTED_PROC(TRUE)
 
 	var/list/refs = list()
 	for(var/key in immutize)
@@ -69,7 +67,6 @@ GLOBAL_LIST_INIT(immutable_list_repo, list())
 
 /datum/immutable_list/string/newme(list/immutize)
 	RETURN_TYPE(/datum/immutable_list)
-	PROTECTED_PROC(TRUE)
 
 	#ifdef UNIT_TESTS
 	for(var/element in immutize)
