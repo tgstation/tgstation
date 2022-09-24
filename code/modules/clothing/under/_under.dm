@@ -98,7 +98,7 @@
 		if(!alt_covers_chest)
 			body_parts_covered |= CHEST
 
-	if(alt_appearances_by_bodytype?[BODYTYPE_DIGITIGRADE] && ishuman(user))
+	if(alt_appearances_by_bodytype?.Index(BODYTYPE_DIGITIGRADE) && ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.bodytypes.Locate(BODYTYPE_DIGITIGRADE))
 			adjusted = DIGITIGRADE_STYLE
