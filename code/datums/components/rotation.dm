@@ -33,6 +33,9 @@
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 
+	var/atom/movable/source = parent
+	source.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
+
 	src.rotation_flags = rotation_flags
 	src.AfterRotation = AfterRotation || CALLBACK(src, .proc/DefaultAfterRotation)
 
@@ -40,6 +43,7 @@
 	RegisterSignal(parent, COMSIG_CLICK_ALT, .proc/RotateLeft)
 	RegisterSignal(parent, COMSIG_CLICK_ALT_SECONDARY, .proc/RotateRight)
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/ExamineMessage)
+	RegisterSignal(parent, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, .proc/on_requesting_context_from_item)
 
 /datum/component/simple_rotation/proc/AddVerbs()
 	var/obj/rotated_obj = parent
@@ -56,7 +60,7 @@
 		rotated_obj.verbs -= /atom/movable/proc/SimpleRotateCounterclockwise
 
 /datum/component/simple_rotation/proc/RemoveSignals()
-	UnregisterSignal(parent, list(COMSIG_CLICK_ALT, COMSIG_CLICK_ALT_SECONDARY, COMSIG_PARENT_EXAMINE))
+	UnregisterSignal(parent, list(COMSIG_CLICK_ALT, COMSIG_CLICK_ALT_SECONDARY, COMSIG_PARENT_EXAMINE, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM))
 
 /datum/component/simple_rotation/RegisterWithParent()
 	AddVerbs()
@@ -85,7 +89,6 @@
 
 /datum/component/simple_rotation/proc/ExamineMessage(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
-	examine_list += span_notice("Alt + Right-click to rotate it clockwise. Alt + Left-click to rotate it counterclockwise.")
 	if(rotation_flags & ROTATION_REQUIRE_WRENCH)
 		examine_list += span_notice("This requires a wrench to be rotated.")
 
@@ -122,7 +125,7 @@
 		return TRUE
 	return FALSE
 
-/datum/component/simple_rotation/proc/CanBeRotated(mob/user, degrees)
+/datum/component/simple_rotation/proc/CanBeRotated(mob/user, degrees, silent=FALSE)
 	var/obj/rotated_obj = parent
 
 	if(rotation_flags & ROTATION_REQUIRE_WRENCH)
@@ -130,12 +133,13 @@
 			return FALSE
 		var/obj/item/tool = user.get_active_held_item()
 		if(!tool || tool.tool_behaviour != TOOL_WRENCH)
-			rotated_obj.balloon_alert(user, "need a wrench!")
+			if(!silent)
+				rotated_obj.balloon_alert(user, "need a wrench!")
 			return FALSE
 	if(!(rotation_flags & ROTATION_IGNORE_ANCHORED) && rotated_obj.anchored)
-		if(istype(rotated_obj, /obj/structure/window))
+		if(istype(rotated_obj, /obj/structure/window) && !silent)
 			rotated_obj.balloon_alert(user, "need to unscrew!")
-		else
+		else if(!silent)
 			rotated_obj.balloon_alert(user, "need to unwrench!")
 		return FALSE
 
@@ -144,7 +148,8 @@
 		var/obj/structure/window/rotated_window = rotated_obj
 		var/fulltile = istype(rotated_window) ? rotated_window.fulltile : FALSE
 		if(!valid_window_location(rotated_obj.loc, target_dir, is_fulltile = fulltile))
-			rotated_obj.balloon_alert(user, "can't rotate in that direction!")
+			if(!silent)
+				rotated_obj.balloon_alert(user, "can't rotate in that direction!")
 			return FALSE
 	return TRUE
 
@@ -174,3 +179,21 @@
 	var/datum/component/simple_rotation/rotcomp = GetComponent(/datum/component/simple_rotation)
 	if(rotcomp)
 		rotcomp.Rotate(usr, ROTATION_FLIP)
+
+// maybe we don't need the item context proc but instead the hand one? since we don't need to check held_item
+/datum/component/simple_rotation/proc/on_requesting_context_from_item(atom/source, list/context, obj/item/held_item, mob/user)
+	SIGNAL_HANDLER
+
+	var/rotation_screentip = FALSE
+
+	if(CanBeRotated(user, ROTATION_CLOCKWISE, silent=TRUE))
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Rotate left"
+		rotation_screentip = TRUE
+	if(CanBeRotated(user, ROTATION_COUNTERCLOCKWISE, silent=TRUE))
+		context[SCREENTIP_CONTEXT_ALT_RMB] = "Rotate right"
+		rotation_screentip = TRUE
+
+	if(rotation_screentip)
+		return CONTEXTUAL_SCREENTIP_SET
+
+	return NONE

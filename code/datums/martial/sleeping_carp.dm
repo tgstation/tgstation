@@ -130,7 +130,7 @@
 
 /datum/martial_art/the_sleeping_carp/on_projectile_hit(mob/living/carp_user, obj/projectile/P, def_zone)
 	. = ..()
-	if(!can_deflect())
+	if(!can_deflect(carp_user))
 		return BULLET_ACT_HIT
 	if(carp_user.throw_mode)
 		carp_user.visible_message(span_danger("[carp_user] effortlessly swats the projectile aside! They can block bullets with their bare hands!"), span_userdanger("You deflect the projectile!"))

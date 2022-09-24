@@ -370,7 +370,7 @@
 /obj/machinery/proc/can_be_occupant(atom/movable/occupant_atom)
 	return occupant_typecache ? is_type_in_typecache(occupant_atom, occupant_typecache) : isliving(occupant_atom)
 
-/obj/machinery/proc/close_machine(atom/movable/target = null)
+/obj/machinery/proc/close_machine(atom/movable/target)
 	state_open = FALSE
 	set_density(TRUE)
 	if(!target)
@@ -562,7 +562,7 @@
 		return FALSE
 
 	// machines have their own lit up display screens and LED buttons so we don't need to check for light
-	if((interaction_flags_machine & INTERACT_MACHINE_REQUIRES_LITERACY) && !user.can_read(src, check_for_light = FALSE))
+	if((interaction_flags_machine & INTERACT_MACHINE_REQUIRES_LITERACY) && !user.can_read(src, READING_CHECK_LITERACY))
 		return FALSE
 
 	if(panel_open && !(interaction_flags_machine & INTERACT_MACHINE_OPEN))
@@ -1012,6 +1012,11 @@
 		set_occupant(vval)
 		datum_flags |= DF_VAR_EDITED
 		return TRUE
+	if(vname == NAMEOF(src, machine_stat))
+		set_machine_stat(vval)
+		datum_flags |= DF_VAR_EDITED
+		return TRUE
+
 	return ..()
 
 /**

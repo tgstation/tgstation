@@ -31,6 +31,9 @@
 	icon_state = "armor"
 	inhand_icon_state = "armor"
 
+/obj/item/clothing/suit/armor/vest/alt/sec
+	icon_state = "armor_sec"
+
 /obj/item/clothing/suit/armor/vest/marine
 	name = "tactical armor vest"
 	desc = "A set of the finest mass produced, stamped plasteel armor plates, containing an environmental protection unit for all-condition door kicking."
@@ -95,6 +98,12 @@
 	inhand_icon_state = "hostrench"
 	flags_inv = 0
 	strip_delay = 80
+
+/obj/item/clothing/suit/armor/hos/trenchcoat/winter
+	name = "head of security's winter trenchcoat"
+	desc = "A trenchcoat enhanced with a special lightweight kevlar, padded with wool on the collar and inside. You feel strangely lonely wearing this coat."
+	icon_state = "hoswinter"
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 
 /obj/item/clothing/suit/armor/hos/hos_formal
 	name = "\improper Head of Security's parade jacket"

@@ -3,6 +3,7 @@
 
 /datum/vote/custom_vote
 	name = "Custom"
+	message = "Click here to start a custom vote."
 
 // Custom votes ares always accessible.
 /datum/vote/custom_vote/is_accessible_vote()
