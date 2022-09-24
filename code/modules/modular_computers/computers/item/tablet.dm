@@ -5,6 +5,9 @@
 	icon_state_unpowered = "tablet-red"
 	icon_state_powered = "tablet-red"
 	icon_state_menu = "menu"
+	inhand_icon_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	base_icon_state = "tablet"
 	worn_icon_state = "tablet"
 	hardware_flag = PROGRAM_TABLET
@@ -24,10 +27,7 @@
 	var/finish_color = null
 
 	var/list/contained_item = list(/obj/item/pen, /obj/item/toy/crayon, /obj/item/lipstick, /obj/item/flashlight/pen, /obj/item/clothing/mask/cigarette)
-	var/obj/item/insert_type = /obj/item/pen
-	var/obj/item/inserted_item
-
-	var/note = "Congratulations on your station upgrading to the new NtOS and Thinktronic based collaboration effort, bringing you the best in electronics and software since 2467!"  // the note used by the notekeeping app, stored here for convenience
+	var/obj/item/inserted_item = /obj/item/pen
 
 /obj/item/modular_computer/tablet/update_icon_state()
 	if(has_variants && !bypass_state)
@@ -252,12 +252,6 @@
 		robo.toggle_headlamp(FALSE, TRUE)
 	return TRUE
 
-/obj/item/modular_computer/tablet/integrated/alert_call(datum/computer_file/program/caller, alerttext, sound = 'sound/machines/twobeep_high.ogg')
-	if(!caller || !caller.alert_able || caller.alert_silenced || !alerttext) //Yeah, we're checking alert_able. No, you don't get to make alerts that the user can't silence.
-		return
-	borgo.playsound_local(src, sound, 50, TRUE)
-	to_chat(borgo, span_notice("The [src] displays a [caller.filedesc] notification: [alerttext]"))
-
 /obj/item/modular_computer/tablet/integrated/ui_state(mob/user)
 	return GLOB.reverse_contained_state
 
@@ -323,5 +317,5 @@
 		var/obj/item/computer_hardware/hard_drive/portable/disk = new loaded_cartridge(src)
 		install_component(disk)
 
-	if(insert_type)
-		inserted_item = new insert_type(src)
+	if(inserted_item)
+		inserted_item = new inserted_item(src)

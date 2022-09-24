@@ -173,7 +173,7 @@
 					return
 				to_chat(user, span_notice("You add [item] to the [initial(name)] assembly."))
 				beakers += item
-				var/reagent_list = pretty_string_from_reagent_list(item.reagents)
+				var/reagent_list = pretty_string_from_reagent_list(item.reagents.reagent_list)
 				user.log_message("inserted [item] ([reagent_list]) into [src]", LOG_GAME)
 			else
 				to_chat(user, span_warning("[item] is empty!"))

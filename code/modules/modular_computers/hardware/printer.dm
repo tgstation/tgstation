@@ -27,7 +27,6 @@
 	var/obj/item/paper/printed_paper = new/obj/item/paper(holder.drop_location())
 
 	// Damaged printer causes the resulting paper to be somewhat harder to read.
-
 	if(damage > damage_malfunction)
 		printed_paper.add_raw_text(stars(text_to_print, 100-malfunction_probability))
 	else
