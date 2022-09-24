@@ -1344,35 +1344,51 @@
 	log_combat(shover, target, "shoved", addition = "into [name]")
 	return COMSIG_CARBON_SHOVE_HANDLED
 
+#define HANDS_FULL 0
+#define ONE_HAND 1
+
 // Checks to see how many hands this person has to sign with.
 /mob/living/carbon/proc/check_signables_state()
-	var/obj/item/bodypart/left_arm = get_bodypart(BODY_ZONE_L_ARM)
-	var/obj/item/bodypart/right_arm = get_bodypart(BODY_ZONE_R_ARM)
-	var/available_hands = length(get_empty_held_indexes()) // missing or disabled arms will count as empty
-	var/no_right_hand = (!right_arm || right_arm.bodypart_disabled)
-	var/no_left_hand = (!left_arm || left_arm.bodypart_disabled)
+	// when a hand gets dismembered it gets null'd in hand_bodyparts but for
+	// get_empty_held_index() it will still be counted as empty and will be +1'd
+	var/healthy_hands = 0 // hands that aren't disabled or amputated
+	var/total_hands = length(held_items)
 
-	// subtract these from our available_hands
-	if(no_right_hand)
-		available_hands -= 1
-	if(no_left_hand)
-		available_hands -= 1
+	// being handcuffed, having a missing or disabled arm will count as empty and be +1 incremented
+	var/available_hands = length(get_empty_held_indexes())
+
+	for(var/obj/item/bodypart/hand as anything in hand_bodyparts)
+		if(hand && !hand.bodypart_disabled)
+			healthy_hands++
+
+	if(!healthy_hands) // No arms at all
+		return SIGN_ARMLESS
+
+	var/unhealthy_hands = total_hands - healthy_hands
+	available_hands -= unhealthy_hands // get_empty_held_indexes() counts a disabled or amputed hand as +1
 
 	// items like slappers/zombie claws/etc. should be ignored
 	for(var/obj/item/held_item as anything in held_items)
 		if(held_item.item_flags & HAND_ITEM)
-			available_hands += 1
+			available_hands++
 
-	if(handcuffed) // Cuffed, usually will show visual effort to sign
+	if(handcuffed)
+		available_hands -= 2 // handcuffs
+
+	// If you have 3 hands and are handcuffed you should still be able to sign
+	if(handcuffed && !available_hands) // Cuffed, usually will show visual effort to sign
 		return SIGN_CUFFED
-	else if(no_left_hand && no_right_hand) // Can't sign with no arms!
-		return SIGN_ARMLESS
-	else if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED) || HAS_TRAIT(src, TRAIT_EMOTEMUTE))
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED) || HAS_TRAIT(src, TRAIT_EMOTEMUTE))
 		return SIGN_TRAIT_BLOCKED
-	else if(available_hands == 0) // All existing hands full, can't sign
-		return SIGN_HANDS_FULL
-	else if(available_hands == 1) // Only one hand is empty
-		return SIGN_ONE_HAND
+
+	switch(avilable_hands)
+		if(HANDS_FULL)
+			return SIGN_HANDS_FULL
+		if(ONE_HAND)
+			return SIGN_ONE_HAND
+
+#undef HANDS_FULL
+#undef ONE_HAND
 
 /**
  * This proc is a helper for spraying blood for things like slashing/piercing wounds and dismemberment.
