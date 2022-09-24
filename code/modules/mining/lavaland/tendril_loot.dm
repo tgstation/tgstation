@@ -775,7 +775,7 @@
 	var/datum/status_effect/agent_pinpointer/scan_pinpointer = living_owner.apply_status_effect(/datum/status_effect/agent_pinpointer/scan)
 	scan_pinpointer.scan_target = living_scanned
 
-	living_scanned.set_timed_status_effect(100 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
+	living_scanned.set_jitter_if_lower(100 SECONDS)
 	to_chat(living_scanned, span_warning("You've been staggered!"))
 	living_scanned.add_filter("scan", 2, list("type" = "outline", "color" = COLOR_YELLOW, "size" = 1))
 	addtimer(CALLBACK(living_scanned, /atom/.proc/remove_filter, "scan"), 30 SECONDS)
@@ -978,7 +978,7 @@
 			target.ranged_cooldown += 5 SECONDS
 		else if(iscarbon(source))
 			var/mob/living/carbon/target = source
-			target.set_timed_status_effect(8 SECONDS, /datum/status_effect/confusion, only_if_higher = TRUE)
+			target.set_confusion_if_lower(8 SECONDS)
 	return NONE
 
 /obj/item/cursed_katana/proc/slice(mob/living/target, mob/user)

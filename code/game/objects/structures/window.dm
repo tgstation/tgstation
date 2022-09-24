@@ -221,7 +221,7 @@
 					set_anchored(FALSE)
 					to_chat(user, span_notice("You unfasten the frame from the floor."))
 			else
-				to_chat(user, span_notice("You begin to screw the frame from to floor..."))
+				to_chat(user, span_notice("You begin to screw the frame to the floor..."))
 				if(tool.use_tool(src, user, decon_speed, volume = 75, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
 					set_anchored(TRUE)
 					to_chat(user, span_notice("You fasten the frame to the floor."))

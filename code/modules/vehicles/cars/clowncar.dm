@@ -25,6 +25,8 @@
 /obj/vehicle/sealed/car/clowncar/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj,src)
+	RegisterSignal(src, COMSIG_MOVABLE_CROSS_OVER, .proc/check_crossed)
+	RegisterSignal(src, COMSIG_MOVABLE_BUMP, .proc/check_bumped)
 
 /obj/vehicle/sealed/car/clowncar/process()
 	if(light_on && (obj_flags & EMAGGED))
@@ -93,15 +95,15 @@
 	to_chat(user, span_danger("You use the [banana] to repair [src]!"))
 	qdel(banana)
 
-/obj/vehicle/sealed/car/clowncar/Bump(atom/bumped)
-	. = ..()
+/obj/vehicle/sealed/car/clowncar/proc/check_bumped(atom/bumped)
+	SIGNAL_HANDLER
 	if(isliving(bumped))
 		if(ismegafauna(bumped))
 			return
 		var/mob/living/hittarget_living = bumped
 		if(iscarbon(hittarget_living))
 			var/mob/living/carbon/carb = hittarget_living
-			carb.Paralyze(40) //I play to make sprites go horizontal
+			carb.Paralyze(4 SECONDS) //I play to make sprites go horizontal
 		hittarget_living.visible_message(span_warning("[src] rams into [hittarget_living] and sucks [hittarget_living.p_them()] up!")) //fuck off shezza this isn't ERP.
 		mob_forced_enter(hittarget_living)
 		playsound(src, pick('sound/vehicles/clowncar_ram1.ogg', 'sound/vehicles/clowncar_ram2.ogg', 'sound/vehicles/clowncar_ram3.ogg'), 75)
@@ -115,6 +117,23 @@
 	dump_mobs(TRUE)
 	log_combat(src, bumped, "crashed into", null, "dumping all passengers")
 
+/obj/vehicle/sealed/car/clowncar/proc/check_crossed(datum/source, atom/movable/crossed)
+	SIGNAL_HANDLER
+	if(!has_gravity())
+		return
+	if(!iscarbon(crossed))
+		return
+	var/mob/living/carbon/target_pancake = crossed
+	if(target_pancake.body_position != LYING_DOWN)
+		return
+	if(HAS_TRAIT(target_pancake, TRAIT_INCAPACITATED))
+		return
+	target_pancake.visible_message(span_warning("[src] runs over [target_pancake], flattening [target_pancake.p_them()] like a pancake!"))
+	target_pancake.AddElement(/datum/element/squish, 5 SECONDS)
+	target_pancake.Paralyze(2 SECONDS)
+	playsound(target_pancake, 'sound/effects/cartoon_splat.ogg', 75)
+	log_combat(src, crossed, "ran over")
+
 /obj/vehicle/sealed/car/clowncar/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
 		return
@@ -127,6 +146,11 @@
 /obj/vehicle/sealed/car/clowncar/atom_destruction(damage_flag)
 	playsound(src, 'sound/vehicles/clowncar_fart.ogg', 100)
 	STOP_PROCESSING(SSobj,src)
+	return ..()
+
+/obj/vehicle/sealed/car/clowncar/Destroy(force)
+	UnregisterSignal(src, COMSIG_MOVABLE_BUMP)
+	UnregisterSignal(src, COMSIG_MOVABLE_CROSS_OVER)
 	return ..()
 
 /**

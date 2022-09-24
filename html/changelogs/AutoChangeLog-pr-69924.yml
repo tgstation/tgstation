@@ -1,0 +1,6 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Blind mobs will no longer be demoralized by posters and graffiti."
+  - bugfix: "Illiterate mobs will no longer be demoralized by the words on posters."
+  - bugfix: "Mobs will no longer be demoralized by posters & graffiti if it's too dark to see them."
