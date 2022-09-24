@@ -287,7 +287,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 			else
 				canonical_deep_lore_name = pick(GLOB.first_names)
 		target.fully_replace_character_name(target.real_name, canonical_deep_lore_name)
-	target.say(target.real_name)
+	target.say("[target.real_name]. My pronouns are [target.p_they()]/[target.p_them()].")
 
 /// This command forces the listeners to say the user's name
 /datum/voice_of_god_command/say_my_name
