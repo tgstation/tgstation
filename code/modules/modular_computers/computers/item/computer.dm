@@ -80,6 +80,11 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	/// Stored pAI in the computer
 	var/obj/item/pai_card/inserted_pai = null
 
+	///The amount of paper currently stored in the PDA
+	var/stored_paper = 10
+	///The max amount of paper that can be held at once.
+	var/max_paper = 30
+
 /obj/item/modular_computer/Initialize(mapload)
 	. = ..()
 
@@ -230,6 +235,18 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 	return ..()
 
+/obj/item/modular_computer/proc/print_text(text_to_print, paper_title = "")
+	if(!stored_paper)
+		return FALSE
+
+	var/obj/item/paper/printed_paper = new /obj/item/paper(drop_location())
+	printed_paper.add_raw_text(text_to_print)
+	if(paper_title)
+		printed_paper.name = paper_title
+	printed_paper.update_appearance()
+	stored_paper--
+	return TRUE
+
 /obj/item/modular_computer/InsertID(obj/item/inserting_item)
 	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
 	var/obj/item/computer_hardware/card_slot/card_slot2 = all_components[MC_CARD2]
@@ -296,11 +313,6 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	else if(atom_integrity < max_integrity)
 		. += span_warning("It is damaged.")
 
-	var/obj/item/computer_hardware/hard_drive/hdd = all_components[MC_HDD]
-	for(var/datum/computer_file/app_examine as anything in hdd.stored_files)
-		if(app_examine.on_examine(src, user))
-			. += app_examine.on_examine(src, user)
-
 	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
 	var/obj/item/computer_hardware/card_slot/card_slot2 = all_components[MC_CARD2]
 	var/multiple_slots = istype(card_slot) && istype(card_slot2)
@@ -317,12 +329,16 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		else
 			. += "It has [multiple_slots ? "two slots" : "a slot"] installed for identification cards."
 
-	var/obj/item/computer_hardware/printer/printer_slot = all_components[MC_PRINT]
-	if(printer_slot)
-		. += "It has a printer installed."
-		if(Adjacent(user))
-			. += "The printer's paper levels are at: [printer_slot.stored_paper]/[printer_slot.max_paper].</span>"
+/obj/item/modular_computer/examine_more(mob/user)
+	. = ..()
+	var/obj/item/computer_hardware/hard_drive/hdd = all_components[MC_HDD]
+	if(hdd)
+		for(var/datum/computer_file/app_examine as anything in hdd.stored_files)
+			if(app_examine.on_examine(src, user))
+				. += app_examine.on_examine(src, user)
 
+	if(Adjacent(user))
+		. += span_notice("Paper level: [stored_paper] / [max_paper].")
 
 /obj/item/modular_computer/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -649,7 +665,77 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 /obj/item/modular_computer/proc/UpdateDisplay()
 	name = "[saved_identification] ([saved_job])"
 
+/obj/item/modular_computer/attackby(obj/item/attacking_item, mob/user, params)
+	// Check for ID first
+	if(isidcard(attacking_item) && InsertID(attacking_item))
+		return
+
+	// Check for cash next
+	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
+	if(card_slot && iscash(attacking_item))
+		var/obj/item/card/id/inserted_id = card_slot.GetID()
+		if(inserted_id)
+			inserted_id.attackby(attacking_item, user) // If we do, try and put that attacking object in
+			return
+
+	// Inserting a pAI
+	if(istype(attacking_item, /obj/item/pai_card) && !inserted_pai)
+		if(!user.transferItemToLoc(attacking_item, src))
+			return
+		inserted_pai = attacking_item
+		to_chat(user, span_notice("You slot \the [attacking_item] into [src]."))
+		return
+
+	// Check if any Applications need it
+	var/obj/item/computer_hardware/hard_drive/hdd = all_components[MC_HDD]
+	if(hdd)
+		for(var/datum/computer_file/item_holding_app as anything in hdd.stored_files)
+			if(item_holding_app.try_insert(attacking_item, user))
+				return
+
+	if(istype(attacking_item, /obj/item/paper))
+		if(stored_paper >= max_paper)
+			to_chat(user, span_warning("You try to add \the [attacking_item] into [src], but it can't hold any more!"))
+			return
+		if(!user.temporarilyRemoveItemFromInventory(attacking_item))
+			return FALSE
+		to_chat(user, span_notice("You insert \the [attacking_item] into [src]'s paper recycler."))
+		qdel(attacking_item)
+		stored_paper++
+		return
+	if(istype(attacking_item, /obj/item/paper_bin))
+		var/obj/item/paper_bin/bin = attacking_item
+		if(bin.total_paper <= 0)
+			to_chat(user, span_notice("\The [bin] is empty!"))
+			return
+		var/papers_added //just to keep track
+		while((bin.total_paper > 0) && (stored_paper < max_paper))
+			papers_added++
+			stored_paper++
+			bin.remove_paper()
+		if(!papers_added)
+			return
+		to_chat(user, span_notice("Added in [papers_added] new sheets. You now have [stored_paper] / [max_paper] printing paper stored."))
+		bin.update_appearance()
+		return
+
+
+	// Insert items into the components
+	for(var/h in all_components)
+		var/obj/item/computer_hardware/H = all_components[h]
+		if(H.try_insert(attacking_item, user))
+			return
+
+	// Insert new hardware
+	if(istype(attacking_item, /obj/item/computer_hardware) && upgradable)
+		if(install_component(attacking_item, user))
+			playsound(src, 'sound/machines/card_slide.ogg', 50)
+			return
+
+	return ..()
+
 /obj/item/modular_computer/screwdriver_act(mob/user, obj/item/tool)
+	. = ..()
 	if(!deconstructable)
 		return
 	if(!length(all_components))
@@ -661,97 +747,49 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		component_names.Add(H.name)
 
 	var/choice = tgui_input_list(user, "Component to uninstall", "Computer maintenance", sort_list(component_names))
-
 	if(isnull(choice))
 		return
-
 	if(!Adjacent(user))
 		return
 
 	var/obj/item/computer_hardware/H = find_hardware_by_name(choice)
-
 	if(!H)
-		return
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 	tool.play_tool_sound(src, user, 20, volume=20)
 	uninstall_component(H, user)
-	return
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/item/modular_computer/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(length(all_components))
+		balloon_alert(user, "remove the other components!")
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	tool.play_tool_sound(src, user, 20, volume=20)
+	new /obj/item/stack/sheet/iron(get_turf(loc), steel_sheet_cost)
+	user.balloon_alert(user, "disassembled")
+	relay_qdel()
+	qdel(src)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 
-/obj/item/modular_computer/attackby(obj/item/attacking_item, mob/user, params)
-	// Check for ID first
-	if(isidcard(attacking_item) && InsertID(attacking_item))
-		return
+/obj/item/modular_computer/welder_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(atom_integrity == max_integrity)
+		to_chat(user, span_warning("\The [src] does not require repairs."))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 
-	// Insert a PAI.
-	if(istype(attacking_item, /obj/item/pai_card) && !inserted_pai)
-		if(!user.transferItemToLoc(attacking_item, src))
-			return
-		inserted_pai = attacking_item
-		to_chat(user, span_notice("You slot \the [attacking_item] into [src]."))
-		return
+	if(!tool.tool_start_check(user, amount=1))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 
-	var/obj/item/computer_hardware/hard_drive/hdd = all_components[MC_HDD]
+	to_chat(user, span_notice("You begin repairing damage to \the [src]..."))
+	if(!tool.use_tool(src, user, 20, volume=50, amount=1))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	atom_integrity = max_integrity
+	to_chat(user, span_notice("You repair \the [src]."))
+	update_appearance()
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
-	// Scan a photo.
-	if(istype(attacking_item, /obj/item/photo))
-		var/obj/item/photo/pic = attacking_item
-		if(hdd)
-			for(var/datum/computer_file/program/messenger/messenger in hdd.stored_files)
-				saved_image = pic.picture
-				messenger.ProcessPhoto()
-		return
-
-	// Insert items into the components
-	for(var/h in all_components)
-		var/obj/item/computer_hardware/H = all_components[h]
-		if(H.try_insert(attacking_item, user))
-			return
-
-	// Insert items into applications
-	for(var/datum/computer_file/item_holding_app as anything in hdd.stored_files)
-		if(item_holding_app.try_insert(attacking_item, user))
-			return
-
-	// Insert new hardware
-	if(istype(attacking_item, /obj/item/computer_hardware) && upgradable)
-		if(install_component(attacking_item, user))
-			playsound(src, 'sound/machines/card_slide.ogg', 50)
-			return
-
-	if(attacking_item.tool_behaviour == TOOL_WRENCH)
-		if(length(all_components))
-			balloon_alert(user, "remove the other components!")
-			return
-		attacking_item.play_tool_sound(src, user, 20, volume=20)
-		new /obj/item/stack/sheet/iron( get_turf(src.loc), steel_sheet_cost )
-		user.balloon_alert(user,"disassembled")
-		relay_qdel()
-		qdel(src)
-		return
-
-	if(attacking_item.tool_behaviour == TOOL_WELDER)
-		if(atom_integrity == max_integrity)
-			to_chat(user, span_warning("\The [src] does not require repairs."))
-			return
-
-		if(!attacking_item.tool_start_check(user, amount=1))
-			return
-
-		to_chat(user, span_notice("You begin repairing damage to \the [src]..."))
-		if(attacking_item.use_tool(src, user, 20, volume=50, amount=1))
-			atom_integrity = max_integrity
-			to_chat(user, span_notice("You repair \the [src]."))
-			update_appearance()
-		return
-
-	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
-	// Check to see if we have an ID inside, and a valid input for money
-	if(card_slot?.GetID() && iscash(attacking_item))
-		var/obj/item/card/id/id = card_slot.GetID()
-		id.attackby(attacking_item, user) // If we do, try and put that attacking object in
-		return
-	..()
 
 // Used by processor to relay qdel() to machinery type.
 /obj/item/modular_computer/proc/relay_qdel()

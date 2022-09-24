@@ -94,16 +94,6 @@
 	category = list(RND_CATEGORY_COMPUTER_PARTS)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
-// Mini printer
-/datum/design/miniprinter
-	name = "Miniprinter"
-	id = "miniprinter"
-	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 600)
-	build_path = /obj/item/computer_hardware/printer/mini
-	category = list(RND_CATEGORY_COMPUTER_PARTS)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
-
 // Batteries
 /datum/design/battery/controller
 	name = "Power Cell Controller"

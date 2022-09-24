@@ -21,7 +21,6 @@
 	// Device loadout
 	var/dev_battery = 1 // 1: Default, 2: Upgraded, 3: Advanced
 	var/dev_disk = 1 // 1: Default, 2: Upgraded, 3: Advanced
-	var/dev_printer = 0 // 0: None, 1: Standard
 	var/dev_card = 0 // 0: None, 1: Standard
 
 // Removes all traces of old order and allows you to begin configuration from scratch.
@@ -36,7 +35,6 @@
 		fabricated_tablet = null
 	dev_battery = 1
 	dev_disk = 1
-	dev_printer = 0
 	dev_card = 0
 
 // Recalculates the price and optionally even fabricates the device.
@@ -74,10 +72,6 @@
 				if(fabricate)
 					fabricated_laptop.install_component(new /obj/item/computer_hardware/hard_drive/super)
 				total_price += 299
-		if(dev_printer)
-			total_price += 99
-			if(fabricate)
-				fabricated_laptop.install_component(new /obj/item/computer_hardware/printer/mini)
 		if(dev_card)
 			total_price += 199
 			if(fabricate)
@@ -116,10 +110,6 @@
 				if(fabricate)
 					fabricated_tablet.install_component(new /obj/item/computer_hardware/hard_drive)
 				total_price += 299
-		if(dev_printer)
-			total_price += 99
-			if(fabricate)
-				fabricated_tablet.install_component(new/obj/item/computer_hardware/printer/mini)
 		if(dev_card)
 			total_price += 199
 			if(fabricate)
@@ -163,10 +153,6 @@
 			return TRUE
 		if("hw_disk")
 			dev_disk = text2num(params["disk"])
-			fabricate_and_recalc_price(FALSE)
-			return TRUE
-		if("hw_nanoprint")
-			dev_printer = text2num(params["print"])
 			fabricate_and_recalc_price(FALSE)
 			return TRUE
 		if("hw_card")
@@ -231,7 +217,6 @@
 		data["devtype"] = devtype
 		data["hw_battery"] = dev_battery
 		data["hw_disk"] = dev_disk
-		data["hw_nanoprint"] = dev_printer
 		data["hw_card"] = dev_card
 	if(state == 1 || state == 2)
 		data["totalprice"] = total_price

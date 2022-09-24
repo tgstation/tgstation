@@ -3866,7 +3866,6 @@
 #include "code\modules\modular_computers\hardware\card_slot.dm"
 #include "code\modules\modular_computers\hardware\hard_drive.dm"
 #include "code\modules\modular_computers\hardware\portable_disk.dm"
-#include "code\modules\modular_computers\hardware\printer.dm"
 #include "code\modules\modular_computers\hardware\program_disks.dm"
 #include "code\modules\modular_computers\hardware\virus_disk.dm"
 #include "code\modules\modular_computers\NTNet\NTNRC\conversation.dm"

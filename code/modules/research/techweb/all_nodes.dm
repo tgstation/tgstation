@@ -1062,7 +1062,6 @@
 		"hdd_basic",
 		"hdd_cluster",
 		"hdd_super",
-		"miniprinter",
 		"portadrive_advanced",
 		"portadrive_basic",
 		"portadrive_super",

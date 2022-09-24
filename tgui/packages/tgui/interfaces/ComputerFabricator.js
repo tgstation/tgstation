@@ -182,42 +182,6 @@ const CfStep2 = (props, context) => {
           <Table.Cell bold position="relative">
             <Tooltip
               content={multiline`
-                A device that allows for various paperwork manipulations,
-                such as, scanning of documents or printing new ones.
-                This device was certified EcoFriendlyPlus and is capable of
-                recycling existing paper for printing purposes.
-              `}
-              position="right">
-              Nano Printer:
-            </Tooltip>
-          </Table.Cell>
-          <Table.Cell>
-            <Button
-              content="None"
-              selected={data.hw_nanoprint === 0}
-              onClick={() =>
-                act('hw_nanoprint', {
-                  print: '0',
-                })
-              }
-            />
-          </Table.Cell>
-          <Table.Cell>
-            <Button
-              content="Standard"
-              selected={data.hw_nanoprint === 1}
-              onClick={() =>
-                act('hw_nanoprint', {
-                  print: '1',
-                })
-              }
-            />
-          </Table.Cell>
-        </Table.Row>
-        <Table.Row>
-          <Table.Cell bold position="relative">
-            <Tooltip
-              content={multiline`
                 Adds a secondary RFID card reader, for manipulating or
                 reading from a second standard RFID card.
                 Please note that a primary card reader is necessary to
