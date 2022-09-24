@@ -421,7 +421,7 @@
 	if(medical_mode_flags & MEDBOT_STATIONARY_MODE && !Adjacent(C)) //YOU come to ME, BRO
 		return FALSE
 
-	if(C.stat == DEAD || (HAS_TRAIT(C, TRAIT_FAKEDEATH)))
+	if(C.stat == DEAD || (HAS_TRAIT(C, TRAIT_FAKE_DEATH)))
 		return FALSE //welp too late for them!
 
 	if(!(loc == C.loc) && !(isturf(C.loc) && isturf(loc)))
@@ -433,7 +433,7 @@
 	if(bot_cover_flags & BOT_COVER_EMAGGED) //Everyone needs our medicine. (Our medicine is toxins)
 		return TRUE
 
-	if(HAS_TRAIT(C, TRAIT_MEDIBOTCOMINGTHROUGH) && !HAS_TRAIT_FROM(C, TRAIT_MEDIBOTCOMINGTHROUGH, tag)) //the early medbot gets the worm (or in this case the patient)
+	if(HAS_TRAIT(C, TRAIT_MEDIBOT_GOTO_PATIENT) && !HAS_TRAIT_FROM(C, TRAIT_MEDIBOT_GOTO_PATIENT, tag)) //the early medbot gets the worm (or in this case the patient)
 		return FALSE
 
 	if(ishuman(C))
@@ -493,7 +493,7 @@
 		soft_reset()
 		return
 
-	if(C.stat == DEAD || (HAS_TRAIT(C, TRAIT_FAKEDEATH)))
+	if(C.stat == DEAD || (HAS_TRAIT(C, TRAIT_FAKE_DEATH)))
 		var/list/messagevoice = list("No! Stay with me!" = 'sound/voice/medbot/no.ogg',"Live, damnit! LIVE!" = 'sound/voice/medbot/live.ogg',"I...I've never lost a patient before. Not today, I mean." = 'sound/voice/medbot/lost.ogg')
 		var/message = pick(messagevoice)
 		speak(message)
@@ -556,8 +556,8 @@
 						log_combat(src, patient, "tended the wounds of", "internal tools", "([uppertext(treatment_method)])")
 					C.visible_message(span_notice("[src] tends the wounds of [patient]!"), \
 						"<span class='infoplain'>[span_green("[src] tends your wounds!")]</span>")
-					ADD_TRAIT(patient,TRAIT_MEDIBOTCOMINGTHROUGH,tag)
-					addtimer(TRAIT_CALLBACK_REMOVE(patient, TRAIT_MEDIBOTCOMINGTHROUGH, tag), (30 SECONDS))
+					ADD_TRAIT(patient,TRAIT_MEDIBOT_GOTO_PATIENT,tag)
+					addtimer(TRAIT_CALLBACK_REMOVE(patient, TRAIT_MEDIBOT_GOTO_PATIENT, tag), (30 SECONDS))
 				else
 					tending = FALSE
 			else

@@ -53,7 +53,7 @@ GLOBAL_LIST_INIT(cursed_animal_masks, list(
 		to_chat(user, span_notice("You [clothing_flags & VOICEBOX_DISABLED ? "disabled" : "enabled"] [src]'s voicebox."))
 
 /obj/item/clothing/mask/animal/proc/make_cursed() //apply cursed effects.
-	ADD_TRAIT(src, TRAIT_NODROP, CURSED_MASK_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, SOURCE_CURSED_MASK)
 	clothing_flags = NONE //force animal sounds to always on.
 	if(flags_inv == initial(flags_inv))
 		flags_inv = HIDEFACIALHAIR
@@ -73,7 +73,7 @@ GLOBAL_LIST_INIT(cursed_animal_masks, list(
 			M.update_worn_mask()
 
 /obj/item/clothing/mask/animal/proc/clear_curse()
-	REMOVE_TRAIT(src, TRAIT_NODROP, CURSED_MASK_TRAIT)
+	REMOVE_TRAIT(src, TRAIT_NODROP, SOURCE_CURSED_MASK)
 	clothing_flags = initial(clothing_flags)
 	flags_inv = initial(flags_inv)
 	name = initial(name)
@@ -99,7 +99,7 @@ GLOBAL_LIST_INIT(cursed_animal_masks, list(
 /obj/item/clothing/mask/animal/equipped(mob/user, slot)
 	if(!iscarbon(user))
 		return ..()
-	if(slot == ITEM_SLOT_MASK && HAS_TRAIT_FROM(src, TRAIT_NODROP, CURSED_MASK_TRAIT))
+	if(slot == ITEM_SLOT_MASK && HAS_TRAIT_FROM(src, TRAIT_NODROP, SOURCE_CURSED_MASK))
 		to_chat(user, span_userdanger("[src] was cursed!"))
 	return ..()
 

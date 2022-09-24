@@ -15,7 +15,7 @@
 
 /obj/item/kitchen/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_APC_SHOCKING, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_APC_SHOCKING, SOURCE_INNATE)
 
 /obj/item/kitchen/fork
 	name = "fork"

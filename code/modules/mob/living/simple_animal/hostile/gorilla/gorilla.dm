@@ -130,7 +130,7 @@
 
 /mob/living/simple_animal/hostile/gorilla/cargo_domestic/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_PACIFISM, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_PACIFISM, SOURCE_INNATE)
 	AddComponent(/datum/component/crate_carrier)
 
 /mob/living/simple_animal/hostile/gorilla/cargo_domestic/attack_ghost(mob/user)

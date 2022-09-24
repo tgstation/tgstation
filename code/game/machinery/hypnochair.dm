@@ -93,8 +93,8 @@
 	victim = C
 	if(!(C.get_eye_protection() > 0))
 		to_chat(C, span_warning("Strobing coloured lights assault you relentlessly! You're losing your ability to think straight!"))
-		C.become_blind(HYPNOCHAIR_TRAIT)
-		ADD_TRAIT(C, TRAIT_DEAF, HYPNOCHAIR_TRAIT)
+		C.become_blind(SOURCE_HYPNOCHAIR)
+		ADD_TRAIT(C, TRAIT_DEAF, SOURCE_HYPNOCHAIR)
 	interrogating = TRUE
 	START_PROCESSING(SSobj, src)
 	start_time = world.time
@@ -129,8 +129,8 @@
 	if(QDELETED(victim) || victim != occupant)
 		victim = null
 		return
-	victim.cure_blind(HYPNOCHAIR_TRAIT)
-	REMOVE_TRAIT(victim, TRAIT_DEAF, HYPNOCHAIR_TRAIT)
+	victim.cure_blind(SOURCE_HYPNOCHAIR)
+	REMOVE_TRAIT(victim, TRAIT_DEAF, SOURCE_HYPNOCHAIR)
 	if(!(victim.get_eye_protection() > 0))
 		victim.cure_trauma_type(/datum/brain_trauma/severe/hypnotic_trigger, TRAUMA_RESILIENCE_SURGERY)
 		if(prob(90))
@@ -149,7 +149,7 @@
 		victim = null
 		return
 	victim.cure_blind("hypnochair")
-	REMOVE_TRAIT(victim, TRAIT_DEAF, HYPNOCHAIR_TRAIT)
+	REMOVE_TRAIT(victim, TRAIT_DEAF, SOURCE_HYPNOCHAIR)
 	if(!(victim.get_eye_protection() > 0))
 		var/time_diff = world.time - start_time
 		switch(time_diff)

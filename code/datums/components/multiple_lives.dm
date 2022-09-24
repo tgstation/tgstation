@@ -34,7 +34,7 @@
 		return
 	//Gives the old mob this trait in case it gets revived, so we won't end up eventually overriding data
 	//that would be read by the current holder when he respawns if the old corpse is ever revived.
-	ADD_TRAIT(source, TRAIT_DONT_WRITE_MEMORY, EXPIRED_LIFE_TRAIT)
+	ADD_TRAIT(source, TRAIT_DONT_WRITE_MEMORY, SOURCE_EXPIRED_LIFE)
 	var/mob/living/respawned_mob = new source.type (source.drop_location())
 	source.mind?.transfer_to(respawned_mob)
 	lives_left--

@@ -18,7 +18,7 @@
 /mob/living/carbon/alien/humanoid/royal/Initialize(mapload)
 	. = ..()
 	// as a wise man once wrote: "pull over that ass too fat"
-	REMOVE_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	REMOVE_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, SOURCE_INNATE)
 
 /mob/living/carbon/alien/humanoid/royal/on_lying_down(new_lying_angle)
 	. = ..()

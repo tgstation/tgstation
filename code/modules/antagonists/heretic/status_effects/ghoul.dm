@@ -55,8 +55,8 @@
 		human_target.health = new_max_health
 
 	on_made_callback?.Invoke(human_target)
-	ADD_TRAIT(human_target, TRAIT_FAKEDEATH, REF(src))
-	human_target.become_husk(MAGIC_TRAIT)
+	ADD_TRAIT(human_target, TRAIT_FAKE_DEATH, REF(src))
+	human_target.become_husk(SOURCE_MAGIC)
 	human_target.faction |= FACTION_HERETIC
 
 	if(human_target.mind)
@@ -81,8 +81,8 @@
 		human_target.setMaxHealth(initial(human_target.maxHealth))
 
 	on_lost_callback?.Invoke(human_target)
-	REMOVE_TRAIT(human_target, TRAIT_FAKEDEATH, REF(src))
-	human_target.cure_husk(MAGIC_TRAIT)
+	REMOVE_TRAIT(human_target, TRAIT_FAKE_DEATH, REF(src))
+	human_target.cure_husk(SOURCE_MAGIC)
 	human_target.faction -= FACTION_HERETIC
 	human_target.mind?.remove_antag_datum(/datum/antagonist/heretic_monster)
 

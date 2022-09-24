@@ -519,16 +519,16 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	if(!heart || heart.organ_flags & ORGAN_FAILING)
 		return ..()
 	metabolization_rate = 0.35
-	ADD_TRAIT(owner, TRAIT_STABLEHEART, type)
-	ADD_TRAIT(owner, TRAIT_NOHARDCRIT, type)
-	ADD_TRAIT(owner, TRAIT_NOSOFTCRIT, type)
-	ADD_TRAIT(owner, TRAIT_NOCRITDAMAGE, type)
-	ADD_TRAIT(owner, TRAIT_NODEATH, type)
+	ADD_TRAIT(owner, TRAIT_STABLE_HEART, type)
+	ADD_TRAIT(owner, TRAIT_NO_HARD_CRIT, type)
+	ADD_TRAIT(owner, TRAIT_NO_SOFT_CRIT, type)
+	ADD_TRAIT(owner, TRAIT_NO_CRIT_DAMAGE, type)
+	ADD_TRAIT(owner, TRAIT_NO_DEATH, type)
 	owner.set_stat(CONSCIOUS) //This doesn't touch knocked out
 	owner.updatehealth()
 	owner.update_sight()
-	REMOVE_TRAIT(owner, TRAIT_KNOCKEDOUT, STAT_TRAIT)
-	REMOVE_TRAIT(owner, TRAIT_KNOCKEDOUT, CRIT_HEALTH_TRAIT) //Because these are normally updated using set_health() - but we don't want to adjust health, and the addition of NOHARDCRIT blocks it being added after, but doesn't remove it if it was added before
+	REMOVE_TRAIT(owner, TRAIT_KNOCKEDOUT, SOURCE_STAT)
+	REMOVE_TRAIT(owner, TRAIT_KNOCKEDOUT, SOURCE_CRIT_HEALTH) //Because these are normally updated using set_health() - but we don't want to adjust health, and the addition of NOHARDCRIT blocks it being added after, but doesn't remove it if it was added before
 	owner.set_resting(FALSE)//Please get up, no one wants a deaththrows juggernaught that lies on the floor all the time
 	owner.SetAllImmobility(0)
 	back_from_the_dead = TRUE
@@ -539,7 +539,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 /datum/reagent/inverse/penthrite/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
 	if(!back_from_the_dead)
 		return ..()
-	REMOVE_TRAIT(src, TRAIT_KNOCKEDOUT, CRIT_HEALTH_TRAIT)
+	REMOVE_TRAIT(src, TRAIT_KNOCKEDOUT, SOURCE_CRIT_HEALTH)
 	//Following is for those brought back from the dead only
 	for(var/datum/wound/iter_wound as anything in owner.all_wounds)
 		iter_wound.adjust_blood_flow(1-creation_purity)
@@ -568,7 +568,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		return ..()
 	var/obj/item/organ/internal/heart/heart = owner.getorganslot(ORGAN_SLOT_HEART)
 	if(!heart) //No heart? No life!
-		REMOVE_TRAIT(owner, TRAIT_NODEATH, type)
+		REMOVE_TRAIT(owner, TRAIT_NO_DEATH, type)
 		owner.stat = DEAD
 		return ..()
 	explosion(owner, light_impact_range = 1, explosion_cause = src)
@@ -577,11 +577,11 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	return..()
 
 /datum/reagent/inverse/penthrite/proc/remove_buffs(mob/living/carbon/owner)
-	REMOVE_TRAIT(owner, TRAIT_STABLEHEART, type)
-	REMOVE_TRAIT(owner, TRAIT_NOHARDCRIT, type)
-	REMOVE_TRAIT(owner, TRAIT_NOSOFTCRIT, type)
-	REMOVE_TRAIT(owner, TRAIT_NOCRITDAMAGE, type)
-	REMOVE_TRAIT(owner, TRAIT_NODEATH, type)
+	REMOVE_TRAIT(owner, TRAIT_STABLE_HEART, type)
+	REMOVE_TRAIT(owner, TRAIT_NO_HARD_CRIT, type)
+	REMOVE_TRAIT(owner, TRAIT_NO_SOFT_CRIT, type)
+	REMOVE_TRAIT(owner, TRAIT_NO_CRIT_DAMAGE, type)
+	REMOVE_TRAIT(owner, TRAIT_NO_DEATH, type)
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/nooartrium)
 	owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/nooartrium)
 	owner.update_sight()
@@ -773,13 +773,13 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	if(headache)
 		return ..()
 	if(DT_PROB(100*(1-creation_purity), delta_time))
-		owner.become_blind(IMPURE_OCULINE)
+		owner.become_blind(SOURCE_IMPURE_OCULINE)
 		to_chat(owner, span_danger("You suddenly develop a pounding headache as your vision fluxuates."))
 		headache = TRUE
 	..()
 
 /datum/reagent/inverse/oculine/on_mob_end_metabolize(mob/living/owner)
-	owner.cure_blind(IMPURE_OCULINE)
+	owner.cure_blind(SOURCE_IMPURE_OCULINE)
 	if(headache)
 		to_chat(owner, span_notice("Your headache clears up!"))
 	..()

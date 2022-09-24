@@ -93,7 +93,7 @@
 		var/mob/living/carbon/human/human_attacker = user
 		human_attacker.set_species(/datum/species/plasmaman)
 		ADD_TRAIT(human_attacker, TRAIT_FORCED_STANDING, type)
-		ADD_TRAIT(human_attacker, TRAIT_BOMBIMMUNE, type)
+		ADD_TRAIT(human_attacker, TRAIT_BOMB_IMMUNE, type)
 		human_attacker.unequip_everything()
 		human_attacker.underwear = "Nude"
 		human_attacker.undershirt = "Nude"
@@ -117,7 +117,7 @@
 
 /datum/martial_art/plasma_fist/proc/Apotheosis_end(mob/living/dying)
 	REMOVE_TRAIT(dying, TRAIT_FORCED_STANDING, type)
-	REMOVE_TRAIT(dying, TRAIT_BOMBIMMUNE, type)
+	REMOVE_TRAIT(dying, TRAIT_BOMB_IMMUNE, type)
 	if(dying.stat == DEAD)
 		return
 	dying.death()

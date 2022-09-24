@@ -137,7 +137,7 @@
 	active_item = augment
 
 	active_item.resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	ADD_TRAIT(active_item, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
+	ADD_TRAIT(active_item, TRAIT_NODROP, SOURCE_HAND_REPLACEMENT)
 	active_item.slot_flags = null
 	active_item.set_custom_materials(null)
 

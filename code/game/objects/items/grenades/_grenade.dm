@@ -76,7 +76,7 @@
 /obj/item/grenade/proc/botch_check(mob/living/carbon/human/user)
 	if(sticky && prob(50)) // to add risk to sticky tape grenade cheese, no return cause we still prime as normal after.
 		to_chat(user, span_warning("What the... [src] is stuck to your hand!"))
-		ADD_TRAIT(src, TRAIT_NODROP, STICKY_NODROP)
+		ADD_TRAIT(src, TRAIT_NODROP, SOURCE_STICKY_NO_DROP)
 
 	var/clumsy = HAS_TRAIT(user, TRAIT_CLUMSY)
 	if(clumsy && (clumsy_check == GRENADE_CLUMSY_FUMBLE) && prob(50))
@@ -103,7 +103,7 @@
 		to_chat(user, span_notice("You try prying [src] off your hand..."))
 		if(do_after(user, 7 SECONDS, target = src))
 			to_chat(user, span_notice("You manage to remove [src] from your hand."))
-			REMOVE_TRAIT(src, TRAIT_NODROP, STICKY_NODROP)
+			REMOVE_TRAIT(src, TRAIT_NODROP, SOURCE_STICKY_NO_DROP)
 		return
 
 	if (active)

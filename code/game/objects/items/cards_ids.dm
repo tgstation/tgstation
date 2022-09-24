@@ -121,7 +121,7 @@
 
 	RegisterSignal(src, COMSIG_ATOM_UPDATED_ICON, .proc/update_in_wallet)
 	if(prob(1))
-		ADD_TRAIT(src, TRAIT_TASTEFULLY_THICK_ID_CARD, ROUNDSTART_TRAIT)
+		ADD_TRAIT(src, TRAIT_TASTEFULLY_THICK_ID_CARD, SOURCE_ROUNDSTART)
 
 /obj/item/card/id/Destroy()
 	if (registered_account)
@@ -1073,7 +1073,7 @@
 
 /obj/item/card/id/advanced/gold/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_TASTEFULLY_THICK_ID_CARD, ROUNDSTART_TRAIT)
+	ADD_TRAIT(src, TRAIT_TASTEFULLY_THICK_ID_CARD, SOURCE_ROUNDSTART)
 
 /obj/item/card/id/advanced/gold/captains_spare
 	name = "captain's spare ID"
@@ -1571,7 +1571,7 @@
 					registered_age = new_age
 
 				if(tgui_alert(user, "Activate wallet ID spoofing, allowing this card to force itself to occupy the visible ID slot in wallets?", "Wallet ID Spoofing", list("Yes", "No")) == "Yes")
-					ADD_TRAIT(src, TRAIT_MAGNETIC_ID_CARD, CHAMELEON_ITEM_TRAIT)
+					ADD_TRAIT(src, TRAIT_MAGNETIC_ID_CARD, SOURCE_CHAMELEON_ITEM)
 
 				update_label()
 				update_icon()
@@ -1593,7 +1593,7 @@
 				registered_name = initial(registered_name)
 				assignment = initial(assignment)
 				SSid_access.remove_trim_from_chameleon_card(src)
-				REMOVE_TRAIT(src, TRAIT_MAGNETIC_ID_CARD, CHAMELEON_ITEM_TRAIT)
+				REMOVE_TRAIT(src, TRAIT_MAGNETIC_ID_CARD, SOURCE_CHAMELEON_ITEM)
 				user.log_message("reset \the [initial(name)] named \"[src]\" to default.", LOG_GAME)
 				update_label()
 				update_icon()

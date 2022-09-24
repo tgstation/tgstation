@@ -26,14 +26,14 @@
 	if(HAS_TRAIT(transforming_mind, TRAIT_HOT_SPRING_CURSED)) // no double dipping
 		return
 
-	ADD_TRAIT(transforming_mind, TRAIT_HOT_SPRING_CURSED, TRAIT_GENERIC)
+	ADD_TRAIT(transforming_mind, TRAIT_HOT_SPRING_CURSED, SOURCE_GENERIC)
 	var/mob/living/transformed_mob = to_transform.wabbajack(pick(WABBAJACK_HUMAN, WABBAJACK_ANIMAL), change_flags = RACE_SWAP)
 	if(!transformed_mob)
 		// Wabbajack failed, maybe the mob had godmode or something.
 		if(!QDELETED(to_transform))
 			to_chat(to_transform, span_notice("The water seems to have no effect on you."))
 		// because it failed, let's allow them to try again in a lil' bit
-		addtimer(TRAIT_CALLBACK_REMOVE(transforming_mind, TRAIT_HOT_SPRING_CURSED, TRAIT_GENERIC), 10 SECONDS)
+		addtimer(TRAIT_CALLBACK_REMOVE(transforming_mind, TRAIT_HOT_SPRING_CURSED, SOURCE_GENERIC), 10 SECONDS)
 		return
 
 	var/turf/return_turf = find_safe_turf(extended_safety_checks = TRUE, dense_atoms = FALSE)

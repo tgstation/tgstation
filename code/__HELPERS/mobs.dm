@@ -546,7 +546,7 @@ GLOBAL_LIST_EMPTY(species_list)
 		var/override = FALSE
 		if(M.client?.holder && (chat_toggles & CHAT_DEAD))
 			override = TRUE
-		if(HAS_TRAIT(M, TRAIT_SIXTHSENSE) && message_type == DEADCHAT_REGULAR)
+		if(HAS_TRAIT(M, TRAIT_SIXTH_SENSE) && message_type == DEADCHAT_REGULAR)
 			override = TRUE
 		if(SSticker.current_state == GAME_STATE_FINISHED)
 			override = TRUE
@@ -620,7 +620,7 @@ GLOBAL_LIST_EMPTY(species_list)
 /proc/passtable_on(target, source)
 	var/mob/living/L = target
 	if (!HAS_TRAIT(L, TRAIT_PASSTABLE) && L.pass_flags & PASSTABLE)
-		ADD_TRAIT(L, TRAIT_PASSTABLE, INNATE_TRAIT)
+		ADD_TRAIT(L, TRAIT_PASSTABLE, SOURCE_INNATE)
 	ADD_TRAIT(L, TRAIT_PASSTABLE, source)
 	L.pass_flags |= PASSTABLE
 
@@ -715,7 +715,7 @@ GLOBAL_LIST_EMPTY(species_list)
 		return -(BODYTEMP_AUTORECOVERY_DIVISOR / 2) * log(1 - (temp_diff * change_rate))
 	return (BODYTEMP_AUTORECOVERY_DIVISOR / 2) * log(1 + (temp_diff * change_rate))
 
-#define ISADVANCEDTOOLUSER(mob) (HAS_TRAIT(mob, TRAIT_ADVANCEDTOOLUSER) && !HAS_TRAIT(mob, TRAIT_DISCOORDINATED_TOOL_USER))
+#define ISADVANCEDTOOLUSER(mob) (HAS_TRAIT(mob, TRAIT_ADVANCED_TOOL_USER) && !HAS_TRAIT(mob, TRAIT_DISCOORDINATED_TOOL_USER))
 
 #define IS_IN_STASIS(mob) (mob.has_status_effect(/datum/status_effect/grouped/stasis))
 

@@ -114,7 +114,7 @@
 /datum/status_effect/blooddrunk/on_apply()
 	. = ..()
 	if(.)
-		ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, BLOODDRUNK_TRAIT)
+		ADD_TRAIT(owner, TRAIT_IGNORE_DAMAGE_SLOWDOWN, SOURCE_BLOOD_DRUNK)
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			H.physiology.brute_mod *= 0.1
@@ -137,7 +137,7 @@
 		H.physiology.clone_mod *= 10
 		H.physiology.stamina_mod *= 10
 	owner.log_message("lost blood-drunk stun immunity", LOG_ATTACK)
-	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, BLOODDRUNK_TRAIT);
+	REMOVE_TRAIT(owner, TRAIT_IGNORE_DAMAGE_SLOWDOWN, SOURCE_BLOOD_DRUNK);
 	if(islist(owner.stun_absorption) && owner.stun_absorption["blooddrunk"])
 		owner.stun_absorption -= "blooddrunk"
 
@@ -236,14 +236,14 @@
 	)
 
 	//Makes the user passive, it's in their oath not to harm!
-	ADD_TRAIT(owner, TRAIT_PACIFISM, HIPPOCRATIC_OATH_TRAIT)
+	ADD_TRAIT(owner, TRAIT_PACIFISM, SOURCE_HIPPOCRATIC_OATH)
 	var/datum/atom_hud/med_hud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	med_hud.show_to(owner)
 	return ..()
 
 /datum/status_effect/hippocratic_oath/on_remove()
 	QDEL_NULL(aura_healing)
-	REMOVE_TRAIT(owner, TRAIT_PACIFISM, HIPPOCRATIC_OATH_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, SOURCE_HIPPOCRATIC_OATH)
 	var/datum/atom_hud/med_hud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	med_hud.hide_from(owner)
 
@@ -335,7 +335,7 @@
 	alert_type = /atom/movable/screen/alert/status_effect/regenerative_core
 
 /datum/status_effect/regenerative_core/on_apply()
-	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, STATUS_EFFECT_TRAIT)
+	ADD_TRAIT(owner, TRAIT_IGNORE_DAMAGE_SLOWDOWN, SOURCE_STATUS_EFFECT)
 	owner.adjustBruteLoss(-25)
 	owner.adjustFireLoss(-25)
 	owner.remove_CC()
@@ -346,7 +346,7 @@
 	return TRUE
 
 /datum/status_effect/regenerative_core/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, STATUS_EFFECT_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_IGNORE_DAMAGE_SLOWDOWN, SOURCE_STATUS_EFFECT)
 
 /datum/status_effect/lightningorb
 	id = "Lightning Orb"
@@ -381,7 +381,7 @@
 	new /datum/hallucination/delusion(owner, forced = TRUE, force_kind = "demon", duration = duration, skip_nearby = FALSE)
 	chainsaw = new(get_turf(owner))
 	owner.log_message("entered a blood frenzy", LOG_ATTACK)
-	ADD_TRAIT(chainsaw, TRAIT_NODROP, CHAINSAW_FRENZY_TRAIT)
+	ADD_TRAIT(chainsaw, TRAIT_NODROP, SOURCE_CHAINSAW_FRENZY)
 	owner.drop_all_held_items()
 	owner.put_in_hands(chainsaw, forced = TRUE)
 	chainsaw.attack_self(owner)

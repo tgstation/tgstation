@@ -9,7 +9,7 @@
 
 /obj/item/food/bait/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, bait_quality, INNATE_TRAIT)
+	ADD_TRAIT(src, bait_quality, SOURCE_INNATE)
 
 /obj/item/food/bait/worm
 	name = "worm"

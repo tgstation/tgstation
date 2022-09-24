@@ -384,9 +384,9 @@
 	. = TRUE // Default to returning true.
 	// we may choose to ignore species trait pierce immunity in case we still want to check skellies for thick clothing without insta failing them (wounds)
 	if(injection_flags & INJECT_CHECK_IGNORE_SPECIES)
-		if(HAS_TRAIT_NOT_FROM(src, TRAIT_PIERCEIMMUNE, SPECIES_TRAIT))
+		if(HAS_TRAIT_NOT_FROM(src, TRAIT_PIERCE_IMMUNE, SOURCE_SPECIES))
 			. = FALSE
-	else if(HAS_TRAIT(src, TRAIT_PIERCEIMMUNE))
+	else if(HAS_TRAIT(src, TRAIT_PIERCE_IMMUNE))
 		. = FALSE
 	if(user && !target_zone)
 		target_zone = get_bodypart(check_zone(user.zone_selected)) //try to find a bodypart. if there isn't one, target_zone will be null, and check_zone in the next line will default to the chest.
@@ -509,7 +509,7 @@
 		if (DOING_INTERACTION_WITH_TARGET(src,target))
 			return FALSE
 
-		if (target.stat == DEAD || HAS_TRAIT(target, TRAIT_FAKEDEATH))
+		if (target.stat == DEAD || HAS_TRAIT(target, TRAIT_FAKE_DEATH))
 			to_chat(src, span_warning("[target.name] is dead!"))
 			return FALSE
 
@@ -525,7 +525,7 @@
 			to_chat(src, span_warning("You have no lungs to breathe with, so you cannot perform CPR!"))
 			return FALSE
 
-		if (HAS_TRAIT(src, TRAIT_NOBREATH))
+		if (HAS_TRAIT(src, TRAIT_NO_BREATH))
 			to_chat(src, span_warning("You do not breathe, so you cannot perform CPR!"))
 			return FALSE
 
@@ -543,7 +543,7 @@
 		add_mood_event("saved_life", /datum/mood_event/saved_life)
 		log_combat(src, target, "CPRed")
 
-		if (HAS_TRAIT(target, TRAIT_NOBREATH))
+		if (HAS_TRAIT(target, TRAIT_NO_BREATH))
 			to_chat(target, span_unconscious("You feel a breath of fresh air... which is a sensation you don't recognise..."))
 		else if (!target.getorganslot(ORGAN_SLOT_LUNGS))
 			to_chat(target, span_unconscious("You feel a breath of fresh air... but you don't feel any better..."))
@@ -598,11 +598,11 @@
 	update_body()
 
 	var/obj/item/bodypart/head/hopefully_a_head = get_bodypart(BODY_ZONE_HEAD)
-	REMOVE_TRAITS_IN(src, LIPSTICK_TRAIT)
+	REMOVE_TRAITS_IN(src, SOURCE_LIPSTICK)
 	hopefully_a_head?.stored_lipstick_trait = null
 
 	if(new_style && apply_trait)
-		ADD_TRAIT(src, apply_trait, LIPSTICK_TRAIT)
+		ADD_TRAIT(src, apply_trait, SOURCE_LIPSTICK)
 		hopefully_a_head?.stored_lipstick_trait = apply_trait
 
 /**
@@ -783,7 +783,7 @@
 	return ..()
 
 /mob/living/carbon/human/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, vomit_type = VOMIT_TOXIC, harm = TRUE, force = FALSE, purge_ratio = 0.1)
-	if(blood && (NOBLOOD in dna.species.species_traits) && !HAS_TRAIT(src, TRAIT_TOXINLOVER))
+	if(blood && (NOBLOOD in dna.species.species_traits) && !HAS_TRAIT(src, TRAIT_TOXIN_LOVER))
 		if(message)
 			visible_message(span_warning("[src] dry heaves!"), \
 							span_userdanger("You try to throw up, but there's nothing in your stomach!"))
@@ -964,7 +964,7 @@
 /mob/living/carbon/human/updatehealth()
 	. = ..()
 	dna?.species.spec_updatehealth(src)
-	if(HAS_TRAIT(src, TRAIT_IGNOREDAMAGESLOWDOWN))
+	if(HAS_TRAIT(src, TRAIT_IGNORE_DAMAGE_SLOWDOWN))
 		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown)
 		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying)
 		return
@@ -977,12 +977,12 @@
 		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying)
 
 /mob/living/carbon/human/adjust_nutrition(change) //Honestly FUCK the oldcoders for putting nutrition on /mob someone else can move it up because holy hell I'd have to fix SO many typechecks
-	if(HAS_TRAIT(src, TRAIT_NOHUNGER))
+	if(HAS_TRAIT(src, TRAIT_NO_HUNGER))
 		return FALSE
 	return ..()
 
 /mob/living/carbon/human/set_nutrition(change) //Seriously fuck you oldcoders.
-	if(HAS_TRAIT(src, TRAIT_NOHUNGER))
+	if(HAS_TRAIT(src, TRAIT_NO_HUNGER))
 		return FALSE
 	return ..()
 

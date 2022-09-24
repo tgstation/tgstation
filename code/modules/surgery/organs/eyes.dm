@@ -87,8 +87,8 @@
 		if(initial(eye_color_right))
 			human_owner.eye_color_right = old_eye_color_right
 		human_owner.update_body()
-	eye_owner.cure_blind(EYE_DAMAGE)
-	eye_owner.cure_nearsighted(EYE_DAMAGE)
+	eye_owner.cure_blind(SOURCE_EYE_DAMAGE)
+	eye_owner.cure_nearsighted(SOURCE_EYE_DAMAGE)
 	eye_owner.set_blindness(0)
 	eye_owner.set_blurriness(0)
 	eye_owner.clear_fullscreen("eye_damage", 0)
@@ -145,7 +145,7 @@
 	if(damage > 20)
 		damaged = TRUE
 		if((organ_flags & ORGAN_FAILING))
-			eye_owner.become_blind(EYE_DAMAGE)
+			eye_owner.become_blind(SOURCE_EYE_DAMAGE)
 			return
 
 		var/obj/item/clothing/glasses/eyewear = eye_owner.glasses
@@ -162,7 +162,7 @@
 	if(damaged)
 		damaged = FALSE
 		eye_owner.clear_fullscreen("eye_damage")
-		eye_owner.cure_blind(EYE_DAMAGE)
+		eye_owner.cure_blind(SOURCE_EYE_DAMAGE)
 
 /obj/item/organ/internal/eyes/night_vision
 	see_in_dark = NIGHTVISION_FOV_RANGE
@@ -242,10 +242,10 @@
 
 /obj/item/organ/internal/eyes/robotic/xray/Insert(mob/living/carbon/eye_owner, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
-	ADD_TRAIT(eye_owner, TRAIT_XRAY_VISION, ORGAN_TRAIT)
+	ADD_TRAIT(eye_owner, TRAIT_XRAY_VISION, SOURCE_ORGAN)
 
 /obj/item/organ/internal/eyes/robotic/xray/Remove(mob/living/carbon/eye_owner, special = FALSE)
-	REMOVE_TRAIT(eye_owner, TRAIT_XRAY_VISION, ORGAN_TRAIT)
+	REMOVE_TRAIT(eye_owner, TRAIT_XRAY_VISION, SOURCE_ORGAN)
 	return ..()
 
 /obj/item/organ/internal/eyes/robotic/thermals
@@ -279,14 +279,14 @@
 	eye.on = TRUE
 	eye.forceMove(victim)
 	eye.update_brightness(victim)
-	victim.become_blind(FLASHLIGHT_EYES)
+	victim.become_blind(SOURCE_FLASHLIGHT_EYES)
 
 
 /obj/item/organ/internal/eyes/robotic/flashlight/Remove(mob/living/carbon/victim, special = 0)
 	eye.on = FALSE
 	eye.update_brightness(victim)
 	eye.forceMove(src)
-	victim.cure_blind(FLASHLIGHT_EYES)
+	victim.cure_blind(SOURCE_FLASHLIGHT_EYES)
 	..()
 
 // Welding shield implant
@@ -536,7 +536,7 @@
 	adapt_light.on = TRUE
 	adapt_light.forceMove(adapted)
 	adapt_light.update_brightness(adapted)
-	ADD_TRAIT(adapted, TRAIT_UNNATURAL_RED_GLOWY_EYES, ORGAN_TRAIT)
+	ADD_TRAIT(adapted, TRAIT_GLOWING_RED_EYES, SOURCE_ORGAN)
 
 /obj/item/organ/internal/eyes/night_vision/maintenance_adapted/on_life(delta_time, times_fired)
 	var/turf/owner_turf = get_turf(owner)
@@ -554,5 +554,5 @@
 	adapt_light.on = FALSE
 	adapt_light.update_brightness(unadapted)
 	adapt_light.forceMove(src)
-	REMOVE_TRAIT(unadapted, TRAIT_UNNATURAL_RED_GLOWY_EYES, ORGAN_TRAIT)
+	REMOVE_TRAIT(unadapted, TRAIT_GLOWING_RED_EYES, SOURCE_ORGAN)
 	return ..()

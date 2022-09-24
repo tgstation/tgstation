@@ -190,7 +190,7 @@
 /// Rose's prick on backfire
 /datum/plant_gene/trait/backfire/rose_thorns
 	name = "Rose Thorns"
-	traits_to_check = list(TRAIT_PIERCEIMMUNE)
+	traits_to_check = list(TRAIT_PIERCE_IMMUNE)
 
 /datum/plant_gene/trait/backfire/rose_thorns/backfire_effect(obj/item/our_plant, mob/living/carbon/user)
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()

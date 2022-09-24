@@ -53,7 +53,7 @@
 	)
 
 	// This duffelbag is now cuuuurrrsseed! Equip it on them
-	ADD_TRAIT(conjured_duffel, TRAIT_DUFFEL_CURSE_PROOF, CURSED_ITEM_TRAIT(conjured_duffel.name))
+	ADD_TRAIT(conjured_duffel, TRAIT_DUFFEL_CURSE_PROOF, SOURCE_CURSED_ITEM(conjured_duffel.name))
 	conjured_duffel.pickup(duffel_victim)
 	conjured_duffel.forceMove(duffel_victim)
 

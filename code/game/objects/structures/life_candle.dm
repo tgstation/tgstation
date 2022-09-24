@@ -38,10 +38,10 @@
 		user.visible_message(span_notice("[user] reaches out and pinches the flame of [src]."), span_warning("You sever the connection between yourself and [src]."))
 		linked_minds -= user.mind
 		if(!linked_minds.len)
-			REMOVE_TRAIT(src, TRAIT_MOVE_FLOATING, LIFECANDLE_TRAIT)
+			REMOVE_TRAIT(src, TRAIT_MOVE_FLOATING, SOURCE_LIFECANDLE)
 	else
 		if(!linked_minds.len)
-			ADD_TRAIT(src, TRAIT_MOVE_FLOATING, LIFECANDLE_TRAIT)
+			ADD_TRAIT(src, TRAIT_MOVE_FLOATING, SOURCE_LIFECANDLE)
 		user.visible_message(span_notice("[user] touches [src]. It seems to respond to [user.p_their()] presence!"), span_warning("You create a connection between you and [src]."))
 		linked_minds |= user.mind
 

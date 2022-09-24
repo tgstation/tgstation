@@ -82,7 +82,7 @@
 		say("Subject is not organic.")
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
 		return
-	if(!allow_living && !(C.stat == DEAD || HAS_TRAIT(C, TRAIT_FAKEDEATH)))     //I mean, the machines scanners arent advanced enough to tell you're alive
+	if(!allow_living && !(C.stat == DEAD || HAS_TRAIT(C, TRAIT_FAKE_DEATH)))     //I mean, the machines scanners arent advanced enough to tell you're alive
 		say("Subject is still alive.")
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
 		return

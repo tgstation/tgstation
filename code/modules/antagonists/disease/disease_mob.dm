@@ -52,7 +52,7 @@ the new instance inside the host to be updated to the template's stats.
 /mob/camera/disease/Initialize(mapload)
 	.= ..()
 
-	ADD_TRAIT(src, TRAIT_SIXTHSENSE, INNATE_TRAIT) //at least they'll have SOMEONE to talk to
+	ADD_TRAIT(src, TRAIT_SIXTH_SENSE, SOURCE_INNATE) //at least they'll have SOMEONE to talk to
 
 	disease_instances = list()
 	hosts = list()

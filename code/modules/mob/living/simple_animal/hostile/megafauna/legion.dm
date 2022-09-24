@@ -69,7 +69,7 @@
 
 /mob/living/simple_animal/hostile/megafauna/legion/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, SOURCE_INNATE)
 
 /mob/living/simple_animal/hostile/megafauna/legion/medium
 	icon = 'icons/mob/simple/lavaland/64x64megafauna.dmi'
@@ -286,7 +286,7 @@
 /obj/structure/legionturret/Initialize(mapload)
 	. = ..()
 	addtimer(CALLBACK(src, .proc/set_up_shot), initial_firing_time)
-	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, SOURCE_INNATE)
 
 ///Handles an extremely basic AI
 /obj/structure/legionturret/proc/set_up_shot()

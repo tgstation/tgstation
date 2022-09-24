@@ -30,14 +30,14 @@
 	if(slot != ITEM_SLOT_MASK)
 		return
 	to_chat(user, "You roll the balaclava over your face, and a data display appears before your eyes.")
-	ADD_TRAIT(user, TRAIT_DIAGNOSTIC_HUD, MASK_TRAIT)
+	ADD_TRAIT(user, TRAIT_DIAGNOSTIC_HUD, SOURCE_MASK)
 	var/datum/atom_hud/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC_BASIC]
 	diag_hud.show_to(user)
 	voice_unknown = TRUE
 
 /obj/item/clothing/mask/infiltrator/dropped(mob/living/carbon/human/user)
 	to_chat(user, "You pull off the balaclava, and the mask's internal hud system switches off quietly.")
-	REMOVE_TRAIT(user, TRAIT_DIAGNOSTIC_HUD, MASK_TRAIT)
+	REMOVE_TRAIT(user, TRAIT_DIAGNOSTIC_HUD, SOURCE_MASK)
 	var/datum/atom_hud/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC_BASIC]
 	diag_hud.hide_from(user)
 	voice_unknown = FALSE

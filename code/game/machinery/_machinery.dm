@@ -202,10 +202,10 @@
 	if(our_area)
 		RegisterSignal(our_area, COMSIG_AREA_POWER_CHANGE, .proc/power_change)
 
-	if(HAS_TRAIT_FROM(src, TRAIT_AREA_SENSITIVE, INNATE_TRAIT)) // If we for some reason have not lost our area sensitivity, there's no reason to set it back up
+	if(HAS_TRAIT_FROM(src, TRAIT_AREA_SENSITIVE, SOURCE_INNATE)) // If we for some reason have not lost our area sensitivity, there's no reason to set it back up
 		return FALSE
 
-	become_area_sensitive(INNATE_TRAIT)
+	become_area_sensitive(SOURCE_INNATE)
 	RegisterSignal(src, COMSIG_ENTER_AREA, .proc/on_enter_area)
 	RegisterSignal(src, COMSIG_EXIT_AREA, .proc/on_exit_area)
 	return TRUE
@@ -223,7 +223,7 @@
 	if(always_area_sensitive)
 		return
 
-	lose_area_sensitivity(INNATE_TRAIT)
+	lose_area_sensitivity(SOURCE_INNATE)
 	UnregisterSignal(src, COMSIG_ENTER_AREA)
 	UnregisterSignal(src, COMSIG_EXIT_AREA)
 

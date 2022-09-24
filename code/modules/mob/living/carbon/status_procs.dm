@@ -1,13 +1,13 @@
 //Here are the procs used to modify status effects of a mob.
 //The effects include: stun, knockdown, unconscious, sleeping, resting, jitteriness, dizziness, ear damage,
-//eye_blind, eye_blurry, druggy, TRAIT_BLIND trait, TRAIT_NEARSIGHT trait, and TRAIT_HUSK trait.
+//eye_blind, eye_blurry, druggy, TRAIT_BLIND trait, TRAIT_NEARSIGHTED trait, and TRAIT_HUSK trait.
 
 
 /mob/living/carbon/IsParalyzed(include_stamcrit = TRUE)
 	return ..() || (include_stamcrit && HAS_TRAIT_FROM(src, TRAIT_INCAPACITATED, STAMINA))
 
 /mob/living/carbon/proc/enter_stamcrit()
-	if(!(status_flags & CANKNOCKDOWN) || HAS_TRAIT(src, TRAIT_STUNIMMUNE))
+	if(!(status_flags & CANKNOCKDOWN) || HAS_TRAIT(src, TRAIT_STUN_IMMUNE))
 		return
 	if(HAS_TRAIT_FROM(src, TRAIT_INCAPACITATED, STAMINA)) //Already in stamcrit
 		return

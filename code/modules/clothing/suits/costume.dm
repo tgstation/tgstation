@@ -218,7 +218,7 @@
 
 /obj/item/clothing/suit/costume/poncho/ponchoshame/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, SHAMEBRERO_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, SOURCE_SHAMEBRERO)
 
 /obj/item/clothing/suit/costume/whitedress
 	name = "white dress"
@@ -294,7 +294,7 @@
 
 /obj/item/clothing/head/hooded/carp_hood/spaceproof/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, LOCKED_HELMET_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, SOURCE_LOCKED_HELMET)
 
 /obj/item/clothing/suit/hooded/carp_costume/spaceproof/old
 	name = "battered carp space suit"

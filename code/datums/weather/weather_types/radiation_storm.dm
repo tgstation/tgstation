@@ -41,7 +41,7 @@
 	if(!H.dna || HAS_TRAIT(H, TRAIT_GENELESS) || H.status_flags & GODMODE)
 		return
 
-	if(HAS_TRAIT(H, TRAIT_RADIMMUNE))
+	if(HAS_TRAIT(H, TRAIT_RAD_IMMUNE))
 		return
 
 	if (SSradiation.wearing_rad_protected_clothing(H))

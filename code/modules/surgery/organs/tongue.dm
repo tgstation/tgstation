@@ -55,13 +55,13 @@
 	tongue_owner.UnregisterSignal(tongue_owner, COMSIG_MOB_SAY)
 
 	/* This could be slightly simpler, by making the removal of the
-	* NO_TONGUE_TRAIT conditional on the tongue's `sense_of_taste`, but
+	* SOURCE_NO_TONGUE conditional on the tongue's `sense_of_taste`, but
 	* then you can distinguish between ageusia from no tongue, and
 	* ageusia from having a non-tasting tongue.
 	*/
-	REMOVE_TRAIT(tongue_owner, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
+	REMOVE_TRAIT(tongue_owner, TRAIT_AGEUSIA, SOURCE_NO_TONGUE)
 	if(!sense_of_taste)
-		ADD_TRAIT(tongue_owner, TRAIT_AGEUSIA, ORGAN_TRAIT)
+		ADD_TRAIT(tongue_owner, TRAIT_AGEUSIA, SOURCE_ORGAN)
 
 /obj/item/organ/internal/tongue/Remove(mob/living/carbon/tongue_owner, special = FALSE)
 	. = ..()
@@ -69,9 +69,9 @@
 		tongue_owner.dna.species.say_mod = initial(tongue_owner.dna.species.say_mod)
 	UnregisterSignal(tongue_owner, COMSIG_MOB_SAY)
 	tongue_owner.RegisterSignal(tongue_owner, COMSIG_MOB_SAY, /mob/living/carbon/.proc/handle_tongueless_speech)
-	REMOVE_TRAIT(tongue_owner, TRAIT_AGEUSIA, ORGAN_TRAIT)
-	// Carbons by default start with NO_TONGUE_TRAIT caused TRAIT_AGEUSIA
-	ADD_TRAIT(tongue_owner, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
+	REMOVE_TRAIT(tongue_owner, TRAIT_AGEUSIA, SOURCE_ORGAN)
+	// Carbons by default start with SOURCE_NO_TONGUE caused TRAIT_AGEUSIA
+	ADD_TRAIT(tongue_owner, TRAIT_AGEUSIA, SOURCE_NO_TONGUE)
 
 /obj/item/organ/internal/tongue/could_speak_language(language)
 	return is_type_in_typecache(language, languages_possible)
@@ -454,8 +454,8 @@
 	signer.verb_sing = "rythmically signs"
 	signer.verb_yell = "emphatically signs"
 	signer.bubble_icon = "signlang"
-	ADD_TRAIT(signer, TRAIT_SIGN_LANG, ORGAN_TRAIT)
-	REMOVE_TRAIT(signer, TRAIT_MUTE, ORGAN_TRAIT)
+	ADD_TRAIT(signer, TRAIT_SIGN_LANG, SOURCE_ORGAN)
+	REMOVE_TRAIT(signer, TRAIT_MUTE, SOURCE_ORGAN)
 
 /obj/item/organ/internal/tongue/tied/Remove(mob/living/carbon/speaker, special = FALSE)
 	..()
@@ -465,7 +465,7 @@
 	speaker.verb_sing = initial(speaker.verb_sing)
 	speaker.verb_yell = initial(speaker.verb_yell)
 	speaker.bubble_icon = initial(speaker.bubble_icon)
-	REMOVE_TRAIT(speaker, TRAIT_SIGN_LANG, ORGAN_TRAIT)
+	REMOVE_TRAIT(speaker, TRAIT_SIGN_LANG, SOURCE_ORGAN)
 
 /obj/item/organ/internal/tongue/tied/modify_speech(datum/source, list/speech_args)
 	// The message we send instead of our normal one

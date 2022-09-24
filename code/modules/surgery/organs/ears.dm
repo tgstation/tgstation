@@ -35,7 +35,7 @@
 
 	. = ..()
 	// if we have non-damage related deafness like mutations, quirks or clothing (earmuffs), don't bother processing here. Ear healing from earmuffs or chems happen elsewhere
-	if(HAS_TRAIT_NOT_FROM(owner, TRAIT_DEAF, EAR_DAMAGE))
+	if(HAS_TRAIT_NOT_FROM(owner, TRAIT_DEAF, SOURCE_EAR_DAMAGE))
 		return
 
 	if((organ_flags & ORGAN_FAILING))
@@ -47,9 +47,9 @@
 			SEND_SOUND(owner, sound('sound/weapons/flash_ring.ogg'))
 
 	if(deaf)
-		ADD_TRAIT(owner, TRAIT_DEAF, EAR_DAMAGE)
+		ADD_TRAIT(owner, TRAIT_DEAF, SOURCE_EAR_DAMAGE)
 	else
-		REMOVE_TRAIT(owner, TRAIT_DEAF, EAR_DAMAGE)
+		REMOVE_TRAIT(owner, TRAIT_DEAF, SOURCE_EAR_DAMAGE)
 
 /obj/item/organ/internal/ears/proc/adjustEarDamage(ddmg, ddeaf)
 	if(owner.status_flags & GODMODE)

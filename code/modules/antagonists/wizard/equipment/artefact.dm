@@ -187,8 +187,8 @@
 
 		to_chat(current_owner, span_notice("Your otherworldly vision fades..."))
 
-		REMOVE_TRAIT(current_owner, TRAIT_SIXTHSENSE, SCRYING_ORB)
-		REMOVE_TRAIT(current_owner, TRAIT_XRAY_VISION, SCRYING_ORB)
+		REMOVE_TRAIT(current_owner, TRAIT_SIXTH_SENSE, SOURCE_SCRYING)
+		REMOVE_TRAIT(current_owner, TRAIT_XRAY_VISION, SOURCE_SCRYING)
 		current_owner.update_sight()
 
 		current_owner = null
@@ -198,8 +198,8 @@
 
 		to_chat(current_owner, span_notice("You can see...everything!"))
 
-		ADD_TRAIT(current_owner, TRAIT_SIXTHSENSE, SCRYING_ORB)
-		ADD_TRAIT(current_owner, TRAIT_XRAY_VISION, SCRYING_ORB)
+		ADD_TRAIT(current_owner, TRAIT_SIXTH_SENSE, SOURCE_SCRYING)
+		ADD_TRAIT(current_owner, TRAIT_XRAY_VISION, SOURCE_SCRYING)
 		current_owner.update_sight()
 
 /obj/item/scrying/attack_self(mob/user)
@@ -353,7 +353,7 @@
 
 	pickedup_mobs += crossed
 	buckle_mob(crossed, TRUE, FALSE)
-	ADD_TRAIT(crossed, TRAIT_INCAPACITATED, WARPWHISTLE_TRAIT)
+	ADD_TRAIT(crossed, TRAIT_INCAPACITATED, SOURCE_WARP_WHISTLE)
 	animate(src, alpha = 20, pixel_y = 400, time = 3 SECONDS)
 	animate(crossed, pixel_y = 400, time = 3 SECONDS)
 	addtimer(CALLBACK(src, .proc/send_away), 2 SECONDS)
@@ -364,7 +364,7 @@
 		do_teleport(stored_mobs, ending_turfs, channel = TELEPORT_CHANNEL_MAGIC)
 		animate(stored_mobs, pixel_y = null, time = 1 SECONDS)
 		stored_mobs.log_message("warped with [whistle].", LOG_ATTACK, color = "red")
-		REMOVE_TRAIT(stored_mobs, TRAIT_INCAPACITATED, WARPWHISTLE_TRAIT)
+		REMOVE_TRAIT(stored_mobs, TRAIT_INCAPACITATED, SOURCE_WARP_WHISTLE)
 
 /// Destroy the tornado and teleport everyone on it away.
 /obj/effect/temp_visual/teleporting_tornado/Destroy()

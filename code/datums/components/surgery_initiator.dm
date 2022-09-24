@@ -146,7 +146,7 @@
 		the_surgery.operated_bodypart.adjustBleedStacks(-5)
 
 	patient.surgeries -= the_surgery
-	REMOVE_TRAIT(patient, TRAIT_ALLOWED_HONORBOUND_ATTACK, ELEMENT_TRAIT(type))
+	REMOVE_TRAIT(patient, TRAIT_ALLOWED_HONORBOUND_ATTACK, SOURCE_ELEMENT(type))
 
 	user.visible_message(
 		span_notice("[user] closes [patient]'s [parse_zone(selected_zone)] with [close_tool] and removes [parent]."),

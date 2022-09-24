@@ -4,17 +4,17 @@
 	id = SPECIES_GOLEM
 	species_traits = list(NOBLOOD,NOTRANSSTING, MUTCOLORS,NO_UNDERWEAR, NO_DNA_COPY)
 	inherent_traits = list(
-		TRAIT_CHUNKYFINGERS,
+		TRAIT_CHUNKY_FINGERS,
 		TRAIT_GENELESS,
-		TRAIT_NOBREATH,
-		TRAIT_NODISMEMBER,
-		TRAIT_NOFIRE,
-		TRAIT_PIERCEIMMUNE,
-		TRAIT_RADIMMUNE,
-		TRAIT_RESISTCOLD,
+		TRAIT_NO_BREATH,
+		TRAIT_NO_DISMEMBER,
+		TRAIT_FLAME_IMMUNE,
+		TRAIT_PIERCE_IMMUNE,
+		TRAIT_RAD_IMMUNE,
+		TRAIT_RESIST_COLD,
 		TRAIT_RESISTHEAT,
-		TRAIT_RESISTHIGHPRESSURE,
-		TRAIT_RESISTLOWPRESSURE,
+		TRAIT_RESIST_HIGH_PRESSURE,
+		TRAIT_RESIST_LOW_PRESSURE,
 	)
 	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL
 	mutant_organs = list(/obj/item/organ/internal/adamantine_resonator)
@@ -94,10 +94,10 @@
 
 /datum/species/golem/adamantine/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
-	ADD_TRAIT(C, TRAIT_ANTIMAGIC, SPECIES_TRAIT)
+	ADD_TRAIT(C, TRAIT_ANTI_MAGIC, SOURCE_SPECIES)
 
 /datum/species/golem/adamantine/on_species_loss(mob/living/carbon/C)
-	REMOVE_TRAIT(C, TRAIT_ANTIMAGIC, SPECIES_TRAIT)
+	REMOVE_TRAIT(C, TRAIT_ANTI_MAGIC, SOURCE_SPECIES)
 	..()
 
 //The suicide bombers of golemkind
@@ -109,15 +109,15 @@
 	//Can burn and takes damage from heat
 	//no RESISTHEAT, NOFIRE
 	inherent_traits = list(
-		TRAIT_CHUNKYFINGERS,
+		TRAIT_CHUNKY_FINGERS,
 		TRAIT_GENELESS,
-		TRAIT_NOBREATH,
-		TRAIT_NODISMEMBER,
-		TRAIT_PIERCEIMMUNE,
-		TRAIT_RADIMMUNE,
-		TRAIT_RESISTCOLD,
-		TRAIT_RESISTHIGHPRESSURE,
-		TRAIT_RESISTLOWPRESSURE,
+		TRAIT_NO_BREATH,
+		TRAIT_NO_DISMEMBER,
+		TRAIT_PIERCE_IMMUNE,
+		TRAIT_RAD_IMMUNE,
+		TRAIT_RESIST_COLD,
+		TRAIT_RESIST_HIGH_PRESSURE,
+		TRAIT_RESIST_LOW_PRESSURE,
 	)
 	info_text = "As a <span class='danger'>Plasma Golem</span>, you burn easily. Be careful, if you get hot enough while burning, you'll blow up!"
 	heatmod = 0 //fine until they blow up
@@ -210,10 +210,10 @@
 
 /datum/species/golem/silver/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
-	ADD_TRAIT(C, TRAIT_HOLY, SPECIES_TRAIT)
+	ADD_TRAIT(C, TRAIT_HOLY, SOURCE_SPECIES)
 
 /datum/species/golem/silver/on_species_loss(mob/living/carbon/C)
-	REMOVE_TRAIT(C, TRAIT_HOLY, SPECIES_TRAIT)
+	REMOVE_TRAIT(C, TRAIT_HOLY, SOURCE_SPECIES)
 	..()
 
 //Harder to stun, deals more damage, massively slowpokes, but gravproof and obstructive. Basically, The Wall.
@@ -240,10 +240,10 @@
 
 /datum/species/golem/plasteel/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
-	ADD_TRAIT(C, TRAIT_NOMOBSWAP, SPECIES_TRAIT) //THE WALL THE WALL THE WALL
+	ADD_TRAIT(C, TRAIT_NO_MOB_SWAP, SOURCE_SPECIES) //THE WALL THE WALL THE WALL
 
 /datum/species/golem/plasteel/on_species_loss(mob/living/carbon/C)
-	REMOVE_TRAIT(C, TRAIT_NOMOBSWAP, SPECIES_TRAIT) //NOTHING ON ERF CAN MAKE IT FALL
+	REMOVE_TRAIT(C, TRAIT_NO_MOB_SWAP, SOURCE_SPECIES) //NOTHING ON ERF CAN MAKE IT FALL
 	..()
 
 //Immune to ash storms
@@ -260,11 +260,11 @@
 
 /datum/species/golem/titanium/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
-	ADD_TRAIT(C, TRAIT_ASHSTORM_IMMUNE, SPECIES_TRAIT)
+	ADD_TRAIT(C, TRAIT_ASHSTORM_IMMUNE, SOURCE_SPECIES)
 
 /datum/species/golem/titanium/on_species_loss(mob/living/carbon/C)
 	. = ..()
-	REMOVE_TRAIT(C, TRAIT_ASHSTORM_IMMUNE, SPECIES_TRAIT)
+	REMOVE_TRAIT(C, TRAIT_ASHSTORM_IMMUNE, SOURCE_SPECIES)
 
 //Immune to ash storms and lava
 /datum/species/golem/plastitanium
@@ -280,13 +280,13 @@
 
 /datum/species/golem/plastitanium/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
-	ADD_TRAIT(C, TRAIT_LAVA_IMMUNE, SPECIES_TRAIT)
-	ADD_TRAIT(C, TRAIT_ASHSTORM_IMMUNE, SPECIES_TRAIT)
+	ADD_TRAIT(C, TRAIT_LAVA_IMMUNE, SOURCE_SPECIES)
+	ADD_TRAIT(C, TRAIT_ASHSTORM_IMMUNE, SOURCE_SPECIES)
 
 /datum/species/golem/plastitanium/on_species_loss(mob/living/carbon/C)
 	. = ..()
-	REMOVE_TRAIT(C, TRAIT_LAVA_IMMUNE, SPECIES_TRAIT)
-	REMOVE_TRAIT(C, TRAIT_ASHSTORM_IMMUNE, SPECIES_TRAIT)
+	REMOVE_TRAIT(C, TRAIT_LAVA_IMMUNE, SOURCE_SPECIES)
+	REMOVE_TRAIT(C, TRAIT_ASHSTORM_IMMUNE, SOURCE_SPECIES)
 
 //Fast and regenerates... but can only speak like an abductor
 /datum/species/golem/alloy
@@ -317,15 +317,15 @@
 	meat = /obj/item/stack/sheet/mineral/wood
 	//Can burn and take damage from heat
 	inherent_traits = list(
-		TRAIT_CHUNKYFINGERS,
+		TRAIT_CHUNKY_FINGERS,
 		TRAIT_GENELESS,
-		TRAIT_NOBREATH,
-		TRAIT_NODISMEMBER,
-		TRAIT_PIERCEIMMUNE,
-		TRAIT_RADIMMUNE,
-		TRAIT_RESISTCOLD,
-		TRAIT_RESISTLOWPRESSURE,
-		TRAIT_RESISTHIGHPRESSURE,
+		TRAIT_NO_BREATH,
+		TRAIT_NO_DISMEMBER,
+		TRAIT_PIERCE_IMMUNE,
+		TRAIT_RAD_IMMUNE,
+		TRAIT_RESIST_COLD,
+		TRAIT_RESIST_LOW_PRESSURE,
+		TRAIT_RESIST_HIGH_PRESSURE,
 	)
 	inherent_biotypes = MOB_ORGANIC | MOB_HUMANOID | MOB_PLANT
 	armor = 30
@@ -583,18 +583,18 @@
 	fixed_mut_color = "#ffff00"
 	say_mod = "honks"
 	inherent_traits = list(
-		TRAIT_CHUNKYFINGERS,
+		TRAIT_CHUNKY_FINGERS,
 		TRAIT_CLUMSY,
 		TRAIT_GENELESS,
-		TRAIT_NOBREATH,
-		TRAIT_NODISMEMBER,
-		TRAIT_NOFIRE,
-		TRAIT_PIERCEIMMUNE,
-		TRAIT_RADIMMUNE,
-		TRAIT_RESISTCOLD,
+		TRAIT_NO_BREATH,
+		TRAIT_NO_DISMEMBER,
+		TRAIT_FLAME_IMMUNE,
+		TRAIT_PIERCE_IMMUNE,
+		TRAIT_RAD_IMMUNE,
+		TRAIT_RESIST_COLD,
 		TRAIT_RESISTHEAT,
-		TRAIT_RESISTHIGHPRESSURE,
-		TRAIT_RESISTLOWPRESSURE,
+		TRAIT_RESIST_HIGH_PRESSURE,
+		TRAIT_RESIST_LOW_PRESSURE,
 	)
 	punchdamagelow = 0
 	punchdamagehigh = 1
@@ -623,7 +623,7 @@
 	RegisterSignal(C, COMSIG_MOB_SAY, .proc/handle_speech)
 	var/obj/item/organ/internal/liver/liver = C.getorganslot(ORGAN_SLOT_LIVER)
 	if(liver)
-		ADD_TRAIT(liver, TRAIT_COMEDY_METABOLISM, SPECIES_TRAIT)
+		ADD_TRAIT(liver, TRAIT_COMEDY_METABOLISM, SOURCE_SPECIES)
 
 /datum/species/golem/bananium/on_species_loss(mob/living/carbon/C)
 	. = ..()
@@ -631,7 +631,7 @@
 
 	var/obj/item/organ/internal/liver/liver = C.getorganslot(ORGAN_SLOT_LIVER)
 	if(liver)
-		REMOVE_TRAIT(liver, TRAIT_COMEDY_METABOLISM, SPECIES_TRAIT)
+		REMOVE_TRAIT(liver, TRAIT_COMEDY_METABOLISM, SOURCE_SPECIES)
 
 /datum/species/golem/bananium/random_name(gender,unique,lastname)
 	var/clown_name = pick(GLOB.clown_names)
@@ -689,18 +689,18 @@
 	info_text = "As a <span class='danger'>Runic Golem</span>, you possess eldritch powers granted by the Elder Goddess Nar'Sie."
 	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYESPRITES) //no mutcolors
 	inherent_traits = list(
-		TRAIT_CHUNKYFINGERS,
+		TRAIT_CHUNKY_FINGERS,
 		TRAIT_GENELESS,
-		TRAIT_NOBREATH,
-		TRAIT_NODISMEMBER,
-		TRAIT_NOFIRE,
-		TRAIT_NOFLASH,
-		TRAIT_PIERCEIMMUNE,
-		TRAIT_RADIMMUNE,
+		TRAIT_NO_BREATH,
+		TRAIT_NO_DISMEMBER,
+		TRAIT_FLAME_IMMUNE,
+		TRAIT_NO_FLASH,
+		TRAIT_PIERCE_IMMUNE,
+		TRAIT_RAD_IMMUNE,
 		TRAIT_RESISTHEAT,
-		TRAIT_RESISTCOLD,
-		TRAIT_RESISTLOWPRESSURE,
-		TRAIT_RESISTHIGHPRESSURE,
+		TRAIT_RESIST_COLD,
+		TRAIT_RESIST_LOW_PRESSURE,
+		TRAIT_RESIST_HIGH_PRESSURE,
 	)
 	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL
 	prefix = "Runic"
@@ -772,18 +772,18 @@
 	Being made of cloth, your body is magic resistant and faster than that of other golems, but weaker and less resilient."
 	species_traits = list(NOBLOOD,NO_UNDERWEAR) //no mutcolors, and can burn
 	inherent_traits = list(
-		TRAIT_ADVANCEDTOOLUSER,
+		TRAIT_ADVANCED_TOOL_USER,
 		TRAIT_CAN_STRIP,
-		TRAIT_CHUNKYFINGERS,
+		TRAIT_CHUNKY_FINGERS,
 		TRAIT_GENELESS,
 		TRAIT_LITERATE,
-		TRAIT_NOBREATH,
-		TRAIT_NODISMEMBER,
-		TRAIT_PIERCEIMMUNE,
-		TRAIT_RADIMMUNE,
-		TRAIT_RESISTCOLD,
-		TRAIT_RESISTHIGHPRESSURE,
-		TRAIT_RESISTLOWPRESSURE,
+		TRAIT_NO_BREATH,
+		TRAIT_NO_DISMEMBER,
+		TRAIT_PIERCE_IMMUNE,
+		TRAIT_RAD_IMMUNE,
+		TRAIT_RESIST_COLD,
+		TRAIT_RESIST_HIGH_PRESSURE,
+		TRAIT_RESIST_LOW_PRESSURE,
 	)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	armor = 15 //feels no pain, but not too resistant
@@ -805,10 +805,10 @@
 
 /datum/species/golem/cloth/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
-	ADD_TRAIT(C, TRAIT_HOLY, SPECIES_TRAIT)
+	ADD_TRAIT(C, TRAIT_HOLY, SOURCE_SPECIES)
 
 /datum/species/golem/cloth/on_species_loss(mob/living/carbon/C)
-	REMOVE_TRAIT(C, TRAIT_HOLY, SPECIES_TRAIT)
+	REMOVE_TRAIT(C, TRAIT_HOLY, SOURCE_SPECIES)
 	..()
 
 /datum/species/golem/cloth/check_roundstart_eligible()
@@ -945,20 +945,20 @@
 	name = "Plastic Golem"
 	id = SPECIES_GOLEM_PLASTIC
 	inherent_traits = list(
-		TRAIT_ADVANCEDTOOLUSER,
+		TRAIT_ADVANCED_TOOL_USER,
 		TRAIT_CAN_STRIP,
-		TRAIT_CHUNKYFINGERS,
+		TRAIT_CHUNKY_FINGERS,
 		TRAIT_GENELESS,
 		TRAIT_LITERATE,
-		TRAIT_NOBREATH,
-		TRAIT_NODISMEMBER,
-		TRAIT_NOFIRE,
-		TRAIT_PIERCEIMMUNE,
-		TRAIT_RADIMMUNE,
-		TRAIT_RESISTCOLD,
+		TRAIT_NO_BREATH,
+		TRAIT_NO_DISMEMBER,
+		TRAIT_FLAME_IMMUNE,
+		TRAIT_PIERCE_IMMUNE,
+		TRAIT_RAD_IMMUNE,
+		TRAIT_RESIST_COLD,
 		TRAIT_RESISTHEAT,
-		TRAIT_RESISTHIGHPRESSURE,
-		TRAIT_RESISTLOWPRESSURE,
+		TRAIT_RESIST_HIGH_PRESSURE,
+		TRAIT_RESIST_LOW_PRESSURE,
 		TRAIT_VENTCRAWLER_NUDE,
 	)
 	prefix = "Plastic"
@@ -1045,19 +1045,19 @@
 	info_text = "As a <span class='danger'>Cardboard Golem</span>, you aren't very strong, but you are a bit quicker and can easily create more brethren by using cardboard on yourself. Cardboard makes a poor building material for tongues, so you'll have difficulty speaking."
 	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYESPRITES,NO_TONGUE)
 	inherent_traits = list(
-		TRAIT_ADVANCEDTOOLUSER,
+		TRAIT_ADVANCED_TOOL_USER,
 		TRAIT_CAN_STRIP,
-		TRAIT_CHUNKYFINGERS,
+		TRAIT_CHUNKY_FINGERS,
 		TRAIT_GENELESS,
 		TRAIT_LITERATE,
-		TRAIT_NOBREATH,
-		TRAIT_NODISMEMBER,
-		TRAIT_NOFLASH,
-		TRAIT_PIERCEIMMUNE,
-		TRAIT_RADIMMUNE,
-		TRAIT_RESISTCOLD,
-		TRAIT_RESISTHIGHPRESSURE,
-		TRAIT_RESISTLOWPRESSURE,
+		TRAIT_NO_BREATH,
+		TRAIT_NO_DISMEMBER,
+		TRAIT_NO_FLASH,
+		TRAIT_PIERCE_IMMUNE,
+		TRAIT_RAD_IMMUNE,
+		TRAIT_RESIST_COLD,
+		TRAIT_RESIST_HIGH_PRESSURE,
+		TRAIT_RESIST_LOW_PRESSURE,
 	)
 	attack_verb = "whips"
 	attack_sound = 'sound/weapons/whip.ogg'
@@ -1111,18 +1111,18 @@
 	id = SPECIES_GOLEM_LEATHER
 	special_names = list("Face", "Man", "Belt") //Ah dude 4 strength 4 stam leather belt AHHH
 	inherent_traits = list(
-		TRAIT_ADVANCEDTOOLUSER,
+		TRAIT_ADVANCED_TOOL_USER,
 		TRAIT_CAN_STRIP,
-		TRAIT_CHUNKYFINGERS,
+		TRAIT_CHUNKY_FINGERS,
 		TRAIT_GENELESS,
 		TRAIT_LITERATE,
-		TRAIT_NOBREATH,
-		TRAIT_NODISMEMBER,
-		TRAIT_PIERCEIMMUNE,
-		TRAIT_RADIMMUNE,
-		TRAIT_RESISTCOLD,
-		TRAIT_RESISTHIGHPRESSURE,
-		TRAIT_RESISTLOWPRESSURE,
+		TRAIT_NO_BREATH,
+		TRAIT_NO_DISMEMBER,
+		TRAIT_PIERCE_IMMUNE,
+		TRAIT_RAD_IMMUNE,
+		TRAIT_RESIST_COLD,
+		TRAIT_RESIST_HIGH_PRESSURE,
+		TRAIT_RESIST_LOW_PRESSURE,
 		TRAIT_STRONG_GRABBER,
 	)
 	prefix = "Leather"
@@ -1139,19 +1139,19 @@
 	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYESPRITES)
 	fixed_mut_color = null
 	inherent_traits = list(
-		TRAIT_ADVANCEDTOOLUSER,
+		TRAIT_ADVANCED_TOOL_USER,
 		TRAIT_CAN_STRIP,
-		TRAIT_CHUNKYFINGERS,
+		TRAIT_CHUNKY_FINGERS,
 		TRAIT_GENELESS,
 		TRAIT_LITERATE,
-		TRAIT_NOBREATH,
-		TRAIT_NODISMEMBER,
-		TRAIT_NOFLASH,
-		TRAIT_PIERCEIMMUNE,
-		TRAIT_RADIMMUNE,
-		TRAIT_RESISTCOLD,
-		TRAIT_RESISTHIGHPRESSURE,
-		TRAIT_RESISTLOWPRESSURE,
+		TRAIT_NO_BREATH,
+		TRAIT_NO_DISMEMBER,
+		TRAIT_NO_FLASH,
+		TRAIT_PIERCE_IMMUNE,
+		TRAIT_RAD_IMMUNE,
+		TRAIT_RESIST_COLD,
+		TRAIT_RESIST_HIGH_PRESSURE,
+		TRAIT_RESIST_LOW_PRESSURE,
 	)
 	info_text = "As a <span class='danger'>Durathread Golem</span>, your strikes will cause those your targets to start choking, but your woven body won't withstand fire as well."
 	bodypart_overrides = list(
@@ -1182,22 +1182,22 @@
 	sexes = FALSE
 	fixed_mut_color = null
 	inherent_traits = list(
-		TRAIT_ADVANCEDTOOLUSER,
+		TRAIT_ADVANCED_TOOL_USER,
 		TRAIT_CAN_STRIP,
-		TRAIT_CHUNKYFINGERS,
-		TRAIT_FAKEDEATH,
+		TRAIT_CHUNKY_FINGERS,
+		TRAIT_FAKE_DEATH,
 		TRAIT_GENELESS,
 		TRAIT_LITERATE,
-		TRAIT_NOBREATH,
-		TRAIT_NOFIRE,
-		TRAIT_NODISMEMBER,
-		TRAIT_NOFLASH,
-		TRAIT_PIERCEIMMUNE,
-		TRAIT_RADIMMUNE,
-		TRAIT_RESISTCOLD,
+		TRAIT_NO_BREATH,
+		TRAIT_FLAME_IMMUNE,
+		TRAIT_NO_DISMEMBER,
+		TRAIT_NO_FLASH,
+		TRAIT_PIERCE_IMMUNE,
+		TRAIT_RAD_IMMUNE,
+		TRAIT_RESIST_COLD,
 		TRAIT_RESISTHEAT,
-		TRAIT_RESISTHIGHPRESSURE,
-		TRAIT_RESISTLOWPRESSURE,
+		TRAIT_RESIST_HIGH_PRESSURE,
+		TRAIT_RESIST_LOW_PRESSURE,
 	)
 	species_language_holder = /datum/language_holder/golem/bone
 	info_text = "As a <span class='danger'>Bone Golem</span>, You have a powerful spell that lets you chill your enemies with fear, and milk heals you! Just make sure to watch our for bone-hurting juice."
@@ -1278,7 +1278,7 @@
 	else
 		playsound(get_turf(owner),'sound/magic/RATTLEMEBONES.ogg', 100)
 	for(var/mob/living/L in orange(7, get_turf(owner)))
-		if((L.mob_biotypes & MOB_UNDEAD) || isgolem(L) || HAS_TRAIT(L, TRAIT_RESISTCOLD))
+		if((L.mob_biotypes & MOB_UNDEAD) || isgolem(L) || HAS_TRAIT(L, TRAIT_RESIST_COLD))
 			continue //Do not affect our brothers
 
 		to_chat(L, span_cultlarge("A spine-chilling sound chills you to the bone!"))
@@ -1296,18 +1296,18 @@
 	special_names = list("Flake", "Blizzard", "Storm")
 	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYESPRITES) //no mutcolors, no eye sprites
 	inherent_traits = list(
-		TRAIT_ADVANCEDTOOLUSER,
+		TRAIT_ADVANCED_TOOL_USER,
 		TRAIT_CAN_STRIP,
-		TRAIT_CHUNKYFINGERS,
+		TRAIT_CHUNKY_FINGERS,
 		TRAIT_GENELESS,
 		TRAIT_LITERATE,
-		TRAIT_NOBREATH,
-		TRAIT_NODISMEMBER,
-		TRAIT_PIERCEIMMUNE,
-		TRAIT_RADIMMUNE,
-		TRAIT_RESISTCOLD,
-		TRAIT_RESISTHIGHPRESSURE,
-		TRAIT_RESISTLOWPRESSURE,
+		TRAIT_NO_BREATH,
+		TRAIT_NO_DISMEMBER,
+		TRAIT_PIERCE_IMMUNE,
+		TRAIT_RAD_IMMUNE,
+		TRAIT_RESIST_COLD,
+		TRAIT_RESIST_HIGH_PRESSURE,
+		TRAIT_RESIST_LOW_PRESSURE,
 	)
 	bodypart_overrides = list(
 		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/golem/snow,
@@ -1334,7 +1334,7 @@
 
 /datum/species/golem/snow/on_species_gain(mob/living/carbon/grant_to, datum/species/old_species)
 	. = ..()
-	ADD_TRAIT(grant_to, TRAIT_SNOWSTORM_IMMUNE, SPECIES_TRAIT)
+	ADD_TRAIT(grant_to, TRAIT_SNOWSTORM_IMMUNE, SOURCE_SPECIES)
 
 	snowball = new(grant_to)
 	snowball.StartCooldown()
@@ -1345,7 +1345,7 @@
 	cryo.Grant(grant_to)
 
 /datum/species/golem/snow/on_species_loss(mob/living/carbon/remove_from)
-	REMOVE_TRAIT(remove_from, TRAIT_SNOWSTORM_IMMUNE, SPECIES_TRAIT)
+	REMOVE_TRAIT(remove_from, TRAIT_SNOWSTORM_IMMUNE, SOURCE_SPECIES)
 	QDEL_NULL(snowball)
 	QDEL_NULL(cryo)
 	return ..()
@@ -1358,25 +1358,25 @@
 	prefix = "Metallic Hydrogen"
 	special_names = null
 	inherent_traits = list(
-		TRAIT_ADVANCEDTOOLUSER,
+		TRAIT_ADVANCED_TOOL_USER,
 		TRAIT_CAN_STRIP,
-		TRAIT_CHUNKYFINGERS,
+		TRAIT_CHUNKY_FINGERS,
 		TRAIT_GENELESS,
 		TRAIT_LITERATE,
-		TRAIT_NOBREATH,
-		TRAIT_NODISMEMBER,
-		TRAIT_NOFIRE,
-		TRAIT_NOFLASH,
-		TRAIT_RADIMMUNE,
+		TRAIT_NO_BREATH,
+		TRAIT_NO_DISMEMBER,
+		TRAIT_FLAME_IMMUNE,
+		TRAIT_NO_FLASH,
+		TRAIT_RAD_IMMUNE,
 		TRAIT_RESISTHEAT,
-		TRAIT_RESISTHIGHPRESSURE,
+		TRAIT_RESIST_HIGH_PRESSURE,
 	)
 	examine_limb_id = SPECIES_GOLEM
 
 /datum/species/golem/mhydrogen/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
-	ADD_TRAIT(C, TRAIT_ANTIMAGIC, SPECIES_TRAIT)
+	ADD_TRAIT(C, TRAIT_ANTI_MAGIC, SOURCE_SPECIES)
 
 /datum/species/golem/mhydrogen/on_species_loss(mob/living/carbon/C)
-	REMOVE_TRAIT(C, TRAIT_ANTIMAGIC, SPECIES_TRAIT)
+	REMOVE_TRAIT(C, TRAIT_ANTI_MAGIC, SOURCE_SPECIES)
 	return ..()

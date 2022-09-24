@@ -115,7 +115,7 @@
 	data["vest"] = vest ? TRUE : FALSE
 	if(vest)
 		data["vest_mode"] = vest.mode
-		data["vest_lock"] = HAS_TRAIT_FROM(vest, TRAIT_NODROP, ABDUCTOR_VEST_TRAIT)
+		data["vest_lock"] = HAS_TRAIT_FROM(vest, TRAIT_NODROP, SOURCE_ABDUCTOR_VEST)
 	return data
 
 /obj/machinery/abductor/console/ui_act(action, list/params)

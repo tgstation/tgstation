@@ -18,14 +18,14 @@
 /datum/mutation/human/temperature_adaptation/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	ADD_TRAIT(owner, TRAIT_RESISTCOLD, GENETIC_MUTATION)
-	ADD_TRAIT(owner, TRAIT_RESISTHEAT, GENETIC_MUTATION)
+	ADD_TRAIT(owner, TRAIT_RESIST_COLD, SOURCE_GENETIC_MUTATION)
+	ADD_TRAIT(owner, TRAIT_RESISTHEAT, SOURCE_GENETIC_MUTATION)
 
 /datum/mutation/human/temperature_adaptation/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	REMOVE_TRAIT(owner, TRAIT_RESISTCOLD, GENETIC_MUTATION)
-	REMOVE_TRAIT(owner, TRAIT_RESISTHEAT, GENETIC_MUTATION)
+	REMOVE_TRAIT(owner, TRAIT_RESIST_COLD, SOURCE_GENETIC_MUTATION)
+	REMOVE_TRAIT(owner, TRAIT_RESISTHEAT, SOURCE_GENETIC_MUTATION)
 
 /datum/mutation/human/pressure_adaptation
 	name = "Pressure Adaptation"
@@ -47,11 +47,11 @@
 /datum/mutation/human/pressure_adaptation/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	ADD_TRAIT(owner, TRAIT_RESISTLOWPRESSURE, GENETIC_MUTATION)
-	ADD_TRAIT(owner, TRAIT_RESISTHIGHPRESSURE, GENETIC_MUTATION)
+	ADD_TRAIT(owner, TRAIT_RESIST_LOW_PRESSURE, SOURCE_GENETIC_MUTATION)
+	ADD_TRAIT(owner, TRAIT_RESIST_HIGH_PRESSURE, SOURCE_GENETIC_MUTATION)
 
 /datum/mutation/human/pressure_adaptation/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	REMOVE_TRAIT(owner, TRAIT_RESISTLOWPRESSURE, GENETIC_MUTATION)
-	REMOVE_TRAIT(owner, TRAIT_RESISTHIGHPRESSURE, GENETIC_MUTATION)
+	REMOVE_TRAIT(owner, TRAIT_RESIST_LOW_PRESSURE, SOURCE_GENETIC_MUTATION)
+	REMOVE_TRAIT(owner, TRAIT_RESIST_HIGH_PRESSURE, SOURCE_GENETIC_MUTATION)

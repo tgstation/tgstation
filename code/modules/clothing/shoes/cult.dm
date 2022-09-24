@@ -18,4 +18,4 @@
 
 /obj/item/clothing/shoes/cult/alt/ghost/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CULT_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, SOURCE_CULT)

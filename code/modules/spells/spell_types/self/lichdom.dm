@@ -78,6 +78,6 @@
 
 
 	// No soul. You just sold it
-	ADD_TRAIT(cast_on, TRAIT_NO_SOUL, LICH_TRAIT)
+	ADD_TRAIT(cast_on, TRAIT_NO_SOUL, SOURCE_LICH)
 	// You only get one phylactery.
 	qdel(src)

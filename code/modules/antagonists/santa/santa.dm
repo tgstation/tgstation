@@ -10,8 +10,8 @@
 	give_equipment()
 	give_objective()
 
-	ADD_TRAIT(owner, TRAIT_CANNOT_OPEN_PRESENTS, TRAIT_SANTA)
-	ADD_TRAIT(owner, TRAIT_PRESENT_VISION, TRAIT_SANTA)
+	ADD_TRAIT(owner, TRAIT_CANNOT_OPEN_PRESENTS, SOURCE_SANTA)
+	ADD_TRAIT(owner, TRAIT_PRESENT_VISION, SOURCE_SANTA)
 
 /datum/antagonist/santa/greet()
 	. = ..()

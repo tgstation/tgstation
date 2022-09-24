@@ -202,12 +202,12 @@
 /// Callback for the ghoul status effect - Tracks all of our ghouls and applies effects
 /datum/heretic_knowledge/limited_amount/flesh_ghoul/proc/apply_to_ghoul(mob/living/ghoul)
 	LAZYADD(created_items, WEAKREF(ghoul))
-	ADD_TRAIT(ghoul, TRAIT_MUTE, MAGIC_TRAIT)
+	ADD_TRAIT(ghoul, TRAIT_MUTE, SOURCE_MAGIC)
 
 /// Callback for the ghoul status effect - Tracks all of our ghouls and applies effects
 /datum/heretic_knowledge/limited_amount/flesh_ghoul/proc/remove_from_ghoul(mob/living/ghoul)
 	LAZYREMOVE(created_items, WEAKREF(ghoul))
-	REMOVE_TRAIT(ghoul, TRAIT_MUTE, MAGIC_TRAIT)
+	REMOVE_TRAIT(ghoul, TRAIT_MUTE, SOURCE_MAGIC)
 
 /datum/heretic_knowledge/mark/flesh_mark
 	name = "Mark of Flesh"

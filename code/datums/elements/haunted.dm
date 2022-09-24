@@ -15,13 +15,13 @@
 	master.add_filter("haunt_glow", 2, list("type" = "outline", "color" = haunt_color, "size" = 1))
 	master.ai_controller = new /datum/ai_controller/haunted(master)
 	master.AddElement(/datum/element/movetype_handler)
-	ADD_TRAIT(master, TRAIT_MOVE_FLYING, ELEMENT_TRAIT(type))
+	ADD_TRAIT(master, TRAIT_MOVE_FLYING, SOURCE_ELEMENT(type))
 
 /datum/element/haunted/Detach(datum/source)
 	. = ..()
 	var/atom/movable/master = source
 	master.remove_filter("haunt_glow")
 	QDEL_NULL(master.ai_controller)
-	REMOVE_TRAIT(master, TRAIT_MOVE_FLYING, ELEMENT_TRAIT(type))
+	REMOVE_TRAIT(master, TRAIT_MOVE_FLYING, SOURCE_ELEMENT(type))
 	master.RemoveElement(/datum/element/movetype_handler)
 	return ..()

@@ -264,7 +264,7 @@
 
 /obj/item/clothing/head/helmet/space/suicide_act(mob/living/carbon/user)
 	var/datum/gas_mixture/environment = user.loc.return_air()
-	if(HAS_TRAIT(user, TRAIT_RESISTCOLD) || !environment || environment.return_temperature() >= user.get_body_temp_cold_damage_limit())
+	if(HAS_TRAIT(user, TRAIT_RESIST_COLD) || !environment || environment.return_temperature() >= user.get_body_temp_cold_damage_limit())
 		user.visible_message(span_suicide("[user] is beating [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 		return BRUTELOSS
 	user.say("You want proof? I'll give you proof! Here's proof of what'll happen to you if you stay here with your stuff!", forced = "space helmet suicide")

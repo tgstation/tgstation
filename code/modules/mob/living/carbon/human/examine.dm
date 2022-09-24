@@ -79,7 +79,7 @@
 	if(!(obscured & ITEM_SLOT_EYES) )
 		if(glasses  && !(glasses.item_flags & EXAMINE_SKIP))
 			. += "[t_He] [t_has] [glasses.get_examine_string(user)] covering [t_his] eyes."
-		else if(HAS_TRAIT(src, TRAIT_UNNATURAL_RED_GLOWY_EYES))
+		else if(HAS_TRAIT(src, TRAIT_GLOWING_RED_EYES))
 			. += "<span class='warning'><B>[t_His] eyes are glowing with an unnatural red aura!</B></span>"
 		else if(HAS_TRAIT(src, TRAIT_BLOODSHOT_EYES))
 			. += "<span class='warning'><B>[t_His] eyes are bloodshot!</B></span>"
@@ -102,7 +102,7 @@
 	var/appears_dead = FALSE
 	var/just_sleeping = FALSE
 
-	if(stat == DEAD || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
+	if(stat == DEAD || (HAS_TRAIT(src, TRAIT_FAKE_DEATH)))
 		appears_dead = TRUE
 
 		var/obj/item/clothing/glasses/G = get_item_by_slot(ITEM_SLOT_EYES)

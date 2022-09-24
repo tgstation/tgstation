@@ -26,7 +26,7 @@
 
 /mob/living/simple_animal/hostile/headcrab/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, SOURCE_INNATE)
 
 /mob/living/simple_animal/hostile/headcrab/proc/Infect(mob/living/carbon/victim)
 	var/obj/item/organ/internal/body_egg/changeling_egg/egg = new(victim)
@@ -87,7 +87,7 @@
 		var/datum/action/changeling/humanform/hf = new()
 		changeling_datum.purchased_powers += hf
 		changeling_datum.regain_powers()
-		
+
 	owner.gib()
 
 #undef EGG_INCUBATION_TIME

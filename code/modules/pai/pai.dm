@@ -222,8 +222,8 @@
 	card = pai_card
 	addtimer(VARSET_CALLBACK(src, holochassis_ready, TRUE), HOLOCHASSIS_INIT_TIME)
 	if(!holoform)
-		ADD_TRAIT(src, TRAIT_IMMOBILIZED, PAI_FOLDED)
-		ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, PAI_FOLDED)
+		ADD_TRAIT(src, TRAIT_IMMOBILIZED, SOURCE_PAI_FOLDED)
+		ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, SOURCE_PAI_FOLDED)
 	desc = "A pAI hard-light holographics emitter. This one appears in the form of a [chassis]."
 
 	RegisterSignal(src, COMSIG_LIVING_CULT_SACRIFICED, .proc/on_cult_sacrificed)

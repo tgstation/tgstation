@@ -460,10 +460,10 @@
 	overlay_state_inactive = "module_plasma"
 
 /obj/item/mod/module/plasma_stabilizer/on_equip()
-	ADD_TRAIT(mod.wearer, TRAIT_NOSELFIGNITION_HEAD_ONLY, MOD_TRAIT)
+	ADD_TRAIT(mod.wearer, TRAIT_HEAD_IGNITION_IMMUNE, SOURCE_MOD)
 
 /obj/item/mod/module/plasma_stabilizer/on_unequip()
-	REMOVE_TRAIT(mod.wearer, TRAIT_NOSELFIGNITION_HEAD_ONLY, MOD_TRAIT)
+	REMOVE_TRAIT(mod.wearer, TRAIT_HEAD_IGNITION_IMMUNE, SOURCE_MOD)
 
 
 //Finally, https://pipe.miroware.io/5b52ba1d94357d5d623f74aa/mspfa/Nuke%20Ops/Panels/0648.gif can be real:
@@ -579,7 +579,7 @@
 	incompatible_modules = list(/obj/item/mod/module/signlang_radio)
 
 /obj/item/mod/module/signlang_radio/on_suit_activation()
-	ADD_TRAIT(mod.wearer, TRAIT_CAN_SIGN_ON_COMMS, MOD_TRAIT)
+	ADD_TRAIT(mod.wearer, TRAIT_CAN_SIGN_ON_COMMS, SOURCE_MOD)
 
 /obj/item/mod/module/signlang_radio/on_suit_deactivation(deleting = FALSE)
-	REMOVE_TRAIT(mod.wearer, TRAIT_CAN_SIGN_ON_COMMS, MOD_TRAIT)
+	REMOVE_TRAIT(mod.wearer, TRAIT_CAN_SIGN_ON_COMMS, SOURCE_MOD)

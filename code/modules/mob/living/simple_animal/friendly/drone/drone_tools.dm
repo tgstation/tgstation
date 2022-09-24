@@ -8,7 +8,7 @@
 
 /obj/item/storage/drone_tools/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, SOURCE_ABSTRACT_ITEM)
 
 	var/static/list/drone_builtins = list(
 		/obj/item/crowbar/drone,

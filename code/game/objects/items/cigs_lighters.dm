@@ -777,7 +777,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 	var/hand_protected = FALSE
 	var/mob/living/carbon/human/human_user = user
-	if(!istype(human_user) || HAS_TRAIT(human_user, TRAIT_RESISTHEAT) || HAS_TRAIT(human_user, TRAIT_RESISTHEATHANDS))
+	if(!istype(human_user) || HAS_TRAIT(human_user, TRAIT_RESISTHEAT) || HAS_TRAIT(human_user, TRAIT_RESIST_HEAT_HANDS))
 		hand_protected = TRUE
 	else if(!istype(human_user.gloves, /obj/item/clothing/gloves))
 		hand_protected = FALSE

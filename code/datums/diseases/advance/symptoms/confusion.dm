@@ -42,7 +42,7 @@
 
 /datum/symptom/confusion/End(datum/disease/advance/advanced_disease)
 	advanced_disease.affected_mob.remove_status_effect(/datum/status_effect/confusion)
-	REMOVE_TRAIT(advanced_disease.affected_mob, TRAIT_ILLITERATE, DISEASE_TRAIT)
+	REMOVE_TRAIT(advanced_disease.affected_mob, TRAIT_ILLITERATE, SOURCE_DISEASE)
 	return ..()
 
 /datum/symptom/confusion/Activate(datum/disease/advance/advanced_disease)
@@ -68,5 +68,5 @@
 		return FALSE
 	var/mob/living/carbon/infected_mob = advanced_disease.affected_mob
 	if(advanced_disease.stage >= 5 && causes_illiteracy)
-		ADD_TRAIT(infected_mob, TRAIT_ILLITERATE, DISEASE_TRAIT)
+		ADD_TRAIT(infected_mob, TRAIT_ILLITERATE, SOURCE_DISEASE)
 	return TRUE

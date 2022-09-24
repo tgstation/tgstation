@@ -148,7 +148,7 @@
 		return
 	var/mob/living/simple_animal/animal = target
 
-	if(animal.stat == DEAD || HAS_TRAIT(animal, TRAIT_FAKEDEATH))
+	if(animal.stat == DEAD || HAS_TRAIT(animal, TRAIT_FAKE_DEATH))
 		to_chat(user, span_warning("[src] can only multiply strength, not grant it to the dead."))
 		return
 	if(HAS_TRAIT(animal, TRAIT_FUGU_GLANDED))

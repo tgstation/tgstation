@@ -14,11 +14,11 @@
 	var/mob/living/carbon/human/valid_target = target
 	on_stat_change(valid_target, new_stat = valid_target.stat) //immediately try adding movement bonus if they're in soft crit
 	RegisterSignal(target, COMSIG_MOB_STATCHANGE, .proc/on_stat_change)
-	ADD_TRAIT(target, TRAIT_TENACIOUS, ELEMENT_TRAIT(type))
+	ADD_TRAIT(target, TRAIT_TENACIOUS, SOURCE_ELEMENT(type))
 
 /datum/element/tenacious/Detach(datum/target)
 	UnregisterSignal(target, COMSIG_MOB_STATCHANGE)
-	REMOVE_TRAIT(target, TRAIT_TENACIOUS, ELEMENT_TRAIT(type))
+	REMOVE_TRAIT(target, TRAIT_TENACIOUS, SOURCE_ELEMENT(type))
 	return ..()
 
 ///signal called by the stat of the target changing

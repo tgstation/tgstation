@@ -7,14 +7,14 @@
 // Takes care blood loss and regeneration
 /mob/living/carbon/human/handle_blood(delta_time, times_fired)
 
-	if(NOBLOOD in dna.species.species_traits || HAS_TRAIT(src, TRAIT_NOBLEED) || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
+	if(NOBLOOD in dna.species.species_traits || HAS_TRAIT(src, TRAIT_NO_BLEED) || (HAS_TRAIT(src, TRAIT_FAKE_DEATH)))
 		return
 
 	if(bodytemperature < BLOOD_STOP_TEMP || (HAS_TRAIT(src, TRAIT_HUSK))) //cold or husked people do not pump the blood.
 		return
 
 	//Blood regeneration if there is some space
-	if(blood_volume < BLOOD_VOLUME_NORMAL && !HAS_TRAIT(src, TRAIT_NOHUNGER))
+	if(blood_volume < BLOOD_VOLUME_NORMAL && !HAS_TRAIT(src, TRAIT_NO_HUNGER))
 		var/nutrition_ratio = 0
 		switch(nutrition)
 			if(0 to NUTRITION_LEVEL_STARVING)
@@ -57,7 +57,7 @@
 				Unconscious(rand(20,60))
 				to_chat(src, span_warning("You feel extremely [word]."))
 		if(-INFINITY to BLOOD_VOLUME_SURVIVE)
-			if(!HAS_TRAIT(src, TRAIT_NODEATH))
+			if(!HAS_TRAIT(src, TRAIT_NO_DEATH))
 				death()
 
 	var/temp_bleed = 0

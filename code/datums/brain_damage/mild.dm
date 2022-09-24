@@ -41,7 +41,7 @@
 	lose_text = "<span class='notice'>You feel smart again.</span>"
 
 /datum/brain_trauma/mild/dumbness/on_gain()
-	ADD_TRAIT(owner, TRAIT_DUMB, TRAUMA_TRAIT)
+	ADD_TRAIT(owner, TRAIT_DUMB, SOURCE_TRAUMA)
 	owner.add_mood_event("dumb", /datum/mood_event/oblivious)
 	return ..()
 
@@ -53,7 +53,7 @@
 		owner.say(pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage"), forced = "brain damage")
 
 /datum/brain_trauma/mild/dumbness/on_lose()
-	REMOVE_TRAIT(owner, TRAIT_DUMB, TRAUMA_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_DUMB, SOURCE_TRAUMA)
 	owner.remove_status_effect(/datum/status_effect/speech/stutter/derpspeech)
 	owner.clear_mood_event("dumb")
 	return ..()
@@ -66,11 +66,11 @@
 	lose_text = "<span class='danger'>Your mind feels more clear.</span>"
 
 /datum/brain_trauma/mild/speech_impediment/on_gain()
-	ADD_TRAIT(owner, TRAIT_UNINTELLIGIBLE_SPEECH, TRAUMA_TRAIT)
+	ADD_TRAIT(owner, TRAIT_UNINTELLIGIBLE_SPEECH, SOURCE_TRAUMA)
 	..()
 
 /datum/brain_trauma/mild/speech_impediment/on_lose()
-	REMOVE_TRAIT(owner, TRAIT_UNINTELLIGIBLE_SPEECH, TRAUMA_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_UNINTELLIGIBLE_SPEECH, SOURCE_TRAUMA)
 	..()
 
 /datum/brain_trauma/mild/concussion

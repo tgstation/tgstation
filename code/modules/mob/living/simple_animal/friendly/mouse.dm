@@ -40,7 +40,7 @@
 	AddComponent(/datum/component/squeak, list('sound/effects/mousesqueek.ogg' = 1), 100, extrarange = SHORT_RANGE_SOUND_EXTRARANGE) //as quiet as a mouse or whatever
 	add_cell_sample()
 
-	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, SOURCE_INNATE)
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
@@ -95,7 +95,7 @@
 			var/obj/structure/cable/C = locate() in F
 			if(C && prob(15))
 				var/powered = C.avail()
-				if(powered && !HAS_TRAIT(src, TRAIT_SHOCKIMMUNE))
+				if(powered && !HAS_TRAIT(src, TRAIT_SHOCK_IMMUNE))
 					visible_message(span_warning("[src] chews through the [C]. It's toast!"))
 					death(toast = TRUE)
 				else
@@ -190,7 +190,7 @@
 	. = ..()
 	AddElement(/datum/element/pet_bonus, "squeaks happily!")
 	// Tom fears no cable.
-	ADD_TRAIT(src, TRAIT_SHOCKIMMUNE, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_SHOCK_IMMUNE, SOURCE_INNATE)
 
 /obj/item/food/deadmouse
 	name = "dead mouse"

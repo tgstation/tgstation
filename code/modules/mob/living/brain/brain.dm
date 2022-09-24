@@ -16,8 +16,8 @@
 		OB.brainmob = src
 		forceMove(OB)
 	if(!container?.mecha) //Unless inside a mecha, brains are rather helpless.
-		ADD_TRAIT(src, TRAIT_IMMOBILIZED, BRAIN_UNAIDED)
-		ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, BRAIN_UNAIDED)
+		ADD_TRAIT(src, TRAIT_IMMOBILIZED, SOURCE_BRAIN_UNAIDED)
+		ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, SOURCE_BRAIN_UNAIDED)
 
 
 /mob/living/brain/proc/create_dna()

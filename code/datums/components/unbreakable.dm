@@ -4,10 +4,10 @@
 /datum/component/unbreakable/Initialize()
 	if(!ishuman(parent))
 		return COMPONENT_INCOMPATIBLE
-	ADD_TRAIT(parent, TRAIT_UNBREAKABLE, INNATE_TRAIT)
+	ADD_TRAIT(parent, TRAIT_UNBREAKABLE, SOURCE_INNATE)
 
 /datum/component/unbreakable/Destroy(force, silent)
-	REMOVE_TRAIT(parent, TRAIT_UNBREAKABLE, INNATE_TRAIT)
+	REMOVE_TRAIT(parent, TRAIT_UNBREAKABLE, SOURCE_INNATE)
 	return ..()
 
 /datum/component/unbreakable/RegisterWithParent()

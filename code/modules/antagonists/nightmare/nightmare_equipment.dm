@@ -20,7 +20,7 @@
 
 /obj/item/light_eater/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, SOURCE_HAND_REPLACEMENT)
 	AddComponent(/datum/component/butchering, \
 	speed = 8 SECONDS, \
 	effectiveness = 70, \

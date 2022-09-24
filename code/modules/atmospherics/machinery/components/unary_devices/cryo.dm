@@ -39,8 +39,8 @@
 
 	if(occupant)
 		vis_contents -= occupant
-		REMOVE_TRAIT(occupant, TRAIT_IMMOBILIZED, CRYO_TRAIT)
-		REMOVE_TRAIT(occupant, TRAIT_FORCED_STANDING, CRYO_TRAIT)
+		REMOVE_TRAIT(occupant, TRAIT_IMMOBILIZED, SOURCE_CRYO)
+		REMOVE_TRAIT(occupant, TRAIT_FORCED_STANDING, SOURCE_CRYO)
 
 	occupant = new_occupant
 	if(!occupant)
@@ -49,9 +49,9 @@
 	occupant.setDir(SOUTH)
 	vis_contents += occupant
 	pixel_y = 22
-	ADD_TRAIT(occupant, TRAIT_IMMOBILIZED, CRYO_TRAIT)
+	ADD_TRAIT(occupant, TRAIT_IMMOBILIZED, SOURCE_CRYO)
 	// Keep them standing! They'll go sideways in the tube when they fall asleep otherwise.
-	ADD_TRAIT(occupant, TRAIT_FORCED_STANDING, CRYO_TRAIT)
+	ADD_TRAIT(occupant, TRAIT_FORCED_STANDING, SOURCE_CRYO)
 
 /// COMSIG_CRYO_SET_ON callback
 /atom/movable/visual/cryo_occupant/proc/on_set_on(datum/source, on)

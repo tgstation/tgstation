@@ -913,7 +913,7 @@
 	var/list/protection_was_used = list() // this is a janky way of interrupting signals using lists
 	var/is_magic_blocked = SEND_SIGNAL(src, COMSIG_MOB_RECEIVE_MAGIC, casted_magic_flags, charge_cost, protection_was_used) & COMPONENT_MAGIC_BLOCKED
 
-	if(casted_magic_flags && HAS_TRAIT(src, TRAIT_ANTIMAGIC))
+	if(casted_magic_flags && HAS_TRAIT(src, TRAIT_ANTI_MAGIC))
 		is_magic_blocked = TRUE
 	if((casted_magic_flags & MAGIC_RESISTANCE_HOLY) && HAS_TRAIT(src, TRAIT_HOLY))
 		is_magic_blocked = TRUE
@@ -1137,7 +1137,7 @@
 
 /// Is this mob affected by nearsight
 /mob/proc/is_nearsighted()
-	return HAS_TRAIT(src, TRAIT_NEARSIGHT)
+	return HAS_TRAIT(src, TRAIT_NEARSIGHTED)
 
 /// This mob is abile to read books
 /mob/proc/is_literate()

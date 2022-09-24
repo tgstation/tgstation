@@ -58,7 +58,7 @@
 	quirk_holder.quirks += src
 
 	if(mob_trait)
-		ADD_TRAIT(quirk_holder, mob_trait, QUIRK_TRAIT)
+		ADD_TRAIT(quirk_holder, mob_trait, SOURCE_QUIRK)
 
 	add()
 
@@ -92,7 +92,7 @@
 		to_chat(quirk_holder, lose_text)
 
 	if(mob_trait)
-		REMOVE_TRAIT(quirk_holder, mob_trait, QUIRK_TRAIT)
+		REMOVE_TRAIT(quirk_holder, mob_trait, SOURCE_QUIRK)
 
 	if(processing_quirk)
 		STOP_PROCESSING(SSquirks, src)

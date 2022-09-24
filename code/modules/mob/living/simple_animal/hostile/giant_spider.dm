@@ -300,7 +300,7 @@
 	var/datum/action/innate/spider/comm/not_hivemind_talk = new(src)
 	not_hivemind_talk.Grant(src)
 
-	ADD_TRAIT(src, TRAIT_ALERT_GHOSTS_ON_DEATH, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_ALERT_GHOSTS_ON_DEATH, SOURCE_INNATE)
 
 /datum/action/innate/spider
 	icon_icon = 'icons/mob/actions/actions_animal.dmi'
@@ -728,6 +728,6 @@
 
 /mob/living/simple_animal/hostile/giant_spider/viper/wizard/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, SOURCE_INNATE)
 
 #undef INTERACTION_SPIDER_KEY

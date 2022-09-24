@@ -6,7 +6,7 @@
 	say_mod = "chirps"
 	species_traits = list(MUTCOLORS,EYECOLOR,NOBLOOD)
 	inherent_traits = list(
-		TRAIT_TOXINLOVER,
+		TRAIT_TOXIN_LOVER,
 	)
 	mutantlungs = /obj/item/organ/internal/lungs/slime
 	meat = /obj/item/food/meat/slab/human/mutant/slime

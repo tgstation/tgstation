@@ -510,7 +510,7 @@
 	else
 		protection_amount = 1
 
-	if(protection_amount > 0 || HAS_TRAIT(user, TRAIT_RESISTHEAT) || HAS_TRAIT(user, TRAIT_RESISTHEATHANDS))
+	if(protection_amount > 0 || HAS_TRAIT(user, TRAIT_RESISTHEAT) || HAS_TRAIT(user, TRAIT_RESIST_HEAT_HANDS))
 		to_chat(user, span_notice("You remove the light [fitting]."))
 	else if(istype(user) && user.dna.check_mutation(/datum/mutation/human/telekinesis))
 		to_chat(user, span_notice("You telekinetically remove the light [fitting]."))

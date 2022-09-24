@@ -31,7 +31,7 @@
 /mob/living/simple_animal/hostile/lizard/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/pet_bonus, "sticks its tongue out contentedly!")
-	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, SOURCE_INNATE)
 
 /mob/living/simple_animal/hostile/lizard/CanAttack(atom/the_target)//Can we actually attack a possible target?
 	if(see_invisible < the_target.invisibility)//Target's invisible to us, forget it

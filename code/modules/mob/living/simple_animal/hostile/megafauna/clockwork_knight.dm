@@ -42,7 +42,7 @@ I'd rather there be something than the clockwork ruin be entirely empty though s
 
 /mob/living/simple_animal/hostile/megafauna/clockwork_defender/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, SOURCE_INNATE)
 
 /mob/living/simple_animal/hostile/megafauna/clockwork_defender/OpenFire()
 	return

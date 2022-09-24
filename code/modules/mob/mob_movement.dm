@@ -353,7 +353,7 @@
  */
 /mob/proc/mob_negates_gravity()
 	var/turf/turf = get_turf(src)
-	return !isgroundlessturf(turf) && HAS_TRAIT(src, TRAIT_NEGATES_GRAVITY)
+	return !isgroundlessturf(turf) && HAS_TRAIT(src, TRAIT_NEGATE_GRAVITY)
 
 /// Called when this mob slips over, override as needed
 /mob/proc/slip(knockdown_amount, obj/O, lube, paralyze, force_drop)
@@ -524,7 +524,7 @@
 	var/turf/current_turf = get_turf(src)
 	var/turf/above_turf = SSmapping.get_turf_above(current_turf)
 
-	var/ventcrawling_flag = HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) ? ZMOVE_VENTCRAWLING : 0
+	var/ventcrawling_flag = HAS_TRAIT(src, TRAIT_MOVE_VENT_CRAWLING) ? ZMOVE_VENTCRAWLING : 0
 	if(!above_turf)
 		to_chat(src, span_warning("There's nowhere to go in that direction!"))
 		return
@@ -544,7 +544,7 @@
 	set name = "Move Down"
 	set category = "IC"
 
-	var/ventcrawling_flag = HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) ? ZMOVE_VENTCRAWLING : 0
+	var/ventcrawling_flag = HAS_TRAIT(src, TRAIT_MOVE_VENT_CRAWLING) ? ZMOVE_VENTCRAWLING : 0
 	if(zMove(DOWN, z_move_flags = ZMOVE_FLIGHT_FLAGS|ZMOVE_FEEDBACK|ventcrawling_flag))
 		to_chat(src, span_notice("You move down."))
 	return FALSE

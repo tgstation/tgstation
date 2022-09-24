@@ -2424,10 +2424,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/rubberneck/on_mob_metabolize(mob/living/drinker)
 	. = ..()
-	ADD_TRAIT(drinker, TRAIT_SHOCKIMMUNE, type)
+	ADD_TRAIT(drinker, TRAIT_SHOCK_IMMUNE, type)
 
 /datum/reagent/consumable/ethanol/rubberneck/on_mob_end_metabolize(mob/living/drinker)
-	REMOVE_TRAIT(drinker, TRAIT_SHOCKIMMUNE, type)
+	REMOVE_TRAIT(drinker, TRAIT_SHOCK_IMMUNE, type)
 	return ..()
 
 /datum/reagent/consumable/ethanol/duplex

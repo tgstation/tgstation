@@ -64,7 +64,7 @@
 	RegisterSignal(src, COMSIG_MOB_BOT_STEP, .proc/on_bot_step)
 	RegisterSignal(src, COMSIG_MOB_CLIENT_MOVED, .proc/on_bot_step)
 
-	ADD_TRAIT(src, TRAIT_NOMOBSWAP, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_NO_MOB_SWAP, SOURCE_INNATE)
 
 	if(prob(0.666) && mapload)
 		new /mob/living/simple_animal/bot/mulebot/paranormal(loc)

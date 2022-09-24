@@ -8,12 +8,12 @@
 /datum/mutation/human/nearsight/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.become_nearsighted(GENETIC_MUTATION)
+	owner.become_nearsighted(SOURCE_GENETIC_MUTATION)
 
 /datum/mutation/human/nearsight/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.cure_nearsighted(GENETIC_MUTATION)
+	owner.cure_nearsighted(SOURCE_GENETIC_MUTATION)
 
 ///Blind makes you blind. Who knew?
 /datum/mutation/human/blind
@@ -25,12 +25,12 @@
 /datum/mutation/human/blind/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.become_blind(GENETIC_MUTATION)
+	owner.become_blind(SOURCE_GENETIC_MUTATION)
 
 /datum/mutation/human/blind/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.cure_blind(GENETIC_MUTATION)
+	owner.cure_blind(SOURCE_GENETIC_MUTATION)
 
 ///Thermal Vision lets you see mobs through walls
 /datum/mutation/human/thermal
@@ -51,8 +51,8 @@
 		return
 
 	// Something went wront and we still have the thermal vision from our power, no cheating.
-	if(HAS_TRAIT_FROM(owner, TRAIT_THERMAL_VISION, GENETIC_MUTATION))
-		REMOVE_TRAIT(owner, TRAIT_THERMAL_VISION, GENETIC_MUTATION)
+	if(HAS_TRAIT_FROM(owner, TRAIT_THERMAL_VISION, SOURCE_GENETIC_MUTATION))
+		REMOVE_TRAIT(owner, TRAIT_THERMAL_VISION, SOURCE_GENETIC_MUTATION)
 		owner.update_sight()
 
 /datum/mutation/human/thermal/modify()
@@ -79,7 +79,7 @@
 	var/thermal_duration = 10 SECONDS
 
 /datum/action/cooldown/spell/thermal_vision/Remove(mob/living/remove_from)
-	REMOVE_TRAIT(remove_from, TRAIT_THERMAL_VISION, GENETIC_MUTATION)
+	REMOVE_TRAIT(remove_from, TRAIT_THERMAL_VISION, SOURCE_GENETIC_MUTATION)
 	remove_from.update_sight()
 	return ..()
 
@@ -88,16 +88,16 @@
 
 /datum/action/cooldown/spell/thermal_vision/cast(mob/living/cast_on)
 	. = ..()
-	ADD_TRAIT(cast_on, TRAIT_THERMAL_VISION, GENETIC_MUTATION)
+	ADD_TRAIT(cast_on, TRAIT_THERMAL_VISION, SOURCE_GENETIC_MUTATION)
 	cast_on.update_sight()
 	to_chat(cast_on, span_info("You focus your eyes intensely, as your vision becomes filled with heat signatures."))
 	addtimer(CALLBACK(src, .proc/deactivate, cast_on), thermal_duration)
 
 /datum/action/cooldown/spell/thermal_vision/proc/deactivate(mob/living/cast_on)
-	if(QDELETED(cast_on) || !HAS_TRAIT_FROM(cast_on, TRAIT_THERMAL_VISION, GENETIC_MUTATION))
+	if(QDELETED(cast_on) || !HAS_TRAIT_FROM(cast_on, TRAIT_THERMAL_VISION, SOURCE_GENETIC_MUTATION))
 		return
 
-	REMOVE_TRAIT(cast_on, TRAIT_THERMAL_VISION, GENETIC_MUTATION)
+	REMOVE_TRAIT(cast_on, TRAIT_THERMAL_VISION, SOURCE_GENETIC_MUTATION)
 	cast_on.update_sight()
 	to_chat(cast_on, span_info("You blink a few times, your vision returning to normal as a dull pain settles in your eyes."))
 
@@ -116,13 +116,13 @@
 /datum/mutation/human/xray/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	ADD_TRAIT(owner, TRAIT_XRAY_VISION, GENETIC_MUTATION)
+	ADD_TRAIT(owner, TRAIT_XRAY_VISION, SOURCE_GENETIC_MUTATION)
 	owner.update_sight()
 
 /datum/mutation/human/xray/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	REMOVE_TRAIT(owner, TRAIT_XRAY_VISION, GENETIC_MUTATION)
+	REMOVE_TRAIT(owner, TRAIT_XRAY_VISION, SOURCE_GENETIC_MUTATION)
 	owner.update_sight()
 
 
@@ -189,9 +189,9 @@
 /datum/mutation/human/illiterate/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	ADD_TRAIT(owner, TRAIT_ILLITERATE, GENETIC_MUTATION)
+	ADD_TRAIT(owner, TRAIT_ILLITERATE, SOURCE_GENETIC_MUTATION)
 
 /datum/mutation/human/illiterate/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	REMOVE_TRAIT(owner, TRAIT_ILLITERATE, GENETIC_MUTATION)
+	REMOVE_TRAIT(owner, TRAIT_ILLITERATE, SOURCE_GENETIC_MUTATION)

@@ -506,10 +506,10 @@
 /datum/reagent/medicine/c2/penthrite/on_mob_metabolize(mob/living/user)
 	. = ..()
 	user.balloon_alert(user, "your heart beats with a great force")
-	ADD_TRAIT(user, TRAIT_STABLEHEART, type)
-	ADD_TRAIT(user, TRAIT_NOHARDCRIT,type)
-	ADD_TRAIT(user, TRAIT_NOSOFTCRIT,type)
-	ADD_TRAIT(user, TRAIT_NOCRITDAMAGE,type)
+	ADD_TRAIT(user, TRAIT_STABLE_HEART, type)
+	ADD_TRAIT(user, TRAIT_NO_HARD_CRIT,type)
+	ADD_TRAIT(user, TRAIT_NO_SOFT_CRIT,type)
+	ADD_TRAIT(user, TRAIT_NO_CRIT_DAMAGE,type)
 
 /datum/reagent/medicine/c2/penthrite/on_mob_life(mob/living/carbon/human/H, delta_time, times_fired)
 	H.adjustOrganLoss(ORGAN_SLOT_STOMACH, 0.25 * REM * delta_time)
@@ -531,7 +531,7 @@
 			to_chat(H,span_danger("Your body is trying to give up, but your heart is still beating!"))
 
 	if(H.health <= (H.crit_threshold + HEALTH_THRESHOLD_FULLCRIT*(2*normalise_creation_purity()))) //certain death below this threshold
-		REMOVE_TRAIT(H, TRAIT_STABLEHEART, type) //we have to remove the stable heart trait before we give them a heart attack
+		REMOVE_TRAIT(H, TRAIT_STABLE_HEART, type) //we have to remove the stable heart trait before we give them a heart attack
 		to_chat(H,span_danger("You feel something rupturing inside your chest!"))
 		H.emote("scream")
 		H.set_heartattack(TRUE)
@@ -540,14 +540,14 @@
 
 /datum/reagent/medicine/c2/penthrite/on_mob_end_metabolize(mob/living/user)
 	user.balloon_alert(user, "your heart relaxes")
-	REMOVE_TRAIT(user, TRAIT_STABLEHEART, type)
-	REMOVE_TRAIT(user, TRAIT_NOHARDCRIT,type)
-	REMOVE_TRAIT(user, TRAIT_NOSOFTCRIT,type)
-	REMOVE_TRAIT(user, TRAIT_NOCRITDAMAGE,type)
+	REMOVE_TRAIT(user, TRAIT_STABLE_HEART, type)
+	REMOVE_TRAIT(user, TRAIT_NO_HARD_CRIT,type)
+	REMOVE_TRAIT(user, TRAIT_NO_SOFT_CRIT,type)
+	REMOVE_TRAIT(user, TRAIT_NO_CRIT_DAMAGE,type)
 	. = ..()
 
 /datum/reagent/medicine/c2/penthrite/overdose_process(mob/living/carbon/human/H, delta_time, times_fired)
-	REMOVE_TRAIT(H, TRAIT_STABLEHEART, type)
+	REMOVE_TRAIT(H, TRAIT_STABLE_HEART, type)
 	H.adjustStaminaLoss(10 * REM * delta_time)
 	H.adjustOrganLoss(ORGAN_SLOT_HEART, 10 * REM * delta_time)
 	H.set_heartattack(TRUE)

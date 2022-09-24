@@ -70,7 +70,7 @@
 	orbiter_list[orbiter] = TRUE
 	orbiter.orbiting = src
 
-	ADD_TRAIT(orbiter, TRAIT_NO_FLOATING_ANIM, ORBITING_TRAIT)
+	ADD_TRAIT(orbiter, TRAIT_NO_FLOATING_ANIM, SOURCE_ORBITING)
 	RegisterSignal(orbiter, COMSIG_MOVABLE_MOVED, .proc/orbiter_move_react)
 
 	SEND_SIGNAL(parent, COMSIG_ATOM_ORBIT_BEGIN, orbiter)
@@ -120,7 +120,7 @@
 		orbiter_mob.updating_glide_size = TRUE
 		orbiter_mob.glide_size = 8
 
-	REMOVE_TRAIT(orbiter, TRAIT_NO_FLOATING_ANIM, ORBITING_TRAIT)
+	REMOVE_TRAIT(orbiter, TRAIT_NO_FLOATING_ANIM, SOURCE_ORBITING)
 
 	if(!refreshing && !length(orbiter_list) && !QDELING(src))
 		qdel(src)

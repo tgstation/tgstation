@@ -35,12 +35,12 @@
 	combat_armor = getArmor(arglist(combat_armor))
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/toggle_nodrop()
-	if(HAS_TRAIT_FROM(src, TRAIT_NODROP, ABDUCTOR_VEST_TRAIT))
-		REMOVE_TRAIT(src, TRAIT_NODROP, ABDUCTOR_VEST_TRAIT)
+	if(HAS_TRAIT_FROM(src, TRAIT_NODROP, SOURCE_ABDUCTOR_VEST))
+		REMOVE_TRAIT(src, TRAIT_NODROP, SOURCE_ABDUCTOR_VEST)
 	else
-		ADD_TRAIT(src, TRAIT_NODROP, ABDUCTOR_VEST_TRAIT)
+		ADD_TRAIT(src, TRAIT_NODROP, SOURCE_ABDUCTOR_VEST)
 	if(ismob(loc))
-		to_chat(loc, span_notice("Your vest is now [HAS_TRAIT_FROM(src, TRAIT_NODROP, ABDUCTOR_VEST_TRAIT) ? "locked" : "unlocked"]."))
+		to_chat(loc, span_notice("Your vest is now [HAS_TRAIT_FROM(src, TRAIT_NODROP, SOURCE_ABDUCTOR_VEST) ? "locked" : "unlocked"]."))
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/flip_mode()
 	switch(mode)

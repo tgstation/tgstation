@@ -89,7 +89,7 @@
 
 /obj/item/clothing/under/costume/kilt/highlander/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, HIGHLANDER)
+	ADD_TRAIT(src, TRAIT_NODROP, SOURCE_HIGHLANDER)
 
 /obj/item/clothing/under/costume/gladiator
 	name = "gladiator uniform"

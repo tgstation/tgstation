@@ -42,7 +42,7 @@
 	riot.Grant(src)
 	AddElement(/datum/element/waddling)
 
-	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, SOURCE_INNATE)
 
 /mob/living/simple_animal/hostile/regalrat/Destroy()
 	QDEL_NULL(domain)
@@ -301,7 +301,7 @@
 	. = ..()
 	SSmobs.cheeserats += src
 
-	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, SOURCE_INNATE)
 
 /mob/living/simple_animal/hostile/rat/Destroy()
 	SSmobs.cheeserats -= src

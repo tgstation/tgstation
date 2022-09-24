@@ -480,7 +480,7 @@ MICE_ROUNDSTART 10
 
 ## Uncomment to allow roundstart quirk selection in the character setup menu.
 ## This used to be named traits, hence the config name, but it handles quirks, not the other kind of trait!
-ROUNDSTART_TRAITS
+SOURCE_ROUNDSTARTS
 
 ## Uncomment to disable human moods.
 #DISABLE_HUMAN_MOOD

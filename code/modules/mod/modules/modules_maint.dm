@@ -52,7 +52,7 @@
 	playsound(mod.wearer, 'sound/effects/splat.ogg', 50, TRUE, frequency = 0.5)
 	mod.wearer.client?.give_award(/datum/award/achievement/misc/springlock, mod.wearer)
 	mod.wearer.apply_damage(500, BRUTE, forced = TRUE, spread_damage = TRUE, sharpness = SHARP_POINTY) //boggers, bogchamp, etc
-	if(!HAS_TRAIT(mod.wearer, TRAIT_NODEATH))
+	if(!HAS_TRAIT(mod.wearer, TRAIT_NO_DEATH))
 		mod.wearer.death() //just in case, for some reason, they're still alive
 	flash_color(mod.wearer, flash_color = "#FF0000", flash_time = 10 SECONDS)
 
@@ -287,7 +287,7 @@
 	mod.wearer.AddElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY)
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, .proc/check_upstairs)
 	mod.wearer.update_gravity(mod.wearer.has_gravity())
-	ADD_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, MOD_TRAIT)
+	ADD_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, SOURCE_MOD)
 	check_upstairs() //todo at some point flip your screen around
 
 /obj/item/mod/module/atrocinator/on_deactivation(display_message = TRUE, deleting = FALSE)
@@ -303,7 +303,7 @@
 	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
 	step_count = 0
 	mod.wearer.update_gravity(mod.wearer.has_gravity())
-	REMOVE_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, MOD_TRAIT)
+	REMOVE_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, SOURCE_MOD)
 	var/turf/open/openspace/current_turf = get_turf(mod.wearer)
 	if(istype(current_turf))
 		current_turf.zFall(mod.wearer, falling_from_move = TRUE)

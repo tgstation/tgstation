@@ -33,12 +33,12 @@
 	alert_type =/atom/movable/screen/alert/status_effect/duskndawn
 
 /datum/status_effect/duskndawn/on_apply()
-	ADD_TRAIT(owner, TRAIT_XRAY_VISION, STATUS_EFFECT_TRAIT)
+	ADD_TRAIT(owner, TRAIT_XRAY_VISION, SOURCE_STATUS_EFFECT)
 	owner.update_sight()
 	return TRUE
 
 /datum/status_effect/duskndawn/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_XRAY_VISION, STATUS_EFFECT_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_XRAY_VISION, SOURCE_STATUS_EFFECT)
 	owner.update_sight()
 
 // WOUNDED SOLDIER
@@ -50,11 +50,11 @@
 	alert_type = /atom/movable/screen/alert/status_effect/marshal
 
 /datum/status_effect/marshal/on_apply()
-	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, STATUS_EFFECT_TRAIT)
+	ADD_TRAIT(owner, TRAIT_IGNORE_DAMAGE_SLOWDOWN, SOURCE_STATUS_EFFECT)
 	return TRUE
 
 /datum/status_effect/marshal/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, STATUS_EFFECT_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_IGNORE_DAMAGE_SLOWDOWN, SOURCE_STATUS_EFFECT)
 
 /datum/status_effect/marshal/tick()
 	if(!iscarbon(owner))

@@ -181,11 +181,11 @@
 	/// A static list of all traits we apply on ascension.
 	var/static/list/traits_to_apply = list(
 		TRAIT_RESISTHEAT,
-		TRAIT_NOBREATH,
-		TRAIT_RESISTCOLD,
-		TRAIT_RESISTHIGHPRESSURE,
-		TRAIT_RESISTLOWPRESSURE,
-		TRAIT_NOFIRE,
+		TRAIT_NO_BREATH,
+		TRAIT_RESIST_COLD,
+		TRAIT_RESIST_HIGH_PRESSURE,
+		TRAIT_RESIST_LOW_PRESSURE,
+		TRAIT_FLAME_IMMUNE,
 	)
 
 /datum/heretic_knowledge/final/ash_final/is_valid_sacrifice(mob/living/carbon/human/sacrifice)
@@ -211,4 +211,4 @@
 
 	user.client?.give_award(/datum/award/achievement/misc/ash_ascension, user)
 	for(var/trait in traits_to_apply)
-		ADD_TRAIT(user, trait, MAGIC_TRAIT)
+		ADD_TRAIT(user, trait, SOURCE_MAGIC)

@@ -16,7 +16,7 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 	if(HAS_TRAIT(target_obj, TRAIT_FROZEN))
 		return ELEMENT_INCOMPATIBLE
 
-	ADD_TRAIT(target_obj, TRAIT_FROZEN, ELEMENT_TRAIT(type))
+	ADD_TRAIT(target_obj, TRAIT_FROZEN, SOURCE_ELEMENT(type))
 	target_obj.name = "frozen [target_obj.name]"
 	target_obj.add_atom_colour(GLOB.freon_color_matrix, TEMPORARY_COLOUR_PRIORITY)
 	target_obj.alpha -= 25
@@ -28,7 +28,7 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 
 /datum/element/frozen/Detach(datum/source, ...)
 	var/obj/obj_source = source
-	REMOVE_TRAIT(obj_source, TRAIT_FROZEN, ELEMENT_TRAIT(type))
+	REMOVE_TRAIT(obj_source, TRAIT_FROZEN, SOURCE_ELEMENT(type))
 	UnregisterSignal(obj_source, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_THROW_LANDED, COMSIG_MOVABLE_IMPACT, COMSIG_OBJ_UNFREEZE))
 	obj_source.name = replacetext(obj_source.name, "frozen ", "")
 	obj_source.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, GLOB.freon_color_matrix)

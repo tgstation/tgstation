@@ -16,11 +16,11 @@
 	if(slot == ITEM_SLOT_FEET)
 		update_gravity_trait(user)
 	else
-		REMOVE_TRAIT(user, TRAIT_NEGATES_GRAVITY, type)
+		REMOVE_TRAIT(user, TRAIT_NEGATE_GRAVITY, type)
 
 /obj/item/clothing/shoes/magboots/dropped(mob/user)
 	. = ..()
-	REMOVE_TRAIT(user, TRAIT_NEGATES_GRAVITY, type)
+	REMOVE_TRAIT(user, TRAIT_NEGATE_GRAVITY, type)
 
 /obj/item/clothing/shoes/magboots/verb/toggle()
 	set name = "Toggle Magboots"
@@ -53,9 +53,9 @@
 ///Adds/removes the gravity negation trait from the wearer depending on if the magpulse system is turned on.
 /obj/item/clothing/shoes/magboots/proc/update_gravity_trait(mob/user)
 	if(magpulse)
-		ADD_TRAIT(user, TRAIT_NEGATES_GRAVITY, type)
+		ADD_TRAIT(user, TRAIT_NEGATE_GRAVITY, type)
 	else
-		REMOVE_TRAIT(user, TRAIT_NEGATES_GRAVITY, type)
+		REMOVE_TRAIT(user, TRAIT_NEGATE_GRAVITY, type)
 
 /obj/item/clothing/shoes/magboots/advance
 	desc = "Advanced magnetic boots that have a lighter magnetic pull, placing less burden on the wearer."

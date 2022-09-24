@@ -54,7 +54,7 @@
 		return
 	if(ispath(device))
 		device = new device(src)
-		ADD_TRAIT(device, TRAIT_NODROP, MOD_TRAIT)
+		ADD_TRAIT(device, TRAIT_NODROP, SOURCE_MOD)
 		RegisterSignal(device, COMSIG_PARENT_QDELETING, .proc/on_device_deletion)
 		RegisterSignal(src, COMSIG_ATOM_EXITED, .proc/on_exit)
 

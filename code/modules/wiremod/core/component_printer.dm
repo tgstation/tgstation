@@ -362,7 +362,7 @@
 
 	if(istype(weapon, /obj/item/circuit_component/module))
 		var/obj/item/circuit_component/module/module = weapon
-		if(HAS_TRAIT(module, TRAIT_CIRCUIT_UNDUPABLE))
+		if(HAS_TRAIT(module, TRAIT_NO_CIRCUIT_REPLICATION))
 			balloon_alert(user, "integrated circuit cannot be saved!")
 			return ..()
 
@@ -374,7 +374,7 @@
 		data["materials"] = list(GET_MATERIAL_REF(/datum/material/glass) = module.circuit_size * cost_per_component)
 	else if(istype(weapon, /obj/item/integrated_circuit))
 		var/obj/item/integrated_circuit/integrated_circuit = weapon
-		if(HAS_TRAIT(integrated_circuit, TRAIT_CIRCUIT_UNDUPABLE))
+		if(HAS_TRAIT(integrated_circuit, TRAIT_NO_CIRCUIT_REPLICATION))
 			balloon_alert(user, "integrated circuit cannot be saved!")
 			return ..()
 		data["dupe_data"] = integrated_circuit.convert_to_json()

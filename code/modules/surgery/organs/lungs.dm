@@ -93,7 +93,7 @@
 		breather.failed_last_breath = FALSE //clear oxy issues
 		breather.clear_alert(ALERT_NOT_ENOUGH_OXYGEN)
 		return
-	if(HAS_TRAIT(breather, TRAIT_NOBREATH))
+	if(HAS_TRAIT(breather, TRAIT_NO_BREATH))
 		return
 
 	if(!breath || (breath.total_moles() == 0))
@@ -101,7 +101,7 @@
 			return
 		if(breather.health >= breather.crit_threshold)
 			breather.adjustOxyLoss(HUMAN_MAX_OXYLOSS)
-		else if(!HAS_TRAIT(breather, TRAIT_NOCRITDAMAGE))
+		else if(!HAS_TRAIT(breather, TRAIT_NO_CRIT_DAMAGE))
 			breather.adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
 
 		breather.failed_last_breath = TRUE
@@ -489,7 +489,7 @@
 /obj/item/organ/internal/lungs/proc/handle_breath_temperature(datum/gas_mixture/breath, mob/living/carbon/human/breather) // called by human/life, handles temperatures
 	var/breath_temperature = breath.temperature
 
-	if(!HAS_TRAIT(breather, TRAIT_RESISTCOLD)) // COLD DAMAGE
+	if(!HAS_TRAIT(breather, TRAIT_RESIST_COLD)) // COLD DAMAGE
 		var/cold_modifier = breather.dna.species.coldmod
 		if(breath_temperature < cold_level_3_threshold)
 			breather.apply_damage_type(cold_level_3_damage*cold_modifier, cold_damage_type)
@@ -534,13 +534,13 @@
 		failed = TRUE
 
 /obj/item/organ/internal/lungs/get_availability(datum/species/owner_species)
-	return !(TRAIT_NOBREATH in owner_species.inherent_traits)
+	return !(TRAIT_NO_BREATH in owner_species.inherent_traits)
 
 /obj/item/organ/internal/lungs/plasmaman
 	name = "plasma filter"
 	desc = "A spongy rib-shaped mass for filtering plasma from the air."
 	icon_state = "lungs-plasma"
-	organ_traits = list(TRAIT_NOHUNGER) // A fresh breakfast of plasma is a great start to any morning.
+	organ_traits = list(TRAIT_NO_HUNGER) // A fresh breakfast of plasma is a great start to any morning.
 
 	safe_oxygen_min = 0 //We don't breathe this
 	safe_plasma_min = 4 //We breathe THIS!

@@ -27,7 +27,7 @@
 		return COMPONENT_INCOMPATIBLE
 
 	// This isn't incompatible, it's just wrong
-	if (HAS_TRAIT(parent, TRAIT_RADIMMUNE))
+	if (HAS_TRAIT(parent, TRAIT_RAD_IMMUNE))
 		qdel(src)
 		return
 
@@ -78,7 +78,7 @@
 	if (!ishuman(parent))
 		return PROCESS_KILL
 
-	if (HAS_TRAIT(parent, TRAIT_RADIMMUNE))
+	if (HAS_TRAIT(parent, TRAIT_RAD_IMMUNE))
 		qdel(src)
 		return PROCESS_KILL
 

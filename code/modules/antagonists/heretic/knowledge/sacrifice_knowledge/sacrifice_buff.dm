@@ -20,14 +20,14 @@
 
 /datum/status_effect/unholy_determination/on_apply()
 	ADD_TRAIT(owner, TRAIT_COAGULATING, type)
-	ADD_TRAIT(owner, TRAIT_NOCRITDAMAGE, type)
-	ADD_TRAIT(owner, TRAIT_NOSOFTCRIT, type)
+	ADD_TRAIT(owner, TRAIT_NO_CRIT_DAMAGE, type)
+	ADD_TRAIT(owner, TRAIT_NO_SOFT_CRIT, type)
 	return TRUE
 
 /datum/status_effect/unholy_determination/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_COAGULATING, type)
-	REMOVE_TRAIT(owner, TRAIT_NOCRITDAMAGE, type)
-	REMOVE_TRAIT(owner, TRAIT_NOSOFTCRIT, type)
+	REMOVE_TRAIT(owner, TRAIT_NO_CRIT_DAMAGE, type)
+	REMOVE_TRAIT(owner, TRAIT_NO_SOFT_CRIT, type)
 
 /datum/status_effect/unholy_determination/tick()
 	// The amount we heal of each damage type per tick. If we're missing legs we heal better because we can't dodge.

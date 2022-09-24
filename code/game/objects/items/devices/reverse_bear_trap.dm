@@ -60,7 +60,7 @@
 	var/mob/living/carbon/carbon_user = user
 	if(carbon_user.get_item_by_slot(ITEM_SLOT_HEAD) != src)
 		return
-	if(!HAS_TRAIT_FROM(src, TRAIT_NODROP, REVERSE_BEAR_TRAP_TRAIT) || struggling)
+	if(!HAS_TRAIT_FROM(src, TRAIT_NODROP, SOURCE_REVERSE_BEAR_TRAP) || struggling)
 		return
 
 	struggling = TRUE
@@ -86,7 +86,7 @@
 	else
 		user.visible_message(span_warning("The lock on [user]'s [name] pops open!"), \
 		span_userdanger("You force open the padlock!"), "<i>You hear a single, pronounced click!</i>")
-		REMOVE_TRAIT(src, TRAIT_NODROP, REVERSE_BEAR_TRAP_TRAIT)
+		REMOVE_TRAIT(src, TRAIT_NODROP, SOURCE_REVERSE_BEAR_TRAP)
 	struggling = FALSE
 
 /obj/item/reverse_bear_trap/attack(mob/living/target, mob/living/user)
@@ -127,7 +127,7 @@
 /obj/item/reverse_bear_trap/proc/reset()
 	ticking = FALSE
 	update_appearance(UPDATE_OVERLAYS)
-	REMOVE_TRAIT(src, TRAIT_NODROP, REVERSE_BEAR_TRAP_TRAIT)
+	REMOVE_TRAIT(src, TRAIT_NODROP, SOURCE_REVERSE_BEAR_TRAP)
 	soundloop.stop()
 	soundloop2.stop()
 	STOP_PROCESSING(SSprocessing, src)
@@ -144,7 +144,7 @@
 	update_appearance(UPDATE_OVERLAYS)
 	escape_chance = initial(escape_chance) //we keep these vars until re-arm, for tracking purposes
 	COOLDOWN_START(src, kill_countdown, REVERSE_BEAR_TRAP_COUNTDOWN)
-	ADD_TRAIT(src, TRAIT_NODROP, REVERSE_BEAR_TRAP_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, SOURCE_REVERSE_BEAR_TRAP)
 	soundloop.start()
 	soundloop2.mid_length = initial(soundloop2.mid_length)
 	soundloop2.start()

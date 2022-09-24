@@ -13,14 +13,14 @@
 	containerref = WEAKREF(passed_container)
 	move_tracker = new(parent, CALLBACK(src, .proc/verify_containment))
 
-	ADD_TRAIT(parent, TRAIT_INCAPACITATED, SMITE_TRAIT)
+	ADD_TRAIT(parent, TRAIT_INCAPACITATED, SOURCE_SMITE)
 
 /// Ensure that when we move, we still are in the container. If not in the container, remove all the traits.
 /datum/component/itembound/proc/verify_containment()
 	var/atom/movable/container = containerref.resolve()
 	if(!QDELETED(container) && container.contains(parent))
 		return
-	REMOVE_TRAIT(parent, TRAIT_INCAPACITATED, SMITE_TRAIT)
+	REMOVE_TRAIT(parent, TRAIT_INCAPACITATED, SOURCE_SMITE)
 	qdel(src)
 
 /datum/component/itembound/Destroy(force, silent)

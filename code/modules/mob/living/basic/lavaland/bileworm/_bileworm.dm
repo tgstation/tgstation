@@ -34,9 +34,9 @@
 	. = ..()
 	//traits and elements
 
-	ADD_TRAIT(src, TRAIT_IMMOBILIZED, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_LAVA_IMMUNE, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_ASHSTORM_IMMUNE, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_IMMOBILIZED, SOURCE_INNATE)
+	ADD_TRAIT(src, TRAIT_LAVA_IMMUNE, SOURCE_INNATE)
+	ADD_TRAIT(src, TRAIT_ASHSTORM_IMMUNE, SOURCE_INNATE)
 	AddElement(/datum/element/basic_body_temp_sensitive, max_body_temp = INFINITY)
 	AddElement(/datum/element/crusher_loot, /obj/item/crusher_trophy/bileworm_spewlet, 15)
 	AddElement(/datum/element/mob_killed_tally, "mobs_killed_mining")

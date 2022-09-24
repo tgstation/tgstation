@@ -72,9 +72,9 @@
 			//nothing
 		if(21 to 110)
 			if(DT_PROB(100 * (1 - (sqrt(110 - current_cycle) / 10)), delta_time))
-				M.cure_nearsighted(list(EYE_DAMAGE))
+				M.cure_nearsighted(list(SOURCE_EYE_DAMAGE))
 		if(110 to INFINITY)
-			M.cure_nearsighted(list(EYE_DAMAGE))
+			M.cure_nearsighted(list(SOURCE_EYE_DAMAGE))
 	..()
 	return
 
@@ -536,10 +536,10 @@
 
 /datum/reagent/consumable/grey_bull/on_mob_metabolize(mob/living/L)
 	..()
-	ADD_TRAIT(L, TRAIT_SHOCKIMMUNE, type)
+	ADD_TRAIT(L, TRAIT_SHOCK_IMMUNE, type)
 
 /datum/reagent/consumable/grey_bull/on_mob_end_metabolize(mob/living/L)
-	REMOVE_TRAIT(L, TRAIT_SHOCKIMMUNE, type)
+	REMOVE_TRAIT(L, TRAIT_SHOCK_IMMUNE, type)
 	..()
 
 /datum/reagent/consumable/grey_bull/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -1284,7 +1284,7 @@
 /datum/reagent/consumable/cucumberjuice
 	name = "Cucumber Juice"
 	description = "Ordinary cucumber juice, nothing from the fantasy world."
-	color = "#6cd87a" 
+	color = "#6cd87a"
 	taste_description = "light cucumber"
 	glass_icon_state = "glass_cucumber"
 	glass_name = "glass of cucumber juice"
@@ -1295,7 +1295,7 @@
 /datum/reagent/consumable/cucumberlemonade
 	name = "Cucumber Lemonade"
 	description = "Cucumber juice, sugar and soda, what else is needed for happiness?"
-	color = "#6cd87a" 
+	color = "#6cd87a"
 	taste_description = "citrus soda with cucumber"
 	glass_icon_state = "cucumber_lemonade"
 	glass_name = "cucumber lemonade"

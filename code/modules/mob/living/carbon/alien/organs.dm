@@ -94,11 +94,11 @@
 /obj/item/organ/internal/alien/hivenode/Insert(mob/living/carbon/organ_owner, special = FALSE, drop_if_replaced = TRUE)
 	..()
 	organ_owner.faction |= ROLE_ALIEN
-	ADD_TRAIT(organ_owner, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)
+	ADD_TRAIT(organ_owner, TRAIT_XENO_IMMUNE, SOURCE_ORGAN)
 
 /obj/item/organ/internal/alien/hivenode/Remove(mob/living/carbon/organ_owner, special = FALSE)
 	organ_owner.faction -= ROLE_ALIEN
-	REMOVE_TRAIT(organ_owner, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)
+	REMOVE_TRAIT(organ_owner, TRAIT_XENO_IMMUNE, SOURCE_ORGAN)
 	..()
 
 //When the alien queen dies, all aliens suffer a penalty as punishment for failing to protect her.

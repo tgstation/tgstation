@@ -480,16 +480,16 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			new_organ.Insert(human)
 
 	for(var/X in inherent_traits)
-		ADD_TRAIT(C, X, SPECIES_TRAIT)
+		ADD_TRAIT(C, X, SOURCE_SPECIES)
 
-	if(TRAIT_VIRUSIMMUNE in inherent_traits)
+	if(TRAIT_VIRUS_IMMUNE in inherent_traits)
 		for(var/datum/disease/A in C.diseases)
 			A.cure(FALSE)
 
-	if(TRAIT_TOXIMMUNE in inherent_traits)
+	if(TRAIT_TOX_IMMUNE in inherent_traits)
 		C.setToxLoss(0, TRUE, TRUE)
 
-	if(TRAIT_NOMETABOLISM in inherent_traits)
+	if(TRAIT_NO_METABOLISM in inherent_traits)
 		C.reagents.end_metabolization(C, keep_liverless = TRUE)
 
 	if(TRAIT_GENELESS in inherent_traits)
@@ -522,7 +522,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(C.dna.species.exotic_bloodtype)
 		C.dna.blood_type = random_blood_type()
 	for(var/X in inherent_traits)
-		REMOVE_TRAIT(C, X, SPECIES_TRAIT)
+		REMOVE_TRAIT(C, X, SOURCE_SPECIES)
 	for(var/obj/item/organ/external/organ as anything in C.external_organs)
 		organ.Remove(C)
 		qdel(organ)
@@ -809,11 +809,11 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	return
 
 /datum/species/proc/spec_life(mob/living/carbon/human/H, delta_time, times_fired)
-	if(HAS_TRAIT(H, TRAIT_NOBREATH))
+	if(HAS_TRAIT(H, TRAIT_NO_BREATH))
 		H.setOxyLoss(0)
 		H.losebreath = 0
 
-		var/takes_crit_damage = (!HAS_TRAIT(H, TRAIT_NOCRITDAMAGE))
+		var/takes_crit_damage = (!HAS_TRAIT(H, TRAIT_NO_CRIT_DAMAGE))
 		if((H.health < H.crit_threshold) && takes_crit_damage && H.stat != DEAD)
 			H.adjustBruteLoss(0.5 * delta_time)
 
@@ -1062,7 +1062,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 
 /datum/species/proc/help(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
-	if(target.body_position == STANDING_UP || (target.health >= 0 && !HAS_TRAIT(target, TRAIT_FAKEDEATH)))
+	if(target.body_position == STANDING_UP || (target.health >= 0 && !HAS_TRAIT(target, TRAIT_FAKE_DEATH)))
 		target.help_shake_act(user)
 		if(target != user)
 			log_combat(user, target, "shaken")
@@ -1527,7 +1527,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			humi.throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/hot, 3)
 
 	// Body temperature is too cold, and we do not have resist traits
-	else if(bodytemp < bodytemp_cold_damage_limit && !HAS_TRAIT(humi, TRAIT_RESISTCOLD))
+	else if(bodytemp < bodytemp_cold_damage_limit && !HAS_TRAIT(humi, TRAIT_RESIST_COLD))
 		// clear any hot moods and apply cold mood
 		humi.clear_mood_event("hot")
 		humi.add_mood_event("cold", /datum/mood_event/cold)
@@ -1597,7 +1597,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	var/cold_damage_limit = bodytemp_cold_damage_limit + (is_hulk ? BODYTEMP_HULK_COLD_DAMAGE_LIMIT_MODIFIER : 0)
 
-	if(humi.coretemperature < cold_damage_limit && !HAS_TRAIT(humi, TRAIT_RESISTCOLD))
+	if(humi.coretemperature < cold_damage_limit && !HAS_TRAIT(humi, TRAIT_RESIST_COLD))
 		var/damage_type = is_hulk ? BRUTE : BURN // Why?
 		var/damage_mod = coldmod * humi.physiology.cold_mod * (is_hulk ? HULK_COLD_DAMAGE_MOD : 1)
 		// Can't be a switch due to http://www.byond.com/forum/post/2750423
@@ -1659,7 +1659,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	switch(adjusted_pressure)
 		// Very high pressure, show an alert and take damage
 		if(HAZARD_HIGH_PRESSURE to INFINITY)
-			if(!HAS_TRAIT(H, TRAIT_RESISTHIGHPRESSURE))
+			if(!HAS_TRAIT(H, TRAIT_RESIST_HIGH_PRESSURE))
 				H.adjustBruteLoss(min(((adjusted_pressure / HAZARD_HIGH_PRESSURE) - 1) * PRESSURE_DAMAGE_COEFFICIENT, MAX_HIGH_PRESSURE_DAMAGE) * H.physiology.pressure_mod * delta_time)
 				H.throw_alert(ALERT_PRESSURE, /atom/movable/screen/alert/highpressure, 2)
 			else
@@ -1676,7 +1676,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		// Low pressure here, show an alert
 		if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
 			// We have low pressure resit trait, clear alerts
-			if(HAS_TRAIT(H, TRAIT_RESISTLOWPRESSURE))
+			if(HAS_TRAIT(H, TRAIT_RESIST_LOW_PRESSURE))
 				H.clear_alert(ALERT_PRESSURE)
 			else
 				H.throw_alert(ALERT_PRESSURE, /atom/movable/screen/alert/lowpressure, 1)
@@ -1684,7 +1684,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		// Very low pressure, show an alert and take damage
 		else
 			// We have low pressure resit trait, clear alerts
-			if(HAS_TRAIT(H, TRAIT_RESISTLOWPRESSURE))
+			if(HAS_TRAIT(H, TRAIT_RESIST_LOW_PRESSURE))
 				H.clear_alert(ALERT_PRESSURE)
 			else
 				H.adjustBruteLoss(LOW_PRESSURE_DAMAGE * H.physiology.pressure_mod * delta_time)
@@ -1878,7 +1878,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
  * Returns a list, or null if they have no diet.
  */
 /datum/species/proc/get_species_diet()
-	if(TRAIT_NOHUNGER in inherent_traits)
+	if(TRAIT_NO_HUNGER in inherent_traits)
 		return null
 
 	var/list/food_flags = FOOD_FLAGS
@@ -2124,7 +2124,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/create_pref_traits_perks()
 	var/list/to_add = list()
 
-	if(TRAIT_LIMBATTACHMENT in inherent_traits)
+	if(TRAIT_LIMB_ATTACHMENT in inherent_traits)
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "user-plus",
@@ -2133,7 +2133,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				require surgery to restore. Simply pick it up and pop it back in, champ!",
 		))
 
-	if(TRAIT_EASYDISMEMBER in inherent_traits)
+	if(TRAIT_EASY_DISMEMBER in inherent_traits)
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "user-times",
@@ -2149,7 +2149,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			SPECIES_PERK_DESC = "[plural_form] skin is very weak and fragile. They are much easier to apply serious wounds to.",
 		))
 
-	if(TRAIT_TOXINLOVER in inherent_traits)
+	if(TRAIT_TOXIN_LOVER in inherent_traits)
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 			SPECIES_PERK_ICON = "syringe",

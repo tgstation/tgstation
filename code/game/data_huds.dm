@@ -97,7 +97,7 @@ Medical HUD! Basic mode needs suit sensors on.
 /mob/living/carbon/proc/check_virus()
 	var/threat
 	var/severity
-	if(HAS_TRAIT(src, TRAIT_DISEASELIKE_SEVERITY_MEDIUM))
+	if(HAS_TRAIT(src, TRAIT_DISEASE_SEVERITY_MEDIUM))
 		severity = DISEASE_SEVERITY_MEDIUM
 		threat = get_disease_severity_value(severity)
 
@@ -111,7 +111,7 @@ Medical HUD! Basic mode needs suit sensors on.
 
 //helper for getting the appropriate health status
 /proc/RoundHealth(mob/living/M)
-	if(M.stat == DEAD || (HAS_TRAIT(M, TRAIT_FAKEDEATH)))
+	if(M.stat == DEAD || (HAS_TRAIT(M, TRAIT_FAKE_DEATH)))
 		return "health-100" //what's our health? it doesn't matter, we're dead, or faking
 	var/maxi_health = M.maxHealth
 	if(iscarbon(M) && M.health < 0)
@@ -182,7 +182,7 @@ Medical HUD! Basic mode needs suit sensors on.
 	var/image/holder = hud_list[STATUS_HUD]
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
-	if(stat == DEAD || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
+	if(stat == DEAD || (HAS_TRAIT(src, TRAIT_FAKE_DEATH)))
 		holder.icon_state = "huddead"
 	else
 		holder.icon_state = "hudhealthy"
@@ -194,7 +194,7 @@ Medical HUD! Basic mode needs suit sensors on.
 	holder.pixel_y = I.Height() - world.icon_size
 	if(HAS_TRAIT(src, TRAIT_XENO_HOST))
 		holder.icon_state = "hudxeno"
-	else if(stat == DEAD || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
+	else if(stat == DEAD || (HAS_TRAIT(src, TRAIT_FAKE_DEATH)))
 		if((key || get_ghost(FALSE, TRUE)) && (can_defib() & DEFIB_REVIVABLE_STATES))
 			holder.icon_state = "huddefib"
 		else

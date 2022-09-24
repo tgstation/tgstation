@@ -23,7 +23,7 @@
 /datum/element/cult_eyes/proc/set_eyes(mob/living/target)
 	SIGNAL_HANDLER
 
-	ADD_TRAIT(target, TRAIT_UNNATURAL_RED_GLOWY_EYES, CULT_TRAIT)
+	ADD_TRAIT(target, TRAIT_GLOWING_RED_EYES, SOURCE_CULT)
 	if (ishuman(target))
 		var/mob/living/carbon/human/human_parent = target
 		human_parent.eye_color_left = BLOODCULT_EYE
@@ -38,7 +38,7 @@
  * Removes the eye color, and trait from the mob
  */
 /datum/element/cult_eyes/Detach(mob/living/target, ...)
-	REMOVE_TRAIT(target, TRAIT_UNNATURAL_RED_GLOWY_EYES, CULT_TRAIT)
+	REMOVE_TRAIT(target, TRAIT_GLOWING_RED_EYES, SOURCE_CULT)
 	if (ishuman(target))
 		var/mob/living/carbon/human/human_parent = target
 		human_parent.eye_color_left = initial(human_parent.eye_color_left)

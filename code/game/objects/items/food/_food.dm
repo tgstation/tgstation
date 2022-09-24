@@ -65,7 +65,7 @@
 	MakeGrillable()
 	MakeDecompose(mapload)
 	MakeBakeable()
-	ADD_TRAIT(src, FISHING_BAIT_TRAIT, INNATE_TRAIT)
+	ADD_TRAIT(src, FISHING_BAIT_TRAIT, SOURCE_INNATE)
 
 /obj/item/food/examine(mob/user)
 	. = ..()

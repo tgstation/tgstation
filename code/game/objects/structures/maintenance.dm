@@ -32,7 +32,7 @@ at the cost of risking a vicious bite.**/
 
 /obj/structure/moisture_trap/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_FISH_SAFE_STORAGE, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_FISH_SAFE_STORAGE, SOURCE_GENERIC)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOIST, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 20)
 	if(prob(40))
 		critter_infested = FALSE

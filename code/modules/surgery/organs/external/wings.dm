@@ -113,17 +113,17 @@
 
 ///UNSAFE PROC, should only be called through the Activate or other sources that check for CanFly
 /obj/item/organ/external/wings/functional/proc/toggle_flight(mob/living/carbon/human/human)
-	if(!HAS_TRAIT_FROM(human, TRAIT_MOVE_FLYING, SPECIES_FLIGHT_TRAIT))
+	if(!HAS_TRAIT_FROM(human, TRAIT_MOVE_FLYING, SOURCE_SPECIES_FLIGHT))
 		human.physiology.stun_mod *= 2
-		ADD_TRAIT(human, TRAIT_NO_FLOATING_ANIM, SPECIES_FLIGHT_TRAIT)
-		ADD_TRAIT(human, TRAIT_MOVE_FLYING, SPECIES_FLIGHT_TRAIT)
-		passtable_on(human, SPECIES_TRAIT)
+		ADD_TRAIT(human, TRAIT_NO_FLOATING_ANIM, SOURCE_SPECIES_FLIGHT)
+		ADD_TRAIT(human, TRAIT_MOVE_FLYING, SOURCE_SPECIES_FLIGHT)
+		passtable_on(human, SOURCE_SPECIES)
 		open_wings()
 	else
 		human.physiology.stun_mod *= 0.5
-		REMOVE_TRAIT(human, TRAIT_NO_FLOATING_ANIM, SPECIES_FLIGHT_TRAIT)
-		REMOVE_TRAIT(human, TRAIT_MOVE_FLYING, SPECIES_FLIGHT_TRAIT)
-		passtable_off(human, SPECIES_TRAIT)
+		REMOVE_TRAIT(human, TRAIT_NO_FLOATING_ANIM, SOURCE_SPECIES_FLIGHT)
+		REMOVE_TRAIT(human, TRAIT_MOVE_FLYING, SOURCE_SPECIES_FLIGHT)
+		passtable_off(human, SOURCE_SPECIES)
 		close_wings()
 
 ///SPREAD OUR WINGS AND FLLLLLYYYYYY

@@ -31,7 +31,7 @@
 
 /mob/living/simple_animal/crab/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, SOURCE_INNATE)
 
 /mob/living/simple_animal/crab/Life(delta_time = SSMOBS_DT, times_fired)
 	..()

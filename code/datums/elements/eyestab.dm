@@ -94,10 +94,10 @@
 	if (target.stat != DEAD)
 		to_chat(target, span_danger("Your eyes start to bleed profusely!"))
 
-	if (!target.is_blind() && !HAS_TRAIT(target, TRAIT_NEARSIGHT))
+	if (!target.is_blind() && !HAS_TRAIT(target, TRAIT_NEARSIGHTED))
 		to_chat(target, span_danger("You become nearsighted!"))
 
-	target.become_nearsighted(EYE_DAMAGE)
+	target.become_nearsighted(SOURCE_EYE_DAMAGE)
 
 	if (prob(50))
 		if (target.stat != DEAD && target.drop_all_held_items())
@@ -107,7 +107,7 @@
 		target.Paralyze(40)
 
 	if (prob(eyes.damage - EYESTAB_BLEEDING_THRESHOLD + 1))
-		target.become_blind(EYE_DAMAGE)
+		target.become_blind(SOURCE_EYE_DAMAGE)
 		to_chat(target, span_danger("You go blind!"))
 
 #undef CLUMSY_ATTACK_SELF_CHANCE

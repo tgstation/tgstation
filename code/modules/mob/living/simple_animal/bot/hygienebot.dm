@@ -50,7 +50,7 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
-	ADD_TRAIT(src, TRAIT_SPRAY_PAINTABLE, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_SPRAY_PAINTABLE, SOURCE_INNATE)
 
 /mob/living/simple_animal/bot/hygienebot/explode()
 	new /obj/effect/particle_effect/fluid/foam(loc)

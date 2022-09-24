@@ -5,10 +5,10 @@
 	sexes = FALSE
 	species_traits = list(NOBLOOD,NOEYESPRITES)
 	inherent_traits = list(
-		TRAIT_CHUNKYFINGERS,
-		TRAIT_NOBREATH,
-		TRAIT_NOHUNGER,
-		TRAIT_VIRUSIMMUNE,
+		TRAIT_CHUNKY_FINGERS,
+		TRAIT_NO_BREATH,
+		TRAIT_NO_HUNGER,
+		TRAIT_VIRUS_IMMUNE,
 	)
 	mutanttongue = /obj/item/organ/internal/tongue/abductor
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT

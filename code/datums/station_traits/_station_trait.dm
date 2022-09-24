@@ -31,7 +31,7 @@
 	if(trait_processes)
 		START_PROCESSING(SSstation, src)
 	if(trait_to_give)
-		ADD_TRAIT(SSstation, trait_to_give, STATION_TRAIT)
+		ADD_TRAIT(SSstation, trait_to_give, SOURCE_STATION)
 
 /datum/station_trait/Destroy()
 	SSstation.station_traits -= src
@@ -52,6 +52,6 @@
 		CRASH("revert() was called on [type], which can't be reverted!")
 
 	if (trait_to_give)
-		REMOVE_TRAIT(SSstation, trait_to_give, STATION_TRAIT)
+		REMOVE_TRAIT(SSstation, trait_to_give, SOURCE_STATION)
 
 	qdel(src)

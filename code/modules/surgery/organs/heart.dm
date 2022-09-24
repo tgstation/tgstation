@@ -88,7 +88,7 @@
 			owner.stop_sound_channel(CHANNEL_HEARTBEAT)
 			beat = BEAT_NONE
 
-	if(organ_flags & ORGAN_FAILING && owner.can_heartattack() && !(HAS_TRAIT(src, TRAIT_STABLEHEART))) //heart broke, stopped beating, death imminent... unless you have veins that pump blood without a heart
+	if(organ_flags & ORGAN_FAILING && owner.can_heartattack() && !(HAS_TRAIT(src, TRAIT_STABLE_HEART))) //heart broke, stopped beating, death imminent... unless you have veins that pump blood without a heart
 		if(owner.stat == CONSCIOUS)
 			owner.visible_message(span_danger("[owner] clutches at [owner.p_their()] chest as if [owner.p_their()] heart is stopping!"), \
 				span_userdanger("You feel a terrible pain in your chest, as if your heart has stopped!"))
@@ -284,7 +284,7 @@
 
 /obj/item/organ/internal/heart/ethereal/Remove(mob/living/carbon/owner, special = FALSE)
 	UnregisterSignal(owner, list(COMSIG_MOB_STATCHANGE, COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_PARENT_QDELETING))
-	REMOVE_TRAIT(owner, TRAIT_CORPSELOCKED, SPECIES_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_CORPSE_LOCKED, SOURCE_SPECIES)
 	stop_crystalization_process(owner)
 	QDEL_NULL(current_crystal)
 	return ..()
@@ -339,7 +339,7 @@
 		span_notice("Crystals start forming around [victim]."),
 		span_nicegreen("Crystals start forming around your dead body."),
 	)
-	ADD_TRAIT(victim, TRAIT_CORPSELOCKED, SPECIES_TRAIT)
+	ADD_TRAIT(victim, TRAIT_CORPSE_LOCKED, SOURCE_SPECIES)
 
 	crystalize_timer_id = addtimer(CALLBACK(src, .proc/crystalize, victim), CRYSTALIZE_PRE_WAIT_TIME, TIMER_STOPPABLE)
 
@@ -366,7 +366,7 @@
 	if(!COOLDOWN_FINISHED(src, crystalize_cooldown) || ethereal.stat != DEAD)
 		return //Should probably not happen, but lets be safe.
 
-	if(ismob(location) || isitem(location) || HAS_TRAIT_FROM(src, TRAIT_HUSK, CHANGELING_DRAIN)) //Stops crystallization if they are eaten by a dragon, turned into a legion, consumed by his grace, etc.
+	if(ismob(location) || isitem(location) || HAS_TRAIT_FROM(src, TRAIT_HUSK, SOURCE_CHANGELING_DRAIN)) //Stops crystallization if they are eaten by a dragon, turned into a legion, consumed by his grace, etc.
 		to_chat(ethereal, span_warning("You were unable to finish your crystallization, for obvious reasons."))
 		stop_crystalization_process(ethereal, FALSE)
 		return
@@ -383,7 +383,7 @@
 	crystalization_process_damage = 0 //Reset damage taken during crystalization
 
 	if(!succesful)
-		REMOVE_TRAIT(owner, TRAIT_CORPSELOCKED, SPECIES_TRAIT)
+		REMOVE_TRAIT(owner, TRAIT_CORPSE_LOCKED, SOURCE_SPECIES)
 		QDEL_NULL(current_crystal)
 
 	if(crystalize_timer_id)
@@ -468,7 +468,7 @@
 	ethereal_heart.current_crystal = null
 	COOLDOWN_START(ethereal_heart, crystalize_cooldown, CRYSTALIZE_COOLDOWN_LENGTH)
 	ethereal_heart.owner.forceMove(get_turf(src))
-	REMOVE_TRAIT(ethereal_heart.owner, TRAIT_CORPSELOCKED, SPECIES_TRAIT)
+	REMOVE_TRAIT(ethereal_heart.owner, TRAIT_CORPSE_LOCKED, SOURCE_SPECIES)
 	deltimer(crystal_heal_timer)
 	visible_message(span_notice("The crystals shatters, causing [ethereal_heart.owner] to fall out"))
 	return ..()

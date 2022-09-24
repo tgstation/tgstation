@@ -333,10 +333,10 @@
 	animate(rider, pixel_y = -6, time = 4)
 	animate(vehicle, pixel_y = -6, time = 3)
 	playsound(vehicle, 'sound/vehicles/skateboard_ollie.ogg', 50, TRUE)
-	passtable_on(rider, VEHICLE_TRAIT)
+	passtable_on(rider, SOURCE_VEHICLE)
 	vehicle.pass_flags |= PASSTABLE
 	rider.Move(landing_turf, vehicle_target.dir)
-	passtable_off(rider, VEHICLE_TRAIT)
+	passtable_off(rider, SOURCE_VEHICLE)
 	vehicle.pass_flags &= ~PASSTABLE
 
 //VIM ACTION DATUMS

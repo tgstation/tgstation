@@ -79,7 +79,7 @@ Difficulty: Extremely Hard
 	RegisterSignal(src, COMSIG_MOB_ABILITY_STARTED, .proc/start_attack)
 	AddElement(/datum/element/knockback, 7, FALSE, TRUE)
 	AddElement(/datum/element/lifesteal, 50)
-	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, SOURCE_INNATE)
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/Destroy()
 	QDEL_NULL(frost_orbs)
@@ -148,7 +148,7 @@ Difficulty: Extremely Hard
 	for(var/mob/living/L in viewers(src))
 		shake_camera(L, 3, 2)
 	playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
-	ADD_TRAIT(src, TRAIT_MOVE_FLYING, FROSTMINER_ENRAGE_TRAIT)
+	ADD_TRAIT(src, TRAIT_MOVE_FLYING, SOURCE_FROSTMINER_ENRAGE)
 	enraging = FALSE
 	adjustHealth(-maxHealth)
 
@@ -278,12 +278,12 @@ Difficulty: Extremely Hard
 /obj/item/clothing/shoes/winterboots/ice_boots/ice_trail/equipped(mob/user, slot)
 	. = ..()
 	if(slot == ITEM_SLOT_FEET)
-		ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT(type))
+		ADD_TRAIT(src, TRAIT_NODROP, SOURCE_CURSED_ITEM(type))
 
 /obj/item/clothing/shoes/winterboots/ice_boots/ice_trail/dropped(mob/user)
 	. = ..()
 	// Could have been blown off in an explosion from the previous owner
-	REMOVE_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT(type))
+	REMOVE_TRAIT(src, TRAIT_NODROP, SOURCE_CURSED_ITEM(type))
 
 /obj/item/clothing/shoes/winterboots/ice_boots/ice_trail/ui_action_click(mob/user)
 	on = !on

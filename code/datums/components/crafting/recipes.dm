@@ -1258,7 +1258,7 @@
 
 /datum/crafting_recipe/underwater_basket/check_requirements(mob/user, list/collected_requirements)
 	. = ..()
-	if(!HAS_TRAIT(user,TRAIT_UNDERWATER_BASKETWEAVING_KNOWLEDGE))
+	if(!HAS_TRAIT(user,TRAIT_UNDERWATER_BASKETWEAVER))
 		return FALSE
 	var/turf/T = get_turf(user)
 	if(istype(T, /turf/open/water))

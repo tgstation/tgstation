@@ -27,7 +27,7 @@
 		return
 	switch(A.stage)
 		if(5)
-			ADD_TRAIT(M, TRAIT_DISFIGURED, DISEASE_TRAIT)
+			ADD_TRAIT(M, TRAIT_DISFIGURED, SOURCE_DISEASE)
 			M.visible_message(span_warning("[M]'s face appears to cave in!"), span_notice("You feel your face crumple and cave in!"))
 		else
 			M.visible_message(span_warning("[M]'s face begins to contort..."), span_notice("Your face feels wet and malleable..."))
@@ -38,4 +38,4 @@
 	if(!.)
 		return
 	if(A.affected_mob)
-		REMOVE_TRAIT(A.affected_mob, TRAIT_DISFIGURED, DISEASE_TRAIT)
+		REMOVE_TRAIT(A.affected_mob, TRAIT_DISFIGURED, SOURCE_DISEASE)

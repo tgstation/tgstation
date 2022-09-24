@@ -488,7 +488,7 @@
 
 /obj/item/turret_control/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, SOURCE_ABSTRACT_ITEM)
 
 /obj/item/turret_control/afterattack(atom/targeted_atom, mob/user, proxflag, clickparams)
 	. = ..()

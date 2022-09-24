@@ -21,7 +21,7 @@
 	current_cycle++
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(!HAS_TRAIT(H, TRAIT_NOHUNGER))
+		if(!HAS_TRAIT(H, TRAIT_NO_HUNGER))
 			H.adjust_nutrition(nutriment_factor * REM * delta_time)
 	if(length(reagent_removal_skip_list))
 		return

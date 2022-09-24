@@ -43,17 +43,17 @@
 	clowned_on.Stun(1 SECONDS)
 	if(!clowned_on.w_uniform || clowned_on.dropItemToGround(clowned_on.w_uniform))
 		var/obj/item/clothing/clown_shirt = new /obj/item/clothing/under/rank/civilian/clown(clowned_on)
-		ADD_TRAIT(clown_shirt, TRAIT_NODROP, CLOWN_NUKE_TRAIT)
+		ADD_TRAIT(clown_shirt, TRAIT_NODROP, SOURCE_CLOWN_NUKE)
 		clowned_on.equip_to_slot_or_del(clown_shirt, ITEM_SLOT_ICLOTHING)
 
 	if(!clowned_on.shoes || clowned_on.dropItemToGround(clowned_on.shoes))
 		var/obj/item/clothing/clown_shoes = new /obj/item/clothing/shoes/clown_shoes(clowned_on)
-		ADD_TRAIT(clown_shoes, TRAIT_NODROP, CLOWN_NUKE_TRAIT)
+		ADD_TRAIT(clown_shoes, TRAIT_NODROP, SOURCE_CLOWN_NUKE)
 		clowned_on.equip_to_slot_or_del(clown_shoes, ITEM_SLOT_FEET)
 
 	if(!clowned_on.wear_mask || clowned_on.dropItemToGround(clowned_on.wear_mask))
 		var/obj/item/clothing/clown_mask = new /obj/item/clothing/mask/gas/clown_hat(clowned_on)
-		ADD_TRAIT(clown_mask, TRAIT_NODROP, CLOWN_NUKE_TRAIT)
+		ADD_TRAIT(clown_mask, TRAIT_NODROP, SOURCE_CLOWN_NUKE)
 		clowned_on.equip_to_slot_or_del(clown_mask, ITEM_SLOT_MASK)
 
 	clowned_on.dna.add_mutation(/datum/mutation/human/clumsy)

@@ -34,7 +34,7 @@
 	to_chat(cast_on, span_userdanger("A freezing darkness surrounds you..."))
 	cast_on.playsound_local(get_turf(cast_on), 'sound/hallucinations/i_see_you1.ogg', 50, 1)
 	owner.playsound_local(get_turf(owner), 'sound/effects/ghost2.ogg', 50, 1)
-	cast_on.become_blind(ABYSSAL_GAZE_BLIND)
+	cast_on.become_blind(SOURCE_ABYSSAL_GAZE_BLIND)
 	addtimer(CALLBACK(src, .proc/cure_blindness, cast_on), blind_duration)
 	if(ishuman(cast_on))
 		var/mob/living/carbon/human/human_cast_on = cast_on
@@ -51,4 +51,4 @@
 	if(QDELETED(cast_on) || !istype(cast_on))
 		return
 
-	cast_on.cure_blind(ABYSSAL_GAZE_BLIND)
+	cast_on.cure_blind(SOURCE_ABYSSAL_GAZE_BLIND)

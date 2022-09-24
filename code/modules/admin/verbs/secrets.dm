@@ -519,7 +519,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 						H.equip_to_slot_or_del(I, ITEM_SLOT_ICLOTHING)
 						qdel(olduniform)
 						if(droptype == "Yes")
-							ADD_TRAIT(I, TRAIT_NODROP, ADMIN_TRAIT)
+							ADD_TRAIT(I, TRAIT_NODROP, SOURCE_ADMIN)
 				else
 					to_chat(H, span_warning("You're not kawaii enough for this!"), confidential = TRUE)
 		if("masspurrbation")

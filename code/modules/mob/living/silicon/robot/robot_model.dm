@@ -101,7 +101,7 @@
 	if(added_module.loc != src)
 		added_module.forceMove(src)
 	modules += added_module
-	ADD_TRAIT(added_module, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
+	ADD_TRAIT(added_module, TRAIT_NODROP, SOURCE_CYBORG_ITEM)
 	added_module.mouse_opacity = MOUSE_OPACITY_OPAQUE
 	if(nonstandard)
 		added_modules += added_module
@@ -339,7 +339,7 @@
 	emag_modules = list(/obj/item/borg/stun)
 	cyborg_base_icon = "engineer"
 	model_select_icon = "engineer"
-	model_traits = list(TRAIT_NEGATES_GRAVITY)
+	model_traits = list(TRAIT_NEGATE_GRAVITY)
 	hat_offset = -4
 
 /obj/item/robot_model/janitor
@@ -622,7 +622,7 @@
 	emag_modules = list(/obj/item/reagent_containers/borghypo/medical/hacked)
 	cyborg_base_icon = "medical"
 	model_select_icon = "medical"
-	model_traits = list(TRAIT_PUSHIMMUNE)
+	model_traits = list(TRAIT_PUSH_IMMUNE)
 	hat_offset = 3
 	borg_skins = list(
 		"Machinified Doctor" = list(SKIN_ICON_STATE = "medical"),
@@ -679,7 +679,7 @@
 	emag_modules = list(/obj/item/reagent_containers/borghypo/peace/hacked)
 	cyborg_base_icon = "peace"
 	model_select_icon = "standard"
-	model_traits = list(TRAIT_PUSHIMMUNE)
+	model_traits = list(TRAIT_PUSH_IMMUNE)
 	hat_offset = -2
 
 /obj/item/robot_model/peacekeeper/do_transform_animation()
@@ -700,7 +700,7 @@
 	emag_modules = list(/obj/item/gun/energy/laser/cyborg)
 	cyborg_base_icon = "sec"
 	model_select_icon = "security"
-	model_traits = list(TRAIT_PUSHIMMUNE)
+	model_traits = list(TRAIT_PUSH_IMMUNE)
 	hat_offset = 3
 
 /obj/item/robot_model/security/do_transform_animation()
@@ -774,7 +774,7 @@
 
 	cyborg_base_icon = "synd_sec"
 	model_select_icon = "malf"
-	model_traits = list(TRAIT_PUSHIMMUNE)
+	model_traits = list(TRAIT_PUSH_IMMUNE)
 	hat_offset = 3
 
 /obj/item/robot_model/syndicate/rebuild_modules()
@@ -811,7 +811,7 @@
 
 	cyborg_base_icon = "synd_medical"
 	model_select_icon = "malf"
-	model_traits = list(TRAIT_PUSHIMMUNE)
+	model_traits = list(TRAIT_PUSH_IMMUNE)
 	hat_offset = 3
 
 /obj/item/robot_model/saboteur
@@ -844,7 +844,7 @@
 
 	cyborg_base_icon = "synd_engi"
 	model_select_icon = "malf"
-	model_traits = list(TRAIT_PUSHIMMUNE, TRAIT_NEGATES_GRAVITY)
+	model_traits = list(TRAIT_PUSH_IMMUNE, TRAIT_NEGATE_GRAVITY)
 	hat_offset = -4
 	canDispose = TRUE
 
@@ -874,7 +874,7 @@
 	robot.equip_module_to_slot(locate(/obj/item/claymore/highlander/robot) in basic_modules, 1)
 	robot.equip_module_to_slot(locate(/obj/item/pinpointer/nuke) in basic_modules, 2)
 	robot.place_on_head(new /obj/item/clothing/head/beret/highlander(robot)) //THE ONLY PART MORE IMPORTANT THAN THE SWORD IS THE HAT
-	ADD_TRAIT(robot.hat, TRAIT_NODROP, HIGHLANDER)
+	ADD_TRAIT(robot.hat, TRAIT_NODROP, SOURCE_HIGHLANDER)
 
 
 // ------------------------------------------ Storages

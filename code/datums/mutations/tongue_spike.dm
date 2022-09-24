@@ -26,7 +26,7 @@
 
 /datum/action/cooldown/spell/tongue_spike/cast(mob/living/carbon/cast_on)
 	. = ..()
-	if(HAS_TRAIT(cast_on, TRAIT_NODISMEMBER))
+	if(HAS_TRAIT(cast_on, TRAIT_NO_DISMEMBER))
 		to_chat(cast_on, span_notice("You concentrate really hard, but nothing happens."))
 		return
 

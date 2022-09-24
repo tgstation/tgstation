@@ -52,7 +52,7 @@
 	RegisterSignal(mob_to_make_moody, COMSIG_MOB_STATCHANGE, .proc/handle_mob_death)
 	RegisterSignal(mob_to_make_moody, COMSIG_PARENT_QDELETING, .proc/clear_parent_ref)
 
-	mob_to_make_moody.become_area_sensitive(MOOD_DATUM_TRAIT)
+	mob_to_make_moody.become_area_sensitive(SOURCE_MOOD_DATUM)
 	if(mob_to_make_moody.hud_used)
 		modify_hud()
 		var/datum/hud/hud = mob_to_make_moody.hud_used
@@ -62,7 +62,7 @@
 	SIGNAL_HANDLER
 
 	unmodify_hud()
-	mob_parent.lose_area_sensitivity(MOOD_DATUM_TRAIT)
+	mob_parent.lose_area_sensitivity(SOURCE_MOOD_DATUM)
 	UnregisterSignal(mob_parent, list(COMSIG_MOB_HUD_CREATED, COMSIG_ENTER_AREA, COMSIG_LIVING_REVIVE, COMSIG_MOB_STATCHANGE, COMSIG_PARENT_QDELETING))
 
 	mob_parent = null
@@ -113,7 +113,7 @@
 
 /// Handles mood given by nutrition
 /datum/mood/proc/handle_nutrition()
-	if (HAS_TRAIT(mob_parent, TRAIT_NOHUNGER))
+	if (HAS_TRAIT(mob_parent, TRAIT_NO_HUNGER))
 		return FALSE // no moods for nutrition
 	switch(mob_parent.nutrition)
 		if(NUTRITION_LEVEL_FULL to INFINITY)

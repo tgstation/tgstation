@@ -41,7 +41,7 @@
 			continue
 		if(H.stat == DEAD)
 			continue
-		if(HAS_TRAIT(H, TRAIT_VIRUSIMMUNE)) //Don't pick someone who's virus immune, only for it to not do anything.
+		if(HAS_TRAIT(H, TRAIT_VIRUS_IMMUNE)) //Don't pick someone who's virus immune, only for it to not do anything.
 			continue
 		var/foundAlready = FALSE // don't infect someone that already has a disease
 		for(var/thing in H.diseases)

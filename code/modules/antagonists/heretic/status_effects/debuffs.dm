@@ -79,14 +79,14 @@
 
 /datum/status_effect/cloudstruck/on_apply()
 	owner.add_overlay(mob_overlay)
-	owner.become_blind(STATUS_EFFECT_TRAIT)
+	owner.become_blind(SOURCE_STATUS_EFFECT)
 	owner.update_blindness() // become_blind is supposed to call this but it doesn't work for some reason because blindness is a fuck
 	return TRUE
 
 /datum/status_effect/cloudstruck/on_remove()
 	if(QDELETED(owner))
 		return
-	owner.cure_blind(STATUS_EFFECT_TRAIT)
+	owner.cure_blind(SOURCE_STATUS_EFFECT)
 	owner.update_blindness()
 	owner.cut_overlay(mob_overlay)
 

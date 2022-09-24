@@ -68,7 +68,7 @@
 		return
 
 	var/mob/living/carbon/human/H = arrived
-	if(HAS_TRAIT(H, TRAIT_PIERCEIMMUNE))
+	if(HAS_TRAIT(H, TRAIT_PIERCE_IMMUNE))
 		return
 
 	if((flags & CALTROP_IGNORE_WALKERS) && H.m_intent == MOVE_INTENT_WALK)

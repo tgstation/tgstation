@@ -15,7 +15,7 @@
 	. = ..()
 	if(!.)
 		return
-	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, SOURCE_STATUS_EFFECT_ID(id))
 	RegisterSignal(owner, COMSIG_LIVING_RESIST, .proc/owner_resist)
 	if(!owner.stat)
 		to_chat(owner, span_userdanger("You become frozen in a cube!"))
@@ -45,7 +45,7 @@
 	owner.cut_overlay(cube)
 	owner.adjust_bodytemperature(100)
 	UnregisterSignal(owner, COMSIG_LIVING_RESIST)
-	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, SOURCE_STATUS_EFFECT_ID(id))
 	return ..()
 
 /datum/status_effect/freon/watcher
@@ -71,7 +71,7 @@
 		CRASH("[type] status effect added to non-human owner: [owner ? owner.type : "null owner"]")
 	var/mob/living/carbon/human/human_owner = owner
 	human_owner.add_movespeed_modifier(/datum/movespeed_modifier/reagent/hypernoblium) //small slowdown as a tradeoff
-	ADD_TRAIT(human_owner, TRAIT_NOFIRE, type)
+	ADD_TRAIT(human_owner, TRAIT_FLAME_IMMUNE, type)
 	return TRUE
 
 /datum/status_effect/hypernob_protection/on_remove()
@@ -79,5 +79,5 @@
 		stack_trace("[type] status effect being removed from non-human owner: [owner ? owner.type : "null owner"]")
 	var/mob/living/carbon/human/human_owner = owner
 	human_owner.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/hypernoblium)
-	REMOVE_TRAIT(human_owner, TRAIT_NOFIRE, type)
+	REMOVE_TRAIT(human_owner, TRAIT_FLAME_IMMUNE, type)
 

@@ -60,9 +60,9 @@
 	AddElement(/datum/element/simple_flying)
 	if(gps_name && true_spawn)
 		AddComponent(/datum/component/gps, gps_name)
-	ADD_TRAIT(src, TRAIT_NO_TELEPORT, MEGAFAUNA_TRAIT)
-	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_MARTIAL_ARTS_IMMUNE, MEGAFAUNA_TRAIT)
+	ADD_TRAIT(src, TRAIT_NO_TELEPORT, SOURCE_MEGAFAUNA)
+	ADD_TRAIT(src, TRAIT_SPACEWALK, SOURCE_INNATE)
+	ADD_TRAIT(src, TRAIT_MARTIAL_ARTS_IMMUNE, SOURCE_MEGAFAUNA)
 	for(var/action_type in attack_action_types)
 		var/datum/action/innate/megafauna_attack/attack_action = new action_type()
 		attack_action.Grant(src)
@@ -126,7 +126,7 @@
 			if(!client && ranged && ranged_cooldown <= world.time)
 				OpenFire()
 
-			if(L.health <= HEALTH_THRESHOLD_DEAD && HAS_TRAIT(L, TRAIT_NODEATH)) //Nope, it still gibs yall
+			if(L.health <= HEALTH_THRESHOLD_DEAD && HAS_TRAIT(L, TRAIT_NO_DEATH)) //Nope, it still gibs yall
 				devour(L)
 		else
 			devour(L)

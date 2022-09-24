@@ -45,8 +45,8 @@
 
 /mob/living/simple_animal/hostile/morph/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_ALERT_GHOSTS_ON_DEATH, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_ALERT_GHOSTS_ON_DEATH, SOURCE_INNATE)
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, SOURCE_INNATE)
 	AddElement(/datum/element/content_barfer)
 
 /mob/living/simple_animal/hostile/morph/examine(mob/user)

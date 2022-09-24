@@ -152,7 +152,7 @@
 	if(stamina)
 		apply_damage(stamina, STAMINA, null, blocked)
 
-	if(jitter && (status_flags & CANSTUN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE))
+	if(jitter && (status_flags & CANSTUN) && !HAS_TRAIT(src, TRAIT_STUN_IMMUNE))
 		adjust_timed_status_effect(jitter, /datum/status_effect/jitter)
 	if(slur)
 		adjust_timed_status_effect(slur, /datum/status_effect/speech/slurring/drunk)
@@ -228,7 +228,7 @@
 	return cloneloss
 
 /mob/living/proc/adjustCloneLoss(amount, updating_health = TRUE, forced = FALSE)
-	if(!forced && ( (status_flags & GODMODE) || HAS_TRAIT(src, TRAIT_NOCLONELOSS)) )
+	if(!forced && ( (status_flags & GODMODE) || HAS_TRAIT(src, TRAIT_NO_CLONE_LOSS)) )
 		return FALSE
 	cloneloss = clamp((cloneloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	if(updating_health)
@@ -236,7 +236,7 @@
 	return amount
 
 /mob/living/proc/setCloneLoss(amount, updating_health = TRUE, forced = FALSE)
-	if(!forced && ( (status_flags & GODMODE) || HAS_TRAIT(src, TRAIT_NOCLONELOSS)) )
+	if(!forced && ( (status_flags & GODMODE) || HAS_TRAIT(src, TRAIT_NO_CLONE_LOSS)) )
 		return FALSE
 	cloneloss = amount
 	if(updating_health)

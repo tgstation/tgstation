@@ -97,7 +97,7 @@
 
 	/// A list of all memories we've stolen through absorbs.
 	var/list/stolen_memories = list()
-	
+
 	///	Keeps track of the currently selected profile.
 	var/datum/changeling_profile/current_profile
 
@@ -342,7 +342,7 @@
 		return FALSE
 
 	//To avoid potential exploits by buying new powers while in stasis, which clears your verblist. // Probably not a problem anymore, but whatever.
-	if(HAS_TRAIT(owner.current, TRAIT_DEATHCOMA))
+	if(HAS_TRAIT(owner.current, TRAIT_DEATH_COMA))
 		to_chat(owner.current, span_warning("We lack the energy to evolve new abilities right now!"))
 		return FALSE
 
@@ -366,7 +366,7 @@
 		to_chat(owner.current, span_warning("We can't remove our evolutions in this form!"))
 		return FALSE
 
-	if(HAS_TRAIT_FROM(owner.current, TRAIT_DEATHCOMA, CHANGELING_TRAIT))
+	if(HAS_TRAIT_FROM(owner.current, TRAIT_DEATH_COMA, SOURCE_CHANGELING))
 		to_chat(owner.current, span_warning("We are too busy reforming ourselves to readapt right now!"))
 		return FALSE
 
@@ -461,7 +461,7 @@
 	new_profile.dna = new_dna
 	new_profile.name = target.real_name
 	new_profile.protected = protect
-	
+
 	new_profile.age = target.age
 	new_profile.physique = target.physique
 
@@ -474,7 +474,7 @@
 	new_profile.underwear_color = target.underwear_color
 	new_profile.undershirt = target.undershirt
 	new_profile.socks = target.socks
-	
+
 	// Hair and facial hair gradients, alongside their colours.
 	new_profile.grad_style = LAZYLISTDUPLICATE(target.grad_style)
 	new_profile.grad_color = LAZYLISTDUPLICATE(target.grad_color)
@@ -791,7 +791,7 @@
 		if(equip)
 			user.equip_to_slot_or_del(new_flesh_item, slot2slot[slot])
 			if(!QDELETED(new_flesh_item))
-				ADD_TRAIT(new_flesh_item, TRAIT_NODROP, CHANGELING_TRAIT)
+				ADD_TRAIT(new_flesh_item, TRAIT_NODROP, SOURCE_CHANGELING)
 
 	for(var/stored_scar_line in chosen_profile.stored_scars)
 		var/datum/scar/attempted_fake_scar = user.load_scar(stored_scar_line)

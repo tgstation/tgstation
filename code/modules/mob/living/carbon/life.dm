@@ -124,7 +124,7 @@
 		loc.assume_air(breath)
 
 /mob/living/carbon/proc/has_smoke_protection()
-	if(HAS_TRAIT(src, TRAIT_NOBREATH))
+	if(HAS_TRAIT(src, TRAIT_NO_BREATH))
 		return TRUE
 	return FALSE
 
@@ -135,7 +135,7 @@
 		failed_last_breath = FALSE
 		clear_alert(ALERT_NOT_ENOUGH_OXYGEN)
 		return FALSE
-	if(HAS_TRAIT(src, TRAIT_NOBREATH))
+	if(HAS_TRAIT(src, TRAIT_NO_BREATH))
 		return FALSE
 
 	var/obj/item/organ/internal/lungs = getorganslot(ORGAN_SLOT_LUNGS)
@@ -595,7 +595,7 @@
 	reagents.end_metabolization(src, keep_liverless = TRUE) //Stops trait-based effects on reagents, to prevent permanent buffs
 	reagents.metabolize(src, delta_time, times_fired, can_overdose=FALSE, liverless = TRUE)
 
-	if(HAS_TRAIT(src, TRAIT_STABLELIVER) || HAS_TRAIT(src, TRAIT_NOMETABOLISM))
+	if(HAS_TRAIT(src, TRAIT_STABLE_LIVER) || HAS_TRAIT(src, TRAIT_NO_METABOLISM))
 		return
 
 	adjustToxLoss(0.6 * delta_time, TRUE,  TRUE)
@@ -683,7 +683,7 @@
 	return TRUE
 
 /mob/living/carbon/proc/needs_heart()
-	if(HAS_TRAIT(src, TRAIT_STABLEHEART))
+	if(HAS_TRAIT(src, TRAIT_STABLE_HEART))
 		return FALSE
 	if(dna && dna.species && (NOBLOOD in dna.species.species_traits)) //not all carbons have species!
 		return FALSE

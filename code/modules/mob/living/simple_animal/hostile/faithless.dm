@@ -37,7 +37,7 @@
 
 /mob/living/simple_animal/hostile/faithless/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_SPACEWALK, SOURCE_INNATE)
 
 /mob/living/simple_animal/hostile/faithless/AttackingTarget()
 	. = ..()

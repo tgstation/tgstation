@@ -115,7 +115,7 @@ Striking a noncultist, however, will tear their flesh."}
 
 /obj/item/melee/cultblade/ghost/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CULT_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, SOURCE_CULT)
 
 /obj/item/melee/cultblade/pickup(mob/living/user)
 	..()
@@ -379,7 +379,7 @@ Striking a noncultist, however, will tear their flesh."}
 
 /obj/item/clothing/suit/hooded/cultrobes/alt/ghost/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CULT_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, SOURCE_CULT)
 
 
 /obj/item/clothing/head/magus
@@ -745,8 +745,8 @@ Striking a noncultist, however, will tear their flesh."}
 	)
 
 /obj/item/melee/cultblade/halberd/update_icon_state()
-	icon_state = HAS_TRAIT(src, TRAIT_WIELDED) ? "[base_icon_state]1" : "[base_icon_state]0"
-	inhand_icon_state = HAS_TRAIT(src, TRAIT_WIELDED) ? "[base_icon_state]1" : "[base_icon_state]0"
+	icon_state = HAS_TRAIT(src, TRAIT_TWO_HANDED) ? "[base_icon_state]1" : "[base_icon_state]0"
+	inhand_icon_state = HAS_TRAIT(src, TRAIT_TWO_HANDED) ? "[base_icon_state]1" : "[base_icon_state]0"
 	return ..()
 
 /obj/item/melee/cultblade/halberd/Destroy()
@@ -784,7 +784,7 @@ Striking a noncultist, however, will tear their flesh."}
 	qdel(src)
 
 /obj/item/melee/cultblade/halberd/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(HAS_TRAIT(src, TRAIT_WIELDED))
+	if(HAS_TRAIT(src, TRAIT_TWO_HANDED))
 		final_block_chance *= 2
 	if(IS_CULTIST(owner) && prob(final_block_chance))
 		if(attack_type == PROJECTILE_ATTACK)
@@ -903,7 +903,7 @@ Striking a noncultist, however, will tear their flesh."}
 
 /obj/item/blood_beam/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CULT_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, SOURCE_CULT)
 
 
 /obj/item/blood_beam/afterattack(atom/A, mob/living/user, proximity_flag, clickparams)
@@ -919,13 +919,13 @@ Striking a noncultist, however, will tear their flesh."}
 	INVOKE_ASYNC(src, .proc/charge, user)
 	if(do_after(user, 9 SECONDS, target = user))
 		firing = TRUE
-		ADD_TRAIT(user, TRAIT_IMMOBILIZED, CULT_TRAIT)
+		ADD_TRAIT(user, TRAIT_IMMOBILIZED, SOURCE_CULT)
 		INVOKE_ASYNC(src, .proc/pewpew, user, clickparams)
 		var/obj/structure/emergency_shield/cult/weak/N = new(user.loc)
 		if(do_after(user, 9 SECONDS, target = user))
 			user.Paralyze(40)
 			to_chat(user, "<span class='cult italic'>You have exhausted the power of this spell!</span>")
-		REMOVE_TRAIT(user, TRAIT_IMMOBILIZED, CULT_TRAIT)
+		REMOVE_TRAIT(user, TRAIT_IMMOBILIZED, SOURCE_CULT)
 		firing = FALSE
 		if(N)
 			qdel(N)

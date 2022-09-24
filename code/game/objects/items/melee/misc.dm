@@ -108,7 +108,7 @@
 /obj/item/melee/sabre/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is trying to cut off all [user.p_their()] limbs with [src]! it looks like [user.p_theyre()] trying to commit suicide!"))
 	var/i = 0
-	ADD_TRAIT(src, TRAIT_NODROP, SABRE_SUICIDE_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, SOURCE_SABRE_SUICIDE)
 	if(iscarbon(user))
 		var/mob/living/carbon/Cuser = user
 		var/obj/item/bodypart/holding_bodypart = Cuser.get_holding_bodypart_of_item(src)
@@ -146,7 +146,7 @@
 	if(!QDELETED(user))
 		user.adjustBruteLoss(200)
 		user.death(FALSE)
-	REMOVE_TRAIT(src, TRAIT_NODROP, SABRE_SUICIDE_TRAIT)
+	REMOVE_TRAIT(src, TRAIT_NODROP, SOURCE_SABRE_SUICIDE)
 
 /obj/item/melee/beesword
 	name = "The Stinger"

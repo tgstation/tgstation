@@ -116,7 +116,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/claymore/highlander/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, HIGHLANDER_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, SOURCE_HIGHLANDER)
 	START_PROCESSING(SSobj, src)
 
 /obj/item/claymore/highlander/Destroy()
@@ -131,7 +131,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	if(ishuman(loc))
 		var/mob/living/carbon/human/H = loc
 		loc.plane = GAME_PLANE_UPPER_FOV_HIDDEN //NO HIDING BEHIND PLANTS FOR YOU, DICKWEED (HA GET IT, BECAUSE WEEDS ARE PLANTS)
-		ADD_TRAIT(H, TRAIT_NOBLEED, HIGHLANDER_TRAIT) //AND WE WON'T BLEED OUT LIKE COWARDS
+		ADD_TRAIT(H, TRAIT_NO_BLEED, SOURCE_HIGHLANDER) //AND WE WON'T BLEED OUT LIKE COWARDS
 	else
 		if(!(flags_1 & ADMIN_SPAWNED_1))
 			qdel(src)
@@ -141,11 +141,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	. = ..()
 	to_chat(user, span_notice("The power of Scotland protects you! You are shielded from all stuns and knockdowns."))
 	user.add_stun_absorption("highlander", INFINITY, 1, " is protected by the power of Scotland!", "The power of Scotland absorbs the stun!", " is protected by the power of Scotland!")
-	user.ignore_slowdown(HIGHLANDER)
+	user.ignore_slowdown(SOURCE_HIGHLANDER)
 
 /obj/item/claymore/highlander/dropped(mob/living/user)
 	. = ..()
-	user.unignore_slowdown(HIGHLANDER)
+	user.unignore_slowdown(SOURCE_HIGHLANDER)
 
 /obj/item/claymore/highlander/examine(mob/user)
 	. = ..()
@@ -473,7 +473,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		attack_verb_continuous_on = list("smacks", "strikes", "cracks", "beats"), \
 		attack_verb_simple_on = list("smack", "strike", "crack", "beat"))
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
-	ADD_TRAIT(src, TRAIT_BLIND_TOOL, ITEM_BLIND_TRAIT)
+	ADD_TRAIT(src, TRAIT_BLIND_TOOL, SOURCE_ITEM_BLIND)
 
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
@@ -566,7 +566,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/mounted_chainsaw/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, SOURCE_HAND_REPLACEMENT)
 
 /obj/item/mounted_chainsaw/Destroy()
 	var/obj/item/bodypart/part
@@ -975,32 +975,32 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HANDS)
 
 /obj/item/highfrequencyblade/update_icon_state()
-	icon_state = "hfrequency[HAS_TRAIT(src, TRAIT_WIELDED)]"
+	icon_state = "hfrequency[HAS_TRAIT(src, TRAIT_TWO_HANDED)]"
 	return ..()
 
 /obj/item/highfrequencyblade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(attack_type == PROJECTILE_ATTACK)
-		if(HAS_TRAIT(src, TRAIT_WIELDED) || prob(final_block_chance))
+		if(HAS_TRAIT(src, TRAIT_TWO_HANDED) || prob(final_block_chance))
 			owner.visible_message(span_danger("[owner] deflects [attack_text] with [src]!"))
 			playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
 			return TRUE
 		return FALSE
-	if(prob(final_block_chance * (HAS_TRAIT(src, TRAIT_WIELDED) ? 2 : 1)))
+	if(prob(final_block_chance * (HAS_TRAIT(src, TRAIT_TWO_HANDED) ? 2 : 1)))
 		owner.visible_message(span_danger("[owner] parries [attack_text] with [src]!"))
 		return TRUE
 
 /obj/item/highfrequencyblade/attack(mob/living/target, mob/living/user, params)
-	if(!HAS_TRAIT(src, TRAIT_WIELDED))
+	if(!HAS_TRAIT(src, TRAIT_TWO_HANDED))
 		return ..()
 	slash(target, user, params)
 
 /obj/item/highfrequencyblade/attack_atom(atom/target, mob/living/user, params)
-	if(HAS_TRAIT(src, TRAIT_WIELDED))
+	if(HAS_TRAIT(src, TRAIT_TWO_HANDED))
 		return
 	return ..()
 
 /obj/item/highfrequencyblade/afterattack(atom/target, mob/user, proximity_flag, params)
-	if(!HAS_TRAIT(src, TRAIT_WIELDED))
+	if(!HAS_TRAIT(src, TRAIT_TWO_HANDED))
 		return ..()
 	if(!proximity_flag || !(isclosedturf(target) || isitem(target) || ismachinery(target) || isstructure(target) || isvehicle(target)))
 		return

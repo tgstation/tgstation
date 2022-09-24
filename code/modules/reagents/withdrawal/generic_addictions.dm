@@ -65,7 +65,7 @@
 	affected_carbon.set_timed_status_effect(30 SECONDS * delta_time, /datum/status_effect/jitter, only_if_higher = TRUE)
 	affected_carbon.hallucination = max(5 SECONDS, affected_carbon.hallucination)
 	if(DT_PROB(4, delta_time))
-		if(!HAS_TRAIT(affected_carbon, TRAIT_ANTICONVULSANT))
+		if(!HAS_TRAIT(affected_carbon, TRAIT_ANTI_CONVULSANT))
 			affected_carbon.apply_status_effect(/datum/status_effect/seizure)
 
 /datum/addiction/hallucinogens
@@ -124,10 +124,6 @@
 	to_chat(affected_carbon, span_warning("You feel yourself adapt to the darkness."))
 	var/mob/living/carbon/human/affected_human = affected_carbon
 	var/obj/item/organ/internal/eyes/empowered_eyes = affected_human.getorgan(/obj/item/organ/internal/eyes)
-	if(empowered_eyes)
-		ADD_TRAIT(affected_human, TRAIT_NIGHT_VISION, "maint_drug_addiction")
-		empowered_eyes?.refresh()
-
 /datum/addiction/maintenance_drugs/withdrawal_stage_3_process(mob/living/carbon/affected_carbon, delta_time)
 	if(!ishuman(affected_carbon))
 		return
@@ -150,7 +146,7 @@
 	affected_human.dna?.species.liked_food = initial(affected_human.dna?.species.liked_food)
 	affected_human.dna?.species.disliked_food = initial(affected_human.dna?.species.disliked_food)
 	affected_human.dna?.species.toxic_food = initial(affected_human.dna?.species.toxic_food)
-	REMOVE_TRAIT(affected_human, TRAIT_NIGHT_VISION, "maint_drug_addiction")
+	REMOVE_TRAIT(affected_human, TRAIT_TRUE_NIGHT_VISION, "maint_drug_addiction")
 	var/obj/item/organ/internal/eyes/eyes = affected_human.getorgan(/obj/item/organ/internal/eyes)
 	eyes.refresh()
 
@@ -177,9 +173,10 @@
 	. = ..()
 	var/list/possibilities = list()
 	if(!HAS_TRAIT(affected_carbon, TRAIT_RESISTHEAT))
-		possibilities += ALERT_TEMPERATURE_HOT
-	if(!HAS_TRAIT(affected_carbon, TRAIT_RESISTCOLD))
-		possibilities += ALERT_TEMPERATURE_COLD
+		possibilities += /datum/hallucination/fake_alert/hot
+	if(!HAS_TRAIT(affected_carbon, TRAIT_RESIST_COLD))
+		possibilities += /datum/hallucination/fake_alert/cold
+
 	var/obj/item/organ/internal/lungs/lungs = affected_carbon.getorganslot(ORGAN_SLOT_LUNGS)
 	if(lungs)
 		if(lungs.safe_oxygen_min)

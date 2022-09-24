@@ -853,7 +853,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		new_human.equipOutfit(/datum/outfit/ghost_cultist) //give them armor
 		new_human.apply_status_effect(/datum/status_effect/cultghost) //ghosts can't summon more ghosts
 		new_human.see_invisible = SEE_INVISIBLE_OBSERVER
-		ADD_TRAIT(new_human, TRAIT_NOBREATH, INNATE_TRAIT)
+		ADD_TRAIT(new_human, TRAIT_NO_BREATH, SOURCE_INNATE)
 
 		ghosts++
 		playsound(src, 'sound/magic/exit_blood.ogg', 50, TRUE)

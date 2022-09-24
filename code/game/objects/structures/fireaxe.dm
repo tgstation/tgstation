@@ -52,7 +52,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 			update_appearance()
 	else if(open || broken)
 		if(istype(I, /obj/item/fireaxe) && !fireaxe)
-			if(HAS_TRAIT(I, TRAIT_WIELDED))
+			if(HAS_TRAIT(I, TRAIT_TWO_HANDED))
 				to_chat(user, span_warning("Unwield [I] first."))
 				return
 			if(!user.transferItemToLoc(I, src))

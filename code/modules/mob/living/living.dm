@@ -135,7 +135,7 @@
 			if(M.pulledby == src && !too_strong)
 				mob_swap = TRUE
 			else if(
-				!(HAS_TRAIT(M, TRAIT_NOMOBSWAP) || HAS_TRAIT(src, TRAIT_NOMOBSWAP))&&\
+				!(HAS_TRAIT(M, TRAIT_NO_MOB_SWAP) || HAS_TRAIT(src, TRAIT_NO_MOB_SWAP))&&\
 				((HAS_TRAIT(M, TRAIT_RESTRAINED) && !too_strong) || !their_combat_mode) &&\
 				(HAS_TRAIT(src, TRAIT_RESTRAINED) || !combat_mode)
 			)
@@ -175,7 +175,7 @@
 		return TRUE
 	if(isliving(M))
 		var/mob/living/L = M
-		if(HAS_TRAIT(L, TRAIT_PUSHIMMUNE))
+		if(HAS_TRAIT(L, TRAIT_PUSH_IMMUNE))
 			return TRUE
 	//If they're a human, and they're not in help intent, block pushing
 	if(ishuman(M))
@@ -609,8 +609,8 @@
 /mob/living/proc/on_lying_down(new_lying_angle)
 	if(layer == initial(layer)) //to avoid things like hiding larvas.
 		layer = LYING_MOB_LAYER //so mob lying always appear behind standing mobs
-	ADD_TRAIT(src, TRAIT_UI_BLOCKED, LYING_DOWN_TRAIT)
-	ADD_TRAIT(src, TRAIT_PULL_BLOCKED, LYING_DOWN_TRAIT)
+	ADD_TRAIT(src, TRAIT_UI_BLOCKED, SOURCE_LYING_DOWN)
+	ADD_TRAIT(src, TRAIT_PULL_BLOCKED, SOURCE_LYING_DOWN)
 	set_density(FALSE) // We lose density and stop bumping passable dense things.
 	if(HAS_TRAIT(src, TRAIT_FLOORED) && !(dir & (NORTH|SOUTH)))
 		setDir(pick(NORTH, SOUTH)) // We are and look helpless.
@@ -622,8 +622,8 @@
 	if(layer == LYING_MOB_LAYER)
 		layer = initial(layer)
 	set_density(initial(density)) // We were prone before, so we become dense and things can bump into us again.
-	REMOVE_TRAIT(src, TRAIT_UI_BLOCKED, LYING_DOWN_TRAIT)
-	REMOVE_TRAIT(src, TRAIT_PULL_BLOCKED, LYING_DOWN_TRAIT)
+	REMOVE_TRAIT(src, TRAIT_UI_BLOCKED, SOURCE_LYING_DOWN)
+	REMOVE_TRAIT(src, TRAIT_PULL_BLOCKED, SOURCE_LYING_DOWN)
 	body_position_pixel_y_offset = 0
 
 
@@ -927,7 +927,7 @@
 			TH.transfer_mob_blood_dna(src)
 
 /mob/living/carbon/human/makeTrail(turf/T)
-	if((NOBLOOD in dna.species.species_traits) || !is_bleeding() || HAS_TRAIT(src, TRAIT_NOBLEED))
+	if((NOBLOOD in dna.species.species_traits) || !is_bleeding() || HAS_TRAIT(src, TRAIT_NO_BLEED))
 		return
 	..()
 
@@ -1024,9 +1024,9 @@
 
 /mob/living/resist_grab(moving_resist)
 	. = TRUE
-	if(pulledby.grab_state || body_position == LYING_DOWN || HAS_TRAIT(src, TRAIT_GRABWEAKNESS))
+	if(pulledby.grab_state || body_position == LYING_DOWN || HAS_TRAIT(src, TRAIT_GRAB_WEAKNESS))
 		var/altered_grab_state = pulledby.grab_state
-		if((body_position == LYING_DOWN || HAS_TRAIT(src, TRAIT_GRABWEAKNESS)) && pulledby.grab_state < GRAB_KILL) //If prone, resisting out of a grab is equivalent to 1 grab state higher. won't make the grab state exceed the normal max, however
+		if((body_position == LYING_DOWN || HAS_TRAIT(src, TRAIT_GRAB_WEAKNESS)) && pulledby.grab_state < GRAB_KILL) //If prone, resisting out of a grab is equivalent to 1 grab state higher. won't make the grab state exceed the normal max, however
 			altered_grab_state++
 		var/resist_chance = BASE_GRAB_RESIST_CHANCE /// see defines/combat.dm, this should be baseline 60%
 		resist_chance = (resist_chance/altered_grab_state) ///Resist chance divided by the value imparted by your grab state. It isn't until you reach neckgrab that you gain a penalty to escaping a grab.
@@ -1077,7 +1077,7 @@
 		if(NEGATIVE_GRAVITY + 0.01 to 0)
 			if(!istype(gravity_alert, /atom/movable/screen/alert/weightless))
 				throw_alert(ALERT_GRAVITY, /atom/movable/screen/alert/weightless)
-				ADD_TRAIT(src, TRAIT_MOVE_FLOATING, NO_GRAVITY_TRAIT)
+				ADD_TRAIT(src, TRAIT_MOVE_FLOATING, SOURCE_NO_GRAVITY)
 		if(0.01 to STANDARD_GRAVITY)
 			if(gravity_alert)
 				clear_alert(ALERT_GRAVITY)
@@ -1091,7 +1091,7 @@
 		return
 	// By this point we know that we do not have the same alert as we used to
 	if(istype(gravity_alert, /atom/movable/screen/alert/weightless))
-		REMOVE_TRAIT(src, TRAIT_MOVE_FLOATING, NO_GRAVITY_TRAIT)
+		REMOVE_TRAIT(src, TRAIT_MOVE_FLOATING, SOURCE_NO_GRAVITY)
 	if(istype(gravity_alert, /atom/movable/screen/alert/negative))
 		var/matrix/flipped_matrix = transform
 		flipped_matrix.b = -flipped_matrix.b
@@ -1210,8 +1210,8 @@
 		return
 
 	notransform = TRUE
-	ADD_TRAIT(src, TRAIT_IMMOBILIZED, MAGIC_TRAIT)
-	ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, MAGIC_TRAIT)
+	ADD_TRAIT(src, TRAIT_IMMOBILIZED, SOURCE_MAGIC)
+	ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, SOURCE_MAGIC)
 	icon = null
 	cut_overlays()
 	invisibility = INVISIBILITY_ABSTRACT
@@ -1494,7 +1494,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		return
 
 	// can't spread fire to mobs that don't catch on fire
-	if(HAS_TRAIT(spread_to, TRAIT_NOFIRE_SPREAD) || HAS_TRAIT(src, TRAIT_NOFIRE_SPREAD))
+	if(HAS_TRAIT(spread_to, TRAIT_NO_FIRE_SPREAD) || HAS_TRAIT(src, TRAIT_NO_FIRE_SPREAD))
 		return
 
 	var/datum/status_effect/fire_handler/fire_stacks/fire_status = has_status_effect(/datum/status_effect/fire_handler/fire_stacks)
@@ -1957,20 +1957,20 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		if(CONSCIOUS)
 			if(stat >= UNCONSCIOUS)
 				ADD_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_KNOCKEDOUT)
-			ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, STAT_TRAIT)
-			ADD_TRAIT(src, TRAIT_INCAPACITATED, STAT_TRAIT)
-			ADD_TRAIT(src, TRAIT_FLOORED, STAT_TRAIT)
+			ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, SOURCE_STAT)
+			ADD_TRAIT(src, TRAIT_INCAPACITATED, SOURCE_STAT)
+			ADD_TRAIT(src, TRAIT_FLOORED, SOURCE_STAT)
 		if(SOFT_CRIT)
 			if(stat >= UNCONSCIOUS)
 				ADD_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_KNOCKEDOUT) //adding trait sources should come before removing to avoid unnecessary updates
 			if(pulledby)
-				REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, PULLED_WHILE_SOFTCRIT_TRAIT)
+				REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, SOURCE_BUSY_PULLED_WHILE_SOFTCRIT)
 		if(UNCONSCIOUS)
 			if(stat != HARD_CRIT)
-				cure_blind(UNCONSCIOUS_TRAIT)
+				cure_blind(SOURCE_UNCONSCIOUS)
 		if(HARD_CRIT)
 			if(stat != UNCONSCIOUS)
-				cure_blind(UNCONSCIOUS_TRAIT)
+				cure_blind(SOURCE_UNCONSCIOUS)
 		if(DEAD)
 			remove_from_dead_mob_list()
 			add_to_alive_mob_list()
@@ -1978,29 +1978,29 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		if(CONSCIOUS)
 			if(. >= UNCONSCIOUS)
 				REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_KNOCKEDOUT)
-			REMOVE_TRAIT(src, TRAIT_HANDS_BLOCKED, STAT_TRAIT)
-			REMOVE_TRAIT(src, TRAIT_INCAPACITATED, STAT_TRAIT)
-			REMOVE_TRAIT(src, TRAIT_FLOORED, STAT_TRAIT)
-			REMOVE_TRAIT(src, TRAIT_CRITICAL_CONDITION, STAT_TRAIT)
+			REMOVE_TRAIT(src, TRAIT_HANDS_BLOCKED, SOURCE_STAT)
+			REMOVE_TRAIT(src, TRAIT_INCAPACITATED, SOURCE_STAT)
+			REMOVE_TRAIT(src, TRAIT_FLOORED, SOURCE_STAT)
+			REMOVE_TRAIT(src, TRAIT_CRITICAL_CONDITION, SOURCE_STAT)
 		if(SOFT_CRIT)
 			if(pulledby)
-				ADD_TRAIT(src, TRAIT_IMMOBILIZED, PULLED_WHILE_SOFTCRIT_TRAIT) //adding trait sources should come before removing to avoid unnecessary updates
+				ADD_TRAIT(src, TRAIT_IMMOBILIZED, SOURCE_BUSY_PULLED_WHILE_SOFTCRIT) //adding trait sources should come before removing to avoid unnecessary updates
 			if(. >= UNCONSCIOUS)
 				REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_KNOCKEDOUT)
-			ADD_TRAIT(src, TRAIT_CRITICAL_CONDITION, STAT_TRAIT)
+			ADD_TRAIT(src, TRAIT_CRITICAL_CONDITION, SOURCE_STAT)
 		if(UNCONSCIOUS)
 			if(. != HARD_CRIT)
-				become_blind(UNCONSCIOUS_TRAIT)
-			if(health <= crit_threshold && !HAS_TRAIT(src, TRAIT_NOSOFTCRIT))
-				ADD_TRAIT(src, TRAIT_CRITICAL_CONDITION, STAT_TRAIT)
+				become_blind(SOURCE_UNCONSCIOUS)
+			if(health <= crit_threshold && !HAS_TRAIT(src, TRAIT_NO_SOFT_CRIT))
+				ADD_TRAIT(src, TRAIT_CRITICAL_CONDITION, SOURCE_STAT)
 			else
-				REMOVE_TRAIT(src, TRAIT_CRITICAL_CONDITION, STAT_TRAIT)
+				REMOVE_TRAIT(src, TRAIT_CRITICAL_CONDITION, SOURCE_STAT)
 		if(HARD_CRIT)
 			if(. != UNCONSCIOUS)
-				become_blind(UNCONSCIOUS_TRAIT)
-			ADD_TRAIT(src, TRAIT_CRITICAL_CONDITION, STAT_TRAIT)
+				become_blind(SOURCE_UNCONSCIOUS)
+			ADD_TRAIT(src, TRAIT_CRITICAL_CONDITION, SOURCE_STAT)
 		if(DEAD)
-			REMOVE_TRAIT(src, TRAIT_CRITICAL_CONDITION, STAT_TRAIT)
+			REMOVE_TRAIT(src, TRAIT_CRITICAL_CONDITION, SOURCE_STAT)
 			remove_from_alive_mob_list()
 			add_to_dead_mob_list()
 
@@ -2014,21 +2014,21 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	buckled = new_buckled
 	if(buckled)
 		if(!HAS_TRAIT(buckled, TRAIT_NO_IMMOBILIZE))
-			ADD_TRAIT(src, TRAIT_IMMOBILIZED, BUCKLED_TRAIT)
+			ADD_TRAIT(src, TRAIT_IMMOBILIZED, SOURCE_BUCKLED)
 		switch(buckled.buckle_lying)
 			if(NO_BUCKLE_LYING) // The buckle doesn't force a lying angle.
-				REMOVE_TRAIT(src, TRAIT_FLOORED, BUCKLED_TRAIT)
+				REMOVE_TRAIT(src, TRAIT_FLOORED, SOURCE_BUCKLED)
 			if(0) // Forcing to a standing position.
-				REMOVE_TRAIT(src, TRAIT_FLOORED, BUCKLED_TRAIT)
+				REMOVE_TRAIT(src, TRAIT_FLOORED, SOURCE_BUCKLED)
 				set_body_position(STANDING_UP)
 				set_lying_angle(0)
 			else // Forcing to a lying position.
-				ADD_TRAIT(src, TRAIT_FLOORED, BUCKLED_TRAIT)
+				ADD_TRAIT(src, TRAIT_FLOORED, SOURCE_BUCKLED)
 				set_body_position(LYING_DOWN)
 				set_lying_angle(buckled.buckle_lying)
 	else
-		REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, BUCKLED_TRAIT)
-		REMOVE_TRAIT(src, TRAIT_FLOORED, BUCKLED_TRAIT)
+		REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, SOURCE_BUCKLED)
+		REMOVE_TRAIT(src, TRAIT_FLOORED, SOURCE_BUCKLED)
 		if(.) // We unbuckled from something.
 			var/atom/movable/old_buckled = .
 			if(old_buckled.buckle_lying == 0 && (resting || HAS_TRAIT(src, TRAIT_FLOORED))) // The buckle forced us to stay up (like a chair)
@@ -2040,9 +2040,9 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		return
 	if(pulledby)
 		if(!. && stat == SOFT_CRIT)
-			ADD_TRAIT(src, TRAIT_IMMOBILIZED, PULLED_WHILE_SOFTCRIT_TRAIT)
+			ADD_TRAIT(src, TRAIT_IMMOBILIZED, SOURCE_BUSY_PULLED_WHILE_SOFTCRIT)
 	else if(. && stat == SOFT_CRIT)
-		REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, PULLED_WHILE_SOFTCRIT_TRAIT)
+		REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, SOURCE_BUSY_PULLED_WHILE_SOFTCRIT)
 
 
 /// Updates the grab state of the mob and updates movespeed
@@ -2084,13 +2084,13 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	usable_legs = new_value
 
 	if(new_value > .) // Gained leg usage.
-		REMOVE_TRAIT(src, TRAIT_FLOORED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)
-		REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)
+		REMOVE_TRAIT(src, TRAIT_FLOORED, SOURCE_NO_LOCOMOTION_APPENDAGES)
+		REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, SOURCE_NO_LOCOMOTION_APPENDAGES)
 	else if(!(movement_type & (FLYING | FLOATING))) //Lost leg usage, not flying.
 		if(!usable_legs)
-			ADD_TRAIT(src, TRAIT_FLOORED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)
+			ADD_TRAIT(src, TRAIT_FLOORED, SOURCE_NO_LOCOMOTION_APPENDAGES)
 			if(!usable_hands)
-				ADD_TRAIT(src, TRAIT_IMMOBILIZED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)
+				ADD_TRAIT(src, TRAIT_IMMOBILIZED, SOURCE_NO_LOCOMOTION_APPENDAGES)
 
 	if(usable_legs < default_num_legs)
 		var/limbless_slowdown = (default_num_legs - usable_legs) * 3
@@ -2117,9 +2117,9 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	usable_hands = new_value
 
 	if(new_value > .) // Gained hand usage.
-		REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)
+		REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, SOURCE_NO_LOCOMOTION_APPENDAGES)
 	else if(!(movement_type & (FLYING | FLOATING)) && !usable_hands && !usable_legs) //Lost a hand, not flying, no hands left, no legs.
-		ADD_TRAIT(src, TRAIT_IMMOBILIZED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)
+		ADD_TRAIT(src, TRAIT_IMMOBILIZED, SOURCE_NO_LOCOMOTION_APPENDAGES)
 
 
 /// Whether or not this mob will escape from storages while being picked up/held.
@@ -2130,7 +2130,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /mob/living/carbon/human/will_escape_storage()
 	return TRUE
 
-/// Sets the mob's hunger levels to a safe overall level. Useful for TRAIT_NOHUNGER species changes.
+/// Sets the mob's hunger levels to a safe overall level. Useful for TRAIT_NO_HUNGER species changes.
 /mob/living/proc/set_safe_hunger_level()
 	// Nutrition reset and alert clearing.
 	nutrition = NUTRITION_LEVEL_FED
@@ -2138,11 +2138,11 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	satiety = 0
 
 	// Trait removal if obese
-	if(HAS_TRAIT_FROM(src, TRAIT_FAT, OBESITY))
+	if(HAS_TRAIT_FROM(src, TRAIT_FAT, SOURCE_OBESITY))
 		if(overeatduration >= (200 SECONDS))
 			to_chat(src, span_notice("Your transformation restores your body's natural fitness!"))
 
-		REMOVE_TRAIT(src, TRAIT_FAT, OBESITY)
+		REMOVE_TRAIT(src, TRAIT_FAT, SOURCE_OBESITY)
 		remove_movespeed_modifier(/datum/movespeed_modifier/obesity)
 		update_worn_undersuit()
 		update_worn_oversuit()

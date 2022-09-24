@@ -199,28 +199,28 @@
 				var/obj/item/organ/internal/lungs/L = H.internal_organs_slot[ORGAN_SLOT_LUNGS]
 				L.plas_breath_dam_min = 0
 				L.plas_breath_dam_max = 0
-			ADD_TRAIT(H, TRAIT_VIRUSIMMUNE, DNA_VAULT_TRAIT)
+			ADD_TRAIT(H, TRAIT_VIRUS_IMMUNE, SOURCE_DNA_VAULT)
 		if(VAULT_NOBREATH)
 			to_chat(H, span_notice("Your lungs feel great."))
-			ADD_TRAIT(H, TRAIT_NOBREATH, DNA_VAULT_TRAIT)
+			ADD_TRAIT(H, TRAIT_NO_BREATH, SOURCE_DNA_VAULT)
 		if(VAULT_FIREPROOF)
 			to_chat(H, span_notice("You feel fireproof."))
 			S.burnmod = 0.5
-			ADD_TRAIT(H, TRAIT_RESISTHEAT, DNA_VAULT_TRAIT)
-			ADD_TRAIT(H, TRAIT_NOFIRE, DNA_VAULT_TRAIT)
+			ADD_TRAIT(H, TRAIT_RESISTHEAT, SOURCE_DNA_VAULT)
+			ADD_TRAIT(H, TRAIT_FLAME_IMMUNE, SOURCE_DNA_VAULT)
 		if(VAULT_STUNTIME)
 			to_chat(H, span_notice("Nothing can keep you down for long."))
 			S.stunmod = 0.5
 		if(VAULT_ARMOUR)
 			to_chat(H, span_notice("You feel tough."))
 			S.armor = 30
-			ADD_TRAIT(H, TRAIT_PIERCEIMMUNE, DNA_VAULT_TRAIT)
+			ADD_TRAIT(H, TRAIT_PIERCE_IMMUNE, SOURCE_DNA_VAULT)
 		if(VAULT_SPEED)
 			to_chat(H, span_notice("Your legs feel faster."))
 			H.add_movespeed_modifier(/datum/movespeed_modifier/dna_vault_speedup)
 		if(VAULT_QUICK)
 			to_chat(H, span_notice("Your arms move as fast as lightning."))
 			H.next_move_modifier = 0.5
-	ADD_TRAIT(H, TRAIT_USED_DNA_VAULT, DNA_VAULT_TRAIT)
+	ADD_TRAIT(H, TRAIT_USED_DNA_VAULT, SOURCE_DNA_VAULT)
 	power_lottery[H] = list()
 	use_power(active_power_usage)

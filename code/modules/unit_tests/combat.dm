@@ -3,7 +3,7 @@
 	var/mob/living/carbon/human/victim = allocate(/mob/living/carbon/human)
 
 	// Avoid all randomness in tests
-	ADD_TRAIT(puncher, TRAIT_PERFECT_ATTACKER, INNATE_TRAIT)
+	ADD_TRAIT(puncher, TRAIT_PERFECT_ATTACKER, SOURCE_INNATE)
 
 	puncher.set_combat_mode(TRUE)
 	victim.attack_hand(puncher, list(RIGHT_CLICK = FALSE))

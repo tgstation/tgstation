@@ -527,7 +527,7 @@
   Jared-Fogle:
   - bugfix: ACTUALLY fixed circuitboards disappearing when disassembling machines.
   ShizCalev:
-  - bugfix: Fixed Arnold pizza not checking for TRAIT_NODISMEMBER, resulting in a
+  - bugfix: Fixed Arnold pizza not checking for TRAIT_NO_DISMEMBER, resulting in a
       message being sent to the user even if they were fine after eating it.
   nightred:
   - bugfix: Fixed some shuttle wall smoothing

@@ -31,7 +31,7 @@
 	if(!eating_success || QDELETED(src)) //checks if src is gone or if they failed to wait for a second
 		user.visible_message(span_suicide("[user] chickens out!"))
 		return SHAME
-	if(HAS_TRAIT(user, TRAIT_NOHUNGER)) //plasmamen don't have saliva/stomach acid
+	if(HAS_TRAIT(user, TRAIT_NO_HUNGER)) //plasmamen don't have saliva/stomach acid
 		user.visible_message(span_suicide("[user] realizes [user.p_their()] body won't activate [src]!")
 		,span_warning("Your body won't activate [src]..."))
 		return SHAME

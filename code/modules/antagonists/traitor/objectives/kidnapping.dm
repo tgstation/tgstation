@@ -126,7 +126,7 @@
 		if(possible_target.current.stat == DEAD)
 			continue
 
-		if(HAS_TRAIT(possible_target, TRAIT_HAS_BEEN_KIDNAPPED))
+		if(HAS_TRAIT(possible_target, TRAIT_KIDNAPPED))
 			continue
 
 		if(possible_target.has_antag_datum(/datum/antagonist/traitor))
@@ -204,7 +204,7 @@
 	var/mob/living/carbon/human/sent_mob = entered_atom
 
 	if(sent_mob.mind)
-		ADD_TRAIT(sent_mob.mind, TRAIT_HAS_BEEN_KIDNAPPED, TRAIT_GENERIC)
+		ADD_TRAIT(sent_mob.mind, TRAIT_KIDNAPPED, SOURCE_GENERIC)
 
 	for(var/obj/item/belonging in sent_mob)
 		if(belonging == sent_mob.get_item_by_slot(ITEM_SLOT_ICLOTHING) || belonging == sent_mob.get_item_by_slot(ITEM_SLOT_FEET))

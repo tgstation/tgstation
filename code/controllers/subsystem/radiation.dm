@@ -125,7 +125,7 @@ SUBSYSTEM_DEF(radiation)
 	if (HAS_TRAIT(target, TRAIT_IRRADIATED) && !HAS_TRAIT(target, TRAIT_BYPASS_EARLY_IRRADIATED_CHECK))
 		return FALSE
 
-	if (HAS_TRAIT(target, TRAIT_RADIMMUNE))
+	if (HAS_TRAIT(target, TRAIT_RAD_IMMUNE))
 		return FALSE
 
 	return TRUE

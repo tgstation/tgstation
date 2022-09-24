@@ -71,10 +71,10 @@
 	incompatible_modules = list(/obj/item/mod/module/quick_carry, /obj/item/mod/module/constructor)
 
 /obj/item/mod/module/quick_carry/on_suit_activation()
-	ADD_TRAIT(mod.wearer, TRAIT_QUICKER_CARRY, MOD_TRAIT)
+	ADD_TRAIT(mod.wearer, TRAIT_QUICKER_CARRY, SOURCE_MOD)
 
 /obj/item/mod/module/quick_carry/on_suit_deactivation(deleting = FALSE)
-	REMOVE_TRAIT(mod.wearer, TRAIT_QUICKER_CARRY, MOD_TRAIT)
+	REMOVE_TRAIT(mod.wearer, TRAIT_QUICKER_CARRY, SOURCE_MOD)
 
 /obj/item/mod/module/quick_carry/advanced
 	name = "MOD advanced quick carry module"
@@ -83,11 +83,11 @@
 
 /obj/item/mod/module/quick_carry/on_suit_activation()
 	. = ..()
-	ADD_TRAIT(mod.wearer, TRAIT_FASTMED, MOD_TRAIT)
+	ADD_TRAIT(mod.wearer, TRAIT_FAST_MED, SOURCE_MOD)
 
 /obj/item/mod/module/quick_carry/on_suit_deactivation(deleting = FALSE)
 	. = ..()
-	REMOVE_TRAIT(mod.wearer, TRAIT_FASTMED, MOD_TRAIT)
+	REMOVE_TRAIT(mod.wearer, TRAIT_FAST_MED, SOURCE_MOD)
 
 ///Injector - Gives the suit an extendable large-capacity piercing syringe.
 /obj/item/mod/module/injector

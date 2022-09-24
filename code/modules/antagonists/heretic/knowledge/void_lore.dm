@@ -95,12 +95,12 @@
 	route = PATH_VOID
 
 /datum/heretic_knowledge/cold_snap/on_gain(mob/user)
-	ADD_TRAIT(user, TRAIT_RESISTCOLD, type)
-	ADD_TRAIT(user, TRAIT_NOBREATH, type)
+	ADD_TRAIT(user, TRAIT_RESIST_COLD, type)
+	ADD_TRAIT(user, TRAIT_NO_BREATH, type)
 
 /datum/heretic_knowledge/cold_snap/on_lose(mob/user)
-	REMOVE_TRAIT(user, TRAIT_RESISTCOLD, type)
-	REMOVE_TRAIT(user, TRAIT_NOBREATH, type)
+	REMOVE_TRAIT(user, TRAIT_RESIST_COLD, type)
+	REMOVE_TRAIT(user, TRAIT_NO_BREATH, type)
 
 /datum/heretic_knowledge/mark/void_mark
 	name = "Mark of Void"
@@ -197,7 +197,7 @@
 	. = ..()
 	priority_announce("[generate_heretic_text()] The nobleman of void [user.real_name] has arrived, step along the Waltz that ends worlds! [generate_heretic_text()]","[generate_heretic_text()]", ANNOUNCER_SPANOMALIES)
 	user.client?.give_award(/datum/award/achievement/misc/void_ascension, user)
-	ADD_TRAIT(user, TRAIT_RESISTLOWPRESSURE, MAGIC_TRAIT)
+	ADD_TRAIT(user, TRAIT_RESIST_LOW_PRESSURE, SOURCE_MAGIC)
 
 	// Let's get this show on the road!
 	sound_loop = new(user, TRUE, TRUE)

@@ -164,7 +164,7 @@
 /datum/reagent/toxin/lexorin/on_mob_life(mob/living/carbon/C, delta_time, times_fired)
 	. = TRUE
 
-	if(HAS_TRAIT(C, TRAIT_NOBREATH))
+	if(HAS_TRAIT(C, TRAIT_NO_BREATH))
 		. = FALSE
 
 	if(.)
@@ -251,7 +251,7 @@
 	zombiepowder.data["method"] |= INGEST
 
 /datum/reagent/toxin/zombiepowder/on_mob_life(mob/living/M, delta_time, times_fired)
-	if(HAS_TRAIT(M, TRAIT_FAKEDEATH) && HAS_TRAIT(M, TRAIT_DEATHCOMA))
+	if(HAS_TRAIT(M, TRAIT_FAKE_DEATH) && HAS_TRAIT(M, TRAIT_DEATH_COMA))
 		..()
 		return TRUE
 	switch(current_cycle)
@@ -280,10 +280,10 @@
 
 /datum/reagent/toxin/ghoulpowder/on_mob_metabolize(mob/living/L)
 	..()
-	ADD_TRAIT(L, TRAIT_FAKEDEATH, type)
+	ADD_TRAIT(L, TRAIT_FAKE_DEATH, type)
 
 /datum/reagent/toxin/ghoulpowder/on_mob_end_metabolize(mob/living/L)
-	REMOVE_TRAIT(L, TRAIT_FAKEDEATH, type)
+	REMOVE_TRAIT(L, TRAIT_FAKE_DEATH, type)
 	..()
 
 /datum/reagent/toxin/ghoulpowder/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -797,11 +797,11 @@
 
 /datum/reagent/toxin/sodium_thiopental/on_mob_add(mob/living/L, amount)
 	. = ..()
-	ADD_TRAIT(L, TRAIT_ANTICONVULSANT, name)
+	ADD_TRAIT(L, TRAIT_ANTI_CONVULSANT, name)
 
 /datum/reagent/toxin/sodium_thiopental/on_mob_delete(mob/living/L)
 	. = ..()
-	REMOVE_TRAIT(L, TRAIT_ANTICONVULSANT, name)
+	REMOVE_TRAIT(L, TRAIT_ANTI_CONVULSANT, name)
 
 /datum/reagent/toxin/sodium_thiopental/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(current_cycle >= 10)

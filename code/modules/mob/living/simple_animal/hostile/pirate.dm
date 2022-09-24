@@ -57,7 +57,7 @@
 
 /mob/living/simple_animal/hostile/pirate/melee/space/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_SPACEWALK, SOURCE_INNATE)
 
 /mob/living/simple_animal/hostile/pirate/melee/Initialize(mapload)
 	. = ..()
@@ -96,4 +96,4 @@
 
 /mob/living/simple_animal/hostile/pirate/ranged/space/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_SPACEWALK, SOURCE_INNATE)

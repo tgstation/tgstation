@@ -152,7 +152,7 @@
 /mob/living/proc/handle_traits(delta_time, times_fired)
 	//Eyes
 	if(eye_blind) //blindness, heals slowly over time
-		if(HAS_TRAIT_FROM(src, TRAIT_BLIND, EYES_COVERED)) //covering your eyes heals blurry eyes faster
+		if(HAS_TRAIT_FROM(src, TRAIT_BLIND, SOURCE_EYES_COVERED)) //covering your eyes heals blurry eyes faster
 			adjust_blindness(-1.5 * delta_time)
 		else if(!stat && !(HAS_TRAIT(src, TRAIT_BLIND)))
 			adjust_blindness(-0.5 * delta_time)

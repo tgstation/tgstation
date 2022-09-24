@@ -1,6 +1,6 @@
 /mob/living/carbon/human/get_movespeed_modifiers()
 	var/list/considering = ..()
-	if(HAS_TRAIT(src, TRAIT_IGNORESLOWDOWN))
+	if(HAS_TRAIT(src, TRAIT_IGNORE_SLOWDOWN))
 		. = list()
 		for(var/id in considering)
 			var/datum/movespeed_modifier/M = considering[id]
@@ -13,7 +13,7 @@
 	if(HAS_TRAIT(src, TRAIT_NOSLIPALL))
 		return FALSE
 	if (!(lube & GALOSHES_DONT_HELP))
-		if(HAS_TRAIT(src, TRAIT_NOSLIPWATER))
+		if(HAS_TRAIT(src, TRAIT_NO_SLIP_WATER))
 			return FALSE
 		if(shoes && isclothing(shoes))
 			var/obj/item/clothing/CS = shoes

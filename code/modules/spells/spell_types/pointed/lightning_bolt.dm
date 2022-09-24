@@ -26,10 +26,10 @@
 
 /datum/action/cooldown/spell/pointed/projectile/lightningbolt/Grant(mob/grant_to)
 	. = ..()
-	ADD_TRAIT(owner, TRAIT_TESLA_SHOCKIMMUNE, type)
+	ADD_TRAIT(owner, TRAIT_TESLA_SHOCK_IMMUNE, type)
 
 /datum/action/cooldown/spell/pointed/projectile/lightningbolt/Remove(mob/living/remove_from)
-	REMOVE_TRAIT(remove_from, TRAIT_TESLA_SHOCKIMMUNE, type)
+	REMOVE_TRAIT(remove_from, TRAIT_TESLA_SHOCK_IMMUNE, type)
 	return ..()
 
 /datum/action/cooldown/spell/pointed/projectile/lightningbolt/ready_projectile(obj/projectile/to_fire, atom/target, mob/user, iteration)

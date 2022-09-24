@@ -6,7 +6,7 @@
 	inhand_icon_state = "bgloves"
 	equip_delay_self = 3 SECONDS
 	equip_delay_other = 4 SECONDS
-	clothing_traits = list(TRAIT_CHUNKYFINGERS)
+	clothing_traits = list(TRAIT_CHUNKY_FINGERS)
 	undyeable = TRUE
 	var/datum/weakref/pull_component_weakref
 

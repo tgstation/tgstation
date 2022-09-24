@@ -59,7 +59,7 @@
 	var/obj/item/bodypart/affecting = null
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
-		if(HAS_TRAIT(H, TRAIT_PIERCEIMMUNE))
+		if(HAS_TRAIT(H, TRAIT_PIERCE_IMMUNE))
 			playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
 			armed = FALSE
 			update_appearance()

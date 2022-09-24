@@ -28,14 +28,14 @@
 	. = ..()
 	if(!.)
 		return
-	ADD_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
-	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
-	ADD_TRAIT(owner, TRAIT_HANDS_BLOCKED, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_INCAPACITATED, SOURCE_STATUS_EFFECT_ID(id))
+	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, SOURCE_STATUS_EFFECT_ID(id))
+	ADD_TRAIT(owner, TRAIT_HANDS_BLOCKED, SOURCE_STATUS_EFFECT_ID(id))
 
 /datum/status_effect/incapacitating/stun/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
-	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
-	REMOVE_TRAIT(owner, TRAIT_HANDS_BLOCKED, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_INCAPACITATED, SOURCE_STATUS_EFFECT_ID(id))
+	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, SOURCE_STATUS_EFFECT_ID(id))
+	REMOVE_TRAIT(owner, TRAIT_HANDS_BLOCKED, SOURCE_STATUS_EFFECT_ID(id))
 	return ..()
 
 
@@ -47,10 +47,10 @@
 	. = ..()
 	if(!.)
 		return
-	ADD_TRAIT(owner, TRAIT_FLOORED, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_FLOORED, SOURCE_STATUS_EFFECT_ID(id))
 
 /datum/status_effect/incapacitating/knockdown/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_FLOORED, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_FLOORED, SOURCE_STATUS_EFFECT_ID(id))
 	return ..()
 
 
@@ -62,10 +62,10 @@
 	. = ..()
 	if(!.)
 		return
-	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, SOURCE_STATUS_EFFECT_ID(id))
 
 /datum/status_effect/incapacitating/immobilized/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, SOURCE_STATUS_EFFECT_ID(id))
 	return ..()
 
 
@@ -77,16 +77,16 @@
 	. = ..()
 	if(!.)
 		return
-	ADD_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
-	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
-	ADD_TRAIT(owner, TRAIT_FLOORED, TRAIT_STATUS_EFFECT(id))
-	ADD_TRAIT(owner, TRAIT_HANDS_BLOCKED, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_INCAPACITATED, SOURCE_STATUS_EFFECT_ID(id))
+	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, SOURCE_STATUS_EFFECT_ID(id))
+	ADD_TRAIT(owner, TRAIT_FLOORED, SOURCE_STATUS_EFFECT_ID(id))
+	ADD_TRAIT(owner, TRAIT_HANDS_BLOCKED, SOURCE_STATUS_EFFECT_ID(id))
 
 /datum/status_effect/incapacitating/paralyzed/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
-	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
-	REMOVE_TRAIT(owner, TRAIT_FLOORED, TRAIT_STATUS_EFFECT(id))
-	REMOVE_TRAIT(owner, TRAIT_HANDS_BLOCKED, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_INCAPACITATED, SOURCE_STATUS_EFFECT_ID(id))
+	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, SOURCE_STATUS_EFFECT_ID(id))
+	REMOVE_TRAIT(owner, TRAIT_FLOORED, SOURCE_STATUS_EFFECT_ID(id))
+	REMOVE_TRAIT(owner, TRAIT_HANDS_BLOCKED, SOURCE_STATUS_EFFECT_ID(id))
 	return ..()
 
 //INCAPACITATED
@@ -99,11 +99,11 @@
 	. = ..()
 	if(!.)
 		return
-	ADD_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_INCAPACITATED, SOURCE_STATUS_EFFECT_ID(id))
 
 // When the status effect runs out, your TRAIT_INCAPACITATED is removed.
 /datum/status_effect/incapacitating/incapacitated/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_INCAPACITATED, SOURCE_STATUS_EFFECT_ID(id))
 	return ..()
 
 
@@ -116,10 +116,10 @@
 	. = ..()
 	if(!.)
 		return
-	ADD_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_KNOCKEDOUT, SOURCE_STATUS_EFFECT_ID(id))
 
 /datum/status_effect/incapacitating/unconscious/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_KNOCKEDOUT, SOURCE_STATUS_EFFECT_ID(id))
 	return ..()
 
 /datum/status_effect/incapacitating/unconscious/tick()
@@ -138,29 +138,29 @@
 	. = ..()
 	if(!.)
 		return
-	if(!HAS_TRAIT(owner, TRAIT_SLEEPIMMUNE))
-		ADD_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
+	if(!HAS_TRAIT(owner, TRAIT_SLEEP_IMMUNE))
+		ADD_TRAIT(owner, TRAIT_KNOCKEDOUT, SOURCE_STATUS_EFFECT_ID(id))
 		tick_interval = -1
-	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_SLEEPIMMUNE), .proc/on_owner_insomniac)
-	RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_SLEEPIMMUNE), .proc/on_owner_sleepy)
+	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_SLEEP_IMMUNE), .proc/on_owner_insomniac)
+	RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_SLEEP_IMMUNE), .proc/on_owner_sleepy)
 
 /datum/status_effect/incapacitating/sleeping/on_remove()
-	UnregisterSignal(owner, list(SIGNAL_ADDTRAIT(TRAIT_SLEEPIMMUNE), SIGNAL_REMOVETRAIT(TRAIT_SLEEPIMMUNE)))
-	if(!HAS_TRAIT(owner, TRAIT_SLEEPIMMUNE))
-		REMOVE_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
+	UnregisterSignal(owner, list(SIGNAL_ADDTRAIT(TRAIT_SLEEP_IMMUNE), SIGNAL_REMOVETRAIT(TRAIT_SLEEP_IMMUNE)))
+	if(!HAS_TRAIT(owner, TRAIT_SLEEP_IMMUNE))
+		REMOVE_TRAIT(owner, TRAIT_KNOCKEDOUT, SOURCE_STATUS_EFFECT_ID(id))
 		tick_interval = initial(tick_interval)
 	return ..()
 
-///If the mob is sleeping and gain the TRAIT_SLEEPIMMUNE we remove the TRAIT_KNOCKEDOUT and stop the tick() from happening
+///If the mob is sleeping and gain the TRAIT_SLEEP_IMMUNE we remove the TRAIT_KNOCKEDOUT and stop the tick() from happening
 /datum/status_effect/incapacitating/sleeping/proc/on_owner_insomniac(mob/living/source)
 	SIGNAL_HANDLER
-	REMOVE_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_KNOCKEDOUT, SOURCE_STATUS_EFFECT_ID(id))
 	tick_interval = -1
 
-///If the mob has the TRAIT_SLEEPIMMUNE but somehow looses it we make him sleep and restart the tick()
+///If the mob has the TRAIT_SLEEP_IMMUNE but somehow looses it we make him sleep and restart the tick()
 /datum/status_effect/incapacitating/sleeping/proc/on_owner_sleepy(mob/living/source)
 	SIGNAL_HANDLER
-	ADD_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_KNOCKEDOUT, SOURCE_STATUS_EFFECT_ID(id))
 	tick_interval = initial(tick_interval)
 
 #define HEALING_SLEEP_DEFAULT 0.2
@@ -190,7 +190,7 @@
 		var/is_sleeping_in_darkness = rest_turf.get_lumcount() <= LIGHTING_TILE_IS_DARK
 
 		// sleeping with a blindfold or in the dark helps us rest
-		if(HAS_TRAIT_FROM(owner, TRAIT_BLIND, BLINDFOLD_TRAIT) || is_sleeping_in_darkness)
+		if(HAS_TRAIT_FROM(owner, TRAIT_BLIND, SOURCE_BLINDFOLD) || is_sleeping_in_darkness)
 			healing += 0.1
 
 		// sleeping in silence is always better
@@ -259,8 +259,8 @@
 	. = ..()
 	if(!.)
 		return
-	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
-	ADD_TRAIT(owner, TRAIT_HANDS_BLOCKED, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, SOURCE_STATUS_EFFECT_ID(id))
+	ADD_TRAIT(owner, TRAIT_HANDS_BLOCKED, SOURCE_STATUS_EFFECT_ID(id))
 	owner.add_filter("stasis_status_ripple", 2, list("type" = "ripple", "flags" = WAVE_BOUNDED, "radius" = 0, "size" = 2))
 	var/filter = owner.get_filter("stasis_status_ripple")
 	animate(filter, radius = 0, time = 0.2 SECONDS, size = 2, easing = JUMP_EASING, loop = -1, flags = ANIMATION_PARALLEL)
@@ -273,8 +273,8 @@
 	update_time_of_death()
 
 /datum/status_effect/grouped/stasis/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
-	REMOVE_TRAIT(owner, TRAIT_HANDS_BLOCKED, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, SOURCE_STATUS_EFFECT_ID(id))
+	REMOVE_TRAIT(owner, TRAIT_HANDS_BLOCKED, SOURCE_STATUS_EFFECT_ID(id))
 	owner.remove_filter("stasis_status_ripple")
 	update_time_of_death()
 	if(iscarbon(owner))
@@ -300,11 +300,11 @@
 	. = ..()
 
 /datum/status_effect/pacify/on_apply()
-	ADD_TRAIT(owner, TRAIT_PACIFISM, STATUS_EFFECT_TRAIT)
+	ADD_TRAIT(owner, TRAIT_PACIFISM, SOURCE_STATUS_EFFECT)
 	return ..()
 
 /datum/status_effect/pacify/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_PACIFISM, STATUS_EFFECT_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, SOURCE_STATUS_EFFECT)
 
 /datum/status_effect/his_wrath //does minor damage over time unless holding His Grace
 	id = "his_wrath"
@@ -524,14 +524,14 @@
 
 /datum/status_effect/gonbola_pacify/on_apply()
 	. = ..()
-	ADD_TRAIT(owner, TRAIT_PACIFISM, CLOTHING_TRAIT)
-	ADD_TRAIT(owner, TRAIT_MUTE, CLOTHING_TRAIT)
+	ADD_TRAIT(owner, TRAIT_PACIFISM, SOURCE_CLOTHING)
+	ADD_TRAIT(owner, TRAIT_MUTE, SOURCE_CLOTHING)
 	owner.add_mood_event(type, /datum/mood_event/gondola)
 	to_chat(owner, span_notice("You suddenly feel at peace and feel no need to make any sudden or rash actions..."))
 
 /datum/status_effect/gonbola_pacify/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_PACIFISM, CLOTHING_TRAIT)
-	REMOVE_TRAIT(owner, TRAIT_MUTE, CLOTHING_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, SOURCE_CLOTHING)
+	REMOVE_TRAIT(owner, TRAIT_MUTE, SOURCE_CLOTHING)
 	owner.clear_mood_event(type)
 	return ..()
 
@@ -557,7 +557,7 @@
 	if(!iscarbon(owner))
 		return FALSE
 	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, .proc/hypnotize)
-	ADD_TRAIT(owner, TRAIT_MUTE, STATUS_EFFECT_TRAIT)
+	ADD_TRAIT(owner, TRAIT_MUTE, SOURCE_STATUS_EFFECT)
 	owner.add_client_colour(/datum/client_colour/monochrome/trance)
 	owner.visible_message("[stun ? span_warning("[owner] stands still as [owner.p_their()] eyes seem to focus on a distant point.") : ""]", \
 	span_warning(pick("You feel your thoughts slow down...", "You suddenly feel extremely dizzy...", "You feel like you're in the middle of a dream...","You feel incredibly relaxed...")))
@@ -570,7 +570,7 @@
 
 /datum/status_effect/trance/on_remove()
 	UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)
-	REMOVE_TRAIT(owner, TRAIT_MUTE, STATUS_EFFECT_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_MUTE, SOURCE_STATUS_EFFECT)
 	owner.remove_status_effect(/datum/status_effect/dizziness)
 	owner.remove_client_colour(/datum/client_colour/monochrome/trance)
 	to_chat(owner, span_warning("You snap out of your trance!"))

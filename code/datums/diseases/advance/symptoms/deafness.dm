@@ -34,7 +34,7 @@
 		causes_permanent_deafness = TRUE
 
 /datum/symptom/deafness/End(datum/disease/advance/advanced_disease)
-	REMOVE_TRAIT(advanced_disease.affected_mob, TRAIT_DEAF, DISEASE_TRAIT)
+	REMOVE_TRAIT(advanced_disease.affected_mob, TRAIT_DEAF, SOURCE_DISEASE)
 	return ..()
 
 /datum/symptom/deafness/Activate(datum/disease/advance/A)
@@ -56,7 +56,7 @@
 					// Just absolutely murder me man
 					ears.applyOrganDamage(ears.maxHealth)
 					infected_mob.emote("scream")
-					ADD_TRAIT(infected_mob, TRAIT_DEAF, DISEASE_TRAIT)
+					ADD_TRAIT(infected_mob, TRAIT_DEAF, SOURCE_DISEASE)
 			else
 				to_chat(infected_mob, span_userdanger("Your ears pop and begin ringing loudly!"))
 				ears.deaf = min(20, ears.deaf + 15)
@@ -67,5 +67,5 @@
 		return FALSE
 	var/mob/living/carbon/infected_mob = advanced_disease.affected_mob
 	if(advanced_disease.stage < 5 || !causes_permanent_deafness)
-		REMOVE_TRAIT(infected_mob, TRAIT_DEAF, DISEASE_TRAIT)
+		REMOVE_TRAIT(infected_mob, TRAIT_DEAF, SOURCE_DISEASE)
 	return TRUE

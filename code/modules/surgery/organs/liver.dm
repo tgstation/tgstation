@@ -80,7 +80,7 @@
 
 	if(!istype(liver_owner))
 		return
-	if(organ_flags & ORGAN_FAILING || HAS_TRAIT(liver_owner, TRAIT_NOMETABOLISM))//can't process reagents with a failing liver
+	if(organ_flags & ORGAN_FAILING || HAS_TRAIT(liver_owner, TRAIT_NO_METABOLISM))//can't process reagents with a failing liver
 		return
 
 	// How much damage to inflict on our liver
@@ -88,7 +88,7 @@
 
 	var/provide_pain_message = HAS_NO_TOXIN
 	var/obj/belly = liver_owner.getorganslot(ORGAN_SLOT_STOMACH)
-	if(filterToxins && !HAS_TRAIT(owner, TRAIT_TOXINLOVER))
+	if(filterToxins && !HAS_TRAIT(owner, TRAIT_TOXIN_LOVER))
 		//handle liver toxin filtration
 		for(var/datum/reagent/toxin/toxin in liver_owner.reagents.reagent_list)
 			var/thisamount = liver_owner.reagents.get_reagent_amount(toxin.type)
@@ -112,7 +112,7 @@
 
 
 /obj/item/organ/internal/liver/handle_failing_organs(delta_time)
-	if(HAS_TRAIT(src, TRAIT_STABLELIVER) || HAS_TRAIT(src, TRAIT_NOMETABOLISM))
+	if(HAS_TRAIT(src, TRAIT_STABLE_LIVER) || HAS_TRAIT(src, TRAIT_NO_METABOLISM))
 		return
 	return ..()
 
@@ -191,7 +191,7 @@
 		CRASH("on_death() called for [src] ([type]) with invalid owner ([isnull(owner) ? "null" : owner.type])")
 	if(carbon_owner.stat != DEAD)
 		CRASH("on_death() called for [src] ([type]) with not-dead owner ([owner])")
-	if((organ_flags & ORGAN_FAILING) && HAS_TRAIT(carbon_owner, TRAIT_NOMETABOLISM))//can't process reagents with a failing liver
+	if((organ_flags & ORGAN_FAILING) && HAS_TRAIT(carbon_owner, TRAIT_NO_METABOLISM))//can't process reagents with a failing liver
 		return
 	for(var/datum/reagent/chem as anything in carbon_owner.reagents.reagent_list)
 		chem.on_mob_dead(carbon_owner, delta_time)
@@ -202,7 +202,7 @@
 #undef LIVER_FAILURE_STAGE_SECONDS
 
 /obj/item/organ/internal/liver/get_availability(datum/species/species)
-	return !(TRAIT_NOMETABOLISM in species.inherent_traits)
+	return !(TRAIT_NO_METABOLISM in species.inherent_traits)
 
 /obj/item/organ/internal/liver/plasmaman
 	name = "reagent processing crystal"

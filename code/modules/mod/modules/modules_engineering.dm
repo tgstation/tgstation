@@ -57,8 +57,8 @@
 	. = ..()
 	if(!.)
 		return
-	ADD_TRAIT(mod.wearer, TRAIT_NEGATES_GRAVITY, MOD_TRAIT)
-	ADD_TRAIT(mod.wearer, TRAIT_NOSLIPWATER, MOD_TRAIT)
+	ADD_TRAIT(mod.wearer, TRAIT_NEGATE_GRAVITY, SOURCE_MOD)
+	ADD_TRAIT(mod.wearer, TRAIT_NO_SLIP_WATER, SOURCE_MOD)
 	mod.slowdown += slowdown_active
 	mod.wearer.update_gravity(mod.wearer.has_gravity())
 	mod.wearer.update_equipment_speed_mods()
@@ -67,8 +67,8 @@
 	. = ..()
 	if(!.)
 		return
-	REMOVE_TRAIT(mod.wearer, TRAIT_NEGATES_GRAVITY, MOD_TRAIT)
-	REMOVE_TRAIT(mod.wearer, TRAIT_NOSLIPWATER, MOD_TRAIT)
+	REMOVE_TRAIT(mod.wearer, TRAIT_NEGATE_GRAVITY, SOURCE_MOD)
+	REMOVE_TRAIT(mod.wearer, TRAIT_NO_SLIP_WATER, SOURCE_MOD)
 	mod.slowdown -= slowdown_active
 	mod.wearer.update_gravity(mod.wearer.has_gravity())
 	mod.wearer.update_equipment_speed_mods()
@@ -154,17 +154,17 @@
 
 /obj/item/mod/module/rad_protection/on_suit_activation()
 	AddComponent(/datum/component/geiger_sound)
-	ADD_TRAIT(mod.wearer, TRAIT_BYPASS_EARLY_IRRADIATED_CHECK, MOD_TRAIT)
+	ADD_TRAIT(mod.wearer, TRAIT_BYPASS_EARLY_IRRADIATED_CHECK, SOURCE_MOD)
 	RegisterSignal(mod.wearer, COMSIG_IN_RANGE_OF_IRRADIATION, .proc/on_pre_potential_irradiation)
 	for(var/obj/item/part in mod.mod_parts)
-		ADD_TRAIT(part, TRAIT_RADIATION_PROTECTED_CLOTHING, MOD_TRAIT)
+		ADD_TRAIT(part, TRAIT_RADIATION_PROTECTED_CLOTHING, SOURCE_MOD)
 
 /obj/item/mod/module/rad_protection/on_suit_deactivation(deleting = FALSE)
 	qdel(GetComponent(/datum/component/geiger_sound))
-	REMOVE_TRAIT(mod.wearer, TRAIT_BYPASS_EARLY_IRRADIATED_CHECK, MOD_TRAIT)
+	REMOVE_TRAIT(mod.wearer, TRAIT_BYPASS_EARLY_IRRADIATED_CHECK, SOURCE_MOD)
 	UnregisterSignal(mod.wearer, COMSIG_IN_RANGE_OF_IRRADIATION)
 	for(var/obj/item/part in mod.mod_parts)
-		REMOVE_TRAIT(part, TRAIT_RADIATION_PROTECTED_CLOTHING, MOD_TRAIT)
+		REMOVE_TRAIT(part, TRAIT_RADIATION_PROTECTED_CLOTHING, SOURCE_MOD)
 
 /obj/item/mod/module/rad_protection/add_ui_data()
 	. = ..()
@@ -195,10 +195,10 @@
 	cooldown_time = 11 SECONDS
 
 /obj/item/mod/module/constructor/on_suit_activation()
-	ADD_TRAIT(mod.wearer, TRAIT_QUICK_BUILD, MOD_TRAIT)
+	ADD_TRAIT(mod.wearer, TRAIT_QUICK_BUILD, SOURCE_MOD)
 
 /obj/item/mod/module/constructor/on_suit_deactivation(deleting = FALSE)
-	REMOVE_TRAIT(mod.wearer, TRAIT_QUICK_BUILD, MOD_TRAIT)
+	REMOVE_TRAIT(mod.wearer, TRAIT_QUICK_BUILD, SOURCE_MOD)
 
 /obj/item/mod/module/constructor/on_use()
 	. = ..()

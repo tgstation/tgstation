@@ -29,7 +29,7 @@
 					context[SCREENTIP_CONTEXT_LMB] = "Pull tail"
 				else
 					context[SCREENTIP_CONTEXT_LMB] = "Hug"
-			else if (health >= 0 && !HAS_TRAIT(src, TRAIT_FAKEDEATH))
+			else if (health >= 0 && !HAS_TRAIT(src, TRAIT_FAKE_DEATH))
 				context[SCREENTIP_CONTEXT_LMB] = "Shake"
 			else
 				context[SCREENTIP_CONTEXT_LMB] = "CPR"

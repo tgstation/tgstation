@@ -179,7 +179,7 @@
 		var/obj/item/I = new default_hatmask(src)
 		equip_to_slot_or_del(I, ITEM_SLOT_HEAD)
 
-	ADD_TRAIT(access_card, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
+	ADD_TRAIT(access_card, TRAIT_NODROP, SOURCE_ABSTRACT_ITEM)
 
 	shy_update()
 
@@ -188,9 +188,9 @@
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
 		diag_hud.add_atom_to_hud(src)
 
-	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_NEGATES_GRAVITY, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_LITERATE, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, SOURCE_INNATE)
+	ADD_TRAIT(src, TRAIT_NEGATE_GRAVITY, SOURCE_INNATE)
+	ADD_TRAIT(src, TRAIT_LITERATE, SOURCE_INNATE)
 
 	listener = new(list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER), list(z))
 	RegisterSignal(listener, COMSIG_ALARM_LISTENER_TRIGGERED, .proc/alarm_triggered)
@@ -342,7 +342,7 @@
 
 	var/static/list/not_shy_of = typecacheof(list(/mob/living/simple_animal/drone, /mob/living/simple_animal/bot))
 	if(shy)
-		ADD_TRAIT(src, TRAIT_PACIFISM, DRONE_SHY_TRAIT)
+		ADD_TRAIT(src, TRAIT_PACIFISM, SOURCE_DRONE_SHY)
 		LoadComponent(/datum/component/shy, mob_whitelist=not_shy_of, shy_range=3, message="Your laws prevent this action near %TARGET.", keyless_shy=FALSE, clientless_shy=TRUE, dead_shy=FALSE, dead_shy_immediate=TRUE, machine_whitelist=shy_machine_whitelist)
 		LoadComponent(/datum/component/shy_in_room, drone_bad_areas, "Touching anything in %ROOM could break your laws.")
 		LoadComponent(/datum/component/technoshy, 1 MINUTES, "%TARGET was touched by a being recently, using it could break your laws.")
@@ -350,7 +350,7 @@
 		RegisterSignal(src, COMSIG_TRY_USE_MACHINE, .proc/blacklist_on_try_use_machine)
 		RegisterSignal(src, COMSIG_TRY_WIRES_INTERACT, .proc/blacklist_on_try_wires_interact)
 	else
-		REMOVE_TRAIT(src, TRAIT_PACIFISM, DRONE_SHY_TRAIT)
+		REMOVE_TRAIT(src, TRAIT_PACIFISM, SOURCE_DRONE_SHY)
 		qdel(GetComponent(/datum/component/shy))
 		qdel(GetComponent(/datum/component/shy_in_room))
 		qdel(GetComponent(/datum/component/technoshy))

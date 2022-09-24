@@ -69,11 +69,11 @@
 /datum/reagent/hypernoblium/on_mob_metabolize(mob/living/breather)
 	. = ..()
 	if(isplasmaman(breather))
-		ADD_TRAIT(breather, TRAIT_NOFIRE, type)
+		ADD_TRAIT(breather, TRAIT_FLAME_IMMUNE, type)
 
 /datum/reagent/hypernoblium/on_mob_end_metabolize(mob/living/breather)
 	if(isplasmaman(breather))
-		REMOVE_TRAIT(breather, TRAIT_NOFIRE, type)
+		REMOVE_TRAIT(breather, TRAIT_FLAME_IMMUNE, type)
 	return ..()
 
 /datum/reagent/nitrium_high_metabolization
@@ -89,10 +89,10 @@
 
 /datum/reagent/nitrium_high_metabolization/on_mob_metabolize(mob/living/breather)
 	. = ..()
-	ADD_TRAIT(breather, TRAIT_SLEEPIMMUNE, type)
+	ADD_TRAIT(breather, TRAIT_SLEEP_IMMUNE, type)
 
 /datum/reagent/nitrium_high_metabolization/on_mob_end_metabolize(mob/living/breather)
-	REMOVE_TRAIT(breather, TRAIT_SLEEPIMMUNE, type)
+	REMOVE_TRAIT(breather, TRAIT_SLEEP_IMMUNE, type)
 	return ..()
 
 /datum/reagent/nitrium_high_metabolization/on_mob_life(mob/living/carbon/breather, delta_time, times_fired)

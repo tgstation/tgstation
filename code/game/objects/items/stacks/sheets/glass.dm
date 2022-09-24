@@ -334,7 +334,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	var/hit_hand = ((user.active_hand_index % 2 == 0) ? "r_" : "l_") + "arm"
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(!H.gloves && !HAS_TRAIT(H, TRAIT_PIERCEIMMUNE)) // golems, etc
+		if(!H.gloves && !HAS_TRAIT(H, TRAIT_PIERCE_IMMUNE)) // golems, etc
 			to_chat(H, span_warning("[src] cuts into your hand!"))
 			H.apply_damage(force*0.5, BRUTE, hit_hand)
 

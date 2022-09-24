@@ -36,13 +36,13 @@
 	if(IS_HERETIC_OR_MONSTER(user))
 		return
 
-	ADD_TRAIT(src, TRAIT_NODROP, CLOTHING_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, SOURCE_CLOTHING)
 	to_chat(user, span_userdanger("[src] clamps tightly to your face as you feel your soul draining away!"))
 
 /obj/item/clothing/mask/madness_mask/dropped(mob/M)
 	local_user = null
 	STOP_PROCESSING(SSobj, src)
-	REMOVE_TRAIT(src, TRAIT_NODROP, CLOTHING_TRAIT)
+	REMOVE_TRAIT(src, TRAIT_NODROP, SOURCE_CLOTHING)
 	return ..()
 
 /obj/item/clothing/mask/madness_mask/process(delta_time)
@@ -50,7 +50,7 @@
 		return PROCESS_KILL
 
 	if(IS_HERETIC_OR_MONSTER(local_user) && HAS_TRAIT(src, TRAIT_NODROP))
-		REMOVE_TRAIT(src, TRAIT_NODROP, CLOTHING_TRAIT)
+		REMOVE_TRAIT(src, TRAIT_NODROP, SOURCE_CLOTHING)
 
 	for(var/mob/living/carbon/human/human_in_range in view(local_user))
 		if(IS_HERETIC_OR_MONSTER(human_in_range))

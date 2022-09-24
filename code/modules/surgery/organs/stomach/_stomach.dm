@@ -117,21 +117,21 @@
 		to_chat(body, span_warning("Your stomach reels in pain as you're incapable of holding down all that food!"))
 
 /obj/item/organ/internal/stomach/proc/handle_hunger(mob/living/carbon/human/human, delta_time, times_fired)
-	if(HAS_TRAIT(human, TRAIT_NOHUNGER))
+	if(HAS_TRAIT(human, TRAIT_NO_HUNGER))
 		return //hunger is for BABIES
 
 	//The fucking TRAIT_FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
-	if(HAS_TRAIT_FROM(human, TRAIT_FAT, OBESITY))//I share your pain, past coder.
+	if(HAS_TRAIT_FROM(human, TRAIT_FAT, SOURCE_OBESITY))//I share your pain, past coder.
 		if(human.overeatduration < (200 SECONDS))
 			to_chat(human, span_notice("You feel fit again!"))
-			REMOVE_TRAIT(human, TRAIT_FAT, OBESITY)
+			REMOVE_TRAIT(human, TRAIT_FAT, SOURCE_OBESITY)
 			human.remove_movespeed_modifier(/datum/movespeed_modifier/obesity)
 			human.update_worn_undersuit()
 			human.update_worn_oversuit()
 	else
 		if(human.overeatduration >= (200 SECONDS))
 			to_chat(human, span_danger("You suddenly feel blubbery!"))
-			ADD_TRAIT(human, TRAIT_FAT, OBESITY)
+			ADD_TRAIT(human, TRAIT_FAT, SOURCE_OBESITY)
 			human.add_movespeed_modifier(/datum/movespeed_modifier/obesity)
 			human.update_worn_undersuit()
 			human.update_worn_oversuit()
@@ -206,7 +206,7 @@
 		human.remove_movespeed_modifier(/datum/movespeed_modifier/hunger)
 
 /obj/item/organ/internal/stomach/get_availability(datum/species/owner_species)
-	return !((TRAIT_NOHUNGER in owner_species.inherent_traits) || (NOSTOMACH in owner_species.species_traits))
+	return !((TRAIT_NO_HUNGER in owner_species.inherent_traits) || (NOSTOMACH in owner_species.species_traits))
 
 /obj/item/organ/internal/stomach/proc/handle_disgust(mob/living/carbon/human/disgusted, delta_time, times_fired)
 	var/old_disgust = disgusted.old_disgust
@@ -266,7 +266,7 @@
 /obj/item/organ/internal/stomach/bone
 	desc = "You have no idea what this strange ball of bones does."
 	metabolism_efficiency = 0.025 //very bad
-	organ_traits = list(TRAIT_NOHUNGER)
+	organ_traits = list(TRAIT_NO_HUNGER)
 	/// How much [BRUTE] damage milk heals every second
 	var/milk_brute_healing = 2.5
 	/// How much [BURN] damage milk heals every second

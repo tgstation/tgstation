@@ -72,7 +72,7 @@
 
 	RegisterSignal(parent, COMSIG_MOVABLE_BUCKLE, .proc/on_buckle)
 
-	ADD_TRAIT(parent_as_movable, TRAIT_ELECTRIFIED_BUCKLE, INNATE_TRAIT)
+	ADD_TRAIT(parent_as_movable, TRAIT_ELECTRIFIED_BUCKLE, SOURCE_INNATE)
 
 	//if parent wants us to manually shock on some specified action
 	if(signal_to_register_from_parent)
@@ -103,7 +103,7 @@
 	parent_as_movable.can_buckle = initial(parent_as_movable.can_buckle)
 
 	if(parent)
-		REMOVE_TRAIT(parent_as_movable, TRAIT_ELECTRIFIED_BUCKLE, INNATE_TRAIT)
+		REMOVE_TRAIT(parent_as_movable, TRAIT_ELECTRIFIED_BUCKLE, SOURCE_INNATE)
 		UnregisterSignal(parent, list(COMSIG_MOVABLE_BUCKLE, COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER)))
 		if(requested_signal_parent_emits)
 			UnregisterSignal(parent, requested_signal_parent_emits)

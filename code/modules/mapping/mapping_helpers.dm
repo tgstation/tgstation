@@ -357,7 +357,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	return TRUE
 
 /obj/effect/mapping_helpers/atom_injector/trait_injector/inject(atom/target)
-	ADD_TRAIT(target, trait_name, MAPPING_HELPER_TRAIT)
+	ADD_TRAIT(target, trait_name, SOURCE_MAPPING_HELPER)
 
 /obj/effect/mapping_helpers/atom_injector/trait_injector/generate_stack_trace()
 	. = ..()

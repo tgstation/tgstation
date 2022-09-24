@@ -259,7 +259,7 @@
 		defense_mod -= 2
 	if(HAS_TRAIT(target, TRAIT_FAT)) // chonkers are harder to knock over
 		defense_mod += 1
-	if(HAS_TRAIT(target, TRAIT_GRABWEAKNESS))
+	if(HAS_TRAIT(target, TRAIT_GRAB_WEAKNESS))
 		defense_mod -= 2
 	if(HAS_TRAIT(target, TRAIT_DWARF))
 		defense_mod -= 2

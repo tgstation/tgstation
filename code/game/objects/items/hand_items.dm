@@ -6,7 +6,7 @@
 
 /obj/item/hand_item/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NO_STORAGE_INSERT, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_NO_STORAGE_INSERT, SOURCE_GENERIC)
 
 /obj/item/hand_item/circlegame
 	name = "circled hand"

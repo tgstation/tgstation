@@ -40,7 +40,7 @@
 	src.storage_scaling = storage_scaling
 
 	// Make sure overlays also inherit the scaling.
-	ADD_KEEP_TOGETHER(target, ITEM_SCALING_TRAIT)
+	ADD_KEEP_TOGETHER(target, SOURCE_ITEM_SCALING)
 
 	// Object scaled when dropped/thrown OR when exiting a storage object.
 	RegisterSignal(target, list(COMSIG_ITEM_DROPPED, COMSIG_ATOM_EXITED), .proc/scale_overworld)
@@ -62,7 +62,7 @@
 		COMSIG_ATOM_EXITED,
 	))
 
-	REMOVE_KEEP_TOGETHER(target, ITEM_SCALING_TRAIT)
+	REMOVE_KEEP_TOGETHER(target, SOURCE_ITEM_SCALING)
 
 	return ..()
 

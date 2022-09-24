@@ -718,7 +718,7 @@
 /datum/religion_rites/unbreakable/perform_rite(mob/living/carbon/human/user, atom/religious_tool)
 	if(!ishuman(user))
 		return FALSE
-	if(HAS_TRAIT_FROM(user, TRAIT_UNBREAKABLE, INNATE_TRAIT))
+	if(HAS_TRAIT_FROM(user, TRAIT_UNBREAKABLE, SOURCE_INNATE))
 		to_chat(user, span_warning("Your spirit is already unbreakable!"))
 		return FALSE
 	return ..()
@@ -738,7 +738,7 @@
 /datum/religion_rites/tenacious/perform_rite(mob/living/carbon/human/user, atom/religious_tool)
 	if(!ishuman(user))
 		return FALSE
-	if(HAS_TRAIT_FROM(user, TRAIT_TENACIOUS, INNATE_TRAIT))
+	if(HAS_TRAIT_FROM(user, TRAIT_TENACIOUS, SOURCE_INNATE))
 		to_chat(user, span_warning("Your spirit is already tenacious!"))
 		return FALSE
 	return ..()

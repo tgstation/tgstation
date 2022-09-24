@@ -244,12 +244,12 @@
 	duration = 100
 
 /datum/status_effect/firecookie/on_apply()
-	ADD_TRAIT(owner, TRAIT_RESISTCOLD,"firecookie")
+	ADD_TRAIT(owner, TRAIT_RESIST_COLD,"firecookie")
 	owner.adjust_bodytemperature(110)
 	return ..()
 
 /datum/status_effect/firecookie/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_RESISTCOLD,"firecookie")
+	REMOVE_TRAIT(owner, TRAIT_RESIST_COLD,"firecookie")
 
 /datum/status_effect/watercookie
 	id = "watercookie"
@@ -258,7 +258,7 @@
 	duration = 100
 
 /datum/status_effect/watercookie/on_apply()
-	ADD_TRAIT(owner, TRAIT_NOSLIPWATER,"watercookie")
+	ADD_TRAIT(owner, TRAIT_NO_SLIP_WATER,"watercookie")
 	return ..()
 
 /datum/status_effect/watercookie/tick()
@@ -266,7 +266,7 @@
 		T.MakeSlippery(TURF_WET_WATER, min_wet_time = 10, wet_time_to_add = 5)
 
 /datum/status_effect/watercookie/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_NOSLIPWATER,"watercookie")
+	REMOVE_TRAIT(owner, TRAIT_NO_SLIP_WATER,"watercookie")
 
 /datum/status_effect/metalcookie
 	id = "metalcookie"
@@ -311,11 +311,11 @@
 	duration = 600
 
 /datum/status_effect/toxincookie/on_apply()
-	ADD_TRAIT(owner, TRAIT_TOXINLOVER,"toxincookie")
+	ADD_TRAIT(owner, TRAIT_TOXIN_LOVER,"toxincookie")
 	return ..()
 
 /datum/status_effect/toxincookie/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_TOXINLOVER,"toxincookie")
+	REMOVE_TRAIT(owner, TRAIT_TOXIN_LOVER,"toxincookie")
 
 /datum/status_effect/timecookie
 	id = "timecookie"
@@ -539,11 +539,11 @@
 	colour = "blue"
 
 /datum/status_effect/stabilized/blue/on_apply()
-	ADD_TRAIT(owner, TRAIT_NOSLIPWATER, "slimestatus")
+	ADD_TRAIT(owner, TRAIT_NO_SLIP_WATER, "slimestatus")
 	return ..()
 
 /datum/status_effect/stabilized/blue/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_NOSLIPWATER, "slimestatus")
+	REMOVE_TRAIT(owner, TRAIT_NO_SLIP_WATER, "slimestatus")
 
 /datum/status_effect/stabilized/metal
 	id = "stabilizedmetal"
@@ -606,7 +606,7 @@
 	var/obj/item/hothands/fire
 
 /datum/status_effect/stabilized/darkpurple/on_apply()
-	ADD_TRAIT(owner, TRAIT_RESISTHEATHANDS, "slimestatus")
+	ADD_TRAIT(owner, TRAIT_RESIST_HEAT_HANDS, "slimestatus")
 	fire = new(owner)
 	return ..()
 
@@ -620,7 +620,7 @@
 	return ..()
 
 /datum/status_effect/stabilized/darkpurple/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_RESISTHEATHANDS, "slimestatus")
+	REMOVE_TRAIT(owner, TRAIT_RESIST_HEAT_HANDS, "slimestatus")
 	qdel(fire)
 
 /datum/status_effect/stabilized/darkpurple/get_examine_text()
@@ -980,7 +980,7 @@
 
 /datum/status_effect/stabilized/lightpink/on_apply()
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/lightpink)
-	ADD_TRAIT(owner, TRAIT_PACIFISM, STABILIZED_LIGHT_PINK_TRAIT)
+	ADD_TRAIT(owner, TRAIT_PACIFISM, SOURCE_STABILIZED_LIGHT_PINK)
 	return ..()
 
 /datum/status_effect/stabilized/lightpink/tick()
@@ -992,7 +992,7 @@
 
 /datum/status_effect/stabilized/lightpink/on_remove()
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/lightpink)
-	REMOVE_TRAIT(owner, TRAIT_PACIFISM, STABILIZED_LIGHT_PINK_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, SOURCE_STABILIZED_LIGHT_PINK)
 
 /datum/status_effect/stabilized/adamantine
 	id = "stabilizedadamantine"

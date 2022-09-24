@@ -244,8 +244,8 @@
 	update_appearance()
 
 	AddElement(/datum/element/atmos_sensitive, mapload)
-	become_hearing_sensitive(trait_source = ROUNDSTART_TRAIT)
-	ADD_TRAIT(src, TRAIT_ASHSTORM_IMMUNE, ROUNDSTART_TRAIT) //protects pilots from ashstorms.
+	become_hearing_sensitive(trait_source = SOURCE_ROUNDSTART)
+	ADD_TRAIT(src, TRAIT_ASHSTORM_IMMUNE, SOURCE_ROUNDSTART) //protects pilots from ashstorms.
 	for(var/key in equip_by_category)
 		if(key == MECHA_L_ARM || key == MECHA_R_ARM)
 			var/path = equip_by_category[key]

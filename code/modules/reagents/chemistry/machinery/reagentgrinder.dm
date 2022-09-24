@@ -34,7 +34,7 @@
 		return
 
 	beaker.desc += " May contain blended dust. Don't breathe this!"
-	ADD_TRAIT(beaker, TRAIT_MAY_CONTAIN_BLENDED_DUST, TRAIT_GENERIC)
+	ADD_TRAIT(beaker, TRAIT_MAY_CONTAIN_BLENDED_DUST, SOURCE_GENERIC)
 
 /obj/machinery/reagentgrinder/constructed/Initialize(mapload)
 	. = ..()

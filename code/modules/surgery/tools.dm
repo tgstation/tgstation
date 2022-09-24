@@ -409,7 +409,7 @@
 
 	var/mob/living/carbon/patient = amputee
 
-	if(HAS_TRAIT(patient, TRAIT_NODISMEMBER))
+	if(HAS_TRAIT(patient, TRAIT_NO_DISMEMBER))
 		to_chat(user, span_warning("The patient's limbs look too sturdy to amputate."))
 		return
 

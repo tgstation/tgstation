@@ -6,7 +6,7 @@
 	say_mod = "hisses"
 	species_traits = list(MUTCOLORS, EYECOLOR, LIPS, HAS_FLESH, HAS_BONE)
 	inherent_traits = list(
-		TRAIT_CAN_USE_FLIGHT_POTION,
+		TRAIT_ALLOW_FLIGHT_POTION,
 		TRAIT_TACKLING_TAILED_DEFENDER,
 	)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_REPTILE
@@ -131,9 +131,9 @@ Lizard subspecies: ASHWALKERS
 	mutantlungs = /obj/item/organ/internal/lungs/ashwalker
 	mutantbrain = /obj/item/organ/internal/brain/primitive
 	inherent_traits = list(
-		TRAIT_CHUNKYFINGERS,
+		TRAIT_CHUNKY_FINGERS,
 		//TRAIT_LITERATE,
-		TRAIT_VIRUSIMMUNE,
+		TRAIT_VIRUS_IMMUNE,
 	)
 	species_language_holder = /datum/language_holder/lizard/ash
 	digitigrade_customization = DIGITIGRADE_FORCED
@@ -147,11 +147,11 @@ Lizard subspecies: SILVER SCALED
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_REPTILE
 	inherent_traits = list(
 		TRAIT_HOLY,
-		TRAIT_NOBREATH,
-		TRAIT_PIERCEIMMUNE,
-		TRAIT_RESISTHIGHPRESSURE,
-		TRAIT_RESISTLOWPRESSURE,
-		TRAIT_VIRUSIMMUNE,
+		TRAIT_NO_BREATH,
+		TRAIT_PIERCE_IMMUNE,
+		TRAIT_RESIST_HIGH_PRESSURE,
+		TRAIT_RESIST_LOW_PRESSURE,
+		TRAIT_VIRUS_IMMUNE,
 		TRAIT_WINE_TASTER,
 	)
 	species_language_holder = /datum/language_holder/lizard/silver

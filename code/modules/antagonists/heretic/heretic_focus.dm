@@ -16,13 +16,13 @@
 	if(ismob(item_target.loc))
 		var/mob/wearer = item_target.loc
 		if(!item_target.slot_flags || wearer.get_item_by_slot(item_target.slot_flags) == item_target)
-			ADD_TRAIT(wearer, TRAIT_ALLOW_HERETIC_CASTING, ELEMENT_TRAIT(target))
+			ADD_TRAIT(wearer, TRAIT_ALLOW_HERETIC_CASTING, SOURCE_ELEMENT(target))
 
 /datum/element/heretic_focus/Detach(obj/item/source)
 	. = ..()
 	UnregisterSignal(source, list(COMSIG_PARENT_EXAMINE, COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 	if(isliving(source.loc))
-		REMOVE_TRAIT(source.loc, TRAIT_ALLOW_HERETIC_CASTING, ELEMENT_TRAIT(source))
+		REMOVE_TRAIT(source.loc, TRAIT_ALLOW_HERETIC_CASTING, SOURCE_ELEMENT(source))
 
 /**
  * Signal proc for [COMSIG_PARENT_EXAMINE].
@@ -49,7 +49,7 @@
 	if(!(source.slot_flags & slot))
 		return
 
-	ADD_TRAIT(user, TRAIT_ALLOW_HERETIC_CASTING, ELEMENT_TRAIT(source))
+	ADD_TRAIT(user, TRAIT_ALLOW_HERETIC_CASTING, SOURCE_ELEMENT(source))
 
 /**
  * Signal proc for [COMSIG_ITEM_DROPPED].
@@ -58,4 +58,4 @@
 /datum/element/heretic_focus/proc/on_drop(obj/item/source, mob/user)
 	SIGNAL_HANDLER
 
-	REMOVE_TRAIT(user, TRAIT_ALLOW_HERETIC_CASTING, ELEMENT_TRAIT(source))
+	REMOVE_TRAIT(user, TRAIT_ALLOW_HERETIC_CASTING, SOURCE_ELEMENT(source))

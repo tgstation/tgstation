@@ -5,7 +5,7 @@
 	register_context()
 
 	// Carbons cannot taste anything without a tongue; the tongue organ removes this on Insert
-	ADD_TRAIT(src, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
+	ADD_TRAIT(src, TRAIT_AGEUSIA, SOURCE_NO_TONGUE)
 
 	GLOB.carbon_list += src
 	var/static/list/loc_connections = list(
@@ -420,7 +420,7 @@
 	return ..()
 
 /mob/living/carbon/proc/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, vomit_type = VOMIT_TOXIC, harm = TRUE, force = FALSE, purge_ratio = 0.1)
-	if((HAS_TRAIT(src, TRAIT_NOHUNGER) || HAS_TRAIT(src, TRAIT_TOXINLOVER)) && !force)
+	if((HAS_TRAIT(src, TRAIT_NO_HUNGER) || HAS_TRAIT(src, TRAIT_TOXIN_LOVER)) && !force)
 		return TRUE
 
 	if(nutrition < 100 && !blood && !force)
@@ -626,12 +626,12 @@
 		return
 	tinttotal = get_total_tint()
 	if(tinttotal >= TINT_BLIND)
-		become_blind(EYES_COVERED)
+		become_blind(SOURCE_EYES_COVERED)
 	else if(tinttotal >= TINT_DARKENED)
-		cure_blind(EYES_COVERED)
+		cure_blind(SOURCE_EYES_COVERED)
 		overlay_fullscreen("tint", /atom/movable/screen/fullscreen/impaired, 2)
 	else
-		cure_blind(EYES_COVERED)
+		cure_blind(SOURCE_EYES_COVERED)
 		clear_fullscreen("tint", 0)
 
 /mob/living/carbon/proc/get_total_tint()
@@ -799,30 +799,30 @@
 /mob/living/carbon/set_health(new_value)
 	. = ..()
 	if(. > hardcrit_threshold)
-		if(health <= hardcrit_threshold && !HAS_TRAIT(src, TRAIT_NOHARDCRIT))
-			ADD_TRAIT(src, TRAIT_KNOCKEDOUT, CRIT_HEALTH_TRAIT)
+		if(health <= hardcrit_threshold && !HAS_TRAIT(src, TRAIT_NO_HARD_CRIT))
+			ADD_TRAIT(src, TRAIT_KNOCKEDOUT, SOURCE_CRIT_HEALTH)
 	else if(health > hardcrit_threshold)
-		REMOVE_TRAIT(src, TRAIT_KNOCKEDOUT, CRIT_HEALTH_TRAIT)
+		REMOVE_TRAIT(src, TRAIT_KNOCKEDOUT, SOURCE_CRIT_HEALTH)
 	if(CONFIG_GET(flag/near_death_experience))
 		if(. > HEALTH_THRESHOLD_NEARDEATH)
-			if(health <= HEALTH_THRESHOLD_NEARDEATH && !HAS_TRAIT(src, TRAIT_NODEATH))
-				ADD_TRAIT(src, TRAIT_SIXTHSENSE, "near-death")
+			if(health <= HEALTH_THRESHOLD_NEARDEATH && !HAS_TRAIT(src, TRAIT_NO_DEATH))
+				ADD_TRAIT(src, TRAIT_SIXTH_SENSE, "near-death")
 		else if(health > HEALTH_THRESHOLD_NEARDEATH)
-			REMOVE_TRAIT(src, TRAIT_SIXTHSENSE, "near-death")
+			REMOVE_TRAIT(src, TRAIT_SIXTH_SENSE, "near-death")
 
 
 /mob/living/carbon/update_stat()
 	if(status_flags & GODMODE)
 		return
 	if(stat != DEAD)
-		if(health <= HEALTH_THRESHOLD_DEAD && !HAS_TRAIT(src, TRAIT_NODEATH))
+		if(health <= HEALTH_THRESHOLD_DEAD && !HAS_TRAIT(src, TRAIT_NO_DEATH))
 			death()
 			return
-		if(health <= hardcrit_threshold && !HAS_TRAIT(src, TRAIT_NOHARDCRIT))
+		if(health <= hardcrit_threshold && !HAS_TRAIT(src, TRAIT_NO_HARD_CRIT))
 			set_stat(HARD_CRIT)
 		else if(HAS_TRAIT(src, TRAIT_KNOCKEDOUT))
 			set_stat(UNCONSCIOUS)
-		else if(health <= crit_threshold && !HAS_TRAIT(src, TRAIT_NOSOFTCRIT))
+		else if(health <= crit_threshold && !HAS_TRAIT(src, TRAIT_NO_SOFT_CRIT))
 			set_stat(SOFT_CRIT)
 		else
 			set_stat(CONSCIOUS)
@@ -852,7 +852,7 @@
 		return FALSE
 
 	// We can't heal them if they're missing their lungs
-	if(!HAS_TRAIT(src, TRAIT_NOBREATH) && !getorganslot(ORGAN_SLOT_LUNGS))
+	if(!HAS_TRAIT(src, TRAIT_NO_BREATH) && !getorganslot(ORGAN_SLOT_LUNGS))
 		return FALSE
 
 	// And we can't heal them if they're missing their liver
@@ -1252,7 +1252,7 @@
 	if(!get_powernet_info_from_source(power_source))
 		return FALSE
 
-	if (HAS_TRAIT(src, TRAIT_SHOCKIMMUNE))
+	if (HAS_TRAIT(src, TRAIT_SHOCK_IMMUNE))
 		return FALSE
 
 	return TRUE
@@ -1281,9 +1281,9 @@
 	handcuffed = new_value
 	if(.)
 		if(!handcuffed)
-			REMOVE_TRAIT(src, TRAIT_RESTRAINED, HANDCUFFED_TRAIT)
+			REMOVE_TRAIT(src, TRAIT_RESTRAINED, SOURCE_HANDCUFFED)
 	else if(handcuffed)
-		ADD_TRAIT(src, TRAIT_RESTRAINED, HANDCUFFED_TRAIT)
+		ADD_TRAIT(src, TRAIT_RESTRAINED, SOURCE_HANDCUFFED)
 
 
 /mob/living/carbon/on_lying_down(new_lying_angle)

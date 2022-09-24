@@ -189,7 +189,7 @@
 /obj/structure/sign/poster/proc/can_embed_trap(mob/living/carbon/human/user)
 	if (!istype(user))
 		return FALSE
-	return (!user.gloves && !HAS_TRAIT(user, TRAIT_PIERCEIMMUNE))
+	return (!user.gloves && !HAS_TRAIT(user, TRAIT_PIERCE_IMMUNE))
 
 /obj/structure/sign/poster/proc/roll_and_drop(loc)
 	pixel_x = 0

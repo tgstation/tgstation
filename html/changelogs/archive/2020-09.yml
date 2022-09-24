@@ -266,7 +266,7 @@
   - rscadd: adds trait injector mapping helper
   Ghilker:
   - rscadd: Ligthing aoe projectile now have a no_stun version for the boss rank
-  - rscadd: Crystal mobs have TRAIT_TESLA_SHOCKIMMUNE to prevent boss from hurting
+  - rscadd: Crystal mobs have TRAIT_TESLA_SHOCK_IMMUNE to prevent boss from hurting
       himself and the other crystal mobs
   - rscadd: Revamped mode, announced main portals with location, close them to be
       able to stabilize the SM
@@ -678,7 +678,7 @@
   - rscadd: Added a minimum amount for healium knock down, added a warning when traces
       are present
   - tweak: 'Remove knockdown, added sleep (less intense effect) refractor: refractored
-      sleeping debuff to take in consideration the TRAIT_SLEEPIMMUNE refractor: moved
+      sleeping debuff to take in consideration the TRAIT_SLEEP_IMMUNE refractor: moved
       the healing effects to the reagent'
   - rscdel: removed oxyloss from the reagent effect
   - tweak: lowered the amount of healing done by the healium gas

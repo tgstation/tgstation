@@ -675,7 +675,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 
 /mob/living/simple_animal/pet/dog/corgi/puppy/void/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_AI_BAGATTACK, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_AI_BAGATTACK, SOURCE_INNATE)
 
 /mob/living/simple_animal/pet/dog/corgi/puppy/void/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
 	return 1 //Void puppies can navigate space.

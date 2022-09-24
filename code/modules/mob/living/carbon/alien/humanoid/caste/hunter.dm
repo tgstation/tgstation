@@ -49,14 +49,14 @@
 		body_position_pixel_x_offset = -32
 		body_position_pixel_y_offset = -32
 		update_icons()
-		ADD_TRAIT(src, TRAIT_MOVE_FLOATING, LEAPING_TRAIT) //Throwing itself doesn't protect mobs against lava (because gulag).
+		ADD_TRAIT(src, TRAIT_MOVE_FLOATING, SOURCE_LEAPING) //Throwing itself doesn't protect mobs against lava (because gulag).
 		throw_at(A, MAX_ALIEN_LEAP_DIST, 1, src, FALSE, TRUE, callback = CALLBACK(src, .proc/leap_end))
 
 /mob/living/carbon/alien/humanoid/hunter/proc/leap_end()
 	leaping = FALSE
 	body_position_pixel_x_offset = 0
 	body_position_pixel_y_offset = 0
-	REMOVE_TRAIT(src, TRAIT_MOVE_FLOATING, LEAPING_TRAIT)
+	REMOVE_TRAIT(src, TRAIT_MOVE_FLOATING, SOURCE_LEAPING)
 	update_icons()
 
 /mob/living/carbon/alien/humanoid/hunter/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)

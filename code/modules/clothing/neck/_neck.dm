@@ -190,7 +190,7 @@
 	var/obj/item/organ/internal/heart/heart = carbon_patient.getorganslot(ORGAN_SLOT_HEART)
 	var/obj/item/organ/internal/lungs/lungs = carbon_patient.getorganslot(ORGAN_SLOT_LUNGS)
 
-	if(carbon_patient.stat != DEAD && !(HAS_TRAIT(carbon_patient, TRAIT_FAKEDEATH)))
+	if(carbon_patient.stat != DEAD && !(HAS_TRAIT(carbon_patient, TRAIT_FAKE_DEATH)))
 		if(istype(heart))
 			heart_strength = (heart.beating ? "a healthy" : span_danger("an unstable"))
 		if(istype(lungs))

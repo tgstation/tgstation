@@ -13,11 +13,11 @@
 	lose_text = "<span class='notice'>You suddenly remember how to speak.</span>"
 
 /datum/brain_trauma/severe/mute/on_gain()
-	ADD_TRAIT(owner, TRAIT_MUTE, TRAUMA_TRAIT)
+	ADD_TRAIT(owner, TRAIT_MUTE, SOURCE_TRAUMA)
 	..()
 
 /datum/brain_trauma/severe/mute/on_lose()
-	REMOVE_TRAIT(owner, TRAIT_MUTE, TRAUMA_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_MUTE, SOURCE_TRAUMA)
 	..()
 
 /datum/brain_trauma/severe/aphasia
@@ -45,11 +45,11 @@
 	lose_text = "<span class='notice'>Your vision returns.</span>"
 
 /datum/brain_trauma/severe/blindness/on_gain()
-	owner.become_blind(TRAUMA_TRAIT)
+	owner.become_blind(SOURCE_TRAUMA)
 	..()
 
 /datum/brain_trauma/severe/blindness/on_lose()
-	owner.cure_blind(TRAUMA_TRAIT)
+	owner.cure_blind(SOURCE_TRAUMA)
 	..()
 
 /datum/brain_trauma/severe/paralysis
@@ -103,13 +103,13 @@
 /datum/brain_trauma/severe/paralysis/on_gain()
 	..()
 	for(var/X in paralysis_traits)
-		ADD_TRAIT(owner, X, TRAUMA_TRAIT)
+		ADD_TRAIT(owner, X, SOURCE_TRAUMA)
 
 
 /datum/brain_trauma/severe/paralysis/on_lose()
 	..()
 	for(var/X in paralysis_traits)
-		REMOVE_TRAIT(owner, X, TRAUMA_TRAIT)
+		REMOVE_TRAIT(owner, X, SOURCE_TRAUMA)
 
 
 /datum/brain_trauma/severe/paralysis/paraplegic
@@ -244,11 +244,11 @@
 	lose_text = "<span class='notice'>You no longer feel compelled to not harm.</span>"
 
 /datum/brain_trauma/severe/pacifism/on_gain()
-	ADD_TRAIT(owner, TRAIT_PACIFISM, TRAUMA_TRAIT)
+	ADD_TRAIT(owner, TRAIT_PACIFISM, SOURCE_TRAUMA)
 	..()
 
 /datum/brain_trauma/severe/pacifism/on_lose()
-	REMOVE_TRAIT(owner, TRAIT_PACIFISM, TRAUMA_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, SOURCE_TRAUMA)
 	..()
 
 /datum/brain_trauma/severe/hypnotic_stupor
@@ -309,9 +309,9 @@
 	lose_text = "<span class='notice'>Your suddenly remember how to read and write.</span>"
 	
 /datum/brain_trauma/severe/dyslexia/on_gain()
-	ADD_TRAIT(owner, TRAIT_ILLITERATE, TRAUMA_TRAIT)
+	ADD_TRAIT(owner, TRAIT_ILLITERATE, SOURCE_TRAUMA)
 	..()
 
 /datum/brain_trauma/severe/dyslexia/on_lose()
-	REMOVE_TRAIT(owner, TRAIT_ILLITERATE, TRAUMA_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_ILLITERATE, SOURCE_TRAUMA)
 	..()

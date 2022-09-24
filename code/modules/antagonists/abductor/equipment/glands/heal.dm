@@ -22,22 +22,22 @@
 			return
 
 	var/obj/item/organ/internal/appendix/appendix = owner.getorganslot(ORGAN_SLOT_APPENDIX)
-	if((!appendix && !HAS_TRAIT(owner, TRAIT_NOHUNGER)) || (appendix && ((appendix.organ_flags & ORGAN_FAILING) || (appendix.organ_flags & ORGAN_SYNTHETIC))))
+	if((!appendix && !HAS_TRAIT(owner, TRAIT_NO_HUNGER)) || (appendix && ((appendix.organ_flags & ORGAN_FAILING) || (appendix.organ_flags & ORGAN_SYNTHETIC))))
 		replace_appendix(appendix)
 		return
 
 	var/obj/item/organ/internal/liver/liver = owner.getorganslot(ORGAN_SLOT_LIVER)
-	if((!liver && !HAS_TRAIT(owner, TRAIT_NOMETABOLISM)) || (liver && ((liver.damage > liver.high_threshold) || (liver.organ_flags & ORGAN_SYNTHETIC))))
+	if((!liver && !HAS_TRAIT(owner, TRAIT_NO_METABOLISM)) || (liver && ((liver.damage > liver.high_threshold) || (liver.organ_flags & ORGAN_SYNTHETIC))))
 		replace_liver(liver)
 		return
 
 	var/obj/item/organ/internal/lungs/lungs = owner.getorganslot(ORGAN_SLOT_LUNGS)
-	if((!lungs && !HAS_TRAIT(owner, TRAIT_NOBREATH)) || (lungs && ((lungs.damage > lungs.high_threshold) || (lungs.organ_flags & ORGAN_SYNTHETIC))))
+	if((!lungs && !HAS_TRAIT(owner, TRAIT_NO_BREATH)) || (lungs && ((lungs.damage > lungs.high_threshold) || (lungs.organ_flags & ORGAN_SYNTHETIC))))
 		replace_lungs(lungs)
 		return
 
 	var/obj/item/organ/internal/stomach/stomach = owner.getorganslot(ORGAN_SLOT_STOMACH)
-	if((!stomach && !HAS_TRAIT(owner, TRAIT_NOHUNGER)) || (stomach && ((stomach.damage > stomach.high_threshold) || (stomach.organ_flags & ORGAN_SYNTHETIC))))
+	if((!stomach && !HAS_TRAIT(owner, TRAIT_NO_HUNGER)) || (stomach && ((stomach.damage > stomach.high_threshold) || (stomach.organ_flags & ORGAN_SYNTHETIC))))
 		replace_stomach(stomach)
 		return
 

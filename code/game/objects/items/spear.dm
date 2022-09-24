@@ -149,7 +149,7 @@
 
 /obj/item/spear/explosive/afterattack(atom/movable/AM, mob/user, proximity)
 	. = ..()
-	if(!proximity || !HAS_TRAIT(src, TRAIT_WIELDED) || !istype(AM))
+	if(!proximity || !HAS_TRAIT(src, TRAIT_TWO_HANDED) || !istype(AM))
 		return
 	if(AM.resistance_flags & INDESTRUCTIBLE) //due to the lich incident of 2021, embedding grenades inside of indestructible structures is forbidden
 		return

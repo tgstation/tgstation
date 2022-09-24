@@ -111,7 +111,7 @@
   Ghilker:
   - bugfix: portable atmos reactions now work again
   Hadza:
-  - bugfix: Fixes TRAIT_NOBREATH crit damage being applied after death
+  - bugfix: Fixes TRAIT_NO_BREATH crit damage being applied after death
   KathrinBailey:
   - bugfix: Metastation's AI satellite is now wired to the station again.
   KathyRyals:

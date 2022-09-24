@@ -75,7 +75,7 @@
 
 /obj/item/pickaxe/drill/cyborg/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, SOURCE_CYBORG_ITEM)
 
 /obj/item/pickaxe/drill/diamonddrill
 	name = "diamond-tipped mining drill"

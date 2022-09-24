@@ -38,12 +38,12 @@
 
 /obj/vehicle/sealed/after_add_occupant(mob/M)
 	. = ..()
-	ADD_TRAIT(M, TRAIT_HANDS_BLOCKED, VEHICLE_TRAIT)
+	ADD_TRAIT(M, TRAIT_HANDS_BLOCKED, SOURCE_VEHICLE)
 
 
 /obj/vehicle/sealed/after_remove_occupant(mob/M)
 	. = ..()
-	REMOVE_TRAIT(M, TRAIT_HANDS_BLOCKED, VEHICLE_TRAIT)
+	REMOVE_TRAIT(M, TRAIT_HANDS_BLOCKED, SOURCE_VEHICLE)
 
 
 /obj/vehicle/sealed/proc/mob_try_enter(mob/M)

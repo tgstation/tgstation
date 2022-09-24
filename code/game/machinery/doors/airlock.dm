@@ -1118,7 +1118,7 @@
 		return
 
 	if(!operating)
-		if(istype(I, /obj/item/fireaxe) && !HAS_TRAIT(I, TRAIT_WIELDED)) //being fireaxe'd
+		if(istype(I, /obj/item/fireaxe) && !HAS_TRAIT(I, TRAIT_TWO_HANDED)) //being fireaxe'd
 			to_chat(user, span_warning("You need to be wielding [I] to do that!"))
 			return
 		INVOKE_ASYNC(src, (density ? .proc/open : .proc/close), 2)

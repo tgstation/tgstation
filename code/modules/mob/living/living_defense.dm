@@ -139,7 +139,7 @@
 		user.start_pulling(src, supress_message = supress_message)
 		return
 
-	if(!(status_flags & CANPUSH) || HAS_TRAIT(src, TRAIT_PUSHIMMUNE))
+	if(!(status_flags & CANPUSH) || HAS_TRAIT(src, TRAIT_PUSH_IMMUNE))
 		to_chat(user, span_warning("[src] can't be grabbed more aggressively!"))
 		return FALSE
 
@@ -377,9 +377,9 @@
 /mob/living/proc/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
 	SEND_SIGNAL(src, COMSIG_LIVING_ELECTROCUTE_ACT, shock_damage, source, siemens_coeff, flags)
 	shock_damage *= siemens_coeff
-	if((flags & SHOCK_TESLA) && HAS_TRAIT(src, TRAIT_TESLA_SHOCKIMMUNE))
+	if((flags & SHOCK_TESLA) && HAS_TRAIT(src, TRAIT_TESLA_SHOCK_IMMUNE))
 		return FALSE
-	if(HAS_TRAIT(src, TRAIT_SHOCKIMMUNE))
+	if(HAS_TRAIT(src, TRAIT_SHOCK_IMMUNE))
 		return FALSE
 	if(shock_damage < 1)
 		return FALSE
@@ -437,7 +437,7 @@
 
 //called when the mob receives a bright flash
 /mob/living/proc/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash, length = 2.5 SECONDS)
-	if(HAS_TRAIT(src, TRAIT_NOFLASH))
+	if(HAS_TRAIT(src, TRAIT_NO_FLASH))
 		return FALSE
 	if(get_eye_protection() >= intensity)
 		return FALSE

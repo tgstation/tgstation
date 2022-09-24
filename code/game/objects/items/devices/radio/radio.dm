@@ -204,9 +204,9 @@
 		should_be_broadcasting = broadcasting
 
 	if(broadcasting && on) //we dont need hearing sensitivity if we arent broadcasting, because talk_into doesnt care about hearing
-		become_hearing_sensitive(INNATE_TRAIT)
+		become_hearing_sensitive(SOURCE_INNATE)
 	else if(!broadcasting)
-		lose_hearing_sensitivity(INNATE_TRAIT)
+		lose_hearing_sensitivity(SOURCE_INNATE)
 
 ///setter for the on var that sets both broadcasting and listening to off or whatever they were supposed to be
 /obj/item/radio/proc/set_on(new_on)

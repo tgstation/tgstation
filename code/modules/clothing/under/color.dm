@@ -78,7 +78,7 @@
 
 /obj/item/clothing/under/color/black/ghost/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CULT_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, SOURCE_CULT)
 
 /obj/item/clothing/under/color/grey
 	name = "grey jumpsuit"

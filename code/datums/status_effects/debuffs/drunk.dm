@@ -30,7 +30,7 @@
 
 /datum/status_effect/inebriated/get_examine_text()
 	// Dead people don't look drunk
-	if(owner.stat == DEAD || HAS_TRAIT(owner, TRAIT_FAKEDEATH))
+	if(owner.stat == DEAD || HAS_TRAIT(owner, TRAIT_FAKE_DEATH))
 		return null
 
 	// Having your face covered conceals your drunkness

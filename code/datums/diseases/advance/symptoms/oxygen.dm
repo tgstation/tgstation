@@ -4,7 +4,7 @@
  * Greatly reduces stage speed
  * Reduces transmission tremendously
  * Lethal level
- * Bonus: Gives the carrier TRAIT_NOBREATH, preventing suffocation and CPR
+ * Bonus: Gives the carrier TRAIT_NO_BREATH, preventing suffocation and CPR
 */
 /datum/symptom/oxygen
 	name = "Self-Respiration"
@@ -51,13 +51,13 @@
 		return FALSE
 	var/mob/living/carbon/M = A.affected_mob
 	if(A.stage > 4)
-		ADD_TRAIT(M, TRAIT_NOBREATH, DISEASE_TRAIT)
+		ADD_TRAIT(M, TRAIT_NO_BREATH, SOURCE_DISEASE)
 	else
-		REMOVE_TRAIT(M, TRAIT_NOBREATH, DISEASE_TRAIT)
+		REMOVE_TRAIT(M, TRAIT_NO_BREATH, SOURCE_DISEASE)
 	return TRUE
 
 /datum/symptom/oxygen/End(datum/disease/advance/A)
 	. = ..()
 	if(!.)
 		return
-	REMOVE_TRAIT(A.affected_mob, TRAIT_NOBREATH, DISEASE_TRAIT)
+	REMOVE_TRAIT(A.affected_mob, TRAIT_NO_BREATH, SOURCE_DISEASE)

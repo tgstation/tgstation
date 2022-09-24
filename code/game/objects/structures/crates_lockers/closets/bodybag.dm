@@ -190,7 +190,7 @@
 /obj/structure/closet/body_bag/environmental/Initialize(mapload)
 	. = ..()
 	for(var/trait in weather_protection)
-		ADD_TRAIT(src, trait, ROUNDSTART_TRAIT)
+		ADD_TRAIT(src, trait, SOURCE_ROUNDSTART)
 	refresh_air()
 
 /obj/structure/closet/body_bag/environmental/Destroy()

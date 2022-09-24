@@ -52,7 +52,7 @@
 				M.blur_eyes(20)
 				eyes.applyOrganDamage(5)
 				if(eyes.damage >= 10)
-					M.become_nearsighted(EYE_DAMAGE)
+					M.become_nearsighted(SOURCE_EYE_DAMAGE)
 				if(prob(eyes.damage - 10 + 1))
 					if(!remove_eyes)
 						if(!M.is_blind())

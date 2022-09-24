@@ -398,7 +398,7 @@
 
 /obj/item/shockpaddles/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NO_STORAGE_INSERT, TRAIT_GENERIC) //stops shockpaddles from being inserted in BoH
+	ADD_TRAIT(src, TRAIT_NO_STORAGE_INSERT, SOURCE_GENERIC) //stops shockpaddles from being inserted in BoH
 	if(!req_defib)
 		return //If it doesn't need a defib, just say it exists
 	if (!loc || !istype(loc, /obj/item/defibrillator)) //To avoid weird issues from admin spawns
@@ -415,10 +415,10 @@
 	return (OXYLOSS)
 
 /obj/item/shockpaddles/update_icon_state()
-	icon_state = "[base_icon_state][HAS_TRAIT(src, TRAIT_WIELDED)]"
+	icon_state = "[base_icon_state][HAS_TRAIT(src, TRAIT_TWO_HANDED)]"
 	inhand_icon_state = icon_state
 	if(cooldown)
-		icon_state = "[base_icon_state][HAS_TRAIT(src, TRAIT_WIELDED)]_cooldown"
+		icon_state = "[base_icon_state][HAS_TRAIT(src, TRAIT_TWO_HANDED)]_cooldown"
 	return ..()
 
 /obj/item/shockpaddles/dropped(mob/user)
@@ -445,7 +445,7 @@
 		user.visible_message(span_warning("[defib] beeps: Not enough charge!"))
 		playsound(src, 'sound/machines/defib_failed.ogg', 50, FALSE)
 		return
-	if(!HAS_TRAIT(src, TRAIT_WIELDED))
+	if(!HAS_TRAIT(src, TRAIT_TWO_HANDED))
 		if(iscyborg(user))
 			to_chat(user, span_warning("You must activate the paddles in your active module before you can use them on someone!"))
 		else
@@ -661,7 +661,7 @@
 	do_cancel()
 
 /obj/item/shockpaddles/proc/is_wielded()
-	return HAS_TRAIT(src, TRAIT_WIELDED)
+	return HAS_TRAIT(src, TRAIT_TWO_HANDED)
 
 /obj/item/shockpaddles/cyborg
 	name = "cyborg defibrillator paddles"

@@ -18,8 +18,8 @@
 		BLOOD_CLANS,
 	)
 	inherent_traits = list(
-		TRAIT_NOBREATH,
-		TRAIT_NOHUNGER,
+		TRAIT_NO_BREATH,
+		TRAIT_NO_HUNGER,
 	)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	mutant_bodyparts = list("wings" = "None")

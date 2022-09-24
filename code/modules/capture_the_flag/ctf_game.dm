@@ -430,7 +430,7 @@
 	M.equipOutfit(chosen_class)
 	RegisterSignal(M, COMSIG_PARENT_QDELETING, .proc/ctf_qdelled_player) //just in case CTF has some map hazards (read: chasms). bit shorter than dust
 	for(var/trait in player_traits)
-		ADD_TRAIT(M, trait, CAPTURE_THE_FLAG_TRAIT)
+		ADD_TRAIT(M, trait, SOURCE_CTF)
 	spawned_mobs[M] = chosen_class
 	return M //used in medisim.dm
 

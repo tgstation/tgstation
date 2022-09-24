@@ -4,7 +4,7 @@
 	var/datum/element/strippable/strippable = target.AddElement(/datum/element/strippable, list())
 
 	var/mob/living/carbon/human/user = allocate(/mob/living/carbon/human, run_loc_floor_bottom_left)
-	ADD_TRAIT(user, TRAIT_PRESERVE_UI_WITHOUT_CLIENT, TRAIT_SOURCE_UNIT_TESTS)
+	ADD_TRAIT(user, TRAIT_PRESERVE_UI, TRAIT_SOURCE_UNIT_TESTS)
 
 	var/datum/strip_menu/strip_menu = allocate(/datum/strip_menu, target, strippable)
 
@@ -41,11 +41,11 @@
 	// A mocked client is needed for providing view
 	var/datum/client_interface/mock_client = new
 	observer.mock_client = mock_client
-	ADD_TRAIT(observer, TRAIT_PRESERVE_UI_WITHOUT_CLIENT, TRAIT_SOURCE_UNIT_TESTS)
+	ADD_TRAIT(observer, TRAIT_PRESERVE_UI, TRAIT_SOURCE_UNIT_TESTS)
 	TEST_ASSERT_EQUAL(strip_menu.ui_status(observer, ui_state), UI_UPDATE, "Being within range but an observer was not update-only.")
 
 	var/mob/living/silicon/robot/borg = allocate(/mob/living/silicon/robot, run_loc_floor_bottom_left)
-	ADD_TRAIT(borg, TRAIT_PRESERVE_UI_WITHOUT_CLIENT, TRAIT_SOURCE_UNIT_TESTS)
+	ADD_TRAIT(borg, TRAIT_PRESERVE_UI, TRAIT_SOURCE_UNIT_TESTS)
 	TEST_ASSERT_EQUAL(strip_menu.ui_status(borg, ui_state), UI_INTERACTIVE, "Being within range as a borg was not interactive.")
 
 	// Borgs can normally access tgui's regardless of position if it's within view range.
@@ -54,7 +54,7 @@
 	TEST_ASSERT_EQUAL(strip_menu.ui_status(borg, ui_state), UI_UPDATE, "Being too far away as a borg was not update-only.")
 
 	var/mob/living/carbon/alien/rouny = allocate(/mob/living/carbon/alien, run_loc_floor_bottom_left)
-	ADD_TRAIT(rouny, TRAIT_PRESERVE_UI_WITHOUT_CLIENT, TRAIT_SOURCE_UNIT_TESTS)
+	ADD_TRAIT(rouny, TRAIT_PRESERVE_UI, TRAIT_SOURCE_UNIT_TESTS)
 	TEST_ASSERT_EQUAL(strip_menu.ui_status(rouny, ui_state), UI_INTERACTIVE, "Being within range as a xeno was not interactive.")
 
 	var/mob/living/simple_animal/pet/dog/corgi/corgi = allocate(/mob/living/simple_animal/pet/dog/corgi, run_loc_floor_bottom_left)

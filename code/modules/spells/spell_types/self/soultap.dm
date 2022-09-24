@@ -49,7 +49,7 @@
 	// If the tap took all of our life, we die and lose our soul!
 	if(cast_on.maxHealth <= 0)
 		to_chat(cast_on, span_userdanger("Your weakened soul is completely consumed by the tap!"))
-		ADD_TRAIT(cast_on, TRAIT_NO_SOUL, MAGIC_TRAIT)
+		ADD_TRAIT(cast_on, TRAIT_NO_SOUL, SOURCE_MAGIC)
 
 		cast_on.visible_message(span_danger("[cast_on] suddenly dies!"), ignored_mobs = cast_on)
 		cast_on.death()

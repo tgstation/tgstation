@@ -31,7 +31,7 @@
 			if(prob(1) || SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
 				target.say("I'm out! I quit! Whose kidneys are these?", forced = "They're out! They quit! Whose kidneys do they have?")
 
-	ADD_TRAIT(target, TRAIT_MINDSHIELD, IMPLANT_TRAIT)
+	ADD_TRAIT(target, TRAIT_MINDSHIELD, SOURCE_IMPLANT)
 	target.sec_hud_set_implants()
 	if(!silent)
 		to_chat(target, span_notice("You feel a sense of peace and security. You are now protected from brainwashing."))
@@ -43,7 +43,7 @@
 		return FALSE
 	if(isliving(target))
 		var/mob/living/L = target
-		REMOVE_TRAIT(L, TRAIT_MINDSHIELD, IMPLANT_TRAIT)
+		REMOVE_TRAIT(L, TRAIT_MINDSHIELD, SOURCE_IMPLANT)
 		L.sec_hud_set_implants()
 	if(target.stat != DEAD && !silent)
 		to_chat(target, span_boldnotice("Your mind suddenly feels terribly vulnerable. You are no longer safe from brainwashing."))

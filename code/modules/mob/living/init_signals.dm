@@ -3,8 +3,8 @@
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_KNOCKEDOUT), .proc/on_knockedout_trait_gain)
 	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_KNOCKEDOUT), .proc/on_knockedout_trait_loss)
 
-	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_DEATHCOMA), .proc/on_deathcoma_trait_gain)
-	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_DEATHCOMA), .proc/on_deathcoma_trait_loss)
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_DEATH_COMA), .proc/on_deathcoma_trait_gain)
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_DEATH_COMA), .proc/on_deathcoma_trait_loss)
 
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_IMMOBILIZED), .proc/on_immobilized_trait_gain)
 	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_IMMOBILIZED), .proc/on_immobilized_trait_loss)
@@ -34,8 +34,8 @@
 		SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION),
 		SIGNAL_REMOVETRAIT(TRAIT_CRITICAL_CONDITION),
 
-		SIGNAL_ADDTRAIT(TRAIT_NODEATH),
-		SIGNAL_REMOVETRAIT(TRAIT_NODEATH),
+		SIGNAL_ADDTRAIT(TRAIT_NO_DEATH),
+		SIGNAL_REMOVETRAIT(TRAIT_NO_DEATH),
 	), .proc/update_succumb_action)
 
 	RegisterSignal(src, COMSIG_MOVETYPE_FLAG_ENABLED, .proc/on_movement_type_flag_enabled)
@@ -57,15 +57,15 @@
 		update_stat()
 
 
-/// Called when [TRAIT_DEATHCOMA] is added to the mob.
+/// Called when [TRAIT_DEATH_COMA] is added to the mob.
 /mob/living/proc/on_deathcoma_trait_gain(datum/source)
 	SIGNAL_HANDLER
-	ADD_TRAIT(src, TRAIT_KNOCKEDOUT, TRAIT_DEATHCOMA)
+	ADD_TRAIT(src, TRAIT_KNOCKEDOUT, TRAIT_DEATH_COMA)
 
-/// Called when [TRAIT_DEATHCOMA] is removed from the mob.
+/// Called when [TRAIT_DEATH_COMA] is removed from the mob.
 /mob/living/proc/on_deathcoma_trait_loss(datum/source)
 	SIGNAL_HANDLER
-	REMOVE_TRAIT(src, TRAIT_KNOCKEDOUT, TRAIT_DEATHCOMA)
+	REMOVE_TRAIT(src, TRAIT_KNOCKEDOUT, TRAIT_DEATH_COMA)
 
 
 /// Called when [TRAIT_IMMOBILIZED] is added to the mob.

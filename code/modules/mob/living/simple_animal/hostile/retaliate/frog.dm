@@ -41,7 +41,7 @@
 /mob/living/simple_animal/hostile/retaliate/frog/Initialize(mapload)
 	. = ..()
 
-	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, SOURCE_INNATE)
 
 	if(prob(1))
 		name = "rare frog"

@@ -23,11 +23,11 @@
 			speak("neutral", prob(25))
 
 /datum/brain_trauma/special/godwoken/on_gain()
-	ADD_TRAIT(owner, TRAIT_HOLY, TRAUMA_TRAIT)
+	ADD_TRAIT(owner, TRAIT_HOLY, SOURCE_TRAUMA)
 	..()
 
 /datum/brain_trauma/special/godwoken/on_lose()
-	REMOVE_TRAIT(owner, TRAIT_HOLY, TRAUMA_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_HOLY, SOURCE_TRAUMA)
 	..()
 
 /datum/brain_trauma/special/godwoken/proc/speak(type, include_owner = FALSE)
@@ -259,13 +259,13 @@
 	lose_text = "<span class='warning'>You realize you can feel pain again.</span>"
 
 /datum/brain_trauma/special/tenacity/on_gain()
-	ADD_TRAIT(owner, TRAIT_NOSOFTCRIT, TRAUMA_TRAIT)
-	ADD_TRAIT(owner, TRAIT_NOHARDCRIT, TRAUMA_TRAIT)
+	ADD_TRAIT(owner, TRAIT_NO_SOFT_CRIT, SOURCE_TRAUMA)
+	ADD_TRAIT(owner, TRAIT_NO_HARD_CRIT, SOURCE_TRAUMA)
 	..()
 
 /datum/brain_trauma/special/tenacity/on_lose()
-	REMOVE_TRAIT(owner, TRAIT_NOSOFTCRIT, TRAUMA_TRAIT)
-	REMOVE_TRAIT(owner, TRAIT_NOHARDCRIT, TRAUMA_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_NO_SOFT_CRIT, SOURCE_TRAUMA)
+	REMOVE_TRAIT(owner, TRAIT_NO_HARD_CRIT, SOURCE_TRAUMA)
 	..()
 
 /datum/brain_trauma/special/death_whispers
@@ -287,12 +287,12 @@
 	..()
 
 /datum/brain_trauma/special/death_whispers/proc/whispering()
-	ADD_TRAIT(owner, TRAIT_SIXTHSENSE, TRAUMA_TRAIT)
+	ADD_TRAIT(owner, TRAIT_SIXTH_SENSE, SOURCE_TRAUMA)
 	active = TRUE
 	addtimer(CALLBACK(src, .proc/cease_whispering), rand(50, 300))
 
 /datum/brain_trauma/special/death_whispers/proc/cease_whispering()
-	REMOVE_TRAIT(owner, TRAIT_SIXTHSENSE, TRAUMA_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_SIXTH_SENSE, SOURCE_TRAUMA)
 	active = FALSE
 
 /datum/brain_trauma/special/existential_crisis

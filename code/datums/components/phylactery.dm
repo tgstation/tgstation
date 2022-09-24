@@ -167,7 +167,7 @@
 
 	revive_timer = null
 	var/mob/living/carbon/human/lich = new(parent_turf)
-	ADD_TRAIT(lich, TRAIT_NO_SOUL, LICH_TRAIT)
+	ADD_TRAIT(lich, TRAIT_NO_SOUL, SOURCE_LICH)
 
 	var/obj/item/organ/internal/brain/new_lich_brain = lich.getorganslot(ORGAN_SLOT_BRAIN)
 	if(new_lich_brain) // Prevent MMI cheese

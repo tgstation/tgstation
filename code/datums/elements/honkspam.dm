@@ -14,8 +14,8 @@
 
 /datum/element/honkspam/proc/interact(obj/item/source, mob/user)
 	SIGNAL_HANDLER
-	if(HAS_TRAIT(source, TRAIT_HONKSPAMMING))
+	if(HAS_TRAIT(source, TRAIT_HONK_SPAM_LIMITER))
 		return
-	ADD_TRAIT(source, TRAIT_HONKSPAMMING, ELEMENT_TRAIT(type))
+	ADD_TRAIT(source, TRAIT_HONK_SPAM_LIMITER, SOURCE_ELEMENT(type))
 	playsound(source.loc, 'sound/items/bikehorn.ogg', 50, TRUE)
-	addtimer(TRAIT_CALLBACK_REMOVE(source, TRAIT_HONKSPAMMING, ELEMENT_TRAIT(type)), 2 SECONDS)
+	addtimer(TRAIT_CALLBACK_REMOVE(source, TRAIT_HONK_SPAM_LIMITER, SOURCE_ELEMENT(type)), 2 SECONDS)

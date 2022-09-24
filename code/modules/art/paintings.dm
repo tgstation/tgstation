@@ -657,7 +657,7 @@
 /obj/structure/sign/painting/large/Initialize(mapload)
 	. = ..()
 	// Necessary so that the painting is framed correctly by the frame overlay when flipped.
-	ADD_KEEP_TOGETHER(src, INNATE_TRAIT)
+	ADD_KEEP_TOGETHER(src, SOURCE_INNATE)
 	if(mapload)
 		finalize_size()
 

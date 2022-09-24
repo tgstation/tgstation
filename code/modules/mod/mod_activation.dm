@@ -75,7 +75,7 @@
 			wearer.transferItemToLoc(overslot, part, force = TRUE)
 			RegisterSignal(part, COMSIG_ATOM_EXITED, .proc/on_overslot_exit)
 	if(wearer.equip_to_slot_if_possible(part, part.slot_flags, qdel_on_fail = FALSE, disable_warning = TRUE))
-		ADD_TRAIT(part, TRAIT_NODROP, MOD_TRAIT)
+		ADD_TRAIT(part, TRAIT_NODROP, SOURCE_MOD)
 		if(!user)
 			return TRUE
 		wearer.visible_message(span_notice("[wearer]'s [part.name] deploy[part.p_s()] with a mechanical hiss."),
@@ -97,7 +97,7 @@
 			return FALSE
 		balloon_alert(user, "[part.name] already retracted!")
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
-	REMOVE_TRAIT(part, TRAIT_NODROP, MOD_TRAIT)
+	REMOVE_TRAIT(part, TRAIT_NODROP, SOURCE_MOD)
 	wearer.transferItemToLoc(part, src, force = TRUE)
 	if(overslotting_parts[part])
 		UnregisterSignal(part, COMSIG_ATOM_EXITED)

@@ -828,7 +828,7 @@
 			recursive_contents[channel] |= arrived.important_recursive_contents[channel]
 
 ///allows this movable to hear and adds itself to the important_recursive_contents list of itself and every movable loc its in
-/atom/movable/proc/become_hearing_sensitive(trait_source = TRAIT_GENERIC)
+/atom/movable/proc/become_hearing_sensitive(trait_source = SOURCE_GENERIC)
 	ADD_TRAIT(src, TRAIT_HEARING_SENSITIVE, trait_source)
 	if(!HAS_TRAIT(src, TRAIT_HEARING_SENSITIVE))
 		return
@@ -849,7 +849,7 @@
  *
  * * trait_source - trait source define or ALL, if ALL, force removes hearing sensitivity. if a trait source define, removes hearing sensitivity only if the trait is removed
  */
-/atom/movable/proc/lose_hearing_sensitivity(trait_source = TRAIT_GENERIC)
+/atom/movable/proc/lose_hearing_sensitivity(trait_source = SOURCE_GENERIC)
 	if(!HAS_TRAIT(src, TRAIT_HEARING_SENSITIVE))
 		return
 	REMOVE_TRAIT(src, TRAIT_HEARING_SENSITIVE, trait_source)
@@ -869,14 +869,14 @@
 		UNSETEMPTY(location.important_recursive_contents)
 
 ///allows this movable to know when it has "entered" another area no matter how many movable atoms its stuffed into, uses important_recursive_contents
-/atom/movable/proc/become_area_sensitive(trait_source = TRAIT_GENERIC)
+/atom/movable/proc/become_area_sensitive(trait_source = SOURCE_GENERIC)
 	if(!HAS_TRAIT(src, TRAIT_AREA_SENSITIVE))
 		for(var/atom/movable/location as anything in get_nested_locs(src) + src)
 			LAZYADDASSOCLIST(location.important_recursive_contents, RECURSIVE_CONTENTS_AREA_SENSITIVE, src)
 	ADD_TRAIT(src, TRAIT_AREA_SENSITIVE, trait_source)
 
 ///removes the area sensitive channel from the important_recursive_contents list of this and all nested locs containing us if there are no more source of the trait left
-/atom/movable/proc/lose_area_sensitivity(trait_source = TRAIT_GENERIC)
+/atom/movable/proc/lose_area_sensitivity(trait_source = SOURCE_GENERIC)
 	if(!HAS_TRAIT(src, TRAIT_AREA_SENSITIVE))
 		return
 	REMOVE_TRAIT(src, TRAIT_AREA_SENSITIVE, trait_source)
@@ -1412,19 +1412,19 @@
 	grab_state = newstate
 	switch(grab_state) // Current state.
 		if(GRAB_PASSIVE)
-			REMOVE_TRAIT(pulling, TRAIT_IMMOBILIZED, CHOKEHOLD_TRAIT)
-			REMOVE_TRAIT(pulling, TRAIT_HANDS_BLOCKED, CHOKEHOLD_TRAIT)
+			REMOVE_TRAIT(pulling, TRAIT_IMMOBILIZED, SOURCE_CHOKEHOLD)
+			REMOVE_TRAIT(pulling, TRAIT_HANDS_BLOCKED, SOURCE_CHOKEHOLD)
 			if(. >= GRAB_NECK) // Previous state was a a neck-grab or higher.
-				REMOVE_TRAIT(pulling, TRAIT_FLOORED, CHOKEHOLD_TRAIT)
+				REMOVE_TRAIT(pulling, TRAIT_FLOORED, SOURCE_CHOKEHOLD)
 		if(GRAB_AGGRESSIVE)
 			if(. >= GRAB_NECK) // Grab got downgraded.
-				REMOVE_TRAIT(pulling, TRAIT_FLOORED, CHOKEHOLD_TRAIT)
+				REMOVE_TRAIT(pulling, TRAIT_FLOORED, SOURCE_CHOKEHOLD)
 			else // Grab got upgraded from a passive one.
-				ADD_TRAIT(pulling, TRAIT_IMMOBILIZED, CHOKEHOLD_TRAIT)
-				ADD_TRAIT(pulling, TRAIT_HANDS_BLOCKED, CHOKEHOLD_TRAIT)
+				ADD_TRAIT(pulling, TRAIT_IMMOBILIZED, SOURCE_CHOKEHOLD)
+				ADD_TRAIT(pulling, TRAIT_HANDS_BLOCKED, SOURCE_CHOKEHOLD)
 		if(GRAB_NECK, GRAB_KILL)
 			if(. <= GRAB_AGGRESSIVE)
-				ADD_TRAIT(pulling, TRAIT_FLOORED, CHOKEHOLD_TRAIT)
+				ADD_TRAIT(pulling, TRAIT_FLOORED, SOURCE_CHOKEHOLD)
 
 /**
  * Adds the deadchat_plays component to this atom with simple movement commands.

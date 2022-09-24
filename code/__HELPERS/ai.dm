@@ -9,7 +9,7 @@
 	for(var/obj/item/item as anything in held_weapons)
 		if(!item)
 			continue
-		if(HAS_TRAIT(item, TRAIT_NEEDS_TWO_HANDS) || controller.blackboard[BB_MONKEY_BLACKLISTITEMS][item])
+		if(HAS_TRAIT(item, TRAIT_REQUIRES_TWO_HANDS) || controller.blackboard[BB_MONKEY_BLACKLISTITEMS][item])
 			continue
 		if(gun_neurons_activated && isgun(item))
 			// We have a gun, why bother looking for something inferior
@@ -22,7 +22,7 @@
 	for(var/obj/item/item as anything in choices)
 		if(!item)
 			continue
-		if(HAS_TRAIT(item, TRAIT_NEEDS_TWO_HANDS) || controller.blackboard[BB_MONKEY_BLACKLISTITEMS][item])
+		if(HAS_TRAIT(item, TRAIT_REQUIRES_TWO_HANDS) || controller.blackboard[BB_MONKEY_BLACKLISTITEMS][item])
 			continue
 		if(gun_neurons_activated && isgun(item))
 			return item

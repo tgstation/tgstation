@@ -130,9 +130,9 @@
 
 	if(bodytemperature < (T0C + 5)) // start calculating temperature damage etc
 		if(bodytemperature <= (T0C - 40)) // stun temperature
-			ADD_TRAIT(src, TRAIT_IMMOBILIZED, SLIME_COLD)
+			ADD_TRAIT(src, TRAIT_IMMOBILIZED, SOURCE_SLIME_COLD)
 		else
-			REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, SLIME_COLD)
+			REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, SOURCE_SLIME_COLD)
 
 		if(bodytemperature <= (T0C - 50)) // hurt temperature
 			if(bodytemperature <= 50) // sqrting negative numbers is bad
@@ -140,7 +140,7 @@
 			else
 				adjustBruteLoss(round(sqrt(bodytemperature)) * delta_time)
 	else
-		REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, SLIME_COLD)
+		REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, SOURCE_SLIME_COLD)
 
 	if(stat != DEAD)
 		var/bz_percentage =0

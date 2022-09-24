@@ -31,4 +31,4 @@
 
 /obj/item/clothing/head/sombrero/shamebrero/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, SHAMEBRERO_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, SOURCE_SHAMEBRERO)

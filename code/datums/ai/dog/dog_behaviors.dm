@@ -183,7 +183,7 @@
 		return
 
 	var/mob/living/living_target = harass_target
-	if(istype(living_target) && (living_target.stat || HAS_TRAIT(living_target, TRAIT_FAKEDEATH)))
+	if(istype(living_target) && (living_target.stat || HAS_TRAIT(living_target, TRAIT_FAKE_DEATH)))
 		finish_action(controller, TRUE)
 		return
 

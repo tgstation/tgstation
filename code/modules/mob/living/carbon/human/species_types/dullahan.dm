@@ -3,8 +3,8 @@
 	id = SPECIES_DULLAHAN
 	species_traits = list(EYECOLOR, HAIR, FACEHAIR, LIPS, HAS_FLESH, HAS_BONE)
 	inherent_traits = list(
-		TRAIT_NOBREATH,
-		TRAIT_NOHUNGER,
+		TRAIT_NO_BREATH,
+		TRAIT_NO_HUNGER,
 	)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	mutant_bodyparts = list("wings" = "None")
@@ -31,7 +31,7 @@
 
 /datum/species/dullahan/on_species_gain(mob/living/carbon/human/human, datum/species/old_species)
 	. = ..()
-	human.lose_hearing_sensitivity(TRAIT_GENERIC)
+	human.lose_hearing_sensitivity(SOURCE_GENERIC)
 	var/obj/item/bodypart/head/head = human.get_bodypart(BODY_ZONE_HEAD)
 
 	if(head)
@@ -210,10 +210,10 @@
 	RegisterSignal(owner, COMSIG_CLICK_SHIFT, .proc/examinate_check)
 	RegisterSignal(owner, COMSIG_LIVING_REGENERATE_LIMBS, .proc/unlist_head)
 	RegisterSignal(owner, COMSIG_LIVING_REVIVE, .proc/retrieve_head)
-	become_hearing_sensitive(ROUNDSTART_TRAIT)
+	become_hearing_sensitive(SOURCE_ROUNDSTART)
 
 /obj/item/dullahan_relay/Destroy()
-	lose_hearing_sensitivity(ROUNDSTART_TRAIT)
+	lose_hearing_sensitivity(SOURCE_ROUNDSTART)
 	owner = null
 	return ..()
 

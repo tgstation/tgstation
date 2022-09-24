@@ -76,7 +76,7 @@
 
 /obj/item/nullrod/godhand/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, SOURCE_HAND_REPLACEMENT)
 
 /obj/item/nullrod/staff
 	name = "red holy staff"
@@ -350,7 +350,7 @@
 
 /obj/item/nullrod/chainsaw/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, SOURCE_HAND_REPLACEMENT)
 	AddComponent(/datum/component/butchering, \
 	speed = 3 SECONDS, \
 	effectiveness = 100, \
@@ -454,7 +454,7 @@
 
 /obj/item/nullrod/armblade/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, SOURCE_HAND_REPLACEMENT)
 	AddComponent(/datum/component/butchering, \
 	speed = 8 SECONDS, \
 	effectiveness = 70, \

@@ -425,7 +425,7 @@
 			H.dropItemToGround(W)
 			if(prob(50))
 				step(W, pick(GLOB.alldirs))
-		ADD_TRAIT(H, TRAIT_DISFIGURED, TRAIT_GENERIC)
+		ADD_TRAIT(H, TRAIT_DISFIGURED, SOURCE_GENERIC)
 		for(var/obj/item/bodypart/part as anything in H.bodyparts)
 			part.adjustBleedStacks(5)
 		H.gib_animation()

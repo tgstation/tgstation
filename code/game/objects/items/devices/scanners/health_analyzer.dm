@@ -121,7 +121,7 @@
 	var/brute_loss = target.getBruteLoss()
 	var/mob_status = (target.stat == DEAD ? span_alert("<b>Deceased</b>") : "<b>[round(target.health/target.maxHealth,0.01)*100]% healthy</b>")
 
-	if(HAS_TRAIT(target, TRAIT_FAKEDEATH) && !advanced)
+	if(HAS_TRAIT(target, TRAIT_FAKE_DEATH) && !advanced)
 		mob_status = span_alert("<b>Deceased</b>")
 		oxy_loss = max(rand(1, 40), oxy_loss, (300 - (tox_loss + fire_loss + brute_loss))) // Random oxygen loss
 
@@ -141,7 +141,7 @@
 		if(advanced)
 			if(HAS_TRAIT_FROM(target, TRAIT_HUSK, BURN))
 				render_list += "<span class='alert ml-1'>Subject has been husked by severe burns.</span>\n"
-			else if (HAS_TRAIT_FROM(target, TRAIT_HUSK, CHANGELING_DRAIN))
+			else if (HAS_TRAIT_FROM(target, TRAIT_HUSK, SOURCE_CHANGELING_DRAIN))
 				render_list += "<span class='alert ml-1'>Subject has been husked by dessication.</span>\n"
 			else
 				render_list += "<span class='alert ml-1'>Subject has been husked by mysterious causes.</span>\n"
@@ -198,9 +198,9 @@
 		// Ear status
 		var/obj/item/organ/internal/ears/ears = carbontarget.getorganslot(ORGAN_SLOT_EARS)
 		if(istype(ears))
-			if(HAS_TRAIT_FROM(carbontarget, TRAIT_DEAF, GENETIC_MUTATION))
+			if(HAS_TRAIT_FROM(carbontarget, TRAIT_DEAF, SOURCE_GENETIC_MUTATION))
 				render_list = "<span class='alert ml-2'>Subject is genetically deaf.\n</span>"
-			else if(HAS_TRAIT_FROM(carbontarget, TRAIT_DEAF, EAR_DAMAGE))
+			else if(HAS_TRAIT_FROM(carbontarget, TRAIT_DEAF, SOURCE_EAR_DAMAGE))
 				render_list = "<span class='alert ml-2'>Subject is deaf from ear damage.\n</span>"
 			else if(HAS_TRAIT(carbontarget, TRAIT_DEAF))
 				render_list = "<span class='alert ml-2'>Subject is deaf.\n</span>"
@@ -215,7 +215,7 @@
 		if(istype(eyes))
 			if(carbontarget.is_blind())
 				render_list += "<span class='alert ml-2'>Subject is blind.\n</span>"
-			else if(HAS_TRAIT(carbontarget, TRAIT_NEARSIGHT))
+			else if(HAS_TRAIT(carbontarget, TRAIT_NEARSIGHTED))
 				render_list += "<span class='alert ml-2'>Subject is nearsighted.\n</span>"
 
 	// Body part damage report
@@ -273,11 +273,11 @@
 				missing_organs += "brain"
 			if(!(NOBLOOD in the_dudes_species.species_traits) && !humantarget.getorganslot(ORGAN_SLOT_HEART))
 				missing_organs += "heart"
-			if(!(TRAIT_NOBREATH in the_dudes_species.species_traits) && !humantarget.getorganslot(ORGAN_SLOT_LUNGS))
+			if(!(TRAIT_NO_BREATH in the_dudes_species.species_traits) && !humantarget.getorganslot(ORGAN_SLOT_LUNGS))
 				missing_organs += "lungs"
-			if(!(TRAIT_NOMETABOLISM in the_dudes_species.species_traits) && !humantarget.getorganslot(ORGAN_SLOT_LIVER))
+			if(!(TRAIT_NO_METABOLISM in the_dudes_species.species_traits) && !humantarget.getorganslot(ORGAN_SLOT_LIVER))
 				missing_organs += "liver"
-			if(!(TRAIT_NOHUNGER in the_dudes_species.species_traits) && !humantarget.getorganslot(ORGAN_SLOT_STOMACH))
+			if(!(TRAIT_NO_HUNGER in the_dudes_species.species_traits) && !humantarget.getorganslot(ORGAN_SLOT_STOMACH))
 				missing_organs += "stomach"
 			if(!(NO_TONGUE in the_dudes_species.species_traits) && !humantarget.getorganslot(ORGAN_SLOT_TONGUE))
 				missing_organs += "tongue"
@@ -320,7 +320,7 @@
 	render_list += "<span class='info ml-1'>Body temperature: [round(target.bodytemperature-T0C,0.1)] &deg;C ([round(target.bodytemperature*1.8-459.67,0.1)] &deg;F)</span>\n"
 
 	// Time of death
-	if(target.tod && (target.stat == DEAD || ((HAS_TRAIT(target, TRAIT_FAKEDEATH)) && !advanced)))
+	if(target.tod && (target.stat == DEAD || ((HAS_TRAIT(target, TRAIT_FAKE_DEATH)) && !advanced)))
 		render_list += "<span class='info ml-1'>Time of Death: [target.tod]</span>\n"
 		var/tdelta = round(world.time - target.timeofdeath)
 		render_list += "<span class='alert ml-1'><b>Subject died [DisplayTimeText(tdelta)] ago.</b></span>\n"

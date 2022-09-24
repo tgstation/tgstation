@@ -60,7 +60,7 @@
 	else if(IS_EDIBLE(I))
 		if(HAS_TRAIT(I, TRAIT_NODROP) || (I.item_flags & (ABSTRACT | DROPDEL)))
 			return ..()
-		else if(HAS_TRAIT(I, TRAIT_FOOD_GRILLED))
+		else if(HAS_TRAIT(I, TRAIT_GRILLED_FOOD))
 			to_chat(user, span_notice("[I] has already been grilled!"))
 			return
 		else if(grill_fuel <= 0)
@@ -69,7 +69,7 @@
 		else if(!grilled_item && user.transferItemToLoc(I, src))
 			grilled_item = I
 			RegisterSignal(grilled_item, COMSIG_GRILL_COMPLETED, .proc/GrillCompleted)
-			ADD_TRAIT(grilled_item, TRAIT_FOOD_GRILLED, "boomers")
+			ADD_TRAIT(grilled_item, TRAIT_GRILLED_FOOD, "boomers")
 			to_chat(user, span_notice("You put the [grilled_item] on [src]."))
 			update_appearance()
 			grill_loop.start()

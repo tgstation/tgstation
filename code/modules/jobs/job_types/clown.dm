@@ -92,7 +92,7 @@
 		return
 
 	H.fully_replace_character_name(H.real_name, pick(GLOB.clown_names)) //rename the mob AFTER they're equipped so their ID gets updated properly.
-	ADD_TRAIT(H, TRAIT_NAIVE, JOB_TRAIT)
+	ADD_TRAIT(H, TRAIT_NAIVE, SOURCE_JOB)
 	H.dna.add_mutation(/datum/mutation/human/clumsy)
 	for(var/datum/mutation/human/clumsy/M in H.dna.mutations)
 		M.mutadone_proof = TRUE

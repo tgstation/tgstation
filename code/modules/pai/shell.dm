@@ -93,8 +93,8 @@
 	var/turf/target = drop_location()
 	card.forceMove(target)
 	forceMove(card)
-	ADD_TRAIT(src, TRAIT_IMMOBILIZED, PAI_FOLDED)
-	ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, PAI_FOLDED)
+	ADD_TRAIT(src, TRAIT_IMMOBILIZED, SOURCE_PAI_FOLDED)
+	ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, SOURCE_PAI_FOLDED)
 	set_density(FALSE)
 	set_light_on(FALSE)
 	holoform = FALSE
@@ -124,8 +124,8 @@
 		return FALSE
 	holochassis_ready = FALSE
 	addtimer(VARSET_CALLBACK(src, holochassis_ready, TRUE), HOLOCHASSIS_COOLDOWN)
-	REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, PAI_FOLDED)
-	REMOVE_TRAIT(src, TRAIT_HANDS_BLOCKED, PAI_FOLDED)
+	REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, SOURCE_PAI_FOLDED)
+	REMOVE_TRAIT(src, TRAIT_HANDS_BLOCKED, SOURCE_PAI_FOLDED)
 	set_density(TRUE)
 	if(istype(card.loc, /obj/item/modular_computer))
 		var/obj/item/modular_computer/pc = card.loc

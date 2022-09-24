@@ -511,7 +511,7 @@
 
 /obj/item/restraints/legcuffs/bola/energy/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_UNCATCHABLE, TRAIT_GENERIC) // People said energy bolas being uncatchable is a feature.
+	ADD_TRAIT(src, TRAIT_UNCATCHABLE, SOURCE_GENERIC) // People said energy bolas being uncatchable is a feature.
 
 /obj/item/restraints/legcuffs/bola/energy/ensnare(atom/hit_atom)
 	var/obj/item/restraints/legcuffs/beartrap/energy/cyborg/B = new (get_turf(hit_atom))

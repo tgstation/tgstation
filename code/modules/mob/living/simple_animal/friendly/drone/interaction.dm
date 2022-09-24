@@ -167,7 +167,7 @@
 		hacked = TRUE
 		set_shy(FALSE)
 		mind.special_role = "hacked drone"
-		REMOVE_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+		REMOVE_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, SOURCE_INNATE)
 		speed = 1 //gotta go slow
 		message_admins("[ADMIN_LOOKUPFLW(src)] became a hacked drone hellbent on destroying the station!")
 	else
@@ -183,7 +183,7 @@
 		hacked = FALSE
 		set_shy(initial(shy))
 		mind.special_role = null
-		ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+		ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, SOURCE_INNATE)
 		speed = initial(speed)
 		message_admins("[ADMIN_LOOKUPFLW(src)], a hacked drone, was restored to factory defaults!")
 	update_drone_icon_hacked()

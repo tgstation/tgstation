@@ -40,9 +40,9 @@
 		span_notice("[user] successfully fixes [target]'s eyes!"),
 		span_notice("[user] completes the surgery on [target]'s eyes."))
 	display_pain(target, "Your vision blurs, but it seems like you can see a little better now!")
-	target.cure_blind(list(EYE_DAMAGE))
+	target.cure_blind(list(SOURCE_EYE_DAMAGE))
 	target.set_blindness(0)
-	target.cure_nearsighted(list(EYE_DAMAGE))
+	target.cure_nearsighted(list(SOURCE_EYE_DAMAGE))
 	target.blur_eyes(35) //this will fix itself slowly.
 	target_eyes.setOrganDamage(0)
 	return ..()

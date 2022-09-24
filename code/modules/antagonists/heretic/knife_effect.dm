@@ -10,5 +10,5 @@
 /obj/effect/floating_blade/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/movetype_handler)
-	ADD_TRAIT(src, TRAIT_MOVE_FLYING, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_MOVE_FLYING, SOURCE_INNATE)
 	add_filter("knife", 2, list("type" = "outline", "color" = glow_color, "size" = 1))

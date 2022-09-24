@@ -171,10 +171,10 @@
 	var/accepted_type = /obj/item/energy_katana
 
 /obj/item/mod/module/weapon_recall/on_suit_activation()
-	ADD_TRAIT(mod.wearer, TRAIT_NOGUNS, MOD_TRAIT)
+	ADD_TRAIT(mod.wearer, TRAIT_NO_GUNS, SOURCE_MOD)
 
 /obj/item/mod/module/weapon_recall/on_suit_deactivation(deleting = FALSE)
-	REMOVE_TRAIT(mod.wearer, TRAIT_NOGUNS, MOD_TRAIT)
+	REMOVE_TRAIT(mod.wearer, TRAIT_NO_GUNS, SOURCE_MOD)
 
 /obj/item/mod/module/weapon_recall/on_use()
 	. = ..()

@@ -390,7 +390,7 @@
 
 
 /mob/living/carbon/human/ex_act(severity, target, origin)
-	if(HAS_TRAIT(src, TRAIT_BOMBIMMUNE))
+	if(HAS_TRAIT(src, TRAIT_BOMB_IMMUNE))
 		return
 
 	. = ..()
@@ -430,7 +430,7 @@
 				brute_loss = 30*(2 - round(bomb_armor*0.01, 0.05))
 				burn_loss = brute_loss //damage gets reduced from 120 to up to 60 combined brute+burn
 			damage_clothes(200 - bomb_armor, BRUTE, BOMB)
-			if (ears && !HAS_TRAIT_FROM_ONLY(src, TRAIT_DEAF, EAR_DAMAGE))
+			if (ears && !HAS_TRAIT_FROM_ONLY(src, TRAIT_DEAF, SOURCE_EAR_DAMAGE))
 				ears.adjustEarDamage(30, 120)
 			Unconscious(20) //short amount of time for follow up attacks against elusive enemies like wizards
 			Knockdown(200 - (bomb_armor * 1.6)) //between ~4 and ~20 seconds of knockdown depending on bomb armor
@@ -440,7 +440,7 @@
 			if(bomb_armor)
 				brute_loss = 15*(2 - round(bomb_armor*0.01, 0.05))
 			damage_clothes(max(50 - bomb_armor, 0), BRUTE, BOMB)
-			if (ears && !HAS_TRAIT_FROM_ONLY(src, TRAIT_DEAF, EAR_DAMAGE))
+			if (ears && !HAS_TRAIT_FROM_ONLY(src, TRAIT_DEAF, SOURCE_EAR_DAMAGE))
 				ears.adjustEarDamage(15,60)
 			Knockdown(160 - (bomb_armor * 1.6)) //100 bomb armor will prevent knockdown altogether
 
@@ -653,7 +653,7 @@
 				facial_hairstyle = "Shaved"
 				hairstyle = "Bald"
 				update_body_parts()
-				ADD_TRAIT(src, TRAIT_DISFIGURED, TRAIT_GENERIC)
+				ADD_TRAIT(src, TRAIT_DISFIGURED, SOURCE_GENERIC)
 
 		update_damage_overlays()
 
@@ -822,7 +822,7 @@
 			else if(oxyloss > 30)
 				combined_msg += span_danger("You're choking! There is no oxygen!")
 
-	if(!HAS_TRAIT(src, TRAIT_NOHUNGER))
+	if(!HAS_TRAIT(src, TRAIT_NO_HUNGER))
 		switch(nutrition)
 			if(NUTRITION_LEVEL_FULL to INFINITY)
 				combined_msg += span_info("You're completely stuffed!")

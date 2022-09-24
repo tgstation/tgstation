@@ -18,7 +18,7 @@
 	name = "nitrile envirogloves"
 	desc = "Pricy nitrile gloves made for plasmamen."
 	icon_state = "nitrile"
-	clothing_traits = list(TRAIT_QUICKER_CARRY, TRAIT_FASTMED)
+	clothing_traits = list(TRAIT_QUICKER_CARRY, TRAIT_FAST_MED)
 
 /obj/item/clothing/gloves/color/plasmaman/white
 	name = "white envirogloves"

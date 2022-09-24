@@ -348,14 +348,14 @@
 	if(A.totalStealth() >= 2)
 		deathgasp = TRUE
 
-/datum/symptom/heal/coma/on_stage_change(datum/disease/advance/A)  //mostly copy+pasted from the code for self-respiration's TRAIT_NOBREATH stuff
+/datum/symptom/heal/coma/on_stage_change(datum/disease/advance/A)  //mostly copy+pasted from the code for self-respiration's TRAIT_NO_BREATH stuff
 	. = ..()
 	if(!.)
 		return FALSE
 	if(A.stage >= 4 && stabilize)
-		ADD_TRAIT(A.affected_mob, TRAIT_NOCRITDAMAGE, DISEASE_TRAIT)
+		ADD_TRAIT(A.affected_mob, TRAIT_NO_CRIT_DAMAGE, SOURCE_DISEASE)
 	else
-		REMOVE_TRAIT(A.affected_mob, TRAIT_NOCRITDAMAGE, DISEASE_TRAIT)
+		REMOVE_TRAIT(A.affected_mob, TRAIT_NO_CRIT_DAMAGE, SOURCE_DISEASE)
 	return TRUE
 
 /datum/symptom/heal/coma/End(datum/disease/advance/A)
@@ -364,11 +364,11 @@
 		return
 	if(active_coma)
 		uncoma()
-	REMOVE_TRAIT(A.affected_mob, TRAIT_NOCRITDAMAGE, DISEASE_TRAIT)
+	REMOVE_TRAIT(A.affected_mob, TRAIT_NO_CRIT_DAMAGE, SOURCE_DISEASE)
 
 /datum/symptom/heal/coma/CanHeal(datum/disease/advance/A)
 	var/mob/living/M = A.affected_mob
-	if(HAS_TRAIT(M, TRAIT_DEATHCOMA))
+	if(HAS_TRAIT(M, TRAIT_DEATH_COMA))
 		return power
 	if(M.IsSleeping())
 		return power * 0.25 //Voluntary unconsciousness yields lower healing.

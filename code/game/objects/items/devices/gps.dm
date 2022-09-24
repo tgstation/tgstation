@@ -42,7 +42,7 @@
 
 /obj/item/gps/cyborg/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, SOURCE_CYBORG_ITEM)
 
 /obj/item/gps/mining/internal
 	icon_state = "gps-m"

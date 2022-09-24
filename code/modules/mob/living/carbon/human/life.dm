@@ -79,7 +79,7 @@
 	return ..()
 
 /mob/living/carbon/human/breathe()
-	if(!HAS_TRAIT(src, TRAIT_NOBREATH))
+	if(!HAS_TRAIT(src, TRAIT_NO_BREATH))
 		return ..()
 
 /mob/living/carbon/human/check_breath(datum/gas_mixture/breath)
@@ -89,7 +89,7 @@
 	if(!L)
 		if(health >= crit_threshold)
 			adjustOxyLoss(HUMAN_MAX_OXYLOSS + 1)
-		else if(!HAS_TRAIT(src, TRAIT_NOCRITDAMAGE))
+		else if(!HAS_TRAIT(src, TRAIT_NO_CRIT_DAMAGE))
 			adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
 
 		failed_last_breath = TRUE
@@ -311,7 +311,7 @@
 	return ..()
 
 /mob/living/carbon/human/proc/handle_heart(delta_time, times_fired)
-	var/we_breath = !HAS_TRAIT_FROM(src, TRAIT_NOBREATH, SPECIES_TRAIT)
+	var/we_breath = !HAS_TRAIT_FROM(src, TRAIT_NO_BREATH, SOURCE_SPECIES)
 
 	if(!undergoing_cardiac_arrest())
 		return

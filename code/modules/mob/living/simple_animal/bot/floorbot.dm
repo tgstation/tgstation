@@ -38,7 +38,7 @@
 
 /mob/living/simple_animal/bot/floorbot/Initialize(mapload, new_toolbox_color)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_SPACEWALK, SOURCE_INNATE)
 	toolbox_color = new_toolbox_color
 	update_appearance(UPDATE_ICON)
 
@@ -112,12 +112,12 @@
 ///mobs should use move_resist instead of anchored.
 /mob/living/simple_animal/bot/floorbot/proc/toggle_magnet(engage = TRUE, change_icon = TRUE)
 	if(engage)
-		ADD_TRAIT(src, TRAIT_IMMOBILIZED, BUSY_FLOORBOT_TRAIT)
+		ADD_TRAIT(src, TRAIT_IMMOBILIZED, SOURCE_BUSY_FLOORBOT)
 		move_resist = INFINITY
 		if(change_icon)
 			icon_state = "[toolbox_color]floorbot-c"
 	else
-		REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, BUSY_FLOORBOT_TRAIT)
+		REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, SOURCE_BUSY_FLOORBOT)
 		move_resist = initial(move_resist)
 		if(change_icon)
 			update_icon()
@@ -130,7 +130,7 @@
 		data["custom_controls"]["place_tiles"] =  placetiles
 		data["custom_controls"]["place_custom"] = replacetiles
 		data["custom_controls"]["repair_damage"] = fixfloors
-		data["custom_controls"]["traction_magnets"] = !!HAS_TRAIT_FROM(src, TRAIT_IMMOBILIZED, BUSY_FLOORBOT_TRAIT)
+		data["custom_controls"]["traction_magnets"] = !!HAS_TRAIT_FROM(src, TRAIT_IMMOBILIZED, SOURCE_BUSY_FLOORBOT)
 		data["custom_controls"]["tile_stack"] = 0
 		data["custom_controls"]["line_mode"] = FALSE
 		if(tilestack)
@@ -155,7 +155,7 @@
 		if("tile_hull")
 			autotile = !autotile
 		if("traction_magnets")
-			toggle_magnet(!HAS_TRAIT_FROM(src, TRAIT_IMMOBILIZED, BUSY_FLOORBOT_TRAIT), FALSE)
+			toggle_magnet(!HAS_TRAIT_FROM(src, TRAIT_IMMOBILIZED, SOURCE_BUSY_FLOORBOT), FALSE)
 		if("eject_tiles")
 			if(tilestack)
 				tilestack.forceMove(drop_location())

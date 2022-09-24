@@ -38,7 +38,7 @@
 	. = ..()
 	AddElement(/datum/element/pet_bonus, "squeaks happily!")
 	add_verb(src, /mob/living/proc/toggle_resting)
-	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, SOURCE_INNATE)
 
 /mob/living/basic/mothroach/toggle_resting()
 	. = ..()

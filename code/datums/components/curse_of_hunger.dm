@@ -80,9 +80,9 @@
 	var/obj/item/cursed_item = parent
 	awakened = TRUE
 	START_PROCESSING(SSobj, src)
-	ADD_TRAIT(cursed_item, TRAIT_NODROP, CURSED_ITEM_TRAIT(cursed_item.type))
-	ADD_TRAIT(cursed, TRAIT_CLUMSY, CURSED_ITEM_TRAIT(cursed_item.type))
-	ADD_TRAIT(cursed, TRAIT_PACIFISM, CURSED_ITEM_TRAIT(cursed_item.type))
+	ADD_TRAIT(cursed_item, TRAIT_NODROP, SOURCE_CURSED_ITEM(cursed_item.type))
+	ADD_TRAIT(cursed, TRAIT_CLUMSY, SOURCE_CURSED_ITEM(cursed_item.type))
+	ADD_TRAIT(cursed, TRAIT_PACIFISM, SOURCE_CURSED_ITEM(cursed_item.type))
 	if(add_dropdel)
 		cursed_item.item_flags |= DROPDEL
 		return
@@ -94,9 +94,9 @@
 /datum/component/curse_of_hunger/proc/the_curse_ends(mob/uncursed)
 	var/obj/item/at_least_item = parent
 	STOP_PROCESSING(SSobj, src)
-	REMOVE_TRAIT(parent, TRAIT_NODROP, CURSED_ITEM_TRAIT(parent.type))
-	REMOVE_TRAIT(uncursed, TRAIT_CLUMSY, CURSED_ITEM_TRAIT(at_least_item.type))
-	REMOVE_TRAIT(uncursed, TRAIT_PACIFISM, CURSED_ITEM_TRAIT(at_least_item.type))
+	REMOVE_TRAIT(parent, TRAIT_NODROP, SOURCE_CURSED_ITEM(parent.type))
+	REMOVE_TRAIT(uncursed, TRAIT_CLUMSY, SOURCE_CURSED_ITEM(at_least_item.type))
+	REMOVE_TRAIT(uncursed, TRAIT_PACIFISM, SOURCE_CURSED_ITEM(at_least_item.type))
 	//remove either one of the signals that could have called this proc
 	UnregisterSignal(parent, list(COMSIG_ITEM_POST_UNEQUIP, COMSIG_ITEM_DROPPED))
 

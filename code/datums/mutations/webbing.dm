@@ -10,12 +10,12 @@
 /datum/mutation/human/webbing/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	ADD_TRAIT(owner, TRAIT_WEB_WEAVER, GENETIC_MUTATION)
+	ADD_TRAIT(owner, TRAIT_WEB_WEAVER, SOURCE_GENETIC_MUTATION)
 
 /datum/mutation/human/webbing/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	REMOVE_TRAIT(owner, TRAIT_WEB_WEAVER, GENETIC_MUTATION)
+	REMOVE_TRAIT(owner, TRAIT_WEB_WEAVER, SOURCE_GENETIC_MUTATION)
 
 // In the future this could be unified with the spider's web action
 /datum/action/cooldown/spell/lay_genetic_web

@@ -170,7 +170,7 @@
 
 /obj/item/melee/arm_blade/Initialize(mapload,silent,synthetic)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, SOURCE_CHANGELING)
 	if(ismob(loc) && !silent)
 		loc.visible_message(span_warning("A grotesque blade forms around [loc.name]\'s arm!"), span_warning("Our arm twists and mutates, transforming it into a deadly blade."), span_hear("You hear organic matter ripping and tearing!"))
 	if(synthetic)
@@ -260,7 +260,7 @@
 
 /obj/item/gun/magic/tentacle/Initialize(mapload, silent)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, SOURCE_CHANGELING)
 	if(ismob(loc))
 		if(!silent)
 			loc.visible_message(span_warning("[loc.name]\'s arm starts stretching inhumanly!"), span_warning("Our arm twists and mutates, transforming it into a tentacle."), span_hear("You hear organic matter ripping and tearing!"))
@@ -435,7 +435,7 @@
 
 /obj/item/shield/changeling/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, SOURCE_CHANGELING)
 	if(ismob(loc))
 		loc.visible_message(span_warning("The end of [loc.name]\'s hand inflates rapidly, forming a huge shield-like mass!"), span_warning("We inflate our hand into a strong shield."), span_hear("You hear organic matter ripping and tearing!"))
 
@@ -484,7 +484,7 @@
 
 /obj/item/clothing/suit/space/changeling/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, SOURCE_CHANGELING)
 	if(ismob(loc))
 		loc.visible_message(span_warning("[loc.name]\'s flesh rapidly inflates, forming a bloated mass around [loc.p_their()] body!"), span_warning("We inflate our flesh, creating a spaceproof suit!"), span_hear("You hear organic matter ripping and tearing!"))
 	START_PROCESSING(SSobj, src)
@@ -510,7 +510,7 @@
 
 /obj/item/clothing/head/helmet/space/changeling/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, SOURCE_CHANGELING)
 
 /***************************************\
 |*****************ARMOR*****************|
@@ -543,7 +543,7 @@
 
 /obj/item/clothing/suit/armor/changeling/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, SOURCE_CHANGELING)
 	if(ismob(loc))
 		loc.visible_message(span_warning("[loc.name]\'s flesh turns black, quickly transforming into a hard, chitinous mass!"), span_warning("We harden our flesh, creating a suit of armor!"), span_hear("You hear organic matter ripping and tearing!"))
 
@@ -557,4 +557,4 @@
 
 /obj/item/clothing/head/helmet/changeling/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, SOURCE_CHANGELING)

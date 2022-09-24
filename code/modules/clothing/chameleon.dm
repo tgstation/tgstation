@@ -530,7 +530,7 @@
 
 /obj/item/clothing/head/chameleon/drone/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, SOURCE_ABSTRACT_ITEM)
 	chameleon_action.random_look()
 	var/datum/action/item_action/chameleon/drone/togglehatmask/togglehatmask_action = new(src)
 	togglehatmask_action.UpdateButtons()
@@ -585,7 +585,7 @@
 
 /obj/item/clothing/mask/chameleon/drone/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, SOURCE_ABSTRACT_ITEM)
 	chameleon_action.random_look()
 	var/datum/action/item_action/chameleon/drone/togglehatmask/togglehatmask_action = new(src)
 	togglehatmask_action.UpdateButtons()

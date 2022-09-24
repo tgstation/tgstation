@@ -5,7 +5,7 @@
 	say_mod = "flutters"
 	species_traits = list(LIPS, HAS_FLESH, HAS_BONE, HAS_MARKINGS, TRAIT_ANTENNAE)
 	inherent_traits = list(
-		TRAIT_CAN_USE_FLIGHT_POTION,
+		TRAIT_ALLOW_FLIGHT_POTION,
 		TRAIT_TACKLING_WINGED_ATTACKER,
 	)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG

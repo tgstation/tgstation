@@ -202,8 +202,8 @@
 
 	if(ishuman(victim))
 		var/mob/living/carbon/human/human_victim = victim
-		if(HAS_TRAIT(victim, TRAIT_LIMBATTACHMENT))
-			if(!human_victim.get_bodypart(body_zone) && !animal_origin)
+		if(HAS_TRAIT(victim, TRAIT_LIMB_ATTACHMENT))
+			if(!human_victim.get_bodypart(body_zone))
 				user.temporarilyRemoveItemFromInventory(src, TRUE)
 				if(!attach_limb(victim))
 					to_chat(user, span_warning("[human_victim]'s body rejects [src]!"))
@@ -326,7 +326,7 @@
 
 	if(owner)
 		var/mangled_state = get_mangled_state()
-		var/easy_dismember = HAS_TRAIT(owner, TRAIT_EASYDISMEMBER) // if we have easydismember, we don't reduce damage when redirecting damage to different types (slashing weapons on mangled/skinless limbs attack at 100% instead of 50%)
+		var/easy_dismember = HAS_TRAIT(owner, TRAIT_EASY_DISMEMBER) // if we have easydismember, we don't reduce damage when redirecting damage to different types (slashing weapons on mangled/skinless limbs attack at 100% instead of 50%)
 
 		//Handling for bone only/flesh only(none right now)/flesh and bone targets
 		switch(owner.get_biological_state())
@@ -525,26 +525,26 @@
 	var/needs_update_disabled = FALSE //Only really relevant if there's an owner
 	if(old_owner)
 		if(initial(can_be_disabled))
-			if(HAS_TRAIT(old_owner, TRAIT_NOLIMBDISABLE))
-				if(!owner || !HAS_TRAIT(owner, TRAIT_NOLIMBDISABLE))
+			if(HAS_TRAIT(old_owner, TRAIT_NO_LIMB_DISABLE))
+				if(!owner || !HAS_TRAIT(owner, TRAIT_NO_LIMB_DISABLE))
 					set_can_be_disabled(initial(can_be_disabled))
 					needs_update_disabled = TRUE
 			UnregisterSignal(old_owner, list(
-				SIGNAL_REMOVETRAIT(TRAIT_NOLIMBDISABLE),
-				SIGNAL_ADDTRAIT(TRAIT_NOLIMBDISABLE),
-				SIGNAL_REMOVETRAIT(TRAIT_NOBLEED),
-				SIGNAL_ADDTRAIT(TRAIT_NOBLEED),
+				SIGNAL_REMOVETRAIT(TRAIT_NO_LIMB_DISABLE),
+				SIGNAL_ADDTRAIT(TRAIT_NO_LIMB_DISABLE),
+				SIGNAL_REMOVETRAIT(TRAIT_NO_BLEED),
+				SIGNAL_ADDTRAIT(TRAIT_NO_BLEED),
 				))
 	if(owner)
 		if(initial(can_be_disabled))
-			if(HAS_TRAIT(owner, TRAIT_NOLIMBDISABLE))
+			if(HAS_TRAIT(owner, TRAIT_NO_LIMB_DISABLE))
 				set_can_be_disabled(FALSE)
 				needs_update_disabled = FALSE
-			RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_NOLIMBDISABLE), .proc/on_owner_nolimbdisable_trait_loss)
-			RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_NOLIMBDISABLE), .proc/on_owner_nolimbdisable_trait_gain)
+			RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_NO_LIMB_DISABLE), .proc/on_owner_nolimbdisable_trait_loss)
+			RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_NO_LIMB_DISABLE), .proc/on_owner_nolimbdisable_trait_gain)
 			// Bleeding stuff
-			RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_NOBLEED), .proc/on_owner_nobleed_loss)
-			RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_NOBLEED), .proc/on_owner_nobleed_gain)
+			RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_NO_BLEED), .proc/on_owner_nobleed_loss)
+			RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_NO_BLEED), .proc/on_owner_nobleed_gain)
 
 		if(needs_update_disabled)
 			update_disabled()
@@ -564,8 +564,8 @@
 	can_be_disabled = new_can_be_disabled
 	if(can_be_disabled)
 		if(owner)
-			if(HAS_TRAIT(owner, TRAIT_NOLIMBDISABLE))
-				CRASH("set_can_be_disabled to TRUE with for limb whose owner has TRAIT_NOLIMBDISABLE")
+			if(HAS_TRAIT(owner, TRAIT_NO_LIMB_DISABLE))
+				CRASH("set_can_be_disabled to TRUE with for limb whose owner has TRAIT_NO_LIMB_DISABLE")
 			RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_PARALYSIS), .proc/on_paralysis_trait_gain)
 			RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_PARALYSIS), .proc/on_paralysis_trait_loss)
 		update_disabled()
@@ -596,7 +596,7 @@
 		update_disabled()
 
 
-///Called when TRAIT_NOLIMBDISABLE is added to the owner.
+///Called when TRAIT_NO_LIMB_DISABLE is added to the owner.
 /obj/item/bodypart/proc/on_owner_nolimbdisable_trait_gain(mob/living/carbon/source)
 	PROTECTED_PROC(TRUE)
 	SIGNAL_HANDLER
@@ -604,7 +604,7 @@
 	set_can_be_disabled(FALSE)
 
 
-///Called when TRAIT_NOLIMBDISABLE is removed from the owner.
+///Called when TRAIT_NO_LIMB_DISABLE is removed from the owner.
 /obj/item/bodypart/proc/on_owner_nolimbdisable_trait_loss(mob/living/carbon/source)
 	PROTECTED_PROC(TRUE)
 	SIGNAL_HANDLER
@@ -892,7 +892,7 @@
 	if(!owner)
 		return
 
-	if(HAS_TRAIT(owner, TRAIT_NOBLEED) || !IS_ORGANIC_LIMB(src))
+	if(HAS_TRAIT(owner, TRAIT_NO_BLEED) || !IS_ORGANIC_LIMB(src))
 		if(cached_bleed_rate != old_bleed_rate)
 			update_part_wound_overlay()
 		return
@@ -933,7 +933,7 @@
 /obj/item/bodypart/proc/update_part_wound_overlay()
 	if(!owner)
 		return FALSE
-	if(HAS_TRAIT(owner, TRAIT_NOBLEED) || !IS_ORGANIC_LIMB(src) || (NOBLOOD in species_flags_list))
+	if(HAS_TRAIT(owner, TRAIT_NO_BLEED) || !IS_ORGANIC_LIMB(src) || (NOBLOOD in species_flags_list))
 		if(bleed_overlay_icon)
 			bleed_overlay_icon = null
 			owner.update_wound_overlays()

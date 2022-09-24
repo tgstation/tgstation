@@ -59,7 +59,7 @@
 				continue
 			stored_items += held_item
 			to_chat(owner, span_notice("Your [owner.get_held_index_name(owner.get_held_index_of_item(held_item))]'s grip tightens."))
-			ADD_TRAIT(held_item, TRAIT_NODROP, IMPLANT_TRAIT)
+			ADD_TRAIT(held_item, TRAIT_NODROP, SOURCE_IMPLANT)
 			RegisterSignal(held_item, COMSIG_ITEM_DROPPED, .proc/on_held_item_dropped)
 	else
 		release_items()
@@ -83,7 +83,7 @@
 
 /obj/item/organ/internal/cyberimp/brain/anti_drop/proc/release_items()
 	for(var/obj/item/stored_item as anything in stored_items)
-		REMOVE_TRAIT(stored_item, TRAIT_NODROP, IMPLANT_TRAIT)
+		REMOVE_TRAIT(stored_item, TRAIT_NODROP, SOURCE_IMPLANT)
 		UnregisterSignal(stored_item, COMSIG_ITEM_DROPPED)
 	stored_items = list()
 
@@ -95,7 +95,7 @@
 
 /obj/item/organ/internal/cyberimp/brain/anti_drop/proc/on_held_item_dropped(obj/item/source, mob/user)
 	SIGNAL_HANDLER
-	REMOVE_TRAIT(source, TRAIT_NODROP, IMPLANT_TRAIT)
+	REMOVE_TRAIT(source, TRAIT_NODROP, SOURCE_IMPLANT)
 	UnregisterSignal(source, COMSIG_ITEM_DROPPED)
 	stored_items -= source
 

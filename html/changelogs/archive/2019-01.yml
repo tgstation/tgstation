@@ -421,9 +421,9 @@
   - bugfix: The Syndicate Bundle uplink item is now purchasable again.
   Gousaid67:
   - bugfix: The genetic sequence analyzer now will no longer be able to scan husked
-      corpses or species with TRAIT_RADIMMUNE, similar to its bigger brother the DNA
+      corpses or species with TRAIT_RAD_IMMUNE, similar to its bigger brother the DNA
       scanner.
-  - tweak: Cloning will no longer apply mutations to species with TRAIT_RADIMMUNE
+  - tweak: Cloning will no longer apply mutations to species with TRAIT_RAD_IMMUNE
       like golems and plasmamens, positive or negative.
   GranpaWalton:
   - bugfix: Oxyloss icon no-longer shows up when someone has the self respiration

@@ -119,21 +119,21 @@
 /datum/mutation/human/dwarfism/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	ADD_TRAIT(owner, TRAIT_DWARF, GENETIC_MUTATION)
+	ADD_TRAIT(owner, TRAIT_DWARF, SOURCE_GENETIC_MUTATION)
 	var/matrix/new_transform = matrix()
 	new_transform.Scale(1, 0.8)
 	owner.transform = new_transform.Multiply(owner.transform)
-	passtable_on(owner, GENETIC_MUTATION)
+	passtable_on(owner, SOURCE_GENETIC_MUTATION)
 	owner.visible_message(span_danger("[owner] suddenly shrinks!"), span_notice("Everything around you seems to grow.."))
 
 /datum/mutation/human/dwarfism/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	REMOVE_TRAIT(owner, TRAIT_DWARF, GENETIC_MUTATION)
+	REMOVE_TRAIT(owner, TRAIT_DWARF, SOURCE_GENETIC_MUTATION)
 	var/matrix/new_transform = matrix()
 	new_transform.Scale(1, 1.25)
 	owner.transform = new_transform.Multiply(owner.transform)
-	passtable_off(owner, GENETIC_MUTATION)
+	passtable_off(owner, SOURCE_GENETIC_MUTATION)
 	owner.visible_message(span_danger("[owner] suddenly grows!"), span_notice("Everything around you seems to shrink.."))
 
 //Clumsiness has a very large amount of small drawbacks depending on item.
@@ -146,12 +146,12 @@
 /datum/mutation/human/clumsy/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	ADD_TRAIT(owner, TRAIT_CLUMSY, GENETIC_MUTATION)
+	ADD_TRAIT(owner, TRAIT_CLUMSY, SOURCE_GENETIC_MUTATION)
 
 /datum/mutation/human/clumsy/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	REMOVE_TRAIT(owner, TRAIT_CLUMSY, GENETIC_MUTATION)
+	REMOVE_TRAIT(owner, TRAIT_CLUMSY, SOURCE_GENETIC_MUTATION)
 
 
 //Tourettes causes you to randomly stand in place and shout.
@@ -187,12 +187,12 @@
 /datum/mutation/human/deaf/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	ADD_TRAIT(owner, TRAIT_DEAF, GENETIC_MUTATION)
+	ADD_TRAIT(owner, TRAIT_DEAF, SOURCE_GENETIC_MUTATION)
 
 /datum/mutation/human/deaf/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	REMOVE_TRAIT(owner, TRAIT_DEAF, GENETIC_MUTATION)
+	REMOVE_TRAIT(owner, TRAIT_DEAF, SOURCE_GENETIC_MUTATION)
 
 
 //Monified turns you into a monkey.
@@ -295,12 +295,12 @@
 /datum/mutation/human/insulated/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	ADD_TRAIT(owner, TRAIT_SHOCKIMMUNE, GENETIC_MUTATION)
+	ADD_TRAIT(owner, TRAIT_SHOCK_IMMUNE, SOURCE_GENETIC_MUTATION)
 
 /datum/mutation/human/insulated/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	REMOVE_TRAIT(owner, TRAIT_SHOCKIMMUNE, GENETIC_MUTATION)
+	REMOVE_TRAIT(owner, TRAIT_SHOCK_IMMUNE, SOURCE_GENETIC_MUTATION)
 
 /datum/mutation/human/fire
 	name = "Fiery Sweat"
@@ -387,7 +387,7 @@
 /datum/mutation/human/gigantism/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	ADD_TRAIT(owner, TRAIT_GIANT, GENETIC_MUTATION)
+	ADD_TRAIT(owner, TRAIT_GIANT, SOURCE_GENETIC_MUTATION)
 	owner.resize = 1.25
 	owner.update_transform()
 	owner.visible_message(span_danger("[owner] suddenly grows!"), span_notice("Everything around you seems to shrink.."))
@@ -395,7 +395,7 @@
 /datum/mutation/human/gigantism/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	REMOVE_TRAIT(owner, TRAIT_GIANT, GENETIC_MUTATION)
+	REMOVE_TRAIT(owner, TRAIT_GIANT, SOURCE_GENETIC_MUTATION)
 	owner.resize = 0.8
 	owner.update_transform()
 	owner.visible_message(span_danger("[owner] suddenly shrinks!"), span_notice("Everything around you seems to grow.."))

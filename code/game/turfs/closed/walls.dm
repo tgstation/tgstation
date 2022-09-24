@@ -36,7 +36,7 @@
 /turf/closed/wall/Initialize(mapload)
 	. = ..()
 	if(!can_engrave)
-		ADD_TRAIT(src, TRAIT_NOT_ENGRAVABLE, INNATE_TRAIT)
+		ADD_TRAIT(src, TRAIT_NOT_ENGRAVABLE, SOURCE_INNATE)
 	if(is_station_level(z))
 		GLOB.station_turfs += src
 	if(smoothing_flags & SMOOTH_DIAGONAL_CORNERS && fixed_underlay) //Set underlays for the diagonal walls.

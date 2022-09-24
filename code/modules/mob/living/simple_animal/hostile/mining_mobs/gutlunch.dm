@@ -48,7 +48,7 @@
 	. = ..()
 	if(wanted_objects.len)
 		AddComponent(/datum/component/udder, /obj/item/udder/gutlunch, CALLBACK(src, .proc/regenerate_icons), CALLBACK(src, .proc/regenerate_icons))
-	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, SOURCE_INNATE)
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/CanAttack(atom/the_target) // Gutlunch-specific version of CanAttack to handle stupid stat_exclusive = true crap so we don't have to do it for literally every single simple_animal/hostile except the two that spawn in lavaland
 	if(!the_target || !isturf(the_target.loc)) // bail out on invalids

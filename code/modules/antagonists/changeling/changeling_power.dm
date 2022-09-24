@@ -81,7 +81,7 @@ the same goes for Remove(). if you override Remove(), call parent or else your p
 	if(req_stat < user.stat)
 		to_chat(user, span_warning("We are incapacitated."))
 		return FALSE
-	if((HAS_TRAIT(user, TRAIT_DEATHCOMA)) && (!ignores_fakedeath))
+	if((HAS_TRAIT(user, TRAIT_DEATH_COMA)) && (!ignores_fakedeath))
 		to_chat(user, span_warning("We are incapacitated."))
 		return FALSE
 	return TRUE

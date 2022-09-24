@@ -45,7 +45,7 @@
 	inflamation_stage = 1
 	update_appearance()
 	if(owner)
-		ADD_TRAIT(owner, TRAIT_DISEASELIKE_SEVERITY_MEDIUM, type)
+		ADD_TRAIT(owner, TRAIT_DISEASE_SEVERITY_MEDIUM, type)
 		owner.med_hud_set_status()
 
 /obj/item/organ/internal/appendix/proc/inflamation(delta_time)
@@ -70,10 +70,10 @@
 
 
 /obj/item/organ/internal/appendix/get_availability(datum/species/owner_species)
-	return !((TRAIT_NOHUNGER in owner_species.inherent_traits) || (NOAPPENDIX in owner_species.species_traits))
+	return !((TRAIT_NO_HUNGER in owner_species.inherent_traits) || (NOAPPENDIX in owner_species.species_traits))
 
 /obj/item/organ/internal/appendix/Remove(mob/living/carbon/organ_owner, special = FALSE)
-	REMOVE_TRAIT(organ_owner, TRAIT_DISEASELIKE_SEVERITY_MEDIUM, type)
+	REMOVE_TRAIT(organ_owner, TRAIT_DISEASE_SEVERITY_MEDIUM, type)
 	organ_owner.med_hud_set_status()
 	..()
 
@@ -81,7 +81,7 @@
 	. = ..()
 	if(.)
 		if(inflamation_stage)
-			ADD_TRAIT(organ_owner, TRAIT_DISEASELIKE_SEVERITY_MEDIUM, type)
+			ADD_TRAIT(organ_owner, TRAIT_DISEASE_SEVERITY_MEDIUM, type)
 			organ_owner.med_hud_set_status()
 
 /obj/item/organ/internal/appendix/get_status_text()

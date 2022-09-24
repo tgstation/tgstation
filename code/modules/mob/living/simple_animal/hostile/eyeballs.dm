@@ -37,4 +37,4 @@
 /mob/living/simple_animal/hostile/eyeball/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
-	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_SPACEWALK, SOURCE_INNATE)

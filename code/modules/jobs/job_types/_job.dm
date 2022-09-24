@@ -145,12 +145,12 @@
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_JOB_AFTER_SPAWN, src, spawned, player_client)
 	for(var/trait in mind_traits)
-		ADD_TRAIT(spawned.mind, trait, JOB_TRAIT)
+		ADD_TRAIT(spawned.mind, trait, SOURCE_JOB)
 
 	var/obj/item/organ/internal/liver/liver = spawned.getorganslot(ORGAN_SLOT_LIVER)
 	if(liver)
 		for(var/trait in liver_traits)
-			ADD_TRAIT(liver, trait, JOB_TRAIT)
+			ADD_TRAIT(liver, trait, SOURCE_JOB)
 
 	if(!ishuman(spawned))
 		return
@@ -331,7 +331,7 @@
 
 	var/obj/item/card/id/card = H.wear_id
 	if(istype(card))
-		ADD_TRAIT(card, TRAIT_JOB_FIRST_ID_CARD, ROUNDSTART_TRAIT)
+		ADD_TRAIT(card, TRAIT_JOB_FIRST_ID_CARD, SOURCE_ROUNDSTART)
 		shuffle_inplace(card.access) // Shuffle access list to make NTNet passkeys less predictable
 		card.registered_name = H.real_name
 		if(H.age)

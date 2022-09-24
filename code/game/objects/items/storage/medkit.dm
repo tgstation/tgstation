@@ -606,7 +606,7 @@
 	return ..()
 
 /obj/item/storage/organbox/suicide_act(mob/living/carbon/user)
-	if(HAS_TRAIT(user, TRAIT_RESISTCOLD)) //if they're immune to cold, just do the box suicide
+	if(HAS_TRAIT(user, TRAIT_RESIST_COLD)) //if they're immune to cold, just do the box suicide
 		var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)
 		if(myhead)
 			user.visible_message(span_suicide("[user] puts [user.p_their()] head into \the [src] and begins closing it! It looks like [user.p_theyre()] trying to commit suicide!"))

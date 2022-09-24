@@ -3,7 +3,7 @@
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
-	ADD_TRAIT(src, TRAIT_CAN_STRIP, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_CAN_STRIP, SOURCE_INNATE)
 	AddComponent(/datum/component/tippable, \
 		tip_time = 3 SECONDS, \
 		untip_time = 2 SECONDS, \
@@ -439,9 +439,9 @@
 	lockcharge = new_lockcharge
 	if(lockcharge)
 		if(!.)
-			ADD_TRAIT(src, TRAIT_IMMOBILIZED, LOCKED_BORG_TRAIT)
+			ADD_TRAIT(src, TRAIT_IMMOBILIZED, SOURCE_LOCKED_BORG)
 	else if(.)
-		REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, LOCKED_BORG_TRAIT)
+		REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, SOURCE_LOCKED_BORG)
 	logevent("System lockdown [lockcharge?"triggered":"released"].")
 
 
@@ -740,10 +740,10 @@
 	if(hands)
 		hands.icon_state = model.model_select_icon
 
-	REMOVE_TRAITS_IN(src, MODEL_TRAIT)
+	REMOVE_TRAITS_IN(src, SOURCE_MODEL)
 	if(model.model_traits)
 		for(var/trait in model.model_traits)
-			ADD_TRAIT(src, trait, MODEL_TRAIT)
+			ADD_TRAIT(src, trait, SOURCE_MODEL)
 
 	hat_offset = model.hat_offset
 

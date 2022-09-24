@@ -48,8 +48,8 @@
 /mob/living/simple_animal/hostile/construct/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
-	ADD_TRAIT(src, TRAIT_HEALS_FROM_CULT_PYLONS, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_HEALS_FROM_CULT_PYLONS, SOURCE_INNATE)
+	ADD_TRAIT(src, TRAIT_SPACEWALK, SOURCE_INNATE)
 	for(var/spell in construct_spells)
 		var/datum/action/new_spell = new spell(src)
 		new_spell.Grant(src)
@@ -434,7 +434,7 @@
 /mob/living/simple_animal/hostile/construct/harvester/AttackingTarget()
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
-		if(HAS_TRAIT(C, TRAIT_NODISMEMBER))
+		if(HAS_TRAIT(C, TRAIT_NO_DISMEMBER))
 			return ..() //ATTACK!
 		var/list/parts = list()
 		var/undismembermerable_limbs = 0

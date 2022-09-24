@@ -26,7 +26,7 @@
 
 /obj/item/assembly/voice/Initialize(mapload)
 	. = ..()
-	become_hearing_sensitive(ROUNDSTART_TRAIT)
+	become_hearing_sensitive(SOURCE_ROUNDSTART)
 
 /obj/item/assembly/voice/examine(mob/user)
 	. = ..()

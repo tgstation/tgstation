@@ -399,7 +399,7 @@
   - bugfix: Newly built turrets start unlocked.
   - balance: munchies now impact hunger at a rate similar to running nonstop
   Zonespace27:
-  - bugfix: Butcher's meat hook no longer fails when the user has TRAIT_NOGUNS
+  - bugfix: Butcher's meat hook no longer fails when the user has TRAIT_NO_GUNS
   axietheaxolotl:
   - imageadd: new dead body spawner icons
   orthography:

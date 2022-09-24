@@ -224,7 +224,7 @@
 			t_prod = new t_prod(output_loc, mutated_seed)
 			t_prod.transform = initial(t_prod.transform)
 			t_prod.transform *= TRANSFORM_USING_VARIABLE(t_prod.seed.potency, 100) + 0.5
-			ADD_TRAIT(t_prod, TRAIT_PLANT_WILDMUTATE, INNATE_TRAIT)
+			ADD_TRAIT(t_prod, TRAIT_PLANT_WILDMUTATE, SOURCE_INNATE)
 			t_amount++
 			if(t_prod.seed)
 				t_prod.seed.set_instability(round(instability * 0.5))

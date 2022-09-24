@@ -54,7 +54,7 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define isplatingturf(A) (istype(A, /turf/open/floor/plating))
 
-#define istransparentturf(A) (HAS_TRAIT(A, TURF_Z_TRANSPARENT_TRAIT))
+#define istransparentturf(A) (HAS_TRAIT(A, TRAIT_TURF_Z_TRANSPARENT))
 
 //Mobs
 #define isliving(A) (istype(A, /mob/living))

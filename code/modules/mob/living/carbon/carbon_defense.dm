@@ -2,7 +2,7 @@
 
 /mob/living/carbon/get_eye_protection()
 	. = ..()
-	if(HAS_TRAIT_NOT_FROM(src, TRAIT_BLIND, list(UNCONSCIOUS_TRAIT, HYPNOCHAIR_TRAIT)))
+	if(HAS_TRAIT_NOT_FROM(src, TRAIT_BLIND, list(SOURCE_UNCONSCIOUS, SOURCE_HYPNOCHAIR)))
 		return INFINITY //For all my homies that can not see in the world
 	var/obj/item/organ/internal/eyes/E = getorganslot(ORGAN_SLOT_EYES)
 	if(!E)
@@ -558,9 +558,9 @@
 
 			if(eyes.damage > 20)
 				if(prob(eyes.damage - 20))
-					if(!HAS_TRAIT(src, TRAIT_NEARSIGHT))
+					if(!HAS_TRAIT(src, TRAIT_NEARSIGHTED))
 						to_chat(src, span_warning("Your eyes start to burn badly!"))
-					become_nearsighted(EYE_DAMAGE)
+					become_nearsighted(SOURCE_EYE_DAMAGE)
 
 				else if(prob(eyes.damage - 25))
 					if(!is_blind())
@@ -650,9 +650,9 @@
 		return
 	if(oxyloss <= 50)
 		if(getOxyLoss() > 50)
-			ADD_TRAIT(src, TRAIT_KNOCKEDOUT, OXYLOSS_TRAIT)
+			ADD_TRAIT(src, TRAIT_KNOCKEDOUT, SOURCE_OXYLOSS)
 	else if(getOxyLoss() <= 50)
-		REMOVE_TRAIT(src, TRAIT_KNOCKEDOUT, OXYLOSS_TRAIT)
+		REMOVE_TRAIT(src, TRAIT_KNOCKEDOUT, SOURCE_OXYLOSS)
 
 /mob/living/carbon/get_organic_health()
 	. = health

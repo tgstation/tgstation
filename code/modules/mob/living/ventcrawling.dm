@@ -53,13 +53,13 @@
 		return
 
 	//Handle the exit here
-	if(HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) && istype(loc, /obj/machinery/atmospherics) && movement_type & VENTCRAWLING)
+	if(HAS_TRAIT(src, TRAIT_MOVE_VENT_CRAWLING) && istype(loc, /obj/machinery/atmospherics) && movement_type & VENTCRAWLING)
 		visible_message(span_notice("[src] begins climbing out from the ventilation system...") ,span_notice("You begin climbing out from the ventilation system..."))
 		if(!client)
 			return
 		visible_message(span_notice("[src] scrambles out from the ventilation ducts!"),span_notice("You scramble out from the ventilation ducts."))
 		forceMove(ventcrawl_target.loc)
-		REMOVE_TRAIT(src, TRAIT_MOVE_VENTCRAWLING, VENTCRAWLING_TRAIT)
+		REMOVE_TRAIT(src, TRAIT_MOVE_VENT_CRAWLING, SOURCE_VENTCRAWLING)
 		update_pipe_vision()
 
 	//Entrance here
@@ -93,7 +93,7 @@
  */
 /mob/living/proc/move_into_vent(obj/machinery/atmospherics/components/ventcrawl_target)
 	forceMove(ventcrawl_target)
-	ADD_TRAIT(src, TRAIT_MOVE_VENTCRAWLING, VENTCRAWLING_TRAIT)
+	ADD_TRAIT(src, TRAIT_MOVE_VENT_CRAWLING, SOURCE_VENTCRAWLING)
 	update_pipe_vision()
 
 /**
@@ -109,7 +109,7 @@
 		lighting = hud_used?.plane_masters["[LIGHTING_PLANE]"]
 
 	// Take away all the pipe images if we're not doing anything with em
-	if(isnull(client) || !HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) || !istype(loc, /obj/machinery/atmospherics) || !(movement_type & VENTCRAWLING))
+	if(isnull(client) || !HAS_TRAIT(src, TRAIT_MOVE_VENT_CRAWLING) || !istype(loc, /obj/machinery/atmospherics) || !(movement_type & VENTCRAWLING))
 		for(var/image/current_image in pipes_shown)
 			client.images -= current_image
 		pipes_shown.len = 0

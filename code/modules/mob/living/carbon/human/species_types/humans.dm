@@ -3,7 +3,7 @@
 	id = SPECIES_HUMAN
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,HAS_FLESH,HAS_BONE)
 	inherent_traits = list(
-		TRAIT_CAN_USE_FLIGHT_POTION,
+		TRAIT_ALLOW_FLIGHT_POTION,
 	)
 	mutant_bodyparts = list("wings" = "None")
 	use_skintones = 1

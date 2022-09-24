@@ -23,7 +23,7 @@
 /datum/element/cult_halo/proc/set_halo(mob/living/target)
 	SIGNAL_HANDLER
 
-	ADD_TRAIT(target, TRAIT_CULT_HALO, CULT_TRAIT)
+	ADD_TRAIT(target, TRAIT_CULT_HALO, SOURCE_CULT)
 	var/mutable_appearance/new_halo_overlay = mutable_appearance('icons/effects/cult/halo.dmi', "halo[rand(1, 6)]", -HALO_LAYER)
 	if (ishuman(target))
 		var/mob/living/carbon/human/human_parent = target
@@ -39,7 +39,7 @@
  * Removes the halo overlays, and trait from the mob
  */
 /datum/element/cult_halo/Detach(mob/living/target, ...)
-	REMOVE_TRAIT(target, TRAIT_CULT_HALO, CULT_TRAIT)
+	REMOVE_TRAIT(target, TRAIT_CULT_HALO, SOURCE_CULT)
 	if (ishuman(target))
 		var/mob/living/carbon/human/human_parent = target
 		human_parent.remove_overlay(HALO_LAYER)

@@ -213,7 +213,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/clown/fleshclown/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, SOURCE_INNATE)
 
 /mob/living/simple_animal/hostile/retaliate/clown/longface
 	name = "Longface"

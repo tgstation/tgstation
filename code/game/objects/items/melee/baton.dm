@@ -132,7 +132,7 @@
 	if(check_parried(target, user))
 		return BATON_ATTACK_DONE
 
-	if(HAS_TRAIT_FROM(target, TRAIT_IWASBATONED, REF(user))) //no doublebaton abuse anon!
+	if(HAS_TRAIT_FROM(target, TRAIT_BATON_COOLDOWN, REF(user))) //no doublebaton abuse anon!
 		to_chat(user, span_danger("You fumble and miss [target]!"))
 		return BATON_ATTACK_DONE
 
@@ -164,7 +164,7 @@
 		return TRUE
 
 /obj/item/melee/baton/proc/finalize_baton_attack(mob/living/target, mob/living/user, modifiers, in_attack_chain = TRUE)
-	if(!in_attack_chain && HAS_TRAIT_FROM(target, TRAIT_IWASBATONED, REF(user)))
+	if(!in_attack_chain && HAS_TRAIT_FROM(target, TRAIT_BATON_COOLDOWN, REF(user)))
 		return BATON_ATTACK_DONE
 
 	cooldown_check = world.time + cooldown
@@ -237,8 +237,8 @@
 	if(!cooldown)
 		return
 	var/user_ref = REF(user) // avoids harddels.
-	ADD_TRAIT(target, TRAIT_IWASBATONED, user_ref)
-	addtimer(TRAIT_CALLBACK_REMOVE(target, TRAIT_IWASBATONED, user_ref), cooldown)
+	ADD_TRAIT(target, TRAIT_BATON_COOLDOWN, user_ref)
+	addtimer(TRAIT_CALLBACK_REMOVE(target, TRAIT_BATON_COOLDOWN, user_ref), cooldown)
 
 /obj/item/melee/baton/proc/clumsy_check(mob/living/user, mob/living/intented_target)
 	if(!active || !HAS_TRAIT(user, TRAIT_CLUMSY) || prob(50))

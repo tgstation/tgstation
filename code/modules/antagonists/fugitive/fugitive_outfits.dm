@@ -53,7 +53,7 @@
 	no_drops += equipped_on.get_item_by_slot(ITEM_SLOT_HEAD)
 	no_drops += equipped_on.get_item_by_slot(ITEM_SLOT_EYES)
 	for(var/obj/item/trait_needed as anything in no_drops)
-		ADD_TRAIT(trait_needed, TRAIT_NODROP, CURSED_ITEM_TRAIT(trait_needed.type))
+		ADD_TRAIT(trait_needed, TRAIT_NODROP, SOURCE_CURSED_ITEM(trait_needed.type))
 
 	var/datum/action/cooldown/spell/aoe/knock/waldos_key = new(equipped_on.mind || equipped_on)
 	waldos_key.Grant(equipped_on)

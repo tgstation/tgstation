@@ -12,8 +12,8 @@
 	say_mod = "poofs" //what does a mushroom sound like
 	species_traits = list(MUTCOLORS, NOEYESPRITES, NO_UNDERWEAR, HAS_FLESH, HAS_BONE)
 	inherent_traits = list(
-		TRAIT_NOBREATH,
-		TRAIT_NOFLASH,
+		TRAIT_NO_BREATH,
+		TRAIT_NO_FLASH,
 	)
 	inherent_factions = list("mushroom")
 	speedmod = 1.5 //faster than golems but not by much

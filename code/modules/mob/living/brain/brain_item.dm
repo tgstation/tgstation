@@ -20,7 +20,7 @@
 	low_threshold = 45
 	high_threshold = 120
 
-	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE, TRAIT_CAN_STRIP)
+	organ_traits = list(TRAIT_ADVANCED_TOOL_USER, TRAIT_LITERATE, TRAIT_CAN_STRIP)
 
 	var/suicided = FALSE
 	var/mob/living/brain/brainmob = null
@@ -45,7 +45,7 @@
 	name = "brain"
 
 	if(C.mind && C.mind.has_antag_datum(/datum/antagonist/changeling) && !no_id_transfer) //congrats, you're trapped in a body you don't control
-		if(brainmob && !(C.stat == DEAD || (HAS_TRAIT(C, TRAIT_DEATHCOMA))))
+		if(brainmob && !(C.stat == DEAD || (HAS_TRAIT(C, TRAIT_DEATH_COMA))))
 			to_chat(brainmob, span_danger("You can't feel your body! You're still just a brain!"))
 		forceMove(C)
 		C.update_body_parts()
@@ -328,7 +328,7 @@
 /obj/item/organ/internal/brain/primitive //No like books and stompy metal men
 	name = "Primative Brain"
 	desc = "This juicy piece of meat has a clearly underdeveloped frontal lobe."
-	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_CAN_STRIP, TRAIT_PRIMITIVE) // No literacy
+	organ_traits = list(TRAIT_ADVANCED_TOOL_USER, TRAIT_CAN_STRIP, TRAIT_PRIMITIVE) // No literacy
 
 ////////////////////////////////////TRAUMAS////////////////////////////////////////
 

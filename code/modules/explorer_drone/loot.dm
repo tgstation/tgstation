@@ -165,7 +165,7 @@ GLOBAL_LIST_INIT(adventure_loot_generator_index,generate_generator_index())
 
 /obj/item/firelance/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	if(!HAS_TRAIT(src,TRAIT_WIELDED))
+	if(!HAS_TRAIT(src,TRAIT_TWO_HANDED))
 		to_chat(user,span_notice("You need to wield [src] in two hands before you can fire it."))
 		return
 	if(LAZYACCESS(user.do_afters, "firelance"))
@@ -190,4 +190,4 @@ GLOBAL_LIST_INIT(adventure_loot_generator_index,generate_generator_index())
 
 /// Additional windup checks
 /obj/item/firelance/proc/windup_checks()
-	return HAS_TRAIT(src,TRAIT_WIELDED)
+	return HAS_TRAIT(src,TRAIT_TWO_HANDED)

@@ -38,7 +38,7 @@
 
 /mob/living/simple_animal/bot/firebot/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_SPACEWALK, SOURCE_INNATE)
 	update_appearance(UPDATE_ICON)
 
 	// Doing this hurts my soul, but simplebot access reworks are for another day.

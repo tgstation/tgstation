@@ -85,7 +85,7 @@
  * tipper - the mob who originally tipped us
  */
 /mob/living/basic/cow/proc/set_tip_react_blackboard(mob/living/carbon/tipper)
-	if(!HAS_TRAIT_FROM(src, TRAIT_IMMOBILIZED, TIPPED_OVER) || !ai_controller)
+	if(!HAS_TRAIT_FROM(src, TRAIT_IMMOBILIZED, SOURCE_TIPPED_OVER) || !ai_controller)
 		return
 	ai_controller.blackboard[BB_BASIC_MOB_TIP_REACTING] = TRUE
 	ai_controller.blackboard[BB_BASIC_MOB_TIPPER] = tipper

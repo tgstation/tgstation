@@ -93,7 +93,7 @@
  * Actually checks if our user is safely handling our plant.
  *
  * Checks for TRAIT_PLANT_SAFE, and returns TRUE if we have it.
- * Then, any extra traits we need to check (Like TRAIT_PIERCEIMMUNE for nettles) and returns TRUE if we have one of them.
+ * Then, any extra traits we need to check (Like TRAIT_PIERCE_IMMUNE for nettles) and returns TRUE if we have one of them.
  * Then, any extra genes we need to check (Like liquid contents for bluespace tomatos) and returns TRUE if we don't have the gene.
  *
  * source - our plant

@@ -1,8 +1,8 @@
 //Here are the procs used to modify status effects of a mob.
 //The effects include: stun, knockdown, unconscious, sleeping, resting, jitteriness, dizziness,
-// eye damage, eye_blind, eye_blurry, druggy, TRAIT_BLIND trait, and TRAIT_NEARSIGHT trait.
+// eye damage, eye_blind, eye_blurry, druggy, TRAIT_BLIND trait, and TRAIT_NEARSIGHTED trait.
 
-#define IS_STUN_IMMUNE(source, ignore_canstun) ((source.status_flags & GODMODE) || (!ignore_canstun && (!(source.status_flags & CANKNOCKDOWN) || HAS_TRAIT(source, TRAIT_STUNIMMUNE))))
+#define IS_STUN_IMMUNE(source, ignore_canstun) ((source.status_flags & GODMODE) || (!ignore_canstun && (!(source.status_flags & CANKNOCKDOWN) || HAS_TRAIT(source, TRAIT_STUN_IMMUNE))))
 
 /* STUN */
 /mob/living/proc/IsStun() //If we're stunned
@@ -369,7 +369,7 @@
 
 /* SLEEPING */
 /mob/living/proc/IsSleeping() //If we're asleep
-	if(!HAS_TRAIT(src, TRAIT_SLEEPIMMUNE))
+	if(!HAS_TRAIT(src, TRAIT_SLEEP_IMMUNE))
 		return has_status_effect(/datum/status_effect/incapacitating/sleeping)
 
 /mob/living/proc/AmountSleeping() //How many deciseconds remain in our sleep
@@ -514,7 +514,7 @@
 	if(source)
 		REMOVE_TRAIT(src, TRAIT_BLIND, source)
 	else
-		REMOVE_TRAIT_NOT_FROM(src, TRAIT_BLIND, list(QUIRK_TRAIT, EYES_COVERED, BLINDFOLD_TRAIT))
+		REMOVE_TRAIT_NOT_FROM(src, TRAIT_BLIND, list(SOURCE_QUIRK, SOURCE_EYES_COVERED, SOURCE_BLINDFOLD))
 	if(!HAS_TRAIT(src, TRAIT_BLIND))
 		update_blindness()
 
@@ -526,14 +526,14 @@
 		ADD_TRAIT(src, TRAIT_BLIND, source)
 
 /mob/living/proc/cure_nearsighted(source)
-	REMOVE_TRAIT(src, TRAIT_NEARSIGHT, source)
-	if(!HAS_TRAIT(src, TRAIT_NEARSIGHT))
+	REMOVE_TRAIT(src, TRAIT_NEARSIGHTED, source)
+	if(!HAS_TRAIT(src, TRAIT_NEARSIGHTED))
 		clear_fullscreen("nearsighted")
 
 /mob/living/proc/become_nearsighted(source)
-	if(!HAS_TRAIT(src, TRAIT_NEARSIGHT))
+	if(!HAS_TRAIT(src, TRAIT_NEARSIGHTED))
 		overlay_fullscreen("nearsighted", /atom/movable/screen/fullscreen/impaired, 1)
-	ADD_TRAIT(src, TRAIT_NEARSIGHT, source)
+	ADD_TRAIT(src, TRAIT_NEARSIGHTED, source)
 
 /mob/living/proc/cure_husk(source)
 	REMOVE_TRAIT(src, TRAIT_HUSK, source)
@@ -551,8 +551,8 @@
 		ADD_TRAIT(src, TRAIT_HUSK, source)
 
 /mob/living/proc/cure_fakedeath(source)
-	REMOVE_TRAIT(src, TRAIT_FAKEDEATH, source)
-	REMOVE_TRAIT(src, TRAIT_DEATHCOMA, source)
+	REMOVE_TRAIT(src, TRAIT_FAKE_DEATH, source)
+	REMOVE_TRAIT(src, TRAIT_DEATH_COMA, source)
 	if(stat != DEAD)
 		tod = null
 
@@ -562,19 +562,19 @@
 		return
 	if(!silent)
 		emote("deathgasp")
-	ADD_TRAIT(src, TRAIT_FAKEDEATH, source)
-	ADD_TRAIT(src, TRAIT_DEATHCOMA, source)
+	ADD_TRAIT(src, TRAIT_FAKE_DEATH, source)
+	ADD_TRAIT(src, TRAIT_DEATH_COMA, source)
 	tod = station_time_timestamp()
 
 
 ///Unignores all slowdowns that lack the IGNORE_NOSLOW flag.
 /mob/living/proc/unignore_slowdown(source)
-	REMOVE_TRAIT(src, TRAIT_IGNORESLOWDOWN, source)
+	REMOVE_TRAIT(src, TRAIT_IGNORE_SLOWDOWN, source)
 	update_movespeed()
 
 ///Ignores all slowdowns that lack the IGNORE_NOSLOW flag.
 /mob/living/proc/ignore_slowdown(source)
-	ADD_TRAIT(src, TRAIT_IGNORESLOWDOWN, source)
+	ADD_TRAIT(src, TRAIT_IGNORE_SLOWDOWN, source)
 	update_movespeed()
 
 ///Ignores specific slowdowns. Accepts a list of slowdowns.

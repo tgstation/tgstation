@@ -32,7 +32,7 @@
 /mob/living/simple_animal/hostile/retaliate/snake/Initialize(mapload, special_reagent)
 	. = ..()
 	add_cell_sample()
-	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, SOURCE_INNATE)
 	if(!special_reagent)
 		special_reagent = /datum/reagent/toxin
 	AddElement(/datum/element/venomous, special_reagent, 4)

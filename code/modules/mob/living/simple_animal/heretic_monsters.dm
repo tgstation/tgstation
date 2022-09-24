@@ -317,7 +317,7 @@
 
 	if(iscarbon(target))
 		var/mob/living/carbon/carbon_target = target
-		if(HAS_TRAIT(carbon_target, TRAIT_NODISMEMBER))
+		if(HAS_TRAIT(carbon_target, TRAIT_NO_DISMEMBER))
 			return
 		var/list/parts_to_remove = list()
 		for(var/obj/item/bodypart/bodypart in carbon_target.bodyparts)

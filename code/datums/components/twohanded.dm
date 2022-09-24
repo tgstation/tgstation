@@ -54,7 +54,7 @@
 	src.unwield_callback = unwield_callback
 
 	if(require_twohands)
-		ADD_TRAIT(parent, TRAIT_NEEDS_TWO_HANDS, ABSTRACT_ITEM_TRAIT)
+		ADD_TRAIT(parent, TRAIT_REQUIRES_TWO_HANDS, SOURCE_ABSTRACT_ITEM)
 
 // Inherit the new values passed to the component
 /datum/component/two_handed/InheritComponent(datum/component/two_handed/new_comp, original, require_twohands, wieldsound, unwieldsound, \
@@ -171,7 +171,7 @@
 	if(SEND_SIGNAL(parent, COMSIG_TWOHANDED_WIELD, user) & COMPONENT_TWOHANDED_BLOCK_WIELD)
 		return // blocked wield from item
 	wielded = TRUE
-	ADD_TRAIT(parent,TRAIT_WIELDED,src)
+	ADD_TRAIT(parent,TRAIT_TWO_HANDED,src)
 	RegisterSignal(user, COMSIG_MOB_SWAP_HANDS, .proc/on_swap_hands)
 	wield_callback?.Invoke(parent, user)
 
@@ -220,7 +220,7 @@
 	wielded = FALSE
 	UnregisterSignal(user, COMSIG_MOB_SWAP_HANDS)
 	SEND_SIGNAL(parent, COMSIG_TWOHANDED_UNWIELD, user)
-	REMOVE_TRAIT(parent,TRAIT_WIELDED,src)
+	REMOVE_TRAIT(parent,TRAIT_TWO_HANDED,src)
 	unwield_callback?.Invoke(parent, user)
 
 	// update item stats
@@ -352,7 +352,7 @@
 
 /obj/item/offhand/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, SOURCE_ABSTRACT_ITEM)
 
 /obj/item/offhand/Destroy()
 	wielded = FALSE

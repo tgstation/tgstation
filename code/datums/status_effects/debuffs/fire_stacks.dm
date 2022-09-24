@@ -216,7 +216,7 @@
  */
 
 /datum/status_effect/fire_handler/fire_stacks/proc/ignite(silent = FALSE)
-	if(HAS_TRAIT(owner, TRAIT_NOFIRE))
+	if(HAS_TRAIT(owner, TRAIT_FLAME_IMMUNE))
 		return FALSE
 
 	on_fire = TRUE

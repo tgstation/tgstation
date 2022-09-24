@@ -70,7 +70,7 @@
 /datum/element/embed/proc/checkEmbed(obj/item/weapon, mob/living/carbon/victim, hit_zone, datum/thrownthing/throwingdatum, forced=FALSE)
 	SIGNAL_HANDLER
 
-	if(!istype(victim) || HAS_TRAIT(victim, TRAIT_PIERCEIMMUNE))
+	if(!istype(victim) || HAS_TRAIT(victim, TRAIT_PIERCE_IMMUNE))
 		return
 
 	var/flying_speed = throwingdatum?.speed || weapon.throw_speed

@@ -547,7 +547,7 @@
   - bugfix: Automatic blob expansion now applies proper reagent strain effects when
       it hurts a human
   Timberpoes:
-  - bugfix: When an admin makes a cyborg flash immune by giving it TRAIT_NOFLASH,
+  - bugfix: When an admin makes a cyborg flash immune by giving it TRAIT_NO_FLASH,
       that cyborg is now actually immune to flash.
   - bugfix: Random corpses spawned in offstation ruins will no longer report as having
       suit sensors when their sensors are disabled.

@@ -112,7 +112,7 @@ GLOBAL_LIST_EMPTY(lifts)
 	if(!(potential_rider in lift_load))
 		return
 	if(isliving(potential_rider) && HAS_TRAIT(potential_rider, TRAIT_CANNOT_BE_UNBUCKLED))
-		REMOVE_TRAIT(potential_rider, TRAIT_CANNOT_BE_UNBUCKLED, BUCKLED_TRAIT)
+		REMOVE_TRAIT(potential_rider, TRAIT_CANNOT_BE_UNBUCKLED, SOURCE_BUCKLED)
 	LAZYREMOVE(lift_load, potential_rider)
 	LAZYREMOVE(changed_gliders, potential_rider)
 	UnregisterSignal(potential_rider, list(COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE))
@@ -126,7 +126,7 @@ GLOBAL_LIST_EMPTY(lifts)
 		return FALSE
 
 	if(isliving(new_lift_contents) && !HAS_TRAIT(new_lift_contents, TRAIT_CANNOT_BE_UNBUCKLED))
-		ADD_TRAIT(new_lift_contents, TRAIT_CANNOT_BE_UNBUCKLED, BUCKLED_TRAIT)
+		ADD_TRAIT(new_lift_contents, TRAIT_CANNOT_BE_UNBUCKLED, SOURCE_BUCKLED)
 	LAZYADD(lift_load, new_lift_contents)
 	RegisterSignal(new_lift_contents, COMSIG_PARENT_QDELETING, .proc/RemoveItemFromLift)
 

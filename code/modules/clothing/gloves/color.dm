@@ -12,7 +12,7 @@
 	custom_price = PAYCHECK_CREW * 10
 	custom_premium_price = PAYCHECK_COMMAND * 6
 	cut_type = /obj/item/clothing/gloves/cut
-	clothing_traits = list(TRAIT_CHUNKYFINGERS)
+	clothing_traits = list(TRAIT_CHUNKY_FINGERS)
 
 /obj/item/clothing/gloves/color/yellow/heavy
 	name = "ceramic-lined insulated gloves"
@@ -51,7 +51,7 @@
 
 /obj/item/clothing/gloves/color/yellow/sprayon/Initialize(mapload)
 	.=..()
-	ADD_TRAIT(src, TRAIT_NODROP, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, SOURCE_INNATE)
 
 /obj/item/clothing/gloves/color/yellow/sprayon/equipped(mob/user, slot)
 	. = ..()
@@ -237,7 +237,7 @@
 	desc = "Pricy sterile gloves that are thicker than latex. Excellent grip ensures very fast carrying of patients along with the faster use time of various chemical related items."
 	icon_state = "nitrile"
 	inhand_icon_state = "nitrilegloves"
-	clothing_traits = list(TRAIT_QUICKER_CARRY, TRAIT_FASTMED)
+	clothing_traits = list(TRAIT_QUICKER_CARRY, TRAIT_FAST_MED)
 
 /obj/item/clothing/gloves/color/infiltrator
 	name = "infiltrator gloves"

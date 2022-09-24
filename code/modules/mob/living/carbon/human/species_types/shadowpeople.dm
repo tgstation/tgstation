@@ -7,9 +7,9 @@
 	meat = /obj/item/food/meat/slab/human/mutant/shadow
 	species_traits = list(NOBLOOD,NOEYESPRITES)
 	inherent_traits = list(
-		TRAIT_NOBREATH,
-		TRAIT_RADIMMUNE,
-		TRAIT_VIRUSIMMUNE,
+		TRAIT_NO_BREATH,
+		TRAIT_RAD_IMMUNE,
+		TRAIT_VIRUS_IMMUNE,
 	)
 	inherent_factions = list("faithless")
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC

@@ -443,7 +443,7 @@
       someone from casting unholy magic (cult spells, etc.)
   - balance: Nullrods, ritual totems, and holymelons prevent someone from casting
       wizard magic (fireball, magic missile, etc.)
-  - balance: Immorality talismans, berserker suits, and `TRAIT_ANTIMAGIC` prevents
+  - balance: Immorality talismans, berserker suits, and `TRAIT_ANTI_MAGIC` prevents
       all types of magic (except stuff like mime abilities)
   - balance: Touch of Madness and Mindswap is now blocked with `MAGIC_RESISTANCE`
       and `MAGIC_RESISTANCE_MIND`

@@ -121,7 +121,7 @@
 		new/obj/structure/ai_core/deactivated(loc) //New empty terminal.
 		return INITIALIZE_HINT_QDEL //Delete AI.
 
-	ADD_TRAIT(src, TRAIT_NO_TELEPORT, AI_ANCHOR_TRAIT)
+	ADD_TRAIT(src, TRAIT_NO_TELEPORT, SOURCE_AI_ANCHOR)
 	status_flags &= ~CANPUSH //AI starts anchored, so dont push it
 
 	if(L && istype(L, /datum/ai_laws))
@@ -192,8 +192,8 @@
 	builtInCamera = new (src)
 	builtInCamera.network = list("ss13")
 
-	ADD_TRAIT(src, TRAIT_PULL_BLOCKED, ROUNDSTART_TRAIT)
-	ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, ROUNDSTART_TRAIT)
+	ADD_TRAIT(src, TRAIT_PULL_BLOCKED, SOURCE_ROUNDSTART)
+	ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, SOURCE_ROUNDSTART)
 
 	alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER, ALARM_CAMERA, ALARM_BURGLAR, ALARM_MOTION), list(z), camera_view = TRUE)
 	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_TRIGGERED, .proc/alarm_triggered)
@@ -382,12 +382,12 @@
 		is_anchored = !is_anchored
 		move_resist = MOVE_FORCE_NORMAL
 		status_flags |= CANPUSH //we want the core to be push-able when un-anchored
-		REMOVE_TRAIT(src, TRAIT_NO_TELEPORT, AI_ANCHOR_TRAIT)
+		REMOVE_TRAIT(src, TRAIT_NO_TELEPORT, SOURCE_AI_ANCHOR)
 	else
 		is_anchored = !is_anchored
 		move_resist = MOVE_FORCE_OVERPOWERING
 		status_flags &= ~CANPUSH //we dont want the core to be push-able when anchored
-		ADD_TRAIT(src, TRAIT_NO_TELEPORT, AI_ANCHOR_TRAIT)
+		ADD_TRAIT(src, TRAIT_NO_TELEPORT, SOURCE_AI_ANCHOR)
 
 /mob/living/silicon/ai/proc/ai_mob_to_structure()
 	disconnect_shell()
@@ -1091,9 +1091,9 @@
 	aiRestorePowerRoutine = new_value
 	if(aiRestorePowerRoutine)
 		if(!.)
-			ADD_TRAIT(src, TRAIT_INCAPACITATED, POWER_LACK_TRAIT)
+			ADD_TRAIT(src, TRAIT_INCAPACITATED, SOURCE_POWER_LACK)
 	else if(.)
-		REMOVE_TRAIT(src, TRAIT_INCAPACITATED, POWER_LACK_TRAIT)
+		REMOVE_TRAIT(src, TRAIT_INCAPACITATED, SOURCE_POWER_LACK)
 
 
 /mob/living/silicon/on_handsblocked_start()

@@ -86,10 +86,10 @@
 	give_item_to_holder(/obj/item/clothing/glasses/blindfold/white, list(LOCATION_EYES = ITEM_SLOT_EYES, LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
 
 /datum/quirk/item_quirk/blindness/add()
-	quirk_holder.become_blind(QUIRK_TRAIT)
+	quirk_holder.become_blind(SOURCE_QUIRK)
 
 /datum/quirk/item_quirk/blindness/remove()
-	quirk_holder.cure_blind(QUIRK_TRAIT)
+	quirk_holder.cure_blind(SOURCE_QUIRK)
 
 	/* A couple of brain tumor stats for anyone curious / looking at this quirk for balancing:
 	 * - It takes less 16 minute 40 seconds to die from brain death due to a brain tumor.
@@ -301,10 +301,10 @@
 	give_item_to_holder(glasses, list(LOCATION_EYES = ITEM_SLOT_EYES, LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
 
 /datum/quirk/item_quirk/nearsighted/add()
-	quirk_holder.become_nearsighted(QUIRK_TRAIT)
+	quirk_holder.become_nearsighted(SOURCE_QUIRK)
 
 /datum/quirk/item_quirk/nearsighted/remove()
-	quirk_holder.cure_nearsighted(QUIRK_TRAIT)
+	quirk_holder.cure_nearsighted(SOURCE_QUIRK)
 
 /datum/quirk/nyctophobia
 	name = "Nyctophobia"
@@ -460,7 +460,7 @@
 	desc = "Your first instinct is always to let people push you around. Resisting out of grabs will take conscious effort."
 	icon = "handshake"
 	value = -8
-	mob_trait = TRAIT_GRABWEAKNESS
+	mob_trait = TRAIT_GRAB_WEAKNESS
 	gain_text = "<span class='danger'>You feel like a pushover.</span>"
 	lose_text = "<span class='notice'>You feel like standing up for yourself.</span>"
 	medical_record_text = "Patient presents a notably unassertive personality and is easy to manipulate."
@@ -676,7 +676,7 @@
 			quirk_holder.mind.remove_addiction_points(addiction_type, MAX_ADDICTION_POINTS)
 
 /datum/quirk/item_quirk/junkie/process(delta_time)
-	if(HAS_TRAIT(quirk_holder, TRAIT_NOMETABOLISM))
+	if(HAS_TRAIT(quirk_holder, TRAIT_NO_METABOLISM))
 		return
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	if(world.time > next_process)

@@ -7,7 +7,7 @@
 
 	var/mangled_state = get_mangled_state()
 	var/bio_state = owner.get_biological_state()
-	var/easy_dismember = HAS_TRAIT(owner, TRAIT_EASYDISMEMBER) // if we have easydismember, we don't reduce damage when redirecting damage to different types (slashing weapons on mangled/skinless limbs attack at 100% instead of 50%)
+	var/easy_dismember = HAS_TRAIT(owner, TRAIT_EASY_DISMEMBER) // if we have easydismember, we don't reduce damage when redirecting damage to different types (slashing weapons on mangled/skinless limbs attack at 100% instead of 50%)
 
 	if(wounding_type == WOUND_BLUNT && sharpness)
 		if(sharpness & SHARP_EDGED)
@@ -72,7 +72,7 @@
 	if(HAS_TRAIT(owner,TRAIT_HARDLY_WOUNDED))
 		damage *= 0.85
 
-	if(HAS_TRAIT(owner, TRAIT_EASYDISMEMBER))
+	if(HAS_TRAIT(owner, TRAIT_EASY_DISMEMBER))
 		damage *= 1.1
 
 	var/base_roll = rand(1, round(damage ** WOUND_DAMAGE_EXPONENT))

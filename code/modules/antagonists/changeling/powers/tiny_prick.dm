@@ -203,7 +203,7 @@
 /datum/action/changeling/sting/blind/sting_action(mob/user, mob/living/carbon/target)
 	log_combat(user, target, "stung", "blind sting")
 	to_chat(target, span_danger("Your eyes burn horrifically!"))
-	target.become_nearsighted(EYE_DAMAGE)
+	target.become_nearsighted(SOURCE_EYE_DAMAGE)
 	target.adjust_blindness(20)
 	target.blur_eyes(40)
 	return TRUE

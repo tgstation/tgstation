@@ -28,7 +28,7 @@
 //Gives player-controlled variants the ability to swap attacks
 /mob/living/simple_animal/hostile/asteroid/elite/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_ALERT_GHOSTS_ON_DEATH, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_ALERT_GHOSTS_ON_DEATH, SOURCE_INNATE)
 	for(var/action_type in attack_action_types)
 		var/datum/action/innate/elite_attack/attack_action = new action_type()
 		attack_action.Grant(src)
@@ -282,8 +282,8 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	if(QDELETED(mychild) || mychild.stat == DEAD)
 		onEliteLoss()
 		return
-	if(QDELETED(activator) || activator.stat == DEAD || (activator.health <= HEALTH_THRESHOLD_DEAD && HAS_TRAIT(activator, TRAIT_NODEATH)))
-		if(!QDELETED(activator) && HAS_TRAIT(activator, TRAIT_NODEATH)) // dust the unkillable activator
+	if(QDELETED(activator) || activator.stat == DEAD || (activator.health <= HEALTH_THRESHOLD_DEAD && HAS_TRAIT(activator, TRAIT_NO_DEATH)))
+		if(!QDELETED(activator) && HAS_TRAIT(activator, TRAIT_NO_DEATH)) // dust the unkillable activator
 			activator.dust(drop_items = TRUE)
 		onEliteWon()
 

@@ -150,7 +150,7 @@
 		to_chat(user, activate_message)
 
 	for(var/trait in auto_traits)
-		ADD_TRAIT(user, trait, SKILLCHIP_TRAIT)
+		ADD_TRAIT(user, trait, SOURCE_SKILLCHIP)
 
 	active = TRUE
 
@@ -184,7 +184,7 @@
 		to_chat(user, deactivate_message)
 
 	for(var/trait in auto_traits)
-		REMOVE_TRAIT(user, trait, SKILLCHIP_TRAIT)
+		REMOVE_TRAIT(user, trait, SOURCE_SKILLCHIP)
 
 	active = FALSE
 
@@ -376,7 +376,7 @@
 /obj/item/skillchip/basketweaving
 	name = "Basketsoft 3000 skillchip"
 	desc = "Underwater edition."
-	auto_traits = list(TRAIT_UNDERWATER_BASKETWEAVING_KNOWLEDGE)
+	auto_traits = list(TRAIT_UNDERWATER_BASKETWEAVER)
 	skill_name = "Underwater Basketweaving"
 	skill_description = "Master intricate art of using twine to create perfect baskets while submerged."
 	skill_icon = "shopping-basket"

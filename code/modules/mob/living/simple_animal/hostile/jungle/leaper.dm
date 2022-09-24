@@ -88,7 +88,7 @@
 /obj/structure/leaper_bubble/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/movetype_handler)
-	ADD_TRAIT(src, TRAIT_MOVE_FLOATING, LEAPER_BUBBLE_TRAIT)
+	ADD_TRAIT(src, TRAIT_MOVE_FLOATING, SOURCE_LEAPER_BUBBLE)
 	QDEL_IN(src, 100)
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,

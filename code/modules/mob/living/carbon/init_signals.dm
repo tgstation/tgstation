@@ -2,11 +2,11 @@
 /mob/living/carbon/register_init_signals()
 	. = ..()
 
-	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_NOBREATH), .proc/on_nobreath_trait_gain)
-	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_NOMETABOLISM), .proc/on_nometabolism_trait_gain)
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_NO_BREATH), .proc/on_nobreath_trait_gain)
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_NO_METABOLISM), .proc/on_nometabolism_trait_gain)
 
 /**
- * On gain of TRAIT_NOBREATH
+ * On gain of TRAIT_NO_BREATH
  *
  * This will clear all alerts and moods related to breathing.
  */
@@ -31,7 +31,7 @@
 	clear_mood_event("smell")
 	clear_mood_event("suffocation")
 /**
- * On gain of TRAIT_NOMETABOLISM
+ * On gain of TRAIT_NO_METABOLISM
  *
  * This will clear all moods related to addictions and stop metabolization.
  */

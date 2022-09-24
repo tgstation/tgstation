@@ -69,9 +69,9 @@
 /mob/living/simple_animal/revenant/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
-	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_SIXTHSENSE, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_ALERT_GHOSTS_ON_DEATH, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_SPACEWALK, SOURCE_INNATE)
+	ADD_TRAIT(src, TRAIT_SIXTH_SENSE, SOURCE_INNATE)
+	ADD_TRAIT(src, TRAIT_ALERT_GHOSTS_ON_DEATH, SOURCE_INNATE)
 
 	// Starting spells
 	var/datum/action/cooldown/spell/night_vision/revenant/vision = new(src)

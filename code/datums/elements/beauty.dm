@@ -22,7 +22,7 @@
 
 	if(!beauty_counter[target] && ismovable(target))
 		var/atom/movable/mov_target = target
-		mov_target.become_area_sensitive(BEAUTY_ELEMENT_TRAIT)
+		mov_target.become_area_sensitive(SOURCE_BEAUTY_ELEMENT)
 		RegisterSignal(mov_target, COMSIG_ENTER_AREA, .proc/enter_area)
 		RegisterSignal(mov_target, COMSIG_EXIT_AREA, .proc/exit_area)
 
@@ -61,7 +61,7 @@
 		beauty_counter -= source
 		var/atom/movable/movable_source = source
 		if(istype(movable_source))
-			movable_source.lose_area_sensitivity(BEAUTY_ELEMENT_TRAIT)
+			movable_source.lose_area_sensitivity(SOURCE_BEAUTY_ELEMENT)
 	else //lower the 'counter' down by one, update the area, and call parent if it's reached zero.
 		beauty_counter[source]--
 		if(current_area && !current_area.outdoors)
@@ -73,4 +73,4 @@
 			beauty_counter -= source
 			var/atom/movable/movable_source = source
 			if(istype(movable_source))
-				movable_source.lose_area_sensitivity(BEAUTY_ELEMENT_TRAIT)
+				movable_source.lose_area_sensitivity(SOURCE_BEAUTY_ELEMENT)

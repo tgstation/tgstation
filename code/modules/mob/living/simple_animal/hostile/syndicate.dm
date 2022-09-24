@@ -63,7 +63,7 @@
 
 /mob/living/simple_animal/hostile/syndicate/space/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_SPACEWALK, SOURCE_INNATE)
 	set_light(4)
 
 /mob/living/simple_animal/hostile/syndicate/space/stormtrooper
@@ -99,7 +99,7 @@
 
 /mob/living/simple_animal/hostile/syndicate/melee/space/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_SPACEWALK, SOURCE_INNATE)
 	set_light(4)
 
 /mob/living/simple_animal/hostile/syndicate/melee/space/stormtrooper
@@ -151,7 +151,7 @@
 
 /mob/living/simple_animal/hostile/syndicate/melee/sword/space/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_SPACEWALK, SOURCE_INNATE)
 	sord = new(src)
 	set_light(4)
 
@@ -197,7 +197,7 @@
 
 /mob/living/simple_animal/hostile/syndicate/ranged/space/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_SPACEWALK, SOURCE_INNATE)
 	set_light(4)
 
 /mob/living/simple_animal/hostile/syndicate/ranged/space/stormtrooper
@@ -230,7 +230,7 @@
 
 /mob/living/simple_animal/hostile/syndicate/ranged/smg/space/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_SPACEWALK, SOURCE_INNATE)
 	set_light(4)
 
 /mob/living/simple_animal/hostile/syndicate/ranged/smg/space/stormtrooper
@@ -260,7 +260,7 @@
 
 /mob/living/simple_animal/hostile/syndicate/ranged/shotgun/space/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_SPACEWALK, SOURCE_INNATE)
 	set_light(4)
 
 /mob/living/simple_animal/hostile/syndicate/ranged/shotgun/space/stormtrooper

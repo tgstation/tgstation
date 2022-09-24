@@ -54,7 +54,7 @@
 	. = ..()
 	if(!proximity)
 		return
-	if(HAS_TRAIT(src, TRAIT_WIELDED))
+	if(HAS_TRAIT(src, TRAIT_TWO_HANDED))
 		if(charged)
 			charged = FALSE
 			if(isliving(A))
@@ -109,7 +109,7 @@
 	..()
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		return
-	if(HAS_TRAIT(src, TRAIT_WIELDED))
+	if(HAS_TRAIT(src, TRAIT_TWO_HANDED))
 		shock(M)
 
 /obj/item/mjollnir/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)

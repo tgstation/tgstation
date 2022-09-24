@@ -5,7 +5,7 @@
 	say_mod = "buzzes"
 	species_traits = list(HAS_FLESH, HAS_BONE, TRAIT_ANTENNAE)
 	inherent_traits = list(
-		TRAIT_CAN_USE_FLIGHT_POTION,
+		TRAIT_ALLOW_FLIGHT_POTION,
 		TRAIT_TACKLING_FRAIL_ATTACKER,
 	)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG

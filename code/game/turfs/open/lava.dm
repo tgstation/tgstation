@@ -61,7 +61,7 @@
 	if(isliving(gone))
 		var/mob/living/L = gone
 		if(!islava(get_step(src, direction)))
-			REMOVE_TRAIT(L, TRAIT_PERMANENTLY_ONFIRE, TURF_TRAIT)
+			REMOVE_TRAIT(L, TRAIT_PERMANENTLY_ONFIRE, SOURCE_TURF)
 		if(!L.on_fire)
 			L.update_fire()
 
@@ -234,7 +234,7 @@
 		return
 
 	var/mob/living/burn_living = burn_target
-	ADD_TRAIT(burn_living, TRAIT_PERMANENTLY_ONFIRE, TURF_TRAIT)
+	ADD_TRAIT(burn_living, TRAIT_PERMANENTLY_ONFIRE, SOURCE_TURF)
 	burn_living.update_fire()
 
 	burn_living.adjustFireLoss(lava_damage * delta_time)

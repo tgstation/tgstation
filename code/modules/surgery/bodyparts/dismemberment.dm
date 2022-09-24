@@ -10,7 +10,7 @@
 	var/mob/living/carbon/limb_owner = owner
 	if(limb_owner.status_flags & GODMODE)
 		return FALSE
-	if(HAS_TRAIT(limb_owner, TRAIT_NODISMEMBER))
+	if(HAS_TRAIT(limb_owner, TRAIT_NO_DISMEMBER))
 		return FALSE
 
 	var/obj/item/bodypart/affecting = limb_owner.get_bodypart(BODY_ZONE_CHEST)
@@ -55,7 +55,7 @@
 	var/mob/living/carbon/chest_owner = owner
 	if(!dismemberable)
 		return FALSE
-	if(HAS_TRAIT(chest_owner, TRAIT_NODISMEMBER))
+	if(HAS_TRAIT(chest_owner, TRAIT_NO_DISMEMBER))
 		return FALSE
 	. = list()
 	if(isturf(chest_owner.loc))

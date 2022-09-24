@@ -87,7 +87,7 @@
 	if(ismovable(wearer?.loc))
 		return wearer.loc.relaymove(wearer, direction)
 	else if(wearer)
-		ADD_TRAIT(wearer, TRAIT_FORCED_STANDING, MOD_TRAIT)
+		ADD_TRAIT(wearer, TRAIT_FORCED_STANDING, SOURCE_MOD)
 		addtimer(CALLBACK(src, .proc/ai_fall), AI_FALL_TIME, TIMER_UNIQUE | TIMER_OVERRIDE)
 	var/atom/movable/mover = wearer || src
 	return step(mover, direction)
@@ -100,7 +100,7 @@
 /obj/item/mod/control/proc/ai_fall()
 	if(!wearer)
 		return
-	REMOVE_TRAIT(wearer, TRAIT_FORCED_STANDING, MOD_TRAIT)
+	REMOVE_TRAIT(wearer, TRAIT_FORCED_STANDING, SOURCE_MOD)
 
 /obj/item/mod/ai_minicard
 	name = "AI mini-card"

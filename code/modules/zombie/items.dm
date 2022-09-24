@@ -19,7 +19,7 @@
 
 /obj/item/zombie_hand/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, SOURCE_HAND_REPLACEMENT)
 
 /obj/item/zombie_hand/visual_equipped(mob/user, slot)
 	. = ..()

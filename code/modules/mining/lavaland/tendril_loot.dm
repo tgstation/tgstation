@@ -114,7 +114,7 @@
 
 /obj/item/rod_of_asclepius/proc/activated()
 	item_flags = DROPDEL
-	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT(type))
+	ADD_TRAIT(src, TRAIT_NODROP, SOURCE_CURSED_ITEM(type))
 	desc = "A short wooden rod with a mystical snake inseparably gripping itself and the rod to your forearm. It flows with a healing energy that disperses amongst yourself and those around you. "
 	icon_state = "asclepius_active"
 	activated = TRUE
@@ -148,9 +148,9 @@
 	to_chat(user, span_warning("You feel your life being drained by the pendant..."))
 	if(do_after(user, 40, target = user))
 		to_chat(user, span_notice("Your lifeforce is now linked to the pendant! You feel like removing it would kill you, and yet you instinctively know that until then, you won't die."))
-		ADD_TRAIT(user, TRAIT_NODEATH, CLOTHING_TRAIT)
-		ADD_TRAIT(user, TRAIT_NOHARDCRIT, CLOTHING_TRAIT)
-		ADD_TRAIT(user, TRAIT_NOCRITDAMAGE, CLOTHING_TRAIT)
+		ADD_TRAIT(user, TRAIT_NO_DEATH, SOURCE_CLOTHING)
+		ADD_TRAIT(user, TRAIT_NO_HARD_CRIT, SOURCE_CLOTHING)
+		ADD_TRAIT(user, TRAIT_NO_CRIT_DAMAGE, SOURCE_CLOTHING)
 		RegisterSignal(user, COMSIG_CARBON_HEALTH_UPDATE, .proc/check_health)
 		icon_state = "memento_mori_active"
 		active_owner = user
@@ -509,7 +509,7 @@
 	if(iscarbon(exposed_mob) && exposed_mob.stat != DEAD)
 		var/mob/living/carbon/exposed_carbon = exposed_mob
 		var/holycheck = ishumanbasic(exposed_carbon)
-		if(!HAS_TRAIT(exposed_carbon, TRAIT_CAN_USE_FLIGHT_POTION) || reac_volume < 5)
+		if(!HAS_TRAIT(exposed_carbon, TRAIT_ALLOW_FLIGHT_POTION) || reac_volume < 5)
 			if((methods & INGEST) && show_message)
 				to_chat(exposed_carbon, span_notice("<i>You feel nothing but a terrible aftertaste.</i>"))
 			return
@@ -520,7 +520,7 @@
 		exposed_carbon.dna.species.GiveSpeciesFlight(exposed_carbon)
 		if(holycheck)
 			to_chat(exposed_carbon, span_notice("You feel blessed!"))
-			ADD_TRAIT(exposed_carbon, TRAIT_HOLY, FLIGHTPOTION_TRAIT)
+			ADD_TRAIT(exposed_carbon, TRAIT_HOLY, SOURCE_FLIGHT_POTION)
 		playsound(exposed_carbon.loc, 'sound/items/poster_ripped.ogg', 50, TRUE, -1)
 		exposed_carbon.adjustBruteLoss(20)
 		exposed_carbon.emote("scream")
@@ -638,7 +638,7 @@
 
 /obj/item/clothing/head/hooded/berserker/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, LOCKED_HELMET_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, SOURCE_LOCKED_HELMET)
 
 /obj/item/clothing/head/hooded/berserker/examine()
 	. = ..()
@@ -678,8 +678,8 @@
 	user.physiology.armor.melee += BERSERK_MELEE_ARMOR_ADDED
 	user.next_move_modifier *= BERSERK_ATTACK_SPEED_MODIFIER
 	user.add_atom_colour(COLOR_BUBBLEGUM_RED, TEMPORARY_COLOUR_PRIORITY)
-	ADD_TRAIT(user, TRAIT_NOGUNS, BERSERK_TRAIT)
-	ADD_TRAIT(src, TRAIT_NODROP, BERSERK_TRAIT)
+	ADD_TRAIT(user, TRAIT_NO_GUNS, SOURCE_BERSERK)
+	ADD_TRAIT(src, TRAIT_NODROP, SOURCE_BERSERK)
 	berserk_active = TRUE
 	START_PROCESSING(SSobj, src)
 
@@ -696,8 +696,8 @@
 	user.physiology.armor.melee -= BERSERK_MELEE_ARMOR_ADDED
 	user.next_move_modifier /= BERSERK_ATTACK_SPEED_MODIFIER
 	user.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_BUBBLEGUM_RED)
-	REMOVE_TRAIT(user, TRAIT_NOGUNS, BERSERK_TRAIT)
-	REMOVE_TRAIT(src, TRAIT_NODROP, BERSERK_TRAIT)
+	REMOVE_TRAIT(user, TRAIT_NO_GUNS, SOURCE_BERSERK)
+	REMOVE_TRAIT(src, TRAIT_NODROP, SOURCE_BERSERK)
 	STOP_PROCESSING(SSobj, src)
 
 #undef MAX_BERSERK_CHARGE
@@ -730,7 +730,7 @@
 /obj/item/clothing/glasses/godeye/equipped(mob/living/user, slot)
 	. = ..()
 	if(ishuman(user) && slot == ITEM_SLOT_EYES)
-		ADD_TRAIT(src, TRAIT_NODROP, EYE_OF_GOD_TRAIT)
+		ADD_TRAIT(src, TRAIT_NODROP, SOURCE_EYE_OF_GOD)
 		pain(user)
 		scan_ability.Grant(user)
 
@@ -738,7 +738,7 @@
 	. = ..()
 	// Behead someone, their "glasses" drop on the floor
 	// and thus, the god eye should no longer be sticky
-	REMOVE_TRAIT(src, TRAIT_NODROP, EYE_OF_GOD_TRAIT)
+	REMOVE_TRAIT(src, TRAIT_NODROP, SOURCE_EYE_OF_GOD)
 	scan_ability.Remove(user)
 
 /obj/item/clothing/glasses/godeye/proc/pain(mob/living/victim)

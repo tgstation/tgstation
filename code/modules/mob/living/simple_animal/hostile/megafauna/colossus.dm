@@ -71,7 +71,7 @@
 
 /mob/living/simple_animal/hostile/megafauna/colossus/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT) //we don't want this guy to float, messes up his animations.
+	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, SOURCE_INNATE) //we don't want this guy to float, messes up his animations.
 	spiral_shots = new /datum/action/cooldown/mob_cooldown/projectile_attack/spiral_shots/colossus()
 	random_shots = new /datum/action/cooldown/mob_cooldown/projectile_attack/random_aoe/colossus()
 	shotgun_blast = new /datum/action/cooldown/mob_cooldown/projectile_attack/shotgun_blast/colossus()
@@ -252,7 +252,7 @@
 	. = ..()
 	if(!activation_method)
 		activation_method = pick(possible_methods)
-	become_hearing_sensitive(trait_source = ROUNDSTART_TRAIT)
+	become_hearing_sensitive(trait_source = SOURCE_ROUNDSTART)
 
 /obj/machinery/anomalous_crystal/examine(mob/user)
 	. = ..()
@@ -440,7 +440,7 @@
 					H.regenerate_limbs()
 					H.regenerate_organs()
 					H.revive(full_heal = TRUE, admin_revive = FALSE)
-					ADD_TRAIT(H, TRAIT_BADDNA, MAGIC_TRAIT) //Free revives, but significantly limits your options for reviving except via the crystal
+					ADD_TRAIT(H, TRAIT_BADDNA, SOURCE_MAGIC) //Free revives, but significantly limits your options for reviving except via the crystal
 					H.grab_ghost(force = TRUE)
 
 /obj/machinery/anomalous_crystal/helpers //Lets ghost spawn as helpful creatures that can only heal people slightly. Incredibly fragile and they can't converse with humans
@@ -523,7 +523,7 @@
 	var/datum/atom_hud/medsensor = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	medsensor.show_to(src)
 
-	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, SOURCE_INNATE)
 
 /mob/living/simple_animal/hostile/lightgeist/AttackingTarget()
 	if(isliving(target) && target != src)
@@ -584,7 +584,7 @@
 	if(isliving(arrived) && holder_animal)
 		var/mob/living/L = arrived
 		L.notransform = 1
-		ADD_TRAIT(L, TRAIT_MUTE, STASIS_MUTE)
+		ADD_TRAIT(L, TRAIT_MUTE, SOURCE_STASIS_MUTE)
 		L.status_flags |= GODMODE
 		L.mind.transfer_to(holder_animal)
 		var/datum/action/exit_possession/escape = new(holder_animal)
@@ -594,7 +594,7 @@
 /obj/structure/closet/stasis/dump_contents(kill = 1)
 	STOP_PROCESSING(SSobj, src)
 	for(var/mob/living/L in src)
-		REMOVE_TRAIT(L, TRAIT_MUTE, STASIS_MUTE)
+		REMOVE_TRAIT(L, TRAIT_MUTE, SOURCE_STASIS_MUTE)
 		L.status_flags &= ~GODMODE
 		L.notransform = 0
 		if(holder_animal)

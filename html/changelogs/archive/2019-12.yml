@@ -60,7 +60,7 @@
       guy from event hall i was talking with is reading this, i made this for you.
   spookydonut:
   - bugfix: jungle fever monkeys now speak monkey
-  - bugfix: TRAIT_NOMETABOLISM species are now immune to clone damage
+  - bugfix: TRAIT_NO_METABOLISM species are now immune to clone damage
   zxaber:
   - rscadd: Heads of staff can now connect to holopads without the other side answering
       the call.

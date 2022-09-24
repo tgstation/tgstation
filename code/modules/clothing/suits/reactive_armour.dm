@@ -253,9 +253,9 @@
 
 /obj/item/clothing/suit/armor/reactive/tesla/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	owner.visible_message(span_danger("[src] blocks [attack_text], but pulls a massive charge of energy into [owner] from the surrounding environment!"))
-	REMOVE_TRAIT(owner, TRAIT_TESLA_SHOCKIMMUNE, "reactive_tesla_armor") //oops! can't shock without this!
+	REMOVE_CLOTHING_TRAIT(owner, TRAIT_TESLA_SHOCK_IMMUNE) //oops! can't shock without this!
 	electrocute_mob(owner, get_area(src), src, 1)
-	ADD_TRAIT(owner, TRAIT_TESLA_SHOCKIMMUNE, "reactive_tesla_armor")
+	ADD_CLOTHING_TRAIT(owner, TRAIT_TESLA_SHOCK_IMMUNE)
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 	return TRUE
 

@@ -240,7 +240,7 @@
 	var/in_duelist_stance = FALSE
 
 /datum/heretic_knowledge/duel_stance/on_gain(mob/user)
-	ADD_TRAIT(user, TRAIT_NODISMEMBER, type)
+	ADD_TRAIT(user, TRAIT_NO_DISMEMBER, type)
 	RegisterSignal(user, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 	RegisterSignal(user, COMSIG_CARBON_GAIN_WOUND, .proc/on_wound_gain)
 	RegisterSignal(user, COMSIG_CARBON_HEALTH_UPDATE, .proc/on_health_update)
@@ -248,7 +248,7 @@
 	on_health_update(user) // Run this once, so if the knowledge is learned while hurt it activates properly
 
 /datum/heretic_knowledge/duel_stance/on_lose(mob/user)
-	REMOVE_TRAIT(user, TRAIT_NODISMEMBER, type)
+	REMOVE_TRAIT(user, TRAIT_NO_DISMEMBER, type)
 	if(in_duelist_stance)
 		REMOVE_TRAIT(user, TRAIT_HARDLY_WOUNDED, type)
 		REMOVE_TRAIT(user, TRAIT_BATON_RESISTANCE, type)
@@ -371,7 +371,7 @@
 	. = ..()
 	priority_announce("[generate_heretic_text()] Master of blades, the Torn Champion's disciple, [user.real_name] has ascended! Their steel is that which will cut reality in a maelstom of silver! [generate_heretic_text()]","[generate_heretic_text()]", ANNOUNCER_SPANOMALIES)
 	user.client?.give_award(/datum/award/achievement/misc/blade_ascension, user)
-	ADD_TRAIT(user, TRAIT_STUNIMMUNE, name)
+	ADD_TRAIT(user, TRAIT_STUN_IMMUNE, name)
 	ADD_TRAIT(user, TRAIT_NEVER_WOUNDED, name)
 	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
 	user.apply_status_effect(/datum/status_effect/protective_blades/recharging, null, 8, 30, 0.25 SECONDS, 1 MINUTES)

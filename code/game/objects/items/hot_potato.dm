@@ -139,7 +139,7 @@
 		return
 	update_appearance()
 	if(sticky)
-		ADD_TRAIT(src, TRAIT_NODROP, HOT_POTATO_TRAIT)
+		ADD_TRAIT(src, TRAIT_NODROP, SOURCE_HOT_POTATO)
 	name = "primed [name]"
 	activation_time = timer + world.time
 	detonation_timerid = addtimer(CALLBACK(src, .proc/detonate), delay, TIMER_STOPPABLE)
@@ -153,7 +153,7 @@
 /obj/item/hot_potato/proc/deactivate()
 	update_appearance()
 	name = initial(name)
-	REMOVE_TRAIT(src, TRAIT_NODROP, HOT_POTATO_TRAIT)
+	REMOVE_TRAIT(src, TRAIT_NODROP, SOURCE_HOT_POTATO)
 	deltimer(detonation_timerid)
 	STOP_PROCESSING(SSfastprocess, src)
 	detonation_timerid = null

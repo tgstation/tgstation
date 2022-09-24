@@ -160,12 +160,12 @@
 	incompatible_modules = list(/obj/item/mod/module/anti_magic)
 
 /obj/item/mod/module/anti_magic/on_suit_activation()
-	ADD_TRAIT(mod.wearer, TRAIT_ANTIMAGIC, MOD_TRAIT)
-	ADD_TRAIT(mod.wearer, TRAIT_HOLY, MOD_TRAIT)
+	ADD_TRAIT(mod.wearer, TRAIT_ANTI_MAGIC, SOURCE_MOD)
+	ADD_TRAIT(mod.wearer, TRAIT_HOLY, SOURCE_MOD)
 
 /obj/item/mod/module/anti_magic/on_suit_deactivation(deleting = FALSE)
-	REMOVE_TRAIT(mod.wearer, TRAIT_ANTIMAGIC, MOD_TRAIT)
-	REMOVE_TRAIT(mod.wearer, TRAIT_HOLY, MOD_TRAIT)
+	REMOVE_TRAIT(mod.wearer, TRAIT_ANTI_MAGIC, SOURCE_MOD)
+	REMOVE_TRAIT(mod.wearer, TRAIT_HOLY, SOURCE_MOD)
 
 /obj/item/mod/module/anti_magic/wizard
 	name = "MOD magic neutralizer module"
@@ -176,12 +176,12 @@
 	icon_state = "magic_neutralizer"
 
 /obj/item/mod/module/anti_magic/wizard/on_suit_activation()
-	ADD_TRAIT(mod.wearer, TRAIT_ANTIMAGIC, MOD_TRAIT)
-	ADD_TRAIT(mod.wearer, TRAIT_ANTIMAGIC_NO_SELFBLOCK, MOD_TRAIT)
+	ADD_TRAIT(mod.wearer, TRAIT_ANTI_MAGIC, SOURCE_MOD)
+	ADD_TRAIT(mod.wearer, TRAIT_ANTIMAGIC_NO_SELFBLOCK, SOURCE_MOD)
 
 /obj/item/mod/module/anti_magic/wizard/on_suit_deactivation(deleting = FALSE)
-	REMOVE_TRAIT(mod.wearer, TRAIT_ANTIMAGIC, MOD_TRAIT)
-	REMOVE_TRAIT(mod.wearer, TRAIT_ANTIMAGIC_NO_SELFBLOCK, MOD_TRAIT)
+	REMOVE_TRAIT(mod.wearer, TRAIT_ANTI_MAGIC, SOURCE_MOD)
+	REMOVE_TRAIT(mod.wearer, TRAIT_ANTIMAGIC_NO_SELFBLOCK, SOURCE_MOD)
 
 ///Insignia - Gives you a skin specific stripe.
 /obj/item/mod/module/insignia
@@ -236,10 +236,10 @@
 	incompatible_modules = list(/obj/item/mod/module/noslip)
 
 /obj/item/mod/module/noslip/on_suit_activation()
-	ADD_TRAIT(mod.wearer, TRAIT_NOSLIPWATER, MOD_TRAIT)
+	ADD_TRAIT(mod.wearer, TRAIT_NO_SLIP_WATER, SOURCE_MOD)
 
 /obj/item/mod/module/noslip/on_suit_deactivation(deleting = FALSE)
-	REMOVE_TRAIT(mod.wearer, TRAIT_NOSLIPWATER, MOD_TRAIT)
+	REMOVE_TRAIT(mod.wearer, TRAIT_NO_SLIP_WATER, SOURCE_MOD)
 
 //Bite of 87 Springlock - Equips faster, disguised as DNA lock.
 /obj/item/mod/module/springlock/bite_of_87

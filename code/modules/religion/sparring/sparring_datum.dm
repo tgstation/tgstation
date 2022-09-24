@@ -23,8 +23,8 @@
 	src.stakes_condition = stakes_condition
 	src.chaplain = chaplain
 	src.opponent = opponent
-	ADD_TRAIT(chaplain, TRAIT_SPARRING, TRAIT_GENERIC)
-	ADD_TRAIT(opponent, TRAIT_SPARRING, TRAIT_GENERIC)
+	ADD_TRAIT(chaplain, TRAIT_SPARRING, SOURCE_GENERIC)
+	ADD_TRAIT(opponent, TRAIT_SPARRING, SOURCE_GENERIC)
 	hook_signals(chaplain)
 	hook_signals(opponent)
 	chaplain.add_filter("sparring_outline", 9, list("type" = "outline", "color" = "#e02200"))
@@ -235,8 +235,8 @@
 
 ///helper to remove all the effects after a match ends
 /datum/sparring_match/proc/cleanup_sparring_match()
-	REMOVE_TRAIT(chaplain, TRAIT_SPARRING, TRAIT_GENERIC)
-	REMOVE_TRAIT(opponent, TRAIT_SPARRING, TRAIT_GENERIC)
+	REMOVE_TRAIT(chaplain, TRAIT_SPARRING, SOURCE_GENERIC)
+	REMOVE_TRAIT(opponent, TRAIT_SPARRING, SOURCE_GENERIC)
 	unhook_signals(chaplain)
 	unhook_signals(opponent)
 	chaplain.remove_filter("sparring_outline")

@@ -264,7 +264,7 @@
 	radiation_pulse(atom_source, max_range = 6, threshold = 1.2 / max(object_size, 1), chance = 10 * object_size)
 	for(var/mob/living/near_mob in range(10))
 		atom_source.investigate_log("has irradiated [key_name(near_mob)] after consuming [consumed_object].", INVESTIGATE_ENGINE)
-		if (HAS_TRAIT(near_mob, TRAIT_RADIMMUNE) || issilicon(near_mob))
+		if (HAS_TRAIT(near_mob, TRAIT_RAD_IMMUNE) || issilicon(near_mob))
 			continue
 		if(ishuman(near_mob) && SSradiation.wearing_rad_protected_clothing(near_mob))
 			continue

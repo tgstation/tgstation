@@ -13,16 +13,16 @@
 	. = ..()
 	if(!.)
 		return
-	ADD_TRAIT(target, TRAIT_NOGUNS, SLEEPING_CARP_TRAIT)
-	ADD_TRAIT(target, TRAIT_HARDLY_WOUNDED, SLEEPING_CARP_TRAIT)
-	ADD_TRAIT(target, TRAIT_NODISMEMBER, SLEEPING_CARP_TRAIT)
+	ADD_TRAIT(target, TRAIT_NO_GUNS, SOURCE_SLEEPING_CARP)
+	ADD_TRAIT(target, TRAIT_HARDLY_WOUNDED, SOURCE_SLEEPING_CARP)
+	ADD_TRAIT(target, TRAIT_NO_DISMEMBER, SOURCE_SLEEPING_CARP)
 	RegisterSignal(target, COMSIG_PARENT_ATTACKBY, .proc/on_attackby)
 	target.faction |= "carp" //:D
 
 /datum/martial_art/the_sleeping_carp/on_remove(mob/living/target)
-	REMOVE_TRAIT(target, TRAIT_NOGUNS, SLEEPING_CARP_TRAIT)
-	REMOVE_TRAIT(target, TRAIT_HARDLY_WOUNDED, SLEEPING_CARP_TRAIT)
-	REMOVE_TRAIT(target, TRAIT_NODISMEMBER, SLEEPING_CARP_TRAIT)
+	REMOVE_TRAIT(target, TRAIT_NO_GUNS, SOURCE_SLEEPING_CARP)
+	REMOVE_TRAIT(target, TRAIT_HARDLY_WOUNDED, SOURCE_SLEEPING_CARP)
+	REMOVE_TRAIT(target, TRAIT_NO_DISMEMBER, SOURCE_SLEEPING_CARP)
 	UnregisterSignal(target, COMSIG_PARENT_ATTACKBY)
 	target.faction -= "carp" //:(
 	. = ..()
@@ -221,7 +221,7 @@
 		return
 	var/list/modifiers = params2list(params)
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
-		if(!HAS_TRAIT(src, TRAIT_WIELDED))
+		if(!HAS_TRAIT(src, TRAIT_TWO_HANDED))
 			return ..()
 		if(!ishuman(target))
 			return ..()
@@ -248,6 +248,6 @@
 		return ..()
 
 /obj/item/staff/bostaff/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(!HAS_TRAIT(src, TRAIT_WIELDED))
+	if(!HAS_TRAIT(src, TRAIT_TWO_HANDED))
 		return ..()
 	return FALSE

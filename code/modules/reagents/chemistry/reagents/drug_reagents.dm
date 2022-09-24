@@ -199,16 +199,16 @@
 
 /datum/reagent/drug/bath_salts/on_mob_metabolize(mob/living/L)
 	..()
-	ADD_TRAIT(L, TRAIT_STUNIMMUNE, type)
-	ADD_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
+	ADD_TRAIT(L, TRAIT_STUN_IMMUNE, type)
+	ADD_TRAIT(L, TRAIT_SLEEP_IMMUNE, type)
 	if(iscarbon(L))
 		var/mob/living/carbon/C = L
 		rage = new()
 		C.gain_trauma(rage, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/reagent/drug/bath_salts/on_mob_end_metabolize(mob/living/L)
-	REMOVE_TRAIT(L, TRAIT_STUNIMMUNE, type)
-	REMOVE_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
+	REMOVE_TRAIT(L, TRAIT_STUN_IMMUNE, type)
+	REMOVE_TRAIT(L, TRAIT_SLEEP_IMMUNE, type)
 	if(rage)
 		QDEL_NULL(rage)
 	..()
@@ -680,7 +680,7 @@
 			return
 		if(invisible_man.undergoing_liver_failure())
 			return
-		if(HAS_TRAIT(invisible_man, TRAIT_NOMETABOLISM))
+		if(HAS_TRAIT(invisible_man, TRAIT_NO_METABOLISM))
 			return
 	if(invisible_man.has_status_effect(/datum/status_effect/grouped/stasis))
 		return

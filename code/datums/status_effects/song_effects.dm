@@ -24,12 +24,12 @@
 	aura_desc = "dull"
 
 /datum/status_effect/song/antimagic/on_apply()
-	ADD_TRAIT(owner, TRAIT_ANTIMAGIC, MAGIC_TRAIT)
+	ADD_TRAIT(owner, TRAIT_ANTI_MAGIC, SOURCE_MAGIC)
 	playsound(owner, 'sound/weapons/fwoosh.ogg', 75, FALSE)
 	return ..()
 
 /datum/status_effect/song/antimagic/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_ANTIMAGIC, MAGIC_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_ANTI_MAGIC, SOURCE_MAGIC)
 	return ..()
 
 /datum/status_effect/song/antimagic/get_examine_text()

@@ -74,11 +74,11 @@
 		if (human_user.glasses != src)
 			return ..()
 
-		if (HAS_TRAIT_FROM(human_user, TRAIT_SEE_GLASS_COLORS, GLASSES_TRAIT))
-			REMOVE_TRAIT(human_user, TRAIT_SEE_GLASS_COLORS, GLASSES_TRAIT)
+		if (HAS_TRAIT_FROM(human_user, TRAIT_SEE_GLASS_COLORS, SOURCE_GLASSES))
+			REMOVE_TRAIT(human_user, TRAIT_SEE_GLASS_COLORS, SOURCE_GLASSES)
 			to_chat(human_user, span_notice("You will no longer see glasses colors."))
 		else
-			ADD_TRAIT(human_user, TRAIT_SEE_GLASS_COLORS, GLASSES_TRAIT)
+			ADD_TRAIT(human_user, TRAIT_SEE_GLASS_COLORS, SOURCE_GLASSES)
 			to_chat(human_user, span_notice("You will now see glasses colors."))
 		human_user.update_glasses_color(src, TRUE)
 	else
@@ -385,11 +385,11 @@
 /obj/item/clothing/glasses/blindfold/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
 	if(slot == ITEM_SLOT_EYES)
-		user.become_blind(BLINDFOLD_TRAIT)
+		user.become_blind(SOURCE_BLINDFOLD)
 
 /obj/item/clothing/glasses/blindfold/dropped(mob/living/carbon/human/user)
 	..()
-	user.cure_blind(BLINDFOLD_TRAIT)
+	user.cure_blind(SOURCE_BLINDFOLD)
 
 /obj/item/clothing/glasses/trickblindfold
 	name = "blindfold"
@@ -457,11 +457,11 @@
 	. = ..()
 	if(slot != ITEM_SLOT_EYES || !istype(user))
 		return
-	ADD_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
+	ADD_TRAIT(user, TRAIT_XRAY_VISION, SOURCE_GLASSES)
 
 /obj/item/clothing/glasses/thermal/xray/dropped(mob/living/carbon/human/user)
 	. = ..()
-	REMOVE_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
+	REMOVE_TRAIT(user, TRAIT_XRAY_VISION, SOURCE_GLASSES)
 
 /obj/item/clothing/glasses/thermal/syndi //These are now a traitor item, concealed as mesons. -Pete
 	name = "chameleon thermals"
@@ -565,16 +565,16 @@
 		for(var/hud in hudlist)
 			var/datum/atom_hud/our_hud = GLOB.huds[hud]
 			our_hud.show_to(user)
-		ADD_TRAIT(user, TRAIT_MEDICAL_HUD, GLASSES_TRAIT)
-		ADD_TRAIT(user, TRAIT_SECURITY_HUD, GLASSES_TRAIT)
+		ADD_TRAIT(user, TRAIT_MEDICAL_HUD, SOURCE_GLASSES)
+		ADD_TRAIT(user, TRAIT_SECURITY_HUD, SOURCE_GLASSES)
 		if(xray)
-			ADD_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
+			ADD_TRAIT(user, TRAIT_XRAY_VISION, SOURCE_GLASSES)
 
 /obj/item/clothing/glasses/debug/dropped(mob/user)
 	. = ..()
-	REMOVE_TRAIT(user, TRAIT_MEDICAL_HUD, GLASSES_TRAIT)
-	REMOVE_TRAIT(user, TRAIT_SECURITY_HUD, GLASSES_TRAIT)
-	REMOVE_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
+	REMOVE_TRAIT(user, TRAIT_MEDICAL_HUD, SOURCE_GLASSES)
+	REMOVE_TRAIT(user, TRAIT_SECURITY_HUD, SOURCE_GLASSES)
+	REMOVE_TRAIT(user, TRAIT_XRAY_VISION, SOURCE_GLASSES)
 	if(ishuman(user))
 		for(var/hud in hudlist)
 			var/datum/atom_hud/our_hud = GLOB.huds[hud]
@@ -585,10 +585,10 @@
 	if(ishuman(user))
 		if(xray)
 			vision_flags -= SEE_MOBS|SEE_OBJS
-			REMOVE_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
+			REMOVE_TRAIT(user, TRAIT_XRAY_VISION, SOURCE_GLASSES)
 		else
 			vision_flags += SEE_MOBS|SEE_OBJS
-			ADD_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
+			ADD_TRAIT(user, TRAIT_XRAY_VISION, SOURCE_GLASSES)
 		xray = !xray
 		var/mob/living/carbon/human/H = user
 		H.update_sight()

@@ -10,8 +10,8 @@
 	inherent_traits = list(
 		TRAIT_GENELESS,
 		TRAIT_HARDLY_WOUNDED,
-		TRAIT_RADIMMUNE,
-		TRAIT_RESISTCOLD,
+		TRAIT_RAD_IMMUNE,
+		TRAIT_RESIST_COLD,
 	)
 
 	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL
@@ -61,16 +61,16 @@
 
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H, delta_time, times_fired)
 	var/atmos_sealed = TRUE
-	if(HAS_TRAIT(H, TRAIT_NOFIRE))
+	if(HAS_TRAIT(H, TRAIT_FLAME_IMMUNE))
 		atmos_sealed = FALSE
 	else if(!isclothing(H.wear_suit) || !(H.wear_suit.clothing_flags & STOPSPRESSUREDAMAGE))
 		atmos_sealed = FALSE
-	else if(!HAS_TRAIT(H, TRAIT_NOSELFIGNITION_HEAD_ONLY) && (!isclothing(H.head) || !(H.head.clothing_flags & STOPSPRESSUREDAMAGE)))
+	else if(!HAS_TRAIT(H, TRAIT_HEAD_IGNITION_IMMUNE) && (!isclothing(H.head) || !(H.head.clothing_flags & STOPSPRESSUREDAMAGE)))
 		atmos_sealed = FALSE
 
 	var/flammable_limb = FALSE
 	for(var/obj/item/bodypart/found_bodypart as anything in H.bodyparts)//If any plasma based limb is found the plasmaman will attempt to autoignite
-		if(IS_ORGANIC_LIMB(found_bodypart) && (found_bodypart.limb_id == SPECIES_PLASMAMAN || HAS_TRAIT(found_bodypart, TRAIT_PLASMABURNT))) //Allows for "donated" limbs and augmented limbs to prevent autoignition
+		if(IS_ORGANIC_LIMB(found_bodypart) && (found_bodypart.limb_id == SPECIES_PLASMAMAN || HAS_TRAIT(found_bodypart, TRAIT_PLASMA_BURNT))) //Allows for "donated" limbs and augmented limbs to prevent autoignition
 			flammable_limb = TRUE
 			break
 
@@ -82,7 +82,7 @@
 		can_burn = TRUE
 	else if(!isclothing(H.gloves))
 		can_burn = TRUE
-	else if(!HAS_TRAIT(H, TRAIT_NOSELFIGNITION_HEAD_ONLY) && (!isclothing(H.head) || !(H.head.clothing_flags & PLASMAMAN_PREVENT_IGNITION)))
+	else if(!HAS_TRAIT(H, TRAIT_HEAD_IGNITION_IMMUNE) && (!isclothing(H.head) || !(H.head.clothing_flags & PLASMAMAN_PREVENT_IGNITION)))
 		can_burn = TRUE
 
 	if(!atmos_sealed && can_burn)
@@ -91,7 +91,7 @@
 			if(environment.gases[/datum/gas/hypernoblium] && (environment.gases[/datum/gas/hypernoblium][MOLES]) >= 5)
 				if(H.on_fire && H.fire_stacks > 0)
 					H.adjust_fire_stacks(-10 * delta_time)
-			else if(!HAS_TRAIT(H, TRAIT_NOFIRE))
+			else if(!HAS_TRAIT(H, TRAIT_FLAME_IMMUNE))
 				if(environment.gases[/datum/gas/oxygen] && (environment.gases[/datum/gas/oxygen][MOLES]) >= 1) //Same threshhold that extinguishes fire
 					H.adjust_fire_stacks(0.25 * delta_time)
 					if(!H.on_fire && H.fire_stacks > 0)
