@@ -44,7 +44,7 @@
 	var/color_source = ORGAN_COLOR_INHERIT
 
 	///Does this organ have any bodytypes to pass to it's ownerlimb?
-	var/datum/immutable_list/external_bodytypes = null
+	var/list/external_bodytypes = null
 
 /**mob_sprite is optional if you havent set sprite_datums for the object, and is used mostly to generate sprite_datums from a persons DNA
 * For _mob_sprite we make a distinction between "Round Snout" and "round". Round Snout is the name of the sprite datum, while "round" would be part of the sprite
@@ -54,7 +54,7 @@
 	. = ..()
 	//This does NOT need to be in New() because organs are immediately initialized. If that EVER CHANGES, put this if statement in New().
 	if(external_bodytypes)
-		external_bodytypes = immutable_string_list(external_bodytypes)
+		external_bodytypes = string_list(external_bodytypes)
 
 	if(mob_sprite)
 		set_sprite(mob_sprite)

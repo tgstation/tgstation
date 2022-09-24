@@ -25,9 +25,9 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 
 	if(ishuman(parent))
 		var/mob/living/carbon/human/H = parent
-		if(H.bodytypes.Locate(BODYTYPE_SNOUTED))
+		if(BODYTYPE_SNOUTED in H.bodytypes)
 			creamface.icon_state = "creampie_lizard"
-		else if(H.bodytypes.Locate(BODYTYPE_MONKEY))
+		else if(BODYTYPE_MONKEY in H.bodytypes)
 			creamface.icon_state = "creampie_monkey"
 		else
 			creamface.icon_state = "creampie_human"

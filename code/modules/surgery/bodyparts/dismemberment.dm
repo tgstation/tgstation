@@ -332,7 +332,7 @@
 		return FALSE
 
 	var/obj/item/bodypart/chest/mob_chest = new_limb_owner.get_bodypart(BODY_ZONE_CHEST)
-	if(mob_chest && !(bodytype.Locate(mob_chest.acceptable_bodytype)) && !special)
+	if(mob_chest && !HAS_BODYTYPE(src, mob_chest.acceptable_bodytype) && !special)
 		return FALSE
 
 	moveToNullspace()
@@ -448,11 +448,11 @@
 	var/list/all_limb_flags = list()
 	for(var/obj/item/bodypart/limb as anything in carbon_owner.bodyparts)
 		for(var/obj/item/organ/external/ext_organ as anything in limb.external_organs)
-			if(ext_organ.external_bodytypes) //We don't want to be inserting nulls into an imutable string list
-				all_limb_flags |= ext_organ.external_bodytypes.Get()
-		all_limb_flags |= limb.bodytype.Get()
+			if(ext_organ.external_bodytypes) //We don't want to be inserting nulls
+				all_limb_flags |= ext_organ.external_bodytypes
+		all_limb_flags |= limb.bodytypes
 
-	carbon_owner.bodytypes = immutable_string_list(all_limb_flags) //We set this to immutable AFTER to avoid all of the Copy() operations.
+	carbon_owner.bodytypes = string_list(all_limb_flags)
 
 //Regenerates all limbs. Returns amount of limbs regenerated
 /mob/living/proc/regenerate_limbs(list/excluded_zones = list())

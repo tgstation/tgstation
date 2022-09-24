@@ -23,7 +23,7 @@
 	var/mob/living/carbon/owner
 
 	///A bitfield of bodytypes for clothing, surgery, and misc information
-	var/datum/immutable_list/bodytype = list(BODYTYPE_HUMANOID, BODYTYPE_ORGANIC) //This is converted to an immutable_list on Initialize()
+	var/list/bodytypes = list(BODYTYPE_HUMANOID, BODYTYPE_ORGANIC)
 	///Defines when a bodypart should not be changed. Example: BP_BLOCK_CHANGE_SPECIES prevents the limb from being overwritten on species gain
 	var/change_exempt_flags
 
@@ -145,15 +145,12 @@
 	///A list of all the external organs we've got stored to draw horns, wings and stuff with (special because we are actually in the limbs unlike normal organs :/ )
 	var/list/obj/item/organ/external/external_organs = list()
 
-///This is here for a VERY, VERY, VERY good reason. bodytype must be built as soon as possible, as
-///it can be referenced before SSatoms can init the object, notably in character creation.
-/obj/item/bodypart/New()
-	bodytype = immutable_string_list(bodytype)
-	return ..()
-
 /obj/item/bodypart/Initialize(mapload)
 	. = ..()
-	if(bodytype.Locate(BODYTYPE_ALIEN) || bodytype.Locate(BODYTYPE_LARVA_PLACEHOLDER))
+	bodytypes = string_list(bodytypes)
+
+	if(HAS_BODYTYPE(src, BODYTYPE_ALIEN) || HAS_BODYTYPE(src,BODYTYPE_LARVA_PLACEHOLDER))
+		//Saves us two list loops per time a limb is damaged. Which is often.
 		isaliensnowflake = TRUE
 
 	if(can_be_disabled)
@@ -175,8 +172,7 @@
 	if(length(wounds))
 		stack_trace("[type] qdeleted with [length(wounds)] uncleared wounds")
 		wounds.Cut()
-	for(var/external_organ in external_organs)
-		qdel(external_organ)
+	QDEL_LIST(external_organs)
 	return ..()
 
 /obj/item/bodypart/forceMove(atom/destination) //Please. Never forcemove a limb if its's actually in use. This is only for borgs.
@@ -373,7 +369,7 @@
 		return FALSE
 	if(owner && (owner.status_flags & GODMODE))
 		return FALSE	//godmode
-	if(required_status && !(bodytype.Locate(required_status)))
+	if(required_status && !(HAS_BODYTYPE(src, required_status)))
 		return FALSE
 
 	var/dmg_multi = CONFIG_GET(number/damage_multiplier) * hit_percent
@@ -484,7 +480,7 @@
 /obj/item/bodypart/proc/heal_damage(brute, burn, stamina, required_status, updating_health = TRUE)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if(required_status && !(bodytype.Locate(required_status))) //So we can only heal certain kinds of limbs, ie robotic vs organic.
+	if(required_status && !HAS_BODYTYPE(src, required_status)) //So we can only heal certain kinds of limbs, ie robotic vs organic.
 		return
 
 	if(brute)

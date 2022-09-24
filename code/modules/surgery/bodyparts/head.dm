@@ -223,10 +223,10 @@
 			//Applies the debrained overlay if there is no brain
 			if(!brain)
 				var/image/debrain_overlay = image(layer = -HAIR_LAYER, dir = SOUTH)
-				if(bodytype.Locate(BODYTYPE_ALIEN))
+				if(HAS_BODYTYPE(src, BODYTYPE_ALIEN))
 					debrain_overlay.icon = 'icons/mob/species/alien/bodyparts.dmi'
 					debrain_overlay.icon_state = "debrained_alien"
-				else if(bodytype.Locate(BODYTYPE_LARVA_PLACEHOLDER))
+				else if(HAS_BODYTYPE(src, BODYTYPE_LARVA_PLACEHOLDER))
 					debrain_overlay.icon = 'icons/mob/species/alien/bodyparts.dmi'
 					debrain_overlay.icon_state = "debrained_larva"
 				else if(!(NOBLOOD in species_flags_list))
@@ -315,7 +315,7 @@
 	icon = 'icons/mob/species/monkey/bodyparts.dmi'
 	icon_state = "default_monkey_head"
 	limb_id = SPECIES_MONKEY
-	bodytype = list(BODYTYPE_MONKEY, BODYTYPE_ORGANIC)
+	bodytypes = list(BODYTYPE_MONKEY, BODYTYPE_ORGANIC)
 	should_draw_greyscale = FALSE
 	dmg_overlay_type = SPECIES_MONKEY
 	is_dimorphic = FALSE
@@ -331,7 +331,7 @@
 	px_y = 0
 	dismemberable = 0
 	max_damage = 500
-	bodytype = list(BODYTYPE_HUMANOID, BODYTYPE_ALIEN, BODYTYPE_ORGANIC)
+	bodytypes = list(BODYTYPE_HUMANOID, BODYTYPE_ALIEN, BODYTYPE_ORGANIC)
 
 /obj/item/bodypart/head/larva
 	icon = 'icons/mob/species/alien/bodyparts.dmi'
@@ -344,4 +344,4 @@
 	px_y = 0
 	dismemberable = 0
 	max_damage = 50
-	bodytype = list(BODYTYPE_LARVA_PLACEHOLDER, BODYTYPE_ORGANIC)
+	bodytypes = list(BODYTYPE_LARVA_PLACEHOLDER, BODYTYPE_ORGANIC)

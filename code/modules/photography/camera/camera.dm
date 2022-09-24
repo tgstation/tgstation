@@ -7,6 +7,7 @@
 	desc = "A polaroid camera."
 	icon_state = "camera"
 	inhand_icon_state = "camera"
+	worn_icon = 'icons/mob/clothing/neck.dmi'
 	worn_icon_state = "camera"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'

@@ -157,7 +157,7 @@
 /mob/living/carbon/proc/get_damaged_bodyparts(brute = FALSE, burn = FALSE, stamina = FALSE, status)
 	var/list/obj/item/bodypart/parts = list()
 	for(var/obj/item/bodypart/BP as anything in bodyparts)
-		if(status && !(BP.bodytype.Locate(status)))
+		if(status && !HAS_BODYTYPE(BP,status))
 			continue
 		if((brute && BP.brute_dam) || (burn && BP.burn_dam) || (stamina && BP.stamina_dam))
 			parts += BP
@@ -166,9 +166,8 @@
 ///Returns a list of damageable bodyparts
 /mob/living/carbon/proc/get_damageable_bodyparts(status)
 	var/list/obj/item/bodypart/parts = list()
-	for(var/X in bodyparts)
-		var/obj/item/bodypart/BP = X
-		if(status && !(BP.bodytype.Locate(status)))
+	for(var/obj/item/bodypart/BP as anything in bodyparts)
+		if(status && !HAS_BODYTYPE(BP, status))
 			continue
 		if(BP.brute_dam + BP.burn_dam < BP.max_damage)
 			parts += BP

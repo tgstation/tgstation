@@ -42,7 +42,7 @@
 	should_draw_greyscale = FALSE
 	is_dimorphic = FALSE
 	wound_resistance = -10
-	bodytype = list(BODYTYPE_MONKEY, BODYTYPE_ORGANIC)
+	bodytypes = list(BODYTYPE_MONKEY, BODYTYPE_ORGANIC)
 	acceptable_bodytype = BODYTYPE_MONKEY
 	dmg_overlay_type = SPECIES_MONKEY
 
@@ -51,7 +51,7 @@
 	icon_static = 'icons/mob/species/alien/bodyparts.dmi'
 	icon_state = "alien_chest"
 	limb_id = BODYPART_ID_ALIEN
-	bodytype = list(BODYTYPE_HUMANOID, BODYTYPE_ALIEN, BODYTYPE_ORGANIC)
+	bodytypes = list(BODYTYPE_HUMANOID, BODYTYPE_ALIEN, BODYTYPE_ORGANIC)
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 	dismemberable = 0
@@ -67,7 +67,7 @@
 	should_draw_greyscale = FALSE
 	dismemberable = 0
 	max_damage = 50
-	bodytype = list(BODYTYPE_LARVA_PLACEHOLDER, BODYTYPE_ORGANIC)
+	bodytypes = list(BODYTYPE_LARVA_PLACEHOLDER, BODYTYPE_ORGANIC)
 	acceptable_bodytype = BODYTYPE_LARVA_PLACEHOLDER
 
 /obj/item/bodypart/l_arm
@@ -156,7 +156,7 @@
 	icon_state = "default_monkey_l_arm"
 	limb_id = SPECIES_MONKEY
 	should_draw_greyscale = FALSE
-	bodytype = list(BODYTYPE_MONKEY, BODYTYPE_ORGANIC)
+	bodytypes = list(BODYTYPE_MONKEY, BODYTYPE_ORGANIC)
 	wound_resistance = -10
 	px_x = -5
 	px_y = -3
@@ -167,7 +167,7 @@
 	icon_static = 'icons/mob/species/alien/bodyparts.dmi'
 	icon_state = "alien_l_arm"
 	limb_id = BODYPART_ID_ALIEN
-	bodytype = list(BODYTYPE_HUMANOID, BODYTYPE_ALIEN, BODYTYPE_ORGANIC)
+	bodytypes = list(BODYTYPE_HUMANOID, BODYTYPE_ALIEN, BODYTYPE_ORGANIC)
 	px_x = 0
 	px_y = 0
 	dismemberable = FALSE
@@ -259,7 +259,7 @@
 	icon_static = 'icons/mob/species/monkey/bodyparts.dmi'
 	icon_state = "default_monkey_r_arm"
 	limb_id = SPECIES_MONKEY
-	bodytype = list(BODYTYPE_MONKEY, BODYTYPE_ORGANIC)
+	bodytypes = list(BODYTYPE_MONKEY, BODYTYPE_ORGANIC)
 	should_draw_greyscale = FALSE
 	wound_resistance = -10
 	px_x = 5
@@ -271,7 +271,7 @@
 	icon_static = 'icons/mob/species/alien/bodyparts.dmi'
 	icon_state = "alien_r_arm"
 	limb_id = BODYPART_ID_ALIEN
-	bodytype = list(BODYTYPE_HUMANOID, BODYTYPE_ALIEN, BODYTYPE_ORGANIC)
+	bodytypes = list(BODYTYPE_HUMANOID, BODYTYPE_ALIEN, BODYTYPE_ORGANIC)
 	px_x = 0
 	px_y = 0
 	dismemberable = FALSE
@@ -353,7 +353,7 @@
 	icon_state = "default_monkey_l_leg"
 	limb_id = SPECIES_MONKEY
 	should_draw_greyscale = FALSE
-	bodytype = list(BODYTYPE_MONKEY, BODYTYPE_ORGANIC)
+	bodytypes = list(BODYTYPE_MONKEY, BODYTYPE_ORGANIC)
 	wound_resistance = -10
 	px_y = 4
 	dmg_overlay_type = SPECIES_MONKEY
@@ -363,7 +363,7 @@
 	icon_static = 'icons/mob/species/alien/bodyparts.dmi'
 	icon_state = "alien_l_leg"
 	limb_id = BODYPART_ID_ALIEN
-	bodytype = list(BODYTYPE_HUMANOID, BODYTYPE_ALIEN, BODYTYPE_ORGANIC)
+	bodytypes = list(BODYTYPE_HUMANOID, BODYTYPE_ALIEN, BODYTYPE_ORGANIC)
 	px_x = 0
 	px_y = 0
 	dismemberable = FALSE
@@ -454,7 +454,7 @@
 	icon_state = "default_monkey_r_leg"
 	limb_id = SPECIES_MONKEY
 	should_draw_greyscale = FALSE
-	bodytype = list(BODYTYPE_MONKEY, BODYTYPE_ORGANIC)
+	bodytypes = list(BODYTYPE_MONKEY, BODYTYPE_ORGANIC)
 	wound_resistance = -10
 	px_y = 4
 	dmg_overlay_type = SPECIES_MONKEY
@@ -464,7 +464,7 @@
 	icon_static = 'icons/mob/species/alien/bodyparts.dmi'
 	icon_state = "alien_r_leg"
 	limb_id = BODYPART_ID_ALIEN
-	bodytype = list(BODYTYPE_HUMANOID, BODYTYPE_ALIEN, BODYTYPE_ORGANIC)
+	bodytypes = list(BODYTYPE_HUMANOID, BODYTYPE_ALIEN, BODYTYPE_ORGANIC)
 	px_x = 0
 	px_y = 0
 	dismemberable = FALSE

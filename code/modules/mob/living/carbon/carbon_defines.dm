@@ -69,7 +69,7 @@
 	var/tinttotal = 0
 
 	///Populated by [synchronize_bodyparts()][/obj/item/bodypart/proc/synchronize_bodytype()].
-	var/datum/immutable_list/bodytypes
+	var/list/bodytypes
 	///Gets filled up in [create_bodyparts()][/mob/living/carbon/proc/create_bodyparts]
 	var/list/bodyparts = list(
 		/obj/item/bodypart/chest,

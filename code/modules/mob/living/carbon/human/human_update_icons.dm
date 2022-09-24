@@ -106,19 +106,20 @@ There are several things that need to be remembered:
 		if(!uniform_overlay)
 			//BEGIN SPECIES HANDLING
 			if(uniform.alt_appearances_by_bodytype)
-				for(var/bodytype in bodytypes.Get())
-					icon_file = uniform.alt_appearances_by_bodytype.Index(bodytype)
+				for(var/bodytype in bodytypes)
+					icon_file = uniform.alt_appearances_by_bodytype[bodytype]
 					if(icon_file)
 						handled_by_bodytype = bodytype
 						break
 
 			//Female sprites have lower priority than digitigrade sprites
-			if(!icon_file && dna.species.sexes && (bodytypes.Locate(BODYTYPE_HUMANOID)) && physique == FEMALE && uniform.female_sprite_flags != NO_FEMALE_UNIFORM) //Agggggggghhhhh
+			if(!icon_file && dna.species.sexes && HAS_BODYTYPE(src, BODYTYPE_HUMANOID) && physique == FEMALE && uniform.female_sprite_flags != NO_FEMALE_UNIFORM) //Agggggggghhhhh
 				woman = TRUE
 
 			if(icon_file && !icon_exists(icon_file, RESOLVE_ICON_STATE(uniform)))
 				icon_file = null
-				uniform.alt_appearances_by_bodytype = uniform.alt_appearances_by_bodytype.Remove(handled_by_bodytype)
+				///Remove the override appearance, as it points to a non-existant iconstate.
+				uniform.alt_appearances_by_bodytype = string_assoc_list(uniform.alt_appearances_by_bodytype.Copy() - handled_by_bodytype)
 				stack_trace("[uniform] said it had a unique appearance for [handled_by_bodytype], but it's state could not be found!")
 
 			//END SPECIES HANDLING
