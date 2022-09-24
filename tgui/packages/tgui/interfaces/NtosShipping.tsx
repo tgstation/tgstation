@@ -25,8 +25,7 @@ export const NtosShipping = () => {
 /** Returns information about the current user, available paper, etc */
 const ShippingHub = (props, context) => {
   const { act, data } = useBackend<Data>(context);
-  const { current_user, card_owner, paperamt, barcode_split } =
-    data;
+  const { current_user, card_owner, paperamt, barcode_split } = data;
 
   return (
     <Section
@@ -45,9 +44,7 @@ const ShippingHub = (props, context) => {
         <LabeledList.Item label="Inserted Card">
           {card_owner || 'N/A'}
         </LabeledList.Item>
-        <LabeledList.Item label="Available Paper">
-          { paperamt }
-        </LabeledList.Item>
+        <LabeledList.Item label="Available Paper">{paperamt}</LabeledList.Item>
         <LabeledList.Item label="Profit on Sale">
           {barcode_split}%
         </LabeledList.Item>
