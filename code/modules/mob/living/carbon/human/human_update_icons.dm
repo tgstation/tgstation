@@ -254,12 +254,7 @@ There are several things that need to be remembered:
 		var/mutable_appearance/ears_overlay
 		update_hud_ears(worn_item)
 
-		var/icon_file
-
-		if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item))))
-			icon_file = 'icons/mob/clothing/ears.dmi'
-
-		ears_overlay = ears.build_worn_icon(default_layer = EARS_LAYER)
+		ears_overlay = ears.build_worn_icon(default_layer = EARS_LAYER, custom_icon_file = 'icons/mob/clothing/ears.dmi')
 
 		if(!ears_overlay)
 			return
