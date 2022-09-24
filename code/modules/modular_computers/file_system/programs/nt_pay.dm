@@ -1,0 +1,75 @@
+/datum/computer_file/program/nt_pay
+	filename = "ntpay"
+	filedesc = "Nanotrasen Pay System"
+	category = PROGRAM_CATEGORY_MISC
+	program_icon_state = "generic"
+	extended_desc = "An application that locally (in your sector) helps to transfer money or track your expenses and profits."
+	size = 2
+	tgui_id = "NtosPay"
+	program_icon = "money-bill-wave"
+	usage_flags = PROGRAM_ALL
+	///Reference to the currently logged in user.
+	var/datum/bank_account/current_user
+	///Pay token, by which we can send credits
+	var/token
+	///Amount of credits, which we sends
+	var/money_to_send = 0
+
+/datum/computer_file/program/nt_pay/ui_act(action, list/params, datum/tgui/ui)
+	. = ..()
+	if(.)
+		return
+
+	switch(action)
+		if("changeValue")
+			if(params["token"])
+				token = params["token"]
+			if(params["money_to_send"])
+				money_to_send = params["money_to_send"]
+			return UI_UPDATE
+		
+		if("Transaction")
+			var/datum/bank_account/recipient
+			if(!token)
+				return to_chat(usr, span_notice("Enter the first and last name to whom you are transferring money."))
+			if(!money_to_send)
+				return to_chat(usr, span_notice("Enter the amount of credits to transfer"))
+			if(token == current_user.pay_token)
+				return to_chat(usr, span_notice("You cannot send credits to yourself"))
+			
+			for(var/account as anything in SSeconomy.bank_accounts_by_id)
+				var/datum/bank_account/acc = SSeconomy.bank_accounts_by_id[account]
+				if(acc.pay_token == token)
+					recipient = acc
+					break
+			
+			if(!recipient)
+				return to_chat(usr, span_notice("No recipients with that name was found"))
+			if(!current_user.has_money(money_to_send))
+				return current_user.bank_card_talk("You cannot afford it.")
+			
+			recipient.bank_card_talk("You received [money_to_send] credit(s). Reason: transfer from [current_user.account_holder]")
+			recipient.transfer_money(current_user, money_to_send)
+			current_user.bank_card_talk("You send [money_to_send] credit(s) to [recipient.account_holder]. Now you have [current_user.account_balance] credit(s)")
+			
+
+/datum/computer_file/program/nt_pay/ui_data(mob/user)
+	var/list/data = get_header_data()
+	var/obj/item/computer_hardware/card_slot/card_slot = computer.all_components[MC_CARD]
+
+	if(card_slot && card_slot.stored_card && card_slot.stored_card.registered_account)
+		current_user = card_slot.stored_card.registered_account
+	else
+		current_user = null
+	
+	if(!current_user)
+		data["name"] = null
+	else
+		data["name"] = current_user.account_holder
+		data["owner_token"] = current_user.pay_token
+		data["money"] = current_user.account_balance
+		data["token"] = token
+		data["money_to_send"] = money_to_send
+		data["trans_list"] = current_user.transaction_history
+
+	return data

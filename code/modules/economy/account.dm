@@ -25,6 +25,10 @@
 	var/replaceable = FALSE
 	///Cooldown timer on replacing a civilain bounty. Bounties can only be replaced once every 5 minutes.
 	COOLDOWN_DECLARE(bounty_timer)
+	///A special semi-tandom token for tranfering money from NT pay app
+	var/pay_token
+	///List with a transaction history for NT pay app
+	var/list/transaction_history = list()
 
 /datum/bank_account/New(newname, job, modifier = 1, player_account = TRUE)
 	account_holder = newname
@@ -32,6 +36,7 @@
 	payday_modifier = modifier
 	add_to_accounts = player_account
 	setup_unique_account_id()
+	pay_token = uppertext("[copytext(newname, 1, 2)][copytext(newname, -1)]-[random_capital_letter()]-[rand(1111,9999)]")
 
 /datum/bank_account/Destroy()
 	if(add_to_accounts)
@@ -95,9 +100,11 @@
 /**
  * Adjusts the balance of a bank_account as well as sanitizes the numerical input.
  */
-/datum/bank_account/proc/adjust_money(amt)
+/datum/bank_account/proc/adjust_money(amt, reason)
 	if((amt < 0 && has_money(-amt)) || amt > 0)
 		_adjust_money(amt)
+		if(reason)
+			add_log_to_history(amt, reason)
 		return TRUE
 	return FALSE
 
@@ -108,10 +115,10 @@
  */
 /datum/bank_account/proc/transfer_money(datum/bank_account/from, amount)
 	if(from.has_money(amount))
-		adjust_money(amount)
+		adjust_money(amount, istype(from, /datum/bank_account/department) ? "Payday" : "Trasfer from [from.account_holder]")
 		SSblackbox.record_feedback("amount", "credits_transferred", amount)
 		log_econ("[amount] credits were transferred from [from.account_holder]'s account to [src.account_holder]")
-		from.adjust_money(-amount)
+		from.adjust_money(-amount, "Transfer to [account_holder]")
 		return TRUE
 	return FALSE
 
@@ -233,5 +240,20 @@
 
 /datum/bank_account/remote // Bank account not belonging to the local station
 	add_to_accounts = FALSE
+
+/**
+ * Add log to transactions history, and if logs >= 20, delete first, what mean, we have max 20 logs.
+ * * Arguments:
+ * * adjusted_money - Interacting money, for example, -50, 125.
+ * * reason - The reason of interact with balance, for example, "Bought chips" or "Payday".
+ */
+/datum/bank_account/proc/add_log_to_history(adjusted_money, reason)
+	if(transaction_history.len >= 20)
+		transaction_history.Cut(1,2)
+	
+	transaction_history += list(list(
+		"adjusted_money" = adjusted_money,
+		"reason" = reason,
+	))
 
 #undef DUMPTIME
