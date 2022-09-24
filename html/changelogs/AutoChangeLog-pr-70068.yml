@@ -1,0 +1,4 @@
+author: "VexingRaven"
+delete-after: True
+changes: 
+  - bugfix: "Build Your Own Shuttle Kit has been fixed and once again docks at the station after being purchased."

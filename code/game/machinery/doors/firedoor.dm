@@ -417,12 +417,11 @@
 		if(place == my_area)
 			place.alarm_manager.clear_alarm(ALARM_FIRE, place)
 
-/obj/machinery/door/firedoor/emag_act(mob/user, obj/item/card/emag/doorjack/digital_crowbar)
+/obj/machinery/door/firedoor/emag_act(mob/user, obj/item/card/emag/emag_type)
 	if(obj_flags & EMAGGED)
 		return
-	if(!isAI(user)) //Skip doorjack-specific code
-		if(!user || digital_crowbar.charges < 1)
-			return
+	if(istype(emag_type, /obj/item/card/emag/doorjack)) //Skip doorjack-specific code
+		var/obj/item/card/emag/doorjack/digital_crowbar = emag_type
 		digital_crowbar.use_charge(user)
 	obj_flags |= EMAGGED
 	INVOKE_ASYNC(src, .proc/open)

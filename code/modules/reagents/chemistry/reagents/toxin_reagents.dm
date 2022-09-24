@@ -258,9 +258,9 @@
 		return TRUE
 	switch(current_cycle)
 		if(1 to 5)
-			M.adjust_timed_status_effect(1 SECONDS * REM * delta_time, /datum/status_effect/confusion)
+			M.adjust_confusion(1 SECONDS * REM * delta_time)
 			M.adjust_drowsyness(1 * REM * delta_time)
-			M.adjust_timed_status_effect(6 SECONDS * REM * delta_time, /datum/status_effect/speech/slurring/drunk)
+			M.adjust_slurring(6 SECONDS * REM * delta_time)
 		if(5 to 8)
 			M.adjustStaminaLoss(40 * REM * delta_time, 0)
 		if(9 to INFINITY)
@@ -463,7 +463,7 @@
 /datum/reagent/toxin/chloralhydrate/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	switch(current_cycle)
 		if(1 to 10)
-			M.adjust_timed_status_effect(2 SECONDS * REM * normalise_creation_purity() * delta_time, /datum/status_effect/confusion)
+			M.adjust_confusion(2 SECONDS * REM * normalise_creation_purity() * delta_time)
 			M.adjust_drowsyness(2 * REM * normalise_creation_purity() * delta_time)
 		if(10 to 50)
 			M.Sleeping(40 * REM * normalise_creation_purity() * delta_time)
@@ -1201,7 +1201,7 @@
 	var/mob_dizziness = M.get_timed_status_effect_duration(/datum/status_effect/confusion)
 	if(mob_dizziness > 0)
 		// Gain confusion equal to about half the duration of our current dizziness
-		M.set_timed_status_effect(mob_dizziness / 2, /datum/status_effect/confusion)
+		M.set_confusion(mob_dizziness / 2)
 
 	if(current_cycle >= 12 && DT_PROB(4, delta_time))
 		var/tox_message = pick("You feel your heart spasm in your chest.", "You feel faint.","You feel you need to catch your breath.","You feel a prickle of pain in your chest.")
@@ -1224,7 +1224,7 @@
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1 * REM * delta_time)
 	if(DT_PROB(0.5, delta_time))
 		to_chat(M, span_notice("Ah, what was that? You thought you heard something..."))
-		M.adjust_timed_status_effect(5 SECONDS, /datum/status_effect/confusion)
+		M.adjust_confusion(5 SECONDS)
 	return ..()
 
 /datum/reagent/toxin/hunterspider
