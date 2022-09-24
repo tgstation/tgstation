@@ -494,7 +494,7 @@
 	var/turf/mounted_wall = get_step(src,dir)
 	if (mounted_wall && istype(mounted_wall, /turf/closed))
 		var/area/wall_area = get_area(mounted_wall)
-		if(!wall_area.always_unpowered )///loc area wasn't good, checking adjacent wall for a good area to use
+		if(!wall_area.always_unpowered) //loc area wasn't good, checking adjacent wall for a good area to use
 			machine_room = wall_area
 			return machine_room
 	machine_room = machine_area ///couldn't find a proper powered area on loc or adjacent wall, defaulting back to loc and blaming mappers
