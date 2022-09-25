@@ -41,8 +41,7 @@
 	domain.Grant(src)
 	riot.Grant(src)
 	AddElement(/datum/element/waddling)
-	AddComponent(/datum/component/ghost_role_spawnpoint)
-
+	AddComponent(/datum/component/ghost_role_spawnpoint, "Become the Royal Rat?")
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/simple_animal/hostile/regalrat/Destroy()
@@ -57,29 +56,6 @@
 		key = C.key
 		notify_ghosts("All rise for the rat king, ascendant to the throne in \the [get_area(src)].", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Sentient Rat Created")
 	to_chat(src, span_notice("You are an independent, invasive force on the station! Horde coins, trash, cheese, and the like from the safety of darkness!"))
-
-/mob/living/simple_animal/hostile/regalrat/attack_ghost(mob/user)
-	. = ..()
-	if(. || !(GLOB.ghost_role_flags & GHOSTROLE_SPAWNER))
-		return
-	get_clicked_player(user)
-
-/**
- * Sets a ghost to control the rat if the rat is eligible
- *
- * Asks the interacting ghost if they would like to control the rat.
- * If they answer yes, and another ghost hasn't taken control, sets the ghost to control the rat.
- * Arguments:
- * * mob/user - The ghost to possibly control the rat
- */
-/mob/living/simple_animal/hostile/regalrat/proc/get_clicked_player(mob/user)
-	if(key || stat)
-		return
-	var/rat_ask = tgui_alert(usr, "Become the Royal Rat?", "Are you sure?", list("Yes", "No"))
-	if(rat_ask != "Yes" || QDELETED(src))
-		return
-
-	SEND_SIGNAL(src, COMSIG_ATTEMPT_POSSESSION, user)
 
 /mob/living/simple_animal/hostile/regalrat/handle_automated_action()
 	if(prob(20))

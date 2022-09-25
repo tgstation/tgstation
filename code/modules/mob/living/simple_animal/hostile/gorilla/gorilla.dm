@@ -132,21 +132,19 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_PACIFISM, INNATE_TRAIT)
 	AddComponent(/datum/component/crate_carrier)
-	AddComponent(/datum/component/ghost_role_spawnpoint)
+	AddComponent(/datum/component/ghost_role_spawnpoint, "Become a Cargorilla?")
+	RegisterSignal(target, COMSIG_MIND_TRANSFERRED, .proc/assign_role)
 
-/mob/living/simple_animal/hostile/gorilla/cargo_domestic/attack_ghost(mob/user)
-	if(being_polled_for || (flags_1 & ADMIN_SPAWNED_1))
-		return ..()
+//mob/living/simple_animal/hostile/gorilla/cargo_domestic/attack_ghost(mob/user) //Currently this wont actually do anything, keeping it so I dont accidentally amputate any important code
+	//if(being_polled_for || (flags_1 & ADMIN_SPAWNED_1))
+	//	return ..()
 
-	if(is_banned_from(user.ckey, list(ROLE_SENTIENCE, ROLE_SYNDICATE)))
-		return ..()
+	//if(is_banned_from(user.ckey, list(ROLE_SENTIENCE, ROLE_SYNDICATE)))
+	//	return ..()
 
-	var/become_gorilla = tgui_alert(user, "Become a Cargorilla?", "Confirm", list("Yes", "No"))
-	if(become_gorilla != "Yes" || QDELETED(src) || QDELETED(user) || being_polled_for || mind || client)
-		return
-
-	SEND_SIGNAL(src, COMSIG_ATTEMPT_POSSESSION, user)
-	enter_ghost(user)
+	//var/become_gorilla = tgui_alert(user, , "Confirm", list("Yes", "No"))
+	//if(become_gorilla != "Yes" || QDELETED(src) || QDELETED(user) || being_polled_for || mind || client)
+	//	return
 
 /// Poll ghosts for control of the gorilla.
 /mob/living/simple_animal/hostile/gorilla/cargo_domestic/proc/poll_for_gorilla()
@@ -165,13 +163,12 @@
 		return
 
 	if(LAZYLEN(candidates))
-		enter_ghost(pick(candidates))
+		var/mob/dead/chosen_candidate = pick(candidates)
+		key = chosen_candidate.key
+		notify_ghosts("The Cargorilla has risen!.", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Cargorilla Lives!")
 
-/// Brings in the a ghost to take control of the gorilla.
-/mob/living/simple_animal/hostile/gorilla/cargo_domestic/proc/enter_ghost(mob/dead/user)
-	if(!mind)
-		CRASH("[type] - enter_ghost didn't end up with a mind.")
-
+/// The post-posession role assignment and chat messages
+/mob/living/simple_animal/hostile/gorilla/cargo_domestic/proc/assign_role()
 	mind.set_assigned_role(SSjob.GetJobType(/datum/job/cargo_technician))
 	mind.special_role = "Cargorilla"
 	to_chat(src, span_boldnotice("You are a Cargorilla, a pacifistic friend of the station and carrier of freight."))
