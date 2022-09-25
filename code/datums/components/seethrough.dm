@@ -103,7 +103,7 @@
 	user_overlay.loc = parent
 	user_overlay.override = TRUE
 	//Special plane so we can click through the overlay
-	SET_PLANE_EXPLICIT(user_overlay, SEETHROUGH_PLANE)
+	SET_PLANE_EXPLICIT(user_overlay, SEETHROUGH_PLANE, parent)
 
 	//These are inherited, but we already use the atom's loc so we end up at double the pixel offset
 	user_overlay.pixel_x = 0

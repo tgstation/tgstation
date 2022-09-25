@@ -554,7 +554,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 			if(check_higher)
 				var/turf/above = local_mapping.get_turf_above(seen)
 				while(above && istransparentturf(above))
-					for(var/turf/adjacent in range(1, below))
+					for(var/turf/adjacent in range(1, above))
 						see += adjacent
 						see += adjacent.contents
 					above = local_mapping.get_turf_above(above)

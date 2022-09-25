@@ -80,7 +80,7 @@
 	dna.species.handle_body(src) //This calls `handle_mutant_bodyparts` which calls `update_mutant_bodyparts()`. Don't double call!
 	update_body_parts(is_creating)
 
-mob/living/carbon/proc/visual_remove_overlay(cache_index)
+/mob/living/carbon/proc/visual_remove_overlay(cache_index)
 	var/I = overlays_standing[cache_index]
 	if(I)
 		cut_overlay(I)
