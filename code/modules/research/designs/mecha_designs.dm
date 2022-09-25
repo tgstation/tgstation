@@ -27,7 +27,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/decouverte_peri
-	name = "\"Decouverte\" Peripheral Control module."
+	name = "\"Decouverte\" Peripherals Control module."
 	desc = "Allows for the construction of a \"Decouverte\" Peripheral Control module"
 	id = "decouverte_peri"
 	build_path = /obj/item/circuitboard/mecha/decouverte/peripherals
