@@ -115,19 +115,6 @@
 	sight = new_value
 
 	SEND_SIGNAL(src, COMSIG_MOB_SIGHT_CHANGE, new_value, old_sight)
-	update_sightflags(old_sight)
-
-/mob/proc/update_sightflags(old_sight)
-	if(!hud_used)
-		return
-	// If neither the old and new flags can see turfs but not objects, don't transform the turfs
-	// This is to ensure parallax works when you can't see holder objects
-	if(sight & (SEE_TURFS | SEE_OBJS) != old_sight & (SEE_TURFS | SEE_OBJS))
-		return
-
-	for(var/group_key in hud_used.master_groups)
-		var/datum/plane_master_group/group = hud_used.master_groups[group_key]
-		group.transform_lower_turfs(hud_used, hud_used.current_plane_offset, hud_used.current_plane_offset)
 
 /mob/proc/add_sight(new_value)
 	set_sight(sight | new_value)

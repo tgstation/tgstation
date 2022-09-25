@@ -127,6 +127,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, .proc/on_plane_increase)
 	RegisterSignal(mymob, COMSIG_MOB_LOGIN, .proc/client_refresh)
 	RegisterSignal(mymob, COMSIG_MOB_LOGOUT, .proc/clear_client)
+	RegisterSignal(mymob, COMSIG_MOB_SIGHT_CHANGE, .proc/update_sightflags)
+	update_sightflags(mymob, mymob.sight, NONE)
 
 /datum/hud/proc/client_refresh(datum/source)
 	RegisterSignal(mymob.client, COMSIG_CLIENT_SET_EYE, .proc/on_eye_change)
@@ -146,6 +148,16 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 		// :sadkirby:
 		RegisterSignal(new_eye, COMSIG_MOVABLE_Z_CHANGED, .proc/eye_z_changed, override = TRUE)
 	eye_z_changed(new_eye)
+
+/datum/hud/proc/update_sightflags(datum/source, new_sight, old_sight)
+	// If neither the old and new flags can see turfs but not objects, don't transform the turfs
+	// This is to ensure parallax works when you can't see holder objects
+	if(((new_sight & (SEE_TURFS | SEE_OBJS)) == SEE_TURFS) == ((old_sight & (SEE_TURFS | SEE_OBJS)) == SEE_TURFS))
+		return
+
+	for(var/group_key in master_groups)
+		var/datum/plane_master_group/group = master_groups[group_key]
+		group.transform_lower_turfs(src, current_plane_offset, current_plane_offset)
 
 /datum/hud/proc/eye_z_changed(atom/eye)
 	SIGNAL_HANDLER

@@ -98,7 +98,7 @@
 	var/scale_by = 0.965
 	var/mob/us = source.mymob
 	// If our mob can see through walls
-	if(us.sight & (SEE_TURFS | SEE_OBJS) == SEE_TURFS)
+	if((us.sight & (SEE_TURFS | SEE_OBJS)) == SEE_TURFS)
 		// This is a workaround for two things
 		// First of all, if a mob can see objects but not turfs, they will not be shown the holder objects we use for
 		// What I'd like to do is revert to images if this case throws, but image vis_contents is broken
