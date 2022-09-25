@@ -39,19 +39,21 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 
 /// Checks if a chunk has been Generated in x, y, z.
 /datum/cameranet/proc/chunkGenerated(x, y, z)
+	var/turf/lowest = get_lowest_turf(locate(max(x, 1), max(y, 1), z))
 	x &= ~(CHUNK_SIZE - 1)
 	y &= ~(CHUNK_SIZE - 1)
-	return chunks["[x],[y],[z]"]
+	return chunks["[x],[y],[lowest.z]"]
 
 // Returns the chunk in the x, y, z.
 // If there is no chunk, it creates a new chunk and returns that.
 /datum/cameranet/proc/getCameraChunk(x, y, z)
+	var/turf/lowest = get_lowest_turf(locate(x, y, z))
 	x &= ~(CHUNK_SIZE - 1)
 	y &= ~(CHUNK_SIZE - 1)
-	var/key = "[x],[y],[z]"
+	var/key = "[x],[y],[lowest.z]"
 	. = chunks[key]
 	if(!.)
-		chunks[key] = . = new /datum/camerachunk(x, y, z)
+		chunks[key] = . = new /datum/camerachunk(x, y, lowest.z)
 
 /// Updates what the aiEye can see. It is recommended you use this when the aiEye moves or it's location is set.
 /datum/cameranet/proc/visibility(list/moved_eyes, client/C, list/other_eyes, use_static = TRUE)
@@ -71,7 +73,6 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 			var/y1 = max(0, eye.y - static_range) & ~(CHUNK_SIZE - 1)
 			var/x2 = min(world.maxx, eye.x + static_range) & ~(CHUNK_SIZE - 1)
 			var/y2 = min(world.maxy, eye.y + static_range) & ~(CHUNK_SIZE - 1)
-
 
 			for(var/x = x1; x <= x2; x += CHUNK_SIZE)
 				for(var/y = y1; y <= y2; y += CHUNK_SIZE)
@@ -135,10 +136,10 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 				if(chunk)
 					if(choice == 0)
 						// Remove the camera.
-						chunk.cameras -= c
+						chunk.cameras["[T.z]"] -= c
 					else if(choice == 1)
 						// You can't have the same camera in the list twice.
-						chunk.cameras |= c
+						chunk.cameras["[T.z]"] |= c
 					chunk.hasChanged()
 
 /// Will check if a mob is on a viewable turf. Returns 1 if it is, otherwise returns 0.

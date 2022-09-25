@@ -528,10 +528,32 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 /obj/machinery/camera/proc/can_see()
 	var/list/see = null
 	var/turf/pos = get_turf(src)
+	var/check_lower = pos != get_lowest_turf(pos)
+	var/check_higher = pos != get_highest_turf(pos)
+
 	if(isXRay())
 		see = range(view_range, pos)
 	else
 		see = get_hear(view_range, pos)
+	if(check_lower || check_higher)
+		// Haha datum var access KILL ME
+		var/datum/controller/subsystem/mapping/local_mapping = SSmapping
+		for(var/turf/seen in see)
+			if(check_lower)
+				var/turf/visible = seen
+				while(visible && istransparentturf(visible))
+					var/turf/below = local_mapping.get_turf_below(visible)
+					for(var/turf/adjacent in range(1, below))
+						see += adjacent
+						see += adjacent.contents
+					visible = below
+			if(check_higher)
+				var/turf/above = local_mapping.get_turf_above(seen)
+				while(above && istransparentturf(above))
+					for(var/turf/adjacent in range(1, below))
+						see += adjacent
+						see += adjacent.contents
+					above = local_mapping.get_turf_above(above)
 	return see
 
 /obj/machinery/camera/proc/Togglelight(on=0)

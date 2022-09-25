@@ -782,11 +782,12 @@
 	var/list/obj/machinery/camera/add = list()
 	var/list/obj/machinery/camera/remove = list()
 	var/list/obj/machinery/camera/visible = list()
-	for (var/datum/camerachunk/CC in eyeobj.visibleCameraChunks)
-		for (var/obj/machinery/camera/C in CC.cameras)
-			if (!C.can_use() || get_dist(C, eyeobj) > 7 || !C.internal_light)
-				continue
-			visible |= C
+	for (var/datum/camerachunk/chunk as anything in eyeobj.visibleCameraChunks)
+		for (var/z_key in chunk.cameras)
+			for(var/obj/machinery/camera/camera as anything in chunk.cameras[z_key])
+				if (!camera.can_use() || get_dist(camera, src) > 7 || !camera.internal_light)
+					continue
+				visible |= camera
 
 	add = visible - lit_cameras
 	remove = lit_cameras - visible

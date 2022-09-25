@@ -347,7 +347,7 @@
 	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	icon_state = model.cyborg_base_icon
 	if(stat != DEAD && !(HAS_TRAIT(src, TRAIT_KNOCKEDOUT) || IsStun() || IsParalyzed() || low_power_mode)) //Not dead, not stunned.
-	// Todo: needs to update on move
+	// lemon Todo: needs to update on move
 		if(!eye_lights)
 			eye_lights = new()
 		if(lamp_enabled || lamp_doom)

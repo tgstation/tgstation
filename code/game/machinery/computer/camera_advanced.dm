@@ -92,6 +92,9 @@
 	user.remote_control = null
 	current_user = null
 	user.unset_machine()
+	var/atom/movable/screen/plane_master/plane_static = user.hud_used?.get_plane_master(CAMERA_STATIC_PLANE)
+	if(plane_static)
+		plane_static.hide_plane(user)
 	playsound(src, 'sound/machines/terminal_off.ogg', 25, FALSE)
 
 /obj/machinery/computer/camera_advanced/check_eye(mob/user)
@@ -174,8 +177,12 @@
 	user.remote_control = eyeobj
 	user.reset_perspective(eyeobj)
 	eyeobj.setLoc(eyeobj.loc)
-	if(should_supress_view_changes )
+	if(should_supress_view_changes)
 		user.client.view_size.supress()
+	// Who passes control like this god I hate static code
+	var/atom/movable/screen/plane_master/plane_static = user.hud_used?.get_plane_master(CAMERA_STATIC_PLANE)
+	if(plane_static)
+		plane_static.unhide_plane(user)
 
 /mob/camera/ai_eye/remote
 	name = "Inactive Camera Eye"
@@ -223,7 +230,7 @@
 		if(visible_icon)
 			if(eye_user.client)
 				eye_user.client.images -= user_image
-	// Todo: needs to update on move
+	// lemon Todo: needs to update on move
 				user_image = image(icon,loc,icon_state, FLY_LAYER)
 				SET_PLANE(user_image, ABOVE_GAME_PLANE, destination)
 				eye_user.client.images += user_image

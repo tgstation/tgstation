@@ -33,7 +33,7 @@
 /obj/machinery/power/solar/Initialize(mapload, obj/item/solar_assembly/S)
 	. = ..()
 
-	// Todo: needs to update on move
+	// lemon Todo: needs to update on move
 	panel_edge = add_panel_overlay("solar_panel_edge", PANEL_EDGE_Y_OFFSET)
 	panel = add_panel_overlay("solar_panel", PANEL_Y_OFFSET)
 

@@ -470,15 +470,17 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	plane = CAMERA_STATIC_PLANE
 	appearance_flags = PLANE_MASTER
 	blend_mode = BLEND_OVERLAY
+	start_hidden = TRUE
 
 /atom/movable/screen/plane_master/camera_static/show_to(mob/mymob)
+	// If we aren't an AI, we have no need for this plane master (most of the time, ai eyes are weird and annoying)
+	if(force_hidden && isAI(mymob))
+		unhide_plane(mymob)
 	. = ..()
 	if(!.)
 		return
 	if(isAI(mymob))
 		return
-	// If we aren't an AI, we have no need for this plane master
-	hide_plane(mymob)
 	return FALSE
 
 /atom/movable/screen/plane_master/high_game
