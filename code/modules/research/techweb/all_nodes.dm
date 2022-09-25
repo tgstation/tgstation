@@ -1667,7 +1667,6 @@
 	prereq_ids = list("engineering", "practical_bluespace")
 	design_ids = list(
 		"decouverte_chassis",
-		"decouverte_head",
 		"decouverte_left_arm",
 		"decouverte_left_leg",
 		"decouverte_main",
