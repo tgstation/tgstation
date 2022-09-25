@@ -20,8 +20,14 @@
 /obj/structure/closet/emcloset/anchored
 	anchored = TRUE
 
+#define PROB_SPAWN_EMPTY 1
+
 /obj/structure/closet/emcloset/PopulateContents()
-	..()
+	. = ..()
+
+	// Let's just make it spawn empty, rather than making it queue itself for deletion on Initialize().
+	if(prob(PROB_SPAWN_EMPTY))
+		return
 
 	if (prob(40))
 		new /obj/item/storage/toolbox/emergency(src)
@@ -49,6 +55,8 @@
 		if ("nothing")
 			// doot
 			pass()
+
+#undef PROB_SPAWN_EMPTY
 
 /*
  * Fire Closet
