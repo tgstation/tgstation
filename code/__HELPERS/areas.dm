@@ -138,7 +138,7 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 
 	SEND_GLOBAL_SIGNAL(COMSIG_AREA_CREATED, newA, oldA, creator)
 	to_chat(creator, span_notice("You have created a new area, named [newA.name]. It is now weather proof, and constructing an APC will allow it to be powered."))
-	creator.log_message("created a new area: [AREACOORD(creator)]. It was previously known as [oldA.name].", LOG_GAME)
+	creator.log_message("created a new area: [AREACOORD(creator)] (previously \"[oldA.name]\")", LOG_GAME)
 	return TRUE
 
 #undef BP_MAX_ROOM_SIZE
