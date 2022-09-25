@@ -340,9 +340,7 @@
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 			return FALSE
 		FAX.receive(loaded, fax_name)
-		history_add("Send", FAX.fax_name)
-		INVOKE_ASYNC(src, .proc/animate_object_travel, loaded, "fax_receive", find_overlay_state(loaded, "send"))
-		playsound(src, 'sound/machines/high_tech_confirm.ogg', 50, FALSE)
+		playback_sending(loaded, FAX.fax_name)
 		return TRUE
 	return FALSE
 
@@ -359,10 +357,21 @@
  */
 /obj/machinery/fax/proc/send_to_additional_faxes(obj/item/paper/paper, mob/sender, receiver_name, receiver_color)
 	GLOB.fax_manager.receive_request(sender, src, receiver_name, paper, receiver_color)
-	history_add("Send", receiver_name)
-	INVOKE_ASYNC(src, .proc/animate_object_travel, paper, "fax_receive", find_overlay_state(paper, "send"))
-	playsound(src, 'sound/machines/high_tech_confirm.ogg', 50, FALSE)
+	playback_sending(paper, receiver_name)
 	return TRUE
+
+/**
+ * The procedure for playing the animation and the sending sound.
+ *
+ * Procedure called to add to the history of sending messages, playing the sending animation and sound.
+ * Arguments:
+ * * loaded - Sending item to determine the animation..
+ * * receiver_name - Recipient's name to be added to the message history.
+ */
+/obj/machinery/fax/proc/playback_sending(obj/item/loaded, receiver_name)
+	history_add("Send", receiver_name)
+	INVOKE_ASYNC(src, .proc/animate_object_travel, loaded, "fax_receive", find_overlay_state(loaded, "send"))
+	playsound(src, 'sound/machines/high_tech_confirm.ogg', 50, FALSE)
 
 /**
  * Procedure for accepting papers from another fax machine.
