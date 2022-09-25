@@ -3,7 +3,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 /atom/movable/screen/plane_master
 	screen_loc = "CENTER"
 	icon_state = "blank"
-	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
+	appearance_flags = PLANE_MASTER
 	blend_mode = BLEND_OVERLAY
 	plane = LOWEST_EVER_PLANE
 	/// Will be sent to the debug ui as a description for each plane
@@ -169,6 +169,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	documentation = "Contains the screen object we use as a backdrop to catch clicks on portions of the screen that would otherwise contain nothing else. \
 		<br>Will always be below almost everything else"
 	plane = CLICKCATCHER_PLANE
+	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	multiz_scaled = FALSE
 
 /atom/movable/screen/plane_master/clickcatcher/Initialize(mapload, datum/plane_master_group/home, offset)
@@ -188,6 +189,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	documentation = "Essentially a backdrop for the parallax plane. We're rendered just below it, so we'll be multiplied by its well, parallax.\
 		<br>If you want something to look as if it has parallax on it, draw it to this plane."
 	plane = PLANE_SPACE
+	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 
 ///Contains space parallax
 /atom/movable/screen/plane_master/parallax
@@ -197,6 +199,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 		<br>We abuse this to ensure we multiply against the Parallax whitifier plane, or space's plane. It's set to full white, so when you do the multiply you just get parallax out where it well, makes sense to be.\
 		<br>Also notice that the parent parallax plane is mirrored down to all children. We want to support viewing parallax across all z levels at once."
 	plane = PLANE_SPACE_PARALLAX
+	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	blend_mode = BLEND_MULTIPLY
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	multiz_scaled = FALSE
@@ -227,6 +230,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 		<br>Note the blend mode and lack of relay targets. This plane exists only to distort, it's never rendered anywhere."
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	plane = GRAVITY_PULSE_PLANE
+	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	blend_mode = BLEND_ADD
 	render_target = GRAVITY_PULSE_RENDER_TARGET
 	render_relay_planes = list()
@@ -236,24 +240,18 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	name = "Floor"
 	documentation = "The well, floor. This is mostly used as a sorting mechanism, but it also lets us create a \"border\" around the game world plane, so its drop shadow will actually work."
 	plane = FLOOR_PLANE
-	appearance_flags = PLANE_MASTER
-	blend_mode = BLEND_OVERLAY
 
 /atom/movable/screen/plane_master/game
 	name = "Lower game world"
 	documentation = "Exists mostly because of FOV shit. Basically, if you've just got a normal not ABOVE fov thing, and you don't want it masked, stick it here yeah?"
 	plane = GAME_PLANE
 	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
-	appearance_flags = PLANE_MASTER //should use client color
-	blend_mode = BLEND_OVERLAY
 
 /atom/movable/screen/plane_master/game_world_fov_hidden
 	name = "lower game world fov hidden"
 	documentation = "If you want something to be hidden by fov, stick it on this plane. We're masked by the fov blocker plane, so the items on us can actually well, disappear."
 	plane = GAME_PLANE_FOV_HIDDEN
 	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
-	appearance_flags = PLANE_MASTER //should use client color
-	blend_mode = BLEND_OVERLAY
 
 /atom/movable/screen/plane_master/game_world_fov_hidden/Initialize(mapload)
 	. = ..()
@@ -264,6 +262,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	documentation = "This is one of those planes that's only used as a filter. It masks out things that want to be hidden by fov.\
 		<br>Literally just contains FOV images, or masks."
 	plane = FIELD_OF_VISION_BLOCKER_PLANE
+	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	render_target = FIELD_OF_VISION_BLOCKER_RENDER_TARGET
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_relay_planes = list()
@@ -283,16 +282,12 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	documentation = "Ok so fov is kinda fucky, because planes in byond serve both as effect groupings and as rendering orderers. Since that's true, we need a plane that we can stick stuff that draws above fov blocked stuff on."
 	plane = GAME_PLANE_UPPER
 	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
-	appearance_flags = PLANE_MASTER //should use client color
-	blend_mode = BLEND_OVERLAY
 
 /atom/movable/screen/plane_master/game_world_upper_fov_hidden
 	name = "Upper game world fov hidden"
 	documentation = "Just as we need a place to draw things \"above\" the hidden fov plane, we also need to be able to hide stuff that draws over the upper game plane."
 	plane = GAME_PLANE_UPPER_FOV_HIDDEN
 	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
-	appearance_flags = PLANE_MASTER //should use client color
-	blend_mode = BLEND_OVERLAY
 
 /atom/movable/screen/plane_master/game_world_upper_fov_hidden/Initialize()
 	. = ..()
@@ -305,8 +300,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	plane = SEETHROUGH_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_relay_planes = list(GAME_PLANE)
-	appearance_flags = PLANE_MASTER
-	blend_mode = BLEND_OVERLAY
 	start_hidden = TRUE
 
 /atom/movable/screen/plane_master/game_world_above
@@ -314,8 +307,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	documentation = "We need a place that's unmasked by fov that also draws above the upper game world fov hidden plane. I told you fov was hacky man."
 	plane = ABOVE_GAME_PLANE
 	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
-	appearance_flags = PLANE_MASTER //should use client color
-	blend_mode = BLEND_OVERLAY
 
 /**
  * Plane master handling byond internal blackness
@@ -335,6 +326,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 		<br>Of note: plane master blackness, and the blackness that comes from having nothing to display look similar, but are not the same thing,\
 		mind yourself when you're working with this plane, you might have accidentially been trying to work with the wrong thing."
 	plane = BLACKNESS_PLANE
+	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	// Note: we don't set this to blend multiply because it just dies when its alpha is modified, because of fun byond bugs
 	// Marked as multiz_scaled = FALSE because it should not scale, scaling lets you see "through" the floor
 	multiz_scaled = FALSE
@@ -394,22 +386,19 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	name = "Massive object"
 	documentation = "Huge objects need to render above everything else on the game plane, otherwise they'd well, get clipped and look not that huge. This does that."
 	plane = MASSIVE_OBJ_PLANE
-	appearance_flags = PLANE_MASTER //should use client color
-	blend_mode = BLEND_OVERLAY
 
 /atom/movable/screen/plane_master/point
 	name = "Point"
 	documentation = "I mean like, what do you want me to say? Points draw over pretty much everything else, so they get their own plane. Remember we layer render relays to draw planes in their proper order on render plates."
 	plane = POINT_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	appearance_flags = PLANE_MASTER //should use client color
-	blend_mode = BLEND_OVERLAY
 
 ///Contains all turf lighting
 /atom/movable/screen/plane_master/turf_lighting
 	name = "Turf Lighting"
 	documentation = "Contains all lighting drawn to turfs. Not so complex, draws directly onto the lighting plate."
 	plane = LIGHTING_PLANE
+	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	render_relay_planes = list(RENDER_PLANE_LIGHTING)
 	blend_mode_override = BLEND_ADD
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -422,6 +411,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 		<br>Exists because lighting updating is really slow, and movement needs to feel smooth.\
 		<br>We draw to the game plane, and mask out space for ourselves on the lighting plane so any color we have has the chance to display."
 	plane = O_LIGHTING_VISUAL_PLANE
+	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	render_target = O_LIGHTING_VISUAL_RENDER_TARGET
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	blend_mode = BLEND_MULTIPLY
@@ -431,8 +421,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	plane = ABOVE_LIGHTING_PLANE
 	documentation = "Anything on the game plane that needs a space to draw on that will be above the lighting plane.\
 		<br>Mostly little alerts and effects, also sometimes contains things that are meant to look as if they glow."
-	appearance_flags = PLANE_MASTER //should use client color
-	blend_mode = BLEND_OVERLAY
 
 /**
  * Handles emissive overlays and emissive blockers.
@@ -447,6 +435,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 		<br>A color matrix filter is applied to the emissive plane to mask out anything that isn't whatever the emissive color is.\
 		<br>This is then used to alpha mask the lighting plane."
 	plane = EMISSIVE_PLANE
+	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_target = EMISSIVE_RENDER_TARGET
 	render_relay_planes = list()
@@ -460,8 +449,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	documentation = "Holds pipecrawl images generated during well, pipecrawling.\
 		<br>Has a few effects and a funky color matrix designed to make things a bit more visually readable."
 	plane = PIPECRAWL_IMAGES_PLANE
-	appearance_flags = PLANE_MASTER
-	blend_mode = BLEND_OVERLAY
 	start_hidden = TRUE
 
 /atom/movable/screen/plane_master/pipecrawl/Initialize(mapload)
@@ -478,8 +465,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	documentation = "Holds camera static images. Usually only visible to people who can well, see static.\
 		<br>We use images rather then vis contents because they're lighter on maptick, and maptick sucks butt."
 	plane = CAMERA_STATIC_PLANE
-	appearance_flags = PLANE_MASTER
-	blend_mode = BLEND_OVERLAY
 	start_hidden = TRUE
 
 /atom/movable/screen/plane_master/camera_static/show_to(mob/mymob)
@@ -499,16 +484,12 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 		<br>This includes atmos debug overlays, blind sound images, and mining scanners. \
 		<br>Really only exists for its layering potential, we don't use this for any vfx"
 	plane = HIGH_GAME_PLANE
-	appearance_flags = PLANE_MASTER
-	blend_mode = BLEND_OVERLAY
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /atom/movable/screen/plane_master/ghost
 	name = "Ghost"
 	documentation = "Ghosts draw here, so they don't get mixed up in the visuals of the game world. Note, this is not not how we HIDE ghosts from people, that's done with invisible and see_invisible."
 	plane = GHOST_PLANE
-	appearance_flags = PLANE_MASTER //should use client color
-	blend_mode = BLEND_OVERLAY
 	render_relay_planes = list(RENDER_PLANE_NON_GAME)
 
 /atom/movable/screen/plane_master/fullscreen
@@ -516,6 +497,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	documentation = "Holds anything that applies to or above the full screen. \
 		<br>Note, it's still rendered underneath hud objects, but this lets us control the order that things like death/damage effects render in."
 	plane = FULLSCREEN_PLANE
+	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	render_relay_planes = list(RENDER_PLANE_NON_GAME)
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	allows_offsetting = FALSE
@@ -524,8 +506,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	name = "Runechat"
 	documentation = "Holds runechat images, that text that pops up when someone say something. Uses a dropshadow to well, look nice."
 	plane = RUNECHAT_PLANE
-	appearance_flags = PLANE_MASTER
-	blend_mode = BLEND_OVERLAY
 	render_relay_planes = list(RENDER_PLANE_NON_GAME)
 
 /atom/movable/screen/plane_master/runechat/show_to(mob/mymob)
@@ -540,12 +520,14 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	name = "Balloon chat"
 	documentation = "Holds ballon chat images, those little text bars that pop up for a second when you do some things. NOT runechat."
 	plane = BALLOON_CHAT_PLANE
+	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	render_relay_planes = list(RENDER_PLANE_NON_GAME)
 
 /atom/movable/screen/plane_master/hud
 	name = "HUD"
 	documentation = "Contains anything that want to be rendered on the hud. Typically is just screen elements."
 	plane = HUD_PLANE
+	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	render_relay_planes = list(RENDER_PLANE_NON_GAME)
 	allows_offsetting = FALSE
 
@@ -553,6 +535,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	name = "Above HUD"
 	documentation = "Anything that wants to be drawn ABOVE the rest of the hud. Typically close buttons and other elements that need to be always visible. Think preventing draggable action button memes."
 	plane = ABOVE_HUD_PLANE
+	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	render_relay_planes = list(RENDER_PLANE_NON_GAME)
 	allows_offsetting = FALSE
 
@@ -560,5 +543,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	name = "Splashscreen"
 	documentation = "Anything that's drawn above LITERALLY everything else. Think cinimatics and the well, spashscreen."
 	plane = SPLASHSCREEN_PLANE
+	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	render_relay_planes = list(RENDER_PLANE_NON_GAME)
 	allows_offsetting = FALSE
