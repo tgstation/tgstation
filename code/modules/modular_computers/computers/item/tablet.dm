@@ -174,8 +174,8 @@
 	has_light = FALSE //tablet light button actually enables/disables the borg lamp
 	comp_light_luminosity = 0
 	has_variants = FALSE
-	///Ref to the silicon we're installed in. Set by the borg during our creation.
-	var/mob/living/silicon/borgo
+	///Ref to the silicon we're installed in. Set by the silicon itself during its creation.
+	var/mob/living/silicon/silicon_owner
 	///Ref to the RoboTact app. Important enough to borgs to deserve a ref.
 	var/datum/computer_file/program/robotact/robotact
 	///IC log that borgs can view in their personal management app
@@ -184,34 +184,34 @@
 /obj/item/modular_computer/tablet/integrated/Initialize(mapload)
 	. = ..()
 	vis_flags |= VIS_INHERIT_ID
-	borgo = loc
-	if(!istype(borgo))
-		borgo = null
+	silicon_owner = loc
+	if(!istype(silicon_owner))
+		silicon_owner = null
 		stack_trace("[type] initialized outside of a borg, deleting.")
 		return INITIALIZE_HINT_QDEL
 
 /obj/item/modular_computer/tablet/integrated/Destroy()
-	borgo = null
+	silicon_owner = null
 	return ..()
 
 /obj/item/modular_computer/tablet/integrated/turn_on(mob/user, open_ui = FALSE)
-	if(borgo?.stat != DEAD)
+	if(silicon_owner?.stat != DEAD)
 		return ..()
 	return FALSE
 
 /obj/item/modular_computer/tablet/integrated/get_ntnet_status(specific_action = 0)
 	//No borg found
-	if(!borgo)
+	if(!silicon_owner)
 		return FALSE
 	// no AIs/pAIs
-	var/mob/living/silicon/robot/borgs_ONLY = borgo
-	if(!istype(borgs_ONLY))
+	var/mob/living/silicon/robot/cyborg_check = silicon_owner
+	if(!istype(cyborg_check))
 		return ..()
 	//lockdown restricts borg networking
-	if(borgs_ONLY.lockcharge)
+	if(cyborg_check.lockcharge)
 		return FALSE
 	//borg cell dying restricts borg networking
-	if(!borgs_ONLY.cell || borgs_ONLY.cell.charge == 0)
+	if(!cyborg_check.cell || cyborg_check.cell.charge == 0)
 		return FALSE
 
 	return ..()
@@ -227,44 +227,44 @@
  * RoboTact is supposed to be undeletable, so these will create runtime messages.
  */
 /obj/item/modular_computer/tablet/integrated/proc/get_robotact()
-	if(!borgo)
+	if(!silicon_owner)
 		return null
 	if(!robotact)
 		var/obj/item/computer_hardware/hard_drive/hard_drive = all_components[MC_HDD]
 		robotact = hard_drive.find_file_by_name("robotact")
 		if(!robotact)
-			stack_trace("Cyborg [borgo] ( [borgo.type] ) was somehow missing their self-manage app in their tablet. A new copy has been created.")
+			stack_trace("Cyborg [silicon_owner] ( [silicon_owner.type] ) was somehow missing their self-manage app in their tablet. A new copy has been created.")
 			robotact = new(hard_drive)
 			if(!hard_drive.store_file(robotact))
 				qdel(robotact)
 				robotact = null
-				CRASH("Cyborg [borgo]'s tablet hard drive rejected recieving a new copy of the self-manage app. To fix, check the hard drive's space remaining. Please make a bug report about this.")
+				CRASH("Cyborg [silicon_owner]'s tablet hard drive rejected recieving a new copy of the self-manage app. To fix, check the hard drive's space remaining. Please make a bug report about this.")
 	return robotact
 
 //Makes the light settings reflect the borg's headlamp settings
 /obj/item/modular_computer/tablet/integrated/ui_data(mob/user)
 	. = ..()
 	.["has_light"] = TRUE
-	if(iscyborg(borgo))
-		var/mob/living/silicon/robot/robo = borgo
+	if(iscyborg(silicon_owner))
+		var/mob/living/silicon/robot/robo = silicon_owner
 		.["light_on"] = robo.lamp_enabled
 		.["comp_light_color"] = robo.lamp_color
 
 //Makes the flashlight button affect the borg rather than the tablet
 /obj/item/modular_computer/tablet/integrated/toggle_flashlight()
-	if(!borgo || QDELETED(borgo))
+	if(!silicon_owner || QDELETED(silicon_owner))
 		return FALSE
-	if(iscyborg(borgo))
-		var/mob/living/silicon/robot/robo = borgo
+	if(iscyborg(silicon_owner))
+		var/mob/living/silicon/robot/robo = silicon_owner
 		robo.toggle_headlamp()
 	return TRUE
 
 //Makes the flashlight color setting affect the borg rather than the tablet
 /obj/item/modular_computer/tablet/integrated/set_flashlight_color(color)
-	if(!borgo || QDELETED(borgo) || !color)
+	if(!silicon_owner || QDELETED(silicon_owner) || !color)
 		return FALSE
-	if(iscyborg(borgo))
-		var/mob/living/silicon/robot/robo = borgo
+	if(iscyborg(silicon_owner))
+		var/mob/living/silicon/robot/robo = silicon_owner
 		robo.lamp_color = color
 		robo.toggle_headlamp(FALSE, TRUE)
 	return TRUE
@@ -281,8 +281,8 @@
 
 /obj/item/modular_computer/tablet/integrated/syndicate/Initialize(mapload)
 	. = ..()
-	if(iscyborg(borgo))
-		var/mob/living/silicon/robot/robo = borgo
+	if(iscyborg(silicon_owner))
+		var/mob/living/silicon/robot/robo = silicon_owner
 		robo.lamp_color = COLOR_RED //Syndicate likes it red
 
 // Round start tablets
