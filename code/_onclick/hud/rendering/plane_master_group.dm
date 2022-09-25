@@ -93,6 +93,19 @@
 	// No offset? piss off
 	if(!SSmapping.max_plane_offset)
 		return
+	// Each time we go "down" a visual z level, we'll reduce the scale by this amount
+	// Chosen because mothblocks liked it, didn't cause motion sickness while also giving a sense of height
+	var/scale_by = 0.965
+	var/mob/us = source.mymob
+	// If our mob can see through walls
+	if(us.sight & (SEE_TURFS | SEE_OBJS) == SEE_TURFS)
+		// This is a workaround for two things
+		// First of all, if a mob can see objects but not turfs, they will not be shown the holder objects we use for
+		// What I'd like to do is revert to images if this case throws, but image vis_contents is broken
+		// https://www.byond.com/forum/post/2821969
+		// If that's ever fixed, please just use that. thanks :)
+		scale_by = 1
+
 	var/list/offsets = list()
 	// We accept negatives so going down "zooms" away the drop above as it goes
 	for(var/offset in -SSmapping.max_plane_offset to SSmapping.max_plane_offset)
@@ -100,7 +113,7 @@
 		if(offset == 0)
 			offsets += null
 			continue
-		var/scale = 0.965 ** (offset)
+		var/scale = scale_by ** (offset)
 		var/matrix/multiz_shrink = matrix()
 		multiz_shrink.Scale(scale)
 		offsets += multiz_shrink

@@ -107,7 +107,7 @@
 	for(var/key in our_groups)
 		groups += key
 
-	data["enable_group_view"] = length(groups)
+	data["enable_group_view"] = length(groups) > 1
 	data["our_group"] = current_group
 	data["present_groups"] = groups
 
