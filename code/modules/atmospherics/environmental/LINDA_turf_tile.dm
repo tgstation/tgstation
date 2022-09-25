@@ -609,7 +609,7 @@ Then we space some of our heat, and think about if we should stop conducting.
 			if(!neighbor.thermal_conductivity)
 				continue
 
-			if(if neighbor && (neighbor.archived_cycle < SSair.times_fired))
+			if(neighbor && (neighbor.archived_cycle < SSair.times_fired))
 				neighbor.archive()
 
 			neighbor.neighbor_conduct_with_src(src)
