@@ -1,4 +1,4 @@
-/client/proc/fax()
+/client/proc/fax_manager()
 	set name = "Fax Manager"
 	set desc = "Open the manager panel to view all requests during this round"
 	set category = "Admin.Game"
