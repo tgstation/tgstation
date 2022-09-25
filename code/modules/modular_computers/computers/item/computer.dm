@@ -22,7 +22,9 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	var/screen_on = 1 // Whether the computer is active/opened/it's screen is on.
 	var/device_theme = "ntos" // Sets the theme for the main menu, hardware config, and file browser apps. Overridden by certain non-NT devices.
 	var/datum/computer_file/program/active_program = null // A currently active program running on the computer.
-	var/hardware_flag = 0 // A flag that describes this device type
+	///The type of device this computer is, as a flag
+	var/hardware_flag = NONE
+//	Options: PROGRAM_ALL PROGRAM_CONSOLE | | PROGRAM_LAPTOP | PROGRAM_TABLET
 	var/last_power_usage = 0
 	var/last_battery_percent = 0 // Used for deciding if battery percentage has chandged
 	var/last_world_time = "00:00"
@@ -594,14 +596,17 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	if(!SSnetworks.station_network || !SSnetworks.station_network.check_function(specific_action)) // NTNet is down and we are not connected via wired connection. No signal.
 		return NTNET_NO_SIGNAL
 
-	// physical computers are always connected through ethernet
-	if(istype(physical, /obj/machinery/modular_computer))
+
+	// computers are connected through ethernet
+	if(hardware_flag & PROGRAM_CONSOLE)
 		return NTNET_ETHERNET_SIGNAL
 
 	var/turf/current_turf = get_turf(src)
 	if(!current_turf || !istype(current_turf))
 		return NTNET_NO_SIGNAL
 	if(is_station_level(current_turf.z))
+		if(hardware_flag & PROGRAM_LAPTOP) //laptops can connect to ethernet but they have to be on station for that
+			return NTNET_ETHERNET_SIGNAL
 		return NTNET_GOOD_SIGNAL
 	else if(is_mining_level(current_turf.z))
 		return NTNET_LOW_SIGNAL
