@@ -400,7 +400,7 @@
 	return
 
 /obj/item/fishing_rod/tech/use_slot(slot, mob/user, obj/item/new_item)
-	if(slot == ROD_SLOT_BAIT)
+	if(slot & ROD_SLOT_BAIT)
 		return
 	return ..()
 

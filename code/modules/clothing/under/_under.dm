@@ -113,7 +113,7 @@
 
 /obj/item/clothing/under/equipped(mob/living/user, slot)
 	..()
-	if(slot == ITEM_SLOT_ICLOTHING && freshly_laundered)
+	if((slot & ITEM_SLOT_ICLOTHING) && freshly_laundered)
 		freshly_laundered = FALSE
 		user.add_mood_event("fresh_laundry", /datum/mood_event/fresh_laundry)
 

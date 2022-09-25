@@ -411,7 +411,7 @@
 		var/mob/living/carbon/human/stunned_human = stunned_mob
 		if(istype(stunned_human.glasses, /obj/item/clothing/glasses/meson))
 			var/obj/item/clothing/glasses/meson/check_meson = stunned_human.glasses
-			if(check_meson.vision_flags == SEE_TURFS)
+			if(check_meson.vision_flags & SEE_TURFS)
 				to_chat(stunned_human, span_notice("You look directly into the [name], good thing you had your protective eyewear on!"))
 				continue
 

@@ -28,7 +28,7 @@
 	ToggleHood()
 
 /obj/item/clothing/suit/hooded/item_action_slot_check(slot, mob/user)
-	if(slot == ITEM_SLOT_OCLOTHING)
+	if(slot & ITEM_SLOT_OCLOTHING)
 		return 1
 
 /obj/item/clothing/suit/hooded/equipped(mob/user, slot)

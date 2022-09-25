@@ -240,7 +240,7 @@
 
 /obj/item/mod/control/equipped(mob/user, slot)
 	..()
-	if(slot == slot_flags)
+	if(slot & slot_flags)
 		set_wearer(user)
 	else if(wearer)
 		unset_wearer()
@@ -252,7 +252,7 @@
 	clean_up()
 
 /obj/item/mod/control/item_action_slot_check(slot)
-	if(slot == slot_flags)
+	if(slot & slot_flags)
 		return TRUE
 
 /obj/item/mod/control/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)

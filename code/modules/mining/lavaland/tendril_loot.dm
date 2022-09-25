@@ -131,7 +131,7 @@
 	var/mob/living/carbon/human/active_owner
 
 /obj/item/clothing/neck/necklace/memento_mori/item_action_slot_check(slot)
-	return slot == ITEM_SLOT_NECK
+	return (slot & ITEM_SLOT_NECK)
 
 /obj/item/clothing/neck/necklace/memento_mori/dropped(mob/user)
 	..()
@@ -568,7 +568,7 @@
 
 /obj/item/clothing/gloves/gauntlets/equipped(mob/user, slot)
 	. = ..()
-	if(slot == ITEM_SLOT_GLOVES)
+	if(slot & ITEM_SLOT_GLOVES)
 		tool_behaviour = TOOL_MINING
 		RegisterSignal(user, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, .proc/rocksmash)
 		RegisterSignal(user, COMSIG_MOVABLE_BUMP, .proc/rocksmash)
@@ -729,7 +729,7 @@
 
 /obj/item/clothing/glasses/godeye/equipped(mob/living/user, slot)
 	. = ..()
-	if(ishuman(user) && slot == ITEM_SLOT_EYES)
+	if(ishuman(user) && (slot & ITEM_SLOT_EYES))
 		ADD_TRAIT(src, TRAIT_NODROP, EYE_OF_GOD_TRAIT)
 		pain(user)
 		scan_ability.Grant(user)

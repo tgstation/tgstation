@@ -32,7 +32,7 @@
 	show_to_user(user)
 
 /obj/item/clothing/glasses/sunglasses/spy/item_action_slot_check(slot)
-	if(slot == ITEM_SLOT_EYES)
+	if(slot & ITEM_SLOT_EYES)
 		return TRUE
 
 /obj/item/clothing/glasses/sunglasses/spy/Destroy()

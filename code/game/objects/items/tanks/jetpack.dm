@@ -30,7 +30,7 @@
 	AddComponent(/datum/component/jetpack, stabilizers, COMSIG_JETPACK_ACTIVATED, COMSIG_JETPACK_DEACTIVATED, JETPACK_ACTIVATION_FAILED, get_mover, check_on_move, /datum/effect_system/trail_follow/ion)
 
 /obj/item/tank/jetpack/item_action_slot_check(slot)
-	if(slot == ITEM_SLOT_BACK)
+	if(slot & ITEM_SLOT_BACK)
 		return TRUE
 
 /obj/item/tank/jetpack/equipped(mob/user, slot, initial)

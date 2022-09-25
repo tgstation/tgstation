@@ -33,7 +33,7 @@
 	toggle_mister(user)
 
 /obj/item/watertank/item_action_slot_check(slot, mob/user)
-	if(slot == user.getBackSlot())
+	if(slot & user.getBackSlot())
 		return 1
 
 /obj/item/watertank/proc/toggle_mister(mob/living/user)
@@ -406,7 +406,7 @@
 	toggle_injection()
 
 /obj/item/reagent_containers/chemtank/item_action_slot_check(slot, mob/user)
-	if(slot == ITEM_SLOT_BACK)
+	if(slot & ITEM_SLOT_BACK)
 		return 1
 
 /obj/item/reagent_containers/chemtank/proc/toggle_injection()
