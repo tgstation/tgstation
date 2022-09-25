@@ -54,6 +54,7 @@
 
 	var/area/our_area = loc
 	our_area.zs_we_have[z] = TRUE
+	// Lemon todo: optimize this
 	SET_PLANE(src, plane, src)
 
 	if(!our_area.area_has_base_lighting && always_lit) //Only provide your own lighting if the area doesn't for you
