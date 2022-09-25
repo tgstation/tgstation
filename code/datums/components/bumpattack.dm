@@ -70,7 +70,6 @@
     if(!istype(our_weapon))
         qdel(src)
         return
- 
     bumper.visible_message(span_danger("[bumper] charges into [target], attacking with [our_weapon]!"), span_danger("You charge into [target], attacking with [our_weapon]!"), vision_distance = COMBAT_MESSAGE_RANGE)
-    target.attackby(our_weapon, bumper)
+    INVOKE_ASYNC(target, /atom.proc/attackby , our_weapon, bumper)
 
