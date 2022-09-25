@@ -17,4 +17,4 @@
 	active = FALSE
 
 /obj/item/delivery/parcel/attackby(obj/item/boxcutter, mob/user)
-	. = ..()
+	var/sound_file = 'sound/items/bikehorn.ogg'
