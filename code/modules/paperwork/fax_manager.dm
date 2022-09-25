@@ -1,13 +1,14 @@
 GLOBAL_DATUM_INIT(fax_manager, /datum/fax_manager, new)
 
 /**
- * # Request Manager
+ * Fax Request Manager
  *
- * Handles all player requests (prayers, centcom requests, syndicate requests)
- * that occur in the duration of a round.
+ * In its functionality it is similar to the usual Request Manager, but respectively for faxes.
+ * This manager allows you to send faxes on behalf of certain virtual faxes to all existing faxes,
+ * as well as receive faxes in their name from the players.
  */
-
 /datum/fax_manager
+	/// A list that contains faxes from players and other related information. You can view the filling of its fields in procedure receive_request.
 	var/list/requests = list()
 
 /datum/fax_manager/Destroy(force, ...)
