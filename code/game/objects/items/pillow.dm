@@ -104,10 +104,12 @@
 	worn_icon = 'icons/mob/clothing/suits/pillow.dmi'
 	icon_state = "pillow_suit"
 	armor = list(MELEE = 5, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 75) //fluffy amor
+	var/obj/item/pillow/unstoppably_plushed
 
 /obj/item/clothing/suit/pillow_suit/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/bumpattack, proxy_weapon = /obj/item/pillow)
+	unstoppably_plushed = new(src)
+	AddComponent(/datum/component/bumpattack, proxy_weapon = unstoppably_plushed, valid_slots = ITEM_SLOT_OCLOTHING)
 
 /obj/item/clothing/head/pillow_hood
 	name = "pillow hood"
