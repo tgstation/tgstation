@@ -26,7 +26,7 @@
 	if(!.)
 		return .
 
-	if(!length(gather_false_events())
+	if(!length(gather_false_events()))
 		return FALSE
 	return TRUE
 
