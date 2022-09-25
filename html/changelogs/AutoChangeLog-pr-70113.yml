@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Fixed not spawning with prosthetic limbs when you have the prosthetic limb quick."
