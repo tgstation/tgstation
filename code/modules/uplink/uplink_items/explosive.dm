@@ -92,16 +92,16 @@
 
 /datum/uplink_item/explosives/syndicate_bomb
 	name = "Syndicate Bomb"
-	desc = null
+	desc = "The Syndicate bomb is a fearsome device capable of massive destruction. It has an adjustable timer, \
+		with a minimum of %MIN_BOMB_TIMER seconds, and can be bolted to the floor with a wrench to prevent \
+		movement. The bomb is bulky and cannot be moved; upon ordering this item, a smaller beacon will be \
+		transported to you that will teleport the actual bomb to it upon activation. Note that this bomb can \
+		be defused, and some crew may attempt to do so. \
+		The bomb core can be pried out and manually detonated with other explosives."
 	progression_minimum = 40 MINUTES
 	item = /obj/item/sbeacondrop/bomb
 	cost = 11
 
 /datum/uplink_item/explosives/syndicate_bomb/New()
 	. = ..()
-	desc ||= "The Syndicate bomb is a fearsome device capable of massive destruction. It has an adjustable timer, \
-			with a minimum of [SYNDIEBOMB_MIN_TIMER_SECONDS] seconds, and can be bolted to the floor with a wrench to prevent \
-			movement. The bomb is bulky and cannot be moved; upon ordering this item, a smaller beacon will be \
-			transported to you that will teleport the actual bomb to it upon activation. Note that this bomb can \
-			be defused, and some crew may attempt to do so. \
-			The bomb core can be pried out and manually detonated with other explosives."
+	desc = replacetext(desc, "%MIN_BOMB_TIMER", SYNDIEBOMB_MIN_TIMER_SECONDS)
