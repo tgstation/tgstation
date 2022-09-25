@@ -299,6 +299,16 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	// Dupe of the other hidden plane
 	add_filter("vision_cone", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(FIELD_OF_VISION_BLOCKER_RENDER_TARGET, offset), flags = MASK_INVERSE))
 
+/atom/movable/screen/plane_master/seethrough
+	name = "Seethrough"
+	documentation = "Holds the seethrough versions (done using image overrides) of large objects. Mose transparent, so you can click through them."
+	plane = SEETHROUGH_PLANE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	render_relay_planes = list(GAME_PLANE)
+	appearance_flags = PLANE_MASTER
+	blend_mode = BLEND_OVERLAY
+	start_hidden = TRUE
+
 /atom/movable/screen/plane_master/game_world_above
 	name = "Above game world"
 	documentation = "We need a place that's unmasked by fov that also draws above the upper game world fov hidden plane. I told you fov was hacky man."

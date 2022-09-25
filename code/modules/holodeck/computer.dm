@@ -192,7 +192,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 	for(var/turf/possible_blacklist as anything in get_affected_turfs(placement))
 		if (possible_blacklist.holodeck_compatible)
 			continue
-		input_blacklist += possible_blacklist
+		input_blacklist[possible_blacklist] = TRUE
 
 ///loads the template whose id string it was given ("offline_program" loads datum/map_template/holodeck/offline)
 /obj/machinery/computer/holodeck/proc/load_program(map_id, force = FALSE, add_delay = TRUE)

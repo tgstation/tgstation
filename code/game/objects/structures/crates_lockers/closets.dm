@@ -136,6 +136,26 @@
 	. += emissive_appearance(icon, "locked", src, alpha = src.alpha)
 	. += locked ? "locked" : "unlocked"
 
+/obj/structure/closet/vv_edit_var(vname, vval)
+	if(vname == NAMEOF(src, opened))
+		if(vval == opened)
+			return FALSE
+		if(vval && !opened && open(null, TRUE))
+			datum_flags |= DF_VAR_EDITED
+			return TRUE
+		else if(!vval && opened && close(null))
+			datum_flags |= DF_VAR_EDITED
+			return TRUE
+		return FALSE
+	. = ..()
+	if(vname == NAMEOF(src, welded) && welded && !can_weld_shut)
+		can_weld_shut = TRUE
+	else if(vname == NAMEOF(src, can_weld_shut) && !can_weld_shut && welded)
+		welded = FALSE
+		update_appearance()
+	if(vname in list(NAMEOF(src, locked), NAMEOF(src, welded), NAMEOF(src, secure), NAMEOF(src, icon_welded), NAMEOF(src, delivery_icon)))
+		update_appearance()
+
 /// Animates the closet door opening and closing
 /obj/structure/closet/proc/animate_door(closing = FALSE)
 	if(!door_anim_time)

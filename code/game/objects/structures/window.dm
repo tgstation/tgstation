@@ -34,19 +34,6 @@
 	/// If some inconsiderate jerk has had their blood spilled on this window, thus making it cleanable
 	var/bloodied = FALSE
 
-/obj/structure/window/examine(mob/user)
-	. = ..()
-	switch(state)
-		if(WINDOW_SCREWED_TO_FRAME)
-			. += span_notice("The window is <b>screwed</b> to the frame.")
-		if(WINDOW_IN_FRAME)
-			. += span_notice("The window is <i>unscrewed</i> but <b>pried</b> into the frame.")
-		if(WINDOW_OUT_OF_FRAME)
-			if (anchored)
-				. += span_notice("The window is <b>screwed</b> to the floor.")
-			else
-				. += span_notice("The window is <i>unscrewed</i> from the floor, and could be deconstructed by <b>wrenching</b>.")
-
 /obj/structure/window/Initialize(mapload, direct)
 	. = ..()
 	if(direct)
@@ -61,6 +48,7 @@
 
 	if(fulltile)
 		setDir()
+		AddElement(/datum/element/can_barricade)
 
 	//windows only block while reinforced and fulltile, so we'll use the proc
 	real_explosion_block = explosion_block
@@ -77,6 +65,19 @@
 
 	if (flags_1 & ON_BORDER_1)
 		AddElement(/datum/element/connect_loc, loc_connections)
+
+/obj/structure/window/examine(mob/user)
+	. = ..()
+	switch(state)
+		if(WINDOW_SCREWED_TO_FRAME)
+			. += span_notice("The window is <b>screwed</b> to the frame.")
+		if(WINDOW_IN_FRAME)
+			. += span_notice("The window is <i>unscrewed</i> but <b>pried</b> into the frame.")
+		if(WINDOW_OUT_OF_FRAME)
+			if (anchored)
+				. += span_notice("The window is <b>screwed</b> to the floor.")
+			else
+				. += span_notice("The window is <i>unscrewed</i> from the floor, and could be deconstructed by <b>wrenching</b>.")
 
 /obj/structure/window/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
@@ -220,7 +221,7 @@
 					set_anchored(FALSE)
 					to_chat(user, span_notice("You unfasten the frame from the floor."))
 			else
-				to_chat(user, span_notice("You begin to screw the frame from to floor..."))
+				to_chat(user, span_notice("You begin to screw the frame to the floor..."))
 				if(tool.use_tool(src, user, decon_speed, volume = 75, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
 					set_anchored(TRUE)
 					to_chat(user, span_notice("You fasten the frame to the floor."))

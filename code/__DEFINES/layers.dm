@@ -17,15 +17,17 @@
 
 #define OPENSPACE_LAYER 600 //Openspace layer over all
 
-#define RENDER_PLANE_TRANSPARENT -10 //Transparent plane that shows openspace underneath the floor
+#define RENDER_PLANE_TRANSPARENT -9 //Transparent plane that shows openspace underneath the floor
 
-#define FLOOR_PLANE -7
+#define FLOOR_PLANE -8
 
-#define GAME_PLANE -6
-#define GAME_PLANE_FOV_HIDDEN -5
-#define GAME_PLANE_UPPER -4
-#define GAME_PLANE_UPPER_FOV_HIDDEN -3
+#define GAME_PLANE -7
+#define GAME_PLANE_FOV_HIDDEN -6
+#define GAME_PLANE_UPPER -5
+#define GAME_PLANE_UPPER_FOV_HIDDEN -4
 
+///Slightly above the game plane but does not catch mouse clicks. Useful for certain visuals that should be clicked through, like seethrough trees
+#define SEETHROUGH_PLANE -3
 #define ABOVE_GAME_PLANE -2
 
 #define RENDER_PLANE_GAME_WORLD -1

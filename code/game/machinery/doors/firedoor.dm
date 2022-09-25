@@ -101,6 +101,7 @@
 
 /obj/machinery/door/firedoor/Destroy()
 	remove_from_areas()
+	unregister_adjacent_turfs(loc)
 	QDEL_NULL(soundloop)
 	return ..()
 
@@ -416,12 +417,11 @@
 		if(place == my_area)
 			place.alarm_manager.clear_alarm(ALARM_FIRE, place)
 
-/obj/machinery/door/firedoor/emag_act(mob/user, obj/item/card/emag/doorjack/digital_crowbar)
+/obj/machinery/door/firedoor/emag_act(mob/user, obj/item/card/emag/emag_type)
 	if(obj_flags & EMAGGED)
 		return
-	if(!isAI(user)) //Skip doorjack-specific code
-		if(!user || digital_crowbar.charges < 1)
-			return
+	if(istype(emag_type, /obj/item/card/emag/doorjack)) //Skip doorjack-specific code
+		var/obj/item/card/emag/doorjack/digital_crowbar = emag_type
 		digital_crowbar.use_charge(user)
 	obj_flags |= EMAGGED
 	INVOKE_ASYNC(src, .proc/open)
@@ -437,13 +437,13 @@
 	return FALSE //No bumping to open, not even in mechs
 
 /obj/machinery/door/firedoor/proc/on_power_loss()
-	SIGNAL_HANDLER 
-	
+	SIGNAL_HANDLER
+
 	soundloop.stop()
 
 /obj/machinery/door/firedoor/proc/on_power_restore()
-	SIGNAL_HANDLER 
-	
+	SIGNAL_HANDLER
+
 	correct_state()
 
 	if(is_playing_alarm)

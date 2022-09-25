@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - admin: "Silenced grav generator admin warnings / logging messages when the round is not currently in progress."

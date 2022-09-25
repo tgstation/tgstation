@@ -87,7 +87,7 @@ SUBSYSTEM_DEF(air)
 	return ..()
 
 
-/datum/controller/subsystem/air/Initialize(timeofday)
+/datum/controller/subsystem/air/Initialize()
 	map_loading = FALSE
 	gas_reactions = init_gas_reactions()
 	hotspot_reactions = init_hotspot_reactions()
@@ -98,7 +98,7 @@ SUBSYSTEM_DEF(air)
 	setup_turf_visuals()
 	process_adjacent_rebuild()
 	atmos_handbooks_init()
-	return ..()
+	return SS_INIT_SUCCESS
 
 
 /datum/controller/subsystem/air/fire(resumed = FALSE)
@@ -389,8 +389,9 @@ SUBSYSTEM_DEF(air)
 		EG.dismantle_cooldown++
 		if(EG.breakdown_cooldown >= EXCITED_GROUP_BREAKDOWN_CYCLES)
 			EG.self_breakdown(poke_turfs = TRUE)
-		else if(EG.dismantle_cooldown >= EXCITED_GROUP_DISMANTLE_CYCLES)
+		else if(EG.dismantle_cooldown >= EXCITED_GROUP_DISMANTLE_CYCLES && !(EG.turf_reactions & (REACTING | STOP_REACTIONS)))
 			EG.dismantle()
+		EG.turf_reactions = NONE
 		if (MC_TICK_CHECK)
 			return
 
@@ -543,7 +544,7 @@ SUBSYSTEM_DEF(air)
 		// This way we can make setting up adjacent turfs O(n) rather then O(n^2)
 		T.Initalize_Atmos(time)
 		if(CHECK_TICK)
-			time++
+			time--
 
 	if(active_turfs.len)
 		var/starting_ats = active_turfs.len

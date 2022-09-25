@@ -351,10 +351,12 @@
 		else
 			enemy_tile.consider_pressure_difference(src, difference)
 
-	our_air.react(src)
+	var/reacting = our_air.react(src)
+	if(our_excited_group)
+		our_excited_group.turf_reactions |= reacting //Adds the flag to turf_reactions so excited groups can check for them before dismantling.
 
 	update_visuals()
-	if(!consider_superconductivity(starting = TRUE) && !active_hotspot) //Might need to include the return of react() here
+	if(!consider_superconductivity(starting = TRUE) && !active_hotspot && !(reacting & (REACTING | STOP_REACTIONS)))
 		if(!our_excited_group) //If nothing of interest is happening, kill the active turf
 			SSair.remove_from_active(src) //This will kill any connected excited group, be careful (This broke atmos for 4 years)
 		if(cached_ticker > EXCITED_GROUP_DISMANTLE_CYCLES) //If you're stalling out, take a rest
@@ -413,6 +415,8 @@
 	var/display_id = 0
 	///Wrapping loop of the index colors
 	var/static/wrapping_id = 0
+	///All turf reaction flags we have received.
+	var/turf_reactions = NONE
 
 /datum/excited_group/New()
 	SSair.excited_groups += src

@@ -551,7 +551,7 @@
 /datum/status_effect/trance/tick()
 	if(stun)
 		owner.Stun(6 SECONDS, TRUE)
-	owner.set_timed_status_effect(40 SECONDS, /datum/status_effect/dizziness)
+	owner.set_dizzy(40 SECONDS)
 
 /datum/status_effect/trance/on_apply()
 	if(!iscarbon(owner))
@@ -671,7 +671,7 @@
 				span_notice("[H]'s hand convulses, and they drop their [I.name]!"),
 				span_userdanger("Your hand convulses violently, and you drop what you were holding!"),
 			)
-			H.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/jitter)
+			H.adjust_jitter(10 SECONDS)
 
 /atom/movable/screen/alert/status_effect/convulsing
 	name = "Shaky Hands"

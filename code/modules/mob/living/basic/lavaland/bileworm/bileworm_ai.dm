@@ -13,8 +13,9 @@
 
 /datum/ai_planning_subtree/bileworm_attack/SelectBehaviors(datum/ai_controller/controller, delta_time)
 
-	var/atom/target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
-	if(!target || QDELETED(target))
+	var/datum/weakref/weak_target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
+	var/mob/living/target = weak_target?.resolve()
+	if(QDELETED(target))
 		return
 
 	var/datum/action/cooldown/mob_cooldown/resurface = controller.blackboard[BB_BILEWORM_RESURFACE]
@@ -31,8 +32,9 @@
 
 /datum/ai_planning_subtree/bileworm_execute/SelectBehaviors(datum/ai_controller/controller, delta_time)
 
-	var/mob/living/target = controller.blackboard[BB_BASIC_MOB_EXECUTION_TARGET]
-	if(!target || QDELETED(target) || target.stat < UNCONSCIOUS)
+	var/datum/weakref/weak_target = controller.blackboard[BB_BASIC_MOB_EXECUTION_TARGET]
+	var/mob/living/target = weak_target?.resolve()
+	if(QDELETED(target) || target.stat < UNCONSCIOUS)
 		return
 
 	controller.queue_behavior(/datum/ai_behavior/try_mob_ability, BB_BILEWORM_DEVOUR, BB_BASIC_MOB_EXECUTION_TARGET)

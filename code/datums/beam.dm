@@ -119,8 +119,7 @@
 	for(N in 0 to length-1 step 32)//-1 as we want < not <=, but we want the speed of X in Y to Z and step X
 		if(QDELETED(src))
 			break
-		var/obj/effect/ebeam/segment = new beam_type(origin_turf)
-		segment.owner = src
+		var/obj/effect/ebeam/segment = new beam_type(origin_turf, src)
 		elements += segment
 
 		//Assign our single visual ebeam to each ebeam's vis_contents
@@ -165,6 +164,10 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	anchored = TRUE
 	var/datum/beam/owner
+
+/obj/effect/ebeam/Initialize(mapload, beam_owner)
+	owner = beam_owner
+	return ..()
 
 /obj/effect/ebeam/update_overlays()
 	. = ..()

@@ -325,6 +325,9 @@
 		return ..()
 
 	var/datum/component/caltrop/caltrop_comp = GetComponent(/datum/component/caltrop)
+	if(!caltrop_comp)
+		return ..()
+
 	switch(caltrop_comp.max_damage)
 		if(0 to 1)
 			icon_state = initial(icon_state)
