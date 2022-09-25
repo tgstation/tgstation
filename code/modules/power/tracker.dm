@@ -25,7 +25,6 @@
 /obj/machinery/power/tracker/Initialize(mapload, obj/item/solar_assembly/S)
 	. = ..()
 
-	// lemon Todo: needs to update on move
 	tracker_dish_edge = add_panel_overlay("tracker_edge", TRACKER_EDGE_Y_OFFSET)
 	tracker_dish = add_panel_overlay("tracker", TRACKER_Y_OFFSET)
 

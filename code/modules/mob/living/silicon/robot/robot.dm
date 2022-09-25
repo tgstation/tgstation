@@ -347,7 +347,6 @@
 	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	icon_state = model.cyborg_base_icon
 	if(stat != DEAD && !(HAS_TRAIT(src, TRAIT_KNOCKEDOUT) || IsStun() || IsParalyzed() || low_power_mode)) //Not dead, not stunned.
-	// lemon Todo: needs to update on move
 		if(!eye_lights)
 			eye_lights = new()
 		if(lamp_enabled || lamp_doom)
@@ -377,7 +376,9 @@
 /mob/living/silicon/robot/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	if(same_z_layer)
 		return ..()
-	update_appearance()
+	cut_overlay(eye_lights)
+	SET_PLANE_EXPLICIT(eye_lights, PLANE_TO_TRUE(eye_lights.plane), src)
+	add_overlay(eye_lights)
 	return ..()
 
 /mob/living/silicon/robot/proc/self_destruct(mob/usr)
