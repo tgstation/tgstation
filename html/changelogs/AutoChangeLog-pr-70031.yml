@@ -1,5 +1,0 @@
-author: "TerraGS"
-delete-after: True
-changes: 
-  - rscadd: "Being run over by the clown car will flatten you like a pancake. Honk!"
-  - soundadd: "adds cartoon_splat.ogg"
