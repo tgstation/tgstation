@@ -256,6 +256,12 @@
 	return TRUE
 
 /obj/structure/closet/dump_contents()
+	// This was added here so we never dump content if we're already deleted.
+	// You can blame emergency closets for that one, but it's added here so it doesn't cause issues
+	// if anyone else decides to do the same thing in the future.
+	if(QDELETED(src))
+		return
+
 	if (!contents_initialized)
 		contents_initialized = TRUE
 		PopulateContents()
