@@ -309,13 +309,13 @@
 	if(harm)
 		weapon.attack(current_target, src)
 	if(ishuman(current_target))
-		current_target.set_timed_status_effect(10 SECONDS, /datum/status_effect/speech/stutter)
+		current_target.set_stutter(10 SECONDS)
 		current_target.Paralyze(100)
 		var/mob/living/carbon/human/human_target = current_target
 		threat = human_target.assess_threat(judgement_criteria, weaponcheck = CALLBACK(src, .proc/check_for_weapons))
 	else
 		current_target.Paralyze(100)
-		current_target.set_timed_status_effect(10 SECONDS, /datum/status_effect/speech/stutter)
+		current_target.set_stutter(10 SECONDS)
 		threat = current_target.assess_threat(judgement_criteria, weaponcheck = CALLBACK(src, .proc/check_for_weapons))
 
 	log_combat(src, target, "stunned")

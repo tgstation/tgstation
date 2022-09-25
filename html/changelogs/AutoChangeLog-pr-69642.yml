@@ -1,0 +1,5 @@
+author: "Time-Green"
+delete-after: True
+changes: 
+  - qol: "You can now see through big trees when you stand behind them!"
+  - refactor: "Adds a seethrough component to make it easier to add big stationairy objects without reducing visibility"

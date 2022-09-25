@@ -830,3 +830,39 @@
   - bugfix: Voice analyzers should now properly trigger TTVs to blow up.
   skylord-a52:
   - imageadd: Nanotrasen Grilling Jorts have received a cosmetic upgrade
+2022-09-25:
+  KirbyDaMaster:
+  - rscadd: '-6 Quirk for all prosthetics named "Quadruple Amputee" change: prosthetic
+      arm changed from -4 to -3'
+  - rscadd: 'SVG icon tutorial readme to tgui tgfont folder change: Minor spelling
+      issues in negative quirks tab'
+  Pizzie11:
+  - rscadd: Cats will now attack beings that have kinship with rats, this includes
+      rats, royal rats, and anyone who overdosed on rat spit.
+  ShizCalev:
+  - bugfix: Fixed not spawning with prosthetic limbs when you have the prosthetic
+      limb quick.
+  - bugfix: Blind mobs will no longer be demoralized by posters and graffiti.
+  - bugfix: Illiterate mobs will no longer be demoralized by the words on posters.
+  - bugfix: Mobs will no longer be demoralized by posters & graffiti if it's too dark
+      to see them.
+  - bugfix: Fixed revenant Malfunction ability not affecting firedoors.
+  - spellcheck: Emag charge time will now be presented as (2 minutes and 31.1 seconds)
+      instead of (152.95s)
+  TerraGS:
+  - rscadd: Being run over by the clown car will flatten you like a pancake. Honk!
+  - soundadd: adds cartoon_splat.ogg
+  Twaticus:
+  - imageadd: resprites all current underwear to a much cleaner look
+  VexingRaven:
+  - bugfix: Build Your Own Shuttle Kit has been fixed and once again docks at the
+      station after being purchased.
+  - spellcheck: Updated the message shown when spawning as a blobbernaut to properly
+      reflect how to chat to the overmind
+  carshalash:
+  - bugfix: Properly makes Gin garden alcoholic and adds quality tag. Is also now
+      made with lime juice to prevent triggering the lemonade recipe.
+  san7890, kugamo@ParadiseSS13:
+  - rscadd: Nanotrasen had a loose shipping container hit the hull of Central Command
+      from one "Station P", so they just decided to pour those into the station's
+      autodrobes.
