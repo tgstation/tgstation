@@ -112,7 +112,7 @@
 	helmet = new /obj/item/clothing/head/mod(src)
 	mod_parts += helmet
 	chestplate = new /obj/item/clothing/suit/mod(src)
-	chestplate.allowed = typecacheof(theme.allowed_suit_storage)
+	chestplate.allowed += typecacheof(theme.allowed_suit_storage)
 	mod_parts += chestplate
 	gauntlets = new /obj/item/clothing/gloves/mod(src)
 	mod_parts += gauntlets
