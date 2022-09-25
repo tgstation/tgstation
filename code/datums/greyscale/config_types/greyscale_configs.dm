@@ -35,7 +35,7 @@
 
 /datum/greyscale_config/carp
 	name = "Space Carp"
-	icon_file = 'icons/mob/carp.dmi'
+	icon_file = 'icons/mob/simple/carp.dmi'
 	json_config = 'code/datums/greyscale/json_configs/carp.json'
 
 /datum/greyscale_config/carp/disk_mouth
@@ -79,12 +79,12 @@
 
 /datum/greyscale_config/jumpsuit_inhand_left
 	name = "Held Jumpsuit, Left"
-	icon_file = 'icons/mob/inhands/clothing_lefthand.dmi'
+	icon_file = 'icons/mob/inhands/clothing/suits_lefthand.dmi'
 	json_config = 'code/datums/greyscale/json_configs/jumpsuit_inhand.json'
 
 /datum/greyscale_config/jumpsuit_inhand_right
 	name = "Held Jumpsuit, Right"
-	icon_file = 'icons/mob/inhands/clothing_righthand.dmi'
+	icon_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
 	json_config = 'code/datums/greyscale/json_configs/jumpsuit_inhand.json'
 
 /datum/greyscale_config/jumpsuit_prison
@@ -99,12 +99,12 @@
 
 /datum/greyscale_config/jumpsuit_prison_inhand_left
 	name = "Held Prison Jumpsuit, Left"
-	icon_file = 'icons/mob/inhands/clothing_lefthand.dmi'
+	icon_file = 'icons/mob/inhands/clothing/suits_lefthand.dmi'
 	json_config = 'code/datums/greyscale/json_configs/jumpsuit_prison_inhand.json'
 
 /datum/greyscale_config/jumpsuit_prison_inhand_right
 	name = "Held Prison Jumpsuit, Right"
-	icon_file = 'icons/mob/inhands/clothing_righthand.dmi'
+	icon_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
 	json_config = 'code/datums/greyscale/json_configs/jumpsuit_prison_inhand.json'
 
 /datum/greyscale_config/tablet
@@ -452,6 +452,26 @@
 	name = "Worn Moth Winter Coat"
 	icon_file = 'icons/mob/clothing/suits/moth.dmi'
 	json_config = 'code/datums/greyscale/json_configs/moth_coat_winter_worn.json'
+
+/datum/greyscale_config/eth_raincoat
+	name = "Ethereal Raincoat"
+	icon_file = 'icons/obj/clothing/suits/ethereal.dmi'
+	json_config = 'code/datums/greyscale/json_configs/eth_raincoat.json'
+
+/datum/greyscale_config/eth_raincoat_worn
+	name = "Worn Ethereal Raincoat"
+	icon_file = 'icons/mob/clothing/suits/ethereal.dmi'
+	json_config = 'code/datums/greyscale/json_configs/eth_raincoat_worn.json'
+
+/datum/greyscale_config/eth_tunic
+	name = "Ethereal Tunic"
+	icon_file = 'icons/obj/clothing/under/ethereal.dmi'
+	json_config = 'code/datums/greyscale/json_configs/eth_tunic.json'
+
+/datum/greyscale_config/eth_tunic_worn
+	name = "Worn Ethereal Tunic"
+	icon_file = 'icons/mob/clothing/under/ethereal.dmi'
+	json_config = 'code/datums/greyscale/json_configs/eth_tunic_worn.json'
 
 /datum/greyscale_config/bandana
 	name = "Bandana"

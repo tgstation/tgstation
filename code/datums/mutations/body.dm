@@ -18,7 +18,7 @@
 		return
 	owner.visible_message(span_danger("[owner] starts having a seizure!"), span_userdanger("You have a seizure!"))
 	owner.Unconscious(200 * GET_MUTATION_POWER(src))
-	owner.set_timed_status_effect(2000 SECONDS * GET_MUTATION_POWER(src), /datum/status_effect/jitter) //yes this number looks crazy but the jitter animations are amplified based on the duration.
+	owner.set_jitter(2000 SECONDS * GET_MUTATION_POWER(src)) //yes this number looks crazy but the jitter animations are amplified based on the duration.
 	owner.add_mood_event("epilepsy", /datum/mood_event/epilepsy)
 	addtimer(CALLBACK(src, .proc/jitter_less), 90)
 
@@ -26,7 +26,7 @@
 	if(QDELETED(owner))
 		return
 
-	owner.set_timed_status_effect(20 SECONDS, /datum/status_effect/jitter)
+	owner.set_jitter(20 SECONDS)
 
 /datum/mutation/human/epilepsy/on_acquiring(mob/living/carbon/human/acquirer)
 	if(..())
@@ -104,7 +104,7 @@
 	if(DT_PROB(2.5, delta_time) && owner.stat == CONSCIOUS)
 		owner.emote("scream")
 		if(prob(25))
-			owner.hallucination += 20
+			owner.adjust_hallucinations(40 SECONDS)
 
 //Dwarfism shrinks your body and lets you pass tables.
 /datum/mutation/human/dwarfism
@@ -489,7 +489,7 @@
 		H.Stun(20)
 		H.blur_eyes(20)
 		eyes?.applyOrganDamage(5)
-		H.adjust_timed_status_effect(3 SECONDS, /datum/status_effect/confusion)
+		H.adjust_confusion(3 SECONDS)
 	for(var/mob/living/silicon/S in view(2,owner))
 		to_chat(S, span_userdanger("Your sensors are disabled by a shower of blood!"))
 		S.Paralyze(60)

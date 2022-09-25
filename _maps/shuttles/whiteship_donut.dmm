@@ -15,7 +15,7 @@
 	dir = 2;
 	dwidth = 8;
 	height = 17;
-	id = "whiteship";
+	shuttle_id = "whiteship";
 	launch_status = 0;
 	name = "White Ship";
 	port_direction = 2;

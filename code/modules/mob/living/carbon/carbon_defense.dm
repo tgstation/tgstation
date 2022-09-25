@@ -217,7 +217,7 @@
 				do_sparks(5, TRUE, src)
 				var/power = M.powerlevel + rand(0,3)
 				Paralyze(power * 2 SECONDS)
-				set_timed_status_effect(power * 2 SECONDS, /datum/status_effect/speech/stutter, only_if_higher = TRUE)
+				set_stutter_if_lower(power * 2 SECONDS)
 				if (prob(stunprob) && M.powerlevel >= 8)
 					adjustFireLoss(M.powerlevel * rand(6,10))
 					updatehealth()
@@ -388,8 +388,8 @@
 		Paralyze(40)
 	//Jitter and other fluff.
 	do_jitter_animation(300)
-	adjust_timed_status_effect(20 SECONDS, /datum/status_effect/jitter)
-	adjust_timed_status_effect(4 SECONDS, /datum/status_effect/speech/stutter)
+	adjust_jitter(20 SECONDS)
+	adjust_stutter(4 SECONDS)
 	addtimer(CALLBACK(src, .proc/secondary_shock, should_stun), 2 SECONDS)
 	return shock_damage
 
@@ -553,7 +553,7 @@
 			eyes.applyOrganDamage(rand(12, 16))
 
 		if(eyes.damage > 10)
-			blind_eyes(damage)
+			adjust_blindness(damage)
 			blur_eyes(damage * rand(3, 6))
 
 			if(eyes.damage > 20)

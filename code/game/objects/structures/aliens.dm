@@ -8,7 +8,7 @@
 
 
 /obj/structure/alien
-	icon = 'icons/mob/alien.dmi'
+	icon = 'icons/mob/nonhuman-player/alien.dmi'
 	max_integrity = 100
 
 /obj/structure/alien/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
@@ -99,7 +99,7 @@
 
 /obj/structure/alien/resin/wall/creature
 	name = "gelatinous wall"
-	desc = "Thick material shaped into a wall. Eugh."
+	desc = "Thick material shaped into a wall. Yuck."
 	color = "#8EC127"
 
 /obj/structure/alien/resin/membrane
@@ -307,7 +307,7 @@
 
 /obj/structure/alien/weeds/creature
 	name = "gelatinous floor"
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes."
+	desc = "A thick gelatinous surface covers the floor.  Someone get the galoshes."
 	color = "#4BAE56"
 
 

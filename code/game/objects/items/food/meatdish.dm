@@ -179,7 +179,7 @@
 	desc = "A simple nigiri of fish atop a packed rice ball with a seaweed wrapping and a side of soy sauce."
 	icon = 'icons/obj/food/food.dmi'
 	icon_state = "nigiri_sushi"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/nutriment/protein = 2)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/vitamin = 6, /datum/reagent/consumable/nutriment/protein = 2)
 	tastes = list("boiled rice" = 4, "fish filet" = 2, "soy sauce" = 2)
 	foodtypes = SEAFOOD | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
@@ -189,7 +189,7 @@
 	desc = "Simple poke, rice on the bottom, vegetables and meat on top. Should be mixed before eating."
 	icon = 'icons/obj/food/soupsalad.dmi'
 	icon_state = "pokemeat"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/consumable/nutriment/protein = 2)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 11, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/consumable/nutriment/protein = 2)
 	tastes = list("rice and meat" = 4, "lettuce" = 2, "soy sauce" = 2)
 	foodtypes = SEAFOOD | MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL

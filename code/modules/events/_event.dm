@@ -134,7 +134,7 @@ Runs the event
 		log_game("Random Event triggering: [name] ([typepath]).")
 
 	if(alert_observers)
-		deadchat_broadcast(" has just been[random ? " randomly" : ""] triggered!", "<b>[name]</b>.", message_type=DEADCHAT_ANNOUNCEMENT) //STOP ASSUMING IT'S BADMINS!
+		deadchat_broadcast(" has just been[random ? " randomly" : ""] triggered!", "<b>[name]</b>", message_type=DEADCHAT_ANNOUNCEMENT) //STOP ASSUMING IT'S BADMINS!
 
 	SSblackbox.record_feedback("tally", "event_ran", 1, "[E]")
 	return E
@@ -144,8 +144,9 @@ Runs the event
 	SIGNAL_HANDLER
 	return CANCEL_RANDOM_EVENT
 
-//Special admins setup
-/datum/round_event_control/proc/admin_setup()
+/// Any special things admins can do while triggering this event to "improve" it.
+/// Return [ADMIN_CANCEL_EVENT] to stop the event from actually happening after all
+/datum/round_event_control/proc/admin_setup(mob/admin)
 	return
 
 /datum/round_event //NOTE: Times are measured in master controller ticks!

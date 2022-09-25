@@ -7,6 +7,7 @@ type FaxData = {
   faxes: FaxInfo[];
   fax_id: string;
   fax_name: string;
+  visible: boolean;
   has_paper: string;
   syndicate_network: boolean;
   fax_history: FaxHistory[];
@@ -15,6 +16,7 @@ type FaxData = {
 type FaxInfo = {
   fax_name: string;
   fax_id: string;
+  visible: boolean;
   has_paper: boolean;
   syndicate_network: boolean;
 };
@@ -30,8 +32,11 @@ export const Fax = (props, context) => {
   const { data } = useBackend<FaxData>(context);
   const faxes = sortBy((sortFax: FaxInfo) => sortFax.fax_name)(
     data.syndicate_network
-      ? data.faxes
-      : data.faxes.filter((filterFax: FaxInfo) => !filterFax.syndicate_network)
+      ? data.faxes.filter((filterFax: FaxInfo) => filterFax.visible)
+      : data.faxes.filter(
+        (filterFax: FaxInfo) =>
+          filterFax.visible && !filterFax.syndicate_network
+      )
   );
   return (
     <Window width={340} height={540}>
@@ -41,6 +46,9 @@ export const Fax = (props, context) => {
             {data.fax_name}
           </LabeledList.Item>
           <LabeledList.Item label="Network ID">{data.fax_id}</LabeledList.Item>
+          <LabeledList.Item label="Visible to Network">
+            {data.visible ? true : false}
+          </LabeledList.Item>
         </Section>
         <Section
           title="Paper"
@@ -70,6 +78,7 @@ export const Fax = (props, context) => {
                 onClick={() =>
                   act('send', {
                     id: fax.fax_id,
+                    name: fax.fax_name,
                   })
                 }>
                 {fax.fax_name}

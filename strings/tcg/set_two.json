@@ -38,7 +38,7 @@
 		{
 			"id": "drone",
 			"name": "Xenomorph Drone",
-			"desc": "Rarely seen on the frontlines, the Drone is your average worker that lays the foundation of the hive.",
+			"desc": "Rarely seen on the frontline, the Drone is your average worker that lays the foundation of the hive.",
 			"rules": "{$Hivemind}. Tap this card: you may summon a Xeno faction creature for 1 less mana this turn.",
 			"icon_state": "xeno_drone",
 			"power": 1,

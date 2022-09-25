@@ -191,12 +191,6 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	dog_fashion = null
 
-/obj/item/clothing/head/helmet/police
-	name = "police officer's hat"
-	desc = "A police officer's Hat. This hat emphasizes that you are THE LAW."
-	icon_state = "policehelm"
-
-
 /obj/item/clothing/head/helmet/swat/nanotrasen
 	name = "\improper SWAT helmet"
 	desc = "An extremely robust helmet with the Nanotrasen logo emblazoned on the top."

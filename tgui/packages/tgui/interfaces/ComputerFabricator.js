@@ -298,44 +298,6 @@ const CfStep2 = (props, context) => {
             />
           </Table.Cell>
         </Table.Row>
-        {data.devtype !== 2 && (
-          <Table.Row>
-            <Table.Cell bold position="relative">
-              <Tooltip
-                content={multiline`
-                  An advanced wireless power relay that allows your device
-                  to connect to nearby area power controller to provide
-                  alternative power source. This component is currently
-                  unavailable on tablet computers due to size restrictions.
-                `}
-                position="right">
-                Tesla Relay:
-              </Tooltip>
-            </Table.Cell>
-            <Table.Cell>
-              <Button
-                content="None"
-                selected={data.hw_tesla === 0}
-                onClick={() =>
-                  act('hw_tesla', {
-                    tesla: '0',
-                  })
-                }
-              />
-            </Table.Cell>
-            <Table.Cell>
-              <Button
-                content="Standard"
-                selected={data.hw_tesla === 1}
-                onClick={() =>
-                  act('hw_tesla', {
-                    tesla: '1',
-                  })
-                }
-              />
-            </Table.Cell>
-          </Table.Row>
-        )}
       </Table>
       <Button
         fluid

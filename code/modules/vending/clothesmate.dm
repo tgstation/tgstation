@@ -61,7 +61,7 @@
 				/obj/item/clothing/under/pants/slacks = 5,
 				/obj/item/clothing/under/shorts = 5,
 				/obj/item/clothing/under/pants/jeans = 5,
-				/obj/item/clothing/under/jeanshorts = 5,
+				/obj/item/clothing/under/shorts/jeanshorts = 5,
 				/obj/item/clothing/under/costume/buttondown/slacks = 4,
 				/obj/item/clothing/under/costume/buttondown/shorts = 4,
 				/obj/item/clothing/under/dress/sundress = 2,
@@ -134,6 +134,9 @@
 				/obj/item/clothing/suit/mothcoat = 3,
 				/obj/item/clothing/suit/mothcoat/winter = 3,
 				/obj/item/clothing/head/mothcap = 3,
+
+				/obj/item/clothing/suit/hooded/ethereal_raincoat = 3,
+				/obj/item/clothing/under/ethereal_tunic = 3,
 
 				/obj/item/clothing/suit/costume/ianshirt = 1,
 				/obj/item/clothing/head/irs = 20,

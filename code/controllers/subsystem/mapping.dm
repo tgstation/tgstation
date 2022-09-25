@@ -9,7 +9,12 @@ SUBSYSTEM_DEF(mapping)
 	var/datum/map_config/config
 	var/datum/map_config/next_map_config
 
+	/// Has the map for the next round been voted for already?
 	var/map_voted = FALSE
+	/// Has the map for the next round been deliberately chosen by an admin?
+	var/map_force_chosen = FALSE
+	/// Has the map vote been rocked?
+	var/map_vote_rocked = FALSE
 
 	var/list/map_templates = list()
 
@@ -58,7 +63,7 @@ SUBSYSTEM_DEF(mapping)
 	/// list of traits and their associated z leves
 	var/list/z_trait_levels = list()
 
-/datum/controller/subsystem/mapping/New()
+/datum/controller/subsystem/mapping/PreInit()
 	..()
 #ifdef FORCE_MAP
 	config = load_map_config(FORCE_MAP, FORCE_MAP_DIRECTORY)
@@ -66,9 +71,9 @@ SUBSYSTEM_DEF(mapping)
 	config = load_map_config(error_if_missing = FALSE)
 #endif
 
-/datum/controller/subsystem/mapping/Initialize(timeofday)
+/datum/controller/subsystem/mapping/Initialize()
 	if(initialized)
-		return
+		return SS_INIT_SUCCESS
 	if(config.defaulted)
 		var/old_config = config
 		config = global.config.defaultmap
@@ -110,11 +115,10 @@ SUBSYSTEM_DEF(mapping)
 	setup_map_transitions()
 	generate_station_area_list()
 	initialize_reserved_level(transit.z_value)
-	SSticker.OnRoundstart(CALLBACK(src, .proc/spawn_maintenance_loot))
 	generate_z_level_linkages()
 	calculate_default_z_level_gravities()
 
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/mapping/proc/calculate_default_z_level_gravities()
 	for(var/z_level in 1 to length(z_list))
@@ -162,20 +166,20 @@ SUBSYSTEM_DEF(mapping)
 	// Generate mining ruins
 	var/list/lava_ruins = levels_by_trait(ZTRAIT_LAVA_RUINS)
 	if (lava_ruins.len)
-		seedRuins(lava_ruins, CONFIG_GET(number/lavaland_budget), list(/area/lavaland/surface/outdoors/unexplored), themed_ruins[ZTRAIT_LAVA_RUINS])
+		seedRuins(lava_ruins, CONFIG_GET(number/lavaland_budget), list(/area/lavaland/surface/outdoors/unexplored), themed_ruins[ZTRAIT_LAVA_RUINS], clear_below = TRUE)
 		for (var/lava_z in lava_ruins)
 			spawn_rivers(lava_z)
 
 	var/list/ice_ruins = levels_by_trait(ZTRAIT_ICE_RUINS)
 	if (ice_ruins.len)
 		// needs to be whitelisted for underground too so place_below ruins work
-		seedRuins(ice_ruins, CONFIG_GET(number/icemoon_budget), list(/area/icemoon/surface/outdoors/unexplored, /area/icemoon/underground/unexplored), themed_ruins[ZTRAIT_ICE_RUINS])
+		seedRuins(ice_ruins, CONFIG_GET(number/icemoon_budget), list(/area/icemoon/surface/outdoors/unexplored, /area/icemoon/underground/unexplored), themed_ruins[ZTRAIT_ICE_RUINS], clear_below = TRUE)
 		for (var/ice_z in ice_ruins)
 			spawn_rivers(ice_z, 4, /turf/open/openspace/icemoon, /area/icemoon/surface/outdoors/unexplored/rivers)
 
 	var/list/ice_ruins_underground = levels_by_trait(ZTRAIT_ICE_RUINS_UNDERGROUND)
 	if (ice_ruins_underground.len)
-		seedRuins(ice_ruins_underground, CONFIG_GET(number/icemoon_budget), list(/area/icemoon/underground/unexplored), themed_ruins[ZTRAIT_ICE_RUINS_UNDERGROUND])
+		seedRuins(ice_ruins_underground, CONFIG_GET(number/icemoon_budget), list(/area/icemoon/underground/unexplored), themed_ruins[ZTRAIT_ICE_RUINS_UNDERGROUND], clear_below = TRUE)
 		for (var/ice_z in ice_ruins_underground)
 			spawn_rivers(ice_z, 4, level_trait(ice_z, ZTRAIT_BASETURF), /area/icemoon/underground/unexplored/rivers)
 
@@ -660,10 +664,3 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		isolated_ruins_z = add_new_zlevel("Isolated Ruins/Reserved", list(ZTRAIT_RESERVED = TRUE, ZTRAIT_ISOLATED_RUINS = TRUE))
 		initialize_reserved_level(isolated_ruins_z.z_value)
 	return isolated_ruins_z.z_value
-
-/datum/controller/subsystem/mapping/proc/spawn_maintenance_loot()
-	for(var/obj/effect/spawner/random/maintenance/spawner as anything in GLOB.maintenance_loot_spawners)
-		CHECK_TICK
-
-		spawner.spawn_loot()
-		qdel(spawner)

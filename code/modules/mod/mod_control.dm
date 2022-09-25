@@ -247,8 +247,9 @@
 
 /obj/item/mod/control/dropped(mob/user)
 	. = ..()
-	if(wearer)
-		unset_wearer()
+	if(!wearer)
+		return
+	clean_up()
 
 /obj/item/mod/control/item_action_slot_check(slot)
 	if(slot == slot_flags)
@@ -258,20 +259,7 @@
 	. = ..()
 	if(!wearer || old_loc != wearer || loc == wearer)
 		return
-	if(active || activating)
-		for(var/obj/item/mod/module/module as anything in modules)
-			if(!module.active)
-				continue
-			module.on_deactivation(display_message = FALSE)
-		for(var/obj/item/part as anything in mod_parts)
-			seal_part(part, seal = FALSE)
-	for(var/obj/item/part as anything in mod_parts)
-		retract(null, part)
-	if(active)
-		finish_activation(on = FALSE)
-	unset_wearer()
-	var/mob/old_wearer = old_loc
-	old_wearer.temporarilyRemoveItemFromInventory(src)
+	clean_up()
 
 /obj/item/mod/control/allow_attack_hand_drop(mob/user)
 	if(user != wearer)
@@ -470,6 +458,22 @@
 	wearer.clear_alert(ALERT_MODSUIT_CHARGE)
 	SEND_SIGNAL(src, COMSIG_MOD_WEARER_UNSET, wearer)
 	wearer = null
+
+/obj/item/mod/control/proc/clean_up()
+	if(active || activating)
+		for(var/obj/item/mod/module/module as anything in modules)
+			if(!module.active)
+				continue
+			module.on_deactivation(display_message = FALSE)
+		for(var/obj/item/part as anything in mod_parts)
+			seal_part(part, seal = FALSE)
+	for(var/obj/item/part as anything in mod_parts)
+		retract(null, part)
+	if(active)
+		finish_activation(on = FALSE)
+	var/mob/old_wearer = wearer
+	unset_wearer()
+	old_wearer.temporarilyRemoveItemFromInventory(src)
 
 /obj/item/mod/control/proc/on_species_gain(datum/source, datum/species/new_species, datum/species/old_species)
 	SIGNAL_HANDLER
@@ -688,7 +692,7 @@
 		return
 	atom_destruction(damage_flag)
 
-/obj/item/mod/control/proc/on_part_deletion(obj/item/part)
+/obj/item/mod/control/proc/on_part_deletion(obj/item/part) //the part doesnt count as being qdeleted, so our destroying does an infinite loop, fix later
 	SIGNAL_HANDLER
 
 	if(QDELETED(src))

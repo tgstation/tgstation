@@ -6,7 +6,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 /mob/dead/observer
 	name = "ghost"
 	desc = "It's a g-g-g-g-ghooooost!" //jinkies!
-	icon = 'icons/mob/mob.dmi'
+	icon = 'icons/mob/simple/mob.dmi'
 	icon_state = "ghost"
 	plane = GHOST_PLANE
 	stat = DEAD
@@ -846,7 +846,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/is_literate()
 	return TRUE
 
-/mob/dead/observer/can_read(obj/O, check_for_light = FALSE)
+/mob/dead/observer/can_read(atom/viewed_atom, reading_check_flags, silent)
 	return TRUE // we want to bypass all the checks
 
 /mob/dead/observer/vv_edit_var(var_name, var_value)

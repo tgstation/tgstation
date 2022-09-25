@@ -1,6 +1,6 @@
 /obj/structure/blob/special/factory
 	name = "factory blob"
-	icon = 'icons/mob/blob.dmi'
+	icon = 'icons/mob/nonhuman-player/blob.dmi'
 	icon_state = "blob_factory"
 	desc = "A thick spire of tendrils."
 	max_integrity = BLOB_FACTORY_MAX_HP

@@ -6,7 +6,7 @@
 	name = "\improper Nanotrasen minebot"
 	desc = "The instructions printed on the side read: This is a small robot used to support miners, can be set to search and collect loose ore, or to help fend off wildlife."
 	gender = NEUTER
-	icon = 'icons/mob/aibots.dmi'
+	icon = 'icons/mob/silicon/aibots.dmi'
 	icon_state = "mining_drone"
 	icon_living = "mining_drone"
 	status_flags = CANSTUN|CANKNOCKDOWN|CANPUSH

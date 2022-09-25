@@ -178,9 +178,9 @@
 		if(!borghead)
 			borghead = H.head
 		if(istype(borghead, /obj/item/clothing/head/cardborg)) //why is this done this way? because equipped() is called BEFORE THE ITEM IS IN THE SLOT WHYYYY
-			var/image/I = image(icon = 'icons/mob/robots.dmi' , icon_state = "robot", loc = H)
+			var/image/I = image(icon = 'icons/mob/silicon/robots.dmi' , icon_state = "robot", loc = H)
 			I.override = 1
-			I.add_overlay(mutable_appearance('icons/mob/robots.dmi', "robot_e")) //gotta look realistic
+			I.add_overlay(mutable_appearance('icons/mob/silicon/robots.dmi', "robot_e")) //gotta look realistic
 			add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "standard_borg_disguise", I) //you look like a robot to robots! (including yourself because you're totally a robot)
 
 /obj/item/clothing/suit/costume/snowman

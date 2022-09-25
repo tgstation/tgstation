@@ -30,7 +30,7 @@
 	can_be_held = TRUE
 	held_w_class = WEIGHT_CLASS_TINY
 	held_state = "mouse_gray"
-	faction = list("rat")
+	faction = list(FACTION_RAT)
 
 /mob/living/simple_animal/mouse/Initialize(mapload)
 	. = ..()
@@ -195,7 +195,7 @@
 /obj/item/food/deadmouse
 	name = "dead mouse"
 	desc = "They look like somebody dropped the bass on it. A lizard's favorite meal."
-	icon = 'icons/mob/animal.dmi'
+	icon = 'icons/mob/simple/animal.dmi'
 	icon_state = "mouse_gray_dead"
 	bite_consumption = 3
 	eatverbs = list("devour")

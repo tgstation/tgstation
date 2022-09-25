@@ -25,7 +25,6 @@
 
 	inherent_biotypes = MOB_ROBOTIC|MOB_HUMANOID
 	meat = null
-	damage_overlay_type = "synth"
 	mutanttongue = /obj/item/organ/internal/tongue/robot
 	species_language_holder = /datum/language_holder/synthetic
 	wings_icons = list("Robotic")

@@ -379,7 +379,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 		if(baton.cell?.charge && baton.active)
 			flick("baton_active", src)
 			user.Paralyze(baton.knockdown_time)
-			user.set_timed_status_effect(baton.knockdown_time, /datum/status_effect/speech/stutter)
+			user.set_stutter(baton.knockdown_time)
 			baton.cell.use(baton.cell_hit_cost)
 			user.visible_message(span_warning("[user] shocks [user.p_them()]self while attempting to wash the active [baton.name]!"), \
 								span_userdanger("You unwisely attempt to wash [baton] while it's still on."))
@@ -441,6 +441,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 		qdel(O)
 		has_water_reclaimer = TRUE
 		begin_reclamation()
+		return
+
+	if(istype(O, /obj/item/storage/fancy/pickles_jar))
+		if(O.contents.len)
+			to_chat(user, span_notice("Looks like there's something left in the jar"))
+			return
+		new /obj/item/reagent_containers/cup/beaker/large(loc)
+		to_chat(user, span_notice("You washed the jar, ridding it of the brine."))
+		qdel(O)
 		return
 
 	if(!istype(O))
@@ -619,7 +628,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 		if(baton.cell?.charge && baton.active)
 			flick("baton_active", src)
 			user.Paralyze(baton.knockdown_time)
-			user.set_timed_status_effect(baton.knockdown_time, /datum/status_effect/speech/stutter)
+			user.set_stutter(baton.knockdown_time)
 			baton.cell.use(baton.cell_hit_cost)
 			user.visible_message(span_warning("[user] shocks [user.p_them()]self while attempting to wash the active [baton.name]!"), \
 								span_userdanger("You unwisely attempt to wash [baton] while it's still on."))
@@ -813,8 +822,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 	. = ..()
 	GLOB.curtains += src
 
-/obj/structure/curtain/cloth/fancy/mechanical/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
-	id = "[port.id]_[id]"
+/obj/structure/curtain/cloth/fancy/mechanical/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
+	id = "[port.shuttle_id]_[id]"
 
 /obj/structure/curtain/cloth/fancy/mechanical/proc/open()
 	icon_state = "[icon_type]-open"

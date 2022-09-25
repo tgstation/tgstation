@@ -8,9 +8,9 @@ SUBSYSTEM_DEF(ban_cache)
 	flags = SS_NO_FIRE
 	var/query_started = FALSE
 
-/datum/controller/subsystem/ban_cache/Initialize(start_timeofday)
+/datum/controller/subsystem/ban_cache/Initialize()
 	generate_queries()
-	return ..()
+	return SS_INIT_SUCCESS
 
 /// Generates ban caches for any logged in clients. This ensures the amount of in-series ban checking we have to do that actually involves sleeps is VERY low
 /datum/controller/subsystem/ban_cache/proc/generate_queries()
@@ -19,17 +19,28 @@ SUBSYSTEM_DEF(ban_cache)
 		return
 	var/current_time = REALTIMEOFDAY
 	var/list/look_for = list()
+
+	var/list/query_args = list()
+	var/list/query_arg_keys = list()
+
+	var/num_keys = 0
 	for(var/ckey in GLOB.directory)
 		var/client/lad = GLOB.directory[ckey]
 		// If they've already got a ban cached, or a request goin, don't do it
 		if(lad.ban_cache || lad.ban_cache_start)
 			continue
+
 		look_for += ckey
 		lad.ban_cache_start = current_time
+
+		query_args += list("key[num_keys]" = ckey)
+		query_arg_keys += ":key[num_keys]"
+		num_keys++
+
 	// We're gonna try and make a query for clients
 	var/datum/db_query/query_batch_ban_cache = SSdbcore.NewQuery(
-		"SELECT ckey, role, applies_to_admins FROM [format_table_name("ban")] WHERE ckey IN (:ckeys) AND unbanned_datetime IS NULL AND (expiration_time IS NULL OR expiration_time > NOW())",
-		list("ckeys" = look_for.Join(","))
+		"SELECT ckey, role, applies_to_admins FROM [format_table_name("ban")] WHERE ckey IN ([query_arg_keys.Join(",")]) AND unbanned_datetime IS NULL AND (expiration_time IS NULL OR expiration_time > NOW())",
+		query_args
 	)
 
 	var/succeeded = query_batch_ban_cache.Execute()

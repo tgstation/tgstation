@@ -26,7 +26,7 @@
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_CLAW
 	unique_name = TRUE
-	faction = list("rat")
+	faction = list(FACTION_RAT)
 	///Whether or not the regal rat is already opening an airlock
 	var/opening_airlock = FALSE
 	///The spell that the rat uses to generate miasma
@@ -50,7 +50,7 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/regalrat/proc/get_player()
-	var/list/mob/dead/observer/candidates = poll_ghost_candidates("Do you want to play as the Royal Rat, cheesey be their crown?", ROLE_SENTIENCE, FALSE, 100, POLL_IGNORE_SENTIENCE_POTION)
+	var/list/mob/dead/observer/candidates = poll_ghost_candidates("Do you want to play as the Regal Rat, cheesey be their crown?", ROLE_SENTIENCE, ROLE_SENTIENCE, 100, POLL_IGNORE_REGAL_RAT)
 	if(LAZYLEN(candidates) && !mind)
 		var/mob/dead/observer/C = pick(candidates)
 		key = C.key
@@ -295,7 +295,7 @@
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
-	faction = list("rat")
+	faction = list(FACTION_RAT)
 
 /mob/living/simple_animal/hostile/rat/Initialize(mapload)
 	. = ..()
@@ -410,9 +410,9 @@
 /datum/reagent/rat_spit/overdose_start(mob/living/M)
 	..()
 	var/mob/living/carbon/victim = M
-	if (istype(victim) && !("rat" in victim.faction))
+	if (istype(victim) && !(FACTION_RAT in victim.faction))
 		to_chat(victim, span_userdanger("With this last sip, you feel your body convulsing horribly from the contents you've ingested. As you contemplate your actions, you sense an awakened kinship with rat-kind and their newly risen leader!"))
-		victim.faction |= "rat"
+		victim.faction |= FACTION_RAT
 		victim.vomit()
 	metabolization_rate = 10 * REAGENTS_METABOLISM
 
