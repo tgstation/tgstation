@@ -325,7 +325,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	var/list/turf_list = atmos_adjacent_turfs + src
 	var/turflen = turf_list.len
 	var/energy = 0
-	var/heat_cap = 0
+	var/heat_cap = 0.00000000001
 
 	for(var/t in turf_list)
 		var/turf/open/T = t
