@@ -128,7 +128,7 @@ GLOBAL_DATUM_INIT(fax_manager, /datum/fax_manager, new)
 	var/msg = span_adminnotice("<b><font color=[receiver_color]>[sanitize(receiver_fax_name)] fax</font> received a message from [sanitize(sender_fax.fax_name)][ADMIN_JMP(sender_fax)]/[ADMIN_FULLMONTY(sender)]</b>")
 	to_chat(GLOB.admins, msg, confidential = TRUE)
 	for(var/client/admin in GLOB.admins)
-		if(admin.prefs.chat_toggles & CHAT_PRAYER && admin.prefs.toggles & SOUND_PRAYERS)
+		if((admin.prefs.chat_toggles & CHAT_PRAYER) && (admin.prefs.toggles & SOUND_PRAYERS))
 			SEND_SOUND(admin, sound('sound/machines/printer.ogg'))
 
 // A special piece of paper for the administrator that will open the interface no matter what.
