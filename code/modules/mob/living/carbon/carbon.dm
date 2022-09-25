@@ -1346,6 +1346,7 @@
 
 #define HANDS_FULL 0
 #define ONE_HAND 1
+#define HANDCUFFS_DISABLE_AMOUNT 2
 
 // Checks to see how many hands this person has to sign with.
 /mob/living/carbon/proc/check_signables_state()
@@ -1368,12 +1369,12 @@
 	available_hands -= unhealthy_hands // get_empty_held_indexes() counts a disabled or amputed hand as +1
 
 	// items like slappers/zombie claws/etc. should be ignored
-	for(var/obj/item/held_item as anything in held_items)
+	for(var/obj/item/held_item in held_items)
 		if(held_item.item_flags & HAND_ITEM)
 			available_hands++
 
 	if(handcuffed)
-		available_hands -= 2 // handcuffs
+		available_hands -= HANDCUFFS_DISABLE_AMOUNT
 
 	// If you have 3 hands and are handcuffed you should still be able to sign
 	if(handcuffed && !available_hands) // Cuffed, usually will show visual effort to sign
@@ -1381,7 +1382,7 @@
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED) || HAS_TRAIT(src, TRAIT_EMOTEMUTE))
 		return SIGN_TRAIT_BLOCKED
 
-	switch(avilable_hands)
+	switch(available_hands)
 		if(HANDS_FULL)
 			return SIGN_HANDS_FULL
 		if(ONE_HAND)
@@ -1389,6 +1390,7 @@
 
 #undef HANDS_FULL
 #undef ONE_HAND
+#undef HANDCUFFS_DISABLE_AMOUNT
 
 /**
  * This proc is a helper for spraying blood for things like slashing/piercing wounds and dismemberment.
