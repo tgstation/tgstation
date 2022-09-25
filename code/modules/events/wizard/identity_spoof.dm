@@ -8,9 +8,11 @@
 /datum/round_event_control/wizard/identity_spoof/canSpawnEvent(players_amt)
 	. = ..()
 	if(.)
-		return FALSE
+		return .
+
 	if(GLOB.current_anonymous_theme) //already anonymous, ABORT ABORT
 		return FALSE
+	return TRUE
 
 /datum/round_event/wizard/identity_spoof/start()
 	if(GLOB.current_anonymous_theme)

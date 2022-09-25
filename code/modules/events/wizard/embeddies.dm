@@ -8,8 +8,13 @@
 
 ///behold... the only reason sticky is a subtype...
 /datum/round_event_control/wizard/embedpocalypse/canSpawnEvent(players_amt, gamemode)
+	. = ..()
+	if(!.)
+		return .
+
 	if(GLOB.global_funny_embedding)
 		return FALSE
+	return TRUE
 
 /datum/round_event/wizard/embedpocalypse/start()
 	GLOB.global_funny_embedding = new /datum/global_funny_embedding/pointy

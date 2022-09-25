@@ -5,7 +5,11 @@
 	category = EVENT_CATEGORY_ENGINEERING
 	description = "Turns off the gravity generator."
 
-/datum/round_event_control/gravity_generator_blackout/canSpawnEvent()
+/datum/round_event_control/gravity_generator_blackout/canSpawnEvent(players_amt)
+	. = ..()
+	if(!.)
+		return .
+
 	var/station_generator_exists = FALSE
 	for(var/obj/machinery/gravity_generator/main/the_generator in GLOB.machines)
 		if(is_station_level(the_generator.z))

@@ -8,7 +8,7 @@
 	description = "A colourful display can be seen through select windows. And the kitchen."
 
 /datum/round_event_control/aurora_caelus/canSpawnEvent(players)
-	if(!CONFIG_GET(flag/starlight)&&!(SSmapping.empty_space))
+	if(!CONFIG_GET(flag/starlight) && !(SSmapping.empty_space))
 		return FALSE
 	return ..()
 
