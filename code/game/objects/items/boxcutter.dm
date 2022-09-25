@@ -14,7 +14,6 @@
 	item_flags = NONE
 	force = 8
 	bare_wound_bonus = 5
-	active = FALSE
 
 /obj/item/delivery/parcel/attackby(obj/item/boxcutter, mob/user)
-	var/sound_file = 'sound/items/bikehorn.ogg'
+	playsound(src, 'sound/items/bikehorn.ogg' , 50, TRUE)
