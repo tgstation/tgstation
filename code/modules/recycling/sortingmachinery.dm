@@ -188,6 +188,13 @@
 	else
 		return ..()
 
+  if(istype(item, /obj/item/boxcutter))
+		var/obj/item/boxcutter/cutter = item
+			if(/obj/item/delivery/parcel/attackby(obj/item/boxcutter, mob/user)
+				/obj/item/delivery/proc/post_unwrap_contents(mob/user)
+					var/turf/turf_loc = get_turf(user || src)
+                	return
+
 /**
  * # Wrapped up crates and lockers - too big to carry.
  */

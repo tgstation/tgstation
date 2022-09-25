@@ -1,6 +1,6 @@
 /obj/item/boxcutter
 	name = "boxcutter"
-	desc = "A cutting tool used for opening boxes."
+	desc = "A tool for cutting boxes, or throats."
 	icon_state = "telebaton"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
