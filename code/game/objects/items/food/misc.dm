@@ -931,10 +931,10 @@
 
 /obj/item/food/springroll
 	name = "spring roll"
-	desc = "A plate of crispy, deep-fried rice wrappers filled with fresh vegetables, served with sweet chili sauce. You either love them or hate them."
+	desc = "A plate of translucent rice wrappers filled with fresh vegetables, served with sweet chili sauce. You either love them or hate them."
 	icon = 'icons/obj/food/food.dmi'
 	icon_state = "springroll"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/consumable/capsaicin = 2)
-	tastes = list("crispy wrappers" = 1, "spice" = 1, "crunchy veggies" = 1)
+	tastes = list("rice wrappers" = 1, "spice" = 1, "crunchy veggies" = 1)
 	foodtypes = GRAIN | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL

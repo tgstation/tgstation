@@ -317,7 +317,7 @@
 	name = "Spring roll"
 	reqs = list(
 		/obj/item/food/grown/carrot = 1,
-		/obj/item/food/grown/cabbage = 1,
+		/obj/item/food/grown/cucumber = 1,
 		/obj/item/food/grown/chili = 1,
 		/datum/reagent/consumable/rice = 10,
 		/datum/reagent/water = 10,
