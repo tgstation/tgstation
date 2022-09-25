@@ -10934,7 +10934,6 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "dSI" = (
 /obj/machinery/duct,
-/obj/structure/cable,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
 	},
@@ -32546,7 +32545,6 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "lGl" = (
-/obj/structure/cable,
 /obj/structure/sink{
 	pixel_y = 15
 	},
@@ -49627,7 +49625,6 @@
 	name = "Permabrig Showers"
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/cable,
 /obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/station/security/prison)
@@ -55419,7 +55416,6 @@
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "tJL" = (
-/obj/structure/cable,
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 1
 	},
