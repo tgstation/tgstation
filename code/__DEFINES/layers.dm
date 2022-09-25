@@ -12,10 +12,8 @@
 #define PLANE_SPACE -95
 #define PLANE_SPACE_PARALLAX -90
 
-#define GRAVITY_PULSE_PLANE -11
+#define GRAVITY_PULSE_PLANE -12
 #define GRAVITY_PULSE_RENDER_TARGET "*GRAVPULSE_RENDER_TARGET"
-
-#define OPENSPACE_LAYER 600 //Openspace layer over all
 
 #define TRANSPARENT_FLOOR_PLANE -11 //Transparent plane that shows openspace underneath the floor
 #define OPENSPACE_PLANE -10 //Openspace plane below all turfs
@@ -122,6 +120,7 @@
 #define GASFIRE_LAYER 5.05
 #define RIPPLE_LAYER 5.1
 
+#define OPENSPACE_LAYER 600 //Openspace layer over all
 
 #define BLACKNESS_PLANE 0 //To keep from conflicts with SEE_BLACKNESS internals
 
