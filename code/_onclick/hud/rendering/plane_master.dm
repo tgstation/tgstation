@@ -296,7 +296,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 
 /atom/movable/screen/plane_master/seethrough
 	name = "Seethrough"
-	documentation = "Holds the seethrough versions (done using image overrides) of large objects. Mose transparent, so you can click through them."
+	documentation = "Holds the seethrough versions (done using image overrides) of large objects. Mouse transparent, so you can click through them."
 	plane = SEETHROUGH_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_relay_planes = list(GAME_PLANE)
