@@ -233,6 +233,12 @@
 		ui = new(user, src, "Fax")
 		ui.open()
 
+/obj/machinery/fax/ui_static_data(mob/user)
+	var/list/data = list()
+	data["additional_faxes_list"] = GLOB.additional_faxes_list
+	data["syndicate_faxes_list"] = GLOB.syndicate_faxes_list
+	return data
+
 /obj/machinery/fax/ui_data(mob/user)
 	var/list/data = list()
 	//Record a list of all existing faxes.
@@ -255,8 +261,6 @@
 	data["access_additional_faxes"] = access_additional_faxes
 	// In this case, we don't care if the fax is hacked or in the syndicate's network. The main thing is to check the visibility of other faxes.
 	data["syndicate_network"] = (syndicate_network || (obj_flags & EMAGGED))
-	data["additional_faxes_list"] = GLOB.additional_faxes_list
-	data["syndicate_faxes_list"] = GLOB.syndicate_faxes_list
 	data["has_paper"] = !!loaded_item_ref?.resolve()
 	data["fax_history"] = fax_history
 	return data

@@ -23,6 +23,12 @@ GLOBAL_DATUM_INIT(fax_manager, /datum/fax_manager, new)
 /datum/fax_manager/ui_state(mob/user)
 	return GLOB.admin_state
 
+/datum/fax_manager/ui_static_data(mob/user)
+	var/list/data = list()
+	// Record additional faxes on a separate list
+	data["additional_faxes"] = GLOB.additional_faxes_list + GLOB.syndicate_faxes_list
+	return data
+
 /datum/fax_manager/ui_data(mob/user)
 	var/list/data = list()
 	//Record a list of all existing faxes.
@@ -32,8 +38,6 @@ GLOBAL_DATUM_INIT(fax_manager, /datum/fax_manager, new)
 		fax_data["fax_id"] = FAX.fax_id
 		fax_data["syndicate_network"] = FAX.syndicate_network
 		data["faxes"] += list(fax_data)
-	// Record additional faxes on a separate list
-	data["additional_faxes"] = GLOB.additional_faxes_list + GLOB.syndicate_faxes_list
 	for(var/list/REQUEST in requests)
 		var/list/request = list()
 		request["id_message"] = REQUEST["id_message"]
