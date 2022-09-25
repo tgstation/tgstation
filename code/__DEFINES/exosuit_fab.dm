@@ -32,7 +32,7 @@
 
 
 /// Module is compatible with "Working" Exosuit models - Ripley and Clarke
-#define EXOSUIT_MODULE_WORKING EXOSUIT_MODULE_RIPLEY | EXOSUIT_MODULE_CLARKE
+#define EXOSUIT_MODULE_WORKING EXOSUIT_MODULE_RIPLEY | EXOSUIT_MODULE_CLARKE | EXOSUIT_MODULE_DECOUVERTE
 /// Module is compatible with "Combat" Exosuit models - Gygax, H.O.N.K, Durand and Phazon, or any Exosuit with an empty Concealed Weapon Bay
 #define EXOSUIT_MODULE_COMBAT EXOSUIT_MODULE_GYGAX | EXOSUIT_MODULE_HONK | EXOSUIT_MODULE_DURAND | EXOSUIT_MODULE_PHAZON | EXOSUIT_MODULE_SAVANNAH | EXOSUIT_MODULE_CONCEALED_WEP_BAY
 /// Module is compatible with "Medical" Exosuit modelsm - Odysseus
