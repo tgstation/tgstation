@@ -7,7 +7,7 @@
 	description = "Everything becomes pointy enough to embed in people when thrown."
 
 ///behold... the only reason sticky is a subtype...
-/datum/round_event_control/wizard/embedpocalypse/canSpawnEvent(players_amt, gamemode)
+/datum/round_event_control/wizard/embedpocalypse/can_spawn_event(players_amt, gamemode)
 	. = ..()
 	if(!.)
 		return .

@@ -21,7 +21,7 @@
 
 	forced_type = input(usr, "Select the scare.","False event") as null|anything in sort_names(possible_types)
 
-/datum/round_event_control/falsealarm/canSpawnEvent(players_amt)
+/datum/round_event_control/falsealarm/can_spawn_event(players_amt)
 	. = ..()
 	if(!.)
 		return .
@@ -59,7 +59,7 @@
 	for(var/datum/round_event_control/E in SSevents.control)
 		if(istype(E, /datum/round_event_control/falsealarm))
 			continue
-		if(!E.canSpawnEvent(players_amt))
+		if(!E.can_spawn_event(players_amt))
 			continue
 
 		var/datum/round_event/event = E.typepath

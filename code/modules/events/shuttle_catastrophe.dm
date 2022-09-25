@@ -6,7 +6,7 @@
 	category = EVENT_CATEGORY_BUREAUCRATIC
 	description = "Replaces the emergency shuttle with a random one."
 
-/datum/round_event_control/shuttle_catastrophe/canSpawnEvent(players)
+/datum/round_event_control/shuttle_catastrophe/can_spawn_event(players)
 	. = ..()
 	if(!.)
 		return .

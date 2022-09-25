@@ -5,7 +5,7 @@
 	category = EVENT_CATEGORY_ENGINEERING
 	description = "Turns off the gravity generator."
 
-/datum/round_event_control/gravity_generator_blackout/canSpawnEvent(players_amt)
+/datum/round_event_control/gravity_generator_blackout/can_spawn_event(players_amt)
 	. = ..()
 	if(!.)
 		return .

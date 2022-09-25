@@ -64,7 +64,7 @@ SUBSYSTEM_DEF(events)
 
 	var/sum_of_weights = 0
 	for(var/datum/round_event_control/E in control)
-		if(!E.canSpawnEvent(players_amt))
+		if(!E.can_spawn_event(players_amt))
 			continue
 		if(E.weight < 0) //for round-start events etc.
 			var/res = TriggerEvent(E)
@@ -77,7 +77,7 @@ SUBSYSTEM_DEF(events)
 	sum_of_weights = rand(0,sum_of_weights) //reusing this variable. It now represents the 'weight' we want to select
 
 	for(var/datum/round_event_control/E in control)
-		if(!E.canSpawnEvent(players_amt))
+		if(!E.can_spawn_event(players_amt))
 			continue
 		sum_of_weights -= E.weight
 
