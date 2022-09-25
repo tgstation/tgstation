@@ -64,6 +64,7 @@
 
 /datum/bank_account/vv_edit_var(var_name, var_value) // just so you don't have to do it manually
 	var/old_id = account_id
+	var/old_balance = account_balance
 	. = ..()
 	switch(var_name)
 		if(NAMEOF(src, account_id))
@@ -75,6 +76,8 @@
 				setup_unique_account_id()
 			else
 				SSeconomy.bank_accounts_by_id -= "[account_id]"
+		if(NAMEOF(src, account_balance))
+			add_log_to_history(var_value - old_balance, "NT Moderation Action")
 
 /**
  * Sets the bank_account to behave as though a CRAB-17 event is happening.
@@ -115,7 +118,7 @@
  */
 /datum/bank_account/proc/transfer_money(datum/bank_account/from, amount)
 	if(from.has_money(amount))
-		adjust_money(amount, istype(from, /datum/bank_account/department) ? "Payday" : "Trasfer from [from.account_holder]")
+		adjust_money(amount, istype(from, /datum/bank_account/department) ? "Payday" : "Transfer from [from.account_holder]")
 		SSblackbox.record_feedback("amount", "credits_transferred", amount)
 		log_econ("[amount] credits were transferred from [from.account_holder]'s account to [src.account_holder]")
 		from.adjust_money(-amount, "Transfer to [account_holder]")
@@ -133,7 +136,7 @@
 	if(amt_of_paychecks == 1)
 		money_to_transfer = clamp(money_to_transfer, 0, PAYCHECK_CREW) //We want to limit single, passive paychecks to regular crew income.
 	if(free)
-		adjust_money(money_to_transfer)
+		adjust_money(money_to_transfer, "Shift payment")
 		SSblackbox.record_feedback("amount", "free_income", money_to_transfer)
 		SSeconomy.station_target += money_to_transfer
 		log_econ("[money_to_transfer] credits were given to [src.account_holder]'s account from income.")

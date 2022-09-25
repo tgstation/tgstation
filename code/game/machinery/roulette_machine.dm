@@ -262,7 +262,7 @@
 
 	var/remaining_payout = payout
 
-	my_card.registered_account.adjust_money(-payout)
+	my_card.registered_account.adjust_money(-payout, "Roulette payout")
 
 	for(var/coin_type in coin_values) //Loop through all coins from most valuable to least valuable. Try to give as much of that coin (the iterable) as possible until you can't anymore, then move to the next.
 		var/value = coin_values[coin_type] //Change this to use initial value once we change to mat datum coins.

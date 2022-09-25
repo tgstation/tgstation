@@ -214,7 +214,7 @@
 		return
 	if(sniped_amount != painting_metadata.credit_value)
 		return
-	if(!account.adjust_money(-offer_amount))
+	if(!account.adjust_money(-offer_amount, "Spending on art"))
 		to_chat(user, span_warning("Transaction failure. Please try again."))
 		return
 	painting_metadata.patron_ckey = user.ckey

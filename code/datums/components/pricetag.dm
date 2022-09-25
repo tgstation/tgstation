@@ -90,7 +90,7 @@
 		// And of course, the cut is removed from what cargo gets. (But not below zero, just in case)
 		overall_item_price = max(0, overall_item_price - payee_cut)
 
-		payee.adjust_money(payee_cut)
+		payee.adjust_money(payee_cut, "[source] sale")
 		payee.bank_card_talk("Sale of [source] recorded. [payee_cut] credits added to account.")
 
 	// Update the report with the modified final price
