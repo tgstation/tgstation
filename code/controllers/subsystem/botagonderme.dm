@@ -1,4 +1,5 @@
 SUBSYSTEM_DEF(dcbotgonder)
+	flags = SS_NO_INIT
 	name = "dcbotgonder"
 	wait = 15 SECONDS
 
