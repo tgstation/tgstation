@@ -108,8 +108,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	hand_slots = list()
 
-	var/datum/plane_master_group/main = new(PLANE_GROUP_MAIN)
-	main.attach_to(src)
+	var/datum/plane_master_group/main/main_group = new(PLANE_GROUP_MAIN)
+	main_group.attach_to(src)
 
 	var/datum/preferences/preferences = owner?.client?.prefs
 	screentip_color = preferences?.read_preference(/datum/preference/color/screentip_color)
@@ -152,12 +152,17 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 /datum/hud/proc/update_sightflags(datum/source, new_sight, old_sight)
 	// If neither the old and new flags can see turfs but not objects, don't transform the turfs
 	// This is to ensure parallax works when you can't see holder objects
-	if(((new_sight & (SEE_TURFS | SEE_OBJS)) == SEE_TURFS) == ((old_sight & (SEE_TURFS | SEE_OBJS)) == SEE_TURFS))
+	if(should_sight_scale(new_sight) == should_sight_scale(old_sight))
 		return
 
-	for(var/group_key in master_groups)
-		var/datum/plane_master_group/group = master_groups[group_key]
-		group.transform_lower_turfs(src, current_plane_offset, current_plane_offset)
+	var/datum/plane_master_group/group = get_plane_group(PLANE_GROUP_MAIN)
+	group.transform_lower_turfs(src, current_plane_offset)
+
+/datum/hud/proc/should_use_scale()
+	return should_sight_scale(mymob.sight)
+
+/datum/hud/proc/should_sight_scale(sight_flags)
+	return (sight_flags & (SEE_TURFS | SEE_OBJS)) != SEE_TURFS
 
 /datum/hud/proc/eye_z_changed(atom/eye)
 	SIGNAL_HANDLER
@@ -167,7 +172,11 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 		return
 	var/old_offset = current_plane_offset
 	current_plane_offset = new_offset
+
 	SEND_SIGNAL(src, COMSIG_HUD_OFFSET_CHANGED, old_offset, new_offset)
+	var/datum/plane_master_group/group = get_plane_group(PLANE_GROUP_MAIN)
+	if(group && should_use_scale())
+		group.transform_lower_turfs(src, new_offset)
 
 /datum/hud/Destroy()
 	if(mymob.hud_used == src)

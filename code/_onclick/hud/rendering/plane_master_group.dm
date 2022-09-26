@@ -9,6 +9,8 @@
 	var/datum/hud/our_hud
 	/// List in the form "[plane]" = object, the plane masters we own
 	var/list/atom/movable/screen/plane_master/plane_masters = list()
+	/// The visual offset we are currently using
+	var/active_offset = 0
 
 	/// What, if any, submap we render onto
 	var/map = ""
@@ -33,8 +35,7 @@
 	our_hud = viewing_hud
 	our_hud.master_groups[key] = src
 	show_hud()
-	RegisterSignal(our_hud, COMSIG_HUD_OFFSET_CHANGED, .proc/transform_lower_turfs)
-	transform_lower_turfs(our_hud, 0, our_hud.current_plane_offset)
+	transform_lower_turfs(our_hud, active_offset)
 
 /// Hide the plane master from its current hud, fully clear it out
 /datum/plane_master_group/proc/orphan_hud()
@@ -53,7 +54,7 @@
 	QDEL_LIST_ASSOC_VAL(plane_masters)
 	build_plane_masters(0, SSmapping.max_plane_offset)
 	show_hud()
-	transform_lower_turfs(our_hud, 0, our_hud.current_plane_offset)
+	transform_lower_turfs(our_hud, active_offset)
 
 /datum/plane_master_group/proc/hide_hud()
 	for(var/thing in plane_masters)
@@ -89,16 +90,16 @@
 
 // Lemon todo: see if you can't setup correction stretches for things like stairs
 // So they look nicer. if you can't it's all good, if you think you can sanely look at monster's work
-/datum/plane_master_group/proc/transform_lower_turfs(datum/hud/source, old_offset, new_offset)
+/datum/plane_master_group/proc/transform_lower_turfs(datum/hud/source, new_offset, use_scale = TRUE)
 	// No offset? piss off
 	if(!SSmapping.max_plane_offset)
 		return
+	active_offset = new_offset
 	// Each time we go "down" a visual z level, we'll reduce the scale by this amount
 	// Chosen because mothblocks liked it, didn't cause motion sickness while also giving a sense of height
 	var/scale_by = 0.965
-	var/mob/us = source.mymob
 	// If our mob can see through walls
-	if((us.sight & (SEE_TURFS | SEE_OBJS)) == SEE_TURFS)
+	if(!use_scale)
 		// This is a workaround for two things
 		// First of all, if a mob can see objects but not turfs, they will not be shown the holder objects we use for
 		// What I'd like to do is revert to images if this case throws, but image vis_contents is broken
@@ -133,8 +134,23 @@
 		animate(plane, transform = offsets[visual_offset + offset_offset], 0.05 SECONDS, easing = LINEAR_EASING)
 
 /// Holds plane masters for popups, like camera windows
+/// Note: We do not scale this plane, even though we could
+/// This is because it's annoying to get turfs to position inside it correctly
+/// If you wanna try someday feel free, but I can't manage it
 /datum/plane_master_group/popup
 
 /datum/plane_master_group/popup/show_plane(atom/movable/screen/plane_master/plane)
 	. = ..()
 	our_hud.mymob.client.register_map_obj(plane)
+
+
+/datum/plane_master_group/main/transform_lower_turfs(datum/hud/source, new_offset, use_scale = TRUE)
+	return ..(source, new_offset, FALSE)
+
+/// Holds the main plane master
+/datum/plane_master_group/main
+
+/datum/plane_master_group/main/transform_lower_turfs(datum/hud/source, new_offset, use_scale = TRUE)
+	if(use_scale)
+		return ..(source, new_offset, source.should_use_scale())
+	return ..()
