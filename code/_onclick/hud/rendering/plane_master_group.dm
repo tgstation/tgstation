@@ -140,10 +140,6 @@
 /// If you wanna try someday feel free, but I can't manage it
 /datum/plane_master_group/popup
 
-/datum/plane_master_group/popup/show_plane(atom/movable/screen/plane_master/plane)
-	. = ..()
-	our_hud.mymob.client.register_map_obj(plane)
-
 /datum/plane_master_group/popup/transform_lower_turfs(datum/hud/source, new_offset, use_scale = TRUE)
 	return ..(source, new_offset, FALSE)
 

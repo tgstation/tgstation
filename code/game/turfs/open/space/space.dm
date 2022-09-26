@@ -55,7 +55,6 @@
 	var/area/our_area = loc
 	our_area.zs_we_have[z] = TRUE
 
-	var/cached_plane = plane
 	// We make the assumption that the space plane will never be blacklisted, as an optimization
 	if(SSmapping.max_plane_offset)
 		plane = PLANE_SPACE - (PLANE_RANGE * SSmapping.z_level_to_plane_offset[z])

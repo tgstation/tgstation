@@ -48,6 +48,7 @@
 	offset_change(hud.current_plane_offset)
 
 /atom/movable/screen/plane_master/rendering_plate/master/hide_from(mob/oldmob)
+	. = ..()
 	if(offset == 0)
 		return
 	var/datum/hud/hud = home.our_hud
@@ -142,6 +143,7 @@
 
 
 /atom/movable/screen/plane_master/rendering_plate/lighting/hide_from(mob/oldmob)
+	. = ..()
 	oldmob.clear_fullscreen("lighting_backdrop_lit")
 	oldmob.clear_fullscreen("lighting_backdrop_unlit")
 	var/datum/hud/hud = home.our_hud

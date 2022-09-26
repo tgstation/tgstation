@@ -130,11 +130,13 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 /// Hides a plane master from the passeed in mob
 /// Do your effect cleanup here
 /atom/movable/screen/plane_master/proc/hide_from(mob/oldmob)
+	SHOULD_CALL_PARENT(TRUE)
 	var/client/their_client = oldmob?.client
 	if(!their_client)
 		return
 	their_client.screen -= src
 	their_client.screen -= relays
+
 
 /// Forces this plane master to hide, until unhide_plane is called
 /// This allows us to disable unused PMs without breaking anything else
@@ -347,6 +349,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	offset_change(0, hud.current_plane_offset)
 
 /atom/movable/screen/plane_master/blackness/hide_from(mob/oldmob)
+	. = ..()
 	if(offset != 0)
 		return
 	UnregisterSignal(oldmob, COMSIG_MOB_SIGHT_CHANGE)
