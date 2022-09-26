@@ -156,7 +156,7 @@
 /obj/item/clothing/head/collectable/swat
 	name = "collectable SWAT helmet"
 	desc = "That's not real blood. That's red paint." //Reference to the actual description
-	icon_state = "swat"
-	inhand_icon_state = "swat"
+	icon_state = "swatsyndie"
+	inhand_icon_state = "swatsyndie"
 	clothing_flags = SNUG_FIT
 	flags_inv = HIDEHAIR
