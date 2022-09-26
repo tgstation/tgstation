@@ -26,7 +26,6 @@
 	. = ..()
 	START_PROCESSING(SSobj,src)
 	RegisterSignal(src, COMSIG_MOVABLE_CROSS_OVER, .proc/check_crossed)
-	RegisterSignal(src, COMSIG_MOVABLE_BUMP, .proc/check_bumped)
 
 /obj/vehicle/sealed/car/clowncar/process()
 	if(light_on && (obj_flags & EMAGGED))
@@ -95,8 +94,8 @@
 	to_chat(user, span_danger("You use the [banana] to repair [src]!"))
 	qdel(banana)
 
-/obj/vehicle/sealed/car/clowncar/proc/check_bumped(atom/bumped)
-	SIGNAL_HANDLER
+/obj/vehicle/sealed/car/clowncar/Bump(atom/bumped)
+	. = ..()
 	if(isliving(bumped))
 		if(ismegafauna(bumped))
 			return
@@ -149,7 +148,6 @@
 	return ..()
 
 /obj/vehicle/sealed/car/clowncar/Destroy(force)
-	UnregisterSignal(src, COMSIG_MOVABLE_BUMP)
 	UnregisterSignal(src, COMSIG_MOVABLE_CROSS_OVER)
 	return ..()
 
