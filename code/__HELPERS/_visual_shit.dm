@@ -7,13 +7,14 @@
 #define SET_PLANE_IMPLICIT(thing, new_value) SET_PLANE_EXPLICIT(thing, new_value, thing)
 
 // This is an unrolled and optimized version of SET_PLANE, for use anywhere where you are unsure of a source's "turfness"
+// The plane is cached to allow for fancy stuff to be eval'd once, rather then often
 #define SET_PLANE_EXPLICIT(thing, new_value, source) \
 	do {\
 		if(SSmapping.max_plane_offset) {\
 			var/_cached_plane = new_value;\
 			var/turf/_our_turf = get_turf(source);\
 			if(_our_turf){\
-				thing.plane = GET_NEW_PLANE(new_value, GET_Z_PLANE_OFFSET(_our_turf.z))
+				thing.plane = GET_NEW_PLANE(_cached_plane, GET_Z_PLANE_OFFSET(_our_turf.z));\
 			}\
 		}\
 		else {\
