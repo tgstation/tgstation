@@ -80,104 +80,6 @@
 	dna.species.handle_body(src) //This calls `handle_mutant_bodyparts` which calls `update_mutant_bodyparts()`. Don't double call!
 	update_body_parts(is_creating)
 
-/mob/living/carbon/proc/visual_remove_overlay(cache_index)
-	var/I = overlays_standing[cache_index]
-	if(I)
-		cut_overlay(I)
-
-/mob/living/carbon/proc/visual_remove_overlay_index(cache_index, Index)
-	var/I = overlays_standing[cache_index]
-	if(I)
-		cut_overlay(I[Index])
-
-/mob/living/carbon/proc/remove_overlay_index(cache_index, Index)
-	var/I = overlays_standing[cache_index]
-	if(I)
-		cut_overlay(I[Index])
-		overlays_standing[cache_index] = null
-
-/atom/proc/realize_overlays()
-	realized_overlays = list()
-	var/list/queue = overlays.Copy()
-	var/queue_index = 0
-	while(queue_index < length(queue))
-		queue_index++
-		// If it's not a command, we assert that it's an appearance
-		var/mutable_appearance/appearance = queue[queue_index]
-		if(!appearance) // Who fucking adds nulls to their sublists god you people are the worst
-			continue
-
-		var/mutable_appearance/new_appearance = new /mutable_appearance()
-		new_appearance.appearance = appearance
-		var/key = "[appearance.icon]-[appearance.icon_state]-[appearance.plane]-[appearance.layer]-[appearance.dir]-[appearance.color]"
-		var/tmp_key = key
-		var/overlay_indx = 1
-		while(realized_overlays[tmp_key])
-			tmp_key = "[key]-[overlay_indx]"
-			overlay_indx++
-
-		realized_overlays[tmp_key] = new_appearance
-		// Now check its children
-		for(var/mutable_appearance/child_appearance as anything in appearance.overlays)
-			queue += child_appearance
-
-/atom/var/list/realized_overlays
-
-/mutable_appearance/proc/realize_overlays()
-	realized_overlays = list()
-	var/list/queue = overlays.Copy()
-	var/queue_index = 0
-	while(queue_index < length(queue))
-		queue_index++
-		// If it's not a command, we assert that it's an appearance
-		var/mutable_appearance/appearance = queue[queue_index]
-		if(!appearance) // Who fucking adds nulls to their sublists god you people are the worst
-			continue
-
-		var/mutable_appearance/new_appearance = new /mutable_appearance()
-		new_appearance.appearance = appearance
-		realized_overlays += new_appearance
-		// Now check its children
-		for(var/mutable_appearance/child_appearance as anything in appearance.overlays)
-			queue += child_appearance
-
-/mutable_appearance/var/list/realized_overlays
-
-/proc/diff_appearances(mutable_appearance/first, mutable_appearance/second, iter = 0)
-	var/list/diffs = list()
-	var/list/firstdeet = first.vars
-	var/list/seconddeet = second.vars
-	var/diff_found = FALSE
-	for(var/name in first.vars)
-		var/firstv = firstdeet[name]
-		var/secondv = seconddeet[name]
-		if(firstv ~= secondv)
-			continue
-		if((islist(firstv) || islist(secondv)) && length(firstv) == 0 && length(secondv) == 0)
-			continue
-		if(name == "vars") // Go away
-			continue
-		if(name == "comp_lookup") // This is just gonna happen with marked datums, don't care
-			continue
-		if(name == "overlays")
-			first.realize_overlays()
-			second.realize_overlays()
-			var/overlays_differ = FALSE
-			for(var/i in 1 to length(first.realized_overlays))
-				if(diff_appearances(first.realized_overlays[i], second.realized_overlays[i], iter + 1))
-					overlays_differ = TRUE
-
-			if(!overlays_differ)
-				continue
-
-		diff_found = TRUE
-		diffs += "Diffs detected at [name]: First ([firstv]), Second ([secondv])"
-
-	var/text = "Depth of: [iter]\n\t[diffs.Join("\n\t")]"
-	message_admins(text)
-	log_world(text)
-	return diff_found
-
 /mob/living/carbon/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	. = ..()
 	if(same_z_layer)
@@ -286,8 +188,8 @@
 	var/list/return_pack = list(queue, parent_indexes)
 	return return_pack
 
-	// Rebuilding is a hack. We should really store a list of indexes into our existing overlay list or SOMETHING
-	// IDK. will work for now though, which is a lot better then not working at all
+// Rebuilding is a hack. We should really store a list of indexes into our existing overlay list or SOMETHING
+// IDK. will work for now though, which is a lot better then not working at all
 /mob/living/carbon/proc/update_z_overlays(new_offset, rebuild = FALSE)
 	// Null entries will be filtered here
 	for(var/i in 1 to length(overlays_standing))
@@ -311,24 +213,14 @@
 	var/list/processing_queue = build_list[1]
 	var/list/parents_queue = build_list[2]
 	// Now that we have our queues, we're going to walk them forwards to remove, and backwards to add
+	// Note, we need to do this separately because you can only remove a mutable appearance when it
+	// Exactly matches the appearance it had when it was first "made static" (by being added to the overlays list)
 	var/parents_index = 0
 	for(var/item in processing_queue)
 		if(item == NEXT_PARENT_COMMAND)
 			parents_index++
 			continue
 		var/mutable_appearance/iter_apper = item
-
-		// If we have a parent, refresh our entry in it
-		// This currently does not work. I assume because when a parent's overlays update
-		// It's place in the overlays list is lost, so you get dupes
-		// I think what I need is to process the list bottom up, to remove everything
-		// and then loop again top down to readd all the nested overlays properly
-		// If that makes any sense
-		// Might actually be able to do it in one pass now that I think about it, not totally sure
-		// should check later
-
-		// Oh and make sure, we need to reupdate the overlays_standing value later
-		// Since its values will no longer be accurate
 		if(parents_index)
 			var/parent_src_index = parents_queue[parents_index]
 			var/mutable_appearance/parent = processing_queue[parent_src_index]
@@ -336,6 +228,7 @@
 		else // Otherwise, we're at the end of the list, and our parent is the mob
 			cut_overlay(iter_apper)
 
+	// Now the back to front stuff, to readd the updated appearances
 	var/queue_index = length(processing_queue)
 	parents_index = length(parents_queue)
 	while(queue_index >= 1)
@@ -347,6 +240,7 @@
 		var/mutable_appearance/new_iter = new /mutable_appearance()
 		new_iter.appearance = item
 		if(new_iter.plane != FLOAT_PLANE)
+			// Here, finally, is where we actually update the plane offsets
 			SET_PLANE_W_SCALAR(new_iter, PLANE_TO_TRUE(new_iter.plane), new_offset)
 		if(parents_index)
 			var/parent_src_index = parents_queue[parents_index]
@@ -355,8 +249,11 @@
 		else
 			add_overlay(new_iter)
 			// chant a protective overlays.Copy to prevent appearance theft and overlay sticking
+			// I'm not joking without this overlays can corrupt and be replaced by other appearances
 			// the compiler might call it useless but I swear it works
+			// we conjure the spirits of the computer with our spells, we conjur- (Hey lemon make a damn issue report already)
 			var/list/does_nothing = new_iter.overlays.Copy()
+			pass(does_nothing)
 			hand_back += new_iter
 
 		queue_index--
