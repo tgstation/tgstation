@@ -26,7 +26,7 @@
 	///are we using our right click ability yet, mr krabs?
 	var/spinning = FALSE
 
-/obj/item/cult_bastard/Initialize()
+/obj/item/cult_bastard/Initialize(mapload)
 	. = ..()
 	set_light(4)
 	AddComponent(/datum/component/butchering, 50, 80)

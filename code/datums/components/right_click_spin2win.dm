@@ -39,7 +39,7 @@
 /datum/component/right_click_spin2win/Destroy(force, silent)
 	QDEL_NULL(on_spin_callback)
 	QDEL_NULL(on_unspin_callback)
-	. = ..()
+	return ..()
 
 /datum/component/right_click_spin2win/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
