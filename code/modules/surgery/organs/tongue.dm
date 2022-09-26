@@ -286,21 +286,62 @@
 	modifies_speech = TRUE
 	taste_sensitivity = 32
 
+// List of english words that translate to zombie phrases
+GLOBAL_LIST_INIT(english_to_zombie, list())
+
+/obj/item/organ/internal/tongue/zombie/proc/add_word_to_translations(english_word, zombie_word)
+	GLOB.english_to_zombie[english_word] = zombie_word
+	// zombies don't care about grammar (any tense or form is all translated to the same word)
+	GLOB.english_to_zombie[english_word + plural_s(english_word)] = zombie_word
+	GLOB.english_to_zombie[english_word + "ing"] = zombie_word
+	GLOB.english_to_zombie[english_word + "ed"] = zombie_word
+
+/obj/item/organ/internal/tongue/zombie/proc/load_zombie_translations()
+	var/list/zombie_translation = strings("zombie_replacement.json", "zombie")
+	for(var/zombie_word in zombie_translation)
+		// since zombie words are a reverse list, we gotta do this backwards
+		var/list/data = islist(zombie_translation[zombie_word]) ? zombie_translation[zombie_word] : list(zombie_translation[zombie_word])
+		for(var/english_word in data)
+			add_word_to_translations(english_word, zombie_word)
+	GLOB.english_to_zombie = sort_list(GLOB.english_to_zombie) // Alphabetizes the list (for debugging)
+
 /obj/item/organ/internal/tongue/zombie/modify_speech(datum/source, list/speech_args)
-	var/list/message_list = splittext(speech_args[SPEECH_MESSAGE], " ")
-	var/maxchanges = max(round(message_list.len / 1.5), 2)
+	var/message = speech_args[SPEECH_MESSAGE]
+	if(message[1] != "*")
+		// setup the global list for translation if it hasn't already been done
+		if(!length(GLOB.english_to_zombie))
+			load_zombie_translations()
 
-	for(var/i = rand(maxchanges / 2, maxchanges), i > 0, i--)
-		var/insertpos = rand(1, message_list.len - 1)
-		var/inserttext = message_list[insertpos]
+		// make a list of all words that can be translated
+		var/list/message_word_list = splittext(message, " ")
+		var/list/translated_word_list = list()
+		for(var/word in message_word_list)
+			word = GLOB.english_to_zombie[lowertext(word)]
+			translated_word_list += word ? word : FALSE
 
-		if(!(copytext(inserttext, -3) == "..."))//3 == length("...")
-			message_list[insertpos] = inserttext + "..."
+		// all occurrences of characters "eiou" (case-insensitive) are replaced with "r"
+		message = replacetext(message, regex(@"[eiou]", "ig"), "r")
+		// all characters other than "zhrgbmna .!?-" (case-insensitive) are stripped
+		message = replacetext(message, regex(@"[^zhrgbmna.!?-\s]", "ig"), "")
+		// multiple spaces are replaced with a single (whitespace is trimmed)
+		message = replacetext(message, regex(@"(\s+)", "g"), " ")
 
-		if(prob(20) && message_list.len > 3)
-			message_list.Insert(insertpos, "[pick("BRAINS", "Brains", "Braaaiinnnsss", "BRAAAIIINNSSS")]...")
+		var/list/old_words = splittext(message, " ")
+		var/list/new_words = list()
+		for(var/word in old_words)
+			// lower-case "r" at the end of words replaced with "rh"
+			word = replacetext(word, regex(@"\lr\b"), "rh")
+			// an "a" or "A" by itself will be replaced with "hra"
+			word = replacetext(word, regex(@"\b[Aa]\b"), "hra")
+			new_words += word
 
-	speech_args[SPEECH_MESSAGE] = jointext(message_list, " ")
+		// if words were not translated, then we apply our zombie speech patterns
+		for(var/i in 1 to length(new_words))
+			new_words[i] = translated_word_list[i] ? translated_word_list[i] : new_words[i]
+
+		message = new_words.Join(" ")
+		message = capitalize(message)
+		speech_args[SPEECH_MESSAGE] = message
 
 /obj/item/organ/internal/tongue/alien
 	name = "alien tongue"
@@ -435,12 +476,14 @@
 	languages_possible = languages_possible_ethereal
 
 /// Defines used to determine whether a sign language user can sign or not, and if not, why they cannot.
-#define SIGN_OKAY -1
-#define SIGN_ONE_HAND 0
-#define SIGN_HANDS_FULL 1
-#define SIGN_ARMLESS 2
-#define SIGN_TRAIT_BLOCKED 3
-#define SIGN_CUFFED 4
+#define SIGN_OKAY 0
+#define SIGN_ONE_HAND 1
+#define SIGN_HANDS_FULL 2
+#define SIGN_ARMLESS 3
+#define SIGN_TRAIT_BLOCKED 4
+#define SIGN_CUFFED 5
+
+#define HANDS_PER_HANDCUFF 2
 
 //Sign Language Tongue - yep, that's how you speak sign language.
 /obj/item/organ/internal/tongue/tied
@@ -527,25 +570,29 @@
 	if(!owner)
 		CRASH("[type] called check_signables_state without an owner.")
 
-	var/obj/item/bodypart/left_arm = owner.get_bodypart(BODY_ZONE_L_ARM)
-	var/obj/item/bodypart/right_arm = owner.get_bodypart(BODY_ZONE_R_ARM)
-	var/empty_indexes = owner.get_empty_held_indexes()
-	var/exit_right = (!right_arm || right_arm.bodypart_disabled)
-	var/exit_left = (!left_arm || left_arm.bodypart_disabled)
-	// All existing hands full, can't sign
-	if(length(empty_indexes) == 0 || (length(empty_indexes) < 2 && (exit_left || exit_right)))
-		return SIGN_HANDS_FULL
-	// Can't sign with no arms!
-	if(exit_left && exit_right)
+	var/total_hands = owner.usable_hands
+	if(total_hands <= 0) // No arms at all
 		return SIGN_ARMLESS
-	// Cuffed. Usually will show visual effort to sign
-	if(owner.handcuffed)
+
+	var/busy_hands = 0
+	for(var/obj/item/held_item as anything in owner.held_items)
+		// items like slappers/zombie claws/etc. should be ignored
+		if(isnull(held_item) || held_item.item_flags & HAND_ITEM)
+			continue
+
+		busy_hands++
+
+	// Handchuffed, can't talk
+	if(HAS_TRAIT(owner, TRAIT_RESTRAINED))
 		return SIGN_CUFFED
-	// Some generic traits that prevent signing
-	if(HAS_TRAIT(owner, TRAIT_HANDS_BLOCKED) || HAS_TRAIT(owner, TRAIT_EMOTEMUTE))
+	// Some other trait preventing us
+	else if(HAS_TRAIT(owner, TRAIT_HANDS_BLOCKED) || HAS_TRAIT(owner, TRAIT_EMOTEMUTE))
 		return SIGN_TRAIT_BLOCKED
-	// One arm gone
-	if(length(empty_indexes) == 1 || exit_left || exit_right)
+
+	var/actually_usable_hands = total_hands - busy_hands
+	if(actually_usable_hands <= 0)
+		return SIGN_HANDS_FULL
+	if(actually_usable_hands == 1)
 		return SIGN_ONE_HAND
 
 	return SIGN_OKAY
@@ -597,3 +644,5 @@
 #undef SIGN_ARMLESS
 #undef SIGN_TRAIT_BLOCKED
 #undef SIGN_CUFFED
+
+#undef HANDS_PER_HANDCUFF

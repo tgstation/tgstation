@@ -1,0 +1,6 @@
+author: "timothymtorres"
+delete-after: True
+changes: 
+  - bugfix: "Fix zombie claws blocking sign language."
+  - bugfix: "Fix slappers and wound grasping blocking sign language."
+  - bugfix: "Fix slappers and wound grasping blocking riding on mobs."

@@ -1,0 +1,4 @@
+author: "san7890"
+delete-after: True
+changes: 
+  - admin: "When a player renames (creates) an area from an existing area to a new one, it now logs to game.log (global and individual)."

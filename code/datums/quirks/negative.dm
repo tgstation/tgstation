@@ -437,18 +437,18 @@
 	var/obj/item/bodypart/prosthetic
 	switch(limb_slot)
 		if(BODY_ZONE_L_ARM)
-			prosthetic = new/obj/item/bodypart/l_arm/robot/surplus(quirk_holder)
+			prosthetic = new /obj/item/bodypart/l_arm/robot/surplus
 			slot_string = "left arm"
 		if(BODY_ZONE_R_ARM)
-			prosthetic = new/obj/item/bodypart/r_arm/robot/surplus(quirk_holder)
+			prosthetic = new /obj/item/bodypart/r_arm/robot/surplus
 			slot_string = "right arm"
 		if(BODY_ZONE_L_LEG)
-			prosthetic = new/obj/item/bodypart/l_leg/robot/surplus(quirk_holder)
+			prosthetic = new /obj/item/bodypart/l_leg/robot/surplus
 			slot_string = "left leg"
 		if(BODY_ZONE_R_LEG)
-			prosthetic = new/obj/item/bodypart/r_leg/robot/surplus(quirk_holder)
+			prosthetic = new /obj/item/bodypart/r_leg/robot/surplus
 			slot_string = "right leg"
-	human_holder.del_and_replace_bodypart(limb_slot, prosthetic)
+	human_holder.del_and_replace_bodypart(prosthetic)
 
 /datum/quirk/prosthetic_limb/post_add()
 	to_chat(quirk_holder, span_boldannounce("Your [slot_string] has been replaced with a surplus prosthetic. It is fragile and will easily come apart under duress. Additionally, \
@@ -464,10 +464,10 @@
 
 /datum/quirk/quadruple_amputee/add_unique()
 	var/mob/living/carbon/human/human_holder = quirk_holder
-	human_holder.del_and_replace_bodypart(BODY_ZONE_L_ARM, new/obj/item/bodypart/l_arm/robot/surplus(quirk_holder))
-	human_holder.del_and_replace_bodypart(BODY_ZONE_R_ARM, new/obj/item/bodypart/r_arm/robot/surplus(quirk_holder))
-	human_holder.del_and_replace_bodypart(BODY_ZONE_L_LEG, new/obj/item/bodypart/l_leg/robot/surplus(quirk_holder))
-	human_holder.del_and_replace_bodypart(BODY_ZONE_R_LEG, new/obj/item/bodypart/r_leg/robot/surplus(quirk_holder))
+	human_holder.del_and_replace_bodypart(new /obj/item/bodypart/l_arm/robot/surplus)
+	human_holder.del_and_replace_bodypart(new /obj/item/bodypart/r_arm/robot/surplus)
+	human_holder.del_and_replace_bodypart(new /obj/item/bodypart/l_leg/robot/surplus)
+	human_holder.del_and_replace_bodypart(new /obj/item/bodypart/r_leg/robot/surplus)
 
 /datum/quirk/quadruple_amputee/post_add()
 	to_chat(quirk_holder, span_boldannounce("All your limbs have been replaced with surplus prosthetics. They are fragile and will easily come apart under duress. Additionally, \
