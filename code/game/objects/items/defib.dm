@@ -210,13 +210,13 @@
 
 /obj/item/defibrillator/equipped(mob/user, slot)
 	..()
-	if(((slot_flags & ITEM_SLOT_BACK) && slot != ITEM_SLOT_BACK) || ((slot_flags & ITEM_SLOT_BELT) && slot != ITEM_SLOT_BELT))
+	if(!(slot_flags & slot))
 		remove_paddles(user)
 		update_power()
 
 /obj/item/defibrillator/item_action_slot_check(slot, mob/user)
-	if(slot & user.getBackSlot())
-		return 1
+	if(slot_flags & slot)
+		return TRUE
 
 /obj/item/defibrillator/proc/remove_paddles(mob/user) //this fox the bug with the paddles when other player stole you the defib when you have the paddles equiped
 	if(ismob(paddles.loc))
