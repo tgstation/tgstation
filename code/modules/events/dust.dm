@@ -55,6 +55,15 @@
 	earliest_start = 30 MINUTES
 	category = EVENT_CATEGORY_SPACE
 	description = "A wave of space dust continually grinds down a side of the station."
+	///Where will the sandstorm be coming from -- Established in admin_setup, passed down to round_event
+	var/start_side
+
+/datum/round_event_control/sandstorm/admin_setup()
+	if(!check_rights(R_FUN))
+		return
+
+	if(tgui_alert(usr, "Choose a side to powersand?", "I hate sand.", list("Yes", "No")) == "Yes")
+		start_side = tgui_input_list(usr, "Pick one!","Rough, gets everywhere, coarse, etc.", GLOB.cardinals)
 
 /datum/round_event/sandstorm
 	start_when = 60
@@ -66,7 +75,10 @@
 	var/start_side_text = "unknown"
 
 /datum/round_event/sandstorm/setup()
-	start_side = pick(GLOB.cardinals)
+	var/datum/round_event_control/sandstorm/sandstorm_event = control
+	start_side = sandstorm_event.start_side
+	if(!start_side)
+		start_side = pick(GLOB.cardinals)
 	switch(start_side) //EOB mentioned the space maps (the only ones that can be hit by this event) using ship directions in the future. dir2text() would save lines but would acknowledge that we're using cardinals in space.
 		if(NORTH)
 			start_side_text = "fore"
@@ -83,15 +95,4 @@
 						damage to external fittings and fixtures.", "Collision Alert")
 
 /datum/round_event/sandstorm/tick()
-	for(var/i in 1 to 10) //That's about 800 pieces of space dust. Wowee!
-		var/turf/pickedstart
-		var/turf/pickedgoal
-		var/max_i = 10
-		while(!isspaceturf(pickedstart))
-			var/start_z = pick(SSmapping.levels_by_trait(ZTRAIT_STATION))
-			pickedstart = spaceDebrisStartLoc(start_side, start_z)
-			pickedgoal = spaceDebrisFinishLoc(start_side, start_z)
-			max_i--
-			if(max_i<=0)
-				break
-		new /obj/effect/meteor/dust(pickedstart, pickedgoal)
+	spawn_meteors(10, GLOB.meteorsC, start_side)
