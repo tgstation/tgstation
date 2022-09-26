@@ -262,7 +262,7 @@
 	/// Exit checks in case the user cancelled or entered an invalid amount
 	if(!amount || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return FALSE
-	if(!payee.adjust_money(-amount))
+	if(!payee.adjust_money(-amount, "Holopay: [name]"))
 		balloon_alert(user, "insufficient credits")
 		to_chat(user, span_warning("You don't have the money to pay for this."))
 		return FALSE
@@ -281,7 +281,7 @@
  */
 /obj/structure/holopay/proc/alert_buyer(payee, amount)
 	/// Pay the owner
-	linked_card.registered_account.adjust_money(amount)
+	linked_card.registered_account.adjust_money(amount, "Holopay: [name]")
 	/// Make alerts
 	linked_card.registered_account.bank_card_talk("[payee] has deposited [amount] cr at your holographic pay stand.")
 	say("Thank you for your patronage, [payee]!")

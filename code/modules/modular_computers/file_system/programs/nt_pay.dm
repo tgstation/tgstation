@@ -14,7 +14,7 @@
 	var/token
 	///Amount of credits, which we sends
 	var/money_to_send = 0
-
+	///Pay token what we want to find
 	var/wanted_token
 
 /datum/computer_file/program/nt_pay/ui_act(action, list/params, datum/tgui/ui)

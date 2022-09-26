@@ -205,7 +205,7 @@
 
 	var/payout = potential_payout
 
-	my_card.registered_account.transfer_money(player_id.registered_account, bet_amount)
+	my_card.registered_account.transfer_money(player_id.registered_account, bet_amount, "Roulette Bet")
 
 	playing = TRUE
 	update_appearance()

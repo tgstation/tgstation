@@ -115,13 +115,25 @@
  * Performs a transfer of credits to the bank_account datum from another bank account.
  * *datum/bank_account/from: The bank account that is sending the credits to this bank_account datum.
  * *amount: the quantity of credits that are being moved between bank_account datums.
+ * *transfer_reason: override for adjust_money reason. Use if no default reason(Transfer to/from Name Surname).
  */
-/datum/bank_account/proc/transfer_money(datum/bank_account/from, amount)
+/datum/bank_account/proc/transfer_money(datum/bank_account/from, amount, transfer_reason)
 	if(from.has_money(amount))
-		adjust_money(amount, istype(from, /datum/bank_account/department) ? "Payday" : "Transfer from [from.account_holder]")
+		var/reason_to = "Transfer from [from.account_holder]"
+		var/reason_from = "Transfer to [account_holder]"
+
+		if(istype(from, /datum/bank_account/department))
+			reason_to = "Salary"
+			reason_from = FALSE
+		
+		if(transfer_reason)
+			reason_to = istype(src, /datum/bank_account/department) ? FALSE : transfer_reason
+			reason_from = transfer_reason
+		
+		adjust_money(amount, reason_to)
+		from.adjust_money(-amount, reason_from)
 		SSblackbox.record_feedback("amount", "credits_transferred", amount)
 		log_econ("[amount] credits were transferred from [from.account_holder]'s account to [src.account_holder]")
-		from.adjust_money(-amount, "Transfer to [account_holder]")
 		return TRUE
 	return FALSE
 

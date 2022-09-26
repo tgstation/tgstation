@@ -104,7 +104,7 @@
 			if(!current_user.has_money(active_request.value) || (current_user.account_holder != active_request.owner))
 				playsound(computer, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
 				return
-			request_target.transfer_money(current_user, active_request.value)
+			request_target.transfer_money(current_user, active_request.value, "Bounty Request")
 			computer.say("Paid out [active_request.value] credits.")
 			GLOB.request_list.Remove(active_request)
 			return TRUE
