@@ -315,11 +315,12 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
  * vars are set as to replicate behavior when rendering to other planes
  * do not touch this unless you know what you are doing
  */
-// Lemon todo: blackness renders weird when you view down openspace, because of transforms and borders and such
+// Blackness renders weird when you view down openspace, because of transforms and borders and such
 // This is a consequence of not using lummy's grouped transparency, but I couldn't get that to work without totally fucking up
 // Sight flags, and shooting vis_contents usage to the moon. So we're doin it different.
 // Look into lessening this, maybe mirror down all the time? idk
 // Part of the issue is it isn't actually the blackness plane, it's just normal blackness
+// (If image vis contents worked (it should in 515), and we were ok with a maptick cost (wait for threaded maptick)) this could be fixed
 /atom/movable/screen/plane_master/blackness
 	name = "Darkness"
 	documentation = "This is quite fiddly, so bear with me. By default (in byond) everything in the game is rendered onto plane 0. It's the default plane. \

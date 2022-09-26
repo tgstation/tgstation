@@ -89,8 +89,9 @@
 /datum/plane_master_group/proc/prep_plane_instance(atom/movable/screen/plane_master/instance)
 	return
 
-// Lemon todo: see if you can't setup correction stretches for things like stairs
+// It would be nice to setup parallaxing for stairs and things when doing this
 // So they look nicer. if you can't it's all good, if you think you can sanely look at monster's work
+// It's hard, and potentially expensive. be careful 
 /datum/plane_master_group/proc/transform_lower_turfs(datum/hud/source, new_offset, use_scale = TRUE)
 	// No offset? piss off
 	if(!SSmapping.max_plane_offset)
