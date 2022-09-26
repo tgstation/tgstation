@@ -86,7 +86,7 @@
 			continue
 		if(temp_vent.welded)
 			continue
-		return //there's at least one. we'll let the codergods handle the rest with prob() i guess.
+		return TRUE //there's at least one. we'll let the codergods handle the rest with prob() i guess.
 	return FALSE
 
 
