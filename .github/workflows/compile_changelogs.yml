@@ -31,9 +31,10 @@ jobs:
           sudo apt-get install  dos2unix
       - name: "Checkout"
         if: steps.value_holder.outputs.ACTIONS_ENABLED
-        uses: actions/checkout@v1
+        uses: actions/checkout@v3
         with:
           fetch-depth: 25
+          persist-credentials: false
       - name: "Compile"
         if: steps.value_holder.outputs.ACTIONS_ENABLED
         run: |
@@ -50,4 +51,4 @@ jobs:
         if: steps.value_holder.outputs.ACTIONS_ENABLED
         uses: ad-m/github-push-action@master
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.COMFY_ORANGE_PAT || secrets.GITHUB_TOKEN }}
