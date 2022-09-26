@@ -93,9 +93,6 @@
 		update_z_overlays(0, rebuild)
 		sleep(3)
 
-// Lemon todo: See about actually properly optimizing this, or at least removing the now pointless work
-// Also trim the unused debug procs
-
 #define NEXT_PARENT_COMMAND "next_parent"
 /// Takes a list of mutable appearances
 /// Returns a list in the form:
