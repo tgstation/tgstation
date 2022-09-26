@@ -1,5 +1,0 @@
-author: "Xander3359"
-delete-after: True
-changes: 
-  - balance: "Captain Jetpack now fits on MODsuit and EVA suit storage slot."
-  - code_imp: "Jetpacks were de-hardcoded and can now support being equipped to other slots."

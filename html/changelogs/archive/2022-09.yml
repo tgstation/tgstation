@@ -866,3 +866,38 @@
   - rscadd: Nanotrasen had a loose shipping container hit the hull of Central Command
       from one "Station P", so they just decided to pour those into the station's
       autodrobes.
+2022-09-26:
+  Rhials:
+  - rscadd: New achievement -- Preventing a heart attack with exercise now gives you
+      a shiny new achievement badge. Show it to all of your gym buddies, be the coolest
+      guy in the locker room.
+  - imageadd: Cool new achievement badge. Wow!
+  - refactor: Rewrites the heart attack event file to be a bit more flexible. Integrates
+      the heart attack eligibility check to canSpawnEvent to prevent edge cases. Migrates
+      the exercise status effect check to the round_event.
+  - admin: MULTI-HEART ATTACK COMBO functionality added (trigger the heart_attack
+      event and select how many victims you want).
+  Time-Green:
+  - qol: You can now see through big trees when you stand behind them!
+  - refactor: Adds a seethrough component to make it easier to add big stationairy
+      objects without reducing visibility
+  Xander3359:
+  - balance: Captain Jetpack now fits on MODsuit and EVA suit storage slot.
+  - code_imp: Jetpacks were de-hardcoded and can now support being equipped to other
+      slots.
+  san7890:
+  - admin: When a player renames (creates) an area from an existing area to a new
+      one, it now logs to game.log (global and individual).
+  - bugfix: 'The developers of Space-Coin decided to renege on their exit scheme with
+      a new advertisement: Space-coin is the mobile currency of the future! As such,
+      you can not cash out of their famous space coin market machines until the machine
+      starts moving. They immediately ran away after that though.'
+  timothymtorres:
+  - rscadd: Rotten zombie tongue has a new speech modifier that converts spoken language
+      into zombie sentences. If the person speaking is a high-functioning zombie this
+      is bypassed.
+  - bugfix: Fix zombie claws blocking sign language.
+  - bugfix: Fix slappers and wound grasping blocking sign language.
+  - bugfix: Fix slappers and wound grasping blocking riding on mobs.
+  uaioy:
+  - bugfix: Ice Box snow storms now cover the surroundings of the homestead.
