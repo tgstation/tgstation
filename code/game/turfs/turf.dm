@@ -104,9 +104,10 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if(flags_1 & INITIALIZED_1)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	flags_1 |= INITIALIZED_1
+
 	/// We do NOT use the shortcut here, because this is faster
-	var/cached_plane = plane
-	SET_PLANE(src, cached_plane, src)
+	if(SSmapping.max_plane_offset && !SSmapping.plane_offset_blacklist["[plane]"])
+		plane = plane - (PLANE_RANGE * SSmapping.z_level_to_plane_offset[z])
 
 	// by default, vis_contents is inherited from the turf that was here before
 	vis_contents.Cut()

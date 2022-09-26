@@ -54,8 +54,11 @@
 
 	var/area/our_area = loc
 	our_area.zs_we_have[z] = TRUE
-	// Lemon todo: optimize this
-	SET_PLANE(src, plane, src)
+
+	var/cached_plane = plane
+	// We make the assumption that the space plane will never be blacklisted, as an optimization
+	if(SSmapping.max_plane_offset)
+		plane = PLANE_SPACE - (PLANE_RANGE * SSmapping.z_level_to_plane_offset[z])
 
 	if(!our_area.area_has_base_lighting && always_lit) //Only provide your own lighting if the area doesn't for you
 		// Intentionally not add_overlay for performance reasons.
