@@ -1,17 +1,20 @@
 /obj/item/boxcutter
 	name = "boxcutter"
 	desc = "A tool for cutting boxes, or throats."
-	icon_state = "telebaton"
-	base_icon_state = "telebaton"
-	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
+	icon_state = "boxcutter"
+	base_icon_state = "boxcutter"
+	lefthand_file = 'icons/mob/inhands/equipment/boxcutter_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/boxcutter_righthand.dmi'
 	inhand_icon_state = null
 	worn_icon_state = "tele_baton"
+	attack_verb_continuous = list("prods", "pokes")
+	attack_verb_simple = list("prod", "poke")
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FIRE_PROOF
 	force = 0
 	var/start_extended = FALSE
+	var/on_sound = 'sound/items/bikehorn.ogg'
 
 /obj/item/boxcutter/Initialize(mapload)
 	. = ..()
@@ -33,4 +36,3 @@
 
 /obj/item/delivery/attackby(obj/item/boxcutter, mob/user)
 	playsound(src, 'sound/items/bikehorn.ogg' , 50, TRUE)
-	unwrap_contents(user)
