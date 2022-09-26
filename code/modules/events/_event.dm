@@ -119,7 +119,7 @@ Runs the event
 	testing("[time2text(world.time, "hh:mm:ss")] [E.type]")
 	triggering = TRUE
 
-	if (alert_observers && !admin_forced)
+	if(!admin_forced)
 		message_admins("Random Event triggering in [DisplayTimeText(RANDOM_EVENT_ADMIN_INTERVENTION_TIME)]: [name] (<a href='?src=[REF(src)];cancel=1'>CANCEL</a>).")
 		sleep(RANDOM_EVENT_ADMIN_INTERVENTION_TIME)
 
