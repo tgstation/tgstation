@@ -391,7 +391,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		if(client.handle_spam_prevention(message, MUTE_IC))
 			return FALSE
 
-	var/sigreturn = SEND_SIGNAL(src, COMSIG_LIVING_SPEECH_CHECK, message, ignore_spam, forced)
+	var/sigreturn = SEND_SIGNAL(src, COMSIG_LIVING_TRY_SPEECH, message, ignore_spam, forced)
 	if(sigreturn & COMPONENT_CAN_ALWAYS_SPEAK)
 		return TRUE
 

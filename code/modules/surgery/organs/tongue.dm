@@ -480,8 +480,9 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 #define SIGN_ONE_HAND 1
 #define SIGN_HANDS_FULL 2
 #define SIGN_ARMLESS 3
-#define SIGN_TRAIT_BLOCKED 4
-#define SIGN_CUFFED 5
+#define SIGN_ARMS_DISABLED 4
+#define SIGN_TRAIT_BLOCKED 5
+#define SIGN_CUFFED 6
 
 #define HANDS_PER_HANDCUFF 2
 
@@ -506,7 +507,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	signer.verb_yell = "emphatically signs"
 	signer.bubble_icon = "signlang"
 	ADD_TRAIT(signer, TRAIT_SIGN_LANG, ORGAN_TRAIT)
-	RegisterSignal(signer, COMSIG_LIVING_SPEECH_CHECK, .proc/on_speech_check)
+	RegisterSignal(signer, COMSIG_LIVING_TRY_SPEECH, .proc/on_speech_check)
 	RegisterSignal(signer, COMSIG_LIVING_TREAT_MESSAGE, .proc/on_treat_message)
 	RegisterSignal(signer, COMSIG_MOVABLE_USING_RADIO, .proc/on_use_radio)
 
@@ -519,11 +520,11 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	speaker.verb_yell = initial(speaker.verb_yell)
 	speaker.bubble_icon = initial(speaker.bubble_icon)
 	REMOVE_TRAIT(speaker, TRAIT_SIGN_LANG, ORGAN_TRAIT)
-	UnregisterSignal(speaker, list(COMSIG_LIVING_SPEECH_CHECK, COMSIG_LIVING_TREAT_MESSAGE, COMSIG_MOVABLE_USING_RADIO))
+	UnregisterSignal(speaker, list(COMSIG_LIVING_TRY_SPEECH, COMSIG_LIVING_TREAT_MESSAGE, COMSIG_MOVABLE_USING_RADIO))
 
-/// Signal proc for [COMSIG_LIVING_SPEECH_CHECK]
+/// Signal proc for [COMSIG_LIVING_TRY_SPEECH]
 /// Sign languagers can always speak regardless of they're mute (as long as they're not mimes)
-/obj/item/organ/internal/tongue/tied/proc/on_speech_check(mob/living/source, allow_mimes)
+/obj/item/organ/internal/tongue/tied/proc/on_speech_check(mob/living/source, message, ignore_spam, forced)
 	SIGNAL_HANDLER
 
 	if(source.mind?.miming)
@@ -535,16 +536,20 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 			source.visible_message("tries to sign, but can't with [source.p_their()] hands full!", visible_message_flags = EMOTE_MESSAGE)
 			return COMPONENT_CANNOT_SPEAK
 
+		if(SIGN_CUFFED) // Restrained
+			source.visible_message("tries to sign, but can't with [source.p_their()] hands bound!", visible_message_flags = EMOTE_MESSAGE)
+			return COMPONENT_CANNOT_SPEAK
+
 		if(SIGN_ARMLESS) // No arms
 			to_chat(source, span_warning("You can't sign with no hands!"))
 			return COMPONENT_CANNOT_SPEAK
 
-		if(SIGN_TRAIT_BLOCKED) // Hands blocked or emote mute
-			to_chat(source, span_warning("You can't sign at the moment!"))
+		if(SIGN_ARMS_DISABLED) // Arms but they're disabled
+			to_chat(source, span_warning("Your can't sign with your hands right now!"))
 			return COMPONENT_CANNOT_SPEAK
 
-		if(SIGN_CUFFED) // Cuffed
-			source.visible_message("tries to sign, but can't with [source.p_their()] hands bound!", visible_message_flags = EMOTE_MESSAGE)
+		if(SIGN_TRAIT_BLOCKED) // Hands blocked or emote mute
+			to_chat(source, span_warning("You can't sign at the moment!"))
 			return COMPONENT_CANNOT_SPEAK
 
 	// Assuming none of the above fail, sign language users can speak
@@ -570,11 +575,17 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	if(!owner)
 		CRASH("[type] called check_signables_state without an owner.")
 
+	// See how many hands we can actually use (this counts disabled / missing limbs for us)
 	var/total_hands = owner.usable_hands
-	if(total_hands <= 0) // No arms at all
-		return SIGN_ARMLESS
+	// Look ma, no hands!
+	if(total_hands <= 0)
+		// Either our hands are still attached (just disabled) or they're gone entirely
+		return owner.num_hands > 0 ? SIGN_ARMS_DISABLED : SIGN_ARMLESS
 
+	// Now let's see how many of our hands is holding something
 	var/busy_hands = 0
+	// Yes held_items can contain null values, which represents empty hands,
+	// I'm just saving myself a variable cast by using as anything
 	for(var/obj/item/held_item as anything in owner.held_items)
 		// items like slappers/zombie claws/etc. should be ignored
 		if(isnull(held_item) || held_item.item_flags & HAND_ITEM)
@@ -582,13 +593,15 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 
 		busy_hands++
 
-	// Handchuffed, can't talk
+	// Handcuffed or otherwise restrained - can't talk
 	if(HAS_TRAIT(owner, TRAIT_RESTRAINED))
 		return SIGN_CUFFED
-	// Some other trait preventing us
+	// Some other trait preventing us from using our hands now
 	else if(HAS_TRAIT(owner, TRAIT_HANDS_BLOCKED) || HAS_TRAIT(owner, TRAIT_EMOTEMUTE))
 		return SIGN_TRAIT_BLOCKED
 
+	// Okay let's compare the total hands to the number of busy hands
+	// to see how many we have left to use for signing right now
 	var/actually_usable_hands = total_hands - busy_hands
 	if(actually_usable_hands <= 0)
 		return SIGN_HANDS_FULL
