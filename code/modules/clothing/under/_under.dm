@@ -322,7 +322,7 @@
 		return
 	adjusted = !adjusted
 	if(adjusted)
-		if(female_sprite_flags != FEMALE_UNIFORM_TOP_ONLY)
+		if(!(female_sprite_flags & FEMALE_UNIFORM_TOP_ONLY))
 			female_sprite_flags = NO_FEMALE_UNIFORM
 		if(!alt_covers_chest) // for the special snowflake suits that expose the chest when adjusted (and also the arms, realistically)
 			body_parts_covered &= ~CHEST
