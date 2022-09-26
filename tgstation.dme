@@ -806,7 +806,6 @@
 #include "code\datums\components\gas_leaker.dm"
 #include "code\datums\components\geiger_sound.dm"
 #include "code\datums\components\genetic_damage.dm"
-#include "code\datums\components\ghost_role_spawnpoint.dm"
 #include "code\datums\components\gps.dm"
 #include "code\datums\components\grillable.dm"
 #include "code\datums\components\gunpoint.dm"

@@ -6,6 +6,3 @@
 
 /// Called on the mind when an antagonist is being removed, after the antagonist list has updated (datum/antagonist/antagonist)
 #define COMSIG_ANTAGONIST_REMOVED "antagonist_removed"
-
-/// Called when an observer attempts to possess a ghost_role_spawnpoint component-bearing mob
-#define COMSIG_ATTEMPT_POSSESSION "attempt_possession" //Find a better file to put this in
