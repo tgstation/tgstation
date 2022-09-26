@@ -31,8 +31,8 @@
 
 	var/mob/living/carbon/human/operative = owner.current
 
-	if(isgolem(operative)) // Currently, nuclear operatives can create golems, and golems inherit the nuclear operative's faction. So, let's make sure we don't turn them into humans or give them a special suit, but it's still valid for them to be allied.
-		return TRUE
+	if(!nukeop_outfit) // this variable is null in instances where an antagonist datum is granted via enslaving the mind, like in golems.
+		return
 
 	operative.set_species(/datum/species/human) //Plasamen burn up otherwise, and besides, all other species are vulnerable to asimov AIs. Let's standardize all operatives being human.
 
