@@ -28,11 +28,14 @@
 /**
  * Effects after completing unwrapping
  */
-/obj/item/delivery/proc/post_unwrap_contents(mob/user)
+/obj/item/delivery/proc/post_unwrap_contents(mob/user, rip_open = TRUE)
 	var/turf/turf_loc = get_turf(user || src)
-	playsound(loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
-	new /obj/effect/decal/cleanable/wrapping(turf_loc)
-
+	if(rip_open)
+		playsound(loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
+		new /obj/effect/decal/cleanable/wrapping(turf_loc)
+	else
+		playsound(loc, 'sound/surgery/scalpel1.ogg', 50, TRUE)
+		new /obj/item/stack/wrapping_paper(turf_loc)
 	for(var/atom/movable/movable_content as anything in contents)
 		movable_content.forceMove(turf_loc)
 
@@ -188,12 +191,10 @@
 	else
 		return ..()
 
-  if(istype(item, /obj/item/boxcutter))
-		var/obj/item/boxcutter/cutter = item
-			if(/obj/item/delivery/parcel/attackby(obj/item/boxcutter, mob/user)
-				/obj/item/delivery/proc/post_unwrap_contents(mob/user)
-					var/turf/turf_loc = get_turf(user || src)
-                	return
+	if(istype(item, /obj/item/boxcutter))
+		unwrap_contents(user)
+		post_unwrap_contents(user, rip_open = FALSE)
+		return
 
 /**
  * # Wrapped up crates and lockers - too big to carry.
