@@ -43,10 +43,10 @@
 
 
 	if(A.stage >= 3)
-		M.adjust_timed_status_effect(-4 SECONDS, /datum/status_effect/dizziness)
+		M.adjust_dizzy(-4 SECONDS)
 		M.adjust_drowsyness(-2)
-		M.adjust_timed_status_effect(-1 SECONDS, /datum/status_effect/speech/slurring/drunk)
-		M.adjust_timed_status_effect(-2 SECONDS, /datum/status_effect/confusion)
+		M.adjust_slurring(-1 SECONDS)
+		M.adjust_confusion(-2 SECONDS)
 		if(purge_alcohol)
 			M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 3)
 			M.adjust_drunk_effect(-5)
@@ -57,7 +57,8 @@
 			M.reagents.remove_reagent(/datum/reagent/toxin/mindbreaker, 5)
 		if(M.reagents.has_reagent(/datum/reagent/toxin/histamine))
 			M.reagents.remove_reagent(/datum/reagent/toxin/histamine, 5)
-		M.hallucination = max(0, M.hallucination - 10)
+
+		M.adjust_hallucinations(-20 SECONDS)
 
 	if(A.stage >= 5)
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -3)

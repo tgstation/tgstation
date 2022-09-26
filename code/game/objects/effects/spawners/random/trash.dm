@@ -144,6 +144,7 @@
 		/obj/item/reagent_containers/cup/bucket = 2,
 		/obj/effect/decal/cleanable/blood/old = 2,
 		/obj/structure/mopbucket = 2,
+		/mob/living/simple_animal/axolotl = 1,
 	)
 
 /obj/effect/spawner/random/trash/graffiti

@@ -1079,32 +1079,32 @@
 	gender = NEUTER
 
 /datum/sprite_accessory/underwear/male_briefs
-	name = "Men's Briefs"
+	name = "Briefs"
 	icon_state = "male_briefs"
 	gender = MALE
 
 /datum/sprite_accessory/underwear/male_boxers
-	name = "Men's Boxer"
+	name = "Boxers"
 	icon_state = "male_boxers"
 	gender = MALE
 
 /datum/sprite_accessory/underwear/male_stripe
-	name = "Men's Striped Boxer"
+	name = "Striped Boxers"
 	icon_state = "male_stripe"
 	gender = MALE
 
 /datum/sprite_accessory/underwear/male_midway
-	name = "Men's Midway Boxer"
+	name = "Midway Boxers"
 	icon_state = "male_midway"
 	gender = MALE
 
 /datum/sprite_accessory/underwear/male_longjohns
-	name = "Men's Long Johns"
+	name = "Long Johns"
 	icon_state = "male_longjohns"
 	gender = MALE
 
 /datum/sprite_accessory/underwear/male_kinky
-	name = "Men's Kinky"
+	name = "Jockstrap"
 	icon_state = "male_kinky"
 	gender = MALE
 
@@ -1114,25 +1114,25 @@
 	gender = MALE
 
 /datum/sprite_accessory/underwear/male_hearts
-	name = "Men's Hearts Boxer"
+	name = "Hearts Boxers"
 	icon_state = "male_hearts"
 	gender = MALE
 	use_static = TRUE
 
 /datum/sprite_accessory/underwear/male_commie
-	name = "Men's Striped Commie Boxer"
+	name = "Commie Boxers"
 	icon_state = "male_commie"
 	gender = MALE
 	use_static = TRUE
 
 /datum/sprite_accessory/underwear/male_usastripe
-	name = "Men's Striped Freedom Boxer"
+	name = "Freedom Boxers"
 	icon_state = "male_assblastusa"
 	gender = MALE
 	use_static = TRUE
 
 /datum/sprite_accessory/underwear/male_uk
-	name = "Men's Striped UK Boxer"
+	name = "UK Boxers"
 	icon_state = "male_uk"
 	gender = MALE
 	use_static = TRUE
@@ -1140,32 +1140,32 @@
 
 //FEMALE UNDERWEAR
 /datum/sprite_accessory/underwear/female_bikini
-	name = "Ladies' Bikini"
+	name = "Bikini"
 	icon_state = "female_bikini"
 	gender = FEMALE
 
 /datum/sprite_accessory/underwear/female_lace
-	name = "Ladies' Lace"
+	name = "Lace Bikini"
 	icon_state = "female_lace"
 	gender = FEMALE
 
 /datum/sprite_accessory/underwear/female_bralette
-	name = "Ladies' Bralette"
+	name = "Bralette w/ Boyshorts"
 	icon_state = "female_bralette"
 	gender = FEMALE
 
 /datum/sprite_accessory/underwear/female_sport
-	name = "Ladies' Sport"
+	name = "Sports Bra w/ Boyshorts"
 	icon_state = "female_sport"
 	gender = FEMALE
 
 /datum/sprite_accessory/underwear/female_thong
-	name = "Ladies' Thong"
+	name = "Thong"
 	icon_state = "female_thong"
 	gender = FEMALE
 
 /datum/sprite_accessory/underwear/female_strapless
-	name = "Ladies' Strapless"
+	name = "Strapless Bikini"
 	icon_state = "female_strapless"
 	gender = FEMALE
 
@@ -1175,67 +1175,67 @@
 	gender = FEMALE
 
 /datum/sprite_accessory/underwear/swimsuit_onepiece
-	name = "Ladies' One Piece Swimsuit"
+	name = "One-Piece Swimsuit"
 	icon_state = "swim_onepiece"
 	gender = FEMALE
 
 /datum/sprite_accessory/underwear/swimsuit_strapless_onepiece
-	name = "Ladies' Strapless One Piece Swimsuit"
+	name = "Strapless One-Piece Swimsuit"
 	icon_state = "swim_strapless_onepiece"
 	gender = FEMALE
 
 /datum/sprite_accessory/underwear/swimsuit_twopiece
-	name = "Ladies' Two Piece Swimsuit"
+	name = "Two-Piece Swimsuit"
 	icon_state = "swim_twopiece"
 	gender = FEMALE
 
 /datum/sprite_accessory/underwear/swimsuit_strapless_twopiece
-	name = "Ladies' Strapless Two Piece Swimsuit"
+	name = "Strapless Two-Piece Swimsuit"
 	icon_state = "swim_strapless_twopiece"
 	gender = FEMALE
 
 /datum/sprite_accessory/underwear/swimsuit_stripe
-	name = "Ladies' Stripe Swimsuit"
+	name = "Strapless Striped Swimsuit"
 	icon_state = "swim_stripe"
 	gender = FEMALE
 
 /datum/sprite_accessory/underwear/swimsuit_halter
-	name = "Ladies' Halter Swimsuit"
+	name = "Halter Swimsuit"
 	icon_state = "swim_halter"
 	gender = FEMALE
 
 /datum/sprite_accessory/underwear/female_white_neko
-	name = "Ladies' White Neko"
+	name = "Neko Bikini (White)"
 	icon_state = "female_neko_white"
 	gender = FEMALE
 	use_static = TRUE
 
 /datum/sprite_accessory/underwear/female_black_neko
-	name = "Ladies' Black Neko"
+	name = "Neko Bikini (Black)"
 	icon_state = "female_neko_black"
 	gender = FEMALE
 	use_static = TRUE
 
 /datum/sprite_accessory/underwear/female_commie
-	name = "Ladies' Commie"
+	name = "Commie Bikini"
 	icon_state = "female_commie"
 	gender = FEMALE
 	use_static = TRUE
 
 /datum/sprite_accessory/underwear/female_usastripe
-	name = "Ladies' Freedom"
+	name = "Freedom Bikini"
 	icon_state = "female_assblastusa"
 	gender = FEMALE
 	use_static = TRUE
 
 /datum/sprite_accessory/underwear/female_uk
-	name = "Ladies' UK"
+	name = "UK Bikini"
 	icon_state = "female_uk"
 	gender = FEMALE
 	use_static = TRUE
 
 /datum/sprite_accessory/underwear/female_kinky
-	name = "Ladies' Kinky"
+	name = "Lingerie"
 	icon_state = "female_kinky"
 	gender = FEMALE
 	use_static = TRUE
@@ -2049,7 +2049,7 @@
 	name = "Normal Legs"
 
 /datum/sprite_accessory/legs/digitigrade_lizard
-	name = "Digitigrade Legs"
+	name = DIGITIGRADE_LEGS
 
 /datum/sprite_accessory/caps
 	icon = 'icons/mob/species/mutant_bodyparts.dmi'

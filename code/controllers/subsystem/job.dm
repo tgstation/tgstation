@@ -62,14 +62,14 @@ SUBSYSTEM_DEF(job)
 	/// Dictionary that maps job priorities to low/medium/high. Keys have to be number-strings as assoc lists cannot be indexed by integers. Set in setup_job_lists.
 	var/list/job_priorities_to_strings
 
-/datum/controller/subsystem/job/Initialize(timeofday)
+/datum/controller/subsystem/job/Initialize()
 	setup_job_lists()
 	if(!length(all_occupations))
 		SetupOccupations()
 	if(CONFIG_GET(flag/load_jobs_from_txt))
 		LoadJobs()
 	set_overflow_role(CONFIG_GET(string/overflow_job))
-	return ..()
+	return SS_INIT_SUCCESS
 
 
 /datum/controller/subsystem/job/proc/set_overflow_role(new_overflow_role)

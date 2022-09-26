@@ -231,7 +231,14 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		message = "[randomnote] [message] [randomnote]"
 		spans |= SPAN_SINGING
 
+	#ifdef UNIT_TESTS
+	// Saves a ref() to our arglist specifically.
+	// We do this because we need to check that COMSIG_MOB_SAY is getting EXACTLY this list.
+	last_say_args_ref = REF(args)
+	#endif
+
 	// Leaving this here so that anything that handles speech this way will be able to have spans affecting it and all that.
+	// Make sure the arglist is passed exactly - don't pass a copy of it. Say signal handlers will modify some of the parameters.
 	var/sigreturn = SEND_SIGNAL(src, COMSIG_MOB_SAY, args, message_range)
 	if (sigreturn & COMPONENT_UPPERCASE_SPEECH)
 		message = uppertext(message)
@@ -347,10 +354,8 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		var/mob/living/carbon/mute = src
 		if(istype(mute))
 			switch(mute.check_signables_state())
-				if(SIGN_ONE_HAND) // One arm
-					message = stars(message)
-				if(SIGN_HANDS_FULL) // Full hands
-					mute.visible_message("tries to sign, but can't with [src.p_their()] hands full!", visible_message_flags = EMOTE_MESSAGE)
+				if(SIGN_CUFFED) // Cuffed
+					mute.visible_message("tries to sign, but can't with [src.p_their()] hands bound!", visible_message_flags = EMOTE_MESSAGE)
 					return FALSE
 				if(SIGN_ARMLESS) // No arms
 					to_chat(src, span_warning("You can't sign with no hands!"))
@@ -358,9 +363,12 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 				if(SIGN_TRAIT_BLOCKED) // Hands Blocked or Emote Mute traits
 					to_chat(src, span_warning("You can't sign at the moment!"))
 					return FALSE
-				if(SIGN_CUFFED) // Cuffed
-					mute.visible_message("tries to sign, but can't with [src.p_their()] hands bound!", visible_message_flags = EMOTE_MESSAGE)
+				if(SIGN_HANDS_FULL) // Full hands
+					mute.visible_message("tries to sign, but can't with [src.p_their()] hands full!", visible_message_flags = EMOTE_MESSAGE)
 					return FALSE
+				if(SIGN_ONE_HAND) // One arm
+					message = stars(message)
+
 	if(client) //client is so that ghosts don't have to listen to mice
 		for(var/mob/player_mob as anything in GLOB.player_list)
 			if(QDELETED(player_mob)) //Some times nulls and deleteds stay in this list. This is a workaround to prevent ic chat breaking for everyone when they do.

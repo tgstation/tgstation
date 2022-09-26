@@ -49,13 +49,6 @@
 	include_subtypes = TRUE
 
 //Other Power Parts
-
-/datum/export/modular_part/apc_link
-	cost = CARGO_CRATE_VALUE * 0.5
-	unit_name = "area power connector"
-	export_types = list(/obj/item/computer_hardware/recharger/apc_recharger)
-	include_subtypes = TRUE
-
 /datum/export/modular_part/controller
 	cost = CARGO_CRATE_VALUE * 0.1
 	unit_name = "power cell controller"
@@ -146,12 +139,6 @@
 	cost = CARGO_CRATE_VALUE * 0.2
 	unit_name = "computer ID card slot"
 	export_types = list(/obj/item/computer_hardware/card_slot)
-	include_subtypes = TRUE
-
-/datum/export/modular_part/intellicard
-	cost = CARGO_CRATE_VALUE * 0.2
-	unit_name = "computer intellicard slot"
-	export_types = list(/obj/item/computer_hardware/ai_slot)
 	include_subtypes = TRUE
 
 /datum/export/modular_part/miniprinter

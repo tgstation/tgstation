@@ -12,7 +12,7 @@
 
 /obj/item/clothing/shoes/combat/Initialize(mapload)
 	. = ..()
-	
+
 	create_storage(type = /datum/storage/pockets/shoes)
 
 /obj/item/clothing/shoes/combat/sneakboots
@@ -45,11 +45,14 @@
 
 /obj/item/clothing/shoes/jackboots/Initialize(mapload)
 	. = ..()
-	
+
 	create_storage(type = /datum/storage/pockets/shoes)
 
 /obj/item/clothing/shoes/jackboots/fast
 	slowdown = -1
+
+/obj/item/clothing/shoes/jackboots/sec
+	icon_state = "jackboots_sec"
 
 /obj/item/clothing/shoes/winterboots
 	name = "winter boots"
@@ -65,7 +68,7 @@
 
 /obj/item/clothing/shoes/winterboots/Initialize(mapload)
 	. = ..()
-	
+
 	create_storage(type = /datum/storage/pockets/shoes)
 
 /obj/item/clothing/shoes/winterboots/ice_boots
@@ -103,7 +106,7 @@
 
 /obj/item/clothing/shoes/workboots/Initialize(mapload)
 	. = ..()
-	
+
 	create_storage(type = /datum/storage/pockets/shoes)
 
 /obj/item/clothing/shoes/workboots/mining
@@ -121,7 +124,7 @@
 
 /obj/item/clothing/shoes/russian/Initialize(mapload)
 	. = ..()
-	
+
 	create_storage(type = /datum/storage/pockets/shoes)
 
 /obj/item/clothing/shoes/discoshoes

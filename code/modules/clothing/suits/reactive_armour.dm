@@ -225,19 +225,13 @@
 	siemens_coefficient = -1
 	cooldown_message = span_danger("The tesla capacitors on the reactive tesla armor are still recharging! The armor merely emits some sparks.")
 	emp_message = span_warning("The tesla capacitors beep ominously for a moment.")
+	clothing_traits = list(TRAIT_TESLA_SHOCKIMMUNE)
+	/// How strong are the zaps we give off?
 	var/zap_power = 25000
+	/// How far to the zaps we give off go?
 	var/zap_range = 20
+	/// What flags do we pass to the zaps we give off?
 	var/zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE
-
-/obj/item/clothing/suit/armor/reactive/tesla/dropped(mob/user)
-	..()
-	if(istype(user))
-		REMOVE_TRAIT(user, TRAIT_TESLA_SHOCKIMMUNE, "reactive_tesla_armor")
-
-/obj/item/clothing/suit/armor/reactive/tesla/equipped(mob/user, slot)
-	..()
-	if(slot_flags & slot) //Was equipped to a valid slot for this item?
-		ADD_TRAIT(user, TRAIT_TESLA_SHOCKIMMUNE, "reactive_tesla_armor")
 
 /obj/item/clothing/suit/armor/reactive/tesla/cooldown_activation(mob/living/carbon/human/owner)
 	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
@@ -253,9 +247,9 @@
 
 /obj/item/clothing/suit/armor/reactive/tesla/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	owner.visible_message(span_danger("[src] blocks [attack_text], but pulls a massive charge of energy into [owner] from the surrounding environment!"))
-	REMOVE_TRAIT(owner, TRAIT_TESLA_SHOCKIMMUNE, "reactive_tesla_armor") //oops! can't shock without this!
+	REMOVE_CLOTHING_TRAIT(owner, TRAIT_TESLA_SHOCKIMMUNE) //oops! can't shock without this!
 	electrocute_mob(owner, get_area(src), src, 1)
-	ADD_TRAIT(owner, TRAIT_TESLA_SHOCKIMMUNE, "reactive_tesla_armor")
+	ADD_CLOTHING_TRAIT(owner, TRAIT_TESLA_SHOCKIMMUNE)
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 	return TRUE
 
@@ -334,51 +328,32 @@
 	desc = "An experimental suit of armor with sensitive detectors hooked up to the mind of the wearer, sending mind pulses that causes hallucinations around you."
 	cooldown_message = span_danger("The connection is currently out of sync... Recalibrating.")
 	emp_message = span_warning("You feel the backsurge of a mind pulse.")
-	var/range = 3
-
-/obj/item/clothing/suit/armor/reactive/hallucinating/dropped(mob/user)
-	..()
-	if(istype(user))
-		REMOVE_TRAIT(user, TRAIT_MADNESS_IMMUNE, "reactive_hallucinating_armor")
-
-/obj/item/clothing/suit/armor/reactive/hallucinating/equipped(mob/user, slot)
-	..()
-	if(slot_flags & slot) //Was equipped to a valid slot for this item?
-		ADD_TRAIT(user, TRAIT_MADNESS_IMMUNE, "reactive_hallucinating_armor")
+	clothing_traits = list(TRAIT_MADNESS_IMMUNE)
 
 /obj/item/clothing/suit/armor/reactive/hallucinating/cooldown_activation(mob/living/carbon/human/owner)
 	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
 	sparks.set_up(1, 1, src)
 	sparks.start()
-	..()
+	return ..()
 
 /obj/item/clothing/suit/armor/reactive/hallucinating/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	owner.visible_message(span_danger("[src] blocks [attack_text], sending out mental pulses!"))
-	hallucination_pulse(owner)
+	visible_hallucination_pulse(
+		center = get_turf(owner),
+		radius = 3,
+		hallucination_duration = 50 SECONDS,
+		hallucination_max_duration = 300 SECONDS,
+	)
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 	return TRUE
 
 /obj/item/clothing/suit/armor/reactive/hallucinating/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	owner.visible_message(span_danger("[src] blocks [attack_text], but pulls a massive charge of mental energy into [owner] from the surrounding environment!"))
-	owner.hallucination += 25
-	owner.hallucination = clamp(owner.hallucination, 0, 150)
+	owner.adjust_hallucinations_up_to(50 SECONDS, 300 SECONDS)
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 	return TRUE
 
-/obj/item/clothing/suit/armor/reactive/hallucinating/proc/hallucination_pulse(mob/living/carbon/human/owner)
-	var/turf/location = get_turf(owner)
-	for(var/mob/living/carbon/human/near in view(location, range))
-		// If they are immune to hallucinations.
-		if (HAS_TRAIT(near, TRAIT_MADNESS_IMMUNE) || (near.mind && HAS_TRAIT(near.mind, TRAIT_MADNESS_IMMUNE)))
-			continue
-
-		// Everyone else gets hallucinations.
-		var/dist = sqrt(1 / max(1, get_dist(near, location)))
-		near.hallucination += 25 * dist
-		near.hallucination = clamp(near.hallucination, 0, 150)
-
 //Bioscrambling
-
 /obj/item/clothing/suit/armor/reactive/bioscrambling
 	name = "reactive bioscrambling armor"
 	desc = "An experimental suit of armor with sensitive detectors hooked up to a biohazard release valve. It scrambles the bodies of those around."
