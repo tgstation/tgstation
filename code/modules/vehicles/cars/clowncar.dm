@@ -25,8 +25,6 @@
 /obj/vehicle/sealed/car/clowncar/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj,src)
-	RegisterSignal(src, COMSIG_MOVABLE_CROSS_OVER, .proc/check_crossed)
-	RegisterSignal(src, COMSIG_MOVABLE_BUMP, .proc/check_bumped)
 
 /obj/vehicle/sealed/car/clowncar/process()
 	if(light_on && (obj_flags & EMAGGED))
@@ -95,8 +93,8 @@
 	to_chat(user, span_danger("You use the [banana] to repair [src]!"))
 	qdel(banana)
 
-/obj/vehicle/sealed/car/clowncar/proc/check_bumped(atom/bumped)
-	SIGNAL_HANDLER
+/obj/vehicle/sealed/car/clowncar/Bump(atom/bumped)
+	. = ..()
 	if(isliving(bumped))
 		if(ismegafauna(bumped))
 			return
@@ -117,22 +115,20 @@
 	dump_mobs(TRUE)
 	log_combat(src, bumped, "crashed into", null, "dumping all passengers")
 
-/obj/vehicle/sealed/car/clowncar/proc/check_crossed(datum/source, atom/movable/crossed)
-	SIGNAL_HANDLER
+/obj/vehicle/sealed/car/clowncar/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
 	if(!has_gravity())
 		return
-	if(!iscarbon(crossed))
-		return
-	var/mob/living/carbon/target_pancake = crossed
-	if(target_pancake.body_position != LYING_DOWN)
-		return
-	if(HAS_TRAIT(target_pancake, TRAIT_INCAPACITATED))
-		return
-	target_pancake.visible_message(span_warning("[src] runs over [target_pancake], flattening [target_pancake.p_them()] like a pancake!"))
-	target_pancake.AddElement(/datum/element/squish, 5 SECONDS)
-	target_pancake.Paralyze(2 SECONDS)
-	playsound(target_pancake, 'sound/effects/cartoon_splat.ogg', 75)
-	log_combat(src, crossed, "ran over")
+	for(var/mob/living/carbon/target_pancake in loc)
+		if(target_pancake.body_position != LYING_DOWN)
+			continue
+		if(HAS_TRAIT(target_pancake, TRAIT_INCAPACITATED))
+			continue
+		target_pancake.visible_message(span_warning("[src] runs over [target_pancake], flattening [target_pancake.p_them()] like a pancake!"))
+		target_pancake.AddElement(/datum/element/squish, 5 SECONDS)
+		target_pancake.Paralyze(2 SECONDS)
+		playsound(target_pancake, 'sound/effects/cartoon_splat.ogg', 75)
+		log_combat(src, target_pancake, "ran over")
 
 /obj/vehicle/sealed/car/clowncar/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
@@ -146,11 +142,6 @@
 /obj/vehicle/sealed/car/clowncar/atom_destruction(damage_flag)
 	playsound(src, 'sound/vehicles/clowncar_fart.ogg', 100)
 	STOP_PROCESSING(SSobj,src)
-	return ..()
-
-/obj/vehicle/sealed/car/clowncar/Destroy(force)
-	UnregisterSignal(src, COMSIG_MOVABLE_BUMP)
-	UnregisterSignal(src, COMSIG_MOVABLE_CROSS_OVER)
 	return ..()
 
 /**
