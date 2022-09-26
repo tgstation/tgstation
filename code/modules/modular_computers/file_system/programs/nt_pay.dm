@@ -15,6 +15,8 @@
 	///Amount of credits, which we sends
 	var/money_to_send = 0
 
+	var/wanted_token
+
 /datum/computer_file/program/nt_pay/ui_act(action, list/params, datum/tgui/ui)
 	. = ..()
 	if(.)
@@ -31,7 +33,7 @@
 		if("Transaction")
 			var/datum/bank_account/recipient
 			if(!token)
-				return to_chat(usr, span_notice("Enter the first and last name to whom you are transferring money."))
+				return to_chat(usr, span_notice("Enter pay token whom you are transferring money."))
 			if(!money_to_send)
 				return to_chat(usr, span_notice("Enter the amount of credits to transfer"))
 			if(token == current_user.pay_token)
@@ -51,7 +53,18 @@
 			recipient.bank_card_talk("You received [money_to_send] credit(s). Reason: transfer from [current_user.account_holder]")
 			recipient.transfer_money(current_user, money_to_send)
 			current_user.bank_card_talk("You send [money_to_send] credit(s) to [recipient.account_holder]. Now you have [current_user.account_balance] credit(s)")
-			
+		
+		if("GetPayToken")
+			wanted_token = null
+			for(var/account in SSeconomy.bank_accounts_by_id)
+				var/datum/bank_account/acc = SSeconomy.bank_accounts_by_id[account]
+				if(acc.account_holder == params["wanted_name"])
+					wanted_token = "Token: [acc.pay_token]"
+					break
+			if(!wanted_token)
+				return wanted_token = "Account \"[params["wanted_name"]]\" not found."
+
+
 
 /datum/computer_file/program/nt_pay/ui_data(mob/user)
 	var/list/data = get_header_data()
@@ -70,6 +83,7 @@
 		data["money"] = current_user.account_balance
 		data["token"] = token
 		data["money_to_send"] = money_to_send
+		data["wanted_token"] = wanted_token
 		data["trans_list"] = current_user.transaction_history
 
 	return data

@@ -1,6 +1,6 @@
 import { NtosWindow } from '../layouts';
 import { useBackend } from '../backend';
-import { Stack, Section, Box, Button, NumberInput, Input, Table, Tooltip, NoticeBox } from '../components';
+import { Stack, Section, Box, Button, NumberInput, Input, Table, Tooltip, NoticeBox, Divider } from '../components';
 
 type Data = {
   name: string;
@@ -9,12 +9,14 @@ type Data = {
   token: string;
   money_to_send: number;
   trans_list: Transactions[];
+  wanted_token: string;
 };
 
 type Transactions = {
   adjusted_money: number;
   reason: string;
 };
+let name_to_token;
 
 export const NtosPay = (props, context) => {
   const { act, data } = useBackend<Data>(context);
@@ -25,14 +27,15 @@ export const NtosPay = (props, context) => {
     token,
     money_to_send,
     trans_list = [],
+    wanted_token,
   } = data;
 
   if (name) {
     return (
-      <NtosWindow width={300} height={660}>
-        <NtosWindow.Content scrollable>
+      <NtosWindow width={495} height={655}>
+        <NtosWindow.Content>
           <Stack vertical>
-            <Section fill textAlign="left">
+            <Section textAlign="center">
               <Table>
                 <Table.Row>Hi, {name}.</Table.Row>
                 <Table.Row>Your pay token is {owner_token}.</Table.Row>
@@ -41,40 +44,72 @@ export const NtosPay = (props, context) => {
                 </Table.Row>
               </Table>
             </Section>
-            <Section horisontal title="Transfer Money" fill>
-              <Box>
-                <Tooltip
-                  content="Enter the pay token of the account you want to trasfer credits."
-                  position="top">
+          </Stack>
+          <Divider hidden />
+
+          <Stack>
+            <Stack.Item>
+              <Section vertical title="Transfer Money">
+                <Box>
+                  <Tooltip
+                    content="Enter the pay token of the account you want to trasfer credits."
+                    position="top">
+                    <Input
+                      placeholder="Pay Token"
+                      width="190px"
+                      onChange={(e, value) =>
+                        act('changeValue', {
+                          token: value,
+                        })
+                      }
+                    />
+                  </Tooltip>
+                </Box>
+                <NumberInput
+                  animate
+                  unit="cr"
+                  value={money_to_send}
+                  minValue={1}
+                  maxValue={money}
+                  width="83px"
+                  onChange={(e, value) =>
+                    act('changeValue', {
+                      money_to_send: value,
+                    })
+                  }
+                />
+                <Button
+                  content="Send credits"
+                  onClick={() => act('Transaction')}
+                />
+              </Section>
+            </Stack.Item>
+            <Stack.Item>
+              <Section title="Know Token" width="270px" height="98px">
+                <Box>
                   <Input
-                    placeholder="Pay Token"
+                    placeholder="Full name of account."
                     width="190px"
-                    onChange={(e, value) =>
-                      act('changeValue', {
-                        token: value,
+                    onChange={(e, value) => (name_to_token = value)}
+                  />
+                  <Button
+                    content="Get it"
+                    onClick={() =>
+                      act('GetPayToken', {
+                        wanted_name: name_to_token,
                       })
                     }
                   />
-                </Tooltip>
-              </Box>
-              <NumberInput
-                animate
-                unit="cr"
-                value={money_to_send}
-                minValue={1}
-                maxValue={money}
-                width="83px"
-                onChange={(e, value) =>
-                  act('changeValue', {
-                    money_to_send: value,
-                  })
-                }
-              />
-              <Button
-                content="Send credits"
-                onClick={() => act('Transaction')}
-              />
-            </Section>
+                </Box>
+                <Divider hidden />
+                <Box nowrap>{wanted_token}</Box>
+              </Section>
+            </Stack.Item>
+          </Stack>
+
+          <Divider hidden />
+
+          <Stack vertical>
             <Section title="Transaction History">
               <Tooltip
                 content="Here are last 20 logs of your transactions."
@@ -82,17 +117,17 @@ export const NtosPay = (props, context) => {
                 <Table>
                   <Table.Row header>
                     <Table.Cell>Balance</Table.Cell>
-                    <Table.Cell>Reason</Table.Cell>
+                    <Table.Cell textAlign="center">Reason</Table.Cell>
                   </Table.Row>
                   {trans_list.map((log) => (
                     <Table.Row
-                      key={log.reason}
+                      key={log}
                       color={log.adjusted_money < 1 ? 'red' : 'green'}>
-                      <Table.Cell width="80px">
-                        {log.adjusted_money > 1 ? '+' : ''}
+                      <Table.Cell width="100px">
+                        {/* {log.adjusted_money > 1 ? '+' : ''} */}
                         {log.adjusted_money}
                       </Table.Cell>
-                      <Table.Cell>{log.reason}</Table.Cell>
+                      <Table.Cell textAlign="center">{log.reason}</Table.Cell>
                     </Table.Row>
                   ))}
                 </Table>
@@ -104,7 +139,7 @@ export const NtosPay = (props, context) => {
     );
   }
   return (
-    <NtosWindow width={335} height={130}>
+    <NtosWindow width={512} height={130}>
       <NtosWindow.Content>
         <NoticeBox>
           You need to insert your ID card into the card slot in order to use
