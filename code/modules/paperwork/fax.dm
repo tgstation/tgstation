@@ -154,11 +154,6 @@
 		return
 	return ..()
 
-/obj/machinery/fax/CtrlClick(mob/living/user)
-	. = ..()
-	if(access_additional_faxes_check(user))
-		access_additional_faxes_toggle()
-
 // Checks if the card has access to switch "legal" faxes of administrators.
 /obj/machinery/fax/proc/access_additional_faxes_check(mob/living/user)
 	if(isAdminGhostAI(user))
@@ -259,6 +254,7 @@
 	data["fax_name"] = fax_name
 	data["visible"] = visible_to_network
 	data["access_additional_faxes"] = access_additional_faxes
+	data["сan_switch_access"] = access_additional_faxes_check(user)
 	// In this case, we don't care if the fax is hacked or in the syndicate's network. The main thing is to check the visibility of other faxes.
 	data["syndicate_network"] = (syndicate_network || (obj_flags & EMAGGED))
 	data["has_paper"] = !!loaded_item_ref?.resolve()
@@ -281,6 +277,8 @@
 			playsound(src, 'sound/machines/eject.ogg', 50, FALSE)
 			update_appearance()
 			return TRUE
+		if("access_additional_faxes_toggle")
+			access_additional_faxes_toggle()
 		if("send")
 			var/obj/item/loaded = loaded_item_ref?.resolve()
 			if (!loaded)

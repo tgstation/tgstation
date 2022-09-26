@@ -10,6 +10,7 @@ type FaxData = {
   visible: boolean;
   has_paper: string;
   access_additional_faxes: boolean;
+  сan_switch_access: boolean;
   additional_faxes_list: AdditionalFaxesList[];
   syndicate_network: boolean;
   syndicate_faxes_list: AdditionalFaxesList[];
@@ -75,7 +76,17 @@ export const Fax = (props, context) => {
             )}
           </LabeledList.Item>
         </Section>
-        <Section title="Send">
+        <Section
+          title="Send"
+          buttons={
+            <Button
+              color={data.access_additional_faxes ? 'bad' : 'good'}
+              onClick={() => act('access_additional_faxes_toggle')}
+              disabled={!data.сan_switch_access}
+              tooltip="Manage access to the expanded fax list.">
+              {data.access_additional_faxes ? 'Unlogin' : 'Login'}
+            </Button>
+          }>
           <Box mt={0.4}>
             {!!data.access_additional_faxes &&
               data.additional_faxes_list.map((fax: AdditionalFaxesList) => (
