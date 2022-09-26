@@ -5,7 +5,6 @@
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
 	icon_state = "beret_badge"
 	greyscale_colors = "#397F3F#FFCE5B"
-
 	flags_inv = 0
 	armor = list(MELEE = 80, BULLET = 80, LASER = 50, ENERGY = 60, BOMB = 100, BIO = 100, FIRE = 100, ACID = 100, WOUND = 15)
 	strip_delay = 130
