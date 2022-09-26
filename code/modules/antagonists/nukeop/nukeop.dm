@@ -28,11 +28,15 @@
 /datum/antagonist/nukeop/proc/equip_op()
 	if(!ishuman(owner.current))
 		return
-	var/mob/living/carbon/human/H = owner.current
 
-	H.set_species(/datum/species/human) //Plasamen burn up otherwise, and lizards are vulnerable to asimov AIs
+	var/mob/living/carbon/human/operative = owner.current
 
-	H.equipOutfit(nukeop_outfit)
+	if(isgolem(operative)) // Currently, nuclear operatives can create golems, and golems inherit the nuclear operative's faction. So, let's make sure we don't turn them into humans or give them a special suit, but it's still valid for them to be allied.
+		return TRUE
+
+	operative.set_species(/datum/species/human) //Plasamen burn up otherwise, and besides, all other species are vulnerable to asimov AIs. Let's standardize all operatives being human.
+
+	operative.equipOutfit(nukeop_outfit)
 	return TRUE
 
 /datum/antagonist/nukeop/greet()
