@@ -54,11 +54,7 @@
 
 	var/client/C = screenmob.client
 	// Default to HIGH
-	var/parallax_selection = PARALLAX_HIGH
-	if(C.prefs)
-		parallax_selection = C.prefs.read_preference(/datum/preference/choiced/parallax)
-		if (!parallax_selection)
-			parallax_selection = PARALLAX_HIGH
+	var/parallax_selection = C?.prefs.read_preference(/datum/preference/choiced/parallax) || PARALLAX_HIGH
 
 	switch(parallax_selection)
 		if (PARALLAX_INSANE)
