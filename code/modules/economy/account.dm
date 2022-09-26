@@ -257,9 +257,9 @@
 	add_to_accounts = FALSE
 
 /**
- * Add log to transactions history, and if logs >= 20, delete first, what mean, we have max 20 logs.
+ * Add log to transactions history. Deletes the oldest log when the history has more than 20 entries.
  * * Arguments:
- * * adjusted_money - Interacting money, for example, -50, 125.
+ * * adjusted_money - How much was added, negative values removing cash.
  * * reason - The reason of interact with balance, for example, "Bought chips" or "Payday".
  */
 /datum/bank_account/proc/add_log_to_history(adjusted_money, reason)

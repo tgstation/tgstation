@@ -33,11 +33,11 @@
 		if("Transaction")
 			var/datum/bank_account/recipient
 			if(!token)
-				return to_chat(usr, span_notice("Enter pay token whom you are transferring money."))
+				return to_chat(usr, span_notice("You need to enter your transfer target's pay token."))
 			if(!money_to_send)
-				return to_chat(usr, span_notice("Enter the amount of credits to transfer"))
+				return to_chat(usr, span_notice("You need to specify how much you're sending."))
 			if(token == current_user.pay_token)
-				return to_chat(usr, span_notice("You cannot send credits to yourself"))
+				return to_chat(usr, span_notice("You can't send credits to yourself."))
 			
 			for(var/account as anything in SSeconomy.bank_accounts_by_id)
 				var/datum/bank_account/acc = SSeconomy.bank_accounts_by_id[account]
@@ -46,7 +46,7 @@
 					break
 			
 			if(!recipient)
-				return to_chat(usr, span_notice("No recipients with that name was found"))
+				return to_chat(usr, span_notice("The app can't find who you're trying to pay. Did you enter the pay token right?"))
 			if(!current_user.has_money(money_to_send))
 				return current_user.bank_card_talk("You cannot afford it.")
 			
