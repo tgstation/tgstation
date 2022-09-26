@@ -262,7 +262,7 @@
 	/// Exit checks in case the user cancelled or entered an invalid amount
 	if(!amount || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return FALSE
-	if(!payee.adjust_money(-amount, "Holopay: [name]"))
+	if(!payee.adjust_money(-amount, "Holopay: [capitalize(name)]"))
 		balloon_alert(user, "insufficient credits")
 		to_chat(user, span_warning("You don't have the money to pay for this."))
 		return FALSE

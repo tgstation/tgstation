@@ -156,7 +156,7 @@
 				to_chat(user, span_warning("ID Card lacks funds. Aborting."))
 		user.balloon_alert(user, "Cost: [total_cost] credits.")
 		return FALSE
-	target_acc.transfer_money(idcard.registered_account, total_cost, "Using of corporate machinery")
+	target_acc.transfer_money(idcard.registered_account, total_cost, "Nanotrasen: Using of Corporate Machinery")
 	log_econ("[total_cost] credits were spent on [parent] by [user] via [idcard.registered_account.account_holder]'s card.")
 	idcard.registered_account.bank_card_talk("[total_cost] credits deducted from your account.")
 	playsound(src, 'sound/effects/cashregister.ogg', 20, TRUE)

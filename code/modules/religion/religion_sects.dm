@@ -256,7 +256,7 @@
 			to_chat(chap, span_warning("[GLOB.deity] refuses to heal this metallic taint!"))
 			return TRUE
 
-	account.adjust_money(-GREEDY_HEAL_COST, "Church Donation - Treatment")
+	account.adjust_money(-GREEDY_HEAL_COST, "Church Donation: Treatment")
 	var/heal_amt = 30
 	var/list/hurt_limbs = blessed.get_damaged_bodyparts(1, 1, null, BODYTYPE_ORGANIC)
 	if(hurt_limbs.len)

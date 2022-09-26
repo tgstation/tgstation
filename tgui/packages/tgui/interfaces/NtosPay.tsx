@@ -1,13 +1,11 @@
 import { NtosWindow } from '../layouts';
 import { useBackend } from '../backend';
-import { Stack, Section, Box, Button, NumberInput, Input, Table, Tooltip, NoticeBox, Divider } from '../components';
+import { Stack, Section, Box, Button, Input, Table, Tooltip, NoticeBox, Divider, RestrictedInput } from '../components';
 
 type Data = {
   name: string;
   owner_token: string;
   money: number;
-  token: string;
-  money_to_send: number;
   trans_list: Transactions[];
   wanted_token: string;
 };
@@ -16,19 +14,11 @@ type Transactions = {
   adjusted_money: number;
   reason: string;
 };
-let name_to_token;
+let name_to_token, money_to_send, token;
 
 export const NtosPay = (props, context) => {
   const { act, data } = useBackend<Data>(context);
-  const {
-    name,
-    owner_token,
-    money,
-    token,
-    money_to_send,
-    trans_list = [],
-    wanted_token,
-  } = data;
+  const { name, owner_token, money, trans_list = [], wanted_token } = data;
 
   if (name) {
     return (
@@ -57,30 +47,29 @@ export const NtosPay = (props, context) => {
                     <Input
                       placeholder="Pay Token"
                       width="190px"
-                      onChange={(e, value) =>
-                        act('changeValue', {
-                          token: value,
-                        })
-                      }
+                      onChange={(e, value) => (token = value)}
                     />
                   </Tooltip>
                 </Box>
-                <NumberInput
-                  animate
-                  unit="cr"
-                  value={money_to_send}
-                  minValue={1}
-                  maxValue={money}
-                  width="83px"
-                  onChange={(e, value) =>
-                    act('changeValue', {
-                      money_to_send: value,
-                    })
-                  }
-                />
+                <Tooltip
+                  content="Enter amount of credits to transfer."
+                  position="top">
+                  <RestrictedInput
+                    width="83px"
+                    minValue={1}
+                    maxValue={money}
+                    onChange={(_, value) => (money_to_send = value)}
+                    value={1}
+                  />
+                </Tooltip>
                 <Button
                   content="Send credits"
-                  onClick={() => act('Transaction')}
+                  onClick={() =>
+                    act('Transaction', {
+                      token: token,
+                      amount: money_to_send,
+                    })
+                  }
                 />
               </Section>
             </Stack.Item>
@@ -109,8 +98,8 @@ export const NtosPay = (props, context) => {
 
           <Divider hidden />
 
-          <Stack vertical>
-            <Section title="Transaction History">
+          <Stack fill vertical>
+            <Section scrollable title="Transaction History">
               <Tooltip
                 content="Here are last 20 logs of your transactions."
                 position="auto">
@@ -124,7 +113,7 @@ export const NtosPay = (props, context) => {
                       key={log}
                       color={log.adjusted_money < 1 ? 'red' : 'green'}>
                       <Table.Cell width="100px">
-                        {/* {log.adjusted_money > 1 ? '+' : ''} */}
+                        {log.adjusted_money > 1 ? '+' : ''}
                         {log.adjusted_money}
                       </Table.Cell>
                       <Table.Cell textAlign="center">{log.reason}</Table.Cell>

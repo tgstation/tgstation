@@ -23,14 +23,9 @@
 		return
 
 	switch(action)
-		if("changeValue")
-			if(params["token"])
-				token = params["token"]
-			if(params["money_to_send"])
-				money_to_send = params["money_to_send"]
-			return UI_UPDATE
-		
 		if("Transaction")
+			token = params["token"]
+			money_to_send = params["amount"]
 			var/datum/bank_account/recipient
 			if(!token)
 				return to_chat(usr, span_notice("You need to enter your transfer target's pay token."))
@@ -81,8 +76,6 @@
 		data["name"] = current_user.account_holder
 		data["owner_token"] = current_user.pay_token
 		data["money"] = current_user.account_balance
-		data["token"] = token
-		data["money_to_send"] = money_to_send
 		data["wanted_token"] = wanted_token
 		data["trans_list"] = current_user.transaction_history
 

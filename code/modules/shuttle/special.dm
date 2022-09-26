@@ -328,11 +328,11 @@
 
 	if(account)
 		if(account.account_balance < threshold - payees[AM])
-			account.adjust_money(-account.account_balance, "Entry Fee")
+			account.adjust_money(-account.account_balance, "Scanner Gate: Entry Fee")
 			payees[AM] += account.account_balance
 		else
 			var/money_owed = threshold - payees[AM]
-			account.adjust_money(-money_owed, "Entry Fee - Unfinal")
+			account.adjust_money(-money_owed, "Scanner Gate: Unfinal Entry Fee")
 			payees[AM] += money_owed
 
 	//Here is all the possible paygate payment methods.

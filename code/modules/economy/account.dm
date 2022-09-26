@@ -77,7 +77,7 @@
 			else
 				SSeconomy.bank_accounts_by_id -= "[account_id]"
 		if(NAMEOF(src, account_balance))
-			add_log_to_history(var_value - old_balance, "NT Moderation Action")
+			add_log_to_history(var_value - old_balance, "Nanotransen: Moderator Action")
 
 /**
  * Sets the bank_account to behave as though a CRAB-17 event is happening.
@@ -119,12 +119,12 @@
  */
 /datum/bank_account/proc/transfer_money(datum/bank_account/from, amount, transfer_reason)
 	if(from.has_money(amount))
-		var/reason_to = "Transfer from [from.account_holder]"
-		var/reason_from = "Transfer to [account_holder]"
+		var/reason_to = "Transfer: From [from.account_holder]"
+		var/reason_from = "Transfer: To [account_holder]"
 
 		if(istype(from, /datum/bank_account/department))
-			reason_to = "Salary"
-			reason_from = FALSE
+			reason_to = "Nanotransen: Salary"
+			reason_from = ""
 		
 		if(transfer_reason)
 			reason_to = istype(src, /datum/bank_account/department) ? FALSE : transfer_reason
@@ -148,7 +148,7 @@
 	if(amt_of_paychecks == 1)
 		money_to_transfer = clamp(money_to_transfer, 0, PAYCHECK_CREW) //We want to limit single, passive paychecks to regular crew income.
 	if(free)
-		adjust_money(money_to_transfer, "Shift payment")
+		adjust_money(money_to_transfer, "Nanotansen: Shift Payment")
 		SSblackbox.record_feedback("amount", "free_income", money_to_transfer)
 		SSeconomy.station_target += money_to_transfer
 		log_econ("[money_to_transfer] credits were given to [src.account_holder]'s account from income.")
@@ -258,6 +258,7 @@
 
 /**
  * Add log to transactions history. Deletes the oldest log when the history has more than 20 entries.
+ * Main format: Category: Reason in Reason. Example: Vending: Machinery Using
  * * Arguments:
  * * adjusted_money - How much was added, negative values removing cash.
  * * reason - The reason of interact with balance, for example, "Bought chips" or "Payday".
