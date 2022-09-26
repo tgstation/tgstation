@@ -121,8 +121,9 @@ Runs the event
 
 	// Make sure the other admins know if it's another admin trying to get an event through, or if the game is engaging in chicanery. We sleep here for the given amount of time to make sure they have enough time to cancel it.
 	// We do a bit of baby-proofing in case an admin fat-fingers an event and summons a Blob instead of something like an Ion Storm.
-	message_admins("[admin_forced ? "Admin Event" : "Random Event"] triggering in [DisplayTimeText(RANDOM_EVENT_ADMIN_INTERVENTION_TIME)]: [name] (<a href='?src=[REF(src)];cancel=1'>CANCEL</a>).")
-	sleep(RANDOM_EVENT_ADMIN_INTERVENTION_TIME)
+	if(alert_observers || admin_forced) // we don't really need to message admins over every tiny event (space dust), this gets the important ones though. We always want to give the admin a way to cancel something they accidentally force.
+		message_admins("[admin_forced ? "Admin Event" : "Random Event"] triggering in [DisplayTimeText(RANDOM_EVENT_ADMIN_INTERVENTION_TIME)]: [name] (<a href='?src=[REF(src)];cancel=1'>CANCEL</a>).")
+		sleep(RANDOM_EVENT_ADMIN_INTERVENTION_TIME)
 
 	if(!triggering)
 		RegisterSignal(SSdcs, COMSIG_GLOB_RANDOM_EVENT, .proc/stop_random_event)
