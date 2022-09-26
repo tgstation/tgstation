@@ -37,6 +37,7 @@ jobs:
         uses: actions/checkout@v1
         with:
           fetch-depth: 25
+          persist-credentials: false
       - name: "Compile"
         if: steps.value_holder.outputs.ACTIONS_ENABLED
         run: |
