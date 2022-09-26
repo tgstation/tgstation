@@ -318,9 +318,9 @@
 
 /datum/status_effect/good_music/tick()
 	if(owner.can_hear())
-		owner.adjust_timed_status_effect(-4 SECONDS, /datum/status_effect/dizziness)
-		owner.adjust_timed_status_effect(-4 SECONDS, /datum/status_effect/jitter)
-		owner.adjust_timed_status_effect(-1 SECONDS, /datum/status_effect/confusion)
+		owner.adjust_dizzy(-4 SECONDS)
+		owner.adjust_jitter(-4 SECONDS)
+		owner.adjust_confusion(-1 SECONDS)
 		owner.add_mood_event("goodmusic", /datum/mood_event/goodmusic)
 
 /atom/movable/screen/alert/status_effect/regenerative_core
@@ -378,17 +378,30 @@
 	. = ..()
 	to_chat(owner, "<span class='reallybig redtext'>RIP AND TEAR</span>")
 	SEND_SOUND(owner, sound('sound/hallucinations/veryfar_noise.ogg'))
-	new /datum/hallucination/delusion(owner, forced = TRUE, force_kind = "demon", duration = duration, skip_nearby = FALSE)
-	chainsaw = new(get_turf(owner))
-	owner.log_message("entered a blood frenzy", LOG_ATTACK)
-	ADD_TRAIT(chainsaw, TRAIT_NODROP, CHAINSAW_FRENZY_TRAIT)
+	owner.cause_hallucination( \
+		/datum/hallucination/delusion/preset/demon, \
+		"[id] status effect", \
+		duration = duration, \
+		affects_us = FALSE, \
+		affects_others = TRUE, \
+		skip_nearby = FALSE, \
+		play_wabbajack = FALSE, \
+	)
+
 	owner.drop_all_held_items()
+
+	chainsaw = new(get_turf(owner))
+	ADD_TRAIT(chainsaw, TRAIT_NODROP, CHAINSAW_FRENZY_TRAIT)
 	owner.put_in_hands(chainsaw, forced = TRUE)
 	chainsaw.attack_self(owner)
-	owner.reagents.add_reagent(/datum/reagent/medicine/adminordrazine,25)
+
+	owner.log_message("entered a blood frenzy", LOG_ATTACK)
+	owner.reagents.add_reagent(/datum/reagent/medicine/adminordrazine, 25)
 	to_chat(owner, span_warning("KILL, KILL, KILL! YOU HAVE NO ALLIES ANYMORE, KILL THEM ALL!"))
+
 	var/datum/client_colour/colour = owner.add_client_colour(/datum/client_colour/bloodlust)
 	QDEL_IN(colour, 1.1 SECONDS)
+	return TRUE
 
 /datum/status_effect/mayhem/on_remove()
 	. = ..()

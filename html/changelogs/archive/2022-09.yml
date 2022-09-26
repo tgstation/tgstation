@@ -744,3 +744,160 @@
   - rscadd: axolotls have taken refuge in the station's moisture traps
   timothymtorres:
   - rscadd: Change infectious zombies to be illiterate
+2022-09-21:
+  Jacquerel:
+  - bugfix: Removes a duplicated fax machine from the tram cargo lobby which wasn't
+      supposed to be there.
+  JohnFulpWillard:
+  - bugfix: Items that rotate will no longer spam you with error messages when you
+      hover your mouse over them.
+  NecromancerAnne, quinn:
+  - imageadd: 'Updates the Darkened Blade: New name (Sundered Blade), new description,
+      new sprites.'
+  Pickle-Coding:
+  - bugfix: The experimentor can no longer create negative temperature.
+  - code_imp: Simplifies experimentor atmos interactions. Shouldn't have an impact
+      in gameplay.
+  Rhials:
+  - rscadd: Rigging light fixtures now works with more reagents than just plasma.
+      Light fixtures will heat the reagents of their inserted lightbulb, up to a maximum
+      of 1000 degrees. Lightbulb tubes now hold 20 reagents to make this more usable.
+  - rscadd: Lightbulbs will now splash their contents on whatever they're shattered
+      by. Their contents are also now visible upon examination.
+  VexingRaven:
+  - bugfix: The Deltastation kitchen no longer has 2 newscasters.
+  - bugfix: The Deltastation kitchen APC has been moved to the kitchen storage area
+      to the north.
+  - bugfix: Fixed a bug where it was possible to call the shuttle while buying a new
+      one, resulting in a second shuttle that gibs everyone aboard.
+  Watermelon914:
+  - bugfix: Fixed bypassing gasmask FOV.
+2022-09-22:
+  JohnFulpWillard:
+  - bugfix: You no longer keep items you shouldn't be wearing (collars) when changing
+      into a species that can't wear them anymore.
+  - admin: Antag panels now properly show team antagonists, instead of showing them
+      as empty.
+  Salex08:
+  - spellcheck: corrects plural spelling when slicing objects
+  ShizCalev:
+  - admin: Moved signal overriden stack_trace warnings to it's own log file.
+  - bugfix: Fixed a bunch of cult abilities not working.
+  dragomagol:
+  - bugfix: cutting onions actually makes you cry (better put some goggles on!)
+2022-09-23:
+  Capsandi:
+  - bugfix: The radio in icebox tool storage is no longer an implant
+  Kapu1178:
+  - bugfix: Robotic limbs are once again style-able using a spraycan.
+  LemonInTheDark:
+  - refactor: Maploading has been optimized significantly, as has ruin generation
+      and other lavaland stuff. Let me know if anything goes fucky
+  Pizzie11:
+  - bugfix: Important Documents received in the mail are now visible
+  ShizCalev:
+  - bugfix: Fixed crowbars hitting ovens during deconstruction.
+  - imageadd: Tablets and PDAs now have inhand icons.
+  Thunder12345:
+  - bugfix: The air vent outside RnD on Icebox is no longer hidden by the Experimental
+      Destructive Scanner
+  Watermelon914:
+  - bugfix: Fixed non-printed airlock shells from not triggering the 'Airlock Access
+      Event' circuit component.
+  moocowswag:
+  - bugfix: Adds Missing GPSs to Icebox Public Mining.
+  san7890:
+  - admin: Admins can now View Notes directly from a Ticket Panel.
+2022-09-24:
+  JohnFulpWillard:
+  - balance: AI restorer app now requires RD access to download.
+  - bugfix: Nukie tablets now properly show when a nuke is going off in their examine.
+  - balance: Tablet's charge and AI holder parts have been removed entirely. Tablets
+      now only have a cell, and computers only use their area's APC.
+  - code_imp: Modular computer's power handling, the AI restorer app's functionality,
+      and modular computer's examining has been refactored, please report any bugs
+      you might find.
+  VexingRaven:
+  - bugfix: The illiteracy quirk will no longer break the mining shuttle
+  - refactor: Refactored some checks on the shuttle console to apply to all consoles
+  - bugfix: Mortar and pestle no longer create infinite reagents
+  dalmationer:
+  - bugfix: fixed two broken sprites for drinking and shot glasses.
+  san7890:
+  - admin: When a voice analyzer is attached to a bomb or a chemical grenade, the
+      respective logs to game as well as the message_admins will contain the recorded
+      phrase on that voice analyzer.
+  - bugfix: Voice analyzers should now properly trigger TTVs to blow up.
+  skylord-a52:
+  - imageadd: Nanotrasen Grilling Jorts have received a cosmetic upgrade
+2022-09-25:
+  KirbyDaMaster:
+  - rscadd: '-6 Quirk for all prosthetics named "Quadruple Amputee" change: prosthetic
+      arm changed from -4 to -3'
+  - rscadd: 'SVG icon tutorial readme to tgui tgfont folder change: Minor spelling
+      issues in negative quirks tab'
+  Pizzie11:
+  - rscadd: Cats will now attack beings that have kinship with rats, this includes
+      rats, royal rats, and anyone who overdosed on rat spit.
+  ShizCalev:
+  - bugfix: Fixed not spawning with prosthetic limbs when you have the prosthetic
+      limb quick.
+  - bugfix: Blind mobs will no longer be demoralized by posters and graffiti.
+  - bugfix: Illiterate mobs will no longer be demoralized by the words on posters.
+  - bugfix: Mobs will no longer be demoralized by posters & graffiti if it's too dark
+      to see them.
+  - bugfix: Fixed revenant Malfunction ability not affecting firedoors.
+  - spellcheck: Emag charge time will now be presented as (2 minutes and 31.1 seconds)
+      instead of (152.95s)
+  TerraGS:
+  - rscadd: Being run over by the clown car will flatten you like a pancake. Honk!
+  - soundadd: adds cartoon_splat.ogg
+  Twaticus:
+  - imageadd: resprites all current underwear to a much cleaner look
+  VexingRaven:
+  - bugfix: Build Your Own Shuttle Kit has been fixed and once again docks at the
+      station after being purchased.
+  - spellcheck: Updated the message shown when spawning as a blobbernaut to properly
+      reflect how to chat to the overmind
+  carshalash:
+  - bugfix: Properly makes Gin garden alcoholic and adds quality tag. Is also now
+      made with lime juice to prevent triggering the lemonade recipe.
+  san7890, kugamo@ParadiseSS13:
+  - rscadd: Nanotrasen had a loose shipping container hit the hull of Central Command
+      from one "Station P", so they just decided to pour those into the station's
+      autodrobes.
+2022-09-26:
+  Rhials:
+  - rscadd: New achievement -- Preventing a heart attack with exercise now gives you
+      a shiny new achievement badge. Show it to all of your gym buddies, be the coolest
+      guy in the locker room.
+  - imageadd: Cool new achievement badge. Wow!
+  - refactor: Rewrites the heart attack event file to be a bit more flexible. Integrates
+      the heart attack eligibility check to canSpawnEvent to prevent edge cases. Migrates
+      the exercise status effect check to the round_event.
+  - admin: MULTI-HEART ATTACK COMBO functionality added (trigger the heart_attack
+      event and select how many victims you want).
+  Time-Green:
+  - qol: You can now see through big trees when you stand behind them!
+  - refactor: Adds a seethrough component to make it easier to add big stationairy
+      objects without reducing visibility
+  Xander3359:
+  - balance: Captain Jetpack now fits on MODsuit and EVA suit storage slot.
+  - code_imp: Jetpacks were de-hardcoded and can now support being equipped to other
+      slots.
+  san7890:
+  - admin: When a player renames (creates) an area from an existing area to a new
+      one, it now logs to game.log (global and individual).
+  - bugfix: 'The developers of Space-Coin decided to renege on their exit scheme with
+      a new advertisement: Space-coin is the mobile currency of the future! As such,
+      you can not cash out of their famous space coin market machines until the machine
+      starts moving. They immediately ran away after that though.'
+  timothymtorres:
+  - rscadd: Rotten zombie tongue has a new speech modifier that converts spoken language
+      into zombie sentences. If the person speaking is a high-functioning zombie this
+      is bypassed.
+  - bugfix: Fix zombie claws blocking sign language.
+  - bugfix: Fix slappers and wound grasping blocking sign language.
+  - bugfix: Fix slappers and wound grasping blocking riding on mobs.
+  uaioy:
+  - bugfix: Ice Box snow storms now cover the surroundings of the homestead.

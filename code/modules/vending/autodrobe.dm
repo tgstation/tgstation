@@ -149,14 +149,15 @@
 		/obj/item/clothing/under/costume/deckers = 5,
 	)
 	contraband = list(
-		/obj/item/clothing/suit/costume/judgerobe = 1,
-		/obj/item/clothing/head/costume/powdered_wig = 1,
-		/obj/item/gun/magic/wand/nothing = 2,
-		/obj/item/clothing/glasses/sunglasses/gar = 2,
 		/obj/item/clothing/glasses/blindfold = 1,
-		/obj/item/clothing/mask/muzzle = 2,
+		/obj/item/clothing/glasses/sunglasses/gar = 2,
+		/obj/item/clothing/head/costume/powdered_wig = 1,
 		/obj/item/clothing/head/costume/tv_head = 1,
+		/obj/item/clothing/mask/muzzle = 2,
+		/obj/item/clothing/shoes/clown_shoes/ducky_shoes = 1,
 		/obj/item/clothing/shoes/clown_shoes/meown_shoes = 1,
+		/obj/item/clothing/suit/costume/judgerobe = 1,
+		/obj/item/gun/magic/wand/nothing = 2,
 	)
 	premium = list(
 		/obj/item/clothing/suit/costume/pirate/captain = 2,

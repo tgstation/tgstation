@@ -10576,7 +10576,7 @@
 /obj/machinery/computer/security{
 	dir = 8
 	},
-/obj/machinery/firealarm/directional/east,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/science)
 "dTX" = (
@@ -39872,7 +39872,7 @@
 /obj/machinery/computer/secure_data{
 	dir = 8
 	},
-/obj/structure/reagent_dispensers/wall/peppertank/directional/east,
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/science)
 "ohI" = (

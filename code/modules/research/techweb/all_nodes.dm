@@ -1051,8 +1051,6 @@
 	description = "How computer hardware is made."
 	prereq_ids = list("comptech")
 	design_ids = list(
-		"APClink",
-		"aislot",
 		"bat_advanced",
 		"bat_control",
 		"bat_micro",
@@ -1064,10 +1062,6 @@
 		"hdd_basic",
 		"hdd_cluster",
 		"hdd_super",
-		"miniprinter",
-		"netcard_advanced",
-		"netcard_basic",
-		"netcard_wired",
 		"portadrive_advanced",
 		"portadrive_basic",
 		"portadrive_super",

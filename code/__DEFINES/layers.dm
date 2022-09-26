@@ -12,23 +12,23 @@
 #define PLANE_SPACE -95
 #define PLANE_SPACE_PARALLAX -90
 
-#define GRAVITY_PULSE_PLANE -11
+#define GRAVITY_PULSE_PLANE -12
 #define GRAVITY_PULSE_RENDER_TARGET "*GRAVPULSE_RENDER_TARGET"
 
-#define OPENSPACE_LAYER 600 //Openspace layer over all
-
-#define TRANSPARENT_FLOOR_PLANE -10 //Transparent plane that shows openspace underneath the floor
-#define OPENSPACE_PLANE -9 //Openspace plane below all turfs
-#define OPENSPACE_BACKDROP_PLANE -8 //Black square just over openspace plane to guaranteed cover all in openspace turf
+#define TRANSPARENT_FLOOR_PLANE -11 //Transparent plane that shows openspace underneath the floor
+#define OPENSPACE_PLANE -10 //Openspace plane below all turfs
+#define OPENSPACE_BACKDROP_PLANE -9 //Black square just over openspace plane to guaranteed cover all in openspace turf
 
 
-#define FLOOR_PLANE -7
+#define FLOOR_PLANE -8
 
-#define GAME_PLANE -6
-#define GAME_PLANE_FOV_HIDDEN -5
-#define GAME_PLANE_UPPER -4
-#define GAME_PLANE_UPPER_FOV_HIDDEN -3
+#define GAME_PLANE -7
+#define GAME_PLANE_FOV_HIDDEN -6
+#define GAME_PLANE_UPPER -5
+#define GAME_PLANE_UPPER_FOV_HIDDEN -4
 
+///Slightly above the game plane but does not catch mouse clicks. Useful for certain visuals that should be clicked through, like seethrough trees
+#define ABOVE_GAME_NO_MOUSE_PLANE -3
 #define ABOVE_GAME_PLANE -2
 
 // PLANE_SPACE layer(s)
@@ -120,6 +120,7 @@
 #define GASFIRE_LAYER 5.05
 #define RIPPLE_LAYER 5.1
 
+#define OPENSPACE_LAYER 600 //Openspace layer over all
 
 #define BLACKNESS_PLANE 0 //To keep from conflicts with SEE_BLACKNESS internals
 

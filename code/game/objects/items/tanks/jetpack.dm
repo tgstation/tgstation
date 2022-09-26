@@ -30,12 +30,12 @@
 	AddComponent(/datum/component/jetpack, stabilizers, COMSIG_JETPACK_ACTIVATED, COMSIG_JETPACK_DEACTIVATED, JETPACK_ACTIVATION_FAILED, get_mover, check_on_move, /datum/effect_system/trail_follow/ion)
 
 /obj/item/tank/jetpack/item_action_slot_check(slot)
-	if(slot == ITEM_SLOT_BACK)
+	if(slot & slot_flags)
 		return TRUE
 
 /obj/item/tank/jetpack/equipped(mob/user, slot, initial)
 	. = ..()
-	if(on && slot != ITEM_SLOT_BACK)
+	if(on && !(slot & slot_flags))
 		turn_off(user)
 
 /obj/item/tank/jetpack/dropped(mob/user, silent)
@@ -179,6 +179,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	volume = 90
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF //steal objective items are hard to destroy.
+	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_SUITSTORE
 
 /obj/item/tank/jetpack/oxygen/security
 	name = "security jetpack (oxygen)"
