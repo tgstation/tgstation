@@ -10,14 +10,9 @@
 #define SET_PLANE_EXPLICIT(thing, new_value, source) \
 	do {\
 		var/_cached_plane = new_value;\
-		if(SSmapping.max_plane_offset){\
-			var/turf/_our_turf = get_turf(source);\
-			if(_our_turf){\
-				SET_PLANE(thing, _cached_plane, _our_turf);\
-			}\
-		}\
-		else {\
-			thing.plane = _cached_plane;\
+		var/turf/_our_turf = get_turf(source);\
+		if(_our_turf){\
+			SET_PLANE(thing, _cached_plane, _our_turf);\
 		}\
 	}\
 	while (FALSE)
@@ -30,7 +25,6 @@
 // This is solvable with lowspec preferences, which would not be hard to implement
 // Player popups will now render their effects, like overlay lights. this is fixable, but I've not gotten to it
 // I think overlay lights can render on the wrong z layer. s fucked
-// Need to setup the pms to do transforms based on the camera you're viewing from. This might be a tad annoying, we'll see
 // Lemon todo:
 // Consider adding a low spec mode if possible, seen too many fps complaints, concerning
 // See if you can do anything about player popups effecting the lighting plane yes?

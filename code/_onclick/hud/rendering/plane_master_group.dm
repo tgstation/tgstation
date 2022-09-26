@@ -51,6 +51,7 @@
 
 /// Fully regenerate our group, resetting our planes to their compile time values
 /datum/plane_master_group/proc/rebuild_hud()
+	hide_hud()
 	QDEL_LIST_ASSOC_VAL(plane_masters)
 	build_plane_masters(0, SSmapping.max_plane_offset)
 	show_hud()
@@ -143,8 +144,7 @@
 	. = ..()
 	our_hud.mymob.client.register_map_obj(plane)
 
-
-/datum/plane_master_group/main/transform_lower_turfs(datum/hud/source, new_offset, use_scale = TRUE)
+/datum/plane_master_group/popup/transform_lower_turfs(datum/hud/source, new_offset, use_scale = TRUE)
 	return ..(source, new_offset, FALSE)
 
 /// Holds the main plane master
