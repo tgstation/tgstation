@@ -31,7 +31,7 @@
 
 	var/mob/living/carbon/human/operative = owner.current
 
-	if(!nukeop_outfit) // this variable is null in instances where an antagonist datum is granted via enslaving the mind, like in golems.
+	if(!nukeop_outfit) // this variable is null in instances where an antagonist datum is granted via enslaving the mind (/datum/mind/proc/enslave_mind_to_creator), like in golems.
 		return
 
 	operative.set_species(/datum/species/human) //Plasamen burn up otherwise, and besides, all other species are vulnerable to asimov AIs. Let's standardize all operatives being human.
