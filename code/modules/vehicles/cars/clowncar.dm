@@ -147,10 +147,6 @@
 	STOP_PROCESSING(SSobj,src)
 	return ..()
 
-/obj/vehicle/sealed/car/clowncar/Destroy(force)
-	UnregisterSignal(src, COMSIG_MOVABLE_CROSS_OVER)
-	return ..()
-
 /**
  * Plays a random funky effect
  * Only available while car is emagged
