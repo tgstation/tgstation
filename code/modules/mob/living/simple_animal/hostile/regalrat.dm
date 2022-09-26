@@ -74,7 +74,7 @@
 /mob/living/simple_animal/hostile/regalrat/proc/get_clicked_player(mob/user)
 	if(key || stat)
 		return
-	if(SSticker.current_state != GAME_STATE_PLAYING)
+	if(!SSticker.HasRoundStarted())
 		to_chat(user, span_warning("You cannot assume control of this until after the round has started!"))
 		return
 	var/rat_ask = tgui_alert(usr, "Become the Royal Rat?", "Are you sure?", list("Yes", "No"))
