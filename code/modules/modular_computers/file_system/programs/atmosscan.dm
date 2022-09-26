@@ -77,7 +77,7 @@
 				atmozphere_mode = ATMOZPHERE_SCAN_ENV
 				UnregisterSignal(computer, COMSIG_ITEM_ATTACK_SELF_SECONDARY)
 				return TRUE
-			if(computer.hardware_flag != PROGRAM_TABLET)
+			if(!(computer.hardware_flag & PROGRAM_TABLET))
 				computer.say("Device incompatible for scanning objects!")
 				return FALSE
 			atmozphere_mode = ATMOZPHERE_SCAN_CLICK
