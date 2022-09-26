@@ -77,7 +77,7 @@
 ///Copies all gas info from the turf into a new gas_mixture, along with our temperature
 ///Returns the created gas_mixture
 /turf/proc/create_gas_mixture()
-	var/datum/gas_mixture/mix = SSair.parse_gas_string(initial_gas_mix)
+	var/datum/gas_mixture/mix = SSair.parse_gas_string(initial_gas_mix, /datum/gas_mixture/turf)
 
 	//acounts for changes in temperature
 	var/turf/parent = parent_type

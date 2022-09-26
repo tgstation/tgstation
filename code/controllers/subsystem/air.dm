@@ -675,16 +675,17 @@ GLOBAL_LIST_EMPTY(colored_images)
 		atmos_gen[initial(atmostype.id)] = new atmostype
 
 /// Takes a gas string, returns the matching mutable gas_mixture
-/datum/controller/subsystem/air/proc/parse_gas_string(gas_string)
-	var/datum/gas_mixture/cached = strings_to_mix[gas_string]
+/datum/controller/subsystem/air/proc/parse_gas_string(gas_string, gastype = /datum/gas_mixture)
+	var/datum/gas_mixture/cached = strings_to_mix["[gas_string]-[gastype]"]
+
 	if(cached)
 		if(istype(cached, /datum/gas_mixture/immutable))
 			return cached
 		return cached.copy()
 
-	var/datum/gas_mixture/canonical_mix = new()
+	var/datum/gas_mixture/canonical_mix = new gastype()
 	// We set here so any future key changes don't fuck us
-	strings_to_mix[gas_string] = canonical_mix
+	strings_to_mix["[gas_string]-[gastype]"] = canonical_mix
 	gas_string = preprocess_gas_string(gas_string)
 
 	var/list/gases = canonical_mix.gases

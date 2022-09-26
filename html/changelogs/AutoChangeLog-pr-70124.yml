@@ -1,0 +1,4 @@
+author: "Time-Green"
+delete-after: True
+changes: 
+  - bugfix: "gravity distortion effects no longer break over glass tiles"
