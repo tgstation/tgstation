@@ -231,12 +231,6 @@
 			return TRUE
 	return FALSE
 
-/mob/living/carbon/hallucinating()
-	if(hallucination)
-		return TRUE
-	else
-		return FALSE
-
 /mob/living/carbon/resist_buckle()
 	if(HAS_TRAIT(src, TRAIT_RESTRAINED))
 		changeNext_move(CLICK_CD_BREAKOUT)
@@ -742,29 +736,39 @@
 		clear_fullscreen("brute")
 
 /mob/living/carbon/update_health_hud(shown_health_amount)
-	if(!client || !hud_used)
+	if(!client || !hud_used?.healths)
 		return
-	if(hud_used.healths)
-		if(stat != DEAD)
-			. = 1
-			if(shown_health_amount == null)
-				shown_health_amount = health
-			if(shown_health_amount >= maxHealth)
-				hud_used.healths.icon_state = "health0"
-			else if(shown_health_amount > maxHealth*0.8)
-				hud_used.healths.icon_state = "health1"
-			else if(shown_health_amount > maxHealth*0.6)
-				hud_used.healths.icon_state = "health2"
-			else if(shown_health_amount > maxHealth*0.4)
-				hud_used.healths.icon_state = "health3"
-			else if(shown_health_amount > maxHealth*0.2)
-				hud_used.healths.icon_state = "health4"
-			else if(shown_health_amount > 0)
-				hud_used.healths.icon_state = "health5"
-			else
-				hud_used.healths.icon_state = "health6"
-		else
-			hud_used.healths.icon_state = "health7"
+
+	if(stat == DEAD)
+		hud_used.healths.icon_state = "health7"
+		return
+
+	if(SEND_SIGNAL(src, COMSIG_CARBON_UPDATING_HEALTH_HUD, shown_health_amount) & COMPONENT_OVERRIDE_HEALTH_HUD)
+		return
+
+	if(shown_health_amount == null)
+		shown_health_amount = health
+
+	if(shown_health_amount >= maxHealth)
+		hud_used.healths.icon_state = "health0"
+
+	else if(shown_health_amount > maxHealth * 0.8)
+		hud_used.healths.icon_state = "health1"
+
+	else if(shown_health_amount > maxHealth * 0.6)
+		hud_used.healths.icon_state = "health2"
+
+	else if(shown_health_amount > maxHealth * 0.4)
+		hud_used.healths.icon_state = "health3"
+
+	else if(shown_health_amount > maxHealth*0.2)
+		hud_used.healths.icon_state = "health4"
+
+	else if(shown_health_amount > 0)
+		hud_used.healths.icon_state = "health5"
+
+	else
+		hud_used.healths.icon_state = "health6"
 
 /mob/living/carbon/update_stamina_hud(shown_stamina_amount)
 	if(!client || !hud_used?.stamina)
@@ -963,8 +967,10 @@
 				hand_bodyparts += bodypart_instance
 
 
-///Proc to hook behavior on bodypart additions.
+///Proc to hook behavior on bodypart additions. Do not directly call. You're looking for [/obj/item/bodypart/proc/attach_limb()].
 /mob/living/carbon/proc/add_bodypart(obj/item/bodypart/new_bodypart)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
 	bodyparts += new_bodypart
 	new_bodypart.set_owner(src)
 
@@ -979,8 +985,10 @@
 				set_usable_hands(usable_hands + 1)
 
 
-///Proc to hook behavior on bodypart removals.
+///Proc to hook behavior on bodypart removals.  Do not directly call. You're looking for [/obj/item/bodypart/proc/drop_limb()].
 /mob/living/carbon/proc/remove_bodypart(obj/item/bodypart/old_bodypart)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
 	bodyparts -= old_bodypart
 	switch(old_bodypart.body_part)
 		if(LEG_LEFT, LEG_RIGHT)
@@ -1006,7 +1014,6 @@
 	VV_DROPDOWN_OPTION(VV_HK_MAKE_AI, "Make AI")
 	VV_DROPDOWN_OPTION(VV_HK_MODIFY_BODYPART, "Modify bodypart")
 	VV_DROPDOWN_OPTION(VV_HK_MODIFY_ORGANS, "Modify organs")
-	VV_DROPDOWN_OPTION(VV_HK_HALLUCINATION, "Hallucinate")
 	VV_DROPDOWN_OPTION(VV_HK_MARTIAL_ART, "Give Martial Arts")
 	VV_DROPDOWN_OPTION(VV_HK_GIVE_TRAUMA, "Give Brain Trauma")
 	VV_DROPDOWN_OPTION(VV_HK_CURE_TRAUMA, "Cure Brain Traumas")
@@ -1114,18 +1121,6 @@
 		cure_all_traumas(TRAUMA_RESILIENCE_ABSOLUTE)
 		log_admin("[key_name(usr)] has cured all traumas from [key_name(src)].")
 		message_admins(span_notice("[key_name_admin(usr)] has cured all traumas from [key_name_admin(src)]."))
-	if(href_list[VV_HK_HALLUCINATION])
-		if(!check_rights(NONE))
-			return
-		var/list/hallucinations = subtypesof(/datum/hallucination)
-		var/result = input(usr, "Choose the hallucination to apply","Send Hallucination") as null|anything in sort_list(hallucinations, /proc/cmp_typepaths_asc)
-		if(!usr)
-			return
-		if(QDELETED(src))
-			to_chat(usr, "Mob doesn't exist anymore")
-			return
-		if(result)
-			new result(src, TRUE)
 
 /mob/living/carbon/can_resist()
 	return bodyparts.len > 2 && ..()
@@ -1133,7 +1128,7 @@
 /mob/living/carbon/proc/hypnosis_vulnerable()
 	if(HAS_TRAIT(src, TRAIT_MINDSHIELD))
 		return FALSE
-	if(hallucinating())
+	if(has_status_effect(/datum/status_effect/hallucination))
 		return TRUE
 	if(IsSleeping())
 		return TRUE
@@ -1303,9 +1298,6 @@
 		if(NAMEOF(src, disgust))
 			set_disgust(var_value)
 			. = TRUE
-		if(NAMEOF(src, hal_screwyhud))
-			set_screwyhud(var_value)
-			. = TRUE
 		if(NAMEOF(src, handcuffed))
 			set_handcuffed(var_value)
 			. = TRUE
@@ -1346,23 +1338,53 @@
 	log_combat(shover, target, "shoved", addition = "into [name]")
 	return COMSIG_CARBON_SHOVE_HANDLED
 
+#define HANDS_FULL 0
+#define ONE_HAND 1
+#define HANDCUFFS_DISABLE_AMOUNT 2
+
 // Checks to see how many hands this person has to sign with.
 /mob/living/carbon/proc/check_signables_state()
-	var/obj/item/bodypart/left_arm = get_bodypart(BODY_ZONE_L_ARM)
-	var/obj/item/bodypart/right_arm = get_bodypart(BODY_ZONE_R_ARM)
-	var/empty_indexes = get_empty_held_indexes()
-	var/exit_right = (!right_arm || right_arm.bodypart_disabled)
-	var/exit_left = (!left_arm || left_arm.bodypart_disabled)
-	if(length(empty_indexes) == 0 || (length(empty_indexes) < 2 && (exit_left || exit_right)))//All existing hands full, can't sign
-		return SIGN_HANDS_FULL // These aren't booleans
-	if(exit_left && exit_right)//Can't sign with no arms!
+	// when a hand gets dismembered it gets null'd in hand_bodyparts but for
+	// get_empty_held_index() it will still be counted as empty and will be +1'd
+	var/healthy_hands = 0 // hands that aren't disabled or amputated
+	var/total_hands = length(held_items)
+
+	// being handcuffed, having a missing or disabled arm will count as empty and be +1 incremented
+	var/available_hands = length(get_empty_held_indexes())
+
+	for(var/obj/item/bodypart/hand as anything in hand_bodyparts)
+		if(hand && !hand.bodypart_disabled)
+			healthy_hands++
+
+	if(!healthy_hands) // No arms at all
 		return SIGN_ARMLESS
-	if(handcuffed) // Cuffed, usually will show visual effort to sign
+
+	var/unhealthy_hands = total_hands - healthy_hands
+	available_hands -= unhealthy_hands // get_empty_held_indexes() counts a disabled or amputed hand as +1
+
+	// items like slappers/zombie claws/etc. should be ignored
+	for(var/obj/item/held_item in held_items)
+		if(held_item.item_flags & HAND_ITEM)
+			available_hands++
+
+	if(handcuffed)
+		available_hands -= HANDCUFFS_DISABLE_AMOUNT
+
+	// If you have 3 hands and are handcuffed you should still be able to sign
+	if(handcuffed && !available_hands) // Cuffed, usually will show visual effort to sign
 		return SIGN_CUFFED
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED) || HAS_TRAIT(src, TRAIT_EMOTEMUTE))
 		return SIGN_TRAIT_BLOCKED
-	if(length(empty_indexes) == 1 || exit_left || exit_right) // One arm gone
-		return SIGN_ONE_HAND
+
+	switch(available_hands)
+		if(HANDS_FULL)
+			return SIGN_HANDS_FULL
+		if(ONE_HAND)
+			return SIGN_ONE_HAND
+
+#undef HANDS_FULL
+#undef ONE_HAND
+#undef HANDCUFFS_DISABLE_AMOUNT
 
 /**
  * This proc is a helper for spraying blood for things like slashing/piercing wounds and dismemberment.

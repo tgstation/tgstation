@@ -13,7 +13,8 @@
 	verb_ask = "beeps"
 	verb_exclaim = "beeps"
 	var/listening = FALSE
-	var/recorded = "" //the activation message
+	/// The activation message is tracked using this var.
+	var/recorded = ""
 	var/mode = INCLUSIVE_MODE
 	var/static/list/modes = list(
 		"inclusive",

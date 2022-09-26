@@ -76,7 +76,6 @@
 	var/face_offset_y = 0
 
 
-
 /obj/item/bodypart/head/Destroy()
 	QDEL_NULL(brainmob) //order is sensitive, see warning in handle_atom_del() below
 	QDEL_NULL(brain)
@@ -169,6 +168,8 @@
 
 	return ..()
 
+#define OFFSET_X 1
+#define OFFSET_Y 2
 /obj/item/bodypart/head/update_limb(dropping_limb, is_creating)
 	. = ..()
 
@@ -179,22 +180,17 @@
 		facial_hairstyle = "Shaved"
 		lip_style = null
 		stored_lipstick_trait = null
+	update_hair_and_lips()
 
-	if(!animal_origin && ishuman(owner))
-		update_hair_and_lips()
-
-#define OFFSET_X 1
-#define OFFSET_Y 2
 	if(OFFSET_FACE in owner.dna?.species.offset_features)
 		var/offset = owner.dna.species.offset_features[OFFSET_FACE]
 		face_offset_x = offset[OFFSET_X]
 		face_offset_y = offset[OFFSET_Y]
-#undef OFFSET_X
-#undef OFFSET_Y
 
 	is_blushing = HAS_TRAIT(owner, TRAIT_BLUSHING) // Caused by either the *blush emote or the "drunk" mood event
 
-
+#undef OFFSET_X
+#undef OFFSET_Y
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /obj/item/bodypart/head/get_limb_icon(dropped, draw_external_organs)
@@ -220,14 +216,17 @@
 					facial_overlay.color = facial_hair_color
 					facial_overlay.alpha = hair_alpha
 					. += facial_overlay
+				
+			if(!eyes)
+				. += image('icons/mob/species/human/human_face.dmi', "eyes_missing", -BODY_LAYER, SOUTH)
 
 			//Applies the debrained overlay if there is no brain
 			if(!brain)
 				var/image/debrain_overlay = image(layer = -HAIR_LAYER, dir = SOUTH)
-				if(animal_origin == ALIEN_BODYPART)
+				if(bodytype & BODYTYPE_ALIEN)
 					debrain_overlay.icon = 'icons/mob/species/alien/bodyparts.dmi'
 					debrain_overlay.icon_state = "debrained_alien"
-				else if(animal_origin == LARVA_BODYPART)
+				else if(bodytype & BODYTYPE_LARVA_PLACEHOLDER)
 					debrain_overlay.icon = 'icons/mob/species/alien/bodyparts.dmi'
 					debrain_overlay.icon_state = "debrained_larva"
 				else if(!(NOBLOOD in species_flags_list))
@@ -259,8 +258,6 @@
 				eye_right.color = eyes.eye_color_right
 			. += eye_left
 			. += eye_right
-		else
-			. += image('icons/mob/species/human/human_face.dmi', "eyes_missing", -BODY_LAYER, SOUTH)
 	else
 		if(!facial_hair_hidden && facial_overlay && (FACEHAIR in species_flags_list))
 			facial_overlay.alpha = hair_alpha
@@ -318,23 +315,33 @@
 	icon = 'icons/mob/species/monkey/bodyparts.dmi'
 	icon_state = "default_monkey_head"
 	limb_id = SPECIES_MONKEY
-	animal_origin = MONKEY_BODYPART
 	bodytype = BODYTYPE_MONKEY | BODYTYPE_ORGANIC
+	should_draw_greyscale = FALSE
+	dmg_overlay_type = SPECIES_MONKEY
+	is_dimorphic = FALSE
 
 /obj/item/bodypart/head/alien
 	icon = 'icons/mob/species/alien/bodyparts.dmi'
+	icon_static = 'icons/mob/species/alien/bodyparts.dmi'
 	icon_state = "alien_head"
+	limb_id = BODYPART_ID_ALIEN
+	is_dimorphic = FALSE
+	should_draw_greyscale = FALSE
 	px_x = 0
 	px_y = 0
 	dismemberable = 0
 	max_damage = 500
-	animal_origin = ALIEN_BODYPART
+	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ALIEN | BODYTYPE_ORGANIC
 
 /obj/item/bodypart/head/larva
 	icon = 'icons/mob/species/alien/bodyparts.dmi'
+	icon_static = 'icons/mob/species/alien/bodyparts.dmi'
 	icon_state = "larva_head"
+	limb_id = BODYPART_ID_LARVA
+	is_dimorphic = FALSE
+	should_draw_greyscale = FALSE
 	px_x = 0
 	px_y = 0
 	dismemberable = 0
 	max_damage = 50
-	animal_origin = LARVA_BODYPART
+	bodytype = BODYTYPE_LARVA_PLACEHOLDER | BODYTYPE_ORGANIC

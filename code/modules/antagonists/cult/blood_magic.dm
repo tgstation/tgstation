@@ -237,9 +237,9 @@
 
 	return ..()
 
-/datum/action/innate/cult/blood_spell/horror/do_ability(mob/living/caller, params, mob/living/carbon/human/clicked_on)
+/datum/action/innate/cult/blood_spell/horror/do_ability(mob/living/caller, mob/living/carbon/human/clicked_on)
 
-	clicked_on.hallucination = max(clicked_on.hallucination, 120)
+	clicked_on.set_hallucinations_if_lower(240 SECONDS)
 	SEND_SOUND(caller, sound('sound/effects/ghost.ogg', FALSE, TRUE, 50))
 
 	var/image/sparkle_image = image('icons/effects/cult/effects.dmi', clicked_on, "bloodsparkles", ABOVE_MOB_LAYER)
@@ -419,9 +419,9 @@
 			else if(iscarbon(target))
 				var/mob/living/carbon/carbon_target = target
 				carbon_target.silent += 6
-				carbon_target.adjust_timed_status_effect(30 SECONDS, /datum/status_effect/speech/stutter)
+				carbon_target.adjust_stutter(30 SECONDS)
 				carbon_target.adjust_timed_status_effect(30 SECONDS, /datum/status_effect/speech/slurring/cult)
-				carbon_target.set_timed_status_effect(30 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
+				carbon_target.set_jitter_if_lower(30 SECONDS)
 		uses--
 	..()
 
@@ -700,7 +700,7 @@
 					if(ratio>1)
 						ratio = 1
 						uses -= round(overall_damage)
-						H.visible_message(span_warning("[H] is fully healed by [H==user ? "[H.p_their()]":"[H]'s"]'s blood magic!"))
+						H.visible_message(span_warning("[H] is fully healed by [H==user ? "[H.p_their()]":"[H]'s"] blood magic!"))
 					else
 						H.visible_message(span_warning("[H] is partially healed by [H==user ? "[H.p_their()]":"[H]'s"] blood magic."))
 						uses = 0
