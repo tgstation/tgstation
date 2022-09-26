@@ -10,6 +10,8 @@
 	var/direct_load //For weapons where we re-load the weapon itself rather than adding to the ammo storage.
 	var/load_audio = 'sound/weapons/gun/general/mag_bullet_insert.ogg'
 	var/ammo_type
+	/// whether to qdel this mecha_ammo when it becomes empty
+	var/qdel_on_empty = FALSE
 
 /obj/item/mecha_ammo/update_name()
 	. = ..()
@@ -20,7 +22,7 @@
 	desc = rounds ? initial(desc) : "An exosuit ammuniton box that has since been emptied. It can be safely folded for recycling."
 
 /obj/item/mecha_ammo/update_icon_state()
-	icon_state = rounds ? initial(icon_state) : "empty"
+	icon_state = rounds ? initial(icon_state) : "[initial(icon_state)]_e"
 	return ..()
 
 /obj/item/mecha_ammo/attack_self(mob/user)

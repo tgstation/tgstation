@@ -3,7 +3,6 @@
 	var/_has_second_id_slot = FALSE
 	var/_has_printer = FALSE
 	var/_has_battery = FALSE
-	var/_has_ai = FALSE
 
 /obj/machinery/modular_computer/console/preset/Initialize(mapload)
 	. = ..()
@@ -17,8 +16,6 @@
 		cpu.install_component(new /obj/item/computer_hardware/printer)
 	if(_has_battery)
 		cpu.install_component(new /obj/item/computer_hardware/battery(cpu, /obj/item/stock_parts/cell/computer/super))
-	if(_has_ai)
-		cpu.install_component(new /obj/item/computer_hardware/ai_slot)
 	install_programs()
 
 // Override in child types to install preset-specific programs.
@@ -43,13 +40,12 @@
 	name = "research director's console"
 	desc = "A stationary computer. This one comes preloaded with research programs."
 	_has_second_id_slot = TRUE
-	_has_ai = TRUE
 
 /obj/machinery/modular_computer/console/preset/research/install_programs()
 	var/obj/item/computer_hardware/hard_drive/hard_drive = cpu.all_components[MC_HDD]
 	hard_drive.store_file(new/datum/computer_file/program/ntnetmonitor())
 	hard_drive.store_file(new/datum/computer_file/program/chatclient())
-	hard_drive.store_file(new/datum/computer_file/program/aidiag())
+	hard_drive.store_file(new/datum/computer_file/program/ai_restorer())
 	hard_drive.store_file(new/datum/computer_file/program/robocontrol())
 	hard_drive.store_file(new/datum/computer_file/program/scipaper_program())
 
