@@ -58,8 +58,6 @@
 		/obj/item/clothing/suit/hooded/wintercoat/medical/paramedic = 4,
 		/obj/item/clothing/under/rank/medical/paramedic = 4,
 		/obj/item/clothing/under/rank/medical/paramedic/skirt = 4,
-		/obj/item/clothing/under/rank/medical/paramedic/dark = 4,
-		/obj/item/clothing/under/rank/medical/paramedic/dark/skirt = 4,
 		/obj/item/clothing/head/nursehat = 4,
 		/obj/item/clothing/head/beret/medical = 4,
 		/obj/item/clothing/head/surgerycap = 4,
