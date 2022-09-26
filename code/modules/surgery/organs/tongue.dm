@@ -484,8 +484,6 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 #define SIGN_TRAIT_BLOCKED 5
 #define SIGN_CUFFED 6
 
-#define HANDS_PER_HANDCUFF 2
-
 //Sign Language Tongue - yep, that's how you speak sign language.
 /obj/item/organ/internal/tongue/tied
 	name = "tied tongue"
@@ -655,7 +653,6 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 #undef SIGN_ONE_HAND
 #undef SIGN_HANDS_FULL
 #undef SIGN_ARMLESS
+#undef SIGN_ARMS_DISABLED
 #undef SIGN_TRAIT_BLOCKED
 #undef SIGN_CUFFED
-
-#undef HANDS_PER_HANDCUFF
