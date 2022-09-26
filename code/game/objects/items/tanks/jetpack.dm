@@ -179,7 +179,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	volume = 90
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF //steal objective items are hard to destroy.
-	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_SUITSTORE
+	slot_flags = ITEM_SLOT_BACK
 
 /obj/item/tank/jetpack/oxygen/security
 	name = "security jetpack (oxygen)"
