@@ -102,6 +102,12 @@
 	/// Boolean value. If TRUE, the [Intern] tag gets prepended to this ID card when the label is updated.
 	var/is_intern = FALSE
 
+	///Way to use NT pay. Or how to save money. 1 - 100%, 0.05 - 5%
+	var/comission =  0.05
+
+	///Payment under >99 credits withdraw. (this + 1 = min value to withdraw)
+	var/comission_minimal = 5
+
 /obj/item/card/id/Initialize(mapload)
 	. = ..()
 
@@ -665,15 +671,19 @@
 	if(loc != user)
 		to_chat(user, span_warning("You must be holding the ID to continue!"))
 		return
-	var/amount_to_remove = tgui_input_number(user, "How much do you want to withdraw? (Max: [registered_account.account_balance] cr)", "Withdraw Funds", max_value = registered_account.account_balance)
+	if(registered_account.account_balance < (comission_minimal + 1) )
+		to_chat(user, span_warning("You must be holding the ID to continue!"))
+		return
+	var/amount_to_remove = tgui_input_number(user, "How much do you want to withdraw? (Max: [registered_account.account_balance] cr)(Comission is [comission_minimal] credits. From 100 credits is [comission*100]% with rounding.)", "Withdraw Funds", max_value = registered_account.account_balance, min_value = 6)
 	if(!amount_to_remove || QDELETED(user) || QDELETED(src) || issilicon(user) || loc != user)
 		return
 	if(!alt_click_can_use_id(user))
 		return
-	if(registered_account.adjust_money(-amount_to_remove))
-		var/obj/item/holochip/holochip = new (user.drop_location(), amount_to_remove)
+	if(registered_account.adjust_money(-amount_to_remove, "Withdraw"))
+		var/comission_amount = amount_to_remove < 100 ? comission_minimal : round(amount_to_remove*comission)
+		var/obj/item/holochip/holochip = new (user.drop_location(), amount_to_remove - comission_amount)
 		user.put_in_hands(holochip)
-		to_chat(user, span_notice("You withdraw [amount_to_remove] credits into a holochip."))
+		to_chat(user, span_notice("You withdraw [amount_to_remove - comission_amount] credits into a holochip. Comission was [comission_amount] credits"))
 		SSblackbox.record_feedback("amount", "credits_removed", amount_to_remove)
 		log_econ("[amount_to_remove] credits were removed from [src] owned by [src.registered_name]")
 		return
