@@ -73,7 +73,7 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 	transfer_overlays = options & AA_MATCH_TARGET_OVERLAYS
 	image = I
 	target = I.loc
-	RegisterSignal(target, COMSIG_MOVABLE_Z_CHANGED, .proc/target_z_changed)
+	LAZYADD(target.update_on_z, image)
 	if(transfer_overlays)
 		I.copy_overlays(target)
 
@@ -90,6 +90,7 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 
 /datum/atom_hud/alternate_appearance/basic/Destroy()
 	. = ..()
+	LAZYREMOVE(target.update_on_z, image)
 	QDEL_NULL(image)
 	target = null
 	if(ghost_appearance)
@@ -102,19 +103,13 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 
 /datum/atom_hud/alternate_appearance/basic/remove_atom_from_hud(atom/A)
 	. = ..()
-	A.hud_list -= appearance_key
+	LAZYREMOVE(A.hud_list, appearance_key)
 	A.set_hud_image_inactive(appearance_key)
 	if(. && !QDELETED(src))
 		qdel(src)
 
 /datum/atom_hud/alternate_appearance/basic/copy_overlays(atom/other, cut_old)
 	image.copy_overlays(other, cut_old)
-
-/datum/atom_hud/alternate_appearance/basic/proc/target_z_changed(turf/old_turf, turf/new_turf, same_z_layer)
-	SIGNAL_HANDLER
-	if(same_z_layer)
-		return
-	SET_PLANE(image, PLANE_TO_TRUE(image.plane), new_turf)
 
 /datum/atom_hud/alternate_appearance/basic/everyone
 	add_ghost_version = TRUE
