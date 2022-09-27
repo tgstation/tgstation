@@ -2,7 +2,7 @@
 /datum/unit_test/cable_powernets
 
 /datum/unit_test/cable_powernets/Run()
-	for(var/datum/powernet/powernets as anything in GLOB.powernets)
+	for(var/datum/powernet/powernets as anything in SSmachines.powernets)
 
 		//nodes (machines, which includes APCs and SMES)
 		if(!length(powernets.nodes))
