@@ -107,7 +107,7 @@
 /datum/component/two_handed/proc/on_equip(datum/source, mob/user, slot)
 	SIGNAL_HANDLER
 
-	if(require_twohands && slot == ITEM_SLOT_HANDS) // force equip the item
+	if(require_twohands && (slot & ITEM_SLOT_HANDS)) // force equip the item
 		wield(user)
 	if(!user.is_holding(parent) && wielded && !require_twohands)
 		unwield(user)
