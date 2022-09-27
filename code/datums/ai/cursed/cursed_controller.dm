@@ -50,7 +50,7 @@
 /datum/ai_controller/cursed/proc/try_equipping_to_target_slot(mob/living/carbon/curse_victim, slot_already_in)
 	var/obj/item/item_pawn = pawn
 	var/attempted_slot = blackboard[BB_TARGET_SLOT]
-	if(slot_already_in && attempted_slot == slot_already_in) //thanks for making it easy
+	if(slot_already_in && (attempted_slot & slot_already_in)) //thanks for making it easy
 		what_a_horrible_night_to_have_a_curse()
 		return
 	if(attempted_slot == ITEM_SLOT_HANDS) //hands needs some different checks

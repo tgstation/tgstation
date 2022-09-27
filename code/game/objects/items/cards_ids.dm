@@ -923,7 +923,7 @@
 			balloon_alert(user, "recolored")
 		update_icon()
 
-/obj/item/card/id/advanced/proc/update_intern_status(datum/source, mob/user)
+/obj/item/card/id/advanced/proc/update_intern_status(datum/source, mob/user, slot)
 	SIGNAL_HANDLER
 
 	if(!user?.client)
