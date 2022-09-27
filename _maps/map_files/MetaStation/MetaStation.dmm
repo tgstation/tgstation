@@ -25684,7 +25684,6 @@
 /turf/open/floor/iron,
 /area/station/security/office)
 "jkT" = (
-/obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
