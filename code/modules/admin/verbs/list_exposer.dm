@@ -59,9 +59,9 @@
 	usr << browse(data, "window=manifest;size=440x410")
 
 /datum/admins/proc/output_ai_laws()
-	var/ai_number = 0
+	var/law_bound_entities = 0
 	for(var/mob/living/silicon/subject as anything in GLOB.silicon_mobs)
-		ai_number++
+		law_bound_entities++
 
 		var/message = ""
 
@@ -84,5 +84,5 @@
 
 		to_chat(usr, message, confidential = TRUE)
 
-	if(!ai_number)
-		to_chat(usr, "<b>No AIs located</b>", confidential = TRUE)
+	if(!law_bound_entities)
+		to_chat(usr, "<b>No law bound entities located</b>", confidential = TRUE)
