@@ -112,6 +112,8 @@
 
 	//if we're not facing the way we're going rotate us
 	if(dir != direction && !strafe || forcerotate || keyheld)
+		if(direction == REVERSE_DIR(dir) && !forcerotate)
+			direction = turn(direction, pick(90, -90))
 		if(dir != direction && !(mecha_flags & QUIET_TURNS) && !step_silent)
 			playsound(src,turnsound,40,TRUE)
 		setDir(direction)
