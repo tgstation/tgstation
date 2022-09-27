@@ -16,7 +16,7 @@
 
 /obj/item/clothing/head/wig/equipped(mob/user, slot)
 	. = ..()
-	if(ishuman(user) && slot == ITEM_SLOT_HEAD)
+	if(ishuman(user) && (slot & ITEM_SLOT_HEAD))
 		item_flags |= EXAMINE_SKIP
 
 /obj/item/clothing/head/wig/dropped(mob/user)
@@ -44,7 +44,7 @@
 	. += hair_overlay
 
 	// So that the wig actually blocks emissives.
-	hair_overlay.overlays += emissive_blocker(hair_overlay.icon, hair_overlay.icon_state, alpha = hair_overlay.alpha)
+	hair_overlay.overlays += emissive_blocker(hair_overlay.icon, hair_overlay.icon_state, src, alpha = hair_overlay.alpha)
 
 /obj/item/clothing/head/wig/attack_self(mob/user)
 	var/new_style = tgui_input_list(user, "Select a hairstyle", "Wig Styling", GLOB.hairstyles_list - "Bald")
@@ -103,7 +103,7 @@
 
 /obj/item/clothing/head/wig/natural/visual_equipped(mob/living/carbon/human/user, slot)
 	. = ..()
-	if(ishuman(user) && slot == ITEM_SLOT_HEAD)
+	if(ishuman(user) && (slot & ITEM_SLOT_HEAD))
 		if (color != user.hair_color) // only update if necessary
 			add_atom_colour(user.hair_color, FIXED_COLOUR_PRIORITY)
 			update_appearance()

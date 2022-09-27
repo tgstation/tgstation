@@ -21,7 +21,6 @@
 		dummy.set_species(species_type)
 		dummy.equipOutfit(/datum/outfit/job/assistant/consistent, visualsOnly = TRUE)
 		dummy.dna.species.prepare_human_for_preview(dummy)
-		COMPILE_OVERLAYS(dummy)
 
 		var/icon/dummy_icon = getFlatIcon(dummy)
 		dummy_icon.Scale(64, 64)

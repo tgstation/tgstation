@@ -22,9 +22,7 @@
 	. = ..()
 	// User-built consoles start as empty frames.
 	var/obj/item/computer_hardware/hard_drive/hard_drive = cpu.all_components[MC_HDD]
-	var/obj/item/computer_hardware/hard_drive/network_card = cpu.all_components[MC_NET]
 	qdel(hard_drive)
-	qdel(network_card)
 
 /obj/machinery/modular_computer/console/Initialize(mapload)
 	. = ..()
@@ -32,21 +30,8 @@
 	if(battery_module)
 		qdel(battery_module)
 
-	var/obj/item/computer_hardware/network_card/wired/network_card = new()
-
-	cpu.install_component(network_card)
 	cpu.install_component(new /obj/item/computer_hardware/hard_drive/super) // Consoles generally have better HDDs due to lower space limitations
 
-	var/area/A = get_area(src)
-	// Attempts to set this console's tag according to our area. Since some areas have stuff like "XX - YY" in their names we try to remove that too.
-	if(A && console_department)
-		network_card.identification_string = replacetext(replacetext(replacetext("[A.name] [console_department] Console", " ", "_"), "-", ""), "__", "_") // Replace spaces with "_"
-	else if(A)
-		network_card.identification_string = replacetext(replacetext(replacetext("[A.name] Console", " ", "_"), "-", ""), "__", "_")
-	else if(console_department)
-		network_card.identification_string = replacetext(replacetext(replacetext("[console_department] Console", " ", "_"), "-", ""), "__", "_")
-	else
-		network_card.identification_string = "Unknown Console"
 	if(cpu)
-		cpu.screen_on = 1
+		cpu.screen_on = TRUE
 	update_appearance()

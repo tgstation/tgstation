@@ -701,7 +701,7 @@
 			user.playsound_local(get_turf(src), slowbeat, 40, 0, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
 			if(isliving(user))
 				var/mob/living/living_user = user
-				living_user.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/jitter)
+				living_user.adjust_jitter(10 SECONDS)
 			addtimer(CALLBACK(src, .proc/drop_card, user), 10 SECONDS)
 	. += span_notice("<i>There's more information below, you can look again to take a closer look...</i>")
 
@@ -923,7 +923,7 @@
 			balloon_alert(user, "recolored")
 		update_icon()
 
-/obj/item/card/id/advanced/proc/update_intern_status(datum/source, mob/user)
+/obj/item/card/id/advanced/proc/update_intern_status(datum/source, mob/user, slot)
 	SIGNAL_HANDLER
 
 	if(!user?.client)

@@ -170,7 +170,7 @@
 
 /obj/item/clothing/gloves/krav_maga/equipped(mob/user, slot)
 	. = ..()
-	if(slot == ITEM_SLOT_GLOVES)
+	if(slot & ITEM_SLOT_GLOVES)
 		style.teach(user, TRUE)
 
 /obj/item/clothing/gloves/krav_maga/dropped(mob/user)
