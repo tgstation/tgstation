@@ -719,9 +719,15 @@ structure_check() searches for nearby cultist structures required for the invoca
 		log_game(fail_logmsg)
 		fail_invoke()
 		return
-	if(is_away_level(cultist_to_summon.z))
-		to_chat(user, "<span class='cult italic'>[cultist_to_summon] is not in our dimension!</span>")
-		fail_logmsg += "target is in away mission."
+	if(HAS_TRAIT(cultist_to_summon, TRAIT_NO_TELEPORT))
+		to_chat(user, "<span class='cult italic'>[cultist_to_summon] can not be teleported by any means!</span>")
+		fail_logmsg += "target has trait preventing all teleports."
+		log_game(fail_logmsg)
+		fail_invoke()
+		return
+	if(is_away_level(cultist_to_summon.z) || is_centcom_level(cultist_to_summon.z))
+		to_chat(user, "<span class='cult italic'>[cultist_to_summon] is too far out of the reach of the Geometer!</span>")
+		fail_logmsg += "target is on an un-reachable z-level."
 		log_game(fail_logmsg)
 		fail_invoke()
 		return
