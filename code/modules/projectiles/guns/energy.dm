@@ -35,21 +35,17 @@
 	var/dead_cell = FALSE
 
 /obj/item/gun/energy/fire_sounds()
-	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
-	var/batt_percent = FLOOR(clamp(cell.charge / cell.maxcharge, 0, 1) * 100, 1)
-	// What percentage of the full battery a shot will expend
-	var/shot_cost_percent = 0
-	// The total amount of shots the fully charged energy gun can fire before running out
-	var/max_shots = 0
-	// How many shots left before the energy gun's current battery runs out of energy
-	var/shots_left = 0
 	// What frequency the energy gun's sound will make
-	var/frequency_to_use = 0
+	var/frequency_to_use
 
-	if(shot.e_cost > 0)
-		shot_cost_percent = FLOOR(clamp(shot.e_cost / cell.maxcharge, 0, 1) * 100, 1)
-		max_shots = round(100/shot_cost_percent)
-		shots_left = round(batt_percent/shot_cost_percent)
+	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+	if((shot.e_cost > 0) && (cell.maxcharge != INFINITY))
+		// What percentage of the full battery a shot will expend
+		var/shot_cost_percent = round(clamp(shot.e_cost / cell.maxcharge, 0, 1) * 100)
+		// The total amount of shots the fully charged energy gun can fire before running out
+		var/max_shots = round(100/shot_cost_percent)
+		// How many shots left before the energy gun's current battery runs out of energy
+		var/shots_left = round((round(clamp(cell.charge / cell.maxcharge, 0, 1) * 100))/shot_cost_percent)
 		frequency_to_use = sin((90/max_shots) * shots_left)
 
 	if(suppressed)
