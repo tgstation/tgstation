@@ -288,7 +288,7 @@
 		span_notice("[user] begins wielding [src] like a sword!"),
 		span_notice("You begin wielding [src] like a sword, with a firm grip on the bottom as an imaginary handle.")
 	)
-	ADD_TRAIT(src, TRAIT_NO_TAP_SOUND, "swordplay")
+	ADD_TRAIT(src, TRAIT_CUSTOM_TAP_SOUND, SWORDPLAY_TRAIT)
 	attack_verb_continuous = list("slashes", "cuts")
 	attack_verb_simple = list("slash", "cut")
 	hitsound = 'sound/weapons/rapierhit.ogg'
@@ -300,7 +300,7 @@
 /obj/item/food/baguette/proc/end_swordplay(mob/user)
 	UnregisterSignal(src, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 
-	REMOVE_TRAIT(src, TRAIT_NO_TAP_SOUND, "swordplay")
+	REMOVE_TRAIT(src, TRAIT_CUSTOM_TAP_SOUND, SWORDPLAY_TRAIT)
 	attack_verb_continuous = initial(attack_verb_continuous)
 	attack_verb_simple = initial(attack_verb_simple)
 	hitsound = initial(hitsound)
