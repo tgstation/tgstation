@@ -12,8 +12,10 @@
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FIRE_PROOF
 	force = 0
+	on_sound = 'sound/items/bikehorn.ogg'
+
 	var/start_extended = FALSE
-	var/on_sound = 'sound/items/bikehorn.ogg'
+
 
 /obj/item/boxcutter/Initialize(mapload)
 	. = ..()
