@@ -1976,7 +1976,6 @@
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 1
 	},
-/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "aTl" = (
@@ -8903,7 +8902,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/brown/filled/line,
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
 "dki" = (
@@ -9664,7 +9662,6 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/trimline/neutral/filled/corner,
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/maintenance/tram/right)
 "dwj" = (
@@ -11610,7 +11607,6 @@
 	},
 /obj/machinery/duct,
 /obj/effect/mapping_helpers/airlock/access/all/medical/general,
-/obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/medical)
 "edC" = (
@@ -11969,7 +11965,6 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/access/all/supply/general,
-/obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/greater)
 "ekx" = (
@@ -20315,7 +20310,6 @@
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/maintenance/tram/right)
 "hqz" = (
@@ -23015,6 +23009,17 @@
 /obj/machinery/meter,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/pumproom)
+"ipk" = (
+/obj/effect/turf_decal/trimline/yellow/warning,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/maintenance/tram/right)
 "iqh" = (
 /obj/machinery/door/window{
 	name = "Captain's Desk";
@@ -33139,7 +33144,6 @@
 /obj/effect/mapping_helpers/airlock/unres{
 	dir = 1
 	},
-/obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/greater)
 "lRr" = (
@@ -35778,7 +35782,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /obj/effect/landmark/start/hangover,
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/maintenance/tram/right)
 "mLp" = (
@@ -42472,7 +42475,6 @@
 	dir = 8
 	},
 /obj/machinery/duct,
-/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "pmc" = (
@@ -49622,15 +49624,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
-"rHY" = (
-/obj/effect/turf_decal/trimline/yellow/warning{
-	dir = 1
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/trimline/neutral/filled/line,
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/station/maintenance/tram/right)
 "rIi" = (
 /obj/machinery/door/airlock{
 	name = "Permabrig Showers"
@@ -56007,6 +56000,17 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/construction/mining/aux_base)
+"tWt" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 8
+	},
+/obj/machinery/airalarm/directional/west,
+/obj/structure/cable,
+/turf/open/floor/iron/white,
+/area/station/science/lower)
 "tWw" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
@@ -57485,16 +57489,6 @@
 /mob/living/simple_animal/bot/secbot/beepsky,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
-"uxg" = (
-/obj/effect/turf_decal/trimline/yellow/warning{
-	dir = 1
-	},
-/obj/machinery/light/small/directional/south,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/trimline/neutral/filled/line,
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/station/maintenance/tram/right)
 "uxk" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
@@ -65733,6 +65727,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -111093,7 +111088,7 @@ hFC
 vgn
 hFC
 bsK
-uxg
+iwJ
 qxm
 afH
 afH
@@ -111111,7 +111106,7 @@ aeb
 aeb
 oaj
 iIm
-iIm
+tWt
 iIm
 lxW
 kxB
@@ -111350,7 +111345,7 @@ hFC
 hFC
 hFC
 bsK
-rHY
+vSV
 qxm
 afH
 afH
@@ -111601,13 +111596,13 @@ arE
 iRL
 iRL
 mbJ
-gUE
+ipk
 mMa
 hFC
 hFC
 hFC
 bsK
-rHY
+vSV
 qxm
 afH
 afH
@@ -111858,7 +111853,7 @@ vWx
 dhe
 dhe
 mbJ
-gUE
+ipk
 mMa
 hFC
 hFC
