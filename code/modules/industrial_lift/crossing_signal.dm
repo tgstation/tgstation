@@ -206,7 +206,7 @@
 	var/lights_overlay = "[base_icon_state][signal_state]"
 
 	. += mutable_appearance(icon, lights_overlay)
-	. += emissive_appearance(icon, "[lights_overlay]e", alpha = src.alpha)
+	. += emissive_appearance(icon, "[lights_overlay]e", offset_spokesman = src, alpha = src.alpha)
 
 /// Shifted to NE corner for east side of southern passage.
 /obj/machinery/crossing_signal/northeast

@@ -36,13 +36,20 @@
 	unset_control() //remove from control computer
 	return ..()
 
+/obj/machinery/power/tracker/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	. = ..()
+	if(same_z_layer)
+		return
+	SET_PLANE(tracker_dish_edge, PLANE_TO_TRUE(tracker_dish_edge.plane), new_turf)
+	SET_PLANE(tracker_dish, PLANE_TO_TRUE(tracker_dish.plane), new_turf)
+
 /obj/machinery/power/tracker/proc/add_panel_overlay(icon_state, y_offset)
 	var/obj/effect/overlay/overlay = new()
 	overlay.vis_flags = VIS_INHERIT_ID | VIS_INHERIT_ICON
 	overlay.appearance_flags = TILE_BOUND
 	overlay.icon_state = icon_state
 	overlay.layer = FLY_LAYER
-	overlay.plane = ABOVE_GAME_PLANE
+	SET_PLANE_EXPLICIT(overlay, ABOVE_GAME_PLANE, src)
 	overlay.pixel_y = y_offset
 	vis_contents += overlay
 	return overlay

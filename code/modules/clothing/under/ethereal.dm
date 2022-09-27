@@ -17,11 +17,11 @@
 /obj/item/clothing/under/ethereal_tunic/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
 	if(!isinhands)
-		. += emissive_appearance('icons/mob/clothing/under/ethereal.dmi', "eth_tunic_emissive_worn", alpha = src.alpha)
+		. += emissive_appearance('icons/mob/clothing/under/ethereal.dmi', "eth_tunic_emissive_worn", offset_spokesman = src, alpha = src.alpha)
 
 /obj/item/clothing/under/ethereal_tunic/update_overlays()
 	. = ..()
-	. += emissive_appearance('icons/obj/clothing/under/ethereal.dmi', "eth_tunic_emissive", alpha = src.alpha)
+	. += emissive_appearance('icons/obj/clothing/under/ethereal.dmi', "eth_tunic_emissive", offset_spokesman = src, alpha = src.alpha)
 
 /obj/item/clothing/under/ethereal_tunic/trailwarden
 	name = "trailwarden tunic"

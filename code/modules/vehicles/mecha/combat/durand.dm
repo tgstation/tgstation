@@ -168,7 +168,7 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 	. = ..()
 	src.chassis = chassis
 	src.layer = layer
-	src.plane = plane
+	SET_PLANE_EXPLICIT(src, plane, src)
 	setDir(dir)
 	RegisterSignal(src, COMSIG_MECHA_ACTION_TRIGGER, .proc/activate)
 	RegisterSignal(chassis, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, .proc/shield_glide_size_update)

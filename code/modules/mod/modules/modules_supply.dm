@@ -231,7 +231,7 @@
 	. = ..()
 	if(!.)
 		return
-	var/atom/game_renderer = mod.wearer.hud_used.plane_masters["[RENDER_PLANE_GAME]"]
+	var/atom/game_renderer = mod.wearer.hud_used.get_plane_master(RENDER_PLANE_GAME)
 	var/matrix/render_matrix = matrix(game_renderer.transform)
 	render_matrix.Scale(1.25, 1.25)
 	animate(game_renderer, launch_time, flags = SINE_EASING|EASE_IN, transform = render_matrix)
@@ -239,7 +239,7 @@
 	mod.wearer.visible_message(span_warning("[mod.wearer] starts whirring!"), \
 		blind_message = span_hear("You hear a whirring sound."))
 	playsound(src, 'sound/items/modsuit/loader_charge.ogg', 75, TRUE)
-	lightning = mutable_appearance('icons/effects/effects.dmi', "electricity3", plane = GAME_PLANE_FOV_HIDDEN)
+	lightning = mutable_appearance('icons/effects/effects.dmi', "electricity3", offset_spokesman = src, plane = GAME_PLANE_FOV_HIDDEN)
 	mod.wearer.add_overlay(lightning)
 	balloon_alert(mod.wearer, "you start charging...")
 	var/power = launch_time
@@ -598,12 +598,21 @@
 
 /obj/structure/mining_bomb/Initialize(mapload, atom/movable/firer)
 	. = ..()
-	if(!explosion_image)
-		explosion_image = image('icons/effects/96x96.dmi', "judicial_explosion")
-		explosion_image.pixel_x = -32
-		explosion_image.pixel_y = -32
-		explosion_image.plane = ABOVE_GAME_PLANE
+	generate_image()
 	addtimer(CALLBACK(src, .proc/prime, firer), prime_time)
+
+/obj/structure/mining_bomb/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	if(same_z_layer)
+		return ..()
+	explosion_image = null
+	generate_image()
+	return ..()
+
+/obj/structure/mining_bomb/proc/generate_image()
+	explosion_image = image('icons/effects/96x96.dmi', "judicial_explosion")
+	explosion_image.pixel_x = -32
+	explosion_image.pixel_y = -32
+	SET_PLANE_EXPLICIT(explosion_image, ABOVE_GAME_PLANE, src)
 
 /obj/structure/mining_bomb/proc/prime(atom/movable/firer)
 	add_overlay(explosion_image)

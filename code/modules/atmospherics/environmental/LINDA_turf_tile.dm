@@ -174,7 +174,7 @@
 	var/list/gases = air.gases
 
 	var/list/new_overlay_types
-	GAS_OVERLAYS(gases, new_overlay_types)
+	GAS_OVERLAYS(gases, new_overlay_types, src)
 
 	if (atmos_overlay_types)
 		for(var/overlay in atmos_overlay_types-new_overlay_types) //doesn't remove overlays that would only be added
@@ -533,12 +533,14 @@
 		display_id = wrapping_id
 	for(var/thing in turf_list)
 		var/turf/display = thing
-		display.vis_contents += GLOB.colored_turfs[display_id]
+		var/offset = GET_Z_PLANE_OFFSET(display.z) + 1
+		display.vis_contents += GLOB.colored_turfs[display_id][offset]
 
 /datum/excited_group/proc/hide_turfs()
 	for(var/thing in turf_list)
 		var/turf/display = thing
-		display.vis_contents -= GLOB.colored_turfs[display_id]
+		var/offset = GET_Z_PLANE_OFFSET(display.z) + 1
+		display.vis_contents -= GLOB.colored_turfs[display_id][offset]
 	display_id = 0
 
 /datum/excited_group/proc/display_turf(turf/thing)
@@ -546,7 +548,8 @@
 		wrapping_id = wrapping_id % GLOB.colored_turfs.len
 		wrapping_id++ //We do this after because lists index at 1
 		display_id = wrapping_id
-	thing.vis_contents += GLOB.colored_turfs[display_id]
+	var/offset = GET_Z_PLANE_OFFSET(thing.z) + 1
+	thing.vis_contents += GLOB.colored_turfs[display_id][offset]
 
 ////////////////////////SUPERCONDUCTIVITY/////////////////////////////
 
