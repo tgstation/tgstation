@@ -74,10 +74,11 @@
 	///Start side var, translated into a nautical direction for presentation in setup().
 	var/start_side_text = "unknown"
 
-/datum/round_event/sandstorm/setup()
+/datum/round_event/sandstorm/announce(fake)
 	var/datum/round_event_control/sandstorm/sandstorm_event = control
-	start_side = sandstorm_event.start_side
-	if(!start_side)
+	if(sandstorm_event.start_side)
+		start_side = sandstorm_event.start_side
+	else
 		start_side = pick(GLOB.cardinals)
 	switch(start_side) //EOB mentioned the space maps (the only ones that can be hit by this event) using ship directions in the future. dir2text() would save lines but would acknowledge that we're using cardinals in space.
 		if(NORTH)
@@ -88,8 +89,6 @@
 			start_side_text = "starboard"
 		if(WEST)
 			start_side_text = "port"
-
-/datum/round_event/sandstorm/announce(fake)
 	priority_announce("A large wave of space dust is approaching from the [start_side_text] side of the station. \
 						Engineering intervention and use of shield generators may be required to prevent serious \
 						damage to external fittings and fixtures.", "Collision Alert")
