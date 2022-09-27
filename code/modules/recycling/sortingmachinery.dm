@@ -188,13 +188,13 @@
 			wrapped_item.AddComponent(/datum/component/pricetag, sticker.payments_acc, sticker.cut_multiplier)
 		update_appearance()
 
-	else
-		return ..()
-
 	if(istype(item, /obj/item/boxcutter))
 		unwrap_contents(user)
 		post_unwrap_contents(user, rip_open = FALSE)
 		return
+
+	else
+		return ..()
 
 /**
  * # Wrapped up crates and lockers - too big to carry.

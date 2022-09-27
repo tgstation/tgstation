@@ -1,15 +1,14 @@
 /obj/item/boxcutter
 	name = "boxcutter"
 	desc = "A tool for cutting boxes, or throats."
+	icon = 'icons/obj/boxcutter.dmi'
 	icon_state = "boxcutter"
 	base_icon_state = "boxcutter"
 	lefthand_file = 'icons/mob/inhands/equipment/boxcutter_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/boxcutter_righthand.dmi'
 	inhand_icon_state = null
-	worn_icon_state = "tele_baton"
 	attack_verb_continuous = list("prods", "pokes")
 	attack_verb_simple = list("prod", "poke")
-	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FIRE_PROOF
 	force = 0
