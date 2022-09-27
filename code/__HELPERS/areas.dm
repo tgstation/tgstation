@@ -120,13 +120,11 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 	else
 		newA = area_choice
 
-	var/list/zs_we_have = newA.zs_we_have
 	for(var/i in 1 to length(turfs))
 		var/turf/thing = turfs[i]
 		var/area/old_area = thing.loc
 		newA.contents += thing
 		thing.transfer_area_lighting(old_area, newA)
-		zs_we_have[thing.z] = TRUE
 
 	newA.reg_in_areas_in_z()
 

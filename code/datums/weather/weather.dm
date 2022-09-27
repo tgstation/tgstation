@@ -250,15 +250,9 @@
 
 		// List of overlays this area uses
 		var/list/mutable_appearance/overlays = list()
-		// List of offsets this area wants, based off its z range
-		var/list/offsets = list()
-		for(var/z_index in 1 to length(N.zs_we_have))
-			if(!N.zs_we_have[z_index])
-				continue
-			offsets |= GET_Z_PLANE_OFFSET(z_index)
-
-		// Now that we have all the offsets this area COULD be effecting, we give it overlays
-		for(var/offset in offsets)
+		// Use all possible offsets
+		// Yes this is a bit annoying, but it's too slow to calculate and store these, and it shouldn't (I hope) look weird
+		for(var/offset in 0 to SSmapping.max_plane_offset)
 			var/keyd_offset = offset + 1
 			if(length(new_offsets_to_overlays) < keyd_offset)
 				new_offsets_to_overlays.len = keyd_offset
@@ -281,8 +275,8 @@
 			overlays += offset_overlays
 
 		var/list/mutable_appearance/old_glows = list()
-		for(var/offset in offsets)
-			offset = offset + 1
+		// Offset (ha) by 1 to match the key
+		for(var/offset in 1 to SSmapping.max_plane_offset + 1)
 			if(length(offsets_to_overlays) >= offset)
 				old_glows += offsets_to_overlays[offset]
 

@@ -106,8 +106,16 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	flags_1 |= INITIALIZED_1
 
 	/// We do NOT use the shortcut here, because this is faster
-	if(SSmapping.max_plane_offset && !SSmapping.plane_offset_blacklist["[plane]"])
-		plane = plane - (PLANE_RANGE * SSmapping.z_level_to_plane_offset[z])
+	if(SSmapping.max_plane_offset)
+		if(!!SSmapping.plane_offset_blacklist["[plane]"])
+			plane = plane - (PLANE_RANGE * SSmapping.z_level_to_plane_offset[z])
+
+		var/turf/T = SSmapping.get_turf_above(src)
+		if(T)
+			T.multiz_turf_new(src, DOWN)
+		T = SSmapping.get_turf_below(src)
+		if(T)
+			T.multiz_turf_new(src, UP)
 
 	// by default, vis_contents is inherited from the turf that was here before
 	vis_contents.Cut()
@@ -141,9 +149,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		Entered(content, null)
 
 	var/area/our_area = loc
-	// Update our area's min and max z values
-	our_area.zs_we_have[z] = TRUE
-
 	if(!our_area.area_has_base_lighting && always_lit) //Only provide your own lighting if the area doesn't for you
 		var/mutable_appearance/overlay = GLOB.fullbright_overlays[GET_TURF_PLANE_OFFSET(src) + 1]
 		add_overlay(overlay)
@@ -153,13 +158,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	if (light_power && light_range)
 		update_light()
-
-	var/turf/T = SSmapping.get_turf_above(src)
-	if(T)
-		T.multiz_turf_new(src, DOWN)
-	T = SSmapping.get_turf_below(src)
-	if(T)
-		T.multiz_turf_new(src, UP)
 
 	if (opacity)
 		directional_opacity = ALL_CARDINALS
