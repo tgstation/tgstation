@@ -1473,6 +1473,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "axF" = (
@@ -11101,6 +11102,7 @@
 	name = "Xenobio Pen 11 Blast DOors";
 	req_access = list("xenobiology")
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "dms" = (
@@ -40388,6 +40390,7 @@
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/prison)
 "msi" = (
@@ -76571,6 +76574,7 @@
 	name = "Containment Blast Door"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "xyx" = (
@@ -188281,7 +188285,7 @@ pMF
 sfv
 xyn
 dmj
-pMF
+wPd
 fwC
 asb
 ega

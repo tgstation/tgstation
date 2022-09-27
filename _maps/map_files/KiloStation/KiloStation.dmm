@@ -428,6 +428,10 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/engine,
 /area/station/ai_monitored/turret_protected/aisat/atmos)
+"adT" = (
+/obj/structure/cable,
+/turf/closed/wall,
+/area/station/maintenance/department/electrical)
 "aed" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -3269,6 +3273,7 @@
 /area/station/security/prison/garden)
 "aVx" = (
 /obj/effect/spawner/random/structure/tank_holder,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/central)
 "aVC" = (
@@ -5356,6 +5361,10 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
+"bFu" = (
+/obj/structure/cable,
+/turf/closed/wall/rust,
+/area/station/maintenance/department/electrical)
 "bFv" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -11931,6 +11940,7 @@
 	pixel_y = 4
 	},
 /obj/item/stock_parts/cell/high,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
 "dBg" = (
@@ -14087,9 +14097,6 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "eki" = (
-/obj/machinery/power/terminal{
-	dir = 1
-	},
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/east,
@@ -14609,7 +14616,6 @@
 "era" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/bar)
@@ -14722,10 +14728,10 @@
 /area/station/security/warden)
 "esO" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
 "esZ" = (
@@ -15415,6 +15421,7 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/blood/gibs/old,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
 "eCU" = (
@@ -18154,6 +18161,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/department/electrical)
 "fpG" = (
@@ -18746,6 +18754,7 @@
 "fxd" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/north,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/central)
 "fxt" = (
@@ -20034,6 +20043,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard)
 "fNe" = (
@@ -20975,6 +20985,7 @@
 "gau" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
 "gaE" = (
@@ -22682,6 +22693,7 @@
 	pixel_x = -8;
 	pixel_y = -5
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
 "gzA" = (
@@ -24291,6 +24303,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
 "gUZ" = (
@@ -24302,7 +24315,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
 "gVc" = (
-/obj/machinery/power/terminal,
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/east,
@@ -25866,6 +25878,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "hqW" = (
@@ -27455,6 +27468,7 @@
 "hOs" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
 "hOt" = (
@@ -28413,6 +28427,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/old,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
 "iaH" = (
@@ -28488,7 +28503,6 @@
 "ibm" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
 "ibJ" = (
@@ -28924,6 +28938,7 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/blood/old,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
 "ihU" = (
@@ -29642,6 +29657,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/blood/gibs/old,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
 "irj" = (
@@ -30195,6 +30211,7 @@
 "iyB" = (
 /obj/machinery/atmospherics/components/binary/valve/layer4,
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
 "iyF" = (
@@ -30343,8 +30360,8 @@
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/spider/stickyweb,
-/obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
 "iAU" = (
@@ -33596,6 +33613,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
 "jwi" = (
@@ -33901,6 +33919,7 @@
 /obj/structure/door_assembly/door_assembly_eng{
 	anchored = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/cargo/warehouse)
 "jBT" = (
@@ -34180,6 +34199,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
 "jGW" = (
@@ -39170,7 +39190,6 @@
 	name = "Electrical Maintenance"
 	},
 /obj/effect/mapping_helpers/airlock/abandoned,
-/obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/unres{
 	dir = 4
 	},
@@ -39379,6 +39398,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
 "lgu" = (
@@ -39744,6 +39764,7 @@
 /area/station/engineering/supermatter/room)
 "lme" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/central)
 "lmh" = (
@@ -39981,6 +40002,7 @@
 	},
 /obj/effect/decal/cleanable/oil,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
 "lqy" = (
@@ -44283,7 +44305,6 @@
 	dir = 4
 	},
 /obj/structure/spider/stickyweb,
-/obj/structure/cable,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard)
@@ -49262,6 +49283,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/stack/tile/wood,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
 "ocn" = (
@@ -50774,6 +50796,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
 "ozz" = (
@@ -51649,6 +51672,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/stripes/line,
 /obj/item/t_scanner,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
 "oLH" = (
@@ -55574,6 +55598,7 @@
 "pQT" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/blood/old,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
 "pRu" = (
@@ -55685,10 +55710,13 @@
 "pSu" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/spider/stickyweb,
-/obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
 "pSE" = (
@@ -56589,6 +56617,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/maintenance,
 /obj/structure/sign/poster/random/directional/north,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/central)
 "qgz" = (
@@ -57241,6 +57270,7 @@
 	dir = 9
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
 "qpj" = (
@@ -57363,6 +57393,7 @@
 /obj/effect/landmark/xeno_spawn,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
 "qrP" = (
@@ -57560,7 +57591,6 @@
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/construction,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/atmos)
@@ -59658,6 +59688,7 @@
 	dir = 8
 	},
 /obj/effect/landmark/xeno_spawn,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
 "raM" = (
@@ -60522,6 +60553,9 @@
 /obj/structure/cable,
 /obj/effect/spawner/random/structure/crate,
 /obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/power/terminal{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -62766,6 +62800,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/cargo/warehouse)
 "rRJ" = (
@@ -62832,7 +62867,6 @@
 "rSL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
 /mob/living/simple_animal/hostile/giant_spider/hunter/scrawny,
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
@@ -63169,6 +63203,7 @@
 "rZi" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
 "rZE" = (
@@ -63191,7 +63226,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/blood/gibs/limb,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
 "rZN" = (
@@ -66395,6 +66429,7 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
 "sTO" = (
@@ -74219,6 +74254,7 @@
 	anchored = 1
 	},
 /obj/structure/barricade/wooden/crude,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/cargo/warehouse)
 "vfO" = (
@@ -79972,6 +80008,7 @@
 /obj/machinery/door/airlock/mining/glass{
 	name = "Mining Dock"
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/cargo/warehouse)
 "wGx" = (
@@ -81143,6 +81180,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
 "wWD" = (
@@ -81262,6 +81300,7 @@
 	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
 "wYR" = (
@@ -81642,6 +81681,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
 "xeP" = (
@@ -84377,6 +84417,7 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/blood/gibs/limb,
 /obj/effect/landmark/event_spawn,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
 "xTG" = (
@@ -127718,12 +127759,12 @@ aeu
 aeu
 aeu
 rpl
-rpl
-asj
-rpl
-asj
-rpl
-rpl
+adT
+bFu
+adT
+bFu
+adT
+adT
 vOX
 dJo
 mua

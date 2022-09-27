@@ -57175,6 +57175,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/chapel)
 "nQY" = (
@@ -73840,6 +73841,7 @@
 /obj/item/storage/box/deputy{
 	pixel_y = 6
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/security/office)
 "rYj" = (
@@ -90524,6 +90526,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/chapel)
 "wdD" = (

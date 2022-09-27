@@ -13,7 +13,7 @@
 			var/area/cable_area = get_area(found_cable)
 			if(!(cable_area.type in GLOB.the_station_areas) || istype(cable_area, /area/station/solars))
 				continue
-			TEST_FAIL("[powernets] found with no nodes connected([found_cable.x], [found_cable.y], [found_cable.z])).")
+			TEST_FAIL("[powernets] found with no nodes connected ([found_cable.x], [found_cable.y], [found_cable.z])).")
 
 		//cables
 		if(!length(powernets.cables))
