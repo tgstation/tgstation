@@ -23,7 +23,7 @@
 	inhand_y_dimension = 64
 	actions_types = list()
 	item_flags = SLOWS_WHILE_IN_HAND
-	///are we using our right click ability yet, mr krabs?
+	///if we are using our attack_self ability
 	var/spinning = FALSE
 
 /obj/item/cult_bastard/Initialize(mapload)
@@ -33,14 +33,14 @@
 	AddComponent(/datum/component/two_handed, require_twohands = TRUE)
 	AddComponent(/datum/component/soul_stealer)
 	AddComponent( \
-		/datum/component/right_click_spin2win, \
+		/datum/component/spin2win, \
 		spin_cooldown_time = 25 SECONDS, \
 		on_spin_callback = CALLBACK(src, .proc/on_spin), \
 		on_unspin_callback = CALLBACK(src, .proc/on_unspin), \
 		start_spin_message = span_danger("%USER begins swinging the sword around with inhuman strength!"), \
 		end_spin_message = span_warning("%USER's inhuman strength dissipates and the sword's runes grow cold!") \
 	)
-
+	
 /obj/item/cult_bastard/proc/on_spin(mob/living/user, duration)
 	var/oldcolor = user.color
 	user.color = "#ff0000"

@@ -133,10 +133,11 @@
 /datum/component/two_handed/proc/on_attack_self(datum/source, mob/user)
 	SIGNAL_HANDLER
 
-	if(wielded)
-		unwield(user)
-	else if(user.is_holding(parent))
-		wield(user)
+	if(!require_twohands)
+		if(wielded)
+			unwield(user)
+		else if(user.is_holding(parent))
+			wield(user)
 
 /**
  * Wield the two handed item in both hands
