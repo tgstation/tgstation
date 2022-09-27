@@ -480,7 +480,7 @@
 		return FALSE
 	limb = newBodyPart(limb_zone, 0, 0)
 	if(limb)
-		if(!limb.try_attach_limb(src, 1))
+		if(!limb.try_attach_limb(src, TRUE))
 			qdel(limb)
 			return FALSE
 		limb.update_limb(is_creating = TRUE)
