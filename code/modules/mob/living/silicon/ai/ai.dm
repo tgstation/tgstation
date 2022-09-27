@@ -616,9 +616,9 @@
 	var/mob/living/silicon/ai/U = usr
 
 	for (var/obj/machinery/camera/C in GLOB.cameranet.cameras)
-		//in-built silicon cameras won't be needed to build a list of available networks,
-		//and they break the next check by being in a mob, setting their z to 0
-		if(istype(C.loc, /mob/living/silicon))
+		//cameras that are located in an object have their z set to 0, breaking the next check;
+		//mostly an issue for silicons. their cameras are in the end of the list, so it shouldn't affect building the list
+		if(!C.z)
 			continue
 		var/list/tempnetwork = C.network
 		if(!(is_station_level(C.z) || is_mining_level(C.z) || ("ss13" in tempnetwork)))
