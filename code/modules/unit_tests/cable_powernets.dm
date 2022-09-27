@@ -1,6 +1,27 @@
-///Checks if all cables on the map are connected to a powernet roundstart
+///Checking all powernets to see if they are properly connected and powered.
 /datum/unit_test/cable_powernets
 
 /datum/unit_test/cable_powernets/Run()
-	for(var/obj/structure/cable/cables as anything in GLOB.cable_list)
-		TEST_ASSERT(!cables.powernet, "CABLE: [cables.name] has no powernet at ([cables.x] [cables.y] [cables.z])")
+	for(var/datum/powernet/powernets as anything in GLOB.powernets)
+
+		//nodes (machines, which includes APCs and SMES)
+		if(!length(powernets.nodes))
+			if(!length(powernets.cables)) //find a cable to give coordinates
+				TEST_ASSERT(!powernets.nodes, "CABLE: [powernets] found with no nodes OR cables connected, something has gone horribly wrong.")
+
+			var/obj/structure/cable/found_cable = powernets.cables[1]
+			//There's no way to check powernets for their Z level, so we do it here.
+			if(!is_station_level(found_cable.z) || !is_centcom_level(found_cable.z))
+				continue
+			TEST_ASSERT(!powernets.nodes, "CABLE: [powernets] found with no nodes connected([found_cable.x], [found_cable.y], [found_cable.z])).")
+
+		//cables
+		if(!length(powernets.cables))
+			if(!length(powernets.cables)) //find a machine to give coordinates
+				TEST_ASSERT(!powernets.cables, "CABLE: [powernets] found with no cables OR nodes connected, something has gone horribly wrong.")
+
+			var/obj/machinery/power/found_machine = powernets.nodes[1]
+			//There's no way to check powernets for their Z level, so we do it here.
+			if(!is_station_level(found_machine.z) || !is_centcom_level(found_machine.z))
+				continue
+			TEST_ASSERT(!powernets.cables, "CABLE: [powernets] found with no cables connected ([found_machine.x], [found_machine.y], [found_machine.z]).")
