@@ -26,4 +26,7 @@
 
 		if(!powernets.avail)
 			var/obj/structure/cable/random_cable = powernets.cables[1]
+			//There's no way to check powernets for their Z level, so we do it here.
+			if(!is_station_level(random_cable.z) && !is_centcom_level(random_cable.z))
+				continue
 			TEST_FAIL("CABLE: [powernets] found with no power roundstart, connected to a cable at ([random_cable.x], [random_cable.y], [random_cable.z]).")
