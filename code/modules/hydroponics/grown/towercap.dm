@@ -143,7 +143,30 @@
 /obj/structure/punji_sticks/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/caltrop, min_damage = 20, max_damage = 30, flags = CALTROP_BYPASS_SHOES)
-	stab_overlay = mutable_appearance(icon, "[icon_state]_stab", layer = ABOVE_MOB_LAYER, plane = GAME_PLANE_FOV_HIDDEN)
+	build_stab_overlay()
+
+/obj/structure/punji_sticks/proc/build_stab_overlay()
+	stab_overlay = mutable_appearance(icon, "[icon_state]_stab", layer = ABOVE_MOB_LAYER, offset_spokesman = src, plane = GAME_PLANE_FOV_HIDDEN)
+
+/obj/structure/punji_sticks/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	. = ..()
+	if(same_z_layer)
+		return
+	build_stab_overlay()
+	update_appearance()
+
+/obj/structure/punji_sticks/post_buckle_mob(mob/living/M)
+	update_appearance()
+	return ..()
+
+/obj/structure/punji_sticks/post_unbuckle_mob(mob/living/M)
+	update_appearance()
+	return ..()
+
+/obj/structure/punji_sticks/update_overlays()
+	. = ..()
+	if(length(buckled_mobs))
+		. += stab_overlay
 
 /obj/structure/punji_sticks/intercept_zImpact(list/falling_movables, levels)
 	. = ..()
@@ -157,7 +180,6 @@
 				var/mob/living/carbon/fallen_carbon = fallen_mob
 				fallen_carbon.emote("scream")
 				fallen_carbon.bleed(30)
-			add_overlay(stab_overlay)
 	. |= FALL_INTERCEPTED | FALL_NO_MESSAGE
 
 /obj/structure/punji_sticks/unbuckle_mob(mob/living/buckled_mob, force, can_fall)
@@ -168,7 +190,6 @@
 	if(!do_after(buckled_mob, 5 SECONDS, target = src))
 		to_chat(buckled_mob, span_userdanger("You fail to detach yourself from [src]."))
 		return
-	cut_overlay(stab_overlay)
 	return ..()
 
 /obj/structure/punji_sticks/spikes

@@ -38,7 +38,7 @@
 	. = ..()
 
 	if(obj_flags & IN_USE)
-		. += mutable_appearance(icon, "[base_icon_state]-o", plane = GAME_PLANE_UPPER, layer = ABOVE_MOB_LAYER, alpha = src.alpha)
+		. += mutable_appearance(icon, "[base_icon_state]-o", offset_spokesman = src, plane = GAME_PLANE_UPPER, layer = ABOVE_MOB_LAYER, alpha = src.alpha)
 
 /obj/structure/weightmachine/attack_hand(mob/living/user, list/modifiers)
 	. = ..()

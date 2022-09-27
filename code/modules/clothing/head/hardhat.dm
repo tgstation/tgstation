@@ -109,7 +109,7 @@
 /obj/item/clothing/head/hardhat/atmos/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
 	if(!isinhands)
-		. += emissive_appearance(icon_file, "[icon_state]-emissive", alpha = src.alpha)
+		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
 
 /obj/item/clothing/head/hardhat/weldhat
 	name = "welding hard hat"
@@ -208,12 +208,12 @@
 /obj/item/clothing/head/hardhat/pumpkinhead/update_overlays()
 	. = ..()
 	if(light_on)
-		. += emissive_appearance(icon, "carved_pumpkin-emissive", alpha = src.alpha)
+		. += emissive_appearance(icon, "carved_pumpkin-emissive", src, alpha = src.alpha)
 
 /obj/item/clothing/head/hardhat/pumpkinhead/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
 	if(light_on && !isinhands)
-		. += emissive_appearance(icon_file, "carved_pumpkin-emissive", alpha = src.alpha)
+		. += emissive_appearance(icon_file, "carved_pumpkin-emissive", src, alpha = src.alpha)
 
 /obj/item/clothing/head/hardhat/pumpkinhead/turn_on(mob/user)
 	. = ..()
