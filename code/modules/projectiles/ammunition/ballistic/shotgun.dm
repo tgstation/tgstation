@@ -147,7 +147,7 @@
 	return
 
 /obj/item/ammo_casing/shotgun/dart/bioterror
-	desc = "A shotgun dart filled with deadly toxins."
+	desc = "An improved shotgun dart filled with deadly toxins. Can be injected with up to 30 units of any chemical."
 
 /obj/item/ammo_casing/shotgun/dart/bioterror/Initialize(mapload)
 	. = ..()
