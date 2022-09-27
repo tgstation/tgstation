@@ -10,6 +10,7 @@
  * Rolling Paper Pack
  * Cigar Case
  * Heart Shaped Box w/ Chocolates
+ * *coffee packs
  */
 
 /obj/item/storage/fancy
@@ -480,11 +481,49 @@
 	SHOULD_CALL_PARENT(FALSE)
 	if(!contents.len)
 		icon_state = "[base_icon_state]_empty"
-	else 
+	else
 		if(contents.len < 5)
 			icon_state = "[base_icon_state]_[contents.len]"
-		else	
+		else
 			icon_state = base_icon_state
 	return
 
-	
+/*
+ * pack of arabica beans
+ */
+
+/obj/item/storage/fancy/arabica_pack
+	icon = 'icons/obj/food/containers.dmi'
+	icon_state = "arabica_beans"
+	base_icon_state = "arabica_beans"
+	name = "arabica beans"
+	desc = "A bag containing fresh, dry coffee arabica beans."
+	spawn_type = /obj/item/food/grown/coffee
+	spawn_count = 10
+	contents_tag = "coffee arabica beans"
+
+/obj/item/storage/fancy/arabica_pack/Initialize(mapload)
+	. = ..()
+	atom_storage.set_holdable(list(/obj/item/food/grown/coffee))
+
+var/obj/fold_result = /obj/item/paper
+
+/*
+ * pack of robusta beans
+ */
+
+/obj/item/storage/fancy/robusta_pack
+	icon = 'icons/obj/food/containers.dmi'
+	icon_state = "robusta_beans"
+	base_icon_state = "robusta_beans"
+	name = "robusta beans"
+	desc = "A bag containing fresh, dry coffee robusta beans."
+	spawn_type = /obj/item/food/grown/coffee/robusta
+	spawn_count = 10
+	contents_tag = "coffee robusta beans"
+
+/obj/item/storage/fancy/arabica_pack/Initialize(mapload)
+	. = ..()
+	atom_storage.set_holdable(list(/obj/item/food/grown/coffee))
+
+var/obj/fold_result = /obj/item/paper
