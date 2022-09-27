@@ -45,8 +45,8 @@
 		healing_amount *= -0.5
 
 	if(owner.health > owner.crit_threshold && prob(4))
-		owner.set_timed_status_effect(20 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
-		owner.set_timed_status_effect(10 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
+		owner.set_jitter_if_lower(20 SECONDS)
+		owner.set_dizzy_if_lower(10 SECONDS)
 		owner.adjust_hallucinations_up_to(6 SECONDS, 48 SECONDS)
 
 	if(prob(2))

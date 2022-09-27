@@ -32,9 +32,9 @@
 		return
 	change_the_track(TRUE)
 
-/datum/component/area_sound_manager/proc/react_to_z_move(datum/source, old_z, new_z)
+/datum/component/area_sound_manager/proc/react_to_z_move(datum/source, turf/old_turf, turf/new_turf)
 	SIGNAL_HANDLER
-	if(!length(accepted_zs) || (new_z in accepted_zs))
+	if(!length(accepted_zs) || (new_turf.z in accepted_zs))
 		return
 	qdel(src)
 

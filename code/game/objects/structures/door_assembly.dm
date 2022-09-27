@@ -295,10 +295,10 @@
 /obj/structure/door_assembly/update_overlays()
 	. = ..()
 	if(!glass)
-		. += get_airlock_overlay("fill_construction", icon, TRUE)
+		. += get_airlock_overlay("fill_construction", icon, src, TRUE)
 	else
-		. += get_airlock_overlay("glass_construction", overlays_file, TRUE)
-	. += get_airlock_overlay("panel_c[state+1]", overlays_file, TRUE)
+		. += get_airlock_overlay("glass_construction", overlays_file, src, TRUE)
+	. += get_airlock_overlay("panel_c[state+1]", overlays_file, src, TRUE)
 
 /obj/structure/door_assembly/update_name()
 	name = ""

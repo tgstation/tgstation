@@ -72,6 +72,7 @@
 /obj/effect/decal/cleanable/blood/splatter/over_window // special layer/plane set to appear on windows
 	layer = ABOVE_WINDOW_LAYER
 	plane = GAME_PLANE
+	vis_flags = VIS_INHERIT_PLANE
 	turf_loc_check = FALSE
 	alpha = 180
 

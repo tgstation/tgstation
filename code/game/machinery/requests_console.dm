@@ -109,7 +109,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 		screen_state = "[base_icon_state]0"
 
 	. += mutable_appearance(icon, screen_state)
-	. += emissive_appearance(icon, screen_state, alpha = src.alpha)
+	. += emissive_appearance(icon, screen_state, src, alpha = src.alpha)
 
 /obj/machinery/requests_console/Initialize(mapload)
 	. = ..()
