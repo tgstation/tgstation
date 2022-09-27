@@ -19,8 +19,8 @@
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HANDS)
 	AddComponent(/datum/component/butchering, \
-	speed = 7 SECONDS, \
-	effectiveness = 100, \
+		speed = 7 SECONDS, \
+		effectiveness = 100, \
 	)
 	AddComponent(/datum/component/transforming, \
 		start_transformed = start_extended, \
@@ -31,7 +31,7 @@
 		hitsound_on = 'sound/weapons/bladeslice.ogg', \
 		w_class_on = WEIGHT_CLASS_NORMAL, \
 		attack_verb_continuous_on = list("cuts", "stabs", "slashes"), \
-		attack_verb_simple_on = list("cut", "stab", "slash"))
+		attack_verb_simple_on = list("cut", "stab", "slash"), \
 
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
 
