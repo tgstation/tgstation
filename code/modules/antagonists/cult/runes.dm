@@ -735,7 +735,12 @@ structure_check() searches for nearby cultist structures required for the invoca
 									  "<span class='cult italic'><b>Overwhelming vertigo consumes you as you are hurled through the air!</b></span>")
 	..()
 	visible_message(span_warning("A foggy shape materializes atop [src] and solidifies into [cultist_to_summon]!"))
-	cultist_to_summon.forceMove(get_turf(src))
+	if(!do_teleport(cultist_to_summon, get_turf(src)))
+		to_chat(user, span_warning("The summoning has completely failed for [cultist_to_summon]!"))
+		fail_logmsg += "target failed criteria to teleport." //catch-all term, just means they failed do_teleport somehow. The most common reasons why someone should fail to be summoned already have verbose messages.
+		log_game(fail_logmsg)
+		fail_invoke()
+		return
 	qdel(src)
 
 //Rite of Boiling Blood: Deals extremely high amounts of damage to non-cultists nearby
