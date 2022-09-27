@@ -105,11 +105,13 @@
 // Yes this doesn't align correctly on anything other than 4 width tabs.
 // If you want it to go switch everybody to elastic tab stops.
 // Actually that'd be great if you could!
-#define EFFECT_UPDATE(level)                \
-	if (needs_update == LIGHTING_NO_UPDATE) \
-		SSlighting.sources_queue += src; \
-	if (needs_update < level)               \
-		needs_update = level;    \
+#define EFFECT_UPDATE(level)                  \
+	if (needs_update == LIGHTING_NO_UPDATE) { \
+		SSlighting.sources_queue += src;      \
+	}                                         \
+	if (needs_update < level) {               \
+		needs_update = level;                 \
+	}
 
 
 /// This proc will cause the light source to update the top atom, and add itself to the update queue.
@@ -137,20 +139,20 @@
 // This exists so we can cache the vars used in this macro, and save MASSIVE time :)
 // Most of this is saving off datum var accesses, tho some of it does actually cache computation
 // You will NEED to call this before you call APPLY_CORNER
-#define SETUP_CORNERS_CACHE(lighting_source) \
-	var/_turf_x = lighting_source.pixel_turf.x; \
-	var/_turf_y = lighting_source.pixel_turf.y; \
-	var/_turf_z = lighting_source.pixel_turf.z; \
+#define SETUP_CORNERS_CACHE(lighting_source)                  \
+	var/_turf_x = lighting_source.pixel_turf.x;               \
+	var/_turf_y = lighting_source.pixel_turf.y;               \
+	var/_turf_z = lighting_source.pixel_turf.z;               \
 	var/_range_divisor = max(1, lighting_source.light_range); \
-	var/_light_power = lighting_source.light_power; \
-	var/_applied_lum_r = lighting_source.applied_lum_r; \
-	var/_applied_lum_g = lighting_source.applied_lum_g; \
-	var/_applied_lum_b = lighting_source.applied_lum_b; \
-	var/_lum_r = lighting_source.lum_r; \
-	var/_lum_g = lighting_source.lum_g; \
-	var/_lum_b = lighting_source.lum_b; \
+	var/_light_power = lighting_source.light_power;           \
+	var/_applied_lum_r = lighting_source.applied_lum_r;       \
+	var/_applied_lum_g = lighting_source.applied_lum_g;       \
+	var/_applied_lum_b = lighting_source.applied_lum_b;       \
+	var/_lum_r = lighting_source.lum_r;                       \
+	var/_lum_g = lighting_source.lum_g;                       \
+	var/_lum_b = lighting_source.lum_b;
 
-#define SETUP_CORNERS_REMOVAL_CACHE(lighting_source) \
+#define SETUP_CORNERS_REMOVAL_CACHE(lighting_source)    \
 	var/_applied_lum_r = lighting_source.applied_lum_r; \
 	var/_applied_lum_g = lighting_source.applied_lum_g; \
 	var/_applied_lum_b = lighting_source.applied_lum_b;
@@ -158,7 +160,7 @@
 #define LUM_FALLOFF(C) (1 - CLAMP01(sqrt((C.x - _turf_x) ** 2 + (C.y - _turf_y) ** 2 + LIGHTING_HEIGHT) / _range_divisor))
 // You may notice we still use squares here even though there are three components
 // Because z diffs are so functionally small, cubes and cube roots are too aggressive
-#define LUM_FALLOFF_MULTIZ(C, T) (1 - CLAMP01(sqrt((C.x - _turf_x) ** 2 + (C.y - _turf_y) ** 2 + abs(C.z - _turf_z) ** 2 + LIGHTING_HEIGHT) / _range_divisor))
+#define LUM_FALLOFF_MULTIZ(C) (1 - CLAMP01(sqrt((C.x - _turf_x) ** 2 + (C.y - _turf_y) ** 2 + abs(C.z - _turf_z) ** 2 + LIGHTING_HEIGHT) / _range_divisor))
 
 // Macro that applies light to a new corner.
 // It is a macro in the interest of speed, yet not having to copy paste it.
@@ -172,23 +174,23 @@
 	else {                                       \
 		. = LUM_FALLOFF_MULTIZ(C)                \
 	}                                            \
-	. *= light_power;                            \
+	. *= _light_power;                           \
 	var/OLD = effect_str[C];                     \
 	                                             \
 	C.update_lumcount                            \
 	(                                            \
-		(. * _lum_r) - (OLD * _applied_lum_r),     \
-		(. * _lum_g) - (OLD * _applied_lum_g),     \
-		(. * _lum_b) - (OLD * _applied_lum_b)      \
-	);                                           \
+		(. * _lum_r) - (OLD * _applied_lum_r),   \
+		(. * _lum_g) - (OLD * _applied_lum_g),   \
+		(. * _lum_b) - (OLD * _applied_lum_b)    \
+	);
 
 #define REMOVE_CORNER(C)                         \
 	. = -effect_str[C];                          \
 	C.update_lumcount                            \
 	(                                            \
-		. * _applied_lum_r,                       \
-		. * _applied_lum_g,                       \
-		. * _applied_lum_b                        \
+		. * _applied_lum_r,                      \
+		. * _applied_lum_g,                      \
+		. * _applied_lum_b                       \
 	);
 
 /// This is the define used to calculate falloff.
@@ -213,25 +215,25 @@
 
 
 // Keep in mind. Lighting corners accept the bottom left (northwest) set of cords to them as input
-#define GENERATE_MISSING_CORNERS(gen_for) \
-	if (!gen_for.lighting_corner_NE) { \
-		gen_for.lighting_corner_NE = new /datum/lighting_corner(gen_for.x, gen_for.y, gen_for.z); \
-	} \
-	if (!gen_for.lighting_corner_SE) { \
-		gen_for.lighting_corner_SE = new /datum/lighting_corner(gen_for.x, gen_for.y - 1, gen_for.z); \
-	} \
-	if (!gen_for.lighting_corner_SW) { \
+#define GENERATE_MISSING_CORNERS(gen_for)                                                                 \
+	if (!gen_for.lighting_corner_NE) {                                                                    \
+		gen_for.lighting_corner_NE = new /datum/lighting_corner(gen_for.x, gen_for.y, gen_for.z);         \
+	}                                                                                                     \
+	if (!gen_for.lighting_corner_SE) {                                                                    \
+		gen_for.lighting_corner_SE = new /datum/lighting_corner(gen_for.x, gen_for.y - 1, gen_for.z);     \
+	}                                                                                                     \
+	if (!gen_for.lighting_corner_SW) {                                                                    \
 		gen_for.lighting_corner_SW = new /datum/lighting_corner(gen_for.x - 1, gen_for.y - 1, gen_for.z); \
-	} \
-	if (!gen_for.lighting_corner_NW) { \
-		gen_for.lighting_corner_NW = new /datum/lighting_corner(gen_for.x - 1, gen_for.y, gen_for.z); \
-	} \
+	}                                                                                                     \
+	if (!gen_for.lighting_corner_NW) {                                                                    \
+		gen_for.lighting_corner_NW = new /datum/lighting_corner(gen_for.x - 1, gen_for.y, gen_for.z);     \
+	}                                                                                                     \
 	gen_for.lighting_corners_initialised = TRUE;
 
-#define INSERT_CORNERS(insert_into, draw_from) \
-	if (!draw_from.lighting_corners_initialised) {     \
-		GENERATE_MISSING_CORNERS(draw_from);           \
-	}                                          \
+#define INSERT_CORNERS(insert_into, draw_from)             \
+	if (!draw_from.lighting_corners_initialised) {         \
+		GENERATE_MISSING_CORNERS(draw_from);               \
+	}                                                      \
 	insert_into[draw_from.lighting_corner_NE] = 0;         \
 	insert_into[draw_from.lighting_corner_SE] = 0;         \
 	insert_into[draw_from.lighting_corner_SW] = 0;         \

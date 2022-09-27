@@ -695,20 +695,31 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		initialize_reserved_level(isolated_ruins_z.z_value)
 	return isolated_ruins_z.z_value
 
-// NOTE:
-// All this code HAS to run before any linked layers generate
-// We do not suppport adding up/down linking later in the process
-/datum/controller/subsystem/mapping/proc/add_to_plane_tracking(datum/space_level/new_z)
+/// Takes a z level datum, and tells the mapping subsystem to manage it
+/// Also handles things like plane offset generation, and other things that happen on a z level to z level basis
+/datum/controller/subsystem/mapping/proc/manage_z_level(datum/space_level/new_z)
+	// First, add the z
+	z_list += new_z
+
+	// Then we build our lookup lists
+	var/z_value = new_z.z_value
 	// We are guarenteed that we'll always grow bottom up
 	// Suck it jannies
 	z_level_to_plane_offset.len += 1
 	z_level_to_lowest_plane_offset += 1
 	// 0's the default value, we'll update it later if required
-	z_level_to_plane_offset[new_z.z_value] = 0
-	z_level_to_lowest_plane_offset[new_z.z_value] = 0
+	z_level_to_plane_offset[z_value] = 0
+	z_level_to_lowest_plane_offset[z_value] = 0
+
+	// Now we check if this plane is offset or not
 	var/below_offset = new_z.traits[ZTRAIT_DOWN]
 	if(below_offset)
 		update_plane_tracking(new_z)
+
+	// And finally, misc global generation
+
+	// We'll have to update this if offsets change, because we load lowest z to highest z
+	generate_lighting_appearance_by_z(z_value)
 
 /datum/controller/subsystem/mapping/proc/update_plane_tracking(datum/space_level/update_with)
 	// We're essentially going to walk down the stack of connected z levels, and set their plane offset as we go
@@ -730,6 +741,11 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	/// Updates the lowest offset value
 	for(var/datum/space_level/level_to_update in levels_checked)
 		z_level_to_lowest_plane_offset[level_to_update.z_value] = current_level
+
+	// This can be affected by offsets, so we need to update it
+	// PAIN
+	for(var/i in 1 to length(z_list))
+		generate_lighting_appearance_by_z(i)
 
 	var/old_max = max_plane_offset
 	max_plane_offset = max(max_plane_offset, current_level)
@@ -778,3 +794,8 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 				true_to_offset_planes[string_real] = list()
 
 			true_to_offset_planes[string_real] |= offset_plane
+
+/proc/generate_lighting_appearance_by_z(z_level)
+	if(length(GLOB.default_lighting_underlays_by_z) < z_level)
+		GLOB.default_lighting_underlays_by_z.len = z_level
+	GLOB.default_lighting_underlays_by_z[z_level] = mutable_appearance(LIGHTING_ICON, "transparent", z_level, null, LIGHTING_PLANE, 255, RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM, offset_const = GET_Z_PLANE_OFFSET(z_level))
