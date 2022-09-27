@@ -81,7 +81,7 @@
 		tool = tool.contents[1]
 	if(isbodypart(tool) && user.temporarilyRemoveItemFromInventory(tool))
 		var/obj/item/bodypart/limb_to_attach = tool
-		limb_to_attach.attach_limb(target)
+		limb_to_attach.try_attach_limb(target)
 		if(organ_rejection_dam)
 			target.adjustToxLoss(organ_rejection_dam)
 		display_results(user, target, span_notice("You succeed in replacing [target]'s [parse_zone(target_zone)]."),
@@ -92,7 +92,7 @@
 	else
 		var/obj/item/bodypart/limb_to_attach = target.newBodyPart(target_zone, FALSE, FALSE)
 		limb_to_attach.is_pseudopart = TRUE
-		limb_to_attach.attach_limb(target)
+		limb_to_attach.try_attach_limb(target)
 		user.visible_message(span_notice("[user] finishes attaching [tool]!"), span_notice("You attach [tool]."))
 		display_results(user, target, span_notice("You attach [tool]."),
 			span_notice("[user] finishes attaching [tool]!"),

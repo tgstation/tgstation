@@ -322,9 +322,9 @@
 	if(old_limb)
 		old_limb.drop_limb(TRUE)
 
-	. = attach_limb(limb_owner, special)
+	. = try_attach_limb(limb_owner, special)
 	if(!.) //If it failed to replace, re-attach their old limb as if nothing happened.
-		old_limb.attach_limb(limb_owner, TRUE)
+		old_limb.try_attach_limb(limb_owner, TRUE)
 
 ///Checks if you can attach a limb, returns TRUE if you can.
 /obj/item/bodypart/proc/can_attach_limb(mob/living/carbon/new_limb_owner, special)
@@ -336,7 +336,7 @@
 		return FALSE
 
 ///Attach src to target mob if able.
-/obj/item/bodypart/proc/attach_limb(mob/living/carbon/new_limb_owner, special)
+/obj/item/bodypart/proc/try_attach_limb(mob/living/carbon/new_limb_owner, special)
 	if(!can_attach_limb(new_limb_owner, special))
 		return FALSE
 
@@ -392,7 +392,7 @@
 	new_limb_owner.update_damage_overlays()
 	return TRUE
 
-/obj/item/bodypart/head/attach_limb(mob/living/carbon/new_head_owner, special = FALSE, abort = FALSE)
+/obj/item/bodypart/head/try_attach_limb(mob/living/carbon/new_head_owner, special = FALSE, abort = FALSE)
 	// These are stored before calling super. This is so that if the head is from a different body, it persists its appearance.
 	var/real_name = src.real_name
 
@@ -479,7 +479,7 @@
 		return FALSE
 	limb = newBodyPart(limb_zone, 0, 0)
 	if(limb)
-		if(!limb.attach_limb(src, 1))
+		if(!limb.try_attach_limb(src, 1))
 			qdel(limb)
 			return FALSE
 		limb.update_limb(is_creating = TRUE)

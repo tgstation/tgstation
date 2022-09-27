@@ -965,7 +965,7 @@
 				hand_bodyparts += bodypart_instance
 
 
-///Proc to hook behavior on bodypart additions. Do not directly call. You're looking for [/obj/item/bodypart/proc/attach_limb()].
+///Proc to hook behavior on bodypart additions. Do not directly call. You're looking for [/obj/item/bodypart/proc/try_attach_limb()].
 /mob/living/carbon/proc/add_bodypart(obj/item/bodypart/new_bodypart)
 	SHOULD_NOT_OVERRIDE(TRUE)
 

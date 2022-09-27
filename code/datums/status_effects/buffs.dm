@@ -267,7 +267,7 @@
 					//If user does not have the corresponding hand anymore, give them one and return the rod to their hand
 					if(((hand % 2) == 0))
 						var/obj/item/bodypart/L = itemUser.newBodyPart(BODY_ZONE_R_ARM, FALSE, FALSE)
-						if(L.attach_limb(itemUser))
+						if(L.try_attach_limb(itemUser))
 							itemUser.put_in_hand(newRod, hand, forced = TRUE)
 						else
 							qdel(L)
@@ -275,7 +275,7 @@
 							return
 					else
 						var/obj/item/bodypart/L = itemUser.newBodyPart(BODY_ZONE_L_ARM, FALSE, FALSE)
-						if(L.attach_limb(itemUser))
+						if(L.try_attach_limb(itemUser))
 							itemUser.put_in_hand(newRod, hand, forced = TRUE)
 						else
 							qdel(L)
