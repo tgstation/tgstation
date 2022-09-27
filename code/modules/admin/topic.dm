@@ -512,7 +512,6 @@
 			return
 
 		M.forceMove(pick(GLOB.prisonwarp))
-		M.AddComponent(/datum/component/imprisoned)
 		to_chat(M, span_adminnotice("You have been sent to Prison!"), confidential = TRUE)
 
 		log_admin("[key_name(usr)] has sent [key_name(M)] to Prison!")

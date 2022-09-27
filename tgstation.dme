@@ -815,7 +815,6 @@
 #include "code\datums\components\heirloom.dm"
 #include "code\datums\components\holderloving.dm"
 #include "code\datums\components\igniter.dm"
-#include "code\datums\components\imprisoned.dm"
 #include "code\datums\components\infective.dm"
 #include "code\datums\components\irradiated.dm"
 #include "code\datums\components\itembound.dm"
