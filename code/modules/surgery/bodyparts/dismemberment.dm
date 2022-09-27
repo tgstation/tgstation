@@ -334,8 +334,9 @@
 	var/obj/item/bodypart/chest/mob_chest = new_limb_owner.get_bodypart(BODY_ZONE_CHEST)
 	if(mob_chest && !(mob_chest.acceptable_bodytype & bodytype) && !special)
 		return FALSE
+	return TRUE
 
-///Attach src to target mob if able.
+///Attach src to target mob if able, returns FALSE if it fails to.
 /obj/item/bodypart/proc/attach_limb(mob/living/carbon/new_limb_owner, special)
 	if(!can_attach_limb(new_limb_owner, special))
 		return FALSE
