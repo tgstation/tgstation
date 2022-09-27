@@ -449,7 +449,7 @@
 	if(!modularInterface)
 		stack_trace("Silicon [src] ( [type] ) was somehow missing their integrated tablet. Please make a bug report.")
 		create_modularInterface()
-	var/mob/living/silicon/robot/robo = modularInterface.borgo
+	var/mob/living/silicon/robot/robo = modularInterface.silicon_owner
 	if(istype(robo))
 		modularInterface.borglog += "[station_time_timestamp()] - [string]"
 	var/datum/computer_file/program/robotact/program = modularInterface.get_robotact()

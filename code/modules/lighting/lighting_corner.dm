@@ -30,51 +30,49 @@
 	///whether we are to be added to SSlighting's corners_queue list for an update
 	var/needs_update = FALSE
 
-/datum/lighting_corner/New(turf/new_turf, diagonal)
+// Takes as an argument the coords to use as the bottom left (south west) of our corner
+/datum/lighting_corner/New(x, y, z)
 	. = ..()
-	save_master(new_turf, turn(diagonal, 180))
 
-	var/vertical = diagonal & ~(diagonal - 1) // The horizontal directions (4 and 8) are bigger than the vertical ones (1 and 2), so we can reliably say the lsb is the horizontal direction.
-	var/horizontal = diagonal & ~vertical       // Now that we know the horizontal one we can get the vertical one.
+	src.x = x + 0.5
+	src.y = y + 0.5
+	src.z = z
 
-	x = new_turf.x + (horizontal == EAST  ? 0.5 : -0.5)
-	y = new_turf.y + (vertical == NORTH ? 0.5 : -0.5)
-	z = new_turf.z
+	// Alright. We're gonna take a set of coords, and from them do a loop clockwise
+	// To build out the turfs adjacent to us. This is pretty fast
+	var/turf/process_next = locate(x, y, z)
+	if(process_next)
+		master_SW = process_next
+		process_next.lighting_corner_NE = src
+		// Now, we go north!
+		process_next = get_step(process_next, NORTH)
+	else
+		// Yes this is slightly slower then having a guarenteeed turf, but there aren't many null turfs
+		// So this is pretty damn fast
+		process_next = locate(x, y + 1, z)
 
-	// My initial plan was to make this loop through a list of all the dirs (horizontal, vertical, diagonal).
-	// Issue being that the only way I could think of doing it was very messy, slow and honestly overengineered.
-	// So we'll have this hardcode instead.
-	var/turf/new_master_turf
+	// Ok, if we have a north turf, go there. otherwise, onto the next
+	if(process_next)
+		master_NW = process_next
+		process_next.lighting_corner_SE = src
+		// Now, TO THE EAST
+		process_next = get_step(process_next, EAST)
+	else
+		process_next = locate(x + 1, y + 1, z)
 
-	// Diagonal one is easy.
-	new_master_turf = get_step(new_turf, diagonal)
-	if (new_master_turf) // In case we're on the map's border.
-		save_master(new_master_turf, diagonal)
+	// Etc etc
+	if(process_next)
+		master_NE = process_next
+		process_next.lighting_corner_SW = src
+		// Now, TO THE SOUTH AGAIN (SE)
+		process_next = get_step(process_next, SOUTH)
+	else
+		process_next = locate(x + 1, y, z)
 
-	// Now the horizontal one.
-	new_master_turf = get_step(new_turf, horizontal)
-	if (new_master_turf) // Ditto.
-		save_master(new_master_turf, ((new_master_turf.x > x) ? EAST : WEST) | ((new_master_turf.y > y) ? NORTH : SOUTH)) // Get the dir based on coordinates.
-
-	// And finally the vertical one.
-	new_master_turf = get_step(new_turf, vertical)
-	if (new_master_turf)
-		save_master(new_master_turf, ((new_master_turf.x > x) ? EAST : WEST) | ((new_master_turf.y > y) ? NORTH : SOUTH)) // Get the dir based on coordinates.
-
-/datum/lighting_corner/proc/save_master(turf/master, dir)
-	switch (dir)
-		if (NORTHEAST)
-			master_NE = master
-			master.lighting_corner_SW = src
-		if (SOUTHEAST)
-			master_SE = master
-			master.lighting_corner_NW = src
-		if (SOUTHWEST)
-			master_SW = master
-			master.lighting_corner_NE = src
-		if (NORTHWEST)
-			master_NW = master
-			master.lighting_corner_SE = src
+	// anddd the last tile
+	if(process_next)
+		master_SE = process_next
+		process_next.lighting_corner_NW = src
 
 /datum/lighting_corner/proc/self_destruct_if_idle()
 	if (!LAZYLEN(affecting))

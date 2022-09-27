@@ -126,32 +126,26 @@
 	if(machine_stat & NOPOWER)
 		return
 
-	. += "fire_overlay"
+	. += mutable_appearance(icon, "fire_overlay")
 	if(is_station_level(z))
-		. += "fire_[SSsecurity_level.get_current_level_as_number()]"
 		. += mutable_appearance(icon, "fire_[SSsecurity_level.get_current_level_as_number()]")
 		. += emissive_appearance(icon, "fire_[SSsecurity_level.get_current_level_as_number()]", src, alpha = src.alpha)
 	else
-		. += "fire_[SEC_LEVEL_GREEN]"
 		. += mutable_appearance(icon, "fire_[SEC_LEVEL_GREEN]")
 		. += emissive_appearance(icon, "fire_[SEC_LEVEL_GREEN]", src, alpha = src.alpha)
 
 	if(!(my_area?.fire || LAZYLEN(my_area?.active_firelocks)))
 		if(my_area?.fire_detect) //If this is false, leave the green light missing. A good hint to anyone paying attention.
-			. += "fire_off"
 			. += mutable_appearance(icon, "fire_off")
 			. += emissive_appearance(icon, "fire_off", src, alpha = src.alpha)
 	else if(obj_flags & EMAGGED)
-		. += "fire_emagged"
 		. += mutable_appearance(icon, "fire_emagged")
 		. += emissive_appearance(icon, "fire_emagged", src, alpha = src.alpha)
 	else
-		. += "fire_on"
 		. += mutable_appearance(icon, "fire_on")
 		. += emissive_appearance(icon, "fire_on", src, alpha = src.alpha)
 
 	if(!panel_open && my_area?.fire_detect && my_area?.fire) //It just looks horrible with the panel open
-		. += "fire_detected"
 		. += mutable_appearance(icon, "fire_detected")
 		. += emissive_appearance(icon, "fire_detected", src, alpha = src.alpha) //Pain
 

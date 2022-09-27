@@ -30,9 +30,9 @@
 	/// Weakref to the tram piece we control
 	var/datum/weakref/tram_ref
 	/// Proximity threshold for amber warning (slow people may be in danger)
-	var/amber_distance_threshold = 40
+	var/amber_distance_threshold = 60
 	/// Proximity threshold for red warning (running people will likely not be able to cross)
-	var/red_distance_threshold = 20
+	var/red_distance_threshold = 35
 
 /obj/machinery/crossing_signal/Initialize(mapload)
 	. = ..()
@@ -140,9 +140,12 @@
 	// Check for stopped state.
 	// Will kill the process since tram starting up will restart process.
 	if(!tram.travelling)
-		// if super close, show red anyway since tram could suddenly start moving
+		// If super close, show red anyway since tram could suddenly start moving. If the tram could be approaching, show amber.
 		if(abs(approach_distance) < red_distance_threshold)
 			set_signal_state(XING_STATE_RED)
+			return PROCESS_KILL
+		if(abs(approach_distance) < amber_distance_threshold)
+			set_signal_state(XING_STATE_AMBER)
 			return PROCESS_KILL
 		set_signal_state(XING_STATE_GREEN)
 		return PROCESS_KILL

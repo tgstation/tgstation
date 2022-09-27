@@ -18,7 +18,7 @@
 /// Returns either its offset, or 0 if it's not a valid ref
 #define GET_TURF_PLANE_OFFSET(z_reference) ((SSmapping.max_plane_offset && isatom(z_reference)) ? GET_Z_PLANE_OFFSET(z_reference.z) : 0)
 /// Essentially just an unsafe version of GET_TURF_PLANE_OFFSET()
-/// Takes a thing we are SURE OF, returns its offset with a list lookup
+/// Takes a z value we returns its offset with a list lookup
 /// Will runtime during parts of init. Be careful :)
 #define GET_Z_PLANE_OFFSET(z) (SSmapping.z_level_to_plane_offset[z])
 
