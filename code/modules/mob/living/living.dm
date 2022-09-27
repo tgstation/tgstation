@@ -1608,7 +1608,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		else
 			registered_z = null
 
-/mob/living/on_changed_z_level(turf/old_turf, turf/new_turf)
+/mob/living/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	..()
 	update_z(new_turf?.z)
 
@@ -2307,7 +2307,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	if(!isnum(duration) || duration <= 0 || QDELETED(src) || !check_rights(NONE))
 		return
 
-	adjust_timed_status_effect(duration SECONDS, impediments[chosen])
+	adjust_timed_status_effect(duration * 1 SECONDS, impediments[chosen])
 
 /mob/living/proc/admin_add_mood_event(mob/admin)
 	if (!admin || !check_rights(NONE))

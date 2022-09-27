@@ -205,3 +205,9 @@
 	desc = "Ignore the warning label on a springlock MODsuit."
 	database_id = MEDAL_SPRINGLOCK
 	icon = "springlock"
+
+/datum/award/achievement/misc/healthy
+	name = "The Picture of Health"
+	desc = "Don't be such a baby, it's just a heart attack. You've bounced back from worse!"
+	database_id = MEDAL_HEALTHY
+	icon = "picofhealth"
