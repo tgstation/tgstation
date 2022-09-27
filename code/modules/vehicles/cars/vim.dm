@@ -18,8 +18,6 @@
 	light_power = 2
 	light_on = FALSE
 	engine_sound = 'sound/effects/servostep.ogg'
-		///What mobs are currently repairing us.
-	var/list/mob/living/repairing_mobs
 	///Maximum size of a mob trying to enter the mech
 	var/maximum_mob_size = MOB_SIZE_SMALL
 	COOLDOWN_DECLARE(sound_cooldown)
@@ -55,15 +53,14 @@
 	if(user.combat_mode)
 		return
 	. = TRUE
-	if(LAZYFIND(repairing_mobs, user))
-		balloon_alert(user, "you're already repairing it!")
+	if(user.do_afters)
+		balloon_alert(user, "you're already busy!")
 		return
 	if(atom_integrity >= max_integrity)
 		balloon_alert(user, "it's not damaged!")
 		return
 	if(!W.tool_start_check(user, amount=1))
 		return
-	LAZYADD(repairing_mobs, user)
 	user.balloon_alert_to_viewers("started welding [src]", "started repairing [src]")
 	audible_message(span_hear("You hear welding."))
 	var/did_the_thing
@@ -78,7 +75,6 @@
 		user.balloon_alert_to_viewers("[(atom_integrity >= max_integrity) ? "fully" : "partially"] repaired [src]")
 	else
 		user.balloon_alert_to_viewers("stopped welding [src]", "interrupted the repair!")
-	LAZYREMOVE(repairing_mobs, user)
 
 /obj/vehicle/sealed/car/vim/mob_enter(mob/newoccupant, silent = FALSE)
 	. = ..()
