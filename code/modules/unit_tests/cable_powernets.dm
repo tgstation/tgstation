@@ -21,15 +21,15 @@
 
 			var/obj/machinery/power/found_machine = powernets.nodes[1]
 			//Check if they're a station area
-			var/area/cable_area = get_area(found_cable)
-			if(!(cable_area.type in GLOB.the_station_areas) || istype(cable_area, /area/station/solars))
+			var/area/machine_area = get_area(found_machine)
+			if(!(machine_area.type in GLOB.the_station_areas) || istype(machine_area, /area/station/solars))
 				continue
 			TEST_ASSERT(!powernets.cables, "CABLE: [powernets] found with no cables connected ([found_machine.x], [found_machine.y], [found_machine.z]).")
 
 		if(!powernets.avail)
 			var/obj/structure/cable/random_cable = powernets.cables[1]
 			//Check if they're a station area
-			var/area/cable_area = get_area(found_cable)
+			var/area/cable_area = get_area(random_cable)
 			if(!(cable_area.type in GLOB.the_station_areas) || istype(cable_area, /area/station/solars))
 				continue
 			TEST_FAIL("CABLE: [powernets] found with no power roundstart, connected to a cable at ([random_cable.x], [random_cable.y], [random_cable.z]).")
