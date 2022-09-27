@@ -54,7 +54,7 @@
 					organ_rejection_dam = 30
 
 			if(!bodypart_to_attach.can_attach_limb(target))
-				to_chat(user, span_warning("You fail in attaching [target]'s [parse_zone(target_zone)]! Their body has rejected [limb_to_attach]!"))
+				to_chat(user, span_warning("You fail in attaching [target]'s [parse_zone(target_zone)]! Their body has rejected [bodypart_to_attach]!"))
 				return SURGERY_STEP_FAIL
 
 		if(target_zone == bodypart_to_attach.body_zone) //so we can't replace a leg with an arm, or a human arm with a monkey arm.
