@@ -18,3 +18,7 @@
 #define MAIN_STATION_TRAM "main station tram"
 ///the specific_lift_id of the tram on the hilbert research station
 #define HILBERT_TRAM "tram_hilbert"
+
+// Defines for update_lift_doors
+#define OPEN_DOORS "open"
+#define CLOSE_DOORS "close"

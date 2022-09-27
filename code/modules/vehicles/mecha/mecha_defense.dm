@@ -41,7 +41,7 @@
 	if(damage_taken <= 0 || atom_integrity < 0)
 		return damage_taken
 
-	spark_system.start()
+	spark_system?.start()
 	try_deal_internal_damage(damage_taken)
 	if(damage_taken >= 5 || prob(33))
 		to_chat(occupants, "[icon2html(src, occupants)][span_userdanger("Taking damage!")]")
@@ -315,19 +315,34 @@
 		to_chat(user, span_notice("You close the hatch to the power unit."))
 
 /obj/vehicle/sealed/mecha/welder_act(mob/living/user, obj/item/W)
-	. = ..()
 	if(user.combat_mode)
 		return
 	. = TRUE
-	if(atom_integrity < max_integrity)
-		if(!W.use_tool(src, user, 0, volume=50, amount=1))
-			return
-		user.visible_message(span_notice("[user] repairs some damage to [name]."), span_notice("You repair some damage to [src]."))
-		atom_integrity += min(10, max_integrity-atom_integrity)
-		if(atom_integrity == max_integrity)
-			to_chat(user, span_notice("It looks to be fully repaired now."))
+	if(LAZYFIND(repairing_mobs, user))
+		balloon_alert(user, "you're already repairing it!")
 		return
-	to_chat(user, span_warning("[src] is at full integrity!"))
+	if(atom_integrity >= max_integrity)
+		balloon_alert(user, "it's not damaged!")
+		return
+	if(!W.tool_start_check(user, amount=1))
+		return
+	LAZYADD(repairing_mobs, user)
+	user.balloon_alert_to_viewers("started welding [src]", "started repairing [src]")
+	audible_message(span_hear("You hear welding."))
+	var/did_the_thing
+	while(atom_integrity < max_integrity)
+		if(W.use_tool(src, user, 2.5 SECONDS, volume=50, amount=1))
+			did_the_thing = TRUE
+			atom_integrity += min(10, (max_integrity - atom_integrity))
+			audible_message(span_hear("You hear welding."))
+		else
+			break
+	if(did_the_thing)
+		user.balloon_alert_to_viewers("[(atom_integrity >= max_integrity) ? "fully" : "partially"] repaired [src]")
+	else
+		user.balloon_alert_to_viewers("stopped welding [src]", "interrupted the repair!")
+	LAZYREMOVE(repairing_mobs, user)
+
 
 /obj/vehicle/sealed/mecha/proc/full_repair(charge_cell)
 	atom_integrity = max_integrity
@@ -356,31 +371,6 @@
 			visual_effect_icon = ATTACK_EFFECT_MECHTOXIN
 	..()
 
-/obj/vehicle/sealed/mecha/atom_destruction()
-	if(wreckage)
-		var/mob/living/silicon/ai/AI
-		for(var/crew in occupants)
-			if(isAI(crew))
-				if(AI)
-					var/mob/living/silicon/ai/unlucky_ais = crew
-					unlucky_ais.gib()
-					continue
-				AI = crew
-		var/obj/structure/mecha_wreckage/WR = new wreckage(loc, AI)
-		for(var/obj/item/mecha_parts/mecha_equipment/E in flat_equipment)
-			if(E.detachable && prob(30))
-				WR.crowbar_salvage += E
-				E.detach(WR) //detaches from src into WR
-				E.activated = TRUE
-			else
-				E.detach(loc)
-				qdel(E)
-		if(cell)
-			WR.crowbar_salvage += cell
-			cell.forceMove(WR)
-			cell.charge = rand(0, cell.charge)
-			cell = null
-	. = ..()
 
 /obj/vehicle/sealed/mecha/proc/ammo_resupply(obj/item/mecha_ammo/A, mob/user,fail_chat_override = FALSE)
 	if(!A.rounds)
@@ -392,7 +382,7 @@
 	for(var/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/gun in flat_equipment)
 		ammo_needed = 0
 
-		if(!istype(gun, /obj/item/mecha_parts/mecha_equipment/weapon/ballistic) && gun.ammo_type == A.ammo_type)
+		if(gun.ammo_type != A.ammo_type)
 			continue
 		found_gun = TRUE
 		if(A.direct_load)
@@ -410,8 +400,15 @@
 			playsound(get_turf(user),A.load_audio,50,TRUE)
 			to_chat(user, span_notice("You add [ammo_needed] [A.ammo_type][ammo_needed > 1?"s":""] to the [gun.name]"))
 			A.rounds = A.rounds - ammo_needed
-			if(A.custom_materials)
-				A.set_custom_materials(A.custom_materials, A.rounds / initial(A.rounds))
+			if(A.custom_materials)	//Change material content of the ammo box according to the amount of ammo deposited into the weapon
+				/// list of materials contained in the ammo box after we put it through the equation so we can stick this list into set_custom_materials()
+				var/list/new_material_content = list()
+				for(var/datum/material/current_material in A.custom_materials)
+					if(istype(current_material, /datum/material/iron))	//we can flatten an empty ammo box into a sheet of iron (2000 units) so we have to make sure the box always has this amount at minimum
+						new_material_content[current_material] = (A.custom_materials[current_material] - 2000) * (A.rounds / initial(A.rounds)) + 2000
+					else
+						new_material_content[current_material] = A.custom_materials[current_material] * (A.rounds / initial(A.rounds))
+				A.set_custom_materials(new_material_content)
 			A.update_name()
 			return TRUE
 
@@ -421,9 +418,12 @@
 			gun.projectiles_cache = gun.projectiles_cache + A.rounds
 		playsound(get_turf(user),A.load_audio,50,TRUE)
 		to_chat(user, span_notice("You add [A.rounds] [A.ammo_type][A.rounds > 1?"s":""] to the [gun.name]"))
+		if(A.qdel_on_empty)
+			qdel(A)
+			return TRUE
 		A.rounds = 0
 		A.set_custom_materials(list(/datum/material/iron=2000))
-		A.update_name()
+		A.update_appearance()
 		return TRUE
 	if(!fail_chat_override)
 		if(found_gun)

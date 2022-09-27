@@ -581,6 +581,9 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	if(ringing)
 		icon_state = "[base_icon_state]_ringing"
 		return ..()
+	if(panel_open)
+		icon_state = "[base_icon_state]_open"
+		return ..()
 	icon_state = "[base_icon_state][(total_users || replay_mode) ? 1 : 0]"
 	return ..()
 

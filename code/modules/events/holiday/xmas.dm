@@ -1,6 +1,6 @@
 /obj/item/toy/xmas_cracker
 	name = "xmas cracker"
-	icon = 'icons/obj/christmas.dmi'
+	icon = 'icons/obj/holiday/christmas.dmi'
 	icon_state = "cracker"
 	desc = "Directions for use: Requires two people, one to pull each end."
 	/// The crack state of the toy. If set to TRUE, you can no longer crack it by attacking.
@@ -9,9 +9,9 @@
 /obj/item/toy/xmas_cracker/attack(mob/target, mob/user)
 	if( !cracked && ishuman(target) && (target.stat == CONSCIOUS) && !target.get_active_held_item() )
 		target.visible_message(span_notice("[user] and [target] pop \an [src]! *pop*"), span_notice("You pull \an [src] with [target]! *pop*"), span_hear("You hear a pop."))
-		var/obj/item/paper/Joke = new /obj/item/paper(user.loc)
-		Joke.name = "[pick("awful","terrible","unfunny")] joke"
-		Joke.info = pick("What did one snowman say to the other?\n\n<i>'Is it me or can you smell carrots?'</i>",
+		var/obj/item/paper/joke_paper = new /obj/item/paper(user.loc)
+		joke_paper.name = "[pick("awful","terrible","unfunny")] joke"
+		joke_paper.add_raw_text(pick("What did one snowman say to the other?\n\n<i>'Is it me or can you smell carrots?'</i>",
 			"Why couldn't the snowman get laid?\n\n<i>He was frigid!</i>",
 			"Where are santa's helpers educated?\n\n<i>Nowhere, they're ELF-taught.</i>",
 			"What happened to the man who stole advent calanders?\n\n<i>He got 25 days.</i>",
@@ -20,7 +20,8 @@
 			"What do you get from eating tree decorations?\n\n<i>Tinsilitis!</i>",
 			"What do snowmen wear on their heads?\n\n<i>Ice caps!</i>",
 			"Why is Christmas just like life on ss13?\n\n<i>You do all the work and the fat guy gets all the credit.</i>",
-			"Why doesn't Santa have any children?\n\n<i>Because he only comes down the chimney.</i>")
+			"Why doesn't Santa have any children?\n\n<i>Because he only comes down the chimney.</i>"))
+		joke_paper.update_appearance()
 		new /obj/item/clothing/head/festive(target.loc)
 		user.update_icons()
 		cracked = TRUE
@@ -30,7 +31,7 @@
 		other_half.icon_state = "cracker2"
 		target.put_in_active_hand(other_half)
 		playsound(user, 'sound/effects/snap.ogg', 50, TRUE)
-		return 1
+		return TRUE
 	return ..()
 
 /obj/item/clothing/head/festive
@@ -74,6 +75,8 @@
 	weight = 20
 	max_occurrences = 1
 	earliest_start = 30 MINUTES
+	category = EVENT_CATEGORY_HOLIDAY
+	description = "Spawns santa, who shall roam the station, handing out gifts."
 
 /datum/round_event/santa
 	var/mob/living/carbon/human/santa //who is our santa?

@@ -1,10 +1,10 @@
-Empire
-Gent
-Imperial
-Britannia
-Navy
-Tea
 Admiral
 Bowler
+Britannia
+Empire
 Fancy
+Gent
+Imperial
+Navy
 Queen
+Tea

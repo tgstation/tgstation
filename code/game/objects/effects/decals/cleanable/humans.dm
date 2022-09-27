@@ -305,11 +305,11 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 			if(species == "unknown")
 				. += "Some <B>feet</B>."
 			else if(species == SPECIES_MONKEY)
-				. += "[icon2html('icons/mob/human.dmi', user, "monkey")] Some <B>monkey feet</B>."
+				. += "[icon2html('icons/mob/species/human/human.dmi', user, "monkey")] Some <B>monkey feet</B>."
 			else if(species == SPECIES_HUMAN)
-				. += "[icon2html('icons/mob/human_parts.dmi', user, "default_human_l_leg")] Some <B>human feet</B>."
+				. += "[icon2html('icons/mob/species/human/bodyparts.dmi', user, "default_human_l_leg")] Some <B>human feet</B>."
 			else
-				. += "[icon2html('icons/mob/human_parts.dmi', user, "[species]_l_leg")] Some <B>[species] feet</B>."
+				. += "[icon2html('icons/mob/species/human/bodyparts.dmi', user, "[species]_l_leg")] Some <B>[species] feet</B>."
 
 /obj/effect/decal/cleanable/blood/footprints/replace_decal(obj/effect/decal/cleanable/C)
 	if(blood_state != C.blood_state) //We only replace footprints of the same type as us
@@ -377,10 +377,10 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 			var/mob/living/carbon/human/splashed_human = iter_atom
 			if(splashed_human.wear_suit)
 				splashed_human.wear_suit.add_blood_DNA(blood_dna_info)
-				splashed_human.update_inv_wear_suit()    //updates mob overlays to show the new blood (no refresh)
+				splashed_human.update_worn_oversuit()    //updates mob overlays to show the new blood (no refresh)
 			if(splashed_human.w_uniform)
 				splashed_human.w_uniform.add_blood_DNA(blood_dna_info)
-				splashed_human.update_inv_w_uniform()    //updates mob overlays to show the new blood (no refresh)
+				splashed_human.update_worn_undersuit()    //updates mob overlays to show the new blood (no refresh)
 			splatter_strength--
 	if(splatter_strength <= 0) // we used all the puff so we delete it.
 		qdel(src)

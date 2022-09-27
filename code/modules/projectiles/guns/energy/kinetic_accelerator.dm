@@ -22,7 +22,7 @@
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/add_seclight_point()
 	AddComponent(/datum/component/seclite_attachable, \
-		light_overlay_icon = 'icons/obj/guns/flashlights.dmi', \
+		light_overlay_icon = 'icons/obj/weapons/guns/flashlights.dmi', \
 		light_overlay = "flight", \
 		overlay_x = 15, \
 		overlay_y = 9)
@@ -501,7 +501,7 @@
 		KA.name = chassis_name
 		if(iscarbon(KA.loc))
 			var/mob/living/carbon/holder = KA.loc
-			holder.update_inv_hands()
+			holder.update_held_items()
 
 /obj/item/borg/upgrade/modkit/chassis_mod/uninstall(obj/item/gun/energy/recharge/kinetic_accelerator/KA)
 	KA.icon_state = initial(KA.icon_state)
@@ -509,7 +509,7 @@
 	KA.name = initial(KA.name)
 	if(iscarbon(KA.loc))
 		var/mob/living/carbon/holder = KA.loc
-		holder.update_inv_hands()
+		holder.update_held_items()
 	..()
 
 /obj/item/borg/upgrade/modkit/chassis_mod/orange

@@ -19,7 +19,7 @@
 	owner.visible_message(span_danger("[owner] starts having a seizure!"), span_userdanger("You have a seizure!"))
 	owner.Unconscious(200 * GET_MUTATION_POWER(src))
 	owner.set_timed_status_effect(2000 SECONDS * GET_MUTATION_POWER(src), /datum/status_effect/jitter) //yes this number looks crazy but the jitter animations are amplified based on the duration.
-	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "epilepsy", /datum/mood_event/epilepsy)
+	owner.add_mood_event("epilepsy", /datum/mood_event/epilepsy)
 	addtimer(CALLBACK(src, .proc/jitter_less), 90)
 
 /datum/mutation/human/epilepsy/proc/jitter_less()
@@ -104,7 +104,7 @@
 	if(DT_PROB(2.5, delta_time) && owner.stat == CONSCIOUS)
 		owner.emote("scream")
 		if(prob(25))
-			owner.hallucination += 20
+			owner.adjust_hallucinations(40 SECONDS)
 
 //Dwarfism shrinks your body and lets you pass tables.
 /datum/mutation/human/dwarfism
@@ -474,7 +474,7 @@
 
 	if(new_stat != HARD_CRIT)
 		return
-	var/list/organs = owner.getorganszone(BODY_ZONE_HEAD, 1)
+	var/list/organs = owner.getorganszone(BODY_ZONE_HEAD, TRUE)
 
 	for(var/obj/item/organ/I in organs)
 		qdel(I)

@@ -1,4 +1,4 @@
-/datum/storage/bag_of_holding/attempt_insert(datum/source, obj/item/to_insert, mob/user, override, force)
+/datum/storage/bag_of_holding/attempt_insert(obj/item/to_insert, mob/user, override, force)
 	var/obj/item/resolve_parent = parent?.resolve()
 	if(!resolve_parent)
 		return
@@ -27,7 +27,7 @@
 	playsound(loccheck,'sound/effects/supermatter.ogg', 200, TRUE)
 
 	message_admins("[ADMIN_LOOKUPFLW(user)] detonated a bag of holding at [ADMIN_VERBOSEJMP(loccheck)].")
-	log_game("[key_name(user)] detonated a bag of holding at [loc_name(loccheck)].")
+	user.log_message("detonated a bag of holding at [loc_name(loccheck)].", LOG_ATTACK, color="red")
 
 	user.gib(TRUE, TRUE, TRUE)
 	new/obj/boh_tear(loccheck)

@@ -13,7 +13,7 @@
 	response_harm_continuous = "punches"
 	response_harm_simple = "punch"
 	speak_chance = 1
-	icon = 'icons/mob/cult.dmi'
+	icon = 'icons/mob/nonhuman-player/cult.dmi'
 	speed = 0
 	combat_mode = TRUE
 	stop_automated_movement = 1
@@ -33,7 +33,7 @@
 	loot = list(/obj/item/ectoplasm)
 	del_on_death = TRUE
 	initial_language_holder = /datum/language_holder/construct
-	deathmessage = "collapses in a shattered heap."
+	death_message = "collapses in a shattered heap."
 	var/list/construct_spells = list()
 	var/playstyle_string = "<span class='big bold'>You are a generic construct!</span><b> Your job is to not exist, and you should probably adminhelp this.</b>"
 	var/master = null

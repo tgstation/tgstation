@@ -1,5 +1,5 @@
 /obj/item/transfer_valve
-	icon = 'icons/obj/assemblies.dmi'
+	icon = 'icons/obj/assemblies/assemblies.dmi'
 	name = "tank transfer valve"
 	icon_state = "valve_1"
 	base_icon_state = "valve"
@@ -148,7 +148,7 @@
 
 	if(change_volume)
 		target_mix.volume += other_mix.volume
-	
+
 	target_mix.merge(other_mix.remove_ratio(1))
 	return TRUE
 
@@ -175,7 +175,7 @@
 		var/attachment
 		var/attachment_signal_log
 		if(attached_device)
-			if(istype(attached_device, /obj/item/assembly/signaler))
+			if(issignaler(attached_device))
 				var/obj/item/assembly/signaler/attached_signaller = attached_device
 				attachment = "<A HREF='?_src_=holder;[HrefToken()];secrets=list_signalers'>[attached_signaller]</A>"
 				attachment_signal_log = attached_signaller.last_receive_signal_log ? "The following log entry is the last one associated with the attached signaller<br>[attached_signaller.last_receive_signal_log]" : "There is no signal log entry."
@@ -194,6 +194,12 @@
 		if(bomber)
 			admin_bomber_message = "The bomb's most recent set of fingerprints indicate it was last touched by [ADMIN_LOOKUPFLW(bomber)]"
 			bomber_message = " - Last touched by: [key_name_admin(bomber)]"
+			bomber.log_message("opened bomb valve", LOG_GAME, log_globally = FALSE)
+
+		if(istype(attachment, /obj/item/assembly/voice))
+			var/obj/item/assembly/voice/spoken_trigger = attachment
+			attachment_message += " with the following activation message: \"[spoken_trigger.recorded]\""
+			admin_attachment_message += " with the following activation message: \"[spoken_trigger.recorded]\""
 
 		var/admin_bomb_message = "Bomb valve opened in [ADMIN_VERBOSEJMP(bombturf)]<br>[admin_attachment_message]<br>[admin_bomber_message]<br>[attachment_signal_log]"
 		GLOB.bombers += admin_bomb_message

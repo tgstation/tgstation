@@ -14,6 +14,8 @@
 	var/destination_y
 
 	var/static/datum/gas_mixture/immutable/space/space_gas = new
+	// We do NOT want atmos adjacent turfs
+	init_air = FALSE
 	run_later = TRUE
 	plane = PLANE_SPACE
 	layer = SPACE_LAYER
@@ -31,49 +33,41 @@
 /**
  * Space Initialize
  *
- * Doesn't call parent, see [/atom/proc/Initialize]
+ * Doesn't call parent, see [/atom/proc/Initialize].
+ * When adding new stuff to /atom/Initialize, /turf/Initialize, etc
+ * don't just add it here unless space actually needs it.
+ *
+ * There is a lot of work that is intentionally not done because it is not currently used.
+ * This includes stuff like smoothing, blocking camera visibility, etc.
+ * If you are facing some odd bug with specifically space, check if it's something that was
+ * intentionally ommitted from this implementation.
  */
 /turf/open/space/Initialize(mapload)
 	SHOULD_CALL_PARENT(FALSE)
-	icon_state = SPACE_ICON_STATE
+	icon_state = SPACE_ICON_STATE(x, y, z)
 	air = space_gas
-	vis_contents.Cut() //removes inherited overlays
-	visibilityChanged()
 
 	if(flags_1 & INITIALIZED_1)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	flags_1 |= INITIALIZED_1
 
-	if (length(smoothing_groups))
-		sortTim(smoothing_groups) //In case it's not properly ordered, let's avoid duplicate entries with the same values.
-		SET_BITFLAG_LIST(smoothing_groups)
-	if (length(canSmoothWith))
-		sortTim(canSmoothWith)
-		if(canSmoothWith[length(canSmoothWith)] > MAX_S_TURF) //If the last element is higher than the maximum turf-only value, then it must scan turf contents for smoothing targets.
-			smoothing_flags |= SMOOTH_OBJ
-		SET_BITFLAG_LIST(canSmoothWith)
-
 	var/area/our_area = loc
 	if(our_area.area_has_base_lighting && always_lit) //Only provide your own lighting if the area doesn't for you
-		add_overlay(GLOB.fullbright_overlay)
+		// Intentionally not add_overlay for performance reasons.
+		// add_overlay does a bunch of generic stuff, like creating a new list for overlays,
+		// queueing compile, cloning appearance, etc etc etc that is not necessary here.
+		overlays += GLOB.fullbright_overlay
 
-	if(requires_activation)
-		SSair.add_to_active(src, TRUE)
+	if (!mapload)
+		if(requires_activation)
+			SSair.add_to_active(src, TRUE)
 
-	if (light_system == STATIC_LIGHT && light_power && light_range)
-		update_light()
-
-	if (opacity)
-		directional_opacity = ALL_CARDINALS
-
-	var/turf/T = SSmapping.get_turf_above(src)
-	if(T)
-		T.multiz_turf_new(src, DOWN)
-	T = SSmapping.get_turf_below(src)
-	if(T)
-		T.multiz_turf_new(src, UP)
-
-	ComponentInitialize()
+		var/turf/T = SSmapping.get_turf_above(src)
+		if(T)
+			T.multiz_turf_new(src, DOWN)
+		T = SSmapping.get_turf_below(src)
+		if(T)
+			T.multiz_turf_new(src, UP)
 
 	return INITIALIZE_HINT_NORMAL
 
@@ -82,9 +76,6 @@
 	if(destination_z)
 		var/turf/T = locate(destination_x, destination_y, destination_z)
 		user.forceMove(T)
-
-/turf/open/space/Initalize_Atmos(times_fired)
-	return
 
 /turf/open/space/TakeTemperature(temp)
 
@@ -185,7 +176,7 @@
 
 /turf/open/space/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	underlay_appearance.icon = 'icons/turf/space.dmi'
-	underlay_appearance.icon_state = SPACE_ICON_STATE
+	underlay_appearance.icon_state = SPACE_ICON_STATE(x, y, z)
 	underlay_appearance.plane = PLANE_SPACE
 	return TRUE
 

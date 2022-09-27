@@ -1,7 +1,7 @@
 /mob/living/simple_animal/bot/secbot
 	name = "\improper Securitron"
 	desc = "A little security robot. He looks less than thrilled."
-	icon = 'icons/mob/aibots.dmi'
+	icon = 'icons/mob/silicon/aibots.dmi'
 	icon_state = "secbot"
 	density = FALSE
 	anchored = FALSE
@@ -101,7 +101,7 @@
 /mob/living/simple_animal/bot/secbot/beepsky/explode()
 	var/atom/Tsec = drop_location()
 	new /obj/item/stock_parts/cell/potato(Tsec)
-	var/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass/drinking_oil = new(Tsec)
+	var/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass/drinking_oil = new(Tsec)
 	drinking_oil.reagents.add_reagent(/datum/reagent/consumable/ethanol/whiskey, 15)
 	return ..()
 
@@ -271,7 +271,7 @@
 		start_handcuffing(attack_target)
 
 /mob/living/simple_animal/bot/secbot/hitby(atom/movable/hitting_atom, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
-	if(istype(hitting_atom, /obj/item))
+	if(isitem(hitting_atom))
 		var/obj/item/item_hitby = hitting_atom
 		var/mob/thrown_by = item_hitby.thrownby?.resolve()
 		if(item_hitby.throwforce < src.health && thrown_by && ishuman(thrown_by))

@@ -25,7 +25,7 @@
 
 // Generates a holodeck-tracked card deck
 /obj/effect/holodeck_effect/cards
-	icon = 'icons/obj/playing_cards.dmi'
+	icon = 'icons/obj/toys/playing_cards.dmi'
 	icon_state = "deck_syndicate_full"
 
 /obj/effect/holodeck_effect/cards/activate(obj/machinery/computer/holodeck/holodeck)
@@ -113,3 +113,6 @@
 
 /obj/effect/holodeck_effect/mobspawner/penguin_baby
 	mobtype = /mob/living/simple_animal/pet/penguin/baby
+
+/obj/effect/holodeck_effect/mobspawner/crab/jon
+	mobtype = /mob/living/simple_animal/crab/jon

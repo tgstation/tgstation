@@ -181,7 +181,7 @@
 /mob/living/simple_animal/hostile/clockwork/cogscarab
 	name = "cogscarab"
 	desc = "A station maintenance drone adorned in intricate bronze detailing. Its front sensor glows an eery red."
-	icon = 'icons/mob/drone.dmi'
+	icon = 'icons/mob/silicon/drone.dmi'
 	icon_state = "drone_clock"
 	icon_living = "drone_clock"
 	icon_dead = "drone_clock_dead"

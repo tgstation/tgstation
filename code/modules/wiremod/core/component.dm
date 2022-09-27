@@ -84,8 +84,6 @@
 		trigger_output = add_output_port("Triggered", PORT_TYPE_SIGNAL, order = 2)
 	if(circuit_flags & CIRCUIT_FLAG_INSTANT)
 		ui_color = "orange"
-	if(circuit_flags & CIRCUIT_FLAG_REFUSE_MODULE)
-		desc += " Incompatible with module components."
 
 /obj/item/circuit_component/Destroy()
 	if(parent)

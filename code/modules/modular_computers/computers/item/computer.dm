@@ -295,7 +295,33 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	else if(atom_integrity < max_integrity)
 		. += span_warning("It is damaged.")
 
-	. += get_modular_computer_parts_examine(user)
+	var/obj/item/computer_hardware/hard_drive/hdd = all_components[MC_HDD]
+	for(var/datum/computer_file/app_examine as anything in hdd.stored_files)
+		if(app_examine.on_examine(src, user))
+			. += app_examine.on_examine(src, user)
+
+	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
+	var/obj/item/computer_hardware/card_slot/card_slot2 = all_components[MC_CARD2]
+	var/multiple_slots = istype(card_slot) && istype(card_slot2)
+	if(card_slot)
+		if(card_slot.stored_card || card_slot2?.stored_card)
+			var/obj/item/card/id/first_ID = card_slot?.stored_card
+			var/obj/item/card/id/second_ID = card_slot2?.stored_card
+			var/multiple_cards = (first_ID && second_ID)
+			if(Adjacent(user))
+				. += "It has [multiple_slots ? "two slots" : "a slot"] for identification cards installed[multiple_cards ? " which contain [first_ID] and [second_ID]" : ", one of which contains [first_ID || second_ID]"]."
+			else
+				. += "It has [multiple_slots ? "two slots" : "a slot"] for identification cards installed, [multiple_cards ? "both of which appear" : "and one of them appears"] to be occupied."
+			. += span_info("Alt-click [src] to eject the identification card[multiple_cards ? "s":""].")
+		else
+			. += "It has [multiple_slots ? "two slots" : "a slot"] installed for identification cards."
+
+	var/obj/item/computer_hardware/printer/printer_slot = all_components[MC_PRINT]
+	if(printer_slot)
+		. += "It has a printer installed."
+		if(Adjacent(user))
+			. += "The printer's paper levels are at: [printer_slot.stored_paper]/[printer_slot.max_paper].</span>"
+
 
 /obj/item/modular_computer/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -354,11 +380,6 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 			to_chat(user, span_warning("You press the power button, but the computer fails to boot up, displaying variety of errors before shutting down again."))
 		return FALSE
 
-	// If we have a recharger, enable it automatically. Lets computer without a battery work.
-	var/obj/item/computer_hardware/recharger/recharger = all_components[MC_CHARGE]
-	if(recharger)
-		recharger.enabled = 1
-
 	if(use_power()) // use_power() checks if the PC is powered
 		if(issynth)
 			to_chat(user, span_notice("You send an activation signal to \the [src], turning it on."))
@@ -403,8 +424,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		else
 			active_program = null
 
-	for(var/I in idle_threads)
-		var/datum/computer_file/program/P = I
+	for(var/datum/computer_file/program/P as anything in idle_threads)
 		if(P.program_state != PROGRAM_STATE_KILLED)
 			P.process_tick(delta_time)
 			P.ntnet_status = get_ntnet_status()
@@ -417,7 +437,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 /**
  * Displays notification text alongside a soundbeep when requested to by a program.
  *
- * After checking tha the requesting program is allowed to send an alert, creates
+ * After checking that the requesting program is allowed to send an alert, creates
  * a visible message of the requested text alongside a soundbeep. This proc adds
  * text to indicate that the message is coming from this device and the program
  * on it, so the supplied text should be the exact message and ending punctuation.
@@ -426,15 +446,11 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
  * The program calling this proc.
  * The message that the program wishes to display.
  */
-
 /obj/item/modular_computer/proc/alert_call(datum/computer_file/program/caller, alerttext, sound = 'sound/machines/twobeep_high.ogg')
 	if(!caller || !caller.alert_able || caller.alert_silenced || !alerttext) //Yeah, we're checking alert_able. No, you don't get to make alerts that the user can't silence.
-		return
+		return FALSE
 	playsound(src, sound, 50, TRUE)
-	visible_message(span_notice("The [src] displays a [caller.filedesc] notification: [alerttext]"))
-	var/mob/living/holder = loc
-	if(istype(holder))
-		to_chat(holder, "[icon2html(src)] [span_notice("The [src] displays a [caller.filedesc] notification: [alerttext]")]")
+	visible_message(span_notice("[icon2html(src)] [span_notice("The [src] displays a [caller.filedesc] notification: [alerttext]")]"))
 
 /obj/item/modular_computer/proc/ring(ringtone) // bring bring
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_PDA_GLITCHED))
@@ -453,7 +469,6 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	data["PC_device_theme"] = device_theme
 
 	var/obj/item/computer_hardware/battery/battery_module = all_components[MC_CELL]
-	var/obj/item/computer_hardware/recharger/recharger = all_components[MC_CHARGE]
 
 	if(battery_module && battery_module.battery)
 		switch(battery_module.battery.percent())
@@ -475,9 +490,6 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		data["PC_batteryicon"] = "batt_5.gif"
 		data["PC_batterypercent"] = "N/C"
 		data["PC_showbatteryicon"] = battery_module ? 1 : 0
-
-	if(recharger && recharger.enabled && recharger.check_functionality() && recharger.use_power(0))
-		data["PC_apclinkicon"] = "charging.gif"
 
 	switch(get_ntnet_status())
 		if(0)
@@ -582,9 +594,9 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		idle_threads.Remove(P)
 	if(looping_sound)
 		soundloop.stop()
-	if(loud)
+	if(physical && loud)
 		physical.visible_message(span_notice("\The [src] shuts down."))
-	enabled = 0
+	enabled = FALSE
 	update_appearance()
 
 /obj/item/modular_computer/ui_action_click(mob/user, actiontype)
@@ -657,7 +669,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 /obj/item/modular_computer/attackby(obj/item/attacking_item, mob/user, params)
 	// Check for ID first
-	if(istype(attacking_item, /obj/item/card/id) && InsertID(attacking_item))
+	if(isidcard(attacking_item) && InsertID(attacking_item))
 		return
 
 	// Insert a PAI.
@@ -668,9 +680,10 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		to_chat(user, span_notice("You slot \the [attacking_item] into [src]."))
 		return
 
+	var/obj/item/computer_hardware/hard_drive/hdd = all_components[MC_HDD]
+
 	// Scan a photo.
 	if(istype(attacking_item, /obj/item/photo))
-		var/obj/item/computer_hardware/hard_drive/hdd = all_components[MC_HDD]
 		var/obj/item/photo/pic = attacking_item
 		if(hdd)
 			for(var/datum/computer_file/program/messenger/messenger in hdd.stored_files)
@@ -682,6 +695,11 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	for(var/h in all_components)
 		var/obj/item/computer_hardware/H = all_components[h]
 		if(H.try_insert(attacking_item, user))
+			return
+
+	// Insert items into applications
+	for(var/datum/computer_file/item_holding_app as anything in hdd.stored_files)
+		if(item_holding_app.try_insert(attacking_item, user))
 			return
 
 	// Insert new hardware

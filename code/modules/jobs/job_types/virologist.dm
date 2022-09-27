@@ -29,9 +29,9 @@
 	family_heirlooms = list(/obj/item/reagent_containers/syringe)
 
 	mail_goodies = list(
-		/obj/item/reagent_containers/glass/bottle/random_virus = 15,
-		/obj/item/reagent_containers/glass/bottle/formaldehyde = 10,
-		/obj/item/reagent_containers/glass/bottle/synaptizine = 10,
+		/obj/item/reagent_containers/cup/bottle/random_virus = 15,
+		/obj/item/reagent_containers/cup/bottle/formaldehyde = 10,
+		/obj/item/reagent_containers/cup/bottle/synaptizine = 10,
 		/obj/item/stack/sheet/mineral/plasma = 10,
 		/obj/item/stack/sheet/mineral/uranium = 5,
 	)

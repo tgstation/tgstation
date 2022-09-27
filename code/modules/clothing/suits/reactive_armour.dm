@@ -2,7 +2,7 @@
 	name = "reactive armour shell"
 	desc = "An experimental suit of armour, awaiting installation of an anomaly core."
 	icon_state = "reactiveoff"
-	icon = 'icons/obj/clothing/suits.dmi'
+	icon = 'icons/obj/clothing/suits/armor.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 
 /obj/item/reactive_armour_shell/attackby(obj/item/weapon, mob/user, params)
@@ -13,6 +13,7 @@
 		/obj/effect/anomaly/bluespace = /obj/item/clothing/suit/armor/reactive/teleport,
 		/obj/effect/anomaly/bioscrambler = /obj/item/clothing/suit/armor/reactive/bioscrambling,
 		/obj/effect/anomaly/hallucination = /obj/item/clothing/suit/armor/reactive/hallucinating,
+		/obj/effect/anomaly/dimensional = /obj/item/clothing/suit/armor/reactive/barricade,
 		)
 
 	if(istype(weapon, /obj/item/assembly/signaler/anomaly))
@@ -52,7 +53,7 @@
 
 /obj/item/clothing/suit/armor/reactive/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob)
+	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_OCLOTHING)
 
 /obj/item/clothing/suit/armor/reactive/update_icon_state()
 	. = ..()
@@ -224,19 +225,13 @@
 	siemens_coefficient = -1
 	cooldown_message = span_danger("The tesla capacitors on the reactive tesla armor are still recharging! The armor merely emits some sparks.")
 	emp_message = span_warning("The tesla capacitors beep ominously for a moment.")
+	clothing_traits = list(TRAIT_TESLA_SHOCKIMMUNE)
+	/// How strong are the zaps we give off?
 	var/zap_power = 25000
+	/// How far to the zaps we give off go?
 	var/zap_range = 20
+	/// What flags do we pass to the zaps we give off?
 	var/zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE
-
-/obj/item/clothing/suit/armor/reactive/tesla/dropped(mob/user)
-	..()
-	if(istype(user))
-		REMOVE_TRAIT(user, TRAIT_TESLA_SHOCKIMMUNE, "reactive_tesla_armor")
-
-/obj/item/clothing/suit/armor/reactive/tesla/equipped(mob/user, slot)
-	..()
-	if(slot_flags & slot) //Was equipped to a valid slot for this item?
-		ADD_TRAIT(user, TRAIT_TESLA_SHOCKIMMUNE, "reactive_tesla_armor")
 
 /obj/item/clothing/suit/armor/reactive/tesla/cooldown_activation(mob/living/carbon/human/owner)
 	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
@@ -252,9 +247,9 @@
 
 /obj/item/clothing/suit/armor/reactive/tesla/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	owner.visible_message(span_danger("[src] blocks [attack_text], but pulls a massive charge of energy into [owner] from the surrounding environment!"))
-	REMOVE_TRAIT(owner, TRAIT_TESLA_SHOCKIMMUNE, "reactive_tesla_armor") //oops! can't shock without this!
+	REMOVE_CLOTHING_TRAIT(owner, TRAIT_TESLA_SHOCKIMMUNE) //oops! can't shock without this!
 	electrocute_mob(owner, get_area(src), src, 1)
-	ADD_TRAIT(owner, TRAIT_TESLA_SHOCKIMMUNE, "reactive_tesla_armor")
+	ADD_CLOTHING_TRAIT(owner, TRAIT_TESLA_SHOCKIMMUNE)
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 	return TRUE
 
@@ -310,7 +305,7 @@
 	owner.apply_damage(10, BRUTE)
 	owner.apply_damage(40, STAMINA)
 	playsound(owner, 'sound/effects/tableslam.ogg', 90, TRUE)
-	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "table", /datum/mood_event/table)
+	owner.add_mood_event("table", /datum/mood_event/table)
 	do_teleport(owner, get_turf(owner), tele_range, no_effects = TRUE, channel = TELEPORT_CHANNEL_BLUESPACE)
 	new /obj/structure/table(get_turf(owner))
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
@@ -333,51 +328,32 @@
 	desc = "An experimental suit of armor with sensitive detectors hooked up to the mind of the wearer, sending mind pulses that causes hallucinations around you."
 	cooldown_message = span_danger("The connection is currently out of sync... Recalibrating.")
 	emp_message = span_warning("You feel the backsurge of a mind pulse.")
-	var/range = 3
-
-/obj/item/clothing/suit/armor/reactive/hallucinating/dropped(mob/user)
-	..()
-	if(istype(user))
-		REMOVE_TRAIT(user, TRAIT_MADNESS_IMMUNE, "reactive_hallucinating_armor")
-
-/obj/item/clothing/suit/armor/reactive/hallucinating/equipped(mob/user, slot)
-	..()
-	if(slot_flags & slot) //Was equipped to a valid slot for this item?
-		ADD_TRAIT(user, TRAIT_MADNESS_IMMUNE, "reactive_hallucinating_armor")
+	clothing_traits = list(TRAIT_MADNESS_IMMUNE)
 
 /obj/item/clothing/suit/armor/reactive/hallucinating/cooldown_activation(mob/living/carbon/human/owner)
 	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
 	sparks.set_up(1, 1, src)
 	sparks.start()
-	..()
+	return ..()
 
 /obj/item/clothing/suit/armor/reactive/hallucinating/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	owner.visible_message(span_danger("[src] blocks [attack_text], sending out mental pulses!"))
-	hallucination_pulse(owner)
+	visible_hallucination_pulse(
+		center = get_turf(owner),
+		radius = 3,
+		hallucination_duration = 50 SECONDS,
+		hallucination_max_duration = 300 SECONDS,
+	)
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 	return TRUE
 
 /obj/item/clothing/suit/armor/reactive/hallucinating/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	owner.visible_message(span_danger("[src] blocks [attack_text], but pulls a massive charge of mental energy into [owner] from the surrounding environment!"))
-	owner.hallucination += 25
-	owner.hallucination = clamp(owner.hallucination, 0, 150)
+	owner.adjust_hallucinations_up_to(50 SECONDS, 300 SECONDS)
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 	return TRUE
 
-/obj/item/clothing/suit/armor/reactive/hallucinating/proc/hallucination_pulse(mob/living/carbon/human/owner)
-	var/turf/location = get_turf(owner)
-	for(var/mob/living/carbon/human/near in view(location, range))
-		// If they are immune to hallucinations.
-		if (HAS_TRAIT(near, TRAIT_MADNESS_IMMUNE) || (near.mind && HAS_TRAIT(near.mind, TRAIT_MADNESS_IMMUNE)))
-			continue
-
-		// Everyone else gets hallucinations.
-		var/dist = sqrt(1 / max(1, get_dist(near, location)))
-		near.hallucination += 25 * dist
-		near.hallucination = clamp(near.hallucination, 0, 150)
-
 //Bioscrambling
-
 /obj/item/clothing/suit/armor/reactive/bioscrambling
 	name = "reactive bioscrambling armor"
 	desc = "An experimental suit of armor with sensitive detectors hooked up to a biohazard release valve. It scrambles the bodies of those around."
@@ -454,3 +430,66 @@
 		qdel(picked_user_part)
 		nearby.update_body(TRUE)
 		balloon_alert(nearby, "something has changed about you")
+
+// When the wearer gets hit, this armor will push people nearby and spawn some blocking objects.
+/obj/item/clothing/suit/armor/reactive/barricade
+	name = "reactive barricade armor"
+	desc = "An experimental suit of armor that generates barriers from another world when it detects its bearer is in danger."
+	emp_message = span_warning("The reactive armor's dimensional coordinates are scrambled!")
+	cooldown_message = span_danger("The reactive barrier system is still recharging! It fails to activate!")
+	reactivearmor_cooldown_duration = 10 SECONDS
+
+/obj/item/clothing/suit/armor/reactive/barricade/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	playsound(get_turf(owner),'sound/magic/repulse.ogg', 100, TRUE)
+	owner.visible_message(span_danger("The reactive armor interposes matter from another world between [src] and [attack_text]!"))
+	for (var/atom/movable/target in repulse_targets(owner))
+		repulse(target, owner)
+
+	var/datum/armour_dimensional_theme/theme = new()
+	theme.apply_random(get_turf(owner), dangerous = FALSE)
+	qdel(theme)
+
+	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
+	return TRUE
+
+/**
+ * Returns a list of all atoms around the source which can be moved away from it.
+ *
+ * Arguments
+ * * source - Thing to try to move things away from.
+ */
+/obj/item/clothing/suit/armor/reactive/barricade/proc/repulse_targets(atom/source)
+	var/list/push_targets = list()
+	for (var/atom/movable/nearby_movable in view(1, source))
+		if(nearby_movable == source)
+			continue
+		if(nearby_movable.anchored)
+			continue
+		push_targets += nearby_movable
+	return push_targets
+
+/**
+ * Pushes something one tile away from the source.
+ *
+ * Arguments
+ * * victim - Thing being moved.
+ * * source - Thing to move it away from.
+ */
+/obj/item/clothing/suit/armor/reactive/barricade/proc/repulse(atom/movable/victim, atom/source)
+	var/dist_from_caster = get_dist(victim, source)
+
+	if(dist_from_caster == 0)
+		return
+
+	if (isliving(victim))
+		to_chat(victim, span_userdanger("You're thrown back by a wave of pressure!"))
+	var/turf/throwtarget = get_edge_target_turf(source, get_dir(source, get_step_away(victim, source, 1)))
+	victim.safe_throw_at(throwtarget, 1, 1, source, force = MOVE_FORCE_EXTREMELY_STRONG)
+
+/obj/item/clothing/suit/armor/reactive/barricade/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	owner.visible_message(span_danger("The reactive armor shunts matter from an unstable dimension!"))
+	var/datum/armour_dimensional_theme/theme = new()
+	theme.apply_random(get_turf(owner), dangerous = TRUE)
+	qdel(theme)
+	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
+	return FALSE

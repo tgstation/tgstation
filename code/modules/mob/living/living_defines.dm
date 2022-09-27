@@ -62,6 +62,12 @@
 	var/last_special = 0
 	var/timeofdeath = 0
 
+	///A message sent when the mob dies, with the *deathgasp emote
+	var/death_message = ""
+	///A sound sent when the mob dies, with the *deathgasp emote
+	var/death_sound
+
+
 	/// Helper vars for quick access to firestacks, these should be updated every time firestacks are adjusted
 	var/on_fire = FALSE
 	var/fire_stacks = 0
@@ -179,11 +185,11 @@
 
 	//this stuff is here to make it simple for admins to mess with custom held sprites
 	///left hand icon for holding mobs
-	var/icon/held_lh = 'icons/mob/pets_held_lh.dmi'
+	var/icon/held_lh = 'icons/mob/inhands/pets_held_lh.dmi'
 	///right hand icon for holding mobs
-	var/icon/held_rh = 'icons/mob/pets_held_rh.dmi'
+	var/icon/held_rh = 'icons/mob/inhands/pets_held_rh.dmi'
 	///what it looks like when the mob is held on your head
-	var/icon/head_icon = 'icons/mob/pets_held.dmi'
+	var/icon/head_icon = 'icons/mob/clothing/head/pets_held.dmi'
 	/// icon_state for holding mobs.
 	var/held_state = ""
 
@@ -206,3 +212,6 @@
 	var/list/fov_traits
 	///what multiplicative slowdown we get from turfs currently.
 	var/current_turf_slowdown = 0
+
+	/// Living mob's mood datum
+	var/datum/mood/mob_mood

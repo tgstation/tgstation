@@ -10,7 +10,7 @@
 	max_integrity = 50
 	can_be_unanchored = TRUE
 	resistance_flags = ACID_PROOF
-	armor = list(MELEE = 30, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 80, ACID = 100)
+	armor = list(MELEE = 50, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 80, ACID = 100)
 	can_atmos_pass = ATMOS_PASS_PROC
 	rad_insulation = RAD_VERY_LIGHT_INSULATION
 	pass_flags_self = PASSGLASS
@@ -34,23 +34,6 @@
 	/// If some inconsiderate jerk has had their blood spilled on this window, thus making it cleanable
 	var/bloodied = FALSE
 
-/obj/structure/window/examine(mob/user)
-	. = ..()
-	if(reinf)
-		if(anchored && state == WINDOW_SCREWED_TO_FRAME)
-			. += span_notice("The window is <b>screwed</b> to the frame.")
-		else if(anchored && state == WINDOW_IN_FRAME)
-			. += span_notice("The window is <i>unscrewed</i> but <b>pried</b> into the frame.")
-		else if(anchored && state == WINDOW_OUT_OF_FRAME)
-			. += span_notice("The window is out of the frame, but could be <i>pried</i> in. It is <b>screwed</b> to the floor.")
-		else if(!anchored)
-			. += span_notice("The window is <i>unscrewed</i> from the floor, and could be deconstructed by <b>wrenching</b>.")
-	else
-		if(anchored)
-			. += span_notice("The window is <b>screwed</b> to the floor.")
-		else
-			. += span_notice("The window is <i>unscrewed</i> from the floor, and could be deconstructed by <b>wrenching</b>.")
-
 /obj/structure/window/Initialize(mapload, direct)
 	. = ..()
 	if(direct)
@@ -58,10 +41,14 @@
 	if(reinf && anchored)
 		state = RWINDOW_SECURE
 
+	if(!reinf && anchored)
+		state = WINDOW_SCREWED_TO_FRAME
+
 	air_update_turf(TRUE, TRUE)
 
 	if(fulltile)
 		setDir()
+		AddElement(/datum/element/can_barricade)
 
 	//windows only block while reinforced and fulltile, so we'll use the proc
 	real_explosion_block = explosion_block
@@ -78,6 +65,19 @@
 
 	if (flags_1 & ON_BORDER_1)
 		AddElement(/datum/element/connect_loc, loc_connections)
+
+/obj/structure/window/examine(mob/user)
+	. = ..()
+	switch(state)
+		if(WINDOW_SCREWED_TO_FRAME)
+			. += span_notice("The window is <b>screwed</b> to the frame.")
+		if(WINDOW_IN_FRAME)
+			. += span_notice("The window is <i>unscrewed</i> but <b>pried</b> into the frame.")
+		if(WINDOW_OUT_OF_FRAME)
+			if (anchored)
+				. += span_notice("The window is <b>screwed</b> to the floor.")
+			else
+				. += span_notice("The window is <i>unscrewed</i> from the floor, and could be deconstructed by <b>wrenching</b>.")
 
 /obj/structure/window/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
@@ -200,12 +200,31 @@
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/structure/window/screwdriver_act(mob/living/user, obj/item/tool)
-	if((flags_1 & NODECONSTRUCT_1) || (reinf && state >= RWINDOW_FRAME_BOLTED))
+	if(flags_1 & NODECONSTRUCT_1)
 		return
-	to_chat(user, span_notice("You begin to [anchored ? "unscrew the window from":"screw the window to"] the floor..."))
-	if(tool.use_tool(src, user, decon_speed, volume = 75, extra_checks = CALLBACK(src, .proc/check_anchored, anchored)))
-		set_anchored(!anchored)
-		to_chat(user, span_notice("You [anchored ? "fasten the window to":"unfasten the window from"] the floor."))
+
+	switch(state)
+		if(WINDOW_SCREWED_TO_FRAME)
+			to_chat(user, span_notice("You begin to unscrew the window from the frame..."))
+			if(tool.use_tool(src, user, decon_speed, volume = 75, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
+				state = WINDOW_IN_FRAME
+				to_chat(user, span_notice("You unfasten the window from the frame."))
+		if(WINDOW_IN_FRAME)
+			to_chat(user, span_notice("You begin to screw the window to the frame..."))
+			if(tool.use_tool(src, user, decon_speed, volume = 75, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
+				state = WINDOW_SCREWED_TO_FRAME
+				to_chat(user, span_notice("You fasten the window to the frame."))
+		if(WINDOW_OUT_OF_FRAME)
+			if(anchored)
+				to_chat(user, span_notice("You begin to unscrew the frame from the floor..."))
+				if(tool.use_tool(src, user, decon_speed, volume = 75, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
+					set_anchored(FALSE)
+					to_chat(user, span_notice("You unfasten the frame from the floor."))
+			else
+				to_chat(user, span_notice("You begin to screw the frame from to floor..."))
+				if(tool.use_tool(src, user, decon_speed, volume = 75, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
+					set_anchored(TRUE)
+					to_chat(user, span_notice("You fasten the frame to the floor."))
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/structure/window/wrench_act(mob/living/user, obj/item/tool)
@@ -226,14 +245,21 @@
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/structure/window/crowbar_act(mob/living/user, obj/item/tool)
-	if(!anchored || !reinf)
+	if(!anchored || (flags_1 & NODECONSTRUCT_1))
 		return FALSE
-	if((flags_1 & NODECONSTRUCT_1) || (state != WINDOW_OUT_OF_FRAME))
-		return FALSE
-	to_chat(user, span_notice("You begin to lever the window into the frame..."))
-	if(tool.use_tool(src, user, 10 SECONDS, volume = 75, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
-		state = RWINDOW_SECURE
-		to_chat(user, span_notice("You pry the window into the frame."))
+
+	switch(state)
+		if(WINDOW_IN_FRAME)
+			to_chat(user, span_notice("You begin to lever the window out of the frame..."))
+			if(tool.use_tool(src, user, 10 SECONDS, volume = 75, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
+				state = WINDOW_OUT_OF_FRAME
+				to_chat(user, span_notice("You pry the window out of the frame."))
+		if(WINDOW_OUT_OF_FRAME)
+			to_chat(user, span_notice("You begin to lever the window back into the frame..."))
+			if(tool.use_tool(src, user, 5 SECONDS, volume = 75, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
+				state = WINDOW_SCREWED_TO_FRAME
+				to_chat(user, span_notice("You pry the window back into the frame."))
+
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/structure/window/attackby(obj/item/I, mob/living/user, params)
@@ -474,6 +500,17 @@
 
 	return ..()
 
+/obj/structure/window/reinforced/crowbar_act(mob/living/user, obj/item/tool)
+	if(!anchored)
+		return FALSE
+	if((flags_1 & NODECONSTRUCT_1) || (state != WINDOW_OUT_OF_FRAME))
+		return FALSE
+	to_chat(user, span_notice("You begin to lever the window back into the frame..."))
+	if(tool.use_tool(src, user, 10 SECONDS, volume = 75, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
+		state = RWINDOW_SECURE
+		to_chat(user, span_notice("You pry the window back into the frame."))
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
 /obj/structure/window/proc/cool_bolts()
 	if(state == RWINDOW_BOLTS_HEATED)
 		state = RWINDOW_SECURE
@@ -679,7 +716,7 @@
 	heat_resistance = 1600
 	armor = list(MELEE = 90, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 50, BIO = 0, FIRE = 80, ACID = 100)
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = list(SMOOTH_GROUP_SHUTTLE_PARTS, SMOOTH_GROUP_WINDOW_FULLTILE_SHUTTLE)
+	smoothing_groups = list(SMOOTH_GROUP_WINDOW_FULLTILE_SHUTTLE, SMOOTH_GROUP_SHUTTLE_PARTS)
 	canSmoothWith = list(SMOOTH_GROUP_WINDOW_FULLTILE_SHUTTLE)
 	explosion_block = 3
 	glass_type = /obj/item/stack/sheet/titaniumglass
@@ -718,7 +755,7 @@
 	heat_resistance = 1600
 	armor = list(MELEE = 95, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 50, BIO = 0, FIRE = 80, ACID = 100)
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = list(SMOOTH_GROUP_SHUTTLE_PARTS, SMOOTH_GROUP_WINDOW_FULLTILE_PLASTITANIUM)
+	smoothing_groups = list(SMOOTH_GROUP_WINDOW_FULLTILE_PLASTITANIUM, SMOOTH_GROUP_SHUTTLE_PARTS)
 	canSmoothWith = list(SMOOTH_GROUP_WINDOW_FULLTILE_PLASTITANIUM)
 	explosion_block = 3
 	damage_deflection = 21 //The same as reinforced plasma windows.3

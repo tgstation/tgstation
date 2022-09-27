@@ -4,16 +4,14 @@
 #define EMAGGED (1<<0)
 #define IN_USE (1<<1) // If we have a user using us, this will be set on. We will check if the user has stopped using us, and thus stop updating and LAGGING EVERYTHING!
 #define CAN_BE_HIT (1<<2) //can this be bludgeoned by items?
-#define BEING_SHOCKED (1<<3) // Whether this thing is currently (already) being shocked by a tesla
-#define DANGEROUS_POSSESSION (1<<4) //Admin possession yes/no
-#define ON_BLUEPRINTS (1<<5)  //Are we visible on the station blueprints at roundstart?
-#define UNIQUE_RENAME (1<<6) // can you customize the description/name of the thing?
-#define USES_TGUI (1<<7) //put on things that use tgui on ui_interact instead of custom/old UI.
-#define BLOCK_Z_OUT_DOWN (1<<8)  // Should this object block z falling from loc?
-#define BLOCK_Z_OUT_UP (1<<9) // Should this object block z uprise from loc?
-#define BLOCK_Z_IN_DOWN (1<<10) // Should this object block z falling from above?
-#define BLOCK_Z_IN_UP (1<<11) // Should this object block z uprise from below?
-#define NO_BUILD (1<<12) // Can we build on this object?
+#define DANGEROUS_POSSESSION (1<<3) //Admin possession yes/no
+#define UNIQUE_RENAME (1<<4) // can you customize the description/name of the thing?
+#define USES_TGUI (1<<5) //put on things that use tgui on ui_interact instead of custom/old UI.
+#define BLOCK_Z_OUT_DOWN (1<<6)  // Should this object block z falling from loc?
+#define BLOCK_Z_OUT_UP (1<<7) // Should this object block z uprise from loc?
+#define BLOCK_Z_IN_DOWN (1<<8) // Should this object block z falling from above?
+#define BLOCK_Z_IN_UP (1<<9) // Should this object block z uprise from below?
+#define NO_BUILD (1<<10) // Can we build on this object?
 
 // If you add new ones, be sure to add them to /obj/Initialize as well for complete mapping support
 
@@ -67,29 +65,6 @@
 #define CASTING_CLOTHES (1<<19)
 ///Moths can't eat the clothing that has this flag.
 #define INEDIBLE_CLOTHING (1<<20)
-
-/// Flags for the organ_flags var on /obj/item/organ
-
-#define ORGAN_SYNTHETIC (1<<0) //Synthetic organs, or cybernetic organs. Reacts to EMPs and don't deteriorate or heal
-#define ORGAN_FROZEN (1<<1) //Frozen organs, don't deteriorate
-#define ORGAN_FAILING (1<<2) //Failing organs perform damaging effects until replaced or fixed
-#define ORGAN_EXTERNAL (1<<3) //Was this organ implanted/inserted/etc, if true will not be removed during species change.
-#define ORGAN_VITAL (1<<4) //Currently only the brain
-#define ORGAN_EDIBLE (1<<5) //is a snack? :D
-#define ORGAN_SYNTHETIC_EMP (1<<6) //Synthetic organ affected by an EMP. Deteriorates over time.
-#define ORGAN_UNREMOVABLE (1<<7) //Can't be removed using surgery
-
-DEFINE_BITFIELD(organ_flags, list(
-	"ORGAN_SYNTHETIC" = ORGAN_SYNTHETIC,
-	"ORGAN_FROZEN" = ORGAN_FROZEN,
-	"ORGAN_FAILING" = ORGAN_FAILING,
-	"ORGAN_EXTERNAL" = ORGAN_EXTERNAL,
-	"ORGAN_VITAL" = ORGAN_VITAL,
-	"ORGAN_EDIBLE" = ORGAN_EDIBLE,
-	"ORGAN_SYNTHETIC_EMP" = ORGAN_SYNTHETIC_EMP,
-	"ORGAN_UNREMOVABLE" = ORGAN_UNREMOVABLE,
-))
-
 
 /// Integrity defines for clothing (not flags but close enough)
 #define CLOTHING_PRISTINE 0 // We have no damage on the clothing

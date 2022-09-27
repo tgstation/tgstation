@@ -1,7 +1,7 @@
 /mob/living/simple_animal/hostile/ashwalker
 	name = "ashwalker"
 	desc = "A wanderer of these ashen lands. Has an affinity for sacrificing people and stabbing you with their spear."
-	icon = 'icons/mob/simple_human.dmi'
+	icon = 'icons/mob/simple/simple_human.dmi'
 	icon_state = "ashwalker"
 	icon_living = "ashwalker"
 	icon_dead = "russianmelee_dead"
@@ -31,7 +31,6 @@
 	attack_verb_continuous = "pokes"
 	attack_verb_simple = "poke"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
-	deathsound = SFX_BODYFALL
 	combat_mode = TRUE
 	loot = list(/obj/item/spear/bonespear, 
 		/obj/effect/mob_spawn/corpse/human/ashwalker)

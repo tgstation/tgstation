@@ -48,7 +48,7 @@
 	faction = list("clockwork")
 	speech_span = SPAN_BRASS
 	del_on_death = TRUE
-	icon = 'icons/mob/simple_human.dmi'
+	icon = 'icons/mob/simple/simple_human.dmi'
 	icon_state = "clockminer"
 	ranged = FALSE
 	environment_smash = ENVIRONMENT_SMASH_NONE

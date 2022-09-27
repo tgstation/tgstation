@@ -150,7 +150,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 /obj/effect/statclick/ticket_list/Click()
 	if (!usr.client?.holder)
 		message_admins("[key_name_admin(usr)] non-holder clicked on a ticket list statclick! ([src])")
-		log_game("[key_name(usr)] non-holder clicked on a ticket list statclick! ([src])")
+		usr.log_message("non-holder clicked on a ticket list statclick! ([src])", LOG_ADMIN)
 		return
 
 	GLOB.ahelp_tickets.BrowseTickets(current_state)
@@ -363,6 +363,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	if(!ref_src)
 		ref_src = "[REF(src)]"
 	. = ADMIN_FULLMONTY_NONAME(initiator.mob)
+	. += " (<A href='?_src_=holder;[HrefToken()];showmessageckey=[initiator.ckey]'>NOTES</A>)"
 	if(state == AHELP_ACTIVE)
 		if (CONFIG_GET(flag/popup_admin_pm))
 			. += " (<A HREF='?_src_=holder;[HrefToken(forceGlobal = TRUE)];adminpopup=[REF(initiator)]'>POPUP</A>)"
@@ -566,7 +567,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 				continue
 			dat += "[related_ticket.TicketHref("#[related_ticket.id]")] ([related_ticket.ticket_status()]): [related_ticket.name]<br/>"
 
-	usr << browse(dat.Join(), "window=ahelp[id];size=700x480")
+	usr << browse(dat.Join(), "window=ahelp[id];size=750x480")
 
 /**
  * Renders the current status of the ticket into a displayable string
@@ -670,7 +671,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 /obj/effect/statclick/ahelp/Click()
 	if (!usr.client?.holder)
 		message_admins("[key_name_admin(usr)] non-holder clicked on an ahelp statclick! ([src])")
-		log_game("[key_name(usr)] non-holder clicked on an ahelp statclick! ([src])")
+		usr.log_message("non-holder clicked on an ahelp statclick! ([src])", LOG_ADMIN)
 		return
 
 	ahelp_datum.TicketPanel()

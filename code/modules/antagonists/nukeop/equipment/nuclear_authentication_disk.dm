@@ -66,7 +66,7 @@
 					if(disk_comfort_level >= 2)
 						visible_message(span_notice("[src] sleeps soundly. Sleep tight, disky."))
 					message_admins("[src] is unsecured in [ADMIN_VERBOSEJMP(new_turf)]. The weight of Lone Operative is now [loneop.weight].")
-				log_game("[src] is unsecured for too long in [loc_name(new_turf)], and has increased the weight of the Lone Operative event to [loneop.weight].")
+				log_game("[src] was left unsecured in [loc_name(new_turf)]. Weight of the Lone Operative event increased to [loneop.weight].")
 
 /obj/item/disk/nuclear/proc/is_secured()
 	if (last_secured_location == get_turf(src))

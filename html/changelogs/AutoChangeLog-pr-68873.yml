@@ -1,4 +1,0 @@
-author: "SuperSlayer"
-delete-after: True
-changes: 
-  - bugfix: "fixes slimes attacking objects not getting logged"

@@ -1,5 +1,6 @@
 #define CONFUSION_STACK_MAX_MULTIPLIER 2
 
+
 /// No deviation at all. Flashed from the front or front-left/front-right. Alternatively, flashed in direct view.
 #define DEVIATION_NONE 0
 /// Partial deviation. Flashed from the side. Alternatively, flashed out the corner of your eyes.
@@ -148,7 +149,7 @@
 	if(user)
 		log_combat(user, flashed, "[targeted? "flashed(targeted)" : "flashed(AOE)"]", src)
 	else //caused by emp/remote signal
-		flashed.log_message("was [targeted? "flashed(targeted)" : "flashed(AOE)"]",LOG_ATTACK)
+		flashed.log_message("was [targeted? "flashed(targeted)" : "flashed(AOE)"]", LOG_ATTACK)
 
 	if(generic_message && flashed != user)
 		to_chat(flashed, span_danger("[src] emits a blinding light!"))
@@ -200,8 +201,10 @@
 	if(victim.flags_1 & IS_SPINNING_1)
 		return DEVIATION_NONE
 
-	if(HAS_TRAIT(victim, TRAIT_FLASH_SENSITIVE)) //If your eyes are sensitive and can be flashed from any direction.
-		return DEVIATION_NONE
+	if(iscarbon(victim))
+		var/mob/living/carbon/carbon_victim = victim
+		if(carbon_victim.get_eye_protection() < FLASH_PROTECTION_SENSITIVE) // If we have really bad flash sensitivity, usually due to really sensitive eyes, we get flashed from all directions
+			return DEVIATION_NONE
 
 	// Are they on the same tile? We'll return partial deviation. This may be someone flashing while lying down
 	// or flashing someone they're stood on the same turf as, or a borg flashing someone buckled to them.
@@ -380,7 +383,7 @@
 	if(user)
 		log_combat(user, M, "[targeted? "hypno-flashed(targeted)" : "hypno-flashed(AOE)"]", src)
 	else //caused by emp/remote signal
-		M.log_message("was [targeted? "hypno-flashed(targeted)" : "hypno-flashed(AOE)"]",LOG_ATTACK)
+		M.log_message("was [targeted? "hypno-flashed(targeted)" : "hypno-flashed(AOE)"]", LOG_ATTACK)
 	if(generic_message && M != user)
 		to_chat(M, span_notice("[src] emits a soothing light..."))
 	if(targeted)

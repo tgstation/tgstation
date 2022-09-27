@@ -1,6 +1,6 @@
 /obj/item/organ/internal/eyes
 	name = BODY_ZONE_PRECISE_EYES
-	icon_state = "eyeballs"
+	icon_state = "eyes"
 	desc = "I see you!"
 	visual = TRUE
 	zone = BODY_ZONE_PRECISE_EYES
@@ -104,26 +104,32 @@
 	if(!istype(parent) || parent.getorgan(/obj/item/organ/internal/eyes) != src)
 		CRASH("Generating a body overlay for [src] targeting an invalid parent '[parent]'.")
 
-	var/mutable_appearance/eye_left = mutable_appearance('icons/mob/human_face.dmi', "[eye_icon_state]_l", -BODY_LAYER)
-	var/mutable_appearance/eye_right = mutable_appearance('icons/mob/human_face.dmi', "[eye_icon_state]_r", -BODY_LAYER)
+	var/mutable_appearance/eye_left = mutable_appearance('icons/mob/species/human/human_face.dmi', "[eye_icon_state]_l", -BODY_LAYER)
+	var/mutable_appearance/eye_right = mutable_appearance('icons/mob/species/human/human_face.dmi', "[eye_icon_state]_r", -BODY_LAYER)
+	var/list/overlays = list(eye_left, eye_right)
 
 	if(EYECOLOR in parent.dna?.species.species_traits)
 		eye_right.color = eye_color_right
 		eye_left.color = eye_color_left
-
-	if(OFFSET_FACE in parent.dna?.species.offset_features)
-		var/offset = parent.dna.species.offset_features[OFFSET_FACE]
-		eye_left.pixel_x += offset[OFFSET_X]
-		eye_right.pixel_x += offset[OFFSET_X]
-		eye_left.pixel_y += offset[OFFSET_Y]
-		eye_right.pixel_y += offset[OFFSET_Y]
 
 	var/obscured = parent.check_obscured_slots(TRUE)
 	if(overlay_ignore_lighting && !(obscured & ITEM_SLOT_EYES))
 		eye_left.overlays += emissive_appearance(eye_left.icon, eye_left.icon_state, alpha = eye_left.alpha)
 		eye_right.overlays += emissive_appearance(eye_right.icon, eye_right.icon_state, alpha = eye_right.alpha)
 
-	return list(eye_left, eye_right)
+	// Cry emote overlay
+	if (HAS_TRAIT(parent, TRAIT_CRYING)) // Caused by the *cry emote
+		var/mutable_appearance/tears_overlay = mutable_appearance('icons/mob/species/human/human_face.dmi', "tears", -BODY_ADJ_LAYER)
+		tears_overlay.color = COLOR_DARK_CYAN
+		overlays += tears_overlay
+
+	if(OFFSET_FACE in parent.dna?.species.offset_features)
+		var/offset = parent.dna.species.offset_features[OFFSET_FACE]
+		for(var/mutable_appearance/overlay in overlays)
+			overlay.pixel_x += offset[OFFSET_X]
+			overlay.pixel_y += offset[OFFSET_Y]
+
+	return overlays
 
 #undef OFFSET_X
 #undef OFFSET_Y
@@ -161,8 +167,6 @@
 		eye_owner.cure_blind(EYE_DAMAGE)
 
 /obj/item/organ/internal/eyes/night_vision
-	name = "shadow eyes"
-	desc = "A spooky set of eyes that can see in the dark."
 	see_in_dark = NIGHTVISION_FOV_RANGE
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	actions_types = list(/datum/action/item_action/organ_action/use)
@@ -190,11 +194,6 @@
 /obj/item/organ/internal/eyes/night_vision/zombie
 	name = "undead eyes"
 	desc = "Somewhat counterintuitively, these half-rotten eyes actually have superior vision to those of a living human."
-
-/obj/item/organ/internal/eyes/night_vision/nightmare
-	name = "burning red eyes"
-	desc = "Even without their shadowy owner, looking at these eyes gives you a sense of dread."
-	icon_state = "burning_eyes"
 
 /obj/item/organ/internal/eyes/night_vision/mushroom
 	name = "fung-eye"
@@ -322,7 +321,7 @@
 
 /obj/item/organ/internal/eyes/robotic/glow/Initialize(mapload)
 	. = ..()
-	mob_overlay = image('icons/mob/human_face.dmi', "eyes_glow_gs")
+	mob_overlay = image('icons/mob/species/human/human_face.dmi', "eyes_glow_gs")
 
 /obj/item/organ/internal/eyes/robotic/glow/Destroy()
 	terminate_effects()
@@ -518,19 +517,12 @@
 	desc = "These eyes seem to stare back no matter the direction you look at it from."
 	eye_icon_state = "flyeyes"
 	icon_state = "eyeballs-fly"
-
-/obj/item/organ/internal/eyes/fly/Insert(mob/living/carbon/eye_owner, special = FALSE, drop_if_replaced = TRUE)
-	. = ..()
-	ADD_TRAIT(eye_owner, TRAIT_FLASH_SENSITIVE, ORGAN_TRAIT)
-
-/obj/item/organ/internal/eyes/fly/Remove(mob/living/carbon/eye_owner, special = FALSE)
-	REMOVE_TRAIT(eye_owner, TRAIT_FLASH_SENSITIVE, ORGAN_TRAIT)
-	return ..()
+	flash_protect = FLASH_PROTECTION_HYPER_SENSITIVE
 
 /obj/item/organ/internal/eyes/night_vision/maintenance_adapted
 	name = "adapted eyes"
 	desc = "These red eyes look like two foggy marbles. They give off a particularly worrying glow in the dark."
-	flash_protect = FLASH_PROTECTION_SENSITIVE
+	flash_protect = FLASH_PROTECTION_HYPER_SENSITIVE
 	eye_color_left = "f00"
 	eye_color_right = "f00"
 	icon_state = "adapted_eyes"
@@ -546,8 +538,6 @@
 	adapt_light.on = TRUE
 	adapt_light.forceMove(adapted)
 	adapt_light.update_brightness(adapted)
-	//traits
-	ADD_TRAIT(adapted, TRAIT_FLASH_SENSITIVE, ORGAN_TRAIT)
 	ADD_TRAIT(adapted, TRAIT_UNNATURAL_RED_GLOWY_EYES, ORGAN_TRAIT)
 
 /obj/item/organ/internal/eyes/night_vision/maintenance_adapted/on_life(delta_time, times_fired)
@@ -566,7 +556,5 @@
 	adapt_light.on = FALSE
 	adapt_light.update_brightness(unadapted)
 	adapt_light.forceMove(src)
-	//traits
-	REMOVE_TRAIT(unadapted, TRAIT_FLASH_SENSITIVE, ORGAN_TRAIT)
 	REMOVE_TRAIT(unadapted, TRAIT_UNNATURAL_RED_GLOWY_EYES, ORGAN_TRAIT)
 	return ..()

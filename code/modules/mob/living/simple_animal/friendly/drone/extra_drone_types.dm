@@ -111,7 +111,7 @@
 /obj/effect/mob_spawn/ghost_role/drone/derelict
 	name = "derelict drone shell"
 	desc = "A long-forgotten drone shell. It seems kind of... Space Russian."
-	icon = 'icons/mob/drone.dmi'
+	icon = 'icons/mob/silicon/drone.dmi'
 	icon_state = "drone_maint_hat"
 	mob_name = "derelict drone"
 	mob_type = /mob/living/simple_animal/drone/derelict

@@ -1,7 +1,7 @@
 /obj/item/storage/portable_chem_mixer
 	name = "Portable Chemical Mixer"
 	desc = "A portable device that dispenses and mixes chemicals. All necessary reagents need to be supplied with beakers. A label indicates that the 'CTRL'-button on the device may be used to open it for refills. This device can be worn as a belt. The letters 'S&T' are imprinted on the side."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "portablechemicalmixer_open"
 	worn_icon_state = "portable_chem_mixer"
 	w_class = WEIGHT_CLASS_HUGE
@@ -18,15 +18,15 @@
 	///If the UI has the pH meter shown
 	var/show_ph = TRUE
 
-/obj/item/storage/portable_chem_mixer/Initialize()
+/obj/item/storage/portable_chem_mixer/Initialize(mapload)
 	. = ..()
 	atom_storage.max_total_storage = 200
 	atom_storage.max_slots = 50
 	atom_storage.set_holdable(list(
-		/obj/item/reagent_containers/glass/beaker,
-		/obj/item/reagent_containers/glass/bottle,
-		/obj/item/reagent_containers/food/drinks/waterbottle,
-		/obj/item/reagent_containers/food/condiment,
+		/obj/item/reagent_containers/cup/beaker,
+		/obj/item/reagent_containers/cup/bottle,
+		/obj/item/reagent_containers/cup/glass/waterbottle,
+		/obj/item/reagent_containers/condiment,
 	))
 
 /obj/item/storage/portable_chem_mixer/Destroy()
@@ -38,7 +38,7 @@
 		return ..()
 
 /obj/item/storage/portable_chem_mixer/attackby(obj/item/I, mob/user, params)
-	if (istype(I, /obj/item/reagent_containers) && !(I.item_flags & ABSTRACT) && I.is_open_container() && atom_storage.locked)
+	if (is_reagent_container(I) && !(I.item_flags & ABSTRACT) && I.is_open_container() && atom_storage.locked)
 		var/obj/item/reagent_containers/B = I
 		. = TRUE //no afterattack
 		if(!user.transferItemToLoc(B, src))
@@ -145,9 +145,16 @@
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "PortableChemMixer", name)
-		if(user.hallucinating())
+
+		var/is_hallucinating = FALSE
+		if(isliving(user))
+			var/mob/living/living_user = user
+			is_hallucinating = !!living_user.has_status_effect(/datum/status_effect/hallucination)
+
+		if(is_hallucinating)
 			// to not ruin the immersion by constantly changing the fake chemicals
 			ui.set_autoupdate(FALSE)
+
 		ui.open()
 
 /obj/item/storage/portable_chem_mixer/ui_data(mob/user)
@@ -159,9 +166,11 @@
 	data["beakerTransferAmounts"] = beaker ? list(1,5,10,30,50,100) : null
 	data["showpH"] = show_ph
 	var/chemicals[0]
-	var/is_hallucinating = user.hallucinating()
-	if(user.hallucinating())
-		is_hallucinating = TRUE
+	var/is_hallucinating = FALSE
+	if(isliving(user))
+		var/mob/living/living_user = user
+		is_hallucinating = !!living_user.has_status_effect(/datum/status_effect/hallucination)
+
 	for(var/re in dispensable_reagents)
 		var/value = dispensable_reagents[re]
 		var/datum/reagent/temp = GLOB.chemical_reagents_list[re]

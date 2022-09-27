@@ -5,11 +5,13 @@
 	weight = 20
 	max_occurrences = 4
 	earliest_start = 10 MINUTES
+	category = EVENT_CATEGORY_BUREAUCRATIC
+	description = "A pod containing a random supply crate lands on the station."
 
 ///Spawns a cargo pod containing a random cargo supply pack on a random area of the station
 /datum/round_event/stray_cargo
 	var/area/impact_area ///Randomly picked area
-	announceChance = 75
+	announce_chance = 75
 	var/list/possible_pack_types = list() ///List of possible supply packs dropped in the pod, if empty picks from the cargo list
 	var/static/list/stray_spawnable_supply_packs = list() ///List of default spawnable supply packs, filtered from the cargo list
 
@@ -21,7 +23,7 @@
 * Also randomizes the start timer
 */
 /datum/round_event/stray_cargo/setup()
-	startWhen = rand(20, 40)
+	start_when = rand(20, 40)
 	impact_area = find_event_area()
 	if(!impact_area)
 		CRASH("No valid areas for cargo pod found.")
@@ -50,7 +52,11 @@
 		pack_type = pick(possible_pack_types)
 	else
 		pack_type = pick(stray_spawnable_supply_packs)
-	var/datum/supply_pack/SP = new pack_type
+	var/datum/supply_pack/SP
+	if(ispath(pack_type, /datum/supply_pack))
+		SP = new pack_type
+	else  // treat this as a supply pack id and resolving it with SSshuttle
+		SP = SSshuttle.supply_packs[pack_type] 
 	var/obj/structure/closet/crate/crate = SP.generate(null)
 	if(crate) //empty supply packs are a thing! get memed on.
 		crate.locked = FALSE //Unlock secure crates
@@ -89,6 +95,7 @@
 	weight = 6
 	max_occurrences = 1
 	earliest_start = 30 MINUTES
+	description = "A pod containing syndicate gear lands on the station."
 
 /datum/round_event/stray_cargo/syndicate
 	possible_pack_types = list(/datum/supply_pack/misc/syndicate)

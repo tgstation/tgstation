@@ -28,7 +28,7 @@
 		if(4)
 			new /obj/item/clothing/glasses/godeye(src)
 		if(5)
-			new /obj/item/reagent_containers/glass/bottle/potion/flight(src)
+			new /obj/item/reagent_containers/cup/bottle/potion/flight(src)
 		if(6)
 			new /obj/item/clothing/gloves/gauntlets(src)
 		if(7)

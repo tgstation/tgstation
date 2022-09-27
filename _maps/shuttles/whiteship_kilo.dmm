@@ -21,6 +21,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /obj/item/bikehorn/rubberducky,
 /obj/structure/closet/crate/trashcart/filled,
+/obj/item/bodypart/r_arm/robot/surplus{
+	name = "rusty robotic arm";
+	desc = "A rusted and decayed robotic arm. Probably still works... Probably."
+	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
 "cD" = (
@@ -49,11 +53,9 @@
 	},
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/machinery/portable_atmospherics/canister/air,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
-"ei" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/abandoned/crew)
 "eD" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/binary/valve,
@@ -72,11 +74,11 @@
 /turf/open/floor/iron/white/corner{
 	dir = 4
 	},
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/bar)
 "eT" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/reagent_dispensers/watertank,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/cup/bucket,
 /obj/item/mop,
 /obj/item/storage/bag/trash{
 	pixel_x = 6
@@ -106,7 +108,10 @@
 /turf/open/floor/iron/white/corner{
 	dir = 4
 	},
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/bar)
+"gk" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/abandoned/bar)
 "gA" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
@@ -136,8 +141,9 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/greenglow,
+/obj/machinery/light/small/red/directional/west,
 /turf/open/floor/plating,
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/bar)
 "id" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/abandoned/crew)
@@ -173,7 +179,7 @@
 /turf/open/floor/iron/white/corner{
 	dir = 8
 	},
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/bar)
 "ik" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/airlock/external/ruin{
@@ -184,8 +190,9 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "exterior_whiteship"
 	},
+/obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/mineral/plastitanium,
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/bar)
 "iI" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
@@ -217,7 +224,7 @@
 /turf/open/floor/iron/cafeteria{
 	dir = 1
 	},
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/bar)
 "kq" = (
 /obj/structure/rack,
 /obj/effect/turf_decal/bot,
@@ -241,7 +248,7 @@
 	dir = 2;
 	dwidth = 7;
 	height = 17;
-	id = "whiteship";
+	shuttle_id = "whiteship";
 	launch_status = 0;
 	movement_force = list("KNOCKDOWN"=0,"THROW"=0);
 	name = "Mining Shuttle";
@@ -263,7 +270,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/greenglow,
 /turf/open/floor/bamboo,
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/bar)
 "lg" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -280,7 +287,7 @@
 /turf/open/floor/iron/cafeteria{
 	dir = 1
 	},
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/bar)
 "mt" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -289,14 +296,24 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/light/small/red/directional/east,
+/obj/machinery/button/door/directional/east{
+	id = "ntms_exterior";
+	name = "NTMS-037 Mining Airlock Bolt Control";
+	normaldoorcontrol = 1;
+	req_access = list("syndicate_leader");
+	specialfunctions = 4
+	},
 /turf/open/floor/plating,
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/bar)
 "mu" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/effect/decal/cleanable/vomit/old,
 /obj/machinery/light/small/broken/directional/west,
 /obj/structure/cable,
+/obj/machinery/airalarm/all_access{
+	dir = 8;
+	pixel_x = -24
+	},
 /turf/open/floor/pod/light,
 /area/shuttle/abandoned/crew)
 "mH" = (
@@ -347,7 +364,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/bar)
 "pI" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
@@ -374,10 +391,11 @@
 	},
 /obj/effect/decal/cleanable/blood,
 /obj/item/paper/crumpled/bloody{
-	info = "We struck gold, literally. We found some good rocks out near Centurai-II rich with the stuff. Kae said he and Milos found something out while prospecting, some sort of glowing cube. It's jammed in there good, so we're anchoring until we sort this out...";
+	default_raw_text = "We struck gold, literally. We found some good rocks out near Centurai-II rich with the stuff. Kae said he and Milos found something out while prospecting, some sort of glowing cube. It's jammed in there good, so we're anchoring until we sort this out...";
 	pixel_x = 4;
 	pixel_y = 4
 	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/pod/light,
 /area/shuttle/abandoned/bridge)
 "qL" = (
@@ -398,7 +416,7 @@
 	stun_projectile_sound = 'sound/weapons/kenetic_accel.ogg'
 	},
 /turf/closed/wall/mineral/titanium,
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/bar)
 "rC" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -414,7 +432,7 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/iron,
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/bar)
 "sz" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/chair{
@@ -424,7 +442,7 @@
 	environment_smash = 0
 	},
 /turf/open/floor/bamboo,
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/bar)
 "sB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -552,6 +570,9 @@
 	icon_state = "medium"
 	},
 /obj/item/stack/cable_coil/cut,
+/obj/machinery/airalarm/all_access{
+	pixel_y = -24
+	},
 /turf/open/floor/pod/light,
 /area/shuttle/abandoned/bridge)
 "zu" = (
@@ -576,7 +597,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/bar)
 "Am" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
@@ -606,7 +627,7 @@
 /area/shuttle/abandoned/cargo)
 "BS" = (
 /turf/closed/wall/mineral/plastitanium,
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/bar)
 "CG" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/abandoned/engine)
@@ -628,7 +649,7 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/iron,
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/bar)
 "FW" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
@@ -687,6 +708,8 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/spawner/random/clothing/wardrobe_closet_colored,
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/structure/cable,
 /turf/open/floor/iron/freezer,
 /area/shuttle/abandoned/crew)
 "In" = (
@@ -747,7 +770,7 @@
 	name = "fridge"
 	},
 /obj/item/food/sausage,
-/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/item/reagent_containers/cup/glass/bottle/beer,
 /obj/item/food/sandwich,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/turf_decal/siding/thinplating_new{
@@ -758,15 +781,24 @@
 /turf/open/floor/iron/cafeteria{
 	dir = 1
 	},
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/bar)
 "JX" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/smes,
+/obj/structure/cable,
+/obj/machinery/power/smes/engineering,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
+"Kx" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/machinery/door/poddoor{
+	id = "whiteship_windows";
+	name = "Exterior Window Blast Door"
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned/bar)
 "KS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/corner{
@@ -789,7 +821,7 @@
 	cycle_id = "exterior_whiteship"
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/bar)
 "LE" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -804,6 +836,7 @@
 /obj/effect/spawner/random/maintenance/three,
 /obj/item/wirebrush,
 /obj/item/stack/sheet/mineral/plasma/five,
+/obj/item/stack/sheet/mineral/plasma/five,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "LK" = (
@@ -814,7 +847,7 @@
 	},
 /obj/effect/decal/cleanable/blood/splatter/over_window,
 /turf/open/floor/plating,
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/bar)
 "Ml" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/suit_storage_unit/standard_unit{
@@ -867,19 +900,20 @@
 /area/shuttle/abandoned/bridge)
 "Of" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/bar)
 "OS" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/item/reagent_containers/food/drinks/drinkingglass/filled/cola{
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/cola{
 	pixel_y = 5;
 	pixel_x = 8
 	},
 /obj/item/plate/small{
 	pixel_x = -5
 	},
+/obj/item/storage/box/donkpockets,
 /turf/open/floor/bamboo,
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/bar)
 "OZ" = (
 /obj/structure/shuttle/engine/heater{
 	dir = 8
@@ -891,7 +925,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/bar)
 "Pe" = (
 /obj/machinery/button/door/directional/north{
 	id = "whiteship_port";
@@ -913,7 +947,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/bar)
 "PR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
@@ -946,7 +980,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/bar)
 "Rr" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/bot_white,
@@ -1092,7 +1126,10 @@
 /obj/structure/reagent_dispensers/water_cooler,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/bar)
+"Xk" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/abandoned/bar)
 "XL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
@@ -1139,6 +1176,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/item/storage/toolbox/mechanical,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "YN" = (
@@ -1333,8 +1371,8 @@ YV
 nN
 lg
 ig
-id
-id
+gk
+gk
 "}
 (11,1,1) = {"
 Rr
@@ -1349,7 +1387,7 @@ NV
 fL
 zJ
 sz
-FW
+Kx
 "}
 (12,1,1) = {"
 xh
@@ -1379,7 +1417,7 @@ id
 jM
 QR
 kY
-FW
+Kx
 "}
 (14,1,1) = {"
 Gu
@@ -1394,7 +1432,7 @@ RF
 eE
 rX
 Xe
-id
+gk
 "}
 (15,1,1) = {"
 Gu
@@ -1406,9 +1444,9 @@ TP
 ZW
 HD
 id
-id
+gk
 Lj
-id
+gk
 ry
 "}
 (16,1,1) = {"
@@ -1420,10 +1458,10 @@ uA
 FW
 FW
 FW
-id
+gk
 hN
 mt
-id
+gk
 Gu
 "}
 (17,1,1) = {"
@@ -1435,9 +1473,9 @@ Gu
 Gu
 Gu
 Gu
-ei
+Xk
 ik
-id
-ei
+gk
+Xk
 Gu
 "}

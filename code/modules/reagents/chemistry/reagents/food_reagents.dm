@@ -33,16 +33,16 @@
 		return
 	switch(quality)
 		if (DRINK_NICE)
-			SEND_SIGNAL(exposed_mob, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/quality_nice)
+			exposed_mob.add_mood_event("quality_drink", /datum/mood_event/quality_nice)
 		if (DRINK_GOOD)
-			SEND_SIGNAL(exposed_mob, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/quality_good)
+			exposed_mob.add_mood_event("quality_drink", /datum/mood_event/quality_good)
 		if (DRINK_VERYGOOD)
-			SEND_SIGNAL(exposed_mob, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/quality_verygood)
+			exposed_mob.add_mood_event("quality_drink", /datum/mood_event/quality_verygood)
 		if (DRINK_FANTASTIC)
-			SEND_SIGNAL(exposed_mob, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/quality_fantastic)
+			exposed_mob.add_mood_event("quality_drink", /datum/mood_event/quality_fantastic)
 			exposed_mob.mind?.add_memory(MEMORY_DRINK, list(DETAIL_DRINK = src), story_value = STORY_VALUE_OKAY)
 		if (FOOD_AMAZING)
-			SEND_SIGNAL(exposed_mob, COMSIG_ADD_MOOD_EVENT, "quality_food", /datum/mood_event/amazingtaste)
+			exposed_mob.add_mood_event("quality_food", /datum/mood_event/amazingtaste)
 
 /datum/reagent/consumable/nutriment
 	name = "Nutriment"
@@ -380,8 +380,9 @@
 		if (!(pepper_proof)) // you need both eye and mouth protection
 			if(prob(5))
 				victim.emote("scream")
+			victim.emote("cry")
 			victim.blur_eyes(5) // 10 seconds
-			victim.blind_eyes(3) // 6 seconds
+			victim.adjust_blindness(3) // 6 seconds
 			victim.set_timed_status_effect(5 SECONDS, /datum/status_effect/confusion, only_if_higher = TRUE)
 			victim.Knockdown(3 SECONDS)
 			victim.add_movespeed_modifier(/datum/movespeed_modifier/reagent/pepperspray)
@@ -466,6 +467,26 @@
 				M.heal_bodypart_damage(brute = 1, burn = 1)
 				. = TRUE
 	..()
+
+/datum/reagent/consumable/tearjuice
+	name = "Tear Juice"
+	description = "A blinding substance extracted from certain onions."
+	color = "#c0c9a0"
+	taste_description = "bitterness"
+	ph = 5
+
+/datum/reagent/consumable/tearjuice/expose_mob(mob/living/exposed_mob, methods = INGEST, reac_volume)
+	. = ..()
+	if(!ishuman(exposed_mob))
+		return
+
+	var/mob/living/carbon/victim = exposed_mob
+	if(methods & (INGEST | VAPOR))
+		var/tear_proof = victim.is_eyes_covered()
+		if (!tear_proof)
+			to_chat(exposed_mob, span_warning("Your eyes sting!"))
+			victim.emote("cry")
+			victim.blur_eyes(3) // 6 seconds
 
 /datum/reagent/consumable/sprinkles
 	name = "Sprinkles"
@@ -570,6 +591,7 @@
 /datum/reagent/consumable/cherryjelly
 	name = "Cherry Jelly"
 	description = "Totally the best. Only to be spread on foods with excellent lateral symmetry."
+	nutriment_factor = 10 * REAGENTS_METABOLISM
 	color = "#801E28" // rgb: 128, 30, 40
 	taste_description = "cherry"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -690,36 +712,6 @@
 	color ="#708a88"
 	taste_description = "rotten eggs"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/consumable/tearjuice
-	name = "Tear Juice"
-	description = "A blinding substance extracted from certain onions."
-	color = "#c0c9a0"
-	taste_description = "bitterness"
-	ph = 5
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/consumable/tearjuice/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
-	. = ..()
-	if(!(methods & INGEST) || !((methods & (TOUCH|PATCH|VAPOR)) && (exposed_mob.is_mouth_covered() || exposed_mob.is_eyes_covered())))
-		return
-
-	if(!exposed_mob.getorganslot(ORGAN_SLOT_EYES)) //can't blind somebody with no eyes
-		to_chat(exposed_mob, span_notice("Your eye sockets feel wet."))
-	else
-		if(!exposed_mob.eye_blurry)
-			to_chat(exposed_mob, span_warning("Tears well up in your eyes!"))
-		exposed_mob.blind_eyes(2)
-		exposed_mob.blur_eyes(5)
-
-/datum/reagent/consumable/tearjuice/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	..()
-	if(M.eye_blurry) //Don't worsen vision if it was otherwise fine
-		M.blur_eyes(4 * REM * delta_time)
-		if(DT_PROB(5, delta_time))
-			to_chat(M, span_warning("Your eyes sting!"))
-			M.blind_eyes(2)
-
 
 /datum/reagent/consumable/nutriment/stabilized
 	name = "Stabilized Nutriment"
@@ -1008,13 +1000,14 @@
 	name = "Peanut Butter"
 	description = "A rich, creamy spread produced by grinding peanuts."
 	taste_description = "peanuts"
+	reagent_state = SOLID
 	color = "#D9A066"
 	nutriment_factor = 15 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/peanut_butter/on_mob_life(mob/living/carbon/M, delta_time, times_fired) //ET loves peanut butter
 	if(isabductor(M))
-		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "ET_pieces", /datum/mood_event/et_pieces, name)
+		M.add_mood_event("ET_pieces", /datum/mood_event/et_pieces, name)
 		M.set_timed_status_effect(30 SECONDS * REM * delta_time, /datum/status_effect/drugginess)
 	..()
 
@@ -1062,3 +1055,10 @@
 	color = "#adcf77"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/consumable/creamer
+	name = "Coffee Creamer"
+	description = "Powdered milk for cheap coffee. How delightful."
+	taste_description = "milk"
+	color = "#efeff0"
+	nutriment_factor = 1.5 * REAGENTS_METABOLISM
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED

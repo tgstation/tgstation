@@ -7,7 +7,7 @@
 /mob/living/simple_animal/bot/firebot
 	name = "\improper Firebot"
 	desc = "A little fire extinguishing bot. He looks rather anxious."
-	icon = 'icons/mob/aibots.dmi'
+	icon = 'icons/mob/silicon/aibots.dmi'
 	icon_state = "firebot"
 	density = FALSE
 	anchored = FALSE

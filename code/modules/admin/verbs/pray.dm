@@ -17,7 +17,7 @@
 		if(src.client.handle_spam_prevention(msg,MUTE_PRAY))
 			return
 
-	var/mutable_appearance/cross = mutable_appearance('icons/obj/storage.dmi', "bible")
+	var/mutable_appearance/cross = mutable_appearance('icons/obj/storage/storage.dmi', "bible")
 	var/font_color = "purple"
 	var/prayer_type = "PRAYER"
 	var/deity

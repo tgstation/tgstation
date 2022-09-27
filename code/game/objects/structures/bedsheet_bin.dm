@@ -12,8 +12,8 @@ LINEN BINS
 	name = "bedsheet"
 	desc = "A surprisingly soft linen bedsheet."
 	icon = 'icons/obj/bedsheets.dmi'
-	lefthand_file = 'icons/mob/inhands/misc/bedsheet_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/bedsheet_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/bedsheet_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/bedsheet_righthand.dmi'
 	icon_state = "sheetwhite"
 	inhand_icon_state = "sheetwhite"
 	slot_flags = ITEM_SLOT_NECK
@@ -198,7 +198,7 @@ LINEN BINS
 	desc = "It is decorated with a crate emblem in silver lining.  It's rather tough, and just the thing to lie on after a hard day of pushing paper."
 	icon_state = "sheetqm"
 	inhand_icon_state = "sheetqm"
-	dream_messages = list("a grey ID", "a shuttle", "a crate", "a sloth", "the quartermaster")
+	dream_messages = list("authority", "a silvery ID", "a shuttle", "a crate", "a sloth", "the quartermaster")
 
 /obj/item/bedsheet/chaplain
 	name = "chaplain's blanket"
@@ -479,7 +479,7 @@ LINEN BINS
 	icon_state = "random_bedsheet"
 	bedsheet_type = BEDSHEET_ABSTRACT
 
-/obj/item/bedsheet/dorms_double/Initialize()
+/obj/item/bedsheet/dorms_double/Initialize(mapload)
 	..()
 	var/type = pick_weight(list("Colors" = 80, "Special" = 20))
 	switch(type)

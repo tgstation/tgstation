@@ -58,10 +58,10 @@
 	QDEL_NULL(cam_background)
 	return ..()
 
-/obj/machinery/computer/security/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
+/obj/machinery/computer/security/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	for(var/i in network)
 		network -= i
-		network += "[port.id]_[i]"
+		network += "[port.shuttle_id]_[i]"
 
 /obj/machinery/computer/security/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -127,7 +127,7 @@
 		return
 
 	if(action == "switch_camera")
-		var/c_tag = format_text(params["name"])
+		var/c_tag = params["name"]
 		var/list/cameras = get_available_cameras()
 		var/obj/machinery/camera/selected_camera = cameras[c_tag]
 		active_camera = selected_camera
@@ -280,10 +280,10 @@
 	desc = "Damn, they better have the /tg/ channel on these things."
 	icon = 'icons/obj/status_display.dmi'
 	icon_state = "entertainment_blank"
-	network = list("thunder")
+	network = list()
 	density = FALSE
 	circuit = null
-	interaction_flags_atom = NONE  // interact() is called by BigClick()
+	interaction_flags_atom = INTERACT_ATOM_UI_INTERACT | INTERACT_ATOM_NO_FINGERPRINT_INTERACT | INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND | INTERACT_MACHINE_REQUIRES_SIGHT
 	var/icon_state_off = "entertainment_blank"
 	var/icon_state_on = "entertainment"
 
@@ -297,18 +297,73 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 /obj/machinery/computer/security/telescreen/entertainment/proc/BigClick()
 	SIGNAL_HANDLER
 
+	if(!network.len)
+		balloon_alert(usr, "there's nothing on TV!")
+		return
+
 	INVOKE_ASYNC(src, /atom.proc/interact, usr)
 
-/obj/machinery/computer/security/telescreen/entertainment/proc/notify(on)
+///Sets the monitor's icon to the selected state, and says an announcement
+/obj/machinery/computer/security/telescreen/entertainment/proc/notify(on, announcement)
 	if(on && icon_state == icon_state_off)
-		say(pick(
-			"Feats of bravery live now at the thunderdome!",
-			"Two enter, one leaves! Tune in now!",
-			"Violence like you've never seen it before!",
-			"Spears! Camera! Action! LIVE NOW!"))
 		icon_state = icon_state_on
 	else
 		icon_state = icon_state_off
+	if(announcement)
+		say(announcement)
+
+/// Adds a camera network ID to the entertainment monitor, and turns off the monitor if network list is empty
+/obj/machinery/computer/security/telescreen/entertainment/proc/update_shows(is_show_active, tv_show_id, announcement)
+	if(!network)
+		return
+
+	if(is_show_active)
+		network |= tv_show_id
+	else
+		network -= tv_show_id
+
+	notify(network.len, announcement)
+
+/// A button that adds a camera network to the entertainment monitors
+/obj/machinery/button/showtime
+	name = "thunderdome showtime button"
+	desc = "Use this button to allow entertainment monitors to broadcast the big game."
+	device_type = /obj/item/assembly/control/showtime
+	req_access = list()
+	id = "showtime_1"
+
+/obj/machinery/button/showtime/Initialize(mapload)
+	. = ..()
+	if(device)
+		var/obj/item/assembly/control/showtime/ours = device
+		ours.id = id
+
+/obj/item/assembly/control/showtime
+	name = "showtime controller"
+	desc = "A remote controller for entertainment monitors."
+	/// Stores if the show associated with this controller is active or not
+	var/is_show_active = FALSE
+	/// The camera network id this controller toggles
+	var/tv_network_id = "thunder"
+	/// The display TV show name
+	var/tv_show_name = "Thunderdome"
+	/// List of phrases the entertainment console may say when the show begins
+	var/list/tv_starters = list("Feats of bravery live now at the thunderdome!",
+		"Two enter, one leaves! Tune in now!",
+		"Violence like you've never seen it before!",
+		"Spears! Camera! Action! LIVE NOW!")
+	/// List of phrases the entertainment console may say when the show ends
+	var/list/tv_enders = list("Thank you for tuning in to the slaughter!",
+		"What a show! And we guarantee next one will be bigger!",
+		"Celebrate the results with Thundermerch!",
+		"This show was brought to you by Nanotrasen.")
+
+/obj/item/assembly/control/showtime/activate()
+	is_show_active = !is_show_active
+	say("The [tv_show_name] show has [is_show_active ? "begun" : "ended"]")
+	var/announcement = is_show_active ? pick(tv_starters) : pick(tv_enders)
+	for(var/obj/machinery/computer/security/telescreen/entertainment/tv in GLOB.machines)
+		tv.update_shows(is_show_active, tv_network_id, announcement)
 
 /obj/machinery/computer/security/telescreen/rd
 	name = "\improper Research Director's telescreen"

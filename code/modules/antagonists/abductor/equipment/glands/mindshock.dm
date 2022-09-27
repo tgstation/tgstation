@@ -28,7 +28,7 @@
 				target.adjust_timed_status_effect(15 SECONDS, /datum/status_effect/confusion)
 				target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 160)
 			if(3)
-				target.hallucination += 60
+				target.adjust_hallucinations(120 SECONDS)
 
 /obj/item/organ/internal/heart/gland/mindshock/mind_control(command, mob/living/user)
 	if(!ownerCheck() || !mind_control_uses || active_mind_control)
@@ -50,7 +50,7 @@
 		to_chat(target_human, span_mind_control("[command]"))
 
 		message_admins("[key_name(user)] broadcasted an abductor mind control message from [key_name(owner)] to [key_name(target_human)]: [command]")
-		log_game("[key_name(user)] broadcasted an abductor mind control message from [key_name(owner)] to [key_name(target_human)]: [command]")
+		user.log_message("broadcasted an abductor mind control message from [key_name(owner)] to [key_name(target_human)]: [command]", LOG_GAME)
 
 		var/atom/movable/screen/alert/mind_control/mind_alert = target_human.throw_alert(ALERT_MIND_CONTROL, /atom/movable/screen/alert/mind_control)
 		mind_alert.command = command

@@ -21,7 +21,7 @@
 	resistance_flags = NONE
 	max_integrity = 300
 
-/obj/item/storage/backpack/Initialize()
+/obj/item/storage/backpack/Initialize(mapload)
 	. = ..()
 	create_storage(max_slots = 21, max_total_storage = 21)
 
@@ -29,14 +29,14 @@
  * Backpack Types
  */
 
-/obj/item/storage/backpack/old/Initialize()
+/obj/item/storage/backpack/old/Initialize(mapload)
 	. = ..()
 	atom_storage.max_total_storage = 12
 
 /obj/item/bag_of_holding_inert
 	name = "inert bag of holding"
 	desc = "What is currently a just an unwieldly block of metal with a slot ready to accept a bluespace anomaly core."
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/storage/storage.dmi'
 	icon_state = "brokenpack"
 	inhand_icon_state = "brokenpack"
 	lefthand_file = 'icons/mob/inhands/equipment/backpack_lefthand.dmi'
@@ -54,7 +54,7 @@
 	item_flags = NO_MAT_REDEMPTION
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 60, ACID = 50)
 
-/obj/item/storage/backpack/holding/Initialize()
+/obj/item/storage/backpack/holding/Initialize(mapload)
 	. = ..()
 
 	create_storage(max_specific_storage = WEIGHT_CLASS_GIGANTIC, max_total_storage = 35, max_slots = 30, type = /datum/storage/bag_of_holding)
@@ -79,7 +79,7 @@
 	. = ..()
 	regenerate_presents()
 
-/obj/item/storage/backpack/santabag/Initialize()
+/obj/item/storage/backpack/santabag/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
 	atom_storage.max_total_storage = 60
@@ -97,7 +97,7 @@
 	if(user.mind && HAS_TRAIT(user.mind, TRAIT_CANNOT_OPEN_PRESENTS))
 		var/turf/floor = get_turf(src)
 		var/obj/item/thing = new /obj/item/a_gift/anything(floor)
-		if(!atom_storage.attempt_insert(src, thing, user, override = TRUE))
+		if(!atom_storage.attempt_insert(thing, user, override = TRUE))
 			qdel(thing)
 
 
@@ -211,6 +211,17 @@
 	name = "emergency response team clown backpack"
 	desc = "A spacious backpack with lots of pockets, worn by Clowns of an Emergency Response Team."
 	icon_state = "ert_clown"
+
+/obj/item/storage/backpack/saddlepack
+	name = "saddlepack"
+	desc = "A backpack designed to be saddled on a mount or carried on your back, and switch between the two on the fly. It's quite spacious, at the cost of making you feel like a literal pack mule."
+	worn_icon = 'icons/mob/clothing/back/ethereal.dmi'
+	icon_state = "saddlepack"
+
+/obj/item/storage/backpack/saddlepack/Initialize(mapload)
+	. = ..()
+	atom_storage.max_total_storage = 26
+
 /*
  * Satchel Types
  */
@@ -331,7 +342,7 @@
 	inhand_icon_state = "duffel"
 	slowdown = 1
 
-/obj/item/storage/backpack/duffelbag/Initialize()
+/obj/item/storage/backpack/duffelbag/Initialize(mapload)
 	. = ..()
 	atom_storage.max_total_storage = 30
 
@@ -483,7 +494,7 @@
 	slowdown = 0
 	resistance_flags = FIRE_PROOF
 
-/obj/item/storage/backpack/duffelbag/syndie/Initialize()
+/obj/item/storage/backpack/duffelbag/syndie/Initialize(mapload)
 	. = ..()
 	atom_storage.silent = TRUE
 
@@ -634,12 +645,12 @@
 	new /obj/item/gun/ballistic/automatic/pistol/aps(src)
 	new /obj/item/ammo_box/magazine/m9mm_aps/fire(src)
 	new /obj/item/ammo_box/magazine/m9mm_aps/fire(src)
-	new /obj/item/reagent_containers/food/drinks/bottle/vodka/badminka(src)
+	new /obj/item/reagent_containers/cup/glass/bottle/vodka/badminka(src)
 	new /obj/item/reagent_containers/hypospray/medipen/stimulants(src)
 	new /obj/item/grenade/syndieminibomb(src)
 
 // For ClownOps.
-/obj/item/storage/backpack/duffelbag/clown/syndie/Initialize()
+/obj/item/storage/backpack/duffelbag/clown/syndie/Initialize(mapload)
 	. = ..()
 	slowdown = 0
 	atom_storage.silent = TRUE

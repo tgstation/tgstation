@@ -154,7 +154,7 @@
 /mob/living/simple_animal/hostile/clockminer
 	name = "Clockwork Servant"
 	desc = "A miner adorned with shining bronze armor. They look particularly angry with you."
-	icon = 'icons/mob/simple_human.dmi'
+	icon = 'icons/mob/simple/simple_human.dmi'
 	icon_state = "clockminer"
 	icon_living = "clockminer"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
@@ -206,7 +206,7 @@
 /mob/living/simple_animal/hostile/clockwork
 	name = "anima fragment"
 	desc = "A shell of bronze held aloft by twirling spirtual energy."
-	icon = 'icons/mob/mob.dmi'
+	icon = 'icons/mob/simple/mob.dmi'
 	icon_state = "anime_fragment"
 	icon_living = "anime_fragment"
 	icon_dead = "shade_dead"
@@ -224,7 +224,6 @@
 	attack_verb_continuous = "slashes at"
 	attack_verb_simple = "slash at"
 	attack_sound = 'sound/weapons/pierce.ogg'
-	deathmessage = "breaks apart into various metallic debris!"
 	combat_mode = TRUE
 	gender = NEUTER
 	mob_biotypes = MOB_ROBOTIC
@@ -261,12 +260,55 @@
 	sentience_type = SENTIENCE_HUMANOID
 	weather_immunities = list(TRAIT_ASHSTORM_IMMUNE)
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	itemrejectphrase = "...Perhapsss we do not ssshare sssimilar ideasss of.. worth?"
-	itemsellcancelphrase = "What a ssshame, you know where to find me if you happen to... change your mind."
-	itemsellacceptphrase = "Thisss will make a great trinket for the brood mother..."
-	interestedphrase = "You.. I see you have ssshiny. Why not participate in some Nanotrasssen-approved capitalisssm?"
-	buyphrase = "Hss.. Pleasssure doing busssinesss with you."
-	nocashphrase = "Do you take me for a sssimpleton like my fellow walkersss? No casssh, no grasssss."
+	say_phrases = list(
+		ITEM_REJECTED_PHRASE = list(
+			"Sorry, I'm not a fan of anything you're showing me. Give me something better and we'll talk."
+		),
+		ITEM_SELLING_CANCELED_PHRASE = list(
+			"What a ssshame, you know where to find me if you happen to... change your mind."
+		),
+		ITEM_SELLING_ACCEPTED_PHRASE = list(
+		"Thisss will make a great trinket for the brood mother..."
+		),
+		INTERESTED_PHRASE = list(
+			"You.. I see you have ssshiny. Why not participate in some Nanotrasssen-approved capitalisssm?"
+		),
+		BUY_PHRASE = list(
+			"Hss.. Pleasssure doing busssinesss with you."
+		),
+		NO_CASH_PHRASE = list(
+			"Do you take me for a sssimpleton like my fellow walkersss? No casssh, no grasssss.",
+			"You ssseem a bit... light on fundsss. Maybe asssk bossssman for raissse?"
+		),
+		NO_STOCK_PHRASE = list(
+			"My ssstorage isss looking a bit... light on that currently. Perhapsss come by another time?"
+		),
+		NOT_WILLING_TO_BUY_PHRASE = list(
+			"No thanksss, I think I'm good for now."
+		),
+		ITEM_IS_WORTHLESS_PHRASE = list(
+			 "...Perhapsss we do not ssshare sssimilar ideasss of.. worth?",
+			 "...What? Is thisss sssome sssort of ssspace joke? ",
+			 "You couldn't pay me to take thisss."
+		),
+		TRADER_HAS_ENOUGH_ITEM_PHRASE = list(
+			"Fellow kin already bring in enough of this to last two ssseasonsss. No thanksss."
+		),
+		TRADER_LORE_PHRASE = list(
+			"My brethern may not take ssso kindly to your presssense, but I for one know a good busssinessss opportunity when I sssee it..",
+			"Ssstrange blue cryssstal beasssts walk thessse cavesss, their trailsss leaving behind an unusssually cold material... If you can bring me sssome of thisss exotic material, I can make it worth your while..",
+			"Where did I get thessse creditsss, you may asssk yourself? Pleassse, keep thossse kindsss of quessstionsss to yourssself.",
+			"Running a busssinesss is hard down here you know? The tribe ssstill expectsss you to chip in your fair ssshare of the daily hunt, but that isss work beneath me. Bring me trophiesss from your victoriesss against the local beassstsss, and I will pay handsssomely..",
+			"A ssshiny machine livesss deep in thessse cavesss, makesss good metal for better toolsss for the tribe. I pay good price for any ssspare ssshiny you come acrosssss..",
+			"I would appreciate you avoiding the needlessss ssslaughter of my kin, but I underssstand sssome of them are more... prone to violent outbreaksss againssst your kind."
+		),
+		TRADER_NOT_BUYING_ANYTHING = list(
+			"I don't particularly feel like haggling currently with you space dwellerssss. Digging through last group'sss belongingsss very tiring."
+		),
+		TRADER_NOT_SELLING_ANYTHING = list(
+			"Ssstoresss closssed, come back... maybe tomorrow? I don't know, dependsss on how I feel honessstly."
+		),
+	)
 	//TODO: More items in this list that make sense for the mission
 	products = list(
 		/obj/item/spear/bonespear = 150,
@@ -283,15 +325,6 @@
 	icon_state = "ashtrader"
 	gender = FEMALE
 	loot = list(/obj/effect/decal/remains/human)
-	lore = list(
-		"My brethern may not take ssso kindly to your presssense, but I for one know a good busssinessss opportunity when I sssee it..",
-		"Ssstrange blue cryssstal beasssts walk thessse cavesss, their trailsss leaving behind an unusssually cold material... If you can bring me sssome of thisss exotic material, I can make it worth your while..",
-		"Where did I get thessse creditsss, you may asssk yourself? Pleassse, keep thossse kindsss of quessstionsss to yourssself.",
-		"Running a busssinesss is hard down here you know? The tribe ssstill expectsss you to chip in your fair ssshare of the daily hunt, but that isss work beneath me. Bring me trophiesss from your victoriesss against the local beassstsss, and I will pay handsssomely..",
-		"A ssshiny machine livesss deep in thessse cavesss, makesss good metal for better toolsss for the tribe. I pay good price for any ssspare ssshiny you come acrosssss..",
-		"I would appreciate you avoiding the needlessss ssslaughter of my kin, but I underssstand sssome of them are more... prone to violent outbreaksss againssst your kind."
-	)
-
 
 //Mob corpse spawns, outfits, and ID cards
 /obj/effect/mob_spawn/corpse/goliath
@@ -602,12 +635,12 @@
 //Lore papers
 /obj/item/paper/fluff/awaymissions/caves/seismic_log
 	name = "Seismic Activity Report Log 43-2"
-	info = "<b><center>Seismic Activity Chart</b></center><br><br><center>*Various line graphs documenting seismic acitivty of the region over the last several months.	\
+	default_raw_text = "<b><center>Seismic Activity Chart</b></center><br><br><center>*Various line graphs documenting seismic acitivty of the region over the last several months.	\
 			The chart seems to spike around a month ago before going back to the baseline*</center>"
 
 /obj/item/paper/fluff/awaymissions/caves/floralguide
 	name = "Local Flora Guide"
-	info = "<b><center>C. Coffee's Extensive List of Local Wild Flora and What-Not</b></center><br><br><center><b>Leafy Mushrooms</b> are actually native to late Earth, but managed to find its way here. \
+	default_raw_text = "<b><center>C. Coffee's Extensive List of Local Wild Flora and What-Not</b></center><br><br><center><b>Leafy Mushrooms</b> are actually native to late Earth, but managed to find its way here. \
 			Harvested for it's leaf canopy, the leaves can be ground into a paste with simple medicinal and relaxant properties.</center><br><br><center><b>Tall Mushrooms</b> \
 			are several separate mushrooms grouped together, usually with the largest in the center with a circular shelf on the shaft. The caps themselves seem to be harvested by the local \
 			lizardkin population for ritualistic purposes, as they have intense hallucigenic properties when ingested.</center><br><br><center><b>Stem Shrooms</b> are small groups of tiny mushrooms that have a bioluminescent property. \
@@ -620,7 +653,7 @@
 
 /obj/item/paper/fluff/awaymissions/caves/researchfluff
 	name = "random research document"
-	info = "<center>*The paper itself dictates various research scribblings ranging from the local populace to rocks. You try to read on, but you stop yourself as your eyes begin to glaze over.*</center>"
+	default_raw_text = "<center>*The paper itself dictates various research scribblings ranging from the local populace to rocks. You try to read on, but you stop yourself as your eyes begin to glaze over.*</center>"
 
 /obj/item/disk/holodisk/caves/doorstuck
 	name = "Security Recording"

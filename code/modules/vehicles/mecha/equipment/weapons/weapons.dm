@@ -63,6 +63,7 @@
 				spread = round((i / projectiles_per_shot - 0.5) * variance)
 
 		var/obj/projectile/projectile_obj = new projectile(get_turf(src))
+		projectile_obj.log_override = TRUE //we log being fired ourselves a little further down.
 		projectile_obj.firer = chassis
 		projectile_obj.preparePixelProjectile(target, source, modifiers, spread)
 		if(source.client && isliving(source)) //dont want it to happen from syndie mecha npc mobs, they do direct fire anyways
@@ -73,11 +74,13 @@
 			new firing_effect_type(get_turf(src), chassis.dir)
 		playsound(chassis, fire_sound, 50, TRUE)
 
+		log_combat(source, target, "fired [projectile_obj] at", src, "from [chassis] at [get_area_name(src, TRUE)]")
+
 		sleep(max(0, projectile_delay))
 
 		if(kickback)
 			chassis.newtonian_move(newtonian_target)
-	chassis.log_message("Fired from [name], targeting [target].", LOG_ATTACK)
+	chassis.log_message("[key_name(source)] fired [src], targeting [target].", LOG_ATTACK)
 
 //Base energy weapon type
 /obj/item/mecha_parts/mecha_equipment/weapon/energy
@@ -237,7 +240,8 @@
 	log_message("Honked from [src.name]. HONK!", LOG_MECHA)
 	var/turf/T = get_turf(src)
 	message_admins("[ADMIN_LOOKUPFLW(source)] used a Mecha Honker in [ADMIN_VERBOSEJMP(T)]")
-	log_game("[key_name(source)] used a Mecha Honker in [AREACOORD(T)]")
+	source.log_message("used a Mecha Honker at [AREACOORD(T)].", LOG_GAME)
+	source.log_message("used a Mecha Honker at [AREACOORD(T)].", LOG_ATTACK)
 	return ..()
 
 
@@ -408,7 +412,8 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/proj_init(obj/item/grenade/flashbang/F, mob/user)
 	var/turf/T = get_turf(src)
 	message_admins("[ADMIN_LOOKUPFLW(user)] fired a [F] in [ADMIN_VERBOSEJMP(T)]")
-	log_game("[key_name(user)] fired a [F] in [AREACOORD(T)]")
+	user.log_message("fired a [F] in [AREACOORD(T)].", LOG_GAME)
+	user.log_message("fired a [F] in [AREACOORD(T)].", LOG_ATTACK)
 	addtimer(CALLBACK(F, /obj/item/grenade/flashbang.proc/detonate), det_time)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/clusterbang //Because I am a heartless bastard -Sieve //Heartless? for making the poor man's honkblast? - Kaze

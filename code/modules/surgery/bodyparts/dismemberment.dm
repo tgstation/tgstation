@@ -3,7 +3,7 @@
 	if(dismemberable)
 		return TRUE
 
-//Dismember a limb
+///Remove target limb from it's owner, with side effects.
 /obj/item/bodypart/proc/dismember(dam_type = BRUTE, silent=TRUE)
 	if(!owner || !dismemberable)
 		return FALSE
@@ -19,7 +19,7 @@
 		limb_owner.visible_message(span_danger("<B>[limb_owner]'s [name] is violently dismembered!</B>"))
 	INVOKE_ASYNC(limb_owner, /mob.proc/emote, "scream")
 	playsound(get_turf(limb_owner), 'sound/effects/dismember.ogg', 80, TRUE)
-	SEND_SIGNAL(limb_owner, COMSIG_ADD_MOOD_EVENT, "dismembered", /datum/mood_event/dismembered)
+	limb_owner.add_mood_event("dismembered", /datum/mood_event/dismembered)
 	limb_owner.mind?.add_memory(MEMORY_DISMEMBERED, list(DETAIL_LOST_LIMB = src, DETAIL_PROTAGONIST = limb_owner), story_value = STORY_VALUE_AMAZING)
 	drop_limb()
 
@@ -89,6 +89,7 @@
 	var/atom/drop_loc = owner.drop_location()
 
 	SEND_SIGNAL(owner, COMSIG_CARBON_REMOVE_LIMB, src, dismembered)
+	SEND_SIGNAL(src, COMSIG_BODYPART_REMOVED, owner, dismembered)
 	update_limb(1)
 	owner.remove_bodypart(src)
 
@@ -121,7 +122,7 @@
 		embedded.forceMove(src) // It'll self remove via signal reaction, just need to move it
 	if(!phantom_owner.has_embedded_objects())
 		phantom_owner.clear_alert(ALERT_EMBEDDED_OBJECT)
-		SEND_SIGNAL(phantom_owner, COMSIG_CLEAR_MOOD_EVENT, "embedded")
+		phantom_owner.clear_mood_event("embedded")
 
 	if(!special)
 		if(phantom_owner.dna)
@@ -140,7 +141,7 @@
 	synchronize_bodytypes(phantom_owner)
 	phantom_owner.update_health_hud() //update the healthdoll
 	phantom_owner.update_body()
-	phantom_owner.update_hair()
+	phantom_owner.update_body_parts()
 
 	if(!drop_loc) // drop_loc = null happens when a "dummy human" used for rendering icons on prefs screen gets its limbs replaced.
 		qdel(src)
@@ -234,11 +235,12 @@
 
 /obj/item/bodypart/chest/drop_limb(special)
 	if(special)
-		..()
+		return ..()
 
 /obj/item/bodypart/r_arm/drop_limb(special)
+	. = ..()
+
 	var/mob/living/carbon/arm_owner = owner
-	..()
 	if(arm_owner && !special)
 		if(arm_owner.handcuffed)
 			arm_owner.handcuffed.forceMove(drop_location())
@@ -251,12 +253,12 @@
 				R_hand.update_appearance()
 		if(arm_owner.gloves)
 			arm_owner.dropItemToGround(arm_owner.gloves, TRUE)
-		arm_owner.update_inv_gloves() //to remove the bloody hands overlay
+		arm_owner.update_worn_gloves() //to remove the bloody hands overlay
 
 
 /obj/item/bodypart/l_arm/drop_limb(special)
 	var/mob/living/carbon/arm_owner = owner
-	..()
+	. = ..()
 	if(arm_owner && !special)
 		if(arm_owner.handcuffed)
 			arm_owner.handcuffed.forceMove(drop_location())
@@ -269,7 +271,7 @@
 				L_hand.update_appearance()
 		if(arm_owner.gloves)
 			arm_owner.dropItemToGround(arm_owner.gloves, TRUE)
-		arm_owner.update_inv_gloves() //to remove the bloody hands overlay
+		arm_owner.update_worn_gloves() //to remove the bloody hands overlay
 
 
 /obj/item/bodypart/r_leg/drop_limb(special)
@@ -278,10 +280,10 @@
 			owner.legcuffed.forceMove(owner.drop_location()) //At this point bodypart is still in nullspace
 			owner.legcuffed.dropped(owner)
 			owner.legcuffed = null
-			owner.update_inv_legcuffed()
+			owner.update_worn_legcuffs()
 		if(owner.shoes)
 			owner.dropItemToGround(owner.shoes, TRUE)
-	..()
+	return ..()
 
 /obj/item/bodypart/l_leg/drop_limb(special) //copypasta
 	if(owner && !special)
@@ -289,10 +291,10 @@
 			owner.legcuffed.forceMove(owner.drop_location())
 			owner.legcuffed.dropped(owner)
 			owner.legcuffed = null
-			owner.update_inv_legcuffed()
+			owner.update_worn_legcuffs()
 		if(owner.shoes)
 			owner.dropItemToGround(owner.shoes, TRUE)
-	..()
+	return ..()
 
 /obj/item/bodypart/head/drop_limb(special)
 	if(!special)
@@ -310,9 +312,9 @@
 			pill.forceMove(src)
 
 	name = "[owner.real_name]'s head"
-	..()
+	return ..()
 
-//Attach a limb to a human and drop any existing limb of that type.
+///Try to attach this bodypart to a mob, while replacing one if it exists, does nothing if it fails.
 /obj/item/bodypart/proc/replace_limb(mob/living/carbon/limb_owner, special)
 	if(!istype(limb_owner))
 		return
@@ -324,6 +326,7 @@
 	if(!.) //If it failed to replace, re-attach their old limb as if nothing happened.
 		old_limb.attach_limb(limb_owner, TRUE)
 
+///Attach src to target mob if able.
 /obj/item/bodypart/proc/attach_limb(mob/living/carbon/new_limb_owner, special)
 	if(SEND_SIGNAL(new_limb_owner, COMSIG_CARBON_ATTACH_LIMB, src, special) & COMPONENT_NO_ATTACH)
 		return FALSE
@@ -345,7 +348,7 @@
 			var/atom/movable/screen/inventory/hand/hand = new_limb_owner.hud_used.hand_slots["[held_index]"]
 			if(hand)
 				hand.update_appearance()
-		new_limb_owner.update_inv_gloves()
+		new_limb_owner.update_worn_gloves()
 
 	if(special) //non conventional limb attachment
 		for(var/datum/surgery/attach_surgery as anything in new_limb_owner.surgeries) //if we had an ongoing surgery to attach a new limb, we stop it.
@@ -417,6 +420,21 @@
 			pill.forceMove(new_head_owner)
 			pill_action.Grant(new_head_owner)
 			break
+
+	///Transfer existing hair properties to the new human.
+	if(!special && ishuman(new_head_owner))
+		var/mob/living/carbon/human/sexy_chad = new_head_owner
+		sexy_chad.hairstyle = hair_style
+		sexy_chad.hair_color = hair_color
+		sexy_chad.facial_hair_color = facial_hair_color
+		sexy_chad.facial_hairstyle = facial_hairstyle
+		if(hair_gradient_style || facial_hair_gradient_style)
+			LAZYSETLEN(sexy_chad.grad_style, GRADIENTS_LEN)
+			LAZYSETLEN(sexy_chad.grad_color, GRADIENTS_LEN)
+			sexy_chad.grad_style[GRADIENT_HAIR_KEY] =  hair_gradient_style
+			sexy_chad.grad_color[GRADIENT_HAIR_KEY] =  hair_gradient_color
+			sexy_chad.grad_style[GRADIENT_FACIAL_HAIR_KEY] = facial_hair_gradient_style
+			sexy_chad.grad_color[GRADIENT_FACIAL_HAIR_KEY] = facial_hair_gradient_color
 
 	new_head_owner.updatehealth()
 	new_head_owner.update_body()

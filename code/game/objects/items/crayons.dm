@@ -21,7 +21,7 @@
 /obj/item/toy/crayon
 	name = "red crayon"
 	desc = "A colourful crayon. Looks tasty. Mmmm..."
-	icon = 'icons/obj/crayons.dmi'
+	icon = 'icons/obj/art/crayons.dmi'
 	icon_state = "crayonred"
 	worn_icon_state = "crayon"
 
@@ -74,7 +74,7 @@
 	var/post_noise = FALSE
 
 /obj/item/toy/crayon/proc/isValidSurface(surface)
-	return istype(surface, /turf/open/floor)
+	return isfloorturf(surface)
 
 /obj/item/toy/crayon/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is jamming [src] up [user.p_their()] nose and into [user.p_their()] brain. It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -440,6 +440,14 @@
 	else
 		..()
 
+/obj/item/toy/crayon/get_writing_implement_details()
+	return list(
+		interaction_mode = MODE_WRITING,
+		font = CRAYON_FONT,
+		color = paint_color,
+		use_bold = TRUE,
+	)
+
 /obj/item/toy/crayon/red
 	name = "red crayon"
 	icon_state = "crayonred"
@@ -535,7 +543,7 @@
 /obj/item/storage/crayons
 	name = "box of crayons"
 	desc = "A box of crayons for all your rune drawing needs."
-	icon = 'icons/obj/crayons.dmi'
+	icon = 'icons/obj/art/crayons.dmi'
 	icon_state = "crayonbox"
 	w_class = WEIGHT_CLASS_SMALL
 	custom_materials = list(/datum/material/cardboard = 2000)
@@ -557,7 +565,7 @@
 /obj/item/storage/crayons/update_overlays()
 	. = ..()
 	for(var/obj/item/toy/crayon/crayon in contents)
-		. += mutable_appearance('icons/obj/crayons.dmi', crayon.crayon_color)
+		. += mutable_appearance('icons/obj/art/crayons.dmi', crayon.crayon_color)
 
 /obj/item/storage/crayons/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/toy/crayon))
@@ -618,7 +626,7 @@
 	post_noise = FALSE
 
 /obj/item/toy/crayon/spraycan/isValidSurface(surface)
-	return (istype(surface, /turf/open/floor) || istype(surface, /turf/closed/wall))
+	return (isfloorturf(surface) || iswallturf(surface))
 
 
 /obj/item/toy/crayon/spraycan/suicide_act(mob/user)
@@ -678,7 +686,7 @@
 
 		if(C.client)
 			C.blur_eyes(3)
-			C.blind_eyes(1)
+			C.adjust_blindness(1)
 		if(C.get_eye_protection() <= 0) // no eye protection? ARGH IT BURNS. Warning: don't add a stun here. It's a roundstart item with some quirks.
 			C.apply_effects(eyeblur = 5, jitter = 10)
 			flash_color(C, flash_color=paint_color, flash_time=40)
@@ -717,7 +725,7 @@
 				var/obj/item/target_item = target
 				var/mob/living/holder = target.loc
 				if(holder.is_holding(target_item))
-					holder.update_inv_hands()
+					holder.update_held_items()
 				else
 					holder.update_clothing(target_item.slot_flags)
 			SEND_SIGNAL(target, COMSIG_OBJ_PAINTED, color_is_dark)
@@ -740,18 +748,20 @@
 	if(check_empty(user))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-	if(istype(target, /obj/item/bodypart) && actually_paints)
+	if(isbodypart(target) && actually_paints)
 		var/obj/item/bodypart/limb = target
 		if(!IS_ORGANIC_LIMB(limb))
 			var/list/skins = list()
 			var/static/list/style_list_icons = list("standard" = 'icons/mob/augmentation/augments.dmi', "engineer" = 'icons/mob/augmentation/augments_engineer.dmi', "security" = 'icons/mob/augmentation/augments_security.dmi', "mining" = 'icons/mob/augmentation/augments_mining.dmi')
 			for(var/skin_option in style_list_icons)
-				var/image/part_image = image(icon = style_list_icons[skin_option], icon_state = limb.icon_state)
+				var/image/part_image = image(icon = style_list_icons[skin_option], icon_state = "[limb.limb_id]_[limb.body_zone]")
+				if(limb.aux_zone) //Hands
+					part_image.overlays += image(icon = style_list_icons[skin_option], icon_state = "[limb.limb_id]_[limb.aux_zone]")
 				skins += list("[skin_option]" = part_image)
 			var/choice = show_radial_menu(user, src, skins, require_near = TRUE)
 			if(choice && (use_charges(user, 5, requires_full = FALSE) == 5))
 				playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
-				limb.icon = style_list_icons[choice]
+				limb.change_appearance(style_list_icons[choice], greyscale = FALSE)
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(target.color)
 		paint_color = target.color
@@ -773,7 +783,7 @@
 /obj/item/toy/crayon/spraycan/update_overlays()
 	. = ..()
 	if(use_overlays)
-		var/mutable_appearance/spray_overlay = mutable_appearance('icons/obj/crayons.dmi', "[is_capped ? "spraycan_cap_colors" : "spraycan_colors"]")
+		var/mutable_appearance/spray_overlay = mutable_appearance('icons/obj/art/crayons.dmi', "[is_capped ? "spraycan_cap_colors" : "spraycan_colors"]")
 		spray_overlay.color = paint_color
 		. += spray_overlay
 
@@ -827,7 +837,7 @@
 	volume_multiplier = 5
 
 /obj/item/toy/crayon/spraycan/lubecan/isValidSurface(surface)
-	return istype(surface, /turf/open/floor)
+	return isfloorturf(surface)
 
 /obj/item/toy/crayon/spraycan/mimecan
 	name = "silent spraycan"
