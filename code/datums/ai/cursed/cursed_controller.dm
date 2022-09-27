@@ -53,7 +53,7 @@
 	if(slot_already_in && (attempted_slot & slot_already_in)) //thanks for making it easy
 		what_a_horrible_night_to_have_a_curse()
 		return
-	if(attempted_slot == ITEM_SLOT_HANDS) //hands needs some different checks
+	if(attempted_slot & ITEM_SLOT_HANDS) //hands needs some different checks
 		curse_victim.drop_all_held_items()
 		if(curse_victim.put_in_hands(item_pawn, del_on_fail = FALSE))
 			to_chat(curse_victim, span_danger("[item_pawn] leaps into your hands!"))
