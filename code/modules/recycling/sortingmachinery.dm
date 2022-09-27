@@ -194,7 +194,7 @@
 			post_unwrap_contents(user, rip_open = FALSE)
 			return
 		else
-			balloon_alert(user, span_warning("The boxcutter isn't active!"))
+			balloon_alert(user, "prime the boxcutter!")
 			return
 
 	else
