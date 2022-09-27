@@ -33,7 +33,7 @@
 		return
 	. = TRUE
 	if(user.do_afters)
-		balloon_alert(user, "you're already repairing it!")
+		balloon_alert(user, "you're already busy!")
 		return
 	if(atom_integrity >= max_integrity)
 		balloon_alert(user, "it's not damaged!")
