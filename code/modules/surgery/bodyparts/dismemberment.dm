@@ -326,13 +326,18 @@
 	if(!.) //If it failed to replace, re-attach their old limb as if nothing happened.
 		old_limb.attach_limb(limb_owner, TRUE)
 
-///Attach src to target mob if able.
-/obj/item/bodypart/proc/attach_limb(mob/living/carbon/new_limb_owner, special)
+///Checks if you can attach a limb, returns TRUE if you can.
+/obj/item/bodypart/proc/can_attach_limb(mob/living/carbon/new_limb_owner, special)
 	if(SEND_SIGNAL(new_limb_owner, COMSIG_CARBON_ATTACH_LIMB, src, special) & COMPONENT_NO_ATTACH)
 		return FALSE
 
 	var/obj/item/bodypart/chest/mob_chest = new_limb_owner.get_bodypart(BODY_ZONE_CHEST)
 	if(mob_chest && !(mob_chest.acceptable_bodytype & bodytype) && !special)
+		return FALSE
+
+///Attach src to target mob if able.
+/obj/item/bodypart/proc/attach_limb(mob/living/carbon/new_limb_owner, special)
+	if(!can_attach_limb(new_limb_owner, special))
 		return FALSE
 
 	moveToNullspace()
