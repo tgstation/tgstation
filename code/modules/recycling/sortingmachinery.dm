@@ -34,8 +34,8 @@
 		playsound(loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
 		new /obj/effect/decal/cleanable/wrapping(turf_loc)
 	else
-		playsound(loc, 'sound/surgery/scalpel1.ogg', 50, TRUE)
-		new /obj/item/stack/wrapping_paper(turf_loc)
+		playsound(loc, 'sound/items/box_cut.ogg', 50, TRUE)
+		new /obj/item/stack/package_wrap(turf_loc, 1)
 	for(var/atom/movable/movable_content as anything in contents)
 		movable_content.forceMove(turf_loc)
 
@@ -189,9 +189,13 @@
 		update_appearance()
 
 	if(istype(item, /obj/item/boxcutter))
-		unwrap_contents(user)
-		post_unwrap_contents(user, rip_open = FALSE)
-		return
+		if( (item.icon_state == "boxcutter_on"))
+			unwrap_contents(user)
+			post_unwrap_contents(user, rip_open = FALSE)
+			return
+		else
+			balloon_alert(user, span_warning("The boxcutter isn't active!"))
+			return
 
 	else
 		return ..()
