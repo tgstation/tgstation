@@ -321,6 +321,8 @@
 /obj/effect/decal/cleanable/ants/update_icon_state()
 	if(istype(src, /obj/effect/decal/cleanable/ants/fire)) //i fucking hate this but you're forced to call parent in update_icon_state()
 		return ..()
+	if(!(flags_1 & INITIALIZED_1))
+		return ..()
 
 	var/datum/component/caltrop/caltrop_comp = GetComponent(/datum/component/caltrop)
 	if(!caltrop_comp)
@@ -339,7 +341,7 @@
 
 /obj/effect/decal/cleanable/ants/update_overlays()
 	. = ..()
-	. += emissive_appearance(icon, "[icon_state]_light", alpha = src.alpha)
+	. += emissive_appearance(icon, "[icon_state]_light", src, alpha = src.alpha)
 
 /obj/effect/decal/cleanable/ants/fire_act(exposed_temperature, exposed_volume)
 	var/obj/effect/decal/cleanable/ants/fire/fire_ants = new(loc)

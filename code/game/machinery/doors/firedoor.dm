@@ -600,7 +600,7 @@
 		hazards.pixel_x = light_xoffset
 		hazards.pixel_y = light_yoffset
 		. += hazards
-		hazards = emissive_appearance(icon, "[(obj_flags & EMAGGED) ? "firelock_alarm_type_emag" : alarm_type]", alpha = src.alpha)
+		hazards = emissive_appearance(icon, "[(obj_flags & EMAGGED) ? "firelock_alarm_type_emag" : alarm_type]", src, alpha = src.alpha)
 		hazards.pixel_x = light_xoffset
 		hazards.pixel_y = light_yoffset
 		. += hazards

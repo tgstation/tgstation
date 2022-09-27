@@ -9,15 +9,24 @@
 
 		gas_info[META_GAS_MOLES_VISIBLE] = initial(gas.moles_visible)
 		if(initial(gas.moles_visible) != null)
-			gas_info[META_GAS_OVERLAY] = new /list(TOTAL_VISIBLE_STATES)
-			for(var/i in 1 to TOTAL_VISIBLE_STATES)
-				gas_info[META_GAS_OVERLAY][i] = new /obj/effect/overlay/gas(initial(gas.gas_overlay), log(4, (i+0.4*TOTAL_VISIBLE_STATES) / (0.35*TOTAL_VISIBLE_STATES)) * 255)
+			gas_info[META_GAS_OVERLAY] = generate_gas_overlays(0, SSmapping.max_plane_offset, gas)
 
 		gas_info[META_GAS_FUSION_POWER] = initial(gas.fusion_power)
 		gas_info[META_GAS_DANGER] = initial(gas.dangerous)
 		gas_info[META_GAS_ID] = initial(gas.id)
 		gas_info[META_GAS_DESC] = initial(gas.desc)
 		.[gas_path] = gas_info
+
+/proc/generate_gas_overlays(old_offset, new_offset, datum/gas/gas_type)
+	var/list/to_return = list()
+	for(var/i in old_offset to new_offset)
+		var/fill = list()
+		to_return += list(fill)
+		for(var/j in 1 to TOTAL_VISIBLE_STATES)
+			var/obj/effect/overlay/gas/gas =  new (initial(gas_type.gas_overlay), log(4, (j+0.4*TOTAL_VISIBLE_STATES) / (0.35*TOTAL_VISIBLE_STATES)) * 255)
+			SET_PLANE_W_SCALAR(gas, gas.plane, i)
+			fill += gas
+	return to_return
 
 /proc/gas_id2path(id)
 	var/list/meta_gas = GLOB.meta_gas_info

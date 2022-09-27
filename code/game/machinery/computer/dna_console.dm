@@ -683,7 +683,7 @@
 				//figure out which pair type the character belongs to
 				pair_str = ((at_str[1] == char || at_str[2] == char) ? at_str : ((cg_str[1] == char || cg_str[2] == char) ? cg_str : null))
 				//Valid pair from character
-				new_pair = (pair_str ? char + (pair_str[1]==char?pair_str[2]:pair_str[1]) : null)
+				new_pair = (pair_str ? char + (pair_str[1] == char ? pair_str[2] : pair_str[1]) : null)
 				// every second letter in the sequence represents a valid pair of the new sequence, otherwise it belongs to old
 				if(new_pair)
 					if(i%2==0)

@@ -852,9 +852,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 		new_human.alpha = 150 //Makes them translucent
 		new_human.equipOutfit(/datum/outfit/ghost_cultist) //give them armor
 		new_human.apply_status_effect(/datum/status_effect/cultghost) //ghosts can't summon more ghosts
-		new_human.see_invisible = SEE_INVISIBLE_OBSERVER
+		new_human.set_invis_see(SEE_INVISIBLE_OBSERVER)
 		ADD_TRAIT(new_human, TRAIT_NOBREATH, INNATE_TRAIT)
-
 		ghosts++
 		playsound(src, 'sound/magic/exit_blood.ogg', 50, TRUE)
 		visible_message(span_warning("A cloud of red mist forms above [src], and from within steps... a [new_human.gender == FEMALE ? "wo":""]man."))
