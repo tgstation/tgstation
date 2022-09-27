@@ -18,7 +18,8 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 /// Called when the count down has been finished, do the nasty work.
 /// [/obj/machinery/power/supermatter_crystal/proc/count_down]
 /datum/sm_delam/proc/delaminate(obj/machinery/power/supermatter_crystal/sm)
-	SSpersistence.rounds_since_engine_exploded = ROUNDCOUNT_ENGINE_JUST_EXPLODED
+	if (sm.is_main_engine)
+		SSpersistence.rounds_since_engine_exploded = ROUNDCOUNT_ENGINE_JUST_EXPLODED
 	qdel(sm)
 
 /// Whatever we're supposed to do when a delam is currently in progress.
