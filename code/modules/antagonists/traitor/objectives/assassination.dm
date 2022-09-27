@@ -99,7 +99,7 @@
 		return //your target please
 	if(equipper.stat != DEAD)
 		return //kill them please
-	if(slot != ITEM_SLOT_LPOCKET && slot != ITEM_SLOT_RPOCKET)
+	if(!(slot & (ITEM_SLOT_LPOCKET|ITEM_SLOT_RPOCKET)))	
 		return //in their pockets please
 	succeed_objective()
 

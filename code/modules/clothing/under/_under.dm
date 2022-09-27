@@ -104,7 +104,7 @@
 			adjusted = DIGITIGRADE_STYLE
 		H.update_worn_undersuit()
 
-	if(attached_accessory && slot != ITEM_SLOT_HANDS && ishuman(user))
+	if(attached_accessory && !(slot & ITEM_SLOT_HANDS) && ishuman(user))
 		var/mob/living/carbon/human/H = user
 		attached_accessory.on_uniform_equip(src, user)
 		H.fan_hud_set_fandom()

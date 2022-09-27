@@ -455,7 +455,7 @@
 
 /obj/item/clothing/glasses/thermal/xray/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
-	if(slot != ITEM_SLOT_EYES || !istype(user))
+	if(!(slot & ITEM_SLOT_EYES) || !istype(user))
 		return
 	ADD_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
 
@@ -559,7 +559,7 @@
 
 /obj/item/clothing/glasses/debug/equipped(mob/user, slot)
 	. = ..()
-	if(slot != ITEM_SLOT_EYES)
+	if(!(slot & ITEM_SLOT_EYES))
 		return
 	if(ishuman(user))
 		for(var/hud in hudlist)
@@ -609,7 +609,7 @@
 
 /obj/item/clothing/glasses/salesman/equipped(mob/living/carbon/human/user, slot)
 	..()
-	if(slot != ITEM_SLOT_EYES)
+	if(!(slot & ITEM_SLOT_EYES))
 		return
 	bigshot = user
 	RegisterSignal(bigshot, COMSIG_CARBON_SANITY_UPDATE, .proc/moodshift)
