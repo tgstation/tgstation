@@ -246,7 +246,7 @@
 		var/atom/movable/AM = i
 		AM.forceMove(drop_location())
 	ingredients.Cut()
-	flick("[dirty == 100? "mwbloodyo" : "mwo"]", src)
+	flick("[dirty == 100 ? "mwbloodyo" : "mwo"]", src)
 	playsound(loc, 'sound/machines/click.ogg', 15, TRUE, -3)
 
 
@@ -375,7 +375,7 @@
 	set_light(0)
 	soundloop.stop()
 	update_appearance()
-	flick("[dirty == 100? "mwbloodyo" : "mwo"]", src)
+	flick("[dirty == 100 ? "mwbloodyo" : "mwo"]", src)
 
 
 /// Type of microwave that automatically turns it self on erratically. Probably don't use this outside of the holodeck program "Microwave Paradise".
