@@ -188,7 +188,7 @@
 			wrapped_item.AddComponent(/datum/component/pricetag, sticker.payments_acc, sticker.cut_multiplier)
 		update_appearance()
 
-	if(istype(item, /obj/item/boxcutter))
+	else if(istype(item, /obj/item/boxcutter))
 		if( (item.icon_state == "boxcutter_on"))
 			unwrap_contents(user)
 			post_unwrap_contents(user, rip_open = FALSE)
