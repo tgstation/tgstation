@@ -18,11 +18,11 @@
 /obj/item/clothing/suit/hooded/ethereal_raincoat/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
 	if(!isinhands)
-		. += emissive_appearance('icons/mob/clothing/suits/ethereal.dmi', "eth_raincoat_glow_worn", alpha = src.alpha)
+		. += emissive_appearance('icons/mob/clothing/suits/ethereal.dmi', "eth_raincoat_glow_worn", offset_spokesman = src, alpha = src.alpha)
 
 /obj/item/clothing/suit/hooded/ethereal_raincoat/update_overlays()
 	. = ..()
-	. += emissive_appearance('icons/obj/clothing/suits/ethereal.dmi', "eth_raincoat_glow", alpha = src.alpha)
+	. += emissive_appearance('icons/obj/clothing/suits/ethereal.dmi', "eth_raincoat_glow", offset_spokesman = src, alpha = src.alpha)
 
 /obj/item/clothing/suit/hooded/ethereal_raincoat/trailwarden
 	name = "trailwarden oilcoat"

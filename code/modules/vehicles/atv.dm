@@ -53,22 +53,22 @@
 			turret.pixel_x = base_pixel_x
 			turret.pixel_y = base_pixel_y + 4
 			turret.layer = ABOVE_MOB_LAYER
-			turret.plane = GAME_PLANE_UPPER
+			SET_PLANE(turret, GAME_PLANE_UPPER, our_turf)
 		if(EAST)
 			turret.pixel_x = base_pixel_x - 12
 			turret.pixel_y = base_pixel_y + 4
 			turret.layer = OBJ_LAYER
-			turret.plane = GAME_PLANE
+			SET_PLANE(turret, GAME_PLANE, our_turf)
 		if(SOUTH)
 			turret.pixel_x = base_pixel_x
 			turret.pixel_y = base_pixel_y + 4
 			turret.layer = OBJ_LAYER
-			turret.plane = GAME_PLANE
+			SET_PLANE(turret, GAME_PLANE, our_turf)
 		if(WEST)
 			turret.pixel_x = base_pixel_x + 12
 			turret.pixel_y = base_pixel_y + 4
 			turret.layer = OBJ_LAYER
-			turret.plane = GAME_PLANE
+			SET_PLANE(turret, GAME_PLANE, our_turf)
 
 /obj/vehicle/ridden/atv/welder_act(mob/living/user, obj/item/W)
 	if(user.combat_mode)

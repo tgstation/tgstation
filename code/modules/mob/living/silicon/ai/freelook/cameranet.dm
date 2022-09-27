@@ -16,31 +16,44 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 	var/list/chunks = list()
 	var/ready = 0
 
-	///The image cloned by all chunk static images put onto turfs cameras cant see
-	var/image/obscured
+	/// List of images cloned by all chunk static images put onto turfs cameras cant see
+	/// Indexed by the plane offset to use
+	var/list/image/obscured_images
 
 /datum/cameranet/New()
+	obscured_images = list()
+	update_offsets(SSmapping.max_plane_offset)
+	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, .proc/on_offset_growth)
 
-	obscured = new('icons/effects/cameravis.dmi')
-	obscured.plane = CAMERA_STATIC_PLANE
-	obscured.appearance_flags = RESET_TRANSFORM | RESET_ALPHA | RESET_COLOR | KEEP_APART
-	obscured.override = TRUE
+/datum/cameranet/proc/update_offsets(new_offset)
+	for(var/i in length(obscured_images) to new_offset)
+		var/image/obscured = new('icons/effects/cameravis.dmi')
+		SET_PLANE_W_SCALAR(obscured, CAMERA_STATIC_PLANE, i)
+		obscured.appearance_flags = RESET_TRANSFORM | RESET_ALPHA | RESET_COLOR | KEEP_APART
+		obscured.override = TRUE
+		obscured_images += obscured
+
+/datum/cameranet/proc/on_offset_growth(datum/source, old_offset, new_offset)
+	SIGNAL_HANDLER
+	update_offsets(new_offset)
 
 /// Checks if a chunk has been Generated in x, y, z.
 /datum/cameranet/proc/chunkGenerated(x, y, z)
+	var/turf/lowest = get_lowest_turf(locate(max(x, 1), max(y, 1), z))
 	x &= ~(CHUNK_SIZE - 1)
 	y &= ~(CHUNK_SIZE - 1)
-	return chunks["[x],[y],[z]"]
+	return chunks["[x],[y],[lowest.z]"]
 
 // Returns the chunk in the x, y, z.
 // If there is no chunk, it creates a new chunk and returns that.
 /datum/cameranet/proc/getCameraChunk(x, y, z)
+	var/turf/lowest = get_lowest_turf(locate(x, y, z))
 	x &= ~(CHUNK_SIZE - 1)
 	y &= ~(CHUNK_SIZE - 1)
-	var/key = "[x],[y],[z]"
+	var/key = "[x],[y],[lowest.z]"
 	. = chunks[key]
 	if(!.)
-		chunks[key] = . = new /datum/camerachunk(x, y, z)
+		chunks[key] = . = new /datum/camerachunk(x, y, lowest.z)
 
 /// Updates what the aiEye can see. It is recommended you use this when the aiEye moves or it's location is set.
 /datum/cameranet/proc/visibility(list/moved_eyes, client/C, list/other_eyes, use_static = TRUE)
@@ -60,7 +73,6 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 			var/y1 = max(0, eye.y - static_range) & ~(CHUNK_SIZE - 1)
 			var/x2 = min(world.maxx, eye.x + static_range) & ~(CHUNK_SIZE - 1)
 			var/y2 = min(world.maxy, eye.y + static_range) & ~(CHUNK_SIZE - 1)
-
 
 			for(var/x = x1; x <= x2; x += CHUNK_SIZE)
 				for(var/y = y1; y <= y2; y += CHUNK_SIZE)
@@ -124,10 +136,10 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 				if(chunk)
 					if(choice == 0)
 						// Remove the camera.
-						chunk.cameras -= c
+						chunk.cameras["[T.z]"] -= c
 					else if(choice == 1)
 						// You can't have the same camera in the list twice.
-						chunk.cameras |= c
+						chunk.cameras["[T.z]"] |= c
 					chunk.hasChanged()
 
 /// Will check if a mob is on a viewable turf. Returns 1 if it is, otherwise returns 0.

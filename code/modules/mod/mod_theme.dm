@@ -48,10 +48,7 @@
 	/// Modules blacklisted from the MOD.
 	var/list/module_blacklist = list()
 	/// Allowed items in the chestplate's suit storage.
-	var/list/allowed_suit_storage = list(
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
-	)
+	var/list/allowed_suit_storage = list()
 	/// List of skins with their appropriate clothing flags.
 	var/list/skins = list(
 		"standard" = list(
@@ -122,9 +119,7 @@
 	allowed_suit_storage = list(
 		/obj/item/construction/rcd,
 		/obj/item/fireaxe/metal_h2_axe,
-		/obj/item/flashlight,
 		/obj/item/storage/bag/construction,
-		/obj/item/tank/internals,
 	)
 	skins = list(
 		"engineering" = list(
@@ -171,10 +166,8 @@
 	allowed_suit_storage = list(
 		/obj/item/analyzer,
 		/obj/item/fireaxe/metal_h2_axe,
-		/obj/item/flashlight,
 		/obj/item/pipe_dispenser,
 		/obj/item/t_scanner,
-		/obj/item/tank/internals,
 	)
 	skins = list(
 		"atmospheric" = list(
@@ -225,12 +218,10 @@
 		/obj/item/analyzer,
 		/obj/item/construction/rcd,
 		/obj/item/fireaxe/metal_h2_axe,
-		/obj/item/flashlight,
 		/obj/item/melee/baton/telescopic,
 		/obj/item/pipe_dispenser,
 		/obj/item/storage/bag/construction,
 		/obj/item/t_scanner,
-		/obj/item/tank/internals,
 	)
 	skins = list(
 		"advanced" = list(
@@ -288,8 +279,6 @@
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 5
 	charge_drain = DEFAULT_CHARGE_DRAIN * 2
 	allowed_suit_storage = list(
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
 		/obj/item/resonator,
 		/obj/item/mining_scanner,
 		/obj/item/t_scanner/adv_mining_scanner,
@@ -373,8 +362,6 @@
 	slowdown_inactive = 0.5
 	slowdown_active = 0
 	allowed_suit_storage = list(
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
 		/obj/item/mail,
 		/obj/item/delivery/small,
 		/obj/item/paper,
@@ -419,8 +406,6 @@
 	slowdown_inactive = 1
 	slowdown_active = 0.5
 	allowed_suit_storage = list(
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
 		/obj/item/healthanalyzer,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/cup/beaker,
@@ -505,8 +490,6 @@
 	slowdown_active = 0.25
 	inbuilt_modules = list(/obj/item/mod/module/quick_carry/advanced)
 	allowed_suit_storage = list(
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
 		/obj/item/healthanalyzer,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/cup/beaker,
@@ -569,8 +552,6 @@
 	slowdown_active = 1.25
 	inbuilt_modules = list(/obj/item/mod/module/reagent_scanner/advanced)
 	allowed_suit_storage = list(
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
 		/obj/item/analyzer,
 		/obj/item/dnainjector,
 		/obj/item/biopsy_tool,
@@ -620,8 +601,6 @@
 	slowdown_inactive = 1
 	slowdown_active = 0.5
 	allowed_suit_storage = list(
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
 		/obj/item/ammo_box,
 		/obj/item/ammo_casing,
 		/obj/item/reagent_containers/spray/pepper,
@@ -674,8 +653,6 @@
 	slowdown_inactive = 0.75
 	slowdown_active = 0.25
 	allowed_suit_storage = list(
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
 		/obj/item/ammo_box,
 		/obj/item/ammo_casing,
 		/obj/item/reagent_containers/spray/pepper,
@@ -732,8 +709,6 @@
 	slowdown_inactive = 0.75
 	slowdown_active = 0.25
 	allowed_suit_storage = list(
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
 		/obj/item/ammo_box,
 		/obj/item/ammo_casing,
 		/obj/item/restraints/handcuffs,
@@ -782,8 +757,6 @@
 	slowdown_inactive = 1.75
 	slowdown_active = 1.25
 	allowed_suit_storage = list(
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
 		/obj/item/bikehorn,
 		/obj/item/food/grown/banana,
 		/obj/item/grown/bananapeel,
@@ -894,8 +867,6 @@
 	ui_theme = "syndicate"
 	inbuilt_modules = list(/obj/item/mod/module/armor_booster)
 	allowed_suit_storage = list(
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
 		/obj/item/ammo_box,
 		/obj/item/ammo_casing,
 		/obj/item/restraints/handcuffs,
@@ -977,8 +948,6 @@
 	ui_theme = "syndicate"
 	inbuilt_modules = list(/obj/item/mod/module/armor_booster)
 	allowed_suit_storage = list(
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
 		/obj/item/ammo_box,
 		/obj/item/ammo_casing,
 		/obj/item/restraints/handcuffs,
@@ -1036,8 +1005,6 @@
 	ui_theme = "wizard"
 	inbuilt_modules = list(/obj/item/mod/module/anti_magic/wizard)
 	allowed_suit_storage = list(
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
 		/obj/item/teleportation_scroll,
 		/obj/item/highfrequencyblade/wizard,
 		/obj/item/gun/magic,
@@ -1088,8 +1055,6 @@
 	ui_theme = "hackerman"
 	inbuilt_modules = list(/obj/item/mod/module/welding/camera_vision, /obj/item/mod/module/hacker, /obj/item/mod/module/weapon_recall, /obj/item/mod/module/adrenaline_boost, /obj/item/mod/module/energy_net)
 	allowed_suit_storage = list(
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
 		/obj/item/gun,
 		/obj/item/ammo_box,
 		/obj/item/ammo_casing,
@@ -1145,8 +1110,6 @@
 	ui_theme = "hackerman"
 	inbuilt_modules = list(/obj/item/mod/module/anomaly_locked/kinesis/prebuilt/prototype)
 	allowed_suit_storage = list(
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
 		/obj/item/analyzer,
 		/obj/item/t_scanner,
 		/obj/item/pipe_dispenser,
@@ -1196,8 +1159,6 @@
 	slowdown_inactive = 0.5
 	slowdown_active = 0
 	allowed_suit_storage = list(
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
 		/obj/item/ammo_box,
 		/obj/item/ammo_casing,
 		/obj/item/restraints/handcuffs,
@@ -1273,8 +1234,6 @@
 	siemens_coefficient = 0
 	complexity_max = DEFAULT_MAX_COMPLEXITY + 10
 	allowed_suit_storage = list(
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
 		/obj/item/ammo_box,
 		/obj/item/ammo_casing,
 		/obj/item/restraints/handcuffs,
@@ -1328,8 +1287,6 @@
 	slowdown_inactive = 0.5
 	slowdown_active = 0
 	allowed_suit_storage = list(
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
 		/obj/item/ammo_box,
 		/obj/item/ammo_casing,
 		/obj/item/restraints/handcuffs,
@@ -1379,8 +1336,6 @@
 	slowdown_inactive = 0
 	slowdown_active = 0
 	allowed_suit_storage = list(
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
 		/obj/item/restraints/handcuffs,
 	)
 	skins = list(
@@ -1427,8 +1382,6 @@
 	slowdown_inactive = 0.5
 	slowdown_active = 0
 	allowed_suit_storage = list(
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
 		/obj/item/gun,
 	)
 	skins = list(
@@ -1478,8 +1431,6 @@
 	slowdown_inactive = 0
 	slowdown_active = 0
 	allowed_suit_storage = list(
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
 		/obj/item/gun,
 	)
 	skins = list(

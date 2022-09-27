@@ -135,6 +135,12 @@
 	who_sees_us.Cut() // probably not needed but who knows
 	return ..()
 
+/obj/effect/client_image_holder/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	. = ..()
+	if(same_z_layer)
+		return
+	SET_PLANE(shown_image, PLANE_TO_TRUE(shown_image.plane), new_turf)
+
 /// Signal proc to clean up references if people who see us are deleted.
 /obj/effect/client_image_holder/proc/remove_seer(mob/source)
 	SIGNAL_HANDLER
@@ -150,7 +156,7 @@
 /// Generates the image which we take on.
 /obj/effect/client_image_holder/proc/generate_image()
 	var/image/created = image(image_icon, src, image_state, image_layer, dir = src.dir)
-	created.plane = image_plane
+	SET_PLANE_EXPLICIT(created, image_plane, src)
 	created.pixel_x = image_pixel_x
 	created.pixel_y = image_pixel_y
 	if(image_color)

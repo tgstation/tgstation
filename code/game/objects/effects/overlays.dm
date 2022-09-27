@@ -65,8 +65,8 @@
 	appearance_flags = RESET_TRANSFORM | TILE_BOUND
 	invisibility = INVISIBILITY_ABSTRACT
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-
-	plane = ATMOS_GROUP_PLANE
+	vis_flags = VIS_INHERIT_PLANE
+	plane = HIGH_GAME_PLANE
 
 /// Door overlay for animating closets
 /obj/effect/overlay/closet_door
