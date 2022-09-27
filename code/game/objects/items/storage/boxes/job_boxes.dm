@@ -12,6 +12,8 @@
 	var/internal_type = /obj/item/tank/internals/emergency_oxygen
 	/// What medipen should be present in this box?
 	var/medipen_type = /obj/item/reagent_containers/hypospray/medipen
+	/// Should the box have a crowbar?
+	var/has_crowbar = TRUE
 
 /obj/item/storage/box/survival/PopulateContents()
 	if(!isnull(mask_type))
@@ -29,9 +31,8 @@
 		new /obj/item/flashlight/flare(src)
 		new /obj/item/radio/off(src)
 
-/obj/item/storage/box/survival/radio/PopulateContents()
-	..() // we want the survival stuff too.
-	new /obj/item/radio/off(src)
+	if(has_crowbar)
+		new /obj/item/crowbar/red(src)
 
 /obj/item/storage/box/survival/proc/wardrobe_removal()
 	if(!isplasmaman(loc)) //We need to specially fill the box with plasmaman gear, since it's intended for one
@@ -46,20 +47,13 @@
 /obj/item/storage/box/survival/mining
 	mask_type = /obj/item/clothing/mask/gas/explorer/folded
 
-/obj/item/storage/box/survival/mining/PopulateContents()
-	..()
-	new /obj/item/crowbar/red(src)
-
 // Engineer survival box
 /obj/item/storage/box/survival/engineer
 	name = "extended-capacity survival box"
 	desc = "A box with the bare essentials of ensuring the survival of you and others. This one is labelled to contain an extended-capacity tank."
 	illustration = "extendedtank"
 	internal_type = /obj/item/tank/internals/emergency_oxygen/engi
-
-/obj/item/storage/box/survival/engineer/radio/PopulateContents()
-	..() // we want the regular items too.
-	new /obj/item/radio/off(src)
+	has_crowbar = FALSE
 
 // Syndie survival box
 /obj/item/storage/box/survival/syndie
@@ -73,17 +67,12 @@
 
 /obj/item/storage/box/survival/syndie/PopulateContents()
 	..()
-	new /obj/item/crowbar/red(src)
 	new /obj/item/screwdriver/red(src)
 	new /obj/item/weldingtool/mini(src)
 
 // Security survival box
 /obj/item/storage/box/survival/security
 	mask_type = /obj/item/clothing/mask/gas/sechailer
-
-/obj/item/storage/box/survival/security/radio/PopulateContents()
-	..() // we want the regular stuff too
-	new /obj/item/radio/off(src)
 
 // Medical survival box
 /obj/item/storage/box/survival/medical
@@ -174,6 +163,8 @@
 	else
 		new /obj/item/tank/internals/plasmaman/belt(src)
 
+	new /obj/item/crowbar/red(src)
+
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_PREMIUM_INTERNALS))
 		new /obj/item/flashlight/flare(src)
 		new /obj/item/radio/off(src)
@@ -185,6 +176,8 @@
 		new /obj/item/tank/internals/emergency_oxygen(src)
 	else
 		new /obj/item/tank/internals/plasmaman/belt(src)
+
+	new /obj/item/crowbar/red(src)
 
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_PREMIUM_INTERNALS))
 		new /obj/item/flashlight/flare(src)
