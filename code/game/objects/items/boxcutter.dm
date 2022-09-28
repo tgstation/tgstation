@@ -13,6 +13,7 @@
 	resistance_flags = FIRE_PROOF
 	force = 0
 	var/start_extended = FALSE
+	/// Whether or not the boxcutter has been readied
 	var/on = FALSE
 	var/on_sound = 'sound/items/boxcutter_activate.ogg'
 
