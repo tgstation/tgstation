@@ -1,6 +1,6 @@
 //These are all minor mutations that affect your speech somehow.
 //Individual ones aren't commented since their functions should be evident at a glance
-// hajının salgamı
+
 /datum/mutation/human/nervousness
 	name = "Nervousness"
 	desc = "Causes the holder to stutter."

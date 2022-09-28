@@ -1,4 +1,4 @@
-//spears will be removed in the next patch
+//spears
 /obj/item/spear
 	icon_state = "spearglass0"
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'

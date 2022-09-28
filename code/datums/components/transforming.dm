@@ -1,7 +1,7 @@
 /*
  * Transforming weapon component. For weapons that swap between states.
  * For example: Energy swords, cleaving saws, switch blades.
- * fan tıkanmış amk
+ *
  * Used to easily make an item that can be attack_self'd to gain force or change mode.
  *
  * Only values passed on initialize will update when the item is activated (except the icon_state).

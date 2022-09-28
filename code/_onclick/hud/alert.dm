@@ -243,7 +243,7 @@
 	if(!.)
 		return
 	to_chat(owner, span_mind_control("[command]"))
-// AAAAAAAAAAAAAAAAAA
+
 /atom/movable/screen/alert/embeddedobject
 	name = "Embedded Object"
 	desc = "Something got lodged into your flesh and is causing major bleeding. It might fall out with time, but surgery is the safest way. \
