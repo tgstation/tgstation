@@ -3,7 +3,7 @@
 
 /mob/living/silicon/spawn_dust()
 	new /obj/effect/decal/remains/robot(loc)
-
+// aaaaaa
 /mob/living/silicon/death(gibbed)
 	if(!gibbed)
 		emote("deathgasp")

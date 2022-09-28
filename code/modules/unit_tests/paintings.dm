@@ -1,6 +1,6 @@
 ///Checks that all kind of painting frames have a sprite for each canvas type in the game.
 /datum/unit_test/paintings
-
+// aaaaaa
 /datum/unit_test/paintings/Run()
 	for(var/obj/item/canvas/canvas as anything in typesof(/obj/item/canvas))
 		canvas = new canvas
