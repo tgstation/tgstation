@@ -249,15 +249,12 @@ GLOBAL_LIST_INIT(meteorsD, list(/obj/effect/meteor/medium=15, /obj/effect/meteor
 	meteorsound = 'sound/items/dodgeball.ogg'
 	threat = 1
 
-/obj/effect/meteor/sand/ram_turf(turf/T)
-	if(istype(T, /turf/closed/wall))
-		SSexplosions.lowturf += T
-
 /obj/effect/meteor/sand/get_hit()
 	hits--
 	if(hits <= 0)
 		meteor_effect()
 		qdel(src) //Since we're going to be throwing literally hundreds of these, they shouldn't leave anything behind
+				//Maybe replace this entire thing with just having the meteordrop be an effect??
 
 //Dust
 /obj/effect/meteor/dust
