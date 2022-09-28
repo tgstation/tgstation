@@ -173,13 +173,14 @@
 /obj/machinery/electrolyzer/attack_hand_secondary(mob/user, list/modifiers)
 	if(!can_interact(user))
 		return
-	toggle_power()
+	toggle_power(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/machinery/electrolyzer/proc/toggle_power()
+/obj/machinery/electrolyzer/proc/toggle_power(user)
 	on = !on
 	mode = ELECTROLYZER_MODE_STANDBY
-	usr.visible_message(span_notice("[usr] switches [on ? "on" : "off"] \the [src]."), span_notice("You switch [on ? "on" : "off"] \the [src]."))
+    if (!isnull(user))
+    	balloon_alert(user, "turned [on ? "on" : "off"]")
 	update_appearance()
 	if (on)
 		SSair.start_processing_machine(src)
