@@ -69,14 +69,21 @@
  * * gibbed - Was the mob gibbed?
 */
 /mob/living/proc/death(gibbed)
+	if(stat == DEAD)
+		return FALSE
+
 	set_stat(DEAD)
 	unset_machine()
 	timeofdeath = world.time
 	tod = station_time_timestamp()
-	var/turf/T = get_turf(src)
-	if(mind && mind.name && mind.active && !istype(T.loc, /area/centcom/ctf))
-		if(!isanimal_or_basicmob(src) || HAS_TRAIT(src, TRAIT_ALERT_GHOSTS_ON_DEATH))
-			deadchat_broadcast(" has died at <b>[get_area_name(T)]</b>.", "<b>[mind.name]</b>", follow_target = src, turf_target = T, message_type=DEADCHAT_DEATHRATTLE)
+	var/turf/death_turf = get_turf(src)
+	var/area/death_area = get_area(src)
+	// Display a death message if the mob is a player mob (has an active mind)
+	var/player_mob_check = mind && mind.name && mind.active
+	// and, display a death message if the area allows it (or if they're in nullspace)
+	var/valid_area_check = !death_area || !(death_area.area_flags & NO_DEATH_MESSAGE)
+	if(player_mob_check && valid_area_check)
+		deadchat_broadcast(" has died at <b>[get_area_name(death_turf)]</b>.", "<b>[mind.name]</b>", follow_target = src, turf_target = death_turf, message_type=DEADCHAT_DEATHRATTLE)
 		if(SSlag_switch.measures[DISABLE_DEAD_KEYLOOP] && !client?.holder)
 			to_chat(src, span_deadsay(span_big("Observer freelook is disabled.\nPlease use Orbit, Teleport, and Jump to look around.")))
 			ghostize(TRUE)
@@ -90,7 +97,6 @@
 	med_hud_set_health()
 	med_hud_set_status()
 	stop_pulling()
-
 
 	SEND_SIGNAL(src, COMSIG_LIVING_DEATH, gibbed)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_MOB_DEATH, src, gibbed)

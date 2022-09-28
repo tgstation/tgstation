@@ -31,7 +31,7 @@
 
 /obj/item/clothing/suit/hooded/ethereal_raincoat/trailwarden/equipped(mob/living/user, slot)
 	. = ..()
-	if(isethereal(user) && slot == ITEM_SLOT_OCLOTHING)
+	if(isethereal(user) && (slot & ITEM_SLOT_OCLOTHING))
 		var/mob/living/carbon/human/ethereal = user
 		to_chat(ethereal, span_notice("[src] gently quivers for a moment as you put it on."))
 		set_greyscale(ethereal.dna.species.fixed_mut_color)
