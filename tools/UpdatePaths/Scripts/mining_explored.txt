@@ -1,1 +1,0 @@
-/area/mine/explored : /area/station/maintenance/explored_mine

@@ -241,7 +241,7 @@
 /area/station/maintenance/tram/mid)
 "afH" = (
 /turf/open/floor/iron/vaporwave,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "afI" = (
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/trimline/white/line{
@@ -1127,7 +1127,7 @@
 /obj/structure/easel,
 /obj/item/canvas/nineteen_nineteen,
 /turf/open/misc/asteroid/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "azy" = (
 /obj/effect/turf_decal/siding/thinplating,
 /turf/open/floor/glass/reinforced,
@@ -1450,7 +1450,7 @@
 	},
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "aHt" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 8
@@ -1890,7 +1890,7 @@
 "aRN" = (
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "aSe" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -2159,7 +2159,7 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "aWy" = (
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 1
@@ -3039,7 +3039,7 @@
 	},
 /obj/structure/lattice,
 /turf/open/space/basic,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "bnJ" = (
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
@@ -3054,7 +3054,7 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/table,
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "bnS" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/trimline/purple/filled/line{
@@ -3291,7 +3291,7 @@
 	key = "maintenance_upperdormsleft_attachment"
 	},
 /turf/open/floor/iron/vaporwave,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "bsE" = (
 /obj/structure/table/glass,
 /obj/item/storage/secure/briefcase,
@@ -3862,7 +3862,7 @@
 	key = "maintenance_uppermedsci_attachment_a"
 	},
 /turf/open/floor/iron/vaporwave,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "bBX" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 4
@@ -6252,7 +6252,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "cpg" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 4
@@ -6605,7 +6605,7 @@
 /obj/structure/falsewall,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "ctU" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
@@ -6655,7 +6655,7 @@
 "cuX" = (
 /obj/item/stack/ore/glass,
 /turf/open/misc/asteroid/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "cvf" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 4
@@ -6739,7 +6739,7 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "cwG" = (
 /turf/open/floor/iron,
 /area/station/cargo/office)
@@ -7658,7 +7658,7 @@
 	dir = 6
 	},
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "cKE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weldingtool,
@@ -8404,7 +8404,7 @@
 /obj/effect/spawner/random/structure/girder,
 /obj/effect/spawner/random/structure/grille,
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "dai" = (
 /obj/structure/chair/sofa/corp/corner{
 	dir = 4
@@ -8742,7 +8742,7 @@
 /area/station/engineering/atmos)
 "dhe" = (
 /turf/closed/mineral/random/stationside/asteroid/porus,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "dhl" = (
 /obj/structure/chair/office{
 	dir = 1
@@ -8830,7 +8830,7 @@
 	},
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "djA" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -8838,7 +8838,7 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "djE" = (
 /obj/structure/window/reinforced/spawner/east,
 /obj/structure/table/reinforced,
@@ -9043,7 +9043,7 @@
 	key = "maintenance_upperbridgeright_attachment_b"
 	},
 /turf/open/floor/iron/vaporwave,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "dnp" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/door/airlock/external{
@@ -9558,10 +9558,10 @@
 /area/station/security/prison/garden)
 "duT" = (
 /turf/open/space/basic,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "duU" = (
 /turf/closed/wall/r_wall,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "dvn" = (
 /obj/structure/easel,
 /obj/item/canvas/twentythree_twentythree,
@@ -9716,7 +9716,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "dwK" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -10101,7 +10101,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "dCD" = (
 /obj/structure/bookcase/random/reference,
 /turf/open/floor/wood/large,
@@ -10157,7 +10157,7 @@
 /area/station/security/processing)
 "dDG" = (
 /turf/open/misc/asteroid/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "dDH" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 8
@@ -10694,7 +10694,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "dOs" = (
 /obj/item/radio/intercom/directional/north,
 /obj/structure/easel,
@@ -11918,7 +11918,7 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/item/storage/toolbox/mechanical,
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "ejY" = (
 /obj/effect/turf_decal/trimline/purple/line,
 /obj/effect/turf_decal/stripes/corner{
@@ -12201,7 +12201,7 @@
 "epX" = (
 /obj/effect/spawner/random/trash/food_packaging,
 /turf/open/misc/asteroid/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "eqf" = (
 /turf/open/floor/iron,
 /area/station/command/gateway)
@@ -12806,7 +12806,7 @@
 	spawn_loot_chance = 50
 	},
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "eBr" = (
 /obj/machinery/space_heater,
 /obj/effect/turf_decal/bot,
@@ -12890,7 +12890,7 @@
 	key = "maintenance_lowerdorm_attachment_b"
 	},
 /turf/open/floor/iron/vaporwave,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "eDo" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/engine,
@@ -14778,7 +14778,7 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/railing,
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "fmy" = (
 /turf/closed/wall,
 /area/station/hallway/secondary/exit/departure_lounge)
@@ -14974,7 +14974,7 @@
 	},
 /obj/structure/lattice,
 /turf/open/space/basic,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "fqt" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
@@ -15761,7 +15761,7 @@
 /obj/effect/spawner/random/structure/furniture_parts,
 /obj/item/relic,
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "fHg" = (
 /obj/structure/chair{
 	dir = 1;
@@ -16210,7 +16210,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "fPy" = (
 /obj/structure/chair/stool/bar/directional/east,
 /turf/open/floor/iron,
@@ -16938,7 +16938,7 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "geT" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 5
@@ -20096,7 +20096,7 @@
 	key = "maintenance_upperdormsright_attachment"
 	},
 /turf/open/floor/iron/vaporwave,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "hlc" = (
 /turf/closed/wall/r_wall,
 /area/station/science/xenobiology)
@@ -20117,7 +20117,7 @@
 /obj/item/restraints/handcuffs/cable/red,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "hmD" = (
 /obj/machinery/shower{
 	dir = 1
@@ -20439,7 +20439,7 @@
 "htM" = (
 /obj/item/stack/ore/iron,
 /turf/open/misc/asteroid/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "htP" = (
 /obj/structure/cable,
 /turf/open/floor/circuit/green,
@@ -21000,7 +21000,7 @@
 /obj/structure/marker_beacon/burgundy,
 /obj/effect/turf_decal/stripes/asteroid/box,
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "hEU" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -21757,7 +21757,7 @@
 	key = "maintenance_uppermedsci_attachment_b"
 	},
 /turf/open/floor/iron/vaporwave,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "hTo" = (
 /obj/structure/cable,
 /obj/machinery/firealarm/directional/east,
@@ -22007,7 +22007,7 @@
 	dir = 4
 	},
 /turf/open/misc/asteroid/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "hXs" = (
 /obj/structure/railing/corner,
 /obj/effect/turf_decal/siding/thinplating/corner,
@@ -22686,7 +22686,7 @@
 	width = 9
 	},
 /turf/open/misc/asteroid/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "iin" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -23000,7 +23000,7 @@
 	key = "maintenance_upperbarright_attachment_a"
 	},
 /turf/open/floor/iron/vaporwave,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "ipe" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/green/visible{
 	dir = 8
@@ -23379,7 +23379,7 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "iwm" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Prison Wing"
@@ -24136,7 +24136,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "iKr" = (
 /obj/effect/turf_decal/bot_white/left,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -26228,7 +26228,7 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/spawner/random/structure/girder,
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "jwx" = (
 /obj/machinery/atmospherics/pipe/multiz/scrubbers/visible/layer2{
 	dir = 4
@@ -26501,7 +26501,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "jBy" = (
 /obj/structure/sink{
 	dir = 4;
@@ -26516,7 +26516,7 @@
 "jBK" = (
 /obj/structure/ladder,
 /turf/open/misc/asteroid/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "jCf" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/machinery/airalarm/directional/west,
@@ -26533,7 +26533,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "jCT" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 4
@@ -27401,7 +27401,7 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /obj/structure/lattice,
 /turf/open/space/basic,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "jTx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
@@ -27427,7 +27427,7 @@
 	key = "maintenance_loweratmosci_attachment_a"
 	},
 /turf/open/floor/iron/vaporwave,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "jTN" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 1
@@ -28925,7 +28925,7 @@
 	},
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "ktq" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -29054,7 +29054,7 @@
 	key = "maintenance_upperbridgeright_attachment_a"
 	},
 /turf/open/floor/iron/vaporwave,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "kwe" = (
 /obj/structure/ladder,
 /turf/open/floor/iron/grimy,
@@ -29951,7 +29951,7 @@
 /area/station/commons/vacant_room/office)
 "kMh" = (
 /turf/open/openspace/airless/planetary,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "kMm" = (
 /obj/structure/table/wood,
 /obj/item/food/grown/harebell,
@@ -30009,7 +30009,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "kNe" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -31204,7 +31204,7 @@
 /obj/structure/disposalpipe/junction/yjunction,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "lib" = (
 /obj/machinery/telecomms/server/presets/security,
 /turf/open/floor/iron/dark/telecomms,
@@ -31944,7 +31944,7 @@
 /area/station/security/prison)
 "lvw" = (
 /turf/closed/wall,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "lvE" = (
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
 	dir = 4
@@ -32339,7 +32339,7 @@
 	dir = 6
 	},
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "lBt" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
@@ -32622,7 +32622,7 @@
 "lHN" = (
 /obj/item/wheelchair/gold,
 /turf/open/misc/asteroid/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "lIs" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /turf/open/floor/iron/white,
@@ -33037,7 +33037,7 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/item/stack/ore/glass,
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "lPO" = (
 /obj/machinery/door/poddoor/incinerator_atmos_main,
 /turf/open/floor/engine,
@@ -33142,7 +33142,7 @@
 	key = "maintenance_lowerdorm"
 	},
 /turf/open/floor/catwalk_floor,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "lRu" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/landmark/navigate_destination/dockescpod1,
@@ -33259,7 +33259,7 @@
 "lTX" = (
 /obj/item/storage/toolbox/electrical,
 /turf/open/misc/asteroid/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "lUf" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /turf/open/floor/iron,
@@ -33639,7 +33639,7 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "mbA" = (
 /obj/structure/sign/warning/docking,
 /turf/closed/wall,
@@ -33719,7 +33719,7 @@
 	},
 /obj/structure/lattice,
 /turf/open/space/basic,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "mdy" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/carpet,
@@ -35390,7 +35390,7 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "mFd" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /obj/effect/turf_decal/trimline/yellow/warning{
@@ -35685,7 +35685,7 @@
 	key = "maintenance_upperbarright_attachment_b"
 	},
 /turf/open/floor/iron/vaporwave,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "mJK" = (
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment,
@@ -35792,7 +35792,7 @@
 	key = "maintenance_lowercargosci_attachment_b"
 	},
 /turf/open/floor/iron/vaporwave,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "mLL" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /obj/machinery/door/firedoor,
@@ -35923,7 +35923,7 @@
 	},
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "mNu" = (
 /obj/effect/turf_decal/trimline/yellow/warning,
 /obj/machinery/light/small/directional/north,
@@ -36616,7 +36616,7 @@
 	dir = 9
 	},
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "naX" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
@@ -38126,7 +38126,7 @@
 "nDT" = (
 /obj/item/ammo_casing/spent,
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "nDV" = (
 /obj/machinery/conveyor{
 	id = "QMLoad2"
@@ -39512,7 +39512,7 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "oho" = (
 /obj/machinery/computer/secure_data{
 	dir = 8
@@ -40256,7 +40256,7 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "ovj" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -40298,7 +40298,7 @@
 	key = "maintenance_lowerdorm_attachment_a"
 	},
 /turf/open/floor/iron/vaporwave,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "oxs" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner,
 /obj/structure/disposalpipe/segment{
@@ -40403,7 +40403,7 @@
 /obj/item/stack/cable_coil,
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "oze" = (
 /obj/machinery/dna_scannernew,
 /obj/machinery/light/directional/north,
@@ -40497,7 +40497,7 @@
 	width = 12
 	},
 /turf/open/misc/asteroid/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "oAA" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 4
@@ -40813,7 +40813,7 @@
 	key = "maintenance_lowertunnel_leftup_attachment_b"
 	},
 /turf/open/floor/iron/vaporwave,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "oGY" = (
 /obj/structure/toilet{
 	pixel_y = 8
@@ -40919,7 +40919,7 @@
 	dir = 5
 	},
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "oIU" = (
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
@@ -42162,7 +42162,7 @@
 	pixel_y = 6
 	},
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "pgz" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 6
@@ -42606,7 +42606,7 @@
 /obj/structure/table,
 /obj/item/radio,
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "pot" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -42709,7 +42709,7 @@
 	},
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "ppX" = (
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
 	dir = 8
@@ -42840,7 +42840,7 @@
 /obj/effect/spawner/random/structure/girder,
 /obj/item/stack/sheet/iron,
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "psl" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -43149,7 +43149,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "pwv" = (
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/engine/air,
@@ -43433,7 +43433,7 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "pAl" = (
 /obj/machinery/light/small/directional/east,
 /obj/machinery/plumbing/synthesizer{
@@ -43619,7 +43619,7 @@
 	},
 /obj/structure/lattice,
 /turf/open/space/basic,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "pEe" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
@@ -43948,7 +43948,7 @@
 	},
 /obj/structure/lattice,
 /turf/open/space/basic,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "pKs" = (
 /obj/structure/ladder,
 /obj/effect/decal/cleanable/dirt,
@@ -45469,7 +45469,7 @@
 "qmf" = (
 /obj/structure/ore_box,
 /turf/open/misc/asteroid/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "qmi" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
@@ -45830,7 +45830,7 @@
 	key = "maintenance_lowerservicecargo_attachment_a"
 	},
 /turf/open/floor/iron/vaporwave,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "qrL" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/effect/turf_decal/trimline/purple/filled/line{
@@ -46473,7 +46473,7 @@
 "qDR" = (
 /obj/item/pickaxe/rusted,
 /turf/open/misc/asteroid/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "qEd" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
@@ -46829,7 +46829,7 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/turf_decal/stripes/asteroid/end,
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "qIM" = (
 /obj/vehicle/ridden/wheelchair,
 /obj/effect/turf_decal/bot,
@@ -47590,7 +47590,7 @@
 	key = "maintenance_lowerservicecargo_attachment_b"
 	},
 /turf/open/floor/iron/vaporwave,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "qXA" = (
 /obj/effect/turf_decal/trimline/brown/filled/corner,
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible,
@@ -50371,7 +50371,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "rRK" = (
 /obj/machinery/light/small/directional/north,
 /obj/structure/closet/firecloset,
@@ -51176,7 +51176,7 @@
 	key = "maintenance_lowertunnel_leftup_attachment_a"
 	},
 /turf/open/floor/iron/vaporwave,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "shR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment,
@@ -51709,7 +51709,7 @@
 	dir = 4
 	},
 /turf/open/misc/asteroid/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "suM" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
@@ -52403,7 +52403,7 @@
 	shuttle_id = "pod_lavaland"
 	},
 /turf/open/misc/asteroid/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "sIq" = (
 /obj/structure/table/glass,
 /obj/item/wrench/medical,
@@ -52586,7 +52586,7 @@
 "sLE" = (
 /obj/structure/lattice,
 /turf/open/space/basic,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "sLF" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/effect/turf_decal/box,
@@ -52659,7 +52659,7 @@
 	key = "maintenance_loweratmosci_attachment_b"
 	},
 /turf/open/floor/iron/vaporwave,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "sMM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/yellow/warning{
@@ -54162,7 +54162,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "ton" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Escape Wing"
@@ -55719,7 +55719,7 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "tRc" = (
 /obj/structure/chair/stool/bar/directional/east,
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -56945,7 +56945,7 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/turf_decal/stripes/asteroid/box,
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "uno" = (
 /turf/closed/wall/r_wall,
 /area/station/maintenance/radshelter/civil)
@@ -57676,7 +57676,7 @@
 /obj/structure/transit_tube,
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "uAg" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
@@ -58412,7 +58412,7 @@
 "uON" = (
 /obj/structure/marker_beacon/burgundy,
 /turf/open/misc/asteroid/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "uOZ" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8;
@@ -58631,7 +58631,7 @@
 "uTp" = (
 /obj/item/relic,
 /turf/open/misc/asteroid/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "uTs" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/trimline/purple/filled/line{
@@ -59334,7 +59334,7 @@
 /obj/effect/spawner/structure/electrified_grille,
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "vfY" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -59631,7 +59631,7 @@
 "vlO" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/misc/asteroid/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "vlX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment,
@@ -60387,7 +60387,7 @@
 	key = "maintenance_lowersecurity_attachment"
 	},
 /turf/open/floor/iron/vaporwave,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "vzO" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -61595,7 +61595,7 @@
 "vWt" = (
 /obj/effect/spawner/random/trash/garbage,
 /turf/open/misc/asteroid/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "vWw" = (
 /obj/structure/railing{
 	dir = 6
@@ -62062,7 +62062,7 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "wgV" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
@@ -63139,7 +63139,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "wAG" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/reagent_dispensers/foamtank,
@@ -63396,7 +63396,7 @@
 "wGb" = (
 /obj/item/shovel,
 /turf/open/misc/asteroid/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "wGc" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -64030,7 +64030,7 @@
 	key = "maintenance_lowercargosci_attachment_a"
 	},
 /turf/open/floor/iron/vaporwave,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "wRw" = (
 /obj/structure/cable/multilayer/multiz,
 /obj/effect/turf_decal/stripes/box,
@@ -64186,7 +64186,7 @@
 "wUS" = (
 /obj/machinery/light/small/directional/north,
 /turf/open/misc/asteroid/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "wVj" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 4
@@ -64513,7 +64513,7 @@
 /area/station/ai_monitored/turret_protected/ai)
 "wZm" = (
 /turf/closed/wall/rock/porous,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "wZs" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
@@ -64682,7 +64682,7 @@
 	},
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "xbz" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -65571,7 +65571,7 @@
 	dir = 9
 	},
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "xsL" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 1
@@ -66043,7 +66043,7 @@
 	dir = 10
 	},
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "xAJ" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -66256,7 +66256,7 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/turf_decal/stripes/asteroid/box,
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "xFx" = (
 /turf/open/floor/iron,
 /area/station/commons/fitness)
@@ -66729,7 +66729,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "xPU" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 8
@@ -66880,7 +66880,7 @@
 	name = "Bold-And-Brash"
 	},
 /turf/open/misc/asteroid/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "xSO" = (
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 1
@@ -66940,7 +66940,7 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/item/stack/sheet/iron,
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "xTZ" = (
 /obj/item/stack/ore/glass,
 /obj/item/toy/beach_ball/holoball,
@@ -67261,7 +67261,7 @@
 	},
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "xXC" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /turf/closed/wall/r_wall,

@@ -69,7 +69,7 @@
 /area/station/maintenance/central/lesser)
 "M" = (
 /turf/closed/mineral/random/stationside/asteroid/porus,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "Q" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,

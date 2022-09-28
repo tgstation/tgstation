@@ -9,13 +9,13 @@
 /area/station/maintenance/starboard/lesser)
 "c" = (
 /turf/closed/mineral/random/stationside/asteroid/porus,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "d" = (
 /obj/item/stack/ore/glass,
 /turf/open/misc/asteroid/dug{
 	initial_gas_mix = "TEMP=2.7"
 	},
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "e" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -39,7 +39,7 @@
 "i" = (
 /obj/structure/ore_box,
 /turf/open/misc/asteroid/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "n" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -68,7 +68,7 @@
 "x" = (
 /obj/item/shovel,
 /turf/open/misc/asteroid/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "z" = (
 /turf/template_noop,
 /area/template_noop)
@@ -81,7 +81,7 @@
 "D" = (
 /obj/item/stack/ore/glass,
 /turf/open/misc/asteroid/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "F" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch"
@@ -107,7 +107,7 @@
 /area/station/maintenance/starboard/lesser)
 "W" = (
 /turf/open/misc/asteroid/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "Z" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/north,

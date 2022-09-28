@@ -47,7 +47,7 @@
 "k" = (
 /obj/item/stack/ore/glass,
 /turf/open/misc/asteroid/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "o" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/north,
@@ -55,10 +55,10 @@
 /area/station/maintenance/department/crew_quarters/dorms)
 "r" = (
 /turf/closed/mineral/random/stationside/asteroid/porus,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "t" = (
 /turf/open/misc/asteroid/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "C" = (
 /turf/template_noop,
 /area/template_noop)

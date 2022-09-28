@@ -17,22 +17,6 @@
 	ambient_buzz = 'sound/ambience/source_corridor2.ogg'
 	ambient_buzz_vol = 20
 
-/area/station/maintenance/explored_mine
-	name = "Mine"
-	icon_state = "explored"
-	always_unpowered = TRUE
-	requires_power = TRUE
-	power_environ = FALSE
-	power_equip = FALSE
-	power_light = FALSE
-	outdoors = TRUE
-	flags_1 = NONE
-	ambience_index = AMBIENCE_MINING
-	area_flags = VALID_TERRITORY | UNIQUE_AREA | CULT_PERMITTED
-	sound_environment = SOUND_AREA_STANDARD_STATION
-	min_ambience_cooldown = 70 SECONDS
-	max_ambience_cooldown = 220 SECONDS
-
 //Maintenance - Departmental
 
 /area/station/maintenance/department/chapel

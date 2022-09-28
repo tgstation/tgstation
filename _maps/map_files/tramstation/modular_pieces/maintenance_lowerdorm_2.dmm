@@ -61,7 +61,7 @@
 	name = "walter"
 	},
 /turf/open/misc/asteroid,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "fP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
@@ -211,7 +211,7 @@
 /area/template_noop)
 "uZ" = (
 /turf/open/misc/asteroid,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "vZ" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -237,7 +237,7 @@
 /area/station/maintenance/central/lesser)
 "xu" = (
 /turf/closed/mineral/random/stationside/asteroid/porus,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "yj" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -255,11 +255,11 @@
 "yu" = (
 /obj/item/relic,
 /turf/open/misc/asteroid/dug,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "yw" = (
 /obj/item/stack/ore/glass,
 /turf/open/misc/asteroid,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "yD" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/blobstart,
@@ -443,11 +443,11 @@
 "Oi" = (
 /obj/item/stack/ore/silver,
 /turf/open/misc/asteroid,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "OF" = (
 /obj/item/pickaxe/emergency,
 /turf/open/misc/asteroid,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "OI" = (
 /turf/template_noop,
 /area/template_noop)
@@ -495,7 +495,7 @@
 "XU" = (
 /obj/structure/barricade/wooden,
 /turf/open/misc/asteroid,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "Ya" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,

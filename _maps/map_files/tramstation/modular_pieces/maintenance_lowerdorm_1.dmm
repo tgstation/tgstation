@@ -46,7 +46,7 @@
 "ag" = (
 /obj/item/stack/ore/glass,
 /turf/open/misc/asteroid/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "ah" = (
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/central/lesser)
@@ -175,7 +175,7 @@
 "ay" = (
 /obj/item/stack/ore/iron,
 /turf/open/misc/asteroid/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "az" = (
 /obj/modular_map_connector,
 /turf/template_noop,
@@ -249,7 +249,7 @@
 /area/station/maintenance/department/crew_quarters/dorms)
 "aO" = (
 /turf/open/misc/asteroid/airless,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "aP" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -262,7 +262,7 @@
 /area/station/maintenance/department/crew_quarters/dorms)
 "aQ" = (
 /turf/closed/mineral/random/stationside/asteroid/porus,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "aR" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,

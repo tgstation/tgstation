@@ -23,7 +23,7 @@
 /area/station/maintenance/starboard/lesser)
 "bs" = (
 /turf/open/misc/asteroid,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "bN" = (
 /obj/effect/decal/cleanable/robot_debris,
 /obj/effect/turf_decal/sand,
@@ -88,7 +88,7 @@
 "gk" = (
 /obj/item/pickaxe/rusted,
 /turf/open/misc/asteroid,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "hl" = (
 /turf/closed/wall,
 /area/station/maintenance/starboard/lesser)
@@ -106,7 +106,7 @@
 "iL" = (
 /obj/effect/spawner/random/trash/garbage,
 /turf/open/misc/asteroid,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "ji" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -168,7 +168,7 @@
 "pU" = (
 /obj/item/stack/ore/glass,
 /turf/open/misc/asteroid,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "qK" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -205,14 +205,14 @@
 "rV" = (
 /obj/item/shard,
 /turf/open/misc/asteroid,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "sA" = (
 /obj/modular_map_connector,
 /turf/template_noop,
 /area/template_noop)
 "ty" = (
 /turf/closed/mineral/random/stationside/asteroid/porus,
-/area/station/maintenance/explored_mine)
+/area/lavaland/surface)
 "uS" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/spawner/random/structure/girder,
