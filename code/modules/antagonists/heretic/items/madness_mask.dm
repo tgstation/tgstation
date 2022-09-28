@@ -25,7 +25,7 @@
 
 /obj/item/clothing/mask/madness_mask/equipped(mob/user, slot)
 	. = ..()
-	if(slot != ITEM_SLOT_MASK)
+	if(!(slot & ITEM_SLOT_MASK))
 		return
 	if(!ishuman(user) || !user.mind)
 		return

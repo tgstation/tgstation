@@ -1,0 +1,4 @@
+author: "VexingRaven"
+delete-after: True
+changes: 
+  - spellcheck: "Gave the Eyepatch HUD a new description that doesn't imply it works without eyes."
