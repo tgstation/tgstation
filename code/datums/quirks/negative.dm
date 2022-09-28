@@ -12,22 +12,30 @@
 	hardcore_value = 4
 	var/datum/weakref/backpack
 
+/datum/quirk/badback/add_unique() // item_quirk?
+	give_item_to_holder(/obj/item/cane, list(LOCATION_HANDS = ITEM_SLOT_HANDS, LOCATION_BACKPACK = ITEM_SLOT_BACKPACK))
+
 /datum/quirk/badback/add()
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/obj/item/storage/backpack/equipped_backpack = human_holder.back
-	if(istype(equipped_backpack))
+	var/is_holding_cane = human_holder.is_holding_item_of_type(/obj/item/cane)
+	
+	if(istype(equipped_backpack) && !is_holding_cane)
 		quirk_holder.add_mood_event("back_pain", /datum/mood_event/back_pain)
+		quirk_holder.add_movespeed_modifier(/datum/movespeed_modifier/human_carry) // TODO make this it's own modifier at some point
 		RegisterSignal(human_holder.back, COMSIG_ITEM_POST_UNEQUIP, .proc/on_unequipped_backpack)
 	else
 		RegisterSignal(quirk_holder, COMSIG_MOB_EQUIPPED_ITEM, .proc/on_equipped_item)
 
 /datum/quirk/badback/remove()
 	UnregisterSignal(quirk_holder, COMSIG_MOB_EQUIPPED_ITEM)
-
 	var/obj/item/storage/equipped_backpack = backpack?.resolve()
-	if(equipped_backpack)
+	var/is_holding_cane = human_holder.is_holding_item_of_type(/obj/item/cane)
+	
+	if(equipped_backpack && !is_holding_cane)
 		UnregisterSignal(equipped_backpack, COMSIG_ITEM_POST_UNEQUIP)
 		quirk_holder.clear_mood_event("back_pain")
+		quirk_holder.remove_movespeed_modifier(/datum/movespeed_modifier/human_carry) 
 
 /// Signal handler for when the quirk_holder equips an item. If it's a backpack, adds the back_pain mood event.
 /datum/quirk/badback/proc/on_equipped_item(mob/living/source, obj/item/equipped_item, slot)
@@ -35,7 +43,11 @@
 
 	if(!(slot & ITEM_SLOT_BACK) || !istype(equipped_item, /obj/item/storage/backpack))
 		return
+	
+	if(!(slot & ITEM_SLOT_HAND) || !istype(equipped_item, /obj/item/cane))
+		return
 
+	quirk_holder.add_movespeed_modifier(/datum/movespeed_modifier/human_carry)
 	quirk_holder.add_mood_event("back_pain", /datum/mood_event/back_pain)
 	RegisterSignal(equipped_item, COMSIG_ITEM_POST_UNEQUIP, .proc/on_unequipped_backpack)
 	UnregisterSignal(quirk_holder, COMSIG_MOB_EQUIPPED_ITEM)
@@ -47,6 +59,7 @@
 
 	UnregisterSignal(source, COMSIG_ITEM_POST_UNEQUIP)
 	quirk_holder.clear_mood_event("back_pain")
+	quirk_holder.remove_movespeed_modifier(/datum/movespeed_modifier/human_carry)
 	backpack = null
 	RegisterSignal(quirk_holder, COMSIG_MOB_EQUIPPED_ITEM, .proc/on_equipped_item)
 
