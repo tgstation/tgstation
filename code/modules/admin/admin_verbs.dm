@@ -373,7 +373,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 
 /client/proc/list_law_changes()
 	set name = "List Law Changes"
-	set category = "Admin.Game"
+	set category = "Debug"
 	if(!holder)
 		return
 	holder.list_law_changes()
@@ -381,7 +381,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 
 /client/proc/show_manifest()
 	set name = "Show Manifest"
-	set category = "Admin.Game"
+	set category = "Debug"
 	if(!holder)
 		return
 	holder.show_manifest()
@@ -389,7 +389,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 
 /client/proc/list_dna()
 	set name = "List DNA"
-	set category = "Admin.Game"
+	set category = "Debug"
 	if(!holder)
 		return
 	holder.list_dna()
@@ -397,7 +397,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 
 /client/proc/list_fingerprints()
 	set name = "List Fingerprints"
-	set category = "Admin.Game"
+	set category = "Debug"
 	if(!holder)
 		return
 	holder.list_fingerprints()
