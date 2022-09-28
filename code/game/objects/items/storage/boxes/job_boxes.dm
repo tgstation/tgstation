@@ -197,7 +197,7 @@
 
 /obj/item/storage/box/hug/plushes/PopulateContents()
 	for(var/i in 1 to 7)
-		var/plush_path = pick(/obj/effect/spawner/random/entertainment/plushie)
+		var/plush_path = /obj/effect/spawner/random/entertainment/plushie
 		new plush_path(src)
 
 /obj/item/storage/box/skillchips
