@@ -194,7 +194,7 @@
 			if(!attempt_pre_unwrap_contents(user, time = 5))
 				return
 			unwrap_contents()
-			to_chat(user, span_notice("You start to cut open package..."))
+			balloon_alert(user, "cutting open package...")
 			post_unwrap_contents(user, rip_open = FALSE)
 		else
 			balloon_alert(user, "prime the boxcutter!")
