@@ -319,9 +319,6 @@
 	if(!istype(limb_owner))
 		return
 
-	var/obj/item/retained_item
-	if(held_index)
-		retained_item = limb_owner.get_item_for_held_index(held_index)
 	var/obj/item/bodypart/old_limb = limb_owner.get_bodypart(body_zone)
 	if(old_limb)
 		old_limb.drop_limb(TRUE)
@@ -329,8 +326,6 @@
 	. = try_attach_limb(limb_owner, special)
 	if(!.) //If it failed to replace, re-attach their old limb as if nothing happened.
 		old_limb.try_attach_limb(limb_owner, TRUE)
-	if(retained_item)
-		limb_owner.put_in_hand(retained_item, held_index)
 
 ///Checks if you can attach a limb, returns TRUE if you can.
 /obj/item/bodypart/proc/can_attach_limb(mob/living/carbon/new_limb_owner, special)
