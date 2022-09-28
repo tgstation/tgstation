@@ -744,6 +744,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 // unique trait sources, still defines
 #define STATUE_MUTE "statue"
 #define CHANGELING_DRAIN "drain"
+/// changelings with this trait can no longer talk over the hivemind
+#define CHANGELING_HIVEMIND_MUTE "ling_mute"
 #define ABYSSAL_GAZE_BLIND "abyssal_gaze"
 #define HIGHLANDER "highlander"
 #define TRAIT_HULK "hulk"

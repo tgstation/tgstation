@@ -3,6 +3,8 @@
 /// The number of recent spoken lines to gain on absorbing a mob
 #define LING_ABSORB_RECENT_SPEECH 8
 
+GLOBAL_LIST_INIT(possible_changeling_IDs, list("Alpha","Beta","Gamma","Delta","Epsilon","Zeta","Eta","Theta","Iota","Kappa","Lambda","Mu","Nu","Xi","Omicron","Pi","Rho","Sigma","Tau","Upsilon","Phi","Chi","Psi","Omega"))
+
 /// Helper to format the text that gets thrown onto the chem hud element.
 #define FORMAT_CHEM_CHARGES_TEXT(charges) MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#dd66dd'>[round(charges)]</font></div>")
 
@@ -46,6 +48,8 @@
 	var/chem_recharge_slowdown = 0
 	/// The range this ling can sting things.
 	var/sting_range = 2
+	/// Changeling name, what other lings see over the hivemind when talking.
+	var/changelingID = "Changeling"
 	/// The number of genetics points (to buy powers) this ling currently has.
 	var/genetic_points = 10
 	/// The max number of genetics points (to buy powers) this ling can have..
@@ -117,6 +121,7 @@
 	return ..()
 
 /datum/antagonist/changeling/on_gain()
+	generate_name()
 	create_emporium()
 	create_innate_actions()
 	create_initial_profile()
@@ -157,6 +162,21 @@
 	if(our_ling_brain)
 		our_ling_brain.organ_flags &= ~ORGAN_VITAL
 		our_ling_brain.decoy_override = TRUE
+
+/datum/antagonist/changeling/proc/generate_name()
+	var/honorific
+	if(owner.current.gender == FEMALE)
+		honorific = "Ms."
+	else if(owner.current.gender == MALE)
+		honorific = "Mr."
+	else
+		honorific = "Mx."
+	if(GLOB.possible_changeling_IDs.len)
+		changelingID = pick(GLOB.possible_changeling_IDs)
+		GLOB.possible_changeling_IDs -= changelingID
+		changelingID = "[honorific] [changelingID]"
+	else
+		changelingID = "[honorific] [rand(1,999)]"
 
 /datum/antagonist/changeling/proc/on_hud_created(datum/source)
 	SIGNAL_HANDLER

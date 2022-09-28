@@ -2378,6 +2378,14 @@
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
+/datum/reagent/bz_metabolites/on_mob_metabolize(mob/living/ling)
+	..()
+	ADD_TRAIT(ling, CHANGELING_HIVEMIND_MUTE, type)
+
+/datum/reagent/bz_metabolites/on_mob_end_metabolize(mob/living/ling)
+	..()
+	REMOVE_TRAIT(ling, CHANGELING_HIVEMIND_MUTE, type)
+
 /datum/reagent/bz_metabolites/on_mob_life(mob/living/carbon/target, delta_time, times_fired)
 	if(target.mind)
 		var/datum/antagonist/changeling/changeling = target.mind.has_antag_datum(/datum/antagonist/changeling)

@@ -9,6 +9,30 @@
 /datum/saymode/proc/handle_message(mob/living/user, message, datum/language/language)
 	return TRUE
 
+/datum/saymode/changeling
+	key = MODE_KEY_CHANGELING
+	mode = MODE_CHANGELING
+
+/datum/saymode/changeling/handle_message(mob/living/user, message, datum/language/language)
+	switch(user.lingcheck())
+		if(LINGHIVE_FALLEN)
+			to_chat(user, "<span class='changeling bold'>We're cut off from the hivemind! We've lost everything! EVERYTHING!!</span>")
+		if(LINGHIVE_LING)
+			if (HAS_TRAIT(user, CHANGELING_HIVEMIND_MUTE))
+				to_chat(user, "<span class='warning'>The poison in the air hinders our ability to interact with the hivemind.</span>")
+				return FALSE
+			var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
+			var/msg = span_changeling("<b>[changeling.changelingID]:</b> [message]")
+			user.log_talk(message, LOG_SAY, tag="changeling [changeling.changelingID]")
+			for(var/mob/player as anything in GLOB.player_list)
+				if(player in GLOB.dead_mob_list)
+					var/link = FOLLOW_LINK(player, user)
+					to_chat(player, "[link] [msg]")
+				else
+					if(player.lingcheck() == LINGHIVE_LING && !HAS_TRAIT(player, CHANGELING_HIVEMIND_MUTE))
+						to_chat(player, msg)
+	return FALSE
+
 /datum/saymode/xeno
 	key = "a"
 	mode = MODE_ALIEN

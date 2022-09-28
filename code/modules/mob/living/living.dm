@@ -1568,6 +1568,13 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /mob/living/proc/on_fall()
 	return
 
+/mob/living/lingcheck()
+	if(mind)
+		var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
+		if(changeling)
+			return LINGHIVE_LING
+	return LINGHIVE_NONE
+
 /mob/living/forceMove(atom/destination)
 	if(!currently_z_moving)
 		stop_pulling()

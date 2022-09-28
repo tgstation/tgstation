@@ -85,6 +85,8 @@ const IntroductionSection = (props, context) => {
   );
 };
 
+// to_chat(owner.current, "<span class='boldannounce'>Use say \"[MODE_TOKEN_CHANGELING] message\" to communicate with your fellow changelings.</span>")
+
 const AbilitiesSection = (props, context) => {
   const { data } = useBackend<Info>(context);
   return (
