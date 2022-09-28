@@ -22,7 +22,7 @@
 			var/obj/machinery/power/found_machine = powernets.nodes[1]
 			//Check if they're a station area
 			var/area/machine_area = get_area(found_machine)
-			if(!(machine_area.type in GLOB.the_station_areas) || !machine_area.requires_power))
+			if(!(machine_area.type in GLOB.the_station_areas) || !machine_area.requires_power)
 				continue
 			TEST_FAIL("[powernets] found with no cables connected ([found_machine.x], [found_machine.y], [found_machine.z]).")
 
