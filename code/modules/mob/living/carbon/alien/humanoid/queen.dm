@@ -22,11 +22,11 @@
 
 /mob/living/carbon/alien/humanoid/royal/on_lying_down(new_lying_angle)
 	. = ..()
-	plane = GAME_PLANE_FOV_HIDDEN //So it won't hide smaller mobs.
+	SET_PLANE_IMPLICIT(src, GAME_PLANE_FOV_HIDDEN) //So it won't hide smaller mobs.
 
 /mob/living/carbon/alien/humanoid/royal/on_standing_up(new_lying_angle)
 	. = ..()
-	plane = initial(plane)
+	SET_PLANE_IMPLICIT(src, initial(plane))
 
 /mob/living/carbon/alien/humanoid/royal/can_inject(mob/user, target_zone, injection_flags)
 	return FALSE

@@ -1,0 +1,5 @@
+author: "LemonInTheDark"
+delete-after: True
+changes: 
+  - balance: "Airlocks will open on bump in series much faster now. As a tradeoff, you're immune to shocks from them for a second after you last got shocked by one."
+  - bugfix: "Mineral doors will no longer take 6 WHOLE SECONDS to open if you've bumped something else recently"

@@ -10576,7 +10576,7 @@
 /obj/machinery/computer/security{
 	dir = 8
 	},
-/obj/machinery/firealarm/directional/east,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/science)
 "dTX" = (
@@ -20699,7 +20699,6 @@
 /area/station/command/heads_quarters/cmo)
 "hGm" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 8
 	},
@@ -24399,7 +24398,6 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/dark,
@@ -25684,7 +25682,6 @@
 /turf/open/floor/iron,
 /area/station/security/office)
 "jkT" = (
-/obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -27355,7 +27352,6 @@
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "jNp" = (
-/obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 4
@@ -39278,7 +39274,6 @@
 /obj/machinery/door/airlock/research{
 	name = "Ordnance Lab"
 	},
-/obj/structure/cable,
 /obj/machinery/door/firedoor/heavy,
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible,
 /obj/effect/turf_decal/siding/purple{
@@ -39872,7 +39867,7 @@
 /obj/machinery/computer/secure_data{
 	dir = 8
 	},
-/obj/structure/reagent_dispensers/wall/peppertank/directional/east,
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/science)
 "ohI" = (
@@ -40974,13 +40969,6 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
-"oCx" = (
-/obj/machinery/porta_turret/ai{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/iron/dark,
-/area/station/ai_monitored/turret_protected/ai)
 "oCN" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -46699,7 +46687,6 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/north,
-/obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/dark,
@@ -49210,6 +49197,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/structure/cable/layer3,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/storage/satellite)
 "ryL" = (
@@ -56729,6 +56717,7 @@
 "tXz" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/structure/cable/layer3,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/storage/satellite)
 "tXD" = (
@@ -66052,7 +66041,6 @@
 /area/station/engineering/atmos)
 "xkY" = (
 /obj/structure/table,
-/obj/structure/cable,
 /obj/item/instrument/harmonica,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
@@ -122992,7 +122980,7 @@ aaa
 aaa
 gfU
 aTV
-oCx
+aVl
 oFC
 phN
 jEr

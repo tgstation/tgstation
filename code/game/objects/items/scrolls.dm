@@ -23,7 +23,7 @@
 		teleport.button_icon_state = icon_state
 
 /obj/item/teleportation_scroll/item_action_slot_check(slot, mob/user)
-	return (slot == ITEM_SLOT_HANDS)
+	return (slot & ITEM_SLOT_HANDS)
 
 /obj/item/teleportation_scroll/apprentice
 	name = "lesser scroll of teleportation"
