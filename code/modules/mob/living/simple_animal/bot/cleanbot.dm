@@ -144,7 +144,7 @@
 	if(!in_range(src, user) || !user.transferItemToLoc(knife, src))
 		balloon_alert(user, "couldn't attach!")
 		return FALSE
-	balloon_alert(user, "attached [knife]!")
+	balloon_alert(user, "attached!")
 	weapon = knife
 	if(!(bot_cover_flags & BOT_COVER_EMAGGED))
 		weapon.force = weapon.force / 2
@@ -192,7 +192,7 @@
 
 /mob/living/simple_animal/bot/cleanbot/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(istype(attacking_item, /obj/item/knife) && !user.combat_mode)
-		balloon_alert(user, "attaching [attacking_item]...")
+		balloon_alert(user, "attaching knife...")
 		if(!do_after(user, 2.5 SECONDS, target = src))
 			return
 		deputize(attacking_item, user)
