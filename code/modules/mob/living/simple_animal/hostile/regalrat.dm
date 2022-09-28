@@ -321,7 +321,7 @@
 
 /mob/living/simple_animal/hostile/rat/revive(full_heal_flags = NONE, excess_healing = 0)
 	var/cap = CONFIG_GET(number/ratcap)
-	if(full_heal_flags != ADMIN_FULL_HEAL && !ckey && LAZYLEN(SSmobs.cheeserats) >= cap)
+	if(!(full_heal_flags & HEAL_ADMIN) && !ckey && LAZYLEN(SSmobs.cheeserats) >= cap)
 		visible_message(span_warning("[src] twitched but does not continue moving due to the overwhelming rodent population on the station!"))
 		return FALSE
 	. = ..()

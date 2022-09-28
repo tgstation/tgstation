@@ -65,7 +65,7 @@
 	/// Does this pickup fully heal when picked up
 	var/full_heal = FALSE
 	/// If full heal, what flags do we pass?
-	var/heal_flags = NON_ADMIN_FULL_HEAL
+	var/heal_flags = HEAL_ALL
 
 /obj/effect/powerup/health/trigger(mob/living/target)
 	. = ..()

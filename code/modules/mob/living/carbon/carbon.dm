@@ -869,7 +869,7 @@
 
 	return ..()
 
-/mob/living/carbon/fully_heal(heal_flags = NON_ADMIN_FULL_HEAL)
+/mob/living/carbon/fully_heal(heal_flags = HEAL_ALL)
 
 	// Should be handled via signal on embeded, or via heal on bodypart
 	remove_all_embedded_objects()
@@ -891,18 +891,12 @@
 		regenerate_limbs()
 
 	if(heal_flags & HEAL_ORGANS)
-		set_heartattack(FALSE)
-		if(heal_flags == ADMIN_FULL_HEAL)
-			regenerate_organs()
-		else
-			for(var/obj/item/organ/organ as anything in internal_organs)
-				organ.setOrganDamage(0)
+		regenerate_organs()
 
 	if(heal_flags & HEAL_TRAUMAS)
 		cure_all_traumas(TRAUMA_RESILIENCE_MAGIC)
 
-	if(heal_flags == ADMIN_FULL_HEAL)
-		suiciding = FALSE
+	if(heal_flags & HEAL_RESTRAINTS)
 		QDEL_NULL(handcuffed)
 		QDEL_NULL(legcuffed)
 		set_handcuffed(null)

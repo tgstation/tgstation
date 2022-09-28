@@ -720,13 +720,13 @@
 		clear_fullscreen("brute")
 
 //Proc used to resuscitate a mob, for full_heal see fully_heal()
-/mob/living/proc/revive(full_heal_flags = NONE, excess_healing = 0)
+/mob/living/proc/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
 	if(excess_healing)
-		adjustOxyLoss(-excess_healing)
-		adjustToxLoss(-excess_healing, forced = TRUE) //slime friendly
+		adjustOxyLoss(-excess_healing, FALSE)
+		adjustToxLoss(-excess_healing, FALSE, TRUE) //slime friendly
 		updatehealth()
 
-	grab_ghost()
+	grab_ghost(force_grab_ghost)
 	if(full_heal_flags)
 		fully_heal(full_heal_flags)
 
@@ -734,7 +734,7 @@
 		set_suicide(FALSE)
 		set_stat(UNCONSCIOUS) //the mob starts unconscious,
 		updatehealth() //then we check if the mob should wake up.
-		if(full_heal_flags == ADMIN_FULL_HEAL)
+		if(full_heal_flags & HEAL_ADMIN)
 			get_up(TRUE)
 		update_sight()
 		clear_alert(ALERT_NOT_ENOUGH_OXYGEN)
@@ -744,7 +744,7 @@
 			INVOKE_ASYNC(src, .proc/emote, "gasp")
 			log_combat(src, src, "revived")
 
-	else if(full_heal_flags == ADMIN_FULL_HEAL)
+	else if(full_heal_flags & HEAL_ADMIN)
 		updatehealth()
 		get_up(TRUE)
 
@@ -802,12 +802,10 @@
  *
  * See [mobs.dm] for more information on the flags
  *
- * Admin calling this proc will result in ADMIN_FULL_HEAL (ALL) being passed - you can check for this by checking for it exactly
- *
  * If you ever think "hey I'm adding something and want it to be reverted on full heal",
  * consider handling it via signal instead of implementing it in this proc
  */
-/mob/living/proc/fully_heal(heal_flags = NON_ADMIN_FULL_HEAL)
+/mob/living/proc/fully_heal(heal_flags = HEAL_ALL)
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(heal_flags & HEAL_TOX)
@@ -842,6 +840,9 @@
 		restore_blood()
 	if(reagents && (heal_flags & HEAL_ALL_REAGENTS))
 		reagents.clear_reagents()
+
+	if(heal_flags & HEAL_ADMIN)
+		suiciding = FALSE
 
 	updatehealth()
 	stop_sound_channel(CHANNEL_HEARTBEAT)

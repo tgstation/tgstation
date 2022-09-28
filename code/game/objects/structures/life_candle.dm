@@ -89,7 +89,7 @@
 		mind.transfer_to(body)
 	else
 		body.forceMove(T)
-		body.revive(ADMIN_FULL_HEAL)
+		body.revive(ADMIN_HEAL_ALL)
 	mind.grab_ghost(TRUE)
 	body.flash_act()
 

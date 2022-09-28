@@ -140,7 +140,7 @@
 /mob/living/simple_animal/hostile/mushroom/proc/Recover()
 	visible_message(span_notice("[src] slowly begins to recover."))
 	faint_ticker = 0
-	revive(NON_ADMIN_FULL_HEAL)
+	revive(HEAL_ALL)
 	UpdateMushroomCap()
 	recovery_cooldown = 1
 	addtimer(CALLBACK(src, .proc/recovery_recharge), 300)

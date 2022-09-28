@@ -58,7 +58,6 @@
 			if(STATUS_EFFECT_NORMAL_PROCESS)
 				START_PROCESSING(SSprocessing, src)
 
-	RegisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL, .proc/remove_effect_on_heal)
 	return TRUE
 
 /datum/status_effect/Destroy()

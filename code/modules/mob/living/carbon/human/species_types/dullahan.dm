@@ -249,7 +249,7 @@
 ///Retrieving the owner's head for better ahealing.
 /obj/item/dullahan_relay/proc/retrieve_head(datum/source, full_heal_flags)
 	SIGNAL_HANDLER
-	if(full_heal_flags != ADMIN_FULL_HEAL)
+	if(!(full_heal_flags & HEAL_ADMIN))
 		return
 
 	var/obj/item/bodypart/head/head = loc

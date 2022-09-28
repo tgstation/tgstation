@@ -62,7 +62,7 @@
 
 
 /datum/status_effect/wish_granters_gift/on_remove()
-	owner.revive(ADMIN_FULL_HEAL)
+	owner.revive(ADMIN_HEAL_ALL)
 	owner.visible_message(span_warning("[owner] appears to wake from the dead, having healed all wounds!"), span_notice("You have regenerated."))
 
 

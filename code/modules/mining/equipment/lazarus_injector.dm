@@ -42,7 +42,7 @@
 		return
 
 	target_animal.faction = list("neutral")
-	target_animal.revive(ADMIN_FULL_HEAL)
+	target_animal.revive(HEAL_ALL)
 	if(ishostile(target))
 		var/mob/living/simple_animal/hostile/target_hostile = target_animal
 		if(malfunctioning)

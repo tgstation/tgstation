@@ -132,7 +132,7 @@
 			return
 		to_chat(src, span_warning("You begin repairs..."))
 		if(do_after(src, 50, target = fixable))
-			fixable.revive(ADMIN_FULL_HEAL)
+			fixable.revive(HEAL_ALL)
 			do_sparks(3, TRUE, fixable)
 			to_chat(src, span_warning("Repairs complete."))
 		return

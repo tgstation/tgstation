@@ -226,7 +226,9 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		lungs.setOrganDamage(0)
 
 		var/obj/item/organ/internal/heart/heart = getorganslot(ORGAN_SLOT_HEART)
-		if(!heart)
+		if(heart)
+			set_heartattack(FALSE)
+		else
 			heart = new()
 			heart.Insert(src)
 		heart.setOrganDamage(0)
