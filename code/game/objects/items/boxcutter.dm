@@ -13,6 +13,7 @@
 	resistance_flags = FIRE_PROOF
 	force = 0
 	var/start_extended = FALSE
+	var/on = FALSE
 	var/on_sound = 'sound/items/boxcutter_activate.ogg'
 
 /obj/item/boxcutter/Initialize(mapload)
@@ -32,6 +33,7 @@
 		w_class_on = WEIGHT_CLASS_NORMAL, \
 		attack_verb_continuous_on = list("cuts", "stabs", "slashes"), \
 		attack_verb_simple_on = list("cut", "stab", "slash"), \
+	)
 
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
 

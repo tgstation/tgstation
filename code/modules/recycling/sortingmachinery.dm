@@ -188,15 +188,14 @@
 			wrapped_item.AddComponent(/datum/component/pricetag, sticker.payments_acc, sticker.cut_multiplier)
 		update_appearance()
 
-	if(istype(item, /obj/item/boxcutter))
+	else if(istype(item, /obj/item/boxcutter))
 		if( (item.icon_state == "boxcutter_on"))
 			unwrap_contents(user)
-				to_chat(user, span_notice("You start to unwrap the package..."))
-				return do_after(user, 15, target = user)
+			to_chat(user, span_notice("You start to cut open package..."))
 			post_unwrap_contents(user, rip_open = FALSE)
-			return
+			return do_after(user, 15, target = user)
 		else
-			balloon_alert(user, span_warning("The boxcutter isn't armed!"))
+			balloon_alert(user, "prime the boxcutter!")
 			return
 
 	else
