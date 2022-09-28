@@ -44,10 +44,6 @@
 		return
 
 	var/area/our_area = get_area(use_as_source_atom)
-	var/our_z_level = use_as_source_atom.z
-
-	if (our_area.area_flags & NO_ALERTS)
-		return FALSE
 
 	var/list/existing_alarms = sent_alarms[alarm_type]
 	if(existing_alarms)
@@ -78,8 +74,6 @@
 
 ///Exists so we can request that the alarms from an area are cleared, even if our source atom is no longer in that area
 /datum/alarm_handler/proc/clear_alarm_from_area(alarm_type, area/our_area)
-	if (our_area.area_flags & NO_ALERTS)
-		return FALSE
 
 	var/list/existing_alarms = sent_alarms[alarm_type]
 	if(!existing_alarms)
