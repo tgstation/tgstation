@@ -162,7 +162,9 @@
 				goodies += job_goodies
 
 	if(!is_mail_restricted)
-		// every quirk adds +5 to the final weighted list (regardless the number of items in quirk list)
+		// the weighted list is 50 (generic items) + 50 (job items)
+		// every quirk adds 5 to the final weighted list (regardless the number of items or weights in the quirk list)
+		// 5% is not too high or low so that stacking multiple quirks doesn't tilt the weighted list too much
 		for(var/datum/quirk/quirk as anything in body.quirks)
 			if(LAZYLEN(quirk.mail_goodies))
 				var/quirk_goodie = pick(quirk.mail_goodies)
