@@ -75,7 +75,7 @@ GLOBAL_LIST_INIT(atmos_adjacent_savings, list(0,0))
 #define TURF_SHARES(T) (LAZYLEN(T.atmos_adjacent_turfs))
 
 #define LINDA_CYCLE_ARCHIVE(turf)\
-	turf.air.archive();\
+	if (turf.air) turf.air.archive();\
 	turf.archived_cycle = SSair.times_fired;\
 	turf.temperature_archived = turf.temperature;
 
