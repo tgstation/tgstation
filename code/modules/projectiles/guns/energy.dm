@@ -42,8 +42,8 @@
 	if((shot.e_cost > 0) && (cell.maxcharge != INFINITY))
 		// What percentage of the full battery a shot will expend
 		var/shot_cost_percent = round(clamp(shot.e_cost / cell.maxcharge, 0, 1) * 100)
-		// The total amount of shots the fully charged energy gun can fire before running out
-		var/max_shots = round(100/shot_cost_percent)
+		// The total amount of shots the fully charged energy gun can fire before running out, 100 if the cost so small it was roundend off
+		var/max_shots = round(100/max(1,shot_cost_percent))
 		// How many shots left before the energy gun's current battery runs out of energy
 		var/shots_left = round((round(clamp(cell.charge / cell.maxcharge, 0, 1) * 100))/shot_cost_percent)
 		frequency_to_use = sin((90/max_shots) * shots_left)
