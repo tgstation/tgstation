@@ -1,0 +1,4 @@
+author: "SpaceSmithers"
+delete-after: True
+changes: 
+  - bugfix: "Fixed the rogue Medbay Maintenance area appearing inside Medbay Storage."

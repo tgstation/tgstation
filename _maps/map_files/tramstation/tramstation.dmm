@@ -890,8 +890,8 @@
 	pixel_x = -8
 	},
 /obj/item/reagent_containers/cup/glass/coffee{
-	pixel_y = 7;
-	pixel_x = 5
+	pixel_x = 5;
+	pixel_y = 7
 	},
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
@@ -1702,8 +1702,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/machinery/light/directional/west,
-/obj/structure/cable/layer1,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "aNd" = (
@@ -1976,6 +1976,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "aTl" = (
@@ -4574,7 +4575,6 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/command/ai_upload,
-/obj/structure/cable/layer1,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
@@ -4776,8 +4776,8 @@
 "bQr" = (
 /obj/docking_port/stationary/random{
 	dir = 8;
-	shuttle_id = "pod_lavaland";
-	name = "lavaland"
+	name = "lavaland";
+	shuttle_id = "pod_lavaland"
 	},
 /turf/open/space/openspace,
 /area/space)
@@ -6471,13 +6471,13 @@
 /turf/open/floor/iron,
 /area/station/ai_monitored/security/armory)
 "csz" = (
-/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Freezer Maintenance Hatch"
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/greater)
 "csK" = (
@@ -8040,7 +8040,7 @@
 "cTT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line,
-/obj/structure/cable/layer1,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "cTU" = (
@@ -8308,9 +8308,9 @@
 	dir = 2;
 	dwidth = 4;
 	height = 9;
-	shuttle_id = "aux_base_zone";
 	name = "Aux Base Zone";
 	roundstart_template = /datum/map_template/shuttle/aux_base/default;
+	shuttle_id = "aux_base_zone";
 	width = 9
 	},
 /turf/open/floor/plating,
@@ -8898,6 +8898,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/brown/filled/line,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
 "dki" = (
@@ -9658,6 +9659,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/trimline/neutral/filled/corner,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/maintenance/tram/right)
 "dwj" = (
@@ -10934,7 +10936,6 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "dSI" = (
 /obj/machinery/duct,
-/obj/structure/cable,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
 	},
@@ -11603,6 +11604,7 @@
 	},
 /obj/machinery/duct,
 /obj/effect/mapping_helpers/airlock/access/all/medical/general,
+/obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/medical)
 "edC" = (
@@ -11961,6 +11963,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/access/all/supply/general,
+/obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/greater)
 "ekx" = (
@@ -14025,9 +14028,9 @@
 	dir = 8;
 	dwidth = 3;
 	height = 15;
-	shuttle_id = "arrival_stationary";
 	name = "arrivals";
 	roundstart_template = /datum/map_template/shuttle/arrival/box;
+	shuttle_id = "arrival_stationary";
 	width = 7
 	},
 /turf/open/space/openspace,
@@ -15914,12 +15917,12 @@
 	},
 /obj/structure/table,
 /obj/item/storage/fancy/coffee_cart_rack{
-	pixel_y = 2;
-	pixel_x = 8
+	pixel_x = 8;
+	pixel_y = 2
 	},
 /obj/item/food/donut/plain{
-	pixel_y = 6;
-	pixel_x = -4
+	pixel_x = -4;
+	pixel_y = 6
 	},
 /turf/open/floor/iron,
 /area/station/security/brig)
@@ -20306,6 +20309,7 @@
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/maintenance/tram/right)
 "hqz" = (
@@ -20823,7 +20827,6 @@
 	pixel_x = 29
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable/layer1,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "hCe" = (
@@ -22677,9 +22680,9 @@
 /obj/docking_port/stationary{
 	dwidth = 2;
 	height = 5;
-	shuttle_id = "laborcamp_home";
 	name = "fore bay 1";
 	roundstart_template = /datum/map_template/shuttle/labour/generic;
+	shuttle_id = "laborcamp_home";
 	width = 9
 	},
 /turf/open/misc/asteroid/airless,
@@ -23005,17 +23008,6 @@
 /obj/machinery/meter,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/pumproom)
-"ipk" = (
-/obj/effect/turf_decal/trimline/yellow/warning,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/station/maintenance/tram/right)
 "iqh" = (
 /obj/machinery/door/window{
 	name = "Captain's Desk";
@@ -23065,7 +23057,6 @@
 /obj/structure/showcase/cyborg/old{
 	pixel_y = 20
 	},
-/obj/structure/cable/layer1,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "iqX" = (
@@ -23126,8 +23117,8 @@
 	},
 /obj/structure/table/glass,
 /obj/item/storage/fancy/coffee_cart_rack{
-	pixel_y = 6;
-	pixel_x = 8
+	pixel_x = 8;
+	pixel_y = 6
 	},
 /obj/item/reagent_containers/cup/glass/coffee{
 	pixel_x = -4;
@@ -24814,8 +24805,8 @@
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Freezer Maintenance Hatch"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/greater)
 "iWl" = (
@@ -25155,8 +25146,8 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/obj/structure/cable/layer1,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "jcI" = (
@@ -25733,6 +25724,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "joe" = (
@@ -26349,7 +26341,7 @@
 	dir = 4;
 	mapping_id = "main_turbine"
 	},
-/obj/structure/cable/layer1,
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/maintenance/disposal/incinerator)
 "jyQ" = (
@@ -27088,12 +27080,12 @@
 	dir = 8
 	},
 /obj/item/storage/fancy/coffee_cart_rack{
-	pixel_y = 6;
-	pixel_x = -8
+	pixel_x = -8;
+	pixel_y = 6
 	},
 /obj/effect/spawner/random/food_or_drink/donkpockets{
-	pixel_y = 6;
-	pixel_x = 4
+	pixel_x = 4;
+	pixel_y = 6
 	},
 /turf/open/floor/iron/dark,
 /area/station/medical/break_room)
@@ -28914,7 +28906,6 @@
 "ksR" = (
 /obj/machinery/porta_turret/ai,
 /obj/machinery/light/directional/north,
-/obj/structure/cable/layer1,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/hallway)
 "ksY" = (
@@ -29230,8 +29221,8 @@
 	dir = 4;
 	dwidth = 12;
 	height = 18;
-	shuttle_id = "emergency_home";
 	name = "Tramstation emergency evac bay";
+	shuttle_id = "emergency_home";
 	width = 32
 	},
 /turf/open/space/openspace,
@@ -31086,10 +31077,10 @@
 /turf/open/floor/plating,
 /area/station/science/lobby)
 "lgi" = (
-/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Freezer Maintenance Hatch"
 	},
+/obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/greater)
 "lgn" = (
@@ -32453,8 +32444,8 @@
 	pixel_x = -7
 	},
 /obj/item/reagent_containers/cup/glass/coffee{
-	pixel_y = 4;
-	pixel_x = 8
+	pixel_x = 8;
+	pixel_y = 4
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
@@ -32546,7 +32537,6 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "lGl" = (
-/obj/structure/cable,
 /obj/structure/sink{
 	pixel_y = 15
 	},
@@ -33140,6 +33130,7 @@
 /obj/effect/mapping_helpers/airlock/unres{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/greater)
 "lRr" = (
@@ -35424,8 +35415,8 @@
 /obj/machinery/button/door/directional/north{
 	id = "robotics2";
 	name = "Robotics Privacy Shuttles Control";
-	req_access = list("robotics");
-	pixel_x = 8
+	pixel_x = 8;
+	req_access = list("robotics")
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
@@ -35778,6 +35769,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /obj/effect/landmark/start/hangover,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/maintenance/tram/right)
 "mLp" = (
@@ -35792,6 +35784,7 @@
 "mLv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "mLH" = (
@@ -36889,6 +36882,7 @@
 /obj/machinery/power/turbine/inlet_compressor{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/maintenance/disposal/incinerator)
 "nfB" = (
@@ -40110,6 +40104,7 @@
 /obj/machinery/door/airlock/security{
 	name = "Courtroom Holding Area"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/central/greater)
 "osB" = (
@@ -40497,8 +40492,8 @@
 /obj/docking_port/stationary{
 	dwidth = 5;
 	height = 7;
-	shuttle_id = "cargo_home";
 	name = "Cargo Bay";
+	shuttle_id = "cargo_home";
 	width = 12
 	},
 /turf/open/misc/asteroid/airless,
@@ -42471,6 +42466,7 @@
 	dir = 8
 	},
 /obj/machinery/duct,
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "pmc" = (
@@ -43648,8 +43644,8 @@
 	dir = 2;
 	dwidth = 11;
 	height = 22;
-	shuttle_id = "whiteship_home";
 	name = "SS13: Auxiliary Dock, Station-Port";
+	shuttle_id = "whiteship_home";
 	width = 35
 	},
 /turf/open/space/openspace,
@@ -47392,6 +47388,7 @@
 "qTs" = (
 /obj/structure/table,
 /obj/item/storage/bag/tray,
+/obj/item/reagent_containers/condiment/enzyme,
 /turf/open/floor/iron/white,
 /area/station/service/kitchen)
 "qTI" = (
@@ -48424,7 +48421,6 @@
 /area/station/commons/dorms)
 "rnA" = (
 /obj/structure/extinguisher_cabinet/directional/east,
-/obj/structure/cable/layer1,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
@@ -49620,12 +49616,20 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
+"rHY" = (
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/maintenance/tram/right)
 "rIi" = (
 /obj/machinery/door/airlock{
 	name = "Permabrig Showers"
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/cable,
 /obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/station/security/prison)
@@ -50996,10 +51000,10 @@
 /turf/open/floor/iron/smooth,
 /area/station/hallway/primary/tram/center)
 "seQ" = (
-/obj/structure/cable/layer1,
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/turf/open/floor/iron/dark,
-/area/station/ai_monitored/turret_protected/ai)
+/turf/open/floor/iron,
+/area/station/maintenance/disposal/incinerator)
 "seR" = (
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 4
@@ -52395,8 +52399,8 @@
 "sIm" = (
 /obj/docking_port/stationary/random{
 	dir = 4;
-	shuttle_id = "pod_lavaland";
-	name = "lavaland"
+	name = "lavaland";
+	shuttle_id = "pod_lavaland"
 	},
 /turf/open/misc/asteroid/airless,
 /area/mine/explored)
@@ -53188,7 +53192,6 @@
 	dir = 1
 	},
 /obj/machinery/holopad/secure,
-/obj/structure/cable/layer1,
 /obj/structure/cable,
 /turf/open/floor/glass/reinforced,
 /area/station/ai_monitored/turret_protected/aisat/hallway)
@@ -55300,7 +55303,7 @@
 /obj/machinery/computer/turbine_computer{
 	mapping_id = "main_turbine"
 	},
-/obj/structure/cable/layer1,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "tGW" = (
@@ -55417,7 +55420,6 @@
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "tJL" = (
-/obj/structure/cable,
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 1
 	},
@@ -55996,17 +55998,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/construction/mining/aux_base)
-"tWt" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/trimline/purple/filled/line{
-	dir = 8
-	},
-/obj/machinery/airalarm/directional/west,
-/obj/structure/cable,
-/turf/open/floor/iron/white,
-/area/station/science/lower)
 "tWw" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
@@ -57182,8 +57173,8 @@
 	dir = 1
 	},
 /mob/living/simple_animal/bot/medbot/autopatrol{
-	name = "T.R.A.M Unit";
-	desc = "A Trauma Response Activation Medibot. It seems overwhelmed."
+	desc = "A Trauma Response Activation Medibot. It seems overwhelmed.";
+	name = "T.R.A.M Unit"
 	},
 /turf/open/floor/iron,
 /area/station/maintenance/tram/left)
@@ -57485,6 +57476,16 @@
 /mob/living/simple_animal/bot/secbot/beepsky,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
+"uxg" = (
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 1
+	},
+/obj/machinery/light/small/directional/south,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/maintenance/tram/right)
 "uxk" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
@@ -58520,8 +58521,8 @@
 /obj/structure/rack,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/mask/gas{
-	pixel_y = 3;
-	pixel_x = 5
+	pixel_x = 5;
+	pixel_y = 3
 	},
 /obj/structure/sign/warning/vacuum/external/directional/west,
 /turf/open/floor/iron/smooth,
@@ -58713,8 +58714,8 @@
 	dir = 8;
 	dwidth = 2;
 	height = 13;
-	shuttle_id = "ferry_home";
 	name = "port bay 2";
+	shuttle_id = "ferry_home";
 	width = 5
 	},
 /turf/open/space/openspace,
@@ -63147,7 +63148,6 @@
 "wAQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/chair/stool/directional/north,
-/obj/structure/cable/layer1,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /turf/open/floor/iron,
@@ -63800,8 +63800,8 @@
 	dir = 4;
 	pixel_x = 24
 	},
-/obj/structure/cable/layer1,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "wMY" = (
@@ -63869,10 +63869,6 @@
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/tram/left)
-"wOq" = (
-/obj/structure/cable/layer1,
-/turf/closed/wall/r_wall,
-/area/station/ai_monitored/turret_protected/aisat/hallway)
 "wOw" = (
 /turf/open/floor/iron/grimy,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
@@ -65723,7 +65719,6 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -67928,8 +67923,8 @@
 "yky" = (
 /obj/structure/table/glass,
 /obj/item/paper_bin{
-	pixel_y = 3;
-	pixel_x = 6
+	pixel_x = 6;
+	pixel_y = 3
 	},
 /obj/item/pen{
 	pixel_x = 6;
@@ -67937,8 +67932,8 @@
 	},
 /obj/structure/sign/clock/directional/east,
 /obj/item/storage/fancy/coffee_cart_rack{
-	pixel_y = 1;
-	pixel_x = -7
+	pixel_x = -7;
+	pixel_y = 1
 	},
 /turf/open/floor/iron/cafeteria{
 	dir = 5
@@ -107527,7 +107522,7 @@ rCd
 wcc
 vde
 jnU
-gqV
+seQ
 mLv
 mLv
 aMV
@@ -111084,7 +111079,7 @@ hFC
 vgn
 hFC
 bsK
-iwJ
+uxg
 qxm
 afH
 afH
@@ -111102,7 +111097,7 @@ aeb
 aeb
 oaj
 iIm
-tWt
+iIm
 iIm
 lxW
 kxB
@@ -111341,7 +111336,7 @@ hFC
 hFC
 hFC
 bsK
-vSV
+rHY
 qxm
 afH
 afH
@@ -111592,13 +111587,13 @@ arE
 iRL
 iRL
 mbJ
-ipk
+gUE
 mMa
 hFC
 hFC
 hFC
 bsK
-vSV
+rHY
 qxm
 afH
 afH
@@ -111849,7 +111844,7 @@ vWx
 dhe
 dhe
 mbJ
-ipk
+gUE
 mMa
 hFC
 hFC
@@ -180804,12 +180799,12 @@ lwj
 tqN
 tqN
 rva
-wOq
-wOq
+gFf
+gFf
 ksR
 sVz
 bNr
-seQ
+aoh
 fyX
 ffe
 mgi

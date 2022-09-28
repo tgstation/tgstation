@@ -33,7 +33,7 @@
 /datum/quirk/badback/proc/on_equipped_item(mob/living/source, obj/item/equipped_item, slot)
 	SIGNAL_HANDLER
 
-	if((slot != ITEM_SLOT_BACK) || !istype(equipped_item, /obj/item/storage/backpack))
+	if(!(slot & ITEM_SLOT_BACK) || !istype(equipped_item, /obj/item/storage/backpack))
 		return
 
 	quirk_holder.add_mood_event("back_pain", /datum/mood_event/back_pain)
