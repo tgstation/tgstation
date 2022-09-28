@@ -15,7 +15,8 @@
 	morphing_human.equip_to_slot_or_del(collar, ITEM_SLOT_NECK)
 	morphing_human.set_species(/datum/species/human)
 
-	TEST_ASSERT(isnull(morphing_human.get_item_by_slot(ITEM_SLOT_NECK)), "Human still has a Monkey collar after changing species.")
+	var/obj/item/item = morphing_human.get_item_by_slot(ITEM_SLOT_NECK)
+	TEST_ASSERT(!item, "Human still has \a [item] after changing species from Monkey to Human.")
 
 	//Allocate the necessary stuff
 	var/obj/item/clothing/shoes/clown_shoes/swag_shoes = allocate(/obj/item/clothing/shoes/clown_shoes)
@@ -36,5 +37,7 @@
 
 	var/obj/item/lizard_shoes = morphing_human.get_item_by_slot(ITEM_SLOT_FEET)
 	TEST_ASSERT_NOTEQUAL(human_shoes, lizard_shoes, "Lizard still has shoes after changing species.")
-	TEST_ASSERT(!isnull(morphing_human.get_item_by_slot(ITEM_SLOT_LPOCKET)), "Lizard somehow lost their pocket items when changing species.")
-	TEST_ASSERT(!isnull(morphing_human.get_item_for_held_index(LEFT_HANDS)), "Lizard somehow lost their hand items when changing species.")
+	item = morphing_human.get_item_by_slot(ITEM_SLOT_LPOCKET)
+	TEST_ASSERT(item, "Lizard somehow lost their pocket items when changing species.")
+	item = morphing_human.get_item_for_held_index(LEFT_HANDS)
+	TEST_ASSERT(item, "Lizard somehow lost their hand items when changing species.")
