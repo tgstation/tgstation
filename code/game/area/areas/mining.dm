@@ -1,5 +1,5 @@
 /**********************Mine areas**************************/
-/area/mine/mining_station/lobby
+/area/mine/lobby
 	name = "Mining Station"
 	icon_state = "mining_lobby"
 
