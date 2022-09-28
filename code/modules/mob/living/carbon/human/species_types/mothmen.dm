@@ -35,6 +35,9 @@
 		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/moth,
 		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/moth,
 	)
+	
+	proc/my_cool_effect(mob/living/carbon/human/moth)
+		moth.say("YOU HAVE NO IDEA WHAT I AM CAPABLE OF!!")
 
 /datum/species/moth/regenerate_organs(mob/living/carbon/C, datum/species/old_species, replace_current= TRUE, list/excluded_zones, visual_only)
 	. = ..()
