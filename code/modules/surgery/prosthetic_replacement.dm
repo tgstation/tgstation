@@ -54,7 +54,7 @@
 					organ_rejection_dam = 30
 
 			if(!bodypart_to_attach.can_attach_limb(target))
-				balloon_alert(user, "that doesn't go on the [parse_zone(target_zone)]!")
+				target.balloon_alert(user, "that doesn't go on the [parse_zone(target_zone)]!")
 				return SURGERY_STEP_FAIL
 
 		if(target_zone == bodypart_to_attach.body_zone) //so we can't replace a leg with an arm, or a human arm with a monkey arm.
