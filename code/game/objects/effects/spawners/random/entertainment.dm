@@ -243,7 +243,7 @@
 
 /obj/effect/spawner/random/entertainment/plushie
 	name = "plushie spawner"
-	icon_state = "toy" // needs it's own icon
+	icon_state = "plushie"
 	loot = list( // the plushies that aren't of things trying to kill you
 		/obj/item/toy/plush/carpplushie, // well, maybe they can be something that tries to kill you a little bit
 		/obj/item/toy/plush/slimeplushie,
@@ -257,7 +257,7 @@
 
 /obj/effect/spawner/random/entertainment/plushie_delux
 	name = "plushie delux spawner"
-	icon_state = "toy" // needs it's own icon
+	icon_state = "plushie"
 	loot = list(
 		// common plushies
 		/obj/item/toy/plush/slimeplushie = 5,

@@ -113,7 +113,7 @@
 
 /obj/effect/spawner/random/decoration/flower
 	name = "random flower spawner"
-	icon_state = "cannabis" // needs it's own icon at some point
+	icon_state = "flower"
 	loot = list(
 		/obj/item/food/grown/poppy,
 		/obj/item/food/grown/harebell,

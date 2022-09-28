@@ -16,7 +16,7 @@
 
 /obj/effect/spawner/random/food_or_drink/donkpockets_single
 	name = "single donk pocket spawner"
-	icon_state = "donkpocket" // needs it's own icon
+	icon_state = "donkpocket_single"
 	loot = list(
 		/obj/item/food/donkpocket,
 		/obj/item/food/donkpocket/spicy,
