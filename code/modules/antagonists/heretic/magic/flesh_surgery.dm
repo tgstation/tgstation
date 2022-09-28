@@ -13,7 +13,6 @@
 	invocation = "CL'M M'N!" // "CLAIM MINE", but also almost "KALI MA"
 	invocation_type = INVOCATION_SHOUT
 	spell_requirements = NONE
-	antimagic_flags = MAGIC_RESISTANCE
 
 	hand_path = /obj/item/melee/touch_attack/flesh_surgery
 	can_cast_on_self = TRUE
@@ -78,9 +77,7 @@
 			. = CONTEXTUAL_SCREENTIP_SET
 
 	else if(isorgan(victim))
-		// RMB or LMB both work but we'll just show RMB
-		// to be consistent about "RMB = heal"
-		context[SCREENTIP_CONTEXT_RMB] = "Heal organ"
+		context[SCREENTIP_CONTEXT_LMB] = "Heal organ"
 		. = CONTEXTUAL_SCREENTIP_SET
 
 	return .

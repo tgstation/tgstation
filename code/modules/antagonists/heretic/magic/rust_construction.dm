@@ -37,7 +37,7 @@
 /datum/action/cooldown/spell/pointed/rust_construction/before_cast(turf/open/cast_on)
 	. = ..()
 	if(!isliving(owner))
-		return // Just allow it
+		return
 
 	var/mob/living/living_owner = owner
 	invocation = span_danger("<b>[owner]</b> drags [owner.p_their()] hand[living_owner.usable_hands == 1 ? "":"s"] upwards as a wall of rust rises out of [cast_on]!")
@@ -79,16 +79,17 @@
 		var/turf/above_us = get_step_multiz(cast_on, UP)
 		if(above_us)
 			living_mob.forceMove(above_us)
+			continue
 
-		else
-			var/list/turfs_by_us = get_adjacent_open_turfs(cast_on)
-			// If there is no side by us, hardstun them
-			if(!length(turfs_by_us))
-				living_mob.Paralyze(5 SECONDS)
-				continue
+		// If we're not throw them to a nearby (open) turf
+		var/list/turfs_by_us = get_adjacent_open_turfs(cast_on)
+		// If there is no side by us, hardstun them
+		if(!length(turfs_by_us))
+			living_mob.Paralyze(5 SECONDS)
+			continue
 
-			// If there's an open turf throw them to the side
-			living_mob.throw_at(pick(turfs_by_us), 1, 3, thrower = owner, spin = FALSE)
+		// If there's an open turf throw them to the side
+		living_mob.throw_at(pick(turfs_by_us), 1, 3, thrower = owner, spin = FALSE)
 
 	if(!message_shown)
 		new_wall.visible_message(span_warning("\A [new_wall] [rises_message]!"))
