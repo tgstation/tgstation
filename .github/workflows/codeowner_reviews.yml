@@ -6,7 +6,7 @@ on: pull_request_target
 jobs:
   assign-users:
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so the job can access it
@@ -15,7 +15,7 @@ jobs:
       #Parse the Codeowner file
       - name: CodeOwnersParser
         id: CodeOwnersParser
-        uses: robotduinom/CodeOwnersParser@v1
+        uses: robotduinom/CodeOwnersParser@master
 
       #Request reviews
       - name: Request reviews
