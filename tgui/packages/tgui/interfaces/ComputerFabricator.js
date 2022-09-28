@@ -182,89 +182,6 @@ const CfStep2 = (props, context) => {
           <Table.Cell bold position="relative">
             <Tooltip
               content={multiline`
-                Allows your device to wirelessly connect to stationwide NTNet
-                network. Basic cards are limited to on-station use, while
-                advanced cards can operate anywhere near the station, which
-                includes asteroid outposts
-              `}
-              position="right">
-              Network Card:
-            </Tooltip>
-          </Table.Cell>
-          <Table.Cell>
-            <Button
-              content="None"
-              selected={data.hw_netcard === 0}
-              onClick={() =>
-                act('hw_netcard', {
-                  netcard: '0',
-                })
-              }
-            />
-          </Table.Cell>
-          <Table.Cell>
-            <Button
-              content="Standard"
-              selected={data.hw_netcard === 1}
-              onClick={() =>
-                act('hw_netcard', {
-                  netcard: '1',
-                })
-              }
-            />
-          </Table.Cell>
-          <Table.Cell>
-            <Button
-              content="Advanced"
-              selected={data.hw_netcard === 2}
-              onClick={() =>
-                act('hw_netcard', {
-                  netcard: '2',
-                })
-              }
-            />
-          </Table.Cell>
-        </Table.Row>
-        <Table.Row>
-          <Table.Cell bold position="relative">
-            <Tooltip
-              content={multiline`
-                A device that allows for various paperwork manipulations,
-                such as, scanning of documents or printing new ones.
-                This device was certified EcoFriendlyPlus and is capable of
-                recycling existing paper for printing purposes.
-              `}
-              position="right">
-              Nano Printer:
-            </Tooltip>
-          </Table.Cell>
-          <Table.Cell>
-            <Button
-              content="None"
-              selected={data.hw_nanoprint === 0}
-              onClick={() =>
-                act('hw_nanoprint', {
-                  print: '0',
-                })
-              }
-            />
-          </Table.Cell>
-          <Table.Cell>
-            <Button
-              content="Standard"
-              selected={data.hw_nanoprint === 1}
-              onClick={() =>
-                act('hw_nanoprint', {
-                  print: '1',
-                })
-              }
-            />
-          </Table.Cell>
-        </Table.Row>
-        <Table.Row>
-          <Table.Cell bold position="relative">
-            <Tooltip
-              content={multiline`
                 Adds a secondary RFID card reader, for manipulating or
                 reading from a second standard RFID card.
                 Please note that a primary card reader is necessary to
@@ -298,44 +215,6 @@ const CfStep2 = (props, context) => {
             />
           </Table.Cell>
         </Table.Row>
-        {data.devtype !== 2 && (
-          <Table.Row>
-            <Table.Cell bold position="relative">
-              <Tooltip
-                content={multiline`
-                  An advanced wireless power relay that allows your device
-                  to connect to nearby area power controller to provide
-                  alternative power source. This component is currently
-                  unavailable on tablet computers due to size restrictions.
-                `}
-                position="right">
-                Tesla Relay:
-              </Tooltip>
-            </Table.Cell>
-            <Table.Cell>
-              <Button
-                content="None"
-                selected={data.hw_tesla === 0}
-                onClick={() =>
-                  act('hw_tesla', {
-                    tesla: '0',
-                  })
-                }
-              />
-            </Table.Cell>
-            <Table.Cell>
-              <Button
-                content="Standard"
-                selected={data.hw_tesla === 1}
-                onClick={() =>
-                  act('hw_tesla', {
-                    tesla: '1',
-                  })
-                }
-              />
-            </Table.Cell>
-          </Table.Row>
-        )}
       </Table>
       <Button
         fluid

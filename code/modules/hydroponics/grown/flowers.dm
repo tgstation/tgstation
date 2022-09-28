@@ -292,7 +292,7 @@
 
 /obj/item/food/grown/rose/equipped(mob/user, slot, initial)
 	. = ..()
-	if(slot == ITEM_SLOT_MASK)
+	if(slot & ITEM_SLOT_MASK)
 		worn_icon_state = "[base_icon_state]_mouth"
 		user.update_worn_mask()
 	else

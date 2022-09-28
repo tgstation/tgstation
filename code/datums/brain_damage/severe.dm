@@ -193,14 +193,14 @@
 			else
 				to_chat(owner, span_warning("You can't stop shaking..."))
 
-			owner.adjust_timed_status_effect(40 SECONDS, /datum/status_effect/dizziness)
-			owner.adjust_timed_status_effect(20 SECONDS, /datum/status_effect/confusion)
-			owner.set_timed_status_effect(40 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
+			owner.adjust_dizzy(40 SECONDS)
+			owner.adjust_confusion(20 SECONDS)
+			owner.set_jitter_if_lower(40 SECONDS)
 
 		if(3, 4)
 			if(high_stress)
 				to_chat(owner, span_warning("You're going mad with loneliness!"))
-				owner.hallucination += 30
+				owner.adjust_hallucinations(60 SECONDS)
 			else
 				to_chat(owner, span_warning("You feel really lonely..."))
 

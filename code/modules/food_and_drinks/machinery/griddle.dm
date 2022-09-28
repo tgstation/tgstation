@@ -95,18 +95,20 @@
 	vis_contents += item_to_grill
 	griddled_objects += item_to_grill
 	item_to_grill.flags_1 |= IS_ONTOP_1
+	item_to_grill.vis_flags |= VIS_INHERIT_PLANE
 	RegisterSignal(item_to_grill, COMSIG_MOVABLE_MOVED, .proc/ItemMoved)
 	RegisterSignal(item_to_grill, COMSIG_GRILL_COMPLETED, .proc/GrillCompleted)
 	RegisterSignal(item_to_grill, COMSIG_PARENT_QDELETING, .proc/ItemRemovedFromGrill)
 	update_grill_audio()
 	update_appearance()
 
-/obj/machinery/griddle/proc/ItemRemovedFromGrill(obj/item/I)
+/obj/machinery/griddle/proc/ItemRemovedFromGrill(obj/item/ungrill)
 	SIGNAL_HANDLER
-	I.flags_1 &= ~IS_ONTOP_1
-	griddled_objects -= I
-	vis_contents -= I
-	UnregisterSignal(I, list(COMSIG_GRILL_COMPLETED, COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
+	ungrill.flags_1 &= ~IS_ONTOP_1
+	ungrill.vis_flags &= ~VIS_INHERIT_PLANE
+	griddled_objects -= ungrill
+	vis_contents -= ungrill
+	UnregisterSignal(ungrill, list(COMSIG_GRILL_COMPLETED, COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
 	update_grill_audio()
 
 /obj/machinery/griddle/proc/ItemMoved(obj/item/I, atom/OldLoc, Dir, Forced)

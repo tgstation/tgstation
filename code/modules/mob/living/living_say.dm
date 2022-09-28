@@ -359,10 +359,8 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		var/mob/living/carbon/mute = src
 		if(istype(mute))
 			switch(mute.check_signables_state())
-				if(SIGN_ONE_HAND) // One arm
-					message_raw = stars(message_raw)
-				if(SIGN_HANDS_FULL) // Full hands
-					mute.visible_message("tries to sign, but can't with [src.p_their()] hands full!", visible_message_flags = EMOTE_MESSAGE)
+				if(SIGN_CUFFED) // Cuffed
+					mute.visible_message("tries to sign, but can't with [src.p_their()] hands bound!", visible_message_flags = EMOTE_MESSAGE)
 					return FALSE
 				if(SIGN_ARMLESS) // No arms
 					to_chat(src, span_warning("You can't sign with no hands!"))
@@ -370,9 +368,11 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 				if(SIGN_TRAIT_BLOCKED) // Hands Blocked or Emote Mute traits
 					to_chat(src, span_warning("You can't sign at the moment!"))
 					return FALSE
-				if(SIGN_CUFFED) // Cuffed
-					mute.visible_message("tries to sign, but can't with [src.p_their()] hands bound!", visible_message_flags = EMOTE_MESSAGE)
+				if(SIGN_HANDS_FULL) // Full hands
+					mute.visible_message("tries to sign, but can't with [src.p_their()] hands full!", visible_message_flags = EMOTE_MESSAGE)
 					return FALSE
+				if(SIGN_ONE_HAND) // One arm
+					message = stars(message)
 
 	if(client) //client is so that ghosts don't have to listen to mice
 		for(var/mob/player_mob as anything in GLOB.player_list)
@@ -423,10 +423,16 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	for(var/mob/M in listening)
 		if(M.client && (!M.client.prefs.read_preference(/datum/preference/toggle/enable_runechat) || (SSlag_switch.measures[DISABLE_RUNECHAT] && !HAS_TRAIT(src, TRAIT_BYPASS_MEASURES))))
 			speech_bubble_recipients.Add(M.client)
-	var/image/I = image('icons/mob/effects/talk.dmi', src, "[bubble_type][talk_icon_state]", FLY_LAYER)
-	I.plane = ABOVE_GAME_PLANE
-	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
-	INVOKE_ASYNC(GLOBAL_PROC, /.proc/flick_overlay, I, speech_bubble_recipients, 30)
+
+	var/image/say_popup = image('icons/mob/effects/talk.dmi', src, "[bubble_type][talk_icon_state]", FLY_LAYER)
+	SET_PLANE_EXPLICIT(say_popup, ABOVE_GAME_PLANE, src)
+	say_popup.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+	INVOKE_ASYNC(GLOBAL_PROC, /proc/flick_overlay, say_popup, speech_bubble_recipients, 3 SECONDS)
+	LAZYADD(update_on_z, say_popup)
+	addtimer(CALLBACK(src, .proc/clear_saypopup, say_popup), 3.5 SECONDS)
+
+/mob/living/proc/clear_saypopup(image/say_popup)
+	LAZYREMOVE(update_on_z, say_popup)
 
 /mob/proc/binarycheck()
 	return FALSE

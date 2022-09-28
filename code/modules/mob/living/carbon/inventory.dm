@@ -80,7 +80,7 @@
 			if(observe.client)
 				observe.client.screen -= I
 	I.forceMove(src)
-	I.plane = ABOVE_HUD_PLANE
+	SET_PLANE_EXPLICIT(I, ABOVE_HUD_PLANE, src)
 	I.appearance_flags |= NO_CLIENT_COLOR
 	var/not_handled = FALSE
 
@@ -165,6 +165,13 @@
 		legcuffed = null
 		if(!QDELETED(src))
 			update_worn_legcuffs()
+
+	// Not an else-if because we're probably equipped in another slot
+	if(I == internal && (QDELETED(src) || QDELETED(I) || I.loc != src))
+		internal = null
+		if(!QDELETED(src))
+			update_action_buttons_icon(status_only = TRUE)
+
 	update_equipment_speed_mods()
 
 //handle stuff to update when a mob equips/unequips a mask.

@@ -33,7 +33,7 @@
 /datum/quirk/badback/proc/on_equipped_item(mob/living/source, obj/item/equipped_item, slot)
 	SIGNAL_HANDLER
 
-	if((slot != ITEM_SLOT_BACK) || !istype(equipped_item, /obj/item/storage/backpack))
+	if(!(slot & ITEM_SLOT_BACK) || !istype(equipped_item, /obj/item/storage/backpack))
 		return
 
 	quirk_holder.add_mood_event("back_pain", /datum/mood_event/back_pain)
@@ -420,11 +420,13 @@
 	medical_record_text = "Patient suffers from prosopagnosia and cannot recognize faces."
 	hardcore_value = 5
 
+
+
 /datum/quirk/prosthetic_limb
 	name = "Prosthetic Limb"
 	desc = "An accident caused you to lose one of your limbs. Because of this, you now have a random prosthetic!"
 	icon = "tg-prosthetic-leg"
-	value = -4
+	value = -3
 	var/slot_string = "limb"
 	medical_record_text = "During physical examination, patient was found to have a prosthetic limb."
 	hardcore_value = 3
@@ -432,28 +434,44 @@
 /datum/quirk/prosthetic_limb/add_unique()
 	var/limb_slot = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	var/mob/living/carbon/human/human_holder = quirk_holder
-	var/obj/item/bodypart/old_part = human_holder.get_bodypart(limb_slot)
 	var/obj/item/bodypart/prosthetic
 	switch(limb_slot)
 		if(BODY_ZONE_L_ARM)
-			prosthetic = new/obj/item/bodypart/l_arm/robot/surplus(quirk_holder)
+			prosthetic = new /obj/item/bodypart/l_arm/robot/surplus
 			slot_string = "left arm"
 		if(BODY_ZONE_R_ARM)
-			prosthetic = new/obj/item/bodypart/r_arm/robot/surplus(quirk_holder)
+			prosthetic = new /obj/item/bodypart/r_arm/robot/surplus
 			slot_string = "right arm"
 		if(BODY_ZONE_L_LEG)
-			prosthetic = new/obj/item/bodypart/l_leg/robot/surplus(quirk_holder)
+			prosthetic = new /obj/item/bodypart/l_leg/robot/surplus
 			slot_string = "left leg"
 		if(BODY_ZONE_R_LEG)
-			prosthetic = new/obj/item/bodypart/r_leg/robot/surplus(quirk_holder)
+			prosthetic = new /obj/item/bodypart/r_leg/robot/surplus
 			slot_string = "right leg"
-	prosthetic.replace_limb(human_holder)
-	qdel(old_part)
-	human_holder.regenerate_icons()
+	human_holder.del_and_replace_bodypart(prosthetic)
 
 /datum/quirk/prosthetic_limb/post_add()
-	to_chat(quirk_holder, "<span class='boldannounce'>Your [slot_string] has been replaced with a surplus prosthetic. It is fragile and will easily come apart under duress. Additionally, \
-	you need to use a welding tool and cables to repair it, instead of bruise packs and ointment.</span>")
+	to_chat(quirk_holder, span_boldannounce("Your [slot_string] has been replaced with a surplus prosthetic. It is fragile and will easily come apart under duress. Additionally, \
+	you need to use a welding tool and cables to repair it, instead of bruise packs and ointment."))
+
+/datum/quirk/quadruple_amputee
+	name = "Quadruple Amputee"
+	desc = "Oops! All Prosthetics! Due to some truly cruel cosmic punishment, all your limbs have been taken from you."
+	icon = "tg-prosthetic-full"
+	value = -6
+	medical_record_text = "During physical examination, patient was found to have all prosthetic limbs."
+	hardcore_value = 6
+
+/datum/quirk/quadruple_amputee/add_unique()
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	human_holder.del_and_replace_bodypart(new /obj/item/bodypart/l_arm/robot/surplus)
+	human_holder.del_and_replace_bodypart(new /obj/item/bodypart/r_arm/robot/surplus)
+	human_holder.del_and_replace_bodypart(new /obj/item/bodypart/l_leg/robot/surplus)
+	human_holder.del_and_replace_bodypart(new /obj/item/bodypart/r_leg/robot/surplus)
+
+/datum/quirk/quadruple_amputee/post_add()
+	to_chat(quirk_holder, span_boldannounce("All your limbs have been replaced with surplus prosthetics. They are fragile and will easily come apart under duress. Additionally, \
+	you need to use a welding tool and cables to repair them, instead of bruise packs and ointment."))
 
 /datum/quirk/pushover
 	name = "Pushover"
@@ -468,28 +486,41 @@
 
 /datum/quirk/insanity
 	name = "Reality Dissociation Syndrome"
-	desc = "You suffer from a severe disorder that causes very vivid hallucinations. Mindbreaker toxin can suppress its effects, and you are immune to mindbreaker's hallucinogenic properties. THIS IS NOT A LICENSE TO GRIEF."
+	desc = "You suffer from a severe disorder that causes very vivid hallucinations. \
+		Mindbreaker toxin can suppress its effects, and you are immune to mindbreaker's hallucinogenic properties. \
+		THIS IS NOT A LICENSE TO GRIEF."
 	icon = "grin-tongue-wink"
 	value = -8
-	mob_trait = TRAIT_INSANITY
-	gain_text = "<span class='userdanger'>...</span>"
-	lose_text = "<span class='notice'>You feel in tune with the world again.</span>"
+	gain_text = span_userdanger("...")
+	lose_text = span_notice("You feel in tune with the world again.")
 	medical_record_text = "Patient suffers from acute Reality Dissociation Syndrome and experiences vivid hallucinations."
 	hardcore_value = 6
-	processing_quirk = TRUE
 
-/datum/quirk/insanity/process(delta_time)
-	if(quirk_holder.stat != CONSCIOUS || quirk_holder.IsSleeping() || quirk_holder.IsUnconscious())
+/datum/quirk/insanity/add()
+	if(!iscarbon(quirk_holder))
 		return
+	var/mob/living/carbon/carbon_quirk_holder = quirk_holder
 
-	if(DT_PROB(2, delta_time))
-		quirk_holder.hallucination += rand(10, 25)
+	// Setup our special RDS mild hallucination.
+	// Not a unique subtype so not to plague subtypesof,
+	// also as we inherit the names and values from our quirk.
+	var/datum/brain_trauma/mild/hallucinations/added_trauma = new()
+	added_trauma.resilience = TRAUMA_RESILIENCE_ABSOLUTE
+	added_trauma.name = name
+	added_trauma.desc = medical_record_text
+	added_trauma.scan_desc = lowertext(name)
+	added_trauma.gain_text = null
+	added_trauma.lose_text = null
 
-/datum/quirk/insanity/post_add() //I don't /think/ we'll need this but for newbies who think "roleplay as insane" = "license to kill" it's probably a good thing to have
+	carbon_quirk_holder.gain_trauma(added_trauma)
+
+/datum/quirk/insanity/post_add()
 	if(!quirk_holder.mind || quirk_holder.mind.special_role)
 		return
-	to_chat(quirk_holder, "<span class='big bold info'>Please note that your dissociation syndrome does NOT give you the right to attack people or otherwise cause any interference to \
-	the round. You are not an antagonist, and the rules will treat you the same as other crewmembers.</span>")
+	// I don't /think/ we'll need this, but for newbies who think "roleplay as insane" = "license to kill",
+	// it's probably a good thing to have.
+	to_chat(quirk_holder, "<span class='big bold info'>Please note that your [lowertext(name)] does NOT give you the right to attack people or otherwise cause any interference to \
+		the round. You are not an antagonist, and the rules will treat you the same as other crewmembers.</span>")
 
 /datum/quirk/social_anxiety
 	name = "Social Anxiety"
@@ -534,13 +565,13 @@
 		for(var/word in message_split)
 			if(prob(max(5,(nearby_people*12.5*moodmod))) && word != message_split[1]) //Minimum 1/20 chance of filler
 				new_message += pick("uh,","erm,","um,")
-				if(prob(min(5,(0.05*(nearby_people*12.5)*moodmod)))) //Max 1 in 20 chance of cutoff after a succesful filler roll, for 50% odds in a 15 word sentence
+				if(prob(min(5,(0.05*(nearby_people*12.5)*moodmod)))) //Max 1 in 20 chance of cutoff after a successful filler roll, for 50% odds in a 15 word sentence
 					quirker.silent = max(3, quirker.silent)
 					to_chat(quirker, span_danger("You feel self-conscious and stop talking. You need a moment to recover!"))
 					break
 			if(prob(max(5,(nearby_people*12.5*moodmod)))) //Minimum 1/20 chance of stutter
 				// Add a short stutter, THEN treat our word
-				quirker.adjust_timed_status_effect(0.5 SECONDS, /datum/status_effect/speech/stutter)
+				quirker.adjust_stutter(0.5 SECONDS)
 				new_message += quirker.treat_message(word, capitalize_message = FALSE)
 
 			else
@@ -556,7 +587,7 @@
 				new/obj/item/food/spaghetti/pastatomato(get_turf(quirker)) //now that's what I call spaghetti code
 		else
 			to_chat(quirk_holder, span_warning("You think that wouldn't add much to the conversation and decide not to say it."))
-			if(prob(min(25,(0.25*(nearby_people*12.75)*moodmod)))) //Max 25% chance of silence stacks after succesful not talking roll
+			if(prob(min(25,(0.25*(nearby_people*12.75)*moodmod)))) //Max 25% chance of silence stacks after successful not talking roll
 				to_chat(quirker, span_danger("You retreat into yourself. You <i>really</i> don't feel up to talking."))
 				quirker.silent = max(5, quirker.silent)
 		speech_args[SPEECH_MESSAGE] = pick("Uh.","Erm.","Um.")
@@ -586,10 +617,10 @@
 
 	switch(rand(1,3))
 		if(1)
-			quirk_holder.set_timed_status_effect(20 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
+			quirk_holder.set_jitter_if_lower(20 SECONDS)
 			msg += "causing you to start fidgeting!"
 		if(2)
-			quirk_holder.set_timed_status_effect(6 SECONDS, /datum/status_effect/speech/stutter, only_if_higher = TRUE)
+			quirk_holder.set_stutter_if_lower(6 SECONDS)
 			msg += "causing you to start stuttering!"
 		if(3)
 			quirk_holder.Stun(2 SECONDS)

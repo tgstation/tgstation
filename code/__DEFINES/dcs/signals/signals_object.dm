@@ -81,9 +81,9 @@
 
 #define COMSIG_OBJ_ALLOWED "door_try_to_activate"
 	#define COMPONENT_OBJ_ALLOW (1<<0)
+	#define COMPONENT_OBJ_DISALLOW (1<<1)
 
 #define COMSIG_AIRLOCK_SHELL_ALLOWED "airlock_shell_try_allowed"
-	#define COMPONENT_AIRLOCK_SHELL_ALLOW (1<<0)
 
 // /obj/machinery/door/airlock signals
 
@@ -93,9 +93,14 @@
 #define COMSIG_AIRLOCK_CLOSE "airlock_close"
 ///from /obj/machinery/door/airlock/set_bolt():
 #define COMSIG_AIRLOCK_SET_BOLT "airlock_set_bolt"
+///from /obj/machinery/door/airlock/bumpopen(), to the carbon who bumped: (airlock)
+#define COMSIG_CARBON_BUMPED_AIRLOCK_OPEN "carbon_bumped_airlock_open"
+	/// Return to stop the door opening on bump.
+	#define STOP_BUMP (1<<0)
+
 // /obj/item signals
 
-///from base of obj/item/equipped(): (/mob/equipper, slot)
+///from base of obj/item/equipped(): (mob/equipper, slot)
 #define COMSIG_ITEM_EQUIPPED "item_equip"
 /// A mob has just equipped an item. Called on [/mob] from base of [/obj/item/equipped()]: (/obj/item/equipped_item, slot)
 #define COMSIG_MOB_EQUIPPED_ITEM "mob_equipped_item"

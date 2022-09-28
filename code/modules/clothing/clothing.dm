@@ -232,8 +232,7 @@
 		return
 	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 	for(var/trait in clothing_traits)
-		REMOVE_TRAIT(user, trait, "[CLOTHING_TRAIT]_[REF(src)]")
-
+		REMOVE_CLOTHING_TRAIT(user, trait)
 
 	if(LAZYLEN(user_vars_remembered))
 		for(var/variable in user_vars_remembered)
@@ -250,7 +249,7 @@
 		if(iscarbon(user) && LAZYLEN(zones_disabled))
 			RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/bristle, override = TRUE)
 		for(var/trait in clothing_traits)
-			ADD_TRAIT(user, trait, "[CLOTHING_TRAIT]_[REF(src)]")
+			ADD_CLOTHING_TRAIT(user, trait)
 		if (LAZYLEN(user_vars_to_edit))
 			for(var/variable in user_vars_to_edit)
 				if(variable in user.vars)

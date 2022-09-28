@@ -13,7 +13,7 @@
 			ui.close()
 		return
 
-	if(!user.can_read(src, check_for_light = FALSE))
+	if(!user.can_read(src, READING_CHECK_LITERACY))
 		return
 
 	if(HAS_TRAIT(user, TRAIT_CHUNKYFINGERS) && !allow_chunky)
@@ -89,18 +89,19 @@
 			IDJob = cardholder.current_job,
 		)
 
+	var/obj/item/computer_hardware/hard_drive/hard_drive = all_components[MC_HDD]
+
 	data["removable_media"] = list()
 	if(all_components[MC_SDD])
 		data["removable_media"] += "Eject Disk"
-	var/obj/item/computer_hardware/ai_slot/intelliholder = all_components[MC_AI]
-	if(intelliholder?.stored_card)
+	var/datum/computer_file/program/ai_restorer/airestore_app = locate() in hard_drive.stored_files
+	if(airestore_app?.stored_card)
 		data["removable_media"] += "intelliCard"
 	var/obj/item/computer_hardware/card_slot/secondarycardholder = all_components[MC_CARD2]
 	if(secondarycardholder?.stored_card)
 		data["removable_media"] += "secondary RFID card"
 
 	data["programs"] = list()
-	var/obj/item/computer_hardware/hard_drive/hard_drive = all_components[MC_HDD]
 	for(var/datum/computer_file/program/P in hard_drive.stored_files)
 		var/running = FALSE
 		if(P in idle_threads)
@@ -189,10 +190,10 @@
 						user.put_in_hands(portable_drive)
 						playsound(src, 'sound/machines/card_slide.ogg', 50)
 				if("intelliCard")
-					var/obj/item/computer_hardware/ai_slot/intelliholder = all_components[MC_AI]
-					if(!intelliholder)
+					var/datum/computer_file/program/ai_restorer/airestore_app = locate() in hard_drive.stored_files
+					if(!airestore_app)
 						return
-					if(intelliholder.try_eject(user))
+					if(airestore_app.try_eject(user))
 						playsound(src, 'sound/machines/card_slide.ogg', 50)
 				if("ID")
 					var/obj/item/computer_hardware/card_slot/cardholder = all_components[MC_CARD]
