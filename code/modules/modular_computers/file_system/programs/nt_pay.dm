@@ -77,6 +77,6 @@
 		data["owner_token"] = current_user.pay_token
 		data["money"] = current_user.account_balance
 		data["wanted_token"] = wanted_token
-		data["trans_list"] = current_user.transaction_history
+		data["transaction_list"] = current_user.transaction_history
 
 	return data

@@ -6,7 +6,7 @@ type Data = {
   name: string;
   owner_token: string;
   money: number;
-  trans_list: Transactions[];
+  transaction_list: Transactions[];
   wanted_token: string;
 };
 
@@ -139,13 +139,13 @@ const TransferSection = (props, context) => {
 /** Displays the transaction history. */
 const TransactionHistory = (props, context) => {
   const { data } = useBackend<Data>(context);
-  const { trans_list = [] } = data;
+  const { transaction_list = [] } = data;
 
   return (
     <Section fill title="Transaction History">
       <Section fill scrollable title={<TableHeaders />}>
         <Table>
-          {trans_list.map((log) => (
+          {transaction_list.map((log) => (
             <Table.Row
               key={log}
               className="candystripe"
