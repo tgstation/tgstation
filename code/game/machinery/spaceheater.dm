@@ -279,8 +279,8 @@
 /obj/machinery/space_heater/proc/toggle_power(user)
 	on = !on
 	mode = HEATER_MODE_STANDBY
-    if(!isnull(user))
-    	balloon_alert(user, "turned [on ? "on" : "off"]")
+	if(!isnull(user))
+		balloon_alert(user, "turned [on ? "on" : "off"]")
 	update_appearance()
 	if(on)
 		SSair.start_processing_machine(src)
