@@ -67,10 +67,14 @@
 
 /datum/round_event/sandstorm
 	start_when = 60
-	end_when = 120 // much shorter now (one minute), but spread out over less time to make it less drawn out
+	end_when = 120
 	announce_when = 1
 	///Which direction the storm will come from.
 	var/start_side
+
+/datum/round_event/sandstorm/setup()
+	start_when = rand(30, 60)
+	start_when = 45 //testing purposes
 
 /datum/round_event/sandstorm/announce(fake)
 	var/datum/round_event_control/sandstorm/sandstorm_event = control
@@ -94,4 +98,4 @@
 						damage to external fittings and fixtures.", "Collision Alert")
 
 /datum/round_event/sandstorm/tick()
-	spawn_meteors(20, GLOB.meteorsC, start_side)
+	spawn_meteors(15, GLOB.meteorsC, start_side)
