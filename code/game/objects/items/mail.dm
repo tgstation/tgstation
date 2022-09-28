@@ -18,14 +18,14 @@
 	var/datum/weakref/recipient_ref
 	/// How many goodies this mail contains.
 	var/goodie_count = 1
-	/// Goodies which can be given to anyone. The base weight for cash is 56. For there to be a 50/50 chance of getting a department item, they need 56 weight as well.
+	/// Goodies which can be given to anyone. The base weight is 50. For there to be a 50/50 chance of getting a department item, they need 50 weight as well.
 	var/list/generic_goodies = list(
-		/obj/effect/spawner/random/entertainment/money_medium,
-		/obj/effect/spawner/random/entertainment/coin,
-		/obj/effect/spawner/random/entertainment/toy,
-		/obj/effect/spawner/random/food_or_drink/refreshing_beverage,
-		/obj/effect/spawner/random/food_or_drink/snack,
-		/obj/effect/spawner/random/food_or_drink/donkpockets_single,
+		/obj/effect/spawner/random/entertainment/money_medium = 25,
+		/obj/effect/spawner/random/entertainment/coin = 5,
+		/obj/effect/spawner/random/entertainment/toy = 5,
+		/obj/effect/spawner/random/food_or_drink/refreshing_beverage = 5,
+		/obj/effect/spawner/random/food_or_drink/snack = 5,
+		/obj/effect/spawner/random/food_or_drink/donkpockets_single = 5,
 	)
 	// Overlays (pure fluff)
 	/// Does the letter have the postmark overlay?
@@ -147,20 +147,26 @@
 	var/list/goodies = generic_goodies
 
 	var/datum/job/this_job = recipient.assigned_role
+	var/is_mail_restricted = FALSE // certain roles and jobs (prisoner) do not receive generic gifts
+
 	if(this_job)
 		if(this_job.paycheck_department && department_colors[this_job.paycheck_department])
 			color = department_colors[this_job.paycheck_department]
+
 		var/list/job_goodies = this_job.get_mail_goodies()
+		is_mail_restricted = this_job.exclusive_mail_goodies
 		if(LAZYLEN(job_goodies))
-			// certain roles and jobs (prisoner) do not receive generic gifts.
-			if(this_job.exclusive_mail_goodies)
+			if(is_mail_restricted)
 				goodies = job_goodies
 			else
 				goodies += job_goodies
 
-	for(var/datum/quirk/quirk as anything in body.quirks)
-		if(LAZYLEN(quirk.mail_goodies))
-			goodies += quirk.mail_goodies
+	if(!is_mail_restricted)
+		// every quirk adds +5 to the final weighted list (regardless the number of items in quirk list)
+		for(var/datum/quirk/quirk as anything in body.quirks)
+			if(LAZYLEN(quirk.mail_goodies))
+				var/quirk_goodie = pick(quirk.mail_goodies)
+				goodies[quirk_goodie] = 5
 
 	for(var/iterator in 1 to goodie_count)
 		var/target_good = pick_weight(goodies)
