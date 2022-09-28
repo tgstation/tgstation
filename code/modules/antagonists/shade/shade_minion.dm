@@ -32,4 +32,3 @@
 /datum/antagonist/shade_minion/proc/display_panel()
 	var/datum/action/antag_info/info_button = info_button_ref?.resolve()
 	info_button?.Trigger()
-/// aaaaaaaaaaaaaa

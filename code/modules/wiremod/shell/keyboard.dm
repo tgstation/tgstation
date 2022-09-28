@@ -8,7 +8,7 @@
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	light_system = MOVABLE_LIGHT_DIRECTIONAL
 	light_on = FALSE
-/// aaaaaaaaaaaaaa
+
 /obj/item/keyboard_shell/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/shell, list(

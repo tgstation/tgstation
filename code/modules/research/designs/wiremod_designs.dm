@@ -424,7 +424,7 @@
 	materials = list(/datum/material/glass = 2000, /datum/material/iron = 5000)
 	build_type = PROTOLATHE | COMPONENT_PRINTER
 	category = list(RND_CATEGORY_CIRCUITRY, RND_CATEGORY_SHELLS)
-/// aaaaaaaaaaaaaa
+
 /datum/design/controller_shell
 	name = "Controller Shell"
 	desc = "A handheld shell with several buttons."

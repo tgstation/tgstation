@@ -1,5 +1,5 @@
 #define TGS_STATUS_THROTTLE 5
-/// aaaaaaaaaaaaaa
+
 /datum/tgs_chat_command/tgsstatus
 	name = "status"
 	help_text = "Gets the admincount, playercount, gamemode, and true game mode of the server"
@@ -34,7 +34,7 @@
 		msg += "Revision [copytext_char(GLOB.revdata.commit, 1, 9)]"
 		if (GLOB.revdata.date)
 			msg += " compiled on '[GLOB.revdata.date]'"
-
+		
 		if(GLOB.revdata.originmastercommit)
 			msg += ", from origin commit: <[CONFIG_GET(string/githuburl)]/commit/[GLOB.revdata.originmastercommit]>"
 

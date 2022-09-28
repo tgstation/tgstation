@@ -354,7 +354,7 @@
 		if(ishuman(operative_mind.current) && (operative_mind.current.stat != DEAD))
 			return FALSE
 	return TRUE
-/// aaaaaaaaaaaaaa
+
 /datum/team/nuclear/proc/get_result()
 	var/shuttle_evacuated = EMERGENCY_ESCAPED_OR_ENDGAMED
 	var/disk_rescued = is_disk_rescued()
