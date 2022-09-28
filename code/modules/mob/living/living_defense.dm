@@ -83,6 +83,8 @@
 				return 0
 
 /mob/living/proc/set_combat_mode(new_mode, silent = TRUE)
+	if(istype(src, /mob/living/silicon/robot))
+		SEND_SIGNAL(src, COMSIG_BORG_TOGGLE_HARM_INTENT)
 	if(combat_mode == new_mode)
 		return
 	. = combat_mode
