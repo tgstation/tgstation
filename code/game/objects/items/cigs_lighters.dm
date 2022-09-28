@@ -1001,7 +1001,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/vape/equipped(mob/user, slot)
 	. = ..()
-	if(slot != ITEM_SLOT_MASK)
+	if(!(slot & ITEM_SLOT_MASK))
 		return
 
 	if(screw)

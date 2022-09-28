@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - bugfix: "False alarms and Gravity generator blackouts now properly respects basic event restrictions."
