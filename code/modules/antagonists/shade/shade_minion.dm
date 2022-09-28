@@ -3,6 +3,7 @@
  * Cult shades don't get it because they get the cult datum instead.
  * They are bound to follow the orders of their creator, probably a chaplain or miner.
  * Technically they're not 'antagonists' but they have antagonist-like properties.
+ * öyle mi kanka
  */
 /datum/antagonist/shade_minion
 	name = "\improper Loyal Shade"
