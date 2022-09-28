@@ -6,7 +6,7 @@ on: pull_request_target
 jobs:
   assign-users:
 
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so the job can access it
