@@ -127,7 +127,7 @@
 			reason_from = ""
 		
 		if(transfer_reason)
-			reason_to = istype(src, /datum/bank_account/department) ? FALSE : transfer_reason
+			reason_to = istype(src, /datum/bank_account/department) ? "" : transfer_reason
 			reason_from = transfer_reason
 		
 		adjust_money(amount, reason_to)
