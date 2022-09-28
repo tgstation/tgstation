@@ -35,6 +35,22 @@
 	SSair.start_processing_machine(src)
 	update_appearance()
 
+	AddElement( \
+		/datum/element/contextual_screentip_bare_hands, \
+		rmb_text = "Toggle power", \
+	)
+
+	var/static/list/tool_behaviors = list(
+			TOOL_SCREWDRIVER = list(
+				SCREENTIP_CONTEXT_LMB = "Open hatch",
+			),
+
+			TOOL_WRENCH = list(
+				SCREENTIP_CONTEXT_LMB = "Anchor",
+			),
+		)
+	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
+
 /obj/machinery/electrolyzer/Destroy()
 	if(cell)
 		QDEL_NULL(cell)
@@ -179,10 +195,10 @@
 /obj/machinery/electrolyzer/proc/toggle_power(user)
 	on = !on
 	mode = ELECTROLYZER_MODE_STANDBY
-    if (!isnull(user))
-    	balloon_alert(user, "turned [on ? "on" : "off"]")
+	if(!isnull(user))
+		balloon_alert(user, "turned [on ? "on" : "off"]")
 	update_appearance()
-	if (on)
+	if(on)
 		SSair.start_processing_machine(src)
 
 /obj/machinery/electrolyzer/ui_state(mob/user)
