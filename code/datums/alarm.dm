@@ -44,6 +44,7 @@
 		return
 
 	var/area/our_area = get_area(use_as_source_atom)
+	var/our_z_level = use_as_source_atom.z
 
 	var/list/existing_alarms = sent_alarms[alarm_type]
 	if(existing_alarms)
