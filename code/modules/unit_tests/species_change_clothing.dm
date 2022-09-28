@@ -6,15 +6,28 @@
 	// Test lizards as their own thing so we can get more coverage on their features
 	var/mob/living/carbon/human/morphing_human = allocate(/mob/living/carbon/human/dummy/consistent)
 
-	morphing_human.equipOutfit(/datum/outfit/job/assistant/consistent)
-	morphing_human.dna.features["legs"] = DIGITIGRADE_LEGS //you WILL have digitigrade legs
+	//Allocate the necessary stuff
+	var/obj/item/clothing/shoes/clown_shoes/swag_shoes = allocate(/obj/item/clothing/shoes/clown_shoes)
+	var/obj/item/clothing/accessory/pocketprotector/pocket_item = allocate(/obj/item/clothing/accessory/pocketprotector)
+	var/obj/item/melee/energy/axe/hand_item = allocate(/obj/item/melee/energy/axe)
 
+	//Equip it all
+	morphing_human.equip_to_slot(swag_shoes, ITEM_SLOT_FEET)
+	morphing_human.equip_to_slot(pocket_item, ITEM_SLOT_LPOCKET)
+	morphing_human.put_in_l_hand(hand_item)
+
+	//Keep track of the shoes and make sure they will not fit.
 	var/obj/item/human_shoes = morphing_human.get_item_by_slot(ITEM_SLOT_FEET)
-	human_shoes.supports_variations_flags = NONE //do not fit lizards at all costs.
-	morphing_human.set_species(/datum/species/lizard)
-	var/obj/item/lizard_shoes = morphing_human.get_item_by_slot(ITEM_SLOT_FEET)
+	swag_shoes.supports_variations_flags = NONE //do not fit lizards at all costs.
+	morphing_human.dna.features["legs"] = DIGITIGRADE_LEGS
 
+	morphing_human.set_species(/datum/species/lizard)
+
+	var/obj/item/lizard_shoes = morphing_human.get_item_by_slot(ITEM_SLOT_FEET)
 	TEST_ASSERT_NOTEQUAL(human_shoes, lizard_shoes, "Lizard still has shoes after changing species.")
+
+	TEST_ASSERT(morphing_human.get_item_by_slot(ITEM_SLOT_LPOCKET), lizard_pocket "Lizard somehow lost their pocket items when changing species.")
+	TEST_ASSERT(morphing_human.get_item_for_held_index(LEFT_HANDS), lizard_hand, "Lizard somehow lost their hand items when changing species.")
 
 	// Testing whether item-species restrictions properly blocks changing into a blacklisted species.
 	morphing_human.set_species(/datum/species/monkey)
