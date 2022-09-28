@@ -20,6 +20,8 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 /datum/sm_delam/proc/delaminate(obj/machinery/power/supermatter_crystal/sm)
 	if (sm.is_main_engine)
 		SSpersistence.rounds_since_engine_exploded = ROUNDCOUNT_ENGINE_JUST_EXPLODED
+		for (var/obj/structure/sign/delamination_counter/sign as anything in GLOB.map_delamination_counters)
+			sign.update_count(ROUNDCOUNT_ENGINE_JUST_EXPLODED)
 	qdel(sm)
 
 /// Whatever we're supposed to do when a delam is currently in progress.

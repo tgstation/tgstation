@@ -26,8 +26,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/calendar, 32)
 			. += span_info("[holidayname]")
 
 /**
- * List of delamination counter signs on the map at mapload, as they init before the Persistence subsystem.
- * Cleared after the persistence subsystem loads. Does not need to gain entries after mapload.
+ * List of delamination counter signs on the map.
+ * Required as persistence subsystem loads after the ones present at mapload, and to reset to 0 upon explosion.
  */
 GLOBAL_LIST_EMPTY(map_delamination_counters)
 
@@ -43,13 +43,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/delamination_counter, 32)
 
 /obj/structure/sign/delamination_counter/Initialize(mapload)
 	. = ..()
-	if (mapload)
-		GLOB.map_delamination_counters += src
-	else
+	GLOB.map_delamination_counters += src
+	if (!mapload)
 		update_count(SSpersistence.rounds_since_engine_exploded)
 
 /obj/structure/sign/delamination_counter/Destroy()
-	GLOB.map_delamination_counters -= src // Just in case.
+	GLOB.map_delamination_counters -= src
 	return ..()
 
 /obj/structure/sign/delamination_counter/proc/update_count(new_count)
@@ -73,9 +72,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/delamination_counter, 32)
 	. = ..()
 	. += span_info("It has been [since_last] day\s since the last delamination event at a Nanotrasen facility.")
 	switch (since_last)
-		if(0)
+		if (0)
+			. += span_info("In case you didn't notice.")
+		if(1)
 			. += span_info("Let's do better today.")
-		if(1 to 5)
+		if(2 to 5)
 			. += span_info("There's room for improvement.")
 		if(6 to 10)
 			. += span_info("Good work!")

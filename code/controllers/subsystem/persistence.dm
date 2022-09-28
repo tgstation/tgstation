@@ -1,7 +1,7 @@
 #define FILE_RECENT_MAPS "data/RecentMaps.json"
 
 #define KEEP_ROUNDS_MAP 3
-#define ROUNDCOUNT_ENGINE_JUST_EXPLODED -1
+#define ROUNDCOUNT_ENGINE_JUST_EXPLODED 0
 
 SUBSYSTEM_DEF(persistence)
 	name = "Persistence"
@@ -473,7 +473,6 @@ SUBSYSTEM_DEF(persistence)
 	rounds_since_engine_exploded = text2num(file2text(DELAMINATION_COUNT_FILEPATH))
 	for (var/obj/structure/sign/delamination_counter/sign as anything in GLOB.map_delamination_counters)
 		sign.update_count(rounds_since_engine_exploded)
-	GLOB.map_delamination_counters = list()
 
 /datum/controller/subsystem/persistence/proc/save_delamination_counter()
 	rustg_file_write("[rounds_since_engine_exploded + 1]", DELAMINATION_COUNT_FILEPATH)
