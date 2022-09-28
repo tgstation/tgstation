@@ -1,5 +1,7 @@
-///Gives a Human lizard-incompatible shoes, then changes their species over to see if they drop the now incompatible shoes, testing if Digitigrade feet works.
-///Gives a Monkey a collar, then changes their species to Human to see if item's restrictions works on species change.
+/// Tests several different ways of changing clothes through species changes to ensure nothing breaks:
+/// Tests if Monkeys (who can wear collars) keeps collars when changing into a species that can't.
+/// Tests if Humans wearing shoes will keep said shoes when turning into a Digitigrade
+/// Lastly, Tests if pockets and hand items drop when you change species, as there's snowflake code around that.
 /datum/unit_test/species_change_clothing
 
 /datum/unit_test/species_change_clothing/Run()
