@@ -100,7 +100,7 @@
 
 // /obj/item signals
 
-///from base of obj/item/equipped(): (/mob/equipper, slot)
+///from base of obj/item/equipped(): (mob/equipper, slot)
 #define COMSIG_ITEM_EQUIPPED "item_equip"
 /// A mob has just equipped an item. Called on [/mob] from base of [/obj/item/equipped()]: (/obj/item/equipped_item, slot)
 #define COMSIG_MOB_EQUIPPED_ITEM "mob_equipped_item"

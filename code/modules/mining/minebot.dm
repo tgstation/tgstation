@@ -206,10 +206,10 @@
 /datum/action/innate/minedrone/toggle_meson_vision/Activate()
 	var/mob/living/simple_animal/hostile/mining_drone/user = owner
 	if(user.sight & SEE_TURFS)
-		user.sight &= ~SEE_TURFS
+		user.clear_sight(SEE_TURFS)
 		user.lighting_alpha = initial(user.lighting_alpha)
 	else
-		user.sight |= SEE_TURFS
+		user.add_sight(SEE_TURFS)
 		user.lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 
 	user.sync_lighting_plane_alpha()

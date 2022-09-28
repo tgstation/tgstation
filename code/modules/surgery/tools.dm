@@ -254,7 +254,7 @@
 
 /obj/item/surgical_processor/equipped(mob/user, slot, initial)
 	. = ..()
-	if(slot != ITEM_SLOT_HANDS)
+	if(!(slot & ITEM_SLOT_HANDS))
 		UnregisterSignal(user, COMSIG_SURGERY_STARTING)
 		return
 	RegisterSignal(user, COMSIG_SURGERY_STARTING, .proc/check_surgery)

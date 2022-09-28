@@ -97,7 +97,7 @@
 
 	/// A list of all memories we've stolen through absorbs.
 	var/list/stolen_memories = list()
-	
+
 	///	Keeps track of the currently selected profile.
 	var/datum/changeling_profile/current_profile
 
@@ -461,7 +461,7 @@
 	new_profile.dna = new_dna
 	new_profile.name = target.real_name
 	new_profile.protected = protect
-	
+
 	new_profile.age = target.age
 	new_profile.physique = target.physique
 
@@ -474,7 +474,7 @@
 	new_profile.underwear_color = target.underwear_color
 	new_profile.undershirt = target.undershirt
 	new_profile.socks = target.socks
-	
+
 	// Hair and facial hair gradients, alongside their colours.
 	new_profile.grad_style = LAZYLISTDUPLICATE(target.grad_style)
 	new_profile.grad_color = LAZYLISTDUPLICATE(target.grad_color)

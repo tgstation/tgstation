@@ -1,4 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes: 
-  - rscadd: "Rotten zombie tongue has a new speech modifier that converts spoken language into zombie sentences. If the person speaking is a high-functioning zombie this is bypassed."

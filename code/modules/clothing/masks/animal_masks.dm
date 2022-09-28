@@ -99,7 +99,7 @@ GLOBAL_LIST_INIT(cursed_animal_masks, list(
 /obj/item/clothing/mask/animal/equipped(mob/user, slot)
 	if(!iscarbon(user))
 		return ..()
-	if(slot == ITEM_SLOT_MASK && HAS_TRAIT_FROM(src, TRAIT_NODROP, CURSED_MASK_TRAIT))
+	if((slot & ITEM_SLOT_MASK) && HAS_TRAIT_FROM(src, TRAIT_NODROP, CURSED_MASK_TRAIT))
 		to_chat(user, span_userdanger("[src] was cursed!"))
 	return ..()
 

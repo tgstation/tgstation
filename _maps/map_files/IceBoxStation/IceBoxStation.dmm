@@ -63598,7 +63598,7 @@
 /obj/machinery/status_display/evac/directional/west,
 /obj/effect/turf_decal/tile/blue/full,
 /turf/open/floor/iron/dark/smooth_large,
-/area/station/maintenance/department/medical)
+/area/station/medical/storage)
 "tCF" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/cable,
@@ -67511,7 +67511,7 @@
 	},
 /obj/effect/turf_decal/tile/blue/full,
 /turf/open/floor/iron/dark/smooth_large,
-/area/station/maintenance/department/medical)
+/area/station/medical/storage)
 "uOj" = (
 /turf/open/floor/iron,
 /area/station/command/gateway)

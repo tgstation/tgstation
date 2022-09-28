@@ -204,7 +204,7 @@
 
 /mob/living/simple_animal/bot/mulebot/update_icon_state() //if you change the icon_state names, please make sure to update /datum/wires/mulebot/on_pulse() as well. <3
 	. = ..()
-	icon_state = "[base_icon][bot_mode_flags & BOT_MODE_ON ? wires.is_cut(WIRE_AVOIDANCE) : 0]"
+	icon_state = "[base_icon][(bot_mode_flags & BOT_MODE_ON) ? wires.is_cut(WIRE_AVOIDANCE) : 0]"
 
 /mob/living/simple_animal/bot/mulebot/update_overlays()
 	. = ..()
@@ -452,7 +452,7 @@
 		load.forceMove(loc)
 		load.pixel_y = initial(load.pixel_y)
 		load.layer = initial(load.layer)
-		load.plane = initial(load.plane)
+		SET_PLANE_EXPLICIT(load, initial(load.plane), src)
 		load = null
 
 	if(dirn) //move the thing to the delivery point.
