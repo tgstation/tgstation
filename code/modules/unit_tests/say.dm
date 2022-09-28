@@ -58,8 +58,8 @@
 
 /// This runs some simple speech tests on a speaker and listener and determines if a person can hear whispering or speaking as they are moved a distance away
 /datum/unit_test/speech
-	var/handle_speech_result
-	var/handle_hearing_result
+	var/handle_speech_result = 0
+	var/handle_hearing_result = 0
 
 /datum/unit_test/speech/proc/handle_speech(datum/source, mob/speech_args)
 	SIGNAL_HANDLER
@@ -74,7 +74,7 @@
 	//var/range = speech_args[SPEECH_RANGE]
 	//TEST_ASSERT(range, "Handle speech signal does not have a range arg")
 
-	handle_speech_result = TRUE
+	handle_speech_result++
 
 /datum/unit_test/speech/proc/handle_hearing(datum/source, list/hearing_args)
 	SIGNAL_HANDLER
@@ -95,7 +95,7 @@
 	var/message_mode = hearing_args[HEARING_MESSAGE_MODE]
 	TEST_ASSERT(message_mode, "Handle hearing signal does not have a message mode arg")
 
-	handle_hearing_result = TRUE
+	handle_hearing_result++
 
 /datum/unit_test/speech/Run()
 	var/mob/living/carbon/human/speaker = allocate(/mob/living/carbon/human)
@@ -110,45 +110,33 @@
 
 	// speaking
 	speaker.say("The quick brown fox jumps over the lazy dog")
-	TEST_ASSERT(handle_speech_result, "Handle speech signal was not fired")
-	TEST_ASSERT(handle_hearing_result, "Handle hearing signal was not fired")
-	handle_speech_result = FALSE
-	handle_hearing_result = FALSE
+	TEST_ASSERT(handle_speech_result == 1, "Handle speech signal was not fired")
+	TEST_ASSERT(handle_hearing_result == 1, "Handle hearing signal was not fired")
 	// whispering
 	speaker.whisper("The quick brown fox jumps over the lazy dog")
-	TEST_ASSERT(handle_speech_result, "Handle speech signal was not fired")
-	TEST_ASSERT(handle_hearing_result, "Handle hearing signal was not fired")
-	handle_speech_result = FALSE
-	handle_hearing_result = FALSE
+	TEST_ASSERT(handle_speech_result == 2, "Handle speech signal was not fired")
+	TEST_ASSERT(handle_hearing_result == 2, "Handle hearing signal was not fired")
 
 	// move listener 5 tiles away (for whisper testing)
 	listener.forceMove(locate(run_loc_floor_bottom_left.x + 5, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
 
 	// speaking
 	speaker.say("The quick brown fox jumps over the lazy dog")
-	TEST_ASSERT(handle_speech_result, "Handle speech signal was not fired")
-	TEST_ASSERT(handle_hearing_result, "Handle hearing signal was not fired")
-	handle_speech_result = FALSE
-	handle_hearing_result = FALSE
+	TEST_ASSERT(handle_speech_result == 3, "Handle speech signal was not fired")
+	TEST_ASSERT(handle_hearing_result == 3, "Handle hearing signal was not fired")
 	// whispering
 	speaker.whisper("The quick brown fox jumps over the lazy dog")
-	TEST_ASSERT(handle_speech_result, "Handle speech signal was not fired")
-	TEST_ASSERT(!handle_hearing_result, "Handle hearing signal was not fired") // shouldn't be able to hear from this distance
-	handle_speech_result = FALSE
-	handle_hearing_result = FALSE
+	TEST_ASSERT(handle_speech_result == 4, "Handle speech signal was not fired")
+	TEST_ASSERT(handle_hearing_result == 3, "Handle hearing signal was not fired") // shouldn't be able to hear from this distance
 
 	// move listener 10 tiles away (should be out of range of speaker)
 	listener.forceMove(locate(run_loc_floor_bottom_left.x + 10, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
 
 	// speaking
 	speaker.say("The quick brown fox jumps over the lazy dog")
-	TEST_ASSERT(handle_speech_result, "Handle speech signal was not fired")
-	TEST_ASSERT(!handle_hearing_result, "Handle hearing signal was not fired") // shouldn't be able to hear from this distance
-	handle_speech_result = FALSE
-	handle_hearing_result = FALSE
+	TEST_ASSERT(handle_speech_result == 5, "Handle speech signal was not fired")
+	TEST_ASSERT(handle_hearing_result == 3, "Handle hearing signal was not fired") // shouldn't be able to hear from this distance
 	// whispering
 	speaker.whisper("The quick brown fox jumps over the lazy dog")
-	TEST_ASSERT(handle_speech_result, "Handle speech signal was not fired")
-	TEST_ASSERT(!handle_hearing_result, "Handle hearing signal was not fired") // shouldn't be able to hear from this distance
-	handle_speech_result = FALSE
-	handle_hearing_result = FALSE
+	TEST_ASSERT(handle_speech_result == 6, "Handle speech signal was not fired")
+	TEST_ASSERT(!handle_hearing_result == 3, "Handle hearing signal was not fired") // shouldn't be able to hear from this distance
