@@ -23,10 +23,11 @@
 		speed = 7 SECONDS, \
 		effectiveness = 100, \
 	)
+	tool_behaviour = TOOL_KNIFE
 	AddComponent(/datum/component/transforming, \
 		start_transformed = start_extended, \
-		force_on = 8, \
-		throwforce_on = 3, \
+		force_on = 10, \
+		throwforce_on = 4, \
 		throw_speed_on = throw_speed, \
 		sharpness_on = SHARP_EDGED, \
 		hitsound_on = 'sound/weapons/bladeslice.ogg', \
@@ -37,8 +38,10 @@
 
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
 
-/obj/item/boxcutter/proc/on_transform()
+/obj/item/boxcutter/proc/on_transform(obj/item/source, mob/user, active)
 	SIGNAL_HANDLER
+
+	on = active
 	playsound(src, on_sound, 50)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 

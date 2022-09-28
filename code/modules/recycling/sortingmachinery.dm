@@ -12,9 +12,9 @@
 /**
  * Initial check if manually unwrapping
  */
-/obj/item/delivery/proc/attempt_pre_unwrap_contents(mob/user)
+/obj/item/delivery/proc/attempt_pre_unwrap_contents(mob/user, time = 15)
 	to_chat(user, span_notice("You start to unwrap the package..."))
-	return do_after(user, 15, target = user)
+	return do_after(user, time, target = user)
 
 /**
  * Signals for unwrapping.
@@ -189,14 +189,15 @@
 		update_appearance()
 
 	else if(istype(item, /obj/item/boxcutter))
-		if( (item.icon_state == "boxcutter_on"))
-			unwrap_contents(user)
+		var/obj/item/boxcutter/boxcutter_item = item
+		if(boxcutter_item.on)
+			if(!attempt_pre_unwrap_contents(user, time = 5))
+				return
+			unwrap_contents()
 			to_chat(user, span_notice("You start to cut open package..."))
 			post_unwrap_contents(user, rip_open = FALSE)
-			return do_after(user, 15, target = user)
 		else
 			balloon_alert(user, "prime the boxcutter!")
-			return
 
 	else
 		return ..()
