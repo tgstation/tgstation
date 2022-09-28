@@ -116,7 +116,7 @@ GLOBAL_LIST_EMPTY(unit_test_mapping_logs)
 	var/annotation_text = replacetext(text, "%", "%25")
 	annotation_text = replacetext(annotation_text, "\n", "%0A")
 
-	log_world("::error file=[file],line=[line],title=[map_name]: [type]::[annotation_text]")
+	log_world("::[priority] file=[file],line=[line],title=[map_name]: [type]::[annotation_text]")
 
 /proc/RunUnitTest(test_path, list/test_results)
 	var/datum/unit_test/test = new test_path
