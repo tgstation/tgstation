@@ -21,11 +21,11 @@
 	/// Goodies which can be given to anyone. The base weight is 50. For there to be a 50/50 chance of getting a department item, they need 50 weight as well.
 	var/list/generic_goodies = list(
 		/obj/effect/spawner/random/entertainment/money_medium = 25,
-		/obj/effect/spawner/random/entertainment/coin = 5,
-		/obj/effect/spawner/random/entertainment/toy = 5,
-		/obj/effect/spawner/random/food_or_drink/refreshing_beverage = 5,
+		/obj/effect/spawner/random/food_or_drink/refreshing_beverage = 10,
 		/obj/effect/spawner/random/food_or_drink/snack = 5,
 		/obj/effect/spawner/random/food_or_drink/donkpockets_single = 5,
+		/obj/effect/spawner/random/entertainment/toy = 3,
+		/obj/effect/spawner/random/entertainment/coin = 2,
 	)
 	// Overlays (pure fluff)
 	/// Does the letter have the postmark overlay?
