@@ -18,7 +18,7 @@
 	},
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
-/area/mine/explored)
+/area/station/maintenance/explored_mine)
 "d" = (
 /turf/closed/wall,
 /area/station/maintenance/starboard/lesser)
@@ -26,11 +26,11 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/chair/stool/directional/north,
 /turf/open/floor/plating,
-/area/mine/explored)
+/area/station/maintenance/explored_mine)
 "f" = (
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
-/area/mine/explored)
+/area/station/maintenance/explored_mine)
 "g" = (
 /turf/open/misc/asteroid,
 /area/station/maintenance/starboard/lesser)
@@ -65,7 +65,7 @@
 "m" = (
 /obj/item/shard,
 /turf/open/misc/asteroid,
-/area/mine/explored)
+/area/station/maintenance/explored_mine)
 "n" = (
 /obj/machinery/portable_atmospherics/canister{
 	greyscale_colors = "#2786e5#e8fefe";
@@ -73,7 +73,7 @@
 	name = "Oxygen canister"
 	},
 /turf/open/misc/asteroid,
-/area/mine/explored)
+/area/station/maintenance/explored_mine)
 "p" = (
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
@@ -91,7 +91,7 @@
 	pixel_y = 2
 	},
 /turf/open/floor/plating,
-/area/mine/explored)
+/area/station/maintenance/explored_mine)
 "r" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/portable_atmospherics/canister/water_vapor,
@@ -101,15 +101,15 @@
 "s" = (
 /obj/item/stack/rods,
 /turf/open/misc/asteroid,
-/area/mine/explored)
+/area/station/maintenance/explored_mine)
 "t" = (
 /obj/structure/ore_box,
 /turf/open/misc/asteroid,
-/area/mine/explored)
+/area/station/maintenance/explored_mine)
 "u" = (
 /obj/item/reagent_containers/cup/glass/bottle/beer/light,
 /turf/open/misc/asteroid,
-/area/mine/explored)
+/area/station/maintenance/explored_mine)
 "w" = (
 /turf/closed/wall/rock/porous,
 /area/station/maintenance/starboard/lesser)
@@ -146,25 +146,25 @@
 /area/station/maintenance/starboard/lesser)
 "E" = (
 /turf/closed/mineral/random/stationside/asteroid/porus,
-/area/mine/explored)
+/area/station/maintenance/explored_mine)
 "F" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/chair/stool/directional/east,
 /turf/open/floor/plating,
-/area/mine/explored)
+/area/station/maintenance/explored_mine)
 "O" = (
 /turf/open/misc/asteroid,
-/area/mine/explored)
+/area/station/maintenance/explored_mine)
 "P" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/fluff/beach_umbrella,
 /turf/open/floor/plating,
-/area/mine/explored)
+/area/station/maintenance/explored_mine)
 "Q" = (
 /obj/machinery/fishing_portal_generator,
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
-/area/mine/explored)
+/area/station/maintenance/explored_mine)
 "R" = (
 /obj/structure/rack,
 /obj/item/shovel,
@@ -173,7 +173,7 @@
 	pixel_y = 4
 	},
 /turf/open/misc/asteroid,
-/area/mine/explored)
+/area/station/maintenance/explored_mine)
 "S" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -192,7 +192,7 @@
 /area/station/maintenance/starboard/lesser)
 "V" = (
 /turf/closed/wall/rock/porous,
-/area/mine/explored)
+/area/station/maintenance/explored_mine)
 "W" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
@@ -211,7 +211,7 @@
 /obj/machinery/power/floodlight,
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
-/area/mine/explored)
+/area/station/maintenance/explored_mine)
 "Z" = (
 /obj/effect/turf_decal/sand,
 /turf/open/floor/iron/smooth,

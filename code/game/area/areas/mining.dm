@@ -1,45 +1,5 @@
 /**********************Mine areas**************************/
-
-/area/mine
-	icon = 'icons/area/areas_station.dmi'
-	icon_state = "mining"
-	has_gravity = STANDARD_GRAVITY
-	area_flags = VALID_TERRITORY | UNIQUE_AREA | FLORA_ALLOWED | CULT_PERMITTED
-	ambient_buzz = 'sound/ambience/magma.ogg'
-
-/area/mine/explored
-	name = "Mine"
-	icon_state = "explored"
-	always_unpowered = TRUE
-	requires_power = TRUE
-	power_environ = FALSE
-	power_equip = FALSE
-	power_light = FALSE
-	outdoors = TRUE
-	flags_1 = NONE
-	ambience_index = AMBIENCE_MINING
-	area_flags = VALID_TERRITORY | UNIQUE_AREA | NO_ALERTS | CULT_PERMITTED
-	sound_environment = SOUND_AREA_STANDARD_STATION
-	min_ambience_cooldown = 70 SECONDS
-	max_ambience_cooldown = 220 SECONDS
-
-/area/mine/unexplored
-	name = "Mine"
-	icon_state = "unexplored"
-	always_unpowered = TRUE
-	requires_power = TRUE
-	power_environ = FALSE
-	power_equip = FALSE
-	power_light = FALSE
-	outdoors = TRUE
-	flags_1 = NONE
-	ambience_index = AMBIENCE_MINING
-	area_flags = VALID_TERRITORY | UNIQUE_AREA | NO_ALERTS | CAVES_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED | MEGAFAUNA_SPAWN_ALLOWED
-	map_generator = /datum/map_generator/cave_generator
-	min_ambience_cooldown = 70 SECONDS
-	max_ambience_cooldown = 220 SECONDS
-
-/area/mine/lobby
+/area/mine/mining_station/lobby
 	name = "Mining Station"
 	icon_state = "mining_lobby"
 

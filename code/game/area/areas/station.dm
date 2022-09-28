@@ -1,6 +1,6 @@
 // Station areas and shuttles
 
-/area/station/
+/area/station
 	name = "Station Areas"
 	icon = 'icons/area/areas_station.dmi'
 	icon_state = "station"
@@ -16,6 +16,22 @@
 	forced_ambience = TRUE
 	ambient_buzz = 'sound/ambience/source_corridor2.ogg'
 	ambient_buzz_vol = 20
+
+/area/station/maintenance/explored_mine
+	name = "Mine"
+	icon_state = "explored"
+	always_unpowered = TRUE
+	requires_power = TRUE
+	power_environ = FALSE
+	power_equip = FALSE
+	power_light = FALSE
+	outdoors = TRUE
+	flags_1 = NONE
+	ambience_index = AMBIENCE_MINING
+	area_flags = VALID_TERRITORY | UNIQUE_AREA | CULT_PERMITTED
+	sound_environment = SOUND_AREA_STANDARD_STATION
+	min_ambience_cooldown = 70 SECONDS
+	max_ambience_cooldown = 220 SECONDS
 
 //Maintenance - Departmental
 
@@ -518,7 +534,7 @@
 
 //Commons - Storage
 /area/station/commons/storage
-	sound_environment = SOUND_AREA_STANDARD_STATION
+	name = "\improper Commons Storage"
 
 /area/station/commons/storage/tools
 	name = "\improper Auxiliary Tool Storage"
@@ -1240,7 +1256,6 @@
 /area/station/cargo/sorting
 	name = "\improper Delivery Office"
 	icon_state = "cargo_delivery"
-	sound_environment = SOUND_AREA_STANDARD_STATION
 
 /area/station/cargo/warehouse
 	name = "\improper Warehouse"

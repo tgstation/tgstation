@@ -6,7 +6,7 @@
 "bJ" = (
 /obj/item/relic,
 /turf/open/misc/asteroid/airless,
-/area/mine/explored)
+/area/station/maintenance/explored_mine)
 "cm" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/xeno_spawn,
@@ -76,7 +76,7 @@
 	name = "Stuck-In-Rock"
 	},
 /turf/open/misc/asteroid/airless,
-/area/mine/explored)
+/area/station/maintenance/explored_mine)
 "jW" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -93,7 +93,7 @@
 /area/station/maintenance/starboard/lesser)
 "ku" = (
 /turf/open/misc/asteroid/airless,
-/area/mine/explored)
+/area/station/maintenance/explored_mine)
 "kw" = (
 /turf/template_noop,
 /area/template_noop)
@@ -117,7 +117,7 @@
 /area/station/maintenance/starboard/lesser)
 "ot" = (
 /turf/closed/mineral/random/stationside/asteroid/porus,
-/area/mine/explored)
+/area/station/maintenance/explored_mine)
 "qk" = (
 /obj/effect/spawner/random/trash/mess,
 /obj/effect/decal/cleanable/dirt,
@@ -126,7 +126,7 @@
 "qy" = (
 /obj/effect/spawner/random/trash/garbage,
 /turf/open/misc/asteroid,
-/area/mine/explored)
+/area/station/maintenance/explored_mine)
 "qR" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
@@ -209,7 +209,7 @@
 /area/station/maintenance/starboard/lesser)
 "wJ" = (
 /turf/open/misc/asteroid,
-/area/mine/explored)
+/area/station/maintenance/explored_mine)
 "wT" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -264,7 +264,7 @@
 "AU" = (
 /obj/item/stack/ore/glass,
 /turf/open/misc/asteroid,
-/area/mine/explored)
+/area/station/maintenance/explored_mine)
 "Bx" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/structure/girder,
@@ -376,7 +376,7 @@
 "MF" = (
 /obj/item/shard,
 /turf/open/misc/asteroid,
-/area/mine/explored)
+/area/station/maintenance/explored_mine)
 "MM" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -522,7 +522,7 @@
 /area/station/maintenance/starboard/lesser)
 "XC" = (
 /turf/template_noop,
-/area/mine/explored)
+/area/station/maintenance/explored_mine)
 "YO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
