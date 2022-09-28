@@ -587,7 +587,7 @@ GLOBAL_VAR(station_nuke_source)
 		nuke_effects(z_levels_to_blow)
 
 	return TRUE
-// aaaaaa
+
 /// Cause nuke effects to the passed z-levels.
 /obj/machinery/nuclearbomb/proc/nuke_effects(list/affected_z_levels)
 	INVOKE_ASYNC(GLOBAL_PROC, /proc/callback_on_everyone_on_z, affected_z_levels, CALLBACK(GLOBAL_PROC, /proc/nuke_gib), src)

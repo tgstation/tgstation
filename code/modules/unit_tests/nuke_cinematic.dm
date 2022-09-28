@@ -12,7 +12,7 @@
 	var/cinematic_playing = NOT_PLAYING_ANIMATION
 	/// Tracks what typepath of cinematic is being played.
 	var/cinematic_playing_type
-// aaaaaa
+
 /datum/unit_test/nuke_cinematic/Run()
 	var/obj/machinery/nuclearbomb/syndicate/nuke = allocate(/obj/machinery/nuclearbomb/syndicate)
 	var/mob/living/carbon/human/nuked = allocate(/mob/living/carbon/human)
