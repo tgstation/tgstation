@@ -49,15 +49,6 @@
 #define MODE_KEY_CHANGELING "g"
 #define MODE_TOKEN_CHANGELING ":g"
 
-// ling status, their interaction with the hivemind
-
-///not in the hive
-#define LINGHIVE_NONE 0
-///lost their powers, gets a special message
-#define LINGHIVE_FALLEN 1
-///can speak normally, unless they have the CHANGELING_HIVEMIND_MUTE trait
-#define LINGHIVE_LING 2
-
 #define MODE_VOCALCORDS "cords"
 #define MODE_KEY_VOCALCORDS "x"
 

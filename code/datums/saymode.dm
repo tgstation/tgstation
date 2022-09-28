@@ -9,12 +9,21 @@
 /datum/saymode/proc/handle_message(mob/living/user, message, datum/language/language)
 	return TRUE
 
+// ling status, their interaction with the hivemind
+
+///not in the hive
+#define LINGHIVE_NONE 0
+///lost their powers, gets a special message
+#define LINGHIVE_FALLEN 1
+///can speak normally, unless they have the CHANGELING_HIVEMIND_MUTE trait
+#define LINGHIVE_LING 2
+
 /datum/saymode/changeling
 	key = MODE_KEY_CHANGELING
 	mode = MODE_CHANGELING
 
 /datum/saymode/changeling/handle_message(mob/living/user, message, datum/language/language)
-	switch(user.lingcheck())
+	switch(lingcheck(user))
 		if(LINGHIVE_FALLEN)
 			to_chat(user, "<span class='changeling bold'>We're cut off from the hivemind! We've lost everything! EVERYTHING!!</span>")
 		if(LINGHIVE_LING)
@@ -29,9 +38,27 @@
 					var/link = FOLLOW_LINK(player, user)
 					to_chat(player, "[link] [msg]")
 				else
-					if(player.lingcheck() == LINGHIVE_LING && !HAS_TRAIT(player, CHANGELING_HIVEMIND_MUTE))
+					if(lingcheck(player) == LINGHIVE_LING && !HAS_TRAIT(player, CHANGELING_HIVEMIND_MUTE))
 						to_chat(player, msg)
 	return FALSE
+
+///Returns what status a mob has in the hivemind, see LINGHIVE defines above
+/datum/saymode/changeling/proc/lingcheck(mob/player)
+	//removes types that override the presence of being changeling (for example, borged lings still can't hivemind chat)
+	if(!isliving(player) || issilicon(player) || isbrain(player))
+		return LINGHIVE_NONE
+
+	var/mob/living/living_player = player
+	if(living_player.mind)
+		if(living_player.mind.has_antag_datum(/datum/antagonist/changeling))
+			return LINGHIVE_LING
+		if(living_player.mind.has_antag_datum(/datum/antagonist/fallen_changeling))
+			return LINGHIVE_FALLEN
+	return LINGHIVE_NONE
+
+#undef LINGHIVE_NONE
+#undef LINGHIVE_FALLEN
+#undef LINGHIVE_LING
 
 /datum/saymode/xeno
 	key = "a"

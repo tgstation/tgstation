@@ -110,10 +110,6 @@
 		emote(copytext(message, length(message[1]) + 1), intentional = !forced)
 		return TRUE
 
-///Check if the mob has a ling hivemind
-/mob/proc/lingcheck()
-	return LINGHIVE_NONE
-
 ///Check if the mob has a hivemind channel
 /mob/proc/hivecheck()
 	return FALSE
