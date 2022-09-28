@@ -904,6 +904,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(ITEM_SLOT_LPOCKET)
 			if(HAS_TRAIT(I, TRAIT_NODROP)) //Pockets aren't visible, so you can't move TRAIT_NODROP items into them.
 				return FALSE
+			if(!ignore_equipped && H.l_store) // no pocket swaps at all
+				return FALSE
 
 			var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_L_LEG)
 
@@ -914,6 +916,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			return TRUE
 		if(ITEM_SLOT_RPOCKET)
 			if(HAS_TRAIT(I, TRAIT_NODROP))
+				return FALSE
+			if(!ignore_equipped && H.r_store)
 				return FALSE
 
 			var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_R_LEG)
