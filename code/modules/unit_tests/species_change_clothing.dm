@@ -13,7 +13,7 @@
 	morphing_human.equip_to_slot_or_del(collar, ITEM_SLOT_NECK)
 	morphing_human.set_species(/datum/species/human)
 
-	TEST_ASSERT(morphing_human.get_item_by_slot(ITEM_SLOT_NECK), "Human still has a Monkey collar after changing species.")
+	TEST_ASSERT(isnull(morphing_human.get_item_by_slot(ITEM_SLOT_NECK)), "Human still has a Monkey collar after changing species.")
 
 	//Allocate the necessary stuff
 	var/obj/item/clothing/shoes/clown_shoes/swag_shoes = allocate(/obj/item/clothing/shoes/clown_shoes)
