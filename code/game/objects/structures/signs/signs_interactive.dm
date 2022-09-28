@@ -25,6 +25,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/calendar, 32)
 		for(var/holidayname in SSevents.holidays)
 			. += span_info("[holidayname]")
 
+/**
+ * List of delamination counter signs on the map at mapload, as they init before the Persistence subsystem.
+ * Cleared after the persistence subsystem loads. Does not need to gain entries after mapload.
+ */
 GLOBAL_LIST_EMPTY(map_delamination_counters)
 
 /obj/structure/sign/delamination_counter
@@ -67,7 +71,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/delamination_counter, 32)
 
 /obj/structure/sign/delamination_counter/examine(mob/user)
 	. = ..()
-	. += span_info("It has been [since_last] days since the last delamination event at a Nanotrasen facility.")
+	. += span_info("It has been [since_last] day\s since the last delamination event at a Nanotrasen facility.")
 	switch (since_last)
 		if(0)
 			. += span_info("Let's do better today.")

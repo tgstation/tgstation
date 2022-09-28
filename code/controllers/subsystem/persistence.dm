@@ -464,18 +464,18 @@ SUBSYSTEM_DEF(persistence)
 
 	WRITE_FILE(file, json_encode(data))
 
+/// Location where we save the information about how many rounds it has been since the engine blew up
+#define DELAMINATION_COUNT_FILEPATH "data/rounds_since_delamination.txt"
 
 /datum/controller/subsystem/persistence/proc/load_delamination_counter()
-	var/path = "data/rounds_since_delamination.txt"
-	if (!fexists(path))
+	if (!fexists(DELAMINATION_COUNT_FILEPATH))
 		return
-	rounds_since_engine_exploded = text2num(file2text(path))
-	for (var/obj/structure/sign/delamination_counter/sign in GLOB.map_delamination_counters)
+	rounds_since_engine_exploded = text2num(file2text(DELAMINATION_COUNT_FILEPATH))
+	for (var/obj/structure/sign/delamination_counter/sign as anything in GLOB.map_delamination_counters)
 		sign.update_count(rounds_since_engine_exploded)
 	GLOB.map_delamination_counters = list()
 
 /datum/controller/subsystem/persistence/proc/save_delamination_counter()
-	var/path = "data/rounds_since_delamination.txt"
-	if (fexists(path))
-		fdel(path)
-	text2file("[rounds_since_engine_exploded + 1]", path)
+	rustg_file_write("[rounds_since_engine_exploded + 1]", DELAMINATION_COUNT_FILEPATH)
+
+#undef DELAMINATION_COUNT_FILEPATH
