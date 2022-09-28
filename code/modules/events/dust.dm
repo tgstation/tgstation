@@ -67,12 +67,10 @@
 
 /datum/round_event/sandstorm
 	start_when = 60
-	end_when = 140 // much shorter now (a little over a minute), but spread out over less time to make it less drawn out
+	end_when = 120 // much shorter now (one minute), but spread out over less time to make it less drawn out
 	announce_when = 1
 	///Which direction the storm will come from.
 	var/start_side
-	///Start side var, translated into a nautical direction for presentation in setup().
-	var/start_side_text = "unknown"
 
 /datum/round_event/sandstorm/announce(fake)
 	var/datum/round_event_control/sandstorm/sandstorm_event = control
@@ -80,6 +78,8 @@
 		start_side = sandstorm_event.start_side
 	else
 		start_side = pick(GLOB.cardinals)
+
+	var/start_side_text = "unknown"
 	switch(start_side) //EOB mentioned the space maps (the only ones that can be hit by this event) using ship directions in the future. dir2text() would save lines but would acknowledge that we're using cardinals in space.
 		if(NORTH)
 			start_side_text = "fore"
@@ -94,4 +94,4 @@
 						damage to external fittings and fixtures.", "Collision Alert")
 
 /datum/round_event/sandstorm/tick()
-	spawn_meteors(10, GLOB.meteorsC, start_side)
+	spawn_meteors(20, GLOB.meteorsC, start_side)
