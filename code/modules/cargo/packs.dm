@@ -205,8 +205,7 @@
 					/obj/item/clothing/suit/utility/radiation,
 					/obj/item/geiger_counter,
 					/obj/item/reagent_containers/cup/glass/bottle/vodka,
-					/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass,
-					/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass)
+					/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass = 2)
 	crate_name = "radiation protection crate"
 	crate_type = /obj/structure/closet/crate/radiation
 
@@ -331,12 +330,9 @@
 	desc = "Contains appropriate outfits for the station's private security force. Contains outfits for the Warden, Head of Security, and two Security Officers. Each outfit comes with a rank-appropriate jumpsuit, suit, and beret. Requires Security access to open."
 	cost = CARGO_CRATE_VALUE * 3
 	access_view = ACCESS_SECURITY
-	contains = list(/obj/item/clothing/under/rank/security/officer/formal,
-					/obj/item/clothing/under/rank/security/officer/formal,
-					/obj/item/clothing/suit/jacket/officer/blue,
-					/obj/item/clothing/suit/jacket/officer/blue,
-					/obj/item/clothing/head/beret/sec/navyofficer,
-					/obj/item/clothing/head/beret/sec/navyofficer,
+	contains = list(/obj/item/clothing/under/rank/security/officer/formal = 2,
+					/obj/item/clothing/suit/jacket/officer/blue = 2,
+					/obj/item/clothing/head/beret/sec/navyofficer = 2,
 					/obj/item/clothing/under/rank/security/warden/formal,
 					/obj/item/clothing/suit/jacket/warden/blue,
 					/obj/item/clothing/head/beret/sec/navywarden,
@@ -1133,10 +1129,7 @@
 	access_view = ACCESS_VIROLOGY
 	contains = list(/obj/item/reagent_containers/cup/bottle/flu_virion,
 					/obj/item/reagent_containers/cup/bottle/cold,
-					/obj/item/reagent_containers/cup/bottle/random_virus,
-					/obj/item/reagent_containers/cup/bottle/random_virus,
-					/obj/item/reagent_containers/cup/bottle/random_virus,
-					/obj/item/reagent_containers/cup/bottle/random_virus,
+					/obj/item/reagent_containers/cup/bottle/random_virus = 4,
 					/obj/item/reagent_containers/cup/bottle/fake_gbs,
 					/obj/item/reagent_containers/cup/bottle/magnitis,
 					/obj/item/reagent_containers/cup/bottle/pierrot_throat,
@@ -1268,11 +1261,9 @@
 	access = ACCESS_ROBOTICS
 	access_view = ACCESS_ROBOTICS
 	contains = list(/obj/item/assembly/prox_sensor = 5,
-					/obj/item/assembly/prox_sensor,
 					/obj/item/healthanalyzer = 2,
 					/obj/item/clothing/head/hardhat/red = 2,
-					/obj/item/storage/medkit,
-					/obj/item/storage/medkit,
+					/obj/item/storage/medkit = 2)
 	crate_name = "robotics assembly crate"
 	crate_type = /obj/structure/closet/crate/secure/science
 
@@ -1365,9 +1356,7 @@
 	desc = "Fight back against dirt and grime with Nanotrasen's Janitorial Essentials(tm)! Contains three buckets, caution signs, and cleaner grenades. Also has a single mop, broom, spray cleaner, rag, and trash bag."
 	cost = CARGO_CRATE_VALUE * 2
 	access_view = ACCESS_JANITOR
-	contains = list(/obj/item/reagent_containers/cup/bucket,
-					/obj/item/reagent_containers/cup/bucket,
-					/obj/item/reagent_containers/cup/bucket,
+	contains = list(/obj/item/reagent_containers/cup/bucket = 3,
 					/obj/item/mop,
 					/obj/item/pushbroom,
 					/obj/item/clothing/suit/caution = 3,
@@ -1411,8 +1400,7 @@
 					/obj/item/reagent_containers/cup/glass/shaker,
 					/obj/item/reagent_containers/cup/glass/bottle/patron,
 					/obj/item/reagent_containers/cup/glass/bottle/goldschlager,
-					/obj/item/reagent_containers/cup/glass/bottle/ale,
-					/obj/item/reagent_containers/cup/glass/bottle/ale,
+					/obj/item/reagent_containers/cup/glass/bottle/ale = 2,
 					/obj/item/storage/cans/sixbeer,
 					/obj/item/storage/cans/sixsoda,
 					/obj/item/flashlight/glowstick,
@@ -1676,10 +1664,8 @@
 	name = "Hydroponics Crate"
 	desc = "Supplies for growing a great garden! Contains two bottles of ammonia, two Plant-B-Gone spray bottles, a hatchet, cultivator, plant analyzer, as well as a pair of leather gloves and a botanist's apron."
 	cost = CARGO_CRATE_VALUE * 3
-	contains = list(/obj/item/reagent_containers/spray/plantbgone =2,
-					/obj/item/reagent_containers/spray/plantbgone,
-					/obj/item/reagent_containers/cup/bottle/ammonia,
-					/obj/item/reagent_containers/cup/bottle/ammonia,
+	contains = list(/obj/item/reagent_containers/spray/plantbgone = 2,
+					/obj/item/reagent_containers/cup/bottle/ammonia = 2,
 					/obj/item/hatchet,
 					/obj/item/cultivator,
 					/obj/item/plant_analyzer,
@@ -2197,10 +2183,7 @@
 	name = "Mech Pilot's Suit Crate"
 	desc = "Suits for piloting big robots. Contains four of those!"
 	cost = CARGO_CRATE_VALUE * 3 //state-of-the-art technology doesn't come cheap
-	contains = list(/obj/item/clothing/under/costume/mech_suit,
-					/obj/item/clothing/under/costume/mech_suit,
-					/obj/item/clothing/under/costume/mech_suit,
-					/obj/item/clothing/under/costume/mech_suit)
+	contains = list(/obj/item/clothing/under/costume/mech_suit = 4)
 	crate_name = "mech pilot's suit crate"
 	crate_type = /obj/structure/closet/crate/wooden
 
@@ -2385,24 +2368,21 @@
 	name = "Freshwater Fish Case"
 	desc = "Aquarium fish that have had most of their mud cleaned off."
 	cost = CARGO_CRATE_VALUE * 2
-	contains = list(/obj/item/storage/fish_case/random/freshwater,
-					/obj/item/storage/fish_case/random/freshwater)
+	contains = list(/obj/item/storage/fish_case/random/freshwater = 2)
 	crate_name = "freshwater fish crate"
 
 /datum/supply_pack/misc/saltwater_fish
 	name = "Saltwater Fish Case"
 	desc = "Aquarium fish that fill the room with the smell of salt."
 	cost = CARGO_CRATE_VALUE * 2
-	contains = list(/obj/item/storage/fish_case/random/saltwater,
-					/obj/item/storage/fish_case/random/saltwater)
+	contains = list(/obj/item/storage/fish_case/random/saltwater = 2)
 	crate_name = "saltwater fish crate"
 
 /datum/supply_pack/misc/tiziran_fish
 	name = "Tirizan Fish Case"
 	desc = "Tiziran saltwater fish imported from the Zagos Sea."
 	cost = CARGO_CRATE_VALUE * 2
-	contains = list(/obj/item/storage/fish_case/tiziran,
-					/obj/item/storage/fish_case/tiziran)
+	contains = list(/obj/item/storage/fish_case/tiziran = 2)
 	crate_name = "tiziran fish crate"
 
 /datum/supply_pack/misc/bicycle
@@ -2445,9 +2425,7 @@
 	access_view = ACCESS_COMMAND
 	access = ACCESS_COMMAND
 	cost = CARGO_CRATE_VALUE * 4
-	contains = list(/obj/item/encryptionkey/headset_com,
-					/obj/item/encryptionkey/headset_com,
-					/obj/item/encryptionkey/headset_com)
+	contains = list(/obj/item/encryptionkey/headset_com = 3)
 	crate_type = /obj/structure/closet/crate/secure
 	crate_name = "command encryption key crate"
 
@@ -2534,15 +2512,10 @@
 	desc = "Keep your local chaplain happy and well-supplied, lest they call down judgement upon your cargo bay. Contains two bottles of holywater, bibles, chaplain robes, and burial garmets."
 	cost = CARGO_CRATE_VALUE * 6 // it costs so much because the Space Church needs funding to build a cathedral
 	access_view = ACCESS_CHAPEL_OFFICE
-	contains = list(/obj/item/reagent_containers/cup/glass/bottle/holywater,
-					/obj/item/reagent_containers/cup/glass/bottle/holywater,
-					/obj/item/storage/book/bible/booze,
-					/obj/item/storage/book/bible/booze,
-					/obj/item/clothing/suit/hooded/chaplain_hoodie,
-					/obj/item/clothing/suit/hooded/chaplain_hoodie,
-					/obj/item/clothing/under/misc/burial,
-					/obj/item/clothing/under/misc/burial,
-				)
+	contains = list(/obj/item/reagent_containers/cup/glass/bottle/holywater = 2,
+					/obj/item/storage/book/bible/booze = 2,
+					/obj/item/clothing/suit/hooded/chaplain_hoodie = 2,
+					/obj/item/clothing/under/misc/burial = 2)
 	crate_name = "religious supplies crate"
 
 /datum/supply_pack/misc/toner
@@ -2574,8 +2547,7 @@
 	contains = list(
 		/obj/item/circuitboard/machine/ltsrbt,
 		/obj/item/stack/ore/bluespace_crystal/artificial = 2,
-		/obj/item/stock_parts/subspace/ansible
-	)
+		/obj/item/stock_parts/subspace/ansible)
 	crate_name = "crate"
 
 ///Special supply crate that generates random syndicate gear up to a determined TC value
