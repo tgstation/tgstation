@@ -64,36 +64,25 @@
 /datum/unit_test/speech/proc/handle_speech(datum/source, mob/speech_args)
 	SIGNAL_HANDLER
 
-	var/message = speech_args[SPEECH_MESSAGE]
-	TEST_ASSERT(message, "Handle speech signal does not have a message arg")
-	var/spans = speech_args[SPEECH_SPANS]
-	TEST_ASSERT(spans, "Handle speech signal does not have spans arg")
-	var/language = speech_args[SPEECH_LANGUAGE]
-	TEST_ASSERT(language, "Handle speech signal does not have a language arg")
+	TEST_ASSERT(speech_args[SPEECH_MESSAGE], "Handle speech signal does not have a message arg")
+	TEST_ASSERT(speech_args[SPEECH_SPANS], "Handle speech signal does not have spans arg")
+	TEST_ASSERT(speech_args[SPEECH_LANGUAGE], "Handle speech signal does not have a language arg")
 	// Uncomment this when the other SPEECH_RANGE PR gets merged
-	//var/range = speech_args[SPEECH_RANGE]
-	//TEST_ASSERT(range, "Handle speech signal does not have a range arg")
+	//TEST_ASSERT(speech_args[SPEECH_RANGE], "Handle speech signal does not have a range arg")
 
 	handle_speech_result++
 
 /datum/unit_test/speech/proc/handle_hearing(datum/source, list/hearing_args)
 	SIGNAL_HANDLER
 
-	var/message = hearing_args[HEARING_MESSAGE]
-	TEST_ASSERT(message, "Handle hearing signal does not have a message arg")
-	var/speaker = hearing_args[HEARING_SPEAKER]
-	TEST_ASSERT(speaker, "Handle hearing signal does not have a speaker arg")
-	var/language = hearing_args[HEARING_LANGUAGE]
-	TEST_ASSERT(language, "Handle hearing signal does not have a language arg")
-	var/raw_message = hearing_args[HEARING_RAW_MESSAGE]
-	TEST_ASSERT(raw_message, "Handle hearing signal does not have a raw message arg")
+	TEST_ASSERT(hearing_args[HEARING_MESSAGE], "Handle hearing signal does not have a message arg")
+	TEST_ASSERT(hearing_args[HEARING_SPEAKER], "Handle hearing signal does not have a speaker arg")
+	TEST_ASSERT(hearing_args[HEARING_LANGUAGE], "Handle hearing signal does not have a language arg")
+	TEST_ASSERT(hearing_args[HEARING_RAW_MESSAGE], "Handle hearing signal does not have a raw message arg")
 	// TODO radio unit tests
-	//var/radio_freq = hearing_args[HEARING_RADIO_FREQ]
-	//TEST_ASSERT(radio_freq, "Handle hearing signal does not have a radio freq arg")
-	var/spans = hearing_args[HEARING_SPANS]
-	TEST_ASSERT(spans, "Handle hearing signal does not have a spans arg")
-	var/message_mode = hearing_args[HEARING_MESSAGE_MODE]
-	TEST_ASSERT(message_mode, "Handle hearing signal does not have a message mode arg")
+	//TEST_ASSERT(hearing_args[HEARING_RADIO_FREQ], "Handle hearing signal does not have a radio freq arg")
+	TEST_ASSERT(hearing_args[HEARING_SPANS], "Handle hearing signal does not have a spans arg")
+	TEST_ASSERT(hearing_args[HEARING_MESSAGE_MODE], "Handle hearing signal does not have a message mode arg")
 
 	handle_hearing_result++
 
