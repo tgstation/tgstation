@@ -71,8 +71,6 @@
 	var/allow_diagonal_movement = FALSE
 	///Whether or not the mech destroys walls by running into it.
 	var/bumpsmash = FALSE
-	///What mobs are currently repairing us.
-	var/list/mob/living/repairing_mobs
 
 	///////////ATMOS
 	///Whether we are currrently drawing from the internal tank
