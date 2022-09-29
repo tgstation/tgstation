@@ -242,6 +242,7 @@ The areas used here are STRICTLY on the CC Z level.
 	base_lighting_alpha = 255
 	has_gravity = STANDARD_GRAVITY
 	flags_1 = NONE
+	area_flags = UNIQUE_AREA | NOTELEPORT | NO_DEATH_MESSAGE
 
 /area/centcom/ctf/control_room
 	name = "Control Room A"

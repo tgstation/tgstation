@@ -35,11 +35,11 @@
 		. += span_notice("The cuff's GPS signal is on.")
 
 /obj/item/kheiral_cuffs/item_action_slot_check(slot)
-	return slot == ITEM_SLOT_GLOVES
+	return (slot & ITEM_SLOT_GLOVES)
 
 /obj/item/kheiral_cuffs/equipped(mob/user, slot, initial)
 	. = ..()
-	if(slot != ITEM_SLOT_GLOVES)
+	if(!(slot & ITEM_SLOT_GLOVES))
 		return
 	on_wrist = TRUE
 	playsound(loc, 'sound/weapons/handcuffs.ogg', 30, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
@@ -93,14 +93,15 @@
 		if(isliving(loc))
 			connect_kheiral_network(loc)
 
+// LEMON AND HERE
 /obj/item/kheiral_cuffs/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
 	if(!isinhands)
-		. += emissive_appearance(icon_file, "strandcuff_emissive", alpha = src.alpha)
+		. += emissive_appearance(icon_file, "strandcuff_emissive", src, alpha = src.alpha)
 
 /obj/item/kheiral_cuffs/update_overlays()
 	. = ..()
-	. += emissive_appearance(icon, "strand_light", alpha = src.alpha)
+	. += emissive_appearance(icon, "strand_light", src, alpha = src.alpha)
 
 /obj/item/kheiral_cuffs/suicide_act(mob/living/carbon/user)
 	var/mob/living/carbon/human/victim

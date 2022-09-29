@@ -322,19 +322,26 @@
 	if(old_limb)
 		old_limb.drop_limb(TRUE)
 
-	. = attach_limb(limb_owner, special)
+	. = try_attach_limb(limb_owner, special)
 	if(!.) //If it failed to replace, re-attach their old limb as if nothing happened.
-		old_limb.attach_limb(limb_owner, TRUE)
+		old_limb.try_attach_limb(limb_owner, TRUE)
 
-///Attach src to target mob if able.
-/obj/item/bodypart/proc/attach_limb(mob/living/carbon/new_limb_owner, special)
-	if(SEND_SIGNAL(new_limb_owner, COMSIG_CARBON_ATTACH_LIMB, src, special) & COMPONENT_NO_ATTACH)
+///Checks if you can attach a limb, returns TRUE if you can.
+/obj/item/bodypart/proc/can_attach_limb(mob/living/carbon/new_limb_owner, special)
+	if(SEND_SIGNAL(new_limb_owner, COMSIG_ATTEMPT_CARBON_ATTACH_LIMB, src, special) & COMPONENT_NO_ATTACH)
 		return FALSE
 
 	var/obj/item/bodypart/chest/mob_chest = new_limb_owner.get_bodypart(BODY_ZONE_CHEST)
 	if(mob_chest && !HAS_BODYTYPE(src, mob_chest.acceptable_bodytype) && !special)
 		return FALSE
+	return TRUE
 
+///Attach src to target mob if able, returns FALSE if it fails to.
+/obj/item/bodypart/proc/try_attach_limb(mob/living/carbon/new_limb_owner, special)
+	if(!can_attach_limb(new_limb_owner, special))
+		return FALSE
+
+	SEND_SIGNAL(new_limb_owner, COMSIG_CARBON_ATTACH_LIMB, src, special)
 	moveToNullspace()
 	set_owner(new_limb_owner)
 	new_limb_owner.add_bodypart(src)
@@ -386,7 +393,7 @@
 	new_limb_owner.update_damage_overlays()
 	return TRUE
 
-/obj/item/bodypart/head/attach_limb(mob/living/carbon/new_head_owner, special = FALSE, abort = FALSE)
+/obj/item/bodypart/head/try_attach_limb(mob/living/carbon/new_head_owner, special = FALSE, abort = FALSE)
 	// These are stored before calling super. This is so that if the head is from a different body, it persists its appearance.
 	var/real_name = src.real_name
 
@@ -475,7 +482,7 @@
 		return FALSE
 	limb = newBodyPart(limb_zone, 0, 0)
 	if(limb)
-		if(!limb.attach_limb(src, 1))
+		if(!limb.try_attach_limb(src, TRUE))
 			qdel(limb)
 			return FALSE
 		limb.update_limb(is_creating = TRUE)

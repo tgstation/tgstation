@@ -9,7 +9,7 @@
 
 	for(var/closet_type in all_closets)
 		var/obj/structure/closet/closet = allocate(closet_type)
-		if(istype(closet_type, /obj/structure/closet/emcloset) && QDELETED(closet)) // this is here because the emcloset subtype has a chance of returning a qdel hint on initialize
+		if(QDELETED(closet)) // this is here because the emcloset subtype has a chance of returning a qdel hint on initialize
 			continue
 
 		// Copy is necessary otherwise closet.contents - immediate_contents returns an empty list

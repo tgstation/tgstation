@@ -153,7 +153,7 @@
 	clothing_traits = list(TRAIT_REAGENT_SCANNER, TRAIT_RESEARCH_SCANNER)
 
 /obj/item/clothing/glasses/science/item_action_slot_check(slot)
-	if(slot == ITEM_SLOT_EYES)
+	if(slot & ITEM_SLOT_EYES)
 		return 1
 
 /obj/item/clothing/glasses/science/suicide_act(mob/living/carbon/user)
@@ -385,7 +385,7 @@
 
 /obj/item/clothing/glasses/blindfold/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
-	if(slot == ITEM_SLOT_EYES)
+	if(slot & ITEM_SLOT_EYES)
 		user.become_blind(BLINDFOLD_TRAIT)
 
 /obj/item/clothing/glasses/blindfold/dropped(mob/living/carbon/human/user)
@@ -406,7 +406,7 @@
 	var/colored_before = FALSE
 
 /obj/item/clothing/glasses/blindfold/white/visual_equipped(mob/living/carbon/human/user, slot)
-	if(ishuman(user) && slot == ITEM_SLOT_EYES)
+	if(ishuman(user) && (slot & ITEM_SLOT_EYES))
 		update_icon(ALL, user)
 		user.update_worn_glasses() //Color might have been changed by update_icon.
 	..()
@@ -456,7 +456,7 @@
 
 /obj/item/clothing/glasses/thermal/xray/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
-	if(slot != ITEM_SLOT_EYES || !istype(user))
+	if(!(slot & ITEM_SLOT_EYES) || !istype(user))
 		return
 	ADD_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
 
@@ -560,7 +560,7 @@
 
 /obj/item/clothing/glasses/debug/equipped(mob/user, slot)
 	. = ..()
-	if(slot != ITEM_SLOT_EYES)
+	if(!(slot & ITEM_SLOT_EYES))
 		return
 	if(ishuman(user))
 		for(var/hud in hudlist)
@@ -610,7 +610,7 @@
 
 /obj/item/clothing/glasses/salesman/equipped(mob/living/carbon/human/user, slot)
 	..()
-	if(slot != ITEM_SLOT_EYES)
+	if(!(slot & ITEM_SLOT_EYES))
 		return
 	bigshot = user
 	RegisterSignal(bigshot, COMSIG_CARBON_SANITY_UPDATE, .proc/moodshift)

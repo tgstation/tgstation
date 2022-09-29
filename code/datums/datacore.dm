@@ -268,8 +268,6 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 
 		var/static/record_id_num = 1001
 		var/id = num2hex(record_id_num++,6)
-		// We need to compile the overlays now, otherwise we're basically copying an empty icon.
-		COMPILE_OVERLAYS(H)
 		var/mutable_appearance/character_appearance = new(H.appearance)
 
 		//These records should ~really~ be merged or something

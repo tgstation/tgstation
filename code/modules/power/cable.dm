@@ -637,46 +637,33 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	machinery_layer = MACHINERY_LAYER_1
 	layer = WIRE_LAYER - 0.02 //Below all cables Disabled layers can lay over hub
 	color = "white"
-	var/obj/effect/node/machinery_node
-	var/obj/effect/node/layer1/cable_node_1
-	var/obj/effect/node/layer2/cable_node_2
-	var/obj/effect/node/layer3/cable_node_3
-
-/obj/effect/node
-	icon = 'icons/obj/power_cond/layer_cable.dmi'
-	icon_state = "l2-noconnection"
-	vis_flags = VIS_INHERIT_ID|VIS_INHERIT_PLANE|VIS_INHERIT_LAYER
-	color = "black"
-
-/obj/effect/node/layer1
-	color = "red"
-	icon_state = "l1-1-2-4-8-node"
-	vis_flags = VIS_INHERIT_ID|VIS_INHERIT_PLANE|VIS_INHERIT_LAYER|VIS_UNDERLAY
-
-/obj/effect/node/layer2
-	color = "yellow"
-	icon_state = "l2-1-2-4-8-node"
-	vis_flags = VIS_INHERIT_ID|VIS_INHERIT_PLANE|VIS_INHERIT_LAYER|VIS_UNDERLAY
-
-/obj/effect/node/layer3
-	color = "blue"
-	icon_state = "l4-1-2-4-8-node"
-	vis_flags = VIS_INHERIT_ID|VIS_INHERIT_PLANE|VIS_INHERIT_LAYER|VIS_UNDERLAY
 
 /obj/structure/cable/multilayer/update_icon_state()
 	SHOULD_CALL_PARENT(FALSE)
 	return
 
 /obj/structure/cable/multilayer/update_icon()
-	machinery_node?.alpha = machinery_layer & MACHINERY_LAYER_1 ? 255 : 0
-	cable_node_1?.alpha = cable_layer & CABLE_LAYER_1 ? 255 : 0
-	cable_node_2?.alpha = cable_layer & CABLE_LAYER_2 ? 255 : 0
+	. = ..()
+	underlays.Cut()
+	var/mutable_appearance/cable_node_3 = mutable_appearance('icons/obj/power_cond/layer_cable.dmi', "l4-1-2-4-8-node")
+	cable_node_3.color = "blue"
 	cable_node_3?.alpha = cable_layer & CABLE_LAYER_3 ? 255 : 0
-	return ..()
-
+	underlays += cable_node_3
+	var/mutable_appearance/cable_node_2 = mutable_appearance('icons/obj/power_cond/layer_cable.dmi', "l2-1-2-4-8-node")
+	cable_node_2.color = "yellow"
+	cable_node_2?.alpha = cable_layer & CABLE_LAYER_2 ? 255 : 0
+	underlays += cable_node_2
+	var/mutable_appearance/cable_node_1 = mutable_appearance('icons/obj/power_cond/layer_cable.dmi', "l1-1-2-4-8-node")
+	cable_node_1.color = "red"
+	cable_node_1?.alpha = cable_layer & CABLE_LAYER_1 ? 255 : 0
+	underlays += cable_node_1
+	var/mutable_appearance/machinery_node = mutable_appearance('icons/obj/power_cond/layer_cable.dmi', "l2-noconnection")
+	machinery_node.color = "black"
+	machinery_node?.alpha = machinery_layer & MACHINERY_LAYER_1 ? 255 : 0
+	underlays += machinery_node
+	
 /obj/structure/cable/multilayer/Initialize(mapload)
 	. = ..()
-
 	var/turf/T = get_turf(src)
 	for(var/obj/structure/cable/C in T.contents - src)
 		if(C.cable_layer & cable_layer)
@@ -684,22 +671,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	if(!mapload)
 		auto_propagate_cut_cable(src)
 
-	machinery_node = new /obj/effect/node()
-	vis_contents += machinery_node
-	cable_node_1 = new /obj/effect/node/layer1()
-	vis_contents += cable_node_1
-	cable_node_2 = new /obj/effect/node/layer2()
-	vis_contents += cable_node_2
-	cable_node_3 = new /obj/effect/node/layer3()
-	vis_contents += cable_node_3
 	update_appearance()
-
-/obj/structure/cable/multilayer/Destroy() // called when a cable is deleted
-	QDEL_NULL(machinery_node)
-	QDEL_NULL(cable_node_1)
-	QDEL_NULL(cable_node_2)
-	QDEL_NULL(cable_node_3)
-	return ..() // then go ahead and delete the cable
 
 /obj/structure/cable/multilayer/examine(mob/user)
 	. += ..()

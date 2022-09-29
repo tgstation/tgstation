@@ -321,7 +321,7 @@
 /obj/item/food/baguette/proc/on_sword_equipped(datum/source, mob/equipper, slot)
 	SIGNAL_HANDLER
 
-	if(slot != ITEM_SLOT_HANDS)
+	if(!(slot & ITEM_SLOT_HANDS))
 		end_swordplay()
 
 /obj/item/food/garlicbread
