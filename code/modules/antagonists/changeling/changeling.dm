@@ -3,8 +3,6 @@
 /// The number of recent spoken lines to gain on absorbing a mob
 #define LING_ABSORB_RECENT_SPEECH 8
 
-GLOBAL_LIST_INIT(possible_changeling_IDs, list("Alpha","Beta","Gamma","Delta","Epsilon","Zeta","Eta","Theta","Iota","Kappa","Lambda","Mu","Nu","Xi","Omicron","Pi","Rho","Sigma","Tau","Upsilon","Phi","Chi","Psi","Omega"))
-
 /// Helper to format the text that gets thrown onto the chem hud element.
 #define FORMAT_CHEM_CHARGES_TEXT(charges) MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#dd66dd'>[round(charges)]</font></div>")
 
@@ -81,6 +79,9 @@ GLOBAL_LIST_INIT(possible_changeling_IDs, list("Alpha","Beta","Gamma","Delta","E
 
 	/// Static typecache of all changeling powers that are usable.
 	var/static/list/all_powers = typecacheof(/datum/action/changeling, ignore_root_path = TRUE)
+
+	/// Static list of possible ids. Initialized into the greek alphabet the first time it is used
+	var/static/list/possible_changeling_IDs
 
 	/// Satic list of what each slot associated with (in regard to changeling flesh items).
 	var/static/list/slot2type = list(
@@ -171,10 +172,11 @@ GLOBAL_LIST_INIT(possible_changeling_IDs, list("Alpha","Beta","Gamma","Delta","E
 		honorific = "Mr."
 	else
 		honorific = "Mx."
-	if(GLOB.possible_changeling_IDs.len)
-		changelingID = pick(GLOB.possible_changeling_IDs)
-		GLOB.possible_changeling_IDs -= changelingID
-		changelingID = "[honorific] [changelingID]"
+
+	if(!possible_changeling_IDs)
+		possible_changeling_IDs = GLOB.greek_letters.Copy()
+	if(possible_changeling_IDs.len)
+		changelingID = "[honorific] [pick_n_take(possible_changeling_IDs)]"
 	else
 		changelingID = "[honorific] [rand(1,999)]"
 

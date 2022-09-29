@@ -118,7 +118,7 @@ const HivemindSection = (props, context) => {
           All Changelings, regardless of origin, are linked together by the{' '}
           <span style={hivemindstyle}>hivemind</span>. You may communicate to
           other Changelings under your mental alias,{' '}
-          <span style={hivemindstyle}>{true_name}</span> by starting a message
+          <span style={hivemindstyle}>{true_name}</span>, by starting a message
           with <span style={hivemindstyle}>:g</span>. Work together, and you
           will bring the station to new heights of terror.
         </Stack.Item>

@@ -156,7 +156,7 @@
 /datum/team/abductor_team/New()
 	..()
 	team_number = team_count++
-	name = "Mothership [pick(GLOB.possible_changeling_IDs)]" //TODO Ensure unique and actual alieny names
+	name = "Mothership [pick(GLOB.greek_letters)]" //TODO Ensure unique and actual alieny names
 	add_objective(new /datum/objective/experiment)
 
 /datum/team/abductor_team/roundend_report()
