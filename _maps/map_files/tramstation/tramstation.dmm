@@ -436,6 +436,14 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/transit_tube)
+"aiP" = (
+/obj/structure/disposalpipe/sorting/mail{
+	dir = 1;
+	sortType = 7;
+	name = "sorting disposal pipe (Security)"
+	},
+/turf/open/floor/iron,
+/area/station/security/office)
 "aiQ" = (
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
 	dir = 8
@@ -10096,6 +10104,9 @@
 	c_tag = "Security - Main Office South";
 	network = list("ss13","Security")
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/security/office)
 "dCz" = (
@@ -12281,6 +12292,7 @@
 /area/station/security/courtroom)
 "erP" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/security/office)
 "esc" = (
@@ -16812,6 +16824,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
 	},
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/security/office)
 "gbZ" = (
@@ -20255,6 +20268,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/security/office)
 "hpz" = (
@@ -23159,10 +23173,10 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 4;
-	name = "sorting disposal pipe (Head of Security's Office)";
-	sortType = 8
+/obj/structure/disposalpipe/sorting/mail{
+	dir = 8;
+	sortType = 8;
+	name = "sorting disposal pipe (Head of Security's Office)"
 	},
 /turf/open/floor/iron,
 /area/station/security/office)
@@ -28307,6 +28321,7 @@
 /area/station/security/checkpoint/supply)
 "kja" = (
 /obj/effect/turf_decal/trimline/red/filled/corner,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/security/office)
 "kjr" = (
@@ -34946,6 +34961,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/security/brig)
 "mxJ" = (
@@ -36401,15 +36417,6 @@
 /obj/structure/fluff/tram_rail/end,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/right)
-"mWW" = (
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 1
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/station/security/office)
 "mXa" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
@@ -44562,6 +44569,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/security/office)
 "pVW" = (
@@ -46495,6 +46503,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/security/office)
 "qDK" = (
@@ -51194,6 +51203,9 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
 /turf/open/floor/iron,
 /area/station/security/office)
 "shF" = (
@@ -54838,6 +54850,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/ai_monitored/command/storage/eva)
+"tze" = (
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/turf/open/floor/iron,
+/area/station/security/office)
 "tzJ" = (
 /obj/machinery/light/directional/north,
 /obj/machinery/door/firedoor/border_only{
@@ -56556,6 +56574,9 @@
 /area/station/security/brig)
 "ufY" = (
 /obj/effect/turf_decal/trimline/red/filled/line,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/security/office)
 "ugb" = (
@@ -60361,7 +60382,7 @@
 	network = list("ss13","Security")
 	},
 /obj/structure/disposalpipe/segment{
-	dir = 4
+	dir = 10
 	},
 /turf/open/floor/iron,
 /area/station/security/office)
@@ -62095,6 +62116,9 @@
 	name = "Prison Monitor";
 	network = list("prison");
 	pixel_x = 30
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 9
 	},
 /turf/open/floor/iron,
 /area/station/security/office)
@@ -155007,7 +155031,7 @@ iuO
 wLC
 eTz
 xsL
-yiB
+nLi
 tfp
 nca
 nca
@@ -155264,7 +155288,7 @@ mOn
 shg
 pVT
 mxI
-aIf
+yiB
 bVN
 tTJ
 tTJ
@@ -156282,7 +156306,7 @@ mAT
 mAT
 mAT
 vyM
-wbH
+aiP
 qDz
 hpn
 erP
@@ -156538,8 +156562,8 @@ vMy
 nZS
 hHf
 ykX
-mWW
-wbH
+jXo
+tze
 gRW
 fAg
 oUx
