@@ -961,6 +961,7 @@ GLOBAL_LIST_INIT(possible_changeling_IDs, list("Alpha","Beta","Gamma","Delta","E
 		memories += list(list("name" = memory_key, "story" = stolen_memories[memory_key]))
 
 	data["memories"] = memories
+	data["true_name"] = changelingID
 	data["hive_name"] = hive_name
 	data["stolen_antag_info"] = antag_memory
 	data["objectives"] = get_objectives()
