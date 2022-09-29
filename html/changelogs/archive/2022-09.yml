@@ -921,3 +921,83 @@
   - bugfix: Fix slappers and wound grasping blocking riding on mobs.
   uaioy:
   - bugfix: Ice Box snow storms now cover the surroundings of the homestead.
+2022-09-29:
+  GoldenAlpharex:
+  - bugfix: The ExperTrack Professional Skill Associations have finally fixed the
+      plans of their drop pods, sabotaged by an intern many moons ago, resulting in
+      a Totally Safe Skill Cape Delivery!
+  Jacquerel:
+  - rscadd: Nanotrasen has started tracking exactly how often you're blowing up the
+      supermatter engine. Surely they can't be sending as many new crystals over there
+      as their financial reports imply.
+  JohnFulpWillard:
+  - bugfix: Tramstation's departments should all be connected to the powernet at the
+      start of a round now.
+  - admin: Admin's power check mapping verb now actually works.
+  - bugfix: Icemoon is no longer considered part of the station.
+  - bugfix: Mobs with more than one pass flag (cockroaches, alien larva, parrots,
+      bots, butterflies, any many other animals) should no longer knock bots down,
+      if they're somehow on harm intent.
+  - bugfix: Some female uniforms (white skirt, lawyer skirt) are now properly uniformed.
+  - bugfix: Command tablet cartridges are now loaded with their unique apps they were
+      supposed to have.
+  - bugfix: Prosthetic replacement surgery should no longer move limbs into the player's
+      contents if it fails to attach the limb.
+  - bugfix: False alarms and Gravity generator blackouts now properly respects basic
+      event restrictions.
+  LT3:
+  - bugfix: Tramstation crossing lights will now properly reflect if you're going
+      to get smacked by the tram if you try to cross.
+  LemonInTheDark:
+  - bugfix: You'll be able to hear weather again. this was broken for a damn year
+      how did none of you report it
+  - refactor: Refactored... well a lot really. Map views, anything to do with planes,
+      multiz, a shit ton of rendering stuff. Basically if you see anything off visually
+      report it
+  - admin: VV a mob, and hit View/Edit Planes in the dropdown to steal their view,
+      and modify it as you like. You can do the same to yourself using the Edit/Debug
+      Planes verb
+  - balance: Airlocks will open on bump in series much faster now. As a tradeoff,
+      you're immune to shocks from them for a second after you last got shocked by
+      one.
+  - bugfix: Mineral doors will no longer take 6 WHOLE SECONDS to open if you've bumped
+      something else recently
+  PositiveEntropy:
+  - imageadd: Resprites suits associated with the curator job!
+  Rhials:
+  - code_imp: All round event control/round event datums have been migrated to the
+      events module
+  - code_imp: Anomaly and ghost_role events now have their own respective folders
+      in the events module
+  ShizCalev:
+  - bugfix: Fixed a runtime when firing energy guns with infinite power cells.
+  SpaceSmithers:
+  - bugfix: Fixed the rogue Medbay Maintenance area appearing inside Medbay Storage.
+  TerraGS:
+  - bugfix: clown car should work again
+  VexingRaven:
+  - rscdel: 'Tramstation: A few stray cables leading to the prison showers have been
+      removed'
+  - rscadd: 'Tramstation: The kitchen now starts with an Enzyme Bottle'
+  - bugfix: 'Tramstation: Service staff can now access the Cold Room Maintenance airlocks'
+  - bugfix: 'Tramstation: The Court Room Holding Cell now has proper access restrictions'
+  - spellcheck: Gave the Eyepatch HUD a new description that doesn't imply it works
+      without eyes.
+  Wallem:
+  - imageadd: Gives the microwave a fresh coat of paint
+  san7890:
+  - admin: If you send a cultist to Admin Prison, their fellow cultists are no longer
+      able to summon them out using the Summon Cultist rune.
+  - bugfix: 'Whenever you put a species with some type of exotic, non-human blood
+      on a surgery table: the corresponding blood type should no longer report it
+      as if the patient in question had a Rhesus blood type, and will instead declare
+      the name of the actual reagent circulating within their system.'
+  - qol: Whenever you open or close an atmospherics valve, you should now get a balloon
+      alert notifying you of that exact action.
+  timothymtorres, soapstain22:
+  - rscadd: Added red and blue nightcaps that spawn in pajama lockers
+  tralezab:
+  - rscadd: Heretics can no longer be converted to cult. But sacrificing them is very
+      valuable to Nar'Sie, and she will grant special weapons if you manage to do
+      so.
+  - rscadd: Fantasy affixes can also include soul-stealing items!

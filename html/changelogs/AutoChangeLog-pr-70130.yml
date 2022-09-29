@@ -1,5 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - bugfix: "Mobs with more than one pass flag (cockroaches, alien larva, parrots, bots, butterflies, any many other animals) should no longer knock bots down, if they're somehow on harm intent."
-  - bugfix: "Some female uniforms (white skirt, lawyer skirt) are now properly uniformed."

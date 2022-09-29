@@ -1,7 +1,0 @@
-author: "VexingRaven"
-delete-after: True
-changes: 
-  - rscdel: "Tramstation: A few stray cables leading to the prison showers have been removed"
-  - rscadd: "Tramstation: The kitchen now starts with an Enzyme Bottle"
-  - bugfix: "Tramstation: Service staff can now access the Cold Room Maintenance airlocks"
-  - bugfix: "Tramstation: The Court Room Holding Cell now has proper access restrictions"
