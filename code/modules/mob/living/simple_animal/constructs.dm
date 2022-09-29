@@ -150,7 +150,6 @@
 	construct_spells = list(
 		/datum/action/cooldown/spell/forcewall/cult,
 		/datum/action/cooldown/spell/basic_projectile/juggernaut,
-		/datum/action/innate/cult/create_rune/wall,
 	)
 	playstyle_string = "<b>You are a Juggernaut. Though slow, your shell can withstand heavy punishment, \
 						create shield walls, rip apart enemies and walls alike, and even deflect energy weapons.</b>"
@@ -217,7 +216,6 @@
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	construct_spells = list(
 		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/shift,
-		/datum/action/innate/cult/create_rune/tele,
 	)
 	playstyle_string = "<b>You are a Wraith. Though relatively fragile, you are fast, deadly, \
 		can phase through walls, and your attacks will lower the cooldown on phasing.</b>"
@@ -264,7 +262,6 @@
 	theme = THEME_HOLY
 	construct_spells = list(
 		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/shift/angelic,
-		/datum/action/innate/cult/create_rune/tele,
 	)
 	loot = list(/obj/item/ectoplasm/angelic)
 
@@ -272,7 +269,6 @@
 	theme = THEME_WIZARD
 	construct_spells = list(
 		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/shift/mystic,
-		/datum/action/innate/cult/create_rune/tele,
 	)
 	loot = list(/obj/item/ectoplasm/mystic)
 

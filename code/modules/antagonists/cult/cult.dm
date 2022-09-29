@@ -12,7 +12,7 @@
 	preview_outfit = /datum/outfit/cultist
 	var/datum/action/innate/cult/comm/communion = new
 	var/datum/action/innate/cult/mastervote/vote = new
-	var/datum/action/innate/cult/blood_magic/magic = new
+	var/datum/action/innate/cult/blood_spell/manipulation/magic = new
 	job_rank = ROLE_CULTIST
 	antag_hud_name = "cult"
 	var/ignore_implant = FALSE
@@ -556,7 +556,6 @@
 	uniform = /obj/item/clothing/under/color/black
 	suit = /obj/item/clothing/suit/hooded/cultrobes/alt
 	shoes = /obj/item/clothing/shoes/cult/alt
-	r_hand = /obj/item/melee/blood_magic/stun
 
 /datum/outfit/cultist/post_equip(mob/living/carbon/human/equipped, visualsOnly)
 	equipped.eye_color_left = BLOODCULT_EYE

@@ -286,7 +286,7 @@
 	data["misc"] += delta_time SECONDS * REM
 	M.adjust_jitter_up_to(4 SECONDS * delta_time, 20 SECONDS)
 	if(IS_CULTIST(M))
-		for(var/datum/action/innate/cult/blood_magic/BM in M.actions)
+		for(var/datum/action/innate/cult/blood_magic/BM in M.actions) /// Removes the entire list of spells you can prepare as a cultist
 			to_chat(M, span_cultlarge("Your blood rites falter as holy water scours your body!"))
 			for(var/datum/action/innate/cult/blood_spell/BS in BM.spells)
 				qdel(BS)

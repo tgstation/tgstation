@@ -25,6 +25,7 @@
 	wound_bonus = -10
 	bare_wound_bonus = 20
 	armour_penetration = 35
+	var/datum/action/innate/cult/dagger/dagger_act
 
 /obj/item/melee/cultblade/dagger/Initialize(mapload)
 	. = ..()
@@ -53,7 +54,7 @@ Striking a noncultist, however, will tear their flesh."}
 	else
 		return FALSE
 
-/obj/item/melee/cultblade
+/obj/item/melee/cultblade/sword
 	name = "eldritch longsword"
 	desc = "A sword humming with unholy energy. It glows with a dim red light."
 	icon = 'icons/obj/cult/items_and_weapons.dmi'
