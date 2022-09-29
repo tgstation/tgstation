@@ -52,8 +52,6 @@
 /// Updates the applied FOV value and applies the handler to client if able
 /mob/living/proc/update_fov()
 	var/highest_fov
-	if(CONFIG_GET(flag/native_fov))
-		highest_fov = native_fov
 	for(var/trait_type in fov_traits)
 		var/fov_type = fov_traits[trait_type]
 		if(fov_type > highest_fov)
