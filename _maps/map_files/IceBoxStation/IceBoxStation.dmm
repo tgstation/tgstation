@@ -28572,7 +28572,7 @@
 /area/station/service/chapel)
 "iLu" = (
 /obj/machinery/suit_storage_unit/captain,
-/obj/item/radio/intercom/captain/directional/west,
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
 "iLv" = (
