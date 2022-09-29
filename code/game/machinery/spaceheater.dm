@@ -203,7 +203,7 @@
 
 /obj/machinery/space_heater/attack_hand_secondary(mob/user, list/modifiers)
 	if(!can_interact(user))
-		return
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	toggle_power(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
