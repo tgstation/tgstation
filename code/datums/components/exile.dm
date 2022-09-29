@@ -1,7 +1,7 @@
 /// euros
-#define HELL "byond:\\terry.tgstation13.org:3336"
+#define HELL CONFIG_GET(string/hell)
 /// lack of even euros
-#define VOID "byond:\\campbell.tgstation13.org:6337"
+#define THE_VOID CONFIG_GET(string/the_void)
 
 /**
  * The exile component: When you really, really want to get rid of someone, shoot them into space!
@@ -33,9 +33,9 @@
 	if(!istype(exilee) || !exilee.client)
 		qdel(src)
 		return
-	var/youre_on_your_way_to = HELL//CONFIG_GET(string/hell)
+	var/youre_on_your_way_to = HELL
 	if(world.url == HELL)
-		youre_on_your_way_to = VOID
+		youre_on_your_way_to = THE_VOID
 	if(!youre_on_your_way_to)
 		qdel(src)
 		return
@@ -65,4 +65,4 @@
 			qdel(src)
 
 #undef HELL
-#undef VOID
+#undef THE_VOID

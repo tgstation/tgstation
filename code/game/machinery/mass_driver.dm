@@ -8,6 +8,8 @@
 	var/code = 1
 	var/id = 1
 	var/drive_range = 50 //this is mostly irrelevant since current mass drivers throw into space, but you could make a lower-range mass driver for interstation transport or something I guess.
+	/// When set to TRUE (hopefully only by VV), this mass driver will direct people who are launched by this off z-level to another server, if one is set
+	var/is_this_a_crossover_episode = FALSE
 
 /obj/machinery/mass_driver/chapelgun
 	name = "holy driver"
@@ -45,7 +47,7 @@
 			if(O_limit >= 20)
 				audible_message(span_notice("[src] lets out a screech, it doesn't seem to be able to handle the load."))
 				break
-			if(isliving(O))
+			if(isliving(O) && is_this_a_crossover_episode)
 				var/mob/living/possible_exilee = O
 				if(possible_exilee.client)
 					possible_exilee.AddComponent(/datum/component/exile, dir)

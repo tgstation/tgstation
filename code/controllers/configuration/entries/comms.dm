@@ -27,7 +27,7 @@
 	protection = CONFIG_ENTRY_LOCKED
 
 /datum/config_entry/string/hell
-	default = "byond:\\terry.tgstation13.org:3336"
+	default = "byond://terry.tgstation13.org:3336"
 
-/datum/config_entry/string/the_abyss
-	default = "byond:\\campbell.tgstation13.org:6337"
+/datum/config_entry/string/the_void
+	default = "byond://campbell.tgstation13.org:6337"
