@@ -2,6 +2,8 @@
 	name = "Spontaneous Brain Trauma"
 	typepath = /datum/round_event/brain_trauma
 	weight = 25
+	category = EVENT_CATEGORY_HEALTH
+	description = "A crewmember gains a random trauma."
 
 /datum/round_event/brain_trauma
 	fakeable = FALSE
@@ -12,7 +14,7 @@
 			continue
 		if(H.stat == DEAD) // What are you doing in this list
 			continue
-		if(!H.getorgan(/obj/item/organ/brain)) // If only I had a brain
+		if(!H.getorgan(/obj/item/organ/internal/brain)) // If only I had a brain
 			continue
 		if(!(H.mind.assigned_role.job_flags & JOB_CREW_MEMBER)) //please stop giving my centcom admin gimmicks full body paralysis
 			continue

@@ -26,7 +26,7 @@
 	SIGNAL_HANDLER
 
 	var/turf/destination = target.loc
-	if(!isturf(destination) || istype(destination, turf_type))
+	if(!isturf(destination) || istype(destination, turf_type) || isopenspaceturf(destination))
 		return
 
 	destination.PlaceOnTop(turf_type)

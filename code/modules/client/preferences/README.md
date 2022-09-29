@@ -363,30 +363,6 @@ Middleware can inject its own data at several points, such as providing new UI a
 
 ---
 
-## Jobs
-
-Every job must have an associated `.ts` file so that the UI knows where to place it.
-
-Create a file in `tgui/packages/tgui/interfaces/PreferencesMenu/jobs/jobs/`.
-
-This will specify the description and department of the job. Here is the details for the medical doctor:
-
-```ts
-import { Job } from "../base";
-import { Service } from "../departments";
-
-const Cook: Job = {
-  name: "Cook",
-  // If you need more room, use `multiline`
-  description: "Serve food, cook meat, keep the crew fed.",
-  department: Service,
-};
-
-export default Cook;
-```
-
----
-
 ## Antagonists
 
 In order to make an antagonist selectable, you must do a few things:

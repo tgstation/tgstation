@@ -2,7 +2,7 @@
 
 	var/list/datum/weakref/localMotionTargets = list()
 	var/detectTime = 0
-	var/area/ai_monitored/area_motion = null
+	var/area/station/ai_monitored/area_motion = null
 	var/alarm_delay = 30 // Don't forget, there's another 3 seconds in queueAlarm()
 
 /obj/machinery/camera/process()
@@ -61,7 +61,7 @@
 		return FALSE
 	if(status)
 		if(alarm_manager.send_alarm(ALARM_MOTION, src, src))
-			visible_message(span_warning("A red light flashes on the [src]!"))
+			visible_message(span_warning("A red light flashes on [src]!"))
 	detectTime = -1
 	return TRUE
 
@@ -79,7 +79,7 @@
 
 /obj/machinery/camera/motion/thunderdome/Initialize(mapload)
 	. = ..()
-	proximity_monitor.SetRange(7)
+	proximity_monitor.set_range(7)
 
 /obj/machinery/camera/motion/thunderdome/HasProximity(atom/movable/AM as mob|obj)
 	if (!isliving(AM) || get_area(AM) != get_area(src))

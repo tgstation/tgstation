@@ -6,7 +6,6 @@
 	fire_sound = 'sound/weapons/gun/revolver/shot_alt.ogg'
 	load_sound = 'sound/weapons/gun/revolver/load_bullet.ogg'
 	eject_sound = 'sound/weapons/gun/revolver/empty.ogg'
-	vary_fire_sound = FALSE
 	fire_sound_volume = 90
 	dry_fire_sound = 'sound/weapons/gun/revolver/dry_fire.ogg'
 	casing_ejector = FALSE
@@ -38,6 +37,20 @@
 	..()
 	spin()
 
+/obj/item/gun/ballistic/revolver/fire_sounds()
+	var/frequency_to_use = sin((90/magazine?.max_ammo) * get_ammo(TRUE, FALSE)) // fucking REVOLVERS
+	var/click_frequency_to_use = 1 - frequency_to_use * 0.75
+	var/play_click = sqrt(magazine?.max_ammo) > get_ammo(TRUE, FALSE)
+	if(suppressed)
+		playsound(src, suppressed_sound, suppressed_volume, vary_fire_sound, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
+		if(play_click)
+			playsound(src, 'sound/weapons/gun/general/ballistic_click.ogg', suppressed_volume, vary_fire_sound, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0, frequency = click_frequency_to_use)
+	else
+		playsound(src, fire_sound, fire_sound_volume, vary_fire_sound)
+		if(play_click)
+			playsound(src, 'sound/weapons/gun/general/ballistic_click.ogg', fire_sound_volume, vary_fire_sound, frequency = click_frequency_to_use)
+
+
 /obj/item/gun/ballistic/revolver/verb/spin()
 	set name = "Spin Chamber"
 	set category = "Object"
@@ -53,7 +66,7 @@
 	recent_spin = world.time + spin_delay
 
 	if(do_spin())
-		playsound(usr, "revolver_spin", 30, FALSE)
+		playsound(usr, SFX_REVOLVER_SPIN, 30, FALSE)
 		usr.visible_message(span_notice("[usr] spins [src]'s chamber."), span_notice("You spin [src]'s chamber."))
 	else
 		verbs -= /obj/item/gun/ballistic/revolver/verb/spin
@@ -142,6 +155,8 @@
 	icon_state = "russianrevolver"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rus357
 	var/spun = FALSE
+	hidden_chambered = TRUE //Cheater.
+	gun_flags = NOT_A_REAL_GUN
 
 /obj/item/gun/ballistic/revolver/russian/do_spin()
 	. = ..()
@@ -187,18 +202,41 @@
 
 		spun = FALSE
 
+		var/zone = check_zone(user.zone_selected)
+		var/obj/item/bodypart/affecting = H.get_bodypart(zone)
+		var/is_target_face = zone == BODY_ZONE_HEAD || zone == BODY_ZONE_PRECISE_EYES || zone == BODY_ZONE_PRECISE_MOUTH
+		var/loaded_rounds = get_ammo(FALSE, FALSE) // check before it is fired
+
+		if(loaded_rounds && is_target_face)
+			add_memory_in_range(
+				user,
+				7,
+				MEMORY_RUSSIAN_ROULETTE,
+				list(
+					DETAIL_PROTAGONIST = user,
+					DETAIL_LOADED_ROUNDS = loaded_rounds,
+					DETAIL_BODYPART = affecting.name,
+					DETAIL_OUTCOME = (chambered ? "lost" : "won")
+				),
+				story_value = chambered ? STORY_VALUE_SHIT : max(STORY_VALUE_NONE, loaded_rounds), // the more bullets, the greater the story (but losing is always SHIT)
+				memory_flags = MEMORY_CHECK_BLINDNESS,
+				protagonist_memory_flags = NONE
+			)
+
 		if(chambered)
 			var/obj/item/ammo_casing/AC = chambered
-			if(AC.fire_casing(user, user))
+			if(AC.fire_casing(user, user, params, distro = 0, quiet = 0, zone_override = null, spread = 0, fired_from = src))
 				playsound(user, fire_sound, fire_sound_volume, vary_fire_sound)
-				var/zone = check_zone(user.zone_selected)
-				var/obj/item/bodypart/affecting = H.get_bodypart(zone)
-				if(zone == BODY_ZONE_HEAD || zone == BODY_ZONE_PRECISE_EYES || zone == BODY_ZONE_PRECISE_MOUTH)
+				if(is_target_face)
 					shoot_self(user, affecting)
 				else
 					user.visible_message(span_danger("[user.name] cowardly fires [src] at [user.p_their()] [affecting.name]!"), span_userdanger("You cowardly fire [src] at your [affecting.name]!"), span_hear("You hear a gunshot!"))
 				chambered = null
+				user.add_mood_event("russian_roulette_lose", /datum/mood_event/russian_roulette_lose)
 				return
+
+		if(loaded_rounds && is_target_face)
+			user.add_mood_event("russian_roulette_win", /datum/mood_event/russian_roulette_win, loaded_rounds)
 
 		user.visible_message(span_danger("*click*"))
 		playsound(src, dry_fire_sound, 30, TRUE)

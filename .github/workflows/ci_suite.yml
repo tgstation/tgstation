@@ -16,12 +16,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Restore SpacemanDMM cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ~/SpacemanDMM
           key: ${{ runner.os }}-spacemandmm-${{ secrets.CACHE_PURGE_KEY }}
       - name: Restore Yarn cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: tgui/.yarn/cache
           key: ${{ runner.os }}-yarn-${{ secrets.CACHE_PURGE_KEY }}-${{ hashFiles('tgui/yarn.lock') }}
@@ -41,6 +41,7 @@ jobs:
           bash tools/ci/check_changelogs.sh
           bash tools/ci/check_grep.sh
           bash tools/ci/check_misc.sh
+          tools/bootstrap/python tools/validate_dme.py <tgstation.dme
           tools/build/build --ci lint tgui-test
           tools/bootstrap/python -m dmi.test
           tools/bootstrap/python -m mapmerge2.dmm_test
@@ -58,7 +59,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Restore BYOND cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ~/BYOND
           key: ${{ runner.os }}-byond-${{ secrets.CACHE_PURGE_KEY }}
@@ -68,10 +69,31 @@ jobs:
           source $HOME/BYOND/byond/bin/byondsetup
           tools/build/build --ci dm -DCIBUILDING -DCITESTING -DALL_MAPS
 
+  find_all_maps:
+    if: "!contains(github.event.head_commit.message, '[ci skip]')"
+    name: Find Maps to Test
+    runs-on: ubuntu-20.04
+    outputs:
+      maps: ${{ steps.map_finder.outputs.maps }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Find Maps
+        id: map_finder
+        run: |
+          echo "$(ls -mw0 _maps/*.json)" > maps_output.txt
+          sed -i -e s+_maps/+\"+g -e s+.json+\"+g maps_output.txt
+          echo "Maps: $(cat maps_output.txt)"
+          echo "::set-output name=maps::{\"paths\":[$(cat maps_output.txt)]}"
+
   run_all_tests:
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
     name: Integration Tests
     runs-on: ubuntu-20.04
+    needs: [find_all_maps]
+    strategy:
+      fail-fast: false
+      matrix:
+        map: ${{ fromJSON(needs.find_all_maps.outputs.maps).paths }}
     services:
       mysql:
         image: mysql:latest
@@ -80,10 +102,13 @@ jobs:
         ports:
           - 3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+    concurrency:
+      group: ci-${{ github.ref }}-${{ matrix.map }}
+      cancel-in-progress: true
     steps:
       - uses: actions/checkout@v2
       - name: Restore BYOND cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ~/BYOND
           key: ${{ runner.os }}-byond-${{ secrets.CACHE_PURGE_KEY }}
@@ -100,12 +125,60 @@ jobs:
           sudo apt update || true
           sudo apt install -o APT::Immediate-Configure=false libssl1.1:i386
           bash tools/ci/install_rust_g.sh
-      - name: Compile and run tests
+      - name: Install auxlua
+        run: |
+          bash tools/ci/install_auxlua.sh
+      - name: Compile Tests
         run: |
           bash tools/ci/install_byond.sh
           source $HOME/BYOND/byond/bin/byondsetup
-          tools/build/build --ci dm -DCIBUILDING
-          bash tools/ci/run_server.sh
+          tools/build/build --ci dm -DCIBUILDING -DANSICOLORS
+      - name: Run Tests
+        run: |
+          source $HOME/BYOND/byond/bin/byondsetup
+          bash tools/ci/run_server.sh ${{ matrix.map }}
+      - name: Upload screenshot tests
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: test_artifacts_${{ matrix.map }}
+          path: data/screenshots_new/
+          retention-days: 1
+
+  compare_screenshots:
+    if: "!contains(github.event.head_commit.message, '[ci skip]') && always()"
+    needs: [run_all_tests]
+    name: Compare Screenshot Tests
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      # If we ever add more artifacts, this is going to break, but it'll be obvious.
+      - name: Download screenshot tests
+        uses: actions/download-artifact@v3
+        with:
+          path: artifacts
+      - name: ls -R
+        run: ls -R artifacts
+      - name: Setup screenshot comparison
+        run: npm i
+        working-directory: tools/screenshot-test-comparison
+      - name: Run screenshot comparison
+        run: node tools/screenshot-test-comparison/index.js artifacts code/modules/unit_tests/screenshots artifacts/screenshot_comparisons
+      # workflow_run does not give you the PR it ran on,
+      # even through the thing literally named "matching pull requests".
+      # However, in GraphQL, you can check if the check suite was ran
+      # by a specific PR, so trusting the (user controlled) action here is okay,
+      # as long as we check it later in show_screenshot_test_results
+      - name: Save PR ID
+        if: failure() && github.event.pull_request
+        run: |
+          echo ${{ github.event.pull_request.number }} > artifacts/screenshot_comparisons/pull_request_number.txt
+      - name: Upload bad screenshots
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: bad-screenshots
+          path: artifacts/screenshot_comparisons
 
   test_windows:
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
@@ -114,7 +187,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Restore Yarn cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: tgui/.yarn/cache
           key: ${{ runner.os }}-yarn-${{ secrets.CACHE_PURGE_KEY }}-${{ hashFiles('tgui/yarn.lock') }}

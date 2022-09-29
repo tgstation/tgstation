@@ -196,3 +196,14 @@ Temporary Items
 /tools/LinuxOneShot/TGS_Config
 /tools/LinuxOneShot/TGS_Instances
 /tools/LinuxOneShot/TGS_Logs
+
+# Built auxtools libraries and intermediate files
+aux*.dll
+libaux*.so
+aux*.pdb
+
+# JavaScript tools
+**/node_modules
+
+# Screenshot tests
+/artifacts

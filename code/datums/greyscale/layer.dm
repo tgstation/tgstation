@@ -66,18 +66,19 @@
 
 /// Used to actualy create the layer using the given colors
 /// Do not override, use InternalGenerate instead
-/datum/greyscale_layer/proc/Generate(list/colors, list/render_steps)
+/datum/greyscale_layer/proc/Generate(list/colors, list/render_steps, icon/new_icon)
 	var/list/processed_colors = list()
 	for(var/i in color_ids)
 		if(isnum(i))
 			processed_colors += colors[i]
 		else
 			processed_colors += i
-	return InternalGenerate(processed_colors, render_steps)
+	var/icon/copy_of_new_icon = icon(new_icon) // Layers shouldn't be modifying it directly, this is just for them to reference
+	return InternalGenerate(processed_colors, render_steps, copy_of_new_icon)
 
 /// Override this to implement layers.
 /// The colors var will only contain colors that this layer is configured to use.
-/datum/greyscale_layer/proc/InternalGenerate(list/colors, list/render_steps)
+/datum/greyscale_layer/proc/InternalGenerate(list/colors, list/render_steps, icon/new_icon)
 
 ////////////////////////////////////////////////////////
 // Subtypes
@@ -103,11 +104,25 @@
 	. = ..()
 	required_values[NAMEOF(src, icon_state)] = /datum/json_reader/text
 
-/datum/greyscale_layer/icon_state/InternalGenerate(list/colors, list/render_steps)
+/datum/greyscale_layer/icon_state/InternalGenerate(list/colors, list/render_steps, icon/new_icon)
 	. = ..()
-	var/icon/new_icon = icon(icon)
+	var/icon/generated_icon = icon(icon)
 	if(length(colors))
-		new_icon.Blend(colors[1], ICON_MULTIPLY)
+		generated_icon.Blend(colors[1], ICON_MULTIPLY)
+	return generated_icon
+
+/// A layer to modify the previous layer's colors with a color matrix
+/datum/greyscale_layer/color_matrix
+	layer_type = "color_matrix"
+	var/list/color_matrix
+
+/datum/greyscale_layer/color_matrix/GetExpectedValues(list/required_values, list/optional_values)
+	. = ..()
+	required_values[NAMEOF(src, color_matrix)] = /datum/json_reader/color_matrix
+
+/datum/greyscale_layer/color_matrix/InternalGenerate(list/colors, list/render_steps, icon/new_icon)
+	. = ..()
+	new_icon.MapColors(arglist(color_matrix))
 	return new_icon
 
 /// A layer created by using another greyscale icon's configuration
@@ -130,12 +145,12 @@
 	if(!reference_type.icon_states[icon_state])
 		CRASH("[src] expects icon_state '[icon_state]' but referenced configuration '[reference_type]' does not have it.")
 
-/datum/greyscale_layer/reference/InternalGenerate(list/colors, list/render_steps)
+/datum/greyscale_layer/reference/InternalGenerate(list/colors, list/render_steps, icon/new_icon)
 	var/icon/generated_icon
 	if(render_steps)
 		var/list/reference_data = list()
-		generated_icon = reference_type.GenerateBundle(colors, reference_data)
+		generated_icon = reference_type.GenerateBundle(colors, reference_data, new_icon)
 		render_steps += reference_data[icon_state]
 	else
-		generated_icon = reference_type.Generate(colors.Join())
+		generated_icon = reference_type.Generate(colors.Join(), new_icon)
 	return icon(generated_icon, icon_state)

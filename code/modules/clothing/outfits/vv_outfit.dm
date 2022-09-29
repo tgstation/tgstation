@@ -1,13 +1,14 @@
 // This outfit preserves varedits made on the items
 // Created from admin helpers.
 /datum/outfit/varedit
+	name = "Var Edited Outfit"
 	var/list/vv_values
 	var/list/stored_access
 	var/update_id_name = FALSE //If the name of the human is same as the name on the id they're wearing we'll update provided id when equipping
 
-/datum/outfit/varedit/pre_equip(mob/living/carbon/human/H, visualsOnly)
-	H.delete_equipment() //Applying VV to wrong objects is not reccomended.
-	. = ..()
+/datum/outfit/varedit/pre_equip(mob/living/carbon/human/equipping_mob, visualsOnly)
+	equipping_mob.delete_equipment() //Applying VV to wrong objects is not reccomended.
+	return ..()
 
 /datum/outfit/varedit/proc/set_equipement_by_slot(slot,item_path)
 	switch(slot)
@@ -106,10 +107,10 @@
 	O.vv_values = result
 	//Copy backpack contents if exist.
 	var/obj/item/backpack = get_item_by_slot(ITEM_SLOT_BACK)
-	if(istype(backpack) && SEND_SIGNAL(backpack, COMSIG_CONTAINS_STORAGE))
+	if(istype(backpack) && backpack.atom_storage)
 		var/list/bp_stuff = list()
 		var/list/typecounts = list()
-		SEND_SIGNAL(backpack, COMSIG_TRY_STORAGE_RETURN_INVENTORY, bp_stuff, FALSE)
+		backpack.atom_storage.return_inv(bp_stuff, FALSE)
 		for(var/obj/item/I in bp_stuff)
 			if(typecounts[I.type])
 				typecounts[I.type] += 1

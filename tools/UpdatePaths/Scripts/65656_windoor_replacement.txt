@@ -1,0 +1,39 @@
+/obj/machinery/door/window/northleft : /obj/machinery/door/window/left/directional/north {@OLD}
+/obj/machinery/door/window/eastleft : /obj/machinery/door/window/left/directional/east {@OLD}
+/obj/machinery/door/window/westleft : /obj/machinery/door/window/left/directional/west {@OLD}
+/obj/machinery/door/window/southleft : /obj/machinery/door/window/left/directional/south {@OLD}
+
+/obj/machinery/door/window/northright : /obj/machinery/door/window/right/directional/north {@OLD}
+/obj/machinery/door/window/eastright : /obj/machinery/door/window/right/directional/east {@OLD}
+/obj/machinery/door/window/westright : /obj/machinery/door/window/right/directional/west {@OLD}
+/obj/machinery/door/window/southright : /obj/machinery/door/window/right/directional/south {@OLD}
+
+/obj/machinery/door/window/brigdoor/northleft : /obj/machinery/door/window/brigdoor/left/directional/north {@OLD}
+/obj/machinery/door/window/brigdoor/eastleft : /obj/machinery/door/window/brigdoor/left/directional/east {@OLD}
+/obj/machinery/door/window/brigdoor/westleft : /obj/machinery/door/window/brigdoor/left/directional/west {@OLD}
+/obj/machinery/door/window/brigdoor/southleft : /obj/machinery/door/window/brigdoor/left/directional/south {@OLD}
+
+/obj/machinery/door/window/brigdoor/northright : /obj/machinery/door/window/brigdoor/right/directional/north {@OLD}
+/obj/machinery/door/window/brigdoor/eastright : /obj/machinery/door/window/brigdoor/right/directional/east {@OLD}
+/obj/machinery/door/window/brigdoor/westright : /obj/machinery/door/window/brigdoor/right/directional/west {@OLD}
+/obj/machinery/door/window/brigdoor/southright : /obj/machinery/door/window/brigdoor/right/directional/south {@OLD}
+
+/obj/machinery/door/window/brigdoor/security/cell/northleft : /obj/machinery/door/window/brigdoor/security/cell/left/directional/north {@OLD}
+/obj/machinery/door/window/brigdoor/security/cell/eastleft : /obj/machinery/door/window/brigdoor/security/cell/left/directional/east {@OLD}
+/obj/machinery/door/window/brigdoor/security/cell/westleft : /obj/machinery/door/window/brigdoor/security/cell/left/directional/west {@OLD}
+/obj/machinery/door/window/brigdoor/security/cell/southleft : /obj/machinery/door/window/brigdoor/security/cell/left/directional/south {@OLD}
+
+/obj/machinery/door/window/brigdoor/security/cell/northright : /obj/machinery/door/window/brigdoor/security/cell/right/directional/north {@OLD}
+/obj/machinery/door/window/brigdoor/security/cell/eastright : /obj/machinery/door/window/brigdoor/security/cell/right/directional/east {@OLD}
+/obj/machinery/door/window/brigdoor/security/cell/westright : /obj/machinery/door/window/brigdoor/security/cell/right/directional/west {@OLD}
+/obj/machinery/door/window/brigdoor/security/cell/southright : /obj/machinery/door/window/brigdoor/security/cell/right/directional/south {@OLD}
+
+/obj/machinery/door/window/brigdoor/security/holding/northleft : /obj/machinery/door/window/brigdoor/security/holding/left/directional/north {@OLD}
+/obj/machinery/door/window/brigdoor/security/holding/eastleft : /obj/machinery/door/window/brigdoor/security/holding/left/directional/east {@OLD}
+/obj/machinery/door/window/brigdoor/security/holding/westleft : /obj/machinery/door/window/brigdoor/security/holding/left/directional/west {@OLD}
+/obj/machinery/door/window/brigdoor/security/holding/southleft : /obj/machinery/door/window/brigdoor/security/holding/left/directional/south {@OLD}
+
+/obj/machinery/door/window/brigdoor/security/holding/northright : /obj/machinery/door/window/brigdoor/security/holding/right/directional/north {@OLD}
+/obj/machinery/door/window/brigdoor/security/holding/eastright : /obj/machinery/door/window/brigdoor/security/holding/right/directional/east {@OLD}
+/obj/machinery/door/window/brigdoor/security/holding/westright : /obj/machinery/door/window/brigdoor/security/holding/right/directional/west {@OLD}
+/obj/machinery/door/window/brigdoor/security/holding/southright : /obj/machinery/door/window/brigdoor/security/holding/right/directional/south {@OLD}

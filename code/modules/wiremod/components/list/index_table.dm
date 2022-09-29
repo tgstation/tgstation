@@ -6,6 +6,7 @@
 /obj/item/circuit_component/index_table
 	display_name = "Index Table"
 	desc = "Gets the row of a table using the index inputted. Will return no value if the index is invalid or a proper table is not returned."
+	category = "List"
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 	/// The list to perform the filter on

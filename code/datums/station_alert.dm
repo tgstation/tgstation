@@ -93,7 +93,7 @@
 				chosen_camera = named_cameras[1]
 			else
 				chosen_camera = tgui_input_list(ai, "Choose a camera to jump to", "Camera Selection", named_cameras)
-				if(!chosen_camera)
+				if(isnull(chosen_camera))
 					return
 			var/obj/machinery/camera/selected_camera = named_cameras[chosen_camera]
 			if(!selected_camera.can_use())

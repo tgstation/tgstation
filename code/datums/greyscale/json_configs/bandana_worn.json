@@ -1,0 +1,10 @@
+{
+    "bandana_worn": [
+        {
+            "type": "icon_state",
+            "icon_state": "bandana_cloth_worn",
+            "blend_mode": "overlay",
+            "color_ids": [ 1 ]
+        }
+    ]
+}

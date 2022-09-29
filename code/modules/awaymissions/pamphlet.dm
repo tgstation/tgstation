@@ -5,7 +5,7 @@
 
 /obj/item/paper/pamphlet/radstorm
 	name = "pamphlet - \'Radstorm Safety Measures and How to Not Become Monkey\'"
-	info = "Has your station's preemptive radstorm safety alarm gone off and you don't see a nearby maintenance hatch to escape to? Never fear, for NT truly thinks of everything! \
+	default_raw_text = "Has your station's preemptive radstorm safety alarm gone off and you don't see a nearby maintenance hatch to escape to? Never fear, for NT truly thinks of everything! \
 		Several public-access shelters have been installed around the upper station with express purpose of protecting your fragile meaty bits from becoming the next medical disaster! \
 		Please see subsection 4.3 V2-3 in your employee handbook for appropriate procedures to deal with excessive radiation damage if you do not make it to a shelter in time."
 
@@ -13,10 +13,10 @@
 /obj/item/paper/pamphlet/violent_video_games
 	name = "pamphlet - \'Violent Video Games and You\'"
 	desc = "A pamphlet encouraging the reader to maintain a balanced lifestyle and take care of their mental health, while still enjoying video games in a healthy way. You probably don't need this..."
-	info = "They don't make you kill people. There, we said it. Now get back to work!"
+	default_raw_text = "They don't make you kill people. There, we said it. Now get back to work!"
 
 /obj/item/paper/pamphlet/gateway
-	info = "<b>Welcome to the Nanotrasen Gateway project...</b><br>\
+	default_raw_text = "<b>Welcome to the Nanotrasen Gateway project...</b><br>\
 			Congratulations! If you're reading this, you and your superiors have decided that you're \
 			ready to commit to a life spent colonising the rolling hills of far away worlds. You \
 			must be ready for a lifetime of adventure, a little bit of hard work, and an award \

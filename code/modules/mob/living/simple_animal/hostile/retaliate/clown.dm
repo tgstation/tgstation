@@ -1,7 +1,7 @@
 /mob/living/simple_animal/hostile/retaliate/clown
 	name = "Clown"
 	desc = "A denizen of clown planet."
-	icon = 'icons/mob/clown_mobs.dmi'
+	icon = 'icons/mob/simple/clown_mobs.dmi'
 	icon_state = "clown"
 	icon_living = "clown"
 	icon_dead = "clown_dead"
@@ -27,16 +27,15 @@
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	del_on_death = 1
-	loot = list(/obj/effect/mob_spawn/human/clown/corpse)
-
+	loot = list(/obj/effect/mob_spawn/corpse/human/clown)
+	initial_language_holder = /datum/language_holder/clown
 	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 270
 	maxbodytemp = 370
 	unsuitable_atmos_damage = 10
 	unsuitable_heat_damage = 15
 	footstep_type = FOOTSTEP_MOB_SHOE
-	var/banana_time = 0 // If there's no time set it won't spawn.
-	var/banana_type = /obj/item/grown/bananapeel
+	faction = list(FACTION_CLOWN)
 	var/attack_reagent
 
 /mob/living/simple_animal/hostile/retaliate/clown/Initialize(mapload)
@@ -48,13 +47,12 @@
 	..()
 	playsound(loc, 'sound/items/bikehorn.ogg', 50, TRUE)
 
-/mob/living/simple_animal/hostile/retaliate/clown/Life(delta_time = SSMOBS_DT, times_fired)
-	. = ..()
-	if(banana_time && banana_time < world.time)
-		var/turf/T = get_turf(src)
-		var/list/adjacent =  T.get_atmos_adjacent_turfs(1)
-		new banana_type(pick(adjacent))
-		banana_time = world.time + rand(30,60)
+/mob/living/simple_animal/hostile/retaliate/clown/AttackingTarget(atom/attacked_target)
+	if(!istype(attacked_target, /obj/item/food/grown/banana/bunch))
+		return ..()
+	var/obj/item/food/grown/banana/bunch/unripe_bunch = attacked_target
+	unripe_bunch.start_ripening()
+	log_combat(src, attacked_target, "honksposivley ripened")
 
 /mob/living/simple_animal/hostile/retaliate/clown/lube
 	name = "Living Lube"
@@ -67,7 +65,7 @@
 	response_disarm_continuous = "gently scoops and pours aside"
 	response_disarm_simple = "gently scoop and pour aside"
 	emote_see = list("bubbles", "oozes")
-	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/particle_effect/foam)
+	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/particle_effect/fluid/foam)
 
 /mob/living/simple_animal/hostile/retaliate/clown/lube/Initialize(mapload)
 	. = ..()
@@ -87,9 +85,92 @@
 	emote_see = list("honks", "bites into the banana", "plucks a banana off its head", "photosynthesizes")
 	maxHealth = 120
 	health = 120
-	speed = -10
+	speed = -1
 	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/human, /obj/item/soap, /obj/item/seeds/banana)
-	banana_time = 20
+	///Our peel dropping ability
+	var/datum/action/cooldown/rustle/banana_rustle
+	///Our banana bunch spawning ability
+	var/datum/action/cooldown/exquisite_bunch/banana_bunch
+
+/mob/living/simple_animal/hostile/retaliate/clown/banana/Initialize(mapload)
+	. = ..()
+	banana_rustle = new()
+	banana_rustle.Grant(src)
+	banana_bunch = new()
+	banana_bunch.Grant(src)
+
+/mob/living/simple_animal/hostile/retaliate/clown/banana/Destroy()
+	. = ..()
+	QDEL_NULL(banana_rustle)
+	QDEL_NULL(banana_bunch)
+
+///drops peels around the mob when activated
+/datum/action/cooldown/rustle
+	name = "Rustle"
+	desc = "Shake loose a few banana peels."
+	cooldown_time = 8 SECONDS
+	button_icon_state = "rustle"
+	icon_icon = 'icons/mob/actions/actions_clown.dmi'
+	background_icon_state = "bg_nature"
+	///which type of peel to spawn
+	var/banana_type = /obj/item/grown/bananapeel
+	///How many peels to spawn
+	var/peel_amount = 3
+
+/datum/action/cooldown/rustle/Activate(atom/target)
+	. = ..()
+	var/list/reachable_turfs = list()
+	for(var/turf/adjacent_turf in RANGE_TURFS(1, owner.loc))
+		if(adjacent_turf == owner.loc || !owner.CanReach(adjacent_turf) || !isopenturf(adjacent_turf))
+			continue
+		reachable_turfs += adjacent_turf
+
+	var/peels_to_spawn = min(peel_amount, reachable_turfs.len)
+	for(var/i in 1 to peels_to_spawn)
+		new banana_type(pick_n_take(reachable_turfs))
+	playsound(owner, 'sound/creatures/clown/clownana_rustle.ogg', 100)
+	animate(owner, time = 1, pixel_x = 6, easing = CUBIC_EASING | EASE_OUT)
+	animate(time = 2, pixel_x = -8, easing = CUBIC_EASING)
+	animate(time = 1, pixel_x = 0, easing = CUBIC_EASING | EASE_IN)
+	StartCooldown()
+
+///spawns a plumb bunch of bananas imbued with mystical power.
+/datum/action/cooldown/exquisite_bunch
+	name = "Exquisite Bunch"
+	desc = "Pluck your finest bunch of bananas from your head. This bunch is especially nutrious to monkeykind. A gentle tap will trigger an explosive ripening process."
+	icon_icon = 'icons/obj/hydroponics/harvest.dmi'
+	cooldown_time = 60 SECONDS
+	button_icon_state = "banana_bunch"
+	background_icon_state = "bg_nature"
+	///If we are currently activating our ability.
+	var/activating = FALSE
+
+/datum/action/cooldown/exquisite_bunch/Trigger(trigger_flags, atom/target)
+	if(activating)
+		return
+	var/bunch_turf = get_step(owner.loc, owner.dir)
+	if(!bunch_turf)
+		return
+	if(!owner.CanReach(bunch_turf) || !isopenturf(bunch_turf))
+		owner.balloon_alert(owner, "can't do that here!")
+		return
+	activating = TRUE
+	if(!do_after(owner, 1 SECONDS))
+		activating = FALSE
+		return
+	playsound(owner, 'sound/creatures/clown/hehe.ogg', 100)
+	if(!do_after(owner, 1 SECONDS))
+		activating = FALSE
+		return
+	activating = FALSE
+	return ..()
+
+/datum/action/cooldown/exquisite_bunch/Activate(atom/target)
+	. = ..()
+	new /obj/item/food/grown/banana/bunch(get_step(owner.loc, owner.dir))
+	playsound(owner, 'sound/items/bikehorn.ogg', 60)
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, owner, 'sound/creatures/clown/hohoho.ogg', 100, 1), 1 SECONDS)
+	StartCooldown()
 
 /mob/living/simple_animal/hostile/retaliate/clown/honkling
 	name = "Honkling"
@@ -104,7 +185,6 @@
 	attack_verb_continuous = "cheers up"
 	attack_verb_simple = "cheer up"
 	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/human, /obj/item/soap, /obj/item/seeds/banana/bluespace)
-	banana_type = /obj/item/grown/bananapeel
 	attack_reagent = /datum/reagent/consumable/laughter
 
 /mob/living/simple_animal/hostile/retaliate/clown/fleshclown
@@ -213,7 +293,7 @@
 	attack_verb_continuous = "steals the girlfriend of"
 	attack_verb_simple = "steal the girlfriend of"
 	attack_sound = 'sound/items/airhorn2.ogg'
-	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/human, /obj/effect/particle_effect/foam, /obj/item/soap)
+	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/human, /obj/effect/particle_effect/fluid/foam, /obj/item/soap)
 
 /mob/living/simple_animal/hostile/retaliate/clown/clownhulk/honcmunculus
 	name = "Honkmunculus"
@@ -236,7 +316,7 @@
 	attack_verb_continuous = "ferociously mauls"
 	attack_verb_simple = "ferociously maul"
 	environment_smash = ENVIRONMENT_SMASH_NONE
-	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/xeno/bodypartless, /obj/effect/particle_effect/foam, /obj/item/soap)
+	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/xeno/bodypartless, /obj/effect/particle_effect/fluid/foam, /obj/item/soap)
 	attack_reagent = /datum/reagent/peaceborg/confuse
 
 /mob/living/simple_animal/hostile/retaliate/clown/clownhulk/destroyer
@@ -259,7 +339,7 @@
 	attack_verb_simple = "act out divine vengeance on"
 	obj_damage = 50
 	environment_smash = ENVIRONMENT_SMASH_RWALLS
-	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/human, /obj/effect/particle_effect/foam, /obj/item/soap)
+	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/human, /obj/effect/particle_effect/fluid/foam, /obj/item/soap)
 
 /mob/living/simple_animal/hostile/retaliate/clown/mutant
 	name = "Unknown"
@@ -310,16 +390,15 @@
 	attack_verb_continuous = "slams"
 	attack_verb_simple = "slam"
 	loot = list(/obj/effect/gibspawner/xeno/bodypartless, /obj/effect/gibspawner/generic, /obj/effect/gibspawner/generic/animal, /obj/effect/gibspawner/human/bodypartless)
-	deathsound = 'sound/misc/sadtrombone.ogg'
+	death_sound = 'sound/misc/sadtrombone.ogg'
 	///This is the list of items we are ready to regurgitate,
 	var/list/prank_pouch = list()
-	///This ability lets you fire a single random item from your pouch.
-	var/obj/effect/proc_holder/regurgitate/my_regurgitate
 
 /mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/Initialize(mapload)
 	. = ..()
-	my_regurgitate = new
-	AddAbility(my_regurgitate)
+	var/datum/action/cooldown/regurgitate/spit = new(src)
+	spit.Grant(src)
+
 	add_cell_sample()
 	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/cheesiehonkers, /obj/item/food/cornchips), tame_chance = 30, bonus_tame_chance = 0, after_tame = CALLBACK(src, .proc/tamed))
 
@@ -357,27 +436,29 @@
 ///This proc eats the atom, certain funny items are stored directly in the prank pouch while bananas grant a heal based on their potency and the peels are retained in the pouch.
 /mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/proc/eat_atom(atom/movable/eaten_atom)
 
-	var/static/funny_items = list(/obj/item/food/pie/cream,
-								/obj/item/food/grown/tomato,
-								/obj/item/food/meatclown)
+	var/static/funny_items = list(
+		/obj/item/food/pie/cream,
+		/obj/item/food/grown/tomato,
+		/obj/item/food/meatclown,
+	)
 
-	visible_message("<span class='warning>[src] eats [eaten_atom]!</span>", span_notice("You eat [eaten_atom]."))
+	visible_message(span_warning("[src] eats [eaten_atom]!"), span_notice("You eat [eaten_atom]."))
 	if(is_type_in_list(eaten_atom, funny_items))
 		eaten_atom.forceMove(src)
 		prank_pouch += eaten_atom
 
-	else if(istype(eaten_atom, /obj/item/food/grown/banana))
-		var/obj/item/food/grown/banana/banana_morsel = eaten_atom
-		adjustBruteLoss(-banana_morsel.seed.potency * 0.25)
-		prank_pouch += banana_morsel.generate_trash(src)
-		qdel(eaten_atom)
 	else
+		if(istype(eaten_atom, /obj/item/food/grown/banana))
+			var/obj/item/food/grown/banana/banana_morsel = eaten_atom
+			adjustBruteLoss(-banana_morsel.seed.potency * 0.25)
+			prank_pouch += banana_morsel.generate_trash(src)
+
 		qdel(eaten_atom)
+
 	playsound(loc,'sound/items/eatfood.ogg', rand(30,50), TRUE)
 	flick("glutton_mouth", src)
 
 /mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/proc/tamed(mob/living/tamer)
-	can_buckle = TRUE
 	buckle_lying = 0
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/glutton)
 
@@ -389,50 +470,57 @@
 	prank_pouch -= gone
 
 ///This ability will let you fire one random item from your pouch,
-/obj/effect/proc_holder/regurgitate
+/datum/action/cooldown/regurgitate
 	name = "Regurgitate"
 	desc = "Regurgitates a single item from the depths of your pouch."
-	action_background_icon_state = "bg_changeling"
-	action_icon = 'icons/mob/actions/actions_animal.dmi'
-	action_icon_state = "regurgitate"
-	active = FALSE
+	background_icon_state = "bg_changeling"
+	icon_icon = 'icons/mob/actions/actions_animal.dmi'
+	button_icon_state = "regurgitate"
+	check_flags = AB_CHECK_CONSCIOUS
+	melee_cooldown_time = 0 SECONDS
+	click_to_activate = TRUE
 
-/obj/effect/proc_holder/regurgitate/Click(location, control, params)
+/datum/action/cooldown/regurgitate/set_click_ability(mob/on_who)
 	. = ..()
-	if(!isliving(usr))
+	if(!.)
+		return
+
+	to_chat(on_who, span_notice("Your throat muscles tense up. <B>Left-click to regurgitate a funny morsel!</B>"))
+	on_who.icon_state = "glutton_tongue"
+	on_who.update_appearance(UPDATE_ICON)
+
+/datum/action/cooldown/regurgitate/unset_click_ability(mob/on_who, refund_cooldown = TRUE)
+	. = ..()
+	if(!.)
+		return
+
+	if(refund_cooldown)
+		to_chat(on_who, span_notice("Your throat muscles relax."))
+	on_who.icon_state = initial(on_who.icon_state)
+	on_who.update_appearance(UPDATE_ICON)
+
+/datum/action/cooldown/regurgitate/IsAvailable()
+	. = ..()
+	if(!.)
+		return FALSE
+
+	// Hardcoded to only work with gluttons. Come back next year
+	return istype(owner, /mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton)
+
+/datum/action/cooldown/regurgitate/Activate(atom/spit_at)
+	StartCooldown(cooldown_time / 4)
+
+	var/mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/pouch_owner = owner
+	if(!length(pouch_owner.prank_pouch))
+		pouch_owner.icon_state = initial(pouch_owner.icon_state)
+		to_chat(pouch_owner, span_notice("Your prank pouch is empty."))
 		return TRUE
-	var/mob/living/user = usr
-	fire(user)
-
-/obj/effect/proc_holder/regurgitate/fire(mob/living/carbon/user)
-	if(active)
-		user.icon_state = initial(user.icon_state)
-		remove_ranged_ability(span_notice("Your throat muscles relax."))
-	else
-		user.icon_state = "glutton_tongue"
-		add_ranged_ability(user, span_notice("Your throat muscles tense up. <B>Left-click to regurgitate a funny morsel!</B>"), TRUE)
-
-/obj/effect/proc_holder/regurgitate/InterceptClickOn(mob/living/caller, params, atom/target)
-	. = ..()
-
-	if(.)
-		return
-
-	if(!istype(ranged_ability_user, /mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton) || ranged_ability_user.stat)
-		remove_ranged_ability()
-		return
-
-	var/mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/pouch_owner = ranged_ability_user
-	if(!pouch_owner.prank_pouch.len)
-		//active = FALSE
-		pouch_owner.icon_state = "glutton"
-		remove_ranged_ability(span_notice("Your prank pouch is empty,."))
-		return
 
 	var/obj/item/projected_morsel = pick(pouch_owner.prank_pouch)
 	projected_morsel.forceMove(pouch_owner.loc)
-	projected_morsel.throw_at(target, 8, 2, pouch_owner)
+	projected_morsel.throw_at(spit_at, 8, 2, pouch_owner)
 	flick("glutton_mouth", pouch_owner)
 	playsound(pouch_owner, 'sound/misc/soggy.ogg', 75)
 
-
+	StartCooldown()
+	return TRUE

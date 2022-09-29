@@ -54,7 +54,7 @@
 	time = 40
 	reqs = list(
 		/obj/item/food/grown/potato = 1,
-		/obj/item/food/cheese = 1
+		/obj/item/food/cheese/wedge = 1
 	)
 	result = /obj/item/food/loadedbakedpotato
 	subcategory = CAT_MISCFOOD
@@ -63,7 +63,7 @@
 	name = "Cheesy fries"
 	reqs = list(
 		/obj/item/food/fries = 1,
-		/obj/item/food/cheese = 1
+		/obj/item/food/cheese/wedge = 1
 	)
 	result = /obj/item/food/cheesyfries
 	subcategory = CAT_MISCFOOD
@@ -72,7 +72,7 @@
 	name = "Poutine"
 	reqs = list(
 		/obj/item/food/fries = 1,
-		/obj/item/food/cheese = 1,
+		/obj/item/food/cheese/wedge = 1,
 		/datum/reagent/consumable/gravy = 3
 	)
 	result = /obj/item/food/poutine
@@ -90,7 +90,7 @@
 /datum/crafting_recipe/food/eggplantparm
 	name ="Eggplant parmigiana"
 	reqs = list(
-		/obj/item/food/cheese = 2,
+		/obj/item/food/cheese/wedge = 2,
 		/obj/item/food/grown/eggplant = 1
 	)
 	result = /obj/item/food/eggplantparm
@@ -101,9 +101,9 @@
 	reqs = list(
 		/datum/reagent/consumable/ethanol/vodka = 25,
 		/obj/item/food/grown/holymelon = 1,
-		/obj/item/reagent_containers/food/drinks/bottle/vodka = 1
+		/obj/item/reagent_containers/cup/glass/bottle/vodka = 1
 	)
-	parts = list(/obj/item/reagent_containers/food/drinks/bottle/vodka = 1)
+	parts = list(/obj/item/reagent_containers/cup/glass/bottle/vodka = 1)
 	result = /obj/item/food/melonkeg
 	subcategory = CAT_MISCFOOD
 
@@ -151,7 +151,7 @@
 /datum/crafting_recipe/food/risotto
 	name = "Risotto"
 	reqs = list(
-		/obj/item/food/cheese = 1,
+		/obj/item/food/cheese/wedge = 1,
 		/datum/reagent/consumable/ethanol/wine = 5,
 		/obj/item/food/salad/boiledrice = 1,
 		/obj/item/food/grown/mushroom/chanterelle = 1
@@ -162,8 +162,8 @@
 /datum/crafting_recipe/food/butterbear //ITS ALIVEEEEEE!
 	name = "Living bear/butter hybrid"
 	reqs = list(
-		/obj/item/organ/brain = 1,
-		/obj/item/organ/heart = 1,
+		/obj/item/organ/internal/brain = 1,
+		/obj/item/organ/internal/heart = 1,
 		/obj/item/food/butter = 10,
 		/obj/item/food/meat/slab = 5,
 		/datum/reagent/blood = 50,
@@ -177,8 +177,8 @@
 	reqs = list(
 		/obj/item/food/doughslice = 1,
 		/datum/reagent/consumable/cream = 5,
-		/obj/item/food/cheese = 1,
-		/obj/item/food/meat/rawcrab = 1
+		/obj/item/food/cheese/wedge = 1,
+		/obj/item/food/meat/slab/rawcrab = 1
 	)
 	result = /obj/item/food/crab_rangoon
 	subcategory = CAT_MISCFOOD
@@ -202,4 +202,125 @@
 		/datum/reagent/ants = 10
 	)
 	result = /obj/item/food/ant_candy
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/pesto
+	name = "Pesto"
+	reqs = list(
+		/obj/item/food/cheese/firm_cheese_slice = 1,
+		/datum/reagent/consumable/salt = 5,
+		/obj/item/food/grown/herbs = 2,
+		/obj/item/food/grown/garlic = 1,
+		/datum/reagent/consumable/quality_oil = 5,
+		/obj/item/food/canned/pine_nuts = 1
+	)
+	result = /obj/item/food/pesto
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/tomato_sauce
+	name = "Tomato sauce"
+	reqs = list(
+		/obj/item/food/canned/tomatoes = 1,
+		/datum/reagent/consumable/salt = 2,
+		/obj/item/food/grown/herbs = 1,
+		/datum/reagent/consumable/quality_oil = 5
+	)
+	result = /obj/item/food/tomato_sauce
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/bechamel_sauce
+	name = "Bechamel sauce"
+	reqs = list(
+		/datum/reagent/consumable/milk = 10,
+		/datum/reagent/consumable/flour = 5,
+		/obj/item/food/butter = 1
+	)
+	result = /obj/item/food/bechamel_sauce
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/pierogi
+	name = "Pierogi"
+	reqs = list(
+		/obj/item/food/doughslice = 1,
+		/obj/item/food/grown/potato = 1,
+		/obj/item/food/grown/onion = 1,
+	)
+	result = /obj/item/food/pierogi
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/stuffed_cabbage
+	name = "Stuffed cabbage"
+	reqs = list(
+		/obj/item/food/meat/cutlet = 2,
+		/obj/item/food/salad/boiledrice = 1,
+		/obj/item/food/grown/cabbage = 1,
+		/obj/item/food/grown/tomato = 1,
+	)
+	result = /obj/item/food/stuffed_cabbage
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/granola_bar
+	name = "Granola bar"
+	reqs = list(
+		/obj/item/food/grown/oat = 1,
+		/obj/item/food/grown/peanut = 1,
+		/obj/item/food/chocolatebar = 1,
+		/obj/item/food/no_raisin = 1,
+		/datum/reagent/consumable/sugar = 2,
+	)
+	result = /obj/item/food/granola_bar
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/onigiri
+	name = "Onigiri"
+	reqs = list(
+		/obj/item/food/salad/boiledrice = 1,
+		/obj/item/food/seaweedsheet = 1,
+	)
+	result = /obj/item/food/onigiri
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/mashed_potatoes
+	name = "Mashed potatoes"
+	reqs = list(
+		/obj/item/food/grown/potato = 2,
+		/obj/item/food/grown/garlic = 1,
+		/obj/item/food/butter = 1,
+		/datum/reagent/consumable/milk = 1,
+	)
+	result = /obj/item/food/mashed_potatoes
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/pacoca
+	name = "Pacoca"
+	reqs = list(
+		/obj/item/food/grown/peanut = 2,
+		/datum/reagent/consumable/sugar = 5,
+		/datum/reagent/consumable/salt = 2,
+	)
+	result = /obj/item/food/pacoca
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/pickles_jar
+	name = "Jar of pickles"
+	reqs = list(
+		/obj/item/reagent_containers/cup/beaker/large = 1,
+		/obj/item/food/grown/cucumber = 10,
+		/datum/reagent/water = 10,
+		/datum/reagent/consumable/salt = 10,
+	)
+	result = /obj/item/storage/fancy/pickles_jar
+	category = CAT_FOOD
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/springroll
+	name = "Spring roll"
+	reqs = list(
+		/obj/item/food/grown/carrot = 1,
+		/obj/item/food/grown/cucumber = 1,
+		/obj/item/food/grown/chili = 1,
+		/datum/reagent/consumable/rice = 10,
+		/datum/reagent/water = 10,
+	)
+	result = /obj/item/food/springroll
 	subcategory = CAT_MISCFOOD

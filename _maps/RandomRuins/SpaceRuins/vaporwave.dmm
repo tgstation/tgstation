@@ -8,10 +8,10 @@
 /area/template_noop)
 "c" = (
 /obj/structure/lattice,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "d" = (
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "e" = (
 /obj/structure/lattice,
@@ -28,14 +28,14 @@
 /turf/open/floor/holofloor/beach,
 /area/ruin/space/has_grav/powered/aesthetic)
 "i" = (
-/obj/structure/musician/piano,
+/obj/effect/spawner/random/structure/musician/piano/random_piano,
 /obj/structure/window{
 	dir = 8
 	},
 /turf/open/floor/iron/vaporwave,
 /area/ruin/space/has_grav/powered/aesthetic)
 "j" = (
-/obj/structure/chair/stool/directional/east,
+/obj/structure/chair/stool/directional/west,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/vaporwave,
 /area/ruin/space/has_grav/powered/aesthetic)
@@ -104,7 +104,7 @@
 /obj/structure/closet/crate/bin,
 /obj/item/tape/random,
 /obj/item/gps/spaceruin,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "y" = (
 /turf/open/floor/holofloor/beach/coast_b,
@@ -167,7 +167,7 @@
 /area/ruin/unpowered/no_grav)
 "H" = (
 /obj/effect/overlay/palmtree_l,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "I" = (
 /obj/effect/turf_decal/sand,
@@ -194,7 +194,7 @@
 /area/ruin/unpowered/no_grav)
 "M" = (
 /obj/effect/overlay/palmtree_r,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "O" = (
 /obj/structure/chair/comfy/black{
@@ -210,7 +210,7 @@
 "Q" = (
 /obj/structure/closet/crate/bin,
 /obj/effect/spawner/random/exotic/technology,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "R" = (
 /obj/machinery/light/small/directional/north,

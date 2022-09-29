@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "b" = (
 /turf/closed/mineral/volcanic/lava_land_surface,
@@ -38,8 +38,10 @@
 /turf/open/floor/carpet,
 /area/ruin/powered/greed)
 "k" = (
-/obj/machinery/computer/arcade/battle{
-	set_obj_flags = "EMAGGED"
+/obj/machinery/computer/arcade/battle,
+/obj/effect/mapping_helpers/atom_injector/obj_flag{
+	inject_flags = 1;
+	target_type = /obj/machinery/computer/arcade/battle
 	},
 /turf/open/floor/engine/cult,
 /area/ruin/powered/greed)

@@ -48,7 +48,7 @@
       The Slime Euthanization Chamber will not have radiation shielding at this time
       as dead slimes will not mind radiation.'
   coiax:
-  - rscadd: Adds seperate languages to the game. Now Ratvarian, Drone, Machine, Swarmer,
+  - rscadd: Adds separate languages to the game. Now Ratvarian, Drone, Machine, Swarmer,
       Human (now called Galactic Common), Slime and Monkey are separate languages.
       Each languages has its own comma prefix, for example, Galcom has the ,0 prefix,
       while Ratvarian has the ,r prefix. If you don't understand a language when it

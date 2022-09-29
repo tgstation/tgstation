@@ -34,6 +34,7 @@
 					CAT_MEAT,
 					CAT_SEAFOOD,
 					CAT_MISCFOOD,
+					CAT_MOTH,
 					CAT_PASTRY,
 					CAT_PIE,
 					CAT_PIZZA,
@@ -44,6 +45,8 @@
 				),
 				CAT_DRINK = CAT_NONE,
 				CAT_CLOTHING = CAT_NONE,
+				CAT_ATMOSPHERIC = CAT_NONE,
+				CAT_STRUCTURE = CAT_NONE,
 			)
 
 	var/cur_category = CAT_NONE
@@ -117,7 +120,7 @@
 		return
 
 	for(var/atom/movable/AM in range(radius_range, a))
-		if((AM.flags_1 & HOLOGRAM_1)  || (blacklist && (AM.type in blacklist)))
+		if((AM.flags_1 & HOLOGRAM_1) || (blacklist && (AM.type in blacklist)))
 			continue
 		. += AM
 
@@ -158,7 +161,7 @@
 	var/list/present_qualities = list()
 
 	for(var/obj/item/contained_item in source.contents)
-		if(contained_item.GetComponent(/datum/component/storage))
+		if(contained_item.atom_storage)
 			for(var/obj/item/subcontained_item in contained_item.contents)
 				available_tools[subcontained_item.type] = TRUE
 				if(subcontained_item.tool_behaviour)
@@ -329,7 +332,7 @@
 			. += RG
 			Deletion -= RG
 			continue
-		else if(istype(part, /obj/item/stack))
+		else if(isstack(part))
 			var/obj/item/stack/ST = locate(part) in Deletion
 			if(ST.amount > partlist[part])
 				ST.amount = partlist[part]
@@ -347,7 +350,7 @@
 		Deletion.Cut(Deletion.len)
 		// Snowflake handling of reagent containers and storage atoms.
 		// If we consumed them in our crafting, we should dump their contents out before qdeling them.
-		if(istype(DL, /obj/item/reagent_containers))
+		if(is_reagent_container(DL))
 			var/obj/item/reagent_containers/container = DL
 			container.reagents.expose(container.loc, TOUCH)
 		else if(istype(DL, /obj/item/storage))
@@ -435,17 +438,18 @@
 	switch(action)
 		if("make")
 			var/mob/user = usr
-			var/datum/crafting_recipe/TR = locate(params["recipe"]) in GLOB.crafting_recipes
+			var/datum/crafting_recipe/crafting_recipe = locate(params["recipe"]) in GLOB.crafting_recipes
 			busy = TRUE
 			ui_interact(user)
-			var/atom/movable/result = construct_item(user, TR)
+			var/atom/movable/result = construct_item(user, crafting_recipe)
 			if(!istext(result)) //We made an item and didn't get a fail message
 				if(ismob(user) && isitem(result)) //In case the user is actually possessing a non mob like a machine
 					user.put_in_hands(result)
 				else
 					result.forceMove(user.drop_location())
-				to_chat(user, span_notice("[TR.name] constructed."))
-				TR.on_craft_completion(user, result)
+				to_chat(user, span_notice("[crafting_recipe.name] constructed."))
+				user.investigate_log("[key_name(user)] crafted [crafting_recipe]", INVESTIGATE_CRAFTING)
+				crafting_recipe.on_craft_completion(user, result)
 			else
 				to_chat(user, span_warning("Construction failed[result]"))
 			busy = FALSE

@@ -11,7 +11,7 @@
 	var/list/spawned_mobs = list()
 
 /datum/component/summoning/Initialize(mob_types, spawn_chance=100, max_mobs=3, spawn_delay=100, spawn_text="appears out of nowhere", spawn_sound='sound/magic/summon_magic.ogg', faction)
-	if(!isitem(parent) && !ishostile(parent) && !isgun(parent) && !ismachinery(parent) && !isstructure(parent))
+	if(!isitem(parent) && !ishostile(parent) && !isgun(parent) && !ismachinery(parent) && !isstructure(parent) && !isprojectilespell(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.mob_types = mob_types
@@ -23,7 +23,7 @@
 	src.faction = faction
 
 /datum/component/summoning/RegisterWithParent()
-	if(ismachinery(parent) || isstructure(parent) || isgun(parent)) // turrets, etc
+	if(ismachinery(parent) || isstructure(parent) || isgun(parent) || isprojectilespell(parent)) // turrets, etc
 		RegisterSignal(parent, COMSIG_PROJECTILE_ON_HIT, .proc/projectile_hit)
 	else if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, .proc/item_afterattack)
@@ -47,7 +47,7 @@
 		return
 	do_spawn_mob(get_turf(target), attacker)
 
-/datum/component/summoning/proc/projectile_hit(atom/fired_from, atom/movable/firer, atom/target, Angle)
+/datum/component/summoning/proc/projectile_hit(datum/fired_from, atom/movable/firer, atom/target, Angle)
 	SIGNAL_HANDLER
 
 	do_spawn_mob(get_turf(target), firer)

@@ -28,7 +28,15 @@
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
 	gold_core_spawnable = FRIENDLY_SPAWN
+	can_be_held = TRUE
+	held_w_class = WEIGHT_CLASS_TINY
+	worn_slot_flags = ITEM_SLOT_HEAD
+	head_icon = 'icons/mob/clothing/head/animal_item_head.dmi'
 	var/stepped_sound = 'sound/effects/huuu.ogg'
+	///How much of a reagent the mob injects on attack
+	var/poison_per_bite = 3
+	///What reagent the mob injects targets with
+	var/poison_type = /datum/reagent/drug/space_drugs
 
 /mob/living/simple_animal/hostile/retaliate/frog/Initialize(mapload)
 	. = ..()
@@ -42,11 +50,13 @@
 		icon_living = "rare_frog"
 		icon_dead = "rare_frog_dead"
 		butcher_results = list(/obj/item/food/nugget = 5)
+		poison_type = /datum/reagent/drug/mushroomhallucinogen
 
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+	AddElement(/datum/element/venomous, poison_type, poison_per_bite)
 	add_cell_sample()
 
 /mob/living/simple_animal/hostile/retaliate/frog/proc/on_entered(datum/source, AM as mob|obj)

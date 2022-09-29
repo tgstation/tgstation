@@ -1,10 +1,8 @@
 /atom
 	///Check if atmos can pass in this atom (ATMOS_PASS_YES, ATMOS_PASS_NO, ATMOS_PASS_DENSITY, ATMOS_PASS_PROC)
 	var/can_atmos_pass = ATMOS_PASS_YES
-	///Zlevel check for can_atmos_pass
-	var/can_atmos_pass_vertical = ATMOS_PASS_YES
 
-/atom/proc/can_atmos_pass(turf/target_turf)
+/atom/proc/can_atmos_pass(turf/target_turf, vertical = FALSE)
 	switch (can_atmos_pass)
 		if (ATMOS_PASS_PROC)
 			return ATMOS_PASS_YES
@@ -15,60 +13,126 @@
 
 /turf
 	can_atmos_pass = ATMOS_PASS_NO
-	can_atmos_pass_vertical = ATMOS_PASS_NO
 
 /turf/open
 	can_atmos_pass = ATMOS_PASS_PROC
-	can_atmos_pass_vertical = ATMOS_PASS_PROC
 
-//Do NOT use this to see if 2 turfs are connected, it mutates state, and we cache that info anyhow. Use TURFS_CAN_SHARE or TURF_SHARES depending on your usecase
+///Do NOT use this to see if 2 turfs are connected, it mutates state, and we cache that info anyhow.
+///Use TURFS_CAN_SHARE or TURF_SHARES depending on your usecase
 /turf/open/can_atmos_pass(turf/target_turf, vertical = FALSE)
+	var/can_pass = TRUE
 	var/direction = vertical ? get_dir_multiz(src, target_turf) : get_dir(src, target_turf)
 	var/opposite_direction = REVERSE_DIR(direction)
-	var/can_pass = FALSE
 	if(vertical && !(zAirOut(direction, target_turf) && target_turf.zAirIn(direction, src)))
-		can_pass = TRUE
+		can_pass = FALSE
 	if(blocks_air || target_turf.blocks_air)
-		can_pass = TRUE
+		can_pass = FALSE
+	//This path is a bit weird, if we're just checking with ourselves no sense asking objects on the turf
 	if (target_turf == src)
-		return !can_pass
+		return can_pass
+
+	//Can't just return if canpass is false here, we need to set superconductivity
 	for(var/obj/checked_object in contents + target_turf.contents)
 		var/turf/other = (checked_object.loc == src ? target_turf : src)
-		if(!(vertical? (CANVERTICALATMOSPASS(checked_object, other)) : (CANATMOSPASS(checked_object, other))))
-			can_pass = TRUE
-			if(checked_object.block_superconductivity()) //the direction and open/closed are already checked on can_atmos_pass() so there are no arguments
-				atmos_supeconductivity |= direction
-				target_turf.atmos_supeconductivity |= opposite_direction
-				return FALSE //no need to keep going, we got all we asked
+		if(CANATMOSPASS(checked_object, other, vertical))
+			continue
+		can_pass = FALSE
+		//the direction and open/closed are already checked on can_atmos_pass() so there are no arguments
+		if(checked_object.block_superconductivity())
+			atmos_supeconductivity |= direction
+			target_turf.atmos_supeconductivity |= opposite_direction
+			return FALSE //no need to keep going, we got all we asked (Is this even faster? fuck you it's soul)
 
+	//Superconductivity is a bitfield of directions we can't conduct with
+	//Yes this is really weird. Fuck you
 	atmos_supeconductivity &= ~direction
 	target_turf.atmos_supeconductivity &= ~opposite_direction
 
-	return !can_pass
+	return can_pass
 
 /atom/movable/proc/block_superconductivity() // objects that block air and don't let superconductivity act
 	return FALSE
 
-/turf/proc/immediate_calculate_adjacent_turfs()
-	var/canpass = CANATMOSPASS(src, src)
-	var/canvpass = CANVERTICALATMOSPASS(src, src)
+/// This proc is a more deeply optimized version of immediate_calculate_adjacent_turfs
+/// It contains dumbshit, and also stuff I just can't do at runtime
+/// If you're not editing behavior, just read that proc. It's less bad
+/turf/proc/init_immediate_calculate_adjacent_turfs()
+	//Basic optimization, if we can't share why bother asking other people ya feel?
+	// You know it's gonna be stupid when they include a unit test in the atmos code
+	// Yes, inlining the string concat does save 0.1 seconds
+	#ifdef UNIT_TESTS
+	ASSERT(UP == 16)
+	ASSERT(DOWN == 32)
+	#endif
+	LAZYINITLIST(src.atmos_adjacent_turfs)
+	var/list/atmos_adjacent_turfs = src.atmos_adjacent_turfs
+	var/canpass = CANATMOSPASS(src, src, FALSE)
+	// I am essentially inlineing two get_dir_multizs here, because they're way too slow on their own. I'm sorry brother
+	var/list/z_traits = SSmapping.multiz_levels[z]
 	for(var/direction in GLOB.cardinals_multiz)
-		var/turf/current_turf = get_step_multiz(src, direction)
-		if(!isopenturf(current_turf))
+		// Yes this is a reimplementation of get_step_mutliz. It's faster tho. fuck you
+		// Oh also yes UP and DOWN do just point to +1 and -1 and not z offsets
+		// Multiz is shitcode welcome home
+		var/turf/current_turf = (direction & (UP|DOWN)) ? \
+			(direction & UP) ? \
+				(z_traits["16"]) ? \
+					(get_step(locate(x, y, z + 1), NONE)) : \
+				(null) : \
+				(z_traits["32"]) ? \
+					(get_step(locate(x, y, z - 1), NONE)) : \
+				(null) : \
+			(get_step(src, direction))
+		if(!isopenturf(current_turf)) // not interested in you brother
 			continue
-		if(!(blocks_air || current_turf.blocks_air) && ((direction & (UP|DOWN)) ? (canvpass && CANVERTICALATMOSPASS(current_turf, src)) : (canpass && CANATMOSPASS(current_turf, src))) )
-			LAZYINITLIST(atmos_adjacent_turfs)
+		// The assumption is that ONLY DURING INIT if two tiles have the same cycle, there's no way canpass(a->b) will be different then canpass(b->a), so this is faster
+		// Saves like 1.2 seconds
+		// Note: current cycle here goes DOWN as we sleep. this is to ensure we can use the >= logic in the first step of process_cell
+		// It's not a massive thing, and I'm sorry for the cursed code, but it be this way
+		if(current_turf.current_cycle <= current_cycle)
+			continue
+
+		//Can you and me form a deeper relationship, or is this just a passing wind
+		// (direction & (UP | DOWN)) is just "is this vertical" by the by
+		if(canpass && CANATMOSPASS(current_turf, src, (direction & (UP|DOWN))) && !(blocks_air || current_turf.blocks_air))
 			LAZYINITLIST(current_turf.atmos_adjacent_turfs)
 			atmos_adjacent_turfs[current_turf] = TRUE
 			current_turf.atmos_adjacent_turfs[src] = TRUE
 		else
-			if (atmos_adjacent_turfs)
-				atmos_adjacent_turfs -= current_turf
+			atmos_adjacent_turfs -= current_turf
 			if (current_turf.atmos_adjacent_turfs)
 				current_turf.atmos_adjacent_turfs -= src
 			UNSETEMPTY(current_turf.atmos_adjacent_turfs)
+		SEND_SIGNAL(current_turf, COMSIG_TURF_CALCULATED_ADJACENT_ATMOS)
+
 	UNSETEMPTY(atmos_adjacent_turfs)
 	src.atmos_adjacent_turfs = atmos_adjacent_turfs
+	SEND_SIGNAL(src, COMSIG_TURF_CALCULATED_ADJACENT_ATMOS)
+
+/turf/proc/immediate_calculate_adjacent_turfs()
+	LAZYINITLIST(src.atmos_adjacent_turfs)
+	var/list/atmos_adjacent_turfs = src.atmos_adjacent_turfs
+	var/canpass = CANATMOSPASS(src, src, FALSE)
+	for(var/direction in GLOB.cardinals_multiz)
+		var/turf/current_turf = get_step_multiz(src, direction)
+		if(!isopenturf(current_turf)) // not interested in you brother
+			continue
+
+		//Can you and me form a deeper relationship, or is this just a passing wind
+		// (direction & (UP | DOWN)) is just "is this vertical" by the by
+		if(canpass && CANATMOSPASS(current_turf, src, (direction & (UP|DOWN))) && !(blocks_air || current_turf.blocks_air))
+			LAZYINITLIST(current_turf.atmos_adjacent_turfs)
+			atmos_adjacent_turfs[current_turf] = TRUE
+			current_turf.atmos_adjacent_turfs[src] = TRUE
+		else
+			atmos_adjacent_turfs -= current_turf
+			if (current_turf.atmos_adjacent_turfs)
+				current_turf.atmos_adjacent_turfs -= src
+			UNSETEMPTY(current_turf.atmos_adjacent_turfs)
+		SEND_SIGNAL(current_turf, COMSIG_TURF_CALCULATED_ADJACENT_ATMOS)
+
+	UNSETEMPTY(atmos_adjacent_turfs)
+	src.atmos_adjacent_turfs = atmos_adjacent_turfs
+	SEND_SIGNAL(src, COMSIG_TURF_CALCULATED_ADJACENT_ATMOS)
 
 /**
  * returns a list of adjacent turfs that can share air with this one.
@@ -145,8 +209,7 @@
 	if(!text || !air)
 		return
 
-	var/datum/gas_mixture/turf_mixture = new
-	turf_mixture.parse_gas_string(text)
+	var/datum/gas_mixture/turf_mixture = SSair.parse_gas_string(text, /datum/gas_mixture/turf)
 
 	air.merge(turf_mixture)
 	archive()

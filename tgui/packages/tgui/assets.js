@@ -7,11 +7,9 @@
 const EXCLUDED_PATTERNS = [/v4shim/i];
 const loadedMappings = {};
 
-export const resolveAsset = name => (
-  loadedMappings[name] || name
-);
+export const resolveAsset = (name) => loadedMappings[name] || name;
 
-export const assetMiddleware = store => next => action => {
+export const assetMiddleware = (store) => (next) => (action) => {
   const { type, payload } = action;
   if (type === 'asset/stylesheet') {
     Byond.loadCss(payload);
@@ -20,7 +18,7 @@ export const assetMiddleware = store => next => action => {
   if (type === 'asset/mappings') {
     for (let name of Object.keys(payload)) {
       // Skip anything that matches excluded patterns
-      if (EXCLUDED_PATTERNS.some(regex => regex.test(name))) {
+      if (EXCLUDED_PATTERNS.some((regex) => regex.test(name))) {
         continue;
       }
       const url = payload[name];

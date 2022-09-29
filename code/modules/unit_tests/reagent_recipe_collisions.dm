@@ -12,4 +12,4 @@
 			var/datum/chemical_reaction/r1 = reactions[i]
 			var/datum/chemical_reaction/r2 = reactions[i2]
 			if(chem_recipes_do_conflict(r1, r2))
-				Fail("Chemical recipe conflict between [r1.type] and [r2.type]")
+				TEST_FAIL("Chemical recipe conflict between [r1.type] and [r2.type]")

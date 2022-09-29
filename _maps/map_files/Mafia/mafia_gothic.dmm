@@ -1,68 +1,60 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/closed/indestructible/riveted,
-/area/mafia)
+/area/centcom/mafia)
 "b" = (
 /turf/closed/wall/mineral/iron,
-/area/mafia)
+/area/centcom/mafia)
 "c" = (
 /turf/closed/wall/rust,
-/area/mafia)
+/area/centcom/mafia)
 "d" = (
 /turf/open/floor/plating,
-/area/mafia)
-"e" = (
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
-/area/mafia)
+/area/centcom/mafia)
 "f" = (
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
-/area/mafia)
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
+/area/centcom/mafia)
 "g" = (
 /obj/mafia_game_board,
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
-/area/mafia)
-"h" = (
-/obj/structure/grille/indestructable,
+/obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
-/area/mafia)
+/area/centcom/mafia)
+"h" = (
+/obj/structure/grille/indestructible,
+/turf/open/floor/plating,
+/area/centcom/mafia)
 "i" = (
-/turf/open/floor/plating{
-	icon_state = "platingdmg1"
-	},
-/area/mafia)
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/centcom/mafia)
 "j" = (
 /turf/closed/indestructible/fakedoor,
-/area/mafia)
+/area/centcom/mafia)
 "k" = (
 /obj/mafia_game_board,
 /turf/open/floor/plating,
-/area/mafia)
+/area/centcom/mafia)
 "l" = (
 /obj/structure/closet/crate/coffin,
 /turf/open/floor/carpet/red,
-/area/mafia)
+/area/centcom/mafia)
 "m" = (
 /obj/effect/landmark/mafia,
 /turf/open/floor/carpet/red,
-/area/mafia)
+/area/centcom/mafia)
 "n" = (
 /obj/effect/landmark/mafia,
 /turf/open/floor/iron/chapel{
 	dir = 1
 	},
-/area/mafia)
+/area/centcom/mafia)
 "o" = (
 /obj/structure/closet/crate/coffin,
 /turf/open/floor/iron/chapel{
 	dir = 4
 	},
-/area/mafia)
+/area/centcom/mafia)
 "p" = (
 /obj/machinery/door/poddoor/preopen{
 	desc = "When it's time to sleep, the lights will go out. Remember - no one in space can hear you scream.";
@@ -71,80 +63,79 @@
 	name = "Station Night Shutters"
 	},
 /turf/closed/indestructible/opsglass,
-/area/mafia)
+/area/centcom/mafia)
 "q" = (
 /turf/open/floor/carpet/red,
-/area/mafia)
+/area/centcom/mafia)
 "r" = (
 /turf/open/floor/iron/chapel{
 	dir = 8
 	},
-/area/mafia)
+/area/centcom/mafia)
 "t" = (
 /turf/open/floor/carpet/royalblack,
-/area/mafia)
+/area/centcom/mafia)
 "u" = (
 /obj/effect/baseturf_helper/asteroid,
 /obj/effect/landmark/mafia/town_center,
 /turf/open/floor/carpet/royalblack,
-/area/mafia)
+/area/centcom/mafia)
 "v" = (
 /obj/mafia_game_board,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
-/area/mafia)
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
+/area/centcom/mafia)
 "D" = (
 /obj/effect/landmark/mafia,
 /turf/open/floor/iron/chapel{
 	dir = 4
 	},
-/area/mafia)
+/area/centcom/mafia)
 "E" = (
 /turf/open/floor/iron/chapel{
 	dir = 4
 	},
-/area/mafia)
+/area/centcom/mafia)
 "H" = (
 /obj/structure/closet/cabinet{
 	anchored = 1
 	},
 /turf/open/floor/carpet/red,
-/area/mafia)
+/area/centcom/mafia)
 "J" = (
 /obj/structure/closet/crate/coffin,
 /turf/open/floor/iron/chapel{
 	dir = 1
 	},
-/area/mafia)
+/area/centcom/mafia)
 "M" = (
 /obj/effect/landmark/mafia,
 /turf/open/floor/iron/chapel{
 	dir = 8
 	},
-/area/mafia)
+/area/centcom/mafia)
 "N" = (
 /obj/effect/landmark/mafia,
 /turf/open/floor/iron/chapel,
-/area/mafia)
+/area/centcom/mafia)
 "O" = (
 /turf/open/floor/iron/chapel,
-/area/mafia)
+/area/centcom/mafia)
 "P" = (
 /obj/structure/closet/crate/coffin,
 /turf/open/floor/iron/chapel,
-/area/mafia)
+/area/centcom/mafia)
 "Q" = (
 /obj/structure/closet/crate/coffin,
 /turf/open/floor/iron/chapel{
 	dir = 8
 	},
-/area/mafia)
+/area/centcom/mafia)
 "X" = (
 /turf/open/floor/iron/chapel{
 	dir = 1
 	},
-/area/mafia)
+/area/centcom/mafia)
 
 (1,1,1) = {"
 a
@@ -233,7 +224,7 @@ d
 d
 d
 d
-e
+i
 d
 d
 d
@@ -254,7 +245,7 @@ c
 h
 d
 d
-e
+i
 b
 b
 j
@@ -416,7 +407,7 @@ r
 E
 N
 j
-e
+i
 c
 b
 a
@@ -425,7 +416,7 @@ a
 a
 b
 c
-e
+i
 b
 b
 p
@@ -613,7 +604,7 @@ j
 b
 b
 d
-e
+i
 d
 h
 c
@@ -630,7 +621,7 @@ k
 h
 d
 d
-e
+i
 d
 d
 d

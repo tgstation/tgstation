@@ -20,7 +20,7 @@ Difficulty: Hard
 	icon_state = "wendigo"
 	icon_living = "wendigo"
 	icon_dead = "wendigo_dead"
-	icon = 'icons/mob/icemoon/64x64megafauna.dmi'
+	icon = 'icons/mob/simple/icemoon/64x64megafauna.dmi'
 	attack_verb_continuous = "claws"
 	attack_verb_simple = "claw"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
@@ -50,8 +50,8 @@ Difficulty: Hard
 	achievement_type = /datum/award/achievement/boss/wendigo_kill
 	crusher_achievement_type = /datum/award/achievement/boss/wendigo_crusher
 	score_achievement_type = /datum/award/score/wendigo_score
-	deathmessage = "falls, shaking the ground around it"
-	deathsound = 'sound/effects/gravhit.ogg'
+	death_message = "falls, shaking the ground around it"
+	death_sound = 'sound/effects/gravhit.ogg'
 	footstep_type = FOOTSTEP_MOB_HEAVY
 	attack_action_types = list(/datum/action/innate/megafauna_attack/heavy_stomp,
 							   /datum/action/innate/megafauna_attack/teleport,
@@ -137,9 +137,9 @@ Difficulty: Hard
 	stored_move_dirs |= direct
 	return ..()
 
-/mob/living/simple_animal/hostile/megafauna/wendigo/Moved(atom/oldloc, direct)
+/mob/living/simple_animal/hostile/megafauna/wendigo/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
-	stored_move_dirs &= ~direct
+	stored_move_dirs &= ~movement_dir
 	if(!stored_move_dirs)
 		INVOKE_ASYNC(GLOBAL_PROC, .proc/wendigo_slam, src, stomp_range, 1, 8)
 
@@ -206,17 +206,17 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/wendigo/proc/shockwave_scream()
 	can_move = FALSE
 	COOLDOWN_START(src, scream_cooldown, scream_cooldown_time)
-	SLEEP_CHECK_DEATH(5)
+	SLEEP_CHECK_DEATH(5, src)
 	playsound(loc, 'sound/magic/demon_dies.ogg', 600, FALSE, 10)
 	animate(src, pixel_z = rand(5, 15), time = 1, loop = 20)
 	animate(pixel_z = 0, time = 1)
 	for(var/mob/living/dizzy_target in get_hearers_in_view(7, src) - src)
-		dizzy_target.Dizzy(6)
+		dizzy_target.set_dizzy_if_lower(12 SECONDS)
 		to_chat(dizzy_target, span_danger("The wendigo screams loudly!"))
-	SLEEP_CHECK_DEATH(1 SECONDS)
+	SLEEP_CHECK_DEATH(1 SECONDS, src)
 	spiral_attack()
 	update_cooldowns(list(COOLDOWN_UPDATE_SET_MELEE = 3 SECONDS, COOLDOWN_UPDATE_SET_RANGED = 3 SECONDS))
-	SLEEP_CHECK_DEATH(3 SECONDS)
+	SLEEP_CHECK_DEATH(3 SECONDS, src)
 	can_move = TRUE
 
 /// Shoots shockwave projectiles in a random preset pattern
@@ -236,7 +236,7 @@ Difficulty: Hard
 					shockwave.firer = src
 					shockwave.speed = 3 - WENDIGO_ENRAGED
 					shockwave.fire(angle)
-				SLEEP_CHECK_DEATH(6 - WENDIGO_ENRAGED * 2)
+				SLEEP_CHECK_DEATH(6 - WENDIGO_ENRAGED * 2, src)
 		if("Spiral")
 			var/shots_spiral = WENDIGO_SPIRAL_SHOTCOUNT
 			var/angle_to_target = get_angle(src, target)
@@ -250,7 +250,7 @@ Difficulty: Hard
 					shockwave.firer = src
 					shockwave.damage = 15
 					shockwave.fire(angle)
-				SLEEP_CHECK_DEATH(1)
+				SLEEP_CHECK_DEATH(1, src)
 		if("Wave")
 			var/shots_per = WENDIGO_WAVE_SHOTCOUNT
 			var/difference = 360 / shots_per
@@ -264,7 +264,7 @@ Difficulty: Hard
 					shockwave.speed = 8
 					shockwave.wave_speed = 10 * wave_direction
 					shockwave.fire(angle)
-				SLEEP_CHECK_DEATH(2)
+				SLEEP_CHECK_DEATH(2, src)
 
 /mob/living/simple_animal/hostile/megafauna/wendigo/death(gibbed, list/force_grant)
 	if(health > 0)
@@ -303,17 +303,10 @@ Difficulty: Hard
 	if(!human_user.mind)
 		return
 	to_chat(human_user, span_danger("Power courses through you! You can now shift your form at will."))
-	var/obj/effect/proc_holder/spell/targeted/shapeshift/polar_bear/transformation_spell = new
-	human_user.mind.AddSpell(transformation_spell)
+	var/datum/action/cooldown/spell/shapeshift/polar_bear/transformation_spell = new(user.mind || user)
+	transformation_spell.Grant(user)
 	playsound(human_user.loc, 'sound/items/drink.ogg', rand(10,50), TRUE)
 	qdel(src)
-
-/obj/effect/proc_holder/spell/targeted/shapeshift/polar_bear
-	name = "Polar Bear Form"
-	desc = "Take on the shape of a polar bear."
-	invocation = "RAAAAAAAAWR!"
-	convert_damage = FALSE
-	shapeshift_type = /mob/living/simple_animal/hostile/asteroid/polarbear/lesser
 
 /obj/item/crusher_trophy/wendigo_horn
 	name = "wendigo horn"

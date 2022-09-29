@@ -5,7 +5,7 @@
  * kinda sitting in limbo... Well, whatever! They're kinda cool anyways!
  */
 /datum/antagonist/imp
-	name = "Imp"
+	name = "\improper Imp"
 	show_in_antagpanel = FALSE
 	show_in_roundend = FALSE
 	ui_name = "AntagInfoDemon"

@@ -4,6 +4,7 @@
 	icon = 'icons/obj/atmospherics/components/bluespace_gas_selling.dmi'
 	icon_state = "bluespace_vendor_open"
 	result_path = /obj/machinery/bluespace_vendor/built
+	pixel_shift = 30
 
 ///Defines for the mode of the vendor
 #define BS_MODE_OFF 1
@@ -18,7 +19,7 @@
 	desc = "Sells gas tanks with custom mixes for all the family!"
 
 	max_integrity = 300
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 80, ACID = 30)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 80, ACID = 30)
 	layer = OBJ_LAYER
 
 	///The bluespace sender that this vendor is connected to
@@ -26,7 +27,7 @@
 	///Amount of usable tanks inside the machine
 	var/empty_tanks = 10
 	///Reference to the current in use tank to be filled
-	var/obj/item/tank/internal_tank
+	var/obj/item/tank/internals/generic/internal_tank
 	///Path of the gas selected from the UI to be pumped inside the tanks
 	var/selected_gas
 	///Is the vendor trying to move gases from the network to the tanks?
@@ -51,29 +52,14 @@
 	map_spawned = FALSE
 	mode = BS_MODE_OPEN
 
-/obj/machinery/bluespace_vendor/north //Pixel offsets get overwritten on New()
-	dir = SOUTH
-	pixel_y = 30
-
-/obj/machinery/bluespace_vendor/south
-	dir = NORTH
-	pixel_y = -30
-
-/obj/machinery/bluespace_vendor/east
-	dir = WEST
-	pixel_x = 30
-
-/obj/machinery/bluespace_vendor/west
-	dir = EAST
-	pixel_x = -30
+INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 
 /obj/machinery/bluespace_vendor/New(loc, ndir, nbuild)
 	. = ..()
-	if(ndir)
-		setDir(ndir)
 
 	if(nbuild)
 		panel_open = TRUE
+
 	update_appearance()
 
 /obj/machinery/bluespace_vendor/Initialize(mapload)
@@ -106,11 +92,15 @@
 
 /obj/machinery/bluespace_vendor/update_overlays()
 	. = ..()
-	cut_overlays()
 	if(mode == BS_MODE_IDLE)
-		. += mutable_appearance(icon, "[base_icon]_idle_light-mask", 0, EMISSIVE_PLANE, alpha)
+		. += emissive_appearance(icon, "[base_icon]_idle_light-mask", src,  alpha)
 	else if(mode == BS_MODE_PUMPING)
-		. += mutable_appearance(icon, "[base_icon]_pumping_light-mask", 0, EMISSIVE_PLANE, alpha)
+		. += emissive_appearance(icon, "[base_icon]_pumping_light-mask", src, alpha)
+
+/obj/machinery/bluespace_vendor/Exited(atom/movable/gone, direction)
+	if(gone == internal_tank)
+		internal_tank = null
+	return ..()
 
 /obj/machinery/bluespace_vendor/process()
 	if(mode == BS_MODE_OPEN)
@@ -267,27 +257,31 @@
 
 	switch(action)
 		if("start_pumping")
-			pumping = TRUE
-			selected_gas = params["gas_id"]
-			mode = BS_MODE_PUMPING
-			update_appearance()
+			if(inserted_tank && !pumping)
+				pumping = TRUE
+				selected_gas = params["gas_id"]
+				mode = BS_MODE_PUMPING
+				update_appearance()
 			. = TRUE
 		if("stop_pumping")
-			pumping = FALSE
-			selected_gas = null
-			mode = BS_MODE_IDLE
-			update_appearance()
+			if(inserted_tank && pumping)
+				pumping = FALSE
+				selected_gas = null
+				mode = BS_MODE_IDLE
+				update_appearance()
 			. = TRUE
 		if("pumping_rate")
 			tank_filling_amount = clamp(params["rate"], 0, 100)
 			. = TRUE
 		if("tank_prepare")
-			inserted_tank = TRUE
-			internal_tank = new(src)
-			empty_tanks = max(empty_tanks - 1, 0)
+			if(empty_tanks && !inserted_tank)
+				inserted_tank = TRUE
+				internal_tank = new(src)
+				empty_tanks = max(empty_tanks - 1, 0)
 			. = TRUE
 		if("tank_expel")
-			check_price(usr)
+			if(inserted_tank && !pumping)
+				check_price(usr)
 			. = TRUE
 
 #undef BS_MODE_OFF

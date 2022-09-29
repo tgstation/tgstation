@@ -50,7 +50,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /turf/open/floor/iron/dark,
 /area/shuttle/mining/large)
 "g" = (
@@ -407,7 +407,7 @@
 /turf/open/floor/plating,
 /area/shuttle/mining/large)
 "E" = (
-/obj/machinery/power/apc/auto_name/east,
+/obj/machinery/power/apc/auto_name/directional/east,
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
 	},
@@ -427,9 +427,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/mining/large)
 "H" = (
-/obj/structure/sign/warning/vacuum/external{
-	pixel_x = 32
-	},
+/obj/structure/sign/warning/vacuum/external/directional/east,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/mining/large)
@@ -447,7 +445,7 @@
 /obj/docking_port/mobile{
 	dwidth = 3;
 	height = 10;
-	id = "mining";
+	shuttle_id = "mining";
 	name = "mining shuttle";
 	port_direction = 2;
 	width = 7

@@ -1,7 +1,5 @@
+/// Anything above a lattice should go here.
 /turf/open/floor
-	//NOTE: Floor code has been refactored, many procs were removed and refactored
-	//- you should use istype() if you want to find out whether a floor has a certain type
-	//- floor_tile is now a path, and not a tile obj
 	name = "floor"
 	icon = 'icons/turf/floors.dmi'
 	base_icon_state = "floor"
@@ -12,21 +10,24 @@
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	flags_1 = NO_SCREENTIPS_1
-	turf_flags = CAN_BE_DIRTY_1
+	turf_flags = CAN_BE_DIRTY_1 | IS_SOLID
 	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_OPEN_FLOOR)
-	canSmoothWith = list(SMOOTH_GROUP_OPEN_FLOOR, SMOOTH_GROUP_TURF_OPEN)
+	canSmoothWith = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_OPEN_FLOOR)
 
 	thermal_conductivity = 0.04
 	heat_capacity = 10000
-	intact = TRUE
 	tiled_dirt = TRUE
 
+	overfloor_placed = TRUE
+
+	/// Determines the type of damage overlay that will be used for the tile
+	var/damaged_dmi = 'icons/turf/damaged.dmi'
 	var/broken = FALSE
 	var/burnt = FALSE
-	var/floor_tile = null //tile that this floor drops
+	/// Path of the tile that this floor drops
+	var/floor_tile = null
 	var/list/broken_states
 	var/list/burnt_states
-
 
 /turf/open/floor/Initialize(mapload)
 	. = ..()
@@ -107,10 +108,6 @@
 /turf/open/floor/blob_act(obj/structure/blob/B)
 	return
 
-/turf/open/floor/update_icon()
-	. = ..()
-	update_visuals()
-
 /turf/open/floor/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
 
@@ -127,21 +124,29 @@
 		return
 	T.break_tile()
 
-/turf/open/floor/proc/break_tile()
+/turf/open/floor/break_tile()
 	if(broken)
 		return
-	icon_state = pick(broken_states)
-	broken = 1
+	broken = TRUE
+	update_appearance()
 
 /turf/open/floor/burn_tile()
-	if(broken || burnt)
+	if(burnt)
 		return
-	if(LAZYLEN(burnt_states))
-		icon_state = pick(burnt_states)
-	else
-		icon_state = pick(broken_states)
-	burnt = 1
+	burnt = TRUE
+	update_appearance()
 
+/turf/open/floor/update_overlays()
+	. = ..()
+	if(broken)
+		. += mutable_appearance(damaged_dmi, pick(broken_states))
+	else if(burnt)
+		if(LAZYLEN(burnt_states))
+			. += mutable_appearance(damaged_dmi, pick(burnt_states))
+		else
+			. += mutable_appearance(damaged_dmi, pick(broken_states))
+
+/// Things seem to rely on this actually returning plating. Override it if you have other baseturfs.
 /turf/open/floor/proc/make_plating(force = FALSE)
 	return ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 
@@ -166,7 +171,7 @@
 	. = ..()
 	if(.)
 		return .
-	if(intact && istype(object, /obj/item/stack/tile))
+	if(overfloor_placed && istype(object, /obj/item/stack/tile))
 		try_replace_tile(object, user, params)
 		return TRUE
 	if(user.combat_mode && istype(object, /obj/item/stack/sheet))
@@ -175,7 +180,7 @@
 	return FALSE
 
 /turf/open/floor/crowbar_act(mob/living/user, obj/item/I)
-	if(intact && pry_tile(I, user))
+	if(overfloor_placed && pry_tile(I, user))
 		return TRUE
 
 /turf/open/floor/proc/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
@@ -283,11 +288,13 @@
 				return FALSE
 			if(ispath(the_rcd.airlock_type, /obj/machinery/door/window))
 				to_chat(user, span_notice("You build a windoor."))
-				var/obj/machinery/door/window/new_window = new the_rcd.airlock_type(src, user.dir)
+				var/obj/machinery/door/window/new_window = new the_rcd.airlock_type(src, user.dir, the_rcd.airlock_electronics?.unres_sides)
 				if(the_rcd.airlock_electronics)
-					new_window.req_access = the_rcd.airlock_electronics.accesses.Copy()
-					new_window.req_one_access = the_rcd.airlock_electronics.one_access
-					new_window.unres_sides = the_rcd.airlock_electronics.unres_sides
+					new_window.name = the_rcd.airlock_electronics.passed_name || initial(new_window.name)
+					if(the_rcd.airlock_electronics.one_access)
+						new_window.req_one_access = the_rcd.airlock_electronics.accesses.Copy()
+					else
+						new_window.req_access = the_rcd.airlock_electronics.accesses.Copy()
 				new_window.autoclose = TRUE
 				new_window.update_appearance()
 				return TRUE
@@ -306,6 +313,7 @@
 				new_airlock.req_access = new_airlock.electronics.accesses
 			if(new_airlock.electronics.unres_sides)
 				new_airlock.unres_sides = new_airlock.electronics.unres_sides
+				new_airlock.unres_sensor = TRUE
 			if(new_airlock.electronics.passed_name)
 				new_airlock.name = sanitize(new_airlock.electronics.passed_name)
 			if(new_airlock.electronics.passed_cycle_id)
@@ -315,9 +323,10 @@
 			new_airlock.update_appearance()
 			return TRUE
 		if(RCD_DECONSTRUCT)
+			var/old_turf_name = name
 			if(!ScrapeAway(flags = CHANGETURF_INHERIT_AIR))
 				return FALSE
-			to_chat(user, span_notice("You deconstruct [src]."))
+			to_chat(user, span_notice("You deconstruct the [old_turf_name]."))
 			return TRUE
 		if(RCD_WINDOWGRILLE)
 			if(locate(/obj/structure/grille) in src)

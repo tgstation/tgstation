@@ -1,12 +1,5 @@
 /datum/config_entry/number_list/repeated_mode_adjust
 
-/datum/config_entry/keyed_list/probability
-	key_mode = KEY_MODE_TEXT
-	value_mode = VALUE_MODE_NUM
-
-/datum/config_entry/keyed_list/probability/ValidateListEntry(key_name)
-	return key_name in config.modes
-
 /datum/config_entry/keyed_list/max_pop
 	key_mode = KEY_MODE_TEXT
 	value_mode = VALUE_MODE_NUM
@@ -36,6 +29,11 @@
 
 /datum/config_entry/flag/everyone_has_maint_access
 
+/datum/config_entry/number/depsec_access_level
+	default = 1
+	min_val = 0
+	max_val = 2
+
 /datum/config_entry/flag/sec_start_brig //makes sec start in brig instead of dept sec posts
 
 /datum/config_entry/flag/force_random_names
@@ -63,6 +61,21 @@
 	default = 25
 	integer = FALSE
 	min_val = 0
+
+/// Determines the ideal player count for maximum progression per minute.
+/datum/config_entry/number/traitor_ideal_player_count
+	default = 20
+	min_val = 1
+
+/// Determines how fast traitors scale in general.
+/datum/config_entry/number/traitor_scaling_multiplier
+	default = 1
+	min_val = 0.01
+
+/// Determines how many potential objectives a traitor can have.
+/datum/config_entry/number/maximum_potential_objectives
+	default = 6
+	min_val = 1
 
 /datum/config_entry/number/changeling_scaling_coeff //how much does the amount of players get divided by to determine changelings
 	default = 6
@@ -95,6 +108,8 @@
 
 /datum/config_entry/flag/enforce_human_authority //If non-human species are barred from joining as a head of staff
 
+/datum/config_entry/flag/enforce_human_authority_on_everyone //If non-human species are barred from joining as a head of staff, including jobs flagged as allowed for non-humans, ie. Quartermaster.
+
 /datum/config_entry/flag/allow_latejoin_antagonists // If late-joining players can be traitor/changeling
 
 /datum/config_entry/number/shuttle_refuel_delay
@@ -106,9 +121,23 @@
 	key_mode = KEY_MODE_TEXT
 	value_mode = VALUE_MODE_FLAG
 
+/datum/config_entry/keyed_list/roundstart_races/ValidateListEntry(key_name, key_value)
+	if(key_name in GLOB.species_list)
+		return TRUE
+
+	log_config("ERROR: [key_name] is not a valid race ID.")
+	return FALSE
+
 /datum/config_entry/keyed_list/roundstart_no_hard_check // Species contained in this list will not cause existing characters with no-longer-roundstart species set to be resetted to the human race.
 	key_mode = KEY_MODE_TEXT
 	value_mode = VALUE_MODE_FLAG
+
+/datum/config_entry/keyed_list/roundstart_no_hard_check/ValidateListEntry(key_name, key_value)
+	if(key_name in GLOB.species_list)
+		return TRUE
+
+	log_config("ERROR: [key_name] is not a valid race ID.")
+	return FALSE
 
 /datum/config_entry/flag/no_summon_guns //No
 
@@ -236,8 +265,6 @@
 	movedelay_type = /mob/living/simple_animal
 /////////////////////////////////////////////////
 
-/datum/config_entry/flag/virtual_reality //Will virtual reality be loaded
-
 /datum/config_entry/flag/roundstart_away //Will random away mission be loaded.
 
 /datum/config_entry/number/gateway_delay //How long the gateway takes before it activates. Default is half an hour. Only matters if roundstart_away is enabled.
@@ -257,16 +284,21 @@
 /datum/config_entry/flag/silent_ai
 /datum/config_entry/flag/silent_borg
 
-/datum/config_entry/flag/sandbox_autoclose // close the sandbox panel after spawning an item, potentially reducing griff
-
 /datum/config_entry/number/default_laws //Controls what laws the AI spawns with.
 	default = 0
 	min_val = 0
-	max_val = 3
+	max_val = 4
+
+/// Controls if Asimov Superiority appears as a perk for humans even if standard Asimov isn't the default AI lawset
+/datum/config_entry/flag/silicon_asimov_superiority_override
 
 /datum/config_entry/number/silicon_max_law_amount
 	default = 12
 	min_val = 0
+
+/datum/config_entry/keyed_list/specified_laws
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_FLAG
 
 /datum/config_entry/keyed_list/random_laws
 	key_mode = KEY_MODE_TEXT
@@ -285,7 +317,7 @@
 	min_val = -1
 
 /datum/config_entry/string/overflow_job
-	default = "Assistant"
+	default = JOB_ASSISTANT
 
 /datum/config_entry/flag/starlight
 /datum/config_entry/flag/grey_assistants
@@ -369,4 +401,14 @@
 	min_val = 0
 	integer = FALSE // It is in hours, but just in case one wants to specify minutes.
 
-/datum/config_entry/flag/sdql_spells
+/datum/config_entry/flag/native_fov
+
+/datum/config_entry/flag/disallow_title_music
+
+/datum/config_entry/number/station_goal_budget
+	default = 1
+	min_val = 0
+	integer = FALSE
+
+/datum/config_entry/flag/disallow_circuit_sounds
+

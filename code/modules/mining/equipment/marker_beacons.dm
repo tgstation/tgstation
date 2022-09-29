@@ -18,7 +18,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 	name = "marker beacon"
 	singular_name = "marker beacon"
 	desc = "Prism-brand path illumination devices. Used by miners to mark paths and warn of danger."
-	icon = 'icons/obj/lighting.dmi'
+	icon = 'icons/obj/marker.dmi'
 	icon_state = "marker"
 	merge_type = /obj/item/stack/marker_beacon
 	max_amount = 100
@@ -62,20 +62,21 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 /obj/item/stack/marker_beacon/AltClick(mob/living/user)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
-	var/input_color = input(user, "Choose a color.", "Beacon Color") as null|anything in GLOB.marker_beacon_colors
+	var/input_color = tgui_input_list(user, "Choose a color", "Beacon Color", GLOB.marker_beacon_colors)
+	if(isnull(input_color))
+		return
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
-	if(input_color)
-		picked_color = input_color
-		update_appearance()
+	picked_color = input_color
+	update_appearance()
 
 /obj/structure/marker_beacon
 	name = "marker beacon"
 	desc = "A Prism-brand path illumination device. It is anchored in place and glowing steadily."
-	icon = 'icons/obj/lighting.dmi'
+	icon = 'icons/obj/marker.dmi'
 	icon_state = "marker"
 	layer = BELOW_OPEN_DOOR_LAYER
-	armor = list(MELEE = 50, BULLET = 75, LASER = 75, ENERGY = 75, BOMB = 25, BIO = 100, RAD = 100, FIRE = 25, ACID = 0)
+	armor = list(MELEE = 50, BULLET = 75, LASER = 75, ENERGY = 75, BOMB = 25, BIO = 0, FIRE = 25, ACID = 0)
 	max_integrity = 50
 	anchored = TRUE
 	light_range = 2
@@ -126,6 +127,9 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 			playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 			qdel(src) //otherwise delete us
 
+/obj/structure/marker_beacon/attack_tk(mob/user)
+	return
+
 /obj/structure/marker_beacon/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/stack/marker_beacon))
 		var/obj/item/stack/marker_beacon/M = I
@@ -148,17 +152,62 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 	..()
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
-	var/input_color = input(user, "Choose a color.", "Beacon Color") as null|anything in GLOB.marker_beacon_colors
+	var/input_color = tgui_input_list(user, "Choose a color", "Beacon Color", GLOB.marker_beacon_colors)
+	if(isnull(input_color))
+		return
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
-	if(input_color)
-		picked_color = input_color
-		update_appearance()
+	picked_color = input_color
+	update_appearance()
 
 
 /* Preset marker beacon types, for mapping */
+// Set the icon_state here to make it clear for mappers.
 
 /obj/structure/marker_beacon/burgundy
 	picked_color = "Burgundy"
-	// set icon_state to make it clear for mappers
 	icon_state = "markerburgundy-on"
+
+/obj/structure/marker_beacon/bronze
+	picked_color = "Bronze"
+	icon_state = "markerbronze-on"
+
+/obj/structure/marker_beacon/yellow
+	picked_color = "Yellow"
+	icon_state = "markeryellow-on"
+
+/obj/structure/marker_beacon/lime
+	picked_color = "Lime"
+	icon_state = "markerlime-on"
+
+/obj/structure/marker_beacon/olive
+	picked_color = "Olive"
+	icon_state = "markerolive-on"
+
+/obj/structure/marker_beacon/jade
+	picked_color = "Jade"
+	icon_state = "markerjade-on"
+
+/obj/structure/marker_beacon/teal
+	picked_color = "Teal"
+	icon_state = "markerteal-on"
+
+/obj/structure/marker_beacon/cerulean
+	picked_color = "Cerulean"
+	icon_state = "markercerulean-on"
+
+/obj/structure/marker_beacon/indigo
+	picked_color = "Indigo"
+	icon_state = "markerindigo-on"
+
+/obj/structure/marker_beacon/purple
+	picked_color = "Purple"
+	icon_state = "markerpurple-on"
+
+/obj/structure/marker_beacon/violet
+	picked_color = "Violet"
+	icon_state = "markerviolet-on"
+
+/obj/structure/marker_beacon/fuchsia
+	picked_color = "Fuchsia"
+	icon_state = "markerfuchsia-on"

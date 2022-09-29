@@ -1,6 +1,0 @@
-author: "esainane"
-delete-after: True
-changes: 
-  - bugfix: "Gas Filters will now always attempt to move gas, as long as at least one output has space available. Any gas not able to be moved to its destination is returned to the input as if it was never removed. Previously, only gases for the main output port would continue to move when the other output port was full."
-  - bugfix: "Gas Filters again no longer leaves empty entries for gases that were filtered in the main output."
-  - bugfix: "Gas Filters again no longer outright destroys gas when no filters (or a bad filter, somehow) are set. Instead, it will go through to the main output, as before, or if the main output is full, be returned back to the input, as if never removed."

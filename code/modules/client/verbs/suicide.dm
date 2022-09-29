@@ -1,5 +1,3 @@
-/mob/var/suiciding = FALSE
-
 /mob/proc/set_suicide(suicide_state)
 	suiciding = suicide_state
 	if(suicide_state)
@@ -9,7 +7,7 @@
 
 /mob/living/carbon/set_suicide(suicide_state) //you thought that box trick was pretty clever, didn't you? well now hardmode is on, boyo.
 	. = ..()
-	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/internal/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
 	if(B)
 		B.suicided = suicide_state
 
@@ -37,13 +35,15 @@
 			return
 		set_suicide(TRUE) //need to be called before calling suicide_act as fuck knows what suicide_act will do with your suicider
 		var/obj/item/held_item = get_active_held_item()
-		if(held_item)
-			var/damagetype = held_item.suicide_act(src)
+		var/damagetype = SEND_SIGNAL(src, COMSIG_HUMAN_SUICIDE_ACT)
+		if(held_item || damagetype)
+			if(!damagetype && held_item)
+				damagetype = held_item.suicide_act(src)
 			if(damagetype)
 				if(damagetype & SHAME)
 					adjustStaminaLoss(200)
 					set_suicide(FALSE)
-					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "shameful_suicide", /datum/mood_event/shameful_suicide)
+					add_mood_event("shameful_suicide", /datum/mood_event/shameful_suicide)
 					return
 
 				if(damagetype & MANUAL_SUICIDE_NONLETHAL) //Make sure to call the necessary procs if it does kill later
@@ -85,7 +85,7 @@
 		var/suicide_message
 
 		if(!combat_mode)
-			var/obj/item/organ/brain/userbrain = getorgan(/obj/item/organ/brain)
+			var/obj/item/organ/internal/brain/userbrain = getorgan(/obj/item/organ/internal/brain)
 			if(userbrain?.damage >= 75)
 				suicide_message = "[src] pulls both arms outwards in front of [p_their()] chest and pumps them behind [p_their()] back, repeats this motion in a smaller range of motion \
 						down to [p_their()] hips two times once more all while sliding [p_their()] legs in a faux walking motion, claps [p_their()] hands together \

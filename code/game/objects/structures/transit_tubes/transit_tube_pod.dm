@@ -11,12 +11,6 @@
 	var/datum/gas_mixture/air_contents = new()
 	var/occupied_icon_state = "pod_occupied"
 	var/obj/structure/transit_tube/current_tube = null
-	var/next_dir
-	var/next_loc
-	var/enter_delay = 0
-	var/exit_delay
-	var/moving_time = 0
-
 
 /obj/structure/transit_tube_pod/Initialize(mapload)
 	. = ..()
@@ -24,7 +18,6 @@
 	air_contents.gases[/datum/gas/oxygen][MOLES] = MOLES_O2STANDARD
 	air_contents.gases[/datum/gas/nitrogen][MOLES] = MOLES_N2STANDARD
 	air_contents.temperature = T20C
-
 
 /obj/structure/transit_tube_pod/Destroy()
 	empty_pod()
@@ -97,70 +90,68 @@
 		M.forceMove(location)
 	update_appearance()
 
-/obj/structure/transit_tube_pod/Process_Spacemove()
-	if(moving) //No drifting while moving in the tubes
-		return TRUE
-	else
-		return ..()
-
-/obj/structure/transit_tube_pod/proc/follow_tube()
-	set waitfor = FALSE
-	if(moving)
+/obj/structure/transit_tube_pod/proc/follow_tube(obj/structure/transit_tube/tube)
+	if(moving || !tube.has_exit(dir))
 		return
 
 	moving = TRUE
+	current_tube = tube
 
-	for(var/obj/structure/transit_tube/tube in loc)
-		if(tube.has_exit(dir))
+	var/datum/move_loop/engine = SSmove_manager.force_move_dir(src, dir, 0, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
+	RegisterSignal(engine, COMSIG_MOVELOOP_PREPROCESS_CHECK, .proc/before_pipe_transfer)
+	RegisterSignal(engine, COMSIG_MOVELOOP_POSTPROCESS, .proc/after_pipe_transfer)
+	RegisterSignal(engine, COMSIG_PARENT_QDELETING, .proc/engine_finish)
+	calibrate_engine(engine)
+
+/obj/structure/transit_tube_pod/proc/before_pipe_transfer(datum/move_loop/move/source)
+	SIGNAL_HANDLER
+	setDir(source.direction)
+
+/obj/structure/transit_tube_pod/proc/after_pipe_transfer(datum/move_loop/move/source)
+	SIGNAL_HANDLER
+
+	set_density(current_tube.density)
+	if(current_tube.should_stop_pod(src, source.direction))
+		current_tube.pod_stopped(src, dir)
+		qdel(source)
+		return
+
+	calibrate_engine(source)
+
+/obj/structure/transit_tube_pod/proc/calibrate_engine(datum/move_loop/move/engine)
+	var/next_dir = current_tube.get_exit(dir)
+
+	if(!next_dir)
+		qdel(engine)
+		return
+
+	var/exit_delay = current_tube.exit_delay(src, dir)
+	var/atom/next_loc = get_step(loc, next_dir)
+
+	current_tube = null
+	for(var/obj/structure/transit_tube/tube in next_loc)
+		if(tube.has_entrance(next_dir))
 			current_tube = tube
 			break
 
-	move_animation(MOVE_ANIMATION_STAGE_ONE)
-
-///timer loop that handles the pod moving from tube to tube
-/obj/structure/transit_tube_pod/proc/move_animation(stage = MOVE_ANIMATION_STAGE_ONE)
-	if(stage == MOVE_ANIMATION_STAGE_ONE)
-		next_dir = current_tube.get_exit(dir)
-
-		if(!next_dir)
-			return
-
-		exit_delay = current_tube.exit_delay(src, dir)
-		next_loc = get_step(loc, next_dir)
-
-		current_tube = null
-		for(var/obj/structure/transit_tube/tube in next_loc)
-			if(tube.has_entrance(next_dir))
-				current_tube = tube
-				break
-
-		if(current_tube == null)
-			setDir(next_dir)
-			Move(get_step(loc, dir), dir, DELAY_TO_GLIDE_SIZE(exit_delay)) // Allow collisions when leaving the tubes.
-			return
-
-		enter_delay = current_tube.enter_delay(src, next_dir)
-		if(enter_delay > 0)
-			addtimer(CALLBACK(src, .proc/move_animation, MOVE_ANIMATION_STAGE_TWO), enter_delay)
-			return
-		else
-			stage = MOVE_ANIMATION_STAGE_TWO
-	if(stage == MOVE_ANIMATION_STAGE_TWO)
+	if(!current_tube)
 		setDir(next_dir)
-		set_glide_size(DELAY_TO_GLIDE_SIZE(enter_delay + exit_delay))
-		forceMove(next_loc) // When moving from one tube to another, skip collision and such.
-		set_density(current_tube.density)
+		// Allow collisions when leaving the tubes.
+		Move(get_step(loc, dir), dir, DELAY_TO_GLIDE_SIZE(exit_delay))
+		qdel(src)
+		return
 
-		if(current_tube?.should_stop_pod(src, next_dir))
-			current_tube.pod_stopped(src, dir)
-		else
-			addtimer(CALLBACK(src, .proc/move_animation, MOVE_ANIMATION_STAGE_ONE), exit_delay)
-			return
+	var/enter_delay = current_tube.enter_delay(src, next_dir)
+	engine.direction = next_dir
+	engine.set_delay(enter_delay + exit_delay)
+
+/obj/structure/transit_tube_pod/proc/engine_finish()
 	set_density(TRUE)
 	moving = FALSE
 
 	var/obj/structure/transit_tube/TT = locate(/obj/structure/transit_tube) in loc
-	if(!TT || (!(dir in TT.tube_dirs) && !(turn(dir,180) in TT.tube_dirs))) //landed on a turf without transit tube or not in our direction
+	//landed on a turf without transit tube or not in our direction
+	if(!TT || (!(dir in TT.tube_dirs) && !(turn(dir,180) in TT.tube_dirs)))
 		outside_tube()
 
 /obj/structure/transit_tube_pod/proc/outside_tube()

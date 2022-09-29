@@ -69,13 +69,12 @@ export const FUNDAMENTAL_DATA_TYPES = {
     );
   },
   'option': (props, context) => {
-    const { value, setValue, extraData } = props;
+    const { value, setValue } = props;
     let large = false;
-    const data = Array.isArray(extraData)
-      ? extraData
-      : Object.keys(extraData);
+    const extraData = props.extraData || [];
+    const data = Array.isArray(extraData) ? extraData : Object.keys(extraData);
 
-    data.forEach(element => {
+    data.forEach((element) => {
       if (element.length > OPTION_DROPDOWN_LARGE_CHAR_AMOUNT) {
         large = true;
       }
@@ -83,12 +82,12 @@ export const FUNDAMENTAL_DATA_TYPES = {
 
     return (
       <Dropdown
-        className="Datatype__Option"
-        color={"transparent"}
+        className="IntegratedCircuit__BlueBorder"
+        color={'transparent'}
         options={data}
         onSelected={setValue}
         displayText={value}
-        openWidth={large ? "200px" : undefined}
+        openWidth={large ? '200px' : undefined}
         noscroll
       />
     );

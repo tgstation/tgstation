@@ -13,7 +13,8 @@
 	verb_ask = "beeps"
 	verb_exclaim = "beeps"
 	var/listening = FALSE
-	var/recorded = "" //the activation message
+	/// The activation message is tracked using this var.
+	var/recorded = ""
 	var/mode = INCLUSIVE_MODE
 	var/static/list/modes = list(
 		"inclusive",
@@ -22,7 +23,7 @@
 		"voice sensor",
 	)
 	drop_sound = 'sound/items/handling/component_drop.ogg'
-	pickup_sound =  'sound/items/handling/component_pickup.ogg'
+	pickup_sound = 'sound/items/handling/component_pickup.ogg'
 
 /obj/item/assembly/voice/Initialize(mapload)
 	. = ..()

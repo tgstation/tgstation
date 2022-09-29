@@ -12,8 +12,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	verb_ask = "queries"
 	verb_exclaim = "alarms"
 
-	idle_power_usage = 20
-	active_power_usage = 50
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.05
 
 	circuit = /obj/item/circuitboard/machine/announcement_system
 
@@ -53,20 +52,23 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	GLOB.announcement_systems -= src //"OH GOD WHY ARE THERE 100,000 LISTED ANNOUNCEMENT SYSTEMS?!!"
 	return ..()
 
-/obj/machinery/announcement_system/attackby(obj/item/P, mob/user, params)
-	if(P.tool_behaviour == TOOL_SCREWDRIVER)
-		P.play_tool_sound(src)
-		panel_open = !panel_open
-		to_chat(user, span_notice("You [panel_open ? "open" : "close"] the maintenance hatch of [src]."))
-		update_appearance()
-	else if(default_deconstruction_crowbar(P))
-		return
-	else if(P.tool_behaviour == TOOL_MULTITOOL && panel_open && (machine_stat & BROKEN))
-		to_chat(user, span_notice("You reset [src]'s firmware."))
-		set_machine_stat(machine_stat & ~BROKEN)
-		update_appearance()
-	else
-		return ..()
+/obj/machinery/announcement_system/screwdriver_act(mob/living/user, obj/item/tool)
+	tool.play_tool_sound(src)
+	panel_open = !panel_open
+	to_chat(user, span_notice("You [panel_open ? "open" : "close"] the maintenance hatch of [src]."))
+	update_appearance()
+	return TRUE
+
+/obj/machinery/announcement_system/crowbar_act(mob/living/user, obj/item/tool)
+	if(default_deconstruction_crowbar(tool))
+		return TRUE
+
+/obj/machinery/announcement_system/multitool_act(mob/living/user, obj/item/tool)
+	if(!panel_open || !(machine_stat & BROKEN))
+		return FALSE
+	to_chat(user, span_notice("You reset [src]'s firmware."))
+	set_machine_stat(machine_stat & ~BROKEN)
+	update_appearance()
 
 /obj/machinery/announcement_system/proc/CompileText(str, user, rank) //replaces user-given variables with actual thingies.
 	str = replacetext(str, "%PERSON", "[user]")
@@ -83,8 +85,6 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 		message = CompileText(arrival, user, rank)
 	else if(message_type == "NEWHEAD" && newheadToggle)
 		message = CompileText(newhead, user, rank)
-	else if(message_type == "CRYOSTORAGE")
-		message = "[user][rank ? ", [rank]" : ""] has been moved to cryo storage."
 	else if(message_type == "ARRIVALS_BROKEN")
 		message = "The arrivals shuttle has been damaged. Docking for repairs..."
 
@@ -99,6 +99,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 
 /// Sends a message to the appropriate channels.
 /obj/machinery/announcement_system/proc/broadcast(message, list/channels)
+	use_power(active_power_usage)
 	if(channels.len == 0)
 		radio.talk_into(src, message, null)
 	else
@@ -136,14 +137,14 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 				return
 			if(NewMessage)
 				arrival = NewMessage
-				log_game("The arrivals announcement was updated: [NewMessage] by:[key_name(usr)]")
+				usr.log_message("updated the arrivals announcement to: [NewMessage]", LOG_GAME)
 		if("NewheadText")
 			var/NewMessage = trim(html_encode(param["newText"]), MAX_MESSAGE_LEN)
 			if(!usr.canUseTopic(src, !issilicon(usr)))
 				return
 			if(NewMessage)
 				newhead = NewMessage
-				log_game("The head announcement was updated: [NewMessage] by:[key_name(usr)]")
+				usr.log_message("updated the head announcement to: [NewMessage]", LOG_GAME)
 		if("NewheadToggle")
 			newheadToggle = !newheadToggle
 			update_appearance()

@@ -1,48 +1,26 @@
 /*
 These defines are the balancing points of various parts of the radiation system.
 Changes here can have widespread effects: make sure you test well.
-Ask ninjanomnom if they're around
+Ask Mothblocks if they're around
 */
 
-#define RAD_BACKGROUND_RADIATION 9 // How much radiation is harmless to a mob, this is also when radiation waves stop spreading
-													// WARNING: Lowering this value significantly increases SSradiation load
-
-// apply_effect((amount*RAD_MOB_COEFFICIENT)/max(1, (radiation**2)*RAD_OVERDOSE_REDUCTION), IRRADIATE, blocked)
-#define RAD_MOB_COEFFICIENT 0.20 // Radiation applied is multiplied by this
-#define RAD_MOB_SKIN_PROTECTION ((1/RAD_MOB_COEFFICIENT)+RAD_BACKGROUND_RADIATION)
-
-#define RAD_LOSS_PER_SECOND 0.25
-/// Toxin damage per second coefficient
-#define RAD_TOX_COEFFICIENT 0.04
-#define RAD_OVERDOSE_REDUCTION 0.000001 // Coefficient to the reduction in applied rads once the thing, usualy mob, has too much radiation
-										// WARNING: This number is highly sensitive to change, graph is first for best results
-#define RAD_BURN_THRESHOLD 1000 // Applied radiation must be over this to burn
-//Holy shit test after you tweak anything it's said like 6 times in here
-//You probably want to plot any tweaks you make so you can see the curves visually
-#define RAD_BURN_LOG_BASE 1.1
-#define RAD_BURN_LOG_GRADIENT 10000
-#define RAD_BURN_CURVE(X) log(1+((X-RAD_BURN_THRESHOLD)/RAD_BURN_LOG_GRADIENT))/log(RAD_BURN_LOG_BASE)
-
-/// How much stored radiation in a mob with no ill effects
-#define RAD_MOB_SAFE 500
-
 /// How much stored radiation to check for hair loss
-#define RAD_MOB_HAIRLOSS 800
+#define RAD_MOB_HAIRLOSS (1 MINUTES)
 /// Chance of you hair starting to fall out every second when over threshold
 #define RAD_MOB_HAIRLOSS_PROB 7.5
 
 /// How much stored radiation to check for mutation
-#define RAD_MOB_MUTATE 1250
+#define RAD_MOB_MUTATE (2 MINUTES)
 /// Chance of randomly mutating every second when over threshold
 #define RAD_MOB_MUTATE_PROB 0.5
 
-/// The amount of radiation to check for vomitting
-#define RAD_MOB_VOMIT 2000
+/// The time since irradiated before checking for vomitting
+#define RAD_MOB_VOMIT (2 MINUTES)
 /// Chance per second of vomitting
 #define RAD_MOB_VOMIT_PROB 0.5
 
 /// How much stored radiation to check for stunning
-#define RAD_MOB_KNOCKDOWN 2000
+#define RAD_MOB_KNOCKDOWN (2 MINUTES)
 /// Chance of knockdown per second when over threshold
 #define RAD_MOB_KNOCKDOWN_PROB 0.5
 /// Amount of knockdown when it occurs
@@ -54,15 +32,23 @@ Ask ninjanomnom if they're around
 #define RAD_MEDIUM_INSULATION  0.7 // What common walls have
 #define RAD_HEAVY_INSULATION 0.6 // What reinforced walls have
 #define RAD_EXTREME_INSULATION 0.5 // What rad collectors have
-#define RAD_FULL_INSULATION 0 // Unused
+#define RAD_FULL_INSULATION 0 // Completely stops radiation from coming through
 
-// WARNING: The defines below could have disastrous consequences if tweaked incorrectly. See: The great SM purge of Oct.6.2017
-// contamination_strength = (strength-RAD_MINIMUM_CONTAMINATION) * RAD_CONTAMINATION_STR_COEFFICIENT
-#define RAD_MINIMUM_CONTAMINATION 350 // How strong does a radiation wave have to be to contaminate objects
-#define RAD_CONTAMINATION_STR_COEFFICIENT 0.25 // Higher means higher strength scaling contamination strength
-#define RAD_DISTANCE_COEFFICIENT 1 // Lower means further rad spread
+/// The default chance something can be irradiated
+#define DEFAULT_RADIATION_CHANCE 10
 
-#define RAD_HALF_LIFE 90 // The half-life of contaminated objects
+/// The default chance for uranium structures to irradiate
+#define URANIUM_IRRADIATION_CHANCE DEFAULT_RADIATION_CHANCE
 
-#define RAD_GEIGER_RC 4 // RC-constant for the LP filter for geiger counters. See #define LPFILTER for more info.
-#define RAD_GEIGER_GRACE_PERIOD 4                   // How many seconds after we last detect a radiation pulse until we stop blipping
+/// The minimum exposure time before uranium structures can irradiate
+#define URANIUM_RADIATION_MINIMUM_EXPOSURE_TIME (3 SECONDS)
+
+/// Return values of [proc/get_perceived_radiation_danger]
+// If you change these, update /datum/looping_sound/geiger as well.
+#define PERCEIVED_RADIATION_DANGER_LOW 1
+#define PERCEIVED_RADIATION_DANGER_MEDIUM 2
+#define PERCEIVED_RADIATION_DANGER_HIGH 3
+#define PERCEIVED_RADIATION_DANGER_EXTREME 4
+
+/// The time before geiger counters reset back to normal without any radiation pulses
+#define TIME_WITHOUT_RADIATION_BEFORE_RESET (5 SECONDS)

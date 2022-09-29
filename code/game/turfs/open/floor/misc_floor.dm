@@ -149,7 +149,7 @@
 	floor_tile = /obj/item/stack/tile/bronze/flat
 
 /turf/open/floor/bronze/filled
-	icon = 'icons/obj/clockwork_objects.dmi'
+	icon_state = "clockwork_floor_filled"
 	floor_tile = /obj/item/stack/tile/bronze/filled
 
 /turf/open/floor/bronze/filled/lavaland
@@ -206,11 +206,8 @@
 
 /turf/open/floor/plating/rust/Initialize(mapload)
 	. = ..()
-	color = null
-
-/turf/open/floor/plating/rust/ComponentInitialize()
-	. = ..()
 	AddElement(/datum/element/rust)
+	color = null
 
 /turf/open/floor/plating/plasma
 	initial_gas_mix = ATMOS_TANK_PLASMA

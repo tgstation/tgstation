@@ -42,41 +42,41 @@ FLOOR SAFES
 	. = ..()
 
 	// Combination generation
-	for(var/i in 1 to number_of_tumblers)
+	for(var/iterating in 1 to number_of_tumblers)
 		tumblers.Add(rand(0, 99))
 
 	if(!mapload)
 		return
 
 	// Put as many items on our turf inside as possible
-	for(var/obj/item/I in loc)
+	for(var/obj/item/inserting_item in loc)
 		if(space >= maxspace)
 			return
-		if(I.w_class + space <= maxspace)
-			space += I.w_class
-			I.forceMove(src)
+		if(inserting_item.w_class + space <= maxspace)
+			space += inserting_item.w_class
+			inserting_item.forceMove(src)
 
 /obj/structure/safe/update_icon_state()
 	icon_state = "[initial(icon_state)][open ? "-open" : null]"
 	return ..()
 
-/obj/structure/safe/attackby(obj/item/I, mob/user, params)
+/obj/structure/safe/attackby(obj/item/attacking_item, mob/user, params)
 	if(open)
 		. = TRUE //no afterattack
-		if(I.w_class + space <= maxspace)
-			space += I.w_class
-			if(!user.transferItemToLoc(I, src))
-				to_chat(user, span_warning("\The [I] is stuck to your hand, you cannot put it in the safe!"))
+		if(attacking_item.w_class + space <= maxspace)
+			if(!user.transferItemToLoc(attacking_item, src))
+				to_chat(user, span_warning("\The [attacking_item] is stuck to your hand, you cannot put it in the safe!"))
 				return
-			to_chat(user, span_notice("You put [I] in [src]."))
+			space += attacking_item.w_class
+			to_chat(user, span_notice("You put [attacking_item] in [src]."))
 		else
-			to_chat(user, span_warning("[I] won't fit in [src]."))
+			to_chat(user, span_warning("[attacking_item] won't fit in [src]."))
 	else
-		if(istype(I, /obj/item/clothing/neck/stethoscope))
+		if(istype(attacking_item, /obj/item/clothing/neck/stethoscope))
 			attack_hand(user)
 			return
 		else
-			to_chat(user, span_warning("You can't put [I] into the safe while it is closed!"))
+			to_chat(user, span_warning("You can't put [attacking_item] into the safe while it is closed!"))
 			return
 
 /obj/structure/safe/blob_act(obj/structure/blob/B)
@@ -154,7 +154,7 @@ FLOOR SAFES
 				to_chat(user, span_warning("The dial will not turn, as the mechanism is destroyed!"))
 				return
 			var/ticks = text2num(params["num"])
-			for(var/i = 1 to ticks)
+			for(var/iterate in 1 to ticks)
 				dial = WRAP(dial - 1, 0, 100)
 
 				var/invalid_turn = current_tumbler_index % 2 == 0 || current_tumbler_index > number_of_tumblers
@@ -162,10 +162,10 @@ FLOOR SAFES
 					current_tumbler_index = 1
 
 				if(!invalid_turn && dial == tumblers[current_tumbler_index])
-					notify_user(user, canhear, list("tink", "krink", "plink"), ticks, i)
+					notify_user(user, canhear, list("tink", "krink", "plink"), ticks, iterate)
 					current_tumbler_index++
 				else
-					notify_user(user, canhear, list("clack", "scrape", "clank"), ticks, i)
+					notify_user(user, canhear, list("clack", "scrape", "clank"), ticks, iterate)
 			check_unlocked()
 			return TRUE
 		if("turnleft")
@@ -175,7 +175,7 @@ FLOOR SAFES
 				to_chat(user, span_warning("The dial will not turn, as the mechanism is destroyed!"))
 				return
 			var/ticks = text2num(params["num"])
-			for(var/i = 1 to ticks)
+			for(var/iterate in 1 to ticks)
 				dial = WRAP(dial + 1, 0, 100)
 
 				var/invalid_turn = current_tumbler_index % 2 != 0 || current_tumbler_index > number_of_tumblers
@@ -183,10 +183,10 @@ FLOOR SAFES
 					current_tumbler_index = 1
 
 				if(!invalid_turn && dial == tumblers[current_tumbler_index])
-					notify_user(user, canhear, list("tonk", "krunk", "plunk"), ticks, i)
+					notify_user(user, canhear, list("tonk", "krunk", "plunk"), ticks, iterate)
 					current_tumbler_index++
 				else
-					notify_user(user, canhear, list("click", "chink", "clink"), ticks, i)
+					notify_user(user, canhear, list("click", "chink", "clink"), ticks, iterate)
 			check_unlocked()
 			return TRUE
 		if("retrieve")
@@ -195,11 +195,11 @@ FLOOR SAFES
 			var/index = text2num(params["index"])
 			if(!index)
 				return
-			var/obj/item/I = contents[index]
-			if(!I || !in_range(src, user))
+			var/obj/item/retrieved_item = contents[index]
+			if(!retrieved_item || !in_range(src, user))
 				return
-			user.put_in_hands(I)
-			space -= I.w_class
+			user.put_in_hands(retrieved_item)
+			space -= retrieved_item.w_class
 			return TRUE
 
 /**
@@ -230,7 +230,7 @@ FLOOR SAFES
 	if(current_tick == 2)
 		to_chat(user, "<span class='italics'>The sounds from [src] are too fast and blend together.</span>")
 	if(total_ticks == 1 || prob(SOUND_CHANCE))
-		to_chat(user, "<span class='italics'>You hear a [pick(sounds)] from [src].</span>")
+		balloon_alert(user, pick(sounds))
 
 //FLOOR SAFES
 /obj/structure/safe/floor

@@ -1,6 +1,6 @@
 //temporary visual effects(/obj/effect/temp_visual) used by cult stuff
 /obj/effect/temp_visual/cult
-	icon = 'icons/effects/cult_effects.dmi'
+	icon = 'icons/effects/cult/effects.dmi'
 	randomdir = FALSE
 	duration = 10
 
@@ -18,13 +18,13 @@
 	icon_state = "bloodout"
 
 /obj/effect/temp_visual/dir_setting/cult/phase  // The veil shifter teleport
-	icon = 'icons/effects/cult_effects.dmi'
+	icon = 'icons/effects/cult/effects.dmi'
 	name = "phase glow"
 	duration = 7
 	icon_state = "cultin"
 
 /obj/effect/temp_visual/dir_setting/cult/phase/out
-	icon = 'icons/effects/cult_effects.dmi'
+	icon = 'icons/effects/cult/effects.dmi'
 	icon_state = "cultout"
 
 /obj/effect/temp_visual/cult/sac
@@ -35,6 +35,7 @@
 	name = "unholy glow"
 	icon_state = "doorglow"
 	layer = CLOSED_FIREDOOR_LAYER //above closed doors
+	plane = GAME_PLANE
 
 /obj/effect/temp_visual/cult/door/unruned
 	icon_state = "unruneddoorglow"
@@ -43,6 +44,7 @@
 	name = "unholy glow"
 	icon_state = "wallglow"
 	layer = ABOVE_NORMAL_TURF_LAYER
+	plane = GAME_PLANE
 
 /obj/effect/temp_visual/cult/turf/floor
 	icon_state = "floorglow"
@@ -53,6 +55,7 @@
 	icon_state = "space"
 	duration = 600
 	layer = ABOVE_OBJ_LAYER
+	plane = GAME_PLANE
 
 //visuals for runes being magically created
 /obj/effect/temp_visual/cult/rune_spawn

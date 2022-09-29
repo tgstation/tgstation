@@ -34,7 +34,7 @@
   - rscadd: The MC can now dynamcially change the rate a subsystem is triggered based
       on how laggy it's being. This has been applied to atmos to allow for faster
       air processing without lagging the server
-  - tweak: Pipes and atmos machinery now processes in tune with air, rather than seperately.
+  - tweak: Pipes and atmos machinery now processes in tune with air, rather than separately.
   - bugfix: Fixed hotspots and fire causing more lag than they needed to
   - bugfix: Fixed some objects not getting garbage collected because they didn't properly
       clear references in Destory()

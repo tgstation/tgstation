@@ -49,7 +49,7 @@
 	face_atom(A) // change direction to face what you clicked on
 
 	if(aicamera.in_camera_mode) //Cyborg picture taking
-		aicamera.camera_mode_off()
+		aicamera.toggle_camera_mode(sound = FALSE)
 		aicamera.captureimage(A, usr)
 		return
 
@@ -66,6 +66,10 @@
 		//while buckled, you can still connect to and control things like doors, but you can't use your modules
 		if(buckled)
 			to_chat(src, span_warning("You can't use modules while buckled to [buckled]!"))
+			return
+
+		//if your "hands" are blocked you shouldn't be able to use modules
+		if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 			return
 
 		if(W == A)

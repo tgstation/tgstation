@@ -1,7 +1,7 @@
 // Approved manifest.
 // +80 credits flat.
 /datum/export/manifest_correct
-	cost =  CARGO_CRATE_VALUE * 0.4
+	cost = CARGO_CRATE_VALUE * 0.4
 	k_elasticity = 0
 	unit_name = "approved manifest"
 	export_types = list(/obj/item/paper/fluff/jobs/cargo/manifest)

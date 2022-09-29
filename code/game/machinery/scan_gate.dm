@@ -22,8 +22,6 @@
 	desc = "A gate able to perform mid-depth scans on any organisms who pass under it."
 	icon = 'icons/obj/machines/scangate.dmi'
 	icon_state = "scangate"
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 50
 	circuit = /obj/item/circuitboard/machine/scanner_gate
 
 	var/scanline_timer
@@ -166,7 +164,7 @@
 						beep = TRUE
 		if(SCANGATE_GUNS)
 			for(var/I in M.get_contents())
-				if(istype(I, /obj/item/gun))
+				if(isgun(I))
 					beep = TRUE
 					break
 		if(SCANGATE_NUTRITION)
@@ -193,6 +191,8 @@
 			var/obj/item/assembly/assembly = wires.get_attached(color)
 			assembly?.activate()
 		set_scanline("scanning", 10)
+
+	use_power(active_power_usage)
 
 /obj/machinery/scanner_gate/proc/alarm_beep()
 	if(next_beep <= world.time)
