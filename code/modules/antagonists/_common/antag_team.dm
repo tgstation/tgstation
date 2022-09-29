@@ -13,7 +13,7 @@ GLOBAL_LIST_EMPTY(antagonist_teams)
 	var/list/datum/mind/members = list()
 	///Common objectives, these won't be added or removed automatically, subtypes handle this, this is here for bookkeeping purposes.
 	var/list/datum/objective/objectives = list()
-	var/list/players_spawned = new
+	var/list/players_spawned = list()
 
 /datum/team/New(starting_members)
 	. = ..()

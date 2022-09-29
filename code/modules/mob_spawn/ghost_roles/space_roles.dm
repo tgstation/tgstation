@@ -118,7 +118,7 @@
 	var/antag_datum_to_give = /datum/antagonist/battlecruiser
 
 /obj/effect/mob_spawn/ghost_role/human/syndicate/battlecruiser/allow_spawn(mob/user, silent = FALSE)
-	if(!(user.key in antag_team.players_spawned))//one per person unless you get a bonus spawn
+	if(!(user.ckey in antag_team.players_spawned))//one per person unless you get a bonus spawn
 		return TRUE
 	to_chat(user, span_warning("<b>You have already used up your chance to roll as Battlecruiser</b>."))
 	return FALSE
