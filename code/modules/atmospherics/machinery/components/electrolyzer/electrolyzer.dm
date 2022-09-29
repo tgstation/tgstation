@@ -41,14 +41,14 @@
 	)
 
 	var/static/list/tool_behaviors = list(
-			TOOL_SCREWDRIVER = list(
-				SCREENTIP_CONTEXT_LMB = "Open hatch",
-			),
+		TOOL_SCREWDRIVER = list(
+			SCREENTIP_CONTEXT_LMB = "Open hatch",
+		),
 
-			TOOL_WRENCH = list(
-				SCREENTIP_CONTEXT_LMB = "Anchor",
-			),
-		)
+		TOOL_WRENCH = list(
+			SCREENTIP_CONTEXT_LMB = "Anchor",
+		),
+	)
 	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 
 /obj/machinery/electrolyzer/Destroy()
