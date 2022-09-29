@@ -259,7 +259,7 @@
 /**
  * Add log to transactions history. Deletes the oldest log when the history has more than 20 entries.
  * Main format: Category: Reason in Reason. Example: Vending: Machinery Using
- * * Arguments:
+ * Arguments:
  * * adjusted_money - How much was added, negative values removing cash.
  * * reason - The reason of interact with balance, for example, "Bought chips" or "Payday".
  */
