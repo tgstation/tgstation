@@ -136,7 +136,7 @@
 
 	//cache for sanic speed (lists are references anyways)
 	var/static/list/footstep_sounds = GLOB.footstep
-	///list returned by playsound() filled by client mobs who heard the footstep. given to play_fov_effect()
+	///list returned by playsound() filled by client mobs who heard the footstep. given to play_blind_effect()
 	var/list/heard_clients
 
 	if ((source.wear_suit?.body_parts_covered | source.w_uniform?.body_parts_covered | source.shoes?.body_parts_covered) & FEET)
@@ -158,7 +158,7 @@
 				bare_footstep_sounds[source_loc.barefootstep][3] + e_range + range_adjustment, falloff_distance = 1, vary = sound_vary)
 
 	if(heard_clients)
-		play_fov_effect(source, 5, "footstep", direction, ignore_self = TRUE, override_list = heard_clients)
+		play_blind_effect(source, 5, "footstep", direction, ignore_self = TRUE, override_list = heard_clients)
 
 
 ///Prepares a footstep for machine walking

@@ -23,7 +23,7 @@
 	sight = SEE_SELF | SEE_BLACKNESS
 	throwforce = 0
 
-	see_in_dark = NIGHTVISION_FOV_RANGE
+	see_in_dark = NIGHTVISION_RANGE
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	response_help_continuous = "passes through"
 	response_help_simple = "pass through"

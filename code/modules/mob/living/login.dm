@@ -19,5 +19,3 @@
 		to_chat(src, span_notice("You can ventcrawl! Use alt+click on vents to quickly travel about the station."))
 
 	med_hud_set_status()
-
-	update_fov_client()

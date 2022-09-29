@@ -29,7 +29,7 @@
 	robust_searching = 1
 	stat_attack = HARD_CRIT
 	faction = list("skeleton")
-	see_in_dark = NIGHTVISION_FOV_RANGE
+	see_in_dark = NIGHTVISION_RANGE
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	death_message = "collapses into a pile of bones!"
 	del_on_death = 1

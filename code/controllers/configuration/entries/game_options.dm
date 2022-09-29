@@ -401,8 +401,6 @@
 	min_val = 0
 	integer = FALSE // It is in hours, but just in case one wants to specify minutes.
 
-/datum/config_entry/flag/native_fov
-
 /datum/config_entry/flag/disallow_title_music
 
 /datum/config_entry/number/station_goal_budget

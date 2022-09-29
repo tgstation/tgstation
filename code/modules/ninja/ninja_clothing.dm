@@ -14,7 +14,6 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	flags_inv = HIDEFACIALHAIR | HIDEFACE | HIDESNOUT
 	flags_cover = MASKCOVERSMOUTH | PEPPERPROOF
-	has_fov = FALSE
 
 /obj/item/clothing/under/syndicate/ninja
 	name = "ninja suit"

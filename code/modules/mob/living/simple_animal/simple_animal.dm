@@ -574,7 +574,7 @@
 			set_sight(initial(sight))
 		else
 			set_sight(SEE_TURFS|SEE_MOBS|SEE_OBJS)
-		set_see_in_dark(NIGHTVISION_FOV_RANGE)
+		set_see_in_dark(NIGHTVISION_RANGE)
 		set_invis_see(SEE_INVISIBLE_OBSERVER)
 		return
 
