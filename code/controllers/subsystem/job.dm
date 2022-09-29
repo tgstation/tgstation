@@ -592,12 +592,42 @@ SUBSYSTEM_DEF(job)
 
 
 /datum/controller/subsystem/job/proc/LoadJobs()
-	var/jobstext = file2text("[global.config.directory]/jobs.txt")
-	for(var/datum/job/job as anything in joinable_occupations)
-		var/regex/jobs = new("[job.title]=(-1|\\d+),(-1|\\d+)")
-		jobs.Find(jobstext)
-		job.total_positions = text2num(jobs.group[1])
-		job.spawn_positions = text2num(jobs.group[2])
+	var/jobstext = file("[global.config.directory]/jobs.txt")
+
+	if(!fexists(jobstext)) // jobs.txt will override the JSON system (until deleted and replaced with a valid JSON).
+		var/json_file = file("[global.config.directory]/jobconfig.json")
+
+		if(!fexists(json_file))
+			log_world("No jobs.txt or jobconfig.json found in config directory! Will use codebase defaults.")
+			return
+
+		var/job_config = json_decode(file2text(json_file))
+
+		for(var/datum/job/occupation as anything in joinable_occupations)
+			if(!job_config["[occupation.title]"])
+				message_admins("[occupation.title] is missing from jobconfig.json! Using codebase defaults.")
+				continue
+
+			occupation.total_positions = job_config["[occupation.title]"]["Total Positions"]
+			occupation.spawn_positions = job_config["[occupation.title]"]["Spawn Positions"]
+			occupation.exp_requirements = job_config["[occupation.title]"]["Playtime Requirements"]
+			occupation.minimal_player_age = job_config["[occupation.title]"]["Required Account Age"]
+
+
+	else // We should assume that we do not have the new JSON jobs system, so let's fall back to the old jobs system to ensure things work nicely.
+
+		#if DM_VERSION >= 516 // are you here to kill me?
+		#error Hello from the past! It's been a while since the new jobs config system was introduced. Probably time to delete jobs.txt on the repository level since all the server operators should have updated by now. Delete this warning too, please. We'll keep loading your jobs for you, but you'll have to deal with me until you delete me. Thanks!
+		#endif
+
+		jobstext = file2text(jobstext)
+
+		for(var/datum/job/occupation as anything in joinable_occupations)
+			var/regex/jobs = new("[occupation.title]=(-1|\\d+),(-1|\\d+)")
+			jobs.Find(jobstext)
+			occupation.total_positions = text2num(jobs.group[1])
+			occupation.spawn_positions = text2num(jobs.group[2])
+
 
 /datum/controller/subsystem/job/proc/HandleFeedbackGathering()
 	for(var/datum/job/job as anything in joinable_occupations)

@@ -296,7 +296,11 @@ CHECK_RANDOMIZER
 # INVOKE_YOUTUBEDL youtube-dl
 
 ## In-game features
-##Toggle for having jobs load up from the .txt
+
+## Toggle for having jobs load up from the .txt/.json file. Will use codebase defaults anyways.
+## Jobs must match their codebase-equivalent title.
+## Playtime Requirements is in minutes, Required Account Age is in days.
+## Keep in mind that if you still have the jobs.txt file present in any capacity, it will always overwrite anything you write in jobconfig.json!
 # LOAD_JOBS_FROM_TXT
 
 ## Uncomment this to forbid admins from possessing the singularity.
