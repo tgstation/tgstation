@@ -1,4 +1,11 @@
 /**********************Mine areas**************************/
+/area/mine
+	icon = 'icons/area/areas_station.dmi'
+	icon_state = "mining"
+	has_gravity = STANDARD_GRAVITY
+	area_flags = VALID_TERRITORY | UNIQUE_AREA | FLORA_ALLOWED | CULT_PERMITTED
+	ambient_buzz = 'sound/ambience/magma.ogg'
+
 /area/mine/lobby
 	name = "Mining Station"
 	icon_state = "mining_lobby"
