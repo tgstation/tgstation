@@ -9,15 +9,6 @@
 /datum/saymode/proc/handle_message(mob/living/user, message, datum/language/language)
 	return TRUE
 
-// ling status, their interaction with the hivemind
-
-///not in the hive
-#define LINGHIVE_NONE 0
-///lost their powers, gets a special message
-#define LINGHIVE_FALLEN 1
-///can speak normally, unless they have the CHANGELING_HIVEMIND_MUTE trait
-#define LINGHIVE_LING 2
-
 /datum/saymode/changeling
 	key = MODE_KEY_CHANGELING
 	mode = MODE_CHANGELING
@@ -32,6 +23,9 @@
 	var/datum/antagonist/changeling/ling_sender = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	if(!ling_sender)
 		return FALSE
+	if(HAS_TRAIT(user, CHANGELING_HIVEMIND_MUTE))
+		to_chat(user, span_warning("The poison in the air hinders our ability to interact with the hivemind."))
+		return FALSE
 
 	user.log_talk(message, LOG_SAY, tag="changeling [ling_sender.changelingID]")
 	var/msg = span_changeling("<b>[ling_sender.changelingID]:</b> [message]")
@@ -42,17 +36,16 @@
 			continue
 		var/mob/living/ling_mob = ling_reciever.owner.current
 		//removes types that override the presence of being changeling (for example, borged lings still can't hivemind chat)
-		if((!isliving(ling_mob) || issilicon(ling_mob) || isbrain(ling_mob)) && !HAS_TRAIT(ling_mob, CHANGELING_HIVEMIND_MUTE))
+		if(!isliving(ling_mob) || issilicon(ling_mob) || isbrain(ling_mob))
+			continue
+		// can't recieve messages on the hivemind right now
+		if(HAS_TRAIT(ling_mob, CHANGELING_HIVEMIND_MUTE))
 			continue
 		to_chat(ling_mob, msg)
 
 	for(var/mob/dead/ghost as anything in GLOB.dead_mob_list)
 		to_chat(ghost, "[FOLLOW_LINK(ghost, user)] [msg]")
 	return FALSE
-
-#undef LINGHIVE_NONE
-#undef LINGHIVE_FALLEN
-#undef LINGHIVE_LING
 
 /datum/saymode/xeno
 	key = "a"
