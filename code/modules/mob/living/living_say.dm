@@ -372,7 +372,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 					mute.visible_message("tries to sign, but can't with [src.p_their()] hands full!", visible_message_flags = EMOTE_MESSAGE)
 					return FALSE
 				if(SIGN_ONE_HAND) // One arm
-					message_raw = stars(message)
+					message_raw = stars(message_raw)
 
 	if(client) //client is so that ghosts don't have to listen to mice
 		for(var/mob/player_mob as anything in GLOB.player_list)
