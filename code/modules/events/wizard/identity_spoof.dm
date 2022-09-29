@@ -7,7 +7,7 @@
 
 /datum/round_event_control/wizard/identity_spoof/can_spawn_event(players_amt)
 	. = ..()
-	if(.)
+	if(!.)
 		return .
 
 	if(GLOB.current_anonymous_theme) //already anonymous, ABORT ABORT
