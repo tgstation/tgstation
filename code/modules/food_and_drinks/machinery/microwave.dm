@@ -3,7 +3,7 @@
 /obj/machinery/microwave
 	name = "microwave oven"
 	desc = "Cooks and boils stuff."
-	icon = 'icons/obj/kitchen.dmi'
+	icon = 'icons/obj/microwave.dmi'
 	icon_state = "mw"
 	layer = BELOW_OBJ_LAYER
 	density = TRUE
