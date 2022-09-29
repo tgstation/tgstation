@@ -41,6 +41,8 @@
 	AddElement(/datum/element/connect_loc, loc_connections)
 	AddElement(/datum/element/atmos_sensitive, mapload)
 
+	RegisterSignal(src, COMSIG_LIVING_TRYING_TO_PULL, .proc/react_to_mob)
+
 /obj/item/clothing/mask/facehugger/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	..()
 	if(atom_integrity < 90)
@@ -48,6 +50,12 @@
 
 /obj/item/clothing/mask/facehugger/attackby(obj/item/O, mob/user, params)
 	return O.attack_atom(src, user, params)
+
+/obj/item/clothing/mask/facehugger/proc/react_to_mob(datum/source, mob/user)
+	SIGNAL_HANDLER
+	if((stat == CONSCIOUS && !sterile) && !isalien(user))
+		if(Leap(user))
+			return COMSIG_LIVING_CANCEL_PULL
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/mask/facehugger/attack_hand(mob/user, list/modifiers)
