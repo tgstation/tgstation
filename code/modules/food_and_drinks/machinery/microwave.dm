@@ -3,8 +3,9 @@
 /obj/machinery/microwave
 	name = "microwave oven"
 	desc = "Cooks and boils stuff."
-	icon = 'icons/obj/microwave.dmi'
-	icon_state = "mw"
+	icon = 'icons/obj/machines/microwave.dmi'
+	icon_state = "map_icon"
+	appearance_flags = KEEP_TOGETHER | LONG_GLIDE | PIXEL_SCALE
 	layer = BELOW_OBJ_LAYER
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/microwave
@@ -16,6 +17,7 @@
 	var/dirty = 0 // 0 to 100 // Does it need cleaning?
 	var/dirty_anim_playing = FALSE
 	var/broken = 0 // 0, 1 or 2 // How broken is it???
+	var/open = FALSE
 	var/max_n_of_items = 10
 	var/efficiency = 0
 	var/datum/looping_sound/microwave/soundloop
@@ -31,9 +33,12 @@
 
 /obj/machinery/microwave/Initialize(mapload)
 	. = ..()
+
 	wires = new /datum/wires/microwave(src)
 	create_reagents(100)
 	soundloop = new(src, FALSE)
+
+	update_icon_state()
 
 /obj/machinery/microwave/Destroy()
 	eject()
@@ -86,23 +91,92 @@
 		"[span_notice("- Capacity: <b>[max_n_of_items]</b> items.")]\n"+\
 		span_notice("- Cook time reduced by <b>[(efficiency - 1) * 25]%</b>.")
 
+#define MICROWAVE_INGREDIENT_OVERLAY_SIZE 24
+
+/obj/machinery/microwave/update_overlays()
+	// When this is the nth ingredient, whats its pixel_x?
+	var/static/list/ingredient_shifts = list(
+		0,
+		6,
+		-6,
+		8,
+		-8,
+		4,
+		-4,
+	)
+
+	. = ..()
+
+	// All of these will use a full icon state instead
+	if (panel_open || dirty == 100 || broken || dirty_anim_playing)
+		return .
+
+	var/ingredient_count = 0
+
+	for (var/atom/movable/ingredient as anything in ingredients)
+		var/image/ingredient_overlay = image(ingredient, src)
+
+		var/icon/ingredient_icon = icon(ingredient.icon, ingredient.icon_state)
+
+		ingredient_overlay.transform = ingredient_overlay.transform.Scale(
+			MICROWAVE_INGREDIENT_OVERLAY_SIZE / ingredient_icon.Width(),
+			MICROWAVE_INGREDIENT_OVERLAY_SIZE / ingredient_icon.Height(),
+		)
+
+		ingredient_overlay.pixel_y = -4
+		ingredient_overlay.layer = FLOAT_LAYER
+		ingredient_overlay.plane = FLOAT_PLANE
+		ingredient_overlay.blend_mode = BLEND_INSET_OVERLAY
+		ingredient_overlay.pixel_x = ingredient_shifts[(ingredient_count % ingredient_shifts.len) + 1]
+
+		ingredient_count += 1
+
+		. += ingredient_overlay
+
+	var/border_icon_state
+	var/door_icon_state
+
+	if (open)
+		door_icon_state = "door_open"
+		border_icon_state = "mwo"
+	else if (operating)
+		door_icon_state = "door_on"
+		border_icon_state = "mw1"
+	else
+		door_icon_state = "door_off"
+		border_icon_state = "mw"
+
+	. += mutable_appearance(
+		icon,
+		door_icon_state,
+		alpha = ingredients.len > 0 ? 128 : 255,
+	)
+
+	. += border_icon_state
+
+	if (!open)
+		. += "door_handle"
+
+	return .
+
+#undef MICROWAVE_INGREDIENT_OVERLAY_SIZE
+
 /obj/machinery/microwave/update_icon_state()
-	if(broken)
+	if (broken)
 		icon_state = "mwb"
-		return ..()
-	if(dirty_anim_playing)
+	else if (dirty_anim_playing)
 		icon_state = "mwbloody1"
-		return ..()
-	if(dirty == 100)
-		icon_state = "mwbloody"
-		return ..()
-	if(operating)
-		icon_state = "mw1"
-		return ..()
-	if(panel_open)
+	else if (dirty == 100)
+		icon_state = open ? "mwbloodyo" : "mwbloody"
+	else if(operating)
+		icon_state = "back_on"
+	else if(open)
+		icon_state = "back_open"
+	else if(panel_open)
 		icon_state = "mw-o"
-		return ..()
-	icon_state = "mw"
+	else
+		icon_state = "back_off"
+
 	return ..()
 
 /obj/machinery/microwave/wrench_act(mob/living/user, obj/item/tool)
@@ -200,6 +274,7 @@
 
 		ingredients += O
 		user.visible_message(span_notice("[user] adds \a [O] to \the [src]."), span_notice("You add [O] to \the [src]."))
+		update_appearance()
 		return
 
 	..()
@@ -246,7 +321,7 @@
 		var/atom/movable/AM = i
 		AM.forceMove(drop_location())
 	ingredients.Cut()
-	flick("[dirty == 100 ? "mwbloodyo" : "mwo"]", src)
+	open()
 	playsound(loc, 'sound/machines/click.ogg', 15, TRUE, -3)
 
 
@@ -374,9 +449,16 @@
 /obj/machinery/microwave/proc/after_finish_loop()
 	set_light(0)
 	soundloop.stop()
-	update_appearance()
-	flick("[dirty == 100 ? "mwbloodyo" : "mwo"]", src)
+	open()
 
+/obj/machinery/microwave/proc/open()
+	open = TRUE
+	update_appearance()
+	addtimer(CALLBACK(src, .proc/close), 0.8 SECONDS)
+
+/obj/machinery/microwave/proc/close()
+	open = FALSE
+	update_appearance()
 
 /// Type of microwave that automatically turns it self on erratically. Probably don't use this outside of the holodeck program "Microwave Paradise".
 /// You could also live your life with a microwave that will continously run in the background of everything while also not having any power draw. I think the former makes more sense.
