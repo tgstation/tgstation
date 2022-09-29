@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - bugfix: "You can manually pump your blood while asleep/in crit, rather than instantly lose all your blood and die forever."

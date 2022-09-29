@@ -33,7 +33,7 @@
 /datum/quirk/badback/proc/on_equipped_item(mob/living/source, obj/item/equipped_item, slot)
 	SIGNAL_HANDLER
 
-	if((slot != ITEM_SLOT_BACK) || !istype(equipped_item, /obj/item/storage/backpack))
+	if(!(slot & ITEM_SLOT_BACK) || !istype(equipped_item, /obj/item/storage/backpack))
 		return
 
 	quirk_holder.add_mood_event("back_pain", /datum/mood_event/back_pain)
@@ -328,6 +328,9 @@
 	if(quirk_holder.stat != CONSCIOUS || quirk_holder.IsSleeping() || quirk_holder.IsUnconscious())
 		return
 
+	if(HAS_TRAIT(quirk_holder, TRAIT_FEARLESS))
+		return
+
 	var/mob/living/carbon/human/human_holder = quirk_holder
 
 	if(human_holder.dna?.species.id in list(SPECIES_SHADOW, SPECIES_NIGHTMARE))
@@ -419,8 +422,6 @@
 	mob_trait = TRAIT_PROSOPAGNOSIA
 	medical_record_text = "Patient suffers from prosopagnosia and cannot recognize faces."
 	hardcore_value = 5
-
-
 
 /datum/quirk/prosthetic_limb
 	name = "Prosthetic Limb"
@@ -886,6 +887,9 @@
 
 /datum/quirk/claustrophobia/process(delta_time)
 	if(quirk_holder.stat != CONSCIOUS || quirk_holder.IsSleeping() || quirk_holder.IsUnconscious())
+		return
+
+	if(HAS_TRAIT(quirk_holder, TRAIT_FEARLESS))
 		return
 
 	var/nick_spotted = FALSE

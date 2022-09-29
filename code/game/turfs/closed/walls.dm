@@ -233,7 +233,7 @@
 			F.attach(src, user)
 		return TRUE
 	//Poster stuff
-	else if(istype(W, /obj/item/poster))
+	else if(istype(W, /obj/item/poster) && Adjacent(user)) //no tk memes.
 		place_poster(W,user)
 		return TRUE
 

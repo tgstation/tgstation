@@ -20,6 +20,7 @@
 ///called on /living, when pull is attempted, but before it completes, from base of [/mob/living/start_pulling]: (atom/movable/thing, force)
 #define COMSIG_LIVING_TRY_PULL "living_try_pull"
 	#define COMSIG_LIVING_CANCEL_PULL (1 << 0)
+#define COMSIG_LIVING_TRYING_TO_PULL "living_tried_pulling"
 /// Called from /mob/living/update_pull_movespeed
 #define COMSIG_LIVING_UPDATING_PULL_MOVESPEED "living_updating_pull_movespeed"
 /// Called from /mob/living/PushAM -- Called when this mob is about to push a movable, but before it moves
