@@ -306,22 +306,12 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	plane = GAME_PLANE
 	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
 
-// THIS
-/atom/movable/screen/plane_master/game_world_upper_fov_hidden
-	name = "Upper game world fov hidden"
-	documentation = "Just as we need a place to draw things \"above\" the hidden fov plane, we also need to be able to hide stuff that draws over the upper game plane."
-	plane = GAME_PLANE_UPPER_FOV_HIDDEN
-	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
-
-/atom/movable/screen/plane_master/game_world_upper_fov_hidden/Initialize()
-	. = ..()
-
 /atom/movable/screen/plane_master/seethrough
 	name = "Seethrough"
 	documentation = "Holds the seethrough versions (done using image overrides) of large objects. Mouse transparent, so you can click through them."
 	plane = SEETHROUGH_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	render_relay_planes = list(GAME_PLANE)
+	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
 	start_hidden = TRUE
 
 // Take THIS

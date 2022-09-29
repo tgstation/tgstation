@@ -15,12 +15,11 @@
 
 #define RENDER_PLANE_TRANSPARENT -18 //Transparent plane that shows openspace underneath the floor
 
-#define FLOOR_PLANE -15
+#define FLOOR_PLANE -12
 #define FLOOR_PLANE_RENDER_TARGET "*FLOOR_PLANE"
-#define OVER_TILE_PLANE -14
-#define WALL_PLANE -13
-#define GAME_PLANE -12
-#define GAME_PLANE_UPPER_FOV_HIDDEN -9
+#define OVER_TILE_PLANE -11
+#define WALL_PLANE -10
+#define GAME_PLANE -9
 #define UNDER_FRILL_PLANE -8
 #define UNDER_FRILL_RENDER_TARGET "*UNDER_FRILL_PLANE"
 #define FRILL_PLANE -7
@@ -172,8 +171,6 @@
 #define EDGED_TURF_LAYER 4.3
 #define ON_EDGED_TURF_LAYER 4.35
 #define SPACEVINE_LAYER 4.4
-
-// GAME_PLANE_UPPER_FOV_HIDDEN layers
 #define LARGE_MOB_LAYER 4.5
 #define SPACEVINE_MOB_LAYER 4.6
 #define ABOVE_ALL_MOB_LAYER 4.7
