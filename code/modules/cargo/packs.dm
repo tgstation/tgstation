@@ -2415,6 +2415,30 @@
 	crate_name = "toy crate" // It's /technically/ a toy. For the clown, at least.
 	crate_type = /obj/structure/closet/crate/wooden
 
+/datum/supply_pack/costumes_toys/knucklebone
+    name = "Knucklebone Game Crate"
+    desc = "A fun dice game to keep you entertaned for hours and is totaly not ripped off from another game!"
+    cost = CARGO_CRATE_VALUE * 2
+    contains = list(/obj/item/dice/d6,
+                    /obj/item/dice/d6,
+                    /obj/item/dice/d6,
+                    /obj/item/dice/d6,
+                    /obj/item/dice/d6,
+                    /obj/item/dice/d6,
+                    /obj/item/dice/d6,
+                    /obj/item/dice/d6,
+                    /obj/item/dice/d6,
+                    /obj/item/dice/d6,
+                    /obj/item/dice/d6,
+                    /obj/item/dice/d6,
+                    /obj/item/dice/d6,
+                    /obj/item/dice/d6,
+                    /obj/item/dice/d6,
+                    /obj/item/dice/d6,
+                    /obj/item/dice/d6,
+                    /obj/item/dice/d6)
+    crate_name = "knucklebone game crate"
+    crate_type = /obj/structure/closet/crate/wooden
 /datum/supply_pack/costumes_toys/lasertag
 	name = "Laser Tag Crate"
 	desc = "Foam Force is for boys. Laser Tag is for men. Contains three sets of red suits, blue suits, matching helmets, and matching laser tag guns."
