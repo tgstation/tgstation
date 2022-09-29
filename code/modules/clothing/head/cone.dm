@@ -13,10 +13,9 @@
 	attack_verb_simple = list("warn", "caution", "smash")
 	resistance_flags = NONE
 
-
 /obj/item/clothing/head/cone/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
 	if(!isinhands)
-		. += emissive_appearance(icon_file, "[icon_state]-emissive", alpha = src.alpha)
+		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
 
 

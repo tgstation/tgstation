@@ -318,15 +318,14 @@
 	if(user.combat_mode)
 		return
 	. = TRUE
-	if(LAZYFIND(repairing_mobs, user))
-		balloon_alert(user, "you're already repairing it!")
+	if(DOING_INTERACTION(user, src))
+		balloon_alert(user, "you're already repairing this!")
 		return
 	if(atom_integrity >= max_integrity)
 		balloon_alert(user, "it's not damaged!")
 		return
 	if(!W.tool_start_check(user, amount=1))
 		return
-	LAZYADD(repairing_mobs, user)
 	user.balloon_alert_to_viewers("started welding [src]", "started repairing [src]")
 	audible_message(span_hear("You hear welding."))
 	var/did_the_thing
@@ -341,7 +340,6 @@
 		user.balloon_alert_to_viewers("[(atom_integrity >= max_integrity) ? "fully" : "partially"] repaired [src]")
 	else
 		user.balloon_alert_to_viewers("stopped welding [src]", "interrupted the repair!")
-	LAZYREMOVE(repairing_mobs, user)
 
 
 /obj/vehicle/sealed/mecha/proc/full_repair(charge_cell)
@@ -418,6 +416,9 @@
 			gun.projectiles_cache = gun.projectiles_cache + A.rounds
 		playsound(get_turf(user),A.load_audio,50,TRUE)
 		to_chat(user, span_notice("You add [A.rounds] [A.ammo_type][A.rounds > 1?"s":""] to the [gun.name]"))
+		if(A.qdel_on_empty)
+			qdel(A)
+			return TRUE
 		A.rounds = 0
 		A.set_custom_materials(list(/datum/material/iron=2000))
 		A.update_appearance()

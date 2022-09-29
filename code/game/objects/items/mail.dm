@@ -296,6 +296,7 @@
 /obj/item/paper/fluff/junkmail_redpill
 	name = "smudged paper"
 	icon_state = "scrap"
+	show_written_words = FALSE
 	var/nuclear_option_odds = 0.1
 
 /obj/item/paper/fluff/junkmail_redpill/Initialize(mapload)
@@ -315,6 +316,7 @@
 /obj/item/paper/fluff/junkmail_generic
 	name = "important document"
 	icon_state = "paper_words"
+	show_written_words = FALSE
 
 /obj/item/paper/fluff/junkmail_generic/Initialize(mapload)
 	default_raw_text = pick(GLOB.junkmail_messages)

@@ -4,7 +4,7 @@
 		humans, butchering all other living things to \
 		sustain the zombie, smashing open airlock doors and opening \
 		child-safe caps on bottles."
-	item_flags = ABSTRACT | DROPDEL
+	item_flags = ABSTRACT | DROPDEL | HAND_ITEM
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "bloodhand_left"

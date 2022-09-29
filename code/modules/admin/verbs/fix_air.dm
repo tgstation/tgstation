@@ -15,6 +15,6 @@
 			if(F.blocks_air)
 			//skip walls
 				continue
-			var/datum/gas_mixture/GM = SSair.parse_gas_string(F.initial_gas_mix)
+			var/datum/gas_mixture/GM = SSair.parse_gas_string(F.initial_gas_mix, /datum/gas_mixture/turf)
 			F.copy_air(GM)
 			F.update_visuals()

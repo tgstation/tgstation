@@ -785,3 +785,219 @@
   - bugfix: Fixed a bunch of cult abilities not working.
   dragomagol:
   - bugfix: cutting onions actually makes you cry (better put some goggles on!)
+2022-09-23:
+  Capsandi:
+  - bugfix: The radio in icebox tool storage is no longer an implant
+  Kapu1178:
+  - bugfix: Robotic limbs are once again style-able using a spraycan.
+  LemonInTheDark:
+  - refactor: Maploading has been optimized significantly, as has ruin generation
+      and other lavaland stuff. Let me know if anything goes fucky
+  Pizzie11:
+  - bugfix: Important Documents received in the mail are now visible
+  ShizCalev:
+  - bugfix: Fixed crowbars hitting ovens during deconstruction.
+  - imageadd: Tablets and PDAs now have inhand icons.
+  Thunder12345:
+  - bugfix: The air vent outside RnD on Icebox is no longer hidden by the Experimental
+      Destructive Scanner
+  Watermelon914:
+  - bugfix: Fixed non-printed airlock shells from not triggering the 'Airlock Access
+      Event' circuit component.
+  moocowswag:
+  - bugfix: Adds Missing GPSs to Icebox Public Mining.
+  san7890:
+  - admin: Admins can now View Notes directly from a Ticket Panel.
+2022-09-24:
+  JohnFulpWillard:
+  - balance: AI restorer app now requires RD access to download.
+  - bugfix: Nukie tablets now properly show when a nuke is going off in their examine.
+  - balance: Tablet's charge and AI holder parts have been removed entirely. Tablets
+      now only have a cell, and computers only use their area's APC.
+  - code_imp: Modular computer's power handling, the AI restorer app's functionality,
+      and modular computer's examining has been refactored, please report any bugs
+      you might find.
+  VexingRaven:
+  - bugfix: The illiteracy quirk will no longer break the mining shuttle
+  - refactor: Refactored some checks on the shuttle console to apply to all consoles
+  - bugfix: Mortar and pestle no longer create infinite reagents
+  dalmationer:
+  - bugfix: fixed two broken sprites for drinking and shot glasses.
+  san7890:
+  - admin: When a voice analyzer is attached to a bomb or a chemical grenade, the
+      respective logs to game as well as the message_admins will contain the recorded
+      phrase on that voice analyzer.
+  - bugfix: Voice analyzers should now properly trigger TTVs to blow up.
+  skylord-a52:
+  - imageadd: Nanotrasen Grilling Jorts have received a cosmetic upgrade
+2022-09-25:
+  KirbyDaMaster:
+  - rscadd: '-6 Quirk for all prosthetics named "Quadruple Amputee" change: prosthetic
+      arm changed from -4 to -3'
+  - rscadd: 'SVG icon tutorial readme to tgui tgfont folder change: Minor spelling
+      issues in negative quirks tab'
+  Pizzie11:
+  - rscadd: Cats will now attack beings that have kinship with rats, this includes
+      rats, royal rats, and anyone who overdosed on rat spit.
+  ShizCalev:
+  - bugfix: Fixed not spawning with prosthetic limbs when you have the prosthetic
+      limb quick.
+  - bugfix: Blind mobs will no longer be demoralized by posters and graffiti.
+  - bugfix: Illiterate mobs will no longer be demoralized by the words on posters.
+  - bugfix: Mobs will no longer be demoralized by posters & graffiti if it's too dark
+      to see them.
+  - bugfix: Fixed revenant Malfunction ability not affecting firedoors.
+  - spellcheck: Emag charge time will now be presented as (2 minutes and 31.1 seconds)
+      instead of (152.95s)
+  TerraGS:
+  - rscadd: Being run over by the clown car will flatten you like a pancake. Honk!
+  - soundadd: adds cartoon_splat.ogg
+  Twaticus:
+  - imageadd: resprites all current underwear to a much cleaner look
+  VexingRaven:
+  - bugfix: Build Your Own Shuttle Kit has been fixed and once again docks at the
+      station after being purchased.
+  - spellcheck: Updated the message shown when spawning as a blobbernaut to properly
+      reflect how to chat to the overmind
+  carshalash:
+  - bugfix: Properly makes Gin garden alcoholic and adds quality tag. Is also now
+      made with lime juice to prevent triggering the lemonade recipe.
+  san7890, kugamo@ParadiseSS13:
+  - rscadd: Nanotrasen had a loose shipping container hit the hull of Central Command
+      from one "Station P", so they just decided to pour those into the station's
+      autodrobes.
+2022-09-26:
+  JohnFulpWillard:
+  - balance: You can no longer upgrade your tablets to have signals to the NTnet despite
+      not being anywhere near telecomms. Instead, the Mining base has a lesser connection,
+      and all computers have Ethernet connections.
+  - balance: 'All tablets now have a printer in them, rather than it being an external
+      part. removal: NTNet tablet cards has been removed.'
+  LemonInTheDark:
+  - bugfix: Fixes mining shuttles being weird as hell
+  Rhials:
+  - rscadd: New achievement -- Preventing a heart attack with exercise now gives you
+      a shiny new achievement badge. Show it to all of your gym buddies, be the coolest
+      guy in the locker room.
+  - imageadd: Cool new achievement badge. Wow!
+  - refactor: Rewrites the heart attack event file to be a bit more flexible. Integrates
+      the heart attack eligibility check to canSpawnEvent to prevent edge cases. Migrates
+      the exercise status effect check to the round_event.
+  - admin: MULTI-HEART ATTACK COMBO functionality added (trigger the heart_attack
+      event and select how many victims you want).
+  - bugfix: You can no longer assume control of Regal Rats during preround.
+  ShizCalev:
+  - bugfix: Scrubber events will no longer trigger if there are no valid scrubbers
+      on the station.
+  SomethingFish:
+  - rscadd: The chefs have come up with a new use for rice and made these delicious
+      vegetarian spring rolls to add to their menu.
+  Striders13:
+  - bugfix: APC in RD office is now more visible if you have x-ray vision.
+  Time-Green:
+  - qol: You can now see through big trees when you stand behind them!
+  - refactor: Adds a seethrough component to make it easier to add big stationairy
+      objects without reducing visibility
+  - bugfix: gravity distortion effects no longer break over glass tiles
+  Xander3359:
+  - balance: Captain Jetpack now fits on MODsuit and EVA suit storage slot.
+  - code_imp: Jetpacks were de-hardcoded and can now support being equipped to other
+      slots.
+  jlsnow301:
+  - rscadd: Added new grouping to orbit menu for CentCom agents.
+  san7890:
+  - admin: When a player renames (creates) an area from an existing area to a new
+      one, it now logs to game.log (global and individual).
+  - bugfix: 'The developers of Space-Coin decided to renege on their exit scheme with
+      a new advertisement: Space-coin is the mobile currency of the future! As such,
+      you can not cash out of their famous space coin market machines until the machine
+      starts moving. They immediately ran away after that though.'
+  timothymtorres:
+  - rscadd: Rotten zombie tongue has a new speech modifier that converts spoken language
+      into zombie sentences. If the person speaking is a high-functioning zombie this
+      is bypassed.
+  - bugfix: Fix zombie claws blocking sign language.
+  - bugfix: Fix slappers and wound grasping blocking sign language.
+  - bugfix: Fix slappers and wound grasping blocking riding on mobs.
+  uaioy:
+  - bugfix: Ice Box snow storms now cover the surroundings of the homestead.
+2022-09-29:
+  GoldenAlpharex:
+  - bugfix: The ExperTrack Professional Skill Associations have finally fixed the
+      plans of their drop pods, sabotaged by an intern many moons ago, resulting in
+      a Totally Safe Skill Cape Delivery!
+  Jacquerel:
+  - rscadd: Nanotrasen has started tracking exactly how often you're blowing up the
+      supermatter engine. Surely they can't be sending as many new crystals over there
+      as their financial reports imply.
+  JohnFulpWillard:
+  - bugfix: Tramstation's departments should all be connected to the powernet at the
+      start of a round now.
+  - admin: Admin's power check mapping verb now actually works.
+  - bugfix: Icemoon is no longer considered part of the station.
+  - bugfix: Mobs with more than one pass flag (cockroaches, alien larva, parrots,
+      bots, butterflies, any many other animals) should no longer knock bots down,
+      if they're somehow on harm intent.
+  - bugfix: Some female uniforms (white skirt, lawyer skirt) are now properly uniformed.
+  - bugfix: Command tablet cartridges are now loaded with their unique apps they were
+      supposed to have.
+  - bugfix: Prosthetic replacement surgery should no longer move limbs into the player's
+      contents if it fails to attach the limb.
+  - bugfix: False alarms and Gravity generator blackouts now properly respects basic
+      event restrictions.
+  LT3:
+  - bugfix: Tramstation crossing lights will now properly reflect if you're going
+      to get smacked by the tram if you try to cross.
+  LemonInTheDark:
+  - bugfix: You'll be able to hear weather again. this was broken for a damn year
+      how did none of you report it
+  - refactor: Refactored... well a lot really. Map views, anything to do with planes,
+      multiz, a shit ton of rendering stuff. Basically if you see anything off visually
+      report it
+  - admin: VV a mob, and hit View/Edit Planes in the dropdown to steal their view,
+      and modify it as you like. You can do the same to yourself using the Edit/Debug
+      Planes verb
+  - balance: Airlocks will open on bump in series much faster now. As a tradeoff,
+      you're immune to shocks from them for a second after you last got shocked by
+      one.
+  - bugfix: Mineral doors will no longer take 6 WHOLE SECONDS to open if you've bumped
+      something else recently
+  PositiveEntropy:
+  - imageadd: Resprites suits associated with the curator job!
+  Rhials:
+  - code_imp: All round event control/round event datums have been migrated to the
+      events module
+  - code_imp: Anomaly and ghost_role events now have their own respective folders
+      in the events module
+  ShizCalev:
+  - bugfix: Fixed a runtime when firing energy guns with infinite power cells.
+  SpaceSmithers:
+  - bugfix: Fixed the rogue Medbay Maintenance area appearing inside Medbay Storage.
+  TerraGS:
+  - bugfix: clown car should work again
+  VexingRaven:
+  - rscdel: 'Tramstation: A few stray cables leading to the prison showers have been
+      removed'
+  - rscadd: 'Tramstation: The kitchen now starts with an Enzyme Bottle'
+  - bugfix: 'Tramstation: Service staff can now access the Cold Room Maintenance airlocks'
+  - bugfix: 'Tramstation: The Court Room Holding Cell now has proper access restrictions'
+  - spellcheck: Gave the Eyepatch HUD a new description that doesn't imply it works
+      without eyes.
+  Wallem:
+  - imageadd: Gives the microwave a fresh coat of paint
+  san7890:
+  - admin: If you send a cultist to Admin Prison, their fellow cultists are no longer
+      able to summon them out using the Summon Cultist rune.
+  - bugfix: 'Whenever you put a species with some type of exotic, non-human blood
+      on a surgery table: the corresponding blood type should no longer report it
+      as if the patient in question had a Rhesus blood type, and will instead declare
+      the name of the actual reagent circulating within their system.'
+  - qol: Whenever you open or close an atmospherics valve, you should now get a balloon
+      alert notifying you of that exact action.
+  timothymtorres, soapstain22:
+  - rscadd: Added red and blue nightcaps that spawn in pajama lockers
+  tralezab:
+  - rscadd: Heretics can no longer be converted to cult. But sacrificing them is very
+      valuable to Nar'Sie, and she will grant special weapons if you manage to do
+      so.
+  - rscadd: Fantasy affixes can also include soul-stealing items!

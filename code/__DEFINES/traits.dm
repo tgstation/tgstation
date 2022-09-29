@@ -180,8 +180,13 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_IWASBATONED "iwasbatoned"
 #define TRAIT_SLEEPIMMUNE "sleep_immunity"
 #define TRAIT_PUSHIMMUNE "push_immunity"
+/// Are we immune to shocks?
 #define TRAIT_SHOCKIMMUNE "shock_immunity"
+/// Are we immune to specifically tesla / SM shocks?
 #define TRAIT_TESLA_SHOCKIMMUNE "tesla_shock_immunity"
+#define TRAIT_AIRLOCK_SHOCKIMMUNE "airlock_shock_immunity"
+/// Is this atom being actively shocked? Used to prevent repeated shocks.
+#define TRAIT_BEING_SHOCKED "shocked"
 #define TRAIT_STABLEHEART "stable_heart"
 /// Prevents you from leaving your corpse
 #define TRAIT_CORPSELOCKED "corpselocked"
@@ -376,8 +381,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_BLUSHING "blushing"
 /// This person is crying
 #define TRAIT_CRYING "crying"
-/// For simple mobs controlled by a player. Sends a death alert in deadchat (used by space dragons, morphs, revenants, elite lavaland mobs, brood spiders)
-#define TRAIT_ALERT_GHOSTS_ON_DEATH "trait_alert_ghosts_on_death"
 #define TRAIT_NOBLEED "nobleed" //This carbon doesn't bleed
 /// This atom can ignore the "is on a turf" check for simple AI datum attacks, allowing them to attack from bags or lockers as long as any other conditions are met
 #define TRAIT_AI_BAGATTACK "bagattack"
@@ -703,6 +706,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define INNATE_TRAIT "innate"
 #define CRIT_HEALTH_TRAIT "crit_health"
 #define OXYLOSS_TRAIT "oxyloss"
+/// Trait sorce for "was recently shocked by something"
+#define WAS_SHOCKED "was_shocked"
 #define TURF_TRAIT "turf"
 /// trait associated to being buckled
 #define BUCKLED_TRAIT "buckled"

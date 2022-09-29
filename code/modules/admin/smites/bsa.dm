@@ -27,7 +27,7 @@
 	else
 		target.adjustBruteLoss(min(BSA_MAX_DAMAGE, target.health - 1))
 		target.Paralyze(BSA_PARALYZE_TIME)
-		target.set_timed_status_effect(BSA_STUTTER_TIME, /datum/status_effect/speech/stutter)
+		target.set_stutter(BSA_STUTTER_TIME)
 
 #undef BSA_CHANCE_TO_BREAK_TILE_TO_PLATING
 #undef BSA_MAX_DAMAGE

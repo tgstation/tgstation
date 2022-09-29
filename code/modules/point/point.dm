@@ -25,18 +25,17 @@
 	animate(visual, pixel_x = (tile.x - our_tile.x) * world.icon_size + pointed_atom.pixel_x, pixel_y = (tile.y - our_tile.y) * world.icon_size + pointed_atom.pixel_y, time = 1.7, easing = EASE_OUT)
 
 /atom/movable/proc/create_point_bubble(atom/pointed_atom)
-	var/obj/effect/thought_bubble_effect = new
-
 	var/mutable_appearance/thought_bubble = mutable_appearance(
 		'icons/effects/effects.dmi',
 		"thought_bubble",
+		offset_spokesman = src,
 		plane = POINT_PLANE,
 		appearance_flags = KEEP_APART,
 	)
 
 	var/mutable_appearance/pointed_atom_appearance = new(pointed_atom.appearance)
 	pointed_atom_appearance.blend_mode = BLEND_INSET_OVERLAY
-	pointed_atom_appearance.plane = thought_bubble.plane
+	pointed_atom_appearance.plane = FLOAT_PLANE
 	pointed_atom_appearance.layer = FLOAT_LAYER
 	pointed_atom_appearance.pixel_x = 0
 	pointed_atom_appearance.pixel_y = 0
@@ -49,21 +48,21 @@
 	thought_bubble.pixel_x = 16
 	thought_bubble.pixel_y = 32
 	thought_bubble.alpha = 200
-	thought_bubble.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 	var/mutable_appearance/point_visual = mutable_appearance(
 		'icons/hud/screen_gen.dmi',
-		"arrow",
-		plane = thought_bubble.plane,
+		"arrow"
 	)
 
 	thought_bubble.overlays += point_visual
 
-	// vis_contents is used to preserve mouse opacity
-	thought_bubble_effect.appearance = thought_bubble
-	vis_contents += thought_bubble_effect
+	add_overlay(thought_bubble)
+	LAZYADD(update_on_z, thought_bubble)
+	addtimer(CALLBACK(src, .proc/clear_point_bubble, thought_bubble), POINT_TIME)
 
-	QDEL_IN(thought_bubble_effect, POINT_TIME)
+/atom/movable/proc/clear_point_bubble(mutable_appearance/thought_bubble)
+	LAZYREMOVE(update_on_z, thought_bubble)
+	cut_overlay(thought_bubble)
 
 /obj/effect/temp_visual/point
 	name = "pointer"
