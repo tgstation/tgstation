@@ -212,7 +212,7 @@ GLOBAL_LIST_INIT_TYPED(cryo_overlays_cover_on, /mutable_appearance, list(create_
 GLOBAL_LIST_INIT_TYPED(cryo_overlays_cover_off, /mutable_appearance, list(create_cryo_overlay(0, "cover-off")))
 
 /proc/create_cryo_overlay(offset, icon_state)
-	var/mutable_appearance/cryo_overlay = mutable_appearance('icons/obj/medical/cryogenics.dmi', icon_state, ABOVE_ALL_MOB_LAYER, plane = ABOVE_GAME_PLANE, offset_const = offset)
+	var/mutable_appearance/cryo_overlay = mutable_appearance('icons/obj/medical/cryogenics.dmi', icon_state, ABOVE_ALL_MOB_LAYER, plane = GAME_PLANE, offset_const = offset)
 	return cryo_overlay
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/update_overlays()

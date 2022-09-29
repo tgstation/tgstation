@@ -15,21 +15,20 @@
 
 #define RENDER_PLANE_TRANSPARENT -18 //Transparent plane that shows openspace underneath the floor
 
-#define FLOOR_PLANE -12
+#define FLOOR_PLANE -10
 #define FLOOR_PLANE_RENDER_TARGET "*FLOOR_PLANE"
-#define OVER_TILE_PLANE -11
-#define WALL_PLANE -10
-#define GAME_PLANE -9
-#define UNDER_FRILL_PLANE -8
+#define OVER_TILE_PLANE -9
+#define WALL_PLANE -8
+#define GAME_PLANE -7
+#define UNDER_FRILL_PLANE -6
 #define UNDER_FRILL_RENDER_TARGET "*UNDER_FRILL_PLANE"
-#define FRILL_PLANE -7
-#define FRILL_MASK_PLANE -6
+#define FRILL_PLANE -5
+#define FRILL_MASK_PLANE -4
 #define FRILL_MASK_RENDER_TARGET "*FRILL_MASK_PLANE"
-#define OVER_FRILL_PLANE -5
+#define OVER_FRILL_PLANE -3
 
 ///Slightly above the game plane but does not catch mouse clicks. Useful for certain visuals that should be clicked through, like seethrough trees
-#define SEETHROUGH_PLANE -3
-#define ABOVE_GAME_PLANE -2
+#define SEETHROUGH_PLANE -2
 
 #define RENDER_PLANE_GAME_WORLD -1
 
@@ -174,12 +173,11 @@
 #define LARGE_MOB_LAYER 4.5
 #define SPACEVINE_MOB_LAYER 4.6
 #define ABOVE_ALL_MOB_LAYER 4.7
-
-// ABOVE_GAME_PLANE layers
 //#define FLY_LAYER 5 //For easy recordkeeping; this is a byond define
+#define HIGH_BUBBLE_LAYER 5.03
 #define GASFIRE_LAYER 5.05
 #define RIPPLE_LAYER 5.1
-
+#define RIPPLE_LAYER 5.1
 //---------- LIGHTING -------------
 
 #define LIGHTING_PRIMARY_LAYER 15	//The layer for the main lights of the station

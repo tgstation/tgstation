@@ -612,7 +612,7 @@
 	explosion_image = image('icons/effects/96x96.dmi', "judicial_explosion")
 	explosion_image.pixel_x = -32
 	explosion_image.pixel_y = -32
-	SET_PLANE_EXPLICIT(explosion_image, ABOVE_GAME_PLANE, src)
+	SET_PLANE_EXPLICIT(explosion_image, GAME_PLANE, src)
 
 /obj/structure/mining_bomb/proc/prime(atom/movable/firer)
 	add_overlay(explosion_image)

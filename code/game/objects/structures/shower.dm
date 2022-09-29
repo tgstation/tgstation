@@ -378,7 +378,6 @@ INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "mist"
 	layer = FLY_LAYER
-	plane = ABOVE_GAME_PLANE
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 

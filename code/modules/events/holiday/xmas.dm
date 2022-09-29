@@ -47,7 +47,6 @@
 	icon = 'icons/effects/landmarks_static.dmi'
 	icon_state = "x2"
 	layer = FLY_LAYER
-	plane = ABOVE_GAME_PLANE
 
 	/// Christmas tree, no presents included.
 	var/festive_tree = /obj/structure/flora/tree/pine/xmas

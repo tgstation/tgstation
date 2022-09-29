@@ -160,7 +160,6 @@
 	icon = 'icons/mob/simple/lavaland/brimdemon.dmi'
 	icon_state = "brimbeam_mid"
 	layer = ABOVE_MOB_LAYER
-	plane = ABOVE_GAME_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	light_color = LIGHT_COLOR_BLOOD_MAGIC
 	light_power = 3

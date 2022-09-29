@@ -71,7 +71,6 @@
 	icon = 'icons/effects/fire.dmi'
 	icon_state = "1"
 	layer = GASFIRE_LAYER
-	plane = ABOVE_GAME_PLANE
 	blend_mode = BLEND_ADD
 	light_system = MOVABLE_LIGHT
 	light_range = LIGHT_RANGE_FIRE

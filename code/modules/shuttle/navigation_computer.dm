@@ -108,7 +108,7 @@
 			var/y_off = T.y - origin.y
 			I.loc = locate(origin.x + x_off, origin.y + y_off, origin.z) //we have to set this after creating the image because it might be null, and images created in nullspace are immutable.
 			I.layer = ABOVE_NORMAL_TURF_LAYER
-			SET_PLANE(I, ABOVE_GAME_PLANE, T)
+			SET_PLANE(I, GAME_PLANE, T)
 			I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 			the_eye.placement_images[I] = list(x_off, y_off)
 
@@ -196,7 +196,7 @@
 		var/image/newI = image('icons/effects/alphacolors.dmi', the_eye.loc, "blue")
 		newI.loc = I.loc //It is highly unlikely that any landing spot including a null tile will get this far, but better safe than sorry.
 		newI.layer = ABOVE_OPEN_TURF_LAYER
-		SET_PLANE_EXPLICIT(newI, ABOVE_GAME_PLANE, V)
+		SET_PLANE_EXPLICIT(newI, GAME_PLANE, V)
 		newI.mouse_opacity = 0
 		the_eye.placed_images += newI
 

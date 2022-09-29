@@ -139,7 +139,6 @@
 /obj/effect/temp_visual/dir_setting/curse/grasp_portal
 	icon = 'icons/effects/64x64.dmi'
 	layer = ABOVE_ALL_MOB_LAYER
-	plane = ABOVE_GAME_PLANE
 	pixel_y = -16
 	pixel_x = -16
 	duration = 32
@@ -159,7 +158,6 @@
 	icon = 'icons/effects/beam_splash.dmi'
 	icon_state = "beam_splash_l"
 	layer = ABOVE_ALL_MOB_LAYER
-	plane = ABOVE_GAME_PLANE
 	pixel_y = -16
 	duration = 50
 
@@ -319,7 +317,6 @@
 	icon = 'icons/obj/weapons/guns/projectiles.dmi'
 	icon_state = "kinetic_blast"
 	layer = ABOVE_ALL_MOB_LAYER
-	plane = ABOVE_GAME_PLANE
 	duration = 4
 
 /obj/effect/temp_visual/explosion
@@ -485,7 +482,6 @@
 	icon = 'icons/effects/effects_rcd.dmi'
 	icon_state = ""
 	layer = ABOVE_ALL_MOB_LAYER
-	plane = ABOVE_GAME_PLANE
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/status = 0

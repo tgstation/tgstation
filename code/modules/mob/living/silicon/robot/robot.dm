@@ -356,7 +356,7 @@
 		else
 			eye_lights.icon_state = "[model.special_light_key ? "[model.special_light_key]":"[model.cyborg_base_icon]"]_e"
 			eye_lights.color = COLOR_WHITE
-			SET_PLANE_EXPLICIT(eye_lights, ABOVE_GAME_PLANE, src)
+			SET_PLANE_EXPLICIT(eye_lights, GAME_PLANE, src)
 		eye_lights.icon = icon
 		add_overlay(eye_lights)
 

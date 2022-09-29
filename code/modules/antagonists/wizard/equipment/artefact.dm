@@ -325,7 +325,6 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "tornado"
 	layer = FLY_LAYER
-	plane = ABOVE_GAME_PLANE
 	randomdir = FALSE
 	duration = 8 SECONDS
 	movement_type = PHASING

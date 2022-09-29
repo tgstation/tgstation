@@ -408,7 +408,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 			speech_bubble_recipients.Add(M.client)
 
 	var/image/say_popup = image('icons/mob/effects/talk.dmi', src, "[bubble_type][say_test(message)]", FLY_LAYER)
-	SET_PLANE_EXPLICIT(say_popup, ABOVE_GAME_PLANE, src)
+	SET_PLANE_EXPLICIT(say_popup, GAME_PLANE, src)
 	say_popup.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	INVOKE_ASYNC(GLOBAL_PROC, /proc/flick_overlay, say_popup, speech_bubble_recipients, 3 SECONDS)
 	LAZYADD(update_on_z, say_popup)

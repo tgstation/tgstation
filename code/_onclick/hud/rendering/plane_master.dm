@@ -306,6 +306,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	plane = GAME_PLANE
 	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
 
+// Wallening todo: does this like, work?
 /atom/movable/screen/plane_master/seethrough
 	name = "Seethrough"
 	documentation = "Holds the seethrough versions (done using image overrides) of large objects. Mouse transparent, so you can click through them."
@@ -313,13 +314,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
 	start_hidden = TRUE
-
-// Take THIS
-/atom/movable/screen/plane_master/game_world_above
-	name = "Above game world"
-	documentation = "We need a place that's unmasked by fov that also draws above the upper game world fov hidden plane. I told you fov was hacky man."
-	plane = ABOVE_GAME_PLANE
-	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
 
 /**
  * Plane master handling byond internal blackness

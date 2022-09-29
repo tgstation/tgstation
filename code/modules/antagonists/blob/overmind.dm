@@ -16,7 +16,6 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	see_in_dark = NIGHTVISION_RANGE
 	invisibility = INVISIBILITY_OBSERVER
 	layer = FLY_LAYER
-	plane = ABOVE_GAME_PLANE
 	see_invisible = SEE_INVISIBLE_LIVING
 	pass_flags = PASSBLOB
 	faction = list(ROLE_BLOB)

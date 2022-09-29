@@ -290,7 +290,6 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	anchored = TRUE  // should only appear in vis_contents, but to be safe
 	layer = FLY_LAYER
-	plane = ABOVE_GAME_PLANE
 	appearance_flags = TILE_BOUND
 	vis_flags = NONE
 
