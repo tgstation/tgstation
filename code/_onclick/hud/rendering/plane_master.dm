@@ -299,48 +299,22 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	plane = OVER_FRILL_PLANE
 	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
 
+// RENAME AND REDOC THIS
 /atom/movable/screen/plane_master/game
 	name = "Lower game world"
 	documentation = "Exists mostly because of FOV shit. Basically, if you've just got a normal not ABOVE fov thing, and you don't want it masked, stick it here yeah?"
 	plane = GAME_PLANE
 	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
 
-/atom/movable/screen/plane_master/game_world_fov_hidden
-	name = "lower game world fov hidden"
-	documentation = "If you want something to be hidden by fov, stick it on this plane. We're masked by the fov blocker plane, so the items on us can actually well, disappear."
-	plane = GAME_PLANE_FOV_HIDDEN
-	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
 
-/atom/movable/screen/plane_master/game_world_fov_hidden/Initialize(mapload)
-	. = ..()
-	add_filter("vision_cone", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(FIELD_OF_VISION_BLOCKER_RENDER_TARGET, offset), flags = MASK_INVERSE))
-
-/atom/movable/screen/plane_master/field_of_vision_blocker
-	name = "Field of vision blocker"
-	documentation = "This is one of those planes that's only used as a filter. It masks out things that want to be hidden by fov.\
-		<br>Literally just contains FOV images, or masks."
-	plane = FIELD_OF_VISION_BLOCKER_PLANE
-	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
-	render_target = FIELD_OF_VISION_BLOCKER_RENDER_TARGET
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	render_relay_planes = list()
-	// We do NOT allow offsetting, because there's no case where you would want to block only one layer, at least currently
-	allows_offsetting = FALSE
-	start_hidden = TRUE
-	// We mark as multiz_scaled FALSE so transforms don't effect us, and we draw to the planes below us as if they were us.
-	// This is safe because we will ALWAYS be on the top z layer, so it DON'T MATTER
-	multiz_scaled = FALSE
-
-/atom/movable/screen/plane_master/field_of_vision_blocker/Initialize(mapload, datum/plane_master_group/home, offset)
-	. = ..()
-	mirror_parent_hidden()
-
+// THIS....
 /atom/movable/screen/plane_master/game_world_upper
 	name = "Upper game world"
 	documentation = "Ok so fov is kinda fucky, because planes in byond serve both as effect groupings and as rendering orderers. Since that's true, we need a plane that we can stick stuff that draws above fov blocked stuff on."
 	plane = GAME_PLANE_UPPER
 	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
 
+// THIS
 /atom/movable/screen/plane_master/game_world_upper_fov_hidden
 	name = "Upper game world fov hidden"
 	documentation = "Just as we need a place to draw things \"above\" the hidden fov plane, we also need to be able to hide stuff that draws over the upper game plane."
@@ -349,8 +323,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 
 /atom/movable/screen/plane_master/game_world_upper_fov_hidden/Initialize()
 	. = ..()
-	// Dupe of the other hidden plane
-	add_filter("vision_cone", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(FIELD_OF_VISION_BLOCKER_RENDER_TARGET, offset), flags = MASK_INVERSE))
 
 /atom/movable/screen/plane_master/seethrough
 	name = "Seethrough"
@@ -360,6 +332,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	render_relay_planes = list(GAME_PLANE)
 	start_hidden = TRUE
 
+// Take THIS
 /atom/movable/screen/plane_master/game_world_above
 	name = "Above game world"
 	documentation = "We need a place that's unmasked by fov that also draws above the upper game world fov hidden plane. I told you fov was hacky man."

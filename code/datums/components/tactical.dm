@@ -40,7 +40,7 @@
 
 	var/obj/item/master = parent
 	var/image/I = image(icon = master.icon, icon_state = master.icon_state, loc = user)
-	SET_PLANE_EXPLICIT(I, GAME_PLANE_FOV_HIDDEN, master)
+	SET_PLANE_EXPLICIT(I, GAME_PLANE, master)
 	I.copy_overlays(master)
 	I.override = TRUE
 	source.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "sneaking_mission", I)
