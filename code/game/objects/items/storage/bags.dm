@@ -220,7 +220,7 @@
 	worn_icon_state = "plantbag"
 	resistance_flags = FLAMMABLE
 
-/obj/item/storage/bag/plants/Initialize(mapload)
+/obj/item/storage/bag/plants/small/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_POCKETS
