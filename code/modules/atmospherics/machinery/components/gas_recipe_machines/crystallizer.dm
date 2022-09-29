@@ -9,7 +9,7 @@
 	name = "crystallizer"
 	desc = "Used to crystallize or solidify gases."
 	layer = ABOVE_MOB_LAYER
-	plane = GAME_PLANE_UPPER
+	plane = GAME_PLANE
 	density = TRUE
 	max_integrity = 300
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 80, ACID = 30)

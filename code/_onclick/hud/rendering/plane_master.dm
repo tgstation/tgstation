@@ -306,14 +306,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	plane = GAME_PLANE
 	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
 
-
-// THIS....
-/atom/movable/screen/plane_master/game_world_upper
-	name = "Upper game world"
-	documentation = "Ok so fov is kinda fucky, because planes in byond serve both as effect groupings and as rendering orderers. Since that's true, we need a plane that we can stick stuff that draws above fov blocked stuff on."
-	plane = GAME_PLANE_UPPER
-	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
-
 // THIS
 /atom/movable/screen/plane_master/game_world_upper_fov_hidden
 	name = "Upper game world fov hidden"

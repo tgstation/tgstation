@@ -189,20 +189,12 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 
 /obj/machinery/bsa/full/proc/get_layer()
 	top_layer = mutable_appearance(icon, layer = ABOVE_MOB_LAYER)
-	SET_PLANE_EXPLICIT(top_layer, GAME_PLANE_UPPER, src)
 	switch(dir)
 		if(WEST)
 			top_layer.icon_state = "top_west"
 		if(EAST)
 			top_layer.icon_state = "top_east"
 	add_overlay(top_layer)
-
-/obj/machinery/bsa/full/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
-	if(same_z_layer)
-		return ..()
-	cut_overlay(top_layer)
-	get_layer()
-	return ..()
 
 /obj/machinery/bsa/full/proc/fire(mob/user, turf/bullseye)
 	reload()

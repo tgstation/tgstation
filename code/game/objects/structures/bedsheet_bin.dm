@@ -45,13 +45,11 @@ LINEN BINS
 		return
 	if(layer == initial(layer))
 		layer = ABOVE_MOB_LAYER
-		SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
 		to_chat(user, span_notice("You cover yourself with [src]."))
 		pixel_x = 0
 		pixel_y = 0
 	else
 		layer = initial(layer)
-		SET_PLANE_IMPLICIT(src, initial(plane))
 		to_chat(user, span_notice("You smooth [src] out beneath you."))
 	if(user.body_position == LYING_DOWN)    //The player isn't laying down currently
 		dir = user.dir

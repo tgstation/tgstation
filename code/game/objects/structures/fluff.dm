@@ -79,7 +79,7 @@
 	density = TRUE
 	deconstructible = FALSE
 	layer = EDGED_TURF_LAYER
-	plane = GAME_PLANE_UPPER
+
 /**
  * A variety of statue in disrepair; parts are broken off and a gemstone is missing
  */

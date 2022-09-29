@@ -17,7 +17,7 @@
 	// and will crop the head off.
 	icon_state = "mask_bg"
 	layer = ABOVE_MOB_LAYER
-	plane = GAME_PLANE_UPPER
+	plane = GAME_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	pixel_y = 22
 	appearance_flags = KEEP_TOGETHER
