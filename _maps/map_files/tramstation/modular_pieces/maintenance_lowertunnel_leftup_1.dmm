@@ -88,12 +88,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/port/central)
-"hD" = (
-/obj/structure/disposalpipe/segment{
-	dir = 5
-	},
-/turf/template_noop,
-/area/template_noop)
 "iC" = (
 /obj/item/stack/ore/glass,
 /turf/open/misc/asteroid/airless,
@@ -848,7 +842,7 @@ Dh
 Dh
 Dh
 Dh
-hD
+Dh
 Dh
 Dh
 Dh

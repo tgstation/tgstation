@@ -481,10 +481,6 @@
 /obj/effect/spawner/random/engineering/flashlight,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/central)
-"RR" = (
-/obj/structure/disposalpipe/segment,
-/turf/template_noop,
-/area/template_noop)
 "Sz" = (
 /turf/template_noop,
 /area/template_noop)
@@ -859,7 +855,7 @@ ol
 ol
 ME
 Sz
-RR
+Sz
 Sz
 Sz
 Sz
