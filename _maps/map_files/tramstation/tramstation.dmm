@@ -53308,7 +53308,7 @@
 	pixel_x = 26
 	},
 /obj/machinery/status_display/ai/directional/north,
-/obj/item/radio/intercom/directional/east,
+/obj/item/radio/intercom/captain/directional/east,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
 "sXa" = (

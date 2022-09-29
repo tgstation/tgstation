@@ -40086,8 +40086,8 @@
 	pixel_x = 1;
 	pixel_y = 5
 	},
-/obj/item/radio/intercom/directional/west,
 /obj/machinery/computer/security/telescreen/entertainment/directional/north,
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain/private)
 "onr" = (
@@ -55895,10 +55895,7 @@
 /obj/item/camera{
 	pixel_y = 4
 	},
-/obj/item/radio/intercom/directional/west{
-	freerange = 1;
-	name = "Captain's Intercom"
-	},
+/obj/item/radio/intercom/captain/directional/west,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain/private)
 "tJb" = (

@@ -9122,7 +9122,7 @@
 /obj/structure/table/wood,
 /obj/item/pinpointer/nuke,
 /obj/item/disk/nuclear,
-/obj/item/radio/intercom/directional/west,
+/obj/item/radio/intercom/captain/directional/west,
 /turf/open/floor/iron/grimy,
 /area/station/command/heads_quarters/captain/private)
 "cbY" = (

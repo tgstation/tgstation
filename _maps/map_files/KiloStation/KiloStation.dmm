@@ -3291,11 +3291,8 @@
 	dir = 4
 	},
 /obj/effect/landmark/start/captain,
-/obj/item/radio/intercom/directional/west{
-	freerange = 1;
-	name = "Captain's Intercom"
-	},
 /obj/structure/sign/poster/contraband/random/directional/north,
+/obj/item/radio/intercom/captain/directional/west,
 /turf/open/floor/carpet/royalblue,
 /area/station/command/heads_quarters/captain/private)
 "aVI" = (
