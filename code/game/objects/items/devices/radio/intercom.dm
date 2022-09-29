@@ -155,6 +155,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom, 26)
 /obj/item/radio/intercom/captain
 	name = "Captain's Intercom"
 	desc = "The Captain's special intercom. Comes with an extended frequency range for optimal eavesdropping."
+	icon_state = "intercom_captain"
 	freerange = TRUE
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/prison, 26)
