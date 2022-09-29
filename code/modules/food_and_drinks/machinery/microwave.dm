@@ -97,12 +97,12 @@
 	// When this is the nth ingredient, whats its pixel_x?
 	var/static/list/ingredient_shifts = list(
 		0,
-		6,
-		-6,
-		8,
-		-8,
+		3,
+		-3,
 		4,
 		-4,
+		2,
+		-2,
 	)
 
 	. = ..()
