@@ -9,7 +9,7 @@
 	// And now, separately for cleanness, the lighting changing
 	if(update_overlay & UPSTATE_BLUESCREEN)
 		set_light_color(LIGHT_COLOR_BLUE)
-		set_light(lon_range)
+		set_light(light_on_range)
 		return
 
 	if(update_overlay)
@@ -20,7 +20,7 @@
 				set_light_color(LIGHT_COLOR_BLUE)
 			if(APC_FULLY_CHARGED)
 				set_light_color(LIGHT_COLOR_GREEN)
-		set_light(lon_range)
+		set_light(light_on_range)
 		return
 
 	set_light(0)
@@ -29,60 +29,62 @@
 	. = ..()
 
 	if(update_overlay & UPOVERLAY_TERMINAL)
-		. += mutable_appearance(icon, "terminal", layer, plane)
+		. += mutable_appearance(icon, "terminal")
 
 	if(update_overlay & UPSTATE_CELL_IN)
-		. += mutable_appearance(icon, "cell", layer, plane)
+		. += mutable_appearance(icon, "cell")
 
 	if(update_overlay & UPSTATE_WIREEXP)
-		. += mutable_appearance(icon, "tray", layer, plane)
+		. += mutable_appearance(icon, "tray")
 
 		if(update_overlay & UPOVERLAY_ELECTRONICS_INSERT)
-			. += mutable_appearance(icon, "electronics", layer, plane)
+			. += mutable_appearance(icon, "electronics")
 		if(update_overlay & UPOVERLAY_TERMINAL)
-			. += mutable_appearance(icon, "wires_secured", layer, plane)
+			. += mutable_appearance(icon, "wires_secured")
 
+	// Wallening todo: this will render below the byond darkness plane when screwed? open, and get cut off
+	// Figure out how you want to handle that, thanks
 	if(update_overlay & UPSTATE_OPENED1)
-		. += mutable_appearance(icon, "hatch-open", layer, BYOND_LIGHTING_PLANE + 1)
+		. += mutable_appearance(icon, "hatch-open")
 	else if(!(update_overlay & UPSTATE_OPENED2))
-		. += mutable_appearance(icon, "hatch-shut", layer, plane)
+		. += mutable_appearance(icon, "hatch-shut")
 
 	if(!locked)
-		. += mutable_appearance(icon, "apc_unlocked", layer, plane)
+		. += mutable_appearance(icon, "apc_unlocked")
 
 	if(update_overlay & UPSTATE_BROKE)
-		. += mutable_appearance(icon, "broken_overlay", layer, plane)
+		. += mutable_appearance(icon, "broken_overlay")
 
 	if((machine_stat & (BROKEN|MAINT)))
 		return
 
 	if(update_overlay & UPSTATE_BLUESCREEN)
-		. += mutable_appearance(icon, "emagged", layer, plane)
-		. += emissive_appearance(icon, "emagged", layer)
+		. += mutable_appearance(icon, "emagged")
+		. += emissive_appearance(icon, "emagged", src)
 
 		if(update_overlay & (UPSTATE_OPENED1 | UPSTATE_OPENED2))
 			return
 
-		. += mutable_appearance(icon, "equip-0", layer, plane)
-		. += emissive_appearance(icon, "equip-0", layer)
-		. += mutable_appearance(icon, "light-0", layer, plane)
-		. += emissive_appearance(icon, "light-0", layer)
-		. += mutable_appearance(icon, "enviro-0", layer, plane)
-		. += emissive_appearance(icon, "enviro-0", layer)
+		. += mutable_appearance(icon, "equip-0")
+		. += emissive_appearance(icon, "equip-0", src)
+		. += mutable_appearance(icon, "light-0")
+		. += emissive_appearance(icon, "light-0", src)
+		. += mutable_appearance(icon, "enviro-0")
+		. += emissive_appearance(icon, "enviro-0", src)
 		return
 
-	. += mutable_appearance(icon, "state-[charging]", layer, plane)
-	. += emissive_appearance(icon, "state-[charging]", layer)
+	. += mutable_appearance(icon, "state-[charging]")
+	. += emissive_appearance(icon, "state-[charging]", src)
 
 	if(!operating || update_overlay & (UPSTATE_OPENED1 | UPSTATE_OPENED2))
 		return
 
-	. += mutable_appearance(icon, "equip-[equipment]", layer, plane)
-	. += emissive_appearance(icon, "equip-[equipment]", layer)
-	. += mutable_appearance(icon, "light-[lighting]", layer, plane)
-	. += emissive_appearance(icon, "light-[lighting]", layer)
-	. += mutable_appearance(icon, "enviro-[environ]", layer, plane)
-	. += emissive_appearance(icon, "enviro-[environ]", layer)
+	. += mutable_appearance(icon, "equip-[equipment]")
+	. += emissive_appearance(icon, "equip-[equipment]", src)
+	. += mutable_appearance(icon, "light-[lighting]")
+	. += emissive_appearance(icon, "light-[lighting]", src)
+	. += mutable_appearance(icon, "enviro-[environ]")
+	. += emissive_appearance(icon, "enviro-[environ]", src)
 
 /// Checks for what icon updates we will need to handle
 /obj/machinery/power/apc/proc/check_updates()

@@ -105,3 +105,9 @@
 #define UPOVERLAY_ELECTRONICS_INSERT (1<<10)
 /// The APC has its electronics fastened
 #define UPOVERLAY_ELECTRONICS_FASTENED (1<<11)
+
+#define APC_AI_NO_MALF 0
+#define APC_AI_NO_HACK 1
+#define APC_AI_HACK_NO_SHUNT 2
+#define APC_AI_HACK_SHUNT_HERE 3
+#define APC_AI_HACK_SHUNT_ANOTHER 4

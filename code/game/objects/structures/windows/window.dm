@@ -68,7 +68,7 @@
 
 	if (flags_1 & ON_BORDER_1)
 		AddElement(/datum/element/connect_loc, loc_connections)
-	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS ,null,CALLBACK(src, .proc/can_be_rotated),CALLBACK(src,.proc/after_rotation))
+	AddComponent(/datum/component/simple_rotation, ROTATION_NEEDS_ROOM, AfterRotation = CALLBACK(src,.proc/AfterRotation))
 
 /obj/structure/window/examine(mob/user)
 	. = ..()
@@ -83,9 +83,7 @@
 			else
 				. += span_notice("The window is <i>unscrewed</i> from the floor, and could be deconstructed by <b>wrenching</b>.")
 
-
-
-/obj/structure/window/Moved(atom/OldLoc, Dir)
+/obj/structure/window/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(fulltile)
 		update_icon_state()
@@ -638,8 +636,10 @@
 	icon_state = "fwindow"
 
 /// Wallening todo: I think these need to be made into fulltile windows? unless those are handled some other way? I'm confused
+/// There's two copies of this code, kyler WHY
+/// Is it just a merge conflict?
 /* Full Tile Windows (more atom_integrity) */
-
+/*
 /obj/structure/window/fulltile
 	icon = 'icons/obj/smooth_structures/window.dmi'
 	icon_state = "window-0"
@@ -879,12 +879,5 @@
 	..()
 	update_appearance()
 
-/obj/structure/window/bronze
-	name = "brass window"
-	desc = "A paper-thin pane of translucent yet reinforced brass. Nevermind, this is just weak bronze!"
-	icon = 'icons/obj/smooth_structures/clockwork_window.dmi'
-	icon_state = "clockwork_window_single"
-	glass_type = /obj/item/stack/sheet/bronze
 
-/obj/structure/window/bronze/unanchored
-	anchored = FALSE
+*/

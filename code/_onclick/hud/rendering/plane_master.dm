@@ -249,7 +249,55 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 /atom/movable/screen/plane_master/over_tile
 	name = "over tile world plane master"
 	plane = OVER_TILE_PLANE
-	render_relay_planes = RENDER_PLANE_GAME
+	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
+
+/atom/movable/screen/plane_master/wall
+	name = "wall plane master"
+	plane = WALL_PLANE
+	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
+
+///Contains wall frills
+/atom/movable/screen/plane_master/frill
+	name = "frill plane master"
+	plane = FRILL_PLANE
+	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
+
+/atom/movable/screen/plane_master/frill/show_to(mob/mymob)
+	. = ..()
+	remove_filter(FRILL_FLOOR_CUT)
+	remove_filter(FRILL_GAME_CUT)
+	remove_filter(FRILL_MOB_MASK)
+	if(!mymob.client)
+		return
+	if(!mymob.client.frills_over_floors)
+		add_filter(FRILL_FLOOR_CUT, 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(FLOOR_PLANE_RENDER_TARGET, offset), flags = MASK_INVERSE))
+	//WALLENING TODO: decide what to do about this, ensure frills filter out emissives/maybe all lighting
+	//add_filter(FRILL_GAME_CUT, 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(EMISSIVE_BLOCKER_RENDER_TARGET, offset), flags = MASK_INVERSE))
+	add_filter(FRILL_MOB_MASK, 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(FRILL_MASK_RENDER_TARGET, offset), flags = MASK_INVERSE))
+
+/atom/movable/screen/plane_master/frill_mask
+	name = "frill mask plane master"
+	plane = FRILL_MASK_PLANE
+	render_target = FRILL_MASK_RENDER_TARGET
+	render_relay_planes = list()
+
+//Yes this is currently unused, we're keeping it for completeness, needs some thinking of if it's actually needed or not
+/atom/movable/screen/plane_master/frill_under
+	name = "frill under plane master"
+	plane = UNDER_FRILL_PLANE
+	render_target = UNDER_FRILL_RENDER_TARGET
+	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
+
+/atom/movable/screen/plane_master/frill_under/show_to(mob/mymob)
+	. = ..()
+	remove_filter(FRILL_MOB_MASK)
+	add_filter(FRILL_MOB_MASK, 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(FRILL_MASK_RENDER_TARGET, offset), flags = MASK_INVERSE))
+
+// Not entirely sure how required this is, it's the plane we use for things that sit "on" walls
+/atom/movable/screen/plane_master/frill_over
+	name = "frill under plane master"
+	plane = OVER_FRILL_PLANE
+	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
 
 /atom/movable/screen/plane_master/game
 	name = "Lower game world"

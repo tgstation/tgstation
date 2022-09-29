@@ -19,7 +19,7 @@
 #define RENDER_PLANE_TRANSPARENT -18 //Transparent plane that shows openspace underneath the floor
 
 #define FLOOR_PLANE -15
-#define FLOOR_PLANE_RENDER_TARGET "FLOOR_PLANE"
+#define FLOOR_PLANE_RENDER_TARGET "*FLOOR_PLANE"
 #define OVER_TILE_PLANE -14
 #define WALL_PLANE -13
 #define GAME_PLANE -12
@@ -27,9 +27,11 @@
 #define GAME_PLANE_UPPER -10
 #define GAME_PLANE_UPPER_FOV_HIDDEN -9
 #define UNDER_FRILL_PLANE -8
-#define UNDER_FRILL_RENDER_TARGET "UNDER_FRILL_PLANE"
+#define UNDER_FRILL_RENDER_TARGET "*UNDER_FRILL_PLANE"
 #define FRILL_PLANE -7
-#define OVER_FRILL_PLANE -6
+#define FRILL_MASK_PLANE -6
+#define FRILL_MASK_RENDER_TARGET "*FRILL_MASK_PLANE"
+#define OVER_FRILL_PLANE -5
 
 ///Slightly above the game plane but does not catch mouse clicks. Useful for certain visuals that should be clicked through, like seethrough trees
 #define SEETHROUGH_PLANE -3
@@ -43,9 +45,6 @@
 #define MASSIVE_OBJ_PLANE 3
 #define GHOST_PLANE 4
 #define POINT_PLANE 5
-
-#define FRILL_MASK_PLANE 6
-#define FRILL_MASK_RENDER_TARGET "*FRILL_MASK_PLANE"
 
 
 //---------- LIGHTING -------------

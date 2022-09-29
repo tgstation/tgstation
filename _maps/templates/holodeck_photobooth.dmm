@@ -58,7 +58,7 @@
 /turf/open/floor/holofloor/carpet,
 /area/template_noop)
 "L" = (
-/obj/structure/falsewall/wood,
+/obj/structure/falsewall/material/wood,
 /obj/structure/mirror,
 /turf/open/floor/holofloor/carpet,
 /area/template_noop)

@@ -56,10 +56,10 @@
 	else
 		desired_mob.key = key
 
-	if(M.base_pixel_x)
-		M.pixel_x = M.base_pixel_x
-	if(M.base_pixel_y)
-		M.pixel_y = M.base_pixel_y
+	if(desired_mob.base_pixel_x)
+		desired_mob.pixel_x = desired_mob.base_pixel_x
+	if(desired_mob.base_pixel_y)
+		desired_mob.pixel_y = desired_mob.base_pixel_y
 
 	if(delete_old_mob)
 		QDEL_IN(src, 1)

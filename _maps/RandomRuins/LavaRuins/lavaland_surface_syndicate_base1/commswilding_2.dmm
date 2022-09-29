@@ -128,7 +128,7 @@
 /turf/open/floor/plating,
 /area/ruin/syndicate_lava_base/telecomms)
 "L" = (
-/obj/structure/falsewall/plastitanium,
+/obj/structure/falsewall/material/plastitanium,
 /turf/open/floor/plating,
 /area/ruin/syndicate_lava_base/telecomms)
 "M" = (

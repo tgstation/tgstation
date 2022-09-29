@@ -152,7 +152,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/toy/mecha/honk,
 		/obj/item/trash/cheesie,
 		/obj/machinery/door/airlock/bananium,
-		/obj/structure/falsewall/bananium,
+		/obj/structure/falsewall/material/bananium,
 		/obj/structure/mecha_wreckage/honker,
 		/obj/structure/statue/bananium,
 		/obj/vehicle/sealed/car/clowncar,

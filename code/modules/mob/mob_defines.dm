@@ -28,8 +28,6 @@
 	/// HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
 	var/client/canon_client
 
-	var/shift_to_open_context_menu = TRUE
-
 	var/lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 	var/datum/mind/mind
 	var/static/next_mob_id = 0

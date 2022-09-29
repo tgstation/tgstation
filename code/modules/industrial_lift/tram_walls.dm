@@ -292,12 +292,12 @@
 /obj/structure/tramwall/material
 	name = "wall"
 	desc = "A huge chunk of material used to separate rooms."
-	icon = 'icons/turf/walls/materialwall.dmi'
-	icon_state = "materialwall-0"
-	base_icon_state = "materialwall"
+	icon = 'icons/turf/walls/silver_wall.dmi'
+	icon_state = "silver_wall-0"
+	base_icon_state = "silver_wall"
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_MATERIAL_WALLS, SMOOTH_GROUP_WALLS)
-	canSmoothWith = list(SMOOTH_GROUP_MATERIAL_WALLS)
+	smoothing_groups = list(SMOOTH_GROUP_WALLS, SMOOTH_GROUP_SILVER_WALLS)
+	canSmoothWith = list(SMOOTH_GROUP_SILVER_WALLS)
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 
 /obj/structure/tramwall/material/deconstruct(disassembled = TRUE)

@@ -20,7 +20,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	new/datum/stack_recipe("bed", /obj/structure/bed, 2, one_per_turf = TRUE, on_solid_ground = TRUE), \
 	new/datum/stack_recipe("double bed", /obj/structure/bed/double, 4, one_per_turf = TRUE, on_solid_ground = TRUE), \
 	null, \
-	new/datum/stack_recipe("window frame", /obj/structure/window_frame, 2, one_per_turf = TRUE, on_floor = TRUE, applies_mats = TRUE), \
+	new/datum/stack_recipe("window frame", /obj/structure/window_frame, 2, one_per_turf = TRUE, on_solid_ground = TRUE, applies_mats = TRUE), \
 	new/datum/stack_recipe_list("office chairs", list( \
 		new/datum/stack_recipe("dark office chair", /obj/structure/chair/office, 5, one_per_turf = TRUE, on_solid_ground = TRUE), \
 		new/datum/stack_recipe("light office chair", /obj/structure/chair/office/light, 5, one_per_turf = TRUE, on_solid_ground = TRUE), \

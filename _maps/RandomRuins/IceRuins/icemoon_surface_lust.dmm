@@ -21,7 +21,7 @@
 /turf/open/floor/mineral/diamond,
 /area/icemoon/surface/outdoors)
 "f" = (
-/obj/structure/falsewall/plastitanium,
+/obj/structure/falsewall/material/plastitanium,
 /obj/structure/sign/poster/contraband/lusty_xenomorph,
 /turf/open/floor/mineral/diamond,
 /area/icemoon/surface/outdoors)

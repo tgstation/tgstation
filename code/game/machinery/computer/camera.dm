@@ -293,8 +293,6 @@ INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/e
 
 	INVOKE_ASYNC(src, /atom.proc/interact, usr)
 
-			"Spears! Camera! Action! LIVE NOW!"))
-
 ///Sets the monitor's icon to the selected state, and says an announcement
 /obj/machinery/computer/security/telescreen/entertainment/proc/notify(on, announcement)
 	if(on && icon_state == icon_state_off)
@@ -310,7 +308,7 @@ INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/e
 	if(machine_stat & (NOPOWER|BROKEN))
 		return
 	. += "[base_icon_state]_program[rand(1,4)]"
-	. += emissive_appearance(icon, "[base_icon_state]_emissive", alpha = src.alpha)
+	. += emissive_appearance(icon, "[base_icon_state]_emissive", src, alpha = src.alpha)
 
 /// Adds a camera network ID to the entertainment monitor, and turns off the monitor if network list is empty
 /obj/machinery/computer/security/telescreen/entertainment/proc/update_shows(is_show_active, tv_show_id, announcement)
@@ -361,6 +359,7 @@ INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/e
 /obj/item/assembly/control/showtime/activate()
 	is_show_active = !is_show_active
 	say("The [tv_show_name] show has [is_show_active ? "begun" : "ended"]")
+	var/announcement = is_show_active ? pick(tv_starters) : pick(tv_enders)
 	for(var/obj/machinery/computer/security/telescreen/entertainment/tv in GLOB.machines)
 		tv.update_shows(is_show_active, tv_network_id, announcement)
 

@@ -80,7 +80,7 @@
 					if(rod.get_amount() < amount)
 						return
 					rod.use(amount)
-					var/obj/structure/falsewall/iron/FW = new (loc)
+					var/obj/structure/falsewall/material/iron/FW = new (loc)
 					transfer_fingerprints_to(FW)
 					qdel(src)
 					return
