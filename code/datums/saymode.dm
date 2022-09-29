@@ -42,7 +42,7 @@
 			continue
 		var/mob/living/ling_mob = ling_reciever.owner.current
 		//removes types that override the presence of being changeling (for example, borged lings still can't hivemind chat)
-		if(!isliving(ling_mob) || issilicon(ling_mob) || isbrain(ling_mob))
+		if((!isliving(ling_mob) || issilicon(ling_mob) || isbrain(ling_mob)) && !HAS_TRAIT(ling_mob, CHANGELING_HIVEMIND_MUTE))
 			continue
 		to_chat(ling_mob, msg)
 
