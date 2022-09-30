@@ -603,7 +603,7 @@ SUBSYSTEM_DEF(job)
 		var/job_title = occupation.title
 		var/job_key = occupation.config_tag
 		if(!job_config["[job_key]"])
-			message_admins("[job_title] (with config key [job_key]) is missing from jobconfig.json! Using codebase defaults.")
+			message_admins("[job_title] (with config key [job_key]) is missing from jobconfig.json! Using codebase defaults.") // we add both the title and the config key in case they desync over time and someone needs to fix the box for some reason
 			continue
 
 		occupation.total_positions = job_config["[job_key]"]["Total Positions"]
