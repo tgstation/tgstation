@@ -45,6 +45,10 @@
 #define MODE_ALIEN "alientalk"
 #define MODE_HOLOPAD "holopad"
 
+#define MODE_CHANGELING "changeling"
+#define MODE_KEY_CHANGELING "g"
+#define MODE_TOKEN_CHANGELING ":g"
+
 #define MODE_VOCALCORDS "cords"
 #define MODE_KEY_VOCALCORDS "x"
 

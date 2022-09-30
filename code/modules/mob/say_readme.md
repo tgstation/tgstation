@@ -92,9 +92,6 @@ global procs
 	hivecheck()
 		Returns TRUE if the mob can hear and talk in the alien hivemind.
 
-	lingcheck()
-		Returns a bitflag representing who is trying to talk to the changeling hivemind.
-
 /mob/living
 	say(message, bubble_type, var/list/spans, sanitize, datum/language/languag, ignore_spam, forced)
 		The say() of mob_living is significantly more complex than that of objects.
