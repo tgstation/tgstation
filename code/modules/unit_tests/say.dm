@@ -93,6 +93,13 @@
 	RegisterSignal(speaker, COMSIG_MOB_SAY, .proc/handle_speech)
 	RegisterSignal(listener, COMSIG_MOVABLE_HEAR, .proc/handle_hearing)
 
+
+
+	conversation(distance=1)
+
+
+
+
 	speaker.forceMove(run_loc_floor_bottom_left)
 	// move listener 1 tiles away
 	listener.forceMove(locate(run_loc_floor_bottom_left.x + 1, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
@@ -129,3 +136,19 @@
 	speaker.whisper("The quick brown fox jumps over the lazy dog")
 	TEST_ASSERT(handle_speech_result == 6, "Handle speech signal was not fired")
 	TEST_ASSERT(!handle_hearing_result == 3, "Handle hearing signal was not fired") // shouldn't be able to hear from this distance
+
+/datum/unit_test/speech/proc/conversation(distance = 0)
+	speaker.forceMove(run_loc_floor_bottom_left)
+	listener.forceMove(locate(run_loc_floor_bottom_left.x + distance, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
+
+	// speaking
+	speaker.say("The quick brown fox jumps over the lazy dog")
+	TEST_ASSERT(handle_speech_result, "Handle speech signal was not fired")
+	TEST_ASSERT(handle_hearing_result, "Handle hearing signal was not fired")
+	// whispering
+	speaker.whisper("The quick brown fox jumps over the lazy dog")
+	TEST_ASSERT(handle_speech_result, "Handle speech signal was not fired")
+	TEST_ASSERT(handle_hearing_result, "Handle hearing signal was not fired")
+	// reset our signal vars
+	handle_speech_result = null
+	handle_hearing_result = null
