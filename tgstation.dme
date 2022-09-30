@@ -1066,6 +1066,7 @@
 #include "code\datums\elements\skittish.dm"
 #include "code\datums\elements\snail_crawl.dm"
 #include "code\datums\elements\soft_landing.dm"
+#include "code\datums\elements\split_visibility.dm"
 #include "code\datums\elements\spooky.dm"
 #include "code\datums\elements\squish.dm"
 #include "code\datums\elements\strippable.dm"

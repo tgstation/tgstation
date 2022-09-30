@@ -6,15 +6,35 @@
 // It's not finished yet, which is why this file isn't ticked. We need to rework how sprite files get split up
 // For now tho, it'll just sit here
 
+/mutable_appearance/split_vis
+
+/mutable_appearance/split_vis/New()
+	. = ..()
+	// Need to do this here because it's overriden by the parent call
+	appearance_flags = TILE_BOUND
 
 GLOBAL_LIST_EMPTY(split_visibility_objects)
-/proc/get_splitvis_object(icon_path, junction, dir, shadow = FALSE, alpha = 255, pixel_x = 0, pixel_y = 0, plane = WALL_PLANE, layer = ABOVE_MOB_LAYER)
-	var/key = "[icon_path]-[junction]-[dir]-[shadow]-[alpha]-[pixel_x]-[pixel_y]-[plane]-[layer]"
-	var/atom/movable/visual/split_vis/vis = GLOB.split_visibility_objects[key]
+
+/proc/get_splitvis_object(turf/apply_to, icon_path, junction, dir, shadow = FALSE, alpha = 255, pixel_x = 0, pixel_y = 0, plane = WALL_PLANE, layer = ABOVE_MOB_LAYER)
+	var/offset = GET_TURF_PLANE_OFFSET(apply_to)
+	var/key = "[icon_path]-[junction]-[dir]-[shadow]-[alpha]-[pixel_x]-[pixel_y]-[plane]-[layer]-[offset]"
+	var/mutable_appearance/split_vis/vis = GLOB.split_visibility_objects[key]
 	if(vis)
 		return vis
 
-	vis = new /atom/movable/visual/split_vis(null, icon_path, junction, dir, shadow, alpha, pixel_x, pixel_y, plane, layer)
+	vis = new /mutable_appearance/split_vis()
+	vis.icon = icon_path
+	var/junc = junction ? junction : "0"
+	vis.icon_state = "[junc]"
+	vis.dir = dir
+	if(shadow)
+		vis.overlays += get_splitvis_object(apply_to, icon_path, junction, dir, FALSE, 120, pixel_x = 0, pixel_y = 0, plane = UNDER_FRILL_PLANE)
+	vis.alpha = alpha
+	vis.pixel_x = pixel_x
+	vis.pixel_y = pixel_y
+	SET_PLANE_W_SCALAR(vis, plane, offset)
+	vis.layer = layer
+
 	GLOB.split_visibility_objects[key] = vis
 	return vis
 
@@ -53,7 +73,6 @@ GLOBAL_LIST_EMPTY(split_visibility_objects)
 
 /turf
 	var/icon_state_key
-	var/list/real_overlays = list()
 
 /datum/element/split_visibility/proc/apply_splitvis_objs(turf/target_turf, icon_path, new_junction, add_to_turfs = TRUE)
 	var/static/frilled_dirs = (NORTH)
@@ -61,10 +80,6 @@ GLOBAL_LIST_EMPTY(split_visibility_objects)
 	var/junction = new_junction
 	if(isnull(junction))
 		junction = target_turf.smoothing_junction
-
-	// Debug stuff begin
-	var/icon_state_key = ""
-	// Debug stuff end
 
 	for(var/direction in GLOB.cardinals)
 		// If we're connected in this direction, please don't draw a wall side
@@ -77,20 +92,15 @@ GLOBAL_LIST_EMPTY(split_visibility_objects)
 			active_plane = FRILL_PLANE
 			uses_shadow = TRUE
 
-		var/atom/movable/visual/split_vis/vis = get_splitvis_object(icon_path, junction, direction, uses_shadow, 255, -DIR_TO_PIXEL_X(direction), -DIR_TO_PIXEL_Y(direction), active_plane)
-
 		var/turf/operating_turf = get_step(target_turf, direction)
 		// Right up against an edge of the map eh?
 		if(!operating_turf)
 			continue
 
+		var/mutable_appearance/split_vis/vis = get_splitvis_object(operating_turf, icon_path, junction, direction, uses_shadow, 255, -DIR_TO_PIXEL_X(direction), -DIR_TO_PIXEL_Y(direction), active_plane)
 		if(add_to_turfs)
-			var/junc = junction ? junction : "0"
-			icon_state_key += "([direction]-[junc])"
-			target_turf.real_overlays += vis
 			operating_turf.overlays += vis
 		else
-			target_turf.real_overlays -= vis
 			operating_turf.overlays -= vis
 
 	for(var/direction in GLOB.diagonals)
@@ -98,23 +108,17 @@ GLOBAL_LIST_EMPTY(split_visibility_objects)
 		if((junction & direction) != direction)
 			continue
 
-		var/atom/movable/visual/split_vis/vis = get_splitvis_object(icon_path, junction, direction, FALSE, 255, -DIR_TO_PIXEL_X(direction), -DIR_TO_PIXEL_Y(direction), layer = WALL_OBJ_LAYER)
-
 		var/turf/operating_turf = get_step(target_turf, direction)
 		// Right up against an edge of the map eh?
 		if(!operating_turf)
 			continue
 
+		var/mutable_appearance/split_vis/vis = get_splitvis_object(operating_turf, icon_path, junction, direction, FALSE, 255, -DIR_TO_PIXEL_X(direction), -DIR_TO_PIXEL_Y(direction), layer = WALL_OBJ_LAYER)
+
 		if(add_to_turfs)
-			var/junc = junction ? junction : "0"
-			icon_state_key += "([direction]-[junc])"
-			target_turf.real_overlays += vis
 			operating_turf.overlays += vis
 		else
-			target_turf.real_overlays -= vis
 			operating_turf.overlays -= vis
-
-	target_turf.icon_state_key = icon_state_key
 
 /datum/element/split_visibility/Detach(turf/target)
 	remove_split_vis_objects(target, icon_path)
@@ -127,27 +131,3 @@ GLOBAL_LIST_EMPTY(split_visibility_objects)
 	var/turf/turf_or_movable = source
 	remove_split_vis_objects(turf_or_movable, icon_path)
 	add_split_vis_objects(turf_or_movable, icon_path, new_junction)
-
-
-/atom/movable/visual/split_vis
-	appearance_flags = TILE_BOUND
-	layer = ABOVE_MOB_LAYER
-	plane = WALL_PLANE
-
-/atom/movable/visual/split_vis/Initialize(mapload, icon, junction, dir, shadow, custom_alpha, custom_pixel_x, custom_pixel_y, custom_plane, custom_layer)
-	. = ..()
-	src.icon = icon
-	var/junc = junction ? junction : "0"
-	icon_state = "[dir]-[junc]"
-	if(shadow)
-		overlays += get_splitvis_object(icon, junction, dir, FALSE, 120, pixel_x = 0, pixel_y = 0, plane = UNDER_FRILL_PLANE)
-	if(!isnull(custom_alpha))
-		alpha = custom_alpha
-	if(!isnull(custom_pixel_x))
-		pixel_x = custom_pixel_x
-	if(!isnull(custom_pixel_y))
-		pixel_y = custom_pixel_y
-	if(!isnull(custom_plane))
-		plane = custom_plane
-	if(!isnull(custom_layer))
-		layer = custom_layer

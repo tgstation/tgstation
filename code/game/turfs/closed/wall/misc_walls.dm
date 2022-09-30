@@ -66,7 +66,7 @@
 	base_icon_state = "sandstonevault"
 
 /turf/closed/wall/ice
-	icon = 'icons/turf/walls/icedmetal_wall.dmi'
+// wallening todo	icon = 'icons/turf/walls/icedmetal_wall.dmi'
 	icon_state = "icedmetal_wall-0"
 	base_icon_state = "icedmetal_wall"
 	desc = "A wall covered in a thick sheet of ice."
@@ -131,7 +131,7 @@
 /turf/closed/wall/rock
 	name = "reinforced rock"
 	desc = "It has metal struts that need to be welded away before it can be mined."
-	icon = 'icons/turf/walls/reinforced_rock.dmi'
+// wallening todo	icon = 'icons/turf/walls/reinforced_rock.dmi'
 	icon_state = "porous_rock-0"
 	base_icon_state = "porous_rock"
 	turf_flags = NO_RUST

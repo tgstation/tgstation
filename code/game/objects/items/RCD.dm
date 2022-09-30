@@ -253,6 +253,7 @@ RLD
 
 	COOLDOWN_DECLARE(destructive_scan_cooldown)
 
+// Wallening todo: need to make this work with split walls
 GLOBAL_VAR_INIT(icon_holographic_wall, init_holographic_wall())
 GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 
@@ -260,7 +261,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 // and referencing that. I don't know why.
 /proc/init_holographic_wall()
 	return getHologramIcon(
-		icon('icons/turf/walls/wall.dmi', "wall-0"),
+		icon('icons/turf/walls/metal_wall.dmi', "wall-0"),
 		opacity = 1,
 	)
 
