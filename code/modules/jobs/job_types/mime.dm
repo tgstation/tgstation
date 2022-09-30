@@ -8,6 +8,7 @@
 	supervisors = SUPERVISOR_HOP
 	selection_color = "#bbe291"
 	exp_granted_type = EXP_TYPE_CREW
+	config_tag = "MIME"
 
 	outfit = /datum/outfit/job/mime
 	plasmaman_outfit = /datum/outfit/plasmaman/mime

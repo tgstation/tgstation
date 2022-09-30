@@ -123,6 +123,10 @@
 	/// Does this job ignore human authority?
 	var/ignore_human_authority = FALSE
 
+	/// String key to track any variables we want to tie to this job in config, so we can avoid using the job title. We CAPITALIZE it in order to ensure it's unique and resistant to trivial formatting changes.
+	/// You'll probably break someone's config if you change this, so it's best to not to.
+	var/config_tag = ""
+
 
 /datum/job/New()
 	. = ..()

@@ -298,7 +298,7 @@ CHECK_RANDOMIZER
 ## In-game features
 
 ## Toggle for having jobs load up from the jobconfig.json file. Will use codebase defaults if commented out.
-## Jobs must match their codebase-equivalent title.
+## Jobs have specific "keys" tied to their in-game datums, those should sync up otherwise it will fail to load.
 ## Setting Total/Spawn Positions to -1 will open unlimited join slots for it.
 ## Playtime Requirements is in minutes, Required Account Age is in days.
 # LOAD_JOBS_FROM_TXT

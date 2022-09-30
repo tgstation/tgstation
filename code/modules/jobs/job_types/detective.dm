@@ -13,6 +13,7 @@
 	exp_requirements = 300
 	exp_required_type = EXP_TYPE_CREW
 	exp_granted_type = EXP_TYPE_CREW
+	config_tag = "DETECTIVE"
 
 	outfit = /datum/outfit/job/detective
 	plasmaman_outfit = /datum/outfit/plasmaman/detective

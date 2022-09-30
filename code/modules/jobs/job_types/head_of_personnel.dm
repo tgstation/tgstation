@@ -16,6 +16,7 @@
 	exp_required_type = EXP_TYPE_CREW
 	exp_required_type_department = EXP_TYPE_SERVICE
 	exp_granted_type = EXP_TYPE_CREW
+	config_tag = "HEAD_OF_PERSONNEL"
 
 	outfit = /datum/outfit/job/hop
 	plasmaman_outfit = /datum/outfit/plasmaman/head_of_personnel
