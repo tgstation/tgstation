@@ -140,8 +140,8 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 /obj/item/fulton_core
 	name = "extraction beacon signaller"
 	desc = "Emits a signal which fulton recovery devices can lock onto. Activate in hand to create a beacon."
-	icon = 'icons/obj/stock_parts.dmi'
-	icon_state = "subspace_amplifier"
+	icon = 'icons/obj/fulton.dmi'
+	icon_state = "folded_extraction"
 
 /obj/item/fulton_core/attack_self(mob/user)
 	if(do_after(user,15,target = user) && !QDELETED(src))
@@ -161,10 +161,15 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	. = ..()
 	name += " ([rand(100,999)]) ([get_area_name(src, TRUE)])"
 	GLOB.total_extraction_beacons += src
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/structure/extraction_point/Destroy()
 	GLOB.total_extraction_beacons -= src
 	return ..()
+
+/obj/structure/extraction_point/update_overlays()
+	. = ..()
+	. += emissive_appearance(icon, "[icon_state]_light", src, alpha = src.alpha)
 
 /obj/effect/extraction_holder
 	name = "extraction holder"
