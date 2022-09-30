@@ -6,7 +6,6 @@
 /obj/item/circuit_component/clock
 	display_name = "Clock"
 	desc = "A component that repeatedly fires."
-	category = "Utility"
 
 	/// Whether the clock is on or not
 	var/datum/port/input/on

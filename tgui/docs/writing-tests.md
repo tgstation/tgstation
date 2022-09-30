@@ -10,7 +10,11 @@ test('something', () => {
 });
 ```
 
-Refer to [README](../README.md) to learn how to run tests.
+To run the tests, type the following into the terminal:
+
+```
+bin/tgui --test
+```
 
 There is an example test in `packages/common/react.spec.ts`.
 

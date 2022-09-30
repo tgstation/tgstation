@@ -2,23 +2,21 @@
 	name = "navigation computer"
 	desc = "Used to designate a precise transit location for a spacecraft."
 	jump_action = null
-	should_supress_view_changes = FALSE
+	should_supress_view_changes  = FALSE
 
 	// Docking cameras should only interact with their current z-level.
 	move_up_action = null
 	move_down_action = null
 
+	var/datum/action/innate/shuttledocker_rotate/rotate_action = new
+	var/datum/action/innate/shuttledocker_place/place_action = new
 	var/shuttleId = ""
 	var/shuttlePortId = ""
 	var/shuttlePortName = "custom location"
-	/// Hashset of ports to jump to and ignore for collision purposes
-	var/list/jump_to_ports = list()
-	/// The custom docking port placed by this console
-	var/obj/docking_port/stationary/my_port
-	/// The mobile docking port of the connected shuttle
-	var/obj/docking_port/mobile/shuttle_port
-	// Traits forbided for custom docking
-	var/list/locked_traits = list(ZTRAIT_RESERVED, ZTRAIT_CENTCOM, ZTRAIT_AWAY)
+	var/list/jumpto_ports = list() //hashset of ports to jump to and ignore for collision purposes
+	var/obj/docking_port/stationary/my_port //the custom docking port placed by this console
+	var/obj/docking_port/mobile/shuttle_port //the mobile docking port of the connected shuttle
+	var/list/locked_traits = list(ZTRAIT_RESERVED, ZTRAIT_CENTCOM, ZTRAIT_AWAY) //traits forbided for custom docking
 	var/view_range = 0
 	var/x_offset = 0
 	var/y_offset = 0
@@ -31,21 +29,20 @@
 /obj/machinery/computer/camera_advanced/shuttle_docker/Initialize(mapload)
 	. = ..()
 	GLOB.navigation_computers += src
-	actions += new /datum/action/innate/shuttledocker_rotate(src)
-	actions += new /datum/action/innate/shuttledocker_place(src)
 
-	set_init_ports()
+	if(!mapload)
+		connect_to_shuttle(SSshuttle.get_containing_shuttle(src))
 
-	if(connect_to_shuttle(mapload, SSshuttle.get_containing_shuttle(src)))
-		for(var/obj/docking_port/stationary/port as anything in SSshuttle.stationary_docking_ports)
-			if(port.shuttle_id == shuttleId)
-				add_jumpable_port(port.shuttle_id)
+		for(var/obj/docking_port/stationary/S as anything in SSshuttle.stationary)
+			if(S.id == shuttleId)
+				jumpto_ports[S.id] = TRUE
 
-	for(var/obj/docking_port/stationary/port as anything in SSshuttle.stationary_docking_ports)
-		if(!port)
+	for(var/V in SSshuttle.stationary)
+		if(!V)
 			continue
-		if(jump_to_ports[port.shuttle_id])
-			z_lock |= port.z
+		var/obj/docking_port/stationary/S = V
+		if(jumpto_ports[S.id])
+			z_lock |= S.z
 	whitelist_turfs = typecacheof(whitelist_turfs)
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/Destroy()
@@ -54,30 +51,11 @@
 
 	if(my_port?.get_docked())
 		my_port.delete_after = TRUE
-		my_port.shuttle_id = null
+		my_port.id = null
 		my_port.name = "Old [my_port.name]"
 		my_port = null
 	else
 		QDEL_NULL(my_port)
-
-/// "Initializes" any default port ids we have, done so add_jumpable_port can be a proper setter
-/obj/machinery/computer/camera_advanced/shuttle_docker/proc/set_init_ports()
-	var/list/init_ports = jump_to_ports.Copy()
-	jump_to_ports = list() //Reset it so we don't get dupes
-	for(var/port_id in init_ports)
-		add_jumpable_port(port_id)
-
-/obj/machinery/computer/camera_advanced/shuttle_docker/proc/add_jumpable_port(port_id)
-	if(!length(jump_to_ports))
-		actions += new /datum/action/innate/camera_jump/shuttle_docker(src)
-	jump_to_ports[port_id] = TRUE
-
-/obj/machinery/computer/camera_advanced/shuttle_docker/proc/remove_jumpable_port(port_id)
-	jump_to_ports -= port_id
-	if(!length(jump_to_ports))
-		var/datum/action/to_remove = locate(/datum/action/innate/camera_jump/shuttle_docker) in actions
-		actions -= to_remove
-		qdel(to_remove)
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/attack_hand(mob/user, list/modifiers)
 	if(jammed)
@@ -87,6 +65,21 @@
 		to_chat(user,span_warning("Warning: Shuttle connection severed!"))
 		return
 	return ..()
+
+/obj/machinery/computer/camera_advanced/shuttle_docker/GrantActions(mob/living/user)
+	if(jumpto_ports.len)
+		jump_action = new /datum/action/innate/camera_jump/shuttle_docker
+	..()
+
+	if(rotate_action)
+		rotate_action.target = user
+		rotate_action.Grant(user)
+		actions += rotate_action
+
+	if(place_action)
+		place_action.target = user
+		place_action.Grant(user)
+		actions += place_action
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/CreateEye()
 	shuttle_port = SSshuttle.getShuttle(shuttleId)
@@ -108,7 +101,7 @@
 			var/y_off = T.y - origin.y
 			I.loc = locate(origin.x + x_off, origin.y + y_off, origin.z) //we have to set this after creating the image because it might be null, and images created in nullspace are immutable.
 			I.layer = ABOVE_NORMAL_TURF_LAYER
-			SET_PLANE(I, GAME_PLANE, T)
+			I.plane = 0
 			I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 			the_eye.placement_images[I] = list(x_off, y_off)
 
@@ -168,7 +161,7 @@
 	if(my_port?.get_docked())
 		my_port.unregister()
 		my_port.delete_after = TRUE
-		my_port.shuttle_id = null
+		my_port.id = null
 		my_port.name = "Old [my_port.name]"
 		my_port = null
 
@@ -176,7 +169,7 @@
 		my_port = new()
 		my_port.unregister()
 		my_port.name = shuttlePortName
-		my_port.shuttle_id = shuttlePortId
+		my_port.id = shuttlePortId
 		my_port.height = shuttle_port.height
 		my_port.width = shuttle_port.width
 		my_port.dheight = shuttle_port.dheight
@@ -196,7 +189,7 @@
 		var/image/newI = image('icons/effects/alphacolors.dmi', the_eye.loc, "blue")
 		newI.loc = I.loc //It is highly unlikely that any landing spot including a null tile will get this far, but better safe than sorry.
 		newI.layer = ABOVE_OPEN_TURF_LAYER
-		SET_PLANE_EXPLICIT(newI, GAME_PLANE, V)
+		newI.plane = 0
 		newI.mouse_opacity = 0
 		the_eye.placed_images += newI
 
@@ -294,15 +287,12 @@
 		current_user.client.images -= remove_images
 		current_user.client.images += add_images
 
-/obj/machinery/computer/camera_advanced/shuttle_docker/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
-	if(!mapload)
-		return FALSE
+/obj/machinery/computer/camera_advanced/shuttle_docker/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	if(port)
-		shuttleId = port.shuttle_id
-		shuttlePortId = "[port.shuttle_id]_custom"
+		shuttleId = port.id
+		shuttlePortId = "[port.id]_custom"
 	if(dock)
-		add_jumpable_port(dock.shuttle_id)
-	return TRUE
+		jumpto_ports[dock.id] = TRUE
 
 /mob/camera/ai_eye/remote/shuttle_docker
 	visible_icon = FALSE
@@ -314,13 +304,13 @@
 	src.origin = origin
 	return ..()
 
-/mob/camera/ai_eye/remote/shuttle_docker/setLoc(turf/destination, force_update = FALSE)
+/mob/camera/ai_eye/remote/shuttle_docker/setLoc(destination)
 	. = ..()
 	var/obj/machinery/computer/camera_advanced/shuttle_docker/console = origin
 	console.checkLandingSpot()
 
 /mob/camera/ai_eye/remote/shuttle_docker/update_remote_sight(mob/living/user)
-	user.set_sight(BLIND|SEE_TURFS)
+	user.sight = BLIND|SEE_TURFS
 	user.lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
 	user.sync_lighting_plane_alpha()
 	return TRUE
@@ -331,9 +321,10 @@
 	button_icon_state = "mech_cycle_equip_off"
 
 /datum/action/innate/shuttledocker_rotate/Activate()
-	if(QDELETED(owner) || !isliving(owner))
+	if(QDELETED(target) || !isliving(target))
 		return
-	var/mob/camera/ai_eye/remote/remote_eye = owner.remote_control
+	var/mob/living/C = target
+	var/mob/camera/ai_eye/remote/remote_eye = C.remote_control
 	var/obj/machinery/computer/camera_advanced/shuttle_docker/origin = remote_eye.origin
 	origin.rotateLandingSpot()
 
@@ -343,38 +334,40 @@
 	button_icon_state = "mech_zoom_off"
 
 /datum/action/innate/shuttledocker_place/Activate()
-	if(QDELETED(owner) || !isliving(owner))
+	if(QDELETED(target) || !isliving(target))
 		return
-	var/mob/camera/ai_eye/remote/remote_eye = owner.remote_control
+	var/mob/living/C = target
+	var/mob/camera/ai_eye/remote/remote_eye = C.remote_control
 	var/obj/machinery/computer/camera_advanced/shuttle_docker/origin = remote_eye.origin
-	origin.placeLandingSpot(owner)
+	origin.placeLandingSpot(target)
 
 /datum/action/innate/camera_jump/shuttle_docker
 	name = "Jump to Location"
 	button_icon_state = "camera_jump"
 
 /datum/action/innate/camera_jump/shuttle_docker/Activate()
-	if(QDELETED(owner) || !isliving(owner))
+	if(QDELETED(target) || !isliving(target))
 		return
-	var/mob/camera/ai_eye/remote/remote_eye = owner.remote_control
+	var/mob/living/C = target
+	var/mob/camera/ai_eye/remote/remote_eye = C.remote_control
 	var/obj/machinery/computer/camera_advanced/shuttle_docker/console = remote_eye.origin
 
 	playsound(console, 'sound/machines/terminal_prompt_deny.ogg', 25, FALSE)
 
 	var/list/L = list()
-	for(var/V in SSshuttle.stationary_docking_ports)
+	for(var/V in SSshuttle.stationary)
 		if(!V)
-			stack_trace("SSshuttle.stationary_docking_ports have null entry!")
+			stack_trace("SSshuttle.stationary have null entry!")
 			continue
 		var/obj/docking_port/stationary/S = V
 		if(console.z_lock.len && !(S.z in console.z_lock))
 			continue
-		if(console.jump_to_ports[S.shuttle_id])
+		if(console.jumpto_ports[S.id])
 			L["([L.len])[S.name]"] = S
 
-	for(var/V in SSshuttle.beacon_list)
+	for(var/V in SSshuttle.beacons)
 		if(!V)
-			stack_trace("SSshuttle.beacon_list have null entry!")
+			stack_trace("SSshuttle.beacons have null entry!")
 			continue
 		var/obj/machinery/spaceship_navigation_beacon/nav_beacon = V
 		if(!nav_beacon.z || SSmapping.level_has_any_trait(nav_beacon.z, console.locked_traits))
@@ -385,18 +378,17 @@
 			L["([L.len]) [nav_beacon.name] locked"] = null
 
 	playsound(console, 'sound/machines/terminal_prompt.ogg', 25, FALSE)
-	var/selected = tgui_input_list(usr, "Choose location to jump to", "Locations", sort_list(L))
-	if(isnull(selected))
+	var/selected = input("Choose location to jump to", "Locations", null) as null|anything in sort_list(L)
+	if(QDELETED(src) || QDELETED(target) || !isliving(target))
+		return
+	playsound(src, "terminal_type", 25, FALSE)
+	if(selected)
+		var/turf/T = get_turf(L[selected])
+		if(T)
+			playsound(console, 'sound/machines/terminal_prompt_confirm.ogg', 25, FALSE)
+			remote_eye.setLoc(T)
+			to_chat(target, span_notice("Jumped to [selected]."))
+			C.overlay_fullscreen("flash", /atom/movable/screen/fullscreen/flash/static)
+			C.clear_fullscreen("flash", 3)
+	else
 		playsound(console, 'sound/machines/terminal_prompt_deny.ogg', 25, FALSE)
-		return
-	if(QDELETED(src) || QDELETED(owner) || !isliving(owner))
-		return
-	playsound(src, SFX_TERMINAL_TYPE, 25, FALSE)
-	var/turf/T = get_turf(L[selected])
-	if(isnull(T))
-		return
-	playsound(console, 'sound/machines/terminal_prompt_confirm.ogg', 25, FALSE)
-	remote_eye.setLoc(T)
-	to_chat(owner, span_notice("Jumped to [selected]."))
-	owner.overlay_fullscreen("flash", /atom/movable/screen/fullscreen/flash/static)
-	owner.clear_fullscreen("flash", 3)

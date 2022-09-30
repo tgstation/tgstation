@@ -7,13 +7,13 @@
 	anchored = FALSE
 	density = TRUE
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN
-	icon = 'icons/obj/atmospherics/atmos.dmi'
+	icon = 'icons/obj/atmos.dmi'
 	icon_state = "sheater-off"
 	base_icon_state = "sheater"
 	name = "space heater"
 	desc = "Made by Space Amish using traditional space techniques, this heater/cooler is guaranteed not to set the station on fire. Warranty void if used in engines."
 	max_integrity = 250
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 80, ACID = 10)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 100, FIRE = 80, ACID = 10)
 	circuit = /obj/item/circuitboard/machine/space_heater
 	//We don't use area power, we always use the cell
 	use_power = NO_POWER_USE
@@ -48,11 +48,6 @@
 	if(ispath(cell))
 		cell = new cell(src)
 	update_appearance()
-	SSair.start_processing_machine(src)
-
-/obj/machinery/space_heater/Destroy()
-	SSair.stop_processing_machine(src)
-	return..()
 
 /obj/machinery/space_heater/on_deconstruction()
 	if(cell)
@@ -80,13 +75,13 @@
 	if(panel_open && display_panel)
 		. += "[base_icon_state]-open"
 
-/obj/machinery/space_heater/process_atmos()
+/obj/machinery/space_heater/process(delta_time)
 	if(!on || !is_operational)
 		if (on) // If it's broken, turn it off too
 			on = FALSE
 		return PROCESS_KILL
 
-	if(!cell || cell.charge <= 1)
+	if(!cell || cell.charge <= 0)
 		on = FALSE
 		update_appearance()
 		return PROCESS_KILL
@@ -115,7 +110,7 @@
 
 	var/heat_capacity = enviroment.heat_capacity()
 	var/required_energy = abs(enviroment.temperature - target_temperature) * heat_capacity
-	required_energy = min(required_energy, heating_power)
+	required_energy = min(required_energy, heating_power * delta_time)
 
 	if(required_energy < 1)
 		return
@@ -129,7 +124,6 @@
 	cell.use(required_energy / efficiency)
 
 /obj/machinery/space_heater/RefreshParts()
-	. = ..()
 	var/laser = 0
 	var/cap = 0
 	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
@@ -153,17 +147,15 @@
 	if(cell)
 		cell.emp_act(severity)
 
-/obj/machinery/space_heater/wrench_act(mob/living/user, obj/item/tool)
-	. = ..()
-	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
-
 /obj/machinery/space_heater/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
 
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, I))
 		user.visible_message(span_notice("\The [user] [panel_open ? "opens" : "closes"] the hatch on \the [src]."), span_notice("You [panel_open ? "open" : "close"] the hatch on \the [src]."))
 		update_appearance()
+		return TRUE
+
+	if(default_unfasten_wrench(user, I))
 		return TRUE
 
 	if(default_deconstruction_crowbar(I))
@@ -188,7 +180,10 @@
 /obj/machinery/space_heater/attack_hand_secondary(mob/user, list/modifiers)
 	if(!can_interact(user))
 		return
-	toggle_power()
+	on = !on
+	update_appearance()
+	if (on)
+		START_PROCESSING(SSmachines, src)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/space_heater/ui_interact(mob/user, datum/tgui/ui)
@@ -230,7 +225,12 @@
 
 	switch(action)
 		if("power")
-			toggle_power()
+			on = !on
+			mode = HEATER_MODE_STANDBY
+			usr.visible_message(span_notice("[usr] switches [on ? "on" : "off"] \the [src]."), span_notice("You switch [on ? "on" : "off"] \the [src]."))
+			update_appearance()
+			if (on)
+				START_PROCESSING(SSmachines, src)
 			. = TRUE
 		if("mode")
 			set_mode = params["mode"]
@@ -260,17 +260,9 @@
 	panel_open = TRUE
 	update_appearance()
 
-/obj/machinery/space_heater/proc/toggle_power()
-	on = !on
-	mode = HEATER_MODE_STANDBY
-	usr.visible_message(span_notice("[usr] switches [on ? "on" : "off"] \the [src]."), span_notice("You switch [on ? "on" : "off"] \the [src]."))
-	update_appearance()
-	if (on)
-		SSair.start_processing_machine(src)
-
 ///For use with heating reagents in a ghetto way
 /obj/machinery/space_heater/improvised_chem_heater
-	icon = 'icons/obj/medical/chemical.dmi'
+	icon = 'icons/obj/chemical.dmi'
 	icon_state = "sheater-off"
 	name = "Improvised chem heater"
 	desc = "A space heater hacked to reroute heating to a water bath on the top."
@@ -340,6 +332,8 @@
 ///Slightly modified to ignore the open_hatch - it's always open, we hacked it.
 /obj/machinery/space_heater/improvised_chem_heater/attackby(obj/item/item, mob/user, params)
 	add_fingerprint(user)
+	if(default_unfasten_wrench(user, item))
+		return
 	if(default_deconstruction_crowbar(item))
 		return
 	if(istype(item, /obj/item/stock_parts/cell))
@@ -361,7 +355,7 @@
 			return
 		replace_beaker(user, container)
 		to_chat(user, span_notice("You add [container] to [src]'s water bath."))
-		ui_interact(user)
+		updateUsrDialog()
 		return
 	//Dropper tools
 	if(beaker)
@@ -416,7 +410,6 @@
 	icon_state = "sheater-off"
 
 /obj/machinery/space_heater/improvised_chem_heater/RefreshParts()
-	. = ..()
 	var/lasers_rating = 0
 	var/capacitors_rating = 0
 	for(var/obj/item/stock_parts/micro_laser/laser in component_parts)

@@ -8,13 +8,22 @@ import { canRender, classes } from 'common/react';
 import { computeBoxClassName, computeBoxProps } from './Box';
 import { Icon } from './Icon';
 
-export const Tabs = (props) => {
-  const { className, vertical, fill, fluid, children, ...rest } = props;
+export const Tabs = props => {
+  const {
+    className,
+    vertical,
+    fill,
+    fluid,
+    children,
+    ...rest
+  } = props;
   return (
     <div
       className={classes([
         'Tabs',
-        vertical ? 'Tabs--vertical' : 'Tabs--horizontal',
+        vertical
+          ? 'Tabs--vertical'
+          : 'Tabs--horizontal',
         fill && 'Tabs--fill',
         fluid && 'Tabs--fluid',
         className,
@@ -26,7 +35,7 @@ export const Tabs = (props) => {
   );
 };
 
-const Tab = (props) => {
+const Tab = props => {
   const {
     className,
     selected,
@@ -48,14 +57,23 @@ const Tab = (props) => {
         ...computeBoxClassName(rest),
       ])}
       {...computeBoxProps(rest)}>
-      {(canRender(leftSlot) && <div className="Tab__left">{leftSlot}</div>) ||
-        (!!icon && (
-          <div className="Tab__left">
-            <Icon name={icon} />
-          </div>
-        ))}
-      <div className="Tab__text">{children}</div>
-      {canRender(rightSlot) && <div className="Tab__right">{rightSlot}</div>}
+      {canRender(leftSlot) && (
+        <div className="Tab__left">
+          {leftSlot}
+        </div>
+      ) || !!icon && (
+        <div className="Tab__left">
+          <Icon name={icon} />
+        </div>
+      )}
+      <div className="Tab__text">
+        {children}
+      </div>
+      {canRender(rightSlot) && (
+        <div className="Tab__right">
+          {rightSlot}
+        </div>
+      )}
     </div>
   );
 };

@@ -41,7 +41,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	icon_state = "0-1"
 	layer = WIRE_LAYER //Above hidden pipes, GAS_PIPE_HIDDEN_LAYER
 	anchored = TRUE
-	obj_flags = CAN_BE_HIT
+	obj_flags = CAN_BE_HIT | ON_BLUEPRINTS
 	color = COLOR_RED
 	/// Pipe_cleaner direction 1 (see above)
 	var/d1 = 0
@@ -91,9 +91,6 @@ By design, d1 is the smallest direction and d2 is the highest
 		var/random_color = pick(pipe_cleaner_colors)
 		color = pipe_cleaner_colors[random_color]
 	update_appearance()
-	if(isturf(loc))
-		var/turf/turf_loc = loc
-		turf_loc.add_blueprints_preround(src)
 
 /obj/structure/pipe_cleaner/Destroy() // called when a pipe_cleaner is deleted
 	//If we have a stored item at this point, lets just delete it, since that should be
@@ -177,7 +174,7 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/item/stack/pipe_cleaner_coil
 	name = "pipe cleaner coil"
 	desc = "A coil of pipe cleaners. Good for arts and crafts, not to build with."
-	custom_price = PAYCHECK_CREW * 0.5
+	custom_price = PAYCHECK_ASSISTANT * 0.5
 	gender = NEUTER //That's a pipe_cleaner coil sounds better than that's some pipe_cleaner coils
 	icon = 'icons/obj/power.dmi'
 	icon_state = "pipecleaner"

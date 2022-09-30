@@ -7,7 +7,7 @@
 import { useSelector, useDispatch } from 'common/redux';
 import { selectAudio } from './selectors';
 
-export const useAudio = (context) => {
+export const useAudio = context => {
   const state = useSelector(context, selectAudio);
   const dispatch = useDispatch(context);
   return {

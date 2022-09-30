@@ -1,14 +1,12 @@
 /datum/job/chief_medical_officer
-	title = JOB_CHIEF_MEDICAL_OFFICER
-	description = "Coordinate doctors and other medbay employees, ensure they \
-		know how to save lives, check for injuries on the crew monitor."
-	department_head = list(JOB_CAPTAIN)
+	title = "Chief Medical Officer"
+	department_head = list("Captain")
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
 	head_announce = list(RADIO_CHANNEL_MEDICAL)
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = SUPERVISOR_CAPTAIN
+	supervisors = "the captain"
 	selection_color = "#ffddf0"
 	req_admin_notify = 1
 	minimal_player_age = 7
@@ -38,9 +36,9 @@
 		/obj/effect/spawner/random/medical/surgery_tool_advanced = 4,
 		/obj/effect/spawner/random/medical/surgery_tool_alien = 1
 	)
-	family_heirlooms = list(/obj/item/storage/medkit/ancient/heirloom, /obj/item/scalpel, /obj/item/hemostat, /obj/item/circular_saw, /obj/item/retractor, /obj/item/cautery)
+	family_heirlooms = list(/obj/item/storage/firstaid/ancient/heirloom)
 	rpg_title = "High Cleric"
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_BOLD_SELECT_TEXT | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_BOLD_SELECT_TEXT | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
 
 	voice_of_god_power = 1.4 //Command staff has authority
 
@@ -54,39 +52,31 @@
 	jobtype = /datum/job/chief_medical_officer
 
 	id = /obj/item/card/id/advanced/silver
-	id_trim = /datum/id_trim/job/chief_medical_officer
-	uniform = /obj/item/clothing/under/rank/medical/chief_medical_officer/scrubs
-	suit = /obj/item/clothing/suit/toggle/labcoat/cmo
-	suit_store = /obj/item/flashlight/pen/paramedic
-	backpack_contents = list(
-		/obj/item/melee/baton/telescopic = 1,
-		)
-	belt = /obj/item/modular_computer/tablet/pda/heads/cmo
-	ears = /obj/item/radio/headset/heads/cmo
-	head = /obj/item/clothing/head/surgerycap/cmo
-	shoes = /obj/item/clothing/shoes/sneakers/blue
+	belt = /obj/item/pda/heads/cmo
 	l_pocket = /obj/item/pinpointer/crew
-	l_hand = /obj/item/storage/medkit/surgery
+	ears = /obj/item/radio/headset/heads/cmo
+	uniform = /obj/item/clothing/under/rank/medical/chief_medical_officer
+	shoes = /obj/item/clothing/shoes/sneakers/brown
+	suit = /obj/item/clothing/suit/toggle/labcoat/cmo
+	l_hand = /obj/item/storage/firstaid/medical
+	suit_store = /obj/item/flashlight/pen/paramedic
+	backpack_contents = list(/obj/item/melee/baton/telescopic=1, /obj/item/modular_computer/tablet/preset/advanced/command=1)
+
+	skillchips = list(/obj/item/skillchip/entrails_reader)
 
 	backpack = /obj/item/storage/backpack/medic
 	satchel = /obj/item/storage/backpack/satchel/med
 	duffelbag = /obj/item/storage/backpack/duffelbag/med
-
 	box = /obj/item/storage/box/survival/medical
-	chameleon_extras = list(
-		/obj/item/gun/syringe,
-		/obj/item/stamp/cmo,
-		)
-	skillchips = list(/obj/item/skillchip/entrails_reader)
 
-/datum/outfit/job/cmo/mod
-	name = "Chief Medical Officer (MODsuit)"
+	chameleon_extras = list(/obj/item/gun/syringe, /obj/item/stamp/cmo)
 
-	suit_store = /obj/item/tank/internals/oxygen
-	back = /obj/item/mod/control/pre_equipped/rescue
-	suit = null
-	head = null
-	uniform = /obj/item/clothing/under/rank/medical/chief_medical_officer
+	id_trim = /datum/id_trim/job/chief_medical_officer
+
+/datum/outfit/job/cmo/hardsuit
+	name = "Chief Medical Officer (Hardsuit)"
+
 	mask = /obj/item/clothing/mask/breath/medical
+	suit = /obj/item/clothing/suit/space/hardsuit/medical
+	suit_store = /obj/item/tank/internals/oxygen
 	r_pocket = /obj/item/flashlight/pen/paramedic
-	internals_slot = ITEM_SLOT_SUITSTORE

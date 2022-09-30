@@ -20,7 +20,7 @@
 	. = ..()
 	if(istype(parent, /obj/machinery/atmospherics/components))
 		process_type = PROCESS_COMPONENT
-	else if(ismachinery(parent))
+	else if(istype(parent, /obj/machinery))
 		process_type = PROCESS_MACHINE
 	else if(isobj(parent))
 		process_type = PROCESS_OBJ

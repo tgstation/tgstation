@@ -7,18 +7,9 @@
 	name = "Pheromone Receptors"
 	desc = "We attune our senses to track other changelings by scent.  The closer they are, the easier we can find them."
 	helptext = "We will know the general direction of nearby changelings, with closer scents being stronger.  Our chemical generation is slowed while this is active."
-	icon_icon = 'icons/mob/actions/actions_spells.dmi'
-	button_icon_state = "nose"
 	chemical_cost = 0 //Reduces regain rate while active.
 	dna_cost = 2
 	var/receptors_active = FALSE
-
-/datum/action/changeling/pheromone_receptors/Remove(mob/living/carbon/user)
-	if(receptors_active)
-		var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
-		changeling.chem_recharge_slowdown -= 0.25
-		user.remove_status_effect(/datum/status_effect/agent_pinpointer/changeling)
-	..()
 
 /datum/action/changeling/pheromone_receptors/sting_action(mob/living/carbon/user)
 	..()

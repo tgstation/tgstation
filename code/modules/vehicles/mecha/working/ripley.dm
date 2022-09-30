@@ -5,43 +5,30 @@
 	base_icon_state = "ripley"
 	silicon_icon_state = "ripley-empty"
 	movedelay = 1.5 //Move speed, lower is faster.
+	/// How fast the mech is in low pressure
+	var/fast_pressure_step_in = 1.5
+	/// How fast the mech is in normal pressure
+	var/slow_pressure_step_in = 2
 	max_temperature = 20000
 	max_integrity = 200
-	ui_x = 1200
 	lights_power = 7
-	armor = list(MELEE = 40, BULLET = 20, LASER = 10, ENERGY = 20, BOMB = 40, BIO = 0, FIRE = 100, ACID = 100)
-	max_equip_by_category = list(
-		MECHA_UTILITY = 2,
-		MECHA_POWER = 1,
-		MECHA_ARMOR = 1,
-	)
+	deflect_chance = 15
+	armor = list(MELEE = 40, BULLET = 20, LASER = 10, ENERGY = 20, BOMB = 40, BIO = 0, RAD = 20, FIRE = 100, ACID = 100)
+	max_equip = 6
 	wreckage = /obj/structure/mecha_wreckage/ripley
-	mech_type = EXOSUIT_MODULE_RIPLEY
-	possible_int_damage = MECHA_INT_FIRE|MECHA_INT_CONTROL_LOST|MECHA_INT_SHORT_CIRCUIT
 	internals_req_access = list(ACCESS_MECH_ENGINE, ACCESS_MECH_SCIENCE, ACCESS_MECH_MINING)
 	enclosed = FALSE //Normal ripley has an open cockpit design
 	enter_delay = 10 //can enter in a quarter of the time of other mechs
 	exit_delay = 10
-	/// Custom Ripley step and turning sounds (from TGMC)
-	stepsound = 'sound/mecha/powerloader_step.ogg'
-	turnsound = 'sound/mecha/powerloader_turn2.ogg'
-	equip_by_category = list(
-		MECHA_L_ARM = null,
-		MECHA_R_ARM = null,
-		MECHA_UTILITY = list(/obj/item/mecha_parts/mecha_equipment/ejector),
-		MECHA_POWER = list(),
-		MECHA_ARMOR = list(),
-	)
 	/// Amount of Goliath hides attached to the mech
 	var/hides = 0
 	/// List of all things in Ripley's Cargo Compartment
 	var/list/cargo
 	/// How much things Ripley can carry in their Cargo Compartment
 	var/cargo_capacity = 15
-	/// How fast the mech is in low pressure
-	var/fast_pressure_step_in = 1.5
-	/// How fast the mech is in normal pressure
-	var/slow_pressure_step_in = 2
+	/// Custom Ripley step and turning sounds (from TGMC)
+	stepsound = 'sound/mecha/powerloader_step.ogg'
+	turnsound = 'sound/mecha/powerloader_turn2.ogg'
 
 /obj/vehicle/sealed/mecha/working/ripley/Move()
 	. = ..()
@@ -49,9 +36,15 @@
 
 /obj/vehicle/sealed/mecha/working/ripley/generate_actions() //isnt allowed to have internal air
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_eject)
+	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_cycle_equip)
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_toggle_lights)
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_view_stats)
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/strafe)
+
+/obj/vehicle/sealed/mecha/working/ripley/check_for_internal_damage(list/possible_int_damage, ignore_threshold = FALSE)
+	if(!enclosed) //if we don't even have an air tank, these two doesn't make a ton of sense.
+		possible_int_damage -= (MECHA_INT_TEMP_CONTROL + MECHA_INT_TANK_BREACH)
+	return ..()
 
 /obj/vehicle/sealed/mecha/working/ripley/Initialize(mapload)
 	. = ..()
@@ -75,8 +68,7 @@
 	movedelay = 4
 	max_temperature = 30000
 	max_integrity = 250
-	possible_int_damage = MECHA_INT_FIRE|MECHA_INT_TEMP_CONTROL|MECHA_INT_TANK_BREACH|MECHA_INT_CONTROL_LOST|MECHA_INT_SHORT_CIRCUIT
-	armor = list(MELEE = 40, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 60, BIO = 0, FIRE = 100, ACID = 100)
+	armor = list(MELEE = 40, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 60, BIO = 0, RAD = 70, FIRE = 100, ACID = 100)
 	wreckage = /obj/structure/mecha_wreckage/ripley/mk2
 	enclosed = TRUE
 	enter_delay = 40
@@ -85,6 +77,7 @@
 /obj/vehicle/sealed/mecha/working/ripley/mk2/generate_actions()
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_eject)
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_toggle_internals)
+	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_cycle_equip)
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_toggle_lights)
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_view_stats)
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/strafe)
@@ -103,23 +96,23 @@
 	enclosed = TRUE
 	enter_delay = 40
 	silicon_icon_state = null
-	equip_by_category = list(
-		MECHA_L_ARM = /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill/fake,
-		MECHA_R_ARM = null,
-		MECHA_UTILITY = list(/obj/item/mecha_parts/mecha_equipment/ejector),
-		MECHA_POWER = list(),
-		MECHA_ARMOR = list(),
-	)
+
+/obj/vehicle/sealed/mecha/working/ripley/deathripley/Initialize(mapload)
+	. = ..()
+	var/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill/fake/clamper = new(loc)
+	clamper.attach(src)
 
 /obj/vehicle/sealed/mecha/working/ripley/deathripley/real
 	desc = "OH SHIT IT'S THE DEATHSQUAD WE'RE ALL GONNA DIE. FOR REAL"
-	equip_by_category = list(
-		MECHA_L_ARM = /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill,
-		MECHA_R_ARM = null,
-		MECHA_UTILITY = list(/obj/item/mecha_parts/mecha_equipment/ejector),
-		MECHA_POWER = list(),
-		MECHA_ARMOR = list(),
-	)
+
+/obj/vehicle/sealed/mecha/working/ripley/deathripley/real/Initialize(mapload)
+	. = ..()
+	for(var/obj/item/mecha_parts/mecha_equipment/E in equipment)
+		E.detach()
+		qdel(E)
+	LAZYCLEARLIST(equipment)
+	var/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill/clamper = new(loc)
+	clamper.attach(src)
 
 /obj/vehicle/sealed/mecha/working/ripley/mining
 	desc = "An old, dusty mining Ripley."
@@ -147,17 +140,16 @@
 
 	//Attach hydraulic clamp
 	var/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/HC = new
-	HC.attach(src, TRUE)
+	HC.attach(src)
 	var/obj/item/mecha_parts/mecha_equipment/mining_scanner/scanner = new
 	scanner.attach(src)
-
-GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/working/ripley/cargo)
 
 /obj/vehicle/sealed/mecha/working/ripley/cargo
 	desc = "An ailing, old, repurposed cargo hauler. Most of its equipment wires are frayed or missing and its frame is rusted."
 	name = "\improper APLU \"Big Bess\""
 	icon_state = "hauler"
 	base_icon_state = "hauler"
+	max_equip = 2
 	max_integrity = 100 //Has half the health of a normal RIPLEY mech, so it's harder to use as a weapon.
 
 /obj/vehicle/sealed/mecha/working/ripley/cargo/Initialize(mapload)
@@ -170,19 +162,24 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/working/ripley/cargo)
 	HC.attach(src)
 
 	take_damage(max_integrity * 0.5, sound_effect=FALSE) //Low starting health
-	if(!GLOB.cargo_ripley && mapload)
-		GLOB.cargo_ripley = src
-
-/obj/vehicle/sealed/mecha/working/ripley/cargo/Destroy()
-	if(GLOB.cargo_ripley == src)
-		GLOB.cargo_ripley = null
-
-	return ..()
 
 /obj/vehicle/sealed/mecha/working/ripley/Exit(atom/movable/leaving, direction)
 	if(leaving in cargo)
 		return FALSE
 	return ..()
+
+/obj/vehicle/sealed/mecha/working/ripley/Topic(href, href_list)
+	..()
+	if(href_list["drop_from_cargo"])
+		var/obj/cargoobj = locate(href_list["drop_from_cargo"]) in cargo
+		if(cargoobj)
+			to_chat(occupants, "[icon2html(src, occupants)][span_notice("You unload [cargoobj].")]")
+			cargoobj.forceMove(drop_location())
+			LAZYREMOVE(cargo, cargoobj)
+			if(cargoobj == box)
+				box = null
+			log_message("Unloaded [cargoobj]. Cargo compartment capacity: [cargo_capacity - LAZYLEN(cargo)]", LOG_MECHA)
+
 
 /obj/vehicle/sealed/mecha/working/ripley/contents_explosion(severity, target)
 	for(var/i in cargo)
@@ -192,38 +189,16 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/working/ripley/cargo)
 			cargoobj.forceMove(drop_location())
 	return ..()
 
-/obj/item/mecha_parts/mecha_equipment/ejector
-	name = "Cargo compartment"
-	equipment_slot = MECHA_UTILITY
-	detachable = FALSE
-
-/obj/item/mecha_parts/mecha_equipment/ejector/get_snowflake_data()
-	var/list/data = list("snowflake_id" = MECHA_SNOWFLAKE_ID_EJECTOR, "cargo" = list())
-	var/obj/vehicle/sealed/mecha/working/ripley/miner = chassis
-	for(var/obj/crate in miner.cargo)
-		data["cargo"] += list(list(
-			"name" = crate.name,
-			"ref" = REF(crate),
-		))
-	return data
-
-/obj/item/mecha_parts/mecha_equipment/ejector/ui_act(action, list/params)
-	. = ..()
-	if(.)
-		return TRUE
-	if(action == "eject")
-		var/obj/vehicle/sealed/mecha/working/ripley/miner = chassis
-		var/obj/crate = locate(params["cargoref"]) in miner.cargo
-		if(!crate)
-			return FALSE
-		to_chat(miner.occupants, "[icon2html(src,  miner.occupants)][span_notice("You unload [crate].")]")
-		crate.forceMove(drop_location())
-		LAZYREMOVE(miner.cargo, crate)
-		if(crate == miner.box)
-			miner.box = null
-		log_message("Unloaded [crate]. Cargo compartment capacity: [miner.cargo_capacity - LAZYLEN(miner.cargo)]", LOG_MECHA)
-		return TRUE
-
+/obj/vehicle/sealed/mecha/working/ripley/get_stats_part()
+	var/output = ..()
+	output += "<b>Cargo Compartment Contents:</b><div style=\"margin-left: 15px;\">"
+	if(LAZYLEN(cargo))
+		for(var/obj/O in cargo)
+			output += "<a href='?src=[REF(src)];drop_from_cargo=[REF(O)]'>Unload</a> : [O]<br>"
+	else
+		output += "Nothing"
+	output += "</div>"
+	return output
 
 /obj/vehicle/sealed/mecha/working/ripley/relay_container_resist_act(mob/living/user, obj/O)
 	to_chat(user, span_notice("You lean on the back of [O] and start pushing so it falls out of [src]."))
@@ -247,10 +222,10 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/working/ripley/cargo)
 
 	if(lavaland_equipment_pressure_check(T))
 		movedelay = fast_pressure_step_in
-		for(var/obj/item/mecha_parts/mecha_equipment/drill/drill in flat_equipment)
+		for(var/obj/item/mecha_parts/mecha_equipment/drill/drill in equipment)
 			drill.equip_cooldown = initial(drill.equip_cooldown) * 0.5
 
 	else
 		movedelay = slow_pressure_step_in
-		for(var/obj/item/mecha_parts/mecha_equipment/drill/drill in flat_equipment)
+		for(var/obj/item/mecha_parts/mecha_equipment/drill/drill in equipment)
 			drill.equip_cooldown = initial(drill.equip_cooldown)

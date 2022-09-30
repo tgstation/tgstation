@@ -1,7 +1,7 @@
 /obj/structure/closet/crate
 	name = "crate"
 	desc = "A rectangular steel crate."
-	icon = 'icons/obj/storage/crates.dmi'
+	icon = 'icons/obj/crates.dmi'
 	icon_state = "crate"
 	req_access = null
 	can_weld_shut = FALSE
@@ -16,7 +16,6 @@
 	close_sound_volume = 50
 	drag_slowdown = 0
 	door_anim_time = 0 // no animation
-	pass_flags_self = PASSSTRUCTURE | LETPASSTHROW
 	var/crate_climb_time = 20
 	var/obj/item/paper/fluff/jobs/cargo/manifest/manifest
 
@@ -28,10 +27,6 @@
 	else
 		AddElement(/datum/element/climbable, climb_time = crate_climb_time, climb_stun = 0)
 	update_appearance()
-
-/obj/structure/closet/crate/Destroy()
-	QDEL_NULL(manifest)
-	return ..()
 
 /obj/structure/closet/crate/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
@@ -51,12 +46,6 @@
 	. = new_overlays
 	if(manifest)
 		. += "manifest"
-	if(broken)
-		. += "securecrateemag"
-	else if(locked)
-		. += "securecrater"
-	else if(secure)
-		. += "securecrateg"
 
 /obj/structure/closet/crate/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -78,7 +67,7 @@
 
 /obj/structure/closet/crate/open(mob/living/user, force = FALSE)
 	. = ..()
-	if(. && !QDELETED(manifest))
+	if(. && manifest)
 		to_chat(user, span_notice("The manifest is torn off [src]."))
 		playsound(src, 'sound/items/poster_ripped.ogg', 75, TRUE)
 		manifest.forceMove(get_turf(src))
@@ -107,29 +96,12 @@
 	close_sound = 'sound/machines/wooden_closet_close.ogg'
 	open_sound_volume = 25
 	close_sound_volume = 50
-	can_install_electronics = FALSE
 
 /obj/structure/closet/crate/maint
 
-/obj/structure/closet/crate/maint/Initialize(mapload)
-	..()
-
-	var/static/list/possible_crates = RANDOM_CRATE_LOOT
-
-	var/crate_path = pick_weight(possible_crates)
-
-	var/obj/structure/closet/crate = new crate_path(loc)
-	crate.RegisterSignal(crate, COMSIG_CLOSET_POPULATE_CONTENTS, /obj/structure/closet/.proc/populate_with_random_maint_loot)
-	if (prob(50))
-		crate.opened = TRUE
-		crate.update_appearance()
-
-	return INITIALIZE_HINT_QDEL
-
-/obj/structure/closet/proc/populate_with_random_maint_loot()
-	SIGNAL_HANDLER
-
-	for (var/i in 1 to rand(2,6))
+/obj/structure/closet/crate/maint/PopulateContents()
+	. = ..()
+	for(var/i in 1 to rand(2,6))
 		new /obj/effect/spawner/random/maintenance(src)
 
 /obj/structure/closet/crate/trashcart/Initialize(mapload)
@@ -155,9 +127,8 @@
 	desc = "A heavy, metal trashcart with wheels."
 	name = "trash cart"
 	icon_state = "trashcart"
-	can_install_electronics = FALSE
 
-/obj/structure/closet/crate/trashcart/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
+/obj/structure/closet/crate/trashcart/Moved()
 	. = ..()
 	if(has_gravity())
 		playsound(src, 'sound/effects/roll.ogg', 100, TRUE)
@@ -281,14 +252,9 @@
 
 /obj/structure/closet/crate/goldcrate/PopulateContents()
 	..()
-	new /obj/item/storage/belt/champion(src)
-
-/obj/structure/closet/crate/goldcrate/populate_contents_immediate()
-	. = ..()
-
-	// /datum/objective_item/stack/gold
 	for(var/i in 1 to 3)
 		new /obj/item/stack/sheet/mineral/gold(src, 1, FALSE)
+	new /obj/item/storage/belt/champion(src)
 
 /obj/structure/closet/crate/silvercrate
 	name = "silver crate"

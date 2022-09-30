@@ -4,7 +4,6 @@
 	desc = "Don't worry, it won't sting."
 	icon = 'icons/obj/xenobiology/vatgrowing.dmi'
 	icon_state = "biopsy"
-	worn_icon_state = "biopsy"
 
 ///Adds the swabbing component to the biopsy tool
 /obj/item/biopsy_tool/Initialize(mapload)

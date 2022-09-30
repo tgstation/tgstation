@@ -14,8 +14,8 @@ Attacus
 Autochloris
 Axylia
 Bombyx
-Callhistia
 Callosamia
+Callhistia
 Capricornia
 Catocala
 Cheliosea
@@ -25,8 +25,8 @@ Cryphia
 Cryptophasa
 Cucullia
 Cydia
-Diaphora
 Diarsia
+Diaphora
 Dolichohedya
 Dyspyralis
 Eacles
@@ -34,8 +34,8 @@ Eclipsea
 Electresia
 Elysius
 Enarmonia
-Epiphyas
 Eriomastyx
+Epiphyas
 Eugnorisma
 Eupithecia
 Euplexia
@@ -85,8 +85,8 @@ Rachiplusia
 Sarobela
 Selenarctia
 Shiragasane
-Socioplana
 Sphingidae
+Socioplana
 Spodoptera
 Syllomatia
 Thaumetopoea

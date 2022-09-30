@@ -45,12 +45,12 @@
 				results += "Powernet with fewer than 10 cables! (number [PN.number]) - example cable at [ADMIN_VERBOSEJMP(C)]"
 
 	for(var/turf/T in world.contents)
-		var/cable_layers //cache all cable layers (which are bitflags) present
+		var/found_one = FALSE
 		for(var/obj/structure/cable/C in T.contents)
-			if(cable_layers & C.cable_layer)
+			if(found_one)
 				results += "Doubled wire at [ADMIN_VERBOSEJMP(C)]"
 			else
-				cable_layers |= C.cable_layer
+				found_one = TRUE
 		var/obj/machinery/power/terminal/term = locate(/obj/machinery/power/terminal) in T.contents
 		if(term)
 			var/obj/structure/cable/C = locate(/obj/structure/cable) in T.contents

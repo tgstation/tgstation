@@ -20,8 +20,6 @@
 #define META_GAS_ID 6
 ///Power of the gas when used in the current iteration of fusion
 #define META_GAS_FUSION_POWER 7
-///Short description of the gas.
-#define META_GAS_DESC 8
 //ATMOS
 //stuff you should probably leave well alone!
 /// kPa*L/(K*mol)
@@ -30,6 +28,8 @@
 #define ONE_ATMOSPHERE 101.325
 /// -270.3degC
 #define TCMB 2.7
+/// -48.15degC
+#define TCRYO 225
 /// 0degC
 #define T0C 273.15
 /// 20degC
@@ -78,6 +78,8 @@
 #define STOP_REACTIONS 2
 
 //Fusion
+///Max amount of radiation that can be emitted per reaction cycle
+#define FUSION_RAD_MAX 5000
 ///Maximum instability before the reaction goes endothermic
 #define FUSION_INSTABILITY_ENDOTHERMALITY 4
 ///Maximum reachable fusion temperature
@@ -135,9 +137,32 @@
 #define FIRE_SPREAD_RADIOSITY_SCALE 0.85
 ///Helper for small fires to grow
 #define FIRE_GROWTH_RATE 40000
+///Minimum temperature to burn plasma
+#define PLASMA_MINIMUM_BURN_TEMPERATURE (100+T0C)
+///Upper temperature ceiling for plasmafire reaction calculations for fuel consumption
+#define PLASMA_UPPER_TEMPERATURE (1370+T0C)
+///Multiplier for plasmafire with O2 moles * PLASMA_OXYGEN_FULLBURN for the maximum fuel consumption
+#define PLASMA_OXYGEN_FULLBURN 10
+///Minimum temperature to burn hydrogen
+#define HYDROGEN_MINIMUM_BURN_TEMPERATURE (100+T0C)
+///Upper temperature ceiling for h2fire reaction calculations for fuel consumption
+#define HYDROGEN_UPPER_TEMPERATURE (1370+T0C)
+///Multiplier for h2fire with O2 moles * HYDROGEN_OXYGEN_FULLBURN for the maximum fuel consumption
+#define HYDROGEN_OXYGEN_FULLBURN 10
 
-///Multiplier for the temperature shared to other turfs
-#define COLD_FIRE_SPREAD_RADIOSITY_SCALE 0.95
+//COLD FIRE (this is used only for the freon-o2 reaction, there is no fire still)
+///fire will spread if the temperature is -10 °C
+#define COLD_FIRE_MAXIMUM_TEMPERATURE_TO_SPREAD 263
+///fire will start if the temperature is 0 °C
+#define COLD_FIRE_MAXIMUM_TEMPERATURE_TO_EXIST 273
+#define COLD_FIRE_SPREAD_RADIOSITY_SCALE 0.95 //Not yet implemented
+#define COLD_FIRE_GROWTH_RATE 40000 //Not yet implemented
+///Maximum temperature to burn freon
+#define FREON_MAXIMUM_BURN_TEMPERATURE 283
+///Minimum temperature allowed for the burn to go, we would have negative pressure otherwise
+#define FREON_LOWER_TEMPERATURE 60
+///Multiplier for freonfire with O2 moles * FREON_OXYGEN_FULLBURN for the maximum fuel consumption
+#define FREON_OXYGEN_FULLBURN 10
 
 ///moles in a 2.5 m^3 cell at 101.325 Pa and 20 degC (103 or so)
 #define MOLES_CELLSTANDARD (ONE_ATMOSPHERE*CELL_VOLUME/(T20C*R_IDEAL_GAS_EQUATION))
@@ -153,11 +178,6 @@
 #define MOLES_N2STANDARD (MOLES_CELLSTANDARD*N2STANDARD)
 /// liters in a cell
 #define CELL_VOLUME 2500
-
-///O2 value for anesthetic canister
-#define O2_ANESTHETIC 0.65
-///N2O value for anesthetic canister
-#define N2O_ANESTHETIC 0.35
 
 //CANATMOSPASS
 #define ATMOS_PASS_YES 1
@@ -175,8 +195,3 @@
 #define MAKE_ACTIVE 2
 ///Disable excited group
 #define KILL_EXCITED 3
-
-/// How many maximum iterations do we allow the Newton-Raphson approximation for gas pressure to do.
-#define ATMOS_PRESSURE_APPROXIMATION_ITERATIONS 20
-/// We deal with big numbers and a lot of math, things are bound to get imprecise. Take this traveller.
-#define ATMOS_PRESSURE_ERROR_TOLERANCE 0.01

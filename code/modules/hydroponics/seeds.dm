@@ -90,15 +90,6 @@
 			genes += new /datum/plant_gene/reagent(reag_id, reagents_add[reag_id])
 		reagents_from_genes() //quality coding
 
-	var/static/list/hovering_item_typechecks = list(
-		/obj/item/plant_analyzer = list(
-			SCREENTIP_CONTEXT_LMB = "Scan seed stats",
-			SCREENTIP_CONTEXT_RMB = "Scan seed chemicals"
-		),
-	)
-
-	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
-
 /obj/item/seeds/Destroy()
 	// No AS ANYTHING here, because the list/genes could have typepaths in it.
 	for(var/datum/plant_gene/gene in genes)
@@ -220,11 +211,11 @@
 			mutated_seed = new mutated_seed
 			for(var/datum/plant_gene/trait/trait in parent.myseed.genes)
 				if((trait.mutability_flags & PLANT_GENE_MUTATABLE) && trait.can_add(mutated_seed))
-					mutated_seed.genes += trait.Copy()
+					mutated_seed.genes += trait
 			t_prod = new t_prod(output_loc, mutated_seed)
 			t_prod.transform = initial(t_prod.transform)
 			t_prod.transform *= TRANSFORM_USING_VARIABLE(t_prod.seed.potency, 100) + 0.5
-			ADD_TRAIT(t_prod, TRAIT_PLANT_WILDMUTATE, INNATE_TRAIT)
+			ADD_TRAIT(t_prod, TRAIT_PLANT_WILDMUTATE, user)
 			t_amount++
 			if(t_prod.seed)
 				t_prod.seed.set_instability(round(instability * 0.5))
@@ -245,7 +236,7 @@
 		product_name = parent.myseed.plantname
 	if(product_count >= 1)
 		SSblackbox.record_feedback("tally", "food_harvested", product_count, product_name)
-	parent.update_tray(user, product_count)
+	parent.update_tray(user)
 
 	return result
 
@@ -456,36 +447,51 @@
 
 /obj/item/seeds/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/pen))
-		var/choice = tgui_input_list(usr, "What would you like to change?", "Seed Alteration", list("Plant Name", "Seed Description", "Product Description"))
-		if(isnull(choice))
-			return
+		var/choice = tgui_input_list(usr, "What would you like to change?",, list("Plant Name", "Seed Description", "Product Description", "Cancel"))
 		if(!user.canUseTopic(src, BE_CLOSE))
 			return
 		switch(choice)
 			if("Plant Name")
-				var/newplantname = reject_bad_text(tgui_input_text(user, "Write a new plant name", "Plant Name", plantname, 20))
-				if(isnull(newplantname))
-					return
+				var/newplantname = reject_bad_text(stripped_input(user, "Write a new plant name:", name, plantname))
 				if(!user.canUseTopic(src, BE_CLOSE))
 					return
-				name = "[lowertext(newplantname)]"
-				plantname = newplantname
+				if (length(newplantname) > 20)
+					to_chat(user, span_warning("That name is too long!"))
+					return
+				if(!newplantname)
+					to_chat(user, span_warning("That name is invalid."))
+					return
+				else
+					name = "[lowertext(newplantname)]"
+					plantname = newplantname
 			if("Seed Description")
-				var/newdesc = tgui_input_text(user, "Write a new seed description", "Seed Description", desc, 180)
-				if(isnull(newdesc))
-					return
+				var/newdesc = stripped_input(user, "Write a new description:", name, desc)
 				if(!user.canUseTopic(src, BE_CLOSE))
 					return
-				desc = newdesc
+				if (length(newdesc) > 180)
+					to_chat(user, span_warning("That description is too long!"))
+					return
+				if(!newdesc)
+					to_chat(user, span_warning("That description is invalid."))
+					return
+				else
+					desc = newdesc
 			if("Product Description")
 				if(product && !productdesc)
 					productdesc = initial(product.desc)
-				var/newproductdesc = tgui_input_text(user, "Write a new product description", "Product Description", productdesc, 180)
-				if(isnull(newproductdesc))
-					return
+				var/newproductdesc = stripped_input(user, "Write a new description:", name, productdesc)
 				if(!user.canUseTopic(src, BE_CLOSE))
 					return
-				productdesc = newproductdesc
+				if (length(newproductdesc) > 180)
+					to_chat(user, span_warning("That description is too long!"))
+					return
+				if(!newproductdesc)
+					to_chat(user, span_warning("That description is invalid."))
+					return
+				else
+					productdesc = newproductdesc
+			else
+				return
 
 	..() // Fallthrough to item/attackby() so that bags can pick seeds up
 

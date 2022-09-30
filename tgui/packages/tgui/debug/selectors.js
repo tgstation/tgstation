@@ -4,4 +4,4 @@
  * @license MIT
  */
 
-export const selectDebug = (state) => state.debug;
+export const selectDebug = state => state.debug;

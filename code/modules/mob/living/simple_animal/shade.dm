@@ -3,7 +3,7 @@
 	real_name = "Shade"
 	desc = "A bound spirit."
 	gender = PLURAL
-	icon = 'icons/mob/nonhuman-player/cult.dmi'
+	icon = 'icons/mob/cult.dmi'
 	icon_state = "shade_cult"
 	icon_living = "shade_cult"
 	mob_biotypes = MOB_SPIRIT
@@ -37,13 +37,12 @@
 /mob/living/simple_animal/shade/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
-	ADD_TRAIT(src, TRAIT_HEALS_FROM_CULT_PYLONS, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/simple_animal/shade/death()
-	if(death_message == initial(death_message))
-		death_message = "lets out a contented sigh as [p_their()] form unwinds."
+	if(deathmessage == initial(deathmessage))
+		deathmessage = "lets out a contented sigh as [p_their()] form unwinds."
 	..()
 
 /mob/living/simple_animal/shade/canSuicide()
@@ -54,7 +53,7 @@
 /mob/living/simple_animal/shade/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	if(isconstruct(user))
 		var/mob/living/simple_animal/hostile/construct/doll = user
-		if(!doll.can_repair)
+		if(!doll.can_repair_constructs)
 			return
 		if(health < maxHealth)
 			adjustHealth(-25)

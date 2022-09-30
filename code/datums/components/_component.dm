@@ -123,24 +123,20 @@
  * Internal proc to handle behaviour when being removed from a parent
  */
 /datum/component/proc/_RemoveFromParent()
-	var/datum/parent = src.parent
-	var/list/parents_components = parent.datum_components
+	var/datum/P = parent
+	var/list/dc = P.datum_components
 	for(var/I in _GetInverseTypeList())
-		var/list/components_of_type = parents_components[I]
-
+		var/list/components_of_type = dc[I]
 		if(length(components_of_type)) //
 			var/list/subtracted = components_of_type - src
-
 			if(subtracted.len == 1) //only 1 guy left
-				parents_components[I] = subtracted[1] //make him special
+				dc[I] = subtracted[1] //make him special
 			else
-				parents_components[I] = subtracted
-
+				dc[I] = subtracted
 		else //just us
-			parents_components -= I
-
-	if(!parents_components.len)
-		parent.datum_components = null
+			dc -= I
+	if(!dc.len)
+		P.datum_components = null
 
 	UnregisterFromParent()
 
@@ -185,26 +181,28 @@
 	var/list/procs = signal_procs
 	if(!procs)
 		signal_procs = procs = list()
-	var/list/target_procs = procs[target] || (procs[target] = list())
+	if(!procs[target])
+		procs[target] = list()
 	var/list/lookup = target.comp_lookup
 	if(!lookup)
 		target.comp_lookup = lookup = list()
 
-	for(var/sig_type in (islist(sig_type_or_types) ? sig_type_or_types : list(sig_type_or_types)))
-		if(!override && target_procs[sig_type])
-			log_signal("[sig_type] overridden. Use override = TRUE to suppress this warning.\nTarget: [target] ([target.type]) Proc: [proctype]")
+	var/list/sig_types = islist(sig_type_or_types) ? sig_type_or_types : list(sig_type_or_types)
+	for(var/sig_type in sig_types)
+		if(!override && procs[target][sig_type])
+			stack_trace("[sig_type] overridden. Use override = TRUE to suppress this warning")
 
-		target_procs[sig_type] = proctype
-		var/list/looked_up = lookup[sig_type]
+		procs[target][sig_type] = proctype
 
-		if(!looked_up) // Nothing has registered here yet
+		if(!lookup[sig_type]) // Nothing has registered here yet
 			lookup[sig_type] = src
-		else if(looked_up == src) // We already registered here
+		else if(lookup[sig_type] == src) // We already registered here
 			continue
-		else if(!length(looked_up)) // One other thing registered here
-			lookup[sig_type] = list((looked_up) = TRUE, (src) = TRUE)
+		else if(!length(lookup[sig_type])) // One other thing registered here
+			lookup[sig_type] = list(lookup[sig_type]=TRUE)
+			lookup[sig_type][src] = TRUE
 		else // Many other things have registered here
-			looked_up[src] = TRUE
+			lookup[sig_type][src] = TRUE
 
 /**
  * Stop listening to a given signal from target

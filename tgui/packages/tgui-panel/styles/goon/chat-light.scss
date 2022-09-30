@@ -3,8 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-html,
-body {
+html, body {
   padding: 0;
   margin: 0;
   height: 100%;
@@ -104,13 +103,13 @@ a.popt {
   color: #333;
 }
 
-.popup input[type='text']:hover,
-.popup input[type='text']:active,
-.popup input[type='text']:focus {
+.popup input[type=text]:hover,
+.popup input[type=text]:active,
+.popup input[type=text]:focus {
   border-color: green;
 }
 
-.popup input[type='submit'] {
+.popup input[type=submit] {
   padding: 5px 10px;
   background: #999;
   color: #ddd;
@@ -119,9 +118,9 @@ a.popt {
   font-weight: bold;
 }
 
-.popup input[type='submit']:hover,
-.popup input[type='submit']:focus,
-.popup input[type='submit']:active {
+.popup input[type=submit]:hover,
+.popup input[type=submit]:focus,
+.popup input[type=submit]:active {
   background: #aaa;
   cursor: pointer;
 }
@@ -146,7 +145,7 @@ a.popt {
   text-align: center;
 }
 
-.highlightPopup input[type='text'] {
+.highlightPopup input[type=text] {
   display: block;
   width: 215px;
   text-align: left;
@@ -154,14 +153,17 @@ a.popt {
 }
 
 .highlightPopup input.highlightColor {
-  background-color: #ffff00;
+  background-color: #FFFF00;
 }
 
 .highlightPopup input.highlightTermSubmit {
   margin-top: 5px;
 }
 
+
+
 /* ADMIN CONTEXT MENU */
+
 
 .contextMenu {
   background-color: #ddd;
@@ -181,7 +183,10 @@ a.popt {
   background-color: #ccc;
 }
 
+
+
 /* ADMIN FILTER MESSAGES MENU */
+
 
 .filterMessages {
   padding: 5px;
@@ -205,13 +210,21 @@ a.popt {
   margin-top: -2px;
 }
 
+
+
+
 /*****************************************
 *
 * OUTPUT ACTUALLY RELATED TO MESSAGES
 *
 ******************************************/
 
+
+
+
+
 /* MOTD */
+
 
 .motd {
   color: #638500;
@@ -237,7 +250,10 @@ a.popt {
   color: #638500;
 }
 
+
+
 /* ADD HERE FOR BOLD */
+
 
 .bold,
 .name,
@@ -251,31 +267,31 @@ a.popt {
   font-weight: bold;
 }
 
+
+
 /* ADD HERE FOR ITALIC */
+
 
 .italic,
 .italics {
   font-style: italic;
 }
 
+
+
 /* OUTPUT COLORS */
+
 
 .highlight {
   background: yellow;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1, h2, h3, h4, h5, h6 {
   color: #0000ff;
   font-family: Georgia, Verdana, sans-serif;
 }
 
-h1.alert,
-h2.alert {
+h1.alert, h2.alert {
   color: #000000;
 }
 
@@ -313,11 +329,7 @@ em {
   font-weight: bold;
 }
 
-.say,
-.emote,
-.infoplain,
-.oocplain,
-.warningplain {
+.say, .emote, .infoplain, .oocplain, .warningplain {
 }
 
 .deadsay {
@@ -411,8 +423,7 @@ em {
   color: #ff0000;
 }
 
-h1.alert,
-h2.alert {
+h1.alert, h2.alert {
   color: #000000;
 }
 
@@ -447,7 +458,7 @@ h2.alert {
 }
 
 .alertwarning {
-  color: #ff0000;
+  color: #FF0000;
   font-weight: bold;
 }
 
@@ -482,7 +493,7 @@ h2.alert {
 }
 
 .info {
-  color: #0000cc;
+  color: #0000CC;
 }
 
 .notice {
@@ -544,25 +555,16 @@ h2.alert {
   color: #03ff39;
 }
 
-.grey {
-  color: #838383;
-}
-
 .red {
-  color: #ff0000;
+  color: #FF0000;
 }
 
 .blue {
-  color: #0000ff;
+  color: #0000FF;
 }
 
 .nicegreen {
   color: #14a833;
-}
-
-.boldnicegreen {
-  color: #14a833;
-  font-weight: bold;
 }
 
 .cult {
@@ -605,7 +607,7 @@ h2.alert {
 }
 
 .colossus {
-  color: #7f282a;
+  color: #7F282A;
   font-size: 310%;
 }
 
@@ -659,7 +661,7 @@ h2.alert {
 }
 
 .deconversion_message {
-  color: #5000a0;
+  color: #5000A0;
   font-size: 185%;
   font-style: italic;
 }
@@ -689,7 +691,7 @@ h2.alert {
 }
 
 .alertsyndie {
-  color: #ff0000;
+  color: #FF0000;
   font-size: 185%;
   font-weight: bold;
 }
@@ -705,20 +707,20 @@ h2.alert {
 }
 
 .sans {
-  font-family: 'Comic Sans MS', cursive, sans-serif;
+  font-family: "Comic Sans MS", cursive, sans-serif;
 }
 
 .papyrus {
-  font-family: 'Papyrus', cursive, sans-serif;
+  font-family: "Papyrus", cursive, sans-serif;
 }
 
 .robot {
-  font-family: 'Courier New', cursive, sans-serif;
+  font-family: "Courier New", cursive, sans-serif;
 }
 
 .tape_recorder {
   color: #800000;
-  font-family: 'Courier New', cursive, sans-serif;
+  font-family: "Courier New", cursive, sans-serif;
 }
 
 .command_headset {
@@ -743,30 +745,30 @@ h2.alert {
 }
 
 .greentext {
-  color: #00ff00;
+  color: #00FF00;
   font-size: 185%;
 }
 
 .redtext {
-  color: #ff0000;
+  color: #FF0000;
   font-size: 185%;
 }
 
 .clown {
-  color: #ff69bf;
+  color: #FF69Bf;
   font-size: 160%;
-  font-family: 'Comic Sans MS', cursive, sans-serif;
+  font-family: "Comic Sans MS", cursive, sans-serif;
   font-weight: bold;
 }
 
 .singing {
-  font-family: 'Trebuchet MS', cursive, sans-serif;
+  font-family: "Trebuchet MS", cursive, sans-serif;
   font-style: italic;
 }
 
 .his_grace {
-  color: #15d512;
-  font-family: 'Courier New', cursive, sans-serif;
+  color: #15D512;
+  font-family: "Courier New", cursive, sans-serif;
   font-style: italic;
 }
 
@@ -844,14 +846,14 @@ h2.alert {
 }
 
 .mind_control {
-  color: #a00d6f;
+  color: #A00D6F;
   font-size: 100%;
   font-weight: bold;
   font-style: italic;
 }
 
 .slime {
-  color: #00ced1;
+  color: #00CED1;
 }
 
 .drone {
@@ -863,11 +865,11 @@ h2.alert {
 }
 
 .swarmer {
-  color: #2c75ff;
+  color: #2C75FF;
 }
 
 .resonate {
-  color: #298f85;
+  color: #298F85;
 }
 
 .monkeyhive {
@@ -895,7 +897,10 @@ h2.alert {
   font-weight: bold;
 }
 
+
+
 /* HELPER CLASSES */
+
 
 .text-normal {
   font-weight: normal;
@@ -917,16 +922,4 @@ h2.alert {
 
 .ml-3 {
   margin-left: 3em;
-}
-
-.examine_block {
-  background: #f2f7fa;
-  border: 1px solid #111a27;
-  margin: 0.5em;
-  padding: 0.5em 0.75em;
-}
-
-.tooltip {
-  font-style: italic;
-  border-bottom: 1px dashed #000;
 }

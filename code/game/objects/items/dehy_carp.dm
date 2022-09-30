@@ -27,7 +27,7 @@
 	visible_message(span_notice("[src] swells up!"))
 
 	//Animation
-	icon = 'icons/mob/simple/carp.dmi'
+	icon = 'icons/mob/carp.dmi'
 	flick("carp_swell", src)
 	//Wait for animation to end
 	sleep(6)
@@ -63,7 +63,7 @@
 			H.spawn_gibs()
 			H.apply_damage(200, def_zone = BODY_ZONE_CHEST)
 			forceMove(get_turf(H)) //we move it back
-		icon = 'icons/mob/simple/carp.dmi'
+		icon = 'icons/mob/carp.dmi'
 		flick("carp_swell", src)
 		sleep(6) //let the animation play out
 

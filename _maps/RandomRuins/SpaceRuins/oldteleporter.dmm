@@ -16,13 +16,17 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/oldteleporter)
 "f" = (
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron/airless,
+/turf/open/floor/iron/airless{
+	icon_state = "damaged2"
+	},
 /area/ruin/space/oldteleporter)
 "g" = (
-/obj/structure/light_construct/small/directional/north,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron/airless,
+/obj/structure/light_construct/small{
+	dir = 1
+	},
+/turf/open/floor/iron/airless{
+	icon_state = "damaged3"
+	},
 /area/ruin/space/oldteleporter)
 "h" = (
 /obj/machinery/computer/teleporter{
@@ -39,16 +43,26 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/oldteleporter)
 "k" = (
-/obj/structure/light_construct/small/directional/east,
+/obj/structure/light_construct/small{
+	dir = 4
+	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/oldteleporter)
 "l" = (
 /obj/structure/table,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/cell{
+	charge = 100;
+	maxcharge = 15000
+	},
 /turf/open/floor/iron/airless,
 /area/ruin/space/oldteleporter)
+"m" = (
+/turf/open/floor/iron/airless{
+	icon_state = "damaged4"
+	},
+/area/ruin/space/oldteleporter)
 "n" = (
-/obj/machinery/power/apc/auto_name/directional/south,
+/obj/machinery/power/apc/auto_name/south,
 /turf/open/floor/iron/airless,
 /area/ruin/space/oldteleporter)
 
@@ -146,7 +160,7 @@ d
 c
 e
 e
-f
+m
 e
 d
 "}

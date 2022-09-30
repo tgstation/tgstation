@@ -3,11 +3,11 @@
 /proc/_abs(A)
 	return abs(A)
 
-/proc/_animate(atom/target, set_vars, time = 10, loop = 1, easing = LINEAR_EASING, flags = null)
-	if(target)
-		animate(target, appearance = set_vars, time, loop, easing, flags)
-	else
-		animate(appearance = set_vars, time, easing = easing, flags)
+/proc/_animate(atom/A, set_vars, time = 10, loop = 1, easing = LINEAR_EASING, flags = null)
+	var/mutable_appearance/MA = new()
+	for(var/v in set_vars)
+		MA.vars[v] = set_vars[v]
+	animate(A, appearance = MA, time, loop, easing, flags)
 
 /proc/_arccos(A)
 	return arccos(A)
@@ -62,10 +62,7 @@
 
 /proc/_locate(X, Y, Z)
 	if (isnull(Y)) // Assuming that it's only a single-argument call.
-		// direct ref locate
-		var/datum/D = locate(X)
-		// &&'s to last value
-		return istype(D) && D.can_vv_mark() && D
+		return locate(X)
 
 	return locate(X, Y, Z)
 
@@ -88,13 +85,7 @@
 	return min(arglist(args))
 
 /proc/_new(type, arguments)
-	var/datum/result
-
-	if(!length(arguments))
-		result = new type()
-	else
-		result = new type(arglist(arguments))
-
+	var/datum/result = new type(arglist(arguments))
 	if(istype(result))
 		result.datum_flags |= DF_VAR_EDITED
 	return result
@@ -125,16 +116,6 @@
 
 /proc/_pick(...)
 	return pick(arglist(args))
-
-/// Allow me to explain
-/// for some reason, if pick() is passed arglist(args) directly and args contains only one list
-/// it considers it to be a list of lists
-/// this means something like _pick(list) would fail
-/// need to do this instead
-///
-/// I hate this timeline
-/proc/_pick_list(list/pick_from)
-	return pick(pick_from)
 
 /proc/_prob(P)
 	return prob(P)
@@ -242,37 +223,12 @@
 /proc/_step_away(ref, trg, max)
 	step_away(ref, trg, max)
 
-/proc/_has_trait(datum/thing, trait)
-	return HAS_TRAIT(thing, trait)
+/proc/_has_trait(datum/thing,trait)
+	return HAS_TRAIT(thing,trait)
 
-/proc/_add_trait(datum/thing, trait, source)
-	ADD_TRAIT(thing, trait, source)
+/proc/_add_trait(datum/thing,trait,source)
+	ADD_TRAIT(thing,trait,source)
 
-/proc/_remove_trait(datum/thing, trait, source)
-	REMOVE_TRAIT(thing, trait, source)
+/proc/_remove_trait(datum/thing,trait,source)
+	REMOVE_TRAIT(thing,trait,source)
 
-/proc/_winset(player, control_id, params)
-	winset(player, control_id, params)
-
-/proc/_winget(player, control_id, params)
-	winget(player, control_id, params)
-
-/proc/_text2path(text)
-	return text2path(text)
-
-/proc/_turn(dir, angle)
-	return turn(dir, angle)
-
-/// Auxtools REALLY doesn't know how to handle filters as values;
-/// when passed as arguments to auxtools-called procs, they aren't simply treated as nulls -
-/// they don't even count towards the length of args.
-/// For example, calling some_proc([a filter], foo, bar) from auxtools
-/// is equivalent to calling some_proc(foo, bar). Thus, we can't use _animate directly on filters.
-/// Use this to perform animation steps on a filter. Consecutive steps on the same filter can be
-/// achieved by calling _animate with no target.
-/proc/_animate_filter(atom/target, filter_index, set_vars, time = 10, loop = 1, easing = LINEAR_EASING, flags = null)
-	if(!istype(target))
-		return
-	if(!filter_index || filter_index < 1 || filter_index > length(target.filters))
-		return
-	animate(target.filters[filter_index], appearance = set_vars, time, loop, easing, flags)

@@ -40,7 +40,6 @@
 	)
 
 	AddElement(/datum/element/connect_loc, loc_connections)
-	AddComponent(/datum/component/simple_rotation, ROTATION_NEEDS_ROOM)
 
 /obj/structure/windoor_assembly/Destroy()
 	set_density(FALSE)
@@ -69,11 +68,11 @@
 	if(istype(mover, /obj/structure/windoor_assembly) || istype(mover, /obj/machinery/door/window))
 		return valid_window_location(loc, mover.dir, is_fulltile = FALSE)
 
-/obj/structure/windoor_assembly/can_atmos_pass(turf/T, vertical = FALSE)
+/obj/structure/windoor_assembly/can_atmos_pass(turf/T)
 	if(get_dir(loc, T) == dir)
 		return !density
 	else
-		return TRUE
+		return 1
 
 /obj/structure/windoor_assembly/proc/on_exit(datum/source, atom/movable/leaving, direction)
 	SIGNAL_HANDLER
@@ -106,12 +105,10 @@
 				if(W.use_tool(src, user, 40, volume=50))
 					to_chat(user, span_notice("You disassemble the windoor assembly."))
 					var/obj/item/stack/sheet/rglass/RG = new (get_turf(src), 5)
-					if (!QDELETED(RG))
-						RG.add_fingerprint(user)
+					RG.add_fingerprint(user)
 					if(secure)
 						var/obj/item/stack/rods/R = new (get_turf(src), 4)
-						if (!QDELETED(R))
-							R.add_fingerprint(user)
+						R.add_fingerprint(user)
 					qdel(src)
 				return
 
@@ -246,7 +243,7 @@
 					ae.forceMove(drop_location())
 
 			else if(istype(W, /obj/item/pen))
-				var/t = tgui_input_text(user, "Enter the name for the door", "Windoor Renaming", created_name, MAX_NAME_LEN)
+				var/t = stripped_input(user, "Enter the name for the door.", name, created_name,MAX_NAME_LEN)
 				if(!t)
 					return
 				if(!in_range(src, usr) && loc != usr)
@@ -322,8 +319,26 @@
 	//Update to reflect changes(if applicable)
 	update_appearance()
 
-/obj/structure/windoor_assembly/AltClick(mob/user)
-	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
+
+
+/obj/structure/windoor_assembly/ComponentInitialize()
+	. = ..()
+	var/static/rotation_flags = ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS
+	AddComponent(/datum/component/simple_rotation, rotation_flags, can_be_rotated=CALLBACK(src, .proc/can_be_rotated), after_rotation=CALLBACK(src,.proc/after_rotation))
+
+/obj/structure/windoor_assembly/proc/can_be_rotated(mob/user,rotation_type)
+	if(anchored)
+		to_chat(user, span_warning("[src] cannot be rotated while it is fastened to the floor!"))
+		return FALSE
+	var/target_dir = turn(dir, rotation_type == ROTATION_CLOCKWISE ? -90 : 90)
+
+	if(!valid_window_location(loc, target_dir, is_fulltile = FALSE))
+		to_chat(user, span_warning("[src] cannot be rotated in that direction!"))
+		return FALSE
+	return TRUE
+
+/obj/structure/windoor_assembly/proc/after_rotation(mob/user)
+	update_appearance()
 
 //Flips the windoor assembly, determines whather the door opens to the left or the right
 /obj/structure/windoor_assembly/verb/flip()

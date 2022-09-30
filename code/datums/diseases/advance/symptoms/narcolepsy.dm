@@ -1,10 +1,16 @@
-/*Narcolepsy
- * Slight reduction to stealth
- * Reduces resistance
- * Greatly reduces stage speed
- * No change to transmissibility
- * Fatal level
- * Bonus: Causes drowsiness and sleep.
+
+/*
+//////////////////////////////////////
+Narcolepsy
+	Noticeable.
+	Lowers resistance
+	Decreases stage speed tremendously.
+	Decreases transmittablity tremendously.
+
+Bonus
+	Causes drowsiness and sleep.
+
+//////////////////////////////////////
 */
 /datum/symptom/narcolepsy
 	name = "Narcolepsy"

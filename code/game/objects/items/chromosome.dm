@@ -34,13 +34,9 @@
 		HM.power_coeff = power_coeff
 	if(HM.energy_coeff != -1)
 		HM.energy_coeff = energy_coeff
-	HM.can_chromosome = CHROMOSOME_USED
+	HM.can_chromosome = 2
 	HM.chromosome_name = name
-
-	// Do the actual modification
-	if(HM.modify())
-		HM.modified = TRUE
-
+	HM.modify()
 	qdel(src)
 
 /proc/generate_chromosome()

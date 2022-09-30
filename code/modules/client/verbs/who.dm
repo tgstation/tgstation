@@ -15,44 +15,44 @@
 			var/mob/dead/observer/G = src.mob
 			if(!G.started_as_observer)//If you aghost to do this, KorPhaeron will deadmin you in your sleep.
 				log_admin("[key_name(usr)] checked advanced who in-round")
-			for(var/client/client in GLOB.clients)
-				var/entry = "\t[client.key]"
-				if(client.holder && client.holder.fakekey)
-					entry += " <i>(as [client.holder.fakekey])</i>"
-				if (isnewplayer(client.mob))
+			for(var/client/C in GLOB.clients)
+				var/entry = "\t[C.key]"
+				if(C.holder && C.holder.fakekey)
+					entry += " <i>(as [C.holder.fakekey])</i>"
+				if (isnewplayer(C.mob))
 					entry += " - <font color='darkgray'><b>In Lobby</b></font>"
 				else
-					entry += " - Playing as [client.mob.real_name]"
-					switch(client.mob.stat)
+					entry += " - Playing as [C.mob.real_name]"
+					switch(C.mob.stat)
 						if(UNCONSCIOUS, HARD_CRIT)
 							entry += " - <font color='darkgray'><b>Unconscious</b></font>"
 						if(DEAD)
-							if(isobserver(client.mob))
-								var/mob/dead/observer/O = client.mob
+							if(isobserver(C.mob))
+								var/mob/dead/observer/O = C.mob
 								if(O.started_as_observer)
 									entry += " - <font color='gray'>Observing</font>"
 								else
 									entry += " - <font color='black'><b>DEAD</b></font>"
 							else
 								entry += " - <font color='black'><b>DEAD</b></font>"
-					if(is_special_character(client.mob))
+					if(is_special_character(C.mob))
 						entry += " - <b><font color='red'>Antagonist</font></b>"
-				entry += " [ADMIN_QUE(client.mob)]"
-				entry += " ([round(client.avgping, 1)]ms)"
+				entry += " [ADMIN_QUE(C.mob)]"
+				entry += " ([round(C.avgping, 1)]ms)"
 				Lines += entry
 		else//If they don't have +ADMIN, only show hidden admins
-			for(var/client/client in GLOB.clients)
-				var/entry = "[client.key]"
-				if(client.holder && client.holder.fakekey)
-					entry += " <i>(as [client.holder.fakekey])</i>"
-				entry += " ([round(client.avgping, 1)]ms)"
+			for(var/client/C in GLOB.clients)
+				var/entry = "[C.key]"
+				if(C.holder && C.holder.fakekey)
+					entry += " <i>(as [C.holder.fakekey])</i>"
+				entry += " ([round(C.avgping, 1)]ms)"
 				Lines += entry
 	else
-		for(var/client/client in GLOB.clients)
-			if(client.holder && client.holder.fakekey)
-				Lines += "[client.holder.fakekey] ([round(client.avgping, 1)]ms)"
+		for(var/client/C in GLOB.clients)
+			if(C.holder && C.holder.fakekey)
+				Lines += "[C.holder.fakekey] ([round(C.avgping, 1)]ms)"
 			else
-				Lines += "[client.key] ([round(client.avgping, 1)]ms)"
+				Lines += "[C.key] ([round(C.avgping, 1)]ms)"
 
 	var/num_lines = 0
 	msg += "<table style='width: 100%; table-layout: fixed'><tr>"
@@ -73,44 +73,30 @@
 	set name = "Adminwho"
 
 	var/msg = "<b>Current Admins:</b>\n"
-	var/display_name
 	if(holder)
-		for(var/client/client in GLOB.admins)
-			var/feedback_link = client.holder.feedback_link()
-			display_name = feedback_link ? "<a href=[feedback_link]>[client]</a>" : client
+		for(var/client/C in GLOB.admins)
+			msg += "\t[C] is a [C.holder.rank]"
 
-			msg += "\t[display_name] is a [client.holder.rank_names()]"
+			if(C.holder.fakekey)
+				msg += " <i>(as [C.holder.fakekey])</i>"
 
-			if(client.holder.fakekey)
-				msg += " <i>(as [client.holder.fakekey])</i>"
-
-			if(isobserver(client.mob))
+			if(isobserver(C.mob))
 				msg += " - Observing"
-			else if(isnewplayer(client.mob))
-				if(SSticker.current_state <= GAME_STATE_PREGAME)
-					var/mob/dead/new_player/lobbied_admin = client.mob
-					if(lobbied_admin.ready == PLAYER_READY_TO_PLAY)
-						msg += " - Lobby (Readied)"
-					else
-						msg += " - Lobby (Not readied)"
-				else
-					msg += " - Lobby"
+			else if(isnewplayer(C.mob))
+				msg += " - Lobby"
 			else
 				msg += " - Playing"
 
-			if(client.is_afk())
+			if(C.is_afk())
 				msg += " (AFK)"
 			msg += "\n"
 	else
-		for(var/client/client in GLOB.admins)
-			var/feedback_link = client.holder.feedback_link()
-			display_name = feedback_link ? "<a href=[feedback_link]>[client]</a>" : client
-
-			if(client.is_afk())
+		for(var/client/C in GLOB.admins)
+			if(C.is_afk())
 				continue //Don't show afk admins to adminwho
-			if(!client.holder.fakekey)
-				msg += "\t[display_name] is a [client.holder.rank_names()]\n"
-		msg += span_info("Adminhelps are also sent through TGS to services like IRC and Discord. If no admins are available in game, sending an adminhelp might still be noticed and responded to.")
+			if(!C.holder.fakekey)
+				msg += "\t[C] is a [C.holder.rank]\n"
+		msg += span_info("Adminhelps are also sent through TGS to services like IRC and Discord. If no admins are available in game adminhelp anyways and an admin will see it and respond.")
 	to_chat(src, msg)
 
 #undef DEFAULT_WHO_CELLS_PER_ROW

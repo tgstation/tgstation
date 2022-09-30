@@ -24,8 +24,7 @@
 
 #define AQUARIUM_FLUID_FRESHWATER "Freshwater"
 #define AQUARIUM_FLUID_SALTWATER "Saltwater"
-#define AQUARIUM_FLUID_SULPHWATEVER "Sulfuric Water"
+#define AQUARIUM_FLUID_SULPHWATEVER "Sulphuric Water"
 #define AQUARIUM_FLUID_AIR "Air"
-#define AQUARIUM_FLUID_ANADROMOUS "Adaptive to both Freshwater and Saltwater"
 
 #define AQUARIUM_COMPANY "Aquatech Ltd."

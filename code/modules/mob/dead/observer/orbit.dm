@@ -1,6 +1,20 @@
 GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 
 /datum/orbit_menu
+	/// Serialised list of all valid POIs. Master list that holds all POIs from all other lists.
+	var/list/pois = list()
+	/// Serialised list of all alive POIs.
+	var/list/alive = list()
+	/// Serialised list of all antagonist POIs.
+	var/list/antagonists = list()
+	/// Serialised list of all dead mob POIs.
+	var/list/dead = list()
+	/// Serialised list of all observers POIS.
+	var/list/ghosts = list()
+	/// Serialised list of all non-mob POIs.
+	var/list/misc = list()
+	/// Serialised list of all POIS without a mind.
+	var/list/npcs = list()
 
 /datum/orbit_menu/ui_state(mob/user)
 	return GLOB.observer_state
@@ -35,20 +49,40 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 			if (auto_observe)
 				user.do_observe(poi)
 			return TRUE
-		if ("refresh")
-			update_static_data(usr, ui)
-			return TRUE
 
-/datum/orbit_menu/ui_static_data(mob/user)
+/datum/orbit_menu/ui_data(mob/user)
+	var/list/data = list()
+
+	update_poi_list()
+
+	data["alive"] = alive
+	data["antagonists"] = antagonists
+	data["dead"] = dead
+	data["ghosts"] = ghosts
+	data["misc"] = misc
+	data["npcs"] = npcs
+
+	return data
+
+/datum/orbit_menu/ui_assets()
+	return list(
+		get_asset_datum(/datum/asset/simple/orbit),
+	)
+
+/// Fully updates the list of POIs.
+/datum/orbit_menu/proc/update_poi_list()
 	var/list/new_mob_pois = SSpoints_of_interest.get_mob_pois(CALLBACK(src, .proc/validate_mob_poi), append_dead_role = FALSE)
 	var/list/new_other_pois = SSpoints_of_interest.get_other_pois()
 
-	var/list/alive = list()
-	var/list/antagonists = list()
-	var/list/dead = list()
-	var/list/ghosts = list()
-	var/list/misc = list()
-	var/list/npcs = list()
+	pois.Cut()
+
+	alive.Cut()
+	antagonists.Cut()
+	dead.Cut()
+	ghosts.Cut()
+	npcs.Cut()
+
+	misc.Cut()
 
 	for(var/name in new_mob_pois)
 		var/list/serialized = list()
@@ -58,6 +92,8 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 		var/poi_ref = REF(mob_poi)
 		serialized["ref"] = poi_ref
 		serialized["name"] = name
+
+		pois[poi_ref] = mob_poi
 
 		if(isobserver(mob_poi))
 			var/number_of_orbiters = length(mob_poi.get_all_orbiters())
@@ -92,21 +128,16 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 			alive += list(serialized)
 
 	for(var/name in new_other_pois)
+		var/list/serialized = list()
+
 		var/atom/atom_poi = new_other_pois[name]
 
-		misc += list(list(
-			"ref" = REF(atom_poi),
-			"name" = name,
-		))
+		var/poi_ref = REF(atom_poi)
+		serialized["ref"] = poi_ref
+		serialized["name"] = name
 
-	return list(
-		"alive" = alive,
-		"antagonists" = antagonists,
-		"dead" = dead,
-		"ghosts" = ghosts,
-		"misc" = misc,
-		"npcs" = npcs,
-	)
+		pois[poi_ref] = atom_poi
+		misc += list(serialized)
 
 /// Shows the UI to the specified user.
 /datum/orbit_menu/proc/show(mob/user)

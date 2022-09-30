@@ -1,7 +1,7 @@
 /obj/item/reagent_containers/chem_pack
 	name = "intravenous medicine bag"
 	desc = "A plastic pressure bag, or 'chem pack', for IV administration of drugs. It is fitted with a thermosealing strip."
-	icon = 'icons/obj/medical/bloodpack.dmi'
+	icon = 'icons/obj/bloodpack.dmi'
 	icon_state = "chempack"
 	volume = 100
 	reagent_flags = OPENCONTAINER

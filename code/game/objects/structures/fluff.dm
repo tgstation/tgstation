@@ -74,12 +74,9 @@
 	icon = 'icons/effects/64x64.dmi'
 	icon_state = "drake_statue"
 	pixel_x = -16
-	maptext_height = 64
-	maptext_width = 64
 	density = TRUE
 	deconstructible = FALSE
 	layer = EDGED_TURF_LAYER
-
 /**
  * A variety of statue in disrepair; parts are broken off and a gemstone is missing
  */
@@ -113,7 +110,6 @@
 	icon_state = "backseat"
 	pixel_y = 17
 	layer = OBJ_LAYER
-	plane = GAME_PLANE
 
 
 /obj/structure/fluff/bus/passable/seat/driver
@@ -231,7 +227,7 @@
 
 /obj/structure/fluff/clockwork
 	name = "Clockwork Fluff"
-	icon = 'icons/obj/fluff.dmi'
+	icon = 'icons/obj/clockwork_objects.dmi'
 	deconstructible = FALSE
 
 /obj/structure/fluff/clockwork/alloy_shards

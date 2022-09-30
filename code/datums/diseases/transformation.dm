@@ -53,7 +53,7 @@
 
 
 /datum/disease/transformation/proc/do_disease_transformation(mob/living/affected_mob)
-	if(iscarbon(affected_mob) && affected_mob.stat != DEAD)
+	if(istype(affected_mob, /mob/living/carbon) && affected_mob.stat != DEAD)
 		if(length(stage5))
 			to_chat(affected_mob, pick(stage5))
 		if(QDELETED(affected_mob))
@@ -97,23 +97,24 @@
 			new_mob.ghostize(can_reenter_corpse = FALSE)
 			new_mob.key = null
 
-/datum/disease/transformation/jungle_flu
-	name = "Jungle Flu"
+/datum/disease/transformation/jungle_fever
+	name = "Jungle Fever"
 	cure_text = "Death."
 	cures = list(/datum/reagent/medicine/adminordrazine)
-	spread_text = "Unknown"
-	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
+	spread_text = "Monkey Bites"
+	spread_flags = DISEASE_SPREAD_SPECIAL
 	viable_mobtypes = list(/mob/living/carbon/human)
-	spreading_modifier = 1
+	permeability_mod = 1
 	cure_chance = 0.5
 	disease_flags = CAN_CARRY|CAN_RESIST
-	desc = "A neutered but still dangerous descendent of the ancient \"Jungle Fever\", victims will eventually genetically backtrack into a primate. \
-	Luckily, once turned the new monkey will not gain the rabies-like rage of the fever."
+	desc = "Monkeys with this disease will bite humans, causing humans to mutate into a monkey."
 	severity = DISEASE_SEVERITY_BIOHAZARD
 	stage_prob = 2
 	visibility_flags = NONE
 	agent = "Kongey Vibrion M-909"
 	new_form = /mob/living/carbon/human/species/monkey
+	bantype = ROLE_MONKEY
+
 
 	stage1 = list()
 	stage2 = list()
@@ -122,10 +123,14 @@
 					"<span class='warning'>You have a craving for bananas.</span>", "<span class='warning'>Your mind feels clouded.</span>")
 	stage5 = list("<span class='warning'>You feel like monkeying around.</span>")
 
-/datum/disease/transformation/jungle_flu/do_disease_transformation(mob/living/carbon/affected_mob)
-	affected_mob.monkeyize()
+/datum/disease/transformation/jungle_fever/do_disease_transformation(mob/living/carbon/affected_mob)
+	if(affected_mob.mind && !IS_INFECTED_MONKEY(affected_mob.mind))
+		affected_mob.mind.add_antag_datum(/datum/antagonist/monkey)
+		affected_mob.monkeyize()
+		ADD_TRAIT(affected_mob, TRAIT_VENTCRAWLER_ALWAYS, type)
 
-/datum/disease/transformation/jungle_flu/stage_act(delta_time, times_fired)
+
+/datum/disease/transformation/jungle_fever/stage_act(delta_time, times_fired)
 	. = ..()
 	if(!.)
 		return
@@ -137,10 +142,25 @@
 		if(3)
 			if(DT_PROB(2, delta_time))
 				to_chat(affected_mob, span_danger("You feel a stabbing pain in your head."))
-				affected_mob.adjust_confusion(10 SECONDS)
+				affected_mob.add_confusion(10)
 		if(4)
 			if(DT_PROB(1.5, delta_time))
 				affected_mob.say(pick("Eeek, ook ook!", "Eee-eeek!", "Eeee!", "Ungh, ungh."), forced = "jungle fever")
+
+
+/datum/disease/transformation/jungle_fever/cure()
+	affected_mob.mind.remove_antag_datum(/datum/antagonist/monkey)
+	..()
+
+/datum/disease/transformation/jungle_fever/monkeymode
+	visibility_flags = HIDDEN_SCANNER|HIDDEN_PANDEMIC
+	disease_flags = CAN_CARRY //no vaccines! no cure!
+
+/datum/disease/transformation/jungle_fever/monkeymode/after_add()
+	if(affected_mob && !IS_MONKEY_LEADER(affected_mob.mind))
+		visibility_flags = NONE
+
+
 
 /datum/disease/transformation/robot
 
@@ -159,7 +179,7 @@
 	stage5 = list("<span class='danger'>Your skin feels as if it's about to burst off!</span>")
 	new_form = /mob/living/silicon/robot
 	infectable_biotypes = MOB_ORGANIC|MOB_UNDEAD|MOB_ROBOTIC
-	bantype = JOB_CYBORG
+	bantype = "Cyborg"
 
 
 /datum/disease/transformation/robot/stage_act(delta_time, times_fired)
@@ -227,7 +247,7 @@
 	stage3 = list("<span class='danger'>Your appendages are melting away.</span>", "<span class='danger'>Your limbs begin to lose their shape.</span>")
 	stage4 = list("<span class='danger'>You are turning into a slime.</span>")
 	stage5 = list("<span class='danger'>You have become a slime.</span>")
-	new_form = /mob/living/simple_animal/slime
+	new_form = /mob/living/simple_animal/slime/random
 
 
 /datum/disease/transformation/slime/stage_act(delta_time, times_fired)
@@ -237,22 +257,15 @@
 
 	switch(stage)
 		if(1)
-			if(ishuman(affected_mob))
-				var/mob/living/carbon/human/human = affected_mob
-				if(isjellyperson(human))
+			if(ishuman(affected_mob) && affected_mob.dna)
+				if(affected_mob.dna.species.id == SPECIES_SLIMEPERSON || affected_mob.dna.species.id == SPECIES_STARGAZER || affected_mob.dna.species.id == SPECIES_LUMINESCENT)
 					stage = 5
 		if(3)
 			if(ishuman(affected_mob))
 				var/mob/living/carbon/human/human = affected_mob
-				if(!ismonkey(human) && !isjellyperson(human))
+				if(human.dna.species.id != SPECIES_SLIMEPERSON && affected_mob.dna.species.id != SPECIES_STARGAZER && affected_mob.dna.species.id != SPECIES_LUMINESCENT)
 					human.set_species(/datum/species/jelly/slime)
 
-/datum/disease/transformation/slime/do_disease_transformation(mob/living/affected_mob)
-	if(affected_mob.client && ishuman(affected_mob)) // if they are a human who's not a monkey and are sentient, then let them have the old fun
-		var/mob/living/carbon/human/human = affected_mob
-		if(!ismonkey(human))
-			new_form = /mob/living/simple_animal/slime/random
-	return ..()
 
 /datum/disease/transformation/corgi
 	name = "The Barkening"

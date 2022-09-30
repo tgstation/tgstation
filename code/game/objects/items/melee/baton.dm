@@ -1,7 +1,7 @@
 /obj/item/melee/baton
 	name = "police baton"
 	desc = "A wooden truncheon for beating criminal scum. Left click to stun, right click to harm."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "classic_baton"
 	inhand_icon_state = "classic_baton"
 	worn_icon_state = "classic_baton"
@@ -37,31 +37,11 @@
 	/// Whether the stun attack is logged. Only relevant for abductor batons, which have different modes.
 	var/log_stun_attack = TRUE
 
-	/// The context to show when the baton is active and targetting a living thing
-	var/context_living_target_active = "Stun"
-
-	/// The context to show when the baton is active and targetting a living thing in combat mode
-	var/context_living_target_active_combat_mode = "Stun"
-
-	/// The context to show when the baton is inactive and targetting a living thing
-	var/context_living_target_inactive = "Prod"
-
-	/// The context to show when the baton is inactive and targetting a living thing in combat mode
-	var/context_living_target_inactive_combat_mode = "Attack"
-
-	/// The RMB context to show when the baton is active and targetting a living thing
-	var/context_living_rmb_active = "Attack"
-
-	/// The RMB context to show when the baton is inactive and targetting a living thing
-	var/context_living_rmb_inactive = "Attack"
-
 /obj/item/melee/baton/Initialize(mapload)
 	. = ..()
 	// Adding an extra break for the sake of presentation
 	if(stamina_damage != 0)
 		offensive_notes = "\nVarious interviewed security forces report being able to beat criminals into exhaustion with only [span_warning("[CEILING(100 / stamina_damage, 1)] hit\s!")]"
-
-	register_item_context()
 
 /**
  * Ok, think of baton attacks like a melee attack chain:
@@ -89,30 +69,6 @@
 			return ..()
 		if(BATON_ATTACKING)
 			finalize_baton_attack(target, user, modifiers)
-
-/obj/item/melee/baton/add_item_context(datum/source, list/context, atom/target, mob/living/user)
-	if (isturf(target))
-		return NONE
-
-	if (isobj(target))
-		context[SCREENTIP_CONTEXT_LMB] = "Attack"
-	else
-		if (active)
-			context[SCREENTIP_CONTEXT_RMB] = context_living_rmb_active
-
-			if (user.combat_mode)
-				context[SCREENTIP_CONTEXT_LMB] = context_living_target_active_combat_mode
-			else
-				context[SCREENTIP_CONTEXT_LMB] = context_living_target_active
-		else
-			context[SCREENTIP_CONTEXT_RMB] = context_living_rmb_inactive
-
-			if (user.combat_mode)
-				context[SCREENTIP_CONTEXT_LMB] = context_living_target_inactive_combat_mode
-			else
-				context[SCREENTIP_CONTEXT_LMB] = context_living_target_inactive
-
-	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/melee/baton/proc/baton_attack(mob/living/target, mob/living/user, modifiers)
 	. = BATON_ATTACKING
@@ -180,7 +136,7 @@
 		set_batoned(target, user, cooldown)
 
 /obj/item/melee/baton/proc/baton_effect(mob/living/target, mob/living/user, modifiers, stun_override)
-	var/trait_check = HAS_TRAIT(target, TRAIT_BATON_RESISTANCE)
+	var/trait_check = HAS_TRAIT(target, TRAIT_STUNRESISTANCE)
 	if(iscyborg(target))
 		if(!affect_cyborg)
 			return FALSE
@@ -189,8 +145,7 @@
 		additional_effects_cyborg(target, user)
 	else
 		target.apply_damage(stamina_damage, STAMINA, BODY_ZONE_CHEST)
-		if(!trait_check)
-			target.Knockdown((isnull(stun_override) ? knockdown_time : stun_override))
+		target.Knockdown((isnull(stun_override) ? knockdown_time : stun_override) * (trait_check ? 0.1 : 1))
 		additional_effects_non_cyborg(target, user)
 	return TRUE
 
@@ -202,8 +157,8 @@
 /obj/item/melee/baton/proc/get_stun_description(mob/living/target, mob/living/user)
 	. = list()
 
-	.["visible"] = span_danger("[user] knocks [target] down with [src]!")
-	.["local"] = span_userdanger("[user] knocks you down with [src]!")
+	.["visible"] =  "<span class ='danger'>[user] knocks [target] down with [src]!</span>"
+	.["local"] = "<span class ='userdanger'>[user] knocks you down with [src]!</span>"
 
 	return .
 
@@ -220,8 +175,8 @@
 /obj/item/melee/baton/proc/get_unga_dunga_cyborg_stun_description(mob/living/target, mob/living/user)
 	. = list()
 
-	.["visible"] = span_danger("[user] tries to knock down [target] with [src], and predictably fails!") //look at this duuuuuude
-	.["local"] = span_userdanger("[user] tries to... knock you down with [src]?") //look at the top of his head!
+	.["visible"] = "<span class='danger'>[user] tries to knock down [target] with [src], and predictably fails!</span>" //look at this duuuuuude
+	.["local"] = "<span class='userdanger'>[target] tries to... knock you down with [src]?</span>" //look at the top of his head!
 
 	return .
 
@@ -271,9 +226,9 @@
 /obj/item/conversion_kit
 	name = "conversion kit"
 	desc = "A strange box containing wood working tools and an instruction paper to turn stun batons into something else."
-	icon = 'icons/obj/storage/storage.dmi'
+	icon = 'icons/obj/storage.dmi'
 	icon_state = "uk"
-	custom_price = PAYCHECK_COMMAND * 4.5
+	custom_price = PAYCHECK_HARD * 4.5
 
 /obj/item/melee/baton/telescopic
 	name = "telescopic baton"
@@ -313,7 +268,7 @@
 
 /obj/item/melee/baton/telescopic/suicide_act(mob/user)
 	var/mob/living/carbon/human/human_user = user
-	var/obj/item/organ/internal/brain/our_brain = human_user.getorgan(/obj/item/organ/internal/brain)
+	var/obj/item/organ/brain/our_brain = human_user.getorgan(/obj/item/organ/brain)
 
 	user.visible_message(span_suicide("[user] stuffs [src] up [user.p_their()] nose and presses the 'extend' button! It looks like [user.p_theyre()] trying to clear [user.p_their()] mind."))
 	if(active)
@@ -322,14 +277,13 @@
 	else
 		attack_self(user)
 
-	sleep(0.3 SECONDS)
-	if (QDELETED(human_user))
-		return
-	if(!QDELETED(our_brain))
-		human_user.internal_organs -= our_brain
-		qdel(our_brain)
-	new /obj/effect/gibspawner/generic(human_user.drop_location(), human_user)
-	return (BRUTELOSS)
+	sleep(3)
+	if (!QDELETED(human_user))
+		if(!QDELETED(our_brain))
+			human_user.internal_organs -= our_brain
+			qdel(our_brain)
+		new /obj/effect/gibspawner/generic(human_user.drop_location(), human_user)
+		return (BRUTELOSS)
 
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
@@ -348,7 +302,7 @@
 /obj/item/melee/baton/telescopic/contractor_baton
 	name = "contractor baton"
 	desc = "A compact, specialised baton assigned to Syndicate contractors. Applies light electrical shocks to targets."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "contractor_baton"
 	worn_icon_state = "contractor_baton"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
@@ -371,8 +325,8 @@
 	return span_danger("The baton is still charging!")
 
 /obj/item/melee/baton/telescopic/contractor_baton/additional_effects_non_cyborg(mob/living/target, mob/living/user)
-	target.set_jitter_if_lower(40 SECONDS)
-	target.adjust_stutter(40 SECONDS)
+	target.Jitter(20)
+	target.stuttering += 20
 
 /obj/item/melee/baton/security
 	name = "stun baton"
@@ -387,7 +341,7 @@
 	attack_verb_continuous = list("beats")
 	attack_verb_simple = list("beat")
 
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 50, BIO = 0, FIRE = 80, ACID = 80)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 50, BIO = 0, RAD = 0, FIRE = 80, ACID = 80)
 
 	throwforce = 7
 	stamina_damage = 60
@@ -397,8 +351,6 @@
 	on_stun_sound = 'sound/weapons/egloves.ogg'
 	on_stun_volume = 50
 	active = FALSE
-
-	context_living_rmb_active = "Harmful Stun"
 
 	var/throw_stun_chance = 35
 	var/obj/item/stock_parts/cell/cell
@@ -410,7 +362,7 @@
 /obj/item/melee/baton/security/Initialize(mapload)
 	. = ..()
 	if(preload_cell_type)
-		if(!ispath(preload_cell_type, /obj/item/stock_parts/cell))
+		if(!ispath(preload_cell_type,/obj/item/stock_parts/cell))
 			log_mapping("[src] at [AREACOORD(src)] had an invalid preload_cell_type: [preload_cell_type].")
 		else
 			cell = new preload_cell_type(src)
@@ -424,7 +376,7 @@
 	if(cell?.charge && active)
 		user.visible_message(span_suicide("[user] is putting the live [name] in [user.p_their()] mouth! It looks like [user.p_theyre()] trying to commit suicide!"))
 		. = (FIRELOSS)
-		attack(user, user)
+		attack(user,user)
 	else
 		user.visible_message(span_suicide("[user] is shoving the [name] down their throat! It looks like [user.p_theyre()] trying to commit suicide!"))
 		. = (OXYLOSS)
@@ -435,19 +387,18 @@
 	UnregisterSignal(src, COMSIG_PARENT_ATTACKBY)
 	return ..()
 
-/obj/item/melee/baton/security/proc/convert(datum/source, obj/item/item, mob/user)
+/obj/item/melee/baton/security/proc/convert(datum/source, obj/item/I, mob/user)
 	SIGNAL_HANDLER
 
-	if(!istype(item, /obj/item/conversion_kit) || !convertible)
-		return
-	var/turf/source_turf = get_turf(src)
-	var/obj/item/melee/baton/baton = new (source_turf)
-	baton.alpha = 20
-	playsound(source_turf, 'sound/items/drill_use.ogg', 80, TRUE, -1)
-	animate(src, alpha = 0, time = 1 SECONDS)
-	animate(baton, alpha = 255, time = 1 SECONDS)
-	qdel(item)
-	qdel(src)
+	if(istype(I,/obj/item/conversion_kit) && convertible)
+		var/turf/source_turf = get_turf(src)
+		var/obj/item/melee/baton/baton = new (source_turf)
+		baton.alpha = 20
+		playsound(source_turf, 'sound/items/drill_use.ogg', 80, TRUE, -1)
+		animate(src, alpha = 0, time = 10)
+		animate(baton, alpha = 255, time = 10)
+		qdel(I)
+		qdel(src)
 
 /obj/item/melee/baton/security/Exited(atom/movable/mov_content)
 	. = ..()
@@ -474,25 +425,23 @@
 	else
 		. += span_warning("\The [src] does not have a power source installed.")
 
-/obj/item/melee/baton/security/screwdriver_act(mob/living/user, obj/item/tool)
-	if(tryremovecell(user))
-		tool.play_tool_sound(src)
-	return TRUE
-
-/obj/item/melee/baton/security/attackby(obj/item/item, mob/user, params)
-	if(istype(item, /obj/item/stock_parts/cell))
-		var/obj/item/stock_parts/cell/active_cell = item
+/obj/item/melee/baton/security/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/stock_parts/cell))
+		var/obj/item/stock_parts/cell/C = W
 		if(cell)
 			to_chat(user, span_warning("[src] already has a cell!"))
 		else
-			if(active_cell.maxcharge < cell_hit_cost)
+			if(C.maxcharge < cell_hit_cost)
 				to_chat(user, span_notice("[src] requires a higher capacity cell."))
 				return
-			if(!user.transferItemToLoc(item, src))
+			if(!user.transferItemToLoc(W, src))
 				return
-			cell = item
+			cell = W
 			to_chat(user, span_notice("You install a cell in [src]."))
 			update_appearance()
+
+	else if(W.tool_behaviour == TOOL_SCREWDRIVER)
+		tryremovecell(user)
 	else
 		return ..()
 
@@ -500,14 +449,12 @@
 	if(cell && can_remove_cell)
 		cell.forceMove(drop_location())
 		to_chat(user, span_notice("You remove the cell from [src]."))
-		return TRUE
-	return FALSE
 
 /obj/item/melee/baton/security/attack_self(mob/user)
 	if(cell?.charge >= cell_hit_cost)
 		active = !active
 		balloon_alert(user, "turned [active ? "on" : "off"]")
-		playsound(src, SFX_SPARKS, 75, TRUE, -1)
+		playsound(src, "sparks", 75, TRUE, -1)
 	else
 		active = FALSE
 		if(!cell)
@@ -527,7 +474,7 @@
 		//we're below minimum, turn off
 		active = FALSE
 		update_appearance()
-		playsound(src, SFX_SPARKS, 75, TRUE, -1)
+		playsound(src, "sparks", 75, TRUE, -1)
 
 /obj/item/melee/baton/security/clumsy_check(mob/living/carbon/human/user)
 	. = ..()
@@ -550,8 +497,8 @@
 
 /obj/item/melee/baton/security/baton_effect(mob/living/target, mob/living/user, modifiers, stun_override)
 	if(iscyborg(loc))
-		var/mob/living/silicon/robot/robot = loc
-		if(!robot || !robot.cell || !robot.cell.use(cell_hit_cost))
+		var/mob/living/silicon/robot/R = loc
+		if(!R || !R.cell || !R.cell.use(cell_hit_cost))
 			return FALSE
 	else if(!deductcharge(cell_hit_cost))
 		return FALSE
@@ -563,18 +510,18 @@
  * After a period of time, we then check to see what stun duration we give.
  */
 /obj/item/melee/baton/security/additional_effects_non_cyborg(mob/living/target, mob/living/user)
-	target.set_jitter_if_lower(40 SECONDS)
-	target.set_confusion_if_lower(10 SECONDS)
-	target.set_stutter_if_lower(16 SECONDS)
+	target.Jitter(20)
+	target.set_confusion(max(10, target.get_confusion()))
+	target.stuttering = max(8, target.stuttering)
 
 	SEND_SIGNAL(target, COMSIG_LIVING_MINOR_SHOCK)
 	addtimer(CALLBACK(src, .proc/apply_stun_effect_end, target), 2 SECONDS)
 
 /// After the initial stun period, we check to see if the target needs to have the stun applied.
 /obj/item/melee/baton/security/proc/apply_stun_effect_end(mob/living/target)
-	var/trait_check = HAS_TRAIT(target, TRAIT_BATON_RESISTANCE) //var since we check it in out to_chat as well as determine stun duration
+	var/trait_check = HAS_TRAIT(target, TRAIT_STUNRESISTANCE) //var since we check it in out to_chat as well as determine stun duration
 	if(!target.IsKnockdown())
-		to_chat(target, span_warning("Your muscles seize, making you collapse[trait_check ? ", but your body quickly recovers..." : "!"]"))
+		to_chat(target, span_warning("Your muscles seize, making you collapse [trait_check ? ", but your body quickly recovers..." : "!"]"))
 
 	target.Knockdown(knockdown_time * (trait_check ? 0.1 : 1))
 
@@ -600,23 +547,8 @@
 
 /obj/item/melee/baton/security/emp_act(severity)
 	. = ..()
-	if (!cell)
-		return
 	if (!(. & EMP_PROTECT_SELF))
 		deductcharge(1000 / severity)
-	if (cell.charge >= cell_hit_cost)
-		var/scramble_time
-		scramble_mode()
-		for(var/loops in 1 to rand(6, 12))
-			scramble_time = rand(5, 15) / (1 SECONDS)
-			addtimer(CALLBACK(src, .proc/scramble_mode), scramble_time*loops * (1 SECONDS))
-
-/obj/item/melee/baton/security/proc/scramble_mode()
-	if (!cell || cell.charge < cell_hit_cost)
-		return
-	active = !active
-	playsound(src, SFX_SPARKS, 75, TRUE, -1)
-	update_appearance()
 
 /obj/item/melee/baton/security/loaded //this one starts with a cell pre-installed.
 	preload_cell_type = /obj/item/stock_parts/cell/high
@@ -630,7 +562,7 @@
 	worn_icon_state = null
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-	w_class = WEIGHT_CLASS_HUGE
+	w_class = WEIGHT_CLASS_BULKY
 	force = 3
 	throwforce = 5
 	cell_hit_cost = 2000
@@ -644,18 +576,19 @@
 	sparkler = new (src)
 
 /obj/item/melee/baton/security/cattleprod/attackby(obj/item/item, mob/user, params)//handles sticking a crystal onto a stunprod to make a teleprod
-	if(!istype(item, /obj/item/stack/ore/bluespace_crystal))
-		return ..()
-	if(!cell)
-		var/obj/item/stack/ore/bluespace_crystal/crystal = item
-		var/obj/item/melee/baton/security/cattleprod/teleprod/prod = new
-		remove_item_from_storage(user)
-		qdel(src)
-		crystal.use(1)
-		user.put_in_hands(prod)
-		to_chat(user, span_notice("You place the bluespace crystal firmly into the igniter."))
+	if(istype(item, /obj/item/stack/ore/bluespace_crystal))
+		if(!cell)
+			var/obj/item/stack/ore/bluespace_crystal/crystal = item
+			var/obj/item/melee/baton/security/cattleprod/teleprod/prod = new
+			remove_item_from_storage(user)
+			qdel(src)
+			crystal.use(1)
+			user.put_in_hands(prod)
+			to_chat(user, span_notice("You place the bluespace crystal firmly into the igniter."))
+		else
+			user.visible_message(span_warning("You can't put the crystal onto the stunprod while it has a power cell installed!"))
 	else
-		user.visible_message(span_warning("You can't put the crystal onto the stunprod while it has a power cell installed!"))
+		return ..()
 
 /obj/item/melee/baton/security/cattleprod/baton_effect()
 	if(!sparkler.activate())
@@ -681,17 +614,23 @@
 	convertible = FALSE
 	custom_materials = list(/datum/material/iron = 10000, /datum/material/glass = 4000, /datum/material/silver = 10000, /datum/material/gold = 2000)
 
-/obj/item/melee/baton/security/boomerang/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/boomerang, throw_range+2, TRUE)
+/obj/item/melee/baton/security/boomerang/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
+	if(active)
+		if(ishuman(thrower))
+			var/mob/living/carbon/human/H = thrower
+			H.throw_mode_off(THROW_MODE_TOGGLE) //so they can catch it on the return.
+	return ..()
 
 /obj/item/melee/baton/security/boomerang/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	if(!active)
+	if(active)
+		var/caught = hit_atom.hitby(src, FALSE, FALSE, throwingdatum=throwingdatum)
+		var/mob/thrown_by = thrownby?.resolve()
+		if(isliving(hit_atom) && !iscyborg(hit_atom) && !caught && prob(throw_stun_chance))//if they are a living creature and they didn't catch it
+			finalize_baton_attack(hit_atom, thrown_by, in_attack_chain = FALSE)
+		if(thrown_by && !caught)
+			addtimer(CALLBACK(src, /atom/movable.proc/throw_at, thrown_by, throw_range+2, throw_speed, null, TRUE), 1)
+	else
 		return ..()
-	var/caught = hit_atom.hitby(src, skipcatch = FALSE, hitpush = FALSE, throwingdatum = throwingdatum)
-	var/mob/thrown_by = thrownby?.resolve()
-	if(isliving(hit_atom) && !iscyborg(hit_atom) && !caught && prob(throw_stun_chance))//if they are a living creature and they didn't catch it
-		finalize_baton_attack(hit_atom, thrown_by, in_attack_chain = FALSE)
 
 /obj/item/melee/baton/security/boomerang/loaded //Same as above, comes with a cell.
 	preload_cell_type = /obj/item/stock_parts/cell/high

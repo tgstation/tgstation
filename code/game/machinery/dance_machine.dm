@@ -19,7 +19,7 @@
 	name = "radiant dance machine mark IV"
 	desc = "The first three prototypes were discontinued after mass casualty incidents."
 	icon_state = "disco"
-	req_access = list(ACCESS_ENGINEERING)
+	req_access = list(ACCESS_ENGINE)
 	anchored = FALSE
 	var/list/spotlights = list()
 	var/list/sparkles = list()
@@ -159,7 +159,7 @@
 			return TRUE
 		if("set_volume")
 			var/new_volume = params["volume"]
-			if(new_volume == "reset")
+			if(new_volume  == "reset")
 				volume = initial(volume)
 				return TRUE
 			else if(new_volume == "min")
@@ -174,7 +174,6 @@
 
 /obj/machinery/jukebox/proc/activate_music()
 	active = TRUE
-	update_use_power(ACTIVE_POWER_USE)
 	update_appearance()
 	START_PROCESSING(SSobj, src)
 	stop = world.time + selection.song_length
@@ -458,7 +457,7 @@
 				continue
 			if(!(M in rangers))
 				rangers[M] = TRUE
-				M.playsound_local(get_turf(M), null, volume, channel = CHANNEL_JUKEBOX, sound_to_use = song_played, use_reverb = FALSE)
+				M.playsound_local(get_turf(M), null, volume, channel = CHANNEL_JUKEBOX, S = song_played, use_reverb = FALSE)
 		for(var/mob/L in rangers)
 			if(get_dist(src,L) > 10)
 				rangers -= L
@@ -467,7 +466,6 @@
 				L.stop_sound_channel(CHANNEL_JUKEBOX)
 	else if(active)
 		active = FALSE
-		update_use_power(IDLE_POWER_USE)
 		STOP_PROCESSING(SSobj, src)
 		dance_over()
 		playsound(src,'sound/machines/terminal_off.ogg',50,TRUE)

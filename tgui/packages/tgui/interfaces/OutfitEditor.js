@@ -6,7 +6,10 @@ export const OutfitEditor = (props, context) => {
   const { act, data } = useBackend(context);
   const { outfit, saveable, dummy64 } = data;
   return (
-    <Window width={380} height={600} theme="admin">
+    <Window
+      width={380}
+      height={600}
+      theme="admin">
       <Window.Content>
         <Box
           as="img"
@@ -18,14 +21,12 @@ export const OutfitEditor = (props, context) => {
           src={`data:image/jpeg;base64,${dummy64}`}
           style={{
             '-ms-interpolation-mode': 'nearest-neighbor',
-          }}
-        />
+          }} />
         <Section
           fill
           title={
             <Stack>
-              <Stack.Item
-                grow={1}
+              <Stack.Item grow={1}
                 style={{
                   'overflow': 'hidden',
                   'white-space': 'nowrap',
@@ -36,8 +37,7 @@ export const OutfitEditor = (props, context) => {
                   color="transparent"
                   icon="pencil-alt"
                   title="Rename this outfit"
-                  onClick={() => act('rename', {})}
-                />
+                  onClick={() => act("rename", {})} />
                 {outfit.name}
               </Stack.Item>
               <Stack.Item align="end" shrink={0}>
@@ -45,25 +45,20 @@ export const OutfitEditor = (props, context) => {
                   color="transparent"
                   icon="info"
                   tooltip="Ctrl-click a button to select *any* item instead of what will probably fit in that slot."
-                  tooltipPosition="bottom-start"
-                />
+                  tooltipPosition="bottom-start" />
                 <Button
                   icon="code"
                   tooltip="Edit this outfit on a VV window"
                   tooltipPosition="bottom-start"
-                  onClick={() => act('vv')}
-                />
+                  onClick={() => act("vv")} />
                 <Button
-                  color={!saveable && 'bad'}
-                  icon={saveable ? 'save' : 'trash-alt'}
-                  tooltip={
-                    saveable
-                      ? 'Save this outfit to the custom outfit list'
-                      : 'Remove this outfit from the custom outfit list'
-                  }
+                  color={!saveable && "bad"}
+                  icon={saveable ? "save" : "trash-alt"}
+                  tooltip={saveable
+                    ? "Save this outfit to the custom outfit list"
+                    : "Remove this outfit from the custom outfit list"}
                   tooltipPosition="bottom-start"
-                  onClick={() => act(saveable ? 'save' : 'delete')}
-                />
+                  onClick={() => act(saveable ? "save" : "delete")} />
               </Stack.Item>
             </Stack>
           }>
@@ -83,11 +78,7 @@ export const OutfitEditor = (props, context) => {
               <OutfitSlot name="Gloves" icon="mitten" slot="gloves" />
             </Stack>
             <Stack mb={2}>
-              <OutfitSlot
-                name="Suit Storage"
-                icon="briefcase-medical"
-                slot="suit_store"
-              />
+              <OutfitSlot name="Suit Storage" icon="briefcase-medical" slot="suit_store" />
               <OutfitSlot name="Back" icon="shopping-bag" slot="back" />
               <OutfitSlot name="ID" icon="id-card-o" slot="id" />
             </Stack>
@@ -98,18 +89,8 @@ export const OutfitEditor = (props, context) => {
             </Stack>
             <Stack mb={2}>
               <OutfitSlot name="Shoes" icon="socks" slot="shoes" />
-              <OutfitSlot
-                name="Left Pocket"
-                icon="envelope-open-o"
-                iconRot={180}
-                slot="l_pocket"
-              />
-              <OutfitSlot
-                name="Right Pocket"
-                icon="envelope-open-o"
-                iconRot={180}
-                slot="r_pocket"
-              />
+              <OutfitSlot name="Left Pocket" icon="envelope-open-o" iconRot={180} slot="l_pocket" />
+              <OutfitSlot name="Right Pocket" icon="envelope-open-o" iconRot={180} slot="r_pocket" />
             </Stack>
           </Box>
         </Section>
@@ -125,12 +106,10 @@ const OutfitSlot = (props, context) => {
   const currItem = outfit[slot];
   return (
     <Stack.Item grow={1} basis={0}>
-      <Button
-        fluid
-        height={2}
+      <Button fluid height={2}
         bold
         // todo: intuitive way to clear items
-        onClick={(e) => act(e.ctrlKey ? 'ctrlClick' : 'click', { slot })}>
+        onClick={e => act(e.ctrlKey ? "ctrlClick" : "click", { slot })} >
         <Icon name={icon} rotation={iconRot} />
         {name}
       </Button>
@@ -143,15 +122,13 @@ const OutfitSlot = (props, context) => {
               title={currItem?.desc}
               style={{
                 '-ms-interpolation-mode': 'nearest-neighbor',
-              }}
-            />
+              }} />
             <Icon
               position="absolute"
               name="times"
               color="label"
               style={{ cursor: 'pointer' }}
-              onClick={() => act('clear', { slot })}
-            />
+              onClick={() => act("clear", { slot })} />
           </>
         )}
       </Box>
@@ -163,7 +140,7 @@ const OutfitSlot = (props, context) => {
           'text-overflow': 'ellipsis',
         }}
         title={currItem?.path}>
-        {currItem?.name || 'Empty'}
+        {currItem?.name || "Empty"}
       </Box>
     </Stack.Item>
   );

@@ -1,6 +1,3 @@
-/// The alpha we give to stuff under tiles, if they want it
-#define ALPHA_UNDERTILE 128
-
 ///Add to an object if you want to be able to be hidden under tiles
 /datum/element/undertile
 	element_flags = ELEMENT_BESPOKE | COMPONENT_DUPE_HIGHLANDER
@@ -40,7 +37,7 @@
 
 	if(covered)
 		if(invisibility_trait)
-			ADD_TRAIT(source, invisibility_trait, ELEMENT_TRAIT(type))
+			ADD_TRAIT(source, invisibility_trait, TRAIT_GENERIC)
 		if(tile_overlay)
 			T.add_overlay(tile_overlay)
 		if(use_alpha)
@@ -50,7 +47,7 @@
 
 	else
 		if(invisibility_trait)
-			REMOVE_TRAIT(source, invisibility_trait, ELEMENT_TRAIT(type))
+			REMOVE_TRAIT(source, invisibility_trait, TRAIT_GENERIC)
 		if(tile_overlay)
 			T.overlays -= tile_overlay
 		if(use_alpha)
@@ -62,5 +59,3 @@
 	. = ..()
 
 	hide(AM, FALSE)
-
-#undef ALPHA_UNDERTILE

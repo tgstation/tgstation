@@ -5,9 +5,19 @@
 	secure = TRUE
 	locked = TRUE
 	max_integrity = 500
-	armor = list(MELEE = 30, BULLET = 50, LASER = 50, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 80, ACID = 80)
+	armor = list(MELEE = 30, BULLET = 50, LASER = 50, ENERGY = 100, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 80)
 	var/tamperproof = 0
 	damage_deflection = 25
+
+/obj/structure/closet/crate/secure/update_overlays()
+	. = ..()
+	if(broken)
+		. += "securecrateemag"
+		return
+	if(locked)
+		. += "securecrater"
+		return
+	. += "securecrateg"
 
 /obj/structure/closet/crate/secure/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	if(prob(tamperproof) && damage_amount >= DAMAGE_PRECISION)
@@ -15,11 +25,13 @@
 	else
 		return ..()
 
+
 /obj/structure/closet/crate/secure/proc/boom(mob/user)
 	if(user)
 		to_chat(user, span_danger("The crate's anti-tamper system activates!"))
 		log_bomber(user, "has detonated a", src)
-	dump_contents()
+	for(var/atom/movable/AM in src)
+		qdel(AM)
 	explosion(src, heavy_impact_range = 1, light_impact_range = 5, flash_range = 5)
 	qdel(src)
 
@@ -51,7 +63,7 @@
 /obj/structure/closet/crate/secure/freezer/pizza
 	name = "secure pizza crate"
 	desc = "An insulated crate with a lock on it, used to secure pizza."
-	req_access = list(ACCESS_KITCHEN)
+	req_access = list(28)
 	tamperproof = 10
 
 /obj/structure/closet/crate/secure/freezer/pizza/PopulateContents()
@@ -107,11 +119,11 @@
 						privacy_lock = FALSE
 						update_appearance()
 					else if(!silent)
-						to_chat(user, span_warning("Bank account does not match with buyer!"))
+						to_chat(user, span_notice("Bank account does not match with buyer!"))
 				else if(!silent)
-					to_chat(user, span_warning("No linked bank account detected!"))
+					to_chat(user, span_notice("No linked bank account detected!"))
 			else if(!silent)
-				to_chat(user, span_warning("No ID detected!"))
+				to_chat(user, span_notice("No ID detected!"))
 		else if(!silent)
 			to_chat(user, span_warning("[src] is broken!"))
 	else ..()

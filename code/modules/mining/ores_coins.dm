@@ -9,7 +9,7 @@
 
 /obj/item/stack/ore
 	name = "rock"
-	icon = 'icons/obj/ore.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "ore"
 	inhand_icon_state = "ore"
 	full_w_class = WEIGHT_CLASS_BULKY
@@ -127,7 +127,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		return
 	C.adjust_blurriness(6)
 	C.adjustStaminaLoss(15)//the pain from your eyes burning does stamina damage
-	C.adjust_confusion(5 SECONDS)
+	C.add_confusion(5)
 	to_chat(C, span_userdanger("\The [src] gets into your eyes! The pain, it burns!"))
 	qdel(src)
 
@@ -234,7 +234,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/gibtonite
 	name = "gibtonite ore"
 	desc = "Extremely explosive if struck with mining equipment, Gibtonite is often used by miners to speed up their work by using it as a mining charge. This material is illegal to possess by unauthorized personnel under space law."
-	icon = 'icons/obj/ore.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "Gibtonite ore"
 	inhand_icon_state = "Gibtonite ore"
 	w_class = WEIGHT_CLASS_BULKY
@@ -245,7 +245,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	var/attacher = "UNKNOWN"
 	var/det_timer
 
-/obj/item/gibtonite/Initialize(mapload)
+/obj/item/gibtonite/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/two_handed, require_twohands=TRUE)
 
@@ -255,7 +255,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	return ..()
 
 /obj/item/gibtonite/attackby(obj/item/I, mob/user, params)
-	if(!wires && isigniter(I))
+	if(!wires && istype(I, /obj/item/assembly/igniter))
 		user.visible_message(span_notice("[user] attaches [I] to [src]."), span_notice("You attach [I] to [src]."))
 		wires = new /datum/wires/explosive/gibtonite(src)
 		attacher = key_name(user)

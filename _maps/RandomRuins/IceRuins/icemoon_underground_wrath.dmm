@@ -1,25 +1,25 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/open/misc/asteroid/snow/icemoon,
+/turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "b" = (
 /turf/closed/mineral/random/snow,
 /area/icemoon/underground/explored)
 "e" = (
 /obj/structure/spawner/nether,
-/turf/open/misc/asteroid/snow/icemoon,
+/turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "p" = (
 /obj/item/wisp_lantern,
-/turf/open/misc/asteroid/snow/icemoon,
+/turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "L" = (
 /obj/item/stack/ore/bluespace_crystal,
-/turf/open/misc/asteroid/snow/icemoon,
+/turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "X" = (
 /obj/item/clothing/gloves/butchering,
-/turf/open/misc/asteroid/snow/icemoon,
+/turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 
 (1,1,1) = {"

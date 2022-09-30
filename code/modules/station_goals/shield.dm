@@ -4,15 +4,13 @@
 /datum/station_goal/station_shield
 	name = "Station Shield"
 	var/coverage_goal = 500
-	requires_space = TRUE
 
 /datum/station_goal/station_shield/get_report()
-	return list(
-		"<blockquote>The station is located in a zone full of space debris.",
-		"We have a prototype shielding system you must deploy to reduce collision-related accidents.",
-		"",
-		"You can order the satellites and control systems at cargo.</blockquote>",
-	).Join("\n")
+	return {"The station is located in a zone full of space debris.
+		We have a prototype shielding system you must deploy to reduce collision-related accidents.
+
+		You can order the satellites and control systems at cargo.
+		"}
 
 
 /datum/station_goal/station_shield/on_report()
@@ -45,7 +43,6 @@
 	var/notice
 
 /obj/machinery/computer/sat_control/ui_interact(mob/user, datum/tgui/ui)
-	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "SatelliteControl", name)
@@ -62,9 +59,8 @@
 			. = TRUE
 
 /obj/machinery/computer/sat_control/proc/toggle(id)
-	var/turf/current_turf = get_turf(src)
 	for(var/obj/machinery/satellite/S in GLOB.machines)
-		if(S.id == id && is_valid_z_level(get_turf(S), current_turf))
+		if(S.id == id && S.z == z)
 			S.toggle()
 
 /obj/machinery/computer/sat_control/ui_data()
@@ -180,8 +176,6 @@
 	// Update the weight of all meteor events
 	for(var/datum/round_event_control/meteor_wave/meteors in SSevents.control)
 		meteors.weight *= mod
-	for(var/datum/round_event_control/stray_meteor/stray_meteor in SSevents.control)
-		stray_meteor.weight *= mod
 
 /obj/machinery/satellite/meteor_shield/Destroy()
 	. = ..()

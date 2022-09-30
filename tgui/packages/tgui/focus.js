@@ -19,7 +19,7 @@ export const focusMap = () => {
  * Moves focus to the browser window.
  */
 export const focusWindow = () => {
-  Byond.winset(Byond.windowId, {
+  Byond.winset(window.__windowId__, {
     focus: true,
   });
 };

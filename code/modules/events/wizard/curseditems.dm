@@ -4,7 +4,6 @@
 	typepath = /datum/round_event/wizard/cursed_items
 	max_occurrences = 3
 	earliest_start = 0 MINUTES
-	description = "Gives everyone a cursed item."
 
 //Note about adding items to this: Because of how NODROP_1 works if an item spawned to the hands can also be equiped to a slot
 //it will be able to be put into that slot from the hand, but then get stuck there. To avoid this make a new subtype of any
@@ -55,7 +54,7 @@
 				I.item_flags |= DROPDEL
 				I.name = "cursed " + I.name
 
-	for(var/mob/living/carbon/human/victim in GLOB.alive_mob_list)
-		var/datum/effect_system/fluid_spread/smoke/smoke = new
-		smoke.set_up(0, holder = victim, location = victim.loc)
+	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
+		var/datum/effect_system/smoke_spread/smoke = new
+		smoke.set_up(0, H.loc)
 		smoke.start()

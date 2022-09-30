@@ -41,7 +41,8 @@ SUBSYSTEM_DEF(time_track)
 		"SendMaps: Per client: Map data: Look for movable changes: Movables examined" = "movables_examined",
 	)
 
-/datum/controller/subsystem/time_track/Initialize()
+/datum/controller/subsystem/time_track/Initialize(start_timeofday)
+	. = ..()
 	GLOB.perf_log = "[GLOB.log_directory]/perf-[GLOB.round_id ? GLOB.round_id : "NULL"]-[SSmapping.config?.map_name].csv"
 	world.Profile(PROFILE_RESTART, type = "sendmaps")
 	//Need to do the sendmaps stuff in its own file, since it works different then everything else
@@ -77,7 +78,7 @@ SUBSYSTEM_DEF(time_track)
 			"queries_standby"
 		) + sendmaps_headers
 	)
-	return SS_INIT_SUCCESS
+
 
 /datum/controller/subsystem/time_track/fire()
 

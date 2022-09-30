@@ -22,45 +22,44 @@
 		to_chat(usr, span_danger("Cannot convert into a new_player mob type."))
 		return
 
-	var/mob/desired_mob
+	var/mob/M
 	if(isturf(location))
-		desired_mob = new new_type(location)
+		M = new new_type( location )
 	else
-		desired_mob = new new_type(src.loc)
+		M = new new_type( src.loc )
 
-	if(!desired_mob || !ismob(desired_mob))
+	if(!M || !ismob(M))
 		to_chat(usr, "Type path is not a mob (new_type = [new_type]) in change_mob_type(). Contact a coder.")
-		qdel(desired_mob)
+		qdel(M)
 		return
 
 	if( istext(new_name) )
-		desired_mob.name = new_name
-		desired_mob.real_name = new_name
+		M.name = new_name
+		M.real_name = new_name
 	else
-		desired_mob.name = src.name
-		desired_mob.real_name = src.real_name
+		M.name = src.name
+		M.real_name = src.real_name
 
-	if(has_dna() && desired_mob.has_dna())
-		var/mob/living/carbon/old_mob = src
-		var/mob/living/carbon/new_mob = desired_mob
-		old_mob.dna.transfer_identity(new_mob, transfer_species = FALSE)
-		new_mob.updateappearance(mutcolor_update=1, mutations_overlay_update=1)
-	else if(ishuman(desired_mob) && (!ismonkey(desired_mob)))
-		var/mob/living/carbon/human/new_human = desired_mob
-		client?.prefs.safe_transfer_prefs_to(new_human)
-		new_human.dna.update_dna_identity()
-		new_human.updateappearance(mutcolor_update=1, mutations_overlay_update=1)
+	if(has_dna() && M.has_dna())
+		var/mob/living/carbon/C = src
+		var/mob/living/carbon/D = M
+		C.dna.transfer_identity(D)
+		D.updateappearance(mutcolor_update=1, mutations_overlay_update=1)
+	else if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		client.prefs.safe_transfer_prefs_to(H)
+		H.dna.update_dna_identity()
 
-	if(mind && isliving(desired_mob))
-		mind.transfer_to(desired_mob, 1) // second argument to force key move to new mob
+	if(mind && isliving(M))
+		mind.transfer_to(M, 1) // second argument to force key move to new mob
 	else
-		desired_mob.key = key
+		M.key = key
 
-	if(desired_mob.base_pixel_x)
-		desired_mob.pixel_x = desired_mob.base_pixel_x
-	if(desired_mob.base_pixel_y)
-		desired_mob.pixel_y = desired_mob.base_pixel_y
+	if(M.base_pixel_x)
+		M.pixel_x = M.base_pixel_x
+	if(M.base_pixel_y)
+		M.pixel_y = M.base_pixel_y
 
 	if(delete_old_mob)
 		QDEL_IN(src, 1)
-	return desired_mob
+	return M

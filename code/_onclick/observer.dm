@@ -31,10 +31,7 @@
 		ShiftClickOn(A)
 		return
 	if(LAZYACCESS(modifiers, MIDDLE_CLICK))
-		if(LAZYACCESS(modifiers, CTRL_CLICK))
-			CtrlMiddleClickOn(A)
-		else
-			MiddleClickOn(A, params)
+		MiddleClickOn(A, params)
 		return
 	if(LAZYACCESS(modifiers, ALT_CLICK))
 		AltClickNoInteract(src, A)
@@ -54,7 +51,7 @@
 	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_GHOST, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return TRUE
 	if(user.client)
-		if(user.gas_scan && atmos_scan(user=user, target=src, silent=TRUE))
+		if(user.gas_scan && atmosanalyzer_scan(user, src))
 			return TRUE
 		else if(isAdminGhostAI(user))
 			attack_ai(user)

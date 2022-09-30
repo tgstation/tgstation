@@ -8,41 +8,56 @@
 	program_icon_state = "generic"
 	extended_desc = "This program allows access to standard security camera networks."
 	requires_ntnet = TRUE
-	transfer_access = list(ACCESS_SECURITY)
+	transfer_access = ACCESS_SECURITY
 	usage_flags = PROGRAM_CONSOLE | PROGRAM_LAPTOP
 	size = 5
 	tgui_id = "NtosSecurEye"
 	program_icon = "eye"
 
 	var/list/network = list("ss13")
-	/// Weakref to the active camera
-	var/datum/weakref/camera_ref
+	var/obj/machinery/camera/active_camera
 	/// The turf where the camera was last updated.
 	var/turf/last_camera_turf
 	var/list/concurrent_users = list()
 
 	// Stuff needed to render the map
+	var/map_name
 	var/atom/movable/screen/map_view/cam_screen
+	/// All the plane masters that need to be applied.
+	var/list/cam_plane_masters
 	var/atom/movable/screen/background/cam_background
 
 /datum/computer_file/program/secureye/New()
 	. = ..()
 	// Map name has to start and end with an A-Z character,
 	// and definitely NOT with a square bracket or even a number.
-	var/map_name = "camera_console_[REF(src)]_map"
+	map_name = "camera_console_[REF(src)]_map"
 	// Convert networks to lowercase
 	for(var/i in network)
 		network -= i
 		network += lowertext(i)
 	// Initialize map objects
 	cam_screen = new
-	cam_screen.generate_view(map_name)
+	cam_screen.name = "screen"
+	cam_screen.assigned_map = map_name
+	cam_screen.del_on_map_removal = FALSE
+	cam_screen.screen_loc = "[map_name]:1,1"
+	cam_plane_masters = list()
+	for(var/plane in subtypesof(/atom/movable/screen/plane_master) - /atom/movable/screen/plane_master/blackness)
+		var/atom/movable/screen/plane_master/instance = new plane()
+		instance.assigned_map = map_name
+		if(instance.blend_mode_override)
+			instance.blend_mode = instance.blend_mode_override
+		instance.del_on_map_removal = FALSE
+		instance.screen_loc = "[map_name]:CENTER"
+		cam_plane_masters += instance
 	cam_background = new
 	cam_background.assigned_map = map_name
 	cam_background.del_on_map_removal = FALSE
 
 /datum/computer_file/program/secureye/Destroy()
 	QDEL_NULL(cam_screen)
+	QDEL_LIST(cam_plane_masters)
 	QDEL_NULL(cam_background)
 	return ..()
 
@@ -61,21 +76,16 @@
 		if(is_living)
 			concurrent_users += user_ref
 		// Register map objects
-		cam_screen.display_to(user)
+		user.client.register_map_obj(cam_screen)
+		for(var/plane in cam_plane_masters)
+			user.client.register_map_obj(plane)
 		user.client.register_map_obj(cam_background)
 		return ..()
-
-/datum/computer_file/program/secureye/ui_status(mob/user)
-	. = ..()
-	if(. == UI_DISABLED)
-		return UI_CLOSE
-	return .
 
 /datum/computer_file/program/secureye/ui_data()
 	var/list/data = get_header_data()
 	data["network"] = network
 	data["activeCamera"] = null
-	var/obj/machinery/camera/active_camera = camera_ref?.resolve()
 	if(active_camera)
 		data["activeCamera"] = list(
 			name = active_camera.c_tag,
@@ -85,7 +95,7 @@
 
 /datum/computer_file/program/secureye/ui_static_data()
 	var/list/data = list()
-	data["mapRef"] = cam_screen.assigned_map
+	data["mapRef"] = map_name
 	var/list/cameras = get_available_cameras()
 	data["cameras"] = list()
 	for(var/i in cameras)
@@ -102,11 +112,11 @@
 		return
 
 	if(action == "switch_camera")
-		var/c_tag = format_text(params["name"])
+		var/c_tag = params["name"]
 		var/list/cameras = get_available_cameras()
 		var/obj/machinery/camera/selected_camera = cameras[c_tag]
-		camera_ref = WEAKREF(selected_camera)
-		playsound(src, get_sfx(SFX_TERMINAL_TYPE), 25, FALSE)
+		active_camera = selected_camera
+		playsound(src, get_sfx("terminal_type"), 25, FALSE)
 
 		if(!selected_camera)
 			return TRUE
@@ -122,14 +132,13 @@
 	// Living creature or not, we remove you anyway.
 	concurrent_users -= user_ref
 	// Unregister map objects
-	cam_screen.hide_from(user)
+	user.client.clear_map(map_name)
 	// Turn off the console
 	if(length(concurrent_users) == 0 && is_living)
-		camera_ref = null
+		active_camera = null
 		playsound(src, 'sound/machines/terminal_off.ogg', 25, FALSE)
 
 /datum/computer_file/program/secureye/proc/update_active_camera_screen()
-	var/obj/machinery/camera/active_camera = camera_ref?.resolve()
 	// Show static if can't use the camera
 	if(!active_camera?.can_use())
 		show_camera_static()

@@ -7,7 +7,7 @@
 	dismemberment = 90
 	armour_penetration = 100
 	damage_type = BRUTE
-	armor_flag = BULLET
+	flag = BULLET
 
 /obj/projectile/meteor/on_hit(atom/target, blocked = FALSE)
 	. = ..()

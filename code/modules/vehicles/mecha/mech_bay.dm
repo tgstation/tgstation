@@ -1,3 +1,16 @@
+/turf/open/floor/mech_bay_recharge_floor               //        Whos idea it was
+	name = "mech bay recharge station"                      //        Recharging turfs
+	desc = "Parking a mech on this station will recharge its internal power cell."
+	icon = 'icons/turf/floors.dmi'                          //   That are set in stone to check the west turf for recharge port
+	icon_state = "recharge_floor"                           //        Some people just want to watch the world burn i guess
+
+/turf/open/floor/mech_bay_recharge_floor/break_tile()
+	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+
+/turf/open/floor/mech_bay_recharge_floor/airless
+	icon_state = "recharge_floor_asteroid"
+	initial_gas_mix = AIRLESS_ATMOS
+
 /obj/machinery/mech_bay_recharge_port
 	name = "mech bay power port"
 	desc = "This port recharges a mech's internal power cell."
@@ -6,33 +19,18 @@
 	icon = 'icons/mecha/mech_bay.dmi'
 	icon_state = "recharge_port"
 	circuit = /obj/item/circuitboard/machine/mech_recharger
-	///Weakref to currently recharging mech on our recharging_turf
-	var/datum/weakref/recharging_mech_ref
-	///Ref to charge console for seeing charge for this port, cyclical reference
+	var/obj/vehicle/sealed/mecha/recharging_mech
 	var/obj/machinery/computer/mech_bay_power_console/recharge_console
-	///Power unit per second to charge by
 	var/recharge_power = 25
-	///turf that will be checked when a mech wants to charge. directly one turf in the direction it is facing
-	var/turf/recharging_turf
+	var/on = FALSE
+	var/turf/recharging_turf = null
 
 /obj/machinery/mech_bay_recharge_port/Initialize(mapload)
 	. = ..()
 	recharging_turf = get_step(loc, dir)
 
-	if(!mapload)
-		return
-
-	var/area/my_area = get_area(src)
-	if(!(my_area.type in GLOB.the_station_areas))
-		return
-
-	var/area_name = get_area_name(src, format_text = TRUE)
-	if(area_name in GLOB.roundstart_station_mechcharger_areas)
-		return
-	GLOB.roundstart_station_mechcharger_areas += area_name
-
 /obj/machinery/mech_bay_recharge_port/Destroy()
-	if (recharge_console?.recharge_port == src)
+	if (recharge_console && recharge_console.recharge_port == src)
 		recharge_console.recharge_port = null
 	return ..()
 
@@ -41,11 +39,10 @@
 	recharging_turf = get_step(loc, dir)
 
 /obj/machinery/mech_bay_recharge_port/RefreshParts()
-	. = ..()
-	var/total_rating = 0
-	for(var/obj/item/stock_parts/capacitor/cap in component_parts)
-		total_rating += cap.rating
-	recharge_power = total_rating * 12.5
+	var/MC
+	for(var/obj/item/stock_parts/capacitor/C in component_parts)
+		MC += C.rating
+	recharge_power = MC * 12.5
 
 /obj/machinery/mech_bay_recharge_port/examine(mob/user)
 	. = ..()
@@ -55,23 +52,20 @@
 /obj/machinery/mech_bay_recharge_port/process(delta_time)
 	if(machine_stat & NOPOWER || !recharge_console)
 		return
-	var/obj/vehicle/sealed/mecha/recharging_mech = recharging_mech_ref?.resolve()
 	if(!recharging_mech)
 		recharging_mech = locate(/obj/vehicle/sealed/mecha) in recharging_turf
 		if(recharging_mech)
-			recharging_mech_ref = WEAKREF(recharging_mech)
 			recharge_console.update_appearance()
-	if(!recharging_mech?.cell)
-		return
-	if(recharging_mech.cell.charge < recharging_mech.cell.maxcharge)
-		var/delta = min(recharge_power * delta_time, recharging_mech.cell.maxcharge - recharging_mech.cell.charge)
-		recharging_mech.give_power(delta)
-		use_power(delta + active_power_usage)
-	else
-		recharge_console.update_appearance()
-	if(recharging_mech.loc != recharging_turf)
-		recharging_mech_ref = null
-		recharge_console.update_appearance()
+	if(recharging_mech && recharging_mech.cell)
+		if(recharging_mech.cell.charge < recharging_mech.cell.maxcharge)
+			var/delta = min(recharge_power * delta_time, recharging_mech.cell.maxcharge - recharging_mech.cell.charge)
+			recharging_mech.give_power(delta)
+			use_power(delta*150)
+		else
+			recharge_console.update_appearance()
+		if(recharging_mech.loc != recharging_turf)
+			recharging_mech = null
+			recharge_console.update_appearance()
 
 
 /obj/machinery/mech_bay_recharge_port/attackby(obj/item/I, mob/user, params)
@@ -93,20 +87,9 @@
 	icon_keyboard = "rd_key"
 	circuit = /obj/item/circuitboard/computer/mech_bay_power_console
 	light_color = LIGHT_COLOR_PINK
-	///Ref to charge port fwe are viewing data for, cyclical reference
 	var/obj/machinery/mech_bay_recharge_port/recharge_port
 
-/obj/machinery/computer/mech_bay_power_console/Initialize(mapload)
-	. = ..()
-	reconnect()
-
-/obj/machinery/computer/mech_bay_power_console/Destroy()
-	if (recharge_port?.recharge_console == src)
-		recharge_port.recharge_console = null
-	return ..()
-
 /obj/machinery/computer/mech_bay_power_console/ui_interact(mob/user, datum/tgui/ui)
-	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "MechBayPowerConsole", name)
@@ -124,51 +107,50 @@
 
 /obj/machinery/computer/mech_bay_power_console/ui_data(mob/user)
 	var/list/data = list()
-	if(QDELETED(recharge_port))
-		return data
-
-	data["recharge_port"] = list("mech" = null)
-	var/obj/vehicle/sealed/mecha/recharging_mech = recharge_port.recharging_mech_ref?.resolve()
-
-	if(!recharging_mech)
-		return data
-	data["recharge_port"]["mech"] = list("health" = recharging_mech.get_integrity(), "maxhealth" = recharging_mech.max_integrity, "cell" = null, "name" = recharging_mech.name,)
-
-	if(QDELETED(recharging_mech.cell))
-		return data
-	data["recharge_port"]["mech"]["cell"] = list(
-	"charge" = recharging_mech.cell.charge,
-	"maxcharge" = recharging_mech.cell.maxcharge
-	)
+	if(recharge_port && !QDELETED(recharge_port))
+		data["recharge_port"] = list("mech" = null)
+		if(recharge_port.recharging_mech && !QDELETED(recharge_port.recharging_mech))
+			data["recharge_port"]["mech"] = list("health" = recharge_port.recharging_mech.get_integrity(), "maxhealth" = recharge_port.recharging_mech.max_integrity, "cell" = null, "name" = recharge_port.recharging_mech.name,)
+			if(recharge_port.recharging_mech.cell && !QDELETED(recharge_port.recharging_mech.cell))
+				data["recharge_port"]["mech"]["cell"] = list(
+				"charge" = recharge_port.recharging_mech.cell.charge,
+				"maxcharge" = recharge_port.recharging_mech.cell.maxcharge
+				)
 	return data
 
-///Checks for nearby recharge ports to link to
+
 /obj/machinery/computer/mech_bay_power_console/proc/reconnect()
 	if(recharge_port)
 		return
 	recharge_port = locate(/obj/machinery/mech_bay_recharge_port) in range(1)
-	if(!recharge_port)
-		for(var/direction in GLOB.cardinals)
-			var/turf/target = get_step(src, direction)
-			target = get_step(target, direction)
-			recharge_port = locate(/obj/machinery/mech_bay_recharge_port) in target
+	if(!recharge_port )
+		for(var/D in GLOB.cardinals)
+			var/turf/A = get_step(src, D)
+			A = get_step(A, D)
+			recharge_port = locate(/obj/machinery/mech_bay_recharge_port) in A
 			if(recharge_port)
 				break
-	if(!recharge_port)
-		return
-	if(!recharge_port.recharge_console)
-		recharge_port.recharge_console = src
-	else
-		recharge_port = null
+	if(recharge_port)
+		if(!recharge_port.recharge_console)
+			recharge_port.recharge_console = src
+		else
+			recharge_port = null
 
 /obj/machinery/computer/mech_bay_power_console/update_overlays()
 	. = ..()
 	if(machine_stat & (NOPOWER|BROKEN))
 		return
-	var/obj/vehicle/sealed/mecha/recharging_mech = recharge_port?.recharging_mech_ref?.resolve()
-
-	if(!recharging_mech?.cell)
+	if(!recharge_port?.recharging_mech?.cell)
 		return
-	if(recharging_mech.cell.charge >= recharging_mech.cell.maxcharge)
+	if(recharge_port.recharging_mech.cell.charge >= recharge_port.recharging_mech.cell.maxcharge)
 		return
 	. += "recharge_comp_on"
+
+/obj/machinery/computer/mech_bay_power_console/Initialize(mapload)
+	. = ..()
+	reconnect()
+
+/obj/machinery/computer/mech_bay_power_console/Destroy()
+	if (recharge_port && recharge_port.recharge_console == src)
+		recharge_port.recharge_console = null
+	return ..()

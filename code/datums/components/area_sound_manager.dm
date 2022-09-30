@@ -32,9 +32,9 @@
 		return
 	change_the_track(TRUE)
 
-/datum/component/area_sound_manager/proc/react_to_z_move(datum/source, turf/old_turf, turf/new_turf)
+/datum/component/area_sound_manager/proc/react_to_z_move(datum/source, old_z, new_z)
 	SIGNAL_HANDLER
-	if(!length(accepted_zs) || (new_turf.z in accepted_zs))
+	if(!length(accepted_zs) || (new_z in accepted_zs))
 		return
 	qdel(src)
 
@@ -50,7 +50,7 @@
 	var/time_remaining = 0
 
 	if(our_loop)
-		var/our_id = our_loop.timer_id || timerid
+		var/our_id = our_loop.timerid || timerid
 		if(our_id)
 			time_remaining = timeleft(our_id, SSsound_loops) || 0
 			//Time left will sometimes return negative values, just ignore them and start a new sound loop now

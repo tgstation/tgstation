@@ -2,7 +2,11 @@
 	"version": 1,
 	"map_name": "Ice Box Station",
 	"map_path": "map_files/IceBoxStation",
-	"map_file": "IceBoxStation.dmm",
+	"map_file": [
+		"IcemoonUnderground_Below.dmm",
+		"IcemoonUnderground_Above.dmm",
+		"IceBoxStation.dmm"
+	],
 	"space_ruin_levels": 0,
 	"space_empty_levels": 0,
 	"shuttles": {
@@ -15,11 +19,11 @@
 		{
 			"Up": 1,
 			"Mining": true,
+			"Station": false,
 			"Linkage": null,
 			"Gravity": true,
 			"Ice Ruins Underground": true,
-			"Baseturf": "/turf/open/lava/plasma/ice_moon",
-			"No Parallax": true
+			"Baseturf": "/turf/open/lava/plasma/ice_moon"
 		},
 		{
 			"Down": -1,
@@ -28,8 +32,7 @@
 			"Linkage": null,
 			"Gravity": true,
 			"Ice Ruins Underground": true,
-			"Baseturf": "/turf/open/openspace/icemoon/keep_below",
-			"No Parallax": true
+			"Baseturf": "/turf/open/openspace/icemoon/keep_below"
 		},
 		{
 			"Down": -1,
@@ -38,16 +41,15 @@
 			"Gravity": true,
 			"Ice Ruins": true,
 			"Weather_Snowstorm": true,
-			"Baseturf": "/turf/open/openspace/icemoon/keep_below",
-			"No Parallax": true
+			"Baseturf": "/turf/open/openspace/icemoon/keep_below"
 		}
 	],
 	"minetype": "none",
 	"job_changes": {
-		"Cook": {
-			"additional_cqc_areas": ["/area/station/service/kitchen/diner"]
+		"cook": {
+			"additional_cqc_areas": ["/area/service/kitchen/diner"]
 		},
-		"Captain": {
+		"captain": {
 			"special_charter": "moon"
 		}
 	}

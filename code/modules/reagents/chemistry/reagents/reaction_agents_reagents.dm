@@ -1,5 +1,5 @@
 /datum/reagent/reaction_agent
-	name = "Reaction Agent"
+	name = "reaction agent"
 	description = "Hello! I am a bugged reagent. Please report me for my crimes. Thank you!!"
 
 /datum/reagent/reaction_agent/intercept_reagents_transfer(datum/reagents/target, amount)
@@ -17,11 +17,13 @@
 	return TRUE
 
 /datum/reagent/reaction_agent/acidic_buffer
-	name = "Strong Acidic Buffer"
+	name = "Strong acidic buffer"
 	description = "This reagent will consume itself and move the pH of a beaker towards acidity when added to another."
 	color = "#fbc314"
 	ph = 0
+	impure_chem = null
 	inverse_chem = null
+	failed_chem = null
 	fallback_icon_state = "acid_buffer_fallback"
 	///The strength of the buffer where (volume/holder.total_volume)*strength. So for 1u added to 50u the ph will decrease by 0.4
 	var/strength = 30
@@ -43,11 +45,13 @@
 	holder.remove_reagent(type, amount)
 
 /datum/reagent/reaction_agent/basic_buffer
-	name = "Strong Basic Buffer"
+	name = "Strong basic buffer"
 	description = "This reagent will consume itself and move the pH of a beaker towards alkalinity when added to another."
 	color = "#3853a4"
 	ph = 14
+	impure_chem = null
 	inverse_chem = null
+	failed_chem = null
 	fallback_icon_state = "base_buffer_fallback"
 	///The strength of the buffer where (volume/holder.total_volume)*strength. So for 1u added to 50u the ph will increase by 0.4
 	var/strength = 30
@@ -70,17 +74,17 @@
 //purity testor/reaction agent prefactors
 
 /datum/reagent/prefactor_a
-	name = "Interim Product Alpha"
+	name = "Interim product alpha"
 	description = "This reagent is a prefactor to the purity tester reagent, and will react with stable plasma to create it"
 	color = "#bafa69"
 
 /datum/reagent/prefactor_b
-	name = "Interim Product Beta"
+	name = "Interim product beta"
 	description = "This reagent is a prefactor to the reaction speed agent reagent, and will react with stable plasma to create it"
 	color = "#8a3aa9"
 
 /datum/reagent/reaction_agent/purity_tester
-	name = "Purity Tester"
+	name = "Purity tester"
 	description = "This reagent will consume itself and violently react if there is a highly impure reagent in the beaker."
 	ph = 3
 	color = "#ffffff"

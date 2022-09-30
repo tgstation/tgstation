@@ -14,7 +14,7 @@
 	. = ..()
 	if(.)
 		return
-	user.adminhelp()
+	user.get_adminhelp()
 	return TRUE
 
 
@@ -29,7 +29,7 @@
 	. = ..()
 	if(.)
 		return
-	winset(user, null, "command=.auto")
+	winset(user, null, "command=.screenshot [!user.keys_held["shift"] ? "auto" : ""]")
 	return TRUE
 
 /datum/keybinding/client/minimal_hud
@@ -60,5 +60,5 @@
 	user.frills_over_floors = !user.frills_over_floors
 	if(length(user?.screen))
 		var/atom/movable/screen/plane_master/frill/frill = locate(/atom/movable/screen/plane_master/frill) in user.screen
-		frill.show_to(user.mob)
+		frill.backdrop(user.mob)
 	return TRUE

@@ -117,7 +117,7 @@
 		return
 	attach_item(target)
 	to_chat(user, span_notice("You attach \the [attached_item] to the training device."))
-	playsound(src, SFX_RUSTLE, 50, TRUE)
+	playsound(src, "rustle", 50, TRUE)
 
 /**
  * Attach an item to the machine
@@ -131,7 +131,7 @@
 	remove_attached_item()
 	attached_item = target
 	attached_item.forceMove(src)
-	attached_item.vis_flags |= VIS_INHERIT_ID | VIS_INHERIT_PLANE
+	attached_item.vis_flags |= VIS_INHERIT_ID
 	vis_contents += attached_item
 	RegisterSignal(attached_item, COMSIG_PARENT_QDELETING, .proc/on_attached_delete)
 	handle_density()
@@ -145,7 +145,6 @@
 	SIGNAL_HANDLER
 	UnregisterSignal(attached_item, COMSIG_PARENT_QDELETING)
 	vis_contents -= attached_item
-	attached_item &= ~(VIS_INHERIT_ID | VIS_INHERIT_PLANE)
 	attached_item = null
 	handle_density()
 
@@ -188,7 +187,7 @@
 		return
 	to_chat(user, span_notice("You remove \the [attached_item] from the training device."))
 	remove_attached_item(user)
-	playsound(src, SFX_RUSTLE, 50, TRUE)
+	playsound(src, "rustle", 50, TRUE)
 
 /**
  * Toggle the machine's movement
@@ -343,8 +342,8 @@
  */
 /obj/item/training_toolbox
 	name = "Training Toolbox"
-	desc = "AURUMILL-Brand Baby's First Training Toolbox. A digital display on the back keeps track of hits made by the user. Second toolbox sold separately!"
-	icon = 'icons/obj/storage/storage.dmi'
+	desc = "AURUMILL-Brand Baby's First Training Toolbox. A digital display on the back keeps track of hits made by the user. Second toolbox sold seperately!"
+	icon = 'icons/obj/storage.dmi'
 	icon_state = "gold"
 	inhand_icon_state = "toolbox_gold"
 	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'

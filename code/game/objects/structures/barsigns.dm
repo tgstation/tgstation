@@ -6,7 +6,7 @@
 	req_access = list(ACCESS_BAR)
 	max_integrity = 500
 	integrity_failure = 0.5
-	armor = list(MELEE = 20, BULLET = 20, LASER = 20, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 50, ACID = 50)
+	armor = list(MELEE = 20, BULLET = 20, LASER = 20, ENERGY = 100, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
 	buildable_sign = FALSE
 
 	var/panel_open = FALSE
@@ -22,7 +22,7 @@
 
 	icon_state = sign.icon
 
-	if(sign.rename_area)
+	if(sign.name)
 		name = "[initial(name)] ([sign.name])"
 	else
 		name = "[initial(name)]"
@@ -30,7 +30,7 @@
 	if(sign.desc)
 		desc = sign.desc
 
-	if(sign.rename_area)
+	if(sign.rename_area && sign.name)
 		rename_area(src, sign.name)
 
 	return sign
@@ -74,26 +74,24 @@
 		return
 	pick_sign(user)
 
-/obj/structure/sign/barsign/screwdriver_act(mob/living/user, obj/item/tool)
-	tool.play_tool_sound(src)
-	if(!panel_open)
-		to_chat(user, span_notice("You open the maintenance panel."))
-		set_sign(new /datum/barsign/hiddensigns/signoff)
-		panel_open = TRUE
-		return TOOL_ACT_TOOLTYPE_SUCCESS
-	to_chat(user, span_notice("You close the maintenance panel."))
-
-	if(broken)
-		set_sign(new /datum/barsign/hiddensigns/empbarsign)
-	else if(!chosen_sign)
-		set_sign(new /datum/barsign/hiddensigns/signoff)
-	else
-		set_sign(chosen_sign)
-	panel_open = FALSE
-	return TOOL_ACT_TOOLTYPE_SUCCESS
-
 /obj/structure/sign/barsign/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/stack/cable_coil) && panel_open)
+	if(I.tool_behaviour == TOOL_SCREWDRIVER)
+		if(!panel_open)
+			to_chat(user, span_notice("You open the maintenance panel."))
+			set_sign(new /datum/barsign/hiddensigns/signoff)
+			panel_open = TRUE
+		else
+			to_chat(user, span_notice("You close the maintenance panel."))
+			if(!broken)
+				if(!chosen_sign)
+					set_sign(new /datum/barsign/hiddensigns/signoff)
+				else
+					set_sign(chosen_sign)
+			else
+				set_sign(new /datum/barsign/hiddensigns/empbarsign)
+			panel_open = FALSE
+
+	else if(istype(I, /obj/item/stack/cable_coil) && panel_open)
 		var/obj/item/stack/cable_coil/C = I
 		if(!broken)
 			to_chat(user, span_warning("This sign is functioning properly!"))
@@ -104,11 +102,8 @@
 			broken = FALSE
 		else
 			to_chat(user, span_warning("You need at least two lengths of cable!"))
-		return TRUE
-
-	if (broken)
-		return TRUE
-	return ..()
+	else
+		return ..()
 
 
 /obj/structure/sign/barsign/emp_act(severity)
@@ -128,8 +123,8 @@
 
 
 /obj/structure/sign/barsign/proc/pick_sign(mob/user)
-	var/picked_name = tgui_input_list(user, "Available Signage", "Bar Sign", sort_list(get_bar_names()))
-	if(isnull(picked_name))
+	var/picked_name = input(user, "Available Signage", "Bar Sign", name) as null|anything in sort_list(get_bar_names())
+	if(!picked_name)
 		return
 	chosen_sign = set_sign_by_name(picked_name)
 	SSblackbox.record_feedback("tally", "barsign_picked", 1, chosen_sign.type)
@@ -138,20 +133,15 @@
 	var/list/names = list()
 	for(var/d in subtypesof(/datum/barsign))
 		var/datum/barsign/D = d
-		if(!initial(D.hidden))
+		if(initial(D.name) && !initial(D.hidden))
 			names += initial(D.name)
 	. = names
 
 /datum/barsign
-	/// User-visible name of the sign.
-	var/name
-	/// Icon state associated with this sign
-	var/icon
-	/// Description shown in the sign's examine text.
-	var/desc
-	/// Hidden from list of selectable options.
+	var/name = "Name"
+	var/icon = "Icon"
+	var/desc = "desc"
 	var/hidden = FALSE
-	/// Rename the area when this sign is selected.
 	var/rename_area = TRUE
 
 /datum/barsign/New()
@@ -309,7 +299,7 @@
 
 
 /datum/barsign/hiddensigns/empbarsign
-	name = "EMP'd"
+	name = null
 	icon = "empbarsign"
 	desc = "Something has gone very wrong."
 	rename_area = FALSE
@@ -320,7 +310,7 @@
 	desc = "Syndicate or die."
 
 /datum/barsign/hiddensigns/signoff
-	name = "Off"
+	name = null
 	icon = "empty"
 	desc = "This sign doesn't seem to be on."
 	rename_area = FALSE

@@ -18,9 +18,11 @@
 
 	if (outcome.len == expected.len)
 		for (var/index in 1 to outcome.len)
-			TEST_ASSERT_EQUAL(outcome[index], expected[index], failure_message)
+			if (outcome[index] != expected[index])
+				Fail(failure_message)
+				return
 	else
-		TEST_FAIL(failure_message)
+		Fail(failure_message)
 
 /datum/unit_test/security_officer_roundstart_distribution/Run()
 	test_distributions()

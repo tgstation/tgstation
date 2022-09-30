@@ -1,18 +1,27 @@
 /datum/antagonist/ninja
-	name = "\improper Space Ninja"
+	name = "Space Ninja"
 	antagpanel_category = "Space Ninja"
 	job_rank = ROLE_NINJA
+	antag_hud_type = ANTAG_HUD_NINJA
 	antag_hud_name = "space_ninja"
 	hijack_speed = 1
 	show_name_in_check_antagonists = TRUE
 	show_to_ghosts = TRUE
 	antag_moodlet = /datum/mood_event/focused
 	suicide_cry = "FOR THE SPIDER CLAN!!"
-	preview_outfit = /datum/outfit/ninja_preview
+	preview_outfit = /datum/outfit/ninja
 	///Whether or not this ninja will obtain objectives
 	var/give_objectives = TRUE
 	///Whether or not this ninja receives the standard equipment
 	var/give_equipment = TRUE
+
+/datum/antagonist/ninja/apply_innate_effects(mob/living/mob_override)
+	var/mob/living/ninja = mob_override || owner.current
+	add_antag_hud(antag_hud_type, antag_hud_name, ninja)
+
+/datum/antagonist/ninja/remove_innate_effects(mob/living/mob_override)
+	var/mob/living/ninja = mob_override || owner.current
+	remove_antag_hud(antag_hud_type, ninja)
 
 /**
  * Proc that equips the space ninja outfit on a given individual.  By default this is the owner of the antagonist datum.
@@ -32,7 +41,7 @@
  */
 /datum/antagonist/ninja/proc/addMemories()
 	antag_memory += "I am an elite mercenary of the mighty Spider Clan. A <font color='red'><B>SPACE NINJA</B></font>!<br>"
-	antag_memory += "Surprise is my weapon. Shadows are my armor. Without them, I am nothing.<br>"
+	antag_memory += "Surprise is my weapon. Shadows are my armor. Without them, I am nothing. (//initialize your suit by clicking the initialize UI button, to use abilities like stealth)!<br>"
 
 /datum/objective/cyborg_hijack
 	explanation_text = "Use your gloves to convert at least one cyborg to aide you in sabotaging the station."
@@ -99,12 +108,9 @@
 	objectives += survival
 
 /datum/antagonist/ninja/greet()
-	. = ..()
 	SEND_SOUND(owner.current, sound('sound/effects/ninja_greeting.ogg'))
-	to_chat(owner.current, span_danger("I am an elite mercenary of the mighty Spider Clan!"))
-	to_chat(owner.current, span_warning("Surprise is my weapon. Shadows are my armor. Without them, I am nothing."))
-	to_chat(owner.current, span_notice("The station is located to your [dir2text(get_dir(owner.current, locate(world.maxx/2, world.maxy/2, owner.current.z)))]. A thrown ninja star will be a great way to get there."))
-	to_chat(owner.current, span_notice("<i>For easier ability access, you can pin your modules to your action bar in your suit's UI.</i>"))
+	to_chat(owner.current, "I am an elite mercenary of the mighty Spider Clan. A <font color='red'><B>SPACE NINJA</B></font>!")
+	to_chat(owner.current, "Surprise is my weapon. Shadows are my armor. Without them, I am nothing. (//initialize your suit by right clicking on it, to use abilities like stealth)!")
 	owner.announce_objectives()
 
 /datum/antagonist/ninja/on_gain()

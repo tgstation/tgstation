@@ -4,8 +4,8 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "export_scanner"
 	inhand_icon_state = "radio"
-	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	item_flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_SMALL
 
@@ -29,7 +29,6 @@
 		var/mob/living/carbon/human/scan_human = user
 		if(istype(O, /obj/item/bounty_cube))
 			var/obj/item/bounty_cube/cube = O
-			var/datum/bank_account/scanner_account = scan_human.get_bank_account()
 
 			if(!istype(get_area(cube), /area/shuttle/supply))
 				to_chat(user, span_warning("Shuttle placement not detected. Handling tip not registered."))
@@ -37,10 +36,12 @@
 			else if(cube.bounty_handler_account)
 				to_chat(user, span_warning("Bank account for handling tip already registered!"))
 
-			else if(scanner_account)
-				cube.AddComponent(/datum/component/pricetag, scanner_account, cube.handler_tip, FALSE)
+			else if(scan_human.get_bank_account() && cube.GetComponent(/datum/component/pricetag))
+				var/datum/component/pricetag/pricetag = cube.GetComponent(/datum/component/pricetag)
 
-				cube.bounty_handler_account = scanner_account
+				cube.bounty_handler_account = scan_human.get_bank_account()
+				pricetag.payees[cube.bounty_handler_account] += cube.handler_tip
+
 				cube.bounty_handler_account.bank_card_talk("Bank account for [price ? "<b>[price * cube.handler_tip]</b> credit " : ""]handling tip successfully registered.")
 
 				if(cube.bounty_holder_account != cube.bounty_handler_account) //No need to send a tracking update to the person scanning it

@@ -113,14 +113,14 @@
 /area/shuttle/supply)
 "m" = (
 /obj/machinery/door/airlock/shuttle{
-	name = "Supply Shuttle Airlock"
+	name = "Supply Shuttle Airlock";
+	req_access_txt = "31"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/docking_port/mobile/supply{
 	dir = 4;
 	dwidth = 4
 	},
-/obj/effect/mapping_helpers/airlock/access/all/supply/general,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/supply)
 "n" = (
@@ -158,13 +158,13 @@
 	id = "QMLoaddoor";
 	name = "Off Ramp Toggle";
 	pixel_y = 8;
-	req_access = list("cargo")
+	req_access_txt = "31"
 	},
 /obj/machinery/button/door/directional/west{
 	id = "QMLoaddoor2";
 	name = "On Ramp Toggle";
 	pixel_y = -8;
-	req_access = list("cargo")
+	req_access_txt = "31"
 	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/supply)
@@ -176,15 +176,17 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/structure/sign/departments/cargo/directional/east,
+/obj/structure/sign/departments/cargo{
+	pixel_x = 32
+	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/supply)
 "r" = (
 /obj/machinery/door/airlock/shuttle{
-	name = "Supply Shuttle Airlock"
+	name = "Supply Shuttle Airlock";
+	req_access_txt = "31"
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/airlock/access/all/supply/general,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/supply)
 "s" = (

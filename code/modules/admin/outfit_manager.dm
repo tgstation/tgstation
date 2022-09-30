@@ -58,11 +58,8 @@
 			owner.holder.load_outfit(owner.mob)
 		if("copy")
 			var/datum/outfit/outfit = tgui_input_list(owner, "Pick an outfit to copy from", "Outfit Manager", subtypesof(/datum/outfit))
-			if(isnull(outfit))
-				return
-			if(!ispath(outfit))
-				return
-			owner.open_outfit_editor(new outfit)
+			if(ispath(outfit))
+				owner.open_outfit_editor(new outfit)
 
 	var/datum/outfit/target_outfit = locate(params["outfit"])
 	if(!istype(target_outfit))

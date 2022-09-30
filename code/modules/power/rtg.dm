@@ -17,6 +17,8 @@
 
 	var/power_gen = 1000 // Enough to power a single APC. 4000 output with T4 capacitor.
 
+	var/irradiate = TRUE // RTGs irradiate surroundings, but only when panel is open.
+
 /obj/machinery/power/rtg/Initialize(mapload)
 	. = ..()
 	connect_to_network()
@@ -24,9 +26,10 @@
 /obj/machinery/power/rtg/process()
 	..()
 	add_avail(power_gen)
+	if(panel_open && irradiate)
+		radiation_pulse(src, 60)
 
 /obj/machinery/power/rtg/RefreshParts()
-	. = ..()
 	var/part_level = 0
 	for(var/obj/item/stock_parts/SP in component_parts)
 		part_level += SP.rating
@@ -60,6 +63,7 @@
 	desc = "An alien power source that produces energy seemingly out of nowhere."
 	circuit = /obj/item/circuitboard/machine/abductor/core
 	power_gen = 20000 // 280 000 at T1, 400 000 at T4. Starts at T4.
+	irradiate = FALSE // Green energy!
 	can_buckle = FALSE
 	pixel_y = 7
 	var/going_kaboom = FALSE // Is it about to explode?
@@ -96,63 +100,3 @@
 	. = ..() //extend the zap
 	if(zap_flags & ZAP_MACHINE_EXPLOSIVE)
 		overload()
-
-/obj/machinery/power/rtg/debug
-	name = "Debug RTG"
-	desc = "You really shouldn't be seeing this if you're not a coder or jannie."
-	power_gen = 20000
-	circuit = null
-
-/obj/machinery/power/rtg/debug/RefreshParts()
-	SHOULD_CALL_PARENT(FALSE)
-	return
-
-/obj/machinery/power/rtg/lavaland
-	name = "Lava powered RTG"
-	desc = "This device only works when exposed to the toxic fumes of Lavaland"
-	circuit = null
-	power_gen = 1500
-	anchored = TRUE
-	resistance_flags = LAVA_PROOF
-
-/obj/machinery/power/rtg/lavaland/Initialize(mapload)
-	. = ..()
-	var/turf/our_turf = get_turf(src)
-	if(!islava(our_turf))
-		power_gen = 0
-	if(!is_mining_level(z))
-		power_gen = 0
-
-/obj/machinery/power/rtg/lavaland/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
-	. = ..()
-	var/turf/our_turf = get_turf(src)
-	if(!islava(our_turf))
-		power_gen = 0
-		return
-	if(!is_mining_level(z))
-		power_gen = 0
-		return
-	power_gen = initial(power_gen)
-
-/obj/machinery/power/rtg/old_station
-	name = "Old RTG"
-	desc = "A very old RTG, it seems on the verge of being destroyed"
-	circuit = null
-	power_gen = 750
-	anchored = TRUE
-
-/obj/machinery/power/rtg/old_station/attackby(obj/item/I, mob/user, params)
-	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-open", initial(icon_state), I))
-		to_chat(user,span_warning("You feel it crumbling under your hands!"))
-		return
-	else if(default_deconstruction_crowbar(I, user = user))
-		return
-	return ..()
-
-/obj/machinery/power/rtg/old_station/default_deconstruction_crowbar(obj/item/crowbar, ignore_panel, custom_deconstruct, mob/user)
-	to_chat(user,span_warning("It's starting to fall off!"))
-	if(!do_after(user, 3 SECONDS, src))
-		return TRUE
-	to_chat(user,span_notice("You feel like you made a mistake"))
-	new /obj/effect/decal/cleanable/ash/large(loc)
-	qdel(src)

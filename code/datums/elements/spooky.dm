@@ -21,8 +21,8 @@
 		var/mob/living/carbon/human/U = user
 		if(!istype(U.dna.species, /datum/species/skeleton))
 			U.adjustStaminaLoss(35) //Extra Damage
-			U.set_jitter_if_lower(70 SECONDS)
-			U.set_stutter(40 SECONDS)
+			U.Jitter(35)
+			U.stuttering = 20
 			if(U.getStaminaLoss() > 95)
 				to_chat(U, "<font color ='red', size ='4'><B>Your ears weren't meant for this spectral sound.</B></font>")
 				INVOKE_ASYNC(src, .proc/spectral_change, U)
@@ -35,16 +35,16 @@
 		if(istype(H.dna.species, /datum/species/zombie))
 			H.adjustStaminaLoss(25)
 			H.Paralyze(15) //zombies can't resist the doot
-		C.set_jitter_if_lower(70 SECONDS)
-		C.set_stutter(40 SECONDS)
+		C.Jitter(35)
+		C.stuttering = 20
 		if((!istype(H.dna.species, /datum/species/skeleton)) && (!istype(H.dna.species, /datum/species/golem)) && (!istype(H.dna.species, /datum/species/android)) && (!istype(H.dna.species, /datum/species/jelly)))
 			C.adjustStaminaLoss(25) //boneless humanoids don't lose the will to live
 		to_chat(C, "<font color='red' size='4'><B>DOOT</B></font>")
 		INVOKE_ASYNC(src, .proc/spectral_change, H)
 
 	else //the sound will spook monkeys.
-		C.set_jitter_if_lower(30 SECONDS)
-		C.set_stutter(40 SECONDS)
+		C.Jitter(15)
+		C.stuttering = 20
 
 /datum/element/spooky/proc/spectral_change(mob/living/carbon/human/H, mob/user)
 	if((H.getStaminaLoss() > 95) && (!istype(H.dna.species, /datum/species/skeleton)) && (!istype(H.dna.species, /datum/species/golem)) && (!istype(H.dna.species, /datum/species/android)) && (!istype(H.dna.species, /datum/species/jelly)))
@@ -66,8 +66,8 @@
 		to_chat(H, span_boldnotice("A new life and identity has begun. Help your fellow skeletons into bringing out the spooky-pocalypse. You haven't forgotten your past life, and are still beholden to past loyalties."))
 		change_name(H) //time for a new name!
 
-/datum/element/spooky/proc/change_name(mob/living/carbon/human/spooked)
-	var/skeleton_name = sanitize_name(tgui_input_text(spooked, "Enter your new skeleton name", "Spookifier", spooked.real_name, MAX_NAME_LEN))
-	if(!skeleton_name)
-		skeleton_name = "spooky skeleton"
-	spooked.fully_replace_character_name(null, skeleton_name)
+/datum/element/spooky/proc/change_name(mob/living/carbon/human/H)
+	var/t = sanitize_name(stripped_input(H, "Enter your new skeleton name", H.real_name, null, MAX_NAME_LEN))
+	if(!t)
+		t = "spooky skeleton"
+	H.fully_replace_character_name(null, t)

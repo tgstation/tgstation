@@ -1,19 +1,17 @@
 /datum/job/chaplain
-	title = JOB_CHAPLAIN
-	description = "Hold services and funerals, cremate people, preach your \
-		religion, protect the crew against cults."
-	department_head = list(JOB_HEAD_OF_PERSONNEL)
+	title = "Chaplain"
+	department_head = list("Head of Personnel")
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = SUPERVISOR_HOP
+	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
 	exp_granted_type = EXP_TYPE_CREW
 
 	outfit = /datum/outfit/job/chaplain
 	plasmaman_outfit = /datum/outfit/plasmaman/chaplain
 
-	paycheck = PAYCHECK_CREW
+	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_SRV
 
 	display_order = JOB_DISPLAY_ORDER_CHAPLAIN
@@ -21,17 +19,17 @@
 		/datum/job_department/service,
 		)
 
-	family_heirlooms = list(/obj/item/toy/windup_toolbox, /obj/item/reagent_containers/cup/glass/bottle/holywater)
+	family_heirlooms = list(/obj/item/toy/windup_toolbox, /obj/item/reagent_containers/food/drinks/bottle/holywater)
 
 	mail_goodies = list(
-		/obj/item/reagent_containers/cup/glass/bottle/holywater = 30,
+		/obj/item/reagent_containers/food/drinks/bottle/holywater = 30,
 		/obj/item/toy/plush/awakenedplushie = 10,
 		/obj/item/grenade/chem_grenade/holy = 5,
 		/obj/item/toy/plush/narplush = 2,
 		/obj/item/toy/plush/ratplush = 1
 	)
 	rpg_title = "Paladin"
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN | JOB_CAN_BE_INTERN
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
 
 	voice_of_god_power = 2 //Chaplains are very good at speaking with the voice of god
 
@@ -96,7 +94,7 @@
 			B.deity_name = "Anime"
 		else
 			if(new_bible == DEFAULT_BIBLE)
-				new_bible = DEFAULT_BIBLE_REPLACE(new_bible)
+				new_bible = "The Holy Book of [new_religion]"
 
 	B.name = new_bible
 
@@ -114,17 +112,19 @@
 	name = "Chaplain"
 	jobtype = /datum/job/chaplain
 
-	id_trim = /datum/id_trim/job/chaplain
+	belt = /obj/item/pda/chaplain
+	ears = /obj/item/radio/headset/headset_srv
 	uniform = /obj/item/clothing/under/rank/civilian/chaplain
 	backpack_contents = list(
-		/obj/item/camera/spooky = 1,
 		/obj/item/stamp/chap = 1,
+		/obj/item/camera/spooky = 1
 		)
-	belt = /obj/item/modular_computer/tablet/pda/chaplain
-	ears = /obj/item/radio/headset/headset_srv
+
+	skillchips = list(/obj/item/skillchip/entrails_reader)
 
 	backpack = /obj/item/storage/backpack/cultpack
 	satchel = /obj/item/storage/backpack/cultpack
 
 	chameleon_extras = /obj/item/stamp/chap
-	skillchips = list(/obj/item/skillchip/entrails_reader)
+
+	id_trim = /datum/id_trim/job/chaplain

@@ -91,18 +91,18 @@
 	else
 		talpha = 255
 		obj_flags |= BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
-	SET_PLANE_IMPLICIT(src, ABOVE_LIGHTING_PLANE) //What matters it's one above openspace, so our animation is not dependant on what's there. Up to revision with 513
+	plane = ABOVE_LIGHTING_PLANE //What matters it's one above openspace, so our animation is not dependant on what's there. Up to revision with 513
 	animate(src,alpha = talpha,time = 10)
 	addtimer(CALLBACK(src,.proc/reset_plane),10)
 	if(hidden)
 		update_openspace()
 	var/turf/T = get_turf(src)
 	for(var/atom/movable/AM in T)
-		if(!AM.currently_z_moving)
+		if(!AM.zfalling)
 			T.zFall(AM)
 
 /obj/structure/pitgrate/proc/reset_plane()
-	SET_PLANE_IMPLICIT(src, FLOOR_PLANE)
+	plane = FLOOR_PLANE
 
 /obj/structure/pitgrate/Destroy()
 	if(hidden)

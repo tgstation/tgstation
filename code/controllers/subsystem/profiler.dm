@@ -21,7 +21,7 @@ SUBSYSTEM_DEF(profiler)
 		StartProfiling()
 	else
 		StopProfiling() //Stop the early start profiler
-	return SS_INIT_SUCCESS
+	return ..()
 
 /datum/controller/subsystem/profiler/fire()
 	if(CONFIG_GET(flag/auto_profile))

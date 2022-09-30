@@ -6,7 +6,7 @@
 /turf/closed/mineral/random,
 /area/ruin/unpowered/no_grav)
 "c" = (
-/turf/open/misc/asteroid/airless,
+/turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "d" = (
 /turf/closed/wall,
@@ -19,10 +19,11 @@
 	amount = 2
 	},
 /obj/item/shard,
-/turf/open/misc/asteroid/airless,
+/turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "g" = (
-/obj/effect/spawner/structure/window,
+/obj/structure/grille,
+/obj/structure/window/fulltile,
 /turf/open/floor/plating,
 /area/ruin/unpowered/no_grav)
 "h" = (
@@ -42,7 +43,7 @@
 /area/ruin/unpowered/no_grav)
 "k" = (
 /obj/item/ectoplasm,
-/turf/open/misc/asteroid/airless,
+/turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "l" = (
 /obj/structure/closet/crate/coffin,
@@ -56,7 +57,7 @@
 /area/ruin/unpowered/no_grav)
 "o" = (
 /obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/cup/glass/bottle/holywater,
+/obj/item/reagent_containers/food/drinks/bottle/holywater,
 /turf/open/floor/carpet/airless,
 /area/ruin/unpowered/no_grav)
 "p" = (
@@ -158,7 +159,8 @@
 /turf/open/floor/iron/dark/airless,
 /area/ruin/unpowered/no_grav)
 "K" = (
-/obj/effect/spawner/structure/window,
+/obj/structure/grille,
+/obj/structure/window/fulltile,
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
 "L" = (
@@ -172,17 +174,18 @@
 /area/ruin/unpowered/no_grav)
 "N" = (
 /mob/living/simple_animal/hostile/construct/proteon,
-/turf/open/misc/asteroid/airless,
+/turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "O" = (
-/obj/effect/spawner/structure/window,
+/obj/structure/grille,
+/obj/structure/window/fulltile,
 /obj/structure/barricade/wooden/crude,
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
 "Q" = (
 /obj/item/storage/book/bible,
 /obj/effect/decal/cleanable/blood,
-/turf/open/misc/asteroid/airless,
+/turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "R" = (
 /obj/structure/closet/crate/coffin,
@@ -191,12 +194,12 @@
 /area/ruin/unpowered/no_grav)
 "S" = (
 /obj/effect/decal/cleanable/blood/drip,
-/turf/open/misc/asteroid/airless,
+/turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "U" = (
 /obj/effect/decal/remains/human,
 /obj/item/paper/fluff/ruins/clericsden/warning,
-/turf/open/misc/asteroid/airless,
+/turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 
 (1,1,1) = {"

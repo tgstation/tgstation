@@ -4,7 +4,7 @@
 		humans, butchering all other living things to \
 		sustain the zombie, smashing open airlock doors and opening \
 		child-safe caps on bottles."
-	item_flags = ABSTRACT | DROPDEL | HAND_ITEM
+	item_flags = ABSTRACT | DROPDEL
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "bloodhand_left"
@@ -48,11 +48,7 @@
 		// zombies)
 		return
 
-	// spaceacillin has a 75% chance to block infection
-	if(istype(target) && target.reagents.has_reagent(/datum/reagent/medicine/spaceacillin) && prob(75))
-		return
-
-	var/obj/item/organ/internal/zombie_infection/infection
+	var/obj/item/organ/zombie_infection/infection
 	infection = target.getorganslot(ORGAN_SLOT_ZOMBIE)
 	if(!infection)
 		infection = new()

@@ -142,7 +142,7 @@
 	var/announce_ion_laws = (show_log == "Yes" ? 100 : 0)
 
 	var/datum/round_event/ion_storm/add_law_only/ion = new()
-	ion.announce_chance = announce_ion_laws
+	ion.announceChance = announce_ion_laws
 	ion.ionMessage = input
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Add Custom AI Law") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -162,7 +162,7 @@
 		if(null, "No")
 			return
 		if("Yes (No Recall)")
-			SSshuttle.admin_emergency_no_recall = TRUE
+			SSshuttle.adminEmergencyNoRecall = TRUE
 			SSshuttle.emergency.mode = SHUTTLE_IDLE
 
 	SSshuttle.emergency.request()
@@ -179,8 +179,8 @@
 	if(tgui_alert(usr, "You sure?", "Confirm", list("Yes", "No")) != "Yes")
 		return
 
-	if(SSshuttle.admin_emergency_no_recall)
-		SSshuttle.admin_emergency_no_recall = FALSE
+	if(SSshuttle.adminEmergencyNoRecall)
+		SSshuttle.adminEmergencyNoRecall = FALSE
 
 	if(EMERGENCY_AT_LEAST_DOCKED)
 		return
@@ -208,9 +208,9 @@
 
 	message_admins(span_adminnotice("[key_name_admin(usr)] disabled the shuttle."))
 
-	SSshuttle.last_mode = SSshuttle.emergency.mode
-	SSshuttle.last_call_time = SSshuttle.emergency.timeLeft(1)
-	SSshuttle.admin_emergency_no_recall = TRUE
+	SSshuttle.lastMode = SSshuttle.emergency.mode
+	SSshuttle.lastCallTime = SSshuttle.emergency.timeLeft(1)
+	SSshuttle.adminEmergencyNoRecall = TRUE
 	SSshuttle.emergency.setTimer(0)
 	SSshuttle.emergency.mode = SHUTTLE_DISABLED
 	priority_announce("Warning: Emergency Shuttle uplink failure, shuttle disabled until further notice.", "Emergency Shuttle Uplink Alert", 'sound/misc/announce_dig.ogg')
@@ -230,15 +230,15 @@
 		return
 
 	message_admins(span_adminnotice("[key_name_admin(usr)] enabled the emergency shuttle."))
-	SSshuttle.admin_emergency_no_recall = FALSE
-	SSshuttle.emergency_no_recall = FALSE
-	if(SSshuttle.last_mode == SHUTTLE_DISABLED) //If everything goes to shit, fix it.
-		SSshuttle.last_mode = SHUTTLE_IDLE
+	SSshuttle.adminEmergencyNoRecall = FALSE
+	SSshuttle.emergencyNoRecall = FALSE
+	if(SSshuttle.lastMode == SHUTTLE_DISABLED) //If everything goes to shit, fix it.
+		SSshuttle.lastMode = SHUTTLE_IDLE
 
-	SSshuttle.emergency.mode = SSshuttle.last_mode
-	if(SSshuttle.last_call_time < 10 SECONDS && SSshuttle.last_mode != SHUTTLE_IDLE)
-		SSshuttle.last_call_time = 10 SECONDS //Make sure no insta departures.
-	SSshuttle.emergency.setTimer(SSshuttle.last_call_time)
+	SSshuttle.emergency.mode = SSshuttle.lastMode
+	if(SSshuttle.lastCallTime < 10 SECONDS && SSshuttle.lastMode != SHUTTLE_IDLE)
+		SSshuttle.lastCallTime = 10 SECONDS //Make sure no insta departures.
+	SSshuttle.emergency.setTimer(SSshuttle.lastCallTime)
 	priority_announce("Warning: Emergency Shuttle uplink reestablished, shuttle enabled.", "Emergency Shuttle Uplink Alert", 'sound/misc/announce_dig.ogg')
 
 /client/proc/toggle_nuke(obj/machinery/nuclearbomb/N in GLOB.nuke_list)
@@ -253,12 +253,219 @@
 		if(!newtime)
 			return
 		N.timer_set = newtime
-	N.toggle_nuke_safety()
-	N.toggle_nuke_armed()
+	N.set_safety()
+	N.set_active()
 
 	log_admin("[key_name(usr)] [N.timing ? "activated" : "deactivated"] a nuke at [AREACOORD(N)].")
 	message_admins("[ADMIN_LOOKUPFLW(usr)] [N.timing ? "activated" : "deactivated"] a nuke at [ADMIN_VERBOSEJMP(N)].")
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Nuke", "[N.timing]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/datum/admins/proc/access_news_network() //MARKER
+	set category = "Admin.Events"
+	set name = "Access Newscaster Network"
+	set desc = "Allows you to view, add and edit news feeds."
+
+	if (!istype(src, /datum/admins))
+		src = usr.client.holder
+	if (!istype(src, /datum/admins))
+		to_chat(usr, "Error: you are not an admin!", confidential = TRUE)
+		return
+	var/dat
+	dat = text("<HEAD><TITLE>Admin Newscaster</TITLE></HEAD><H3>Admin Newscaster Unit</H3>")
+
+	switch(admincaster_screen)
+		if(0)
+			dat += "Welcome to the admin newscaster.<BR> Here you can add, edit and censor every newspiece on the network."
+			dat += "<BR>Feed channels and stories entered through here will be uneditable and handled as official news by the rest of the units."
+			dat += "<BR>Note that this panel allows full freedom over the news network, there are no constrictions except the few basic ones. Don't break things!</FONT>"
+			if(GLOB.news_network.wanted_issue.active)
+				dat+= "<HR><A href='?src=[REF(src)];[HrefToken()];ac_view_wanted=1'>Read Wanted Issue</A>"
+			dat+= "<HR><BR><A href='?src=[REF(src)];[HrefToken()];ac_create_channel=1'>Create Feed Channel</A>"
+			dat+= "<BR><A href='?src=[REF(src)];[HrefToken()];ac_view=1'>View Feed Channels</A>"
+			dat+= "<BR><A href='?src=[REF(src)];[HrefToken()];ac_create_feed_story=1'>Submit new Feed story</A>"
+			dat+= "<BR><BR><A href='?src=[REF(usr)];[HrefToken()];mach_close=newscaster_main'>Exit</A>"
+			var/wanted_already = 0
+			if(GLOB.news_network.wanted_issue.active)
+				wanted_already = 1
+			dat+="<HR><B>Feed Security functions:</B><BR>"
+			dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_menu_wanted=1'>[(wanted_already) ? ("Manage") : ("Publish")] \"Wanted\" Issue</A>"
+			dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_menu_censor_story=1'>Censor Feed Stories</A>"
+			dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_menu_censor_channel=1'>Mark Feed Channel with Nanotrasen D-Notice (disables and locks the channel).</A>"
+			dat+="<BR><HR><A href='?src=[REF(src)];[HrefToken()];ac_set_signature=1'>The newscaster recognises you as:<BR> <FONT COLOR='green'>[src.admin_signature]</FONT></A>"
+		if(1)
+			dat+= "Station Feed Channels<HR>"
+			if( !length(GLOB.news_network.network_channels) )
+				dat+="<I>No active channels found...</I>"
+			else
+				for(var/datum/newscaster/feed_channel/CHANNEL in GLOB.news_network.network_channels)
+					if(CHANNEL.is_admin_channel)
+						dat+="<B><FONT style='BACKGROUND-COLOR: LightGreen'><A href='?src=[REF(src)];ac_show_channel=[REF(CHANNEL)]'>[CHANNEL.channel_name]</A></FONT></B><BR>"
+					else
+						dat+="<B><A href='?src=[REF(src)];[HrefToken()];ac_show_channel=[REF(CHANNEL)]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : ""]<BR></B>"
+			dat+="<BR><HR><A href='?src=[REF(src)];[HrefToken()];ac_refresh=1'>Refresh</A>"
+			dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_setScreen=[0]'>Back</A>"
+		if(2)
+			dat+="Creating new Feed Channel..."
+			dat+="<HR><B><A href='?src=[REF(src)];[HrefToken()];ac_set_channel_name=1'>Channel Name</A>:</B> [src.admincaster_feed_channel.channel_name]<BR>"
+			dat+="<B><A href='?src=[REF(src)];[HrefToken()];ac_set_signature=1'>Channel Author</A>:</B> <FONT COLOR='green'>[src.admin_signature]</FONT><BR>"
+			dat+="<B><A href='?src=[REF(src)];[HrefToken()];ac_set_channel_lock=1'>Will Accept Public Feeds</A>:</B> [(src.admincaster_feed_channel.locked) ? ("NO") : ("YES")]<BR><BR>"
+			dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_submit_new_channel=1'>Submit</A><BR><BR><A href='?src=[REF(src)];[HrefToken()];ac_setScreen=[0]'>Cancel</A><BR>"
+		if(3)
+			dat+="Creating new Feed Message..."
+			dat+="<HR><B><A href='?src=[REF(src)];[HrefToken()];ac_set_channel_receiving=1'>Receiving Channel</A>:</B> [src.admincaster_feed_channel.channel_name]<BR>" //MARK
+			dat+="<B>Message Author:</B> <FONT COLOR='green'>[src.admin_signature]</FONT><BR>"
+			dat+="<B><A href='?src=[REF(src)];[HrefToken()];ac_set_new_message=1'>Message Body</A>:</B> [src.admincaster_feed_message.returnBody(-1)] <BR>"
+			dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_submit_new_message=1'>Submit</A><BR><BR><A href='?src=[REF(src)];[HrefToken()];ac_setScreen=[0]'>Cancel</A><BR>"
+		if(4)
+			dat+="Feed story successfully submitted to [src.admincaster_feed_channel.channel_name].<BR><BR>"
+			dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_setScreen=[0]'>Return</A><BR>"
+		if(5)
+			dat+="Feed Channel [src.admincaster_feed_channel.channel_name] created successfully.<BR><BR>"
+			dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_setScreen=[0]'>Return</A><BR>"
+		if(6)
+			dat+="<B><FONT COLOR='maroon'>ERROR: Could not submit Feed story to Network.</B></FONT><HR><BR>"
+			if(src.admincaster_feed_channel.channel_name=="")
+				dat+="<FONT COLOR='maroon'>Invalid receiving channel name.</FONT><BR>"
+			if(src.admincaster_feed_message.returnBody(-1) == "" || src.admincaster_feed_message.returnBody(-1) == "\[REDACTED\]")
+				dat+="<FONT COLOR='maroon'>Invalid message body.</FONT><BR>"
+			dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_setScreen=[3]'>Return</A><BR>"
+		if(7)
+			dat+="<B><FONT COLOR='maroon'>ERROR: Could not submit Feed Channel to Network.</B></FONT><HR><BR>"
+			if(src.admincaster_feed_channel.channel_name =="" || src.admincaster_feed_channel.channel_name == "\[REDACTED\]")
+				dat+="<FONT COLOR='maroon'>Invalid channel name.</FONT><BR>"
+			var/check = 0
+			for(var/datum/newscaster/feed_channel/FC in GLOB.news_network.network_channels)
+				if(FC.channel_name == src.admincaster_feed_channel.channel_name)
+					check = 1
+					break
+			if(check)
+				dat+="<FONT COLOR='maroon'>Channel name already in use.</FONT><BR>"
+			dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_setScreen=[2]'>Return</A><BR>"
+		if(9)
+			dat+="<B>[admincaster_feed_channel.channel_name]: </B><FONT SIZE=1>\[created by: <FONT COLOR='maroon'>[admincaster_feed_channel.returnAuthor(-1)]</FONT>\]</FONT><HR>"
+			if(src.admincaster_feed_channel.censored)
+				dat+="<FONT COLOR='red'><B>ATTENTION: </B></FONT>This channel has been deemed as threatening to the welfare of the station, and marked with a Nanotrasen D-Notice.<BR>"
+				dat+="No further feed story additions are allowed while the D-Notice is in effect.</FONT><BR><BR>"
+			else
+				if( !length(src.admincaster_feed_channel.messages) )
+					dat+="<I>No feed messages found in channel...</I><BR>"
+				else
+					var/i = 0
+					for(var/datum/newscaster/feed_message/MESSAGE in src.admincaster_feed_channel.messages)
+						i++
+						dat+="-[MESSAGE.returnBody(-1)] <BR>"
+						if(MESSAGE.img)
+							usr << browse_rsc(MESSAGE.img, "tmp_photo[i].png")
+							dat+="<img src='tmp_photo[i].png' width = '180'><BR><BR>"
+						dat+="<FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.returnAuthor(-1)]</FONT>\]</FONT><BR>"
+						dat+="[MESSAGE.comments.len] comment[MESSAGE.comments.len > 1 ? "s" : ""]:<br>"
+						for(var/datum/newscaster/feed_comment/comment in MESSAGE.comments)
+							dat+="[comment.body]<br><font size=1>[comment.author] [comment.time_stamp]</font><br>"
+						dat+="<br>"
+			dat+="<BR><HR><A href='?src=[REF(src)];[HrefToken()];ac_refresh=1'>Refresh</A>"
+			dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_setScreen=[1]'>Back</A>"
+		if(10)
+			dat+="<B>Nanotrasen Feed Censorship Tool</B><BR>"
+			dat+="<FONT SIZE=1>NOTE: Due to the nature of news Feeds, total deletion of a Feed Story is not possible.<BR>"
+			dat+="Keep in mind that users attempting to view a censored feed will instead see the \[REDACTED\] tag above it.</FONT>"
+			dat+="<HR>Select Feed channel to get Stories from:<BR>"
+			if(!length(GLOB.news_network.network_channels))
+				dat+="<I>No feed channels found active...</I><BR>"
+			else
+				for(var/datum/newscaster/feed_channel/CHANNEL in GLOB.news_network.network_channels)
+					dat+="<A href='?src=[REF(src)];[HrefToken()];ac_pick_censor_channel=[REF(CHANNEL)]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : ""]<BR>"
+			dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_setScreen=[0]'>Cancel</A>"
+		if(11)
+			dat+="<B>Nanotrasen D-Notice Handler</B><HR>"
+			dat+="<FONT SIZE=1>A D-Notice is to be bestowed upon the channel if the handling Authority deems it as harmful for the station's"
+			dat+="morale, integrity or disciplinary behaviour. A D-Notice will render a channel unable to be updated by anyone, without deleting any feed"
+			dat+="stories it might contain at the time. You can lift a D-Notice if you have the required access at any time.</FONT><HR>"
+			if(!length(GLOB.news_network.network_channels))
+				dat+="<I>No feed channels found active...</I><BR>"
+			else
+				for(var/datum/newscaster/feed_channel/CHANNEL in GLOB.news_network.network_channels)
+					dat+="<A href='?src=[REF(src)];[HrefToken()];ac_pick_d_notice=[REF(CHANNEL)]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : ""]<BR>"
+
+			dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_setScreen=[0]'>Back</A>"
+		if(12)
+			dat+="<B>[src.admincaster_feed_channel.channel_name]: </B><FONT SIZE=1>\[ created by: <FONT COLOR='maroon'>[src.admincaster_feed_channel.returnAuthor(-1)]</FONT> \]</FONT><BR>"
+			dat+="<FONT SIZE=2><A href='?src=[REF(src)];[HrefToken()];ac_censor_channel_author=[REF(src.admincaster_feed_channel)]'>[(src.admincaster_feed_channel.authorCensor) ? ("Undo Author censorship") : ("Censor channel Author")]</A></FONT><HR>"
+
+			if( !length(src.admincaster_feed_channel.messages) )
+				dat+="<I>No feed messages found in channel...</I><BR>"
+			else
+				for(var/datum/newscaster/feed_message/MESSAGE in src.admincaster_feed_channel.messages)
+					dat+="-[MESSAGE.returnBody(-1)] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.returnAuthor(-1)]</FONT>\]</FONT><BR>"
+					dat+="<FONT SIZE=2><A href='?src=[REF(src)];[HrefToken()];ac_censor_channel_story_body=[REF(MESSAGE)]'>[(MESSAGE.bodyCensor) ? ("Undo story censorship") : ("Censor story")]</A>  -  <A href='?src=[REF(src)];[HrefToken()];ac_censor_channel_story_author=[REF(MESSAGE)]'>[(MESSAGE.authorCensor) ? ("Undo Author Censorship") : ("Censor message Author")]</A></FONT><BR>"
+					dat+="[MESSAGE.comments.len] comment[MESSAGE.comments.len > 1 ? "s" : ""]: <a href='?src=[REF(src)];[HrefToken()];ac_lock_comment=[REF(MESSAGE)]'>[MESSAGE.locked ? "Unlock" : "Lock"]</a><br>"
+					for(var/datum/newscaster/feed_comment/comment in MESSAGE.comments)
+						dat+="[comment.body] <a href='?src=[REF(src)];[HrefToken()];ac_del_comment=[REF(comment)];ac_del_comment_msg=[REF(MESSAGE)]'>X</a><br><font size=1>[comment.author] [comment.time_stamp]</font><br>"
+			dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_setScreen=[10]'>Back</A>"
+		if(13)
+			dat+="<B>[src.admincaster_feed_channel.channel_name]: </B><FONT SIZE=1>\[ created by: <FONT COLOR='maroon'>[src.admincaster_feed_channel.returnAuthor(-1)]</FONT> \]</FONT><BR>"
+			dat+="Channel messages listed below. If you deem them dangerous to the station, you can <A href='?src=[REF(src)];[HrefToken()];ac_toggle_d_notice=[REF(src.admincaster_feed_channel)]'>Bestow a D-Notice upon the channel</A>.<HR>"
+			if(src.admincaster_feed_channel.censored)
+				dat+="<FONT COLOR='red'><B>ATTENTION: </B></FONT>This channel has been deemed as threatening to the welfare of the station, and marked with a Nanotrasen D-Notice.<BR>"
+				dat+="No further feed story additions are allowed while the D-Notice is in effect.</FONT><BR><BR>"
+			else
+				if( !length(src.admincaster_feed_channel.messages) )
+					dat+="<I>No feed messages found in channel...</I><BR>"
+				else
+					for(var/datum/newscaster/feed_message/MESSAGE in src.admincaster_feed_channel.messages)
+						dat+="-[MESSAGE.returnBody(-1)] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.returnAuthor(-1)]</FONT>\]</FONT><BR>"
+			dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_setScreen=[11]'>Back</A>"
+		if(14)
+			dat+="<B>Wanted Issue Handler:</B>"
+			var/wanted_already = 0
+			var/end_param = 1
+			if(GLOB.news_network.wanted_issue.active)
+				wanted_already = 1
+				end_param = 2
+			if(wanted_already)
+				dat+="<FONT SIZE=2><BR><I>A wanted issue is already in Feed Circulation. You can edit or cancel it below.</FONT></I>"
+			dat+="<HR>"
+			dat+="<A href='?src=[REF(src)];[HrefToken()];ac_set_wanted_name=1'>Criminal Name</A>: [src.admincaster_wanted_message.criminal] <BR>"
+			dat+="<A href='?src=[REF(src)];[HrefToken()];ac_set_wanted_desc=1'>Description</A>: [src.admincaster_wanted_message.body] <BR>"
+			if(wanted_already)
+				dat+="<B>Wanted Issue created by:</B><FONT COLOR='green'>[GLOB.news_network.wanted_issue.scannedUser]</FONT><BR>"
+			else
+				dat+="<B>Wanted Issue will be created under prosecutor:</B><FONT COLOR='green'>[src.admin_signature]</FONT><BR>"
+			dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_submit_wanted=[end_param]'>[(wanted_already) ? ("Edit Issue") : ("Submit")]</A>"
+			if(wanted_already)
+				dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_cancel_wanted=1'>Take down Issue</A>"
+			dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_setScreen=[0]'>Cancel</A>"
+		if(15)
+			dat+="<FONT COLOR='green'>Wanted issue for [src.admincaster_wanted_message.criminal] is now in Network Circulation.</FONT><BR><BR>"
+			dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_setScreen=[0]'>Return</A><BR>"
+		if(16)
+			dat+="<B><FONT COLOR='maroon'>ERROR: Wanted Issue rejected by Network.</B></FONT><HR><BR>"
+			if(src.admincaster_wanted_message.criminal =="" || src.admincaster_wanted_message.criminal == "\[REDACTED\]")
+				dat+="<FONT COLOR='maroon'>Invalid name for person wanted.</FONT><BR>"
+			if(src.admincaster_wanted_message.body == "" || src.admincaster_wanted_message.body == "\[REDACTED\]")
+				dat+="<FONT COLOR='maroon'>Invalid description.</FONT><BR>"
+			dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_setScreen=[0]'>Return</A><BR>"
+		if(17)
+			dat+="<B>Wanted Issue successfully deleted from Circulation</B><BR>"
+			dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_setScreen=[0]'>Return</A><BR>"
+		if(18)
+			dat+="<B><FONT COLOR ='maroon'>-- STATIONWIDE WANTED ISSUE --</B></FONT><BR><FONT SIZE=2>\[Submitted by: <FONT COLOR='green'>[GLOB.news_network.wanted_issue.scannedUser]</FONT>\]</FONT><HR>"
+			dat+="<B>Criminal</B>: [GLOB.news_network.wanted_issue.criminal]<BR>"
+			dat+="<B>Description</B>: [GLOB.news_network.wanted_issue.body]<BR>"
+			dat+="<B>Photo:</B>: "
+			if(GLOB.news_network.wanted_issue.img)
+				usr << browse_rsc(GLOB.news_network.wanted_issue.img, "tmp_photow.png")
+				dat+="<BR><img src='tmp_photow.png' width = '180'>"
+			else
+				dat+="None"
+			dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_setScreen=[0]'>Back</A><BR>"
+		if(19)
+			dat+="<FONT COLOR='green'>Wanted issue for [src.admincaster_wanted_message.criminal] successfully edited.</FONT><BR><BR>"
+			dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_setScreen=[0]'>Return</A><BR>"
+		else
+			dat+="I'm sorry to break your immersion. This shit's bugged. Report this bug to Agouri, polyxenitopalidou@gmail.com"
+
+	usr << browse(dat, "window=admincaster_main;size=400x600")
+	onclose(usr, "admincaster_main")
 
 /client/proc/admin_change_sec_level()
 	set category = "Admin.Events"
@@ -268,16 +475,13 @@
 	if(!check_rights(R_ADMIN))
 		return
 
-	var/level = tgui_input_list(usr, "Select Security Level:", "Set Security Level", SSsecurity_level.available_levels)
+	var/level = input("Select security level to change to","Set Security Level") as null|anything in list("green","blue","red","delta")
+	if(level)
+		set_security_level(level)
 
-	if(!level)
-		return
-
-	SSsecurity_level.set_level(level)
-
-	log_admin("[key_name(usr)] changed the security level to [level]")
-	message_admins("[key_name_admin(usr)] changed the security level to [level]")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Set Security Level [capitalize(level)]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		log_admin("[key_name(usr)] changed the security level to [level]")
+		message_admins("[key_name_admin(usr)] changed the security level to [level]")
+		SSblackbox.record_feedback("tally", "admin_verb", 1, "Set Security Level [capitalize(level)]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/run_weather()
 	set category = "Admin.Events"
@@ -301,88 +505,3 @@
 	message_admins("[key_name_admin(usr)] started weather of type [weather_type] on the z-level [z_level].")
 	log_admin("[key_name(usr)] started weather of type [weather_type] on the z-level [z_level].")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Run Weather")
-
-/client/proc/add_mob_ability()
-	set category = "Admin.Events"
-	set name = "Add Mob Ability"
-	set desc = "Adds an ability to a marked mob."
-
-	if(!holder)
-		return
-
-	if(!isliving(holder.marked_datum))
-		to_chat(usr, span_warning("Error: Please mark a mob to add actions to it."))
-		return
-
-	var/mob/living/marked_mob = holder.marked_datum
-
-	var/list/all_mob_actions = sort_list(subtypesof(/datum/action/cooldown/mob_cooldown), /proc/cmp_typepaths_asc)
-
-	var/ability_type = tgui_input_list(usr, "Choose an ability", "Ability", all_mob_actions)
-
-	if(!ability_type)
-		return
-
-	var/datum/action/cooldown/mob_cooldown/add_ability
-
-	var/make_sequence = tgui_alert(usr, "Would you like this action to be a sequence of multiple abilities?", "Sequence Ability", list("Yes", "No"))
-	if(make_sequence == "Yes")
-		add_ability = new /datum/action/cooldown/mob_cooldown(marked_mob)
-		add_ability.sequence_actions = list()
-		while(!isnull(ability_type))
-			var/ability_delay = tgui_input_number(usr, "Enter the delay in seconds before the next ability in the sequence is used", "Ability Delay", 2)
-			if(isnull(ability_delay) || ability_delay < 0)
-				ability_delay = 0
-			add_ability.sequence_actions[ability_type] = ability_delay * 1 SECONDS
-			ability_type = tgui_input_list(usr, "Choose a new sequence ability", "Sequence Ability", all_mob_actions)
-		var/ability_cooldown = tgui_input_number(usr, "Enter the sequence abilities cooldown in seconds", "Ability Cooldown", 2)
-		if(isnull(ability_cooldown) || ability_cooldown < 0)
-			ability_cooldown = 2
-		add_ability.cooldown_time = ability_cooldown * 1 SECONDS
-		var/ability_melee_cooldown = tgui_input_number(usr, "Enter the abilities melee cooldown in seconds", "Melee Cooldown", 2)
-		if(isnull(ability_melee_cooldown) || ability_melee_cooldown < 0)
-			ability_melee_cooldown = 2
-		add_ability.melee_cooldown_time = ability_melee_cooldown * 1 SECONDS
-		add_ability.name = tgui_input_text(usr, "Choose ability name", "Ability name", "Generic Ability")
-		add_ability.create_sequence_actions()
-	else
-		add_ability = new ability_type(marked_mob)
-
-	if(isnull(marked_mob))
-		return
-	add_ability.Grant(marked_mob)
-
-	message_admins("[key_name_admin(usr)] added mob ability [ability_type] to mob [marked_mob].")
-	log_admin("[key_name(usr)] added mob ability [ability_type] to mob [marked_mob].")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Add Mob Ability") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/client/proc/remove_mob_ability()
-	set category = "Admin.Events"
-	set name = "Remove Mob Ability"
-	set desc = "Removes an ability from marked mob."
-
-	if(!holder)
-		return
-
-	if(!isliving(holder.marked_datum))
-		to_chat(usr, span_warning("Error: Please mark a mob to remove actions from it."))
-		return
-
-	var/mob/living/marked_mob = holder.marked_datum
-
-	var/list/all_mob_actions = list()
-	for(var/datum/action/cooldown/mob_cooldown/ability in marked_mob.actions)
-		all_mob_actions.Add(ability)
-
-	var/datum/action/cooldown/mob_cooldown/ability = tgui_input_list(usr, "Remove an ability", "Ability", all_mob_actions)
-
-	if(!ability)
-		return
-
-	var/ability_name = ability.name
-	QDEL_NULL(ability)
-
-	message_admins("[key_name_admin(usr)] removed ability [ability_name] from mob [marked_mob].")
-	log_admin("[key_name(usr)] removed mob ability [ability_name] from mob [marked_mob].")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Remove Mob Ability") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-

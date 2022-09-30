@@ -17,7 +17,7 @@
 /obj/machinery/computer/chef_order/Initialize(mapload)
 	. = ..()
 	radio = new(src)
-	radio.set_frequency(FREQ_SUPPLY)
+	radio.frequency = FREQ_SUPPLY
 	radio.subspace_transmission = TRUE
 	radio.canhear_range = 0
 	radio.recalculateChannels()
@@ -33,10 +33,10 @@
 /obj/machinery/computer/chef_order/proc/get_total_cost()
 	. = 0
 	for(var/datum/orderable_item/item as anything in grocery_list)
-		. += grocery_list[item] * item.cost_per_order
+		for(var/i in 1 to grocery_list[item]) //for how many times we bought it
+			. += item.cost_per_order //add its price
 
 /obj/machinery/computer/chef_order/ui_interact(mob/user, datum/tgui/ui)
-	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "ProduceConsole", name)
@@ -71,7 +71,7 @@
 	var/datum/orderable_item/wanted_item = locate(params["target"]) in order_datums
 	switch(action)
 		if("cart_set")
-			grocery_list[wanted_item] = clamp(params["amt"], 0, 20)
+			grocery_list[wanted_item] = params["amt"]
 			if(!grocery_list[wanted_item])
 				grocery_list -= wanted_item
 			update_static_data(chef)

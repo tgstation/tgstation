@@ -7,38 +7,31 @@
 
 /obj/item/implant/storage/activate()
 	. = ..()
-	atom_storage?.open_storage(imp_in)
+	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SHOW, imp_in, TRUE)
 
 /obj/item/implant/storage/removed(source, silent = FALSE, special = 0)
 	if(!special)
+		var/datum/component/storage/lostimplant = GetComponent(/datum/component/storage/concrete/implant)
 		var/mob/living/implantee = source
-
-		var/atom/resolve_parent = atom_storage.parent?.resolve()
-		if(!resolve_parent)
-			return
-
-		for (var/obj/item/I in resolve_parent.contents)
+		for (var/obj/item/I in lostimplant.contents())
 			I.add_mob_blood(implantee)
-		atom_storage.remove_all(implantee)
+		lostimplant.do_quick_empty()
 		implantee.visible_message(span_warning("A bluespace pocket opens around [src] as it exits [implantee], spewing out its contents and rupturing the surrounding tissue!"))
 		implantee.apply_damage(20, BRUTE, BODY_ZONE_CHEST)
-		qdel(atom_storage)
+		qdel(lostimplant)
 	return ..()
 
 /obj/item/implant/storage/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
 	for(var/X in target.implants)
 		if(istype(X, type))
 			var/obj/item/implant/storage/imp_e = X
-			if(!imp_e.atom_storage)
-				imp_e.create_storage(type = /datum/storage/implant)
+			var/datum/component/storage/STR = imp_e.GetComponent(/datum/component/storage)
+			if(!STR || (STR && STR.max_items < max_slot_stacking))
+				imp_e.AddComponent(/datum/component/storage/concrete/implant)
 				qdel(src)
 				return TRUE
-			else if(imp_e.atom_storage.max_slots < max_slot_stacking)
-				imp_e.atom_storage.max_slots += initial(imp_e.atom_storage.max_slots)
-				imp_e.atom_storage.max_total_storage += initial(imp_e.atom_storage.max_total_storage)
-				return TRUE
 			return FALSE
-	create_storage(type = /datum/storage/implant)
+	AddComponent(/datum/component/storage/concrete/implant)
 
 	return ..()
 

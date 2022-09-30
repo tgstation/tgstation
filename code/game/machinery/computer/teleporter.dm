@@ -39,7 +39,6 @@
 	return power_station
 
 /obj/machinery/computer/teleporter/ui_interact(mob/user, datum/tgui/ui)
-	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "Teleporter", name)
@@ -184,24 +183,21 @@
 	var/list/targets = get_targets()
 
 	if (regime_set == "Teleporter")
-		var/desc = tgui_input_list(usr, "Select a location to lock in", "Locking Computer", sort_list(targets))
-		if(isnull(desc))
-			return
+		var/desc = input("Please select a location to lock in.", "Locking Computer") as null|anything in sort_list(targets)
 		set_teleport_target(targets[desc])
-		user.log_message("set the teleporter target to [targets[desc]].]", LOG_GAME)
+		var/turf/target_turf = get_turf(targets[desc])
+		log_game("[key_name(user)] has set the teleporter target to [targets[desc]] at [AREACOORD(target_turf)]")
 	else
-		if (!length(targets))
+		if (targets.len == 0)
 			to_chat(user, span_alert("No active connected stations located."))
 			return
 
-		var/desc = tgui_input_list(usr, "Select a station to lock in", "Locking Computer", sort_list(targets))
-		if(isnull(desc))
-			return
+		var/desc = input("Please select a station to lock in.", "Locking Computer") as null|anything in sort_list(targets)
 		var/obj/machinery/teleport/station/target_station = targets[desc]
 		if(!target_station || !target_station.teleporter_hub)
 			return
 		var/turf/target_station_turf = get_turf(target_station)
-		user.log_message("set the teleporter target to [target_station_turf].", LOG_GAME)
+		log_game("[key_name(user)] has set the teleporter target to [target_station] at [AREACOORD(target_station_turf)]")
 		set_teleport_target(target_station.teleporter_hub)
 		lock_in_station(target_station)
 

@@ -5,26 +5,40 @@ import { NtosWindow } from '../layouts';
 
 export const NtosCrewManifest = (props, context) => {
   const { act, data } = useBackend(context);
-  const { manifest = {} } = data;
+  const {
+    have_printer,
+    manifest = {},
+  } = data;
   return (
-    <NtosWindow width={400} height={480}>
+    <NtosWindow
+      width={400}
+      height={480}>
       <NtosWindow.Content scrollable>
         <Section
           title="Crew Manifest"
-          buttons={
+          buttons={(
             <Button
               icon="print"
               content="Print"
-              onClick={() => act('PRG_print')}
-            />
-          }>
+              disabled={!have_printer}
+              onClick={() => act('PRG_print')} />
+          )}>
           {map((entries, department) => (
-            <Section key={department} level={2} title={department}>
+            <Section
+              key={department}
+              level={2}
+              title={department}>
               <Table>
-                {entries.map((entry) => (
-                  <Table.Row key={entry.name} className="candystripe">
-                    <Table.Cell bold>{entry.name}</Table.Cell>
-                    <Table.Cell>({entry.rank})</Table.Cell>
+                {entries.map(entry => (
+                  <Table.Row
+                    key={entry.name}
+                    className="candystripe">
+                    <Table.Cell bold>
+                      {entry.name}
+                    </Table.Cell>
+                    <Table.Cell>
+                      ({entry.rank})
+                    </Table.Cell>
                   </Table.Row>
                 ))}
               </Table>

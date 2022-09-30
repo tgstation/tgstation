@@ -30,14 +30,6 @@ $fg-map: colors.$fg-map !default;
   user-select: none;
 }
 
-.ObjectComponent__Greyed_Content {
-  white-space: nowrap;
-  background-color: rgba(19, 19, 19, 0.5);
-
-  -ms-user-select: none;
-  user-select: none;
-}
-
 .ObjectComponent__Port {
   position: relative;
   width: 13px;
@@ -65,7 +57,7 @@ $fg-map: colors.$fg-map !default;
 $border-color: #88bfff !default;
 $border-radius: base.$border-radius !default;
 
-.IntegratedCircuit__BlueBorder {
+.Datatype__Option {
   border: base.em(1px) solid $border-color;
   border: base.em(1px) solid rgba($border-color, 0.75);
   border-radius: $border-radius;

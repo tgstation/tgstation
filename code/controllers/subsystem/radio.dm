@@ -5,7 +5,7 @@ SUBSYSTEM_DEF(radio)
 	var/list/datum/radio_frequency/frequencies = list()
 	var/list/saymodes = list()
 
-/datum/controller/subsystem/radio/PreInit()
+/datum/controller/subsystem/radio/PreInit(timeofday)
 	for(var/_SM in subtypesof(/datum/saymode))
 		var/datum/saymode/SM = new _SM()
 		saymodes[SM.key] = SM

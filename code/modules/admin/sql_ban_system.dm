@@ -1,8 +1,6 @@
 #define MAX_ADMINBANS_PER_ADMIN 1
 #define MAX_ADMINBANS_PER_HEADMIN 3
 
-#define MAX_REASON_LENGTH 600
-
 //checks client ban cache or DB ban table if ckey is banned from one or more roles
 //doesn't return any details, use only for if statements
 /proc/is_banned_from(player_ckey, list/roles)
@@ -10,7 +8,7 @@
 		return
 	var/client/player_client = GLOB.directory[player_ckey]
 	if(player_client)
-		var/list/ban_cache = retrieve_ban_cache(player_client)
+		var/list/ban_cache = player_client.ban_cache || build_ban_cache(player_client)
 		if(!islist(ban_cache))
 			return // Disconnected while building the list.
 		if(islist(roles))
@@ -85,43 +83,12 @@
 		. += list(list("id" = query_check_ban.item[1], "bantime" = query_check_ban.item[2], "round_id" = query_check_ban.item[3], "expiration_time" = query_check_ban.item[4], "duration" = query_check_ban.item[5], "applies_to_admins" = query_check_ban.item[6], "reason" = query_check_ban.item[7], "key" = query_check_ban.item[8], "ip" = query_check_ban.item[9], "computerid" = query_check_ban.item[10], "admin_key" = query_check_ban.item[11]))
 	qdel(query_check_ban)
 
-/// Gets the ban cache of the passed in client
-/// If the cache has not been generated, we start off a query
-/// If we still have a query going for this request, we just sleep until it's recieved back
-/proc/retrieve_ban_cache(client/player_client)
-	if(QDELETED(player_client))
-		return
-
-	if(player_client.ban_cache)
-		return player_client.ban_cache
-
-	var/config_delay = CONFIG_GET(number/blocking_query_timeout) SECONDS
-	// If we haven't got a query going right now, or we've timed out on the old query
-	if(player_client.ban_cache_start + config_delay < REALTIMEOFDAY)
-		return build_ban_cache(player_client)
-
-	// Ok so we've got a request going, lets start a wait cycle
-	// If we wait longer then config/db_ban_timeout we'll send another request
-	// We use timeofday here because we're talking human time
-	// We do NOT cache the start time because it can update, and we want it to be able to
-	while(player_client && player_client?.ban_cache_start + config_delay >= REALTIMEOFDAY && !player_client?.ban_cache)
-		// Wait a decisecond or two would ya?
-		// If this causes lag on client join, increase this delay. it doesn't need to be too fast since this should
-		// Realllly only happen near Login, and we're unlikely to make any new requests in that time
-		stoplag(2)
-
-	// If we have a ban cache, use it. if we've timed out, go ahead and start another query would you?
-	// This will update any other sleep loops, so we should only run one at a time
-	return player_client?.ban_cache || build_ban_cache(player_client)
 
 /proc/build_ban_cache(client/player_client)
 	if(!SSdbcore.Connect())
 		return
 	if(QDELETED(player_client))
 		return
-	var/current_time = REALTIMEOFDAY
-	player_client.ban_cache_start = current_time
-
 	var/ckey = player_client.ckey
 	var/list/ban_cache = list()
 	var/is_admin = FALSE
@@ -131,14 +98,9 @@
 		"SELECT role, applies_to_admins FROM [format_table_name("ban")] WHERE ckey = :ckey AND unbanned_datetime IS NULL AND (expiration_time IS NULL OR expiration_time > NOW())",
 		list("ckey" = ckey)
 	)
-	var/query_successful = query_build_ban_cache.warn_execute()
-	// After we sleep, we check if this was the most recent cache build, and if so we clear our start time
-	if(player_client?.ban_cache_start == current_time)
-		player_client.ban_cache_start = 0
-	if(!query_successful)
+	if(!query_build_ban_cache.warn_execute())
 		qdel(query_build_ban_cache)
 		return
-
 	while(query_build_ban_cache.NextRow())
 		if(is_admin && !text2num(query_build_ban_cache.item[2]))
 			continue
@@ -151,9 +113,6 @@
 
 
 /datum/admins/proc/ban_panel(player_key, player_ip, player_cid, role, duration = 1440, applies_to_admins, reason, edit_id, page, admin_key)
-	if (duration == BAN_PANEL_PERMANENT)
-		duration = null
-
 	var/panel_height = 620
 	if(edit_id)
 		panel_height = 240
@@ -242,7 +201,7 @@
 		<div class='column'>
 			Reason
 			<br>
-			<textarea class='reason' name='reason' maxlength='[MAX_REASON_LENGTH]'>[reason]</textarea>
+			<textarea class='reason' name='reason'>[reason]</textarea>
 		</div>
 	</div>
 	"}
@@ -260,7 +219,6 @@
 		<input type='hidden' name='oldreason' value='[reason]'>
 		<input type='hidden' name='page' value='[page]'>
 		<input type='hidden' name='adminkey' value='[admin_key]'>
-		<input type='hidden' name='role' value='[role]'>
 		<br>
 		When ticked, edits here will also affect bans created with matching ckey, IP, CID and time. Use this to edit all role bans which were made at the same time.
 		"}
@@ -315,7 +273,7 @@
 			break_counter = 0
 
 		var/list/other_job_lists = list(
-			"Abstract" = list("Appearance", "Emote", "Deadchat", "OOC", "Urgent Adminhelp"),
+			"Abstract" = list("Appearance", "Emote", "Deadchat", "OOC"),
 			)
 		for(var/department in other_job_lists)
 			output += "<div class='column'><label class='rolegroup [ckey(department)]'>[tgui_fancy ? "<input type='checkbox' name='[department]' class='hidden' onClick='header_click_all_checkboxes(this)'>" : ""][department]</label><div class='content'>"
@@ -347,9 +305,12 @@
 				ROLE_BROTHER,
 				ROLE_CHANGELING,
 				ROLE_CULTIST,
+				ROLE_FAMILIES,
 				ROLE_HERETIC,
 				ROLE_HIVE,
+				ROLE_INTERNAL_AFFAIRS,
 				ROLE_MALF,
+				ROLE_MONKEY,
 				ROLE_NINJA,
 				ROLE_OPERATIVE,
 				ROLE_OVERTHROW,
@@ -358,6 +319,7 @@
 				ROLE_REV_HEAD,
 				ROLE_SENTIENT_DISEASE,
 				ROLE_SPIDER,
+				ROLE_SWARMER,
 				ROLE_SYNDICATE,
 				ROLE_TRAITOR,
 				ROLE_WIZARD,
@@ -448,8 +410,6 @@
 	reason = href_list["reason"]
 	if(!reason)
 		error_state += "No reason was provided."
-	if(length(reason) > MAX_REASON_LENGTH)
-		error_state += "Reason cannot be more than [MAX_REASON_LENGTH] characters."
 	if(href_list["editid"])
 		edit_id = href_list["editid"]
 		if(href_list["mirroredit"])
@@ -474,7 +434,6 @@
 			changes += list("Reason" = "[href_list["oldreason"]]<br>to<br>[reason]")
 		if(!changes.len)
 			error_state += "No changes were detected."
-		roles_to_ban += href_list["role"]
 	else
 		severity = href_list["radioseverity"]
 		if(!severity)
@@ -484,12 +443,10 @@
 				roles_to_ban += "Server"
 			if("role")
 				href_list.Remove("Command", "Security", "Engineering", "Medical", "Science", "Supply", "Silicon", "Abstract", "Service", "Ghost and Other Roles", "Antagonist Positions") //remove the role banner hidden input values
-				var/delimiter_pos = href_list.Find("roleban_delimiter")
-				if(href_list.len == delimiter_pos)
+				if(href_list[href_list.len] == "roleban_delimiter")
 					error_state += "Role ban was selected but no roles to ban were selected."
-				else if(delimiter_pos == 0)
-					error_state += "roleban_delimiter not found in href. Report this to coders."
 				else
+					var/delimiter_pos = href_list.Find("roleban_delimiter")
 					href_list.Cut(1, delimiter_pos+1)//remove every list element before and including roleban_delimiter so we have a list of only the roles to ban
 					for(var/key in href_list) //flatten into a list of only unique keys
 						roles_to_ban |= key
@@ -710,7 +667,7 @@
 		while(query_unban_search_bans.NextRow())
 			var/ban_id = query_unban_search_bans.item[1]
 			var/ban_datetime = query_unban_search_bans.item[2]
-			var/ban_round_id = query_unban_search_bans.item[3]
+			var/ban_round_id  = query_unban_search_bans.item[3]
 			var/role = query_unban_search_bans.item[4]
 			var/expiration_time = query_unban_search_bans.item[5]
 			//we don't cast duration as num because if the duration is large enough to be converted to scientific notation by byond then the + character gets lost when passed through href causing SQL to interpret '4.321e 007' as '4'
@@ -1007,7 +964,7 @@
 	if(query_check_adminban_count.NextRow())
 		var/adminban_count = text2num(query_check_adminban_count.item[1])
 		var/max_adminbans = MAX_ADMINBANS_PER_ADMIN
-		if(check_rights(R_PERMISSIONS, show_msg = FALSE) && (can_edit_rights_flags() & R_EVERYTHING) == R_EVERYTHING) //edit rights are a more effective way to check hierarchical rank since many non-headmins have R_PERMISSIONS now
+		if(check_rights(R_PERMISSIONS, show_msg = FALSE) && (rank.can_edit_rights & R_EVERYTHING) == R_EVERYTHING) //edit rights are a more effective way to check hierarchical rank since many non-headmins have R_PERMISSIONS now
 			max_adminbans = MAX_ADMINBANS_PER_HEADMIN
 		if(adminban_count >= max_adminbans)
 			to_chat(usr, span_danger("You've already logged [max_adminbans] admin ban(s) or more. Do not abuse this function!"), confidential = TRUE)
@@ -1056,5 +1013,3 @@
 				is_admin = TRUE
 			if(kick_banned_players && (!is_admin || (is_admin && applies_to_admins)))
 				qdel(other_player_client)
-
-#undef MAX_REASON_LENGTH

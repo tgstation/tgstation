@@ -6,13 +6,16 @@ import { Window } from '../layouts';
 
 export const ApprenticeContract = (props, context) => {
   return (
-    <Window width={620} height={600} theme="wizard">
+    <Window
+      width={620}
+      height={600}
+      theme="wizard">
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
             <Section textColor="lightgreen" fontSize="15px">
-              If you cannot reach any of your apprentices today, you can feed
-              the contract back into your spellbook to refund it.
+              If you cannot reach any of your apprentices today,
+              you can feed the contract back into your spellbook to refund it.
             </Section>
           </Stack.Item>
           <Stack.Item grow>
@@ -24,8 +27,7 @@ export const ApprenticeContract = (props, context) => {
               blurb={multiline`
                 Your apprentice is skilled in offensive magic.
                 They know Magic Missile and Fireball.
-              `}
-            />
+              `} />
             <ApprenticeSelection
               iconName="route"
               fluffName="Student of Translocation"
@@ -35,8 +37,7 @@ export const ApprenticeContract = (props, context) => {
               Your apprentice is able to defy physics, melting through
               solid objects and travelling great distances in the
               blink of an eye. They know Teleport and Ethereal Jaunt.
-              `}
-            />
+              `} />
             <ApprenticeSelection
               iconName="medkit"
               fluffName="Neophyte of Restoration"
@@ -46,8 +47,7 @@ export const ApprenticeContract = (props, context) => {
               Your apprentice is training to cast spells that will
               aid your survival. They know Forcewall and Charge and
               come with a Staff of Healing.
-              `}
-            />
+              `} />
             <ApprenticeSelection
               iconName="user-secret"
               fluffName="Robeless Pupil"
@@ -56,8 +56,7 @@ export const ApprenticeContract = (props, context) => {
               blurb={multiline`
               Your apprentice is training to cast spells without
               their robes. They know Knock and Mindswap.
-              `}
-            />
+              `} />
           </Stack.Item>
         </Stack>
       </Window.Content>
@@ -67,7 +66,13 @@ export const ApprenticeContract = (props, context) => {
 
 const ApprenticeSelection = (props, context) => {
   const { act } = useBackend(context);
-  const { iconName, fluffName, schoolTitle, assetName, blurb } = props;
+  const {
+    iconName,
+    fluffName,
+    schoolTitle,
+    assetName,
+    blurb,
+  } = props;
   return (
     <Section>
       <Stack align="middle" fill>
@@ -77,20 +82,17 @@ const ApprenticeSelection = (props, context) => {
               <img
                 src={resolveAsset(assetName)}
                 style={{
-                  'border-style': 'solid',
-                  'border-color': '#7e90a7',
-                }}
-              />
+                  "border-style": "solid",
+                  "border-color": "#7e90a7",
+                }} />
             </Stack.Item>
             <Stack.Item>
               <Button
                 textAlign="center"
                 fluid
-                onClick={() =>
-                  act('buy', {
-                    school: schoolTitle,
-                  })
-                }>
+                onClick={() => act('buy', {
+                  school: schoolTitle,
+                })}>
                 Select
               </Button>
             </Stack.Item>

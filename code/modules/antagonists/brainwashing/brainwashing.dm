@@ -26,14 +26,14 @@
 		L.say("You son of a bitch! I'm in.", forced = "That son of a bitch! They're in.")
 
 /datum/antagonist/brainwashed
-	name = "\improper Brainwashed Victim"
+	name = "Brainwashed Victim"
 	job_rank = ROLE_BRAINWASHED
 	roundend_category = "brainwashed victims"
 	show_in_antagpanel = TRUE
+	antag_hud_type = ANTAG_HUD_BRAINWASHED
 	antag_hud_name = "brainwashed"
 	antagpanel_category = "Other"
 	show_name_in_check_antagonists = TRUE
-	count_against_dynamic_roll_chance = FALSE
 	ui_name = "AntagInfoBrainwashed"
 	suicide_cry = "FOR... SOMEONE!!"
 
@@ -42,6 +42,16 @@
 	var/list/data = list()
 	data["objectives"] = get_objectives()
 	return data
+
+/datum/antagonist/brainwashed/apply_innate_effects(mob/living/mob_override)
+	. = ..()
+	var/mob/living/current_mob = mob_override || owner.current
+	add_antag_hud(antag_hud_type, antag_hud_name, current_mob)
+
+/datum/antagonist/brainwashed/remove_innate_effects(mob/living/mob_override)
+	var/mob/living/current_mob = mob_override || owner.current
+	remove_antag_hud(antag_hud_type, current_mob)
+	return ..()
 
 /datum/antagonist/brainwashed/farewell()
 	to_chat(owner, span_warning("Your mind suddenly clears..."))
@@ -62,10 +72,10 @@
 		return
 	var/list/objectives = list()
 	do
-		var/objective = tgui_input_text(admin, "Add an objective", "Brainwashing")
+		var/objective = stripped_input(admin, "Add an objective, or leave empty to finish.", "Brainwashing", null, MAX_MESSAGE_LEN)
 		if(objective)
 			objectives += objective
-	while(tgui_alert(admin, "Add another objective?", "More Brainwashing", list("Yes","No")) == "Yes")
+	while(tgui_alert(admin,"Add another objective?","More Brainwashing",list("Yes","No")) == "Yes")
 
 	if(tgui_alert(admin,"Confirm Brainwashing?","Are you sure?",list("Yes","No")) == "No")
 		return

@@ -14,7 +14,6 @@
 import { perf } from 'common/perf';
 import { createAction } from 'common/redux';
 import { setupDrag } from './drag';
-import { globalEvents } from './events';
 import { focusMap } from './focus';
 import { createLogger } from './logging';
 import { resumeRenderer, suspendRenderer } from './renderer';
@@ -63,7 +62,8 @@ export const backendReducer = (state = initialState, action) => {
         const value = payload.shared[key];
         if (value === '') {
           shared[key] = undefined;
-        } else {
+        }
+        else {
           shared[key] = JSON.parse(value);
         }
       }
@@ -115,11 +115,11 @@ export const backendReducer = (state = initialState, action) => {
   return state;
 };
 
-export const backendMiddleware = (store) => {
+export const backendMiddleware = store => {
   let fancyState;
   let suspendInterval;
 
-  return (next) => (action) => {
+  return next => action => {
     const { suspended } = selectBackend(store.getState());
     const { type, payload } = action;
 
@@ -134,23 +134,19 @@ export const backendMiddleware = (store) => {
     }
 
     if (type === 'ping') {
-      Byond.sendMessage('ping/reply');
+      sendMessage({
+        type: 'pingReply',
+      });
       return;
     }
 
-    if (type === 'byond/mousedown') {
-      globalEvents.emit('byond/mousedown');
-    }
-
-    if (type === 'byond/mouseup') {
-      globalEvents.emit('byond/mouseup');
-    }
-
     if (type === 'backend/suspendStart' && !suspendInterval) {
-      logger.log(`suspending (${Byond.windowId})`);
+      logger.log(`suspending (${window.__windowId__})`);
       // Keep sending suspend messages until it succeeds.
       // It may fail multiple times due to topic rate limiting.
-      const suspendFn = () => Byond.sendMessage('suspend');
+      const suspendFn = () => sendMessage({
+        type: 'suspend',
+      });
       suspendFn();
       suspendInterval = setInterval(suspendFn, 2000);
     }
@@ -159,7 +155,7 @@ export const backendMiddleware = (store) => {
       suspendRenderer();
       clearInterval(suspendInterval);
       suspendInterval = undefined;
-      Byond.winset(Byond.windowId, {
+      Byond.winset(window.__windowId__, {
         'is-visible': false,
       });
       setImmediate(() => focusMap());
@@ -175,7 +171,7 @@ export const backendMiddleware = (store) => {
       else if (fancyState !== fancy) {
         logger.log('changing fancy mode to', fancy);
         fancyState = fancy;
-        Byond.winset(Byond.windowId, {
+        Byond.winset(window.__windowId__, {
           titlebar: !fancy,
           'can-resize': !fancy,
         });
@@ -199,15 +195,13 @@ export const backendMiddleware = (store) => {
         if (suspended) {
           return;
         }
-        Byond.winset(Byond.windowId, {
+        Byond.winset(window.__windowId__, {
           'is-visible': true,
         });
         perf.mark('resume/finish');
         if (process.env.NODE_ENV !== 'production') {
-          logger.log(
-            'visible in',
-            perf.measure('render/finish', 'resume/finish')
-          );
+          logger.log('visible in',
+            perf.measure('render/finish', 'resume/finish'));
         }
       });
     }
@@ -217,12 +211,30 @@ export const backendMiddleware = (store) => {
 };
 
 /**
+ * Sends a message to /datum/tgui_window.
+ */
+export const sendMessage = (message: any = {}) => {
+  const { payload, ...rest } = message;
+  const data: any = {
+    // Message identifying header
+    tgui: 1,
+    window_id: window.__windowId__,
+    // Message body
+    ...rest,
+  };
+  // JSON-encode the payload
+  if (payload !== null && payload !== undefined) {
+    data.payload = JSON.stringify(payload);
+  }
+  Byond.topic(data);
+};
+
+/**
  * Sends an action to `ui_act` on `src_object` that this tgui window
  * is associated with.
  */
 export const sendAct = (action: string, payload: object = {}) => {
   // Validate that payload is an object
-  // prettier-ignore
   const isObject = typeof payload === 'object'
     && payload !== null
     && !Array.isArray(payload);
@@ -230,47 +242,53 @@ export const sendAct = (action: string, payload: object = {}) => {
     logger.error(`Payload for act() must be an object, got this:`, payload);
     return;
   }
-  Byond.sendMessage('act/' + action, payload);
+  sendMessage({
+    type: 'act/' + action,
+    payload,
+  });
 };
 
 type BackendState<TData> = {
   config: {
-    title: string;
-    status: number;
-    interface: string;
-    refreshing: boolean;
+    title: string,
+    status: number,
+    interface: string,
     window: {
-      key: string;
-      size: [number, number];
-      fancy: boolean;
-      locked: boolean;
-    };
+      key: string,
+      size: [number, number],
+      fancy: boolean,
+      locked: boolean,
+    },
     client: {
-      ckey: string;
-      address: string;
-      computer_id: string;
-    };
+      ckey: string,
+      address: string,
+      computer_id: string,
+    },
     user: {
-      name: string;
-      observer: number;
-    };
-  };
-  data: TData;
-  shared: Record<string, any>;
-  suspending: boolean;
-  suspended: boolean;
-};
+      name: string,
+      observer: number,
+    },
+  },
+  data: TData,
+  shared: Record<string, any>,
+  suspending: boolean,
+  suspended: boolean,
+}
 
 /**
  * Selects a backend-related slice of Redux state
  */
-export const selectBackend = <TData>(state: any): BackendState<TData> =>
-  state.backend || {};
+export const selectBackend = <TData>(state: any): BackendState<TData> => (
+  state.backend || {}
+);
 
 /**
- * Get data from tgui backend.
+ * A React hook (sort of) for getting tgui state and related functions.
  *
- * Includes the `act` function for performing DM actions.
+ * This is supposed to be replaced with a real React Hook, which can only
+ * be used in functional components.
+ *
+ * You can make
  */
 export const useBackend = <TData>(context: any) => {
   const { store } = context;
@@ -302,24 +320,25 @@ type StateWithSetter<T> = [T, (nextState: T) => void];
 export const useLocalState = <T>(
   context: any,
   key: string,
-  initialState: T
+  initialState: T,
 ): StateWithSetter<T> => {
   const { store } = context;
   const state = selectBackend(store.getState());
   const sharedStates = state.shared ?? {};
-  const sharedState = key in sharedStates ? sharedStates[key] : initialState;
+  const sharedState = (key in sharedStates)
+    ? sharedStates[key]
+    : initialState;
   return [
     sharedState,
-    (nextState) => {
-      store.dispatch(
-        backendSetSharedState({
-          key,
-          nextState:
-            typeof nextState === 'function'
-              ? nextState(sharedState)
-              : nextState,
-        })
-      );
+    nextState => {
+      store.dispatch(backendSetSharedState({
+        key,
+        nextState: (
+          typeof nextState === 'function'
+            ? nextState(sharedState)
+            : nextState
+        ),
+      }));
     },
   ];
 };
@@ -341,17 +360,18 @@ export const useLocalState = <T>(
 export const useSharedState = <T>(
   context: any,
   key: string,
-  initialState: T
+  initialState: T,
 ): StateWithSetter<T> => {
   const { store } = context;
   const state = selectBackend(store.getState());
   const sharedStates = state.shared ?? {};
-  const sharedState = key in sharedStates ? sharedStates[key] : initialState;
+  const sharedState = (key in sharedStates)
+    ? sharedStates[key]
+    : initialState;
   return [
     sharedState,
-    (nextState) => {
-      // prettier-ignore
-      Byond.sendMessage({
+    nextState => {
+      sendMessage({
         type: 'setSharedState',
         key,
         value: JSON.stringify(

@@ -1,10 +1,8 @@
-#define RANDOM_EVENT_ADMIN_INTERVENTION_TIME (10 SECONDS)
+#define RANDOM_EVENT_ADMIN_INTERVENTION_TIME 10
 
 //this singleton datum is used by the events controller to dictate how it selects events
 /datum/round_event_control
 	var/name //The human-readable name of the event
-	var/category //The category of the event
-	var/description //The description of the event
 	var/typepath //The typepath of the event datum /datum/round_event
 
 	var/weight = 10 //The weight this event has in the random-selection process.
@@ -36,7 +34,6 @@
 		min_players = CEILING(min_players * CONFIG_GET(number/events_min_players_mul), 1)
 
 /datum/round_event_control/wizard
-	category = EVENT_CATEGORY_WIZARD
 	wizardevent = TRUE
 
 // Checks if the event can be spawned. Used by event controller and "false alarm" event.
@@ -72,8 +69,8 @@
 
 	triggering = TRUE
 	if (alert_observers)
-		message_admins("Random Event triggering in [DisplayTimeText(RANDOM_EVENT_ADMIN_INTERVENTION_TIME)]: [name] (<a href='?src=[REF(src)];cancel=1'>CANCEL</a>)")
-		sleep(RANDOM_EVENT_ADMIN_INTERVENTION_TIME)
+		message_admins("Random Event triggering in [RANDOM_EVENT_ADMIN_INTERVENTION_TIME] seconds: [name] (<a href='?src=[REF(src)];cancel=1'>CANCEL</a>)")
+		sleep(RANDOM_EVENT_ADMIN_INTERVENTION_TIME SECONDS)
 		var/players_amt = get_active_player_count(alive_check = TRUE, afk_check = TRUE, human_check = TRUE)
 		if(!canSpawnEvent(players_amt))
 			message_admins("Second pre-condition check for [name] failed, skipping...")
@@ -95,85 +92,40 @@
 		log_admin_private("[key_name(usr)] cancelled event [name].")
 		SSblackbox.record_feedback("tally", "event_admin_cancelled", 1, typepath)
 
-/*
-Runs the event
-* Arguments:
-* - random: shows if the event was triggered randomly, or by on purpose by an admin or an item
-* - announce_chance_override: if the value is not null, overrides the announcement chance when an admin calls an event
-*/
-/datum/round_event_control/proc/runEvent(random = FALSE, announce_chance_override = null, admin_forced = FALSE)
-	/*
-	* We clear our signals first so we dont cancel a wanted event by accident,
-	* the majority of time the admin will probably want to cancel a single midround spawned random events
-	* and not multiple events called by others admins
-	* * In the worst case scenario we can still recall a event which we cancelled by accident, which is much better then to have a unwanted event
-	*/
-	UnregisterSignal(SSdcs, COMSIG_GLOB_RANDOM_EVENT)
+/datum/round_event_control/proc/runEvent(random = FALSE)
 	var/datum/round_event/E = new typepath()
 	E.current_players = get_active_player_count(alive_check = 1, afk_check = 1, human_check = 1)
 	E.control = src
+	SSblackbox.record_feedback("tally", "event_ran", 1, "[E]")
 	occurrences++
 
-	if(announce_chance_override != null)
-		E.announce_chance = announce_chance_override
-
 	testing("[time2text(world.time, "hh:mm:ss")] [E.type]")
-	triggering = TRUE
-
-	if (alert_observers && !admin_forced)
-		message_admins("Random Event triggering in [DisplayTimeText(RANDOM_EVENT_ADMIN_INTERVENTION_TIME)]: [name] (<a href='?src=[REF(src)];cancel=1'>CANCEL</a>).")
-		sleep(RANDOM_EVENT_ADMIN_INTERVENTION_TIME)
-
-	if(!triggering)
-		RegisterSignal(SSdcs, COMSIG_GLOB_RANDOM_EVENT, .proc/stop_random_event)
-		E.cancel_event = TRUE
-		return E
-
-	triggering = FALSE
 	if(random)
-		log_game("Random Event triggering: [name] ([typepath]).")
-
-	if(alert_observers)
+		log_game("Random Event triggering: [name] ([typepath])")
+	if (alert_observers)
 		deadchat_broadcast(" has just been[random ? " randomly" : ""] triggered!", "<b>[name]</b>", message_type=DEADCHAT_ANNOUNCEMENT) //STOP ASSUMING IT'S BADMINS!
-
-	SSblackbox.record_feedback("tally", "event_ran", 1, "[E]")
 	return E
 
-//Returns the component for the listener
-/datum/round_event_control/proc/stop_random_event()
-	SIGNAL_HANDLER
-	return CANCEL_RANDOM_EVENT
-
-/// Any special things admins can do while triggering this event to "improve" it.
-/// Return [ADMIN_CANCEL_EVENT] to stop the event from actually happening after all
-/datum/round_event_control/proc/admin_setup(mob/admin)
+//Special admins setup
+/datum/round_event_control/proc/admin_setup()
 	return
 
 /datum/round_event //NOTE: Times are measured in master controller ticks!
 	var/processing = TRUE
 	var/datum/round_event_control/control
 
-	/// When in the lifetime to call start().
-	var/start_when = 0
-	/// When in the lifetime to call announce(). If you don't want it to announce use announce_chance, below.
-	var/announce_when = 0
-	/// Probability of announcing, used in prob(), 0 to 100, default 100. Called in process, and for a second time in the ion storm event.
-	var/announce_chance = 100
-	/// When in the lifetime the event should end.
-	var/end_when = 0
+	var/startWhen = 0 //When in the lifetime to call start().
+	var/announceWhen = 0 //When in the lifetime to call announce(). If you don't want it to announce use announceChance, below.
+	var/announceChance = 100 // Probability of announcing, used in prob(), 0 to 100, default 100. Used in ion storms currently.
+	var/endWhen = 0 //When in the lifetime the event should end.
 
-	/// How long the event has existed. You don't need to change this.
-	var/activeFor = 0
-	/// Amount of of alive, non-AFK human players on server at the time of event start
-	var/current_players = 0
-	/// Can be faked by fake news event.
-	var/fakeable = TRUE
-	/// Whether a admin wants this event to be cancelled
-	var/cancel_event = FALSE
+	var/activeFor = 0 //How long the event has existed. You don't need to change this.
+	var/current_players = 0 //Amount of of alive, non-AFK human players on server at the time of event start
+	var/fakeable = TRUE //Can be faked by fake news event.
 
 //Called first before processing.
 //Allows you to setup your event, such as randomly
-//setting the start_when and or announce_when variables.
+//setting the startWhen and or announceWhen variables.
 //Only called once.
 //EDIT: if there's anything you want to override within the new() call, it will not be overridden by the time this proc is called.
 //It will only have been overridden by the time we get to announce() start() tick() or end() (anything but setup basically).
@@ -181,7 +133,7 @@ Runs the event
 /datum/round_event/proc/setup()
 	return
 
-//Called when the tick is equal to the start_when variable.
+//Called when the tick is equal to the startWhen variable.
 //Allows you to start before announcing or vice versa.
 //Only called once.
 /datum/round_event/proc/start()
@@ -196,20 +148,20 @@ Runs the event
 			notify_ghosts("[control.name] has an object of interest: [atom_of_interest]!", source=atom_of_interest, action=NOTIFY_ORBIT, header="Something's Interesting!")
 	return
 
-//Called when the tick is equal to the announce_when variable.
+//Called when the tick is equal to the announceWhen variable.
 //Allows you to announce before starting or vice versa.
 //Only called once.
 /datum/round_event/proc/announce(fake)
 	return
 
-//Called on or after the tick counter is equal to start_when.
+//Called on or after the tick counter is equal to startWhen.
 //You can include code related to your event or add your own
 //time stamped events.
 //Called more than once.
 /datum/round_event/proc/tick()
 	return
 
-//Called on or after the tick is equal or more than end_when
+//Called on or after the tick is equal or more than endWhen
 //You can include code related to the event ending.
 //Do not place spawn() in here, instead use tick() to check for
 //the activeFor variable.
@@ -227,33 +179,28 @@ Runs the event
 	if(!processing)
 		return
 
-	if(SEND_GLOBAL_SIGNAL(COMSIG_GLOB_RANDOM_EVENT, src) & CANCEL_RANDOM_EVENT)
-		processing = FALSE
-		kill()
-		return
-
-	if(activeFor == start_when)
+	if(activeFor == startWhen)
 		processing = FALSE
 		start()
 		processing = TRUE
 
-	if(activeFor == announce_when && prob(announce_chance))
+	if(activeFor == announceWhen && prob(announceChance))
 		processing = FALSE
 		announce(FALSE)
 		processing = TRUE
 
-	if(start_when < activeFor && activeFor < end_when)
+	if(startWhen < activeFor && activeFor < endWhen)
 		processing = FALSE
 		tick()
 		processing = TRUE
 
-	if(activeFor == end_when)
+	if(activeFor == endWhen)
 		processing = FALSE
 		end()
 		processing = TRUE
 
 	// Everything is done, let's clean up.
-	if(activeFor >= end_when && activeFor >= announce_when && activeFor >= start_when)
+	if(activeFor >= endWhen && activeFor >= announceWhen && activeFor >= startWhen)
 		processing = FALSE
 		kill()
 

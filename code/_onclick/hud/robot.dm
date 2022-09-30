@@ -81,11 +81,6 @@
 	using.screen_loc = ui_borg_language_menu
 	static_inventory += using
 
-// Navigation
-	using = new /atom/movable/screen/navigate
-	using.screen_loc = ui_borg_navigate_menu
-	static_inventory += using
-
 //Radio
 	using = new /atom/movable/screen/robot/radio()
 	using.screen_loc = ui_borg_radio
@@ -130,16 +125,14 @@
 	static_inventory += using
 
 //Borg Integrated Tablet
-	using = new /atom/movable/screen/robot/modpc()
+	using = new /atom/movable/screen/robot/modPC()
 	using.screen_loc = ui_borg_tablet
 	using.hud = src
 	static_inventory += using
 	robit.interfaceButton = using
 	if(robit.modularInterface)
-		// Just trust me
-		robit.modularInterface.vis_flags |= VIS_INHERIT_PLANE
 		using.vis_contents += robit.modularInterface
-	var/atom/movable/screen/robot/modpc/tabletbutton = using
+	var/atom/movable/screen/robot/modPC/tabletbutton = using
 	tabletbutton.robot = robit
 
 //Alerts
@@ -233,7 +226,7 @@
 				A.screen_loc = "CENTER[x]:16,SOUTH+[y]:7"
 			else
 				A.screen_loc = "CENTER+[x]:16,SOUTH+[y]:7"
-			SET_PLANE_IMPLICIT(A, ABOVE_HUD_PLANE)
+			A.plane = ABOVE_HUD_PLANE
 
 			x++
 			if(x == 4)
@@ -299,18 +292,18 @@
 		robot = null
 	return ..()
 
-/atom/movable/screen/robot/modpc
+/atom/movable/screen/robot/modPC
 	name = "Modular Interface"
 	icon_state = "template"
 	var/mob/living/silicon/robot/robot
 
-/atom/movable/screen/robot/modpc/Click()
+/atom/movable/screen/robot/modPC/Click()
 	. = ..()
 	if(.)
 		return
 	robot.modularInterface?.interact(robot)
 
-/atom/movable/screen/robot/modpc/Destroy()
+/atom/movable/screen/robot/modPC/Destroy()
 	if(robot)
 		robot.interfaceButton = null
 		robot = null

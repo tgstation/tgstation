@@ -5,51 +5,45 @@
 
 /obj/item/circuitboard
 	name = "circuit board"
-	/// extension that is applied after the initial name AKA (Computer/Machine Board)
-	var/name_extension = null
 	icon = 'icons/obj/module.dmi'
 	icon_state = "circuit_map"
 	inhand_icon_state = "electronic"
-	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
-	custom_materials = list(/datum/material/glass = 1000)
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	custom_materials = list(/datum/material/glass=1000)
 	w_class = WEIGHT_CLASS_SMALL
 	grind_results = list(/datum/reagent/silicon = 20)
 	greyscale_colors = CIRCUIT_COLOR_GENERIC
 	var/build_path = null
 	///determines if the circuit board originated from a vendor off station or not.
 	var/onstation = TRUE
-	///determines if the board requires specific levels of parts. (ie specifically a femto menipulator vs generic manipulator)
-	var/specific_parts = FALSE
 
 /obj/item/circuitboard/Initialize(mapload)
-	if(name_extension)
-		name = "[initial(name)] [name_extension]"
-	set_greyscale(new_config = /datum/greyscale_config/circuit)
+	set_greyscale(new_config=/datum/greyscale_config/circuit)
 	return ..()
 
-/obj/item/circuitboard/proc/apply_default_parts(obj/machinery/machine)
-	if(LAZYLEN(machine.component_parts))
+/obj/item/circuitboard/proc/apply_default_parts(obj/machinery/M)
+	if(LAZYLEN(M.component_parts))
 		// This really shouldn't happen. If it somehow does, print out a stack trace and gracefully handle it.
-		stack_trace("apply_defauly_parts called on machine that already had component_parts: [machine]")
+		stack_trace("apply_defauly_parts called on machine that already had component_parts: [M]")
 
 		// Move to nullspace so you don't trigger handle_atom_del logic and remove existing parts.
-		for(var/obj/item/part as anything in machine.component_parts)
+		for(var/obj/item/part in M.component_parts)
 			part.moveToNullspace(loc)
 			qdel(part)
 
 	// List of components always contains the circuit board used to build it.
-	machine.component_parts = list(src)
-	forceMove(machine)
+	M.component_parts = list(src)
+	forceMove(M)
 
-	if(machine.circuit != src)
+	if(M.circuit != src)
 		// This really shouldn't happen. If it somehow does, print out a stack trace and gracefully handle it.
-		stack_trace("apply_default_parts called from a circuit board that does not belong to machine: [machine]")
+		stack_trace("apply_default_parts called from a circuit board that does not belong to machine: [M]")
 
 		// Move to nullspace so you don't trigger handle_atom_del logic, remove old circuit, add new circuit.
-		machine.circuit.moveToNullspace()
-		qdel(machine.circuit)
-		machine.circuit = src
+		M.circuit.moveToNullspace()
+		qdel(M.circuit)
+		M.circuit = src
 
 	return
 
@@ -68,7 +62,6 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 */
 
 /obj/item/circuitboard/machine
-	name_extension = "(Machine Board)"
 	var/needs_anchored = TRUE // Whether this machine must be anchored to be constructed.
 	var/list/req_components // Components required by the machine.
 							// Example: list(/obj/item/stock_parts/matter_bin = 5)
@@ -77,7 +70,7 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 							// Example: list(/obj/item/stock_parts/matter_bin = /obj/item/stock_parts/matter_bin/super)
 
 // Applies the default parts defined by the circuit board when the machine is created
-/obj/item/circuitboard/machine/apply_default_parts(obj/machinery/machine)
+/obj/item/circuitboard/machine/apply_default_parts(obj/machinery/M)
 	if(!req_components)
 		return
 
@@ -92,41 +85,20 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 			comp_path = def_components[comp_path]
 
 		if(ispath(comp_path, /obj/item/stack))
-			machine.component_parts += new comp_path(machine, comp_amt)
+			M.component_parts += new comp_path(M, comp_amt)
 		else
-			for(var/component in 1 to comp_amt)
-				machine.component_parts += new comp_path(machine)
+			for(var/i in 1 to comp_amt)
+				M.component_parts += new comp_path(M)
 
-	machine.RefreshParts()
+	M.RefreshParts()
 
 /obj/item/circuitboard/machine/examine(mob/user)
 	. = ..()
-	if(!LAZYLEN(req_components))
-		. += span_info("It requires no components.")
-		return .
-
-	var/list/nice_list = list()
-	for(var/atom/component_path as anything in req_components)
-		if(!ispath(component_path))
-			continue
-
-		var/component_name = initial(component_path.name)
-		var/component_amount = req_components[component_path]
-
-		if(ispath(component_path, /obj/item/stack))
-			var/obj/item/stack/stack_path = component_path
-			if(initial(stack_path.singular_name))
-				component_name = initial(stack_path.singular_name) //e.g. "glass sheet" vs. "glass"
-
-		else if(ispath(component_path, /obj/item/stock_parts) && !specific_parts)
-			var/obj/item/stock_parts/stock_part = component_path
-			if(initial(stock_part.base_name))
-				component_name = initial(stock_part.base_name)
-		else if(ispath(component_path, /obj/item/stock_parts))
-			var/obj/item/stock_parts/stock_part = component_path
-			if(initial(stock_part.name))
-				component_name = initial(stock_part.name)
-
-		nice_list += list("[component_amount] [component_name]\s")
-
-	. += span_info("It requires [english_list(nice_list)].")
+	if(LAZYLEN(req_components))
+		var/list/nice_list = list()
+		for(var/B in req_components)
+			var/atom/A = B
+			if(!ispath(A))
+				continue
+			nice_list += list("[req_components[A]] [initial(A.name)]")
+		. += span_notice("Required components: [english_list(nice_list)].")

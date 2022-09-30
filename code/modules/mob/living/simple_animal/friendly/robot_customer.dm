@@ -5,7 +5,7 @@
 	health = 150
 	desc = "I wonder what they'll order..."
 	gender = NEUTER
-	icon = 'icons/mob/simple/tourists.dmi'
+	icon = 'icons/mob/tourists.dmi'
 	icon_state = "amerifat"
 	icon_living = "amerifat"
 	///Override so it uses datum ai
@@ -34,8 +34,7 @@
 	ai_controller.blackboard[BB_CUSTOMER_CUSTOMERINFO] = customer_info
 	ai_controller.blackboard[BB_CUSTOMER_ATTENDING_VENUE] = attending_venue
 	ai_controller.blackboard[BB_CUSTOMER_PATIENCE] = customer_info.total_patience
-	icon = customer_info.base_icon
-	icon_state = customer_info.base_icon_state
+	icon_state = customer_info.base_icon
 	name = "[pick(customer_info.name_prefixes)]-bot"
 	color = rgb(rand(80,255), rand(80,255), rand(80,255))
 	update_icon()
@@ -44,10 +43,7 @@
 /mob/living/simple_animal/robot_customer/Destroy()
 	var/datum/venue/attending_venue = ai_controller.blackboard[BB_CUSTOMER_ATTENDING_VENUE]
 	attending_venue.current_visitors -= src
-	var/datum/weakref/seat_ref = ai_controller.blackboard[BB_CUSTOMER_MY_SEAT]
-	var/obj/structure/holosign/robot_seat/our_seat = seat_ref?.resolve()
-	if(attending_venue.linked_seats[our_seat])
-		attending_venue.linked_seats[our_seat] = null
+	attending_venue.linked_seats[ai_controller.blackboard[BB_CUSTOMER_MY_SEAT]] = null
 	QDEL_NULL(hud_to_show_on_hover)
 	return ..()
 
@@ -57,11 +53,11 @@
 
 /mob/living/simple_animal/robot_customer/MouseEntered(location, control, params)
 	. = ..()
-	hud_to_show_on_hover?.show_to(usr)
+	hud_to_show_on_hover?.add_hud_to(usr)
 
 /mob/living/simple_animal/robot_customer/MouseExited(location, control, params)
 	. = ..()
-	hud_to_show_on_hover?.hide_from(usr)
+	hud_to_show_on_hover?.remove_hud_from(usr)
 
 /mob/living/simple_animal/robot_customer/update_overlays()
 	. = ..()
@@ -94,11 +90,4 @@
 	. = ..()
 	if(ai_controller.blackboard[BB_CUSTOMER_CURRENT_ORDER])
 		var/datum/venue/attending_venue = ai_controller.blackboard[BB_CUSTOMER_ATTENDING_VENUE]
-		var/wanted_item = ai_controller.blackboard[BB_CUSTOMER_CURRENT_ORDER]
-		var/order
-		if(istype(wanted_item, /datum/custom_order))
-			var/datum/custom_order/custom_order = wanted_item
-			order = custom_order.get_order_line(attending_venue)
-		else
-			order = attending_venue.order_food_line(wanted_item)
-		. += span_notice("Their order was: \"[order].\"")
+		. += span_notice("Their order was: \"[attending_venue.order_food_line(ai_controller.blackboard[BB_CUSTOMER_CURRENT_ORDER])].\"")

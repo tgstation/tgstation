@@ -48,7 +48,7 @@
 		data["occupant"]["stat"] = mob_occupant.stat
 
 	data["special_name"] = special ? special_name : null
-	data["ready_implants"] = ready_implants
+	data["ready_implants"]  = ready_implants
 	data["ready"] = ready
 	data["replenishing"] = replenishing
 
@@ -93,7 +93,7 @@
 		if(P.implant(M))
 			visible_message(span_warning("[M] is implanted by [src]."))
 			return TRUE
-	else if(isorgan(I))
+	else if(istype(I, /obj/item/organ))
 		var/obj/item/organ/P = I
 		P.Insert(M, FALSE, FALSE)
 		visible_message(span_warning("[M] is implanted by [src]."))
@@ -187,15 +187,15 @@
 	var/objective = "Obey the law. Praise Nanotrasen."
 	var/custom = FALSE
 
-/obj/machinery/implantchair/brainwash/implant_action(mob/living/C, mob/user)
+/obj/machinery/implantchair/brainwash/implant_action(mob/living/C,mob/user)
 	if(!istype(C) || !C.mind) // I don't know how this makes any sense for silicons but laws trump objectives anyway.
 		return FALSE
 	if(custom)
 		if(!user || !user.Adjacent(src))
 			return FALSE
-		objective = tgui_input_text(user, "What order do you want to imprint on [C]?", "Brainwashing", max_length = 120)
+		objective = stripped_input(usr,"What order do you want to imprint on [C]?","Enter the order","",120)
 		message_admins("[ADMIN_LOOKUPFLW(user)] set brainwash machine objective to '[objective]'.")
-		user.log_message("set brainwash machine objective to '[objective]'.", LOG_GAME)
+		log_game("[key_name(user)] set brainwash machine objective to '[objective]'.")
 	if(HAS_TRAIT(C, TRAIT_MINDSHIELD))
 		return FALSE
 	brainwash(C, objective)

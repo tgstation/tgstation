@@ -5,13 +5,21 @@ import { Window } from '../layouts';
 
 export const EightBallVote = (props, context) => {
   const { act, data } = useBackend(context);
-  const { shaking } = data;
+  const {
+    shaking,
+  } = data;
   return (
-    <Window width={400} height={600}>
+    <Window
+      width={400}
+      height={600}>
       <Window.Content>
-        {(!shaking && (
-          <NoticeBox>No question is currently being asked.</NoticeBox>
-        )) || <EightBallVoteQuestion />}
+        {!shaking && (
+          <NoticeBox>
+            No question is currently being asked.
+          </NoticeBox>
+        ) || (
+          <EightBallVoteQuestion />
+        )}
       </Window.Content>
     </Window>
   );
@@ -19,14 +27,21 @@ export const EightBallVote = (props, context) => {
 
 const EightBallVoteQuestion = (props, context) => {
   const { act, data } = useBackend(context);
-  const { question, answers = [] } = data;
+  const {
+    question,
+    answers = [],
+  } = data;
   return (
     <Section>
-      <Box bold textAlign="center" fontSize="16px" m={1}>
+      <Box
+        bold
+        textAlign="center"
+        fontSize="16px"
+        m={1}>
         &quot;{question}&quot;
       </Box>
       <Grid>
-        {answers.map((answer) => (
+        {answers.map(answer => (
           <Grid.Column key={answer.answer}>
             <Button
               fluid
@@ -37,13 +52,13 @@ const EightBallVoteQuestion = (props, context) => {
               lineHeight="24px"
               textAlign="center"
               mb={1}
-              onClick={() =>
-                act('vote', {
-                  answer: answer.answer,
-                })
-              }
-            />
-            <Box bold textAlign="center" fontSize="30px">
+              onClick={() => act('vote', {
+                answer: answer.answer,
+              })} />
+            <Box
+              bold
+              textAlign="center"
+              fontSize="30px">
               {answer.amount}
             </Box>
           </Grid.Column>

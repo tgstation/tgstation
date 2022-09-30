@@ -65,14 +65,14 @@
 	RegisterSignal(biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED, .proc/on_sample_growth_completed)
 
 ///Adds text for when there is a sample in the vat
-/obj/machinery/plumbing/growing_vat/examine_more(mob/user)
+/obj/machinery/plumbing/growing_vat/examine(mob/user)
 	. = ..()
 	if(!biological_sample)
 		return
 	. += span_notice("It seems to have a sample in it!")
 	for(var/i in biological_sample.micro_organisms)
 		var/datum/micro_organism/MO = i
-		. += MO.get_details(HAS_TRAIT(user, TRAIT_RESEARCH_SCANNER))
+		. += MO.get_details(user.research_scanner)
 
 /obj/machinery/plumbing/growing_vat/plunger_act(obj/item/plunger/P, mob/living/user, reinforced)
 	. = ..()
@@ -93,7 +93,7 @@
 	if(isnull(on_overlay))
 		on_overlay = iconstate2appearance(icon, "growing_vat_on")
 		off_overlay = iconstate2appearance(icon, "growing_vat_off")
-		emissive_overlay = emissive_appearance(icon, "growing_vat_glow", src, alpha = src.alpha)
+		emissive_overlay = emissive_appearance(icon, "growing_vat_glow", alpha = src.alpha)
 	. += emissive_overlay
 	if(is_operational)
 		if(resampler_active)
@@ -124,7 +124,7 @@
 	if(obj_flags & EMAGGED)
 		return
 	obj_flags |= EMAGGED
-	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, "sparks", 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	to_chat(user, span_warning("You overload [src]'s resampling circuit."))
 	flick("growing_vat_emagged", src)
 

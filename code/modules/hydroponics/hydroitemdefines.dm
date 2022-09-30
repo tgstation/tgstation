@@ -10,55 +10,23 @@
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_BELT
-	custom_materials = list(/datum/material/iron = 30, /datum/material/glass = 20)
-
-/obj/item/plant_analyzer/Initialize(mapload)
-	. = ..()
-	register_item_context()
+	custom_materials = list(/datum/material/iron=30, /datum/material/glass=20)
 
 /obj/item/plant_analyzer/examine()
 	. = ..()
 	. += span_notice("Left click a plant to scan its growth stats, and right click to scan its chemical reagent stats.")
 
-/obj/item/plant_analyzer/add_item_context(
-	obj/item/source,
-	list/context,
-	atom/target,
-)
-
-	if(isliving(target))
-		// It's a health analyzer, but for podpeople.
-		var/mob/living/living_target = target
-		if(!(living_target.mob_biotypes & MOB_PLANT))
-			return NONE
-
-		context[SCREENTIP_CONTEXT_LMB] = "Scan health"
-		context[SCREENTIP_CONTEXT_RMB] = "Scan chemicals"
-		return CONTEXTUAL_SCREENTIP_SET
-
-	if(isitem(target))
-		// Easier to handle this here, as grown items are split across two type-paths
-		var/obj/item/item_target = target
-		if(!item_target.get_plant_seed())
-			return NONE
-
-		context[SCREENTIP_CONTEXT_LMB] = "Scan plant stats"
-		context[SCREENTIP_CONTEXT_RMB] = "Scan plant chemicals"
-		return CONTEXTUAL_SCREENTIP_SET
-
-	return NONE
-
 /// When we attack something, first - try to scan something we hit with left click. Left-clicking uses scans for stats
 /obj/item/plant_analyzer/pre_attack(atom/target, mob/living/user)
 	. = ..()
-	if(user.combat_mode || !user.can_read(src))
+	if(user.combat_mode)
 		return
 
 	return do_plant_stats_scan(target, user)
 
 /// Same as above, but with right click. Right-clicking scans for chemicals.
 /obj/item/plant_analyzer/pre_attack_secondary(atom/target, mob/living/user)
-	if(user.combat_mode || !user.can_read(src))
+	if(user.combat_mode)
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
 
 	return do_plant_chem_scan(target, user) ? SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN : SECONDARY_ATTACK_CONTINUE_CHAIN
@@ -74,19 +42,19 @@
  */
 /obj/item/plant_analyzer/proc/do_plant_stats_scan(atom/scan_target, mob/user)
 	if(istype(scan_target, /obj/machinery/hydroponics))
-		to_chat(user, examine_block(scan_tray_stats(scan_target)))
+		to_chat(user, scan_tray_stats(scan_target))
 		return TRUE
 	if(istype(scan_target, /obj/structure/glowshroom))
 		var/obj/structure/glowshroom/shroom_plant = scan_target
-		to_chat(user, examine_block(scan_plant_stats(shroom_plant.myseed)))
+		to_chat(user, scan_plant_stats(shroom_plant.myseed))
 		return TRUE
 	if(istype(scan_target, /obj/item/graft))
-		to_chat(user, examine_block(get_graft_text(scan_target)))
+		to_chat(user, get_graft_text(scan_target))
 		return TRUE
 	if(isitem(scan_target))
 		var/obj/item/scanned_object = scan_target
 		if(scanned_object.get_plant_seed() || istype(scanned_object, /obj/item/seeds))
-			to_chat(user, examine_block(scan_plant_stats(scanned_object)))
+			to_chat(user, scan_plant_stats(scanned_object))
 			return TRUE
 	if(isliving(scan_target))
 		var/mob/living/L = scan_target
@@ -107,19 +75,19 @@
  */
 /obj/item/plant_analyzer/proc/do_plant_chem_scan(atom/scan_target, mob/user)
 	if(istype(scan_target, /obj/machinery/hydroponics))
-		to_chat(user, examine_block(scan_tray_chems(scan_target)))
+		to_chat(user, scan_tray_chems(scan_target))
 		return TRUE
 	if(istype(scan_target, /obj/structure/glowshroom))
 		var/obj/structure/glowshroom/shroom_plant = scan_target
-		to_chat(user, examine_block(scan_plant_chems(shroom_plant.myseed)))
+		to_chat(user, scan_plant_chems(shroom_plant.myseed))
 		return TRUE
 	if(istype(scan_target, /obj/item/graft))
-		to_chat(user, examine_block(get_graft_text(scan_target)))
+		to_chat(user, get_graft_text(scan_target))
 		return TRUE
 	if(isitem(scan_target))
 		var/obj/item/scanned_object = scan_target
 		if(scanned_object.get_plant_seed() || istype(scanned_object, /obj/item/seeds))
-			to_chat(user, examine_block(scan_plant_chems(scanned_object)))
+			to_chat(user, scan_plant_chems(scanned_object))
 			return TRUE
 	if(isliving(scan_target))
 		var/mob/living/L = scan_target
@@ -167,24 +135,23 @@
  * Returns the formatted message as text.
  */
 /obj/item/plant_analyzer/proc/scan_tray_stats(obj/machinery/hydroponics/scanned_tray)
-	var/returned_message = ""
+	var/returned_message = "*---------*\n"
 	if(scanned_tray.myseed)
-		returned_message += "[span_bold("[scanned_tray.myseed.plantname]")]"
-		returned_message += "\nPlant Age: [span_notice("[scanned_tray.age]")]"
-		returned_message += "\nPlant Health: [span_notice("[scanned_tray.plant_health]")]"
-		returned_message += scan_plant_stats(scanned_tray.myseed, TRUE)
-		returned_message += "\n<b>Growth medium</b>"
+		returned_message += "*** [span_bold("[scanned_tray.myseed.plantname]")] ***\n"
+		returned_message += "- Plant Age: [span_notice("[scanned_tray.age]")]\n"
+		returned_message += scan_plant_stats(scanned_tray.myseed)
 	else
-		returned_message += span_bold("No plant found.")
+		returned_message += span_bold("No plant found.\n")
 
-	returned_message += "\nWeed level: [span_notice("[scanned_tray.weedlevel] / [MAX_TRAY_WEEDS]")]"
-	returned_message += "\nPest level: [span_notice("[scanned_tray.pestlevel] / [MAX_TRAY_PESTS]")]"
-	returned_message += "\nToxicity level: [span_notice("[scanned_tray.toxic] / [MAX_TRAY_TOXINS]")]"
-	returned_message += "\nWater level: [span_notice("[scanned_tray.waterlevel] / [scanned_tray.maxwater]")]"
-	returned_message += "\nNutrition level: [span_notice("[scanned_tray.reagents.total_volume] / [scanned_tray.maxnutri]")]"
+	returned_message += "- Weed level: [span_notice("[scanned_tray.weedlevel] / [MAX_TRAY_WEEDS]")]\n"
+	returned_message += "- Pest level: [span_notice("[scanned_tray.pestlevel] / [MAX_TRAY_PESTS]")]\n"
+	returned_message += "- Toxicity level: [span_notice("[scanned_tray.toxic] / [MAX_TRAY_TOXINS]")]\n"
+	returned_message += "- Water level: [span_notice("[scanned_tray.waterlevel] / [scanned_tray.maxwater]")]\n"
+	returned_message += "- Nutrition level: [span_notice("[scanned_tray.reagents.total_volume] / [scanned_tray.maxnutri]")]\n"
 	if(scanned_tray.yieldmod != 1)
-		returned_message += "\nYield modifier on harvest: [span_notice("[scanned_tray.yieldmod]x")]"
+		returned_message += "- Yield modifier on harvest: [span_notice("[scanned_tray.yieldmod]x")]\n"
 
+	returned_message += "*---------*"
 	return span_info(returned_message)
 
 /**
@@ -196,21 +163,22 @@
  * Returns the formatted message as text.
  */
 /obj/item/plant_analyzer/proc/scan_tray_chems(obj/machinery/hydroponics/scanned_tray)
-	var/returned_message = ""
+	var/returned_message = "*---------*\n"
 	if(scanned_tray.myseed)
-		returned_message += "[span_bold("[scanned_tray.myseed.plantname]")]"
-		returned_message += "\nPlant Age: [span_notice("[scanned_tray.age]")]"
-		returned_message += scan_plant_chems(scanned_tray.myseed, TRUE)
+		returned_message += "*** [span_bold("[scanned_tray.myseed.plantname]")] ***\n"
+		returned_message += "- Plant Age: [span_notice("[scanned_tray.age]")]\n"
+		returned_message += scan_plant_chems(scanned_tray.myseed)
 	else
-		returned_message += span_bold("No plant found.")
+		returned_message += span_bold("No plant found.\n")
 
-	returned_message += "\nGrowth medium contains:"
+	returned_message += "- Tray contains:\n"
 	if(scanned_tray.reagents.reagent_list.len)
 		for(var/datum/reagent/reagent_id in scanned_tray.reagents.reagent_list)
-			returned_message += "\n[span_notice("&bull; [reagent_id.volume] / [scanned_tray.maxnutri] units of [reagent_id]")]"
+			returned_message += "- [span_notice("[reagent_id.volume] / [scanned_tray.maxnutri] units of [reagent_id]")]\n"
 	else
-		returned_message += "\n[span_notice("No reagents found.")]"
+		returned_message += "[span_notice("No reagents found.")]\n"
 
+	returned_message += "*---------*"
 	return span_info(returned_message)
 
 /**
@@ -221,12 +189,8 @@
  *
  * Returns the formatted output as text.
  */
-/obj/item/plant_analyzer/proc/scan_plant_stats(obj/item/scanned_object, in_tray = FALSE)
-	var/returned_message = ""
-	if(!in_tray)
-		returned_message += "This is [span_name("\a [scanned_object]")]."
-	else
-		returned_message += "\n<b>Seed Stats</b>"
+/obj/item/plant_analyzer/proc/scan_plant_stats(obj/item/scanned_object)
+	var/returned_message = "*---------*\nThis is [span_name("\a [scanned_object]")].\n"
 	var/obj/item/seeds/our_seed = scanned_object
 	if(!istype(our_seed)) //if we weren't passed a seed, we were passed a plant with a seed
 		our_seed = scanned_object.get_plant_seed()
@@ -234,8 +198,9 @@
 	if(our_seed && istype(our_seed))
 		returned_message += get_analyzer_text_traits(our_seed)
 	else
-		returned_message += "\nNo genes found."
+		returned_message += "*---------*\nNo genes found.\n*---------*"
 
+	returned_message += "\n"
 	return span_info(returned_message)
 
 /**
@@ -246,12 +211,8 @@
  *
  * Returns the formatted output as text.
  */
-/obj/item/plant_analyzer/proc/scan_plant_chems(obj/item/scanned_object, in_tray = FALSE)
-	var/returned_message = ""
-	if(!in_tray)
-		returned_message += "This is [span_name("\a [scanned_object]")]."
-	else
-		returned_message += "\n<b>Seed Stats</b>"
+/obj/item/plant_analyzer/proc/scan_plant_chems(obj/item/scanned_object)
+	var/returned_message = "*---------*\nThis is [span_name("\a [scanned_object]")].\n"
 	var/obj/item/seeds/our_seed = scanned_object
 	if(!istype(our_seed)) //if we weren't passed a seed, we were passed a plant with a seed
 		our_seed = scanned_object.get_plant_seed()
@@ -261,8 +222,9 @@
 	else if (our_seed.reagents_add?.len) //we have a seed with reagent genes
 		returned_message += get_analyzer_text_chem_genes(our_seed)
 	else
-		returned_message += "\nNo reagents found."
+		returned_message += "*---------*\nNo reagents found.\n*---------*"
 
+	returned_message += "\n"
 	return span_info(returned_message)
 
 /**
@@ -275,28 +237,28 @@
 /obj/item/plant_analyzer/proc/get_analyzer_text_traits(obj/item/seeds/scanned)
 	var/text = ""
 	if(scanned.get_gene(/datum/plant_gene/trait/plant_type/weed_hardy))
-		text += "\nPlant type: [span_notice("Weed. Can grow in nutrient-poor soil.")]"
+		text += "- Plant type: [span_notice("Weed. Can grow in nutrient-poor soil.")]\n"
 	else if(scanned.get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism))
-		text += "\nPlant type: [span_notice("Mushroom. Can grow in dry soil.")]"
+		text += "- Plant type: [span_notice("Mushroom. Can grow in dry soil.")]\n"
 	else if(scanned.get_gene(/datum/plant_gene/trait/plant_type/alien_properties))
-		text += "\nPlant type: [span_warning("UNKNOWN")]"
+		text += "- Plant type: [span_warning("UNKNOWN")] \n"
 	else
-		text += "\nPlant type: [span_notice("Normal plant")]"
+		text += "- Plant type: [span_notice("Normal plant")]\n"
 
 	if(scanned.potency != -1)
-		text += "\nPotency: [span_notice("[scanned.potency]")]"
+		text += "- Potency: [span_notice("[scanned.potency]")]\n"
 	if(scanned.yield != -1)
-		text += "\nYield: [span_notice("[scanned.yield]")]"
-	text += "\nMaturation speed: [span_notice("[scanned.maturation]")]"
+		text += "- Yield: [span_notice("[scanned.yield]")]\n"
+	text += "- Maturation speed: [span_notice("[scanned.maturation]")]\n"
 	if(scanned.yield != -1)
-		text += "\nProduction speed: [span_notice("[scanned.production]")]"
-	text += "\nEndurance: [span_notice("[scanned.endurance]")]"
-	text += "\nLifespan: [span_notice("[scanned.lifespan]")]"
-	text += "\nInstability: [span_notice("[scanned.instability]")]"
-	text += "\nWeed Growth Rate: [span_notice("[scanned.weed_rate]")]"
-	text += "\nWeed Vulnerability: [span_notice("[scanned.weed_chance]")]"
+		text += "- Production speed: [span_notice("[scanned.production]")]\n"
+	text += "- Endurance: [span_notice("[scanned.endurance]")]\n"
+	text += "- Lifespan: [span_notice("[scanned.lifespan]")]\n"
+	text += "- Instability: [span_notice("[scanned.instability]")]\n"
+	text += "- Weed Growth Rate: [span_notice("[scanned.weed_rate]")]\n"
+	text += "- Weed Vulnerability: [span_notice("[scanned.weed_chance]")]\n"
 	if(scanned.rarity)
-		text += "\nSpecies Discovery Value: [span_notice("[scanned.rarity]")]"
+		text += "- Species Discovery Value: [span_notice("[scanned.rarity]")]\n"
 	var/all_removable_traits = ""
 	var/all_immutable_traits = ""
 	for(var/datum/plant_gene/trait/traits in scanned.genes)
@@ -307,14 +269,17 @@
 		else
 			all_immutable_traits += "[(all_immutable_traits == "") ? "" : ", "][traits.get_name()]"
 
-	text += "\nPlant Traits: [span_notice("[all_removable_traits? all_removable_traits : "None."]")]"
-	text += "\nCore Plant Traits: [span_notice("[all_immutable_traits? all_immutable_traits : "None."]")]"
+	text += "- Plant Traits: [span_notice("[all_removable_traits? all_removable_traits : "None."]")]\n"
+	text += "- Core Plant Traits: [span_notice("[all_immutable_traits? all_immutable_traits : "None."]")]\n"
 	var/datum/plant_gene/scanned_graft_result = scanned.graft_gene? new scanned.graft_gene : new /datum/plant_gene/trait/repeated_harvest
-	text += "\nGrafting this plant would give: [span_notice("[scanned_graft_result.get_name()]")]"
+	text += "- Grafting this plant would give: [span_notice("[scanned_graft_result.get_name()]")]\n"
 	QDEL_NULL(scanned_graft_result) //graft genes are stored as typepaths so if we want to get their formatted name we need a datum ref - musn't forget to clean up afterwards
+	text += "*---------*"
 	var/unique_text = scanned.get_unique_analyzer_text()
 	if(unique_text)
-		text += "\n[unique_text]"
+		text += "\n"
+		text += unique_text
+		text += "\n*---------*"
 	return text
 
 /**
@@ -325,9 +290,12 @@
  * Returns the formatted output as text.
  */
 /obj/item/plant_analyzer/proc/get_analyzer_text_chem_genes(obj/item/seeds/scanned)
-	var/text = "\nPlant Reagent Genes:"
+	var/text = ""
+	text += "- Plant Reagent Genes -\n"
+	text += "*---------*\n"
 	for(var/datum/plant_gene/reagent/gene in scanned.genes)
-		text += "\n&bull; [gene.get_name()]"
+		text += "- [gene.get_name()] -\n"
+	text += "*---------*"
 	return text
 
 /**
@@ -340,19 +308,21 @@
 /obj/item/plant_analyzer/proc/get_analyzer_text_chem_contents(obj/item/scanned_plant)
 	var/text = ""
 	var/reagents_text = ""
-	text += "\nPlant Reagents:"
+	text += "- Plant Reagents -\n"
+	text += "Maximum reagent capacity: [scanned_plant.reagents.maximum_volume]\n"
 	var/chem_cap = 0
 	for(var/_reagent in scanned_plant.reagents.reagent_list)
-		var/datum/reagent/reagent = _reagent
+		var/datum/reagent/reagent  = _reagent
 		var/amount = reagent.volume
 		chem_cap += reagent.volume
-		reagents_text += "\n&bull; [reagent.name]: [amount]"
-	if(reagents_text)
-		text += reagents_text
-	text += "\nMaximum reagent capacity: [scanned_plant.reagents.maximum_volume]"
+		reagents_text += "\n- [reagent.name]: [amount]"
 	if(chem_cap > 100)
-		text += "\n[span_danger("Reagent Traits Over 100% Production")]"
+		text += "- [span_danger("Reagent Traits Over 100% Production")]\n"
 
+	if(reagents_text)
+		text += "*---------*"
+		text += reagents_text
+	text += "\n*---------*"
 	return text
 
 /**
@@ -363,17 +333,19 @@
  * Returns the formatted output as text.
  */
 /obj/item/plant_analyzer/proc/get_graft_text(obj/item/graft/scanned_graft)
-	var/text = "Plant Graft"
+	var/text = "*---------*\n- Plant Graft -\n"
 	if(scanned_graft.parent_name)
-		text += "\nParent Plant: [span_notice("[scanned_graft.parent_name]")]"
+		text += "- Parent Plant: [span_notice("[scanned_graft.parent_name]")] -\n"
 	if(scanned_graft.stored_trait)
-		text += "\nGraftable Traits: [span_notice("[scanned_graft.stored_trait.get_name()]")]"
-	text += "\nYield: [span_notice("[scanned_graft.yield]")]"
-	text += "\nProduction speed: [span_notice("[scanned_graft.production]")]"
-	text += "\nEndurance: [span_notice("[scanned_graft.endurance]")]"
-	text += "\nLifespan: [span_notice("[scanned_graft.lifespan]")]"
-	text += "\nWeed Growth Rate: [span_notice("[scanned_graft.weed_rate]")]"
-	text += "\nWeed Vulnerability: [span_notice("[scanned_graft.weed_chance]")]"
+		text += "- Graftable Traits: [span_notice("[scanned_graft.stored_trait.get_name()]")] -\n"
+	text += "*---------*\n"
+	text += "- Yield: [span_notice("[scanned_graft.yield]")]\n"
+	text += "- Production speed: [span_notice("[scanned_graft.production]")]\n"
+	text += "- Endurance: [span_notice("[scanned_graft.endurance]")]\n"
+	text += "- Lifespan: [span_notice("[scanned_graft.lifespan]")]\n"
+	text += "- Weed Growth Rate: [span_notice("[scanned_graft.weed_rate]")]\n"
+	text += "- Weed Vulnerability: [span_notice("[scanned_graft.weed_chance]")]\n"
+	text += "*---------*"
 	return span_info(text)
 
 
@@ -416,7 +388,7 @@
 /obj/item/cultivator
 	name = "cultivator"
 	desc = "It's used for removing weeds or scratching your back."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "cultivator"
 	inhand_icon_state = "cultivator"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
@@ -458,7 +430,7 @@
 		return
 	var/mob/living/carbon/human/H = AM
 	if(has_gravity(loc) && HAS_TRAIT(H, TRAIT_CLUMSY) && !H.resting)
-		H.set_confusion_if_lower(10 SECONDS)
+		H.set_confusion(max(H.get_confusion(), 10))
 		H.Stun(20)
 		playsound(src, 'sound/weapons/punch4.ogg', 50, TRUE)
 		H.visible_message(span_warning("[H] steps on [src] causing the handle to hit [H.p_them()] right in the face!"), \
@@ -467,7 +439,7 @@
 /obj/item/hatchet
 	name = "hatchet"
 	desc = "A very sharp axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "hatchet"
 	inhand_icon_state = "hatchet"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
@@ -487,10 +459,7 @@
 
 /obj/item/hatchet/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/butchering, \
-	speed = 7 SECONDS, \
-	effectiveness = 100, \
-	)
+	AddComponent(/datum/component/butchering, 70, 100)
 
 /obj/item/hatchet/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is chopping at [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -524,10 +493,7 @@
 
 /obj/item/scythe/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/butchering, \
-	speed = 9 SECONDS, \
-	effectiveness = 105, \
-	)
+	AddComponent(/datum/component/butchering, 90, 105)
 
 /obj/item/scythe/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is beheading [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -536,7 +502,7 @@
 		var/obj/item/bodypart/BP = C.get_bodypart(BODY_ZONE_HEAD)
 		if(BP)
 			BP.drop_limb()
-			playsound(src, SFX_DESECRATION ,50, TRUE, -1)
+			playsound(src, "desecration" ,50, TRUE, -1)
 	return (BRUTELOSS)
 
 /obj/item/scythe/pre_attack(atom/A, mob/living/user, params)
@@ -573,37 +539,6 @@
 	attack_verb_simple = list("slash", "slice", "cut", "claw")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
-/// Secateurs can be used to style podperson "hair"
-/obj/item/secateurs/attack(mob/trimmed, mob/living/trimmer)
-	if(ispodperson(trimmed))
-		var/mob/living/carbon/human/pod = trimmed
-		var/location = trimmer.zone_selected
-		if((location in list(BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_HEAD)) && !pod.get_bodypart(BODY_ZONE_HEAD))
-			to_chat(trimmer, span_warning("[pod] [pod.p_do()]n't have a head!"))
-			return
-		if(location == BODY_ZONE_HEAD && !trimmer.combat_mode)
-			if(!trimmer.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
-				return
-			var/new_style = tgui_input_list(trimmer, "Select a hairstyle", "Grooming", GLOB.pod_hair_list)
-			if(isnull(new_style))
-				return
-			trimmer.visible_message(
-				span_notice("[trimmer] tries to change [pod == trimmer ? trimmer.p_their() : pod.name + "'s"] hairstyle using [src]."),
-				span_notice("You try to change [pod == trimmer ? "your" : pod.name + "'s"] hairstyle using [src].")
-			)
-			if(new_style && do_after(trimmer, 6 SECONDS, target = pod))
-				trimmer.visible_message(
-					span_notice("[trimmer] successfully changes [pod == trimmer ? trimmer.p_their() : pod.name + "'s"] hairstyle using [src]."),
-					span_notice("You successfully change [pod == trimmer ? "your" : pod.name + "'s"] hairstyle using [src].")
-				)
-
-				var/datum/species/pod/species = pod.dna?.species
-				species?.change_hairstyle(pod, new_style)
-		else
-			return ..()
-	else
-		return ..()
-
 /obj/item/geneshears
 	name = "Botanogenetic Plant Shears"
 	desc = "A high tech, high fidelity pair of plant shears, capable of cutting genetic traits out of a plant."
@@ -623,52 +558,53 @@
 	attack_verb_simple = list("slash", "slice", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
+
 // *************************************
 // Nutrient defines for hydroponics
 // *************************************
 
 
-/obj/item/reagent_containers/cup/bottle/nutrient
+/obj/item/reagent_containers/glass/bottle/nutrient
 	name = "bottle of nutrient"
 	volume = 50
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(1,2,5,10,15,25,50)
 
-/obj/item/reagent_containers/cup/bottle/nutrient/Initialize(mapload)
+/obj/item/reagent_containers/glass/bottle/nutrient/Initialize(mapload)
 	. = ..()
 	pixel_x = base_pixel_x + rand(-5, 5)
 	pixel_y = base_pixel_y + rand(-5, 5)
 
 
-/obj/item/reagent_containers/cup/bottle/nutrient/ez
+/obj/item/reagent_containers/glass/bottle/nutrient/ez
 	name = "bottle of E-Z-Nutrient"
 	desc = "Contains a fertilizer that causes mild mutations and gradual plant growth with each harvest."
 	list_reagents = list(/datum/reagent/plantnutriment/eznutriment = 50)
 
-/obj/item/reagent_containers/cup/bottle/nutrient/l4z
+/obj/item/reagent_containers/glass/bottle/nutrient/l4z
 	name = "bottle of Left 4 Zed"
 	desc = "Contains a fertilizer that lightly heals the plant but causes significant mutations in plants over generations."
 	list_reagents = list(/datum/reagent/plantnutriment/left4zednutriment = 50)
 
-/obj/item/reagent_containers/cup/bottle/nutrient/rh
+/obj/item/reagent_containers/glass/bottle/nutrient/rh
 	name = "bottle of Robust Harvest"
 	desc = "Contains a fertilizer that increases the yield of a plant while gradually preventing mutations."
 	list_reagents = list(/datum/reagent/plantnutriment/robustharvestnutriment = 50)
 
-/obj/item/reagent_containers/cup/bottle/nutrient/empty
+/obj/item/reagent_containers/glass/bottle/nutrient/empty
 	name = "bottle"
 
-/obj/item/reagent_containers/cup/bottle/killer
+/obj/item/reagent_containers/glass/bottle/killer
 	volume = 30
 	amount_per_transfer_from_this = 1
 	possible_transfer_amounts = list(1,2,5)
 
-/obj/item/reagent_containers/cup/bottle/killer/weedkiller
+/obj/item/reagent_containers/glass/bottle/killer/weedkiller
 	name = "bottle of weed killer"
 	desc = "Contains a herbicide."
 	list_reagents = list(/datum/reagent/toxin/plantbgone/weedkiller = 30)
 
-/obj/item/reagent_containers/cup/bottle/killer/pestkiller
+/obj/item/reagent_containers/glass/bottle/killer/pestkiller
 	name = "bottle of pest spray"
 	desc = "Contains a pesticide."
 	list_reagents = list(/datum/reagent/toxin/pestkiller = 30)

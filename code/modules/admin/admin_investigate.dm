@@ -10,24 +10,7 @@
 	if(!holder)
 		return
 
-	var/list/investigates = list(
-		INVESTIGATE_ACCESSCHANGES,
-		INVESTIGATE_ATMOS,
-		INVESTIGATE_BOTANY,
-		INVESTIGATE_CARGO,
-		INVESTIGATE_CRAFTING,
-		INVESTIGATE_ENGINE,
-		INVESTIGATE_EXPERIMENTOR,
-		INVESTIGATE_GRAVITY,
-		INVESTIGATE_HALLUCINATIONS,
-		INVESTIGATE_HYPERTORUS,
-		INVESTIGATE_PORTAL,
-		INVESTIGATE_PRESENTS,
-		INVESTIGATE_RADIATION,
-		INVESTIGATE_RECORDS,
-		INVESTIGATE_RESEARCH,
-		INVESTIGATE_WIRES,
-	)
+	var/list/investigates = list(INVESTIGATE_RESEARCH, INVESTIGATE_EXONET, INVESTIGATE_PORTAL, INVESTIGATE_SINGULO, INVESTIGATE_WIRES, INVESTIGATE_TELESCI, INVESTIGATE_GRAVITY, INVESTIGATE_RECORDS, INVESTIGATE_CARGO, INVESTIGATE_SUPERMATTER, INVESTIGATE_ATMOS, INVESTIGATE_EXPERIMENTOR, INVESTIGATE_BOTANY, INVESTIGATE_HALLUCINATIONS, INVESTIGATE_RADIATION, INVESTIGATE_PRESENTS, INVESTIGATE_HYPERTORUS, INVESTIGATE_ACCESSCHANGES)
 
 	var/list/logs_present = list("notes, memos, watchlist")
 	var/list/logs_missing = list("---")
@@ -41,9 +24,8 @@
 
 	var/list/combined = sort_list(logs_present) + sort_list(logs_missing)
 
-	var/selected = tgui_input_list(src, "Investigate what?", "Investigation", combined)
-	if(isnull(selected))
-		return
+	var/selected = input("Investigate what?", "Investigate") as null|anything in combined
+
 	if(!(selected in combined) || selected == "---")
 		return
 

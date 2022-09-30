@@ -11,9 +11,9 @@ SUBSYSTEM_DEF(achievements)
 	///List of all awards
 	var/list/datum/award/awards = list()
 
-/datum/controller/subsystem/achievements/Initialize()
+/datum/controller/subsystem/achievements/Initialize(timeofday)
 	if(!SSdbcore.Connect())
-		return SS_INIT_NO_NEED
+		return ..()
 	achievements_enabled = TRUE
 
 	for(var/T in subtypesof(/datum/award/achievement))
@@ -33,7 +33,7 @@ SUBSYSTEM_DEF(achievements)
 		if(!C.player_details.achievements.initialized)
 			C.player_details.achievements.InitializeData()
 
-	return SS_INIT_SUCCESS
+	return ..()
 
 /datum/controller/subsystem/achievements/Shutdown()
 	save_achievements_to_db()

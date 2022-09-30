@@ -1,7 +1,7 @@
 /obj/projectile/plasma
 	name = "plasma blast"
 	icon_state = "plasmacutter"
-	damage_type = BURN
+	damage_type = BRUTE
 	damage = 5
 	range = 4
 	dismemberment = 20

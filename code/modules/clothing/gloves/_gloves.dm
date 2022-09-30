@@ -3,13 +3,12 @@
 	gender = PLURAL //Carn: for grammarically correct text-parsing
 	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/clothing/gloves.dmi'
-	lefthand_file = 'icons/mob/inhands/clothing/gloves_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/clothing/gloves_righthand.dmi'
 	siemens_coefficient = 0.5
 	body_parts_covered = HANDS
 	slot_flags = ITEM_SLOT_GLOVES
 	attack_verb_continuous = list("challenges")
 	attack_verb_simple = list("challenge")
+	var/transfer_prints = FALSE
 	strip_delay = 20
 	equip_delay_other = 40
 	// Path variable. If defined, will produced the type through interaction with wirecutters.
@@ -34,31 +33,25 @@
 
 	if(damaged_clothes)
 		. += mutable_appearance('icons/effects/item_damage.dmi', "damagedgloves")
-	if(GET_ATOM_BLOOD_DNA_LENGTH(src))
+	if(HAS_BLOOD_DNA(src))
 		. += mutable_appearance('icons/effects/blood.dmi', "bloodyhands")
 
 /obj/item/clothing/gloves/update_clothes_damaged_state(damaged_state = CLOTHING_DAMAGED)
 	..()
 	if(ismob(loc))
 		var/mob/M = loc
-		M.update_worn_gloves()
+		M.update_inv_gloves()
 
-/obj/item/clothing/gloves/proc/can_cut_with(obj/item/tool)
+// Called just before an attack_hand(), in mob/UnarmedAttack()
+/obj/item/clothing/gloves/proc/Touch(atom/A, proximity, mouseparams)
+	return FALSE // return 1 to cancel attack_hand()
+
+/obj/item/clothing/gloves/wirecutter_act(mob/living/user, obj/item/I)
+	. = ..()
 	if(!cut_type)
-		return FALSE
+		return
 	if(icon_state != initial(icon_state))
-		return FALSE // We don't want to cut dyed gloves.
-	return TRUE
-
-/obj/item/clothing/gloves/attackby(obj/item/tool, mob/user, params)
-	if(tool.tool_behaviour != TOOL_WIRECUTTER && !tool.get_sharpness())
-		return
-	if (!can_cut_with(tool))
-		return
-	balloon_alert(user, "cutting off fingertips...")
-
-	if(!do_after(user, 3 SECONDS, target=src, extra_checks = CALLBACK(src, .proc/can_cut_with, tool)))
-		return
-	balloon_alert(user, "cut fingertips off")
+		return // We don't want to cut dyed gloves.
+	new cut_type(drop_location())
 	qdel(src)
-	user.put_in_hands(new cut_type)
+	return TRUE

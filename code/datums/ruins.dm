@@ -17,8 +17,6 @@
 	var/prefix = null
 	var/suffix = null
 
-	var/ruin_type = null
-
 /datum/map_template/ruin/New()
 	if(!name && id)
 		name = id

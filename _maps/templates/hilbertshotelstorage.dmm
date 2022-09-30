@@ -1,10 +1,10 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/closed/indestructible/hotelwall,
-/area/misc/hilbertshotelstorage)
+/area/hilbertshotelstorage)
 "b" = (
 /turf/open/indestructible/hotelwood,
-/area/misc/hilbertshotelstorage)
+/area/hilbertshotelstorage)
 
 (1,1,1) = {"
 a

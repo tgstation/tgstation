@@ -1,14 +1,22 @@
 /*
+//////////////////////////////////////
+
 Necrotizing Fasciitis (AKA Flesh-Eating Disease)
+
 	Very very noticable.
 	Lowers resistance tremendously.
 	No changes to stage speed.
-	Decreases transmissibility tremendously.
+	Decreases transmittablity temrendously.
 	Fatal Level.
+
 Bonus
 	Deals brute damage over time.
+
+//////////////////////////////////////
 */
+
 /datum/symptom/flesh_eating
+
 	name = "Necrotizing Fasciitis"
 	desc = "The virus aggressively attacks body cells, necrotizing tissues and organs."
 	stealth = -3
@@ -51,14 +59,14 @@ Bonus
 
 /datum/symptom/flesh_eating/proc/Flesheat(mob/living/M, datum/disease/advance/A)
 	var/get_damage = rand(15,25) * power
-	M.take_overall_damage(brute = get_damage, required_status = BODYTYPE_ORGANIC)
+	M.take_overall_damage(brute = get_damage, required_status = BODYPART_ORGANIC)
 	if(pain)
 		M.adjustStaminaLoss(get_damage * 2)
 	if(bleed)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			var/obj/item/bodypart/random_part = pick(H.bodyparts)
-			random_part.adjustBleedStacks(5 * power)
+			random_part.generic_bleedstacks += 5 * power
 	return 1
 
 /*
@@ -123,7 +131,7 @@ Bonus
 
 /datum/symptom/flesh_death/proc/Flesh_death(mob/living/M, datum/disease/advance/A)
 	var/get_damage = rand(6,10)
-	M.take_overall_damage(brute = get_damage, required_status = BODYTYPE_ORGANIC)
+	M.take_overall_damage(brute = get_damage, required_status = BODYPART_ORGANIC)
 	if(chems)
 		M.reagents.add_reagent_list(list(/datum/reagent/toxin/heparin = 2, /datum/reagent/toxin/lipolicide = 2))
 	if(zombie)

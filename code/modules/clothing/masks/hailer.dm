@@ -53,9 +53,8 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	w_class = WEIGHT_CLASS_SMALL
 	visor_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	visor_flags_inv = HIDEFACIALHAIR | HIDEFACE | HIDESNOUT
-	flags_cover = MASKCOVERSMOUTH
-	visor_flags_cover = MASKCOVERSMOUTH
-	tint = 0
+	flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
+	visor_flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
 	var/aggressiveness = AGGR_BAD_COP
 	var/overuse_cooldown = FALSE
 	var/recent_uses = 0
@@ -71,17 +70,12 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	aggressiveness = AGGR_SHIT_COP
 	flags_inv = HIDEFACIALHAIR | HIDEFACE | HIDEEYES | HIDEEARS | HIDEHAIR | HIDESNOUT
 	visor_flags_inv = 0
-	flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
-	visor_flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
 
 /obj/item/clothing/mask/gas/sechailer/swat/spacepol
 	name = "spacepol mask"
 	desc = "A close-fitting tactical mask created in cooperation with a certain megacorporation, comes with an especially aggressive Compli-o-nator 3000."
 	icon_state = "spacepol"
 	inhand_icon_state = "spacepol"
-	tint = 1.5
-	flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
-	visor_flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
 
 /obj/item/clothing/mask/gas/sechailer/cyborg
 	name = "security hailer"
@@ -121,7 +115,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 /obj/item/clothing/mask/gas/sechailer/emag_act(mob/user)
 	if(safety)
 		safety = FALSE
-		to_chat(user, span_warning("You silently fry [src]'s vocal circuit."))
+		to_chat(user, span_warning("You silently fry [src]'s vocal circuit with the cryptographic sequencer."))
 
 /obj/item/clothing/mask/gas/sechailer/verb/halt()
 	set category = "Object"
@@ -189,18 +183,14 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	icon_state = "whistle"
 	inhand_icon_state = "whistle"
 	slot_flags = ITEM_SLOT_MASK|ITEM_SLOT_NECK
-	custom_price = PAYCHECK_COMMAND * 1.5
-	w_class = WEIGHT_CLASS_SMALL
+	custom_price = PAYCHECK_HARD * 1.5
 	actions_types = list(/datum/action/item_action/halt)
 
 /obj/item/clothing/mask/whistle/ui_action_click(mob/user, action)
 	if(cooldown < world.time - 100)
 		usr.audible_message("<font color='red' size='5'><b>HALT!</b></font>")
-		playsound(src, 'sound/misc/whistle.ogg', 75, FALSE, 4)
+		playsound(src, 'sound/misc/whistle.ogg', 100, FALSE, 4)
 		cooldown = world.time
-
-/datum/action/item_action/halt
-	name = "HALT!"
 
 #undef PHRASE_COOLDOWN
 #undef OVERUSE_COOLDOWN

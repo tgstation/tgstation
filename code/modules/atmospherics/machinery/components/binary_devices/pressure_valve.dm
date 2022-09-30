@@ -6,7 +6,6 @@
 	shift_underlay_only = FALSE
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "pvalve"
-	use_power = NO_POWER_USE
 	///Amount of pressure needed before the valve for it to open
 	var/target_pressure = ONE_ATMOSPHERE
 	///Frequency for radio signaling

@@ -1,1 +1,0 @@
-/area/station/cargo/qm : /area/station/command/heads_quarters/qm

@@ -39,7 +39,7 @@
 /datum/crafting_recipe/food/appendixburger
 	name = "Appendix burger"
 	reqs = list(
-		/obj/item/organ/internal/appendix = 1,
+		/obj/item/organ/appendix = 1,
 		/obj/item/food/bun = 1
 	)
 	result = /obj/item/food/burger/appendix
@@ -48,7 +48,7 @@
 /datum/crafting_recipe/food/brainburger
 	name = "Brain burger"
 	reqs = list(
-		/obj/item/organ/internal/brain = 1,
+		/obj/item/organ/brain = 1,
 		/obj/item/food/bun = 1
 	)
 	result = /obj/item/food/burger/brain
@@ -77,7 +77,7 @@
 	reqs = list(
 		/obj/item/food/fishmeat = 1,
 		/obj/item/food/bun = 1,
-		/obj/item/food/cheese/wedge = 1
+		/obj/item/food/cheese = 1
 	)
 	result = /obj/item/food/burger/fish
 	subcategory = CAT_BURGER
@@ -222,7 +222,7 @@
 	reqs = list(
 		/obj/item/food/patty/plain = 3,
 		/obj/item/food/bun = 1,
-		/obj/item/food/cheese/wedge = 2
+		/obj/item/food/cheese = 2
 	)
 	result = /obj/item/food/burger/bigbite
 	subcategory = CAT_BURGER
@@ -234,11 +234,10 @@
 		/datum/reagent/consumable/blackpepper = 5,
 		/obj/item/food/patty/plain = 5,
 		/obj/item/food/grown/tomato = 4,
-		/obj/item/food/cheese/wedge = 3,
+		/obj/item/food/cheese = 3,
 		/obj/item/food/boiledegg = 1,
 		/obj/item/food/meat/bacon = 1,
-		/obj/item/food/bun = 1,
-		/obj/item/food/pickle = 1,
+		/obj/item/food/bun = 1
 
 	)
 	result = /obj/item/food/burger/superbite
@@ -315,8 +314,8 @@
 	reqs = list(
 		/obj/item/food/bun = 1,
 		/obj/item/food/patty/plain = 1,
-		/obj/item/organ/internal/ears/cat = 1,
-		/obj/item/organ/external/tail/cat = 1,
+		/obj/item/organ/ears/cat = 1,
+		/obj/item/organ/tail/cat = 1,
 	)
 	result = /obj/item/food/burger/catburger
 	subcategory = CAT_BURGER
@@ -336,7 +335,7 @@
 	reqs = list(
 			/obj/item/food/patty/plain = 1,
 			/obj/item/food/bun = 1,
-			/obj/item/food/cheese/wedge = 1,
+			/obj/item/food/cheese = 1,
 	)
 	result = /obj/item/food/burger/cheese
 	subcategory = CAT_BURGER
@@ -346,7 +345,7 @@
 	reqs = list(
 			/obj/item/food/soylentgreen = 1, //two full meats worth.
 			/obj/item/food/bun = 1,
-			/obj/item/food/cheese/wedge = 2,
+			/obj/item/food/cheese = 2,
 	)
 	result = /obj/item/food/burger/soylent
 	subcategory = CAT_BURGER
@@ -386,7 +385,7 @@
 	reqs = list(
 			/obj/item/food/patty/plain = 2,
 			/obj/item/food/bun = 1,
-			/obj/item/food/cheese/wedge = 2,
+			/obj/item/food/cheese = 2,
 			/obj/item/food/grown/chili = 1,
 			/obj/item/food/grown/cabbage = 1,
 			/obj/item/toy/crayon/green = 1,

@@ -52,11 +52,11 @@
 /area/shuttle/transport)
 "k" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/medkit/o2{
+/obj/item/storage/firstaid/o2{
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/storage/medkit/regular,
+/obj/item/storage/firstaid/regular,
 /obj/item/crowbar,
 /obj/machinery/light/directional/west,
 /turf/open/floor/mineral/plastitanium,
@@ -152,7 +152,7 @@
 	dir = 8;
 	dwidth = 2;
 	height = 11;
-	shuttle_id = "ferry";
+	id = "ferry";
 	name = "ferry shuttle";
 	preferred_direction = 4;
 	width = 5

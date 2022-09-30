@@ -9,7 +9,7 @@
 	if(mob_size < MOB_SIZE_LARGE)
 		safe_throw_at(get_edge_target_turf(src, get_dir(user, src)), 2, 1, user)
 		hitverb = "slam"
-	playsound(loc, SFX_PUNCH, 25, TRUE, -1)
+	playsound(loc, "punch", 25, TRUE, -1)
 	visible_message(span_danger("[user] [hitverb]s [src]!"), \
 					span_userdanger("[user] [hitverb]s you!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, user)
 	to_chat(user, span_danger("You [hitverb] [src]!"))
@@ -29,7 +29,7 @@
 		return TRUE
 	var/damage = rand(1, 9)
 	if (prob(90))
-		playsound(loc, SFX_PUNCH, 25, TRUE, -1)
+		playsound(loc, "punch", 25, TRUE, -1)
 		visible_message(span_danger("[user] punches [src]!"), \
 						span_userdanger("[user] punches you!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, user)
 		to_chat(user, span_danger("You punch [src]!"))
@@ -38,7 +38,7 @@
 			visible_message(span_danger("[user] knocks [src] down!"), \
 							span_userdanger("[user] knocks you down!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, user)
 			to_chat(user, span_danger("You knock [src] down!"))
-		var/obj/item/bodypart/affecting = get_bodypart(get_random_valid_zone(user.zone_selected))
+		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(user.zone_selected))
 		apply_damage(damage, BRUTE, affecting)
 		log_combat(user, src, "attacked")
 	else

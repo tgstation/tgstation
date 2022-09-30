@@ -7,8 +7,16 @@
 import { classes, pureComponentHooks } from 'common/react';
 import { Box } from './Box';
 
-export const NoticeBox = (props) => {
-  const { className, color, info, warning, success, danger, ...rest } = props;
+export const NoticeBox = props => {
+  const {
+    className,
+    color,
+    info,
+    warning,
+    success,
+    danger,
+    ...rest
+  } = props;
   return (
     <Box
       className={classes([
@@ -19,8 +27,7 @@ export const NoticeBox = (props) => {
         danger && 'NoticeBox--type--danger',
         className,
       ])}
-      {...rest}
-    />
+      {...rest} />
   );
 };
 

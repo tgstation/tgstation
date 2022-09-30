@@ -67,11 +67,7 @@
 	if(..())
 		return
 	var/list/buildlist = list("Walls and Floors" = RCD_FLOORWALL, "Airlocks" = RCD_AIRLOCK, "Deconstruction" = RCD_DECONSTRUCT, "Windows and Grilles" = RCD_WINDOWGRILLE)
-	var/buildmode = tgui_input_list(owner, "Set construction mode", "Base Console", buildlist)
-	if(isnull(buildmode))
-		return
-	if(isnull(buildlist[buildmode]))
-		return
+	var/buildmode = input(owner, "Set construction mode.", "Base Console", null) in buildlist
 	check_rcd()
 	base_console.internal_rcd.construction_mode = buildlist[buildmode]
 	to_chat(owner, "Build mode is now [buildmode].")
@@ -135,9 +131,9 @@
 	button_icon_state = "build_fan"
 	structure_name = "fans"
 	structure_path = /obj/structure/fans/tiny
-	place_sound = 'sound/machines/click.ogg'
+	place_sound =  'sound/machines/click.ogg'
 
-/datum/action/innate/construction/place_structure/fan/after_place(obj/placed_structure, remaining)
+/datum/action/innate/construction/place_structure/turret/after_place(obj/placed_structure, remaining)
 	to_chat(owner, span_notice("Tiny fan placed. [remaining] fans remaining."))
 
 /datum/action/innate/construction/place_structure/turret
@@ -152,6 +148,5 @@
 	if(!turret_controller)
 		to_chat(owner, span_notice("<b>Warning:</b> Aux base controller not found. Turrets might not work properly."))
 		return
-
-	LAZYADD(turret_controller.turrets, WEAKREF(placed_structure))
+	turret_controller.turrets += placed_structure
 	to_chat(owner, span_notice("You've constructed an additional turret. [remaining] turrets remaining."))

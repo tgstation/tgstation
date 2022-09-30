@@ -10,8 +10,8 @@
 	w_class = WEIGHT_CLASS_SMALL
 	inhand_icon_state = "electronic"
 	worn_icon_state = "electronic"
-	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	flags_1 = CONDUCT_1
 	item_flags = NOBLUDGEON
 	slot_flags = ITEM_SLOT_BELT
@@ -25,7 +25,7 @@
 /datum/action/item_action/display_detective_scan_results
 	name = "Display Forensic Scanner Results"
 
-/datum/action/item_action/display_detective_scan_results/Trigger(trigger_flags)
+/datum/action/item_action/display_detective_scan_results/Trigger()
 	var/obj/item/detective_scanner/scanner = target
 	if(istype(scanner))
 		scanner.displayDetectiveScanResults(usr)
@@ -40,22 +40,20 @@
 
 /obj/item/detective_scanner/proc/PrintReport()
 	// Create our paper
-	var/obj/item/paper/report_paper = new(get_turf(src))
+	var/obj/item/paper/P = new(get_turf(src))
 
 	//This could be a global count like sec and med record printouts. See GLOB.data_core.medicalPrintCount AKA datacore.dm
 	var/frNum = ++forensicPrintCount
 
-	report_paper.name = text("FR-[] 'Forensic Record'", frNum)
-	var/report_text = text("<center><B>Forensic Record - (FR-[])</B></center><HR><BR>", frNum)
-	report_text += jointext(log, "<BR>")
-	report_text += "<HR><B>Notes:</B><BR>"
-
-	report_paper.add_raw_text(report_text)
-	report_paper.update_appearance()
+	P.name = text("FR-[] 'Forensic Record'", frNum)
+	P.info = text("<center><B>Forensic Record - (FR-[])</B></center><HR><BR>", frNum)
+	P.info += jointext(log, "<BR>")
+	P.info += "<HR><B>Notes:</B><BR>"
+	P.update_appearance()
 
 	if(ismob(loc))
 		var/mob/M = loc
-		M.put_in_hands(report_paper)
+		M.put_in_hands(P)
 		to_chat(M, span_notice("Report printed. Log cleared."))
 
 	// Clear the logs
@@ -88,8 +86,8 @@
 
 		//Make our lists
 		var/list/fingerprints = list()
-		var/list/blood = GET_ATOM_BLOOD_DNA(A)
-		var/list/fibers = GET_ATOM_FIBRES(A)
+		var/list/blood = A.return_blood_DNA()
+		var/list/fibers = A.return_fibers()
 		var/list/reagents = list()
 
 		var/target_name = A.name
@@ -104,7 +102,7 @@
 
 		else if(!ismob(A))
 
-			fingerprints = GET_ATOM_FINGERPRINTS(A)
+			fingerprints = A.return_fingerprints()
 
 			// Only get reagents from non-mobs.
 			if(A.reagents && A.reagents.reagent_list.len)

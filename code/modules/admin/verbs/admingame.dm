@@ -18,7 +18,7 @@
 	body += "<body>Options panel for <b>[M]</b>"
 	if(M.client)
 		body += " played by <b>[M.client]</b> "
-		body += "\[<A href='?_src_=holder;[HrefToken()];editrights=[(GLOB.admin_datums[M.client.ckey] || GLOB.deadmins[M.client.ckey]) ? "rank" : "add"];key=[M.key]'>[M.client.holder ? M.client.holder.rank_names() : "Player"]</A>\]"
+		body += "\[<A href='?_src_=holder;[HrefToken()];editrights=[(GLOB.admin_datums[M.client.ckey] || GLOB.deadmins[M.client.ckey]) ? "rank" : "add"];key=[M.key]'>[M.client.holder ? M.client.holder.rank : "Player"]</A>\]"
 		if(CONFIG_GET(flag/use_exp_tracking))
 			body += "\[<A href='?_src_=holder;[HrefToken()];getplaytimewindow=[REF(M)]'>" + M.client.get_exp_living(FALSE) + "</a>\]"
 
@@ -26,9 +26,6 @@
 		body += " <B>Hasn't Entered Game</B> "
 	else
 		body += " \[<A href='?_src_=holder;[HrefToken()];revive=[REF(M)]'>Heal</A>\] "
-
-	if(M.ckey)
-		body += "<br>\[<A href='?_src_=holder;[HrefToken()];ppbyckey=[M.ckey];ppbyckeyorigmob=[REF(M)]'>Find Updated Panel</A>\]"
 
 	if(M.client)
 		body += "<br>\[<b>First Seen:</b> [M.client.player_join_date]\]\[<b>Byond account registered on:</b> [M.client.account_join_date]\]"
@@ -99,44 +96,81 @@
 	body += "<A href='?_src_=holder;[HrefToken()];playsoundto=[REF(M)]'>Play sound to</A> | "
 	body += "<A href='?_src_=holder;[HrefToken()];languagemenu=[REF(M)]'>Language Menu</A>"
 
-	if(M.client)
+	if (M.client)
 		if(!isnewplayer(M))
 			body += "<br><br>"
-			body += "<b>Transformation:</b><br>"
-			if(isobserver(M))
-				body += "<b>Ghost</b> | "
-			else
-				body += "<A href='?_src_=holder;[HrefToken()];simplemake=observer;mob=[REF(M)]'>Make Ghost</A> | "
+			body += "<b>Transformation:</b>"
+			body += "<br>"
 
+			//Human
 			if(ishuman(M) && !ismonkey(M))
-				body += "<b>Human</b> | "
+				body += "<B>Human</B> | "
 			else
-				body += "<A href='?_src_=holder;[HrefToken()];simplemake=human;mob=[REF(M)]'>Make Human</A> | "
+				body += "<A href='?_src_=holder;[HrefToken()];humanone=[REF(M)]'>Humanize</A> | "
 
+			//Monkey
 			if(ismonkey(M))
-				body += "<b>Monkey</b> | "
+				body += "<B>Monkeyized</B> | "
 			else
-				body += "<A href='?_src_=holder;[HrefToken()];simplemake=monkey;mob=[REF(M)]'>Make Monkey</A> | "
+				body += "<A href='?_src_=holder;[HrefToken()];monkeyone=[REF(M)]'>Monkeyize</A> | "
 
-			if(iscyborg(M))
-				body += "<b>Cyborg</b> | "
+			//Corgi
+			if(iscorgi(M))
+				body += "<B>Corgized</B> | "
 			else
-				body += "<A href='?_src_=holder;[HrefToken()];simplemake=robot;mob=[REF(M)]'>Make Cyborg</A> | "
+				body += "<A href='?_src_=holder;[HrefToken()];corgione=[REF(M)]'>Corgize</A> | "
 
+			//AI / Cyborg
 			if(isAI(M))
-				body += "<b>AI</b>"
-			else
-				body += "<A href='?_src_=holder;[HrefToken()];makeai=[REF(M)]'>Make AI</A>"
+				body += "<B>Is an AI</B> "
+			else if(ishuman(M))
+				body += "<A href='?_src_=holder;[HrefToken()];makeai=[REF(M)]'>Make AI</A> | "
+				body += "<A href='?_src_=holder;[HrefToken()];makerobot=[REF(M)]'>Make Robot</A> | "
+				body += "<A href='?_src_=holder;[HrefToken()];makealien=[REF(M)]'>Make Alien</A> | "
+				body += "<A href='?_src_=holder;[HrefToken()];makeslime=[REF(M)]'>Make Slime</A> | "
+				body += "<A href='?_src_=holder;[HrefToken()];makeblob=[REF(M)]'>Make Blob</A> | "
 
+			//Simple Animals
+			if(isanimal(M))
+				body += "<A href='?_src_=holder;[HrefToken()];makeanimal=[REF(M)]'>Re-Animalize</A> | "
+			else
+				body += "<A href='?_src_=holder;[HrefToken()];makeanimal=[REF(M)]'>Animalize</A> | "
+
+			body += "<br><br>"
+			body += "<b>Rudimentary transformation:</b><font size=2><br>These transformations only create a new mob type and copy stuff over. They do not take into account MMIs and similar mob-specific things. The buttons in 'Transformations' are preferred, when possible.</font><br>"
+			body += "<A href='?_src_=holder;[HrefToken()];simplemake=observer;mob=[REF(M)]'>Observer</A> | "
+			body += "\[ Alien: <A href='?_src_=holder;[HrefToken()];simplemake=drone;mob=[REF(M)]'>Drone</A>, "
+			body += "<A href='?_src_=holder;[HrefToken()];simplemake=hunter;mob=[REF(M)]'>Hunter</A>, "
+			body += "<A href='?_src_=holder;[HrefToken()];simplemake=sentinel;mob=[REF(M)]'>Sentinel</A>, "
+			body += "<A href='?_src_=holder;[HrefToken()];simplemake=praetorian;mob=[REF(M)]'>Praetorian</A>, "
+			body += "<A href='?_src_=holder;[HrefToken()];simplemake=queen;mob=[REF(M)]'>Queen</A>, "
+			body += "<A href='?_src_=holder;[HrefToken()];simplemake=larva;mob=[REF(M)]'>Larva</A> \] "
+			body += "<A href='?_src_=holder;[HrefToken()];simplemake=human;mob=[REF(M)]'>Human</A> "
+			body += "\[ slime: <A href='?_src_=holder;[HrefToken()];simplemake=slime;mob=[REF(M)]'>Baby</A>, "
+			body += "<A href='?_src_=holder;[HrefToken()];simplemake=adultslime;mob=[REF(M)]'>Adult</A> \] "
+			body += "<A href='?_src_=holder;[HrefToken()];simplemake=monkey;mob=[REF(M)]'>Monkey</A> | "
+			body += "<A href='?_src_=holder;[HrefToken()];simplemake=robot;mob=[REF(M)]'>Cyborg</A> | "
+			body += "<A href='?_src_=holder;[HrefToken()];simplemake=cat;mob=[REF(M)]'>Cat</A> | "
+			body += "<A href='?_src_=holder;[HrefToken()];simplemake=runtime;mob=[REF(M)]'>Runtime</A> | "
+			body += "<A href='?_src_=holder;[HrefToken()];simplemake=corgi;mob=[REF(M)]'>Corgi</A> | "
+			body += "<A href='?_src_=holder;[HrefToken()];simplemake=ian;mob=[REF(M)]'>Ian</A> | "
+			body += "<A href='?_src_=holder;[HrefToken()];simplemake=crab;mob=[REF(M)]'>Crab</A> | "
+			body += "<A href='?_src_=holder;[HrefToken()];simplemake=coffee;mob=[REF(M)]'>Coffee</A> | "
+			body += "\[ Construct: <A href='?_src_=holder;[HrefToken()];simplemake=constructjuggernaut;mob=[REF(M)]'>Juggernaut</A> , "
+			body += "<A href='?_src_=holder;[HrefToken()];simplemake=constructartificer;mob=[REF(M)]'>Artificer</A> , "
+			body += "<A href='?_src_=holder;[HrefToken()];simplemake=constructwraith;mob=[REF(M)]'>Wraith</A> \] "
+			body += "<A href='?_src_=holder;[HrefToken()];simplemake=shade;mob=[REF(M)]'>Shade</A>"
+			body += "<br>"
+
+	if (M.client)
 		body += "<br><br>"
 		body += "<b>Other actions:</b>"
 		body += "<br>"
-		if(!isnewplayer(M))
-			body += "<A href='?_src_=holder;[HrefToken()];forcespeech=[REF(M)]'>Forcesay</A> | "
-			body += "<A href='?_src_=holder;[HrefToken()];tdome1=[REF(M)]'>Thunderdome 1</A> | "
-			body += "<A href='?_src_=holder;[HrefToken()];tdome2=[REF(M)]'>Thunderdome 2</A> | "
-			body += "<A href='?_src_=holder;[HrefToken()];tdomeadmin=[REF(M)]'>Thunderdome Admin</A> | "
-			body += "<A href='?_src_=holder;[HrefToken()];tdomeobserve=[REF(M)]'>Thunderdome Observer</A> | "
+		body += "<A href='?_src_=holder;[HrefToken()];forcespeech=[REF(M)]'>Forcesay</A> | "
+		body += "<A href='?_src_=holder;[HrefToken()];tdome1=[REF(M)]'>Thunderdome 1</A> | "
+		body += "<A href='?_src_=holder;[HrefToken()];tdome2=[REF(M)]'>Thunderdome 2</A> | "
+		body += "<A href='?_src_=holder;[HrefToken()];tdomeadmin=[REF(M)]'>Thunderdome Admin</A> | "
+		body += "<A href='?_src_=holder;[HrefToken()];tdomeobserve=[REF(M)]'>Thunderdome Observer</A> | "
 		body += "<A href='?_src_=holder;[HrefToken()];admincommend=[REF(M)]'>Commend Behavior</A> | "
 
 	body += "<br>"
@@ -367,47 +401,30 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!check_rights(R_ADMIN))
 		return
 
-	if (combo_hud_enabled)
-		disable_combo_hud()
-	else
-		enable_combo_hud()
+	var/adding_hud = !has_antag_hud()
 
-	to_chat(usr, "You toggled your admin combo HUD [combo_hud_enabled ? "ON" : "OFF"].", confidential = TRUE)
-	message_admins("[key_name_admin(usr)] toggled their admin combo HUD [combo_hud_enabled ? "ON" : "OFF"].")
-	log_admin("[key_name(usr)] toggled their admin combo HUD [combo_hud_enabled ? "ON" : "OFF"].")
-	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Combo HUD", "[combo_hud_enabled ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	for(var/hudtype in list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_ADVANCED)) // add data huds
+		var/datum/atom_hud/H = GLOB.huds[hudtype]
+		(adding_hud) ? H.add_hud_to(usr) : H.remove_hud_from(usr)
+	for(var/datum/atom_hud/antag/H in GLOB.huds) // add antag huds
+		(adding_hud) ? H.add_hud_to(usr) : H.remove_hud_from(usr)
 
-/client/proc/enable_combo_hud()
-	if (combo_hud_enabled)
-		return
+	if(prefs.toggles & COMBOHUD_LIGHTING)
+		if(adding_hud)
+			mob.lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
+		else
+			mob.lighting_alpha = initial(mob.lighting_alpha)
 
-	combo_hud_enabled = TRUE
-
-	for (var/hudtype in list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_ADVANCED))
-		var/datum/atom_hud/atom_hud = GLOB.huds[hudtype]
-		atom_hud.show_to(mob)
-
-	for (var/datum/atom_hud/alternate_appearance/basic/antagonist_hud/antag_hud in GLOB.active_alternate_appearances)
-		antag_hud.show_to(mob)
-
-	mob.lighting_alpha = mob.default_lighting_alpha()
 	mob.update_sight()
 
-/client/proc/disable_combo_hud()
-	if (!combo_hud_enabled)
-		return
+	to_chat(usr, "You toggled your admin combo HUD [adding_hud ? "ON" : "OFF"].", confidential = TRUE)
+	message_admins("[key_name_admin(usr)] toggled their admin combo HUD [adding_hud ? "ON" : "OFF"].")
+	log_admin("[key_name(usr)] toggled their admin combo HUD [adding_hud ? "ON" : "OFF"].")
+	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Combo HUD", "[adding_hud ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-	combo_hud_enabled = FALSE
-
-	for (var/hudtype in list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_ADVANCED))
-		var/datum/atom_hud/atom_hud = GLOB.huds[hudtype]
-		atom_hud.hide_from(mob)
-
-	for (var/datum/atom_hud/alternate_appearance/basic/antagonist_hud/antag_hud in GLOB.active_alternate_appearances)
-		antag_hud.hide_from(mob)
-
-	mob.lighting_alpha = mob.default_lighting_alpha()
-	mob.update_sight()
+/client/proc/has_antag_hud()
+	var/datum/atom_hud/A = GLOB.huds[ANTAG_HUD_TRAITOR]
+	return A.hudusers[mob]
 
 /datum/admins/proc/show_traitor_panel(mob/target_mob in GLOB.mob_list)
 	set category = "Admin.Game"
@@ -436,7 +453,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	else
 		to_chat(usr, "This can only be used on instances of type /mob and /mind", confidential = TRUE)
 		return
-	var/datum/skill_panel/SP = new(usr, target_mind)
+	var/datum/skill_panel/SP  = new(usr, target_mind)
 	SP.ui_interact(usr)
 
 /datum/admins/proc/show_lag_switch_panel()
@@ -464,7 +481,5 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	dat += "Slowmode say verb (informs world): <a href='?_src_=holder;[HrefToken()];change_lag_switch=[SLOWMODE_SAY]'><b>[SSlag_switch.measures[SLOWMODE_SAY] ? "On" : "Off"]</b></a><br/>"
 	dat += "Disable runechat: <a href='?_src_=holder;[HrefToken()];change_lag_switch=[DISABLE_RUNECHAT]'><b>[SSlag_switch.measures[DISABLE_RUNECHAT] ? "On" : "Off"]</b></a> - <span style='font-size:80%'>trait applies to speaker</span><br/>"
 	dat += "Disable examine icons: <a href='?_src_=holder;[HrefToken()];change_lag_switch=[DISABLE_USR_ICON2HTML]'><b>[SSlag_switch.measures[DISABLE_USR_ICON2HTML] ? "On" : "Off"]</b></a> - <span style='font-size:80%'>trait applies to examiner</span><br/>"
-	dat += "Disable parallax: <a href='?_src_=holder;[HrefToken()];change_lag_switch=[DISABLE_PARALLAX]'><b>[SSlag_switch.measures[DISABLE_PARALLAX] ? "On" : "Off"]</b></a> - <span style='font-size:80%'>trait applies to character</span><br />"
-	dat += "Disable footsteps: <a href='?_src_=holder;[HrefToken()];change_lag_switch=[DISABLE_FOOTSTEPS]'><b>[SSlag_switch.measures[DISABLE_FOOTSTEPS] ? "On" : "Off"]</b></a> - <span style='font-size:80%'>trait applies to character</span><br />"
 	dat += "</body></html>"
-	usr << browse(dat.Join(), "window=lag_switch_panel;size=420x480")
+	usr << browse(dat.Join(), "window=lag_switch_panel;size=420x420")

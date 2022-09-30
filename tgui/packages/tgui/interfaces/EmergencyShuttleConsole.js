@@ -13,32 +13,45 @@ export const EmergencyShuttleConsole = (props, context) => {
     authorizations = [],
   } = data;
   return (
-    <Window width={400} height={350}>
+    <Window
+      width={400}
+      height={350}>
       <Window.Content>
         <Section>
-          <Box bold fontSize="40px" textAlign="center" fontFamily="monospace">
+          <Box
+            bold
+            fontSize="40px"
+            textAlign="center"
+            fontFamily="monospace">
             {timer_str}
           </Box>
-          <Box textAlign="center" fontSize="16px" mb={1}>
-            <Box inline bold>
+          <Box
+            textAlign="center"
+            fontSize="16px"
+            mb={1}>
+            <Box
+              inline
+              bold>
               ENGINES:
             </Box>
-            <Box inline color={engines_started ? 'good' : 'average'} ml={1}>
+            <Box
+              inline
+              color={engines_started ? 'good' : 'average'}
+              ml={1}>
               {engines_started ? 'Online' : 'Idle'}
             </Box>
           </Box>
           <Section
             title="Early Launch Authorization"
             level={2}
-            buttons={
+            buttons={(
               <Button
                 icon="times"
                 content="Repeal All"
                 color="bad"
                 disabled={!enabled}
-                onClick={() => act('abort')}
-              />
-            }>
+                onClick={() => act('abort')} />
+            )}>
             <Grid>
               <Grid.Column>
                 <Button
@@ -47,8 +60,7 @@ export const EmergencyShuttleConsole = (props, context) => {
                   color="good"
                   content="AUTHORIZE"
                   disabled={!enabled}
-                  onClick={() => act('authorize')}
-                />
+                  onClick={() => act('authorize')} />
               </Grid.Column>
               <Grid.Column>
                 <Button
@@ -56,21 +68,23 @@ export const EmergencyShuttleConsole = (props, context) => {
                   icon="minus"
                   content="REPEAL"
                   disabled={!enabled}
-                  onClick={() => act('repeal')}
-                />
+                  onClick={() => act('repeal')} />
               </Grid.Column>
             </Grid>
             <Section
               title="Authorizations"
               level={3}
               minHeight="150px"
-              buttons={
-                <Box inline bold color={emagged ? 'bad' : 'good'}>
+              buttons={(
+                <Box
+                  inline
+                  bold
+                  color={emagged ? 'bad' : 'good'}>
                   {emagged ? 'ERROR' : 'Remaining: ' + authorizations_remaining}
                 </Box>
-              }>
+              )}>
               {authorizations.length > 0 ? (
-                authorizations.map((authorization) => (
+                authorizations.map(authorization => (
                   <Box
                     key={authorization.name}
                     bold
@@ -80,7 +94,11 @@ export const EmergencyShuttleConsole = (props, context) => {
                   </Box>
                 ))
               ) : (
-                <Box bold textAlign="center" fontSize="16px" color="average">
+                <Box
+                  bold
+                  textAlign="center"
+                  fontSize="16px"
+                  color="average">
                   No Active Authorizations
                 </Box>
               )}

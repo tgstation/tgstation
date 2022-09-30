@@ -10,26 +10,15 @@
 	density = TRUE
 	anchored = TRUE
 
-/obj/structure/loom/Initialize(mapload)
-	. = ..()
-
-	var/static/list/hovering_item_typechecks = list(
-		/obj/item/stack/sheet/cotton = list(
-			SCREENTIP_CONTEXT_LMB = "Weave",
-		),
-	)
-
-	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
-
 /obj/structure/loom/attackby(obj/item/I, mob/user)
 	if(weave(I, user))
 		return
 	return ..()
 
-/obj/structure/loom/wrench_act(mob/living/user, obj/item/tool)
-	. = ..()
-	default_unfasten_wrench(user, tool, time = 0.5 SECONDS)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+/obj/structure/loom/wrench_act(mob/living/user, obj/item/I)
+	..()
+	default_unfasten_wrench(user, I, 5)
+	return TRUE
 
 ///Handles the weaving.
 /obj/structure/loom/proc/weave(obj/item/stack/sheet/cotton/W, mob/user)

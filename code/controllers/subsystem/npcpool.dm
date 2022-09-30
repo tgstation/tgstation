@@ -26,7 +26,7 @@ SUBSYSTEM_DEF(npcpool)
 
 		if (QDELETED(SA)) // Some issue causes nulls to get into this list some times. This keeps it running, but the bug is still there.
 			GLOB.simple_animals[AI_ON] -= SA
-			stack_trace("Found a null in simple_animals active list [SA.type]!")
+			log_world("Found a null in simple_animals list!")
 			continue
 
 		if(!SA.ckey && !SA.notransform)

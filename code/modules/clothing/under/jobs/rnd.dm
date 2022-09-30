@@ -7,7 +7,7 @@
 	name = "research director's vest suit"
 	icon_state = "director"
 	inhand_icon_state = "lb_suit"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 10, FIRE = 0, ACID = 35)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 10, RAD = 0, FIRE = 0, ACID = 35)
 	can_adjust = FALSE
 
 /obj/item/clothing/under/rank/rnd/research_director/doctor_hilbert
@@ -22,8 +22,7 @@
 	inhand_icon_state = "lb_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
-	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/rank/rnd/research_director/alt
 	desc = "Maybe you'll engineer your own half-man, half-pig creature some day. Its fabric provides minor protection from biological contaminants."
@@ -40,8 +39,7 @@
 	inhand_icon_state = "rdwhimsy"
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
-	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/rank/rnd/research_director/turtleneck
 	desc = "A dark purple turtleneck and tan khakis, for a director with a superior sense of style."
@@ -58,15 +56,14 @@
 	inhand_icon_state = "p_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
-	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/rank/rnd/scientist
 	desc = "It's made of a special fiber that provides minor protection against explosives. It has markings that denote the wearer as a scientist."
 	name = "scientist's jumpsuit"
 	icon_state = "science"
 	inhand_icon_state = "w_suit"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 50, FIRE = 0, ACID = 0)
+	permeability_coefficient = 0.5
 
 /obj/item/clothing/under/rank/rnd/scientist/skirt
 	name = "scientist's jumpskirt"
@@ -75,8 +72,7 @@
 	inhand_icon_state = "w_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
-	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/rank/rnd/roboticist
 	desc = "It's a slimming black with reinforced seams; great for industrial work."
@@ -92,15 +88,15 @@
 	inhand_icon_state = "robotics"
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
-	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/rank/rnd/geneticist
 	desc = "It's made of a special fiber that gives special protection against biohazards. It has a genetics rank stripe on it."
 	name = "geneticist's jumpsuit"
 	icon_state = "genetics"
 	inhand_icon_state = "w_suit"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 50, FIRE = 0, ACID = 0)
+	permeability_coefficient = 0.5
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 10, RAD = 0, FIRE = 0, ACID = 0)
 
 /obj/item/clothing/under/rank/rnd/geneticist/skirt
 	name = "geneticist's jumpskirt"
@@ -109,5 +105,4 @@
 	inhand_icon_state = "w_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
-	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	fitted = FEMALE_UNIFORM_TOP

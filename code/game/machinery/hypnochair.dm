@@ -115,8 +115,6 @@
 			"...an annoying buzz in your ears..."\
 		)]</span>")
 
-	use_power(active_power_usage * delta_time)
-
 /obj/machinery/hypnochair/proc/finish_interrogation()
 	interrogating = FALSE
 	STOP_PROCESSING(SSobj, src)
@@ -149,23 +147,23 @@
 		victim = null
 		return
 	victim.cure_blind("hypnochair")
-	REMOVE_TRAIT(victim, TRAIT_DEAF, HYPNOCHAIR_TRAIT)
+	REMOVE_TRAIT(victim, TRAIT_DEAF, "hypnochair")
 	if(!(victim.get_eye_protection() > 0))
 		var/time_diff = world.time - start_time
 		switch(time_diff)
 			if(0 to 100)
-				victim.adjust_confusion(10 SECONDS)
-				victim.set_dizzy_if_lower(200 SECONDS)
+				victim.add_confusion(10)
+				victim.Dizzy(100)
 				victim.blur_eyes(5)
 			if(101 to 200)
-				victim.adjust_confusion(15 SECONDS)
-				victim.set_dizzy_if_lower(400 SECONDS)
+				victim.add_confusion(15)
+				victim.Dizzy(200)
 				victim.blur_eyes(10)
 				if(prob(25))
 					victim.apply_status_effect(/datum/status_effect/trance, rand(50,150), FALSE)
 			if(201 to INFINITY)
-				victim.adjust_confusion(20 SECONDS)
-				victim.set_dizzy_if_lower(600 SECONDS)
+				victim.add_confusion(20)
+				victim.Dizzy(300)
 				victim.blur_eyes(15)
 				if(prob(65))
 					victim.apply_status_effect(/datum/status_effect/trance, rand(50,150), FALSE)

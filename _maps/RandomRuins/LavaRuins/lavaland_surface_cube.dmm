@@ -3,11 +3,11 @@
 /turf/closed/mineral/volcanic/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "b" = (
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "c" = (
 /obj/effect/decal/remains/human,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "d" = (
 /turf/closed/indestructible/riveted,
@@ -15,7 +15,7 @@
 "e" = (
 /obj/machinery/wish_granter,
 /obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 
 (1,1,1) = {"

@@ -7,6 +7,7 @@
 	semi_auto = TRUE
 	fire_sound = 'sound/weapons/gun/smg/shot.ogg'
 	fire_sound_volume = 90
+	vary_fire_sound = FALSE
 	rack_sound = 'sound/weapons/gun/smg/smgrack.ogg'
 	suppressed_sound = 'sound/weapons/gun/smg/shot_suppressed.ogg'
 	var/select = 1 ///fire selector position. 1 = semi, 2 = burst. anything past that can vary between guns.
@@ -178,7 +179,7 @@
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
 /obj/item/gun/ballistic/automatic/m90/attackby(obj/item/A, mob/user, params)
-	if(isammocasing(A))
+	if(istype(A, /obj/item/ammo_casing))
 		if(istype(A, underbarrel.magazine.ammo_type))
 			underbarrel.attack_self(user)
 			underbarrel.attackby(A, user, params)
@@ -339,6 +340,7 @@
 	worn_icon_state = null
 	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
 	fire_sound_volume = 90
+	vary_fire_sound = FALSE
 	load_sound = 'sound/weapons/gun/sniper/mag_insert.ogg'
 	rack_sound = 'sound/weapons/gun/sniper/rack.ogg'
 	suppressed_sound = 'sound/weapons/gun/general/heavy_shot_suppressed.ogg'
@@ -348,15 +350,14 @@
 	fire_delay = 40
 	burst_size = 1
 	w_class = WEIGHT_CLASS_NORMAL
+	zoomable = TRUE
+	zoom_amt = 10 //Long range, enough to see in front of you, but no tiles behind you.
+	zoom_out_amt = 5
 	slot_flags = ITEM_SLOT_BACK
 	actions_types = list()
 	mag_display = TRUE
 	suppressor_x_offset = 3
 	suppressor_y_offset = 3
-
-/obj/item/gun/ballistic/automatic/sniper_rifle/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/scope, range_modifier = 2)
 
 /obj/item/gun/ballistic/automatic/sniper_rifle/syndicate
 	name = "syndicate sniper rifle"

@@ -59,15 +59,11 @@
 	/// Since it's above everything else, this is the layer used by default. TURF_LAYER is below mobs and walls if you need to use that.
 	var/overlay_layer = AREA_LAYER
 	/// Plane for the overlay
-	var/overlay_plane = AREA_PLANE
+	var/overlay_plane = ABOVE_LIGHTING_PLANE
 	/// If the weather has no purpose other than looks
 	var/aesthetic = FALSE
 	/// Used by mobs (or movables containing mobs, such as enviro bags) to prevent them from being affected by the weather.
 	var/immunity_type
-	/// If this bit of weather should also draw an overlay that's uneffected by lighting onto the area
-	/// Taken from weather_glow.dmi
-	var/use_glow = TRUE
-	var/list/offsets_to_overlays
 
 	/// The stage of the weather, from 1-4
 	var/stage = END_STAGE
@@ -112,7 +108,7 @@
 		if(A.z in impacted_z_levels)
 			impacted_areas |= A
 	weather_duration = rand(weather_duration_lower, weather_duration_upper)
-	SSweather.processing |= src
+	START_PROCESSING(SSweather, src)
 	update_areas()
 	for(var/z_level in impacted_z_levels)
 		for(var/mob/player as anything in SSmobs.clients_by_zlevel[z_level])
@@ -186,7 +182,7 @@
 		return
 	SEND_GLOBAL_SIGNAL(COMSIG_WEATHER_END(type))
 	stage = END_STAGE
-	SSweather.processing -= src
+	STOP_PROCESSING(SSweather, src)
 	update_areas()
 
 /**
@@ -228,62 +224,23 @@
  *
  */
 /datum/weather/proc/update_areas()
-	var/using_icon_state = ""
-	switch(stage)
-		if(STARTUP_STAGE)
-			using_icon_state = telegraph_overlay
-		if(MAIN_STAGE)
-			using_icon_state = weather_overlay
-		if(WIND_DOWN_STAGE)
-			using_icon_state = end_overlay
-		if(END_STAGE)
-			using_icon_state = ""
-
-	// Note: what we do here is effectively apply two overlays to each area, for every unique multiz layer they inhabit
-	// One is the base, which will be masked by lighting. the other is "glowing", and provides a nice contrast
-	// This method of applying one overlay per z layer has some minor downsides, in that it could lead to improperly doubled effects if some have alpha
-	// I prefer it to creating 2 extra plane masters however, so it's a cost I'm willing to pay
-	// LU
-	var/list/new_offsets_to_overlays = list()
 	for(var/V in impacted_areas)
 		var/area/N = V
-
-		// List of overlays this area uses
-		var/list/mutable_appearance/overlays = list()
-		// Use all possible offsets
-		// Yes this is a bit annoying, but it's too slow to calculate and store these, and it shouldn't (I hope) look weird
-		for(var/offset in 0 to SSmapping.max_plane_offset)
-			var/keyd_offset = offset + 1
-			if(length(new_offsets_to_overlays) < keyd_offset)
-				new_offsets_to_overlays.len = keyd_offset
-			var/list/mutable_appearance/existing_appearances = new_offsets_to_overlays[keyd_offset]
-			if(existing_appearances)
-				overlays += existing_appearances
-				continue
-
-			var/list/offset_overlays = list()
-			var/mutable_appearance/glow_overlay = mutable_appearance('icons/effects/glow_weather.dmi', using_icon_state, overlay_layer, N, ABOVE_LIGHTING_PLANE, 100, offset_const = offset)
-			glow_overlay.color = weather_color
-			offset_overlays += glow_overlay
-
-			if(stage != END_STAGE)
-				var/mutable_appearance/weather_overlay = mutable_appearance('icons/effects/weather_effects.dmi', using_icon_state, overlay_layer, plane = overlay_plane, offset_const = offset)
-				weather_overlay.color = weather_color
-				offset_overlays += weather_overlay
-
-			new_offsets_to_overlays[keyd_offset] = offset_overlays
-			overlays += offset_overlays
-
-		var/list/mutable_appearance/old_glows = list()
-		// Offset (ha) by 1 to match the key
-		for(var/offset in 1 to SSmapping.max_plane_offset + 1)
-			if(length(offsets_to_overlays) >= offset)
-				old_glows += offsets_to_overlays[offset]
-
-		if(length(old_glows))
-			N.overlays -= old_glows
-		if(length(overlays))
-			N.overlays += overlays
-
-	offsets_to_overlays = new_offsets_to_overlays
-
+		N.layer = overlay_layer
+		N.plane = overlay_plane
+		N.icon = 'icons/effects/weather_effects.dmi'
+		N.color = weather_color
+		switch(stage)
+			if(STARTUP_STAGE)
+				N.icon_state = telegraph_overlay
+			if(MAIN_STAGE)
+				N.icon_state = weather_overlay
+			if(WIND_DOWN_STAGE)
+				N.icon_state = end_overlay
+			if(END_STAGE)
+				N.color = null
+				N.icon_state = ""
+				N.icon = 'icons/turf/areas.dmi'
+				N.layer = initial(N.layer)
+				N.plane = initial(N.plane)
+				N.set_opacity(FALSE)

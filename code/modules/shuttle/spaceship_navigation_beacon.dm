@@ -10,6 +10,8 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "core"
 	base_icon_state = "core"
+	use_power = IDLE_POWER_USE
+	idle_power_usage = 0
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/spaceship_navigation_beacon
 
@@ -18,13 +20,13 @@
 
 /obj/machinery/spaceship_navigation_beacon/Initialize(mapload)
 	. = ..()
-	SSshuttle.beacon_list |= src
+	SSshuttle.beacons |= src
 
 /obj/machinery/spaceship_navigation_beacon/emp_act()
 	locked = TRUE
 
 /obj/machinery/spaceship_navigation_beacon/Destroy()
-	SSshuttle.beacon_list -= src
+	SSshuttle.beacons -= src
 	return ..()
 
 // update the icon_state
@@ -35,10 +37,7 @@
 /obj/machinery/spaceship_navigation_beacon/multitool_act(mob/living/user, obj/item/multitool/I)
 	..()
 	if(panel_open)
-		var/chosen_tag = tgui_input_text(user, "Enter the custom name for this beacon", "Beacon Reclassification", max_length = MAX_NAME_LEN)
-		if(!chosen_tag)
-			return
-		var/new_name = "Beacon_[chosen_tag]"
+		var/new_name = "Beacon_[stripped_input("Enter the custom name for this beacon", "It be Beacon ..your input..")]"
 		if(new_name && Adjacent(user))
 			name = new_name
 			to_chat(user, span_notice("You change beacon name to [name]."))

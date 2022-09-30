@@ -42,32 +42,29 @@
 
 #define R_EVERYTHING (1<<15)-1 //the sum of all other rank permissions, used for +EVERYTHING
 
-#define ADMIN_QUE(user) "(<a href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];adminmoreinfo=[REF(user)]'>?</a>)"
-#define ADMIN_FLW(user) "(<a href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];adminplayerobservefollow=[REF(user)]'>FLW</a>)"
-#define ADMIN_PP(user) "(<a href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];adminplayeropts=[REF(user)]'>PP</a>)"
-#define ADMIN_VV(atom) "(<a href='?_src_=vars;[HrefToken(forceGlobal = TRUE)];Vars=[REF(atom)]'>VV</a>)"
-#define ADMIN_SM(user) "(<a href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];subtlemessage=[REF(user)]'>SM</a>)"
-#define ADMIN_TP(user) "(<a href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];traitor=[REF(user)]'>TP</a>)"
-#define ADMIN_SP(user) "(<a href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];skill=[REF(user)]'>SP</a>)"
-#define ADMIN_KICK(user) "(<a href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];boot2=[REF(user)]'>KICK</a>)"
-#define ADMIN_CENTCOM_REPLY(user) "(<a href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];CentComReply=[REF(user)]'>RPLY</a>)"
-#define ADMIN_SYNDICATE_REPLY(user) "(<a href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];SyndicateReply=[REF(user)]'>RPLY</a>)"
-#define ADMIN_SC(user) "(<a href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];adminspawncookie=[REF(user)]'>SC</a>)"
-#define ADMIN_SMITE(user) "(<a href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];adminsmite=[REF(user)]'>SMITE</a>)"
+#define ADMIN_QUE(user) "(<a href='?_src_=holder;[HrefToken(TRUE)];adminmoreinfo=[REF(user)]'>?</a>)"
+#define ADMIN_FLW(user) "(<a href='?_src_=holder;[HrefToken(TRUE)];adminplayerobservefollow=[REF(user)]'>FLW</a>)"
+#define ADMIN_PP(user) "(<a href='?_src_=holder;[HrefToken(TRUE)];adminplayeropts=[REF(user)]'>PP</a>)"
+#define ADMIN_VV(atom) "(<a href='?_src_=vars;[HrefToken(TRUE)];Vars=[REF(atom)]'>VV</a>)"
+#define ADMIN_SM(user) "(<a href='?_src_=holder;[HrefToken(TRUE)];subtlemessage=[REF(user)]'>SM</a>)"
+#define ADMIN_TP(user) "(<a href='?_src_=holder;[HrefToken(TRUE)];traitor=[REF(user)]'>TP</a>)"
+#define ADMIN_SP(user) "(<a href='?_src_=holder;[HrefToken(TRUE)];skill=[REF(user)]'>SP</a>)"
+#define ADMIN_KICK(user) "(<a href='?_src_=holder;[HrefToken(TRUE)];boot2=[REF(user)]'>KICK</a>)"
+#define ADMIN_CENTCOM_REPLY(user) "(<a href='?_src_=holder;[HrefToken(TRUE)];CentComReply=[REF(user)]'>RPLY</a>)"
+#define ADMIN_SYNDICATE_REPLY(user) "(<a href='?_src_=holder;[HrefToken(TRUE)];SyndicateReply=[REF(user)]'>RPLY</a>)"
+#define ADMIN_SC(user) "(<a href='?_src_=holder;[HrefToken(TRUE)];adminspawncookie=[REF(user)]'>SC</a>)"
+#define ADMIN_SMITE(user) "(<a href='?_src_=holder;[HrefToken(TRUE)];adminsmite=[REF(user)]'>SMITE</a>)"
 #define ADMIN_LOOKUP(user) "[key_name_admin(user)][ADMIN_QUE(user)]"
 #define ADMIN_LOOKUPFLW(user) "[key_name_admin(user)][ADMIN_QUE(user)] [ADMIN_FLW(user)]"
-#define ADMIN_SET_SD_CODE "(<a href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];set_selfdestruct_code=1'>SETCODE</a>)"
+#define ADMIN_SET_SD_CODE "(<a href='?_src_=holder;[HrefToken(TRUE)];set_selfdestruct_code=1'>SETCODE</a>)"
 #define ADMIN_FULLMONTY_NONAME(user) "[ADMIN_QUE(user)] [ADMIN_PP(user)] [ADMIN_VV(user)] [ADMIN_SM(user)] [ADMIN_FLW(user)] [ADMIN_TP(user)] [ADMIN_INDIVIDUALLOG(user)] [ADMIN_SMITE(user)]"
 #define ADMIN_FULLMONTY(user) "[key_name_admin(user)] [ADMIN_FULLMONTY_NONAME(user)]"
-#define ADMIN_JMP(src) "(<a href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)"
+#define ADMIN_JMP(src) "(<a href='?_src_=holder;[HrefToken(TRUE)];adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)"
 #define COORD(src) "[src ? src.Admin_Coordinates_Readable() : "nonexistent location"]"
 #define AREACOORD(src) "[src ? src.Admin_Coordinates_Readable(TRUE) : "nonexistent location"]"
 #define ADMIN_COORDJMP(src) "[src ? src.Admin_Coordinates_Readable(FALSE, TRUE) : "nonexistent location"]"
 #define ADMIN_VERBOSEJMP(src) "[src ? src.Admin_Coordinates_Readable(TRUE, TRUE) : "nonexistent location"]"
-#define ADMIN_INDIVIDUALLOG(user) "(<a href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];individuallog=[REF(user)]'>LOGS</a>)"
-#define ADMIN_TAG(datum) "(<A href='?src=[REF(src)];[HrefToken(forceGlobal = TRUE)];tag_datum=[REF(datum)]'>TAG</a>)"
-#define ADMIN_LUAVIEW(state) "(<a href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];lua_state=[REF(state)]'>VIEW STATE</a>)"
-#define ADMIN_LUAVIEW_CHUNK(state, log_index) "(<a href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];lua_state=[REF(state)];log_index=[log_index]'>VIEW CODE</a>)"
+#define ADMIN_INDIVIDUALLOG(user) "(<a href='?_src_=holder;[HrefToken(TRUE)];individuallog=[REF(user)]'>LOGS</a>)"
 
 /atom/proc/Admin_Coordinates_Readable(area_name, admin_jump_ref)
 	var/turf/T = Safe_COORD_Location()
@@ -111,10 +108,11 @@
 #define STICKYBAN_DB_CACHE_TIME 10 SECONDS
 #define STICKYBAN_ROGUE_CHECK_TIME 5
 
-/// Reference index for policy.json to locate any policy text applicable to polymorphed/staff of changed mobs.
-#define POLICY_POLYMORPH "Polymorph"
-/// Reference index for policy.json to locate any policy text that is shown as a header in the OOC > Show Policy verb.
-#define POLICY_VERB_HEADER "Policy Verb Header"
+
+/// Shown to vicitm of staff of change and related effects.
+#define POLICY_POLYMORPH "polymorph"
+/// Shown on top of policy verb window
+#define POLICY_VERB_HEADER "policy_verb_header"
 
 //How many things you can spawn at once with spawn verb/create panel
 #define ADMIN_SPAWN_CAP 100
@@ -143,13 +141,5 @@ GLOBAL_VAR_INIT(ghost_role_flags, (~0))
 #define LIGHTNING_BOLT_DAMAGE 75
 #define LIGHTNING_BOLT_ELECTROCUTION_ANIMATION_LENGTH 40
 
-/// for [/proc/check_asay_links], if there are any actionable refs in the asay message, this index in the return list contains the new message text to be printed
-#define ASAY_LINK_NEW_MESSAGE_INDEX "!asay_new_message"
-/// for [/proc/check_asay_links], if there are any admin pings in the asay message, this index in the return list contains a list of admins to ping
-#define ASAY_LINK_PINGED_ADMINS_INDEX "!pinged_admins"
-
-/// When passed in as the duration for ban_panel, will make the ban default to permanent
-#define BAN_PANEL_PERMANENT "permanent"
-
-/// A value for /datum/admins/cached_feedback_link to indicate empty, rather than unobtained
-#define NO_FEEDBACK_LINK "no_feedback_link"
+/// for asay pings, this is the index in the return list for [/proc/check_admin_pings] that contains the message modified with underlines for the spotted names
+#define ADMINSAY_PING_UNDERLINE_NAME_INDEX "!underlined_names"

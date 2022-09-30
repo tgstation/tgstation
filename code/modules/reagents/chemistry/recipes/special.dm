@@ -1,40 +1,32 @@
 GLOBAL_LIST_INIT(food_reagents, build_reagents_to_food()) //reagentid = related food types
 GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 
-#define VALID_RANDOM_RECIPE_REAGENT(chemical_flags) (chemical_flags & REAGENT_CAN_BE_SYNTHESIZED && !(chemical_flags & REAGENT_NO_RANDOM_RECIPE))
-
 /proc/build_reagents_to_food()
 	. = list()
-	for (var/type in subtypesof(/obj/item/food))
-		var/obj/item/food/item = new type()
-		for(var/datum/reagent/reagent as anything in item.food_reagents)
-			var/chem_flags = initial(reagent.chemical_flags)
-			if(!VALID_RANDOM_RECIPE_REAGENT(chem_flags))
-				continue
-			if (!.[reagent])
-				.[reagent] = list()
-			.[reagent] += type
+	for (var/type in subtypesof(/obj/item/reagent_containers/food))
+		var/obj/item/reagent_containers/food/item = new type()
+		for(var/r in item.list_reagents)
+			if (!.[r])
+				.[r] = list()
+			.[r] += type
 		qdel(item)
 	//dang plant snowflake
 	for (var/type in subtypesof(/obj/item/seeds))
 		var/obj/item/seeds/item = new type()
-		for(var/datum/reagent/reagent as anything in item.reagents_add)
-			var/chem_flags = initial(reagent.chemical_flags)
-			if(!VALID_RANDOM_RECIPE_REAGENT(chem_flags))
-				continue
-			if (!.[reagent])
-				.[reagent] = list()
-			.[reagent] += type
+		for(var/r in item.reagents_add)
+			if (!.[r])
+				.[r] = list()
+			.[r] += type
 		qdel(item)
 
 ///Just grab every craftable medicine you can think off
 /proc/build_medicine_reagents()
 	. = list()
 
-	for(var/datum/reagent/reagent as anything in subtypesof(/datum/reagent/medicine))
-		var/chem_flags = initial(reagent.chemical_flags)
-		if(VALID_RANDOM_RECIPE_REAGENT(chem_flags))
-			. += reagent
+	for(var/A in subtypesof(/datum/reagent/medicine))
+		var/datum/reagent/R = A
+		if(initial(R.chemical_flags) & REAGENT_CAN_BE_SYNTHESIZED)
+			. += R
 
 #define RNGCHEM_INPUT "input"
 #define RNGCHEM_CATALYSTS "catalysts"
@@ -128,7 +120,9 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 	if(randomize_impurity_reagents)
 		for(var/rid in required_reagents)
 			var/datum/reagent/R = GLOB.chemical_reagents_list[rid]
+			R.impure_chem = get_random_reagent_id()
 			R.inverse_chem = get_random_reagent_id()
+			R.failed_chem = get_random_reagent_id()
 
 	if(randomize_results)
 		results = list()
@@ -188,31 +182,6 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 			return null
 		.[pathR] = textreagents[R]
 
-/datum/chemical_reaction/randomized/proc/SaveOldRecipe()
-	var/recipe_data = list()
-
-	recipe_data["timestamp"] = created
-	recipe_data["required_reagents"] = required_reagents
-	recipe_data["required_catalysts"] = required_catalysts
-
-	recipe_data["is_cold_recipe"] = is_cold_recipe
-	recipe_data["required_temp"] = required_temp
-	recipe_data["optimal_temp"] = optimal_temp
-	recipe_data["overheat_temp"] = overheat_temp
-	recipe_data["thermic_constant"] = thermic_constant
-
-	recipe_data["optimal_ph_min"] = optimal_ph_min
-	recipe_data["optimal_ph_max"] = optimal_ph_max
-	recipe_data["determin_ph_range"] = determin_ph_range
-	recipe_data["H_ion_release"] = H_ion_release
-
-	recipe_data["purity_min"] = purity_min
-
-	recipe_data["results"] = results
-	recipe_data["required_container"] = required_container
-
-	return recipe_data
-
 /datum/chemical_reaction/randomized/proc/LoadOldRecipe(recipe_data)
 	created = text2num(recipe_data["timestamp"])
 
@@ -248,14 +217,14 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 		var/containerpath = text2path(raw_container_path)
 		if(!containerpath)
 			return FALSE
-		required_container = containerpath
+		required_container =  containerpath
 	return TRUE
 
 /datum/chemical_reaction/randomized/secret_sauce
 	persistent = TRUE
 	persistence_period = 7 //Reset every week
 	randomize_container = TRUE
-	possible_containers = list(/obj/item/reagent_containers/cup/bucket) //easy way to ensure no common conflicts
+	possible_containers = list(/obj/item/reagent_containers/glass/bucket) //easy way to ensure no common conflicts
 	randomize_req_temperature = TRUE
 	results = list(/datum/reagent/consumable/secretsauce=1)
 
@@ -285,7 +254,7 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 	return ..()
 
 /obj/item/paper/secretrecipe
-	name = "Old Recipe"
+	name = "old recipe"
 
 	///List of possible recipes we could display
 	var/list/possible_recipes = list(/datum/chemical_reaction/randomized/secret_sauce, /datum/chemical_reaction/randomized/metalgen)
@@ -316,8 +285,7 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 /obj/item/paper/secretrecipe/proc/UpdateInfo()
 	var/datum/chemical_reaction/recipe = get_chemical_reaction(recipe_id)
 	if(!recipe)
-		add_raw_text("This recipe is illegible.")
-		update_appearance()
+		info = "This recipe is illegible."
 		return
 	var/list/dat = list("<ul>")
 	for(var/rid in recipe.required_reagents)
@@ -353,7 +321,5 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 			dat += "<li> and your purity above [recipe.purity_min]</li>"
 	dat += "</ul>"
 	dat += "."
-	add_raw_text(dat.Join(""))
+	info = dat.Join("")
 	update_appearance()
-
-#undef VALID_RANDOM_RECIPE_REAGENT

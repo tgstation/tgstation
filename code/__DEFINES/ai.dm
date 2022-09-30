@@ -18,10 +18,6 @@
 #define AI_BEHAVIOR_REQUIRE_MOVEMENT (1<<0)
 ///Does this task let you perform the action while you move closer? (Things like moving and shooting)
 #define AI_BEHAVIOR_MOVE_AND_PERFORM (1<<1)
-///Does finishing this task not null the current movement target?
-#define AI_BEHAVIOR_KEEP_MOVE_TARGET_ON_FINISH (1<<2)
-///Does finishing this task make the AI stop moving towards the target?
-#define AI_BEHAVIOR_KEEP_MOVING_TOWARDS_TARGET_ON_FINISH (1<<3)
 
 ///AI flags
 #define STOP_MOVING_WHEN_PULLED (1<<0)
@@ -103,13 +99,6 @@
 ///Amount of successful hits in a row this item has had
 #define BB_CURSED_THROW_ATTEMPT_COUNT "BB_cursed_throw_attempt_count"
 
-///Mob the MOD is trying to attach to
-#define BB_MOD_TARGET "BB_mod_target"
-///The implant the AI was created from
-#define BB_MOD_IMPLANT "BB_mod_implant"
-///Range for a MOD AI controller.
-#define MOD_AI_RANGE 200
-
 ///Vending machine AI controller blackboard keys
 #define BB_VENDING_CURRENT_TARGET "BB_vending_current_target"
 #define BB_VENDING_TILT_COOLDOWN "BB_vending_tilt_cooldown"
@@ -161,7 +150,6 @@
 #define BB_DOG_ORDER_MODE "BB_DOG_ORDER_MODE"
 #define BB_DOG_PLAYING_DEAD "BB_DOG_PLAYING_DEAD"
 #define BB_DOG_HARASS_TARGET "BB_DOG_HARASS_TARGET"
-#define BB_DOG_HARASS_FRUSTRATION "BB_DOG_HARASS_FRUSTRATION"
 
 /// Basically, what is our vision/hearing range for picking up on things to fetch/
 #define AI_DOG_VISION_RANGE	10
@@ -172,9 +160,7 @@
 /// After being ordered to heel, we spend this long chilling out
 #define AI_DOG_HEEL_DURATION 20 SECONDS
 /// After either being given a verbal order or a pointing order, ignore further of each for this duration
-#define AI_DOG_COMMAND_COOLDOWN 2 SECONDS
-/// If the dog is set to harass someone but doesn't bite them for this long, give up
-#define AI_DOG_HARASS_FRUSTRATE_TIME 50 SECONDS
+#define AI_DOG_COMMAND_COOLDOWN	2 SECONDS
 
 // dog command modes (what pointing at something/someone does depending on the last order the dog heard)
 /// Don't do anything (will still react to stuff around them though)
@@ -216,14 +202,3 @@
 #define BB_BASIC_MOB_CURRENT_TARGET "BB_basic_current_target"
 #define BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION "BB_basic_current_target_hiding_location"
 #define BB_TARGETTING_DATUM "targetting_datum"
-///some behaviors that check current_target also set this on deep crit mobs
-#define BB_BASIC_MOB_EXECUTION_TARGET "BB_basic_execution_target"
-
-///list of foods this mob likes
-#define BB_BASIC_FOODS "BB_basic_foods"
-
-///Bileworm AI keys
-
-#define BB_BILEWORM_SPEW_BILE "BB_bileworm_spew_bile"
-#define BB_BILEWORM_RESURFACE "BB_bileworm_resurface"
-#define BB_BILEWORM_DEVOUR "BB_bileworm_devour"

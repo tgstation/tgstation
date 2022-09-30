@@ -53,8 +53,6 @@
 #define LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE 128
 #define LIGHTING_PLANE_ALPHA_INVISIBLE 0
 
-/// The amount of lumcount on a tile for it to be considered dark (used to determine reading and nyctophobia)
-#define LIGHTING_TILE_IS_DARK 0.2
 
 //code assumes higher numbers override lower numbers.
 #define LIGHTING_NO_UPDATE 0

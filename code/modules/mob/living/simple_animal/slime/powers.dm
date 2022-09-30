@@ -30,16 +30,15 @@
 		return FALSE
 
 	var/list/choices = list()
-	for(var/mob/living/nearby_mob in view(1,src))
-		if(nearby_mob != src && Adjacent(nearby_mob))
-			choices += nearby_mob
+	for(var/mob/living/C in view(1,src))
+		if(C!=src && Adjacent(C))
+			choices += C
 
-	var/choice = tgui_input_list(src, "Who do you wish to feed on?", "Slime Feed", sort_names(choices))
-	if(isnull(choice))
+	var/mob/living/M = input(src,"Who do you wish to feed on?") in null|sort_names(choices)
+	if(!M)
 		return FALSE
-	var/mob/living/victim = choice
-	if(CanFeedon(victim))
-		Feedon(victim)
+	if(CanFeedon(M))
+		Feedon(M)
 		return TRUE
 	return FALSE
 
@@ -60,7 +59,7 @@
 		Feedstop()
 		return FALSE
 
-	if(issilicon(M) || M.mob_biotypes & MOB_ROBOTIC)
+	if(issilicon(M))
 		return FALSE
 
 	if(isanimal(M))
@@ -178,7 +177,7 @@
 			var/new_powerlevel = round(powerlevel / 4)
 			var/turf/drop_loc = drop_location()
 
-			for(var/i in 1 to 4)
+			for(var/i=1,i<=4,i++)
 				var/child_colour
 				if(mutation_chance >= 100)
 					child_colour = "rainbow"

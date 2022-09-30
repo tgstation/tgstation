@@ -11,4 +11,4 @@
 		try
 			mix_color_from_reagents(egg.reagents.reagent_list + list(new reagent_type))
 		catch (var/exception/exception)
-			TEST_FAIL("[reagent_type] fails mixing\n[exception]")
+			Fail("[reagent_type] fails mixing\n[exception]")

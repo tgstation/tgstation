@@ -4,8 +4,8 @@
 	icon_state = "cell_con"
 	critical = 1
 	malfunction_probability = 1
-	device_type = MC_CELL
 	var/obj/item/stock_parts/cell/battery
+	device_type = MC_CELL
 
 /obj/item/computer_hardware/battery/get_cell()
 	return battery

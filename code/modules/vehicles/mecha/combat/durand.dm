@@ -6,22 +6,17 @@
 	movedelay = 4
 	dir_in = 1 //Facing North.
 	max_integrity = 400
-	armor = list(MELEE = 40, BULLET = 35, LASER = 15, ENERGY = 10, BOMB = 20, BIO = 0, FIRE = 100, ACID = 100)
+	deflect_chance = 20
+	armor = list(MELEE = 40, BULLET = 35, LASER = 15, ENERGY = 10, BOMB = 20, BIO = 0, RAD = 50, FIRE = 100, ACID = 100)
 	max_temperature = 30000
 	force = 40
 	wreckage = /obj/structure/mecha_wreckage/durand
-	mech_type = EXOSUIT_MODULE_DURAND
-	max_equip_by_category = list(
-		MECHA_UTILITY = 1,
-		MECHA_POWER = 1,
-		MECHA_ARMOR = 3,
-	)
 	var/obj/durand_shield/shield
 
 
 /obj/vehicle/sealed/mecha/combat/durand/Initialize(mapload)
 	. = ..()
-	shield = new /obj/durand_shield(loc, src, plane, layer, dir)
+	shield = new /obj/durand_shield(loc, src, layer, dir)
 	RegisterSignal(src, COMSIG_MECHA_ACTION_TRIGGER, .proc/relay)
 	RegisterSignal(src, COMSIG_PROJECTILE_PREHIT, .proc/prehit)
 
@@ -128,13 +123,6 @@ Expects a turf. Returns true if the attack should be blocked, false if not.*/
 	else
 		. = ..()
 
-/datum/action/vehicle/sealed/mecha/mech_defense_mode
-	name = "Toggle an energy shield that blocks all attacks from the faced direction at a heavy power cost."
-	button_icon_state = "mech_defense_mode_off"
-
-/datum/action/vehicle/sealed/mecha/mech_defense_mode/Trigger(trigger_flags, forced_state = FALSE)
-	SEND_SIGNAL(chassis, COMSIG_MECHA_ACTION_TRIGGER, owner, args) //Signal sent to the mech, to be handed to the shield. See durand.dm for more details
-
 ////////////////////////////
 ///// Shield processing ////
 ////////////////////////////
@@ -158,33 +146,27 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 	light_power = 5
 	light_color = LIGHT_COLOR_ELECTRIC_CYAN
 	light_on = FALSE
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF //The shield should not take damage from fire,  lava, or acid; that's the mech's job.
 	///Our link back to the durand
 	var/obj/vehicle/sealed/mecha/combat/durand/chassis
 	///To keep track of things during the animation
 	var/switching = FALSE
+	var/currentuser
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF //The shield should not take damage from fire,  lava, or acid; that's the mech's job.
 
-/obj/durand_shield/Initialize(mapload, chassis, plane, layer, dir)
+
+/obj/durand_shield/Initialize(mapload, _chassis, _layer, _dir)
 	. = ..()
-	src.chassis = chassis
-	src.layer = layer
-	SET_PLANE_EXPLICIT(src, plane, src)
-	setDir(dir)
+	chassis = _chassis
+	layer = _layer
+	setDir(_dir)
 	RegisterSignal(src, COMSIG_MECHA_ACTION_TRIGGER, .proc/activate)
-	RegisterSignal(chassis, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, .proc/shield_glide_size_update)
 
 
 /obj/durand_shield/Destroy()
-	UnregisterSignal(src, COMSIG_MECHA_ACTION_TRIGGER)
 	if(chassis)
-		UnregisterSignal(chassis, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE)
 		chassis.shield = null
 		chassis = null
 	return ..()
-
-/obj/durand_shield/proc/shield_glide_size_update(datum/source, target)
-	SIGNAL_HANDLER
-	glide_size = target
 
 /**
  * Handles activating and deactivating the shield.
@@ -201,6 +183,7 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
  */
 /obj/durand_shield/proc/activate(datum/source, mob/owner, list/signal_args)
 	SIGNAL_HANDLER
+	currentuser = owner
 	if(!LAZYLEN(chassis?.occupants))
 		return
 	if(switching && !signal_args[1])
@@ -218,7 +201,7 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 	for(var/occupant in chassis.occupants)
 		var/datum/action/button = chassis.occupant_actions[occupant][/datum/action/vehicle/sealed/mecha/mech_defense_mode]
 		button.button_icon_state = "mech_defense_mode_[chassis.defense_mode ? "on" : "off"]"
-		button.UpdateButtons()
+		button.UpdateButtonIcon()
 
 	set_light_on(chassis.defense_mode)
 
@@ -234,20 +217,9 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 		playsound(src, 'sound/mecha/mech_shield_drop.ogg', 50, FALSE)
 		set_light(0)
 		icon_state = "shield_null"
-		addtimer(CALLBACK(src, .proc/make_invisible), 1 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
+		invisibility = INVISIBILITY_MAXIMUM //no showing on right-click
 		UnregisterSignal(chassis, COMSIG_ATOM_DIR_CHANGE)
 	switching = FALSE
-
-/**
- * Sets invisibility to INVISIBILITY_MAXIMUM if defense mode is disabled
- *
- * We need invisibility set to higher than 25 for the shield to not appear
- * in the right-click context menu, but if we do it too early, we miss the
- * deactivate animation. Hense, timer and this proc.
- */
-/obj/durand_shield/proc/make_invisible()
-	if(!chassis.defense_mode)
-		invisibility = INVISIBILITY_MAXIMUM
 
 /obj/durand_shield/proc/resetdir(datum/source, olddir, newdir)
 	SIGNAL_HANDLER
@@ -266,7 +238,7 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 		for(var/O in chassis.occupants)
 			var/mob/living/occupant = O
 			var/datum/action/action = LAZYACCESSASSOC(chassis.occupant_actions, occupant, /datum/action/vehicle/sealed/mecha/mech_defense_mode)
-			action.Trigger()
+			action.Trigger(FALSE)
 	atom_integrity = 10000
 
 /obj/durand_shield/play_attack_sound()

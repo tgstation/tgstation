@@ -22,6 +22,8 @@
 	icon_keyboard = null
 	icon_screen = "slots_screen"
 	density = TRUE
+	use_power = IDLE_POWER_USE
+	idle_power_usage = 50
 	circuit = /obj/item/circuitboard/computer/slot_machine
 	light_color = LIGHT_COLOR_BROWN
 	var/money = 3000 //How much money it has CONSUMED
@@ -44,7 +46,7 @@
 	INVOKE_ASYNC(src, .proc/toggle_reel_spin, TRUE)//The reels won't spin unless we activate them
 
 	var/list/reel = reels[1]
-	for(var/i in 1 to reel.len) //Populate the reels.
+	for(var/i = 0, i < reel.len, i++) //Populate the reels.
 		randomize_reels()
 
 	INVOKE_ASYNC(src, .proc/toggle_reel_spin, FALSE)
@@ -130,7 +132,7 @@
 	var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(4, 0, src.loc)
 	spark_system.start()
-	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/machinery/computer/slot_machine/ui_interact(mob/living/user)
 	. = ..()
@@ -218,7 +220,6 @@
 /obj/machinery/computer/slot_machine/proc/do_spin()
 	randomize_reels()
 	updateDialog()
-	use_power(active_power_usage)
 
 /obj/machinery/computer/slot_machine/proc/finish_spinning(spin_loop, mob/user, the_name)
 	toggle_reel_spin(0, REEL_DEACTIVATE_DELAY)
@@ -268,7 +269,7 @@
 		if(paymode == HOLOCHIP)
 			new /obj/item/holochip(loc,JACKPOT)
 		else
-			for(var/i in 1 to 5)
+			for(var/i = 0, i < 5, i++)
 				cointype = pick(subtypesof(/obj/item/coin))
 				var/obj/item/coin/C = new cointype(loc)
 				random_step(C, 2, 50)
@@ -292,7 +293,7 @@
 /obj/machinery/computer/slot_machine/proc/get_lines()
 	var/amountthesame
 
-	for(var/i in 1 to 3)
+	for(var/i = 1, i <= 3, i++)
 		var/inputtext = reels[1][i] + reels[2][i] + reels[3][i] + reels[4][i] + reels[5][i]
 		for(var/symbol in symbols)
 			var/j = 3 //The lowest value we have to check for.

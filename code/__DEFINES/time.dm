@@ -46,10 +46,6 @@ When using time2text(), please use "DDD" to find the weekday. Refrain from using
 #define SATURDAY "Sat"
 #define SUNDAY "Sun"
 
-#define MILLISECONDS *0.01
-
-#define DECISECONDS *1 //the base unit all of these defines are scaled by, because byond uses that as a unit of measurement for some fucking reason
-
 #define SECONDS *10
 
 #define MINUTES SECONDS*60
@@ -57,6 +53,8 @@ When using time2text(), please use "DDD" to find the weekday. Refrain from using
 #define HOURS MINUTES*60
 
 #define TICKS *world.tick_lag
+
+#define MILLISECONDS * 0.01
 
 #define DS2TICKS(DS) ((DS)/world.tick_lag)
 
@@ -119,14 +117,8 @@ When using time2text(), please use "DDD" to find the weekday. Refrain from using
 /// Eastern Daylight Time
 #define TIMEZONE_EDT -4
 
-/// Eastern Standard Time
-#define TIMEZONE_EST -5
-
 /// Central Daylight Time
 #define TIMEZONE_CDT -5
-
-/// Central Standard Time
-#define TIMEZONE_CST -6
 
 /// Mountain Daylight Time
 #define TIMEZONE_MDT -6
@@ -137,14 +129,8 @@ When using time2text(), please use "DDD" to find the weekday. Refrain from using
 /// Pacific Daylight Time
 #define TIMEZONE_PDT -7
 
-/// Pacific Standard Time
-#define TIMEZONE_PST -8
-
 /// Alaska Daylight Time
 #define TIMEZONE_AKDT -8
-
-/// Alaska Standard Time
-#define TIMEZONE_AKST -9
 
 /// Hawaii-Aleutian Daylight Time
 #define TIMEZONE_HDT -9

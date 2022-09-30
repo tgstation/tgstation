@@ -82,7 +82,7 @@
 	dir = 8;
 	dwidth = 3;
 	height = 5;
-	shuttle_id = "mining_common";
+	id = "mining_common";
 	name = "lavaland shuttle";
 	port_direction = 4;
 	width = 7

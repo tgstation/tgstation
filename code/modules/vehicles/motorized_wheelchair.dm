@@ -56,6 +56,14 @@
 		return FALSE
 	return ..()
 
+/obj/vehicle/ridden/wheelchair/motorized/post_buckle_mob(mob/living/user)
+	. = ..()
+	set_density(TRUE)
+
+/obj/vehicle/ridden/wheelchair/motorized/post_unbuckle_mob()
+	. = ..()
+	set_density(FALSE)
+
 /obj/vehicle/ridden/wheelchair/motorized/attack_hand(mob/living/user, list/modifiers)
 	if(!power_cell || !panel_open)
 		return ..()
@@ -124,20 +132,10 @@
 	. += "Energy efficiency: [power_efficiency]"
 	. += "Power: [power_cell.charge] out of [power_cell.maxcharge]"
 
-/obj/vehicle/ridden/wheelchair/motorized/Move(newloc, direct)
-	. = ..()
-	if (.)
-		return
-	if (!has_buckled_mobs())
-		return
-	for (var/mob/living/guy in newloc)
-		if(!(guy in buckled_mobs))
-			Bump(guy)
-
 /obj/vehicle/ridden/wheelchair/motorized/Bump(atom/A)
 	. = ..()
 	// Here is the shitty emag functionality.
-	if(obj_flags & EMAGGED && (isclosedturf(A) || isliving(A)))
+	if(obj_flags & EMAGGED && (istype(A, /turf/closed) || isliving(A)))
 		explosion(src, devastation_range = -1, heavy_impact_range = 1, light_impact_range = 3, flash_range = 2, adminlog = FALSE)
 		visible_message(span_boldwarning("[src] explodes!!"))
 		return

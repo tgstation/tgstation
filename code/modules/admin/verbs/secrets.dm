@@ -5,7 +5,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 	set desc = "Abuse harder than you ever have before with this handy dandy semi-misc stuff menu"
 	set category = "Admin.Game"
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Secrets Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	var/datum/secrets_menu/tgui = new(usr)//create the datum
+	var/datum/secrets_menu/tgui  = new(usr)//create the datum
 	tgui.ui_interact(usr)//datum has a tgui component, here we open the window
 
 /datum/secrets_menu
@@ -42,7 +42,6 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 	data["is_funmin"] = is_funmin
 	return data
 
-#define THUNDERDOME_TEMPLATE_FILE "admin_thunderdome.dmm"
 /datum/secrets_menu/ui_act(action, params)
 	. = ..()
 	if(.)
@@ -64,7 +63,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			if(GLOB.admin_datums)
 				for(var/ckey in GLOB.admin_datums)
 					var/datum/admins/D = GLOB.admin_datums[ckey]
-					dat += "[ckey] - [D.rank_names()]<br>"
+					dat += "[ckey] - [D.rank.name]<br>"
 				holder << browse(dat, "window=showadmins;size=600x500")
 		//Buttons for debug.
 		if("maint_access_engiebrig")
@@ -74,7 +73,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 				M.check_access()
 				if (ACCESS_MAINT_TUNNELS in M.req_access)
 					M.req_access = list()
-					M.req_one_access = list(ACCESS_BRIG,ACCESS_ENGINEERING)
+					M.req_one_access = list(ACCESS_BRIG,ACCESS_ENGINE)
 			message_admins("[key_name_admin(holder)] made all maint doors engineering and brig access-only.")
 		if("maint_access_brig")
 			if(!is_debugger)
@@ -121,7 +120,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			var/dat = "<B>Showing Crew Manifest.</B><HR>"
 			dat += "<table cellspacing=5><tr><th>Name</th><th>Position</th></tr>"
 			for(var/datum/data/record/t in GLOB.data_core.general)
-				dat += "<tr><td>[t.fields["name"]]</td><td>[t.fields["rank"]][t.fields["rank"] != t.fields["trim"] ? " ([t.fields["trim"]])" : ""]</td></tr>"
+				dat += "<tr><td>[t.fields["name"]]</td><td>[t.fields["rank"]]</td></tr>"
 			dat += "</table>"
 			holder << browse(dat, "window=manifest;size=440x410")
 		if("dna")
@@ -152,17 +151,16 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			log_admin("[key_name(holder)] reset the thunderdome to default with delete_mobs==[delete_mobs].", 1)
 			message_admins(span_adminnotice("[key_name_admin(holder)] reset the thunderdome to default with delete_mobs==[delete_mobs]."))
 
-			var/area/thunderdome = GLOB.areas_by_type[/area/centcom/tdome/arena]
+			var/area/thunderdome = GLOB.areas_by_type[/area/tdome/arena]
 			if(delete_mobs == "Yes")
 				for(var/mob/living/mob in thunderdome)
 					qdel(mob) //Clear mobs
 			for(var/obj/obj in thunderdome)
-				if(!istype(obj, /obj/machinery/camera))
+				if(!istype(obj, /obj/machinery/camera) && !istype(obj, /obj/effect/abstract/proximity_checker))
 					qdel(obj) //Clear objects
 
-			var/datum/map_template/thunderdome_template = SSmapping.map_templates[THUNDERDOME_TEMPLATE_FILE]
-			var/turf/thunderdome_corner = locate(thunderdome.x - 3, thunderdome.y - 1, 1) // have to do a little bit of coord manipulation to get it in the right spot
-			thunderdome_template.load(thunderdome_corner)
+			var/area/template = GLOB.areas_by_type[/area/tdome/arena_source]
+			template.copy_contents_to(thunderdome)
 		if("set_name")
 			var/new_name = input(holder, "Please input a new name for the station.", "What?", "") as text|null
 			if(!new_name)
@@ -172,9 +170,6 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			message_admins(span_adminnotice("[key_name_admin(holder)] renamed the station to: [new_name]."))
 			priority_announce("[command_name()] has renamed the station to \"[new_name]\".")
 		if("reset_name")
-			var/confirmed = tgui_alert(usr,"Are you sure you want to reset the station name?", "Confirm", list("Yes", "No", "Cancel"))
-			if(confirmed != "Yes")
-				return
 			var/new_name = new_station_name()
 			set_station_name(new_name)
 			log_admin("[key_name(holder)] reset the station name.")
@@ -295,8 +290,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 				if("All Antags!")
 					survivor_probability = 100
 
-			summon_guns(holder, survivor_probability)
-
+			rightandwrong(SUMMON_GUNS, holder, survivor_probability)
 		if("magic")
 			if(!is_funmin)
 				return
@@ -308,31 +302,30 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 				if("All Antags!")
 					survivor_probability = 100
 
-			summon_magic(holder, survivor_probability)
-
+			rightandwrong(SUMMON_MAGIC, holder, survivor_probability)
 		if("events")
 			if(!is_funmin)
 				return
-			if(SSevents.wizardmode)
+			if(!SSevents.wizardmode)
+				if(tgui_alert(usr,"Do you want to toggle summon events on?",,list("Yes","No")) == "Yes")
+					summonevents()
+					SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Summon Events", "Activate"))
+
+			else
 				switch(tgui_alert(usr,"What would you like to do?",,list("Intensify Summon Events","Turn Off Summon Events","Nothing")))
 					if("Intensify Summon Events")
-						summon_events(holder)
+						summonevents()
 						SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Summon Events", "Intensify"))
 					if("Turn Off Summon Events")
 						SSevents.toggleWizardmode()
 						SSevents.resetFrequency()
 						SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Summon Events", "Disable"))
-			else
-				if(tgui_alert(usr,"Do you want to toggle summon events on?",,list("Yes","No")) == "Yes")
-					summon_events(holder)
-					SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Summon Events", "Activate"))
-
 		if("eagles")
 			if(!is_funmin)
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Egalitarian Station"))
 			for(var/obj/machinery/door/airlock/W in GLOB.machines)
-				if(is_station_level(W.z) && !istype(get_area(W), /area/station/command) && !istype(get_area(W), /area/station/commons) && !istype(get_area(W), /area/station/service) && !istype(get_area(W), /area/station/command/heads_quarters) && !istype(get_area(W), /area/station/security/prison))
+				if(is_station_level(W.z) && !istype(get_area(W), /area/command) && !istype(get_area(W), /area/commons) && !istype(get_area(W), /area/service) && !istype(get_area(W), /area/command/heads_quarters) && !istype(get_area(W), /area/security/prison))
 					W.req_access = list()
 			message_admins("[key_name_admin(holder)] activated Egalitarian Station mode")
 			priority_announce("CentCom airlock control override activated. Please take this time to get acquainted with your coworkers.", null, SSstation.announcer.get_rand_report_sound())
@@ -353,7 +346,6 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			message_admins("[key_name_admin(holder)] broke all lights")
 			for(var/obj/machinery/light/L in GLOB.machines)
 				L.break_light_tube()
-				stoplag()
 		if("whiteout")
 			if(!is_funmin)
 				return
@@ -361,7 +353,6 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			message_admins("[key_name_admin(holder)] fixed all lights")
 			for(var/obj/machinery/light/L in GLOB.machines)
 				L.fix()
-				stoplag()
 		if("customportal")
 			if(!is_funmin)
 				return
@@ -414,12 +405,8 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 				if (prefs["announce_players"]["value"] == "Yes")
 					portalAnnounce(prefs["announcement"]["value"], (prefs["playlightning"]["value"] == "Yes" ? TRUE : FALSE))
 
-				var/list/storm_appearances = list()
-				for(var/offset in 0 to SSmapping.max_plane_offset)
-					var/mutable_appearance/storm = mutable_appearance('icons/obj/engine/energy_ball.dmi', "energy_ball_fast", FLY_LAYER)
-					SET_PLANE_W_SCALAR(storm, GAME_PLANE, offset)
-					storm.color = prefs["color"]["value"]
-					storm_appearances += storm
+				var/mutable_appearance/storm = mutable_appearance('icons/obj/tesla_engine/energy_ball.dmi', "energy_ball_fast", FLY_LAYER)
+				storm.color = prefs["color"]["value"]
 
 				message_admins("[key_name_admin(holder)] has created a customized portal storm that will spawn [prefs["portalnum"]["value"]] portals, each of them spawning [prefs["amount"]["value"]] of [pathToSpawn]")
 				log_admin("[key_name(holder)] has created a customized portal storm that will spawn [prefs["portalnum"]["value"]] portals, each of them spawning [prefs["amount"]["value"]] of [pathToSpawn]")
@@ -433,9 +420,9 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 						var/ghostcandidates = list()
 						for (var/j in 1 to min(prefs["amount"]["value"], length(candidates)))
 							ghostcandidates += pick_n_take(candidates)
-							addtimer(CALLBACK(GLOBAL_PROC, .proc/doPortalSpawn, get_random_station_turf(), pathToSpawn, length(ghostcandidates), storm_appearances, ghostcandidates, outfit), i*prefs["delay"]["value"])
+							addtimer(CALLBACK(GLOBAL_PROC, .proc/doPortalSpawn, get_random_station_turf(), pathToSpawn, length(ghostcandidates), storm, ghostcandidates, outfit), i*prefs["delay"]["value"])
 					else if (prefs["playersonly"]["value"] != "Yes")
-						addtimer(CALLBACK(GLOBAL_PROC, .proc/doPortalSpawn, get_random_station_turf(), pathToSpawn, prefs["amount"]["value"], storm_appearances, null, outfit), i*prefs["delay"]["value"])
+						addtimer(CALLBACK(GLOBAL_PROC, .proc/doPortalSpawn, get_random_station_turf(), pathToSpawn, prefs["amount"]["value"], storm, null, outfit), i*prefs["delay"]["value"])
 		if("changebombcap")
 			if(!is_funmin)
 				return
@@ -466,7 +453,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			if(GLOB.everyone_a_traitor)
 				tgui_alert(usr, "The everyone is a traitor secret has already been triggered")
 				return
-			var/objective = tgui_input_text(holder, "Enter an objective", "Objective")
+			var/objective = stripped_input(holder, "Enter an objective")
 			if(!objective)
 				return
 			GLOB.everyone_a_traitor = new /datum/everyone_is_a_traitor_controller(objective)
@@ -504,8 +491,8 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 
 				if(H.dna.species.id == SPECIES_HUMAN)
 					if(H.dna.features["tail_human"] == "None" || H.dna.features["ears"] == "None")
-						var/obj/item/organ/internal/ears/cat/ears = new
-						var/obj/item/organ/external/tail/cat/tail = new
+						var/obj/item/organ/ears/cat/ears = new
+						var/obj/item/organ/tail/cat/tail = new
 						ears.Insert(H, drop_if_replaced=FALSE)
 						tail.Insert(H, drop_if_replaced=FALSE)
 					var/list/honorifics = list("[MALE]" = list("kun"), "[FEMALE]" = list("chan","tan"), "[NEUTER]" = list("san"), "[PLURAL]" = list("san")) //John Robust -> Robust-kun
@@ -575,25 +562,24 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 				candidates -= chosen_candidate
 				nerd = new /mob/living/simple_animal/drone/classic(spawnpoint)
 				nerd.key = chosen_candidate.key
-				nerd.log_message("has been selected as a Nanotrasen emergency response drone.", LOG_GAME)
+				log_game("[key_name(nerd)] has been selected as a Nanotrasen emergency response drone")
 				teamsize--
 
 			return TRUE
 	if(E)
 		E.processing = FALSE
-		if(E.announce_when>0)
+		if(E.announceWhen>0)
 			switch(tgui_alert(holder, "Would you like to alert the crew?", "Alert", list("Yes", "No", "Cancel")))
 				if("Yes")
-					E.announce_chance = 100
+					E.announceChance = 100
 				if("Cancel")
 					E.kill()
 					return
 				if("No")
-					E.announce_chance = 0
+					E.announceChance = 0
 		E.processing = TRUE
 	if(holder)
 		log_admin("[key_name(holder)] used secret [action]")
-#undef THUNDERDOME_TEMPLATE_FILE
 
 /proc/portalAnnounce(announcement, playlightning)
 	set waitfor = FALSE
@@ -605,9 +591,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 		sleep(20)
 		sound_to_playing_players('sound/magic/lightningbolt.ogg')
 
-/// Spawns a portal storm that spawns in sentient/non sentient mobs
-/// portal_appearance is a list in the form (turf's plane offset + 1) -> appearance to use
-/proc/doPortalSpawn(turf/loc, mobtype, numtospawn, list/portal_appearance, players, humanoutfit)
+/proc/doPortalSpawn(turf/loc, mobtype, numtospawn, portal_appearance, players, humanoutfit)
 	for (var/i in 1 to numtospawn)
 		var/mob/spawnedMob = new mobtype(loc)
 		if (length(players))
@@ -620,7 +604,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			var/mob/living/carbon/human/H = spawnedMob
 			H.equipOutfit(humanoutfit)
 	var/turf/T = get_step(loc, SOUTHWEST)
-	flick_overlay_static(portal_appearance[GET_TURF_PLANE_OFFSET(T) + 1], T, 15)
+	flick_overlay_static(portal_appearance, T, 15)
 	playsound(T, 'sound/magic/lightningbolt.ogg', rand(80, 100), TRUE)
 
 ///Makes sure latejoining crewmembers also become traitors.
@@ -639,22 +623,14 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 	SIGNAL_HANDLER
 	if(player.stat == DEAD || !player.mind)
 		return
+	if(!(ishuman(player) || issilicon(player)) || ispAI(player))
+		return
 	if(is_special_character(player))
 		return
-	if(ishuman(player))
-		var/datum/antagonist/traitor/traitor_datum = new(give_objectives = FALSE)
-		var/datum/objective/new_objective = new
-		new_objective.owner = player
-		new_objective.explanation_text = objective
-		traitor_datum.objectives += new_objective
-		player.mind.add_antag_datum(traitor_datum)
-		var/datum/uplink_handler/uplink = traitor_datum.uplink_handler
-		uplink.has_progression = FALSE
-		uplink.has_objectives = FALSE
-	else if(isAI(player))
-		var/datum/antagonist/malf_ai/malfunction_datum = new(give_objectives = FALSE)
-		var/datum/objective/new_objective = new
-		new_objective.owner = player
-		new_objective.explanation_text = objective
-		malfunction_datum.objectives += new_objective
-		player.mind.add_antag_datum(malfunction_datum)
+	var/datum/antagonist/traitor/traitor_datum = new()
+	traitor_datum.give_objectives = FALSE
+	var/datum/objective/new_objective = new
+	new_objective.owner = player
+	new_objective.explanation_text = objective
+	traitor_datum.objectives += new_objective
+	player.mind.add_antag_datum(traitor_datum)

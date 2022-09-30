@@ -18,7 +18,7 @@
 /mob/living/carbon/human/bee_friendly()
 	if(dna && dna.species && dna.species.id == SPECIES_PODPERSON) //bees pollinate plants, duh.
 		return 1
-	if (wear_suit && head && isclothing(wear_suit) && isclothing(head))
+	if (wear_suit && head && istype(wear_suit, /obj/item/clothing) && istype(head, /obj/item/clothing))
 		var/obj/item/clothing/CS = wear_suit
 		var/obj/item/clothing/CH = head
 		if (CS.clothing_flags & CH.clothing_flags & THICKMATERIAL)
@@ -143,10 +143,6 @@
 	if(honeycombs.len >= get_max_honeycomb())
 		. += span_warning("There's no room for more honeycomb!")
 
-/obj/structure/beebox/wrench_act(mob/living/user, obj/item/tool)
-	. = ..()
-	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/structure/beebox/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/honey_frame))
@@ -160,21 +156,25 @@
 			to_chat(user, span_warning("There's no room for any more frames in the apiary!"))
 		return
 
+	if(I.tool_behaviour == TOOL_WRENCH)
+		if(default_unfasten_wrench(user, I, time = 20))
+			return
+
 	if(istype(I, /obj/item/queen_bee))
 		if(queen_bee)
 			to_chat(user, span_warning("This hive already has a queen!"))
 			return
 
-		var/obj/item/queen_bee/new_queen = I
-		user.temporarilyRemoveItemFromInventory(new_queen)
+		var/obj/item/queen_bee/qb = I
+		user.temporarilyRemoveItemFromInventory(qb)
 
-		bees += new_queen.queen
-		queen_bee = new_queen.queen
-
-		new_queen.queen.forceMove(src)
+		qb.queen.forceMove(src)
+		bees += qb.queen
+		queen_bee = qb.queen
+		qb.queen = null
 
 		if(queen_bee)
-			visible_message(span_notice("[user] sets [queen_bee] down inside the apiary, making it their new home."))
+			visible_message(span_notice("[user] sets [qb] down inside the apiary, making it their new home."))
 			var/relocated = 0
 			for(var/b in bees)
 				var/mob/living/simple_animal/hostile/bee/B = b
@@ -190,6 +190,7 @@
 		else
 			to_chat(user, span_warning("The queen bee disappeared! Disappearing bees have been in the news lately..."))
 
+		qdel(qb)
 		return
 
 	..()
@@ -212,11 +213,11 @@
 		else
 			visible_message(span_danger("[user] disturbs the [name] to no effect!"))
 	else
-		var/option = tgui_alert(user, "Which piece do you wish to remove?", "Apiary Adjustment", list("Honey Frame", "Queen Bee"))
-		if(!option || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, BE_CLOSE, FALSE))
+		var/option = tgui_alert(user, "What action do you wish to perform?","Apiary",list("Remove a Honey Frame","Remove the Queen Bee", "Cancel"))
+		if(!Adjacent(user))
 			return
 		switch(option)
-			if("Honey Frame")
+			if("Remove a Honey Frame")
 				if(!honey_frames.len)
 					to_chat(user, span_warning("There are no honey frames to remove!"))
 					return
@@ -239,7 +240,7 @@
 						var/multiple = fallen > 1
 						visible_message(span_notice("[user] scrapes [multiple ? "[fallen]" : "a"] honeycomb[multiple ? "s" : ""] off of the frame."))
 
-			if("Queen Bee")
+			if("Remove the Queen Bee")
 				if(!queen_bee || queen_bee.loc != src)
 					to_chat(user, span_warning("There is no queen bee to remove!"))
 					return

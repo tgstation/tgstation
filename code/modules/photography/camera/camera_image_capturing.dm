@@ -91,11 +91,8 @@
 					if(decompose.scale_x != 1 || decompose.scale_y != 1)
 						var/base_w = img.Width()
 						var/base_h = img.Height()
-						// scale_x can be negative
-						img.Scale(base_w * abs(decompose.scale_x), base_h * decompose.scale_y)
-						if(decompose.scale_x < 0)
-							img.Flip(EAST)
-						xo -= base_w * (decompose.scale_x - SIGN(decompose.scale_x)) / 2 * SIGN(decompose.scale_x)
+						img.Scale(base_w * decompose.scale_x, base_h * decompose.scale_y)
+						xo -= base_w * (decompose.scale_x - 1) / 2
 						yo -= base_h * (decompose.scale_y - 1) / 2
 					// Rotation
 					if(decompose.rotation != 0)

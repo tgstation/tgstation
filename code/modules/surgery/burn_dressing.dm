@@ -32,9 +32,6 @@
 		TOOL_WIRECUTTER = 40)
 	time = 30
 	repeatable = TRUE
-	preop_sound = 'sound/surgery/scalpel1.ogg'
-	success_sound = 'sound/surgery/retractor2.ogg'
-	failure_sound = 'sound/surgery/organ1.ogg'
 	/// How much sanitization is added per step
 	var/sanitization_added = 0.5
 	/// How much infestation is removed per step (positive number)
@@ -146,6 +143,6 @@
 
 /datum/surgery_step/dress/failure(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, fail_prob = 0)
 	..()
-	if(isstack(tool))
+	if(istype(tool, /obj/item/stack))
 		var/obj/item/stack/used_stack = tool
 		used_stack.use(1)

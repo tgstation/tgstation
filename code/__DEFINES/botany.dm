@@ -32,8 +32,6 @@
 #define MAX_TRAY_WEEDS 10
 /// Minumum plant health required for gene shears.
 #define GENE_SHEAR_MIN_HEALTH 15
-/// Minumum plant endurance required to lock a mutation with a somatoray.
-#define FLORA_GUN_MIN_ENDURANCE 20
 
 /// -- Flags for genes --
 /// Plant genes that can be removed via gene shears.
@@ -70,13 +68,3 @@
 #define GLOWSHROOM_SPREAD_BASE_DIMINISH_FACTOR 10
 #define GLOWSHROOM_SPREAD_DIMINISH_FACTOR_PER_GLOWSHROOM 0.2
 #define GLOWSHROOM_BASE_INTEGRITY 60
-
-// obj/machinery/hydroponics/var/plant_status defines
-
-#define HYDROTRAY_NO_PLANT "missing"
-#define HYDROTRAY_PLANT_DEAD "dead"
-#define HYDROTRAY_PLANT_GROWING "growing"
-#define HYDROTRAY_PLANT_HARVESTABLE "harvestable"
-
-/// A list of possible egg laying descriptions
-#define EGG_LAYING_MESSAGES list("lays an egg.","squats down and croons.","begins making a huge racket.","begins clucking raucously.")

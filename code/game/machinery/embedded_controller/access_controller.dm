@@ -7,8 +7,8 @@
 /obj/machinery/door_buttons
 	power_channel = AREA_USAGE_ENVIRON
 	use_power = IDLE_POWER_USE
-	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
-	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.04
+	idle_power_usage = 2
+	active_power_usage = 4
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/idSelf
 
@@ -31,7 +31,7 @@
 	obj_flags |= EMAGGED
 	req_access = list()
 	req_one_access = list()
-	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, "sparks", 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	to_chat(user, span_warning("You short out the access controller."))
 
 /obj/machinery/door_buttons/proc/removeMe()
@@ -83,7 +83,6 @@
 					controller.cycleClose(door)
 		else
 			controller.onlyClose(door)
-		use_power(active_power_usage)
 		addtimer(CALLBACK(src, .proc/not_busy), 2 SECONDS)
 
 /obj/machinery/door_buttons/access_button/proc/not_busy()

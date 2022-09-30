@@ -1,13 +1,12 @@
 /mob/living/carbon/human/say_mod(input, list/message_mods = list())
 	verb_say = dna.species.say_mod
-	// Any subtype of slurring in our status effects make us "slur"
-	if(locate(/datum/status_effect/speech/slurring) in status_effects)
+	if(slurring)
 		if (HAS_TRAIT(src, TRAIT_SIGN_LANG))
 			return "loosely signs"
 		else
 			return "slurs"
-
-	return ..()
+	else
+		. = ..()
 
 /mob/living/carbon/human/GetVoice()
 	if(istype(wear_mask, /obj/item/clothing/mask/chameleon))
@@ -28,7 +27,7 @@
 			return real_name
 	if(mind)
 		var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
-		if(changeling?.mimicing)
+		if(changeling?.mimicing )
 			return changeling.mimicing
 	if(GetSpecialVoice())
 		return GetSpecialVoice()
@@ -84,4 +83,4 @@
 
 /mob/living/carbon/human/get_alt_name()
 	if(name != GetVoice())
-		return " (as [get_id_name("Unknown")])"
+		return " (as [get_id_name("Unknown")])"\

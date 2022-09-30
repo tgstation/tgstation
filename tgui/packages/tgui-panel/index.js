@@ -68,11 +68,20 @@ const setupApp = () => {
   setupPanelFocusHacks();
   captureExternalLinks();
 
-  // Re-render UI on store updates
+  // Subscribe for Redux state updates
   store.subscribe(renderApp);
 
-  // Dispatch incoming messages as store actions
-  Byond.subscribe((type, payload) => store.dispatch({ type, payload }));
+  // Subscribe for bankend updates
+  window.update = msg => store.dispatch(Byond.parseJson(msg));
+
+  // Process the early update queue
+  while (true) {
+    const msg = window.__updateQueue__.shift();
+    if (!msg) {
+      break;
+    }
+    window.update(msg);
+  }
 
   // Unhide the panel
   Byond.winset('output', {
@@ -86,7 +95,7 @@ const setupApp = () => {
   });
 
   // Resize the panel to match the non-browser output
-  Byond.winget('output').then((output) => {
+  Byond.winget('output').then(output => {
     Byond.winset('browseroutput', {
       'size': output.size,
     });
@@ -95,7 +104,6 @@ const setupApp = () => {
   // Enable hot module reloading
   if (module.hot) {
     setupHotReloading();
-    // prettier-ignore
     module.hot.accept([
       './audio',
       './chat',

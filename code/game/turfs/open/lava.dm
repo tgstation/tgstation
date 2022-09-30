@@ -26,15 +26,9 @@
 	var/immunity_trait = TRAIT_LAVA_IMMUNE
 	/// objects with these flags won't burn.
 	var/immunity_resistance_flags = LAVA_PROOF
-	/// the temperature that this turf will attempt to heat/cool gasses too in a heat exchanger, in kelvin
-	var/lava_temperature = 5000
-
-/turf/open/lava/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/lazy_fishing_spot, FISHING_SPOT_PRESET_LAVALAND_LAVA)
 
 /turf/open/lava/ex_act(severity, target)
-	return
+	contents_explosion(severity, target)
 
 /turf/open/lava/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
 	return
@@ -87,9 +81,6 @@
 			return TRUE
 	return FALSE
 
-/turf/open/lava/rust_heretic_act()
-	return FALSE
-
 /turf/open/lava/singularity_act()
 	return
 
@@ -105,7 +96,7 @@
 	. = 700000
 
 /turf/open/lava/GetTemperature()
-	. = lava_temperature
+	. = 5000
 
 /turf/open/lava/TakeTemperature(temp)
 
@@ -124,20 +115,6 @@
 		else
 			to_chat(user, span_warning("You need one rod to build a heatproof lattice."))
 		return
-	// Light a cigarette in the lava
-	if(istype(C, /obj/item/clothing/mask/cigarette))
-		var/obj/item/clothing/mask/cigarette/ciggie = C
-		if(ciggie.lit)
-			to_chat(user, span_warning("The [ciggie.name] is already lit!"))
-			return TRUE
-		var/clumsy_modifier = HAS_TRAIT(user, TRAIT_CLUMSY) ? 2 : 1
-		if(prob(25 * clumsy_modifier ))
-			ciggie.light(span_warning("[user] expertly dips \the [ciggie.name] into [src], along with the rest of [user.p_their()] arm. What a dumbass."))
-			var/obj/item/bodypart/affecting = user.get_active_hand()
-			affecting?.receive_damage(burn = 90)
-		else
-			ciggie.light(span_rose("[user] expertly dips \the [ciggie.name] into [src], lighting it with the scorching heat of the planet. Witnessing such a feat is almost enough to make you cry."))
-		return TRUE
 
 /turf/open/lava/proc/is_safe()
 	//if anything matching this typecache is found in the lava, we don't burn things
@@ -174,7 +151,7 @@
 
 /turf/open/lava/proc/can_burn_stuff(atom/movable/burn_target)
 	if(burn_target.movement_type & (FLYING|FLOATING)) //you're flying over it.
-		return LAVA_BE_IGNORING
+		return isliving(burn_target) ? LAVA_BE_PROCESSING : LAVA_BE_IGNORING
 
 	if(isobj(burn_target))
 		if(burn_target.throwing) // to avoid gulag prisoners easily escaping, throwing only works for objects.
@@ -240,7 +217,7 @@
 	burn_living.adjustFireLoss(lava_damage * delta_time)
 	if(!QDELETED(burn_living)) //mobs turning into object corpses could get deleted here.
 		burn_living.adjust_fire_stacks(lava_firestacks * delta_time)
-		burn_living.ignite_mob()
+		burn_living.IgniteMob()
 
 /turf/open/lava/smooth
 	name = "lava"
@@ -251,7 +228,6 @@
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_FLOOR_LAVA)
 	canSmoothWith = list(SMOOTH_GROUP_FLOOR_LAVA)
-	underfloor_accessibility = 2 //This avoids strangeness when routing pipes / wires along catwalks over lava
 
 /turf/open/lava/smooth/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS

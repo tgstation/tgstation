@@ -4,13 +4,13 @@
 	unit_name = "new plant species sample"
 	export_types = list(/obj/item/seeds)
 	var/needs_discovery = FALSE // Only for undiscovered species
-	var/static/list/discovered_plants = list()
+	var/static/list/discoveredPlants = list()
 
 /datum/export/seed/get_cost(obj/O)
 	var/obj/item/seeds/S = O
-	if(!needs_discovery && (S.type in discovered_plants))
+	if(!needs_discovery && (S.type in discoveredPlants))
 		return 0
-	if(needs_discovery && !(S.type in discovered_plants))
+	if(needs_discovery && !(S.type in discoveredPlants))
 		return 0
 	return ..() * S.rarity // That's right, no bonus for potency. Send a crappy sample first to "show improvement" later.
 
@@ -18,7 +18,7 @@
 	. = ..()
 	if(. && !dry_run)
 		var/obj/item/seeds/S = O
-		discovered_plants[S.type] = S.potency
+		discoveredPlants[S.type] = S.potency
 
 
 /datum/export/seed/potency
@@ -33,6 +33,6 @@
 	if(!cost)
 		return 0
 
-	var/potDiff = (S.potency - discovered_plants[S.type])
+	var/potDiff = (S.potency - discoveredPlants[S.type])
 
 	return round(..() * potDiff)

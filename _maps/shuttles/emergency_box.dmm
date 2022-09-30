@@ -29,12 +29,12 @@
 /area/shuttle/escape)
 "ai" = (
 /obj/structure/table,
-/obj/item/storage/medkit/regular{
+/obj/item/storage/firstaid/regular{
 	pixel_x = 2;
 	pixel_y = 3
 	},
 /obj/item/crowbar,
-/obj/item/storage/medkit/fire,
+/obj/item/storage/firstaid/fire,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "al" = (
@@ -98,9 +98,9 @@
 /area/shuttle/escape)
 "ay" = (
 /obj/machinery/door/airlock/public/glass{
-	name = "Emergency Shuttle Cockpit"
+	name = "Emergency Shuttle Cockpit";
+	req_access_txt = "19"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aA" = (
@@ -123,8 +123,8 @@
 /area/shuttle/escape)
 "aE" = (
 /obj/structure/table,
-/obj/item/storage/medkit/fire,
-/obj/item/storage/medkit/regular{
+/obj/item/storage/firstaid/fire,
+/obj/item/storage/firstaid/regular{
 	pixel_x = 2;
 	pixel_y = 3
 	},
@@ -148,16 +148,16 @@
 /area/shuttle/escape/brig)
 "aH" = (
 /obj/machinery/door/airlock/public/glass{
-	name = "Emergency Shuttle Brig"
+	name = "Emergency Shuttle Brig";
+	req_access_txt = "2"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape/brig)
 "aI" = (
 /obj/machinery/door/airlock/titanium{
-	name = "Emergency Shuttle Airlock"
+	name = "Emergency Shuttle Airlock";
+	req_access_txt = "2"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "aJ" = (
@@ -245,8 +245,8 @@
 /area/shuttle/escape)
 "be" = (
 /obj/structure/table,
-/obj/item/storage/medkit/fire,
-/obj/item/storage/medkit/regular{
+/obj/item/storage/firstaid/fire,
+/obj/item/storage/firstaid/regular{
 	pixel_x = 2;
 	pixel_y = 3
 	},

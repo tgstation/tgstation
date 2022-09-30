@@ -2,7 +2,7 @@
 /obj/effect/spresent
 	name = "strange present"
 	desc = "It's a ... present?"
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "strangepresent"
 	density = TRUE
 	anchored = FALSE
@@ -28,7 +28,7 @@
 	name = "mobl"
 	var/master = null
 
-	var/list/container = list()
+	var/list/container = list(  )
 
 /obj/effect/overlay/thermite
 	name = "thermite"
@@ -46,7 +46,6 @@
 	icon_state = "white"
 	plane = LIGHTING_PLANE
 	blend_mode = BLEND_ADD
-	luminosity = 1
 
 /obj/effect/abstract/marker
 	name = "marker"

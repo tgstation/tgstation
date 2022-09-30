@@ -6,7 +6,6 @@
 /obj/item/circuit_component/length
 	display_name = "Length"
 	desc = "A component that returns the length of its input."
-	category = "Math"
 
 	/// The input port
 	var/datum/port/input/input_port

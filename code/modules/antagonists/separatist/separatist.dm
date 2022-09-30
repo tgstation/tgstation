@@ -1,21 +1,19 @@
 /datum/team/nation
-	name = "\improper Nation"
+	name = "Nation"
 	member_name = "separatist"
 	///a list of ranks that can join this nation.
 	var/list/potential_recruits
-	///department said team is related to
-	var/datum/job_department/department
-	///whether to forge objectives attacking other nations
+	///checked by the department revolt event to prevent trying to make a nation that is already independent... double independent.
+	var/nation_department
 	var/dangerous_nation = TRUE
 
-/datum/team/nation/New(starting_members, potential_recruits, department)
+/datum/team/nation/New(starting_members, _potential_recruits, _nation_department)
 	. = ..()
 	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, .proc/new_possible_separatist)
-	src.potential_recruits = potential_recruits
-	src.department = department
+	potential_recruits = _potential_recruits
+	nation_department = _nation_department
 
 /datum/team/nation/Destroy(force, ...)
-	department = null
 	UnregisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED)
 	. = ..()
 
@@ -71,28 +69,15 @@
 		needs_objectives.owner.announce_objectives()
 
 /datum/antagonist/separatist
-	name = "\improper Separatists"
+	name = "Separatists"
 	show_in_antagpanel = FALSE
 	show_name_in_check_antagonists = TRUE
 	suicide_cry = "FOR THE MOTHERLAND!!"
-	ui_name = "AntagInfoSeparatist"
-	///team datum
 	var/datum/team/nation/nation
-	///background color of the ui
-	var/ui_color
 
 /datum/antagonist/separatist/on_gain()
 	create_objectives()
-	setup_ui_color()
 	. = ..()
-
-//give ais their role as UN
-/datum/antagonist/separatist/apply_innate_effects(mob/living/mob_override)
-	. = ..()
-	if(isAI(mob_override))
-		var/mob/living/silicon/ai/united_nations_ai = mob_override
-		united_nations_ai.laws = new /datum/ai_laws/united_nations
-		united_nations_ai.laws.associate(united_nations_ai)
 
 /datum/antagonist/separatist/on_removal()
 	remove_objectives()
@@ -104,11 +89,6 @@
 /datum/antagonist/separatist/proc/remove_objectives()
 	objectives -= nation.objectives
 
-/datum/antagonist/separatist/proc/setup_ui_color()
-	var/list/hsl = rgb2num(nation.department.latejoin_color, COLORSPACE_HSL)
-	hsl[3] = 25 //setting lightness very low
-	ui_color = rgb(hsl[1], hsl[2], hsl[3], space = COLORSPACE_HSL)
-
 /datum/antagonist/separatist/create_team(datum/team/nation/new_team)
 	if(!new_team)
 		return
@@ -117,9 +97,57 @@
 /datum/antagonist/separatist/get_team()
 	return nation
 
-/datum/antagonist/separatist/ui_static_data(mob/user)
-	var/list/data = list()
-	data["objectives"] = get_objectives()
-	data["nation"] = nation.name
-	data["nationColor"] = ui_color
-	return data
+/datum/antagonist/separatist/greet()
+	to_chat(owner, span_boldannounce("You are a separatist for an independent [nation.nation_department]! [nation.name] forever! Protect the sovereignty of your newfound land with your comrades (fellow department members) in arms!"))
+	owner.announce_objectives()
+
+//objectives
+/datum/objective/destroy_nation
+	name = "nation destruction"
+	explanation_text = "Make sure no member of the enemy nation escapes alive!"
+	team_explanation_text = "Make sure no member of the enemy nation escapes alive!"
+	var/datum/team/nation/target_team
+
+/datum/objective/destroy_nation/update_explanation_text()
+	. = ..()
+	if(target_team)
+		explanation_text = "Make sure no member of [target_team] ([target_team.nation_department]) nation escapes alive!"
+	else
+		explanation_text = "Free Objective"
+
+/datum/objective/destroy_nation/New(text, target_department)
+	. = ..()
+	target_team = target_department
+	update_explanation_text()
+
+/datum/objective/destroy_nation/check_completion()
+	if(!target_team)
+		return TRUE
+
+	for(var/datum/antagonist/separatist/separatist_datum in GLOB.antagonists)
+		if(separatist_datum.nation.nation_department != target_team.nation_department) //a separatist, but not one part of the department we need to destroy
+			continue
+		var/datum/mind/target = separatist_datum.owner
+		if(target && considered_alive(target) && (target.current.onCentCom() || target.current.onSyndieBase()))
+			return FALSE //at least one member got away
+	return TRUE
+
+/datum/objective/separatist_fluff
+
+/datum/objective/separatist_fluff/New(text, nation_name)
+	var/list/explanationTexts = list(
+		"The rest of the station must be taxed for their use of [nation_name]'s services.", \
+		"Make statues everywhere of your glorious leader of [nation_name]. If you have nobody, crown one amongst yourselves!", \
+		"[nation_name] must be absolutely blinged out.", \
+		"Damage as much of the station as you can, keep it in disrepair. [nation_name] must be the untouched paragon!", \
+		"Heavily reinforce [nation_name] against the dangers of the outside world.", \
+		"Make sure [nation_name] is fully off the grid, not requiring power or any other services from other departments!", \
+		"Use a misaligned teleporter to make you and your fellow citizens of [nation_name] flypeople. Bring toxin medication!", \
+		"Save the station when it needs you most. [nation_name] will be remembered as the protectors.", \
+		"Arm up. The citizens of [nation_name] have a right to bear arms.",
+	)
+	explanation_text = pick(explanationTexts)
+	..()
+
+/datum/objective/separatist_fluff/check_completion()
+	return TRUE

@@ -1,11 +1,10 @@
 /**********************Light************************/
 
-//this item is intended to give the effect of entering the mine, so that light gradually fades. we also use the base effect for certain lighting effects while mapping.
+//this item is intended to give the effect of entering the mine, so that light gradually fades
 /obj/effect/light_emitter
-	name = "light emitter"
-	icon_state = "lighting_marker"
+	name = "Light emitter"
 	anchored = TRUE
-	invisibility = INVISIBILITY_ABSTRACT
+	invisibility = 101
 	var/set_luminosity = 8
 	var/set_cap = 0
 
@@ -26,7 +25,7 @@
 	icon_door = "mixed"
 
 /obj/structure/closet/wardrobe/miner/PopulateContents()
-	new /obj/item/storage/backpack/duffelbag/explorer(src)
+	new /obj/item/storage/backpack/duffelbag(src)
 	new /obj/item/storage/backpack/explorer(src)
 	new /obj/item/storage/backpack/satchel/explorer(src)
 	new /obj/item/clothing/under/rank/cargo/miner/lavaland(src)
@@ -61,7 +60,7 @@
 	new /obj/item/storage/bag/plants(src)
 	new /obj/item/storage/bag/ore(src)
 	new /obj/item/t_scanner/adv_mining_scanner/lesser(src)
-	new /obj/item/gun/energy/recharge/kinetic_accelerator(src)
+	new /obj/item/gun/energy/kinetic_accelerator(src)
 	new /obj/item/clothing/glasses/meson(src)
 	new /obj/item/survivalcapsule(src)
 	new /obj/item/assault_pod/mining(src)
@@ -76,6 +75,7 @@
 	shuttleId = "mining"
 	possible_destinations = "mining_home;mining_away;landing_zone_dock;mining_public"
 	no_destination_swap = TRUE
+	var/static/list/dumb_rev_heads = list()
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/machinery/computer/shuttle/mining/attack_hand(mob/user, list/modifiers)
@@ -83,11 +83,7 @@
 		to_chat(user, span_warning("You get a feeling that leaving the station might be a REALLY dumb idea..."))
 		dumb_rev_heads += user.mind
 		return
-
-	if (HAS_TRAIT(user, TRAIT_FORBID_MINING_SHUTTLE_CONSOLE_OUTSIDE_STATION) && !is_station_level(user.z))
-		to_chat(user, span_warning("You get the feeling you shouldn't mess with this."))
-		return
-	return ..()
+	. = ..()
 
 /obj/machinery/computer/shuttle/mining/common
 	name = "lavaland shuttle console"
@@ -95,26 +91,6 @@
 	circuit = /obj/item/circuitboard/computer/mining_shuttle/common
 	shuttleId = "mining_common"
 	possible_destinations = "commonmining_home;lavaland_common_away;landing_zone_dock;mining_public"
-
-/obj/docking_port/stationary/mining_home
-	name = "SS13: Mining Dock"
-	shuttle_id = "mining_home"
-	roundstart_template = /datum/map_template/shuttle/mining/delta
-	width = 7
-	dwidth = 3
-	height = 5
-
-/obj/docking_port/stationary/mining_home/kilo
-	roundstart_template = /datum/map_template/shuttle/mining/kilo
-	height = 10
-
-/obj/docking_port/stationary/mining_home/common
-	name = "SS13: Common Mining Dock"
-	shuttle_id = "commonmining_home"
-	roundstart_template = /datum/map_template/shuttle/mining_common/meta
-
-/obj/docking_port/stationary/mining_home/common/kilo
-	roundstart_template = /datum/map_template/shuttle/mining_common/kilo
 
 /**********************Mining car (Crate like thing, not the rail car)**************************/
 

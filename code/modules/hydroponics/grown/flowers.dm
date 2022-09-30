@@ -70,10 +70,10 @@
 	icon_grow = "spacemanstrumpet-grow"
 	icon_dead = "spacemanstrumpet-dead"
 	mutatelist = null
-	genes = list(/datum/plant_gene/reagent/preset/polypyr, /datum/plant_gene/trait/preserved)
+	genes = list(/datum/plant_gene/reagent/polypyr, /datum/plant_gene/trait/preserved)
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.05)
 	rarity = 30
-	graft_gene = /datum/plant_gene/reagent/preset/polypyr
+	graft_gene = /datum/plant_gene/reagent/polypyr
 
 /obj/item/food/grown/trumpet
 	seed = /obj/item/seeds/poppy/lily/trumpet
@@ -110,7 +110,6 @@
 	mutatelist = null
 	rarity = 15
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.05, /datum/reagent/fuel/oil = 0.05)
-	graft_gene = /datum/plant_gene/trait/preserved
 
 ///Fraxinella Flowers.
 /obj/item/food/grown/poppy/geranium/fraxinella
@@ -161,7 +160,7 @@
 	icon_state = "seed-sunflower"
 	species = "sunflower"
 	plantname = "Sunflowers"
-	product = /obj/item/food/grown/sunflower
+	product = /obj/item/grown/sunflower
 	genes = list(/datum/plant_gene/trait/attack/sunflower_attack, /datum/plant_gene/trait/preserved)
 	endurance = 20
 	production = 2
@@ -174,14 +173,13 @@
 	mutatelist = list(/obj/item/seeds/sunflower/moonflower, /obj/item/seeds/sunflower/novaflower)
 	reagents_add = list(/datum/reagent/consumable/cornoil = 0.08, /datum/reagent/consumable/nutriment = 0.04)
 
-/obj/item/food/grown/sunflower // FLOWER POWER!
+/obj/item/grown/sunflower // FLOWER POWER!
 	seed = /obj/item/seeds/sunflower
 	name = "sunflower"
 	desc = "It's beautiful! A certain person might beat you to death if you trample these."
 	icon_state = "sunflower"
 	lefthand_file = 'icons/mob/inhands/weapons/plants_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/plants_righthand.dmi'
-	foodtypes = VEGETABLES
 	damtype = BURN
 	force = 0
 	slot_flags = ITEM_SLOT_HEAD
@@ -191,16 +189,13 @@
 	throw_speed = 1
 	throw_range = 3
 
-/obj/item/food/grown/sunflower/make_dryable()
-	AddElement(/datum/element/dryable, /obj/item/food/semki/healthy) //yum
-
 // Moonflower
 /obj/item/seeds/sunflower/moonflower
 	name = "pack of moonflower seeds"
 	desc = "These seeds grow into moonflowers."
 	icon_state = "seed-moonflower"
-	lefthand_file = 'icons/mob/inhands/items/food_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/items/food_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	species = "moonflower"
 	plantname = "Moonflowers"
 	icon_grow = "moonflower-grow"
@@ -233,7 +228,7 @@
 	product = /obj/item/grown/novaflower
 	genes = list(/datum/plant_gene/trait/backfire/novaflower_heat, /datum/plant_gene/trait/attack/novaflower_attack, /datum/plant_gene/trait/preserved)
 	mutatelist = null
-	reagents_add = list(/datum/reagent/consumable/condensedcapsaicin = 0.25, /datum/reagent/consumable/capsaicin = 0.3, /datum/reagent/consumable/nutriment = 0, /datum/reagent/toxin/acid = 0.05)
+	reagents_add = list(/datum/reagent/consumable/condensedcapsaicin = 0.25, /datum/reagent/consumable/capsaicin = 0.3, /datum/reagent/consumable/nutriment = 0)
 	rarity = 20
 
 /obj/item/grown/novaflower
@@ -283,8 +278,8 @@
 	base_icon_state = "rose"
 	icon_state = "rose"
 	worn_icon_state = "rose"
-	lefthand_file = 'icons/mob/inhands/items/food_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/items/food_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	slot_flags = ITEM_SLOT_HEAD | ITEM_SLOT_MASK
 	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 	bite_consumption_mod = 2
@@ -292,12 +287,12 @@
 
 /obj/item/food/grown/rose/equipped(mob/user, slot, initial)
 	. = ..()
-	if(slot & ITEM_SLOT_MASK)
+	if(slot == ITEM_SLOT_MASK)
 		worn_icon_state = "[base_icon_state]_mouth"
-		user.update_worn_mask()
+		user.update_inv_wear_mask()
 	else
 		worn_icon_state = base_icon_state
-		user.update_worn_head()
+		user.update_inv_head()
 
 // Carbon Rose
 /obj/item/seeds/carbon_rose
@@ -312,13 +307,13 @@
 	potency = 15
 	instability = 3
 	growthstages = 3
-	genes = list(/datum/plant_gene/reagent/preset/carbon, /datum/plant_gene/trait/preserved)
+	genes = list(/datum/plant_gene/reagent/carbon, /datum/plant_gene/trait/preserved)
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	icon_grow = "carbonrose-grow"
 	icon_dead = "carbonrose-dead"
 	reagents_add = list(/datum/reagent/plastic_polymers = 0.05)
 	rarity = 10
-	graft_gene = /datum/plant_gene/reagent/preset/carbon
+	graft_gene = /datum/plant_gene/reagent/carbon
 
 /obj/item/grown/carbon_rose
 	seed = /obj/item/seeds/carbon_rose

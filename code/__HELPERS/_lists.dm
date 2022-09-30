@@ -13,8 +13,6 @@
 #define LAZYINITLIST(L) if (!L) { L = list(); }
 ///If the provided list is empty, set it to null
 #define UNSETEMPTY(L) if (L && !length(L)) L = null
-///If the provided key -> list is empty, remove it from the list
-#define ASSOC_UNSETEMPTY(L, K) if (!length(L[K])) L -= K;
 ///Like LAZYCOPY - copies an input list if the list has entries, If it doesn't the assigned list is nulled
 #define LAZYLISTDUPLICATE(L) (L ? L.Copy() : null )
 ///Remove an item from the list, set the list to null if empty
@@ -29,9 +27,7 @@
 #define LAZYACCESS(L, I) (L ? (isnum(I) ? (I > 0 && I <= length(L) ? L[I] : null) : L[I]) : null)
 ///Sets the item K to the value V, if the list is null it will initialize it
 #define LAZYSET(L, K, V) if(!L) { L = list(); } L[K] = V;
-///Sets the length of a lazylist
-#define LAZYSETLEN(L, V) if (!L) { L = list(); } L.len = V;
-///Returns the length of the list
+///Returns the lenght of the list
 #define LAZYLEN(L) length(L)
 ///Sets a list to null
 #define LAZYNULL(L) L = null
@@ -135,44 +131,6 @@
 		};\
 	} while(FALSE)
 
-#define SORT_FIRST_INDEX(list) (list[1])
-#define SORT_COMPARE_DIRECTLY(thing) (thing)
-#define SORT_VAR_NO_TYPE(varname) var/varname
-/****
-	* Even more custom binary search sorted insert, using defines instead of vars
-	* INPUT: Item to be inserted
-	* LIST: List to insert INPUT into
-	* TYPECONT: A define setting the var to the typepath of the contents of the list
-	* COMPARE: The item to compare against, usualy the same as INPUT
-	* COMPARISON: A define that takes an item to compare as input, and returns their comparable value
-	* COMPTYPE: How should the list be compared? Either COMPARE_KEY or COMPARE_VALUE.
-	*/
-#define BINARY_INSERT_DEFINE(INPUT, LIST, TYPECONT, COMPARE, COMPARISON, COMPTYPE) \
-	do {\
-		var/list/__BIN_LIST = LIST;\
-		var/__BIN_CTTL = length(__BIN_LIST);\
-		if(!__BIN_CTTL) {\
-			__BIN_LIST += INPUT;\
-		} else {\
-			var/__BIN_LEFT = 1;\
-			var/__BIN_RIGHT = __BIN_CTTL;\
-			var/__BIN_MID = (__BIN_LEFT + __BIN_RIGHT) >> 1;\
-			##TYPECONT(__BIN_ITEM);\
-			while(__BIN_LEFT < __BIN_RIGHT) {\
-				__BIN_ITEM = COMPTYPE;\
-				if(##COMPARISON(__BIN_ITEM) <= ##COMPARISON(COMPARE)) {\
-					__BIN_LEFT = __BIN_MID + 1;\
-				} else {\
-					__BIN_RIGHT = __BIN_MID;\
-				};\
-				__BIN_MID = (__BIN_LEFT + __BIN_RIGHT) >> 1;\
-			};\
-			__BIN_ITEM = COMPTYPE;\
-			__BIN_MID = ##COMPARISON(__BIN_ITEM) > ##COMPARISON(COMPARE) ? __BIN_MID : __BIN_MID + 1;\
-			__BIN_LIST.Insert(__BIN_MID, INPUT);\
-		};\
-	} while(FALSE)
-
 ///Returns a list in plain english as a string
 /proc/english_list(list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "" )
 	var/total = length(input)
@@ -195,56 +153,24 @@
 
 			return "[output][and_text][input[index]]"
 
-/**
- * Checks for specific types in a list.
- *
- * If using zebra mode the list should be an assoc list with truthy/falsey values.
- * The check short circuits so earlier entries in the input list will take priority.
- * Ergo, subtypes should come before parent types.
- * Notice that this is the opposite priority of [/proc/typecacheof].
- *
- * Arguments:
- * - [type_to_check][/datum]: An instance to check.
- * - [list_to_check][/list]: A list of typepaths to check the type_to_check against.
- * - zebra: Whether to use the value of the matching type in the list instead of just returning true when a match is found.
- */
-/proc/is_type_in_list(datum/type_to_check, list/list_to_check, zebra = FALSE)
+///Checks for specific types in a list
+/proc/is_type_in_list(atom/type_to_check, list/list_to_check)
 	if(!LAZYLEN(list_to_check) || !type_to_check)
 		return FALSE
 	for(var/type in list_to_check)
 		if(istype(type_to_check, type))
-			return !zebra || list_to_check[type] // Subtypes must come first in zebra lists.
+			return TRUE
 	return FALSE
 
-/**
- * Checks for specific paths in a list.
- *
- * If using zebra mode the list should be an assoc list with truthy/falsey values.
- * The check short circuits so earlier entries in the input list will take priority.
- * Ergo, subpaths should come before parent paths.
- * Notice that this is the opposite priority of [/proc/typecacheof].
- *
- * Arguments:
- * - path_to_check: A typepath to check.
- * - [list_to_check][/list]: A list of typepaths to check the path_to_check against.
- * - zebra: Whether to use the value of the mathing path in the list instead of just returning true when a match is found.
- */
-/proc/is_path_in_list(path_to_check, list/list_to_check, zebra = FALSE)
-	if(!LAZYLEN(list_to_check) || !path_to_check)
-		return FALSE
-	for(var/path in list_to_check)
-		if(ispath(path_to_check, path))
-			return !zebra || list_to_check[path]
-	return FALSE
-
-///Checks for specific types in specifically structured (Assoc "type" = TRUE|FALSE) lists ('typecaches')
+///Checks for specific types in specifically structured (Assoc "type" = TRUE) lists ('typecaches')
 #define is_type_in_typecache(A, L) (A && length(L) && L[(ispath(A) ? A : A:type)])
 
 ///returns a new list with only atoms that are in the typecache list
 /proc/typecache_filter_list(list/atoms, list/typecache)
 	RETURN_TYPE(/list)
 	. = list()
-	for(var/atom/atom_checked as anything in atoms)
+	for(var/thing in atoms)
+		var/atom/atom_checked = thing
 		if (typecache[atom_checked.type])
 			. += atom_checked
 
@@ -252,112 +178,46 @@
 /proc/typecache_filter_list_reverse(list/atoms, list/typecache)
 	RETURN_TYPE(/list)
 	. = list()
-	for(var/atom/atom_checked as anything in atoms)
-		if(!typecache[atom_checked.type])
-			. += atom_checked
+	for(var/atom/atom as anything in atoms)
+		if(!typecache[atom.type])
+			. += atom
 
 ///similar to typecache_filter_list and typecache_filter_list_reverse but it supports an inclusion list and and exclusion list
 /proc/typecache_filter_multi_list_exclusion(list/atoms, list/typecache_include, list/typecache_exclude)
 	. = list()
-	for(var/atom/atom_checked as anything in atoms)
-		if(typecache_include[atom_checked.type] && !typecache_exclude[atom_checked.type])
-			. += atom_checked
+	for(var/atom/atom as anything in atoms)
+		if(typecache_include[atom.type] && !typecache_exclude[atom.type])
+			. += atom
 
-/**
- * Like typesof() or subtypesof(), but returns a typecache instead of a list.
- *
- * Arguments:
- * - path: A typepath or list of typepaths.
- * - only_root_path: Whether the typecache should be specifically of the passed types.
- * - ignore_root_path: Whether to ignore the root path when caching subtypes.
- */
-/proc/typecacheof(path, only_root_path = FALSE, ignore_root_path = FALSE)
-	if(isnull(path))
-		return
-
+///Like typesof() or subtypesof(), but returns a typecache instead of a list
+/proc/typecacheof(path, ignore_root_path, only_root_path = FALSE)
 	if(ispath(path))
-		. = list()
+		var/list/types
+		var/list/output = list()
 		if(only_root_path)
-			.[path] = TRUE
-			return
+			output[path] = TRUE
+		else
+			types = ignore_root_path ? subtypesof(path) : typesof(path)
+			for(var/T in types)
+				output[T] = TRUE
+		return output
+	else if(islist(path))
+		var/list/pathlist = path
+		var/list/output = list()
+		if(ignore_root_path)
+			for(var/current_path in pathlist)
+				for(var/subtype in subtypesof(current_path))
+					output[subtype] = TRUE
+			return output
 
-		for(var/subtype in (ignore_root_path ? subtypesof(path) : typesof(path)))
-			.[subtype] = TRUE
-		return
-
-	if(!islist(path))
-		CRASH("Tried to create a typecache of [path] which is neither a typepath nor a list.")
-
-	. = list()
-	var/list/pathlist = path
-	if(only_root_path)
-		for(var/current_path in pathlist)
-			.[current_path] = TRUE
-	else if(ignore_root_path)
-		for(var/current_path in pathlist)
-			for(var/subtype in subtypesof(current_path))
-				.[subtype] = TRUE
-	else
-		for(var/current_path in pathlist)
-			for(var/subpath in typesof(current_path))
-				.[subpath] = TRUE
-
-/**
- * Like typesof() or subtypesof(), but returns a typecache instead of a list.
- * This time it also uses the associated values given by the input list for the values of the subtypes.
- *
- * Latter values from the input list override earlier values.
- * Thus subtypes should come _after_ parent types in the input list.
- * Notice that this is the opposite priority of [/proc/is_type_in_list] and [/proc/is_path_in_list].
- *
- * Arguments:
- * - path: A typepath or list of typepaths with associated values.
- * - single_value: The assoc value used if only a single path is passed as the first variable.
- * - only_root_path: Whether the typecache should be specifically of the passed types.
- * - ignore_root_path: Whether to ignore the root path when caching subtypes.
- * - clear_nulls: Whether to remove keys with null assoc values from the typecache after generating it.
- */
-/proc/zebra_typecacheof(path, single_value = TRUE, only_root_path = FALSE, ignore_root_path = FALSE, clear_nulls = FALSE)
-	if(isnull(path))
-		return
-
-	if(ispath(path))
-		if (isnull(single_value))
-			return
-
-		. = list()
 		if(only_root_path)
-			.[path] = single_value
-			return
-
-		for(var/subtype in (ignore_root_path ? subtypesof(path) : typesof(path)))
-			.[subtype] = single_value
-		return
-
-	if(!islist(path))
-		CRASH("Tried to create a typecache of [path] which is neither a typepath nor a list.")
-
-	. = list()
-	var/list/pathlist = path
-	if(only_root_path)
-		for(var/current_path in pathlist)
-			.[current_path] = pathlist[current_path]
-	else if(ignore_root_path)
-		for(var/current_path in pathlist)
-			for(var/subtype in subtypesof(current_path))
-				.[subtype] = pathlist[current_path]
-	else
-		for(var/current_path in pathlist)
-			for(var/subpath in typesof(current_path))
-				.[subpath] = pathlist[current_path]
-
-	if(!clear_nulls)
-		return
-
-	for(var/cached_path in .)
-		if (isnull(.[cached_path]))
-			. -= cached_path
-
+			for(var/current_path in pathlist)
+				output[current_path] = TRUE
+		else
+			for(var/current_path in pathlist)
+				for(var/subpath in typesof(current_path))
+					output[subpath] = TRUE
+		return output
 
 /**
  * Removes any null entries from the list
@@ -402,16 +262,30 @@
 	return result
 
 /**
- * Picks a random element from a list based on a weighting system.
- * For example, given the following list:
- * A = 6, B = 3, C = 1, D = 0
- * A would have a 60% chance of being picked,
- * B would have a 30% chance of being picked,
- * C would have a 10% chance of being picked,
- * and D would have a 0% chance of being picked.
- * You should only pass integers in.
- */
+ * Picks a random element from a list based on a weighting system:
+ * 1. Adds up the total of weights for each element
+ * 2. Gets a number between 1 and that total
+ * 3. For each element in the list, subtracts its weighting from that number
+ * 4. If that makes the number 0 or less, return that element.
+ * Will output null sometimes if you use decimals (e.g. 0.1 instead of 10) as rand() uses integers, not floats
+**/
 /proc/pick_weight(list/list_to_pick)
+	var/total = 0
+	var/item
+	for(item in list_to_pick)
+		if(!list_to_pick[item])
+			list_to_pick[item] = 1
+		total += list_to_pick[item]
+
+	total = rand(1, total)
+	for(item in list_to_pick)
+		total -= list_to_pick[item]
+		if(total <= 0)
+			return item
+
+	return null
+///The original pickweight proc will sometimes pick entries with zero weight.  I'm not sure if changing the original will break anything, so I left it be.
+/proc/pick_weight_allow_zero(list/list_to_pick)
 	var/total = 0
 	var/item
 	for(item in list_to_pick)
@@ -427,41 +301,6 @@
 
 	return null
 
-/// Takes a weighted list (see above) and expands it into raw entries
-/// This eats more memory, but saves time when actually picking from it
-/proc/expand_weights(list/list_to_pick)
-	var/list/values = list()
-	for(var/item in list_to_pick)
-		var/value = list_to_pick[item]
-		if(!value)
-			continue
-		values += value
-
-	var/gcf = greatest_common_factor(values)
-
-	var/list/output = list()
-	for(var/item in list_to_pick)
-		var/value = list_to_pick[item]
-		if(!value)
-			continue
-		for(var/i in 1 to value / gcf)
-			output += item
-	return output
-
-/// Takes a list of numbers as input, returns the highest value that is cleanly divides them all
-/// Note: this implementation is expensive as heck for large numbers, I only use it because most of my usecase
-/// Is < 10 ints
-/proc/greatest_common_factor(list/values)
-	var/smallest = min(arglist(values))
-	for(var/i in smallest to 1 step -1)
-		var/safe = TRUE
-		for(var/entry in values)
-			if(entry % i != 0)
-				safe = FALSE
-				break
-		if(safe)
-			return i
-
 /// Pick a random element from the list and remove it from the list.
 /proc/pick_n_take(list/list_to_pick)
 	RETURN_TYPE(list_to_pick[_].type)
@@ -475,12 +314,6 @@
 	if(L.len)
 		. = L[L.len]
 		L.len--
-
-/// Returns the top (last) element from the list, does not remove it from the list. Stack functionality.
-/proc/peek(list/target_list)
-	var/list_length = length(target_list)
-	if(list_length != 0)
-		return target_list[list_length]
 
 /proc/popleft(list/L)
 	if(L.len)
@@ -519,7 +352,7 @@
 		return
 	inserted_list = inserted_list.Copy()
 
-	for(var/i in 1 to inserted_list.len - 1)
+	for(var/i = 1, i < inserted_list.len, ++i)
 		inserted_list.Swap(i, rand(i, inserted_list.len))
 
 	return inserted_list
@@ -529,7 +362,7 @@
 	if(!inserted_list)
 		return
 
-	for(var/i in 1 to inserted_list.len - 1)
+	for(var/i = 1, i < inserted_list.len, ++i)
 		inserted_list.Swap(i, rand(i, inserted_list.len))
 
 ///Return a list with no duplicate entries
@@ -565,19 +398,19 @@
 /proc/sort_names(list/list_to_sort, order=1)
 	return sortTim(list_to_sort.Copy(), order >= 0 ? /proc/cmp_name_asc : /proc/cmp_name_dsc)
 
+
 ///Converts a bitfield to a list of numbers (or words if a wordlist is provided)
 /proc/bitfield_to_list(bitfield = 0, list/wordlist)
 	var/list/return_list = list()
 	if(islist(wordlist))
 		var/max = min(wordlist.len, 24)
 		var/bit = 1
-		for(var/i in 1 to max)
+		for(var/i = 1, i <= max, i++)
 			if(bitfield & bit)
 				return_list += wordlist[i]
 			bit = bit << 1
 	else
-		for(var/bit_number = 0 to 23)
-			var/bit = 1 << bit_number
+		for(var/bit = 1, bit <= (1<<24), bit = bit << 1)
 			if(bitfield & bit)
 				return_list += bit
 
@@ -633,7 +466,7 @@
 			return //no need to move
 		from_index += len //we want to shift left instead of right
 
-		for(var/i in 1 to distance)
+		for(var/i = 0, i < distance, ++i)
 			inserted_list.Insert(from_index, null)
 			inserted_list.Swap(from_index, to_index)
 			inserted_list.Cut(to_index, to_index + 1)
@@ -641,7 +474,7 @@
 		if(from_index > to_index)
 			from_index += len
 
-		for(var/i in 1 to len)
+		for(var/i = 0, i < len, ++i)
 			inserted_list.Insert(to_index, null)
 			inserted_list.Swap(from_index, to_index)
 			inserted_list.Cut(from_index, from_index + 1)
@@ -657,7 +490,7 @@
 		else
 			from_index += len
 
-		for(var/i in 1 to distance)
+		for(var/i = 0, i < distance, ++i)
 			inserted_list.Insert(from_index, null)
 			inserted_list.Swap(from_index, to_index)
 			inserted_list.Cut(to_index, to_index + 1)
@@ -667,7 +500,7 @@
 			to_index = from_index
 			from_index = a
 
-		for(var/i in 1 to len)
+		for(var/i = 0, i < len, ++i)
 			inserted_list.Swap(from_index++, to_index++)
 
 ///replaces reverseList ~Carnie
@@ -824,228 +657,3 @@
 		if(condition.Invoke(i))
 			. |= i
 
-///Returns a list with all weakrefs resolved
-/proc/recursive_list_resolve(list/list_to_resolve)
-	. = list()
-	for(var/element in list_to_resolve)
-		if(istext(element))
-			. += element
-			var/possible_assoc_value = list_to_resolve[element]
-			if(possible_assoc_value)
-				.[element] = recursive_list_resolve_element(possible_assoc_value)
-		else
-			. += list(recursive_list_resolve_element(element))
-
-///Helper for /proc/recursive_list_resolve
-/proc/recursive_list_resolve_element(element)
-	if(islist(element))
-		var/list/inner_list = element
-		return recursive_list_resolve(inner_list)
-	else if(isweakref(element))
-		var/datum/weakref/ref = element
-		return ref.resolve()
-	else
-		return element
-
-/// Returns a copy of the list where any element that is a datum or the world is converted into a ref
-/proc/refify_list(list/target_list, list/visited, path_accumulator = "list")
-	if(!visited)
-		visited = list()
-	var/list/ret = list()
-	visited[target_list] = path_accumulator
-	for(var/i in 1 to target_list.len)
-		var/key = target_list[i]
-		var/new_key = key
-		if(isweakref(key))
-			var/datum/weakref/ref = key
-			var/resolved = ref.resolve()
-			if(resolved)
-				new_key = "[resolved] [REF(resolved)]"
-			else
-				new_key = "null weakref [REF(key)]"
-		else if(isdatum(key))
-			new_key = "[key] [REF(key)]"
-		else if(key == world)
-			new_key = "world [REF(world)]"
-		else if(islist(key))
-			if(visited.Find(key))
-				new_key = visited[key]
-			else
-				new_key = refify_list(key, visited, path_accumulator + "\[[i]\]")
-		var/value
-		if(istext(key) || islist(key) || ispath(key) || isdatum(key) || key == world)
-			value = target_list[key]
-		if(isweakref(value))
-			var/datum/weakref/ref = value
-			var/resolved = ref.resolve()
-			if(resolved)
-				value = "[resolved] [REF(resolved)]"
-			else
-				value = "null weakref [REF(key)]"
-		else if(isdatum(value))
-			value = "[value] [REF(value)]"
-		else if(value == world)
-			value = "world [REF(world)]"
-		else if(islist(value))
-			if(visited.Find(value))
-				value = visited[value]
-			else
-				value = refify_list(value, visited, path_accumulator + "\[[key]\]")
-		var/list/to_add = list(new_key)
-		if(value)
-			to_add[new_key] = value
-		ret += to_add
-		if(i < target_list.len)
-			CHECK_TICK
-	return ret
-
-/**
- * Converts a list into a list of assoc lists of the form ("key" = key, "value" = value)
- * so that list keys that are themselves lists can be fully json-encoded
- */
-/proc/kvpify_list(list/target_list, depth = INFINITY, list/visited, path_accumulator = "list")
-	if(!visited)
-		visited = list()
-	var/list/ret = list()
-	visited[target_list] = path_accumulator
-	for(var/i in 1 to target_list.len)
-		var/key = target_list[i]
-		var/new_key = key
-		if(islist(key) && depth)
-			if(visited.Find(key))
-				new_key = visited[key]
-			else
-				new_key = kvpify_list(key, depth-1, visited, path_accumulator + "\[[i]\]")
-		var/value
-		if(istext(key) || islist(key) || ispath(key) || isdatum(key) || key == world)
-			value = target_list[key]
-		if(islist(value) && depth)
-			if(visited.Find(value))
-				value = visited[value]
-			else
-				value = kvpify_list(value, depth-1, visited, path_accumulator + "\[[key]\]")
-		if(value)
-			ret += list(list("key" = new_key, "value" = value))
-		else
-			ret += list(list("key" = i, "value" = new_key))
-		if(i < target_list.len)
-			CHECK_TICK
-	return ret
-
-/// Compares 2 lists, returns TRUE if they are the same
-/proc/deep_compare_list(list/list_1, list/list_2)
-	if(!islist(list_1) || !islist(list_2))
-		return FALSE
-
-	if(list_1 == list_2)
-		return TRUE
-
-	if(list_1.len != list_2.len)
-		return FALSE
-
-	for(var/i in 1 to list_1.len)
-		var/key_1 = list_1[i]
-		var/key_2 = list_2[i]
-		if (islist(key_1) && islist(key_2))
-			if(!deep_compare_list(key_1, key_2))
-				return FALSE
-		else if(key_1 != key_2)
-			return FALSE
-		if(istext(key_1) || islist(key_1) || ispath(key_1) || isdatum(key_1) || key_1 == world)
-			var/value_1 = list_1[key_1]
-			var/value_2 = list_2[key_1]
-			if (islist(value_1) && islist(value_2))
-				if(!deep_compare_list(value_1, value_2))
-					return FALSE
-			else if(value_1 != value_2)
-				return FALSE
-	return TRUE
-
-/// Returns a copy of the list where any element that is a datum is converted into a weakref
-/proc/weakrefify_list(list/target_list, list/visited, path_accumulator = "list")
-	if(!visited)
-		visited = list()
-	var/list/ret = list()
-	visited[target_list] = path_accumulator
-	for(var/i in 1 to target_list.len)
-		var/key = target_list[i]
-		var/new_key = key
-		if(isdatum(key))
-			new_key = WEAKREF(key)
-		else if(islist(key))
-			if(visited.Find(key))
-				new_key = visited[key]
-			else
-				new_key = weakrefify_list(key, visited, path_accumulator + "\[[i]\]")
-		var/value
-		if(istext(key) || islist(key) || ispath(key) || isdatum(key) || key == world)
-			value = target_list[key]
-		if(isdatum(value))
-			value = WEAKREF(value)
-		else if(islist(value))
-			if(visited.Find(value))
-				value = visited[value]
-			else
-				value = weakrefify_list(value, visited, path_accumulator + "\[[key]\]")
-		var/list/to_add = list(new_key)
-		if(value)
-			to_add[new_key] = value
-		ret += to_add
-		if(i < target_list.len)
-			CHECK_TICK
-	return ret
-
-/// Returns a copy of a list where text values (except assoc-keys and string representations of lua-only values) are
-/// wrapped in quotes and existing quote marks are escaped,
-/// and nulls are replaced with the string "null"
-/proc/encode_text_and_nulls(list/target_list, list/visited)
-	var/static/regex/lua_reference_regex
-	if(!lua_reference_regex)
-		lua_reference_regex = regex(@"^((function)|(table)|(thread)|(userdata)): 0x[0-9a-fA-F]+$")
-	if(!visited)
-		visited = list()
-	var/list/ret = list()
-	visited[target_list] = TRUE
-	for(var/i in 1 to target_list.len)
-		var/key = target_list[i]
-		var/new_key = key
-		if(istext(key) && !target_list[key] && !lua_reference_regex.Find(key))
-			new_key = "\"[replacetext(key, "\"", "\\\"")]\""
-		else if(islist(key))
-			var/found_index = visited.Find(key)
-			if(found_index)
-				new_key = visited[found_index]
-			else
-				new_key = encode_text_and_nulls(key, visited)
-		else if(isnull(key))
-			new_key = "null"
-		var/value
-		if(istext(key) || islist(key) || ispath(key) || isdatum(key) || key == world)
-			value = target_list[key]
-		if(istext(value) && !lua_reference_regex.Find(value))
-			value = "\"[replacetext(value, "\"", "\\\"")]\""
-		else if(islist(value))
-			var/found_index = visited.Find(value)
-			if(found_index)
-				value = visited[found_index]
-			else
-				value = encode_text_and_nulls(value, visited)
-		var/list/to_add = list(new_key)
-		if(value)
-			to_add[new_key] = value
-		ret += to_add
-		if(i < target_list.len)
-			CHECK_TICK
-	return ret
-
-/// Runtimes if the passed in list is not sorted
-/proc/assert_sorted(list/list, name, cmp = /proc/cmp_numeric_asc)
-	var/last_value = list[1]
-
-	for (var/index in 2 to list.len)
-		var/value = list[index]
-
-		if (call(cmp)(value, last_value) < 0)
-			stack_trace("[name] is not sorted. value at [index] ([value]) is in the wrong place compared to the previous value of [last_value] (when compared to by [cmp])")
-
-		last_value = value

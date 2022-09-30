@@ -2,13 +2,8 @@
 
 /datum/hud/new_player/New(mob/owner)
 	..()
-
-	if(!owner || !owner.client)
+	if (owner?.client?.interviewee)
 		return
-
-	if (owner.client.interviewee)
-		return
-
 	var/list/buttons = subtypesof(/atom/movable/screen/lobby)
 	for(var/button_type in buttons)
 		var/atom/movable/screen/lobby/lobbyscreen = new button_type()
@@ -46,9 +41,6 @@
 	if(owner != REF(usr))
 		return
 
-	if(!usr.client || usr.client.interviewee)
-		return
-
 	. = ..()
 
 	if(!enabled)
@@ -61,18 +53,12 @@
 	if(owner != REF(usr))
 		return
 
-	if(!usr.client || usr.client.interviewee)
-		return
-
 	. = ..()
 	highlighted = TRUE
 	update_appearance(UPDATE_ICON)
 
 /atom/movable/screen/lobby/button/MouseExited()
 	if(owner != REF(usr))
-		return
-
-	if(!usr.client || usr.client.interviewee)
 		return
 
 	. = ..()
@@ -247,7 +233,7 @@
 	SIGNAL_HANDLER
 	flick("[base_icon_state]_enabled", src)
 	set_button_status(TRUE)
-	UnregisterSignal(SSticker, COMSIG_TICKER_ENTER_PREGAME)
+	UnregisterSignal(SSticker, COMSIG_TICKER_ENTER_PREGAME, .proc/enable_observing)
 
 /atom/movable/screen/lobby/button/settings
 	icon = 'icons/hud/lobby/bottom_buttons.dmi'

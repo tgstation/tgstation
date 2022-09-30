@@ -23,12 +23,12 @@
 
 /datum/brain_trauma/severe/split_personality/proc/make_backseats()
 	stranger_backseat = new(owner, src)
-	var/datum/action/cooldown/spell/personality_commune/stranger_spell = new(src)
-	stranger_spell.Grant(stranger_backseat)
+	var/obj/effect/proc_holder/spell/targeted/personality_commune/stranger_spell = new(src)
+	stranger_backseat.AddSpell(stranger_spell)
 
 	owner_backseat = new(owner, src)
-	var/datum/action/cooldown/spell/personality_commune/owner_spell = new(src)
-	owner_spell.Grant(owner_backseat)
+	var/obj/effect/proc_holder/spell/targeted/personality_commune/owner_spell = new(src)
+	owner_backseat.AddSpell(owner_spell)
 
 
 /datum/brain_trauma/severe/split_personality/proc/get_ghost()
@@ -37,7 +37,7 @@
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
 		stranger_backseat.key = C.key
-		stranger_backseat.log_message("became [key_name(owner)]'s split personality.", LOG_GAME)
+		log_game("[key_name(stranger_backseat)] became [key_name(owner)]'s split personality.")
 		message_admins("[ADMIN_LOOKUPFLW(stranger_backseat)] became [ADMIN_LOOKUPFLW(owner)]'s split personality.")
 	else
 		qdel(src)
@@ -81,7 +81,7 @@
 	if(!current_backseat.client) //Make sure we never switch to a logged off mob.
 		return
 
-	current_backseat.log_message("assumed control of [key_name(owner)] due to [src]. (Original owner: [current_controller == OWNER ? owner.key : current_backseat.key])", LOG_GAME)
+	log_game("[key_name(current_backseat)] assumed control of [key_name(owner)] due to [src]. (Original owner: [current_controller == OWNER ? owner.key : current_backseat.key])")
 	to_chat(owner, span_userdanger("You feel your control being taken away... your other personality is in charge now!"))
 	to_chat(current_backseat, span_userdanger("You manage to take control of your body!"))
 
@@ -163,7 +163,7 @@
 	to_chat(src, span_notice("As a split personality, you cannot do anything but observe. However, you will eventually gain control of your body, switching places with the current personality."))
 	to_chat(src, span_warning("<b>Do not commit suicide or put the body in a deadly position. Behave like you care about it as much as the owner.</b>"))
 
-/mob/living/split_personality/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null)
+/mob/living/split_personality/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	to_chat(src, span_warning("You cannot speak, your other self is controlling your body!"))
 	return FALSE
 
@@ -182,7 +182,7 @@
 	var/codeword
 	var/objective
 
-/datum/brain_trauma/severe/split_personality/brainwashing/New(obj/item/organ/internal/brain/B, _permanent, _codeword, _objective)
+/datum/brain_trauma/severe/split_personality/brainwashing/New(obj/item/organ/brain/B, _permanent, _codeword, _objective)
 	..()
 	if(_codeword)
 		codeword = _codeword

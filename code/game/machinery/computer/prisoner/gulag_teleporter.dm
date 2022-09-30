@@ -4,7 +4,7 @@
 	desc = "Used to send criminals to the Labor Camp."
 	icon_screen = "explosive"
 	icon_keyboard = "security_key"
-	req_access = list(ACCESS_BRIG)
+	req_access = list(ACCESS_ARMORY)
 	circuit = /obj/item/circuitboard/computer/gulag_teleporter_console
 	light_color = COLOR_SOFT_RED
 
@@ -20,7 +20,6 @@
 	scan_machinery()
 
 /obj/machinery/computer/prisoner/gulag_teleporter_computer/ui_interact(mob/user, datum/tgui/ui)
-	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "GulagTeleporterConsole", name)
@@ -91,8 +90,6 @@
 				id_insert(usr)
 			return TRUE
 		if("set_goal")
-			if(!contained_id)
-				return
 			var/new_goal = text2num(params["value"])
 			if(!isnum(new_goal))
 				return
@@ -142,15 +139,14 @@
 		id_goal_not_set = TRUE
 		contained_id.goal = default_goal
 		say("[contained_id]'s ID card goal defaulting to [contained_id.goal] points.")
-	user.log_message("teleported [key_name(prisoner)] to the Labor Camp [COORD(beacon)] for [id_goal_not_set ? "default goal of ":""][contained_id.goal] points.", LOG_GAME)
-	prisoner.log_message("teleported to Labor Camp [COORD(beacon)] by [key_name(user)] for [id_goal_not_set ? "default goal of ":""][contained_id.goal] points.", LOG_GAME, log_globally = FALSE)
+	log_game("[key_name(user)] teleported [key_name(prisoner)] to the Labor Camp [COORD(beacon)] for [id_goal_not_set ? "default goal of ":""][contained_id.goal] points.")
 	teleporter.handle_prisoner(contained_id, temporary_record)
 	playsound(src, 'sound/weapons/emitter.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	prisoner.forceMove(get_turf(beacon))
 	prisoner.Paralyze(40) // small travel dizziness
 	to_chat(prisoner, span_warning("The teleportation makes you a little dizzy."))
 	new /obj/effect/particle_effect/sparks(get_turf(prisoner))
-	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	if(teleporter.locked)
 		teleporter.locked = FALSE
 	teleporter.toggle_open()

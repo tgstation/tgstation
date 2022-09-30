@@ -9,18 +9,14 @@
 
 	for (var/obj/machinery/camera/C in L)
 		var/list/tempnetwork = C.network&src.network
-		if (length(tempnetwork))
+		if (tempnetwork.len)
 			T[text("[][]", C.c_tag, (C.can_use() ? null : " (Deactivated)"))] = C
 
 	return T
 
 /mob/living/silicon/ai/proc/show_camera_list()
 	var/list/cameras = get_camera_list()
-	var/camera = tgui_input_list(src, "Choose which camera you want to view", "Cameras", cameras)
-	if(isnull(camera))
-		return
-	if(isnull(cameras[camera]))
-		return
+	var/camera = input(src, "Choose which camera you want to view", "Cameras") as null|anything in cameras
 	switchCamera(cameras[camera])
 
 /datum/trackable
@@ -73,7 +69,7 @@
 
 	var/datum/weakref/target = (isnull(track.humans[target_name]) ? track.others[target_name] : track.humans[target_name])
 
-	ai_actual_track(target?.resolve())
+	ai_actual_track(target.resolve())
 
 /mob/living/silicon/ai/proc/ai_actual_track(mob/living/target)
 	if(!istype(target))
@@ -149,7 +145,7 @@
 	var/obj/machinery/camera/a
 	var/obj/machinery/camera/b
 
-	for (var/i = length(L), i > 0, i--)
+	for (var/i = L.len, i > 0, i--)
 		for (var/j = 1 to i - 1)
 			a = L[j]
 			b = L[j + 1]

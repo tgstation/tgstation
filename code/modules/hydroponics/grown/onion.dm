@@ -14,7 +14,7 @@
 	growthstages = 3
 	weed_chance = 3
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
-	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1, /datum/reagent/consumable/tearjuice = 0.5)
+	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 	mutatelist = list(/obj/item/seeds/onion/red)
 
 /obj/item/food/grown/onion
@@ -36,6 +36,7 @@
 	plantname = "Red Onion Sprouts"
 	weed_chance = 1
 	product = /obj/item/food/grown/onion/red
+	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1, /datum/reagent/consumable/tearjuice = 0.05)
 	mutatelist = null
 
 /obj/item/food/grown/onion/red
@@ -49,12 +50,12 @@
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/onion_slice/red, 2, 15)
 
 /obj/item/food/grown/onion/UsedforProcessing(mob/living/user, obj/item/I, list/chosen_option)
-	var/datum/effect_system/fluid_spread/smoke/chem/cry_about_it = new //Since the onion is destroyed when it's sliced,
+	var/datum/effect_system/smoke_spread/chem/S = new //Since the onion is destroyed when it's sliced,
 	var/splat_location = get_turf(src) //we need to set up the smoke beforehand
-	cry_about_it.attach(splat_location)
-	cry_about_it.set_up(0, holder = src, location = splat_location, carry = reagents, silent = FALSE)
-	cry_about_it.start()
-	qdel(cry_about_it)
+	S.attach(splat_location)
+	S.set_up(reagents, 0, splat_location, 0)
+	S.start()
+	qdel(S)
 	return ..()
 
 /obj/item/food/onion_slice

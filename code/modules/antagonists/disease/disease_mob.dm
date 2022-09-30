@@ -11,16 +11,16 @@ the new instance inside the host to be updated to the template's stats.
 	name = "Sentient Disease"
 	real_name = "Sentient Disease"
 	desc = ""
-	icon = 'icons/mob/silicon/cameramob.dmi'
+	icon = 'icons/mob/cameramob.dmi'
 	icon_state = "marker"
 	mouse_opacity = MOUSE_OPACITY_ICON
 	move_on_shuttle = FALSE
-	see_in_dark = NIGHTVISION_RANGE
+	see_in_dark = 8
 	invisibility = INVISIBILITY_OBSERVER
 	see_invisible = SEE_INVISIBLE_LIVING
 	layer = BELOW_MOB_LAYER
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-	sight = SEE_SELF|SEE_THRU|SEE_BLACKNESS
+	sight = SEE_SELF|SEE_THRU
 	initial_language_holder = /datum/language_holder/universal
 
 	var/freemove = TRUE
@@ -66,7 +66,7 @@ the new instance inside the host to be updated to the template's stats.
 	SSdisease.archive_diseases[disease_template.GetDiseaseID()] = disease_template //important for stuff that uses disease IDs
 
 	var/datum/atom_hud/my_hud = GLOB.huds[DATA_HUD_SENTIENT_DISEASE]
-	my_hud.show_to(src)
+	my_hud.add_hud_to(src)
 
 	browser = new /datum/browser(src, "disease_menu", "Adaptation Menu", 1000, 770, src)
 
@@ -111,7 +111,7 @@ the new instance inside the host to be updated to the template's stats.
 		for(var/datum/disease_ability/ability in purchased_abilities)
 			. += span_notice("[ability.name]")
 
-/mob/camera/disease/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null)
+/mob/camera/disease/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	if(!message)
 		return
 	if(sanitize)
@@ -133,11 +133,6 @@ the new instance inside the host to be updated to the template's stats.
 		if(world.time > (last_move_tick + move_delay))
 			follow_next(Dir & NORTHWEST)
 			last_move_tick = world.time
-
-/mob/camera/disease/can_z_move(direction, turf/start, turf/destination, z_move_flags = NONE, mob/living/rider)
-	if(freemove)
-		return ..()
-	return FALSE
 
 /mob/camera/disease/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
 	. = ..()
@@ -163,7 +158,7 @@ the new instance inside the host to be updated to the template's stats.
 	if(!mind.has_antag_datum(/datum/antagonist/disease))
 		mind.add_antag_datum(/datum/antagonist/disease)
 	var/datum/atom_hud/medsensor = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
-	medsensor.show_to(src)
+	medsensor.add_hud_to(src)
 
 /mob/camera/disease/proc/pick_name()
 	var/static/list/taken_names
@@ -174,7 +169,7 @@ the new instance inside the host to be updated to the template's stats.
 			taken_names[initial(D.name)] = TRUE
 	var/set_name
 	while(!set_name)
-		var/input = sanitize_name(tgui_input_text(src, "Select a name for your disease", "Select Name", max_length = MAX_NAME_LEN))
+		var/input = sanitize_name(stripped_input(src, "Select a name for your disease", "Select Name", "", MAX_NAME_LEN))
 		if(!input)
 			set_name = "Sentient Virus"
 			break
@@ -214,7 +209,7 @@ the new instance inside the host to be updated to the template's stats.
 		possible_hosts.Cut(1, 2)
 
 	if(del_on_fail)
-		to_chat(src, span_warning("No hosts were available for your disease to infect."))
+		to_chat(src, "<span class=userdanger'>No hosts were available for your disease to infect.</span>")
 		qdel(src)
 	return FALSE
 
@@ -239,7 +234,7 @@ the new instance inside the host to be updated to the template's stats.
 			A.Buy(src, TRUE, FALSE)
 	if(freemove_end_timerid)
 		deltimer(freemove_end_timerid)
-	set_sight(SEE_SELF)
+	sight = SEE_SELF
 
 /mob/camera/disease/proc/add_infection(datum/disease/advance/sentient_disease/V)
 	disease_instances += V
@@ -255,7 +250,7 @@ the new instance inside the host to be updated to the template's stats.
 	MA.alpha = 200
 	holder.appearance = MA
 	var/datum/atom_hud/my_hud = GLOB.huds[DATA_HUD_SENTIENT_DISEASE]
-	my_hud.add_atom_to_hud(V.affected_mob)
+	my_hud.add_to_hud(V.affected_mob)
 
 	to_chat(src, span_notice("A new host, <b>[V.affected_mob.real_name]</b>, has been infected."))
 
@@ -271,7 +266,7 @@ the new instance inside the host to be updated to the template's stats.
 		to_chat(src, span_notice("One of your hosts, <b>[V.affected_mob.real_name]</b>, has been purged of your infection."))
 
 		var/datum/atom_hud/my_hud = GLOB.huds[DATA_HUD_SENTIENT_DISEASE]
-		my_hud.remove_atom_from_hud(V.affected_mob)
+		my_hud.remove_from_hud(V.affected_mob)
 
 		if(following_host == V.affected_mob)
 			follow_next()

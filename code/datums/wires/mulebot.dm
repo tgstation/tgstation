@@ -20,7 +20,7 @@
 	if(!..())
 		return FALSE
 	var/mob/living/simple_animal/bot/mulebot/mule = holder
-	if(mule.bot_cover_flags & BOT_COVER_OPEN)
+	if(mule.open)
 		return TRUE
 
 /datum/wires/mulebot/on_cut(wire, mend)

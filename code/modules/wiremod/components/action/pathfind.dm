@@ -6,7 +6,6 @@
 /obj/item/circuit_component/pathfind
 	display_name = "Pathfinder"
 	desc = "When triggered, the next step to the target's location as an entity. This can be used with the direction component and the drone shell to make it move on its own. The Id Card input port is for considering ID access when pathing, it does not give the shell actual access."
-	category = "Action"
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 	var/datum/port/input/input_X
@@ -57,13 +56,13 @@
 		return
 
 	var/atom/path_id = id_card.value
-	if(path_id && !isidcard(path_id))
+	if(path_id && !istype(path_id, /obj/item/card/id))
 		path_id = null
 		failed.set_output(COMPONENT_SIGNAL)
 		reason_failed.set_output("Object marked is not an ID! Using no ID instead.")
 
 	// Get both the current turf and the destination's turf
-	var/turf/current_turf = get_location()
+	var/turf/current_turf = get_turf(src)
 	var/turf/destination = locate(target_X, target_Y, current_turf?.z)
 
 	// We're already here! No need to do anything.

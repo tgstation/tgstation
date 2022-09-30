@@ -4,7 +4,7 @@
 	category = PROGRAM_CATEGORY_CREW
 	program_icon_state = "id"
 	extended_desc = "Program for programming employee ID cards to access parts of the station."
-	transfer_access = list(ACCESS_COMMAND)
+	transfer_access = ACCESS_HEADS
 	requires_ntnet = 0
 	size = 8
 	tgui_id = "NtosCard"
@@ -15,8 +15,6 @@
 	/// If TRUE, this program is authenticated with limited departmental access.
 	var/minor = FALSE
 	/// The name/assignment combo of the ID card used to authenticate.
-	var/authenticated_card
-	/// The name of the registered user, related to `authenticated_card`.
 	var/authenticated_user
 	/// The regions this program has access to based on the authenticated ID.
 	var/list/region_access = list()
@@ -48,8 +46,7 @@
 	// If the program isn't locked to a specific department or is_centcom and we have ACCESS_CHANGE_IDS in our auth card, we're not minor.
 	if((!target_dept || is_centcom) && (ACCESS_CHANGE_IDS in id_card.access))
 		minor = FALSE
-		authenticated_card = "[id_card.name]"
-		authenticated_user = id_card.registered_name ? id_card.registered_name : "Unknown"
+		authenticated_user = "[id_card.name]"
 		job_templates = is_centcom ? SSid_access.centcom_job_templates.Copy() : SSid_access.station_job_templates.Copy()
 		valid_access = is_centcom ? SSid_access.get_region_access_list(list(REGION_CENTCOM)) : SSid_access.get_region_access_list(list(REGION_ALL_STATION))
 		update_static_data(user)
@@ -59,7 +56,7 @@
 	var/list/managers = SSid_access.sub_department_managers_tgui
 	for(var/access_as_text in managers)
 		var/list/info = managers[access_as_text]
-		var/access = access_as_text
+		var/access = text2num(access_as_text)
 		if((access in id_card.access) && ((target_dept in info["regions"]) || !target_dept))
 			region_access |= info["regions"]
 			job_templates |= info["templates"]
@@ -67,7 +64,7 @@
 	if(length(region_access))
 		minor = TRUE
 		valid_access |= SSid_access.get_region_access_list(region_access)
-		authenticated_card = "[id_card.name] \[LIMITED ACCESS\]"
+		authenticated_user = "[id_card.name] \[LIMITED ACCESS\]"
 		update_static_data(user)
 		return TRUE
 
@@ -80,9 +77,11 @@
 
 	var/obj/item/computer_hardware/card_slot/card_slot
 	var/obj/item/computer_hardware/card_slot/card_slot2
+	var/obj/item/computer_hardware/printer/printer
 	if(computer)
 		card_slot = computer.all_components[MC_CARD]
 		card_slot2 = computer.all_components[MC_CARD2]
+		printer = computer.all_components[MC_PRINT]
 		if(!card_slot || !card_slot2)
 			return
 
@@ -101,18 +100,17 @@
 				return TRUE
 		// Log out.
 		if("PRG_logout")
-			authenticated_card = null
 			authenticated_user = null
 			playsound(computer, 'sound/machines/terminal_off.ogg', 50, FALSE)
 			return TRUE
 		// Print a report.
 		if("PRG_print")
-			if(!computer)
+			if(!computer || !printer)
 				return TRUE
-			if(!authenticated_card)
+			if(!authenticated_user)
 				return TRUE
 			var/contents = {"<h4>Access Report</h4>
-						<u>Prepared By:</u> [authenticated_user]<br>
+						<u>Prepared By:</u> [user_id_card?.registered_name ? user_id_card.registered_name : "Unknown"]<br>
 						<u>For:</u> [target_id_card.registered_name ? target_id_card.registered_name : "Unregistered"]<br>
 						<hr>
 						<u>Assignment:</u> [target_id_card.assignment]<br>
@@ -124,7 +122,7 @@
 				if(A in known_access_rights)
 					contents += "  [SSid_access.get_access_desc(A)]"
 
-			if(!computer.print_text(contents, "access report - [target_id_card.registered_name ? target_id_card.registered_name : "Unregistered"]"))
+			if(!printer.print_text(contents,"access report"))
 				to_chat(usr, span_notice("Hardware error: Printer was unable to print the file. It may be out of paper."))
 				return TRUE
 			else
@@ -139,23 +137,23 @@
 				return card_slot.try_eject(user)
 			else
 				var/obj/item/I = user.get_active_held_item()
-				if(isidcard(I))
+				if(istype(I, /obj/item/card/id))
 					return card_slot.try_insert(I, user)
 		// Eject the ID being modified.
 		if("PRG_ejectmodid")
 			if(!computer || !card_slot2)
 				return TRUE
 			if(target_id_card)
-				GLOB.data_core.manifest_modify(target_id_card.registered_name, target_id_card.assignment, target_id_card.get_trim_assignment())
+				GLOB.data_core.manifest_modify(target_id_card.registered_name, target_id_card.assignment)
 				return card_slot2.try_eject(user)
 			else
 				var/obj/item/I = user.get_active_held_item()
-				if(isidcard(I))
+				if(istype(I, /obj/item/card/id))
 					return card_slot2.try_insert(I, user)
 			return TRUE
 		// Used to fire someone. Wipes all access from their card and modifies their assignment.
 		if("PRG_terminate")
-			if(!computer || !authenticated_card)
+			if(!computer || !authenticated_user)
 				return TRUE
 			if(minor)
 				if(!(target_id_card.trim?.type in job_templates))
@@ -170,7 +168,7 @@
 			return TRUE
 		// Change ID card assigned name.
 		if("PRG_edit")
-			if(!computer || !authenticated_card || !target_id_card)
+			if(!computer || !authenticated_user || !target_id_card)
 				return TRUE
 
 			var/old_name = target_id_card.registered_name
@@ -181,7 +179,7 @@
 
 			if(!new_name)
 				target_id_card.registered_name = null
-				playsound(computer, SFX_TERMINAL_TYPE, 50, FALSE)
+				playsound(computer, "terminal_type", 50, FALSE)
 				target_id_card.update_label()
 				// We had a name before and now we have no name, so this will unassign the card and we update the icon.
 				if(old_name)
@@ -196,7 +194,7 @@
 				return TRUE
 
 			target_id_card.registered_name = new_name
-			playsound(computer, SFX_TERMINAL_TYPE, 50, FALSE)
+			playsound(computer, "terminal_type", 50, FALSE)
 			target_id_card.update_label()
 			// Card wasn't assigned before and now it is, so update the icon accordingly.
 			if(!old_name)
@@ -204,7 +202,7 @@
 			return TRUE
 		// Change age
 		if("PRG_age")
-			if(!computer || !authenticated_card || !target_id_card)
+			if(!computer || !authenticated_user || !target_id_card)
 				return TRUE
 
 			var/new_age = params["id_age"]
@@ -213,22 +211,22 @@
 				return TRUE
 
 			target_id_card.registered_age = new_age
-			playsound(computer, SFX_TERMINAL_TYPE, 50, FALSE)
+			playsound(computer, "terminal_type", 50, FALSE)
 			return TRUE
 		// Change assignment
 		if("PRG_assign")
-			if(!computer || !authenticated_card || !target_id_card)
+			if(!computer || !authenticated_user || !target_id_card)
 				return TRUE
 			var/new_asignment = sanitize(params["assignment"])
 			target_id_card.assignment = new_asignment
-			playsound(computer, SFX_TERMINAL_TYPE, 50, FALSE)
+			playsound(computer, "terminal_type", 50, FALSE)
 			target_id_card.update_label()
 			return TRUE
 		// Add/remove access.
 		if("PRG_access")
-			if(!computer || !authenticated_card || !target_id_card)
+			if(!computer || !authenticated_user || !target_id_card)
 				return TRUE
-			playsound(computer, SFX_TERMINAL_TYPE, 50, FALSE)
+			playsound(computer, "terminal_type", 50, FALSE)
 			var/access_type = params["access_target"]
 			var/try_wildcard = params["access_wildcard"]
 			if(!(access_type in valid_access))
@@ -251,10 +249,10 @@
 			return TRUE
 		// Apply template to ID card.
 		if("PRG_template")
-			if(!computer || !authenticated_card || !target_id_card)
+			if(!computer || !authenticated_user || !target_id_card)
 				return TRUE
 
-			playsound(computer, SFX_TERMINAL_TYPE, 50, FALSE)
+			playsound(computer, "terminal_type", 50, FALSE)
 			var/template_name = params["name"]
 
 			if(!template_name)
@@ -306,14 +304,18 @@
 
 	var/obj/item/computer_hardware/card_slot/card_slot
 	var/obj/item/computer_hardware/card_slot/card_slot2
+	var/obj/item/computer_hardware/printer/printer
 
 	if(computer)
 		card_slot = computer.all_components[MC_CARD]
 		card_slot2 = computer.all_components[MC_CARD2]
+		printer = computer.all_components[MC_PRINT]
 		data["have_auth_card"] = !!(card_slot)
 		data["have_id_slot"] = !!(card_slot2)
+		data["have_printer"] = !!(printer)
 	else
 		data["have_id_slot"] = FALSE
+		data["have_printer"] = FALSE
 
 	if(!card_slot2)
 		return data //We're just gonna error out on the js side at this point anyway
@@ -321,7 +323,7 @@
 	var/obj/item/card/id/auth_card = card_slot.stored_card
 	data["authIDName"] = auth_card ? auth_card.name : "-----"
 
-	data["authenticatedUser"] = authenticated_card
+	data["authenticatedUser"] = authenticated_user
 
 	var/obj/item/card/id/id_card = card_slot2.stored_card
 	data["has_id"] = !!id_card

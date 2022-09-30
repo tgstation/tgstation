@@ -9,12 +9,12 @@
 	force = 8 //Very heavy
 	attack_verb_continuous = list("bludgeons", "smashes", "beats")
 	attack_verb_simple = list("bludgeon", "smash", "beat")
-	icon = 'icons/obj/weapons/pneumaticCannon.dmi'
+	icon = 'icons/obj/pneumaticCannon.dmi'
 	icon_state = "pneumaticCannon"
 	inhand_icon_state = "bulldog"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 60, ACID = 50)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 60, ACID = 50)
 	var/maxWeightClass = 20 //The max weight of items that can fit into the cannon
 	var/loadedWeightClass = 0 //The weight of items currently in the cannon
 	var/obj/item/tank/internals/tank = null //The gas tank that is drawn from to fire things
@@ -70,24 +70,6 @@
 		out += span_notice("[icon2html(tank, user)] It has \a [tank] mounted onto it.")
 	. += out.Join("\n")
 
-/obj/item/pneumatic_cannon/screwdriver_act(mob/living/user, obj/item/tool)
-	if(tank)
-		tool.play_tool_sound(src)
-		updateTank(tank, 1, user)
-	return TRUE
-
-/obj/item/pneumatic_cannon/wrench_act(mob/living/user, obj/item/tool)
-	playsound(src, 'sound/items/ratchet.ogg', 50, TRUE)
-	switch(pressureSetting)
-		if(1)
-			pressureSetting = 2
-		if(2)
-			pressureSetting = 3
-		if(3)
-			pressureSetting = 1
-	to_chat(user, span_notice("You tweak \the [src]'s pressure output to [pressureSetting]."))
-	return TRUE
-
 /obj/item/pneumatic_cannon/attackby(obj/item/W, mob/living/user, params)
 	if(user.combat_mode)
 		return ..()
@@ -110,6 +92,9 @@
 			if(3)
 				pressureSetting = 1
 		to_chat(user, span_notice("You tweak \the [src]'s pressure output to [pressureSetting]."))
+	else if(W.tool_behaviour == TOOL_SCREWDRIVER)
+		if(tank)
+			updateTank(tank, 1, user)
 	else if(loadedWeightClass >= maxWeightClass)
 		to_chat(user, span_warning("\The [src] can't hold any more items!"))
 	else if(isitem(W))

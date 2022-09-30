@@ -47,7 +47,7 @@
 	dir = 8;
 	dwidth = 2;
 	height = 12;
-	shuttle_id = "ferry";
+	id = "ferry";
 	name = "ferry shuttle";
 	port_direction = 2;
 	width = 5

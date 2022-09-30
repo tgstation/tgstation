@@ -22,7 +22,7 @@
 
 /obj/effect/projectile/tracer
 	name = "beam"
-	icon = 'icons/obj/weapons/guns/projectiles_tracer.dmi'
+	icon = 'icons/obj/guns/projectiles_tracer.dmi'
 
 /obj/effect/projectile/tracer/laser
 	name = "laser"
@@ -73,6 +73,3 @@
 /obj/effect/projectile/tracer/laser/emitter
 	name = "emitter beam"
 	icon_state = "emitter"
-
-/obj/effect/projectile/tracer/sniper
-	icon_state = "sniper"

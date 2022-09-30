@@ -43,6 +43,10 @@ Buildable meters
 /obj/item/pipe/quaternary
 	RPD_type = PIPE_ONEDIR
 
+/obj/item/pipe/ComponentInitialize()
+	//Flipping handled manually due to custom handling for trinary pipes
+	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE)
+
 /obj/item/pipe/Initialize(mapload, _pipe_type, _dir, obj/machinery/atmospherics/make_from, device_color, device_init_dir = SOUTH)
 	if(make_from)
 		make_from_existing(make_from)
@@ -55,9 +59,6 @@ Buildable meters
 	update()
 	pixel_x += rand(-5, 5)
 	pixel_y += rand(-5, 5)
-	
-	//Flipping handled manually due to custom handling for trinary pipes
-	AddComponent(/datum/component/simple_rotation, ROTATION_NO_FLIPPING)
 	return ..()
 
 /obj/item/pipe/proc/make_from_existing(obj/machinery/atmospherics/make_from)
@@ -98,7 +99,7 @@ Buildable meters
 
 /obj/item/pipe/verb/flip()
 	set category = "Object"
-	set name = "Invert Pipe"
+	set name = "Flip Pipe"
 	set src in view(1)
 
 	if ( usr.incapacitated() )
@@ -286,7 +287,7 @@ Buildable meters
 	..()
 	T.flipped = flipped
 
-/obj/item/pipe/suicide_act(mob/user)
+/obj/item/pipe/directional/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] shoves [src] in [user.p_their()] mouth and turns it on! It looks like [user.p_theyre()] trying to commit suicide!"))
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
@@ -297,35 +298,6 @@ Buildable meters
 			sleep(5)
 		C.blood_volume = 0
 	return(OXYLOSS|BRUTELOSS)
-
-/obj/item/pipe/examine(mob/user)
-	. = ..()
-	. += span_notice("The pipe layer is set to [piping_layer].")
-	. += span_notice("You can change the pipe layer by Right-Clicking the device.")
-
-/obj/item/pipe/attack_hand_secondary(mob/user, list/modifiers)
-	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return
-	var/layer_to_set = (piping_layer >= PIPING_LAYER_MAX) ? PIPING_LAYER_MIN : (piping_layer + 1)
-	set_piping_layer(layer_to_set)
-	balloon_alert(user, "pipe layer set to [piping_layer]")
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-/obj/item/pipe/AltClick(mob/user)
-	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
-
-/obj/item/pipe/trinary/flippable/examine(mob/user)
-	. = ..()
-	. += span_notice("You can flip the device by Right-Clicking it.")
-
-/obj/item/pipe/trinary/flippable/attack_hand_secondary(mob/user, list/modifiers)
-	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return
-	do_a_flip()
-	balloon_alert(user, "pipe was flipped")
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/pipe_meter
 	name = "meter"

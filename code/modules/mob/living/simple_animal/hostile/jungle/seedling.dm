@@ -9,7 +9,7 @@
 	name = "seedling"
 	desc = "This oversized, predatory flower conceals what can only be described as an organic energy cannon, and it will not die until its hidden vital organs are sliced out. \
 		The concentrated streams of energy it sometimes produces require its full attention, attacking it during this time will prevent it from finishing its attack."
-	icon = 'icons/mob/simple/jungle/seedling.dmi'
+	icon = 'icons/mob/jungle/seedling.dmi'
 	icon_state = "seedling"
 	icon_living = "seedling"
 	icon_dead = "seedling_dead"
@@ -44,7 +44,7 @@
 	damage = 10
 	damage_type = BURN
 	light_range = 2
-	armor_flag = ENERGY
+	flag = ENERGY
 	light_color = LIGHT_COLOR_YELLOW
 	hitsound = 'sound/weapons/sear.ogg'
 	hitsound_wall = 'sound/weapons/effects/searwall.ogg'
@@ -100,7 +100,7 @@
 	seedling_screen_object.transform = final
 
 /atom/movable/screen/seedling
-	icon = 'icons/mob/simple/jungle/arachnid.dmi'
+	icon = 'icons/mob/jungle/arachnid.dmi'
 	icon_state = "seedling_beam_indicator"
 	screen_loc = "CENTER:-16,CENTER:-16"
 
@@ -122,7 +122,7 @@
 /mob/living/simple_animal/hostile/jungle/seedling/proc/WarmupAttack()
 	if(combatant_state == SEEDLING_STATE_NEUTRAL)
 		combatant_state = SEEDLING_STATE_WARMUP
-		SSmove_manager.stop_looping(src)
+		walk(src,0)
 		update_icons()
 		var/target_dist = get_dist(src,target)
 		var/living_target_check = isliving(target)
@@ -162,7 +162,7 @@
 			K.transform = final
 			living_target.adjustFireLoss(30)
 			living_target.adjust_fire_stacks(0.2)//Just here for the showmanship
-			living_target.ignite_mob()
+			living_target.IgniteMob()
 			playsound(living_target,'sound/weapons/sear.ogg', 50, TRUE)
 			addtimer(CALLBACK(src, .proc/AttackRecovery), 5)
 			return

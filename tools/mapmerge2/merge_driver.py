@@ -75,13 +75,9 @@ def three_way_merge(base, left, right):
         print(f" C: Both sides touch the tile at {coord}")
 
         if merged_movables is None:
-            # Note that if you do not have an object that matches this path in your DME, the invalid path may be discarded when the map is loaded into a map editor.
-            # To rectify this, either add an object with this same path, or create a new object/denote an existing object in the obj_path define.
-            obj_path = "/obj/merge_conflict_marker"
-            obj_name = "---Merge Conflict Marker---"
-            obj_desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-            merged_movables = left_movables + [f'{obj_path}{{name = "{obj_name}";\n\tdesc = "{obj_desc}"}}'] + right_movables
-            print(f"    Left and right movable groups are split by an `{obj_path}` named \"{obj_name}\"")
+            obj_name = "---Merge conflict marker---"
+            merged_movables = left_movables + [f'/obj{{name = "{obj_name}"}}'] + right_movables
+            print(f"    Left and right movable groups are split by an `/obj` named \"{obj_name}\"")
         if merged_turfs is None:
             merged_turfs = left_turfs
             print(f"    Saving turf: {', '.join(left_turfs)}")

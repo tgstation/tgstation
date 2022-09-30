@@ -62,7 +62,7 @@
 	desc = "A wonderful yet fake friend."
 	see_in_dark = 0
 	lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
-	sight = SEE_BLACKNESS
+	sight = NONE
 	mouse_opacity = MOUSE_OPACITY_ICON
 	see_invisible = SEE_INVISIBLE_LIVING
 	invisibility = INVISIBILITY_MAXIMUM
@@ -83,9 +83,9 @@
 	Show()
 
 /mob/camera/imaginary_friend/proc/greet()
-	to_chat(src, span_notice("<b>You are the imaginary friend of [owner]!</b>"))
-	to_chat(src, span_notice("You are absolutely loyal to your friend, no matter what."))
-	to_chat(src, span_notice("You cannot directly influence the world around you, but you can see what [owner] cannot."))
+		to_chat(src, span_notice("<b>You are the imaginary friend of [owner]!</b>"))
+		to_chat(src, span_notice("You are absolutely loyal to your friend, no matter what."))
+		to_chat(src, span_notice("You cannot directly influence the world around you, but you can see what [owner] cannot."))
 
 /**
  * Arguments:
@@ -138,14 +138,14 @@
 			highest_pref = this_pref
 
 	if(!appearance_job)
-		appearance_job = SSjob.GetJob(JOB_ASSISTANT)
+		appearance_job = SSjob.GetJob("Assistant")
 
 	if(istype(appearance_job, /datum/job/ai))
-		human_image = icon('icons/mob/silicon/ai.dmi', icon_state = resolve_ai_icon(appearance_from_prefs.read_preference(/datum/preference/choiced/ai_core_display)), dir = SOUTH)
+		human_image = icon('icons/mob/ai.dmi', icon_state = resolve_ai_icon(appearance_from_prefs.read_preference(/datum/preference/choiced/ai_core_display)), dir = SOUTH)
 		return
 
 	if(istype(appearance_job, /datum/job/cyborg))
-		human_image = icon('icons/mob/silicon/robots.dmi', icon_state = "robot")
+		human_image = icon('icons/mob/robots.dmi', icon_state = "robot")
 		return
 
 	human_image = get_flat_human_icon(null, appearance_job, appearance_from_prefs)
@@ -180,7 +180,7 @@
 		client.images.Remove(human_image)
 	return ..()
 
-/mob/camera/imaginary_friend/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null)
+/mob/camera/imaginary_friend/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	if (!message)
 		return
 
@@ -214,19 +214,13 @@
 
 	//speech bubble
 	if(owner.client)
-		var/mutable_appearance/MA = mutable_appearance('icons/mob/effects/talk.dmi', src, "default[say_test(message)]", FLY_LAYER)
-		SET_PLANE_EXPLICIT(MA, GAME_PLANE, src)
+		var/mutable_appearance/MA = mutable_appearance('icons/mob/talk.dmi', src, "default[say_test(message)]", FLY_LAYER)
 		MA.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 		INVOKE_ASYNC(GLOBAL_PROC, /proc/flick_overlay, MA, list(owner.client), 30)
-		LAZYADD(update_on_z, MA)
-		addtimer(CALLBACK(src, .proc/clear_saypopup, MA), 3.5 SECONDS)
 
 	for(var/mob/M in GLOB.dead_mob_list)
 		var/link = FOLLOW_LINK(M, owner)
 		to_chat(M, "[link] [dead_rendered]")
-
-/mob/camera/imaginary_friend/proc/clear_saypopup(image/say_popup)
-	LAZYREMOVE(update_on_z, say_popup)
 
 /mob/camera/imaginary_friend/Move(NewLoc, Dir = 0)
 	if(world.time < move_delay)
@@ -280,7 +274,7 @@
 		name = "Hide"
 		desc = "Hide yourself from your owner's sight."
 		button_icon_state = "hide"
-	UpdateButtons()
+	UpdateButtonIcon()
 
 /datum/action/innate/imaginary_hide/Activate()
 	var/mob/camera/imaginary_friend/I = owner
@@ -324,4 +318,4 @@
 /mob/camera/imaginary_friend/trapped/setup_friend()
 	real_name = "[owner.real_name]?"
 	name = real_name
-	human_image = icon('icons/mob/simple/lavaland/lavaland_monsters.dmi', icon_state = "curseblob")
+	human_image = icon('icons/mob/lavaland/lavaland_monsters.dmi', icon_state = "curseblob")

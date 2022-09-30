@@ -2,7 +2,7 @@
 /// !!!!!!!!!!HEY LISTEN!!!!!!!!!!!!!!!!!!!!!!!!
 /// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-// If you modify this file you ALSO need to modify tgui/packages/tgui-panel/styles/goon/chat-light.scss and chat-dark.scss
+// If you modify this file you ALSO need to modify code/modules/goonchat/browserAssets/browserOutput.css and browserOutput_white.css
 // BUT you have to use PX font sizes with are on a x8 scale of these font sizes
 // Sample font-size: DM: 8 CSS: 64px
 
@@ -90,9 +90,7 @@ h1.alert, h2.alert		{color: #000000;}
 .unconscious			{color: #0000ff;	font-weight: bold;}
 .suicide				{color: #ff5050;	font-style: italic;}
 .green					{color: #03ff39;}
-.grey					{color: #838383;}
 .nicegreen				{color: #14a833;}
-.boldnicegreen			{color: #14a833;	font-weight: bold;}
 .cult					{color: #973e3b;}
 .cultlarge				{color: #973e3b;	font-weight: bold;	font-size: 3;}
 .narsie					{color: #973e3b;	font-weight: bold;	font-size: 15;}

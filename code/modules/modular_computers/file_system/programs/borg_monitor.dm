@@ -1,12 +1,12 @@
 /datum/computer_file/program/borg_monitor
 	filename = "siliconnect"
 	filedesc = "SiliConnect"
-	category = PROGRAM_CATEGORY_SCI
+	category = PROGRAM_CATEGORY_ROBO
 	ui_header = "borg_mon.gif"
 	program_icon_state = "generic"
 	extended_desc = "This program allows for remote monitoring of station cyborgs."
 	requires_ntnet = TRUE
-	transfer_access = list(ACCESS_ROBOTICS)
+	transfer_access = ACCESS_ROBOTICS
 	size = 5
 	tgui_id = "NtosCyborgRemoteMonitor"
 	program_icon = "project-diagram"
@@ -47,7 +47,7 @@
 	borgo.logevent("File request by [username]: /var/logs/syslog")
 	return TRUE
 
-/datum/computer_file/program/borg_monitor/process_tick(delta_time)
+/datum/computer_file/program/borg_monitor/process_tick()
 	if(!DL_source)
 		DL_progress = -1
 		return
@@ -130,7 +130,7 @@
 				return
 			if(R.stat == DEAD) //Dead borgs will listen to you no longer
 				to_chat(usr, span_warning("Error -- Could not open a connection to unit:[R]"))
-			var/message = tgui_input_text(usr, "Message to be sent to remote cyborg", "Send Message")
+			var/message = stripped_input(usr, message = "Enter message to be sent to remote cyborg.", title = "Send Message")
 			if(!message)
 				return
 			to_chat(R, "<br><br>[span_notice("Message from [ID] -- \"[message]\"")]<br>")
@@ -144,13 +144,13 @@
 
 ///This proc is used to determin if a borg should be shown in the list (based on the borg's scrambledcodes var). Syndicate version overrides this to show only syndicate borgs.
 /datum/computer_file/program/borg_monitor/proc/evaluate_borg(mob/living/silicon/robot/R)
-	if(!is_valid_z_level(get_turf(computer), get_turf(R)))
+	if((get_turf(computer)).z != (get_turf(R)).z)
 		return FALSE
 	if(R.scrambledcodes)
 		return FALSE
 	return TRUE
 
-///Gets the ID's name, if one is inserted into the device. This is a separate proc solely to be overridden by the syndicate version of the app.
+///Gets the ID's name, if one is inserted into the device. This is a seperate proc solely to be overridden by the syndicate version of the app.
 /datum/computer_file/program/borg_monitor/proc/checkID()
 	var/obj/item/card/id/ID = computer.GetID()
 	if(!ID)
@@ -162,21 +162,21 @@
 /datum/computer_file/program/borg_monitor/syndicate
 	filename = "roboverlord"
 	filedesc = "Roboverlord"
-	category = PROGRAM_CATEGORY_SCI
+	category = PROGRAM_CATEGORY_ROBO
 	ui_header = "borg_mon.gif"
 	program_icon_state = "generic"
 	extended_desc = "This program allows for remote monitoring of mission-assigned cyborgs."
 	requires_ntnet = FALSE
 	available_on_ntnet = FALSE
 	available_on_syndinet = TRUE
-	transfer_access = list()
+	transfer_access = null
 	tgui_id = "NtosCyborgRemoteMonitorSyndicate"
 
 /datum/computer_file/program/borg_monitor/syndicate/run_emag()
 	return FALSE
 
 /datum/computer_file/program/borg_monitor/syndicate/evaluate_borg(mob/living/silicon/robot/R)
-	if(!is_valid_z_level(get_turf(computer), get_turf(R)))
+	if((get_turf(computer)).z != (get_turf(R)).z)
 		return FALSE
 	if(!R.scrambledcodes)
 		return FALSE

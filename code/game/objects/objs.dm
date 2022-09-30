@@ -3,6 +3,7 @@
 	animate_movement = SLIDE_STEPS
 	speech_span = SPAN_ROBOT
 	var/obj_flags = CAN_BE_HIT
+	var/set_obj_flags // ONLY FOR MAPPING: Sets flags from a string list, handled in Initialize. Usage: set_obj_flags = "EMAGGED;!CAN_BE_HIT" to set EMAGGED and clear CAN_BE_HIT.
 
 	var/damtype = BRUTE
 	var/force = 0
@@ -12,8 +13,16 @@
 	/// If this attacks a human with no wound armor on the affected body part, add this to the wound mod. Some attacks may be significantly worse at wounding if there's even a slight layer of armor to absorb some of it vs bare flesh
 	var/bare_wound_bonus = 0
 
-	/// A multiplier to an objecet's force when used against a stucture, vechicle, machine, or robot.
-	var/demolition_mod = 1
+	/*
+	var/datum/armor/armor
+	VAR_PRIVATE/atom_integrity //defaults to max_integrity
+	var/max_integrity = 500
+	var/integrity_failure = 0 //0 if we have no special broken behavior, otherwise is a percentage of at what point the obj breaks. 0.5 being 50%
+	///Damage under this value will be completely ignored
+	var/damage_deflection = 0
+
+	var/resistance_flags = NONE // INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ON_FIRE | UNACIDABLE | ACID_PROOF
+	*/
 
 	var/current_skin //Has the item been reskinned?
 	var/list/unique_reskin //List of options to reskin.
@@ -30,6 +39,8 @@
 
 	var/drag_slowdown // Amont of multiplicative slowdown applied if pulled. >1 makes you slower, <1 makes you faster.
 
+	vis_flags = VIS_INHERIT_PLANE //when this be added to vis_contents of something it inherit something.plane, important for visualisation of obj in openspace.
+
 	/// Map tag for something.  Tired of it being used on snowflake items.  Moved here for some semblance of a standard.
 	/// Next pr after the network fix will have me refactor door interactions, so help me god.
 	var/id_tag = null
@@ -45,43 +56,58 @@
 			return FALSE
 	return ..()
 
-// Call this if you want to add your object to a network
-/obj/proc/init_network_id(network_id)
-	var/area/A = get_area(src)
-	if(A)
-		if(!A.network_root_id)
-			log_telecomms("Area '[A.name]([REF(A)])' has no network network_root_id, force assigning in object [src]([REF(src)])")
-			SSnetworks.lookup_area_root_id(A)
-		network_id = NETWORK_NAME_COMBINE(A.network_root_id, network_id) // I regret nothing!!
-	else
-		log_telecomms("Created [src]([REF(src)] in nullspace, assuming network to be in station")
-		network_id = NETWORK_NAME_COMBINE(STATION_NETWORK_ROOT, network_id) // I regret nothing!!
-	AddComponent(/datum/component/ntnet_interface, network_id, id_tag)
+/obj/Initialize(mapload)
+	//if (islist(armor))
+	//	armor = getArmor(arglist(armor))
+	//else if (!armor)
+	//	armor = getArmor()
+	//else if (!istype(armor, /datum/armor))
+	//	stack_trace("Invalid type [armor.type] found in .armor during /obj Initialize()")
+	//atom_integrity = max_integrity
 
-/obj/Destroy(force)
+	. = ..() //Do this after, else mat datums is mad.
+
+	if (set_obj_flags)
+		var/flagslist = splittext(set_obj_flags,";")
+		var/list/string_to_objflag = GLOB.bitfields["obj_flags"]
+		for (var/flag in flagslist)
+			if(flag[1] == "!")
+				flag = copytext(flag, length(flag[1]) + 1) // Get all but the initial !
+				obj_flags &= ~string_to_objflag[flag]
+			else
+				obj_flags |= string_to_objflag[flag]
+
+	if((obj_flags & ON_BLUEPRINTS) && isturf(loc))
+		var/turf/T = loc
+		T.add_blueprints_preround(src)
+
+	if(network_id)
+		var/area/A = get_area(src)
+		if(A)
+			if(!A.network_root_id)
+				log_telecomms("Area '[A.name]([REF(A)])' has no network network_root_id, force assigning in object [src]([REF(src)])")
+				SSnetworks.lookup_area_root_id(A)
+			network_id = NETWORK_NAME_COMBINE(A.network_root_id, network_id) // I regret nothing!!
+		else
+			log_telecomms("Created [src]([REF(src)] in nullspace, assuming network to be in station")
+			network_id = NETWORK_NAME_COMBINE(STATION_NETWORK_ROOT, network_id) // I regret nothing!!
+		AddComponent(/datum/component/ntnet_interface, network_id, id_tag)
+		/// Needs to run before as ComponentInitialize runs after this statement...why do we have ComponentInitialize again?
+
+
+/obj/Destroy(force=FALSE)
 	if(!ismachinery(src))
 		STOP_PROCESSING(SSobj, src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
 	SStgui.close_uis(src)
 	. = ..()
 
-/obj/attacked_by(obj/item/attacking_item, mob/living/user)
-	if(!attacking_item.force)
-		return
 
-	var/total_force = (attacking_item.force * attacking_item.demolition_mod)
+/obj/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
+	. = ..()
+	if(obj_flags & FROZEN)
+		visible_message(span_danger("[src] shatters into a million pieces!"))
+		qdel(src)
 
-	var/damage = take_damage(total_force, attacking_item.damtype, MELEE, 1)
-
-	var/damage_verb = "hit"
-
-	if(attacking_item.demolition_mod > 1 && damage)
-		damage_verb = "pulverise"
-	if(attacking_item.demolition_mod < 1)
-		damage_verb = "ineffectively pierce"
-
-	user.visible_message(span_danger("[user] [damage_verb][plural_s(damage_verb)] [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]"), \
-		span_danger("You [damage_verb] [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]"), null, COMBAT_MESSAGE_RANGE)
-	log_combat(user, src, "attacked", attacking_item)
 
 /obj/assume_air(datum/gas_mixture/giver)
 	if(loc)
@@ -134,7 +160,7 @@
 			var/mob/living/carbon/human/H = usr
 			if(!(usr in nearby))
 				if(usr.client && usr.machine==src)
-					if(H.dna.check_mutation(/datum/mutation/human/telekinesis))
+					if(H.dna.check_mutation(TK))
 						is_in_use = TRUE
 						ui_interact(usr)
 		if (is_in_use)
@@ -199,8 +225,24 @@
 	if(!anchored || current_size >= STAGE_FIVE)
 		step_towards(src,S)
 
-/obj/get_dumping_location()
+/obj/get_dumping_location(datum/component/storage/source,mob/user)
 	return get_turf(src)
+
+/**
+ * This proc is used for telling whether something can pass by this object in a given direction, for use by the pathfinding system.
+ *
+ * Trying to generate one long path across the station will call this proc on every single object on every single tile that we're seeing if we can move through, likely
+ * multiple times per tile since we're likely checking if we can access said tile from multiple directions, so keep these as lightweight as possible.
+ *
+ * Arguments:
+ * * ID- An ID card representing what access we have (and thus if we can open things like airlocks or windows to pass through them). The ID card's physical location does not matter, just the reference
+ * * to_dir- What direction we're trying to move in, relevant for things like directional windows that only block movement in certain directions
+ * * caller- The movable we're checking pass flags for, if we're making any such checks
+ **/
+/obj/proc/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller)
+	if(istype(caller) && (caller.pass_flags & pass_flags_self))
+		return TRUE
+	. = !density
 
 /obj/proc/check_uplink_validity()
 	return 1
@@ -236,10 +278,11 @@
 			                  energy = text2num(result["values"][ENERGY]),\
 			                  bomb = text2num(result["values"][BOMB]),\
 			                  bio = text2num(result["values"][BIO]),\
+			                  rad = text2num(result["values"][RAD]),\
 			                  fire = text2num(result["values"][FIRE]),\
 			                  acid = text2num(result["values"][ACID]))
-				log_admin("[key_name(usr)] modified the armor on [src] ([type]) to melee: [armor.melee], bullet: [armor.bullet], laser: [armor.laser], energy: [armor.energy], bomb: [armor.bomb], bio: [armor.bio], fire: [armor.fire], acid: [armor.acid]")
-				message_admins(span_notice("[key_name_admin(usr)] modified the armor on [src] ([type]) to melee: [armor.melee], bullet: [armor.bullet], laser: [armor.laser], energy: [armor.energy], bomb: [armor.bomb], bio: [armor.bio], fire: [armor.fire], acid: [armor.acid]"))
+				log_admin("[key_name(usr)] modified the armor on [src] ([type]) to melee: [armor.melee], bullet: [armor.bullet], laser: [armor.laser], energy: [armor.energy], bomb: [armor.bomb], bio: [armor.bio], rad: [armor.rad], fire: [armor.fire], acid: [armor.acid]")
+				message_admins(span_notice("[key_name_admin(usr)] modified the armor on [src] ([type]) to melee: [armor.melee], bullet: [armor.bullet], laser: [armor.laser], energy: [armor.energy], bomb: [armor.bomb], bio: [armor.bio], rad: [armor.rad], fire: [armor.fire], acid: [armor.acid]"))
 	if(href_list[VV_HK_MASS_DEL_TYPE])
 		if(check_rights(R_DEBUG|R_SERVER))
 			var/action_type = tgui_alert(usr, "Strict type ([type]) or type and all subtypes?",,list("Strict type","Type and subtypes","Cancel"))
@@ -333,8 +376,8 @@
 		return FALSE
 	return TRUE
 
-/obj/analyzer_act(mob/living/user, obj/item/analyzer/tool)
-	if(atmos_scan(user=user, target=src, silent=FALSE))
+/obj/analyzer_act(mob/living/user, obj/item/I)
+	if(atmosanalyzer_scan(user, src))
 		return TRUE
 	return ..()
 
@@ -348,7 +391,7 @@
 /obj/handle_ricochet(obj/projectile/P)
 	. = ..()
 	if(. && receive_ricochet_damage_coeff)
-		take_damage(P.damage * receive_ricochet_damage_coeff, P.damage_type, P.armor_flag, 0, turn(P.dir, 180), P.armour_penetration) // pass along receive_ricochet_damage_coeff damage to the structure for the ricochet
+		take_damage(P.damage * receive_ricochet_damage_coeff, P.damage_type, P.flag, 0, turn(P.dir, 180), P.armour_penetration) // pass along receive_ricochet_damage_coeff damage to the structure for the ricochet
 
 /obj/update_overlays()
 	. = ..()
@@ -365,17 +408,3 @@
 	for(var/reagent in reagents)
 		var/datum/reagent/R = reagent
 		. |= R.expose_obj(src, reagents[R])
-
-///attempt to freeze this obj if possible. returns TRUE if it succeeded, FALSE otherwise.
-/obj/proc/freeze()
-	if(HAS_TRAIT(src, TRAIT_FROZEN))
-		return FALSE
-	if(obj_flags & FREEZE_PROOF)
-		return FALSE
-
-	AddElement(/datum/element/frozen)
-	return TRUE
-
-///unfreezes this obj if its frozen
-/obj/proc/unfreeze()
-	SEND_SIGNAL(src, COMSIG_OBJ_UNFREEZE)

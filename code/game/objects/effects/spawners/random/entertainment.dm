@@ -42,7 +42,7 @@
 		/obj/effect/spawner/random/entertainment/money = 3,
 		/obj/item/dice/d6 = 3,
 		/obj/item/storage/box/syndie_kit/throwing_weapons = 1,
-		/obj/item/reagent_containers/cup/glass/bottle/vodka/badminka = 1,
+		/obj/item/reagent_containers/food/drinks/bottle/vodka/badminka = 1,
 	)
 
 /obj/effect/spawner/random/entertainment/coin
@@ -109,7 +109,7 @@
 	name = "recreational drugs spawner"
 	icon_state = "pill"
 	loot = list(
-		/obj/item/reagent_containers/cup/glass/bottle/hooch = 50,
+		/obj/item/reagent_containers/food/drinks/bottle/hooch = 50,
 		/obj/item/clothing/mask/cigarette/rollie/cannabis = 15,
 		/obj/item/reagent_containers/syringe = 15,
 		/obj/item/cigbutt/roach = 15,
@@ -208,10 +208,12 @@
 	name = "deck spawner"
 	icon_state = "deck"
 	loot = list(
-		/obj/item/toy/cards/deck = 5,
-		/obj/item/toy/cards/deck/kotahi = 2,
-		/obj/item/toy/cards/deck/wizoff = 2,
-		/obj/item/toy/cards/deck/tarot = 1,
+		/obj/item/toy/cards/deck = 10,
+		/obj/item/toy/cards/deck/kotahi = 3,
+		/obj/item/toy/cards/deck/wizoff = 3,
+		/obj/item/toy/cards/deck/tarot = 2,
+		/obj/item/toy/cards/deck/cas = 1,
+		/obj/item/toy/cards/deck/cas/black = 1,
 	)
 
 /obj/effect/spawner/random/entertainment/toy_figure

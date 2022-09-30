@@ -1,0 +1,7 @@
+author: "ATHATH"
+delete-after: True
+changes: 
+  - bugfix: "Butter bears can now attack objects, as they were intended to."
+  - bugfix: "Fugu glanded butter bears can now break down walls, matching the behavior of other fugu glanded mobs."
+  - bugfix: "Butter bears can now deal damage with their attacks if their melee damage variables (which are zero by default) become nonzero."
+  - bugfix: "Butter bear attacks are now considered to be blunt instead of sharp for the purposes of wounds."

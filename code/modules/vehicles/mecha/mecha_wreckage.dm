@@ -34,8 +34,8 @@
 	AI.apply_damage(150, BURN) //Give the AI a bit of damage from the "shock" of being suddenly shut down
 	INVOKE_ASYNC(AI, /mob/living/silicon.proc/death) //The damage is not enough to kill the AI, but to be 'corrupted files' in need of repair.
 	AI.forceMove(src) //Put the dead AI inside the wreckage for recovery
-	add_overlay(mutable_appearance('icons/obj/weapons/guns/projectiles.dmi', "green_laser")) //Overlay for the recovery beacon
-	AI.controlled_equipment = null
+	add_overlay(mutable_appearance('icons/obj/guns/projectiles.dmi', "green_laser")) //Overlay for the recovery beacon
+	AI.controlled_mech = null
 	AI.remote_control = null
 
 /obj/structure/mecha_wreckage/Destroy()
@@ -64,7 +64,7 @@
 	var/type = pick(welder_salvage)
 	var/N = new type(get_turf(user))
 	user.visible_message(span_notice("[user] cuts [N] from [src]."), span_notice("You cut [N] from [src]."))
-	if(!isstack(N))
+	if(!istype(N, /obj/item/stack))
 		welder_salvage -= type
 	salvage_num--
 
@@ -89,7 +89,7 @@
 		return
 	to_chat(user, span_notice("You don't see anything that can be cut with [I]!"))
 
-/obj/structure/mecha_wreckage/transfer_ai(interaction, mob/user, mob/living/silicon/ai/ai_mob, obj/item/aicard/card)
+/obj/structure/mecha_wreckage/transfer_ai(interaction, mob/user, null, obj/item/aicard/card)
 	if(!..())
 		return
 

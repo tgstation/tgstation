@@ -1,12 +1,12 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/open/misc/ice/icemoon,
+/turf/open/floor/plating/ice/icemoon,
 /area/icemoon/underground/explored)
 "b" = (
 /obj/structure/ladder{
 	travel_time = 40
 	},
-/turf/open/misc/ice/icemoon,
+/turf/open/floor/plating/ice/icemoon,
 /area/icemoon/underground/explored)
 "d" = (
 /turf/template_noop,
@@ -14,15 +14,15 @@
 "g" = (
 /obj/item/clothing/suit/hooded/explorer,
 /obj/effect/decal/cleanable/blood/gibs/up,
-/turf/open/misc/ice/icemoon,
+/turf/open/floor/plating/ice/icemoon,
 /area/icemoon/underground/explored)
 "h" = (
 /obj/item/clothing/shoes/winterboots/ice_boots,
-/turf/open/misc/ice/icemoon,
+/turf/open/floor/plating/ice/icemoon,
 /area/icemoon/underground/explored)
 "i" = (
 /obj/item/knife/combat/survival,
-/turf/open/misc/ice/icemoon,
+/turf/open/floor/plating/ice/icemoon,
 /area/icemoon/underground/explored)
 "l" = (
 /turf/closed/indestructible/rock/snow/ice/ore,
@@ -30,11 +30,11 @@
 "V" = (
 /obj/structure/frost_miner_prism,
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner,
-/turf/open/misc/ice/icemoon,
+/turf/open/floor/plating/ice/icemoon,
 /area/icemoon/underground/explored)
 "Z" = (
 /obj/structure/frost_miner_prism,
-/turf/open/misc/ice/icemoon,
+/turf/open/floor/plating/ice/icemoon,
 /area/icemoon/underground/explored)
 
 (1,1,1) = {"

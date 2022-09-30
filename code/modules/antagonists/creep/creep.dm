@@ -3,10 +3,10 @@
 	show_in_antagpanel = TRUE
 	antagpanel_category = "Other"
 	job_rank = ROLE_OBSESSED
+	antag_hud_type = ANTAG_HUD_OBSESSED
 	antag_hud_name = "obsessed"
 	show_name_in_check_antagonists = TRUE
 	roundend_category = "obsessed"
-	count_against_dynamic_roll_chance = FALSE
 	silent = TRUE //not actually silent, because greet will be called by the trauma anyway.
 	suicide_cry = "FOR MY LOVE!!"
 	preview_outfit = /datum/outfit/obsessed
@@ -17,7 +17,7 @@
 	if(!istype(C))
 		to_chat(admin, "[roundend_category] come from a brain trauma, so they need to at least be a carbon!")
 		return
-	if(!C.getorgan(/obj/item/organ/internal/brain)) // If only I had a brain
+	if(!C.getorgan(/obj/item/organ/brain)) // If only I had a brain
 		to_chat(admin, "[roundend_category] come from a brain trauma, so they need to HAVE A BRAIN.")
 		return
 	message_admins("[key_name_admin(admin)] made [key_name_admin(new_owner)] into [name].")
@@ -37,11 +37,19 @@
 		qdel(trauma)
 	. = ..()
 
+/datum/antagonist/obsessed/apply_innate_effects(mob/living/mob_override)
+	var/mob/living/M = mob_override || owner.current
+	add_antag_hud(antag_hud_type, antag_hud_name, M)
+
+/datum/antagonist/obsessed/remove_innate_effects(mob/living/mob_override)
+	var/mob/living/M = mob_override || owner.current
+	remove_antag_hud(antag_hud_type, M)
+
 /datum/antagonist/obsessed/get_preview_icon()
 	var/mob/living/carbon/human/dummy/consistent/victim_dummy = new
 	victim_dummy.hair_color = "#bb9966" // Brown
 	victim_dummy.hairstyle = "Messy"
-	victim_dummy.update_body_parts()
+	victim_dummy.update_hair()
 
 	var/icon/obsessed_icon = render_preview_outfit(preview_outfit)
 	obsessed_icon.Blend(icon('icons/effects/blood.dmi', "uniformblood"), ICON_OVERLAY)
@@ -251,7 +259,7 @@
 /datum/objective/polaroid/update_explanation_text()
 	..()
 	if(target?.current)
-		explanation_text = "Take a photo of [target.name] while they're alive, and keep it in your bag."
+		explanation_text = "Take a photo of [target.name] while they're alive."
 	else
 		explanation_text = "Free Objective"
 
@@ -264,7 +272,7 @@
 		for(var/obj/I in all_items) //Check for wanted items
 			if(istype(I, /obj/item/photo))
 				var/obj/item/photo/P = I
-				if(P.picture && (WEAKREF(target.current) in P.picture.mobs_seen) && !(WEAKREF(target.current) in P.picture.dead_seen)) //Does the picture exist and is the target in it and is the target not dead
+				if(P.picture && (target.current in P.picture.mobs_seen) && !(target.current in P.picture.dead_seen)) //Does the picture exist and is the target in it and is the target not dead
 					return TRUE
 	return FALSE
 

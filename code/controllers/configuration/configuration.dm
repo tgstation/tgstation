@@ -33,15 +33,6 @@
 	/// A regex that matches words blocked IC, but not in PDAs
 	var/static/regex/ic_outside_pda_filter_regex
 
-	/// A regex that matches words soft blocked IC
-	var/static/regex/soft_ic_filter_regex
-
-	/// A regex that matches words soft blocked OOC
-	var/static/regex/soft_ooc_filter_regex
-
-	/// A regex that matches words soft blocked IC, but not in PDAs
-	var/static/regex/soft_ic_outside_pda_filter_regex
-
 	/// An assoc list of blocked IC words to their reasons
 	var/static/list/ic_filter_reasons
 
@@ -50,15 +41,6 @@
 
 	/// An assoc list of words that are blocked both IC and OOC to their reasons
 	var/static/list/shared_filter_reasons
-
-	/// An assoc list of soft blocked IC words to their reasons
-	var/static/list/soft_ic_filter_reasons
-
-	/// An assoc list of words that are soft blocked IC, but not in PDAs, to their reasons
-	var/static/list/soft_ic_outside_pda_filter_reasons
-
-	/// An assoc list of words that are soft blocked both IC and OOC to their reasons
-	var/static/list/soft_shared_filter_reasons
 
 /datum/controller/configuration/proc/admin_reload()
 	if(IsAdminAdvancedProcCall())
@@ -297,7 +279,7 @@ special keywords defined in _DEFINES/admin.dm
 
 Example config:
 {
-	JOB_ASSISTANT : "Don't kill everyone",
+	"Assistant" : "Don't kill everyone",
 	"/datum/antagonist/highlander" : "<b>Kill everyone</b>",
 	"Ash Walker" : "Kill all spacemans"
 }
@@ -348,11 +330,9 @@ Example config:
 
 		switch (command)
 			if ("map")
-				currentmap = load_map_config(data, MAP_DIRECTORY_MAPS)
+				currentmap = load_map_config("_maps/[data].json")
 				if(currentmap.defaulted)
-					var/error_message = "Failed to load map config for [data]!"
-					log_config(error_message)
-					log_mapping(error_message, TRUE)
+					log_config("Failed to load map config for [data]!")
 					currentmap = null
 			if ("minplayers","minplayer")
 				currentmap.config_min_users = text2num(data)
@@ -379,20 +359,17 @@ Example config:
 		return
 
 	log_config("Loading config file word_filter.toml...")
-	var/list/result = rustg_raw_read_toml_file("[directory]/word_filter.toml")
-	if(!result["success"])
-		var/message = "The word filter is not configured correctly! [result["content"]]"
+
+	var/list/word_filter = rustg_read_toml_file("[directory]/word_filter.toml")
+	if (!islist(word_filter))
+		var/message = "The word filter configuration did not output a list, contact someone with configuration access to make sure it's setup properly."
 		log_config(message)
 		DelayedMessageAdmins(message)
 		return
-	var/list/word_filter = json_decode(result["content"])
 
 	ic_filter_reasons = try_extract_from_word_filter(word_filter, "ic")
 	ic_outside_pda_filter_reasons = try_extract_from_word_filter(word_filter, "ic_outside_pda")
 	shared_filter_reasons = try_extract_from_word_filter(word_filter, "shared")
-	soft_ic_filter_reasons = try_extract_from_word_filter(word_filter, "soft_ic")
-	soft_ic_outside_pda_filter_reasons = try_extract_from_word_filter(word_filter, "soft_ic_outside_pda")
-	soft_shared_filter_reasons = try_extract_from_word_filter(word_filter, "soft_shared")
 
 	update_chat_filter_regexes()
 
@@ -405,9 +382,6 @@ Example config:
 	ic_filter_reasons = list()
 	ic_outside_pda_filter_reasons = list()
 	shared_filter_reasons = list()
-	soft_ic_filter_reasons = list()
-	soft_ic_outside_pda_filter_reasons = list()
-	soft_shared_filter_reasons = list()
 
 	for (var/line in world.file2list("[directory]/in_character_filter.txt"))
 		if (!line)
@@ -424,9 +398,6 @@ Example config:
 	ic_filter_regex = compile_filter_regex(ic_filter_reasons + ic_outside_pda_filter_reasons + shared_filter_reasons)
 	ic_outside_pda_filter_regex = compile_filter_regex(ic_filter_reasons + shared_filter_reasons)
 	ooc_filter_regex = compile_filter_regex(shared_filter_reasons)
-	soft_ic_filter_regex = compile_filter_regex(soft_ic_filter_reasons + soft_ic_outside_pda_filter_reasons + soft_shared_filter_reasons)
-	soft_ic_outside_pda_filter_regex = compile_filter_regex(soft_ic_filter_reasons + soft_shared_filter_reasons)
-	soft_ooc_filter_regex = compile_filter_regex(soft_shared_filter_reasons)
 
 /datum/controller/configuration/proc/try_extract_from_word_filter(list/word_filter, key)
 	var/list/banned_words = word_filter[key]
@@ -439,11 +410,7 @@ Example config:
 		DelayedMessageAdmins(message)
 		return list()
 
-	var/list/formatted_banned_words = list()
-
-	for (var/banned_word in banned_words)
-		formatted_banned_words[lowertext(banned_word)] = banned_words[banned_word]
-	return formatted_banned_words
+	return banned_words
 
 /datum/controller/configuration/proc/compile_filter_regex(list/banned_words)
 	if (isnull(banned_words) || banned_words.len == 0)
@@ -462,11 +429,9 @@ Example config:
 		else
 			to_join_on_whitespace_splits += REGEX_QUOTE(banned_word)
 
-	// We don't want a whitespace_split part if there's no stuff that requires it
-	var/whitespace_split = to_join_on_whitespace_splits.len > 0 ? @"(?:(?:^|\s+)(" + jointext(to_join_on_whitespace_splits, "|") + @")(?:$|\s+))" : ""
+	var/whitespace_split = @"(?:(?:^|\s+)(" + jointext(to_join_on_whitespace_splits, "|") + @")(?:$|\s+))"
 	var/word_bounds = @"(\b(" + jointext(to_join_on_word_bounds, "|") + @")\b)"
-	var/regex_filter = whitespace_split != "" ? "([whitespace_split]|[word_bounds])" : word_bounds
-	return regex(regex_filter, "i")
+	return regex("([whitespace_split]|[word_bounds])", "i")
 
 //Message admins when you can.
 /datum/controller/configuration/proc/DelayedMessageAdmins(text)

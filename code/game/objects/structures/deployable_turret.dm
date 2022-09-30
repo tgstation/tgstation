@@ -4,7 +4,7 @@
 /obj/machinery/deployable_turret
 	name = "machine gun turret"
 	desc = "While the trigger is held down, this gun will redistribute recoil to allow its user to easily shift targets."
-	icon = 'icons/obj/weapons/turrets.dmi'
+	icon = 'icons/obj/turrets.dmi'
 	icon_state = "machinegun"
 	can_buckle = TRUE
 	anchored = FALSE
@@ -60,7 +60,7 @@
 
 //BUCKLE HOOKS
 
-/obj/machinery/deployable_turret/unbuckle_mob(mob/living/buckled_mob, force = FALSE, can_fall = TRUE)
+/obj/machinery/deployable_turret/unbuckle_mob(mob/living/buckled_mob,force = FALSE)
 	playsound(src,'sound/mecha/mechmove01.ogg', 50, TRUE)
 	for(var/obj/item/I in buckled_mob.held_items)
 		if(istype(I, /obj/item/gun_control))
@@ -112,11 +112,11 @@
 	var/client/controlling_client = controller.client
 	if(controlling_client)
 		var/modifiers = params2list(controlling_client.mouseParams)
-		var/atom/target_atom = controlling_client.mouse_object_ref?.resolve()
+		var/atom/target_atom = controlling_client.mouseObject
 		var/turf/target_turf = get_turf(target_atom)
 		if(istype(target_turf)) //They're hovering over something in the map.
 			direction_track(controller, target_turf)
-			calculated_projectile_vars = calculate_projectile_angle_and_pixel_offsets(controller, target_turf, modifiers)
+			calculated_projectile_vars = calculate_projectile_angle_and_pixel_offsets(controller, modifiers)
 
 /obj/machinery/deployable_turret/proc/direction_track(mob/user, atom/targeted)
 	if(user.incapacitated())
@@ -138,7 +138,6 @@
 			user.pixel_y = 0
 		if(SOUTHEAST)
 			layer = BELOW_MOB_LAYER
-			SET_PLANE_IMPLICIT(src, GAME_PLANE)
 			user.pixel_x = -8
 			user.pixel_y = 4
 		if(SOUTH)
@@ -147,7 +146,6 @@
 			user.pixel_y = 14
 		if(SOUTHWEST)
 			layer = BELOW_MOB_LAYER
-			SET_PLANE_IMPLICIT(src, GAME_PLANE)
 			user.pixel_x = 8
 			user.pixel_y = 4
 		if(WEST)
@@ -156,7 +154,6 @@
 			user.pixel_y = 0
 		if(NORTHWEST)
 			layer = BELOW_MOB_LAYER
-			SET_PLANE_IMPLICIT(src, GAME_PLANE)
 			user.pixel_x = 8
 			user.pixel_y = -4
 
@@ -189,8 +186,6 @@
 	var/obj/projectile/projectile_to_fire = new projectile_type
 	playsound(src, firesound, 75, TRUE)
 	projectile_to_fire.preparePixelProjectile(target, targets_from)
-	projectile_to_fire.firer = user
-	projectile_to_fire.fired_from = src
 	projectile_to_fire.fire()
 
 /obj/machinery/deployable_turret/ultimate  // Admin-only proof of concept for autoclicker automatics
@@ -221,7 +216,7 @@
 
 /obj/item/gun_control
 	name = "turret controls"
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "offhand"
 	w_class = WEIGHT_CLASS_HUGE
 	item_flags = ABSTRACT | NOBLUDGEON | DROPDEL
@@ -256,6 +251,6 @@
 	. = ..()
 	var/modifiers = params2list(params)
 	var/obj/machinery/deployable_turret/E = user.buckled
-	E.calculated_projectile_vars = calculate_projectile_angle_and_pixel_offsets(user, targeted_atom, modifiers)
+	E.calculated_projectile_vars = calculate_projectile_angle_and_pixel_offsets(user, modifiers)
 	E.direction_track(user, targeted_atom)
 	E.checkfire(targeted_atom, user)

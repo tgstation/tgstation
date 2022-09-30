@@ -1,7 +1,7 @@
 /proc/translate_legacy_chem_id(id)
 	switch (id)
 		if ("sacid")
-			return "sulfuricacid"
+			return "sulphuricacid"
 		if ("facid")
 			return "fluorosulfuricacid"
 		if ("co2")
@@ -15,9 +15,11 @@
 	name = "chem dispenser"
 	desc = "Creates and dispenses chemicals."
 	density = TRUE
-	icon = 'icons/obj/medical/chemical.dmi'
+	icon = 'icons/obj/chemical.dmi'
 	icon_state = "dispenser"
 	base_icon_state = "dispenser"
+	use_power = IDLE_POWER_USE
+	idle_power_usage = 40
 	interaction_flags_machine = INTERACT_MACHINE_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OFFLINE
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	circuit = /obj/item/circuitboard/machine/chem_dispenser
@@ -109,7 +111,6 @@
 		. += "<span class='notice'>The status display reads:\n\
 		Recharging <b>[recharge_amount]</b> power units per interval.\n\
 		Power efficiency increased by <b>[round((powerefficiency*1000)-100, 1)]%</b>.</span>"
-	. += span_notice("Use <b>RMB</b> to eject a stored beaker.")
 
 
 /obj/machinery/chem_dispenser/on_set_is_operational(old_value)
@@ -123,7 +124,7 @@
 	if (recharge_counter >= 8)
 		var/usedpower = cell.give(recharge_amount)
 		if(usedpower)
-			use_power(active_power_usage + recharge_amount)
+			use_power(250*recharge_amount)
 		recharge_counter = 0
 		return
 	recharge_counter += delta_time
@@ -188,15 +189,8 @@
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "ChemDispenser", name)
-
-		var/is_hallucinating = FALSE
-		if(isliving(user))
-			var/mob/living/living_user = user
-			is_hallucinating = !!living_user.has_status_effect(/datum/status_effect/hallucination)
-
-		if(is_hallucinating)
+		if(user.hallucinating())
 			ui.set_autoupdate(FALSE) //to not ruin the immersion by constantly changing the fake chemicals
-
 		ui.open()
 
 /obj/machinery/chem_dispenser/ui_data(mob/user)
@@ -228,10 +222,8 @@
 
 	var/chemicals[0]
 	var/is_hallucinating = FALSE
-	if(isliving(user))
-		var/mob/living/living_user = user
-		is_hallucinating = !!living_user.has_status_effect(/datum/status_effect/hallucination)
-
+	if(user.hallucinating())
+		is_hallucinating = TRUE
 	for(var/re in dispensable_reagents)
 		var/datum/reagent/temp = GLOB.chemical_reagents_list[re]
 		if(temp)
@@ -337,7 +329,7 @@
 		if("save_recording")
 			if(!is_operational)
 				return
-			var/name = tgui_input_text(usr, "What do you want to name this recipe?", "Recipe Name", MAX_NAME_LEN)
+			var/name = stripped_input(usr,"Name","What do you want to name this recipe?", "Recipe", MAX_NAME_LEN)
 			if(!usr.canUseTopic(src, !issilicon(usr)))
 				return
 			if(saved_recipes[name] && tgui_alert(usr, "\"[name]\" already exists, do you want to overwrite it?",, list("Yes", "No")) == "No")
@@ -347,7 +339,7 @@
 					var/reagent_id = GLOB.name2reagent[translate_legacy_chem_id(reagent)]
 					if(!dispensable_reagents.Find(reagent_id))
 						visible_message(span_warning("[src] buzzes."), span_hear("You hear a faint buzz."))
-						to_chat(usr, span_warning("[src] cannot find <b>[reagent]</b>!"))
+						to_chat(usr, "<span class ='danger'>[src] cannot find <b>[reagent]</b>!</span>")
 						playsound(src, 'sound/machines/buzz-two.ogg', 50, TRUE)
 						return
 				saved_recipes[name] = recording_recipe
@@ -362,25 +354,22 @@
 			if(beaker)
 				beaker.reagents.ui_interact(usr)
 
-/obj/machinery/chem_dispenser/wrench_act(mob/living/user, obj/item/tool)
-	. = ..()
-	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
-
 /obj/machinery/chem_dispenser/attackby(obj/item/I, mob/living/user, params)
+	if(default_unfasten_wrench(user, I))
+		return
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, I))
 		update_appearance()
 		return
 	if(default_deconstruction_crowbar(I))
 		return
-	if(is_reagent_container(I) && !(I.item_flags & ABSTRACT) && I.is_open_container())
+	if(istype(I, /obj/item/reagent_containers) && !(I.item_flags & ABSTRACT) && I.is_open_container())
 		var/obj/item/reagent_containers/B = I
 		. = TRUE //no afterattack
 		if(!user.transferItemToLoc(B, src))
 			return
 		replace_beaker(user, B)
 		to_chat(user, span_notice("You add [B] to [src]."))
-		ui_interact(user)
+		updateUsrDialog()
 	else if(!user.combat_mode && !istype(I, /obj/item/card/emag))
 		to_chat(user, span_warning("You can't load [I] into [src]!"))
 		return ..()
@@ -402,7 +391,7 @@
 	for(var/i in 1 to total)
 		Q.add_reagent(pick(dispensable_reagents), 10, reagtemp = dispensed_temperature)
 	R += Q
-	chem_splash(get_turf(src), null, 3, R)
+	chem_splash(get_turf(src), 3, R)
 	if(beaker?.reagents)
 		beaker.reagents.remove_all()
 	cell.use(total/powerefficiency)
@@ -411,22 +400,17 @@
 	visible_message(span_danger("[src] malfunctions, spraying chemicals everywhere!"))
 
 /obj/machinery/chem_dispenser/RefreshParts()
-	. = ..()
 	recharge_amount = initial(recharge_amount)
 	var/newpowereff = 0.0666666
-	var/parts_rating = 0
 	for(var/obj/item/stock_parts/cell/P in component_parts)
 		cell = P
 	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 		newpowereff += 0.0166666666*M.rating
-		parts_rating += M.rating
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		recharge_amount *= C.rating
-		parts_rating += C.rating
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		if (M.rating > 3)
 			dispensable_reagents |= upgrade_reagents
-		parts_rating += M.rating
 	powerefficiency = round(newpowereff, 0.01)
 
 /obj/machinery/chem_dispenser/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
@@ -447,75 +431,15 @@
 		beaker = null
 	return ..()
 
-/obj/machinery/chem_dispenser/attack_hand_secondary(mob/user, list/modifiers)
+/obj/machinery/chem_dispenser/AltClick(mob/living/user)
 	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return
-	if(!can_interact(user) || !user.canUseTopic(src, !issilicon(user), FALSE, NO_TK))
+	if(!can_interact(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 	replace_beaker(user)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-/obj/machinery/chem_dispenser/attack_robot_secondary(mob/user, list/modifiers)
-	return attack_hand_secondary(user, modifiers)
-
-/obj/machinery/chem_dispenser/attack_ai_secondary(mob/user, list/modifiers)
-	return attack_hand_secondary(user, modifiers)
-
-/obj/machinery/chem_dispenser/AltClick(mob/user)
-	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
-
-/obj/machinery/chem_dispenser/drinks
-	name = "soda dispenser"
-	desc = "Contains a large reservoir of soft drinks."
-	icon = 'icons/obj/medical/chemical.dmi'
-	icon_state = "soda_dispenser"
-	base_icon_state = "soda_dispenser"
-	has_panel_overlay = FALSE
-	dispensed_temperature = WATER_MATTERSTATE_CHANGE_TEMP // magical mystery temperature of 274.5, where ice does not melt, and water does not freeze
-	amount = 10
-	pixel_y = 6
-	circuit = /obj/item/circuitboard/machine/chem_dispenser/drinks
-	working_state = null
-	nopower_state = null
-	pass_flags = PASSTABLE
-	show_ph = FALSE
-	dispensable_reagents = list(
-		/datum/reagent/consumable/coffee,
-		/datum/reagent/consumable/space_cola,
-		/datum/reagent/consumable/cream,
-		/datum/reagent/consumable/dr_gibb,
-		/datum/reagent/consumable/grenadine,
-		/datum/reagent/consumable/ice,
-		/datum/reagent/consumable/icetea,
-		/datum/reagent/consumable/lemonjuice,
-		/datum/reagent/consumable/lemon_lime,
-		/datum/reagent/consumable/limejuice,
-		/datum/reagent/consumable/menthol,
-		/datum/reagent/consumable/orangejuice,
-		/datum/reagent/consumable/pineapplejuice,
-		/datum/reagent/consumable/pwr_game,
-		/datum/reagent/consumable/shamblers,
-		/datum/reagent/consumable/spacemountainwind,
-		/datum/reagent/consumable/sodawater,
-		/datum/reagent/consumable/space_up,
-		/datum/reagent/consumable/sugar,
-		/datum/reagent/consumable/tea,
-		/datum/reagent/consumable/tomatojuice,
-		/datum/reagent/consumable/tonic,
-		/datum/reagent/water,
-	)
-	upgrade_reagents = null
-	emagged_reagents = list(
-		/datum/reagent/consumable/ethanol/thirteenloko,
-		/datum/reagent/consumable/ethanol/whiskey_cola,
-		/datum/reagent/toxin/mindbreaker,
-		/datum/reagent/toxin/staminatoxin
-	)
 
 /obj/machinery/chem_dispenser/drinks/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/simple_rotation)
+	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE)
 
 /obj/machinery/chem_dispenser/drinks/setDir()
 	var/old = dir
@@ -540,6 +464,55 @@
 			b_o.pixel_x = rand(-9, 9)
 	return b_o
 
+/obj/machinery/chem_dispenser/drinks
+	name = "soda dispenser"
+	desc = "Contains a large reservoir of soft drinks."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "soda_dispenser"
+	base_icon_state = "soda_dispenser"
+	has_panel_overlay = FALSE
+	dispensed_temperature = WATER_MATTERSTATE_CHANGE_TEMP // magical mystery temperature of 274.5, where ice does not melt, and water does not freeze
+	amount = 10
+	pixel_y = 6
+	layer = WALL_OBJ_LAYER
+	circuit = /obj/item/circuitboard/machine/chem_dispenser/drinks
+	working_state = null
+	nopower_state = null
+	pass_flags = PASSTABLE
+	show_ph = FALSE
+	dispensable_reagents = list(
+		/datum/reagent/water,
+		/datum/reagent/consumable/ice,
+		/datum/reagent/consumable/coffee,
+		/datum/reagent/consumable/cream,
+		/datum/reagent/consumable/tea,
+		/datum/reagent/consumable/icetea,
+		/datum/reagent/consumable/space_cola,
+		/datum/reagent/consumable/spacemountainwind,
+		/datum/reagent/consumable/dr_gibb,
+		/datum/reagent/consumable/space_up,
+		/datum/reagent/consumable/tonic,
+		/datum/reagent/consumable/sodawater,
+		/datum/reagent/consumable/lemon_lime,
+		/datum/reagent/consumable/pwr_game,
+		/datum/reagent/consumable/shamblers,
+		/datum/reagent/consumable/sugar,
+		/datum/reagent/consumable/pineapplejuice,
+		/datum/reagent/consumable/orangejuice,
+		/datum/reagent/consumable/grenadine,
+		/datum/reagent/consumable/limejuice,
+		/datum/reagent/consumable/tomatojuice,
+		/datum/reagent/consumable/lemonjuice,
+		/datum/reagent/consumable/menthol
+	)
+	upgrade_reagents = null
+	emagged_reagents = list(
+		/datum/reagent/consumable/ethanol/thirteenloko,
+		/datum/reagent/consumable/ethanol/whiskey_cola,
+		/datum/reagent/toxin/mindbreaker,
+		/datum/reagent/toxin/staminatoxin
+	)
+
 /obj/machinery/chem_dispenser/drinks/fullupgrade //fully ugpraded stock parts, emagged
 	desc = "Contains a large reservoir of soft drinks. This model has had its safeties shorted out."
 	obj_flags = CAN_BE_HIT | EMAGGED
@@ -553,34 +526,32 @@
 /obj/machinery/chem_dispenser/drinks/beer
 	name = "booze dispenser"
 	desc = "Contains a large reservoir of the good stuff."
-	icon = 'icons/obj/medical/chemical.dmi'
+	icon = 'icons/obj/chemical.dmi'
 	icon_state = "booze_dispenser"
 	base_icon_state = "booze_dispenser"
 	dispensed_temperature = WATER_MATTERSTATE_CHANGE_TEMP
 	circuit = /obj/item/circuitboard/machine/chem_dispenser/drinks/beer
 	dispensable_reagents = list(
-		/datum/reagent/consumable/ethanol/absinthe,
-		/datum/reagent/consumable/ethanol/ale,
-		/datum/reagent/consumable/ethanol/applejack,
 		/datum/reagent/consumable/ethanol/beer,
-		/datum/reagent/consumable/ethanol/cognac,
-		/datum/reagent/consumable/ethanol/creme_de_cacao,
-		/datum/reagent/consumable/ethanol/creme_de_coconut,
-		/datum/reagent/consumable/ethanol/creme_de_menthe,
-		/datum/reagent/consumable/ethanol/curacao,
-		/datum/reagent/consumable/ethanol/gin,
-		/datum/reagent/consumable/ethanol/hcider,
-		/datum/reagent/consumable/ethanol/kahlua,
 		/datum/reagent/consumable/ethanol/beer/maltliquor,
-		/datum/reagent/consumable/ethanol/navy_rum,
-		/datum/reagent/consumable/ethanol/rum,
-		/datum/reagent/consumable/ethanol/sake,
-		/datum/reagent/consumable/ethanol/tequila,
-		/datum/reagent/consumable/ethanol/triple_sec,
-		/datum/reagent/consumable/ethanol/vermouth,
-		/datum/reagent/consumable/ethanol/vodka,
+		/datum/reagent/consumable/ethanol/kahlua,
 		/datum/reagent/consumable/ethanol/whiskey,
 		/datum/reagent/consumable/ethanol/wine,
+		/datum/reagent/consumable/ethanol/vodka,
+		/datum/reagent/consumable/ethanol/gin,
+		/datum/reagent/consumable/ethanol/rum,
+		/datum/reagent/consumable/ethanol/tequila,
+		/datum/reagent/consumable/ethanol/vermouth,
+		/datum/reagent/consumable/ethanol/cognac,
+		/datum/reagent/consumable/ethanol/ale,
+		/datum/reagent/consumable/ethanol/absinthe,
+		/datum/reagent/consumable/ethanol/hcider,
+		/datum/reagent/consumable/ethanol/creme_de_menthe,
+		/datum/reagent/consumable/ethanol/creme_de_cacao,
+		/datum/reagent/consumable/ethanol/creme_de_coconut,
+		/datum/reagent/consumable/ethanol/triple_sec,
+		/datum/reagent/consumable/ethanol/sake,
+		/datum/reagent/consumable/ethanol/applejack
 	)
 	upgrade_reagents = null
 	emagged_reagents = list(
@@ -652,7 +623,6 @@
 	circuit = /obj/item/circuitboard/machine/chem_dispenser/abductor
 	working_state = null
 	nopower_state = null
-	use_power = NO_POWER_USE
 	dispensable_reagents = list(
 		/datum/reagent/aluminium,
 		/datum/reagent/bromine,
@@ -691,7 +661,5 @@
 		/datum/reagent/drug/space_drugs,
 		/datum/reagent/toxin,
 		/datum/reagent/toxin/plasma,
-		/datum/reagent/uranium,
-		/datum/reagent/consumable/liquidelectricity/enriched,
-		/datum/reagent/medicine/c2/synthflesh
+		/datum/reagent/uranium
 	)

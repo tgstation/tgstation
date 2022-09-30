@@ -13,32 +13,25 @@ $scrollbar-color-multiplier: 1 !default;
   // Fancy scrollbar
   scrollbar-base-color: color.scale(
     base.$color-bg,
-    $lightness: -25% * $scrollbar-color-multiplier
-  );
+    $lightness: -25% * $scrollbar-color-multiplier);
   scrollbar-face-color: color.scale(
     base.$color-bg,
-    $lightness: 10% * $scrollbar-color-multiplier
-  );
+    $lightness: 10% * $scrollbar-color-multiplier);
   scrollbar-3dlight-color: color.scale(
     base.$color-bg,
-    $lightness: 0% * $scrollbar-color-multiplier
-  );
+    $lightness: 0% * $scrollbar-color-multiplier);
   scrollbar-highlight-color: color.scale(
     base.$color-bg,
-    $lightness: 0% * $scrollbar-color-multiplier
-  );
+    $lightness: 0% * $scrollbar-color-multiplier);
   scrollbar-track-color: color.scale(
     base.$color-bg,
-    $lightness: -25% * $scrollbar-color-multiplier
-  );
+    $lightness: -25% * $scrollbar-color-multiplier);
   scrollbar-arrow-color: color.scale(
     base.$color-bg,
-    $lightness: 50% * $scrollbar-color-multiplier
-  );
+    $lightness: 50% * $scrollbar-color-multiplier);
   scrollbar-shadow-color: color.scale(
     base.$color-bg,
-    $lightness: 10% * $scrollbar-color-multiplier
-  );
+    $lightness: 10% * $scrollbar-color-multiplier);
 }
 
 .Layout__content {

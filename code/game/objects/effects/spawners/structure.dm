@@ -10,10 +10,9 @@ again.
 
 /obj/effect/spawner/structure/Initialize(mapload)
 	. = ..()
-
-	for(var/spawn_type in spawn_list)
-		new spawn_type(loc)
-
+	if(spawn_list?.len)
+		for(var/I in spawn_list)
+			new I(get_turf(src))
 	return INITIALIZE_HINT_QDEL
 
 
@@ -29,8 +28,9 @@ again.
 /obj/effect/spawner/structure/window/Initialize(mapload)
 	. = ..()
 
-	var/turf/current_turf = loc
-	current_turf.rcd_memory = RCD_MEMORY_WINDOWGRILLE
+	if (is_station_level(z))
+		var/turf/current_turf = get_turf(src)
+		current_turf.rcd_memory = RCD_MEMORY_WINDOWGRILLE
 
 /obj/effect/spawner/structure/window/hollow
 	name = "hollow window spawner"
@@ -153,13 +153,6 @@ again.
 	name = "tinted reinforced window spawner"
 	icon_state = "twindow_spawner"
 	spawn_list = list(/obj/structure/window_frame/iron, /obj/structure/window/reinforced/tinted/fulltile)
-
-//bronze
-
-/obj/effect/spawner/structure/window/bronze
-	name = "bronze window spawner"
-	icon_state = "bronzewindow_spawner"
-	spawn_list = list(/obj/structure/grille, /obj/structure/window/bronze/fulltile)
 
 
 //shuttle window
@@ -369,9 +362,3 @@ again.
 		if(NORTHWEST)
 			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/plasma/spawner/north, /obj/structure/window/reinforced/plasma/spawner/west)
 	. = ..()
-
-/obj/effect/spawner/structure/electrified_grille
-	name = "electrified grill spawner"
-	icon = 'icons/obj/structures_spawners.dmi'
-	icon_state = "electrified_grille"
-	spawn_list = list(/obj/structure/grille, /obj/structure/cable)

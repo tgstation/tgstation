@@ -64,8 +64,10 @@
 
 	var/list/msg = list()
 	msg += "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Playtime Report</title></head><body>Playtime:<BR><UL>"
-	for(var/client/client in sort_list(GLOB.clients, /proc/cmp_playtime_asc))
-		msg += "<LI> [ADMIN_PP(client.mob)] [key_name_admin(client)]: <A href='?_src_=holder;[HrefToken()];getplaytimewindow=[REF(client.mob)]'>" + client.get_exp_living() + "</a></LI>"
+	var/list/clients_list_copy = GLOB.clients.Copy()
+	sort_list(clients_list_copy)
+	for(var/client/C in clients_list_copy)
+		msg += "<LI> - [key_name_admin(C)]: <A href='?_src_=holder;[HrefToken()];getplaytimewindow=[REF(C.mob)]'>" + C.get_exp_living() + "</a></LI>"
 	msg += "</UL></BODY></HTML>"
 	src << browse(msg.Join(), "window=Player_playtime_check")
 
@@ -79,7 +81,7 @@
 		return
 
 	message_admins("[key_name_admin(usr)] triggered a CentCom recall, with the admiral message of: [message]")
-	usr.log_message("triggered a CentCom recall, with the message of: [message]", LOG_GAME)
+	log_game("[key_name(usr)] triggered a CentCom recall, with the message of: [message]")
 	SSshuttle.centcom_recall(SSshuttle.emergency.timer, message)
 
 /datum/admins/proc/cmd_show_exp_panel(client/client_to_check)

@@ -136,7 +136,7 @@ Consuming extracts:
 	name = "water cookie"
 	desc = "A transparent blue cookie. Constantly dripping wet."
 	icon_state = "blue"
-	taste = "water"
+	taste = /datum/reagent/water
 
 /obj/item/slime_cookie/blue/do_effect(mob/living/M, mob/user)
 	M.apply_status_effect(/datum/status_effect/watercookie)
@@ -247,7 +247,7 @@ Consuming extracts:
 	if(target)
 		do_teleport(M, target, 0, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
 		new /obj/effect/particle_effect/sparks(get_turf(M))
-		playsound(get_turf(M), SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(get_turf(M), "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/item/slimecross/consuming/sepia
 	colour = "sepia"

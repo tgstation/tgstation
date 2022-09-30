@@ -6,7 +6,6 @@
 /obj/item/circuit_component/concat_list
 	display_name = "Concatenate List"
 	desc = "A component that joins up a list with a separator into a single string."
-	category = "List"
 
 	/// The input port
 	var/datum/port/input/list_port
@@ -36,7 +35,7 @@
 
 	var/list/text_list = list()
 	for(var/entry in list_input)
-		if(isdatum(entry))
+		if(isatom(entry))
 			text_list += PORT_TYPE_ATOM
 		else
 			text_list += "[entry]"

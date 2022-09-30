@@ -7,7 +7,6 @@
 
 /obj/machinery/abductor
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	use_power = NO_POWER_USE
 	var/team_number = 0
 
 //Console
@@ -34,21 +33,6 @@
 /obj/machinery/abductor/console/Initialize(mapload)
 	. = ..()
 	possible_gear = get_abductor_gear()
-
-/obj/machinery/abductor/console/Destroy()
-	if(gizmo)
-		gizmo.console = null
-		gizmo = null
-	if(experiment)
-		experiment.console = null
-		experiment = null
-	if(pad)
-		pad.console = null
-		pad = null
-	if(camera)
-		camera.console = null
-		camera = null
-	return ..()
 
 /**
  * get_abductor_gear: Returns a list of a filtered abductor gear sorted by categories
@@ -111,7 +95,7 @@
 		data["credits"] = experiment.credits
 	data["pad"] = pad ? TRUE : FALSE
 	if(pad)
-		data["gizmo"] = gizmo && gizmo.marked_target_weakref?.resolve() ? TRUE : FALSE
+		data["gizmo"] = gizmo && gizmo.marked ? TRUE : FALSE
 	data["vest"] = vest ? TRUE : FALSE
 	if(vest)
 		data["vest_mode"] = vest.mode
@@ -159,9 +143,8 @@
 			return TRUE
 
 /obj/machinery/abductor/console/proc/TeleporterRetrieve()
-	var/mob/living/marked = gizmo.marked_target_weakref?.resolve()
-	if(pad && marked)
-		pad.Retrieve(marked)
+	if(pad && gizmo?.marked)
+		pad.Retrieve(gizmo.marked)
 
 /obj/machinery/abductor/console/proc/TeleporterSend()
 	if(pad)
@@ -209,7 +192,6 @@
 	for(var/obj/machinery/abductor/pad/p in GLOB.machines)
 		if(p.team_number == team_number)
 			pad = p
-			pad.console = src
 			break
 
 	for(var/obj/machinery/abductor/experiment/e in GLOB.machines)
@@ -223,8 +205,8 @@
 			c.console = src
 
 /obj/machinery/abductor/console/proc/AddSnapshot(mob/living/carbon/human/target)
-	if(target.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))
-		say("Unable to get a proper scan of subject! Something is shielding [target]'s mind!")
+	if(target.anti_magic_check(FALSE, FALSE, TRUE, 0))
+		say("Subject wearing specialized protective tinfoil gear, unable to get a proper scan!")
 		return
 	var/datum/icon_snapshot/entry = new
 	entry.name = target.name

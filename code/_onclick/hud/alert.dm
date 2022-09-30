@@ -120,52 +120,52 @@
 /atom/movable/screen/alert/not_enough_oxy
 	name = "Choking (No O2)"
 	desc = "You're not getting enough oxygen. Find some good air before you pass out! The box in your backpack has an oxygen tank and breath mask in it."
-	icon_state = ALERT_NOT_ENOUGH_OXYGEN
+	icon_state = "not_enough_oxy"
 
 /atom/movable/screen/alert/too_much_oxy
 	name = "Choking (O2)"
 	desc = "There's too much oxygen in the air, and you're breathing it in! Find some good air before you pass out!"
-	icon_state = ALERT_TOO_MUCH_OXYGEN
+	icon_state = "too_much_oxy"
 
 /atom/movable/screen/alert/not_enough_nitro
 	name = "Choking (No N2)"
 	desc = "You're not getting enough nitrogen. Find some good air before you pass out!"
-	icon_state = ALERT_NOT_ENOUGH_NITRO
+	icon_state = "not_enough_nitro"
 
 /atom/movable/screen/alert/too_much_nitro
 	name = "Choking (N2)"
 	desc = "There's too much nitrogen in the air, and you're breathing it in! Find some good air before you pass out!"
-	icon_state = ALERT_TOO_MUCH_NITRO
+	icon_state = "too_much_nitro"
 
 /atom/movable/screen/alert/not_enough_co2
 	name = "Choking (No CO2)"
 	desc = "You're not getting enough carbon dioxide. Find some good air before you pass out!"
-	icon_state = ALERT_NOT_ENOUGH_CO2
+	icon_state = "not_enough_co2"
 
 /atom/movable/screen/alert/too_much_co2
 	name = "Choking (CO2)"
 	desc = "There's too much carbon dioxide in the air, and you're breathing it in! Find some good air before you pass out!"
-	icon_state = ALERT_TOO_MUCH_CO2
+	icon_state = "too_much_co2"
 
 /atom/movable/screen/alert/not_enough_plas
 	name = "Choking (No Plasma)"
 	desc = "You're not getting enough plasma. Find some good air before you pass out!"
-	icon_state = ALERT_NOT_ENOUGH_PLASMA
+	icon_state = "not_enough_plas"
 
 /atom/movable/screen/alert/too_much_plas
 	name = "Choking (Plasma)"
 	desc = "There's highly flammable, toxic plasma in the air and you're breathing it in. Find some fresh air. The box in your backpack has an oxygen tank and gas mask in it."
-	icon_state = ALERT_TOO_MUCH_PLASMA
+	icon_state = "too_much_plas"
 
 /atom/movable/screen/alert/not_enough_n2o
 	name = "Choking (No N2O)"
 	desc = "You're not getting enough N2O. Find some good air before you pass out!"
-	icon_state = ALERT_NOT_ENOUGH_N2O
+	icon_state = "not_enough_n2o"
 
 /atom/movable/screen/alert/too_much_n2o
 	name = "Choking (N2O)"
 	desc = "There's sleeping gas in the air and you're breathing it in. Find some fresh air. The box in your backpack has an oxygen tank and gas mask in it."
-	icon_state = ALERT_TOO_MUCH_N2O
+	icon_state = "too_much_n2o"
 
 //End gas alerts
 
@@ -223,19 +223,24 @@
 /atom/movable/screen/alert/blind
 	name = "Blind"
 	desc = "You can't see! This may be caused by a genetic defect, eye trauma, being unconscious, \
-		or something covering your eyes."
-	icon_state = ALERT_BLIND
+or something covering your eyes."
+	icon_state = "blind"
+
+/atom/movable/screen/alert/high
+	name = "High"
+	desc = "Whoa man, you're tripping balls! Careful you don't get addicted... if you aren't already."
+	icon_state = "high"
 
 /atom/movable/screen/alert/hypnosis
 	name = "Hypnosis"
 	desc = "Something's hypnotizing you, but you're not really sure about what."
-	icon_state = ALERT_HYPNOSIS
+	icon_state = "hypnosis"
 	var/phrase
 
 /atom/movable/screen/alert/mind_control
 	name = "Mind Control"
 	desc = "Your mind has been hijacked! Click to view the mind control command."
-	icon_state = ALERT_MIND_CONTROL
+	icon_state = "mind_control"
 	var/command
 
 /atom/movable/screen/alert/mind_control/Click()
@@ -244,11 +249,16 @@
 		return
 	to_chat(owner, span_mind_control("[command]"))
 
+/atom/movable/screen/alert/drunk
+	name = "Drunk"
+	desc = "All that alcohol you've been drinking is impairing your speech, motor skills, and mental cognition. Make sure to act like it."
+	icon_state = "drunk"
+
 /atom/movable/screen/alert/embeddedobject
 	name = "Embedded Object"
 	desc = "Something got lodged into your flesh and is causing major bleeding. It might fall out with time, but surgery is the safest way. \
-		If you're feeling frisky, examine yourself and click the underlined item to pull the object out."
-	icon_state = ALERT_EMBEDDED_OBJECT
+If you're feeling frisky, examine yourself and click the underlined item to pull the object out."
+	icon_state = "embeddedobject"
 
 /atom/movable/screen/alert/embeddedobject/Click()
 	. = ..()
@@ -258,11 +268,6 @@
 	var/mob/living/carbon/carbon_owner = owner
 
 	return carbon_owner.help_shake_act(carbon_owner)
-
-/atom/movable/screen/alert/negative
-	name = "Negative Gravity"
-	desc = "You're getting pulled upwards. While you won't have to worry about falling down anymore, you may accidentally fall upwards!"
-	icon_state = "negative"
 
 /atom/movable/screen/alert/weightless
 	name = "Weightless"
@@ -303,11 +308,6 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	var/mob/living/carbon/offerer
 	var/obj/item/receiving
 
-/atom/movable/screen/alert/give/Destroy()
-	offerer = null
-	receiving = null
-	return ..()
-
 /**
  * Handles assigning most of the variables for the alert that pops up when an item is offered
  *
@@ -326,6 +326,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	add_overlay(receiving)
 	src.receiving = receiving
 	src.offerer = offerer
+	RegisterSignal(taker, COMSIG_MOVABLE_MOVED, .proc/check_in_range, override = TRUE) //Override to prevent runtimes when people offer a item multiple times
 
 /atom/movable/screen/alert/give/Click(location, control, params)
 	. = ..()
@@ -341,6 +342,14 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 /atom/movable/screen/alert/give/proc/handle_transfer()
 	var/mob/living/carbon/taker = owner
 	taker.take(offerer, receiving)
+
+/// Simply checks if the other person is still in range
+/atom/movable/screen/alert/give/proc/check_in_range(atom/taker)
+	SIGNAL_HANDLER
+
+	if(!offerer.CanReach(taker))
+		to_chat(owner, span_warning("You moved out of range of [offerer]!"))
+		owner.clear_alert("[offerer]")
 
 /atom/movable/screen/alert/give/highfive/setup(mob/living/carbon/taker, mob/living/carbon/offerer, obj/item/receiving)
 	. = ..()
@@ -379,8 +388,8 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	to_chat(rube, span_userdanger("[all_caps_for_emphasis]"))
 	playsound(offerer, 'sound/weapons/thudswoosh.ogg', 100, TRUE, 1)
 	rube.Knockdown(1 SECONDS)
-	offerer.add_mood_event("high_five", /datum/mood_event/down_low)
-	rube.add_mood_event("high_five", /datum/mood_event/too_slow)
+	SEND_SIGNAL(offerer, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/down_low)
+	SEND_SIGNAL(rube, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/too_slow)
 	qdel(src)
 
 /// If someone examine_more's the offerer while they're trying to pull a too-slow, it'll tip them off to the offerer's trickster ways
@@ -401,23 +410,27 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	add_overlay(receiving)
 	src.receiving = receiving
 	src.offerer = offerer
+	RegisterSignal(taker, COMSIG_MOVABLE_MOVED, .proc/check_in_range, override = TRUE) //Override to prevent runtimes when people offer a item multiple times
 
 /// Gives the player the option to succumb while in critical condition
 /atom/movable/screen/alert/succumb
 	name = "Succumb"
 	desc = "Shuffle off this mortal coil."
-	icon_state = ALERT_SUCCUMB
+	icon_state = "succumb"
 
 /atom/movable/screen/alert/succumb/Click()
 	. = ..()
 	if(!.)
 		return
+
 	var/mob/living/living_owner = owner
-	var/last_whisper = tgui_input_text(usr, "Do you have any last words?", "Goodnight, Sweet Prince")
-	if(isnull(last_whisper) || !CAN_SUCCUMB(living_owner))
+	var/last_whisper = input("Do you have any last words?", "Final Words") as null | text
+	if (isnull(last_whisper) || !CAN_SUCCUMB(living_owner))
 		return
-	if(length(last_whisper))
+
+	if (length(last_whisper))
 		living_owner.say("#[last_whisper]")
+
 	living_owner.succumb(whispered = length(last_whisper) > 0)
 
 //ALIENS
@@ -425,20 +438,20 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 /atom/movable/screen/alert/alien_plas
 	name = "Plasma"
 	desc = "There's flammable plasma in the air. If it lights up, you'll be toast."
-	icon_state = ALERT_XENO_PLASMA
+	icon_state = "alien_plas"
 	alerttooltipstyle = "alien"
 
 /atom/movable/screen/alert/alien_fire
 // This alert is temporarily gonna be thrown for all hot air but one day it will be used for literally being on fire
 	name = "Too Hot"
 	desc = "It's too hot! Flee to space or at least away from the flames. Standing on weeds will heal you."
-	icon_state = ALERT_XENO_FIRE
+	icon_state = "alien_fire"
 	alerttooltipstyle = "alien"
 
 /atom/movable/screen/alert/alien_vulnerable
 	name = "Severed Matriarchy"
 	desc = "Your queen has been killed, you will suffer movement penalties and loss of hivemind. A new queen cannot be made until you recover."
-	icon_state = ALERT_XENO_NOQUEEN
+	icon_state = "alien_noqueen"
 	alerttooltipstyle = "alien"
 
 //BLOBS
@@ -587,47 +600,14 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /atom/movable/screen/alert/emptycell
 	name = "Out of Power"
-	desc = "Unit's power cell has no charge remaining. No modules available until power cell is recharged."
+	desc = "Unit's power cell has no charge remaining. No modules available until power cell is recharged. \
+Recharging stations are available in robotics, the dormitory bathrooms, and the AI satellite."
 	icon_state = "empty_cell"
-
-/atom/movable/screen/alert/emptycell/Initialize(mapload)
-	. = ..()
-	update_appearance(updates=UPDATE_DESC)
-
-/atom/movable/screen/alert/emptycell/update_desc()
-	. = ..()
-	desc = initial(desc)
-	if(length(GLOB.roundstart_station_borgcharger_areas))
-		desc += " Recharging stations are available in [english_list(GLOB.roundstart_station_borgcharger_areas)]."
 
 /atom/movable/screen/alert/lowcell
 	name = "Low Charge"
-	desc = "Unit's power cell is running low."
+	desc = "Unit's power cell is running low. Recharging stations are available in robotics, the dormitory bathrooms, and the AI satellite."
 	icon_state = "low_cell"
-
-/atom/movable/screen/alert/lowcell/Initialize(mapload)
-	. = ..()
-	update_appearance(updates=UPDATE_DESC)
-
-/atom/movable/screen/alert/lowcell/update_desc()
-	. = ..()
-	desc = initial(desc)
-	if(length(GLOB.roundstart_station_borgcharger_areas))
-		desc += " Recharging stations are available in [english_list(GLOB.roundstart_station_borgcharger_areas)]."
-
-//MECH
-
-/atom/movable/screen/alert/lowcell/mech/update_desc()
-	. = ..()
-	desc = initial(desc)
-	if(length(GLOB.roundstart_station_mechcharger_areas))
-		desc += " Power ports are available in [english_list(GLOB.roundstart_station_mechcharger_areas)]."
-
-/atom/movable/screen/alert/emptycell/mech/update_desc()
-	. = ..()
-	desc = initial(desc)
-	if(length(GLOB.roundstart_station_mechcharger_areas))
-		desc += " Power ports are available in [english_list(GLOB.roundstart_station_mechcharger_areas)]."
 
 //Ethereal
 
@@ -644,46 +624,23 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	desc = "Your charge is running dangerously high, find an outlet for your energy! Right click an APC while not in combat mode."
 	icon_state = "cell_overcharge"
 
-//MODsuit unique
-/atom/movable/screen/alert/nocore
-	name = "Missing Core"
-	desc = "Unit has no core. No modules available until a core is reinstalled. Robotics may provide assistance."
-	icon_state = "no_cell"
-
-/atom/movable/screen/alert/emptycell/plasma
-	name = "Out of Power"
-	desc = "Unit's plasma core has no charge remaining. No modules available until plasma core is recharged. \
-		Unit can be refilled through plasma fuel."
-
-/atom/movable/screen/alert/emptycell/plasma/update_desc()
-	. = ..()
-	desc = initial(desc)
-
-/atom/movable/screen/alert/lowcell/plasma
-	name = "Low Charge"
-	desc = "Unit's plasma core is running low. Unit can be refilled through plasma fuel."
-
-/atom/movable/screen/alert/lowcell/plasma/update_desc()
-	. = ..()
-	desc = initial(desc)
-
 //Need to cover all use cases - emag, illegal upgrade module, malf AI hack, traitor cyborg
 /atom/movable/screen/alert/hacked
 	name = "Hacked"
 	desc = "Hazardous non-standard equipment detected. Please ensure any usage of this equipment is in line with unit's laws, if any."
-	icon_state = ALERT_HACKED
+	icon_state = "hacked"
 
 /atom/movable/screen/alert/locked
 	name = "Locked Down"
 	desc = "Unit has been remotely locked down. Usage of a Robotics Control Console like the one in the Research Director's \
-		office by your AI master or any qualified human may resolve this matter. Robotics may provide further assistance if necessary."
-	icon_state = ALERT_LOCKED
+office by your AI master or any qualified human may resolve this matter. Robotics may provide further assistance if necessary."
+	icon_state = "locked"
 
 /atom/movable/screen/alert/newlaw
 	name = "Law Update"
 	desc = "Laws have potentially been uploaded to or removed from this unit. Please be aware of any changes \
-		so as to remain in compliance with the most up-to-date laws."
-	icon_state = ALERT_NEW_LAW
+so as to remain in compliance with the most up-to-date laws."
+	icon_state = "newlaw"
 	timeout = 300
 
 /atom/movable/screen/alert/hackingapc
@@ -691,7 +648,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	desc = "An Area Power Controller is being hacked. When the process is \
 		complete, you will have exclusive control of it, and you will gain \
 		additional processing time to unlock more malfunction abilities."
-	icon_state = ALERT_HACKING_APC
+	icon_state = "hackingapc"
 	timeout = 600
 	var/atom/target = null
 
@@ -760,7 +717,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 /atom/movable/screen/alert/buckled
 	name = "Buckled"
 	desc = "You've been buckled to something. Click the alert to unbuckle unless you're handcuffed."
-	icon_state = ALERT_BUCKLED
+	icon_state = "buckled"
 
 /atom/movable/screen/alert/restrained/handcuffed
 	name = "Handcuffed"
@@ -802,12 +759,12 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 /atom/movable/screen/alert/shoes/untied
 	name = "Untied Shoes"
 	desc = "Your shoes are untied! Click the alert or your shoes to tie them."
-	icon_state = ALERT_SHOES_KNOT
+	icon_state = "shoealert"
 
 /atom/movable/screen/alert/shoes/knotted
 	name = "Knotted Shoes"
 	desc = "Someone tied your shoelaces together! Click the alert or your shoes to undo the knot."
-	icon_state = ALERT_SHOES_KNOT
+	icon_state = "shoealert"
 
 /atom/movable/screen/alert/shoes/Click()
 	. = ..()
@@ -831,10 +788,10 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		return
 	var/list/alerts = mymob.alerts
 	if(!hud_shown)
-		for(var/i in 1 to alerts.len)
+		for(var/i = 1, i <= alerts.len, i++)
 			screenmob.client.screen -= alerts[alerts[i]]
 		return 1
-	for(var/i in 1 to alerts.len)
+	for(var/i = 1, i <= alerts.len, i++)
 		var/atom/movable/screen/alert/alert = alerts[alerts[i]]
 		if(alert.icon_state == "template")
 			alert.icon = ui_style

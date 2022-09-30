@@ -23,7 +23,6 @@
 	status_flags |= CANPUSH //we want it to be pushable when unanchored on death
 	REMOVE_TRAIT(src, TRAIT_NO_TELEPORT, AI_ANCHOR_TRAIT) //removes the anchor trait, because its not anchored anymore
 	move_resist = MOVE_FORCE_NORMAL
-	is_anchored = FALSE
 
 	if(eyeobj)
 		eyeobj.setLoc(get_turf(src))
@@ -34,9 +33,6 @@
 	SSshuttle.autoEvac()
 
 	ShutOffDoomsdayDevice()
-
-	if(gibbed)
-		make_mmi_drop_and_transfer()
 
 	if(explosive)
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/explosion, loc, 3, 6, 12, null, 15), 1 SECONDS)

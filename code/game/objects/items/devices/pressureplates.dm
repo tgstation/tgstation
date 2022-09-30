@@ -29,7 +29,7 @@
 	if(roundstart_signaller)
 		sigdev = new
 		sigdev.code = roundstart_signaller_code
-		sigdev.set_frequency(roundstart_signaller_freq)
+		sigdev.frequency = roundstart_signaller_freq
 
 	if(undertile_pressureplate)
 		AddElement(/datum/element/undertile, tile_overlay = tile_overlay, use_anchor = TRUE)
@@ -59,7 +59,7 @@
 		sigdev.signal()
 
 /obj/item/pressure_plate/attackby(obj/item/I, mob/living/L)
-	if(issignaler(I) && !istype(sigdev) && removable_signaller && L.transferItemToLoc(I, src))
+	if(istype(I, /obj/item/assembly/signaler) && !istype(sigdev) && removable_signaller && L.transferItemToLoc(I, src))
 		sigdev = I
 		to_chat(L, span_notice("You attach [I] to [src]!"))
 	return ..()

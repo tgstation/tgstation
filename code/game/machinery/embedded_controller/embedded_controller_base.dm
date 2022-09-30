@@ -55,15 +55,12 @@
 	if(.)
 		return
 
-	process_command(href_list["command"])
+	if(program)
+		program.receive_user_command(href_list["command"])
+		addtimer(CALLBACK(program, /datum/computer/file/embedded_program.proc/process), 5)
 
 	usr.set_machine(src)
 	addtimer(CALLBACK(src, .proc/updateDialog), 5)
-
-/obj/machinery/embedded_controller/proc/process_command(command)
-	if(program)
-		program.receive_user_command(command)
-		addtimer(CALLBACK(program, /datum/computer/file/embedded_program.proc/process), 5)
 
 /obj/machinery/embedded_controller/process(delta_time)
 	if(program)

@@ -8,6 +8,7 @@ SUBSYSTEM_DEF(ipintel)
 
 	var/list/cache = list()
 
-/datum/controller/subsystem/ipintel/Initialize()
+/datum/controller/subsystem/ipintel/Initialize(timeofday, zlevel)
 	enabled = TRUE
-	return SS_INIT_SUCCESS
+	. = ..()
+

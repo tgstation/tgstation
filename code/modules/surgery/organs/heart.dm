@@ -1,9 +1,8 @@
-/obj/item/organ/internal/heart
+/obj/item/organ/heart
 	name = "heart"
 	desc = "I feel bad for the heartless bastard who lost this."
 	icon_state = "heart-on"
 	base_icon_state = "heart"
-	visual = FALSE
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_HEART
 
@@ -23,20 +22,20 @@
 	var/failed = FALSE //to prevent constantly running failing code
 	var/operated = FALSE //whether the heart's been operated on to fix some of its damages
 
-/obj/item/organ/internal/heart/update_icon_state()
+/obj/item/organ/heart/update_icon_state()
 	icon_state = "[base_icon_state]-[beating ? "on" : "off"]"
 	return ..()
 
-/obj/item/organ/internal/heart/Remove(mob/living/carbon/heartless, special = 0)
+/obj/item/organ/heart/Remove(mob/living/carbon/heartless, special = 0)
 	..()
 	if(!special)
 		addtimer(CALLBACK(src, .proc/stop_if_unowned), 120)
 
-/obj/item/organ/internal/heart/proc/stop_if_unowned()
+/obj/item/organ/heart/proc/stop_if_unowned()
 	if(!owner)
 		Stop()
 
-/obj/item/organ/internal/heart/attack_self(mob/user)
+/obj/item/organ/heart/attack_self(mob/user)
 	..()
 	if(!beating)
 		user.visible_message("<span class='notice'>[user] squeezes [src] to \
@@ -44,22 +43,22 @@
 		Restart()
 		addtimer(CALLBACK(src, .proc/stop_if_unowned), 80)
 
-/obj/item/organ/internal/heart/proc/Stop()
+/obj/item/organ/heart/proc/Stop()
 	beating = FALSE
 	update_appearance()
 	return TRUE
 
-/obj/item/organ/internal/heart/proc/Restart()
+/obj/item/organ/heart/proc/Restart()
 	beating = TRUE
 	update_appearance()
 	return TRUE
 
-/obj/item/organ/internal/heart/OnEatFrom(eater, feeder)
+/obj/item/organ/heart/OnEatFrom(eater, feeder)
 	. = ..()
 	beating = FALSE
 	update_appearance()
 
-/obj/item/organ/internal/heart/on_life(delta_time, times_fired)
+/obj/item/organ/heart/on_life(delta_time, times_fired)
 	..()
 
 	// If the owner doesn't need a heart, we don't need to do anything with it.
@@ -79,11 +78,10 @@
 			owner.stop_sound_channel(CHANNEL_HEARTBEAT)
 			beat = BEAT_NONE
 
-		if(owner.has_status_effect(/datum/status_effect/jitter))
+		if(owner.jitteriness)
 			if(owner.health > HEALTH_THRESHOLD_FULLCRIT && (!beat || beat == BEAT_SLOW))
 				owner.playsound_local(get_turf(owner), fastbeat, 40, 0, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
 				beat = BEAT_FAST
-
 		else if(beat == BEAT_FAST)
 			owner.stop_sound_channel(CHANNEL_HEARTBEAT)
 			beat = BEAT_NONE
@@ -95,10 +93,10 @@
 		owner.set_heartattack(TRUE)
 		failed = TRUE
 
-/obj/item/organ/internal/heart/get_availability(datum/species/owner_species)
+/obj/item/organ/heart/get_availability(datum/species/owner_species)
 	return !(NOBLOOD in owner_species.species_traits)
 
-/obj/item/organ/internal/heart/cursed
+/obj/item/organ/heart/cursed
 	name = "cursed heart"
 	desc = "A heart that, when inserted, will force you to pump it manually."
 	icon_state = "cursedheart-off"
@@ -116,7 +114,7 @@
 	var/heal_oxy = 0
 
 
-/obj/item/organ/internal/heart/cursed/attack(mob/living/carbon/human/accursed, mob/living/carbon/human/user, obj/target)
+/obj/item/organ/heart/cursed/attack(mob/living/carbon/human/accursed, mob/living/carbon/human/user, obj/target)
 	if(accursed == user && istype(accursed))
 		playsound(user,'sound/effects/singlebeat.ogg',40,TRUE)
 		user.temporarilyRemoveItemFromInventory(src, TRUE)
@@ -124,7 +122,7 @@
 	else
 		return ..()
 
-/obj/item/organ/internal/heart/cursed/on_life(delta_time, times_fired)
+/obj/item/organ/heart/cursed/on_life(delta_time, times_fired)
 	if(world.time > (last_pump + pump_delay))
 		if(ishuman(owner) && owner.client) //While this entire item exists to make people suffer, they can't control disconnects.
 			var/mob/living/carbon/human/accursed_human = owner
@@ -137,12 +135,12 @@
 		else
 			last_pump = world.time //lets be extra fair *sigh*
 
-/obj/item/organ/internal/heart/cursed/Insert(mob/living/carbon/accursed, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/heart/cursed/Insert(mob/living/carbon/accursed, special = 0)
 	..()
 	if(owner)
 		to_chat(owner, span_userdanger("Your heart has been replaced with a cursed one, you have to pump this one manually otherwise you'll die!"))
 
-/obj/item/organ/internal/heart/cursed/Remove(mob/living/carbon/accursed, special = FALSE)
+/obj/item/organ/heart/cursed/Remove(mob/living/carbon/accursed, special = 0)
 	..()
 	accursed.remove_client_colour(/datum/client_colour/cursed_heart_blood)
 
@@ -150,10 +148,10 @@
 	name = "Pump your blood"
 
 //You are now brea- pumping blood manually
-/datum/action/item_action/organ_action/cursed_heart/Trigger(trigger_flags)
+/datum/action/item_action/organ_action/cursed_heart/Trigger()
 	. = ..()
-	if(. && istype(target, /obj/item/organ/internal/heart/cursed))
-		var/obj/item/organ/internal/heart/cursed/cursed_heart = target
+	if(. && istype(target, /obj/item/organ/heart/cursed))
+		var/obj/item/organ/heart/cursed/cursed_heart = target
 
 		if(world.time < (cursed_heart.last_pump + (cursed_heart.pump_delay-10))) //no spam
 			to_chat(owner, span_userdanger("Too soon!"))
@@ -178,7 +176,7 @@
 	priority = 100 //it's an indicator you're dying, so it's very high priority
 	colour = "red"
 
-/obj/item/organ/internal/heart/cybernetic
+/obj/item/organ/heart/cybernetic
 	name = "basic cybernetic heart"
 	desc = "A basic electronic device designed to mimic the functions of an organic human heart."
 	icon_state = "heart-c"
@@ -190,7 +188,7 @@
 	var/ramount = 10
 	var/emp_vulnerability = 80 //Chance of permanent effects if emp-ed.
 
-/obj/item/organ/internal/heart/cybernetic/tier2
+/obj/item/organ/heart/cybernetic/tier2
 	name = "cybernetic heart"
 	desc = "An electronic device designed to mimic the functions of an organic human heart. Also holds an emergency dose of epinephrine, used automatically after facing severe trauma."
 	icon_state = "heart-c-u"
@@ -198,7 +196,7 @@
 	dose_available = TRUE
 	emp_vulnerability = 40
 
-/obj/item/organ/internal/heart/cybernetic/tier3
+/obj/item/organ/heart/cybernetic/tier3
 	name = "upgraded cybernetic heart"
 	desc = "An electronic device designed to mimic the functions of an organic human heart. Also holds an emergency dose of epinephrine, used automatically after facing severe trauma. This upgraded model can regenerate its dose after use."
 	icon_state = "heart-c-u2"
@@ -206,7 +204,7 @@
 	dose_available = TRUE
 	emp_vulnerability = 20
 
-/obj/item/organ/internal/heart/cybernetic/emp_act(severity)
+/obj/item/organ/heart/cybernetic/emp_act(severity)
 	. = ..()
 
 	// If the owner doesn't need a heart, we don't need to do anything with it.
@@ -216,7 +214,7 @@
 	if(. & EMP_PROTECT_SELF)
 		return
 	if(!COOLDOWN_FINISHED(src, severe_cooldown)) //So we cant just spam emp to kill people.
-		owner.set_dizzy_if_lower(20 SECONDS)
+		owner.Dizzy(10)
 		owner.losebreath += 10
 		COOLDOWN_START(src, severe_cooldown, 20 SECONDS)
 	if(prob(emp_vulnerability/severity)) //Chance of permanent effects
@@ -226,39 +224,38 @@
 						span_userdanger("You feel a terrible pain in your chest, as if your heart has stopped!"))
 		addtimer(CALLBACK(src, .proc/Restart), 10 SECONDS)
 
-/obj/item/organ/internal/heart/cybernetic/on_life(delta_time, times_fired)
+/obj/item/organ/heart/cybernetic/on_life(delta_time, times_fired)
 	. = ..()
 	if(dose_available && owner.health <= owner.crit_threshold && !owner.reagents.has_reagent(rid))
 		used_dose()
 
-/obj/item/organ/internal/heart/cybernetic/proc/used_dose()
+/obj/item/organ/heart/cybernetic/proc/used_dose()
 	owner.reagents.add_reagent(rid, ramount)
 	dose_available = FALSE
 
-/obj/item/organ/internal/heart/cybernetic/tier3/used_dose()
+/obj/item/organ/heart/cybernetic/tier3/used_dose()
 	. = ..()
 	addtimer(VARSET_CALLBACK(src, dose_available, TRUE), 5 MINUTES)
 
-/obj/item/organ/internal/heart/freedom
+/obj/item/organ/heart/freedom
 	name = "heart of freedom"
 	desc = "This heart pumps with the passion to give... something freedom."
-	organ_flags = ORGAN_SYNTHETIC  //the power of freedom prevents heart attacks
+	organ_flags = ORGAN_SYNTHETIC //the power of freedom prevents heart attacks
 	/// The cooldown until the next time this heart can give the host an adrenaline boost.
 	COOLDOWN_DECLARE(adrenaline_cooldown)
 
-/obj/item/organ/internal/heart/freedom/on_life(delta_time, times_fired)
+/obj/item/organ/heart/freedom/on_life(delta_time, times_fired)
 	. = ..()
 	if(owner.health < 5 && COOLDOWN_FINISHED(src, adrenaline_cooldown))
 		COOLDOWN_START(src, adrenaline_cooldown, rand(25 SECONDS, 1 MINUTES))
 		to_chat(owner, span_userdanger("You feel yourself dying, but you refuse to give up!"))
-		owner.heal_overall_damage(15, 15, 0, BODYTYPE_ORGANIC)
+		owner.heal_overall_damage(15, 15, 0, BODYPART_ORGANIC)
 		if(owner.reagents.get_reagent_amount(/datum/reagent/medicine/ephedrine) < 20)
 			owner.reagents.add_reagent(/datum/reagent/medicine/ephedrine, 10)
 
-/obj/item/organ/internal/heart/ethereal
+/obj/item/organ/heart/ethereal
 	name = "crystal core"
 	icon_state = "ethereal_heart" //Welp. At least it's more unique in functionaliy.
-	visual = TRUE //This is used by the ethereal species for color
 	desc = "A crystal-like organ that functions similarly to a heart for Ethereals. It can revive its owner."
 
 	///Cooldown for the next time we can crystalize
@@ -272,37 +269,38 @@
 	///Color of the heart, is set by the species on gain
 	var/ethereal_color = "#9c3030"
 
-/obj/item/organ/internal/heart/ethereal/Initialize(mapload)
+/obj/item/organ/heart/ethereal/Initialize(mapload)
 	. = ..()
 	add_atom_colour(ethereal_color, FIXED_COLOUR_PRIORITY)
 
-/obj/item/organ/internal/heart/ethereal/Insert(mob/living/carbon/owner, special = FALSE, drop_if_replaced = TRUE)
+
+/obj/item/organ/heart/ethereal/Insert(mob/living/carbon/owner, special = 0)
 	. = ..()
 	RegisterSignal(owner, COMSIG_MOB_STATCHANGE, .proc/on_stat_change)
 	RegisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL, .proc/on_owner_fully_heal)
-	RegisterSignal(owner, COMSIG_PARENT_QDELETING, .proc/owner_deleted)
+	RegisterSignal(owner, COMSIG_PARENT_PREQDELETED, .proc/owner_deleted)
 
-/obj/item/organ/internal/heart/ethereal/Remove(mob/living/carbon/owner, special = FALSE)
-	UnregisterSignal(owner, list(COMSIG_MOB_STATCHANGE, COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_PARENT_QDELETING))
+/obj/item/organ/heart/ethereal/Remove(mob/living/carbon/owner, special = 0)
+	UnregisterSignal(owner, list(COMSIG_MOB_STATCHANGE, COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_PARENT_PREQDELETED))
 	REMOVE_TRAIT(owner, TRAIT_CORPSELOCKED, SPECIES_TRAIT)
 	stop_crystalization_process(owner)
 	QDEL_NULL(current_crystal)
 	return ..()
 
-/obj/item/organ/internal/heart/ethereal/update_overlays()
+/obj/item/organ/heart/ethereal/update_overlays()
 	. = ..()
 	var/mutable_appearance/shine = mutable_appearance(icon, icon_state = "[icon_state]_shine")
 	shine.appearance_flags = RESET_COLOR //No color on this, just pure white
 	. += shine
 
 
-/obj/item/organ/internal/heart/ethereal/proc/on_owner_fully_heal(mob/living/carbon/healed, admin_heal)
+/obj/item/organ/heart/ethereal/proc/on_owner_fully_heal(mob/living/carbon/healed, admin_heal)
 	SIGNAL_HANDLER
 
 	QDEL_NULL(current_crystal) //Kicks out the ethereal
 
 ///Ran when examined while crystalizing, gives info about the amount of time left
-/obj/item/organ/internal/heart/ethereal/proc/on_examine(mob/living/carbon/human/examined_human, mob/user, list/examine_list)
+/obj/item/organ/heart/ethereal/proc/on_examine(mob/living/carbon/human/examined_human, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
 	if(!crystalize_timer_id)
@@ -317,7 +315,7 @@
 			examine_list += span_notice("Some crystals are coming out of [examined_human]. ")
 
 ///On stat changes, if the victim is no longer dead but they're crystalizing, cancel it, if they become dead, start the crystalizing process if possible
-/obj/item/organ/internal/heart/ethereal/proc/on_stat_change(mob/living/victim, new_stat)
+/obj/item/organ/heart/ethereal/proc/on_stat_change(mob/living/victim, new_stat)
 	SIGNAL_HANDLER
 
 	if(new_stat != DEAD)
@@ -344,11 +342,11 @@
 	crystalize_timer_id = addtimer(CALLBACK(src, .proc/crystalize, victim), CRYSTALIZE_PRE_WAIT_TIME, TIMER_STOPPABLE)
 
 	RegisterSignal(victim, COMSIG_HUMAN_DISARM_HIT, .proc/reset_crystalizing)
-	RegisterSignal(victim, COMSIG_PARENT_EXAMINE, .proc/on_examine, override = TRUE)
+	RegisterSignal(victim, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 	RegisterSignal(victim, COMSIG_MOB_APPLY_DAMAGE, .proc/on_take_damage)
 
 ///Ran when disarmed, prevents the ethereal from reviving
-/obj/item/organ/internal/heart/ethereal/proc/reset_crystalizing(mob/living/defender, mob/living/attacker, zone)
+/obj/item/organ/heart/ethereal/proc/reset_crystalizing(mob/living/defender, mob/living/attacker, zone)
 	SIGNAL_HANDLER
 	defender.visible_message(
 		span_notice("The crystals on [defender] are gently broken off."),
@@ -359,14 +357,14 @@
 
 
 ///Actually spawns the crystal which puts the ethereal in it.
-/obj/item/organ/internal/heart/ethereal/proc/crystalize(mob/living/ethereal)
+/obj/item/organ/heart/ethereal/proc/crystalize(mob/living/ethereal)
 
 	var/location = ethereal.loc
 
 	if(!COOLDOWN_FINISHED(src, crystalize_cooldown) || ethereal.stat != DEAD)
 		return //Should probably not happen, but lets be safe.
 
-	if(ismob(location) || isitem(location) || HAS_TRAIT_FROM(src, TRAIT_HUSK, CHANGELING_DRAIN)) //Stops crystallization if they are eaten by a dragon, turned into a legion, consumed by his grace, etc.
+	if(ismob(location) || isitem(location)) //Stops crystallization if they are eaten by a dragon, turned into a legion, consumed by his grace, etc.
 		to_chat(ethereal, span_warning("You were unable to finish your crystallization, for obvious reasons."))
 		stop_crystalization_process(ethereal, FALSE)
 		return
@@ -375,7 +373,7 @@
 	stop_crystalization_process(ethereal, TRUE)
 
 ///Stop the crystalization process, unregistering any signals and resetting any variables.
-/obj/item/organ/internal/heart/ethereal/proc/stop_crystalization_process(mob/living/ethereal, succesful = FALSE)
+/obj/item/organ/heart/ethereal/proc/stop_crystalization_process(mob/living/ethereal, succesful = FALSE)
 	UnregisterSignal(ethereal, COMSIG_HUMAN_DISARM_HIT)
 	UnregisterSignal(ethereal, COMSIG_PARENT_EXAMINE)
 	UnregisterSignal(ethereal, COMSIG_MOB_APPLY_DAMAGE)
@@ -390,14 +388,14 @@
 		deltimer(crystalize_timer_id)
 		crystalize_timer_id = null
 
-/obj/item/organ/internal/heart/ethereal/proc/owner_deleted(datum/source)
+/obj/item/organ/heart/ethereal/proc/owner_deleted(datum/source)
 	SIGNAL_HANDLER
 
 	stop_crystalization_process(owner)
 	return
 
 ///Lets you stop the process with enough brute damage
-/obj/item/organ/internal/heart/ethereal/proc/on_take_damage(datum/source, damage, damagetype, def_zone)
+/obj/item/organ/heart/ethereal/proc/on_take_damage(datum/source, damage, damagetype, def_zone)
 	SIGNAL_HANDLER
 	if(damagetype != BRUTE)
 		return
@@ -427,13 +425,13 @@
 	density = TRUE
 	anchored = TRUE
 	///The organ this crystal belongs to
-	var/obj/item/organ/internal/heart/ethereal/ethereal_heart
+	var/obj/item/organ/heart/ethereal/ethereal_heart
 	///Timer for the healing process. Stops if destroyed.
 	var/crystal_heal_timer
 	///Is the crystal still being built? True by default, gets changed after a timer.
 	var/being_built = TRUE
 
-/obj/structure/ethereal_crystal/Initialize(mapload, obj/item/organ/internal/heart/ethereal/ethereal_heart)
+/obj/structure/ethereal_crystal/Initialize(mapload, obj/item/organ/heart/ethereal/ethereal_heart)
 	. = ..()
 	if(!ethereal_heart)
 		stack_trace("Our crystal has no related heart")
@@ -442,8 +440,6 @@
 	ethereal_heart.owner.visible_message(span_notice("The crystals fully encase [ethereal_heart.owner]!"))
 	to_chat(ethereal_heart.owner, span_notice("You are encased in a huge crystal!"))
 	playsound(get_turf(src), 'sound/effects/ethereal_crystalization.ogg', 50)
-	var/atom/movable/possible_chair = ethereal_heart.owner.buckled
-	possible_chair?.unbuckle_mob(ethereal_heart.owner, force = TRUE)
 	ethereal_heart.owner.forceMove(src) //put that ethereal in
 	add_atom_colour(ethereal_heart.ethereal_color, FIXED_COLOUR_PRIORITY)
 	crystal_heal_timer = addtimer(CALLBACK(src, .proc/heal_ethereal), CRYSTALIZE_HEAL_TIME, TIMER_STOPPABLE)

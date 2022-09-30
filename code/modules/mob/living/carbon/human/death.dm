@@ -21,14 +21,17 @@ GLOBAL_LIST_EMPTY(dead_players_during_shift)
 	if(stat == DEAD)
 		return
 	stop_sound_channel(CHANNEL_HEARTBEAT)
-	var/obj/item/organ/internal/heart/H = getorganslot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/heart/H = getorganslot(ORGAN_SLOT_HEART)
 	if(H)
 		H.beat = BEAT_NONE
 
 	. = ..()
 
+	dizziness = 0
+	jitteriness = 0
 	if(client && !suiciding && !(client in GLOB.dead_players_during_shift))
 		GLOB.dead_players_during_shift += client
+		GLOB.deaths_during_shift++
 
 	if(!QDELETED(dna)) //The gibbed param is bit redundant here since dna won't exist at this point if they got deleted.
 		dna.species.spec_death(gibbed, src)
@@ -44,8 +47,14 @@ GLOBAL_LIST_EMPTY(dead_players_during_shift)
 	set_species(/datum/species/skeleton)
 	return TRUE
 
+
 /mob/living/carbon/proc/Drain()
 	become_husk(CHANGELING_DRAIN)
 	ADD_TRAIT(src, TRAIT_BADDNA, CHANGELING_DRAIN)
+	blood_volume = 0
+	return TRUE
+
+/mob/living/carbon/proc/makeUncloneable()
+	ADD_TRAIT(src, TRAIT_BADDNA, MADE_UNCLONEABLE)
 	blood_volume = 0
 	return TRUE

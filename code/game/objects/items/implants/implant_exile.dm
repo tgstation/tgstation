@@ -4,7 +4,7 @@
 /obj/item/implant/exile
 	name = "exile implant"
 	desc = "Prevents you from returning from away missions."
-	actions_types = null
+	activated = FALSE
 
 /obj/item/implant/exile/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>

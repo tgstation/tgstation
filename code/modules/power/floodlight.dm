@@ -61,15 +61,12 @@
 	density = TRUE
 	max_integrity = 100
 	integrity_failure = 0.8
-	idle_power_usage = 0
-	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION
+	idle_power_usage = 100
+	active_power_usage = 1000
 	anchored = FALSE
 	light_power = 1.75
-	/// List of power usage multipliers
 	var/list/light_setting_list = list(0, 5, 10, 15)
-	/// Constant coeff. for power usage
 	var/light_power_coefficient = 200
-	/// Intensity of the floodlight.
 	var/setting = FLOODLIGHT_OFF
 
 /obj/machinery/power/floodlight/process()
@@ -99,43 +96,38 @@
 	else
 		icon_state = initial(icon_state)
 	switch(setting)
-		if(FLOODLIGHT_OFF)
+		if(1)
 			setting_text = "OFF"
-		if(FLOODLIGHT_LOW)
+		if(2)
 			setting_text = "low power"
-		if(FLOODLIGHT_MED)
+		if(3)
 			setting_text = "standard lighting"
-		if(FLOODLIGHT_HIGH)
+		if(4)
 			setting_text = "high power"
 	if(user)
 		to_chat(user, span_notice("You set [src] to [setting_text]."))
 
-/obj/machinery/power/floodlight/wrench_act(mob/living/user, obj/item/tool)
-	. = ..()
-	default_unfasten_wrench(user, tool)
-	change_setting(FLOODLIGHT_OFF)
-	if(anchored)
-		connect_to_network()
+/obj/machinery/power/floodlight/attackby(obj/item/O, mob/user, params)
+	if(O.tool_behaviour == TOOL_WRENCH)
+		default_unfasten_wrench(user, O, time = 20)
+		change_setting(1)
+		if(anchored)
+			connect_to_network()
+		else
+			disconnect_from_network()
 	else
-		disconnect_from_network()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+		. = ..()
 
 /obj/machinery/power/floodlight/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
 	var/current = setting
-	if(current == FLOODLIGHT_OFF)
+	if(current == 1)
 		current = light_setting_list.len
 	else
 		current--
 	change_setting(current, user)
-
-/obj/machinery/power/floodlight/attack_robot(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/power/floodlight/attack_ai(mob/user)
-	return attack_hand(user)
 
 /obj/machinery/power/floodlight/atom_break(damage_flag)
 	. = ..()

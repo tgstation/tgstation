@@ -9,7 +9,7 @@ SUBSYSTEM_DEF(vis_overlays)
 
 /datum/controller/subsystem/vis_overlays/Initialize()
 	vis_overlay_cache = list()
-	return SS_INIT_SUCCESS
+	return ..()
 
 /datum/controller/subsystem/vis_overlays/fire(resumed = FALSE)
 	if(!resumed)

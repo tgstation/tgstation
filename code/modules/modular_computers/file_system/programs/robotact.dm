@@ -1,11 +1,12 @@
 /datum/computer_file/program/robotact
 	filename = "robotact"
 	filedesc = "RoboTact"
-	category = PROGRAM_CATEGORY_SCI
+	category = PROGRAM_CATEGORY_ROBO
 	extended_desc = "A built-in app for cyborg self-management and diagnostics."
 	ui_header = "robotact.gif" //DEBUG -- new icon before PR
 	program_icon_state = "command"
 	requires_ntnet = FALSE
+	transfer_access = null
 	available_on_ntnet = FALSE
 	unsendable = TRUE
 	undeletable = TRUE
@@ -13,14 +14,20 @@
 	size = 5
 	tgui_id = "NtosRobotact"
 	program_icon = "terminal"
+	///A typed reference to the computer, specifying the borg tablet type
+	var/obj/item/modular_computer/tablet/integrated/tablet
 
-/datum/computer_file/program/robotact/on_start(mob/living/user)
+/datum/computer_file/program/robotact/Destroy()
+	tablet = null
+	return ..()
+
+/datum/computer_file/program/robotact/run_program(mob/living/user)
 	if(!istype(computer, /obj/item/modular_computer/tablet/integrated))
 		to_chat(user, span_warning("A warning flashes across \the [computer]: Device Incompatible."))
 		return FALSE
 	. = ..()
 	if(.)
-		var/obj/item/modular_computer/tablet/integrated/tablet = computer
+		tablet = computer
 		if(tablet.device_theme == "syndicate")
 			program_icon_state = "command-syndicate"
 		return TRUE
@@ -30,45 +37,41 @@
 	var/list/data = get_header_data()
 	if(!iscyborg(user))
 		return data
+	var/mob/living/silicon/robot/borgo = tablet.borgo
 
-	//Implied, since we can't run on non tablets
-	var/obj/item/modular_computer/tablet/integrated/tablet = computer
-
-	var/mob/living/silicon/robot/cyborg = tablet.silicon_owner
-
-	data["name"] = cyborg.name
-	data["designation"] = cyborg.model
-	data["masterAI"] = cyborg.connected_ai //Master AI
+	data["name"] = borgo.name
+	data["designation"] = borgo.model //Borgo model type
+	data["masterAI"] = borgo.connected_ai //Master AI
 
 	var/charge = 0
 	var/maxcharge = 1
-	if(cyborg.cell)
-		charge = cyborg.cell.charge
-		maxcharge = cyborg.cell.maxcharge
+	if(borgo.cell)
+		charge = borgo.cell.charge
+		maxcharge = borgo.cell.maxcharge
 	data["charge"] = charge //Current cell charge
 	data["maxcharge"] = maxcharge //Cell max charge
-	data["integrity"] = ((cyborg.health + 100) / 2) //health, as percentage
-	data["lampIntensity"] = cyborg.lamp_intensity //lamp power setting
-	data["sensors"] = "[cyborg.sensors_on?"ACTIVE":"DISABLED"]"
-	data["printerPictures"] = cyborg.connected_ai? cyborg.connected_ai.aicamera.stored.len : cyborg.aicamera.stored.len //Number of pictures taken, synced to AI if available
-	data["printerToner"] = cyborg.toner //amount of toner
-	data["printerTonerMax"] = cyborg.tonermax //It's a variable, might as well use it
-	data["thrustersInstalled"] = cyborg.ionpulse //If we have a thruster uprade
-	data["thrustersStatus"] = "[cyborg.ionpulse_on?"ACTIVE":"DISABLED"]" //Feedback for thruster status
-	data["selfDestructAble"] = (cyborg.emagged || istype(cyborg, /mob/living/silicon/robot/model/syndicate))
+	data["integrity"] = ((borgo.health + 100) / 2) //Borgo health, as percentage
+	data["lampIntensity"] = borgo.lamp_intensity //Borgo lamp power setting
+	data["sensors"] = "[borgo.sensors_on?"ACTIVE":"DISABLED"]"
+	data["printerPictures"] =  borgo.connected_ai? borgo.connected_ai.aicamera.stored.len : borgo.aicamera.stored.len //Number of pictures taken, synced to AI if available
+	data["printerToner"] = borgo.toner //amount of toner
+	data["printerTonerMax"] = borgo.tonermax //It's a variable, might as well use it
+	data["thrustersInstalled"] = borgo.ionpulse //If we have a thruster uprade
+	data["thrustersStatus"] = "[borgo.ionpulse_on?"ACTIVE":"DISABLED"]" //Feedback for thruster status
+	data["selfDestructAble"] = (borgo.emagged || istype(borgo, /mob/living/silicon/robot/model/syndicate/))
 
 	//Cover, TRUE for locked
-	data["cover"] = "[cyborg.locked? "LOCKED":"UNLOCKED"]"
+	data["cover"] = "[borgo.locked? "LOCKED":"UNLOCKED"]"
 	//Ability to move. FAULT if lockdown wire is cut, DISABLED if borg locked, ENABLED otherwise
-	data["locomotion"] = "[cyborg.wires.is_cut(WIRE_LOCKDOWN)?"FAULT":"[cyborg.lockcharge?"DISABLED":"ENABLED"]"]"
+	data["locomotion"] = "[borgo.wires.is_cut(WIRE_LOCKDOWN)?"FAULT":"[borgo.lockcharge?"DISABLED":"ENABLED"]"]"
 	//Model wire. FAULT if cut, NOMINAL otherwise
-	data["wireModule"] = "[cyborg.wires.is_cut(WIRE_RESET_MODEL)?"FAULT":"NOMINAL"]"
+	data["wireModule"] = "[borgo.wires.is_cut(WIRE_RESET_MODEL)?"FAULT":"NOMINAL"]"
 	//DEBUG -- Camera(net) wire. FAULT if cut (or no cameranet camera), DISABLED if pulse-disabled, NOMINAL otherwise
-	data["wireCamera"] = "[!cyborg.builtInCamera || cyborg.wires.is_cut(WIRE_CAMERA)?"FAULT":"[cyborg.builtInCamera.can_use()?"NOMINAL":"DISABLED"]"]"
+	data["wireCamera"] = "[!borgo.builtInCamera || borgo.wires.is_cut(WIRE_CAMERA)?"FAULT":"[borgo.builtInCamera.can_use()?"NOMINAL":"DISABLED"]"]"
 	//AI wire. FAULT if wire is cut, CONNECTED if connected to AI, READY otherwise
-	data["wireAI"] = "[cyborg.wires.is_cut(WIRE_AI)?"FAULT":"[cyborg.connected_ai?"CONNECTED":"READY"]"]"
+	data["wireAI"] = "[borgo.wires.is_cut(WIRE_AI)?"FAULT":"[borgo.connected_ai?"CONNECTED":"READY"]"]"
 	//Law sync wire. FAULT if cut, NOMINAL otherwise
-	data["wireLaw"] = "[cyborg.wires.is_cut(WIRE_LAWSYNC)?"FAULT":"NOMINAL"]"
+	data["wireLaw"] = "[borgo.wires.is_cut(WIRE_LAWSYNC)?"FAULT":"NOMINAL"]"
 
 	return data
 
@@ -76,71 +79,68 @@
 	var/list/data = list()
 	if(!iscyborg(user))
 		return data
-	var/mob/living/silicon/robot/cyborg = user
-	//Implied
-	var/obj/item/modular_computer/tablet/integrated/tablet = computer
+	var/mob/living/silicon/robot/borgo = user
 
-	data["Laws"] = cyborg.laws.get_law_list(TRUE, TRUE, FALSE)
+	data["Laws"] = borgo.laws.get_law_list(TRUE, TRUE, FALSE)
 	data["borgLog"] = tablet.borglog
-	data["borgUpgrades"] = cyborg.upgrades
+	data["borgUpgrades"] = borgo.upgrades
 	return data
 
 /datum/computer_file/program/robotact/ui_act(action, params)
 	. = ..()
 	if(.)
 		return
-	//Implied type, memes
-	var/obj/item/modular_computer/tablet/integrated/tablet = computer
-	var/mob/living/silicon/robot/cyborg = tablet.silicon_owner
+
+	var/mob/living/silicon/robot/borgo = tablet.borgo
 
 	switch(action)
 		if("coverunlock")
-			if(cyborg.locked)
-				cyborg.locked = FALSE
-				cyborg.update_icons()
-				if(cyborg.emagged)
-					cyborg.logevent("ChÃ¥vÃis cover lock has been [cyborg.locked ? "engaged" : "released"]") //"The cover interface glitches out for a split second"
+			if(borgo.locked)
+				borgo.locked = FALSE
+				borgo.update_icons()
+				if(borgo.emagged)
+					borgo.logevent("ChÃ¥vÃis cover lock has been [borgo.locked ? "engaged" : "released"]") //"The cover interface glitches out for a split second"
 				else
-					cyborg.logevent("Chassis cover lock has been [cyborg.locked ? "engaged" : "released"]")
+					borgo.logevent("Chassis cover lock has been [borgo.locked ? "engaged" : "released"]")
 
 		if("lawchannel")
-			cyborg.set_autosay()
+			borgo.set_autosay()
 
 		if("lawstate")
-			cyborg.checklaws()
+			borgo.checklaws()
 
 		if("alertPower")
-			if(cyborg.stat == CONSCIOUS)
-				if(!cyborg.cell || !cyborg.cell.charge)
-					cyborg.visible_message(span_notice("The power warning light on [span_name("[cyborg]")] flashes urgently."), \
+			if(borgo.stat == CONSCIOUS)
+				if(!borgo.cell || !borgo.cell.charge)
+					borgo.visible_message(span_notice("The power warning light on [span_name("[borgo]")] flashes urgently."), \
 						"You announce you are operating in low power mode.")
-					playsound(cyborg, 'sound/machines/buzz-two.ogg', 50, FALSE)
+					playsound(borgo, 'sound/machines/buzz-two.ogg', 50, FALSE)
 
 		if("toggleSensors")
-			cyborg.toggle_sensors()
+			borgo.toggle_sensors()
 
 		if("viewImage")
-			if(cyborg.connected_ai)
-				cyborg.connected_ai.aicamera?.viewpictures(usr)
+			if(borgo.connected_ai)
+				borgo.connected_ai.aicamera?.viewpictures(usr)
 			else
-				cyborg.aicamera?.viewpictures(usr)
+				borgo.aicamera?.viewpictures(usr)
 
 		if("printImage")
-			var/obj/item/camera/siliconcam/robot_camera/borgcam = cyborg.aicamera
+			var/obj/item/camera/siliconcam/robot_camera/borgcam = borgo.aicamera
 			borgcam?.borgprint(usr)
 
 		if("toggleThrusters")
-			cyborg.toggle_ionpulse()
+			borgo.toggle_ionpulse()
 
 		if("lampIntensity")
-			cyborg.lamp_intensity = params["ref"]
-			cyborg.toggle_headlamp(FALSE, TRUE)
+			borgo.lamp_intensity = params["ref"]
+			borgo.toggle_headlamp(FALSE, TRUE)
 
 		if("selfDestruct")
-			if(cyborg.stat || cyborg.lockcharge) //No detonation while stunned or locked down
+			if(borgo.stat || borgo.lockcharge) //No detonation while stunned or locked down
 				return
-			if(cyborg.emagged || istype(cyborg, /mob/living/silicon/robot/model/syndicate)) //This option shouldn't even be showing otherwise
-				cyborg.self_destruct(cyborg)
+			if(borgo.emagged || istype(borgo, /mob/living/silicon/robot/model/syndicate/)) //This option shouldn't even be showing otherwise
+				borgo.self_destruct(borgo)
 
 /**
  * Forces a full update of the UI, if currently open.
@@ -149,9 +149,7 @@
  * law changes and borg log additions.
  */
 /datum/computer_file/program/robotact/proc/force_full_update()
-	if(!istype(computer, /obj/item/modular_computer/tablet/integrated))
-		return
-	var/obj/item/modular_computer/tablet/integrated/tablet = computer
-	var/datum/tgui/active_ui = SStgui.get_open_ui(tablet.silicon_owner, src)
-	if(active_ui)
-		active_ui.send_full_update()
+	if(tablet)
+		var/datum/tgui/active_ui = SStgui.get_open_ui(tablet.borgo, src)
+		if(active_ui)
+			active_ui.send_full_update()

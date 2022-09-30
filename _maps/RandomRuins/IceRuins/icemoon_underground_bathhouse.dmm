@@ -18,11 +18,14 @@
 /area/ruin/powered/bathhouse)
 "e" = (
 /obj/structure/mirror/directional/north,
-/obj/structure/sink/directional/south,
+/obj/structure/sink{
+	pixel_y = 20
+	},
 /turf/open/floor/iron/white,
 /area/ruin/powered/bathhouse)
 "f" = (
-/obj/machinery/shower/directional/south{
+/obj/machinery/shower{
+	pixel_y = 16;
 	reagent_id = /datum/reagent/water/holywater
 	},
 /obj/structure/curtain,
@@ -44,7 +47,7 @@
 /area/ruin/powered/bathhouse)
 "i" = (
 /obj/machinery/door/airlock/freezer{
-	name = "Bath House Airlock"
+	name = "bath house airlock"
 	},
 /turf/open/floor/iron/white,
 /area/ruin/powered/bathhouse)
@@ -64,7 +67,7 @@
 /turf/open/floor/wood,
 /area/ruin/powered/bathhouse)
 "n" = (
-/turf/open/misc/asteroid/snow/icemoon,
+/turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "o" = (
 /obj/structure/bed,

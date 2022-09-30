@@ -71,7 +71,7 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "m" = (
-/obj/effect/mob_spawn/ghost_role/human/golem/adamantine,
+/obj/effect/mob_spawn/human/golem/adamantine,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "n" = (
@@ -83,9 +83,7 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "p" = (
-/obj/item/circuitboard/machine/ore_redemption,
-/obj/structure/frame/machine,
-/obj/item/stack/cable_coil/five,
+/obj/machinery/mineral/ore_redemption,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "q" = (
@@ -149,29 +147,21 @@
 /obj/item/surgical_drapes{
 	pixel_x = 15
 	},
-/obj/item/storage/medkit/fire,
-/obj/item/storage/medkit/fire,
-/obj/item/stock_parts/matter_bin,
-/obj/item/assembly/igniter,
-/obj/item/stock_parts/micro_laser,
-/obj/item/stack/sheet/glass,
-/obj/item/stack/sheet/glass,
-/obj/item/stack/sheet/glass,
-/obj/item/stack/sheet/glass,
-/obj/item/stack/sheet/glass,
+/obj/item/storage/firstaid/fire,
+/obj/item/storage/firstaid/fire,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "B" = (
-/obj/item/storage/medkit/fire,
+/obj/item/storage/firstaid/fire,
 /obj/structure/table/wood,
-/obj/item/storage/medkit/fire,
+/obj/item/storage/firstaid/fire,
 /obj/machinery/light/directional/south,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "C" = (
-/obj/item/storage/medkit/brute,
+/obj/item/storage/firstaid/brute,
 /obj/structure/table/wood,
-/obj/item/storage/medkit/brute,
+/obj/item/storage/firstaid/brute,
 /obj/item/areaeditor/blueprints{
 	desc = "Use to build new structures in the wastes.";
 	name = "land claim"
@@ -179,9 +169,9 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "D" = (
-/obj/item/storage/medkit/brute,
+/obj/item/storage/firstaid/brute,
 /obj/structure/table/wood,
-/obj/item/storage/medkit/brute,
+/obj/item/storage/firstaid/brute,
 /obj/item/disk/design_disk/golem_shell,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
@@ -218,7 +208,7 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "M" = (
-/obj/effect/mob_spawn/ghost_role/human/golem/adamantine,
+/obj/effect/mob_spawn/human/golem/adamantine,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
@@ -240,7 +230,7 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "U" = (
-/obj/effect/mob_spawn/ghost_role/human/golem/adamantine,
+/obj/effect/mob_spawn/human/golem/adamantine,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)

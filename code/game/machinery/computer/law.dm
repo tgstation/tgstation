@@ -21,7 +21,8 @@
 			to_chat(user, span_alert("Upload failed! Check to make sure [current.name] is functioning properly."))
 			current = null
 			return
-		if(!is_valid_z_level(get_turf(current), get_turf(user)))
+		var/turf/currentloc = get_turf(current)
+		if(currentloc && user.z != currentloc.z)
 			to_chat(user, span_alert("Upload failed! Unable to establish a connection to [current.name]. You're too far away!"))
 			current = null
 			return

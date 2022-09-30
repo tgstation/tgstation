@@ -62,7 +62,8 @@ const setupApp = async () => {
         }
         suite.run();
       });
-    } catch (error) {
+    }
+    catch (error) {
       sendMessage({ type: 'error', error });
     }
   }

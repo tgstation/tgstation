@@ -71,8 +71,7 @@
 
 /// Called on multitool click, prints diagnostic information to the user.
 /obj/item/computer_hardware/proc/diagnostics(mob/user)
-	to_chat(user, "Hardware Integrity Test... (Corruption: [damage]/[max_damage]) \
-		[damage > damage_failure ? "FAIL" : damage > damage_malfunction ? "WARN" : "PASS"]")
+	to_chat(user, "Hardware Integrity Test... (Corruption: [damage]/[max_damage]) [damage > damage_failure ? "FAIL" : damage > damage_malfunction ? "WARN" : "PASS"]")
 
 /// Handles damage checks
 /obj/item/computer_hardware/proc/check_functionality()

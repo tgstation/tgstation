@@ -17,13 +17,13 @@
 
 /obj/item/firing_pin/New(newloc)
 	..()
-	if(isgun(newloc))
+	if(istype(newloc, /obj/item/gun))
 		gun = newloc
 
 /obj/item/firing_pin/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
 	if(proximity_flag)
-		if(isgun(target))
+		if(istype(target, /obj/item/gun))
 			var/obj/item/gun/G = target
 			var/obj/item/firing_pin/old_pin = G.pin
 			if(old_pin && (force_replace || old_pin.pin_removeable))
@@ -89,7 +89,7 @@
 /obj/item/firing_pin/test_range/pin_auth(mob/living/user)
 	if(!istype(user))
 		return FALSE
-	if (istype(get_area(user), /area/station/security/range))
+	if (istype(get_area(user), /area/security/range))
 		return TRUE
 	return FALSE
 
@@ -247,7 +247,7 @@
 	..()
 
 /obj/item/firing_pin/paywall/attackby(obj/item/M, mob/user, params)
-	if(isidcard(M))
+	if(istype(M, /obj/item/card/id))
 		var/obj/item/card/id/id = M
 		if(!id.registered_account)
 			to_chat(user, span_warning("ERROR: Identification card lacks registered bank account!"))
@@ -261,8 +261,11 @@
 			pin_owner = null
 			owned = FALSE
 			return
-		var/transaction_amount = tgui_input_number(user, "Insert valid deposit amount for gun purchase", "Money Deposit")
-		if(!transaction_amount || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		var/transaction_amount = input(user, "Insert valid deposit amount for gun purchase", "Money Deposit") as null|num
+		if(transaction_amount < 1)
+			to_chat(user, span_warning("ERROR: Invalid amount designated."))
+			return
+		if(!transaction_amount)
 			return
 		pin_owner = id
 		owned = TRUE

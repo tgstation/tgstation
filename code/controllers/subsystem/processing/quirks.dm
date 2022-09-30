@@ -18,21 +18,19 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 
 	/// A list of quirks that can not be used with each other. Format: list(quirk1,quirk2),list(quirk3,quirk4)
 	var/static/list/quirk_blacklist = list(
-		list("Blind", "Nearsighted"),
-		list("Jolly", "Depression", "Apathetic", "Hypersensitive"),
-		list("Ageusia", "Vegetarian", "Deviant Tastes", "Gamer"),
-		list("Ananas Affinity", "Ananas Aversion", "Gamer"),
-		list("Alcohol Tolerance", "Light Drinker"),
-		list("Clown Enjoyer", "Mime Fan"),
+		list("Blind","Nearsighted"),
+		list("Jolly","Depression","Apathetic","Hypersensitive"),
+		list("Ageusia","Vegetarian","Deviant Tastes"),
+		list("Ananas Affinity","Ananas Aversion"),
+		list("Alcohol Tolerance","Light Drinker"),
+		list("Clown Enjoyer","Mime Fan"),
 		list("Bad Touch", "Friendly"),
 		list("Extrovert", "Introvert"),
-		list("Prosthetic Limb", "Quadruple Amputee"),
-		list("Quadruple Amputee", "Paraplegic","Frail"),
 	)
 
-/datum/controller/subsystem/processing/quirks/Initialize()
+/datum/controller/subsystem/processing/quirks/Initialize(timeofday)
 	get_quirks()
-	return SS_INIT_SUCCESS
+	return ..()
 
 /// Returns the list of possible quirks
 /datum/controller/subsystem/processing/quirks/proc/get_quirks()
@@ -74,6 +72,12 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 			badquirk = TRUE
 	if(badquirk)
 		cli.prefs.save_character()
+
+	// Assign wayfinding pinpointer granting quirk if they're new
+	if(cli.get_exp_living(TRUE) < EXP_ASSIGN_WAYFINDER && !user.has_quirk(/datum/quirk/item_quirk/needswayfinder))
+		var/datum/quirk/wayfinder = /datum/quirk/item_quirk/needswayfinder
+		if(user.add_quirk(wayfinder))
+			SSblackbox.record_feedback("nested tally", "quirks_taken", 1, list(initial(wayfinder.name)))
 
 /*
  *Randomises the quirks for a specified mob

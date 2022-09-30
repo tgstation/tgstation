@@ -14,6 +14,12 @@
 /obj/structure/lattice,
 /turf/template_noop,
 /area/template_noop)
+"ad" = (
+/obj/structure/girder,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg2"
+	},
+/area/ruin/unpowered)
 "ae" = (
 /obj/item/stack/sheet/iron,
 /obj/structure/lattice,
@@ -30,8 +36,9 @@
 /turf/open/floor/iron/airless,
 /area/ruin/unpowered)
 "ah" = (
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
 /area/ruin/unpowered)
 "ai" = (
 /turf/closed/wall,
@@ -45,8 +52,9 @@
 /area/template_noop)
 "ak" = (
 /obj/item/stack/rods,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg2"
+	},
 /area/ruin/unpowered)
 "al" = (
 /obj/structure/fluff/broken_flooring{
@@ -66,16 +74,40 @@
 /area/ruin/unpowered)
 "ao" = (
 /obj/structure/closet/emcloset,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg3"
+	},
+/area/ruin/unpowered)
+"ap" = (
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg3"
+	},
+/area/ruin/unpowered)
+"aq" = (
+/obj/structure/girder,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg3"
+	},
 /area/ruin/unpowered)
 "ar" = (
 /obj/structure/girder,
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered)
+"as" = (
+/obj/item/stack/sheet/iron,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg2"
+	},
+/area/ruin/unpowered)
 "at" = (
 /obj/item/stack/rods,
 /turf/open/floor/iron/airless,
+/area/ruin/unpowered)
+"au" = (
+/obj/item/stack/sheet/iron,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg3"
+	},
 /area/ruin/unpowered)
 "av" = (
 /obj/effect/decal/remains/human,
@@ -88,6 +120,12 @@
 "ax" = (
 /mob/living/simple_animal/hostile/retaliate/ghost,
 /turf/open/floor/iron/airless,
+/area/ruin/unpowered)
+"ay" = (
+/obj/item/stack/tile/iron/base,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg2"
+	},
 /area/ruin/unpowered)
 "az" = (
 /obj/structure/fluff/broken_flooring{
@@ -107,8 +145,9 @@
 /area/template_noop)
 "aB" = (
 /obj/item/stack/tile/iron/base,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
 /area/ruin/unpowered)
 "aC" = (
 /obj/machinery/light/broken/directional/south,
@@ -120,8 +159,9 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg2"
+	},
 /area/ruin/unpowered)
 "aE" = (
 /obj/structure/door_assembly/door_assembly_mhatch{
@@ -194,8 +234,9 @@
 /area/ruin/unpowered)
 "aP" = (
 /obj/machinery/light/broken/directional/north,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg3"
+	},
 /area/ruin/unpowered)
 "aQ" = (
 /obj/item/stack/tile/iron/base,
@@ -219,14 +260,16 @@
 "aU" = (
 /obj/structure/table/wood,
 /obj/item/shard,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg3"
+	},
 /area/ruin/unpowered)
 "aV" = (
 /obj/structure/table/wood,
 /obj/item/plate,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg3"
+	},
 /area/ruin/unpowered)
 "aW" = (
 /obj/structure/table,
@@ -264,17 +307,23 @@
 /turf/open/floor/iron/cafeteria/airless,
 /area/ruin/unpowered)
 "bd" = (
-/obj/structure/chair/stool/bar/directional/west,
+/obj/structure/chair/stool/bar/directional/east,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
 /turf/open/floor/iron/airless,
 /area/ruin/unpowered)
+"be" = (
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg2"
+	},
+/area/ruin/unpowered)
 "bg" = (
 /obj/item/stack/sheet/iron,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
 /area/ruin/unpowered)
 "bh" = (
 /obj/machinery/light/broken/directional/west,
@@ -284,8 +333,9 @@
 "bi" = (
 /obj/item/stack/sheet/iron,
 /obj/item/clothing/head/chefhat,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg3"
+	},
 /area/ruin/unpowered)
 "bj" = (
 /obj/item/plate,
@@ -294,18 +344,21 @@
 /area/ruin/unpowered)
 "bk" = (
 /obj/structure/table_frame/wood,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg3"
+	},
 /area/ruin/unpowered)
 "bl" = (
 /obj/structure/girder,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
 /area/ruin/unpowered)
 "bm" = (
 /obj/item/chair,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg3"
+	},
 /area/ruin/unpowered)
 "bo" = (
 /obj/item/stack/rods,
@@ -314,14 +367,22 @@
 "bp" = (
 /obj/item/stack/sheet/iron,
 /obj/structure/girder,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/unpowered)
+"bq" = (
+/obj/item/stack/tile/iron/base,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg3"
+	},
 /area/ruin/unpowered)
 "br" = (
 /obj/structure/girder,
 /obj/item/stack/sheet/iron,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
 /area/ruin/unpowered)
 "bt" = (
 /obj/structure/fluff/broken_flooring{
@@ -510,11 +571,11 @@ aa
 aa
 aa
 ac
-ah
+ap
 aw
 ag
 ag
-ah
+be
 bH
 aa
 ac
@@ -533,19 +594,19 @@ aa
 aa
 aa
 bw
-bl
+ad
 ag
 ag
 ag
 ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
+be
+be
+be
+be
+be
+be
+be
+be
 bH
 aa
 aa
@@ -555,21 +616,21 @@ aa
 aa
 aa
 ac
-ah
-ah
+ap
+ap
 at
 bD
 ag
 ai
 ai
 ai
-bl
+aq
 ah
 bg
 bl
 ah
-aB
-ah
+ay
+be
 ac
 aa
 "}
@@ -578,7 +639,7 @@ aa
 ac
 ac
 ac
-ah
+be
 ai
 aw
 ag
@@ -587,12 +648,12 @@ aE
 aH
 aQ
 aH
+ap
+ap
 ah
 ah
-ah
-ah
-ah
-ah
+be
+be
 aa
 aa
 "}
@@ -600,7 +661,7 @@ aa
 aa
 ac
 ac
-ah
+ap
 am
 ai
 ag
@@ -612,10 +673,10 @@ ai
 ai
 ai
 ai
-bl
+aq
 bp
 ah
-bg
+as
 ac
 aa
 "}
@@ -623,7 +684,7 @@ aa
 aa
 ac
 ac
-ah
+ap
 ah
 ai
 av
@@ -635,8 +696,8 @@ aR
 aW
 aW
 bh
-ah
-ah
+ap
+ap
 br
 ac
 ac
@@ -646,9 +707,9 @@ aa
 aa
 aa
 aa
+ap
 ah
-ah
-bl
+aq
 ag
 aw
 ag
@@ -658,8 +719,8 @@ aR
 aR
 aR
 bi
-ah
-aB
+ap
+bq
 bl
 ac
 ac
@@ -669,7 +730,7 @@ aa
 aa
 aa
 bw
-bg
+as
 ai
 ai
 ag
@@ -681,9 +742,9 @@ aR
 aR
 ba
 bj
-bg
-ah
-bl
+au
+ap
+aq
 ac
 ac
 ab
@@ -760,7 +821,7 @@ ac
 (15,1,1) = {"
 aa
 aa
-bl
+ad
 ai
 ai
 ai
@@ -773,8 +834,8 @@ aT
 ah
 aM
 aT
-bg
-ah
+au
+be
 ai
 ac
 aa
@@ -783,8 +844,8 @@ aa
 (16,1,1) = {"
 aa
 ac
-ah
-ah
+ap
+ap
 ao
 ai
 ag
@@ -794,11 +855,11 @@ aG
 aO
 bI
 ac
-ah
-ah
+be
+ap
 ac
-bg
-bl
+au
+aq
 aa
 aa
 aa
@@ -808,7 +869,7 @@ aa
 ac
 bx
 ak
-ah
+ap
 ai
 ag
 ag
@@ -817,7 +878,7 @@ ai
 aM
 aU
 aB
-ah
+ap
 bk
 bm
 az
@@ -830,19 +891,19 @@ aa
 aa
 aa
 ae
-ah
-ah
-bl
+ap
+ap
+aq
 ag
 ag
 aC
 ai
 aM
-ah
-ah
-ah
+ap
+ap
+ap
 ac
-ah
+ap
 ac
 aa
 aa
@@ -854,17 +915,17 @@ aa
 aa
 aa
 bz
-ah
+ap
 ai
 ag
 ag
 ag
 ai
 aP
-ah
+ap
 ac
-ah
-ah
+be
+ap
 aZ
 aa
 aa
@@ -877,16 +938,16 @@ aa
 aa
 aa
 ac
-ah
+ap
 ai
 ag
 ag
 ag
 ai
-ah
+ap
 aV
 aD
-ah
+ap
 ac
 ac
 aa
@@ -900,15 +961,15 @@ aa
 aa
 aa
 aa
-bg
+as
 ar
 ag
 ag
 ag
 ai
-bg
-ah
-ah
+au
+ap
+ap
 aY
 ac
 ac
@@ -924,14 +985,14 @@ aa
 aa
 aa
 ac
-ah
+ap
 aw
 at
 ag
 ai
 ai
 ai
-bl
+aq
 ac
 aa
 bo

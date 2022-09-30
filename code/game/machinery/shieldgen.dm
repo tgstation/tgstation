@@ -114,7 +114,7 @@
 	opacity = FALSE
 	anchored = FALSE
 	pressure_resistance = 2*ONE_ATMOSPHERE
-	req_access = list(ACCESS_ENGINEERING)
+	req_access = list(ACCESS_ENGINE)
 	max_integrity = 100
 	var/active = FALSE
 	var/list/deployed_shields
@@ -184,35 +184,15 @@
 			to_chat(user, span_warning("The device must first be secured to the floor!"))
 	return
 
-/obj/machinery/shieldgen/screwdriver_act(mob/living/user, obj/item/tool)
-	tool.play_tool_sound(src, 100)
-	panel_open = !panel_open
-	if(panel_open)
-		to_chat(user, span_notice("You open the panel and expose the wiring."))
-	else
-		to_chat(user, span_notice("You close the panel."))
-	return TRUE
-
-/obj/machinery/shieldgen/wrench_act(mob/living/user, obj/item/tool)
-	. = TRUE
-	if(locked)
-		to_chat(user, span_warning("The bolts are covered! Unlocking this would retract the covers."))
-		return
-	if(!anchored && !isinspace())
-		tool.play_tool_sound(src, 100)
-		to_chat(user, span_notice("You secure \the [src] to the floor!"))
-		set_anchored(TRUE)
-	else if(anchored)
-		tool.play_tool_sound(src, 100)
-		to_chat(user, span_notice("You unsecure \the [src] from the floor!"))
-		if(active)
-			to_chat(user, span_notice("\The [src] shuts off!"))
-			shields_down()
-		set_anchored(FALSE)
-
-
 /obj/machinery/shieldgen/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/stack/cable_coil) && (machine_stat & BROKEN) && panel_open)
+	if(W.tool_behaviour == TOOL_SCREWDRIVER)
+		W.play_tool_sound(src, 100)
+		panel_open = !panel_open
+		if(panel_open)
+			to_chat(user, span_notice("You open the panel and expose the wiring."))
+		else
+			to_chat(user, span_notice("You close the panel."))
+	else if(istype(W, /obj/item/stack/cable_coil) && (machine_stat & BROKEN) && panel_open)
 		var/obj/item/stack/cable_coil/coil = W
 		if (coil.get_amount() < 1)
 			to_chat(user, span_warning("You need one length of cable to repair [src]!"))
@@ -226,6 +206,22 @@
 			set_machine_stat(machine_stat & ~BROKEN)
 			to_chat(user, span_notice("You repair \the [src]."))
 			update_appearance()
+
+	else if(W.tool_behaviour == TOOL_WRENCH)
+		if(locked)
+			to_chat(user, span_warning("The bolts are covered! Unlocking this would retract the covers."))
+			return
+		if(!anchored && !isinspace())
+			W.play_tool_sound(src, 100)
+			to_chat(user, span_notice("You secure \the [src] to the floor!"))
+			set_anchored(TRUE)
+		else if(anchored)
+			W.play_tool_sound(src, 100)
+			to_chat(user, span_notice("You unsecure \the [src] from the floor!"))
+			if(active)
+				to_chat(user, span_notice("\The [src] shuts off!"))
+				shields_down()
+			set_anchored(FALSE)
 
 	else if(W.GetID())
 		if(allowed(user) && !(obj_flags & EMAGGED))
@@ -245,7 +241,7 @@
 		return
 	obj_flags |= EMAGGED
 	locked = FALSE
-	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, "sparks", 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	to_chat(user, span_warning("You short out the access controller."))
 
 /obj/machinery/shieldgen/update_icon_state()
@@ -264,6 +260,8 @@
 	req_access = list(ACCESS_TELEPORTER)
 	flags_1 = CONDUCT_1
 	use_power = NO_POWER_USE
+	idle_power_usage = 10
+	active_power_usage = 50
 	max_integrity = 300
 	var/active = FALSE
 	var/locked = TRUE
@@ -390,9 +388,9 @@
 	return ..()
 
 
-/obj/machinery/power/shieldwallgen/wrench_act(mob/living/user, obj/item/tool)
+/obj/machinery/power/shieldwallgen/wrench_act(mob/living/user, obj/item/I)
 	. = ..()
-	. |= default_unfasten_wrench(user, tool, time = 0)
+	. |= default_unfasten_wrench(user, I, 0)
 	var/turf/T = get_turf(src)
 	update_cable_icons_on_turf(T)
 	if(. == SUCCESSFUL_UNFASTEN && anchored)
@@ -432,13 +430,13 @@
 			span_notice("You turn off \the [src]."), \
 			span_hear("You hear heavy droning fade out."))
 		active = FALSE
-		user.log_message("deactivated [src].", LOG_GAME)
+		log_game("[src] was deactivated by [key_name(user)] at [AREACOORD(src)]")
 	else
 		user.visible_message(span_notice("[user] turned \the [src] on."), \
 			span_notice("You turn on \the [src]."), \
 			span_hear("You hear heavy droning."))
 		active = ACTIVE_SETUPFIELDS
-		user.log_message("activated [src].", LOG_GAME)
+		log_game("[src] was activated by [key_name(user)] at [AREACOORD(src)]")
 	add_fingerprint(user)
 
 /obj/machinery/power/shieldwallgen/emag_act(mob/user)
@@ -447,7 +445,7 @@
 		return
 	obj_flags |= EMAGGED
 	locked = FALSE
-	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, "sparks", 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	to_chat(user, span_warning("You short out the access controller."))
 
 //////////////Containment Field START
@@ -518,5 +516,5 @@
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return prob(20)
 	else
-		if(isprojectile(mover))
+		if(istype(mover, /obj/projectile))
 			return prob(10)

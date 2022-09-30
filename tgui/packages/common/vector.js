@@ -32,17 +32,17 @@ export const vecDivide = (...vecs) => {
 };
 
 export const vecScale = (vec, n) => {
-  return map((x) => x * n)(vec);
+  return map(x => x * n)(vec);
 };
 
-export const vecInverse = (vec) => {
-  return map((x) => -x)(vec);
+export const vecInverse = vec => {
+  return map(x => -x)(vec);
 };
 
-export const vecLength = (vec) => {
+export const vecLength = vec => {
   return Math.sqrt(reduce(ADD)(zipWith(MUL)(vec, vec)));
 };
 
-export const vecNormalize = (vec) => {
+export const vecNormalize = vec => {
   return vecDivide(vec, vecLength(vec));
 };

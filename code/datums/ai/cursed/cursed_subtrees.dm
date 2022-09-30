@@ -2,8 +2,7 @@
 	var/obj/item/item_pawn = controller.pawn
 
 	//make sure we have a target
-	var/datum/weakref/target_ref = controller.blackboard[BB_CURSE_TARGET]
-	var/mob/living/carbon/curse_target = target_ref?.resolve()
+	var/mob/living/carbon/curse_target = controller.blackboard[BB_CURSE_TARGET]
 	if(!curse_target)
 		controller.queue_behavior(/datum/ai_behavior/find_and_set, BB_CURSE_TARGET, /mob/living/carbon, CURSED_VIEW_RANGE)
 		return
@@ -12,4 +11,4 @@
 		controller.blackboard[BB_CURSE_TARGET] = null
 		return
 	controller.current_movement_target = curse_target
-	controller.queue_behavior(/datum/ai_behavior/item_move_close_and_attack/ghostly/cursed)
+	controller.queue_behavior(/datum/ai_behavior/item_move_close_and_attack/cursed)

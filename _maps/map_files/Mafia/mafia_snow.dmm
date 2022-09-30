@@ -1,30 +1,38 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/closed/indestructible/riveted,
-/area/centcom/mafia)
+/area/mafia)
 "b" = (
 /turf/closed/indestructible/riveted/plastinum,
-/area/centcom/mafia)
+/area/mafia)
 "d" = (
 /turf/open/floor/plating,
-/area/centcom/mafia)
+/area/mafia)
+"e" = (
+/turf/open/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/mafia)
 "f" = (
-/obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/plating,
-/area/centcom/mafia)
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/mafia)
 "g" = (
 /obj/mafia_game_board,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating,
-/area/centcom/mafia)
+/turf/open/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/mafia)
 "h" = (
-/obj/structure/grille/indestructible,
+/obj/structure/grille/indestructable,
 /turf/open/floor/plating,
-/area/centcom/mafia)
+/area/mafia)
 "i" = (
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating,
-/area/centcom/mafia)
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/mafia)
 "j" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	max_integrity = 99999;
@@ -32,38 +40,30 @@
 	},
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/plating,
-/area/centcom/mafia)
+/area/mafia)
 "k" = (
 /obj/mafia_game_board,
 /turf/open/floor/plating,
-/area/centcom/mafia)
+/area/mafia)
 "l" = (
-/obj/item/bedsheet/brown{
-	dir = 4
-	},
-/obj/structure/bed{
-	dir = 4
-	},
+/obj/item/bedsheet/brown,
+/obj/structure/bed,
 /turf/open/floor/holofloor/wood,
-/area/centcom/mafia)
+/area/mafia)
 "m" = (
 /obj/effect/landmark/mafia,
 /turf/open/floor/holofloor/wood,
-/area/centcom/mafia)
+/area/mafia)
 "n" = (
 /obj/item/bedsheet/green,
 /obj/structure/bed,
 /turf/open/floor/holofloor/wood,
-/area/centcom/mafia)
+/area/mafia)
 "o" = (
-/obj/item/bedsheet/blue{
-	dir = 4
-	},
-/obj/structure/bed{
-	dir = 4
-	},
+/obj/item/bedsheet/blue,
+/obj/structure/bed,
 /turf/open/floor/holofloor/wood,
-/area/centcom/mafia)
+/area/mafia)
 "p" = (
 /obj/machinery/door/poddoor/preopen{
 	desc = "When it's time to sleep, the lights will go out. Remember - no one in space can hear you scream.";
@@ -72,34 +72,38 @@
 	name = "Station Night Shutters"
 	},
 /turf/closed/indestructible/fakeglass,
-/area/centcom/mafia)
+/area/mafia)
 "q" = (
 /turf/open/floor/iron/dark,
-/area/centcom/mafia)
+/area/mafia)
 "r" = (
 /turf/open/floor/iron,
-/area/centcom/mafia)
+/area/mafia)
 "s" = (
 /turf/closed/wall/ice,
-/area/centcom/mafia)
+/area/mafia)
 "t" = (
 /turf/open/floor/holofloor/snow,
-/area/centcom/mafia)
+/area/mafia)
 "u" = (
 /obj/structure/statue/plasma/scientist{
 	anchored = 1
 	},
 /turf/open/floor/holofloor/snow,
-/area/centcom/mafia)
+/area/mafia)
 "v" = (
 /obj/effect/baseturf_helper/asteroid,
 /obj/effect/landmark/mafia/town_center,
 /turf/open/floor/holofloor/snow,
-/area/centcom/mafia)
+/area/mafia)
 "w" = (
 /turf/open/lava/plasma/mafia,
-/area/centcom/mafia)
+/area/mafia)
 "x" = (
+/obj/machinery/door/airlock/external/ruin{
+	max_integrity = 9999;
+	opacity = 0
+	},
 /obj/machinery/door/poddoor/preopen{
 	desc = "When it's time to sleep, the lights will go out. Remember - no one in space can hear you scream.";
 	id = "mafia";
@@ -107,20 +111,20 @@
 	name = "Station Night Shutters"
 	},
 /obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/door/airlock/external/glass/ruin{
-	max_integrity = 9999
-	},
 /turf/open/floor/iron/dark,
-/area/centcom/mafia)
+/area/mafia)
 "y" = (
 /obj/effect/landmark/mafia,
 /turf/open/floor/holofloor/snow,
-/area/centcom/mafia)
+/area/mafia)
 "z" = (
 /obj/structure/lattice/catwalk,
 /turf/open/lava/plasma/mafia,
-/area/centcom/mafia)
+/area/mafia)
 "A" = (
+/obj/machinery/door/airlock/external/ruin{
+	max_integrity = 9999
+	},
 /obj/machinery/door/poddoor/preopen{
 	desc = "When it's time to sleep, the lights will go out. Remember - no one in space can hear you scream.";
 	id = "mafia";
@@ -128,61 +132,54 @@
 	name = "Station Night Shutters"
 	},
 /obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/door/airlock/external/glass/ruin{
-	max_integrity = 9999
-	},
 /turf/open/floor/iron,
-/area/centcom/mafia)
+/area/mafia)
 "B" = (
 /obj/effect/landmark/mafia,
 /obj/structure/lattice/catwalk,
 /turf/open/lava/plasma/mafia,
-/area/centcom/mafia)
+/area/mafia)
 "C" = (
 /obj/mafia_game_board,
 /turf/open/floor/holofloor/snow,
-/area/centcom/mafia)
+/area/mafia)
 "D" = (
 /obj/structure/closet/crate/science,
 /obj/item/clothing/suit/hooded/wintercoat,
 /obj/item/clothing/shoes/winterboots,
 /turf/open/floor/holofloor/snow,
-/area/centcom/mafia)
+/area/mafia)
 "E" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/closet/crate/critter,
 /obj/item/clothing/suit/hooded/wintercoat/miner,
 /obj/item/clothing/shoes/winterboots,
 /turf/open/lava/plasma/mafia,
-/area/centcom/mafia)
+/area/mafia)
 "F" = (
 /turf/open/floor/holofloor/wood,
-/area/centcom/mafia)
+/area/mafia)
 "G" = (
 /obj/item/bedsheet/orange,
 /obj/structure/bed,
 /turf/open/floor/holofloor/wood,
-/area/centcom/mafia)
+/area/mafia)
 "H" = (
-/obj/item/bedsheet/black{
-	dir = 4
-	},
-/obj/structure/bed{
-	dir = 4
-	},
+/obj/item/bedsheet/black,
+/obj/structure/bed,
 /turf/open/floor/holofloor/wood,
-/area/centcom/mafia)
+/area/mafia)
 "I" = (
 /obj/item/bedsheet/red,
 /obj/structure/bed,
 /turf/open/floor/holofloor/wood,
-/area/centcom/mafia)
+/area/mafia)
 "J" = (
 /turf/open/floor/plating/snowed/smoothed,
-/area/centcom/mafia)
+/area/mafia)
 "K" = (
 /turf/closed/indestructible/rock/snow,
-/area/centcom/mafia)
+/area/mafia)
 
 (1,1,1) = {"
 a
@@ -292,7 +289,7 @@ s
 h
 d
 d
-i
+e
 s
 s
 j
@@ -463,7 +460,7 @@ a
 a
 b
 s
-i
+e
 s
 b
 p
@@ -668,7 +665,7 @@ k
 h
 d
 d
-i
+e
 d
 d
 s

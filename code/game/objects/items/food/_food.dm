@@ -6,8 +6,8 @@
 	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/food/food.dmi'
 	icon_state = null
-	lefthand_file = 'icons/mob/inhands/items/food_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/items/food_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	obj_flags = UNIQUE_RENAME
 	grind_results = list()
 	///List of reagents this food gets on creation
@@ -41,13 +41,11 @@
 	///Food that's immune to decomposition.
 	var/preserved_food = FALSE
 	///Does our food normally attract ants?
-	var/ant_attracting = FALSE
+	var/ant_attracting = TRUE
 	///What our food decomposes into.
 	var/decomp_type = /obj/item/food/badrecipe/moldy
 	///Food that needs to be picked up in order to decompose.
 	var/decomp_req_handle = FALSE
-	///Used to set custom decomposition times for food. Set to 0 to have it automatically set via the food's flags.
-	var/decomposition_time = 0
 
 /obj/item/food/Initialize(mapload)
 	. = ..()
@@ -65,13 +63,6 @@
 	MakeGrillable()
 	MakeDecompose(mapload)
 	MakeBakeable()
-	ADD_TRAIT(src, FISHING_BAIT_TRAIT, INNATE_TRAIT)
-
-/obj/item/food/examine(mob/user)
-	. = ..()
-	if(foodtypes)
-		var/list/types = bitfield_to_list(foodtypes, FOOD_FLAGS)
-		. += span_notice("It is [lowertext(english_list(types))].")
 
 ///This proc adds the edible component, overwrite this if you for some reason want to change some specific args like callbacks.
 /obj/item/food/proc/MakeEdible()
@@ -115,9 +106,5 @@
 ///Set decomp_req_handle to TRUE to only make it decompose when someone picks it up.
 /obj/item/food/proc/MakeDecompose(mapload)
 	if(!preserved_food)
-		AddComponent(/datum/component/decomposition, mapload, decomp_req_handle, decomp_flags = foodtypes, decomp_result = decomp_type, ant_attracting = ant_attracting, custom_time = decomposition_time)
+		AddComponent(/datum/component/decomposition, mapload, decomp_req_handle, decomp_flags = foodtypes, decomp_result = decomp_type, ant_attracting = ant_attracting)
 
-/obj/item/food/mark_silver_slime_reaction()
-	//Adds this flag to prevent it from exporting for profit from cargo
-	food_flags |= FOOD_SILVER_SPAWNED
-	return ..()

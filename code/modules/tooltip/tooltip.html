@@ -130,29 +130,21 @@
 
 				//alert(realIconSize + ' | ' +tooltip.tileSize + ' | ' + resizeRatio); //DEBUG
 
-				const parameters = new Object();
-
-				//Parse out the contents of params (e.g. "icon-x=32;icon-y=29;screen-loc=3:10,15:29")
-				//It is worth noting that params is not always ordered in the same way. We therefore need to write the code
-				//To load their values in independantly of their order
+				//Parse out the tile and cursor locations from params (e.g. "icon-x=32;icon-y=29;screen-loc=3:10,15:29")
 				var paramsA = tooltip.params.cursor.split(';');
-				for (var i = 0; i < paramsA.length; i++) {
-					var entry = paramsA[i];
-					var nameAndValue = entry.split("=");
-					parameters[nameAndValue[0]] = nameAndValue[1];
-				}
-
-				//Sometimes screen-loc is never sent ahaha fuck you byond
-				if (!parameters["icon-x"] || !parameters["icon-y"] || !parameters["screen-loc"]) {
-					return false;
-				}
+				if (paramsA.length < 3) {return false;} //Sometimes screen-loc is never sent ahaha fuck you byond
 				//icon-x
-				var iconX = parseInt(parameters["icon-x"]);
+				var iconX = paramsA[0];
+				iconX = iconX.split('=');
+				iconX = parseInt(iconX[1]);
 				//icon-y
-				var iconY = parseInt(parameters["icon-y"]);
+				var iconY = paramsA[1];
+				iconY = iconY.split('=');
+				iconY = parseInt(iconY[1]);
 				//screen-loc
-				var screenLoc = parameters["screen-loc"];
-				screenLoc = screenLoc.split(',');
+				var screenLoc = paramsA[2];
+				screenLoc = screenLoc.split('=');
+				screenLoc = screenLoc[1].split(',');
 				if (screenLoc.length < 2) {return false;}
 				var left = screenLoc[0];
 				var top = screenLoc[1];
@@ -224,13 +216,8 @@
 
 				$wrap.width($wrap.width() + 2); //Dumb hack to fix a bizarre sizing bug
 
-				var pixelRatio = 1;
-				if (window.devicePixelRatio) {
-					pixelRatio = window.devicePixelRatio;
-				}
-
-				var docWidth	= Math.floor($wrap.outerWidth() * pixelRatio),
-					docHeight	= Math.floor($wrap.outerHeight() * pixelRatio);
+				var docWidth	= $wrap.outerWidth(),
+					docHeight	= $wrap.outerHeight();
 
 				if (posY + docHeight > map.size.y) { //Is the bottom edge below the window? Snap it up if so
 					posY = (posY - docHeight) - realIconSizeY - tooltip.padding;

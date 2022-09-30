@@ -3,7 +3,7 @@
 
 	id = /obj/item/card/id/advanced/centcom
 	id_trim = /datum/id_trim/centcom/specops_officer
-	uniform = /obj/item/clothing/under/rank/centcom/commander
+	uniform = /obj/item/clothing/under/syndicate
 	suit = /obj/item/clothing/suit/space/officer
 	back = /obj/item/storage/backpack/satchel/leather
 	belt = /obj/item/gun/energy/pulse/pistol/m1911
@@ -59,7 +59,7 @@
 	name = "tournament gangster"
 
 	uniform = /obj/item/clothing/under/rank/security/detective
-	suit = /obj/item/clothing/suit/jacket/det_suit
+	suit = /obj/item/clothing/suit/det_suit
 	glasses = /obj/item/clothing/glasses/thermal/monocle
 	head = /obj/item/clothing/head/fedora/det_hat
 	l_hand = /obj/item/gun/ballistic
@@ -79,13 +79,13 @@
 	r_pocket = /obj/item/grenade/chem_grenade/cleaner
 	l_pocket = /obj/item/grenade/chem_grenade/cleaner
 	r_hand = /obj/item/mop
-	l_hand = /obj/item/reagent_containers/cup/bucket
+	l_hand = /obj/item/reagent_containers/glass/bucket
 
 /datum/outfit/tournament/janitor/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
 
-	var/obj/item/reagent_containers/cup/bucket/bucket = H.get_item_for_held_index(1)
+	var/obj/item/reagent_containers/glass/bucket/bucket = H.get_item_for_held_index(1)
 	bucket.reagents.add_reagent(/datum/reagent/water,70)
 
 /datum/outfit/laser_tag
@@ -119,7 +119,7 @@
 	id = /obj/item/card/id/advanced
 	id_trim = /datum/id_trim/pirate
 	uniform = /obj/item/clothing/under/costume/pirate
-	suit = /obj/item/clothing/suit/costume/pirate/armored
+	suit = /obj/item/clothing/suit/pirate/armored
 	ears = /obj/item/radio/headset/syndicate
 	glasses = /obj/item/clothing/glasses/eyepatch
 	head = /obj/item/clothing/head/bandana/armored
@@ -138,12 +138,6 @@
 		outfit_id.registered_name = equipped.real_name
 		outfit_id.update_label()
 		outfit_id.update_icon()
-	
-	var/obj/item/clothing/under/pirate_uniform = equipped.w_uniform
-	if(pirate_uniform)
-		pirate_uniform.has_sensor = NO_SENSORS
-		pirate_uniform.sensor_mode = SENSOR_OFF
-		equipped.update_suit_sensors()
 
 /datum/outfit/pirate/captain
 	name = "Space Pirate Captain"
@@ -169,7 +163,7 @@
 
 	id = /obj/item/card/id/advanced/silver
 	id_trim = /datum/id_trim/pirate/silverscale
-	uniform = /obj/item/clothing/under/syndicate/sniper
+	uniform = /obj/item/clothing/under/suit/charcoal
 	suit = /obj/item/clothing/suit/armor/vest/alt
 	glasses = /obj/item/clothing/glasses/monocle
 	gloves = /obj/item/clothing/gloves/color/black
@@ -237,8 +231,7 @@
 	id = /obj/item/card/id/advanced/chameleon/black
 	id_trim = /datum/id_trim/reaper_assassin
 	uniform = /obj/item/clothing/under/suit/black
-	neck = /obj/item/clothing/neck/tie/red/hitman/tied
-	belt = /obj/item/modular_computer/tablet/pda/heads
+	belt = /obj/item/pda/heads
 	ears = /obj/item/radio/headset
 	gloves = /obj/item/clothing/gloves/color/black
 	glasses = /obj/item/clothing/glasses/sunglasses
@@ -258,15 +251,16 @@
 	for(var/obj/item/briefcase_item in sec_briefcase)
 		qdel(briefcase_item)
 	for(var/i = 3 to 0 step -1)
-		sec_briefcase.contents += new /obj/item/stack/spacecash/c1000
-	sec_briefcase.contents += new /obj/item/gun/energy/recharge/ebow
-	sec_briefcase.contents += new /obj/item/gun/ballistic/revolver/mateba
-	sec_briefcase.contents += new /obj/item/ammo_box/a357
-	sec_briefcase.contents += new /obj/item/grenade/c4/x4
+		SEND_SIGNAL(sec_briefcase, COMSIG_TRY_STORAGE_INSERT, new /obj/item/stack/spacecash/c1000, null, TRUE, TRUE)
+	SEND_SIGNAL(sec_briefcase, COMSIG_TRY_STORAGE_INSERT, new /obj/item/gun/energy/kinetic_accelerator/crossbow, null, TRUE, TRUE)
+	SEND_SIGNAL(sec_briefcase, COMSIG_TRY_STORAGE_INSERT, new /obj/item/gun/ballistic/revolver/mateba, null, TRUE, TRUE)
+	SEND_SIGNAL(sec_briefcase, COMSIG_TRY_STORAGE_INSERT, new /obj/item/ammo_box/a357, null, TRUE, TRUE)
+	SEND_SIGNAL(sec_briefcase, COMSIG_TRY_STORAGE_INSERT, new /obj/item/grenade/c4/x4, null, TRUE, TRUE)
 
-	var/obj/item/modular_computer/tablet/pda/heads/pda = H.belt
-	pda.saved_identification = H.real_name
-	pda.saved_job = "Reaper"
+	var/obj/item/pda/heads/pda = H.belt
+	pda.owner = H.real_name
+	pda.ownjob = "Reaper"
+	pda.update_label()
 
 	var/obj/item/card/id/W = H.wear_id
 	W.registered_name = H.real_name
@@ -279,11 +273,11 @@
 	id = /obj/item/card/id/advanced/centcom
 	id_trim = /datum/id_trim/centcom/commander
 	uniform = /obj/item/clothing/under/rank/centcom/commander
-	suit = /obj/item/clothing/suit/armor/centcom_formal
+	suit = /obj/item/clothing/suit/armor/bulletproof
 	back = /obj/item/storage/backpack/satchel/leather
 	belt = /obj/item/gun/ballistic/revolver/mateba
 	ears = /obj/item/radio/headset/headset_cent/commander
-	glasses = /obj/item/clothing/glasses/sunglasses
+	glasses = /obj/item/clothing/glasses/eyepatch
 	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
 	head = /obj/item/clothing/head/centhat
 	mask = /obj/item/clothing/mask/cigarette/cigar/cohiba
@@ -300,16 +294,6 @@
 	W.update_label()
 	W.update_icon()
 	..()
-
-/datum/outfit/centcom/commander/mod
-	name = "CentCom Commander (MODsuit)"
-
-	suit_store = /obj/item/tank/internals/oxygen
-	suit = null
-	head = null
-	mask = /obj/item/clothing/mask/gas/sechailer
-	back = /obj/item/mod/control/pre_equipped/corporate
-	internals_slot = ITEM_SLOT_SUITSTORE
 
 /datum/outfit/ghost_cultist
 	name = "Cultist Ghost"
@@ -335,13 +319,13 @@
 	r_pocket = /obj/item/teleportation_scroll
 	l_hand = /obj/item/staff
 
-/datum/outfit/wizard/post_equip(mob/living/carbon/human/wizard, visualsOnly = FALSE)
+/datum/outfit/wizard/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
 
-	var/obj/item/spellbook/new_spellbook = locate() in wizard.back
-	if(new_spellbook)
-		new_spellbook.owner = wizard.mind
+	var/obj/item/spellbook/S = locate() in H.back
+	if(S)
+		S.owner = H
 
 /datum/outfit/wizard/apprentice
 	name = "Wizard Apprentice"
@@ -364,21 +348,13 @@
 	head = /obj/item/clothing/head/wizard/marisa
 	shoes = /obj/item/clothing/shoes/sneakers/marisa
 
-/datum/outfit/wizard/academy
-	name = "Academy Wizard"
-	r_pocket = null
-	r_hand = null
-	suit = /obj/item/clothing/suit/wizrobe/red
-	head = /obj/item/clothing/head/wizard/red
-	backpack_contents = list(/obj/item/storage/box/survival = 1)
-
 /datum/outfit/centcom/soviet
 	name = "Soviet Admiral"
 
 	id = /obj/item/card/id/advanced/centcom
 	id_trim = /datum/id_trim/centcom/admiral
 	uniform = /obj/item/clothing/under/costume/soviet
-	suit = /obj/item/clothing/suit/costume/pirate/captain
+	suit = /obj/item/clothing/suit/pirate/captain
 	back = /obj/item/storage/backpack/satchel/leather
 	belt = /obj/item/gun/ballistic/revolver/mateba
 	ears = /obj/item/radio/headset/headset_cent
@@ -404,7 +380,6 @@
 	id = /obj/item/card/id/advanced
 	id_trim = /datum/id_trim/mobster
 	uniform = /obj/item/clothing/under/suit/black_really
-	neck = /obj/item/clothing/neck/tie/red/tied
 	ears = /obj/item/radio/headset
 	glasses = /obj/item/clothing/glasses/sunglasses
 	gloves = /obj/item/clothing/gloves/color/black
@@ -425,25 +400,20 @@
 	name = "Timeline Eradication Agent"
 
 	uniform = /obj/item/clothing/under/color/white
+	suit = /obj/item/clothing/suit/space/chronos
 	suit_store = /obj/item/tank/internals/oxygen
+	back = /obj/item/chrono_eraser
+	head = /obj/item/clothing/head/helmet/space/chronos
 	mask = /obj/item/clothing/mask/breath
-	back = /obj/item/mod/control/pre_equipped/chrono
 
-/datum/outfit/chrono_agent/post_equip(mob/living/carbon/human/agent, visualsOnly)
-	. = ..()
-	var/obj/item/mod/control/mod = agent.back
-	if(!istype(mod))
-		return
-	var/obj/item/mod/module/eradication_lock/lock = locate(/obj/item/mod/module/eradication_lock) in mod.modules
-	lock.true_owner_ckey = agent.ckey
-
-/datum/outfit/debug //Debug objs plus MODsuit
+/datum/outfit/debug //Debug objs plus hardsuit
 	name = "Debug outfit"
 
 	id = /obj/item/card/id/advanced/debug
 	uniform = /obj/item/clothing/under/misc/patriotsuit
+	suit = /obj/item/clothing/suit/space/hardsuit/syndi/elite/debug
 	suit_store = /obj/item/tank/internals/oxygen
-	back = /obj/item/mod/control/pre_equipped/debug
+	back = /obj/item/storage/backpack/holding
 	backpack_contents = list(
 		/obj/item/melee/energy/axe = 1,
 		/obj/item/storage/part_replacer/bluespace/tier4 = 1,
@@ -473,8 +443,9 @@
 
 	id = /obj/item/card/id/advanced/debug
 	uniform = /obj/item/clothing/under/misc/patriotsuit
+	suit = /obj/item/clothing/suit/space/hardsuit/syndi/elite/admin
 	suit_store = /obj/item/tank/internals/oxygen
-	back = /obj/item/mod/control/pre_equipped/administrative
+	back = /obj/item/storage/backpack/holding
 	backpack_contents = list(
 		/obj/item/melee/energy/axe = 1,
 		/obj/item/storage/part_replacer/bluespace/tier4 = 1,

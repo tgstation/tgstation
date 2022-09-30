@@ -29,7 +29,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/mining/large)
 "f" = (
-/obj/item/storage/medkit/regular,
+/obj/item/storage/firstaid/regular,
 /obj/structure/table,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/mining/large)
@@ -287,7 +287,7 @@
 /turf/open/floor/plating,
 /area/shuttle/mining/large)
 "J" = (
-/obj/machinery/power/apc/auto_name/directional/east,
+/obj/machinery/power/apc/auto_name/east,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/effect/turf_decal/bot,
@@ -297,7 +297,9 @@
 /turf/open/floor/plating,
 /area/shuttle/mining/large)
 "K" = (
-/obj/structure/sign/warning/vacuum/external/directional/east,
+/obj/structure/sign/warning/vacuum/external{
+	pixel_x = 32
+	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -321,7 +323,7 @@
 /obj/docking_port/mobile{
 	dwidth = 3;
 	height = 10;
-	shuttle_id = "mining";
+	id = "mining";
 	name = "mining shuttle";
 	port_direction = 2;
 	width = 7

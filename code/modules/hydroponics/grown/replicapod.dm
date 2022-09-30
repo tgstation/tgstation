@@ -42,7 +42,6 @@
 	maturation = 10
 	production = 1
 	yield = 1 //seeds if there isn't a dna inside
-	instability = 15 //allows it to gain reagent genes from nearby plants
 	potency = 30
 	var/volume = 5
 	var/ckey
@@ -93,7 +92,7 @@
 		sampleDNA = B.data["blood_DNA"]
 		contains_sample = TRUE
 		visible_message(span_notice("The [src] is injected with a fresh blood sample."))
-		investigate_log("[key_name(mind)]'s cloning record was added to [src]", INVESTIGATE_BOTANY)
+		log_cloning("[key_name(mind)]'s cloning record was added to [src] at [AREACOORD(src)].")
 	else
 		visible_message(span_warning("The [src] rejects the sample!"))
 	return NONE
@@ -172,11 +171,11 @@
 		if(prob(getYield() * 20))
 			seed_count++
 		var/output_loc = parent.Adjacent(user) ? user.loc : parent.loc //needed for TK
-		for(var/i  in 1 to seed_count)
+		for(var/i=0,i<seed_count,i++)
 			var/obj/item/seeds/replicapod/harvestseeds = src.Copy()
 			result.Add(harvestseeds)
 			harvestseeds.forceMove(output_loc)
-		parent.update_tray(user, seed_count)
+		parent.update_tray()
 		return result
 
 	// Congratulations! %Do you want to build a pod man?%
@@ -195,15 +194,11 @@
 	podman.faction |= factions
 	if(!features["mcolor"])
 		features["mcolor"] = "#59CE00"
-	if(!features["pod_hair"])
-		features["pod_hair"] = pick(GLOB.pod_hair_list)
-
 	for(var/V in quirks)
 		new V(podman)
-	podman.hardset_dna(null, null, null, podman.real_name, blood_type, new /datum/species/pod, features) // Discard SE's and UI's, podman cloning is inaccurate, and always make them a podman
+	podman.hardset_dna(null,null,null,podman.real_name,blood_type, new /datum/species/pod,features)//Discard SE's and UI's, podman cloning is inaccurate, and always make them a podman
 	podman.set_cloned_appearance()
+	log_cloning("[key_name(mind)] cloned as a podman via [src] in [parent] at [AREACOORD(parent)].")
 
-	podman.dna.species.exotic_blood = max(reagents_add) || /datum/reagent/water
-	investigate_log("[key_name(mind)] cloned as a podman via [src] in [parent]", INVESTIGATE_BOTANY)
-	parent.update_tray(user, 1)
+	parent.update_tray()
 	return result

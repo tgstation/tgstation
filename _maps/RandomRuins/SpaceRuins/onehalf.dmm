@@ -30,7 +30,7 @@
 /turf/closed/wall,
 /area/ruin/space/has_grav/onehalf/hallway)
 "al" = (
-/obj/machinery/sleeper/self_control{
+/obj/machinery/sleeper/syndie{
 	dir = 4
 	},
 /turf/open/floor/iron/white,
@@ -40,11 +40,11 @@
 /area/ruin/space/has_grav/onehalf/dorms_med)
 "an" = (
 /obj/structure/table,
-/obj/item/storage/medkit/toxin{
+/obj/item/storage/firstaid/toxin{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/storage/medkit/fire,
+/obj/item/storage/firstaid/fire,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/onehalf/dorms_med)
 "ao" = (
@@ -66,7 +66,7 @@
 "as" = (
 /obj/machinery/door/poddoor{
 	id = "onehalf_drone1ext";
-	name = "Mining Drone Bay Blast Door"
+	name = "mining drone bay blast door"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -76,7 +76,7 @@
 "at" = (
 /obj/machinery/door/poddoor{
 	id = "onehalf_drone2ext";
-	name = "Mining Drone Bay Blast Door"
+	name = "mining drone bay blast door"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -86,7 +86,7 @@
 "au" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "onehalf_drone3ext";
-	name = "Mining Drone Bay Blast Door"
+	name = "mining drone bay blast door"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -96,7 +96,7 @@
 "av" = (
 /obj/machinery/door/poddoor{
 	id = "onehalf_drone4ext";
-	name = "Mining Drone Bay Blast Door"
+	name = "mining drone bay blast door"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -113,8 +113,9 @@
 /area/ruin/space/has_grav/onehalf/hallway)
 "ay" = (
 /obj/structure/table_frame,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron/airless,
+/turf/open/floor/iron/airless{
+	icon_state = "damaged3"
+	},
 /area/ruin/space/has_grav/onehalf/hallway)
 "az" = (
 /obj/machinery/washing_machine,
@@ -127,11 +128,11 @@
 "aB" = (
 /obj/machinery/light/directional/east,
 /obj/structure/table,
-/obj/item/storage/medkit/brute{
+/obj/item/storage/firstaid/brute{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/storage/medkit/regular,
+/obj/item/storage/firstaid/regular,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/onehalf/dorms_med)
 "aC" = (
@@ -166,6 +167,16 @@
 /obj/item/stack/rods,
 /turf/template_noop,
 /area/ruin/space/has_grav/onehalf/hallway)
+"aI" = (
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg3"
+	},
+/area/ruin/space/has_grav/onehalf/hallway)
+"aJ" = (
+/turf/open/floor/iron/airless{
+	icon_state = "damaged5"
+	},
+/area/ruin/space/has_grav/onehalf/hallway)
 "aK" = (
 /obj/machinery/iv_drip,
 /turf/open/floor/iron/white,
@@ -180,7 +191,7 @@
 /obj/item/healthanalyzer,
 /obj/item/reagent_containers/blood/o_minus,
 /obj/item/reagent_containers/blood/o_minus,
-/obj/machinery/power/apc/auto_name/directional/east,
+/obj/machinery/power/apc/auto_name/east,
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/onehalf/dorms_med)
@@ -188,7 +199,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/poddoor{
 	id = "onehalf_drone1int";
-	name = "Mining Drone Bay Blast Door"
+	name = "mining drone bay blast door"
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/onehalf/drone_bay)
@@ -196,7 +207,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/poddoor{
 	id = "onehalf_drone2int";
-	name = "Mining Drone Bay Blast Door"
+	name = "mining drone bay blast door"
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/onehalf/drone_bay)
@@ -204,7 +215,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/poddoor{
 	id = "onehalf_drone3int";
-	name = "Mining Drone Bay Blast Door"
+	name = "mining drone bay blast door"
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/onehalf/drone_bay)
@@ -212,7 +223,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/poddoor{
 	id = "onehalf_drone4int";
-	name = "Mining Drone Bay Blast Door"
+	name = "mining drone bay blast door"
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/onehalf/drone_bay)
@@ -230,12 +241,14 @@
 /area/template_noop)
 "aT" = (
 /obj/structure/cable,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron/airless,
+/turf/open/floor/iron/airless{
+	icon_state = "damaged3"
+	},
 /area/ruin/space/has_grav/onehalf/hallway)
 "aU" = (
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron/airless,
+/turf/open/floor/iron/airless{
+	icon_state = "damaged1"
+	},
 /area/ruin/space/has_grav/onehalf/hallway)
 "aV" = (
 /obj/machinery/door/airlock/medical/glass,
@@ -254,7 +267,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "aY" = (
-/obj/machinery/power/apc/auto_name/directional/north,
+/obj/machinery/power/apc/auto_name/north,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -343,24 +356,36 @@
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "bf" = (
 /obj/item/stack/sheet/iron,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
 /area/ruin/space/has_grav/onehalf/hallway)
 "bg" = (
 /obj/structure/disposalpipe/broken{
 	dir = 4
 	},
 /obj/item/stack/cable_coil/cut,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg2"
+	},
 /area/ruin/space/has_grav/onehalf/hallway)
 "bh" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron/airless,
+/turf/open/floor/iron/airless{
+	icon_state = "damaged3"
+	},
+/area/ruin/space/has_grav/onehalf/hallway)
+"bi" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/airless{
+	icon_state = "damaged5"
+	},
 /area/ruin/space/has_grav/onehalf/hallway)
 "bj" = (
 /obj/structure/disposalpipe/segment{
@@ -374,8 +399,9 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron/airless,
+/turf/open/floor/iron/airless{
+	icon_state = "damaged1"
+	},
 /area/ruin/space/has_grav/onehalf/hallway)
 "bm" = (
 /obj/structure/disposalpipe/junction{
@@ -445,15 +471,17 @@
 /obj/structure/disposalpipe/broken{
 	dir = 4
 	},
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg3"
+	},
 /area/ruin/space/has_grav/onehalf/hallway)
 "bw" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron/airless,
+/turf/open/floor/iron/airless{
+	icon_state = "damaged3"
+	},
 /area/ruin/space/has_grav/onehalf/hallway)
 "bx" = (
 /obj/structure/disposalpipe/segment{
@@ -466,16 +494,25 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron/airless,
+/turf/open/floor/iron/airless{
+	icon_state = "damaged1"
+	},
 /area/ruin/space/has_grav/onehalf/hallway)
 "bz" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/power/apc/auto_name/directional/south,
+/obj/machinery/power/apc/auto_name/south,
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
+/area/ruin/space/has_grav/onehalf/hallway)
+"bA" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/iron/airless{
+	icon_state = "damaged4"
+	},
 /area/ruin/space/has_grav/onehalf/hallway)
 "bB" = (
 /obj/structure/disposalpipe/segment,
@@ -535,18 +572,21 @@
 /area/ruin/space/has_grav/onehalf/hallway)
 "bL" = (
 /obj/structure/closet/emcloset,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron/airless,
+/turf/open/floor/iron/airless{
+	icon_state = "damaged4"
+	},
 /area/ruin/space/has_grav/onehalf/hallway)
 "bM" = (
 /obj/machinery/vending/coffee,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron/airless,
+/turf/open/floor/iron/airless{
+	icon_state = "damaged4"
+	},
 /area/ruin/space/has_grav/onehalf/hallway)
 "bN" = (
 /obj/machinery/vending/snack,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron/airless,
+/turf/open/floor/iron/airless{
+	icon_state = "damaged2"
+	},
 /area/ruin/space/has_grav/onehalf/hallway)
 "bO" = (
 /obj/structure/disposalpipe/trunk{
@@ -567,6 +607,11 @@
 "bR" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/onehalf/hallway)
+"bS" = (
+/turf/open/floor/iron/airless{
+	icon_state = "damaged2"
+	},
+/area/ruin/space/has_grav/onehalf/hallway)
 "bT" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/airless,
@@ -579,14 +624,16 @@
 /turf/template_noop,
 /area/template_noop)
 "bW" = (
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
 /area/ruin/space/has_grav/onehalf/hallway)
 "bX" = (
 /obj/structure/disposalpipe/segment,
 /obj/item/stack/rods,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron/airless,
+/turf/open/floor/iron/airless{
+	icon_state = "damaged5"
+	},
 /area/ruin/space/has_grav/onehalf/hallway)
 "bY" = (
 /obj/structure/grille,
@@ -596,7 +643,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "bridge_onehalf";
-	name = "Bridge Blast Door"
+	name = "bridge blast door"
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/onehalf/bridge)
@@ -625,7 +672,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cf" = (
-/obj/machinery/power/apc/auto_name/directional/north,
+/obj/machinery/power/apc/auto_name/north,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/bridge)
@@ -639,8 +686,9 @@
 	dir = 1
 	},
 /obj/item/shard,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg2"
+	},
 /area/ruin/space/has_grav/onehalf/hallway)
 "ci" = (
 /obj/structure/lattice,
@@ -670,7 +718,7 @@
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "bridge_onehalf";
-	name = "Bridge Blast Door"
+	name = "bridge blast door"
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/onehalf/bridge)
@@ -708,7 +756,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "bridge_onehalf";
-	name = "Bridge Blast Door"
+	name = "bridge blast door"
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -733,8 +781,9 @@
 /area/ruin/space/has_grav/onehalf/hallway)
 "cu" = (
 /obj/structure/disposalpipe/segment,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron/airless,
+/turf/open/floor/iron/airless{
+	icon_state = "damaged5"
+	},
 /area/ruin/space/has_grav/onehalf/hallway)
 "cv" = (
 /obj/structure/girder/reinforced,
@@ -787,7 +836,7 @@
 "cG" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "bridge_onehalf";
-	name = "Bridge Blast Door"
+	name = "bridge blast door"
 	},
 /obj/machinery/door/airlock/command/glass{
 	name = "Bridge"
@@ -800,8 +849,8 @@
 /obj/item/tank/internals/oxygen/red,
 /obj/item/clothing/head/helmet/space/eva,
 /obj/item/clothing/suit/space/eva,
-/obj/item/reagent_containers/cup/glass/bottle/rum,
-/obj/item/reagent_containers/cup/glass/bottle/rum,
+/obj/item/reagent_containers/food/drinks/bottle/rum,
+/obj/item/reagent_containers/food/drinks/bottle/rum,
 /obj/item/folder/syndicate/mining,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/onehalf/bridge)
@@ -817,6 +866,11 @@
 /obj/item/stack/cable_coil/cut,
 /turf/template_noop,
 /area/ruin/space/has_grav/onehalf/hallway)
+"cL" = (
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg2"
+	},
+/area/ruin/space/has_grav/onehalf/hallway)
 "cM" = (
 /obj/machinery/light/directional/west,
 /obj/machinery/vending/sovietsoda,
@@ -826,6 +880,11 @@
 /obj/item/stack/sheet/plasteel,
 /turf/template_noop,
 /area/template_noop)
+"cP" = (
+/turf/open/floor/iron/airless{
+	icon_state = "damaged3"
+	},
+/area/ruin/space/has_grav/onehalf/hallway)
 "cQ" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -873,19 +932,21 @@
 "db" = (
 /obj/machinery/light/directional/south,
 /obj/structure/table/reinforced,
-/obj/item/storage/medkit/regular,
+/obj/item/storage/firstaid/regular,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/bridge)
 "dc" = (
 /obj/structure/grille/broken,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
 /area/ruin/space/has_grav/onehalf/hallway)
 "dd" = (
 /obj/structure/grille,
 /obj/item/shard,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg3"
+	},
 /area/ruin/space/has_grav/onehalf/hallway)
 "dh" = (
 /obj/item/stack/sheet/plasteel,
@@ -919,15 +980,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/onehalf/bridge)
-"sZ" = (
-/obj/structure/bed{
-	dir = 4
-	},
-/obj/item/bedsheet/black{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/onehalf/dorms_med)
 "KC" = (
 /obj/structure/frame/computer,
 /obj/structure/cable,
@@ -988,7 +1040,7 @@ aa
 ae
 ak
 ax
-bW
+aI
 ax
 bg
 bw
@@ -1032,9 +1084,9 @@ ab
 ab
 ak
 az
+aJ
 aU
-aU
-bh
+bi
 bx
 bL
 bK
@@ -1122,7 +1174,7 @@ an
 aB
 aM
 ag
-bh
+bi
 bx
 bP
 aj
@@ -1144,7 +1196,7 @@ ag
 ag
 ag
 ag
-bh
+bi
 bx
 bQ
 aw
@@ -1154,7 +1206,7 @@ aa
 aw
 cA
 aa
-bW
+cL
 dh
 aa
 "}
@@ -1162,9 +1214,9 @@ aa
 aa
 ab
 ag
-sZ
+ao
 aC
-sZ
+ao
 ag
 bj
 bz
@@ -1189,15 +1241,15 @@ ap
 ap
 aW
 bj
-bw
-aU
+bA
+bS
 bW
 ax
 ct
 cK
 cK
 cK
-aU
+aJ
 dc
 dj
 aa
@@ -1217,9 +1269,9 @@ bX
 ch
 cu
 cD
-bW
-aU
-aU
+cL
+cP
+aJ
 dd
 ad
 aa

@@ -22,7 +22,7 @@
 /datum/crafting_recipe/food/shredded_lungs
 	name = "Crispy shredded lung stirfry"
 	reqs = list(
-		/obj/item/organ/internal/lungs = 1,
+		/obj/item/organ/lungs = 1,
 		/obj/item/food/grown/onion = 1,
 		/obj/item/food/grown/carrot = 1,
 		/obj/item/food/grown/chili = 1
@@ -33,10 +33,10 @@
 /datum/crafting_recipe/food/tsatsikh
 	name = "Tsatsikh"
 	reqs = list(
-		/obj/item/organ/internal/heart = 1,
-		/obj/item/organ/internal/liver = 1,
-		/obj/item/organ/internal/lungs = 1,
-		/obj/item/organ/internal/stomach = 1,
+		/obj/item/organ/heart = 1,
+		/obj/item/organ/liver = 1,
+		/obj/item/organ/lungs = 1,
+		/obj/item/organ/stomach = 1,
 		/datum/reagent/consumable/salt = 2,
 		/datum/reagent/consumable/blackpepper = 2
 	)
@@ -46,7 +46,7 @@
 /datum/crafting_recipe/food/liver_pate
 	name = "Liver pate"
 	reqs = list(
-		/obj/item/organ/internal/liver = 1,
+		/obj/item/organ/liver = 1,
 		/obj/item/food/meat/rawcutlet = 1,
 		/obj/item/food/grown/onion = 1
 	)
@@ -97,8 +97,8 @@
 /datum/crafting_recipe/food/brain_pate
 	name = "Eyeball-and-brain pate"
 	reqs = list(
-		/obj/item/organ/internal/brain = 1,
-		/obj/item/organ/internal/eyes = 1,
+		/obj/item/organ/brain = 1,
+		/obj/item/organ/eyes = 1,
 		/obj/item/food/grown/onion = 1,
 		/datum/reagent/consumable/salt = 3
 	)
@@ -288,7 +288,7 @@
 	name = "Atrakor dumpling soup"
 	reqs = list(
 		/datum/reagent/water = 10,
-		/obj/item/reagent_containers/cup/bowl = 1,
+		/obj/item/reagent_containers/glass/bowl = 1,
 		/obj/item/food/meat/rawcutlet = 2,
 		/obj/item/food/grown/onion = 1,
 		/obj/item/food/lizard_dumplings = 1,
@@ -301,12 +301,12 @@
 	name = "Meatball noodle soup"
 	reqs = list(
 		/datum/reagent/water = 10,
-		/obj/item/reagent_containers/cup/bowl = 1,
+		/obj/item/reagent_containers/glass/bowl = 1,
 		/obj/item/food/meat/rawcutlet = 2,
 		/obj/item/food/grown/onion = 1,
 		/obj/item/food/spaghetti/nizaya = 1,
 		/obj/item/food/meatball = 2,
-		/obj/item/food/grown/peanut = 1
+		/obj/item/food/peanuts = 1
 	)
 	result = /obj/item/food/soup/meatball_noodles
 	subcategory = CAT_LIZARD
@@ -314,7 +314,7 @@
 /datum/crafting_recipe/food/black_broth
 	name = "Tiziran black broth"
 	reqs = list(
-		/obj/item/reagent_containers/cup/bowl = 1,
+		/obj/item/reagent_containers/glass/bowl = 1,
 		/obj/item/food/tiziran_sausage = 1,
 		/obj/item/food/grown/onion = 1,
 		/datum/reagent/consumable/vinegar = 5,
@@ -327,7 +327,7 @@
 /datum/crafting_recipe/food/jellyfish_stew
 	name = "Jellyfish stew"
 	reqs = list(
-		/obj/item/reagent_containers/cup/bowl = 1,
+		/obj/item/reagent_containers/glass/bowl = 1,
 		/obj/item/food/canned_jellyfish = 1,
 		/obj/item/food/grown/soybeans = 1,
 		/obj/item/food/grown/redbeet = 1,
@@ -339,7 +339,7 @@
 /datum/crafting_recipe/food/rootbread_soup
 	name = "Rootbread soup"
 	reqs = list(
-		/obj/item/reagent_containers/cup/bowl = 1,
+		/obj/item/reagent_containers/glass/bowl = 1,
 		/obj/item/food/breadslice/root = 2,
 		/obj/item/food/grown/garlic = 1,
 		/obj/item/food/grown/chili = 1,
@@ -384,7 +384,7 @@
 /datum/crafting_recipe/food/korta_ice
 	name = "Korta ice"
 	reqs = list(
-		/obj/item/reagent_containers/cup/glass/sillycup = 1,
+		/obj/item/reagent_containers/food/drinks/sillycup = 1,
 		/datum/reagent/consumable/ice = 15,
 		/datum/reagent/consumable/korta_nectar = 5,
 		/obj/item/food/grown/berries = 1

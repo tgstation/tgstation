@@ -17,7 +17,9 @@ $bg-map: colors.$bg-map !default;
 .NoticeBox {
   // Adapt text color to background luminance to ensure high contast
   $luminance: luminance($background-color);
-  $text-color: if($luminance > 0.35, rgba(0, 0, 0, 1), rgba(255, 255, 255, 1));
+  $text-color: if($luminance > 0.35,
+    rgba(0, 0, 0, 1),
+    rgba(255, 255, 255, 1));
 
   padding: 0.33em 0.5em;
   margin-bottom: 0.5em;
@@ -31,20 +33,24 @@ $bg-map: colors.$bg-map !default;
     transparent,
     transparent base.em(10px),
     $color-stripes base.em(10px),
-    $color-stripes base.em(20px)
-  );
+    $color-stripes base.em(20px));
 }
 
 @mixin box-color($color) {
   $luminance: luminance($color);
-  $text-color: if($luminance > 0.35, rgba(0, 0, 0, 1), rgba(255, 255, 255, 1));
+  $text-color: if($luminance > 0.35,
+    rgba(0, 0, 0, 1),
+    rgba(255, 255, 255, 1));
   color: $text-color;
-  background-color: color.adjust($color, $saturation: -15%, $lightness: -15%);
+  background-color: color.adjust(
+    $color,
+    $saturation: -15%,
+    $lightness: -15%);
 }
 
 @each $color-name, $color-value in $bg-map {
   .NoticeBox--color--#{$color-name} {
-    @include box-color($color-value);
+    @include box-color($color-value)
   }
 }
 

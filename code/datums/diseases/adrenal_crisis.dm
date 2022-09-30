@@ -7,7 +7,7 @@
 	cure_chance = 10
 	agent = "Shitty Adrenal Glands"
 	viable_mobtypes = list(/mob/living/carbon/human)
-	spreading_modifier = 1
+	permeability_mod = 1
 	desc = "If left untreated the subject will suffer from lethargy, dizziness and periodic loss of conciousness."
 	severity = DISEASE_SEVERITY_MEDIUM
 	disease_flags = CAN_CARRY|CAN_RESIST
@@ -29,10 +29,10 @@
 				affected_mob.Unconscious(40)
 
 			if(DT_PROB(10, delta_time))
-				affected_mob.adjust_slurring(14 SECONDS)
+				affected_mob.slurring += 7
 
 			if(DT_PROB(7, delta_time))
-				affected_mob.set_dizzy_if_lower(20 SECONDS)
+				affected_mob.Dizzy(10)
 
 			if(DT_PROB(2.5, delta_time))
 				to_chat(affected_mob, span_warning(pick("You feel pain shoot down your legs!", "You feel like you are going to pass out at any moment.", "You feel really dizzy.")))

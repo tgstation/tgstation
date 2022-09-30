@@ -6,7 +6,7 @@
 	program_icon_state = "alert-green"
 	extended_desc = "This program provides visual interface for a station's alarm system."
 	requires_ntnet = 1
-	size = 4
+	size = 5
 	tgui_id = "NtosStationAlertConsole"
 	program_icon = "bell"
 	/// If there is any station alert
@@ -19,14 +19,14 @@
 	//Or if we're on station. Otherwise, die.
 	var/list/allowed_areas = GLOB.the_station_areas + typesof(/area/mine)
 	alert_control = new(computer, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER), listener_areas = allowed_areas)
-	RegisterSignal(alert_control.listener, list(COMSIG_ALARM_LISTENER_TRIGGERED, COMSIG_ALARM_LISTENER_CLEARED), .proc/update_alarm_display)
+	RegisterSignal(alert_control.listener, list(COMSIG_ALARM_TRIGGERED, COMSIG_ALARM_CLEARED), .proc/update_alarm_display)
 	return ..()
 
 /datum/computer_file/program/alarm_monitor/Destroy()
 	QDEL_NULL(alert_control)
 	return ..()
 
-/datum/computer_file/program/alarm_monitor/process_tick(delta_time)
+/datum/computer_file/program/alarm_monitor/process_tick()
 	..()
 
 	if(has_alert)
@@ -51,7 +51,7 @@
 	if(length(alert_control.listener.alarms))
 		has_alert = TRUE
 
-/datum/computer_file/program/alarm_monitor/on_start(mob/user)
+/datum/computer_file/program/alarm_monitor/run_program(mob/user)
 	. = ..(user)
 	GLOB.alarmdisplay += src
 

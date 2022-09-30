@@ -6,7 +6,6 @@
 /obj/item/circuit_component/mmi
 	display_name = "Man-Machine Interface"
 	desc = "A component that allows MMI to enter shells to send output signals."
-	category = "Action"
 	circuit_flags = CIRCUIT_FLAG_REFUSE_MODULE
 
 	/// The message to send to the MMI in the shell.
@@ -164,9 +163,9 @@
 	. = ..()
 	if(HAS_TRAIT(add_to, TRAIT_COMPONENT_MMI))
 		return FALSE
-	ADD_TRAIT(add_to, TRAIT_COMPONENT_MMI, REF(src))
+	ADD_TRAIT(add_to, TRAIT_COMPONENT_MMI, src)
 
 /obj/item/circuit_component/mmi/removed_from(obj/item/integrated_circuit/removed_from)
-	REMOVE_TRAIT(removed_from, TRAIT_COMPONENT_MMI, REF(src))
+	REMOVE_TRAIT(removed_from, TRAIT_COMPONENT_MMI, src)
 	remove_current_brain()
 	return ..()

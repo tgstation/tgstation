@@ -30,10 +30,10 @@
 /datum/element/atmos_requirements/proc/on_non_stasis_life(mob/living/target, delta_time = SSMOBS_DT)
 	SIGNAL_HANDLER
 	if(is_breathable_atmos(target))
-		target.clear_alert(ALERT_NOT_ENOUGH_OXYGEN)
+		target.clear_alert("not_enough_oxy")
 		return
 	target.adjustBruteLoss(unsuitable_atmos_damage * delta_time)
-	target.throw_alert(ALERT_NOT_ENOUGH_OXYGEN, /atom/movable/screen/alert/not_enough_oxy)
+	target.throw_alert("not_enough_oxy", /atom/movable/screen/alert/not_enough_oxy)
 
 /datum/element/atmos_requirements/proc/is_breathable_atmos(mob/living/target)
 	if(target.pulledby && target.pulledby.grab_state >= GRAB_KILL && atmos_requirements["min_oxy"])
@@ -47,11 +47,11 @@
 		return FALSE
 
 	var/open_turf_gases = open_turf.air.gases
-	open_turf.air.assert_gases(/datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/carbon_dioxide, /datum/gas/plasma)
+	open_turf.air.assert_gases(arglist(GLOB.hardcoded_gases))
 
 	var/plas = open_turf_gases[/datum/gas/plasma][MOLES]
 	var/oxy = open_turf_gases[/datum/gas/oxygen][MOLES]
-	var/n2 = open_turf_gases[/datum/gas/nitrogen][MOLES]
+	var/n2  = open_turf_gases[/datum/gas/nitrogen][MOLES]
 	var/co2 = open_turf_gases[/datum/gas/carbon_dioxide][MOLES]
 
 	open_turf.air.garbage_collect()

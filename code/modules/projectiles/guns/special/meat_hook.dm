@@ -18,9 +18,6 @@
 /obj/item/gun/magic/hook/shoot_with_empty_chamber(mob/living/user)
 	to_chat(user, span_warning("[src] isn't ready to fire yet!"))
 
-/obj/item/gun/magic/hook/can_trigger_gun(mob/living/user) // This isn't really a gun, so it shouldn't be checking for TRAIT_NOGUNS, a firing pin (pinless), or a trigger guard (guardless)
-	return TRUE
-
 /obj/item/ammo_casing/magic/hook
 	name = "hook"
 	desc = "A hook."
@@ -55,8 +52,6 @@
 		if(A.anchored)
 			return
 		A.visible_message(span_danger("[A] is snagged by [firer]'s hook!"))
-		//Should really be a movement loop, but I don't want to support moving 5 tiles a tick
-		//It just looks bad
 		new /datum/forced_movement(A, get_turf(firer), 5, TRUE)
 		if (isliving(target))
 			var/mob/living/fresh_meat = target

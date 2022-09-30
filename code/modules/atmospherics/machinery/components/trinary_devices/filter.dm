@@ -267,14 +267,17 @@
 	name = "miasma filter"
 	filter_type = list(/datum/gas/miasma)
 /obj/machinery/atmospherics/components/trinary/filter/atmos/no2
-	name = "nitrium filter"
-	filter_type = list(/datum/gas/nitrium)
+	name = "nitryl filter"
+	filter_type = list(/datum/gas/nitryl)
 /obj/machinery/atmospherics/components/trinary/filter/atmos/pluoxium
 	name = "pluoxium filter"
 	filter_type = list(/datum/gas/pluoxium)
 /obj/machinery/atmospherics/components/trinary/filter/atmos/proto_nitrate
 	name = "proto-nitrate filter"
 	filter_type = list(/datum/gas/proto_nitrate)
+/obj/machinery/atmospherics/components/trinary/filter/atmos/stimulum
+	name = "stimulum filter"
+	filter_type = list(/datum/gas/stimulum)
 /obj/machinery/atmospherics/components/trinary/filter/atmos/tritium
 	name = "tritium filter"
 	filter_type = list(/datum/gas/tritium)
@@ -333,14 +336,17 @@
 	name = "miasma filter"
 	filter_type = list(/datum/gas/miasma)
 /obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/no2
-	name = "nitrium filter"
-	filter_type = list(/datum/gas/nitrium)
+	name = "nitryl filter"
+	filter_type = list(/datum/gas/nitryl)
 /obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/pluoxium
 	name = "pluoxium filter"
 	filter_type = list(/datum/gas/pluoxium)
 /obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/proto_nitrate
 	name = "proto-nitrate filter"
 	filter_type = list(/datum/gas/proto_nitrate)
+/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/stimulum
+	name = "stimulum filter"
+	filter_type = list(/datum/gas/stimulum)
 /obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/tritium
 	name = "tritium filter"
 	filter_type = list(/datum/gas/tritium)

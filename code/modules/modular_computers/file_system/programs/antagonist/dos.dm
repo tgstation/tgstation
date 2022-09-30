@@ -16,7 +16,7 @@
 	var/error = ""
 	var/executed = 0
 
-/datum/computer_file/program/ntnet_dos/process_tick(delta_time)
+/datum/computer_file/program/ntnet_dos/process_tick()
 	dos_speed = 0
 	switch(ntnet_status)
 		if(1)
@@ -63,7 +63,8 @@
 				executed = TRUE
 				target.dos_sources.Add(src)
 				if(SSnetworks.station_network.intrusion_detection_enabled)
-					SSnetworks.add_log("IDS WARNING - Excess traffic flood targeting relay [target.uid] detected from device: [computer.name]")
+					var/obj/item/computer_hardware/network_card/network_card = computer.all_components[MC_NET]
+					SSnetworks.add_log("IDS WARNING - Excess traffic flood targeting relay [target.uid] detected from device: [network_card.get_network_tag()]")
 					SSnetworks.station_network.intrusion_detection_alarm = TRUE
 			return TRUE
 

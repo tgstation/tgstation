@@ -6,7 +6,7 @@
 	explosion_block = 3
 	heat_proof = TRUE
 	max_integrity = 600
-	armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 100, BIO = 100, FIRE = 100, ACID = 100)
+	armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 100, BIO = 100, RAD = 100, FIRE = 100, ACID = 100)
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
 	damage_deflection = 70
 	var/password = "Swordfish"
@@ -59,7 +59,7 @@
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
 
 /obj/machinery/door/password/proc/ask_for_pass(mob/user)
-	var/guess = tgui_input_text(user, "Enter the password", "Password")
+	var/guess = stripped_input(user,"Enter the password:", "Password", "")
 	if(guess == password)
 		return TRUE
 	return FALSE

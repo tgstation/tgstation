@@ -3,14 +3,14 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll"
 	drop_sound = 'sound/items/handling/paper_drop.ogg'
-	pickup_sound = 'sound/items/handling/paper_pickup.ogg'
+	pickup_sound =  'sound/items/handling/paper_pickup.ogg'
 	throw_range = 1
 	throw_speed = 1
 	w_class = WEIGHT_CLASS_TINY
 	///what weapons will be allowed during the sparring match
 	var/weapons_condition = CONDITION_MELEE_ONLY
 	///what arena the fight will take place in
-	var/arena_condition = /area/station/service/chapel
+	var/arena_condition = /area/service/chapel
 	///what stakes the fight will have
 	var/stakes_condition = STAKES_NONE
 	///who has signed this contract. fills itself with WEAKREFS, to prevent hanging references

@@ -3,7 +3,9 @@
 	desc = "It produces items using iron, glass, plastic and maybe some more."
 	icon_state = "autolathe"
 	density = TRUE
-	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
+	use_power = IDLE_POWER_USE
+	idle_power_usage = 10
+	active_power_usage = 100
 	circuit = /obj/item/circuitboard/machine/autolathe
 	layer = BELOW_OBJ_LAYER
 
@@ -30,22 +32,22 @@
 	var/hacked_price = 50
 
 	var/list/categories = list(
-							RND_CATEGORY_TOOLS,
-							RND_CATEGORY_EQUIPMENT,
-							RND_CATEGORY_CONSTRUCTION,
-							RND_CATEGORY_MATERIAL,
-							RND_CATEGORY_TELECOMMS,
-							RND_CATEGORY_SECURITY,
-							RND_CATEGORY_MACHINERY,
-							RND_CATEGORY_MEDICAL,
-							RND_CATEGORY_MISC,
-							RND_CATEGORY_DINNERWARE,
-							RND_CATEGORY_IMPORTED
+							"Tools",
+							"Electronics",
+							"Construction",
+							"T-Comm",
+							"Security",
+							"Machinery",
+							"Medical",
+							"Misc",
+							"Dinnerware",
+							"Imported"
 							)
 
 /obj/machinery/autolathe/Initialize(mapload)
 	AddComponent(/datum/component/material_container, SSmaterials.materials_by_category[MAT_CATEGORY_ITEM_MATERIAL], 0, MATCONTAINER_EXAMINE, _after_insert = CALLBACK(src, .proc/AfterMaterialInsert))
 	. = ..()
+
 	wires = new /datum/wires/autolathe(src)
 	stored_research = new /datum/techweb/specialized/autounlocking/autolathe
 	matching_designs = list()
@@ -112,9 +114,9 @@
 				var/datum/component/material_container/mats = GetComponent(/datum/component/material_container)
 				for(var/datum/material/mat in D.materials)
 					max_multiplier = min(D.maxstack, round(mats.get_material_amount(mat)/D.materials[mat]))
-				if (max_multiplier >= 10 && !disabled)
+				if (max_multiplier>10 && !disabled)
 					m10 = TRUE
-				if (max_multiplier >= 25 && !disabled)
+				if (max_multiplier>25 && !disabled)
 					m25 = TRUE
 		else
 			if(!unbuildable)
@@ -174,8 +176,8 @@
 				return
 
 			var/multiplier = text2num(params["multiplier"])
-			if(!multiplier || !IS_FINITE(multiplier))
-				stack_trace("Invalid multiplier value in stack creation [multiplier], [usr] is likely attempting an exploit")
+			if(!multiplier)
+				to_chat(usr, span_alert("[src] only accepts a numerical multiplier!"))
 				return
 			var/is_stack = ispath(being_built.build_path, /obj/item/stack)
 			multiplier = clamp(round(multiplier),1,50)
@@ -188,7 +190,7 @@
 			for(var/MAT in being_built.materials)
 				total_amount += being_built.materials[MAT]
 
-			var/power = max(active_power_usage, (total_amount)*multiplier/5) //Change this to use all materials
+			var/power = max(2000, (total_amount)*multiplier/5) //Change this to use all materials
 
 			var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 
@@ -204,8 +206,8 @@
 						if(materials.materials[i] > 0)
 							list_to_show += i
 
-					used_material = tgui_input_list(usr, "Choose [used_material]", "Custom Material", sort_list(list_to_show, /proc/cmp_typepaths_asc))
-					if(isnull(used_material))
+					used_material = input("Choose [used_material]", "Custom Material") as null|anything in sort_list(list_to_show, /proc/cmp_typepaths_asc)
+					if(!used_material)
 						return //Didn't pick any material, so you can't build shit either.
 					custom_materials[used_material] += amount_needed
 
@@ -228,15 +230,15 @@
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	materials.retrieve_all()
 
-/obj/machinery/autolathe/attackby(obj/item/attacking_item, mob/living/user, params)
+/obj/machinery/autolathe/attackby(obj/item/O, mob/living/user, params)
 	if(busy)
 		balloon_alert(user, "it's busy!")
 		return TRUE
 
-	if(default_deconstruction_crowbar(attacking_item))
+	if(default_deconstruction_crowbar(O))
 		return TRUE
 
-	if(panel_open && is_wire_tool(attacking_item))
+	if(panel_open && is_wire_tool(O))
 		wires.interact(user)
 		return TRUE
 
@@ -246,13 +248,13 @@
 	if(machine_stat)
 		return TRUE
 
-	if(istype(attacking_item, /obj/item/disk/design_disk))
-		user.visible_message(span_notice("[user] begins to load \the [attacking_item] in \the [src]..."),
+	if(istype(O, /obj/item/disk/design_disk))
+		user.visible_message(span_notice("[user] begins to load \the [O] in \the [src]..."),
 			balloon_alert(user, "uploading design..."),
 			span_hear("You hear the chatter of a floppy drive."))
 		busy = TRUE
 		if(do_after(user, 14.4, target = src))
-			var/obj/item/disk/design_disk/disky = attacking_item
+			var/obj/item/disk/design_disk/disky = O
 			var/list/not_imported
 			for(var/datum/design/blueprint as anything in disky.blueprints)
 				if(!blueprint)
@@ -262,7 +264,7 @@
 				else
 					LAZYADD(not_imported, blueprint.name)
 			if(not_imported)
-				to_chat(user, span_warning("The following design[length(not_imported) > 1 ? "s" : ""] couldn't be imported: [english_list(not_imported)]"))
+				to_chat(user, span_warning("The following design[not_imported.len > 1 ? "s" : ""] couldn't be imported: [english_list(not_imported)]"))
 		busy = FALSE
 		return TRUE
 
@@ -270,32 +272,24 @@
 		balloon_alert(user, "close the panel first!")
 		return FALSE
 
-	if(istype(attacking_item, /obj/item/storage/bag/trash))
-		for(var/obj/item/content_item in attacking_item.contents)
-			if(!do_after(user, 0.5 SECONDS, src))
-				return FALSE
-			attackby(content_item, user)
-		return TRUE
-
 	return ..()
 
 /obj/machinery/autolathe/attackby_secondary(obj/item/weapon, mob/living/user, params)
-	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(busy)
 		balloon_alert(user, "it's busy!")
-		return
+		return TRUE
 
 	if(default_deconstruction_screwdriver(user, "autolathe_t", "autolathe", weapon))
-		return
+		return FALSE //returning this as FALSE prevents the screwdriver from being immediately eaten by the autolathe after you screw the panel open/closed. why? don't ask me
 
 	if(machine_stat)
-		return SECONDARY_ATTACK_CALL_NORMAL
+		return TRUE
 
 	if(panel_open)
 		balloon_alert(user, "close the panel first!")
-		return
+		return FALSE
 
-	return SECONDARY_ATTACK_CALL_NORMAL
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/autolathe/proc/AfterMaterialInsert(obj/item/item_inserted, id_inserted, amount_inserted)
 	if(istype(item_inserted, /obj/item/stack/ore/bluespace_crystal))
@@ -305,7 +299,7 @@
 	else
 		flick("autolathe_o", src)//plays metal insertion animation
 
-		use_power(min(active_power_usage * 0.25, amount_inserted / 100))
+		use_power(min(1000, amount_inserted / 100))
 
 /obj/machinery/autolathe/proc/make_item(power, list/materials_used, list/picked_materials, multiplier, coeff, is_stack, mob/user)
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
@@ -319,7 +313,7 @@
 		N.update_appearance()
 		N.autolathe_crafted(src)
 	else
-		for(var/i in 1 to multiplier)
+		for(var/i=1, i<=multiplier, i++)
 			var/obj/item/new_item = new being_built.build_path(A)
 			new_item.autolathe_crafted(src)
 
@@ -335,7 +329,6 @@
 	busy = FALSE
 
 /obj/machinery/autolathe/RefreshParts()
-	. = ..()
 	var/mat_capacity = 0
 	for(var/obj/item/stock_parts/matter_bin/new_matter_bin in component_parts)
 		mat_capacity += new_matter_bin.rating*75000
@@ -354,7 +347,7 @@
 		. += span_notice("The status display reads: Storing up to <b>[materials.max_amount]</b> material units.<br>Material consumption at <b>[creation_efficiency*100]%</b>.")
 
 /obj/machinery/autolathe/proc/can_build(datum/design/D, amount = 1)
-	if(length(D.make_reagents))
+	if(D.make_reagents.len)
 		return FALSE
 
 	var/coeff = (ispath(D.build_path, /obj/item/stack) ? 1 : creation_efficiency)
@@ -409,7 +402,7 @@
 	hacked = state
 	for(var/id in SSresearch.techweb_designs)
 		var/datum/design/D = SSresearch.techweb_design_by_id(id)
-		if((D.build_type & AUTOLATHE) && (RND_CATEGORY_HACKED in D.category))
+		if((D.build_type & AUTOLATHE) && ("hacked" in D.category))
 			if(hacked)
 				stored_research.add_design(D)
 			else

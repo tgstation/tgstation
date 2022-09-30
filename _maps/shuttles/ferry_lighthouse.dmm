@@ -152,7 +152,7 @@
 	dir = 8;
 	dwidth = 8;
 	height = 27;
-	shuttle_id = "ferry";
+	id = "ferry";
 	name = "The Lighthouse";
 	port_direction = 2;
 	width = 16

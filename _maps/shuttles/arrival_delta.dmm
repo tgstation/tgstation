@@ -135,6 +135,19 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/shuttle/arrival)
+"l" = (
+/obj/structure/table/reinforced,
+/obj/structure/extinguisher_cabinet{
+	pixel_y = 32
+	},
+/obj/item/storage/firstaid/regular{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/storage/firstaid/regular,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron,
+/area/shuttle/arrival)
 "m" = (
 /obj/structure/table/reinforced,
 /obj/machinery/cell_charger,
@@ -165,7 +178,16 @@
 	},
 /area/shuttle/arrival)
 "p" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/shuttle/arrival)
 "q" = (
@@ -233,18 +255,18 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/arrival)
 "x" = (
-/obj/structure/flora/bush/grassy/style_random,
-/obj/structure/flora/bush/lavendergrass/style_random,
-/obj/structure/flora/bush/flowers_pp/style_random,
-/obj/structure/flora/bush/sunny/style_random,
+/obj/structure/flora/ausbushes/grassybush,
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/ausbushes/sunnybush,
 /obj/structure/window/reinforced/shuttle,
 /turf/open/floor/grass,
 /area/shuttle/arrival)
 "y" = (
-/obj/structure/flora/bush/grassy/style_random,
-/obj/structure/flora/bush/lavendergrass/style_random,
-/obj/structure/flora/bush/flowers_yw/style_random,
-/obj/structure/flora/bush/ferny/style_random,
+/obj/structure/flora/ausbushes/grassybush,
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/ausbushes/fernybush,
 /obj/structure/window/reinforced/shuttle,
 /turf/open/floor/grass,
 /area/shuttle/arrival)
@@ -272,14 +294,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/shuttle/arrival)
-"C" = (
-/obj/machinery/computer{
-	dir = 1;
-	name = "Shuttle computer"
-	},
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/turf/open/floor/iron,
-/area/shuttle/arrival)
 "D" = (
 /obj/structure/table/reinforced,
 /obj/item/folder,
@@ -299,7 +313,16 @@
 /area/shuttle/arrival)
 "F" = (
 /obj/machinery/light/directional/north,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
 /obj/machinery/vending/wallmed/directional/north{
 	use_power = 0
 	},
@@ -342,7 +365,16 @@
 /area/shuttle/arrival)
 "L" = (
 /obj/structure/closet/wardrobe/grey,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/shuttle/arrival)
 "M" = (
@@ -401,6 +433,23 @@
 	},
 /turf/open/floor/iron,
 /area/shuttle/arrival)
+"U" = (
+/obj/machinery/computer{
+	dir = 1;
+	name = "Shuttle computer"
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/shuttle/arrival)
 "V" = (
 /obj/machinery/computer{
 	dir = 1;
@@ -410,19 +459,6 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/turf/open/floor/iron,
-/area/shuttle/arrival)
-"W" = (
-/obj/structure/table/reinforced,
-/obj/structure/extinguisher_cabinet{
-	pixel_y = 32
-	},
-/obj/item/storage/medkit/regular{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/storage/medkit/regular,
-/obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/shuttle/arrival)
 
@@ -499,14 +535,14 @@ p
 I
 N
 Q
-C
+U
 h
 "}
 (5,1,1) = {"
 c
 d
 f
-W
+l
 p
 s
 w
@@ -537,7 +573,7 @@ p
 K
 P
 S
-C
+U
 h
 "}
 (7,1,1) = {"

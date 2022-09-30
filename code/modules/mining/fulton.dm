@@ -19,17 +19,23 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 
 /obj/item/extraction_pack/attack_self(mob/user)
 	var/list/possible_beacons = list()
-	for(var/obj/structure/extraction_point/extraction_point as anything in GLOB.total_extraction_beacons)
-		if(extraction_point.beacon_network in beacon_networks)
-			possible_beacons += extraction_point
-	if(!length(possible_beacons))
+	for(var/B in GLOB.total_extraction_beacons)
+		var/obj/structure/extraction_point/EP = B
+		if(EP.beacon_network in beacon_networks)
+			possible_beacons += EP
+
+	if(!possible_beacons.len)
 		to_chat(user, span_warning("There are no extraction beacons in existence!"))
 		return
+
 	else
-		var/chosen_beacon = tgui_input_list(user, "Beacon to connect to", "Balloon Extraction Pack", sort_names(possible_beacons))
-		if(isnull(chosen_beacon))
+		var/A
+
+		A = input("Select a beacon to connect to", "Balloon Extraction Pack", A) as null|anything in sort_names(possible_beacons)
+
+		if(!A)
 			return
-		beacon = chosen_beacon
+		beacon = A
 		to_chat(user, span_notice("You link the extraction pack to the beacon system."))
 
 /obj/item/extraction_pack/afterattack(atom/movable/A, mob/living/carbon/human/user, flag, params)
@@ -63,7 +69,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			to_chat(user, span_notice("You attach the pack to [A] and activate it."))
 			if(loc == user && istype(user.back, /obj/item/storage/backpack))
 				var/obj/item/storage/backpack/B = user.back
-				B.atom_storage?.attempt_insert(src, user)
+				SEND_SIGNAL(B, COMSIG_TRY_STORAGE_INSERT, src, user, FALSE, FALSE)
 			uses_left--
 			if(uses_left <= 0)
 				user.transferItemToLoc(src, A, TRUE)

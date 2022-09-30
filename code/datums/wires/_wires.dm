@@ -6,7 +6,7 @@
 
 	if(I.tool_behaviour == TOOL_WIRECUTTER || I.tool_behaviour == TOOL_MULTITOOL)
 		return TRUE
-	if(isassembly(I))
+	if(istype(I, /obj/item/assembly))
 		var/obj/item/assembly/A = I
 		if(A.attachable)
 			return TRUE
@@ -87,9 +87,8 @@
 	"crimson",
 	"cyan",
 	"gold",
-	"green",
 	"grey",
-	"lime",
+	"green",
 	"magenta",
 	"orange",
 	"pink",
@@ -98,7 +97,7 @@
 	"silver",
 	"violet",
 	"white",
-	"yellow",
+	"yellow"
 	)
 
 	var/list/my_possible_colors = possible_colors.Copy()
@@ -111,7 +110,7 @@
 	randomize()
 
 /datum/wires/proc/repair()
-	cut_wires.Cut()//a negative times a negative equals a positive
+	cut_wires.Cut()
 
 /datum/wires/proc/get_wire(color)
 	return colors[color]
@@ -165,18 +164,18 @@
 	for(var/wire in wires)
 		cut(wire)
 
-/datum/wires/proc/pulse(wire, user, force=FALSE)
-	if(!force && is_cut(wire))
+/datum/wires/proc/pulse(wire, user)
+	if(is_cut(wire))
 		return
 	on_pulse(wire, user)
 
-/datum/wires/proc/pulse_color(color, mob/living/user, force=FALSE)
-	pulse(get_wire(color), user, force)
+/datum/wires/proc/pulse_color(color, mob/living/user)
+	pulse(get_wire(color), user)
 
 /datum/wires/proc/pulse_assembly(obj/item/assembly/S)
 	for(var/color in assemblies)
 		if(S == assemblies[color])
-			pulse_color(color, force=TRUE)
+			pulse_color(color)
 			return TRUE
 
 /datum/wires/proc/attach_assembly(color, obj/item/assembly/S)
@@ -334,7 +333,7 @@
 					. = TRUE
 			else
 				I = L.get_active_held_item()
-				if(isassembly(I))
+				if(istype(I, /obj/item/assembly))
 					var/obj/item/assembly/A = I
 					if(A.attachable)
 						if(!L.temporarilyRemoveItemFromInventory(A))

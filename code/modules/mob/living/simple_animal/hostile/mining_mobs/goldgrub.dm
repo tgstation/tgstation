@@ -2,7 +2,7 @@
 /mob/living/simple_animal/hostile/asteroid/goldgrub
 	name = "goldgrub"
 	desc = "A worm that grows fat from eating everything in its sight. Seems to enjoy precious metals and other shiny things, hence the name."
-	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
+	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
 	icon_state = "Goldgrub"
 	icon_living = "Goldgrub"
 	icon_aggro = "Goldgrub_alert"
@@ -25,7 +25,7 @@
 	combat_mode = FALSE
 	speak_emote = list("screeches")
 	throw_message = "sinks in slowly, before being pushed out of "
-	death_message = "stops moving as green liquid oozes from the carcass!"
+	deathmessage = "stops moving as green liquid oozes from the carcass!"
 	status_flags = CANPUSH
 	gold_core_spawnable = HOSTILE_SPAWN
 	search_objects = 1
@@ -72,7 +72,7 @@
 	if(G.stat == DEAD)
 		return
 	var/turf/T = get_turf(G)
-	if (!istype(T, /turf/open/misc/asteroid) || !do_after(G, 30, target = T))
+	if (!istype(T, /turf/open/floor/plating/asteroid) || !do_after(G, 30, target = T))
 		to_chat(G, span_warning("You can only burrow in and out of mining turfs and must stay still!"))
 		return
 	if (get_dist(G, T) != 0)
@@ -80,15 +80,16 @@
 		return
 	if(G.is_burrowed)
 		holder = G.loc
-		holder.eject_jaunter()
-		holder = null
+		G.forceMove(T)
+		QDEL_NULL(holder)
 		G.is_burrowed = FALSE
 		G.visible_message(span_danger("[G] emerges from the ground!"))
 		playsound(get_turf(G), 'sound/effects/break_stone.ogg', 50, TRUE, -1)
 	else
 		G.visible_message(span_danger("[G] buries into the ground, vanishing from sight!"))
 		playsound(get_turf(G), 'sound/effects/break_stone.ogg', 50, TRUE, -1)
-		holder = new /obj/effect/dummy/phased_mob(T, G)
+		holder = new /obj/effect/dummy/phased_mob(T)
+		G.forceMove(holder)
 		G.is_burrowed = TRUE
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/GiveTarget(new_target)

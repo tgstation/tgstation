@@ -7,76 +7,59 @@ export const PortablePump = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     direction,
-    connected,
     holding,
-    targetPressure,
-    defaultPressure,
-    minPressure,
-    maxPressure,
+    target_pressure,
+    default_pressure,
+    min_pressure,
+    max_pressure,
   } = data;
-  const pump_or_port = connected ? 'Port' : 'Pump';
-  const area_or_tank = holding ? 'Tank' : 'Area';
   return (
-    <Window width={300} height={340}>
+    <Window
+      width={300}
+      height={315}>
       <Window.Content>
         <PortableBasicInfo />
         <Section
-          title="Pumping"
-          buttons={
+          title="Pump"
+          buttons={(
             <Button
-              content={
-                direction
-                  ? area_or_tank + ' → ' + pump_or_port
-                  : pump_or_port + ' → ' + area_or_tank
-              }
-              color={!direction && !holding ? 'caution' : null}
-              onClick={() => act('direction')}
-            />
-          }>
+              icon={direction ? 'sign-in-alt' : 'sign-out-alt'}
+              content={direction ? 'In' : 'Out'}
+              selected={direction}
+              onClick={() => act('direction')} />
+          )}>
           <LabeledList>
             <LabeledList.Item label="Output">
               <NumberInput
-                value={targetPressure}
+                value={target_pressure}
                 unit="kPa"
                 width="75px"
-                minValue={minPressure}
-                maxValue={maxPressure}
+                minValue={min_pressure}
+                maxValue={max_pressure}
                 step={10}
-                onChange={(e, value) =>
-                  act('pressure', {
-                    pressure: value,
-                  })
-                }
-              />
+                onChange={(e, value) => act('pressure', {
+                  pressure: value,
+                })} />
             </LabeledList.Item>
             <LabeledList.Item label="Presets">
               <Button
                 icon="minus"
-                disabled={targetPressure === minPressure}
-                onClick={() =>
-                  act('pressure', {
-                    pressure: 'min',
-                  })
-                }
-              />
+                disabled={target_pressure === min_pressure}
+                onClick={() => act('pressure', {
+                  pressure: 'min',
+                })} />
               <Button
                 icon="sync"
-                disabled={targetPressure === defaultPressure}
-                onClick={() =>
-                  act('pressure', {
-                    pressure: 'reset',
-                  })
-                }
-              />
+                disabled={target_pressure === default_pressure}
+                onClick={() => act('pressure', {
+                  pressure: 'reset',
+                })} />
               <Button
                 icon="plus"
-                disabled={targetPressure === maxPressure}
-                onClick={() =>
-                  act('pressure', {
-                    pressure: 'max',
-                  })
-                }
-              />
+                disabled={target_pressure === max_pressure}
+                onClick={() => act('pressure', {
+                  pressure: 'max',
+                })} />
             </LabeledList.Item>
           </LabeledList>
         </Section>

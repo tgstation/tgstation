@@ -1,10 +1,10 @@
-Admiral
-Bowler
-Britannia
 Empire
-Fancy
 Gent
 Imperial
+Britannia
 Navy
-Queen
 Tea
+Admiral
+Bowler
+Fancy
+Queen

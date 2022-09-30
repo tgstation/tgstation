@@ -10,9 +10,6 @@
 	ammo_type = /obj/item/ammo_casing/shotgun/rubbershot
 	max_ammo = 4
 
-/obj/item/ammo_box/magazine/internal/shot/tube/fire
-	ammo_type = /obj/projectile/bullet/incendiary/shotgun/no_trail
-
 /obj/item/ammo_box/magazine/internal/shot/lethal
 	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
 
@@ -24,10 +21,6 @@
 /obj/item/ammo_box/magazine/internal/shot/dual
 	name = "double-barrel shotgun internal magazine"
 	max_ammo = 2
-
-/obj/item/ammo_box/magazine/internal/shot/dual/slugs
-	name = "double-barrel shotgun internal magazine (slugs)"
-	ammo_type = /obj/item/ammo_casing/shotgun
 
 /obj/item/ammo_box/magazine/internal/shot/riot
 	name = "riot shotgun internal magazine"

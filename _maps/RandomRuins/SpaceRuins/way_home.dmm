@@ -6,11 +6,11 @@
 /turf/closed/mineral/random,
 /area/ruin/space/way_home)
 "c" = (
-/turf/open/misc/asteroid/airless,
+/turf/open/floor/plating/asteroid/airless,
 /area/ruin/space/way_home)
 "d" = (
 /obj/structure/signpost/salvation,
-/turf/open/misc/asteroid/airless,
+/turf/open/floor/plating/asteroid/airless,
 /area/ruin/space/way_home)
 
 (1,1,1) = {"

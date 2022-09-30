@@ -10,8 +10,8 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 150, /datum/material/glass = 100)
 	build_path = /obj/item/beacon
-	category = list(RND_CATEGORY_BLUESPACE_DESIGNS)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_SECURITY
+	category = list("Bluespace Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/bag_holding
 	name = "Inert Bag of Holding"
@@ -20,9 +20,9 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/gold = 3000, /datum/material/diamond = 1500, /datum/material/uranium = 250, /datum/material/bluespace = 2000)
 	build_path = /obj/item/bag_of_holding_inert
-	category = list(RND_CATEGORY_BLUESPACE_DESIGNS)
+	category = list("Bluespace Designs")
 	dangerous_construction = TRUE
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/bluespace_crystal
 	name = "Artificial Bluespace Crystal"
@@ -31,8 +31,8 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/diamond = 1500, /datum/material/plasma = 1500)
 	build_path = /obj/item/stack/ore/bluespace_crystal/artificial
-	category = list(RND_CATEGORY_BLUESPACE_DESIGNS)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
+	category = list("Bluespace Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
 
 /datum/design/telesci_gps
 	name = "GPS Device"
@@ -41,9 +41,8 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 1000)
 	build_path = /obj/item/gps
-	category = list(RND_CATEGORY_BLUESPACE_DESIGNS)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO
-	autolathe_exportable = FALSE
+	category = list("Bluespace Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_CARGO
 
 /datum/design/desynchronizer
 	name = "Desynchronizer"
@@ -52,8 +51,8 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 500, /datum/material/silver = 1500, /datum/material/bluespace = 1000)
 	build_path = /obj/item/desynchronizer
-	category = list(RND_CATEGORY_BLUESPACE_DESIGNS)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+	category = list("Bluespace Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/miningsatchel_holding
 	name = "Mining Satchel of Holding"
@@ -62,8 +61,8 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/gold = 250, /datum/material/uranium = 500) //quite cheap, for more convenience
 	build_path = /obj/item/storage/bag/ore/holding
-	category = list(RND_CATEGORY_BLUESPACE_DESIGNS)
-	departmental_flags = DEPARTMENT_BITFLAG_CARGO
+	category = list("Bluespace Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO
 
 /datum/design/swapper
 	name = "Quantum Spin Inverter"
@@ -72,5 +71,5 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 1000, /datum/material/bluespace = 2000, /datum/material/gold = 1500, /datum/material/silver = 1000)
 	build_path = /obj/item/swapper
-	category = list(RND_CATEGORY_BLUESPACE_DESIGNS)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+	category = list("Bluespace Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE

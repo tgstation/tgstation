@@ -11,6 +11,7 @@
 #define POLL_IGNORE_SPIDER "spider"
 #define POLL_IGNORE_ASHWALKER "ashwalker"
 #define POLL_IGNORE_GOLEM "golem"
+#define POLL_IGNORE_SWARMER "swarmer"
 #define POLL_IGNORE_DRONE "drone"
 #define POLL_IGNORE_FUGITIVE "fugitive"
 #define POLL_IGNORE_PYROSLIME "slime"
@@ -19,13 +20,6 @@
 #define POLL_IGNORE_SPLITPERSONALITY "split_personality"
 #define POLL_IGNORE_CONTRACTOR_SUPPORT "contractor_support"
 #define POLL_IGNORE_ACADEMY_WIZARD "academy_wizard"
-#define POLL_IGNORE_PAI "pai"
-#define POLL_IGNORE_VENUSHUMANTRAP "venus_human_trap"
-#define POLL_IGNORE_REGAL_RAT "regal_rat"
-#define POLL_IGNORE_CARGORILLA "cargorilla"
-#define POLL_IGNORE_MONKEY_HELMET "mind_magnified_monkey"
-#define POLL_IGNORE_LAVALAND_ELITE "lavaland_elite"
-#define POLL_IGNORE_SHUTTLE_DENIZENS "shuttle_denizens"
 
 
 GLOBAL_LIST_INIT(poll_ignore_desc, list(
@@ -40,6 +34,7 @@ GLOBAL_LIST_INIT(poll_ignore_desc, list(
 	POLL_IGNORE_SPIDER = "Spiders",
 	POLL_IGNORE_ASHWALKER = "Ashwalker eggs",
 	POLL_IGNORE_GOLEM = "Golems",
+	POLL_IGNORE_SWARMER = "Swarmer shells",
 	POLL_IGNORE_DRONE = "Drone shells",
 	POLL_IGNORE_FUGITIVE = "Fugitive Hunter",
 	POLL_IGNORE_PYROSLIME = "Slime",
@@ -47,14 +42,7 @@ GLOBAL_LIST_INIT(poll_ignore_desc, list(
 	POLL_IGNORE_IMAGINARYFRIEND = "Imaginary Friend",
 	POLL_IGNORE_SPLITPERSONALITY = "Split Personality",
 	POLL_IGNORE_CONTRACTOR_SUPPORT = "Contractor Support Unit",
-	POLL_IGNORE_ACADEMY_WIZARD = "Academy Wizard Defender",
-	POLL_IGNORE_PAI = JOB_PERSONAL_AI,
-	POLL_IGNORE_VENUSHUMANTRAP = "Venus Human Traps",
-	POLL_IGNORE_REGAL_RAT = "Regal rat",
-	POLL_IGNORE_CARGORILLA = "Cargorilla",
-	POLL_IGNORE_MONKEY_HELMET = "Mind magnified monkey",
-	POLL_IGNORE_LAVALAND_ELITE = "Lavaland elite",
-	POLL_IGNORE_SHUTTLE_DENIZENS = "Shuttle denizens",
+	POLL_IGNORE_ACADEMY_WIZARD = "Academy Wizard Defender"
 ))
 GLOBAL_LIST_INIT(poll_ignore, init_poll_ignore())
 

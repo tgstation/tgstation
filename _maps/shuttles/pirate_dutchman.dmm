@@ -53,7 +53,7 @@
 /obj/structure/chair/wood{
 	dir = 1
 	},
-/obj/effect/mob_spawn/ghost_role/human/pirate/skeleton/gunner,
+/obj/effect/mob_spawn/human/pirate/skeleton/gunner,
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
 "am" = (
@@ -66,12 +66,12 @@
 	dir = 5
 	},
 /obj/structure/table/wood,
-/obj/item/reagent_containers/cup/glass/bottle/beer{
+/obj/item/reagent_containers/food/drinks/bottle/beer{
 	pixel_x = -5;
 	pixel_y = 8
 	},
 /obj/item/stack/cannonball/fourteen,
-/obj/item/reagent_containers/cup/bucket/wooden,
+/obj/item/reagent_containers/glass/bucket/wooden,
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
 "an" = (
@@ -107,6 +107,12 @@
 	dir = 1
 	},
 /turf/open/floor/wood/airless,
+/area/shuttle/pirate/flying_dutchman)
+"aw" = (
+/obj/machinery/computer/monitor/secret{
+	dir = 8
+	},
+/turf/open/floor/carpet/royalblack/airless,
 /area/shuttle/pirate/flying_dutchman)
 "aB" = (
 /obj/structure/railing/corner{
@@ -298,7 +304,7 @@
 "gP" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/chair/comfy/shuttle,
-/obj/effect/mob_spawn/ghost_role/human/pirate/skeleton/captain,
+/obj/effect/mob_spawn/human/pirate/skeleton/captain,
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
 "gQ" = (
@@ -325,8 +331,8 @@
 	},
 /obj/machinery/light/small/directional/south,
 /obj/structure/fermenting_barrel/gunpowder,
-/obj/item/reagent_containers/cup/bucket/wooden,
-/obj/item/reagent_containers/cup/bucket/wooden,
+/obj/item/reagent_containers/glass/bucket/wooden,
+/obj/item/reagent_containers/glass/bucket/wooden,
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
 "hz" = (
@@ -420,7 +426,7 @@
 "sf" = (
 /obj/machinery/door/airlock/vault{
 	color = "#825427";
-	name = "Ye Olde Strong Door"
+	name = "ye olde strong door"
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /turf/open/floor/wood/airless,
@@ -571,8 +577,8 @@
 	},
 /obj/machinery/light/small/directional/south,
 /obj/structure/fermenting_barrel/gunpowder,
-/obj/item/reagent_containers/cup/bucket/wooden,
-/obj/item/reagent_containers/cup/bucket/wooden,
+/obj/item/reagent_containers/glass/bucket/wooden,
+/obj/item/reagent_containers/glass/bucket/wooden,
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
 "BK" = (
@@ -585,10 +591,10 @@
 	icon_state = "minibar";
 	name = "skeletal minibar"
 	},
-/obj/item/reagent_containers/condiment/milk{
+/obj/item/reagent_containers/food/condiment/milk{
 	pixel_x = -5
 	},
-/obj/item/reagent_containers/condiment/milk{
+/obj/item/reagent_containers/food/condiment/milk{
 	pixel_x = 5
 	},
 /turf/open/floor/wood/airless,
@@ -608,7 +614,6 @@
 /obj/structure/festivus{
 	anchored = 1;
 	color = "#825427";
-	desc = "A sturdy pole designed to hold the vessel's solar sails in place.";
 	name = "mast";
 	pixel_x = -16;
 	pixel_y = 2
@@ -617,7 +622,7 @@
 /area/shuttle/pirate/flying_dutchman)
 "Dr" = (
 /obj/structure/table,
-/obj/item/reagent_containers/cup/glass/bottle/rum{
+/obj/item/reagent_containers/food/drinks/bottle/rum{
 	desc = "Rum with ghostly properties that can help the drinker enter the spirit realm. It has fermented under the sea of space for ages.";
 	name = "Ghost Pirate Rum";
 	pixel_x = -4;
@@ -626,7 +631,7 @@
 /obj/item/clothing/mask/cigarette/cigar{
 	pixel_x = 4
 	},
-/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
 	pixel_x = -7;
 	pixel_y = 5
 	},
@@ -739,6 +744,33 @@
 	},
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
+"LD" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/machinery/light/floor,
+/obj/docking_port/stationary{
+	dir = 8;
+	dwidth = 11;
+	height = 16;
+	id = "pirateship_home";
+	name = "Deep Space";
+	width = 17
+	},
+/obj/docking_port/mobile/pirate{
+	dheight = 7;
+	dir = 8;
+	dwidth = 18;
+	height = 6;
+	launch_status = 0;
+	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
+	name = "Pirate Ship";
+	port_direction = 4;
+	preferred_direction = 8;
+	width = 13
+	},
+/turf/open/floor/wood/airless,
+/area/shuttle/pirate/flying_dutchman)
 "Ms" = (
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/carpet/royalblack/airless,
@@ -756,33 +788,6 @@
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
 /turf/open/space/basic,
-/area/shuttle/pirate/flying_dutchman)
-"Op" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 6
-	},
-/obj/machinery/light/floor,
-/obj/docking_port/stationary{
-	dir = 8;
-	dwidth = 11;
-	height = 16;
-	shuttle_id = "pirate_home";
-	name = "Deep Space";
-	width = 17
-	},
-/obj/docking_port/mobile/pirate{
-	dheight = 7;
-	dir = 8;
-	dwidth = 18;
-	height = 6;
-	launch_status = 0;
-	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
-	name = "Pirate Ship";
-	port_direction = 4;
-	preferred_direction = 8;
-	width = 13
-	},
-/turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
 "OL" = (
 /obj/effect/turf_decal/siding/wood/corner{
@@ -881,7 +886,7 @@
 /obj/item/food/grown/sugarcane,
 /obj/item/food/grown/sugarcane,
 /obj/item/food/grown/sugarcane,
-/obj/item/reagent_containers/cup/bucket/wooden,
+/obj/item/reagent_containers/glass/bucket/wooden,
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
 "Vm" = (
@@ -938,14 +943,8 @@
 /turf/open/floor/carpet/royalblack/airless,
 /area/shuttle/pirate/flying_dutchman)
 "Ys" = (
-/obj/effect/mob_spawn/ghost_role/human/pirate/skeleton,
+/obj/effect/mob_spawn/human/pirate/skeleton,
 /turf/open/floor/wood/airless,
-/area/shuttle/pirate/flying_dutchman)
-"YJ" = (
-/obj/machinery/computer/monitor{
-	dir = 8
-	},
-/turf/open/floor/carpet/royalblack/airless,
 /area/shuttle/pirate/flying_dutchman)
 "ZL" = (
 /obj/effect/turf_decal/siding/wood{
@@ -1324,7 +1323,7 @@ af
 af
 af
 zO
-Op
+LD
 WR
 vi
 WR
@@ -1340,7 +1339,7 @@ Gr
 WR
 EU
 bO
-YJ
+aw
 WR
 WR
 "}

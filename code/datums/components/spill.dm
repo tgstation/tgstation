@@ -45,7 +45,7 @@
 /datum/component/spill/proc/equip_react(obj/item/source, mob/equipper, slot)
 	SIGNAL_HANDLER
 
-	if(slot & (ITEM_SLOT_LPOCKET|ITEM_SLOT_RPOCKET))
+	if(slot == ITEM_SLOT_LPOCKET || slot == ITEM_SLOT_RPOCKET)
 		RegisterSignal(equipper, COMSIG_LIVING_STATUS_KNOCKDOWN, .proc/knockdown_react, TRUE)
 	else
 		UnregisterSignal(equipper, COMSIG_LIVING_STATUS_KNOCKDOWN)

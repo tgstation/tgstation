@@ -10,8 +10,8 @@
 	inhand_icon_state = "walkietalkie"
 	worn_icon_state = "radio"
 	desc = "A basic handheld radio that communicates with local telecommunication networks."
-	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	dog_fashion = /datum/dog_fashion/back
 
 	flags_1 = CONDUCT_1
@@ -35,7 +35,7 @@
 	. = ..()
 	var/datum/component/uplink/hidden_uplink = GetComponent(/datum/component/uplink)
 	hidden_uplink.name = "debug uplink"
-	hidden_uplink.uplink_handler.debug_mode = TRUE
+	hidden_uplink.debug = TRUE
 
 /obj/item/uplink/nuclear
 	uplink_flag = UPLINK_NUKE_OPS
@@ -48,7 +48,7 @@
 	. = ..()
 	var/datum/component/uplink/hidden_uplink = GetComponent(/datum/component/uplink)
 	hidden_uplink.name = "debug nuclear uplink"
-	hidden_uplink.uplink_handler.debug_mode = TRUE
+	hidden_uplink.debug = TRUE
 
 /obj/item/uplink/nuclear_restricted
 	uplink_flag = UPLINK_NUKE_OPS

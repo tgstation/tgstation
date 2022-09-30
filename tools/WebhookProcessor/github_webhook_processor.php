@@ -40,18 +40,6 @@ $tracked_branch = 'master';
 $require_changelogs = false;
 $discordWebHooks = array();
 
-// Only these repositories will announce in game.
-// Any repository that players actually care about.
-$game_announce_whitelist = array(
-	"tgstation",
-	"TerraGov-Marine-Corps",
-);
-
-// Any repository that matches in this blacklist will not appear on Discord.
-$discord_announce_blacklist = array(
-	"/^event-.*$/",
-);
-
 require_once 'secret.php';
 
 //CONFIG END
@@ -244,6 +232,7 @@ function tag_pr($payload, $opened) {
 
 		if(strpos(strtolower($title), 'refactor') !== FALSE)
 			$tags[] = 'Refactor';
+
 		if(strpos(strtolower($title), 'revert') !== FALSE)
 			$tags[] = 'Revert';
 		if(strpos(strtolower($title), 'removes') !== FALSE)
@@ -270,7 +259,6 @@ function tag_pr($payload, $opened) {
 			$tags[] = $tag;
 
 	check_tag_and_replace($payload, '[dnm]', 'Do Not Merge', $tags);
-	check_tag_and_replace($payload, '[no gbp]', 'GBP: No Update', $tags);
 
 	return array($tags, $remove);
 }
@@ -322,21 +310,8 @@ function check_dismiss_changelog_review($payload){
 				dismiss_review($payload, $R['id'], 'Changelog added/fixed.');
 }
 
-function is_blacklisted($blacklist, $name) {
-	foreach ($blacklist as $pattern) {
-		if (preg_match($pattern, $name)) {
-			return true;
-		}
-	}
-
-	return false;
-}
-
 function handle_pr($payload) {
-	global $discord_announce_blacklist;
 	global $no_changelog;
-	global $game_announce_whitelist;
-
 	$action = 'opened';
 	$validated = validate_user($payload);
 	switch ($payload["action"]) {
@@ -377,16 +352,9 @@ function handle_pr($payload) {
 	if (!$validated) {
 		$pr_flags |= F_UNVALIDATED_USER;
 	}
+	discord_announce($action, $payload, $pr_flags);
+	game_announce($action, $payload, $pr_flags);
 
-	$repo_name = $payload['repository']['name'];
-
-	if (in_array($repo_name, $game_announce_whitelist)) {
-		game_announce($action, $payload, $pr_flags);
-	}
-
-	if (!is_blacklisted($discord_announce_blacklist, $repo_name)) {
-		discord_announce($action, $payload, $pr_flags);
-	}
 }
 
 function filter_announce_targets($targets, $owner, $repo, $action, $pr_flags) {
@@ -730,7 +698,7 @@ function checkchangelog($payload, $compile = true) {
 			case 'adds':
 			case 'rscadd':
 				if($item != 'Added new mechanics or gameplay changes' && $item != 'Added more things') {
-					$tags[] = 'Feature';
+					$tags[] = 'Mechanic';
 					$currentchangelogblock[] = array('type' => 'rscadd', 'body' => $item);
 				}
 				break;
@@ -763,8 +731,9 @@ function checkchangelog($payload, $compile = true) {
 				}
 				break;
 			case 'balance':
+			case 'rebalance':
 				if($item != 'rebalanced something'){
-					$tags[] = 'Balance';
+					$tags[] = 'Balance/Rebalance';
 					$currentchangelogblock[] = array('type' => 'balance', 'body' => $item);
 				}
 				break;
@@ -773,6 +742,12 @@ function checkchangelog($payload, $compile = true) {
 				if($item != 'changed some code'){
 					$tags[] = 'Code Improvement';
 					$currentchangelogblock[] = array('type' => 'code_imp', 'body' => $item);
+				}
+				break;
+			case 'expansion':
+				if($item != 'Expands content of an existing feature'){
+					$tags[] = 'Content Expansion';
+					$currentchangelogblock[] = array('type' => 'expansion', 'body' => $item);
 				}
 				break;
 			case 'refactor':

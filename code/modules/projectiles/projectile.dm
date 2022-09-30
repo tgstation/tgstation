@@ -4,7 +4,7 @@
 
 /obj/projectile
 	name = "projectile"
-	icon = 'icons/obj/weapons/guns/projectiles.dmi'
+	icon = 'icons/obj/guns/projectiles.dmi'
 	icon_state = "bullet"
 	density = FALSE
 	anchored = TRUE
@@ -13,7 +13,6 @@
 	wound_bonus = CANT_WOUND // can't wound by default
 	generic_canpass = FALSE
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
-	layer = MOB_LAYER
 	//The sound this plays on impact.
 	var/hitsound = 'sound/weapons/pierce.ogg'
 	var/hitsound_wall = ""
@@ -21,7 +20,7 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/def_zone = "" //Aiming at
 	var/atom/movable/firer = null//Who shot it
-	var/datum/fired_from = null // the thing that the projectile was fired from (gun, turret, spell)
+	var/atom/fired_from = null // the atom that the projectile was fired from (gun, turret)
 	var/suppressed = FALSE //Attack message
 	var/yo = null
 	var/xo = null
@@ -68,22 +67,7 @@
 	/// number of times we've pierced something. Incremented BEFORE bullet_act and on_hit proc!
 	var/pierces = 0
 
-	/// If objects are below this layer, we pass through them
-	var/hit_threshhold = PROJECTILE_HIT_THRESHHOLD_LAYER
-
-	/// During each fire of SSprojectiles, the number of deciseconds since the last fire of SSprojectiles
-	/// is divided by this var, and the result truncated to the next lowest integer is
-	/// the number of times the projectile's `pixel_move` proc will be called.
-	var/speed = 0.8
-
-	/// This var is multiplied by SSprojectiles.global_pixel_speed to get how many pixels
-	/// the projectile moves during each iteration of the movement loop
-	///
-	/// If you want to make a fast-moving projectile, you should keep this equal to 1 and
-	/// reduce the value of `speed`. If you want to make a slow-moving projectile, make
-	/// `speed` a modest value like 1 and set this to a low value like 0.2.
-	var/pixel_speed_multiplier = 1
-
+	var/speed = 0.8 //Amount of deciseconds it takes for projectile to travel
 	var/Angle = 0
 	var/original_angle = 0 //Angle at firing
 	var/nondirectional_sprite = FALSE //Set TRUE to prevent projectiles from having their sprites rotated based on firing angle
@@ -105,8 +89,6 @@
 	var/ricochet_auto_aim_angle = 30
 	/// the angle of impact must be within this many degrees of the struck surface, set to 0 to allow any angle
 	var/ricochet_incidence_leeway = 40
-	/// Can our ricochet autoaim hit our firer?
-	var/ricochet_shoots_firer = TRUE
 
 	///If the object being hit can pass ths damage on to something else, it should not do it for this bullet
 	var/force_hit = FALSE
@@ -145,8 +127,7 @@
 	var/damage = 10
 	var/damage_type = BRUTE //BRUTE, BURN, TOX, OXY, CLONE are the only things that should be in here
 	var/nodamage = FALSE //Determines if the projectile will skip any damage inflictions
-	///Defines what armor to use when it hits things.  Must be set to bullet, laser, energy, or bomb
-	var/armor_flag = BULLET
+	var/flag = BULLET //Defines what armor to use when it hits things.  Must be set to bullet, laser, energy,or bomb
 	///How much armor this projectile pierces.
 	var/armour_penetration = 0
 	///Whether or not our bullet lacks penetrative power, and is easily stopped by armor.
@@ -156,28 +137,22 @@
 	var/decayedRange //stores original range
 	var/reflect_range_decrease = 5 //amount of original range that falls off when reflecting, so it doesn't go forever
 	var/reflectable = NONE // Can it be reflected or not?
-	// Status effects applied on hit
+		//Effects
 	var/stun = 0
 	var/knockdown = 0
 	var/paralyze = 0
 	var/immobilize = 0
 	var/unconscious = 0
+	var/irradiate = 0
+	var/stutter = 0
+	var/slur = 0
 	var/eyeblur = 0
 	var/drowsy = 0
-	/// Jittering applied on projectile hit
-	var/jitter = 0 SECONDS
-	/// Extra stamina damage applied on projectile hit (in addition to the main damage)
 	var/stamina = 0
-	/// Stuttering applied on projectile hit
-	var/stutter = 0 SECONDS
-	/// Slurring applied on projectile hit
-	var/slur = 0 SECONDS
-
+	var/jitter = 0
 	var/dismemberment = 0 //The higher the number, the greater the bonus to dismembering. 0 will not dismember at all.
 	var/impact_effect_type //what type of impact effect to show when hitting something
 	var/log_override = FALSE //is this type spammed enough to not log? (KAs)
-	/// We ignore mobs with these factions.
-	var/list/ignored_factions
 
 	///If defined, on hit we create an item of this type then call hitby() on the hit target with this, mainly used for embedding items (bullets) in targets
 	var/shrapnel_type
@@ -194,8 +169,6 @@
 	var/static/list/projectile_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
-	/// If true directly targeted turfs can be hit
-	var/can_hit_turfs = FALSE
 
 /obj/projectile/Initialize(mapload)
 	. = ..()
@@ -211,7 +184,6 @@
 		bare_wound_bonus = max(0, bare_wound_bonus + wound_falloff_tile)
 	if(embedding)
 		embedding["embed_chance"] += embed_falloff_tile
-	SEND_SIGNAL(src, COMSIG_PROJECTILE_RANGE)
 	if(range <= 0 && loc)
 		on_range()
 
@@ -312,29 +284,19 @@
 				playsound(src, hitsound, volume, TRUE, -1)
 			L.visible_message(span_danger("[L] is hit by \a [src][organ_hit_text]!"), \
 					span_userdanger("You're hit by \a [src][organ_hit_text]!"), null, COMBAT_MESSAGE_RANGE)
-			if(L.is_blind())
-				to_chat(L, span_userdanger("You feel something hit you[organ_hit_text]!"))
 		L.on_hit(src)
 
 	var/reagent_note
 	if(reagents?.reagent_list)
-		reagent_note = "REAGENTS: [pretty_string_from_reagent_list(reagents.reagent_list)]"
+		reagent_note = " REAGENTS:"
+		for(var/datum/reagent/R in reagents.reagent_list)
+			reagent_note += "[R.name] ([num2text(R.volume)])"
 
 	if(ismob(firer))
 		log_combat(firer, L, "shot", src, reagent_note)
-		return BULLET_ACT_HIT
+	else
+		L.log_message("has been shot by [firer] with [src]", LOG_ATTACK, color="orange")
 
-	if(isvehicle(firer))
-		var/obj/vehicle/firing_vehicle = firer
-
-		var/list/logging_mobs = firing_vehicle.return_controllers_with_flag(VEHICLE_CONTROL_EQUIPMENT)
-		if(!LAZYLEN(logging_mobs))
-			logging_mobs = firing_vehicle.return_drivers()
-		for(var/mob/logged_mob as anything in logging_mobs)
-			log_combat(logged_mob, L, "shot", src, "from inside [firing_vehicle][logging_mobs.len > 1 ? " with multiple occupants" : null][reagent_note ? " and contained [reagent_note]" : null]")
-		return BULLET_ACT_HIT
-
-	L.log_message("has been shot by [firer] with [src][reagent_note ? " containing [reagent_note]" : null]", LOG_VICTIM, color="orange", log_globally=FALSE)
 	return BULLET_ACT_HIT
 
 /obj/projectile/proc/vol_by_damage()
@@ -352,7 +314,7 @@
 	if(firer && HAS_TRAIT(firer, TRAIT_NICE_SHOT))
 		best_angle += NICE_SHOT_RICOCHET_BONUS
 	for(var/mob/living/L in range(ricochet_auto_aim_range, src.loc))
-		if(L.stat == DEAD || !is_in_sight(src, L) || (!ricochet_shoots_firer && L == firer))
+		if(L.stat == DEAD || !is_in_sight(src, L))
 			continue
 		var/our_angle = abs(closer_angle_difference(Angle, get_angle(src.loc, L.loc)))
 		if(our_angle < best_angle)
@@ -401,7 +363,6 @@
 			decayedRange = max(0, decayedRange - reflect_range_decrease)
 			ricochet_chance *= ricochet_decay_chance
 			damage *= ricochet_decay_damage
-			stamina *= ricochet_decay_damage
 			range = decayedRange
 			if(hitscan)
 				store_hitscan_collision(point_cache)
@@ -479,38 +440,39 @@
  * 0. Anything that is already in impacted is ignored no matter what. Furthermore, in any bracket, if the target atom parameter is in it, that's hit first.
  * Furthermore, can_hit_target is always checked. This (entire proc) is PERFORMANCE OVERHEAD!! But, it shouldn't be ""too"" bad and I frankly don't have a better *generic non snowflakey* way that I can think of right now at 3 AM.
  * FURTHERMORE, mobs/objs have a density check from can_hit_target - to hit non dense objects over a turf, you must click on them, same for mobs that usually wouldn't get hit.
- * 1. Special check on what we bumped to see if it's a border object that intercepts hitting anything behind it
- * 2. The thing originally aimed at/clicked on
- * 3. Mobs - picks lowest buckled mob to prevent scarp piggybacking memes
- * 4. Objs
- * 5. Turf
- * 6. Nothing
+ * 1. The thing originally aimed at/clicked on
+ * 2. Mobs - picks lowest buckled mob to prevent scarp piggybacking memes
+ * 3. Objs
+ * 4. Turf
+ * 5. Nothing
  */
-/obj/projectile/proc/select_target(turf/our_turf, atom/target, atom/bumped)
-	// 1. special bumped border object check
-	if((bumped?.flags_1 & ON_BORDER_1) && can_hit_target(bumped, original == bumped, FALSE, TRUE))
-		return bumped
-	// 2. original
+/obj/projectile/proc/select_target(turf/T, atom/target, atom/bumped)
+	// 1. original
 	if(can_hit_target(original, TRUE, FALSE, original == bumped))
 		return original
-	var/list/atom/considering = list()  // let's define this ONCE
-	// 3. mobs
-	for(var/mob/living/iter_possible_target in our_turf)
-		if(can_hit_target(iter_possible_target, iter_possible_target == original, TRUE, iter_possible_target == bumped))
-			considering += iter_possible_target
+	var/list/atom/possible = list() // let's define these ONCE
+	var/list/atom/considering = list()
+	// 2. mobs
+	possible = typecache_filter_list(T, GLOB.typecache_living) // living only
+	for(var/i in possible)
+		if(!can_hit_target(i, i == original, TRUE, i == bumped))
+			continue
+		considering += i
 	if(considering.len)
-		var/mob/living/hit_living = pick(considering)
-		return hit_living.lowest_buckled_mob()
-	// 4. objs and other dense things
-	for(var/i in our_turf)
-		if(can_hit_target(i, i == original, TRUE, i == bumped))
-			considering += i
+		var/mob/living/M = pick(considering)
+		return M.lowest_buckled_mob()
+	considering.len = 0
+	// 3. objs and other dense things
+	for(var/i in T.contents)
+		if(!can_hit_target(i, i == original, TRUE, i == bumped))
+			continue
+		considering += i
 	if(considering.len)
 		return pick(considering)
-	// 5. turf
-	if(can_hit_target(our_turf, our_turf == original, TRUE, our_turf == bumped))
-		return our_turf
-	// 6. nothing
+	// 4. turf
+	if(can_hit_target(T, T == original, TRUE, T == bumped))
+		return T
+	// 5. nothing
 		// (returns null)
 
 //Returns true if the target atom is on our current turf and above the right layer
@@ -518,7 +480,7 @@
 /obj/projectile/proc/can_hit_target(atom/target, direct_target = FALSE, ignore_loc = FALSE, cross_failed = FALSE)
 	if(QDELETED(target) || impacted[target])
 		return FALSE
-	if(!ignore_loc && (loc != target.loc) && !(can_hit_turfs && direct_target && loc == target))
+	if(!ignore_loc && (loc != target.loc))
 		return FALSE
 	// if pass_flags match, pass through entirely - unless direct target is set.
 	if((target.pass_flags_self & pass_flags) && !direct_target)
@@ -527,16 +489,12 @@
 		var/mob/M = firer
 		if((target == firer) || ((target == firer.loc) && ismecha(firer.loc)) || (target in firer.buckled_mobs) || (istype(M) && (M.buckled == target)))
 			return FALSE
-	if(ignored_factions?.len && ismob(target) && !direct_target)
-		var/mob/target_mob = target
-		if(faction_check(target_mob.faction, ignored_factions))
-			return FALSE
 	if(target.density || cross_failed) //This thing blocks projectiles, hit it regardless of layer/mob stuns/etc.
 		return TRUE
 	if(!isliving(target))
 		if(isturf(target)) // non dense turfs
-			return can_hit_turfs && direct_target
-		if(target.layer < hit_threshhold)
+			return FALSE
+		if(target.layer < PROJECTILE_HIT_THRESHHOLD_LAYER)
 			return FALSE
 		else if(!direct_target) // non dense objects do not get hit unless specifically clicked
 			return FALSE
@@ -612,7 +570,7 @@
  * Scan turf we're now in for anything we can/should hit. This is useful for hitting non dense objects the user
  * directly clicks on, as well as for PHASING projectiles to be able to hit things at all as they don't ever Bump().
  */
-/obj/projectile/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
+/obj/projectile/Moved(atom/OldLoc, Dir)
 	. = ..()
 	if(!fired)
 		return
@@ -628,7 +586,7 @@
  * Return PROJECTILE_DELETE_WITHOUT_HITTING to delete projectile without hitting at all!
  */
 /obj/projectile/proc/prehit_pierce(atom/A)
-	if((projectile_phasing & A.pass_flags_self) && (phasing_ignore_direct_target || original != A))
+	if((projectile_phasing & A.pass_flags_self) && (!phasing_ignore_direct_target || original != A))
 		return PROJECTILE_PIERCE_PHASE
 	if(projectile_piercing & A.pass_flags_self)
 		return PROJECTILE_PIERCE_HIT
@@ -647,10 +605,10 @@
 	return FALSE
 
 /obj/projectile/proc/check_ricochet_flag(atom/A)
-	if((armor_flag in list(ENERGY, LASER)) && (A.flags_ricochet & RICOCHET_SHINY))
+	if((flag in list(ENERGY, LASER)) && (A.flags_ricochet & RICOCHET_SHINY))
 		return TRUE
 
-	if((armor_flag in list(BOMB, BULLET)) && (A.flags_ricochet & RICOCHET_HARD))
+	if((flag in list(BOMB, BULLET)) && (A.flags_ricochet & RICOCHET_HARD))
 		return TRUE
 
 	return FALSE
@@ -670,7 +628,7 @@
 	var/turf/ending = return_predicted_turf_after_moves(moves, forced_angle)
 	return get_line(current, ending)
 
-/obj/projectile/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
+/obj/projectile/Process_Spacemove(movement_dir = 0)
 	return TRUE //Bullets don't drift in space
 
 /obj/projectile/process()
@@ -694,7 +652,7 @@
 		time_offset += MODULUS(elapsed_time_deciseconds, speed)
 
 	for(var/i in 1 to required_moves)
-		pixel_move(pixel_speed_multiplier, FALSE)
+		pixel_move(1, FALSE)
 
 /obj/projectile/proc/fire(angle, atom/direct_target)
 	LAZYINITLIST(impacted)
@@ -705,7 +663,6 @@
 		AddElement(/datum/element/embed, projectile_payload = shrapnel_type)
 	if(!log_override && firer && original)
 		log_combat(firer, original, "fired at", src, "from [get_area_name(src, TRUE)]")
-			//note: mecha projectile logging is handled in /obj/item/mecha_parts/mecha_equipment/weapon/action(). try to keep these messages roughly the sameish just for consistency's sake.
 	if(direct_target && (get_dist(direct_target, get_turf(src)) <= 1)) // point blank shots
 		process_hit(get_turf(direct_target), direct_target)
 		if(QDELETED(src))
@@ -733,13 +690,12 @@
 	trajectory = new(starting.x, starting.y, starting.z, pixel_x, pixel_y, Angle, SSprojectiles.global_pixel_speed)
 	last_projectile_move = world.time
 	fired = TRUE
-	play_blind_effect(starting, 6, "gunfire", dir = NORTH, angle = Angle)
 	SEND_SIGNAL(src, COMSIG_PROJECTILE_FIRE)
 	if(hitscan)
 		process_hitscan()
 	if(!(datum_flags & DF_ISPROCESSING))
 		START_PROCESSING(SSprojectiles, src)
-	pixel_move(pixel_speed_multiplier, FALSE) //move it now!
+	pixel_move(1, FALSE) //move it now!
 
 /obj/projectile/proc/set_angle(new_angle) //wrapper for overrides.
 	Angle = new_angle
@@ -899,103 +855,65 @@
 	if(prob(50))
 		homing_offset_y = -homing_offset_y
 
-/**
- * Aims the projectile at a target.
- *
- * Must be passed at least one of a target or a list of click parameters.
- * If only passed the click modifiers the source atom must be a mob with a client.
- *
- * Arguments:
- * - [target][/atom]: (Optional) The thing that the projectile will be aimed at.
- * - [source][/atom]: The initial location of the projectile or the thing firing it.
- * - [modifiers][/list]: (Optional) A list of click parameters to apply to this operation.
- * - deviation: (Optional) How the trajectory should deviate from the target in degrees.
- *   - //Spread is FORCED!
- */
-/obj/projectile/proc/preparePixelProjectile(atom/target, atom/source, list/modifiers = null, deviation = 0)
-	if(!(isnull(modifiers) || islist(modifiers)))
+//Spread is FORCED!
+/obj/projectile/proc/preparePixelProjectile(atom/target, atom/source, modifiers, spread = 0)
+	if(!isnull(modifiers) && !islist(modifiers))
 		stack_trace("WARNING: Projectile [type] fired with non-list modifiers, likely was passed click params.")
-		modifiers = null
 
-	var/turf/source_loc = get_turf(source)
-	var/turf/target_loc = get_turf(target)
-	if(isnull(source_loc))
-		stack_trace("WARNING: Projectile [type] fired from nullspace.")
-		qdel(src)
-		return FALSE
-
+	var/turf/curloc = get_turf(source)
+	var/turf/targloc = get_turf(target)
 	trajectory_ignore_forcemove = TRUE
-	forceMove(source_loc)
+	forceMove(get_turf(source))
 	trajectory_ignore_forcemove = FALSE
-
-	starting = source_loc
-	pixel_x = source.pixel_x
-	pixel_y = source.pixel_y
+	starting = get_turf(source)
 	original = target
-	if(length(modifiers))
-		var/list/calculated = calculate_projectile_angle_and_pixel_offsets(source, target_loc && target, modifiers)
+	if(targloc || !length(modifiers))
+		yo = targloc.y - curloc.y
+		xo = targloc.x - curloc.x
+		set_angle(get_angle(src, targloc) + spread)
 
+	if(isliving(source) && length(modifiers))
+		var/list/calculated = calculate_projectile_angle_and_pixel_offsets(source, modifiers)
 		p_x = calculated[2]
 		p_y = calculated[3]
-		set_angle(calculated[1] + deviation)
-		return TRUE
 
-	if(target_loc)
-		yo = target_loc.y - source_loc.y
-		xo = target_loc.x - source_loc.x
-		set_angle(get_angle(src, target_loc) + deviation)
-		return TRUE
+		set_angle(calculated[1] + spread)
+	else if(targloc)
+		yo = targloc.y - curloc.y
+		xo = targloc.x - curloc.x
+		set_angle(get_angle(src, targloc) + spread)
+	else
+		stack_trace("WARNING: Projectile [type] fired without either mouse parameters, or a target atom to aim at!")
+		qdel(src)
 
-	stack_trace("WARNING: Projectile [type] fired without a target or mouse parameters to aim with.")
-	qdel(src)
-	return FALSE
-
-/**
- * Calculates the pixel offsets and angle that a projectile should be launched at.
- *
- * Arguments:
- * - [source][/atom]: The thing that the projectile is being shot from.
- * - [target][/atom]: (Optional) The thing that the projectile is being shot at.
- *   - If this is not provided the  source atom must be a mob with a client.
- * - [modifiers][/list]: A list of click parameters used to modify the shot angle.
- */
-/proc/calculate_projectile_angle_and_pixel_offsets(atom/source, atom/target, modifiers)
+/proc/calculate_projectile_angle_and_pixel_offsets(mob/user, modifiers)
+	var/p_x = 0
+	var/p_y = 0
 	var/angle = 0
-	var/p_x = LAZYACCESS(modifiers, ICON_X) ? text2num(LAZYACCESS(modifiers, ICON_X)) : world.icon_size / 2 // ICON_(X|Y) are measured from the bottom left corner of the icon.
-	var/p_y = LAZYACCESS(modifiers, ICON_Y) ? text2num(LAZYACCESS(modifiers, ICON_Y)) : world.icon_size / 2 // This centers the target if modifiers aren't passed.
+	if(LAZYACCESS(modifiers, ICON_X))
+		p_x = text2num(LAZYACCESS(modifiers, ICON_X))
+	if(LAZYACCESS(modifiers, ICON_Y))
+		p_y = text2num(LAZYACCESS(modifiers, ICON_Y))
+	if(LAZYACCESS(modifiers, SCREEN_LOC))
+		//Split screen-loc up into X+Pixel_X and Y+Pixel_Y
+		var/list/screen_loc_params = splittext(LAZYACCESS(modifiers, SCREEN_LOC), ",")
 
-	if(target)
-		var/turf/source_loc = get_turf(source)
-		var/turf/target_loc = get_turf(target)
-		var/dx = ((target_loc.x - source_loc.x) * world.icon_size) + (target.pixel_x - source.pixel_x) + (p_x - (world.icon_size / 2))
-		var/dy = ((target_loc.y - source_loc.y) * world.icon_size) + (target.pixel_y - source.pixel_y) + (p_y - (world.icon_size / 2))
+		//Split X+Pixel_X up into list(X, Pixel_X)
+		var/list/screen_loc_X = splittext(screen_loc_params[1],":")
 
-		angle = ATAN2(dy, dx)
-		return list(angle, p_x, p_y)
+		//Split Y+Pixel_Y up into list(Y, Pixel_Y)
+		var/list/screen_loc_Y = splittext(screen_loc_params[2],":")
+		var/x = text2num(screen_loc_X[1]) * 32 + text2num(screen_loc_X[2]) - 32
+		var/y = text2num(screen_loc_Y[1]) * 32 + text2num(screen_loc_Y[2]) - 32
 
-	if(!ismob(source) || !LAZYACCESS(modifiers, SCREEN_LOC))
-		CRASH("Can't make trajectory calculations without a target or click modifiers and a client.")
+		//Calculate the "resolution" of screen based on client's view and world's icon size. This will work if the user can view more tiles than average.
+		var/list/screenview = getviewsize(user.client.view)
+		var/screenviewX = screenview[1] * world.icon_size
+		var/screenviewY = screenview[2] * world.icon_size
 
-	var/mob/user = source
-	if(!user.client)
-		CRASH("Can't make trajectory calculations without a target or click modifiers and a client.")
-
-	//Split screen-loc up into X+Pixel_X and Y+Pixel_Y
-	var/list/screen_loc_params = splittext(LAZYACCESS(modifiers, SCREEN_LOC), ",")
-	//Split X+Pixel_X up into list(X, Pixel_X)
-	var/list/screen_loc_X = splittext(screen_loc_params[1],":")
-	//Split Y+Pixel_Y up into list(Y, Pixel_Y)
-	var/list/screen_loc_Y = splittext(screen_loc_params[2],":")
-
-	var/tx = (text2num(screen_loc_X[1]) - 1) * world.icon_size + text2num(screen_loc_X[2])
-	var/ty = (text2num(screen_loc_Y[1]) - 1) * world.icon_size + text2num(screen_loc_Y[2])
-
-	//Calculate the "resolution" of screen based on client's view and world's icon size. This will work if the user can view more tiles than average.
-	var/list/screenview = view_to_pixels(user.client.view)
-
-	var/ox = round(screenview[1] / 2) - user.client.pixel_x //"origin" x
-	var/oy = round(screenview[2] / 2) - user.client.pixel_y //"origin" y
-	angle = ATAN2(tx - oy, ty - ox)
+		var/ox = round(screenviewX/2) - user.client.pixel_x //"origin" x
+		var/oy = round(screenviewY/2) - user.client.pixel_y //"origin" y
+		angle = ATAN2(y - oy, x - ox)
 	return list(angle, p_x, p_y)
 
 /obj/projectile/Destroy()

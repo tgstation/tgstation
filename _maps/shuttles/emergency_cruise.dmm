@@ -1,4 +1,30 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ac" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
 "aY" = (
 /obj/machinery/door/airlock/shuttle,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -16,6 +42,37 @@
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
+"cm" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/structure/table/reinforced,
+/obj/item/storage/fancy/donut_box{
+	pixel_y = -7
+	},
+/obj/item/food/donut{
+	pixel_x = 5;
+	pixel_y = 10
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
@@ -50,12 +107,6 @@
 /obj/item/folder/white,
 /obj/item/pen/blue,
 /obj/machinery/light/directional/north,
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
-"dQ" = (
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/machinery/door/airlock/shuttle,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "dR" = (
@@ -98,15 +149,60 @@
 /obj/machinery/vending/boozeomat/all_access,
 /turf/open/floor/wood,
 /area/shuttle/escape)
+"gv" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
 "gQ" = (
 /obj/structure/table/wood/fancy,
 /turf/open/floor/wood,
 /area/shuttle/escape)
-"iP" = (
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/structure/window/reinforced{
+"hB" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/structure/table/reinforced,
+/obj/item/camera{
+	pixel_y = 3
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
@@ -166,6 +262,30 @@
 	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
+"kN" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
 "kQ" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -185,13 +305,60 @@
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
-"lJ" = (
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/effect/turf_decal/tile/blue/fourcorners,
+"kZ" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
 /obj/structure/table/reinforced,
-/obj/item/camera{
+/obj/item/reagent_containers/food/drinks/britcup{
+	pixel_x = 8;
+	pixel_y = -1
+	},
+/obj/item/storage/firstaid/regular{
+	pixel_x = -9;
 	pixel_y = 3
 	},
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
+"lh" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "mv" = (
@@ -218,12 +385,6 @@
 "mw" = (
 /mob/living/simple_animal/hostile/alien/maid/barmaid,
 /turf/open/floor/wood,
-/area/shuttle/escape)
-"mG" = (
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/machinery/computer/communications,
-/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "ni" = (
 /turf/open/floor/light/colour_cycle/dancefloor_b,
@@ -303,11 +464,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
-"qw" = (
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
 "qE" = (
 /obj/machinery/door/airlock/shuttle,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -321,6 +477,30 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
+/area/shuttle/escape)
+"qX" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/machinery/door/airlock/shuttle,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "rs" = (
 /obj/effect/turf_decal/tile/blue{
@@ -340,11 +520,29 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
-"rw" = (
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/structure/chair/comfy/shuttle{
+"rt" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 4
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
@@ -370,14 +568,6 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/wood,
 /area/shuttle/escape)
-"sk" = (
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/structure/chair/comfy/shuttle{
-	dir = 4
-	},
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
 "sv" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -394,15 +584,6 @@
 /obj/structure/shuttle/engine/huge,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
-"tx" = (
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/structure/chair/comfy/shuttle{
-	dir = 1;
-	name = "Shuttle Captain seat"
-	},
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
 "tB" = (
 /obj/structure/statue/diamond/ai1{
 	anchored = 1;
@@ -410,17 +591,55 @@
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
-"tJ" = (
-/obj/structure/table/reinforced,
-/obj/item/reagent_containers/cup/glass/britcup{
-	pixel_x = 8;
-	pixel_y = -1
+"uh" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
 	},
-/obj/item/storage/medkit/regular{
-	pixel_x = -9;
-	pixel_y = 3
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
 	},
-/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
+"ut" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 1;
+	name = "Shuttle Captain seat"
+	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "uV" = (
@@ -446,38 +665,59 @@
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
-"vq" = (
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/effect/turf_decal/tile/blue/fourcorners,
+"vi" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
 /obj/machinery/computer/emergency_shuttle,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
-"vL" = (
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/effect/turf_decal/tile/blue/fourcorners,
+"vS" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
 /obj/structure/table/reinforced,
-/obj/item/clothing/mask/cigarette/robust{
-	pixel_x = -4;
-	pixel_y = 15
+/obj/item/camera_film{
+	pixel_x = 4;
+	pixel_y = 4
 	},
-/obj/item/clothing/mask/cigarette/robust{
-	pixel_x = 3;
-	pixel_y = 7
-	},
-/obj/item/clothing/mask/cigarette/robust{
-	pixel_x = 7;
-	pixel_y = 12
-	},
-/obj/item/storage/fancy/cigarettes/cigpack_robust{
+/obj/item/camera_film{
 	pixel_x = -13;
-	pixel_y = 2
-	},
-/obj/item/lighter/greyscale{
-	pixel_x = 6;
-	pixel_y = -10
-	},
-/obj/item/cigbutt{
-	pixel_x = -8
+	pixel_y = 8
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
@@ -489,8 +729,8 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "wF" = (
-/obj/machinery/door/window/left/directional/west{
-	name = "Bar Door"
+/obj/machinery/door/window/westleft{
+	name = "bar door"
 	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
@@ -512,19 +752,6 @@
 /area/shuttle/escape)
 "xj" = (
 /turf/open/floor/plating/airless,
-/area/shuttle/escape)
-"xB" = (
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/structure/table/reinforced,
-/obj/item/storage/fancy/donut_box{
-	pixel_y = -7
-	},
-/obj/item/food/donut/plain{
-	pixel_x = 5;
-	pixel_y = 10
-	},
-/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "yn" = (
 /obj/effect/turf_decal/tile/blue{
@@ -563,15 +790,6 @@
 	dir = 1
 	},
 /obj/item/reactive_armour_shell,
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
-"zm" = (
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/structure/chair/comfy/shuttle{
-	dir = 1;
-	name = "Shuttle HoP seat"
-	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Aq" = (
@@ -614,17 +832,6 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
-"Cn" = (
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/machinery/shuttle_manipulator{
-	desc = "A holographic display of the cruise shuttle we're on right now.";
-	layer = 2.7;
-	max_integrity = 99999;
-	name = "shuttle holographic display"
-	},
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
 "Cw" = (
 /obj/machinery/vending/snack/orange,
 /turf/open/floor/wood,
@@ -645,20 +852,6 @@
 	width = 44
 	},
 /turf/open/floor/wood,
-/area/shuttle/escape)
-"Dn" = (
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/structure/table/reinforced,
-/obj/item/camera_film{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/camera_film{
-	pixel_x = -13;
-	pixel_y = 8
-	},
-/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Do" = (
 /obj/effect/turf_decal/tile/blue{
@@ -689,20 +882,6 @@
 	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
-"DJ" = (
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/machinery/light/directional/north,
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
-"El" = (
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
 "En" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue,
@@ -719,20 +898,6 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/west,
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
-"Eo" = (
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/structure/table/reinforced,
-/obj/item/toy/figure{
-	desc = "A model spaceship, it looks like those used back in the day when travelling to Orion!";
-	icon_state = "ship";
-	name = "Orion Settler Ship figure";
-	pixel_y = -5;
-	toysay = "Oxygen offline. Weapons charging. All systems nominal.";
-	toysound = 'sound/mecha/nominal.ogg'
-	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "EC" = (
@@ -763,45 +928,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
-"FS" = (
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/machinery/door/airlock/command/glass{
-	name = "Cockpit"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/command/general,
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
-"Gv" = (
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/structure{
-	density = 1;
-	icon = 'icons/obj/machines/shuttle_manipulator.dmi';
-	icon_state = "hologram_on";
-	layer = 2.8;
-	light_color = "#2cb2e8";
-	light_range = 2;
-	max_integrity = 7500;
-	mouse_opacity = 0;
-	name = "holographic projection";
-	pixel_x = -32;
-	pixel_y = 17
-	},
-/obj/structure{
-	desc = "This is the shuttle we're on. It's amazing what Nanotrasen can do once they actually put more than ten seconds of effort into their projects.";
-	icon = 'icons/obj/machines/shuttle_manipulator.dmi';
-	icon_state = "hologram_whiteship";
-	layer = 4;
-	light_color = "#2cb2e8";
-	light_range = 7;
-	max_integrity = 75000;
-	name = "Cruise Shuttle Hologram";
-	pixel_x = -32;
-	pixel_y = 27
-	},
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
 "Hi" = (
 /obj/structure/table/wood/fancy,
 /obj/item/candle/infinite{
@@ -822,6 +948,53 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1;
 	name = "shuttle CMO seat"
+	},
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
+"Hz" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/structure/table/reinforced,
+/obj/item/clothing/mask/cigarette/robust{
+	pixel_x = -4;
+	pixel_y = 15
+	},
+/obj/item/clothing/mask/cigarette/robust{
+	pixel_x = 3;
+	pixel_y = 7
+	},
+/obj/item/clothing/mask/cigarette/robust{
+	pixel_x = 7;
+	pixel_y = 12
+	},
+/obj/item/storage/fancy/cigarettes/cigpack_robust{
+	pixel_x = -13;
+	pixel_y = 2
+	},
+/obj/item/lighter/greyscale{
+	pixel_x = 6;
+	pixel_y = -10
+	},
+/obj/item/cigbutt{
+	pixel_x = -8
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
@@ -862,6 +1035,32 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4;
 	name = "Shuttle CE seat"
+	},
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
+"IX" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
@@ -910,30 +1109,63 @@
 "KD" = (
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
+"KM" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
 "Lo" = (
 /obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
 	pixel_x = -3;
 	pixel_y = 6
 	},
-/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
 	pixel_x = 6;
 	pixel_y = 14
 	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
-"LM" = (
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/structure/table/reinforced,
-/obj/item/storage/book/bible/booze{
-	pixel_x = -3;
-	pixel_y = 4
+"Ls" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
 	},
-/obj/item/taperecorder{
-	pixel_x = 15;
-	pixel_y = 4
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/machinery/computer/communications,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Me" = (
@@ -942,18 +1174,33 @@
 	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
-"MI" = (
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/structure/table/reinforced,
-/obj/item/paper_bin,
-/obj/item/pen/fourcolor,
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
-"Nv" = (
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/structure/chair/comfy/shuttle,
+"MU" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/machinery/shuttle_manipulator{
+	desc = "A holographic display of the cruise shuttle we're on right now.";
+	layer = 2.7;
+	max_integrity = 99999;
+	name = "shuttle holographic display"
+	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "NH" = (
@@ -967,6 +1214,85 @@
 	dir = 8
 	},
 /obj/machinery/light/directional/east,
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
+"On" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/structure{
+	density = 1;
+	icon = 'icons/obj/machines/shuttle_manipulator.dmi';
+	icon_state = "hologram_on";
+	layer = 2.8;
+	light_color = "#2cb2e8";
+	light_range = 2;
+	max_integrity = 7500;
+	mouse_opacity = 0;
+	name = "holographic projection";
+	pixel_x = -32;
+	pixel_y = 17
+	},
+/obj/structure{
+	desc = "This is the shuttle we're on. It's amazing what Nanotrasen can do once they actually put more than ten seconds of effort into their projects.";
+	icon = 'icons/obj/machines/shuttle_manipulator.dmi';
+	icon_state = "hologram_whiteship";
+	layer = 4;
+	light_color = "#2cb2e8";
+	light_range = 7;
+	max_integrity = 75000;
+	name = "Cruise Shuttle Hologram";
+	pixel_x = -32;
+	pixel_y = 27
+	},
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
+"Ov" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/structure/table/reinforced,
+/obj/item/clothing/glasses/heat{
+	pixel_y = -5
+	},
+/obj/item/clothing/glasses/heat,
+/obj/item/clothing/glasses/heat{
+	pixel_y = 5
+	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "OJ" = (
@@ -1011,11 +1337,63 @@
 	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
-"SK" = (
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/structure/chair/comfy/shuttle{
+"SQ" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
 	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/structure/table/reinforced,
+/obj/item/storage/book/bible/booze{
+	pixel_x = -3;
+	pixel_y = 4
+	},
+/obj/item/taperecorder{
+	pixel_x = 15;
+	pixel_y = 4
+	},
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
+"TH" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/structure/table/reinforced,
+/obj/item/phone{
+	pixel_x = 1;
+	pixel_y = 3
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
@@ -1045,12 +1423,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
-"Uo" = (
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/machinery/light/directional/south,
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
 "UF" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -1066,7 +1438,7 @@
 /area/shuttle/escape)
 "UN" = (
 /obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/cup/rag{
+/obj/item/reagent_containers/glass/rag{
 	pixel_y = 7
 	},
 /obj/effect/fun_balloon/sentience/emergency_shuttle{
@@ -1087,13 +1459,30 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
-"VO" = (
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/structure/table/reinforced,
-/obj/item/phone{
-	pixel_x = 1;
-	pixel_y = 3
+"VQ" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 1;
+	name = "Shuttle HoP seat"
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
@@ -1101,25 +1490,123 @@
 /obj/machinery/vending/coffee,
 /turf/open/floor/wood,
 /area/shuttle/escape)
+"Wh" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
 "WT" = (
 /turf/open/floor/wood,
 /area/shuttle/escape)
-"Yv" = (
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/structure/table/reinforced,
-/obj/item/clothing/glasses/heat{
-	pixel_y = -5
+"Xd" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
 	},
-/obj/item/clothing/glasses/heat,
-/obj/item/clothing/glasses/heat{
-	pixel_y = 5
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/structure/table/reinforced,
+/obj/item/toy/figure{
+	desc = "A model spaceship, it looks like those used back in the day when travelling to Orion!";
+	icon_state = "ship";
+	name = "Orion Settler Ship figure";
+	pixel_y = -5;
+	toysay = "Oxygen offline. Weapons charging. All systems nominal.";
+	toysound = 'sound/mecha/nominal.ogg'
+	},
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
+"YA" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/machinery/door/airlock/command/glass{
+	name = "Cockpit";
+	req_access_txt = "19"
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "YZ" = (
 /obj/machinery/light/directional/west,
 /turf/open/floor/wood,
+/area/shuttle/escape)
+"ZL" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/structure/table/reinforced,
+/obj/item/paper_bin,
+/obj/item/pen/fourcolor,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 
 (1,1,1) = {"
@@ -1361,11 +1848,11 @@ jt
 jt
 Vm
 Vm
-dQ
+qX
 Vm
 Vm
 Vm
-dQ
+qX
 Vm
 Vm
 Vm
@@ -1378,9 +1865,9 @@ Vm
 Vm
 Vm
 Vm
-dQ
+qX
 Vm
-dQ
+qX
 Vm
 Vm
 oo
@@ -1402,16 +1889,16 @@ jt
 jt
 jt
 en
-qw
+KM
 FR
 yH
 Vm
 jT
-qw
+KM
 TI
 EH
 TI
-qw
+KM
 jT
 Vm
 TI
@@ -1424,9 +1911,9 @@ En
 TI
 Vm
 jT
-qw
+KM
 Pb
-qw
+KM
 jT
 Vm
 Vm
@@ -1448,31 +1935,31 @@ sW
 jt
 jP
 kQ
-qw
+KM
 Ud
 Bp
 Vm
 Pr
-qw
-qw
-qw
-qw
-qw
+KM
+KM
+KM
+KM
+KM
 oH
 Vm
 HA
-qw
-qw
-qw
-qw
-qw
-qw
+KM
+KM
+KM
+KM
+KM
+KM
 yn
 Vm
 KD
-qw
-qw
-qw
+KM
+KM
+KM
 cf
 KD
 Vv
@@ -1494,36 +1981,36 @@ xj
 en
 qd
 KB
-qw
-Uo
+KM
+uh
 uV
 Vm
 KD
-qw
-qw
-qw
-qw
-qw
+KM
+KM
+KM
+KM
+KM
 KD
 Vm
 Vm
-qw
-qw
-qw
-qw
-qw
-qw
+KM
+KM
+KM
+KM
+KM
+KM
 Vm
 Vm
 KD
-qw
-sk
-sk
-sk
-qw
-qw
-qw
-dQ
+KM
+ac
+ac
+ac
+KM
+KM
+KM
+qX
 WT
 WT
 WT
@@ -1538,38 +2025,38 @@ xj
 "}
 (10,1,1) = {"
 en
-qw
-qw
-qw
-qw
+KM
+KM
+KM
+KM
 Vm
 BB
 KD
-qw
+KM
 Ki
 Ki
 Ki
-qw
+KM
 KD
 CK
 Vm
-DJ
+lh
 Ki
 Ki
 Ki
 Ki
-Uo
+uh
 Vm
 BB
 Vk
-Nv
-xB
-MI
-lJ
-SK
-qw
-qw
-dQ
+kN
+cm
+ZL
+hB
+Wh
+KM
+KM
+qX
 WT
 WT
 OJ
@@ -1584,35 +2071,35 @@ uV
 "}
 (11,1,1) = {"
 en
-vq
-tx
-qw
-qw
-FS
-qw
-qw
-qw
-iP
-iP
-iP
-qw
-qw
-qw
-dQ
-qw
-iP
-iP
-iP
-iP
-qw
-dQ
-qw
-qw
-Nv
-LM
-Cn
-Dn
-SK
+vi
+ut
+KM
+KM
+YA
+KM
+KM
+KM
+IX
+IX
+IX
+KM
+KM
+KM
+qX
+KM
+IX
+IX
+IX
+IX
+KM
+qX
+KM
+KM
+kN
+SQ
+MU
+vS
+Wh
 UF
 jW
 Vm
@@ -1630,35 +2117,35 @@ kd
 "}
 (12,1,1) = {"
 en
-mG
-zm
-qw
-qw
-FS
-qw
-qw
-qw
-El
-El
-El
-qw
-qw
-qw
-dQ
-qw
-El
-El
-El
-El
-qw
-dQ
-qw
-qw
-Nv
-VO
-Gv
-tJ
-SK
+Ls
+VQ
+KM
+KM
+YA
+KM
+KM
+KM
+rt
+rt
+rt
+KM
+KM
+KM
+qX
+KM
+rt
+rt
+rt
+rt
+KM
+qX
+KM
+KM
+kN
+TH
+On
+kZ
+Wh
 cf
 tB
 Vm
@@ -1676,38 +2163,38 @@ kd
 "}
 (13,1,1) = {"
 en
-qw
-qw
-qw
-qw
+KM
+KM
+KM
+KM
 Vm
 BB
 KD
-qw
+KM
 TI
 TI
 TI
-qw
+KM
 KD
 CK
 Vm
-DJ
+lh
 TI
 TI
 TI
 TI
-Uo
+uh
 Vm
 BB
 ju
-Nv
-vL
-Eo
-Yv
-SK
-qw
-qw
-dQ
+kN
+Hz
+Xd
+Ov
+Wh
+KM
+KM
+qX
 WT
 WT
 ni
@@ -1724,36 +2211,36 @@ uV
 en
 oZ
 Ho
-qw
-Uo
+KM
+uh
 uV
 Vm
 KD
-qw
-qw
-qw
-qw
-qw
+KM
+KM
+KM
+KM
+KM
 KD
 Vm
 Vm
-qw
-qw
-qw
-qw
-qw
-qw
+KM
+KM
+KM
+KM
+KM
+KM
 Vm
 Vm
 KD
-qw
-rw
-rw
-rw
-qw
-qw
-qw
-dQ
+KM
+gv
+gv
+gv
+KM
+KM
+KM
+qX
 WT
 WT
 WT
@@ -1770,31 +2257,31 @@ sW
 jt
 dd
 sv
-qw
+KM
 IL
 eb
 Vm
 Pr
-qw
-qw
-qw
-qw
-qw
+KM
+KM
+KM
+KM
+KM
 oH
 Vm
 rX
-qw
-qw
-qw
-qw
-qw
-qw
+KM
+KM
+KM
+KM
+KM
+KM
 mv
 Vm
 KD
-qw
-qw
-qw
+KM
+KM
+KM
 UF
 KD
 Kc
@@ -1816,16 +2303,16 @@ xj
 jt
 jt
 en
-qw
+KM
 uX
 qr
 Vm
 jT
-qw
+KM
 Ki
 Oh
 Ki
-qw
+KM
 jT
 Vm
 Ki
@@ -1838,9 +2325,9 @@ pk
 Ki
 Vm
 jT
-qw
+KM
 Js
-qw
+KM
 jT
 Vm
 Vm
@@ -1867,11 +2354,11 @@ jt
 jt
 Vm
 Vm
-dQ
+qX
 Vm
 Vm
 Vm
-dQ
+qX
 Vm
 Vm
 Vm
@@ -1884,9 +2371,9 @@ Vm
 Vm
 Vm
 Vm
-dQ
+qX
 Vm
-dQ
+qX
 Vm
 Vm
 YZ

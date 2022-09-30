@@ -1,5 +1,6 @@
 # base = ubuntu + full apt update
 FROM ubuntu:xenial AS base
+
 RUN dpkg --add-architecture i386 \
     && apt-get update \
     && apt-get upgrade -y \

@@ -21,8 +21,8 @@
 	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "oar"
 	inhand_icon_state = "oar"
-	lefthand_file = 'icons/mob/inhands/items/lavaland_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/items/lavaland_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/misc/lavaland_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/lavaland_righthand.dmi'
 	force = 12
 	w_class = WEIGHT_CLASS_NORMAL
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
@@ -73,7 +73,6 @@
 	name = "mysterious boat"
 	desc = "This boat moves where you will it, without the need for an oar."
 	icon_state = "dragon_boat"
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | FREEZE_PROOF
 
 /obj/vehicle/ridden/lavaboat/dragon/Initialize(mapload)
 	. = ..()

@@ -1,0 +1,4 @@
+author: "Zytolg"
+delete-after: True
+changes: 
+  - bugfix: "Tramstation is now free from oddly decaled walls."

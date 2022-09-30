@@ -1,5 +1,5 @@
 
-/mob/living/silicon/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE, spread_damage = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE, attack_direction = null)
+/mob/living/silicon/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE, spread_damage = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE)
 	var/hit_percent = (100-blocked)/100
 	if((!damage || (!forced && hit_percent <= 0)))
 		return 0
@@ -40,13 +40,13 @@
 	return FALSE
 
 /mob/living/silicon/adjustOxyLoss(amount, updating_health = TRUE, forced = FALSE) //immune to oxygen damage
-	if(isAI(src)) //ais are snowflakes and use oxyloss for being in AI cards and having no battery
+	if(istype(src, /mob/living/silicon/ai)) //ais are snowflakes and use oxyloss for being in AI cards and having no battery
 		return ..()
 
 	return FALSE
 
 /mob/living/silicon/setOxyLoss(amount, updating_health = TRUE, forced = FALSE)
-	if(isAI(src)) //ditto
+	if(istype(src, /mob/living/silicon/ai)) //ditto
 		return ..()
 
 	return FALSE

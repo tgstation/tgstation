@@ -22,10 +22,10 @@
 	hitsound = 'sound/items/wirecutter.ogg'
 	usesound = 'sound/items/wirecutter.ogg'
 	drop_sound = 'sound/items/handling/wirecutter_drop.ogg'
-	pickup_sound = 'sound/items/handling/wirecutter_pickup.ogg'
+	pickup_sound =  'sound/items/handling/wirecutter_pickup.ogg'
 	tool_behaviour = TOOL_WIRECUTTER
 	toolspeed = 1
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 30)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 30)
 	/// If the item should be assigned a random color
 	var/random_color = TRUE
 	/// List of possible random colors
@@ -50,8 +50,15 @@
 		user.visible_message(span_notice("[user] cuts [attacked_carbon]'s restraints with [src]!"))
 		qdel(attacked_carbon.handcuffed)
 		return
-
-	return ..()
+	else if(istype(attacked_carbon) && attacked_carbon.has_status_effect(STATUS_EFFECT_CHOKINGSTRAND))
+		user.visible_message(span_notice("[user] attempts to cut the durathread strand from around [attacked_carbon]'s neck."))
+		if(do_after(user, 1.5 SECONDS, attacked_carbon))
+			user.visible_message(span_notice("[user] succesfully cuts the durathread strand from around [attacked_carbon]'s neck."))
+			attacked_carbon.remove_status_effect(STATUS_EFFECT_CHOKINGSTRAND)
+			playsound(loc, usesound, 50, TRUE, -1)
+		return
+	else
+		..()
 
 /obj/item/wirecutters/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is cutting at [user.p_their()] arteries with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))

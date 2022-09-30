@@ -15,11 +15,11 @@
 /area/ruin/unpowered/cultaltar)
 "e" = (
 /obj/effect/decal/remains/human,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/cultaltar)
 "f" = (
 /obj/structure/destructible/cult/pylon,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/cultaltar)
 "g" = (
 /obj/effect/decal/cleanable/blood/old,
@@ -87,7 +87,7 @@
 	},
 /area/ruin/unpowered/cultaltar)
 "s" = (
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/cultaltar)
 
 (1,1,1) = {"

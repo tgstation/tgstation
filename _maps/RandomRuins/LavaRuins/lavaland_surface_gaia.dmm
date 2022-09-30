@@ -3,109 +3,109 @@
 /turf/template_noop,
 /area/template_noop)
 "b" = (
-/obj/structure/flora/grass/jungle/b/style_random,
-/turf/open/misc/grass/lavaland,
+/obj/structure/flora/grass/jungle/b,
+/turf/open/floor/plating/grass/lavaland,
 /area/ruin/unpowered/gaia)
 "c" = (
-/turf/open/misc/grass/lavaland,
+/turf/open/floor/plating/grass/lavaland,
 /area/ruin/unpowered/gaia)
 "d" = (
-/obj/structure/flora/grass/jungle/a/style_random,
-/turf/open/misc/grass/lavaland,
+/obj/structure/flora/grass/jungle,
+/turf/open/floor/plating/grass/lavaland,
 /area/ruin/unpowered/gaia)
 "e" = (
-/obj/structure/flora/rock/pile/jungle/style_random,
-/turf/open/misc/grass/lavaland,
+/obj/structure/flora/rock/jungle,
+/turf/open/floor/plating/grass/lavaland,
 /area/ruin/unpowered/gaia)
 "f" = (
-/obj/structure/flora/bush/sparsegrass/style_random,
-/turf/open/misc/grass/lavaland,
+/obj/structure/flora/ausbushes/sparsegrass,
+/turf/open/floor/plating/grass/lavaland,
 /area/ruin/unpowered/gaia)
 "g" = (
-/obj/structure/flora/bush/flowers_yw/style_random,
-/turf/open/misc/grass/lavaland,
+/obj/structure/flora/ausbushes/ywflowers,
+/turf/open/floor/plating/grass/lavaland,
 /area/ruin/unpowered/gaia)
 "h" = (
-/obj/structure/flora/bush/lavendergrass/style_random,
-/turf/open/misc/grass/lavaland,
+/obj/structure/flora/ausbushes/lavendergrass,
+/turf/open/floor/plating/grass/lavaland,
 /area/ruin/unpowered/gaia)
 "i" = (
 /obj/machinery/hydroponics/soil{
 	self_sustaining = 1
 	},
-/turf/open/misc/grass/lavaland,
+/turf/open/floor/plating/grass/lavaland,
 /area/ruin/unpowered/gaia)
 "j" = (
 /mob/living/simple_animal/butterfly{
 	atmos_requirements = list()
 	},
-/turf/open/misc/grass/lavaland,
+/turf/open/floor/plating/grass/lavaland,
 /area/ruin/unpowered/gaia)
 "l" = (
 /obj/item/food/grown/mushroom/angel,
-/turf/open/misc/grass/lavaland,
+/turf/open/floor/plating/grass/lavaland,
 /area/ruin/unpowered/gaia)
 "m" = (
 /obj/item/food/grown/mushroom/libertycap,
-/turf/open/misc/grass/lavaland,
+/turf/open/floor/plating/grass/lavaland,
 /area/ruin/unpowered/gaia)
 "n" = (
-/obj/structure/flora/bush/flowers_br/style_random,
-/turf/open/misc/grass/lavaland,
+/obj/structure/flora/ausbushes/brflowers,
+/turf/open/floor/plating/grass/lavaland,
 /area/ruin/unpowered/gaia)
 "p" = (
 /mob/living/simple_animal/hostile/lightgeist{
 	AIStatus = 1;
 	light_color = "#42ECFF"
 	},
-/turf/open/misc/grass/lavaland,
+/turf/open/floor/plating/grass/lavaland,
 /area/ruin/unpowered/gaia)
 "q" = (
-/obj/structure/flora/tree/jungle/small/style_random,
-/turf/open/misc/grass/lavaland,
+/obj/structure/flora/tree/jungle/small,
+/turf/open/floor/plating/grass/lavaland,
 /area/ruin/unpowered/gaia)
 "r" = (
-/obj/structure/flora/grass/jungle/b/style_random,
-/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/grass/jungle/b,
+/obj/structure/flora/ausbushes/sparsegrass,
 /mob/living/simple_animal/butterfly{
 	atmos_requirements = list()
 	},
-/turf/open/misc/grass/lavaland,
+/turf/open/floor/plating/grass/lavaland,
 /area/ruin/unpowered/gaia)
 "s" = (
 /obj/item/food/grown/mushroom/amanita,
-/turf/open/misc/grass/lavaland,
+/turf/open/floor/plating/grass/lavaland,
 /area/ruin/unpowered/gaia)
 "t" = (
-/obj/structure/flora/bush/sunny/style_random,
-/turf/open/misc/grass/lavaland,
+/obj/structure/flora/ausbushes/sunnybush,
+/turf/open/floor/plating/grass/lavaland,
 /area/ruin/unpowered/gaia)
 "v" = (
-/obj/structure/flora/tree/jungle/style_random,
-/turf/open/misc/grass/lavaland,
+/obj/structure/flora/tree/jungle,
+/turf/open/floor/plating/grass/lavaland,
 /area/ruin/unpowered/gaia)
 "w" = (
 /turf/closed/mineral/volcanic/lava_land_surface,
 /area/ruin/unpowered/gaia)
 "A" = (
-/obj/structure/flora/bush/stalky/style_random,
-/turf/open/misc/grass/lavaland,
+/obj/structure/flora/ausbushes/stalkybush,
+/turf/open/floor/plating/grass/lavaland,
 /area/ruin/unpowered/gaia)
 "B" = (
-/obj/structure/flora/grass/jungle/a/style_random,
+/obj/structure/flora/grass/jungle,
 /mob/living/simple_animal/hostile/lightgeist{
 	AIStatus = 1;
 	light_color = "#42ECFF"
 	},
-/turf/open/misc/grass/lavaland,
+/turf/open/floor/plating/grass/lavaland,
 /area/ruin/unpowered/gaia)
 "C" = (
-/obj/structure/flora/bush/ferny/style_random,
-/turf/open/misc/grass/lavaland,
+/obj/structure/flora/ausbushes/fernybush,
+/turf/open/floor/plating/grass/lavaland,
 /area/ruin/unpowered/gaia)
 "D" = (
 /obj/item/food/grown/mushroom/chanterelle,
-/turf/open/misc/grass/lavaland,
+/turf/open/floor/plating/grass/lavaland,
 /area/ruin/unpowered/gaia)
 
 (1,1,1) = {"

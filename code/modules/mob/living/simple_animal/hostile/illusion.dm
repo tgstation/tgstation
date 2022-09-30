@@ -20,7 +20,7 @@
 	var/mob/living/parent_mob
 	var/multiply_chance = 0 //if we multiply on hit
 	del_on_death = 1
-	death_message = "vanishes into thin air! It was a fake!"
+	deathmessage = "vanishes into thin air! It was a fake!"
 
 
 /mob/living/simple_animal/hostile/illusion/Life(delta_time = SSMOBS_DT, times_fired)
@@ -76,11 +76,3 @@
 
 /mob/living/simple_animal/hostile/illusion/escape/AttackingTarget()
 	return FALSE
-
-/mob/living/simple_animal/hostile/illusion/mirage
-	AIStatus = AI_OFF
-	density = FALSE
-
-/mob/living/simple_animal/hostile/illusion/mirage/death(gibbed)
-	do_sparks(rand(3, 6), FALSE, src)
-	return ..()

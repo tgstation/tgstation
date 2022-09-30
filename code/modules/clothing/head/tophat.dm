@@ -22,7 +22,7 @@
 
 	COOLDOWN_START(src, rabbit_cooldown, RABBIT_CD_TIME)
 	playsound(get_turf(src), 'sound/weapons/emitter.ogg', 70)
-	do_smoke(amount = DIAMOND_AREA(1), holder = src, location = src, smoke_type=/obj/effect/particle_effect/fluid/smoke/quick)
+	do_smoke(range=1, location=src, smoke_type=/obj/effect/particle_effect/smoke/quick)
 
 	if(prob(10))
 		magician.visible_message(span_danger("[magician] taps [src] with [hitby_wand], then reaches in and pulls out a bu- wait, those are bees!"), span_danger("You tap [src] with your [hitby_wand.name] and pull out... <b>BEES!</b>"))
@@ -34,7 +34,7 @@
 				barry.say(pick("BUZZ BUZZ", "PULLING A RABBIT OUT OF A HAT IS A TIRED TROPE", "I DIDN'T ASK TO BEE HERE"), forced = "bee hat")
 	else
 		magician.visible_message(span_notice("[magician] taps [src] with [hitby_wand], then reaches in and pulls out a bunny! Cute!"), span_notice("You tap [src] with your [hitby_wand.name] and pull out a cute bunny!"))
-		var/mob/living/simple_animal/rabbit/bunbun = new(get_turf(magician))
+		var/mob/living/simple_animal/rabbit/empty/bunbun = new(get_turf(magician))
 		bunbun.mob_try_pickup(magician, instant=TRUE)
 
 #undef RABBIT_CD_TIME

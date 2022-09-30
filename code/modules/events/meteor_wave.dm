@@ -7,13 +7,11 @@
 	min_players = 15
 	max_occurrences = 3
 	earliest_start = 25 MINUTES
-	category = EVENT_CATEGORY_SPACE
-	description = "A regular meteor wave."
 
 /datum/round_event/meteor_wave
-	start_when = 6
-	end_when = 66
-	announce_when = 1
+	startWhen = 6
+	endWhen = 66
+	announceWhen = 1
 	var/list/wave_type
 	var/wave_name = "normal"
 
@@ -62,7 +60,6 @@
 	min_players = 20
 	max_occurrences = 3
 	earliest_start = 35 MINUTES
-	description = "A meteor wave with higher chance of big meteors."
 
 /datum/round_event/meteor_wave/threatening
 	wave_name = "threatening"
@@ -74,20 +71,6 @@
 	min_players = 25
 	max_occurrences = 3
 	earliest_start = 45 MINUTES
-	description = "A meteor wave that might summon a tunguska class meteor."
 
 /datum/round_event/meteor_wave/catastrophic
 	wave_name = "catastrophic"
-
-/datum/round_event_control/meteor_wave/meaty
-	name = "Meteor Wave: Meaty"
-	typepath = /datum/round_event/meteor_wave/meaty
-	weight = 2
-	max_occurrences = 1
-	description = "A meteor wave made of meat."
-
-/datum/round_event/meteor_wave/meaty
-	wave_name = "meaty"
-
-/datum/round_event/meteor_wave/meaty/announce(fake)
-	priority_announce("Meaty ores have been detected on collision course with the station.", "Oh crap, get the mop.", ANNOUNCER_METEORS)

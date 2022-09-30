@@ -5,7 +5,8 @@
  */
 /obj/item/inspector
 	name = "\improper N-spect scanner"
-	desc = "Central Command-issued inspection device. Performs inspections according to Nanotrasen protocols when activated, then prints an encrypted report regarding the maintenance of the station. Definitely not giving you cancer."
+	desc = "Central Command-issued inspection device. Performs inspections according to Nanotrasen protocols when activated, then \
+			prints an encrypted report regarding the maintenance of the station. Hard to replace."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "inspector"
 	worn_icon_state = "salestagger"
@@ -150,11 +151,8 @@
 	characters += GLOB.alphabet_upper
 	characters += GLOB.numerals
 
-	var/report_text = random_string(rand(180,220), characters)
-	report_text += "[prob(50) ? "=" : "=="]" //Based64 encoding
-
-	add_raw_text(report_text)
-	update_appearance()
+	info = random_string(rand(180,220), characters)
+	info += "[prob(50) ? "=" : "=="]" //Based64 encoding
 
 /obj/item/paper/report/examine(mob/user)
 	. = ..()
@@ -162,7 +160,7 @@
 		. += span_notice("\The [src] contains data on [scanned_area.name].")
 	else if(scanned_area)
 		. += span_notice("\The [src] contains data on a vague area on station, you should throw it away.")
-	else if(get_total_length())
+	else if(get_info_length())
 		icon_state = "slipfull"
 		. += span_notice("Wait a minute, this isn't an encrypted inspection report! You should throw it away.")
 	else
@@ -352,8 +350,7 @@
 				new_info += pick_list_replacements(CLOWN_NONSENSE_FILE, "non-honk-clown-words")
 			if(1000)
 				new_info += pick_list_replacements(CLOWN_NONSENSE_FILE, "rare")
-	add_raw_text(new_info.Join())
-	update_appearance()
+	info += new_info.Join()
 
 /obj/item/paper/fake_report/examine(mob/user)
 	. = ..()
@@ -361,7 +358,7 @@
 		. += span_notice("\The [src] contains no data on [scanned_area.name].")
 	else if(scanned_area)
 		. += span_notice("\The [src] contains no data on a vague area on station, you should throw it away.")
-	else if(get_total_length())
+	else if(get_info_length())
 		. += span_notice("Wait a minute, this isn't an encrypted inspection report! You should throw it away.")
 	else
 		. += span_notice("Wait a minute, this thing's blank! You should throw it away.")

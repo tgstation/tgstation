@@ -19,7 +19,7 @@
 		if ("spawncontainer")
 			var/containerdata = json_decode(href_list["container"])
 			var/obj/item/reagent_containers/container = beaker_panel_create_container(containerdata, get_turf(usr))
-			usr.log_message("spawned a [container] containing [pretty_string_from_reagent_list(container.reagents.reagent_list)]", LOG_GAME)
+			log_game("[key_name(usr)] spawned a [container] containing [pretty_string_from_reagent_list(container.reagents.reagent_list)]")
 		if ("spawngrenade")
 			var/obj/item/grenade/chem_grenade/grenade = new(get_turf(usr))
 			var/containersdata = json_decode(href_list["containers"])
@@ -34,7 +34,7 @@
 					var/det_time = text2num(grenadedata["grenade-timer"])
 					if (det_time)
 						grenade.det_time = det_time
-			usr.log_message("spawned a [grenade] containing: [reagent_string]", LOG_GAME)
+			log_game("[key_name(usr)] spawned a [grenade] containing: [reagent_string]")
 
 /datum/admins/proc/beaker_panel_prep_assembly(obj/item/assembly/towrap, grenade)
 	var/obj/item/assembly/igniter/igniter = new
@@ -48,7 +48,7 @@
 
 /datum/admins/proc/beaker_panel_create_container(list/containerdata, location)
 	var/containertype = text2path(containerdata["container"])
-	var/obj/item/reagent_containers/container = new containertype(location)
+	var/obj/item/reagent_containers/container =  new containertype(location)
 	var/datum/reagents/reagents = container.reagents
 	for(var/datum/reagent/R in reagents.reagent_list) // clear the container of reagents
 		reagents.remove_reagent(R.type,R.volume)
@@ -66,7 +66,7 @@
 	if(!check_rights())
 		return
 	var/datum/asset/asset_datum = get_asset_datum(/datum/asset/simple/namespaced/common)
-	asset_datum.send(usr)
+	asset_datum.send()
 	//Could somebody tell me why this isn't using the browser datum, given that it copypastes all of browser datum's html
 	var/dat = {"
 		<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">

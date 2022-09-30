@@ -3,7 +3,9 @@
 	desc = "A bluespace quantum-linked telepad used for teleporting objects to other quantum pads."
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "qpad-idle"
-	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 10
+	use_power = IDLE_POWER_USE
+	idle_power_usage = 200
+	active_power_usage = 5000
 	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
 	circuit = /obj/item/circuitboard/machine/quantumpad
 	var/teleport_cooldown = 400 //30 seconds base due to base parts
@@ -40,7 +42,6 @@
 		. += span_notice("The <i>linking</i> device is now able to be <i>scanned<i> with a multitool.")
 
 /obj/machinery/quantumpad/RefreshParts()
-	. = ..()
 	var/E = 0
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		E += C.rating
@@ -54,7 +55,7 @@
 	teleport_cooldown -= (E * 100)
 
 /obj/machinery/quantumpad/attackby(obj/item/I, mob/user, params)
-	if(default_deconstruction_screwdriver(user, "qpad-idle-open", "qpad-idle", I))
+	if(default_deconstruction_screwdriver(user, "pad-idle-o", "qpad-idle", I))
 		return
 
 	if(panel_open)
@@ -136,51 +137,54 @@
 		ghost.forceMove(get_turf(linked_pad))
 
 /obj/machinery/quantumpad/proc/doteleport(mob/user = null, obj/machinery/quantumpad/target_pad = linked_pad)
-	if(!target_pad)
-		return
-	playsound(get_turf(src), 'sound/weapons/flash.ogg', 25, TRUE)
-	teleporting = TRUE
+	if(target_pad)
+		playsound(get_turf(src), 'sound/weapons/flash.ogg', 25, TRUE)
+		teleporting = TRUE
 
-	addtimer(CALLBACK(src, .proc/teleport_contents, user, target_pad), teleport_speed)
+		spawn(teleport_speed)
+			if(!src || QDELETED(src))
+				teleporting = FALSE
+				return
+			if(machine_stat & NOPOWER)
+				if(user)
+					to_chat(user, span_warning("[src] is unpowered!"))
+				teleporting = FALSE
+				return
+			if(!target_pad || QDELETED(target_pad) || target_pad.machine_stat & NOPOWER)
+				if(user)
+					to_chat(user, span_warning("Linked pad is not responding to ping. Teleport aborted."))
+				teleporting = FALSE
+				return
 
-/obj/machinery/quantumpad/proc/teleport_contents(mob/user, obj/machinery/quantumpad/target_pad)
-	teleporting = FALSE
-	if(machine_stat & NOPOWER)
-		if(user)
-			to_chat(user, span_warning("[src] is unpowered!"))
-		return
-	if(QDELETED(target_pad) || target_pad.machine_stat & NOPOWER)
-		if(user)
-			to_chat(user, span_warning("Linked pad is not responding to ping. Teleport aborted."))
-		return
+			teleporting = FALSE
+			last_teleport = world.time
 
-	last_teleport = world.time
+			// use a lot of power
+			use_power(10000 / power_efficiency)
+			sparks()
+			target_pad.sparks()
 
-	// use a lot of power
-	use_power(active_power_usage / power_efficiency)
-	sparks()
-	target_pad.sparks()
+			flick("qpad-beam", src)
+			playsound(get_turf(src), 'sound/weapons/emitter2.ogg', 25, TRUE)
+			flick("qpad-beam", target_pad)
+			playsound(get_turf(target_pad), 'sound/weapons/emitter2.ogg', 25, TRUE)
+			for(var/atom/movable/ROI in get_turf(src))
+				if(QDELETED(ROI))
+					continue //sleeps in CHECK_TICK
 
-	flick("qpad-beam", src)
-	playsound(get_turf(src), 'sound/weapons/emitter2.ogg', 25, TRUE)
-	flick("qpad-beam", target_pad)
-	playsound(get_turf(target_pad), 'sound/weapons/emitter2.ogg', 25, TRUE)
-	for(var/atom/movable/ROI in get_turf(src))
-		if(QDELETED(ROI))
-			continue //sleeps in CHECK_TICK
+				// if is anchored, don't let through
+				if(ROI.anchored)
+					if(isliving(ROI))
+						var/mob/living/L = ROI
+						//only TP living mobs buckled to non anchored items
+						if(!L.buckled || L.buckled.anchored)
+							continue
+					//Don't TP ghosts
+					else if(!isobserver(ROI))
+						continue
 
-		// if is anchored, don't let through
-		if(ROI.anchored)
-			continue
-
-		if(isliving(ROI))
-			var/mob/living/living_subject = ROI
-			//only TP living mobs buckled to non anchored items
-			if(living_subject.buckled && living_subject.buckled.anchored)
-				continue
-
-		do_teleport(ROI, get_turf(target_pad), no_effects = TRUE, channel = TELEPORT_CHANNEL_QUANTUM)
-		CHECK_TICK
+				do_teleport(ROI, get_turf(target_pad), no_effects = TRUE, channel = TELEPORT_CHANNEL_QUANTUM)
+				CHECK_TICK
 
 /obj/machinery/quantumpad/proc/initMappedLink()
 	. = FALSE
@@ -191,7 +195,7 @@
 
 /obj/item/paper/guides/quantumpad
 	name = "Quantum Pad For Dummies"
-	default_raw_text = "<center><b>Dummies Guide To Quantum Pads</b></center><br><br><center>Do you hate the concept of having to use your legs, let alone <i>walk</i> to places? Well, with the Quantum Pad (tm), never again will the fear of cardio keep you from going places!<br><br><c><b>How to set up your Quantum Pad(tm)</b></center><br><br>1.Unscrew the Quantum Pad(tm) you wish to link.<br>2. Use your multi-tool to cache the buffer of the Quantum Pad(tm) you wish to link.<br>3. Apply the multi-tool to the secondary Quantum Pad(tm) you wish to link to the first Quantum Pad(tm)<br><br><center>If you followed these instructions carefully, your Quantum Pad(tm) should now be properly linked together for near-instant movement across the station! Bear in mind that this is technically a one-way teleport, so you'll need to do the same process with the secondary pad to the first one if you wish to travel between both.</center>"
+	info = "<center><b>Dummies Guide To Quantum Pads</b></center><br><br><center>Do you hate the concept of having to use your legs, let alone <i>walk</i> to places? Well, with the Quantum Pad (tm), never again will the fear of cardio keep you from going places!<br><br><c><b>How to set up your Quantum Pad(tm)</b></center><br><br>1.Unscrew the Quantum Pad(tm) you wish to link.<br>2. Use your multi-tool to cache the buffer of the Quantum Pad(tm) you wish to link.<br>3. Apply the multi-tool to the secondary Quantum Pad(tm) you wish to link to the first Quantum Pad(tm)<br><br><center>If you followed these instructions carefully, your Quantum Pad(tm) should now be properly linked together for near-instant movement across the station! Bear in mind that this is technically a one-way teleport, so you'll need to do the same process with the secondary pad to the first one if you wish to travel between both.</center>"
 
 /obj/item/circuit_component/quantumpad
 	display_name = "Quantum Pad"

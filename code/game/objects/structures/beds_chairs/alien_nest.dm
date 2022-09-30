@@ -14,14 +14,14 @@
 	buildstacktype = null
 	flags_1 = NODECONSTRUCT_1
 	bolts = FALSE
-	var/static/mutable_appearance/nest_overlay = mutable_appearance('icons/mob/nonhuman-player/alien.dmi', "nestoverlay", LYING_MOB_LAYER)
+	var/static/mutable_appearance/nest_overlay = mutable_appearance('icons/mob/alien.dmi', "nestoverlay", LYING_MOB_LAYER)
 
 /obj/structure/bed/nest/user_unbuckle_mob(mob/living/buckled_mob, mob/living/user)
 	if(has_buckled_mobs())
 		for(var/buck in buckled_mobs) //breaking a nest releases all the buckled mobs, because the nest isn't holding them down anymore
 			var/mob/living/M = buck
 
-			if(user.getorgan(/obj/item/organ/internal/alien/plasmavessel))
+			if(user.getorgan(/obj/item/organ/alien/plasmavessel))
 				unbuckle_mob(M)
 				add_fingerprint(user)
 				return
@@ -51,9 +51,9 @@
 	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.incapacitated() || M.buckled )
 		return
 
-	if(M.getorgan(/obj/item/organ/internal/alien/plasmavessel))
+	if(M.getorgan(/obj/item/organ/alien/plasmavessel))
 		return
-	if(!user.getorgan(/obj/item/organ/internal/alien/plasmavessel))
+	if(!user.getorgan(/obj/item/organ/alien/plasmavessel))
 		return
 
 	if(has_buckled_mobs())

@@ -10,10 +10,8 @@
 	var/time_to_process
 	///Amount of the resulting actor this will create
 	var/amount_created
-	///Whether or not the atom being processed has to be on a table or tray to process it
-	var/table_required
 
-/datum/element/processable/Attach(datum/target, tool_behaviour, result_atom_type, amount_created = 3, time_to_process = 2 SECONDS, table_required = FALSE)
+/datum/element/processable/Attach(datum/target, tool_behaviour, result_atom_type, amount_created = 3, time_to_process = 20)
 	. = ..()
 	if(!isatom(target))
 		return ELEMENT_INCOMPATIBLE
@@ -22,7 +20,6 @@
 	src.amount_created = amount_created
 	src.time_to_process = time_to_process
 	src.result_atom_type = result_atom_type
-	src.table_required = table_required
 
 	RegisterSignal(target, COMSIG_ATOM_TOOL_ACT(tool_behaviour), .proc/try_process)
 	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/OnExamine)
@@ -33,16 +30,6 @@
 
 /datum/element/processable/proc/try_process(datum/source, mob/living/user, obj/item/I, list/mutable_recipes)
 	SIGNAL_HANDLER
-
-	if(table_required)
-		var/obj/item/found_item = source
-		var/found_location = found_item.loc
-		var/found_turf = isturf(found_location)
-		var/found_table = locate(/obj/structure/table) in found_location
-		var/found_tray = locate(/obj/item/storage/bag/tray) in found_location
-		if(!found_turf && !istype(found_location, /obj/item/storage/bag/tray) || found_turf && !(found_table || found_tray))
-			to_chat(user, span_notice("You cannot make [initial(result_atom_type.name)] here! You need a table or at least a tray."))
-			return
 
 	mutable_recipes += list(list(TOOL_PROCESSING_RESULT = result_atom_type, TOOL_PROCESSING_AMOUNT = amount_created, TOOL_PROCESSING_TIME = time_to_process))
 

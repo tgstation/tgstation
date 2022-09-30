@@ -6,7 +6,7 @@
 		if (z > z_list.len)
 			stack_trace("Unmanaged z-level [z]! maxz = [world.maxz], z_list.len = [z_list.len]")
 			return list()
-		var/datum/space_level/S = z_list[z]
+		var/datum/space_level/S = get_level(z)
 		return S.traits[trait]
 	else
 		var/list/default = DEFAULT_MAP_TRAITS
@@ -17,53 +17,52 @@
 
 /// Check if levels[z] has any of the specified traits
 /datum/controller/subsystem/mapping/proc/level_has_any_trait(z, list/traits)
-	var/datum/space_level/level_to_check = z_list[z]
-	if (length(level_to_check.traits & traits))
-		return TRUE
+	for (var/I in traits)
+		if (level_trait(z, I))
+			return TRUE
 	return FALSE
 
 /// Check if levels[z] has all of the specified traits
 /datum/controller/subsystem/mapping/proc/level_has_all_traits(z, list/traits)
-	var/datum/space_level/level_to_check = z_list[z]
-	if (length(level_to_check.traits & traits) == length(traits))
-		return TRUE
-	return FALSE
+	for (var/I in traits)
+		if (!level_trait(z, I))
+			return FALSE
+	return TRUE
 
 /// Get a list of all z which have the specified trait
 /datum/controller/subsystem/mapping/proc/levels_by_trait(trait)
-	return z_trait_levels[trait] || list()
+	. = list()
+	var/list/_z_list = z_list
+	for(var/A in _z_list)
+		var/datum/space_level/S = A
+		if (S.traits[trait])
+			. += S.z_value
 
 /// Get a list of all z which have any of the specified traits
 /datum/controller/subsystem/mapping/proc/levels_by_any_trait(list/traits)
-	var/list/final_return = list()
-	for (var/trait in traits)
-		if (z_trait_levels[trait])
-			final_return |= z_trait_levels[trait]
-	return final_return
-
-/// Get a list of all z which have all of the specified traits
-/datum/controller/subsystem/mapping/proc/levels_by_all_traits(list/traits)
-	var/list/final_return = list()
-	for(var/datum/space_level/level as anything in z_list)
-		if(level_has_all_traits(level.z_value, traits))
-			final_return += level.z_value
-	return final_return
+	. = list()
+	var/list/_z_list = z_list
+	for(var/A in _z_list)
+		var/datum/space_level/S = A
+		for (var/trait in traits)
+			if (S.traits[trait])
+				. += S.z_value
+				break
 
 /// Attempt to get the turf below the provided one according to Z traits
 /datum/controller/subsystem/mapping/proc/get_turf_below(turf/T)
-	if (!T || !initialized)
+	if (!T)
 		return
-	var/offset = multiz_levels[T.z]["[DOWN]"]
+	var/offset = level_trait(T.z, ZTRAIT_DOWN)
 	if (!offset)
 		return
-	return locate(T.x, T.y, T.z - offset)
+	return locate(T.x, T.y, T.z + offset)
 
 /// Attempt to get the turf above the provided one according to Z traits
 /datum/controller/subsystem/mapping/proc/get_turf_above(turf/T)
-	if (!T || !initialized)
+	if (!T)
 		return
-
-	var/offset = multiz_levels[T.z]["[UP]"]
+	var/offset = level_trait(T.z, ZTRAIT_UP)
 	if (!offset)
 		return
 	return locate(T.x, T.y, T.z + offset)

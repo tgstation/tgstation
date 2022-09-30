@@ -11,12 +11,6 @@
 	BB_CUSTOMER_SAID_CANT_FIND_SEAT_LINE = FALSE)
 	planning_subtrees = list(/datum/ai_planning_subtree/robot_customer)
 
-/datum/ai_controller/robot_customer/Destroy()
-	// clear possible datum refs
-	blackboard[BB_CUSTOMER_CURRENT_ORDER] = null
-	blackboard[BB_CUSTOMER_CUSTOMERINFO] = null
-	return ..()
-
 /datum/ai_controller/robot_customer/TryPossessPawn(atom/new_pawn)
 	if(!istype(new_pawn, /mob/living/simple_animal/robot_customer))
 		return AI_CONTROLLER_INCOMPATIBLE
@@ -44,10 +38,6 @@
 	if(!blackboard[BB_CUSTOMER_EATING])
 		blackboard[BB_CUSTOMER_EATING] = TRUE
 		attending_venue.on_get_order(pawn, order_item)
-		var/our_order = blackboard[BB_CUSTOMER_CURRENT_ORDER]
-		if(isdatum(our_order))
-			qdel(our_order)
-		blackboard[BB_CUSTOMER_CURRENT_ORDER] = null
 
 
 ///Called when
@@ -77,10 +67,9 @@
 	var/mob/living/simple_animal/robot_customer/customer = pawn
 	var/datum/venue/attending_venue = blackboard[BB_CUSTOMER_ATTENDING_VENUE]
 	var/datum/customer_data/customer_data = blackboard[BB_CUSTOMER_CUSTOMERINFO]
-	//Living mobs are tagged, so these will always be valid
-	attending_venue.mob_blacklist[REF(greytider)] += 1
+	attending_venue.mob_blacklist[greytider] += 1
 
-	switch(attending_venue.mob_blacklist[REF(greytider)])
+	switch(attending_venue.mob_blacklist[greytider])
 		if(1)
 			customer.say(customer_data.first_warning_line)
 			return

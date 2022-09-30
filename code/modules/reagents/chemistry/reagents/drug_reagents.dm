@@ -6,10 +6,10 @@
 
 /datum/reagent/drug/on_mob_end_metabolize(mob/living/M)
 	if(trippy)
-		M.clear_mood_event("[type]_high")
+		SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "[type]_high")
 
 /datum/reagent/drug/space_drugs
-	name = "Space Drugs"
+	name = "Space drugs"
 	description = "An illegal chemical compound used as drug."
 	color = "#60A584" // rgb: 96, 165, 132
 	overdose_threshold = 30
@@ -18,7 +18,7 @@
 	addiction_types = list(/datum/addiction/hallucinogens = 10) //4 per 2 seconds
 
 /datum/reagent/drug/space_drugs/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.set_drugginess(30 SECONDS * REM * delta_time)
+	M.set_drugginess(15 * REM * delta_time)
 	if(isturf(M.loc) && !isspaceturf(M.loc) && !HAS_TRAIT(M, TRAIT_IMMOBILIZED) && DT_PROB(5, delta_time))
 		step(M, pick(GLOB.cardinals))
 	if(DT_PROB(3.5, delta_time))
@@ -27,12 +27,11 @@
 
 /datum/reagent/drug/space_drugs/overdose_start(mob/living/M)
 	to_chat(M, span_userdanger("You start tripping hard!"))
-	M.add_mood_event("[type]_overdose", /datum/mood_event/overdose, name)
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[type]_overdose", /datum/mood_event/overdose, name)
 
 /datum/reagent/drug/space_drugs/overdose_process(mob/living/M, delta_time, times_fired)
-	var/hallucination_duration_in_seconds = (M.get_timed_status_effect_duration(/datum/status_effect/hallucination) / 10)
-	if(hallucination_duration_in_seconds < volume && DT_PROB(10, delta_time))
-		M.adjust_hallucinations(10 SECONDS)
+	if(M.hallucination < volume && DT_PROB(10, delta_time))
+		M.hallucination += 5
 	..()
 
 /datum/reagent/drug/cannabis
@@ -51,7 +50,7 @@
 		to_chat(M, "<span class='notice'>[smoke_message]</span>")
 	if(DT_PROB(2, delta_time))
 		M.emote(pick("smile","laugh","giggle"))
-	M.adjust_nutrition(-0.15 * REM * delta_time) //munchies
+	M.adjust_nutrition(-1 * REM * delta_time) //munchies
 	if(DT_PROB(4, delta_time) && M.body_position == LYING_DOWN && !M.IsSleeping()) //chance to fall asleep if lying down
 		to_chat(M, "<span class='warning'>You doze off...</span>")
 		M.Sleeping(10 SECONDS)
@@ -67,7 +66,7 @@
 	color = "#60A584" // rgb: 96, 165, 132
 	taste_description = "smoke"
 	trippy = FALSE
-	overdose_threshold = 15
+	overdose_threshold=15
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 	ph = 8
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -77,16 +76,16 @@
 /datum/reagent/drug/nicotine/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
 	if(chems.has_reagent(type, 1))
-		mytray.adjust_toxic(round(chems.get_reagent_amount(type)))
-		mytray.adjust_pestlevel(-rand(1, 2))
+		mytray.adjustToxic(round(chems.get_reagent_amount(type)))
+		mytray.adjustPests(-rand(1,2))
 
 /datum/reagent/drug/nicotine/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(DT_PROB(0.5, delta_time))
 		var/smoke_message = pick("You feel relaxed.", "You feel calmed.","You feel alert.","You feel rugged.")
 		to_chat(M, span_notice("[smoke_message]"))
-	M.add_mood_event("smoked", /datum/mood_event/smoked, name)
-	M.remove_status_effect(/datum/status_effect/jitter)
-	M.AdjustStun(-50 * REM * delta_time)
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "smoked", /datum/mood_event/smoked, name)
+	M.Jitter(0) //calms down any withdrawal jitters
+	M.AdjustStun(-50  * REM * delta_time)
 	M.AdjustKnockdown(-50 * REM * delta_time)
 	M.AdjustUnconscious(-50 * REM * delta_time)
 	M.AdjustParalyzed(-50 * REM * delta_time)
@@ -108,23 +107,19 @@
 	overdose_threshold = 20
 	ph = 9
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	addiction_types = list(/datum/addiction/opioids = 18) //7.2 per 2 seconds
+	addiction_types = list(/datum/addiction/opiods = 18) //7.2 per 2 seconds
 
 
 /datum/reagent/drug/krokodil/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	var/high_message = pick("You feel calm.", "You feel collected.", "You feel like you need to relax.")
 	if(DT_PROB(2.5, delta_time))
 		to_chat(M, span_notice("[high_message]"))
-	M.add_mood_event("smacked out", /datum/mood_event/narcotic_heavy, name)
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "smacked out", /datum/mood_event/narcotic_heavy, name)
 	if(current_cycle == 35 && creation_purity <= 0.6)
-		if(!istype(M.dna.species, /datum/species/human/krokodil_addict))
+		if(!istype(M.dna.species, /datum/species/krokodil_addict))
 			to_chat(M, span_userdanger("Your skin falls off easily!"))
-			var/mob/living/carbon/human/H = M
-			H.facial_hairstyle = "Shaved"
-			H.hairstyle = "Bald"
-			H.update_body_parts() // makes you loose hair as well
-			M.set_species(/datum/species/human/krokodil_addict)
-			M.adjustBruteLoss(50 * REM, 0) // holy shit your skin just FELL THE FUCK OFF
+			M.adjustBruteLoss(50*REM, 0) // holy shit your skin just FELL THE FUCK OFF
+			M.set_species(/datum/species/krokodil_addict)
 	..()
 
 /datum/reagent/drug/krokodil/overdose_process(mob/living/M, delta_time, times_fired)
@@ -158,14 +153,14 @@
 	var/high_message = pick("You feel hyper.", "You feel like you need to go faster.", "You feel like you can run the world.")
 	if(DT_PROB(2.5, delta_time))
 		to_chat(M, span_notice("[high_message]"))
-	M.add_mood_event("tweaking", /datum/mood_event/stimulant_medium, name)
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "tweaking", /datum/mood_event/stimulant_medium, name)
 	M.AdjustStun(-40 * REM * delta_time)
 	M.AdjustKnockdown(-40 * REM * delta_time)
 	M.AdjustUnconscious(-40 * REM * delta_time)
 	M.AdjustParalyzed(-40 * REM * delta_time)
 	M.AdjustImmobilized(-40 * REM * delta_time)
 	M.adjustStaminaLoss(-2 * REM * delta_time, 0)
-	M.set_jitter_if_lower(4 SECONDS * REM * delta_time)
+	M.Jitter(2 * REM * delta_time)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, rand(1, 4) * REM * delta_time)
 	if(DT_PROB(2.5, delta_time))
 		M.emote(pick("twitch", "shiver"))
@@ -218,10 +213,10 @@
 	var/high_message = pick("You feel amped up.", "You feel ready.", "You feel like you can push it to the limit.")
 	if(DT_PROB(2.5, delta_time))
 		to_chat(M, span_notice("[high_message]"))
-	M.add_mood_event("salted", /datum/mood_event/stimulant_heavy, name)
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "salted", /datum/mood_event/stimulant_heavy, name)
 	M.adjustStaminaLoss(-5 * REM * delta_time, 0)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 4 * REM * delta_time)
-	M.adjust_hallucinations(10 SECONDS * REM * delta_time)
+	M.hallucination += 5 * REM * delta_time
 	if(!HAS_TRAIT(M, TRAIT_IMMOBILIZED) && !ismovable(M.loc))
 		step(M, pick(GLOB.cardinals))
 		step(M, pick(GLOB.cardinals))
@@ -229,7 +224,7 @@
 	. = TRUE
 
 /datum/reagent/drug/bath_salts/overdose_process(mob/living/M, delta_time, times_fired)
-	M.adjust_hallucinations(10 SECONDS * REM * delta_time)
+	M.hallucination += 5 * REM * delta_time
 	if(!HAS_TRAIT(M, TRAIT_IMMOBILIZED) && !ismovable(M.loc))
 		for(var/i in 1 to round(8 * REM * delta_time, 1))
 			step(M, pick(GLOB.cardinals))
@@ -272,16 +267,16 @@
 /datum/reagent/drug/happiness/on_mob_metabolize(mob/living/L)
 	..()
 	ADD_TRAIT(L, TRAIT_FEARLESS, type)
-	L.add_mood_event("happiness_drug", /datum/mood_event/happiness_drug)
+	SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "happiness_drug", /datum/mood_event/happiness_drug)
 
 /datum/reagent/drug/happiness/on_mob_delete(mob/living/L)
 	REMOVE_TRAIT(L, TRAIT_FEARLESS, type)
-	L.clear_mood_event("happiness_drug")
+	SEND_SIGNAL(L, COMSIG_CLEAR_MOOD_EVENT, "happiness_drug")
 	..()
 
 /datum/reagent/drug/happiness/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.remove_status_effect(/datum/status_effect/jitter)
-	M.remove_status_effect(/datum/status_effect/confusion)
+	M.jitteriness = 0
+	M.set_confusion(0)
 	M.disgust = 0
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.2 * REM * delta_time)
 	..()
@@ -293,13 +288,13 @@
 		switch(reaction)
 			if(1)
 				M.emote("laugh")
-				M.add_mood_event("happiness_drug", /datum/mood_event/happiness_drug_good_od)
+				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "happiness_drug", /datum/mood_event/happiness_drug_good_od)
 			if(2)
 				M.emote("sway")
-				M.set_dizzy_if_lower(50 SECONDS)
+				M.Dizzy(25)
 			if(3)
 				M.emote("frown")
-				M.add_mood_event("happiness_drug", /datum/mood_event/happiness_drug_bad_od)
+				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "happiness_drug", /datum/mood_event/happiness_drug_bad_od)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.5 * REM * delta_time)
 	..()
 	. = TRUE
@@ -316,14 +311,14 @@
 
 /datum/reagent/drug/pumpup/on_mob_metabolize(mob/living/L)
 	..()
-	ADD_TRAIT(L, TRAIT_BATON_RESISTANCE, type)
+	ADD_TRAIT(L, TRAIT_STUNRESISTANCE, type)
 
 /datum/reagent/drug/pumpup/on_mob_end_metabolize(mob/living/L)
-	REMOVE_TRAIT(L, TRAIT_BATON_RESISTANCE, type)
+	REMOVE_TRAIT(L, TRAIT_STUNRESISTANCE, type)
 	..()
 
 /datum/reagent/drug/pumpup/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.set_jitter_if_lower(10 SECONDS * REM * delta_time)
+	M.Jitter(5 * REM * delta_time)
 
 	if(DT_PROB(2.5, delta_time))
 		to_chat(M, span_notice("[pick("Go! Go! GO!", "You feel ready...", "You feel invincible...")]"))
@@ -337,7 +332,7 @@
 	to_chat(M, span_userdanger("You can't stop shaking, your heart beats faster and faster..."))
 
 /datum/reagent/drug/pumpup/overdose_process(mob/living/M, delta_time, times_fired)
-	M.set_jitter_if_lower(10 SECONDS * REM * delta_time)
+	M.Jitter(5 * REM * delta_time)
 	if(DT_PROB(2.5, delta_time))
 		M.drop_all_held_items()
 	if(DT_PROB(7.5, delta_time))
@@ -360,6 +355,7 @@
 	color = "#ffffff"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 15
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/maintenance_drugs = 14)
 
@@ -450,18 +446,19 @@
 	addiction_types = list(/datum/addiction/hallucinogens = 12)
 
 /datum/reagent/drug/mushroomhallucinogen/on_mob_life(mob/living/carbon/psychonaut, delta_time, times_fired)
-	psychonaut.set_slurring_if_lower(1 SECONDS * REM * delta_time)
-
+	if(!psychonaut.slurring)
+		psychonaut.slurring = 1 * REM * delta_time
+	SEND_SIGNAL(psychonaut, COMSIG_ADD_MOOD_EVENT, "tripping", /datum/mood_event/high, name)
 	switch(current_cycle)
 		if(1 to 5)
 			if(DT_PROB(5, delta_time))
 				psychonaut.emote(pick("twitch","giggle"))
 		if(5 to 10)
-			psychonaut.set_jitter_if_lower(20 SECONDS * REM * delta_time)
+			psychonaut.Jitter(10 * REM * delta_time)
 			if(DT_PROB(10, delta_time))
 				psychonaut.emote(pick("twitch","giggle"))
 		if (10 to INFINITY)
-			psychonaut.set_jitter_if_lower(40 SECONDS * REM * delta_time)
+			psychonaut.Jitter(20 * REM * delta_time)
 			if(DT_PROB(16, delta_time))
 				psychonaut.emote(pick("twitch","giggle"))
 	..()
@@ -469,7 +466,6 @@
 /datum/reagent/drug/mushroomhallucinogen/on_mob_metabolize(mob/living/psychonaut)
 	. = ..()
 
-	psychonaut.add_mood_event("tripping", /datum/mood_event/high, name)
 	if(!psychonaut.hud_used)
 		return
 
@@ -495,7 +491,6 @@
 
 /datum/reagent/drug/mushroomhallucinogen/on_mob_end_metabolize(mob/living/psychonaut)
 	. = ..()
-	psychonaut.clear_mood_event("tripping")
 	if(!psychonaut.hud_used)
 		return
 	var/atom/movable/plane_master_controller/game_plane_master_controller = psychonaut.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
@@ -503,7 +498,7 @@
 	game_plane_master_controller.remove_filter("psilocybin_wave")
 
 /datum/reagent/drug/blastoff
-	name = "bLaStOoF"
+	name = "bLaSToFF"
 	description = "A drug for the hardcore party crowd said to enhance ones abilities on the dance floor.\nMost old heads refuse to touch this stuff, perhaps because memories of the luna discoteque incident are seared into their brains."
 	reagent_state = LIQUID
 	color = "#9015a9"
@@ -522,7 +517,6 @@
 /datum/reagent/drug/blastoff/on_mob_metabolize(mob/living/dancer)
 	. = ..()
 
-	dancer.add_mood_event("vibing", /datum/mood_event/high, name)
 	RegisterSignal(dancer, COMSIG_MOB_EMOTED("flip"), .proc/on_flip)
 	RegisterSignal(dancer, COMSIG_MOB_EMOTED("spin"), .proc/on_spin)
 
@@ -553,7 +547,6 @@
 /datum/reagent/drug/blastoff/on_mob_end_metabolize(mob/living/dancer)
 	. = ..()
 
-	dancer.clear_mood_event("vibing")
 	UnregisterSignal(dancer, COMSIG_MOB_EMOTED("flip"))
 	UnregisterSignal(dancer, COMSIG_MOB_EMOTED("spin"))
 
@@ -571,6 +564,7 @@
 
 	dancer.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.3 * REM * delta_time)
 	dancer.AdjustKnockdown(-20)
+	SEND_SIGNAL(dancer, COMSIG_ADD_MOOD_EVENT, "vibing", /datum/mood_event/high, name)
 
 	if(DT_PROB(BLASTOFF_DANCE_MOVE_CHANCE_PER_UNIT * volume, delta_time))
 		dancer.emote("flip")
@@ -627,7 +621,7 @@
 		dance_partner.throw_at(target = throwtarget, range = 4, speed = 1) //superspeed
 
 /datum/reagent/drug/saturnx
-	name = "Saturn-X"
+	name = "SaturnX"
 	description = "This compound was first discovered during the infancy of cloaking technology and at the time thought to be a promising candidate agent. It was withdrawn for consideration after the researchers discovered a slew of associated safety issues including thought disorders and hepatoxicity."
 	reagent_state = SOLID
 	taste_description = "metallic bitterness"
@@ -675,15 +669,14 @@
 		animate(size = 0, time = 6 SECONDS, easing = CIRCULAR_EASING|EASE_IN)
 
 ///This proc turns the living mob passed as the arg "invisible_man"s invisible by giving him the invisible man trait and updating his body, this changes the sprite of all his organic limbs to a 1 alpha version.
-/datum/reagent/drug/saturnx/proc/turn_man_invisible(mob/living/carbon/invisible_man, requires_liver = TRUE)
-	if(requires_liver)
-		if(!invisible_man.getorganslot(ORGAN_SLOT_LIVER))
-			return
-		if(invisible_man.undergoing_liver_failure())
-			return
-		if(HAS_TRAIT(invisible_man, TRAIT_NOMETABOLISM))
-			return
-	if(invisible_man.has_status_effect(/datum/status_effect/grouped/stasis))
+/datum/reagent/drug/saturnx/proc/turn_man_invisible(mob/living/carbon/invisible_man)
+	if(!invisible_man.getorganslot(ORGAN_SLOT_LIVER))
+		return
+	if(invisible_man.undergoing_liver_failure())
+		return
+	if(HAS_TRAIT(invisible_man, TRAIT_NOMETABOLISM))
+		return
+	if(invisible_man.has_status_effect(STATUS_EFFECT_STASIS))
 		return
 
 	ADD_TRAIT(invisible_man, TRAIT_INVISIBLE_MAN, name)
@@ -694,10 +687,11 @@
 		druggy_dna.species.species_traits += NOBLOODOVERLAY
 
 	invisible_man.update_body()
+	invisible_man.update_hair()
 	invisible_man.remove_from_all_data_huds()
 	invisible_man.sound_environment_override = SOUND_ENVIROMENT_PHASED
 
-/datum/reagent/drug/saturnx/on_mob_end_metabolize(mob/living/carbon/invisible_man)
+/datum/reagent/drug/saturnx/on_mob_end_metabolize(mob/living/invisible_man)
 	. = ..()
 	if(HAS_TRAIT(invisible_man, TRAIT_INVISIBLE_MAN))
 		invisible_man.add_to_all_human_data_huds() //Is this safe, what do you think, Floyd?
@@ -710,6 +704,7 @@
 			druggy_dna.species.species_traits -= NOBLOODOVERLAY
 
 	invisible_man.update_body()
+	invisible_man.update_hair()
 	invisible_man.sound_environment_override = NONE
 
 	if(!invisible_man.hud_used)
@@ -728,7 +723,7 @@
 	invisible_man.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.4 * REM * delta_time)
 
 /datum/reagent/drug/kronkaine
-	name = "Kronkaine"
+	name = "kronkaine"
 	description = "A highly illegal stimulant from the edge of the galaxy.\nIt is said the average kronkaine addict causes as much criminal damage as five stick up men, two rascals and one proferssional cambringo hustler combined."
 	reagent_state = SOLID
 	color = "#FAFAFA"
@@ -759,9 +754,9 @@
 
 /datum/reagent/drug/kronkaine/on_mob_life(mob/living/carbon/kronkaine_fiend, delta_time, times_fired)
 	. = ..()
-	kronkaine_fiend.add_mood_event("tweaking", /datum/mood_event/stimulant_medium, name)
+	SEND_SIGNAL(kronkaine_fiend, COMSIG_ADD_MOOD_EVENT, "tweaking", /datum/mood_event/stimulant_medium, name)
 	kronkaine_fiend.adjustOrganLoss(ORGAN_SLOT_HEART, 0.4 * REM * delta_time)
-	kronkaine_fiend.set_jitter_if_lower(20 SECONDS * REM * delta_time)
+	kronkaine_fiend.Jitter(10 * REM * delta_time)
 	kronkaine_fiend.AdjustSleeping(-20 * REM * delta_time)
 	kronkaine_fiend.adjust_drowsyness(-5 * REM * delta_time)
 	if(volume < 10)
@@ -774,6 +769,6 @@
 /datum/reagent/drug/kronkaine/overdose_process(mob/living/kronkaine_fiend, delta_time, times_fired)
 	. = ..()
 	kronkaine_fiend.adjustOrganLoss(ORGAN_SLOT_HEART, 1 * REM * delta_time)
-	kronkaine_fiend.set_jitter_if_lower(20 SECONDS * REM * delta_time)
+	kronkaine_fiend.Jitter(10 * REM * delta_time)
 	if(DT_PROB(10, delta_time))
 		to_chat(kronkaine_fiend, span_danger(pick("You feel like your heart is going to explode!", "Your ears are ringing!", "You sweat like a pig!", "You clench your jaw and grind your teeth.", "You feel prickles of pain in your chest.")))

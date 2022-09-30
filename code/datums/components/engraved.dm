@@ -51,15 +51,13 @@
 	engraved_wall.update_appearance()
 
 /datum/component/engraved/Destroy(force, silent)
-	if(!parent)
-		return ..()
+	. = ..()
 	parent.RemoveElement(/datum/element/art)
 	//must be here to allow overlays to be updated
 	UnregisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS)
-	if(!QDELING(parent))
+	if(parent && !QDELING(parent))
 		var/atom/parent_atom = parent
 		parent_atom.update_appearance()
-	return ..() //call this after since we null out the parent
 
 /datum/component/engraved/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)

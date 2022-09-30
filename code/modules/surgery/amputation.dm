@@ -3,8 +3,8 @@
 	name = "Amputation"
 	steps = list(
 		/datum/surgery_step/incise,
-		/datum/surgery_step/retract_skin,
 		/datum/surgery_step/clamp_bleeders,
+		/datum/surgery_step/retract_skin,
 		/datum/surgery_step/saw,
 		/datum/surgery_step/clamp_bleeders,
 		/datum/surgery_step/sever_limb)
@@ -24,8 +24,6 @@
 		/obj/item/hatchet = 40,
 		/obj/item/knife/butcher = 25)
 	time = 64
-	preop_sound = 'sound/surgery/scalpel1.ogg'
-	success_sound = 'sound/surgery/organ2.ogg'
 
 /datum/surgery_step/sever_limb/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, span_notice("You begin to sever [target]'s [parse_zone(target_zone)]..."),
@@ -38,7 +36,7 @@
 	display_results(user, target, span_notice("You sever [target]'s [parse_zone(target_zone)]."),
 		span_notice("[user] severs [target]'s [parse_zone(target_zone)]!"),
 		span_notice("[user] severs [target]'s [parse_zone(target_zone)]!"))
-	display_pain(target, "You can no longer feel your severed [parse_zone(target_zone)]!")
+	display_pain(target, "You lose all feeling in your [parse_zone(target_zone)]!")
 	if(surgery.operated_bodypart)
 		var/obj/item/bodypart/target_limb = surgery.operated_bodypart
 		target_limb.drop_limb()

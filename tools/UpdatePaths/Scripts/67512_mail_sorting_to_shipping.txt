@@ -1,2 +1,0 @@
-/obj/effect/mapping_helpers/airlock/access/any/supply/mail_sorting : /obj/effect/mapping_helpers/airlock/access/any/supply/shipping
-/obj effect/mapping_helpers/airlock/access/all/supply/mail_sorting : /obj/effect/mapping_helpers/airlock/access/all/supply/shipping

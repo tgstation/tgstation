@@ -7,7 +7,8 @@
 	base_icon_state = "pump"
 	anchored = FALSE
 	density = TRUE
-	use_power = NO_POWER_USE
+	idle_power_usage = 10
+	active_power_usage = 1000
 
 	///units we pump per second
 	var/pump_power = 1

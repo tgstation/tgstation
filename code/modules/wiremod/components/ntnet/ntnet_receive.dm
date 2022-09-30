@@ -6,9 +6,10 @@
 /obj/item/circuit_component/ntnet_receive
 	display_name = "NTNet Receiver"
 	desc = "Receives data packages through NTNet. If Encryption Key is set then only signals with the same Encryption Key will be received."
-	category = "NTNet"
 
 	circuit_flags = CIRCUIT_FLAG_OUTPUT_SIGNAL //trigger_output
+
+	network_id = __NETWORK_CIRCUITS
 
 	/// The list type
 	var/datum/port/input/option/list_options
@@ -18,10 +19,6 @@
 
 	/// Encryption key
 	var/datum/port/input/enc_key
-
-/obj/item/circuit_component/ntnet_receive/Initialize(mapload)
-	. = ..()
-	init_network_id(__NETWORK_CIRCUITS)
 
 /obj/item/circuit_component/ntnet_receive/populate_options()
 	list_options = add_option_port("List Type", GLOB.wiremod_basic_types)

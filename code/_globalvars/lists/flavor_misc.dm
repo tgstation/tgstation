@@ -7,7 +7,6 @@ GLOBAL_LIST_EMPTY(facial_hairstyles_list) //stores /datum/sprite_accessory/facia
 GLOBAL_LIST_EMPTY(facial_hairstyles_male_list) //stores only hair names
 GLOBAL_LIST_EMPTY(facial_hairstyles_female_list) //stores only hair names
 GLOBAL_LIST_EMPTY(hair_gradients_list) //stores /datum/sprite_accessory/hair_gradient indexed by name
-GLOBAL_LIST_EMPTY(facial_hair_gradients_list) //stores /datum/sprite_accessory/facial_hair_gradient indexed by name
 	//Underwear
 GLOBAL_LIST_EMPTY(underwear_list) //stores /datum/sprite_accessory/underwear indexed by name
 GLOBAL_LIST_EMPTY(underwear_m) //stores only underwear name
@@ -20,6 +19,8 @@ GLOBAL_LIST_EMPTY(undershirt_f)  //stores only undershirt name
 GLOBAL_LIST_EMPTY(socks_list) //stores /datum/sprite_accessory/socks indexed by name
 	//Lizard Bits (all datum lists indexed by name)
 GLOBAL_LIST_EMPTY(body_markings_list)
+GLOBAL_LIST_EMPTY(tails_list_lizard)
+GLOBAL_LIST_EMPTY(animated_tails_list_lizard)
 GLOBAL_LIST_EMPTY(snouts_list)
 GLOBAL_LIST_EMPTY(horns_list)
 GLOBAL_LIST_EMPTY(frills_list)
@@ -28,9 +29,8 @@ GLOBAL_LIST_EMPTY(legs_list)
 GLOBAL_LIST_EMPTY(animated_spines_list)
 
 	//Mutant Human bits
-GLOBAL_LIST_EMPTY(tails_list)
-GLOBAL_LIST_EMPTY(tails_list_human) //Only exists for preference choices. Use "tails_list" otherwise.
-GLOBAL_LIST_EMPTY(tails_list_lizard) //See above!
+GLOBAL_LIST_EMPTY(tails_list_human)
+GLOBAL_LIST_EMPTY(animated_tails_list_human)
 GLOBAL_LIST_EMPTY(ears_list)
 GLOBAL_LIST_EMPTY(wings_list)
 GLOBAL_LIST_EMPTY(wings_open_list)
@@ -38,89 +38,85 @@ GLOBAL_LIST_EMPTY(moth_wings_list)
 GLOBAL_LIST_EMPTY(moth_antennae_list)
 GLOBAL_LIST_EMPTY(moth_markings_list)
 GLOBAL_LIST_EMPTY(caps_list)
-GLOBAL_LIST_EMPTY(pod_hair_list)
+GLOBAL_LIST_EMPTY(tails_list_monkey)
 
 GLOBAL_LIST_INIT(color_list_ethereal, list(
-	"Blue" = "#3399ff",
-	"Bright Yellow" = "#ffff99",
-	"Burnt Orange" = "#cc4400",
-	"Cyan Blue" = "#00ffff",
-	"Dark Blue" = "#6666ff",
-	"Dark Fuschia" = "#cc0066",
-	"Dark Green" = "#37835b",
-	"Dark Red" = "#9c3030",
-	"Dull Yellow" = "#fbdf56",
-	"Faint Blue" = "#b3d9ff",
-	"Faint Green" = "#ddff99",
-	"Faint Red" = "#ffb3b3",
-	"Green" = "#97ee63",
-	"Orange" = "#ffa64d",
-	"Pink" = "#ff99cc",
-	"Purple" = "#ee82ee",
 	"Red" = "#ff4d4d",
+	"Faint Red" = "#ffb3b3",
+	"Dark Red" = "#9c3030",
+	"Orange" = "#ffa64d",
+	"Burnt Orange" = "#cc4400",
+	"Bright Yellow" = "#ffff99",
+	"Dull Yellow" = "#fbdf56",
+	"Faint Green" = "#ddff99",
+	"Green" = "#97ee63",
 	"Seafoam Green" = "#00fa9a",
-	"White" = "#f2f2f2",
-))
+	"Dark Green" = "#37835b",
+	"Cyan Blue" = "#00ffff",
+	"Faint Blue" = "#b3d9ff",
+	"Blue" = "#3399ff",
+	"Dark Blue" = "#6666ff",
+	"Purple" = "#ee82ee",
+	"Dark Fuschia" = "#cc0066",
+	"Pink" = "#ff99cc",
+	"White" = "#f2f2f2",))
 
 GLOBAL_LIST_INIT(ghost_forms_with_directions_list, list(
-	"catghost",
-	"ghost_black",
-	"ghost_blazeit",
-	"ghost_blue",
-	"ghost_camo",
-	"ghost_cyan",
-	"ghost_dblue",
-	"ghost_dcyan",
-	"ghost_dgreen",
-	"ghost_dpink",
-	"ghost_dred",
-	"ghost_dyellow",
-	"ghost_fire",
-	"ghost_funkypurp",
-	"ghost_green",
-	"ghost_grey",
-	"ghost_mellow",
-	"ghost_pink",
-	"ghost_pinksherbert",
-	"ghost_purpleswirl",
-	"ghost_rainbow",
-	"ghost_red",
-	"ghost_yellow",
 	"ghost",
 	"ghostian",
 	"ghostian2",
 	"ghostking",
-	"skeleghost",
-))
-//stores the ghost forms that support directional sprites
-
-GLOBAL_LIST_INIT(ghost_forms_with_accessories_list, list(
+	"ghost_red",
 	"ghost_black",
-	"ghost_blazeit",
 	"ghost_blue",
-	"ghost_camo",
+	"ghost_yellow",
+	"ghost_green",
+	"ghost_pink",
 	"ghost_cyan",
 	"ghost_dblue",
-	"ghost_dcyan",
-	"ghost_dgreen",
-	"ghost_dpink",
 	"ghost_dred",
-	"ghost_dyellow",
-	"ghost_fire",
-	"ghost_funkypurp",
-	"ghost_green",
+	"ghost_dgreen",
+	"ghost_dcyan",
 	"ghost_grey",
-	"ghost_mellow",
-	"ghost_pink",
-	"ghost_pinksherbert",
+	"ghost_dyellow",
+	"ghost_dpink",
+	"skeleghost",
 	"ghost_purpleswirl",
 	"ghost_rainbow",
-	"ghost_red",
-	"ghost_yellow",
+	"ghost_fire",
+	"ghost_funkypurp",
+	"ghost_pinksherbert",
+	"ghost_blazeit",
+	"ghost_mellow",
+	"ghost_camo",
+	"catghost")) //stores the ghost forms that support directional sprites
+
+GLOBAL_LIST_INIT(ghost_forms_with_accessories_list, list(
 	"ghost",
+	"ghost_red",
+	"ghost_black",
+	"ghost_blue",
+	"ghost_yellow",
+	"ghost_green",
+	"ghost_pink",
+	"ghost_cyan",
+	"ghost_dblue",
+	"ghost_dred",
+	"ghost_dgreen",
+	"ghost_dcyan",
+	"ghost_grey",
+	"ghost_dyellow",
+	"ghost_dpink",
 	"skeleghost",
-))
-//stores the ghost forms that support hair and other such things
+	"ghost_purpleswirl",
+	"ghost_rainbow",
+	"ghost_fire",
+	"ghost_funkypurp",
+	"ghost_pinksherbert",
+	"ghost_blazeit",
+	"ghost_mellow",
+	"ghost_camo",))
+	//stores the ghost forms that support hair and other such things
 
 GLOBAL_LIST_INIT(ai_core_display_screens, sort_list(list(
 	":thinking:",
@@ -151,18 +147,17 @@ GLOBAL_LIST_INIT(ai_core_display_screens, sort_list(list(
 	"Not Malf",
 	"Portrait",
 	"President",
-	"Rainbow",
 	"Random",
-	"Red October",
+	"Rainbow",
 	"Red",
+	"Red October",
 	"Static",
 	"Syndicat Meow",
 	"Text",
 	"Too Deep",
-	"Triumvirate-M",
 	"Triumvirate",
-	"Weird",
-)))
+	"Triumvirate-M",
+	"Weird")))
 
 /// A form of resolve_ai_icon that is guaranteed to never sleep.
 /// Not always accurate, but always synchronous.
@@ -185,54 +180,22 @@ GLOBAL_LIST_INIT(ai_core_display_screens, sort_list(list(
 	return resolve_ai_icon_sync(input)
 
 GLOBAL_LIST_INIT(security_depts_prefs, sort_list(list(
+	SEC_DEPT_NONE,
 	SEC_DEPT_ENGINEERING,
 	SEC_DEPT_MEDICAL,
-	SEC_DEPT_NONE,
 	SEC_DEPT_SCIENCE,
 	SEC_DEPT_SUPPLY,
 )))
 
-/// Types of Crimes Prisoners will have on their record roundstart.
-/// (They also can choose Random, which picks from these options... randomly!)
-GLOBAL_LIST_INIT(prisoner_crimes, list(
-	"Abhorrent Criminal Negligence" = "Incompetently risked numerous lives.",
-	"Attempted Development of Cloning" = "Attempted illegal research in the cloning sphere. Cloning, cloning construction, and cloning-related R&D was outlawed in 2560.",
-	"Attempted Murder" = "Attempted to maliciously kill someone.",
-	"Biological Terrorism" = "Created and or released a lethal biological agent/lifeform.",
-	"Classified" = "Consult Legal.",
-	"Corporate Espionage" = "Conducted espionage against Nanotrasen for commercial purposes.",
-	"Counterfeiting" = "Engaged in widespread fraud.",
-	"Enemy of the Corporation" = "Acted as, or knowingly aided, an enemy of Nanotrasen.",
-	"Grand Sabotage" = "Engaged in malicious destructive actions, seriously threatening Nanotrasen employees and or infrastructure.",
-	"Grand Theft" = "Stole items of high value or sensitive nature.",
-	"Identity Theft of High-Ranking Figure" = "Impersonated a high-ranking figure.",
-	"Kidnapping" = "Planned and executed a kidnapping.",
-	"Medical Malpractice" = "Engaged in organ harvesting, limb theft, or other malicious medical procedures.",
-	"Murder" = "Maliciously killed someone.",
-	"Mutiny" = "Attempted to overthrow/subvert Chain of Command.",
-	"Other" = "Consult Legal.",
-	"Tampering of Artificial Intelligence" = "Uploaded malicious, negligent, or otherwise blacklisted directives to an Artificial Intelligence.",
-	"Tax Evasion" = "Outstanding amount of tax evasion.",
-	"Worship of Blacklisted Deities" = "Practiced worship of blacklisted deities.",
-))
-
 	//Backpacks
-#define DBACKPACK "Department Backpack"
-#define DDUFFELBAG "Department Duffel Bag"
-#define DSATCHEL "Department Satchel"
 #define GBACKPACK "Grey Backpack"
-#define GDUFFELBAG "Grey Duffel Bag"
 #define GSATCHEL "Grey Satchel"
+#define GDUFFELBAG "Grey Duffel Bag"
 #define LSATCHEL "Leather Satchel"
-GLOBAL_LIST_INIT(backpacklist, list(
-	DBACKPACK,
-	DDUFFELBAG,
-	DSATCHEL,
-	GBACKPACK,
-	GDUFFELBAG,
-	GSATCHEL,
-	LSATCHEL,
-))
+#define DBACKPACK "Department Backpack"
+#define DSATCHEL "Department Satchel"
+#define DDUFFELBAG "Department Duffel Bag"
+GLOBAL_LIST_INIT(backpacklist, list(DBACKPACK, DSATCHEL, DDUFFELBAG, GBACKPACK, GSATCHEL, GDUFFELBAG, LSATCHEL))
 
 	//Suit/Skirt
 #define PREF_SUIT "Jumpsuit"
@@ -247,25 +210,7 @@ GLOBAL_LIST_INIT(backpacklist, list(
 	//Female Uniforms
 GLOBAL_LIST_EMPTY(female_clothing_icons)
 
-GLOBAL_LIST_INIT(scarySounds, list(
-	'sound/effects/clownstep1.ogg',
-	'sound/effects/clownstep2.ogg',
-	'sound/effects/glassbr1.ogg',
-	'sound/effects/glassbr2.ogg',
-	'sound/effects/glassbr3.ogg',
-	'sound/items/welder.ogg',
-	'sound/items/welder2.ogg',
-	'sound/machines/airlock.ogg',
-	'sound/voice/hiss1.ogg',
-	'sound/voice/hiss2.ogg',
-	'sound/voice/hiss3.ogg',
-	'sound/voice/hiss4.ogg',
-	'sound/voice/hiss5.ogg',
-	'sound/voice/hiss6.ogg',
-	'sound/weapons/armbomb.ogg',
-	'sound/weapons/taser.ogg',
-	'sound/weapons/thudswoosh.ogg',
-))
+GLOBAL_LIST_INIT(scarySounds, list('sound/weapons/thudswoosh.ogg','sound/weapons/taser.ogg','sound/weapons/armbomb.ogg','sound/voice/hiss1.ogg','sound/voice/hiss2.ogg','sound/voice/hiss3.ogg','sound/voice/hiss4.ogg','sound/voice/hiss5.ogg','sound/voice/hiss6.ogg','sound/effects/glassbr1.ogg','sound/effects/glassbr2.ogg','sound/effects/glassbr3.ogg','sound/items/welder.ogg','sound/items/welder2.ogg','sound/machines/airlock.ogg','sound/effects/clownstep1.ogg','sound/effects/clownstep2.ogg'))
 
 
 // Reference list for disposal sort junctions. Set the sortType variable on disposal sort junctions to
@@ -344,34 +289,6 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/wisdoms.txt"))
 
 GLOBAL_LIST_INIT(station_numerals, greek_letters + phonetic_alphabet + numbers_as_words + generate_number_strings())
 
-GLOBAL_LIST_INIT(admiral_messages, list(
-	"<i>Error: No comment given.</i>",
-	"<i>null</i>",
-	"Do you know how expensive these stations are?",
-	"I was sleeping, thanks a lot.",
-	"It's a good day to die!",
-	"No.",
-	"Stand and fight you cowards!",
-	"Stop being paranoid.",
-	"Stop wasting my time.",
-	"Whatever's broken just build a new one.",
-	"You knew the risks coming in.",
-))
+GLOBAL_LIST_INIT(admiral_messages, list("Do you know how expensive these stations are?","Stop wasting my time.","I was sleeping, thanks a lot.","Stand and fight you cowards!","You knew the risks coming in.","Stop being paranoid.","Whatever's broken just build a new one.","No.", "<i>null</i>","<i>Error: No comment given.</i>", "It's a good day to die!"))
 
 GLOBAL_LIST_INIT(junkmail_messages, world.file2list("strings/junkmail.txt"))
-
-// All valid inputs to status display post_status
-GLOBAL_LIST_INIT(status_display_approved_pictures, list(
-	"blank",
-	"shuttle",
-	"default",
-	"biohazard",
-	"lockdown",
-	"redalert",
-))
-
-// Members of status_display_approved_pictures that are actually states and not alert values
-GLOBAL_LIST_INIT(status_display_state_pictures, list(
-	"blank",
-	"shuttle",
-))

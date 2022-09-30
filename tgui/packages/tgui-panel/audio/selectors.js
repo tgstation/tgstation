@@ -4,4 +4,4 @@
  * @license MIT
  */
 
-export const selectAudio = (state) => state.audio;
+export const selectAudio = state => state.audio;

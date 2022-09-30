@@ -1,144 +1,150 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/open/space/bluespace,
-/area/misc/hilbertshotel)
+/area/hilbertshotel)
 "b" = (
 /turf/closed/indestructible/hotelwall,
-/area/misc/hilbertshotel)
+/area/hilbertshotel)
 "c" = (
 /obj/machinery/jukebox{
 	req_access = null
 	},
 /turf/open/indestructible/hotelwood,
-/area/misc/hilbertshotel)
+/area/hilbertshotel)
 "d" = (
 /turf/open/indestructible/hotelwood,
-/area/misc/hilbertshotel)
+/area/hilbertshotel)
 "e" = (
 /obj/structure/table/wood,
 /turf/open/indestructible/hotelwood,
-/area/misc/hilbertshotel)
+/area/hilbertshotel)
 "f" = (
 /obj/structure/table/wood,
 /obj/structure/showcase/machinery/tv,
 /obj/machinery/light/small/directional/north,
 /turf/open/indestructible/hotelwood,
-/area/misc/hilbertshotel)
+/area/hilbertshotel)
 "g" = (
 /obj/structure/dresser,
 /turf/open/indestructible/hotelwood,
-/area/misc/hilbertshotel)
+/area/hilbertshotel)
 "h" = (
 /obj/structure/table/wood/fancy,
 /turf/open/indestructible/hotelwood,
-/area/misc/hilbertshotel)
+/area/hilbertshotel)
 "i" = (
 /obj/structure/table/wood/fancy,
 /obj/structure/mirror/directional/north,
 /turf/open/indestructible/hotelwood,
-/area/misc/hilbertshotel)
+/area/hilbertshotel)
 "j" = (
 /obj/structure/table/wood/fancy,
 /obj/item/flashlight/lamp/green,
 /turf/open/indestructible/hotelwood,
-/area/misc/hilbertshotel)
+/area/hilbertshotel)
 "k" = (
 /obj/structure/chair/comfy/brown{
 	dir = 4
 	},
 /obj/machinery/light/small/directional/west,
 /turf/open/indestructible/hotelwood,
-/area/misc/hilbertshotel)
+/area/hilbertshotel)
 "l" = (
 /obj/structure/table/wood/poker,
 /turf/open/indestructible/hotelwood,
-/area/misc/hilbertshotel)
+/area/hilbertshotel)
 "m" = (
 /obj/structure/chair/comfy/brown{
 	dir = 8
 	},
 /obj/machinery/light/small/directional/east,
 /turf/open/indestructible/hotelwood,
-/area/misc/hilbertshotel)
+/area/hilbertshotel)
 "n" = (
 /obj/effect/spawner/xmastree,
 /turf/open/indestructible/hotelwood,
-/area/misc/hilbertshotel)
+/area/hilbertshotel)
 "o" = (
 /obj/structure/chair/comfy/brown{
 	dir = 1
 	},
 /turf/open/indestructible/hotelwood,
-/area/misc/hilbertshotel)
+/area/hilbertshotel)
 "p" = (
 /obj/structure/mineral_door/wood,
 /turf/open/indestructible/hotelwood,
-/area/misc/hilbertshotel)
+/area/hilbertshotel)
 "q" = (
 /obj/structure/bed,
 /obj/item/bedsheet/random,
 /turf/open/indestructible/hotelwood,
-/area/misc/hilbertshotel)
+/area/hilbertshotel)
 "r" = (
 /obj/structure/closet/cabinet{
 	anchored = 1
 	},
 /turf/open/indestructible/hotelwood,
-/area/misc/hilbertshotel)
+/area/hilbertshotel)
 "s" = (
 /obj/structure/table/wood/fancy,
 /obj/item/food/grown/poppy,
 /turf/open/indestructible/hotelwood,
-/area/misc/hilbertshotel)
+/area/hilbertshotel)
 "t" = (
 /obj/machinery/light/small/directional/west,
 /turf/open/indestructible/hotelwood,
-/area/misc/hilbertshotel)
+/area/hilbertshotel)
 "u" = (
 /obj/structure/mineral_door/paperframe,
 /turf/open/indestructible/hotelwood,
-/area/misc/hilbertshotel)
+/area/hilbertshotel)
 "v" = (
 /obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/indestructible/hotelwood,
-/area/misc/hilbertshotel)
+/area/hilbertshotel)
 "w" = (
 /turf/open/indestructible/hoteltile,
-/area/misc/hilbertshotel)
+/area/hilbertshotel)
 "x" = (
 /obj/structure/curtain,
 /turf/open/indestructible/hoteltile,
-/area/misc/hilbertshotel)
+/area/hilbertshotel)
 "y" = (
-/obj/machinery/door/window/left/directional/north,
+/obj/machinery/door/window/northleft,
 /turf/open/indestructible/hotelwood,
-/area/misc/hilbertshotel)
+/area/hilbertshotel)
 "z" = (
 /obj/structure/table/reinforced,
 /turf/open/indestructible/hotelwood,
-/area/misc/hilbertshotel)
+/area/hilbertshotel)
 "A" = (
 /obj/structure/mirror/directional/west,
-/obj/structure/sink/directional/east,
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = -12;
+	pixel_y = 2
+	},
 /turf/open/indestructible/hoteltile,
-/area/misc/hilbertshotel)
+/area/hilbertshotel)
 "B" = (
-/obj/structure/chair/stool/bar/directional/south,
+/obj/structure/chair/stool/bar/directional/north,
 /turf/open/indestructible/hotelwood,
-/area/misc/hilbertshotel)
+/area/hilbertshotel)
 "C" = (
-/obj/machinery/shower/directional/west,
+/obj/machinery/shower{
+	dir = 8
+	},
 /turf/open/indestructible/hoteltile,
-/area/misc/hilbertshotel)
+/area/hilbertshotel)
 "D" = (
 /obj/machinery/light_switch/directional/east,
 /turf/open/indestructible/hotelwood,
-/area/misc/hilbertshotel)
+/area/hilbertshotel)
 "E" = (
 /obj/structure/table/reinforced,
 /obj/item/soap/deluxe,
 /turf/open/indestructible/hoteltile,
-/area/misc/hilbertshotel)
+/area/hilbertshotel)
 "F" = (
 /obj/structure/window/reinforced/tinted{
 	dir = 8
@@ -147,56 +153,56 @@
 	dir = 1
 	},
 /turf/open/indestructible/hoteltile,
-/area/misc/hilbertshotel)
+/area/hilbertshotel)
 "G" = (
 /obj/machinery/light_switch/directional/west,
 /turf/open/indestructible/hotelwood,
-/area/misc/hilbertshotel)
+/area/hilbertshotel)
 "H" = (
 /obj/structure/table/reinforced,
 /obj/machinery/microwave,
 /turf/open/indestructible/hotelwood,
-/area/misc/hilbertshotel)
+/area/hilbertshotel)
 "I" = (
 /turf/closed/indestructible/hoteldoor,
-/area/misc/hilbertshotel)
+/area/hilbertshotel)
 "J" = (
 /obj/machinery/light/small/directional/south,
 /turf/open/indestructible/hotelwood,
-/area/misc/hilbertshotel)
+/area/hilbertshotel)
 "K" = (
 /obj/structure/closet/crate/bin,
 /obj/machinery/light/small/directional/east,
 /turf/open/indestructible/hotelwood,
-/area/misc/hilbertshotel)
+/area/hilbertshotel)
 "L" = (
 /obj/machinery/light/small/directional/north,
 /turf/open/indestructible/hoteltile,
-/area/misc/hilbertshotel)
+/area/hilbertshotel)
 "M" = (
 /obj/structure/table/reinforced,
 /obj/machinery/light/small/directional/east,
 /turf/open/indestructible/hotelwood,
-/area/misc/hilbertshotel)
+/area/hilbertshotel)
 "N" = (
 /obj/structure/table/reinforced,
 /obj/item/soap/deluxe,
 /obj/machinery/light/small/directional/west,
 /turf/open/indestructible/hoteltile,
-/area/misc/hilbertshotel)
+/area/hilbertshotel)
 "O" = (
 /obj/item/bikehorn/rubberducky,
 /obj/machinery/light/small/directional/east,
 /turf/open/indestructible/hoteltile,
-/area/misc/hilbertshotel)
+/area/hilbertshotel)
 "P" = (
 /obj/machinery/light/small/directional/south,
 /turf/open/indestructible/hoteltile,
-/area/misc/hilbertshotel)
+/area/hilbertshotel)
 "Q" = (
 /obj/machinery/smartfridge/food,
 /turf/open/indestructible/hotelwood,
-/area/misc/hilbertshotel)
+/area/hilbertshotel)
 "R" = (
 /obj/structure/toilet{
 	dir = 8
@@ -208,36 +214,38 @@
 	dir = 8
 	},
 /turf/open/indestructible/hoteltile,
-/area/misc/hilbertshotel)
+/area/hilbertshotel)
 "S" = (
 /obj/structure/window/reinforced/tinted{
 	dir = 8
 	},
 /turf/open/indestructible/hoteltile,
-/area/misc/hilbertshotel)
+/area/hilbertshotel)
 "T" = (
 /obj/structure/window/reinforced/tinted{
 	dir = 8
 	},
 /obj/structure/window/reinforced/tinted,
 /turf/open/indestructible/hoteltile,
-/area/misc/hilbertshotel)
+/area/hilbertshotel)
 "U" = (
 /obj/structure/table/reinforced,
-/obj/structure/sink/kitchen/directional/north,
+/obj/structure/sink/kitchen{
+	dir = 1
+	},
 /obj/machinery/light/small/directional/south,
 /turf/open/indestructible/hotelwood,
-/area/misc/hilbertshotel)
+/area/hilbertshotel)
 "V" = (
 /obj/structure/table/reinforced,
 /obj/effect/spawner/random/food_or_drink/three_course_meal,
 /turf/open/indestructible/hotelwood,
-/area/misc/hilbertshotel)
+/area/hilbertshotel)
 "Z" = (
 /obj/structure/table/wood/fancy,
 /obj/machinery/light/small/directional/north,
 /turf/open/indestructible/hotelwood,
-/area/misc/hilbertshotel)
+/area/hilbertshotel)
 
 (1,1,1) = {"
 a

@@ -6,70 +6,70 @@
 /turf/closed/mineral/random,
 /area/ruin/unpowered)
 "c" = (
-/turf/open/misc/asteroid/airless,
+/turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered)
 "d" = (
 /turf/closed/mineral/random/high_chance,
 /area/ruin/unpowered)
 "e" = (
 /turf/closed/wall/mineral/titanium,
-/area/ruin/space/has_grav)
+/area/ruin/unpowered)
 "f" = (
 /obj/machinery/door/airlock/titanium,
 /turf/open/floor/plating/airless,
-/area/ruin/space/has_grav)
+/area/ruin/unpowered)
 "g" = (
 /turf/open/floor/plating/airless,
-/area/ruin/space/has_grav)
+/area/ruin/unpowered)
 "h" = (
 /turf/open/floor/mineral/titanium/blue/airless,
-/area/ruin/space/has_grav)
+/area/ruin/unpowered)
 "i" = (
 /obj/structure/chair,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue/airless,
-/area/ruin/space/has_grav)
+/area/ruin/unpowered)
 "j" = (
 /obj/structure/chair,
 /turf/open/floor/mineral/titanium/blue/airless,
-/area/ruin/space/has_grav)
+/area/ruin/unpowered)
 "k" = (
 /obj/effect/spawner/random/structure/crate_abandoned,
 /turf/open/floor/mineral/titanium/blue/airless,
-/area/ruin/space/has_grav)
+/area/ruin/unpowered)
 "l" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
-/area/ruin/space/has_grav)
+/area/ruin/unpowered)
 "m" = (
 /obj/item/shard,
 /turf/open/floor/plating/airless,
-/area/ruin/space/has_grav)
+/area/ruin/unpowered)
 "n" = (
 /obj/structure/chair{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
-/area/ruin/space/has_grav)
+/area/ruin/unpowered)
 "o" = (
 /obj/structure/grille,
 /turf/open/floor/plating/airless,
-/area/ruin/space/has_grav)
+/area/ruin/unpowered)
 "p" = (
 /obj/structure/table,
 /turf/open/floor/mineral/titanium/blue/airless,
-/area/ruin/space/has_grav)
+/area/ruin/unpowered)
 "q" = (
 /obj/item/shard,
 /obj/structure/chair{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue/airless,
-/area/ruin/space/has_grav)
+/area/ruin/unpowered)
 "r" = (
 /obj/structure/chair{
 	dir = 1
@@ -78,26 +78,17 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue/airless,
-/area/ruin/space/has_grav)
+/area/ruin/unpowered)
 "s" = (
 /obj/structure/chair{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
-/area/ruin/space/has_grav)
+/area/ruin/unpowered)
 "t" = (
 /obj/structure/girder,
 /turf/open/floor/plating/airless,
-/area/ruin/space/has_grav)
-"O" = (
-/obj/machinery/power/apc/auto_name/directional/north{
-	start_charge = 0
-	},
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav)
-"Q" = (
-/turf/closed/mineral/random,
-/area/ruin/space/has_grav)
+/area/ruin/unpowered)
 
 (1,1,1) = {"
 a
@@ -635,7 +626,7 @@ b
 g
 g
 o
-Q
+b
 b
 c
 b
@@ -743,7 +734,7 @@ b
 b
 c
 e
-O
+g
 h
 h
 h

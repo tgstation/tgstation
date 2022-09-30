@@ -1,14 +1,14 @@
 /obj/item/reagent_containers/dropper
 	name = "dropper"
 	desc = "A dropper. Holds up to 5 units."
-	icon = 'icons/obj/medical/chemical.dmi'
+	icon = 'icons/obj/chemical.dmi'
 	icon_state = "dropper0"
 	worn_icon_state = "pen"
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list(1, 2, 3, 4, 5)
 	volume = 5
 	reagent_flags = TRANSPARENT
-	custom_price = PAYCHECK_CREW
+	custom_price = PAYCHECK_MEDIUM
 
 /obj/item/reagent_containers/dropper/afterattack(obj/target, mob/user , proximity)
 	. = ..()

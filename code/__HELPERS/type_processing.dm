@@ -6,12 +6,11 @@
 		var/typename = "[type]"
 		var/static/list/TYPES_SHORTCUTS = list(
 			/obj/effect/decal/cleanable = "CLEANABLE",
-			/obj/item/bodypart = "BODYPART",
 			/obj/item/radio/headset = "HEADSET",
 			/obj/item/clothing/head/helmet/space = "SPESSHELMET",
 			/obj/item/book/manual = "MANUAL",
-			/obj/item/reagent_containers/cup/glass = "DRINK", //longest paths comes first
-			/obj/item/food = "FOOD",
+			/obj/item/reagent_containers/food/drinks = "DRINK", //longest paths comes first
+			/obj/item/reagent_containers/food = "FOOD",
 			/obj/item/reagent_containers = "REAGENT_CONTAINERS",
 			/obj/machinery/atmospherics = "ATMOS_MECH",
 			/obj/machinery/portable_atmospherics = "PORT_ATMOS",
@@ -64,6 +63,3 @@
 		if(findtext("[key]", filter, -end_len) || findtext("[value]", filter, -end_len))
 			matches[key] = value
 	return matches
-
-/proc/return_typenames(type)
-	return splittext("[type]", "/")

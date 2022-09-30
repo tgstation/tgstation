@@ -20,7 +20,7 @@
 		return
 	icon_state = "latexballon_blow"
 	inhand_icon_state = "latexballon"
-	user.update_held_items()
+	user.update_inv_hands()
 	to_chat(user, span_notice("You blow up [src] with [tank]."))
 	air_contents = tank.remove_air_volume(3)
 
@@ -38,7 +38,7 @@
 	inhand_icon_state = "lgloves"
 	if(isliving(loc))
 		var/mob/living/user = src.loc
-		user.update_held_items()
+		user.update_inv_hands()
 	loc.assume_air(air_contents)
 
 /obj/item/latexballon/ex_act(severity, target)

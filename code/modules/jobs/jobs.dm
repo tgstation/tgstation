@@ -21,7 +21,6 @@ GLOBAL_LIST_INIT(exp_specialmap, list(
 		ROLE_SPACE_BAR_PATRON,
 		ROLE_LAVALAND_SYNDICATE,
 		ROLE_MAINTENANCE_DRONE,
-		ROLE_VENUSHUMANTRAP,
 		ROLE_GHOST_ROLE,
 		), // Ghost roles
 	EXP_TYPE_GHOST = list() // dead people, observers

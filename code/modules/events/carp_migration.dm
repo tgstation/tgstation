@@ -5,8 +5,6 @@
 	min_players = 2
 	earliest_start = 10 MINUTES
 	max_occurrences = 6
-	category = EVENT_CATEGORY_ENTITIES
-	description = "Summons a school of space carp."
 
 /datum/round_event_control/carp_migration/New()
 	. = ..()
@@ -18,12 +16,12 @@
 
 
 /datum/round_event/carp_migration
-	announce_when = 3
-	start_when = 50
+	announceWhen = 3
+	startWhen = 50
 	var/hasAnnounced = FALSE
 
 /datum/round_event/carp_migration/setup()
-	start_when = rand(40, 60)
+	startWhen = rand(40, 60)
 
 /datum/round_event/carp_migration/announce(fake)
 	priority_announce("Unknown biological entities have been detected near [station_name()], please stand-by.", "Lifesign Alert")

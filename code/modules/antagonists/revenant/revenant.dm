@@ -3,10 +3,13 @@
 //Can hear deadchat, but are NOT normal ghosts and do NOT have x-ray vision
 //Admin-spawn or random event
 
+#define INVISIBILITY_REVENANT 50
+#define REVENANT_NAME_FILE "revenant_names.json"
+
 /mob/living/simple_animal/revenant
 	name = "revenant"
 	desc = "A malevolent spirit."
-	icon = 'icons/mob/simple/mob.dmi'
+	icon = 'icons/mob/mob.dmi'
 	icon_state = "revenant_idle"
 	var/icon_idle = "revenant_idle"
 	var/icon_reveal = "revenant_revealed"
@@ -20,10 +23,10 @@
 	maxHealth = INFINITY
 	plane = GHOST_PLANE
 	healable = FALSE
-	sight = SEE_SELF | SEE_BLACKNESS
+	sight = SEE_SELF
 	throwforce = 0
 
-	see_in_dark = NIGHTVISION_RANGE
+	see_in_dark = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	response_help_continuous = "passes through"
 	response_help_simple = "pass through"
@@ -69,33 +72,15 @@
 /mob/living/simple_animal/revenant/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
+	flags_1 |= RAD_NO_CONTAMINATE_1
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_SIXTHSENSE, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_ALERT_GHOSTS_ON_DEATH, INNATE_TRAIT)
-
-	// Starting spells
-	var/datum/action/cooldown/spell/night_vision/revenant/vision = new(src)
-	vision.Grant(src)
-
-	var/datum/action/cooldown/spell/list_target/telepathy/revenant/telepathy = new(src)
-	telepathy.Grant(src)
-
-	// Starting spells that start locked
-	var/datum/action/cooldown/spell/aoe/revenant/overload/lights_go_zap = new(src)
-	lights_go_zap.Grant(src)
-
-	var/datum/action/cooldown/spell/aoe/revenant/defile/windows_go_smash = new(src)
-	windows_go_smash.Grant(src)
-
-	var/datum/action/cooldown/spell/aoe/revenant/blight/botany_go_mad = new(src)
-	botany_go_mad.Grant(src)
-
-	var/datum/action/cooldown/spell/aoe/revenant/malfunction/shuttle_go_emag = new(src)
-	shuttle_go_emag.Grant(src)
-
-	var/datum/action/cooldown/spell/aoe/revenant/haunt_object/toolbox_go_bonk = new(src)
-	toolbox_go_bonk.Grant(src)
-
+	AddSpell(new /obj/effect/proc_holder/spell/targeted/night_vision/revenant(null))
+	AddSpell(new /obj/effect/proc_holder/spell/targeted/telepathy/revenant(null))
+	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/defile(null))
+	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/overload(null))
+	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/blight(null))
+	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/malfunction(null))
 	RegisterSignal(src, COMSIG_LIVING_BANED, .proc/on_baned)
 	random_revenant_name()
 
@@ -153,10 +138,10 @@
 
 /mob/living/simple_animal/revenant/get_status_tab_items()
 	. = ..()
-	. += "Current Essence: [essence >= essence_regen_cap ? essence : "[essence] / [essence_regen_cap]"]E"
-	. += "Total Essence Stolen: [essence_accumulated]SE"
-	. += "Unused Stolen Essence: [essence_excess]SE"
-	. += "Perfect Souls Stolen: [perfectsouls]"
+	. += "Current essence: [essence]/[essence_regen_cap]E"
+	. += "Stolen essence: [essence_accumulated]E"
+	. += "Unused stolen essence: [essence_excess]E"
+	. += "Stolen perfect souls: [perfectsouls]"
 
 /mob/living/simple_animal/revenant/update_health_hud()
 	if(hud_used)
@@ -173,7 +158,7 @@
 /mob/living/simple_animal/revenant/med_hud_set_status()
 	return //we use no hud
 
-/mob/living/simple_animal/revenant/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null)
+/mob/living/simple_animal/revenant/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	if(!message)
 		return
 	if(sanitize)
@@ -367,7 +352,7 @@
 	setDir(SOUTH) // reset dir so the right directional sprites show up
 	return ..()
 
-/mob/living/simple_animal/revenant/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
+/mob/living/simple_animal/revenant/Moved(atom/OldLoc)
 	if(!orbiting) // only needed when orbiting
 		return ..()
 	if(incorporeal_move_check(src))
@@ -375,7 +360,7 @@
 
 	// back back back it up, the orbitee went somewhere revenant cannot
 	orbiting?.end_orbit(src)
-	abstract_move(old_loc) // gross but maybe orbit component will be able to check pre move in the future
+	abstract_move(OldLoc) // gross but maybe orbit component will be able to check pre move in the future
 
 /mob/living/simple_animal/revenant/stop_orbit(datum/component/orbiter/orbits)
 	// reset the simple_flying animation
@@ -482,7 +467,7 @@
 			return
 
 	message_admins("[key_of_revenant] has been [old_key == key_of_revenant ? "re":""]made into a revenant by reforming ectoplasm.")
-	revenant.log_message("was [old_key == key_of_revenant ? "re":""]made as a revenant by reforming ectoplasm.", LOG_GAME)
+	log_game("[key_of_revenant] was [old_key == key_of_revenant ? "re":""]made as a revenant by reforming ectoplasm.")
 	visible_message(span_revenboldnotice("[src] suddenly rises into the air before fading away."))
 
 	revenant.essence = essence

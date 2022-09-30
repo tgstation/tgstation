@@ -3,7 +3,7 @@
 Usage:
 Override /Run() to run your test code
 
-Call TEST_FAIL() to fail the test (You should specify a reason)
+Call Fail() to fail the test (You should specify a reason)
 
 You may use /New() and /Destroy() for setup/teardown respectively
 
@@ -14,8 +14,6 @@ You can use the run_loc_floor_bottom_left and run_loc_floor_top_right to get tur
 GLOBAL_DATUM(current_test, /datum/unit_test)
 GLOBAL_VAR_INIT(failed_any_test, FALSE)
 GLOBAL_VAR(test_log)
-/// When unit testing, all logs sent to log_mapping are stored here and retrieved in log_mapping unit test.
-GLOBAL_LIST_EMPTY(unit_test_mapping_logs)
 
 /datum/unit_test
 	//Bit of metadata for the future maybe
@@ -62,15 +60,15 @@ GLOBAL_LIST_EMPTY(unit_test_mapping_logs)
 	return ..()
 
 /datum/unit_test/proc/Run()
-	TEST_FAIL("Run() called parent or not implemented")
+	Fail("Run() called parent or not implemented")
 
-/datum/unit_test/proc/Fail(reason = "No reason", file = "OUTDATED_TEST", line = 1)
+/datum/unit_test/proc/Fail(reason = "No reason")
 	succeeded = FALSE
 
 	if(!istext(reason))
 		reason = "FORMATTED: [reason != null ? reason : "NULL"]"
 
-	LAZYADD(fail_reasons, list(list(reason, file, line)))
+	LAZYADD(fail_reasons, reason)
 
 /// Allocates an instance of the provided type, and places it somewhere in an available loc
 /// Instances allocated through this proc will be destroyed when the test is over
@@ -84,30 +82,6 @@ GLOBAL_LIST_EMPTY(unit_test_mapping_logs)
 	allocated += instance
 	return instance
 
-/datum/unit_test/proc/test_screenshot(name, icon/icon)
-	if (!istype(icon))
-		TEST_FAIL("[icon] is not an icon.")
-		return
-
-	var/path_prefix = replacetext(replacetext("[type]", "/datum/unit_test/", ""), "/", "_")
-	name = replacetext(name, "/", "_")
-
-	var/filename = "code/modules/unit_tests/screenshots/[path_prefix]_[name].png"
-
-	if (fexists(filename))
-		var/data_filename = "data/screenshots/[path_prefix]_[name].png"
-		fcopy(icon, data_filename)
-		log_test("[path_prefix]_[name] was found, putting in data/screenshots")
-	else if (fexists("code"))
-		// We are probably running in a local build
-		fcopy(icon, filename)
-		TEST_FAIL("Screenshot for [name] did not exist. One has been created.")
-	else
-		// We are probably running in real CI, so just pretend it worked and move on
-		fcopy(icon, "data/screenshots_new/[path_prefix]_[name].png")
-
-		log_test("[path_prefix]_[name] was put in data/screenshots_new")
-
 /proc/RunUnitTest(test_path, list/test_results)
 	var/datum/unit_test/test = new test_path
 
@@ -120,29 +94,11 @@ GLOBAL_LIST_EMPTY(unit_test_mapping_logs)
 	GLOB.current_test = null
 	GLOB.failed_any_test |= !test.succeeded
 
-	var/list/log_entry = list(
-		"[test.succeeded ? TEST_OUTPUT_GREEN("PASS") : TEST_OUTPUT_RED("FAIL")]: [test_path] [duration / 10]s",
-	)
+	var/list/log_entry = list("[test.succeeded ? "PASS" : "FAIL"]: [test_path] [duration / 10]s")
 	var/list/fail_reasons = test.fail_reasons
-	var/map_name = SSmapping.config.map_name
 
-	for(var/reasonID in 1 to LAZYLEN(fail_reasons))
-		var/text = fail_reasons[reasonID][1]
-		var/file = fail_reasons[reasonID][2]
-		var/line = fail_reasons[reasonID][3]
-
-		// Github action annotation.
-		// See https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions
-
-		// Need to escape the text to properly support newlines.
-		var/annotation_text = replacetext(text, "%", "%25")
-		annotation_text = replacetext(annotation_text, "\n", "%0A")
-
-		log_world("::error file=[file],line=[line],title=[map_name]: [test_path]::[annotation_text]")
-
-		// Normal log message
-		log_entry += "\tREASON #[reasonID]: [text] at [file]:[line]"
-
+	for(var/J in 1 to LAZYLEN(fail_reasons))
+		log_entry += "\tREASON #[J]: [fail_reasons[J]]"
 	var/message = log_entry.Join("\n")
 	log_test(message)
 
@@ -154,13 +110,11 @@ GLOBAL_LIST_EMPTY(unit_test_mapping_logs)
 	CHECK_TICK
 
 	var/list/tests_to_run = subtypesof(/datum/unit_test)
-	var/list/focused_tests = list()
 	for (var/_test_to_run in tests_to_run)
 		var/datum/unit_test/test_to_run = _test_to_run
 		if (initial(test_to_run.focus))
-			focused_tests += test_to_run
-	if(length(focused_tests))
-		tests_to_run = focused_tests
+			tests_to_run = list(test_to_run)
+			break
 
 	tests_to_run = sortTim(tests_to_run, /proc/cmp_unit_test_priority)
 

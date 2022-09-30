@@ -71,7 +71,7 @@
 /area/ruin/powered/shuttle/medium_4)
 "v" = (
 /obj/structure/shuttle/engine/propulsion/burst/right,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/powered/shuttle/medium_4)
 "w" = (
 /obj/structure/shuttle/engine/propulsion/burst,

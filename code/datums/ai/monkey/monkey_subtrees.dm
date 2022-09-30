@@ -30,16 +30,13 @@
 	var/list/enemies = controller.blackboard[BB_MONKEY_ENEMIES]
 
 	if((HAS_TRAIT(controller.pawn, TRAIT_PACIFISM)) || (!length(enemies) && !controller.blackboard[BB_MONKEY_AGGRESSIVE])) //Pacifist, or we have no enemies and we're not pissed
-		living_pawn.set_combat_mode(FALSE)
 		return
 
 	if(!controller.blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET])
 		controller.queue_behavior(/datum/ai_behavior/monkey_set_combat_target, BB_MONKEY_CURRENT_ATTACK_TARGET, BB_MONKEY_ENEMIES)
-		living_pawn.set_combat_mode(FALSE)
 		return SUBTREE_RETURN_FINISH_PLANNING
 
-	var/datum/weakref/target_ref = controller.blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET]
-	var/mob/living/selected_enemy = target_ref?.resolve()
+	var/mob/living/selected_enemy = controller.blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET]
 
 	if(!selected_enemy.stat) //He's up, get him!
 		if(living_pawn.health < MONKEY_FLEE_HEALTH) //Time to skeddadle
@@ -56,8 +53,6 @@
 		return SUBTREE_RETURN_FINISH_PLANNING
 
 	//by this point we have a target but they're down, let's try dumpstering this loser
-
-	living_pawn.set_combat_mode(FALSE)
 
 	if(!controller.blackboard[BB_MONKEY_TARGET_DISPOSAL])
 		controller.queue_behavior(/datum/ai_behavior/find_and_set, BB_MONKEY_TARGET_DISPOSAL, /obj/machinery/disposal, MONKEY_ENEMY_VISION)

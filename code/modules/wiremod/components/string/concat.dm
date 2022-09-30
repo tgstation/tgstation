@@ -6,7 +6,9 @@
 /obj/item/circuit_component/concat
 	display_name = "Concatenate"
 	desc = "A component that combines strings."
-	category = "String"
+
+	/// The amount of input ports to have
+	var/input_port_amount = 4
 
 	var/list/datum/port/input/concat_ports = list()
 
@@ -14,22 +16,12 @@
 	var/datum/port/output/output
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
-	ui_buttons = list(
-		"plus" = "add",
-		"minus" = "remove"
-	)
-
 /obj/item/circuit_component/concat/populate_ports()
-	AddComponent(/datum/component/circuit_component_add_port, \
-		port_list = concat_ports, \
-		add_action = "add", \
-		remove_action = "remove", \
-		port_type = PORT_TYPE_STRING, \
-		prefix = "Port", \
-		minimum_amount = 2 \
-	)
+	for(var/port_id in 1 to input_port_amount)
+		var/letter = ascii2text(text2ascii("A") + (port_id-1))
+		concat_ports += add_input_port(letter, PORT_TYPE_STRING)
 
-	output = add_output_port("Output", PORT_TYPE_STRING, order = 1.1)
+	output = add_output_port("Output", PORT_TYPE_STRING)
 
 /obj/item/circuit_component/concat/input_received(datum/port/input/port)
 

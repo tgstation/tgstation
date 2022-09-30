@@ -50,16 +50,12 @@
 		Retaliate()
 
 /mob/living/simple_animal/hostile/retaliate/goose/handle_automated_action()
-	. = ..()
-	feed_random()
-
-/mob/living/simple_animal/hostile/retaliate/goose/proc/feed_random()
 	var/obj/item/eat_it_motherfucker = pick(locate(/obj/item) in loc)
 	if(!eat_it_motherfucker)
 		return
 	feed(eat_it_motherfucker)
 
-/mob/living/simple_animal/hostile/retaliate/goose/vomit/feed_random()
+/mob/living/simple_animal/hostile/retaliate/goose/vomit/handle_automated_action()
 	for(var/obj/item/eat_it_motherfucker in loc)
 		if(!eat_it_motherfucker.has_material_type(/datum/material/plastic))
 			continue
@@ -118,7 +114,7 @@
 	if(feed(O))
 		return TRUE
 
-/mob/living/simple_animal/hostile/retaliate/goose/vomit/feed(obj/item/food/tasty)
+/mob/living/simple_animal/hostile/retaliate/goose/vomit/feed(obj/item/reagent_containers/food/tasty)
 	. = ..()
 	if(. || !istype(tasty))
 		return FALSE
@@ -127,7 +123,7 @@
 			visible_message(span_notice("[src] looks too full to eat \the [tasty]!"))
 			message_cooldown = world.time + 5 SECONDS
 		return FALSE
-	if (tasty.foodtypes & GROSS)
+	if (tasty.foodtype & GROSS)
 		visible_message(span_notice("[src] hungrily gobbles up \the [tasty]!"))
 		tasty.forceMove(src)
 		playsound(src,'sound/items/eatfood.ogg', 70, TRUE)
@@ -140,12 +136,12 @@
 			message_cooldown = world.time + 5 SECONDS
 			return FALSE
 
-/mob/living/simple_animal/hostile/retaliate/goose/proc/choke(obj/item/food/plastic)
+/mob/living/simple_animal/hostile/retaliate/goose/proc/choke(obj/item/reagent_containers/food/plastic)
 	if(stat == DEAD || choking)
 		return
 	addtimer(CALLBACK(src, .proc/suffocate), 300)
 
-/mob/living/simple_animal/hostile/retaliate/goose/vomit/choke(obj/item/food/plastic)
+/mob/living/simple_animal/hostile/retaliate/goose/vomit/choke(obj/item/reagent_containers/food/plastic)
 	if(stat == DEAD || choking)
 		return
 	if(prob(25))
@@ -165,7 +161,7 @@
 /mob/living/simple_animal/hostile/retaliate/goose/proc/suffocate()
 	if(!choking)
 		return
-	death_message = "lets out one final oxygen-deprived honk before [p_they()] go[p_es()] limp and lifeless.."
+	deathmessage = "lets out one final oxygen-deprived honk before [p_they()] go[p_es()] limp and lifeless.."
 	death()
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/vomit()
@@ -183,10 +179,10 @@
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/barf_food(atom/A, hard = FALSE)
 	if (stat == DEAD)
 		return
-	if(!istype(A, /obj/item/food))
+	if(!istype(A, /obj/item/reagent_containers/food))
 		return
 	var/turf/currentTurf = get_turf(src)
-	var/obj/item/food/consumed = A
+	var/obj/item/reagent_containers/food/consumed = A
 	consumed.forceMove(currentTurf)
 	var/destination = get_edge_target_turf(currentTurf, pick(GLOB.alldirs)) //Pick a random direction to toss them in
 	var/throwRange = hard ? rand(2,8) : 1
@@ -247,19 +243,17 @@
 	name = "Vomit"
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "vomit"
-	icon_icon = 'icons/mob/simple/animal.dmi'
+	icon_icon = 'icons/mob/animal.dmi'
 	cooldown_time = 250
 
-/datum/action/cooldown/vomit/Activate(atom/target)
+/datum/action/cooldown/vomit/Trigger()
+	if(!..())
+		return FALSE
 	if(!istype(owner, /mob/living/simple_animal/hostile/retaliate/goose/vomit))
 		return FALSE
-
-	StartCooldown(10 SECONDS)
-	var/mob/living/simple_animal/hostile/retaliate/goose/vomit/probably_birdboat = owner
-	if(!probably_birdboat.vomiting)
-		probably_birdboat.vomit_prestart(probably_birdboat.vomitTimeBonus + 25)
-		probably_birdboat.vomitCoefficient = 1
-		probably_birdboat.vomitTimeBonus = 0
-
-	StartCooldown()
+	var/mob/living/simple_animal/hostile/retaliate/goose/vomit/vomit = owner
+	if(!vomit.vomiting)
+		vomit.vomit_prestart(vomit.vomitTimeBonus + 25)
+		vomit.vomitCoefficient = 1
+		vomit.vomitTimeBonus = 0
 	return TRUE

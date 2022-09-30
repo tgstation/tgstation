@@ -1,7 +1,7 @@
 /mob/living/simple_animal/hostile/zombie
 	name = "Shambling Corpse"
 	desc = "When there is no more room in hell, the dead will walk in outer space."
-	icon = 'icons/mob/simple/simple_human.dmi'
+	icon = 'icons/mob/simple_human.dmi'
 	icon_state = "zombie"
 	icon_living = "zombie"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
@@ -22,8 +22,9 @@
 	minbodytemp = 0
 	status_flags = CANPUSH
 	del_on_death = 1
-	var/zombiejob = JOB_MEDICAL_DOCTOR
+	var/zombiejob = "Medical Doctor"
 	var/infection_chance = 0
+	var/obj/effect/mob_spawn/human/corpse/delayed/corpse
 
 /mob/living/simple_animal/hostile/zombie/Initialize(mapload)
 	. = ..()
@@ -39,10 +40,21 @@
 	var/mob/living/carbon/human/dummy/dummy = new
 	dummy.equipOutfit(outfit)
 	dummy.set_species(/datum/species/zombie)
+	COMPILE_OVERLAYS(dummy)
 	icon = getFlatIcon(dummy)
 	qdel(dummy)
+
+	corpse = new(src)
+	corpse.outfit = outfit
+	corpse.mob_species = /datum/species/zombie
+	corpse.mob_name = name
 
 /mob/living/simple_animal/hostile/zombie/AttackingTarget()
 	. = ..()
 	if(. && ishuman(target) && prob(infection_chance))
 		try_to_zombie_infect(target)
+
+/mob/living/simple_animal/hostile/zombie/drop_loot()
+	. = ..()
+	corpse.forceMove(drop_location())
+	corpse.create()

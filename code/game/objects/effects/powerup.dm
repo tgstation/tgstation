@@ -55,7 +55,7 @@
 /obj/effect/powerup/health
 	name = "health pickup"
 	desc = "Blessing from the havens."
-	icon = 'icons/obj/storage/storage.dmi'
+	icon = 'icons/obj/storage.dmi'
 	icon_state = "medicalpack"
 	respawn_time = 30 SECONDS
 	pickup_message = "Health restored!"
@@ -85,7 +85,7 @@
 /obj/effect/powerup/ammo
 	name = "ammo pickup"
 	desc = "You like revenge, right? Everybody likes revenge! Well, let's go get some!"
-	icon = 'icons/obj/storage/storage.dmi'
+	icon = 'icons/obj/storage.dmi'
 	icon_state = "ammobox"
 	respawn_time = 30 SECONDS
 	pickup_message = "Ammunition reloaded!"
@@ -116,7 +116,7 @@
 	. = ..()
 	if(!.)
 		return
-	target.apply_status_effect(/datum/status_effect/lightningorb)
+	target.apply_status_effect(STATUS_EFFECT_LIGHTNINGORB)
 
 /obj/effect/powerup/mayhem
 	name = "Orb of Mayhem"
@@ -127,4 +127,4 @@
 	. = ..()
 	if(!.)
 		return
-	target.apply_status_effect(/datum/status_effect/mayhem)
+	target.apply_status_effect(STATUS_EFFECT_MAYHEM)

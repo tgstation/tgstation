@@ -6,7 +6,7 @@
 	name = "Inactive AI Eye"
 
 	icon_state = "ai_camera"
-	icon = 'icons/mob/silicon/cameramob.dmi'
+	icon = 'icons/mob/cameramob.dmi'
 	invisibility = INVISIBILITY_MAXIMUM
 	hud_possible = list(ANTAG_HUD, AI_DETECT_HUD = HUD_LIST_LIST)
 	var/list/visibleCameraChunks = list()
@@ -16,19 +16,13 @@
 	var/static_visibility_range = 16
 	var/ai_detector_visible = TRUE
 	var/ai_detector_color = COLOR_RED
-	interaction_range = INFINITY
+	interaction_range = null
 
 /mob/camera/ai_eye/Initialize(mapload)
 	. = ..()
 	GLOB.aiEyes += src
 	update_ai_detect_hud()
 	setLoc(loc, TRUE)
-
-/mob/camera/ai_eye/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
-	. = ..()
-	if(same_z_layer)
-		return
-	update_ai_detect_hud()
 
 /mob/camera/ai_eye/examine(mob/user) //Displays a silicon's laws to ghosts
 	. = ..()
@@ -41,26 +35,21 @@
 	var/datum/atom_hud/ai_detector/hud = GLOB.huds[DATA_HUD_AI_DETECT]
 	var/list/old_images = hud_list[AI_DETECT_HUD]
 	if(!ai_detector_visible)
-		hud.remove_atom_from_hud(src)
+		hud.remove_from_hud(src)
 		QDEL_LIST(old_images)
 		return
 
-	if(!length(hud.hud_users))
+	if(!length(hud.hudusers))
 		return //no one is watching, do not bother updating anything
 
-	hud.remove_atom_from_hud(src)
+	hud.remove_from_hud(src)
 
 	var/static/list/vis_contents_opaque = list()
-	var/turf/our_turf = get_turf(src)
-	var/our_z_offset = GET_TURF_PLANE_OFFSET(our_turf)
-	var/key = "[our_z_offset]-[ai_detector_color]"
-
-	var/obj/effect/overlay/ai_detect_hud/hud_obj = vis_contents_opaque[key]
+	var/obj/effect/overlay/ai_detect_hud/hud_obj = vis_contents_opaque[ai_detector_color]
 	if(!hud_obj)
 		hud_obj = new /obj/effect/overlay/ai_detect_hud()
-		SET_PLANE_W_SCALAR(hud_obj, PLANE_TO_TRUE(hud_obj.plane), our_z_offset)
 		hud_obj.color = ai_detector_color
-		vis_contents_opaque[key] = hud_obj
+		vis_contents_opaque[ai_detector_color] = hud_obj
 
 	var/list/new_images = list()
 	var/list/turfs = get_visible_turfs()
@@ -72,7 +61,7 @@
 	for(var/i in (new_images.len + 1) to old_images.len)
 		qdel(old_images[i])
 	hud_list[AI_DETECT_HUD] = new_images
-	hud.add_atom_to_hud(src)
+	hud.add_to_hud(src)
 
 /mob/camera/ai_eye/proc/get_visible_turfs()
 	if(!isturf(loc))
@@ -100,7 +89,7 @@
 		if(use_static)
 			ai.camera_visibility(src)
 		if(ai.client && !ai.multicam_on)
-			ai.client.set_eye(src)
+			ai.client.eye = src
 		update_ai_detect_hud()
 		update_parallax_contents()
 		//Holopad
@@ -112,10 +101,24 @@
 		if(ai.master_multicam)
 			ai.master_multicam.refresh_view()
 
-/mob/camera/ai_eye/zMove(dir, turf/target, z_move_flags = NONE, recursions_left = 1, list/falling_movs)
-	. = ..()
-	if(.)
-		setLoc(loc, force_update = TRUE)
+//it uses setLoc not forceMove, talks to the sillycone and not the camera mob
+/mob/camera/ai_eye/zMove(dir, feedback = FALSE)
+	if(dir != UP && dir != DOWN)
+		return FALSE
+	var/turf/target = get_step_multiz(src, dir)
+	if(!target)
+		if(feedback)
+			to_chat(ai, span_warning("There's nowhere to go in that direction!"))
+		return FALSE
+	if(!canZMove(dir, target))
+		if(feedback)
+			to_chat(ai, span_warning("You couldn't move there!"))
+		return FALSE
+	setLoc(target, TRUE)
+	return TRUE
+
+/mob/camera/ai_eye/canZMove(direction, turf/target) //cameras do not respect these FLOORS you speak so much of
+	return TRUE
 
 /mob/camera/ai_eye/Move()
 	return
@@ -135,7 +138,7 @@
 	GLOB.aiEyes -= src
 	if(ai_detector_visible)
 		var/datum/atom_hud/ai_detector/hud = GLOB.huds[DATA_HUD_AI_DETECT]
-		hud.remove_atom_from_hud(src)
+		hud.remove_from_hud(src)
 		var/list/L = hud_list[AI_DETECT_HUD]
 		QDEL_LIST(L)
 	return ..()
@@ -185,8 +188,6 @@
 
 	if(isturf(loc) && (QDELETED(eyeobj) || !eyeobj.loc))
 		to_chat(src, "ERROR: Eyeobj not found. Creating new eye...")
-		stack_trace("AI eye object wasn't found! Location: [loc] / Eyeobj: [eyeobj] / QDELETED: [QDELETED(eyeobj)] / Eye loc: [eyeobj?.loc]")
-		QDEL_NULL(eyeobj)
 		create_eye()
 
 	eyeobj?.setLoc(loc)
@@ -229,3 +230,4 @@
 	icon_state = ""
 	alpha = 100
 	layer = ABOVE_ALL_MOB_LAYER
+	plane = GAME_PLANE

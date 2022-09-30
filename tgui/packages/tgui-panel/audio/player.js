@@ -42,7 +42,7 @@ export class AudioPlayer {
       this.stop();
     });
     // Listen for playback errors
-    this.node.addEventListener('error', (e) => {
+    this.node.addEventListener('error', e => {
       if (this.playing) {
         logger.log('playback error', e.error);
         this.stop();
@@ -53,8 +53,8 @@ export class AudioPlayer {
       if (!this.playing) {
         return;
       }
-      const shouldStop =
-        this.options.end > 0 && this.node.currentTime >= this.options.end;
+      const shouldStop = this.options.end > 0
+        && this.node.currentTime >= this.options.end;
       if (shouldStop) {
         this.stop();
       }

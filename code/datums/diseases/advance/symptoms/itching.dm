@@ -1,12 +1,23 @@
-/*Itching
- * No effect to stealth
- * Greatly increases resistance
- * Greatly increases stage speed
- * Slightly increases transmissibility
- * Low level
- * Bonus: Displays an annoying message! Should be used for buffing your disease.
+/*
+//////////////////////////////////////
+
+Itching
+
+	Not noticable or unnoticable.
+	Resistant.
+	Increases stage speed.
+	Little transmissibility.
+	Low Level.
+
+BONUS
+	Displays an annoying message!
+	Should be used for buffing your disease.
+
+//////////////////////////////////////
 */
+
 /datum/symptom/itching
+
 	name = "Itching"
 	desc = "The virus irritates the skin, causing itching."
 	stealth = 0
@@ -38,9 +49,10 @@
 	if(!.)
 		return
 	var/mob/living/carbon/M = A.affected_mob
-	var/obj/item/bodypart/bodypart = M.get_bodypart(M.get_random_valid_zone(even_weights = TRUE))
-	if(bodypart && IS_ORGANIC_LIMB(bodypart) && !bodypart.is_pseudopart)  //robotic limbs will mean less scratching overall (why are golems able to damage themselves with self-scratching, but not androids? the world may never know)
+	var/picked_bodypart = pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
+	var/obj/item/bodypart/bodypart = M.get_bodypart(picked_bodypart)
+	if(bodypart && bodypart.status == BODYPART_ORGANIC && !bodypart.is_pseudopart)  //robotic limbs will mean less scratching overall (why are golems able to damage themselves with self-scratching, but not androids? the world may never know)
 		var/can_scratch = scratch && !M.incapacitated()
-		M.visible_message("[can_scratch ? span_warning("[M] scratches [M.p_their()] [bodypart.plaintext_zone].") : ""]", span_warning("Your [bodypart.plaintext_zone] itches. [can_scratch ? " You scratch it." : ""]"))
+		M.visible_message("[can_scratch ? span_warning("[M] scratches [M.p_their()] [bodypart.name].") : ""]", span_warning("Your [bodypart.name] itches. [can_scratch ? " You scratch it." : ""]"))
 		if(can_scratch)
 			bodypart.receive_damage(0.5)

@@ -1,11 +1,11 @@
 /datum/antagonist/valentine
-	name = "\improper Valentine"
+	name = "valentine"
 	roundend_category = "valentines" //there's going to be a ton of them so put them in separate category
 	show_in_antagpanel = FALSE
 	prevent_roundtype_conversion = FALSE
 	suicide_cry = "FOR MY LOVE!!"
 	var/datum/mind/date
-	count_against_dynamic_roll_chance = FALSE
+	soft_antag = TRUE
 
 /datum/antagonist/valentine/proc/forge_objectives()
 	var/datum/objective/protect/protect_objective = new /datum/objective/protect
@@ -20,13 +20,13 @@
 	forge_objectives()
 	if(isliving(owner.current))
 		var/mob/living/L = owner.current
-		L.apply_status_effect(/datum/status_effect/in_love, date.current)
+		L.apply_status_effect(STATUS_EFFECT_INLOVE, date.current)
 	. = ..()
 
 /datum/antagonist/valentine/on_removal()
 	if(isliving(owner.current))
 		var/mob/living/L = owner.current
-		L.remove_status_effect(/datum/status_effect/in_love)
+		L.remove_status_effect(STATUS_EFFECT_INLOVE)
 	. = ..()
 
 /datum/antagonist/valentine/greet()

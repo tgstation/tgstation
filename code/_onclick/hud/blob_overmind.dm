@@ -163,7 +163,7 @@
 	blobpwrdisplay.icon_state = "block"
 	blobpwrdisplay.screen_loc = ui_health
 	blobpwrdisplay.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	SET_PLANE_EXPLICIT(blobpwrdisplay, ABOVE_HUD_PLANE, owner)
+	blobpwrdisplay.plane = ABOVE_HUD_PLANE
 	blobpwrdisplay.hud = src
 	infodisplay += blobpwrdisplay
 

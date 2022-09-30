@@ -1,22 +1,8 @@
-// Remove these once we have Byond implementation.
-// ------------------------------------
-#define IS_NAN(a) (a!=a)
-
-#define IS_INF__UNSAFE(a) (a==a && a-a!=a-a)
-#define IS_INF(a) (isnum(a) && IS_INF__UNSAFE(a))
-
-#define IS_FINITE__UNSAFE(a) (a-a==a-a)
-#define IS_FINITE(a) (isnum(a) && IS_FINITE__UNSAFE(a))
-// ------------------------------------
-// Aight dont remove the rest
-
 // Credits to Nickr5 for the useful procs I've taken from his library resource.
 // This file is quadruple wrapped for your pleasure
 // (
 
 #define NUM_E 2.71828183
-
-#define SQRT_2 1.414214 //CLOSE ENOUGH!
 
 #define PI 3.1416
 #define INFINITY 1e31 //closer then enough
@@ -42,19 +28,14 @@
 
 #define CEILING(x, y) ( -round(-(x) / (y)) * (y) )
 
-#define ROUND_UP(x) ( -round(-(x)))
-
 // round() acts like floor(x, 1) by default but can't handle other values
 #define FLOOR(x, y) ( round((x) / (y)) * (y) )
 
 // Similar to clamp but the bottom rolls around to the top and vice versa. min is inclusive, max is exclusive
 #define WRAP(val, min, max) clamp(( min == max ? min : (val) - (round(((val) - (min))/((max) - (min))) * ((max) - (min))) ),min,max)
 
-/// Increments a value and wraps it if it exceeds some value. Can be used to circularly iterate through a list through `idx = WRAP_UP(idx, length_of_list)`.
-#define WRAP_UP(val, max) (((val) % (max)) + 1)
-
 // Real modulus that handles decimals
-#define MODULUS(x, y) ( (x) - FLOOR(x, y))
+#define MODULUS(x, y) ( (x) - (y) * round((x) / (y)) )
 
 // Cotangent
 #define COT(x) (1 / tan(x))
@@ -103,6 +84,11 @@
 // Returns the nth root of x.
 #define ROOT(n, x) ((x) ** (1 / (n)))
 
+/// Low-pass filter a value to smooth out high frequent peaks. This can be thought of as a moving average filter as well.
+/// delta_time is how many seconds since we last ran this command. RC is the filter constant, high RC means more smoothing
+/// See https://en.wikipedia.org/wiki/Low-pass_filter#Simple_infinite_impulse_response_filter for the maths
+#define LPFILTER(memory, signal, delta_time, RC) (delta_time / (RC + delta_time)) * signal + (1 - delta_time / (RC + delta_time)) * memory
+
 // The quadratic formula. Returns a list with the solutions, or an empty list
 // if they are imaginary.
 /proc/SolveQuadratic(a, b, c)
@@ -110,7 +96,7 @@
 	. = list()
 	var/d = b*b - 4 * a * c
 	var/bottom  = 2 * a
-	if(d < 0 || !IS_FINITE__UNSAFE(d) || !IS_FINITE__UNSAFE(bottom))
+	if(d < 0)
 		return
 	var/root = sqrt(d)
 	. += (-b + root) / bottom
@@ -123,8 +109,7 @@
 #define TORADIANS(degrees) ((degrees) * 0.0174532925)
 
 /// Gets shift x that would be required the bitflag (1<<x)
-/// We need the round because log has floating-point inaccuracy, and if we undershoot at all on list indexing we'll get the wrong index.
-#define TOBITSHIFT(bit) ( round(log(2, bit), 1) )
+#define TOBITSHIFT(bit) ( log(2, bit) )
 
 // Will filter out extra rotations and negative rotations
 // E.g: 540 becomes 180. -180 becomes 180.
@@ -236,6 +221,3 @@
 // )
 
 #define GET_TRUE_DIST(a, b) (a == null || b == null) ? -1 : max(abs(a.x -b.x), abs(a.y-b.y), abs(a.z-b.z))
-
-/// The number of cells in a taxicab circle (rasterized diamond) of radius X.
-#define DIAMOND_AREA(X) (1 + 2*(X)*((X)+1))

@@ -16,16 +16,16 @@
 /datum/surgery_step/replace_limb/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(NOAUGMENTS in target.dna.species.species_traits)
 		to_chat(user, span_warning("[target] cannot be augmented!"))
-		return SURGERY_STEP_FAIL
+		return -1
 	if(istype(tool, /obj/item/borg/apparatus/organ_storage) && istype(tool.contents[1], /obj/item/bodypart))
 		tool = tool.contents[1]
 	var/obj/item/bodypart/aug = tool
-	if(IS_ORGANIC_LIMB(aug))
+	if(aug.status != BODYPART_ROBOTIC)
 		to_chat(user, span_warning("That's not an augment, silly!"))
-		return SURGERY_STEP_FAIL
+		return -1
 	if(aug.body_zone != target_zone)
 		to_chat(user, span_warning("[tool] isn't the right type for [parse_zone(target_zone)]."))
-		return SURGERY_STEP_FAIL
+		return -1
 	target_limb = surgery.operated_bodypart
 	if(target_limb)
 		display_results(user, target, span_notice("You begin to augment [target]'s [parse_zone(user.zone_selected)]..."),
@@ -42,8 +42,8 @@
 	name = "Augmentation"
 	steps = list(
 		/datum/surgery_step/incise,
-		/datum/surgery_step/retract_skin,
 		/datum/surgery_step/clamp_bleeders,
+		/datum/surgery_step/retract_skin,
 		/datum/surgery_step/replace_limb)
 	target_mobtypes = list(/mob/living/carbon/human)
 	possible_locs = list(BODY_ZONE_R_ARM,BODY_ZONE_L_ARM,BODY_ZONE_R_LEG,BODY_ZONE_L_LEG,BODY_ZONE_CHEST,BODY_ZONE_HEAD)
@@ -59,12 +59,7 @@
 			tool.cut_overlays()
 			tool = tool.contents[1]
 		if(istype(tool) && user.temporarilyRemoveItemFromInventory(tool))
-			if(!tool.replace_limb(target))
-				display_results(user, target, span_warning("You fail in replacing [target]'s [parse_zone(target_zone)]! Their body has rejected [tool]!"),
-					span_warning("[user] fails to replace [target]'s [parse_zone(target_zone)]!"),
-					span_warning("[user] fails to replaces [target]'s [parse_zone(target_zone)]!"))
-				tool.forceMove(target.loc)
-				return
+			tool.replace_limb(target, TRUE)
 		display_results(user, target, span_notice("You successfully augment [target]'s [parse_zone(target_zone)]."),
 			span_notice("[user] successfully augments [target]'s [parse_zone(target_zone)] with [tool]!"),
 			span_notice("[user] successfully augments [target]'s [parse_zone(target_zone)]!"))

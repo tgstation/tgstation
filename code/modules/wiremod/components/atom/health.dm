@@ -6,7 +6,6 @@
 /obj/item/circuit_component/health
 	display_name = "Get Health"
 	desc = "A component that returns the health of an organism."
-	category = "Entity"
 
 	/// The input port
 	var/datum/port/input/input_port
@@ -42,7 +41,7 @@
 /obj/item/circuit_component/health/input_received(datum/port/input/port)
 
 	var/mob/living/organism = input_port.value
-	var/turf/current_turf = get_location()
+	var/turf/current_turf = get_turf(src)
 	if(!istype(organism) || get_dist(current_turf, organism) > max_range || current_turf.z != organism.z)
 		brute.set_output(null)
 		burn.set_output(null)

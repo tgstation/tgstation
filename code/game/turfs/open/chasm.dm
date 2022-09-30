@@ -49,9 +49,6 @@
 			return TRUE
 	return FALSE
 
-/turf/open/chasm/rust_heretic_act()
-	return FALSE
-
 /turf/open/chasm/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	underlay_appearance.icon = 'icons/turf/floors.dmi'
 	underlay_appearance.icon_state = "basalt"
@@ -62,18 +59,29 @@
 	if(istype(C, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = C
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
+		if(!L)
+			if(R.use(1))
+				to_chat(user, span_notice("You construct a lattice."))
+				playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+				// Create a lattice, without reverting to our baseturf
+				new /obj/structure/lattice(src)
+			else
+				to_chat(user, span_warning("You need one rod to build a lattice."))
+			return
+	if(istype(C, /obj/item/stack/tile/iron))
+		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 		if(L)
-			return
-		if(!R.use(1))
-			to_chat(user, span_warning("You need one rod to build a lattice."))
-			return
-		to_chat(user, span_notice("You construct a lattice."))
-		playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
-		// Create a lattice, without reverting to our baseturf
-		new /obj/structure/lattice(src)
-		return
-	else if(istype(C, /obj/item/stack/tile/iron))
-		build_with_floor_tiles(C, user)
+			var/obj/item/stack/tile/iron/S = C
+			if(S.use(1))
+				qdel(L)
+				playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+				to_chat(user, span_notice("You build a floor."))
+				// Create a floor, which has this chasm underneath it
+				PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+			else
+				to_chat(user, span_warning("You need one floor tile to build a floor!"))
+		else
+			to_chat(user, span_warning("The plating is going to need some support! Place iron rods first."))
 
 // Chasms for Lavaland, with planetary atmos and lava glow
 /turf/open/chasm/lavaland

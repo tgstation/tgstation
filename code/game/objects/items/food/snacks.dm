@@ -15,7 +15,7 @@
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/food/candy/bronx
-	name = "\improper South Bronx Paradise bar"
+	name = "South Bronx Paradise bar"
 	desc = "Lose weight, guaranteed! Caramel Mocha Flavor. Something about product consumption..."
 	icon_state = "bronx"
 	inhand_icon_state = "candy"
@@ -24,8 +24,8 @@
 	junkiness = 10
 	bite_consumption = 10
 	tastes = list("candy" = 5, "weight loss" = 4, "insect larva" = 1)
-	foodtypes = JUNKFOOD | RAW | BUGS
-	custom_price = 80
+	foodtypes = JUNKFOOD | RAW | GROSS
+	custom_price = PAYCHECK_ASSISTANT * 1.6 //Joke adjusted for inflation
 	w_class = WEIGHT_CLASS_TINY
 	var/revelation = FALSE
 
@@ -46,15 +46,15 @@
 /obj/item/food/candy/bronx/proc/after_eat(mob/living/eater)
 	if(ishuman(eater))
 		var/mob/living/carbon/human/carl = eater
-		var/datum/disease/disease = new /datum/disease/parasite()
-		carl.ForceContractDisease(disease, make_copy = FALSE, del_on_fail = TRUE)
+		var/datum/disease/P = new /datum/disease/parasite()
+		carl.ForceContractDisease(P, make_copy=FALSE, del_on_fail=TRUE)
 
 /obj/item/food/candy/bronx/examine(mob/user)
 	. = ..()
 	if(!revelation && !isobserver(user))
 		. += span_notice("Geeze, you need to get to get your eyes checked. You should look again...")
 
-		name = "\improper South Bronx Parasite bar"
+		name = "South Bronx Parasite bar"
 		desc = "Lose weight, guaranteed! Caramel Mocha Flavor! WARNING: PRODUCT NOT FIT FOR HUMAN CONSUMPTION. CONTAINS LIVE DIAMPHIDIA SPECIMENS."
 		revelation = TRUE
 
@@ -102,7 +102,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/no_raisin
-	name = "\improper 4no raisins"
+	name = "4no raisins"
 	icon_state = "4no_raisins"
 	desc = "Best raisins in the universe. Not sure why."
 	trash_type = /obj/item/trash/raisins
@@ -111,7 +111,7 @@
 	tastes = list("dried raisins" = 1)
 	foodtypes = JUNKFOOD | FRUIT | SUGAR
 	food_flags = FOOD_FINGER_FOOD
-	custom_price = PAYCHECK_CREW * 0.7
+	custom_price = PAYCHECK_ASSISTANT * 0.7
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/no_raisin/healthy
@@ -123,14 +123,14 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/spacetwinkie
-	name = "\improper Space Twinkie"
+	name = "space twinkie"
 	icon_state = "space_twinkie"
 	desc = "Guaranteed to survive longer than you will."
 	food_reagents = list(/datum/reagent/consumable/sugar = 4)
 	junkiness = 25
 	foodtypes = JUNKFOOD | GRAIN | SUGAR
 	food_flags = FOOD_FINGER_FOOD
-	custom_price = PAYCHECK_LOWER
+	custom_price = PAYCHECK_PRISONER
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/candy_trash
@@ -149,7 +149,7 @@
 	food_reagents = list(/datum/reagent/consumable/sugar = 4, /datum/reagent/ash = 3, /datum/reagent/drug/nicotine = 1)
 
 /obj/item/food/cheesiehonkers
-	name = "\improper Cheesie Honkers"
+	name = "cheesie honkers"
 	desc = "Bite sized cheesie snacks that will honk all over your mouth."
 	icon_state = "cheesie_honkers"
 	trash_type = /obj/item/trash/cheesie
@@ -160,7 +160,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/syndicake
-	name = "\improper Syndi-Cakes"
+	name = "syndi-cakes"
 	icon_state = "syndi_cakes"
 	desc = "An extremely moist snack cake that tastes just as good after being nuked."
 	trash_type = /obj/item/trash/syndi_cakes
@@ -170,7 +170,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/energybar
-	name = "\improper High-power energy bars"
+	name = "High-power energy bars"
 	icon_state = "energybar"
 	desc = "An energy bar with a lot of punch, you probably shouldn't eat this if you're not an Ethereal."
 	trash_type = /obj/item/trash/energybar
@@ -188,7 +188,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2)
 	tastes = list("peanuts" = 4, "anger" = 1)
 	foodtypes = JUNKFOOD | NUTS
-	custom_price = PAYCHECK_CREW * 0.8 //nuts are expensive in real life, and this is the best food in the vendor.
+	custom_price = PAYCHECK_ASSISTANT * 0.8 //nuts are expensive in real life, and this is the best food in the vendor.
 	junkiness = 10 //less junky than other options, since peanuts are a decently healthy snack option
 	w_class = WEIGHT_CLASS_SMALL
 	grind_results = list(/datum/reagent/consumable/peanut_butter = 5, /datum/reagent/consumable/cooking_oil = 2)
@@ -307,109 +307,6 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	name = sample.name
 	desc = sample.desc
 	food_reagents = sample.food_reagents
-	tastes = sample.tastes
-
-	qdel(sample)
-
-	. = ..()
-
-/obj/item/food/pistachios
-	name = "\improper Sweetie's Pistachios"
-	desc = "A pack of Sweetie's brand premium pistacios."
-	icon_state = "pistachio"
-	trash_type = /obj/item/trash/pistachios
-	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 1) //a healthy but expensive snack
-	tastes = list("pistachios" = 4, "subtle sweetness" = 1)
-	foodtypes = JUNKFOOD | NUTS
-	custom_price = PAYCHECK_CREW//pistachios are even more expensive.
-	junkiness = 10 //on par with peanuts
-	w_class = WEIGHT_CLASS_SMALL
-	grind_results = list(/datum/reagent/consumable/peanut_butter = 5, /datum/reagent/consumable/cooking_oil = 2)
-
-/obj/item/food/semki
-	name = "\improper Semki Sunflower Seeds"
-	desc = "A pack of roasted sunflower seeds. Beloved by space russians and babushka alike."
-	icon_state = "semki"
-	trash_type = /obj/item/trash/semki
-	food_reagents = list(/datum/reagent/consumable/cornoil  = 1, /datum/reagent/consumable/salt = 6) //1 cornoil is equal to 1.33 nutriment
-	tastes = list("sunflowers" = 5)
-	foodtypes = JUNKFOOD | NUTS
-	custom_price = PAYCHECK_LOWER * 0.4 //sunflowers are cheap in real life.
-	bite_consumption = 1
-	junkiness = 25
-	w_class = WEIGHT_CLASS_SMALL
-
-/obj/item/food/semki/healthy
-	name = "roasted sunflower seeds"
-	desc = "Homemade roasted sunflower seeds in a paper cup. A healthy and filling snack to nibble as you watch people pass."
-	icon_state = "sunseeds"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/iron = 2)
-	junkiness = 5 //Homemade or not, sunflower seets are always kinda junky
-	foodtypes = JUNKFOOD | NUTS
-	trash_type = /obj/item/trash/semki/healthy
-
-/obj/item/food/cornchips
-	name = "\improper Boritos corn chips"
-	desc = "Triangular corn chips. They do seem a bit bland but would probably go well with some kind of dipping sauce."
-	icon_state = "boritos"
-	trash_type = /obj/item/trash/boritos
-	bite_consumption = 2
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/cooking_oil = 2, /datum/reagent/consumable/salt = 3)
-	junkiness = 20
-	custom_price = PAYCHECK_LOWER * 0.8  //we are filled to the brim with flavor
-	tastes = list("fried corn" = 1)
-	foodtypes = JUNKFOOD | FRIED
-	w_class = WEIGHT_CLASS_SMALL
-
-/obj/item/food/cornchips/MakeLeaveTrash()
-	AddElement(/datum/element/food_trash, trash_type, FOOD_TRASH_POPABLE)
-
-/obj/item/food/cornchips/blue
-	name = "\improper Coolest Ranch Boritos corn chips"
-	desc = "Which came first, ranch or cool ranch?"
-	icon_state = "boritos"
-	trash_type = /obj/item/trash/boritos
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/cooking_oil = 2, /datum/reagent/consumable/salt = 3, /datum/reagent/consumable/yoghurt = 1, /datum/reagent/consumable/garlic = 1)
-	tastes = list("fried corn" = 1, "coolest ranch" = 3)
-
-/obj/item/food/cornchips/green
-	name = "\improper Spess Salsa Boritos corn chips"
-	desc = "It has the salsa baked in, so you don't need dip."
-	icon_state = "boritosgreen"
-	trash_type = /obj/item/trash/boritos/green
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/cooking_oil = 2, /datum/reagent/consumable/salt = 3, /datum/reagent/consumable/astrotame = 1, /datum/reagent/consumable/blackpepper = 1)
-	tastes = list("fried corn" = 1, "spess salsa" = 3)
-
-/obj/item/food/cornchips/red
-	name = "\improper Nacho Cheese Boritos corn chips"
-	desc = "Notorious for helping cover everything you touch in orange cheese dust."
-	icon_state = "boritosred"
-	trash_type = /obj/item/trash/boritos/red
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/cooking_oil = 2, /datum/reagent/consumable/salt = 3, /datum/reagent/consumable/astrotame = 1, /datum/reagent/consumable/cornmeal = 1)
-	tastes = list("fried corn" = 1, "nacho cheese" = 3)
-
-/obj/item/food/cornchips/purple
-	name = "\improper Spicy Sweet Chili Boritos corn chips"
-	desc = "The only flavour that actually tastes spicy like proper nachos."
-	icon_state = "boritospurple"
-	trash_type = /obj/item/trash/boritos/purple
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/cooking_oil = 2, /datum/reagent/consumable/salt = 3, /datum/reagent/consumable/capsaicin = 1, /datum/reagent/consumable/sugar = 1)
-	tastes = list("fried corn" = 1, "spicy & sweet chili" = 3)
-
-/obj/item/food/cornchips/random
-	name = "\improper Boritos cornchips"
-	desc = "Filled with one of four delicious flavours!"
-
-/obj/item/food/cornchips/random/Initialize(mapload)
-	var/random_flavour = pick(subtypesof(/obj/item/food/cornchips) - /obj/item/food/cornchips/random)
-
-	var/obj/item/food/sample = new random_flavour(loc)
-
-	name = sample.name
-	desc = sample.desc
-	food_reagents = sample.food_reagents
-	icon_state = sample.icon_state
-	trash_type = sample.trash_type
 	tastes = sample.tastes
 
 	qdel(sample)

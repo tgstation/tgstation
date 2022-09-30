@@ -46,7 +46,16 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/shuttle/mining)
 "h" = (
@@ -71,7 +80,7 @@
 	dir = 4;
 	dwidth = 3;
 	height = 5;
-	shuttle_id = "mining";
+	id = "mining";
 	name = "mining shuttle";
 	port_direction = 8;
 	width = 7
@@ -86,7 +95,16 @@
 /turf/open/floor/iron,
 /area/shuttle/mining)
 "k" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/shuttle/mining)
 "l" = (

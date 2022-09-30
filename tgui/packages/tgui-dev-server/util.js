@@ -25,7 +25,8 @@ export const resolveGlob = (...sections) => {
     try {
       fs.statSync(path);
       safePaths.push(path);
-    } catch {}
+    }
+    catch {}
   }
   return safePaths;
 };

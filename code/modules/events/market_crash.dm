@@ -7,16 +7,14 @@
 	name = "Market Crash"
 	typepath = /datum/round_event/market_crash
 	weight = 10
-	category = EVENT_CATEGORY_BUREAUCRATIC
-	description = "Temporarily increases the prices of vending machines."
 
 /datum/round_event/market_crash
 	var/market_dip = 0
 
 /datum/round_event/market_crash/setup()
-	start_when = 1
-	end_when = rand(25, 50)
-	announce_when = 2
+	startWhen = 1
+	endWhen = rand(25, 50)
+	announceWhen = 2
 
 /datum/round_event/market_crash/announce(fake)
 	var/list/poss_reasons = list("the alignment of the moon and the sun",\
@@ -32,12 +30,12 @@
 	market_dip = rand(1000,10000) * length(SSeconomy.bank_accounts_by_id)
 	SSeconomy.station_target = max(SSeconomy.station_target - market_dip, 1)
 	SSeconomy.price_update()
-	ADD_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING, MARKET_CRASH_EVENT_TRAIT)
+	SSeconomy.market_crashing = TRUE
 
 /datum/round_event/market_crash/end()
 	. = ..()
 	SSeconomy.station_target += market_dip
-	REMOVE_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING, MARKET_CRASH_EVENT_TRAIT)
+	SSeconomy.market_crashing = FALSE
 	SSeconomy.price_update()
 	priority_announce("Prices for on-station vendors have now stabilized.", "Nanotrasen Accounting Division")
 

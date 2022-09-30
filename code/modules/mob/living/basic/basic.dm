@@ -1,7 +1,7 @@
 ///Simple animals 2.0, This time, let's really try to keep it simple. This basetype should purely be used as a base-level for implementing simplified behaviours for things such as damage and attacks. Everything else should be in components or AI behaviours.
 /mob/living/basic
 	name = "basic mob"
-	icon = 'icons/mob/simple/animal.dmi'
+	icon = 'icons/mob/animal.dmi'
 	health = 20
 	maxHealth = 20
 	gender = PLURAL
@@ -33,7 +33,7 @@
 	/// Override for the visual attack effect shown on 'do_attack_animation()'.
 	var/attack_vis_effect
 	///Played when someone punches the creature.
-	var/attacked_sound = SFX_PUNCH //This should be an element
+	var/attacked_sound = "punch" //This should be an element
 
 	///What kind of objects this mob can smash.
 	var/environment_smash = ENVIRONMENT_SMASH_NONE
@@ -146,7 +146,3 @@
 	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/simplemob_varspeed, multiplicative_slowdown = speed)
 	SEND_SIGNAL(src, POST_BASIC_MOB_UPDATE_VARSPEED)
 
-/mob/living/basic/relaymove(mob/living/user, direction)
-	if(user.incapacitated())
-		return
-	return relaydrive(user, direction)

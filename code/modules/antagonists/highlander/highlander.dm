@@ -1,11 +1,10 @@
 /datum/antagonist/highlander
-	name = "\improper Highlander"
+	name = "highlander"
 	var/obj/item/claymore/highlander/sword
 	show_in_antagpanel = FALSE
 	show_name_in_check_antagonists = TRUE
 	can_elimination_hijack = ELIMINATION_ENABLED
 	suicide_cry = "FOR SCOTLAND!!" // If they manage to lose their no-drop stuff somehow
-	count_against_dynamic_roll_chance = FALSE
 
 /datum/antagonist/highlander/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/L = owner.current || mob_override
@@ -85,7 +84,7 @@
 	H.put_in_hands(antiwelder)
 
 /datum/antagonist/highlander/robot
-	name = "\improper highlander"
+	name="highlander"
 
 /datum/antagonist/highlander/robot/greet()
 	to_chat(owner, "<span class='boldannounce'>Your integrated claymore cries out for blood. Claim the lives of others, and your own will be restored!\n\

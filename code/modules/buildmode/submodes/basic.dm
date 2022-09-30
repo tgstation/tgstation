@@ -21,16 +21,16 @@
 	var/ctrl_click = LAZYACCESS(modifiers, CTRL_CLICK)
 
 	if(istype(object,/turf) && left_click && !alt_click && !ctrl_click)
-		var/turf/clicked_turf = object
-		if(isplatingturf(object))
-			clicked_turf.PlaceOnTop(/turf/open/floor/iron, flags = CHANGETURF_INHERIT_AIR)
+		var/turf/T = object
+		if(isspaceturf(object))
+			T.PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+		else if(isplatingturf(object))
+			T.PlaceOnTop(/turf/open/floor/iron, flags = CHANGETURF_INHERIT_AIR)
 		else if(isfloorturf(object))
-			clicked_turf.PlaceOnTop(/turf/closed/wall)
+			T.PlaceOnTop(/turf/closed/wall)
 		else if(iswallturf(object))
-			clicked_turf.PlaceOnTop(/turf/closed/wall/r_wall)
-		else
-			clicked_turf.PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR) // Gotta do something
-		log_admin("Build Mode: [key_name(c)] built [clicked_turf] at [AREACOORD(clicked_turf)]")
+			T.PlaceOnTop(/turf/closed/wall/r_wall)
+		log_admin("Build Mode: [key_name(c)] built [T] at [AREACOORD(T)]")
 		return
 	else if(right_click)
 		log_admin("Build Mode: [key_name(c)] deleted [object] at [AREACOORD(object)]")

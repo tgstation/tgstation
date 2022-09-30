@@ -1,9 +1,7 @@
-/// if autoadmin is enabled
-/datum/config_entry/flag/autoadmin
+/datum/config_entry/flag/autoadmin  // if autoadmin is enabled
 	protection = CONFIG_ENTRY_LOCKED
 
-/// the rank given to autoadmins
-/datum/config_entry/string/autoadmin_rank
+/datum/config_entry/string/autoadmin_rank // the rank for autoadmins
 	default = "Game Master"
 	protection = CONFIG_ENTRY_LOCKED
 
@@ -27,169 +25,107 @@
 	protection = CONFIG_ENTRY_LOCKED
 
 
-/// server name (the name of the game window)
-/datum/config_entry/string/servername
+/datum/config_entry/string/servername // server name (the name of the game window)
 
-/// short form server name used for the DB
-/datum/config_entry/string/serversqlname
+/datum/config_entry/string/serversqlname // short form server name used for the DB
 
-/// station name (the name of the station in-game)
-/datum/config_entry/string/stationname
+/datum/config_entry/string/stationname // station name (the name of the station in-game)
 
-/// Countdown between lobby and the round starting.
-/datum/config_entry/number/lobby_countdown
+/datum/config_entry/number/lobby_countdown // In between round countdown.
 	default = 120
 	integer = FALSE
 	min_val = 0
 
-/// Post round murder death kill countdown.
-/datum/config_entry/number/round_end_countdown
+/datum/config_entry/number/round_end_countdown // Post round murder death kill countdown
 	default = 25
 	integer = FALSE
 	min_val = 0
 
-/// if the game appears on the hub or not
-/datum/config_entry/flag/hub
+/datum/config_entry/flag/hub // if the game appears on the hub or not
 
-/// Pop requirement for the server to be removed from the hub
-/datum/config_entry/number/max_hub_pop
+/datum/config_entry/number/max_hub_pop //At what pop to take hub off the server
 	default = 0 //0 means disabled
 	integer = TRUE
 	min_val = 0
 
-/// log messages sent in OOC
-/datum/config_entry/flag/log_ooc
+/datum/config_entry/flag/log_ooc // log OOC channel
 
-/// log login/logout
-/datum/config_entry/flag/log_access
+/datum/config_entry/flag/log_access // log login/logout
 
 /// Config entry which special logging of failed logins under suspicious circumstances.
 /datum/config_entry/flag/log_suspicious_login
 
-/// log client say
-/datum/config_entry/flag/log_say
+/datum/config_entry/flag/log_say // log client say
 
-/// log admin actions
-/datum/config_entry/flag/log_admin
+/datum/config_entry/flag/log_admin // log admin actions
 	protection = CONFIG_ENTRY_LOCKED
 
-/// log prayers
-/datum/config_entry/flag/log_prayer
+/datum/config_entry/flag/log_prayer // log prayers
 
-/// log silicons
-/datum/config_entry/flag/log_silicon
+/datum/config_entry/flag/log_law // log lawchanges
 
-/datum/config_entry/flag/log_law
-	deprecated_by = /datum/config_entry/flag/log_silicon
+/datum/config_entry/flag/log_game // log game events
 
-/datum/config_entry/flag/log_law/DeprecationUpdate(value)
-	return value
+/datum/config_entry/flag/log_mecha // log mech data
 
-/// log usage of tools
-/datum/config_entry/flag/log_tools
+/datum/config_entry/flag/log_virus // log virology data
 
-/// log game events
-/datum/config_entry/flag/log_game
+/datum/config_entry/flag/log_cloning // log cloning actions.
 
-/// log mech data
-/datum/config_entry/flag/log_mecha
+/datum/config_entry/flag/log_asset //asset logging
 
-/// log virology data
-/datum/config_entry/flag/log_virus
+/datum/config_entry/flag/log_vote // log voting
 
-/// log assets
-/datum/config_entry/flag/log_asset
+/datum/config_entry/flag/log_whisper // log client whisper
 
-/// log voting
-/datum/config_entry/flag/log_vote
+/datum/config_entry/flag/log_attack // log attack messages
 
-/// log client whisper
-/datum/config_entry/flag/log_whisper
+/datum/config_entry/flag/log_emote // log emotes
 
-/// log attack messages
-/datum/config_entry/flag/log_attack
+/datum/config_entry/flag/log_econ // log economy actions
 
-/// log emotes
-/datum/config_entry/flag/log_emote
-
-/// log economy actions
-/datum/config_entry/flag/log_econ
-
-/// log traitor objectives
-/datum/config_entry/flag/log_traitor
-
-/// log admin chat messages
-/datum/config_entry/flag/log_adminchat
+/datum/config_entry/flag/log_adminchat // log admin chat messages
 	protection = CONFIG_ENTRY_LOCKED
 
-/// log pda messages
-/datum/config_entry/flag/log_pda
+/datum/config_entry/flag/log_pda // log pda messages
 
-/// log uplink/spellbook/codex ciatrix purchases and refunds
-/datum/config_entry/flag/log_uplink
+/datum/config_entry/flag/log_uplink // log uplink/spellbook/codex ciatrix purchases and refunds
 
-/// log telecomms messages
-/datum/config_entry/flag/log_telecomms
+/datum/config_entry/flag/log_telecomms // log telecomms messages
 
-/// log speech indicators(started/stopped speaking)
-/datum/config_entry/flag/log_speech_indicators
+/datum/config_entry/flag/log_twitter // log certain expliotable parrots and other such fun things in a JSON file of twitter valid phrases.
 
-/// log certain expliotable parrots and other such fun things in a JSON file of twitter valid phrases.
-/datum/config_entry/flag/log_twitter
+/datum/config_entry/flag/log_world_topic // log all world.Topic() calls
 
-/// log all world.Topic() calls
-/datum/config_entry/flag/log_world_topic
+/datum/config_entry/flag/log_manifest // log crew manifest to seperate file
 
-/// log crew manifest to separate file
-/datum/config_entry/flag/log_manifest
+/datum/config_entry/flag/log_job_debug // log roundstart divide occupations debug information to a file
 
-/// log roundstart divide occupations debug information to a file
-/datum/config_entry/flag/log_job_debug
+/datum/config_entry/flag/log_shuttle // log shuttle related actions, ie shuttle computers, shuttle manipulator, emergency console
 
-/// log shuttle related actions, ie shuttle computers, shuttle manipulator, emergency console
-/datum/config_entry/flag/log_shuttle
+/datum/config_entry/flag/log_timers_on_bucket_reset // logs all timers in buckets on automatic bucket reset (Useful for timer debugging)
 
-/// logs all timers in buckets on automatic bucket reset (Useful for timer debugging)
-/datum/config_entry/flag/log_timers_on_bucket_reset
+/datum/config_entry/flag/allow_admin_ooccolor // Allows admins with relevant permissions to have their own ooc colour
 
-/// allows admins with relevant permissions to have their own ooc colour
-/datum/config_entry/flag/allow_admin_ooccolor
+/datum/config_entry/flag/allow_admin_asaycolor //Allows admins with relevant permissions to have a personalized asay color
 
-/// allows admins with relevant permissions to have a personalized asay color
-/datum/config_entry/flag/allow_admin_asaycolor
+/datum/config_entry/flag/allow_vote_restart // allow votes to restart
 
-/// allow votes to restart
-/datum/config_entry/flag/allow_vote_restart
+/datum/config_entry/flag/allow_vote_map // allow votes to change map
 
-/// allow votes to change map
-/datum/config_entry/flag/allow_vote_map
-
-/// allow players to vote to re-do the map vote
-/datum/config_entry/flag/allow_rock_the_vote
-
-/// the number of times we allow players to rock the vote
-/datum/config_entry/number/max_rocking_votes
-	default = 1
-	min_val = 1
-
-/// minimum time between voting sessions (deciseconds, 10 minute default)
-/datum/config_entry/number/vote_delay
+/datum/config_entry/number/vote_delay // minimum time between voting sessions (deciseconds, 10 minute default)
 	default = 6000
 	integer = FALSE
 	min_val = 0
 
-/// length of voting period (deciseconds, default 1 minute)
-/datum/config_entry/number/vote_period
+/datum/config_entry/number/vote_period  // length of voting period (deciseconds, default 1 minute)
 	default = 600
 	integer = FALSE
 	min_val = 0
 
-/// If disabled, non-voters will automatically have their votes added to certain vote options
-/// (For example: restart votes will default to "no restart", map votes will default to their preferred map / default map, rocking the vote will default to "no")
-/datum/config_entry/flag/default_no_vote
+/datum/config_entry/flag/default_no_vote // vote does not default to nochange/norestart
 
-/// Prevents dead people from voting.
-/datum/config_entry/flag/no_dead_vote
+/datum/config_entry/flag/no_dead_vote // dead people can't vote
 
 /// Gives the ability to send players a maptext popup.
 /datum/config_entry/flag/popup_admin_pm
@@ -198,7 +134,7 @@
 	default = 20
 	integer = FALSE
 	min_val = 1
-	max_val = 100 //byond will start crapping out at 50, so this is just ridic
+	max_val = 100   //byond will start crapping out at 50, so this is just ridic
 	var/sync_validate = FALSE
 
 /datum/config_entry/number/fps/ValidateAndSet(str_val)
@@ -230,6 +166,10 @@
 
 /datum/config_entry/flag/allow_holidays
 
+/datum/config_entry/number/tick_limit_mc_init //SSinitialization throttling
+	default = TICK_LIMIT_MC_INIT_DEFAULT
+	min_val = 0 //oranges warned us
+	integer = FALSE
 
 /datum/config_entry/flag/admin_legacy_system //Defines whether the server uses the legacy admin system with admins.txt or the SQL system
 	protection = CONFIG_ENTRY_LOCKED
@@ -551,7 +491,7 @@
 
 /datum/config_entry/flag/resume_after_initializations/ValidateAndSet(str_val)
 	. = ..()
-	if(. && MC_RUNNING())
+	if(. && Master.current_runlevel)
 		world.sleep_offline = !config_entry_value
 
 /datum/config_entry/number/rounds_until_hard_restart
@@ -597,49 +537,3 @@
 	min_val = 0
 
 /datum/config_entry/str_list/motd
-
-/datum/config_entry/number/urgent_ahelp_cooldown
-	default = 300
-
-/datum/config_entry/string/urgent_ahelp_message
-	default = "This ahelp is urgent!"
-
-/datum/config_entry/string/ahelp_message
-	default = ""
-
-/datum/config_entry/string/urgent_ahelp_user_prompt
-	default = "There are no admins currently on. Do not press the button below if your ahelp is a joke, a request or a question. Use it only for cases of obvious grief."
-
-/datum/config_entry/string/urgent_adminhelp_webhook_url
-
-/datum/config_entry/string/regular_adminhelp_webhook_url
-
-/datum/config_entry/string/adminhelp_webhook_pfp
-
-/datum/config_entry/string/adminhelp_webhook_name
-
-/datum/config_entry/string/adminhelp_ahelp_link
-
-/datum/config_entry/flag/cache_assets
-	default = TRUE
-
-/datum/config_entry/flag/station_name_in_hub_entry
-	default = FALSE
-
-/datum/config_entry/number/pr_announcements_per_round
-	default = 5
-	min_val = 0
-	integer = TRUE
-
-/datum/config_entry/flag/forbid_all_profiling
-
-/datum/config_entry/flag/forbid_admin_profiling
-
-
-/datum/config_entry/flag/morgue_cadaver_disable_nonhumans
-	default = FALSE
-
-/datum/config_entry/number/morgue_cadaver_other_species_probability
-	default = 50
-
-/datum/config_entry/string/morgue_cadaver_override_species

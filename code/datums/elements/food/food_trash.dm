@@ -24,7 +24,6 @@
 		RegisterSignal(target, COMSIG_FOOD_CROSSED, .proc/food_crossed)
 	RegisterSignal(target, COMSIG_ITEM_ON_GRIND, .proc/generate_trash)
 	RegisterSignal(target, COMSIG_ITEM_ON_JUICE, .proc/generate_trash)
-	RegisterSignal(target, COMSIG_ITEM_USED_AS_INGREDIENT, .proc/generate_trash)
 	RegisterSignal(target, COMSIG_ITEM_ON_COMPOSTED, .proc/generate_trash)
 	RegisterSignal(target, COMSIG_ITEM_SOLD_TO_CUSTOMER, .proc/generate_trash)
 
@@ -45,7 +44,6 @@
 
 	if(isliving(edible_object.loc))
 		var/mob/living/food_holding_mob = edible_object.loc
-		food_holding_mob.dropItemToGround(edible_object)
 		food_holding_mob.put_in_hands(trash_item)
 
 /datum/element/food_trash/proc/food_crossed(datum/source, mob/crosser, bitecount)

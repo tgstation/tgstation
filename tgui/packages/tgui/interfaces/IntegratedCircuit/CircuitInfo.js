@@ -1,11 +1,18 @@
 import { Button, Stack, Box } from '../../components';
 
 export const CircuitInfo = (props, context) => {
-  const { name, desc, notices, ...rest } = props;
+  const {
+    name,
+    desc,
+    notices,
+    ...rest
+  } = props;
   return (
     <Box {...rest}>
       <Stack fill vertical justify="space-around">
-        <Stack.Item maxWidth="200px">{desc}</Stack.Item>
+        <Stack.Item maxWidth="200px">
+          {desc}
+        </Stack.Item>
         <Stack.Item>
           <Stack vertical>
             {notices.map((val, index) => (

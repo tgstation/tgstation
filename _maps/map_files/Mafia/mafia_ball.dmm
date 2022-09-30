@@ -1,33 +1,41 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/closed/indestructible/riveted,
-/area/centcom/mafia)
+/area/mafia)
 "b" = (
 /turf/closed/indestructible/riveted/plastinum,
-/area/centcom/mafia)
+/area/mafia)
 "c" = (
 /turf/closed/wall/rust,
-/area/centcom/mafia)
+/area/mafia)
 "d" = (
 /turf/open/floor/plating,
-/area/centcom/mafia)
+/area/mafia)
+"e" = (
+/turf/open/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/mafia)
 "f" = (
-/obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/plating,
-/area/centcom/mafia)
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/mafia)
 "g" = (
 /obj/mafia_game_board,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating,
-/area/centcom/mafia)
+/turf/open/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/mafia)
 "h" = (
-/obj/structure/grille/indestructible,
+/obj/structure/grille/indestructable,
 /turf/open/floor/plating,
-/area/centcom/mafia)
+/area/mafia)
 "i" = (
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating,
-/area/centcom/mafia)
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/mafia)
 "j" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	max_integrity = 99999;
@@ -35,31 +43,31 @@
 	},
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/plating,
-/area/centcom/mafia)
+/area/mafia)
 "k" = (
 /obj/mafia_game_board,
 /turf/open/floor/plating,
-/area/centcom/mafia)
+/area/mafia)
 "l" = (
 /obj/structure/closet/cabinet{
 	anchored = 1
 	},
 /turf/open/floor/iron/dark,
-/area/centcom/mafia)
+/area/mafia)
 "m" = (
 /obj/effect/landmark/mafia,
 /turf/open/floor/iron/dark,
-/area/centcom/mafia)
+/area/mafia)
 "n" = (
 /obj/effect/landmark/mafia,
 /turf/open/floor/iron,
-/area/centcom/mafia)
+/area/mafia)
 "o" = (
 /obj/structure/closet/cabinet{
 	anchored = 1
 	},
 /turf/open/floor/iron,
-/area/centcom/mafia)
+/area/mafia)
 "p" = (
 /obj/machinery/door/poddoor/preopen{
 	desc = "When it's time to sleep, the lights will go out. Remember - no one in space can hear you scream.";
@@ -68,29 +76,30 @@
 	name = "Station Night Shutters"
 	},
 /turf/closed/indestructible/fakeglass,
-/area/centcom/mafia)
+/area/mafia)
 "q" = (
 /turf/open/floor/iron/dark,
-/area/centcom/mafia)
+/area/mafia)
 "r" = (
 /turf/open/floor/iron,
-/area/centcom/mafia)
+/area/mafia)
 "s" = (
 /turf/open/floor/fakespace,
-/area/centcom/mafia)
+/area/mafia)
 "t" = (
 /turf/open/floor/iron/solarpanel,
-/area/centcom/mafia)
+/area/mafia)
 "u" = (
 /obj/effect/baseturf_helper/asteroid,
 /obj/effect/landmark/mafia/town_center,
 /turf/open/floor/iron/solarpanel,
-/area/centcom/mafia)
+/area/mafia)
 "v" = (
 /obj/mafia_game_board,
-/obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/plating,
-/area/centcom/mafia)
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/mafia)
 
 (1,1,1) = {"
 a
@@ -179,7 +188,7 @@ d
 d
 d
 d
-i
+e
 d
 d
 d
@@ -200,7 +209,7 @@ c
 h
 d
 d
-i
+e
 b
 b
 j
@@ -362,7 +371,7 @@ r
 r
 n
 j
-i
+e
 c
 b
 a
@@ -371,7 +380,7 @@ a
 a
 b
 c
-i
+e
 b
 b
 p
@@ -559,7 +568,7 @@ j
 b
 b
 d
-i
+e
 d
 h
 c
@@ -576,7 +585,7 @@ k
 h
 d
 d
-i
+e
 d
 d
 d

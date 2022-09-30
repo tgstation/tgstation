@@ -15,15 +15,12 @@ const FilterIntegerEntry = (props, context) => {
       maxValue={500}
       stepPixelSize={5}
       width="39px"
-      onDrag={(e, value) =>
-        act('modify_filter_value', {
-          name: filterName,
-          new_data: {
-            [name]: value,
-          },
-        })
-      }
-    />
+      onDrag={(e, value) => act('modify_filter_value', {
+        name: filterName,
+        new_data: {
+          [name]: value,
+        },
+      })} />
   );
 };
 
@@ -39,27 +36,26 @@ const FilterFloatEntry = (props, context) => {
         maxValue={500}
         stepPixelSize={4}
         step={step}
-        format={(value) => toFixed(value, numberOfDecimalDigits(step))}
+        format={value => toFixed(value, numberOfDecimalDigits(step))}
         width="80px"
-        onDrag={(e, value) =>
-          act('transition_filter_value', {
-            name: filterName,
-            new_data: {
-              [name]: value,
-            },
-          })
-        }
-      />
-      <Box inline ml={2} mr={1}>
+        onDrag={(e, value) => act('transition_filter_value', {
+          name: filterName,
+          new_data: {
+            [name]: value,
+          },
+        })} />
+      <Box
+        inline
+        ml={2}
+        mr={1}>
         Step:
       </Box>
       <NumberInput
         value={step}
         step={0.001}
-        format={(value) => toFixed(value, 4)}
+        format={value => toFixed(value, 4)}
         width="70px"
-        onChange={(e, value) => setStep(value)}
-      />
+        onChange={(e, value) => setStep(value)} />
     </>
   );
 };
@@ -72,15 +68,12 @@ const FilterTextEntry = (props, context) => {
     <Input
       value={value}
       width="250px"
-      onInput={(e, value) =>
-        act('modify_filter_value', {
-          name: filterName,
-          new_data: {
-            [name]: value,
-          },
-        })
-      }
-    />
+      onInput={(e, value) => act('modify_filter_value', {
+        name: filterName,
+        new_data: {
+          [name]: value,
+        },
+      })} />
   );
 };
 
@@ -91,25 +84,21 @@ const FilterColorEntry = (props, context) => {
     <>
       <Button
         icon="pencil-alt"
-        onClick={() =>
-          act('modify_color_value', {
-            name: filterName,
-          })
-        }
-      />
-      <ColorBox color={value} mr={0.5} />
+        onClick={() => act('modify_color_value', {
+          name: filterName,
+        })} />
+      <ColorBox
+        color={value}
+        mr={0.5} />
       <Input
         value={value}
         width="90px"
-        onInput={(e, value) =>
-          act('transition_filter_value', {
-            name: filterName,
-            new_data: {
-              [name]: value,
-            },
-          })
-        }
-      />
+        onInput={(e, value) => act('transition_filter_value', {
+          name: filterName,
+          new_data: {
+            [name]: value,
+          },
+        })} />
     </>
   );
 };
@@ -121,12 +110,9 @@ const FilterIconEntry = (props, context) => {
     <>
       <Button
         icon="pencil-alt"
-        onClick={() =>
-          act('modify_icon_value', {
-            name: filterName,
-          })
-        }
-      />
+        onClick={() => act('modify_icon_value', {
+          name: filterName,
+        })} />
       <Box inline ml={1}>
         {value}
       </Box>
@@ -140,20 +126,19 @@ const FilterFlagsEntry = (props, context) => {
 
   const filterInfo = data.filter_info;
   const flags = filterInfo[filterType]['flags'];
-  return map((bitField, flagName) => (
-    <Button.Checkbox
-      checked={value & bitField}
-      content={flagName}
-      onClick={() =>
-        act('modify_filter_value', {
+  return (
+    map((bitField, flagName) => (
+      <Button.Checkbox
+        checked={value & bitField}
+        content={flagName}
+        onClick={() => act('modify_filter_value', {
           name: filterName,
           new_data: {
             [name]: value ^ bitField,
           },
-        })
-      }
-    />
-  ))(flags);
+        })} />
+    ))(flags)
+  );
 };
 
 const FilterDataEntry = (props, context) => {
@@ -187,12 +172,9 @@ const FilterDataEntry = (props, context) => {
 
   return (
     <LabeledList.Item label={name}>
-      {filterEntryTypes[filterEntryMap[name]] || 'Not Found (This is an error)'}{' '}
-      {!hasValue && (
-        <Box inline color="average">
-          (Default)
-        </Box>
-      )}
+      {filterEntryTypes[filterEntryMap[name]] || "Not Found (This is an error)"}
+      {' '}
+      {!hasValue && <Box inline color="average">(Default)</Box>}
     </LabeledList.Item>
   );
 };
@@ -202,48 +184,40 @@ const FilterEntry = (props, context) => {
   const { name, filterDataEntry } = props;
   const { type, priority, ...restOfProps } = filterDataEntry;
 
-  const filterDefaults = data['filter_info'];
+  const filterDefaults = data["filter_info"];
 
-  const targetFilterPossibleKeys = Object.keys(
-    filterDefaults[type]['defaults']
-  );
+  const targetFilterPossibleKeys = Object.keys(filterDefaults[type]['defaults']);
 
   return (
     <Collapsible
-      title={name + ' (' + type + ')'}
-      buttons={
+      title={name + " (" + type + ")"}
+      buttons={(
         <>
           <NumberInput
             value={priority}
             stepPixelSize={10}
             width="60px"
-            onChange={(e, value) =>
-              act('change_priority', {
-                name: name,
-                new_priority: value,
-              })
-            }
+            onChange={(e, value) => act('change_priority', {
+              name: name,
+              new_priority: value,
+            })}
           />
           <Button.Input
             content="Rename"
             placeholder={name}
-            onCommit={(e, new_name) =>
-              act('rename_filter', {
-                name: name,
-                new_name: new_name,
-              })
-            }
-            width="90px"
-          />
+            onCommit={(e, new_name) => act('rename_filter', {
+              name: name,
+              new_name: new_name,
+            })}
+            width="90px" />
           <Button.Confirm
             icon="minus"
-            onClick={() => act('remove_filter', { name: name })}
-          />
+            onClick={() => act("remove_filter", { name: name })} />
         </>
-      }>
+      )}>
       <Section level={2}>
         <LabeledList>
-          {targetFilterPossibleKeys.map((entryName) => {
+          {targetFilterPossibleKeys.map(entryName => {
             const defaults = filterDefaults[type]['defaults'];
             const value = restOfProps[entryName] || defaults[entryName];
             const hasValue = value !== defaults[entryName];
@@ -254,8 +228,7 @@ const FilterEntry = (props, context) => {
                 filterType={type}
                 name={entryName}
                 value={value}
-                hasValue={hasValue}
-              />
+                hasValue={hasValue} />
             );
           })}
         </LabeledList>
@@ -266,68 +239,60 @@ const FilterEntry = (props, context) => {
 
 export const Filteriffic = (props, context) => {
   const { act, data } = useBackend(context);
-  const name = data.target_name || 'Unknown Object';
+  const name = data.target_name || "Unknown Object";
   const filters = data.target_filter_data || {};
   const hasFilters = Object.keys(filters).length !== 0;
-  const filterDefaults = data['filter_info'];
-  const [massApplyPath, setMassApplyPath] = useLocalState(
-    context,
-    'massApplyPath',
-    ''
-  );
-  const [hiddenSecret, setHiddenSecret] = useLocalState(
-    context,
-    'hidden',
-    false
-  );
+  const filterDefaults = data["filter_info"];
+  const [massApplyPath, setMassApplyPath] = useLocalState(context, 'massApplyPath', '');
+  const [hiddenSecret, setHiddenSecret] = useLocalState(context, 'hidden', false);
   return (
-    <Window title="Filteriffic" width={500} height={500}>
+    <Window
+      title="Filteriffic"
+      width={500}
+      height={500}>
       <Window.Content scrollable>
         <NoticeBox danger>
           DO NOT MESS WITH EXISTING FILTERS IF YOU DO NOT KNOW THE CONSEQUENCES.
           YOU HAVE BEEN WARNED.
         </NoticeBox>
         <Section
-          title={
-            hiddenSecret ? (
-              <>
-                <Box mr={0.5} inline>
-                  MASS EDIT:
-                </Box>
-                <Input
-                  value={massApplyPath}
-                  width="100px"
-                  onInput={(e, value) => setMassApplyPath(value)}
-                />
-                <Button.Confirm
-                  content="Apply"
-                  confirmContent="ARE YOU SURE?"
-                  onClick={() => act('mass_apply', { path: massApplyPath })}
-                />
-              </>
-            ) : (
-              <Box inline onDblClick={() => setHiddenSecret(true)}>
-                {name}
+          title={hiddenSecret ? (
+            <>
+              <Box mr={0.5} inline>
+                MASS EDIT:
               </Box>
-            )
-          }
-          buttons={
+              <Input
+                value={massApplyPath}
+                width="100px"
+                onInput={(e, value) => setMassApplyPath(value)} />
+              <Button.Confirm
+                content="Apply"
+                confirmContent="ARE YOU SURE?"
+                onClick={() => act('mass_apply', { path: massApplyPath })} />
+            </>
+          ) : (
+            <Box
+              inline
+              onDblClick={() => setHiddenSecret(true)}>
+              {name}
+            </Box>
+          )}
+          buttons={(
             <Dropdown
               icon="plus"
               displayText="Add Filter"
               nochevron
               options={Object.keys(filterDefaults)}
-              onSelected={(value) =>
-                act('add_filter', {
-                  name: 'default',
-                  priority: 10,
-                  type: value,
-                })
-              }
-            />
-          }>
+              onSelected={value => act('add_filter', {
+                name: 'default',
+                priority: 10,
+                type: value,
+              })} />
+          )} >
           {!hasFilters ? (
-            <Box>No filters</Box>
+            <Box>
+              No filters
+            </Box>
           ) : (
             map((entry, key) => (
               <FilterEntry filterDataEntry={entry} name={key} key={key} />

@@ -6,11 +6,7 @@
 /obj/item/circuit_component/set_variable
 	display_name = "Set Variable"
 	desc = "A component that sets a variable on an object."
-	category = "Admin"
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL|CIRCUIT_FLAG_ADMIN
-
-	/// Whether to resolve weakrefs or not
-	var/datum/port/input/resolve_weakrefs
 
 	/// Entity to set variable of
 	var/datum/port/input/entity
@@ -23,7 +19,6 @@
 
 
 /obj/item/circuit_component/set_variable/populate_ports()
-	resolve_weakrefs = add_input_port("Resolve Weakrefs", PORT_TYPE_NUMBER, default = TRUE)
 	entity = add_input_port("Target", PORT_TYPE_DATUM)
 	variable_name = add_input_port("Variable Name", PORT_TYPE_STRING)
 	new_value = add_input_port("New Value", PORT_TYPE_ANY)
@@ -34,10 +29,4 @@
 	if(!var_name || !object)
 		return
 
-	var/resolved_new_value = new_value.value
-	if(islist(resolved_new_value) && resolve_weakrefs.value)
-		var/list/to_resolve = resolved_new_value
-		resolved_new_value = recursive_list_resolve(to_resolve)
-
-	log_admin_circuit("[parent.get_creator()] set the variable '[var_name]' on [object] to [resolved_new_value].")
-	object.vv_edit_var(var_name, resolved_new_value)
+	object.vv_edit_var(var_name, new_value.value)

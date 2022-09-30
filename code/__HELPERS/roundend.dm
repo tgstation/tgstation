@@ -157,27 +157,27 @@
 	var/list/file_data = list()
 	var/pos = 1
 	for(var/V in GLOB.news_network.network_channels)
-		var/datum/feed_channel/channel = V
+		var/datum/newscaster/feed_channel/channel = V
 		if(!istype(channel))
 			stack_trace("Non-channel in newscaster channel list")
 			continue
-		file_data["[pos]"] = list("channel name" = "[channel.channel_name]", "author" = "[channel.author]", "censored" = channel.censored ? 1 : 0, "author censored" = channel.author_censor ? 1 : 0, "messages" = list())
+		file_data["[pos]"] = list("channel name" = "[channel.channel_name]", "author" = "[channel.author]", "censored" = channel.censored ? 1 : 0, "author censored" = channel.authorCensor ? 1 : 0, "messages" = list())
 		for(var/M in channel.messages)
-			var/datum/feed_message/message = M
+			var/datum/newscaster/feed_message/message = M
 			if(!istype(message))
 				stack_trace("Non-message in newscaster channel messages list")
 				continue
 			var/list/comment_data = list()
 			for(var/C in message.comments)
-				var/datum/feed_comment/comment = C
+				var/datum/newscaster/feed_comment/comment = C
 				if(!istype(comment))
 					stack_trace("Non-message in newscaster message comments list")
 					continue
 				comment_data += list(list("author" = "[comment.author]", "time stamp" = "[comment.time_stamp]", "body" = "[comment.body]"))
-			file_data["[pos]"]["messages"] += list(list("author" = "[message.author]", "time stamp" = "[message.time_stamp]", "censored" = message.body_censor ? 1 : 0, "author censored" = message.author_censor ? 1 : 0, "photo file" = "[message.photo_file]", "photo caption" = "[message.caption]", "body" = "[message.body]", "comments" = comment_data))
+			file_data["[pos]"]["messages"] += list(list("author" = "[message.author]", "time stamp" = "[message.time_stamp]", "censored" = message.bodyCensor ? 1 : 0, "author censored" = message.authorCensor ? 1 : 0, "photo file" = "[message.photo_file]", "photo caption" = "[message.caption]", "body" = "[message.body]", "comments" = comment_data))
 		pos++
 	if(GLOB.news_network.wanted_issue.active)
-		file_data["wanted"] = list("author" = "[GLOB.news_network.wanted_issue.scanned_user]", "criminal" = "[GLOB.news_network.wanted_issue.criminal]", "description" = "[GLOB.news_network.wanted_issue.body]", "photo file" = "[GLOB.news_network.wanted_issue.photo_file]")
+		file_data["wanted"] = list("author" = "[GLOB.news_network.wanted_issue.scannedUser]", "criminal" = "[GLOB.news_network.wanted_issue.criminal]", "description" = "[GLOB.news_network.wanted_issue.body]", "photo file" = "[GLOB.news_network.wanted_issue.photo_file]")
 	WRITE_FILE(json_file, json_encode(file_data))
 
 ///Handles random hardcore point rewarding if it applies.
@@ -207,8 +207,9 @@
 	to_chat(world, "<span class='infoplain'><BR><BR><BR><span class='big bold'>The round has ended.</span></span>")
 	log_game("The round has ended.")
 
-	for(var/datum/callback/roundend_callbacks as anything in round_end_events)
-		roundend_callbacks.InvokeAsync()
+	for(var/I in round_end_events)
+		var/datum/callback/cb = I
+		cb.InvokeAsync()
 	LAZYCLEARLIST(round_end_events)
 
 	var/speed_round = FALSE
@@ -229,9 +230,10 @@
 	CHECK_TICK
 
 	// Add AntagHUD to everyone, see who was really evil the whole time!
-	for(var/datum/atom_hud/alternate_appearance/basic/antagonist_hud/antagonist_hud in GLOB.active_alternate_appearances)
-		for(var/mob/player as anything in GLOB.player_list)
-			antagonist_hud.show_to(player)
+	for(var/datum/atom_hud/antag/H in GLOB.huds)
+		for(var/m in GLOB.player_list)
+			var/mob/M = m
+			H.add_hud_to(M)
 
 	CHECK_TICK
 
@@ -346,10 +348,6 @@
 		var/datum/game_mode/dynamic/mode = SSticker.mode
 		parts += "[FOURSPACES]Threat level: [mode.threat_level]"
 		parts += "[FOURSPACES]Threat left: [mode.mid_round_budget]"
-		if(mode.roundend_threat_log.len)
-			parts += "[FOURSPACES]Threat edits:"
-			for(var/entry as anything in mode.roundend_threat_log)
-				parts += "[FOURSPACES][FOURSPACES][entry]<BR>"
 		parts += "[FOURSPACES]Executed rules:"
 		for(var/datum/dynamic_ruleset/rule in mode.executed_rules)
 			parts += "[FOURSPACES][FOURSPACES][rule.ruletype] - <b>[rule.name]</b>: -[rule.cost + rule.scaled_times * rule.scaling_cost] threat"
@@ -443,7 +441,7 @@
 
 /datum/controller/subsystem/ticker/proc/law_report()
 	var/list/parts = list()
-	var/borg_spacer = FALSE //inserts an extra linebreak to separate AIs from independent borgs, and then multiple independent borgs.
+	var/borg_spacer = FALSE //inserts an extra linebreak to seperate AIs from independent borgs, and then multiple independent borgs.
 	//Silicon laws report
 	for (var/i in GLOB.ai_list)
 		var/mob/living/silicon/ai/aiPlayer = i
@@ -589,25 +587,19 @@
 	var/list/all_teams = list()
 	var/list/all_antagonists = list()
 
-	for(var/datum/team/team as anything in GLOB.antagonist_teams)
-		all_teams |= team
+	for(var/datum/team/A in GLOB.antagonist_teams)
+		all_teams |= A
 
-	for(var/datum/antagonist/antagonists as anything in GLOB.antagonists)
-		if(!antagonists.owner)
+	for(var/datum/antagonist/A in GLOB.antagonists)
+		if(!A.owner)
 			continue
-		all_antagonists |= antagonists
+		all_antagonists |= A
 
-	for(var/datum/team/active_teams as anything in all_teams)
-		//check if we should show the team
-		if(!active_teams.show_roundend_report)
-			continue
-
-		//remove the team's individual antag reports, if the team actually shows up in the report.
-		for(var/datum/mind/team_minds as anything in active_teams.members)
-			if(!isnull(team_minds.antag_datums)) // is_special_character passes if they have a special role instead of an antag
-				all_antagonists -= team_minds.antag_datums
-
-		result += active_teams.roundend_report()
+	for(var/datum/team/T in all_teams)
+		result += T.roundend_report()
+		for(var/datum/antagonist/X in all_antagonists)
+			if(X.get_team() == T)
+				all_antagonists -= X
 		result += " "//newline between teams
 		CHECK_TICK
 
@@ -616,18 +608,18 @@
 
 	sortTim(all_antagonists, /proc/cmp_antag_category)
 
-	for(var/datum/antagonist/antagonists in all_antagonists)
-		if(!antagonists.show_in_roundend)
+	for(var/datum/antagonist/A in all_antagonists)
+		if(!A.show_in_roundend)
 			continue
-		if(antagonists.roundend_category != currrent_category)
+		if(A.roundend_category != currrent_category)
 			if(previous_category)
 				result += previous_category.roundend_report_footer()
 				result += "</div>"
 			result += "<div class='panel redborder'>"
-			result += antagonists.roundend_report_header()
-			currrent_category = antagonists.roundend_category
-			previous_category = antagonists
-		result += antagonists.roundend_report()
+			result += A.roundend_report_header()
+			currrent_category = A.roundend_category
+			previous_category = A
+		result += A.roundend_report()
 		result += "<br><br>"
 		CHECK_TICK
 
@@ -652,7 +644,7 @@
 	name = "Show roundend report"
 	button_icon_state = "round_end"
 
-/datum/action/report/Trigger(trigger_flags)
+/datum/action/report/Trigger()
 	if(owner && GLOB.common_report && SSticker.current_state == GAME_STATE_FINISHED)
 		SSticker.show_roundend_report(owner.client)
 
@@ -722,7 +714,7 @@
 	var/list/sql_admins = list()
 	for(var/i in GLOB.protected_admins)
 		var/datum/admins/A = GLOB.protected_admins[i]
-		sql_admins += list(list("ckey" = A.target, "rank" = A.rank_names()))
+		sql_admins += list(list("ckey" = A.target, "rank" = A.rank.name))
 	SSdbcore.MassInsert(format_table_name("admin"), sql_admins, duplicate_key = TRUE)
 	var/datum/db_query/query_admin_rank_update = SSdbcore.NewQuery("UPDATE [format_table_name("player")] p INNER JOIN [format_table_name("admin")] a ON p.ckey = a.ckey SET p.lastadminrank = a.rank")
 	query_admin_rank_update.Execute()
@@ -749,7 +741,7 @@
 			if (!admin)
 				continue
 
-		file_data["admins"][admin_ckey] = admin.rank_names()
+		file_data["admins"][admin_ckey] = admin.rank.name
 
 		if (admin.owner)
 			file_data["connections"][admin_ckey] = list(

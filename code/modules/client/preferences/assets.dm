@@ -2,9 +2,8 @@
 /datum/asset/spritesheet/preferences
 	name = "preferences"
 	early = TRUE
-	cross_round_cachable = TRUE
 
-/datum/asset/spritesheet/preferences/create_spritesheets()
+/datum/asset/spritesheet/preferences/register()
 	var/list/to_insert = list()
 
 	for (var/preference_key in GLOB.preference_entries_by_key)
@@ -32,10 +31,12 @@
 				CRASH("[create_icon_of] is an invalid preference value (from [preference_key]:[preference_value]).")
 
 			to_insert[preference.get_spritesheet_key(preference_value)] = list(icon, icon_state)
-	
+
 	for (var/spritesheet_key in to_insert)
 		var/list/inserting = to_insert[spritesheet_key]
 		Insert(spritesheet_key, inserting[1], inserting[2])
+
+	return ..()
 
 /// Returns the key that will be used in the spritesheet for a given value.
 /datum/preference/proc/get_spritesheet_key(value)

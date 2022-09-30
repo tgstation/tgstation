@@ -14,22 +14,28 @@
 		return
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
 	shield_uses = round(our_seed.potency / 20)
-	//deliver us from evil o melon god
-	our_plant.AddComponent(/datum/component/anti_magic, \
-		antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY, \
-		inventory_flags = ITEM_SLOT_HANDS, \
-		charges = shield_uses, \
-		drain_antimagic = CALLBACK(src, .proc/drain_antimagic), \
-		expiration = CALLBACK(src, .proc/expire), \
-	)
+	our_plant.AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, ITEM_SLOT_HANDS, shield_uses, TRUE, CALLBACK(src, .proc/block_magic), CALLBACK(src, .proc/expire)) //deliver us from evil o melon god
 
-/// When the plant our gene is hosted in is drained of an anti-magic charge.
-/datum/plant_gene/trait/anti_magic/proc/drain_antimagic(mob/user, obj/item/our_plant)
-	to_chat(user, span_warning("[our_plant] hums slightly, and seems to decay a bit."))
+/*
+ * The proc called when the holymelon successfully blocks a spell.
+ *
+ * user - the mob who's using the melon
+ * major - whether the spell was 'major' or not
+ * our_plant - our plant, who's eating the magic spell
+ */
+/datum/plant_gene/trait/anti_magic/proc/block_magic(mob/user, major, obj/item/our_plant)
+	if(major)
+		to_chat(user, "<span class='warning'>[our_plant] hums slightly, and seems to decay a bit.</span>")
 
-/// When the plant our gene is hosted in is drained of all of its anti-magic charges.
+/*
+ * The proc called when the holymelon uses up all of its anti-magic charges.
+ *
+ * user - the mob who's using the melon
+ * major - whether the spell was 'major' or not
+ * our_plant - our plant, who tragically melted protecting us from magics
+ */
 /datum/plant_gene/trait/anti_magic/proc/expire(mob/user, obj/item/our_plant)
-	to_chat(user, span_warning("[our_plant] rapidly turns into ash!"))
+	to_chat(user, "<span class='warning'>[our_plant] rapidly turns into ash!</span>")
 	new /obj/effect/decal/cleanable/ash(our_plant.drop_location())
 	qdel(our_plant)
 
@@ -38,10 +44,6 @@
 	name = "On Attack Trait"
 	/// The multiplier we apply to the potency to calculate force. Set to 0 to not affect the force.
 	var/force_multiplier = 0
-	/// If TRUE, our plant will degrade in force every hit until diappearing.
-	var/degrades_after_hit = FALSE
-	/// When we fully degrade, what degraded off of us?
-	var/degradation_noun = "leaves"
 
 /datum/plant_gene/trait/attack/on_new_plant(obj/item/our_plant, newloc)
 	. = ..()
@@ -54,102 +56,83 @@
 	RegisterSignal(our_plant, COMSIG_ITEM_ATTACK, .proc/on_plant_attack)
 	RegisterSignal(our_plant, COMSIG_ITEM_AFTERATTACK, .proc/after_plant_attack)
 
-/// Signal proc for [COMSIG_ITEM_ATTACK] that allows for effects on attack
-/datum/plant_gene/trait/attack/proc/on_plant_attack(obj/item/source, mob/living/target, mob/living/user)
-	SIGNAL_HANDLER
-
-	INVOKE_ASYNC(src, .proc/attack_effect, source, target, user)
-
 /*
- * Effects done when we hit people with our plant, ON attack.
- * Override on a per-plant basis.
+ * Plant effects ON attack.
  *
  * our_plant - our plant, that we're attacking with
  * user - the person who is attacking with the plant
  * target - the person who is attacked by the plant
  */
-/datum/plant_gene/trait/attack/proc/attack_effect(obj/item/our_plant, mob/living/target, mob/living/user)
-	return
-
-/// Signal proc for [COMSIG_ITEM_AFTERATTACK] that allows for effects after an attack is done
-/datum/plant_gene/trait/attack/proc/after_plant_attack(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)
+/datum/plant_gene/trait/attack/proc/on_plant_attack(obj/item/our_plant, mob/living/target, mob/living/user)
 	SIGNAL_HANDLER
 
-	if(!proximity_flag)
-		return
-
-	if(!ismovable(target))
-		return
-
-	if(isobj(target))
-		var/obj/object_target = target
-		if(!(object_target.obj_flags & CAN_BE_HIT))
-			return
-
-	INVOKE_ASYNC(src, .proc/after_attack_effect, source, target, user)
-
 /*
- * Effects done when we hit people with our plant, AFTER the attack is done.
- * Extend on a per-plant basis.
+ * Plant effects AFTER attack.
  *
  * our_plant - our plant, that we're attacking with
  * user - the person who is attacking with the plant
  * target - the atom which is attacked by the plant
  */
-/datum/plant_gene/trait/attack/proc/after_attack_effect(obj/item/our_plant, atom/target, mob/living/user)
-	SHOULD_CALL_PARENT(TRUE)
-
-	if(!degrades_after_hit)
-		return
-
-	// We probably hit something or someone. Reduce our force
-	if(our_plant.force > 0)
-		our_plant.force -= rand(1, (our_plant.force / 3) + 1)
-		return
-
-	// When our force degrades to zero or below, we're all done
-	to_chat(user, span_warning("All the [degradation_noun] have fallen off [our_plant] from violent whacking!"))
-	qdel(our_plant)
+/datum/plant_gene/trait/attack/proc/after_plant_attack(obj/item/our_plant, atom/target, mob/user)
+	SIGNAL_HANDLER
 
 /// Novaflower's attack effects (sets people on fire) + degradation on attack
 /datum/plant_gene/trait/attack/novaflower_attack
 	name = "Heated Petals"
 	force_multiplier = 0.2
-	degrades_after_hit = TRUE
-	degradation_noun = "petals"
 
-/datum/plant_gene/trait/attack/novaflower_attack/attack_effect(obj/item/our_plant, mob/living/target, mob/living/user)
-	if(!istype(target))
-		return
+/datum/plant_gene/trait/attack/novaflower_attack/on_plant_attack(obj/item/our_plant, mob/living/target, mob/living/user)
+	. = ..()
 
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
-	to_chat(target, span_danger("You are lit on fire from the intense heat of [our_plant]!"))
-	target.adjust_fire_stacks(round(our_seed.potency / 20))
-	if(target.ignite_mob())
+	to_chat(target, "<span class='danger'>You are lit on fire from the intense heat of [our_plant]!</span>")
+	target.adjust_fire_stacks(our_seed.potency / 20)
+	if(target.IgniteMob())
 		message_admins("[ADMIN_LOOKUPFLW(user)] set [ADMIN_LOOKUPFLW(target)] on fire with [our_plant] at [AREACOORD(user)]")
-		user.log_message("set [key_name(target)] on fire with [our_plant]", LOG_ATTACK)
-		target.log_message("was set on fire by [key_name(user)] with [our_plant].", LOG_VICTIM, log_globally = FALSE)
+		log_game("[key_name(user)] set [key_name(target)] on fire with [our_plant] at [AREACOORD(user)]")
 	our_plant.investigate_log("was used by [key_name(user)] to burn [key_name(target)] at [AREACOORD(user)]", INVESTIGATE_BOTANY)
+
+/datum/plant_gene/trait/attack/novaflower_attack/after_plant_attack(obj/item/our_plant, atom/target, mob/user)
+	. = ..()
+
+	if(!ismovable(target))
+		return
+	if(our_plant.force > 0)
+		our_plant.force -= rand(1, (our_plant.force / 3) + 1)
+	else
+		to_chat(user, "<span class='warning'>All the petals have fallen off [our_plant] from violent whacking!</span>")
+		qdel(our_plant)
 
 /// Sunflower's attack effect (shows cute text)
 /datum/plant_gene/trait/attack/sunflower_attack
 	name = "Bright Petals"
 
-/datum/plant_gene/trait/attack/sunflower_attack/after_attack_effect(obj/item/our_plant, atom/target, mob/user, proximity_flag, click_parameters)
-	if(ismob(target))
-		var/mob/target_mob = target
-		user.visible_message("<font color='green'>[user] smacks [target_mob] with [user.p_their()] [our_plant.name]! <font color='orange'><b>FLOWER POWER!</b></font></font>", ignored_mobs = list(target_mob, user))
-		if(target_mob != user)
-			to_chat(target_mob, "<font color='green'>[user] smacks you with [our_plant]!<font color='orange'><b>FLOWER POWER!</b></font></font>")
-		to_chat(user, "<font color='green'>Your [our_plant.name]'s <font color='orange'><b>FLOWER POWER</b></font> strikes [target_mob]!</font>")
+/datum/plant_gene/trait/attack/sunflower_attack/after_plant_attack(obj/item/our_plant, atom/target, mob/living/user)
+	. = ..()
 
-	return ..()
+	if(!ismob(target))
+		return
+	var/mob/target_mob = target
+	user.visible_message("<font color='green'>[user] smacks [target_mob] with [user.p_their()] [our_plant.name]! <font color='orange'><b>FLOWER POWER!</b></font></font>", ignored_mobs = list(target_mob, user))
+	if(target_mob != user)
+		to_chat(target_mob, "<font color='green'>[user] smacks you with [our_plant]!<font color='orange'><b>FLOWER POWER!</b></font></font>")
+	to_chat(user, "<font color='green'>Your [our_plant.name]'s <font color='orange'><b>FLOWER POWER</b></font> strikes [target_mob]!</font>")
 
 /// Normal nettle's force + degradation on attack
 /datum/plant_gene/trait/attack/nettle_attack
 	name = "Sharpened Leaves"
 	force_multiplier = 0.2
-	degrades_after_hit = TRUE
+
+/datum/plant_gene/trait/attack/nettle_attack/after_plant_attack(obj/item/our_plant, atom/target, mob/user)
+	. = ..()
+
+	if(!ismovable(target))
+		return
+	if(our_plant.force > 0)
+		our_plant.force -= rand(1, (our_plant.force / 3) + 1)
+	else
+		to_chat(user, "<span class='warning'>All the leaves have fallen off [our_plant] from violent whacking!</span>")
+		qdel(our_plant)
 
 /// Deathnettle force + degradation on attack
 /datum/plant_gene/trait/attack/nettle_attack/death
@@ -162,9 +145,9 @@
 	/// Whether our actions are cancelled when the backfire triggers.
 	var/cancel_action_on_backfire = FALSE
 	/// A list of extra traits to check to be considered safe.
-	var/list/traits_to_check
+	var/traits_to_check
 	/// A list of extra genes to check to be considered safe.
-	var/list/genes_to_check
+	var/genes_to_check
 
 /datum/plant_gene/trait/backfire/on_new_plant(obj/item/our_plant, newloc)
 	. = ..()
@@ -172,20 +155,16 @@
 		return
 
 	our_plant.AddElement(/datum/element/plant_backfire, cancel_action_on_backfire, traits_to_check, genes_to_check)
-	RegisterSignal(our_plant, COMSIG_PLANT_ON_BACKFIRE, .proc/on_backfire)
+	RegisterSignal(our_plant, COMSIG_PLANT_ON_BACKFIRE, .proc/backfire_effect)
 
-/// Signal proc for [COMSIG_PLANT_ON_BACKFIRE] that causes the backfire effect.
-/datum/plant_gene/trait/backfire/proc/on_backfire(obj/item/source, mob/living/carbon/user)
-	SIGNAL_HANDLER
-
-	INVOKE_ASYNC(src, .proc/backfire_effect, source, user)
-
-/**
- * The actual backfire effect on the user.
- * Override with plant-specific effects.
+/*
+ * The backfire effect. Override with plant-specific effects.
+ *
+ * user - the person who is carrying the plant
+ * our_plant - our plant
  */
 /datum/plant_gene/trait/backfire/proc/backfire_effect(obj/item/our_plant, mob/living/carbon/user)
-	return
+	SIGNAL_HANDLER
 
 /// Rose's prick on backfire
 /datum/plant_gene/trait/backfire/rose_thorns
@@ -193,15 +172,18 @@
 	traits_to_check = list(TRAIT_PIERCEIMMUNE)
 
 /datum/plant_gene/trait/backfire/rose_thorns/backfire_effect(obj/item/our_plant, mob/living/carbon/user)
+	. = ..()
+
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
 	if(!our_seed.get_gene(/datum/plant_gene/trait/sticky) && prob(66))
-		to_chat(user, span_danger("[our_plant]'s thorns nearly prick your hand. Best be careful."))
+		to_chat(user, "<span class='danger'>[our_plant]'s thorns nearly prick your hand. Best be careful.</span>")
 		return
 
-	to_chat(user, span_danger("[our_plant]'s thorns prick your hand. Ouch."))
+	to_chat(user, "<span class='danger'>[our_plant]'s thorns prick your hand. Ouch.</span>")
 	our_plant.investigate_log("rose-pricked [key_name(user)] at [AREACOORD(user)]", INVESTIGATE_BOTANY)
 	var/obj/item/bodypart/affecting = user.get_active_hand()
-	affecting?.receive_damage(2)
+	if(affecting?.receive_damage(2))
+		user.update_damage_overlays()
 
 /// Novaflower's hand burn on backfire
 /datum/plant_gene/trait/backfire/novaflower_heat
@@ -209,20 +191,26 @@
 	cancel_action_on_backfire = TRUE
 
 /datum/plant_gene/trait/backfire/novaflower_heat/backfire_effect(obj/item/our_plant, mob/living/carbon/user)
-	to_chat(user, span_danger("[our_plant] singes your bare hand!"))
+	. = ..()
+
+	to_chat(user, "<span class='danger'>[our_plant] singes your bare hand!</span>")
 	our_plant.investigate_log("self-burned [key_name(user)] for [our_plant.force] at [AREACOORD(user)]", INVESTIGATE_BOTANY)
 	var/obj/item/bodypart/affecting = user.get_active_hand()
-	return affecting?.receive_damage(0, our_plant.force, wound_bonus = CANT_WOUND)
+	if(affecting?.receive_damage(0, our_plant.force, wound_bonus = CANT_WOUND))
+		user.update_damage_overlays()
 
 /// Normal Nettle hannd burn on backfire
 /datum/plant_gene/trait/backfire/nettle_burn
 	name = "Stinging Stem"
 
 /datum/plant_gene/trait/backfire/nettle_burn/backfire_effect(obj/item/our_plant, mob/living/carbon/user)
-	to_chat(user, span_danger("[our_plant] burns your bare hand!"))
+	. = ..()
+
+	to_chat(user, "<span class='danger'>[our_plant] burns your bare hand!</span>")
 	our_plant.investigate_log("self-burned [key_name(user)] for [our_plant.force] at [AREACOORD(user)]", INVESTIGATE_BOTANY)
 	var/obj/item/bodypart/affecting = user.get_active_hand()
-	return affecting?.receive_damage(0, our_plant.force, wound_bonus = CANT_WOUND)
+	if(affecting?.receive_damage(0, our_plant.force, wound_bonus = CANT_WOUND))
+		user.update_damage_overlays()
 
 /// Deathnettle hand burn + stun on backfire
 /datum/plant_gene/trait/backfire/nettle_burn/death
@@ -231,11 +219,10 @@
 
 /datum/plant_gene/trait/backfire/nettle_burn/death/backfire_effect(obj/item/our_plant, mob/living/carbon/user)
 	. = ..()
-	if(!. || prob(50))
-		return
 
-	user.Paralyze(10 SECONDS)
-	to_chat(user, span_userdanger("You are stunned by the powerful acids of [our_plant]!"))
+	if(prob(50))
+		user.Paralyze(100)
+		to_chat(user, "<span class='userdanger'>You are stunned by the powerful acids of [our_plant]!</span>")
 
 /// Ghost-Chili heating up on backfire
 /datum/plant_gene/trait/backfire/chili_heat
@@ -261,6 +248,8 @@
  * user - the mob holding our plant
  */
 /datum/plant_gene/trait/backfire/chili_heat/backfire_effect(obj/item/our_plant, mob/living/carbon/user)
+	. = ..()
+
 	held_mob = WEAKREF(user)
 	START_PROCESSING(SSobj, src)
 
@@ -299,18 +288,15 @@
 	genes_to_check = list(/datum/plant_gene/trait/squash)
 
 /datum/plant_gene/trait/backfire/bluespace/backfire_effect(obj/item/our_plant, mob/living/carbon/user)
+	. = ..()
+
 	if(prob(50))
-		return
-
-	to_chat(user, span_danger("[our_plant] slips out of your hand!"))
-
-	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
-	var/datum/plant_gene/trait/squash/squash_gene = our_seed.get_gene(/datum/plant_gene/trait/squash)
-	squash_gene.squash_plant(our_plant, user)
+		to_chat(user, "<span class='danger'>[our_plant] slips out of your hand!</span>")
+		INVOKE_ASYNC(our_plant, /obj/item/.proc/attack_self, user)
 
 /// Traits for plants that can be activated to turn into a mob.
 /datum/plant_gene/trait/mob_transformation
-	name = "Dormant Ferocity"
+	name = "Dormat Ferocity"
 	trait_ids = ATTACK_SELF_ID
 	/// Whether mobs spawned by this trait are dangerous or not.
 	var/dangerous = FALSE
@@ -353,8 +339,8 @@
 		return
 
 	if(target != user)
-		to_chat(user, span_warning("[our_plant] is twitching and shaking, preventing you from feeding it to [target]."))
-	to_chat(target, span_warning("[our_plant] is twitching and shaking, preventing you from eating it."))
+		to_chat(user, "<span class='warning'>[our_plant] is twitching and shaking, preventing you from feeding it to [target].</span>")
+	to_chat(target, "<span class='warning'>[our_plant] is twitching and shaking, preventing you from eating it.</span>")
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /*
@@ -371,12 +357,12 @@
 		return
 
 	if(dangerous && HAS_TRAIT(user, TRAIT_PACIFISM))
-		to_chat(user, span_notice("You decide not to awaken [our_plant]. It may be very dangerous!"))
+		to_chat(user, "<span class='notice'>You decide not to awaken [our_plant]. It may be very dangerous!</span>")
 		return
 
-	to_chat(user, span_notice("You begin to awaken [our_plant]..."))
+	to_chat(user, "<span class='notice'>You begin to awaken [our_plant]...</span>")
 	begin_awaken(our_plant, 3 SECONDS)
-	our_plant.investigate_log("was awakened by [key_name(user)] at [AREACOORD(user)].", INVESTIGATE_BOTANY)
+	log_game("[key_name(user)] awakened a [our_plant] at [AREACOORD(user)].")
 
 /*
  * Called when a user accidentally activates the plant via backfire effect.
@@ -388,9 +374,8 @@
 	SIGNAL_HANDLER
 
 	if(!awakening && !isspaceturf(user.loc) && prob(25))
-		our_plant.visible_message(span_danger("[our_plant] begins to growl and shake!"))
+		to_chat(user, "<span class='danger'>[our_plant] begins to growl and shake!</span>")
 		begin_awaken(our_plant, 1 SECONDS)
-		our_plant.investigate_log("was awakened (via plant backfire) by [key_name(user)] at [AREACOORD(user)].", INVESTIGATE_BOTANY)
 
 /*
  * Actually begin the process of awakening the plant.
@@ -422,7 +407,7 @@
 		spawned_simplemob.melee_damage_upper += round(our_seed.potency * mob_melee_multiplier)
 		spawned_simplemob.move_to_delay -= round(our_seed.production * mob_speed_multiplier)
 	our_plant.forceMove(our_plant.drop_location())
-	spawned_mob.visible_message(span_notice("[our_plant] growls as it suddenly awakens!"))
+	spawned_mob.visible_message("<span class='notice'>[our_plant] growls as it suddenly awakens!</span>")
 	qdel(our_plant)
 
 /// Killer Tomato's transformation gene.
@@ -511,10 +496,7 @@
 		our_plant.color = COLOR_RED
 
 	playsound(our_plant, 'sound/effects/fuse.ogg', our_seed.potency, FALSE)
-	user.visible_message(
-		span_warning("[user] plucks the stem from [our_plant]!"),
-		span_userdanger("You pluck the stem from [our_plant], which begins to hiss loudly!"),
-	)
+	user.visible_message("<span class='warning'>[user] plucks the stem from [our_plant]!</span>", "<span class='userdanger'>You pluck the stem from [our_plant], which begins to hiss loudly!</span>")
 	log_bomber(user, "primed a", our_plant, "for detonation")
 	detonate(our_plant)
 
@@ -560,10 +542,7 @@
 	name = "Explosive Nature"
 
 /datum/plant_gene/trait/bomb_plant/potency_based/trigger_detonation(obj/item/our_plant, mob/living/user)
-	user.visible_message(
-		span_warning("[user] primes [our_plant]!"),
-		span_userdanger("You prime [our_plant]!"),
-	)
+	user.visible_message("<span class='warning'>[user] primes [our_plant]!</span>", "<span class='userdanger'>You prime [our_plant]!</span>")
 	log_bomber(user, "primed a", our_plant, "for detonation")
 
 	var/obj/item/food/grown/grown_plant = our_plant
@@ -665,25 +644,20 @@
 /datum/plant_gene/trait/carnivory/jupitercup
 	mutability_flags = PLANT_GENE_GRAFTABLE
 
-/// Preset plant reagent genes that are unremovable from a plant.
-/datum/plant_gene/reagent/preset
-	mutability_flags = PLANT_GENE_GRAFTABLE
-
-/datum/plant_gene/reagent/preset/New(new_reagent_id, new_reagent_rate = 0.04)
-	. = ..()
-	set_reagent(reagent_id)
-
 /// Spaceman's Trumpet fragile Polypyrylium Oligomers
-/datum/plant_gene/reagent/preset/polypyr
+/datum/plant_gene/reagent/polypyr
 	reagent_id = /datum/reagent/medicine/polypyr
 	rate = 0.15
+	mutability_flags = PLANT_GENE_GRAFTABLE
 
 /// Jupitercup's fragile Liquid Electricity
-/datum/plant_gene/reagent/preset/liquidelectricity
+/datum/plant_gene/reagent/liquidelectricity
 	reagent_id = /datum/reagent/consumable/liquidelectricity/enriched
 	rate = 0.1
+	mutability_flags = PLANT_GENE_GRAFTABLE
 
 /// Carbon Roses's fragile Carbon
-/datum/plant_gene/reagent/preset/carbon
+/datum/plant_gene/reagent/carbon
 	reagent_id = /datum/reagent/carbon
 	rate = 0.1
+	mutability_flags = PLANT_GENE_GRAFTABLE

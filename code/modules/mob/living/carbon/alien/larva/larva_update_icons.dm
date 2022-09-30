@@ -25,7 +25,7 @@
 	. = ..()
 	update_icons()
 
-/mob/living/carbon/alien/larva/update_worn_handcuffs()
+/mob/living/carbon/alien/larva/update_inv_handcuffed()
 	update_icons() //larva icon_state changes if cuffed/uncuffed.
 
 

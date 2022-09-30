@@ -101,7 +101,7 @@
 			"contents" = list_contents)
 
 	// JATUM is really only meant for PoD types
-	if(!isdatum(value)\
+	if(!istype(value, /datum)\
 		|| istype(value, /image)\
 		|| istype(value, /icon)\
 		|| istype(value, /sound)\

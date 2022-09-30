@@ -4,8 +4,8 @@
  * Abstract component for handling variables
  */
 /obj/item/circuit_component/variable
-	display_name = "Abstract Variable Component"
-	desc = "You shouldn't be seeing this."
+	display_name = "Variable Getter"
+	desc = "A component that gets a variable globally on the circuit."
 
 	/// Variable name
 	var/datum/port/input/option/variable_name
@@ -13,17 +13,12 @@
 	var/datum/circuit_variable/current_variable
 	circuit_size = 0
 
-	var/should_listen = FALSE
-
 /obj/item/circuit_component/variable/populate_options()
 	variable_name = add_option_port("Variable", null)
 
 /obj/item/circuit_component/variable/add_to(obj/item/integrated_circuit/added_to)
 	. = ..()
-	variable_name.possible_options = get_variable_list(added_to)
-
-/obj/item/circuit_component/variable/proc/get_variable_list(obj/item/integrated_circuit/integrated_circuit)
-	return integrated_circuit.circuit_variables
+	variable_name.possible_options = added_to.circuit_variables
 
 /obj/item/circuit_component/variable/removed_from(obj/item/integrated_circuit/removed_from)
 	variable_name.possible_options = null
@@ -48,8 +43,7 @@
 /obj/item/circuit_component/variable/proc/remove_current_variable()
 	SIGNAL_HANDLER
 	if(current_variable)
-		if(should_listen)
-			current_variable.remove_listener(src)
+		current_variable.remove_listener(src)
 		UnregisterSignal(current_variable, COMSIG_PARENT_QDELETING)
 		current_variable = null
 
@@ -59,6 +53,5 @@
 
 	remove_current_variable()
 	current_variable = variable
-	if(should_listen)
-		current_variable.add_listener(src)
+	current_variable.add_listener(src)
 	RegisterSignal(current_variable, COMSIG_PARENT_QDELETING, .proc/remove_current_variable)

@@ -2,7 +2,7 @@
 /obj/singularity
 	name = "gravitational singularity"
 	desc = "A gravitational singularity."
-	icon = 'icons/obj/engine/singularity.dmi'
+	icon = 'icons/obj/singularity.dmi'
 	icon_state = "singularity_s1"
 	anchored = TRUE
 	density = TRUE
@@ -35,8 +35,6 @@
 	var/move_self = TRUE
 	///If the singularity has eaten a supermatter shard and can go to stage six
 	var/consumed_supermatter = FALSE
-	/// How long it's been since the singulo last acted, in seconds
-	var/time_since_act = 0
 
 	flags_1 = SUPERMATTER_IGNORES_1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
@@ -47,7 +45,7 @@
 
 	energy = starting_energy
 
-	START_PROCESSING(SSsinguloprocess, src)
+	START_PROCESSING(SSobj, src)
 	SSpoints_of_interest.make_point_of_interest(src)
 
 	var/datum/component/singularity/new_component = AddComponent(
@@ -77,7 +75,7 @@
 
 
 /obj/singularity/Destroy()
-	STOP_PROCESSING(SSsinguloprocess, src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/singularity/attack_tk(mob/user)
@@ -136,7 +134,7 @@
 	switch(severity)
 		if(EXPLODE_DEVASTATE)
 			if(current_size <= STAGE_TWO)
-				investigate_log("has been destroyed by a heavy explosion.", INVESTIGATE_ENGINE)
+				investigate_log("has been destroyed by a heavy explosion.", INVESTIGATE_SINGULO)
 				qdel(src)
 				return
 
@@ -147,12 +145,8 @@
 			energy -= round(((energy + 1) / 4), 1)
 
 /obj/singularity/process(delta_time)
-	time_since_act += delta_time
-	if(time_since_act < 2)
-		return
-	time_since_act = 0
 	if(current_size >= STAGE_TWO)
-		if(prob(event_chance))
+		if(prob(event_chance))//Chance for it to run a special event TODO:Come up with one or two more that fit
 			event()
 	dissipate(delta_time)
 	check_energy()
@@ -183,7 +177,7 @@
 	switch(temp_allowed_size)
 		if(STAGE_ONE)
 			current_size = STAGE_ONE
-			icon = 'icons/obj/engine/singularity.dmi'
+			icon = 'icons/obj/singularity.dmi'
 			icon_state = "singularity_s1"
 			pixel_x = 0
 			pixel_y = 0
@@ -256,7 +250,7 @@
 		resolved_singularity.singularity_size = current_size
 
 	if(current_size == allowed_size)
-		investigate_log("grew to size [current_size].", INVESTIGATE_ENGINE)
+		investigate_log("<font color='red'>grew to size [current_size]</font>", INVESTIGATE_SINGULO)
 		return TRUE
 	else if(current_size < (--temp_allowed_size))
 		expand(temp_allowed_size)
@@ -265,7 +259,7 @@
 
 /obj/singularity/proc/check_energy()
 	if(energy <= 0)
-		investigate_log("collapsed.", INVESTIGATE_ENGINE)
+		investigate_log("collapsed.", INVESTIGATE_SINGULO)
 		qdel(src)
 		return FALSE
 	switch(energy)//Some of these numbers might need to be changed up later -Mport
@@ -334,10 +328,10 @@
 	var/dir2 = 0
 	var/dir3 = 0
 	switch(direction)
-		if(NORTH, SOUTH)
+		if(NORTH||SOUTH)
 			dir2 = 4
 			dir3 = 8
-		if(EAST, WEST)
+		if(EAST||WEST)
 			dir2 = 1
 			dir3 = 2
 	var/turf/other_turf = considered_turf
@@ -395,22 +389,22 @@
 			span_userdanger("You feel an inner fire as your skin bursts into flames!")
 		)
 		burned_mob.adjust_fire_stacks(5)
-		burned_mob.ignite_mob()
+		burned_mob.IgniteMob()
 	return
 
 /obj/singularity/proc/mezzer()
 	for(var/mob/living/carbon/stunned_mob in oviewers(8, src))
-		if(stunned_mob.stat == DEAD || stunned_mob.is_blind())
+		if(isbrain(stunned_mob)) //Ignore brains
 			continue
 
-		if(!ishuman(stunned_mob))
+		if(stunned_mob.stat != CONSCIOUS || !ishuman(stunned_mob))
 			apply_stun(stunned_mob)
 			continue
 
 		var/mob/living/carbon/human/stunned_human = stunned_mob
 		if(istype(stunned_human.glasses, /obj/item/clothing/glasses/meson))
 			var/obj/item/clothing/glasses/meson/check_meson = stunned_human.glasses
-			if(check_meson.vision_flags & SEE_TURFS)
+			if(check_meson.vision_flags == SEE_TURFS)
 				to_chat(stunned_human, span_notice("You look directly into the [name], good thing you had your protective eyewear on!"))
 				continue
 
@@ -429,7 +423,7 @@
 /obj/singularity/singularity_act()
 	var/gain = (energy/2)
 	var/dist = max((current_size - 2),1)
-	investigate_log("has been destroyed by another singularity.", INVESTIGATE_ENGINE)
+	investigate_log("has been destroyed by another singularity.", INVESTIGATE_SINGULO)
 	explosion(
 		src,
 		devastation_range = dist,

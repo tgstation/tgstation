@@ -15,7 +15,7 @@
 /datum/crafting_recipe/food/cheesyburrito
 	name ="Cheesy burrito"
 	reqs = list(
-		/obj/item/food/cheese/wedge = 2,
+		/obj/item/food/cheese = 2,
 		/obj/item/food/tortilla = 1,
 		/obj/item/food/grown/soybeans = 1
 	)
@@ -55,7 +55,7 @@
 	name ="Cheesy nachos"
 	reqs = list(
 		/datum/reagent/consumable/salt = 1,
-		/obj/item/food/cheese/wedge = 1,
+		/obj/item/food/cheese = 1,
 		/obj/item/food/tortilla = 1
 	)
 	result = /obj/item/food/cheesynachos
@@ -75,7 +75,7 @@
 	name ="Classic Taco"
 	reqs = list(
 		/obj/item/food/tortilla = 1,
-		/obj/item/food/cheese/wedge = 1,
+		/obj/item/food/cheese = 1,
 		/obj/item/food/meat/cutlet = 1,
 		/obj/item/food/grown/cabbage = 1,
 	)
@@ -86,7 +86,7 @@
 	name ="Plain Taco"
 	reqs = list(
 		/obj/item/food/tortilla = 1,
-		/obj/item/food/cheese/wedge = 1,
+		/obj/item/food/cheese = 1,
 		/obj/item/food/meat/cutlet = 1,
 	)
 	result = /obj/item/food/taco/plain
@@ -107,20 +107,9 @@
 	time = 40
 	reqs = list(
 		/obj/item/food/meat/steak/goliath = 1,
-		/obj/item/organ/internal/regenerative_core/legion = 1,
+		/obj/item/organ/regenerative_core/legion = 1,
 		/datum/reagent/consumable/ketchup = 2,
 		/datum/reagent/consumable/capsaicin = 2
 	)
 	result = /obj/item/food/stuffedlegion
-	subcategory = CAT_MEXICAN
-
-/datum/crafting_recipe/food/chipsandsalsa
-	name = "Chips and salsa"
-	reqs = list(
-		/obj/item/food/cornchips = 1,
-		/obj/item/food/grown/chili = 1,
-		/obj/item/food/grown/onion = 1,
-		/obj/item/food/grown/tomato = 1
-	)
-	result = /obj/item/food/chipsandsalsa
 	subcategory = CAT_MEXICAN

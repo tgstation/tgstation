@@ -4,10 +4,10 @@
 //Though it could easily be expanded to cover other senders/revievers
 //The system as a whole differs from reading off a global list in a few ways.
 //In that A, it allows us to send cameras for ais/borgs/potentially others to jump to
-//And B, it's not like we're giving you all the alarms that have been sent, because of the separate listing for each reviever
-//You only receive alarms sent after you start to listen
-//Also of note, due to an optimization done on areas, one alarm handler will only ever send one "on" or "off" alarm
-//So the whole only receiving stuff sent post creation thing actually matters
+//And B, it's not like we're giving you all the alarms that have been sent, because of the seperate listing for each reviever
+//You only recieve alarms sent after you start to listen
+//Also of note, due to an optimzation done on areas, one alarm handler will only ever send one "on" or "off" alarm
+//So the whole only receving stuff sent post creation thing actually matters
 //Honestly I'm not sure how much of this is a feature, and how much is just old code
 //But I'm leaving it how I found it
 
@@ -22,7 +22,7 @@
 	if(istype(source_atom))
 		src.source_atom = source_atom
 	else
-		var/source_type = (isdatum(source_atom)) ? source_atom.type : ""
+		var/source_type = (istype(source_atom, /datum)) ? source_atom.type : ""
 		stack_trace("a non atom was passed into alarm_handler! [source_atom] [source_type]")
 	return ..()
 
@@ -61,8 +61,7 @@
 
 	our_area.active_alarms[alarm_type] += 1
 
-	SEND_SIGNAL(src, COMSIG_ALARM_TRIGGERED, alarm_type, our_area)
-	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_ALARM_FIRE(alarm_type), src, alarm_type, our_area, our_z_level, optional_camera)
+	SEND_GLOBAL_SIGNAL(COMSIG_ALARM_FIRE(alarm_type), src, alarm_type, our_area, our_z_level, optional_camera)
 
 	return TRUE
 
@@ -96,8 +95,7 @@
 	if(!length(our_area.active_alarms))
 		our_area.active_alarms -= alarm_type
 
-	SEND_SIGNAL(src, COMSIG_ALARM_CLEARED, alarm_type, our_area)
-	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_ALARM_CLEAR(alarm_type), src, alarm_type, our_area)
+	SEND_GLOBAL_SIGNAL(COMSIG_ALARM_CLEAR(alarm_type), src, alarm_type, our_area)
 	return TRUE
 
 /datum/alarm_listener
@@ -116,8 +114,8 @@
 	src.allowed_z_levels = allowed_z_levels
 	src.allowed_areas = allowed_areas
 	for(var/alarm_type in alarms_to_listen_for)
-		RegisterSignal(SSdcs, COMSIG_GLOB_ALARM_FIRE(alarm_type), .proc/add_alarm)
-		RegisterSignal(SSdcs, COMSIG_GLOB_ALARM_CLEAR(alarm_type), .proc/clear_alarm)
+		RegisterSignal(SSdcs, COMSIG_ALARM_FIRE(alarm_type), .proc/add_alarm)
+		RegisterSignal(SSdcs, COMSIG_ALARM_CLEAR(alarm_type), .proc/clear_alarm)
 
 	return ..()
 
@@ -155,7 +153,7 @@
 
 	//This does mean that only the first alarm of that camera type in the area will send a ping, but jesus what else can ya do
 	alarms_of_our_type[source_area.name] = list(source_area, cameras, list(handler))
-	SEND_SIGNAL(src, COMSIG_ALARM_LISTENER_TRIGGERED, alarm_type, source_area)
+	SEND_SIGNAL(src, COMSIG_ALARM_TRIGGERED, alarm_type, source_area)
 
 ///Removes an alarm to our alarms list, you probably shouldn't be calling this manually
 ///It should all be handled by the signal listening we do, unless you want to only remove an alarm to one listener
@@ -185,7 +183,7 @@
 	if(!length(alarms_of_our_type))
 		alarms -= alarm_type
 
-	SEND_SIGNAL(src, COMSIG_ALARM_LISTENER_CLEARED, alarm_type, source_area)
+	SEND_SIGNAL(src, COMSIG_ALARM_CLEARED, alarm_type, source_area)
 
 ///Does what it says on the tin, exists for signal hooking
 /datum/alarm_listener/proc/prevent_alarm_changes()

@@ -7,6 +7,9 @@
 	icon_state = "juicer1"
 	base_icon_state = "juicer"
 	layer = BELOW_OBJ_LAYER
+	use_power = IDLE_POWER_USE
+	idle_power_usage = 5
+	active_power_usage = 100
 	circuit = /obj/item/circuitboard/machine/reagentgrinder
 	pass_flags = PASSTABLE
 	resistance_flags = ACID_PROOF
@@ -25,7 +28,7 @@
 /obj/machinery/reagentgrinder/Initialize(mapload)
 	. = ..()
 	holdingitems = list()
-	beaker = new /obj/item/reagent_containers/cup/beaker/large(src)
+	beaker = new /obj/item/reagent_containers/glass/beaker/large(src)
 	warn_of_dust()
 
 /// Add a description to the current beaker warning of blended dust, if it doesn't already have that warning.
@@ -65,7 +68,6 @@
 			SSexplosions.low_mov_atom += beaker
 
 /obj/machinery/reagentgrinder/RefreshParts()
-	. = ..()
 	speed = 1
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		speed = M.rating
@@ -95,22 +97,13 @@
 			for(var/datum/reagent/R in beaker.reagents.reagent_list)
 				. += span_notice("- [R.volume] units of [R.name].")
 
-/obj/machinery/reagentgrinder/attack_hand_secondary(mob/user, list/modifiers)
+/obj/machinery/reagentgrinder/AltClick(mob/user)
 	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+	if(!can_interact(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
-	if(!can_interact(user) || !user.canUseTopic(src, !issilicon(user), FALSE, NO_TK))
-		return
-	if(operating)
+	if(operating)//Prevent alt click early removals
 		return
 	replace_beaker(user)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-/obj/machinery/reagentgrinder/attack_robot_secondary(mob/user, list/modifiers)
-	return attack_hand_secondary(user, modifiers)
-
-/obj/machinery/reagentgrinder/attack_ai_secondary(mob/user, list/modifiers)
-	return attack_hand_secondary(user, modifiers)
 
 /obj/machinery/reagentgrinder/handle_atom_del(atom/A)
 	. = ..()
@@ -141,11 +134,6 @@
 	update_appearance()
 	return TRUE
 
-/obj/machinery/reagentgrinder/wrench_act(mob/living/user, obj/item/tool)
-	. = ..()
-	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
-
 /obj/machinery/reagentgrinder/attackby(obj/item/I, mob/living/user, params)
 	//You can only screw open empty grinder
 	if(!beaker && !length(holdingitems) && default_deconstruction_screwdriver(user, icon_state, icon_state, I))
@@ -154,10 +142,13 @@
 	if(default_deconstruction_crowbar(I))
 		return
 
+	if(default_unfasten_wrench(user, I))
+		return
+
 	if(panel_open) //Can't insert objects when its screwed open
 		return TRUE
 
-	if (is_reagent_container(I) && !(I.item_flags & ABSTRACT) && I.is_open_container())
+	if (istype(I, /obj/item/reagent_containers) && !(I.item_flags & ABSTRACT) && I.is_open_container())
 		var/obj/item/reagent_containers/B = I
 		. = TRUE //no afterattack
 		if(!user.transferItemToLoc(B, src))
@@ -174,7 +165,7 @@
 	//Fill machine with a bag!
 	if(istype(I, /obj/item/storage/bag))
 		var/list/inserted = list()
-		if(I.atom_storage.remove_type(/obj/item/food/grown, src, limit - length(holdingitems), TRUE, FALSE, user, inserted))
+		if(SEND_SIGNAL(I, COMSIG_TRY_STORAGE_TAKE_TYPE, /obj/item/food/grown, src, limit - length(holdingitems), null, null, user, inserted))
 			for(var/i in inserted)
 				holdingitems[i] = TRUE
 			if(!I.contents.len)
@@ -248,7 +239,10 @@
 			examine(user)
 
 /obj/machinery/reagentgrinder/proc/eject(mob/user)
-	drop_all_items()
+	for(var/i in holdingitems)
+		var/obj/item/O = i
+		O.forceMove(drop_location())
+		holdingitems -= O
 	if(beaker)
 		replace_beaker(user)
 
@@ -256,30 +250,15 @@
 	holdingitems -= O
 	qdel(O)
 
-/obj/machinery/reagentgrinder/proc/start_shaking()
-	var/static/list/transforms
-	if(!transforms)
-		var/matrix/M1 = matrix()
-		var/matrix/M2 = matrix()
-		var/matrix/M3 = matrix()
-		var/matrix/M4 = matrix()
-		M1.Translate(-1, 0)
-		M2.Translate(0, 1)
-		M3.Translate(1, 0)
-		M4.Translate(0, -1)
-		transforms = list(M1, M2, M3, M4)
-	animate(src, transform=transforms[1], time=0.4, loop=-1)
-	animate(transform=transforms[2], time=0.2)
-	animate(transform=transforms[3], time=0.4)
-	animate(transform=transforms[4], time=0.6)
-
 /obj/machinery/reagentgrinder/proc/shake_for(duration)
-	start_shaking() //start shaking
-	addtimer(CALLBACK(src, .proc/stop_shaking), duration)
+	var/offset = prob(50) ? -2 : 2
+	var/old_pixel_x = pixel_x
+	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = -1) //start shaking
+	addtimer(CALLBACK(src, .proc/stop_shaking, old_pixel_x), duration)
 
-/obj/machinery/reagentgrinder/proc/stop_shaking()
-	update_appearance()
-	animate(src, transform = matrix())
+/obj/machinery/reagentgrinder/proc/stop_shaking(old_px)
+	animate(src)
+	pixel_x = old_px
 
 /obj/machinery/reagentgrinder/proc/operate_for(time, silent = FALSE, juicing = FALSE)
 	shake_for(time / speed)
@@ -289,7 +268,6 @@
 			playsound(src, 'sound/machines/blender.ogg', 50, TRUE)
 		else
 			playsound(src, 'sound/machines/juicer.ogg', 20, TRUE)
-	use_power(active_power_usage * time * 0.1) // .1 needed here to convert time (in deciseconds) to seconds such that watts * seconds = joules
 	addtimer(CALLBACK(src, .proc/stop_operating), time / speed)
 
 /obj/machinery/reagentgrinder/proc/stop_operating()

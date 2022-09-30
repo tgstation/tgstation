@@ -66,7 +66,7 @@
 	held_items[module_num] = item_module
 	item_module.equipped(src, ITEM_SLOT_HANDS)
 	item_module.mouse_opacity = initial(item_module.mouse_opacity)
-	SET_PLANE_EXPLICIT(item_module, ABOVE_HUD_PLANE, src)
+	item_module.plane = ABOVE_HUD_PLANE
 	item_module.forceMove(src)
 
 	if(istype(item_module, /obj/item/borg/sight))
@@ -97,7 +97,7 @@
 	item_module.mouse_opacity = MOUSE_OPACITY_OPAQUE
 
 	if(istype(item_module, /obj/item/storage/bag/tray/))
-		item_module.atom_storage.remove_all(loc)
+		SEND_SIGNAL(item_module, COMSIG_TRY_STORAGE_QUICK_EMPTY)
 	if(istype(item_module, /obj/item/borg/sight))
 		var/obj/item/borg/sight/borg_sight = item_module
 		sight_mode &= ~borg_sight.sight_mode

@@ -12,7 +12,7 @@
 	"traits": [
 		{
 			"Up": 1,
-			"Baseturf": "/turf/open/misc/asteroid/airless",
+			"Baseturf": "/turf/open/floor/plating/asteroid/airless",
 			"Linkage": "Cross"
 		},
 		{
@@ -22,10 +22,10 @@
 		}
 	],
 	"job_changes": {
-		"Cook": {
-			"additional_cqc_areas": ["/area/station/service/kitchen/diner"]
+		"cook": {
+			"additional_cqc_areas": ["/area/service/kitchen/diner"]
 		},
-		"Captain": {
+		"captain": {
 			"special_charter": "asteroid"
 		}
 	}

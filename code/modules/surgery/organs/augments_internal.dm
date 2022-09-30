@@ -1,15 +1,14 @@
 
-/obj/item/organ/internal/cyberimp
+/obj/item/organ/cyberimp
 	name = "cybernetic implant"
 	desc = "A state-of-the-art implant that improves a baseline's functionality."
-	visual = FALSE
 	status = ORGAN_ROBOTIC
 	organ_flags = ORGAN_SYNTHETIC
 	var/implant_color = "#FFFFFF"
 	var/implant_overlay
 	var/syndicate_implant = FALSE //Makes the implant invisible to health analyzers and medical HUDs.
 
-/obj/item/organ/internal/cyberimp/New(mob/implanted_mob = null)
+/obj/item/organ/cyberimp/New(mob/implanted_mob = null)
 	if(iscarbon(implanted_mob))
 		src.Insert(implanted_mob)
 	if(implant_overlay)
@@ -18,9 +17,11 @@
 		add_overlay(overlay)
 	return ..()
 
+
+
 //[[[[BRAIN]]]]
 
-/obj/item/organ/internal/cyberimp/brain
+/obj/item/organ/cyberimp/brain
 	name = "cybernetic brain implant"
 	desc = "Injectors of extra sub-routines for the brain."
 	icon_state = "brain_implant"
@@ -28,7 +29,7 @@
 	zone = BODY_ZONE_HEAD
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/organ/internal/cyberimp/brain/emp_act(severity)
+/obj/item/organ/cyberimp/brain/emp_act(severity)
 	. = ..()
 	if(!owner || . & EMP_PROTECT_SELF)
 		return
@@ -37,7 +38,7 @@
 	to_chat(owner, span_warning("Your body seizes up!"))
 
 
-/obj/item/organ/internal/cyberimp/brain/anti_drop
+/obj/item/organ/cyberimp/brain/anti_drop
 	name = "anti-drop implant"
 	desc = "This cybernetic brain implant will allow you to force your hand muscles to contract, preventing item dropping. Twitch ear to toggle."
 	var/active = FALSE
@@ -46,7 +47,7 @@
 	slot = ORGAN_SLOT_BRAIN_ANTIDROP
 	actions_types = list(/datum/action/item_action/organ_action/toggle)
 
-/obj/item/organ/internal/cyberimp/brain/anti_drop/ui_action_click()
+/obj/item/organ/cyberimp/brain/anti_drop/ui_action_click()
 	active = !active
 	if(active)
 		var/list/hold_list = owner.get_empty_held_indexes()
@@ -66,7 +67,7 @@
 		to_chat(owner, span_notice("Your hands relax..."))
 
 
-/obj/item/organ/internal/cyberimp/brain/anti_drop/emp_act(severity)
+/obj/item/organ/cyberimp/brain/anti_drop/emp_act(severity)
 	. = ..()
 	if(!owner || . & EMP_PROTECT_SELF)
 		return
@@ -81,25 +82,25 @@
 	stored_items = list()
 
 
-/obj/item/organ/internal/cyberimp/brain/anti_drop/proc/release_items()
+/obj/item/organ/cyberimp/brain/anti_drop/proc/release_items()
 	for(var/obj/item/stored_item as anything in stored_items)
 		REMOVE_TRAIT(stored_item, TRAIT_NODROP, IMPLANT_TRAIT)
 		UnregisterSignal(stored_item, COMSIG_ITEM_DROPPED)
 	stored_items = list()
 
 
-/obj/item/organ/internal/cyberimp/brain/anti_drop/Remove(mob/living/carbon/implant_owner, special = 0)
+/obj/item/organ/cyberimp/brain/anti_drop/Remove(mob/living/carbon/implant_owner, special = 0)
 	if(active)
 		ui_action_click()
 	..()
 
-/obj/item/organ/internal/cyberimp/brain/anti_drop/proc/on_held_item_dropped(obj/item/source, mob/user)
+/obj/item/organ/cyberimp/brain/anti_drop/proc/on_held_item_dropped(obj/item/source, mob/user)
 	SIGNAL_HANDLER
 	REMOVE_TRAIT(source, TRAIT_NODROP, IMPLANT_TRAIT)
 	UnregisterSignal(source, COMSIG_ITEM_DROPPED)
 	stored_items -= source
 
-/obj/item/organ/internal/cyberimp/brain/anti_stun
+/obj/item/organ/cyberimp/brain/anti_stun
 	name = "CNS Rebooter implant"
 	desc = "This implant will automatically give you back control over your central nervous system, reducing downtime when stunned."
 	implant_color = "#FFFF00"
@@ -114,48 +115,48 @@
 
 	var/stun_cap_amount = 40
 
-/obj/item/organ/internal/cyberimp/brain/anti_stun/Remove(mob/living/carbon/implant_owner, special = FALSE)
+/obj/item/organ/cyberimp/brain/anti_stun/Remove(mob/living/carbon/implant_owner, special = FALSE)
 	. = ..()
 	UnregisterSignal(implant_owner, signalCache)
 
-/obj/item/organ/internal/cyberimp/brain/anti_stun/Insert(special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/cyberimp/brain/anti_stun/Insert()
 	. = ..()
 	RegisterSignal(owner, signalCache, .proc/on_signal)
 
-/obj/item/organ/internal/cyberimp/brain/anti_stun/proc/on_signal(datum/source, amount)
+/obj/item/organ/cyberimp/brain/anti_stun/proc/on_signal(datum/source, amount)
 	SIGNAL_HANDLER
 	if(!(organ_flags & ORGAN_FAILING) && amount > 0)
 		addtimer(CALLBACK(src, .proc/clear_stuns), stun_cap_amount, TIMER_UNIQUE|TIMER_OVERRIDE)
 
-/obj/item/organ/internal/cyberimp/brain/anti_stun/proc/clear_stuns()
+/obj/item/organ/cyberimp/brain/anti_stun/proc/clear_stuns()
 	if(owner || !(organ_flags & ORGAN_FAILING))
 		owner.SetStun(0)
 		owner.SetKnockdown(0)
 		owner.SetImmobilized(0)
 		owner.SetParalyzed(0)
 
-/obj/item/organ/internal/cyberimp/brain/anti_stun/emp_act(severity)
+/obj/item/organ/cyberimp/brain/anti_stun/emp_act(severity)
 	. = ..()
 	if((organ_flags & ORGAN_FAILING) || . & EMP_PROTECT_SELF)
 		return
 	organ_flags |= ORGAN_FAILING
 	addtimer(CALLBACK(src, .proc/reboot), 90 / severity)
 
-/obj/item/organ/internal/cyberimp/brain/anti_stun/proc/reboot()
+/obj/item/organ/cyberimp/brain/anti_stun/proc/reboot()
 	organ_flags &= ~ORGAN_FAILING
 
 //[[[[MOUTH]]]]
-/obj/item/organ/internal/cyberimp/mouth
+/obj/item/organ/cyberimp/mouth
 	zone = BODY_ZONE_PRECISE_MOUTH
 
-/obj/item/organ/internal/cyberimp/mouth/breathing_tube
+/obj/item/organ/cyberimp/mouth/breathing_tube
 	name = "breathing tube implant"
 	desc = "This simple implant adds an internals connector to your back, allowing you to use internals without a mask and protecting you from being choked."
 	icon_state = "implant_mask"
 	slot = ORGAN_SLOT_BREATHING_TUBE
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/organ/internal/cyberimp/mouth/breathing_tube/emp_act(severity)
+/obj/item/organ/cyberimp/mouth/breathing_tube/emp_act(severity)
 	. = ..()
 	if(!owner || . & EMP_PROTECT_SELF)
 		return
@@ -170,10 +171,10 @@
 	desc = "A sleek, sturdy box."
 	icon_state = "cyber_implants"
 	var/list/boxed = list(
-		/obj/item/autosurgeon/syndicate/thermal_eyes,
-		/obj/item/autosurgeon/syndicate/xray_eyes,
-		/obj/item/autosurgeon/syndicate/anti_stun,
-		/obj/item/autosurgeon/syndicate/reviver)
+		/obj/item/autosurgeon/organ/syndicate/thermal_eyes,
+		/obj/item/autosurgeon/organ/syndicate/xray_eyes,
+		/obj/item/autosurgeon/organ/syndicate/anti_stun,
+		/obj/item/autosurgeon/organ/syndicate/reviver)
 	var/amount = 5
 
 /obj/item/storage/box/cyber_implants/PopulateContents()

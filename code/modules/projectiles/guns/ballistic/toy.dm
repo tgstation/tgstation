@@ -12,7 +12,7 @@
 	can_suppress = TRUE
 	clumsy_check = FALSE
 	item_flags = NONE
-	gun_flags = TOY_FIREARM_OVERLAY | NOT_A_REAL_GUN
+	gun_flags = TOY_FIREARM_OVERLAY
 	casing_ejector = FALSE
 
 /obj/item/gun/ballistic/automatic/toy/unrestricted
@@ -23,7 +23,7 @@
 	desc = "A small, easily concealable toy handgun. Ages 8 and up."
 	mag_type = /obj/item/ammo_box/magazine/toy/pistol
 	fire_sound = 'sound/items/syringeproj.ogg'
-	gun_flags = TOY_FIREARM_OVERLAY | NOT_A_REAL_GUN
+	gun_flags = TOY_FIREARM_OVERLAY
 
 /obj/item/gun/ballistic/automatic/pistol/toy/riot
 	mag_type = /obj/item/ammo_box/magazine/toy/pistol/riot
@@ -43,9 +43,8 @@
 	item_flags = NONE
 	casing_ejector = FALSE
 	can_suppress = FALSE
-	weapon_weight = WEAPON_LIGHT
 	pb_knockback = 0
-	gun_flags = TOY_FIREARM_OVERLAY | NOT_A_REAL_GUN
+	gun_flags = TOY_FIREARM_OVERLAY
 
 /obj/item/gun/ballistic/shotgun/toy/handle_chamber()
 	. = ..()
@@ -58,7 +57,7 @@
 /obj/item/gun/ballistic/shotgun/toy/crossbow
 	name = "foam force crossbow"
 	desc = "A weapon favored by many overactive children. Ages 8 and up."
-	icon = 'icons/obj/toys/toy.dmi'
+	icon = 'icons/obj/toy.dmi'
 	icon_state = "foamcrossbow"
 	inhand_icon_state = "crossbow"
 	worn_icon_state = "gun"
@@ -77,7 +76,7 @@
 	mag_type = /obj/item/ammo_box/magazine/toy/smgm45/riot
 	casing_ejector = FALSE
 	clumsy_check = FALSE
-	gun_flags = TOY_FIREARM_OVERLAY | NOT_A_REAL_GUN
+	gun_flags = TOY_FIREARM_OVERLAY
 
 /obj/item/gun/ballistic/automatic/c20r/toy/unrestricted //Use this for actual toys
 	pin = /obj/item/firing_pin
@@ -95,7 +94,7 @@
 	mag_type = /obj/item/ammo_box/magazine/toy/m762/riot
 	casing_ejector = FALSE
 	clumsy_check = FALSE
-	gun_flags = TOY_FIREARM_OVERLAY | NOT_A_REAL_GUN
+	gun_flags = TOY_FIREARM_OVERLAY
 
 /obj/item/gun/ballistic/automatic/l6_saw/toy/unrestricted //Use this for actual toys
 	pin = /obj/item/firing_pin

@@ -1,8 +1,5 @@
 // Keep the identifiers here below 32 characters, you can put the full display name in the actual achievement datum
 
-/// Achievements icon set
-#define ACHIEVEMENTS_SET 'icons/ui_icons/achievements/achievements.dmi'
-
 #define ACHIEVEMENT_DEFAULT "default"
 #define ACHIEVEMENT_SCORE "score"
 
@@ -33,17 +30,12 @@
 #define MEDAL_FLESH_ASCENSION "Flesh"
 #define MEDAL_RUST_ASCENSION "Rust"
 #define MEDAL_VOID_ASCENSION "Void"
-#define MEDAL_BLADE_ASCENSION "Blade"
 #define MEDAL_TOOLBOX_SOUL "Toolsoul"
 #define MEDAL_CHEM_TUT          "Beginner Chemist"
 #define MEDAL_HOT_DAMN "Hot Damn!"
 #define MEDAL_CAYENNE_DISK "Very Important Piscis"
 #define MEDAL_TRAM_SURFER "Tram Surfer"
 #define MEDAL_CULT_SHUTTLE_OMFG "WHAT JUST HAPPENED"
-#define MEDAL_CLICKBAIT "Clickbait"
-#define MEDAL_NARSUPREME "Narsupreme"
-#define MEDAL_SPRINGLOCK "The Man Inside the Modsuit"
-#define MEDAL_HEALTHY "Heart Healthy"
 
 //Skill medal hub IDs
 #define MEDAL_LEGENDARY_MINER "Legendary Miner"

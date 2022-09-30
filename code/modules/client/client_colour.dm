@@ -185,9 +185,6 @@
 /datum/client_colour/glass_colour/gray
 	colour = "#cccccc"
 
-/datum/client_colour/glass_colour/nightmare
-	colour = list(255,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, -130,0,0,0) //every color is either red or black
-
 /datum/client_colour/monochrome
 	colour = list(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
 	priority = PRIORITY_HIGH //we can't see colors anyway!
@@ -209,9 +206,6 @@
 /datum/client_colour/bloodlust/New(mob/_owner)
 	..()
 	addtimer(CALLBACK(src, .proc/update_colour, list(1,0,0,0.8,0.2,0, 0.8,0,0.2,0.1,0,0), 10, SINE_EASING|EASE_OUT), 1)
-
-/datum/client_colour/rave
-	priority = PRIORITY_LOW
 
 #undef PRIORITY_ABSOLUTE
 #undef PRIORITY_HIGH

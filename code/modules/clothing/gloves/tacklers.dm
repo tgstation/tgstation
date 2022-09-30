@@ -3,11 +3,11 @@
 	desc = "Special gloves that manipulate the blood vessels in the wearer's hands, granting them the ability to launch headfirst into walls."
 	icon_state = "tackle"
 	inhand_icon_state = "tackle"
+	transfer_prints = TRUE
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	resistance_flags = NONE
-	custom_premium_price = PAYCHECK_COMMAND * 3.5
-	clothing_traits = list(TRAIT_FINGERPRINT_PASSTHROUGH)
+	custom_premium_price = PAYCHECK_HARD * 3.5
 	/// For storing our tackler datum so we can remove it after
 	var/datum/component/tackler
 	/// See: [/datum/component/tackler/var/stamina_cost]
@@ -31,7 +31,7 @@
 	. = ..()
 	if(!ishuman(user))
 		return
-	if(slot & ITEM_SLOT_GLOVES)
+	if(slot == ITEM_SLOT_GLOVES)
 		var/mob/living/carbon/human/H = user
 		tackler = H.AddComponent(/datum/component/tackler, stamina_cost=tackle_stam_cost, base_knockdown = base_knockdown, range = tackle_range, speed = tackle_speed, skill_mod = skill_mod, min_distance = min_distance)
 
@@ -77,7 +77,7 @@
 	name = "guerrilla gloves"
 	desc = "Superior quality combative gloves, good for performing tackle takedowns as well as absorbing electrical shocks."
 	siemens_coefficient = 0
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 50, FIRE = 0, ACID = 0)
+	permeability_coefficient = 0.05
 
 /obj/item/clothing/gloves/tackler/rocket
 	name = "rocket gloves"

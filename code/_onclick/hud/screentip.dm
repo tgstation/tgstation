@@ -6,7 +6,6 @@
 	maptext_height = 480
 	maptext_width = 480
 	maptext = ""
-	layer = SCREENTIP_LAYER //Added to make screentips appear above action buttons (and other /atom/movable/screen objects)
 
 /atom/movable/screen/screentip/Initialize(mapload, _hud)
 	. = ..()
@@ -17,6 +16,6 @@
 	SIGNAL_HANDLER
 	if(!hud || !hud.mymob.client.view_size) //Might not have been initialized by now
 		return
-	maptext_width = view_to_pixels(hud.mymob.client.view_size.getView())[1]
+	maptext_width = getviewsize(hud.mymob.client.view_size.getView())[1] * world.icon_size
 
 

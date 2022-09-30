@@ -9,21 +9,8 @@
 	throw_speed = 3
 	throw_range = 7
 	resistance_flags = FLAMMABLE
-	actions_types = list(/datum/action/cooldown/spell/teleport/area_teleport/wizard/scroll)
-	/// Number of uses the scroll gets.
+	/// Number of uses remaining
 	var/uses = 4
-
-/obj/item/teleportation_scroll/Initialize(mapload)
-	. = ..()
-	// In the future, this can be generalized into just "magic scrolls that give you a specific spell".
-	var/datum/action/cooldown/spell/teleport/area_teleport/wizard/scroll/teleport = locate() in actions
-	if(teleport)
-		teleport.name = name
-		teleport.icon_icon = icon
-		teleport.button_icon_state = icon_state
-
-/obj/item/teleportation_scroll/item_action_slot_check(slot, mob/user)
-	return (slot & ITEM_SLOT_HANDS)
 
 /obj/item/teleportation_scroll/apprentice
 	name = "lesser scroll of teleportation"
@@ -35,24 +22,51 @@
 		. += "It has [uses] use\s remaining."
 
 /obj/item/teleportation_scroll/attack_self(mob/user)
-	. = ..()
-	if(.)
-		return
-
 	if(!uses)
 		return
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/human_user = user
-	if(human_user.incapacitated() || !human_user.is_holding(src))
+	if(human_user.incapacitated())
 		return
-	var/datum/action/cooldown/spell/teleport/area_teleport/wizard/scroll/teleport = locate() in actions
-	if(!teleport)
-		to_chat(user, span_warning("[src] seems to be a faulty teleportation scroll, and has no magic associated."))
+	if(!human_user.is_holding(src))
 		return
-	if(!teleport.Activate(user))
+	teleportscroll(human_user)
+
+/**
+ * Shows a list of a possible teleport destinations to a user and then teleports him to to his chosen destination
+ *
+ * Arguments:
+ * * user The mob that is being teleported
+ */
+/obj/item/teleportation_scroll/proc/teleportscroll(mob/user)
+	var/A
+
+	A = input(user, "Area to jump to", "BOOYEA", A) as null|anything in GLOB.teleportlocs
+	if(!src || QDELETED(src) || !user || !user.is_holding(src) || user.incapacitated() || !A || !uses)
 		return
-	if(--uses <= 0)
-		to_chat(user, span_warning("[src] runs out of uses and crumbles to dust!"))
-		qdel(src)
-	return TRUE
+	var/area/thearea = GLOB.teleportlocs[A]
+
+	var/datum/effect_system/smoke_spread/smoke = new
+	smoke.set_up(2, user.loc)
+	smoke.attach(user)
+	smoke.start()
+	var/list/L = list()
+	for(var/turf/T in get_area_turfs(thearea.type))
+		if(!T.is_blocked_turf())
+			L += T
+
+	if(!L.len)
+		to_chat(user, span_warning("The spell matrix was unable to locate a suitable teleport destination for an unknown reason. Sorry."))
+		return
+
+	if(do_teleport(user, pick(L), channel = TELEPORT_CHANNEL_MAGIC, forced = TRUE))
+		smoke.start()
+		uses--
+		if(!uses)
+			to_chat(user, span_warning("[src] has run out of uses and crumbles to dust!"))
+			qdel(src)
+		else
+			to_chat(user, span_notice("[src] has [uses] use\s remaining."))
+	else
+		to_chat(user, span_warning("The spell matrix was disrupted by something near the destination."))

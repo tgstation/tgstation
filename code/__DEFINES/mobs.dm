@@ -24,9 +24,6 @@
 /// How efficiently humans regenerate blood.
 #define BLOOD_REGEN_FACTOR 0.25
 
-/// Temperature at which blood loss and regen stops. [/mob/living/carbon/human/proc/handle_blood]
-#define BLOOD_STOP_TEMP 225
-
 //Sizes of mobs, used by mob/living/var/mob_size
 #define MOB_SIZE_TINY 0
 #define MOB_SIZE_SMALL 1
@@ -52,96 +49,30 @@
 #define MOB_SPIRIT (1 << 9)
 #define MOB_PLANT (1 << 10)
 
-
 //Organ defines for carbon mobs
-#define ORGAN_ORGANIC 1
-#define ORGAN_ROBOTIC 2
+#define ORGAN_ORGANIC   1
+#define ORGAN_ROBOTIC   2
 
-#define DEFAULT_BODYPART_ICON_ORGANIC 'icons/mob/species/human/bodyparts_greyscale.dmi'
+#define BODYPART_ORGANIC   1
+#define BODYPART_ROBOTIC   2
+
+#define DEFAULT_BODYPART_ICON_ORGANIC 'icons/mob/human_parts_greyscale.dmi'
 #define DEFAULT_BODYPART_ICON_ROBOTIC 'icons/mob/augmentation/augments.dmi'
 
 #define MONKEY_BODYPART "monkey"
 #define ALIEN_BODYPART "alien"
 #define LARVA_BODYPART "larva"
 
-//Bodypart change blocking flags
-///Bodypart does not get replaced during set_species()
-#define BP_BLOCK_CHANGE_SPECIES (1<<0)
 
-//Bodytype defines for how things can be worn, surgery, and other misc things.
-///The limb is organic.
-#define BODYTYPE_ORGANIC (1<<0)
-///The limb is robotic.
-#define BODYTYPE_ROBOTIC (1<<1)
-///The limb fits the human mold. This is not meant to be literal, if the sprite "fits" on a human, it is "humanoid", regardless of origin.
-#define BODYTYPE_HUMANOID (1<<2)
-///The limb is digitigrade.
-#define BODYTYPE_DIGITIGRADE (1<<3)
-///The limb fits the monkey mold.
-#define BODYTYPE_MONKEY (1<<4)
-///The limb is snouted.
-#define BODYTYPE_SNOUTED (1<<5)
-///A placeholder bodytype for xeno larva, so their limbs cannot be attached to anything.
-#define BODYTYPE_LARVA_PLACEHOLDER (1<<6)
-///The limb is from a xenomorph.
-#define BODYTYPE_ALIEN (1<<7)
-
-// Defines for Species IDs. Used to refer to the name of a species, for things like bodypart names or species preferences.
-#define SPECIES_ABDUCTOR "abductor"
-#define SPECIES_ANDROID "android"
-#define SPECIES_DULLAHAN "dullahan"
-#define SPECIES_ETHEREAL "ethereal"
-#define SPECIES_FELINE "felinid"
-#define SPECIES_FLYPERSON "fly"
-#define SPECIES_HUMAN "human"
-#define SPECIES_JELLYPERSON "jelly"
-#define SPECIES_SLIMEPERSON "slime"
-#define SPECIES_LUMINESCENT "luminescent"
-#define SPECIES_STARGAZER "stargazer"
-#define SPECIES_LIZARD "lizard"
-#define SPECIES_LIZARD_ASH "ashwalker"
-#define SPECIES_LIZARD_SILVER "silverscale"
-#define SPECIES_NIGHTMARE "nightmare"
-#define SPECIES_MONKEY "monkey"
-#define SPECIES_MOTH "moth"
-#define SPECIES_MUSHROOM "mush"
-#define SPECIES_PLASMAMAN "plasmaman"
-#define SPECIES_PODPERSON "pod"
-#define SPECIES_SHADOW "shadow"
-#define SPECIES_SKELETON "skeleton"
-#define SPECIES_SNAIL "snail"
-#define SPECIES_VAMPIRE "vampire"
-#define SPECIES_ZOMBIE "zombie"
-#define SPECIES_ZOMBIE_INFECTIOUS "memezombie"
-#define SPECIES_ZOMBIE_KROKODIL "krokodil_zombie"
-
-// Like species IDs, but not specifically attached a species.
-#define BODYPART_ID_ALIEN "alien"
-#define BODYPART_ID_ROBOTIC "robotic"
-#define BODYPART_ID_DIGITIGRADE "digitigrade"
-#define BODYPART_ID_LARVA "larva"
-
-//See: datum/species/var/digitigrade_customization
-///The species does not have digitigrade legs in generation.
-#define DIGITIGRADE_NEVER 0
-///The species can have digitigrade legs in generation
-#define DIGITIGRADE_OPTIONAL 1
-///The species is forced to have digitigrade legs in generation.
-#define DIGITIGRADE_FORCED 2
-
-///Digitigrade's prefs, used in features for legs if you're meant to be a Digitigrade.
-#define DIGITIGRADE_LEGS "Digitigrade Legs"
+///Body type bitfields for allowed_animal_origin used to check compatible surgery body types (use NONE for no matching body type)
+#define HUMAN_BODY (1 << 0)
+#define MONKEY_BODY (1 << 1)
+#define ALIEN_BODY (1 << 2)
+#define LARVA_BODY (1 << 3)
+/*see __DEFINES/inventory.dm for bodypart bitflag defines*/
 
 // Health/damage defines
 #define MAX_LIVING_HEALTH 100
-
-//for determining which type of heartbeat sound is playing
-///Heartbeat is beating fast for hard crit
-#define BEAT_FAST 1
-///Heartbeat is beating slow for soft crit
-#define BEAT_SLOW 2
-///Heartbeat is gone... He's dead Jim :(
-#define BEAT_NONE 0
 
 #define HUMAN_MAX_OXYLOSS 3
 #define HUMAN_CRIT_MAX_OXYLOSS (SSMOBS_DT/3)
@@ -221,28 +152,17 @@
 #define BEAUTY_LEVEL_GREAT 100
 
 //Moods levels for humans
-#define MOOD_HAPPY4 15
-#define MOOD_HAPPY3 10
-#define MOOD_HAPPY2 6
-#define MOOD_HAPPY1 2
-#define MOOD_NEUTRAL 0
-#define MOOD_SAD1 -3
-#define MOOD_SAD2 -7
-#define MOOD_SAD3 -15
-#define MOOD_SAD4 -20
+#define MOOD_LEVEL_HAPPY4 15
+#define MOOD_LEVEL_HAPPY3 10
+#define MOOD_LEVEL_HAPPY2 6
+#define MOOD_LEVEL_HAPPY1 2
+#define MOOD_LEVEL_NEUTRAL 0
+#define MOOD_LEVEL_SAD1 -3
+#define MOOD_LEVEL_SAD2 -7
+#define MOOD_LEVEL_SAD3 -15
+#define MOOD_LEVEL_SAD4 -20
 
-//Moods levels for humans
-#define MOOD_LEVEL_HAPPY4 9
-#define MOOD_LEVEL_HAPPY3 8
-#define MOOD_LEVEL_HAPPY2 7
-#define MOOD_LEVEL_HAPPY1 6
-#define MOOD_LEVEL_NEUTRAL 5
-#define MOOD_LEVEL_SAD1 4
-#define MOOD_LEVEL_SAD2 3
-#define MOOD_LEVEL_SAD3 2
-#define MOOD_LEVEL_SAD4 1
-
-//Sanity values for humans
+//Sanity levels for humans
 #define SANITY_MAXIMUM 150
 #define SANITY_GREAT 125
 #define SANITY_NEUTRAL 100
@@ -250,14 +170,6 @@
 #define SANITY_UNSTABLE 50
 #define SANITY_CRAZY 25
 #define SANITY_INSANE 0
-
-//Sanity levels for humans
-#define SANITY_LEVEL_GREAT 1
-#define SANITY_LEVEL_NEUTRAL 2
-#define SANITY_LEVEL_DISTURBED 3
-#define SANITY_LEVEL_UNSTABLE 4
-#define SANITY_LEVEL_CRAZY 5
-#define SANITY_LEVEL_INSANE 6
 
 //Nutrition levels for humans
 #define NUTRITION_LEVEL_FAT 600
@@ -426,13 +338,10 @@
 
 #define HUNGER_FACTOR 0.05 //factor at which mob nutrition decreases
 #define ETHEREAL_CHARGE_FACTOR 0.8 //factor at which ethereal's charge decreases per second
-/// How much nutrition eating clothes as moth gives and drains
-#define CLOTHING_NUTRITION_GAIN 15
 #define REAGENTS_METABOLISM 0.2 //How many units of reagent are consumed per second, by default.
 #define REAGENTS_EFFECT_MULTIPLIER (REAGENTS_METABOLISM / 0.4) // By defining the effect multiplier this way, it'll exactly adjust all effects according to how they originally were with the 0.4 metabolism
 
 // Eye protection
-#define FLASH_PROTECTION_HYPER_SENSITIVE -2
 #define FLASH_PROTECTION_SENSITIVE -1
 #define FLASH_PROTECTION_NONE 0
 #define FLASH_PROTECTION_FLASH 1
@@ -452,15 +361,7 @@
 #define MAX_REVIVE_FIRE_DAMAGE 180
 #define MAX_REVIVE_BRUTE_DAMAGE 180
 
-#define DEFAULT_BRUTE_EXAMINE_TEXT "bruising"
-#define DEFAULT_BURN_EXAMINE_TEXT "burns"
-#define DEFAULT_CLONE_EXAMINE_TEXT "cellular damage"
-
-#define ROBOTIC_BRUTE_EXAMINE_TEXT "denting"
-#define ROBOTIC_BURN_EXAMINE_TEXT "charring"
-
-// If a mob has a higher threshold than this, the icon shown will be increased to the big fire icon.
-#define MOB_BIG_FIRE_STACK_THRESHOLD 3
+#define HUMAN_FIRE_STACK_ICON_NUM 3
 
 #define GRAB_PIXEL_SHIFT_PASSIVE 6
 #define GRAB_PIXEL_SHIFT_AGGRESSIVE 12
@@ -473,27 +374,17 @@
 //Badmin magic mirror
 #define MIRROR_BADMIN (1<<0)
 //Standard magic mirror (wizard)
-#define MIRROR_MAGIC (1<<1)
+#define MIRROR_MAGIC  (1<<1)
 //Pride ruin mirror
-#define MIRROR_PRIDE (1<<2)
+#define MIRROR_PRIDE  (1<<2)
 //Race swap wizard event
-#define RACE_SWAP (1<<3)
+#define RACE_SWAP     (1<<3)
 //ERT spawn template (avoid races that don't function without correct gear)
-#define ERT_SPAWN (1<<4)
+#define ERT_SPAWN     (1<<4)
 //xenobio black crossbreed
 #define SLIME_EXTRACT (1<<5)
 //Wabbacjack staff projectiles
-#define WABBAJACK (1<<6)
-
-// Randomization keys for calling wabbajack with.
-// Note the contents of these keys are important, as they're displayed to the player
-// Ex: (You turn into a "monkey", You turn into a "xenomorph")
-#define WABBAJACK_MONKEY "monkey"
-#define WABBAJACK_ROBOT "robot"
-#define WABBAJACK_SLIME "slime"
-#define WABBAJACK_XENO "xenomorph"
-#define WABBAJACK_HUMAN "humanoid"
-#define WABBAJACK_ANIMAL "animal"
+#define WABBAJACK     (1<<6)
 
 // Reasons a defibrilation might fail
 #define DEFIB_POSSIBLE (1<<0)
@@ -505,20 +396,12 @@
 #define DEFIB_FAIL_FAILING_BRAIN (1<<6)
 #define DEFIB_FAIL_NO_BRAIN (1<<7)
 #define DEFIB_FAIL_NO_INTELLIGENCE (1<<8)
-#define DEFIB_FAIL_BLACKLISTED (1<<9)
-#define DEFIB_NOGRAB_AGHOST (1<<10)
+#define DEFIB_NOGRAB_AGHOST (1<<9)
 
 // Bit mask of possible return values by can_defib that would result in a revivable patient
 #define DEFIB_REVIVABLE_STATES (DEFIB_FAIL_NO_HEART | DEFIB_FAIL_FAILING_HEART | DEFIB_FAIL_HUSK | DEFIB_FAIL_TISSUE_DAMAGE | DEFIB_FAIL_FAILING_BRAIN | DEFIB_POSSIBLE)
 
-#define SLEEP_CHECK_DEATH(X, A) \
-	sleep(X); \
-	if(QDELETED(A)) return; \
-	if(ismob(A)) { \
-		var/mob/sleep_check_death_mob = A; \
-		if(sleep_check_death_mob.stat == DEAD) return; \
-	}
-
+#define SLEEP_CHECK_DEATH(X) sleep(X); if(QDELETED(src) || stat == DEAD) return;
 
 #define DOING_INTERACTION(user, interaction_key) (LAZYACCESS(user.do_afters, interaction_key))
 #define DOING_INTERACTION_LIMIT(user, interaction_key, max_interaction_count) ((LAZYACCESS(user.do_afters, interaction_key) || 0) >= max_interaction_count)
@@ -532,14 +415,15 @@
 #define EXAMINE_MORE_WINDOW 1 SECONDS
 /// If you examine another mob who's successfully examined you during this duration of time, you two try to make eye contact. Cute!
 #define EYE_CONTACT_WINDOW 2 SECONDS
-/// If you yawn while someone nearby has examined you within this time frame, it will force them to yawn as well. Tradecraft!
-#define YAWN_PROPAGATION_EXAMINE_WINDOW 2 SECONDS
 
 /// How far away you can be to make eye contact with someone while examining
 #define EYE_CONTACT_RANGE 5
 
 
 #define SILENCE_RANGED_MESSAGE (1<<0)
+
+///Swarmer flags
+#define SWARMER_LIGHT_ON (1<<0)
 
 /// Returns whether or not the given mob can succumb
 #define CAN_SUCCUMB(target) (HAS_TRAIT(target, TRAIT_CRITICAL_CONDITION) && !HAS_TRAIT(target, TRAIT_NODEATH))
@@ -592,141 +476,3 @@
 
 //Saves a proc call, life is suffering. If who has no targets_from var, we assume it's just who
 #define GET_TARGETS_FROM(who) (who.targets_from ? who.get_targets_from() : who)
-
-//defines for grad_color and grad_styles list access keys
-#define GRADIENT_HAIR_KEY 1
-#define GRADIENT_FACIAL_HAIR_KEY 2
-//Keep up to date with the highest key value
-#define GRADIENTS_LEN 2
-
-// /datum/sprite_accessory/gradient defines
-#define GRADIENT_APPLIES_TO_HAIR (1<<0)
-#define GRADIENT_APPLIES_TO_FACIAL_HAIR (1<<1)
-
-/// Sign Language defines
-#define SIGN_ONE_HAND 0
-#define SIGN_HANDS_FULL 1
-#define SIGN_ARMLESS 2
-#define SIGN_TRAIT_BLOCKED 3
-#define SIGN_CUFFED 4
-
-// Mob Overlays Indexes
-/// Total number of layers for mob overlays
-#define TOTAL_LAYERS 32 //KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
-/// Mutations layer - Tk headglows, cold resistance glow, etc
-#define MUTATIONS_LAYER 32
-/// Mutantrace features (tail when looking south) that must appear behind the body parts
-#define BODY_BEHIND_LAYER 31
-/// Initially "AUGMENTS", this was repurposed to be a catch-all bodyparts flag
-#define BODYPARTS_LAYER 30
-/// Mutantrace features (snout, body markings) that must appear above the body parts
-#define BODY_ADJ_LAYER 29
-/// Underwear, undershirts, socks, eyes, lips(makeup)
-#define BODY_LAYER 28
-/// Mutations that should appear above body, body_adj and bodyparts layer (e.g. laser eyes)
-#define FRONT_MUTATIONS_LAYER 27
-/// Damage indicators (cuts and burns)
-#define DAMAGE_LAYER 26
-/// Jumpsuit clothing layer
-#define UNIFORM_LAYER 25
-/// ID card layer (might be deprecated)
-#define ID_LAYER 24
-/// ID card layer
-#define ID_CARD_LAYER 23
-/// Hands body part layer (or is this for the arm? not sure...)
-#define HANDS_PART_LAYER 22
-/// Gloves layer
-#define GLOVES_LAYER 21
-/// Shoes layer
-#define SHOES_LAYER 20
-/// Ears layer (Spessmen have ears? Wow)
-#define EARS_LAYER 19
-/// Suit layer (armor, coats, etc.)
-#define SUIT_LAYER 18
-/// Glasses layer
-#define GLASSES_LAYER 17
-/// Belt layer
-#define BELT_LAYER 16 //Possible make this an overlay of somethign required to wear a belt?
-/// Suit storage layer (tucking a gun or baton underneath your armor)
-#define SUIT_STORE_LAYER 15
-/// Neck layer (for wearing ties and bedsheets)
-#define NECK_LAYER 14
-/// Back layer (for backpacks and equipment on your back)
-#define BACK_LAYER 13
-/// Hair layer (mess with the fro and you got to go!)
-#define HAIR_LAYER 12 //TODO: make part of head layer?
-/// Facemask layer (gas masks, breath masks, etc.)
-#define FACEMASK_LAYER 11
-/// Head layer (hats, helmets, etc.)
-#define HEAD_LAYER 10
-/// Handcuff layer (when your hands are cuffed)
-#define HANDCUFF_LAYER 9
-/// Legcuff layer (when your feet are cuffed)
-#define LEGCUFF_LAYER 8
-/// Hands layer (for the actual hand, not the arm... I think?)
-#define HANDS_LAYER 7
-/// Body front layer. Usually used for mutant bodyparts that need to be in front of stuff (e.g. cat ears)
-#define BODY_FRONT_LAYER 6
-/// Special body layer that actually require to be above the hair (e.g. lifted welding goggles)
-#define ABOVE_BODY_FRONT_GLASSES_LAYER 5
-/// Special body layer for the rare cases where something on the head needs to be above everything else (e.g. flowers)
-#define ABOVE_BODY_FRONT_HEAD_LAYER 4
-/// Bleeding wound icons
-#define WOUND_LAYER 3
-/// Blood cult ascended halo layer, because there's currently no better solution for adding/removing
-#define HALO_LAYER 2
-/// Fire layer when you're on fire
-#define FIRE_LAYER 1
-
-//Bitflags for the layers an external organ can draw on (organs can be drawn on multiple layers)
-/// Draws organ on the BODY_FRONT_LAYER
-#define EXTERNAL_FRONT (1 << 1)
-/// Draws organ on the BODY_ADJ_LAYER
-#define EXTERNAL_ADJACENT (1 << 2)
-/// Draws organ on the BODY_BEHIND_LAYER
-#define EXTERNAL_BEHIND (1 << 3)
-/// Draws organ on all EXTERNAL layers
-#define ALL_EXTERNAL_OVERLAYS EXTERNAL_FRONT | EXTERNAL_ADJACENT | EXTERNAL_BEHIND
-
-//Mob Overlay Index Shortcuts for alternate_worn_layer, layers
-//Because I *KNOW* somebody will think layer+1 means "above"
-//IT DOESN'T OK, IT MEANS "UNDER"
-/// The layer underneath the suit
-#define UNDER_SUIT_LAYER (SUIT_LAYER+1)
-/// The layer underneath the head (for hats)
-#define UNDER_HEAD_LAYER (HEAD_LAYER+1)
-
-//AND -1 MEANS "ABOVE", OK?, OK!?!
-/// The layer above shoes
-#define ABOVE_SHOES_LAYER (SHOES_LAYER-1)
-/// The layer above mutant body parts
-#define ABOVE_BODY_FRONT_LAYER (BODY_FRONT_LAYER-1)
-
-//used by canUseTopic()
-/// If silicons need to be next to the atom to use this
-#define BE_CLOSE TRUE
-/// If other mobs (monkeys, aliens, etc) can use this
-#define NO_DEXTERITY TRUE // I had to change 20+ files because some non-dnd-playing fuckchumbis can't spell "dexterity"
-// If telekinesis you can use it from a distance
-#define NO_TK TRUE
-/// If mobs can use this while resting
-#define FLOOR_OKAY TRUE
-
-/// The default mob sprite size (used for shrinking or enlarging the mob sprite to regular size)
-#define RESIZE_DEFAULT_SIZE 1
-
-/// Get the client from the var
-#define CLIENT_FROM_VAR(I) (ismob(I) ? I:client : (istype(I, /client) ? I : (istype(I, /datum/mind) ? I:current?:client : null)))
-
-/// The mob will vomit a green color
-#define VOMIT_TOXIC 1
-/// The mob will vomit a purple color
-#define VOMIT_PURPLE 2
-
-/// Possible value of [/atom/movable/buckle_lying]. If set to a different (positive-or-zero) value than this, the buckling thing will force a lying angle on the buckled.
-#define NO_BUCKLE_LYING -1
-
-/// Checking flags for [/mob/proc/can_read()]
-#define READING_CHECK_LITERACY (1<<0)
-#define READING_CHECK_LIGHT (1<<1)
-

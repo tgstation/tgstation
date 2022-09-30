@@ -52,7 +52,7 @@ SUBSYSTEM_DEF(discord)
 	/// Is TGS enabled (If not we won't fire because otherwise this is useless)
 	var/enabled = FALSE
 
-/datum/controller/subsystem/discord/Initialize()
+/datum/controller/subsystem/discord/Initialize(start_timeofday)
 	common_words = world.file2list("strings/1000_most_common.txt")
 	reverify_cache = list()
 	// Check for if we are using TGS, otherwise return and disables firing
@@ -60,7 +60,7 @@ SUBSYSTEM_DEF(discord)
 		enabled = TRUE // Allows other procs to use this (Account linking, etc)
 	else
 		can_fire = FALSE // We dont want excess firing
-		return SS_INIT_NO_NEED
+		return ..() // Cancel
 
 	try
 		people_to_notify = json_decode(file2text(notify_file))
@@ -71,7 +71,7 @@ SUBSYSTEM_DEF(discord)
 		notifymsg += ", a new round is starting!"
 		send2chat(trim(notifymsg), CONFIG_GET(string/chat_new_game_notifications)) // Sends the message to the discord, using same config option as the roundstart notification
 	fdel(notify_file) // Deletes the file
-	return SS_INIT_SUCCESS
+	return ..()
 
 /datum/controller/subsystem/discord/fire()
 	if(!enabled)
@@ -113,7 +113,7 @@ SUBSYSTEM_DEF(discord)
  * * lookup_id The discord id as a string
  */
 /datum/controller/subsystem/discord/proc/lookup_ckey(lookup_id)
-	var/datum/discord_link_record/link = find_discord_link_by_discord_id(lookup_id)
+	var/datum/discord_link_record/link  = find_discord_link_by_discord_id(lookup_id)
 	if(link)
 		return link.ckey
 

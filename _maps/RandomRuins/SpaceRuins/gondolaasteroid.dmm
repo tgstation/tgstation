@@ -6,7 +6,7 @@
 /turf/closed/mineral/random,
 /area/ruin/space/has_grav)
 "c" = (
-/turf/open/misc/asteroid/airless,
+/turf/open/floor/plating/asteroid/airless,
 /area/ruin/space/has_grav)
 "d" = (
 /turf/open/floor/grass,
@@ -19,11 +19,11 @@
 /turf/open/floor/grass,
 /area/ruin/space/has_grav)
 "f" = (
-/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/ausbushes/fullgrass,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav)
 "g" = (
-/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/ausbushes/ywflowers,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav)
 "h" = (
@@ -31,7 +31,7 @@
 /turf/open/floor/grass,
 /area/ruin/space/has_grav)
 "i" = (
-/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/ausbushes/sparsegrass,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav)
 "j" = (
@@ -43,27 +43,27 @@
 /turf/open/floor/grass,
 /area/ruin/space/has_grav)
 "l" = (
-/obj/structure/flora/bush/stalky/style_random,
+/obj/structure/flora/ausbushes/stalkybush,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav)
 "m" = (
-/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/ausbushes/grassybush,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav)
 "n" = (
-/obj/structure/flora/bush/reed/style_random,
+/obj/structure/flora/ausbushes/reedbush,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav)
 "o" = (
-/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/ausbushes/lavendergrass,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav)
 "p" = (
-/obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/flora/ausbushes/brflowers,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav)
 "q" = (
-/obj/structure/flora/bush/ferny/style_random,
+/obj/structure/flora/ausbushes/fernybush,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav)
 "r" = (
@@ -71,11 +71,11 @@
 /turf/open/floor/grass,
 /area/ruin/space/has_grav)
 "s" = (
-/obj/structure/flora/bush/large/style_random,
+/obj/structure/flora/junglebush/large,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav)
 "t" = (
-/obj/structure/flora/bush/sunny/style_random,
+/obj/structure/flora/ausbushes/sunnybush,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav)
 "u" = (

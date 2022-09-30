@@ -1,15 +1,16 @@
 /* Toys!
  * Contains
  * Balloons
- * Captain's Aid
  * Fake singularity
  * Toy gun
+ * Toy crossbow
  * Toy swords
  * Crayons
  * Snap pops
  * AI core prizes
  * Toy codex gigas
  * Skeleton toys
+ * Cards
  * Toy nuke
  * Fake meteor
  * Foam armblade
@@ -26,11 +27,13 @@
  * Fake Pierced Reality
  * Intento
  */
+
 /obj/item/toy
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
 	force = 0
+
 
 /*
  * Balloons
@@ -38,14 +41,18 @@
 /obj/item/toy/waterballoon
 	name = "water balloon"
 	desc = "A translucent balloon. There's nothing in it."
-	icon = 'icons/obj/toys/toy.dmi'
+	icon = 'icons/obj/toy.dmi'
 	icon_state = "waterballoon-e"
 	inhand_icon_state = "balloon-empty"
 
+
 /obj/item/toy/waterballoon/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HANDS)
 	create_reagents(10)
+
+/obj/item/toy/waterballoon/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/toy/waterballoon/attack(mob/living/carbon/human/M, mob/user)
 	return
@@ -67,7 +74,7 @@
 			update_appearance()
 
 /obj/item/toy/waterballoon/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/reagent_containers/cup))
+	if(istype(I, /obj/item/reagent_containers/glass))
 		if(I.reagents)
 			if(I.reagents.total_volume <= 0)
 				to_chat(user, span_warning("[I] is empty."))
@@ -115,41 +122,17 @@
 /obj/item/toy/balloon
 	name = "balloon"
 	desc = "No birthday is complete without it."
-	icon = 'icons/obj/toys/balloons.dmi'
+	icon = 'icons/obj/balloons.dmi'
 	icon_state = "balloon"
 	inhand_icon_state = "balloon"
-	lefthand_file = 'icons/mob/inhands/items/balloons_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/items/balloons_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/balloons_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/balloons_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
 	force = 0
 	var/random_color = TRUE
-
-/obj/item/toy/balloon/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/ammo_casing/caseless/foam_dart) && ismonkey(user))
-		pop_balloon(monkey_pop = TRUE)
-	else
-		return ..()
-
-/obj/item/toy/balloon/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
-	if(ismonkey(throwingdatum.thrower) && istype(AM, /obj/item/ammo_casing/caseless/foam_dart))
-		pop_balloon(monkey_pop = TRUE)
-	else
-		return ..()
-
-/obj/item/toy/balloon/bullet_act(obj/projectile/P)
-	if((istype(P,/obj/projectile/bullet/p50) || istype(P,/obj/projectile/bullet/reusable/foam_dart)) && ismonkey(P.firer))
-		pop_balloon(monkey_pop = TRUE)
-	else
-		return ..()
-
-/obj/item/toy/balloon/proc/pop_balloon(monkey_pop = FALSE)
-	playsound(src, 'sound/effects/cartoon_pop.ogg', 50, vary = TRUE)
-	if(monkey_pop) // Monkeys make money from popping bloons
-		new /obj/item/coin/iron(get_turf(src))
-	qdel(src)
 
 /obj/item/toy/balloon/Initialize(mapload)
 	. = ..()
@@ -173,21 +156,23 @@
 	inhand_icon_state = "syndballoon"
 	random_color = FALSE
 
-/obj/item/toy/balloon/syndicate/pickup(mob/living/user)
+/obj/item/toy/balloon/syndicate/pickup(mob/user)
 	. = ..()
 	if(user && user.mind && user.mind.has_antag_datum(/datum/antagonist, TRUE))
-		user.add_mood_event("badass_antag", /datum/mood_event/badass_antag)
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "badass_antag", /datum/mood_event/badass_antag)
 
-/obj/item/toy/balloon/syndicate/dropped(mob/living/user)
+/obj/item/toy/balloon/syndicate/dropped(mob/user)
 	if(user)
-		user.clear_mood_event("badass_antag")
+		SEND_SIGNAL(user, COMSIG_CLEAR_MOOD_EVENT, "badass_antag", /datum/mood_event/badass_antag)
 	. = ..()
+
 
 /obj/item/toy/balloon/syndicate/Destroy()
 	if(ismob(loc))
-		var/mob/living/M = loc
-		M.clear_mood_event("badass_antag")
+		var/mob/M = loc
+		SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "badass_antag", /datum/mood_event/badass_antag)
 	. = ..()
+
 
 /obj/item/toy/balloon/arrest
 	name = "arreyst balloon"
@@ -199,54 +184,12 @@
 #undef BALLOON_COLORS
 
 /*
-* Captain's Aid
-*/
-#define CAPTAINSAID_MODE_OFF 1
-
-/obj/item/toy/captainsaid
-	name = "\improper Captain's Aid"
-	desc = "Every captain's greatest ally when exploring the vast emptiness of space, now with a color display!"
-	icon = 'icons/obj/toys/toy.dmi'
-	icon_state = "captainsaid_off"
-	/// List of modes it can cycle through
-	var/list/modes = list(
-		"off",
-		"port",
-		"starboard",
-		"fore",
-		"aft",
-	)
-	/// Current mode of the item, changed when cycling through modes
-	var/current_mode = CAPTAINSAID_MODE_OFF
-
-/obj/item/toy/captainsaid/examine_more(mob/user)
-	. = ..()
-	. += span_notice("You could swear you've been hearing advertisments for the 'soon upcoming' release of a tablet version for the better part of 3 years...")
-
-/obj/item/toy/captainsaid/attack_self(mob/living/user)
-	current_mode++
-	playsound(src, 'sound/items/screwdriver2.ogg', 50, vary = TRUE)
-	if (current_mode <= modes.len)
-		balloon_alert(user, "set to [current_mode]")
-	else
-		balloon_alert(user, "turned off")
-		current_mode = CAPTAINSAID_MODE_OFF
-	icon_state = "captainsaid_[modes[current_mode]]"
-	update_appearance(UPDATE_ICON)
-
-#undef CAPTAINSAID_MODE_OFF
-
-/obj/item/toy/captainsaid/collector
-	name = "\improper Collector's Edition Captain's Aid"
-	desc = "A copy of the first run of Captain's Aid ever released. Functionally the same as the later batches, just more expensive. For the truly aristocratic."
-
-/*
  * Fake singularity
  */
 /obj/item/toy/spinningtoy
 	name = "gravitational singularity"
 	desc = "\"Singulo\" brand spinning toy."
-	icon = 'icons/obj/engine/singularity.dmi'
+	icon = 'icons/obj/singularity.dmi'
 	icon_state = "singularity_s1"
 	item_flags = NO_PIXEL_RANDOM_DROP
 
@@ -255,7 +198,7 @@
 	if(!myhead)
 		user.visible_message(span_suicide("[user] tries consuming [src]... but [user.p_they()] [user.p_have()] no mouth!")) // and i must scream
 		return SHAME
-	user.visible_message(span_suicide("[user] consumes [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] consumes [src]! It looks like [user.p_theyre()] trying to commit suicicide!"))
 	playsound(user, 'sound/items/eatfood.ogg', 50, TRUE)
 	user.adjust_nutrition(50) // mmmm delicious
 	addtimer(CALLBACK(src, .proc/manual_suicide, user), (3SECONDS))
@@ -293,19 +236,21 @@
 	user.death(FALSE)
 	user.ghostize(FALSE)
 
+
+
 /*
  * Toy gun: Why isn't this an /obj/item/gun?
  */
 /obj/item/toy/gun
 	name = "cap gun"
 	desc = "Looks almost like the real thing! Ages 8 and up. Please recycle in an autolathe when you're out of caps."
-	icon = 'icons/obj/weapons/guns/ballistic.dmi'
+	icon = 'icons/obj/guns/ballistic.dmi'
 	icon_state = "revolver"
 	inhand_icon_state = "gun"
 	worn_icon_state = "gun"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
-	flags_1 = CONDUCT_1
+	flags_1 =  CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/iron=10, /datum/material/glass=10)
@@ -360,7 +305,7 @@
 /obj/item/toy/ammo/gun
 	name = "capgun ammo"
 	desc = "Make sure to recyle the box in an autolathe when it gets empty."
-	icon = 'icons/obj/weapons/guns/ammo.dmi'
+	icon = 'icons/obj/guns/ammo.dmi'
 	icon_state = "357OLD-7"
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/iron=10, /datum/material/glass=10)
@@ -381,7 +326,7 @@
 	name = "toy sword"
 	desc = "A cheap, plastic replica of an energy sword. Realistic sounds! Ages 8 and up."
 	icon_state = "e_sword"
-	icon = 'icons/obj/weapons/transforming_energy.dmi'
+	icon = 'icons/obj/transforming_energy.dmi'
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
@@ -399,6 +344,7 @@
 		hitsound_on = hitsound, \
 		clumsy_check = FALSE)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
+
 
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
@@ -450,7 +396,7 @@
 /obj/item/toy/foamblade
 	name = "foam armblade"
 	desc = "It says \"Sternside Changs #1 fan\" on it."
-	icon = 'icons/obj/toys/toy.dmi'
+	icon = 'icons/obj/toy.dmi'
 	icon_state = "foamblade"
 	inhand_icon_state = "arm_blade"
 	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
@@ -460,17 +406,18 @@
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FLAMMABLE
 
+
 /obj/item/toy/windup_toolbox
 	name = "windup toolbox"
 	desc = "A replica toolbox that rumbles when you turn the key."
-	icon = 'icons/obj/storage/storage.dmi'
+	icon = 'icons/obj/storage.dmi'
 	icon_state = "green"
 	inhand_icon_state = "artistic_toolbox"
 	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
 	hitsound = 'sound/weapons/smash.ogg'
 	drop_sound = 'sound/items/handling/toolbox_drop.ogg'
-	pickup_sound = 'sound/items/handling/toolbox_pickup.ogg'
+	pickup_sound =  'sound/items/handling/toolbox_pickup.ogg'
 	attack_verb_continuous = list("robusts")
 	attack_verb_simple = list("robust")
 	var/active = FALSE
@@ -548,7 +495,7 @@
 /obj/item/toy/katana
 	name = "replica katana"
 	desc = "Woefully underpowered in D20."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "katana"
 	inhand_icon_state = "katana"
 	worn_icon_state = "katana"
@@ -566,10 +513,11 @@
 /*
  * Snap pops
  */
+
 /obj/item/toy/snappop
 	name = "snap pop"
 	desc = "Wow!"
-	icon = 'icons/obj/toys/toy.dmi'
+	icon = 'icons/obj/toy.dmi'
 	icon_state = "snappop"
 	w_class = WEIGHT_CLASS_TINY
 	var/ash_type = /obj/effect/decal/cleanable/ash
@@ -625,7 +573,7 @@
 /obj/item/toy/talking
 	name = "talking action figure"
 	desc = "A generic action figure modeled after nothing in particular."
-	icon = 'icons/obj/toys/toy.dmi'
+	icon = 'icons/obj/toy.dmi'
 	icon_state = "owlprize"
 	w_class = WEIGHT_CLASS_SMALL
 	var/cooldown = FALSE
@@ -667,7 +615,7 @@
 		sleep(10)
 
 /obj/item/toy/talking/proc/toy_talk(mob/user, message)
-	say(message, spans = list(span))
+	user.loc.visible_message("<span class='[span]'>[icon2html(src, viewers(user.loc))] [message]</span>")
 	if(chattering)
 		chatter(message, phomeme, user)
 
@@ -688,8 +636,8 @@
 	desc = "A tool to help you write fictional devils!"
 	icon = 'icons/obj/library.dmi'
 	icon_state = "demonomicon"
-	lefthand_file = 'icons/mob/inhands/items/books_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/items/books_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/misc/books_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/books_righthand.dmi'
 	messages = list("You must challenge the devil to a dance-off!", "The devils true name is Ian", "The devil hates salt!", "Would you like infinite power?", "Would you like infinite  wisdom?", " Would you like infinite healing?")
 	w_class = WEIGHT_CLASS_SMALL
 	recharge_time = 60
@@ -719,12 +667,365 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 /*
+|| A Deck of Cards for playing various games of chance ||
+*/
+
+
+
+/obj/item/toy/cards
+	resistance_flags = FLAMMABLE
+	max_integrity = 50
+	var/parentdeck = null
+	var/deckstyle = "nanotrasen"
+	var/card_hitsound = null
+	var/card_force = 0
+	var/card_throwforce = 0
+	var/card_throw_speed = 3
+	var/card_throw_range = 7
+	var/list/card_attack_verb_continuous = list("attacks")
+	var/list/card_attack_verb_simple = list("attack")
+
+
+/obj/item/toy/cards/Initialize(mapload)
+	. = ..()
+	if(card_attack_verb_continuous)
+		card_attack_verb_continuous = string_list(card_attack_verb_continuous)
+	if(card_attack_verb_simple)
+		card_attack_verb_simple = string_list(card_attack_verb_simple)
+
+
+/obj/item/toy/cards/suicide_act(mob/living/carbon/user)
+	user.visible_message(span_suicide("[user] is slitting [user.p_their()] wrists with \the [src]! It looks like [user.p_they()] [user.p_have()] a crummy hand!"))
+	playsound(src, 'sound/items/cardshuffle.ogg', 50, TRUE)
+	return BRUTELOSS
+
+/obj/item/toy/cards/proc/apply_card_vars(obj/item/toy/cards/newobj, obj/item/toy/cards/sourceobj) // Applies variables for supporting multiple types of card deck
+	if(!istype(sourceobj))
+		return
+
+/obj/item/toy/cards/deck
+	name = "deck of cards"
+	desc = "A deck of space-grade playing cards."
+	icon = 'icons/obj/toy.dmi'
+	deckstyle = "nanotrasen"
+	icon_state = "deck_nanotrasen_full"
+	w_class = WEIGHT_CLASS_SMALL
+	var/cooldown = 0
+	var/obj/machinery/computer/holodeck/holo = null // Holodeck cards should not be infinite
+	var/list/cards = list()
+
+/obj/item/toy/cards/deck/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/drag_pickup)
+	populate_deck()
+
+///Generates all the cards within the deck.
+/obj/item/toy/cards/deck/proc/populate_deck()
+	icon_state = "deck_[deckstyle]_full"
+	for(var/suit in list("Hearts", "Spades", "Clubs", "Diamonds"))
+		cards += "Ace of [suit]"
+		for(var/i in 2 to 10)
+			cards += "[i] of [suit]"
+		for(var/person in list("Jack", "Queen", "King"))
+			cards += "[person] of [suit]"
+
+//ATTACK HAND IGNORING PARENT RETURN VALUE
+//ATTACK HAND NOT CALLING PARENT
+/obj/item/toy/cards/deck/attack_hand(mob/user, list/modifiers)
+	draw_card(user)
+
+/obj/item/toy/cards/deck/proc/draw_card(mob/user)
+	if(isliving(user))
+		var/mob/living/L = user
+		if(!(L.mobility_flags & MOBILITY_PICKUP))
+			return
+	var/choice = null
+	if(cards.len == 0)
+		to_chat(user, span_warning("There are no more cards to draw!"))
+		return
+	var/obj/item/toy/cards/singlecard/H = new/obj/item/toy/cards/singlecard(user.loc)
+	if(holo)
+		holo.spawned += H // track them leaving the holodeck
+	choice = cards[1]
+	H.cardname = choice
+	H.parentdeck = src
+	var/O = src
+	H.apply_card_vars(H,O)
+	popleft(cards)
+	H.pickup(user)
+	user.put_in_hands(H)
+	user.visible_message(span_notice("[user] draws a card from the deck."), span_notice("You draw a card from the deck."))
+	update_appearance()
+	return H
+
+/obj/item/toy/cards/deck/update_icon_state()
+	switch(cards.len)
+		if(27 to INFINITY)
+			icon_state = "deck_[deckstyle]_full"
+		if(11 to 27)
+			icon_state = "deck_[deckstyle]_half"
+		if(1 to 11)
+			icon_state = "deck_[deckstyle]_low"
+		else
+			icon_state = "deck_[deckstyle]_empty"
+	return ..()
+
+/obj/item/toy/cards/deck/attack_self(mob/user)
+	if(cooldown < world.time - 50)
+		cards = shuffle(cards)
+		playsound(src, 'sound/items/cardshuffle.ogg', 50, TRUE)
+		user.visible_message(span_notice("[user] shuffles the deck."), span_notice("You shuffle the deck."))
+		cooldown = world.time
+
+/obj/item/toy/cards/deck/attackby(obj/item/I, mob/living/user, params)
+	if(istype(I, /obj/item/toy/cards/singlecard))
+		var/obj/item/toy/cards/singlecard/SC = I
+		if(SC.parentdeck == src)
+			if(!user.temporarilyRemoveItemFromInventory(SC))
+				to_chat(user, span_warning("The card is stuck to your hand, you can't add it to the deck!"))
+				return
+			cards += SC.cardname
+			user.visible_message(span_notice("[user] adds a card to the bottom of the deck."),span_notice("You add the card to the bottom of the deck."))
+			qdel(SC)
+		else
+			to_chat(user, span_warning("You can't mix cards from other decks!"))
+		update_appearance()
+	else if(istype(I, /obj/item/toy/cards/cardhand))
+		var/obj/item/toy/cards/cardhand/CH = I
+		if(CH.parentdeck == src)
+			if(!user.temporarilyRemoveItemFromInventory(CH))
+				to_chat(user, span_warning("The hand of cards is stuck to your hand, you can't add it to the deck!"))
+				return
+			cards += CH.currenthand
+			user.visible_message(span_notice("[user] puts [user.p_their()] hand of cards in the deck."), span_notice("You put the hand of cards in the deck."))
+			qdel(CH)
+		else
+			to_chat(user, span_warning("You can't mix cards from other decks!"))
+		update_appearance()
+	else
+		return ..()
+
+
+
+/obj/item/toy/cards/cardhand
+	name = "hand of cards"
+	desc = "A number of cards not in a deck, customarily held in ones hand."
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "none"
+	w_class = WEIGHT_CLASS_TINY
+	var/list/currenthand = list()
+	var/choice = null
+
+/obj/item/toy/cards/cardhand/attack_self(mob/user)
+	var/list/handradial = list()
+	interact(user)
+
+	for(var/t in currenthand)
+		handradial[t] = image(icon = src.icon, icon_state = "sc_[t]_[deckstyle]")
+
+	if(usr.stat || !ishuman(usr))
+		return
+	var/mob/living/carbon/human/cardUser = usr
+	if(!(cardUser.mobility_flags & MOBILITY_USE))
+		return
+	var/O = src
+	var/choice = show_radial_menu(usr,src, handradial, custom_check = CALLBACK(src, .proc/check_menu, user), radius = 36, require_near = TRUE)
+	if(!choice)
+		return FALSE
+	var/obj/item/toy/cards/singlecard/C = new/obj/item/toy/cards/singlecard(cardUser.loc)
+	currenthand -= choice
+	handradial -= choice
+	C.parentdeck = parentdeck
+	C.cardname = choice
+	C.apply_card_vars(C,O)
+	C.pickup(cardUser)
+	cardUser.put_in_hands(C)
+	cardUser.visible_message(span_notice("[cardUser] draws a card from [cardUser.p_their()] hand."), span_notice("You take the [C.cardname] from your hand."))
+
+	interact(cardUser)
+	if(length(currenthand) == 1)
+		var/obj/item/toy/cards/singlecard/N = new/obj/item/toy/cards/singlecard(loc)
+		N.parentdeck = parentdeck
+		N.cardname = currenthand[1]
+		N.apply_card_vars(N,O)
+		qdel(src)
+		N.pickup(cardUser)
+		cardUser.put_in_hands(N)
+		to_chat(cardUser, span_notice("You also take [N.cardname] and hold it."))
+	else
+		update_sprite()
+
+/obj/item/toy/cards/cardhand/attackby(obj/item/toy/cards/singlecard/C, mob/living/user, params)
+	if(istype(C))
+		if(C.parentdeck == src.parentdeck)
+			src.currenthand += C.cardname
+			user.visible_message(span_notice("[user] adds a card to [user.p_their()] hand."), span_notice("You add the [C.cardname] to your hand."))
+			qdel(C)
+			interact(user)
+			update_sprite(src)
+		else
+			to_chat(user, span_warning("You can't mix cards from other decks!"))
+	else
+		return ..()
+
+/obj/item/toy/cards/cardhand/apply_card_vars(obj/item/toy/cards/newobj,obj/item/toy/cards/sourceobj)
+	..()
+	newobj.deckstyle = sourceobj.deckstyle
+	update_sprite()
+	newobj.card_hitsound = sourceobj.card_hitsound
+	newobj.card_force = sourceobj.card_force
+	newobj.card_throwforce = sourceobj.card_throwforce
+	newobj.card_throw_speed = sourceobj.card_throw_speed
+	newobj.card_throw_range = sourceobj.card_throw_range
+	newobj.card_attack_verb_continuous = sourceobj.card_attack_verb_continuous //null or unique list made by string_list()
+	newobj.card_attack_verb_simple = sourceobj.card_attack_verb_simple //null or unique list made by string_list()
+	newobj.resistance_flags = sourceobj.resistance_flags
+
+/**
+ * check_menu: Checks if we are allowed to interact with a radial menu
+ *
+ * Arguments:
+ * * user The mob interacting with a menu
+ */
+/obj/item/toy/cards/cardhand/proc/check_menu(mob/living/user)
+	if(!istype(user))
+		return FALSE
+	if(user.incapacitated())
+		return FALSE
+	return TRUE
+
+/**
+ * This proc updates the sprite for when you create a hand of cards
+ */
+/obj/item/toy/cards/cardhand/proc/update_sprite()
+	cut_overlays()
+	var/overlay_cards = currenthand.len
+
+	var/k = overlay_cards == 2 ? 1 : overlay_cards - 2
+	for(var/i = k; i <= overlay_cards; i++)
+		var/card_overlay = image(icon=src.icon,icon_state="sc_[currenthand[i]]_[deckstyle]",pixel_x=(1-i+k)*3,pixel_y=(1-i+k)*3)
+		add_overlay(card_overlay)
+
+/obj/item/toy/cards/singlecard
+	name = "card"
+	desc = "A playing card used to play card games like poker."
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "singlecard_down_nanotrasen"
+	w_class = WEIGHT_CLASS_TINY
+	var/cardname = null
+	var/flipped = 0
+	pixel_x = -5
+
+
+/obj/item/toy/cards/singlecard/examine(mob/user)
+	. = ..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/cardUser = user
+		if(cardUser.is_holding(src))
+			cardUser.visible_message(span_notice("[cardUser] checks [cardUser.p_their()] card."), span_notice("The card reads: [cardname]."))
+		else
+			. += span_warning("You need to have the card in your hand to check it!")
+
+
+/obj/item/toy/cards/singlecard/verb/Flip()
+	set name = "Flip Card"
+	set category = "Object"
+	set src in range(1)
+	if(!ishuman(usr) || !usr.canUseTopic(src, BE_CLOSE))
+		return
+	if(!flipped)
+		src.flipped = 1
+		if (cardname)
+			src.icon_state = "sc_[cardname]_[deckstyle]"
+			src.name = src.cardname
+		else
+			src.icon_state = "sc_Ace of Spades_[deckstyle]"
+			src.name = "What Card"
+		src.pixel_x = 5
+	else if(flipped)
+		src.flipped = 0
+		src.icon_state = "singlecard_down_[deckstyle]"
+		src.name = "card"
+		src.pixel_x = -5
+
+/obj/item/toy/cards/singlecard/attackby(obj/item/I, mob/living/user, params)
+	if(istype(I, /obj/item/toy/cards/singlecard/))
+		var/obj/item/toy/cards/singlecard/C = I
+		if(C.parentdeck == src.parentdeck)
+			var/obj/item/toy/cards/cardhand/H = new/obj/item/toy/cards/cardhand(user.loc)
+			H.currenthand += C.cardname
+			H.currenthand += src.cardname
+			H.parentdeck = C.parentdeck
+			H.apply_card_vars(H,C)
+			to_chat(user, span_notice("You combine the [C.cardname] and the [src.cardname] into a hand."))
+			qdel(C)
+			qdel(src)
+			H.pickup(user)
+			user.put_in_active_hand(H)
+		else
+			to_chat(user, span_warning("You can't mix cards from other decks!"))
+
+	if(istype(I, /obj/item/toy/cards/cardhand/))
+		var/obj/item/toy/cards/cardhand/H = I
+		if(H.parentdeck == parentdeck)
+			H.currenthand += cardname
+			user.visible_message(span_notice("[user] adds a card to [user.p_their()] hand."), span_notice("You add the [cardname] to your hand."))
+			qdel(src)
+			H.interact(user)
+			H.update_sprite()
+		else
+			to_chat(user, span_warning("You can't mix cards from other decks!"))
+	else
+		return ..()
+
+/obj/item/toy/cards/singlecard/attack_self(mob/living/carbon/human/user)
+	if(!ishuman(user) || !(user.mobility_flags & MOBILITY_USE))
+		return
+	Flip()
+
+/obj/item/toy/cards/singlecard/apply_card_vars(obj/item/toy/cards/singlecard/newobj,obj/item/toy/cards/sourceobj)
+	..()
+	newobj.deckstyle = sourceobj.deckstyle
+	newobj.icon_state = "singlecard_down_[deckstyle]" // Without this the card is invisible until flipped. It's an ugly hack, but it works.
+	newobj.card_hitsound = sourceobj.card_hitsound
+	newobj.hitsound = newobj.card_hitsound
+	newobj.card_force = sourceobj.card_force
+	newobj.force = newobj.card_force
+	newobj.card_throwforce = sourceobj.card_throwforce
+	newobj.throwforce = newobj.card_throwforce
+	newobj.card_throw_speed = sourceobj.card_throw_speed
+	newobj.throw_speed = newobj.card_throw_speed
+	newobj.card_throw_range = sourceobj.card_throw_range
+	newobj.throw_range = newobj.card_throw_range
+	newobj.attack_verb_continuous = newobj.card_attack_verb_continuous = sourceobj.card_attack_verb_continuous //null or unique list made by string_list()
+	newobj.attack_verb_simple = newobj.card_attack_verb_simple = sourceobj.card_attack_verb_simple //null or unique list made by string_list()
+
+/*
+|| Syndicate playing cards, for pretending you're Gambit and playing poker for the nuke disk. ||
+*/
+
+/obj/item/toy/cards/deck/syndicate
+	name = "suspicious looking deck of cards"
+	desc = "A deck of space-grade playing cards. They seem unusually rigid."
+	icon_state = "deck_syndicate_full"
+	deckstyle = "syndicate"
+	card_hitsound = 'sound/weapons/bladeslice.ogg'
+	card_force = 5
+	card_throwforce = 10
+	card_throw_speed = 3
+	card_throw_range = 7
+	card_attack_verb_continuous = list("attacks", "slices", "dices", "slashes", "cuts")
+	card_attack_verb_simple = list("attack", "slice", "dice", "slash", "cut")
+	resistance_flags = NONE
+
+/*
  * Fake nuke
  */
+
 /obj/item/toy/nuke
 	name = "\improper Nuclear Fission Explosive toy"
 	desc = "A plastic model of a Nuclear Fission Explosive."
-	icon = 'icons/obj/toys/toy.dmi'
+	icon = 'icons/obj/toy.dmi'
 	icon_state = "nuketoyidle"
 	w_class = WEIGHT_CLASS_SMALL
 	var/cooldown = 0
@@ -754,26 +1055,27 @@
 		to_chat(user, span_alert("Nothing happens, and '</span>[round(timeleft/10)]<span class='alert'>' appears on the small display."))
 		sleep(5)
 
+
 /obj/item/toy/nuke/emag_act(mob/user)
 	if (obj_flags & EMAGGED)
 		return
-	to_chat(user, span_warning("You short-circuit \the [src]."))
+	to_chat(user, "<span class = 'notice'> You short-circuit \the [src].</span>")
 	obj_flags |= EMAGGED
-
 /*
  * Fake meteor
  */
+
 /obj/item/toy/minimeteor
 	name = "\improper Mini-Meteor"
 	desc = "Relive the excitement of a meteor shower! SweetMeat-eor Co. is not responsible for any injuries, headaches or hearing loss caused by Mini-Meteor."
-	icon = 'icons/obj/toys/toy.dmi'
+	icon = 'icons/obj/toy.dmi'
 	icon_state = "minimeteor"
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/toy/minimeteor/emag_act(mob/user)
 	if (obj_flags & EMAGGED)
 		return
-	to_chat(user, span_warning("You short-circuit whatever electronics exist inside \the [src], if there even are any."))
+	to_chat(user, "<span class = 'notice'> You short-circuit whatever electronics exist inside \the [src], if there even are any.</span>")
 	obj_flags |= EMAGGED
 
 /obj/item/toy/minimeteor/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
@@ -795,7 +1097,7 @@
 /obj/item/toy/redbutton
 	name = "big red button"
 	desc = "A big, plastic red button. Reads 'From HonkCo Pranks!' on the back."
-	icon = 'icons/obj/assemblies/assemblies.dmi'
+	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "bigred"
 	w_class = WEIGHT_CLASS_SMALL
 	var/cooldown = 0
@@ -817,10 +1119,11 @@
 /*
  * Snowballs
  */
+
 /obj/item/toy/snowball
 	name = "snowball"
 	desc = "A compact ball of snow. Good for throwing at people."
-	icon = 'icons/obj/toys/toy.dmi'
+	icon = 'icons/obj/toy.dmi'
 	icon_state = "snowball"
 	throwforce = 20 //the same damage as a disabler shot
 	damtype = STAMINA //maybe someday we can add stuffing rocks (or perhaps ore?) into snowballs to make them deal brute damage
@@ -844,28 +1147,19 @@
 	icon_state = "ball"
 	inhand_icon_state = "beachball"
 	w_class = WEIGHT_CLASS_BULKY //Stops people from hiding it in their bags/pockets
-	item_flags = NO_PIXEL_RANDOM_DROP
 
 /obj/item/toy/beach_ball/branded
 	name = "\improper Nanotrasen-brand beach ball"
 	desc = "The simple beach ball is one of Nanotrasen's most popular products. 'Why do we make beach balls? Because we can! (TM)' - Nanotrasen"
 
-/obj/item/toy/beach_ball/baseball
-	name = "baseball"
-	desc = "Enter the world of concussions and become who you were destined to be."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
-	icon_state = "baseball"
-	inhand_icon_state = "baseball"
-	throw_range = 9
-	throw_speed = 0.5
-
 /*
  * Clockwork Watch
  */
+
 /obj/item/toy/clockwork_watch
 	name = "steampunk watch"
 	desc = "A stylish steampunk watch made out of thousands of tiny cogwheels."
-	icon = 'icons/obj/toys/toy.dmi'
+	icon = 'icons/obj/clockwork_objects.dmi'
 	icon_state = "dread_ipad"
 	worn_icon_state = "dread_ipad"
 	slot_flags = ITEM_SLOT_BELT
@@ -887,10 +1181,11 @@
 /*
  * Toy Dagger
  */
+
 /obj/item/toy/toy_dagger
 	name = "toy dagger"
 	desc = "A cheap plastic replica of a dagger. Produced by THE ARM Toys, Inc."
-	icon = 'icons/obj/cult/items_and_weapons.dmi'
+	icon = 'icons/obj/wizard.dmi'
 	icon_state = "render"
 	inhand_icon_state = "cultdagger"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
@@ -900,8 +1195,9 @@
 /*
  * Xenomorph action figure
  */
+
 /obj/item/toy/toy_xeno
-	icon = 'icons/obj/toys/toy.dmi'
+	icon = 'icons/obj/toy.dmi'
 	icon_state = "toy_xeno"
 	name = "xenomorph action figure"
 	desc = "MEGA presents the new Xenos Isolated action figure! Comes complete with realistic sounds! Pull back string to use."
@@ -924,10 +1220,11 @@
 		return
 
 // TOY MOUSEYS :3 :3 :3
+
 /obj/item/toy/cattoy
 	name = "toy mouse"
 	desc = "A colorful toy mouse!"
-	icon = 'icons/obj/toys/toy.dmi'
+	icon = 'icons/obj/toy.dmi'
 	icon_state = "toy_mouse"
 	w_class = WEIGHT_CLASS_SMALL
 	var/cooldown = 0
@@ -937,9 +1234,10 @@
 /*
  * Action Figures
  */
+
 /obj/item/toy/figure
 	name = "\improper Non-Specific Action Figure action figure"
-	icon = 'icons/obj/toys/toy.dmi'
+	icon = 'icons/obj/toy.dmi'
 	icon_state = "nuketoy"
 	var/cooldown = 0
 	var/toysay = "What the fuck did you do?"
@@ -1159,17 +1457,18 @@
 	icon_state = "warden"
 	toysay = "Seventeen minutes for coughing at an officer!"
 
+
 /obj/item/toy/dummy
 	name = "ventriloquist dummy"
 	desc = "It's a dummy, dummy."
-	icon = 'icons/obj/toys/toy.dmi'
+	icon = 'icons/obj/toy.dmi'
 	icon_state = "puppet"
 	inhand_icon_state = "puppet"
 	var/doll_name = "Dummy"
 
 //Add changing looks when i feel suicidal about making 20 inhands for these.
 /obj/item/toy/dummy/attack_self(mob/user)
-	var/new_name = tgui_input_text(usr, "What would you like to name the dummy?", "Doll Name", doll_name, MAX_NAME_LEN)
+	var/new_name = stripped_input(usr,"What would you like to name the dummy?","Input a name",doll_name,MAX_NAME_LEN)
 	if(!new_name)
 		return
 	doll_name = new_name
@@ -1192,7 +1491,7 @@
 	desc = "May you always have a shell in your pocket and sand in your shoes. Whatever that's supposed to mean."
 	icon = 'icons/misc/beach.dmi'
 	icon_state = "shell1"
-	var/static/list/possible_colors = list("" = 2, COLOR_PURPLE_GRAY = 1, COLOR_OLIVE = 1, COLOR_PALE_BLUE_GRAY = 1, COLOR_RED_GRAY = 1)
+	var/static/list/possible_colors = list("" =  2, COLOR_PURPLE_GRAY = 1, COLOR_OLIVE = 1, COLOR_PALE_BLUE_GRAY = 1, COLOR_RED_GRAY = 1)
 
 /obj/item/toy/seashell/Initialize(mapload)
 	. = ..()
@@ -1205,7 +1504,7 @@
 /obj/item/toy/brokenradio
 	name = "broken radio"
 	desc = "An old radio that produces nothing but static when turned on."
-	icon = 'icons/obj/toys/toy.dmi'
+	icon = 'icons/obj/toy.dmi'
 	icon_state = "broken_radio"
 	w_class = WEIGHT_CLASS_SMALL
 	var/cooldown = 0
@@ -1222,7 +1521,7 @@
 /obj/item/toy/braintoy
 	name = "squeaky brain"
 	desc = "A Mr. Monstrous brand toy made to imitate a human brain in smell and texture."
-	icon = 'icons/obj/medical/organs/organs.dmi'
+	icon = 'icons/obj/surgery.dmi'
 	icon_state = "brain-old"
 	var/cooldown = 0
 
@@ -1231,9 +1530,11 @@
 		cooldown = (world.time + 10)
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, src, 'sound/effects/blobattack.ogg', 50, FALSE), 0.5 SECONDS)
 
+
 /*
  * Eldritch Toys
  */
+
 /obj/item/toy/eldritch_book
 	name = "Codex Cicatrix"
 	desc = "A toy book that closely resembles the Codex Cicatrix. Covered in fake polyester human flesh and has a huge goggly eye attached to the cover. The runes are gibberish and cannot be used to summon demons... Hopefully?"
@@ -1256,6 +1557,7 @@
 /*
  * Fake tear
  */
+
 /obj/item/toy/reality_pierce
 	name = "Pierced reality"
 	desc = "Hah. You thought it was the real deal!"
@@ -1274,7 +1576,7 @@
 /obj/item/toy/foamfinger
 	name = "foam finger"
 	desc = "root for the home team! wait, does this station even have a sports team?"
-	icon = 'icons/obj/weapons/guns/ballistic.dmi'
+	icon = 'icons/obj/guns/ballistic.dmi'
 	icon_state = "foamfinger"
 	inhand_icon_state = "foamfinger_inhand"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
@@ -1326,10 +1628,11 @@ GLOBAL_LIST_EMPTY(intento_players)
 #define TIME_PER_DEMO_STEP 0.6 SECONDS
 #define TIME_TO_RESET_ICON 0.5 SECONDS
 
+
 /obj/item/toy/intento
 	name = "\improper Intento"
 	desc = "Fundamentally useless for all intentsive purposes."
-	icon = 'icons/obj/toys/intents.dmi'
+	icon = 'icons/obj/intents.dmi'
 	icon_state = "blank"
 	/// Current sequence of intents
 	var/list/current_sequence = list()
@@ -1406,6 +1709,7 @@ GLOBAL_LIST_EMPTY(intento_players)
 
 		state = STATE_STARTING
 		COOLDOWN_START(src, next_process, TIME_TO_BEGIN)
+
 
 /obj/item/toy/intento/process()
 	if(next_icon_reset && next_icon_reset <= world.time)
@@ -1484,7 +1788,7 @@ GLOBAL_LIST_EMPTY(intento_players)
 	switch(intent)
 		if(HELP)
 			to_chat(victim, span_danger("[src] hugs you to make you feel better!"))
-			victim.add_mood_event("hug", /datum/mood_event/hug)
+			SEND_SIGNAL(victim, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/hug)
 		if(DISARM)
 			to_chat(victim, span_danger("You're knocked down from a shove by [src]!"))
 			victim.Knockdown(2 SECONDS)

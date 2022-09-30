@@ -27,18 +27,10 @@ have ways of interacting with a specific mob and control it.
 		BB_MONKEY_GUN_WORKED = TRUE,
 		BB_SONG_LINES = MONKEY_SONG,
 	)
-	idle_behavior = /datum/idle_behavior/idle_monkey
-
-/datum/ai_controller/monkey/pun_pun
-	movement_delay = 0.7 SECONDS //pun pun moves slower so the bartender can keep track of them
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/generic_resist,
-		/datum/ai_planning_subtree/monkey_combat,
-		/datum/ai_planning_subtree/generic_hunger,
-		/datum/ai_planning_subtree/generic_play_instrument,
-		/datum/ai_planning_subtree/punpun_shenanigans,
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
-	idle_behavior = /datum/idle_behavior/idle_monkey/pun_pun
+	idle_behavior = /datum/idle_behavior/idle_monkey
 
 /datum/ai_controller/monkey/angry
 
@@ -66,45 +58,32 @@ have ways of interacting with a specific mob and control it.
 	RegisterSignal(new_pawn, COMSIG_CARBON_CUFF_ATTEMPTED, .proc/on_attempt_cuff)
 	RegisterSignal(new_pawn, COMSIG_MOB_MOVESPEED_UPDATED, .proc/update_movespeed)
 
+	AddComponent(/datum/component/connect_loc_behalf, new_pawn, loc_connections)
 	movement_delay = living_pawn.cached_multiplicative_slowdown
 	return ..() //Run parent at end
 
 /datum/ai_controller/monkey/UnpossessPawn(destroy)
-
-	UnregisterSignal(pawn, list(
-		COMSIG_PARENT_ATTACKBY,
-		COMSIG_ATOM_ATTACK_HAND,
-		COMSIG_ATOM_ATTACK_PAW,
-		COMSIG_ATOM_BULLET_ACT,
-		COMSIG_ATOM_HITBY,
-		COMSIG_LIVING_START_PULL,
-		COMSIG_LIVING_TRY_SYRINGE,
-		COMSIG_ATOM_HULK_ATTACK,
-		COMSIG_CARBON_CUFF_ATTEMPTED,
-		COMSIG_MOB_MOVESPEED_UPDATED,
-		COMSIG_ATOM_ATTACK_ANIMAL,
-		COMSIG_MOB_ATTACK_ALIEN,
-	))
+	UnregisterSignal(pawn, list(COMSIG_PARENT_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_ATTACK_PAW, COMSIG_ATOM_BULLET_ACT, COMSIG_ATOM_HITBY, COMSIG_LIVING_START_PULL,\
+	COMSIG_LIVING_TRY_SYRINGE, COMSIG_ATOM_HULK_ATTACK, COMSIG_CARBON_CUFF_ATTEMPTED, COMSIG_MOB_MOVESPEED_UPDATED, COMSIG_ATOM_ATTACK_ANIMAL, COMSIG_MOB_ATTACK_ALIEN))
+	qdel(GetComponent(/datum/component/connect_loc_behalf))
 
 	return ..() //Run parent at end
 
+// Stops sentient monkeys from being knocked over like weak dunces.
+/datum/ai_controller/monkey/on_sentience_gained()
+	. = ..()
+	qdel(GetComponent(/datum/component/connect_loc_behalf))
+
 /datum/ai_controller/monkey/on_sentience_lost()
 	. = ..()
-	set_trip_mode(mode = TRUE)
+	AddComponent(/datum/component/connect_loc_behalf, pawn, loc_connections)
 
 /datum/ai_controller/monkey/able_to_run()
+	. = ..()
 	var/mob/living/living_pawn = pawn
 
 	if(IS_DEAD_OR_INCAP(living_pawn))
 		return FALSE
-	return ..()
-
-/datum/ai_controller/monkey/proc/set_trip_mode(mode = TRUE)
-	var/mob/living/carbon/regressed_monkey = pawn
-	var/brain = regressed_monkey.getorganslot(ORGAN_SLOT_BRAIN)
-	if(istype(brain, /obj/item/organ/internal/brain/primate)) // In case we are a monkey AI in a human brain by who was previously controlled by a client but it now not by some marvel
-		var/obj/item/organ/internal/brain/primate/monkeybrain = brain
-		monkeybrain.tripping = mode
 
 ///re-used behavior pattern by monkeys for finding a weapon
 /datum/ai_controller/monkey/proc/TryFindWeapon()
@@ -122,10 +101,6 @@ have ways of interacting with a specific mob and control it.
 	for(var/obj/item/item in oview(2, living_pawn))
 		nearby_items += item
 
-	for(var/obj/item/item in living_pawn.held_items) // If we've got some garbage in out hands thats going to stop us from effectivly attacking, we should get rid of it.
-		if(item.force < 2)
-			living_pawn.dropItemToGround(item)
-
 	weapon = GetBestWeapon(src, nearby_items, living_pawn.held_items)
 
 	var/pickpocket = FALSE
@@ -139,9 +114,6 @@ have ways of interacting with a specific mob and control it.
 	if(!weapon || (weapon in living_pawn.held_items))
 		return FALSE
 
-	if(weapon.force < 2) // our bite does 2 damage on avarage, no point in settling for anything less
-		return FALSE
-
 	blackboard[BB_MONKEY_PICKUPTARGET] = weapon
 	current_movement_target = weapon
 	if(pickpocket)
@@ -153,21 +125,21 @@ have ways of interacting with a specific mob and control it.
 ///Reactive events to being hit
 /datum/ai_controller/monkey/proc/retaliate(mob/living/L)
 	var/list/enemies = blackboard[BB_MONKEY_ENEMIES]
-	enemies[WEAKREF(L)] += MONKEY_HATRED_AMOUNT
+	enemies[L] += MONKEY_HATRED_AMOUNT
 
 /datum/ai_controller/monkey/proc/on_attackby(datum/source, obj/item/I, mob/user)
 	SIGNAL_HANDLER
 	if(I.force && I.damtype != STAMINA)
 		retaliate(user)
 
-/datum/ai_controller/monkey/proc/on_attack_hand(datum/source, mob/living/user, list/modifiers)
+/datum/ai_controller/monkey/proc/on_attack_hand(datum/source, mob/living/user)
 	SIGNAL_HANDLER
-	if((user.combat_mode || LAZYACCESS(modifiers, RIGHT_CLICK)) && prob(MONKEY_RETALIATE_PROB))
+	if(prob(MONKEY_RETALIATE_PROB))
 		retaliate(user)
 
-/datum/ai_controller/monkey/proc/on_attack_paw(datum/source, mob/living/user, list/modifiers)
+/datum/ai_controller/monkey/proc/on_attack_paw(datum/source, mob/living/user)
 	SIGNAL_HANDLER
-	if((user.combat_mode || LAZYACCESS(modifiers, RIGHT_CLICK)) && prob(MONKEY_RETALIATE_PROB))
+	if(prob(MONKEY_RETALIATE_PROB))
 		retaliate(user)
 
 /datum/ai_controller/monkey/proc/on_attack_animal(datum/source, mob/living/user)
@@ -175,28 +147,36 @@ have ways of interacting with a specific mob and control it.
 	if(user.melee_damage_upper > 0 && prob(MONKEY_RETALIATE_PROB))
 		retaliate(user)
 
-/datum/ai_controller/monkey/proc/on_attack_alien(datum/source, mob/living/user, list/modifiers)
+/datum/ai_controller/monkey/proc/on_attack_alien(datum/source, mob/living/user)
 	SIGNAL_HANDLER
-	if((user.combat_mode || LAZYACCESS(modifiers, RIGHT_CLICK)) && prob(MONKEY_RETALIATE_PROB))
+	if(prob(MONKEY_RETALIATE_PROB))
 		retaliate(user)
 
 /datum/ai_controller/monkey/proc/on_bullet_act(datum/source, obj/projectile/Proj)
 	SIGNAL_HANDLER
 	var/mob/living/living_pawn = pawn
-	if(istype(Proj, /obj/projectile/beam) || istype(Proj, /obj/projectile/bullet))
+	if(istype(Proj , /obj/projectile/beam)||istype(Proj, /obj/projectile/bullet))
 		if((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE))
 			if(!Proj.nodamage && Proj.damage < living_pawn.health && isliving(Proj.firer))
 				retaliate(Proj.firer)
 
 /datum/ai_controller/monkey/proc/on_hitby(datum/source, atom/movable/AM, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	SIGNAL_HANDLER
-	if(isitem(AM))
+	if(istype(AM, /obj/item))
 		var/mob/living/living_pawn = pawn
 		var/obj/item/I = AM
 		var/mob/thrown_by = I.thrownby?.resolve()
-		if(I.throwforce && I.throwforce < living_pawn.health && ishuman(thrown_by))
+		if(I.throwforce < living_pawn.health && ishuman(thrown_by))
 			var/mob/living/carbon/human/H = thrown_by
 			retaliate(H)
+
+/datum/ai_controller/monkey/proc/on_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	SIGNAL_HANDLER
+	var/mob/living/living_pawn = pawn
+	if(!IS_DEAD_OR_INCAP(living_pawn) && isliving(arrived))
+		var/mob/living/in_the_way_mob = arrived
+		in_the_way_mob.knockOver(living_pawn)
+		return
 
 /datum/ai_controller/monkey/proc/on_startpulling(datum/source, atom/movable/puller, state, force)
 	SIGNAL_HANDLER

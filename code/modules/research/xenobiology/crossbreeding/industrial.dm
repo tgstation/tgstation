@@ -42,7 +42,7 @@ Industrial extracts:
 	if(plasmaabsorbed >= plasmarequired)
 		playsound(src, 'sound/effects/attackblob.ogg', 50, TRUE)
 		plasmaabsorbed -= plasmarequired
-		for(var/i in 1 to itemamount)
+		for(var/i = 0, i < itemamount, i++)
 			do_after_spawn(new itempath(get_turf(src)))
 	else if(IsWorking)
 		playsound(src, 'sound/effects/bubbles.ogg', 5, TRUE)
@@ -118,11 +118,6 @@ Industrial extracts:
 /obj/item/slimecross/industrial/silver/process()
 	itempath = pick(list(get_random_food(), get_random_drink()))
 	..()
-
-/obj/item/slimecross/industrial/silver/do_after_spawn(obj/item/spawned)
-	if(istype(spawned, /obj/item/food))
-		var/obj/item/food/food_object = spawned
-		food_object.mark_silver_slime_reaction()
 
 /obj/item/slimecross/industrial/bluespace
 	colour = "bluespace"

@@ -37,9 +37,8 @@ You can avoid hacky code by using object-oriented methodologies, such as overrid
 
 ### User Interfaces
 
-* All new player-facing user interfaces must use TGUI, unless they are critical user interfaces.
-* All critical user interfaces must be usable with HTML or the interface.dmf, with tgui being *optional* for this UI.
-	* Examples of critical user interfaces are the chat box, the observe button, the stat panel, and the chat input.
+* All new player-facing user interfaces must use TGUI.
+* Raw HTML is permitted for admin and debug UIs.
 * Documentation for TGUI can be found at:
 	* [tgui/README.md](../tgui/README.md)
 	* [tgui/tutorial-and-examples.md](../tgui/docs/tutorial-and-examples.md)
@@ -97,9 +96,7 @@ While we normally encourage (and in some cases, even require) bringing out of da
 
 * Files and path accessed and referenced by code above simply being #included should be strictly lowercase to avoid issues on filesystems where case matters.
 
-### RegisterSignal()
-
-#### Signal Handlers
+### Signal Handlers
 
 All procs that are registered to listen for signals using `RegisterSignal()` must contain at the start of the proc `SIGNAL_HANDLER` eg;
 ```
@@ -110,16 +107,6 @@ All procs that are registered to listen for signals using `RegisterSignal()` mus
 This is to ensure that it is clear the proc handles signals and turns on a lint to ensure it does not sleep.
 
 Any sleeping behaviour that you need to perform inside a `SIGNAL_HANDLER` proc must be called asynchronously (e.g. with `INVOKE_ASYNC()`) or be redone to work asynchronously. 
-
-#### `override`
-
-Each atom can only register a signal on the same object once, or else you will get a runtime. Overriding signals is usually a bug, but if you are confident that it is not, you can silence this runtime with `override = TRUE`.
-
-```dm
-RegisterSignal(fork, COMSIG_FORK_STAB, .proc/on_fork_stab, override = TRUE)
-```
-
-If you decide to do this, you should make it clear with a comment explaining why it is necessary. This helps us to understand that the signal override is not a bug, and may help us to remove it in the future if the assumptions change.
 
 ### Enforcing parent calling
 
@@ -256,7 +243,7 @@ Bad:
 ```dm
 /obj/machine/update_overlays(var/blah)
 	var/static/our_overlays
-	if (isnull(our_overlays))
+	if(isnull(our_overlays)
 		our_overlays = list("on" = iconstate2appearance(overlay_icon, "on"), "off" = iconstate2appearance(overlay_icon, "off"), "broken" = iconstate2appearance(overlay_icon, "broken"))
 	if (stat & broken)
 		add_overlay(our_overlays["broken"]) 
@@ -269,10 +256,9 @@ Good:
 #define OUR_ON_OVERLAY 1
 #define OUR_OFF_OVERLAY 2
 #define OUR_BROKEN_OVERLAY 3
-
-/obj/machine/update_overlays(var/blah)
+/obj/machine/update_overlays(var/blah
 	var/static/our_overlays
-	if (isnull(our_overlays))
+	if(isnull(our_overlays)
 		our_overlays = list(iconstate2appearance(overlay_icon, "on"), iconstate2appearance(overlay_icon, "off"), iconstate2appearance(overlay_icon, "broken"))
 	if (stat & broken)
 		add_overlay(our_overlays[OUR_BROKEN_OVERLAY])
@@ -322,151 +308,17 @@ https://file.house/zy7H.png
 Code used for the test in a readable format:
 https://pastebin.com/w50uERkG
 
-### Dot variable (`.`)
+### Dot variable
 
-The `.` variable is present in all procs. It refers to the value returned by a proc.
-
-```dm
-/proc/return_six()
-	. = 3
-	. *= 2
-
-// ...is equivalent to...
-/proc/return_six()
-	var/output = 3
-	output *= 2
-	return output
+Like other languages in the C family, DM has a `.` or "Dot" operator, used for accessing variables/members/functions of an object instance.
+eg:
+```DM
+var/mob/living/carbon/human/H = YOU_THE_READER
+H.gib()
 ```
+However, DM also has a dot variable, accessed just as `.` on its own, defaulting to a value of null. Now, what's special about the dot operator is that it is automatically returned (as in the `return` statement) at the end of a proc, provided the proc does not already manually return (`return count` for example.) Why is this special?
 
-At its best, it can make some very common patterns easy to use, and harder to mess up. However, at its worst, it can make it significantly harder to understand what a proc does.
-
-```dm
-/proc/complex_proc()
-	if (do_something())
-		some_code()
-		if (do_something_else())
-			. = TRUE // Uh oh, what's going on!
-	
-	// even
-	// more
-	// code
-	if (bad_condition())
-		return // This actually will return something set from earlier!
-```
-
-This sort of behavior can create some nasty to debug errors with things returning when you don't expect them to. Would you see `return` and it expect it to return a value, without reading all the code before it? Furthermore, a simple `return` statement cannot easily be checked by the LSP, meaning you can't easily check what is actually being returned. Basically, `return output` lets you go to where `output` is defined/set. `return` does not.
-
-Even in simple cases, this can create some just generally hard to read code, seemingly in the pursuit of being clever.
-
-```dm
-/client/p_were(gender)
-	. = "was"
-	if (gender == PLURAL || gender == NEUTER)
-		. = "were"
-```
-
-Because of these problems, it is encouraged to prefer standard, explicit return statements. The above code would be best written as:
-
-```dm
-/client/p_were(gender)
-	if (gender == PLURAL || gender == NEUTER)
-		return "were"
-	else
-		return "was"
-```
-
-#### Exception: `. = ..()`
-
-As hinted at before, `. = ..()` is *extremely* common. This will call the parent function, and preserve its return type. Code like this:
-
-```dm
-/obj/item/spoon/attack()
-	. = ..()
-	visible_message("Whack!")
-```
-
-...is completely accepted, and in fact, usually *prefered* over:
-
-```dm
-/obj/item/spoon/attack()
-	var/output = ..()
-	visible_message("Whack!")
-	return output
-```
-
-#### Exception: Runtime resilience
-
-One unique property of DM is the ability for procs to error, but for code to continue. For instance, the following:
-
-```dm
-/proc/uh_oh()
-	CRASH("oh no!")
-
-/proc/main()
-	to_chat(world, "1")
-	uh_oh()
-	to_chat(world, "2")
-```
-
-...would print both 1 *and* 2, which may be unexpected if you come from other languages.
-
-This is where `.` provides a new useful behavior--**a proc that runtimes will return `.`**.
-
-Meaning:
-
-```dm
-/proc/uh_oh()
-	. = "woah!"
-	CRASH("oh no!")
-
-/proc/main()
-	to_chat(world, uh_oh())
-```
-
-...will print `woah!`. 
-
-For this reason, it is acceptable for `.` to be used in places where consumers can reasonably continue in the event of a runtime.
-
-If you are using `.` in this case (or for another case that might be acceptable, other than most uses of `. = ..()`), it is still prefered that you explicitly `return .` in order to prevent both editor issues and readability/error-prone issues.
-
-```dm
-/proc/uh_oh()
-	. = "woah!"
-
-	if (do_something())
-		call_code()
-		if (!working_fine())
-			return . // Instead of `return`, we explicitly `return .`
-
-	if (some_fail_state())
-		CRASH("youch!")
-
-	return . // `return .` is used at the end, to signify it has been used
-```
-
-```dm
-/obj/item/spoon/super_attack()
-	. = ..()
-	if (. == BIGGER_SUPER_ATTACK)
-		return BIGGER_SUPER_ATTACK // More readable than `.`
-	
-	// Due to how common it is, most uses of `. = ..()` do not need a trailing `return .`
-```
-
-### The BYOND walk procs
-
-BYOND has a few procs that move one atom towards/away from another, `walk()`, `walk_to()`, `walk_towards`, `walk_away()` and `walk_rand()`.
-
-The way they pull this off, while fine for the language itself, makes a mess of our master-controller, and can cause the whole game to slow down. Do not use them.
-
-The following is a list of procs, and their safe replacements.
-
-* Removing something from the loop `walk(0)` -> `SSmove_manager.stop_looping()`
-* Move in a direction `walk()` -> `SSmove_manager.move()`
-* Move towards a thing, taking turf density into account`walk_to()` -> `SSmove_manager.move_to()`
-* Move in a thing's direction, ignoring turf density `walk_towards()` -> `SSmove_manager.home_onto()` and `SSmove_manager.move_towards_legacy()`, check the documentation to see which you like better
-* Move away from something, taking turf density into account `walk_away()` -> `SSmove_manager.move_away()`
-* Move to a random place nearby. NOT random walk `walk_rand()` -> `SSmove_manager.move_rand()` is random walk, `SSmove_manager.move_to_rand()` is walk to a random place
+With `.` being everpresent in every proc, can we use it as a temporary variable? Of course we can! However, the `.` operator cannot replace a typecasted variable - it can hold data any other var in DM can, it just can't be accessed as one, although the `.` operator is compatible with a few operators that look weird but work perfectly fine, such as: `.++` for incrementing `.'s` value, or `.[1]` for accessing the first element of `.`, provided that it's a list.
 
 ### BYOND hellspawn
 
@@ -475,7 +327,7 @@ It's listed here in the hope that it will prevent fruitless debugging in future.
 
 #### Icon hell
 
-Due to how they are internally represented as part of appearance, overlays and underlays which have an icon_state named the same as an icon_state on the parent object will use the parent's icon_state and look completely wrong. This has caused two bugs with underlay lighting whenever a turf had the icon_state of "transparent" or "dark" and their lighting objects also had those states - because when the lighting underlays were in those modes they would be rendered by the client to look like the icons the floor used. When adding something as an overlay or an underlay make sure it can't match icon_state names with whatever you're adding it to.
+The ‘transparent’ icon state causes fucked visual behavior when used on turfs, something to do with underlays and overlays.
 
 ## SQL
 

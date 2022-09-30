@@ -1,16 +1,11 @@
 
 //returns TRUE if this mob has sufficient access to use this object
 /obj/proc/allowed(mob/accessor)
-	var/result_bitflags = SEND_SIGNAL(src, COMSIG_OBJ_ALLOWED, accessor)
-	if(result_bitflags & COMPONENT_OBJ_ALLOW)
+	if(SEND_SIGNAL(src, COMSIG_OBJ_ALLOWED, accessor) & COMPONENT_OBJ_ALLOW)
 		return TRUE
-	if(result_bitflags & COMPONENT_OBJ_DISALLOW) // override all other checks
-		return FALSE
 	//check if it doesn't require any access at all
-	if(check_access(null))
+	if(src.check_access(null))
 		return TRUE
-	if(!istype(accessor)) //likely a TK user.
-		return FALSE
 	if(issilicon(accessor))
 		if(ispAI(accessor))
 			return FALSE
@@ -18,27 +13,22 @@
 	if(isAdminGhostAI(accessor))
 		//Access can't stop the abuse
 		return TRUE
-	//If the mob has the simple_access component with the requried access, we let them in.
-	else if(SEND_SIGNAL(accessor, COMSIG_MOB_TRIED_ACCESS, src) & ACCESS_ALLOWED)
+	else if(istype(accessor) && SEND_SIGNAL(accessor, COMSIG_MOB_ALLOWED, src))
 		return TRUE
-	//If the mob is holding a valid ID, we let them in. get_active_held_item() is on the mob level, so no need to copypasta everywhere.
-	else if(check_access(accessor.get_active_held_item()))
-		return TRUE
-	//if they are wearing a card that has access, that works
 	else if(ishuman(accessor))
 		var/mob/living/carbon/human/human_accessor = accessor
-		if(check_access(human_accessor.wear_id))
+		//if they are holding or wearing a card that has access, that works
+		if(check_access(human_accessor.get_active_held_item()) || src.check_access(human_accessor.wear_id))
 			return TRUE
-	//if they have a hacky abstract animal ID with the required access, let them in i guess...
+	else if(isalienadult(accessor))
+		var/mob/living/carbon/george = accessor
+		//they can only hold things :(
+		if(check_access(george.get_active_held_item()))
+			return TRUE
 	else if(isanimal(accessor))
 		var/mob/living/simple_animal/animal = accessor
-		if(check_access(animal.access_card))
+		if(check_access(animal.get_active_held_item()) || check_access(animal.access_card))
 			return TRUE
-	else if(isbrain(accessor) && istype(accessor.loc, /obj/item/mmi))
-		var/obj/item/mmi/brain_mmi = accessor.loc
-		if(ismecha(brain_mmi.loc))
-			var/obj/vehicle/sealed/mecha/big_stompy_robot = brain_mmi.loc
-			return check_access_list(big_stompy_robot.operation_req_access)
 	return FALSE
 
 /obj/item/proc/GetAccess()
@@ -118,4 +108,34 @@
 /obj/item/proc/get_sechud_job_icon_state()
 	var/obj/item/card/id/id_card = GetID()
 
-	return id_card?.get_trim_sechud_icon_state() || SECHUD_NO_ID
+	if(!id_card)
+		return "hudno_id"
+
+	var/card_assignment
+	if(istype(id_card, /obj/item/card/id/advanced))
+		var/obj/item/card/id/advanced/advanced_id_card = id_card
+		if(advanced_id_card.trim_assignment_override)
+			card_assignment = advanced_id_card.trim_assignment_override
+		else if(ispath(advanced_id_card.trim))
+			var/datum/id_trim/trim = SSid_access.trim_singletons_by_path[advanced_id_card.trim]
+			card_assignment = trim.assignment
+		else
+			card_assignment = advanced_id_card.trim?.assignment
+	else
+		card_assignment = id_card.trim?.assignment
+
+	if(!card_assignment)
+		card_assignment = id_card.assignment
+
+	// Is this one of the jobs with dedicated HUD icons?
+	if(card_assignment in SSjob.station_jobs)
+		return "hud[ckey(card_assignment)]"
+	if(card_assignment in SSjob.additional_jobs_with_icons)
+		return "hud[ckey(card_assignment)]"
+
+	// If not, is it one of the jobs that should use the NT logo?
+	if(card_assignment in SSjob.centcom_jobs)
+		return "hudcentcom"
+
+	// If none of the above apply, job name is unknown.
+	return "hudunknown"

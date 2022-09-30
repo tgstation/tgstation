@@ -312,7 +312,9 @@
 	},
 /area/template_noop)
 "qV" = (
-/obj/machinery/shower/directional/east,
+/obj/machinery/shower{
+	dir = 4
+	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -514,7 +516,9 @@
 	},
 /area/template_noop)
 "Ck" = (
-/obj/machinery/shower/directional/east,
+/obj/machinery/shower{
+	dir = 4
+	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -587,9 +591,9 @@
 	dir = 8
 	},
 /obj/structure/table,
-/obj/item/reagent_containers/cup/beaker,
-/obj/item/reagent_containers/cup/beaker,
-/obj/item/reagent_containers/cup/beaker,
+/obj/item/reagent_containers/glass/beaker,
+/obj/item/reagent_containers/glass/beaker,
+/obj/item/reagent_containers/glass/beaker,
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
@@ -606,7 +610,7 @@
 	},
 /area/template_noop)
 "GN" = (
-/obj/machinery/door/window/left/directional/west{
+/obj/machinery/door/window/westleft{
 	dir = 2
 	},
 /obj/effect/turf_decal/tile/blue,
@@ -743,7 +747,7 @@
 	dir = 8
 	},
 /obj/structure/table,
-/obj/item/reagent_containers/cup/beaker/large,
+/obj/item/reagent_containers/glass/beaker/large,
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
@@ -774,9 +778,7 @@
 	},
 /area/template_noop)
 "Tt" = (
-/obj/machinery/stasis{
-	dir = 4
-	},
+/obj/machinery/stasis,
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
 	dir = 8

@@ -4,8 +4,8 @@
 	damage = 60
 	damage_type = BRUTE
 	nodamage = FALSE
-	armor_flag = BULLET
-	hitsound_wall = SFX_RICOCHET
+	flag = BULLET
+	hitsound_wall = "ricochet"
 	sharpness = SHARP_POINTY
 	impact_effect_type = /obj/effect/temp_visual/impact_effect
 	shrapnel_type = /obj/item/shrapnel/bullet

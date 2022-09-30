@@ -9,9 +9,6 @@
 	density = FALSE
 	can_buckle = FALSE
 	resistance_flags = INDESTRUCTIBLE // Just to be safe.
-	use_power = NO_POWER_USE
-	///Are non-humans allowed to use this?
-	var/humans_only = FALSE
 	///What color is your mob set to when crossed?
 	var/team_color = COLOR_WHITE
 	///What radio station is your radio set to when crossed (And human)?
@@ -31,8 +28,6 @@
 
 /obj/machinery/teambuilder/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
-	if(!ishuman(AM) && humans_only)
-		return
 	if(AM.get_filter("teambuilder"))
 		return
 	if(isliving(AM) && team_color)
@@ -47,13 +42,11 @@
 /obj/machinery/teambuilder/red
 	name = "Teambuilding Machine (Red)"
 	desc = "A machine that, when passed, colors you based on the color of your team. Go red team!"
-	humans_only = TRUE
 	team_color = COLOR_RED
 	team_radio = FREQ_CTF_RED
 
 /obj/machinery/teambuilder/blue
 	name = "Teambuilding Machine (Blue)"
 	desc = "A machine that, when passed, colors you based on the color of your team. Go blue team!"
-	humans_only = TRUE
 	team_color = COLOR_BLUE
 	team_radio = FREQ_CTF_BLUE

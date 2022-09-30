@@ -7,79 +7,76 @@
  * Wall Safe
  */
 
-///Generic Safe
+// -----------------------------
+//         Generic Item
+// -----------------------------
 /obj/item/storage/secure
 	name = "secstorage"
-	desc = "This shouldn't exist. If it does, create an issue report."
-	w_class = WEIGHT_CLASS_NORMAL
-	/// The code entered by the user
-	var/entered_code
-	/// The code that will open this safe
-	var/lock_code
-	/// Does this lock have a code set?
-	var/lock_set = FALSE
-	/// Is this lock currently being hacked?
-	var/lock_hacking = FALSE
-	/// Is the safe service panel open?
+	var/code = ""
+	var/l_code = null
+	var/l_set = FALSE
+	var/l_setshort = FALSE
+	var/l_hacking = FALSE
 	var/panel_open = FALSE
-	/// Is this door hackable?
 	var/can_hack_open = TRUE
-	/// Do we want to apply a door overlay?
+	///this var decides if we want to apply a door overlay.
 	var/has_door = FALSE
+	w_class = WEIGHT_CLASS_NORMAL
+	desc = "This shouldn't exist. If it does, create an issue report."
 
-
-/obj/item/storage/secure/Initialize(mapload)
+/obj/item/storage/secure/ComponentInitialize()
 	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
-	atom_storage.max_total_storage = 14
-	update_appearance()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_w_class = WEIGHT_CLASS_SMALL
+	STR.max_combined_w_class = 14
+	if(SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED))
+		icon_state = "[initial(icon_state)]_locked"
 
 /obj/item/storage/secure/examine(mob/user)
 	. = ..()
 	if(can_hack_open)
 		. += "The service panel is currently <b>[panel_open ? "unscrewed" : "screwed shut"]</b>."
 
-/obj/item/storage/secure/tool_act(mob/living/user, obj/item/tool)
-	if(can_hack_open && atom_storage.locked)
-		return ..()
-	else
-		return FALSE
+/obj/item/storage/secure/attackby(obj/item/W, mob/user, params)
+	if(can_hack_open && SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED))
+		if (W.tool_behaviour == TOOL_SCREWDRIVER)
+			if (W.use_tool(src, user, 20))
+				panel_open = !panel_open
+				to_chat(user, span_notice("You [panel_open ? "open" : "close"] the service panel."))
+			return
+		if (W.tool_behaviour == TOOL_WIRECUTTER)
+			to_chat(user, span_danger("[src] is protected from this sort of tampering, yet it appears the internal memory wires can still be <b>pulsed</b>."))
+			return
+		if (W.tool_behaviour == TOOL_MULTITOOL)
+			if(l_hacking)
+				to_chat(user, span_danger("This safe is already being hacked."))
+				return
+			if(panel_open == TRUE)
+				to_chat(user, span_danger("Now attempting to reset internal memory, please hold."))
+				l_hacking = TRUE
+				if (W.use_tool(src, user, 400))
+					to_chat(user, span_danger("Internal memory reset - lock has been disengaged."))
+					l_set = FALSE
 
-/obj/item/storage/secure/wirecutter_act(mob/living/user, obj/item/tool)
-	to_chat(user, span_danger("[src] is protected from this sort of tampering, yet it appears the internal memory wires can still be <b>pulsed</b>."))
-	return
+				l_hacking = FALSE
+				return
 
-/obj/item/storage/secure/screwdriver_act(mob/living/user, obj/item/tool)
-	if(tool.use_tool(src, user, 20))
-		panel_open = !panel_open
-		balloon_alert(user, "panel [panel_open ? "opened" : "closed"]")
-		return TRUE
+			to_chat(user, span_warning("You must <b>unscrew</b> the service panel before you can pulse the wiring!"))
+			return
 
-/obj/item/storage/secure/multitool_act(mob/living/user, obj/item/tool)
-	. = TRUE
-	if(lock_hacking)
-		balloon_alert(user, "already hacking!")
-		return
-	if(panel_open == TRUE)
-		balloon_alert(user, "hacking...")
-		lock_hacking = TRUE
-		if (tool.use_tool(src, user, 400))
-			balloon_alert(user, "hacked")
-			lock_set = FALSE
-
-		lock_hacking = FALSE
-		return
-
-	balloon_alert(user, "unscrew panel!")
+	// -> storage/attackby() what with handle insertion, etc
+	return ..()
 
 /obj/item/storage/secure/attack_self(mob/user)
-	var/locked = atom_storage.locked
+	var/locked = SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED)
 	user.set_machine(src)
 	var/dat = text("<TT><B>[]</B><BR>\n\nLock Status: []",src, (locked ? "LOCKED" : "UNLOCKED"))
 	var/message = "Code"
-	if (lock_set == 0)
+	if ((l_set == 0) && (!l_setshort))
 		dat += text("<p>\n<b>5-DIGIT PASSCODE NOT SET.<br>ENTER NEW PASSCODE.</b>")
-	message = text("[]", entered_code)
+	if (l_setshort)
+		dat += text("<p>\n<font color=red><b>ALERT: MEMORY SYSTEM ERROR - 6040 201</b></font>")
+	message = text("[]", code)
 	if (!locked)
 		message = "*****"
 	dat += text("<HR>\n>[]<BR>\n<A href='?src=[REF(src)];type=1'>1</A>-<A href='?src=[REF(src)];type=2'>2</A>-<A href='?src=[REF(src)];type=3'>3</A><BR>\n<A href='?src=[REF(src)];type=4'>4</A>-<A href='?src=[REF(src)];type=5'>5</A>-<A href='?src=[REF(src)];type=6'>6</A><BR>\n<A href='?src=[REF(src)];type=7'>7</A>-<A href='?src=[REF(src)];type=8'>8</A>-<A href='?src=[REF(src)];type=9'>9</A><BR>\n<A href='?src=[REF(src)];type=R'>R</A>-<A href='?src=[REF(src)];type=0'>0</A>-<A href='?src=[REF(src)];type=E'>E</A><BR>\n</TT>", message)
@@ -91,25 +88,25 @@
 		return
 	if (href_list["type"])
 		if (href_list["type"] == "E")
-			if (!lock_set && (length(entered_code) == 5) && (entered_code != "ERROR"))
-				lock_code = entered_code
-				lock_set = TRUE
-			else if ((entered_code == lock_code) && lock_set)
-				atom_storage.locked = FALSE
-				update_appearance()
-				entered_code = null
+			if (!l_set && (length(code) == 5) && (!l_setshort) && (code != "ERROR"))
+				l_code = code
+				l_set = TRUE
+			else if ((code == l_code) && l_set)
+				SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SET_LOCKSTATE, FALSE)
+				update_icon()
+				code = null
 			else
-				entered_code = "ERROR"
+				code = "ERROR"
 		else
-			if (href_list["type"] == "R")
-				atom_storage.locked = TRUE
-				update_appearance()
-				entered_code = null
-				atom_storage.hide_contents(usr)
+			if ((href_list["type"] == "R") && (!l_setshort))
+				SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SET_LOCKSTATE, TRUE)
+				update_icon()
+				code = null
+				SEND_SIGNAL(src, COMSIG_TRY_STORAGE_HIDE_FROM, usr)
 			else
-				entered_code += text("[]", sanitize_text(href_list["type"]))
-				if (length(entered_code) > 5)
-					entered_code = "ERROR"
+				code += text("[]", sanitize_text(href_list["type"]))
+				if (length(code) > 5)
+					code = "ERROR"
 		add_fingerprint(usr)
 		for(var/mob/M in viewers(1, loc))
 			if ((M.client && M.machine == src))
@@ -119,34 +116,34 @@
 
 /obj/item/storage/secure/update_icon()
 	..()
-	if(!atom_storage)
+	cut_overlays()
+	if(!SEND_SIGNAL(src, COMSIG_CONTAINS_STORAGE))
 		return
-	if(atom_storage.locked)
+	if(SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED))
 		icon_state = "[initial(icon_state)]_locked"
 	else
 		icon_state = "[initial(icon_state)]_open"
+		if(has_door)
+			var/mutable_appearance/door_overlay = mutable_appearance(icon, "[initial(icon_state)]_door")
+			if(dir == SOUTH)
+				door_overlay.pixel_y = -1
+			else if(dir == WEST)
+				door_overlay.pixel_y = -6
+			add_overlay(door_overlay)
 
-/obj/item/storage/secure/update_overlays()
-	. = ..()
-	if(!atom_storage || !has_door)
-		return
-	var/mutable_appearance/door_overlay = mutable_appearance(icon, "[initial(icon_state)]_door")
-	if(dir == SOUTH)
-		door_overlay.pixel_y = -1
-	else if(dir == WEST)
-		door_overlay.pixel_y = -6
-	. += door_overlay
-
+// -----------------------------
+//        Secure Briefcase
+// -----------------------------
 /obj/item/storage/secure/briefcase
 	name = "secure briefcase"
-	icon = 'icons/obj/storage/storage.dmi'
+	icon = 'icons/obj/storage.dmi'
 	icon_state = "secure"
 	inhand_icon_state = "sec-case"
 	lefthand_file = 'icons/mob/inhands/equipment/briefcase_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/briefcase_righthand.dmi'
 	desc = "A large briefcase with a digital locking system."
 	force = 8
-	hitsound = SFX_SWING_HIT
+	hitsound = "swing_hit"
 	throw_speed = 2
 	throw_range = 4
 	w_class = WEIGHT_CLASS_BULKY
@@ -157,24 +154,30 @@
 	new /obj/item/paper(src)
 	new /obj/item/pen(src)
 
-/obj/item/storage/secure/briefcase/Initialize(mapload)
+/obj/item/storage/secure/briefcase/ComponentInitialize()
 	. = ..()
-	atom_storage.max_total_storage = 21
-	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_combined_w_class = 21
+	STR.max_w_class = WEIGHT_CLASS_NORMAL
 
-///Syndie variant of Secure Briefcase. Contains space cash, slightly more robust.
+//Syndie variant of Secure Briefcase. Contains space cash, slightly more robust.
 /obj/item/storage/secure/briefcase/syndie
 	force = 15
 
 /obj/item/storage/secure/briefcase/syndie/PopulateContents()
 	..()
-	for(var/iterator in 1 to 5)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	for(var/i = 0, i < STR.max_items - 2, i++)
 		new /obj/item/stack/spacecash/c1000(src)
 
-///Secure Safe
+
+// -----------------------------
+//        Secure Safe
+// -----------------------------
+
 /obj/item/storage/secure/safe
 	name = "secure safe"
-	icon = 'icons/obj/storage/storage.dmi'
+	icon = 'icons/obj/storage.dmi'
 	icon_state = "wall_safe"
 	desc = "Excellent for securing things away from grubby hands."
 	w_class = WEIGHT_CLASS_GIGANTIC
@@ -186,12 +189,27 @@
 	. = ..()
 	AddElement(/datum/element/wall_mount)
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/secure/safe, 32)
+/obj/item/storage/secure/safe/directional/north
+	dir = SOUTH
+	pixel_y = 32
 
-/obj/item/storage/secure/safe/Initialize(mapload)
+/obj/item/storage/secure/safe/directional/south
+	dir = NORTH
+	pixel_y = -32
+
+/obj/item/storage/secure/safe/directional/east
+	dir = WEST
+	pixel_x = 32
+
+/obj/item/storage/secure/safe/directional/west
+	dir = EAST
+	pixel_x = -32
+
+/obj/item/storage/secure/safe/ComponentInitialize()
 	. = ..()
-	atom_storage.set_holdable(cant_hold_list = list(/obj/item/storage/secure/briefcase))
-	atom_storage.max_specific_storage = WEIGHT_CLASS_GIGANTIC
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.set_holdable(null, list(/obj/item/storage/secure/briefcase))
+	STR.max_w_class = 8 //??
 
 /obj/item/storage/secure/safe/PopulateContents()
 	new /obj/item/paper(src)
@@ -223,17 +241,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/secure/safe, 32)
 It is made out of the same material as the station's Black Box and is designed to resist all conventional weaponry. \
 There appears to be a small amount of surface corrosion. It doesn't look like it could withstand much of an explosion."
 	can_hack_open = FALSE
-	armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 70, BIO = 0, FIRE = 80, ACID = 70)
+	armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 70, BIO = 100, RAD = 100, FIRE = 80, ACID = 70)
 	max_integrity = 300
-
-MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/secure/safe/caps_spare, 32)
 
 /obj/item/storage/secure/safe/caps_spare/Initialize(mapload)
 	. = ..()
 
-	lock_code = SSid_access.spare_id_safe_code
-	lock_set = TRUE
-	atom_storage.locked = TRUE
+	l_code = SSid_access.spare_id_safe_code
+	l_set = TRUE
+	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SET_LOCKSTATE, TRUE)
 
 /obj/item/storage/secure/safe/caps_spare/PopulateContents()
 	new /obj/item/card/id/advanced/gold/captains_spare(src)

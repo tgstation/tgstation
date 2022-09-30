@@ -1,7 +1,7 @@
 /obj/item/banhammer
 	desc = "A banhammer."
 	name = "banhammer"
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "toyhammer"
 	slot_flags = ITEM_SLOT_BELT
 	throwforce = 0
@@ -12,7 +12,7 @@
 	attack_verb_continuous = list("bans")
 	attack_verb_simple = list("ban")
 	max_integrity = 200
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 70)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 70)
 	resistance_flags = FIRE_PROOF
 
 /obj/item/banhammer/Initialize(mapload)
@@ -74,15 +74,12 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	block_chance = 50
 	sharpness = SHARP_EDGED
 	max_integrity = 200
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 50)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 50)
 	resistance_flags = FIRE_PROOF
 
 /obj/item/claymore/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/butchering, \
-	speed = 4 SECONDS, \
-	effectiveness = 105, \
-	)
+	AddComponent(/datum/component/butchering, 40, 105)
 
 /obj/item/claymore/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is falling on [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -129,9 +126,9 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/claymore/highlander/process()
 	if(ishuman(loc))
-		var/mob/living/carbon/human/holder = loc
-		holder.layer = LARGE_MOB_LAYER //NO HIDING BEHIND PLANTS FOR YOU, DICKWEED (HA GET IT, BECAUSE WEEDS ARE PLANTS)
-		ADD_TRAIT(holder, TRAIT_NOBLEED, HIGHLANDER_TRAIT) //AND WE WON'T BLEED OUT LIKE COWARDS
+		var/mob/living/carbon/human/H = loc
+		loc.layer = LARGE_MOB_LAYER //NO HIDING BEHIND PLANTS FOR YOU, DICKWEED (HA GET IT, BECAUSE WEEDS ARE PLANTS)
+		ADD_TRAIT(H, TRAIT_NOBLEED, HIGHLANDER_TRAIT) //AND WE WON'T BLEED OUT LIKE COWARDS
 	else
 		if(!(flags_1 & ADMIN_SPAWNED_1))
 			qdel(src)
@@ -266,7 +263,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	block_chance = 50
 	sharpness = SHARP_EDGED
 	max_integrity = 200
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 50)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 50)
 	resistance_flags = FIRE_PROOF
 
 /obj/item/katana/suicide_act(mob/user)
@@ -284,58 +281,37 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	flags_1 = CONDUCT_1
 	force = 9
 	throwforce = 10
-	w_class = WEIGHT_CLASS_BULKY
+	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/iron=1150, /datum/material/glass=75)
 	attack_verb_continuous = list("hits", "bludgeons", "whacks", "bonks")
 	attack_verb_simple = list("hit", "bludgeon", "whack", "bonk")
 
-/obj/item/wirerod/Initialize(mapload)
-	. = ..()
+/obj/item/wirerod/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/shard))
+		var/obj/item/spear/S = new /obj/item/spear
 
-	var/static/list/hovering_item_typechecks = list(
-		/obj/item/shard = list(
-			SCREENTIP_CONTEXT_LMB = "Craft spear",
-		),
+		remove_item_from_storage(user)
+		if (!user.transferItemToLoc(I, S))
+			return
+		S.CheckParts(list(I))
+		qdel(src)
 
-		/obj/item/assembly/igniter = list(
-			SCREENTIP_CONTEXT_LMB = "Craft stunprod",
-		),
-	)
+		user.put_in_hands(S)
+		to_chat(user, span_notice("You fasten the glass shard to the top of the rod with the cable."))
 
-	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
+	else if(istype(I, /obj/item/assembly/igniter) && !(HAS_TRAIT(I, TRAIT_NODROP)))
+		var/obj/item/melee/baton/security/cattleprod/prod = new
 
-/obj/item/wirerod/attackby(obj/item/attacking_item, mob/user, params)
-	if(istype(attacking_item, /obj/item/shard))
-		var/datum/crafting_recipe/recipe_to_use = /datum/crafting_recipe/spear
-		user.balloon_alert(user, "crafting spear...")
-		if(do_after(user, initial(recipe_to_use.time), src)) // we do initial work here to get the correct timer
-			var/obj/item/spear/crafted_spear = new /obj/item/spear()
+		remove_item_from_storage(user)
 
-			remove_item_from_storage(user)
-			if (!user.transferItemToLoc(attacking_item, crafted_spear))
-				return
-			crafted_spear.CheckParts(list(attacking_item))
-			qdel(src)
+		to_chat(user, span_notice("You fasten [I] to the top of the rod with the cable."))
 
-			user.put_in_hands(crafted_spear)
-			user.balloon_alert(user, "crafted spear")
-		return
+		qdel(I)
+		qdel(src)
 
-	if(isigniter(attacking_item) && !(HAS_TRAIT(attacking_item, TRAIT_NODROP)))
-		var/datum/crafting_recipe/recipe_to_use = /datum/crafting_recipe/stunprod
-		user.balloon_alert(user, "crafting cattleprod...")
-		if(do_after(user, initial(recipe_to_use.time), src))
-			var/obj/item/melee/baton/security/cattleprod/prod = new
-
-			remove_item_from_storage(user)
-
-			qdel(attacking_item)
-			qdel(src)
-
-			user.put_in_hands(prod)
-			user.balloon_alert(user, "crafted cattleprod")
-		return
-	return ..()
+		user.put_in_hands(prod)
+	else
+		return ..()
 
 
 /obj/item/throwing_star
@@ -393,11 +369,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/switchblade/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HANDS)
-	AddComponent(/datum/component/butchering, \
-	speed = 7 SECONDS, \
-	effectiveness = 100, \
-	)
+	AddElement(/datum/element/update_icon_updates_onmob)
+	AddComponent(/datum/component/butchering, 7 SECONDS, 100)
 	AddComponent(/datum/component/transforming, \
 		start_transformed = start_extended, \
 		force_on = 20, \
@@ -419,7 +392,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/phone
 	name = "red phone"
 	desc = "Should anything ever go wrong..."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "red_phone"
 	force = 3
 	throwforce = 2
@@ -440,7 +413,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/cane
 	name = "cane"
 	desc = "A cane used by a true gentleman. Or a clown."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "cane"
 	inhand_icon_state = "stick"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
@@ -451,41 +424,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	custom_materials = list(/datum/material/iron=50)
 	attack_verb_continuous = list("bludgeons", "whacks", "disciplines", "thrashes")
 	attack_verb_simple = list("bludgeon", "whack", "discipline", "thrash")
-
-/obj/item/cane/white
-	name = "white cane"
-	desc = "A cane traditionally used by the blind to help them see. Folds down to be easier to transport."
-	icon_state = "cane_white"
-	inhand_icon_state = null
-	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-	force = 1
-	w_class = WEIGHT_CLASS_SMALL
-	custom_materials = list(/datum/material/iron = 600)
-
-/obj/item/cane/white/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/transforming, \
-		force_on = 7, \
-		hitsound_on = hitsound, \
-		w_class_on = WEIGHT_CLASS_BULKY, \
-		clumsy_check = FALSE, \
-		attack_verb_continuous_on = list("smacks", "strikes", "cracks", "beats"), \
-		attack_verb_simple_on = list("smack", "strike", "crack", "beat"))
-	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
-	ADD_TRAIT(src, TRAIT_BLIND_TOOL, ITEM_BLIND_TRAIT)
-
-/*
- * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
- *
- * Gives feedback to the user and makes it show up inhand.
- */
-/obj/item/cane/white/proc/on_transform(obj/item/source, mob/user, active)
-	SIGNAL_HANDLER
-
-	balloon_alert(user, active ? "extended" : "collapsed")
-	playsound(user ? user : src, 'sound/weapons/batonextend.ogg', 50, TRUE)
-	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/staff
 	name = "wizard staff"
@@ -514,7 +452,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/staff/stick
 	name = "stick"
 	desc = "A great tool to drag someone else's drinks across the bar."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "cane"
 	inhand_icon_state = "stick"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
@@ -583,7 +521,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/statuebust
 	name = "bust"
 	desc = "A priceless ancient marble bust, the kind that belongs in a museum." //or you can hit people with it
-	icon = 'icons/obj/art/statue.dmi'
+	icon = 'icons/obj/statue.dmi'
 	icon_state = "bust"
 	force = 15
 	throwforce = 10
@@ -657,7 +595,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon_state = "skateboard2"
 	inhand_icon_state = "skateboard2"
 	board_item_type = /obj/vehicle/ridden/scooter/skateboard/pro
-	custom_premium_price = PAYCHECK_COMMAND * 5
+	custom_premium_price = PAYCHECK_HARD * 5
 
 /obj/item/melee/skateboard/hoverboard
 	name = "hoverboard"
@@ -677,7 +615,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/melee/baseball_bat
 	name = "baseball bat"
 	desc = "There ain't a skull in the league that can withstand a swatter."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "baseball_bat"
 	inhand_icon_state = "baseball_bat"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
@@ -685,19 +623,12 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	force = 12
 	wound_bonus = -10
 	throwforce = 12
-	demolition_mod = 1.25
 	attack_verb_continuous = list("beats", "smacks")
 	attack_verb_simple = list("beat", "smack")
 	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 3.5)
 	w_class = WEIGHT_CLASS_HUGE
-	/// Are we able to do a homerun?
-	var/homerun_able = FALSE
-	/// Are we ready to do a homerun?
-	var/homerun_ready = FALSE
-	/// Can we launch mobs thrown at us away?
-	var/mob_thrower = FALSE
-	/// List of all thrown datums we sent.
-	var/list/thrown_datums = list()
+	var/homerun_ready = 0
+	var/homerun_able = 0
 
 /obj/item/melee/baseball_bat/Initialize(mapload)
 	. = ..()
@@ -705,107 +636,48 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		name = "cricket bat"
 		icon_state = "baseball_bat_brit"
 		inhand_icon_state = "baseball_bat_brit"
-		desc = pick("You've got red on you.", "You gotta know what a crumpet is to understand cricket.")
+		if(prob(50))
+			desc = "You've got red on you."
+		else
+			desc = "You gotta know what a crumpet is to understand cricket."
 
 	AddElement(/datum/element/kneecapping)
 
+/obj/item/melee/baseball_bat/homerun
+	name = "home run bat"
+	desc = "This thing looks dangerous... Dangerously good at baseball, that is."
+	homerun_able = 1
+
 /obj/item/melee/baseball_bat/attack_self(mob/user)
 	if(!homerun_able)
-		return ..()
+		..()
+		return
 	if(homerun_ready)
 		to_chat(user, span_warning("You're already ready to do a home run!"))
-		return ..()
+		..()
+		return
 	to_chat(user, span_warning("You begin gathering strength..."))
 	playsound(get_turf(src), 'sound/magic/lightning_chargeup.ogg', 65, TRUE)
-	if(do_after(user, 9 SECONDS, target = src))
+	if(do_after(user, 90, target = src))
 		to_chat(user, span_userdanger("You gather power! Time for a home run!"))
-		homerun_ready = TRUE
-	return ..()
+		homerun_ready = 1
+	..()
 
 /obj/item/melee/baseball_bat/attack(mob/living/target, mob/living/user)
 	. = ..()
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		return
-	// we obtain the relative direction from the bat itself to the target
-	var/relative_direction = get_cardinal_dir(src, target)
-	var/atom/throw_target = get_edge_target_turf(target, relative_direction)
+	var/atom/throw_target = get_edge_target_turf(target, user.dir)
 	if(homerun_ready)
 		user.visible_message(span_userdanger("It's a home run!"))
 		target.throw_at(throw_target, rand(8,10), 14, user)
 		SSexplosions.medturf += throw_target
 		playsound(get_turf(src), 'sound/weapons/homerun.ogg', 100, TRUE)
-		homerun_ready = FALSE
+		homerun_ready = 0
 		return
 	else if(!target.anchored)
 		var/whack_speed = (prob(60) ? 1 : 4)
 		target.throw_at(throw_target, rand(1, 2), whack_speed, user, gentle = TRUE) // sorry friends, 7 speed batting caused wounds to absolutely delete whoever you knocked your target into (and said target)
-
-/obj/item/melee/baseball_bat/Destroy(force)
-	for(var/target in thrown_datums)
-		var/datum/thrownthing/throw_datum = thrown_datums[target]
-		throw_datum.callback.Invoke()
-	thrown_datums.Cut()
-	return ..()
-
-/obj/item/melee/baseball_bat/pre_attack(atom/movable/target, mob/living/user, params)
-	var/turf/target_turf = get_turf(target)
-	if(!target_turf)
-		return ..()
-	for(var/atom/movable/atom as anything in target_turf)
-		if(!try_launch(atom, user))
-			continue
-		return TRUE
-	return ..()
-
-/obj/item/melee/baseball_bat/proc/try_launch(atom/movable/target, mob/living/user)
-	if(!target.throwing || (ismob(target) && !mob_thrower))
-		return FALSE
-	var/datum/thrownthing/throw_datum = target.throwing
-	var/datum_throw_speed = throw_datum.speed
-	var/angle = 0
-	var/target_to_user = get_dir(target, user)
-	if(target.dir & turn(target_to_user, 90))
-		angle = 270
-	if(target.dir & turn(target_to_user, 270))
-		angle = 90
-	if(target.dir & turn(target_to_user, 180))
-		angle = 180
-	if(target.dir & target_to_user)
-		angle = 360
-	var/turf/return_to_sender = get_ranged_target_turf_direct(user, throw_datum.starting_turf, round(target.throw_range * 1.5, 1), offset = angle + (rand(-1, 1) * 10))
-	throw_datum.finalize(hit = FALSE)
-	target.mouse_opacity = MOUSE_OPACITY_TRANSPARENT //dont mess with our ball
-	target.color = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,3) //make them super light
-	animate(target, 0.5 SECONDS, color = null, flags = ANIMATION_PARALLEL)
-	user.color = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,3)
-	animate(user, 0.5 SECONDS, color = null, flags = ANIMATION_PARALLEL)
-	playsound(src, 'sound/items/baseballhit.ogg', 100, TRUE)
-	user.do_attack_animation(target, used_item = src)
-	ADD_TRAIT(user, TRAIT_IMMOBILIZED, type)
-	addtimer(CALLBACK(src, .proc/launch_back, target, user, return_to_sender, datum_throw_speed), 0.5 SECONDS)
-	return TRUE
-
-/obj/item/melee/baseball_bat/proc/launch_back(atom/movable/target, mob/living/user, turf/target_turf, datum_throw_speed)
-	playsound(target, 'sound/magic/tail_swing.ogg', 50, TRUE)
-	REMOVE_TRAIT(user, TRAIT_IMMOBILIZED, type)
-	target.mouse_opacity = initial(target.mouse_opacity)
-	target.add_filter("baseball_launch", 3, motion_blur_filter(1, 3))
-	target.throwforce *= 2
-	target.throw_at(target_turf, get_dist(target, target_turf), datum_throw_speed + 1, user, callback = CALLBACK(src, .proc/on_hit, target))
-	thrown_datums[target] = target.throwing
-
-/obj/item/melee/baseball_bat/proc/on_hit(atom/movable/target)
-	target.remove_filter("baseball_launch")
-	target.throwforce *= 0.5
-	thrown_datums -= target
-
-/obj/item/melee/baseball_bat/homerun
-	name = "home run bat"
-	desc = "This thing looks dangerous... Dangerously good at baseball, that is."
-	icon_state = "baseball_bat_home"
-	inhand_icon_state = "baseball_bat_home"
-	homerun_able = TRUE
-	mob_thrower = TRUE
 
 /obj/item/melee/baseball_bat/ablative
 	name = "metal baseball bat"
@@ -814,16 +686,20 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	inhand_icon_state = "baseball_bat_metal"
 	force = 12
 	throwforce = 15
-	mob_thrower = TRUE
 
 /obj/item/melee/baseball_bat/ablative/IsReflect()//some day this will reflect thrown items instead of lasers
-	playsound(src, pick('sound/weapons/effects/batreflect1.ogg', 'sound/weapons/effects/batreflect2.ogg'), 50, TRUE)
-	return TRUE
+	var/picksound = rand(1,2)
+	var/turf = get_turf(src)
+	if(picksound == 1)
+		playsound(turf, 'sound/weapons/effects/batreflect1.ogg', 50, TRUE)
+	if(picksound == 2)
+		playsound(turf, 'sound/weapons/effects/batreflect2.ogg', 50, TRUE)
+	return 1
 
 /obj/item/melee/flyswatter
 	name = "flyswatter"
 	desc = "Useful for killing pests of all sizes."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "flyswatter"
 	inhand_icon_state = "flyswatter"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
@@ -834,46 +710,34 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb_simple = list("swat", "smack")
 	hitsound = 'sound/effects/snap.ogg'
 	w_class = WEIGHT_CLASS_SMALL
-	/// Things in this list will be instantly splatted.  Flyman weakness is handled in the flyman species weakness proc.
-	var/list/splattable
-	/// Things in this list which take a lot more damage from the fly swatter, but not be necessarily killed by it.
+	//Things in this list will be instantly splatted.  Flyman weakness is handled in the flyman species weakness proc.
 	var/list/strong_against
-	/// How much extra damage the fly swatter does against mobs it is strong against
-	var/extra_strength_damage = 24
 
 /obj/item/melee/flyswatter/Initialize(mapload)
 	. = ..()
-	splattable = typecacheof(list(
-		/mob/living/simple_animal/hostile/bee,
-		/mob/living/simple_animal/butterfly,
-		/mob/living/basic/cockroach,
-		/obj/item/queen_bee,
-		/obj/structure/spider/spiderling,
-		/mob/living/simple_animal/hostile/ant,
-		/obj/effect/decal/cleanable/ants,
-	))
 	strong_against = typecacheof(list(
-		/mob/living/simple_animal/hostile/giant_spider,
+					/mob/living/simple_animal/hostile/bee/,
+					/mob/living/simple_animal/butterfly,
+					/mob/living/basic/cockroach,
+					/obj/item/queen_bee,
+					/obj/structure/spider/spiderling,
+					/mob/living/simple_animal/ant,
+					/obj/effect/decal/cleanable/ants
 	))
 
 
 /obj/item/melee/flyswatter/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
-	if(!proximity_flag || HAS_TRAIT(user, TRAIT_PACIFISM))
-		return
-
-	if(is_type_in_typecache(target, splattable))
-		new /obj/effect/decal/cleanable/insectguts(target.drop_location())
-		to_chat(user, span_warning("You easily splat [target]."))
-		if(isliving(target))
-			var/mob/living/bug = target
-			bug.gib()
-		else
-			qdel(target)
-		return
-	if(is_type_in_typecache(target, strong_against) && isliving(target))
-		var/mob/living/living_target = target
-		living_target.adjustBruteLoss(extra_strength_damage)
+	if(proximity_flag)
+		if(is_type_in_typecache(target, strong_against))
+			if(!HAS_TRAIT(user, TRAIT_PACIFISM))
+				new /obj/effect/decal/cleanable/insectguts(target.drop_location())
+				to_chat(user, span_warning("You easily splat [target]."))
+				if(isliving(target))
+					var/mob/living/bug = target
+					bug.gib()
+				else
+					qdel(target)
 
 /obj/item/proc/can_trigger_gun(mob/living/user)
 	if(!user.can_use_guns(src))
@@ -883,7 +747,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/extendohand
 	name = "extendo-hand"
 	desc = "Futuristic tech has allowed these classic spring-boxing toys to essentially act as a fully functional hand-operated hand prosthetic."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "extendohand"
 	inhand_icon_state = "extendohand"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
@@ -910,14 +774,75 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "A wooden stick with white streamers at the end. Originally used by shrine maidens to purify things. Now used by the station's valued weeaboos."
 	force = 5
 	throwforce = 5
-	hitsound = SFX_SWING_HIT
+	hitsound = "swing_hit"
 	attack_verb_continuous = list("whacks", "thwacks", "wallops", "socks")
 	attack_verb_simple = list("whack", "thwack", "wallop", "sock")
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "gohei"
 	inhand_icon_state = "gohei"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
+
+//HF blade
+/obj/item/vibro_weapon
+	icon_state = "hfrequency0"
+	base_icon_state = "hfrequency"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	name = "vibro sword"
+	desc = "A potent weapon capable of cutting through nearly anything. Wielding it in two hands will allow you to deflect gunfire."
+	armour_penetration = 100
+	block_chance = 40
+	force = 20
+	throwforce = 20
+	throw_speed = 4
+	sharpness = SHARP_EDGED
+	attack_verb_continuous = list("cuts", "slices", "dices")
+	attack_verb_simple = list("cut", "slice", "dice")
+	w_class = WEIGHT_CLASS_BULKY
+	slot_flags = ITEM_SLOT_BACK
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	var/wielded = FALSE // track wielded status on item
+
+/obj/item/vibro_weapon/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
+	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
+
+/obj/item/vibro_weapon/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 20, 105)
+	AddComponent(/datum/component/two_handed, force_multiplier=2, icon_wielded="[base_icon_state]1")
+
+/// triggered on wield of two handed item
+/obj/item/vibro_weapon/proc/on_wield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
+	wielded = TRUE
+
+/// triggered on unwield of two handed item
+/obj/item/vibro_weapon/proc/on_unwield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
+	wielded = FALSE
+
+/obj/item/vibro_weapon/update_icon_state()
+	icon_state = "[base_icon_state]0"
+	return ..()
+
+/obj/item/vibro_weapon/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	if(wielded)
+		final_block_chance *= 2
+	if(wielded || attack_type != PROJECTILE_ATTACK)
+		if(prob(final_block_chance))
+			if(attack_type == PROJECTILE_ATTACK)
+				owner.visible_message(span_danger("[owner] deflects [attack_text] with [src]!"))
+				playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
+				return TRUE
+			else
+				owner.visible_message(span_danger("[owner] parries [attack_text] with [src]!"))
+				return TRUE
+	return FALSE
 
 /obj/item/melee/moonlight_greatsword
 	name = "moonlight greatsword"
@@ -936,150 +861,3 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
-
-//High Frequency Blade
-
-/obj/item/highfrequencyblade
-	name = "high frequency blade"
-	desc = "A sword reinforced by a powerful alternating current and resonating at extremely high vibration frequencies. \
-		This oscillation weakens the molecular bonds of anything it cuts, thereby increasing its cutting ability."
-	icon_state = "hfrequency0"
-	worn_icon_state = "hfrequency0"
-	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	force = 10
-	wound_bonus = 25
-	bare_wound_bonus = 50
-	throwforce = 25
-	throw_speed = 4
-	embedding = list("embed_chance" = 100)
-	block_chance = 25
-	sharpness = SHARP_EDGED
-	w_class = WEIGHT_CLASS_BULKY
-	slot_flags = ITEM_SLOT_BACK
-	/// The color of the slash we create
-	var/slash_color = COLOR_BLUE
-	/// Previous x position of where we clicked on the target's icon
-	var/previous_x
-	/// Previous y position of where we clicked on the target's icon
-	var/previous_y
-	/// The previous target we attacked
-	var/datum/weakref/previous_target
-
-/obj/item/highfrequencyblade/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/two_handed, \
-		wield_callback = CALLBACK(src, .proc/on_wield), \
-		unwield_callback = CALLBACK(src, .proc/on_unwield), \
-	)
-	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HANDS)
-
-/obj/item/highfrequencyblade/update_icon_state()
-	icon_state = "hfrequency[HAS_TRAIT(src, TRAIT_WIELDED)]"
-	return ..()
-
-/obj/item/highfrequencyblade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(attack_type == PROJECTILE_ATTACK)
-		if(HAS_TRAIT(src, TRAIT_WIELDED) || prob(final_block_chance))
-			owner.visible_message(span_danger("[owner] deflects [attack_text] with [src]!"))
-			playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
-			return TRUE
-		return FALSE
-	if(prob(final_block_chance * (HAS_TRAIT(src, TRAIT_WIELDED) ? 2 : 1)))
-		owner.visible_message(span_danger("[owner] parries [attack_text] with [src]!"))
-		return TRUE
-
-/obj/item/highfrequencyblade/attack(mob/living/target, mob/living/user, params)
-	if(!HAS_TRAIT(src, TRAIT_WIELDED))
-		return ..()
-	slash(target, user, params)
-
-/obj/item/highfrequencyblade/attack_atom(atom/target, mob/living/user, params)
-	if(HAS_TRAIT(src, TRAIT_WIELDED))
-		return
-	return ..()
-
-/obj/item/highfrequencyblade/afterattack(atom/target, mob/user, proximity_flag, params)
-	if(!HAS_TRAIT(src, TRAIT_WIELDED))
-		return ..()
-	if(!proximity_flag || !(isclosedturf(target) || isitem(target) || ismachinery(target) || isstructure(target) || isvehicle(target)))
-		return
-	slash(target, user, params)
-
-/// triggered on wield of two handed item
-/obj/item/highfrequencyblade/proc/on_wield(obj/item/source, mob/user)
-	update_icon(UPDATE_ICON_STATE)
-
-/// triggered on unwield of two handed item
-/obj/item/highfrequencyblade/proc/on_unwield(obj/item/source, mob/user)
-	update_icon(UPDATE_ICON_STATE)
-
-/obj/item/highfrequencyblade/proc/slash(atom/target, mob/living/user, params)
-	user.changeNext_move(0.1 SECONDS)
-	user.do_attack_animation(target, "nothing")
-	var/list/modifiers = params2list(params)
-	var/damage_mod = 1
-	var/x_slashed = text2num(modifiers[ICON_X]) || world.icon_size/2 //in case we arent called by a client
-	var/y_slashed = text2num(modifiers[ICON_Y]) || world.icon_size/2 //in case we arent called by a client
-	new /obj/effect/temp_visual/slash(get_turf(target), target, x_slashed, y_slashed, slash_color)
-	if(target == previous_target?.resolve()) //if the same target, we calculate a damage multiplier if you swing your mouse around
-		var/x_mod = previous_x - x_slashed
-		var/y_mod = previous_y - y_slashed
-		damage_mod = max(1, round((sqrt(x_mod ** 2 + y_mod ** 2) / 10), 0.1))
-	previous_target = WEAKREF(target)
-	previous_x = x_slashed
-	previous_y = y_slashed
-	playsound(src, 'sound/weapons/bladeslice.ogg', 100, vary = TRUE)
-	playsound(src, 'sound/weapons/zapbang.ogg', 50, vary = TRUE)
-	if(isliving(target))
-		var/mob/living/living_target = target
-		living_target.apply_damage(force*damage_mod, BRUTE, sharpness = SHARP_EDGED, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, def_zone = user.zone_selected)
-		log_combat(user, living_target, "slashed", src)
-		if(living_target.stat == DEAD && prob(force*damage_mod*0.5))
-			living_target.visible_message(span_danger("[living_target] explodes in a shower of gore!"), blind_message = span_hear("You hear organic matter ripping and tearing!"))
-			living_target.gib()
-			log_combat(user, living_target, "gibbed", src)
-	else if(target.uses_integrity)
-		target.take_damage(force*damage_mod*3, BRUTE, MELEE, FALSE, null, 50)
-	else if(iswallturf(target) && prob(force*damage_mod*0.5))
-		var/turf/closed/wall/wall_target = target
-		wall_target.dismantle_wall()
-	else if(ismineralturf(target) && prob(force*damage_mod))
-		var/turf/closed/mineral/mineral_target = target
-		mineral_target.gets_drilled()
-
-/obj/effect/temp_visual/slash
-	icon_state = "highfreq_slash"
-	alpha = 150
-	duration = 0.5 SECONDS
-	layer = ABOVE_ALL_MOB_LAYER
-
-/obj/effect/temp_visual/slash/Initialize(mapload, atom/target, x_slashed, y_slashed, slash_color)
-	. = ..()
-	if(!target)
-		return
-	var/matrix/new_transform = matrix()
-	new_transform.Turn(rand(1, 360)) // Random slash angle
-	var/datum/decompose_matrix/decomp = target.transform.decompose()
-	new_transform.Translate((x_slashed - world.icon_size/2) * decomp.scale_x, (y_slashed - world.icon_size/2) * decomp.scale_y) // Move to where we clicked
-	//Follow target's transform while ignoring scaling
-	new_transform.Turn(decomp.rotation)
-	new_transform.Translate(decomp.shift_x, decomp.shift_y)
-	new_transform.Translate(target.pixel_x, target.pixel_y) // Follow target's pixel offsets
-	transform = new_transform
-	//Double the scale of the matrix by doubling the 2x2 part without touching the translation part
-	var/matrix/scaled_transform = new_transform + matrix(new_transform.a, new_transform.b, 0, new_transform.d, new_transform.e, 0)
-	animate(src, duration*0.5, color = slash_color, transform = scaled_transform, alpha = 255)
-
-/obj/item/highfrequencyblade/wizard
-	desc = "A blade that was mastercrafted by a legendary blacksmith. Its' enchantments let it slash through anything."
-	force = 8
-	throwforce = 20
-	wound_bonus = 20
-	bare_wound_bonus = 25
-
-/obj/item/highfrequencyblade/wizard/attack_self(mob/user, modifiers)
-	if(!IS_WIZARD(user))
-		balloon_alert(user, "you're too weak!")
-		return
-	return ..()

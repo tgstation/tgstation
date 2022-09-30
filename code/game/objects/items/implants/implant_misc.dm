@@ -2,7 +2,7 @@
 	name = "firearms authentication implant"
 	desc = "Lets you shoot your guns."
 	icon_state = "auth"
-	actions_types = null
+	activated = FALSE
 
 /obj/item/implant/weapons_auth/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
@@ -29,8 +29,28 @@
 	name = "implanter (EMP)"
 	imp_type = /obj/item/implant/emp
 
+
+//Health Tracker Implant
+
+/obj/item/implant/health
+	name = "health implant"
+	activated = FALSE
+	var/healthstring = ""
+
+/obj/item/implant/health/proc/sensehealth()
+	if (!imp_in)
+		return "ERROR"
+	else
+		if(isliving(imp_in))
+			var/mob/living/L = imp_in
+			healthstring = "<small>Oxygen Deprivation Damage => [round(L.getOxyLoss())]<br />Fire Damage => [round(L.getFireLoss())]<br />Toxin Damage => [round(L.getToxLoss())]<br />Brute Force Damage => [round(L.getBruteLoss())]</small>"
+		if (!healthstring)
+			healthstring = "ERROR"
+		return healthstring
+
 /obj/item/implant/radio
 	name = "internal radio implant"
+	activated = TRUE
 	var/obj/item/radio/radio
 	var/radio_key
 	var/subspace_transmission = FALSE
@@ -69,7 +89,7 @@
 
 /obj/item/implant/radio/slime
 	name = "slime radio"
-	icon = 'icons/obj/medical/organs/organs.dmi'
+	icon = 'icons/obj/surgery.dmi'
 	icon_state = "adamantine_resonator"
 	radio_key = /obj/item/encryptionkey/headset_sci
 	subspace_transmission = TRUE
@@ -88,3 +108,4 @@
 /obj/item/implanter/radio/syndicate
 	name = "implanter (internal syndicate radio)"
 	imp_type = /obj/item/implant/radio/syndicate
+

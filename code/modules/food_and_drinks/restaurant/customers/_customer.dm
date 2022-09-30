@@ -33,9 +33,7 @@
 	///Prefix file to uise
 	var/prefix_file = "strings/names/american_prefix.txt"
 	///Base icon for the customer
-	var/base_icon = 'icons/mob/simple/tourists.dmi'
-	///Base icon state for the customer
-	var/base_icon_state = "amerifat"
+	var/base_icon = "amerifat"
 	///Sound to use when this robot type speaks
 	var/speech_sound = 'sound/creatures/tourist/tourist_talk.ogg'
 
@@ -49,6 +47,12 @@
 /// Can this customer be chosen for this venue?
 /datum/customer_data/proc/can_use(datum/venue/venue)
 	return TRUE
+
+/// Gets the order of this customer.
+/// You want to override this if you have dynamic orders, such as the moth tourists requesting the chef's clothes.
+/// If the list of orders are static, just modify orderable_objects.
+/datum/customer_data/proc/get_order(datum/venue/venue)
+	return pick_weight(orderable_objects[venue.venue_type])
 
 /datum/customer_data/proc/get_overlays(mob/living/simple_animal/robot_customer/customer)
 	return
@@ -81,8 +85,6 @@
 			/obj/item/food/burger/baconburger = 10,
 			/obj/item/food/pancakes = 4,
 			/obj/item/food/eggsausage = 5,
-			/datum/custom_order/icecream = 14,
-			/obj/item/food/danish_hotdog = 3,
 		),
 		VENUE_BAR = list(
 			/datum/reagent/consumable/ethanol/b52 = 6,
@@ -95,7 +97,7 @@
 
 /datum/customer_data/italian
 	prefix_file = "strings/names/italian_prefix.txt"
-	base_icon_state = "italian"
+	base_icon = "italian"
 	clothing_sets = list("italian_pison", "italian_godfather")
 
 	found_seat_lines = list("What a wonderful place to sit.", "I hope they serve it like-a my momma used to make it.")
@@ -119,11 +121,9 @@
 			/obj/item/food/pizza/margherita = 2,
 			/obj/item/food/lasagna = 4,
 			/obj/item/food/cannoli = 3,
-			/obj/item/food/salad/risotto = 5,
+			/obj/item/food/salad/risotto =5,
 			/obj/item/food/eggplantparm = 3,
 			/obj/item/food/cornuto = 2,
-			/datum/custom_order/icecream = 10,
-			/obj/item/food/salad/greek_salad = 6,
 		),
 		VENUE_BAR = list(
 			/datum/reagent/consumable/ethanol/fanciulli = 5,
@@ -134,14 +134,13 @@
 			/datum/reagent/consumable/ethanol/wine = 3,
 			/datum/reagent/consumable/ethanol/grappa = 3,
 			/datum/reagent/consumable/ethanol/amaretto = 5,
-			/datum/reagent/consumable/cucumberlemonade = 2,
 		),
 	)
 
 
 /datum/customer_data/french
 	prefix_file = "strings/names/french_prefix.txt"
-	base_icon_state = "french"
+	base_icon = "french"
 	clothing_sets = list("french_fit")
 	found_seat_lines = list("Hon hon hon", "It's not the Eiffel tower but it will do.", "Yuck, I guess this will make do.")
 	cant_find_seat_lines = list("Making someone like me stand? How dare you.", "What a filthy lobby!")
@@ -160,7 +159,6 @@
 			/obj/item/food/soup/onion = 4,
 			/obj/item/food/pie/berryclafoutis = 2,
 			/obj/item/food/omelette = 15,
-			/datum/custom_order/icecream = 6,
 		),
 		VENUE_BAR = list(
 			/datum/reagent/consumable/ethanol/champagne = 10,
@@ -170,7 +168,6 @@
 			/datum/reagent/consumable/ethanol/between_the_sheets = 4,
 			/datum/reagent/consumable/ethanol/beer = 5,
 			/datum/reagent/consumable/ethanol/wine = 5,
-			/datum/reagent/consumable/ethanol/gin_garden = 2,
 		),
 	)
 
@@ -184,7 +181,7 @@
 
 /datum/customer_data/japanese
 	prefix_file = "strings/names/japanese_prefix.txt"
-	base_icon_state = "japanese"
+	base_icon = "japanese"
 	clothing_sets = list("japanese_animes")
 
 	found_seat_lines = list("Konnichiwa!", "Arigato gozaimasuuu~", "I hope there's some beef stroganoff...")
@@ -207,8 +204,6 @@
 			/obj/item/food/chawanmushi = 4,
 			/obj/item/food/muffin/berry = 2,
 			/obj/item/food/beef_stroganoff = 2,
-			/datum/custom_order/icecream = 4,
-			/obj/item/food/fish_poke = 5,
 		),
 		VENUE_BAR = list(
 			/datum/reagent/consumable/ethanol/sake = 8,
@@ -250,7 +245,6 @@
 			/obj/item/food/chawanmushi = 4,
 			/obj/item/food/meatbun = 4,
 			/obj/item/food/beef_stroganoff = 2,
-			/obj/item/food/meat_poke = 4,
 		),
 		VENUE_BAR = list(
 			/datum/reagent/consumable/ethanol/beer = 14,
@@ -264,7 +258,7 @@
 
 /datum/customer_data/moth
 	prefix_file = "strings/names/moth_prefix.txt"
-	base_icon_state = "mothbot"
+	base_icon = "mothbot"
 	found_seat_lines = list("Give me your hat!", "Moth?", "Certainly an... interesting venue.")
 	cant_find_seat_lines = list("If I can't find a seat, I'm flappity flapping out of here quick!", "I'm trying to flutter here!")
 	leave_mad_lines = list("I'm telling all my moth friends to never come here!", "Zero star rating, even worse than that time I ate a mothball!","Closing down permanently would still be too good of a fate for this place.")
@@ -277,9 +271,12 @@
 
 	speech_sound = 'sound/creatures/tourist/tourist_talk_moth.ogg'
 
+	// Always asks for the clothes that you have on, but this is a fallback.
 	orderable_objects = list(
 		VENUE_RESTAURANT = list(
-			/datum/custom_order/moth_clothing = 1,
+			/obj/item/clothing/head/chefhat = 3,
+			/obj/item/clothing/shoes/sneakers/black = 3,
+			/obj/item/clothing/gloves/color/black = 1,
 		),
 	)
 
@@ -293,12 +290,27 @@
 // If it takes any more effort, it loses a bit of the comedy.
 // Therefore, only show up if it's reasonable for that gag to happen.
 /datum/customer_data/moth/can_use(datum/venue/venue)
+	return !isnull(get_dynamic_order(venue))
+
+/datum/customer_data/moth/proc/get_dynamic_order(datum/venue/venue)
 	var/mob/living/carbon/buffet = venue.restaurant_portal?.turned_on_portal?.resolve()
 	if (!istype(buffet))
-		return FALSE
-	if(QDELETED(buffet.head) && QDELETED(buffet.gloves) && QDELETED(buffet.shoes))
-		return FALSE
-	return TRUE
+		return
+
+	var/list/orderable = list()
+
+	if (!QDELETED(buffet.head))
+		orderable[buffet.head] = 5
+
+	if (!QDELETED(buffet.gloves))
+		orderable[buffet.gloves] = 5
+
+	if (!QDELETED(buffet.shoes))
+		orderable[buffet.shoes] = 1
+
+	if (orderable.len)
+		var/datum/order = pick_weight(orderable)
+		return order.type
 
 /datum/customer_data/moth/proc/get_wings(mob/living/simple_animal/robot_customer/customer)
 	var/customer_ref = WEAKREF(customer)
@@ -311,7 +323,7 @@
 
 	var/datum/sprite_accessory/moth_wings/wings = get_wings(customer)
 
-	var/mutable_appearance/wings_behind = mutable_appearance(icon = 'icons/mob/species/moth/moth_wings.dmi', icon_state = "m_moth_wings_[wings.icon_state]_BEHIND")
+	var/mutable_appearance/wings_behind = mutable_appearance(icon = 'icons/mob/moth_wings.dmi', icon_state = "m_moth_wings_[wings.icon_state]_BEHIND")
 	wings_behind.appearance_flags = RESET_COLOR
 	underlays += wings_behind
 
@@ -322,7 +334,7 @@
 
 	var/datum/sprite_accessory/moth_wings/wings = get_wings(customer)
 
-	var/mutable_appearance/wings_front = mutable_appearance(icon = 'icons/mob/species/moth/moth_wings.dmi', icon_state = "m_moth_wings_[wings.icon_state]_FRONT")
+	var/mutable_appearance/wings_front = mutable_appearance(icon = 'icons/mob/moth_wings.dmi', icon_state = "m_moth_wings_[wings.icon_state]_FRONT")
 	wings_front.appearance_flags = RESET_COLOR
 	overlays += wings_front
 
@@ -332,8 +344,14 @@
 
 	return overlays
 
+/datum/customer_data/moth/get_order(datum/venue/venue)
+	var/dynamic_order = get_dynamic_order(venue)
+
+	// Fall back to basic clothing.
+	return dynamic_order || ..()
+
 /datum/customer_data/mexican
-	base_icon_state = "mexican"
+	base_icon = "mexican"
 	prefix_file = "strings/names/mexican_prefix.txt"
 	speech_sound = 'sound/creatures/tourist/tourist_talk_mexican.ogg'
 	clothing_sets = list("mexican_poncho")
@@ -349,7 +367,6 @@
 			/obj/item/food/pie/dulcedebatata = 2,
 			/obj/item/food/cubannachos = 3,
 			/obj/item/food/stuffedlegion = 1,
-			/datum/custom_order/icecream = 2,
 		),
 		VENUE_BAR = list(
 			/datum/reagent/consumable/ethanol/whiskey = 6,
@@ -373,7 +390,7 @@
 	self_defense_line = "Time for you to find out what kind of robot I am, eh?"
 
 /datum/customer_data/british
-	base_icon_state = "british"
+	base_icon = "british"
 	prefix_file = "strings/names/british_prefix.txt"
 	speech_sound = 'sound/creatures/tourist/tourist_talk_british.ogg'
 
@@ -393,7 +410,6 @@
 			/obj/item/food/full_english = 2,
 			/obj/item/food/soup/indian_curry = 3,
 			/obj/item/food/beef_wellington_slice = 2,
-			/datum/custom_order/icecream = 8
 		),
 		VENUE_BAR = list(
 			/datum/reagent/consumable/ethanol/ale = 10,
@@ -428,7 +444,7 @@
 
 ///MALFUNCTIONING - only shows up once per venue, very rare
 /datum/customer_data/malfunction
-	base_icon_state = "defect"
+	base_icon = "defect"
 	prefix_file = "strings/names/malf_prefix.txt"
 	speech_sound = 'sound/effects/clang.ogg'
 	clothing_sets = list("defect_wires", "defect_bad_takes")

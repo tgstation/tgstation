@@ -88,16 +88,7 @@
 	icon_state = "room_background"
 	flags_1 = NOJAUNT
 
-/turf/open/ai_visible/Initialize(mapload)
-	. = ..()
-	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, .proc/multiz_offset_increase)
-	multiz_offset_increase(SSmapping)
-
-/turf/open/ai_visible/proc/multiz_offset_increase(datum/source)
-	SIGNAL_HANDLER
-	SET_PLANE_W_SCALAR(src, initial(plane), SSmapping.max_plane_offset)
-
-/area/centcom/ai_multicam_room
+/area/ai_multicam_room
 	name = "ai_multicam_room"
 	icon_state = "ai_camera_room"
 	static_lighting = FALSE
@@ -141,7 +132,7 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 	if(screen?.ai)
 		return screen.ai.client
 
-/mob/camera/ai_eye/pic_in_pic/setLoc(turf/destination, force_update = FALSE)
+/mob/camera/ai_eye/pic_in_pic/setLoc(turf/destination)
 	if (destination)
 		abstract_move(destination)
 	else
@@ -162,12 +153,13 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 	var/list/obj/machinery/camera/add = list()
 	var/list/obj/machinery/camera/remove = list()
 	var/list/obj/machinery/camera/visible = list()
-	for (var/datum/camerachunk/chunk as anything in visibleCameraChunks)
-		for (var/z_key in chunk.cameras)
-			for(var/obj/machinery/camera/camera as anything in chunk.cameras[z_key])
-				if (!camera.can_use() || (get_dist(camera, src) > telegraph_range))
-					continue
-				visible |= camera
+	for (var/VV in visibleCameraChunks)
+		var/datum/camerachunk/CC = VV
+		for (var/V in CC.cameras)
+			var/obj/machinery/camera/C = V
+			if (!C.can_use() || (get_dist(C, src) > telegraph_range))
+				continue
+			visible |= C
 
 	add = visible - cameras_telegraphed
 	remove = cameras_telegraphed - visible

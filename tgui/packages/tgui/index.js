@@ -8,7 +8,6 @@
 import './styles/main.scss';
 import './styles/themes/abductor.scss';
 import './styles/themes/cardtable.scss';
-import './styles/themes/spookyconsole.scss';
 import './styles/themes/hackerman.scss';
 import './styles/themes/malfunction.scss';
 import './styles/themes/neutral.scss';
@@ -53,16 +52,24 @@ const setupApp = () => {
   setupHotKeys();
   captureExternalLinks();
 
-  // Re-render UI on store updates
+  // Subscribe for state updates
   store.subscribe(renderApp);
 
-  // Dispatch incoming messages as store actions
-  Byond.subscribe((type, payload) => store.dispatch({ type, payload }));
+  // Dispatch incoming messages
+  window.update = msg => store.dispatch(Byond.parseJson(msg));
+
+  // Process the early update queue
+  while (true) {
+    const msg = window.__updateQueue__.shift();
+    if (!msg) {
+      break;
+    }
+    window.update(msg);
+  }
 
   // Enable hot module reloading
   if (module.hot) {
     setupHotReloading();
-    // prettier-ignore
     module.hot.accept([
       './components',
       './debug',

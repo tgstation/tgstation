@@ -6,7 +6,6 @@
 		PORT_TYPE_NUMBER,
 		PORT_TYPE_INSTANT_SIGNAL,
 		PORT_TYPE_RESPONSE_SIGNAL,
-		PORT_TYPE_SIGNAL,
 	)
 
 /datum/circuit_datatype/signal/handle_manual_input(datum/port/input/port, mob/user, user_input)

@@ -14,13 +14,13 @@
 		return
 	if(stat != DEAD)
 		death()
-	var/obj/item/organ/internal/brain/BR
+	var/obj/item/organ/brain/BR
 	if(container?.brain)
 		BR = container.brain
-	else if(istype(loc, /obj/item/organ/internal/brain))
+	else if(istype(loc, /obj/item/organ/brain))
 		BR = loc
 	if(BR)
-		BR.setOrganDamage(BRAIN_DAMAGE_DEATH) //beaten to a pulp
+		BR.damage = BRAIN_DAMAGE_DEATH //beaten to a pulp
 
 /mob/living/brain/proc/handle_emp_damage(delta_time, times_fired)
 	if(!emp_damage)

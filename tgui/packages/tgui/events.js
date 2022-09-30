@@ -16,6 +16,7 @@ export const setupGlobalEvents = (options = {}) => {
   ignoreWindowFocus = !!options.ignoreWindowFocus;
 };
 
+
 // Window focus
 // --------------------------------------------------------
 
@@ -43,17 +44,18 @@ const setWindowFocus = (value, delayed) => {
   }
 };
 
+
 // Focus stealing
 // --------------------------------------------------------
 
 let focusStolenBy = null;
 
-export const canStealFocus = (node) => {
+export const canStealFocus = node => {
   const tag = String(node.tagName).toLowerCase();
   return tag === 'input' || tag === 'textarea';
 };
 
-const stealFocus = (node) => {
+const stealFocus = node => {
   releaseStolenFocus();
   focusStolenBy = node;
   focusStolenBy.addEventListener('blur', releaseStolenFocus);
@@ -66,6 +68,7 @@ const releaseStolenFocus = () => {
   }
 };
 
+
 // Focus follows the mouse
 // --------------------------------------------------------
 
@@ -73,18 +76,18 @@ let focusedNode = null;
 let lastVisitedNode = null;
 const trackedNodes = [];
 
-export const addScrollableNode = (node) => {
+export const addScrollableNode = node => {
   trackedNodes.push(node);
 };
 
-export const removeScrollableNode = (node) => {
+export const removeScrollableNode = node => {
   const index = trackedNodes.indexOf(node);
   if (index >= 0) {
     trackedNodes.splice(index, 1);
   }
 };
 
-const focusNearestTrackedParent = (node) => {
+const focusNearestTrackedParent = node => {
   if (focusStolenBy || !windowFocused) {
     return;
   }
@@ -103,7 +106,7 @@ const focusNearestTrackedParent = (node) => {
   }
 };
 
-window.addEventListener('mousemove', (e) => {
+window.addEventListener('mousemove', e => {
   const node = e.target;
   if (node !== lastVisitedNode) {
     lastVisitedNode = node;
@@ -111,10 +114,11 @@ window.addEventListener('mousemove', (e) => {
   }
 });
 
+
 // Focus event hooks
 // --------------------------------------------------------
 
-window.addEventListener('focusin', (e) => {
+window.addEventListener('focusin', e => {
   lastVisitedNode = null;
   focusedNode = e.target;
   setWindowFocus(true);
@@ -124,19 +128,20 @@ window.addEventListener('focusin', (e) => {
   }
 });
 
-window.addEventListener('focusout', (e) => {
+window.addEventListener('focusout', e => {
   lastVisitedNode = null;
   setWindowFocus(false, true);
 });
 
-window.addEventListener('blur', (e) => {
+window.addEventListener('blur', e => {
   lastVisitedNode = null;
   setWindowFocus(false, true);
 });
 
-window.addEventListener('beforeunload', (e) => {
+window.addEventListener('beforeunload', e => {
   setWindowFocus(false);
 });
+
 
 // Key events
 // --------------------------------------------------------
@@ -159,7 +164,6 @@ export class KeyEvent {
   }
 
   isModifierKey() {
-    // prettier-ignore
     return this.code === KEY_CTRL
       || this.code === KEY_SHIFT
       || this.code === KEY_ALT;
@@ -189,9 +193,11 @@ export class KeyEvent {
     }
     if (this.code >= 48 && this.code <= 90) {
       this._str += String.fromCharCode(this.code);
-    } else if (this.code >= KEY_F1 && this.code <= KEY_F12) {
+    }
+    else if (this.code >= KEY_F1 && this.code <= KEY_F12) {
       this._str += 'F' + (this.code - 111);
-    } else {
+    }
+    else {
       this._str += '[' + this.code + ']';
     }
     return this._str;
@@ -199,7 +205,7 @@ export class KeyEvent {
 }
 
 // IE8: Keydown event is only available on document.
-document.addEventListener('keydown', (e) => {
+document.addEventListener('keydown', e => {
   if (canStealFocus(e.target)) {
     return;
   }
@@ -210,7 +216,7 @@ document.addEventListener('keydown', (e) => {
   keyHeldByCode[code] = true;
 });
 
-document.addEventListener('keyup', (e) => {
+document.addEventListener('keyup', e => {
   if (canStealFocus(e.target)) {
     return;
   }

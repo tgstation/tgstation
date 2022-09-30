@@ -92,9 +92,9 @@
 					var/static/pipenetwarnings = 10
 					if(pipenetwarnings > 0)
 						log_mapping("build_pipeline(): [item.type] added to a pipenet while still having one. (pipes leading to the same spot stacking in one turf) around [AREACOORD(item)].")
+						pipenetwarnings--
 					if(pipenetwarnings == 0)
 						log_mapping("build_pipeline(): further messages about pipenets will be suppressed")
-					pipenetwarnings--
 
 				members += item
 				possible_expansions += item
@@ -189,21 +189,29 @@
 /datum/pipeline/proc/temperature_interact(turf/target, share_volume, thermal_conductivity)
 	var/total_heat_capacity = air.heat_capacity()
 	var/partial_heat_capacity = total_heat_capacity * (share_volume / air.volume)
+	var/target_temperature
+	var/target_heat_capacity
 
-	var/turf_temperature = target.GetTemperature()
-	var/turf_heat_capacity = target.GetHeatCapacity()
 
-	if(turf_heat_capacity <= 0 || partial_heat_capacity <= 0)
+	var/turf/modeled_location = target
+	target_temperature = modeled_location.GetTemperature()
+	target_heat_capacity = modeled_location.GetHeatCapacity()
+
+	var/delta_temperature = air.temperature - target_temperature
+	var/sharer_heat_capacity = target_heat_capacity
+
+	if((sharer_heat_capacity <= 0) || (partial_heat_capacity <= 0))
 		return TRUE
+	var/heat = thermal_conductivity * delta_temperature * (partial_heat_capacity * sharer_heat_capacity / (partial_heat_capacity + sharer_heat_capacity))
 
-	var/delta_temperature = turf_temperature - air.temperature
+	var/self_temperature_delta = - heat / total_heat_capacity
+	var/sharer_temperature_delta = heat / sharer_heat_capacity
 
-	var/heat = thermal_conductivity * CALCULATE_CONDUCTION_ENERGY(delta_temperature, partial_heat_capacity, turf_heat_capacity)
-	air.temperature += heat / total_heat_capacity
-	target.TakeTemperature(-1 * heat / turf_heat_capacity)
+	air.temperature += self_temperature_delta
+	modeled_location.TakeTemperature(sharer_temperature_delta)
+	if(modeled_location.blocks_air)
+		modeled_location.temperature_expose(air, modeled_location.temperature)
 
-	if(target.blocks_air)
-		target.temperature_expose(air, target.temperature)
 	update = TRUE
 
 /datum/pipeline/proc/return_air()

@@ -12,7 +12,7 @@
 /turf/closed/mineral/random,
 /area/ruin/unpowered)
 "e" = (
-/turf/open/misc/asteroid/airless,
+/turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "f" = (
 /turf/closed/mineral/random/high_chance,
@@ -21,10 +21,10 @@
 /turf/closed/mineral/bananium,
 /area/ruin/unpowered)
 "h" = (
-/turf/open/misc/asteroid/airless,
+/turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered)
 "i" = (
-/turf/open/misc/asteroid,
+/turf/open/floor/plating/asteroid,
 /area/ruin/unpowered)
 "j" = (
 /turf/closed/wall/mineral/titanium,
@@ -40,7 +40,7 @@
 	dir = 1
 	},
 /obj/item/shard,
-/obj/effect/mob_spawn/corpse/human/clown{
+/obj/effect/mob_spawn/human/clown{
 	brute_damage = 120;
 	oxy_damage = 75
 	},

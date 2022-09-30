@@ -1,7 +1,7 @@
 /obj/item/toy/plush
 	name = "plush"
 	desc = "This is the special coder plush, do not steal."
-	icon = 'icons/obj/toys/plushes.dmi'
+	icon = 'icons/obj/plushes.dmi'
 	icon_state = "debug"
 	worn_icon_state = "plushie"
 	attack_verb_continuous = list("thumps", "whomps", "bumps")
@@ -112,7 +112,7 @@
 	if(stuffed || grenade)
 		to_chat(user, span_notice("You pet [src]. D'awww."))
 		if(grenade && !grenade.active)
-			user.log_message("activated a hidden grenade in [src].", LOG_VICTIM)
+			log_game("[key_name(user)] activated a hidden grenade in [src].")
 			grenade.arm_grenade(user, msg = FALSE, volume = 10)
 	else
 		to_chat(user, span_notice("You try to pet [src], but it has no stuffing. Aww..."))
@@ -129,8 +129,10 @@
 				stuffed = FALSE
 			else
 				to_chat(user, span_notice("What a fool you are. [src] is a god, how can you kill a god? What a grand and intoxicating innocence."))
-				user.adjust_drunk_effect(20, up_to = 50)
-
+				if(iscarbon(user))
+					var/mob/living/carbon/C = user
+					if(C.drunkenness < 50)
+						C.drunkenness = min(C.drunkenness + 20, 50)
 				var/turf/current_location = get_turf(user)
 				var/area/current_area = current_location.loc //copied from hand tele code
 				if(current_location && current_area && (current_area.area_flags & NOTELEPORT))
@@ -144,7 +146,7 @@
 			user.put_in_hands(grenade)
 			grenade = null
 		return
-	if(isgrenade(I))
+	if(istype(I, /obj/item/grenade))
 		if(stuffed)
 			to_chat(user, span_warning("You need to remove some stuffing first!"))
 			return
@@ -156,7 +158,8 @@
 		user.visible_message(span_warning("[user] slides [grenade] into [src]."), \
 		span_danger("You slide [I] into [src]."))
 		grenade = I
-		user.log_message("added a grenade ([I.name]) to [src]", LOG_GAME)
+		var/turf/grenade_turf = get_turf(src)
+		log_game("[key_name(user)] added a grenade ([I.name]) to [src] at [AREACOORD(grenade_turf)].")
 		return
 	if(istype(I, /obj/item/toy/plush))
 		love(I, user)
@@ -233,7 +236,8 @@
 
 /obj/item/toy/plush/proc/heartbreak(obj/item/toy/plush/Brutus)
 	if(lover != Brutus)
-		CRASH("plushie heartbroken by a plushie that is not their lover")
+		to_chat(world, "lover != Brutus")
+		return //why are we considering someone we don't love?
 
 	scorned.Add(Brutus)
 	Brutus.scorned_by(src)
@@ -402,7 +406,7 @@
 	var/obj/item/toy/plush/narplush/clash_target
 	gender = MALE //he's a boy, right?
 
-/obj/item/toy/plush/ratplush/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
+/obj/item/toy/plush/ratplush/Moved()
 	. = ..()
 	if(clash_target)
 		return
@@ -489,7 +493,7 @@
 	var/clashing
 	gender = FEMALE //it's canon if the toy is
 
-/obj/item/toy/plush/narplush/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
+/obj/item/toy/plush/narplush/Moved()
 	. = ..()
 	var/obj/item/toy/plush/ratplush/P = locate() in range(1, src)
 	if(P && istype(P.loc, /turf/open) && !P.clash_target && !clashing)
@@ -576,7 +580,7 @@
 	icon_state = "plushie_awake"
 	inhand_icon_state = "plushie_awake"
 
-/obj/item/toy/plush/awakenedplushie/Initialize(mapload)
+/obj/item/toy/plush/awakenedplushie/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/edit_complainer)
 
@@ -597,22 +601,10 @@
 	squeak_override = list('sound/weapons/punch1.ogg'=1)
 	/// Whether or not this goat is currently taking in a monsterous doink
 	var/going_hard = FALSE
-	/// Whether or not this goat has been flattened like a funny pancake
-	var/splat = FALSE
-
-/obj/item/toy/plush/goatplushie/Initialize(mapload)
-	. = ..()
-	var/static/list/loc_connections = list(
-		COMSIG_TURF_INDUSTRIAL_LIFT_ENTER = .proc/splat,
-	)
-	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/item/toy/plush/goatplushie/attackby(obj/item/clothing/mask/cigarette/rollie/fat_dart, mob/user, params)
 	if(!istype(fat_dart))
 		return ..()
-	if(splat)
-		to_chat(user, span_notice("[src] doesn't seem to be able to go hard right now."))
-		return
 	if(going_hard)
 		to_chat(user, span_notice("[src] is already going too hard!"))
 		return
@@ -624,22 +616,8 @@
 	going_hard = TRUE
 	update_icon(UPDATE_OVERLAYS)
 
-/obj/item/toy/plush/goatplushie/proc/splat(datum/source)
-	SIGNAL_HANDLER
-	if(splat)
-		return
-	if(going_hard)
-		going_hard = FALSE
-		update_icon(UPDATE_OVERLAYS)
-	icon_state = "goat_splat"
-	playsound(src, SFX_DESECRATION, 50, TRUE)
-	visible_message(span_danger("[src] gets absolutely flattened!"))
-	splat = TRUE
-
 /obj/item/toy/plush/goatplushie/examine()
 	. = ..()
-	if(splat)
-		. += span_notice("[src] might need medical attention.")
 	if(going_hard)
 		. += span_notice("[src] is going so hard, feel free to take a picture.")
 
@@ -693,36 +671,3 @@
 	attack_verb_continuous = list("slashes", "bites", "charges")
 	attack_verb_simple = list("slash", "bite", "charge")
 	squeak_override = list('sound/items/intents/Help.ogg' = 1)
-
-/obj/item/toy/plush/abductor
-	name = "abductor plushie"
-	desc = "A plushie depicting an alien abductor. The tag on it is in an indecipherable language."
-	icon_state = "abductor"
-	inhand_icon_state = "abductor"
-	attack_verb_continuous = list("abducts", "probes")
-	attack_verb_continuous = list("abduct", "probe")
-	squeak_override = list('sound/weather/ashstorm/inside/weak_end.ogg' = 1) //very faint sound since abductors are silent as far as "speaking" is concerned.
-
-/obj/item/toy/plush/abductor/agent
-	name = "abductor agent plushie"
-	desc = "A plushie depicting an alien abductor agent. The stun baton is attached to the hand of the plushie, and appears to be inert. I wouldn't stay alone with it."
-	icon_state = "abductor_agent"
-	inhand_icon_state = "abductor_agent"
-	attack_verb_continuous = list("abducts", "probes", "stuns")
-	attack_verb_continuous = list("abduct", "probe", "stun")
-	squeak_override = list(
-		'sound/weapons/egloves.ogg' = 2,
-		'sound/weapons/cablecuff.ogg' = 1,
-	)
-
-/obj/item/toy/plush/greek_cucumber
-	name = "cucumber greek"
-	desc = "A plushie depicting a large cucumber with eyes, it seems that according to the manufacturer of the toy, the human race will look like in the future."
-	icon_state = "cucumber"
-	inhand_icon_state = "cucumber"
-	attack_verb_continuous = list("squishуы", "creakes", "crunches")
-	attack_verb_simple = list("squish", "creak", "crunch")
-	squeak_override = list(
-		'sound/effects/slosh.ogg' = 1,
-		'sound/effects/splat.ogg' = 2
-	)

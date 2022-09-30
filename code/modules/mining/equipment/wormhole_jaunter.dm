@@ -6,8 +6,8 @@
 	icon_state = "Jaunter"
 	inhand_icon_state = "electronic"
 	worn_icon_state = "electronic"
-	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	throwforce = 0
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
@@ -96,8 +96,8 @@
 //jaunter tunnel
 /obj/effect/portal/jaunt_tunnel
 	name = "jaunt tunnel"
-	icon = 'icons/effects/anomalies.dmi'
-	icon_state = "vortex"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "bhole3"
 	desc = "A stable hole in the universe made by a wormhole jaunter. Turbulent doesn't even begin to describe how rough passage through one of these is, but at least it will always get you somewhere near a beacon."
 	mech_sized = TRUE //save your ripley
 	innate_accuracy_penalty = 6

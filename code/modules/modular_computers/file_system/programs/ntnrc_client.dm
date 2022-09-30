@@ -68,7 +68,7 @@
 				active_channel = new_target // Bypasses normal leave/join and passwords. Technically makes the user invisible to others.
 				return TRUE
 
-			active_channel = new_target
+			active_channel =  new_target
 			channel = SSnetworks.station_network.get_chat_channel_by_id(new_target)
 			if((!(src in channel.active_clients) && !(src in channel.offline_clients)) && !channel.password)
 				channel.add_client(src)
@@ -91,7 +91,8 @@
 		if("PRG_toggleadmin")
 			if(netadmin_mode)
 				netadmin_mode = FALSE
-				channel?.add_client(src)
+				if(channel)
+					channel.remove_client(src) // We shouldn't be in channel's user list, but just in case...
 				return TRUE
 			var/mob/living/user = usr
 			if(can_run(user, TRUE, ACCESS_NETWORK))
@@ -116,13 +117,13 @@
 			var/logname = stripped_input(params["log_name"])
 			if(!logname)
 				return
-			var/datum/computer_file/data/text/logfile = new()
+			var/datum/computer_file/data/logfile = new /datum/computer_file/data/logfile()
 			// Now we will generate HTML-compliant file that can actually be viewed/printed.
 			logfile.filename = logname
-			logfile.stored_text = "\[b\]Logfile dump from NTNRC channel [channel.title]\[/b\]\[BR\]"
+			logfile.stored_data = "\[b\]Logfile dump from NTNRC channel [channel.title]\[/b\]\[BR\]"
 			for(var/logstring in channel.messages)
-				logfile.stored_text = "[logfile.stored_text][logstring]\[BR\]"
-			logfile.stored_text = "[logfile.stored_text]\[b\]Logfile dump completed.\[/b\]"
+				logfile.stored_data = "[logfile.stored_data][logstring]\[BR\]"
+			logfile.stored_data = "[logfile.stored_data]\[b\]Logfile dump completed.\[/b\]"
 			logfile.calculate_size()
 			var/obj/item/computer_hardware/hard_drive/hard_drive = computer.all_components[MC_HDD]
 			if(!computer || !hard_drive || !hard_drive.store_file(logfile))
@@ -171,7 +172,7 @@
 			channel.ping_user(src, pinged)
 			return TRUE
 
-/datum/computer_file/program/chatclient/process_tick(delta_time)
+/datum/computer_file/program/chatclient/process_tick()
 	. = ..()
 	var/datum/ntnet_conversation/channel = SSnetworks.station_network.get_chat_channel_by_id(active_channel)
 	if(program_state != PROGRAM_STATE_KILLED)
@@ -187,7 +188,7 @@
 	else
 		ui_header = "ntnrc_idle.gif"
 
-/datum/computer_file/program/chatclient/on_start(mob/living/user)
+/datum/computer_file/program/chatclient/run_program(mob/living/user)
 	. = ..()
 	if(!.)
 		return

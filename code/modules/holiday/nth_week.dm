@@ -31,7 +31,6 @@
 
 /datum/holiday/nth_week/thanksgiving
 	name = "Thanksgiving in the United States"
-	timezones = list(TIMEZONE_EST, TIMEZONE_CST, TIMEZONE_MST, TIMEZONE_PST, TIMEZONE_AKST, TIMEZONE_HST)
 	begin_week = 4
 	begin_month = NOVEMBER
 	begin_weekday = THURSDAY

@@ -19,7 +19,7 @@
 /datum/movespeed_modifier/reagent/methamphetamine
 	multiplicative_slowdown = -0.65
 
-/datum/movespeed_modifier/reagent/nitrium
+/datum/movespeed_modifier/reagent/nitryl
 	multiplicative_slowdown = -0.65
 
 /datum/movespeed_modifier/reagent/cannabis
@@ -30,9 +30,6 @@
 
 /datum/movespeed_modifier/reagent/halon
 	multiplicative_slowdown = 1.8
-
-/datum/movespeed_modifier/reagent/hypernoblium
-	multiplicative_slowdown = 0.5
 
 /datum/movespeed_modifier/reagent/lenturi
 	multiplicative_slowdown = 1.5

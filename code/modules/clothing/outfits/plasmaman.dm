@@ -144,7 +144,7 @@
 	name = "Botany Plasmaman"
 
 	uniform = /obj/item/clothing/under/plasmaman/botany
-	gloves = /obj/item/clothing/gloves/color/plasmaman/botanic_leather
+	gloves = /obj/item/clothing/gloves/botanic_leather/plasmaman
 	head = /obj/item/clothing/head/helmet/space/plasmaman/botany
 
 /datum/outfit/plasmaman/janitor

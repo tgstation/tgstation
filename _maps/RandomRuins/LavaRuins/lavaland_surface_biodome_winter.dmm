@@ -3,7 +3,9 @@
 /turf/template_noop,
 /area/template_noop)
 "ab" = (
-/obj/machinery/shower/directional/south,
+/obj/machinery/shower{
+	pixel_y = 12
+	},
 /turf/open/floor/iron/white/textured_large,
 /area/ruin/powered/snow_biodome)
 "ac" = (
@@ -35,7 +37,9 @@
 /turf/open/floor/circuit,
 /area/ruin/powered/snow_biodome)
 "ai" = (
-/obj/structure/sink/directional/south,
+/obj/structure/sink{
+	pixel_y = 26
+	},
 /obj/structure/mirror/directional/east,
 /turf/open/floor/iron/white/textured_large,
 /area/ruin/powered/snow_biodome)
@@ -43,14 +47,14 @@
 /turf/open/floor/iron/white/textured_large,
 /area/ruin/powered/snow_biodome)
 "ak" = (
-/turf/open/misc/asteroid/snow,
+/turf/open/floor/plating/asteroid/snow,
 /area/ruin/powered/snow_biodome)
 "al" = (
 /obj/structure/reagent_dispensers/beerkeg,
 /turf/open/floor/plating,
 /area/ruin/powered/snow_biodome)
 "am" = (
-/obj/item/reagent_containers/cup/glass/mug,
+/obj/item/reagent_containers/food/drinks/mug,
 /turf/open/floor/plating,
 /area/ruin/powered/snow_biodome)
 "an" = (
@@ -58,11 +62,11 @@
 /turf/open/floor/iron/white/textured_large,
 /area/ruin/powered/snow_biodome)
 "ao" = (
-/turf/open/misc/ice,
+/turf/open/floor/plating/ice,
 /area/ruin/powered/snow_biodome)
 "ap" = (
-/obj/structure/flora/rock/icy/style_random,
-/turf/open/misc/asteroid/snow,
+/obj/structure/flora/rock/icy,
+/turf/open/floor/plating/asteroid/snow,
 /area/ruin/powered/snow_biodome)
 "aq" = (
 /turf/closed/wall/mineral/wood,
@@ -114,19 +118,19 @@
 /turf/open/floor/wood,
 /area/ruin/powered/snow_biodome)
 "az" = (
-/obj/structure/flora/tree/pine/style_random,
-/turf/open/misc/asteroid/snow,
+/obj/structure/flora/tree/pine,
+/turf/open/floor/plating/asteroid/snow,
 /area/ruin/powered/snow_biodome)
 "aA" = (
 /turf/open/floor/wood/parquet,
 /area/ruin/powered/snow_biodome)
 "aB" = (
-/obj/structure/flora/rock/pile/icy/style_random,
-/turf/open/misc/asteroid/snow,
+/obj/structure/flora/rock/pile/icy,
+/turf/open/floor/plating/asteroid/snow,
 /area/ruin/powered/snow_biodome)
 "aC" = (
-/obj/structure/flora/tree/dead/style_random,
-/turf/open/misc/asteroid/snow,
+/obj/structure/flora/tree/dead,
+/turf/open/floor/plating/asteroid/snow,
 /area/ruin/powered/snow_biodome)
 "aD" = (
 /obj/machinery/light/small/directional/east,
@@ -138,7 +142,7 @@
 /area/ruin/powered/snow_biodome)
 "aF" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/cup/glass/mug/coco,
+/obj/item/reagent_containers/food/drinks/mug/coco,
 /turf/open/floor/wood,
 /area/ruin/powered/snow_biodome)
 "aG" = (
@@ -152,12 +156,12 @@
 /turf/open/floor/wood,
 /area/ruin/powered/snow_biodome)
 "aI" = (
-/obj/structure/flora/bush/snow/style_random,
-/turf/open/misc/asteroid/snow,
+/obj/structure/flora/bush,
+/turf/open/floor/plating/asteroid/snow,
 /area/ruin/powered/snow_biodome)
 "aJ" = (
 /obj/vehicle/ridden/atv,
-/turf/open/misc/asteroid/snow,
+/turf/open/floor/plating/asteroid/snow,
 /area/ruin/powered/snow_biodome)
 "aK" = (
 /obj/structure/toilet{
@@ -169,7 +173,7 @@
 /obj/structure/closet/crate/trashcart,
 /obj/item/trash/semki,
 /obj/item/trash/candy,
-/turf/open/misc/asteroid/snow,
+/turf/open/floor/plating/asteroid/snow,
 /area/ruin/powered/snow_biodome)
 "aM" = (
 /turf/open/floor/carpet,
@@ -188,12 +192,12 @@
 /turf/open/floor/pod/dark,
 /area/ruin/powered/snow_biodome)
 "aQ" = (
-/obj/structure/flora/grass/both/style_random,
-/turf/open/misc/asteroid/snow,
+/obj/structure/flora/grass/both,
+/turf/open/floor/plating/asteroid/snow,
 /area/ruin/powered/snow_biodome)
 "aR" = (
 /obj/structure/flora/tree/pine/xmas,
-/turf/open/misc/asteroid/snow,
+/turf/open/floor/plating/asteroid/snow,
 /area/ruin/powered/snow_biodome)
 "bl" = (
 /obj/effect/turf_decal/siding/wood{
@@ -206,7 +210,7 @@
 /area/ruin/powered/snow_biodome)
 "bv" = (
 /obj/machinery/light/directional/north,
-/turf/open/misc/ice,
+/turf/open/floor/plating/ice,
 /area/ruin/powered/snow_biodome)
 "bw" = (
 /obj/machinery/light/small/directional/west,
@@ -218,7 +222,7 @@
 /area/ruin/powered/snow_biodome)
 "by" = (
 /obj/machinery/light/directional/west,
-/turf/open/misc/asteroid/snow,
+/turf/open/floor/plating/asteroid/snow,
 /area/ruin/powered/snow_biodome)
 "bz" = (
 /obj/machinery/light/directional/south,
@@ -226,19 +230,19 @@
 /area/ruin/powered/snow_biodome)
 "bB" = (
 /obj/machinery/light/directional/east,
-/turf/open/misc/asteroid/snow,
+/turf/open/floor/plating/asteroid/snow,
 /area/ruin/powered/snow_biodome)
 "bD" = (
 /obj/machinery/light/directional/north,
-/turf/open/misc/asteroid/snow,
+/turf/open/floor/plating/asteroid/snow,
 /area/ruin/powered/snow_biodome)
 "bM" = (
 /obj/machinery/light/directional/south,
-/turf/open/misc/asteroid/snow,
+/turf/open/floor/plating/asteroid/snow,
 /area/ruin/powered/snow_biodome)
 "bN" = (
 /obj/machinery/light/directional/south,
-/turf/open/misc/ice,
+/turf/open/floor/plating/ice,
 /area/ruin/powered/snow_biodome)
 "dS" = (
 /obj/machinery/light/small/directional/south,
@@ -257,7 +261,7 @@
 /turf/open/floor/pod/dark,
 /area/ruin/powered/snow_biodome)
 "gz" = (
-/obj/structure/chair/stool/directional/south,
+/obj/structure/chair/stool/directional/north,
 /mob/living/simple_animal/hostile/skeleton/eskimo,
 /turf/open/floor/pod/dark,
 /area/ruin/powered/snow_biodome)
@@ -284,7 +288,7 @@
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 4
 	},
-/turf/open/misc/asteroid/snow,
+/turf/open/floor/plating/asteroid/snow,
 /area/ruin/powered/snow_biodome)
 "qt" = (
 /obj/machinery/door/airlock/silver,
@@ -294,34 +298,16 @@
 	},
 /turf/open/floor/pod/dark,
 /area/ruin/powered/snow_biodome)
-"sn" = (
-/obj/structure/bed{
-	dir = 4
-	},
-/obj/item/bedsheet/blue{
-	dir = 4
-	},
-/turf/open/floor/wood/parquet,
-/area/ruin/powered/snow_biodome)
 "tb" = (
 /obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/explored)
 "tl" = (
 /turf/open/floor/pod/light,
 /area/ruin/powered/snow_biodome)
-"uO" = (
-/obj/item/bedsheet/blue{
-	dir = 4
-	},
-/obj/structure/bed{
-	dir = 4
-	},
-/turf/open/floor/wood/parquet,
-/area/ruin/powered/snow_biodome)
 "vr" = (
 /obj/machinery/light/small/directional/north,
-/turf/open/misc/asteroid/snow,
+/turf/open/floor/plating/asteroid/snow,
 /area/ruin/powered/snow_biodome)
 "vN" = (
 /turf/open/floor/plating/snowed/smoothed,
@@ -349,7 +335,7 @@
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 8
 	},
-/turf/open/misc/asteroid/snow,
+/turf/open/floor/plating/asteroid/snow,
 /area/ruin/powered/snow_biodome)
 "Dd" = (
 /obj/structure/rack,
@@ -369,12 +355,12 @@
 /area/ruin/powered/snow_biodome)
 "EA" = (
 /obj/effect/turf_decal/siding/wood/corner,
-/turf/open/misc/asteroid/snow,
+/turf/open/floor/plating/asteroid/snow,
 /area/ruin/powered/snow_biodome)
 "Gi" = (
-/obj/structure/flora/bush/snow/style_random,
+/obj/structure/flora/bush,
 /obj/machinery/light/small/directional/north,
-/turf/open/misc/asteroid/snow,
+/turf/open/floor/plating/asteroid/snow,
 /area/ruin/powered/snow_biodome)
 "HP" = (
 /turf/open/floor/pod/dark,
@@ -426,10 +412,10 @@
 "Qa" = (
 /obj/effect/mapping_helpers/no_lava,
 /obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/explored)
 "QI" = (
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/explored)
 "QK" = (
 /obj/structure/table,
@@ -449,7 +435,7 @@
 /turf/open/floor/pod/dark,
 /area/ruin/powered/snow_biodome)
 "UM" = (
-/obj/machinery/computer/monitor{
+/obj/machinery/computer/monitor/secret{
 	dir = 1
 	},
 /turf/open/floor/pod/dark,
@@ -458,7 +444,7 @@
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 1
 	},
-/turf/open/misc/asteroid/snow,
+/turf/open/floor/plating/asteroid/snow,
 /area/ruin/powered/snow_biodome)
 "Wg" = (
 /turf/closed/wall/r_wall,
@@ -796,8 +782,8 @@ ac
 am
 aq
 aq
-uO
-sn
+au
+au
 aq
 aq
 aq

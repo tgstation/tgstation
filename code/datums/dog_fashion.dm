@@ -40,10 +40,10 @@
 
 
 /datum/dog_fashion/head
-	icon_file = 'icons/mob/simple/corgi_head.dmi'
+	icon_file = 'icons/mob/corgi_head.dmi'
 
 /datum/dog_fashion/back
-	icon_file = 'icons/mob/simple/corgi_back.dmi'
+	icon_file = 'icons/mob/corgi_back.dmi'
 
 /datum/dog_fashion/head/helmet
 	name = "Sergeant REAL_NAME"
@@ -108,11 +108,6 @@
 	name = "[pick("Comrade","Commissar","Glorious Leader")] [M.real_name]"
 
 /datum/dog_fashion/head/warden
-	name = "Officer REAL_NAME"
-	emote_see = list("drools.","looks for donuts.")
-	desc = "Stop right there criminal scum!"
-
-/datum/dog_fashion/head/warden_red
 	name = "Officer REAL_NAME"
 	emote_see = list("drools.","looks for donuts.")
 	desc = "Stop right there criminal scum!"
@@ -184,25 +179,3 @@
 	name = "Festive REAL_NAME"
 	desc = "Ready to party!"
 	obj_icon_state = "festive"
-
-/datum/dog_fashion/head/pumpkin/unlit
-	name = "Headless HoP-less REAL_NAME"
-	desc = "A spooky dog spirit of a beloved pet who lost their owner."
-	obj_icon_state = "pumpkin0"
-	speak = list("BOO!", "AUUUUUUU", "RAAARGH!")
-	emote_see = list("shambles around.", "yaps ominously.", "shivers.")
-	emote_hear = list("howls at the Moon.", "yaps at the crows!")
-
-/datum/dog_fashion/head/pumpkin/lit
-	obj_icon_state = "pumpkin1"
-
-/datum/dog_fashion/head/blumpkin/unlit
-	name = "Hue-less Headless HoP-less REAL_NAME"
-	desc = "An evil dog spirit of a beloved pet that haunts your treats pantries!"
-	obj_icon_state = "blumpkin0"
-	speak = list("BOO!", "AUUUUUUU", "RAAARGH!")
-	emote_see = list("shambles around.", "yaps ominously.", "shivers.")
-	emote_hear = list("howls at the Moon.", "yaps at the crows!", "growls eerily!")
-
-/datum/dog_fashion/head/blumpkin/lit
-	obj_icon_state = "blumpkin1"

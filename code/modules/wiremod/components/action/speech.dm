@@ -6,7 +6,6 @@
 /obj/item/circuit_component/speech
 	display_name = "Speech"
 	desc = "A component that sends a message. Requires a shell."
-	category = "Action"
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 	/// The message to send
@@ -31,7 +30,7 @@
 		var/atom/movable/shell = parent.shell
 		// Prevents appear as the individual component if there is a shell.
 		if(shell)
-			shell.say(message.value, forced = "circuit speech | [key_name(parent.get_creator())]")
+			shell.say(message.value)
 		else
-			say(message.value, forced = "circuit speech | [parent.get_creator()]")
+			say(message.value)
 		TIMER_COOLDOWN_START(parent, COOLDOWN_CIRCUIT_SPEECH, speech_cooldown)

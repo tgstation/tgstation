@@ -18,7 +18,7 @@
 
 /obj/item/clothing/shoes/wheelys/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_FEET)
+	AddElement(/datum/element/update_icon_updates_onmob)
 	wheels = new wheels(null)
 	wheels.link_shoes(src)
 
@@ -26,7 +26,7 @@
 	if(!isliving(user))
 		return
 	if(!istype(user.get_item_by_slot(ITEM_SLOT_FEET), /obj/item/clothing/shoes/wheelys))
-		balloon_alert(user, "must be worn!")
+		to_chat(user, span_warning("You must be wearing the wheely-heels to use them!"))
 		return
 	if(!(wheels.is_occupant(user)))
 		wheelToggle = FALSE
@@ -65,8 +65,8 @@
 	worn_icon_state = "rollerskates"
 	slowdown = SHOES_SLOWDOWN+1
 	wheels = /obj/vehicle/ridden/scooter/skateboard/wheelys/rollerskates
-	custom_premium_price = PAYCHECK_CREW * 5
-	custom_price = PAYCHECK_CREW * 5
+	custom_premium_price = PAYCHECK_EASY * 5
+	custom_price = PAYCHECK_EASY * 5
 
 /obj/item/clothing/shoes/wheelys/skishoes
 	name = "ski shoes"
@@ -77,5 +77,5 @@
 	worn_icon_state = "skishoes"
 	slowdown = SHOES_SLOWDOWN+1
 	wheels = /obj/vehicle/ridden/scooter/skateboard/wheelys/skishoes
-	custom_premium_price = PAYCHECK_CREW * 1.6
-	custom_price = PAYCHECK_CREW * 1.6
+	custom_premium_price = PAYCHECK_EASY * 1.6
+	custom_price = PAYCHECK_EASY * 1.6

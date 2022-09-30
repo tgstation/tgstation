@@ -1,13 +1,22 @@
-/**Spontaneous Combustion
- * Slightly hidden.
- * Lowers resistance tremendously.
- * Decreases stage speed tremendously.
- * Decreases transmittablity tremendously.
- * Fatal level
- * Bonus: Ignites infected mob.
- */
+/*
+//////////////////////////////////////
+
+Spontaneous Combustion
+
+	Slightly hidden.
+	Lowers resistance tremendously.
+	Decreases stage tremendously.
+	Decreases transmittablity tremendously.
+	Fatal Level.
+
+Bonus
+	Ignites infected mob.
+
+//////////////////////////////////////
+*/
 
 /datum/symptom/fire
+
 	name = "Spontaneous Combustion"
 	desc = "The virus turns fat into an extremely flammable compound, and raises the body's temperature, making the host burst into flames spontaneously."
 	stealth = -1
@@ -51,39 +60,45 @@
 				to_chat(M, span_warning("[pick("You feel hot.", "You hear a crackling noise.", "You smell smoke.")]"))
 		if(4)
 			Firestacks_stage_4(M, A)
-			M.ignite_mob()
+			M.IgniteMob()
 			to_chat(M, span_userdanger("Your skin bursts into flames!"))
 			M.emote("scream")
 		if(5)
 			Firestacks_stage_5(M, A)
-			M.ignite_mob()
+			M.IgniteMob()
 			to_chat(M, span_userdanger("Your skin erupts into an inferno!"))
 			M.emote("scream")
 
 /datum/symptom/fire/proc/Firestacks_stage_4(mob/living/M, datum/disease/advance/A)
 	M.adjust_fire_stacks(1 * power)
-	M.take_overall_damage(burn = 3 * power, required_status = BODYTYPE_ORGANIC)
+	M.take_overall_damage(burn = 3 * power, required_status = BODYPART_ORGANIC)
 	if(infective)
 		A.spread(2)
 	return 1
 
 /datum/symptom/fire/proc/Firestacks_stage_5(mob/living/M, datum/disease/advance/A)
 	M.adjust_fire_stacks(3 * power)
-	M.take_overall_damage(burn = 5 * power, required_status = BODYTYPE_ORGANIC)
+	M.take_overall_damage(burn = 5 * power, required_status = BODYPART_ORGANIC)
 	if(infective)
 		A.spread(4)
 	return 1
 
 /*
+//////////////////////////////////////
+
 Alkali perspiration
+
 	Hidden.
 	Lowers resistance.
 	Decreases stage speed.
-	Decreases transmissibility.
+	Decreases transmittablity.
 	Fatal Level.
+
 Bonus
 	Ignites infected mob.
 	Explodes mob on contact with water.
+
+//////////////////////////////////////
 */
 
 /datum/symptom/alkali
@@ -134,7 +149,7 @@ Bonus
 				M.visible_message(span_warning("[M]'s sweat sizzles and pops on contact with water!"))
 				explosion(M, devastation_range = -1, heavy_impact_range = (-1 + explosion_power), light_impact_range = (2 * explosion_power), explosion_cause = src)
 			Alkali_fire_stage_4(M, A)
-			M.ignite_mob()
+			M.IgniteMob()
 			to_chat(M, span_userdanger("Your sweat bursts into flames!"))
 			M.emote("scream")
 		if(5)
@@ -142,14 +157,14 @@ Bonus
 				M.visible_message(span_warning("[M]'s sweat sizzles and pops on contact with water!"))
 				explosion(M, devastation_range = -1, heavy_impact_range = (-1 + explosion_power), light_impact_range = (2 * explosion_power), explosion_cause = src)
 			Alkali_fire_stage_5(M, A)
-			M.ignite_mob()
+			M.IgniteMob()
 			to_chat(M, span_userdanger("Your skin erupts into an inferno!"))
 			M.emote("scream")
 
 /datum/symptom/alkali/proc/Alkali_fire_stage_4(mob/living/M, datum/disease/advance/A)
 	var/get_stacks = 6 * power
 	M.adjust_fire_stacks(get_stacks)
-	M.take_overall_damage(burn = get_stacks / 2, required_status = BODYTYPE_ORGANIC)
+	M.take_overall_damage(burn = get_stacks / 2, required_status = BODYPART_ORGANIC)
 	if(chems)
 		M.reagents.add_reagent(/datum/reagent/clf3, 2 * power)
 	return 1
@@ -157,7 +172,7 @@ Bonus
 /datum/symptom/alkali/proc/Alkali_fire_stage_5(mob/living/M, datum/disease/advance/A)
 	var/get_stacks = 8 * power
 	M.adjust_fire_stacks(get_stacks)
-	M.take_overall_damage(burn = get_stacks, required_status = BODYTYPE_ORGANIC)
+	M.take_overall_damage(burn = get_stacks, required_status = BODYPART_ORGANIC)
 	if(chems)
 		M.reagents.add_reagent_list(list(/datum/reagent/napalm = 4 * power, /datum/reagent/clf3 = 4 * power))
 	return 1

@@ -10,8 +10,8 @@
 	icon_state = "setup_small_calc"
 	inhand_icon_state = "electronic"
 	worn_icon_state = "electronic"
-	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	light_system = MOVABLE_LIGHT_DIRECTIONAL
 	light_on = FALSE
 
@@ -59,7 +59,7 @@
 	if(!user.Adjacent(source))
 		return
 	source.balloon_alert(user, "clicked primary button")
-	playsound(source, get_sfx(SFX_TERMINAL_TYPE), 25, FALSE)
+	playsound(source, get_sfx("terminal_type"), 25, FALSE)
 	entity.set_output(user)
 	signal.set_output(COMPONENT_SIGNAL)
 
@@ -71,7 +71,7 @@
 	if(!user.Adjacent(source))
 		return
 	source.balloon_alert(user, "clicked alternate button")
-	playsound(source, get_sfx(SFX_TERMINAL_TYPE), 25, FALSE)
+	playsound(source, get_sfx("terminal_type"), 25, FALSE)
 	entity.set_output(user)
 	alt.set_output(COMPONENT_SIGNAL)
 
@@ -83,6 +83,6 @@
 	if(!user.Adjacent(source))
 		return
 	source.balloon_alert(user, "clicked extra button")
-	playsound(source, get_sfx(SFX_TERMINAL_TYPE), 25, FALSE)
+	playsound(source, get_sfx("terminal_type"), 25, FALSE)
 	entity.set_output(user)
 	right.set_output(COMPONENT_SIGNAL)

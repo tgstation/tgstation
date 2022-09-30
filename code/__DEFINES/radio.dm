@@ -118,6 +118,3 @@
 #define REQ_DEP_TYPE_ASSISTANCE (1<<0)
 #define REQ_DEP_TYPE_SUPPLIES (1<<1)
 #define REQ_DEP_TYPE_INFORMATION (1<<2)
-
-///give this to can_receive to specify that there is no restriction on what z level this signal is sent to
-#define RADIO_NO_Z_LEVEL_RESTRICTION 0

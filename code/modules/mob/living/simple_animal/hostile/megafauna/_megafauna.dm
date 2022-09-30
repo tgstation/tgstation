@@ -69,7 +69,7 @@
 		var/datum/action/small_sprite/small_action = new small_sprite_type()
 		small_action.Grant(src)
 
-/mob/living/simple_animal/hostile/megafauna/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
+/mob/living/simple_animal/hostile/megafauna/Moved()
 	//Safety check
 	if(!loc)
 		return ..()
@@ -85,7 +85,7 @@
 /mob/living/simple_animal/hostile/megafauna/death(gibbed, list/force_grant)
 	if(health > 0)
 		return
-	var/datum/status_effect/crusher_damage/crusher_dmg = has_status_effect(/datum/status_effect/crusher_damage)
+	var/datum/status_effect/crusher_damage/crusher_dmg = has_status_effect(STATUS_EFFECT_CRUSHERDAMAGETRACKING)
 	var/crusher_kill = FALSE
 	if(crusher_dmg && crusher_loot && crusher_dmg.total_damage >= maxHealth * 0.6)
 		spawn_crusher_loot()
@@ -155,7 +155,7 @@
 
 /// Sets/adds the next time the megafauna can use a melee or ranged attack, in deciseconds. It is a list to allow using named args. Use the ignore_staggered var if youre setting the cooldown to ranged_cooldown_time.
 /mob/living/simple_animal/hostile/megafauna/proc/update_cooldowns(list/cooldown_updates, ignore_staggered = FALSE)
-	if(!ignore_staggered && has_status_effect(/datum/status_effect/stagger))
+	if(!ignore_staggered && has_status_effect(STATUS_EFFECT_STAGGER))
 		for(var/update in cooldown_updates)
 			cooldown_updates[update] *= 2
 	if(cooldown_updates[COOLDOWN_UPDATE_SET_MELEE])

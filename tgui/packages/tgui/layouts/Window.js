@@ -28,7 +28,7 @@ export class Window extends Component {
     if (suspended) {
       return;
     }
-    Byond.winset(Byond.windowId, {
+    Byond.winset(window.__windowId__, {
       'can-close': Boolean(canClose),
     });
     logger.log('mounting');
@@ -36,7 +36,6 @@ export class Window extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    // prettier-ignore
     const shouldUpdateGeometry = (
       this.props.width !== prevProps.width
       || this.props.height !== prevProps.height
@@ -62,20 +61,30 @@ export class Window extends Component {
   }
 
   render() {
-    const { canClose = true, theme, title, children, buttons } = this.props;
-    const { config, suspended } = useBackend(this.context);
+    const {
+      canClose = true,
+      theme,
+      title,
+      children,
+      buttons,
+    } = this.props;
+    const {
+      config,
+      suspended,
+    } = useBackend(this.context);
     const { debugLayout } = useDebug(this.context);
     const dispatch = useDispatch(this.context);
     const fancy = config.window?.fancy;
     // Determine when to show dimmer
-    // prettier-ignore
     const showDimmer = config.user && (
       config.user.observer
         ? config.status < UI_DISABLED
         : config.status < UI_INTERACTIVE
     );
     return (
-      <Layout className="Window" theme={theme}>
+      <Layout
+        className="Window"
+        theme={theme}>
         <TitleBar
           className="Window__titleBar"
           title={!suspended && (title || decodeHtmlEntities(config.title))}
@@ -90,24 +99,23 @@ export class Window extends Component {
           {buttons}
         </TitleBar>
         <div
-          className={classes(['Window__rest', debugLayout && 'debug-layout'])}>
+          className={classes([
+            'Window__rest',
+            debugLayout && 'debug-layout',
+          ])}>
           {!suspended && children}
-          {showDimmer && <div className="Window__dimmer" />}
+          {showDimmer && (
+            <div className="Window__dimmer" />
+          )}
         </div>
         {fancy && (
           <>
-            <div
-              className="Window__resizeHandle__e"
-              onMousedown={resizeStartHandler(1, 0)}
-            />
-            <div
-              className="Window__resizeHandle__s"
-              onMousedown={resizeStartHandler(0, 1)}
-            />
-            <div
-              className="Window__resizeHandle__se"
-              onMousedown={resizeStartHandler(1, 1)}
-            />
+            <div className="Window__resizeHandle__e"
+              onMousedown={resizeStartHandler(1, 0)} />
+            <div className="Window__resizeHandle__s"
+              onMousedown={resizeStartHandler(0, 1)} />
+            <div className="Window__resizeHandle__se"
+              onMousedown={resizeStartHandler(1, 1)} />
           </>
         )}
       </Layout>
@@ -115,14 +123,24 @@ export class Window extends Component {
   }
 }
 
-const WindowContent = (props) => {
-  const { className, fitted, children, ...rest } = props;
+const WindowContent = props => {
+  const {
+    className,
+    fitted,
+    children,
+    ...rest
+  } = props;
   return (
     <Layout.Content
-      className={classes(['Window__content', className])}
+      className={classes([
+        'Window__content',
+        className,
+      ])}
       {...rest}>
-      {(fitted && children) || (
-        <div className="Window__contentPadding">{children}</div>
+      {fitted && children || (
+        <div className="Window__contentPadding">
+          {children}
+        </div>
       )}
     </Layout.Content>
   );
@@ -130,7 +148,7 @@ const WindowContent = (props) => {
 
 Window.Content = WindowContent;
 
-const statusToColor = (status) => {
+const statusToColor = status => {
   switch (status) {
     case UI_INTERACTIVE:
       return 'good';
@@ -154,31 +172,36 @@ const TitleBar = (props, context) => {
     children,
   } = props;
   const dispatch = useDispatch(context);
-  // prettier-ignore
-  const finalTitle = (
-    typeof title === 'string'
-    && title === title.toLowerCase()
-    && toTitleCase(title)
-    || title
-  );
   return (
-    <div className={classes(['TitleBar', className])}>
-      {(status === undefined && (
-        <Icon className="TitleBar__statusIcon" name="tools" opacity={0.5} />
-      )) || (
+    <div
+      className={classes([
+        'TitleBar',
+        className,
+      ])}>
+      {status === undefined && (
+        <Icon
+          className="TitleBar__statusIcon"
+          name="tools"
+          opacity={0.5} />
+      ) || (
         <Icon
           className="TitleBar__statusIcon"
           color={statusToColor(status)}
-          name="eye"
-        />
+          name="eye" />
       )}
       <div
         className="TitleBar__dragZone"
-        onMousedown={(e) => fancy && onDragStart(e)}
-      />
+        onMousedown={e => fancy && onDragStart(e)} />
       <div className="TitleBar__title">
-        {finalTitle}
-        {!!children && <div className="TitleBar__buttons">{children}</div>}
+        {typeof title === 'string'
+          && title === title.toLowerCase()
+          && toTitleCase(title)
+          || title}
+        {!!children && (
+          <div className="TitleBar__buttons">
+            {children}
+          </div>
+        )}
       </div>
       {process.env.NODE_ENV !== 'production' && (
         <div

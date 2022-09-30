@@ -14,7 +14,7 @@
 	var/framebuildstackamount = 5
 	var/buildstacktype = /obj/item/stack/sheet/iron
 	var/buildstackamount = 0
-	var/list/allowed_projectile_typecache = list(/obj/projectile/beam, /obj/projectile/energy/nuclear_particle)
+	var/list/allowed_projectile_typecache = list(/obj/projectile/beam)
 	var/rotation_angle = -1
 
 /obj/structure/reflector/Initialize(mapload)
@@ -32,10 +32,6 @@
 
 	if(admin)
 		can_rotate = FALSE
-
-	AddComponent(/datum/component/usb_port, list(
-		/obj/item/circuit_component/reflector,
-	))
 
 /obj/structure/reflector/examine(mob/user)
 	. = ..()
@@ -75,62 +71,61 @@
 	P.decayedRange = max(P.decayedRange--, 0)
 	return BULLET_ACT_FORCE_PIERCE
 
-/obj/structure/reflector/tool_act(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
-	if(admin)
-		return FALSE
-	return ..()
-
-/obj/structure/reflector/screwdriver_act(mob/living/user, obj/item/tool)
-	can_rotate = !can_rotate
-	to_chat(user, span_notice("You [can_rotate ? "unlock" : "lock"] [src]'s rotation."))
-	tool.play_tool_sound(src)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
-
-/obj/structure/reflector/wrench_act(mob/living/user, obj/item/tool)
-	if(anchored)
-		to_chat(user, span_warning("Unweld [src] from the floor first!"))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
-	user.visible_message(span_notice("[user] starts to dismantle [src]."), span_notice("You start to dismantle [src]..."))
-	if(!tool.use_tool(src, user, 8 SECONDS, volume=50))
-		return
-	to_chat(user, span_notice("You dismantle [src]."))
-	new framebuildstacktype(drop_location(), framebuildstackamount)
-	if(buildstackamount)
-		new buildstacktype(drop_location(), buildstackamount)
-	qdel(src)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
-
-/obj/structure/reflector/welder_act(mob/living/user, obj/item/tool)
-	if(!tool.tool_start_check(user, amount=0))
-		return
-	if(atom_integrity < max_integrity)
-		user.visible_message(span_notice("[user] starts to repair [src]."),
-							span_notice("You begin repairing [src]..."),
-							span_hear("You hear welding."))
-		if(tool.use_tool(src, user, 4 SECONDS, volume=40))
-			atom_integrity = max_integrity
-			user.visible_message(span_notice("[user] repairs [src]."), \
-								span_notice("You finish repairing [src]."))
-	else if(!anchored)
-		user.visible_message(span_notice("[user] starts to weld [src] to the floor."),
-							span_notice("You start to weld [src] to the floor..."),
-							span_hear("You hear welding."))
-		if (tool.use_tool(src, user, 2 SECONDS, volume=50))
-			set_anchored(TRUE)
-			to_chat(user, span_notice("You weld [src] to the floor."))
-	else
-		user.visible_message(span_notice("[user] starts to cut [src] free from the floor."),
-							span_notice("You start to cut [src] free from the floor..."),
-							span_hear("You hear welding."))
-		if (tool.use_tool(src, user, 2 SECONDS, volume=50))
-			set_anchored(FALSE)
-			to_chat(user, span_notice("You cut [src] free from the floor."))
-
-	return TOOL_ACT_TOOLTYPE_SUCCESS
-
 /obj/structure/reflector/attackby(obj/item/W, mob/user, params)
 	if(admin)
 		return
+
+	if(W.tool_behaviour == TOOL_SCREWDRIVER)
+		can_rotate = !can_rotate
+		to_chat(user, span_notice("You [can_rotate ? "unlock" : "lock"] [src]'s rotation."))
+		W.play_tool_sound(src)
+		return
+
+	if(W.tool_behaviour == TOOL_WRENCH)
+		if(anchored)
+			to_chat(user, span_warning("Unweld [src] from the floor first!"))
+			return
+		user.visible_message(span_notice("[user] starts to dismantle [src]."), span_notice("You start to dismantle [src]..."))
+		if(W.use_tool(src, user, 80, volume=50))
+			to_chat(user, span_notice("You dismantle [src]."))
+			new framebuildstacktype(drop_location(), framebuildstackamount)
+			if(buildstackamount)
+				new buildstacktype(drop_location(), buildstackamount)
+			qdel(src)
+	else if(W.tool_behaviour == TOOL_WELDER)
+		if(atom_integrity < max_integrity)
+			if(!W.tool_start_check(user, amount=0))
+				return
+
+			user.visible_message(span_notice("[user] starts to repair [src]."),
+								span_notice("You begin repairing [src]..."),
+								span_hear("You hear welding."))
+			if(W.use_tool(src, user, 40, volume=40))
+				atom_integrity = max_integrity
+				user.visible_message(span_notice("[user] repairs [src]."), \
+									span_notice("You finish repairing [src]."))
+
+		else if(!anchored)
+			if(!W.tool_start_check(user, amount=0))
+				return
+
+			user.visible_message(span_notice("[user] starts to weld [src] to the floor."),
+								span_notice("You start to weld [src] to the floor..."),
+								span_hear("You hear welding."))
+			if (W.use_tool(src, user, 20, volume=50))
+				set_anchored(TRUE)
+				to_chat(user, span_notice("You weld [src] to the floor."))
+		else
+			if(!W.tool_start_check(user, amount=0))
+				return
+
+			user.visible_message(span_notice("[user] starts to cut [src] free from the floor."),
+								span_notice("You start to cut [src] free from the floor..."),
+								span_hear("You hear welding."))
+			if (W.use_tool(src, user, 20, volume=50))
+				set_anchored(FALSE)
+				to_chat(user, span_notice("You cut [src] free from the floor."))
+
 	//Finishing the frame
 	else if(istype(W, /obj/item/stack/sheet))
 		if(finished)
@@ -161,10 +156,11 @@
 	if (!can_rotate || admin)
 		to_chat(user, span_warning("The rotation is locked!"))
 		return FALSE
-	var/new_angle = tgui_input_number(user, "New angle for primary reflection face", "Reflector Angle", rotation_angle, 360)
-	if(isnull(new_angle) || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
-		return FALSE
-	set_angle(SIMPLIFY_DEGREES(new_angle))
+	var/new_angle = input(user, "Input a new angle for primary reflection face.", "Reflector Angle", rotation_angle) as null|num
+	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
+		return
+	if(!isnull(new_angle))
+		set_angle(SIMPLIFY_DEGREES(new_angle))
 	return TRUE
 
 /obj/structure/reflector/AltClick(mob/user)
@@ -258,30 +254,3 @@
 		return
 	else
 		return ..()
-
-//	USB
-
-/obj/item/circuit_component/reflector
-	display_name = "Reflector"
-	desc = "Allows you to adjust the angle of a reflector."
-	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL
-
-	///angle the reflector will be set to at trigger unless locked
-	var/datum/port/input/angle
-
-	var/obj/structure/reflector/attached_reflector
-
-/obj/item/circuit_component/reflector/populate_ports()
-	angle = add_input_port("Angle", PORT_TYPE_NUMBER)
-
-/obj/item/circuit_component/reflector/register_usb_parent(atom/movable/parent)
-	. = ..()
-	if(istype(parent, /obj/structure/reflector))
-		attached_reflector = parent
-
-/obj/item/circuit_component/reflector/unregister_usb_parent(atom/movable/parent)
-	attached_reflector = null
-	return ..()
-
-/obj/item/circuit_component/reflector/input_received(datum/port/input/port)
-	attached_reflector?.set_angle(angle.value)

@@ -1,7 +1,7 @@
 /mob/living/simple_animal/hostile/nanotrasen
 	name = "\improper Nanotrasen Private Security Officer"
 	desc = "An officer part of Nanotrasen's private security force, he seems rather unpleased to meet you."
-	icon = 'icons/mob/simple/simple_human.dmi'
+	icon = 'icons/mob/simple_human.dmi'
 	icon_state = "nanotrasen"
 	icon_living = "nanotrasen"
 	icon_dead = null
@@ -22,7 +22,7 @@
 	attack_verb_simple = "punch"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	combat_mode = TRUE
-	loot = list(/obj/effect/mob_spawn/corpse/human/nanotrasensoldier)
+	loot = list(/obj/effect/mob_spawn/human/corpse/nanotrasensoldier)
 	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 7.5
 	faction = list(ROLE_DEATHSQUAD)

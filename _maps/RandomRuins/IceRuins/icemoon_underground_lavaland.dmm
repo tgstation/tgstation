@@ -8,10 +8,10 @@
 /area/icemoon/underground)
 "h" = (
 /obj/item/paper{
-	default_raw_text = "We have managed to seal the beast inside, the last of its kind they say... unfortunately in doing so, it seems we have spawned creatures beyond our power to contain..."
+	info = "We have managed to seal the beast inside, the last of its kind they say... unfortunately in doing so, it seems we have spawned creatures beyond our power to contain..."
 	},
 /obj/item/pen,
-/turf/open/misc/asteroid{
+/turf/open/floor/plating/asteroid{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/icemoon/underground)
@@ -26,14 +26,14 @@
 /area/icemoon/underground)
 "y" = (
 /mob/living/simple_animal/hostile/megafauna/dragon{
-	desc = "Hunted to extinction, this icey moon is the final resting place for these creatures.";
+	desc = "Hunted to extinction, the icey moon of lavaland is the final resting place for these creatures.";
 	name = "\proper the last ash drake"
 	},
 /turf/open/floor/mineral/gold,
 /area/icemoon/underground)
 "A" = (
-/obj/effect/mob_spawn/corpse/human/skeleton,
-/turf/open/misc/asteroid{
+/obj/effect/mob_spawn/human/skeleton,
+/turf/open/floor/plating/asteroid{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/icemoon/underground)
@@ -55,12 +55,12 @@
 /area/icemoon/underground)
 "V" = (
 /obj/item/storage/toolbox/mechanical/old/clean,
-/turf/open/misc/asteroid{
+/turf/open/floor/plating/asteroid{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/icemoon/underground)
 "Z" = (
-/turf/open/misc/asteroid{
+/turf/open/floor/plating/asteroid{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/icemoon/underground)

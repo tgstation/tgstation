@@ -48,8 +48,8 @@
 	new /obj/item/clothing/mask/gas/sechailer/swat(src)
 	new /obj/item/clothing/shoes/combat/swat(src)
 	new /obj/item/clothing/shoes/combat/swat(src)
-	new /obj/item/mod/control/pre_equipped/apocryphal(src)
-	new /obj/item/mod/control/pre_equipped/apocryphal(src)
+	new /obj/item/clothing/suit/space/hardsuit/deathsquad(src)
+	new /obj/item/clothing/suit/space/hardsuit/deathsquad(src)
 	new /obj/item/clothing/under/syndicate/tacticool(src)
 	new /obj/item/clothing/under/syndicate/tacticool(src)
 
@@ -117,7 +117,7 @@
 	icon_state = "mini_fridge"
 	icon_welded = "welded_small"
 	max_mob_size = MOB_SIZE_SMALL
-	storage_capacity = 10
+	storage_capacity = 7
 
 /obj/structure/closet/mini_fridge/PopulateContents()
 	. = ..()

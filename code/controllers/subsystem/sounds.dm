@@ -25,7 +25,7 @@ SUBSYSTEM_DEF(sounds)
 
 /datum/controller/subsystem/sounds/Initialize()
 	setup_available_channels()
-	return SS_INIT_SUCCESS
+	return ..()
 
 /datum/controller/subsystem/sounds/proc/setup_available_channels()
 	channel_list = list()

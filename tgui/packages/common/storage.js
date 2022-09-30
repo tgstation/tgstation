@@ -17,10 +17,11 @@ const INDEXED_DB_STORE_NAME = 'storage-v1';
 const READ_ONLY = 'readonly';
 const READ_WRITE = 'readwrite';
 
-const testGeneric = (testFn) => () => {
+const testGeneric = testFn => () => {
   try {
     return Boolean(testFn());
-  } catch {
+  }
+  catch {
     return false;
   }
 };
@@ -28,12 +29,10 @@ const testGeneric = (testFn) => () => {
 // Localstorage can sometimes throw an error, even if DOM storage is not
 // disabled in IE11 settings.
 // See: https://superuser.com/questions/1080011
-// prettier-ignore
 const testLocalStorage = testGeneric(() => (
   window.localStorage && window.localStorage.getItem
 ));
 
-// prettier-ignore
 const testIndexedDb = testGeneric(() => (
   (window.indexedDB || window.msIndexedDB)
   && (window.IDBTransaction || window.msIDBTransaction)
@@ -97,7 +96,8 @@ class IndexedDbBackend {
       req.onupgradeneeded = () => {
         try {
           req.result.createObjectStore(INDEXED_DB_STORE_NAME);
-        } catch (err) {
+        }
+        catch (err) {
           reject(new Error('Failed to upgrade IDB: ' + req.error));
         }
       };
@@ -109,8 +109,7 @@ class IndexedDbBackend {
   }
 
   getStore(mode) {
-    // prettier-ignore
-    return this.dbPromise.then((db) => db
+    return this.dbPromise.then(db => db
       .transaction(INDEXED_DB_STORE_NAME, mode)
       .objectStore(INDEXED_DB_STORE_NAME));
   }
@@ -162,7 +161,8 @@ class StorageProxy {
           const backend = new IndexedDbBackend();
           await backend.dbPromise;
           return backend;
-        } catch {}
+        }
+        catch {}
       }
       if (testLocalStorage()) {
         return new LocalStorageBackend();

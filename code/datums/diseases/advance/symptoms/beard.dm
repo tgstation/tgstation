@@ -1,13 +1,21 @@
-/** Facial Hypertrichosis
- * No change to stealth.
- * Increases resistance.
- * Increases speed.
- * Slighlty increases transmissibility
- * Intense Level.
- * Bonus: Makes the mob grow a massive beard, regardless of gender.
+/*
+//////////////////////////////////////
+Facial Hypertrichosis
+
+	No change to stealth.
+	Increases resistance.
+	Increases speed.
+	Slighlty increases transmittability
+	Intense Level.
+
+BONUS
+	Makes the mob grow a massive beard, regardless of gender.
+
+//////////////////////////////////////
 */
 
 /datum/symptom/beard
+
 	name = "Facial Hypertrichosis"
 	desc = "The virus increases hair production significantly, causing rapid beard growth."
 	stealth = 0
@@ -32,5 +40,5 @@
 		if(index > 0 && H.facial_hairstyle != beard_order[index])
 			to_chat(H, span_warning("Your chin itches."))
 			H.facial_hairstyle = beard_order[index]
-			H.update_body_parts()
+			H.update_hair()
 

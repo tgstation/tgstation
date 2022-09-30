@@ -1,8 +1,19 @@
-/mob/living/carbon/human/can_equip(obj/item/I, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE, ignore_equipped = FALSE)
-	return dna.species.can_equip(I, slot, disable_warning, src, bypass_equip_delay_self, ignore_equipped)
+/mob/living/carbon/human/can_equip(obj/item/I, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
+	return dna.species.can_equip(I, slot, disable_warning, src, bypass_equip_delay_self)
 
+// Return the item currently in the slot ID
 /mob/living/carbon/human/get_item_by_slot(slot_id)
 	switch(slot_id)
+		if(ITEM_SLOT_BACK)
+			return back
+		if(ITEM_SLOT_MASK)
+			return wear_mask
+		if(ITEM_SLOT_NECK)
+			return wear_neck
+		if(ITEM_SLOT_HANDCUFFED)
+			return handcuffed
+		if(ITEM_SLOT_LEGCUFFED)
+			return legcuffed
 		if(ITEM_SLOT_BELT)
 			return belt
 		if(ITEM_SLOT_ID)
@@ -13,6 +24,8 @@
 			return glasses
 		if(ITEM_SLOT_GLOVES)
 			return gloves
+		if(ITEM_SLOT_HEAD)
+			return head
 		if(ITEM_SLOT_FEET)
 			return shoes
 		if(ITEM_SLOT_OCLOTHING)
@@ -25,49 +38,9 @@
 			return r_store
 		if(ITEM_SLOT_SUITSTORE)
 			return s_store
+	return null
 
-	return ..()
-
-/mob/living/carbon/human/get_slot_by_item(obj/item/looking_for)
-	if(looking_for == belt)
-		return ITEM_SLOT_BELT
-
-	if(looking_for == wear_id)
-		return ITEM_SLOT_ID
-
-	if(looking_for == ears)
-		return ITEM_SLOT_EARS
-
-	if(looking_for == glasses)
-		return ITEM_SLOT_EYES
-
-	if(looking_for == gloves)
-		return ITEM_SLOT_GLOVES
-
-	if(looking_for == head)
-		return ITEM_SLOT_HEAD
-
-	if(looking_for == shoes)
-		return ITEM_SLOT_FEET
-
-	if(looking_for == wear_suit)
-		return ITEM_SLOT_OCLOTHING
-
-	if(looking_for == w_uniform)
-		return ITEM_SLOT_ICLOTHING
-
-	if(looking_for == r_store)
-		return ITEM_SLOT_RPOCKET
-
-	if(looking_for == l_store)
-		return ITEM_SLOT_LPOCKET
-
-	if(looking_for == s_store)
-		return ITEM_SLOT_SUITSTORE
-
-	return ..()
-
-/mob/living/carbon/human/get_all_worn_items()
+/mob/living/carbon/human/proc/get_all_slots()
 	. = get_head_slots() | get_body_slots()
 
 /mob/living/carbon/human/proc/get_body_slots()
@@ -116,13 +89,13 @@
 			if(belt)
 				return
 			belt = I
-			update_worn_belt()
+			update_inv_belt()
 		if(ITEM_SLOT_ID)
 			if(wear_id)
 				return
 			wear_id = I
 			sec_hud_set_ID()
-			update_worn_id()
+			update_inv_wear_id()
 		if(ITEM_SLOT_EARS)
 			if(ears)
 				return
@@ -141,17 +114,17 @@
 				clear_fullscreen("nearsighted")
 			if(G.vision_flags || G.darkness_view || G.invis_override || G.invis_view || !isnull(G.lighting_alpha))
 				update_sight()
-			update_worn_glasses()
+			update_inv_glasses()
 		if(ITEM_SLOT_GLOVES)
 			if(gloves)
 				return
 			gloves = I
-			update_worn_gloves()
+			update_inv_gloves()
 		if(ITEM_SLOT_FEET)
 			if(shoes)
 				return
 			shoes = I
-			update_worn_shoes()
+			update_inv_shoes()
 		if(ITEM_SLOT_OCLOTHING)
 			if(wear_suit)
 				return
@@ -159,29 +132,29 @@
 			wear_suit = I
 
 			if(I.flags_inv & HIDEJUMPSUIT)
-				update_worn_undersuit()
+				update_inv_w_uniform()
 			if(wear_suit.breakouttime) //when equipping a straightjacket
 				ADD_TRAIT(src, TRAIT_RESTRAINED, SUIT_TRAIT)
 				stop_pulling() //can't pull if restrained
 				update_action_buttons_icon() //certain action buttons will no longer be usable.
-			update_worn_oversuit()
+			update_inv_wear_suit()
 		if(ITEM_SLOT_ICLOTHING)
 			if(w_uniform)
 				return
 			w_uniform = I
 			update_suit_sensors()
-			update_worn_undersuit()
+			update_inv_w_uniform()
 		if(ITEM_SLOT_LPOCKET)
 			l_store = I
-			update_pockets()
+			update_inv_pockets()
 		if(ITEM_SLOT_RPOCKET)
 			r_store = I
-			update_pockets()
+			update_inv_pockets()
 		if(ITEM_SLOT_SUITSTORE)
 			if(s_store)
 				return
 			s_store = I
-			update_suit_storage()
+			update_inv_s_store()
 		else
 			to_chat(src, span_danger("You are trying to equip this item to an unsupported inventory slot. Report this to a coder!"))
 
@@ -197,7 +170,7 @@
 
 /mob/living/carbon/human/equipped_speed_mods()
 	. = ..()
-	for(var/sloties in get_all_worn_items() - list(l_store, r_store, s_store))
+	for(var/sloties in get_all_slots() - list(l_store, r_store, s_store))
 		var/obj/item/thing = sloties
 		. += thing?.slowdown
 
@@ -218,8 +191,8 @@
 		wear_suit = null
 		if(!QDELETED(src)) //no need to update we're getting deleted anyway
 			if(I.flags_inv & HIDEJUMPSUIT)
-				update_worn_undersuit()
-			update_worn_oversuit()
+				update_inv_w_uniform()
+			update_inv_wear_suit()
 	else if(I == w_uniform)
 		if(invdrop)
 			if(r_store)
@@ -233,11 +206,11 @@
 		w_uniform = null
 		update_suit_sensors()
 		if(!QDELETED(src))
-			update_worn_undersuit()
+			update_inv_w_uniform()
 	else if(I == gloves)
 		gloves = null
 		if(!QDELETED(src))
-			update_worn_gloves()
+			update_inv_gloves()
 	else if(I == glasses)
 		glasses = null
 		var/obj/item/clothing/glasses/G = I
@@ -251,7 +224,7 @@
 		if(G.vision_flags || G.darkness_view || G.invis_override || G.invis_view || !isnull(G.lighting_alpha))
 			update_sight()
 		if(!QDELETED(src))
-			update_worn_glasses()
+			update_inv_glasses()
 	else if(I == ears)
 		ears = null
 		if(!QDELETED(src))
@@ -259,28 +232,28 @@
 	else if(I == shoes)
 		shoes = null
 		if(!QDELETED(src))
-			update_worn_shoes()
+			update_inv_shoes()
 	else if(I == belt)
 		belt = null
 		if(!QDELETED(src))
-			update_worn_belt()
+			update_inv_belt()
 	else if(I == wear_id)
 		wear_id = null
 		sec_hud_set_ID()
 		if(!QDELETED(src))
-			update_worn_id()
+			update_inv_wear_id()
 	else if(I == r_store)
 		r_store = null
 		if(!QDELETED(src))
-			update_pockets()
+			update_inv_pockets()
 	else if(I == l_store)
 		l_store = null
 		if(!QDELETED(src))
-			update_pockets()
+			update_inv_pockets()
 	else if(I == s_store)
 		s_store = null
 		if(!QDELETED(src))
-			update_suit_storage()
+			update_inv_s_store()
 	update_equipment_speed_mods()
 
 	// Send a signal for when we unequip an item that used to cover our feet/shoes. Used for bloody feet
@@ -289,19 +262,24 @@
 
 /mob/living/carbon/human/wear_mask_update(obj/item/I, toggle_off = 1)
 	if((I.flags_inv & (HIDEHAIR|HIDEFACIALHAIR)) || (initial(I.flags_inv) & (HIDEHAIR|HIDEFACIALHAIR)))
-		update_body_parts()
+		update_hair()
 	if(toggle_off && internal && !getorganslot(ORGAN_SLOT_BREATHING_TUBE))
+		update_internals_hud_icon(0)
 		internal = null
 	if(I.flags_inv & HIDEEYES)
-		update_worn_glasses()
+		update_inv_glasses()
 	sec_hud_set_security_status()
 	..()
 
 /mob/living/carbon/human/head_update(obj/item/I, forced)
 	if((I.flags_inv & (HIDEHAIR|HIDEFACIALHAIR)) || forced)
-		update_body_parts()
+		update_hair()
+	else
+		var/obj/item/clothing/C = I
+		if(istype(C) && C.dynamic_hair_suffix)
+			update_hair()
 	if(I.flags_inv & HIDEEYES || forced)
-		update_worn_glasses()
+		update_inv_glasses()
 	if(I.flags_inv & HIDEEARS || forced)
 		update_body()
 	sec_hud_set_security_status()
@@ -324,7 +302,7 @@
 
 //delete all equipment without dropping anything
 /mob/living/carbon/human/proc/delete_equipment()
-	for(var/slot in get_all_worn_items())//order matters, dependant slots go first
+	for(var/slot in get_all_slots())//order matters, dependant slots go first
 		qdel(slot)
 	for(var/obj/item/I in held_items)
 		qdel(I)
@@ -341,24 +319,22 @@
 			to_chat(src, span_warning("You have no [slot_item_name] to take something out of!"))
 			return
 		if(equip_to_slot_if_possible(thing, slot_type))
-			update_held_items()
+			update_inv_hands()
 		return
-	var/datum/storage/storage = equipped_item.atom_storage
-	if(!storage)
+	if(!SEND_SIGNAL(equipped_item, COMSIG_CONTAINS_STORAGE)) // not a storage item
 		if(!thing)
 			equipped_item.attack_hand(src)
 		else
 			to_chat(src, span_warning("You can't fit [thing] into your [equipped_item.name]!"))
 		return
 	if(thing) // put thing in storage item
-		if(!equipped_item.atom_storage?.attempt_insert(thing, src))
+		if(!SEND_SIGNAL(equipped_item, COMSIG_TRY_STORAGE_INSERT, thing, src))
 			to_chat(src, span_warning("You can't fit [thing] into your [equipped_item.name]!"))
 		return
-	var/atom/real_location = storage.real_location?.resolve()
-	if(!real_location.contents.len) // nothing to take out
+	if(!equipped_item.contents.len) // nothing to take out
 		to_chat(src, span_warning("There's nothing in your [equipped_item.name] to take out!"))
 		return
-	var/obj/item/stored = real_location.contents[real_location.contents.len]
+	var/obj/item/stored = equipped_item.contents[equipped_item.contents.len]
 	if(!stored || stored.on_found(src))
 		return
 	stored.attack_hand(src) // take out thing from item in storage slot

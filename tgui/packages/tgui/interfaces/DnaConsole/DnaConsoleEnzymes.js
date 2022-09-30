@@ -1,16 +1,27 @@
 import { useBackend } from '../../backend';
 import { Box, Button, Collapsible, Dimmer, Divider, Icon, LabeledList, NumberInput, Section, Stack } from '../../components';
 import { GeneticMakeupInfo } from './GeneticMakeupInfo';
-import { PULSE_DURATION_MAX, PULSE_STRENGTH_MAX } from './constants';
+import { RADIATION_DURATION_MAX, RADIATION_STRENGTH_MAX } from './constants';
 
 const GeneticMakeupBufferInfo = (props, context) => {
   const { index, makeup } = props;
   const { act, data } = useBackend(context);
-  const { isViableSubject, hasDisk, diskReadOnly, isInjectorReady } = data;
+  const {
+    isViableSubject,
+    hasDisk,
+    diskReadOnly,
+    isInjectorReady,
+  } = data;
   // Type of the action for applying makeup
-  const ACTION_MAKEUP_APPLY = isViableSubject ? 'makeup_apply' : 'makeup_delay';
+  const ACTION_MAKEUP_APPLY = isViableSubject
+    ? 'makeup_apply'
+    : 'makeup_delay';
   if (!makeup) {
-    return <Box color="average">No stored subject data.</Box>;
+    return (
+      <Box color="average">
+        No stored subject data.
+      </Box>
+    );
   }
   return (
     <>
@@ -25,21 +36,16 @@ const GeneticMakeupBufferInfo = (props, context) => {
             icon="syringe"
             disabled={!isInjectorReady}
             content="Print"
-            onClick={() =>
-              act('makeup_injector', {
-                index,
-                type: 'ue',
-              })
-            }
-          />
+            onClick={() => act('makeup_injector', {
+              index,
+              type: 'ue',
+            })} />
           <Button
             icon="exchange-alt"
-            onClick={() =>
-              act(ACTION_MAKEUP_APPLY, {
-                index,
-                type: 'ue',
-              })
-            }>
+            onClick={() => act(ACTION_MAKEUP_APPLY, {
+              index,
+              type: 'ue',
+            })}>
             Transfer
             {!isViableSubject && ' (Delayed)'}
           </Button>
@@ -49,21 +55,16 @@ const GeneticMakeupBufferInfo = (props, context) => {
             icon="syringe"
             disabled={!isInjectorReady}
             content="Print"
-            onClick={() =>
-              act('makeup_injector', {
-                index,
-                type: 'ui',
-              })
-            }
-          />
+            onClick={() => act('makeup_injector', {
+              index,
+              type: 'ui',
+            })} />
           <Button
             icon="exchange-alt"
-            onClick={() =>
-              act(ACTION_MAKEUP_APPLY, {
-                index,
-                type: 'ui',
-              })
-            }>
+            onClick={() => act(ACTION_MAKEUP_APPLY, {
+              index,
+              type: 'ui',
+            })}>
             Transfer
             {!isViableSubject && ' (Delayed)'}
           </Button>
@@ -73,21 +74,16 @@ const GeneticMakeupBufferInfo = (props, context) => {
             icon="syringe"
             disabled={!isInjectorReady}
             content="Print"
-            onClick={() =>
-              act('makeup_injector', {
-                index,
-                type: 'uf',
-              })
-            }
-          />
+            onClick={() => act('makeup_injector', {
+              index,
+              type: 'uf',
+            })} />
           <Button
             icon="exchange-alt"
-            onClick={() =>
-              act(ACTION_MAKEUP_APPLY, {
-                index,
-                type: 'uf',
-              })
-            }>
+            onClick={() => act(ACTION_MAKEUP_APPLY, {
+              index,
+              type: 'uf',
+            })}>
             Transfer
             {!isViableSubject && ' (Delayed)'}
           </Button>
@@ -97,21 +93,16 @@ const GeneticMakeupBufferInfo = (props, context) => {
             icon="syringe"
             disabled={!isInjectorReady}
             content="Print"
-            onClick={() =>
-              act('makeup_injector', {
-                index,
-                type: 'mixed',
-              })
-            }
-          />
+            onClick={() => act('makeup_injector', {
+              index,
+              type: 'mixed',
+            })} />
           <Button
             icon="exchange-alt"
-            onClick={() =>
-              act(ACTION_MAKEUP_APPLY, {
-                index,
-                type: 'mixed',
-              })
-            }>
+            onClick={() => act(ACTION_MAKEUP_APPLY, {
+              index,
+              type: 'mixed',
+            })}>
             Transfer
             {!isViableSubject && ' (Delayed)'}
           </Button>
@@ -121,12 +112,9 @@ const GeneticMakeupBufferInfo = (props, context) => {
             icon="save"
             disabled={!hasDisk || diskReadOnly}
             content="Export To Disk"
-            onClick={() =>
-              act('save_makeup_disk', {
-                index,
-              })
-            }
-          />
+            onClick={() => act('save_makeup_disk', {
+              index,
+            })} />
         </LabeledList.Item>
       </LabeledList>
     </>
@@ -148,7 +136,9 @@ const GeneticMakeupBuffers = (props, context) => {
     const makeup = makeupStorage[i];
     const element = (
       <Collapsible
-        title={makeup ? makeup.label || makeup.name : `Slot ${i}`}
+        title={makeup
+          ? (makeup.label || makeup.name)
+          : `Slot ${i}`}
         buttons={
           <>
             {!!(hasDisk && diskHasMakeup) && (
@@ -156,36 +146,29 @@ const GeneticMakeupBuffers = (props, context) => {
                 mr={1}
                 disabled={!hasDisk || !diskHasMakeup}
                 content="Import from disk"
-                onClick={() =>
-                  act('load_makeup_disk', {
-                    index: i,
-                  })
-                }
-              />
+                onClick={() => act('load_makeup_disk', {
+                  index: i,
+                })} />
             )}
             <Button
               disabled={!isViableSubject}
               content="Save"
-              onClick={() =>
-                act('save_makeup_console', {
-                  index: i,
-                })
-              }
-            />
+              onClick={() => act('save_makeup_console', {
+                index: i,
+              })} />
             <Button
               ml={1}
               icon="times"
               color="red"
               disabled={!makeup}
-              onClick={() =>
-                act('del_makeup_console', {
-                  index: i,
-                })
-              }
-            />
+              onClick={() => act('del_makeup_console', {
+                index: i,
+              })} />
           </>
         }>
-        <GeneticMakeupBufferInfo index={i} makeup={makeup} />
+        <GeneticMakeupBufferInfo
+          index={i}
+          makeup={makeup} />
       </Collapsible>
     );
     elements.push(element);
@@ -193,8 +176,13 @@ const GeneticMakeupBuffers = (props, context) => {
   return (
     <Section title="Genetic Makeup Buffers">
       {!!geneticMakeupCooldown && (
-        <Dimmer fontSize="14px" textAlign="center">
-          <Icon mr={1} name="spinner" spin />
+        <Dimmer
+          fontSize="14px"
+          textAlign="center">
+          <Icon
+            mr={1}
+            name="spinner"
+            spin />
           Genetic makeup transfer ready in...
           <Box mt={1} />
           {geneticMakeupCooldown}s
@@ -205,19 +193,30 @@ const GeneticMakeupBuffers = (props, context) => {
   );
 };
 
-const PulseEmitterProbs = (props, context) => {
+const RadiationEmitterProbs = (props, context) => {
   const { data } = useBackend(context);
-  const { stdDevAcc, stdDevStr } = data;
+  const {
+    stdDevAcc,
+    stdDevStr,
+  } = data;
   return (
-    <Section title="Probabilities" minHeight="100%">
+    <Section
+      title="Probabilities"
+      minHeight="100%">
       <LabeledList>
-        <LabeledList.Item label="Accuracy" textAlign="right">
+        <LabeledList.Item
+          label="Accuracy"
+          textAlign="right">
           {stdDevAcc}
         </LabeledList.Item>
-        <LabeledList.Item label={`P(±${stdDevStr})`} textAlign="right">
+        <LabeledList.Item
+          label={`P(±${stdDevStr})`}
+          textAlign="right">
           68 %
         </LabeledList.Item>
-        <LabeledList.Item label={`P(±${stdDevStr * 2})`} textAlign="right">
+        <LabeledList.Item
+          label={`P(±${stdDevStr * 2})`}
+          textAlign="right">
           95 %
         </LabeledList.Item>
       </LabeledList>
@@ -225,9 +224,13 @@ const PulseEmitterProbs = (props, context) => {
   );
 };
 
-const PulseBoard = (props, context) => {
+const RadiationEmitterPulseBoard = (props, context) => {
   const { act } = useBackend(context);
-  const { subjectBlock = [], type, name } = props;
+  const {
+    subjectBlock = [],
+    type,
+    name,
+  } = props;
   // Build blocks of buttons of unique enzymes
   const blocks = [];
   let buffer = [];
@@ -240,13 +243,10 @@ const PulseBoard = (props, context) => {
         key={i}
         textAlign="center"
         content={char}
-        onClick={() =>
-          act('makeup_pulse', {
-            index: i + 1,
-            type: type,
-          })
-        }
-      />
+        onClick={() => act('makeup_pulse', {
+          index: i + 1,
+          type: type,
+        })} />
     );
     buffer.push(button);
     // Create a block from the current buffer
@@ -262,47 +262,51 @@ const PulseBoard = (props, context) => {
     }
   }
   return (
-    <Section title={'Unique ' + name} minHeight="100%" position="relative">
-      <Box mx="-1px">{blocks}</Box>
+    <Section
+      title={"Unique " + name}
+      minHeight="100%"
+      position="relative">
+      <Box mx="-1px">
+        {blocks}
+      </Box>
     </Section>
   );
 };
 
-const PulseSettings = (props, context) => {
+const RadiationEmitterSettings = (props, context) => {
   const { data, act } = useBackend(context);
-  const { pulseStrength, pulseDuration } = data;
+  const {
+    radStrength,
+    radDuration,
+  } = data;
   return (
-    <Section title="Emitter Configuration" minHeight="100%">
+    <Section
+      title="Radiation Emitter"
+      minHeight="100%">
       <LabeledList>
         <LabeledList.Item label="Output level">
           <NumberInput
             animated
             width="32px"
             stepPixelSize={10}
-            value={pulseStrength}
+            value={radStrength}
             minValue={1}
-            maxValue={PULSE_STRENGTH_MAX}
-            onDrag={(e, value) =>
-              act('set_pulse_strength', {
-                val: value,
-              })
-            }
-          />
+            maxValue={RADIATION_STRENGTH_MAX}
+            onDrag={(e, value) => act('set_pulse_strength', {
+              val: value,
+            })} />
         </LabeledList.Item>
         <LabeledList.Item label="Pulse duration">
           <NumberInput
             animated
             width="32px"
             stepPixelSize={10}
-            value={pulseDuration}
+            value={radDuration}
             minValue={1}
-            maxValue={PULSE_DURATION_MAX}
-            onDrag={(e, value) =>
-              act('set_pulse_duration', {
-                val: value,
-              })
-            }
-          />
+            maxValue={RADIATION_DURATION_MAX}
+            onDrag={(e, value) => act('set_pulse_duration', {
+              val: value,
+            })} />
         </LabeledList.Item>
       </LabeledList>
     </Section>
@@ -311,22 +315,35 @@ const PulseSettings = (props, context) => {
 
 export const DnaConsoleEnzymes = (props, context) => {
   const { data, act } = useBackend(context);
-  const { isScannerConnected } = data;
-  const { subjectBlock, type, name } = props;
+  const {
+    isScannerConnected,
+  } = data;
+  const {
+    subjectBlock,
+    type,
+    name,
+  } = props;
   if (!isScannerConnected) {
-    return <Section color="bad">DNA Scanner is not connected.</Section>;
+    return (
+      <Section color="bad">
+        DNA Scanner is not connected.
+      </Section>
+    );
   }
   return (
     <>
       <Stack mb={1}>
         <Stack.Item width="155px">
-          <PulseSettings />
+          <RadiationEmitterSettings />
         </Stack.Item>
         <Stack.Item width="140px">
-          <PulseEmitterProbs />
+          <RadiationEmitterProbs />
         </Stack.Item>
         <Stack.Item grow={1} basis={0}>
-          <PulseBoard subjectBlock={subjectBlock} type={type} name={name} />
+          <RadiationEmitterPulseBoard
+            subjectBlock={subjectBlock}
+            type={type}
+            name={name} />
         </Stack.Item>
       </Stack>
       <GeneticMakeupBuffers />

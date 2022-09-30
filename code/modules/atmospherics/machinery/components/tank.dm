@@ -1,5 +1,3 @@
-#define TANK_PLATING_SHEETS 12
-
 /obj/machinery/atmospherics/components/tank
 	icon = 'icons/obj/atmospherics/stationary_canisters.dmi'
 	icon_state = "smooth"
@@ -12,7 +10,7 @@
 	density = TRUE
 	layer = ABOVE_WINDOW_LAYER
 
-	custom_materials = list(/datum/material/iron = TANK_PLATING_SHEETS * MINERAL_MATERIAL_AMOUNT) // plasteel is not a material to prevent two bugs: one where the default pressure is 1.5 times higher as plasteel's material modifier is added, and a second one where the tank names could be "plasteel plasteel" tanks
+	custom_materials = list(/datum/material/iron = 20000) // plasteel is not a material to prevent two bugs: one where the default pressure is 1.5 times higher as plasteel's material modifier is added, and a second one where the tank names could be "plasteel plasteel" tanks
 	material_flags = MATERIAL_EFFECTS | MATERIAL_GREYSCALE | MATERIAL_ADD_PREFIX | MATERIAL_AFFECT_STATISTICS
 
 	pipe_flags = PIPING_ONE_PER_TURF
@@ -23,7 +21,7 @@
 	smoothing_flags = SMOOTH_CORNERS | SMOOTH_OBJ
 	smoothing_groups = list(SMOOTH_GROUP_GAS_TANK)
 	canSmoothWith = list(SMOOTH_GROUP_GAS_TANK)
-	appearance_flags = KEEP_TOGETHER|LONG_GLIDE
+	appearance_flags = KEEP_TOGETHER
 
 	greyscale_config = /datum/greyscale_config/stationary_canister
 	greyscale_colors = "#ffffff"
@@ -34,7 +32,7 @@
 	/// The volume of the gas mixture
 	var/volume = 2500 //in liters
 	/// The max pressure of the gas mixture before damaging the tank
-	var/max_pressure = 46000
+	var/max_pressure = 20000
 	/// The typepath of the gas this tank should be filled with.
 	var/gas_type = null
 
@@ -270,7 +268,7 @@
 	window = image(icon, icon_state = "window-bg", layer = FLOAT_LAYER)
 
 	var/list/new_underlays = list()
-	for(var/obj/effect/overlay/gas/gas as anything in air_contents.return_visuals(get_turf(src)))
+	for(var/obj/effect/overlay/gas/gas as anything in air_contents.return_visuals())
 		var/image/new_underlay = image(gas.icon, icon_state = gas.icon_state, layer = FLOAT_LAYER)
 		new_underlay.filters = alpha_mask_filter(icon = icon(icon, icon_state = "window-bg"))
 		new_underlays += new_underlay
@@ -322,39 +320,25 @@
 	var/datum/gas_mixture/airmix = current_location.return_air()
 
 	var/time_taken = 4 SECONDS
-	var/unsafe = FALSE
 
-	var/internal_pressure = air_contents.return_pressure() - airmix.return_pressure()
-	if(internal_pressure > 2 * ONE_ATMOSPHERE)
+	if(air_contents.return_pressure() > airmix.return_pressure())
 		time_taken *= 2
 		to_chat(user, span_warning("The tank seems to be pressurized, are you sure this is a good idea?"))
-		unsafe = TRUE
 
-	if(!tool.use_tool(src, user, time_taken, volume = 60))
+	if(!tool.use_tool(src, user, time_taken, volume =  60))
 		return
 
-	if(unsafe)
-		unsafe_pressure_release(user, internal_pressure)
 	deconstruct(disassembled=TRUE)
 	to_chat(user, span_notice("You finish cutting open the sealed gas tank, revealing the innards."))
 
 /obj/machinery/atmospherics/components/tank/deconstruct(disassembled)
 	var/turf/location = drop_location()
 	. = ..()
-	location.assume_air(air_contents)
 	if(!disassembled)
 		return
 	var/obj/structure/tank_frame/frame = new(location)
 	frame.construction_state = TANK_PLATING_UNSECURED
-	for(var/datum/material/material as anything in custom_materials)
-		if (frame.material_end_product)
-			// If something looks fishy, you get nothing
-			message_admins("\The [src] had multiple materials set. Unless you were messing around with VV, yell at a coder")
-			frame.material_end_product = null
-			frame.construction_state = TANK_FRAME
-			break
-		else
-			frame.material_end_product = material
+	frame.material_end_product = custom_materials[2].type
 	frame.update_appearance()
 
 ///////////////////////////////////////////////////////////////////
@@ -404,14 +388,17 @@
 /obj/machinery/atmospherics/components/tank/miasma
 	gas_type = /datum/gas/miasma
 
-/obj/machinery/atmospherics/components/tank/nitrium
-	gas_type = /datum/gas/nitrium
+/obj/machinery/atmospherics/components/tank/nitryl
+	gas_type = /datum/gas/nitryl
 
 /obj/machinery/atmospherics/components/tank/pluoxium
 	gas_type = /datum/gas/pluoxium
 
 /obj/machinery/atmospherics/components/tank/proto_nitrate
 	gas_type = /datum/gas/proto_nitrate
+
+/obj/machinery/atmospherics/components/tank/stimulum
+	gas_type = /datum/gas/stimulum
 
 /obj/machinery/atmospherics/components/tank/tritium
 	gas_type = /datum/gas/tritium
@@ -436,7 +423,7 @@
 	icon_state = "frame"
 	anchored = FALSE
 	density = TRUE
-	custom_materials = list(/datum/material/alloy/plasteel = 4 * MINERAL_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/alloy/plasteel = 4000)
 	var/construction_state = TANK_FRAME
 	var/datum/material/material_end_product
 
@@ -462,7 +449,7 @@
 /obj/structure/tank_frame/deconstruct(disassembled)
 	if(disassembled)
 		for(var/datum/material/mat as anything in custom_materials)
-			new mat.sheet_type(drop_location(), custom_materials[mat] / MINERAL_MATERIAL_AMOUNT)
+			new mat.sheet_type(drop_location())
 	return ..()
 
 /obj/structure/tank_frame/update_icon(updates)
@@ -474,14 +461,13 @@
 			icon_state = "plated_frame"
 
 /obj/structure/tank_frame/attackby(obj/item/item, mob/living/user, params)
-	if(construction_state == TANK_FRAME && isstack(item) && add_plating(user, item))
+	if(construction_state == TANK_FRAME && istype(item, /obj/item/stack) && add_plating(user, item))
 		return
 	return ..()
 
 /obj/structure/tank_frame/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
-	default_unfasten_wrench(user, tool, time = 0.5 SECONDS)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return default_unfasten_wrench(user, tool, 0.5 SECONDS)
 
 /obj/structure/tank_frame/screwdriver_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
@@ -496,8 +482,6 @@
 
 /obj/structure/tank_frame/proc/add_plating(mob/living/user, obj/item/stack/stack)
 	. = FALSE
-	if(!stack.material_type)
-		balloon_alert(user, "invalid material!")
 	var/datum/material/stack_mat = GET_MATERIAL_REF(stack.material_type)
 	if(!(MAT_CATEGORY_RIGID in stack_mat.categories))
 		to_chat(user, span_notice("This material doesn't seem rigid enough to hold the shape of a tank..."))
@@ -507,18 +491,18 @@
 	to_chat(user, span_notice("You begin adding [stack] to [src]..."))
 	if(!stack.use_tool(src, user, 3 SECONDS))
 		return
-	if(!stack.use(TANK_PLATING_SHEETS))
+	if(!stack.use(20))
 		var/amount_more
-		switch(100 * stack.amount / TANK_PLATING_SHEETS)
+		switch(stack.amount)
 			if(0) // Wat?
 				amount_more = "any at all"
-			if(1 to 25)
+			if(1 to 4)
 				amount_more = "a lot more"
-			if(26 to 50)
+			if(5 to 9)
 				amount_more = "about four times as much"
-			if(51 to 75)
+			if(10 to 15)
 				amount_more = "about twice as much"
-			if(76 to 100)
+			if(16 to 20)
 				amount_more = "just a bit more"
 			else
 				amount_more = "an indeterminate amount more"
@@ -539,7 +523,7 @@
 	if(!tool.use_tool(src, user, 2 SECONDS))
 		return
 	construction_state = TANK_FRAME
-	new material_end_product.sheet_type(drop_location(), TANK_PLATING_SHEETS)
+	new material_end_product.sheet_type(drop_location(), 20)
 	material_end_product = null
 	update_appearance()
 
@@ -561,10 +545,9 @@
 	if(!isturf(build_location))
 		return
 	var/obj/machinery/atmospherics/components/tank/new_tank = new(build_location)
-	var/list/new_custom_materials = list((material_end_product) = TANK_PLATING_SHEETS * MINERAL_MATERIAL_AMOUNT)
+	var/list/new_custom_materials = list()
+	new_custom_materials[material_end_product] = 20000
 	new_tank.set_custom_materials(new_custom_materials)
 	new_tank.on_construction(new_tank.pipe_color, new_tank.piping_layer)
 	to_chat(user, span_notice("[new_tank] has been sealed and is ready to accept gases."))
 	qdel(src)
-
-#undef TANK_PLATING_SHEETS

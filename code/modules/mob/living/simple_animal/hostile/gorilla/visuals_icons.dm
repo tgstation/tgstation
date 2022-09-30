@@ -9,7 +9,7 @@
 		cut_overlay(I)
 		gorilla_overlays[cache_index] = null
 
-/mob/living/simple_animal/hostile/gorilla/update_held_items()
+/mob/living/simple_animal/hostile/gorilla/update_inv_hands()
 	cut_overlays("standing_overlay")
 	remove_overlay(GORILLA_HANDS_LAYER)
 
@@ -21,11 +21,11 @@
 	if(!standing)
 		if(stat != DEAD)
 			icon_state = "crawling"
-			set_varspeed(0.5)
+			speed = 1
 		return ..()
 	if(stat != DEAD)
 		icon_state = "standing"
-		set_varspeed(1) // Gorillas are slow when standing up.
+		speed = 3 // Gorillas are slow when standing up.
 
 	var/list/hands_overlays = list()
 
@@ -49,5 +49,5 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/gorilla/regenerate_icons()
-	update_held_items()
+	update_inv_hands()
 

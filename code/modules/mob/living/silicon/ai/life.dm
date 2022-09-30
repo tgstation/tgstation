@@ -3,7 +3,7 @@
 		return
 	//Being dead doesn't mean your temperature never changes
 
-	update_gravity(has_gravity())
+	update_gravity(mob_has_gravity())
 
 	handle_status_effects(delta_time, times_fired)
 
@@ -75,16 +75,18 @@
 	diag_hud_set_status()
 
 /mob/living/silicon/ai/update_sight()
-	set_invis_see(initial(see_invisible))
-	set_see_in_dark(initial(see_in_dark))
-	set_sight(initial(sight))
+	see_invisible = initial(see_invisible)
+	see_in_dark = initial(see_in_dark)
+	sight = initial(sight)
 	if(aiRestorePowerRoutine)
-		clear_sight(SEE_TURFS|SEE_MOBS|SEE_OBJS)
-		set_see_in_dark(0)
+		sight = sight&~SEE_TURFS
+		sight = sight&~SEE_MOBS
+		sight = sight&~SEE_OBJS
+		see_in_dark = 0
 
 	if(see_override)
-		set_invis_see(see_override)
-	return ..()
+		see_invisible = see_override
+	sync_lighting_plane_alpha()
 
 
 /mob/living/silicon/ai/proc/start_RestorePowerRoutine()
@@ -163,7 +165,7 @@
 /mob/living/silicon/ai/proc/ai_lose_power()
 	disconnect_shell()
 	setAiRestorePowerRoutine(POWER_RESTORATION_START)
-	adjust_blindness(1)
+	blind_eyes(1)
 	update_sight()
 	to_chat(src, span_alert("You've lost power!"))
 	addtimer(CALLBACK(src, .proc/start_RestorePowerRoutine), 20)

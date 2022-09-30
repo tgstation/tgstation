@@ -28,11 +28,25 @@
 		addtimer(CALLBACK(src, .proc/RemoveFromLatejoin), 0)
 	if(prob(0.2))
 		name = "tactical [name]"
-	MakeRotate()
 
-///This proc adds the rotate component, overwrite this if you for some reason want to change some specific args.
-/obj/structure/chair/proc/MakeRotate()
-	AddComponent(/datum/component/simple_rotation, ROTATION_IGNORE_ANCHORED|ROTATION_GHOSTS_ALLOWED)
+/obj/structure/chair/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE, CALLBACK(src, .proc/can_user_rotate),CALLBACK(src, .proc/can_be_rotated),null)
+
+/obj/structure/chair/proc/can_be_rotated(mob/user)
+	return TRUE
+
+/obj/structure/chair/proc/can_user_rotate(mob/user)
+	var/mob/living/L = user
+
+	if(istype(L))
+		if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
+			return FALSE
+		else
+			return TRUE
+	else if(isobserver(user) && CONFIG_GET(flag/ghost_interaction))
+		return TRUE
+	return FALSE
 
 /obj/structure/chair/Destroy()
 	RemoveFromLatejoin()
@@ -41,7 +55,7 @@
 /obj/structure/chair/proc/RemoveFromLatejoin()
 	SSjob.latejoin_trackers -= src //These may be here due to the arrivals shuttle
 
-/obj/structure/chair/deconstruct(disassembled)
+/obj/structure/chair/deconstruct()
 	// If we have materials, and don't have the NOCONSTRUCT flag
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(buildstacktype)
@@ -68,9 +82,6 @@
 		return
 	. = ..()
 
-/obj/structure/chair/AltClick(mob/user)
-	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
-
 ///allows each chair to request the electrified_buckle component with overlays that dont look ridiculous
 /obj/structure/chair/proc/electrify_self(obj/item/assembly/shock_kit/input_shock_kit, mob/user, list/overlays_from_child_procs)
 	SHOULD_CALL_PARENT(TRUE)
@@ -89,12 +100,10 @@
 		to_chat(user, "<span class='notice'> You cannot fit the shock kit onto the [name]!")
 
 
-/obj/structure/chair/wrench_act_secondary(mob/living/user, obj/item/weapon)
-	if(flags_1&NODECONSTRUCT_1)
-		return TRUE
-	..()
-	weapon.play_tool_sound(src)
-	deconstruct(disassembled = TRUE)
+/obj/structure/chair/wrench_act(mob/living/user, obj/item/I)
+	. = ..()
+	I.play_tool_sound(src)
+	deconstruct()
 	return TRUE
 
 /obj/structure/chair/attack_tk(mob/user)
@@ -164,20 +173,15 @@
 	max_integrity = 70
 	buildstackamount = 2
 	item_chair = null
-	// The mutable appearance used for the overlay over buckled mobs.
 	var/mutable_appearance/armrest
 
 /obj/structure/chair/comfy/Initialize(mapload)
-	gen_armrest()
-	return ..()
-
-/obj/structure/chair/comfy/proc/gen_armrest()
 	armrest = GetArmrest()
 	armrest.layer = ABOVE_MOB_LAYER
-	update_armrest()
+	return ..()
 
 /obj/structure/chair/comfy/proc/GetArmrest()
-	return mutable_appearance(icon, "[icon_state]_armrest")
+	return mutable_appearance('icons/obj/chairs.dmi', "comfychair_armrest")
 
 /obj/structure/chair/comfy/Destroy()
 	QDEL_NULL(armrest)
@@ -218,19 +222,22 @@
 	icon_state = "shuttle_chair"
 	buildstacktype = /obj/item/stack/sheet/mineral/titanium
 
+/obj/structure/chair/comfy/shuttle/GetArmrest()
+	return mutable_appearance('icons/obj/chairs.dmi', "shuttle_chair_armrest")
+
 /obj/structure/chair/comfy/shuttle/electrify_self(obj/item/assembly/shock_kit/input_shock_kit, mob/user, list/overlays_from_child_procs)
 	if(!overlays_from_child_procs)
 		overlays_from_child_procs = list(image('icons/obj/chairs.dmi', loc, "echair_over", pixel_x = -1))
 	. = ..()
-
-/obj/structure/chair/comfy/shuttle/tactical
-	name = "tactical chair"
 
 /obj/structure/chair/comfy/carp
 	name = "carpskin chair"
 	desc = "A luxurious chair, the many purple scales reflect the light in a most pleasing manner."
 	icon_state = "carp_chair"
 	buildstacktype = /obj/item/stack/sheet/animalhide/carp
+
+/obj/structure/chair/comfy/carp/GetArmrest()
+	return mutable_appearance('icons/obj/chairs.dmi', "carp_chair_armrest")
 
 /obj/structure/chair/office
 	anchored = FALSE
@@ -239,7 +246,7 @@
 	icon_state = "officechair_dark"
 
 
-/obj/structure/chair/office/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
+/obj/structure/chair/office/Moved()
 	. = ..()
 	if(has_gravity())
 		playsound(src, 'sound/effects/roll.ogg', 100, TRUE)
@@ -248,9 +255,6 @@
 	if(!overlays_from_child_procs)
 		overlays_from_child_procs = list(image('icons/obj/chairs.dmi', loc, "echair_over", pixel_x = -1))
 	. = ..()
-
-/obj/structure/chair/office/tactical
-	name = "tactical swivel chair"
 
 /obj/structure/chair/office/light
 	icon_state = "officechair_white"
@@ -265,7 +269,19 @@
 	buildstackamount = 1
 	item_chair = /obj/item/chair/stool
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool, 0)
+/obj/structure/chair/stool/directional/north
+	dir = SOUTH
+	pixel_y = 6
+
+/obj/structure/chair/stool/directional/south
+	dir = NORTH
+	pixel_y = 6
+
+/obj/structure/chair/stool/directional/east
+	dir = WEST
+
+/obj/structure/chair/stool/directional/west
+	dir = EAST
 
 /obj/structure/chair/stool/narsie_act()
 	return
@@ -293,17 +309,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool, 0)
 	icon_state = "bar"
 	item_chair = /obj/item/chair/stool/bar
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
+/obj/structure/chair/stool/bar/directional/north
+	dir = SOUTH
 
-/obj/structure/chair/stool/bamboo
-	name = "bamboo stool"
-	desc = "A makeshift bamboo stool with a rustic look."
-	icon_state = "bamboo_stool"
-	resistance_flags = FLAMMABLE
-	max_integrity = 60
-	buildstacktype = /obj/item/stack/sheet/mineral/bamboo
-	buildstackamount = 2
-	item_chair = /obj/item/chair/stool/bamboo
+/obj/structure/chair/stool/bar/directional/south
+	dir = NORTH
+
+/obj/structure/chair/stool/bar/directional/east
+	dir = WEST
+
+/obj/structure/chair/stool/bar/directional/west
+	dir = EAST
 
 /obj/item/chair
 	name = "chair"
@@ -311,12 +327,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	icon = 'icons/obj/chairs.dmi'
 	icon_state = "chair_toppled"
 	inhand_icon_state = "chair"
-	lefthand_file = 'icons/mob/inhands/items/chairs_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/items/chairs_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/misc/chairs_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/chairs_righthand.dmi'
 	w_class = WEIGHT_CLASS_HUGE
 	force = 8
 	throwforce = 10
-	demolition_mod = 1.25
 	throw_range = 3
 	hitsound = 'sound/items/trayhit1.ogg'
 	hit_reaction_chance = 50
@@ -408,14 +423,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	inhand_icon_state = "stool_bar"
 	origin_type = /obj/structure/chair/stool/bar
 
-/obj/item/chair/stool/bamboo
-	name = "bamboo stool"
-	icon_state = "bamboo_stool"
-	inhand_icon_state = "stool_bamboo"
-	hitsound = 'sound/weapons/genhit1.ogg'
-	origin_type = /obj/structure/chair/stool/bamboo
-	break_chance = 50	//Submissive and breakable unlike the chad iron stool
-
 /obj/item/chair/stool/narsie_act()
 	return //sturdy enough to ignore a god
 
@@ -464,7 +471,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	if(turns >= 8)
 		STOP_PROCESSING(SSfastprocess, src)
 
-/obj/structure/chair/bronze/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
+/obj/structure/chair/bronze/Moved()
 	. = ..()
 	if(has_gravity())
 		playsound(src, 'sound/machines/clockcult/integration_cog_install.ogg', 50, TRUE)
@@ -533,23 +540,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	icon = 'icons/obj/chairs.dmi'
 	icon_state = "folded_chair"
 	inhand_icon_state = "folded_chair"
-	lefthand_file = 'icons/mob/inhands/items/chairs_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/items/chairs_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/misc/chairs_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/chairs_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 7
 	throw_range = 5 //Lighter Weight --> Flies Farther.
 	custom_materials = list(/datum/material/plastic = 2000)
 	break_chance = 25
 	origin_type = /obj/structure/chair/plastic
-
-/obj/structure/chair/musical
-	name = "musical chair"
-	desc = "You listen to this. Either by will or by force."
-	item_chair = /obj/item/chair/musical
-	particles = new /particles/musical_notes
-
-/obj/item/chair/musical
-	name = "musical chair"
-	desc = "Oh, so this is like the fucked up Monopoly rules where there are no rules and you can pick up and place the musical chairs as you please."
-	particles = new /particles/musical_notes
-	origin_type = /obj/structure/chair/musical

@@ -16,8 +16,8 @@
 	var/repeatable_weight_decrease = 2
 	/// List of players that are being drafted for this rule
 	var/list/mob/candidates = list()
-	/// List of players that were selected for this rule. This can be minds, or mobs.
-	var/list/assigned = list()
+	/// List of players that were selected for this rule
+	var/list/datum/mind/assigned = list()
 	/// Preferences flag such as ROLE_WIZARD that need to be turned on for players to be antag.
 	var/antag_flag = null
 	/// The antagonist datum that is assigned to the mobs mind on ruleset execution.
@@ -104,18 +104,10 @@
 	indice_pop = min(requirements.len,round(population/pop_per_requirement)+1)
 
 	if(minimum_players > population)
-		log_dynamic("FAIL: [src] failed acceptable: minimum_players ([minimum_players]) > population ([population])")
 		return FALSE
-
 	if(maximum_players > 0 && population > maximum_players)
-		log_dynamic("FAIL: [src] failed acceptable: maximum_players ([maximum_players]) < population ([population])")
 		return FALSE
-
-	if (threat_level < requirements[indice_pop])
-		log_dynamic("FAIL: [src] failed acceptable: threat_level ([threat_level]) < requirement ([requirements[indice_pop]])")
-		return FALSE
-
-	return TRUE
+	return (threat_level >= requirements[indice_pop])
 
 /// When picking rulesets, if dynamic picks the same one multiple times, it will "scale up".
 /// However, doing this blindly would result in lowpop rounds (think under 10 people) where over 80% of the crew is antags!
@@ -166,7 +158,9 @@
 /// Remember that on roundstart no one knows what their job is at this point.
 /// IMPORTANT: If ready() returns TRUE, that means pre_execute() or execute() should never fail!
 /datum/dynamic_ruleset/proc/ready(forced = 0)
-	return check_candidates()
+	if (required_candidates > candidates.len)
+		return FALSE
+	return TRUE
 
 /// Runs from gamemode process() if ruleset fails to start, like delayed rulesets not getting valid candidates.
 /// This one only handles refunding the threat, override in ruleset to clean up the rest.
@@ -183,14 +177,6 @@
 			if(istype(DR, type))
 				weight = max(weight-repeatable_weight_decrease,1)
 	return weight
-
-/// Checks if there are enough candidates to run, and logs otherwise
-/datum/dynamic_ruleset/proc/check_candidates()
-	if (required_candidates <= candidates.len)
-		return TRUE
-
-	log_dynamic("FAIL: [src] does not have enough candidates ([required_candidates] needed, [candidates.len] found)")
-	return FALSE
 
 /// Here you can remove candidates that do not meet your requirements.
 /// This means if their job is not correct or they have disconnected you can remove them from candidates here.
@@ -238,8 +224,7 @@
 			var/exclusive_candidate = FALSE
 			for(var/role in exclusive_roles)
 				var/datum/job/job = SSjob.GetJob(role)
-
-				if((role in candidate_client.prefs.job_preferences) && SSjob.check_job_eligibility(candidate_player, job, "Dynamic Roundstart TC", add_job_to_log = TRUE)==JOB_AVAILABLE)
+				if((role in candidate_client.prefs.job_preferences) && !is_banned_from(candidate_player.ckey, role) && !job.required_playtime_remaining(candidate_client))
 					exclusive_candidate = TRUE
 					break
 

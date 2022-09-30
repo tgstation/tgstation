@@ -9,7 +9,6 @@
 	target_mobtypes = list(/mob/living/carbon/human)
 	possible_locs = list(BODY_ZONE_PRECISE_EYES)
 	requires_bodypart_type = 0
-	organ_to_manipulate = ORGAN_SLOT_EYES
 
 //fix eyes
 /datum/surgery_step/fix_eyes
@@ -21,7 +20,7 @@
 	time = 64
 
 /datum/surgery/eye_surgery/can_start(mob/user, mob/living/carbon/target)
-	var/obj/item/organ/internal/eyes/target_eyes = target.getorganslot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/eyes/target_eyes = target.getorganslot(ORGAN_SLOT_EYES)
 	if(!target_eyes)
 		to_chat(user, span_warning("It's hard to do surgery on someone's eyes when [target.p_they()] [target.p_do()]n't have any."))
 		return FALSE
@@ -34,7 +33,7 @@
 	display_pain(target, "You feel a stabbing pain in your eyes!")
 
 /datum/surgery_step/fix_eyes/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
-	var/obj/item/organ/internal/eyes/target_eyes = target.getorganslot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/eyes/target_eyes = target.getorganslot(ORGAN_SLOT_EYES)
 	user.visible_message(span_notice("[user] successfully fixes [target]'s eyes!"), span_notice("You succeed in fixing [target]'s eyes."))
 	display_results(user, target, span_notice("You succeed in fixing [target]'s eyes."),
 		span_notice("[user] successfully fixes [target]'s eyes!"),
@@ -48,7 +47,7 @@
 	return ..()
 
 /datum/surgery_step/fix_eyes/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	if(target.getorgan(/obj/item/organ/internal/brain))
+	if(target.getorgan(/obj/item/organ/brain))
 		display_results(user, target, span_warning("You accidentally stab [target] right in the brain!"),
 			span_warning("[user] accidentally stabs [target] right in the brain!"),
 			span_warning("[user] accidentally stabs [target] right in the brain!"))

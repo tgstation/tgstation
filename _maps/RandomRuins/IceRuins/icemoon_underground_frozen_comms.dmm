@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aD" = (
 /obj/structure/fence/cut/medium,
-/turf/open/misc/asteroid/snow/icemoon,
+/turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "aU" = (
 /turf/open/genturf,
@@ -11,9 +11,9 @@
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/underground/explored)
 "cv" = (
-/obj/structure/flora/rock/pile/icy/style_random,
+/obj/structure/flora/rock/pile/icy,
 /obj/machinery/light/small/directional/north,
-/turf/open/misc/asteroid/snow/icemoon,
+/turf/open/floor/plating/asteroid/snow/icemoon,
 /area/ruin/powered/shuttle)
 "cH" = (
 /obj/structure/table/reinforced/rglass,
@@ -26,13 +26,13 @@
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/underground/unexplored/rivers)
 "dq" = (
-/obj/structure/flora/tree/dead/style_random,
-/obj/structure/flora/grass/green/style_random,
-/turf/open/misc/asteroid/snow/icemoon,
+/obj/structure/flora/tree/dead,
+/obj/structure/flora/grass/green,
+/turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "el" = (
-/obj/structure/flora/grass/green/style_random,
-/turf/open/misc/asteroid/snow/icemoon,
+/obj/structure/flora/grass/green,
+/turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "eC" = (
 /obj/effect/turf_decal/stripes/line{
@@ -53,7 +53,7 @@
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/underground/explored)
 "hY" = (
-/turf/open/misc/asteroid/snow/icemoon,
+/turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/unexplored/rivers)
 "kr" = (
 /turf/open/floor/iron/smooth{
@@ -80,7 +80,7 @@
 	},
 /area/ruin/powered/shuttle)
 "qS" = (
-/turf/open/misc/asteroid/snow/icemoon,
+/turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "rd" = (
 /obj/structure/table/reinforced/rglass,
@@ -103,9 +103,9 @@
 /turf/open/floor/plating/icemoon,
 /area/ruin/powered/shuttle)
 "rS" = (
-/obj/structure/flora/tree/pine/style_random,
-/obj/structure/flora/grass/green/style_random,
-/turf/open/misc/asteroid/snow/icemoon,
+/obj/structure/flora/tree/pine,
+/obj/structure/flora/grass/green,
+/turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "st" = (
 /obj/machinery/door/airlock/public,
@@ -114,9 +114,8 @@
 	},
 /area/ruin/powered/shuttle)
 "sM" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	dir = 4
-	},
+/obj/structure/grille,
+/obj/structure/window/reinforced/spawner/east,
 /obj/item/shard,
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating/icemoon,
@@ -128,7 +127,7 @@
 /obj/structure/fence/end{
 	dir = 8
 	},
-/turf/open/misc/asteroid/snow/icemoon,
+/turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "uz" = (
 /obj/structure/tank_dispenser,
@@ -149,7 +148,9 @@
 /turf/open/floor/plating/icemoon,
 /area/ruin/powered/shuttle)
 "wJ" = (
-/obj/structure/sink/directional/south,
+/obj/structure/sink{
+	pixel_y = 20
+	},
 /turf/open/floor/iron/showroomfloor{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
@@ -158,8 +159,8 @@
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/underground/explored)
 "yl" = (
-/obj/structure/flora/tree/pine/style_random,
-/turf/open/misc/asteroid/snow/icemoon,
+/obj/structure/flora/tree/pine,
+/turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "yF" = (
 /obj/structure/closet/wardrobe/grey,
@@ -224,13 +225,12 @@
 /area/ruin/powered/shuttle)
 "Cu" = (
 /obj/structure/fence/cut/large,
-/turf/open/misc/asteroid/snow/icemoon,
+/turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "CH" = (
 /obj/structure/window/reinforced/spawner,
-/obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	dir = 1
-	},
+/obj/structure/grille,
+/obj/structure/window/reinforced/spawner/north,
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating/icemoon,
 /area/ruin/powered/shuttle)
@@ -244,7 +244,7 @@
 	name = "Garage Door Button";
 	pixel_x = -23;
 	pixel_y = 22;
-	req_access = list("research")
+	req_access_txt = "47"
 	},
 /turf/open/floor/plating/icemoon,
 /area/ruin/powered/shuttle)
@@ -254,9 +254,9 @@
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/ruin/powered/shuttle)
 "FP" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/middle{
-	dir = 4
-	},
+/obj/structure/grille,
+/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/east,
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating/icemoon,
 /area/ruin/powered/shuttle)
@@ -269,9 +269,8 @@
 	},
 /area/ruin/powered/shuttle)
 "GH" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	dir = 1
-	},
+/obj/structure/grille,
+/obj/structure/window/reinforced/spawner/north,
 /obj/item/shard,
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating/icemoon,
@@ -296,12 +295,11 @@
 /area/icemoon/underground/explored)
 "Js" = (
 /obj/structure/fence,
-/turf/open/misc/asteroid/snow/icemoon,
+/turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "Jt" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	dir = 4
-	},
+/obj/structure/grille,
+/obj/structure/window/reinforced/spawner/east,
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating/icemoon,
 /area/ruin/powered/shuttle)
@@ -323,7 +321,7 @@
 /obj/structure/fence/end{
 	dir = 1
 	},
-/turf/open/misc/asteroid/snow/icemoon,
+/turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "MS" = (
 /obj/effect/turf_decal/siding/wood{
@@ -389,12 +387,12 @@
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/ruin/powered/shuttle)
 "Tz" = (
-/obj/structure/flora/tree/dead/style_random,
-/turf/open/misc/asteroid/snow/icemoon,
+/obj/structure/flora/tree/dead,
+/turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "TG" = (
-/obj/structure/flora/rock/pile/icy/style_random,
-/turf/open/misc/asteroid/snow/icemoon,
+/obj/structure/flora/rock/pile/icy,
+/turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "Ux" = (
 /obj/structure/grille,

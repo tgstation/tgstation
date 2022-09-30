@@ -1,6 +1,6 @@
 /obj/item/food/drug
 	name = "generic drug"
-	desc = "I am error"
+	desc =  "I am error"
 	icon = 'icons/obj/drugs.dmi'
 	foodtypes = GROSS
 	food_flags = FOOD_FINGER_FOOD
@@ -29,7 +29,7 @@
 	icon_state = pick("moon_rock1", "moon_rock2", "moon_rock3")
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOONICORN, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
-/obj/item/reagent_containers/cup/blastoff_ampoule
+/obj/item/reagent_containers/glass/blastoff_ampoule
 	name = "bLaSToFF ampoule" //stylized name
 	desc = "A small ampoule. The liquid inside appears to be boiling violently.\nYou suspect it contains bLasSToFF; the drug thought to be the cause of the infamous Luna nightclub mass casualty incident."
 	icon = 'icons/obj/drugs.dmi'
@@ -40,7 +40,7 @@
 	spillable = FALSE
 	list_reagents = list(/datum/reagent/drug/blastoff = 10)
 
-/obj/item/reagent_containers/cup/blastoff_ampoule/update_icon_state()
+/obj/item/reagent_containers/glass/blastoff_ampoule/update_icon_state()
 	. = ..()
 	if(!reagents.total_volume)
 		icon_state = "[base_icon_state]_empty"
@@ -49,7 +49,7 @@
 	else
 		icon_state = base_icon_state
 
-/obj/item/reagent_containers/cup/blastoff_ampoule/attack_self(mob/user)
+/obj/item/reagent_containers/glass/blastoff_ampoule/attack_self(mob/user)
 	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY) || spillable)
 		return ..()
 	reagent_flags |= OPENCONTAINER
@@ -57,14 +57,14 @@
 	playsound(src, 'sound/items/ampoule_snap.ogg', 40)
 	update_appearance()
 
-/obj/item/reagent_containers/cup/blastoff_ampoule/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+/obj/item/reagent_containers/glass/blastoff_ampoule/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	if(.)
 		return
 	if(QDELING(src) || !hit_atom)	//Invalid loc
 		return
 	var/obj/item/shard/ampoule_shard = new(drop_location())
-	playsound(src, SFX_SHATTER, 40, TRUE)
+	playsound(src, "shatter", 40, TRUE)
 	transfer_fingerprints_to(ampoule_shard)
 	spillable = TRUE
 	SplashReagents(hit_atom, TRUE)

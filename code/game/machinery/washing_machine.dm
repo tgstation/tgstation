@@ -70,16 +70,6 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		DYE_SYNDICATE = /obj/item/clothing/gloves/combat,
 		DYE_CENTCOM = /obj/item/clothing/gloves/combat
 	),
-	DYE_REGISTRY_BANDANA = list(
-		DYE_RED = /obj/item/clothing/mask/bandana/red,
-		DYE_ORANGE = /obj/item/clothing/mask/bandana/orange,
-		DYE_YELLOW = /obj/item/clothing/mask/bandana/gold,
-		DYE_GREEN = /obj/item/clothing/mask/bandana/green,
-		DYE_BLUE = /obj/item/clothing/mask/bandana/blue,
-		DYE_PURPLE = /obj/item/clothing/mask/bandana/purple,
-		DYE_BLACK = /obj/item/clothing/mask/bandana/black,
-		DYE_WHITE = /obj/item/clothing/mask/bandana/white
-	),
 	DYE_REGISTRY_SNEAKERS = list(
 		DYE_RED = /obj/item/clothing/shoes/sneakers/red,
 		DYE_ORANGE = /obj/item/clothing/shoes/sneakers/orange,
@@ -137,31 +127,6 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		DYE_SYNDICATE = /obj/item/bedsheet/syndie,
 		DYE_CENTCOM = /obj/item/bedsheet/centcom
 	),
-		DYE_REGISTRY_DOUBLE_BEDSHEET = list(
-		DYE_RED = /obj/item/bedsheet/red/double,
-		DYE_ORANGE = /obj/item/bedsheet/orange/double,
-		DYE_YELLOW = /obj/item/bedsheet/yellow/double,
-		DYE_GREEN = /obj/item/bedsheet/green/double,
-		DYE_BLUE = /obj/item/bedsheet/blue/double,
-		DYE_PURPLE = /obj/item/bedsheet/purple/double,
-		DYE_BLACK = /obj/item/bedsheet/black/double,
-		DYE_WHITE = /obj/item/bedsheet/double,
-		DYE_RAINBOW = /obj/item/bedsheet/rainbow/double,
-		DYE_MIME = /obj/item/bedsheet/mime/double,
-		DYE_CLOWN = /obj/item/bedsheet/clown/double,
-		DYE_CHAP = /obj/item/bedsheet/chaplain/double,
-		DYE_QM = /obj/item/bedsheet/qm/double,
-		DYE_LAW = /obj/item/bedsheet/black/double,
-		DYE_CAPTAIN = /obj/item/bedsheet/captain/double,
-		DYE_HOP = /obj/item/bedsheet/hop/double,
-		DYE_HOS = /obj/item/bedsheet/hos/double,
-		DYE_CE = /obj/item/bedsheet/ce/double,
-		DYE_RD = /obj/item/bedsheet/rd/double,
-		DYE_CMO = /obj/item/bedsheet/cmo/double,
-		DYE_COSMIC = /obj/item/bedsheet/cosmos/double,
-		DYE_SYNDICATE = /obj/item/bedsheet/syndie/double,
-		DYE_CENTCOM = /obj/item/bedsheet/centcom/double
-	),
 	DYE_LAWYER_SPECIAL = list(
 		DYE_COSMIC = /obj/item/clothing/under/rank/civilian/lawyer/galaxy,
 		DYE_SYNDICATE = /obj/item/clothing/under/rank/civilian/lawyer/galaxy/red
@@ -215,14 +180,11 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		AM.wash(CLEAN_WASH)
 		AM.machine_wash(src)
 
-	//if we had the ability to brainwash, remove that now
-	REMOVE_TRAIT(src, TRAIT_BRAINWASHING, SKILLCHIP_TRAIT)
 	busy = FALSE
 	if(color_source)
 		qdel(color_source)
 		color_source = null
 	update_appearance()
-	use_power(active_power_usage)
 
 /obj/item/proc/dye_item(dye_color, dye_key_override)
 	var/dye_key_selector = dye_key_override ? dye_key_override : dying_key
@@ -260,24 +222,24 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	return target_type //successfully "appearance copy" dyed something; returns the target type as a hacky way of extending
 
 //what happens to this object when washed inside a washing machine
-/atom/movable/proc/machine_wash(obj/machinery/washing_machine/washer)
+/atom/movable/proc/machine_wash(obj/machinery/washing_machine/WM)
 	return
 
-/obj/item/stack/sheet/hairlesshide/machine_wash(obj/machinery/washing_machine/washer)
+/obj/item/stack/sheet/hairlesshide/machine_wash(obj/machinery/washing_machine/WM)
 	new /obj/item/stack/sheet/wethide(drop_location(), amount)
 	qdel(src)
 
-/obj/item/clothing/suit/hooded/ian_costume/machine_wash(obj/machinery/washing_machine/washer)
+/obj/item/clothing/suit/hooded/ian_costume/machine_wash(obj/machinery/washing_machine/WM)
 	new /obj/item/food/meat/slab/corgi(loc)
 	qdel(src)
 
-/mob/living/simple_animal/pet/machine_wash(obj/machinery/washing_machine/washer)
-	washer.bloody_mess = TRUE
+/mob/living/simple_animal/pet/machine_wash(obj/machinery/washing_machine/WM)
+	WM.bloody_mess = TRUE
 	gib()
 
-/obj/item/machine_wash(obj/machinery/washing_machine/washer)
-	if(washer.color_source)
-		dye_item(washer.color_source.dye_color)
+/obj/item/machine_wash(obj/machinery/washing_machine/WM)
+	if(WM.color_source)
+		dye_item(WM.color_source.dye_color)
 
 /obj/item/clothing/under/dye_item(dye_color, dye_key)
 	. = ..()
@@ -287,16 +249,16 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		if(!can_adjust && adjusted) //we deadjust the uniform if it's now unadjustable
 			toggle_jumpsuit_adjust()
 
-/obj/item/clothing/under/machine_wash(obj/machinery/washing_machine/washer)
+/obj/item/clothing/under/machine_wash(obj/machinery/washing_machine/WM)
 	freshly_laundered = TRUE
 	addtimer(VARSET_CALLBACK(src, freshly_laundered, FALSE), 5 MINUTES, TIMER_UNIQUE | TIMER_OVERRIDE)
 	..()
 
-/obj/item/clothing/head/mob_holder/machine_wash(obj/machinery/washing_machine/washer)
+/obj/item/clothing/head/mob_holder/machine_wash(obj/machinery/washing_machine/WM)
 	..()
-	held_mob.machine_wash(washer)
+	held_mob.machine_wash(WM)
 
-/obj/item/clothing/shoes/sneakers/machine_wash(obj/machinery/washing_machine/washer)
+/obj/item/clothing/shoes/sneakers/machine_wash(obj/machinery/washing_machine/WM)
 	if(chained)
 		chained = FALSE
 		slowdown = SHOES_SLOWDOWN
@@ -328,14 +290,10 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	if(panel_open)
 		. += "wm_panel"
 
-/obj/machinery/washing_machine/wrench_act(mob/living/user, obj/item/tool)
-	. = ..()
-	if(!panel_open || busy)
-		return FALSE
-	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
-
 /obj/machinery/washing_machine/attackby(obj/item/W, mob/living/user, params)
+	if(panel_open && !busy && default_unfasten_wrench(user, W))
+		return
+
 	if(default_deconstruction_screwdriver(user, null, null, W))
 		update_appearance()
 		return
@@ -404,8 +362,6 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		to_chat(user, span_warning("[src] must be cleaned up first!"))
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	busy = TRUE
-	if(HAS_TRAIT(user, TRAIT_BRAINWASHING))
-		ADD_TRAIT(src, TRAIT_BRAINWASHING, SKILLCHIP_TRAIT)
 	update_appearance()
 	addtimer(CALLBACK(src, .proc/wash_cycle), 20 SECONDS)
 	START_PROCESSING(SSfastprocess, src)

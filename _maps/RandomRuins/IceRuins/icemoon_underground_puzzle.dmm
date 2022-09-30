@@ -3,11 +3,11 @@
 /turf/template_noop,
 /area/template_noop)
 "b" = (
-/turf/open/misc/asteroid/snow/icemoon,
+/turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "c" = (
 /obj/effect/sliding_puzzle/lavaland,
-/turf/open/misc/asteroid/snow/icemoon,
+/turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 
 (1,1,1) = {"

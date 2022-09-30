@@ -2,7 +2,7 @@
 /mob/living/carbon/human
 	name = "Unknown"
 	real_name = "Unknown"
-	icon = 'icons/mob/species/human/human.dmi'
+	icon = 'icons/mob/human.dmi'
 	icon_state = "human_basic"
 	appearance_flags = KEEP_TOGETHER|TILE_BOUND|PIXEL_SCALE|LONG_GLIDE
 	hud_possible = list(HEALTH_HUD,STATUS_HUD,ID_HUD,WANTED_HUD,IMPLOYAL_HUD,IMPCHEM_HUD,IMPTRACK_HUD,ANTAG_HUD,GLAND_HUD,SENTIENT_DISEASE_HUD,FAN_HUD)
@@ -17,20 +17,17 @@
 	var/hair_color = "#000000"
 	var/hairstyle = "Bald"
 
-	///Colours used for hair and facial hair gradients.
-	var/list/grad_color
-	///Styles used for hair and facial hair gradients.
-	var/list/grad_style
+	///Colour used for the hair gradient.
+	var/grad_color = "#000000"
+	///Style used for the hair gradient.
+	var/grad_style
 
 	//Facial hair colour and style
 	var/facial_hair_color = "#000000"
 	var/facial_hairstyle = "Shaved"
 
 	//Eye colour
-	var/eye_color_left = "#000000"
-	var/eye_color_right = "#000000"
-	/// Var used to keep track of a human mob having a heterochromatic right eye. To ensure prefs don't overwrite shit
-	var/eye_color_heterochromatic = FALSE
+	var/eye_color = "#000000"
 
 	var/skin_tone = "caucasian1" //Skin tone
 
@@ -67,11 +64,12 @@
 	/// What types of mobs are allowed to ride/buckle to this mob
 	var/static/list/can_ride_typecache = typecacheof(list(/mob/living/carbon/human, /mob/living/simple_animal/slime, /mob/living/simple_animal/parrot))
 	var/lastpuke = 0
+	var/last_fire_update
 	var/account_id
 
 	var/hardcore_survival_score = 0
-	/// Which body type to use
-	var/physique = MALE
+	/// For agendered spessmen, which body type to use
+	var/body_type = MALE
 
 	/// How many "units of blood" we have on our hands
 	var/blood_in_hands = 0
@@ -82,5 +80,7 @@
 	///Exposure to damaging heat levels increases stacks, stacks clean over time when temperatures are lower. Stack is consumed to add a wound.
 	var/heat_exposure_stacks = 0
 
+	///human specific screwyhuds from hallucinations (define key (bodypart) to int value (severity)) - see /datum/hallucination/fake_health_doll
+	var/hal_screwydoll
 	/// When an braindead player has their equipment fiddled with, we log that info here for when they come back so they know who took their ID while they were DC'd for 30 seconds
 	var/list/afk_thefts

@@ -1,6 +1,6 @@
-/mob/living/silicon/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
+/mob/living/silicon/Moved(oldLoc, dir)
 	. = ..()
-	update_camera_location(old_loc)
+	update_camera_location(oldLoc)
 
 /mob/living/silicon/forceMove(atom/destination)
 	. = ..()

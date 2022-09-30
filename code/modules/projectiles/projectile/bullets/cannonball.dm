@@ -7,7 +7,7 @@
 	projectile_piercing = ALL
 	dismemberment = 0
 	paralyze = 5 SECONDS
-	stutter = 20 SECONDS
+	stutter = 10 SECONDS
 	embedding = null
 	hitsound = 'sound/effects/meteorimpact.ogg'
 	hitsound_wall = 'sound/weapons/sonic_jackhammer.ogg'

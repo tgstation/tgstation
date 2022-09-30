@@ -35,7 +35,6 @@
 			return
 		aggressive = TRUE
 	start_closing(aggressive)
-	use_power(idle_power_usage)
 
 ///Closes the machine to kidnap everything in the turf into it.
 /obj/machinery/destructive_scanner/proc/start_closing(aggressive)
@@ -48,7 +47,6 @@
 	scanning = TRUE
 	update_icon()
 	playsound(src, 'sound/machines/destructive_scanner/TubeDown.ogg', 100)
-	use_power(idle_power_usage)
 	addtimer(CALLBACK(src, .proc/start_scanning, aggressive), 1.2 SECONDS)
 
 ///Starts scanning the fancy scanning effects
@@ -57,7 +55,6 @@
 		playsound(src, 'sound/machines/destructive_scanner/ScanDangerous.ogg', 100, extrarange = 5)
 	else
 		playsound(src, 'sound/machines/destructive_scanner/ScanSafe.ogg', 100)
-	use_power(active_power_usage)
 	addtimer(CALLBACK(src, .proc/finish_scanning, aggressive), 6 SECONDS)
 
 
@@ -90,7 +87,7 @@
 	if(obj_flags & EMAGGED)
 		return
 	obj_flags |= EMAGGED
-	playsound(src, SFX_SPARKS, 75, TRUE, SILENCED_SOUND_EXTRARANGE)
+	playsound(src, "sparks", 75, TRUE, SILENCED_SOUND_EXTRARANGE)
 	to_chat(user, span_notice("You disable the safety sensor BIOS on [src]."))
 
 /obj/machinery/destructive_scanner/update_icon_state()

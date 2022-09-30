@@ -5,10 +5,8 @@
 	if(istype(A))
 		var/turf/T = get_turf(A)
 		if(T)
-			var/atom/a_loc = A.loc
-			var/is_turf = isturf(a_loc)
-			coords = "[is_turf ? "at" : "from [a_loc] at"] [AREACOORD(T)]"
-			jmp_coords = "[is_turf ? "at" : "from [a_loc] at"] [ADMIN_VERBOSEJMP(T)]"
+			coords = "at [COORD(T)]"
+			jmp_coords = "at [ADMIN_COORDJMP(T)]"
 		else
 			jmp_coords = coords = "in nullspace"
 

@@ -66,9 +66,6 @@ GLOBAL_VAR(command_name)
 		new_station_name = name + " "
 		name = ""
 
-	if(prob(0.1))
-		random = 999999999 //ridiculously long name in written numbers
-
 	// Prefix
 	var/holiday_name = pick(SSevents.holidays)
 	if(holiday_name)
@@ -97,18 +94,16 @@ GLOBAL_VAR(command_name)
 		if(4)
 			new_station_name += pick(GLOB.phonetic_alphabet)
 		if(5)
-			new_station_name += convert_integer_to_words(rand(-1,99), capitalise = TRUE)
+			new_station_name += pick(GLOB.numbers_as_words)
 		if(13)
 			new_station_name += pick("13","XIII","Thirteen")
-		if(999999999)
-			new_station_name += convert_integer_to_words(rand(111111111,999999999), capitalise = TRUE)
 	return new_station_name
 
 /proc/syndicate_name()
 	var/name = ""
 
 	// Prefix
-	name += pick("Clandestine", "Prima", "Blue", "Zero-G", "Max", "Blasto", "North", "Omni", "Newton", "Cyber", "Bonk", "Gene", "Gib")
+	name += pick("Clandestine", "Prima", "Blue", "Zero-G", "Max", "Blasto", "Waffle", "North", "Omni", "Newton", "Cyber", "Bonk", "Gene", "Gib")
 
 	// Suffix
 	if (prob(80))
@@ -121,11 +116,11 @@ GLOBAL_VAR(command_name)
 		else
 			name += pick("Syndi", "Corp", "Bio", "System", "Prod", "Chem", "Inter", "Hive")
 			name += pick("", "-")
-			name += pick("Tech", "Co", "Tek", "X", "Inc", "Code")
+			name += pick("Tech", "Sun", "Co", "Tek", "X", "Inc", "Code")
 	// Small
 	else
 		name += pick("-", "*", "")
-		name += pick("Tech", "Co", "Tek", "X", "Inc", "Gen", "Star", "Dyne", "Code", "Hive")
+		name += pick("Tech", "Sun", "Co", "Tek", "X", "Inc", "Gen", "Star", "Dyne", "Code", "Hive")
 
 	return name
 
@@ -203,12 +198,7 @@ GLOBAL_DATUM(syndicate_code_response_regex, /regex)
 								new_name += pick(GLOB.last_names)
 								. += new_name
 					if(2)
-						var/datum/job/job = pick(SSjob.joinable_occupations)
-						if(job)
-							. += job.title //Returns a job.
-						else
-							stack_trace("Failed to pick(SSjob.joinable_occupations) on generate_code_phrase()")
-							. += "Bug"
+						. += pick(SSjob.station_jobs)//Returns a job.
 				safety -= 1
 			if(2)
 				switch(rand(1,3))//Food, drinks, or places. Only selectable once.

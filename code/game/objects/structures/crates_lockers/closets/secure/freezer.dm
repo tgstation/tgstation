@@ -4,7 +4,6 @@
 	door_anim_squish = 0.22
 	door_anim_angle = 123
 	door_anim_time = 4
-	/// If FALSE, we will protect the first person in the freezer from an explosion / nuclear blast.
 	var/jones = FALSE
 
 /obj/structure/closet/secure_closet/freezer/Destroy()
@@ -31,23 +30,16 @@
 	jones = TRUE
 	flags_1 &= ~PREVENT_CONTENTS_EXPLOSION_1
 
-/obj/structure/closet/secure_closet/freezer/empty
-	name = "empty freezer"
-
-/obj/structure/closet/secure_closet/freezer/empty/open
-	req_access = null
-	locked = FALSE
-
 /obj/structure/closet/secure_closet/freezer/kitchen
 	name = "kitchen cabinet"
 	req_access = list(ACCESS_KITCHEN)
 
 /obj/structure/closet/secure_closet/freezer/kitchen/PopulateContents()
 	..()
-	for(var/i in 1 to 3)
-		new /obj/item/reagent_containers/condiment/flour(src)
-	new /obj/item/reagent_containers/condiment/rice(src)
-	new /obj/item/reagent_containers/condiment/sugar(src)
+	for(var/i = 0, i < 3, i++)
+		new /obj/item/reagent_containers/food/condiment/flour(src)
+	new /obj/item/reagent_containers/food/condiment/rice(src)
+	new /obj/item/reagent_containers/food/condiment/sugar(src)
 
 /obj/structure/closet/secure_closet/freezer/kitchen/maintenance
 	name = "maintenance refrigerator"
@@ -56,10 +48,11 @@
 
 /obj/structure/closet/secure_closet/freezer/kitchen/maintenance/PopulateContents()
 	..()
-	for(var/i in 1 to 5)
-		new /obj/item/reagent_containers/condiment/milk(src)
-		new /obj/item/reagent_containers/condiment/soymilk(src)
-	for(var/i in 1 to 2)
+	for(var/i = 0, i < 5, i++)
+		new /obj/item/reagent_containers/food/condiment/milk(src)
+	for(var/i = 0, i < 5, i++)
+		new /obj/item/reagent_containers/food/condiment/soymilk(src)
+	for(var/i = 0, i < 2, i++)
 		new /obj/item/storage/fancy/egg_box(src)
 
 /obj/structure/closet/secure_closet/freezer/kitchen/mining
@@ -71,7 +64,7 @@
 
 /obj/structure/closet/secure_closet/freezer/meat/PopulateContents()
 	..()
-	for(var/i in 1 to 4)
+	for(var/i = 0, i < 4, i++)
 		new /obj/item/food/meat/slab/monkey(src)
 
 /obj/structure/closet/secure_closet/freezer/meat/open
@@ -84,7 +77,7 @@
 /obj/structure/closet/secure_closet/freezer/gulag_fridge/PopulateContents()
 	..()
 	for(var/i in 1 to 3)
-		new /obj/item/reagent_containers/cup/glass/bottle/beer/light(src)
+		new /obj/item/reagent_containers/food/drinks/bottle/beer/light(src)
 
 /obj/structure/closet/secure_closet/freezer/fridge
 	name = "refrigerator"
@@ -92,10 +85,11 @@
 
 /obj/structure/closet/secure_closet/freezer/fridge/PopulateContents()
 	..()
-	for(var/i in 1 to 5)
-		new /obj/item/reagent_containers/condiment/milk(src)
-		new /obj/item/reagent_containers/condiment/soymilk(src)
-	for(var/i in 1 to 2)
+	for(var/i = 0, i < 5, i++)
+		new /obj/item/reagent_containers/food/condiment/milk(src)
+	for(var/i = 0, i < 5, i++)
+		new /obj/item/reagent_containers/food/condiment/soymilk(src)
+	for(var/i = 0, i < 2, i++)
 		new /obj/item/storage/fancy/egg_box(src)
 
 /obj/structure/closet/secure_closet/freezer/fridge/open
@@ -109,11 +103,11 @@
 
 /obj/structure/closet/secure_closet/freezer/money/PopulateContents()
 	..()
-	for(var/i in 1 to 3)
+	for(var/i = 0, i < 3, i++)
 		new /obj/item/stack/spacecash/c1000(src)
-	for(var/i in 1 to 5)
+	for(var/i = 0, i < 5, i++)
 		new /obj/item/stack/spacecash/c500(src)
-	for(var/i in 1 to 6)
+	for(var/i = 0, i < 6, i++)
 		new /obj/item/stack/spacecash/c200(src)
 
 /obj/structure/closet/secure_closet/freezer/cream_pie

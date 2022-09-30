@@ -1,7 +1,7 @@
 #define SLIME_CARES_ABOUT(to_check) (to_check && (to_check == Target || to_check == Leader || (to_check in Friends)))
 /mob/living/simple_animal/slime
 	name = "grey baby slime (123)"
-	icon = 'icons/mob/simple/slimes.dmi'
+	icon = 'icons/mob/slimes.dmi'
 	icon_state = "grey baby slime"
 	pass_flags = PASSTABLE | PASSGRILLE
 	gender = NEUTER
@@ -30,7 +30,7 @@
 	healable = 0
 	melee_damage_lower = 5
 	melee_damage_upper = 25
-	see_in_dark = NIGHTVISION_RANGE
+	see_in_dark = 8
 
 	verb_say = "blorbles"
 	verb_ask = "inquisitively blorbles"
@@ -85,7 +85,7 @@
 	var/applied = 0 //How many extracts of the modtype have been applied.
 
 
-/mob/living/simple_animal/slime/Initialize(mapload, new_colour=colour, new_is_adult=FALSE)
+/mob/living/simple_animal/slime/Initialize(mapload, new_colour="grey", new_is_adult=FALSE)
 	var/datum/action/innate/slime/feed/F = new
 	F.Grant(src)
 	ADD_TRAIT(src, TRAIT_CANT_RIDE, INNATE_TRAIT)
@@ -107,7 +107,6 @@
 	add_cell_sample()
 
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
-	AddElement(/datum/element/soft_landing)
 
 /mob/living/simple_animal/slime/Destroy()
 	for (var/A in actions)
@@ -221,7 +220,7 @@
 						Atkcool = TRUE
 						addtimer(VARSET_CALLBACK(src, Atkcool, FALSE), 4.5 SECONDS)
 
-/mob/living/simple_animal/slime/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
+/mob/living/simple_animal/slime/Process_Spacemove(movement_dir = 0)
 	return 2
 
 /mob/living/simple_animal/slime/get_status_tab_items()
@@ -277,7 +276,7 @@
 /mob/living/simple_animal/slime/attack_ui(slot, params)
 	return
 
-/mob/living/simple_animal/slime/attack_slime(mob/living/simple_animal/slime/M, list/modifiers)
+/mob/living/simple_animal/slime/attack_slime(mob/living/simple_animal/slime/M)
 	if(..()) //successful slime attack
 		if(M == src)
 			return
@@ -304,7 +303,7 @@
 	if(..()) //successful monkey bite.
 		attacked += 10
 
-/mob/living/simple_animal/slime/attack_larva(mob/living/carbon/alien/larva/L, list/modifiers)
+/mob/living/simple_animal/slime/attack_larva(mob/living/carbon/alien/larva/L)
 	if(..()) //successful larva bite.
 		attacked += 10
 
@@ -385,7 +384,7 @@
 			force_effect = round(W.force/2)
 		if(prob(10 + force_effect))
 			discipline_slime(user)
-	if(istype(W, /obj/item/storage/bag/xeno))
+	if(istype(W, /obj/item/storage/bag/bio))
 		var/obj/item/storage/P = W
 		if(!effectmod)
 			to_chat(user, span_warning("The slime is not currently being mutated."))
@@ -394,7 +393,7 @@
 		var/hasFound = FALSE //Have we found an extract to be added?
 		for(var/obj/item/slime_extract/S in P.contents)
 			if(S.effectmod == effectmod)
-				P.atom_storage.attempt_remove(S, get_turf(src), silent = TRUE)
+				SEND_SIGNAL(P, COMSIG_TRY_STORAGE_TAKE, S, get_turf(src), TRUE)
 				qdel(S)
 				applied++
 				hasFound = TRUE
@@ -438,7 +437,7 @@
 	return
 
 /mob/living/simple_animal/slime/examine(mob/user)
-	. = list("<span class='info'>This is [icon2html(src, user)] \a <EM>[src]</EM>!")
+	. = list("<span class='info'>*---------*\nThis is [icon2html(src, user)] \a <EM>[src]</EM>!")
 	if (stat == DEAD)
 		. += span_deadsay("It is limp and unresponsive.")
 	else
@@ -465,7 +464,7 @@
 			if(10)
 				. += span_warning("<B>It is radiating with massive levels of electrical activity!</B>")
 
-	. += "</span>"
+	. += "*---------*</span>"
 
 /mob/living/simple_animal/slime/proc/discipline_slime(mob/user)
 	if(stat)

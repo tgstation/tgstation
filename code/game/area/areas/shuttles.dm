@@ -10,7 +10,6 @@
 	always_unpowered = FALSE
 	// Loading the same shuttle map at a different time will produce distinct area instances.
 	area_flags = NO_ALERTS
-	icon = 'icons/area/areas_station.dmi'
 	icon_state = "shuttle"
 	flags_1 = CAN_BE_DIRTY_1
 	area_limited_icon_smoothing = /area/shuttle
@@ -46,10 +45,6 @@
 	name = "Syndicate Infiltrator EVA"
 
 /area/shuttle/syndicate/hallway
-	name = "Syndicate Infiltrator Hall"
-
-/area/shuttle/syndicate/engineering
-	name = "Syndicate Infiltrator Engineering"
 
 /area/shuttle/syndicate/airlock
 	name = "Syndicate Infiltrator Airlock"
@@ -69,12 +64,6 @@
 /area/shuttle/hunter
 	name = "Hunter Shuttle"
 	static_lighting = FALSE
-	base_lighting_alpha = 255
-
-/area/shuttle/hunter/russian
-	name = "Russian Cargo Hauler"
-	requires_power = TRUE
-	static_lighting = TRUE
 
 ////////////////////////////White Ship////////////////////////////
 
@@ -109,7 +98,6 @@
 	name = "Hyperspace"
 	desc = "Weeeeee"
 	static_lighting = FALSE
-	base_lighting_alpha = 255
 
 
 /area/shuttle/arrival
@@ -180,7 +168,6 @@
 	icon_state = "shuttlectf"
 	area_flags = NOTELEPORT
 	static_lighting = FALSE
-	base_lighting_alpha = 255
 
 /area/shuttle/escape/arena
 	name = "The Arena"
@@ -204,9 +191,6 @@
 
 /area/shuttle/sbc_fighter2
 	name = "SBC Fighter 2"
-
-/area/shuttle/sbc_fighter3
-	name = "SBC Fighter 3"
 
 /area/shuttle/sbc_corvette
 	name = "SBC corvette"
@@ -239,14 +223,14 @@
 	name = "Tiny Freighter"
 
 // ----------- Arena Shuttle
-/area/shuttle/shuttle_arena
+/area/shuttle_arena
 	name = "arena"
 	has_gravity = STANDARD_GRAVITY
 	requires_power = FALSE
 
 /obj/effect/forcefield/arena_shuttle
 	name = "portal"
-	initial_duration = 0
+	timeleft = 0
 	var/list/warp_points = list()
 
 /obj/effect/forcefield/arena_shuttle/Initialize(mapload)
@@ -264,7 +248,7 @@
 		qdel(L.pulling)
 		var/turf/LA = get_turf(pick(warp_points))
 		L.forceMove(LA)
-		L.remove_status_effect(/datum/status_effect/hallucination)
+		L.hallucination = 0
 		to_chat(L, "<span class='reallybig redtext'>The battle is won. Your bloodlust subsides.</span>", confidential = TRUE)
 		for(var/obj/item/chainsaw/doomslayer/chainsaw in L)
 			qdel(chainsaw)
@@ -283,7 +267,7 @@
 
 /obj/effect/forcefield/arena_shuttle_entrance
 	name = "portal"
-	initial_duration = 0
+	timeleft = 0
 	var/list/warp_points = list()
 
 /obj/effect/forcefield/arena_shuttle_entrance/Bumped(atom/movable/AM)
@@ -298,4 +282,4 @@
 	var/mob/living/M = AM
 	M.forceMove(get_turf(LA))
 	to_chat(M, "<span class='reallybig redtext'>You're trapped in a deadly arena! To escape, you'll need to drag a severed head to the escape portals.</span>", confidential = TRUE)
-	M.apply_status_effect(/datum/status_effect/mayhem)
+	M.apply_status_effect(STATUS_EFFECT_MAYHEM)

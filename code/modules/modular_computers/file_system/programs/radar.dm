@@ -5,6 +5,7 @@
 	ui_header = "borg_mon.gif" //DEBUG -- new icon before PR
 	program_icon_state = "radarntos"
 	requires_ntnet = TRUE
+	transfer_access = null
 	available_on_ntnet = FALSE
 	usage_flags = PROGRAM_LAPTOP | PROGRAM_TABLET
 	size = 5
@@ -22,7 +23,7 @@
 	///Used by the tgui interface, themed for NT or Syndicate colors.
 	var/pointercolor = "green"
 
-/datum/computer_file/program/radar/on_start(mob/living/user)
+/datum/computer_file/program/radar/run_program(mob/living/user)
 	. = ..()
 	if(.)
 		START_PROCESSING(SSfastprocess, src)
@@ -197,7 +198,7 @@
 	computer.setDir(get_dir(here_turf, target_turf))
 
 //We can use process_tick to restart fast processing, since the computer will be running this constantly either way.
-/datum/computer_file/program/radar/process_tick(delta_time)
+/datum/computer_file/program/radar/process_tick()
 	if(computer.active_program == src)
 		START_PROCESSING(SSfastprocess, src)
 
@@ -211,7 +212,7 @@
 	filedesc = "Lifeline"
 	extended_desc = "This program allows for tracking of crew members via their suit sensors."
 	requires_ntnet = TRUE
-	transfer_access = list(ACCESS_MEDICAL)
+	transfer_access = ACCESS_MEDICAL
 	available_on_ntnet = TRUE
 	program_icon = "heartbeat"
 
@@ -248,49 +249,6 @@
 				return TRUE
 	return FALSE
 
-///Tracks all janitor equipment
-/datum/computer_file/program/radar/custodial_locator
-	filename = "custodiallocator"
-	filedesc = "Custodial Locator"
-	extended_desc = "This program allows for tracking of custodial equipment."
-	requires_ntnet = TRUE
-	transfer_access = list(ACCESS_JANITOR)
-	available_on_ntnet = TRUE
-	program_icon = "broom"
-	size = 2
-	detomatix_resistance = DETOMATIX_RESIST_MINOR
-
-/datum/computer_file/program/radar/custodial_locator/find_atom()
-	return locate(selected) in GLOB.janitor_devices
-
-/datum/computer_file/program/radar/custodial_locator/scan()
-	if(world.time < next_scan)
-		return
-	next_scan = world.time + (2 SECONDS)
-	objects = list()
-	for(var/obj/custodial_tools as anything in GLOB.janitor_devices)
-		if(!trackable(custodial_tools))
-			continue
-		var/tool_name = custodial_tools.name
-
-		if(istype(custodial_tools, /obj/item/mop))
-			var/obj/item/mop/wet_mop = custodial_tools
-			tool_name = "[wet_mop.reagents.total_volume ? "Wet" : "Dry"] [wet_mop.name]"
-
-		if(istype(custodial_tools, /obj/structure/janitorialcart))
-			var/obj/structure/janitorialcart/janicart = custodial_tools
-			tool_name = "[janicart.name] - Water level: [janicart.reagents.total_volume] / [janicart.reagents.maximum_volume]"
-
-		if(istype(custodial_tools, /mob/living/simple_animal/bot/cleanbot))
-			var/mob/living/simple_animal/bot/cleanbot/cleanbots = custodial_tools
-			tool_name = "[cleanbots.name] - [cleanbots.bot_mode_flags & BOT_MODE_ON ? "Online" : "Offline"]"
-
-		var/list/tool_information = list(
-			ref = REF(custodial_tools),
-			name = tool_name,
-		)
-		objects += list(tool_information)
-
 ////////////////////////
 //Nuke Disk Finder App//
 ////////////////////////
@@ -303,27 +261,13 @@
 	program_icon_state = "radarsyndicate"
 	extended_desc = "This program allows for tracking of nuclear authorization disks and warheads."
 	requires_ntnet = FALSE
+	transfer_access = null
 	available_on_ntnet = FALSE
 	available_on_syndinet = TRUE
 	tgui_id = "NtosRadarSyndicate"
 	program_icon = "bomb"
 	arrowstyle = "ntosradarpointerS.png"
 	pointercolor = "red"
-
-/datum/computer_file/program/radar/fission360/on_start(mob/living/user)
-	. = ..()
-	if(!.)
-		return
-
-	RegisterSignal(SSdcs, COMSIG_GLOB_NUKE_DEVICE_ARMED, .proc/on_nuke_armed)
-
-/datum/computer_file/program/radar/fission360/kill_program(forced)
-	UnregisterSignal(SSdcs, COMSIG_GLOB_NUKE_DEVICE_ARMED)
-	return ..()
-
-/datum/computer_file/program/radar/fission360/Destroy()
-	UnregisterSignal(SSdcs, COMSIG_GLOB_NUKE_DEVICE_ARMED)
-	return ..()
 
 /datum/computer_file/program/radar/fission360/find_atom()
 	return SSpoints_of_interest.get_poi_atom_by_ref(selected)
@@ -333,55 +277,17 @@
 		return
 	next_scan = world.time + (2 SECONDS)
 	objects = list()
+	for(var/i in GLOB.nuke_list)
+		var/obj/machinery/nuclearbomb/nuke = i
 
-	// All the nukes
-	for(var/obj/machinery/nuclearbomb/nuke as anything in GLOB.nuke_list)
-		var/list/nuke_info = list(
+		var/list/nukeinfo = list(
 			ref = REF(nuke),
 			name = nuke.name,
 			)
-		objects += list(nuke_info)
-
-	// Dat fukken disk
+		objects += list(nukeinfo)
 	var/obj/item/disk/nuclear/disk = locate() in SSpoints_of_interest.real_nuclear_disks
-	var/list/disk_info = list(
+	var/list/nukeinfo = list(
 		ref = REF(disk),
 		name = "Nuke Auth. Disk",
 		)
-	objects += list(disk_info)
-
-	// The infiltrator
-	var/obj/docking_port/mobile/infiltrator = SSshuttle.getShuttle("syndicate")
-	var/list/ship_info = list(
-		ref = REF(infiltrator),
-		name = "Infiltrator",
-		)
-	objects += list(ship_info)
-
-///Shows how long until the nuke detonates, if one is active.
-/datum/computer_file/program/radar/fission360/on_examine(obj/item/modular_computer/source, mob/user)
-	var/list/examine_list = list()
-
-	for(var/obj/machinery/nuclearbomb/bomb as anything in GLOB.nuke_list)
-		if(bomb.timing)
-			examine_list += span_danger("Extreme danger. Arming signal detected. Time remaining: [bomb.get_time_left()].")
-	return examine_list
-
-/*
- * Signal proc for [COMSIG_GLOB_NUKE_DEVICE_ARMED].
- * Warns anyone nearby or holding the computer that a nuke was armed.
- */
-/datum/computer_file/program/radar/fission360/proc/on_nuke_armed(datum/source, obj/machinery/nuclearbomb/bomb)
-	SIGNAL_HANDLER
-
-	if(!computer)
-		return
-
-	playsound(computer, 'sound/items/nuke_toy_lowpower.ogg', 50, FALSE)
-	if(isliving(computer.loc))
-		to_chat(computer.loc, span_userdanger("Your [computer.name] vibrates and lets out an ominous alarm. Uh oh."))
-	else
-		computer.audible_message(
-			span_danger("[computer] vibrates and lets out an ominous alarm. Uh oh."),
-			span_notice("[computer] begins to vibrate rapidly. Wonder what that means..."),
-		)
+	objects += list(nukeinfo)

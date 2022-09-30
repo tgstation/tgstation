@@ -23,20 +23,20 @@
 /obj/bullet_act(obj/projectile/P)
 	. = ..()
 	playsound(src, P.hitsound, 50, TRUE)
-	var/damage
-	if(!QDELETED(src)) //Bullet on_hit effect might have already destroyed this object
-		damage = take_damage(P.damage, P.damage_type, P.armor_flag, 0, turn(P.dir, 180), P.armour_penetration)
+	var/no_damage = FALSE
+	if(!QDELETED(src) && !take_damage(P.damage, P.damage_type, P.flag, 0, turn(P.dir, 180), P.armour_penetration)) //Bullet on_hit effect might have already destroyed this object
+		no_damage = TRUE
 	if(P.suppressed != SUPPRESSED_VERY)
-		visible_message(span_danger("[src] is hit by \a [P][damage ? "" : ", without leaving a mark"]!"), null, null, COMBAT_MESSAGE_RANGE)
+		visible_message(span_danger("[src] is hit by \a [P][no_damage ? ", which doesn't leave a mark" : ""]!"), null, null, COMBAT_MESSAGE_RANGE)
 
 /obj/attack_hulk(mob/living/carbon/human/user)
 	..()
+	user.visible_message(span_danger("[user] smashes [src]!"), span_danger("You smash [src]!"), null, COMBAT_MESSAGE_RANGE)
 	if(density)
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 	else
 		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
-	var/damage = take_damage(hulk_damage(), BRUTE, MELEE, 0, get_dir(src, user))
-	user.visible_message(span_danger("[user] smashes [src][damage ? "" : ", without leaving a mark"]!"), span_danger("You smash [src][damage ? "" : ", without leaving a mark"]!"), null, COMBAT_MESSAGE_RANGE)
+	take_damage(hulk_damage(), BRUTE, MELEE, 0, get_dir(src, user))
 	return TRUE
 
 /obj/blob_act(obj/structure/blob/B)
@@ -44,7 +44,7 @@
 		return
 	if(isturf(loc))
 		var/turf/T = loc
-		if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(src, TRAIT_T_RAY_VISIBLE))
+		if(T.intact && HAS_TRAIT(src, TRAIT_T_RAY_VISIBLE))
 			return
 	take_damage(400, BRUTE, MELEE, 0, get_dir(src, B))
 
@@ -78,8 +78,6 @@
 			. = attack_generic(user, rand(user.melee_damage_lower,user.melee_damage_upper), user.melee_damage_type, MELEE, play_soundeffect, user.armour_penetration)
 		if(. && !play_soundeffect)
 			playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
-		if(user.client)
-			log_combat(user, src, "attacked")
 
 /obj/force_pushed(atom/movable/pusher, force = MOVE_FORCE_DEFAULT, direction)
 	return TRUE
@@ -92,11 +90,11 @@
 	var/amt = max(0, ((force - (move_resist * MOVE_FORCE_CRUSH_RATIO)) / (move_resist * MOVE_FORCE_CRUSH_RATIO)) * 10)
 	take_damage(amt, BRUTE)
 
-/obj/attack_slime(mob/living/simple_animal/slime/user, list/modifiers)
+/obj/attack_slime(mob/living/simple_animal/slime/user)
 	if(!user.is_adult)
 		return
-	if(attack_generic(user, rand(10, 15), BRUTE, MELEE, 1))
-		log_combat(user, src, "attacked")
+	attack_generic(user, rand(10, 15), BRUTE, MELEE, 1)
+
 
 /obj/singularity_act()
 	SSexplosions.high_mov_atom += src
@@ -128,7 +126,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 /obj/fire_act(exposed_temperature, exposed_volume)
 	if(isturf(loc))
 		var/turf/T = loc
-		if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(src, TRAIT_T_RAY_VISIBLE))
+		if(T.intact && HAS_TRAIT(src, TRAIT_T_RAY_VISIBLE))
 			return
 	if(exposed_temperature && !(resistance_flags & FIRE_PROOF))
 		take_damage(clamp(0.02 * exposed_temperature, 0, 20), BURN, FIRE, 0)
@@ -156,8 +154,8 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 /obj/zap_act(power, zap_flags)
 	if(QDELETED(src))
 		return 0
-	ADD_TRAIT(src, TRAIT_BEING_SHOCKED, WAS_SHOCKED)
-	addtimer(TRAIT_CALLBACK_REMOVE(src, TRAIT_BEING_SHOCKED, WAS_SHOCKED), 1 SECONDS)
+	obj_flags |= BEING_SHOCKED
+	addtimer(CALLBACK(src, .proc/reset_shocked), 1 SECONDS)
 	return power / 2
 
 //The surgeon general warns that being buckled to certain objects receiving powerful shocks is greatly hazardous to your health
@@ -168,6 +166,9 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 			var/mob/living/buckled_mob = m
 			buckled_mob.electrocute_act((clamp(round(strength/400), 10, 90) + rand(-5, 5)), src, flags = SHOCK_TESLA)
 
+/obj/proc/reset_shocked()
+	obj_flags &= ~BEING_SHOCKED
+
 ///the obj is deconstructed into pieces, whether through careful disassembly or when destroyed.
 /obj/proc/deconstruct(disassembled = TRUE)
 	SEND_SIGNAL(src, COMSIG_OBJ_DECONSTRUCT, disassembled)
@@ -175,7 +176,6 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 ///what happens when the obj's integrity reaches zero.
 /obj/atom_destruction(damage_flag)
-	. = ..()
 	if(damage_flag == ACID)
 		acid_melt()
 	else if(damage_flag == FIRE)

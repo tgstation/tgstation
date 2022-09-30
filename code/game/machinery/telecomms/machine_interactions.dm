@@ -9,15 +9,6 @@
 	var/temp = "" // output message
 	var/tempfreq = FREQ_COMMON
 	var/mob/living/operator
-	///Illegal frequencies that can't be listened to by telecommunication servers.
-	var/list/banned_frequencies = list(
-		FREQ_SYNDICATE,
-		FREQ_CENTCOM,
-		FREQ_CTF_RED,
-		FREQ_CTF_YELLOW,
-		FREQ_CTF_GREEN,
-		FREQ_CTF_BLUE,
-	)
 
 /obj/machinery/telecomms/attackby(obj/item/P, mob/user, params)
 
@@ -103,7 +94,7 @@
 			toggled = !toggled
 			update_power()
 			update_appearance()
-			operator.log_message("toggled [toggled ? "On" : "Off"] [src].", LOG_GAME)
+			log_game("[key_name(operator)] toggled [toggled ? "On" : "Off"] [src] at [AREACOORD(src)].")
 			. = TRUE
 		if("id")
 			if(params["value"])
@@ -113,7 +104,7 @@
 					return
 				else
 					id = params["value"]
-					operator.log_message("has changed the ID for [src] to [id].", LOG_GAME)
+					log_game("[key_name(operator)] has changed the ID for [src] at [AREACOORD(src)] to [id].")
 					. = TRUE
 		if("network")
 			if(params["value"])
@@ -123,35 +114,46 @@
 					return
 				else
 					for(var/obj/machinery/telecomms/T in links)
-						remove_link(T)
+						T.links.Remove(src)
 					network = params["value"]
 					links = list()
-					operator.log_message("has changed the network for [src] to [network].", LOG_GAME)
+					log_game("[key_name(operator)] has changed the network for [src] at [AREACOORD(src)] to [network].")
 					. = TRUE
 		if("tempfreq")
 			if(params["value"])
 				tempfreq = text2num(params["value"]) * 10
 		if("freq")
-			if(tempfreq in banned_frequencies)
+			if(tempfreq == FREQ_SYNDICATE)
 				to_chat(operator, span_warning("Error: Interference preventing filtering frequency: \"[tempfreq / 10] kHz\""))
 				playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
 			else
 				if(!(tempfreq in freq_listening))
 					freq_listening.Add(tempfreq)
-					operator.log_message("added frequency [tempfreq] for [src].", LOG_GAME)
+					log_game("[key_name(operator)] added frequency [tempfreq] for [src] at [AREACOORD(src)].")
 					. = TRUE
 		if("delete")
 			freq_listening.Remove(params["value"])
-			operator.log_message("removed frequency [params["value"]] for [src].", LOG_GAME)
+			log_game("[key_name(operator)] added removed frequency [params["value"]] for [src] at [AREACOORD(src)].")
 			. = TRUE
 		if("unlink")
 			var/obj/machinery/telecomms/T = links[text2num(params["value"])]
 			if(T)
-				. = remove_link(T, operator)
+				// Remove link entries from both T and src.
+				if(T.links)
+					T.links.Remove(src)
+				links.Remove(T)
+				log_game("[key_name(operator)] unlinked [src] and [T] at [AREACOORD(src)].")
+				. = TRUE
 		if("link")
 			if(heldmultitool)
 				var/obj/machinery/telecomms/T = heldmultitool.buffer
-				. = add_new_link(T, operator)
+				if(istype(T) && T != src)
+					if(!(src in T.links))
+						T.links += src
+					if(!(T in links))
+						links += T
+						log_game("[key_name(operator)] linked [src] for [T] at [AREACOORD(src)].")
+						. = TRUE
 		if("buffer")
 			heldmultitool.buffer = src
 			. = TRUE
@@ -161,42 +163,6 @@
 
 	add_act(action, params)
 	. = TRUE
-
-///adds new_connection to src's links list AND vice versa. also updates links_by_telecomms_type
-/obj/machinery/telecomms/proc/add_new_link(obj/machinery/telecomms/new_connection, mob/user)
-	if(!istype(new_connection) || new_connection == src)
-		return FALSE
-
-	if((new_connection in links) && (src in new_connection.links))
-		return FALSE
-
-	links |= new_connection
-	new_connection.links |= src
-
-	LAZYADDASSOCLIST(links_by_telecomms_type, new_connection.telecomms_type, new_connection)
-	LAZYADDASSOCLIST(new_connection.links_by_telecomms_type, telecomms_type, src)
-
-	if(user)
-		user.log_message("linked [src] for [new_connection].", LOG_GAME)
-	return TRUE
-
-///removes old_connection from src's links list AND vice versa. also updates links_by_telecomms_type
-/obj/machinery/telecomms/proc/remove_link(obj/machinery/telecomms/old_connection, mob/user)
-	if(!istype(old_connection) || old_connection == src)
-		return FALSE
-
-	if(old_connection in links)
-		links -= old_connection
-		LAZYREMOVEASSOC(links_by_telecomms_type, old_connection.telecomms_type, old_connection)
-
-	if(src in old_connection.links)
-		old_connection.links -= src
-		LAZYREMOVEASSOC(old_connection.links_by_telecomms_type, telecomms_type, src)
-
-	if(user)
-		user.log_message("unlinked [src] and [old_connection].", LOG_GAME)
-
-	return TRUE
 
 /obj/machinery/telecomms/proc/add_option()
 	return

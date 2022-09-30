@@ -1,4 +1,4 @@
-/mob/living/brain/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterpoof = null)
+/mob/living/brain/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	if(!(container && istype(container, /obj/item/mmi)))
 		return //No MMI, can't speak, bucko./N
 	else
@@ -19,7 +19,6 @@
 	else
 		return ..()
 
-/mob/living/brain/treat_message(message, capitalize_message = TRUE)
-	if(capitalize_message)
-		message = capitalize(message)
+/mob/living/brain/treat_message(message)
+	message = capitalize(message)
 	return message

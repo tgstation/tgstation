@@ -6,8 +6,8 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "paper_bin0"
 	inhand_icon_state = "sheet-metal"
-	lefthand_file = 'icons/mob/inhands/items/sheets_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/items/sheets_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/misc/sheets_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/sheets_righthand.dmi'
 	throwforce = 0
 	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 3
@@ -15,7 +15,7 @@
 	pressure_resistance = 8
 	var/papertype = /obj/item/paper
 	var/total_paper = 30
-	var/list/paper_stack = list()
+	var/list/papers = list()
 	var/obj/item/pen/bin_pen
 	///Overlay of the pen on top of the bin.
 	var/mutable_appearance/pen_overlay
@@ -33,21 +33,21 @@
 		if(pen && !bin_pen)
 			pen.forceMove(src)
 			bin_pen = pen
+	for(var/i in 1 to total_paper)
+		papers.Add(generate_paper())
 	update_appearance()
 
-/obj/item/paper_bin/Destroy()
-	QDEL_LIST(paper_stack)
-	return ..()
-
-/// Returns a fresh piece of paper
 /obj/item/paper_bin/proc/generate_paper()
-	var/obj/item/paper/paper = new papertype
+	var/obj/item/paper/paper = new papertype(src)
 	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
 		if(prob(30))
-			paper.add_raw_text("<font face=\"[CRAYON_FONT]\" color=\"red\"><b>HONK HONK HONK HONK HONK HONK HONK<br>HOOOOOOOOOOOOOOOOOOOOOONK<br>APRIL FOOLS</b></font>")
+			paper.info = "<font face=\"[CRAYON_FONT]\" color=\"red\"><b>HONK HONK HONK HONK HONK HONK HONK<br>HOOOOOOOOOOOOOOOOOOOOOONK<br>APRIL FOOLS</b></font>"
 			paper.AddElement(/datum/element/honkspam)
-			paper.update_appearance()
 	return paper
+
+/obj/item/paper_bin/Destroy()
+	QDEL_LIST(papers)
+	. = ..()
 
 /obj/item/paper_bin/dump_contents(atom/droppoint, collapse = FALSE)
 	if(!droppoint)
@@ -60,14 +60,13 @@
 			movable_atom.pixel_y = rand(-3,3)
 		if(!movable_atom.pixel_x)
 			movable_atom.pixel_x = rand(-3,3)
+	LAZYNULL(papers)
 	update_appearance()
 
 /obj/item/paper_bin/fire_act(exposed_temperature, exposed_volume)
-	if(total_paper > 0)
-		total_paper = 0
-		QDEL_LIST(paper_stack)
+	if(LAZYLEN(papers))
+		LAZYNULL(papers)
 		update_appearance()
-
 	..()
 
 /obj/item/paper_bin/attack_paw(mob/user, list/modifiers)
@@ -91,9 +90,9 @@
 		to_chat(user, span_notice("You take [pen] out of [src]."))
 		bin_pen = null
 		update_appearance()
-	else if(total_paper > 0)
-		var/obj/item/paper/top_paper = pop(paper_stack) || generate_paper()
-		total_paper -= 1
+	else if(LAZYLEN(papers))
+		var/obj/item/paper/top_paper = papers[papers.len]
+		LAZYREMOVE(papers, top_paper)
 		top_paper.add_fingerprint(user)
 		top_paper.forceMove(user.loc)
 		user.put_in_hands(top_paper)
@@ -113,8 +112,7 @@
 		if(!user.transferItemToLoc(paper, src))
 			return
 		to_chat(user, span_notice("You put [paper] in [src]."))
-		paper_stack += paper
-		total_paper += 1
+		LAZYADD(papers, paper)
 		update_appearance()
 	else if(istype(I, /obj/item/pen) && !bin_pen)
 		var/obj/item/pen/pen = I
@@ -128,12 +126,6 @@
 
 /obj/item/paper_bin/proc/at_overlay_limit()
 	return overlays.len >= MAX_ATOM_OVERLAYS - 1
-
-/obj/item/paper_bin/proc/remove_paper(amount = 1)
-	var/obj/item/paper/top_paper = pop(paper_stack)
-	if(top_paper)
-		qdel(top_paper)
-	total_paper -= amount
 
 /obj/item/paper_bin/examine(mob/user)
 	. = ..()
@@ -152,9 +144,7 @@
 /obj/item/paper_bin/update_overlays()
 	. = ..()
 
-	var/static/reference_paper
-	if (isnull(reference_paper))
-		reference_paper = new /obj/item/paper
+	total_paper = LAZYLEN(papers)
 
 	if(bin_pen)
 		pen_overlay = mutable_appearance(bin_pen.icon, bin_pen.icon_state)
@@ -162,20 +152,16 @@
 	if(!bin_overlay)
 		bin_overlay = mutable_appearance(icon, bin_overlay_string)
 
-	if(total_paper > 0)
-		for(var/paper_number in 1 to total_paper)
-			if(paper_number != total_paper && paper_number % PAPERS_PER_OVERLAY != 0) //only top paper and every nth paper get overlays
+	if(LAZYLEN(papers))
+		for(var/paper_number in 1 to papers.len)
+			if(paper_number != papers.len && paper_number % PAPERS_PER_OVERLAY != 0) //only top paper and every nth paper get overlays
 				continue
-
-			var/obj/item/paper/current_paper = paper_number > (total_paper - paper_stack.len) \
-				? paper_stack[paper_stack.len - (total_paper - paper_number + 1) + 1] \
-				: reference_paper
-
+			var/obj/item/paper/current_paper = papers[paper_number]
 			var/mutable_appearance/paper_overlay = mutable_appearance(current_paper.icon, current_paper.icon_state)
 			paper_overlay.color = current_paper.color
 			paper_overlay.pixel_y = paper_number/PAPERS_PER_OVERLAY - PAPER_OVERLAY_PIXEL_SHIFT //gives the illusion of stacking
 			. += paper_overlay
-			if(paper_number == total_paper) //this is our top paper
+			if(paper_number == papers.len) //this is our top paper
 				. += current_paper.overlays //add overlays only for top paper
 				if(istype(src, /obj/item/paper_bin/bundlenatural))
 					bin_overlay.pixel_y = paper_overlay.pixel_y //keeps binding centred on stack
@@ -219,7 +205,7 @@
 
 /obj/item/paper_bin/bundlenatural/attack_hand(mob/user, list/modifiers)
 	. = ..()
-	if(total_paper == 0)
+	if(!LAZYLEN(papers))
 		deconstruct(FALSE)
 
 /obj/item/paper_bin/bundlenatural/deconstruct(disassembled)

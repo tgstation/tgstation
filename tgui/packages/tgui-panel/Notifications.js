@@ -6,20 +6,33 @@
 
 import { Flex } from 'tgui/components';
 
-export const Notifications = (props) => {
+export const Notifications = props => {
   const { children } = props;
-  return <div className="Notifications">{children}</div>;
+  return (
+    <div className="Notifications">
+      {children}
+    </div>
+  );
 };
 
-const NotificationsItem = (props) => {
-  const { rightSlot, children } = props;
+const NotificationsItem = props => {
+  const {
+    rightSlot,
+    children,
+  } = props;
   return (
-    <Flex align="center" className="Notification">
-      <Flex.Item className="Notification__content" grow={1}>
+    <Flex
+      align="center"
+      className="Notification">
+      <Flex.Item
+        className="Notification__content"
+        grow={1}>
         {children}
       </Flex.Item>
       {rightSlot && (
-        <Flex.Item className="Notification__rightSlot">{rightSlot}</Flex.Item>
+        <Flex.Item className="Notification__rightSlot">
+          {rightSlot}
+        </Flex.Item>
       )}
     </Flex>
   );

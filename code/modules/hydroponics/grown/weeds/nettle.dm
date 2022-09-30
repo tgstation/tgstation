@@ -35,7 +35,7 @@
 	seed = /obj/item/seeds/nettle
 	name = "\improper nettle"
 	desc = "It's probably <B>not</B> wise to touch it with bare hands..."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "nettle"
 	bite_consumption_mod = 2
 	lefthand_file = 'icons/mob/inhands/weapons/plants_lefthand.dmi'
@@ -44,7 +44,7 @@
 	force = 15
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	throwforce = 5
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 1
 	throw_range = 3
 	attack_verb_continuous = list("stings")

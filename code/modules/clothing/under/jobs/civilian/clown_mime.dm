@@ -12,16 +12,15 @@
 	inhand_icon_state = "mime"
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
-	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/rank/civilian/mime/sexy
 	name = "sexy mime outfit"
-	desc = "Pretty inappropriate for a circus."
+	desc = "The only time when you DON'T enjoy looking at someone's rack."
 	icon_state = "sexymime"
 	inhand_icon_state = "sexymime"
 	body_parts_covered = CHEST|GROIN|LEGS
-	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
+	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 
 /obj/item/clothing/under/rank/civilian/clown
@@ -30,7 +29,7 @@
 	icon_state = "clown"
 	inhand_icon_state = "clown"
 	species_exception = list(/datum/species/golem/bananium)
-	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
+	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 
 /obj/item/clothing/under/rank/civilian/clown/Initialize(mapload)

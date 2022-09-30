@@ -125,10 +125,10 @@
 		shell.loaded_projectile.wound_bonus = original_wb
 		shell.loaded_projectile.bare_wound_bonus = original_bwb
 		pellets += shell.loaded_projectile
-		var/turf/current_loc = get_turf(fired_from)
+		var/turf/current_loc = get_turf(user)
 		if (!istype(target_loc) || !istype(current_loc) || !(shell.loaded_projectile))
 			return
-		INVOKE_ASYNC(shell, /obj/item/ammo_casing.proc/throw_proj, target, target_loc, shooter, params, spread, fired_from)
+		INVOKE_ASYNC(shell, /obj/item/ammo_casing.proc/throw_proj, target, target_loc, shooter, params, spread)
 
 		if(i != num_pellets)
 			shell.newshot()
@@ -231,7 +231,7 @@
 	terminated++
 	hits++
 	var/obj/item/bodypart/hit_part
-	var/damage = TRUE
+	var/no_damage = FALSE
 	if(iscarbon(target) && hit_zone)
 		var/mob/living/carbon/hit_carbon = target
 		hit_part = hit_carbon.get_bodypart(hit_zone)
@@ -249,10 +249,10 @@
 	else if(isobj(target))
 		var/obj/hit_object = target
 		if(hit_object.damage_deflection > P.damage || !P.damage)
-			damage = FALSE
+			no_damage = TRUE
 
 	LAZYADDASSOC(targets_hit[target], "hits", 1)
-	LAZYSET(targets_hit[target], "damage", damage)
+	LAZYSET(targets_hit[target], "no damage", no_damage)
 	if(targets_hit[target]["hits"] == 1)
 		RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/on_target_qdel, override=TRUE)
 	UnregisterSignal(P, list(COMSIG_PARENT_QDELETING, COMSIG_PROJECTILE_RANGE_OUT, COMSIG_PROJECTILE_SELF_ON_HIT))
@@ -294,44 +294,26 @@
 
 	for(var/atom/target in targets_hit)
 		var/num_hits = targets_hit[target]["hits"]
-		var/damage = targets_hit[target]["damage"]
+		var/did_damage = targets_hit[target]["no damage"]
 		UnregisterSignal(target, COMSIG_PARENT_QDELETING)
 		var/obj/item/bodypart/hit_part
 		if(isbodypart(target))
 			hit_part = target
-			if(!hit_part.owner) //only bother doing the thing if it was a limb just laying on the ground lol.
-				hit_part = null //so the visible_message later on doesn't generate extra text.
-			else
-				target = hit_part.owner
-				if(wound_info_by_part[hit_part] && (initial(P.damage_type) == BRUTE || initial(P.damage_type) == BURN)) // so a cloud of disablers that deal stamina don't inadvertently end up causing burn wounds)
-					var/damage_dealt = wound_info_by_part[hit_part][CLOUD_POSITION_DAMAGE]
-					var/w_bonus = wound_info_by_part[hit_part][CLOUD_POSITION_W_BONUS]
-					var/bw_bonus = wound_info_by_part[hit_part][CLOUD_POSITION_BW_BONUS]
-					var/wound_type = (initial(P.damage_type) == BRUTE) ? WOUND_BLUNT : WOUND_BURN // sharpness is handled in the wound rolling
-					wound_info_by_part -= hit_part
-
-					// technically this only checks armor worn the moment that all the pellets resolve rather than as each one hits you,
-					// but this isn't important enough to warrant all the extra loops of mostly redundant armor checks
-					var/mob/living/carbon/hit_carbon = target
-					var/armor_factor = hit_carbon.getarmor(hit_part, initial(P.armor_flag))
-					armor_factor = min(ARMOR_MAX_BLOCK, armor_factor) //cap damage reduction at 90%
-					if(armor_factor > 0)
-						if(initial(P.weak_against_armour) && armor_factor >= 0)
-							armor_factor *= ARMOR_WEAKENED_MULTIPLIER
-						damage_dealt *= armor_factor
-
-					hit_part.painless_wound_roll(wound_type, damage_dealt, w_bonus, bw_bonus, initial(P.sharpness))
-
-		var/limb_hit_text = ""
-		if(hit_part)
-			limb_hit_text = " in the [hit_part.plaintext_zone]"
+			target = hit_part.owner
+			if(wound_info_by_part[hit_part] && (initial(P.damage_type) == BRUTE || initial(P.damage_type) == BURN)) // so a cloud of disablers that deal stamina don't inadvertently end up causing burn wounds)
+				var/damage_dealt = wound_info_by_part[hit_part][CLOUD_POSITION_DAMAGE]
+				var/w_bonus = wound_info_by_part[hit_part][CLOUD_POSITION_W_BONUS]
+				var/bw_bonus = wound_info_by_part[hit_part][CLOUD_POSITION_BW_BONUS]
+				var/wound_type = (initial(P.damage_type) == BRUTE) ? WOUND_BLUNT : WOUND_BURN // sharpness is handled in the wound rolling
+				wound_info_by_part -= hit_part
+				hit_part.painless_wound_roll(wound_type, damage_dealt, w_bonus, bw_bonus, initial(P.sharpness))
 
 		if(num_hits > 1)
-			target.visible_message(span_danger("[target] is hit by [num_hits] [proj_name][plural_s(proj_name)][limb_hit_text][damage ? "" : ", without leaving a mark"]!"), null, null, COMBAT_MESSAGE_RANGE, target)
-			to_chat(target, span_userdanger("You're hit by [num_hits] [proj_name]s[limb_hit_text]!"))
+			target.visible_message(span_danger("[target] is hit by [num_hits] [proj_name][plural_s(proj_name)][hit_part ? " in the [hit_part.name]" : ""][did_damage ? ", which don't leave a mark" : ""]!"), null, null, COMBAT_MESSAGE_RANGE, target)
+			to_chat(target, span_userdanger("You're hit by [num_hits] [proj_name]s[hit_part ? " in the [hit_part.name]" : ""]!"))
 		else
-			target.visible_message(span_danger("[target] is hit by a [proj_name][limb_hit_text][damage ? "" : ", without leaving a mark"]!"), null, null, COMBAT_MESSAGE_RANGE, target)
-			to_chat(target, span_userdanger("You're hit by a [proj_name][limb_hit_text]!"))
+			target.visible_message(span_danger("[target] is hit by a [proj_name][hit_part ? " in the [hit_part.name]" : ""][did_damage ? ", which doesn't leave a mark" : ""]!"), null, null, COMBAT_MESSAGE_RANGE, target)
+			to_chat(target, span_userdanger("You're hit by a [proj_name][hit_part ? " in the [hit_part.name]" : ""]!"))
 
 	for(var/M in purple_hearts)
 		var/mob/living/martyr = M

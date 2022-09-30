@@ -40,7 +40,7 @@
 	production = 2
 	yield = 5
 	potency = 50
-	growthstages = 3
+	growthstages = 2
 	growing_icon = 'icons/obj/hydroponics/growing.dmi'
 	icon_dead = "bamboo-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)

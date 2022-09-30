@@ -1,11 +1,3 @@
-//check_target_facings() return defines
-/// Two mobs are facing the same direction
-#define FACING_SAME_DIR 1
-/// Two mobs are facing each others
-#define FACING_EACHOTHER 2
-/// Two mobs one is facing a person, but the other is perpendicular
-#define FACING_INIT_FACING_TARGET_TARGET_FACING_PERPENDICULAR 3 //Do I win the most informative but also most stupid define award?
-
 /proc/random_blood_type()
 	return pick(4;"O-", 36;"O+", 3;"A-", 28;"A+", 1;"B-", 20;"B+", 1;"AB-", 5;"AB+")
 
@@ -59,12 +51,10 @@
 	return pick(GLOB.backpacklist)
 
 /proc/random_features()
-	if(!GLOB.tails_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/, GLOB.tails_list,  add_blank = TRUE)
 	if(!GLOB.tails_list_human.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/human, GLOB.tails_list_human,  add_blank = TRUE)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/human, GLOB.tails_list_human)
 	if(!GLOB.tails_list_lizard.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/lizard, GLOB.tails_list_lizard, add_blank = TRUE)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/lizard, GLOB.tails_list_lizard)
 	if(!GLOB.snouts_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/snouts, GLOB.snouts_list)
 	if(!GLOB.horns_list.len)
@@ -87,30 +77,8 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_antennae, GLOB.moth_antennae_list)
 	if(!GLOB.moth_markings_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_markings, GLOB.moth_markings_list)
-	if(!GLOB.pod_hair_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/pod_hair, GLOB.pod_hair_list)
-
-	//For now we will always return none for tail_human and ears. | "For now" he says.
-	return(list(
-		"mcolor" = "#[pick("7F","FF")][pick("7F","FF")][pick("7F","FF")]",
-		"ethcolor" = GLOB.color_list_ethereal[pick(GLOB.color_list_ethereal)],
-		"tail_cat" = "None",
-		"tail_lizard" = "Smooth",
-		"wings" = "None",
-		"snout" = pick(GLOB.snouts_list),
-		"horns" = pick(GLOB.horns_list),
-		"ears" = "None",
-		"frills" = pick(GLOB.frills_list),
-		"spines" = pick(GLOB.spines_list),
-		"body_markings" = pick(GLOB.body_markings_list),
-		"legs" = "Normal Legs",
-		"caps" = pick(GLOB.caps_list),
-		"moth_wings" = pick(GLOB.moth_wings_list),
-		"moth_antennae" = pick(GLOB.moth_antennae_list),
-		"moth_markings" = pick(GLOB.moth_markings_list),
-		"tail_monkey" = "None",
-		"pod_hair" = pick(GLOB.pod_hair_list),
-	))
+	//For now we will always return none for tail_human and ears.
+	return(list("mcolor" = "#[pick("7F","FF")][pick("7F","FF")][pick("7F","FF")]","ethcolor" = GLOB.color_list_ethereal[pick(GLOB.color_list_ethereal)], "tail_lizard" = pick(GLOB.tails_list_lizard), "tail_human" = "None", "wings" = "None", "snout" = pick(GLOB.snouts_list), "horns" = pick(GLOB.horns_list), "ears" = "None", "frills" = pick(GLOB.frills_list), "spines" = pick(GLOB.spines_list), "body_markings" = pick(GLOB.body_markings_list), "legs" = "Normal Legs", "caps" = pick(GLOB.caps_list), "moth_wings" = pick(GLOB.moth_wings_list), "moth_antennae" = pick(GLOB.moth_antennae_list), "moth_markings" = pick(GLOB.moth_markings_list), "tail_monkey" = "None"))
 
 /proc/random_hairstyle(gender)
 	switch(gender)
@@ -235,7 +203,7 @@ GLOBAL_LIST_EMPTY(species_list)
 	var/user_loc = user.loc
 
 	var/drifting = FALSE
-	if(SSmove_manager.processing_on(user, SSspacedrift))
+	if(!user.Process_Spacemove(0) && user.inertia_dir)
 		drifting = TRUE
 
 	var/target_loc = target.loc
@@ -268,7 +236,7 @@ GLOBAL_LIST_EMPTY(species_list)
 		if(!QDELETED(progbar))
 			progbar.update(world.time - starttime)
 
-		if(drifting && !SSmove_manager.processing_on(user, SSspacedrift))
+		if(drifting && !user.inertia_dir)
 			drifting = FALSE
 			user_loc = user.loc
 
@@ -330,7 +298,7 @@ GLOBAL_LIST_EMPTY(species_list)
 	var/atom/user_loc = user.loc
 
 	var/drifting = FALSE
-	if(SSmove_manager.processing_on(user, SSspacedrift))
+	if(!user.Process_Spacemove(0) && user.inertia_dir)
 		drifting = TRUE
 
 	var/holding = user.get_active_held_item()
@@ -351,7 +319,7 @@ GLOBAL_LIST_EMPTY(species_list)
 		if(!QDELETED(progbar))
 			progbar.update(world.time - starttime)
 
-		if(drifting && !SSmove_manager.processing_on(user, SSspacedrift))
+		if(drifting && !user.inertia_dir)
 			drifting = FALSE
 			user_loc = user.loc
 
@@ -396,7 +364,7 @@ GLOBAL_LIST_EMPTY(species_list)
 		time *= user.cached_multiplicative_actions_slowdown
 
 	var/drifting = FALSE
-	if(SSmove_manager.processing_on(user, SSspacedrift))
+	if(!user.Process_Spacemove(0) && user.inertia_dir)
 		drifting = TRUE
 
 	var/list/originalloc = list()
@@ -429,7 +397,7 @@ GLOBAL_LIST_EMPTY(species_list)
 			. = FALSE
 			break
 
-		if(drifting && !SSmove_manager.processing_on(user, SSspacedrift))
+		if(drifting && !user.inertia_dir)
 			drifting = FALSE
 			user_loc = user.loc
 
@@ -466,15 +434,6 @@ GLOBAL_LIST_EMPTY(species_list)
 		var/mob/living/carbon/human/H = A
 		if(H.dna && istype(H.dna.species, species_datum))
 			. = TRUE
-
-/// Returns if the given target is a human. Like, a REAL human.
-/// Not a moth, not a felinid (which are human subtypes), but a human.
-/proc/ishumanbasic(target)
-	if (!ishuman(target))
-		return FALSE
-
-	var/mob/living/carbon/human/human_target = target
-	return human_target.dna?.species?.type == /datum/species/human
 
 /proc/spawn_atom_to_turf(spawn_type, target, amount, admin_spawn=FALSE, list/extra_args)
 	var/turf/T = get_turf(target)
@@ -527,7 +486,7 @@ GLOBAL_LIST_EMPTY(species_list)
 // Displays a message in deadchat, sent by source. source is not linkified, message is, to avoid stuff like character names to be linkified.
 // Automatically gives the class deadsay to the whole message (message + source)
 /proc/deadchat_broadcast(message, source=null, mob/follow_target=null, turf/turf_target=null, speaker_key=null, message_type=DEADCHAT_REGULAR, admin_only=FALSE)
-	message = span_deadsay("[source][span_linkify(message)]")
+	message = span_deadsay("[source]<span class='linkify'>[message]</span>")
 
 	for(var/mob/M in GLOB.player_list)
 		var/chat_toggles = TOGGLES_DEFAULT_CHAT
@@ -717,8 +676,6 @@ GLOBAL_LIST_EMPTY(species_list)
 
 #define ISADVANCEDTOOLUSER(mob) (HAS_TRAIT(mob, TRAIT_ADVANCEDTOOLUSER) && !HAS_TRAIT(mob, TRAIT_DISCOORDINATED_TOOL_USER))
 
-#define IS_IN_STASIS(mob) (mob.has_status_effect(/datum/status_effect/grouped/stasis))
-
 /// Gets the client of the mob, allowing for mocking of the client.
 /// You only need to use this if you know you're going to be mocking clients somewhere else.
 #define GET_CLIENT(mob) (##mob.client || ##mob.mock_client)
@@ -765,51 +722,26 @@ GLOBAL_LIST_EMPTY(species_list)
 		if(mob.ckey == key)
 			return mob
 
-///Return a string for the specified body zone. Should be used for parsing non-instantiated bodyparts, otherwise use [/obj/item/bodypart/var/plaintext_zone]
+///Return a string for the specified body zone
 /proc/parse_zone(zone)
-	switch(zone)
-		if(BODY_ZONE_CHEST)
-			return "chest"
-		if(BODY_ZONE_HEAD)
-			return "head"
-		if(BODY_ZONE_PRECISE_R_HAND)
-			return "right hand"
-		if(BODY_ZONE_PRECISE_L_HAND)
-			return "left hand"
-		if(BODY_ZONE_L_ARM)
-			return "left arm"
-		if(BODY_ZONE_R_ARM)
-			return "right arm"
-		if(BODY_ZONE_L_LEG)
-			return "left leg"
-		if(BODY_ZONE_R_LEG)
-			return "right leg"
-		if(BODY_ZONE_PRECISE_L_FOOT)
-			return "left foot"
-		if(BODY_ZONE_PRECISE_R_FOOT)
-			return "right foot"
-		if(BODY_ZONE_PRECISE_GROIN)
-			return "groin"
-		else
-			return zone
-
-///Takes a zone and returns it's "parent" zone, if it has one.
-/proc/deprecise_zone(precise_zone)
-	switch(precise_zone)
-		if(BODY_ZONE_PRECISE_GROIN)
-			return BODY_ZONE_CHEST
-		if(BODY_ZONE_PRECISE_EYES)
-			return BODY_ZONE_HEAD
-		if(BODY_ZONE_PRECISE_R_HAND)
-			return BODY_ZONE_R_ARM
-		if(BODY_ZONE_PRECISE_L_HAND)
-			return BODY_ZONE_L_ARM
-		if(BODY_ZONE_PRECISE_L_FOOT)
-			return BODY_ZONE_L_LEG
-		if(BODY_ZONE_PRECISE_R_FOOT)
-			return BODY_ZONE_R_LEG
-		else
-			return precise_zone
+	if(zone == BODY_ZONE_PRECISE_R_HAND)
+		return "right hand"
+	else if (zone == BODY_ZONE_PRECISE_L_HAND)
+		return "left hand"
+	else if (zone == BODY_ZONE_L_ARM)
+		return "left arm"
+	else if (zone == BODY_ZONE_R_ARM)
+		return "right arm"
+	else if (zone == BODY_ZONE_L_LEG)
+		return "left leg"
+	else if (zone == BODY_ZONE_R_LEG)
+		return "right leg"
+	else if (zone == BODY_ZONE_PRECISE_L_FOOT)
+		return "left foot"
+	else if (zone == BODY_ZONE_PRECISE_R_FOOT)
+		return "right foot"
+	else
+		return zone
 
 ///Returns the direction that the initiator and the target are facing
 /proc/check_target_facings(mob/living/initiator, mob/living/target)
@@ -839,7 +771,7 @@ GLOBAL_LIST_EMPTY(species_list)
 		mob_occupant = head.brainmob
 
 	else if(isorgan(occupant))
-		var/obj/item/organ/internal/brain/brain = occupant
+		var/obj/item/organ/brain/brain = occupant
 		mob_occupant = brain.brainmob
 
 	return mob_occupant
@@ -894,7 +826,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 
 	GLOB.dview_mob.loc = center
 
-	GLOB.dview_mob.set_invis_see(invis_flags)
+	GLOB.dview_mob.see_invisible = invis_flags
 
 	. = view(range, GLOB.dview_mob)
 	GLOB.dview_mob.loc = null
@@ -928,7 +860,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 
 #define FOR_DVIEW(type, range, center, invis_flags) \
 	GLOB.dview_mob.loc = center;           \
-	GLOB.dview_mob.set_invis_see(invis_flags); \
+	GLOB.dview_mob.see_invisible = invis_flags; \
 	for(type in view(range, GLOB.dview_mob))
 
 #define FOR_DVIEW_END GLOB.dview_mob.loc = null
@@ -942,7 +874,3 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	else
 		. = invoked_callback.Invoke()
 	usr = temp
-
-#undef FACING_SAME_DIR
-#undef FACING_EACHOTHER
-#undef FACING_INIT_FACING_TARGET_TARGET_FACING_PERPENDICULAR

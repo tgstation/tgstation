@@ -6,7 +6,7 @@
 	base_icon_state = "reinforced_wall"
 	opacity = TRUE
 	density = TRUE
-	turf_flags = IS_SOLID
+	turf_flags = NONE
 	smoothing_flags = SMOOTH_BITMASK
 	hardness = 10
 	sheet_type = /obj/item/stack/sheet/plasteel
@@ -201,10 +201,8 @@
 
 /turf/closed/wall/r_wall/update_icon(updates=ALL)
 	. = ..()
-	if(d_state != INTACT)
+	if(!(updates & UPDATE_SMOOTHING) || (d_state != INTACT))
 		smoothing_flags = NONE
-		return
-	if (!(updates & UPDATE_SMOOTHING))
 		return
 	smoothing_flags = SMOOTH_BITMASK
 	QUEUE_SMOOTH_NEIGHBORS(src)
@@ -248,10 +246,9 @@
 	base_icon_state = "plastitanium_wall"
 	explosion_block = 20
 	sheet_type = /obj/item/stack/sheet/mineral/plastitanium
-	hardness = 25 //plastitanium
-	turf_flags = IS_SOLID
+	turf_flags = NONE
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS
-	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_SYNDICATE_WALLS, SMOOTH_GROUP_WALLS)
+	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_SYNDICATE_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_SYNDICATE_WALLS, SMOOTH_GROUP_PLASTITANIUM_WALLS, SMOOTH_GROUP_AIRLOCK, SMOOTH_GROUP_SHUTTLE_PARTS)
 	frill_icon = null
 

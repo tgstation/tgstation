@@ -1,5 +1,11 @@
 @echo off
-set NODE_SKIP_PLATFORM_CHECK=1
+where node.exe >nul 2>nul
+if %errorlevel% == 0 (
+	echo | set /p printed_str="Using system-wide Node "
+	call node.exe --version
+	call node.exe %*
+	goto exit_with_last_error_level
+)
 call powershell -NoLogo -ExecutionPolicy Bypass -File "%~dp0\node_.ps1" Download-Node
 for /f "tokens=* USEBACKQ" %%s in (`
 	call powershell -NoLogo -ExecutionPolicy Bypass -File "%~dp0\node_.ps1" Get-Path

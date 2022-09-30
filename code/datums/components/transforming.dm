@@ -218,7 +218,7 @@
 	if(!clumsy_check)
 		return FALSE
 
-	if(!user || !HAS_TRAIT(user, TRAIT_CLUMSY))
+	if(!HAS_TRAIT(user, TRAIT_CLUMSY))
 		return FALSE
 
 	if(active && prob(50))

@@ -12,17 +12,16 @@ PROCESSING_SUBSYSTEM_DEF(station)
 	///Currently active announcer. Starts as a type but gets initialized after traits are selected
 	var/datum/centcom_announcer/announcer = /datum/centcom_announcer/default
 
-/datum/controller/subsystem/processing/station/Initialize()
+/datum/controller/subsystem/processing/station/Initialize(timeofday)
 
 	//If doing unit tests we don't do none of that trait shit ya know?
-	// Autowiki also wants consistent outputs, for example making sure the vending machine page always reports the normal products
-	#if !defined(UNIT_TESTS) && !defined(AUTOWIKI)
+	#ifndef UNIT_TESTS
 	SetupTraits()
 	#endif
 
 	announcer = new announcer() //Initialize the station's announcer datum
 
-	return SS_INIT_SUCCESS
+	return ..()
 
 ///Rolls for the amount of traits and adds them to the traits list
 /datum/controller/subsystem/processing/station/proc/SetupTraits()
@@ -77,7 +76,6 @@ PROCESSING_SUBSYSTEM_DEF(station)
 /datum/controller/subsystem/processing/station/proc/setup_trait(datum/station_trait/trait_type)
 	var/datum/station_trait/trait_instance = new trait_type()
 	station_traits += trait_instance
-	log_game("Station Trait: [trait_instance.name] chosen for this round.")
 	if(!trait_instance.blacklist)
 		return
 	for(var/i in trait_instance.blacklist)

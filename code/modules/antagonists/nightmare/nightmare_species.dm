@@ -4,9 +4,8 @@
 /datum/species/shadow/nightmare
 	name = "Nightmare"
 	id = SPECIES_NIGHTMARE
-	examine_limb_id = SPECIES_SHADOW
+	limbs_id = "shadow"
 	burnmod = 1.5
-	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE
 	no_equip = list(ITEM_SLOT_MASK, ITEM_SLOT_OCLOTHING, ITEM_SLOT_GLOVES, ITEM_SLOT_FEET, ITEM_SLOT_ICLOTHING, ITEM_SLOT_SUITSTORE)
 	species_traits = list(NOBLOOD,NO_UNDERWEAR,NO_DNA_COPY,NOTRANSSTING,NOEYESPRITES)
 	inherent_traits = list(
@@ -23,9 +22,9 @@
 		TRAIT_NODISMEMBER,
 		TRAIT_NOHUNGER,
 	)
-
-	mutantheart = /obj/item/organ/internal/heart/nightmare
-	mutantbrain = /obj/item/organ/internal/brain/shadow/nightmare
+	mutanteyes = /obj/item/organ/eyes/night_vision/nightmare
+	mutantheart = /obj/item/organ/heart/nightmare
+	mutantbrain = /obj/item/organ/brain/nightmare
 
 /datum/species/shadow/nightmare/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
@@ -39,7 +38,7 @@
 		var/light_amount = T.get_lumcount()
 		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
 			H.visible_message(span_danger("[H] dances in the shadows, evading [P]!"))
-			playsound(T, SFX_BULLET_MISS, 75, TRUE)
+			playsound(T, "bullet_miss", 75, TRUE)
 			return BULLET_ACT_FORCE_PIERCE
 	return ..()
 

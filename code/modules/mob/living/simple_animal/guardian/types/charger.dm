@@ -19,16 +19,16 @@
 	. = ..()
 	if(ranged_cooldown <= world.time)
 		if(!chargealert)
-			chargealert = throw_alert(ALERT_CHARGE, /atom/movable/screen/alert/cancharge)
+			chargealert = throw_alert("charge", /atom/movable/screen/alert/cancharge)
 	else
-		clear_alert(ALERT_CHARGE)
+		clear_alert("charge")
 		chargealert = null
 
 /mob/living/simple_animal/hostile/guardian/charger/OpenFire(atom/A)
 	if(!charging)
 		visible_message(span_danger("<b>[src]</b> [ranged_message] at [A]!"))
 		ranged_cooldown = world.time + ranged_cooldown_time
-		clear_alert(ALERT_CHARGE)
+		clear_alert("charge")
 		chargealert = null
 		Shoot(A)
 

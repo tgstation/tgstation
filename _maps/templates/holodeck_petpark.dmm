@@ -1,10 +1,10 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/ausbushes/sparsegrass,
 /turf/open/floor/holofloor/grass,
 /area/template_noop)
 "b" = (
-/obj/structure/flora/bush/ferny/style_random,
+/obj/structure/flora/ausbushes/fernybush,
 /turf/open/floor/holofloor/grass,
 /area/template_noop)
 "c" = (
@@ -12,7 +12,7 @@
 /turf/open/floor/holofloor/grass,
 /area/template_noop)
 "f" = (
-/obj/structure/flora/bush/generic/style_random,
+/obj/structure/flora/ausbushes/genericbush,
 /turf/open/floor/holofloor/grass,
 /area/template_noop)
 "g" = (
@@ -20,15 +20,15 @@
 /turf/open/floor/holofloor/grass,
 /area/template_noop)
 "k" = (
-/obj/structure/flora/tree/jungle/small/style_random,
+/obj/structure/flora/tree/jungle/small,
 /turf/open/floor/holofloor/grass,
 /area/template_noop)
 "l" = (
-/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/flora/ausbushes/ppflowers,
 /turf/open/floor/holofloor/grass,
 /area/template_noop)
 "p" = (
-/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/ausbushes/ywflowers,
 /obj/effect/holodeck_effect/mobspawner/pet,
 /turf/open/floor/holofloor/grass,
 /area/template_noop)
@@ -38,40 +38,40 @@
 /turf/open/floor/holofloor/grass,
 /area/template_noop)
 "v" = (
-/obj/structure/flora/bush/pale/style_random,
+/obj/structure/flora/ausbushes/palebush,
 /turf/open/floor/holofloor/grass,
 /area/template_noop)
 "w" = (
 /obj/effect/holodeck_effect/mobspawner/pet,
-/obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/flora/ausbushes/brflowers,
 /turf/open/floor/holofloor/grass,
 /area/template_noop)
 "y" = (
-/obj/structure/flora/bush/pointy/style_random,
+/obj/structure/flora/ausbushes/pointybush,
 /turf/open/floor/holofloor/grass,
 /area/template_noop)
 "C" = (
-/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/ausbushes/ywflowers,
 /turf/open/floor/holofloor/grass,
 /area/template_noop)
 "D" = (
-/obj/structure/flora/bush/reed/style_random,
+/obj/structure/flora/ausbushes/reedbush,
 /turf/open/floor/holofloor/grass,
 /area/template_noop)
 "G" = (
-/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/ausbushes/lavendergrass,
 /turf/open/floor/holofloor/grass,
 /area/template_noop)
 "H" = (
 /obj/effect/holodeck_effect/mobspawner/pet,
-/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/ausbushes/sparsegrass,
 /turf/open/floor/holofloor/grass,
 /area/template_noop)
 "I" = (
 /turf/open/floor/holofloor/grass,
 /area/template_noop)
 "M" = (
-/obj/structure/flora/bush/sunny/style_random,
+/obj/structure/flora/ausbushes/sunnybush,
 /turf/open/floor/holofloor/grass,
 /area/template_noop)
 "N" = (
@@ -88,7 +88,7 @@
 /turf/open/floor/holofloor,
 /area/template_noop)
 "R" = (
-/obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/flora/ausbushes/brflowers,
 /turf/open/floor/holofloor/grass,
 /area/template_noop)
 "S" = (
@@ -128,7 +128,7 @@
 /turf/open/floor/holofloor,
 /area/template_noop)
 "X" = (
-/obj/item/reagent_containers/cup/watering_can,
+/obj/item/reagent_containers/glass/bucket,
 /turf/open/floor/holofloor/grass,
 /area/template_noop)
 "Z" = (

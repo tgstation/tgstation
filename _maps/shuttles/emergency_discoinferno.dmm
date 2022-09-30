@@ -69,7 +69,7 @@
 "n" = (
 /obj/structure/table/wood/poker,
 /obj/item/storage/box/drinkingglasses,
-/obj/item/reagent_containers/cup/glass/bottle/whiskey,
+/obj/item/reagent_containers/food/drinks/bottle/whiskey,
 /obj/machinery/light/directional/south,
 /turf/open/floor/mineral/gold,
 /area/shuttle/escape)
@@ -80,8 +80,9 @@
 /turf/open/floor/mineral/gold,
 /area/shuttle/escape)
 "p" = (
-/obj/machinery/door/airlock/gold,
-/obj/effect/mapping_helpers/airlock/access/all/command/general,
+/obj/machinery/door/airlock/gold{
+	req_access_txt = "19"
+	},
 /turf/open/floor/mineral/gold,
 /area/shuttle/escape)
 "q" = (
@@ -105,7 +106,7 @@
 	name = "Disco Inferno"
 	},
 /obj/machinery/door/airlock/gold{
-	armor = list("melee" = 30, "bullet" = 30, "laser" = 20, "energy" = 20, "bomb" = 10, "bio" = 0, "fire" = 100, "acid" = 100);
+	armor = list("melee" = 30, "bullet" = 30, "laser" = 20, "energy" = 20, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100);
 	heat_proof = 1;
 	resistance_flags = 2
 	},
@@ -131,12 +132,12 @@
 /area/shuttle/escape)
 "A" = (
 /obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/cup/glass/bottle/cognac,
+/obj/item/reagent_containers/food/drinks/bottle/cognac,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "B" = (
 /obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/cup/glass/bottle/vodka/badminka,
+/obj/item/reagent_containers/food/drinks/bottle/vodka/badminka,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "C" = (
@@ -169,16 +170,18 @@
 /area/shuttle/escape)
 "H" = (
 /obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass,
-/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass,
-/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass,
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
 /obj/machinery/light/directional/east,
 /obj/item/coin/plasma,
 /obj/item/coin/plasma,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "I" = (
-/obj/machinery/computer/slot_machine,
+/obj/machinery/computer/slot_machine{
+	dir = 3
+	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "J" = (
@@ -189,12 +192,12 @@
 /area/shuttle/escape)
 "K" = (
 /obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/cup/glass/bottle/absinthe,
+/obj/item/reagent_containers/food/drinks/bottle/absinthe,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "L" = (
 /obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/cup/glass/bottle/lizardwine,
+/obj/item/reagent_containers/food/drinks/bottle/lizardwine,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "M" = (

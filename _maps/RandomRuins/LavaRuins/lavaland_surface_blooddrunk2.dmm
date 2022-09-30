@@ -9,66 +9,66 @@
 /obj/structure/stone_tile/surrounding_tile{
 	dir = 4
 	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "d" = (
 /obj/structure/stone_tile/block{
 	dir = 1
 	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "e" = (
 /obj/structure/stone_tile/surrounding_tile/cracked{
 	dir = 1
 	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "f" = (
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "g" = (
 /obj/structure/stone_tile{
 	dir = 4
 	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "h" = (
 /obj/structure/stone_tile/block/cracked{
 	dir = 8
 	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "i" = (
 /obj/structure/stone_tile/surrounding_tile/cracked,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "j" = (
 /obj/structure/stone_tile/block/cracked{
 	dir = 4
 	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "k" = (
 /obj/structure/stone_tile/surrounding_tile{
 	dir = 8
 	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "l" = (
 /obj/structure/stone_tile/surrounding_tile,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "m" = (
 /obj/structure/stone_tile/cracked{
 	dir = 4
 	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "n" = (
 /obj/structure/stone_tile/block{
 	dir = 4
 	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "o" = (
 /obj/structure/stone_tile,
@@ -78,14 +78,14 @@
 /obj/structure/stone_tile/cracked{
 	dir = 8
 	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "p" = (
 /obj/structure/stone_tile,
 /obj/structure/stone_tile/block/cracked{
 	dir = 1
 	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "q" = (
 /obj/structure/stone_tile{
@@ -94,13 +94,13 @@
 /obj/structure/stone_tile{
 	dir = 1
 	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "s" = (
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/guidance{
 	dir = 8
 	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "t" = (
 /obj/structure/stone_tile{
@@ -112,50 +112,50 @@
 /obj/structure/stone_tile/cracked{
 	dir = 8
 	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "u" = (
 /obj/structure/stone_tile/surrounding_tile/cracked{
 	dir = 4
 	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "v" = (
 /obj/structure/stone_tile/block/cracked,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "w" = (
 /obj/structure/stone_tile/block,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "x" = (
 /obj/structure/stone_tile/block/cracked{
 	dir = 1
 	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "y" = (
 /obj/structure/stone_tile,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "z" = (
 /obj/structure/stone_tile/surrounding_tile/cracked{
 	dir = 8
 	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "A" = (
 /obj/structure/stone_tile/cracked{
 	dir = 8
 	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "M" = (
 /obj/structure/stone_tile/block{
 	dir = 8
 	},
 /obj/structure/stone_tile/cracked,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 
 (1,1,1) = {"

@@ -8,6 +8,9 @@
 	desc = "It's the hub of a teleporting machine."
 	icon_state = "tele0"
 	base_icon_state = "tele"
+	use_power = IDLE_POWER_USE
+	idle_power_usage = 10
+	active_power_usage = 2000
 	circuit = /obj/item/circuitboard/machine/teleporter_hub
 	var/accuracy = 0
 	var/obj/machinery/teleport/station/power_station
@@ -24,7 +27,6 @@
 	return ..()
 
 /obj/machinery/teleport/hub/RefreshParts()
-	. = ..()
 	var/A = 0
 	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 		A += M.rating
@@ -75,7 +77,7 @@
 		return
 	if (ismovable(M))
 		if(do_teleport(M, target, channel = TELEPORT_CHANNEL_BLUESPACE))
-			use_power(active_power_usage)
+			use_power(5000)
 			if(!calibrated && prob(30 - ((accuracy) * 10))) //oh dear a problem
 				if(ishuman(M))//don't remove people from the round randomly you jerks
 					var/mob/living/carbon/human/human = M
@@ -86,7 +88,9 @@
 						if(human.dna && human.dna.species.id != initial(species_to_transform.id))
 							to_chat(M, span_hear("You hear a buzzing in your ears."))
 							human.set_species(species_to_transform)
-							human.log_message("was turned into a [initial(species_to_transform.name)] through [src].", LOG_GAME)
+							log_game("[human] ([key_name(human)]) was turned into a [initial(species_to_transform.name)] through [src].")
+
+					human.apply_effect((rand(120 - accuracy * 40, 180 - accuracy * 60)), EFFECT_IRRADIATE, 0)
 			calibrated = FALSE
 	return
 
@@ -108,6 +112,9 @@
 	desc = "The power control station for a bluespace teleporter. Used for toggling power, and can activate a test-fire to prevent malfunctions."
 	icon_state = "controller"
 	base_icon_state = "controller"
+	use_power = IDLE_POWER_USE
+	idle_power_usage = 10
+	active_power_usage = 2000
 	circuit = /obj/item/circuitboard/machine/teleporter_station
 	var/engaged = FALSE
 	var/obj/machinery/computer/teleporter/teleporter_console
@@ -120,7 +127,6 @@
 	link_console_and_hub()
 
 /obj/machinery/teleport/station/RefreshParts()
-	. = ..()
 	var/E
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		E += C.rating
@@ -196,7 +202,7 @@
 			to_chat(user, span_alert("The teleporter hub isn't responding."))
 		else
 			engaged = !engaged
-			use_power(active_power_usage)
+			use_power(5000)
 			to_chat(user, span_notice("Teleporter [engaged ? "" : "dis"]engaged!"))
 	else
 		teleporter_console.target_ref = null

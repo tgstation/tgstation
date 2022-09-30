@@ -3,7 +3,7 @@
 /obj/item/evidencebag
 	name = "evidence bag"
 	desc = "An empty evidence bag."
-	icon = 'icons/obj/storage/storage.dmi'
+	icon = 'icons/obj/storage.dmi'
 	icon_state = "evidenceobj"
 	inhand_icon_state = ""
 	w_class = WEIGHT_CLASS_TINY
@@ -28,13 +28,9 @@
 	if(!istype(I) || I.anchored)
 		return
 
-	if(loc.atom_storage && I.atom_storage)
+	if(SEND_SIGNAL(loc, COMSIG_CONTAINS_STORAGE) && SEND_SIGNAL(I, COMSIG_CONTAINS_STORAGE))
 		to_chat(user, span_warning("No matter what way you try, you can't get [I] to fit inside [src]."))
 		return TRUE //begone infinite storage ghosts, begone from me
-
-	if(HAS_TRAIT(I, TRAIT_NO_STORAGE_INSERT))
-		to_chat(user, span_warning("No matter what way you try, you can't get [I] to fit inside [src]."))
-		return TRUE
 
 	if(istype(I, /obj/item/evidencebag))
 		to_chat(user, span_warning("You find putting an evidence bag in another evidence bag to be slightly absurd."))
@@ -53,8 +49,8 @@
 		return
 
 	if(!isturf(I.loc)) //If it isn't on the floor. Do some checks to see if it's in our hands or a box. Otherwise give up.
-		if(I.loc.atom_storage) //in a container.
-			I.loc.atom_storage.attempt_remove(I, src)
+		if(SEND_SIGNAL(I.loc, COMSIG_CONTAINS_STORAGE)) //in a container.
+			SEND_SIGNAL(I.loc, COMSIG_TRY_STORAGE_TAKE, I, src)
 		if(!user.dropItemToGround(I))
 			return
 

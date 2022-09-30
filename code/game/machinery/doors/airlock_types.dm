@@ -25,7 +25,7 @@
 	greyscale_colors = "#ffffff#ffffff#ffffff#ffffff#66ccff#6d6565#ffffff"
 
 /obj/machinery/door/airlock/hydroponics	//Hydroponics front doors!
-	icon = 'icons/obj/doors/airlocks/station/hydroponics.dmi'
+	icon = 'icons/obj/doors/airlocks/station/medical.dmi'	 //Uses same icon as /medical, maybe update it with its own unique icon one day?
 	assemblytype = /obj/structure/door_assembly/door_assembly_hydro
 
 /obj/machinery/door/airlock/maintenance
@@ -135,6 +135,7 @@
 	autoclose = FALSE
 	frequency = FREQ_AIRLOCK_CONTROL
 	heat_proof = TRUE
+	req_access = list(ACCESS_ORDNANCE)
 
 /obj/machinery/door/airlock/research/glass/incinerator/ordmix_interior
 	name = "Mixing Room Interior Airlock"
@@ -217,36 +218,23 @@
 	name = "uranium airlock"
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_uranium
-	greyscale_colors = rgb(0,51,0)+rgb(0,51,0)+rgb(0,68,0)+rgb(0,68,0)+rgb(0,51,0)+rgb(109,101,101)+rgb(0,51,0)
 	var/last_event = 0
-	//Is this airlock actually radioactive?
-	var/actually_radioactive = TRUE
+	greyscale_colors = rgb(0,51,0)+rgb(0,51,0)+rgb(0,68,0)+rgb(0,68,0)+rgb(0,51,0)+rgb(109,101,101)+rgb(0,51,0)
 
 /obj/machinery/door/airlock/uranium/process()
-	if(actually_radioactive && world.time > last_event+20)
+	if(world.time > last_event+20)
 		if(prob(50))
 			radiate()
 		last_event = world.time
 	..()
 
 /obj/machinery/door/airlock/uranium/proc/radiate()
-	radiation_pulse(
-		src,
-		max_range = 2,
-		threshold = RAD_LIGHT_INSULATION,
-		chance = URANIUM_IRRADIATION_CHANCE,
-		minimum_exposure_time = URANIUM_RADIATION_MINIMUM_EXPOSURE_TIME,
-	)
+	radiation_pulse(get_turf(src), 150)
+	return
 
 /obj/machinery/door/airlock/uranium/glass
 	opacity = FALSE
 	glass = TRUE
-
-/obj/machinery/door/airlock/uranium/safe
-	actually_radioactive = FALSE
-
-/obj/machinery/door/airlock/uranium/glass/safe
-	actually_radioactive = FALSE
 
 /obj/machinery/door/airlock/plasma
 	name = "plasma airlock"
@@ -254,15 +242,43 @@
 	icon = 'icons/obj/doors/airlocks/station/plasma.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_plasma
 	greyscale_colors = "#890e89#890e89#660066#660066#660066#6d6565#5d035d"
-	material_flags = MATERIAL_EFFECTS
-	material_modifier = 0.25
 
 /obj/machinery/door/airlock/plasma/Initialize(mapload)
-	custom_materials = custom_materials ? custom_materials : list(/datum/material/plasma = 20000)
 	. = ..()
+	AddElement(/datum/element/atmos_sensitive, mapload)
+
+/obj/machinery/door/airlock/plasma/proc/ignite(exposed_temperature)
+	if(exposed_temperature > 300)
+		PlasmaBurn(exposed_temperature)
+
+/obj/machinery/door/airlock/plasma/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
+	return (exposed_temperature > 300)
+
+/obj/machinery/door/airlock/plasma/atmos_expose(datum/gas_mixture/air, exposed_temperature)
+	PlasmaBurn()
+
+/obj/machinery/door/airlock/plasma/proc/PlasmaBurn()
+	atmos_spawn_air("plasma=500;TEMP=1000")
+	var/obj/structure/door_assembly/DA
+	DA = new /obj/structure/door_assembly(loc)
+	if(glass)
+		DA.glass = TRUE
+	if(heat_proof)
+		DA.heat_proof_finished = TRUE
+	DA.update_appearance()
+	DA.update_name()
+	qdel(src)
 
 /obj/machinery/door/airlock/plasma/block_superconductivity() //we don't stop the heat~
 	return 0
+
+/obj/machinery/door/airlock/plasma/attackby(obj/item/C, mob/user, params)
+	if(C.get_temperature() > 300)//If the temperature of the object is over 300, then ignite
+		message_admins("Plasma airlock ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(src)]")
+		log_game("Plasma airlock ignited by [key_name(user)] in [AREACOORD(src)]")
+		ignite(C.get_temperature())
+	else
+		return ..()
 
 /obj/machinery/door/airlock/plasma/glass
 	opacity = FALSE
@@ -347,6 +363,7 @@
 	autoclose = FALSE
 	frequency = FREQ_AIRLOCK_CONTROL
 	heat_proof = TRUE
+	req_one_access = list(ACCESS_ATMOSPHERICS, ACCESS_MAINT_TUNNELS)
 
 /obj/machinery/door/airlock/public/glass/incinerator/atmos_interior
 	name = "Turbine Interior Airlock"
@@ -369,6 +386,8 @@
 	assemblytype = /obj/structure/door_assembly/door_assembly_ext
 	greyscale_config = null
 	greyscale_colors = null
+	req_access = list(ACCESS_EXTERNAL_AIRLOCKS)
+
 	/// Whether or not the airlock can be opened without access from a certain direction while powered, or with bare hands from any direction while unpowered OR pressurized.
 	var/space_dir = null
 
@@ -413,6 +432,7 @@
 
 /// Access free external airlock
 /obj/machinery/door/airlock/external/ruin
+	req_access = null
 
 /obj/machinery/door/airlock/external/glass
 	opacity = FALSE
@@ -420,6 +440,7 @@
 
 /// Access free external glass airlock
 /obj/machinery/door/airlock/external/glass/ruin
+	req_access = null
 
 //////////////////////////////////
 /*
@@ -568,7 +589,7 @@
 /obj/machinery/door/airlock/cult/allowed(mob/living/L)
 	if(!density)
 		return TRUE
-	if(friendly || IS_CULTIST(L) || isshade(L) || isconstruct(L))
+	if(friendly || IS_CULTIST(L) || istype(L, /mob/living/simple_animal/shade) || isconstruct(L))
 		if(!stealthy)
 			new openingoverlaytype(loc)
 		return TRUE
@@ -580,13 +601,13 @@
 			SEND_SOUND(L, sound(pick('sound/hallucinations/turn_around1.ogg','sound/hallucinations/turn_around2.ogg'),0,1,50))
 			flash_color(L, flash_color="#960000", flash_time=20)
 			L.Paralyze(40)
-			L.throw_at(throwtarget, 5, 1)
+			L.throw_at(throwtarget, 5, 1,src)
 		return FALSE
 
 /obj/machinery/door/airlock/cult/proc/conceal()
 	icon = 'icons/obj/doors/airlocks/tall/maintenance.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/tall/overlays.dmi'
-	name = "Airlock"
+	name = "airlock"
 	desc = "It opens and closes."
 	stealthy = TRUE
 	update_appearance()
@@ -635,35 +656,7 @@
 	desc = "An airlock hastily corrupted by blood magic, it is unusually brittle in this state."
 	normal_integrity = 150
 	damage_deflection = 5
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
-
-
-//////////////////////////////////
-/*
-	Material Airlocks
-*/
-/obj/machinery/door/airlock/material
-	name = "Airlock"
-	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_GREYSCALE | MATERIAL_AFFECT_STATISTICS
-	greyscale_config = /datum/greyscale_config/material_airlock
-	assemblytype = /obj/structure/door_assembly/door_assembly_material
-
-/obj/machinery/door/airlock/material/close(forced, force_crush)
-	. = ..()
-	if(!.)
-		return
-	for(var/datum/material/mat in custom_materials)
-		if(mat.alpha < 255)
-			set_opacity(FALSE)
-			break
-
-/obj/machinery/door/airlock/material/prepare_deconstruction_assembly(obj/structure/door_assembly/assembly)
-	assembly.set_custom_materials(custom_materials)
-	..()
-
-/obj/machinery/door/airlock/material/glass
-	opacity = FALSE
-	glass = TRUE
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 
 //////////////////////////////////
 /*

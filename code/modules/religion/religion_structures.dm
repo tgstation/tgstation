@@ -6,7 +6,7 @@
 	density = TRUE
 	anchored = TRUE
 	layer = TABLE_LAYER
-	pass_flags_self = PASSSTRUCTURE | PASSTABLE | LETPASSTHROW
+	pass_flags_self = LETPASSTHROW
 	can_buckle = TRUE
 	buckle_lying = 90 //we turn to you!
 	///Avoids having to check global everytime by referencing it locally.
@@ -14,21 +14,16 @@
 
 /obj/structure/altar_of_gods/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/religious_tool, ALL, FALSE, CALLBACK(src, .proc/reflect_sect_in_icons))
 	reflect_sect_in_icons()
-	GLOB.chaplain_altars += src
 	AddElement(/datum/element/climbable)
 
-/obj/structure/altar_of_gods/Destroy()
-	GLOB.chaplain_altars -= src
-	return ..()
+/obj/structure/altar_of_gods/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/religious_tool, ALL, FALSE, CALLBACK(src, .proc/reflect_sect_in_icons))
 
 /obj/structure/altar_of_gods/update_overlays()
-	var/list/new_overlays = ..()
-	if(GLOB.religious_sect)
-		return new_overlays
-	new_overlays += "convertaltarcandle"
-	return new_overlays
+	. = ..()
+	. += "convertaltarcandle"
 
 /obj/structure/altar_of_gods/attack_hand(mob/living/user, list/modifiers)
 	if(!Adjacent(user) || !user.pulling)
@@ -39,7 +34,7 @@
 	if(pushed_mob.buckled)
 		to_chat(user, span_warning("[pushed_mob] is buckled to [pushed_mob.buckled]!"))
 		return ..()
-	to_chat(user, span_notice("You try to coax [pushed_mob] onto [src]..."))
+	to_chat(user,"<span class='notice>You try to coax [pushed_mob] onto [src]...</span>")
 	if(!do_after(user,(5 SECONDS),target = pushed_mob))
 		return ..()
 	pushed_mob.forceMove(loc)
@@ -83,26 +78,25 @@
 	desc = "A wooden totem with strange carvings on it."
 	icon_state = "ritual_totem"
 	inhand_icon_state = "sheet-wood"
-	lefthand_file = 'icons/mob/inhands/items/sheets_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/items/sheets_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/misc/sheets_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/sheets_righthand.dmi'
 	//made out of a single sheet of wood
 	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT)
 	item_flags = NO_PIXEL_RANDOM_DROP
 
 /obj/item/ritual_totem/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/anti_magic, \
-		antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY, \
-		charges = 1, \
-		expiration = CALLBACK(src, .proc/expire), \
-	)
+	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, null, 1, FALSE, CALLBACK(src, .proc/block_magic), CALLBACK(src, .proc/expire))//one charge of anti_magic
 	AddComponent(/datum/component/religious_tool, RELIGION_TOOL_INVOKE, FALSE)
 
-/// When the ritual totem is depleted of antimagic
+/obj/item/ritual_totem/proc/block_magic(mob/user, major)
+	if(major)
+		to_chat(user, span_warning("[src] consumes the magic within itself!"))
+
 /obj/item/ritual_totem/proc/expire(mob/user)
-	to_chat(user, span_warning("[src] consumes the magic within itself and quickly decays into rot!"))
-	new /obj/effect/decal/cleanable/ash(drop_location())
+	to_chat(user, span_warning("[src] quickly decays into rot!"))
 	qdel(src)
+	new /obj/effect/decal/cleanable/ash(drop_location())
 
 /obj/item/ritual_totem/can_be_pulled(user, grab_state, force)
 	. = ..()

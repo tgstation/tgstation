@@ -38,11 +38,15 @@
 					floor += 2
 
 			if(iswallturf(T))
-				wall += 1
+				var/turf/closed/wall/TW = T
+				if(TW.intact)
+					wall += 2
+				else
+					wall += 1
 
 			if(istype(T, /turf/closed/wall/r_wall))
 				var/turf/closed/wall/r_wall/TRW = T
-				if(TRW.d_state == INTACT)
+				if(TRW.intact)
 					r_wall += 2
 				else
 					r_wall += 1

@@ -1,7 +1,8 @@
 //DO NOT USE THESE FOR ACCESSING ATMOS DATA, THEY MUTATE THINGS WHEN CALLED. I WILL BEAT YOU WITH A STICK. See the actual proc for more details
-///Check if an atom (A) and a turf (O) allow gas passage based on the atom's can_atmos_pass var, do not use.
-///(V) is if the share is vertical or not. True or False
-#define CANATMOSPASS(A, O, V) ( A.can_atmos_pass == ATMOS_PASS_PROC ? A.can_atmos_pass(O, V) : ( A.can_atmos_pass == ATMOS_PASS_DENSITY ? !A.density : A.can_atmos_pass ) )
+///Check if the turfs allows gas passage based on density, do not use.
+#define CANATMOSPASS(A, O) ( A.can_atmos_pass == ATMOS_PASS_PROC ? A.can_atmos_pass(O) : ( A.can_atmos_pass == ATMOS_PASS_DENSITY ? !A.density : A.can_atmos_pass ) )
+///Check if the turfs allows gas passage on a z level, do not use.
+#define CANVERTICALATMOSPASS(A, O) ( A.can_atmos_pass_vertical == ATMOS_PASS_PROC ? A.can_atmos_pass(O, TRUE) : ( A.can_atmos_pass_vertical == ATMOS_PASS_DENSITY ? !A.density : A.can_atmos_pass_vertical ) )
 
 //Helpers
 ///Moves the icon of the device based on the piping layer and on the direction
@@ -47,73 +48,25 @@
 
 GLOBAL_LIST_INIT(nonoverlaying_gases, typecache_of_gases_with_no_overlays())
 ///Returns a list of overlays of every gas in the mixture
-#define GAS_OVERLAYS(gases, out_var, z_layer_turf)\
-	do { \
-		out_var = list();\
-		var/offset = GET_TURF_PLANE_OFFSET(z_layer_turf);\
-		for(var/_ID in gases){\
-			if(GLOB.nonoverlaying_gases[_ID]) continue;\
-			var/_GAS = gases[_ID];\
-			var/_GAS_META = _GAS[GAS_META];\
-			if(_GAS[MOLES] <= _GAS_META[META_GAS_MOLES_VISIBLE]) continue;\
-			var/_GAS_OVERLAY = _GAS_META[META_GAS_OVERLAY][offset + 1];\
-			out_var += _GAS_OVERLAY[min(TOTAL_VISIBLE_STATES, CEILING(_GAS[MOLES] / MOLES_GAS_VISIBLE_STEP, 1))];\
-		} \
-	}\
-	while (FALSE)
+#define GAS_OVERLAYS(gases, out_var)\
+	out_var = list();\
+	for(var/_ID in gases){\
+		if(GLOB.nonoverlaying_gases[_ID]) continue;\
+		var/_GAS = gases[_ID];\
+		var/_GAS_META = _GAS[GAS_META];\
+		if(_GAS[MOLES] <= _GAS_META[META_GAS_MOLES_VISIBLE]) continue;\
+		var/_GAS_OVERLAY = _GAS_META[META_GAS_OVERLAY];\
+		out_var += _GAS_OVERLAY[min(TOTAL_VISIBLE_STATES, CEILING(_GAS[MOLES] / MOLES_GAS_VISIBLE_STEP, 1))];\
+	}
 
 #ifdef TESTING
 GLOBAL_LIST_INIT(atmos_adjacent_savings, list(0,0))
-#define CALCULATE_ADJACENT_TURFS(T, state) if (SSair.adjacent_rebuild[T]) { GLOB.atmos_adjacent_savings[1] += 1 } else { GLOB.atmos_adjacent_savings[2] += 1; SSair.adjacent_rebuild[T] = state}
+#define CALCULATE_ADJACENT_TURFS(T, state) if (SSadjacent_air.queue[T]) { GLOB.atmos_adjacent_savings[1] += 1 } else { GLOB.atmos_adjacent_savings[2] += 1; SSadjacent_air.queue[T] = state}
 #else
-#define CALCULATE_ADJACENT_TURFS(T, state) SSair.adjacent_rebuild[T] = state
+#define CALCULATE_ADJACENT_TURFS(T, state) SSadjacent_air.queue[T] = state
 #endif
 
 //If you're doing spreading things related to atmos, DO NOT USE CANATMOSPASS, IT IS NOT CHEAP. use this instead, the info is cached after all. it's tweaked just a bit to allow for circular checks
 #define TURFS_CAN_SHARE(T1, T2) (LAZYACCESS(T2.atmos_adjacent_turfs, T1) || LAZYLEN(T1.atmos_adjacent_turfs & T2.atmos_adjacent_turfs))
 //Use this to see if a turf is fully blocked or not, think windows or firelocks. Fails with 1x1 non full tile windows, but it's not worth the cost.
 #define TURF_SHARES(T) (LAZYLEN(T.atmos_adjacent_turfs))
-
-#define LINDA_CYCLE_ARCHIVE(turf)\
-	turf.air.archive();\
-	turf.archived_cycle = SSair.times_fired;\
-	turf.temperature_archived = turf.temperature;
-
-/* Fetch the energy transferred when two gas mixtures's temperature equalize.
- *
- * To equalize two gas mixtures, we simply pool the energy and divide it by the pooled heat capacity.
- * T' = (W1+W2) / (C1+C2)
- * But if we want to moderate this conduction, maybe we can calculate the energy transferred
- * and multiply a coefficient to it instead.
- * This is the energy transferred:
- * W = T' * C1 - W1
- * W = (W1+W2) / (C1+C2) * C1 - W1
- * W = (W1C1 + W2C1) / (C1+C2) - W1
- * W = ((W1C1 + W2C1) - (W1 * (C1+C2))) / (C1+C2)
- * W = ((W1C1 + W2C1) - (W1C1 + W1C2)) / (C1+C2)
- * W = (W1C1 - W1C1 + W2C1 - W1C2) / (C1+C2)
- * W = (W2C1 - W1C2) / (C1+C2)
- * W = (T2*C2*C1 - T1*C1*C2) / (C1+C2)
- * W = (C1*C2) * (T2-T1) / (C1+C2)
- *
- * W: Energy involved in the operation
- * T': Combined temperature
- * T1, C1, W1: Temp, heat cap, and thermal energy of the first gas mixture
- * T2, C2, W2: Temp, heat cap, and thermal energy of the second gas mixture
- *
- * Not immediately obvious, but saves us operation time.
- *
- * We put a lot of parentheses here because the numbers get really really big.
- * By prioritizing the division we try to tone the number down so we dont get overflows.
- *
- * Arguments:
- * * temperature_delta: T2 - T1. [/datum/gas_mixture/var/temperature]
- * If you have any moderating (less than 1) coefficients and are dealing with very big numbers
- * multiply the temperature_delta by it first before passing so we get even more breathing room.
- * * heat_capacity_one:  gasmix one's [/datum/gas_mixture/proc/heat_capacity]
- * * heat_capacity_two: gasmix two's [/datum/gas_mixture/proc/heat_capacity]
- * Returns: The energy gained by gas mixture one. Negative if gas mixture one loses energy.
- * Honestly the heat capacity is interchangeable, just make sure the delta is right.
- */
-#define CALCULATE_CONDUCTION_ENERGY(temperature_delta, heat_capacity_one, heat_capacity_two)\
-	((temperature_delta) * ((heat_capacity_one) * ((heat_capacity_two) / ((heat_capacity_one) + (heat_capacity_two)))))

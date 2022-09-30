@@ -5,8 +5,7 @@
 
 @use './base.scss';
 
-html,
-body {
+html, body {
   box-sizing: border-box;
   height: 100%;
   margin: 0;
@@ -23,13 +22,10 @@ body {
   font-family: Verdana, Geneva, sans-serif;
 }
 
-*,
-*:before,
-*:after {
+*, *:before, *:after {
   box-sizing: inherit;
 }
 
-// prettier-ignore
 h1, h2, h3, h4, h5, h6 {
   display: block;
   margin: 0;
@@ -57,8 +53,7 @@ h4 {
   font-size: 1rem;
 }
 
-td,
-th {
+td, th {
   vertical-align: baseline;
   text-align: left;
 }

@@ -11,7 +11,21 @@
 	/// Current number of a pinned notices
 	var/notices = 0
 
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/structure/noticeboard, 32)
+/obj/structure/noticeboard/directional/north
+	dir = SOUTH
+	pixel_y = 32
+
+/obj/structure/noticeboard/directional/south
+	dir = NORTH
+	pixel_y = -32
+
+/obj/structure/noticeboard/directional/east
+	dir = WEST
+	pixel_x = 32
+
+/obj/structure/noticeboard/directional/west
+	dir = EAST
+	pixel_x = -32
 
 /obj/structure/noticeboard/Initialize(mapload)
 	. = ..()
@@ -104,7 +118,7 @@ INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/structure/noticeboard, 32)
 		user.put_in_hands(item)
 		balloon_alert(user, "removed from board")
 	notices--
-	update_appearance()
+	icon_state = "nboard0[notices]"
 
 /obj/structure/noticeboard/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -158,6 +172,6 @@ INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/structure/noticeboard, 32)
 /obj/structure/noticeboard/staff
 	name = "Staff Notice Board"
 	desc = "Important notices from the heads of staff."
-	req_access = list(ACCESS_COMMAND)
+	req_access = list(ACCESS_HEADS)
 
 #undef MAX_NOTICES

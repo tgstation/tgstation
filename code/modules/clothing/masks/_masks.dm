@@ -1,8 +1,6 @@
 /obj/item/clothing/mask
 	name = "mask"
 	icon = 'icons/obj/clothing/masks.dmi'
-	lefthand_file = 'icons/mob/inhands/clothing/masks_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/clothing/masks_righthand.dmi'
 	body_parts_covered = HEAD
 	slot_flags = ITEM_SLOT_MASK
 	strip_delay = 40
@@ -21,7 +19,7 @@
 
 /obj/item/clothing/mask/equipped(mob/M, slot)
 	. = ..()
-	if ((slot & ITEM_SLOT_MASK) && modifies_speech)
+	if (slot == ITEM_SLOT_MASK && modifies_speech)
 		RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
 	else
 		UnregisterSignal(M, COMSIG_MOB_SAY)
@@ -52,14 +50,14 @@
 	if(body_parts_covered & HEAD)
 		if(damaged_clothes)
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damagedmask")
-		if(GET_ATOM_BLOOD_DNA_LENGTH(src))
+		if(HAS_BLOOD_DNA(src))
 			. += mutable_appearance('icons/effects/blood.dmi', "maskblood")
 
 /obj/item/clothing/mask/update_clothes_damaged_state(damaged_state = CLOTHING_DAMAGED)
 	..()
 	if(ismob(loc))
 		var/mob/M = loc
-		M.update_worn_mask()
+		M.update_inv_wear_mask()
 
 //Proc that moves gas/breath masks out of the way, disabling them and allowing pill/food consumption
 /obj/item/clothing/mask/proc/adjustmask(mob/living/user)
@@ -68,6 +66,7 @@
 	mask_adjusted = !mask_adjusted
 	if(!mask_adjusted)
 		src.icon_state = initial(icon_state)
+		permeability_coefficient = initial(permeability_coefficient)
 		clothing_flags |= visor_flags
 		flags_inv |= visor_flags_inv
 		flags_cover |= visor_flags_cover
@@ -76,6 +75,7 @@
 	else
 		icon_state += "_up"
 		to_chat(user, span_notice("You push \the [src] out of the way."))
+		permeability_coefficient = 1
 		clothing_flags &= ~visor_flags
 		flags_inv &= ~visor_flags_inv
 		flags_cover &= ~visor_flags_cover

@@ -48,6 +48,35 @@
 	parts += antag_listing_commands()
 	return "<tr><td>[parts.Join("</td><td>")]</td></tr>"
 
+
+/datum/team/proc/get_team_antags(antag_type,specific = FALSE)
+	. = list()
+	for(var/datum/antagonist/A in GLOB.antagonists)
+		if(A.get_team() == src && (!antag_type || !specific && istype(A,antag_type) || specific && A.type == antag_type))
+			. += A
+
+//Builds section for the team
+/datum/team/proc/antag_listing_entry()
+	//NukeOps:
+	// Jim (Status) FLW PM TP
+	// Joe (Status) FLW PM TP
+	//Disk:
+	// Deep Space FLW
+	var/list/parts = list()
+	parts += "<b>[antag_listing_name()]</b><br>"
+	parts += "<table cellspacing=5>"
+	for(var/datum/antagonist/A in get_team_antags())
+		parts += A.antag_listing_entry()
+	parts += "</table>"
+	parts += antag_listing_footer()
+	return parts.Join()
+
+/datum/team/proc/antag_listing_name()
+	return name
+
+/datum/team/proc/antag_listing_footer()
+	return
+
 /datum/admins/proc/build_antag_listing()
 	var/list/sections = list()
 	var/list/priority_sections = list()

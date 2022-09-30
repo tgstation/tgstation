@@ -110,15 +110,17 @@
 	desc = "Not very useful without a real lock."
 	icon_state = "door_closed"
 	cuttable = FALSE
+	var/open = FALSE
 
 /obj/structure/fence/door/Initialize(mapload)
 	. = ..()
 
-	update_icon_state()
+	update_door_status()
 
 /obj/structure/fence/door/opened
 	icon_state = "door_opened"
-	density = FALSE
+	open = TRUE
+	density = TRUE
 
 /obj/structure/fence/door/attack_hand(mob/user, list/modifiers)
 	if(can_open(user))
@@ -127,14 +129,14 @@
 	return TRUE
 
 /obj/structure/fence/door/proc/toggle(mob/user)
-	visible_message(span_notice("\The [user] [density ? "opens" : "closes"] \the [src]."))
-	set_density(!density)
-	update_icon_state()
+	open = !open
+	visible_message(span_notice("\The [user] [open ? "opens" : "closes"] \the [src]."))
+	update_door_status()
 	playsound(src, 'sound/machines/click.ogg', 100, TRUE)
 
-/obj/structure/fence/door/update_icon_state()
+/obj/structure/fence/door/proc/update_door_status()
+	set_density(!density)
 	icon_state = density ? "door_closed" : "door_opened"
-	return ..()
 
 /obj/structure/fence/door/proc/can_open(mob/user)
 	return TRUE

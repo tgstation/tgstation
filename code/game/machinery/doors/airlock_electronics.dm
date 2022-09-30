@@ -5,18 +5,14 @@
 	var/list/accesses = list()
 	/// If the airlock should require ALL or only ONE of the listed accesses
 	var/one_access = 0
-	/// Checks to see if this airlock has an unrestricted helper (will set to TRUE if present).
-	var/unres_sensor = FALSE
 	/// Unrestricted sides, or sides of the airlock that will open regardless of access
-	var/unres_sides = NONE
+	var/unres_sides = 0
 	///what name are we passing to the finished airlock
 	var/passed_name
 	///what string are we passing to the finished airlock as the cycle ID
 	var/passed_cycle_id
 	/// A holder of the electronics, in case of them working as an integrated part
 	var/holder
-	/// Whether this airlock can have an integrated circuit inside of it or not
-	var/shell = FALSE
 
 /obj/item/electronics/airlock/examine(mob/user)
 	. = ..()
@@ -49,7 +45,6 @@
 	data["unres_direction"] = unres_sides
 	data["passedName"] = passed_name
 	data["passedCycleId"] = passed_cycle_id
-	data["shell"] = shell
 	return data
 
 /obj/item/electronics/airlock/ui_act(action, params)
@@ -69,14 +64,11 @@
 			one_access = !one_access
 			. = TRUE
 		if("set")
-			var/access = params["access"]
+			var/access = text2num(params["access"])
 			if (!(access in accesses))
 				accesses += access
 			else
 				accesses -= access
-			. = TRUE
-		if("set_shell")
-			shell = !!params["on"]
 			. = TRUE
 		if("direc_set")
 			var/unres_direction = text2num(params["unres_direction"])

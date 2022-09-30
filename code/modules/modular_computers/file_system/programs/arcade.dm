@@ -35,7 +35,6 @@
 			computer.update_appearance()
 		ticket_count += 1
 		user?.mind?.adjust_experience(/datum/skill/gaming, 50)
-		usr.won_game()
 		sleep(10)
 	else if(player_hp <= 0 || player_mp <= 0)
 		heads_up = "You have been defeated... how will the station survive?"
@@ -45,7 +44,6 @@
 		if(istype(computer))
 			computer.update_appearance()
 		user?.mind?.adjust_experience(/datum/skill/gaming, 10)
-		usr.lost_game()
 		sleep(10)
 
 /datum/computer_file/program/arcade/proc/enemy_check(mob/user)
@@ -98,7 +96,9 @@
 	if(.)
 		return
 
-	usr.played_game()
+	var/obj/item/computer_hardware/printer/printer
+	if(computer)
+		printer = computer.all_components[MC_PRINT]
 
 	var/gamerSkillLevel = 0
 	var/gamerSkill = 0
@@ -149,7 +149,10 @@
 			enemy_check()
 			return TRUE
 		if("Dispense_Tickets")
-			if(computer.stored_paper <= 0)
+			if(!printer)
+				to_chat(usr, span_notice("Hardware error: A printer is required to redeem tickets."))
+				return
+			if(printer.stored_paper <= 0)
 				to_chat(usr, span_notice("Hardware error: Printer is out of paper."))
 				return
 			else
@@ -158,7 +161,7 @@
 					new /obj/item/stack/arcadeticket((get_turf(computer)), 1)
 					to_chat(usr, span_notice("[computer] dispenses a ticket!"))
 					ticket_count -= 1
-					computer.stored_paper -= 1
+					printer.stored_paper -= 1
 				else
 					to_chat(usr, span_notice("You don't have any stored tickets!"))
 				return TRUE

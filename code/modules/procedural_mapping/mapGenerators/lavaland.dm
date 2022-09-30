@@ -1,6 +1,6 @@
 
 /datum/map_generator_module/bottom_layer/lavaland_default
-	spawnableTurfs = list(/turf/open/misc/asteroid/basalt/lava_land_surface = 100)
+	spawnableTurfs = list(/turf/open/floor/plating/asteroid/basalt/lava_land_surface = 100)
 
 /datum/map_generator_module/bottom_layer/lavaland_mineral
 	spawnableTurfs = list(/turf/closed/mineral/random/volcanic = 100)

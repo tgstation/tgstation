@@ -39,10 +39,10 @@
 /datum/component/omen/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/check_accident)
 	RegisterSignal(parent, COMSIG_LIVING_STATUS_KNOCKDOWN, .proc/check_slip)
-	RegisterSignal(parent, COMSIG_CARBON_MOOD_UPDATE, .proc/check_bless)
+	RegisterSignal(parent, COMSIG_ADD_MOOD_EVENT, .proc/check_bless)
 
 /datum/component/omen/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_LIVING_STATUS_KNOCKDOWN, COMSIG_MOVABLE_MOVED, COMSIG_CARBON_MOOD_UPDATE))
+	UnregisterSignal(parent, list(COMSIG_LIVING_STATUS_KNOCKDOWN, COMSIG_MOVABLE_MOVED, COMSIG_ADD_MOOD_EVENT))
 
 /**
  * check_accident() is called each step we take
@@ -65,14 +65,16 @@
 		if(istype(turf_content, /obj/machinery/door/airlock))
 			to_chat(living_guy, span_warning("A malevolent force launches your body to the floor..."))
 			var/obj/machinery/door/airlock/darth_airlock = turf_content
-			living_guy.apply_status_effect(/datum/status_effect/incapacitating/paralyzed, 10)
+			living_guy.apply_status_effect(STATUS_EFFECT_PARALYZED, 10)
 			INVOKE_ASYNC(darth_airlock, /obj/machinery/door/airlock.proc/close, TRUE)
 			if(!permanent)
 				qdel(src)
 			return
 
-	for(var/turf/the_turf as anything in get_adjacent_open_turfs(living_guy))
-		if(the_turf.zPassOut(living_guy, DOWN) && living_guy.can_z_move(DOWN, the_turf, z_move_flags = ZMOVE_FALL_FLAGS))
+	for(var/t in get_adjacent_open_turfs(living_guy))
+		var/turf/the_turf = t
+
+		if(the_turf.zPassOut(living_guy, DOWN) && living_guy.can_zFall(the_turf))
 			to_chat(living_guy, span_warning("A malevolent force guides you towards the edge..."))
 			living_guy.throw_at(the_turf, 1, 10, force = MOVE_FORCE_EXTREMELY_STRONG)
 			if(!permanent)
@@ -112,7 +114,7 @@
 	if(permanent)
 		return
 
-	if (!("blessing" in our_guy.mob_mood.mood_events))
+	if(category != "blessing")
 		return
 
 	qdel(src)

@@ -19,6 +19,7 @@
 		var/mob/living/living_pawn = pawn
 		if(IS_DEAD_OR_INCAP(living_pawn))
 			return FALSE
+	return TRUE
 
 /datum/ai_controller/basic_controller/proc/update_speed(mob/living/basic/basic_mob)
 	SIGNAL_HANDLER

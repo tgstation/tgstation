@@ -10,7 +10,7 @@
 	var/datum/mind/memorizer_mind
 	///the action done to the target, see memory.dm in _DEFINES
 	var/action
-	///extra information used in the memories to more accurately describe what happened. Assoc list of key -> string identifying what kind of info it is, value is a string identifying the detail.
+	///extra information used in the memories to more accurately describe what happened. Assoc list of key -> string identifying what kind of info it is, value is an atom or string identifying the detail.
 	var/list/extra_info
 	///mood of the person memorizing the event when it happend. can change the style.
 	var/memorizer_mood
@@ -24,14 +24,6 @@
 	src.memorizer_mind = memorizer_mind
 	src.memorizer = memorizer
 	src.action = action
-	//You can feed atoms in, but they're gonna be reduced to text
-	for(var/key in extra_info)
-		var/thing = extra_info[key]
-		if(!isdatum(thing))
-			continue
-		var/datum/reduce_to_string = thing
-		extra_info[key] = "[reduce_to_string]"
-
 	src.extra_info = extra_info
 	src.memorizer_mood = memorizer_mood
 	src.story_value = story_value
@@ -48,7 +40,7 @@
 		/mob/living/simple_animal/hostile/carp,
 		/mob/living/simple_animal/hostile/bear,
 		/mob/living/simple_animal/hostile/mushroom,
-		/mob/living/simple_animal/hostile/netherworld/statue,
+		/mob/living/simple_animal/hostile/statue,
 		/mob/living/simple_animal/hostile/retaliate/bat,
 		/mob/living/simple_animal/hostile/retaliate/goat,
 		/mob/living/simple_animal/hostile/killertomato,
@@ -77,7 +69,6 @@
 		/mob/living/simple_animal/pet/fox,
 		/mob/living/simple_animal/butterfly,
 		/mob/living/simple_animal/pet/cat/cak,
-		/mob/living/simple_animal/pet/dog/breaddog,
 		/mob/living/simple_animal/chick,
 		/mob/living/basic/cow/wisdom,
 		/obj/item/skub,
@@ -108,15 +99,15 @@
 
 	if(victim_mood != MOODLESS_MEMORY) //How the victim felt when it all happend.
 		switch(victim_mood)
-			if(MOOD_SAD4 to MOOD_SAD2)
+			if(MOOD_LEVEL_SAD4 to MOOD_LEVEL_SAD2)
 				story_moods = strings(MEMORY_FILE, "sad")
 				if("[action]_sad" in GLOB.string_cache[MEMORY_FILE])
 					story_moods += strings(MEMORY_FILE, "[action]_sad")
-			if(MOOD_SAD2 to MOOD_HAPPY2)
+			if(MOOD_LEVEL_SAD2 to MOOD_LEVEL_HAPPY2)
 				story_moods = strings(MEMORY_FILE, "neutral")
 				if("[action]_neutral" in GLOB.string_cache[MEMORY_FILE])
 					story_moods += strings(MEMORY_FILE, "[action]_neutral")
-			if(MOOD_HAPPY2 to MOOD_HAPPY4)
+			if(MOOD_LEVEL_HAPPY2 to MOOD_LEVEL_HAPPY4)
 				story_moods = strings(MEMORY_FILE, "happy")
 				if("[action]_happy" in GLOB.string_cache[MEMORY_FILE])
 					story_moods += strings(MEMORY_FILE, "[action]_happy")

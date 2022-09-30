@@ -16,12 +16,10 @@
 	. = ..()
 	update_appearance()
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/janicart)
-	GLOB.janitor_devices += src
 	if (installed_upgrade)
 		installed_upgrade.install(src)
 
 /obj/vehicle/ridden/janicart/Destroy()
-	GLOB.janitor_devices -= src
 	if (trash_bag)
 		QDEL_NULL(trash_bag)
 	if (installed_upgrade)
@@ -152,10 +150,10 @@
 	greyscale_colors = "#ffffff#6aa3ff#a2a2a2#d1d15f"
 
 /obj/item/janicart_upgrade/buffer/install(obj/vehicle/ridden/janicart/installee)
-	installee.AddElement(/datum/element/cleaning)
+	installee._AddElement(list(/datum/element/cleaning))
 
 /obj/item/janicart_upgrade/buffer/uninstall(obj/vehicle/ridden/janicart/installee)
-	installee.RemoveElement(/datum/element/cleaning)
+	installee._RemoveElement(list(/datum/element/cleaning))
 
 /obj/item/janicart_upgrade/vacuum
 	name = "vacuum upgrade"
@@ -163,7 +161,7 @@
 	greyscale_colors = "#ffffff#ffea6a#a2a2a2#d1d15f"
 
 /obj/item/janicart_upgrade/vacuum/install(obj/vehicle/ridden/janicart/installee)
-	installee.AddComponent(/datum/component/vacuum, installee.trash_bag)
+	installee._AddComponent(list(/datum/component/vacuum, installee.trash_bag))
 
 /obj/item/janicart_upgrade/vacuum/uninstall(obj/vehicle/ridden/janicart/installee)
 	qdel(installee.GetComponent(/datum/component/vacuum))

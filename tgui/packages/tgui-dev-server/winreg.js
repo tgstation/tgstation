@@ -30,14 +30,17 @@ export const regQuery = async (path, key) => {
       logger.error('could not find the end of the line');
       return null;
     }
-    const indexOfValue = stdout.indexOf('    ', indexOfKey + keyPattern.length);
+    const indexOfValue = stdout.indexOf(
+      '    ',
+      indexOfKey + keyPattern.length);
     if (indexOfValue === -1) {
       logger.error('could not find the start of the key value');
       return null;
     }
     const value = stdout.substring(indexOfValue + 4, indexOfEol);
     return value;
-  } catch (err) {
+  }
+  catch (err) {
     logger.error(err);
     return null;
   }

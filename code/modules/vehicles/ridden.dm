@@ -58,11 +58,6 @@
 /obj/vehicle/ridden/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
 	if(!force && occupant_amount() >= max_occupants)
 		return FALSE
-
-	var/response = SEND_SIGNAL(M, COMSIG_VEHICLE_RIDDEN, src)
-	if(response & EJECT_FROM_VEHICLE)
-		return FALSE
-
 	return ..()
 
 /obj/vehicle/ridden/zap_act(power, zap_flags)

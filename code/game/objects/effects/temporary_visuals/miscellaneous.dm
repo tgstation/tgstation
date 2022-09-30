@@ -4,7 +4,6 @@
 	duration = 5
 	randomdir = FALSE
 	layer = BELOW_MOB_LAYER
-	plane = GAME_PLANE
 	var/splatter_type = "splatter"
 
 /obj/effect/temp_visual/dir_setting/bloodsplatter/Initialize(mapload, set_dir)
@@ -48,7 +47,6 @@
 	name = "speedbike trails"
 	icon_state = "ion_fade"
 	layer = BELOW_MOB_LAYER
-	plane = GAME_PLANE
 	duration = 10
 	randomdir = 0
 
@@ -81,7 +79,7 @@
 
 /obj/effect/temp_visual/dir_setting/ninja
 	name = "ninja shadow"
-	icon = 'icons/mob/simple/mob.dmi'
+	icon = 'icons/mob/mob.dmi'
 	icon_state = "uncloak"
 	duration = 9
 
@@ -100,7 +98,7 @@
 
 /obj/effect/temp_visual/dir_setting/wraith
 	name = "shadow"
-	icon = 'icons/mob/nonhuman-player/cult.dmi'
+	icon = 'icons/mob/cult.dmi'
 	icon_state = "phase_shift2_cult"
 	duration = 0.6 SECONDS
 
@@ -138,7 +136,7 @@
 
 /obj/effect/temp_visual/dir_setting/curse/grasp_portal
 	icon = 'icons/effects/64x64.dmi'
-	layer = ABOVE_ALL_MOB_LAYER
+	layer = LARGE_MOB_LAYER
 	pixel_y = -16
 	pixel_x = -16
 	duration = 32
@@ -171,7 +169,7 @@
 
 /obj/effect/temp_visual/wizard
 	name = "water"
-	icon = 'icons/mob/simple/mob.dmi'
+	icon = 'icons/mob/mob.dmi'
 	icon_state = "reappear"
 	duration = 5
 
@@ -180,7 +178,7 @@
 	duration = 12
 
 /obj/effect/temp_visual/monkeyify
-	icon = 'icons/mob/simple/mob.dmi'
+	icon = 'icons/mob/mob.dmi'
 	icon_state = "h2monkey"
 	duration = 22
 
@@ -188,7 +186,7 @@
 	icon_state = "monkey2h"
 
 /obj/effect/temp_visual/borgflash
-	icon = 'icons/mob/simple/mob.dmi'
+	icon = 'icons/mob/mob.dmi'
 	icon_state = "blspell"
 	duration = 5
 
@@ -277,7 +275,7 @@
 	duration = 9
 
 /obj/effect/temp_visual/gib_animation
-	icon = 'icons/mob/simple/mob.dmi'
+	icon = 'icons/mob/mob.dmi'
 	duration = 15
 
 /obj/effect/temp_visual/gib_animation/Initialize(mapload, gib_icon)
@@ -285,10 +283,10 @@
 	. = ..()
 
 /obj/effect/temp_visual/gib_animation/animal
-	icon = 'icons/mob/simple/animal.dmi'
+	icon = 'icons/mob/animal.dmi'
 
 /obj/effect/temp_visual/dust_animation
-	icon = 'icons/mob/simple/mob.dmi'
+	icon = 'icons/mob/mob.dmi'
 	duration = 15
 
 /obj/effect/temp_visual/dust_animation/Initialize(mapload, dust_icon)
@@ -296,7 +294,7 @@
 	. = ..()
 
 /obj/effect/temp_visual/mummy_animation
-	icon = 'icons/mob/simple/mob.dmi'
+	icon = 'icons/mob/mob.dmi'
 	icon_state = "mummy_revive"
 	duration = 20
 
@@ -314,7 +312,7 @@
 
 /obj/effect/temp_visual/kinetic_blast
 	name = "kinetic explosion"
-	icon = 'icons/obj/weapons/guns/projectiles.dmi'
+	icon = 'icons/obj/guns/projectiles.dmi'
 	icon_state = "kinetic_blast"
 	layer = ABOVE_ALL_MOB_LAYER
 	duration = 4
@@ -393,7 +391,7 @@
 
 /obj/effect/temp_visual/heart
 	name = "heart"
-	icon = 'icons/mob/simple/animal.dmi'
+	icon = 'icons/mob/animal.dmi'
 	icon_state = "heart"
 	duration = 25
 
@@ -531,46 +529,3 @@
 	icon_state = "thunderbolt"
 	icon = 'icons/effects/32x96.dmi'
 	duration = 0.6 SECONDS
-
-/obj/effect/temp_visual/light_ash
-	icon_state = "light_ash"
-	icon = 'icons/effects/weather_effects.dmi'
-	duration = 3.2 SECONDS
-
-/obj/effect/temp_visual/sonar_ping
-	duration = 3 SECONDS
-	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	anchored = TRUE
-	randomdir = FALSE
-	/// The image shown to modsuit users
-	var/image/modsuit_image
-	/// The person in the modsuit at the moment, really just used to remove this from their screen
-	var/datum/weakref/mod_man
-	/// The icon state applied to the image created for this ping.
-	var/real_icon_state = "sonar_ping"
-
-/obj/effect/temp_visual/sonar_ping/Initialize(mapload, mob/living/looker, mob/living/creature)
-	. = ..()
-	if(!looker || !creature)
-		return INITIALIZE_HINT_QDEL
-	modsuit_image = image(icon = icon, loc = looker.loc, icon_state = real_icon_state, layer = ABOVE_ALL_MOB_LAYER, pixel_x = ((creature.x - looker.x) * 32), pixel_y = ((creature.y - looker.y) * 32))
-	modsuit_image.plane = ABOVE_LIGHTING_PLANE
-	SET_PLANE_EXPLICIT(modsuit_image, ABOVE_LIGHTING_PLANE, creature)
-	mod_man = WEAKREF(looker)
-	add_mind(looker)
-
-/obj/effect/temp_visual/sonar_ping/Destroy()
-	var/mob/living/previous_user = mod_man?.resolve()
-	if(previous_user)
-		remove_mind(previous_user)
-	// Null so we don't shit the bed when we delete
-	modsuit_image = null
-	return ..()
-
-/// Add the image to the modsuit wearer's screen
-/obj/effect/temp_visual/sonar_ping/proc/add_mind(mob/living/looker)
-	looker?.client?.images |= modsuit_image
-
-/// Remove the image from the modsuit wearer's screen
-/obj/effect/temp_visual/sonar_ping/proc/remove_mind(mob/living/looker)
-	looker?.client?.images -= modsuit_image

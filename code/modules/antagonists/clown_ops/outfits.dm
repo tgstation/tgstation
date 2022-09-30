@@ -9,14 +9,11 @@
 	l_pocket = /obj/item/pinpointer/nuke/syndicate
 	r_pocket = /obj/item/bikehorn
 	id = /obj/item/card/id/advanced/chameleon
-	backpack_contents = list(
-		/obj/item/pen/edagger = 1,
-		/obj/item/dnainjector/clumsymut = 1, //in case you want to be clumsy for the memes
-		/obj/item/storage/box/syndie_kit/clownpins = 1, //for any guns that you get your grubby little clown op mitts on
-		/obj/item/reagent_containers/spray/waterflower/lube = 1,
-		/obj/item/mod/skin_applier/honkerative = 1,
-	)
-	box = /obj/item/storage/box/survival/syndie
+	backpack_contents = list(/obj/item/storage/box/survival/syndie=1,\
+		/obj/item/knife/combat/survival,
+		/obj/item/dnainjector/clumsymut, //in case you want to be clumsy for the memes
+		/obj/item/storage/box/syndie_kit/clownpins, //for any guns that you get your grubby little clown op mitts on
+		/obj/item/reagent_containers/spray/waterflower/lube)
 	implants = list(/obj/item/implant/sad_trombone)
 
 	uplink_type = /obj/item/uplink/clownop
@@ -28,6 +25,7 @@
 
 /datum/outfit/syndicate/clownop/leader
 	name = "Clown Operative Leader - Basic"
+	gloves = /obj/item/clothing/gloves/krav_maga/combatglovesplus
 	command_radio = TRUE
 
 	id_trim = /datum/id_trim/chameleon/operative/clown_leader

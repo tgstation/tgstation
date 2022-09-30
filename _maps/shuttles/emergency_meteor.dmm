@@ -3,48 +3,48 @@
 /turf/template_noop,
 /area/template_noop)
 "b" = (
-/turf/closed/mineral/asteroid/porous,
+/turf/closed/mineral,
 /area/shuttle/escape/meteor)
 "c" = (
 /obj/structure/window/reinforced{
 	dir = 1;
 	layer = 2.9
 	},
-/turf/open/misc/asteroid,
+/turf/open/floor/plating/asteroid,
 /area/shuttle/escape/meteor)
 "d" = (
-/turf/open/misc/asteroid,
+/turf/open/floor/plating/asteroid,
 /area/shuttle/escape/meteor)
 "e" = (
 /obj/machinery/computer/emergency_shuttle{
 	dir = 4;
 	use_power = 0
 	},
-/turf/open/misc/asteroid,
+/turf/open/floor/plating/asteroid,
 /area/shuttle/escape/meteor)
 "f" = (
 /mob/living/simple_animal/hostile/asteroid/goliath,
-/turf/open/misc/asteroid,
+/turf/open/floor/plating/asteroid,
 /area/shuttle/escape/meteor)
 "g" = (
 /obj/structure/mineral_door/iron,
-/turf/open/misc/asteroid,
+/turf/open/floor/plating/asteroid,
 /area/shuttle/escape/meteor)
 "h" = (
 /obj/item/pickaxe,
-/turf/open/misc/asteroid,
+/turf/open/floor/plating/asteroid,
 /area/shuttle/escape/meteor)
 "i" = (
 /obj/effect/station_crash,
-/turf/open/misc/asteroid,
+/turf/open/floor/plating/asteroid,
 /area/shuttle/escape/meteor)
 "k" = (
 /obj/structure/closet/crate,
-/turf/open/misc/asteroid,
+/turf/open/floor/plating/asteroid,
 /area/shuttle/escape/meteor)
 "l" = (
 /obj/machinery/power/smes,
-/turf/open/misc/asteroid,
+/turf/open/floor/plating/asteroid,
 /area/shuttle/escape/meteor)
 "m" = (
 /obj/structure/window/reinforced{
@@ -61,17 +61,17 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/turf/open/misc/asteroid,
+/turf/open/floor/plating/asteroid,
 /area/shuttle/escape/meteor)
 "L" = (
 /obj/docking_port/mobile/emergency{
 	dwidth = 20;
 	height = 40;
-	movement_force = list("KNOCKDOWN"=3,"THROW"=6);
+	movement_force = list("KNOCKDOWN" = 3, "THROW" = 6);
 	name = "\proper a meteor with engines strapped to it";
 	width = 40
 	},
-/turf/open/misc/asteroid,
+/turf/open/floor/plating/asteroid,
 /area/shuttle/escape/meteor)
 
 (1,1,1) = {"

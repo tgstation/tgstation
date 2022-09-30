@@ -19,8 +19,10 @@
 	ph = 3.7
 	purity = 0.5
 	creation_purity = 0.5
-	inverse_chem = /datum/reagent/impurity/eigenswap
+	impure_chem = /datum/reagent/impurity/eigenswap
+	inverse_chem = null
 	inverse_chem_val = 0
+	failed_chem = /datum/reagent/bluespace //crashes out
 	chemical_flags = REAGENT_DEAD_PROCESS //So if you die with it in your body, you still get teleported back to the location as a corpse
 	data = list("location_created" = null, "ingested" = FALSE)//So we retain the target location and creator between reagent instances
 	///The creation point assigned during the reaction
@@ -31,9 +33,6 @@
 	var/turf/open/location_return = null
 
 /datum/reagent/eigenstate/on_new(list/data)
-	. = ..()
-	if(!data)
-		return
 	location_created = data["location_created"]
 
 /datum/reagent/eigenstate/expose_mob(mob/living/living_mob, methods, reac_volume, show_message, touch_protection)
@@ -43,7 +42,7 @@
 	//This looks rediculous, but expose is usually called from the donor reagents datum - we want to edit the post exposure version present in the mob.
 	var/mob/living/carbon/carby = living_mob
 	//But because carbon mobs have stomachs we have to search in there because we're ingested
-	var/obj/item/organ/internal/stomach/stomach = carby.getorganslot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/stomach/stomach = carby.getorganslot(ORGAN_SLOT_STOMACH)
 	var/datum/reagent/eigenstate/eigen
 	if(stomach)
 		eigen = stomach.reagents.has_reagent(/datum/reagent/eigenstate)
@@ -62,7 +61,7 @@
 	eigenstate.mouse_opacity = MOUSE_OPACITY_TRANSPARENT//So you can't click on it.
 	eigenstate.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
 	eigenstate.set_anchored(TRUE) //So space wind cannot drag it.
-	eigenstate.name = "[living_mob.name]'s Eigenstate"//If someone decides to right click.
+	eigenstate.name = "[living_mob.name]'s eigenstate"//If someone decides to right click.
 	eigenstate.set_light(2)	//hologram lighting
 
 	location_return = get_turf(living_mob)	//sets up return point
@@ -93,11 +92,11 @@
 
 /datum/reagent/eigenstate/overdose_start(mob/living/living_mob) //Overdose, makes you teleport randomly
 	to_chat(living_mob, span_userdanger("You feel like your perspective is being ripped apart as you begin flitting in and out of reality!"))
-	living_mob.set_jitter_if_lower(40 SECONDS)
+	living_mob.Jitter(20)
 	metabolization_rate += 0.5 //So you're not stuck forever teleporting.
 	if(iscarbon(living_mob))
 		var/mob/living/carbon/carbon_mob = living_mob
-		carbon_mob.apply_status_effect(/datum/status_effect/eigenstasium)
+		carbon_mob.apply_status_effect(STATUS_EFFECT_EIGEN)
 	return ..()
 
 /datum/reagent/eigenstate/overdose_process(mob/living/living_mob) //Overdose, makes you teleport randomly

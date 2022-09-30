@@ -99,6 +99,8 @@
 				custom_name = FALSE
 
 			command_name = params["updated_name"]
+		if("update_report_contents")
+			command_report_content = params["updated_contents"]
 		if("set_report_sound")
 			played_sound = params["picked_sound"]
 		if("toggle_announce")
@@ -107,10 +109,9 @@
 			if(!command_name)
 				to_chat(ui_user, span_danger("You can't send a report with no command name."))
 				return
-			if(!params["report"])
+			if(!command_report_content)
 				to_chat(ui_user, span_danger("You can't send a report with no contents."))
 				return
-			command_report_content = params["report"]
 			send_announcement()
 
 	return TRUE

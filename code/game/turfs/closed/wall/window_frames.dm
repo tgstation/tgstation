@@ -12,7 +12,7 @@
 	density = TRUE
 	rad_insulation = null
 	frill_icon = null // we dont have a frill, our window does
-	armor = list(MELEE = 50, BULLET = 70, LASER = 70, ENERGY = 100, BOMB = 10, BIO = 100, FIRE = 0, ACID = 0)
+	armor = list(MELEE = 50, BULLET = 70, LASER = 70, ENERGY = 100, BOMB = 10, BIO = 100, RAD = 100, FIRE = 0, ACID = 0)
 	max_integrity = 50
 	anchored = TRUE
 
@@ -198,7 +198,7 @@
 /obj/structure/window_frame/reinforced
 	name = "reinforced window frame"
 	window_type = /obj/item/stack/sheet/rglass
-	armor = list(MELEE = 80, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 25, BIO = 100, FIRE = 80, ACID = 100)
+	armor = list(MELEE = 80, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 25, BIO = 100, RAD = 100, FIRE = 80, ACID = 100)
 	max_integrity = 150
 	damage_deflection = 11
 

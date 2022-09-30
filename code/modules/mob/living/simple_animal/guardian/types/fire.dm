@@ -29,24 +29,8 @@
 
 /mob/living/simple_animal/hostile/guardian/fire/AttackingTarget()
 	. = ..()
-	if(!.)
-		return
-	if(!isliving(target))
-		return
-	if(target == summoner)
-		return
-	var/mob/living/living_target = target
-	living_target.cause_hallucination( \
-		/datum/hallucination/delusion/custom, \
-		"fire holoparasite ([key_name(src)], owned by [key_name(summoner)])", \
-		duration = 20 SECONDS, \
-		affects_us = TRUE, \
-		affects_others = TRUE, \
-		skip_nearby = FALSE, \
-		play_wabbajack = FALSE, \
-		custom_icon_file = icon, \
-		custom_icon_state = icon_state, \
-	)
+	if(. && ishuman(target) && target != summoner)
+		new /datum/hallucination/delusion(target,TRUE,"custom",200,0, icon_state,icon)
 
 /mob/living/simple_animal/hostile/guardian/fire/proc/on_entered(datum/source, AM as mob|obj)
 	SIGNAL_HANDLER
@@ -65,4 +49,4 @@
 		var/mob/living/M = AM
 		if(!hasmatchingsummoner(M) && M != summoner && M.fire_stacks < 7)
 			M.set_fire_stacks(7)
-			M.ignite_mob()
+			M.IgniteMob()

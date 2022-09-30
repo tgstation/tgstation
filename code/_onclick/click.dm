@@ -22,9 +22,10 @@
 /mob/living/changeNext_move(num)
 	var/mod = next_move_modifier
 	var/adj = next_move_adjust
-	for(var/datum/status_effect/effect as anything in status_effects)
-		mod *= effect.nextmove_modifier()
-		adj += effect.nextmove_adjust()
+	for(var/i in status_effects)
+		var/datum/status_effect/S = i
+		mod *= S.nextmove_modifier()
+		adj += S.nextmove_adjust()
 	next_move = world.time + ((num + adj)*mod)
 
 /**
@@ -36,10 +37,9 @@
  *
  * Note that this proc can be overridden, and is in the case of screen objects.
  */
-/atom/Click(location, control, params)
+/atom/Click(location,control,params)
 	if(flags_1 & INITIALIZED_1)
 		SEND_SIGNAL(src, COMSIG_CLICK, location, control, params, usr)
-
 		usr.ClickOn(src, params)
 
 /atom/DblClick(location,control,params)
@@ -68,7 +68,10 @@
 		return
 	next_click = world.time + 1
 
-	if(check_click_intercept(params,A) || notransform)
+	if(check_click_intercept(params,A))
+		return
+
+	if(notransform)
 		return
 
 	var/list/modifiers = params2list(params)
@@ -86,10 +89,7 @@
 		ShiftClickOn(A)
 		return
 	if(LAZYACCESS(modifiers, MIDDLE_CLICK))
-		if(LAZYACCESS(modifiers, CTRL_CLICK))
-			CtrlMiddleClickOn(A)
-		else
-			MiddleClickOn(A, params)
+		MiddleClickOn(A, params)
 		return
 	if(LAZYACCESS(modifiers, ALT_CLICK)) // alt and alt-gr (rightalt)
 		if(LAZYACCESS(modifiers, RIGHT_CLICK))
@@ -101,7 +101,7 @@
 		CtrlClickOn(A)
 		return
 
-	if(incapacitated(IGNORE_RESTRAINTS|IGNORE_STASIS))
+	if(incapacitated(ignore_restraints = TRUE, ignore_stasis = TRUE))
 		return
 
 	face_atom(A)
@@ -118,8 +118,8 @@
 		return
 
 	if(throw_mode)
-		if(throw_item(A))
-			changeNext_move(CLICK_CD_THROW)
+		changeNext_move(CLICK_CD_THROW)
+		throw_item(A)
 		return
 
 	var/obj/item/W = get_active_held_item()
@@ -127,11 +127,11 @@
 	if(W == A)
 		if(LAZYACCESS(modifiers, RIGHT_CLICK))
 			W.attack_self_secondary(src, modifiers)
-			update_held_items()
+			update_inv_hands()
 			return
 		else
 			W.attack_self(src, modifiers)
-			update_held_items()
+			update_inv_hands()
 			return
 
 	//These are always reachable.
@@ -149,12 +149,6 @@
 	//Can't reach anything else in lockers or other weirdness
 	if(!loc.AllowClick())
 		return
-
-	// In a storage item with a disassociated storage parent
-	var/obj/item/item_atom = A
-	if(istype(item_atom))
-		if((item_atom.item_flags & IN_STORAGE) && (item_atom.loc.flags_1 & HAS_DISASSOCIATED_STORAGE_1))
-			UnarmedAttack(item_atom, TRUE, modifiers)
 
 	//Standard reach turf to turf or reaching inside storage
 	if(CanReach(A,W))
@@ -209,7 +203,6 @@
 
 	var/list/closed = list()
 	var/list/checking = list(ultimate_target)
-
 	while (checking.len && depth > 0)
 		var/list/next = list()
 		--depth
@@ -217,17 +210,16 @@
 		for(var/atom/target in checking)  // will filter out nulls
 			if(closed[target] || isarea(target))  // avoid infinity situations
 				continue
-
-			if(isturf(target) || isturf(target.loc) || (target in direct_access) || (ismovable(target) && target.flags_1 & IS_ONTOP_1) || target.loc?.atom_storage) //Directly accessible atoms
+			closed[target] = TRUE
+			if(isturf(target) || isturf(target.loc) || (target in direct_access) || (ismovable(target) && target.flags_1 & IS_ONTOP_1)) //Directly accessible atoms
 				if(Adjacent(target) || (tool && CheckToolReach(src, target, tool.reach))) //Adjacent or reaching attacks
 					return TRUE
-
-			closed[target] = TRUE
 
 			if (!target.loc)
 				continue
 
-			if(target.loc.atom_storage)
+			//Storage and things with reachable internal atoms need add to next here. Or return COMPONENT_ALLOW_REACH.
+			if(SEND_SIGNAL(target.loc, COMSIG_ATOM_CANREACH, next) & COMPONENT_ALLOW_REACH)
 				next += target.loc
 
 		checking = next
@@ -288,7 +280,6 @@
  * modifiers is a lazy list of click modifiers this attack had,
  * used for figuring out different properties of the click, mostly right vs left and such.
  */
-
 /mob/proc/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
 	if(ismob(A))
 		changeNext_move(CLICK_CD_MELEE)
@@ -337,7 +328,7 @@
 	return
 
 /atom/proc/ShiftClick(mob/user)
-	var/flags = SEND_SIGNAL(user, COMSIG_CLICK_SHIFT, src)
+	var/flags = SEND_SIGNAL(src, COMSIG_CLICK_SHIFT, user)
 	if(user.client && (user.client.eye == user || user.client.eye == user.loc || flags & COMPONENT_ALLOW_EXAMINATE))
 		user.examinate(src)
 	return
@@ -375,30 +366,19 @@
 
 
 /mob/living/carbon/human/CtrlClick(mob/user)
-	if(!iscarbon(user) || !user.CanReach(src) || user.incapacitated())
+
+	if(!ishuman(user) || !user.CanReach(src) || user.incapacitated())
 		return ..()
 
 	if(world.time < user.next_move)
 		return FALSE
 
-	if (ishuman(user))
-		var/mob/living/carbon/human/human_user = user
-		if(human_user.dna.species.grab(human_user, src, human_user.mind.martial_art))
-			human_user.changeNext_move(CLICK_CD_MELEE)
-			return TRUE
-	else if(isalien(user))
-		var/mob/living/carbon/alien/humanoid/alien_boy = user
-		if(alien_boy.grab(src))
-			alien_boy.changeNext_move(CLICK_CD_MELEE)
-			return TRUE
-	return ..()
+	var/mob/living/carbon/human/human_user = user
+	if(human_user.dna.species.grab(human_user, src, human_user.mind.martial_art))
+		human_user.changeNext_move(CLICK_CD_MELEE)
+		return TRUE
 
-/mob/proc/CtrlMiddleClickOn(atom/A)
-	if(check_rights_for(client, R_ADMIN))
-		client.toggle_tag_datum(A)
-	else
-		A.CtrlClick(src)
-	return
+	return ..()
 
 /**
  * Alt click
@@ -411,13 +391,14 @@
 	A.AltClick(src)
 
 /atom/proc/AltClick(mob/user)
-	if(!user.can_interact_with(src))
+	if(!can_interact(user))
 		return FALSE
 	if(SEND_SIGNAL(src, COMSIG_CLICK_ALT, user) & COMPONENT_CANCEL_CLICK_ALT)
 		return
 	var/turf/T = get_turf(src)
-	if(T && (isturf(loc) || isturf(src)) && user.TurfAdjacent(T) && !HAS_TRAIT(user, TRAIT_MOVE_VENTCRAWLING))
-		user.set_listed_turf(T)
+	if(T && (isturf(loc) || isturf(src)) && user.TurfAdjacent(T))
+		user.listed_turf = T
+		user.client << output("[url_encode(json_encode(T.name))];", "statbrowser:create_listedturf")
 
 ///The base proc of when something is right clicked on when alt is held - generally use alt_click_secondary instead
 /atom/proc/alt_click_on_secondary(atom/A)
@@ -428,19 +409,17 @@
 
 ///The base proc of when something is right clicked on when alt is held
 /atom/proc/alt_click_secondary(mob/user)
-	if(!user.can_interact_with(src))
+	if(!can_interact(user))
 		return FALSE
 	if(SEND_SIGNAL(src, COMSIG_CLICK_ALT_SECONDARY, user) & COMPONENT_CANCEL_CLICK_ALT_SECONDARY)
-		return
-	if(isobserver(user) && user.client && check_rights_for(user.client, R_DEBUG))
-		user.client.toggle_tag_datum(src)
 		return
 
 /// Use this instead of [/mob/proc/AltClickOn] where you only want turf content listing without additional atom alt-click interaction
 /atom/proc/AltClickNoInteract(mob/user, atom/A)
 	var/turf/T = get_turf(A)
 	if(T && user.TurfAdjacent(T))
-		user.set_listed_turf(T)
+		user.listed_turf = T
+		user.client << output("[url_encode(json_encode(T.name))];", "statbrowser:create_listedturf")
 
 /mob/proc/TurfAdjacent(turf/T)
 	return T.Adjacent(src)
@@ -529,26 +508,16 @@
 	M.Scale(px/sx, py/sy)
 	transform = M
 
-/atom/movable/screen/click_catcher/Initialize(mapload)
-	. = ..()
-	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, .proc/offset_increased)
-	offset_increased(SSmapping, 0, SSmapping.max_plane_offset)
-
-// Draw to the lowest plane level offered
-/atom/movable/screen/click_catcher/proc/offset_increased(datum/source, old_offset, new_offset)
-	SIGNAL_HANDLER
-	SET_PLANE_W_SCALAR(src, initial(plane), new_offset)
-
 /atom/movable/screen/click_catcher/Click(location, control, params)
 	var/list/modifiers = params2list(params)
 	if(LAZYACCESS(modifiers, MIDDLE_CLICK) && iscarbon(usr))
 		var/mob/living/carbon/C = usr
 		C.swap_hand()
 	else
-		var/turf/click_turf = parse_caught_click_modifiers(modifiers, get_turf(usr.client ? usr.client.eye : usr), usr.client)
-		if (click_turf)
-			modifiers["catcher"] = TRUE
-			click_turf.Click(click_turf, control, list2params(modifiers))
+		var/turf/T = params_to_turf(LAZYACCESS(modifiers, SCREEN_LOC), get_turf(usr.client ? usr.client.eye : usr), usr.client)
+		params += "&catcher=1"
+		if(T)
+			T.Click(location, control, params)
 	. = 1
 
 /// MouseWheelOn

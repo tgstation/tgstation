@@ -1,5 +1,3 @@
-GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar to GLOB.PDAs (used primarily with ntmessenger.dm)
-
 // This is the base type that does all the hardware stuff.
 // Other types expand it - tablets use a direct subtypes, and
 // consoles and laptops use "procssor" item that is held inside machinery piece
@@ -11,20 +9,13 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	light_on = FALSE
 	integrity_failure = 0.5
 	max_integrity = 100
-	armor = list(MELEE = 0, BULLET = 20, LASER = 20, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
-	light_system = MOVABLE_LIGHT_DIRECTIONAL
-
-	var/bypass_state = FALSE // bypassing the set icon state
+	armor = list(MELEE = 0, BULLET = 20, LASER = 20, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 0, ACID = 0)
 
 	var/enabled = 0 // Whether the computer is turned on.
-	var/upgradable = TRUE // whether or not the computer can be upgraded
-	var/deconstructable = TRUE // whether or not the computer can be deconstructed
 	var/screen_on = 1 // Whether the computer is active/opened/it's screen is on.
 	var/device_theme = "ntos" // Sets the theme for the main menu, hardware config, and file browser apps. Overridden by certain non-NT devices.
 	var/datum/computer_file/program/active_program = null // A currently active program running on the computer.
-	///The type of device this computer is, as a flag
-	var/hardware_flag = NONE
-//	Options: PROGRAM_ALL PROGRAM_CONSOLE | | PROGRAM_LAPTOP | PROGRAM_TABLET
+	var/hardware_flag = 0 // A flag that describes this device type
 	var/last_power_usage = 0
 	var/last_battery_percent = 0 // Used for deciding if battery percentage has chandged
 	var/last_world_time = "00:00"
@@ -48,9 +39,6 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	var/max_hardware_size = 0 // Maximal hardware w_class. Tablets/PDAs have 1, laptops 2, consoles 4.
 	var/steel_sheet_cost = 5 // Amount of steel sheets refunded when disassembling an empty frame of this computer.
 
-	/// Amount of programs that can be ran at once
-	var/max_idle_programs = 2
-
 	/// List of "connection ports" in this computer and the components with which they are plugged
 	var/list/all_components = list()
 	/// Lazy List of extra hardware slots that can be used modularly.
@@ -58,72 +46,32 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	/// Number of total expansion bays this computer has available.
 	var/max_bays = 0
 
-	var/saved_identification = null // next two values are the currently imprinted id and job values
-	var/saved_job = null
-
-	/// Allow people with chunky fingers to use?
-	var/allow_chunky = FALSE
-
-	var/honkamnt = 0 /// honk honk honk honk honk honkh onk honkhnoohnk
-
 	var/list/idle_threads // Idle programs on background. They still receive process calls but can't be interacted with.
 	var/obj/physical = null // Object that represents our computer. It's used for Adjacent() and UI visibility checks.
 	var/has_light = FALSE //If the computer has a flashlight/LED light/what-have-you installed
-
-	/// How far the computer's light can reach, is not editable by players.
-	var/comp_light_luminosity = 3
-	/// The built-in light's color, editable by players.
-	var/comp_light_color = "#FFFFFF"
-
-	var/invisible = FALSE // whether or not the tablet is invisible in messenger and other apps
-
-	var/datum/picture/saved_image // the saved image used for messaging purpose like come on dude
-
-	/// Stored pAI in the computer
-	var/obj/item/pai_card/inserted_pai = null
-
-	///The amount of paper currently stored in the PDA
-	var/stored_paper = 10
-	///The max amount of paper that can be held at once.
-	var/max_paper = 30
+	var/comp_light_luminosity = 3 //The brightness of that light
+	var/comp_light_color //The color of that light
 
 /obj/item/modular_computer/Initialize(mapload)
 	. = ..()
-
 	START_PROCESSING(SSobj, src)
 	if(!physical)
 		physical = src
-	set_light_color(comp_light_color)
-	set_light_range(comp_light_luminosity)
+	comp_light_color = "#FFFFFF"
 	idle_threads = list()
 	if(looping_sound)
 		soundloop = new(src, enabled)
-	UpdateDisplay()
-	if(has_light)
-		add_item_action(/datum/action/item_action/toggle_computer_light)
-
 	update_appearance()
-	register_context()
-	init_network_id(NETWORK_TABLETS)
-	Add_Messenger()
 
 /obj/item/modular_computer/Destroy()
 	wipe_program(forced = TRUE)
-	for(var/datum/computer_file/program/idle as anything in idle_threads)
-		idle.kill_program(TRUE)
-	idle_threads?.Cut()
 	STOP_PROCESSING(SSobj, src)
 	for(var/port in all_components)
 		var/obj/item/computer_hardware/component = all_components[port]
 		qdel(component)
-	all_components?.Cut()
+	all_components.Cut() //Die demon die
 	//Some components will actually try and interact with this, so let's do it later
 	QDEL_NULL(soundloop)
-	Remove_Messenger()
-
-	if(istype(inserted_pai))
-		QDEL_NULL(inserted_pai)
-
 	physical = null
 	return ..()
 
@@ -135,16 +83,6 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return ..()
 
-// shameless copy of newscaster photo saving
-
-/obj/item/modular_computer/proc/save_photo(icon/photo)
-	var/photo_file = copytext_char(md5("\icon[photo]"), 1, 6)
-	if(!fexists("[GLOB.log_directory]/photos/[photo_file].png"))
-		//Clean up repeated frames
-		var/icon/clean = new /icon()
-		clean.Insert(photo, "", SOUTH, 1, 0)
-		fcopy(clean, "[GLOB.log_directory]/photos/[photo_file].png")
-	return photo_file
 
 /**
  * Plays a ping sound.
@@ -162,10 +100,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	if(user.canUseTopic(src, BE_CLOSE))
 		var/obj/item/computer_hardware/card_slot/card_slot2 = all_components[MC_CARD2]
 		var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
-		if(card_slot2?.try_eject(user) || card_slot?.try_eject(user))
-			return TRUE
-		if(!istype(src, /obj/item/modular_computer/tablet))
-			return FALSE
+		return (card_slot2?.try_eject(user) || card_slot?.try_eject(user)) //Try the secondary one first.
 
 // Gets IDs/access levels from card slot. Would be useful when/if PDAs would become modular PCs.
 /obj/item/modular_computer/GetAccess()
@@ -231,32 +166,17 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 			if(human_wearer.wear_id == src)
 				human_wearer.sec_hud_set_ID()
 		update_slot_icon()
-		update_appearance()
-
 		return removed_id
 
 	return ..()
 
-/obj/item/modular_computer/proc/print_text(text_to_print, paper_title = "")
-	if(!stored_paper)
-		return FALSE
-
-	var/obj/item/paper/printed_paper = new /obj/item/paper(drop_location())
-	printed_paper.add_raw_text(text_to_print)
-	if(paper_title)
-		printed_paper.name = paper_title
-	printed_paper.update_appearance()
-	stored_paper--
-	return TRUE
-
 /obj/item/modular_computer/InsertID(obj/item/inserting_item)
 	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
 	var/obj/item/computer_hardware/card_slot/card_slot2 = all_components[MC_CARD2]
-
 	if(!(card_slot || card_slot2))
 		return FALSE
 
-	var/obj/item/card/inserting_id = inserting_item.GetID()
+	var/obj/item/card/inserting_id = inserting_item.RemoveID()
 	if(!inserting_id)
 		return FALSE
 
@@ -265,10 +185,10 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 			var/mob/living/carbon/human/human_wearer = loc
 			if(human_wearer.wear_id == src)
 				human_wearer.sec_hud_set_ID()
-		update_appearance()
 		update_slot_icon()
+		return TRUE
 
-	return TRUE
+	return FALSE
 
 /obj/item/modular_computer/MouseDrop(obj/over_object, src_location, over_location)
 	var/mob/M = usr
@@ -315,60 +235,22 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	else if(atom_integrity < max_integrity)
 		. += span_warning("It is damaged.")
 
-	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
-	var/obj/item/computer_hardware/card_slot/card_slot2 = all_components[MC_CARD2]
-	var/multiple_slots = istype(card_slot) && istype(card_slot2)
-	if(card_slot)
-		if(card_slot.stored_card || card_slot2?.stored_card)
-			var/obj/item/card/id/first_ID = card_slot?.stored_card
-			var/obj/item/card/id/second_ID = card_slot2?.stored_card
-			var/multiple_cards = (first_ID && second_ID)
-			if(Adjacent(user))
-				. += "It has [multiple_slots ? "two slots" : "a slot"] for identification cards installed[multiple_cards ? " which contain [first_ID] and [second_ID]" : ", one of which contains [first_ID || second_ID]"]."
-			else
-				. += "It has [multiple_slots ? "two slots" : "a slot"] for identification cards installed, [multiple_cards ? "both of which appear" : "and one of them appears"] to be occupied."
-			. += span_info("Alt-click [src] to eject the identification card[multiple_cards ? "s":""].")
-		else
-			. += "It has [multiple_slots ? "two slots" : "a slot"] installed for identification cards."
-
-/obj/item/modular_computer/examine_more(mob/user)
-	. = ..()
-	var/obj/item/computer_hardware/hard_drive/hdd = all_components[MC_HDD]
-	if(hdd)
-		for(var/datum/computer_file/app_examine as anything in hdd.stored_files)
-			if(app_examine.on_examine(src, user))
-				. += app_examine.on_examine(src, user)
-
-	if(Adjacent(user))
-		. += span_notice("Paper level: [stored_paper] / [max_paper].")
-
-/obj/item/modular_computer/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	. = ..()
-
-	context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove ID"
-	context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB] = "Remove Disk"
-
-	return CONTEXTUAL_SCREENTIP_SET
+	. += get_modular_computer_parts_examine(user)
 
 /obj/item/modular_computer/update_icon_state()
-	if(!bypass_state)
-		icon_state = enabled ? icon_state_powered : icon_state_unpowered
+	icon_state = enabled ? icon_state_powered : icon_state_unpowered
 	return ..()
 
 /obj/item/modular_computer/update_overlays()
 	. = ..()
-	var/init_icon = initial(icon)
-
-	if(!init_icon)
-		return
 	if(!display_overlays)
 		return
 
 	if(enabled)
-		. += active_program ? mutable_appearance(init_icon, active_program.program_icon_state) : mutable_appearance(init_icon, icon_state_menu)
+		. += active_program?.program_icon_state || icon_state_menu
 	if(atom_integrity <= integrity_failure * max_integrity)
-		. += mutable_appearance(init_icon, "bsod")
-		. += mutable_appearance(init_icon, "broken")
+		. += "bsod"
+		. += "broken"
 
 
 // On-click handling. Turns on the computer if it's off and opens the GUI.
@@ -378,19 +260,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	else
 		turn_on(user)
 
-/obj/item/modular_computer/CtrlShiftClick(mob/user)
-	. = ..()
-	if(.)
-		return
-
-	var/obj/item/computer_hardware/hard_drive/ssd = all_components[MC_SDD]
-	if(!ssd)
-		return
-	if(uninstall_component(ssd, usr))
-		user.put_in_hands(ssd)
-		playsound(src, 'sound/machines/card_slide.ogg', 50)
-
-/obj/item/modular_computer/proc/turn_on(mob/user, open_ui = TRUE)
+/obj/item/modular_computer/proc/turn_on(mob/user)
 	var/issynth = issilicon(user) // Robots and AIs get different activation messages.
 	if(atom_integrity <= integrity_failure * max_integrity)
 		if(issynth)
@@ -399,7 +269,12 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 			to_chat(user, span_warning("You press the power button, but the computer fails to boot up, displaying variety of errors before shutting down again."))
 		return FALSE
 
-	if(use_power()) // use_power() checks if the PC is powered
+	// If we have a recharger, enable it automatically. Lets computer without a battery work.
+	var/obj/item/computer_hardware/recharger/recharger = all_components[MC_CHARGE]
+	if(recharger)
+		recharger.enabled = 1
+
+	if(all_components[MC_CPU] && use_power()) // use_power() checks if the PC is powered
 		if(issynth)
 			to_chat(user, span_notice("You send an activation signal to \the [src], turning it on."))
 		else
@@ -408,8 +283,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 			soundloop.start()
 		enabled = 1
 		update_appearance()
-		if(open_ui)
-			ui_interact(user)
+		ui_interact(user)
 		return TRUE
 	else // Unpowered
 		if(issynth)
@@ -443,7 +317,8 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		else
 			active_program = null
 
-	for(var/datum/computer_file/program/P as anything in idle_threads)
+	for(var/I in idle_threads)
+		var/datum/computer_file/program/P = I
 		if(P.program_state != PROGRAM_STATE_KILLED)
 			P.process_tick(delta_time)
 			P.ntnet_status = get_ntnet_status()
@@ -456,7 +331,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 /**
  * Displays notification text alongside a soundbeep when requested to by a program.
  *
- * After checking that the requesting program is allowed to send an alert, creates
+ * After checking tha the requesting program is allowed to send an alert, creates
  * a visible message of the requested text alongside a soundbeep. This proc adds
  * text to indicate that the message is coming from this device and the program
  * on it, so the supplied text should be the exact message and ending punctuation.
@@ -465,21 +340,15 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
  * The program calling this proc.
  * The message that the program wishes to display.
  */
+
 /obj/item/modular_computer/proc/alert_call(datum/computer_file/program/caller, alerttext, sound = 'sound/machines/twobeep_high.ogg')
 	if(!caller || !caller.alert_able || caller.alert_silenced || !alerttext) //Yeah, we're checking alert_able. No, you don't get to make alerts that the user can't silence.
-		return FALSE
+		return
 	playsound(src, sound, 50, TRUE)
-	visible_message(span_notice("[icon2html(src)] [span_notice("The [src] displays a [caller.filedesc] notification: [alerttext]")]"))
-
-/obj/item/modular_computer/proc/ring(ringtone) // bring bring
-	if(HAS_TRAIT(SSstation, STATION_TRAIT_PDA_GLITCHED))
-		playsound(src, pick('sound/machines/twobeep_voice1.ogg', 'sound/machines/twobeep_voice2.ogg'), 50, TRUE)
-	else
-		playsound(src, 'sound/machines/twobeep_high.ogg', 50, TRUE)
-	visible_message("*[ringtone]*")
-
-/obj/item/modular_computer/proc/send_sound()
-	playsound(src, 'sound/machines/terminal_success.ogg', 15, TRUE)
+	visible_message(span_notice("The [src] displays a [caller.filedesc] notification: [alerttext]"))
+	var/mob/living/holder = loc
+	if(istype(holder))
+		to_chat(holder, "[icon2html(src)] [span_notice("The [src] displays a [caller.filedesc] notification: [alerttext]")]")
 
 // Function used by NanoUI's to obtain data for header. All relevant entries begin with "PC_"
 /obj/item/modular_computer/proc/get_header_data()
@@ -488,6 +357,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	data["PC_device_theme"] = device_theme
 
 	var/obj/item/computer_hardware/battery/battery_module = all_components[MC_CELL]
+	var/obj/item/computer_hardware/recharger/recharger = all_components[MC_CHARGE]
 
 	if(battery_module && battery_module.battery)
 		switch(battery_module.battery.percent())
@@ -510,17 +380,20 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		data["PC_batterypercent"] = "N/C"
 		data["PC_showbatteryicon"] = battery_module ? 1 : 0
 
+	if(recharger && recharger.enabled && recharger.check_functionality() && recharger.use_power(0))
+		data["PC_apclinkicon"] = "charging.gif"
+
 	switch(get_ntnet_status())
-		if(NTNET_NO_SIGNAL)
+		if(0)
 			data["PC_ntneticon"] = "sig_none.gif"
-		if(NTNET_LOW_SIGNAL)
+		if(1)
 			data["PC_ntneticon"] = "sig_low.gif"
-		if(NTNET_GOOD_SIGNAL)
+		if(2)
 			data["PC_ntneticon"] = "sig_high.gif"
-		if(NTNET_ETHERNET_SIGNAL)
+		if(3)
 			data["PC_ntneticon"] = "sig_lan.gif"
 
-	if(length(idle_threads))
+	if(idle_threads.len)
 		var/list/program_headers = list()
 		for(var/I in idle_threads)
 			var/datum/computer_file/program/P = I
@@ -553,71 +426,20 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		INVOKE_ASYNC(src, /datum/proc/ui_interact, user) // Re-open the UI on this computer. It should show the main screen now.
 	update_appearance()
 
-/obj/item/modular_computer/proc/open_program(mob/user, datum/computer_file/program/program)
-	if(program.computer != src)
-		CRASH("tried to open program that does not belong to this computer")
-
-	if(!program || !istype(program)) // Program not found or it's not executable program.
-		to_chat(user, span_danger("\The [src]'s screen shows \"I/O ERROR - Unable to run program\" warning."))
-		return FALSE
-
-	if(!program.is_supported_by_hardware(hardware_flag, 1, user))
-		return FALSE
-
-	// The program is already running. Resume it.
-	if(program in idle_threads)
-		program.program_state = PROGRAM_STATE_ACTIVE
-		active_program = program
-		program.alert_pending = FALSE
-		idle_threads.Remove(program)
-		update_appearance()
-		updateUsrDialog()
-		return TRUE
-
-	if(idle_threads.len > max_idle_programs)
-		to_chat(user, span_danger("\The [src] displays a \"Maximal CPU load reached. Unable to run another program.\" error."))
-		return FALSE
-
-	if(program.requires_ntnet && !get_ntnet_status(program.requires_ntnet_feature)) // The program requires NTNet connection, but we are not connected to NTNet.
-		to_chat(user, span_danger("\The [src]'s screen shows \"Unable to connect to NTNet. Please retry. If problem persists contact your system administrator.\" warning."))
-		return FALSE
-
-	if(!program.on_start(user))
-		return FALSE
-
-	active_program = program
-	program.alert_pending = FALSE
-	update_appearance()
-	updateUsrDialog()
-	return TRUE
-
 // Returns 0 for No Signal, 1 for Low Signal and 2 for Good Signal. 3 is for wired connection (always-on)
 /obj/item/modular_computer/proc/get_ntnet_status(specific_action = 0)
-	if(!SSnetworks.station_network || !SSnetworks.station_network.check_function(specific_action)) // NTNet is down and we are not connected via wired connection. No signal.
-		return NTNET_NO_SIGNAL
-
-
-	// computers are connected through ethernet
-	if(hardware_flag & PROGRAM_CONSOLE)
-		return NTNET_ETHERNET_SIGNAL
-
-	var/turf/current_turf = get_turf(src)
-	if(!current_turf || !istype(current_turf))
-		return NTNET_NO_SIGNAL
-	if(is_station_level(current_turf.z))
-		if(hardware_flag & PROGRAM_LAPTOP) //laptops can connect to ethernet but they have to be on station for that
-			return NTNET_ETHERNET_SIGNAL
-		return NTNET_GOOD_SIGNAL
-	else if(is_mining_level(current_turf.z))
-		return NTNET_LOW_SIGNAL
-
-	return NTNET_NO_SIGNAL
+	var/obj/item/computer_hardware/network_card/network_card = all_components[MC_NET]
+	if(network_card)
+		return network_card.get_signal(specific_action)
+	else
+		return 0
 
 /obj/item/modular_computer/proc/add_log(text)
 	if(!get_ntnet_status())
 		return FALSE
+	var/obj/item/computer_hardware/network_card/network_card = all_components[MC_NET]
 
-	return SSnetworks.add_log(text, network_id)
+	return SSnetworks.add_log(text, network_card.network_id, network_card.hardware_id)
 
 /obj/item/modular_computer/proc/shutdown_computer(loud = 1)
 	kill_program(forced = TRUE)
@@ -626,37 +448,32 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		idle_threads.Remove(P)
 	if(looping_sound)
 		soundloop.stop()
-	if(physical && loud)
+	if(loud)
 		physical.visible_message(span_notice("\The [src] shuts down."))
-	enabled = FALSE
+	enabled = 0
 	update_appearance()
-
-/obj/item/modular_computer/ui_action_click(mob/user, actiontype)
-	if(istype(actiontype, /datum/action/item_action/toggle_computer_light))
-		toggle_flashlight()
-		return
-
-	return ..()
 
 /**
  * Toggles the computer's flashlight, if it has one.
  *
  * Called from ui_act(), does as the name implies.
- * It is separated from ui_act() to be overwritten as needed.
+ * It is seperated from ui_act() to be overwritten as needed.
 */
 /obj/item/modular_computer/proc/toggle_flashlight()
 	if(!has_light)
 		return FALSE
 	set_light_on(!light_on)
-	update_appearance()
-	update_action_buttons(force = TRUE) //force it because we added an overlay, not changed its icon
+	if(light_on)
+		set_light(comp_light_luminosity, 1, comp_light_color)
+	else
+		set_light(0)
 	return TRUE
 
 /**
  * Sets the computer's light color, if it has a light.
  *
  * Called from ui_act(), this proc takes a color string and applies it.
- * It is separated from ui_act() to be overwritten as needed.
+ * It is seperated from ui_act() to be overwritten as needed.
  * Arguments:
  ** color is the string that holds the color value that we should use. Proc auto-fails if this is null.
 */
@@ -665,136 +482,82 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		return FALSE
 	comp_light_color = color
 	set_light_color(color)
+	update_light()
 	return TRUE
 
-/obj/item/modular_computer/proc/UpdateDisplay()
-	name = "[saved_identification] ([saved_job])"
-
-/obj/item/modular_computer/attackby(obj/item/attacking_item, mob/user, params)
-	// Check for ID first
-	if(isidcard(attacking_item) && InsertID(attacking_item))
-		return
-
-	// Check for cash next
-	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
-	if(card_slot && iscash(attacking_item))
-		var/obj/item/card/id/inserted_id = card_slot.GetID()
-		if(inserted_id)
-			inserted_id.attackby(attacking_item, user) // If we do, try and put that attacking object in
-			return
-
-	// Inserting a pAI
-	if(istype(attacking_item, /obj/item/pai_card) && !inserted_pai)
-		if(!user.transferItemToLoc(attacking_item, src))
-			return
-		inserted_pai = attacking_item
-		to_chat(user, span_notice("You slot \the [attacking_item] into [src]."))
-		return
-
-	// Check if any Applications need it
-	var/obj/item/computer_hardware/hard_drive/hdd = all_components[MC_HDD]
-	if(hdd)
-		for(var/datum/computer_file/item_holding_app as anything in hdd.stored_files)
-			if(item_holding_app.try_insert(attacking_item, user))
-				return
-
-	if(istype(attacking_item, /obj/item/paper))
-		if(stored_paper >= max_paper)
-			to_chat(user, span_warning("You try to add \the [attacking_item] into [src], but it can't hold any more!"))
-			return
-		if(!user.temporarilyRemoveItemFromInventory(attacking_item))
-			return FALSE
-		to_chat(user, span_notice("You insert \the [attacking_item] into [src]'s paper recycler."))
-		qdel(attacking_item)
-		stored_paper++
-		return
-	if(istype(attacking_item, /obj/item/paper_bin))
-		var/obj/item/paper_bin/bin = attacking_item
-		if(bin.total_paper <= 0)
-			to_chat(user, span_notice("\The [bin] is empty!"))
-			return
-		var/papers_added //just to keep track
-		while((bin.total_paper > 0) && (stored_paper < max_paper))
-			papers_added++
-			stored_paper++
-			bin.remove_paper()
-		if(!papers_added)
-			return
-		to_chat(user, span_notice("Added in [papers_added] new sheets. You now have [stored_paper] / [max_paper] printing paper stored."))
-		bin.update_appearance()
-		return
-
-
-	// Insert items into the components
-	for(var/h in all_components)
-		var/obj/item/computer_hardware/H = all_components[h]
-		if(H.try_insert(attacking_item, user))
-			return
-
-	// Insert new hardware
-	if(istype(attacking_item, /obj/item/computer_hardware) && upgradable)
-		if(install_component(attacking_item, user))
-			playsound(src, 'sound/machines/card_slide.ogg', 50)
-			return
-
-	return ..()
-
 /obj/item/modular_computer/screwdriver_act(mob/user, obj/item/tool)
-	. = ..()
-	if(!deconstructable)
-		return
-	if(!length(all_components))
-		balloon_alert(user, "no components installed!")
+	if(!all_components.len)
+		to_chat(user, span_warning("This device doesn't have any components installed."))
 		return
 	var/list/component_names = list()
 	for(var/h in all_components)
 		var/obj/item/computer_hardware/H = all_components[h]
 		component_names.Add(H.name)
 
-	var/choice = tgui_input_list(user, "Component to uninstall", "Computer maintenance", sort_list(component_names))
-	if(isnull(choice))
+	var/choice = input(user, "Which component do you want to uninstall?", "Computer maintenance", null) as null|anything in sort_list(component_names)
+
+	if(!choice)
 		return
+
 	if(!Adjacent(user))
 		return
 
 	var/obj/item/computer_hardware/H = find_hardware_by_name(choice)
+
 	if(!H)
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return
 
-	tool.play_tool_sound(src, user, 20, volume=20)
 	uninstall_component(H, user)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
-
-/obj/item/modular_computer/wrench_act(mob/living/user, obj/item/tool)
-	. = ..()
-	if(length(all_components))
-		balloon_alert(user, "remove the other components!")
-		return TOOL_ACT_TOOLTYPE_SUCCESS
-	tool.play_tool_sound(src, user, 20, volume=20)
-	new /obj/item/stack/sheet/iron(get_turf(loc), steel_sheet_cost)
-	user.balloon_alert(user, "disassembled")
-	relay_qdel()
-	qdel(src)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return
 
 
-/obj/item/modular_computer/welder_act(mob/living/user, obj/item/tool)
-	. = ..()
-	if(atom_integrity == max_integrity)
-		to_chat(user, span_warning("\The [src] does not require repairs."))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+/obj/item/modular_computer/attackby(obj/item/W as obj, mob/user as mob)
+	// Check for ID first
+	if(istype(W, /obj/item/card/id) && InsertID(W))
+		return
 
-	if(!tool.tool_start_check(user, amount=1))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+	// Insert items into the components
+	for(var/h in all_components)
+		var/obj/item/computer_hardware/H = all_components[h]
+		if(H.try_insert(W, user))
+			return
 
-	to_chat(user, span_notice("You begin repairing damage to \the [src]..."))
-	if(!tool.use_tool(src, user, 20, volume=50, amount=1))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
-	atom_integrity = max_integrity
-	to_chat(user, span_notice("You repair \the [src]."))
-	update_appearance()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	// Insert new hardware
+	if(istype(W, /obj/item/computer_hardware))
+		if(install_component(W, user))
+			return
 
+	if(W.tool_behaviour == TOOL_WRENCH)
+		if(all_components.len)
+			to_chat(user, span_warning("Remove all components from \the [src] before disassembling it."))
+			return
+		new /obj/item/stack/sheet/iron( get_turf(src.loc), steel_sheet_cost )
+		physical.visible_message(span_notice("\The [src] is disassembled by [user]."))
+		relay_qdel()
+		qdel(src)
+		return
+
+	if(W.tool_behaviour == TOOL_WELDER)
+		if(atom_integrity == max_integrity)
+			to_chat(user, span_warning("\The [src] does not require repairs."))
+			return
+
+		if(!W.tool_start_check(user, amount=1))
+			return
+
+		to_chat(user, span_notice("You begin repairing damage to \the [src]..."))
+		if(W.use_tool(src, user, 20, volume=50, amount=1))
+			atom_integrity = max_integrity
+			to_chat(user, span_notice("You repair \the [src]."))
+		return
+
+	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
+	// Check to see if we have an ID inside, and a valid input for money
+	if(card_slot?.GetID() && iscash(W))
+		var/obj/item/card/id/id = card_slot.GetID()
+		id.attackby(W, user) // If we do, try and put that attacking object in
+		return
+	..()
 
 // Used by processor to relay qdel() to machinery type.
 /obj/item/modular_computer/proc/relay_qdel()
@@ -805,9 +568,3 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	if(physical && physical != src)
 		return physical.Adjacent(neighbor)
 	return ..()
-
-/obj/item/modular_computer/proc/Add_Messenger()
-	GLOB.TabletMessengers += src
-
-/obj/item/modular_computer/proc/Remove_Messenger()
-	GLOB.TabletMessengers -= src

@@ -8,7 +8,7 @@
 	reqs = list(
 		/obj/item/food/bread/plain = 1,
 		/obj/item/food/meat/cutlet/plain = 3,
-		/obj/item/food/cheese/wedge = 3
+		/obj/item/food/cheese = 3
 	)
 	result = /obj/item/food/bread/meat
 	subcategory = CAT_BREAD
@@ -18,7 +18,7 @@
 	reqs = list(
 		/obj/item/food/bread/plain = 1,
 		/obj/item/food/meat/cutlet/xeno = 3,
-		/obj/item/food/cheese/wedge = 3
+		/obj/item/food/cheese = 3
 	)
 	result = /obj/item/food/bread/xenomeat
 	subcategory = CAT_BREAD
@@ -28,7 +28,7 @@
 	reqs = list(
 		/obj/item/food/bread/plain = 1,
 		/obj/item/food/meat/cutlet/spider = 3,
-		/obj/item/food/cheese/wedge = 3
+		/obj/item/food/cheese = 3
 	)
 	result = /obj/item/food/bread/spidermeat
 	subcategory = CAT_BREAD
@@ -58,7 +58,7 @@
 	reqs = list(
 		/obj/item/food/bread/plain = 1,
 		/obj/item/food/tofu = 3,
-		/obj/item/food/cheese/wedge = 3
+		/obj/item/food/cheese = 3
 	)
 	result = /obj/item/food/bread/tofu
 	subcategory = CAT_BREAD
@@ -68,7 +68,7 @@
 	reqs = list(
 		/datum/reagent/consumable/milk = 5,
 		/obj/item/food/bread/plain = 1,
-		/obj/item/food/cheese/wedge = 2
+		/obj/item/food/cheese = 2
 	)
 	result = /obj/item/food/bread/creamcheese
 	subcategory = CAT_BREAD
@@ -122,29 +122,6 @@
 	result = /obj/item/food/baguette
 	subcategory = CAT_BREAD
 
-/datum/crafting_recipe/food/raw_breadstick
-	name = "Raw breadstick"
-	reqs = list(
-		/obj/item/food/doughslice = 1,
-		/datum/reagent/consumable/salt = 1,
-		/obj/item/food/butter = 1
-	)
-	result = /obj/item/food/raw_breadstick
-	subcategory = CAT_BREAD
-
-/datum/crafting_recipe/food/breaddog
-	name = "Living dog/bread hybrid"
-	reqs = list(
-		/obj/item/organ/internal/brain = 1,
-		/obj/item/organ/internal/heart = 1,
-		/obj/item/food/bread = 2,
-		/obj/item/food/meat/slab = 3,
-		/datum/reagent/blood = 30,
-		/datum/reagent/teslium = 1 //To shock the whole thing into life
-	)
-	result = /mob/living/simple_animal/pet/dog/breaddog
-	subcategory = CAT_BREAD
-
 ////////////////////////////////////////////////TOAST////////////////////////////////////////////////
 
 /datum/crafting_recipe/food/slimetoast
@@ -196,21 +173,11 @@
 	name = "Bread cat/bread hybrid"
 	reqs = list(
 		/obj/item/food/bread/plain = 1,
-		/obj/item/organ/internal/ears/cat = 1,
-		/obj/item/organ/external/tail/cat = 1,
+		/obj/item/organ/ears/cat = 1,
+		/obj/item/organ/tail/cat = 1,
 		/obj/item/food/meat/slab = 3,
 		/datum/reagent/blood = 50,
 		/datum/reagent/medicine/strange_reagent = 5
 	)
 	result = /mob/living/simple_animal/pet/cat/breadcat
-	subcategory = CAT_BREAD
-
-/datum/crafting_recipe/food/frenchtoast
-	name = "Raw french toast"
-	reqs = list(
-		/obj/item/food/breadslice/plain = 1,
-		/obj/item/food/egg = 2,
-		/datum/reagent/consumable/milk = 5
-	)
-	result = /obj/item/food/raw_frenchtoast
 	subcategory = CAT_BREAD

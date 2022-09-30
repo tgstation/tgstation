@@ -10,18 +10,12 @@
 	name = null
 	icon = 'icons/obj/power.dmi'
 	anchored = TRUE
-	obj_flags = CAN_BE_HIT
+	obj_flags = CAN_BE_HIT | ON_BLUEPRINTS
 	var/datum/powernet/powernet = null
 	use_power = NO_POWER_USE
 	idle_power_usage = 0
 	active_power_usage = 0
 	var/machinery_layer = MACHINERY_LAYER_1 //cable layer to which the machine is connected
-
-/obj/machinery/power/Initialize(mapload)
-	. = ..()
-	if(isturf(loc))
-		var/turf/turf_loc = loc
-		turf_loc.add_blueprints_preround(src)
 
 /obj/machinery/power/Destroy()
 	disconnect_from_network()
@@ -85,10 +79,10 @@
 
 // returns true if the area has power on given channel (or doesn't require power).
 // defaults to power_channel
-/obj/machinery/proc/powered(chan = power_channel, ignore_use_power = FALSE)
+/obj/machinery/proc/powered(chan = power_channel)
 	if(!loc)
 		return FALSE
-	if(!use_power && !ignore_use_power)
+	if(!use_power)
 		return TRUE
 
 	var/area/A = get_area(src) // make sure it's in an area
@@ -99,7 +93,6 @@
 
 // increment the power usage stats for an area
 /obj/machinery/proc/use_power(amount, chan = power_channel)
-	amount = max(amount * machine_power_rectifier, 0) // make sure we don't use negative power
 	var/area/A = get_area(src) // make sure it's in an area
 	A?.use_power(amount, chan)
 
@@ -174,17 +167,16 @@
 
 	if(machine_stat & BROKEN)
 		return
-	var/initial_stat = machine_stat
 	if(powered(power_channel))
-		set_machine_stat(machine_stat & ~NOPOWER)
-		if(initial_stat & NOPOWER)
+		if(machine_stat & NOPOWER)
 			SEND_SIGNAL(src, COMSIG_MACHINERY_POWER_RESTORED)
 			. = TRUE
+		set_machine_stat(machine_stat & ~NOPOWER)
 	else
-		set_machine_stat(machine_stat | NOPOWER)
-		if(!(initial_stat & NOPOWER))
+		if(!(machine_stat & NOPOWER))
 			SEND_SIGNAL(src, COMSIG_MACHINERY_POWER_LOST)
 			. = TRUE
+		set_machine_stat(machine_stat | NOPOWER)
 	update_appearance()
 
 // connect the machine to a powernet if a node cable or a terminal is present on the turf
@@ -218,7 +210,7 @@
 	if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/coil = W
 		var/turf/T = user.loc
-		if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE || !isfloorturf(T))
+		if(T.intact || !isfloorturf(T))
 			return
 		if(get_dist(src, user) > 1)
 			return

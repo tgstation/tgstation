@@ -4,9 +4,12 @@
 	SStgui.on_logout(src)
 	unset_machine()
 	remove_from_player_list()
+	clear_client_in_contents()
+	if(client?.movingmob) //In the case the client was transferred to another mob and not deleted.
+		client.movingmob.client_mobs_in_contents -= src
+		UNSETEMPTY(client.movingmob.client_mobs_in_contents)
+		client.movingmob = null
 
-	// Clears away the frill mask
-	// Wallening todo: make this better. Also why are these not cached exactly?
 	if(client)
 		client.images.Remove(frill_oval_mask)
 	frill_oval_mask = null
@@ -16,6 +19,9 @@
 	if(loc)
 		loc.on_log(FALSE)
 
-	become_uncliented()
+	if(client)
+		for(var/foo in client.player_details.post_logout_callbacks)
+			var/datum/callback/CB = foo
+			CB.Invoke()
 
 	return TRUE

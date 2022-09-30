@@ -28,12 +28,6 @@
 	juice_results = list(/datum/reagent/consumable/banana = 0)
 	distill_reagent = /datum/reagent/consumable/ethanol/bananahonk
 
-/obj/item/food/grown/banana/Initialize(mapload)
-	. = ..()
-	if(prob(1))
-		AddComponent(/datum/component/boomerang, boomerang_throw_range = throw_range + 4, thrower_easy_catch_enabled = TRUE)
-		desc += " The curve on this one looks particularly acute."
-
 /obj/item/food/grown/banana/generate_trash(atom/location)
 	. = ..()
 	var/obj/item/grown/bananapeel/peel = .
@@ -59,8 +53,8 @@
 	seed = /obj/item/seeds/banana
 	name = "banana peel"
 	desc = "A peel from a banana."
-	lefthand_file = 'icons/mob/inhands/items/food_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/items/food_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	icon_state = "banana_peel"
 	inhand_icon_state = "banana_peel"
 	w_class = WEIGHT_CLASS_TINY
@@ -122,7 +116,7 @@
 	product = /obj/item/food/grown/banana/bluespace
 	mutatelist = null
 	genes = list(/datum/plant_gene/trait/slip, /datum/plant_gene/trait/teleport, /datum/plant_gene/trait/repeated_harvest)
-	reagents_add = list(/datum/reagent/bluespace = 0.2, /datum/reagent/consumable/banana = 0.1, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.02, /datum/reagent/liquid_dark_matter = 0.2)
+	reagents_add = list(/datum/reagent/bluespace = 0.2, /datum/reagent/consumable/banana = 0.1, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.02)
 	rarity = 30
 	graft_gene = /datum/plant_gene/trait/teleport
 
@@ -132,7 +126,7 @@
 	icon_state = "bluenana"
 	inhand_icon_state = "bluespace_peel"
 	trash_type = /obj/item/grown/bananapeel/bluespace
-	tastes = list("banana" = 1, "antimatter" = 1)
+	tastes = list("banana" = 1)
 	wine_power = 60
 	wine_flavor = "slippery hypercubes"
 
@@ -143,41 +137,10 @@
 	icon_state = "bluenana_peel"
 
 // Other
-/obj/item/grown/bananapeel/specialpeel //used by /obj/item/clothing/shoes/clown_shoes/banana_shoes
+/obj/item/grown/bananapeel/specialpeel     //used by /obj/item/clothing/shoes/clown_shoes/banana_shoes
 	name = "synthesized banana peel"
 	desc = "A synthetic banana peel."
 
-/obj/item/grown/bananapeel/specialpeel/Initialize(mapload)
+/obj/item/grown/bananapeel/specialpeel/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/slippery, 40)
-
-/obj/item/food/grown/banana/bunch
-	name = "banana bunch"
-	desc = "Am exquisite bunch of bananas. The almost otherwordly plumpness steers the mind any discening entertainer towards the divine."
-	icon_state = "banana_bunch"
-	bite_consumption_mod = 4
-	var/is_ripening = FALSE
-
-/obj/item/food/grown/banana/bunch/Initialize(mapload, obj/item/seeds/new_seed)
-	. = ..()
-	reagents.add_reagent(/datum/reagent/consumable/monkey_energy, 10)
-	reagents.add_reagent(/datum/reagent/consumable/banana, 10)
-
-/obj/item/food/grown/banana/bunch/proc/start_ripening()
-	if(is_ripening)
-		return
-	playsound(src, 'sound/effects/fuse.ogg', 80)
-
-	animate(src, time = 1, pixel_z = 12, easing = ELASTIC_EASING)
-	animate(time = 1, pixel_z = 0, easing = BOUNCE_EASING)
-	addtimer(CALLBACK(src, .proc/explosive_ripening), 3 SECONDS)
-	for(var/i in 1 to 32)
-		animate(color = (i % 2) ? "#ffffff": "#ff6739", time = 1, easing = QUAD_EASING)
-
-/obj/item/food/grown/banana/bunch/proc/explosive_ripening()
-	honkerblast(src, light_range = 3, medium_range = 1)
-	for(var/mob/shook_boi in range(6, loc))
-		shake_camera(shook_boi, 3, 5)
-	var/obj/effect/decal/cleanable/food/plant_smudge/banana_smudge = new(loc)
-	banana_smudge.color = "#ffe02f"
-	qdel(src)

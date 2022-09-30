@@ -3,6 +3,9 @@
 	desc = "It charges power cells."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "ccharger"
+	use_power = IDLE_POWER_USE
+	idle_power_usage = 5
+	active_power_usage = 60
 	power_channel = AREA_USAGE_EQUIP
 	circuit = /obj/item/circuitboard/machine/cell_charger
 	pass_flags = PASSTABLE
@@ -15,15 +18,11 @@
 	if(!charging)
 		return
 
+	. += image(charging.icon, charging.icon_state)
+	. += "ccharger-on"
 	if(!(machine_stat & (BROKEN|NOPOWER)))
 		var/newlevel = round(charging.percent() * 4 / 100)
 		. += "ccharger-o[newlevel]"
-	. += image(charging.icon, charging.icon_state)
-	if(charging.grown_battery)
-		. += mutable_appearance('icons/obj/power.dmi', "grown_wires")
-	. += "ccharger-[charging.connector_type]-on"
-	if((charging.charge > 0.01) && charging.charge_light_type)
-		. += mutable_appearance('icons/obj/power.dmi', "cell-[charging.charge_light_type]-o[(charging.percent() >= 99.5) ? 2 : 1]")
 
 /obj/machinery/cell_charger/examine(mob/user)
 	. = ..()
@@ -32,14 +31,6 @@
 		. += "Current charge: [round(charging.percent(), 1)]%."
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Charging power: <b>[charge_rate]W</b>.")
-
-/obj/machinery/cell_charger/wrench_act(mob/living/user, obj/item/tool)
-	. = ..()
-	if(charging)
-		return FALSE
-	if(default_unfasten_wrench(user, tool))
-		update_appearance()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/cell_charger/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stock_parts/cell) && !panel_open)
@@ -69,6 +60,8 @@
 		if(!charging && default_deconstruction_screwdriver(user, icon_state, icon_state, W))
 			return
 		if(default_deconstruction_crowbar(W))
+			return
+		if(!charging && default_unfasten_wrench(user, W))
 			return
 		return ..()
 
@@ -125,7 +118,6 @@
 		charging.emp_act(severity)
 
 /obj/machinery/cell_charger/RefreshParts()
-	. = ..()
 	charge_rate = 250
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		charge_rate *= C.rating

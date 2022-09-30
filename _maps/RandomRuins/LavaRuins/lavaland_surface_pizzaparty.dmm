@@ -3,11 +3,11 @@
 /turf/template_noop,
 /area/template_noop)
 "b" = (
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "c" = (
 /obj/structure/lattice,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "d" = (
 /turf/closed/wall,
@@ -140,7 +140,7 @@
 "v" = (
 /obj/structure/lattice,
 /obj/item/chair/wood/wings,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "w" = (
 /obj/item/kitchen/fork,
@@ -263,7 +263,7 @@
 "N" = (
 /obj/structure/lattice,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "O" = (
 /obj/item/knife/kitchen,

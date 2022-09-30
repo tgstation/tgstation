@@ -13,9 +13,9 @@
 	var/broken = FALSE
 	var/initialized_at
 
-/datum/tgui_panel/New(client/client, id)
+/datum/tgui_panel/New(client/client)
 	src.client = client
-	window = new(client, id)
+	window = new(client, "browseroutput")
 	window.subscribe(src, .proc/on_message)
 
 /datum/tgui_panel/Del()
@@ -42,11 +42,9 @@
 	sleep(1)
 	initialized_at = world.time
 	// Perform a clean initialization
-	window.initialize(
-		strict_mode = TRUE,
-		assets = list(
-			get_asset_datum(/datum/asset/simple/tgui_panel),
-		))
+	window.initialize(inline_assets = list(
+		get_asset_datum(/datum/asset/simple/tgui_panel),
+	))
 	window.send_asset(get_asset_datum(/datum/asset/simple/namespaced/fontawesome))
 	window.send_asset(get_asset_datum(/datum/asset/simple/namespaced/tgfont))
 	window.send_asset(get_asset_datum(/datum/asset/spritesheet/chat))

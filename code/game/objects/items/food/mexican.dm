@@ -12,7 +12,7 @@
 	name = "burrito"
 	desc = "Tortilla wrapped goodness."
 	icon_state = "burrito"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/nutriment/vitamin = 1)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 2,/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("torilla" = 2, "beans" = 3)
 	foodtypes = GRAIN
 	w_class = WEIGHT_CLASS_SMALL
@@ -115,12 +115,3 @@
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_LEGENDARY
-
-/obj/item/food/chipsandsalsa
-	name = "chips and salsa"
-	desc = "Some tortilla chips with a cup of zesty salsa. Highly addictive!"
-	icon_state = "chipsandsalsa"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/capsaicin = 2, /datum/reagent/consumable/nutriment/vitamin = 4)
-	tastes = list("peppers" = 1, "salsa" = 3, "tortilla chips" = 1, "onion" = 1)
-	foodtypes = VEGETABLES
-	w_class = WEIGHT_CLASS_SMALL

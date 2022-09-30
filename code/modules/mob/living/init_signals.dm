@@ -73,7 +73,7 @@
 	SIGNAL_HANDLER
 	mobility_flags &= ~MOBILITY_MOVE
 	if(living_flags & MOVES_ON_ITS_OWN)
-		SSmove_manager.stop_looping(src) //stop mid walk //This is also really dumb
+		walk(src, 0) //stop mid walk
 
 /// Called when [TRAIT_IMMOBILIZED] is removed from the mob.
 /mob/living/proc/on_immobilized_trait_loss(datum/source)
@@ -109,10 +109,7 @@
 /mob/living/proc/on_forced_standing_trait_loss(datum/source)
 	SIGNAL_HANDLER
 
-	if(HAS_TRAIT(src, TRAIT_FLOORED))
-		on_fall()
-		set_lying_down()
-	else if(resting)
+	if(resting || HAS_TRAIT(src, TRAIT_FLOORED))
 		set_lying_down()
 
 /// Called when [TRAIT_HANDS_BLOCKED] is added to the mob.
@@ -189,9 +186,9 @@
 /mob/living/proc/update_succumb_action()
 	SIGNAL_HANDLER
 	if (CAN_SUCCUMB(src))
-		throw_alert(ALERT_SUCCUMB, /atom/movable/screen/alert/succumb)
+		throw_alert("succumb", /atom/movable/screen/alert/succumb)
 	else
-		clear_alert(ALERT_SUCCUMB)
+		clear_alert("succumb")
 
 ///From [element/movetype_handler/on_movement_type_trait_gain()]
 /mob/living/proc/on_movement_type_flag_enabled(datum/source, flag, old_movement_type)

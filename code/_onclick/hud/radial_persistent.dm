@@ -8,7 +8,7 @@
 
 /atom/movable/screen/radial/persistent/center/Click(location, control, params)
 	if(usr.client == parent.current_user)
-		parent.element_chosen(null, usr, params)
+		parent.element_chosen(null,usr)
 
 /atom/movable/screen/radial/persistent/center/MouseEntered(location, control, params)
 	. = ..()
@@ -29,17 +29,15 @@
 	close_button.set_parent(src)
 
 
-/datum/radial_menu/persistent/element_chosen(choice_id, mob/user, params)
-	select_proc_callback.Invoke(choices_values[choice_id], params)
+/datum/radial_menu/persistent/element_chosen(choice_id,mob/user)
+	select_proc_callback.Invoke(choices_values[choice_id])
 
 
-/datum/radial_menu/persistent/proc/change_choices(list/newchoices, tooltips = FALSE, animate = FALSE, keep_same_page = FALSE)
+/datum/radial_menu/persistent/proc/change_choices(list/newchoices, tooltips)
 	if(!newchoices.len)
 		return
-	entry_animation = FALSE
-	var/target_page = keep_same_page ? current_page : 1 //Stores the current_page value before it's set back to 1 on Reset()
 	Reset()
-	set_choices(newchoices,tooltips, set_page = target_page)
+	set_choices(newchoices,tooltips)
 
 /datum/radial_menu/persistent/Destroy()
 	QDEL_NULL(select_proc_callback)
@@ -55,7 +53,7 @@
 	Select_proc is the proc to be called each time an element on the menu is clicked, and should accept the chosen element as its final argument
 	Clicking the center button will return a choice of null
 */
-/proc/show_radial_menu_persistent(mob/user, atom/anchor, list/choices, datum/callback/select_proc, uniqueid, radius, tooltips = FALSE, radial_slice_icon = "radial_slice")
+/proc/show_radial_menu_persistent(mob/user, atom/anchor, list/choices, datum/callback/select_proc, uniqueid, radius, tooltips = FALSE)
 	if(!user || !anchor || !length(choices) || !select_proc)
 		return
 	if(!uniqueid)
@@ -69,7 +67,6 @@
 	GLOB.radial_menus[uniqueid] = menu
 	if(radius)
 		menu.radius = radius
-	menu.radial_slice_icon = radial_slice_icon
 	menu.select_proc_callback = select_proc
 	menu.anchor = anchor
 	menu.check_screen_border(user) //Do what's needed to make it look good near borders or on hud

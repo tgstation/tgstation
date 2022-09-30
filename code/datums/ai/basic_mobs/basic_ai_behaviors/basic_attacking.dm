@@ -4,19 +4,12 @@
 
 /datum/ai_behavior/basic_melee_attack/setup(datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
 	. = ..()
-	//Hiding location is priority
-	var/datum/weakref/weak_target = controller.blackboard[hiding_location_key] || controller.blackboard[target_key]
-	var/atom/target = weak_target?.resolve()
-	if(!target)
-		return FALSE
-	controller.current_movement_target = target
+	controller.current_movement_target =  controller.blackboard[hiding_location_key] || controller.blackboard[target_key] //Hiding location is priority
 
 /datum/ai_behavior/basic_melee_attack/perform(delta_time, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
 	. = ..()
 	var/mob/living/basic/basic_mob = controller.pawn
-	//targetting datum will kill the action if not real anymore
-	var/datum/weakref/weak_target = controller.blackboard[target_key]
-	var/atom/target = weak_target?.resolve()
+	var/atom/target = controller.blackboard[target_key]
 	var/datum/targetting_datum/targetting_datum = controller.blackboard[targetting_datum_key]
 
 	if(!targetting_datum.can_attack(basic_mob, target))
@@ -45,27 +38,23 @@
 
 /datum/ai_behavior/basic_ranged_attack/setup(datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
 	. = ..()
-	var/datum/weakref/weak_target = controller.blackboard[hiding_location_key] || controller.blackboard[target_key]
-	var/atom/target = weak_target?.resolve()
-	if(!target)
-		return FALSE
-	controller.current_movement_target = target
+	controller.current_movement_target =  controller.blackboard[hiding_location_key] || controller.blackboard[target_key] //Hiding location is priority
+
 
 /datum/ai_behavior/basic_ranged_attack/perform(delta_time, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
 	. = ..()
 	var/mob/living/basic/basic_mob = controller.pawn
-	//targetting datum will kill the action if not real anymore
-	var/datum/weakref/weak_target = controller.blackboard[target_key]
-	var/atom/target = weak_target?.resolve()
+	var/atom/target = controller.blackboard[target_key]
 	var/datum/targetting_datum/targetting_datum = controller.blackboard[targetting_datum_key]
+
 
 	if(!targetting_datum.can_attack(basic_mob, target))
 		finish_action(controller, FALSE, target_key)
 		return
 
-	var/atom/hiding_target = targetting_datum.find_hidden_mobs(basic_mob, target) //If this is valid, theyre hidden in something!
+	var/hiding_target = targetting_datum.find_hidden_mobs(basic_mob, target) //If this is valid, theyre hidden in something!
 
-	controller.blackboard[hiding_location_key] = WEAKREF(hiding_target)
+	controller.blackboard[hiding_location_key] = hiding_target
 
 	if(hiding_target) //Shoot it!
 		basic_mob.RangedAttack(hiding_target)

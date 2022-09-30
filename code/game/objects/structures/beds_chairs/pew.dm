@@ -9,24 +9,15 @@
 	buildstackamount = 3
 	item_chair = null
 
-///This proc adds the rotate component, overwrite this if you for some reason want to change some specific args.
-/obj/structure/chair/pew/MakeRotate()
-	AddComponent(/datum/component/simple_rotation, ROTATION_REQUIRE_WRENCH|ROTATION_IGNORE_ANCHORED)
-
 /obj/structure/chair/pew/left
 	name = "left wooden pew end"
 	icon_state = "pewend_left"
 	var/mutable_appearance/leftpewarmrest
 
 /obj/structure/chair/pew/left/Initialize(mapload)
-	gen_armrest()
-	return ..()
-
-/obj/structure/chair/pew/left/proc/gen_armrest()
 	leftpewarmrest = GetLeftPewArmrest()
 	leftpewarmrest.layer = ABOVE_MOB_LAYER
-	update_leftpewarmrest()
-
+	return ..()
 
 /obj/structure/chair/pew/left/proc/GetLeftPewArmrest()
 	return mutable_appearance('icons/obj/sofa.dmi', "pewend_left_armrest")
@@ -55,13 +46,9 @@
 	var/mutable_appearance/rightpewarmrest
 
 /obj/structure/chair/pew/right/Initialize(mapload)
-	gen_armrest()
-	return ..()
-
-/obj/structure/chair/pew/right/proc/gen_armrest()
 	rightpewarmrest = GetRightPewArmrest()
 	rightpewarmrest.layer = ABOVE_MOB_LAYER
-	update_rightpewarmrest()
+	return ..()
 
 /obj/structure/chair/pew/right/proc/GetRightPewArmrest()
 	return mutable_appearance('icons/obj/sofa.dmi', "pewend_right_armrest")

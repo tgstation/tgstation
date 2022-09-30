@@ -17,7 +17,7 @@
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/attackby(obj/item/A, mob/user, params)
 	..()
-	if(istype(A, /obj/item/ammo_box) || isammocasing(A))
+	if(istype(A, /obj/item/ammo_box) || istype(A, /obj/item/ammo_casing))
 		chamber_round()
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/cyborg

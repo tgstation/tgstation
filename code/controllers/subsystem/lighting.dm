@@ -6,36 +6,32 @@ SUBSYSTEM_DEF(lighting)
 	var/static/list/sources_queue = list() // List of lighting sources queued for update.
 	var/static/list/corners_queue = list() // List of lighting corners queued for update.
 	var/static/list/objects_queue = list() // List of lighting objects queued for update.
-#ifdef VISUALIZE_LIGHT_UPDATES
-	var/allow_duped_values = FALSE
-	var/allow_duped_corners = FALSE
-#endif
 
 /datum/controller/subsystem/lighting/stat_entry(msg)
 	msg = "L:[length(sources_queue)]|C:[length(corners_queue)]|O:[length(objects_queue)]"
 	return ..()
 
 
-/datum/controller/subsystem/lighting/Initialize()
+/datum/controller/subsystem/lighting/Initialize(timeofday)
 	if(!initialized)
 		create_all_lighting_objects()
 		initialized = TRUE
 
 	fire(FALSE, TRUE)
 
-	return SS_INIT_SUCCESS
+	return ..()
 
 /datum/controller/subsystem/lighting/fire(resumed, init_tick_checks)
 	MC_SPLIT_TICK_INIT(3)
 	if(!init_tick_checks)
 		MC_SPLIT_TICK
-
 	var/list/queue = sources_queue
 	var/i = 0
 	for (i in 1 to length(queue))
 		var/datum/light_source/L = queue[i]
 
 		L.update_corners()
+
 		L.needs_update = LIGHTING_NO_UPDATE
 
 		if(init_tick_checks)

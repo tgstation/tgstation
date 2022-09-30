@@ -9,18 +9,17 @@
 	if(!msg)
 		return
 
-	if(findtext(msg, "@") || findtext(msg, "#"))
-		var/list/link_results = check_asay_links(msg)
-		if(length(link_results))
-			msg = link_results[ASAY_LINK_NEW_MESSAGE_INDEX]
-			link_results[ASAY_LINK_NEW_MESSAGE_INDEX] = null
-			var/list/pinged_admin_clients = link_results[ASAY_LINK_PINGED_ADMINS_INDEX]
-			for(var/iter_ckey in pinged_admin_clients)
-				var/client/iter_admin_client = pinged_admin_clients[iter_ckey]
-				if(!iter_admin_client?.holder)
-					continue
-				window_flash(iter_admin_client)
-				SEND_SOUND(iter_admin_client.mob, sound('sound/misc/asay_ping.ogg'))
+	var/list/pinged_admin_clients = check_admin_pings(msg)
+	if(length(pinged_admin_clients) && pinged_admin_clients[ADMINSAY_PING_UNDERLINE_NAME_INDEX])
+		msg = pinged_admin_clients[ADMINSAY_PING_UNDERLINE_NAME_INDEX]
+		pinged_admin_clients -= ADMINSAY_PING_UNDERLINE_NAME_INDEX
+
+	for(var/iter_ckey in pinged_admin_clients)
+		var/client/iter_admin_client = pinged_admin_clients[iter_ckey]
+		if(!iter_admin_client?.holder)
+			continue
+		window_flash(iter_admin_client)
+		SEND_SOUND(iter_admin_client.mob, sound('sound/misc/bloop.ogg'))
 
 	mob.log_talk(msg, LOG_ASAY)
 	msg = keywords_lookup(msg)
