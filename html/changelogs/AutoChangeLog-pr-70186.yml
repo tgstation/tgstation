@@ -1,8 +1,0 @@
-author: "Profakos"
-delete-after: True
-changes: 
-  - bugfix: "Various tramstation medbay disposal and air pipe issues have been fixed"
-  - bugfix: "Medbay and Chemistry tagged packages will arrive properly to Tramstation's medical equipment storage, and the apothecary, respectively"
-  - bugfix: "Gaps have been plugged in the tramstation disposal loop"
-  - bugfix: "Errant fire alarm no longer hovers above the surgery door"
-  - bugfix: "Trash flushed down HoS and the Security Meeting area's disposals no longer get ejected below the HoS's door"

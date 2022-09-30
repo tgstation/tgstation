@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - bugfix: "Wizard's anonymous event won't run near the start of a round anymore."
