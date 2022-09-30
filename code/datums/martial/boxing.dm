@@ -64,7 +64,7 @@
 	// boxing requires human
 	if(!ishuman(user))
 		return
-	if(slot == ITEM_SLOT_GLOVES)
+	if(slot & ITEM_SLOT_GLOVES)
 		var/mob/living/student = user
 		style.teach(student, 1)
 

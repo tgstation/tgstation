@@ -39,17 +39,30 @@
 /obj/item/assembly/get_part_rating()
 	return 1
 
+/**
+ * on_attach: Called when attached to a holder, wiring datum, or other special assembly
+ *
+ * Will also be called if the assembly holder is attached to a plasma (internals) tank or welding fuel (dispenser) tank.
+ */
 /obj/item/assembly/proc/on_attach()
+	if(!holder && connected)
+		holder = connected.holder
 
-//Call this when detaching it from a device. handles any special functions that need to be updated ex post facto
+/**
+ * on_detach: Called when removed from an assembly holder or wiring datum
+ */
 /obj/item/assembly/proc/on_detach()
+	if(connected)
+		connected = null
 	if(!holder)
 		return FALSE
 	forceMove(holder.drop_location())
 	holder = null
 	return TRUE
 
-//Called when the holder is moved
+/**
+ * holder_movement: Called when the assembly's holder detects movement
+ */
 /obj/item/assembly/proc/holder_movement()
 	if(!holder)
 		return FALSE
@@ -94,6 +107,15 @@
 	update_appearance()
 	return secured
 
+// This is overwritten so that clumsy people can set off mousetraps even when in a holder.
+// We are not going deeper than that however (won't set off if in a tank bomb or anything with wires)
+// That would need to be added to all parent objects, or a signal created, whatever.
+// Anyway this return check prevents you from picking up every assembly inside the holder at once.
+/obj/item/assembly/attack_hand(mob/living/user, list/modifiers)
+	if(holder || connected)
+		return
+	. = ..()
+
 /obj/item/assembly/attackby(obj/item/W, mob/user, params)
 	if(isassembly(W))
 		var/obj/item/assembly/A = W
@@ -135,9 +157,12 @@
 	return ui_interact(user)
 
 /obj/item/assembly/ui_host(mob/user)
-	if(holder)
-		return holder
-	return src
+	// In order, return:
+	// - The conencted wiring datum's owner, or
+	// - The thing your assembly holder is attached to, or
+	// - the assembly holder itself, or
+	// - us
+	return connected?.holder || holder?.master || holder || src
 
 /obj/item/assembly/ui_state(mob/user)
 	return GLOB.hands_state

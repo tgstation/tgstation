@@ -44,8 +44,13 @@
 	// If you're not conscious you're too busy or dead to look at propaganda
 	if (viewer.stat != CONSCIOUS)
 		return
+	if(viewer.is_blind())
+		return
 	if (!should_demoralise(viewer))
 		return
+	if(!viewer.can_read(host, moods.reading_requirements, TRUE)) //if it's a text based demoralization datum, make sure the mob has the capability to read. if it's only an image, make sure it's just bright enough for them to see it.
+		return
+
 
 	if (is_special_character(viewer))
 		to_chat(viewer, span_notice("[moods.antag_notification]"))
@@ -86,6 +91,8 @@
 	var/datum/mood_event/crew_mood
 	/// Text to display to a head of staff upon receiving this mood
 	var/authority_notification
+	/// For literacy checks
+	var/reading_requirements = READING_CHECK_LIGHT
 	/// Mood datum to apply to a head of staff or security
 	var/datum/mood_event/authority_mood
 
@@ -97,6 +104,7 @@
 	crew_mood = /datum/mood_event/traitor_poster_crew
 	authority_notification = "Hey! Who put up that poster?"
 	authority_mood = /datum/mood_event/traitor_poster_auth
+	reading_requirements = (READING_CHECK_LITERACY | READING_CHECK_LIGHT)
 
 /datum/mood_event/traitor_poster_antag
 	description = "I am doing the right thing."

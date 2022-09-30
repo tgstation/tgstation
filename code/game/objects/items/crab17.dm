@@ -50,6 +50,7 @@
 	max_integrity = 5000
 	var/list/accounts_to_rob
 	var/mob/living/bogdanoff
+	/// Are we able to start moving?
 	var/canwalk = FALSE
 
 /obj/structure/checkoutmachine/examine(mob/living/user)
@@ -76,6 +77,10 @@
 		user.safe_throw_at(throwtarget, 1, 1, force = MOVE_FORCE_EXTREMELY_STRONG)
 		playsound(get_turf(src),'sound/magic/repulse.ogg', 100, TRUE)
 
+		return
+
+	if(!canwalk)
+		to_chat(user, span_warning("Space-Coin only accepts transactions while mobile!"))
 		return
 
 	if(!card.registered_account)
@@ -166,8 +171,8 @@
 	add_overlay("screen_lines")
 	cut_overlay("text")
 	add_overlay("text")
+	START_PROCESSING(SSfastprocess, src) // we only start doing economy draining stuff once our machinery is initialized, thematically
 	canwalk = TRUE
-	START_PROCESSING(SSfastprocess, src)
 
 /obj/structure/checkoutmachine/Destroy()
 	stop_dumping()

@@ -65,8 +65,8 @@
 			return
 		attached_device = A
 		to_chat(user, span_notice("You attach the [item] to the valve controls and secure it."))
-		A.on_attach()
 		A.holder = src
+		A.on_attach()
 		A.toggle_secure() //this calls update_icon(), which calls update_icon() on the holder (i.e. the bomb).
 		log_bomber(user, "attached a [item.name] to a ttv -", src, null, FALSE)
 		attacher = user
