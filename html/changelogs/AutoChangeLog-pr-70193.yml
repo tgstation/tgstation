@@ -1,0 +1,5 @@
+author: "tralezab"
+delete-after: True
+changes: 
+  - rscadd: "Changelings once again have reestablished their changeling hivemind, and can secretly communicate between each other."
+  - bugfix: "Fixed up the Changeling UI a bit, like for example some dimmers would never render."
