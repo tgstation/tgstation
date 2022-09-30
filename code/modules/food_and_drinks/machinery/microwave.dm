@@ -35,7 +35,7 @@
 	create_reagents(100)
 	soundloop = new(src, FALSE)
 	// Go on top of a table if we're not varedited
-	var/obj/structure/table/counter = locate(/obj/structure/table) in geturf(src)
+	var/obj/structure/table/counter = locate(/obj/structure/table) in get_turf(src)
 	if(!pixel_y && counter)
 		pixel_y = 6
 
