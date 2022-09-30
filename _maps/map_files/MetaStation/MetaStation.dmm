@@ -10935,7 +10935,7 @@
 /obj/item/book/manual/wiki/security_space_law{
 	pixel_y = 3
 	},
-/obj/item/radio/intercom/directional/north,
+/obj/item/radio/intercom/command/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "eau" = (
@@ -55895,7 +55895,7 @@
 /obj/item/camera{
 	pixel_y = 4
 	},
-/obj/item/radio/intercom/command/directional/west,
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain/private)
 "tJb" = (
@@ -66107,6 +66107,11 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/storage)
+"xmg" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/item/radio/intercom/command/directional/north,
+/turf/open/floor/plating,
+/area/station/hallway/primary/central)
 "xml" = (
 /obj/machinery/computer/message_monitor{
 	dir = 4
@@ -96768,7 +96773,7 @@ wtZ
 vpQ
 iLk
 tGL
-tKN
+xmg
 aaf
 dho
 oYd

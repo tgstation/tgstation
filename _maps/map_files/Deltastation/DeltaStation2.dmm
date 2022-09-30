@@ -9122,7 +9122,7 @@
 /obj/structure/table/wood,
 /obj/item/pinpointer/nuke,
 /obj/item/disk/nuclear,
-/obj/item/radio/intercom/command/directional/west,
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron/grimy,
 /area/station/command/heads_quarters/captain/private)
 "cbY" = (
@@ -88256,7 +88256,7 @@
 "vzD" = (
 /obj/structure/table/wood,
 /obj/structure/cable,
-/obj/item/radio/intercom,
+/obj/item/radio/intercom/command,
 /turf/open/floor/iron/dark,
 /area/station/command/corporate_showroom)
 "vzK" = (
