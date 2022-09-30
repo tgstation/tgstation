@@ -12,7 +12,7 @@
 /**
  * Initial check if manually unwrapping
  */
-/obj/item/delivery/proc/attempt_pre_unwrap_contents(mob/user, time = 15)
+/obj/item/delivery/proc/attempt_pre_unwrap_contents(mob/user, time = 1.5 SECONDS)
 	to_chat(user, span_notice("You start to unwrap the package..."))
 	return do_after(user, time, target = user)
 
