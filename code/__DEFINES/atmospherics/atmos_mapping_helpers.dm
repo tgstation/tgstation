@@ -6,6 +6,7 @@
 #define TCOMMS_ATMOS "n2=100;TEMP=80"
 /// space
 #define AIRLESS_ATMOS "TEMP=2.7"
+#define SPACE_EQUIPMENT_EFFECT_PRESSURE 15
 /// -93.15°C snow and ice turfs
 #define FROZEN_ATMOS "o2=22;n2=82;TEMP=180"
 /// -14°C kitchen coldroom, just might loss your tail; higher amount of mol to reach about 101.3 kpA

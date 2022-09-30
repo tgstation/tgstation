@@ -61,6 +61,36 @@
 	desc = "A Ripley APLU right leg. Contains somewhat complex servodrives and balance maintaining systems."
 	icon_state = "ripley_r_leg"
 
+//Abuzer mech (Decouverte)
+
+/obj/item/mecha_parts/chassis/decouverte
+	name = "\improper Decouverte chassis"
+	construct_type = /datum/component/construction/unordered/mecha_chassis/decouverte
+
+/obj/item/mecha_parts/part/decouverte_torso
+	name = "\improper Decouverte torso"
+	desc = "A torso part of Decouverte. Contains power unit, processing core and life support systems."
+	icon_state = "decouverte_harness"
+
+/obj/item/mecha_parts/part/decouverte_left_arm
+	name = "\improper Decouverte left arm"
+	desc = "A Decouverte left arm. Data and power sockets are compatible with most exosuit tools."
+	icon_state = "decouverte_l_arm"
+
+/obj/item/mecha_parts/part/decouverte_right_arm
+	name = "\improper Decouverte right arm"
+	desc = "A Decouverte right arm. Data and power sockets are compatible with most exosuit tools."
+	icon_state = "decouverte_r_arm"
+
+/obj/item/mecha_parts/part/decouverte_left_leg
+	name = "\improper Decouverte left leg"
+	desc = "A Decouverte left leg. Contains somewhat complex servodrives and balance maintaining systems."
+	icon_state = "decouverte_l_leg"
+
+/obj/item/mecha_parts/part/decouverte_right_leg
+	name = "\improper Decouverte right leg"
+	desc = "A Decouverte right leg. Contains somewhat complex servodrives and balance maintaining systems."
+	icon_state = "decouverte_r_leg"
 ///////// Odysseus
 
 /obj/item/mecha_parts/chassis/odysseus
@@ -356,6 +386,13 @@
 	name = "Ripley Central Control module (Exosuit Board)"
 	icon_state = "mainboard"
 
+
+/obj/item/circuitboard/mecha/decouverte/peripherals
+	name = "Decouverte Peripherals Control module (Exosuit Board)"
+	icon_state = "mcontroller"
+/obj/item/circuitboard/mecha/decouverte/main
+	name = "Decouverte Central Control module (Exosuit Board)"
+	icon_state = "mainboard"
 
 /obj/item/circuitboard/mecha/gygax/peripherals
 	name = "Gygax Peripherals Control module (Exosuit Board)"

@@ -27945,6 +27945,11 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/aft)
+"kcv" = (
+/obj/machinery/light/directional/south,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/engineering/supermatter/room)
 "kcA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/food_packaging,
@@ -37780,6 +37785,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "nvA" = (
@@ -99610,8 +99616,8 @@ wXe
 uDu
 lLx
 nvu
-fVI
-eAr
+fJi
+kcv
 qHs
 dhe
 dhe

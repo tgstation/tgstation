@@ -50,6 +50,7 @@
 	var/list/part_sets = list(
 								"Cyborg",
 								"Ripley",
+								"Decouverte",
 								"Odysseus",
 								"Clarke",
 								"Gygax",
@@ -185,6 +186,8 @@
 					category_override += "Odysseus"
 				if(mech_types & EXOSUIT_MODULE_CLARKE)
 					category_override += "Clarke"
+				if(mech_types & EXOSUIT_MODULE_DECOUVERTE)
+					category_override += "Decouverte"
 				if(mech_types & EXOSUIT_MODULE_GYGAX)
 					category_override += "Gygax"
 				if(mech_types & EXOSUIT_MODULE_DURAND)

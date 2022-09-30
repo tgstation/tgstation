@@ -18,6 +18,22 @@
 	category = list(RND_CATEGORY_EXOSUIT_MODULES)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
+/datum/design/board/decouverte_main
+	name = "\"Decouverte\" Central Control module"
+	desc = "Allows for the construction of a \"Decouverte\" Central Control module."
+	id = "decouverte_main"
+	build_path = /obj/item/circuitboard/mecha/decouverte/main
+	category = list("Exosuit Modules")
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/board/decouverte_peri
+	name = "\"Decouverte\" Peripherals Control module."
+	desc = "Allows for the construction of a \"Decouverte\" Peripheral Control module"
+	id = "decouverte_peri"
+	build_path = /obj/item/circuitboard/mecha/decouverte/peripherals
+	category = list("Exosuit Modules")
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
 /datum/design/board/odysseus_main
 	name = "\"Odysseus\" Central Control module"
 	desc = "Allows for the construction of a \"Odysseus\" Central Control module."

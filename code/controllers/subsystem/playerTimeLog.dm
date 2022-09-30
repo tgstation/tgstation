@@ -1,4 +1,5 @@
 SUBSYSTEM_DEF(oyuncuDakikaTut)
+	flags = SS_NO_INIT
 	name = "oyuncuDakikaTut"
 	wait = 60 SECONDS
 

@@ -80591,6 +80591,7 @@
 /area/station/medical/abandoned)
 "tHf" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/solars/port/fore)
 "tHs" = (

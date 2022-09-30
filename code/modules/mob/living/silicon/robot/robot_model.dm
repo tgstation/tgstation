@@ -628,6 +628,7 @@
 	borg_skins = list(
 		"Machinified Doctor" = list(SKIN_ICON_STATE = "medical"),
 		"Qualified Doctor" = list(SKIN_ICON_STATE = "qualified_doctor"),
+		"uWu Doctor" = list(SKIN_ICON_STATE = "uWu_borg"),
 	)
 
 /obj/item/robot_model/miner

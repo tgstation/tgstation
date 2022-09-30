@@ -264,7 +264,7 @@
 /datum/emote/living/laugh/get_sound(mob/living/user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.mind.clowning == TRUE)
+		if(H.mind && H.mind.clowning == TRUE)
 			if(user.gender == FEMALE)
 				return 'sound/voice/human/hihiha.ogg'
 			else
