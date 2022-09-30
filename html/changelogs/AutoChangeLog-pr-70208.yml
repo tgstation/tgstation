@@ -1,0 +1,4 @@
+author: "Guillaume Prata"
+delete-after: True
+changes: 
+  - bugfix: "Fix an accidental revert on noblium's reagent effect on plasmamen"
