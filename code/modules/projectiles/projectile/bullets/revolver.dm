@@ -118,3 +118,103 @@
 	ricochet_auto_aim_range = 6
 	ricochet_incidence_leeway = 80
 	ricochet_decay_chance = 1
+
+// marksman
+/obj/projectile/bullet/marksman
+	name = "nanoshot"
+	hitscan = TRUE
+	tracer_type = /obj/effect/projectile/tracer/laser
+	muzzle_type = /obj/effect/projectile/muzzle/laser
+	impact_type = /obj/effect/projectile/impact/laser
+
+/obj/projectile/bullet/marksman/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+	var/obj/item/gun/energy/marksman_revolver/blahgun = fired_from
+	var/obj/projectile/bullet/coin/last_coin = blahgun?.last_coin
+	var/turf/cur_turf = get_turf(src)
+	var/coin_coords
+	if(last_coin)
+		coin_coords = ("([last_coin.x] [last_coin.y]) dist: [get_dist(src, last_coin)]")
+	testing("moved>> [x] [y] [coin_coords]")
+
+	var/obj/projectile/bullet/coin/coin_check = cur_turf ? locate(/obj/projectile/bullet/coin) in cur_turf.contents : null
+	if(!coin_check || coin_check.used)
+		return
+
+	testing("found a coin!")
+	coin_check.shot_at(firer, src)
+	testing("moved end!")
+
+// coin
+/obj/projectile/bullet/coin
+	name = "marksman coin"
+	pixel_speed_multiplier = 0.333
+	speed = 1
+
+	var/turf/target_turf
+
+	var/valid = FALSE
+
+	var/list/ignored_coins = list()
+
+	var/used = FALSE
+
+/obj/projectile/bullet/coin/Initialize(mapload, turf/the_target, list/parent_ignored_coins)
+	. = ..()
+	target_turf = the_target
+	target_turf?.color = COLOR_RED
+	if(parent_ignored_coins)
+		ignored_coins = deep_copy_list(parent_ignored_coins)
+	//range = get_dist()
+
+/obj/projectile/bullet/coin/Destroy()
+	target_turf?.color = null
+	return ..()
+
+/obj/projectile/bullet/coin/fire(angle, atom/direct_target)
+	. = ..()
+	range = get_dist(starting, direct_target)
+
+/obj/projectile/bullet/coin/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+	if(!valid && get_dist(loc, target_turf) <= 1)
+		playsound(src, 'sound/machines/ping.ogg', 50)
+		valid = TRUE
+		color = COLOR_YELLOW
+
+/obj/projectile/bullet/coin/proc/shot_at(mob/living/shooter, obj/projectile/incoming_shot)
+	if(get_dist(src, target_turf) > 1)
+		return FALSE
+
+	testing("coin hit!")
+	used = TRUE
+	var/turf/cur_tur = get_turf(src)
+	cur_tur.visible_message(span_nicegreen("[incoming_shot] impacts [src]!"))
+	splitshot(shooter, incoming_shot)
+	qdel(src)
+
+/obj/projectile/bullet/coin/proc/splitshot(mob/living/shooter, obj/projectile/incoming_shot)
+	var/list/possible_victims = list()
+
+	for(var/mob/living/iter_living in range(4, src.loc))
+		if(can_see(iter_living, src))
+			possible_victims += iter_living
+
+	var/mob/living/victim = pick(possible_victims)
+	if(victim)
+		fire_splitshot(victim, incoming_shot)
+	else
+		var/atom/random_thing = pick(range(3, src))
+		fire_splitshot(random_thing, incoming_shot)
+
+/// Minor convenience function for creating each shrapnel piece with circle explosions, mostly stolen from the MIRV component
+/obj/projectile/bullet/coin/proc/fire_splitshot(atom/target, obj/projectile/incoming_shot)
+	var/projectile_type = incoming_shot.type
+	var/obj/projectile/new_splitshot = new projectile_type(get_turf(src))
+
+	//Shooting Code:
+	new_splitshot.original = target
+	new_splitshot.fired_from = incoming_shot.fired_from
+	new_splitshot.firer = incoming_shot.firer
+	new_splitshot.preparePixelProjectile(target, src)
+	new_splitshot.fire()

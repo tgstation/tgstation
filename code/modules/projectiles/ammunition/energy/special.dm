@@ -68,3 +68,8 @@
 	projectile_type = /obj/projectile/beam/shrink
 	select_name = "shrink ray"
 	e_cost = 200
+
+/obj/item/ammo_casing/energy/marksman
+	projectile_type = /obj/projectile/bullet/marksman
+	select_name = "marksman bullet"
+	e_cost = 0

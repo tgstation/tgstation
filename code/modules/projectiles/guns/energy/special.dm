@@ -372,3 +372,30 @@
 /obj/item/gun/energy/tesla_cannon/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/automatic_fire, 0.1 SECONDS)
+
+/obj/item/gun/energy/marksman_revolver
+	name = "marksman revolver"
+	icon = 'icons/obj/weapons/guns/ballistic.dmi'
+	icon_state = "revolver"
+	inhand_icon_state = "tesla"
+	desc = "A gun that shoots balls of \"tesla\", whatever that is."
+	ammo_type = list(/obj/item/ammo_casing/energy/marksman)
+	fire_sound = 'sound/weapons/gun/revolver/shot_alt.ogg'
+	automatic_charge_overlays = FALSE
+	var/obj/projectile/bullet/coin/last_coin
+
+
+/obj/item/gun/energy/marksman_revolver/afterattack_secondary(atom/target, mob/living/user, params)
+	if(!can_see(user, target))
+		return ..()
+
+	var/turf/target_turf = get_offset_target_turf(target, rand(-1, 1), rand(-1, 1))
+
+	playsound(user.loc, 'sound/effects/coin2.ogg', 50, TRUE)
+	user.visible_message(span_warning("[user] flips a coin near [target]!"), span_danger("You flip a coin near [target]!"))
+	var/obj/projectile/bullet/coin/new_coin = new(user, target_turf)
+	last_coin = new_coin
+	new_coin.preparePixelProjectile(target_turf, user)
+	new_coin.fire()
+
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
