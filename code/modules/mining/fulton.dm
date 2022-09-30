@@ -138,8 +138,8 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 
 
 /obj/item/fulton_core
-	name = "extraction beacon signaller"
-	desc = "Emits a signal which fulton recovery devices can lock onto. Activate in hand to create a beacon."
+	name = "extraction beacon assembly kit"
+	desc = "When built, emits a signal which fulton recovery devices can lock onto. Activate in hand to unfold into a beacon."
 	icon = 'icons/obj/fulton.dmi'
 	icon_state = "folded_extraction"
 
