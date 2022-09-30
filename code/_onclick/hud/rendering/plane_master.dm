@@ -245,7 +245,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	render_target = FLOOR_PLANE_RENDER_TARGET
 	render_relay_planes = list(RENDER_PLANE_GAME)
 
-// Wallening todo: document ALL of the new plane masters
 /atom/movable/screen/plane_master/over_tile
 	name = "Over Tile"
 	documentation = "Holds anything on tiles, but not large enough to be on the game plane. I don't want to z fight with a disposals tube "

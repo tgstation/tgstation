@@ -521,13 +521,6 @@
 			frame_state = AIRLOCK_FRAME_OPENING
 			light_state = AIRLOCK_LIGHT_OPENING
 
-	// Wallening todo : this was removed at one point. WHY?
-	//. += get_airlock_overlay(frame_state, icon, src, em_block = TRUE)
-	//if(airlock_material)
-	//	. += get_airlock_overlay("[airlock_material]_[frame_state]", overlays_file, src, em_block = TRUE)
-	//else
-	//	. += get_airlock_overlay("fill_[frame_state]", icon, src, em_block = TRUE)
-
 	if(lights && hasPower())
 		. += get_airlock_overlay("lights_[light_state]", overlays_file, src, em_block = FALSE)
 
