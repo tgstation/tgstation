@@ -25,15 +25,12 @@ GLOBAL_LIST_EMPTY(split_visibility_objects)
 	vis = new /mutable_appearance/split_vis()
 	vis.icon = icon_path
 	var/junc = junction ? junction : "0"
-	vis.icon_state = "[junc]"
-	vis.dir = dir
+	vis.icon_state = "[junc]-[dir]"
 	if(shadow)
 		vis.overlays += get_splitvis_object(apply_to, icon_path, junction, dir, FALSE, 120, pixel_x = 0, pixel_y = 0, plane = UNDER_FRILL_PLANE)
 	vis.alpha = alpha
-/*
 	vis.pixel_x = pixel_x
 	vis.pixel_y = pixel_y
-*/
 	SET_PLANE_W_SCALAR(vis, plane, offset)
 	vis.layer = layer
 
