@@ -11,7 +11,6 @@
 	pass_flags = PASSTABLE
 	light_color = LIGHT_COLOR_YELLOW
 	light_power = 3
-	base_pixel_y = 6
 	var/wire_disabled = FALSE // is its internal wire cut?
 	var/operating = FALSE
 	var/dirty = 0 // 0 to 100 // Does it need cleaning?
@@ -35,6 +34,10 @@
 	wires = new /datum/wires/microwave(src)
 	create_reagents(100)
 	soundloop = new(src, FALSE)
+	// Go on top of a table if we're not varedited
+	var/obj/structure/table/counter = locate(/obj/structure/table) in geturf(src)
+	if(!pixel_y && counter)
+		pixel_y = 6
 
 /obj/machinery/microwave/Destroy()
 	eject()
