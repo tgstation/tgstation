@@ -565,3 +565,27 @@
 
 /obj/item/vending_refill/wardrobe/det_wardrobe
 	machine_name = "DetDrobe"
+
+/obj/machinery/vending/wardrobe/cent_wardrobe
+	name = "\improper CentDrobe"
+	desc = "A one-of-a-kind vending machine for all your centcom aesthetic needs!"
+	icon_state = "centdrobe"
+	product_ads = "Show those ERTs who's the most stylish in the briefing room!"
+	vend_reply = "Thank you for using the CentDrobe!"
+	products = list(
+		/obj/item/clothing/under/rank/centcom/commander = 3,
+		/obj/item/clothing/under/rank/centcom/centcom_skirt = 3,
+		/obj/item/clothing/under/rank/centcom/intern = 3,
+		/obj/item/clothing/under/rank/centcom/official = 3,
+		/obj/item/clothing/under/rank/centcom/officer = 3,
+		/obj/item/clothing/under/rank/centcom/officer_skirt = 3,
+		/obj/item/clothing/suit/armor/centcom_formal = 3,
+		/obj/item/clothing/suit/hooded/wintercoat/centcom = 3,
+		/obj/item/clothing/head/centcom_cap = 3,
+		/obj/item/clothing/head/centhat = 3,
+		/obj/item/clothing/head/intern = 3,
+	)
+	refill_canister = /obj/item/vending_refill/wardrobe/cent_wardrobe
+/obj/item/vending_refill/wardrobe/cent_wardrobe
+	machine_name = "CentDrobe"
+	light_color = LIGHT_COLOR_ELECTRIC_GREEN
