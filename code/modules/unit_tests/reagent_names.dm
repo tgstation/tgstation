@@ -1,4 +1,4 @@
-/// Test that all reagent names are different in order to prevent #65231
+/// Test that all reagent names are different in order to prevent #65231 and tests that searching for that reagent by name gives the correct one
 /datum/unit_test/reagent_names
 
 /datum/unit_test/reagent_names/Run()
@@ -16,7 +16,6 @@
 			used_names[name] = reagent
 
 		// Now make sure searching for that name gets us the right reagent
-
 		var/datum/reagent/found_reagent = get_chem_id(name)
 
 		if (!found_reagent)
