@@ -67,7 +67,7 @@ SUBSYSTEM_DEF(job)
 	if(!length(all_occupations))
 		SetupOccupations()
 	if(CONFIG_GET(flag/load_jobs_from_txt))
-		LoadJobs()
+		load_jobs_from_config()
 	set_overflow_role(CONFIG_GET(string/overflow_job))
 	return SS_INIT_SUCCESS
 
@@ -591,43 +591,55 @@ SUBSYSTEM_DEF(job)
 			break
 
 
-/datum/controller/subsystem/job/proc/LoadJobs()
+/datum/controller/subsystem/job/proc/load_jobs_from_config()
+	var/json_file = file("[global.config.directory]/jobconfig.json")
+
+	if(!fexists(json_file)) // If we have it, migrate the values to the new format. If we don't have it, great!
+		generate_config()
+
+	var/job_config = json_decode(file2text(json_file))
+
+	for(var/datum/job/occupation as anything in joinable_occupations)
+		var/job_title = occupation.title
+		if(!job_config["[job_title]"])
+			message_admins("[job_title] is missing from jobconfig.json! Using codebase defaults.")
+			continue
+
+		occupation.total_positions = job_config["[job_title]"]["Total Positions"]
+		occupation.spawn_positions = job_config["[job_title]"]["Spawn Positions"]
+		occupation.exp_requirements = job_config["[job_title]"]["Playtime Requirements"]
+		occupation.minimal_player_age = job_config["[job_title]"]["Required Account Age"]
+
+/datum/controller/subsystem/job/proc/generate_config()
+	var/json_file = file("[global.config.directory]/jobconfig.json")
 	var/jobstext = file("[global.config.directory]/jobs.txt")
+	var/list/file_data = list()
 
-	if(!fexists(jobstext)) // jobs.txt will override the JSON system (until deleted and replaced with a valid JSON).
-		var/json_file = file("[global.config.directory]/jobconfig.json")
-
-		if(!fexists(json_file))
-			log_world("No jobs.txt or jobconfig.json found in config directory! Will use codebase defaults.")
-			return
-
-		var/job_config = json_decode(file2text(json_file))
-
-		for(var/datum/job/occupation as anything in joinable_occupations)
-			if(!job_config["[occupation.title]"])
-				message_admins("[occupation.title] is missing from jobconfig.json! Using codebase defaults.")
-				continue
-
-			occupation.total_positions = job_config["[occupation.title]"]["Total Positions"]
-			occupation.spawn_positions = job_config["[occupation.title]"]["Spawn Positions"]
-			occupation.exp_requirements = job_config["[occupation.title]"]["Playtime Requirements"]
-			occupation.minimal_player_age = job_config["[occupation.title]"]["Required Account Age"]
-
-
-	else // We should assume that we do not have the new JSON jobs system, so let's fall back to the old jobs system to ensure things work nicely.
-
-		#if DM_VERSION >= 516 // are you here to kill me?
-		#error Hello from the past! It's been a while since the new jobs config system was introduced. Probably time to delete jobs.txt on the repository level since all the server operators should have updated by now. Delete this warning too, please. We'll keep loading your jobs for you, but you'll have to deal with me until you delete me. Thanks!
-		#endif
-
+	if(fexists(jobstext)) // Generate the new JSON format, migrating from the text format.
+		message_admins("Found jobs.txt in config directory! Migrating to jobconfig.json...")
 		jobstext = file2text(jobstext)
-
 		for(var/datum/job/occupation as anything in joinable_occupations)
-			var/regex/jobs = new("[occupation.title]=(-1|\\d+),(-1|\\d+)")
-			jobs.Find(jobstext)
-			occupation.total_positions = text2num(jobs.group[1])
-			occupation.spawn_positions = text2num(jobs.group[2])
+			var/job_name = occupation.title
+			var/regex/parser = new("[job_name]=(-1|\\d+),(-1|\\d+)")
+			parser.Find(jobstext)
+			// Playtime Requirements and Required Account Age are new, so we will just pull codebase defaults for them.
+			file_data["[job_name]"] = list("Total Positions" = text2num(parser.group[1]), "Spawn Positions" = text2num(parser.group[2]), "Playtime Requirements" = occupation.exp_requirements, "Required Account Age" = occupation.minimal_player_age)
+		fdel(jobstext) // Bid adieu.
+		if(fexists(json_file))
+			fdel(json_file) // just in case we have some chicanery here, open it up so we can write to it.
+		WRITE_FILE(json_file, json_encode(file_data))
 
+	else // No text format found! Let's spin one up.
+		message_admins("Creating jobconfig.json in config directory...")
+		for(var/datum/job/occupation as anything in joinable_occupations)
+			var/job_name = occupation.title
+			// Generate new config from wholly codebase defaults
+			if(job_name == "Assistant") // there's a concession made in jobs.txt that we should just quickly account for here.
+				file_data["[job_name]"] = list("Total Positions" = -1, "Spawn Positions" = -1, "Playtime Requirements" = occupation.exp_requirements, "Required Account Age" = occupation.minimal_player_age)
+			file_data["[job_name]"] = list("Total Positions" = occupation.total_positions, "Spawn Positions" = occupation.spawn_positions, "Playtime Requirements" = occupation.exp_requirements, "Required Account Age" = occupation.minimal_player_age)
+		if(fexists(json_file))
+			fdel(json_file) // just in case we have some chicanery here, open it up so we can write to it.
+		WRITE_FILE(json_file, json_encode(file_data))
 
 /datum/controller/subsystem/job/proc/HandleFeedbackGathering()
 	for(var/datum/job/job as anything in joinable_occupations)
