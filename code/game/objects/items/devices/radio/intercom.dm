@@ -152,12 +152,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom, 26)
 	set_frequency(1481)
 	set_broadcasting(TRUE)
 
-/obj/item/radio/intercom/captain
-	name = "Captain's Intercom"
-	desc = "The Captain's special intercom. Comes with an extended frequency range for optimal eavesdropping."
-	icon_state = "intercom_captain"
+/obj/item/radio/intercom/command
+	name = "Command Intercom"
+	desc = "The command team's special extended-frequency intercom. Useful for eavesdropping, gossiping about subordinates, and complaining about the higher-ups."
+	icon_state = "intercom_command"
 	freerange = TRUE
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/prison, 26)
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/chapel, 26)
-MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/captain, 26)
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/command, 26)
