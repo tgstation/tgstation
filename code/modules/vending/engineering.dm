@@ -4,6 +4,7 @@
 	desc = "Everything you need for do-it-yourself station repair."
 	icon_state = "engi"
 	icon_deny = "engi-deny"
+	panel_type = "panel10"
 	req_access = list(ACCESS_ENGINE_EQUIP)
 	products = list(
 		/obj/item/clothing/under/rank/engineering/chief_engineer = 4,
@@ -23,14 +24,14 @@
 		/obj/item/weldingtool = 8,
 		/obj/item/clothing/head/welding = 8,
 		/obj/item/light/tube = 10,
-		/obj/item/clothing/suit/fire = 4,
+		/obj/item/clothing/suit/utility/fire = 4,
 		/obj/item/stock_parts/scanning_module = 5,
 		/obj/item/stock_parts/micro_laser = 5,
 		/obj/item/stock_parts/matter_bin = 5,
-		/obj/item/stock_parts/manipulator = 5
+		/obj/item/stock_parts/manipulator = 5,
 		)
 	refill_canister = /obj/item/vending_refill/engineering
-	default_price = PAYCHECK_EASY
+	default_price = PAYCHECK_CREW
 	extra_price = PAYCHECK_COMMAND * 1.5
 	payment_department = ACCOUNT_ENG
 	light_mask = "engi-light-mask"

@@ -9,6 +9,7 @@
  * functions, where each successive invocation is supplied the return
  * value of the previous.
  */
+// prettier-ignore
 export const flow = (...funcs) => (input, ...rest) => {
   let output = input;
   for (let func of funcs) {
@@ -37,11 +38,12 @@ export const flow = (...funcs) => (input, ...rest) => {
  */
 export const compose = (...funcs) => {
   if (funcs.length === 0) {
-    return arg => arg;
+    return (arg) => arg;
   }
   if (funcs.length === 1) {
     return funcs[0];
   }
+  // prettier-ignore
   return funcs.reduce((a, b) => (value, ...rest) =>
     a(b(value, ...rest), ...rest));
 };

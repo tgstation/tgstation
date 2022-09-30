@@ -1,4 +1,3 @@
-
 /**
  * For FTP requests. (i.e. downloading runtime logs.)
  *
@@ -6,7 +5,7 @@
  */
 GLOBAL_VAR_INIT(fileaccess_timer, 0)
 
-/client/proc/browse_files(root_type=BROWSE_ROOT_ALL_LOGS, max_iterations=10, list/valid_extensions=list("txt","log","htm", "html"))
+/client/proc/browse_files(root_type=BROWSE_ROOT_ALL_LOGS, max_iterations=10, list/valid_extensions=list("txt","log","htm", "html", "gz"))
 	// wow why was this ever a parameter
 	var/root = "data/logs/"
 	switch(root_type)
@@ -16,18 +15,27 @@ GLOBAL_VAR_INIT(fileaccess_timer, 0)
 			root = "[GLOB.log_directory]/"
 	var/path = root
 
-	for(var/i=0, i<max_iterations, i++)
+	for(var/i in 1 to max_iterations)
 		var/list/choices = flist(path)
 		if(path != root)
 			choices.Insert(1,"/")
+		choices = sort_list(choices) + "Download Folder"
 
-		var/choice = input(src,"Choose a file to access:","Download",null) as null|anything in sort_list(choices)
+		var/choice = input(src,"Choose a file to access:","Download",null) as null|anything in choices
 		switch(choice)
 			if(null)
 				return
 			if("/")
 				path = root
 				continue
+			if("Download Folder")
+				var/list/comp_flist = flist(path)
+				var/confirmation = input(src, "Are you SURE you want to download all the files in this folder? (This will open [length(comp_flist)] prompt[length(comp_flist) == 1 ? "" : "s"])", "Confirmation") in list("Yes", "No")
+				if(confirmation != "Yes")
+					continue
+				for(var/file in comp_flist)
+					src << ftp(path + file)
+				return
 		path += choice
 
 		if(copytext_char(path, -1) != "/") //didn't choose a directory, no need to iterate again
@@ -96,3 +104,23 @@ GLOBAL_VAR_INIT(fileaccess_timer, 0)
 	fcopy(file, filename)
 	. = md5filepath(filename)
 	fdel(filename)
+
+/**
+ * Sanitizes the name of each node in the path.
+ *
+ * Im case you are wondering when to use this proc and when to use SANITIZE_FILENAME,
+ *
+ * You use SANITIZE_FILENAME to sanitize the name of a file [e.g. example.txt]
+ *
+ * You use sanitize_filepath sanitize the path of a file [e.g. root/node/example.txt]
+ *
+ * If you use SANITIZE_FILENAME to sanitize a file path things will break.
+ */
+/proc/sanitize_filepath(path)
+	. = ""
+	var/delimiter = "/" //Very much intentionally hardcoded
+	var/list/all_nodes = splittext(path, delimiter)
+	for(var/node in all_nodes)
+		if(.)
+			. += delimiter // Add the delimiter before each successive node.
+		. += SANITIZE_FILENAME(node)

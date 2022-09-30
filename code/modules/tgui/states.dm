@@ -100,7 +100,7 @@
  *
  * return UI_state The state of the UI.
  */
-/mob/living/proc/shared_living_ui_distance(atom/movable/src_object, viewcheck = TRUE)
+/mob/living/proc/shared_living_ui_distance(atom/movable/src_object, viewcheck = TRUE, allow_tk = TRUE)
 	// If the object is obscured, close it.
 	if(viewcheck && !(src_object in view(src)))
 		return UI_CLOSE
@@ -117,7 +117,7 @@
 	// Otherwise, we got nothing.
 	return UI_CLOSE
 
-/mob/living/carbon/human/shared_living_ui_distance(atom/movable/src_object, viewcheck = TRUE)
-	if(dna.check_mutation(TK) && tkMaxRangeCheck(src, src_object))
+/mob/living/carbon/human/shared_living_ui_distance(atom/movable/src_object, viewcheck = TRUE, allow_tk = TRUE)
+	if(allow_tk && dna.check_mutation(/datum/mutation/human/telekinesis) && tkMaxRangeCheck(src, src_object))
 		return UI_INTERACTIVE
 	return ..()

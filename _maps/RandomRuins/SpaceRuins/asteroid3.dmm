@@ -3,7 +3,7 @@
 /turf/template_noop,
 /area/template_noop)
 "b" = (
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "c" = (
 /turf/closed/mineral/random,
@@ -13,11 +13,11 @@
 /area/ruin/unpowered/no_grav)
 "e" = (
 /obj/effect/decal/remains/human,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "f" = (
 /obj/item/pickaxe/diamond,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 
 (1,1,1) = {"

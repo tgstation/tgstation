@@ -13,7 +13,7 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 /obj/item/a_gift
 	name = "gift"
 	desc = "PRESENTS!!!! eek!"
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/storage/storage.dmi'
 	icon_state = "giftdeliverypackage3"
 	inhand_icon_state = "gift"
 	resistance_flags = FLAMMABLE
@@ -45,10 +45,13 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 	qdel(src)
 
 	var/obj/item/I = new contains_type(get_turf(M))
-	M.visible_message(span_notice("[M] unwraps \the [src], finding \a [I] inside!"))
-	I.investigate_log("([I.type]) was found in a present by [key_name(M)].", INVESTIGATE_PRESENTS)
-	M.put_in_hands(I)
-	I.add_fingerprint(M)
+	if (!QDELETED(I)) //might contain something like metal rods that might merge with a stack on the ground
+		M.visible_message(span_notice("[M] unwraps \the [src], finding \a [I] inside!"))
+		I.investigate_log("([I.type]) was found in a present by [key_name(M)].", INVESTIGATE_PRESENTS)
+		M.put_in_hands(I)
+		I.add_fingerprint(M)
+	else
+		M.visible_message(span_danger("Oh no! The present that [M] opened had nothing inside it!"))
 
 /obj/item/a_gift/proc/get_gift_type()
 	var/gift_type_list = list(/obj/item/sord,
@@ -74,17 +77,17 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 		/obj/item/banhammer,
 		/obj/item/food/grown/ambrosia/deus,
 		/obj/item/food/grown/ambrosia/vulgaris,
-		/obj/item/paicard,
+		/obj/item/pai_card,
 		/obj/item/instrument/violin,
 		/obj/item/instrument/guitar,
 		/obj/item/storage/belt/utility/full,
 		/obj/item/clothing/neck/tie/horrible,
 		/obj/item/clothing/suit/jacket/leather,
 		/obj/item/clothing/suit/jacket/leather/overcoat,
-		/obj/item/clothing/suit/poncho,
-		/obj/item/clothing/suit/poncho/green,
-		/obj/item/clothing/suit/poncho/red,
-		/obj/item/clothing/suit/snowman,
+		/obj/item/clothing/suit/costume/poncho,
+		/obj/item/clothing/suit/costume/poncho/green,
+		/obj/item/clothing/suit/costume/poncho/red,
+		/obj/item/clothing/suit/costume/snowman,
 		/obj/item/clothing/head/snowman,
 		/obj/item/stack/sheet/mineral/coal)
 

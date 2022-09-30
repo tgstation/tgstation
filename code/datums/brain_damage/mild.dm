@@ -8,16 +8,20 @@
 	name = "Hallucinations"
 	desc = "Patient suffers constant hallucinations."
 	scan_desc = "schizophrenia"
-	gain_text = "<span class='warning'>You feel your grip on reality slipping...</span>"
-	lose_text = "<span class='notice'>You feel more grounded.</span>"
+	gain_text = span_warning("You feel your grip on reality slipping...")
+	lose_text = span_notice("You feel more grounded.")
 
 /datum/brain_trauma/mild/hallucinations/on_life(delta_time, times_fired)
-	owner.hallucination = min(owner.hallucination + 10, 50)
-	..()
+	if(owner.stat != CONSCIOUS || owner.IsSleeping() || owner.IsUnconscious())
+		return
+	if(HAS_TRAIT(owner, TRAIT_HALLUCINATION_SUPPRESSED))
+		return
+
+	owner.adjust_hallucinations_up_to(10 SECONDS * delta_time, 100 SECONDS)
 
 /datum/brain_trauma/mild/hallucinations/on_lose()
-	owner.hallucination = 0
-	..()
+	owner.remove_status_effect(/datum/status_effect/hallucination)
+	return ..()
 
 /datum/brain_trauma/mild/stuttering
 	name = "Stuttering"
@@ -27,12 +31,11 @@
 	lose_text = "<span class='notice'>You feel in control of your speech.</span>"
 
 /datum/brain_trauma/mild/stuttering/on_life(delta_time, times_fired)
-	owner.stuttering = min(owner.stuttering + 5, 25)
-	..()
+	owner.adjust_stutter_up_to(5 SECONDS * delta_time, 50 SECONDS)
 
 /datum/brain_trauma/mild/stuttering/on_lose()
-	owner.stuttering = 0
-	..()
+	owner.remove_status_effect(/datum/status_effect/speech/stutter)
+	return ..()
 
 /datum/brain_trauma/mild/dumbness
 	name = "Dumbness"
@@ -43,22 +46,21 @@
 
 /datum/brain_trauma/mild/dumbness/on_gain()
 	ADD_TRAIT(owner, TRAIT_DUMB, TRAUMA_TRAIT)
-	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "dumb", /datum/mood_event/oblivious)
-	..()
+	owner.add_mood_event("dumb", /datum/mood_event/oblivious)
+	return ..()
 
 /datum/brain_trauma/mild/dumbness/on_life(delta_time, times_fired)
-	owner.derpspeech = min(owner.derpspeech + 5, 25)
+	owner.adjust_derpspeech_up_to(5 SECONDS * delta_time, 50 SECONDS)
 	if(DT_PROB(1.5, delta_time))
 		owner.emote("drool")
 	else if(owner.stat == CONSCIOUS && DT_PROB(1.5, delta_time))
 		owner.say(pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage"), forced = "brain damage")
-	..()
 
 /datum/brain_trauma/mild/dumbness/on_lose()
 	REMOVE_TRAIT(owner, TRAIT_DUMB, TRAUMA_TRAIT)
-	owner.derpspeech = 0
-	SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "dumb")
-	..()
+	owner.remove_status_effect(/datum/status_effect/speech/stutter/derpspeech)
+	owner.clear_mood_event("dumb")
+	return ..()
 
 /datum/brain_trauma/mild/speech_impediment
 	name = "Speech Impediment"
@@ -88,12 +90,12 @@
 			if(1)
 				owner.vomit()
 			if(2,3)
-				owner.dizziness += 10
+				owner.adjust_dizzy(20 SECONDS)
 			if(4,5)
-				owner.add_confusion(10)
+				owner.adjust_confusion(10 SECONDS)
 				owner.blur_eyes(10)
 			if(6 to 9)
-				owner.slurring += 30
+				owner.adjust_slurring(1 MINUTES)
 			if(10)
 				to_chat(owner, span_notice("You forget for a moment what you were doing."))
 				owner.Stun(20)
@@ -111,17 +113,15 @@
 	lose_text = "<span class='warning'>You no longer feel perfectly healthy.</span>"
 
 /datum/brain_trauma/mild/healthy/on_gain()
-	owner.set_screwyhud(SCREWYHUD_HEALTHY)
-	..()
+	owner.apply_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)
+	return ..()
 
 /datum/brain_trauma/mild/healthy/on_life(delta_time, times_fired)
-	owner.set_screwyhud(SCREWYHUD_HEALTHY) //just in case of hallucinations
 	owner.adjustStaminaLoss(-2.5 * delta_time) //no pain, no fatigue
-	..()
 
 /datum/brain_trauma/mild/healthy/on_lose()
-	owner.set_screwyhud(SCREWYHUD_NONE)
-	..()
+	owner.remove_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)
+	return ..()
 
 /datum/brain_trauma/mild/muscle_weakness
 	name = "Muscle Weakness"
@@ -158,11 +158,11 @@
 	lose_text = "<span class='notice'>You feel in control of your muscles again.</span>"
 
 /datum/brain_trauma/mild/muscle_spasms/on_gain()
-	owner.apply_status_effect(STATUS_EFFECT_SPASMS)
+	owner.apply_status_effect(/datum/status_effect/spasms)
 	..()
 
 /datum/brain_trauma/mild/muscle_spasms/on_lose()
-	owner.remove_status_effect(STATUS_EFFECT_SPASMS)
+	owner.remove_status_effect(/datum/status_effect/spasms)
 	..()
 
 /datum/brain_trauma/mild/nervous_cough
@@ -175,7 +175,7 @@
 /datum/brain_trauma/mild/nervous_cough/on_life(delta_time, times_fired)
 	if(DT_PROB(6, delta_time) && !HAS_TRAIT(owner, TRAIT_SOOTHED_THROAT))
 		if(prob(5))
-			to_chat(owner, "<span notice='warning'>[pick("You have a coughing fit!", "You can't stop coughing!")]</span>")
+			to_chat(owner, span_warning("[pick("You have a coughing fit!", "You can't stop coughing!")]"))
 			owner.Immobilize(20)
 			owner.emote("cough")
 			addtimer(CALLBACK(owner, /mob/.proc/emote, "cough"), 6)

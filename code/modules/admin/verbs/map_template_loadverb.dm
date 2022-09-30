@@ -23,9 +23,9 @@
 			center = FALSE
 		else
 			return
-	for(var/S in template.get_affected_turfs(T,centered = center))
-		var/image/item = image('icons/turf/overlays.dmi',S,"greenOverlay")
-		item.plane = ABOVE_LIGHTING_PLANE
+	for(var/turf/place_on as anything in template.get_affected_turfs(T,centered = center))
+		var/image/item = image('icons/turf/overlays.dmi', place_on,"greenOverlay")
+		SET_PLANE(item, ABOVE_LIGHTING_PLANE, place_on)
 		preview += item
 	images += preview
 	if(tgui_alert(usr,"Confirm location.","Template Confirm",list("Yes","No")) == "Yes")
@@ -68,7 +68,7 @@
 	var/report_link
 	if(report)
 		report.show_to(src)
-		report_link = " - <a href='?src=[REF(report)];[HrefToken(TRUE)];show=1'>validation report</a>"
+		report_link = " - <a href='?src=[REF(report)];[HrefToken(forceGlobal = TRUE)];show=1'>validation report</a>"
 		to_chat(src, span_warning("Map template '[map]' <a href='?src=[REF(report)];[HrefToken()];show=1'>failed validation</a>."), confidential = TRUE)
 		if(report.loadable)
 			var/response = tgui_alert(usr, "The map failed validation, would you like to load it anyways?", "Map Errors", list("Cancel", "Upload Anyways"))

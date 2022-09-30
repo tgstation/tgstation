@@ -3,7 +3,7 @@
 /obj/effect/decal/cleanable/robot_debris
 	name = "robot debris"
 	desc = "It's a useless heap of junk... <i>or is it?</i>"
-	icon = 'icons/mob/robots.dmi'
+	icon = 'icons/mob/silicon/robots.dmi'
 	icon_state = "gib1"
 	layer = LOW_OBJ_LAYER
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6", "gib7")
@@ -18,20 +18,30 @@
 	RegisterSignal(src, COMSIG_MOVABLE_PIPE_EJECTING, .proc/on_pipe_eject)
 
 /obj/effect/decal/cleanable/robot_debris/proc/streak(list/directions, mapload=FALSE)
-	set waitfor = FALSE
 	var/direction = pick(directions)
-	for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4, 17; 50), i++) //the 3% chance of 50 steps is intentional and played for laughs.
-		if (!mapload)
-			sleep(2)
-		if (i > 0)
+	var/delay = 2
+	var/range = pick(1, 200; 2, 150; 3, 50; 4, 17; 50) //the 3% chance of 50 steps is intentional and played for laughs.
+	if(!step_to(src, get_step(src, direction), 0))
+		return
+	if(mapload)
+		for (var/i in 1 to range)
 			if (prob(40))
 				new /obj/effect/decal/cleanable/oil/streak(src.loc)
-			else if (prob(10) && !mapload)
-				var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-				s.set_up(3, 1, src)
-				s.start()
-		if (!step_to(src, get_step(src, direction), 0))
-			break
+			if (!step_to(src, get_step(src, direction), 0))
+				break
+		return
+
+	var/datum/move_loop/loop = SSmove_manager.move_to_dir(src, get_step(src, direction), delay = delay, timeout = range * delay, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
+	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, .proc/spread_movement_effects)
+
+/obj/effect/decal/cleanable/robot_debris/proc/spread_movement_effects(datum/move_loop/has_target/source)
+	SIGNAL_HANDLER
+	if (prob(40))
+		new /obj/effect/decal/cleanable/oil/streak(src.loc)
+	else if (prob(10))
+		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
+		s.set_up(3, 1, src)
+		s.start()
 
 /obj/effect/decal/cleanable/robot_debris/proc/on_pipe_eject(atom/source, direction)
 	SIGNAL_HANDLER
@@ -62,17 +72,15 @@
 /obj/effect/decal/cleanable/oil
 	name = "motor oil"
 	desc = "It's black and greasy. Looks like Beepsky made another mess."
-	icon = 'icons/mob/robots.dmi'
+	icon = 'icons/mob/silicon/robots.dmi'
 	icon_state = "floor1"
 	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
 	blood_state = BLOOD_STATE_OIL
 	bloodiness = BLOOD_AMOUNT_PER_DECAL
 	beauty = -100
 	clean_type = CLEAN_TYPE_BLOOD
-
-/obj/effect/decal/cleanable/oil/Initialize(mapload)
-	. = ..()
-	reagents.add_reagent(/datum/reagent/fuel/oil, 30)
+	decal_reagent = /datum/reagent/fuel/oil
+	reagent_amount = 30
 
 /obj/effect/decal/cleanable/oil/attackby(obj/item/I, mob/living/user)
 	var/attacked_by_hot_thing = I.get_temperature()
@@ -96,6 +104,6 @@
 	random_icon_states = list("streak1", "streak2", "streak3", "streak4", "streak5")
 	beauty = -50
 
-/obj/effect/decal/cleanable/oil/slippery/ComponentInitialize()
+/obj/effect/decal/cleanable/oil/slippery/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/slippery, 80, (NO_SLIP_WHEN_WALKING | SLIDE))

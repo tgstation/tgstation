@@ -17,11 +17,14 @@
 	desc = "advanced clown shoes that protect the wearer and render them nearly immune to slipping on their own peels. They also squeak at 100% capacity."
 	clothing_flags = NOSLIP
 	slowdown = SHOES_SLOWDOWN
-	armor = list(MELEE = 25, BULLET = 25, LASER = 25, ENERGY = 25, BOMB = 50, BIO = 10, RAD = 0, FIRE = 70, ACID = 50)
+	armor = list(MELEE = 25, BULLET = 25, LASER = 25, ENERGY = 25, BOMB = 50, BIO = 90, FIRE = 70, ACID = 50)
 	strip_delay = 70
 	resistance_flags = NONE
-	permeability_coefficient = 0.05
-	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
+
+/obj/item/clothing/shoes/clown_shoes/combat/Initialize(mapload)
+	. = ..()
+
+	create_storage(type = /datum/storage/pockets/shoes)
 
 /// Recharging rate in PPS (peels per second)
 #define BANANA_SHOES_RECHARGE_RATE 17
@@ -32,15 +35,16 @@
 	name = "mk-honk combat shoes"
 	desc = "The culmination of years of clown combat research, these shoes leave a trail of chaos in their wake. They will slowly recharge themselves over time, or can be manually charged with bananium."
 	slowdown = SHOES_SLOWDOWN
-	armor = list(MELEE = 25, BULLET = 25, LASER = 25, ENERGY = 25, BOMB = 50, BIO = 10, RAD = 0, FIRE = 70, ACID = 50)
+	armor = list(MELEE = 25, BULLET = 25, LASER = 25, ENERGY = 25, BOMB = 50, BIO = 50, FIRE = 90, ACID = 50)
 	strip_delay = 70
 	resistance_flags = NONE
-	permeability_coefficient = 0.05
-	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 	always_noslip = TRUE
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/combat/Initialize(mapload)
 	. = ..()
+
+	create_storage(type = /datum/storage/pockets/shoes)
+
 	var/datum/component/material_container/bananium = GetComponent(/datum/component/material_container)
 	bananium.insert_amount_mat(BANANA_SHOES_MAX_CHARGE, /datum/material/bananium)
 	START_PROCESSING(SSobj, src)
@@ -141,23 +145,18 @@
 
 /obj/item/shield/energy/bananium/on_transform(obj/item/source, mob/user, active)
 	. = ..()
-	adjust_slipperiness()
+	adjust_comedy()
 
 /*
- * Adds or removes a slippery component, depending on whether the shield is active or not.
+ * Adds or removes a slippery and boomerang component, depending on whether the shield is active or not.
  */
-/obj/item/shield/energy/bananium/proc/adjust_slipperiness()
+/obj/item/shield/energy/bananium/proc/adjust_comedy()
 	if(enabled)
 		AddComponent(/datum/component/slippery, 60, GALOSHES_DONT_HELP)
+		AddComponent(/datum/component/boomerang, throw_range+2, TRUE)
 	else
 		qdel(GetComponent(/datum/component/slippery))
-
-/obj/item/shield/energy/bananium/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
-	if(enabled)
-		if(iscarbon(thrower))
-			var/mob/living/carbon/C = thrower
-			C.throw_mode_on(THROW_MODE_TOGGLE) //so they can catch it on the return.
-	return ..()
+		qdel(GetComponent(/datum/component/boomerang))
 
 /obj/item/shield/energy/bananium/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(enabled)
@@ -165,9 +164,6 @@
 		if(iscarbon(hit_atom) && !caught)//if they are a carbon and they didn't catch it
 			var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
 			slipper.Slip(src, hit_atom)
-		var/mob/thrown_by = thrownby?.resolve()
-		if(thrown_by && !caught)
-			addtimer(CALLBACK(src, /atom/movable.proc/throw_at, thrown_by, throw_range+2, throw_speed, null, TRUE), 1)
 	else
 		return ..()
 
@@ -194,15 +190,12 @@
 
 /obj/item/grown/bananapeel/bombanana/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/slippery, det_time)
 	bomb = new /obj/item/grenade/syndieminibomb(src)
 	bomb.det_time = det_time
 	if(iscarbon(loc))
 		to_chat(loc, span_danger("[src] begins to beep."))
 	bomb.arm_grenade(loc, null, FALSE)
-
-/obj/item/grown/bananapeel/bombanana/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/slippery, det_time)
 
 /obj/item/grown/bananapeel/bombanana/Destroy()
 	. = ..()
@@ -225,6 +218,9 @@
 /obj/item/grenade/chem_grenade/teargas/moustache/detonate(mob/living/lanced_by)
 	var/myloc = get_turf(src)
 	. = ..()
+	if(!.)
+		return
+
 	for(var/mob/living/carbon/M in view(6, myloc))
 		if(!istype(M.wear_mask, /obj/item/clothing/mask/gas/clown_hat) && !istype(M.wear_mask, /obj/item/clothing/mask/gas/mime) )
 			if(!M.wear_mask || M.dropItemToGround(M.wear_mask))

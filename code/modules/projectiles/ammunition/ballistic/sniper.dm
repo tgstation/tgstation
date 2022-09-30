@@ -18,3 +18,8 @@
 	name = ".50 penetrator round bullet casing"
 	desc = "A .50 caliber penetrator round casing."
 	projectile_type = /obj/projectile/bullet/p50/penetrator
+
+/obj/item/ammo_casing/p50/marksman
+	name = ".50 marksman round bullet casing"
+	desc = "A .50 caliber marksman round casing."
+	projectile_type = /obj/projectile/bullet/p50/marksman

@@ -47,7 +47,7 @@ Difficulty: Hard
 	health_doll_icon = "hierophant"
 	friendly_verb_continuous = "stares down"
 	friendly_verb_simple = "stare down"
-	icon = 'icons/mob/lavaland/hierophant_new.dmi'
+	icon = 'icons/mob/simple/lavaland/hierophant_new.dmi'
 	faction = list("boss") //asteroid mobs? get that shit out of my beautiful square house
 	speak_emote = list("preaches")
 	armour_penetration = 50
@@ -66,7 +66,7 @@ Difficulty: Hard
 	crusher_achievement_type = /datum/award/achievement/boss/hierophant_crusher
 	score_achievement_type = /datum/award/score/hierophant_score
 	del_on_death = TRUE
-	deathsound = 'sound/magic/repulse.ogg'
+	death_sound = 'sound/magic/repulse.ogg'
 	attack_action_types = list(/datum/action/innate/megafauna_attack/blink,
 							   /datum/action/innate/megafauna_attack/chaser_swarm,
 							   /datum/action/innate/megafauna_attack/cross_blasts,
@@ -220,7 +220,7 @@ Difficulty: Hard
 		visible_message(span_hierophant("\"Mx ampp rsx iwgeti.\""))
 		var/oldcolor = color
 		animate(src, color = "#660099", time = 6)
-		SLEEP_CHECK_DEATH(6)
+		SLEEP_CHECK_DEATH(6, src)
 		while(!QDELETED(target) && blink_counter)
 			if(loc == target.loc || loc == target) //we're on the same tile as them after about a second we can stop now
 				break
@@ -228,10 +228,10 @@ Difficulty: Hard
 			blinking = FALSE
 			blink(target)
 			blinking = TRUE
-			SLEEP_CHECK_DEATH(4 + target_slowness)
+			SLEEP_CHECK_DEATH(4 + target_slowness, src)
 		animate(src, color = oldcolor, time = 8)
 		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
-		SLEEP_CHECK_DEATH(8)
+		SLEEP_CHECK_DEATH(8, src)
 		blinking = FALSE
 	else
 		blink(target)
@@ -242,17 +242,17 @@ Difficulty: Hard
 	blinking = TRUE
 	var/oldcolor = color
 	animate(src, color = "#660099", time = 6)
-	SLEEP_CHECK_DEATH(6)
+	SLEEP_CHECK_DEATH(6, src)
 	while(!QDELETED(target) && cross_counter)
 		cross_counter--
 		if(prob(60))
 			INVOKE_ASYNC(src, .proc/blasts, target, GLOB.cardinals)
 		else
 			INVOKE_ASYNC(src, .proc/blasts, target, GLOB.diagonals)
-		SLEEP_CHECK_DEATH(6 + target_slowness)
+		SLEEP_CHECK_DEATH(6 + target_slowness, src)
 	animate(src, color = oldcolor, time = 8)
 	addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
-	SLEEP_CHECK_DEATH(8)
+	SLEEP_CHECK_DEATH(8, src)
 	blinking = FALSE
 
 
@@ -262,7 +262,7 @@ Difficulty: Hard
 	blinking = TRUE
 	var/oldcolor = color
 	animate(src, color = "#660099", time = 6)
-	SLEEP_CHECK_DEATH(6)
+	SLEEP_CHECK_DEATH(6, src)
 	var/list/targets = ListTargets()
 	var/list/cardinal_copy = GLOB.cardinals.Copy()
 	while(targets.len && cardinal_copy.len)
@@ -276,11 +276,11 @@ Difficulty: Hard
 		var/obj/effect/temp_visual/hierophant/chaser/C = new(loc, src, pickedtarget, chaser_speed, FALSE)
 		C.moving = 3
 		C.moving_dir = pick_n_take(cardinal_copy)
-		SLEEP_CHECK_DEATH(8 + target_slowness)
+		SLEEP_CHECK_DEATH(8 + target_slowness, src)
 	update_cooldowns(list(COOLDOWN_UPDATE_SET_CHASER = chaser_cooldown_time))
 	animate(src, color = oldcolor, time = 8)
 	addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
-	SLEEP_CHECK_DEATH(8)
+	SLEEP_CHECK_DEATH(8, src)
 	blinking = FALSE
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/blasts(mob/victim, list/directions = GLOB.cardinals) //fires cross blasts with a delay
@@ -294,7 +294,7 @@ Difficulty: Hard
 	else
 		new /obj/effect/temp_visual/hierophant/telegraph(T, src)
 	playsound(T,'sound/effects/bin_close.ogg', 200, TRUE)
-	SLEEP_CHECK_DEATH(2)
+	SLEEP_CHECK_DEATH(2, src)
 	new /obj/effect/temp_visual/hierophant/blast/damaging(T, src, FALSE)
 	for(var/d in directions)
 		INVOKE_ASYNC(src, .proc/blast_wall, T, d)
@@ -332,7 +332,7 @@ Difficulty: Hard
 		HS.setDir(set_dir)
 		previousturf = J
 		J = get_step(previousturf, set_dir)
-		SLEEP_CHECK_DEATH(0.5)
+		SLEEP_CHECK_DEATH(0.5, src)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/blink(mob/victim) //blink to a target
 	if(blinking || !victim)
@@ -344,7 +344,7 @@ Difficulty: Hard
 	playsound(T,'sound/magic/wand_teleport.ogg', 200, TRUE)
 	playsound(source,'sound/machines/airlockopen.ogg', 200, TRUE)
 	blinking = TRUE
-	SLEEP_CHECK_DEATH(2) //short delay before we start...
+	SLEEP_CHECK_DEATH(2, src) //short delay before we start...
 	new /obj/effect/temp_visual/hierophant/telegraph/teleport(T, src)
 	new /obj/effect/temp_visual/hierophant/telegraph/teleport(source, src)
 	for(var/t in RANGE_TURFS(1, T))
@@ -354,17 +354,17 @@ Difficulty: Hard
 		var/obj/effect/temp_visual/hierophant/blast/damaging/B = new(t, src, FALSE)
 		B.damage = 30
 	animate(src, alpha = 0, time = 2, easing = EASE_OUT) //fade out
-	SLEEP_CHECK_DEATH(1)
+	SLEEP_CHECK_DEATH(1, src)
 	visible_message(span_hierophant_warning("[src] fades out!"))
 	set_density(FALSE)
-	SLEEP_CHECK_DEATH(2)
+	SLEEP_CHECK_DEATH(2, src)
 	forceMove(T)
-	SLEEP_CHECK_DEATH(1)
+	SLEEP_CHECK_DEATH(1, src)
 	animate(src, alpha = 255, time = 2, easing = EASE_IN) //fade IN
-	SLEEP_CHECK_DEATH(1)
+	SLEEP_CHECK_DEATH(1, src)
 	set_density(TRUE)
 	visible_message(span_hierophant_warning("[src] fades in!"))
-	SLEEP_CHECK_DEATH(1) //at this point the blasts we made detonate
+	SLEEP_CHECK_DEATH(1, src) //at this point the blasts we made detonate
 	blinking = FALSE
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/melee_blast(mob/victim) //make a 3x3 blast around a target
@@ -375,7 +375,7 @@ Difficulty: Hard
 		return
 	new /obj/effect/temp_visual/hierophant/telegraph(T, src)
 	playsound(T,'sound/effects/bin_close.ogg', 200, TRUE)
-	SLEEP_CHECK_DEATH(2)
+	SLEEP_CHECK_DEATH(2, src)
 	for(var/t in RANGE_TURFS(1, T))
 		new /obj/effect/temp_visual/hierophant/blast/damaging(t, src, FALSE)
 
@@ -483,10 +483,10 @@ Difficulty: Hard
 	if(!blinking)
 		. = ..()
 
-/mob/living/simple_animal/hostile/megafauna/hierophant/Moved(oldLoc, movement_dir)
+/mob/living/simple_animal/hostile/megafauna/hierophant/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(!stat && .)
-		var/obj/effect/temp_visual/hierophant/squares/HS = new(oldLoc)
+		var/obj/effect/temp_visual/hierophant/squares/HS = new(old_loc)
 		HS.setDir(movement_dir)
 		playsound(src, 'sound/mecha/mechmove04.ogg', 150, TRUE, -4)
 		if(target)
@@ -507,6 +507,7 @@ Difficulty: Hard
 /obj/effect/temp_visual/hierophant
 	name = "vortex energy"
 	layer = BELOW_MOB_LAYER
+	plane = GAME_PLANE
 	var/mob/living/caster //who made this, anyway
 
 /obj/effect/temp_visual/hierophant/Initialize(mapload, new_caster)
@@ -528,7 +529,7 @@ Difficulty: Hard
 
 /obj/effect/temp_visual/hierophant/wall //smoothing and pooling were not friends, but pooling is dead.
 	name = "vortex wall"
-	icon = 'icons/turf/walls/hierophant_wall_temp.dmi'
+// wallening todo:	icon = 'icons/turf/walls/hierophant_wall.dmi'
 	icon_state = "hierophant_wall_temp-0"
 	base_icon_state = "hierophant_wall_temp"
 	smoothing_flags = SMOOTH_BITMASK
@@ -554,7 +555,7 @@ Difficulty: Hard
 		return FALSE
 	if(mover == caster.pulledby)
 		return
-	if(istype(mover, /obj/projectile))
+	if(isprojectile(mover))
 		var/obj/projectile/P = mover
 		if(P.firer == caster)
 			return
@@ -701,7 +702,7 @@ Difficulty: Hard
 			flash_color(L.client, "#660099", 1)
 		playsound(L,'sound/weapons/sear.ogg', 50, TRUE, -4)
 		to_chat(L, span_userdanger("You're struck by a [name]!"))
-		var/limb_to_hit = L.get_bodypart(pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
+		var/limb_to_hit = L.get_bodypart(L.get_random_valid_zone(even_weights = TRUE))
 		var/armor = L.run_armor_check(limb_to_hit, MELEE, "Your armor absorbs [src]!", "Your armor blocks part of [src]!", FALSE, 50, "Your armor was penetrated by [src]!")
 		L.apply_damage(damage, BURN, limb_to_hit, armor, wound_bonus=CANT_WOUND)
 		if(ishostile(L))
@@ -709,7 +710,7 @@ Difficulty: Hard
 			if(H.stat == CONSCIOUS && !H.target && H.AIStatus != AI_OFF && !H.client)
 				if(!QDELETED(caster))
 					if(get_dist(H, caster) <= H.aggro_vision_range)
-						H.FindTarget(list(caster), 1)
+						H.FindTarget(list(caster))
 					else
 						H.Goto(get_turf(caster), H.move_to_delay, 3)
 		if(monster_damage_boost && (ismegafauna(L) || istype(L, /mob/living/simple_animal/hostile/asteroid)))

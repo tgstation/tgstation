@@ -28,20 +28,27 @@ After this process is done, any leftover roundstart threat will be given to the 
 
 ## Deciding midround threats
 
-Latejoin and midround injection cooldowns are set using exponential distribution between
+### Frequency
 
-- 5 minutes and 25 for latejoin (configurable as latejoin_delay_min and latejoin_delay_max)
-- 15 minutes and 35 for midround (configurable as midround_delay_min and midround_delay_max)
+The frequency of midround threats is based on the midround threat of the round. The number of midround threats that will roll is `threat_level` / `threat_per_midround_roll` (configurable), rounded up. For example, if `threat_per_midround_roll` is set to 5, then for every 5 threat, one midround roll will be added. If you have 6 threat, with this configuration, you will get 2 midround rolls.
 
-this value is then added to `world.time` and assigned to the injection cooldown variables.
+These midround roll points are then equidistantly spaced across the round, starting from `midround_lower_bound` (configurable) to `midround_upper_bound` (configurable), with a +/- of `midround_roll_distance` (configurable).
 
-[rigged_roundstart][/datum/game_mode/dynamic/proc/rigged_roundstart] is called instead if there are forced rules (an admin set the mode)
+For example, if:
+1. `midround_lower_bound` is `10 MINUTES`
+2. `midround_upper_bound` is `100 MINUTES`
+3. `midround_roll_distance` is `3 MINUTES`
+4. You have 5 midround rolls for the round
 
-1. [setup_parameters][/datum/game_mode/proc/setup_parameters]\()
-2. [pre_setup][/datum/game_mode/proc/pre_setup]\()
-3. [roundstart][/datum/game_mode/dynamic/proc/roundstart]\() OR [rigged_roundstart][/datum/game_mode/dynamic/proc/rigged_roundstart]\()
-4. [picking_roundstart_rule][/datum/game_mode/dynamic/proc/picking_roundstart_rule]\(drafted_rules)
-5. [post_setup][/datum/game_mode/proc/post_setup]\()
+...then those 5 midround rolls will be placed equidistantly (meaning equally apart) across the first 10-100 minutes of the round. Every individual roll will then be adjusted to either be 3 minutes earlier, or 3 minutes later.
+
+### Threat variety
+
+Threats are split between **heavy** rulesets and **light** rulesets. A heavy ruleset includes major threats like space dragons or blobs, while light rulesets are ones that don't often cause shuttle calls when rolled, such as revenants or traitors (sleeper agents).
+
+When a midround roll occurs, the decision to choose between light or heavy depends on the current round time. If it is less than `midround_light_upper_bound` (configurable), then it is guaranteed to be a light ruleset. If it is more than `midround_heavy_lower_bound`, then it is guaranteed to be a heavy ruleset. If it is any point in between, it will interpolate the value between those. This means that the longer the round goes on, the more likely you are to get a heavy ruleset.
+
+If no heavy ruleset can run, such as not having enough threat, then a light ruleset is guaranteed to run.
 
 ## Rule Processing
 
@@ -92,7 +99,7 @@ Latejoin: Only one candidate, the latejoiner. Standard checks.
 Midround: Instead of building a single list candidates, candidates contains four lists: living, dead, observing, and living antags. Standard checks in trim_list(list).
 
 Midround - Rulesets have additional types
-/from_ghosts: execute() -> send_applications() -> review_applications() -> finish_setup(mob/newcharacter, index) -> setup_role(role)
+/from_ghosts: execute() -> send_applications() -> review_applications() -> finish_applications() -> finish_setup(mob/newcharacter, index) -> setup_role(role)
 **NOTE: execute() here adds dead players and observers to candidates list
 
 ## Configuration and variables
@@ -153,17 +160,14 @@ Rulesets have the following variables notable to developers and those interested
 - `protected_roles` - Serves the same purpose of `restricted_roles`, except it can be turned off through configuration (`protect_roles_from_antagonist`). For example, security officers *shouldn't* be made traitor, so they are in Traitor's `protected_roles`.
 	- When considering putting a role in `protected_roles` or `restricted_roles`, the rule of thumb is if it is *technically infeasible* to support that job in that role. There's no *technical* reason a security officer can't be a traitor, and so they are simply in `protected_roles`. There *are* technical reasons a cyborg can't be a changeling, so they are in `restricted_roles` instead.
 
+This is not a complete list--search "configurable" in this README to learn more.
+
 ### Dynamic
 
 The "Dynamic" key has the following configurable values:
 - `pop_per_requirement` - The default value of `pop_per_requirement` for any ruleset that does not explicitly set it. Defaults to 6.
 - `latejoin_delay_min`, `latejoin_delay_max` - The time range, in deciseconds (take your seconds, and multiply by 10), for a latejoin to attempt rolling. Once this timer is finished, a new one will be created within the same range.
 	- Suppose you have a `latejoin_delay_min` of 600 (60 seconds, 1 minute) and a `latejoin_delay_max` of 1800 (180 seconds, 3 minutes). Once the round starts, a random number in this range will be picked--let's suppose 1.5 minutes. After 1.5 minutes, Dynamic will decide if a latejoin threat should be created (a probability of `/datum/game_mode/dynamic/proc/get_injection_chance()`). Regardless of its decision, a new timer will be started within the range of 1 to 3 minutes, repeatedly.
-- `midround_delay_min`, `midround_delay_max` - Same as `latejoin_delay_min` and `latejoin_delay_max`, except for midround threats instead of latejoin ones.
-- `higher_injection_chance`, `higher_injection_chance_minimum_threat` - Manipulates the injection chance (`/datum/game_mode/dynamic/proc/get_injection_chance()`). If the *current midround budget* is above `higher_injection_chance_minimum_threat`, then this chance will be increased by `higher_injection_chance`.
-	- For example: suppose you have a `higher_injection_chance_minimum_threat` of 70, and a `higher_injection_chance` of 15. This means that, if when a midround threat is trying to roll, there is 75 midround budget left, then the injection chance will go up 15%.
-- `lower_injection_chance`, `lower_injection_chance_minimum_threat` - The inverse of the `higher_injection_chance` variables. If the *current midround budget* is *below* `lower_injection_chance`, then the chance is lowered by `lower_injection_chance_minimum_threat`.
-	- For example: suppose you have a `lower_injection_chance_minimum_threat` of 30, and a `lower_injection_chance` of 15. This means if there is 20 midround budget left, then the chance will lower by 15%.
 - `threat_curve_centre` - A number between -5 and +5. A negative value will give a more peaceful round and a positive value will give a round with higher threat.
 - `threat_curve_width` - A number between 0.5 and 4. Higher value will favour extreme rounds and lower value rounds closer to the average.
 - `roundstart_split_curve_centre` - A number between -5 and +5. Equivalent to threat_curve_centre, but for the budget split. A negative value will weigh towards midround rulesets, and a positive value will weight towards roundstart ones.
@@ -180,6 +184,6 @@ Random events have the potential to be hijacked by Dynamic to keep the pace of m
 
 In `/datum/game_mode/dynamic/on_pre_random_event` (in `dynamic_hijacking.dm`), Dynamic hooks to random events. If the `dynamic_should_hijack` variable is TRUE, the following sequence of events occurs:
 
-![Flow chart to describe the chain of events for Dynamic 2021 to take](https://user-images.githubusercontent.com/35135081/109071468-9cab7e00-76a8-11eb-8f9f-2b920c602ef4.png)
+![Flow chart to describe the chain of events for Dynamic 2021 to take](https://github.com/tgstation/documentation-assets/blob/main/dynamic/random_event_hijacking.png)
 
-`n` is a random value between `random_event_hijack_minimum` and `random_event_hijack_maximum`. Injection chance, should it need to be raised, is increased by `hijacked_random_event_injection_chance`.
+`n` is a random value between `random_event_hijack_minimum` and `random_event_hijack_maximum`. Heavy injection chance, should it need to be raised, is increased by `hijacked_random_event_injection_chance_modifier`.

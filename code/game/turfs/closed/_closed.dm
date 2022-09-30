@@ -1,10 +1,11 @@
 /turf/closed
 	plane = WALL_PLANE
 	layer = CLOSED_TURF_LAYER
+	turf_flags = IS_SOLID
 	opacity = TRUE
 	density = TRUE
 	blocks_air = TRUE
-	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
+	init_air = FALSE
 	rad_insulation = RAD_MEDIUM_INSULATION
 	pass_flags_self = PASSCLOSEDTURF
 	/// Icon path. Smoothing objects larger than 32x32 require a visual object to represent the excess part, in order not to increase its hitbox. We call that a frill.
@@ -14,7 +15,7 @@
 /turf/closed/Initialize(mapload)
 	. = ..()
 	if(frill_icon)
-		AddElement(/datum/element/frill, frill_icon)
+		AddElement(/datum/element/split_visibility, icon)
 
 
 /turf/closed/AfterChange()
@@ -53,7 +54,7 @@
 
 /turf/closed/indestructible/weeb
 	name = "paper wall"
-	desc = "Reinforced paper walling. Someone really doesn't you to leave."
+	desc = "Reinforced paper walling. Someone really doesn't want you to leave."
 	icon = 'icons/obj/smooth_structures/paperframes.dmi'
 	icon_state = "paperframes-0"
 	base_icon_state = "paperframes"
@@ -86,7 +87,7 @@
 /turf/closed/indestructible/splashscreen
 	name = "Space Station 13"
 	desc = null
-	icon = 'icons/blank_title.png'
+	icon = 'icons/blanks/blank_title.png'
 	icon_state = ""
 	pixel_x = -64
 	plane = SPLASHSCREEN_PLANE
@@ -99,11 +100,11 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	SStitle.splash_turf = src
 	if(SStitle.icon)
 		icon = SStitle.icon
-	handle_generic_titlescreen_sizes()
+		handle_generic_titlescreen_sizes()
 
 ///helper proc that will center the screen if the icon is changed to a generic width, to make admins have to fudge around with pixel_x less. returns null
 /turf/closed/indestructible/splashscreen/proc/handle_generic_titlescreen_sizes()
-	var/icon/size_check = icon(icon, icon_state)
+	var/icon/size_check = icon(SStitle.icon, icon_state)
 	var/width = size_check.Width()
 	if(width == 480) // 480x480 is nonwidescreen
 		pixel_x = 0
@@ -150,7 +151,7 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	icon_state = "plastitanium_wall-0"
 	base_icon_state = "plastitanium_wall"
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_SYNDICATE_WALLS)
+	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_SYNDICATE_WALLS, SMOOTH_GROUP_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_SYNDICATE_WALLS, SMOOTH_GROUP_PLASTITANIUM_WALLS, SMOOTH_GROUP_AIRLOCK, SMOOTH_GROUP_SHUTTLE_PARTS)
 
 /turf/closed/indestructible/riveted/uranium
@@ -164,10 +165,16 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 /turf/closed/indestructible/riveted/plastinum
 	name = "plastinum wall"
 	desc = "A luxurious wall made out of a plasma-platinum alloy. Effectively impervious to conventional methods of destruction."
-	icon = 'icons/turf/walls/plastinum_wall.dmi'
+// wallening todo:	icon = 'icons/turf/walls/plastinum_wall.dmi'
 	icon_state = "plastinum_wall-0"
 	base_icon_state = "plastinum_wall"
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS
+	smoothing_groups = list(SMOOTH_GROUP_PLASTINUM_WALLS, SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS)
+	canSmoothWith = list(SMOOTH_GROUP_PLASTINUM_WALLS)
+
+/turf/closed/indestructible/riveted/plastinum/nodiagonal
+	icon_state = "map-shuttle_nd"
+	smoothing_flags = SMOOTH_BITMASK
 
 /turf/closed/indestructible/wood
 	icon = 'icons/turf/walls/wood_wall.dmi'
@@ -231,7 +238,7 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	base_icon_state = "plastitanium_window"
 	opacity = FALSE
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = list(SMOOTH_GROUP_SHUTTLE_PARTS, SMOOTH_GROUP_WINDOW_FULLTILE_PLASTITANIUM)
+	smoothing_groups = list(SMOOTH_GROUP_WINDOW_FULLTILE_PLASTITANIUM, SMOOTH_GROUP_SHUTTLE_PARTS)
 	canSmoothWith = list(SMOOTH_GROUP_WINDOW_FULLTILE_PLASTITANIUM)
 
 /turf/closed/indestructible/opsglass/Initialize(mapload)
@@ -265,7 +272,7 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	icon_state = "icerock"
 
 /turf/closed/indestructible/rock/snow/ice/ore
-	icon = 'icons/turf/walls/icerock_wall.dmi'
+// wallening todo:	icon = 'icons/turf/walls/icerock_wall.dmi'
 	icon_state = "icerock_wall-0"
 	base_icon_state = "icerock_wall"
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
@@ -328,7 +335,7 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 /turf/closed/indestructible/riveted/hierophant
 	name = "wall"
 	desc = "A wall made out of a strange metal. The squares on it pulse in a predictable pattern."
-	icon = 'icons/turf/walls/hierophant_wall.dmi'
+// wallening todo:	icon = 'icons/turf/walls/hierophant_wall.dmi'
 	icon_state = "wall"
 	smoothing_flags = SMOOTH_CORNERS
 	smoothing_groups = list(SMOOTH_GROUP_HIERO_WALL)

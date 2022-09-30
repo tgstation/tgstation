@@ -2,7 +2,7 @@
 /obj/item/cardboard_cutout
 	name = "cardboard cutout"
 	desc = "A vaguely humanoid cardboard cutout. It's completely blank."
-	icon = 'icons/obj/cardboard_cutout.dmi'
+	icon = 'icons/obj/art/cardboard_cutout.dmi'
 	icon_state = "cutout_basic"
 	w_class = WEIGHT_CLASS_BULKY
 	resistance_flags = FLAMMABLE
@@ -16,7 +16,7 @@
 /obj/item/cardboard_cutout/Initialize(mapload)
 	. = ..()
 	possible_appearances = sort_list(list(
-		"Assistant" = image(icon = src.icon, icon_state = "cutout_greytide"),
+		JOB_ASSISTANT = image(icon = src.icon, icon_state = "cutout_greytide"),
 		"Clown" = image(icon = src.icon, icon_state = "cutout_clown"),
 		"Mime" = image(icon = src.icon, icon_state = "cutout_mime"),
 		"Traitor" = image(icon = src.icon, icon_state = "cutout_traitor"),
@@ -25,15 +25,14 @@
 		"Clockwork Cultist" = image(icon = src.icon, icon_state = "cutout_servant"),
 		"Revolutionary" = image(icon = src.icon, icon_state = "cutout_viva"),
 		"Wizard" = image(icon = src.icon, icon_state = "cutout_wizard"),
-		"Shadowling" = image(icon = src.icon, icon_state = "cutout_shadowling"),
+		"Nightmare" = image(icon = src.icon, icon_state = "cutout_nightmare"),
 		"Xenomorph" = image(icon = src.icon, icon_state = "cutout_fukken_xeno"),
 		"Xenomorph Maid" = image(icon = src.icon, icon_state = "cutout_lusty"),
-		"Swarmer" = image(icon = src.icon, icon_state = "cutout_swarmer"),
 		"Ash Walker" = image(icon = src.icon, icon_state = "cutout_free_antag"),
 		"Deathsquad Officer" = image(icon = src.icon, icon_state = "cutout_deathsquad"),
 		"Ian" = image(icon = src.icon, icon_state = "cutout_ian"),
-		"Slaughter Demon" = image(icon = 'icons/mob/mob.dmi', icon_state = "daemon"),
-		"Laughter Demon" = image(icon = 'icons/mob/mob.dmi', icon_state = "bowmon"),
+		"Slaughter Demon" = image(icon = 'icons/mob/simple/mob.dmi', icon_state = "daemon"),
+		"Laughter Demon" = image(icon = 'icons/mob/simple/mob.dmi', icon_state = "bowmon"),
 		"Private Security Officer" = image(icon = src.icon, icon_state = "cutout_ntsec")
 	))
 
@@ -116,7 +115,7 @@
 	if(!deceptive)
 		add_atom_colour("#FFD7A7", FIXED_COLOUR_PRIORITY)
 	switch(new_appearance)
-		if("Assistant")
+		if(JOB_ASSISTANT)
 			name = "[pick(GLOB.first_names_male)] [pick(GLOB.last_names)]"
 			desc = "A cardboat cutout of an assistant."
 			icon_state = "cutout_greytide"
@@ -152,10 +151,10 @@
 			name = "[pick(GLOB.wizard_first)], [pick(GLOB.wizard_second)]"
 			desc = "A cardboard cutout of a wizard."
 			icon_state = "cutout_wizard"
-		if("Shadowling")
-			name = "Unknown"
-			desc = "A cardboard cutout of a shadowling."
-			icon_state = "cutout_shadowling"
+		if("Nightmare")
+			name = "[pick(GLOB.nightmare_names)]"
+			desc = "A cardboard cutout of a nightmare."
+			icon_state = "cutout_nightmare"
 		if("Xenomorph")
 			name = "alien hunter ([rand(1, 999)])"
 			desc = "A cardboard cutout of a xenomorph."
@@ -166,10 +165,6 @@
 			name = "lusty xenomorph maid ([rand(1, 999)])"
 			desc = "A cardboard cutout of a xenomorph maid."
 			icon_state = "cutout_lusty"
-		if("Swarmer")
-			name = "Swarmer ([rand(1, 999)])"
-			desc = "A cardboard cutout of a swarmer."
-			icon_state = "cutout_swarmer"
 		if("Ash Walker")
 			name = lizard_name(pick(MALE, FEMALE))
 			desc = "A cardboard cutout of an ash walker."
@@ -185,12 +180,12 @@
 		if("Slaughter Demon")
 			name = "slaughter demon"
 			desc = "A cardboard cutout of a slaughter demon."
-			icon = 'icons/mob/mob.dmi'
+			icon = 'icons/mob/simple/mob.dmi'
 			icon_state = "daemon"
 		if("Laughter Demon")
 			name = "laughter demon"
 			desc = "A cardboard cutout of a laughter demon."
-			icon = 'icons/mob/mob.dmi'
+			icon = 'icons/mob/simple/mob.dmi'
 			icon_state = "bowmon"
 		if("Private Security Officer")
 			name = "Private Security Officer"

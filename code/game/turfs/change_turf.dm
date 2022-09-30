@@ -78,6 +78,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	var/old_directional_opacity = directional_opacity
 	var/old_dynamic_lumcount = dynamic_lumcount
 	var/old_rcd_memory = rcd_memory
+	var/old_always_lit = always_lit
 
 	var/old_bp = blueprint_data
 	blueprint_data = null
@@ -125,9 +126,12 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	dynamic_lumcount = old_dynamic_lumcount
 
 	if(W.always_lit)
-		W.add_overlay(GLOB.fullbright_overlay)
-	else
-		W.cut_overlay(GLOB.fullbright_overlay)
+		// We are guarenteed to have these overlays because of how generation works
+		var/mutable_appearance/overlay = GLOB.fullbright_overlays[GET_TURF_PLANE_OFFSET(src) + 1]
+		W.add_overlay(overlay)
+	else if (old_always_lit)
+		var/mutable_appearance/overlay = GLOB.fullbright_overlays[GET_TURF_PLANE_OFFSET(src) + 1]
+		W.cut_overlay(overlay)
 
 	if(SSlighting.initialized)
 		W.lighting_object = old_lighting_object
@@ -141,9 +145,11 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		for(var/turf/open/space/space_tile in RANGE_TURFS(1, src))
 			space_tile.update_starlight()
 
-	var/area/thisarea = get_area(W)
-	if(thisarea.lighting_effect)
-		W.add_overlay(thisarea.lighting_effect)
+	// We will only run this logic if the tile is not on the prime z layer, since we use area overlays to cover that
+	if(SSmapping.z_level_to_plane_offset[z])
+		var/area/thisarea = get_area(W)
+		if(thisarea.lighting_effects)
+			W.add_overlay(thisarea.lighting_effects[SSmapping.z_level_to_plane_offset[z]])
 
 	QUEUE_SMOOTH_NEIGHBORS(src)
 	QUEUE_SMOOTH(src)
@@ -240,7 +246,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 			if(!length(baseturfs))
 				baseturfs = list(baseturfs)
 			var/list/old_baseturfs = baseturfs.Copy()
-			if(!istype(src, /turf/closed))
+			if(!isclosedturf(src))
 				old_baseturfs += type
 			newT = ChangeTurf(fake_turf_type, null, flags)
 			newT.assemble_baseturfs(initial(fake_turf_type.baseturfs)) // The baseturfs list is created like roundstart
@@ -251,13 +257,13 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 			return newT
 		if(!length(baseturfs))
 			baseturfs = list(baseturfs)
-		if(!istype(src, /turf/closed))
+		if(!isclosedturf(src))
 			new_baseturfs = list(type) + new_baseturfs
 		baseturfs = baseturfs_string_list(baseturfs + new_baseturfs, src)
 		return ChangeTurf(fake_turf_type, null, flags)
 	if(!length(baseturfs))
 		baseturfs = list(baseturfs)
-	if(!istype(src, /turf/closed))
+	if(!isclosedturf(src))
 		baseturfs = baseturfs_string_list(baseturfs + type, src)
 	var/turf/change_type
 	if(length(new_baseturfs))
@@ -298,10 +304,10 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	levelupdate()
 	if(flags & CHANGETURF_RECALC_ADJACENT)
 		immediate_calculate_adjacent_turfs()
-		if(ispath(oldType, /turf/closed) && istype(src, /turf/open))
+		if(ispath(oldType, /turf/closed) && isopenturf(src))
 			SSair.add_to_active(src)
 	else //In effect, I want closed turfs to make their tile active when sheered, but we need to queue it since they have no adjacent turfs
-		CALCULATE_ADJACENT_TURFS(src, (!(ispath(oldType, /turf/closed) && istype(src, /turf/open)) ? NORMAL_TURF : MAKE_ACTIVE))
+		CALCULATE_ADJACENT_TURFS(src, (!(ispath(oldType, /turf/closed) && isopenturf(src)) ? NORMAL_TURF : MAKE_ACTIVE))
 	//update firedoor adjacency
 	var/list/turfs_to_check = get_adjacent_open_turfs(src) | src
 	for(var/I in turfs_to_check)

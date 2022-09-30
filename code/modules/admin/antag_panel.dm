@@ -40,13 +40,17 @@ GLOBAL_VAR(antag_prototypes)
 	return parts.Join("<br>")
 
 /datum/antagonist/proc/antag_panel_objectives()
-	var/result = "<i><b>Objectives</b></i>:<br>"
+	var/result = "<i><b>Personal Objectives</b></i>:<br>"
 	if (objectives.len == 0)
 		result += "EMPTY<br>"
 	else
 		var/obj_count = 1
 		for(var/datum/objective/objective as anything in objectives)
-			result += "<B>[obj_count]</B>: [objective.explanation_text] <a href='?src=[REF(owner)];obj_edit=[REF(objective)]'>Edit</a> <a href='?src=[REF(owner)];obj_delete=[REF(objective)]'>Delete</a> <a href='?src=[REF(owner)];obj_completed=[REF(objective)]'><font color=[objective.completed ? "green" : "red"]>[objective.completed ? "Mark as incomplete" : "Mark as complete"]</font></a><br>"
+			result += "<B>[obj_count]</B>: [objective.explanation_text] \
+				<a href='?src=[REF(owner)];obj_edit=[REF(objective)]'>Edit</a> \
+				<a href='?src=[REF(owner)];obj_delete=[REF(objective)]'>Delete</a> \
+				<a href='?src=[REF(owner)];obj_completed=[REF(objective)]'><font color=[objective.check_completion() ? "green" : "red"]>[objective.completed ? "Mark as incomplete" : "Mark as complete"]</font></a> \
+				<br>"
 			obj_count++
 	result += "<a href='?src=[REF(owner)];obj_add=1;target_antag=[REF(src)]'>Add objective</a><br>"
 	result += "<a href='?src=[REF(owner)];obj_announce=1'>Announce objectives</a><br>"
@@ -148,6 +152,7 @@ GLOBAL_VAR(antag_prototypes)
 			priority_sections |= antag_category
 			antag_header_parts += "<span class='bad'>[current_antag.name]</span>"
 			antag_header_parts += "<a href='?src=[REF(src)];remove_antag=[REF(current_antag)]'>Remove</a>"
+			antag_header_parts += "<a href='?src=[REF(src)];open_antag_vv=[REF(current_antag)]'>Open VV</a>"
 
 
 		//We aren't antag of this category, grab first prototype to check the prefs (This is pretty vague but really not sure how else to do this)
@@ -186,11 +191,18 @@ GLOBAL_VAR(antag_prototypes)
 		var/uplink_info = "<i><b>Uplink</b></i>:"
 		var/datum/component/uplink/U = find_syndicate_uplink()
 		if(U)
-			uplink_info += "<a href='?src=[REF(src)];common=takeuplink'>take</a>"
+			if(!U.uplink_handler.has_objectives)
+				uplink_info += "<a href='?src=[REF(src)];common=takeuplink'>take</a>"
 			if (check_rights(R_FUN, 0))
-				uplink_info += ", <a href='?src=[REF(src)];common=crystals'>[U.telecrystals]</a> TC"
+				uplink_info += ", <a href='?src=[REF(src)];common=crystals'>[U.uplink_handler.telecrystals]</a> TC"
+				if(U.uplink_handler.has_progression)
+					uplink_info += ", <a href='?src=[REF(src)];common=progression'>[U.uplink_handler.progression_points]</a> PR"
+				if(U.uplink_handler.has_objectives)
+					uplink_info += ", <a href='?src=[REF(src)];common=give_objective'>Force Give Objective</a>"
 			else
-				uplink_info += ", [U.telecrystals] TC"
+				uplink_info += ", [U.uplink_handler.telecrystals] TC"
+				if(U.uplink_handler.has_progression)
+					uplink_info += ", [U.uplink_handler.progression_points] PR"
 		else
 			uplink_info += "<a href='?src=[REF(src)];common=uplink'>give</a>"
 		uplink_info += "." //hiel grammar

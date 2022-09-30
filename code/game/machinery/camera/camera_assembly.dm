@@ -10,6 +10,7 @@
 	icon_state = "cameracase"
 	custom_materials = list(/datum/material/iron=400, /datum/material/glass=250)
 	result_path = /obj/structure/camera_assembly
+	wall_external = TRUE
 
 /obj/structure/camera_assembly
 	name = "camera assembly"
@@ -121,17 +122,24 @@
 	else if(I == proxy_module)
 		proxy_module = null
 
+/obj/structure/camera_assembly/welder_act(mob/living/user, obj/item/tool)
+	if(state != STATE_WRENCHED && state != STATE_WELDED)
+		return
+	. = TRUE
+	if(!tool.tool_start_check(user, amount=3))
+		return
+	user.balloon_alert_to_viewers("[state == STATE_WELDED ? "un" : null]welding...")
+	audible_message(span_hear("You hear welding."))
+	if(!tool.use_tool(src, user, 2 SECONDS, amount=3, volume = 50))
+		user.balloon_alert_to_viewers("stopped [state == STATE_WELDED ? "un" : null]welding!")
+		return
+	state = ((state == STATE_WELDED) ? STATE_WRENCHED : STATE_WELDED)
+	set_anchored(state == STATE_WELDED)
+	user.balloon_alert_to_viewers(state == STATE_WELDED ? "welded" : "unwelded")
+
 
 /obj/structure/camera_assembly/attackby(obj/item/W, mob/living/user, params)
 	switch(state)
-		if(STATE_WRENCHED)
-			if(W.tool_behaviour == TOOL_WELDER)
-				if(weld(W, user))
-					to_chat(user, span_notice("You weld [src] securely into place."))
-					set_anchored(TRUE)
-					state = STATE_WELDED
-				return
-
 		if(STATE_WELDED)
 			if(istype(W, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/C = W
@@ -140,17 +148,7 @@
 					state = STATE_WIRED
 				else
 					to_chat(user, span_warning("You need two lengths of cable to wire a camera!"))
-					return
 				return
-
-			else if(W.tool_behaviour == TOOL_WELDER)
-
-				if(weld(W, user))
-					to_chat(user, span_notice("You unweld [src] from its place."))
-					state = STATE_WRENCHED
-					set_anchored(TRUE)
-				return
-
 		if(STATE_WIRED) // Upgrades!
 			if(istype(W, /obj/item/stack/sheet/mineral/plasma)) //emp upgrade
 				if(emp_module)
@@ -179,7 +177,7 @@
 				update_appearance()
 				return
 
-			else if(istype(W, /obj/item/assembly/prox_sensor)) //motion sensing upgrade
+			else if(isprox(W)) //motion sensing upgrade
 				if(proxy_module)
 					to_chat(user, span_warning("[src] already contains a [proxy_module]!"))
 					return
@@ -201,10 +199,12 @@
 		droppable_parts += emp_module
 	if(proxy_module)
 		droppable_parts += proxy_module
-	if(!droppable_parts.len)
+	if(!length(droppable_parts))
 		return
-	var/obj/item/choice = input(user, "Select a part to remove:", src) as null|obj in sort_names(droppable_parts)
-	if(!choice || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	var/obj/item/choice = tgui_input_list(user, "Select a part to remove", "Part Removal", sort_names(droppable_parts))
+	if(isnull(choice))
+		return
+	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 	to_chat(user, span_notice("You remove [choice] from [src]."))
 	drop_upgrade(choice)
@@ -219,12 +219,11 @@
 		return FALSE
 
 	tool.play_tool_sound(src)
-	var/input = stripped_input(user, "Which networks would you like to connect this camera to? Separate networks with a comma. No Spaces!\nFor example: SS13,Security,Secret ", "Set Network", "SS13")
-	if(!input)
-		to_chat(user, span_warning("No input found, please hang up and try your call again!"))
+	var/input = tgui_input_text(user, "Which networks would you like to connect this camera to? Separate networks with a comma. No Spaces!\nFor example: SS13,Security,Secret", "Set Network", "SS13")
+	if(isnull(input))
 		return
 	var/list/tempnetwork = splittext(input, ",")
-	if(tempnetwork.len < 1)
+	if(!length(tempnetwork))
 		to_chat(user, span_warning("No network found, please hang up and try your call again!"))
 		return
 	for(var/i in tempnetwork)
@@ -237,7 +236,7 @@
 
 	C.network = tempnetwork
 	var/area/A = get_area(src)
-	C.c_tag = "[A.name] ([rand(1, 999)])"
+	C.c_tag = "[format_text(A.name)] ([rand(1, 999)])"
 	return TRUE
 
 /obj/structure/camera_assembly/wirecutter_act(mob/user, obj/item/I)
@@ -269,13 +268,6 @@
 	qdel(src)
 	return TRUE
 
-/obj/structure/camera_assembly/proc/weld(obj/item/weldingtool/W, mob/living/user)
-	if(!W.tool_start_check(user, amount=3))
-		return FALSE
-	to_chat(user, span_notice("You start to weld [src]..."))
-	if(W.use_tool(src, user, 20, amount=3, volume = 50))
-		return TRUE
-	return FALSE
 
 /obj/structure/camera_assembly/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))

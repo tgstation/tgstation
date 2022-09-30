@@ -15,7 +15,7 @@
 	dir = 2;
 	dwidth = 8;
 	height = 17;
-	id = "whiteship";
+	shuttle_id = "whiteship";
 	launch_status = 0;
 	name = "White Ship";
 	port_direction = 2;
@@ -167,19 +167,19 @@
 "aE" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/mecha_wreckage/ripley,
-/turf/open/floor/mech_bay_recharge_floor,
+/turf/open/floor/iron/recharge_floor,
 /area/shuttle/abandoned)
 "aF" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/door/airlock/titanium{
-	name = "restroom"
+	name = "Restroom"
 	},
 /turf/open/floor/iron/showroomfloor/airless,
 /area/shuttle/abandoned)
 "aG" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/door/airlock/titanium{
-	name = "mech bay"
+	name = "Mech Bay"
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
@@ -205,7 +205,7 @@
 /obj/structure/toilet{
 	dir = 4
 	},
-/obj/machinery/door/window/eastleft,
+/obj/machinery/door/window/left/directional/east,
 /obj/structure/window/reinforced/tinted,
 /turf/open/floor/iron/showroomfloor/airless,
 /area/shuttle/abandoned)
@@ -241,10 +241,7 @@
 /area/shuttle/abandoned)
 "aQ" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12
-	},
+/obj/structure/sink/directional/east,
 /obj/item/soap,
 /turf/open/floor/iron/showroomfloor/airless,
 /area/shuttle/abandoned)
@@ -270,7 +267,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/directional/south,
 /obj/effect/spawner/random/exotic/ripley,
-/turf/open/floor/mech_bay_recharge_floor,
+/turf/open/floor/iron/recharge_floor,
 /area/shuttle/abandoned)
 "aV" = (
 /obj/machinery/computer/mech_bay_power_console{
@@ -282,9 +279,9 @@
 "aW" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/door/airlock/titanium{
-	name = "Cockpit";
-	req_access_txt = "109"
+	name = "Cockpit"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/admin/captain,
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
@@ -425,7 +422,7 @@
 /area/shuttle/abandoned)
 "bn" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/item/reagent_containers/food/drinks/mug,
+/obj/item/reagent_containers/cup/glass/mug,
 /obj/effect/turf_decal/tile/blue,
 /turf/open/floor/iron/airless,
 /area/shuttle/abandoned)
@@ -499,7 +496,7 @@
 "pe" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/shreds,
-/obj/item/storage/firstaid/ancient,
+/obj/item/storage/medkit/ancient,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "tT" = (

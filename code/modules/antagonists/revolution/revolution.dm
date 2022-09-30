@@ -4,12 +4,11 @@
 #define HEAD_UPDATE_PERIOD 300
 
 /datum/antagonist/rev
-	name = "Revolutionary"
+	name = "\improper Revolutionary"
 	roundend_category = "revolutionaries" // if by some miracle revolutionaries without revolution happen
 	antagpanel_category = "Revolution"
 	job_rank = ROLE_REV
 	antag_moodlet = /datum/mood_event/revolution
-	antag_hud_type = ANTAG_HUD_REV
 	antag_hud_name = "rev"
 	suicide_cry = "VIVA LA REVOLUTION!!"
 	var/datum/team/revolution/rev_team
@@ -31,12 +30,11 @@
 
 /datum/antagonist/rev/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
-	add_antag_hud(antag_hud_type, antag_hud_name, M)
 	handle_clown_mutation(M, mob_override ? null : "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
+	add_team_hud(M, /datum/antagonist/rev)
 
 /datum/antagonist/rev/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
-	remove_antag_hud(antag_hud_type, M)
 	handle_clown_mutation(M, removing = FALSE)
 
 /datum/antagonist/rev/on_mindshield(mob/implanter)
@@ -57,7 +55,8 @@
 	. = ..()
 
 /datum/antagonist/rev/greet()
-	to_chat(owner, span_userdanger("You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!"))
+	. = ..()
+	to_chat(owner, span_userdanger("Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!"))
 	owner.announce_objectives()
 
 /datum/antagonist/rev/create_team(datum/team/revolution/new_team)
@@ -155,14 +154,15 @@
 		flash.burnt_out = FALSE
 		flash.update_appearance()
 
-/datum/antagonist/rev/head/proc/admin_demote(datum/mind/target,mob/user)
-	message_admins("[key_name_admin(user)] has demoted [key_name_admin(owner)] from head revolutionary.")
-	log_admin("[key_name(user)] has demoted [key_name(owner)] from head revolutionary.")
+/datum/antagonist/rev/head/proc/admin_demote(mob/admin)
+	message_admins("[key_name_admin(admin)] has demoted [key_name_admin(owner)] from head revolutionary.")
+	log_admin("[key_name(admin)] has demoted [key_name(owner)] from head revolutionary.")
 	demote()
 
 /datum/antagonist/rev/head
-	name = "Head Revolutionary"
+	name = "\improper Head Revolutionary"
 	antag_hud_name = "rev_head"
+	job_rank = ROLE_REV_HEAD
 
 	preview_outfit = /datum/outfit/revolutionary
 
@@ -176,7 +176,7 @@
 /datum/antagonist/rev/head/on_removal()
 	if(give_hud)
 		var/mob/living/carbon/C = owner.current
-		var/obj/item/organ/cyberimp/eyes/hud/security/syndicate/S = C.getorganslot(ORGAN_SLOT_HUD)
+		var/obj/item/organ/internal/cyberimp/eyes/hud/security/syndicate/S = C.getorganslot(ORGAN_SLOT_HUD)
 		if(S)
 			S.Remove(C)
 	return ..()
@@ -194,7 +194,7 @@
 	// Otherwise, the R gets cut off.
 	final_icon.Scale(64, 64)
 
-	var/icon/rev_head_icon = icon('icons/mob/hud.dmi', "rev_head")
+	var/icon/rev_head_icon = icon('icons/mob/huds/antag_hud.dmi', "rev_head")
 	rev_head_icon.Scale(48, 48)
 	rev_head_icon.Crop(1, 1, 64, 64)
 	rev_head_icon.Shift(EAST, 10)
@@ -206,7 +206,7 @@
 /datum/antagonist/rev/head/proc/make_assistant_icon(hairstyle)
 	var/mob/living/carbon/human/dummy/consistent/assistant = new
 	assistant.hairstyle = hairstyle
-	assistant.update_hair()
+	assistant.update_body_parts()
 
 	var/icon/assistant_icon = render_preview_outfit(/datum/outfit/job/assistant/consistent, assistant)
 	assistant_icon.ChangeOpacity(0.5)
@@ -267,7 +267,7 @@
 
 	if(ishuman(owner.current))
 		owner.current.visible_message(span_deconversion_message("[owner.current] looks like [owner.current.p_theyve()] just remembered [owner.current.p_their()] real allegiance!"), null, null, null, owner.current)
-		to_chat(owner, "<span class ='deconversion_message bold'>You are no longer a brainwashed revolutionary! Your memory is hazy from the time you were a rebel...the only thing you remember is the name of the one who brainwashed you....</span>")
+		to_chat(owner, "<span class='deconversion_message bold'>You are no longer a brainwashed revolutionary! Your memory is hazy from the time you were a rebel...the only thing you remember is the name of the one who brainwashed you....</span>")
 	else if(issilicon(owner.current))
 		owner.current.visible_message(span_deconversion_message("The frame beeps contentedly, purging the hostile memory engram from the MMI before initalizing it."), null, null, null, owner.current)
 		to_chat(owner, span_userdanger("The frame's firmware detects and deletes your neural reprogramming! You remember nothing but the name of the one who flashed you."))
@@ -278,16 +278,16 @@
 	if((ishuman(owner.current)))
 		if(owner.current.stat != DEAD)
 			owner.current.visible_message(span_deconversion_message("[owner.current] looks like [owner.current.p_theyve()] just remembered [owner.current.p_their()] real allegiance!"), null, null, null, owner.current)
-			to_chat(owner, "<span class ='deconversion_message bold'>You have given up your cause of overthrowing the command staff. You are no longer a Head Revolutionary.</span>")
+			to_chat(owner, "<span class='deconversion_message bold'>You have given up your cause of overthrowing the command staff. You are no longer a Head Revolutionary.</span>")
 		else
-			to_chat(owner, "<span class ='deconversion_message bold'>The sweet release of death. You are no longer a Head Revolutionary.</span>")
+			to_chat(owner, "<span class='deconversion_message bold'>The sweet release of death. You are no longer a Head Revolutionary.</span>")
 	else if(issilicon(owner.current))
 		owner.current.visible_message(span_deconversion_message("The frame beeps contentedly, suppressing the disloyal personality traits from the MMI before initalizing it."), null, null, null, owner.current)
 		to_chat(owner, span_userdanger("The frame's firmware detects and suppresses your unwanted personality traits! You feel more content with the leadership around these parts."))
 
 //blunt trauma deconversions call this through species.dm spec_attacked_by()
 /datum/antagonist/rev/proc/remove_revolutionary(borged, deconverter)
-	log_attack("[key_name(owner.current)] has been deconverted from the revolution by [ismob(deconverter) ? key_name(deconverter) : deconverter]!")
+	owner.current.log_message("has been deconverted from the revolution by [ismob(deconverter) ? key_name(deconverter) : deconverter]!", LOG_ATTACK, color="#960000")
 	if(borged)
 		message_admins("[ADMIN_LOOKUPFLW(owner.current)] has been borged while being a [name]")
 	owner.special_role = null
@@ -325,12 +325,12 @@
 			to_chat(C, "The flash in your [where] will help you to persuade the crew to join your cause.")
 
 	if(give_hud)
-		var/obj/item/organ/cyberimp/eyes/hud/security/syndicate/S = new()
+		var/obj/item/organ/internal/cyberimp/eyes/hud/security/syndicate/S = new()
 		S.Insert(C)
 		to_chat(C, "Your eyes have been implanted with a cybernetic security HUD which will help you keep track of who is mindshield-implanted, and therefore unable to be recruited.")
 
 /datum/team/revolution
-	name = "Revolution"
+	name = "\improper Revolution"
 	var/max_headrevs = 3
 	var/list/ex_headrevs = list() // Dynamic removes revs on loss, used to keep a list for the roundend report.
 	var/list/ex_revs = list()
@@ -369,7 +369,7 @@
 			var/list/datum/mind/nonhuman_promotable = list()
 			for(var/datum/mind/khrushchev in non_heads)
 				if(khrushchev.current && !khrushchev.current.incapacitated() && !HAS_TRAIT(khrushchev.current, TRAIT_RESTRAINED) && khrushchev.current.client)
-					if(ROLE_REV in khrushchev.current.client.prefs.be_special)
+					if((ROLE_REV_HEAD in khrushchev.current.client.prefs.be_special) || (ROLE_PROVOCATEUR in khrushchev.current.client.prefs.be_special))
 						if(ishuman(khrushchev.current))
 							promotable += khrushchev
 						else
@@ -405,8 +405,7 @@
 
 /// Updates the state of the world depending on if revs won or loss.
 /// Returns who won, at which case this method should no longer be called.
-/// If revs_win_injection_amount is passed, then that amount of threat will be added if the revs win.
-/datum/team/revolution/proc/process_victory(revs_win_injection_amount)
+/datum/team/revolution/proc/process_victory()
 	if (check_rev_victory())
 		. = REVOLUTION_VICTORY
 	else if (check_heads_victory())
@@ -416,8 +415,6 @@
 
 	SSshuttle.clearHostileEnvironment(src)
 	save_members()
-
-	var/charter_given = FALSE
 
 	// Remove everyone as a revolutionary
 	for (var/_rev_mind in members)
@@ -430,67 +427,117 @@
 			else
 				LAZYADD(rev_mind.special_statuses, "<span class='bad'>Former head revolutionary</span>")
 				add_memory_in_range(rev_mind.current, 7, MEMORY_WON_REVOLUTION, list(DETAIL_PROTAGONIST = rev_mind.current, DETAIL_STATION_NAME = station_name()), story_value = STORY_VALUE_LEGENDARY, memory_flags = MEMORY_FLAG_NOSTATIONNAME|MEMORY_CHECK_BLIND_AND_DEAF, protagonist_memory_flags = MEMORY_FLAG_NOSTATIONNAME)
-				if(!charter_given && rev_mind.current && rev_mind.current.stat == CONSCIOUS)
-					charter_given = TRUE
-					podspawn(list(
-						"target" = get_turf(rev_mind.current),
-						"style" = STYLE_SYNDICATE,
-						"spawn" = /obj/item/station_charter/revolution
-					))
-					to_chat(rev_mind.current, "<span class='hear'>You hear something crackle in your ears for a moment before a voice speaks. \
-						\"Please stand by for a message from your benefactor. Message as follows, provocateur. \
-						<b>You have been chosen out of your fellow provocateurs to rename the station. Choose wisely.</b> Message ends.\"</span>")
 
 	if (. == STATION_VICTORY)
 		// If the revolution was quelled, make rev heads unable to be revived through pods
-		for (var/_rev_head_mind in ex_revs)
-			var/datum/mind/rev_head_mind = _rev_head_mind
-			var/mob/living/carbon/rev_head_body = rev_head_mind.current
-			if(istype(rev_head_body) && rev_head_body.stat == DEAD)
-				rev_head_body.makeUncloneable()
+		for (var/datum/mind/rev_head as anything in ex_headrevs)
+			if(!isnull(rev_head.current))
+				ADD_TRAIT(rev_head.current, TRAIT_DEFIB_BLACKLISTED, REF(src))
+				rev_head.current.med_hud_set_status()
 
 		priority_announce("It appears the mutiny has been quelled. Please return yourself and your incapacitated colleagues to work. \
 		We have remotely blacklisted the head revolutionaries in your medical records to prevent accidental revival.", null, null, null, "Central Command Loyalty Monitoring Division")
 	else
-		for (var/_player in GLOB.player_list)
-			var/mob/player = _player
-			var/datum/mind/mind = player.mind
+		victory_effects()
 
-			if (isnull(mind))
-				continue
+/datum/team/revolution/proc/victory_effects(revs_win_injection_amount)
+	var/charter_given = FALSE
 
-			if (!(mind.assigned_role.departments_bitflags & (DEPARTMENT_BITFLAG_SECURITY|DEPARTMENT_BITFLAG_COMMAND)))
-				continue
+	for(var/datum/mind/headrev_mind as anything in ex_headrevs)
+		if(charter_given)
+			break
+		if(!headrev_mind.current || headrev_mind.current.stat != CONSCIOUS)
+			continue
+		charter_given = TRUE
+		podspawn(list(
+			"target" = get_turf(headrev_mind.current),
+			"style" = STYLE_SYNDICATE,
+			"spawn" = /obj/item/station_charter/revolution,
+		))
+		to_chat(headrev_mind.current, span_hear("You hear something crackle in your ears for a moment before a voice speaks. \
+			\"Please stand by for a message from your benefactor. Message as follows, provocateur. \
+			<b>You have been chosen out of your fellow provocateurs to rename the station. Choose wisely.</b> Message ends.\""))
 
-			if (mind in ex_revs + ex_headrevs)
-				continue
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_REVOLUTION_VICTORY)
 
-			var/mob/living/carbon/target_body = mind.current
+	for (var/mob/living/player as anything in GLOB.player_list)
+		var/datum/mind/player_mind = player.mind
 
-			mind.add_antag_datum(/datum/antagonist/enemy_of_the_revolution)
+		if (isnull(player_mind))
+			continue
 
-			if (!istype(target_body))
-				continue
+		if (!(player_mind.assigned_role.departments_bitflags & (DEPARTMENT_BITFLAG_SECURITY|DEPARTMENT_BITFLAG_COMMAND)))
+			continue
 
-			if (target_body.stat == DEAD)
-				target_body.makeUncloneable()
-			else
-				mind.announce_objectives()
+		if (player_mind in ex_revs + ex_headrevs)
+			continue
 
-		for(var/datum/job/job as anything in SSjob.joinable_occupations)
-			if(!(job.departments_bitflags & (DEPARTMENT_BITFLAG_SECURITY|DEPARTMENT_BITFLAG_COMMAND)))
-				continue
-			job.allow_bureaucratic_error = FALSE
-			job.total_positions = 0
+		player_mind.add_antag_datum(/datum/antagonist/enemy_of_the_revolution)
 
-		if (revs_win_injection_amount)
-			var/datum/game_mode/dynamic/dynamic = SSticker.mode
-			dynamic.create_threat(revs_win_injection_amount)
-			dynamic.threat_log += "[worldtime2text()]: Revolution victory. Added [revs_win_injection_amount] threat."
+		if (!istype(player))
+			continue
 
-		priority_announce("A recent assessment of your station has marked your station as a severe risk area for high ranking Nanotrasen officials. \
-		For the safety of our staff, we have blacklisted your station for new employment of security and command. \
-		[pick(world.file2list("strings/anti_union_propaganda.txt"))]", null, null, null, "Central Command Loyalty Monitoring Division")
+		if(player_mind.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
+			ADD_TRAIT(player, TRAIT_DEFIB_BLACKLISTED, REF(src))
+			player.med_hud_set_status()
+
+	for(var/datum/job/job as anything in SSjob.joinable_occupations)
+		if(!(job.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY|DEPARTMENT_BITFLAG_COMMAND))
+			continue
+		job.allow_bureaucratic_error = FALSE
+		job.total_positions = 0
+
+	var/datum/game_mode/dynamic/dynamic = SSticker.mode
+	dynamic.unfavorable_situation()
+
+	var/message_header = "A recent assessment of your station has marked your station as a severe risk area for high ranking Nanotrasen officials."
+	var/extra_detail = try_auto_call_shuttle() \
+		? "For the safety of our staff, we are expediting an emergency shuttle for remaining members of security and command." \
+		: "For the safety of our staff, we have blacklisted your station for new employment of security and command."
+	var/propaganda = pick(world.file2list("strings/anti_union_propaganda.txt"))
+
+	priority_announce(
+		"[message_header]\n\n[extra_detail]\n\n[propaganda]",
+		sender_override = "Central Command Loyalty Monitoring Division"
+	)
+
+/// How much of the station, ignoring sec and command, should be revs before a shuttle will be automatically called?
+#define REV_AUTO_CALL_THRESHOLD 0.65
+
+/datum/team/revolution/proc/try_auto_call_shuttle()
+	var/total_revs = ex_revs.len + ex_headrevs.len
+	var/total_candidates = 0
+
+	for (var/mob/player as anything in GLOB.player_list)
+		if (player.mind.has_antag_datum(/datum/antagonist/enemy_of_the_revolution))
+			continue
+
+		total_candidates += 1
+
+	var/display_percent = round(total_revs / total_candidates * 100)
+
+	if (total_revs / total_candidates < REV_AUTO_CALL_THRESHOLD)
+		log_game("REVOLUTION: Not calling the shuttle, [display_percent]% are revs")
+		return FALSE
+
+	// Do it later so everyone has time to see the messages
+	addtimer(CALLBACK(src, .proc/perform_auto_shuttle_call), 20 SECONDS)
+
+	var/log = "REVOLUTION: Auto-calling the shuttle, [display_percent]% are revs"
+	log_game(log)
+	message_admins(log)
+
+	return TRUE
+
+#undef REV_AUTO_CALL_THRESHOLD
+
+/datum/team/revolution/proc/perform_auto_shuttle_call()
+	var/can_evac_result = SSshuttle.canEvac()
+	if (can_evac_result != TRUE)
+		log_game("REVOLUTION: Not calling the shuttle, canEvac() returned [can_evac_result]")
+		return
+
+	SSshuttle.call_evac_shuttle("Sending emergency shuttle to rescue command and security staff.")
 
 /// Mutates the ticker to report that the revs have won
 /datum/team/revolution/proc/round_result(finished)
@@ -568,13 +615,12 @@
 	parts += "<b>[antag_listing_name()]</b><br>"
 	parts += "<table cellspacing=5>"
 
-	var/list/heads = get_team_antags(/datum/antagonist/rev/head,TRUE)
+	var/list/heads = get_team_antags(/datum/antagonist/rev/head, FALSE)
 
 	for(var/datum/antagonist/A in heads | get_team_antags())
 		parts += A.antag_listing_entry()
 
 	parts += "</table>"
-	parts += antag_listing_footer()
 	common_part = parts.Join()
 
 	var/heads_report = "<b>Heads of Staff</b><br>"

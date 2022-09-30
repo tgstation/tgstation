@@ -56,6 +56,19 @@
 			else
 				client.screen -= screen
 
+/mob/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	. = ..()
+	if(!same_z_layer)
+		relayer_fullscreens()
+
+/mob/proc/relayer_fullscreens()
+	var/turf/our_lad = get_turf(src)
+	var/offset = GET_TURF_PLANE_OFFSET(our_lad)
+	var/atom/movable/screen/fullscreen/screen
+	for(var/category in screens)
+		screen = screens[category]
+		screen.plane = GET_NEW_PLANE(initial(screen.plane), offset)
+
 /atom/movable/screen/fullscreen
 	icon = 'icons/hud/screen_full.dmi'
 	icon_state = "default"
@@ -149,6 +162,14 @@
 	screen_loc = "WEST,SOUTH to EAST,NORTH"
 	icon_state = "flash"
 	alpha = 80
+
+/atom/movable/screen/fullscreen/bluespace_sparkle
+	icon = 'icons/effects/effects.dmi'
+	screen_loc = "WEST,SOUTH to EAST,NORTH"
+	icon_state = "shieldsparkles"
+	layer = FLASH_LAYER
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	show_when_dead = TRUE
 
 /atom/movable/screen/fullscreen/color_vision/green
 	color = "#00ff00"

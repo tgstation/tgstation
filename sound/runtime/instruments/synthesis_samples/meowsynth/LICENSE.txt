@@ -1,0 +1,14 @@
+The audio samples in this folder were created using the MeowSynth VST plugin.
+MeowSynth was created by a user named zipp and was released on knobster.org under the following terms:
+
+All KNOBSTER synthesizers are absolutely free, even for commercial use. Nevertheless, the author will gladly accept material gratitude, especially if it is done from the heart. You can send it to any of the wallets listed below:
+
+     Yandex money:
+         41001357297942
+
+     webmoney:
+         Z407831455581
+         R770671369144
+         U877500879439
+
+Remember: by helping the author financially, you stimulate the improvement of existing and the creation of new free synthesizers. Thank you.

@@ -16,6 +16,7 @@ Passive gate is similar to the regular pump except:
 	interaction_flags_machine = INTERACT_MACHINE_OFFLINE | INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_SET_MACHINE
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "passivegate"
+	use_power = NO_POWER_USE
 	///Set the target pressure the component should arrive to
 	var/target_pressure = ONE_ATMOSPHERE
 	///Variable for radio frequency

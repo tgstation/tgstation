@@ -13,35 +13,29 @@ export const meta = {
 };
 
 const Story = (props, context) => {
-  const [grow, setGrow] = useLocalState(
-    context, 'fs_grow', 1);
+  const [grow, setGrow] = useLocalState(context, 'fs_grow', 1);
   const [direction, setDirection] = useLocalState(
-    context, 'fs_direction', 'column');
-  const [fill, setFill] = useLocalState(
-    context, 'fs_fill', true);
-  const [hasTitle, setHasTitle] = useLocalState(
-    context, 'fs_title', true);
+    context,
+    'fs_direction',
+    'column'
+  );
+  const [fill, setFill] = useLocalState(context, 'fs_fill', true);
+  const [hasTitle, setHasTitle] = useLocalState(context, 'fs_title', true);
   return (
-    <Flex
-      height="100%"
-      direction="column">
+    <Flex height="100%" direction="column">
       <Flex.Item mb={1}>
         <Section>
           <Button
             fluid
-            onClick={() => setDirection(
-              direction === 'column' ? 'row' : 'column'
-            )}>
+            onClick={() =>
+              setDirection(direction === 'column' ? 'row' : 'column')
+            }>
             {`Flex direction="${direction}"`}
           </Button>
-          <Button
-            fluid
-            onClick={() => setGrow(Number(!grow))}>
+          <Button fluid onClick={() => setGrow(Number(!grow))}>
             {`Flex.Item grow={${grow}}`}
           </Button>
-          <Button
-            fluid
-            onClick={() => setFill(!fill)}>
+          <Button fluid onClick={() => setFill(!fill)}>
             {`Section fill={${String(fill)}}`}
           </Button>
           <Button
@@ -53,23 +47,17 @@ const Story = (props, context) => {
         </Section>
       </Flex.Item>
       <Flex.Item grow={1}>
-        <Flex
-          height="100%"
-          direction={direction}>
+        <Flex height="100%" direction={direction}>
           <Flex.Item
             mr={direction === 'row' && 1}
             mb={direction === 'column' && 1}
             grow={grow}>
-            <Section
-              title={hasTitle && 'Section 1'}
-              fill={fill}>
+            <Section title={hasTitle && 'Section 1'} fill={fill}>
               Content
             </Section>
           </Flex.Item>
           <Flex.Item grow={grow}>
-            <Section
-              title={hasTitle && 'Section 2'}
-              fill={fill}>
+            <Section title={hasTitle && 'Section 2'} fill={fill}>
               Content
             </Section>
           </Flex.Item>

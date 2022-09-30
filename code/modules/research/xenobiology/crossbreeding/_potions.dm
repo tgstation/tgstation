@@ -8,13 +8,13 @@ Slimecrossing Potions
 /obj/item/slimepotion/extract_cloner
 	name = "extract cloning potion"
 	desc = "A more powerful version of the extract enhancer potion, capable of cloning regular slime extracts."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potpurple"
 
 /obj/item/slimepotion/extract_cloner/afterattack(obj/item/target, mob/user , proximity)
 	if(!proximity)
 		return
-	if(istype(target, /obj/item/reagent_containers))
+	if(is_reagent_container(target))
 		return ..(target, user, proximity)
 	if(istype(target, /obj/item/slimecross))
 		to_chat(user, span_warning("[target] is too complex for the potion to clone!"))
@@ -36,14 +36,14 @@ Slimecrossing Potions
 /obj/item/slimepotion/peacepotion
 	name = "pacification potion"
 	desc = "A light pink solution of chemicals, smelling like liquid peace. And mercury salts."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potlightpink"
 
 /obj/item/slimepotion/peacepotion/attack(mob/living/peace_target, mob/user)
 	if(!isliving(peace_target) || peace_target.stat == DEAD)
 		to_chat(user, span_warning("[src] only works on the living."))
 		return ..()
-	if(istype(peace_target, /mob/living/simple_animal/hostile/megafauna))
+	if(ismegafauna(peace_target))
 		to_chat(user, span_warning("[src] does not work on beings of pure evil!"))
 		return ..()
 	if(peace_target != user)
@@ -70,20 +70,20 @@ Slimecrossing Potions
 /obj/item/slimepotion/lovepotion
 	name = "love potion"
 	desc = "A pink chemical mix thought to inspire feelings of love."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potpink"
 
 /obj/item/slimepotion/lovepotion/attack(mob/living/love_target, mob/user)
 	if(!isliving(love_target) || love_target.stat == DEAD)
 		to_chat(user, span_warning("The love potion only works on living things, sicko!"))
 		return ..()
-	if(istype(love_target, /mob/living/simple_animal/hostile/megafauna))
+	if(ismegafauna(love_target))
 		to_chat(user, span_warning("The love potion does not work on beings of pure evil!"))
 		return ..()
 	if(user == love_target)
 		to_chat(user, span_warning("You can't drink the love potion. What are you, a narcissist?"))
 		return ..()
-	if(love_target.has_status_effect(STATUS_EFFECT_INLOVE))
+	if(love_target.has_status_effect(/datum/status_effect/in_love))
 		to_chat(user, span_warning("[love_target] is already lovestruck!"))
 		return ..()
 
@@ -95,14 +95,14 @@ Slimecrossing Potions
 	to_chat(user, span_notice("You feed [love_target] the love potion!"))
 	to_chat(love_target, span_notice("You develop feelings for [user], and anyone [user.p_they()] like[user.p_s()]."))
 	love_target.faction |= "[REF(user)]"
-	love_target.apply_status_effect(STATUS_EFFECT_INLOVE, user)
+	love_target.apply_status_effect(/datum/status_effect/in_love, user)
 	qdel(src)
 
 //Pressure potion - Charged Dark Blue
 /obj/item/slimepotion/spaceproof
 	name = "slime pressurization potion"
 	desc = "A potent chemical sealant that will render any article of clothing airtight. Has two uses."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potblue"
 	var/uses = 2
 
@@ -137,14 +137,14 @@ Slimecrossing Potions
 /obj/item/slimepotion/enhancer/max
 	name = "extract maximizer"
 	desc = "An extremely potent chemical mix that will maximize a slime extract's uses."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potpurple"
 
 //Lavaproofing potion - Charged Red
 /obj/item/slimepotion/lavaproof
 	name = "slime lavaproofing potion"
 	desc = "A strange, reddish goo said to repel lava as if it were water, without reducing flammability. Has two uses."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potred"
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
 	var/uses = 2
@@ -164,7 +164,7 @@ Slimecrossing Potions
 	C.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 	C.add_atom_colour("#800000", FIXED_COLOUR_PRIORITY)
 	C.resistance_flags |= LAVA_PROOF
-	if (istype(C, /obj/item/clothing))
+	if (isclothing(C))
 		var/obj/item/clothing/CL = C
 		CL.clothing_flags |= LAVAPROTECT
 	uses--
@@ -175,7 +175,7 @@ Slimecrossing Potions
 /obj/item/slimepotion/slime_reviver
 	name = "slime revival potion"
 	desc = "Infused with plasma and compressed gel, this brings dead slimes back to life."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potsilver"
 
 /obj/item/slimepotion/slime_reviver/attack(mob/living/simple_animal/slime/revive_target, mob/user)
@@ -199,7 +199,7 @@ Slimecrossing Potions
 /obj/item/slimepotion/slime/chargedstabilizer
 	name = "slime omnistabilizer"
 	desc = "An extremely potent chemical mix that will stop a slime from mutating completely."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potcyan"
 
 /obj/item/slimepotion/slime/chargedstabilizer/attack(mob/living/simple_animal/slime/stabilize_target, mob/user)

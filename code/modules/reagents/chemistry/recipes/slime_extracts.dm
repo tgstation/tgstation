@@ -147,6 +147,9 @@
 	for(var/i in 1 to 4 + rand(1,2))
 		var/chosen = getbork()
 		var/obj/item/food_item = new chosen(T)
+		if(istype(food_item, /obj/item/food))
+			var/obj/item/food/foody = food_item
+			foody.mark_silver_slime_reaction()
 		if(prob(5))//Fry it!
 			var/obj/item/food/deepfryholder/fried
 			fried = new(T, food_item)
@@ -187,7 +190,7 @@
 	required_other = TRUE
 
 /datum/chemical_reaction/slime/slimefoam/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	holder.create_foam(/datum/effect_system/foam_spread,80, span_danger("[src] spews out foam!"))
+	holder.create_foam(/datum/effect_system/fluid_spread/foam, 80, span_danger("[src] spews out foam!"), log = TRUE)
 
 //Dark Blue
 /datum/chemical_reaction/slime/slimefreeze
@@ -390,6 +393,7 @@
 	if(lastkey)
 		var/mob/toucher = get_mob_by_key(lastkey)
 		touch_msg = "[ADMIN_LOOKUPFLW(toucher)]."
+		toucher.log_message("was the last to touch the slime which has exploded at [AREACOORD(T)].", LOG_GAME, log_globally = FALSE)
 	message_admins("Slime Explosion reaction started at [ADMIN_VERBOSEJMP(T)]. Last Fingerprint: [touch_msg]")
 	log_game("Slime Explosion reaction started at [AREACOORD(T)]. Last Fingerprint: [lastkey ? lastkey : "N/A"].")
 	T.visible_message(span_danger("The slime extract begins to vibrate violently !"))
@@ -584,6 +588,7 @@
 	if(lastkey)
 		var/mob/toucher = get_mob_by_key(lastkey)
 		touch_msg = "[ADMIN_LOOKUPFLW(toucher)]."
+		toucher.log_message("was last to touch a Brorble Brorble that has been primed at [AREACOORD(T)].", LOG_GAME, log_globally = FALSE)
 	message_admins("Brorble Brorble primed at [ADMIN_VERBOSEJMP(T)]. Last Fingerprint: [touch_msg]")
 	log_game("Brorble Brorble primed at [AREACOORD(T)]. Last Fingerprint: [lastkey ? lastkey : "N/A"].")
 	..()
@@ -603,5 +608,5 @@
 	required_container = /obj/item/slime_extract/rainbow
 
 /datum/chemical_reaction/slime/flight_potion/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	new /obj/item/reagent_containers/glass/bottle/potion/flight(get_turf(holder.my_atom))
+	new /obj/item/reagent_containers/cup/bottle/potion/flight(get_turf(holder.my_atom))
 	..()

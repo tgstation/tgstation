@@ -4,7 +4,6 @@
  * @license MIT
  */
 
-export const PING_INTERVAL = 2500;
 export const PING_TIMEOUT = 2000;
 export const PING_MAX_FAILS = 3;
 export const PING_QUEUE_SIZE = 8;

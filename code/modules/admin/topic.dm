@@ -47,28 +47,6 @@
 			to_chat(usr, span_danger("ERROR: Mob not found."), confidential = TRUE)
 			return
 		cmd_show_exp_panel(M.client)
-	else if(href_list["forceevent"])
-		if(!check_rights(R_FUN))
-			return
-		var/datum/round_event_control/E = locate(href_list["forceevent"]) in SSevents.control
-		if(E)
-			E.admin_setup(usr)
-			var/datum/round_event/event = E.runEvent()
-			if(event.announceWhen>0)
-				event.processing = FALSE
-				var/prompt = tgui_alert(usr, "Would you like to alert the crew?", "Alert", list("Yes", "No", "Cancel"))
-				switch(prompt)
-					if("Yes")
-						event.announceChance = 100
-					if("Cancel")
-						event.kill()
-						return
-					if("No")
-						event.announceChance = 0
-				event.processing = TRUE
-			message_admins("[key_name_admin(usr)] has triggered an event. ([E.name])")
-			log_admin("[key_name(usr)] has triggered an event. ([E.name])")
-		return
 
 	else if(href_list["editrightsbrowser"])
 		edit_admin_permissions(0)
@@ -156,28 +134,11 @@
 			return
 		shuttle_console.admin_controlled = !shuttle_console.admin_controlled
 		to_chat(usr, "[shuttle_console] was [shuttle_console.admin_controlled ? "locked" : "unlocked"].", confidential = TRUE)
+
 	else if(href_list["delay_round_end"])
-		if(!check_rights(R_SERVER))
-			return
+		// Permissions are checked in delay_round_end
+		delay_round_end()
 
-		if(SSticker.delay_end)
-			tgui_alert(usr, "The round end is already delayed. The reason for the current delay is: \"[SSticker.admin_delay_notice]\"", "Alert", list("Ok"))
-			return
-
-		var/delay_reason = input(usr, "Enter a reason for delaying the round end", "Round Delay Reason") as null|text
-
-		if(isnull(delay_reason))
-			return
-
-		if(SSticker.delay_end)
-			tgui_alert(usr, "The round end is already delayed. The reason for the current delay is: \"[SSticker.admin_delay_notice]\"", "Alert", list("Ok"))
-			return
-
-		SSticker.delay_end = TRUE
-		SSticker.admin_delay_notice = delay_reason
-
-		log_admin("[key_name(usr)] delayed the round end for reason: [SSticker.admin_delay_notice]")
-		message_admins("[key_name_admin(usr)] delayed the round end for reason: [SSticker.admin_delay_notice]")
 	else if(href_list["undelay_round_end"])
 		if(!check_rights(R_SERVER))
 			return
@@ -230,18 +191,6 @@
 		switch(href_list["simplemake"])
 			if("observer")
 				M.change_mob_type( /mob/dead/observer , null, null, delmob )
-			if("drone")
-				M.change_mob_type( /mob/living/carbon/alien/humanoid/drone , null, null, delmob )
-			if("hunter")
-				M.change_mob_type( /mob/living/carbon/alien/humanoid/hunter , null, null, delmob )
-			if("queen")
-				M.change_mob_type( /mob/living/carbon/alien/humanoid/royal/queen , null, null, delmob )
-			if("praetorian")
-				M.change_mob_type( /mob/living/carbon/alien/humanoid/royal/praetorian , null, null, delmob )
-			if("sentinel")
-				M.change_mob_type( /mob/living/carbon/alien/humanoid/sentinel , null, null, delmob )
-			if("larva")
-				M.change_mob_type( /mob/living/carbon/alien/larva , null, null, delmob )
 			if("human")
 				var/posttransformoutfit = usr.client.robust_dress_shop()
 				if (!posttransformoutfit)
@@ -249,42 +198,10 @@
 				var/mob/living/carbon/human/newmob = M.change_mob_type( /mob/living/carbon/human , null, null, delmob )
 				if(posttransformoutfit && istype(newmob))
 					newmob.equipOutfit(posttransformoutfit)
-			if("slime")
-				M.change_mob_type( /mob/living/simple_animal/slime , null, null, delmob )
-			if("adultslime")
-				var/mob/living/simple_animal/slime/baby_slime = M.change_mob_type( /mob/living/simple_animal/slime , null, null, delmob )
-				baby_slime.amount_grown = SLIME_EVOLUTION_THRESHOLD
-				baby_slime.Evolve()
 			if("monkey")
 				M.change_mob_type( /mob/living/carbon/human/species/monkey , null, null, delmob )
 			if("robot")
 				M.change_mob_type( /mob/living/silicon/robot , null, null, delmob )
-			if("cat")
-				M.change_mob_type( /mob/living/simple_animal/pet/cat , null, null, delmob )
-			if("runtime")
-				M.change_mob_type( /mob/living/simple_animal/pet/cat/runtime , null, null, delmob )
-			if("corgi")
-				M.change_mob_type( /mob/living/simple_animal/pet/dog/corgi , null, null, delmob )
-			if("ian")
-				M.change_mob_type( /mob/living/simple_animal/pet/dog/corgi/ian , null, null, delmob )
-			if("pug")
-				M.change_mob_type( /mob/living/simple_animal/pet/dog/pug , null, null, delmob )
-			if("crab")
-				M.change_mob_type( /mob/living/simple_animal/crab , null, null, delmob )
-			if("coffee")
-				M.change_mob_type( /mob/living/simple_animal/crab/coffee , null, null, delmob )
-			if("parrot")
-				M.change_mob_type( /mob/living/simple_animal/parrot , null, null, delmob )
-			if("polyparrot")
-				M.change_mob_type( /mob/living/simple_animal/parrot/poly , null, null, delmob )
-			if("constructjuggernaut")
-				M.change_mob_type( /mob/living/simple_animal/hostile/construct/juggernaut , null, null, delmob )
-			if("constructartificer")
-				M.change_mob_type( /mob/living/simple_animal/hostile/construct/artificer , null, null, delmob )
-			if("constructwraith")
-				M.change_mob_type( /mob/living/simple_animal/hostile/construct/wraith , null, null, delmob )
-			if("shade")
-				M.change_mob_type( /mob/living/simple_animal/shade , null, null, delmob )
 
 	else if(href_list["boot2"])
 		if(!check_rights(R_ADMIN))
@@ -444,6 +361,19 @@
 		var/target = href_list["showmessageckeylinkless"]
 		browse_messages(target_ckey = target, linkless = 1)
 
+	else if(href_list["messageread"])
+		if(!isnum(href_list["message_id"]))
+			return
+		var/rounded_message_id = round(href_list["message_id"], 1)
+		var/datum/db_query/query_message_read = SSdbcore.NewQuery(
+			"UPDATE [format_table_name("messages")] SET type = 'message sent' WHERE targetckey = :player_key AND id = :id",
+			list("id" = rounded_message_id, "player_key" = usr.ckey)
+		)
+		if(!query_message_read.warn_execute())
+			qdel(query_message_read)
+			return
+		qdel(query_message_read)
+
 	else if(href_list["messageedits"])
 		if(!check_rights(R_ADMIN))
 			return
@@ -549,46 +479,6 @@
 		log_admin("[key_name(usr)] set 'forced_threat_level' to [GLOB.dynamic_forced_threat_level].")
 		message_admins("[key_name(usr)] set 'forced_threat_level' to [GLOB.dynamic_forced_threat_level].")
 		dynamic_mode_options(usr)
-
-	else if(href_list["monkeyone"])
-		if(!check_rights(R_SPAWN))
-			return
-
-		var/mob/living/carbon/human/H = locate(href_list["monkeyone"])
-		if(!istype(H))
-			to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human.", confidential = TRUE)
-			return
-
-		log_admin("[key_name(usr)] attempting to monkeyize [key_name(H)].")
-		message_admins(span_adminnotice("[key_name_admin(usr)] attempting to monkeyize [key_name_admin(H)]."))
-		H.monkeyize()
-
-	else if(href_list["humanone"])
-		if(!check_rights(R_SPAWN))
-			return
-
-		var/mob/living/carbon/human/Mo = locate(href_list["humanone"])
-		if(!ismonkey(Mo))
-			to_chat(usr, "This can only be used on monkeys.", confidential = TRUE)
-			return
-
-		log_admin("[key_name(usr)] attempting to humanize [key_name(Mo)].")
-		message_admins(span_adminnotice("[key_name_admin(usr)] attempting to humanize [key_name_admin(Mo)]."))
-		Mo.humanize()
-
-	else if(href_list["corgione"])
-		if(!check_rights(R_SPAWN))
-			return
-
-		var/mob/living/carbon/human/H = locate(href_list["corgione"])
-		if(!istype(H))
-			to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human.", confidential = TRUE)
-			return
-
-		log_admin("[key_name(usr)] attempting to corgize [key_name(H)].")
-		message_admins(span_adminnotice("[key_name_admin(usr)] attempting to corgize [key_name_admin(H)]."))
-		H.corgize()
-
 
 	else if(href_list["forcespeech"])
 		if(!check_rights(R_FUN))
@@ -748,6 +638,7 @@
 		if(ishuman(L))
 			var/mob/living/carbon/human/observer = L
 			observer.equip_to_slot_or_del(new /obj/item/clothing/under/suit/black(observer), ITEM_SLOT_ICLOTHING)
+			observer.equip_to_slot_or_del(new /obj/item/clothing/neck/tie/black/tied(observer), ITEM_SLOT_NECK)
 			observer.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(observer), ITEM_SLOT_FEET)
 		L.Unconscious(100)
 		sleep(5)
@@ -773,9 +664,11 @@
 		if(!check_rights(R_SPAWN))
 			return
 
-		var/mob/living/carbon/human/H = locate(href_list["makeai"])
-		if(!istype(H))
-			to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human.", confidential = TRUE)
+		var/mob/our_mob = locate(href_list["makeai"])
+		if(!istype(our_mob))
+			return
+		if(isAI(our_mob))
+			to_chat(usr, "That's already an AI.", confidential = TRUE)
 			return
 
 		var/move = TRUE
@@ -784,72 +677,44 @@
 				return
 			if("No")
 				move = FALSE
-		if(QDELETED(H))
+		if(QDELETED(our_mob))
 			to_chat(usr, span_danger("Subject was deleted already. Transform canceled."))
 			return
-		message_admins(span_danger("Admin [key_name_admin(usr)] AIized [key_name_admin(H)]!"))
-		log_admin("[key_name(usr)] AIized [key_name(H)].")
-		H.AIize(TRUE, H.client, move)
-
-	else if(href_list["makealien"])
-		if(!check_rights(R_SPAWN))
-			return
-
-		var/mob/living/carbon/human/H = locate(href_list["makealien"])
-		if(!istype(H))
-			to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human.", confidential = TRUE)
-			return
-
-		usr.client.cmd_admin_alienize(H)
-
-	else if(href_list["makeslime"])
-		if(!check_rights(R_SPAWN))
-			return
-
-		var/mob/living/carbon/human/H = locate(href_list["makeslime"])
-		if(!istype(H))
-			to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human.", confidential = TRUE)
-			return
-
-		usr.client.cmd_admin_slimeize(H)
-
-	else if(href_list["makeblob"])
-		if(!check_rights(R_SPAWN))
-			return
-
-		var/mob/living/carbon/human/H = locate(href_list["makeblob"])
-		if(!istype(H))
-			to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human.", confidential = TRUE)
-			return
-
-		usr.client.cmd_admin_blobize(H)
-
+		message_admins(span_danger("Admin [key_name_admin(usr)] AIized [key_name_admin(our_mob)]!"))
+		log_admin("[key_name(usr)] AIized [key_name(our_mob)].")
+		our_mob.AIize(our_mob.client, move)
 
 	else if(href_list["makerobot"])
 		if(!check_rights(R_SPAWN))
 			return
 
-		var/mob/living/carbon/human/H = locate(href_list["makerobot"])
-		if(!istype(H))
-			to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human.", confidential = TRUE)
+		var/mob/our_mob = locate(href_list["makerobot"])
+		if(!istype(our_mob))
+			return
+		if(iscyborg(our_mob))
+			to_chat(usr, "That's already a cyborg.", confidential = TRUE)
 			return
 
-		usr.client.cmd_admin_robotize(H)
-
-	else if(href_list["makeanimal"])
-		if(!check_rights(R_SPAWN))
-			return
-
-		var/mob/M = locate(href_list["makeanimal"])
-		if(isnewplayer(M))
-			to_chat(usr, "This cannot be used on instances of type /mob/dead/new_player.", confidential = TRUE)
-			return
-
-		usr.client.cmd_admin_animalize(M)
+		usr.client.cmd_admin_robotize(our_mob)
 
 	else if(href_list["adminplayeropts"])
 		var/mob/M = locate(href_list["adminplayeropts"])
 		show_player_panel(M)
+
+	else if(href_list["ppbyckey"])
+		var/target_ckey = href_list["ppbyckey"]
+		var/mob/original_mob = locate(href_list["ppbyckeyorigmob"]) in GLOB.mob_list
+		var/mob/target_mob = get_mob_by_ckey(target_ckey)
+		if(!target_mob)
+			to_chat(usr, span_warning("No mob found with that ckey."))
+			return
+
+		if(original_mob == target_mob)
+			to_chat(usr, span_warning("[target_ckey] is still in their original mob: [original_mob]."))
+			return
+
+		to_chat(usr, span_notice("Jumping to [target_ckey]'s new mob: [target_mob]!"))
+		show_player_panel(target_mob)
 
 	else if(href_list["adminplayerobservefollow"])
 		if(!isobserver(usr) && !check_rights(R_ADMIN))
@@ -867,6 +732,8 @@
 
 	else if(href_list["adminplayerobservecoodjump"])
 		if(!isobserver(usr) && !check_rights(R_ADMIN))
+			return
+		if(isnewplayer(usr))
 			return
 
 		var/x = text2num(href_list["X"])
@@ -1034,20 +901,9 @@
 		if(!ishuman(H))
 			to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human.", confidential = TRUE)
 			return
-		//let's keep it simple
-		//milk to plasmemes and skeletons, meat to lizards, electricity bars to ethereals, cookies to everyone else
-		var/cookiealt = /obj/item/food/cookie
-		if(isskeleton(H))
-			cookiealt = /obj/item/reagent_containers/food/condiment/milk
-		else if(isplasmaman(H))
-			cookiealt = /obj/item/reagent_containers/food/condiment/milk
-		else if(isethereal(H))
-			cookiealt = /obj/item/food/energybar
-		else if(islizard(H))
-			cookiealt = /obj/item/food/meat/slab
-		var/obj/item/new_item = new cookiealt(H)
+		var/obj/item/new_item = new H.dna.species.species_cookie(H)
 		if(H.put_in_hands(new_item))
-			H.update_inv_hands()
+			H.update_held_items()
 		else
 			qdel(new_item)
 			log_admin("[key_name(H)] has their hands full, so they did not receive their [new_item.name], spawned by [key_name(src.owner)].")
@@ -1411,7 +1267,7 @@
 		if(!check_rights(R_ADMIN))
 			return
 		var/check = 0
-		for(var/datum/newscaster/feed_channel/FC in GLOB.news_network.network_channels)
+		for(var/datum/feed_channel/FC in GLOB.news_network.network_channels)
 			if(FC.channel_name == src.admincaster_feed_channel.channel_name)
 				check = 1
 				break
@@ -1420,7 +1276,7 @@
 		else
 			var/choice = tgui_alert(usr,"Please confirm Feed channel creation.","Network Channel Handler",list("Confirm","Cancel"))
 			if(choice=="Confirm")
-				GLOB.news_network.CreateFeedChannel(src.admincaster_feed_channel.channel_name, src.admin_signature, src.admincaster_feed_channel.locked, 1)
+				GLOB.news_network.create_feed_channel(src.admincaster_feed_channel.channel_name, src.admin_signature, "New information from on high." , src.admincaster_feed_channel.locked, 1)
 				SSblackbox.record_feedback("tally", "newscaster_channels", 1, src.admincaster_feed_channel.channel_name)
 				log_admin("[key_name(usr)] created command feed channel: [src.admincaster_feed_channel.channel_name]!")
 				src.admincaster_screen=5
@@ -1430,7 +1286,7 @@
 		if(!check_rights(R_ADMIN))
 			return
 		var/list/available_channels = list()
-		for(var/datum/newscaster/feed_channel/F in GLOB.news_network.network_channels)
+		for(var/datum/feed_channel/F in GLOB.news_network.network_channels)
 			available_channels += F.channel_name
 		src.admincaster_feed_channel.channel_name = adminscrub(input(usr, "Choose receiving Feed Channel.", "Network Channel Handler") in sort_list(available_channels) )
 		src.access_news_network()
@@ -1444,15 +1300,15 @@
 	else if(href_list["ac_submit_new_message"])
 		if(!check_rights(R_ADMIN))
 			return
-		if(src.admincaster_feed_message.returnBody(-1) =="" || src.admincaster_feed_message.returnBody(-1) =="\[REDACTED\]" || src.admincaster_feed_channel.channel_name == "" )
+		if(src.admincaster_feed_message.return_body(-1) =="" || src.admincaster_feed_message.return_body(-1) =="\[REDACTED\]" || src.admincaster_feed_channel.channel_name == "" )
 			src.admincaster_screen = 6
 		else
-			GLOB.news_network.SubmitArticle(src.admincaster_feed_message.returnBody(-1), src.admin_signature, src.admincaster_feed_channel.channel_name, null, 1)
+			GLOB.news_network.submit_article(src.admincaster_feed_message.return_body(-1), src.admin_signature, src.admincaster_feed_channel.channel_name, null, 1)
 			SSblackbox.record_feedback("amount", "newscaster_stories", 1)
 			src.admincaster_screen=4
 
 		for(var/obj/machinery/newscaster/NEWSCASTER in GLOB.allCasters)
-			NEWSCASTER.newsAlert(src.admincaster_feed_channel.channel_name)
+			NEWSCASTER.news_alert(src.admincaster_feed_channel.channel_name)
 
 		log_admin("[key_name(usr)] submitted a feed story to channel: [src.admincaster_feed_channel.channel_name]!")
 		src.access_news_network()
@@ -1489,7 +1345,7 @@
 			already_wanted = 1
 
 		if(already_wanted)
-			src.admincaster_wanted_message.criminal  = GLOB.news_network.wanted_issue.criminal
+			src.admincaster_wanted_message.criminal = GLOB.news_network.wanted_issue.criminal
 			src.admincaster_wanted_message.body = GLOB.news_network.wanted_issue.body
 		src.admincaster_screen = 14
 		src.access_news_network()
@@ -1516,10 +1372,10 @@
 			var/choice = tgui_alert(usr,"Please confirm Wanted Issue [(input_param==1) ? ("creation.") : ("edit.")]","Network Security Handler",list("Confirm","Cancel"))
 			if(choice=="Confirm")
 				if(input_param==1)          //If input_param == 1 we're submitting a new wanted issue. At 2 we're just editing an existing one. See the else below
-					GLOB.news_network.submitWanted(admincaster_wanted_message.criminal, admincaster_wanted_message.body, admin_signature, null, 1, 1)
+					GLOB.news_network.submit_wanted(admincaster_wanted_message.criminal, admincaster_wanted_message.body, admin_signature, null, 1, 1)
 					src.admincaster_screen = 15
 				else
-					GLOB.news_network.submitWanted(admincaster_wanted_message.criminal, admincaster_wanted_message.body, admin_signature)
+					GLOB.news_network.submit_wanted(admincaster_wanted_message.criminal, admincaster_wanted_message.body, admin_signature)
 					src.admincaster_screen = 19
 				log_admin("[key_name(usr)] issued a Station-wide Wanted Notification for [src.admincaster_wanted_message.criminal]!")
 		src.access_news_network()
@@ -1529,35 +1385,35 @@
 			return
 		var/choice = tgui_alert(usr,"Please confirm Wanted Issue removal.","Network Security Handler",list("Confirm","Cancel"))
 		if(choice=="Confirm")
-			GLOB.news_network.deleteWanted()
+			GLOB.news_network.delete_wanted()
 			src.admincaster_screen=17
 		src.access_news_network()
 
 	else if(href_list["ac_censor_channel_author"])
 		if(!check_rights(R_ADMIN))
 			return
-		var/datum/newscaster/feed_channel/FC = locate(href_list["ac_censor_channel_author"])
-		FC.toggleCensorAuthor()
+		var/datum/feed_channel/FC = locate(href_list["ac_censor_channel_author"])
+		FC.toggle_censor_author()
 		src.access_news_network()
 
 	else if(href_list["ac_censor_channel_story_author"])
 		if(!check_rights(R_ADMIN))
 			return
-		var/datum/newscaster/feed_message/MSG = locate(href_list["ac_censor_channel_story_author"])
-		MSG.toggleCensorAuthor()
+		var/datum/feed_message/MSG = locate(href_list["ac_censor_channel_story_author"])
+		MSG.toggle_censor_author()
 		src.access_news_network()
 
 	else if(href_list["ac_censor_channel_story_body"])
 		if(!check_rights(R_ADMIN))
 			return
-		var/datum/newscaster/feed_message/MSG = locate(href_list["ac_censor_channel_story_body"])
-		MSG.toggleCensorBody()
+		var/datum/feed_message/MSG = locate(href_list["ac_censor_channel_story_body"])
+		MSG.toggle_censor_body()
 		src.access_news_network()
 
 	else if(href_list["ac_pick_d_notice"])
 		if(!check_rights(R_ADMIN))
 			return
-		var/datum/newscaster/feed_channel/FC = locate(href_list["ac_pick_d_notice"])
+		var/datum/feed_channel/FC = locate(href_list["ac_pick_d_notice"])
 		src.admincaster_feed_channel = FC
 		src.admincaster_screen=13
 		src.access_news_network()
@@ -1565,8 +1421,8 @@
 	else if(href_list["ac_toggle_d_notice"])
 		if(!check_rights(R_ADMIN))
 			return
-		var/datum/newscaster/feed_channel/FC = locate(href_list["ac_toggle_d_notice"])
-		FC.toggleCensorDclass()
+		var/datum/feed_channel/FC = locate(href_list["ac_toggle_d_notice"])
+		FC.toggle_censor_D_class()
 		src.access_news_network()
 
 	else if(href_list["ac_view"])
@@ -1581,17 +1437,17 @@
 		src.admincaster_screen = text2num(href_list["ac_setScreen"])
 		if (src.admincaster_screen == 0)
 			if(src.admincaster_feed_channel)
-				src.admincaster_feed_channel = new /datum/newscaster/feed_channel
+				src.admincaster_feed_channel = new /datum/feed_channel
 			if(src.admincaster_feed_message)
-				src.admincaster_feed_message = new /datum/newscaster/feed_message
+				src.admincaster_feed_message = new /datum/feed_message
 			if(admincaster_wanted_message)
-				admincaster_wanted_message = new /datum/newscaster/wanted_message
+				admincaster_wanted_message = new /datum/wanted_message
 		src.access_news_network()
 
 	else if(href_list["ac_show_channel"])
 		if(!check_rights(R_ADMIN))
 			return
-		var/datum/newscaster/feed_channel/FC = locate(href_list["ac_show_channel"])
+		var/datum/feed_channel/FC = locate(href_list["ac_show_channel"])
 		src.admincaster_feed_channel = FC
 		src.admincaster_screen = 9
 		src.access_news_network()
@@ -1599,7 +1455,7 @@
 	else if(href_list["ac_pick_censor_channel"])
 		if(!check_rights(R_ADMIN))
 			return
-		var/datum/newscaster/feed_channel/FC = locate(href_list["ac_pick_censor_channel"])
+		var/datum/feed_channel/FC = locate(href_list["ac_pick_censor_channel"])
 		src.admincaster_feed_channel = FC
 		src.admincaster_screen = 12
 		src.access_news_network()
@@ -1618,8 +1474,8 @@
 	else if(href_list["ac_del_comment"])
 		if(!check_rights(R_ADMIN))
 			return
-		var/datum/newscaster/feed_comment/FC = locate(href_list["ac_del_comment"])
-		var/datum/newscaster/feed_message/FM = locate(href_list["ac_del_comment_msg"])
+		var/datum/feed_comment/FC = locate(href_list["ac_del_comment"])
+		var/datum/feed_message/FM = locate(href_list["ac_del_comment_msg"])
 		FM.comments -= FC
 		qdel(FC)
 		src.access_news_network()
@@ -1627,7 +1483,7 @@
 	else if(href_list["ac_lock_comment"])
 		if(!check_rights(R_ADMIN))
 			return
-		var/datum/newscaster/feed_message/FM = locate(href_list["ac_lock_comment"])
+		var/datum/feed_message/FM = locate(href_list["ac_lock_comment"])
 		FM.locked ^= 1
 		src.access_news_network()
 
@@ -1667,7 +1523,7 @@
 		if(!check_rights(R_ADMIN))
 			return
 		var/list/type_choices = typesof(/datum/station_goal)
-		var/picked = tgui_input_list(usr, "Choose goal type",, type_choices)
+		var/picked = tgui_input_list(usr, "Choose goal type", "Station Goal", type_choices)
 		if(!picked)
 			return
 		var/datum/station_goal/G = new picked()
@@ -1835,7 +1691,7 @@
 		var/answer = href_list["slowquery"]
 		if(answer == "yes")
 			log_query_debug("[usr.key] | Reported a server hang")
-			if(tgui_alert(usr, "Had you just press any admin buttons?", "Query server hang report", list("Yes", "No")) == "Yes")
+			if(tgui_alert(usr, "Did you just press any admin buttons?", "Query server hang report", list("Yes", "No")) == "Yes")
 				var/response = input(usr,"What were you just doing?","Query server hang report") as null|text
 				if(response)
 					log_query_debug("[usr.key] | [response]")
@@ -2051,3 +1907,49 @@
 		if(!check_rights(R_ADMIN))
 			return
 		GLOB.interviews.ui_interact(usr)
+
+	else if(href_list["tag_datum"])
+		if(!check_rights(R_ADMIN))
+			return
+		var/datum/datum_to_tag = locate(href_list["tag_datum"])
+		if(!datum_to_tag)
+			return
+		return add_tagged_datum(datum_to_tag)
+
+	else if(href_list["del_tag"])
+		if(!check_rights(R_ADMIN))
+			return
+		var/datum/datum_to_remove = locate(href_list["del_tag"])
+		if(!datum_to_remove)
+			return
+		return remove_tagged_datum(datum_to_remove)
+
+	else if(href_list["show_tags"])
+		if(!check_rights(R_ADMIN))
+			return
+		return display_tags()
+
+	else if(href_list["mark_datum"])
+		if(!check_rights(R_ADMIN))
+			return
+		var/datum/datum_to_mark = locate(href_list["mark_datum"])
+		if(!datum_to_mark)
+			return
+		return usr.client?.mark_datum(datum_to_mark)
+
+	else if(href_list["lua_state"])
+		if(!check_rights(R_DEBUG))
+			return
+		var/datum/lua_state/state_to_view = locate(href_list["lua_state"])
+		if(!state_to_view)
+			return
+		var/datum/lua_editor/editor = new(state_to_view)
+		var/log_index = href_list["log_index"]
+		if(log_index)
+			log_index = text2num(log_index)
+		if(log_index <= state_to_view.log.len)
+			var/list/log_entry = state_to_view.log[log_index]
+			if(log_entry["chunk"])
+				editor.force_view_chunk = log_entry["chunk"]
+				editor.force_modal = "viewChunk"
+		editor.ui_interact(usr)

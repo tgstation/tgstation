@@ -6,10 +6,7 @@ export const NtosRobotact = (props, context) => {
   const { act, data } = useBackend(context);
   const { PC_device_theme } = data;
   return (
-    <NtosWindow
-      width={800}
-      height={600}
-      theme={PC_device_theme}>
+    <NtosWindow width={800} height={600} theme={PC_device_theme}>
       <NtosWindow.Content>
         <NtosRobotactContent />
       </NtosWindow.Content>
@@ -47,11 +44,8 @@ export const NtosRobotactContent = (props, context) => {
   const borgLog = data.borgLog || [];
   const borgUpgrades = data.borgUpgrades || [];
   return (
-    <Flex
-      direction={"column"}>
-      <Flex.Item
-        position="relative"
-        mb={1}>
+    <Flex direction={'column'}>
+      <Flex.Item position="relative" mb={1}>
         <Tabs>
           <Tabs.Tab
             icon="list"
@@ -71,40 +65,28 @@ export const NtosRobotactContent = (props, context) => {
       </Flex.Item>
       {tab_main === 1 && (
         <>
-          <Flex
-            direction={"row"}>
-            <Flex.Item
-              width="30%">
-              <Section
-                title="Configuration"
-                fill>
+          <Flex direction={'row'}>
+            <Flex.Item width="30%">
+              <Section title="Configuration" fill>
                 <LabeledList>
-                  <LabeledList.Item
-                    label="Unit">
+                  <LabeledList.Item label="Unit">
                     {borgName.slice(0, 17)}
                   </LabeledList.Item>
-                  <LabeledList.Item
-                    label="Type">
-                    {borgType}
-                  </LabeledList.Item>
-                  <LabeledList.Item
-                    label="AI">
+                  <LabeledList.Item label="Type">{borgType}</LabeledList.Item>
+                  <LabeledList.Item label="AI">
                     {masterAI.slice(0, 17)}
                   </LabeledList.Item>
                 </LabeledList>
               </Section>
             </Flex.Item>
-            <Flex.Item
-              grow={1}
-              basis="content"
-              ml={1}>
-              <Section
-                title="Status">
+            <Flex.Item grow={1} basis="content" ml={1}>
+              <Section title="Status">
                 Charge:
                 <Button
                   content="Power Alert"
                   disabled={charge}
-                  onClick={() => act('alertPower')} />
+                  onClick={() => act('alertPower')}
+                />
                 <ProgressBar
                   value={charge / maxcharge}
                   ranges={{
@@ -123,30 +105,28 @@ export const NtosRobotactContent = (props, context) => {
                     bad: [-Infinity, 25],
                     average: [25, 75],
                     good: [75, Infinity],
-                  }} />
+                  }}
+                />
               </Section>
-              <Section
-                title="Lamp Power">
+              <Section title="Lamp Power">
                 <Slider
                   value={lampIntensity}
                   step={1}
                   stepPixelSize={25}
                   maxValue={5}
                   minValue={1}
-                  onChange={(e, value) => act('lampIntensity', {
-                    ref: value,
-                  })} />
-                Lamp power usage: {lampIntensity/2} watts
+                  onChange={(e, value) =>
+                    act('lampIntensity', {
+                      ref: value,
+                    })
+                  }
+                />
+                Lamp power usage: {lampIntensity / 2} watts
               </Section>
             </Flex.Item>
-            <Flex.Item
-              width="50%"
-              ml={1}>
-              <Section
-                fitted>
-                <Tabs
-                  fluid={1}
-                  textAlign="center">
+            <Flex.Item width="50%" ml={1}>
+              <Section fitted>
+                <Tabs fluid={1} textAlign="center">
                   <Tabs.Tab
                     icon=""
                     lineHeight="23px"
@@ -173,50 +153,50 @@ export const NtosRobotactContent = (props, context) => {
               {tab_sub === 1 && (
                 <Section>
                   <LabeledList>
-                    <LabeledList.Item
-                      label="Maintenance Cover">
+                    <LabeledList.Item label="Maintenance Cover">
                       <Button.Confirm
                         content="Unlock"
-                        disabled={cover==="UNLOCKED"}
-                        onClick={() => act('coverunlock')} />
+                        disabled={cover === 'UNLOCKED'}
+                        onClick={() => act('coverunlock')}
+                      />
                     </LabeledList.Item>
-                    <LabeledList.Item
-                      label="Sensor Overlay">
+                    <LabeledList.Item label="Sensor Overlay">
                       <Button
                         content={sensors}
-                        onClick={() => act('toggleSensors')} />
+                        onClick={() => act('toggleSensors')}
+                      />
                     </LabeledList.Item>
                     <LabeledList.Item
-                      label={"Stored Photos (" + printerPictures + ")"}>
+                      label={'Stored Photos (' + printerPictures + ')'}>
                       <Button
                         content="View"
                         disabled={!printerPictures}
-                        onClick={() => act('viewImage')} />
+                        onClick={() => act('viewImage')}
+                      />
                       <Button
                         content="Print"
                         disabled={!printerPictures}
-                        onClick={() => act('printImage')} />
+                        onClick={() => act('printImage')}
+                      />
                     </LabeledList.Item>
-                    <LabeledList.Item
-                      label="Printer Toner">
-                      <ProgressBar
-                        value={printerToner / printerTonerMax} />
+                    <LabeledList.Item label="Printer Toner">
+                      <ProgressBar value={printerToner / printerTonerMax} />
                     </LabeledList.Item>
                     {!!thrustersInstalled && (
-                      <LabeledList.Item
-                        label="Toggle Thrusters">
+                      <LabeledList.Item label="Toggle Thrusters">
                         <Button
                           content={thrustersStatus}
-                          onClick={() => act('toggleThrusters')} />
+                          onClick={() => act('toggleThrusters')}
+                        />
                       </LabeledList.Item>
                     )}
                     {!!selfDestructAble && (
-                      <LabeledList.Item
-                        label="Self Destruct">
+                      <LabeledList.Item label="Self Destruct">
                         <Button.Confirm
                           content="ACTIVATE"
                           color="red"
-                          onClick={() => act('selfDestruct')} />
+                          onClick={() => act('selfDestruct')}
+                        />
                       </LabeledList.Item>
                     )}
                   </LabeledList>
@@ -224,10 +204,8 @@ export const NtosRobotactContent = (props, context) => {
               )}
               {tab_sub === 2 && (
                 <Section>
-                  {borgUpgrades.map(upgrade => (
-                    <Box
-                      mb={1}
-                      key={upgrade}>
+                  {borgUpgrades.map((upgrade) => (
+                    <Box mb={1} key={upgrade}>
                       {upgrade}
                     </Box>
                   ))}
@@ -238,32 +216,50 @@ export const NtosRobotactContent = (props, context) => {
                   <LabeledList>
                     <LabeledList.Item
                       label="AI Connection"
-                      color={wireAI==="FAULT"?'red': wireAI==="READY"?'yellow': 'green'}>
+                      color={
+                        wireAI === 'FAULT'
+                          ? 'red'
+                          : wireAI === 'READY'
+                            ? 'yellow'
+                            : 'green'
+                      }>
                       {wireAI}
                     </LabeledList.Item>
                     <LabeledList.Item
                       label="LawSync"
-                      color={wireLaw==="FAULT"?"red":"green"}>
+                      color={wireLaw === 'FAULT' ? 'red' : 'green'}>
                       {wireLaw}
                     </LabeledList.Item>
                     <LabeledList.Item
                       label="Camera"
-                      color={wireCamera==="FAULT"?'red': wireCamera==="DISABLED"?'yellow': 'green'}>
+                      color={
+                        wireCamera === 'FAULT'
+                          ? 'red'
+                          : wireCamera === 'DISABLED'
+                            ? 'yellow'
+                            : 'green'
+                      }>
                       {wireCamera}
                     </LabeledList.Item>
                     <LabeledList.Item
                       label="Module Controller"
-                      color={wireModule==="FAULT"?"red":"green"}>
+                      color={wireModule === 'FAULT' ? 'red' : 'green'}>
                       {wireModule}
                     </LabeledList.Item>
                     <LabeledList.Item
                       label="Motor Controller"
-                      color={locomotion==="FAULT"?'red': locomotion==="DISABLED"?'yellow': 'green'}>
+                      color={
+                        locomotion === 'FAULT'
+                          ? 'red'
+                          : locomotion === 'DISABLED'
+                            ? 'yellow'
+                            : 'green'
+                      }>
                       {locomotion}
                     </LabeledList.Item>
                     <LabeledList.Item
                       label="Maintenance Cover"
-                      color={cover==="UNLOCKED"?"red":"green"}>
+                      color={cover === 'UNLOCKED' ? 'red' : 'green'}>
                       {cover}
                     </LabeledList.Item>
                   </LabeledList>
@@ -271,27 +267,22 @@ export const NtosRobotactContent = (props, context) => {
               )}
             </Flex.Item>
           </Flex>
-          <Flex.Item
-            height={21}
-            mt={1}>
+          <Flex.Item height={21} mt={1}>
             <Section
               title="Laws"
               fill
               scrollable
-              buttons={(
+              buttons={
                 <>
                   <Button
                     content="State Laws"
-                    onClick={() => act('lawstate')} />
-                  <Button
-                    icon="volume-off"
-                    onClick={() => act('lawchannel')} />
+                    onClick={() => act('lawstate')}
+                  />
+                  <Button icon="volume-off" onClick={() => act('lawchannel')} />
                 </>
-              )}>
-              {laws.map(law => (
-                <Box
-                  mb={1}
-                  key={law}>
+              }>
+              {laws.map((law) => (
+                <Box mb={1} key={law}>
                   {law}
                 </Box>
               ))}
@@ -300,16 +291,10 @@ export const NtosRobotactContent = (props, context) => {
         </>
       )}
       {tab_main === 2 && (
-        <Flex.Item
-          height={40}>
-          <Section
-            fill
-            scrollable
-            backgroundColor="black">
-            {borgLog.map(log => (
-              <Box
-                mb={1}
-                key={log}>
+        <Flex.Item height={40}>
+          <Section fill scrollable backgroundColor="black">
+            {borgLog.map((log) => (
+              <Box mb={1} key={log}>
                 <font color="green">{log}</font>
               </Box>
             ))}
@@ -319,4 +304,3 @@ export const NtosRobotactContent = (props, context) => {
     </Flex>
   );
 };
-

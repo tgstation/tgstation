@@ -9,8 +9,7 @@
 
 /datum/mutation/human/nervousness/on_life(delta_time, times_fired)
 	if(DT_PROB(5, delta_time))
-		owner.stuttering = max(10, owner.stuttering)
-
+		owner.set_stutter_if_lower(20 SECONDS)
 
 /datum/mutation/human/wacky
 	name = "Wacky"

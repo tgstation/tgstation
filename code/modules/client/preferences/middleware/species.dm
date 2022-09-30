@@ -9,8 +9,9 @@
 /datum/asset/spritesheet/species
 	name = "species"
 	early = TRUE
+	cross_round_cachable = TRUE
 
-/datum/asset/spritesheet/species/register()
+/datum/asset/spritesheet/species/create_spritesheets()
 	var/list/to_insert = list()
 
 	for (var/species_id in get_selectable_species())
@@ -20,7 +21,6 @@
 		dummy.set_species(species_type)
 		dummy.equipOutfit(/datum/outfit/job/assistant/consistent, visualsOnly = TRUE)
 		dummy.dna.species.prepare_human_for_preview(dummy)
-		COMPILE_OVERLAYS(dummy)
 
 		var/icon/dummy_icon = getFlatIcon(dummy)
 		dummy_icon.Scale(64, 64)
@@ -32,5 +32,3 @@
 
 	for (var/spritesheet_key in to_insert)
 		Insert(spritesheet_key, to_insert[spritesheet_key])
-
-	return ..()

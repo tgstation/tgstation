@@ -1,5 +1,4 @@
 /obj/vehicle/sealed/mecha/working
-	internal_damage_threshold = 60
 	allow_diagonal_movement = TRUE
 	/// Handles an internal ore box for working mechs
 	var/obj/structure/ore_box/box
@@ -21,7 +20,7 @@
 /obj/vehicle/sealed/mecha/working/proc/collect_ore()
 	if(!box)
 		return
-	if(!(locate(/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp) in equipment) && !(locate(/obj/item/mecha_parts/mecha_equipment/orebox_manager) in equipment))
+	if(!(locate(/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp) in flat_equipment) && !(locate(/obj/item/mecha_parts/mecha_equipment/orebox_manager) in equip_by_category[MECHA_UTILITY]))
 		return
 	for(var/obj/item/stack/ore/ore in range(1, src))
 		if(ore.Adjacent(src) && ((get_dir(src, ore) & dir) || ore.loc == loc)) //we can reach it and it's in front of us? grab it!

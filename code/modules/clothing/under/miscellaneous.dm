@@ -47,9 +47,8 @@
 	inhand_icon_state = "bl_suit"
 	worn_icon = 'icons/mob/clothing/under/syndicate.dmi'
 	desc = "A cybernetically enhanced jumpsuit used for administrative duties."
-	permeability_coefficient = 0.01
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	armor = list(MELEE = 100, BULLET = 100, LASER = 100,ENERGY = 100, BOMB = 100, BIO = 100, RAD = 100, FIRE = 100, ACID = 100)
+	armor = list(MELEE = 100, BULLET = 100, LASER = 100,ENERGY = 100, BOMB = 100, BIO = 100, FIRE = 100, ACID = 100)
 	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -71,7 +70,7 @@
 	icon_state = "overalls"
 	inhand_icon_state = "lb_suit"
 	can_adjust = FALSE
-	custom_price = PAYCHECK_EASY
+	custom_price = PAYCHECK_CREW
 
 /obj/item/clothing/under/misc/assistantformal
 	name = "assistant's formal uniform"
@@ -86,7 +85,7 @@
 	icon_state = "durathread"
 	inhand_icon_state = "durathread"
 	can_adjust = FALSE
-	armor = list(MELEE = 10, LASER = 10, FIRE = 40, ACID = 10, BOMB = 5)
+	armor = list(MELEE = 10, LASER = 10, FIRE = 40, ACID = 10, BOMB = 5, BIO = 10, FIRE = 0, ACID = 0)
 
 /obj/item/clothing/under/misc/bouncer
 	name = "bouncer uniform"
@@ -94,7 +93,7 @@
 	icon_state = "bouncer"
 	inhand_icon_state = "bouncer"
 	can_adjust = FALSE
-	armor = list(MELEE = 5, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 30, ACID = 30)
+	armor = list(MELEE = 5, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 30, ACID = 30)
 
 /obj/item/clothing/under/misc/coordinator
 	name = "coordinator jumpsuit"
@@ -104,3 +103,15 @@
 	icon_state = "captain_parade"
 	inhand_icon_state = "by_suit"
 	can_adjust = FALSE
+
+/obj/item/clothing/under/misc/syndicate_souvenir
+	name = "syndicate souvenir tee"
+	desc = "I got kidnapped by a Syndicate operative and all I got was this lousy t-shirt!"
+	icon = 'icons/obj/clothing/under/syndicate_souvenir.dmi'
+	worn_icon = 'icons/mob/clothing/under/syndicate_souvenir.dmi'
+	icon_state = "syndicate_souvenir"
+	inhand_icon_state = "syndicate_souvenir"
+	random_sensor = FALSE
+	sensor_mode = NO_SENSORS
+	can_adjust = FALSE
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY

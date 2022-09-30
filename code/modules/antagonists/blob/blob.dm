@@ -1,5 +1,5 @@
 /datum/antagonist/blob
-	name = "Blob"
+	name = "\improper Blob"
 	roundend_category = "blobs"
 	antagpanel_category = "Biohazards"
 	show_to_ghosts = TRUE
@@ -19,7 +19,7 @@
 	return basic_report
 
 /datum/antagonist/blob/greet()
-	to_chat(owner.current, span_notice("<font color=\"#EE4000\">You are the Blob!</font>"))
+	. = ..()
 	owner.announce_objectives()
 	if(!isovermind(owner.current))
 		to_chat(owner.current, span_notice("Use the pop ability to place your blob core! It is recommended you do this away from anyone else, as you'll be taking on the entire crew!"))
@@ -34,16 +34,12 @@
 	QDEL_NULL(pop_action)
 	return ..()
 
-/datum/antagonist/blob/farewell()
-	to_chat(owner.current, "<span class='alertsyndie'><font color=\"#EE4000\">You are no longer the Blob!</font></span>")
-	return ..()
-
 /datum/antagonist/blob/get_preview_icon()
 	var/datum/blobstrain/reagent/reactive_spines/reactive_spines = /datum/blobstrain/reagent/reactive_spines
 
-	var/icon/icon = icon('icons/mob/blob.dmi', "blob_core")
+	var/icon/icon = icon('icons/mob/nonhuman-player/blob.dmi', "blob_core")
 	icon.Blend(initial(reactive_spines.color), ICON_MULTIPLY)
-	icon.Blend(icon('icons/mob/blob.dmi', "blob_core_overlay"), ICON_OVERLAY)
+	icon.Blend(icon('icons/mob/nonhuman-player/blob.dmi', "blob_core_overlay"), ICON_OVERLAY)
 	icon.Scale(ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)
 
 	return icon
@@ -66,7 +62,7 @@
 /datum/action/innate/blobpop
 	name = "Pop"
 	desc = "Unleash the blob"
-	icon_icon = 'icons/mob/blob.dmi'
+	icon_icon = 'icons/mob/nonhuman-player/blob.dmi'
 	button_icon_state = "blob"
 
 	/// The time taken before this ability is automatically activated.
@@ -126,7 +122,7 @@
 	var/icon/blob_icon = ..()
 
 	var/datum/blobstrain/reagent/reactive_spines/reactive_spines = /datum/blobstrain/reagent/reactive_spines
-	var/icon/blob_head = icon('icons/mob/blob.dmi', "blob_head")
+	var/icon/blob_head = icon('icons/mob/nonhuman-player/blob.dmi', "blob_head")
 	blob_head.Blend(initial(reactive_spines.complementary_color), ICON_MULTIPLY)
 
 	var/icon/human_icon = render_preview_outfit(/datum/outfit/job/miner)

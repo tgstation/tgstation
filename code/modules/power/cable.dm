@@ -19,7 +19,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	color = "yellow"
 	layer = WIRE_LAYER //Above hidden pipes, GAS_PIPE_HIDDEN_LAYER
 	anchored = TRUE
-	obj_flags = CAN_BE_HIT | ON_BLUEPRINTS
+	obj_flags = CAN_BE_HIT
 	var/linked_dirs = 0 //bitflag
 	var/node = FALSE //used for sprites display
 	var/cable_layer = CABLE_LAYER_2 //bitflag
@@ -47,6 +47,10 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	Connect_cable()
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
 	RegisterSignal(src, COMSIG_RAT_INTERACT, .proc/on_rat_eat)
+	if(isturf(loc))
+		var/turf/turf_loc = loc
+		turf_loc.add_blueprints_preround(src)
+
 
 /obj/structure/cable/proc/on_rat_eat(datum/source, mob/living/simple_animal/hostile/regalrat/king)
 	SIGNAL_HANDLER
@@ -161,7 +165,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 
 /obj/structure/cable/proc/handlecable(obj/item/W, mob/user, params)
 	var/turf/T = get_turf(src)
-	if(T.intact)
+	if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 		return
 	if(W.tool_behaviour == TOOL_WIRECUTTER)
 		if (shock(user, 50))
@@ -261,7 +265,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 
 	var/inverse_dir = (!direction)? 0 : turn(direction, 180) //flip the direction, to match with the source position on its turf
 
-	var/turf/TB  = get_step(src, direction)
+	var/turf/TB = get_step(src, direction)
 
 	for(var/obj/structure/cable/C in TB)
 		if(!C)
@@ -403,7 +407,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 
 /obj/item/stack/cable_coil
 	name = "cable coil"
-	custom_price = PAYCHECK_PRISONER * 0.8
+	custom_price = PAYCHECK_LOWER * 0.8
 	gender = NEUTER //That's a cable coil sounds better than that's some cable coils
 	icon = 'icons/obj/power.dmi'
 	icon_state = "coil"
@@ -546,7 +550,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 		return ..()
 
 	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
-	if(affecting && affecting.status == BODYPART_ROBOTIC)
+	if(affecting && !IS_ORGANIC_LIMB(affecting))
 		if(user == H)
 			user.visible_message(span_notice("[user] starts to fix some of the wires in [H]'s [affecting.name]."), span_notice("You start fixing some of the wires in [H == user ? "your" : "[H]'s"] [affecting.name]."))
 			if(!do_mob(user, H, 50))
@@ -567,7 +571,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	if(!isturf(user.loc))
 		return
 
-	if(!isturf(T) || T.intact || !T.can_have_cabling())
+	if(!isturf(T) || T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE || !T.can_have_cabling())
 		to_chat(user, span_warning("You can only lay cables on catwalks and plating!"))
 		return
 
@@ -633,46 +637,33 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	machinery_layer = MACHINERY_LAYER_1
 	layer = WIRE_LAYER - 0.02 //Below all cables Disabled layers can lay over hub
 	color = "white"
-	var/obj/effect/node/machinery_node
-	var/obj/effect/node/layer1/cable_node_1
-	var/obj/effect/node/layer2/cable_node_2
-	var/obj/effect/node/layer3/cable_node_3
-
-/obj/effect/node
-	icon = 'icons/obj/power_cond/layer_cable.dmi'
-	icon_state = "l2-noconnection"
-	vis_flags = VIS_INHERIT_ID|VIS_INHERIT_PLANE|VIS_INHERIT_LAYER
-	color = "black"
-
-/obj/effect/node/layer1
-	color = "red"
-	icon_state = "l1-1-2-4-8-node"
-	vis_flags = VIS_INHERIT_ID|VIS_INHERIT_PLANE|VIS_INHERIT_LAYER|VIS_UNDERLAY
-
-/obj/effect/node/layer2
-	color = "yellow"
-	icon_state = "l2-1-2-4-8-node"
-	vis_flags = VIS_INHERIT_ID|VIS_INHERIT_PLANE|VIS_INHERIT_LAYER|VIS_UNDERLAY
-
-/obj/effect/node/layer3
-	color = "blue"
-	icon_state = "l4-1-2-4-8-node"
-	vis_flags = VIS_INHERIT_ID|VIS_INHERIT_PLANE|VIS_INHERIT_LAYER|VIS_UNDERLAY
 
 /obj/structure/cable/multilayer/update_icon_state()
 	SHOULD_CALL_PARENT(FALSE)
 	return
 
 /obj/structure/cable/multilayer/update_icon()
-	machinery_node?.alpha = machinery_layer & MACHINERY_LAYER_1 ? 255 : 0
-	cable_node_1?.alpha = cable_layer & CABLE_LAYER_1 ? 255 : 0
-	cable_node_2?.alpha = cable_layer & CABLE_LAYER_2 ? 255 : 0
+	. = ..()
+	underlays.Cut()
+	var/mutable_appearance/cable_node_3 = mutable_appearance('icons/obj/power_cond/layer_cable.dmi', "l4-1-2-4-8-node")
+	cable_node_3.color = "blue"
 	cable_node_3?.alpha = cable_layer & CABLE_LAYER_3 ? 255 : 0
-	return ..()
-
+	underlays += cable_node_3
+	var/mutable_appearance/cable_node_2 = mutable_appearance('icons/obj/power_cond/layer_cable.dmi', "l2-1-2-4-8-node")
+	cable_node_2.color = "yellow"
+	cable_node_2?.alpha = cable_layer & CABLE_LAYER_2 ? 255 : 0
+	underlays += cable_node_2
+	var/mutable_appearance/cable_node_1 = mutable_appearance('icons/obj/power_cond/layer_cable.dmi', "l1-1-2-4-8-node")
+	cable_node_1.color = "red"
+	cable_node_1?.alpha = cable_layer & CABLE_LAYER_1 ? 255 : 0
+	underlays += cable_node_1
+	var/mutable_appearance/machinery_node = mutable_appearance('icons/obj/power_cond/layer_cable.dmi', "l2-noconnection")
+	machinery_node.color = "black"
+	machinery_node?.alpha = machinery_layer & MACHINERY_LAYER_1 ? 255 : 0
+	underlays += machinery_node
+	
 /obj/structure/cable/multilayer/Initialize(mapload)
 	. = ..()
-
 	var/turf/T = get_turf(src)
 	for(var/obj/structure/cable/C in T.contents - src)
 		if(C.cable_layer & cable_layer)
@@ -680,22 +671,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	if(!mapload)
 		auto_propagate_cut_cable(src)
 
-	machinery_node = new /obj/effect/node()
-	vis_contents += machinery_node
-	cable_node_1 = new /obj/effect/node/layer1()
-	vis_contents += cable_node_1
-	cable_node_2 = new /obj/effect/node/layer2()
-	vis_contents += cable_node_2
-	cable_node_3 = new /obj/effect/node/layer3()
-	vis_contents += cable_node_3
 	update_appearance()
-
-/obj/structure/cable/multilayer/Destroy() // called when a cable is deleted
-	QDEL_NULL(machinery_node)
-	QDEL_NULL(cable_node_1)
-	QDEL_NULL(cable_node_2)
-	QDEL_NULL(cable_node_3)
-	return ..() // then go ahead and delete the cable
 
 /obj/structure/cable/multilayer/examine(mob/user)
 	. += ..()
@@ -767,7 +743,7 @@ GLOBAL_LIST(hub_radial_layer_list)
 	auto_propagate_cut_cable(src) // update the powernets
 
 /obj/structure/cable/multilayer/CtrlClick(mob/living/user)
-	to_chat(user, span_warning("You pust reset button."))
+	to_chat(user, span_warning("You push the reset button."))
 	addtimer(CALLBACK(src, .proc/Reload), 10, TIMER_UNIQUE) //spam protect
 
 // This is a mapping aid. In order for this to be placed on a map and function, all three layers need to have their nodes active

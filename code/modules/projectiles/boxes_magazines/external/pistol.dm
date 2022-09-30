@@ -1,11 +1,34 @@
 /obj/item/ammo_box/magazine/m10mm
 	name = "pistol magazine (10mm)"
 	desc = "A gun magazine."
-	icon_state = "9x19p"
+	icon_state = "9x19p-8"
+	base_icon_state = "9x19p"
 	ammo_type = /obj/item/ammo_casing/c10mm
 	caliber = CALIBER_10MM
 	max_ammo = 8
 	multiple_sprites = AMMO_BOX_FULL_EMPTY
+	multiple_sprite_use_base = TRUE
+
+/obj/item/ammo_box/magazine/m10mm/fire
+	name = "pistol magazine (10mm incendiary)"
+	icon_state = "9x19pI-8"
+	base_icon_state = "9x19pI"
+	desc = "A gun magazine. Loaded with rounds which ignite the target."
+	ammo_type = /obj/item/ammo_casing/c10mm/fire
+
+/obj/item/ammo_box/magazine/m10mm/hp
+	name = "pistol magazine (10mm HP)"
+	icon_state = "9x19pH-8"
+	base_icon_state = "9x19pH"
+	desc= "A gun magazine. Loaded with hollow-point rounds, extremely effective against unarmored targets, but nearly useless against protective clothing."
+	ammo_type = /obj/item/ammo_casing/c10mm/hp
+
+/obj/item/ammo_box/magazine/m10mm/ap
+	name = "pistol magazine (10mm AP)"
+	icon_state = "9x19pA-8"
+	base_icon_state = "9x19pA"
+	desc= "A gun magazine. Loaded with rounds which penetrate armour, but are less effective against normal targets."
+	ammo_type = /obj/item/ammo_casing/c10mm/ap
 
 /obj/item/ammo_box/magazine/m45
 	name = "handgun magazine (.45)"
@@ -14,10 +37,8 @@
 	ammo_type = /obj/item/ammo_casing/c45
 	caliber = CALIBER_45
 	max_ammo = 8
-
-/obj/item/ammo_box/magazine/m45/update_icon_state()
-	. = ..()
-	icon_state = "[base_icon_state]-[min(ammo_count(), 8)]"
+	multiple_sprites = AMMO_BOX_PER_BULLET
+	multiple_sprite_use_base = TRUE
 
 /obj/item/ammo_box/magazine/m9mm
 	name = "pistol magazine (9mm)"
@@ -26,26 +47,27 @@
 	ammo_type = /obj/item/ammo_casing/c9mm
 	caliber = CALIBER_9MM
 	max_ammo = 8
-
-/obj/item/ammo_box/magazine/m9mm/update_icon_state()
-	. = ..()
-	icon_state = "[base_icon_state]-[ammo_count() ? "8" : "0"]"
+	multiple_sprites = AMMO_BOX_FULL_EMPTY
+	multiple_sprite_use_base = TRUE
 
 /obj/item/ammo_box/magazine/m9mm/fire
 	name = "pistol magazine (9mm incendiary)"
-	icon_state = "9x19pI"
+	icon_state = "9x19pI-8"
+	base_icon_state = "9x19pI"
 	desc = "A gun magazine. Loaded with rounds which ignite the target."
 	ammo_type = /obj/item/ammo_casing/c9mm/fire
 
 /obj/item/ammo_box/magazine/m9mm/hp
 	name = "pistol magazine (9mm HP)"
-	icon_state = "9x19pH"
+	icon_state = "9x19pH-8"
+	base_icon_state = "9x19pH"
 	desc= "A gun magazine. Loaded with hollow-point rounds, extremely effective against unarmored targets, but nearly useless against protective clothing."
 	ammo_type = /obj/item/ammo_casing/c9mm/hp
 
 /obj/item/ammo_box/magazine/m9mm/ap
 	name = "pistol magazine (9mm AP)"
-	icon_state = "9x19pA"
+	icon_state = "9x19pA-8"
+	base_icon_state = "9x19pA"
 	desc= "A gun magazine. Loaded with rounds which penetrate armour, but are less effective against normal targets."
 	ammo_type = /obj/item/ammo_casing/c9mm/ap
 

@@ -73,6 +73,14 @@
 	if(attack_self(user))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
+/atom/proc/attack_self_secondary_tk(mob/user)
+	return
+
+
+/obj/item/attack_self_secondary_tk(mob/user)
+	if(attack_self_secondary(user))
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
 
 /*
 	TK Grab Item (the workhorse of old TK)
@@ -119,7 +127,7 @@
 //stops TK grabs being equipped anywhere but into hands
 /obj/item/tk_grab/equipped(mob/user, slot)
 	. = ..()
-	if(slot == ITEM_SLOT_HANDS)
+	if(slot & ITEM_SLOT_HANDS)
 		return
 	qdel(src)
 
@@ -162,20 +170,75 @@
 		update_appearance()
 		return
 
-	if(!isturf(target) && isitem(focus) && target.Adjacent(focus))
-		apply_focus_overlay()
+	if(isitem(focus))
 		var/obj/item/I = focus
-		. = I.melee_attack_chain(tk_user, target, params) //isn't copying the attack chain fun. we should do it more often.
-		if(check_if_focusable(focus))
-			focus.do_attack_animation(target, null, focus)
-	else
-		. = TRUE
 		apply_focus_overlay()
-		//Only items can be thrown 10 tiles everything else only 1 tile
-		focus.throw_at(target, focus.tk_throw_range, 1,user)
-		var/turf/start_turf = get_turf(focus)
-		var/turf/end_turf = get_turf(target)
-		user.log_message("has thrown [focus] from [AREACOORD(start_turf)] towards [AREACOORD(end_turf)] using Telekinesis", LOG_ATTACK)
+		if(target.Adjacent(focus))
+			. = I.melee_attack_chain(tk_user, target, params) //isn't copying the attack chain fun. we should do it more often.
+			if(check_if_focusable(focus))
+				focus.do_attack_animation(target, null, focus)
+		else if(isgun(I)) //I've only tested this with guns, and it took some doing to make it work
+			. = I.afterattack(target, tk_user, 0, params)
+
+	user.changeNext_move(CLICK_CD_MELEE)
+	update_appearance()
+
+/obj/item/tk_grab/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+
+	if(!target || !user)
+		return
+
+	if(!focus)
+		focus_object(target)
+		return TRUE
+
+	if(!check_if_focusable(focus))
+		return
+
+	if(target == focus)
+		if(target.attack_self_secondary_tk(user) & COMPONENT_CANCEL_ATTACK_CHAIN)
+			. = TRUE
+		update_appearance()
+		return
+
+	if(isitem(focus))
+		var/obj/item/I = focus
+		apply_focus_overlay()
+		if(target.Adjacent(focus))
+			. = I.melee_attack_chain(tk_user, target, click_parameters) //isn't copying the attack chain fun. we should do it more often.
+			if(check_if_focusable(focus))
+				focus.do_attack_animation(target, null, focus)
+		else if(isgun(I)) //I've only tested this with guns, and it took some doing to make it work
+			. = I.afterattack_secondary(target, tk_user, 0, click_parameters)
+
+	user.changeNext_move(CLICK_CD_MELEE)
+	update_appearance()
+
+/obj/item/tk_grab/on_thrown(mob/living/carbon/user, atom/target)
+	if(!target || !user)
+		return
+
+	if(!focus)
+		return
+
+	if(!check_if_focusable(focus))
+		return
+
+	if(target == focus)
+		if(target.attack_self_tk(user) & COMPONENT_CANCEL_ATTACK_CHAIN)
+			return
+		update_appearance()
+		return
+
+	apply_focus_overlay()
+	//Only items can be thrown 10 tiles everything else only 1 tile
+	focus.throw_at(target, focus.tk_throw_range, 1,user)
+	var/turf/start_turf = get_turf(focus)
+	var/turf/end_turf = get_turf(target)
+	user.log_message("has thrown [focus] from [AREACOORD(start_turf)] towards [AREACOORD(end_turf)] using Telekinesis.", LOG_ATTACK)
 	user.changeNext_move(CLICK_CD_MELEE)
 	update_appearance()
 
@@ -183,7 +246,7 @@
 /proc/tkMaxRangeCheck(mob/user, atom/target)
 	var/d = get_dist(user, target)
 	if(d > TK_MAXRANGE)
-		to_chat(user, span_warning("Your mind won't reach that far."))
+		user.balloon_alert(user, "can't TK, too far!")
 		return
 	return TRUE
 
@@ -199,7 +262,7 @@
 	return TRUE
 
 /obj/item/tk_grab/proc/check_if_focusable(obj/target)
-	if(!tk_user || !istype(tk_user) || QDELETED(target) || !istype(target) || !tk_user.dna.check_mutation(TK))
+	if(!tk_user || !istype(tk_user) || QDELETED(target) || !istype(target) || !tk_user.dna.check_mutation(/datum/mutation/human/telekinesis))
 		qdel(src)
 		return
 	if(!tkMaxRangeCheck(tk_user, target) || target.anchored || !isturf(target.loc))
@@ -219,7 +282,7 @@
 
 	var/mutable_appearance/focus_overlay = new(focus)
 	focus_overlay.layer = layer + 0.01
-	focus_overlay.plane = ABOVE_HUD_PLANE
+	SET_PLANE_EXPLICIT(focus_overlay, ABOVE_HUD_PLANE, focus)
 	. += focus_overlay
 
 /obj/item/tk_grab/suicide_act(mob/user)

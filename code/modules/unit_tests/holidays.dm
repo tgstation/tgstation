@@ -29,8 +29,20 @@
 	TEST_ASSERT(new_year.shouldCelebrate(2, JANUARY, 1983, SUNDAY), "January 2, 1983 was not New Year.")
 
 /datum/unit_test/moth_week_2020/Run()
-	var/datum/holiday/nth_week/moth/moth = new
-	TEST_ASSERT(moth.shouldCelebrate(18, JULY, 2020, SATURDAY), "July 18, 2020 was not Moth Week.")
-	TEST_ASSERT(moth.shouldCelebrate(20, JULY, 2020, MONDAY), "July 20, 2020 was not Moth Week.")
-	TEST_ASSERT(moth.shouldCelebrate(24, JULY, 2020, FRIDAY), "July 24, 2020 was not Moth Week.")
-	TEST_ASSERT(moth.shouldCelebrate(26, JULY, 2020, SUNDAY), "July 26, 2020 was not Moth Week.")
+	// We expect 2 year's worth of moth week, falling on the last full week of july
+	// We test ahead and behind just in case something's fucked
+	// Both lists are in the form yyyy/m/d
+	var/list/produced_moth_days = poll_holiday(/datum/holiday/nth_week/moth, 6, 8, 2020, 2021, 31)
+	var/list/predicted_moth_days = list()
+	for(var/day in 18 to 26) // Last full week of July 2020
+		predicted_moth_days += "2020/7/[day]"
+	for(var/day in 17 to 25) // Last full week of July 2021
+		predicted_moth_days += "2021/7/[day]"
+	var/list/unexpected_moths = produced_moth_days - predicted_moth_days
+	for(var/date in unexpected_moths)
+		TEST_FAIL("[date] was improperly Moth Week")
+
+	var/list/missing_moths = predicted_moth_days - produced_moth_days
+	for(var/date in missing_moths)
+		TEST_FAIL("[date] was not Moth Week")
+

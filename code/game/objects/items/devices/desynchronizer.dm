@@ -6,8 +6,8 @@
 	inhand_icon_state = "electronic"
 	w_class = WEIGHT_CLASS_SMALL
 	item_flags = NOBLUDGEON
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	custom_materials = list(/datum/material/iron=250, /datum/material/glass=500)
 	var/max_duration = 3000
 	var/duration = 300
@@ -35,12 +35,11 @@
 /obj/item/desynchronizer/AltClick(mob/living/user)
 	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
 		return
-	var/new_duration = input(user, "Set the duration (5-300):", "Desynchronizer", duration / 10) as null|num
-	if(new_duration)
-		new_duration = new_duration SECONDS
-		new_duration = clamp(new_duration, 50, max_duration)
-		duration = new_duration
-		to_chat(user, span_notice("You set the duration to [DisplayTimeText(duration)]."))
+	var/new_duration = tgui_input_number(user, "Set the duration", "Desynchronizer", duration / 10, max_duration, 5)
+	if(!new_duration || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
+		return
+	duration = new_duration
+	to_chat(user, span_notice("You set the duration to [DisplayTimeText(duration)]."))
 
 /obj/item/desynchronizer/proc/desync(mob/living/user)
 	if(sync_holder)

@@ -2,7 +2,7 @@
 /mob/living/simple_animal/hostile/asteroid/goliath
 	name = "goliath"
 	desc = "A massive beast that uses long tentacles to ensnare its prey, threatening them is not advised under any conditions."
-	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	icon_state = "Goliath"
 	icon_living = "Goliath"
 	icon_aggro = "Goliath_alert"
@@ -89,7 +89,7 @@
 /mob/living/simple_animal/hostile/asteroid/goliath/beast
 	name = "goliath"
 	desc = "A hulking, armor-plated beast with long tendrils arching from its back."
-	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	icon_state = "goliath"
 	icon_living = "goliath"
 	icon_aggro = "goliath"
@@ -118,7 +118,6 @@
 		user.visible_message(span_notice("You manage to put [O] on [src], you can now ride [p_them()]."))
 		qdel(O)
 		saddled = TRUE
-		can_buckle = TRUE
 		buckle_lying = 0
 		add_overlay("goliath_saddled")
 		AddElement(/datum/element/ridable, /datum/component/riding/creature/goliath)
@@ -180,9 +179,10 @@
 //tentacles
 /obj/effect/temp_visual/goliath_tentacle
 	name = "goliath tentacle"
-	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	icon_state = "Goliath_tentacle_spawn"
 	layer = BELOW_MOB_LAYER
+	plane = GAME_PLANE
 	var/mob/living/spawner
 
 /obj/effect/temp_visual/goliath_tentacle/Initialize(mapload, mob/living/new_spawner)

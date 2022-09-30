@@ -1,13 +1,13 @@
 /obj/item/flashlight
 	name = "flashlight"
 	desc = "A hand-held emergency light."
-	custom_price = PAYCHECK_EASY
+	custom_price = PAYCHECK_CREW
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "flashlight"
 	inhand_icon_state = "flashlight"
 	worn_icon_state = "flashlight"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
@@ -75,7 +75,7 @@
 					to_chat(user, span_warning("You're going to need to remove that [(M.head && M.head.flags_cover & HEADCOVERSEYES) ? "helmet" : (M.wear_mask && M.wear_mask.flags_cover & MASKCOVERSEYES) ? "mask": "glasses"] first!"))
 					return
 
-				var/obj/item/organ/eyes/E = M.getorganslot(ORGAN_SLOT_EYES)
+				var/obj/item/organ/internal/eyes/E = M.getorganslot(ORGAN_SLOT_EYES)
 				if(!E)
 					to_chat(user, span_warning("[M] doesn't have any eyes!"))
 					return
@@ -90,7 +90,7 @@
 						span_danger("You direct [src] to [M]'s eyes."))
 					if(M.stat == DEAD || (M.is_blind()) || !M.flash_act(visual = 1)) //mob is dead or fully blind
 						to_chat(user, span_warning("[M]'s pupils don't react to the light!"))
-					else if(M.dna && M.dna.check_mutation(XRAY)) //mob has X-ray vision
+					else if(M.dna && M.dna.check_mutation(/datum/mutation/human/xray)) //mob has X-ray vision
 						to_chat(user, span_danger("[M]'s pupils give an eerie glow!"))
 					else //they're okay!
 						to_chat(user, span_notice("[M]'s pupils narrow."))
@@ -104,9 +104,9 @@
 				var/their = M.p_their()
 
 				var/list/mouth_organs = new
-				for(var/obj/item/organ/O in M.internal_organs)
-					if(O.zone == BODY_ZONE_PRECISE_MOUTH)
-						mouth_organs.Add(O)
+				for(var/obj/item/organ/organ as anything in M.internal_organs)
+					if(organ.zone == BODY_ZONE_PRECISE_MOUTH)
+						mouth_organs.Add(organ)
 				var/organ_list = ""
 				var/organ_count = LAZYLEN(mouth_organs)
 				if(organ_count)
@@ -216,6 +216,7 @@
 	desc = "A robust flashlight used by security."
 	icon_state = "seclite"
 	inhand_icon_state = "seclite"
+	worn_icon_state = "seclite"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	force = 9 // Not as good as a stun baton.
@@ -449,7 +450,7 @@
 /obj/item/flashlight/glowstick
 	name = "glowstick"
 	desc = "A military-grade glowstick."
-	custom_price = PAYCHECK_PRISONER
+	custom_price = PAYCHECK_LOWER
 	w_class = WEIGHT_CLASS_SMALL
 	light_range = 4
 	light_system = MOVABLE_LIGHT
@@ -526,7 +527,7 @@
 	if(!fuel)
 		user.visible_message(span_suicide("[user] is trying to squirt [src]'s fluids into [user.p_their()] eyes... but it's empty!"))
 		return SHAME
-	var/obj/item/organ/eyes/eyes = user.getorganslot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/internal/eyes/eyes = user.getorganslot(ORGAN_SLOT_EYES)
 	if(!eyes)
 		user.visible_message(span_suicide("[user] is trying to squirt [src]'s fluids into [user.p_their()] eyes... but [user.p_they()] don't have any!"))
 		return SHAME
@@ -566,7 +567,7 @@
 	light_range = 4
 	light_power = 10
 	alpha = 0
-	layer = 0
+	plane = FLOOR_PLANE
 	on = TRUE
 	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF

@@ -34,7 +34,7 @@ no power level overlay is currently in the overlays list.
 	max_integrity = 500
 	can_atmos_pass = ATMOS_PASS_YES
 	//100% immune to lasers and energy projectiles since it absorbs their energy.
-	armor = list(MELEE = 25, BULLET = 10, LASER = 100, ENERGY = 100, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 70)
+	armor = list(MELEE = 25, BULLET = 10, LASER = 100, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 50, ACID = 70)
 	///Amount of energy stored, used for visual overlays (over 9000?)
 	var/power_level = 0
 	///Current power mode of the machine, between FG_OFFLINE, FG_CHARGING, FG_ONLINE
@@ -46,9 +46,9 @@ no power level overlay is currently in the overlays list.
 	///Timer between 0 and 3 before the field gets made
 	var/warming_up = 0
 	///List of every containment fields connected to this generator
-	var/list/obj/machinery/field/containment/fields
+	var/list/obj/machinery/field/containment/fields = list()
 	///List of every field generators connected to this one
-	var/list/obj/machinery/field/generator/connected_gens
+	var/list/obj/machinery/field/generator/connected_gens = list()
 	///Check for asynk cleanups for this and the connected gens
 	var/clean_up = FALSE
 
@@ -64,17 +64,12 @@ no power level overlay is currently in the overlays list.
 
 /obj/machinery/field/generator/Initialize(mapload)
 	. = ..()
-	fields = list()
-	connected_gens = list()
+	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
 	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, .proc/block_singularity_if_active)
 
 /obj/machinery/field/generator/anchored/Initialize(mapload)
 	. = ..()
 	set_anchored(TRUE)
-
-/obj/machinery/field/generator/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
 
 /obj/machinery/field/generator/process()
 	if(active == FG_ONLINE)
@@ -95,7 +90,7 @@ no power level overlay is currently in the overlays list.
 		span_notice("You turn on [src]."),
 		span_hear("You hear heavy droning."))
 	turn_on()
-	investigate_log("<font color='green'>activated</font> by [key_name(user)].", INVESTIGATE_SINGULO)
+	investigate_log("activated by [key_name(user)].", INVESTIGATE_ENGINE)
 
 	add_fingerprint(user)
 
@@ -120,10 +115,10 @@ no power level overlay is currently in the overlays list.
 
 	return ..()
 
-/obj/machinery/field/generator/wrench_act(mob/living/user, obj/item/wrench)
-	..()
-	default_unfasten_wrench(user, wrench)
-	return TRUE
+/obj/machinery/field/generator/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/field/generator/welder_act(mob/living/user, obj/item/welder)
 	. = ..()
@@ -176,7 +171,7 @@ no power level overlay is currently in the overlays list.
 		return ..()
 
 /obj/machinery/field/generator/bullet_act(obj/projectile/considered_bullet)
-	if(considered_bullet.flag != BULLET)
+	if(considered_bullet.armor_flag != BULLET)
 		power = min(power + considered_bullet.damage, field_generator_max_power)
 		check_power_level()
 	. = ..()
@@ -237,7 +232,7 @@ no power level overlay is currently in the overlays list.
 	else
 		visible_message(span_danger("The [name] shuts down!"), span_hear("You hear something shutting down."))
 		turn_off()
-		investigate_log("ran out of power and <font color='red'>deactivated</font>", INVESTIGATE_SINGULO)
+		investigate_log("ran out of power and DEACTIVATED.", INVESTIGATE_ENGINE)
 		power = 0
 		check_power_level()
 		return FALSE

@@ -4,7 +4,7 @@
 	desc = "A blade created to spar with. It seems weak, but if you spar with it...?"
 	icon_state = "default"
 	inhand_icon_state = "default"
-	icon = 'icons/obj/items/ritual_weapon.dmi'
+	icon = 'icons/obj/weapons/ritual_weapon.dmi'
 
 	//does the exact thing we want so heck why not
 	greyscale_config = /datum/greyscale_config/ceremonial_blade
@@ -23,12 +23,15 @@
 	sharpness = SHARP_EDGED
 	max_integrity = 200
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_GREYSCALE //doesn't affect stats of the weapon as to avoid gamering your opponent with a dope weapon
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 50)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 50)
 	resistance_flags = FIRE_PROOF
 
 /obj/item/ceremonial_blade/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/butchering, 40, 105)
+	AddComponent(/datum/component/butchering, \
+	speed = 4 SECONDS, \
+	effectiveness = 105, \
+	)
 	RegisterSignal(src, COMSIG_ITEM_SHARPEN_ACT, .proc/block_sharpening)
 
 /obj/item/ceremonial_blade/melee_attack_chain(mob/user, atom/target, params)

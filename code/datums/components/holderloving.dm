@@ -35,8 +35,8 @@
 	RegisterSignal(parent, list(
 		COMSIG_ITEM_DROPPED,
 		COMSIG_ITEM_EQUIPPED,
-		COMSIG_STORAGE_ENTERED,
-		COMSIG_STORAGE_EXITED,
+		COMSIG_ATOM_ENTERED,
+		COMSIG_ATOM_EXITED,
 	), .proc/check_my_loc)
 
 /datum/component/holderloving/UnregisterFromParent()
@@ -44,8 +44,8 @@
 	UnregisterSignal(parent, list(
 		COMSIG_ITEM_DROPPED,
 		COMSIG_ITEM_EQUIPPED,
-		COMSIG_STORAGE_ENTERED,
-		COMSIG_STORAGE_EXITED,
+		COMSIG_ATOM_ENTERED,
+		COMSIG_ATOM_EXITED,
 	))
 
 /datum/component/holderloving/PostTransfer()

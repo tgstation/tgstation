@@ -65,9 +65,7 @@
 	if ( loc != user || user.incapacitated() || user.is_blind() || !current )
 		user.unset_machine()
 		return FALSE
-	var/turf/T_user = get_turf(user.loc)
-	var/turf/T_current = get_turf(current)
-	if(T_user.z != T_current.z || !current.can_use())
+	if(!is_valid_z_level(get_turf(current), get_turf(user.loc)) || !current.can_use())
 		to_chat(user, span_danger("[src] has lost the signal."))
 		current = null
 		user.unset_machine()
@@ -150,9 +148,7 @@
 	return html
 
 /obj/item/camera_bug/proc/get_seens()
-	if(current?.can_use())
-		var/list/seen = current.can_see()
-		return seen
+	return current?.can_see()
 
 /obj/item/camera_bug/proc/camera_report()
 	// this should only be called if current exists
@@ -259,18 +255,20 @@
 				to_chat(usr, span_warning("Something's wrong with that camera! You can't get a feed."))
 				return
 			current = camera
-			spawn(6)
-				if(src.check_eye(usr))
-					usr.reset_perspective(camera)
-					interact()
-				else
-					usr.unset_machine()
-					usr << browse(null, "window=camerabug")
+			addtimer(CALLBACK(src, .proc/view_camera, usr, camera), 0.6 SECONDS)
 			return
 		else
 			usr.unset_machine()
 
 	interact()
+
+/obj/item/camera_bug/proc/view_camera(mob/show, obj/machinery/camera/camera)
+	if(check_eye(show))
+		show.reset_perspective(camera)
+		interact()
+	else
+		show.unset_machine()
+		show << browse(null, "window=camerabug")
 
 /obj/item/camera_bug/process()
 	if(track_mode == BUGMODE_LIST || (world.time < (last_tracked + refresh_interval)))
@@ -310,9 +308,8 @@
 	src.updateSelfDialog()
 
 /obj/item/camera_bug/proc/same_z_level(obj/machinery/camera/C)
-	var/turf/T_cam = get_turf(C)
 	var/turf/T_bug = get_turf(loc)
-	if(!T_bug || T_cam.z != T_bug.z)
+	if(!T_bug || !is_valid_z_level(T_bug, get_turf(C)))
 		to_chat(usr, span_warning("You can't get a signal!"))
 		return FALSE
 	return TRUE
