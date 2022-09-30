@@ -292,6 +292,10 @@ effective or pretty fucking useless.
 
 	update_appearance()
 
+/obj/item/jammer/Destroy()
+	GLOB.active_jammers -= src
+	. = ..()
+
 /obj/item/storage/toolbox/emergency/turret
 	desc = "You feel a strange urge to hit this with a wrench."
 
