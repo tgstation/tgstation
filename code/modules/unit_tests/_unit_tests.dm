@@ -146,7 +146,6 @@
 #include "reagent_mod_procs.dm"
 #include "reagent_names.dm"
 #include "reagent_recipe_collisions.dm"
-#include "reagent_search.dm"
 #include "reagent_transfer.dm"
 #include "resist.dm"
 #include "say.dm"
