@@ -55895,7 +55895,7 @@
 /obj/item/camera{
 	pixel_y = 4
 	},
-/obj/item/radio/intercom/captain/directional/west,
+/obj/item/radio/intercom/command/directional/west,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain/private)
 "tJb" = (

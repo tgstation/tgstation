@@ -3292,7 +3292,7 @@
 	},
 /obj/effect/landmark/start/captain,
 /obj/structure/sign/poster/contraband/random/directional/north,
-/obj/item/radio/intercom/captain/directional/west,
+/obj/item/radio/intercom/command/directional/west,
 /turf/open/floor/carpet/royalblue,
 /area/station/command/heads_quarters/captain/private)
 "aVI" = (

@@ -39017,11 +39017,7 @@
 /area/station/medical/break_room)
 "lVZ" = (
 /obj/structure/table/wood,
-/obj/item/radio/intercom/captain{
-	desc = "A conference intercom with an extended frequency range. Useful for discussing business with the higher-ups, or just gossiping about the crew.";
-	dir = 8;
-	name = "Station Intercom (Command)"
-	},
+/obj/item/radio/intercom/command,
 /turf/open/floor/carpet,
 /area/station/command/meeting_room)
 "lWb" = (
