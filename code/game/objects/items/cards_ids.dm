@@ -683,7 +683,7 @@
 		var/commission_amount = amount_to_remove < 100 ? commission_minimal : round(amount_to_remove * commission)
 		var/obj/item/holochip/holochip = new (user.drop_location(), amount_to_remove - commission_amount)
 		user.put_in_hands(holochip)
-		to_chat(user, span_notice("You withdraw [amount_to_remove - commission_amount] credits into a holochip. Commission was [comission_amount] credits"))
+		to_chat(user, span_notice("You withdraw [amount_to_remove - commission_amount] credits into a holochip. Commission was [commission_amount] credits"))
 		SSblackbox.record_feedback("amount", "credits_removed", amount_to_remove)
 		log_econ("[amount_to_remove] credits were removed from [src] owned by [src.registered_name]")
 		return
