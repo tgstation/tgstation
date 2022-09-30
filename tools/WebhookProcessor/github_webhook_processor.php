@@ -186,7 +186,7 @@ function validate_user($payload) {
 		$querystring .= ($querystring == '' ? '' : '+') . urlencode($key) . ':' . urlencode($value);
 	$res = github_apisend('https://api.github.com/search/issues?q='.$querystring);
 	$res = json_decode($res, TRUE);
-	return $res['total_count'] >= (int)$validation_count;
+	return (isset($res['total_count']) && $res['total_count'] >= (int)$validation_count);
 
 }
 
