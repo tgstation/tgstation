@@ -601,7 +601,7 @@ SUBSYSTEM_DEF(job)
 
 	for(var/datum/job/occupation as anything in joinable_occupations)
 		var/job_title = occupation.title
-		var/job_key = occupation.config_key
+		var/job_key = occupation.config_tag
 		if(!job_config["[job_title]"])
 			message_admins("[job_title] (with config key [job_key]) is missing from jobconfig.json! Using codebase defaults.")
 			continue
@@ -622,7 +622,7 @@ SUBSYSTEM_DEF(job)
 		jobstext = file2text(jobstext)
 		for(var/datum/job/occupation as anything in joinable_occupations)
 			var/job_name = occupation.title
-			var/job_key = occupation.config_key
+			var/job_key = occupation.config_tag
 			var/regex/parser = new("[job_name]=(-1|\\d+),(-1|\\d+)") // TXT system used the occupation's name, we convert it to the new config_key system here.
 			parser.Find(jobstext)
 			// Playtime Requirements and Required Account Age are new and we want to see it migrated, so we will just pull codebase defaults for them.
@@ -640,9 +640,8 @@ SUBSYSTEM_DEF(job)
 	else // No jobs.txt found! Let's spin up the new system.
 		message_admins("Creating jobconfig.json in config directory...")
 		for(var/datum/job/occupation as anything in joinable_occupations)
-			var/job_name = occupation.title
-			var/job_key = occupation.config_key
-			
+			var/job_key = occupation.config_tag
+
 			if(is_assistant_job(occupation)) // there's a concession made in jobs.txt that we should just rapidly account for here I KNOW I KNOW.
 				file_data["[job_key]"] = list(
 					"Total Positions" = -1,
@@ -673,10 +672,10 @@ SUBSYSTEM_DEF(job)
 		generate_config()
 		return
 
-	job_config = json_decode(file2text(json_file))
+	var/job_config = json_decode(file2text(json_file))
 	for(var/datum/job/occupation as anything in joinable_occupations)
 		var/job_name = occupation.title
-		var/job_key = occupation.config_key
+		var/job_key = occupation.config_tag
 
 		if(job_config["[job_key]"]) // Let's see if any data for this job exists.
 			file_data["[job_name]"] = list(
@@ -684,9 +683,10 @@ SUBSYSTEM_DEF(job)
 				"Spawn Positions" = job_config["[job_name]"]["Spawn Positions"],
 				"Playtime Requirements" = job_config["[job_name]"]["Playtime Requirements"],
 				"Required Account Age" = job_config["[job_name]"]["Required Account Age"],
-		)
+			)
+
 		else
-		 	message_admins("New job [job_name] (using key [job_key]) detected! Adding to jobconfig.json using default codebase values...")
+			message_admins("New job [job_name] (using key [job_key]) detected! Adding to jobconfig.json using default codebase values...")
 			file_data["[job_key]"] = list(
 				"Total Positions" = occupation.total_positions,
 				"Spawn Positions" = occupation.spawn_positions,
