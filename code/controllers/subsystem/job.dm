@@ -590,7 +590,7 @@ SUBSYSTEM_DEF(job)
 		else //We ran out of spare locker spawns!
 			break
 
-
+/// Called in jobs subsystem initialize if LOAD_JOBS_FROM_TXT config flag is set, reads jobconfig.json to set all of the datum's values to what the server operator wants. If we don't have jobconfig.json, calls a proc to create one.
 /datum/controller/subsystem/job/proc/load_jobs_from_config()
 	var/json_file = file("[global.config.directory]/jobconfig.json")
 
@@ -610,6 +610,7 @@ SUBSYSTEM_DEF(job)
 		occupation.exp_requirements = job_config["[job_title]"]["Playtime Requirements"]
 		occupation.minimal_player_age = job_config["[job_title]"]["Required Account Age"]
 
+/// Called from load_jobs_from_config (or could be called directly if you are fucked up) to generate a jobconfig.json file with the default values from the codebase, or jobs.txt if that is still present in the config folder.
 /datum/controller/subsystem/job/proc/generate_config()
 	var/json_file = file("[global.config.directory]/jobconfig.json")
 	var/jobstext = file("[global.config.directory]/jobs.txt")
