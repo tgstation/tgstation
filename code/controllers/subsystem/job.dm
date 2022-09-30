@@ -594,7 +594,7 @@ SUBSYSTEM_DEF(job)
 /datum/controller/subsystem/job/proc/load_jobs_from_config()
 	var/json_file = file("[global.config.directory]/jobconfig.json")
 
-	if(!fexists(json_file)) // If we have it, migrate the values to the new format. If we don't have it, great!
+	if(!fexists(json_file)) // No config file, create one and return back to this proc to finish it out.
 		generate_config()
 
 	var/job_config = json_decode(file2text(json_file))
