@@ -1,0 +1,8 @@
+author: "SuperSayu"
+delete-after: True
+changes: 
+  - balance: "Welding fuel tank explosions have been scaled slightly down and require the fuel tanks to actually be full of welding fuel"
+  - bugfix: "You can detonate welding fuel tanks with an igniter-sensor assembly"
+  - bugfix: "You can reach your one-tank bomb's assembly controls by activating the item in your hand."
+  - bugfix: "Certain assemblies should no longer turn themselves off."
+  - bugfix: "Clumsy fools handling a mousetrap-based multi-part assembly may set it off by accident"
