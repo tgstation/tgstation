@@ -30,8 +30,10 @@ GLOBAL_LIST_EMPTY(split_visibility_objects)
 	if(shadow)
 		vis.overlays += get_splitvis_object(apply_to, icon_path, junction, dir, FALSE, 120, pixel_x = 0, pixel_y = 0, plane = UNDER_FRILL_PLANE)
 	vis.alpha = alpha
+/*
 	vis.pixel_x = pixel_x
 	vis.pixel_y = pixel_y
+*/
 	SET_PLANE_W_SCALAR(vis, plane, offset)
 	vis.layer = layer
 

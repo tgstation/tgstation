@@ -10,7 +10,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	/// Also useful as a place to explain to coders how/why your plane works, and what it's meant to do
 	/// Plaintext and basic html are fine to use here.
 	/// I'll bonk you if I find you putting "lmao stuff" in here, make this useful.
-	var/documentation = ""
+	var/documentation
 	/// Our real alpha value, so alpha can persist through being hidden/shown
 	var/true_alpha = 255
 	/// Tracks if we're using our true alpha, or being manipulated in some other way
@@ -247,18 +247,44 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 
 // Wallening todo: document ALL of the new plane masters
 /atom/movable/screen/plane_master/over_tile
-	name = "over tile world plane master"
+	name = "Over Tile"
+	documentation = "Holds anything on tiles, but not large enough to be on the game plane. I don't want to z fight with a disposals tube "
 	plane = OVER_TILE_PLANE
 	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
 
 /atom/movable/screen/plane_master/wall
-	name = "wall plane master"
+	name = "Wall"
+	documentation = "Holds well, walls! Done this way so they don't side_map z fight with anything else."
 	plane = WALL_PLANE
 	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
 
+// RENAME AND REDOC THIS
+/atom/movable/screen/plane_master/game_misc
+	name = "Game Misc"
+	documentation = "Exists to hold anything we want to be a part of the \"game world\" that isn't held by other plane masters that point at the world rendering plate.\
+		<br>This is done partially to support parallaxing, since we can only parallax inputs, but it's also done so sidemap can operate as we'd like"
+	plane = GAME_PLANE
+	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
+
+//Yes this is currently used for JUST shadows. Need to figure out how I want it to work
+/atom/movable/screen/plane_master/frill_under
+	name = "Under Frill"
+	documentation = "Holds anything that should sit UNDER frills. This is currently quite limited, and is only used for \"shadows\"\
+		that persist above a wall even if their frill is masked away"
+	plane = UNDER_FRILL_PLANE
+	render_target = UNDER_FRILL_RENDER_TARGET
+	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
+
+/atom/movable/screen/plane_master/frill_under/show_to(mob/mymob)
+	. = ..()
+	remove_filter(FRILL_MOB_MASK)
+	add_filter(FRILL_MOB_MASK, 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(FRILL_MASK_RENDER_TARGET, offset), flags = MASK_INVERSE))
+
 ///Contains wall frills
 /atom/movable/screen/plane_master/frill
-	name = "frill plane master"
+	name = "Frill"
+	documentation = "Contains frills, or the upper parts of some 3/4th'd structures.\
+		<br>Is masked by a few things, the floor and client visible images"
 	plane = FRILL_PLANE
 	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
 
@@ -276,34 +302,18 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	add_filter(FRILL_MOB_MASK, 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(FRILL_MASK_RENDER_TARGET, offset), flags = MASK_INVERSE))
 
 /atom/movable/screen/plane_master/frill_mask
-	name = "frill mask plane master"
+	name = "Frill Mask"
+	documentation = "Masks the frill plane, this allows us to hide frills around the area of our mob, or really just as we desire"
 	plane = FRILL_MASK_PLANE
 	render_target = FRILL_MASK_RENDER_TARGET
 	render_relay_planes = list()
 
-//Yes this is currently unused, we're keeping it for completeness, needs some thinking of if it's actually needed or not
-/atom/movable/screen/plane_master/frill_under
-	name = "frill under plane master"
-	plane = UNDER_FRILL_PLANE
-	render_target = UNDER_FRILL_RENDER_TARGET
-	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
-
-/atom/movable/screen/plane_master/frill_under/show_to(mob/mymob)
-	. = ..()
-	remove_filter(FRILL_MOB_MASK)
-	add_filter(FRILL_MOB_MASK, 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(FRILL_MASK_RENDER_TARGET, offset), flags = MASK_INVERSE))
-
 // Not entirely sure how required this is, it's the plane we use for things that sit "on" walls
 /atom/movable/screen/plane_master/frill_over
-	name = "frill under plane master"
+	name = "Over Frill"
+	documentation = "Holds anything that should sit ON TOP of the frill plane.\
+		<br>I'd love to do this with layers, but we alpha out the frill plane so I can't."
 	plane = OVER_FRILL_PLANE
-	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
-
-// RENAME AND REDOC THIS
-/atom/movable/screen/plane_master/game
-	name = "Lower game world"
-	documentation = "Exists mostly because of FOV shit. Basically, if you've just got a normal not ABOVE fov thing, and you don't want it masked, stick it here yeah?"
-	plane = GAME_PLANE
 	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
 
 // Wallening todo: does this like, work?
