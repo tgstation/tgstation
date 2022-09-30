@@ -634,8 +634,9 @@ SUBSYSTEM_DEF(job)
 		for(var/datum/job/occupation as anything in joinable_occupations)
 			var/job_name = occupation.title
 			// Generate new config from wholly codebase defaults
-			if(job_name == "Assistant") // there's a concession made in jobs.txt that we should just quickly account for here.
+			if(is_assistant_job(occupation)) // there's a concession made in jobs.txt that we should just quickly account for here.
 				file_data["[job_name]"] = list("Total Positions" = -1, "Spawn Positions" = -1, "Playtime Requirements" = occupation.exp_requirements, "Required Account Age" = occupation.minimal_player_age)
+				continue
 			file_data["[job_name]"] = list("Total Positions" = occupation.total_positions, "Spawn Positions" = occupation.spawn_positions, "Playtime Requirements" = occupation.exp_requirements, "Required Account Age" = occupation.minimal_player_age)
 		if(fexists(json_file))
 			fdel(json_file) // just in case we have some chicanery here, open it up so we can write to it.
