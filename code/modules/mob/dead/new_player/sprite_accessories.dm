@@ -307,6 +307,14 @@
 	name = "Devil Lock"
 	icon_state = "hair_devilock"
 
+/datum/sprite_accessory/hair/dolorosa
+	name = "Dolorosa"
+	icon_state = "hair_dolorosa"
+
+/datum/sprite_accessory/hair/double
+	name = "Double"
+	icon_state = "hair_double"
+
 /datum/sprite_accessory/hair/doublebun
 	name = "Double Bun"
 	icon_state = "hair_doublebun"
@@ -322,6 +330,14 @@
 /datum/sprite_accessory/hair/drillhairextended
 	name = "Drill Hair (Extended)"
 	icon_state = "hair_drillhairextended"
+
+/datum/sprite_accessory/hair/egg
+	name = "Egg"
+	icon_state = "hair_egg"
+
+/datum/sprite_accessory/hair/eight
+	name = "Eight"
+	icon_state = "hair_eight"
 
 /datum/sprite_accessory/hair/emo
 	name = "Emo"
@@ -395,6 +411,10 @@
 	name = "Half-shaved"
 	icon_state = "hair_halfshaved"
 
+/datum/sprite_accessory/hair/harley
+	name = "Harley"
+	icon_state = "hair_harley"
+
 /datum/sprite_accessory/hair/hedgehog
 	name = "Hedgehog Hair"
 	icon_state = "hair_hedgehog"
@@ -430,6 +450,10 @@
 /datum/sprite_accessory/hair/joestar
 	name = "Joestar"
 	icon_state = "hair_joestar"
+
+/datum/sprite_accessory/hair/justice
+	name = "Justice"
+	icon_state = "hair_justice"
 
 /datum/sprite_accessory/hair/keanu
 	name = "Keanu Hair"
@@ -471,13 +495,25 @@
 	name = "Long Side Part"
 	icon_state = "hair_longsidepart"
 
+/datum/sprite_accessory/hair/manime
+	name = "Manime"
+	icon_state = "hair_manime"
+
 /datum/sprite_accessory/hair/megaeyebrows
 	name = "Mega Eyebrows"
 	icon_state = "hair_megaeyebrows"
 
+/datum/sprite_accessory/hair/meow
+	name = "Meow"
+	icon_state = "hair_meow"
+
 /datum/sprite_accessory/hair/messy
 	name = "Messy"
 	icon_state = "hair_messy"
+
+/datum/sprite_accessory/hair/miracles
+	name = "Miracles"
+	icon_state = "hair_miracles"
 
 /datum/sprite_accessory/hair/modern
 	name = "Modern"
@@ -631,6 +667,14 @@
 	name = "Poofy"
 	icon_state = "hair_poofy"
 
+/datum/sprite_accessory/hair/prince
+	name = "Prince"
+	icon_state = "hair_prince"
+
+/datum/sprite_accessory/hair/pupa
+	name = "Pupa"
+	icon_state = "hair_pupa"
+
 /datum/sprite_accessory/hair/quiff
 	name = "Quiff"
 	icon_state = "hair_quiff"
@@ -638,6 +682,10 @@
 /datum/sprite_accessory/hair/ronin
 	name = "Ronin"
 	icon_state = "hair_ronin"
+
+/datum/sprite_accessory/hair/rosemary
+	name = "Rosemary"
+	icon_state = "hair_rosemary"
 
 /datum/sprite_accessory/hair/shaved
 	name = "Shaved"
@@ -715,6 +763,10 @@
 	name = "Spiky 3"
 	icon_state = "hair_spiky2"
 
+/datum/sprite_accessory/hair/stride
+	name = "Stride"
+	icon_state = "hair_stride"
+
 /datum/sprite_accessory/hair/swept
 	name = "Swept Back Hair"
 	icon_state = "hair_swept"
@@ -734,6 +786,10 @@
 /datum/sprite_accessory/hair/thinningrear
 	name = "Thinning (Rear)"
 	icon_state = "hair_thinningrear"
+
+/datum/sprite_accessory/hair/thresh
+	name = "Thresh"
+	icon_state = "hair_thresh"
 
 /datum/sprite_accessory/hair/topknot
 	name = "Topknot"
