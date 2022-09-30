@@ -313,7 +313,7 @@
 /obj/structure/falsewall/material/diamond
 	name = "diamond wall"
 	desc = "A wall with diamond plating. You monster."
-// wallening todo:	icon = 'icons/turf/walls/diamond_wall.dmi'
+	icon = 'icons/turf/walls/diamond_wall.dmi'
 	icon_state = "diamond_wall-0"
 	base_icon_state = "diamond_wall"
 	mineral = /obj/item/stack/sheet/mineral/diamond
@@ -400,7 +400,7 @@
 /obj/structure/falsewall/material/abductor
 	name = "alien wall"
 	desc = "A wall with alien alloy plating."
-// wallening todo:	icon = 'icons/turf/walls/abductor_wall.dmi'
+	icon = 'icons/turf/walls/abductor_wall.dmi'
 	icon_state = "abductor_wall-0"
 	base_icon_state = "abductor_wall"
 	mineral = /obj/item/stack/sheet/mineral/abductor

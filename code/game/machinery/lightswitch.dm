@@ -40,7 +40,6 @@ INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 	. = ..()
 	luminosity = (machine_stat & NOPOWER) ? 0 : 1
 
-// Wallening todo: is it just me, or do light switches not like, have a resting position 
 /obj/machinery/light_switch/update_icon_state()
 	set_light(area.lightswitch ? 0 : light_on_range)
 	icon_state = "[base_icon_state]"
