@@ -109,21 +109,21 @@ DEFINE_BITFIELD(smoothing_flags, list(
 /* /obj included */
 
 #define SMOOTH_GROUP_WALLS S_OBJ(0) ///turf/closed/wall, /obj/structure/falsewall
-#define SMOOTH_GROUP_URANIUM_WALLS S_OBJ(1) ///turf/closed/wall/mineral/uranium, /obj/structure/falsewall/uranium
-#define SMOOTH_GROUP_GOLD_WALLS S_OBJ(2) ///turf/closed/wall/mineral/gold, /obj/structure/falsewall/gold
-#define SMOOTH_GROUP_SILVER_WALLS S_OBJ(3) ///turf/closed/wall/mineral/silver, /obj/structure/falsewall/silver
-#define SMOOTH_GROUP_DIAMOND_WALLS S_OBJ(4) ///turf/closed/wall/mineral/diamond, /obj/structure/falsewall/diamond
-#define SMOOTH_GROUP_PLASMA_WALLS S_OBJ(5) ///turf/closed/wall/mineral/plasma, /obj/structure/falsewall/plasma
-#define SMOOTH_GROUP_BANANIUM_WALLS S_OBJ(6) ///turf/closed/wall/mineral/bananium, /obj/structure/falsewall/bananium
-#define SMOOTH_GROUP_SANDSTONE_WALLS S_OBJ(7) ///turf/closed/wall/mineral/sandstone, /obj/structure/falsewall/sandstone
-#define SMOOTH_GROUP_WOOD_WALLS S_OBJ(8) ///turf/closed/wall/mineral/wood, /obj/structure/falsewall/wood
-#define SMOOTH_GROUP_IRON_WALLS S_OBJ(9) ///turf/closed/wall/mineral/iron, /obj/structure/falsewall/iron
-#define SMOOTH_GROUP_ABDUCTOR_WALLS S_OBJ(10) ///turf/closed/wall/mineral/abductor, /obj/structure/falsewall/abductor
-#define SMOOTH_GROUP_TITANIUM_WALLS S_OBJ(11) ///turf/closed/wall/mineral/titanium, /obj/structure/falsewall/titanium
-#define SMOOTH_GROUP_PLASTITANIUM_WALLS S_OBJ(13) ///turf/closed/wall/mineral/plastitanium, /obj/structure/falsewall/plastitanium
+#define SMOOTH_GROUP_URANIUM_WALLS S_OBJ(1) ///turf/closed/wall/mineral/uranium, /obj/structure/falsewall/material/uranium
+#define SMOOTH_GROUP_GOLD_WALLS S_OBJ(2) ///turf/closed/wall/mineral/gold, /obj/structure/falsewall/material/gold
+#define SMOOTH_GROUP_SILVER_WALLS S_OBJ(3) ///turf/closed/wall/mineral/silver, /obj/structure/falsewall/material/silver
+#define SMOOTH_GROUP_DIAMOND_WALLS S_OBJ(4) ///turf/closed/wall/mineral/diamond, /obj/structure/falsewall/material/diamond
+#define SMOOTH_GROUP_PLASMA_WALLS S_OBJ(5) ///turf/closed/wall/mineral/plasma, /obj/structure/falsewall/material/plasma
+#define SMOOTH_GROUP_BANANIUM_WALLS S_OBJ(6) ///turf/closed/wall/mineral/bananium, /obj/structure/falsewall/material/bananium
+#define SMOOTH_GROUP_SANDSTONE_WALLS S_OBJ(7) ///turf/closed/wall/mineral/sandstone, /obj/structure/falsewall/material/sandstone
+#define SMOOTH_GROUP_WOOD_WALLS S_OBJ(8) ///turf/closed/wall/mineral/wood, /obj/structure/falsewall/material/wood
+#define SMOOTH_GROUP_IRON_WALLS S_OBJ(9) ///turf/closed/wall/mineral/iron, /obj/structure/falsewall/material/iron
+#define SMOOTH_GROUP_ABDUCTOR_WALLS S_OBJ(10) ///turf/closed/wall/mineral/abductor, /obj/structure/falsewall/material/abductor
+#define SMOOTH_GROUP_TITANIUM_WALLS S_OBJ(11) ///turf/closed/wall/mineral/titanium, /obj/structure/falsewall/material/titanium
+#define SMOOTH_GROUP_PLASTITANIUM_WALLS S_OBJ(13) ///turf/closed/wall/mineral/plastitanium, /obj/structure/falsewall/material/plastitanium
 #define SMOOTH_GROUP_SURVIVAL_TITANIUM_POD S_OBJ(14) ///turf/closed/wall/mineral/titanium/survival/pod, /obj/machinery/door/airlock/survival_pod, /obj/structure/window/reinforced/shuttle/survival_pod
 #define SMOOTH_GROUP_HIERO_WALL S_OBJ(15) ///obj/effect/temp_visual/elite_tumor_wall, /obj/effect/temp_visual/hierophant/wall
-#define SMOOTH_GROUP_BAMBOO_WALLS S_TURF(16) //![/turf/closed/wall/mineral/bamboo, /obj/structure/falsewall/bamboo]
+#define SMOOTH_GROUP_BAMBOO_WALLS S_TURF(16) //![/turf/closed/wall/mineral/bamboo, /obj/structure/falsewall/material/bamboo]
 #define SMOOTH_GROUP_PLASTINUM_WALLS S_TURF(17) //![turf/closed/indestructible/riveted/plastinum]
 #define SMOOTH_GROUP_PIZZA_WALLS S_OBJ(17)  ///turf/closed/wall/mineral/pizza, /obj/structure/falsewall/pizza (wallening todo: these don't exist)
 
