@@ -5,6 +5,7 @@
 #define BAD_AREA 2
 #define BAD_COORDS 3
 #define BAD_TURF 4
+#define BAD_LAYER 5
 
 /area/shuttle/auxiliary_base
 	name = "Auxiliary Base"
@@ -17,14 +18,14 @@
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "dorm_available"
 	icon_keyboard = null
-	req_one_access = list(ACCESS_AUX_BASE, ACCESS_HEADS)
+	req_one_access = list(ACCESS_AUX_BASE, ACCESS_COMMAND)
 	circuit = /obj/item/circuitboard/computer/auxiliary_base
 	/// Shuttle ID of the base
 	var/shuttleId = "colony_drop"
 	/// If we give warnings before base is launched
 	var/launch_warning = TRUE
 	/// List of connected turrets
-	var/list/turrets = list()
+	var/list/datum/weakref/turrets
 	/// List of all possible destinations
 	var/possible_destinations
 	/// ID of the currently selected destination of the attached base
@@ -34,27 +35,18 @@
 
 	density = FALSE //this is a wallmount
 
-/obj/machinery/computer/auxiliary_base/directional/north
-	dir = SOUTH
-	pixel_y = 32
-
-/obj/machinery/computer/auxiliary_base/directional/south
-	dir = NORTH
-	pixel_y = -32
-
-/obj/machinery/computer/auxiliary_base/directional/east
-	dir = WEST
-	pixel_x = 32
-
-/obj/machinery/computer/auxiliary_base/directional/west
-	dir = EAST
-	pixel_x = -32
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 
 /obj/machinery/computer/auxiliary_base/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/gps, "NT_AUX")
 
+/obj/machinery/computer/auxiliary_base/Destroy() // Shouldn't be destroyable... but just in case
+	LAZYCLEARLIST(turrets)
+	return ..()
+
 /obj/machinery/computer/auxiliary_base/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "AuxBaseConsole", name)
@@ -72,28 +64,31 @@
 	data["destination"] = destination
 	data["blind_drop"] = blind_drop_ready
 	data["turrets"] = list()
-	if(LAZYLEN(turrets))
-		for(var/turret in turrets)
-			var/obj/machinery/porta_turret/aux_base/base_turret = turret
-			var/turret_integrity = max((base_turret.get_integrity() - base_turret.integrity_failure * base_turret.max_integrity) / (base_turret.max_integrity - base_turret.integrity_failure * max_integrity) * 100, 0)
-			var/turret_status
-			if(base_turret.machine_stat & BROKEN)
-				turret_status = "ERROR"
-			else if(!base_turret.on)
-				turret_status = "Disabled"
-			else if(base_turret.raised)
-				turret_status = "Firing"
-			else
-				turret_status = "All Clear"
-			var/list/turret_data = list(
-				name = base_turret.name,
-				integrity = turret_integrity,
-				status = turret_status,
-				direction = dir2text(get_dir(src, base_turret)),
-				distance = get_dist(src, base_turret),
-				ref = REF(base_turret)
-			)
-			data["turrets"] += list(turret_data)
+	for(var/datum/weakref/turret_ref as anything in turrets)
+		var/obj/machinery/porta_turret/aux_base/base_turret = turret_ref.resolve()
+		if(!istype(base_turret)) // null or invalid in turrets list? axe it
+			LAZYREMOVE(turrets, turret_ref)
+			continue
+
+		var/turret_integrity = max((base_turret.get_integrity() - base_turret.integrity_failure * base_turret.max_integrity) / (base_turret.max_integrity - base_turret.integrity_failure * max_integrity) * 100, 0)
+		var/turret_status
+		if(base_turret.machine_stat & BROKEN)
+			turret_status = "ERROR"
+		else if(!base_turret.on)
+			turret_status = "Disabled"
+		else if(base_turret.raised)
+			turret_status = "Firing"
+		else
+			turret_status = "All Clear"
+		var/list/turret_data = list(
+			name = base_turret.name,
+			integrity = turret_integrity,
+			status = turret_status,
+			direction = dir2text(get_dir(src, base_turret)),
+			distance = get_dist(src, base_turret),
+			ref = REF(base_turret)
+		)
+		data["turrets"] += list(turret_data)
 	if(!M)
 		data["status"] = "Missing"
 		return data
@@ -106,13 +101,13 @@
 			data["status"] = "Recharging"
 		else
 			data["status"] = "In Transit"
-	for(var/obj/docking_port/stationary/S in SSshuttle.stationary)
+	for(var/obj/docking_port/stationary/S in SSshuttle.stationary_docking_ports)
 		if(!options.Find(S.port_destinations))
 			continue
 		if(!M.check_dock(S, silent = TRUE))
 			continue
 		var/list/location_data = list(
-			id = S.id,
+			id = S.shuttle_id,
 			name = S.name
 		)
 		data["locations"] += list(location_data)
@@ -151,7 +146,7 @@
 				return
 			var/shuttle_error = SSshuttle.moveShuttle(shuttleId, params["shuttle_id"], 1)
 			if(launch_warning)
-				say(span_danger("Launch sequence activated! Prepare for drop!!"))
+				say("Launch sequence activated! Prepare for drop!!", spans = list("danger"))
 				playsound(loc, 'sound/machines/warning-buzzer.ogg', 70, FALSE)
 				launch_warning = FALSE
 				blind_drop_ready = FALSE
@@ -169,7 +164,7 @@
 			for(var/z_level in SSmapping.levels_by_trait(ZTRAIT_MINING))
 				all_mining_turfs += Z_TURFS(z_level)
 			var/turf/LZ = pick(all_mining_turfs) //Pick a random mining Z-level turf
-			if(!ismineralturf(LZ) && !istype(LZ, /turf/open/floor/plating/asteroid))
+			if(!ismineralturf(LZ) && !istype(LZ, /turf/open/misc/asteroid))
 			//Find a suitable mining turf. Reduces chance of landing in a bad area
 				to_chat(usr, span_warning("Landing zone scan failed. Please try again."))
 				return
@@ -185,13 +180,19 @@
 			destination = target_destination
 			return TRUE
 		if("turrets_power")
-			for(var/obj/machinery/porta_turret/aux_base/base_turret in turrets)
+			for(var/datum/weakref/turret_ref as anything in turrets)
+				var/obj/machinery/porta_turret/aux_base/base_turret = turret_ref.resolve()
+				if(!istype(base_turret)) // null or invalid in turrets list
+					LAZYREMOVE(turrets, turret_ref)
+					continue
+
 				base_turret.toggle_on()
 			return TRUE
 		if("single_turret_power")
-			var/obj/machinery/porta_turret/aux_base/base_turret = locate(params["single_turret_power"]) in turrets
-			if(!istype(base_turret))
+			var/obj/machinery/porta_turret/aux_base/base_turret = locate(params["single_turret_power"])
+			if(!istype(base_turret) || !(WEAKREF(base_turret) in turrets))
 				return
+
 			base_turret.toggle_on()
 			return TRUE
 
@@ -202,18 +203,17 @@
 		possible_destinations = "mining_home;mining_away;landing_zone_dock;mining_public"
 
 /obj/machinery/computer/auxiliary_base/proc/set_landing_zone(turf/T, mob/user, no_restrictions)
-	var/obj/docking_port/mobile/auxiliary_base/base_dock = locate(/obj/docking_port/mobile/auxiliary_base) in SSshuttle.mobile
+	var/obj/docking_port/mobile/auxiliary_base/base_dock = locate(/obj/docking_port/mobile/auxiliary_base) in SSshuttle.mobile_docking_ports
 	if(!base_dock) //Not all maps have an Aux base. This object is useless in that case.
 		to_chat(user, span_warning("This station is not equipped with an auxiliary base. Please contact your Nanotrasen contractor."))
 		return
 	if(!no_restrictions)
-		var/static/list/disallowed_turf_types = typecacheof(list(
-			/turf/closed,
-			/turf/open/lava,
-			/turf/open/indestructible,
-			)) - typecacheof(list(
-			/turf/closed/mineral,
-			))
+		var/static/list/disallowed_turf_types = zebra_typecacheof(list(
+			/turf/closed = TRUE,
+			/turf/open/lava = TRUE,
+			/turf/open/indestructible = TRUE,
+			/turf/closed/mineral = FALSE,
+		))
 
 		if(!is_mining_level(T.z))
 			return BAD_ZLEVEL
@@ -225,7 +225,9 @@
 			var/turf/place = colony_turfs[i]
 			if(!place)
 				return BAD_COORDS
-			if(!istype(place.loc, /area/lavaland/surface))
+			if(istype(place.loc, /area/icemoon/surface))
+				return BAD_LAYER
+			if(!istype(place.loc, /area/lavaland/surface) && !istype(place.loc, /area/icemoon/underground))
 				return BAD_AREA
 			if(disallowed_turf_types[place.type])
 				return BAD_TURF
@@ -234,7 +236,7 @@
 	var/area/A = get_area(T)
 
 	var/obj/docking_port/stationary/landing_zone = new /obj/docking_port/stationary(T)
-	landing_zone.id = "colony_drop([REF(src)])"
+	landing_zone.shuttle_id = "colony_drop([REF(src)])"
 	landing_zone.port_destinations = "colony_drop([REF(src)])"
 	landing_zone.name = "Landing Zone ([T.x], [T.y])"
 	landing_zone.dwidth = base_dock.dwidth
@@ -244,20 +246,19 @@
 	landing_zone.setDir(base_dock.dir)
 	landing_zone.area_type = A.type
 
-	possible_destinations += "[landing_zone.id];"
+	possible_destinations += "[landing_zone.shuttle_id];"
 
 //Serves as a nice mechanic to people get ready for the launch.
 	minor_announce("Auxiliary base landing zone coordinates locked in for [A]. Launch command now available!")
 	to_chat(user, span_notice("Landing zone set."))
 	return ZONE_SET
 
-
 /obj/item/assault_pod/mining
 	name = "Landing Field Designator"
 	icon_state = "gangtool-purple"
 	inhand_icon_state = "electronic"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	desc = "Deploy to designate the landing zone of the auxiliary base."
 	w_class = WEIGHT_CLASS_SMALL
 	shuttle_id = "colony_drop"
@@ -297,6 +298,8 @@
 			to_chat(user, span_warning("Location is too close to the edge of the station's scanning range. Move several paces away and try again."))
 		if(BAD_TURF)
 			to_chat(user, span_warning("The landing zone contains turfs unsuitable for a base. Make sure you've removed all walls and dangerous terrain from the landing zone."))
+		if(BAD_LAYER)
+			to_chat(user, span_warning("This area is not hazardous enough to justify an auxiliary base. Try again on a deeper layer."))
 
 /obj/item/assault_pod/mining/unrestricted
 	name = "omni-locational landing field designator"
@@ -306,7 +309,7 @@
 
 /obj/docking_port/mobile/auxiliary_base
 	name = "auxiliary base"
-	id = "colony_drop"
+	shuttle_id = "colony_drop"
 	//Reminder to map-makers to set these values equal to the size of your base.
 	dheight = 4
 	dwidth = 4
@@ -316,18 +319,18 @@
 /obj/docking_port/mobile/auxiliary_base/takeoff(list/old_turfs, list/new_turfs, list/moved_atoms, rotation, movement_direction, old_dock, area/underlying_old_area)
 	for(var/i in new_turfs)
 		var/turf/place = i
-		if(istype(place, /turf/closed/mineral))
+		if(ismineralturf(place))
 			place.ScrapeAway()
 	return ..()
 
 /obj/docking_port/stationary/public_mining_dock
 	name = "public mining base dock"
-	id = "disabled" //The Aux Base has to leave before this can be used as a dock.
+	shuttle_id = "disabled" //The Aux Base has to leave before this can be used as a dock.
 	//Should be checked on the map to ensure it matchs the mining shuttle dimensions.
 	dwidth = 3
 	width = 7
 	height = 5
-	area_type = /area/construction/mining/aux_base
+	area_type = /area/station/construction/mining/aux_base
 
 /obj/structure/mining_shuttle_beacon
 	name = "mining shuttle beacon"
@@ -371,15 +374,15 @@
 		to_chat(user, span_warning("The auxiliary base's console must be within [console_range] meters in order to interface."))
 		return
 
-//Mining shuttles may not be created equal, so we find the map's shuttle dock and size accordingly.
-	for(var/S in SSshuttle.stationary)
+	//Mining shuttles may not be created equal, so we find the map's shuttle dock and size accordingly.
+	for(var/S in SSshuttle.stationary_docking_ports)
 		var/obj/docking_port/stationary/SM = S //SM is declared outside so it can be checked for null
-		if(SM.id == "mining_home" || SM.id == "mining_away")
+		if(SM.shuttle_id == "mining_home" || SM.shuttle_id == "mining_away")
 
 			var/area/A = get_area(landing_spot)
 
 			Mport = new(landing_spot)
-			Mport.id = "landing_zone_dock"
+			Mport.shuttle_id = "landing_zone_dock"
 			Mport.port_destinations = "landing_zone_dock"
 			Mport.name = "auxiliary base landing site"
 			Mport.dwidth = SM.dwidth
@@ -396,9 +399,8 @@
 
 	var/obj/docking_port/mobile/mining_shuttle
 	var/list/landing_turfs = list() //List of turfs where the mining shuttle may land.
-	for(var/S in SSshuttle.mobile)
-		var/obj/docking_port/mobile/MS = S
-		if(MS.id != "mining")
+	for(var/obj/docking_port/mobile/MS as anything in SSshuttle.mobile_docking_ports)
+		if(MS.shuttle_id != "mining")
 			continue
 		mining_shuttle = MS
 		landing_turfs = mining_shuttle.return_ordered_turfs(x,y,z,dir)
@@ -406,7 +408,7 @@
 
 	if(!mining_shuttle) //Not having a mining shuttle is a map issue
 		to_chat(user, span_warning("No mining shuttle signal detected. Please contact Nanotrasen Support."))
-		SSshuttle.stationary.Remove(Mport)
+		SSshuttle.stationary_docking_ports.Remove(Mport)
 		qdel(Mport)
 		return
 
@@ -414,18 +416,18 @@
 		var/turf/L = landing_turfs[i]
 		if(!L) //This happens at map edges
 			to_chat(user, span_warning("Unable to secure a valid docking zone. Please try again in an open area near, but not within the auxiliary mining base."))
-			SSshuttle.stationary.Remove(Mport)
+			SSshuttle.stationary_docking_ports.Remove(Mport)
 			qdel(Mport)
 			return
 		if(istype(get_area(L), /area/shuttle/auxiliary_base))
 			to_chat(user, span_warning("The mining shuttle must not land within the mining base itself."))
-			SSshuttle.stationary.Remove(Mport)
+			SSshuttle.stationary_docking_ports.Remove(Mport)
 			qdel(Mport)
 			return
 
 	if(mining_shuttle.canDock(Mport) != SHUTTLE_CAN_DOCK)
 		to_chat(user, span_warning("Unable to secure a valid docking zone. Please try again in an open area near, but not within the auxiliary mining base."))
-		SSshuttle.stationary.Remove(Mport)
+		SSshuttle.stationary_docking_ports.Remove(Mport)
 		qdel(Mport)
 		return
 
@@ -446,3 +448,4 @@
 #undef BAD_AREA
 #undef BAD_COORDS
 #undef BAD_TURF
+#undef BAD_LAYER

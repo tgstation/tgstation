@@ -13,16 +13,30 @@
 	var/datum/techweb/linked_techweb
 	light_color = LIGHT_COLOR_BLUE
 
+	var/datum/component/experiment_handler/experiment_handler
+
 /obj/machinery/computer/operating/Initialize(mapload)
-	. = ..()
+	..()
 	linked_techweb = SSresearch.science_tech
 	find_table()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/computer/operating/LateInitialize()
+	. = ..()
+
+	experiment_handler = AddComponent( \
+		/datum/component/experiment_handler, \
+		allowed_experiments = list(/datum/experiment/dissection), \
+		config_flags = EXPERIMENT_CONFIG_ALWAYS_ACTIVE, \
+		config_mode = EXPERIMENT_CONFIG_ALTCLICK, \
+	)
 
 /obj/machinery/computer/operating/Destroy()
 	for(var/direction in GLOB.alldirs)
 		table = locate(/obj/structure/table/optable) in get_step(src, direction)
 		if(table && table.computer == src)
 			table.computer = null
+	QDEL_NULL(experiment_handler)
 	. = ..()
 
 /obj/machinery/computer/operating/attackby(obj/item/O, mob/user, params)
@@ -54,6 +68,7 @@
 	return GLOB.not_incapacitated_state
 
 /obj/machinery/computer/operating/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "OperatingComputer", name)
@@ -76,10 +91,10 @@
 		return data
 
 	data["table"] = table
-	if(!table.check_eligible_patient())
-		return data
 	data["patient"] = list()
-	var/mob/living/carbon/human/patient = table.patient
+	if(!table.patient)
+		return data
+	var/mob/living/carbon/patient = table.patient
 
 	switch(patient.stat)
 		if(CONSCIOUS)
@@ -95,7 +110,7 @@
 			data["patient"]["stat"] = "Dead"
 			data["patient"]["statstate"] = "bad"
 	data["patient"]["health"] = patient.health
-	data["patient"]["blood_type"] = patient.dna.blood_type
+	data["patient"]["blood_type"] = patient.dna?.blood_type
 	data["patient"]["maxHealth"] = patient.maxHealth
 	data["patient"]["minHealth"] = HEALTH_THRESHOLD_DEAD
 	data["patient"]["bruteLoss"] = patient.getBruteLoss()
@@ -134,8 +149,9 @@
 	switch(action)
 		if("sync")
 			sync_surgeries()
-			. = TRUE
-	. = TRUE
+		if("open_experiments")
+			experiment_handler.ui_interact(usr)
+	return TRUE
 
 #undef MENU_OPERATION
 #undef MENU_SURGERIES

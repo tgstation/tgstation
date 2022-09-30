@@ -1,0 +1,15 @@
+{
+    "football_helmet": [
+        {
+            "type": "icon_state",
+            "icon_state": "football_helmet",
+            "blend_mode": "overlay",
+            "color_ids": [ 1 ]
+        },
+		{
+            "type": "icon_state",
+            "icon_state": "football_stripe",
+            "blend_mode": "overlay"
+        }
+    ]
+}

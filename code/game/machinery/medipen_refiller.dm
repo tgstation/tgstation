@@ -5,7 +5,6 @@
 	icon_state = "medipen_refiller"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/medipen_refiller
-	idle_power_usage = 100
 	/// list of medipen subtypes it can refill
 	var/list/allowed = list(/obj/item/reagent_containers/hypospray/medipen = /datum/reagent/medicine/epinephrine,
 						    /obj/item/reagent_containers/hypospray/medipen/atropine = /datum/reagent/medicine/atropine,
@@ -25,6 +24,7 @@
 
 
 /obj/machinery/medipen_refiller/RefreshParts()
+	. = ..()
 	var/new_volume = 100
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		new_volume += 100 * B.rating
@@ -38,7 +38,7 @@
 	if(busy)
 		to_chat(user, span_danger("The machine is busy."))
 		return
-	if(istype(I, /obj/item/reagent_containers) && I.is_open_container())
+	if(is_reagent_container(I) && I.is_open_container())
 		var/obj/item/reagent_containers/RC = I
 		var/units = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this, transfered_by = user)
 		if(units)
@@ -72,10 +72,10 @@
 		reagents.expose(get_turf(src), TOUCH)
 		reagents.clear_reagents()
 
-/obj/machinery/medipen_refiller/wrench_act(mob/living/user, obj/item/I)
-	..()
-	default_unfasten_wrench(user, I)
-	return TRUE
+/obj/machinery/medipen_refiller/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/medipen_refiller/crowbar_act(mob/user, obj/item/I)
 	..()
@@ -94,3 +94,4 @@
 	cut_overlays()
 	busy = FALSE
 	to_chat(user, span_notice("Medipen refilled."))
+	use_power(active_power_usage)

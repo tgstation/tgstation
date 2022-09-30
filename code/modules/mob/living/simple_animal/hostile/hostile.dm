@@ -54,19 +54,6 @@
 	var/lose_patience_timer_id //id for a timer to call LoseTarget(), used to stop mobs fixating on a target they can't reach
 	var/lose_patience_timeout = 300 //30 seconds by default, so there's no major changes to AI behaviour, beyond actually bailing if stuck forever
 
-	///When a target is found, will the mob attempt to charge at it's target?
-	var/charger = FALSE
-	///Tracks if the target is actively charging.
-	var/charge_state = FALSE
-	///In a charge, how many tiles will the charger travel?
-	var/charge_distance = 3
-	///How often can the charging mob actually charge? Effects the cooldown between charges.
-	var/charge_frequency = 6 SECONDS
-	///If the mob is charging, how long will it stun it's target on success, and itself on failure?
-	var/knockdown_time = 3 SECONDS
-	///Declares a cooldown for potential charges right off the bat.
-	COOLDOWN_DECLARE(charge_cooldown)
-
 /mob/living/simple_animal/hostile/Initialize(mapload)
 	. = ..()
 	wanted_objects = typecacheof(wanted_objects)
@@ -79,7 +66,7 @@
 /mob/living/simple_animal/hostile/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	if(!.) //dead
-		walk(src, 0) //stops walking
+		SSmove_manager.stop_looping(src)
 
 /mob/living/simple_animal/hostile/handle_automated_action()
 	if(AIStatus == AI_OFF)
@@ -132,13 +119,18 @@
 
 /mob/living/simple_animal/hostile/attacked_by(obj/item/I, mob/living/user)
 	if(stat == CONSCIOUS && !target && AIStatus != AI_OFF && !client && user)
-		FindTarget(list(user), 1)
+		FindTarget(list(user))
+	return ..()
+
+/mob/living/simple_animal/hostile/electrocute_act(shock_damage, source, siemens_coeff, flags)
+	if(stat == CONSCIOUS && !target && AIStatus != AI_OFF && !client)
+		FindTarget(list(source))
 	return ..()
 
 /mob/living/simple_animal/hostile/bullet_act(obj/projectile/P)
 	if(stat == CONSCIOUS && !target && AIStatus != AI_OFF && !client)
 		if(P.firer && get_dist(src, P.firer) <= aggro_vision_range)
-			FindTarget(list(P.firer), 1)
+			FindTarget(list(P.firer))
 		Goto(P.starting, move_to_delay, 3)
 	return ..()
 
@@ -157,22 +149,27 @@
 	else
 		. = oview(vision_range, target_from)
 
-/mob/living/simple_animal/hostile/proc/FindTarget(list/possible_targets, HasTargetsList = 0)//Step 2, filter down possible targets to things we actually care about
-	. = list()
-	if(!HasTargetsList)
-		possible_targets = ListTargets()
-	for(var/pos_targ in possible_targets)
-		var/atom/A = pos_targ
-		if(Found(A))//Just in case people want to override targetting
-			. = list(A)
-			break
-		if(CanAttack(A))//Can we attack it?
-			. += A
-			continue
-	var/Target = PickTarget(.)
-	GiveTarget(Target)
-	return Target //We now have a target
+/mob/living/simple_animal/hostile/proc/FindTarget(list/possible_targets)//Step 2, filter down possible targets to things we actually care about
+	var/list/all_potential_targets = list()
 
+	if(isnull(possible_targets))
+		possible_targets = ListTargets()
+
+	for(var/atom/pos_targ as anything in possible_targets)
+		if(Found(pos_targ)) //Just in case people want to override targetting
+			all_potential_targets = list(pos_targ)
+			break
+
+		if(isitem(pos_targ) && ismob(pos_targ.loc)) //If source is from an item, check the holder of it.
+			if(CanAttack(pos_targ.loc))
+				all_potential_targets += pos_targ.loc
+		else
+			if(CanAttack(pos_targ))
+				all_potential_targets += pos_targ
+
+	var/found_target = PickTarget(all_potential_targets)
+	GiveTarget(found_target)
+	return found_target //We now have a target
 
 
 /mob/living/simple_animal/hostile/proc/PossibleThreats()
@@ -295,15 +292,12 @@
 		if(ranged) //We ranged? Shoot at em
 			if(!target.Adjacent(target_from) && ranged_cooldown <= world.time) //But make sure they're not in range for a melee attack and our range attack is off cooldown
 				OpenFire(target)
-		if(charger && (target_distance > minimum_distance) && (target_distance <= charge_distance))//Attempt to close the distance with a charge.
-			enter_charge(target)
-			return TRUE
-		if(!Process_Spacemove()) //Drifting
-			walk(src,0)
+		if(!Process_Spacemove(0)) //Drifting
+			SSmove_manager.stop_looping(src)
 			return 1
 		if(retreat_distance != null) //If we have a retreat distance, check if we need to run from our target
 			if(target_distance <= retreat_distance) //If target's closer than our retreat distance, run
-				walk_away(src,target,retreat_distance,move_to_delay)
+				SSmove_manager.move_away(src, target, retreat_distance, move_to_delay, flags = MOVEMENT_LOOP_IGNORE_GLIDE)
 			else
 				Goto(target,move_to_delay,minimum_distance) //Otherwise, get to our minimum distance so we chase them
 		else
@@ -331,12 +325,15 @@
 	LoseTarget()
 	return 0
 
-/mob/living/simple_animal/hostile/proc/Goto(target, delay, minimum_distance)
+/mob/living/simple_animal/hostile/Goto(target, delay, minimum_distance)
+	if(prevent_goto_movement)
+		return FALSE
 	if(target == src.target)
 		approaching_target = TRUE
 	else
 		approaching_target = FALSE
-	walk_to(src, target, minimum_distance, delay)
+	SSmove_manager.move_to(src, target, minimum_distance, delay, flags = MOVEMENT_LOOP_IGNORE_GLIDE)
+	return TRUE
 
 /mob/living/simple_animal/hostile/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
@@ -375,7 +372,7 @@
 	GiveTarget(null)
 	approaching_target = FALSE
 	in_melee = FALSE
-	walk(src, 0)
+	SSmove_manager.stop_looping(src)
 	LoseAggro()
 
 //////////////END HOSTILE MOB TARGETTING AND AGGRESSION////////////
@@ -429,7 +426,13 @@
 	if(casingtype)
 		var/obj/item/ammo_casing/casing = new casingtype(startloc)
 		playsound(src, projectilesound, 100, TRUE)
-		casing.fire_casing(targeted_atom, src, null, null, null, ran_zone(), 0,  src)
+		var/targeted_zone
+		if(ismob(targeted_atom))
+			var/mob/targeted_mob = targeted_atom
+			targeted_zone = targeted_mob.get_random_valid_zone()
+		else
+			targeted_zone = ran_zone()
+		casing.fire_casing(targeted_atom, src, null, null, null, targeted_zone, 0,  src)
 	else if(projectiletype)
 		var/obj/projectile/P = new projectiletype(startloc)
 		playsound(src, projectilesound, 100, TRUE)
@@ -463,7 +466,7 @@
 	dodging = FALSE
 	. = Move(get_step(loc,pick(cdir,ccdir)))
 	if(!.)//Can't dodge there so we just carry on
-		. =  Move(moving_to,move_direction)
+		. = Move(moving_to,move_direction)
 	dodging = TRUE
 
 /mob/living/simple_animal/hostile/proc/DestroyObjectsInDirection(direction)
@@ -536,14 +539,14 @@
 		if(AI_ON)
 			. = 1
 		if(AI_IDLE)
-			if(FindTarget(possible_targets, 1))
+			if(FindTarget(possible_targets))
 				. = 1
 				toggle_ai(AI_ON) //Wake up for more than one Life() cycle.
 			else
 				. = 0
 
 /mob/living/simple_animal/hostile/proc/AIShouldSleep(list/possible_targets)
-	return !FindTarget(possible_targets, 1)
+	return !FindTarget(possible_targets)
 
 
 //These two procs handle losing our target if we've failed to attack them for
@@ -588,7 +591,7 @@
 	else
 		tlist = ListTargets()
 
-	if(AIStatus == AI_IDLE && FindTarget(tlist, 1))
+	if(AIStatus == AI_IDLE && FindTarget(tlist))
 		if(cheap_search) //Try again with full effort
 			FindTarget()
 		toggle_ai(AI_ON)
@@ -603,71 +606,6 @@
 				. += M
 			else if (M.loc.type in hostile_machines)
 				. += M.loc
-
-/**
- * Proc that handles a charge attack windup for a mob.
- */
-/mob/living/simple_animal/hostile/proc/enter_charge(atom/target)
-	if(charge_state || !(COOLDOWN_FINISHED(src, charge_cooldown)))
-		return FALSE
-	if(!can_charge_target(target))
-		return FALSE
-	Shake(15, 15, 1 SECONDS)
-	addtimer(CALLBACK(src, .proc/handle_charge_target, target), 1.5 SECONDS, TIMER_STOPPABLE)
-
-/**
- * Proc that checks if the mob can charge attack.
- */
-/mob/living/simple_animal/hostile/proc/can_charge_target(atom/target)
-	if(stat == DEAD || body_position == LYING_DOWN || HAS_TRAIT(src, TRAIT_IMMOBILIZED) || !has_gravity() || !target.has_gravity())
-		return FALSE
-	return TRUE
-
-/**
- * Proc that throws the mob at the target after the windup.
- */
-/mob/living/simple_animal/hostile/proc/handle_charge_target(atom/target)
-	if(!can_charge_target(target))
-		return FALSE
-	charge_state = TRUE
-	throw_at(target, charge_distance, 1, src, FALSE, TRUE, callback = CALLBACK(src, .proc/charge_end))
-	COOLDOWN_START(src, charge_cooldown, charge_frequency)
-	return TRUE
-
-/**
- * Proc that handles a charge attack after it's concluded.
- */
-/mob/living/simple_animal/hostile/proc/charge_end()
-	charge_state = FALSE
-
-/**
- * Proc that handles the charge impact of the charging mob.
- */
-/mob/living/simple_animal/hostile/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	if(!charge_state)
-		return ..()
-
-	if(hit_atom)
-		if(isliving(hit_atom))
-			var/mob/living/L = hit_atom
-			var/blocked = FALSE
-			if(ishuman(hit_atom))
-				var/mob/living/carbon/human/H = hit_atom
-				if(H.check_shields(src, 0, "the [name]", attack_type = LEAP_ATTACK))
-					blocked = TRUE
-			if(!blocked)
-				L.visible_message(span_danger("[src] charges on [L]!"), span_userdanger("[src] charges into you!"))
-				L.Knockdown(knockdown_time)
-			else
-				Stun((knockdown_time * 2), ignore_canstun = TRUE)
-			charge_end()
-		else if(hit_atom.density && !hit_atom.CanPass(src, get_dir(hit_atom, src)))
-			visible_message(span_danger("[src] smashes into [hit_atom]!"))
-			Stun((knockdown_time * 2), ignore_canstun = TRUE)
-
-		if(charge_state)
-			charge_state = FALSE
-			update_icons()
 
 /mob/living/simple_animal/hostile/proc/get_targets_from()
 	var/atom/target_from = targets_from.resolve()

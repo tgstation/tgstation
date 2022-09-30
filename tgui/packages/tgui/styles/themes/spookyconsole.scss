@@ -1,0 +1,73 @@
+@use 'sass:color';
+@use 'sass:meta';
+@use 'sass:map';
+
+@use '../colors.scss' with (
+  $primary: #3f021a,
+  $good: #010005,
+  $bad: #970934,
+  $fg-map-keys: (),
+  $bg-map-keys: (),
+);
+@use '../base.scss' with (
+  $color-bg: #240101,
+  $color-bg-grad-spread: 12%,
+);
+
+$updated-bg-map: colors.$bg-map !default;
+
+$updated-bg-map: map.set($updated-bg-map, 'good', colors.$good);
+$updated-bg-map: map.set($updated-bg-map, 'bad', colors.$bad);
+
+.theme-spookyconsole {
+  // Atomic classes
+  @include meta.load-css(
+    '../atomic/color.scss',
+    $with: ('bg-map': $updated-bg-map)
+  );
+
+  // Components
+  @include meta.load-css(
+    '../components/Button.scss',
+    $with: (
+      'color-default': #7e0322,
+      'color-disabled': #363636,
+      'color-selected': #610a0a,
+      'color-caution': #1416a3,
+      'color-danger': #5c1e80,
+      'bg-map': $updated-bg-map
+    )
+  );
+  @include meta.load-css(
+    '../components/Dimmer.scss',
+    $with: ('background-dimness': 0.45)
+  );
+  @include meta.load-css(
+    '../components/Input.scss',
+    $with: ('border-color': #473a37)
+  );
+  @include meta.load-css('../components/Modal.scss');
+  @include meta.load-css(
+    '../components/NoticeBox.scss',
+    $with: ('background-color': #740707)
+  );
+  @include meta.load-css('../components/NumberInput.scss');
+  @include meta.load-css('../components/Section.scss');
+  @include meta.load-css('../components/Table.scss');
+  @include meta.load-css(
+    '../components/Tooltip.scss',
+    $with: ('background-color': #000000)
+  );
+
+  // Layouts
+  @include meta.load-css('../layouts/Layout.scss');
+  @include meta.load-css('../layouts/Window.scss');
+  @include meta.load-css(
+    '../layouts/TitleBar.scss',
+    $with: ('background-color': #6b0808)
+  );
+
+  .Layout__content {
+    background-image: url('../../assets/bg-spookycomp-compressed.svg');
+  }
+}

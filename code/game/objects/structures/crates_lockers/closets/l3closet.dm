@@ -46,7 +46,7 @@
 	icon_state = "bio_viro"
 
 /obj/structure/closet/l3closet/scientist/PopulateContents()
-	new /obj/item/storage/bag/bio(src)
+	new /obj/item/storage/bag/xeno(src)
 	new /obj/item/clothing/suit/bio_suit/scientist(src)
 	new /obj/item/clothing/head/bio_hood/scientist(src)
 	new /obj/item/clothing/mask/breath(src)

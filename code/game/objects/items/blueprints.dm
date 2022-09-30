@@ -5,7 +5,7 @@
 
 /obj/item/areaeditor
 	name = "area modification item"
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "blueprints"
 	attack_verb_continuous = list("attacks", "baps", "hits")
 	attack_verb_simple = list("attack", "bap", "hit")
@@ -47,7 +47,7 @@
 /obj/item/areaeditor/blueprints
 	name = "station blueprints"
 	desc = "Blueprints of the station. There is a \"Classified\" stamp and several coffee stains on it."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "blueprints"
 	fluffnotice = "Property of Nanotrasen. For heads of staff only. Store in high-secure storage."
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
@@ -156,11 +156,11 @@
 	var/list/SPECIALS = list(
 		/area/shuttle,
 		/area/centcom,
-		/area/asteroid,
-		/area/tdome,
-		/area/wizard_station,
-		/area/hilbertshotel,
-		/area/hilbertshotelstorage
+		/area/centcom/asteroid,
+		/area/centcom/tdome,
+		/area/centcom/wizard_station,
+		/area/misc/hilbertshotel,
+		/area/misc/hilbertshotelstorage
 	)
 	for (var/type in SPECIALS)
 		if ( istype(A,type) )
@@ -190,7 +190,7 @@
 /obj/item/areaeditor/proc/edit_area()
 	var/area/A = get_area(usr)
 	var/prevname = "[A.name]"
-	var/str = stripped_input(usr,"New area name:", "Area Creation", "", MAX_NAME_LEN)
+	var/str = tgui_input_text(usr, "New area name", "Area Creation", max_length = MAX_NAME_LEN)
 	if(!str || !length(str) || str==prevname) //cancel
 		return
 	if(length(str) > 50)
@@ -200,7 +200,7 @@
 	rename_area(A, str)
 
 	to_chat(usr, span_notice("You rename the '[prevname]' to '[str]'."))
-	log_game("[key_name(usr)] has renamed [prevname] to [str]")
+	usr.log_message("has renamed [prevname] to [str]", LOG_GAME)
 	A.update_areasize()
 	interact()
 	return TRUE
@@ -210,7 +210,7 @@
 /obj/item/areaeditor/blueprints/cyborg
 	name = "station schematics"
 	desc = "A digital copy of the station blueprints stored in your memory."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "blueprints"
 	fluffnotice = "Intellectual Property of Nanotrasen. For use in engineering cyborgs only. Wipe from memory upon departure from the station."
 
@@ -227,17 +227,19 @@
 	return TRUE
 
 
-/proc/set_area_machinery_title(area/A, title, oldtitle)
+/proc/set_area_machinery_title(area/area, title, oldtitle)
 	if(!oldtitle) // or replacetext goes to infinite loop
 		return
-	for(var/obj/machinery/airalarm/M in A)
-		M.name = replacetext(M.name,oldtitle,title)
-	for(var/obj/machinery/power/apc/M in A)
-		M.name = replacetext(M.name,oldtitle,title)
-	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/M in A)
-		M.name = replacetext(M.name,oldtitle,title)
-	for(var/obj/machinery/atmospherics/components/unary/vent_pump/M in A)
-		M.name = replacetext(M.name,oldtitle,title)
-	for(var/obj/machinery/door/M in A)
-		M.name = replacetext(M.name,oldtitle,title)
+	for(var/obj/machinery/airalarm/airpanel in area)
+		airpanel.name = replacetext(airpanel.name,oldtitle,title)
+	for(var/obj/machinery/power/apc/apcpanel in area)
+		apcpanel.name = replacetext(apcpanel.name,oldtitle,title)
+	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber in area)
+		scrubber.name = replacetext(scrubber.name,oldtitle,title)
+	for(var/obj/machinery/atmospherics/components/unary/vent_pump/vent in area)
+		vent.name = replacetext(vent.name,oldtitle,title)
+	for(var/obj/machinery/door/door in area)
+		door.name = replacetext(door.name,oldtitle,title)
+	for(var/obj/machinery/firealarm/firepanel in area)
+		firepanel.name = replacetext(firepanel.name,oldtitle,title)
 	//TODO: much much more. Unnamed airlocks, cameras, etc.

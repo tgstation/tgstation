@@ -1,7 +1,7 @@
 /obj/item/melee/energy
-	icon = 'icons/obj/transforming_energy.dmi'
+	icon = 'icons/obj/weapons/transforming_energy.dmi'
 	max_integrity = 200
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 30)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 30)
 	attack_verb_continuous = list("hits", "taps", "pokes")
 	attack_verb_simple = list("hit", "tap", "poke")
 	resistance_flags = FIRE_PROOF
@@ -33,7 +33,10 @@
 /obj/item/melee/energy/Initialize(mapload)
 	. = ..()
 	make_transformable()
-	AddComponent(/datum/component/butchering, _speed = 5 SECONDS, _butcher_sound = active_hitsound)
+	AddComponent(/datum/component/butchering, \
+	speed = 5 SECONDS, \
+	butcher_sound = active_hitsound, \
+	)
 
 /obj/item/melee/energy/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -67,16 +70,16 @@
 	if(heat)
 		open_flame()
 
-/obj/item/melee/energy/ignition_effect(atom/A, mob/user)
+/obj/item/melee/energy/ignition_effect(atom/atom, mob/user)
 	if(!heat && !blade_active)
 		return ""
 
 	var/in_mouth = ""
 	if(iscarbon(user))
-		var/mob/living/carbon/C = user
-		if(C.wear_mask)
-			in_mouth = ", barely missing [C.p_their()] nose"
-	. = span_warning("[user] swings [user.p_their()] [name][in_mouth]. [user.p_they(TRUE)] light[user.p_s()] [user.p_their()] [A.name] in the process.")
+		var/mob/living/carbon/carbon_user = user
+		if(carbon_user.wear_mask)
+			in_mouth = ", barely missing [carbon_user.p_their()] nose"
+	. = span_warning("[user] swings [user.p_their()] [name][in_mouth]. [user.p_they(TRUE)] light[user.p_s()] [user.p_their()] [atom.name] in the process.")
 	playsound(loc, hitsound, get_clamped_volume(), TRUE, -1)
 	add_fingerprint(user)
 
@@ -107,6 +110,7 @@
 		heat = initial(heat)
 		STOP_PROCESSING(SSobj, src)
 
+	tool_behaviour = (active ? TOOL_SAW : NONE) //Lets energy weapons cut trees. Also lets them do bonecutting surgery, which is kinda metal!
 	balloon_alert(user, "[name] [active ? "enabled":"disabled"]")
 	playsound(user ? user : src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 35, TRUE)
 	set_light_on(active)
@@ -156,7 +160,7 @@
 	icon_state = "e_sword"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	hitsound = "swing_hit"
+	hitsound = SFX_SWING_HIT
 	force = 3
 	throwforce = 5
 	throw_speed = 3
@@ -195,7 +199,7 @@
 /obj/item/melee/energy/sword/cyborg/saw //Used by medical Syndicate cyborgs
 	name = "energy saw"
 	desc = "For heavy duty cutting. It has a carbon-fiber blade in addition to a toggleable hard-light edge to dramatically increase sharpness."
-	icon = 'icons/obj/surgery.dmi'
+	icon = 'icons/obj/medical/surgery_tools.dmi'
 	icon_state = "esaw"
 	hitsound = 'sound/weapons/circsawhit.ogg'
 	force = 18
@@ -221,7 +225,7 @@
 		"green" = LIGHT_COLOR_GREEN,
 		"purple" = LIGHT_COLOR_LAVENDER,
 		)
-	/// Whether this saber has beel multitooled.
+	/// Whether this saber has been multitooled.
 	var/hacked = FALSE
 
 /obj/item/melee/energy/sword/saber/Initialize(mapload)
@@ -249,19 +253,16 @@
 /obj/item/melee/energy/sword/saber/purple
 	sword_color_icon = "purple"
 
-/obj/item/melee/energy/sword/saber/attackby(obj/item/weapon, mob/living/user, params)
-	if(weapon.tool_behaviour == TOOL_MULTITOOL)
-		if(hacked)
-			to_chat(user, span_warning("It's already fabulous!"))
-		else
-			hacked = TRUE
-			sword_color_icon = "rainbow"
-			to_chat(user, span_warning("RNBW_ENGAGE"))
-			if(force >= active_force)
-				icon_state = "[initial(icon_state)]_on_rainbow"
-				user.update_inv_hands()
-	else
-		return ..()
+/obj/item/melee/energy/sword/saber/multitool_act(mob/living/user, obj/item/tool)
+	if(hacked)
+		to_chat(user, span_warning("It's already fabulous!"))
+		return
+	hacked = TRUE
+	sword_color_icon = "rainbow"
+	to_chat(user, span_warning("RNBW_ENGAGE"))
+	if(force >= active_force)
+		icon_state = "[initial(icon_state)]_on_rainbow"
+		user.update_held_items()
 
 /obj/item/melee/energy/sword/pirate
 	name = "energy cutlass"

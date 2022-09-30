@@ -4,7 +4,7 @@
 	verb_say = "intones"
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "speaking_tile"
-	layer = 5
+	layer = FLY_LAYER
 	resistance_flags = INDESTRUCTIBLE
 	var/speaking = FALSE
 	var/times_spoken_to = 0
@@ -26,10 +26,10 @@
 	switch(times_spoken_to)
 		if(0)
 			SpeakPeace(list("Welcome to the error handling room.","Something's goofed up bad to send you here.","You should probably tell an admin what you were doing, or make a bug report."))
-			for(var/obj/structure/signpost/salvation/S in orange(7))
-				S.invisibility = 0
-				var/datum/effect_system/smoke_spread/smoke = new
-				smoke.set_up(1, S.loc)
+			for(var/obj/structure/signpost/salvation/sign in orange(7))
+				sign.invisibility = 0
+				var/datum/effect_system/fluid_spread/smoke/smoke = new
+				smoke.set_up(1, holder = src, location = sign.loc)
 				smoke.start()
 				break
 		if(1)
@@ -70,7 +70,7 @@
 			SpeakPeace(list("Congratulations.", "By my very loose calculations you've now wasted a decent chunk of the round doing this.", "But you've seen this meme to its conclusion, and that's an experience in itself, right?"))
 		if(251)
 			SpeakPeace(list("Anyway, here.", "I can't give you anything that would impact the progression of the round.","But you've earned this at least."))
-			var/obj/item/reagent_containers/food/drinks/trophy/silver_cup/the_ride = new(get_turf(user))
+			var/obj/item/reagent_containers/cup/glass/trophy/silver_cup/the_ride = new(get_turf(user))
 			the_ride.name = "Overextending The Joke: Second Place"
 			the_ride.desc = "There's a point where this needed to stop, and we've clearly passed it."
 		if(252)
@@ -81,7 +81,7 @@
 			SpeakPeace(list("The ends exists somewhere beyond meaningful milestones.", "There will be no more messages until then.", "You disgust me."))
 		if(5643)
 			user.client.give_award(/datum/award/achievement/misc/time_waste, user)
-			var/obj/item/reagent_containers/food/drinks/trophy/gold_cup/never_ends = new(get_turf(user))
+			var/obj/item/reagent_containers/cup/glass/trophy/gold_cup/never_ends = new(get_turf(user))
 			never_ends.name = "Overextending The Joke: First Place"
 			never_ends.desc = "And so we are left alone with our regrets."
 		else
@@ -98,13 +98,13 @@
 /obj/structure/speaking_tile/attack_hulk(mob/user)
 	return
 
-/obj/structure/speaking_tile/attack_larva(mob/user)
+/obj/structure/speaking_tile/attack_larva(mob/user, list/modifiers)
 	return interact(user)
 
 /obj/structure/speaking_tile/attack_ai(mob/user)
 	return interact(user)
 
-/obj/structure/speaking_tile/attack_slime(mob/user)
+/obj/structure/speaking_tile/attack_slime(mob/user, list/modifiers)
 	return interact(user)
 
 /obj/structure/speaking_tile/attack_animal(mob/user, list/modifiers)
@@ -126,7 +126,7 @@
 
 /obj/item/rupee/Initialize(mapload)
 	. = ..()
-	var/newcolor = color2hex(pick(10;"green", 5;"blue", 3;"red", 1;"purple"))
+	var/newcolor = pick(10;COLOR_GREEN, 5;COLOR_BLUE, 3;COLOR_RED, 1;COLOR_PURPLE)
 	add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,

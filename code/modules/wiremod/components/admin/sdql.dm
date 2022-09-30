@@ -6,6 +6,7 @@
 /obj/item/circuit_component/sdql_operation
 	display_name = "SDQL Operation"
 	desc = "A component that performs an SDQL operation when invoked."
+	category = "Admin"
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL|CIRCUIT_FLAG_ADMIN
 
 	/// SDQL Operation to invoke
@@ -30,5 +31,6 @@
 	if(!operation)
 		return
 
+	log_admin_circuit("[parent.get_creator()] performed SDQL query [operation].")
 	var/result = HandleUserlessSDQL(parent.get_creator(), operation)
 	results.set_output(result)

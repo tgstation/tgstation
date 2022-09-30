@@ -35,7 +35,7 @@
 	var/team_name = stripped_input(user,"Team name ?")
 	if(!team_name)
 		return
-	var/datum/team/custom/T = new()
+	var/datum/team/T = new()
 	T.name = team_name
 
 	message_admins("[key_name_admin(usr)] created new [name] antagonist team.")
@@ -145,39 +145,3 @@
 
 /datum/team/proc/get_admin_commands()
 	return list()
-
-//Custom team subtype created by the panel, allow forcing hud for the team for now
-/datum/team/custom
-	var/datum/atom_hud/antag/custom_hud
-	var/custom_hud_state = "traitor"
-
-/datum/team/custom/add_member(datum/mind/new_member)
-	. = ..()
-	if(custom_hud)
-		custom_hud.join_hud(new_member.current)
-		set_antag_hud(new_member.current,custom_hud_state)
-
-/datum/team/custom/remove_member(datum/mind/member)
-	. = ..()
-	if(custom_hud)
-		custom_hud.leave_hud(member.current)
-
-/datum/team/custom/get_admin_commands()
-	. = ..()
-	.["Force HUD"] = CALLBACK(src,.proc/admin_force_hud)
-
-//This is here if you want admin created teams to tell each other apart easily.
-/datum/team/custom/proc/admin_force_hud(mob/user)
-	var/list/possible_icons = icon_states('icons/mob/hud.dmi')
-	var/new_hud_state = input(user,"Choose hud icon state","Custom HUD","traitor") as null|anything in sort_list(possible_icons)
-	if(!new_hud_state)
-		return
-	//suppose could ask for color too
-	custom_hud_state = new_hud_state
-	custom_hud = new
-	custom_hud.self_visible = TRUE
-	GLOB.huds += custom_hud //Make it show in admin hud
-
-	for(var/datum/mind/M in members)
-		custom_hud.join_hud(M.current)
-		set_antag_hud(M.current,custom_hud_state)

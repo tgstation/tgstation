@@ -25,25 +25,50 @@
 
 /obj/item/rcl/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
-	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
-
-/obj/item/rcl/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob)
-	AddComponent(/datum/component/two_handed)
+	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HANDS)
+	AddComponent(/datum/component/two_handed, wield_callback = CALLBACK(src, .proc/on_wield), unwield_callback = CALLBACK(src, .proc/on_unwield))
 
 /// triggered on wield of two handed item
 /obj/item/rcl/proc/on_wield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-
 	active = TRUE
 
 /// triggered on unwield of two handed item
 /obj/item/rcl/proc/on_unwield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-
 	active = FALSE
+
+/obj/item/rcl/screwdriver_act(mob/living/user, obj/item/tool)
+	if(!loaded)
+		return FALSE
+	. = TRUE
+	if(ghetto && prob(10)) //Is it a ghetto RCL? If so, give it a 10% chance to fall apart
+		to_chat(user, span_warning("You attempt to loosen the securing screws on the side, but it falls apart!"))
+		while(loaded.amount > 30) //There are only two kinds of situations: "nodiff" (60,90), or "diff" (31-59, 61-89)
+			var/diff = loaded.amount % 30
+			if(diff)
+				loaded.use(diff)
+				new /obj/item/stack/pipe_cleaner_coil(get_turf(user), diff)
+			else
+				loaded.use(30)
+				new /obj/item/stack/pipe_cleaner_coil(get_turf(user), 30)
+		qdel(src)
+		return
+
+	tool.play_tool_sound(src)
+	to_chat(user, span_notice("You loosen the securing screws on the side, allowing you to lower the guiding edge and retrieve the wires."))
+	while(loaded.amount > 30) //There are only two kinds of situations: "nodiff" (60,90), or "diff" (31-59, 61-89)
+		var/diff = loaded.amount % 30
+		if(diff)
+			loaded.use(diff)
+			new /obj/item/stack/pipe_cleaner_coil(get_turf(user), diff)
+		else
+			loaded.use(30)
+			new /obj/item/stack/pipe_cleaner_coil(get_turf(user), 30)
+	loaded.max_amount = initial(loaded.max_amount)
+	if(!user.put_in_hands(loaded))
+		loaded.forceMove(get_turf(user))
+
+	loaded = null
+	update_appearance()
 
 /obj/item/rcl/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/stack/pipe_cleaner_coil))
@@ -66,37 +91,6 @@
 			return
 		update_appearance()
 		to_chat(user, span_notice("You add the pipe cleaners to [src]. It now contains [loaded.amount]."))
-	else if(W.tool_behaviour == TOOL_SCREWDRIVER)
-		if(!loaded)
-			return
-		if(ghetto && prob(10)) //Is it a ghetto RCL? If so, give it a 10% chance to fall apart
-			to_chat(user, span_warning("You attempt to loosen the securing screws on the side, but it falls apart!"))
-			while(loaded.amount > 30) //There are only two kinds of situations: "nodiff" (60,90), or "diff" (31-59, 61-89)
-				var/diff = loaded.amount % 30
-				if(diff)
-					loaded.use(diff)
-					new /obj/item/stack/pipe_cleaner_coil(get_turf(user), diff)
-				else
-					loaded.use(30)
-					new /obj/item/stack/pipe_cleaner_coil(get_turf(user), 30)
-			qdel(src)
-			return
-
-		to_chat(user, span_notice("You loosen the securing screws on the side, allowing you to lower the guiding edge and retrieve the wires."))
-		while(loaded.amount > 30) //There are only two kinds of situations: "nodiff" (60,90), or "diff" (31-59, 61-89)
-			var/diff = loaded.amount % 30
-			if(diff)
-				loaded.use(diff)
-				new /obj/item/stack/pipe_cleaner_coil(get_turf(user), diff)
-			else
-				loaded.use(30)
-				new /obj/item/stack/pipe_cleaner_coil(get_turf(user), 30)
-		loaded.max_amount = initial(loaded.max_amount)
-		if(!user.put_in_hands(loaded))
-			loaded.forceMove(get_turf(user))
-
-		loaded = null
-		update_appearance()
 	else
 		..()
 
@@ -262,7 +256,6 @@
 	if(!wiring_gui_menu)
 		return
 
-	wiring_gui_menu.entry_animation = FALSE //stop the open anim from playing each time we update
 	var/list/choices = wiringGuiGenerateChoices(user)
 
 	wiring_gui_menu.change_choices(choices,FALSE)
@@ -348,3 +341,13 @@
 			icon_state = "rclg-1"
 			inhand_icon_state = "rclg-1"
 	return ..()
+
+/datum/action/item_action/rcl_col
+	name = "Change Cable Color"
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon_state = "rcl_rainbow"
+
+/datum/action/item_action/rcl_gui
+	name = "Toggle Fast Wiring Gui"
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon_state = "rcl_gui"

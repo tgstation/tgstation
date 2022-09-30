@@ -4,7 +4,6 @@
 	desc = "These clunky gauntlets allow you to drag things with more confidence on them not getting nabbed from you."
 	icon_state = "haul_gauntlet"
 	inhand_icon_state = "bgloves"
-	transfer_prints = FALSE
 	equip_delay_self = 3 SECONDS
 	equip_delay_other = 4 SECONDS
 	clothing_traits = list(TRAIT_CHUNKYFINGERS)
@@ -20,7 +19,7 @@
 /obj/item/clothing/gloves/cargo_gauntlet/proc/on_glove_equip(datum/source, mob/equipper, slot)
 	SIGNAL_HANDLER
 
-	if(slot != ITEM_SLOT_GLOVES)
+	if(!(slot & ITEM_SLOT_GLOVES))
 		return
 
 	var/datum/component/strong_pull/pull_component = pull_component_weakref?.resolve()
@@ -55,8 +54,22 @@
 	desc = "Just looking at these fills you with an urge to beat the shit out of people."
 	icon_state = "rapid"
 	inhand_icon_state = "rapid"
-	transfer_prints = TRUE
+	clothing_traits = list(TRAIT_FINGERPRINT_PASSTHROUGH)
 
-/obj/item/clothing/gloves/rapid/ComponentInitialize()
+/obj/item/clothing/gloves/rapid/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/wearertargeting/punchcooldown)
+
+/obj/item/clothing/gloves/radio
+	name = "translation gloves"
+	desc = "A pair of electronic gloves which connect to nearby radios wirelessly. Allows for sign language users to 'speak' over comms."
+	icon_state = "radio_g"
+	inhand_icon_state = "radio_g"
+	clothing_traits = list(TRAIT_CAN_SIGN_ON_COMMS)
+
+/obj/item/clothing/gloves/race
+	name = "race gloves"
+	desc = "Extremely finely made gloves meant for use by sportsmen in speed-shooting competitions."
+	clothing_traits = list(TRAIT_DOUBLE_TAP)
+	icon_state = "black"
+	inhand_icon_state = "blackgloves"

@@ -6,6 +6,7 @@
 /obj/item/circuit_component/module
 	display_name = "Module"
 	desc = "A component that has other components within it, acting like a function. Use it in your hand to control the amount of input and output ports it has, as well as being able to access the integrated circuit contained inside."
+	category = "Abstract"
 
 	var/obj/item/integrated_circuit/module/internal_circuit
 

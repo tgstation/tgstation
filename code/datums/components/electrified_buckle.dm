@@ -58,7 +58,7 @@
 	if(usage_flags & SHOCK_REQUIREMENT_ITEM)
 		required_object = input_item
 		required_object.Move(parent_as_movable)
-		RegisterSignal(required_object, COMSIG_PARENT_PREQDELETED, .proc/delete_self)
+		RegisterSignal(required_object, COMSIG_PARENT_QDELETING, .proc/delete_self)
 		RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER), .proc/move_required_object_from_contents)
 
 		if(usage_flags & SHOCK_REQUIREMENT_ON_SIGNAL_RECEIVED)
@@ -109,7 +109,7 @@
 			UnregisterSignal(parent, requested_signal_parent_emits)
 
 	if(required_object)
-		UnregisterSignal(required_object, list(COMSIG_PARENT_PREQDELETED, COMSIG_ASSEMBLY_PULSED))
+		UnregisterSignal(required_object, list(COMSIG_PARENT_QDELETING, COMSIG_ASSEMBLY_PULSED))
 		if(parent_as_movable && (required_object in parent_as_movable.contents))
 			required_object.Move(parent_as_movable.loc)
 

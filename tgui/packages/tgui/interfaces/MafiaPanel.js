@@ -6,19 +6,9 @@ import { Window } from '../layouts';
 
 export const MafiaPanel = (props, context) => {
   const { act, data } = useBackend(context);
-  const {
-    actions,
-    phase,
-    roleinfo,
-    role_theme,
-    admin_controls,
-  } = data;
+  const { actions, phase, roleinfo, role_theme, admin_controls } = data;
   return (
-    <Window
-      title="Mafia"
-      theme={role_theme}
-      width={650}
-      height={580}>
+    <Window title="Mafia" theme={role_theme} width={650} height={580}>
       <Window.Content>
         <Stack fill vertical>
           {!roleinfo && (
@@ -31,12 +21,14 @@ export const MafiaPanel = (props, context) => {
               <MafiaRole />
             </Stack.Item>
           )}
-          {actions?.map(action => (
+          {actions?.map((action) => (
             <Stack.Item key={action}>
               <Button
-                onClick={() => act('mf_action', {
-                  atype: action,
-                })}>
+                onClick={() =>
+                  act('mf_action', {
+                    atype: action,
+                  })
+                }>
                 {action}
               </Button>
             </Stack.Item>
@@ -60,7 +52,7 @@ export const MafiaPanel = (props, context) => {
                     {!!roleinfo && (
                       <Stack.Item height="80px">
                         <Section fill scrollable>
-                          {roleinfo.action_log?.map(line => (
+                          {roleinfo.action_log?.map((line) => (
                             <Box key={line}>{line}</Box>
                           ))}
                         </Section>
@@ -84,24 +76,20 @@ export const MafiaPanel = (props, context) => {
 
 const MafiaLobby = (props, context) => {
   const { act, data } = useBackend(context);
-  const {
-    lobbydata,
-    phase,
-    timeleft,
-  } = data;
-  const readyGhosts = lobbydata ? lobbydata.filter(
-    player => player.status === "Ready") : null;
+  const { lobbydata, phase, timeleft } = data;
+  const readyGhosts = lobbydata
+    ? lobbydata.filter((player) => player.status === 'Ready')
+    : null;
   return (
     <Section
       fill
       scrollable
       title="Lobby"
-      buttons={(
+      buttons={
         <>
           Phase = {phase}
           {' | '}
-          <TimeDisplay auto="down" value={timeleft} />
-          {' '}
+          <TimeDisplay auto="down" value={timeleft} />{' '}
           <Button
             icon="clipboard-check"
             tooltipPosition="bottom-start"
@@ -111,7 +99,8 @@ const MafiaLobby = (props, context) => {
               for the next.
             `}
             content="Sign Up"
-            onClick={() => act('mf_signup')} />
+            onClick={() => act('mf_signup')}
+          />
           <Button
             icon="eye"
             tooltipPosition="bottom-start"
@@ -123,27 +112,19 @@ const MafiaLobby = (props, context) => {
               rejoin SS13.
             `}
             content="Spectate"
-            onClick={() => act('mf_spectate')} />
+            onClick={() => act('mf_spectate')}
+          />
         </>
-      )}>
+      }>
       <NoticeBox info>
-        The lobby currently has {readyGhosts
-          ? readyGhosts.length : "0"}/12 valid players signed up.
+        The lobby currently has {readyGhosts ? readyGhosts.length : '0'}/12
+        valid players signed up.
       </NoticeBox>
-      {lobbydata?.map(lobbyist => (
-        <Stack
-          key={lobbyist}
-          className="candystripe"
-          p={1}
-          align="baseline">
-          <Stack.Item grow>
-            {lobbyist.name}
-          </Stack.Item>
-          <Stack.Item>
-            Status:
-          </Stack.Item>
-          <Stack.Item
-            color={lobbyist.status === 'Ready' ? 'green' : 'red'}>
+      {lobbydata?.map((lobbyist) => (
+        <Stack key={lobbyist} className="candystripe" p={1} align="baseline">
+          <Stack.Item grow>{lobbyist.name}</Stack.Item>
+          <Stack.Item>Status:</Stack.Item>
+          <Stack.Item color={lobbyist.status === 'Ready' ? 'green' : 'red'}>
             {lobbyist.status} {lobbyist.spectating}
           </Stack.Item>
         </Stack>
@@ -154,17 +135,13 @@ const MafiaLobby = (props, context) => {
 
 const MafiaRole = (props, context) => {
   const { act, data } = useBackend(context);
-  const {
-    phase,
-    roleinfo,
-    timeleft,
-  } = data;
+  const { phase, roleinfo, timeleft } = data;
   return (
     <Section
       title={phase}
       minHeight="100px"
       maxHeight="50px"
-      buttons={(
+      buttons={
         <Box
           style={{
             'font-family': 'Consolas, monospace',
@@ -174,35 +151,27 @@ const MafiaRole = (props, context) => {
           }}>
           <TimeDisplay auto="down" value={timeleft} />
         </Box>
-      )}>
+      }>
       <Stack align="center">
         <Stack.Item grow>
-          <Box bold>
-            You are the {roleinfo.role}
-          </Box>
-          <Box italic>
-            {roleinfo.desc}
-          </Box>
+          <Box bold>You are the {roleinfo.role}</Box>
+          <Box italic>{roleinfo.desc}</Box>
         </Stack.Item>
         <Stack.Item>
           <Box
-            className={classes([
-              'mafia32x32',
-              roleinfo.revealed_icon,
-            ])}
+            className={classes(['mafia32x32', roleinfo.revealed_icon])}
             style={{
               'transform': 'scale(2) translate(0px, 10%)',
               'vertical-align': 'middle',
-            }} />
+            }}
+          />
           <Box
-            className={classes([
-              'mafia32x32',
-              roleinfo.hud_icon,
-            ])}
+            className={classes(['mafia32x32', roleinfo.hud_icon])}
             style={{
               'transform': 'scale(2) translate(-5px, -5px)',
               'vertical-align': 'middle',
-            }} />
+            }}
+          />
         </Stack.Item>
       </Stack>
     </Section>
@@ -211,9 +180,7 @@ const MafiaRole = (props, context) => {
 
 const MafiaListOfRoles = (props, context) => {
   const { act, data } = useBackend(context);
-  const {
-    all_roles,
-  } = data;
+  const { all_roles } = data;
   return (
     <Section
       fill
@@ -244,26 +211,22 @@ const MafiaListOfRoles = (props, context) => {
         </>
       }>
       <Flex direction="column">
-        {all_roles?.map(r => (
+        {all_roles?.map((r) => (
           <Flex.Item
             key={r}
             height="30px"
             className="Section__title candystripe">
-            <Flex
-              height="18px"
-              align="center"
-              justify="space-between">
-              <Flex.Item>
-                {r}
-              </Flex.Item>
-              <Flex.Item
-                textAlign="right">
+            <Flex height="18px" align="center" justify="space-between">
+              <Flex.Item>{r}</Flex.Item>
+              <Flex.Item textAlign="right">
                 <Button
                   color="transparent"
                   icon="question"
-                  onClick={() => act('mf_lookup', {
-                    atype: r.slice(0, -3),
-                  })}
+                  onClick={() =>
+                    act('mf_lookup', {
+                      atype: r.slice(0, -3),
+                    })
+                  }
                 />
               </Flex.Item>
             </Flex>
@@ -276,9 +239,7 @@ const MafiaListOfRoles = (props, context) => {
 
 const MafiaJudgement = (props, context) => {
   const { act, data } = useBackend(context);
-  const {
-    judgement_phase,
-  } = data;
+  const { judgement_phase } = data;
   return (
     <Section
       title="Judgement"
@@ -301,12 +262,9 @@ const MafiaJudgement = (props, context) => {
           content="INNOCENT!"
           color="good"
           disabled={!judgement_phase}
-          onClick={() => act('vote_innocent')} />
-        {!judgement_phase && (
-          <Box>
-            There is nobody on trial at the moment.
-          </Box>
-        )}
+          onClick={() => act('vote_innocent')}
+        />
+        {!judgement_phase && <Box>There is nobody on trial at the moment.</Box>}
         {!!judgement_phase && (
           <Box>
             It is now time to vote, vote the accused innocent or guilty!
@@ -335,13 +293,11 @@ const MafiaJudgement = (props, context) => {
 
 const MafiaPlayers = (props, context) => {
   const { act, data } = useBackend(context);
-  const {
-    players,
-  } = data;
+  const { players } = data;
   return (
     <Section fill scrollable title="Players">
       <Flex direction="column">
-        {players?.map(player => (
+        {players?.map((player) => (
           <Flex.Item
             height="30px"
             className="Section__title candystripe"
@@ -351,19 +307,21 @@ const MafiaPlayers = (props, context) => {
                 {player.name} {!player.alive && '(DEAD)'}
               </Stack.Item>
               <Stack.Item shrink={0}>
-                {player.votes !== undefined
-                  && !!player.alive
-                  && `Votes: ${player.votes}`}
+                {player.votes !== undefined &&
+                  !!player.alive &&
+                  `Votes: ${player.votes}`}
               </Stack.Item>
               <Stack.Item shrink={0} minWidth="42px" textAlign="center">
-                {player.actions?.map(action => (
+                {player.actions?.map((action) => (
                   <Button
                     key={action}
                     fluid
-                    onClick={() => act('mf_targ_action', {
-                      atype: action,
-                      target: player.ref,
-                    })}>
+                    onClick={() =>
+                      act('mf_targ_action', {
+                        atype: action,
+                        target: player.ref,
+                      })
+                    }>
                     {action}
                   </Button>
                 ))}
@@ -379,49 +337,32 @@ const MafiaPlayers = (props, context) => {
 const MafiaAdmin = (props, context) => {
   const { act, data } = useBackend(context);
   return (
-    <Collapsible
-      title="ADMIN CONTROLS"
-      color="red">
+    <Collapsible title="ADMIN CONTROLS" color="red">
       <Section>
-        <Collapsible
-          title="A kind, coder warning"
-          color="transparent">
-          Almost all of these are all built to help me debug
-          the game (ow, debugging a 12 player game!) So they are
-          rudamentary and prone to breaking at the drop of a hat.
-          Make sure you know what you&apos;re doing when you press one.
-          Also because an admin did it: do not gib/delete/dust
-          anyone! It will runtime the game to death
+        <Collapsible title="A kind, coder warning" color="transparent">
+          Almost all of these are all built to help me debug the game (ow,
+          debugging a 12 player game!) So they are rudamentary and prone to
+          breaking at the drop of a hat. Make sure you know what you&apos;re
+          doing when you press one. Also because an admin did it: do not
+          gib/delete/dust anyone! It will runtime the game to death
         </Collapsible>
-        <Button
-          icon="arrow-right"
-          onClick={() => act('next_phase')}>
+        <Button icon="arrow-right" onClick={() => act('next_phase')}>
           Next Phase
         </Button>
-        <Button
-          icon="home"
-          onClick={() => act('players_home')}>
+        <Button icon="home" onClick={() => act('players_home')}>
           Send All Players Home
         </Button>
-        <Button
-          icon="sync-alt"
-          onClick={() => act('new_game')}>
+        <Button icon="sync-alt" onClick={() => act('new_game')}>
           New Game
         </Button>
-        <Button
-          icon="skull"
-          onClick={() => act('nuke')}>
+        <Button icon="skull" onClick={() => act('nuke')}>
           Nuke
         </Button>
         <br />
-        <Button
-          icon="paint-brush"
-          onClick={() => act('debug_setup')}>
+        <Button icon="paint-brush" onClick={() => act('debug_setup')}>
           Create Custom Setup
         </Button>
-        <Button
-          icon="paint-roller"
-          onClick={() => act('cancel_setup')}>
+        <Button icon="paint-roller" onClick={() => act('cancel_setup')}>
           Reset Custom Setup
         </Button>
       </Section>

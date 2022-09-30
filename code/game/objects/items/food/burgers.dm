@@ -13,13 +13,13 @@
 	desc = "The cornerstone of every nutritious breakfast."
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 1)
 	foodtypes = GRAIN | MEAT
-	custom_price = PAYCHECK_ASSISTANT * 0.8
+	custom_price = PAYCHECK_CREW * 0.8
 	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/burger/plain/Initialize(mapload)
 	. = ..()
 	if(prob(1))
-		new/obj/effect/particle_effect/smoke(get_turf(src))
+		new/obj/effect/particle_effect/fluid/smoke(get_turf(src))
 		playsound(src, 'sound/effects/smoke.ogg', 50, TRUE)
 		visible_message(span_warning("Oh, ye gods! [src] is ruined! But what if...?"))
 		name = "steamed ham"
@@ -33,24 +33,24 @@
 	desc = "A bloody burger."
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("bun" = 2, "long pig" = 4)
-	foodtypes = MEAT | GRAIN | GROSS
+	foodtypes = MEAT | GRAIN | GORE
 	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/burger/human/CheckParts(list/parts_list)
 	..()
 	var/obj/item/food/patty/human/human_patty = locate(/obj/item/food/patty/human) in contents
-	if(LAZYLEN(human_patty.custom_materials))
-		for(var/datum/material/meat/mob_meat/mob_meat_material in human_patty.custom_materials)
-			if(mob_meat_material.subjectname)
-				name = "[mob_meat_material.subjectname] burger"
-			else if(mob_meat_material.subjectjob)
-				name = "[mob_meat_material.subjectjob] burger"
+	for(var/datum/material/meat/mob_meat/mob_meat_material in human_patty.custom_materials)
+		if(mob_meat_material.subjectname)
+			name = "[mob_meat_material.subjectname] burger"
+		else if(mob_meat_material.subjectjob)
+			name = "[mob_meat_material.subjectjob] burger"
 
 /obj/item/food/burger/corgi
 	name = "corgi burger"
 	desc = "You monster."
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 6)
-	foodtypes = GRAIN | MEAT | GROSS
+	tastes = list("bun" = 4, "corgi meat" = 2)
+	foodtypes = GRAIN | MEAT | GORE
 	venue_value = FOOD_PRICE_EXOTIC
 
 
@@ -60,7 +60,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 6)
 	icon_state = "appendixburger"
 	tastes = list("bun" = 4, "grass" = 2)
-	foodtypes = GRAIN | MEAT | GROSS
+	foodtypes = GRAIN | MEAT | GORE
 	venue_value = FOOD_PRICE_NORMAL
 
 /obj/item/food/burger/fish
@@ -113,6 +113,7 @@
 	desc = "Best served rawr."
 	icon_state = "bearger"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 5)
+	tastes = list("bun" = 2, "meat" = 2, "salmon" = 2)
 	foodtypes = GRAIN | MEAT
 	venue_value = FOOD_PRICE_EXOTIC
 
@@ -120,7 +121,8 @@
 	name = "clown burger"
 	desc = "This tastes funny..."
 	icon_state = "clownburger"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/medicine/mannitol = 6, /datum/reagent/consumable/nutriment/vitamin = 6)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 6)
+	tastes = list("bun" = 2, "a bad joke" = 4)
 	foodtypes = GRAIN | FRUIT
 	venue_value = FOOD_PRICE_NORMAL
 
@@ -138,7 +140,7 @@
 	icon_state = "brainburger"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/medicine/mannitol = 6, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/consumable/nutriment/protein = 6)
 	tastes = list("bun" = 4, "brains" = 2)
-	foodtypes = GRAIN | MEAT | GROSS
+	foodtypes = GRAIN | MEAT | GORE
 	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/burger/ghost
@@ -164,7 +166,7 @@
 	switch(paranormal_activity)
 		if(97 to 100)
 			audible_message("[src] rattles a length of chain.")
-			playsound(loc,'sound/spookoween/chain_rattling.ogg', 300, TRUE)
+			playsound(loc, 'sound/misc/chain_rattling.ogg', 300, TRUE)
 		if(91 to 96)
 			say(pick("OoOoOoo.", "OoooOOooOoo!!"))
 		if(84 to 90)
@@ -173,15 +175,14 @@
 		if(71 to 83)
 			step(src, dir)
 		if(65 to 70)
-			var/obj/machinery/light/L = locate(/obj/machinery/light) in view(4, src)
-			if(L)
-				L.flicker()
+			var/obj/machinery/light/light = locate(/obj/machinery/light) in view(4, src)
+			light?.flicker()
 		if(62 to 64)
-			playsound(loc,pick('sound/hallucinations/i_see_you1.ogg', 'sound/hallucinations/i_see_you2.ogg'), 50, TRUE, ignore_walls = FALSE)
+			playsound(loc, pick('sound/hallucinations/i_see_you1.ogg', 'sound/hallucinations/i_see_you2.ogg'), 50, TRUE, ignore_walls = FALSE)
 		if(61)
 			visible_message("[src] spews out a glob of ectoplasm!")
 			new /obj/effect/decal/cleanable/greenglow/ecto(loc)
-			playsound(loc,'sound/effects/splat.ogg', 200, TRUE)
+			playsound(loc, 'sound/effects/splat.ogg', 200, TRUE)
 
 		//If i was less lazy i would make the burger forcefeed itself to a nearby mob here.
 
@@ -291,7 +292,7 @@
 	name = "super bite burger"
 	desc = "This is a mountain of a burger. FOOD!"
 	icon_state = "superbiteburger"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 25, /datum/reagent/consumable/nutriment/protein = 40, /datum/reagent/consumable/nutriment/vitamin = 12)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 26, /datum/reagent/consumable/nutriment/protein = 40, /datum/reagent/consumable/nutriment/vitamin = 13)
 	w_class = WEIGHT_CLASS_NORMAL
 	bite_consumption = 7
 	max_volume = 100
@@ -299,11 +300,18 @@
 	foodtypes = GRAIN | MEAT | DAIRY
 	venue_value = FOOD_PRICE_EXOTIC
 
+/obj/item/food/burger/superbite/suicide_act(mob/user)
+	user.visible_message(span_suicide("[user] starts to eat [src] in one bite, it looks like [user.p_theyre()] trying to commit suicide!"))
+	var/datum/component/edible/component = GetComponent(/datum/component/edible)
+	component?.TakeBite(user, user)
+	return OXYLOSS
+
 /obj/item/food/burger/fivealarm
 	name = "five alarm burger"
 	desc = "HOT! HOT!"
 	icon_state = "fivealarmburger"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/capsaicin = 5, /datum/reagent/consumable/condensedcapsaicin = 5, /datum/reagent/consumable/nutriment/vitamin = 6)
+	tastes = list("extreme heat" = 4, "bun" = 2)
 	foodtypes = GRAIN | MEAT
 	venue_value = FOOD_PRICE_NORMAL
 
@@ -312,7 +320,8 @@
 	desc = "Pretty much what you'd expect..."
 	icon_state = "ratburger"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
-	foodtypes = GRAIN | MEAT | GROSS
+	tastes = list("dead rat" = 4, "bun" = 2)
+	foodtypes = GRAIN | MEAT | GORE
 	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/burger/baseball
@@ -320,8 +329,9 @@
 	desc = "It's still warm. The steam coming off of it looks like baseball."
 	icon_state = "baseball"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
+	tastes = list("bun" = 2, "a home run" = 4)
 	foodtypes = GRAIN | GROSS
-	custom_price = PAYCHECK_ASSISTANT * 0.8
+	custom_price = PAYCHECK_CREW * 0.8
 	venue_value = FOOD_PRICE_NORMAL
 
 /obj/item/food/burger/baconburger
@@ -331,7 +341,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("bacon" = 4, "bun" = 2)
 	foodtypes = GRAIN | MEAT
-	custom_premium_price = PAYCHECK_ASSISTANT * 1.6
+	custom_premium_price = PAYCHECK_CREW * 1.6
 	venue_value = FOOD_PRICE_NORMAL
 
 /obj/item/food/burger/empoweredburger
@@ -349,7 +359,7 @@
 	icon_state = "catburger"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("bun" = 4, "meat" = 2, "cat" = 2)
-	foodtypes = GRAIN | MEAT | GROSS
+	foodtypes = GRAIN | MEAT | GORE
 
 /obj/item/food/burger/crab
 	name = "crab burger"
@@ -424,8 +434,8 @@
 
 /obj/item/food/burger/crazy/process(delta_time) // DIT EES HORRIBLE
 	if(DT_PROB(2.5, delta_time))
-		var/datum/effect_system/smoke_spread/bad/green/smoke = new
-		smoke.set_up(0, src)
+		var/datum/effect_system/fluid_spread/smoke/bad/green/smoke = new
+		smoke.set_up(0, holder = src, location = src)
 		smoke.start()
 
 // empty burger you can customize

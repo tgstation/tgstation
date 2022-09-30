@@ -9,11 +9,11 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	name = "Blob Overmind"
 	real_name = "Blob Overmind"
 	desc = "The overmind. It controls the blob."
-	icon = 'icons/mob/cameramob.dmi'
+	icon = 'icons/mob/silicon/cameramob.dmi'
 	icon_state = "marker"
 	mouse_opacity = MOUSE_OPACITY_ICON
 	move_on_shuttle = 1
-	see_in_dark = 8
+	see_in_dark = NIGHTVISION_RANGE
 	invisibility = INVISIBILITY_OBSERVER
 	layer = FLY_LAYER
 	see_invisible = SEE_INVISIBLE_LIVING
@@ -106,9 +106,17 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 			if(blobstrain.effectdesc)
 				to_chat(src, "The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> strain [blobstrain.effectdesc]")
 
-/mob/camera/blob/can_zFall(turf/source, levels)
-	// Prevent blob from falling through zlevels
-	return FALSE
+/mob/camera/blob/can_z_move(direction, turf/start, turf/destination, z_move_flags = NONE, mob/living/rider)
+	if(placed) // The blob can't expand vertically (yet)
+		return FALSE
+	. = ..()
+	if(!.)
+		return
+	var/turf/target_turf = .
+	if(!is_valid_turf(target_turf)) // Allows unplaced blobs to travel through station z-levels
+		if(z_move_flags & ZMOVE_FEEDBACK)
+			to_chat(src, "Your destination is invalid. Move somewhere else and try again.")
+		return null
 
 /mob/camera/blob/proc/is_valid_turf(turf/T)
 	var/area/A = get_area(T)
@@ -130,7 +138,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	else if(!victory_in_progress && (blobs_legit.len >= blobwincount))
 		victory_in_progress = TRUE
 		priority_announce("Biohazard has reached critical mass. Station loss is imminent.", "Biohazard Alert")
-		set_security_level("delta")
+		SSsecurity_level.set_level(SEC_LEVEL_DELTA)
 		max_blob_points = INFINITY
 		blob_points = INFINITY
 		addtimer(CALLBACK(src, .proc/victory), 450)
@@ -176,7 +184,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 				continue
 			A.color = blobstrain.color
 			A.name = "blob"
-			A.icon = 'icons/mob/blob.dmi'
+			A.icon = 'icons/mob/nonhuman-player/blob.dmi'
 			A.icon_state = "blob_shield"
 			A.layer = BELOW_MOB_LAYER
 			A.invisibility = 0
@@ -221,7 +229,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	. = ..()
 	if(!. || !client)
 		return FALSE
-	to_chat(src, span_notice("You are the overmind!"))
+	to_chat(src, span_big("You are the overmind!"))
 	blob_help()
 	update_health_hud()
 	add_points(0)
@@ -243,7 +251,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	blob_points = clamp(blob_points + points, 0, max_blob_points)
 	hud_used.blobpwrdisplay.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(blob_points)]</font></div>")
 
-/mob/camera/blob/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+/mob/camera/blob/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null)
 	if (!message)
 		return
 
@@ -272,7 +280,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	var/rendered = span_big("<font color=\"#EE4000\"><b>\[Blob Telepathy\] [name](<font color=\"[blobstrain.color]\">[blobstrain.name]</font>)</b> [message_a]</font>")
 
 	for(var/mob/M in GLOB.mob_list)
-		if(isovermind(M) || istype(M, /mob/living/simple_animal/hostile/blob))
+		if(isovermind(M) || isblobmonster(M))
 			to_chat(M, rendered)
 		if(isobserver(M))
 			var/link = FOLLOW_LINK(M, src)
@@ -291,7 +299,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		. += "You have [free_strain_rerolls] Free Strain Reroll\s Remaining"
 	if(!placed)
 		if(manualplace_min_time)
-			. +=  "Time Before Manual Placement: [max(round((manualplace_min_time - world.time)*0.1, 0.1), 0)]"
+			. += "Time Before Manual Placement: [max(round((manualplace_min_time - world.time)*0.1, 0.1), 0)]"
 		. += "Time Before Automatic Placement: [max(round((autoplace_max_time - world.time)*0.1, 0.1), 0)]"
 
 /mob/camera/blob/Move(NewLoc, Dir = 0)

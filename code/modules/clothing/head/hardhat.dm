@@ -3,12 +3,12 @@
 	desc = "A piece of headgear used in dangerous working conditions to protect the head. Comes with a built-in flashlight."
 	icon_state = "hardhat0_yellow"
 	inhand_icon_state = "hardhat0_yellow"
-	armor = list(MELEE = 15, BULLET = 5, LASER = 20, ENERGY = 10, BOMB = 20, BIO = 10, RAD = 20, FIRE = 100, ACID = 50, WOUND = 10) // surprisingly robust against head trauma
+	armor = list(MELEE = 15, BULLET = 5, LASER = 20, ENERGY = 10, BOMB = 20, BIO = 50, FIRE = 100, ACID = 50, WOUND = 10) // surprisingly robust against head trauma
 	flags_inv = 0
 	actions_types = list(/datum/action/item_action/toggle_helmet_light)
 	clothing_flags = SNUG_FIT | PLASMAMAN_HELMET_EXEMPT
 	resistance_flags = FIRE_PROOF
-	dynamic_hair_suffix = "+generic"
+
 	light_system = MOVABLE_LIGHT_DIRECTIONAL
 	light_range = 4
 	light_power = 0.8
@@ -21,9 +21,9 @@
 	var/on = FALSE
 
 
-/obj/item/clothing/head/hardhat/ComponentInitialize()
+/obj/item/clothing/head/hardhat/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob)
+	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HEAD)
 
 /obj/item/clothing/head/hardhat/attack_self(mob/living/user)
 	toggle_helmet_light(user)
@@ -109,7 +109,7 @@
 /obj/item/clothing/head/hardhat/atmos/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
 	if(!isinhands)
-		. += emissive_appearance(icon_file, "[icon_state]-emissive", alpha = src.alpha)
+		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
 
 /obj/item/clothing/head/hardhat/weldhat
 	name = "welding hard hat"
@@ -135,6 +135,13 @@
 /obj/item/clothing/head/hardhat/weldhat/AltClick(mob/user)
 	if(user.canUseTopic(src, BE_CLOSE))
 		toggle_welding_screen(user)
+
+/obj/item/clothing/head/hardhat/weldhat/ui_action_click(mob/user, actiontype)
+	if(istype(actiontype, /datum/action/item_action/toggle_welding_screen))
+		toggle_welding_screen(user)
+		return
+
+	return ..()
 
 /obj/item/clothing/head/hardhat/weldhat/proc/toggle_welding_screen(mob/living/user)
 	if(weldingvisortoggle(user))
@@ -185,11 +192,12 @@
 	hat_type = "pumpkin"
 	clothing_flags = SNUG_FIT | PLASMAMAN_HELMET_EXEMPT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
 	light_range = 2 //luminosity when on
 	flags_cover = HEADCOVERSEYES
 	light_color = "#fff2bf"
 	worn_y_offset = 1
+	dog_fashion = /datum/dog_fashion/head/pumpkin/unlit
 
 /obj/item/clothing/head/hardhat/pumpkinhead/set_light_on(new_value)
 	. = ..()
@@ -200,12 +208,20 @@
 /obj/item/clothing/head/hardhat/pumpkinhead/update_overlays()
 	. = ..()
 	if(light_on)
-		. += emissive_appearance(icon, "carved_pumpkin-emissive", alpha = src.alpha)
+		. += emissive_appearance(icon, "carved_pumpkin-emissive", src, alpha = src.alpha)
 
 /obj/item/clothing/head/hardhat/pumpkinhead/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
 	if(light_on && !isinhands)
-		. += emissive_appearance(icon_file, "carved_pumpkin-emissive", alpha = src.alpha)
+		. += emissive_appearance(icon_file, "carved_pumpkin-emissive", src, alpha = src.alpha)
+
+/obj/item/clothing/head/hardhat/pumpkinhead/turn_on(mob/user)
+	. = ..()
+	dog_fashion = /datum/dog_fashion/head/pumpkin/lit
+
+/obj/item/clothing/head/hardhat/pumpkinhead/turn_off(mob/user)
+	. = ..()
+	dog_fashion = /datum/dog_fashion/head/pumpkin/unlit
 
 /obj/item/clothing/head/hardhat/pumpkinhead/blumpkin
 	name = "carved blumpkin"
@@ -214,6 +230,15 @@
 	inhand_icon_state = "hardhat0_blumpkin"
 	hat_type = "blumpkin"
 	light_color = "#76ff8e"
+	dog_fashion = /datum/dog_fashion/head/blumpkin/unlit
+
+/obj/item/clothing/head/hardhat/pumpkinhead/blumpkin/turn_on(mob/user)
+	. = ..()
+	dog_fashion = /datum/dog_fashion/head/blumpkin/lit
+
+/obj/item/clothing/head/hardhat/pumpkinhead/blumpkin/turn_off(mob/user)
+	. = ..()
+	dog_fashion = /datum/dog_fashion/head/blumpkin/unlit
 
 /obj/item/clothing/head/hardhat/reindeer
 	name = "novelty reindeer hat"
@@ -222,8 +247,8 @@
 	inhand_icon_state = "hardhat0_reindeer"
 	hat_type = "reindeer"
 	flags_inv = 0
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
 	light_range = 1 //luminosity when on
-	dynamic_hair_suffix = ""
+
 
 	dog_fashion = /datum/dog_fashion/head/reindeer

@@ -6,7 +6,7 @@
 	program_icon_state = "smmon_0"
 	extended_desc = "Crystal Integrity Monitoring System, connects to specially calibrated supermatter sensors to provide information on the status of supermatter-based engines."
 	requires_ntnet = TRUE
-	transfer_access = ACCESS_CONSTRUCTION
+	transfer_access = list(ACCESS_CONSTRUCTION)
 	size = 5
 	tgui_id = "NtosSupermatterMonitor"
 	program_icon = "radiation"
@@ -20,7 +20,7 @@
 	active = null
 	return ..()
 
-/datum/computer_file/program/supermatter_monitor/process_tick()
+/datum/computer_file/program/supermatter_monitor/process_tick(delta_time)
 	..()
 	var/new_status = get_status()
 	if(last_status != new_status)
@@ -30,7 +30,7 @@
 		if(istype(computer))
 			computer.update_appearance()
 
-/datum/computer_file/program/supermatter_monitor/run_program(mob/living/user)
+/datum/computer_file/program/supermatter_monitor/on_start(mob/living/user)
 	. = ..(user)
 	if(!(active in GLOB.machines))
 		active = null
@@ -47,15 +47,15 @@
 	for(var/supermatter in supermatters)
 		clear_supermatter(supermatter)
 	supermatters = list()
-	var/turf/T = get_turf(ui_host())
-	if(!T)
+	var/turf/user_turf = get_turf(ui_host())
+	if(!user_turf)
 		return
-	for(var/obj/machinery/power/supermatter_crystal/S in GLOB.machines)
-		// Delaminating, not within coverage, not on a tile.
-		if (!isturf(S.loc) || !(is_station_level(S.z) || is_mining_level(S.z) || S.z == T.z))
+	for(var/obj/machinery/power/supermatter_crystal/crystal in GLOB.machines)
+		//Exclude Syndicate owned, Delaminating, not within coverage, not on a tile.
+		if (!crystal.include_in_cims || !isturf(crystal.loc) || !(is_station_level(crystal.z) || is_mining_level(crystal.z) || crystal.z == user_turf.z))
 			continue
-		supermatters.Add(S)
-		RegisterSignal(S, COMSIG_PARENT_QDELETING, .proc/react_to_del)
+		supermatters.Add(crystal)
+		RegisterSignal(crystal, COMSIG_PARENT_QDELETING, .proc/react_to_del)
 
 /datum/computer_file/program/supermatter_monitor/proc/get_status()
 	. = SUPERMATTER_INACTIVE
@@ -132,7 +132,7 @@
 
 		data += active.ui_data()
 		data["singlecrystal"] = FALSE
-		
+
 	else
 		var/list/SMS = list()
 		for(var/obj/machinery/power/supermatter_crystal/S in supermatters)

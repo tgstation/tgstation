@@ -85,17 +85,6 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/dirtype = PIPE_BENDABLE
 	var/all_layers
 
-/datum/pipe_info/proc/Render(dispenser)
-	var/dat = "<li><a href='?src=[REF(dispenser)]&[Params()]'>[name]</a></li>"
-
-	// Stationary pipe dispensers don't allow you to pre-select pipe directions.
-	// This makes it impossble to spawn bent versions of bendable pipes.
-	// We add a "Bent" pipe type with a preset diagonal direction to work around it.
-	if(istype(dispenser, /obj/machinery/pipedispenser) && (dirtype == PIPE_BENDABLE || dirtype == /obj/item/pipe/binary/bendable))
-		dat += "<li><a href='?src=[REF(dispenser)]&[Params()]&dir=[NORTHEAST]'>Bent [name]</a></li>"
-
-	return dat
-
 /datum/pipe_info/proc/Params()
 	return ""
 
@@ -196,7 +185,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron=75000, /datum/material/glass=37500)
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 50)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 50)
 	resistance_flags = FIRE_PROOF
 	///Sparks system used when changing device in the UI
 	var/datum/effect_system/spark_spread/spark_system
@@ -263,7 +252,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 /obj/item/pipe_dispenser/equipped(mob/user, slot, initial)
 	. = ..()
-	if(slot == ITEM_SLOT_HANDS)
+	if(slot & ITEM_SLOT_HANDS)
 		RegisterSignal(user, COMSIG_MOUSE_SCROLL_ON, .proc/mouse_wheeled)
 	else
 		UnregisterSignal(user,COMSIG_MOUSE_SCROLL_ON)
@@ -611,6 +600,12 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 				if(isclosedturf(attack_target))
 					to_chat(user, span_warning("[src]'s error light flickers; there's something in the way!"))
 					return
+
+				var/turf/target_turf = get_turf(attack_target)
+				if(target_turf.is_blocked_turf(exclude_mobs = TRUE))
+					to_chat(user, span_warning("[src]'s error light flickers; there's something in the way!"))
+					return
+
 				to_chat(user, span_notice("You start building a transit tube..."))
 				playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
 				if(do_after(user, transit_build_speed, target = attack_target))
@@ -627,7 +622,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 						if(queued_p_flipped)
 							tube.setDir(turn(queued_p_dir, 45))
-							tube.simple_rotate_flip()
+							tube.SimpleRotateFlip()
 
 						tube.add_fingerprint(usr)
 						if(mode & WRENCH_MODE)
@@ -641,7 +636,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 /obj/item/pipe_dispenser/proc/mouse_wheeled(mob/source, atom/A, delta_x, delta_y, params)
 	SIGNAL_HANDLER
-	if(source.incapacitated(ignore_restraints = TRUE, ignore_stasis = TRUE))
+	if(source.incapacitated(IGNORE_RESTRAINTS|IGNORE_STASIS))
 		return
 
 	if(delta_y < 0)

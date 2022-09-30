@@ -1,17 +1,17 @@
 /mob/living/silicon
 	gender = NEUTER
-	has_unlimited_silicon_privilege = 1
+	has_unlimited_silicon_privilege = TRUE
 	verb_say = "states"
 	verb_ask = "queries"
 	verb_exclaim = "declares"
 	verb_yell = "alarms"
 	initial_language_holder = /datum/language_holder/synthetic
-	see_in_dark = 8
+	see_in_dark = NIGHTVISION_RANGE
 	bubble_icon = "machine"
 	mob_biotypes = MOB_ROBOTIC
-	deathsound = 'sound/voice/borg_deathsound.ogg'
+	death_sound = 'sound/voice/borg_deathsound.ogg'
 	speech_span = SPAN_ROBOT
-	flags_1 = PREVENT_CONTENTS_EXPLOSION_1 | RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
+	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	examine_cursor_icon = null
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
 	var/last_lawchange_announce = 0
@@ -27,9 +27,13 @@
 	var/list/alarm_types_show = list(ALARM_ATMOS = 0, ALARM_FIRE = 0, ALARM_POWER = 0, ALARM_CAMERA = 0, ALARM_MOTION = 0)
 	var/list/alarm_types_clear = list(ALARM_ATMOS = 0, ALARM_FIRE = 0, ALARM_POWER = 0, ALARM_CAMERA = 0, ALARM_MOTION = 0)
 
-	var/lawcheck[1]
-	var/ioncheck[1]
-	var/hackedcheck[1]
+	//These lists will contain each law that should be announced / set to yes in the state laws menu.
+	///List keeping track of which laws to announce
+	var/list/lawcheck = list()
+	///List keeping track of hacked laws to announce
+	var/list/hackedcheck = list()
+	///List keeping track of ion laws to announce
+	var/list/ioncheck = list()
 
 	///Are our siliconHUDs on? TRUE for yes, FALSE for no.
 	var/sensors_on = TRUE
@@ -40,10 +44,12 @@
 	var/law_change_counter = 0
 	var/obj/machinery/camera/builtInCamera = null
 	var/updating = FALSE //portable camera camerachunk update
-
+	///Whether we have been emagged
+	var/emagged = FALSE
 	var/hack_software = FALSE //Will be able to use hacking actions
 	interaction_range = 7 //wireless control range
-	var/obj/item/pda/ai/aiPDA
+
+	var/obj/item/modular_computer/tablet/integrated/modularInterface
 
 /mob/living/silicon/Initialize(mapload)
 	. = ..()
@@ -52,24 +58,50 @@
 	if(ispath(radio))
 		radio = new radio(src)
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
-		diag_hud.add_to_hud(src)
+		diag_hud.add_atom_to_hud(src)
 	diag_hud_set_status()
 	diag_hud_set_health()
 	add_sensors()
 	ADD_TRAIT(src, TRAIT_ADVANCEDTOOLUSER, ROUNDSTART_TRAIT)
-	ADD_TRAIT(src, TRAIT_MARTIAL_ARTS_IMMUNE, ROUNDSTART_TRAIT)
+	ADD_TRAIT(src, TRAIT_LITERATE, ROUNDSTART_TRAIT)
 	ADD_TRAIT(src, TRAIT_NOFIRE_SPREAD, ROUNDSTART_TRAIT)
+
 	ADD_TRAIT(src, TRAIT_ASHSTORM_IMMUNE, ROUNDSTART_TRAIT)
+	ADD_TRAIT(src, TRAIT_MADNESS_IMMUNE, ROUNDSTART_TRAIT)
+	ADD_TRAIT(src, TRAIT_MARTIAL_ARTS_IMMUNE, ROUNDSTART_TRAIT)
 
 /mob/living/silicon/Destroy()
 	QDEL_NULL(radio)
 	QDEL_NULL(aicamera)
 	QDEL_NULL(builtInCamera)
-	QDEL_NULL(aiPDA)
 	laws?.owner = null //Laws will refuse to die otherwise.
 	QDEL_NULL(laws)
 	GLOB.silicon_mobs -= src
 	return ..()
+
+/mob/living/silicon/proc/create_modularInterface()
+	if(!modularInterface)
+		modularInterface = new /obj/item/modular_computer/tablet/integrated(src)
+	modularInterface.layer = ABOVE_HUD_PLANE
+	SET_PLANE_EXPLICIT(modularInterface, ABOVE_HUD_PLANE, src)
+	modularInterface.saved_identification = real_name || name
+	if(iscyborg(src))
+		modularInterface.saved_job = "Cyborg"
+		modularInterface.install_component(new /obj/item/computer_hardware/hard_drive/small/robot)
+	if(isAI(src))
+		modularInterface.saved_job = "AI"
+		modularInterface.install_component(new /obj/item/computer_hardware/hard_drive/small/ai)
+	if(ispAI(src))
+		modularInterface.saved_job = "pAI Messenger"
+		modularInterface.install_component(new /obj/item/computer_hardware/hard_drive/small/ai)
+
+/mob/living/silicon/robot/model/syndicate/create_modularInterface()
+	if(!modularInterface)
+		modularInterface = new /obj/item/modular_computer/tablet/integrated/syndicate(src)
+		modularInterface.saved_identification = real_name
+		modularInterface.saved_job = "Cyborg"
+	return ..()
+
 
 /mob/living/silicon/med_hud_set_health()
 	return //we use a different hud
@@ -81,7 +113,7 @@
 	return
 
 /mob/living/silicon/proc/queueAlarm(message, type, incoming = FALSE)
-	var/in_cooldown = (alarms_to_show.len > 0 || alarms_to_clear.len > 0)
+	var/in_cooldown = (length(alarms_to_show) || length(alarms_to_clear))
 	if(incoming)
 		alarms_to_show += message
 		alarm_types_show[type] += 1
@@ -95,10 +127,10 @@
 	addtimer(CALLBACK(src, .proc/show_alarms), 3 SECONDS)
 
 /mob/living/silicon/proc/show_alarms()
-	if(alarms_to_show.len < 5)
+	if(length(alarms_to_show) < 5)
 		for(var/msg in alarms_to_show)
 			to_chat(src, msg)
-	else if(alarms_to_show.len)
+	else if(length(alarms_to_show))
 
 		var/msg = "--- "
 		for(var/alarm_type in alarm_types_show)
@@ -107,11 +139,11 @@
 		msg += "<A href=?src=[REF(src)];showalerts=1'>\[Show Alerts\]</a>"
 		to_chat(src, msg)
 
-	if(alarms_to_clear.len < 3)
+	if(length(alarms_to_clear) < 3)
 		for(var/msg in alarms_to_clear)
 			to_chat(src, msg)
 
-	else if(alarms_to_clear.len)
+	else if(length(alarms_to_clear))
 		var/msg = "--- "
 
 		for(var/alarm_type in alarm_types_clear)
@@ -143,36 +175,48 @@
 		return TRUE
 	return FALSE
 
+/**
+ * Assembles all the zeroth, inherent and supplied laws into a single list.
+ */
+/mob/living/silicon/proc/assemble_laws()
+	var/list/laws_to_return = list()
+	laws_to_return += laws.zeroth
+	for (var/law in laws.inherent)
+		laws_to_return += law
+	for (var/law in laws.supplied)
+		if (law != "") // supplied laws start off with 15 blank strings, so don't add any of those
+			laws_to_return += law
+	return laws_to_return
+
 /mob/living/silicon/Topic(href, href_list)
-	if (href_list["lawc"]) // Toggling whether or not a law gets stated by the State Laws verb --NeoFite
-		var/L = text2num(href_list["lawc"])
-		switch(lawcheck[L+1])
-			if ("Yes")
-				lawcheck[L+1] = "No"
-			if ("No")
-				lawcheck[L+1] = "Yes"
+	if (href_list["lawc"]) // Toggling whether or not a law gets stated by the State Laws verb
+		var/law_index = text2num(href_list["lawc"])
+		var/law = assemble_laws()[law_index + 1]
+		if (law in lawcheck)
+			lawcheck -= law
+		else
+			lawcheck += law
 		checklaws()
 
-	if (href_list["lawi"]) // Toggling whether or not a law gets stated by the State Laws verb --NeoFite
-		var/L = text2num(href_list["lawi"])
-		switch(ioncheck[L])
-			if ("Yes")
-				ioncheck[L] = "No"
-			if ("No")
-				ioncheck[L] = "Yes"
+	if (href_list["lawi"])
+		var/law_index = text2num(href_list["lawi"])
+		var/law = laws.ion[law_index]
+		if (law in ioncheck)
+			ioncheck -= law
+		else
+			ioncheck += law
 		checklaws()
 
 	if (href_list["lawh"])
-		var/L = text2num(href_list["lawh"])
-		switch(hackedcheck[L])
-			if ("Yes")
-				hackedcheck[L] = "No"
-			if ("No")
-				hackedcheck[L] = "Yes"
+		var/law_index = text2num(href_list["lawh"])
+		var/law = laws.hacked[law_index]
+		if (law in hackedcheck)
+			hackedcheck -= law
+		else
+			hackedcheck += law
 		checklaws()
 
-
-	if (href_list["laws"]) // With how my law selection code works, I changed statelaws from a verb to a proc, and call it through my law selection panel. --NeoFite
+	if (href_list["laws"])
 		statelaws()
 
 	if (href_list["printlawtext"]) // this is kinda backwards
@@ -184,6 +228,7 @@
 	return
 
 /mob/living/silicon/proc/statelaws(force = 0)
+	laws_sanity_check()
 	// Create a cache of our laws and lawcheck flags before we do anything else.
 	// These are used to prevent weirdness when laws are changed when the AI is mid-stating.
 	var/lawcache_zeroth = laws.zeroth
@@ -195,100 +240,98 @@
 	var/list/lawcache_lawcheck = lawcheck.Copy()
 	var/list/lawcache_ioncheck = ioncheck.Copy()
 	var/list/lawcache_hackedcheck = hackedcheck.Copy()
-
+	var/forced_log_message = "stating laws[force ? ", forced" : ""]"
 	//"radiomod" is inserted before a hardcoded message to change if and how it is handled by an internal radio.
-	say("[radiomod] Current Active Laws:")
-	//laws_sanity_check()
-	//laws.show_laws(world)
-	var/number = 1
+	say("[radiomod] Current Active Laws:", forced = forced_log_message)
 	sleep(10)
 
 	if (lawcache_zeroth)
-		if (force || lawcache_lawcheck[1] == "Yes")
-			say("[radiomod] 0. [lawcache_zeroth]")
+		if (force || (lawcache_zeroth in lawcache_lawcheck))
+			say("[radiomod] 0. [lawcache_zeroth]", forced = forced_log_message)
 			sleep(10)
 
 	for (var/index in 1 to length(lawcache_hacked))
 		var/law = lawcache_hacked[index]
 		var/num = ion_num()
-		if (length(law) > 0)
-			if (force || lawcache_hackedcheck[index] == "Yes")
-				say("[radiomod] [num]. [law]")
-				sleep(10)
+		if (length(law) <= 0)
+			continue
+		if (force || (law in lawcache_hackedcheck))
+			say("[radiomod] [num]. [law]", forced = forced_log_message)
+			sleep(10)
 
 	for (var/index in 1 to length(lawcache_ion))
 		var/law = lawcache_ion[index]
 		var/num = ion_num()
-		if (length(law) > 0)
-			if (force || lawcache_ioncheck[index] == "Yes")
-				say("[radiomod] [num]. [law]")
-				sleep(10)
+		if (length(law) <= 0)
+			return
+		if (force || (law in lawcache_ioncheck))
+			say("[radiomod] [num]. [law]", forced = forced_log_message)
+			sleep(10)
 
+	var/number = 1
 	for (var/index in 1 to length(lawcache_inherent))
 		var/law = lawcache_inherent[index]
-
-		if (length(law) > 0)
-			if (force || lawcache_lawcheck[index+1] == "Yes")
-				say("[radiomod] [number]. [law]")
-				number++
-				sleep(10)
+		if (length(law) <= 0)
+			continue
+		if (force || (law in lawcache_lawcheck))
+			say("[radiomod] [number]. [law]", forced = forced_log_message)
+			number++
+			sleep(10)
 
 	for (var/index in 1 to length(lawcache_supplied))
 		var/law = lawcache_supplied[index]
 
-		if (length(law) > 0)
-			if(lawcache_lawcheck.len >= number+1)
-				if (force || lawcache_lawcheck[number+1] == "Yes")
-					say("[radiomod] [number]. [law]")
-					number++
-					sleep(10)
+		if (length(law) <= 0)
+			continue
+		if (force || (law in lawcache_lawcheck))
+			say("[radiomod] [number]. [law]", forced = forced_log_message)
+			number++
+			sleep(10)
 
-
-/mob/living/silicon/proc/checklaws() //Gives you a link-driven interface for deciding what laws the statelaws() proc will share with the crew. --NeoFite
-
+///Gives you a link-driven interface for deciding what laws the statelaws() proc will share with the crew.
+/mob/living/silicon/proc/checklaws()
+	laws_sanity_check()
 	var/list = "<b>Which laws do you want to include when stating them for the crew?</b><br><br>"
 
+	var/law_display = "Yes"
 	if (laws.zeroth)
-		if (!lawcheck[1])
-			lawcheck[1] = "No" //Given Law 0's usual nature, it defaults to NOT getting reported. --NeoFite
-		list += {"<A href='byond://?src=[REF(src)];lawc=0'>[lawcheck[1]] 0:</A> <font color='#ff0000'><b>[laws.zeroth]</b></font><BR>"}
+		if (!(laws.zeroth in lawcheck))
+			law_display = "No"
+		list += {"<A href='byond://?src=[REF(src)];lawc=0'>[law_display] 0:</A> <font color='#ff0000'><b>[laws.zeroth]</b></font><BR>"}
 
-	for (var/index = 1, index <= laws.hacked.len, index++)
+	for (var/index in 1 to length(laws.hacked))
+		law_display = "Yes"
 		var/law = laws.hacked[index]
 		if (length(law) > 0)
-			if (!hackedcheck[index])
-				hackedcheck[index] = "No"
-			list += {"<A href='byond://?src=[REF(src)];lawh=[index]'>[hackedcheck[index]] [ion_num()]:</A> <font color='#660000'>[law]</font><BR>"}
-			hackedcheck.len += 1
+			if (!(law in hackedcheck))
+				law_display = "No"
+			list += {"<A href='byond://?src=[REF(src)];lawh=[index]'>[law_display] [ion_num()]:</A> <font color='#660000'>[law]</font><BR>"}
 
-	for (var/index = 1, index <= laws.ion.len, index++)
+	for (var/index in 1 to length(laws.ion))
+		law_display = "Yes"
 		var/law = laws.ion[index]
-
 		if (length(law) > 0)
-			if (!ioncheck[index])
-				ioncheck[index] = "Yes"
-			list += {"<A href='byond://?src=[REF(src)];lawi=[index]'>[ioncheck[index]] [ion_num()]:</A> <font color='#547DFE'>[law]</font><BR>"}
-			ioncheck.len += 1
+			if(!(law in ioncheck))
+				law_display = "No"
+			list += {"<A href='byond://?src=[REF(src)];lawi=[index]'>[law_display] [ion_num()]:</A> <font color='#547DFE'>[law]</font><BR>"}
 
 	var/number = 1
-	for (var/index = 1, index <= laws.inherent.len, index++)
+	for (var/index in 1 to length(laws.inherent))
+		law_display = "Yes"
 		var/law = laws.inherent[index]
-
 		if (length(law) > 0)
-			lawcheck.len += 1
-
-			if (!lawcheck[number+1])
-				lawcheck[number+1] = "Yes"
-			list += {"<A href='byond://?src=[REF(src)];lawc=[number]'>[lawcheck[number+1]] [number]:</A> [law]<BR>"}
+			if (!(law in lawcheck))
+				law_display = "No"
+			list += {"<A href='byond://?src=[REF(src)];lawc=[index]'>[law_display] [number]:</A> [law]<BR>"}
 			number++
 
-	for (var/index = 1, index <= laws.supplied.len, index++)
+	for (var/index in 1 to length(laws.supplied))
+		law_display = "Yes"
 		var/law = laws.supplied[index]
 		if (length(law) > 0)
-			lawcheck.len += 1
-			if (!lawcheck[number+1])
-				lawcheck[number+1] = "Yes"
-			list += {"<A href='byond://?src=[REF(src)];lawc=[number]'>[lawcheck[number+1]] [number]:</A> <font color='#990099'>[law]</font><BR>"}
+			if (!(law in lawcheck))
+				law_display = "No"
+			list += {"<A href='byond://?src=[REF(src)];lawc=[number]'>[law_display] [number]:</A> <font color='#990099'>[law]</font><BR>"}
 			number++
 	list += {"<br><br><A href='byond://?src=[REF(src)];laws=1'>State Laws</A>"}
 
@@ -312,31 +355,24 @@
 		return
 
 	//Ask the user to pick a channel from what it has available.
-	var/Autochan = input("Select a channel:") as null|anything in list("Default","None") + radio.channels
-
-	if(!Autochan)
+	var/chosen_channel = tgui_input_list(usr, "Select a channel", "Channel Selection", list("Default","None") + radio.channels)
+	if(isnull(chosen_channel))
 		return
-	if(Autochan == "Default") //Autospeak on whatever frequency to which the radio is set, usually Common.
+	if(chosen_channel == "Default") //Autospeak on whatever frequency to which the radio is set, usually Common.
 		radiomod = ";"
-		Autochan += " ([radio.frequency])"
-	else if(Autochan == "None") //Prevents use of the radio for automatic annoucements.
+		chosen_channel += " ([radio.get_frequency()])"
+	if(chosen_channel == "None") //Prevents use of the radio for automatic annoucements.
 		radiomod = ""
 	else //For department channels, if any, given by the internal radio.
 		for(var/key in GLOB.department_radio_keys)
-			if(GLOB.department_radio_keys[key] == Autochan)
+			if(GLOB.department_radio_keys[key] == chosen_channel)
 				radiomod = ":" + key
 				break
 
-	to_chat(src, span_notice("Automatic announcements [Autochan == "None" ? "will not use the radio." : "set to [Autochan]."]"))
+	to_chat(src, span_notice("Automatic announcements [chosen_channel == "None" ? "will not use the radio." : "set to [chosen_channel]."]"))
 
 /mob/living/silicon/put_in_hand_check() // This check is for borgs being able to receive items, not put them in others' hands.
 	return FALSE
-
-// The src mob is trying to place an item on someone
-// But the src mob is a silicon!!  Disable.
-/mob/living/silicon/stripPanelEquip(obj/item/what, mob/who, slot)
-	return FALSE
-
 
 /mob/living/silicon/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) //Secbots won't hunt silicon units
 	return -10
@@ -345,17 +381,17 @@
 	var/datum/atom_hud/secsensor = GLOB.huds[sec_hud]
 	var/datum/atom_hud/medsensor = GLOB.huds[med_hud]
 	var/datum/atom_hud/diagsensor = GLOB.huds[d_hud]
-	secsensor.remove_hud_from(src)
-	medsensor.remove_hud_from(src)
-	diagsensor.remove_hud_from(src)
+	secsensor.hide_from(src)
+	medsensor.hide_from(src)
+	diagsensor.hide_from(src)
 
 /mob/living/silicon/proc/add_sensors()
 	var/datum/atom_hud/secsensor = GLOB.huds[sec_hud]
 	var/datum/atom_hud/medsensor = GLOB.huds[med_hud]
 	var/datum/atom_hud/diagsensor = GLOB.huds[d_hud]
-	secsensor.add_hud_to(src)
-	medsensor.add_hud_to(src)
-	diagsensor.add_hud_to(src)
+	secsensor.show_to(src)
+	medsensor.show_to(src)
+	diagsensor.show_to(src)
 
 /mob/living/silicon/proc/toggle_sensors()
 	if(incapacitated())
@@ -371,9 +407,6 @@
 /mob/living/silicon/proc/GetPhoto(mob/user)
 	if (aicamera)
 		return aicamera.selectpicture(user)
-
-/mob/living/silicon/is_literate()
-	return TRUE
 
 /mob/living/silicon/get_inactive_held_item()
 	return FALSE
@@ -395,3 +428,38 @@
 
 /mob/living/silicon/on_standing_up()
 	return // Silicons are always standing by default.
+
+/**
+ * Records an IC event log entry in the cyborg's internal tablet.
+ *
+ * Creates an entry in the borglog list of the cyborg's internal tablet (if it's a borg), listing the current
+ * in-game time followed by the message given. These logs can be seen by the cyborg in their
+ * BorgUI tablet app. By design, logging fails if the cyborg is dead.
+ *
+ * (This used to be in robot.dm. It's in here now.)
+ *
+ * Arguments:
+ * arg1: a string containing the message to log.
+ */
+/mob/living/silicon/proc/logevent(string = "")
+	if(!string)
+		return
+	if(stat == DEAD) //Dead silicons log no longer
+		return
+	if(!modularInterface)
+		stack_trace("Silicon [src] ( [type] ) was somehow missing their integrated tablet. Please make a bug report.")
+		create_modularInterface()
+	var/mob/living/silicon/robot/robo = modularInterface.silicon_owner
+	if(istype(robo))
+		modularInterface.borglog += "[station_time_timestamp()] - [string]"
+	var/datum/computer_file/program/robotact/program = modularInterface.get_robotact()
+	if(program)
+		program.force_full_update()
+
+/// Same as the normal character name replacement, but updates the contents of the modular interface.
+/mob/living/silicon/fully_replace_character_name(oldname, newname)
+	. = ..()
+	if(!modularInterface)
+		stack_trace("Silicon [src] ( [type] ) was somehow missing their integrated tablet. Please make a bug report.")
+		create_modularInterface()
+	modularInterface.saved_identification = newname

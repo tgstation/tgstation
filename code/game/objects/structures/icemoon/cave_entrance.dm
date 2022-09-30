@@ -12,7 +12,7 @@ GLOBAL_LIST_INIT(ore_probability, list(
 /obj/structure/spawner/ice_moon
 	name = "cave entrance"
 	desc = "A hole in the ground, filled with monsters ready to defend it."
-	icon = 'icons/mob/nest.dmi'
+	icon = 'icons/mob/simple/lavaland/nest.dmi'
 	icon_state = "hole"
 	faction = list("mining")
 	max_mobs = 3
@@ -108,7 +108,7 @@ GLOBAL_LIST_INIT(ore_probability, list(
 	name = "collapsing demonic portal"
 	desc = "It's slowly fading!"
 	layer = TABLE_LAYER
-	icon = 'icons/mob/nest.dmi'
+	icon = 'icons/mob/simple/lavaland/nest.dmi'
 	icon_state = "nether"
 	anchored = TRUE
 	density = TRUE
@@ -137,13 +137,13 @@ GLOBAL_LIST_INIT(ore_probability, list(
 	var/loot = rand(1, 28)
 	switch(loot)
 		if(1)
-			new /obj/item/clothing/suit/space/hardsuit/cult(loc)
+			new /obj/item/clothing/suit/hooded/cultrobes/hardened(loc)
 		if(2)
 			new /obj/item/clothing/glasses/godeye(loc)
 		if(3)
-			new /obj/item/reagent_containers/glass/bottle/potion/flight(loc)
+			new /obj/item/reagent_containers/cup/bottle/potion/flight(loc)
 		if(4)
-			new /obj/item/organ/heart/cursed/wizard(loc)
+			new /obj/item/organ/internal/heart/cursed/wizard(loc)
 		if(5)
 			new /obj/item/jacobs_ladder(loc)
 		if(6)
@@ -155,7 +155,7 @@ GLOBAL_LIST_INIT(ore_probability, list(
 		if(9)
 			new /obj/item/immortality_talisman(loc)
 		if(10)
-			new /obj/item/book/granter/spell/summonitem(loc)
+			new /obj/item/book/granter/action/spell/summonitem(loc)
 		if(11)
 			new /obj/item/clothing/neck/necklace/memento_mori(loc)
 		if(12)
@@ -171,7 +171,7 @@ GLOBAL_LIST_INIT(ore_probability, list(
 		if(16)
 			new /obj/item/seeds/gatfruit(loc)
 		if(17)
-			new /obj/item/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola(loc)
+			new /obj/item/reagent_containers/cup/glass/drinkingglass/filled/nuka_cola(loc)
 		if(18)
 			new /obj/item/soulstone/anybody(loc)
 		if(19)
@@ -191,6 +191,6 @@ GLOBAL_LIST_INIT(ore_probability, list(
 		if(26)
 			new /obj/item/clothing/shoes/winterboots/ice_boots(loc)
 		if(27)
-			new /obj/item/book/granter/spell/sacredflame(loc)
+			new /obj/item/book/granter/action/spell/sacredflame(loc)
 		if(28)
 			new /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/doom(loc)

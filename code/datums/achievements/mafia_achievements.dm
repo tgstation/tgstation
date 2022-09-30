@@ -1,6 +1,5 @@
 /datum/award/achievement/mafia
 	category = "Mafia"
-	icon = "basemafia"
 
 ///ALL THE ACHIEVEMENTS FOR WINNING A ROUND AS A ROLE///
 

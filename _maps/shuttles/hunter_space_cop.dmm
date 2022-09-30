@@ -19,7 +19,7 @@
 	dir = 4;
 	dwidth = 3;
 	height = 12;
-	id = "huntership_home";
+	shuttle_id = "huntership_home";
 	name = "Deep Space";
 	width = 7
 	},
@@ -27,7 +27,7 @@
 	dir = 4;
 	dwidth = 3;
 	height = 12;
-	id = "huntership";
+	shuttle_id = "huntership";
 	name = "hunter shuttle";
 	rechargeTime = 1800;
 	width = 7
@@ -71,7 +71,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/effect/mob_spawn/human/fugitive/spacepol{
+/obj/effect/mob_spawn/ghost_role/human/fugitive/spacepol{
 	dir = 1
 	},
 /obj/effect/turf_decal/box,
@@ -115,7 +115,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
 "Am" = (
-/obj/effect/mob_spawn/human/fugitive/spacepol{
+/obj/effect/mob_spawn/ghost_role/human/fugitive/spacepol{
 	dir = 8
 	},
 /obj/effect/turf_decal/box,

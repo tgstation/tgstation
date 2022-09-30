@@ -7,28 +7,18 @@ const render = createRenderer();
 const handleClick = () => undefined;
 
 export const SingleButton = () => {
-  const node = (
-    <Button>
-      Hello world!
-    </Button>
-  );
+  const node = <Button>Hello world!</Button>;
   render(node);
 };
 
 export const SingleButtonWithCallback = () => {
-  const node = (
-    <Button onClick={() => undefined}>
-      Hello world!
-    </Button>
-  );
+  const node = <Button onClick={() => undefined}>Hello world!</Button>;
   render(node);
 };
 
 export const SingleButtonWithLinkEvent = () => {
   const node = (
-    <Button onClick={linkEvent(null, handleClick)}>
-      Hello world!
-    </Button>
+    <Button onClick={linkEvent(null, handleClick)}>Hello world!</Button>
   );
   render(node);
 };
@@ -36,11 +26,7 @@ export const SingleButtonWithLinkEvent = () => {
 export const ListOfButtons = () => {
   const nodes: JSX.Element[] = [];
   for (let i = 0; i < 100; i++) {
-    const node = (
-      <Button key={i}>
-        Hello world! {i}
-      </Button>
-    );
+    const node = <Button key={i}>Hello world! {i}</Button>;
     nodes.push(node);
   }
   render(<div>{nodes}</div>);

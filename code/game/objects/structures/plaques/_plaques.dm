@@ -1,5 +1,5 @@
 /obj/structure/plaque //This is a plaque you can craft with gold, then permanently engrave a title and description on, with a fountain pen.
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/signs.dmi'
 	icon_state = "blankplaque"
 	name = "blank plaque"
 	desc = "A blank plaque, use a fancy pen to engrave it. It can be detatched from the wall with a wrench."
@@ -9,13 +9,12 @@
 	layer = SIGN_LAYER
 	custom_materials = list(/datum/material/gold = 2000)
 	max_integrity = 200 //Twice as durable as regular signs.
-	armor = list(MELEE = 50, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
-	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
+	armor = list(MELEE = 50, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 50)
 	///Custom plaque structures and items both start "unengraved", once engraved with a fountain pen their text can't be altered again. Static plaques are already engraved.
 	var/engraved = FALSE
 
 /obj/item/plaque //The item version of the above.
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/signs.dmi'
 	icon_state = "blankplaque"
 	inhand_icon_state = "blankplaque"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
@@ -25,7 +24,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/gold = 2000)
 	max_integrity = 200
-	armor = list(MELEE = 50, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
+	armor = list(MELEE = 50, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 50)
 	///This points the item to make the proper structure when placed on a wall.
 	var/plaque_path = /obj/structure/plaque
 	///Custom plaque structures and items both start "unengraved", once engraved with a fountain pen their text can't be altered again.
@@ -103,10 +102,10 @@
 		if(engraved)
 			to_chat(user, span_warning("This plaque has already been engraved."))
 			return
-		var/namechoice = input(user, "Title this plaque. (e.g. 'Best HoP Award', 'Great Ashwalker War Memorial')", "Plaque Customization")
+		var/namechoice = tgui_input_text(user, "Title this plaque. (e.g. 'Best HoP Award', 'Great Ashwalker War Memorial')", "Plaque Customization", max_length = MAX_NAME_LEN)
 		if(!namechoice)
 			return
-		var/descriptionchoice = input(user, "Engrave this plaque's text.", "Plaque Customization")
+		var/descriptionchoice = tgui_input_text(user, "Engrave this plaque's text", "Plaque Customization")
 		if(!descriptionchoice)
 			return
 		if(!Adjacent(user)) //Make sure user is adjacent still
@@ -136,10 +135,10 @@
 		if(engraved)
 			to_chat(user, span_warning("This plaque has already been engraved."))
 			return
-		var/namechoice = input(user, "Title this plaque. (e.g. 'Best HoP Award', 'Great Ashwalker War Memorial')", "Plaque Customization")
+		var/namechoice = tgui_input_text(user, "Title this plaque. (e.g. 'Best HoP Award', 'Great Ashwalker War Memorial')", "Plaque Customization", max_length = MAX_NAME_LEN)
 		if(!namechoice)
 			return
-		var/descriptionchoice = input(user, "Engrave this plaque's text.", "Plaque Customization")
+		var/descriptionchoice = tgui_input_text(user, "Engrave this plaque's text", "Plaque Customization")
 		if(!descriptionchoice)
 			return
 		if(!Adjacent(user)) //Make sure user is adjacent still

@@ -16,6 +16,9 @@
 	/// The name of the component shown on the UI
 	var/display_name = "Generic"
 
+	/// The category of the component in the UI
+	var/category = COMPONENT_DEFAULT_CATEGORY
+
 	/// The colour this circuit component appears in the UI
 	var/ui_color = "blue"
 
@@ -81,8 +84,6 @@
 		trigger_output = add_output_port("Triggered", PORT_TYPE_SIGNAL, order = 2)
 	if(circuit_flags & CIRCUIT_FLAG_INSTANT)
 		ui_color = "orange"
-	if(circuit_flags & CIRCUIT_FLAG_REFUSE_MODULE)
-		desc += " Incompatible with module components."
 
 /obj/item/circuit_component/Destroy()
 	if(parent)
@@ -96,6 +97,11 @@
 
 	QDEL_LIST(output_ports)
 	QDEL_LIST(input_ports)
+	return ..()
+
+/obj/item/circuit_component/drop_location()
+	if(parent?.shell)
+		return parent.shell.drop_location()
 	return ..()
 
 /obj/item/circuit_component/examine(mob/user)
@@ -180,6 +186,8 @@
 	var/datum/port/output/output_port = new(arglist(arguments))
 	output_ports += output_port
 	sortTim(output_ports, /proc/cmp_port_order_asc)
+	if(parent)
+		SStgui.update_uis(parent)
 	return output_port
 
 /**
@@ -254,14 +262,26 @@
 			message_admins("[display_name] tried to execute on [parent.get_creator_admin()] that has admin_only set to 0")
 			return FALSE
 
-		var/obj/item/stock_parts/cell/cell = parent.get_cell()
-		if(!cell?.use(power_usage_per_input))
-			return FALSE
+		var/flags = SEND_SIGNAL(parent, COMSIG_CIRCUIT_PRE_POWER_USAGE, power_usage_per_input)
+		if(!(flags & COMPONENT_OVERRIDE_POWER_USAGE))
+			var/obj/item/stock_parts/cell/cell = parent.get_cell()
+			if(!cell?.use(power_usage_per_input))
+				return FALSE
 
 	if((!port || port.trigger == .proc/input_received) && (circuit_flags & CIRCUIT_FLAG_INPUT_SIGNAL) && !COMPONENT_TRIGGERED_BY(trigger_input, port))
 		return FALSE
 
 	return TRUE
+
+/// Called when trying to get the physical location of this object
+/obj/item/circuit_component/proc/get_location()
+	return get_turf(src) || get_turf(parent?.shell)
+
+/obj/item/circuit_component/balloon_alert(mob/viewer, text)
+	if(parent)
+		return parent.balloon_alert(viewer, text)
+	return ..()
+
 
 /// Called before input_received and should_receive_input. Used to perform behaviour that shouldn't care whether the input should be received or not.
 /obj/item/circuit_component/proc/pre_input_received(datum/port/input/port)
@@ -282,10 +302,13 @@
 
 /// Called when this component is about to be added to an integrated_circuit.
 /obj/item/circuit_component/proc/add_to(obj/item/integrated_circuit/added_to)
+	if(circuit_flags & CIRCUIT_FLAG_ADMIN)
+		ADD_TRAIT(added_to, TRAIT_CIRCUIT_UNDUPABLE, REF(src))
 	return TRUE
 
 /// Called when this component is removed from an integrated_circuit.
 /obj/item/circuit_component/proc/removed_from(obj/item/integrated_circuit/removed_from)
+	REMOVE_TRAIT(removed_from, TRAIT_CIRCUIT_UNDUPABLE, REF(src))
 	return
 
 /**
@@ -350,15 +373,15 @@
  * Returns a list that can then be added to the return list in get_ui_notices()
  * Used by components to list their available columns. Recommended to use at the end of get_ui_notices()
  */
-/obj/item/circuit_component/proc/create_table_notices(list/entries)
+/obj/item/circuit_component/proc/create_table_notices(list/entries, column_name = "Column", column_name_plural = "Columns")
 	SHOULD_BE_PURE(TRUE)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	. = list()
-	. += create_ui_notice("Available Columns:", "grey", "question-circle")
+	. += create_ui_notice("Available [column_name_plural]:", "grey", "question-circle")
 
 
 	for(var/entry in entries)
-		. += create_ui_notice("Column Name: '[entry]'", "grey", "columns")
+		. += create_ui_notice("[column_name] Name: '[entry]'", "grey", "columns")
 
 /**
  * Called when a circuit component is added to an object with a USB port.

@@ -8,7 +8,10 @@
 @use '../base.scss';
 @use '../colors.scss';
 
-$color-default: color.scale(colors.fg(colors.$primary), $lightness: 75%) !default;
+$color-default: color.scale(
+  colors.fg(colors.$primary),
+  $lightness: 75%
+) !default;
 $text-color: rgba(255, 255, 255, 0.5) !default;
 $text-color-selected: color.scale($color-default, $lightness: 25%) !default;
 $tab-color: transparent !default;

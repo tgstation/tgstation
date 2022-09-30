@@ -5,7 +5,7 @@
 	frill_icon = 'icons/effects/frills/wall_cult_frill.dmi'
 	icon_state = "cult_wall-0"
 	base_icon_state = "cult_wall"
-	turf_flags = NONE
+	turf_flags = IS_SOLID
 	smoothing_flags = SMOOTH_BITMASK
 	canSmoothWith = null
 	sheet_type = /obj/item/stack/sheet/runed_metal
@@ -45,7 +45,7 @@
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "rockvault"
 	base_icon_state = "rockvault"
-	turf_flags = NONE
+	turf_flags = IS_SOLID
 	smoothing_flags = NONE
 	canSmoothWith = null
 	smoothing_groups = null
@@ -66,11 +66,11 @@
 	base_icon_state = "sandstonevault"
 
 /turf/closed/wall/ice
-	icon = 'icons/turf/walls/icedmetal_wall.dmi'
+// wallening todo	icon = 'icons/turf/walls/icedmetal_wall.dmi'
 	icon_state = "icedmetal_wall-0"
 	base_icon_state = "icedmetal_wall"
 	desc = "A wall covered in a thick sheet of ice."
-	turf_flags = NONE
+	turf_flags = IS_SOLID
 	smoothing_flags = SMOOTH_BITMASK
 	canSmoothWith = null
 	rcd_memory = null
@@ -122,7 +122,7 @@
 	frill_icon = 'icons/effects/frills/wall_clockwork_frill.dmi'
 	icon_state = "clockwork_wall-0"
 	base_icon_state = "clockwork_wall"
-	turf_flags = NONE
+	turf_flags = IS_SOLID
 	smoothing_flags = SMOOTH_BITMASK
 	sheet_type = /obj/item/stack/sheet/bronze
 	sheet_amount = 2
@@ -131,9 +131,10 @@
 /turf/closed/wall/rock
 	name = "reinforced rock"
 	desc = "It has metal struts that need to be welded away before it can be mined."
-	icon = 'icons/turf/walls/reinforced_rock.dmi'
+// wallening todo	icon = 'icons/turf/walls/reinforced_rock.dmi'
 	icon_state = "porous_rock-0"
 	base_icon_state = "porous_rock"
+	turf_flags = NO_RUST
 	sheet_amount = 1
 	hardness = 50
 	girder_type = null

@@ -1,10 +1,12 @@
 #define SOLAR_GEN_RATE 1500
 #define OCCLUSION_DISTANCE 20
+#define PANEL_Y_OFFSET 13
+#define PANEL_EDGE_Y_OFFSET (PANEL_Y_OFFSET - 2)
 
 /obj/machinery/power/solar
 	name = "solar panel"
 	desc = "A solar panel. Generates electricity when in contact with sunlight."
-	icon = 'goon/icons/obj/power.dmi'
+	icon = 'icons/obj/solar.dmi'
 	icon_state = "sp_base"
 	density = TRUE
 	use_power = NO_POWER_USE
@@ -26,15 +28,14 @@
 	///do we need to call update_solar_exposure() next tick?
 	var/needs_to_update_solar_exposure = TRUE
 	var/obj/effect/overlay/panel
+	var/obj/effect/overlay/panel_edge
 
 /obj/machinery/power/solar/Initialize(mapload, obj/item/solar_assembly/S)
 	. = ..()
-	panel = new()
-	panel.vis_flags = VIS_INHERIT_ID|VIS_INHERIT_ICON|VIS_INHERIT_PLANE
-	vis_contents += panel
-	panel.icon = icon
-	panel.icon_state = "solar_panel"
-	panel.layer = FLY_LAYER
+
+	panel_edge = add_panel_overlay("solar_panel_edge", PANEL_EDGE_Y_OFFSET)
+	panel = add_panel_overlay("solar_panel", PANEL_Y_OFFSET)
+
 	Make(S)
 	connect_to_network()
 	RegisterSignal(SSsun, COMSIG_SUN_MOVED, .proc/queue_update_solar_exposure)
@@ -42,6 +43,24 @@
 /obj/machinery/power/solar/Destroy()
 	unset_control() //remove from control computer
 	return ..()
+
+/obj/machinery/power/solar/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	. = ..()
+	if(same_z_layer)
+		return
+	SET_PLANE(panel_edge, PLANE_TO_TRUE(panel_edge.plane), new_turf)
+	SET_PLANE(panel, PLANE_TO_TRUE(panel.plane), new_turf)
+
+/obj/machinery/power/solar/proc/add_panel_overlay(icon_state, y_offset)
+	var/obj/effect/overlay/overlay = new()
+	overlay.vis_flags = VIS_INHERIT_ID | VIS_INHERIT_ICON
+	overlay.appearance_flags = TILE_BOUND
+	overlay.icon_state = icon_state
+	overlay.layer = FLY_LAYER
+	SET_PLANE_EXPLICIT(overlay, GAME_PLANE, src)
+	overlay.pixel_y = y_offset
+	vis_contents += overlay
+	return overlay
 
 /obj/machinery/power/solar/should_have_node()
 	return TRUE
@@ -95,6 +114,10 @@
 	if(.)
 		playsound(loc, 'sound/effects/glassbr3.ogg', 100, TRUE)
 		unset_control()
+		// Make sure user can see it's broken
+		var/new_angle = rand(160, 200)
+		visually_turn(new_angle)
+		azimuth_current = new_angle
 
 /obj/machinery/power/solar/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -104,17 +127,15 @@
 				S.forceMove(loc)
 				S.give_glass(machine_stat & BROKEN)
 		else
-			playsound(src, "shatter", 70, TRUE)
+			playsound(src, SFX_SHATTER, 70, TRUE)
 			new /obj/item/shard(src.loc)
 			new /obj/item/shard(src.loc)
 	qdel(src)
 
 /obj/machinery/power/solar/update_overlays()
 	. = ..()
-	var/matrix/turner = matrix()
-	turner.Turn(azimuth_current)
-	panel.transform = turner
 	panel.icon_state = "solar_panel[(machine_stat & BROKEN) ? "-b" : null]"
+	panel_edge.icon_state = "solar_panel[(machine_stat & BROKEN) ? "-b" : "_edge"]"
 
 /obj/machinery/power/solar/proc/queue_turn(azimuth)
 	needs_to_turn = TRUE
@@ -125,12 +146,50 @@
 
 	needs_to_update_solar_exposure = TRUE //updating right away would be wasteful if we're also turning later
 
+/**
+ * Get the 2.5D transform for the panel, given an angle
+ * Arguments:
+ * * angle - the angle the panel is facing
+ */
+/obj/machinery/power/solar/proc/get_panel_transform(angle)
+	// 2.5D solar panel works by using a magic combination of transforms
+	var/matrix/turner = matrix()
+	// Rotate towards sun
+	turner.Turn(angle)
+	// "Tilt" the panel in 3D towards East and West
+	turner.Shear(0, -0.6 * sin(angle))
+	// Make it skinny when facing north (away), fat south
+	turner.Scale(1, 0.85 * (cos(angle) * -0.5 + 0.5) + 0.15)
+
+	return turner
+
+/obj/machinery/power/solar/proc/visually_turn_part(part, angle)
+	var/mid_azimuth = (azimuth_current + angle) / 2
+
+	// actually flip to other direction?
+	if(abs(angle - azimuth_current) > 180)
+		mid_azimuth = (mid_azimuth + 180) % 360
+
+	// Split into 2 parts so it doesn't distort on large changes
+	animate(part,
+		transform = get_panel_transform(mid_azimuth),
+		time = 2.5 SECONDS, easing = CUBIC_EASING|EASE_IN
+	)
+	animate(
+		transform = get_panel_transform(angle),
+		time = 2.5 SECONDS, easing = CUBIC_EASING|EASE_OUT
+	)
+
+/obj/machinery/power/solar/proc/visually_turn(angle)
+	visually_turn_part(panel, angle)
+	visually_turn_part(panel_edge, angle)
+
 /obj/machinery/power/solar/proc/update_turn()
 	needs_to_turn = FALSE
 	if(azimuth_current != azimuth_target)
+		visually_turn(azimuth_target)
 		azimuth_current = azimuth_target
 		occlusion_setup()
-		update_appearance()
 		needs_to_update_solar_exposure = TRUE
 
 ///trace towards sun to see if we're in shadow
@@ -202,11 +261,11 @@
 /obj/item/solar_assembly
 	name = "solar panel assembly"
 	desc = "A solar panel assembly kit, allows constructions of a solar panel, or with a tracking circuit board, a solar tracker."
-	icon = 'goon/icons/obj/power.dmi'
+	icon = 'icons/obj/solar.dmi'
 	icon_state = "sp_base"
 	inhand_icon_state = "electropack"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY // Pretty big!
 	anchored = FALSE
 	var/tracker = 0
@@ -217,6 +276,10 @@
 	. = ..()
 	if(!anchored && !pixel_x && !pixel_y)
 		randomise_offset(random_offset)
+
+/obj/item/solar_assembly/update_icon_state()
+	. = ..()
+	icon_state = tracker ? "tracker_base" : "sp_base"
 
 /obj/item/solar_assembly/proc/randomise_offset(amount)
 	pixel_x = base_pixel_x + rand(-amount, amount)
@@ -244,7 +307,10 @@
 			to_chat(user, span_warning("You can't secure [src] here."))
 			return
 		set_anchored(!anchored)
-		user.visible_message(span_notice("[user] [anchored ? null : "un"]wrenches the solar assembly into place."), span_notice("You [anchored ? null : "un"]wrench the solar assembly into place."))
+		user.visible_message(
+			span_notice("[user] [anchored ? null : "un"]wrenches the solar assembly [anchored ? "into place" : null]."),
+			span_notice("You [anchored ? null : "un"]wrench the solar assembly [anchored ? "into place" : null]."),
+		)
 		W.play_tool_sound(src, 75)
 		return TRUE
 
@@ -275,6 +341,7 @@
 			if(!user.temporarilyRemoveItemFromInventory(W))
 				return
 			tracker = TRUE
+			update_appearance()
 			qdel(W)
 			user.visible_message(span_notice("[user] inserts the electronics into the solar assembly."), span_notice("You insert the electronics into the solar assembly."))
 			return TRUE
@@ -282,6 +349,7 @@
 		if(W.tool_behaviour == TOOL_CROWBAR)
 			new /obj/item/electronics/tracker(src.loc)
 			tracker = FALSE
+			update_appearance()
 			user.visible_message(span_notice("[user] takes out the electronics from the solar assembly."), span_notice("You take out the electronics from the solar assembly."))
 			return TRUE
 	return ..()
@@ -297,7 +365,7 @@
 	icon_state = "computer"
 	density = TRUE
 	use_power = IDLE_POWER_USE
-	idle_power_usage = 250
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION
 	max_integrity = 200
 	integrity_failure = 0.5
 	var/icon_screen = "solar"
@@ -487,7 +555,9 @@
 
 /obj/item/paper/guides/jobs/engi/solars
 	name = "paper- 'Going green! Setup your own solar array instructions.'"
-	info = "<h1>Welcome</h1><p>At greencorps we love the environment, and space. With this package you are able to help mother nature and produce energy without any usage of fossil fuel or plasma! Singularity energy is dangerous while solar energy is safe, which is why it's better. Now here is how you setup your own solar array.</p><p>You can make a solar panel by wrenching the solar assembly onto a cable node. Adding a glass panel, reinforced or regular glass will do, will finish the construction of your solar panel. It is that easy!</p><p>Now after setting up 19 more of these solar panels you will want to create a solar tracker to keep track of our mother nature's gift, the sun. These are the same steps as before except you insert the tracker equipment circuit into the assembly before performing the final step of adding the glass. You now have a tracker! Now the last step is to add a computer to calculate the sun's movements and to send commands to the solar panels to change direction with the sun. Setting up the solar computer is the same as setting up any computer, so you should have no trouble in doing that. You do need to put a wire node under the computer, and the wire needs to be connected to the tracker.</p><p>Congratulations, you should have a working solar array. If you are having trouble, here are some tips. Make sure all solar equipment are on a cable node, even the computer. You can always deconstruct your creations if you make a mistake.</p><p>That's all to it, be safe, be green!</p>"
+	default_raw_text = "<h1>Welcome</h1><p>At greencorps we love the environment, and space. With this package you are able to help mother nature and produce energy without any usage of fossil fuel or plasma! Singularity energy is dangerous while solar energy is safe, which is why it's better. Now here is how you setup your own solar array.</p><p>You can make a solar panel by wrenching the solar assembly onto a cable node. Adding a glass panel, reinforced or regular glass will do, will finish the construction of your solar panel. It is that easy!</p><p>Now after setting up 19 more of these solar panels you will want to create a solar tracker to keep track of our mother nature's gift, the sun. These are the same steps as before except you insert the tracker equipment circuit into the assembly before performing the final step of adding the glass. You now have a tracker! Now the last step is to add a computer to calculate the sun's movements and to send commands to the solar panels to change direction with the sun. Setting up the solar computer is the same as setting up any computer, so you should have no trouble in doing that. You do need to put a wire node under the computer, and the wire needs to be connected to the tracker.</p><p>Congratulations, you should have a working solar array. If you are having trouble, here are some tips. Make sure all solar equipment are on a cable node, even the computer. You can always deconstruct your creations if you make a mistake.</p><p>That's all to it, be safe, be green!</p>"
 
 #undef SOLAR_GEN_RATE
 #undef OCCLUSION_DISTANCE
+#undef PANEL_Y_OFFSET
+#undef PANEL_EDGE_Y_OFFSET

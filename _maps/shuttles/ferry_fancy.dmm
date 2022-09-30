@@ -66,7 +66,7 @@
 	dir = 8;
 	dwidth = 2;
 	height = 13;
-	id = "ferry";
+	shuttle_id = "ferry";
 	name = "ferry shuttle";
 	preferred_direction = 4;
 	width = 5
@@ -90,7 +90,7 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/transport)
 "q" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/pod/light,
 /area/shuttle/transport)
 "r" = (

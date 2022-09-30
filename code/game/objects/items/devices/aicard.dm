@@ -5,8 +5,8 @@
 	icon_state = "aicard" // aicard-full
 	inhand_icon_state = "electronic"
 	worn_icon_state = "electronic"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT
 	item_flags = NOBLUDGEON
@@ -27,18 +27,21 @@
 	user.visible_message(span_suicide("[user] is trying to upload [user.p_them()]self into [src]! That's not going to work out well!"))
 	return BRUTELOSS
 
-/obj/item/aicard/afterattack(atom/target, mob/user, proximity)
-	. = ..()
-	if(!proximity || !target)
-		return
+/obj/item/aicard/pre_attack(atom/target, mob/living/user, params)
 	if(AI) //AI is on the card, implies user wants to upload it.
-		log_combat(user, AI, "uploaded", src, "to [target].")
+		var/our_ai = AI
 		target.transfer_ai(AI_TRANS_FROM_CARD, user, AI, src)
+		if(!AI)
+			log_combat(user, our_ai, "uploaded", src, "to [target].")
+			update_appearance()
+			return TRUE
 	else //No AI on the card, therefore the user wants to download one.
 		target.transfer_ai(AI_TRANS_TO_CARD, user, null, src)
 		if(AI)
-			log_combat(user, AI, "carded", src)
-	update_appearance() //Whatever happened, update the card's state (icon, name) to match.
+			log_silicon("[key_name(user)] carded [key_name(AI)]", src)
+			update_appearance()
+			return TRUE
+	return ..()
 
 /obj/item/aicard/update_icon_state()
 	if(!AI)
@@ -101,7 +104,7 @@
 		if("wireless")
 			AI.control_disabled = !AI.control_disabled
 			if(!AI.control_disabled)
-				AI.interaction_range = null
+				AI.interaction_range = INFINITY
 			else
 				AI.interaction_range = 0
 			to_chat(AI, span_warning("[src]'s wireless port has been [AI.control_disabled ? "disabled" : "enabled"]!"))

@@ -77,7 +77,7 @@
 	name = "deathrattle implant"
 	desc = "Hope no one else dies, prepare for when they do."
 
-	activated = FALSE
+	actions_types = null
 
 /obj/item/implant/deathrattle/can_be_implanted_in(mob/living/target)
 	// Can be implanted in anything that's a mob. Syndicate cyborgs, talking fish, humans...

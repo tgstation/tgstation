@@ -54,7 +54,7 @@
 	var/output_message = ""
 	for(var/datum/spacevine_mutation/SM in mutations)
 		kudzu_mutations += "[(kudzu_mutations == "") ? "" : ", "][SM.name]"
-	output_message += "- Plant Mutations: [(kudzu_mutations == "") ? "None." : "[kudzu_mutations]."]"
+	output_message += "Plant Mutations: [(kudzu_mutations == "") ? "None." : "[kudzu_mutations]."]"
 	return output_message
 
 /obj/item/seeds/kudzu/on_chem_reaction(datum/reagents/reagents)

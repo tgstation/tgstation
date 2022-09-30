@@ -28,8 +28,8 @@
 	var/skill_mod
 	///Some gloves, generally ones that increase mobility, may have a minimum distance to fly. Rocket gloves are especially dangerous with this, be sure you'll hit your target or have a clear background if you miss, or else!
 	var/min_distance
-	///The throwdatum we're currently dealing with, if we need it
-	var/datum/thrownthing/tackle
+	///A wearkef to the throwdatum we're currently dealing with, if we need it
+	var/datum/weakref/tackle_ref
 
 /datum/component/tackler/Initialize(stamina_cost = 25, base_knockdown = 1 SECONDS, range = 4, speed = 1, skill_mod = 0, min_distance = min_distance)
 	if(!iscarbon(parent))
@@ -61,10 +61,10 @@
 	UnregisterSignal(parent, list(COMSIG_MOB_CLICKON, COMSIG_MOVABLE_IMPACT, COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_POST_THROW))
 
 ///Store the thrownthing datum for later use
-/datum/component/tackler/proc/registerTackle(mob/living/carbon/user, datum/thrownthing/TT)
+/datum/component/tackler/proc/registerTackle(mob/living/carbon/user, datum/thrownthing/tackle)
 	SIGNAL_HANDLER
 
-	tackle = TT
+	tackle_ref = WEAKREF(tackle)
 	tackle.thrower = user
 
 ///See if we can tackle or not. If we can, leap!
@@ -143,7 +143,9 @@
 /datum/component/tackler/proc/sack(mob/living/carbon/user, atom/hit)
 	SIGNAL_HANDLER
 
+	var/datum/thrownthing/tackle = tackle_ref?.resolve()
 	if(!tackling || !tackle)
+		tackle = null
 		return
 
 	user.toggle_throw_mode()
@@ -245,10 +247,14 @@
 	var/attack_mod = 0
 
 	// DE-FENSE
-	if(target.drunkenness > 60) // drunks are easier to knock off balance
+
+	// Drunks are easier to knock off balance
+	var/target_drunkenness = target.get_drunk_amount()
+	if(target_drunkenness > 60)
 		defense_mod -= 3
-	else if(target.drunkenness > 30)
+	else if(target_drunkenness > 30)
 		defense_mod -= 1
+
 	if(HAS_TRAIT(target, TRAIT_CLUMSY))
 		defense_mod -= 2
 	if(HAS_TRAIT(target, TRAIT_FAT)) // chonkers are harder to knock over
@@ -270,36 +276,45 @@
 	defense_mod -= round(leg_wounds * 0.5)
 
 	if(ishuman(target))
-		var/mob/living/carbon/human/T = target
-		var/suit_slot = T.get_item_by_slot(ITEM_SLOT_OCLOTHING)
+		var/mob/living/carbon/human/tackle_target = target
 
-		if(isnull(T.wear_suit) && isnull(T.w_uniform)) // who honestly puts all of their effort into tackling a naked guy?
+		if(isnull(tackle_target.wear_suit) && isnull(tackle_target.w_uniform)) // who honestly puts all of their effort into tackling a naked guy?
 			defense_mod += 2
-		if(suit_slot && (istype(suit_slot,/obj/item/clothing/suit/space/hardsuit)))
+		if(tackle_target.mob_negates_gravity())
 			defense_mod += 1
-		if(T.is_shove_knockdown_blocked()) // riot armor and such
+		if(tackle_target.is_shove_knockdown_blocked()) // riot armor and such
 			defense_mod += 5
-		if(T.is_holding_item_of_type(/obj/item/shield))
+		if(tackle_target.is_holding_item_of_type(/obj/item/shield))
 			defense_mod += 2
 
-		if(islizard(T))
-			if(!T.getorganslot(ORGAN_SLOT_TAIL)) // lizards without tails are off-balance
-				defense_mod -= 1
-			else if(T.dna.species.is_wagging_tail()) // lizard tail wagging is robust and can swat away assailants!
-				defense_mod += 1
+
+		var/obj/item/organ/external/tail/lizard/el_tail = tackle_target.getorganslot(ORGAN_SLOT_EXTERNAL_TAIL)
+		if(HAS_TRAIT(tackle_target, TRAIT_TACKLING_TAILED_DEFENDER) && !el_tail)
+			defense_mod -= 1
+		if(el_tail && (el_tail.wag_flags & WAG_WAGGING)) // lizard tail wagging is robust and can swat away assailants!
+			defense_mod += 1
 
 	// OF-FENSE
 	var/mob/living/carbon/sacker = parent
-
-	if(sacker.drunkenness > 60) // you're far too drunk to hold back!
+	var/sacker_drunkenness = sacker.get_drunk_amount()
+	if(sacker_drunkenness > 60) // you're far too drunk to hold back!
 		attack_mod += 1
-	else if(sacker.drunkenness > 30) // if you're only a bit drunk though, you're just sloppy
+	else if(sacker_drunkenness > 30) // if you're only a bit drunk though, you're just sloppy
 		attack_mod -= 1
+
 	if(HAS_TRAIT(sacker, TRAIT_CLUMSY))
 		attack_mod -= 2
 	if(HAS_TRAIT(sacker, TRAIT_DWARF))
 		attack_mod -= 2
 	if(HAS_TRAIT(sacker, TRAIT_GIANT))
+		attack_mod += 2
+
+	if(HAS_TRAIT(sacker, TRAIT_TACKLING_WINGED_ATTACKER))
+		var/obj/item/organ/external/wings/moth/sacker_moth_wing = sacker.getorganslot(ORGAN_SLOT_EXTERNAL_WINGS)
+		if(!sacker_moth_wing || sacker_moth_wing.burnt)
+			attack_mod -= 2
+	var/obj/item/organ/external/wings/sacker_wing = sacker.getorganslot(ORGAN_SLOT_EXTERNAL_WINGS)
+	if(sacker_wing)
 		attack_mod += 2
 
 	if(ishuman(target))
@@ -366,6 +381,9 @@
 	if(HAS_TRAIT(user, TRAIT_CLUMSY))
 		oopsie_mod += 6 //honk!
 
+	if(HAS_TRAIT(user, TRAIT_TACKLING_FRAIL_ATTACKER))
+		oopsie_mod += 6 // flies don't take smacking into a window/wall easily
+
 	var/oopsie = rand(danger_zone, 100)
 	if(oopsie >= 94 && oopsie_mod < 0) // good job avoiding getting paralyzed! gold star!
 		to_chat(user, span_notice("You're really glad you're wearing protection!"))
@@ -418,7 +436,7 @@
 			user.visible_message(span_danger("[user] slams head-first into [hit], suffering major cranial trauma!"), span_userdanger("You slam head-first into [hit], and the world explodes around you!"))
 			user.adjustStaminaLoss(30, updating_health=FALSE)
 			user.adjustBruteLoss(30)
-			user.add_confusion(15)
+			user.adjust_confusion(15 SECONDS)
 			if(prob(80))
 				user.gain_trauma(/datum/brain_trauma/mild/concussion)
 			user.playsound_local(get_turf(user), 'sound/weapons/flashbang.ogg', 100, TRUE, 8)
@@ -430,7 +448,7 @@
 			user.visible_message(span_danger("[user] slams hard into [hit], knocking [user.p_them()] senseless!"), span_userdanger("You slam hard into [hit], knocking yourself senseless!"))
 			user.adjustStaminaLoss(30, updating_health=FALSE)
 			user.adjustBruteLoss(10)
-			user.add_confusion(10)
+			user.adjust_confusion(10 SECONDS)
 			user.Knockdown(30)
 			shake_camera(user, 3, 4)
 
@@ -446,7 +464,7 @@
 
 /datum/component/tackler/proc/resetTackle()
 	tackling = FALSE
-	QDEL_NULL(tackle)
+	QDEL_NULL(tackle_ref)
 	UnregisterSignal(parent, COMSIG_MOVABLE_MOVED)
 
 ///A special case for splatting for handling windows
@@ -454,7 +472,7 @@
 	playsound(user, 'sound/effects/Glasshit.ogg', 140, TRUE)
 
 	if(W.type in list(/obj/structure/window, /obj/structure/window/fulltile, /obj/structure/window/unanchored, /obj/structure/window/fulltile/unanchored)) // boring unreinforced windows
-		for(var/i = 0, i < speed, i++)
+		for(var/i in 1 to speed)
 			var/obj/item/shard/shard = new /obj/item/shard(get_turf(user))
 			shard.embedding = list(embed_chance = 100, ignore_throwspeed_threshold = TRUE, impact_pain_mult=3, pain_chance=5)
 			shard.updateEmbedding()
@@ -477,7 +495,7 @@
 /datum/component/tackler/proc/delayedSmash(obj/structure/window/W)
 	if(W)
 		W.atom_destruction()
-		playsound(W, "shatter", 70, TRUE)
+		playsound(W, SFX_SHATTER, 70, TRUE)
 
 ///Check to see if we hit a table, and if so, make a big mess!
 /datum/component/tackler/proc/checkObstacle(mob/living/carbon/owner)
@@ -527,8 +545,11 @@
 		I.throw_at(get_ranged_target_turf(I, pick(GLOB.alldirs), range = dist), range = dist, speed = sp)
 		I.visible_message(span_danger("[I] goes flying[sp > 3 ? " dangerously fast" : ""]!")) // standard embed speed
 
+	var/datum/thrownthing/tackle = tackle_ref?.resolve()
+
 	playsound(owner, 'sound/weapons/smash.ogg', 70, TRUE)
-	tackle.finalize(hit=TRUE)
+	if(tackle)
+		tackle.finalize(hit=TRUE)
 	resetTackle()
 
 #undef MAX_TABLE_MESSES

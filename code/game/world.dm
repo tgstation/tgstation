@@ -1,5 +1,10 @@
 #define RESTART_COUNTER_PATH "data/round_counter.txt"
 
+/// Force the log directory to be something specific in the data/logs folder
+#define OVERRIDE_LOG_DIRECTORY_PARAMETER "log-directory"
+/// Prevent the master controller from starting automatically
+#define NO_INIT_PARAMETER "no-init"
+
 GLOBAL_VAR(restart_counter)
 
 /**
@@ -35,6 +40,9 @@ GLOBAL_VAR(restart_counter)
 	make_datum_references_lists() //initialises global lists for referencing frequently used datums (so that we only ever do it once)
 
 	GLOB.config_error_log = GLOB.world_manifest_log = GLOB.world_pda_log = GLOB.world_job_debug_log = GLOB.sql_error_log = GLOB.world_href_log = GLOB.world_runtime_log = GLOB.world_attack_log = GLOB.world_game_log = GLOB.world_econ_log = GLOB.world_shuttle_log = "data/logs/config_error.[GUID()].log" //temporary file used to record errors with loading config, moved to log directory once logging is set bl
+	#ifdef REFERENCE_DOING_IT_LIVE
+	GLOB.harddel_log = GLOB.world_game_log
+	#endif
 
 	GLOB.revdata = new
 
@@ -77,6 +85,10 @@ GLOBAL_VAR(restart_counter)
 	HandleTestRun()
 	#endif
 
+	#ifdef AUTOWIKI
+	setup_autowiki()
+	#endif
+
 /world/proc/InitTgs()
 	TgsNew(new /datum/tgs_event_handler/impl, TGS_SECURITY_TRUSTED)
 	GLOB.revdata.load_tgs_info()
@@ -117,50 +129,62 @@ GLOBAL_VAR(restart_counter)
 		GLOB.picture_logging_prefix = "O_[override_dir]_"
 		GLOB.picture_log_directory = "data/picture_logs/[override_dir]"
 
-	GLOB.world_game_log = "[GLOB.log_directory]/game.log"
-	GLOB.world_suspicious_login_log = "[GLOB.log_directory]/suspicious_logins.log"
-	GLOB.world_mecha_log = "[GLOB.log_directory]/mecha.log"
-	GLOB.world_virus_log = "[GLOB.log_directory]/virus.log"
-	GLOB.world_cloning_log = "[GLOB.log_directory]/cloning.log"
+	GLOB.demo_log = "[GLOB.log_directory]/demo.log"
+	GLOB.dynamic_log = "[GLOB.log_directory]/dynamic.log"
+	GLOB.filter_log = "[GLOB.log_directory]/filters.log"
+	GLOB.lua_log = "[GLOB.log_directory]/lua.log"
+	GLOB.query_debug_log = "[GLOB.log_directory]/query_debug.log"
+	GLOB.signals_log = "[GLOB.log_directory]/signals.log"
+	GLOB.sql_error_log = "[GLOB.log_directory]/sql.log"
+	GLOB.tgui_log = "[GLOB.log_directory]/tgui.log"
 	GLOB.world_asset_log = "[GLOB.log_directory]/asset.log"
 	GLOB.world_attack_log = "[GLOB.log_directory]/attack.log"
+	GLOB.world_cloning_log = "[GLOB.log_directory]/cloning.log"
 	GLOB.world_econ_log = "[GLOB.log_directory]/econ.log"
-	GLOB.world_pda_log = "[GLOB.log_directory]/pda.log"
-	GLOB.world_uplink_log = "[GLOB.log_directory]/uplink.log"
-	GLOB.world_telecomms_log = "[GLOB.log_directory]/telecomms.log"
-	GLOB.world_manifest_log = "[GLOB.log_directory]/manifest.log"
+	GLOB.world_game_log = "[GLOB.log_directory]/game.log"
 	GLOB.world_href_log = "[GLOB.log_directory]/hrefs.log"
-	GLOB.world_mob_tag_log = "[GLOB.log_directory]/mob_tags.log"
-	GLOB.sql_error_log = "[GLOB.log_directory]/sql.log"
-	GLOB.world_qdel_log = "[GLOB.log_directory]/qdel.log"
-	GLOB.world_map_error_log = "[GLOB.log_directory]/map_errors.log"
-	GLOB.world_runtime_log = "[GLOB.log_directory]/runtime.log"
-	GLOB.query_debug_log = "[GLOB.log_directory]/query_debug.log"
 	GLOB.world_job_debug_log = "[GLOB.log_directory]/job_debug.log"
+	GLOB.world_manifest_log = "[GLOB.log_directory]/manifest.log"
+	GLOB.world_map_error_log = "[GLOB.log_directory]/map_errors.log"
+	GLOB.world_mecha_log = "[GLOB.log_directory]/mecha.log"
+	GLOB.world_mob_tag_log = "[GLOB.log_directory]/mob_tags.log"
+	GLOB.world_qdel_log = "[GLOB.log_directory]/qdel.log"
 	GLOB.world_paper_log = "[GLOB.log_directory]/paper.log"
-	GLOB.tgui_log = "[GLOB.log_directory]/tgui.log"
+	GLOB.world_pda_log = "[GLOB.log_directory]/pda.log"
+	GLOB.world_runtime_log = "[GLOB.log_directory]/runtime.log"
 	GLOB.world_shuttle_log = "[GLOB.log_directory]/shuttle.log"
+	GLOB.world_silicon_log = "[GLOB.log_directory]/silicon.log"
+	GLOB.world_speech_indicators_log = "[GLOB.log_directory]/speech_indicators.log"
+	GLOB.world_suspicious_login_log = "[GLOB.log_directory]/suspicious_logins.log"
+	GLOB.world_telecomms_log = "[GLOB.log_directory]/telecomms.log"
+	GLOB.world_tool_log = "[GLOB.log_directory]/tools.log"
+	GLOB.world_uplink_log = "[GLOB.log_directory]/uplink.log"
+	GLOB.world_virus_log = "[GLOB.log_directory]/virus.log"
 
-	GLOB.demo_log = "[GLOB.log_directory]/demo.log"
 
 #ifdef UNIT_TESTS
 	GLOB.test_log = "[GLOB.log_directory]/tests.log"
 	start_log(GLOB.test_log)
 #endif
-	start_log(GLOB.world_game_log)
+
+#ifdef REFERENCE_DOING_IT_LIVE
+	GLOB.harddel_log = "[GLOB.log_directory]/harddels.log"
+	start_log(GLOB.harddel_log)
+#endif
+	start_log(GLOB.tgui_log)
 	start_log(GLOB.world_attack_log)
 	start_log(GLOB.world_econ_log)
-	start_log(GLOB.world_pda_log)
-	start_log(GLOB.world_uplink_log)
-	start_log(GLOB.world_telecomms_log)
-	start_log(GLOB.world_manifest_log)
+	start_log(GLOB.world_game_log)
 	start_log(GLOB.world_href_log)
+	start_log(GLOB.world_job_debug_log)
+	start_log(GLOB.world_manifest_log)
 	start_log(GLOB.world_mob_tag_log)
 	start_log(GLOB.world_qdel_log)
 	start_log(GLOB.world_runtime_log)
-	start_log(GLOB.world_job_debug_log)
-	start_log(GLOB.tgui_log)
 	start_log(GLOB.world_shuttle_log)
+	start_log(GLOB.world_telecomms_log)
+	start_log(GLOB.world_uplink_log)
+	start_log(GLOB.world_pda_log)
 
 	var/latest_changelog = file("[global.config.directory]/../html/changelogs/archive/" + time2text(world.timeofday, "YYYY-MM") + ".yml")
 	GLOB.changelog_hash = fexists(latest_changelog) ? md5(latest_changelog) : 0 //for telling if the changelog has changed recently
@@ -204,7 +228,7 @@ GLOBAL_VAR(restart_counter)
 		PRcounts[id] = 1
 	else
 		++PRcounts[id]
-		if(PRcounts[id] > PR_ANNOUNCEMENTS_PER_ROUND)
+		if(PRcounts[id] > CONFIG_GET(number/pr_announcements_per_round))
 			return
 
 	var/final_composed = span_announce("PR: [announcement]")
@@ -272,7 +296,15 @@ GLOBAL_VAR(restart_counter)
 
 	TgsReboot()
 	shutdown_logging() // Past this point, no logging procs can be used, at risk of data loss.
+	AUXTOOLS_FULL_SHUTDOWN(AUXLUA)
 	..()
+
+/world/Del()
+	AUXTOOLS_FULL_SHUTDOWN(AUXLUA)
+	var/debug_server = world.GetConfig("env", "AUXTOOLS_DEBUG_DLL")
+	if (debug_server)
+		call(debug_server, "auxtools_shutdown")()
+	. = ..()
 
 /world/proc/update_status()
 
@@ -281,45 +313,39 @@ GLOBAL_VAR(restart_counter)
 	if(LAZYACCESS(SSlag_switch.measures, DISABLE_NON_OBSJOBS))
 		features += "closed"
 
-	var/s = ""
+	var/new_status = ""
 	var/hostedby
 	if(config)
 		var/server_name = CONFIG_GET(string/servername)
 		if (server_name)
-			s += "<b>[server_name]</b> &#8212; "
-		features += "[CONFIG_GET(flag/norespawn) ? "no " : ""]respawn"
-		if(CONFIG_GET(flag/allow_ai))
-			features += "AI allowed"
+			new_status += "<b>[server_name]</b> "
+		if(!CONFIG_GET(flag/norespawn))
+			features += "respawn"
+		if(!CONFIG_GET(flag/allow_ai))
+			features += "AI disabled"
 		hostedby = CONFIG_GET(string/hostedby)
 
-	s += "<b>[station_name()]</b>";
-	s += " ("
-	s += "<a href=\"http://\">" //Change this to wherever you want the hub to link to.
-	s += "Default"  //Replace this with something else. Or ever better, delete it and uncomment the game version.
-	s += "</a>"
-	s += ")"
+	if (CONFIG_GET(flag/station_name_in_hub_entry))
+		new_status += " &#8212; <b>[station_name()]</b>"
 
 	var/players = GLOB.clients.len
-
-	var/popcaptext = ""
-	var/popcap = max(CONFIG_GET(number/extreme_popcap), CONFIG_GET(number/hard_popcap), CONFIG_GET(number/soft_popcap))
-	if (popcap)
-		popcaptext = "/[popcap]"
-
-	if (players > 1)
-		features += "[players][popcaptext] players"
-	else if (players > 0)
-		features += "[players][popcaptext] player"
 
 	game_state = (CONFIG_GET(number/extreme_popcap) && players >= CONFIG_GET(number/extreme_popcap)) //tells the hub if we are full
 
 	if (!host && hostedby)
 		features += "hosted by <b>[hostedby]</b>"
 
-	if (features)
-		s += ": [jointext(features, ", ")]"
+	if(length(features))
+		new_status += ": [jointext(features, ", ")]"
 
-	status = s
+	new_status += "<br>Time: <b>[gameTimestamp("hh:mm")]</b>"
+	if(SSmapping.config)
+		new_status += "<br>Map: <b>[SSmapping.config.map_path == CUSTOM_MAP_PATH ? "Uncharted Territory" : SSmapping.config.map_name]</b>"
+	var/alert_text = SSsecurity_level.get_current_level_as_text()
+	if(alert_text)
+		new_status += "<br>Alert: <b>[capitalize(alert_text)]</b>"
+
+	status = new_status
 
 /world/proc/update_hub_visibility(new_visibility)
 	if(new_visibility == GLOB.hub_visibility)
@@ -358,3 +384,10 @@ GLOBAL_VAR(restart_counter)
 
 /world/proc/on_tickrate_change()
 	SStimer?.reset_buckets()
+
+/world/Profile(command, type, format)
+	if((command & PROFILE_STOP) || !global.config?.loaded || !CONFIG_GET(flag/forbid_all_profiling))
+		. = ..()
+
+#undef OVERRIDE_LOG_DIRECTORY_PARAMETER
+#undef NO_INIT_PARAMETER

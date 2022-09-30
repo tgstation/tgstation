@@ -10,7 +10,7 @@
 		icon_state = "paper"
 	else
 		icon_state = "paper_stack"
-	if(info || add_info)
+	if(get_total_length())
 		icon_state = "[icon_state]_words"
 	return ..()
 

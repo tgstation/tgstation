@@ -31,10 +31,12 @@
 
 //Mecha cooldowns
 #define COOLDOWN_MECHA_MESSAGE "mecha_message"
-#define COOLDOWN_MECHA_EQUIPMENT "mecha_equipment"
+#define COOLDOWN_MECHA_EQUIPMENT(type) ("mecha_equip_[type]")
 #define COOLDOWN_MECHA_ARMOR "mecha_armor"
 #define COOLDOWN_MECHA_MELEE_ATTACK "mecha_melee"
 #define COOLDOWN_MECHA_SMOKE "mecha_smoke"
+#define COOLDOWN_MECHA_SKYFALL "mecha_skyfall"
+#define COOLDOWN_MECHA_MISSILE_STRIKE "mecha_missile_strike"
 
 //car cooldowns
 #define COOLDOWN_CAR_HONK "car_honk"
@@ -51,6 +53,15 @@
 #define COOLDOWN_CIRCUIT_PATHFIND_SAME "circuit_pathfind_same"
 #define COOLDOWN_CIRCUIT_PATHFIND_DIF "circuit_pathfind_different"
 #define COOLDOWN_CIRCUIT_TARGET_INTERCEPT "circuit_target_intercept"
+#define COOLDOWN_CIRCUIT_VIEW_SENSOR "circuit_view_sensor"
+
+// mob cooldowns
+#define COOLDOWN_YAWN_PROPAGATION "yawn_propagation_cooldown"
+
+//Shared cooldowns for actions
+#define MOB_SHARED_COOLDOWN_1 (1<<0)
+#define MOB_SHARED_COOLDOWN_2 (1<<1)
+#define MOB_SHARED_COOLDOWN_3 (1<<2)
 
 //TIMER COOLDOWN MACROS
 

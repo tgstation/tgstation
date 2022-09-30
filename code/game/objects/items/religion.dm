@@ -31,7 +31,7 @@
 		return
 	user.visible_message("<span class='big notice'>[user] flourishes [src]!</span>", \
 	span_notice("You raise [src] skywards, inspiring your allies!"))
-	playsound(src, "rustle", 100, FALSE)
+	playsound(src, SFX_RUSTLE, 100, FALSE)
 	if(warcry)
 		user.say("[warcry]", forced="banner")
 	var/old_transform = user.transform
@@ -201,7 +201,7 @@
 	inspiration_available = FALSE
 
 /obj/item/banner/engineering/special_inspiration(mob/living/carbon/human/H)
-	H.radiation = 0
+	qdel(H.GetComponent(/datum/component/irradiated))
 
 /datum/crafting_recipe/engineering_banner
 	name = "Engitopia Banner"
@@ -254,8 +254,7 @@
 
 /obj/item/storage/backpack/bannerpack/Initialize(mapload)
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_combined_w_class = 27 //6 more then normal, for the tradeoff of declaring yourself an antag at all times.
+	atom_storage.max_total_storage = 27 //6 more then normal, for the tradeoff of declaring yourself an antag at all times.
 
 /obj/item/storage/backpack/bannerpack/red
 	name = "red banner backpack"
@@ -268,20 +267,6 @@
 	icon_state = "bannerpack-blue"
 
 //this is all part of one item set
-/obj/item/clothing/suit/armor/plate/crusader
-	name = "Crusader's Armour"
-	desc = "Armour that's comprised of metal and cloth."
-	icon_state = "crusader"
-	w_class = WEIGHT_CLASS_BULKY
-	slowdown = 2.0 //gotta pretend we're balanced.
-	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 60, BIO = 0, RAD = 0, FIRE = 60, ACID = 60)
-
-/obj/item/clothing/suit/armor/plate/crusader/red
-	icon_state = "crusader-red"
-
-/obj/item/clothing/suit/armor/plate/crusader/blue
-	icon_state = "crusader-blue"
 
 /obj/item/clothing/head/helmet/plate/crusader
 	name = "Crusader's Hood"
@@ -289,7 +274,7 @@
 	icon_state = "crusader"
 	w_class = WEIGHT_CLASS_NORMAL
 	flags_inv = HIDEHAIR|HIDEEARS|HIDEFACE
-	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 60, BIO = 0, RAD = 0, FIRE = 60, ACID = 60)
+	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 60, BIO = 0, FIRE = 60, ACID = 60)
 
 /obj/item/clothing/head/helmet/plate/crusader/blue
 	icon_state = "crusader-blue"
@@ -303,7 +288,7 @@
 	desc = "A religious-looking hat."
 	icon_state = null
 	flags_1 = 0
-	armor = list(MELEE = 60, BULLET = 60, LASER = 60, ENERGY = 60, BOMB = 70, BIO = 50, RAD = 50, FIRE = 60, ACID = 60) //religion protects you from disease and radiation, honk.
+	armor = list(MELEE = 60, BULLET = 60, LASER = 60, ENERGY = 60, BOMB = 70, BIO = 50, FIRE = 60, ACID = 60) //religion protects you from disease, honk.
 	worn_y_offset = 6
 
 /obj/item/clothing/head/helmet/plate/crusader/prophet/red
@@ -362,13 +347,12 @@
 	desc = "Metal boots, they look heavy."
 	icon_state = "crusader"
 	w_class = WEIGHT_CLASS_NORMAL
-	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 60, BIO = 0, RAD = 0, FIRE = 60, ACID = 60) //does this even do anything on boots?
+	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 60, BIO = 0, FIRE = 60, ACID = 60) //does this even do anything on boots?
 	clothing_flags = NOSLIP
 	cold_protection = FEET
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
 	heat_protection = FEET
 	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
-
 
 /obj/item/clothing/shoes/plate/red
 	icon_state = "crusader-red"
@@ -376,25 +360,17 @@
 /obj/item/clothing/shoes/plate/blue
 	icon_state = "crusader-blue"
 
-
-/obj/item/storage/box/itemset/crusader
-	name = "Crusader's Armour Set" //i can't into ck2 references
-	desc = "This armour is said to be based on the armor of kings on another world thousands of years ago, who tended to assassinate, conspire, and plot against everyone who tried to do the same to them.  Some things never change."
-
-
 /obj/item/storage/box/itemset/crusader/blue/PopulateContents()
-	new /obj/item/clothing/suit/armor/plate/crusader/blue(src)
+	new /obj/item/clothing/suit/chaplainsuit/armor/crusader/blue(src)
 	new /obj/item/clothing/head/helmet/plate/crusader/blue(src)
 	new /obj/item/clothing/gloves/plate/blue(src)
 	new /obj/item/clothing/shoes/plate/blue(src)
 
-
 /obj/item/storage/box/itemset/crusader/red/PopulateContents()
-	new /obj/item/clothing/suit/armor/plate/crusader/red(src)
+	new /obj/item/clothing/suit/chaplainsuit/armor/crusader/red(src)
 	new /obj/item/clothing/head/helmet/plate/crusader/red(src)
 	new /obj/item/clothing/gloves/plate/red(src)
 	new /obj/item/clothing/shoes/plate/red(src)
-
 
 /obj/item/claymore/weak
 	desc = "This one is rusted."

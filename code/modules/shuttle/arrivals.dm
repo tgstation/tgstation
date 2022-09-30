@@ -1,6 +1,6 @@
 /obj/docking_port/mobile/arrivals
 	name = "arrivals shuttle"
-	id = "arrivals"
+	shuttle_id = "arrival"
 
 	dwidth = 3
 	width = 7
@@ -30,7 +30,7 @@
 /obj/docking_port/mobile/arrivals/register()
 	..()
 	if(SSshuttle.arrivals)
-		WARNING("More than one arrivals docking_port placed on map! Ignoring duplicates.")
+		log_mapping("More than one arrivals docking_port placed on map! Ignoring duplicates.")
 	SSshuttle.arrivals = src
 
 /obj/docking_port/mobile/arrivals/LateInitialize()
@@ -45,12 +45,12 @@
 		areas += A
 
 	if(SSjob.latejoin_trackers.len)
-		WARNING("Map contains predefined latejoin spawn points and an arrivals shuttle. Using the arrivals shuttle.")
+		log_mapping("Map contains predefined latejoin spawn points and an arrivals shuttle. Using the arrivals shuttle.")
 
 	if(!new_latejoin.len)
-		WARNING("Arrivals shuttle contains no chairs for spawn points. Reverting to latejoin landmarks.")
+		log_mapping("Arrivals shuttle contains no chairs for spawn points. Reverting to latejoin landmarks.")
 		if(!SSjob.latejoin_trackers.len)
-			WARNING("No latejoin landmarks exist. Players will spawn unbuckled on the shuttle.")
+			log_mapping("No latejoin landmarks exist. Players will spawn unbuckled on the shuttle.")
 		return
 
 	SSjob.latejoin_trackers = new_latejoin
@@ -181,7 +181,7 @@
 			console.say(pickingup ? "Departing immediately for new employee pickup." : "Shuttle departing.")
 		var/obj/docking_port/stationary/target = target_dock
 		if(QDELETED(target))
-			target = SSshuttle.getDock("arrivals_stationary")
+			target = SSshuttle.getDock("arrival_stationary")
 		request(target) //we will intentionally never return SHUTTLE_ALREADY_DOCKED
 
 /obj/docking_port/mobile/arrivals/proc/RequireUndocked(mob/user)

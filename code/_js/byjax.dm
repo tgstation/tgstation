@@ -5,7 +5,7 @@ function replaceContent() {
 	var args = Array.prototype.slice.call(arguments);
 	var id = args\[0\];
 	var content = args\[1\];
-	var callback  = null;
+	var callback = null;
 	if(args\[2\]){
 		callback = args\[2\];
 		if(args\[3\]){

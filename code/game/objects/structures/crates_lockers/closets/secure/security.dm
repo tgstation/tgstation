@@ -5,29 +5,17 @@
 
 /obj/structure/closet/secure_closet/captains/PopulateContents()
 	..()
-	new /obj/item/clothing/suit/hooded/wintercoat/captain(src)
+
 	new /obj/item/storage/backpack/captain(src)
 	new /obj/item/storage/backpack/satchel/cap(src)
 	new /obj/item/storage/backpack/duffelbag/captain(src)
-	new /obj/item/clothing/neck/cloak/cap(src)
 	new /obj/item/clothing/neck/petcollar(src)
 	new /obj/item/pet_carrier(src)
-	new /obj/item/clothing/shoes/sneakers/brown(src)
-	new /obj/item/clothing/under/rank/captain(src)
-	new /obj/item/clothing/under/rank/captain/skirt(src)
-	new /obj/item/clothing/suit/armor/vest/capcarapace(src)
-	new /obj/item/clothing/head/caphat(src)
-	new /obj/item/clothing/under/rank/captain/parade(src)
-	new /obj/item/clothing/suit/armor/vest/capcarapace/captains_formal(src)
-	new /obj/item/clothing/head/caphat/parade(src)
-	new /obj/item/clothing/suit/captunic(src)
-	new /obj/item/clothing/head/crown/fancy(src)
-	new /obj/item/cartridge/captain(src)
+	new /obj/item/storage/bag/garment/captain(src)
+	new /obj/item/computer_hardware/hard_drive/portable/command/captain(src)
 	new /obj/item/storage/box/silver_ids(src)
 	new /obj/item/radio/headset/heads/captain/alt(src)
 	new /obj/item/radio/headset/heads/captain(src)
-	new /obj/item/clothing/glasses/sunglasses/gar/supergar(src)
-	new /obj/item/clothing/gloves/color/captain(src)
 	new /obj/item/storage/belt/sabre(src)
 	new /obj/item/gun/energy/e_gun(src)
 	new /obj/item/door_remote/captain(src)
@@ -40,20 +28,14 @@
 
 /obj/structure/closet/secure_closet/hop/PopulateContents()
 	..()
-	new /obj/item/clothing/neck/cloak/hop(src)
+	new /obj/item/storage/bag/garment/hop(src)
 	new /obj/item/storage/lockbox/medal/service(src)
-	new /obj/item/clothing/under/rank/civilian/head_of_personnel(src)
-	new /obj/item/clothing/under/rank/civilian/head_of_personnel/skirt(src)
-	new /obj/item/clothing/head/hopcap(src)
-	new /obj/item/cartridge/hop(src)
+	new /obj/item/computer_hardware/hard_drive/portable/command/hop(src)
 	new /obj/item/radio/headset/heads/hop(src)
-	new /obj/item/clothing/shoes/sneakers/brown(src)
 	new /obj/item/storage/box/ids(src)
 	new /obj/item/storage/box/ids(src)
 	new /obj/item/megaphone/command(src)
-	new /obj/item/clothing/suit/armor/vest/alt(src)
 	new /obj/item/assembly/flash/handheld(src)
-	new /obj/item/clothing/glasses/sunglasses(src)
 	new /obj/item/gun/energy/e_gun(src)
 	new /obj/item/clothing/neck/petcollar(src)
 	new /obj/item/pet_carrier(src)
@@ -61,8 +43,6 @@
 	new /obj/item/circuitboard/machine/techfab/department/service(src)
 	new /obj/item/storage/photo_album/hop(src)
 	new /obj/item/storage/lockbox/medal/hop(src)
-	new /obj/item/clothing/suit/hooded/wintercoat/hop(src)
-
 
 /obj/structure/closet/secure_closet/hos
 	name = "\proper head of security's locker"
@@ -71,34 +51,26 @@
 
 /obj/structure/closet/secure_closet/hos/PopulateContents()
 	..()
-	new /obj/item/clothing/neck/cloak/hos(src)
-	new /obj/item/clothing/suit/armor/hos/hos_formal(src)
-	new /obj/item/cartridge/hos(src)
+
+	new /obj/item/computer_hardware/hard_drive/portable/command/hos(src)
 	new /obj/item/radio/headset/heads/hos(src)
-	new /obj/item/clothing/under/rank/security/head_of_security/parade/female(src)
-	new /obj/item/clothing/under/rank/security/head_of_security/parade(src)
-	new /obj/item/clothing/suit/armor/vest/leather(src)
-	new /obj/item/clothing/suit/armor/hos(src)
-	new /obj/item/clothing/under/rank/security/head_of_security/skirt(src)
-	new /obj/item/clothing/under/rank/security/head_of_security/alt(src)
-	new /obj/item/clothing/under/rank/security/head_of_security/alt/skirt(src)
-	new /obj/item/clothing/head/hos(src)
-	new /obj/item/clothing/glasses/hud/security/sunglasses/eyepatch(src)
-	new /obj/item/clothing/glasses/hud/security/sunglasses/gars/supergars(src)
-	new /obj/item/clothing/under/rank/security/head_of_security/grey(src)
+	new /obj/item/storage/bag/garment/hos(src)
 	new /obj/item/storage/lockbox/medal/sec(src)
 	new /obj/item/megaphone/sec(src)
 	new /obj/item/holosign_creator/security(src)
 	new /obj/item/storage/lockbox/loyalty(src)
-	new /obj/item/clothing/mask/gas/sechailer/swat(src)
 	new /obj/item/storage/box/flashbangs(src)
 	new /obj/item/shield/riot/tele(src)
 	new /obj/item/storage/belt/security/full(src)
-	new /obj/item/gun/energy/e_gun/hos(src)
-	new /obj/item/pinpointer/nuke(src)
 	new /obj/item/circuitboard/machine/techfab/department/security(src)
 	new /obj/item/storage/photo_album/hos(src)
-	new /obj/item/clothing/suit/hooded/wintercoat/security/hos(src)
+
+/obj/structure/closet/secure_closet/hos/populate_contents_immediate()
+	. = ..()
+
+	// Traitor steal objectives
+	new /obj/item/gun/energy/e_gun/hos(src)
+	new /obj/item/pinpointer/nuke(src)
 
 /obj/structure/closet/secure_closet/warden
 	name = "\proper warden's locker"
@@ -127,7 +99,7 @@
 
 /obj/structure/closet/secure_closet/security
 	name = "security officer's locker"
-	req_access = list(ACCESS_SECURITY)
+	req_access = list(ACCESS_BRIG)
 	icon_state = "sec"
 
 /obj/structure/closet/secure_closet/security/PopulateContents()
@@ -175,7 +147,7 @@
 
 /obj/structure/closet/secure_closet/detective
 	name = "\improper detective's cabinet"
-	req_access = list(ACCESS_FORENSICS_LOCKERS)
+	req_access = list(ACCESS_DETECTIVE)
 	icon_state = "cabinet"
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
@@ -208,15 +180,59 @@
 
 /obj/structure/closet/secure_closet/brig
 	name = "brig locker"
-	req_access = list(ACCESS_BRIG)
+	req_one_access = list(ACCESS_BRIG)
 	anchored = TRUE
 	var/id = null
+
+/obj/structure/closet/secure_closet/brig/genpop
+	name = "genpop storage locker"
+	desc = "Used for storing the belongings of genpop's tourists visiting the locals."
+
+	///Reference to the ID linked to the locker, done by swiping a prisoner ID on it
+	var/datum/weakref/assigned_id_ref = null
+
+/obj/structure/closet/secure_closet/brig/genpop/Destroy()
+	assigned_id_ref = null
+	return ..()
+
+/obj/structure/closet/secure_closet/brig/genpop/examine(mob/user)
+	. = ..()
+	. += span_notice("<b>Right-click</b> with a Security-level ID to reset [src]'s registered ID.")
+
+/obj/structure/closet/secure_closet/brig/genpop/attackby(obj/item/card/id/advanced/prisoner/used_id, mob/user, params)
+	. = ..()
+	if(!istype(used_id, /obj/item/card/id/advanced/prisoner))
+		return
+
+	if(!assigned_id_ref)
+		say("Prisoner ID linked to locker.")
+		assigned_id_ref = WEAKREF(used_id)
+		name = "genpop storage locker - [used_id.registered_name]"
+		return
+	var/obj/item/card/id/advanced/prisoner/registered_id = assigned_id_ref.resolve()
+	if(used_id == registered_id)
+		say("Authorized ID detected. Unlocking locker and resetting ID.")
+		locked = FALSE
+		assigned_id_ref = null
+		name = initial(name)
+		update_appearance()
+
+/obj/structure/closet/secure_closet/brig/genpop/attackby_secondary(obj/item/card/id/advanced/used_id, mob/user, params)
+	. = ..()
+
+	var/list/id_access = used_id.GetAccess()
+	if(assigned_id_ref && (ACCESS_BRIG in id_access))
+		say("Authorized ID detected. Unlocking locker and resetting ID.")
+		locked = FALSE
+		assigned_id_ref = null
+		name = initial(name)
+		update_appearance()
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/closet/secure_closet/evidence
 	anchored = TRUE
 	name = "Secure Evidence Closet"
-	req_access_txt = "0"
-	req_one_access_txt = list(ACCESS_ARMORY, ACCESS_FORENSICS_LOCKERS)
+	req_one_access = list("armory","detective")
 
 /obj/structure/closet/secure_closet/brig/PopulateContents()
 	..()
@@ -234,7 +250,7 @@
 	for(var/i in 1 to 3)
 		new /obj/item/paper/fluff/jobs/security/court_judgement (src)
 	new /obj/item/pen (src)
-	new /obj/item/clothing/suit/judgerobe (src)
+	new /obj/item/clothing/suit/costume/judgerobe (src)
 	new /obj/item/clothing/head/powdered_wig (src)
 	new /obj/item/storage/briefcase(src)
 
@@ -246,7 +262,7 @@
 /obj/structure/closet/secure_closet/contraband/heads
 	anchored = TRUE
 	name = "Contraband Locker"
-	req_access = list(ACCESS_HEADS)
+	req_access = list(ACCESS_COMMAND)
 
 /obj/structure/closet/secure_closet/armory1
 	name = "armory armor locker"
@@ -255,13 +271,18 @@
 
 /obj/structure/closet/secure_closet/armory1/PopulateContents()
 	..()
-	new /obj/item/clothing/suit/hooded/ablative(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/suit/armor/riot(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/head/helmet/riot(src)
 	for(var/i in 1 to 3)
 		new /obj/item/shield/riot(src)
+
+/obj/structure/closet/secure_closet/armory1/populate_contents_immediate()
+	. = ..()
+
+	// Traitor steal objective
+	new /obj/item/clothing/suit/hooded/ablative(src)
 
 /obj/structure/closet/secure_closet/armory2
 	name = "armory ballistics locker"
@@ -289,6 +310,8 @@
 		new /obj/item/gun/energy/e_gun(src)
 	for(var/i in 1 to 3)
 		new /obj/item/gun/energy/laser(src)
+	for(var/i in 1 to 3)
+		new /obj/item/gun/energy/laser/thermal(src)
 
 /obj/structure/closet/secure_closet/tac
 	name = "armory tac locker"

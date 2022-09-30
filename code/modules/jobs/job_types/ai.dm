@@ -1,5 +1,6 @@
 /datum/job/ai
-	title = "AI"
+	title = JOB_AI
+	description = "Assist the crew, follow your laws, coordinate your cyborgs."
 	auto_deadmin_role_flags = DEADMIN_POSITION_SILICON
 	faction = FACTION_STATION
 	total_positions = 1
@@ -30,6 +31,8 @@
 		for(var/mob/living/silicon/robot/R in GLOB.silicon_mobs)
 			if(!R.connected_ai)
 				R.TryConnectToAI()
+	var/mob/living/silicon/ai/ai_spawn = spawned
+	ai_spawn.log_current_laws()
 
 
 /datum/job/ai/get_roundstart_spawn_point()

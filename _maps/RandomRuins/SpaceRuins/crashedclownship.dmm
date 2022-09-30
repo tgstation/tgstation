@@ -6,7 +6,7 @@
 /turf/closed/mineral/random,
 /area/ruin/unpowered/no_grav)
 "c" = (
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "d" = (
 /turf/closed/wall/mineral/bananium,
@@ -16,10 +16,10 @@
 /turf/open/floor/mineral/bananium/airless,
 /area/ruin/unpowered)
 "f" = (
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/ruin/unpowered)
 "g" = (
-/obj/effect/mob_spawn/human/clown,
+/obj/effect/mob_spawn/corpse/human/clown,
 /turf/open/floor/mineral/bananium/airless,
 /area/ruin/unpowered)
 "h" = (
@@ -44,7 +44,7 @@
 "k" = (
 /obj/structure/closet/secure_closet{
 	name = "clown locker";
-	req_access_txt = "46"
+	req_access = list("theatre")
 	},
 /obj/item/clothing/shoes/clown_shoes/banana_shoes,
 /obj/item/gps/spaceruin,
@@ -78,7 +78,7 @@
 /obj/item/shard{
 	icon_state = "small"
 	},
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/ruin/unpowered)
 "p" = (
 /obj/item/stack/ore/bananium,
@@ -91,10 +91,10 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/ruin/unpowered)
 "r" = (
-/obj/effect/mob_spawn/human/clown{
+/obj/effect/mob_spawn/corpse/human/clown{
 	name = "Clown Pilot"
 	},
 /turf/open/floor/mineral/bananium/airless,

@@ -1,7 +1,10 @@
-The enclosed /images folder holds the image files used as the title screen for the game. All common formats such as PNG, JPG, and GIF are supported.
-Byond's DMI format is also supported, but if you use a DMI only include one image per file and do not give it an icon_state (the text label below the image).
+The enclosed /images folder holds the image files used as the title screen for the game.
 
-Keep in mind that the area a title screen fills is a 480px square so you should scale/crop source images to these dimensions first.
+Specification:
+Formats: PNG, JPG, GIF, DMI*
+Dimensions: 608x480
+	*Byond's DMI format is also supported, but if you use a DMI only include one image per file and do not give it an icon_state (the text label below the image).
+
 The game won't scale these images for you, so smaller images will not fill the screen and larger ones will be cut off.
 
 Using unnecessarily huge images can cause client side lag and should be avoided. Extremely large GIFs should preferentially be converted to DMIs.
@@ -23,7 +26,7 @@ Common titles are in the rotation to be displayed all the time. Any name that do
 
 An example of a common title name is "clown".
 
-The common title screen named "default" is special. It is only used if no other titles are available. Because default only runs in the 
+The common title screen named "default" is special. It is only used if no other titles are available. Because default only runs in the
 absence of other titles, if you want it to also appear in the general rotation you must name it something else.
 
 
@@ -31,7 +34,7 @@ Map Titles:
 
 Map titles are tied to a specific in game map. To make a map title you format the name like this "(name of a map)+(name of your title)"
 
-The spelling of the map name is important. It must match exactly the define MAP_NAME found in the relevant .DM file in the /_maps folder in 
+The spelling of the map name is important. It must match exactly the define MAP_NAME found in the relevant .JSON file in the /_maps folder in
 the root directory. It can also be seen in game in the status menu. Note that there are no spaces between the two names.
 
 It is absolutely fine to have more than one title tied to the same map.

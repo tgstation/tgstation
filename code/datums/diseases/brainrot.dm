@@ -9,7 +9,7 @@
 	viable_mobtypes = list(/mob/living/carbon/human)
 	cure_chance = 7.5 //higher chance to cure, since two reagents are required
 	desc = "This disease destroys the braincells, causing brain fever, brain necrosis and general intoxication."
-	required_organs = list(/obj/item/organ/brain)
+	required_organs = list(/obj/item/organ/internal/brain)
 	severity = DISEASE_SEVERITY_HARMFUL
 
 
@@ -55,4 +55,4 @@
 				if(prob(1))
 					affected_mob.emote("snore")
 			if(DT_PROB(7.5, delta_time))
-				affected_mob.stuttering += 3
+				affected_mob.adjust_stutter(6 SECONDS)

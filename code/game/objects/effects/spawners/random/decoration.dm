@@ -32,12 +32,12 @@
 	name = "ornament spawner"
 	icon_state = "lamp"
 	loot = list(
-		/obj/item/sign = 10,
-		/obj/item/flashlight/lamp/green = 10,
-		/obj/item/plaque = 5,
+		/obj/item/flashlight/lamp = 35,
+		/obj/item/flashlight/lamp/green = 35,
+		/obj/item/flashlight/lantern = 10,
+		/obj/item/phone = 10,
 		/obj/item/flashlight/lantern/jade = 5,
-		/obj/item/phone = 5,
-		/obj/item/flashlight/lamp/bananalamp = 3,
+		/obj/item/flashlight/lamp/bananalamp = 5,
 	)
 
 /obj/effect/spawner/random/decoration/generic
@@ -78,6 +78,13 @@
 		/obj/structure/statue/diamond/ai1 = 1,
 		/obj/structure/statue/diamond/ai2 = 1,
 	)
+
+/obj/effect/spawner/random/decoration/statue/make_item(spawn_loc, type_path_to_make)
+	var/obj/structure/statue/statue = ..()
+	if(istype(statue))
+		statue.set_anchored(TRUE)
+
+	return statue
 
 /obj/effect/spawner/random/decoration/showcase
 	name = "showcase spawner"

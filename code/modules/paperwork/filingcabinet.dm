@@ -30,7 +30,6 @@
 /obj/structure/filingcabinet/filingcabinet //not changing the path to avoid unnecessary map issues, but please don't name stuff like this in the future -Pete
 	icon_state = "tallcabinet"
 
-
 /obj/structure/filingcabinet/Initialize(mapload)
 	. = ..()
 	if(mapload)
@@ -59,33 +58,52 @@
 		icon_state = "[initial(icon_state)]-open"
 		sleep(5)
 		icon_state = initial(icon_state)
-		updateUsrDialog()
 	else if(!user.combat_mode)
 		to_chat(user, span_warning("You can't put [P] in [src]!"))
 	else
 		return ..()
 
-
-/obj/structure/filingcabinet/ui_interact(mob/user)
+/obj/structure/filingcabinet/attack_hand(mob/living/carbon/user, list/modifiers)
 	. = ..()
-	if(contents.len <= 0)
-		to_chat(user, span_notice("[src] is empty."))
+	ui_interact(user)
+
+/obj/structure/filingcabinet/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "FilingCabinet")
+		ui.open()
+
+/obj/structure/filingcabinet/ui_data(mob/user)
+	var/list/data = list()
+
+	data["cabinet_name"] = "[name]"
+	data["contents"] = list()
+	data["contents_ref"] = list()
+	for(var/obj/item/content in src)
+		data["contents"] += "[content]"
+		data["contents_ref"] += "[REF(content)]"
+
+	return data
+
+/obj/structure/filingcabinet/ui_act(action, params)
+	. = ..()
+	if(.)
 		return
 
-	var/dat = "<center><table>"
-	var/i
-	for(i=contents.len, i>=1, i--)
-		var/obj/item/P = contents[i]
-		dat += "<tr><td><a href='?src=[REF(src)];retrieve=[REF(P)]'>[P.name]</a></td></tr>"
-	dat += "</table></center>"
-	user << browse("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>[name]</title></head><body>[dat]</body></html>", "window=filingcabinet;size=350x300")
-
+	switch(action)
+		// Take the object out
+		if("remove_object")
+			var/obj/item/content = locate(params["ref"]) in src
+			if(istype(content) && in_range(src, usr))
+				usr.put_in_hands(content)
+				icon_state = "[initial(icon_state)]-open"
+				addtimer(VARSET_CALLBACK(src, icon_state, initial(icon_state)), 5)
+				return TRUE
 
 /obj/structure/filingcabinet/attack_tk(mob/user)
 	if(anchored)
 		return attack_self_tk(user)
 	return ..()
-
 
 /obj/structure/filingcabinet/attack_self_tk(mob/user)
 	. = COMPONENT_CANCEL_ATTACK_CHAIN
@@ -99,21 +117,6 @@
 			return
 	to_chat(user, span_notice("You find nothing in [src]."))
 
-
-/obj/structure/filingcabinet/Topic(href, href_list)
-	if(!usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(usr)))
-		return
-	if(href_list["retrieve"])
-		usr << browse("", "window=filingcabinet") // Close the menu
-
-		var/obj/item/P = locate(href_list["retrieve"]) in src //contents[retrieveindex]
-		if(istype(P) && in_range(src, usr))
-			usr.put_in_hands(P)
-			updateUsrDialog()
-			icon_state = "[initial(icon_state)]-open"
-			addtimer(VARSET_CALLBACK(src, icon_state, initial(icon_state)), 5)
-
-
 /*
  * Security Record Cabinets
  */
@@ -126,16 +129,7 @@
 			var/datum/data/record/S = find_record("name", G.fields["name"], GLOB.data_core.security)
 			if(!S)
 				continue
-			var/obj/item/paper/P = new /obj/item/paper(src)
-			P.info = "<CENTER><B>Security Record</B></CENTER><BR>"
-			P.info += "Name: [G.fields["name"]] ID: [G.fields["id"]]<BR>\nGender: [G.fields["gender"]]<BR>\nAge: [G.fields["age"]]<BR>\nFingerprint: [G.fields["fingerprint"]]<BR>\nPhysical Status: [G.fields["p_stat"]]<BR>\nMental Status: [G.fields["m_stat"]]<BR>"
-			P.info += "<BR>\n<CENTER><B>Security Data</B></CENTER><BR>\nCriminal Status: [S.fields["criminal"]]<BR>\n<BR>\nCrimes: [S.fields["crim"]]<BR>\nDetails: [S.fields["crim_d"]]<BR>\n<BR>\nImportant Notes:<BR>\n\t[S.fields["notes"]]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>"
-			var/counter = 1
-			while(S.fields["com_[counter]"])
-				P.info += "[S.fields["com_[counter]"]]<BR>"
-				counter++
-			P.info += "</TT>"
-			P.name = "paper - '[G.fields["name"]]'"
+			print_security_record(G, S, src)
 			virgin = FALSE //tabbing here is correct- it's possible for people to try and use it
 						//before the records have been generated, so we do this inside the loop.
 
@@ -160,16 +154,18 @@
 			var/datum/data/record/M = find_record("name", G.fields["name"], GLOB.data_core.medical)
 			if(!M)
 				continue
-			var/obj/item/paper/P = new /obj/item/paper(src)
-			P.info = "<CENTER><B>Medical Record</B></CENTER><BR>"
-			P.info += "Name: [G.fields["name"]] ID: [G.fields["id"]]<BR>\nGender: [G.fields["gender"]]<BR>\nAge: [G.fields["age"]]<BR>\nFingerprint: [G.fields["fingerprint"]]<BR>\nPhysical Status: [G.fields["p_stat"]]<BR>\nMental Status: [G.fields["m_stat"]]<BR>"
-			P.info += "<BR>\n<CENTER><B>Medical Data</B></CENTER><BR>\nBlood Type: [M.fields["blood_type"]]<BR>\nDNA: [M.fields["b_dna"]]<BR>\n<BR>\nMinor Disabilities: [M.fields["mi_dis"]]<BR>\nDetails: [M.fields["mi_dis_d"]]<BR>\n<BR>\nMajor Disabilities: [M.fields["ma_dis"]]<BR>\nDetails: [M.fields["ma_dis_d"]]<BR>\n<BR>\nAllergies: [M.fields["alg"]]<BR>\nDetails: [M.fields["alg_d"]]<BR>\n<BR>\nCurrent Diseases: [M.fields["cdi"]] (per disease info placed in log/comment section)<BR>\nDetails: [M.fields["cdi_d"]]<BR>\n<BR>\nImportant Notes:<BR>\n\t[M.fields["notes"]]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>"
+			var/obj/item/paper/med_record_paper = new /obj/item/paper(src)
+			var/med_record_text = "<CENTER><B>Medical Record</B></CENTER><BR>"
+			med_record_text += "Name: [G.fields["name"]] ID: [G.fields["id"]]<BR>\nGender: [G.fields["gender"]]<BR>\nAge: [G.fields["age"]]<BR>\nFingerprint: [G.fields["fingerprint"]]<BR>\nPhysical Status: [G.fields["p_stat"]]<BR>\nMental Status: [G.fields["m_stat"]]<BR>"
+			med_record_text += "<BR>\n<CENTER><B>Medical Data</B></CENTER><BR>\nBlood Type: [M.fields["blood_type"]]<BR>\nDNA: [M.fields["b_dna"]]<BR>\n<BR>\nMinor Disabilities: [M.fields["mi_dis"]]<BR>\nDetails: [M.fields["mi_dis_d"]]<BR>\n<BR>\nMajor Disabilities: [M.fields["ma_dis"]]<BR>\nDetails: [M.fields["ma_dis_d"]]<BR>\n<BR>\nAllergies: [M.fields["alg"]]<BR>\nDetails: [M.fields["alg_d"]]<BR>\n<BR>\nCurrent Diseases: [M.fields["cdi"]] (per disease info placed in log/comment section)<BR>\nDetails: [M.fields["cdi_d"]]<BR>\n<BR>\nImportant Notes:<BR>\n\t[M.fields["notes"]]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>"
 			var/counter = 1
 			while(M.fields["com_[counter]"])
-				P.info += "[M.fields["com_[counter]"]]<BR>"
+				med_record_text += "[M.fields["com_[counter]"]]<BR>"
 				counter++
-			P.info += "</TT>"
-			P.name = "paper - '[G.fields["name"]]'"
+			med_record_text += "</TT>"
+			med_record_paper.add_raw_text(med_record_text)
+			med_record_paper.name = "paper - '[G.fields["name"]]'"
+			med_record_paper.update_appearance()
 			virgin = FALSE //tabbing here is correct- it's possible for people to try and use it
 						//before the records have been generated, so we do this inside the loop.
 

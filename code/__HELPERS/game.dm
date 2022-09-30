@@ -11,170 +11,11 @@
 		return null
 	return format_text ? format_text(checked_area.name) : checked_area.name
 
-/**
- * Returns a list with the names of the areas around a center at a certain distance
- * Returns the local area if no distance is indicated
- * Returns an empty list if the center is null
-**/
-/proc/get_areas_in_range(distance = 0, atom/center = usr)
-	if(!distance)
-		var/turf/center_turf = get_turf(center)
-		return center_turf ? list(center_turf.loc) : list()
-	if(!center)
-		return list()
-
-	var/list/turfs = RANGE_TURFS(distance, center)
-	var/list/areas = list()
-	for(var/turf/checked_turf as anything in turfs)
-		areas |= checked_turf.loc
-	return areas
-
-///Returns a list of all areas that are adjacent to the center atom's area, clear the list of nulls at the end.
-/proc/get_adjacent_areas(atom/center)
-	. = list(
-		get_area(get_ranged_target_turf(center, NORTH, 1)),
-		get_area(get_ranged_target_turf(center, SOUTH, 1)),
-		get_area(get_ranged_target_turf(center, EAST, 1)),
-		get_area(get_ranged_target_turf(center, WEST, 1))
-		)
-	list_clear_nulls(.)
-
-///Returns the open turf next to the center in a specific direction
-/proc/get_open_turf_in_dir(atom/center, dir)
-	var/turf/open/get_turf = get_ranged_target_turf(center, dir, 1)
-	if(istype(get_turf))
-		return get_turf
-
-///Returns a list with all the adjacent open turfs. Clears the list of nulls in the end.
-/proc/get_adjacent_open_turfs(atom/center)
-	. = list(
-		get_open_turf_in_dir(center, NORTH),
-		get_open_turf_in_dir(center, SOUTH),
-		get_open_turf_in_dir(center, EAST),
-		get_open_turf_in_dir(center, WEST)
-		)
-	list_clear_nulls(.)
-
-///Returns a list with all the adjacent areas by getting the adjacent open turfs
-/proc/get_adjacent_open_areas(atom/center)
-	. = list()
-	var/list/adjacent_turfs = get_adjacent_open_turfs(center)
-	for(var/near_turf in adjacent_turfs)
-		. |= get_area(near_turf)
-
-/**
- * Get a bounding box of a list of atoms.
- *
- * Arguments:
- * - atoms - List of atoms. Can accept output of view() and range() procs.
- *
- * Returns: list(x1, y1, x2, y2)
- */
-/proc/get_bbox_of_atoms(list/atoms)
-	var/list/list_x = list()
-	var/list/list_y = list()
-	for(var/_a in atoms)
-		var/atom/a = _a
-		list_x += a.x
-		list_y += a.y
-	return list(
-		min(list_x),
-		min(list_y),
-		max(list_x),
-		max(list_y))
-
-/// Like view but bypasses luminosity check
-/proc/get_hear(range, atom/source)
-	var/lum = source.luminosity
-	source.luminosity = 6
-
-	. = view(range, source)
-	source.luminosity = lum
-
-///Checks if the mob provided (must_be_alone) is alone in an area
-/proc/alone_in_area(area/the_area, mob/must_be_alone, check_type = /mob/living/carbon)
-	var/area/our_area = get_area(the_area)
-	for(var/carbon in GLOB.alive_mob_list)
-		if(!istype(carbon, check_type))
-			continue
-		if(carbon == must_be_alone)
-			continue
-		if(our_area == get_area(carbon))
-			return FALSE
-	return TRUE
-
 //We used to use linear regression to approximate the answer, but Mloc realized this was actually faster.
 //And lo and behold, it is, and it's more accurate to boot.
 ///Calculate the hypotenuse cheaply (this should be in maths.dm)
 /proc/cheap_hypotenuse(Ax, Ay, Bx, By)
 	return sqrt(abs(Ax - Bx) ** 2 + abs(Ay - By) ** 2) //A squared + B squared = C squared
-
-///Returns all atoms present in a circle around the center
-/proc/circle_range(center = usr,radius = 3)
-
-	var/turf/center_turf = get_turf(center)
-	var/list/atoms = new/list()
-	var/rsq = radius * (radius + 0.5)
-
-	for(var/atom/checked_atom as anything in range(radius, center_turf))
-		var/dx = checked_atom.x - center_turf.x
-		var/dy = checked_atom.y - center_turf.y
-		if(dx * dx + dy * dy <= rsq)
-			atoms += checked_atom
-
-	return atoms
-
-///Returns all atoms present in a circle around the center but uses view() instead of range() (Currently not used)
-/proc/circle_view(center=usr,radius=3)
-
-	var/turf/center_turf = get_turf(center)
-	var/list/atoms = new/list()
-	var/rsq = radius * (radius + 0.5)
-
-	for(var/atom/checked_atom as anything in view(radius, center_turf))
-		var/dx = checked_atom.x - center_turf.x
-		var/dy = checked_atom.y - center_turf.y
-		if(dx * dx + dy * dy <= rsq)
-			atoms += checked_atom
-
-	return atoms
-
-///Returns the distance between two atoms
-/proc/get_dist_euclidian(atom/first_location as turf|mob|obj, atom/second_location as turf|mob|obj)
-	var/dx = first_location.x - second_location.x
-	var/dy = first_location.y - second_location.y
-
-	var/dist = sqrt(dx ** 2 + dy ** 2)
-
-	return dist
-
-///Returns a list of turfs around a center based on RANGE_TURFS()
-/proc/circle_range_turfs(center = usr, radius = 3)
-
-	var/turf/center_turf = get_turf(center)
-	var/list/turfs = new/list()
-	var/rsq = radius * (radius + 0.5)
-
-	for(var/turf/checked_turf as anything in RANGE_TURFS(radius, center_turf))
-		var/dx = checked_turf.x - center_turf.x
-		var/dy = checked_turf.y - center_turf.y
-		if(dx * dx + dy * dy <= rsq)
-			turfs += checked_turf
-	return turfs
-
-///Returns a list of turfs around a center based on view()
-/proc/circle_view_turfs(center=usr,radius=3) //Is there even a diffrence between this proc and circle_range_turfs()?
-
-	var/turf/center_turf = get_turf(center)
-	var/list/turfs = new/list()
-	var/rsq = radius * (radius + 0.5)
-
-	for(var/turf/checked_turf in view(radius, center_turf))
-		var/dx = checked_turf.x - center_turf.x
-		var/dy = checked_turf.y - center_turf.y
-		if(dx * dx + dy * dy <= rsq)
-			turfs += checked_turf
-	return turfs
 
 /** recursive_organ_check
  * inputs: first_object (object to start with)
@@ -194,11 +35,11 @@
 
 		var/atom/object_to_check = processing_list[index]
 
-		if(istype(object_to_check, /obj/item/organ))
+		if(isorgan(object_to_check))
 			found_organ = object_to_check
 			found_organ.organ_flags ^= ORGAN_FROZEN
 
-		else if(istype(object_to_check, /mob/living/carbon))
+		else if(iscarbon(object_to_check))
 			var/mob/living/carbon/mob_to_check = object_to_check
 			for(var/organ in mob_to_check.internal_organs)
 				found_organ = organ
@@ -212,68 +53,6 @@
 		processed_list[object_to_check] = object_to_check
 
 	return
-
-/// Returns a list of hearers in view(view_radius) from source (ignoring luminosity). uses important_recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE]
-/proc/get_hearers_in_view(view_radius, atom/source)
-	var/turf/center_turf = get_turf(source)
-	. = list()
-	if(!center_turf)
-		return
-	var/lum = center_turf.luminosity
-	center_turf.luminosity = 6 // This is the maximum luminosity
-	for(var/atom/movable/movable in view(view_radius, center_turf))
-		var/list/recursive_contents = LAZYACCESS(movable.important_recursive_contents, RECURSIVE_CONTENTS_HEARING_SENSITIVE)
-		if(recursive_contents)
-			. += recursive_contents
-			SEND_SIGNAL(movable, COMSIG_ATOM_HEARER_IN_VIEW, .)
-	center_turf.luminosity = lum
-
-/// Returns a list of mobs who can hear any of the radios given in @radios
-/proc/get_mobs_in_radio_ranges(list/obj/item/radio/radios)
-	. = list()
-	for(var/obj/item/radio/this_radio in radios)
-		. |= get_hearers_in_view(this_radio.canhear_range, this_radio)
-
-///Calculate if two atoms are in sight, returns TRUE or FALSE
-/proc/inLineOfSight(X1,Y1,X2,Y2,Z=1,PX1=16.5,PY1=16.5,PX2=16.5,PY2=16.5)
-	var/turf/T
-	if(X1==X2)
-		if(Y1==Y2)
-			return TRUE //Light cannot be blocked on same tile
-		else
-			var/s = SIGN(Y2-Y1)
-			Y1+=s
-			while(Y1!=Y2)
-				T=locate(X1,Y1,Z)
-				if(IS_OPAQUE_TURF(T))
-					return FALSE
-				Y1+=s
-	else
-		var/m=(32*(Y2-Y1)+(PY2-PY1))/(32*(X2-X1)+(PX2-PX1))
-		var/b=(Y1+PY1/32-0.015625)-m*(X1+PX1/32-0.015625) //In tiles
-		var/signX = SIGN(X2-X1)
-		var/signY = SIGN(Y2-Y1)
-		if(X1<X2)
-			b+=m
-		while(X1!=X2 || Y1!=Y2)
-			if(round(m*X1+b-Y1))
-				Y1+=signY //Line exits tile vertically
-			else
-				X1+=signX //Line exits tile horizontally
-			T=locate(X1,Y1,Z)
-			if(IS_OPAQUE_TURF(T))
-				return FALSE
-	return TRUE
-
-
-/proc/is_in_sight(atom/first_atom, atom/second_atom)
-	var/turf/first_turf = get_turf(first_atom)
-	var/turf/second_turf = get_turf(second_atom)
-
-	if(!first_turf || !second_turf)
-		return FALSE
-
-	return inLineOfSight(first_turf.x, first_turf.y, second_turf.x, second_turf.y, first_turf.z)
 
 ///Tries to move an atom to an adjacent turf, return TRUE if successful
 /proc/try_move_adjacent(atom/movable/atom_to_move, trydir)
@@ -352,10 +131,9 @@
 ///wrapper for flick_overlay(), flicks to everyone who can see the target atom
 /proc/flick_overlay_view(image/image_to_show, atom/target, duration)
 	var/list/viewing = list()
-	for(var/viewer in viewers(target))
-		var/mob/viewer_mob = viewer
-		if(viewer_mob.client)
-			viewing += viewer_mob.client
+	for(var/mob/viewer as anything in viewers(target))
+		if(viewer.client)
+			viewing += viewer.client
 	flick_overlay(image_to_show, viewing, duration)
 
 ///Get active players who are playing in the round
@@ -364,24 +142,33 @@
 	for(var/i = 1; i <= GLOB.player_list.len; i++)
 		var/mob/player_mob = GLOB.player_list[i]
 		if(!player_mob?.client)
-			if(alive_check && player_mob.stat)
+			continue
+		if(alive_check && player_mob.stat)
+			continue
+		else if(afk_check && player_mob.client.is_afk())
+			continue
+		else if(human_check && !ishuman(player_mob))
+			continue
+		else if(isnewplayer(player_mob)) // exclude people in the lobby
+			continue
+		else if(isobserver(player_mob)) // Ghosts are fine if they were playing once (didn't start as observers)
+			var/mob/dead/observer/ghost_player = player_mob
+			if(ghost_player.started_as_observer) // Exclude people who started as observers
 				continue
-			else if(afk_check && player_mob.client.is_afk())
-				continue
-			else if(human_check && !ishuman(player_mob))
-				continue
-			else if(isnewplayer(player_mob)) // exclude people in the lobby
-				continue
-			else if(isobserver(player_mob)) // Ghosts are fine if they were playing once (didn't start as observers)
-				var/mob/dead/observer/ghost_player = player_mob
-				if(ghost_player.started_as_observer) // Exclude people who started as observers
-					continue
-			active_players++
+		active_players++
 	return active_players
 
 ///Show the poll window to the candidate mobs
 /proc/show_candidate_poll_window(mob/candidate_mob, poll_time, question, list/candidates, ignore_category, time_passed, flashwindow = TRUE)
 	set waitfor = 0
+
+	// Universal opt-out for all players.
+	if ((!candidate_mob.client.prefs.read_preference(/datum/preference/toggle/ghost_roles)))
+		return
+
+	// Opt-out for admins whom are currently adminned.
+	if ((!candidate_mob.client.prefs.read_preference(/datum/preference/toggle/ghost_roles_as_admin)) && candidate_mob.client.holder)
+		return
 
 	SEND_SOUND(candidate_mob, 'sound/misc/notice2.ogg') //Alerting them to their consideration
 	if(flashwindow)
@@ -426,8 +213,7 @@
 	if (!question)
 		question = "Would you like to be a special role?"
 	var/list/result = list()
-	for(var/candidate in group)
-		var/mob/candidate_mob = candidate
+	for(var/mob/candidate_mob as anything in group)
 		if(!candidate_mob.key || !candidate_mob.client || (ignore_category && GLOB.poll_ignore[ignore_category] && (candidate_mob.ckey in GLOB.poll_ignore[ignore_category])))
 			continue
 		if(be_special_flag)
@@ -459,10 +245,10 @@
  * Arguments:
  * * question - question to show players as part of poll
  * * jobban_type - Type of jobban to use to filter out potential candidates.
- * * be_special_flag - Unknown/needs further documentation.
+ * * be_special_flag - The required role that the player has to have enabled to see the prompt.
  * * poll_time - Length of time in deciseconds that the poll input box exists before closing.
  * * target_mob - The mob that is being polled for.
- * * ignore_category - Unknown/needs further documentation.
+ * * ignore_category -  The notification preference that hides the prompt.
  */
 /proc/poll_candidates_for_mob(question, jobban_type, be_special_flag = 0, poll_time = 30 SECONDS, mob/target_mob, ignore_category = null)
 	var/static/list/mob/currently_polling_mobs = list()
@@ -486,10 +272,10 @@
  * Arguments:
  * * question - question to show players as part of poll
  * * jobban_type - Type of jobban to use to filter out potential candidates.
- * * be_special_flag - Unknown/needs further documentation.
+ * * be_special_flag - The required role that the player has to have enabled to see the prompt.
  * * poll_time - Length of time in deciseconds that the poll input box exists before closing.
  * * mobs - The list of mobs being polled for. This list is mutated and invalid mobs are removed from it before the proc returns.
- * * ignore_category - Unknown/needs further documentation.
+ * * ignore_category - The notification preference that hides the prompt.
  */
 /proc/poll_candidates_for_mobs(question, jobban_type, be_special_flag = 0, poll_time = 30 SECONDS, list/mobs, ignore_category = null)
 	var/list/candidate_list = poll_ghost_candidates(question, jobban_type, be_special_flag, poll_time, ignore_category)
@@ -579,7 +365,7 @@
 /proc/find_obstruction_free_location(range, atom/center, area/specific_area)
 	var/list/possible_loc = list()
 
-	for(var/turf/found_turf in RANGE_TURFS(range, center))
+	for(var/turf/found_turf as anything in RANGE_TURFS(range, center))
 		// We check if both the turf is a floor, and that it's actually in the area.
 		// We also want a location that's clear of any obstructions.
 		if (specific_area && !istype(get_area(found_turf), specific_area))
@@ -594,8 +380,12 @@
 
 	return pick(possible_loc)
 
+///Prevents power_failure message spam if a traitor purchases repeatedly.
+GLOBAL_VAR_INIT(power_failure_message_cooldown, 0)
+
 ///Disable power in the station APCs
 /proc/power_fail(duration_min, duration_max)
+	var/message_cooldown
 	for(var/obj/machinery/power/apc/current_apc as anything in GLOB.apcs_list)
 		if(!current_apc.cell || !SSmapping.level_trait(current_apc.z, ZTRAIT_STATION))
 			continue
@@ -603,7 +393,10 @@
 		if(GLOB.typecache_powerfailure_safe_areas[apc_area.type])
 			continue
 
-		current_apc.energy_fail(rand(duration_min,duration_max))
+		var/duration = rand(duration_min,duration_max)
+		message_cooldown = max(duration, message_cooldown)
+		current_apc.energy_fail(duration)
+	GLOB.power_failure_message_cooldown = world.time + message_cooldown
 
 /**
  * Sends a round tip to a target. If selected_tip is null, a random tip will be sent instead (5% chance of it being silly).
@@ -628,4 +421,4 @@
 		message = html_encode(message)
 	else
 		message = copytext(message, 2)
-	to_chat(target, span_purple("<span class='oocplain'><b>Tip of the round: </b>[message]</span>"))
+	to_chat(target, span_purple(examine_block("<span class='oocplain'><b>Tip of the round: </b>[message]</span>")))

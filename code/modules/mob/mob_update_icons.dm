@@ -1,7 +1,12 @@
 //Most of these are defined at this level to reduce on checks elsewhere in the code.
 //Having them here also makes for a nice reference list of the various overlay-updating procs available
 
+///Redraws the entire mob. For carbons, this is rather expensive, please use the individual update_X procs.
 /mob/proc/regenerate_icons() //TODO: phase this out completely if possible
+	return
+
+///Updates every item slot passed into it.
+/mob/proc/update_clothing(slot_flags)
 	return
 
 /mob/proc/update_icons()
@@ -10,62 +15,77 @@
 /mob/proc/update_transform()
 	return
 
-/mob/proc/update_inv_handcuffed()
+///Updates the handcuff overlay & HUD element.
+/mob/proc/update_worn_handcuffs()
 	return
 
-/mob/proc/update_inv_legcuffed()
+///Updates the legcuff overlay & HUD element.
+/mob/proc/update_worn_legcuffs()
 	return
 
-/mob/proc/update_inv_back()
+///Updates the back overlay & HUD element.
+/mob/proc/update_worn_back()
 	return
 
-/mob/proc/update_inv_hands()
+///Updates the held items overlay(s) & HUD element.
+/mob/proc/update_held_items()
 	return
 
-/mob/proc/update_inv_wear_mask()
+///Updates the mask overlay & HUD element.
+/mob/proc/update_worn_mask()
 	return
 
-/mob/proc/update_inv_neck()
+///Updates the neck overlay & HUD element.
+/mob/proc/update_worn_neck()
 	return
 
-/mob/proc/update_inv_wear_suit()
+///Updates the oversuit overlay & HUD element.
+/mob/proc/update_worn_oversuit()
 	return
 
-/mob/proc/update_inv_w_uniform()
+///Updates the undersuit/uniform overlay & HUD element.
+/mob/proc/update_worn_undersuit()
 	return
 
-/mob/proc/update_inv_belt()
+///Updates the belt overlay & HUD element.
+/mob/proc/update_worn_belt()
 	return
 
-/mob/proc/update_inv_head()
+///Updates the on-head overlay & HUD element.
+/mob/proc/update_worn_head()
 	return
 
+///Updates every part of a carbon's body. Including parts, mutant parts, lips, underwear, and socks.
 /mob/proc/update_body()
 	return
 
 /mob/proc/update_hair()
 	return
 
-/mob/proc/update_fire()
+///Updates the glasses overlay & HUD element.
+/mob/proc/update_worn_glasses()
 	return
 
-/mob/proc/update_inv_gloves()
+///Updates the id overlay & HUD element.
+/mob/proc/update_worn_id()
 	return
 
-/mob/proc/update_inv_wear_id()
+///Updates the shoes overlay & HUD element.
+/mob/proc/update_worn_shoes()
 	return
 
-/mob/proc/update_inv_shoes()
+///Updates the glasses overlay & HUD element.
+/mob/proc/update_worn_gloves()
 	return
 
-/mob/proc/update_inv_glasses()
+///Updates the handcuff overlay & HUD element.
+/mob/proc/update_suit_storage()
 	return
 
-/mob/proc/update_inv_s_store()
+///Updates the handcuff overlay & HUD element.
+/mob/proc/update_pockets()
 	return
 
-/mob/proc/update_inv_pockets()
-	return
-
+///Updates the handcuff overlay & HUD element.
 /mob/proc/update_inv_ears()
 	return

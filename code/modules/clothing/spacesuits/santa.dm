@@ -10,6 +10,8 @@
 	name = "Santa's suit"
 	desc = "Festive!"
 	icon_state = "santa"
+	icon = 'icons/obj/clothing/suits/wizard.dmi'
+	worn_icon = 'icons/mob/clothing/suits/wizard.dmi'
 	inhand_icon_state = "santa"
 	slowdown = 0
 	allowed = list(/obj/item) //for stuffing exta special presents

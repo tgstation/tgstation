@@ -2,11 +2,10 @@
 GLOBAL_LIST_INIT(possible_abductor_names, list("Alpha","Beta","Gamma","Delta","Epsilon","Zeta","Eta","Theta","Iota","Kappa","Lambda","Mu","Nu","Xi","Omicron","Pi","Rho","Sigma","Tau","Upsilon","Phi","Chi","Psi","Omega"))
 
 /datum/antagonist/abductor
-	name = "Abductor"
+	name = "\improper Abductor"
 	roundend_category = "abductors"
 	antagpanel_category = "Abductor"
 	job_rank = ROLE_ABDUCTOR
-	antag_hud_type = ANTAG_HUD_ABDUCTOR
 	antag_hud_name = "abductor"
 	show_in_antagpanel = FALSE //should only show subtypes
 	show_to_ghosts = TRUE
@@ -41,7 +40,7 @@ GLOBAL_LIST_INIT(possible_abductor_names, list("Alpha","Beta","Gamma","Delta","E
 	return finish_preview_icon(final_icon)
 
 /datum/antagonist/abductor/agent
-	name = "Abductor Agent"
+	name = "\improper Abductor Agent"
 	sub_role = "Agent"
 	outfit = /datum/outfit/abductor/agent
 	landmark_type = /obj/effect/landmark/abductor/agent
@@ -49,7 +48,7 @@ GLOBAL_LIST_INIT(possible_abductor_names, list("Alpha","Beta","Gamma","Delta","E
 	show_in_antagpanel = TRUE
 
 /datum/antagonist/abductor/scientist
-	name = "Abductor Scientist"
+	name = "\improper Abductor Scientist"
 	sub_role = "Scientist"
 	outfit = /datum/outfit/abductor/scientist
 	landmark_type = /obj/effect/landmark/abductor/scientist
@@ -58,7 +57,7 @@ GLOBAL_LIST_INIT(possible_abductor_names, list("Alpha","Beta","Gamma","Delta","E
 	role_job = /datum/job/abductor_scientist
 
 /datum/antagonist/abductor/scientist/onemanteam
-	name = "Abductor Solo"
+	name = "\improper Abductor Solo"
 	outfit = /datum/outfit/abductor/scientist/onemanteam
 	role_job = /datum/job/abductor_solo
 
@@ -81,14 +80,12 @@ GLOBAL_LIST_INIT(possible_abductor_names, list("Alpha","Beta","Gamma","Delta","E
 	return ..()
 
 /datum/antagonist/abductor/on_removal()
-	if(owner.current)
-		to_chat(owner.current,span_userdanger("You are no longer the [owner.special_role]!"))
 	owner.special_role = null
 	REMOVE_TRAIT(owner, TRAIT_ABDUCTOR_TRAINING, ABDUCTOR_ANTAGONIST)
 	return ..()
 
 /datum/antagonist/abductor/greet()
-	to_chat(owner.current, span_notice("You are the [owner.special_role]!"))
+	. = ..()
 	to_chat(owner.current, span_notice("With the help of your teammate, kidnap and experiment on station crew members!"))
 	to_chat(owner.current, span_notice("[greet_text]"))
 	owner.announce_objectives()
@@ -97,7 +94,7 @@ GLOBAL_LIST_INIT(possible_abductor_names, list("Alpha","Beta","Gamma","Delta","E
 	//Equip
 	var/mob/living/carbon/human/H = owner.current
 	H.set_species(/datum/species/abductor)
-	var/obj/item/organ/tongue/abductor/T = H.getorganslot(ORGAN_SLOT_TONGUE)
+	var/obj/item/organ/internal/tongue/abductor/T = H.getorganslot(ORGAN_SLOT_TONGUE)
 	T.mothership = "[team.name]"
 
 	H.real_name = "[team.name] [sub_role]"
@@ -108,8 +105,6 @@ GLOBAL_LIST_INIT(possible_abductor_names, list("Alpha","Beta","Gamma","Delta","E
 		if(istype(LM, landmark_type) && LM.team_number == team.team_number)
 			H.forceMove(LM.loc)
 			break
-
-	add_antag_hud(antag_hud_type, antag_hud_name, owner.current)
 
 /datum/antagonist/abductor/scientist/on_gain()
 	ADD_TRAIT(owner, TRAIT_ABDUCTOR_SCIENTIST_TRAINING, ABDUCTOR_ANTAGONIST)
@@ -145,7 +140,7 @@ GLOBAL_LIST_INIT(possible_abductor_names, list("Alpha","Beta","Gamma","Delta","E
 		to_chat(admin, span_warning("This only works on humans!"))
 		return
 	var/mob/living/carbon/human/H = owner.current
-	var/gear = tgui_alert(admin,"Agent or Scientist Gear","Gear",list("Agent","Scientist"))
+	var/gear = tgui_alert(admin,"Agent or Scientist Gear", "Gear", list("Agent", "Scientist"))
 	if(gear)
 		if(gear=="Agent")
 			H.equipOutfit(/datum/outfit/abductor/agent)
@@ -153,24 +148,17 @@ GLOBAL_LIST_INIT(possible_abductor_names, list("Alpha","Beta","Gamma","Delta","E
 			H.equipOutfit(/datum/outfit/abductor/scientist)
 
 /datum/team/abductor_team
-	member_name = "abductor"
+	member_name = "\improper Abductor"
 	var/team_number
-	var/list/datum/mind/abductees = list()
 	var/static/team_count = 1
+	///List of all brainwashed victims' minds
+	var/list/datum/mind/abductees = list()
 
 /datum/team/abductor_team/New()
 	..()
 	team_number = team_count++
 	name = "Mothership [pick(GLOB.possible_abductor_names)]" //TODO Ensure unique and actual alieny names
-	add_objective(new/datum/objective/experiment)
-
-/datum/team/abductor_team/is_solo()
-	return FALSE
-
-/datum/team/abductor_team/proc/add_objective(datum/objective/O)
-	O.team = src
-	O.update_explanation_text()
-	objectives += O
+	add_objective(new /datum/objective/experiment)
 
 /datum/team/abductor_team/roundend_report()
 	var/list/result = list()

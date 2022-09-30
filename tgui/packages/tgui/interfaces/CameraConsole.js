@@ -14,13 +14,10 @@ export const prevNextCamera = (cameras, activeCamera) => {
   if (!activeCamera) {
     return [];
   }
-  const index = cameras.findIndex(camera => (
-    camera.name === activeCamera.name
-  ));
-  return [
-    cameras[index - 1]?.name,
-    cameras[index + 1]?.name,
-  ];
+  const index = cameras.findIndex(
+    (camera) => camera.name === activeCamera.name
+  );
+  return [cameras[index - 1]?.name, cameras[index + 1]?.name];
 };
 
 /**
@@ -29,14 +26,14 @@ export const prevNextCamera = (cameras, activeCamera) => {
  * Filters cameras, applies search terms and sorts the alphabetically.
  */
 export const selectCameras = (cameras, searchText = '') => {
-  const testSearch = createSearch(searchText, camera => camera.name);
+  const testSearch = createSearch(searchText, (camera) => camera.name);
   return flow([
     // Null camera filter
-    filter(camera => camera?.name),
+    filter((camera) => camera?.name),
     // Optional search term
     searchText && filter(testSearch),
     // Slightly expensive, but way better than sorting in BYOND
-    sortBy(camera => camera.name),
+    sortBy((camera) => camera.name),
   ])(cameras);
 };
 
@@ -44,14 +41,12 @@ export const CameraConsole = (props, context) => {
   const { act, data } = useBackend(context);
   const { mapRef, activeCamera } = data;
   const cameras = selectCameras(data.cameras);
-  const [
-    prevCameraName,
-    nextCameraName,
-  ] = prevNextCamera(cameras, activeCamera);
+  const [prevCameraName, nextCameraName] = prevNextCamera(
+    cameras,
+    activeCamera
+  );
   return (
-    <Window
-      width={870}
-      height={708}>
+    <Window width={870} height={708}>
       <div className="CameraConsole__left">
         <Window.Content scrollable>
           <CameraConsoleContent />
@@ -60,30 +55,35 @@ export const CameraConsole = (props, context) => {
       <div className="CameraConsole__right">
         <div className="CameraConsole__toolbar">
           <b>Camera: </b>
-          {activeCamera
-            && activeCamera.name
-            || '—'}
+          {(activeCamera && activeCamera.name) || '—'}
         </div>
         <div className="CameraConsole__toolbarRight">
           <Button
             icon="chevron-left"
             disabled={!prevCameraName}
-            onClick={() => act('switch_camera', {
-              name: prevCameraName,
-            })} />
+            onClick={() =>
+              act('switch_camera', {
+                name: prevCameraName,
+              })
+            }
+          />
           <Button
             icon="chevron-right"
             disabled={!nextCameraName}
-            onClick={() => act('switch_camera', {
-              name: nextCameraName,
-            })} />
+            onClick={() =>
+              act('switch_camera', {
+                name: nextCameraName,
+              })
+            }
+          />
         </div>
         <ByondUi
           className="CameraConsole__map"
           params={{
             id: mapRef,
             type: 'map',
-          }} />
+          }}
+        />
       </div>
     </Window>
   );
@@ -91,32 +91,25 @@ export const CameraConsole = (props, context) => {
 
 export const CameraConsoleContent = (props, context) => {
   const { act, data } = useBackend(context);
-  const [
-    searchText,
-    setSearchText,
-  ] = useLocalState(context, 'searchText', '');
+  const [searchText, setSearchText] = useLocalState(context, 'searchText', '');
   const { activeCamera } = data;
   const cameras = selectCameras(data.cameras, searchText);
   return (
-    <Flex
-      direction={"column"}
-      height="100%">
+    <Flex direction={'column'} height="100%">
       <Flex.Item>
         <Input
           autoFocus
           fluid
           mt={1}
           placeholder="Search for a camera"
-          onInput={(e, value) => setSearchText(value)} />
+          onInput={(e, value) => setSearchText(value)}
+        />
       </Flex.Item>
-      <Flex.Item
-        height="100%">
-        <Section
-          fill
-          scrollable>
-          {cameras.map(camera => (
-          // We're not using the component here because performance
-          // would be absolutely abysmal (50+ ms for each re-render).
+      <Flex.Item height="100%">
+        <Section fill scrollable>
+          {cameras.map((camera) => (
+            // We're not using the component here because performance
+            // would be absolutely abysmal (50+ ms for each re-render).
             <div
               key={camera.name}
               title={camera.name}
@@ -125,13 +118,15 @@ export const CameraConsoleContent = (props, context) => {
                 'Button--fluid',
                 'Button--color--transparent',
                 'Button--ellipsis',
-                activeCamera
-                && camera.name === activeCamera.name
-                && 'Button--selected',
+                activeCamera &&
+                  camera.name === activeCamera.name &&
+                  'Button--selected',
               ])}
-              onClick={() => act('switch_camera', {
-                name: camera.name,
-              })}>
+              onClick={() =>
+                act('switch_camera', {
+                  name: camera.name,
+                })
+              }>
               {camera.name}
             </div>
           ))}

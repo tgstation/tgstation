@@ -1,7 +1,7 @@
-//used for holding information about unique properties of maps
-//feed it json files that match the datum layout
-//defaults to box
-//  -Cyberboss
+//This file is used to contain unique properties of every map, and how we wish to alter them on a per-map basis.
+//Use JSON files that match the datum layout and you should be set from there.
+//Right now, we default to MetaStation to ensure something does indeed load by default.
+//  -san7890 (with regards to Cyberboss)
 
 /datum/map_config
 	// Metadata
@@ -28,24 +28,56 @@
 	var/shuttles = list(
 		"cargo" = "cargo_box",
 		"ferry" = "ferry_fancy",
-		"whiteship" = "whiteship_box",
-		"emergency" = "emergency_box")
+		"whiteship" = "whiteship_meta",
+		"emergency" = "emergency_meta")
 
 	/// Dictionary of job sub-typepath to template changes dictionary
 	var/job_changes = list()
+	/// List of additional areas that count as a part of the library
+	var/library_areas = list()
 
-/proc/load_map_config(filename = "data/next_map.json", default_to_box, delete_after, error_if_missing = TRUE)
-	var/datum/map_config/config = new
-	if (default_to_box)
-		return config
+/**
+ * Proc that simply loads the default map config, which should always be functional.
+ */
+/proc/load_default_map_config()
+	return new /datum/map_config
+
+
+/**
+ * Proc handling the loading of map configs. Will return the default map config using [/proc/load_default_map_config] if the loading of said file fails for any reason whatsoever, so we always have a working map for the server to run.
+ * Arguments:
+ * * filename - Name of the config file for the map we want to load. The .json file extension is added during the proc, so do not specify filenames with the extension.
+ * * directory - Name of the directory containing our .json - Must be in MAP_DIRECTORY_WHITELIST. We default this to MAP_DIRECTORY_MAPS as it will likely be the most common usecase. If no filename is set, we ignore this.
+ * * error_if_missing - Bool that says whether failing to load the config for the map will be logged in log_world or not as it's passed to LoadConfig().
+ *
+ * Returns the config for the map to load.
+ */
+/proc/load_map_config(filename = null, directory = null, error_if_missing = TRUE)
+	var/datum/map_config/config = load_default_map_config()
+
+	if(filename) // If none is specified, then go to look for next_map.json, for map rotation purposes.
+
+		//Default to MAP_DIRECTORY_MAPS if no directory is passed
+		if(directory)
+			if(!(directory in MAP_DIRECTORY_WHITELIST))
+				log_world("map directory not in whitelist: [directory] for map [filename]")
+				return config
+		else
+			directory = MAP_DIRECTORY_MAPS
+
+		filename = "[directory]/[filename].json"
+	else
+		filename = PATH_TO_NEXT_MAP_JSON
+
+
 	if (!config.LoadConfig(filename, error_if_missing))
 		qdel(config)
-		config = new /datum/map_config  // Fall back to Box
-	if (delete_after)
-		fdel(filename)
+		return load_default_map_config()
 	return config
 
+
 #define CHECK_EXISTS(X) if(!istext(json[X])) { log_world("[##X] missing from json!"); return; }
+
 /datum/map_config/proc/LoadConfig(filename, error_if_missing)
 	if(!fexists(filename))
 		if(error_if_missing)
@@ -145,6 +177,17 @@
 			return
 		job_changes = json["job_changes"]
 
+	if("library_areas" in json)
+		if(!islist(json["library_areas"]))
+			log_world("map_config \"library_areas\" field is missing or invalid!")
+			return
+		for(var/path_as_text in json["library_areas"])
+			var/path = text2path(path_as_text)
+			if(!ispath(path, /area))
+				stack_trace("Invalid path in mapping config for additional library areas: \[[path_as_text]\]")
+				continue
+			library_areas += path
+
 	defaulted = FALSE
 	return TRUE
 #undef CHECK_EXISTS
@@ -157,4 +200,4 @@
 		. += "_maps/[map_path]/[file]"
 
 /datum/map_config/proc/MakeNextMap()
-	return config_filename == "data/next_map.json" || fcopy(config_filename, "data/next_map.json")
+	return config_filename == PATH_TO_NEXT_MAP_JSON || fcopy(config_filename, PATH_TO_NEXT_MAP_JSON)

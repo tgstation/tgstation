@@ -32,12 +32,8 @@
 
 /datum/element/wall_mount/proc/on_dir_changed(datum/target, olddir, newdir)
 	var/atom/movable/real_target = target
-	switch(newdir)
-		if(NORTH)
-			real_target.plane = OVER_FRILL_PLANE
-		if(SOUTH)
-			real_target.plane = WALL_PLANE
-		if(EAST)
-			real_target.plane = OVER_FRILL_PLANE
-		if(WEST)
-			real_target.plane = OVER_FRILL_PLANE
+	var/new_plane = OVER_FRILL_PLANE
+	if(newdir == SOUTH)
+		new_plane = WALL_PLANE
+	SET_PLANE_EXPLICIT(real_target, new_plane, real_target)
+

@@ -9,8 +9,8 @@
 	w_class = WEIGHT_CLASS_SMALL
 	inhand_icon_state = "electronic"
 	worn_icon_state = "pinpointer"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	throw_speed = 3
 	throw_range = 7
 	custom_materials = list(/datum/material/iron = 500, /datum/material/glass = 250)
@@ -90,8 +90,8 @@
 	desc = "A handheld tracking device that points to crew suit sensors."
 	icon_state = "pinpointer_crew"
 	worn_icon_state = "pinpointer_crew"
-	custom_price = PAYCHECK_MEDIUM * 4
-	custom_premium_price = PAYCHECK_MEDIUM * 6
+	custom_price = PAYCHECK_CREW * 4
+	custom_premium_price = PAYCHECK_CREW * 6
 	var/has_owner = FALSE
 	var/pinpointer_owner = null
 	var/ignore_suit_sensor_level = FALSE /// Do we find people even if their suit sensors are turned off
@@ -139,15 +139,17 @@
 		names[crewmember_name] = H
 		name_counts[crewmember_name] = 1
 
-	if(!names.len)
+	if(!length(names))
 		user.visible_message(span_notice("[user]'s pinpointer fails to detect a signal."), span_notice("Your pinpointer fails to detect a signal."))
 		return
-
-	var/A = input(user, "Person to track", "Pinpoint") in sort_list(names)
-	if(!A || QDELETED(src) || !user || !user.is_holding(src) || user.incapacitated())
+	var/pinpoint_target = tgui_input_list(user, "Person to track", "Pinpoint", sort_list(names))
+	if(isnull(pinpoint_target))
 		return
-
-	target = names[A]
+	if(isnull(names[pinpoint_target]))
+		return
+	if(QDELETED(src) || !user || !user.is_holding(src) || user.incapacitated())
+		return
+	target = names[pinpoint_target]
 	toggle_on()
 	user.visible_message(span_notice("[user] activates [user.p_their()] pinpointer."), span_notice("You activate your pinpointer."))
 
@@ -159,28 +161,6 @@
 				target = null
 	if(!target) //target can be set to null from above code, or elsewhere
 		active = FALSE
-
-/obj/item/pinpointer/crew/prox //Weaker version of crew monitor primarily for EMT
-	name = "proximity crew pinpointer"
-	desc = "A handheld tracking device that displays its proximity to crew suit sensors."
-	icon_state = "pinpointer_crewprox"
-	worn_icon_state = "pinpointer_prox"
-	custom_price = PAYCHECK_MEDIUM * 3
-
-/obj/item/pinpointer/crew/prox/get_direction_icon(here, there)
-	var/size = ""
-	if(here == there)
-		size = "small"
-	else
-		switch(get_dist(here, there))
-			if(1 to 4)
-				size = "xtrlarge"
-			if(5 to 16)
-				size = "large"
-			//17 through 28 use the normal pinion, "pinondirect"
-			if(29 to INFINITY)
-				size = "small"
-	return "pinondirect[size]"
 
 /obj/item/pinpointer/pair
 	name = "pair pinpointer"
