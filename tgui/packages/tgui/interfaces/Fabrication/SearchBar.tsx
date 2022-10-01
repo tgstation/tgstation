@@ -22,9 +22,9 @@ export type SearchBarProps = {
 };
 
 export class SearchBar extends Component<SearchBarProps> {
-  protected timeout?: NodeJS.Timeout;
+  timeout?: NodeJS.Timeout;
 
-  protected onInput(value: string) {
+  onInput(value: string) {
     if (this.timeout) {
       clearTimeout(this.timeout);
     }
