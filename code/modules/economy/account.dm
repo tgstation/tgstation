@@ -103,7 +103,7 @@
 /**
  * Adjusts the balance of a bank_account as well as sanitizes the numerical input.
  */
-/datum/bank_account/proc/adjust_money(amount, reason)
+/datum/bank_account/proc/adjust_money(amount)
 	if((amount < 0 && has_money(-amount)) || amount > 0)
 		_adjust_money(amount)
 		return TRUE
