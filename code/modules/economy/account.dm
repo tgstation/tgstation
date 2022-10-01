@@ -103,19 +103,17 @@
 /**
  * Adjusts the balance of a bank_account as well as sanitizes the numerical input.
  */
-/datum/bank_account/proc/adjust_money(amt, reason)
-	if((amt < 0 && has_money(-amt)) || amt > 0)
-		_adjust_money(amt)
-		if(reason)
-			add_log_to_history(amt, reason)
+/datum/bank_account/proc/adjust_money(amount, reason)
+	if((amount < 0 && has_money(-amount)) || amount > 0)
+		_adjust_money(amount)
 		return TRUE
 	return FALSE
 
 /**
  * Performs a transfer of credits to the bank_account datum from another bank account.
- * *datum/bank_account/from: The bank account that is sending the credits to this bank_account datum.
- * *amount: the quantity of credits that are being moved between bank_account datums.
- * *transfer_reason: override for adjust_money reason. Use if no default reason(Transfer to/from Name Surname).
+ * Arguments:
+ * * datum/bank_account/from - The bank account that is sending the credits to this bank_account datum.
+ * * amount - the quantity of credits that are being moved between bank_account datums.
  */
 /datum/bank_account/proc/transfer_money(datum/bank_account/from, amount, transfer_reason)
 	if(from.has_money(amount))
