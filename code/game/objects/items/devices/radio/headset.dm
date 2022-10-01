@@ -74,7 +74,8 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	possibly_deactivate_in_loc()
 
 /obj/item/radio/headset/Destroy()
-	QDEL_NULL(keyslot2)
+	if(istype(keyslot2))
+		QDEL_NULL(keyslot2)
 	return ..()
 
 /obj/item/radio/headset/ui_data(mob/user)
