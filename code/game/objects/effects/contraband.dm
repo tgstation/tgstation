@@ -230,7 +230,7 @@
 	playsound(src, 'sound/items/poster_being_created.ogg', 100, TRUE)
 
 	var/turf/user_drop_location = get_turf(user) //cache this so it just falls to the ground if they move. also no tk memes allowed.
-	if(!do_after(user, PLACE_SPEED, placed_poster, extra_checks = CALLBACK(placed_poster, /obj/structure/sign/poster.proc/snowflake_wall_turf_check, src)))
+	if(!do_after(user, placed_poster, PLACE_SPEED, extra_checks = CALLBACK(placed_poster, /obj/structure/sign/poster.proc/snowflake_wall_turf_check, src)))
 		to_chat(user, span_notice("The poster falls down!"))
 		placed_poster.roll_and_drop(user_drop_location)
 		return

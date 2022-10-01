@@ -124,7 +124,7 @@
 	if(user.mob_size <= MOB_SIZE_SMALL)
 		to_chat(user, span_notice("You poke a limb through [src]'s bars and start fumbling for the lock switch... (This will take some time.)"))
 		to_chat(loc, span_warning("You see [user] reach through the bars and fumble for the lock switch!"))
-		if(!do_after(user, rand(300, 400), target = user) || open || !locked || !(user in occupants))
+		if(!do_after(user, user, rand(300, 400)) || open || !locked || !(user in occupants))
 			return
 		loc.visible_message(span_warning("[user] flips the lock switch on [src] by reaching through!"), null, null, null, user)
 		to_chat(user, span_boldannounce("Bingo! The lock pops open!"))
@@ -134,7 +134,7 @@
 	else
 		loc.visible_message(span_warning("[src] starts rattling as something pushes against the door!"), null, null, null, user)
 		to_chat(user, span_notice("You start pushing out of [src]... (This will take about 20 seconds.)"))
-		if(!do_after(user, 200, target = user) || open || !locked || !(user in occupants))
+		if(!do_after(user, user, 200) || open || !locked || !(user in occupants))
 			return
 		loc.visible_message(span_warning("[user] shoves out of [src]!"), null, null, null, user)
 		to_chat(user, span_notice("You shove open [src]'s door against the lock's resistance and fall out!"))

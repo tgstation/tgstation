@@ -134,7 +134,7 @@
 			return
 
 		user.visible_message(span_notice("[user] starts to pour the contents of [O] onto [src]."), span_notice("You start to slowly pour the contents of [O] onto [src]."))
-		if(!do_after(user, 6 SECONDS, src))
+		if(!do_after(user, src, 6 SECONDS))
 			to_chat(user, span_warning("You failed to pour [O] onto [src]!"))
 			return
 
@@ -147,7 +147,7 @@
 	// Cutting out skill chips.
 	if(length(skillchips) && O.get_sharpness() == SHARP_EDGED)
 		to_chat(user,span_notice("You begin to excise skillchips from [src]."))
-		if(do_after(user, 15 SECONDS, target = src))
+		if(do_after(user, src, 15 SECONDS))
 			for(var/chip in skillchips)
 				var/obj/item/skillchip/skillchip = chip
 

@@ -113,7 +113,7 @@
 		return
 	to_chat(user, span_notice("AI accepted request. Transferring stored intelligence to [card]..."))
 	to_chat(occupier, span_notice("Transfer starting. You will be moved to [card] shortly."))
-	if(!do_after(user, 50, target = src))
+	if(!do_after(user, src, 5 SECONDS))
 		to_chat(occupier, span_warning("[user] was interrupted! Transfer canceled."))
 		transfer_in_progress = FALSE
 		return

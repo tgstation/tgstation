@@ -63,7 +63,7 @@
 		if("repair")
 			ui.close() // allow watching for baddies and the ingame effects
 			chassis.balloon_alert(usr, "starting repair")
-			while(do_after(usr, 1 SECONDS, chassis) && get_integrity() < max_integrity)
+			while(do_after(usr, chassis, 1 SECONDS) && get_integrity() < max_integrity)
 				repair_damage(30)
 			if(get_integrity() == max_integrity)
 				balloon_alert(usr, "repair complete")
@@ -113,11 +113,11 @@
 	if(!chassis)
 		return FALSE
 	chassis.use_power(energy_drain)
-	return do_after(user, equip_cooldown, target, extra_checks = CALLBACK(src, .proc/do_after_checks, target), interaction_key = interaction_key)
+	return do_after(user, target, equip_cooldown, extra_checks = CALLBACK(src, .proc/do_after_checks, target), interaction_key = interaction_key)
 
 ///Do after wrapper for mecha equipment
 /obj/item/mecha_parts/mecha_equipment/proc/do_after_mecha(atom/target, mob/user, delay)
-	return do_after(user, delay, target, extra_checks = CALLBACK(src, .proc/do_after_checks, target))
+	return do_after(user, target, time = delay, extra_checks = CALLBACK(src, .proc/do_after_checks, target))
 
 /// do after checks for the mecha equipment do afters
 /obj/item/mecha_parts/mecha_equipment/proc/do_after_checks(atom/target)

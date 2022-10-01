@@ -196,7 +196,7 @@
 /// everything async that ripOut used to do
 /datum/component/embedded/proc/complete_rip_out(mob/living/carbon/victim, obj/item/I, obj/item/bodypart/limb, time_taken)
 	victim.visible_message(span_warning("[victim] attempts to remove [weapon] from [victim.p_their()] [limb.plaintext_zone]."),span_notice("You attempt to remove [weapon] from your [limb.plaintext_zone]... (It will take [DisplayTimeText(time_taken)].)"))
-	if(!do_after(victim, time_taken, target = victim))
+	if(!do_after(victim, victim, time_taken))
 		return
 	if(!weapon || !limb || weapon.loc != victim || !(weapon in limb.embedded_objects))
 		qdel(src)
@@ -272,7 +272,7 @@
 		to_chat(victim, span_userdanger("[user] begins plucking [weapon] from your [limb.plaintext_zone]..."))
 
 	var/pluck_time = 2.5 SECONDS * weapon.w_class * (self_pluck ? 2 : 1)
-	if(!do_after(user, pluck_time, victim))
+	if(!do_after(user, victim, pluck_time))
 		if(self_pluck)
 			to_chat(user, span_danger("You fail to pluck [weapon] from your [limb.plaintext_zone]."))
 		else

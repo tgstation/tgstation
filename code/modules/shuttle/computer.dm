@@ -46,7 +46,7 @@
 		return
 	if(!user.can_read(src, reading_check_flags = READING_CHECK_LITERACY)) //Illiterate mobs which aren't otherwise blocked from using computers will send the shuttle to a random valid destination
 		to_chat(user, span_warning("You start mashing buttons at random!"))
-		if(do_after(user, 10 SECONDS, target = src))
+		if(do_after(user, src, 10 SECONDS))
 			var/list/dest_list = get_valid_destinations()
 			if(!dest_list.len) //No valid destinations
 				to_chat(user, span_warning("The console shows a flashing error message, but you can't comprehend it."))

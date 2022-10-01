@@ -187,7 +187,7 @@
 		mod.balloon_alert(user, "no cell!")
 		return
 	mod.balloon_alert(user, "removing cell...")
-	if(!do_after(user, 1.5 SECONDS, target = mod))
+	if(!do_after(user, mod, 1.5 SECONDS))
 		mod.balloon_alert(user, "interrupted!")
 		return
 	mod.balloon_alert(user, "cell removed")

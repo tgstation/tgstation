@@ -341,7 +341,7 @@ Moving interrupts
 
 	var/datum/progressbar/total_progress_bar = new(user, sculpting_time, prepared_block )
 	while(remaining_time > 0 && !interrupted)
-		if(do_after(user,sculpting_period, target = prepared_block, progress = FALSE))
+		if(do_after(user, prepared_block, sculpting_period, progress = FALSE))
 			remaining_time -= sculpting_period
 			prepared_block.set_completion((sculpting_time - remaining_time)/sculpting_time)
 			total_progress_bar.update(sculpting_time - remaining_time)

@@ -1045,7 +1045,7 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 				return
 
 		else
-			if(!do_after(user, delay, target=target, extra_checks=tool_check))
+			if(!do_after(user, target, time = delay, extra_checks = tool_check))
 				return
 	else
 		// Invoke the extra checks once, just in case.

@@ -41,7 +41,7 @@
 					GM.visible_message(span_danger("[user] starts to give [GM] a swirlie!"), span_userdanger("[user] starts to give you a swirlie..."))
 					swirlie = GM
 					var/was_alive = (swirlie.stat != DEAD)
-					if(do_after(user, 3 SECONDS, target = src, timed_action_flags = IGNORE_HELD_ITEM))
+					if(do_after(user, src, 3 SECONDS, timed_action_flags = IGNORE_HELD_ITEM))
 						GM.visible_message(span_danger("[user] gives [GM] a swirlie!"), span_userdanger("[user] gives you a swirlie!"), span_hear("You hear a toilet flushing."))
 						if(iscarbon(GM))
 							var/mob/living/carbon/C = GM
@@ -333,7 +333,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 						span_notice("You start washing your [washing_face ? "face" : "hands"]..."))
 	busy = TRUE
 
-	if(!do_after(user, 40, target = src))
+	if(!do_after(user, src, 4 SECONDS))
 		busy = FALSE
 		return
 
@@ -460,7 +460,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 	if(!user.combat_mode)
 		to_chat(user, span_notice("You start washing [O]..."))
 		busy = TRUE
-		if(!do_after(user, 40, target = src))
+		if(!do_after(user, src, 4 SECONDS))
 			busy = FALSE
 			return 1
 		busy = FALSE
@@ -588,7 +588,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 						span_notice("You start washing your [washing_face ? "face" : "hands"]..."))
 	busy = TRUE
 
-	if(!do_after(user, 4 SECONDS, target = src))
+	if(!do_after(user, src, 4 SECONDS))
 		busy = FALSE
 		return
 
@@ -667,7 +667,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 	if(!user.combat_mode)
 		to_chat(user, span_notice("You start washing [O]..."))
 		busy = TRUE
-		if(!do_after(user, 4 SECONDS, target = src))
+		if(!do_after(user, src, 4 SECONDS))
 			busy = FALSE
 			return TRUE
 		busy = FALSE

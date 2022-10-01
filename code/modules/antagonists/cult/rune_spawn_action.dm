@@ -66,7 +66,7 @@
 		if(istype(T, /turf/open/floor/engine/cult))
 			scribe_mod *= 0.5
 		playsound(T, 'sound/magic/enter_blood.ogg', 100, FALSE)
-		if(do_after(owner, scribe_mod, target = owner, extra_checks = CALLBACK(owner, /mob.proc/break_do_after_checks, health, action_interrupt)))
+		if(do_after(owner, owner, scribe_mod, extra_checks = CALLBACK(owner, /mob.proc/break_do_after_checks, health, action_interrupt)))
 			new rune_type(owner.loc, chosen_keyword)
 		else
 			qdel(R1)

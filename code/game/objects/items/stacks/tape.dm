@@ -25,7 +25,7 @@
 		if(is_zero_amount(delete_if_zero = TRUE))
 			return
 		playsound(user, 'sound/items/duct_tape_rip.ogg', 50, TRUE)
-		if(!do_after(user, 1 SECONDS))
+		if(!do_after(user, time = 1 SECONDS))
 			return
 		var/new_tape_gag = new tape_gag(src)
 		user.put_in_hands(new_tape_gag)
@@ -53,7 +53,7 @@
 	user.visible_message(span_notice("[user] begins wrapping [target] with [src]."), span_notice("You begin wrapping [target] with [src]."))
 	playsound(user, 'sound/items/duct_tape_rip.ogg', 50, TRUE)
 
-	if(do_after(user, 3 SECONDS, target=target))
+	if(do_after(user, target, 3 SECONDS))
 		playsound(user, 'sound/items/duct_tape_snap.ogg', 50, TRUE)
 		use(1)
 		if(istype(target, /obj/item/clothing/gloves/fingerless))

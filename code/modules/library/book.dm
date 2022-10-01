@@ -219,7 +219,7 @@
 
 	else if((istype(I, /obj/item/knife) || I.tool_behaviour == TOOL_WIRECUTTER) && !(flags_1 & HOLOGRAM_1))
 		to_chat(user, span_notice("You begin to carve out [book_data.title]..."))
-		if(do_after(user, 30, target = src))
+		if(do_after(user, src, 3 SECONDS))
 			to_chat(user, span_notice("You carve out the pages from [book_data.title]! You didn't want to read it anyway."))
 			var/obj/item/storage/book/carved_out = new
 			carved_out.name = src.name

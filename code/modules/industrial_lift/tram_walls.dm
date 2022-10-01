@@ -244,7 +244,7 @@
 		var/duration = ((4.8 SECONDS) / W.force) * 2 //In seconds, for now.
 		if(istype(W, /obj/item/hatchet) || istype(W, /obj/item/fireaxe))
 			duration /= 4 //Much better with hatchets and axes.
-		if(do_after(user, duration * (1 SECONDS), target=src)) //Into deciseconds.
+		if(do_after(user, src, duration * (1 SECONDS))) //Into deciseconds.
 			dismantle(user, disassembled = FALSE, tool = W)
 			return
 	return ..()

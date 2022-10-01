@@ -151,7 +151,7 @@
 
 /obj/machinery/power/rtg/old_station/default_deconstruction_crowbar(obj/item/crowbar, ignore_panel, custom_deconstruct, mob/user)
 	to_chat(user,span_warning("It's starting to fall off!"))
-	if(!do_after(user, 3 SECONDS, src))
+	if(!do_after(user, src, 3 SECONDS))
 		return TRUE
 	to_chat(user,span_notice("You feel like you made a mistake"))
 	new /obj/effect/decal/cleanable/ash/large(loc)

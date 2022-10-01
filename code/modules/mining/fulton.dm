@@ -59,7 +59,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 		if(A.anchored || (A.move_resist > max_force_fulton))
 			return
 		to_chat(user, span_notice("You start attaching the pack to [A]..."))
-		if(do_after(user,50,target=A))
+		if(do_after(user, A, 5 SECONDS))
 			to_chat(user, span_notice("You attach the pack to [A] and activate it."))
 			if(loc == user && istype(user.back, /obj/item/storage/backpack))
 				var/obj/item/storage/backpack/B = user.back
@@ -144,7 +144,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	icon_state = "subspace_amplifier"
 
 /obj/item/fulton_core/attack_self(mob/user)
-	if(do_after(user,15,target = user) && !QDELETED(src))
+	if(do_after(user, user, 1.5 SECONDS) && !QDELETED(src))
 		new /obj/structure/extraction_point(get_turf(user))
 		qdel(src)
 

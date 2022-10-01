@@ -86,7 +86,7 @@ GLOBAL_DATUM_INIT(cleaning_bubbles_higher, /mutable_appearance, mutable_appearan
 
 	//do the cleaning
 	user.visible_message(span_notice("[user] starts to clean [target]!"), span_notice("You start to clean [target]..."))
-	if(do_after(user, cleaning_duration, target = target))
+	if(do_after(user, target, cleaning_duration))
 		user.visible_message(span_notice("[user] finishes cleaning [target]!"), span_notice("You finish cleaning [target]."))
 		if(clean_target)
 			if(isturf(target)) //cleaning the floor and every bit of filth on top of it

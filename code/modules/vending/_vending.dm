@@ -861,7 +861,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 	if(tilted && !user.buckled && !isAI(user))
 		to_chat(user, span_notice("You begin righting [src]."))
-		if(do_after(user, 50, target=src))
+		if(do_after(user, src, 5 SECONDS))
 			untilt(user)
 		return
 

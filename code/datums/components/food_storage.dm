@@ -104,7 +104,7 @@
  * user - the person inserting the item.
  */
 /datum/component/food_storage/proc/insert_item(obj/item/inserted_item, mob/user)
-	if(do_after(user, 1.5 SECONDS, target = parent))
+	if(do_after(user, parent, 1.5 SECONDS))
 		var/atom/food = parent
 		to_chat(user, span_notice("You slip [inserted_item.name] inside \the [parent]."))
 		inserted_item.forceMove(food)
@@ -120,7 +120,7 @@
  * user - person removing the item.
  */
 /datum/component/food_storage/proc/begin_remove_item(mob/user)
-	if(do_after(user, 10 SECONDS, target = parent))
+	if(do_after(user, parent, 10 SECONDS))
 		remove_item(user)
 
 /**

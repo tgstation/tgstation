@@ -436,7 +436,7 @@
 		. += "It seems welded shut."
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/attack_alien(mob/user, list/modifiers)
-	if(!welded || !(do_after(user, 20, target = src)))
+	if(!welded || !(do_after(user, src, 2 SECONDS)))
 		return
 	user.visible_message(span_warning("[user] furiously claws at [src]!"), span_notice("You manage to clear away the stuff blocking the scrubber."), span_hear("You hear loud scraping noises."))
 	welded = FALSE
@@ -475,7 +475,7 @@
 		return
 
 	to_chat(user, span_notice("You begin pumping [src] with your plunger."))
-	if(do_after(user, 6 SECONDS, target = src))
+	if(do_after(user, src, 6 SECONDS))
 		to_chat(user, span_notice("You finish pumping [src]."))
 		clogged = FALSE
 

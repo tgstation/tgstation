@@ -52,7 +52,7 @@
 		return
 	used_wrench.play_tool_sound(user)
 	user.balloon_alert(user, "undeploying...")
-	if(!do_after(user, undeploy_time))
+	if(!do_after(user, time = undeploy_time))
 		return
 	var/obj/undeployed_object = new spawned_on_undeploy(src)
 	//Keeps the health the same even if you redeploy the gun

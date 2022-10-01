@@ -119,7 +119,7 @@
 				to_chat(user, span_warning("You need two glass sheets to fix the case!"))
 				return
 			to_chat(user, span_notice("You start fixing [src]..."))
-			if(do_after(user, 2 SECONDS, target = src))
+			if(do_after(user, src, 2 SECONDS))
 				glass.use(2)
 				broken = FALSE
 				atom_integrity = max_integrity
@@ -160,7 +160,7 @@
 			to_chat(user, span_warning("[living_pulled] is attached to something!"))
 			return
 		user.visible_message(span_danger("[user] starts to put [living_pulled] into [src]!"))
-		if(do_after(user, 10 SECONDS, target = src))
+		if(do_after(user, src, 10 SECONDS))
 			if(QDELETED(living_pulled) || user.pulling != living_pulled || living_pulled.buckled || living_pulled.has_buckled_mobs())
 				return
 			var/datum/component/aquarium_content/content_component = living_pulled.GetComponent(/datum/component/aquarium_content)
@@ -173,7 +173,7 @@
 ///Apply mood bonus depending on aquarium status
 /obj/structure/aquarium/proc/admire(mob/living/user)
 	to_chat(user,span_notice("You take a moment to watch [src]."))
-	if(do_after(user, 5 SECONDS, target = src))
+	if(do_after(user, src, 5 SECONDS))
 		var/alive_fish = 0
 		var/dead_fish = 0
 		for(var/obj/item/fish/fish in tracked_fish)

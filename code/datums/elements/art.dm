@@ -44,7 +44,7 @@
 
 /datum/element/art/proc/appraise(atom/source, mob/user)
 	to_chat(user, span_notice("You start appraising [source]..."))
-	if(!do_after(user, 2 SECONDS, target = source))
+	if(!do_after(user, source, 2 SECONDS))
 		return
 	var/mult = 1
 	if(isobj(source))

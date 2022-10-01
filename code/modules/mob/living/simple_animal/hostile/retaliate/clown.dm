@@ -155,11 +155,11 @@
 		owner.balloon_alert(owner, "can't do that here!")
 		return
 	activating = TRUE
-	if(!do_after(owner, 1 SECONDS))
+	if(!do_after(owner, time = 1 SECONDS))
 		activating = FALSE
 		return
 	playsound(owner, 'sound/creatures/clown/hehe.ogg', 100)
-	if(!do_after(owner, 1 SECONDS))
+	if(!do_after(owner, time = 1 SECONDS))
 		activating = FALSE
 		return
 	activating = FALSE

@@ -317,7 +317,7 @@
 	balloon_alert(mod.wearer, "you start charging...")
 	animate(mod.wearer, 0.3 SECONDS, pixel_z = 16, flags = ANIMATION_RELATIVE|SINE_EASING|EASE_OUT)
 	addtimer(CALLBACK(mod.wearer, /atom.proc/SpinAnimation, 3, 2), 0.3 SECONDS)
-	if(!do_after(mod.wearer, 1 SECONDS, target = mod))
+	if(!do_after(mod.wearer, mod, 1 SECONDS))
 		animate(mod.wearer, 0.2 SECONDS, pixel_z = -16, flags = ANIMATION_RELATIVE|SINE_EASING|EASE_IN)
 		return
 	animate(mod.wearer)

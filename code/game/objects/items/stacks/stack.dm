@@ -373,7 +373,7 @@
 			adjusted_time = (recipe.time * recipe.trait_modifier)
 		else
 			adjusted_time = recipe.time
-		if(!do_after(builder, adjusted_time, target = builder))
+		if(!do_after(builder, builder, adjusted_time))
 			builder.balloon_alert(builder, "interrupted!")
 			return
 		if(!building_checks(builder, recipe, multiplier))

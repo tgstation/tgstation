@@ -84,7 +84,7 @@
 /obj/machinery/atmospherics/components/unary/bluespace_sender/crowbar_act(mob/living/user, obj/item/tool)
 	default_deconstruction_crowbar(tool, custom_deconstruct = bluespace_network.total_moles() > 0 ? TRUE : FALSE)
 	say("WARNING - Bluespace network can contain hazardous gases, deconstruct with caution!")
-	if(!do_after(user, 3 SECONDS, src))
+	if(!do_after(user, src, 3 SECONDS))
 		return
 	tool.play_tool_sound(src, 50)
 	deconstruct(TRUE)

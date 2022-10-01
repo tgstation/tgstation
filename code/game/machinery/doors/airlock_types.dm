@@ -364,7 +364,7 @@
 	if(space_dir && density)
 		if(!hasPower())
 			to_chat(user, span_notice("You begin unlocking the airlock safety mechanism..."))
-			if(do_after(user, 15 SECONDS, target = src))
+			if(do_after(user, src, 15 SECONDS))
 				try_to_crowbar(null, user, TRUE)
 				return TRUE
 		else

@@ -864,7 +864,7 @@
 	if(!istype(living) || !living.can_resist() || living != owner)
 		return
 	to_chat(living, span_notice("You start to shake the ants off!"))
-	if(!do_after(living, 2 SECONDS, target = living))
+	if(!do_after(living, living, 2 SECONDS))
 		return
 	for (var/datum/status_effect/ants/ant_covered in living.status_effects)
 		to_chat(living, span_notice("You manage to get some of the ants off!"))

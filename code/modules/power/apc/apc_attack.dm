@@ -64,7 +64,7 @@
 		user.visible_message(span_notice("[user.name] adds cables to the APC frame."))
 		balloon_alert(user, "adding cables to the frame...")
 		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
-		if(!do_after(user, 20, target = src))
+		if(!do_after(user, src, 2 SECONDS))
 			return
 		if(installing_cable.get_amount() < 10 || !installing_cable)
 			return
@@ -94,7 +94,7 @@
 		balloon_alert(user, "you start to insert the board...")
 		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 
-		if(!do_after(user, 10, target = src) || has_electronics)
+		if(!do_after(user, src, 1 SECONDS) || has_electronics)
 			return
 
 		has_electronics = APC_ELECTRONICS_INSTALLED
@@ -142,7 +142,7 @@
 		if(!(machine_stat & BROKEN) && opened==APC_COVER_REMOVED) // Cover is the only thing broken, we do not need to remove elctronicks to replace cover
 			user.visible_message(span_notice("[user.name] replaces missing APC's cover."))
 			balloon_alert(user, "replacing APC's cover...")
-			if(do_after(user, 20, target = src)) // replacing cover is quicker than replacing whole frame
+			if(do_after(user, src, 2 SECONDS)) // replacing cover is quicker than replacing whole frame
 				balloon_alert(user, "cover replaced")
 				qdel(attacking_object)
 				opened = APC_COVER_OPENED
@@ -153,7 +153,7 @@
 			return
 		user.visible_message(span_notice("[user.name] replaces the damaged APC frame with a new one."))
 		balloon_alert(user, "replacing damaged frame...")
-		if(do_after(user, 50, target = src))
+		if(do_after(user, src, 5 SECONDS))
 			balloon_alert(user, "APC frame replaced")
 			qdel(attacking_object)
 			set_machine_stat(machine_stat & ~BROKEN)
@@ -208,7 +208,7 @@
 			return
 		stomach.drain_time = world.time + APC_DRAIN_TIME
 		balloon_alert(ethereal, "draining power")
-		if(do_after(user, APC_DRAIN_TIME, target = src))
+		if(do_after(user, src, APC_DRAIN_TIME))
 			if(cell.charge <= (cell.maxcharge / 2) || (stomach.crystal_charge > charge_limit))
 				return
 			balloon_alert(ethereal, "received charge")
@@ -224,7 +224,7 @@
 		return
 	stomach.drain_time = world.time + APC_DRAIN_TIME
 	balloon_alert(ethereal, "transfering power")
-	if(!do_after(user, APC_DRAIN_TIME, target = src))
+	if(!do_after(user, src, APC_DRAIN_TIME))
 		return
 	if((cell.charge >= (cell.maxcharge - APC_POWER_GAIN)) || (stomach.crystal_charge < APC_POWER_GAIN))
 		balloon_alert(ethereal, "can't transfer power!")

@@ -661,7 +661,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	var/datum/progressbar/progress = new(user, amount, thing.loc)
 	var/list/rejections = list()
 
-	while(do_after(user, 1 SECONDS, resolve_parent, NONE, FALSE, CALLBACK(src, .proc/handle_mass_pickup, user, turf_things, thing.loc, rejections, progress)))
+	while(do_after(user, resolve_parent, 1 SECONDS, NONE, FALSE, CALLBACK(src, .proc/handle_mass_pickup, user, turf_things, thing.loc, rejections, progress)))
 		stoplag(1)
 
 	progress.end_progress()
@@ -736,7 +736,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	// Storage to loc transfer requires a do_after
 	to_chat(user, span_notice("You start dumping out the contents of [resolve_parent] onto [dest_object]..."))
-	if(!do_after(user, 2 SECONDS, target = dest_object))
+	if(!do_after(user, dest_object, 2 SECONDS))
 		return
 
 	remove_all(dump_loc)

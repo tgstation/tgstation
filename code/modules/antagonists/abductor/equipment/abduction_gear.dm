@@ -236,7 +236,7 @@
 		to_chat(user, span_warning("You need to be next to the specimen to prepare it for transport!"))
 		return
 	to_chat(user, span_notice("You begin preparing [target] for transport..."))
-	if(do_after(user, 100, target = target))
+	if(do_after(user, target, 10 SECONDS))
 		marked_target_weakref = WEAKREF(target)
 		to_chat(user, span_notice("You finish preparing [target] for transport."))
 
@@ -781,7 +781,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 			to_chat(user, span_warning("You need one alien alloy sheet to do this!"))
 			return
 		to_chat(user, span_notice("You start adding [P] to [src]..."))
-		if(do_after(user, 50, target = src))
+		if(do_after(user, src, 5 SECONDS))
 			P.use(1)
 			new /obj/structure/table/abductor(src.loc)
 			qdel(src)
@@ -792,7 +792,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 			to_chat(user, span_warning("You need one sheet of silver to do this!"))
 			return
 		to_chat(user, span_notice("You start adding [P] to [src]..."))
-		if(do_after(user, 50, target = src))
+		if(do_after(user, src, 5 SECONDS))
 			P.use(1)
 			new /obj/structure/table/optable/abductor(src.loc)
 			qdel(src)

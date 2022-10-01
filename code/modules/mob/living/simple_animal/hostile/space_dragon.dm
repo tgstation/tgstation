@@ -130,7 +130,7 @@
 		var/timetotear = 40
 		if(istype(target, /turf/closed/wall/r_wall))
 			timetotear = 120
-		if(do_after(src, timetotear, target = thewall))
+		if(do_after(src, thewall, timetotear))
 			if(isopenturf(thewall))
 				return
 			thewall.dismantle_wall(1)
@@ -141,7 +141,7 @@
 		var/mob/living/L = target
 		if(L.stat == DEAD)
 			to_chat(src, span_warning("You begin to swallow [L] whole..."))
-			if(do_after(src, 30, target = L))
+			if(do_after(src, L, 3 SECONDS))
 				if(eat(L))
 					adjustHealth(-L.maxHealth * 0.25)
 			return

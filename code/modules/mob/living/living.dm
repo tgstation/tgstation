@@ -1646,7 +1646,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		user.visible_message(span_warning("[user] starts trying to scoop up [src]!"), \
 						span_danger("You start trying to scoop up [src]..."), null, null, src)
 		to_chat(src, span_userdanger("[user] starts trying to scoop you up!"))
-		if(!do_after(user, 2 SECONDS, target = src))
+		if(!do_after(user, src, 2 SECONDS))
 			return FALSE
 	mob_pickup(user)
 	return TRUE

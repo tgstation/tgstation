@@ -164,7 +164,7 @@
 			to_chat(user, span_warning("You need two glass sheets to fix the case!"))
 			return
 		to_chat(user, span_notice("You start fixing [src]..."))
-		if(do_after(user, 20, target = src))
+		if(do_after(user, src, 2 SECONDS))
 			G.use(2)
 			broken = FALSE
 			atom_integrity = max_integrity
@@ -234,14 +234,14 @@
 	else if(istype(I, /obj/item/electronics/airlock))
 		to_chat(user, span_notice("You start installing the electronics into [src]..."))
 		I.play_tool_sound(src)
-		if(do_after(user, 30, target = src) && user.transferItemToLoc(I,src))
+		if(do_after(user, src, 3 SECONDS) && user.transferItemToLoc(I,src))
 			electronics = I
 			to_chat(user, span_notice("You install the airlock electronics."))
 
 	else if(istype(I, /obj/item/stock_parts/card_reader))
 		var/obj/item/stock_parts/card_reader/C = I
 		to_chat(user, span_notice("You start adding [C] to [src]..."))
-		if(do_after(user, 20, target = src))
+		if(do_after(user, src, 2 SECONDS))
 			var/obj/structure/displaycase/forsale/sale = new(src.loc)
 			if(electronics)
 				electronics.forceMove(sale)
@@ -259,7 +259,7 @@
 			to_chat(user, span_warning("You need ten glass sheets to do this!"))
 			return
 		to_chat(user, span_notice("You start adding [G] to [src]..."))
-		if(do_after(user, 20, target = src))
+		if(do_after(user, src, 2 SECONDS))
 			G.use(10)
 			var/obj/structure/displaycase/noalert/display = new(src.loc)
 			if(electronics)
@@ -543,7 +543,7 @@
 	. = ..()
 	if(atom_integrity <= (integrity_failure *  max_integrity))
 		to_chat(user, span_notice("You start recalibrating [src]'s hover field..."))
-		if(do_after(user, 20, target = src))
+		if(do_after(user, src, 2 SECONDS))
 			broken = FALSE
 			atom_integrity = max_integrity
 			update_appearance()

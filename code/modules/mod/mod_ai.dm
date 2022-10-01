@@ -11,7 +11,7 @@
 				balloon_alert(user, "no AI in suit!")
 				return
 			balloon_alert(user, "transferring to card...")
-			if(!do_after(user, 5 SECONDS, target = src))
+			if(!do_after(user, src, 5 SECONDS))
 				balloon_alert(user, "interrupted!")
 				return
 			if(!ai)
@@ -45,7 +45,7 @@
 				balloon_alert(user, "AI unresponsive!")
 				return
 			balloon_alert(user, "transferring to suit...")
-			if(!do_after(user, 5 SECONDS, target = src))
+			if(!do_after(user, src, 5 SECONDS))
 				balloon_alert(user, "interrupted!")
 				return
 			if(ai)
@@ -138,7 +138,7 @@
 		balloon_alert(user, "no AI!")
 		return
 	balloon_alert(user, "transferring to card...")
-	if(!do_after(user, 5 SECONDS, target = src) || !ai)
+	if(!do_after(user, src, 5 SECONDS) || !ai)
 		balloon_alert(user, "interrupted!")
 		return
 	icon_state = "minicard"

@@ -111,7 +111,7 @@
 		return ..()
 	user.visible_message(span_suicide("[user] locks [src] around their neck, wrinkles forming across their face. It looks like [user.p_theyre()] trying to commit suicide!"))
 	for(var/mult in 1 to 5) // Rapidly age
-		if(!do_after(victim, 0.5 SECONDS)) // just to space out the aging, either way you still dust.
+		if(!do_after(victim, time = 0.5 SECONDS)) // just to space out the aging, either way you still dust.
 			break
 		var/before_age = victim.age
 		victim.age = round((victim.age * 1.5),1)

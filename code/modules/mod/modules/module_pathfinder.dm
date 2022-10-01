@@ -34,7 +34,7 @@
 /obj/item/mod/module/pathfinder/attack(mob/living/target, mob/living/user, params)
 	if(!ishuman(target) || !implant)
 		return
-	if(!do_after(user, 1.5 SECONDS, target = target))
+	if(!do_after(user, target, 1.5 SECONDS))
 		balloon_alert(user, "interrupted!")
 		return
 	if(!implant.implant(target, user))

@@ -193,7 +193,7 @@
 /mob/living/simple_animal/bot/cleanbot/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(istype(attacking_item, /obj/item/knife) && !user.combat_mode)
 		balloon_alert(user, "attaching knife...")
-		if(!do_after(user, 2.5 SECONDS, target = src))
+		if(!do_after(user, src, 2.5 SECONDS))
 			return
 		deputize(attacking_item, user)
 		return

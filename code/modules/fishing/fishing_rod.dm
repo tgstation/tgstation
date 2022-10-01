@@ -81,7 +81,7 @@
 
 /obj/item/fishing_rod/proc/reel(mob/user)
 	//Could use sound here for feedback
-	if(do_after(user, 1 SECONDS, currently_hooked_item))
+	if(do_after(user, currently_hooked_item, 1 SECONDS))
 		// Should probably respect and used force move later
 		step_towards(currently_hooked_item, get_turf(src))
 		if(get_dist(currently_hooked_item,get_turf(src)) < 1)

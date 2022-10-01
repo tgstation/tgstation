@@ -102,7 +102,7 @@
 
 /obj/structure/ladder/proc/start_travelling(mob/user, going_up)
 	show_initial_fluff_message(user, going_up)
-	if(do_after(user, travel_time, target = src, interaction_key = DOAFTER_SOURCE_CLIMBING_LADDER))
+	if(do_after(user, src, travel_time, interaction_key = DOAFTER_SOURCE_CLIMBING_LADDER))
 		travel(user, going_up)
 
 /// The message shown when the player starts climbing the ladder

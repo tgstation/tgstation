@@ -222,7 +222,7 @@
 			if(!clear_tile(user))
 				return
 			to_chat(user, span_notice("You start placing the window..."))
-			if(do_after(user,20, target = src))
+			if(do_after(user, src, 2 SECONDS))
 				if(!src.loc || !anchored) //Grille broken or unanchored while waiting
 					return
 				for(var/obj/structure/window/WINDOW in loc) //Another window already installed on grille

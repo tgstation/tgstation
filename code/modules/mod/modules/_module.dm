@@ -384,7 +384,7 @@
 		balloon_alert(user, "no core!")
 		return
 	balloon_alert(user, "removing core...")
-	if(!do_after(user, 3 SECONDS, target = src))
+	if(!do_after(user, src, 3 SECONDS))
 		balloon_alert(user, "interrupted!")
 		return
 	balloon_alert(user, "core removed")

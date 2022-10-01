@@ -58,7 +58,7 @@
 	playsound(get_turf(cast_on), charge_sound, 50, FALSE)
 
 	currently_channeling = TRUE
-	if(!do_after(cast_on, channel_time, timed_action_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_HELD_ITEM)))
+	if(!do_after(cast_on, time = channel_time, timed_action_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_HELD_ITEM)))
 		reset_tesla(cast_on)
 		return . | SPELL_CANCEL_CAST
 

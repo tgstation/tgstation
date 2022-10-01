@@ -128,7 +128,7 @@
 	if (selected_experiment == null && !(config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE))
 		to_chat(user, span_notice("You do not have an experiment selected!"))
 		return
-	if(!do_after(user, 1 SECONDS, target = target))
+	if(!do_after(user, target, 1 SECONDS))
 		return
 	if(action_experiment(source, target))
 		playsound(user, 'sound/machines/ping.ogg', 25)

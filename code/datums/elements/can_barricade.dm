@@ -45,7 +45,7 @@
 
 /// when our element gets attacked by wooden planks it creates a barricade
 /datum/element/can_barricade/proc/barricade(atom/source, obj/item/stack/sheet/mineral/wood/plank, mob/living/user, params)
-	if(!do_after(user, 5 SECONDS, target = source) || !plank.use(2) || (locate(/obj/structure/barricade/wooden/crude) in source.loc))
+	if(!do_after(user, source, 5 SECONDS) || !plank.use(2) || (locate(/obj/structure/barricade/wooden/crude) in source.loc))
 		return
 
 	source.balloon_alert(user, "barricade constructed")

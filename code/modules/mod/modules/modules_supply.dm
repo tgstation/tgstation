@@ -56,7 +56,7 @@
 		if(!check_crate_pickup(picked_crate))
 			return
 		playsound(src, 'sound/mecha/hydraulic.ogg', 25, TRUE)
-		if(!do_after(mod.wearer, load_time, target = target))
+		if(!do_after(mod.wearer, target, load_time))
 			balloon_alert(mod.wearer, "interrupted!")
 			return
 		if(!check_crate_pickup(picked_crate))
@@ -70,7 +70,7 @@
 		if(target_turf.is_blocked_turf())
 			return
 		playsound(src, 'sound/mecha/hydraulic.ogg', 25, TRUE)
-		if(!do_after(mod.wearer, load_time, target = target))
+		if(!do_after(mod.wearer, target, load_time))
 			balloon_alert(mod.wearer, "interrupted!")
 			return
 		if(target_turf.is_blocked_turf())
@@ -243,7 +243,7 @@
 	mod.wearer.add_overlay(lightning)
 	balloon_alert(mod.wearer, "you start charging...")
 	var/power = launch_time
-	if(!do_after(mod.wearer, launch_time, target = mod))
+	if(!do_after(mod.wearer, mod, launch_time))
 		power = world.time - current_time
 		animate(game_renderer)
 	drain_power(use_power_cost)

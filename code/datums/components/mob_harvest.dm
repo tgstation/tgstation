@@ -153,7 +153,7 @@
 		to_chat(user, span_warning("[parent] doesn't seem to have enough [produced_item_desc] to harvest."))
 		return
 	to_chat(user, span_notice("You start to harvest [produced_item_desc] from [parent]..."))
-	if(do_after(user, item_harvest_time, target = parent))
+	if(do_after(user, parent, item_harvest_time))
 		playsound(parent, item_harvest_sound, 20, TRUE)
 		to_chat(user, span_notice("You harvest some [produced_item_desc] from [parent]."))
 		amount_ready--

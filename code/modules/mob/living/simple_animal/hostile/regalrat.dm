@@ -184,7 +184,7 @@
 	if(prying_door.hasPower())
 		time_to_open = 5 SECONDS
 		playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, vary = TRUE)
-	if(do_after(src, time_to_open, prying_door))
+	if(do_after(src, prying_door, time_to_open))
 		opening_airlock = FALSE
 		if(prying_door.density && !prying_door.open(2))
 			to_chat(src, span_warning("Despite your efforts, the airlock managed to resist your attempts to open it!"))

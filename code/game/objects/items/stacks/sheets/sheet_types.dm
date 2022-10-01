@@ -223,7 +223,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 		if(get_amount() < 2)
 			user.balloon_alert(user, "not enough material!")
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-		if(!do_after(user, 4 SECONDS, build_on))
+		if(!do_after(user, build_on, 4 SECONDS))
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 		if(build_on.is_blocked_turf())
 			user.balloon_alert(user, "something is blocking the tile!")

@@ -118,7 +118,7 @@
 			ignored_mobs = tipper
 		)
 
-		if(!do_after(tipper, tip_time, target = tipped_mob))
+		if(!do_after(tipper, tipped_mob, tip_time))
 			if(!isnull(tipped_mob.client))
 				tipped_mob.log_message("was attempted to tip over by [key_name(tipper)]", LOG_VICTIM, log_globally = FALSE)
 				tipper.log_message("failed to tip over [key_name(tipped_mob)]", LOG_ATTACK)
@@ -173,7 +173,7 @@
 			ignored_mobs = untipper
 		)
 
-		if(!do_after(untipper, untip_time, target = tipped_mob))
+		if(!do_after(untipper, tipped_mob, untip_time))
 			to_chat(untipper, span_warning("You fail to right [tipped_mob]."))
 			return
 

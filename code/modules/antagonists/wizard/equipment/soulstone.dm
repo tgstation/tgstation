@@ -94,7 +94,7 @@
 		return
 	balloon_alert(exorcist, span_notice("exorcising [src]..."))
 	playsound(src, 'sound/hallucinations/veryfar_noise.ogg', 40, TRUE)
-	if(!do_after(exorcist, 4 SECONDS, target = src))
+	if(!do_after(exorcist, src, 4 SECONDS))
 		return
 	playsound(src, 'sound/effects/pray_chaplain.ogg', 60, TRUE)
 	required_role = null

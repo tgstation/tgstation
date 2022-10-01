@@ -14,7 +14,7 @@
  */
 /obj/item/delivery/proc/attempt_pre_unwrap_contents(mob/user)
 	to_chat(user, span_notice("You start to unwrap the package..."))
-	return do_after(user, 15, target = user)
+	return do_after(user, user, 1.5 SECONDS)
 
 /**
  * Signals for unwrapping.
@@ -76,7 +76,7 @@
 		movable_loc.relay_container_resist_act(user, object)
 		return
 	to_chat(user, span_notice("You lean on the back of [object] and start pushing to rip the wrapping around it."))
-	if(do_after(user, 50, target = object))
+	if(do_after(user, object, 5 SECONDS))
 		if(!user || user.stat != CONSCIOUS || user.loc != object || object.loc != src)
 			return
 		to_chat(user, span_notice("You successfully removed [object]'s wrapping !"))

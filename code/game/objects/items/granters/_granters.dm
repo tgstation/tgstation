@@ -44,7 +44,7 @@
 			on_reading_stopped()
 			reading = FALSE
 			return
-	if(do_after(user, 5 SECONDS, src))
+	if(do_after(user, src, 5 SECONDS))
 		uses--
 		on_reading_finished(user)
 	reading = FALSE
@@ -67,7 +67,7 @@
 /obj/item/book/granter/proc/turn_page(mob/living/user)
 	playsound(user, pick(book_sounds), 30, TRUE)
 
-	if(!do_after(user, 5 SECONDS, src))
+	if(!do_after(user, src, 5 SECONDS))
 		return FALSE
 
 	to_chat(user, span_notice("[length(remarks) ? pick(remarks) : "You keep reading..."]"))

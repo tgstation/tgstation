@@ -89,7 +89,7 @@
  * the other way the loop ends is if charge level (var it's ticking up) gets to SKYFALL_CHARGELEVEL_LAUNCH, in which case it ends the loop and does the ability.
  */
 /datum/action/vehicle/sealed/mecha/skyfall/proc/skyfall_charge_loop()
-	if(!do_after(owner, SKYFALL_SINGLE_CHARGE_TIME, target = chassis))
+	if(!do_after(owner, chassis, SKYFALL_SINGLE_CHARGE_TIME))
 		abort_skyfall()
 		return
 	skyfall_charge_level++

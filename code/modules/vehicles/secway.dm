@@ -60,7 +60,7 @@
 		return ..()
 	// ignore the occupants because they're presumably too distracted to notice the guy stuffing fruit into their vehicle's exhaust. do segways have exhausts? they do now!
 	user.visible_message(span_warning("[user] begins stuffing [W] into [src]'s tailpipe."), span_warning("You begin stuffing [W] into [src]'s tailpipe..."), ignored_mobs = occupants)
-	if(!do_after(user, 3 SECONDS, src))
+	if(!do_after(user, src, 3 SECONDS))
 		return TRUE
 	if(user.transferItemToLoc(W, src))
 		user.visible_message(span_warning("[user] stuffs [W] into [src]'s tailpipe."), span_warning("You stuff [W] into [src]'s tailpipe."), ignored_mobs = occupants)
@@ -71,7 +71,7 @@
 	if(!eddie_murphy)
 		return ..()
 	user.visible_message(span_warning("[user] begins cleaning [eddie_murphy] out of [src]."), span_warning("You begin cleaning [eddie_murphy] out of [src]..."))
-	if(!do_after(user, 60, target = src))
+	if(!do_after(user, src, 6 SECONDS))
 		return ..()
 	user.visible_message(span_warning("[user] cleans [eddie_murphy] out of [src]."), span_warning("You manage to get [eddie_murphy] out of [src]."))
 	eddie_murphy.forceMove(drop_location())

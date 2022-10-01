@@ -224,7 +224,7 @@
 	message_admins("[src] is being overriden for hijack by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(console_hijack_turf)]")
 	user.log_message("is hijacking [src].", LOG_GAME)
 	. = FALSE
-	if(do_after(user, hijack_stage_time * (1 / user.mind.get_hijack_speed()), target = src))
+	if(do_after(user, src, hijack_stage_time * (1 / user.mind.get_hijack_speed())))
 		increase_hijack_stage()
 		console_hijack_turf = get_turf(src)
 		message_admins("[ADMIN_LOOKUPFLW(user)] has hijacked [src] in [ADMIN_VERBOSEJMP(console_hijack_turf)].  Hijack stage increased to stage [SSshuttle.emergency.hijack_status] out of [HIJACKED].")

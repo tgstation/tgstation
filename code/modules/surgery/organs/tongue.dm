@@ -142,7 +142,7 @@
 		return
 	var/is_statue = becoming_statue.loc == statue
 	to_chat(becoming_statue, span_notice("You begin to [is_statue ? "break free from the statue" : "make a glorious pose as you become a statue"]!"))
-	if(!do_after(becoming_statue, (is_statue ? 5 : 30), target = get_turf(becoming_statue)))
+	if(!do_after(becoming_statue, get_turf(becoming_statue), (is_statue ? 0.5 SECONDS : 3 SECONDS)))
 		to_chat(becoming_statue, span_warning("Your transformation is interrupted!"))
 		COOLDOWN_START(src, ability_cooldown, 3 SECONDS)
 		return
@@ -246,7 +246,7 @@
 		to_chat(tongue_holder, span_notice("[src] is already attuned to the same channel as your own."))
 
 	tongue_holder.visible_message(span_notice("[tongue_holder] holds [src] in their hands, and concentrates for a moment."), span_notice("You attempt to modify the attenuation of [src]."))
-	if(do_after(tongue_holder, delay=15, target=src))
+	if(do_after(tongue_holder, src, 1.5 SECONDS))
 		to_chat(tongue_holder, span_notice("You attune [src] to your own channel."))
 		mothership = tongue.mothership
 

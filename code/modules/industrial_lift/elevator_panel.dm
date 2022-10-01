@@ -111,7 +111,7 @@
 
 	balloon_alert(user, "resetting panel...")
 	playsound(src, 'sound/machines/locktoggle.ogg', 50, TRUE)
-	if(!do_after(user, 6 SECONDS, src))
+	if(!do_after(user, src, 6 SECONDS))
 		balloon_alert(user, "interrupted!")
 		return TRUE
 

@@ -168,7 +168,7 @@
 		span_notice("You begin wrapping the wounds of [hurt_spider]."),
 	)
 
-	if(!do_after(src, 2 SECONDS, target = hurt_spider, interaction_key = INTERACTION_SPIDER_KEY))
+	if(!do_after(src, hurt_spider, 2 SECONDS, interaction_key = INTERACTION_SPIDER_KEY))
 		return
 
 	hurt_spider.heal_overall_damage(20, 20)
@@ -348,7 +348,7 @@
 
 	spider.stop_automated_movement = TRUE
 
-	if(do_after(spider, 4 SECONDS * spider.web_speed, target = spider_turf))
+	if(do_after(spider, spider_turf, 4 SECONDS * spider.web_speed))
 		if(spider.loc == spider_turf)
 			if(web)
 				qdel(web)
@@ -432,7 +432,7 @@
 	if(istype(animal_owner))
 		animal_owner.stop_automated_movement = TRUE
 
-	if(do_after(owner, wrap_time, target = to_wrap, interaction_key = INTERACTION_SPIDER_KEY))
+	if(do_after(owner, to_wrap, wrap_time, interaction_key = INTERACTION_SPIDER_KEY))
 		var/obj/structure/spider/cocoon/casing = new(to_wrap.loc)
 		if(isliving(to_wrap))
 			var/mob/living/living_wrapped = to_wrap
@@ -494,7 +494,7 @@
 	var/mob/living/simple_animal/hostile/giant_spider/spider = owner
 	spider.stop_automated_movement = TRUE
 
-	if(do_after(owner, egg_lay_time, target = get_turf(owner), interaction_key = INTERACTION_SPIDER_KEY))
+	if(do_after(owner, get_turf(owner), egg_lay_time, interaction_key = INTERACTION_SPIDER_KEY))
 		var/obj/structure/spider/eggcluster/eggs = locate() in get_turf(owner)
 		if(!eggs || !isturf(spider.loc))
 			var/obj/effect/mob_spawn/ghost_role/spider/new_eggs = new egg_type(get_turf(spider))
@@ -705,7 +705,7 @@
 			to_chat(src, span_warning("You're not injured, there's no reason to heal."))
 			return
 		visible_message(span_notice("[src] begins mending themselves..."),span_notice("You begin mending your wounds..."))
-		if(do_after(src, 2 SECONDS, target = src, interaction_key = INTERACTION_SPIDER_KEY))
+		if(do_after(src, src, 2 SECONDS, interaction_key = INTERACTION_SPIDER_KEY))
 			heal_overall_damage(maxHealth * 0.5, maxHealth * 0.5)
 			new /obj/effect/temp_visual/heal(get_turf(src), "#80F5FF")
 			visible_message(span_notice("[src]'s wounds mend together."),span_notice("You mend your wounds together."))

@@ -100,7 +100,7 @@ This component is used in vat growing to swab for microbiological samples which 
 	INVOKE_ASYNC(src, .proc/async_try_to_swab, target, user)
 
 /datum/component/swabbing/proc/async_try_to_swab(atom/target, mob/user)
-	if(!do_after(user, 3 SECONDS, target)) // Start swabbing boi
+	if(!do_after(user, target, 3 SECONDS)) // Start swabbing boi
 		return
 
 	LAZYINITLIST(swabbed_items) //If it isn't initialized, initialize it. As we need to pass it by reference

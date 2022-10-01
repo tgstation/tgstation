@@ -57,7 +57,7 @@
 		return
 
 	tattoo_artist.visible_message(span_notice("[tattoo_artist] begins to tattoo something onto [tattoo_target] of [tattoo_holder]..."))
-	if(!do_after(tattoo_artist, 5 SECONDS, tattoo_holder))
+	if(!do_after(tattoo_artist, tattoo_holder, 5 SECONDS))
 		return
 	if(!tattoo_holder.get_bodypart(selected_zone))
 		return

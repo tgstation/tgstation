@@ -120,7 +120,7 @@
 		usr.balloon_alert(usr, "already has a bell!")
 		return
 	usr.balloon_alert(usr, "attaching bell...")
-	if(!do_after(usr, 0.5 SECONDS))
+	if(!do_after(usr, time = 0.5 SECONDS))
 		return
 	target.attach_bell(src)
 	return ..()

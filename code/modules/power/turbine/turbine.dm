@@ -170,7 +170,7 @@
  * Currently it doesn't allow worst parts to be installed
  */
 /obj/machinery/power/turbine/proc/install_part(obj/item/turbine_parts/part_object, mob/user)
-	if(!do_after(user, 2 SECONDS, src))
+	if(!do_after(user, src, 2 SECONDS))
 		return
 	if(installed_part)
 		user.put_in_hands(installed_part)

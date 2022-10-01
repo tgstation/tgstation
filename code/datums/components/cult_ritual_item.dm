@@ -211,7 +211,7 @@
 			return
 
 	SEND_SOUND(cultist, 'sound/items/sheath.ogg')
-	if(!do_after(cultist, rune.erase_time, target = rune))
+	if(!do_after(cultist, rune, rune.erase_time))
 		return
 
 	if(!can_scrape_rune(rune, cultist))
@@ -311,7 +311,7 @@
 		scribe_mod *= 0.5
 
 	SEND_SOUND(cultist, sound('sound/weapons/slice.ogg', 0, 1, 10))
-	if(!do_after(cultist, scribe_mod, target = get_turf(cultist), timed_action_flags = IGNORE_SLOWDOWNS))
+	if(!do_after(cultist, get_turf(cultist), scribe_mod, timed_action_flags = IGNORE_SLOWDOWNS))
 		cleanup_shields()
 		return FALSE
 	if(!can_scribe_rune(tool, cultist))

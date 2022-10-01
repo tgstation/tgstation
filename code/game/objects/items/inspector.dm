@@ -52,7 +52,7 @@
 
 /obj/item/inspector/attack_self(mob/user)
 	. = ..()
-	if(do_after(user, time_list[time_mode], target = user, progress=TRUE))
+	if(do_after(user, user, time_list[time_mode], progress=TRUE))
 		print_report(user)
 
 /obj/item/inspector/crowbar_act(mob/living/user, obj/item/tool)
@@ -383,7 +383,7 @@
 	var/datum/action/innate/origami/origami_action = locate() in user.actions
 	if(origami_action?.active) //Origami masters can fold water
 		make_plane(user, I, /obj/item/paperplane/syndicate)
-	else if(do_after(user, 1 SECONDS, target = src, progress=TRUE))
+	else if(do_after(user, src, 1 SECONDS, progress=TRUE))
 		var/turf/open/target = get_turf(src)
 		target.MakeSlippery(TURF_WET_WATER, min_wet_time = 10 SECONDS, wet_time_to_add = 5 SECONDS)
 		to_chat(user, span_notice("As you try to fold [src] into the shape of a plane, it disintegrates into water!"))

@@ -34,7 +34,7 @@
 		user.balloon_alert(user, "It's empty!")
 		return
 	user.visible_message(span_boldnotice("[user] takes a huge drag on the [src]."))
-	if (do_after(user, 2 SECONDS, target = src))
+	if (do_after(user, src, 2 SECONDS))
 		var/turf/toiletbong_location = loc
 		toiletbong_location.hotspot_expose(1000, 5)
 		for (var/obj/item/item in contents)
@@ -80,7 +80,7 @@
 		return FALSE
 	tool.play_tool_sound(src)
 	to_chat(user, span_notice("You begin taking apart the [src]."))
-	if (!do_after(user, 10 SECONDS, target = src))
+	if (!do_after(user, src, 10 SECONDS))
 		return FALSE
 	new /obj/item/flamethrower(get_turf(src))
 	new /obj/item/stack/sheet/iron(get_turf(src))

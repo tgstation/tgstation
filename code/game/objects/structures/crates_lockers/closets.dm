@@ -445,7 +445,7 @@
 			&& !secure && !electronics && !locked && (welded || !can_weld_shut) && !broken)
 		user.visible_message(span_notice("[user] installs the electronics into the [src]."),\
 			span_notice("You start to install electronics into the [src]..."))
-		if (!do_after(user, 4 SECONDS, target = src))
+		if (!do_after(user, src, 4 SECONDS))
 			return FALSE
 		if (electronics || secure)
 			return FALSE
@@ -466,7 +466,7 @@
 			span_notice("You begin to remove the electronics from the [src]..."))
 		var/had_electronics = !!electronics
 		var/was_secure = secure
-		if (!do_after(user, 4 SECONDS, target = src))
+		if (!do_after(user, src, 4 SECONDS))
 			return FALSE
 		if ((had_electronics && !electronics) || (was_secure && !secure))
 			return FALSE
@@ -636,7 +636,7 @@
 	user.visible_message(span_warning("[src] begins to shake violently!"), \
 		span_notice("You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)"), \
 		span_hear("You hear banging from [src]."))
-	if(do_after(user,(breakout_time), target = src))
+	if(do_after(user, src, breakout_time))
 		if(!user || user.stat != CONSCIOUS || user.loc != src || opened || (!locked && !welded) )
 			return
 		//we check after a while whether there is a point of resisting anymore and whether the user is capable of resisting

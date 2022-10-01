@@ -82,7 +82,7 @@
 	. = ..()
 	if(lava_drinker && !warmed_up && islava(target))
 		visible_message(span_warning("[src] begins to drink from [target]..."))
-		if(do_after(src, 70, target = target))
+		if(do_after(src, target, 7 SECONDS))
 			visible_message(span_warning("[src] begins to fire up!"))
 			fully_heal()
 			icon_state = "Basilisk_alert"

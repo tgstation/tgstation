@@ -780,7 +780,7 @@
 		return FALSE
 
 	AI_notify_hack()
-	if(!do_after(hacker, duration, src, extra_checks = CALLBACK(src, .proc/can_hack)))
+	if(!do_after(hacker, src, duration, extra_checks = CALLBACK(src, .proc/can_hack)))
 		return FALSE
 
 	hack_console(hacker)

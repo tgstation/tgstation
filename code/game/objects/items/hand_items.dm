@@ -152,7 +152,7 @@
 	user.visible_message(span_danger("[user] begins giving [target] a [message_others]!"), span_warning("You start giving [target] a [message_others]!"), vision_distance=COMBAT_MESSAGE_RANGE, ignored_mobs=target)
 	to_chat(target, span_userdanger("[user] starts giving you a [message_target]!"))
 
-	if(!do_after(user, 1.5 SECONDS, target))
+	if(!do_after(user, target, 1.5 SECONDS))
 		to_chat(user, span_warning("You fail to give [target] a noogie!"))
 		to_chat(target, span_danger("[user] fails to give you a noogie!"))
 		return
@@ -192,7 +192,7 @@
 		user.visible_message(span_danger("[user] continues noogie'ing [target]!"), span_warning("You continue giving [target] a noogie!"), vision_distance=COMBAT_MESSAGE_RANGE, ignored_mobs=target)
 		to_chat(target, span_userdanger("[user] continues giving you a noogie!"))
 
-	if(!do_after(user, 1 SECONDS + (iteration * 2), target))
+	if(!do_after(user, target, 1 SECONDS + (iteration * 2)))
 		to_chat(user, span_warning("You fail to give [target] a noogie!"))
 		to_chat(target, span_danger("[user] fails to give you a noogie!"))
 		return
@@ -368,7 +368,7 @@
 	user.visible_message(span_warning("[user] starts stealing [target_human]'s [item_to_strip.name]!"), \
 		span_danger("You start stealing [target_human]'s [item_to_strip.name]..."))
 	to_chat(target_human, span_userdanger("[user] starts stealing your [item_to_strip.name]!"))
-	if (!do_after(user, item_to_strip.strip_delay, target_human))
+	if (!do_after(user, target_human, item_to_strip.strip_delay))
 		return
 	if(!target_human.dropItemToGround(item_to_strip))
 		return

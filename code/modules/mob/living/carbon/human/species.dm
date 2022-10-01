@@ -967,7 +967,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(!I.equip_delay_self || bypass_equip_delay_self)
 		return TRUE
 	H.visible_message(span_notice("[H] start putting on [I]..."), span_notice("You start putting on [I]..."))
-	return do_after(H, I.equip_delay_self, target = H)
+	return do_after(H, H, I.equip_delay_self)
 
 
 /// Equips the necessary species-relevant gear before putting on the rest of the uniform.

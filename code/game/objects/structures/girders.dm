@@ -75,7 +75,7 @@
 					balloon_alert(user, "need [amount] rods!")
 					return
 				balloon_alert(user, "concealing entrance...")
-				if(do_after(user, 20, target = src))
+				if(do_after(user, src, 2 SECONDS))
 					if(rod.get_amount() < amount)
 						return
 					rod.use(amount)
@@ -88,7 +88,7 @@
 					balloon_alert(user, "need [amount] rods!")
 					return
 				balloon_alert(user, "adding plating...")
-				if(do_after(user, 40, target = src))
+				if(do_after(user, src, 4 SECONDS))
 					if(rod.get_amount() < amount)
 						return
 					rod.use(amount)
@@ -109,7 +109,7 @@
 					balloon_alert(user, "need [amount] sheets!")
 					return
 				balloon_alert(user, "concealing entrance...")
-				if(do_after(user, 20*platingmodifier, target = src))
+				if(do_after(user, src, 20*platingmodifier))
 					if(sheets.get_amount() < amount)
 						return
 					sheets.use(amount)
@@ -125,7 +125,7 @@
 					balloon_alert(user, "need [amount] sheets!")
 					return
 				balloon_alert(user, "adding plating...")
-				if (do_after(user, 4 SECONDS, target = src))
+				if(do_after(user, src, 4 SECONDS))
 					if(sheets.get_amount() < amount)
 						return
 					sheets.use(2)
@@ -138,7 +138,7 @@
 					balloon_alert(user, "need [amount] sheets!")
 					return
 				balloon_alert(user, "adding plating...")
-				if (do_after(user, 40*platingmodifier, target = src))
+				if (do_after(user, src, 40*platingmodifier))
 					if(sheets.get_amount() < amount)
 						return
 					sheets.use(amount)
@@ -155,7 +155,7 @@
 					balloon_alert(user, "need [amount] sheets!")
 					return
 				balloon_alert(user, "concealing entrance...")
-				if(do_after(user, 20, target = src))
+				if(do_after(user, src, 2 SECONDS))
 					if(sheets.get_amount() < amount)
 						return
 					sheets.use(amount)
@@ -168,7 +168,7 @@
 				if(sheets.get_amount() < amount)
 					return
 				balloon_alert(user, "adding plating...")
-				if(do_after(user, 50*platingmodifier, target = src))
+				if(do_after(user, src, 50*platingmodifier))
 					if(sheets.get_amount() < amount)
 						return
 					sheets.use(amount)
@@ -182,7 +182,7 @@
 				if(sheets.get_amount() < amount)
 					return
 				balloon_alert(user, "reinforcing frame...")
-				if(do_after(user, 60*platingmodifier, target = src))
+				if(do_after(user, src, 60*platingmodifier))
 					if(sheets.get_amount() < amount)
 						return
 					sheets.use(amount)
@@ -203,7 +203,7 @@
 					balloon_alert(user, "need [amount] sheets!")
 					return
 				balloon_alert(user, "adding plating...")
-				if (do_after(user, 4 SECONDS, target = src))
+				if(do_after(user, src, 4 SECONDS))
 					if(sheets.get_amount() < amount)
 						return
 					sheets.use(amount)
@@ -227,7 +227,7 @@
 					balloon_alert(user, "need [amount] sheets!")
 					return
 				balloon_alert(user, "concealing entrance...")
-				if(do_after(user, 20, target = src))
+				if(do_after(user, src, 2 SECONDS))
 					if(sheets.get_amount() < amount)
 						return
 					sheets.use(amount)
@@ -249,7 +249,7 @@
 					balloon_alert(user, "need [amount] sheets!")
 					return
 				balloon_alert(user, "adding plating...")
-				if (do_after(user, 40, target = src))
+				if(do_after(user, src, 4 SECONDS))
 					if(sheets.get_amount() < amount)
 						return
 					sheets.use(amount)
@@ -423,7 +423,7 @@
 			balloon_alert(user, "need [amount] sheet!")
 			return
 		balloon_alert(user, "adding plating...")
-		if(do_after(user, 50, target = src))
+		if(do_after(user, src, 5 SECONDS))
 			if(R.get_amount() < amount)
 				return
 			R.use(amount)
@@ -489,7 +489,7 @@
 			balloon_alert(user, "need [amount] sheets!")
 			return
 		balloon_alert(user, "adding plating...")
-		if(do_after(user, 50, target = src))
+		if(do_after(user, src, 5 SECONDS))
 			if(B.get_amount() < amount)
 				return
 			B.use(amount)

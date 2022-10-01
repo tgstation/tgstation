@@ -25,15 +25,16 @@
 
 /obj/item/food/monkeycube/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is putting [src] in [user.p_their()] mouth! It looks like [user.p_theyre()] trying to commit suicide!"))
-	var/eating_success = do_after(user, 1 SECONDS, src)
+	var/eating_success = do_after(user, src, 1 SECONDS)
 	if(QDELETED(user)) //qdeletion: the nuclear option of self-harm
 		return SHAME
 	if(!eating_success || QDELETED(src)) //checks if src is gone or if they failed to wait for a second
 		user.visible_message(span_suicide("[user] chickens out!"))
 		return SHAME
 	if(HAS_TRAIT(user, TRAIT_NOHUNGER)) //plasmamen don't have saliva/stomach acid
-		user.visible_message(span_suicide("[user] realizes [user.p_their()] body won't activate [src]!")
-		,span_warning("Your body won't activate [src]..."))
+		user.visible_message(
+			span_suicide("[user] realizes [user.p_their()] body won't activate [src]!"),
+			span_warning("Your body won't activate [src]..."))
 		return SHAME
 	playsound(user, 'sound/items/eatfood.ogg', rand(10, 50), TRUE)
 	user.temporarilyRemoveItemFromInventory(src) //removes from hands, keeps in M

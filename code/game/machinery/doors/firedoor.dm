@@ -810,7 +810,7 @@
 				user.visible_message(span_notice("[user] begins reinforcing [src]..."), \
 					span_notice("You begin reinforcing [src]..."))
 				playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, TRUE)
-				if(do_after(user, DEFAULT_STEP_TIME, target = src))
+				if(do_after(user, src, DEFAULT_STEP_TIME))
 					if(constructionStep != CONSTRUCTION_PANEL_OPEN || reinforced || plasteel_sheet.get_amount() < 2 || !plasteel_sheet)
 						return
 					user.visible_message(span_notice("[user] reinforces [src]."), \
@@ -824,7 +824,7 @@
 				user.visible_message(span_notice("[user] starts adding [attacking_object] to [src]..."), \
 					span_notice("You begin adding a circuit board to [src]..."))
 				playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, TRUE)
-				if(!do_after(user, DEFAULT_STEP_TIME, target = src))
+				if(!do_after(user, src, DEFAULT_STEP_TIME))
 					return
 				if(constructionStep != CONSTRUCTION_NO_CIRCUIT)
 					return

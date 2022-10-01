@@ -170,7 +170,7 @@
 			var/obj/item/soap/used_soap = item
 			cleanspeed = used_soap.cleanspeed
 		user.visible_message(span_notice("[user] starts to clean \the [src]."), span_notice("You start to clean \the [src]..."))
-		if (do_after(user, cleanspeed, target = src))
+		if (do_after(user, src, cleanspeed))
 			user.visible_message(span_notice("[user] cleans \the [src]."), span_notice("You clean \the [src]."))
 			jammed = FALSE
 		return TRUE

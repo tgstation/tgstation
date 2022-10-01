@@ -447,7 +447,7 @@
 			var/y_offset = base_y + rand(-1, 1)
 			animate(pixel_x = x_offset, pixel_y = y_offset, time = 1)
 
-		if(!do_after(robot_owner, 4 SECONDS, interaction_key = "auto_wash_toggle", extra_checks = allow_buffer_activate))
+		if(!do_after(robot_owner, time = 4 SECONDS, interaction_key = "auto_wash_toggle", extra_checks = allow_buffer_activate))
 			wash_audio.stop() // Coward
 			animate(robot_owner, pixel_x = base_x, pixel_y = base_y, time = 1)
 			return FALSE

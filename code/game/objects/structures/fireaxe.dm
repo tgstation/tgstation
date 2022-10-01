@@ -46,7 +46,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 			to_chat(user, span_warning("You need two glass sheets to fix [src]!"))
 			return
 		to_chat(user, span_notice("You start fixing [src]..."))
-		if(do_after(user, 20, target = src) && G.use(2))
+		if(do_after(user, src, 2 SECONDS) && G.use(2))
 			broken = FALSE
 			atom_integrity = max_integrity
 			update_appearance()
@@ -168,7 +168,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 /obj/structure/fireaxecabinet/proc/toggle_lock(mob/user)
 	to_chat(user, span_notice("Resetting circuitry..."))
 	playsound(src, 'sound/machines/locktoggle.ogg', 50, TRUE)
-	if(do_after(user, 20, target = src))
+	if(do_after(user, src, 2 SECONDS))
 		to_chat(user, span_notice("You [locked ? "disable" : "re-enable"] the locking modules."))
 		locked = !locked
 		update_appearance()

@@ -300,7 +300,7 @@
 		playsound(loc, 'sound/weapons/slice.ogg', 50, TRUE, -1)
 		user.visible_message(span_warning("[user] begins to cut open [src]."),\
 			span_notice("You begin to cut open [src]..."))
-		if(do_after(user, 54, target = src))
+		if(do_after(user, src, 5.4 SECONDS))
 			drop_organs(user, TRUE)
 	else
 		return ..()

@@ -260,7 +260,7 @@
 	balloon_alert(user, "draining influence...")
 	RegisterSignal(user, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 
-	if(!do_after(user, 10 SECONDS, src))
+	if(!do_after(user, src, 10 SECONDS))
 		being_drained = FALSE
 		balloon_alert(user, "interrupted!")
 		UnregisterSignal(user, COMSIG_PARENT_EXAMINE)

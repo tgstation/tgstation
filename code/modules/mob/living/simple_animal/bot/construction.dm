@@ -136,7 +136,7 @@
 					to_chat(user, span_warning("You need one length of cable to wire the ED-209!"))
 					return
 				to_chat(user, span_notice("You start to wire [src]..."))
-				if(do_after(user, 40, target = src))
+				if(do_after(user, src, 4 SECONDS))
 					if(coil.get_amount() >= 1 && build_step == ASSEMBLY_SEVENTH_STEP)
 						coil.use(1)
 						to_chat(user, span_notice("You wire [src]."))
@@ -517,7 +517,7 @@
 					to_chat(user, span_warning("You need one fluid duct to finish [src]"))
 					return
 				to_chat(user, span_notice("You start to pipe up [src]..."))
-				if(do_after(user, 40, target = src) && D.use(1))
+				if(do_after(user, src, 4 SECONDS) && D.use(1))
 					to_chat(user, span_notice("You pipe up [src]."))
 					var/mob/living/simple_animal/bot/hygienebot/H = new(drop_location())
 					H.name = created_name

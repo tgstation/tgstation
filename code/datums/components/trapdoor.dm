@@ -82,7 +82,7 @@
 	return
 
 /datum/component/trapdoor/proc/async_try_unlink(turf/source, mob/user, obj/item/tool)
-	if(!do_after(user, 5 SECONDS, target=source))
+	if(!do_after(user, source, 5 SECONDS))
 		return
 	if(IS_OPEN(parent))
 		source.balloon_alert(user, "can't unlink trapdoor when its open")
@@ -361,7 +361,7 @@
 		return
 	in_use = TRUE
 	balloon_alert(user, "constructing trapdoor")
-	if(!do_after(user, 5 SECONDS, target = target))
+	if(!do_after(user, target, 5 SECONDS))
 		in_use = FALSE
 		return
 	in_use = FALSE

@@ -307,7 +307,7 @@
 		M.visible_message(span_warning("[user] starts buckling [M] to [src]!"),\
 			span_userdanger("[user] starts buckling you to [src]!"),\
 			span_hear("You hear metal clanking."))
-		if(!do_after(user, 2 SECONDS, M))
+		if(!do_after(user, M, 2 SECONDS))
 			return FALSE
 
 		// Sanity check before we attempt to buckle. Is everything still in a kosher state for buckling after the 3 seconds have elapsed?

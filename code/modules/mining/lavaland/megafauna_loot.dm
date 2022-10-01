@@ -119,7 +119,7 @@
 		if(isturf(user.loc))
 			user.visible_message(span_hierophant_warning("[user] starts fiddling with [src]'s pommel..."), \
 			span_notice("You start detaching the hierophant beacon..."))
-			if(do_after(user, 50, target = user) && !beacon)
+			if(do_after(user, user, 5 SECONDS) && !beacon)
 				var/turf/T = get_turf(user)
 				playsound(T,'sound/magic/blind.ogg', 200, TRUE, -4)
 				new /obj/effect/temp_visual/hierophant/telegraph/teleport(T, user)
@@ -147,7 +147,7 @@
 	beacon.icon_state = "hierophant_tele_on"
 	var/obj/effect/temp_visual/hierophant/telegraph/edge/TE1 = new /obj/effect/temp_visual/hierophant/telegraph/edge(user.loc)
 	var/obj/effect/temp_visual/hierophant/telegraph/edge/TE2 = new /obj/effect/temp_visual/hierophant/telegraph/edge(beacon.loc)
-	if(do_after(user, 40, target = user) && user && beacon)
+	if(do_after(user, user, 4 SECONDS) && user && beacon)
 		var/turf/T = get_turf(beacon)
 		var/turf/source = get_turf(user)
 		if(T.is_blocked_turf(TRUE))
@@ -160,7 +160,7 @@
 		new /obj/effect/temp_visual/hierophant/telegraph(source, user)
 		playsound(T,'sound/magic/wand_teleport.ogg', 200, TRUE)
 		playsound(source,'sound/machines/airlockopen.ogg', 200, TRUE)
-		if(!do_after(user, 3, target = user) || !user || !beacon || QDELETED(beacon)) //no walking away shitlord
+		if(!do_after(user, user, 0.3 SECONDS) || !user || !beacon || QDELETED(beacon)) //no walking away shitlord
 			teleporting = FALSE
 			if(user)
 				user.update_action_buttons_icon()
@@ -479,7 +479,7 @@
 	if(!use_blood(10))
 		return
 	balloon_alert(soul, "you resist...")
-	if(!do_after(soul, 5 SECONDS, target = src, timed_action_flags = IGNORE_TARGET_LOC_CHANGE))
+	if(!do_after(soul, src, 5 SECONDS, timed_action_flags = IGNORE_TARGET_LOC_CHANGE))
 		balloon_alert(soul, "interrupted!")
 		return
 	balloon_alert(soul, "you break out")
@@ -549,7 +549,7 @@
 	charging = TRUE
 	visible_message(span_danger("[src] starts charging..."))
 	balloon_alert(soul, "you start charging...")
-	if(!do_after(soul, 2 SECONDS, target = src, timed_action_flags = IGNORE_TARGET_LOC_CHANGE))
+	if(!do_after(soul, src, 2 SECONDS, timed_action_flags = IGNORE_TARGET_LOC_CHANGE))
 		balloon_alert(soul, "interrupted!")
 		return
 	visible_message(span_danger("[src] charges at [attacked_atom]!"), span_notice("You charge at [attacked_atom]!"))
@@ -778,7 +778,7 @@
 			animate(L, alpha = 255, time = create_delay)
 			user.visible_message(span_danger("[user] points [src] at [T]!"))
 			timer = world.time + create_delay + 1
-			if(do_after(user, create_delay, target = T))
+			if(do_after(user, T, create_delay))
 				var/old_name = T.name
 				if(T.TerraformTurf(turf_type, flags = CHANGETURF_INHERIT_AIR))
 					user.visible_message(span_danger("[user] turns \the [old_name] into [transform_string]!"))
@@ -978,7 +978,7 @@
 		balloon_alert(user, "already ending!")
 		return
 	balloon_alert(user, "you hold the staff up...")
-	if(!do_after(user, 3 SECONDS, target = src))
+	if(!do_after(user, src, 3 SECONDS))
 		balloon_alert(user, "interrupted!")
 		return
 	user.visible_message(span_warning("[user] holds [src] skywards as an orange beam travels into the sky!"), \

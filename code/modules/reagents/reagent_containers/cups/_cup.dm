@@ -416,7 +416,7 @@
 			var/picked_option = show_radial_menu(user, src, choose_options, radius = 38, require_near = TRUE)
 			if(grinded && in_range(src, user) && user.is_holding(I) && picked_option)
 				to_chat(user, span_notice("You start grinding..."))
-				if(do_after(user, 25, target = src))
+				if(do_after(user, src, 2.5 SECONDS))
 					user.adjustStaminaLoss(40)
 					switch(picked_option)
 						if("Juice") //prioritize juicing

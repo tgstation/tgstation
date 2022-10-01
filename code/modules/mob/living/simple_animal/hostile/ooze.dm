@@ -220,7 +220,7 @@
 		to_chat(src, span_warning("You are already consuming another creature!"))
 		return FALSE
 	owner.visible_message(span_warning("[ooze] starts attempting to devour [target]!"), span_notice("You start attempting to devour [target]."))
-	if(!do_after(ooze, 15, target = ooze.pulling))
+	if(!do_after(ooze, ooze.pulling, 1.5 SECONDS))
 		return FALSE
 	var/mob/living/eat_target = ooze.pulling
 
@@ -428,7 +428,7 @@
 		to_chat(src, span_warning("You need to be pulling an intelligent enough creature to assist it with a cocoon!"))
 		return FALSE
 	owner.visible_message(span_nicegreen("[ooze] starts attempting to put [target] into a gel cocoon!"), span_notice("You start attempting to put [target] into a gel cocoon."))
-	if(!do_after(ooze, 1.5 SECONDS, target = ooze.pulling))
+	if(!do_after(ooze, ooze.pulling, 1.5 SECONDS))
 		return FALSE
 
 	put_in_cocoon(ooze.pulling)
@@ -465,7 +465,7 @@
 	. = ..()
 	user.visible_message(span_notice("You see [user] breaking out of [src]!"), \
 		span_notice("You start tearing the soft tissue of the gel cocoon"))
-	if(!do_after(user, 1.5 SECONDS, target = src))
+	if(!do_after(user, src, 1.5 SECONDS))
 		return FALSE
 	dump_inhabitant()
 

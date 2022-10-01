@@ -114,7 +114,7 @@
 	if(!istype(O, /obj/item/saddle) || saddled)
 		return ..()
 
-	if(can_saddle && do_after(user,55,target=src))
+	if(can_saddle && do_after(user, src, 5.5 SECONDS))
 		user.visible_message(span_notice("You manage to put [O] on [src], you can now ride [p_them()]."))
 		qdel(O)
 		saddled = TRUE

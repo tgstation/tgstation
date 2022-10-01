@@ -302,7 +302,7 @@
 	. = ..()
 	if(!.)
 		return
-	if(dispense_time && !do_after(mod.wearer, dispense_time, target = mod))
+	if(dispense_time && !do_after(mod.wearer, mod, dispense_time))
 		balloon_alert(mod.wearer, "interrupted!")
 		return FALSE
 	var/obj/item/dispensed = new dispense_type(mod.wearer.loc)

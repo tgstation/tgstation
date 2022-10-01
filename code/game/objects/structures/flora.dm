@@ -99,7 +99,7 @@ GLOBAL_LIST_EMPTY(flora_uprooting_tools_typepaths)
 			user.visible_message(span_notice("[user] starts to uproot [src]..."),
 				span_notice("You start to uproot [src]..."))
 		used_item.play_tool_sound(src, 50)
-		if(!do_after(user, harvest_time, src))
+		if(!do_after(user, src, harvest_time))
 			return
 		if(uprooted)
 			user.visible_message(span_notice("[user] replants [src]."),
@@ -118,7 +118,7 @@ GLOBAL_LIST_EMPTY(flora_uprooting_tools_typepaths)
 	user.visible_message(span_notice("[user] starts to [harvest_verb] [src]..."),
 		span_notice("You start to [harvest_verb] [src] with [used_item]..."))
 	play_attack_sound(used_item.force)
-	if(!do_after(user, harvest_time * used_item.toolspeed, src))
+	if(!do_after(user, src, harvest_time * used_item.toolspeed))
 		return
 	visible_message(span_notice("[user] [harvest_verb][harvest_verb_suffix] [src]."),
 		ignored_mobs = list(user))
@@ -137,7 +137,7 @@ GLOBAL_LIST_EMPTY(flora_uprooting_tools_typepaths)
 	user.visible_message(span_notice("[user] starts to [harvest_verb] [src]..."),
 		span_notice("You start to [harvest_verb] [src]..."))
 	play_attack_sound()
-	if(!do_after(user, harvest_time, src))
+	if(!do_after(user, src, harvest_time))
 		return
 	visible_message(span_notice("[user] [harvest_verb][harvest_verb_suffix] [src]."),
 		ignored_mobs = list(user))

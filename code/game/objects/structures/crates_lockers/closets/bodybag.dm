@@ -297,7 +297,7 @@
 	user.visible_message(span_warning("Someone in [src] begins to wriggle!"), \
 		span_notice("You start wriggling, attempting to loosen [src]'s buckles... (this will take about [DisplayTimeText(breakout_time)].)"), \
 		span_hear("You hear straining cloth from [src]."))
-	if(do_after(user,(breakout_time), target = src))
+	if(do_after(user, src, breakout_time))
 		if(!user || user.stat != CONSCIOUS || user.loc != src || opened || !sinched )
 			return
 		//we check after a while whether there is a point of resisting anymore and whether the user is capable of resisting
@@ -333,7 +333,7 @@
 		for(var/mob/living/target in contents)
 			to_chat(target, span_userdanger("You feel the lining of [src] tighten around you! Soon, you won't be able to escape!"))
 		user.visible_message(span_notice("[user] begins sinching down the buckles on [src]."))
-		if(!(do_after(user,(sinch_time),target = src)))
+		if(!(do_after(user, src, sinch_time)))
 			return
 	sinched = !sinched
 	if(sinched)

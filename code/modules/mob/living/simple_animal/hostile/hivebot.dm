@@ -120,7 +120,7 @@
 			to_chat(src, span_warning("Diagnostics indicate that this machine is at peak integrity."))
 			return
 		to_chat(src, span_warning("You begin repairs..."))
-		if(do_after(src, 50, target = fixable))
+		if(do_after(src, fixable, 5 SECONDS))
 			fixable.repair_damage(fixable.max_integrity - fixable.get_integrity())
 			do_sparks(3, TRUE, fixable)
 			to_chat(src, span_warning("Repairs complete."))
@@ -131,7 +131,7 @@
 			to_chat(src, span_warning("Diagnostics indicate that this unit is at peak integrity."))
 			return
 		to_chat(src, span_warning("You begin repairs..."))
-		if(do_after(src, 50, target = fixable))
+		if(do_after(src, fixable, 5 SECONDS))
 			fixable.revive(full_heal = TRUE, admin_revive = TRUE)
 			do_sparks(3, TRUE, fixable)
 			to_chat(src, span_warning("Repairs complete."))
@@ -152,7 +152,7 @@
 		to_chat(H, span_warning("There's already something on this tile!"))
 		return
 	to_chat(H, span_warning("You begin to create a foam wall at your position..."))
-	if(do_after(H, 50, target = H))
+	if(do_after(H, H, 5 SECONDS))
 		for(var/obj/structure/foamedmetal/FM in T.contents)
 			to_chat(H, span_warning("There's already a foam wall on this tile!"))
 			return

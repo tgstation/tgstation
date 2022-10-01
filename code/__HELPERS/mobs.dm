@@ -309,10 +309,10 @@ GLOBAL_LIST_EMPTY(species_list)
  * Timed action involving one mob user. Target is optional.
  *
  * Checks that `user` does not move, change hands, get stunned, etc. for the
- * given `delay`. Returns `TRUE` on success or `FALSE` on failure.
+ * given `time`. Returns `TRUE` on success or `FALSE` on failure.
  * Interaction_key is the assoc key under which the do_after is capped, with max_interact_count being the cap. Interaction key will default to target if not set.
  */
-/proc/do_after(mob/user, delay, atom/target, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, interaction_key, max_interact_count = 1)
+/proc/do_after(mob/user, atom/target, time = 3 SECONDS, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, interaction_key, max_interact_count = 1)
 	if(!user)
 		return FALSE
 	var/atom/target_loc = null
@@ -336,13 +336,13 @@ GLOBAL_LIST_EMPTY(species_list)
 	var/holding = user.get_active_held_item()
 
 	if(!(timed_action_flags & IGNORE_SLOWDOWNS))
-		delay *= user.cached_multiplicative_actions_slowdown
+		time *= user.cached_multiplicative_actions_slowdown
 
 	var/datum/progressbar/progbar
 	if(progress)
-		progbar = new(user, delay, target || user)
+		progbar = new(user, time, target || user)
 
-	var/endtime = world.time + delay
+	var/endtime = world.time + time
 	var/starttime = world.time
 	. = TRUE
 	while (world.time < endtime)

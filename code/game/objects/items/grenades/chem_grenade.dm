@@ -100,7 +100,7 @@
 	. = TRUE
 	if(dud_flags & GRENADE_USED)
 		balloon_alert(user, span_notice("resetting trigger..."))
-		if (do_after(user, 2 SECONDS, src))
+		if (do_after(user, src, 2 SECONDS))
 			balloon_alert(user, span_notice("trigger reset"))
 			dud_flags &= ~GRENADE_USED
 		return

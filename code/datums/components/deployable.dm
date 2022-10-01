@@ -57,7 +57,7 @@
 		new_direction = user.dir //Gets the direction for thing_to_be_deployed if there is a user
 		source.balloon_alert(user, "deploying...")
 		playsound(source, 'sound/items/ratchet.ogg', 50, TRUE)
-		if(!do_after(user, deploy_time))
+		if(!do_after(user, time = deploy_time))
 			return
 	else //If there is for some reason no user, then the location and direction are set here
 		deploy_location = location

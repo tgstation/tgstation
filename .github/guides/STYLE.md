@@ -126,14 +126,14 @@ The defines are as follows:
 This is bad:
 ````DM
 /datum/datum1/proc/proc1()
-	if(do_after(mob, 15))
+	if(do_after(mob, time = 15))
 		mob.dothing()
 ````
 
 This is good:
 ````DM
 /datum/datum1/proc/proc1()
-	if(do_after(mob, 1.5 SECONDS))
+	if(do_after(mob, time = 1.5 SECONDS))
 		mob.dothing()
 ````
 

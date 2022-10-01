@@ -99,7 +99,7 @@
 	if(can_jam)
 		if(bolt_locked)
 			if(istype(item, /obj/item/gun_maintenance_supplies))
-				if(do_after(user, 10 SECONDS, target = src))
+				if(do_after(user, src, 10 SECONDS))
 					user.visible_message(span_notice("[user] finishes maintenance of [src]."))
 					jamming_chance = 10
 					qdel(item)

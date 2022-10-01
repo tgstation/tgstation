@@ -94,7 +94,7 @@
 		to_chat(user, span_notice("Space carp DNA is required to use the self-mutation mechanism!"))
 		return
 	to_chat(user, span_notice("You pull out the needle from [src] and flip the switch, and start injecting yourself with it."))
-	if(!do_after(user, CARP_MIX_DNA_TIMER))
+	if(!do_after(user, time = CARP_MIX_DNA_TIMER))
 		return
 	var/mob/living/simple_animal/hostile/space_dragon/new_dragon = user.change_mob_type(/mob/living/simple_animal/hostile/space_dragon, location = loc, delete_old_mob = TRUE)
 	new_dragon.add_filter("anger_glow", 3, list("type" = "outline", "color" = "#ff330030", "size" = 5))

@@ -50,7 +50,7 @@
 	playsound(item, item.hitsound, 30, TRUE, -1)
 	user.do_attack_animation(wall)
 	user.balloon_alert(user, "engraving wall...")
-	if(!do_after(user, 5 SECONDS, target = wall))
+	if(!do_after(user, wall, 5 SECONDS))
 		return
 	user.balloon_alert(user, "wall engraved")
 	user.do_attack_animation(wall)

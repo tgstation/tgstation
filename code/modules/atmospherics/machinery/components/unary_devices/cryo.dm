@@ -376,7 +376,7 @@ GLOBAL_LIST_INIT_TYPED(cryo_overlays_cover_off, /mutable_appearance, list(create
 	user.visible_message(span_notice("You see [user] kicking against the glass of [src]!"), \
 		span_notice("You struggle inside [src], kicking the release with your foot... (this will take about [DisplayTimeText(CRYO_BREAKOUT_TIME)].)"), \
 		span_hear("You hear a thump from [src]."))
-	if(do_after(user, CRYO_BREAKOUT_TIME, target = src))
+	if(do_after(user, src, CRYO_BREAKOUT_TIME))
 		if(!user || user.stat != CONSCIOUS || user.loc != src )
 			return
 		user.visible_message(span_warning("[user] successfully broke out of [src]!"), \
@@ -402,7 +402,7 @@ GLOBAL_LIST_INIT_TYPED(cryo_overlays_cover_off, /mutable_appearance, list(create
 			close_machine(target)
 	else
 		user.visible_message(span_notice("[user] starts shoving [target] inside [src]."), span_notice("You start shoving [target] inside [src]."))
-		if (do_after(user, 2.5 SECONDS, target=target))
+		if (do_after(user, target, 2.5 SECONDS))
 			close_machine(target)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/screwdriver_act(mob/living/user, obj/item/tool)

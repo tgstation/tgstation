@@ -72,7 +72,7 @@ at the cost of risking a vicious bite.**/
 		to_chat(user, span_warning("You need to lie down to reach into [src]."))
 		return
 	to_chat(user, span_notice("You reach down into the cold water of the basin."))
-	if(!do_after(user, 2 SECONDS, target = src))
+	if(!do_after(user, src, 2 SECONDS))
 		return
 	if(hidden_item)
 		user.put_in_hands(hidden_item)

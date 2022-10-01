@@ -25,7 +25,7 @@
 	if(player_turf?.is_blocked_turf(TRUE))
 		return FALSE
 	user.visible_message(span_danger("[user] begins to plant \the [src]..."))
-	if(do_after(user, 8 SECONDS, target = user.drop_location(), progress = TRUE))
+	if(do_after(user, user.drop_location(), 8 SECONDS, progress = TRUE))
 		new /obj/structure/hedge/opaque(user.drop_location())
 		to_chat(user, span_notice("You plant \the [src]."))
 		qdel(src)
@@ -48,7 +48,7 @@
 /obj/structure/hedge/attacked_by(obj/item/I, mob/living/user)
 	if(opacity && HAS_TRAIT(user, TRAIT_BONSAI) && I.get_sharpness())
 		to_chat(user,span_notice("You start trimming \the [src]."))
-		if(do_after(user, 3 SECONDS,target=src))
+		if(do_after(user, src, 3 SECONDS))
 			to_chat(user,span_notice("You finish trimming \the [src]."))
 			opacity = FALSE
 	else

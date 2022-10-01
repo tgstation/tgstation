@@ -591,7 +591,7 @@
 				span_notice("[trimmer] tries to change [pod == trimmer ? trimmer.p_their() : pod.name + "'s"] hairstyle using [src]."),
 				span_notice("You try to change [pod == trimmer ? "your" : pod.name + "'s"] hairstyle using [src].")
 			)
-			if(new_style && do_after(trimmer, 6 SECONDS, target = pod))
+			if(new_style && do_after(trimmer, pod, 6 SECONDS))
 				trimmer.visible_message(
 					span_notice("[trimmer] successfully changes [pod == trimmer ? trimmer.p_their() : pod.name + "'s"] hairstyle using [src]."),
 					span_notice("You successfully change [pod == trimmer ? "your" : pod.name + "'s"] hairstyle using [src].")

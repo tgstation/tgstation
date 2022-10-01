@@ -160,7 +160,7 @@
 /obj/item/traitor_spraycan/proc/try_draw_step(start_output, mob/living/user, atom/target)
 	drawing_rune = TRUE
 	user.balloon_alert(user, "[start_output]")
-	if (!do_after(user, 3 SECONDS, target))
+	if (!do_after(user, target, 3 SECONDS))
 		user.balloon_alert(user, "interrupted!")
 		drawing_rune = FALSE
 		return FALSE

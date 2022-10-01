@@ -186,7 +186,7 @@
 	. = ..()
 	if(!.)
 		return
-	if(!do_after(mod.wearer, 10 SECONDS, target = mod))
+	if(!do_after(mod.wearer, mod, 10 SECONDS))
 		return FALSE
 	mod.wearer.adjustOxyLoss(20)
 	playsound(src, 'sound/items/modsuit/inflate_bloon.ogg', 50, TRUE)
@@ -212,7 +212,7 @@
 	. = ..()
 	if(!.)
 		return
-	if(!do_after(mod.wearer, 1 SECONDS, target = mod))
+	if(!do_after(mod.wearer, mod, 1 SECONDS))
 		return FALSE
 
 	var/obj/item/paper/crisp_paper = new(get_turf(src))

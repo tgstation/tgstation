@@ -33,7 +33,7 @@
 		return
 	if(turbine_core)
 		to_chat(user, span_notice("Changing [src] bluespace network..."))
-	if(!do_after(user, 0.2 SECONDS, src))
+	if(!do_after(user, src, 0.2 SECONDS))
 		return
 	playsound(get_turf(user), 'sound/machines/click.ogg', 10, TRUE)
 	register_machine(multitool.buffer)

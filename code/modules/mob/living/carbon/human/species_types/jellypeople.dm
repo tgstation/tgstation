@@ -245,7 +245,7 @@
 
 	H.notransform = TRUE
 
-	if(do_after(owner, delay = 6 SECONDS, target = owner, timed_action_flags = IGNORE_HELD_ITEM))
+	if(do_after(owner, owner, time = 6 SECONDS, timed_action_flags = IGNORE_HELD_ITEM))
 		if(H.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
 			make_dupe()
 		else
@@ -737,7 +737,7 @@
 	to_chat(living_target, span_warning("You feel a foreign presence within your mind..."))
 	currently_linking = TRUE
 
-	if(!do_after(owner, 6 SECONDS, target = living_target, extra_checks = CALLBACK(src, .proc/while_link_callback, living_target)))
+	if(!do_after(owner, living_target, 6 SECONDS, extra_checks = CALLBACK(src, .proc/while_link_callback, living_target)))
 		to_chat(owner, span_warning("You can't seem to link [living_target]'s mind."))
 		to_chat(living_target, span_warning("The foreign presence leaves your mind."))
 		currently_linking = FALSE

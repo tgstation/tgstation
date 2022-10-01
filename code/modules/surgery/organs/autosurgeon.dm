@@ -77,7 +77,7 @@
 
 	if(implant_time)
 		user.visible_message( "[user] prepares to use [src] on [target].", "You begin to prepare to use [src] on [target].")
-		if(!do_after(user, (8 SECONDS * surgery_speed), target))
+		if(!do_after(user, target, (8 SECONDS * surgery_speed)))
 			return
 
 	if(target != user)

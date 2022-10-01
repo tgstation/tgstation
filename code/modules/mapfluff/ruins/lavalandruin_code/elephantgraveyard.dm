@@ -175,7 +175,7 @@
 		if(!opened)
 			if(istype(S,cutting_tool) && S.tool_behaviour == TOOL_SHOVEL)
 				to_chat(user, span_notice("You start start to dig open \the [src]  with \the [S]..."))
-				if (do_after(user,20, target = src))
+				if (do_after(user, src, 2 SECONDS))
 					opened = TRUE
 					locked = TRUE
 					dump_contents()
@@ -197,7 +197,7 @@
 	else if((user.combat_mode) && opened) //checks to attempt to remove the grave entirely.
 		if(istype(S,cutting_tool) && S.tool_behaviour == TOOL_SHOVEL)
 			to_chat(user, span_notice("You start to remove \the [src]  with \the [S]."))
-			if (do_after(user,15, target = src))
+			if (do_after(user, src, 1.5 SECONDS))
 				to_chat(user, span_notice("You remove \the [src]  completely."))
 				user.add_mood_event("graverobbing", /datum/mood_event/graverobbing)
 				deconstruct(TRUE)

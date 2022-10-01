@@ -607,7 +607,7 @@
 	else if(ismob(examined_thing) && examined_thing != src)
 		examine_delay_length *= 2
 
-	if(examine_delay_length > 0 && !do_after(src, examine_delay_length, target = examined_thing))
+	if(examine_delay_length > 0 && !do_after(src, examined_thing, examine_delay_length))
 		to_chat(src, span_notice("You can't get a good feel for what is there."))
 		return FALSE
 

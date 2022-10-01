@@ -44,7 +44,7 @@
 	if(!HAS_TRAIT(user,TRAIT_WEB_WEAVER))
 		return
 	user.visible_message(span_notice("[user] begins weaving [src] into cloth."), span_notice("You begin weaving [src] into cloth."))
-	if(!do_after(user, 2 SECONDS))
+	if(!do_after(user, time = 2 SECONDS))
 		return
 	qdel(src)
 	var/obj/item/stack/sheet/cloth/woven_cloth = new /obj/item/stack/sheet/cloth
@@ -242,7 +242,7 @@
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	to_chat(user, span_notice("You struggle against the tight bonds... (This will take about [DisplayTimeText(breakout_time)].)"))
 	visible_message(span_notice("You see something struggling and writhing in \the [src]!"))
-	if(do_after(user,(breakout_time), target = src))
+	if(do_after(user, src, breakout_time))
 		if(!user || user.stat != CONSCIOUS || user.loc != src)
 			return
 		qdel(src)

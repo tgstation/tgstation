@@ -161,7 +161,7 @@
 					return
 				to_chat(user, span_notice("You start to reinforce the windoor with plasteel..."))
 
-				if(do_after(user,40, target = src))
+				if(do_after(user, src, 4 SECONDS))
 					if(!src || secure || P.get_amount() < 2)
 						return
 
@@ -177,7 +177,7 @@
 			else if(istype(W, /obj/item/stack/cable_coil) && anchored)
 				user.visible_message(span_notice("[user] wires the windoor assembly."), span_notice("You start to wire the windoor assembly..."))
 
-				if(do_after(user, 40, target = src))
+				if(do_after(user, src, 4 SECONDS))
 					if(!src || !anchored || src.state != "01")
 						return
 					var/obj/item/stack/cable_coil/CC = W
@@ -219,7 +219,7 @@
 				user.visible_message(span_notice("[user] installs the electronics into the airlock assembly."),
 					span_notice("You start to install electronics into the airlock assembly..."))
 
-				if(do_after(user, 40, target = src))
+				if(do_after(user, src, 4 SECONDS))
 					if(!src || electronics)
 						W.forceMove(drop_location())
 						return

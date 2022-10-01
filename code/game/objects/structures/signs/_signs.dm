@@ -140,7 +140,7 @@
 			return
 		user.visible_message(span_notice("[user] begins changing [src]."), \
 			span_notice("You begin changing [src]."))
-		if(!do_after(user, 4 SECONDS, target = src)) //Small delay for changing signs instead of it being instant, so somebody could be shoved or stunned to prevent them from doing so.
+		if(!do_after(user, src, 4 SECONDS)) //Small delay for changing signs instead of it being instant, so somebody could be shoved or stunned to prevent them from doing so.
 			return
 		var/sign_type = GLOB.editable_sign_types[choice]
 		//It's import to clone the pixel layout information.
@@ -167,7 +167,7 @@
 			to_chat(user, span_warning("You need to stand next to the sign to change it!"))
 			return
 		user.visible_message(span_notice("You begin changing [src]."))
-		if(!do_after(user, 4 SECONDS, target = src))
+		if(!do_after(user, src, 4 SECONDS))
 			return
 		set_sign_type(GLOB.editable_sign_types[choice])
 		user.visible_message(span_notice("You finish changing the sign."))

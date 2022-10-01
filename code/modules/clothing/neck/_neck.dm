@@ -65,7 +65,7 @@
 	if(user.mind?.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
 		tie_timer_actual /= 2
 	// Tie/Untie our tie
-	if(!do_after(user, tie_timer_actual))
+	if(!do_after(user, time = tie_timer_actual))
 		to_chat(user, span_notice("Your fingers fumble away from [src] as your concentration breaks."))
 		return
 	// Clumsy & Dumb people have trouble tying their ties.

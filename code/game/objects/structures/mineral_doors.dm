@@ -319,7 +319,7 @@
 
 	if((!user.combat_mode) && istype(I, /obj/item/paper) && (atom_integrity < max_integrity))
 		user.visible_message(span_notice("[user] starts to patch the holes in [src]."), span_notice("You start patching some of the holes in [src]!"))
-		if(do_after(user, 2 SECONDS, src))
+		if(do_after(user, src, 2 SECONDS))
 			atom_integrity = min(atom_integrity+4,max_integrity)
 			qdel(I)
 			user.visible_message(span_notice("[user] patches some of the holes in [src]."), span_notice("You patch some of the holes in [src]!"))

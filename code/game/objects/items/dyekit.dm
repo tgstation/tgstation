@@ -39,7 +39,7 @@
 		return
 
 	to_chat(user, span_notice("You start applying the hair dye..."))
-	if(!do_after(user, 3 SECONDS, target))
+	if(!do_after(user, target, 3 SECONDS))
 		return
 	var/gradient_key = beard_or_hair == "Hair" ? GRADIENT_HAIR_KEY : GRADIENT_FACIAL_HAIR_KEY
 	LAZYSETLEN(human_target.grad_style, GRADIENTS_LEN)

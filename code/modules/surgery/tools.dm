@@ -274,7 +274,7 @@
 		return ..()
 	balloon_alert(user, "copying designs...")
 	playsound(src, 'sound/machines/terminal_processing.ogg', 25, TRUE)
-	if(do_after(user, 1 SECONDS, target = design_holder))
+	if(do_after(user, design_holder, 1 SECONDS))
 		if(istype(design_holder, /obj/item/disk/surgery))
 			var/obj/item/disk/surgery/surgery_disk = design_holder
 			loaded_surgeries |= surgery_disk.surgeries
@@ -440,7 +440,7 @@
 	if(patient.stat != DEAD && patient.has_status_effect(/datum/status_effect/jitter)) //jittering will make it harder to secure the shears, even if you can't otherwise move
 		amputation_speed_mod *= 1.5 //15*0.5*1.5=11.25, so staminacritting someone who's jittering (from, say, a stun baton) won't give you enough time to snip their head off, but staminacritting someone who isn't jittering will
 
-	if(do_after(user,  toolspeed * 15 SECONDS * amputation_speed_mod, target = patient))
+	if(do_after(user, patient, toolspeed * 15 SECONDS * amputation_speed_mod))
 		playsound(get_turf(patient), 'sound/weapons/bladeslice.ogg', 250, TRUE)
 		if(user.zone_selected == BODY_ZONE_PRECISE_GROIN) //OwO
 			tail_snip_candidate.Remove(patient)

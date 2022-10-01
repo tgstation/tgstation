@@ -292,7 +292,7 @@
 		return
 	balloon_alert(mod.wearer, "ripping clothing...")
 	playsound(src, 'sound/items/zip.ogg', 25, TRUE, frequency = -1)
-	if(!do_after(mod.wearer, 1.5 SECONDS, target = carbon_target))
+	if(!do_after(mod.wearer, carbon_target, 1.5 SECONDS))
 		balloon_alert(mod.wearer, "interrupted!")
 		return
 	var/target_zones = body_zone2cover_flags(mod.wearer.zone_selected)

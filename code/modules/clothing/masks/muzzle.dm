@@ -68,7 +68,7 @@
 		to_chat(attacker, span_notice("[victim] is already wearing somthing on their face."))
 		return
 	balloon_alert(attacker, "taping mouth...")
-	if(!do_after(attacker, equip_delay_other, target = victim))
+	if(!do_after(attacker, victim, equip_delay_other))
 		return
 	victim.equip_to_slot_if_possible(src, ITEM_SLOT_MASK)
 	update_appearance()

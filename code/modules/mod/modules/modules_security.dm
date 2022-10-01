@@ -219,7 +219,7 @@
 		return
 	if(target == linked_bodybag)
 		playsound(src, 'sound/machines/ding.ogg', 25, TRUE)
-		if(!do_after(mod.wearer, packup_time, target = target))
+		if(!do_after(mod.wearer, target, packup_time))
 			balloon_alert(mod.wearer, "interrupted!")
 		packup()
 		return
@@ -229,7 +229,7 @@
 	if(target_turf.is_blocked_turf(exclude_mobs = TRUE))
 		return
 	playsound(src, 'sound/machines/ding.ogg', 25, TRUE)
-	if(!do_after(mod.wearer, capture_time, target = target))
+	if(!do_after(mod.wearer, target, capture_time))
 		balloon_alert(mod.wearer, "interrupted!")
 		return
 	if(linked_bodybag)
@@ -371,7 +371,7 @@
 		return
 	balloon_alert(mod.wearer, "readying sonar...")
 	playsound(mod.wearer, 'sound/mecha/skyfall_power_up.ogg', vol = 20, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
-	if(!do_after(mod.wearer, 1.1 SECONDS, target = mod))
+	if(!do_after(mod.wearer, mod, 1.1 SECONDS))
 		return
 	var/creatures_detected = 0
 	for(var/mob/living/creature in range(9, mod.wearer))

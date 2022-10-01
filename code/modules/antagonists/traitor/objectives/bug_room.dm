@@ -144,7 +144,7 @@
 	if(!istype(current_area, target_area_type))
 		balloon_alert(user, "you can't deploy this here!")
 		return
-	if(!do_after(user, deploy_time, src))
+	if(!do_after(user, src, deploy_time))
 		return
 	var/obj/structure/traitor_bug/new_bug = new(location)
 	transfer_fingerprints_to(new_bug)
@@ -163,7 +163,7 @@
 		if(result & COMPONENT_FORCE_FAIL_PLACEMENT || !istype(target, target_object_type))
 			balloon_alert(user, "you can't attach this onto here!")
 			return
-	if(!do_after(user, deploy_time, src))
+	if(!do_after(user, src, deploy_time))
 		return
 	if(planted_on)
 		return

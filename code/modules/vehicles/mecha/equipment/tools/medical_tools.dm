@@ -67,7 +67,7 @@
 		return
 	to_chat(source, "[icon2html(src, source)][span_notice("You start putting [target] into [src]...")]")
 	chassis.visible_message(span_warning("[chassis] starts putting [target] into \the [src]."))
-	if(!do_after(source, equip_cooldown, target, extra_checks=CALLBACK(src, .proc/patient_insertion_check, target, source)))
+	if(!do_after(source, target, equip_cooldown, extra_checks=CALLBACK(src, .proc/patient_insertion_check, target, source)))
 		return
 	if(!chassis || !(get_dir(chassis, target) & chassis.dir))
 		return

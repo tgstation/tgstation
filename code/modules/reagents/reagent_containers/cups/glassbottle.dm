@@ -474,7 +474,7 @@
 	if(spillable)
 		return ..()
 	balloon_alert(user, "fiddling with cork...")
-	if(do_after(user, 1 SECONDS, src))
+	if(do_after(user, src, 1 SECONDS))
 		return pop_cork(user)
 
 /obj/item/reagent_containers/cup/glass/bottle/champagne/update_icon_state()

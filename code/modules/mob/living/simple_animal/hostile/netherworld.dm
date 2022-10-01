@@ -45,7 +45,7 @@
 	if(N.stat == DEAD)
 		return
 	var/turf/T = get_turf(N)
-	if (N.can_be_seen(T) || !do_after(N, 60, target = T))
+	if (N.can_be_seen(T) || !do_after(N, T, 6 SECONDS))
 		to_chat(N, span_warning("You can't phase in or out while being observed and you must stay still!"))
 		return
 	if (get_dist(N, T) != 0 || N.can_be_seen(T))

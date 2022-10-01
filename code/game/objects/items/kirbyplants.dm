@@ -27,7 +27,7 @@
 	. = ..()
 	if(trimmable && HAS_TRAIT(user,TRAIT_BONSAI) && isturf(loc) && I.get_sharpness())
 		to_chat(user,span_notice("You start trimming [src]."))
-		if(do_after(user,3 SECONDS,target=src))
+		if(do_after(user, src, 3 SECONDS))
 			to_chat(user,span_notice("You finish trimming [src]."))
 			change_visual()
 
