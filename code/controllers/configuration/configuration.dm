@@ -88,7 +88,8 @@
 	LoadMOTD()
 	LoadPolicy()
 	LoadChatFilter()
-	validate_job_config()
+	if(CONFIG_GET(flag/load_jobs_from_txt))
+		validate_job_config()
 
 	loaded = TRUE
 
@@ -471,9 +472,6 @@ Example config:
 
 /// Check to ensure that the jobconfig is valid/in-date.
 /datum/controller/configuration/proc/validate_job_config()
-	if(!CONFIG_GET(flag/load_jobs_from_txt)) // server operators didn't set this flag, so we don't need to bother continuing
-		return
-
 	var/config_toml = "[directory]/jobconfig.toml"
 	var/config_txt = "[directory]/jobs.txt"
 	var/message = "Notify Server Operators: "
