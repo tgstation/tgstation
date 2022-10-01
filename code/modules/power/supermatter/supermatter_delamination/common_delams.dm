@@ -12,7 +12,7 @@
 		return FALSE
 	sm.radio.talk_into(
 		sm,
-		"Warning: Critical coolant mass reached.", 
+		"Warning: Critical coolant mass reached.",
 		sm.damage > sm.emergency_point ? sm.emergency_channel : sm.warning_channel
 	)
 
@@ -26,7 +26,7 @@
 		effect_anomaly(sm)
 	if(!effect_singulo(sm))
 		effect_explosion(sm)
-	qdel(sm)
+	return ..()
 
 /// When we have too much power.
 /datum/sm_delam/tesla
@@ -54,7 +54,7 @@
 		effect_anomaly(sm)
 	effect_tesla(sm)
 	effect_explosion(sm)
-	qdel(sm)
+	return ..()
 
 /// Default delam.
 /datum/sm_delam/explosive
@@ -71,4 +71,4 @@
 	if(sm.is_main_engine)
 		effect_anomaly(sm)
 	effect_explosion(sm)
-	qdel(sm)
+	return ..()

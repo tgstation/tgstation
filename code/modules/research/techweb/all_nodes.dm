@@ -223,6 +223,7 @@
 	design_ids = list(
 		"airlock_painter",
 		"analyzer",
+		"boxcutter",
 		"cable_coil",
 		"cable_coil",
 		"crowbar",
@@ -1121,10 +1122,6 @@
 		"hdd_basic",
 		"hdd_cluster",
 		"hdd_super",
-		"miniprinter",
-		"netcard_advanced",
-		"netcard_basic",
-		"netcard_wired",
 		"portadrive_advanced",
 		"portadrive_basic",
 		"portadrive_super",

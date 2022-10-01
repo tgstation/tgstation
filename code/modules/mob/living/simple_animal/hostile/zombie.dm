@@ -39,7 +39,6 @@
 	var/mob/living/carbon/human/dummy/dummy = new
 	dummy.equipOutfit(outfit)
 	dummy.set_species(/datum/species/zombie)
-	COMPILE_OVERLAYS(dummy)
 	icon = getFlatIcon(dummy)
 	qdel(dummy)
 
