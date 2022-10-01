@@ -286,21 +286,62 @@
 	modifies_speech = TRUE
 	taste_sensitivity = 32
 
+// List of english words that translate to zombie phrases
+GLOBAL_LIST_INIT(english_to_zombie, list())
+
+/obj/item/organ/internal/tongue/zombie/proc/add_word_to_translations(english_word, zombie_word)
+	GLOB.english_to_zombie[english_word] = zombie_word
+	// zombies don't care about grammar (any tense or form is all translated to the same word)
+	GLOB.english_to_zombie[english_word + plural_s(english_word)] = zombie_word
+	GLOB.english_to_zombie[english_word + "ing"] = zombie_word
+	GLOB.english_to_zombie[english_word + "ed"] = zombie_word
+
+/obj/item/organ/internal/tongue/zombie/proc/load_zombie_translations()
+	var/list/zombie_translation = strings("zombie_replacement.json", "zombie")
+	for(var/zombie_word in zombie_translation)
+		// since zombie words are a reverse list, we gotta do this backwards
+		var/list/data = islist(zombie_translation[zombie_word]) ? zombie_translation[zombie_word] : list(zombie_translation[zombie_word])
+		for(var/english_word in data)
+			add_word_to_translations(english_word, zombie_word)
+	GLOB.english_to_zombie = sort_list(GLOB.english_to_zombie) // Alphabetizes the list (for debugging)
+
 /obj/item/organ/internal/tongue/zombie/modify_speech(datum/source, list/speech_args)
-	var/list/message_list = splittext(speech_args[SPEECH_MESSAGE], " ")
-	var/maxchanges = max(round(message_list.len / 1.5), 2)
+	var/message = speech_args[SPEECH_MESSAGE]
+	if(message[1] != "*")
+		// setup the global list for translation if it hasn't already been done
+		if(!length(GLOB.english_to_zombie))
+			load_zombie_translations()
 
-	for(var/i = rand(maxchanges / 2, maxchanges), i > 0, i--)
-		var/insertpos = rand(1, message_list.len - 1)
-		var/inserttext = message_list[insertpos]
+		// make a list of all words that can be translated
+		var/list/message_word_list = splittext(message, " ")
+		var/list/translated_word_list = list()
+		for(var/word in message_word_list)
+			word = GLOB.english_to_zombie[lowertext(word)]
+			translated_word_list += word ? word : FALSE
 
-		if(!(copytext(inserttext, -3) == "..."))//3 == length("...")
-			message_list[insertpos] = inserttext + "..."
+		// all occurrences of characters "eiou" (case-insensitive) are replaced with "r"
+		message = replacetext(message, regex(@"[eiou]", "ig"), "r")
+		// all characters other than "zhrgbmna .!?-" (case-insensitive) are stripped
+		message = replacetext(message, regex(@"[^zhrgbmna.!?-\s]", "ig"), "")
+		// multiple spaces are replaced with a single (whitespace is trimmed)
+		message = replacetext(message, regex(@"(\s+)", "g"), " ")
 
-		if(prob(20) && message_list.len > 3)
-			message_list.Insert(insertpos, "[pick("BRAINS", "Brains", "Braaaiinnnsss", "BRAAAIIINNSSS")]...")
+		var/list/old_words = splittext(message, " ")
+		var/list/new_words = list()
+		for(var/word in old_words)
+			// lower-case "r" at the end of words replaced with "rh"
+			word = replacetext(word, regex(@"\lr\b"), "rh")
+			// an "a" or "A" by itself will be replaced with "hra"
+			word = replacetext(word, regex(@"\b[Aa]\b"), "hra")
+			new_words += word
 
-	speech_args[SPEECH_MESSAGE] = jointext(message_list, " ")
+		// if words were not translated, then we apply our zombie speech patterns
+		for(var/i in 1 to length(new_words))
+			new_words[i] = translated_word_list[i] ? translated_word_list[i] : new_words[i]
+
+		message = new_words.Join(" ")
+		message = capitalize(message)
+		speech_args[SPEECH_MESSAGE] = message
 
 /obj/item/organ/internal/tongue/alien
 	name = "alien tongue"

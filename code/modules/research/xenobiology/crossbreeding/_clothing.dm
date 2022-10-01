@@ -19,7 +19,7 @@ Slimecrossing Armor
 
 /obj/item/clothing/mask/nobreath/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
-	if(slot == ITEM_SLOT_MASK)
+	if(slot & ITEM_SLOT_MASK)
 		user.failed_last_breath = FALSE
 		user.clear_alert(ALERT_NOT_ENOUGH_OXYGEN)
 		user.apply_status_effect(/datum/status_effect/rebreathing)
@@ -37,7 +37,7 @@ Slimecrossing Armor
 	var/glasses_color = "#FFFFFF"
 
 /obj/item/clothing/glasses/prism_glasses/item_action_slot_check(slot)
-	if(slot == ITEM_SLOT_EYES)
+	if(slot & ITEM_SLOT_EYES)
 		return TRUE
 
 /obj/structure/light_prism

@@ -17,8 +17,8 @@
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_OFFLINE
 
 	use_power = NO_POWER_USE
-	var/minimum_timer = 90
-	var/timer_set = 90
+	var/minimum_timer = SYNDIEBOMB_MIN_TIMER_SECONDS
+	var/timer_set = SYNDIEBOMB_MIN_TIMER_SECONDS
 	var/maximum_timer = 60000
 
 	var/can_unanchor = TRUE

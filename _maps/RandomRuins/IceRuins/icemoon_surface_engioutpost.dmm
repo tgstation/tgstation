@@ -532,15 +532,11 @@
 /turf/open/floor/plating,
 /area/ruin/planetengi)
 "cI" = (
-/obj/item/modular_computer/tablet/pda/clear{
-	note = "Chief's asked me to check on the machinery inside PDA. He's also worried about Build, but i'm sure Harry'll handle the construction. I just need to work on Internals. Fuck i'm hungry"
-	},
+/obj/item/modular_computer/tablet/pda/clear,
 /turf/open/floor/iron,
 /area/ruin/planetengi)
 "cJ" = (
-/obj/item/modular_computer/tablet/pda/engineering{
-	note = "To-do: Check on SM status. Get a pint at eat. Nag the research manager for RCDs."
-	},
+/obj/item/modular_computer/tablet/pda/engineering,
 /turf/open/floor/iron,
 /area/ruin/planetengi)
 "cL" = (

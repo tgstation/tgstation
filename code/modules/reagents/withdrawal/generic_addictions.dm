@@ -53,20 +53,19 @@
 
 /datum/addiction/alcohol/withdrawal_stage_1_process(mob/living/carbon/affected_carbon, delta_time)
 	. = ..()
-	affected_carbon.set_timed_status_effect(10 SECONDS * delta_time, /datum/status_effect/jitter, only_if_higher = TRUE)
+	affected_carbon.set_jitter_if_lower(10 SECONDS * delta_time)
 
 /datum/addiction/alcohol/withdrawal_stage_2_process(mob/living/carbon/affected_carbon, delta_time)
 	. = ..()
-	affected_carbon.set_timed_status_effect(20 SECONDS * delta_time, /datum/status_effect/jitter, only_if_higher = TRUE)
+	affected_carbon.set_jitter_if_lower(20 SECONDS * delta_time)
 	affected_carbon.set_hallucinations_if_lower(10 SECONDS)
 
 /datum/addiction/alcohol/withdrawal_stage_3_process(mob/living/carbon/affected_carbon, delta_time)
 	. = ..()
-	affected_carbon.set_timed_status_effect(30 SECONDS * delta_time, /datum/status_effect/jitter, only_if_higher = TRUE)
+	affected_carbon.set_jitter_if_lower(30 SECONDS * delta_time)
 	affected_carbon.set_hallucinations_if_lower(10 SECONDS)
-	if(DT_PROB(4, delta_time))
-		if(!HAS_TRAIT(affected_carbon, TRAIT_ANTICONVULSANT))
-			affected_carbon.apply_status_effect(/datum/status_effect/seizure)
+	if(DT_PROB(4, delta_time) && !HAS_TRAIT(affected_carbon, TRAIT_ANTICONVULSANT))
+		affected_carbon.apply_status_effect(/datum/status_effect/seizure)
 
 /datum/addiction/hallucinogens
 	name = "hallucinogen"
@@ -136,8 +135,8 @@
 	var/lums = T.get_lumcount()
 	if(lums > 0.5)
 		affected_human.add_mood_event("too_bright", /datum/mood_event/bright_light)
-		affected_human.adjust_timed_status_effect(6 SECONDS, /datum/status_effect/dizziness, max_duration = 80 SECONDS)
-		affected_human.adjust_timed_status_effect(0.5 SECONDS * delta_time, /datum/status_effect/confusion, max_duration = 20 SECONDS)
+		affected_human.adjust_dizzy_up_to(6 SECONDS, 80 SECONDS)
+		affected_human.adjust_confusion_up_to(0.5 SECONDS * delta_time, 20 SECONDS)
 	else
 		affected_carbon.clear_mood_event("too_bright")
 
@@ -274,16 +273,16 @@
 
 /datum/addiction/nicotine/withdrawal_enters_stage_1(mob/living/carbon/affected_carbon, delta_time)
 	. = ..()
-	affected_carbon.set_timed_status_effect(10 SECONDS * delta_time, /datum/status_effect/jitter, only_if_higher = TRUE)
+	affected_carbon.set_jitter_if_lower(10 SECONDS * delta_time)
 
 /datum/addiction/nicotine/withdrawal_stage_2_process(mob/living/carbon/affected_carbon, delta_time)
 	. = ..()
-	affected_carbon.set_timed_status_effect(20 SECONDS * delta_time, /datum/status_effect/jitter, only_if_higher = TRUE)
+	affected_carbon.set_jitter_if_lower(20 SECONDS * delta_time)
 	if(DT_PROB(10, delta_time))
 		affected_carbon.emote("cough")
 
 /datum/addiction/nicotine/withdrawal_stage_3_process(mob/living/carbon/affected_carbon, delta_time)
 	. = ..()
-	affected_carbon.set_timed_status_effect(30 SECONDS * delta_time, /datum/status_effect/jitter, only_if_higher = TRUE)
+	affected_carbon.set_jitter_if_lower(30 SECONDS * delta_time)
 	if(DT_PROB(15, delta_time))
 		affected_carbon.emote("cough")

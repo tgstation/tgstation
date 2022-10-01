@@ -233,7 +233,7 @@
 
 /obj/projectile/hallucination/taser/apply_effect_to_hallucinator(mob/living/afflicted)
 	afflicted.Paralyze(10 SECONDS)
-	afflicted.adjust_timed_status_effect(40 SECONDS, /datum/status_effect/speech/stutter)
+	afflicted.adjust_stutter(40 SECONDS)
 	if(HAS_TRAIT(afflicted, TRAIT_HULK))
 		afflicted.say(pick(
 			";RAAAAAAAARGH!",
@@ -276,7 +276,7 @@
 	hal_impact_effect_wall = null
 
 /obj/projectile/hallucination/ebow/apply_effect_to_hallucinator(mob/living/afflicted)
-	afflicted.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/speech/slurring)
+	afflicted.adjust_slurring(10 SECONDS)
 	afflicted.Knockdown(1 SECONDS)
 	afflicted.adjustStaminaLoss(75) // 60 stam + 15 tox
 	afflicted.blur_eyes(10)

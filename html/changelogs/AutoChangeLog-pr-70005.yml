@@ -1,4 +1,0 @@
-author: "Salex08"
-delete-after: True
-changes: 
-  - spellcheck: "corrects plural spelling when slicing objects"
