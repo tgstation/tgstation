@@ -9,7 +9,7 @@
 	var/image/shown_body
 	/// The layer this body will be drawn on, in case we want to bypass lighting
 	var/body_layer = TURF_LAYER
-	/// Spawns the body under the hallucinator
+	/// if TRUE, spawns the body under the hallucinator instead of somewhere in view
 	var/spawn_under_hallucinator = FALSE
 
 /datum/hallucination/body/start()

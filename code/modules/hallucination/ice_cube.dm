@@ -17,8 +17,9 @@
 	ice_overlay = image(ice_icon, hallucinator, ice_icon_state, ABOVE_MOB_LAYER)
 	hallucinator.client?.images |= ice_overlay
 	ADD_TRAIT(hallucinator, TRAIT_IMMOBILIZED, HALLUCINATION_TRAIT)
-	to_chat(hallucinator, span_userdanger("You're frozen in ice!"))
-	hallucinator.throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/cold, override = TRUE)
+	to_chat(hallucinator, span_userdanger("You become frozen in a cube!"))
+	hallucinator.cause_hallucination(/datum/hallucination/fake_alert/cold, "ice hallucination")
+	/datum/hallucination/fake_alert/cold
 	if(play_ice_sound)
 		hallucinator.cause_hallucination(/datum/hallucination/fake_sound/weird/ice_crack, "ice hallucination")
 
@@ -33,7 +34,6 @@
 	return ..()
 
 /datum/hallucination/ice/proc/unfreeze()
-	hallucinator.clear_alert(ALERT_TEMPERATURE, clear_override = TRUE)
 	REMOVE_TRAIT(hallucinator, TRAIT_IMMOBILIZED, HALLUCINATION_TRAIT)
 	if(ice_overlay)
 		hallucinator.client?.images -= ice_overlay
