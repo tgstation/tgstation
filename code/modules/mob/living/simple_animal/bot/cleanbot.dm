@@ -30,6 +30,7 @@
 	///The current bot's target.
 	var/atom/target
 
+	var/obj/item/mop/advanced/cleaning_mop
 	///Currently attached weapon, usually a knife.
 	var/obj/item/weapon
 
@@ -97,6 +98,8 @@
 
 /mob/living/simple_animal/bot/cleanbot/Initialize(mapload)
 	. = ..()
+	cleaning_mop = new(src)
+
 	AddComponent(/datum/component/cleaner, CLEANBOT_CLEANING_TIME, \
 		on_cleaned_callback = CALLBACK(src, /atom/.proc/update_appearance, UPDATE_ICON))
 
@@ -116,12 +119,15 @@
 		var/atom/drop_loc = drop_location()
 		weapon.force = initial(weapon.force)
 		drop_part(weapon, drop_loc)
+	QDEL_NULL(cleaning_mop)
 	return ..()
 
 /mob/living/simple_animal/bot/cleanbot/examine(mob/user)
 	. = ..()
+	if(!cleaning_mop)
+		. += "[span_warning("It's missing their trusty mop!")]"
 	if(!weapon)
-		return
+		return .
 	. += "[span_warning("Is that \a [weapon] taped to it...?")]"
 
 	if(ascended && user.stat == CONSCIOUS && user.client)
@@ -226,6 +232,9 @@
 /mob/living/simple_animal/bot/cleanbot/handle_atom_del(atom/deleting_atom)
 	if(deleting_atom == weapon)
 		weapon = null
+		update_appearance(UPDATE_ICON)
+	if(deleting_atom == cleaning_mop)
+		cleaning_mop = null
 		update_appearance(UPDATE_ICON)
 	return ..()
 
@@ -338,7 +347,7 @@
 		mode = BOT_CLEANING
 		update_icon_state()
 		var/turf/turf_to_clean = get_turf(attack_target)
-		start_cleaning(src, turf_to_clean, src)
+		cleaning_mop.afterattack(turf_to_clean, src)
 		target = null
 		mode = BOT_IDLE
 

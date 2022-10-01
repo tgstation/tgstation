@@ -136,7 +136,6 @@
 	to_chat(user, span_warning("The soap has ran out of chemicals"))
 
 /obj/item/soap/afterattack(atom/target, mob/user, proximity)
-	. = ..()
 	if(!proximity || !check_allowed_items(target))
 		return
 	if(ishuman(target) && user.zone_selected == BODY_ZONE_PRECISE_MOUTH) //washing that potty mouth of yours
@@ -147,7 +146,7 @@
 			human_target.update_lips(null)
 		decreaseUses(src, target, user)
 		return
-	start_cleaning(src, target, user) //normal cleaning
+	return ..()
 
 /obj/item/soap/nanotrasen/cyborg/afterattack(atom/target, mob/user, proximity)
 	if(uses <= 0)
