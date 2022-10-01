@@ -509,15 +509,7 @@
 	uniform = /obj/item/clothing/under/rank/centcom/military
 	mask = /obj/item/clothing/mask/gas/sechailer
 	head = /obj/item/clothing/head/helmet/marine
-
-/datum/outfit/centcom/ert/marine/post_equip(mob/living/carbon/human/equipper, visualsOnly = FALSE)
-	..()
-
-	if(visualsOnly)
-		return
-	var/obj/item/radio/headset = equipper.ears
-	headset.keyslot = /obj/item/encryptionkey/heads/captain
-	headset.recalculateChannels()
+	additional_radio = /obj/item/encryptionkey/heads/captain
 
 /datum/outfit/centcom/ert/marine/security
 	name = "Marine Heavy"
@@ -526,16 +518,7 @@
 	suit = /obj/item/clothing/suit/armor/vest/marine/security
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 	head = /obj/item/clothing/head/helmet/marine/security
-
-/datum/outfit/centcom/ert/marine/security/post_equip(mob/living/carbon/human/equipper, visualsOnly = FALSE)
-	..()
-
-	if(visualsOnly)
-		return
-
-	var/obj/item/radio/headset = equipper.ears
-	headset.keyslot = /obj/item/encryptionkey/heads/hos
-	headset.recalculateChannels()
+	additional_radio = /obj/item/encryptionkey/heads/hos
 
 /datum/outfit/centcom/ert/marine/medic
 	name = "Marine Medic"
@@ -553,16 +536,7 @@
 	)
 	belt = /obj/item/storage/belt/medical/paramedic
 	glasses = /obj/item/clothing/glasses/hud/health/sunglasses
-
-/datum/outfit/centcom/ert/marine/medic/post_equip(mob/living/carbon/human/equipper, visualsOnly = FALSE)
-	..()
-
-	if(visualsOnly)
-		return
-
-	var/obj/item/radio/headset = equipper.ears
-	headset.keyslot = /obj/item/encryptionkey/heads/cmo
-	headset.recalculateChannels()
+	additional_radio = /obj/item/encryptionkey/heads/cmo
 
 /datum/outfit/centcom/ert/marine/engineer
 	name = "Marine Engineer"
@@ -575,13 +549,4 @@
 	uniform = /obj/item/clothing/under/rank/centcom/military/eng
 	belt = /obj/item/storage/belt/utility/full/powertools/rcd
 	glasses = /obj/item/clothing/glasses/hud/diagnostic/sunglasses
-
-/datum/outfit/centcom/ert/marine/engineer/post_equip(mob/living/carbon/human/equipper, visualsOnly = FALSE)
-	..()
-
-	if(visualsOnly)
-		return
-
-	var/obj/item/radio/headset = equipper.ears
-	headset.keyslot = /obj/item/encryptionkey/heads/ce
-	headset.recalculateChannels()
+	additional_radio = /obj/item/encryptionkey/heads/ce
