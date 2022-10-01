@@ -43823,10 +43823,6 @@
 "mvW" = (
 /turf/open/floor/engine/plasma,
 /area/station/engineering/atmos)
-"mvX" = (
-/obj/effect/turf_decal/box,
-/turf/closed/wall/r_wall,
-/area/station/tcommsat/computer)
 "mwe" = (
 /obj/machinery/smartfridge,
 /turf/closed/wall,
@@ -83348,7 +83344,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/south,
-/obj/effect/turf_decal/box,
 /turf/open/floor/iron/dark,
 /area/station/tcommsat/computer)
 "xDE" = (
@@ -115142,7 +115137,7 @@ tLM
 jEd
 bsc
 xDm
-mvX
+vqw
 dAZ
 oHD
 fzL
