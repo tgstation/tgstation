@@ -32,7 +32,7 @@
 	/// Proximity threshold for amber warning (slow people may be in danger)
 	var/amber_distance_threshold = 60
 	/// Proximity threshold for red warning (running people will likely not be able to cross)
-	var/red_distance_threshold = 35
+	var/red_distance_threshold = 33
 
 /obj/machinery/crossing_signal/Initialize(mapload)
 	. = ..()
