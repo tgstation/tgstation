@@ -16,7 +16,7 @@
  * In most cases you should NOT call this manually, instead use [/datum/element/movetype_handler]!
  * This is just so you can apply the animation to things which can be animated but are not movables (like images)
  */
-#define STOP_FLOAING_ANIM(target) \
+#define STOP_FLOATING_ANIM(target) \
 	var/final_pixel_y = 0; \
 	if(ismovable(target)) { \
 		var/atom/movable/movable_target = target; \

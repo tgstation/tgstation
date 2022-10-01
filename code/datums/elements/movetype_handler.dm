@@ -40,7 +40,7 @@
 
 	attached_atoms -= source
 	paused_floating_anim_atoms -= source
-	STOP_FLOAING_ANIM(source)
+	STOP_FLOATING_ANIM(source)
 	return ..()
 
 /// Called when a movement type trait is added to the movable. Enables the relative bitflag.
@@ -64,7 +64,7 @@
 	var/old_state = source.movement_type
 	source.movement_type &= ~flag
 	if((old_state & (FLOATING|FLYING)) && !(source.movement_type & (FLOATING|FLYING)))
-		STOP_FLOAING_ANIM(source)
+		STOP_FLOATING_ANIM(source)
 		var/turf/pitfall = source.loc //Things that don't fly fall in open space.
 		if(istype(pitfall))
 			pitfall.zFall(source)
@@ -73,7 +73,7 @@
 /// Called when the TRAIT_NO_FLOATING_ANIM trait is added to the movable. Stops it from bobbing up and down.
 /datum/element/movetype_handler/proc/on_no_floating_anim_trait_gain(atom/movable/source, trait)
 	SIGNAL_HANDLER
-	STOP_FLOAING_ANIM(source)
+	STOP_FLOATING_ANIM(source)
 
 /// Called when the TRAIT_NO_FLOATING_ANIM trait is removed from the mob. Restarts the bobbing animation.
 /datum/element/movetype_handler/proc/on_no_floating_anim_trait_loss(atom/movable/source, trait)
@@ -85,7 +85,7 @@
 /datum/element/movetype_handler/proc/pause_floating_anim(atom/movable/source, timer)
 	SIGNAL_HANDLER
 	if(paused_floating_anim_atoms[source] < world.time + timer)
-		STOP_FLOAING_ANIM(source)
+		STOP_FLOATING_ANIM(source)
 		if(!length(paused_floating_anim_atoms))
 			START_PROCESSING(SSdcs, src) //1 second tickrate.
 		paused_floating_anim_atoms[source] = world.time + timer
