@@ -89,8 +89,8 @@
 	handle_hearing_result = hearing_args
 
 /datum/unit_test/speech/Run()
-	var/mob/living/carbon/human/speaker = allocate(/mob/living/carbon/human)
-	var/mob/living/carbon/human/listener = allocate(/mob/living/carbon/human)
+	speaker = allocate(/mob/living/carbon/human)
+	listener = allocate(/mob/living/carbon/human)
 
 	RegisterSignal(speaker, COMSIG_MOB_SAY, .proc/handle_speech)
 	RegisterSignal(listener, COMSIG_MOVABLE_HEAR, .proc/handle_hearing)
