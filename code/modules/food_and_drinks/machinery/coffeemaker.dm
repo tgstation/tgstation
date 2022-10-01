@@ -140,9 +140,12 @@
 		cartridge = null
 	update_appearance()
 
-/obj/machinery/coffeemaker/update_icon_state()
-	icon_state = "[base_icon_state][coffeepot ? "_pot" : "_nopot"][cartridge ? "_cart": "_nocart"]"
-	return ..()
+/obj/machinery/coffeemaker/update_overlays()
+	. = ..()
+	if(coffeepot)
+		. += "coffeemaker_pot"
+	if(cartridge)
+		. += "coffeemaker_cartridge"
 
 /obj/machinery/coffeemaker/proc/replace_pot(mob/living/user, obj/item/reagent_containers/cup/coffeepot/new_coffeepot)
 	if(!user)
@@ -408,3 +411,4 @@
 	. = ..()
 	atom_storage.max_slots = 4
 	atom_storage.set_holdable(list(/obj/item/coffee_cartridge))
+
