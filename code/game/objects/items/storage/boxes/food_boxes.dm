@@ -486,6 +486,7 @@
 		new /obj/item/reagent_containers/condiment(src)
 
 
+
 /obj/item/storage/box/coffeepack/arabica
 	illustration = null
 	icon = 'icons/obj/food/containers.dmi'
@@ -494,7 +495,9 @@
 	desc = "A bag containing fresh, dry coffee arabica beans. Ethically courced and packaged by Waffle Corp."
 
 /obj/item/storage/box/coffeepack/arabica/PopulateContents()
-	for(var/i in 1 to 6)
+	atom_storage.max_slots = 5
+	atom_storage.set_holdable(list(/obj/item/food/grown/coffee))
+	for(var/i in 1 to 5)
 		new /obj/item/food/grown/coffee(src)
 
 
@@ -506,5 +509,7 @@
 	desc = "A bag containing fresh, dry coffee robusta beans. Ethically courced and packaged by Waffle Corp."
 
 /obj/item/storage/box/coffeepack/robusta/PopulateContents()
-	for(var/i in 1 to 6)
+	atom_storage.max_slots = 5
+	atom_storage.set_holdable(list(/obj/item/food/grown/coffee))
+	for(var/i in 1 to 5)
 		new /obj/item/food/grown/coffee/robusta(src)
