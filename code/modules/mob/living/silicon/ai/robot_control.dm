@@ -37,7 +37,7 @@
 	data["robots"] = list()
 	for(var/mob/living/simple_animal/bot/simple_bot as anything in GLOB.bots_list)
 		//Only non-emagged bots on a valid Z-level are detected!
-		if(!is_valid_z_level(ai_current_turf, get_turf(simple_bot)) || !(simple_bot.bot_mode_flags & BOT_MODE_REMOTE_ENABLED)) //Only non-emagged bots on the same Z-level are detected!
+		if(!is_valid_z_level(ai_current_turf, get_turf(simple_bot)) || !(simple_bot.bot_mode_flags & BOT_MODE_REMOTE_ENABLED))
 			continue
 		var/list/robot_data = list(
 			name = simple_bot.name,
