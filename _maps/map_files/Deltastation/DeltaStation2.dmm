@@ -88256,7 +88256,6 @@
 "vzD" = (
 /obj/structure/table/wood,
 /obj/structure/cable,
-/obj/item/radio/intercom/command,
 /turf/open/floor/iron/dark,
 /area/station/command/corporate_showroom)
 "vzK" = (
@@ -98174,6 +98173,7 @@
 "xVo" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/table/wood,
+/obj/item/radio/intercom/command,
 /turf/open/floor/carpet,
 /area/station/command/meeting_room/council)
 "xVr" = (
