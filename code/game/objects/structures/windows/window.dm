@@ -69,6 +69,7 @@
 	if (flags_1 & ON_BORDER_1)
 		AddElement(/datum/element/connect_loc, loc_connections)
 	AddComponent(/datum/component/simple_rotation, ROTATION_NEEDS_ROOM, AfterRotation = CALLBACK(src,.proc/AfterRotation))
+	update_pixel_offsets()
 
 /obj/structure/window/examine(mob/user)
 	. = ..()
@@ -356,6 +357,29 @@
 		set_opacity(255)
 	else
 		set_opacity(initial(opacity))
+
+/obj/structure/window/setDir(newdir)
+	. = ..()
+	update_pixel_offsets()
+
+/// OK, so, this makes windows render properly.
+/// We're using side_map to handle layering for us
+/// So things decides layering based on (simplifying)
+/// Plane
+/// Position (x and y + pixel_x/y, NOT the position of pixels on the sprite) blocked out in chunks of 32x32 because we're using tile movement
+/// Layer
+/// What we're doing here is shifting south windows DOWN onto the tile below them both visually and positionally
+/// Then shifting them back up ONLY visually, so they layer as if they were below us
+/// And since windows draw above mobs, this just WORKS
+/obj/structure/window/proc/update_pixel_offsets()
+	if(fulltile)
+		return
+	if(dir & SOUTH)
+		pixel_y = -32
+		pixel_z = 32
+	else
+		pixel_y = 0
+		pixel_z = 0
 
 /obj/structure/window/Destroy()
 	set_density(FALSE)
