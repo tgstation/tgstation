@@ -24,7 +24,7 @@
 
 /obj/item/clothing/head/foilhat/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
-	if(slot != ITEM_SLOT_HEAD || warped)
+	if(!(slot & ITEM_SLOT_HEAD) || warped)
 		return
 	if(paranoia)
 		QDEL_NULL(paranoia)

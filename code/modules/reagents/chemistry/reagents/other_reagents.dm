@@ -284,15 +284,15 @@
 		data = list("misc" = 0)
 
 	data["misc"] += delta_time SECONDS * REM
-	M.adjust_timed_status_effect(4 SECONDS * delta_time, /datum/status_effect/jitter, max_duration = 20 SECONDS)
+	M.adjust_jitter_up_to(4 SECONDS * delta_time, 20 SECONDS)
 	if(IS_CULTIST(M))
 		for(var/datum/action/innate/cult/blood_magic/BM in M.actions)
 			to_chat(M, span_cultlarge("Your blood rites falter as holy water scours your body!"))
 			for(var/datum/action/innate/cult/blood_spell/BS in BM.spells)
 				qdel(BS)
 	if(data["misc"] >= (25 SECONDS)) // 10 units
-		M.adjust_timed_status_effect(4 SECONDS * delta_time, /datum/status_effect/speech/stutter, max_duration = 20 SECONDS)
-		M.set_timed_status_effect(10 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
+		M.adjust_stutter_up_to(4 SECONDS * delta_time, 20 SECONDS)
+		M.set_dizzy_if_lower(10 SECONDS)
 		if(IS_CULTIST(M) && DT_PROB(10, delta_time))
 			M.say(pick("Av'te Nar'Sie","Pa'lid Mors","INO INO ORA ANA","SAT ANA!","Daim'niodeis Arc'iai Le'eones","R'ge Na'sie","Diabo us Vo'iscum","Eld' Mon Nobis"), forced = "holy water")
 			if(prob(10))
@@ -1111,7 +1111,7 @@
 /datum/reagent/bluespace/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(current_cycle > 10 && DT_PROB(7.5, delta_time))
 		to_chat(M, span_warning("You feel unstable..."))
-		M.set_timed_status_effect(2 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
+		M.set_jitter_if_lower(2 SECONDS)
 		current_cycle = 1
 		addtimer(CALLBACK(M, /mob/living/proc/bluespace_shuffle), 30)
 	..()
@@ -1239,16 +1239,16 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/cryptobiolin/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.set_timed_status_effect(2 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
+	M.set_dizzy_if_lower(2 SECONDS)
 
 	// Cryptobiolin adjusts the mob's confusion down to 20 seconds if it's higher,
 	// or up to 1 second if it's lower, but will do nothing if it's in between
 	var/confusion_left = M.get_timed_status_effect_duration(/datum/status_effect/confusion)
 	if(confusion_left < 1 SECONDS)
-		M.set_timed_status_effect(1 SECONDS, /datum/status_effect/confusion)
+		M.set_confusion(1 SECONDS)
 
 	else if(confusion_left > 20 SECONDS)
-		M.set_timed_status_effect(20 SECONDS, /datum/status_effect/confusion)
+		M.set_confusion(20 SECONDS)
 
 	..()
 
@@ -1262,7 +1262,7 @@
 	addiction_types = list(/datum/addiction/opioids = 10)
 
 /datum/reagent/impedrezene/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjust_timed_status_effect(-5 SECONDS * delta_time, /datum/status_effect/jitter)
+	M.adjust_jitter(-5 SECONDS * delta_time)
 	if(DT_PROB(55, delta_time))
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2)
 	if(DT_PROB(30, delta_time))
@@ -1426,7 +1426,7 @@
 		H.blood_volume = max(H.blood_volume - (10 * REM * delta_time), 0)
 	if(DT_PROB(10, delta_time))
 		M.losebreath += 2
-		M.adjust_timed_status_effect(2 SECONDS, /datum/status_effect/confusion, max_duration = 5 SECONDS)
+		M.adjust_confusion_up_to(2 SECONDS, 5 SECONDS)
 	..()
 
 /////////////////////////Colorful Powder////////////////////////////
@@ -2378,6 +2378,14 @@
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
+/datum/reagent/bz_metabolites/on_mob_metabolize(mob/living/ling)
+	..()
+	ADD_TRAIT(ling, CHANGELING_HIVEMIND_MUTE, type)
+
+/datum/reagent/bz_metabolites/on_mob_end_metabolize(mob/living/ling)
+	..()
+	REMOVE_TRAIT(ling, CHANGELING_HIVEMIND_MUTE, type)
+
 /datum/reagent/bz_metabolites/on_mob_life(mob/living/carbon/target, delta_time, times_fired)
 	if(target.mind)
 		var/datum/antagonist/changeling/changeling = target.mind.has_antag_datum(/datum/antagonist/changeling)
@@ -2399,8 +2407,8 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/peaceborg/confuse/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjust_timed_status_effect(3 SECONDS * REM * delta_time, /datum/status_effect/confusion, max_duration = 5 SECONDS)
-	M.adjust_timed_status_effect(6 SECONDS * REM * delta_time, /datum/status_effect/dizziness, max_duration = 12 SECONDS)
+	M.adjust_confusion_up_to(3 SECONDS * REM * delta_time, 5 SECONDS)
+	M.adjust_dizzy_up_to(6 SECONDS * REM * delta_time, 12 SECONDS)
 
 	if(DT_PROB(10, delta_time))
 		to_chat(M, "You feel confused and disoriented.")

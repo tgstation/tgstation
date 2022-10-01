@@ -113,7 +113,7 @@
 
 /obj/item/clothing/head/fedora/det_hat/AltClick(mob/user)
 	. = ..()
-	if(loc != user || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
+	if(loc != user || !user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = TRUE))
 		return
 	if(candy_cooldown < world.time)
 		var/obj/item/food/candy_corn/CC = new /obj/item/food/candy_corn(src)
@@ -158,7 +158,7 @@
 	icon_state = "beret_badge"
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
-	greyscale_colors = "#3F3C40#FFCE5B"
+	greyscale_colors = "#39393f#FFCE5B"
 
 /obj/item/clothing/head/hos/beret/navyhos
 	name = "head of security's formal beret"
@@ -223,7 +223,7 @@
 
 /obj/item/clothing/head/warden/drill/equipped(mob/M, slot)
 	. = ..()
-	if (slot == ITEM_SLOT_HEAD)
+	if (slot & ITEM_SLOT_HEAD)
 		RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
 	else
 		UnregisterSignal(M, COMSIG_MOB_SAY)
@@ -264,7 +264,7 @@
 	icon_state = "beret_badge"
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
-	greyscale_colors = "#972A2A#F2F2F2"
+	greyscale_colors = "#a52f29#F2F2F2"
 	armor = list(MELEE = 35, BULLET = 30, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, FIRE = 20, ACID = 50, WOUND = 4)
 	strip_delay = 60
 	dog_fashion = null

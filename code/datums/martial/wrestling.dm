@@ -468,7 +468,7 @@ If you make a derivative work from this code, you must include this notification
 
 /obj/item/storage/belt/champion/wrestling/equipped(mob/user, slot)
 	. = ..()
-	if(slot == ITEM_SLOT_BELT)
+	if(slot & ITEM_SLOT_BELT)
 		style.teach(user, TRUE)
 	return
 

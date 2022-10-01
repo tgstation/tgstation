@@ -56,34 +56,6 @@
 	category = list(RND_CATEGORY_COMPUTER_PARTS)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
-// Network cards
-/datum/design/netcard/basic
-	name = "Network Card"
-	id = "netcard_basic"
-	build_type = IMPRINTER | AWAY_IMPRINTER
-	materials = list(/datum/material/iron = 250, /datum/material/glass = 100)
-	build_path = /obj/item/computer_hardware/network_card
-	category = list(RND_CATEGORY_COMPUTER_PARTS)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
-
-/datum/design/netcard/advanced
-	name = "Advanced Network Card"
-	id = "netcard_advanced"
-	build_type = IMPRINTER | AWAY_IMPRINTER
-	materials = list(/datum/material/iron = 500, /datum/material/glass = 200)
-	build_path = /obj/item/computer_hardware/network_card/advanced
-	category = list(RND_CATEGORY_COMPUTER_PARTS)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
-
-/datum/design/netcard/wired
-	name = "Wired Network Card"
-	id = "netcard_wired"
-	build_type = IMPRINTER | AWAY_IMPRINTER
-	materials = list(/datum/material/iron = 2500, /datum/material/glass = 400)
-	build_path = /obj/item/computer_hardware/network_card/wired
-	category = list(RND_CATEGORY_COMPUTER_PARTS)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
-
 // Data disks
 /datum/design/portabledrive/basic
 	name = "Data Disk"
@@ -119,36 +91,6 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 600)
 	build_path = /obj/item/computer_hardware/card_slot
-	category = list(RND_CATEGORY_COMPUTER_PARTS)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
-
-// Intellicard slot
-/datum/design/aislot
-	name = "Intellicard Slot"
-	id = "aislot"
-	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 600)
-	build_path = /obj/item/computer_hardware/ai_slot
-	category = list(RND_CATEGORY_COMPUTER_PARTS)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
-
-// Mini printer
-/datum/design/miniprinter
-	name = "Miniprinter"
-	id = "miniprinter"
-	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 600)
-	build_path = /obj/item/computer_hardware/printer/mini
-	category = list(RND_CATEGORY_COMPUTER_PARTS)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
-
-// APC Link
-/datum/design/apc_link
-	name = "Area Power Connector"
-	id = "APClink"
-	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 2000)
-	build_path = /obj/item/computer_hardware/recharger/apc_recharger
 	category = list(RND_CATEGORY_COMPUTER_PARTS)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 

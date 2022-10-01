@@ -26,6 +26,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/modular_map_connector,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
 "h" = (

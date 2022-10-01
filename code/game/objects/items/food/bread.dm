@@ -40,6 +40,10 @@
 /obj/item/food/bread/plain/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/plain, 5, 3 SECONDS, table_required = TRUE)
 
+// special subtype we use for the "Bread" Admin Smite (or the breadify proc)
+/obj/item/food/bread/plain/smite
+	desc = "If you hold it up to your ear, you can hear the screams of the damned."
+
 /obj/item/food/breadslice/plain
 	name = "bread slice"
 	desc = "A slice of home."
@@ -266,15 +270,15 @@
 /obj/item/food/baguette/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 	if (user.mind?.miming && held_item == src)
-		context[SCREENTIP_CONTEXT_RMB] = "Toggle Swordplay"
+		context[SCREENTIP_CONTEXT_LMB] = "Toggle Swordplay"
 		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/food/baguette/examine(mob/user)
 	var/examine_list = ..()
 	if(user.mind?.miming)
-		examine_list += span_notice("You can wield this like a sword by right clicking it.")
+		examine_list += span_notice("You can wield this like a sword by using it in your hand.")
 
-/obj/item/food/baguette/attack_self_secondary(mob/user, modifiers)
+/obj/item/food/baguette/attack_self(mob/user, modifiers)
 	. = ..()
 	if(!user.mind?.miming)
 		return
@@ -288,9 +292,11 @@
 		span_notice("[user] begins wielding [src] like a sword!"),
 		span_notice("You begin wielding [src] like a sword, with a firm grip on the bottom as an imaginary handle.")
 	)
+	ADD_TRAIT(src, TRAIT_CUSTOM_TAP_SOUND, SWORDPLAY_TRAIT)
 	attack_verb_continuous = list("slashes", "cuts")
 	attack_verb_simple = list("slash", "cut")
 	hitsound = 'sound/weapons/rapierhit.ogg'
+	fake_swordplay = TRUE
 
 	RegisterSignal(src, COMSIG_ITEM_EQUIPPED, .proc/on_sword_equipped)
 	RegisterSignal(src, COMSIG_ITEM_DROPPED, .proc/on_sword_dropped)
@@ -298,14 +304,16 @@
 /obj/item/food/baguette/proc/end_swordplay(mob/user)
 	UnregisterSignal(src, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 
+	REMOVE_TRAIT(src, TRAIT_CUSTOM_TAP_SOUND, SWORDPLAY_TRAIT)
 	attack_verb_continuous = initial(attack_verb_continuous)
 	attack_verb_simple = initial(attack_verb_simple)
 	hitsound = initial(hitsound)
+	fake_swordplay = FALSE
 
 	if(user)
-		visible_message( \
-			span_notice("[user] no longer holds [src] like a sword!"), \
-			span_notice("You go back to holding [src] normally.") \
+		visible_message(
+			span_notice("[user] no longer holds [src] like a sword!"),
+			span_notice("You go back to holding [src] normally.")
 		)
 
 /obj/item/food/baguette/proc/on_sword_dropped(datum/source, mob/user)
@@ -316,7 +324,7 @@
 /obj/item/food/baguette/proc/on_sword_equipped(datum/source, mob/equipper, slot)
 	SIGNAL_HANDLER
 
-	if(slot != ITEM_SLOT_HANDS)
+	if(!(slot & ITEM_SLOT_HANDS))
 		end_swordplay()
 
 /obj/item/food/garlicbread

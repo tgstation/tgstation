@@ -458,7 +458,7 @@
 		return
 	var/mob/living/carbon/human/H = AM
 	if(has_gravity(loc) && HAS_TRAIT(H, TRAIT_CLUMSY) && !H.resting)
-		H.set_timed_status_effect(10 SECONDS, /datum/status_effect/confusion, only_if_higher = TRUE)
+		H.set_confusion_if_lower(10 SECONDS)
 		H.Stun(20)
 		playsound(src, 'sound/weapons/punch4.ogg', 50, TRUE)
 		H.visible_message(span_warning("[H] steps on [src] causing the handle to hit [H.p_them()] right in the face!"), \
@@ -582,7 +582,7 @@
 			to_chat(trimmer, span_warning("[pod] [pod.p_do()]n't have a head!"))
 			return
 		if(location == BODY_ZONE_HEAD && !trimmer.combat_mode)
-			if(!trimmer.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+			if(!trimmer.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 				return
 			var/new_style = tgui_input_list(trimmer, "Select a hairstyle", "Grooming", GLOB.pod_hair_list)
 			if(isnull(new_style))

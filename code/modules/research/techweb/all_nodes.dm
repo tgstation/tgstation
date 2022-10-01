@@ -166,6 +166,7 @@
 	design_ids = list(
 		"airlock_painter",
 		"analyzer",
+		"boxcutter",
 		"cable_coil",
 		"cable_coil",
 		"crowbar",
@@ -219,6 +220,7 @@
 		"petri_dish",
 		"pillbottle",
 		"plumbing_rcd",
+		"plumbing_rcd_service",
 		"plumbing_rcd_sci",
 		"portable_chem_mixer",
 		"retractor",
@@ -528,6 +530,7 @@
 		"welding_goggles",
 		"anomaly_refinery",
 		"tank_compressor",
+		"atmos_thermal",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 12500)
 	discount_experiments = list(/datum/experiment/scanning/random/material/easy = 7500)
@@ -1049,8 +1052,6 @@
 	description = "How computer hardware is made."
 	prereq_ids = list("comptech")
 	design_ids = list(
-		"APClink",
-		"aislot",
 		"bat_advanced",
 		"bat_control",
 		"bat_micro",
@@ -1062,10 +1063,6 @@
 		"hdd_basic",
 		"hdd_cluster",
 		"hdd_super",
-		"miniprinter",
-		"netcard_advanced",
-		"netcard_basic",
-		"netcard_wired",
 		"portadrive_advanced",
 		"portadrive_basic",
 		"portadrive_super",

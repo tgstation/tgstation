@@ -1,5 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Fixed messages sometimes not showing properly when melting shards with a welder."
-  - bugfix: "Fixed glass generated from melting shards teleporting to someone when using TK."

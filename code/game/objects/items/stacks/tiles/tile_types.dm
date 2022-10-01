@@ -374,7 +374,7 @@
 	var/mutable_appearance/neon_overlay = mutable_appearance(neon_icon || icon, neon_icon_state || icon_state, alpha = alpha)
 	neon_overlay.color = neon_color
 	. += neon_overlay
-	. += emissive_appearance(neon_icon || icon, neon_icon_state || icon_state, alpha = emissive_alpha)
+	. += emissive_appearance(neon_icon || icon, neon_icon_state || icon_state, src, alpha = emissive_alpha)
 
 /obj/item/stack/tile/carpet/neon/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
@@ -384,7 +384,7 @@
 	var/mutable_appearance/neon_overlay = mutable_appearance(icon_file, neon_inhand_icon_state)
 	neon_overlay.color = neon_color
 	. += neon_overlay
-	. += emissive_appearance(icon_file, neon_inhand_icon_state, alpha = emissive_alpha)
+	. += emissive_appearance(icon_file, neon_inhand_icon_state, src, alpha = emissive_alpha)
 
 /obj/item/stack/tile/carpet/neon/simple
 	name = "simple neon carpet"
@@ -1157,11 +1157,11 @@
 
 /obj/item/stack/tile/emissive_test/update_overlays()
 	. = ..()
-	. += emissive_appearance(icon, icon_state, alpha = alpha)
+	. += emissive_appearance(icon, icon_state, src, alpha = alpha)
 
 /obj/item/stack/tile/emissive_test/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
-	. += emissive_appearance(standing.icon, standing.icon_state, alpha = standing.alpha)
+	. += emissive_appearance(standing.icon, standing.icon_state, src, alpha = standing.alpha)
 
 /obj/item/stack/tile/emissive_test/sixty
 	amount = 60

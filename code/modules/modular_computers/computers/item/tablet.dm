@@ -5,6 +5,9 @@
 	icon_state_unpowered = "tablet-red"
 	icon_state_powered = "tablet-red"
 	icon_state_menu = "menu"
+	inhand_icon_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	base_icon_state = "tablet"
 	worn_icon_state = "tablet"
 	hardware_flag = PROGRAM_TABLET
@@ -24,10 +27,7 @@
 	var/finish_color = null
 
 	var/list/contained_item = list(/obj/item/pen, /obj/item/toy/crayon, /obj/item/lipstick, /obj/item/flashlight/pen, /obj/item/clothing/mask/cigarette)
-	var/obj/item/insert_type = /obj/item/pen
-	var/obj/item/inserted_item
-
-	var/note = "Congratulations on your station upgrading to the new NtOS and Thinktronic based collaboration effort, bringing you the best in electronics and software since 2467!"  // the note used by the notekeeping app, stored here for convenience
+	var/obj/item/inserted_item = /obj/item/pen
 
 /obj/item/modular_computer/tablet/update_icon_state()
 	if(has_variants && !bypass_state)
@@ -95,7 +95,7 @@
 
 /obj/item/modular_computer/tablet/proc/remove_pen(mob/user)
 
-	if(issilicon(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK)) //TK doesn't work even with this removed but here for readability
+	if(issilicon(user) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE)) //TK doesn't work even with this removed but here for readability
 		return
 
 	if(inserted_item)
@@ -174,8 +174,8 @@
 	has_light = FALSE //tablet light button actually enables/disables the borg lamp
 	comp_light_luminosity = 0
 	has_variants = FALSE
-	///Ref to the silicon we're installed in. Set by the borg during our creation.
-	var/mob/living/silicon/borgo
+	///Ref to the silicon we're installed in. Set by the silicon itself during its creation.
+	var/mob/living/silicon/silicon_owner
 	///Ref to the RoboTact app. Important enough to borgs to deserve a ref.
 	var/datum/computer_file/program/robotact/robotact
 	///IC log that borgs can view in their personal management app
@@ -184,20 +184,37 @@
 /obj/item/modular_computer/tablet/integrated/Initialize(mapload)
 	. = ..()
 	vis_flags |= VIS_INHERIT_ID
-	borgo = loc
-	if(!istype(borgo))
-		borgo = null
+	silicon_owner = loc
+	if(!istype(silicon_owner))
+		silicon_owner = null
 		stack_trace("[type] initialized outside of a borg, deleting.")
 		return INITIALIZE_HINT_QDEL
 
 /obj/item/modular_computer/tablet/integrated/Destroy()
-	borgo = null
+	silicon_owner = null
 	return ..()
 
 /obj/item/modular_computer/tablet/integrated/turn_on(mob/user, open_ui = FALSE)
-	if(borgo?.stat != DEAD)
+	if(silicon_owner?.stat != DEAD)
 		return ..()
 	return FALSE
+
+/obj/item/modular_computer/tablet/integrated/get_ntnet_status(specific_action = 0)
+	//No borg found
+	if(!silicon_owner)
+		return FALSE
+	// no AIs/pAIs
+	var/mob/living/silicon/robot/cyborg_check = silicon_owner
+	if(!istype(cyborg_check))
+		return ..()
+	//lockdown restricts borg networking
+	if(cyborg_check.lockcharge)
+		return FALSE
+	//borg cell dying restricts borg networking
+	if(!cyborg_check.cell || cyborg_check.cell.charge == 0)
+		return FALSE
+
+	return ..()
 
 /**
  * Returns a ref to the RoboTact app, creating the app if need be.
@@ -210,53 +227,47 @@
  * RoboTact is supposed to be undeletable, so these will create runtime messages.
  */
 /obj/item/modular_computer/tablet/integrated/proc/get_robotact()
-	if(!borgo)
+	if(!silicon_owner)
 		return null
 	if(!robotact)
 		var/obj/item/computer_hardware/hard_drive/hard_drive = all_components[MC_HDD]
 		robotact = hard_drive.find_file_by_name("robotact")
 		if(!robotact)
-			stack_trace("Cyborg [borgo] ( [borgo.type] ) was somehow missing their self-manage app in their tablet. A new copy has been created.")
+			stack_trace("Cyborg [silicon_owner] ( [silicon_owner.type] ) was somehow missing their self-manage app in their tablet. A new copy has been created.")
 			robotact = new(hard_drive)
 			if(!hard_drive.store_file(robotact))
 				qdel(robotact)
 				robotact = null
-				CRASH("Cyborg [borgo]'s tablet hard drive rejected recieving a new copy of the self-manage app. To fix, check the hard drive's space remaining. Please make a bug report about this.")
+				CRASH("Cyborg [silicon_owner]'s tablet hard drive rejected recieving a new copy of the self-manage app. To fix, check the hard drive's space remaining. Please make a bug report about this.")
 	return robotact
 
 //Makes the light settings reflect the borg's headlamp settings
 /obj/item/modular_computer/tablet/integrated/ui_data(mob/user)
 	. = ..()
 	.["has_light"] = TRUE
-	if(iscyborg(borgo))
-		var/mob/living/silicon/robot/robo = borgo
+	if(iscyborg(silicon_owner))
+		var/mob/living/silicon/robot/robo = silicon_owner
 		.["light_on"] = robo.lamp_enabled
 		.["comp_light_color"] = robo.lamp_color
 
 //Makes the flashlight button affect the borg rather than the tablet
 /obj/item/modular_computer/tablet/integrated/toggle_flashlight()
-	if(!borgo || QDELETED(borgo))
+	if(!silicon_owner || QDELETED(silicon_owner))
 		return FALSE
-	if(iscyborg(borgo))
-		var/mob/living/silicon/robot/robo = borgo
+	if(iscyborg(silicon_owner))
+		var/mob/living/silicon/robot/robo = silicon_owner
 		robo.toggle_headlamp()
 	return TRUE
 
 //Makes the flashlight color setting affect the borg rather than the tablet
 /obj/item/modular_computer/tablet/integrated/set_flashlight_color(color)
-	if(!borgo || QDELETED(borgo) || !color)
+	if(!silicon_owner || QDELETED(silicon_owner) || !color)
 		return FALSE
-	if(iscyborg(borgo))
-		var/mob/living/silicon/robot/robo = borgo
+	if(iscyborg(silicon_owner))
+		var/mob/living/silicon/robot/robo = silicon_owner
 		robo.lamp_color = color
 		robo.toggle_headlamp(FALSE, TRUE)
 	return TRUE
-
-/obj/item/modular_computer/tablet/integrated/alert_call(datum/computer_file/program/caller, alerttext, sound = 'sound/machines/twobeep_high.ogg')
-	if(!caller || !caller.alert_able || caller.alert_silenced || !alerttext) //Yeah, we're checking alert_able. No, you don't get to make alerts that the user can't silence.
-		return
-	borgo.playsound_local(src, sound, 50, TRUE)
-	to_chat(borgo, span_notice("The [src] displays a [caller.filedesc] notification: [alerttext]"))
 
 /obj/item/modular_computer/tablet/integrated/ui_state(mob/user)
 	return GLOB.reverse_contained_state
@@ -270,8 +281,8 @@
 
 /obj/item/modular_computer/tablet/integrated/syndicate/Initialize(mapload)
 	. = ..()
-	if(iscyborg(borgo))
-		var/mob/living/silicon/robot/robo = borgo
+	if(iscyborg(silicon_owner))
+		var/mob/living/silicon/robot/robo = silicon_owner
 		robo.lamp_color = COLOR_RED //Syndicate likes it red
 
 // Round start tablets
@@ -311,7 +322,6 @@
 	. = ..()
 	install_component(new /obj/item/computer_hardware/hard_drive/small)
 	install_component(new /obj/item/computer_hardware/battery(src, /obj/item/stock_parts/cell/computer))
-	install_component(new /obj/item/computer_hardware/network_card)
 	install_component(new /obj/item/computer_hardware/card_slot)
 
 	if(!isnull(default_applications))
@@ -323,5 +333,5 @@
 		var/obj/item/computer_hardware/hard_drive/portable/disk = new loaded_cartridge(src)
 		install_component(disk)
 
-	if(insert_type)
-		inserted_item = new insert_type(src)
+	if(inserted_item)
+		inserted_item = new inserted_item(src)

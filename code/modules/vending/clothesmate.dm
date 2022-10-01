@@ -61,7 +61,7 @@
 				/obj/item/clothing/under/pants/slacks = 5,
 				/obj/item/clothing/under/shorts = 5,
 				/obj/item/clothing/under/pants/jeans = 5,
-				/obj/item/clothing/under/jeanshorts = 5,
+				/obj/item/clothing/under/shorts/jeanshorts = 5,
 				/obj/item/clothing/under/costume/buttondown/slacks = 4,
 				/obj/item/clothing/under/costume/buttondown/shorts = 4,
 				/obj/item/clothing/under/dress/sundress = 2,

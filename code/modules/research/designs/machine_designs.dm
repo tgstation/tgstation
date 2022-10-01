@@ -643,7 +643,7 @@
 	id = "plumbing_receiver"
 	build_path = /obj/item/circuitboard/machine/plumbing_receiver
 	category = list (RND_CATEGORY_TELEPORTATION_MACHINERY)
-	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SERVICE
 
 
 /datum/design/board/sheetifier

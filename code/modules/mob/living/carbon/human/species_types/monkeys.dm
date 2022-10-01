@@ -39,7 +39,6 @@
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | ERT_SPAWN | SLIME_EXTRACT
 	liked_food = MEAT | FRUIT | BUGS
 	disliked_food = CLOTH
-	damage_overlay_type = "monkey"
 	sexes = FALSE
 	punchdamagelow = 1
 	punchdamagehigh = 3
@@ -232,6 +231,6 @@
 	var/mob/living/in_the_way_mob = crossed
 	if(iscarbon(in_the_way_mob) && !in_the_way_mob.combat_mode)
 		return
-	if(in_the_way_mob.pass_flags == PASSTABLE)
+	if(in_the_way_mob.pass_flags & PASSTABLE)
 		return
 	in_the_way_mob.knockOver(owner)
