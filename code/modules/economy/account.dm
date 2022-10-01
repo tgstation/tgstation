@@ -108,10 +108,13 @@
  * Adjusts the balance of a bank_account as well as sanitizes the numerical input.
  * Arguments:
  * * amount - the quantity of credits that will be written off if the value is negative, or added if it is positive.
+ * * reason - the reason for the appearance or loss of money
  */
-/datum/bank_account/proc/adjust_money(amount)
+/datum/bank_account/proc/adjust_money(amount, reason)
 	if((amount < 0 && has_money(-amount)) || amount > 0)
 		_adjust_money(amount)
+		if(reason)
+			add_log_to_history(amount, reason)
 		return TRUE
 	return FALSE
 
@@ -120,6 +123,7 @@
  * Arguments:
  * * datum/bank_account/from - The bank account that is sending the credits to this bank_account datum.
  * * amount - the quantity of credits that are being moved between bank_account datums.
+ * * transfer_reason - override for adjust_money reason. Use if no default reason(Transfer to/from Name Surname).
  */
 /datum/bank_account/proc/transfer_money(datum/bank_account/from, amount, transfer_reason)
 	if(from.has_money(amount))
