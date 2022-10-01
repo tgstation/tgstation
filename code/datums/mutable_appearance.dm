@@ -36,9 +36,9 @@
 			plane = MUTATE_PLANE(plane, our_turf)
 		// otherwise if you're setting plane you better have the guts to back it up
 		else
-			stack_trace("No plane offset passed in as context for a non floating mutable appearance, ya done fucked up")
+			stack_trace("No plane offset passed in as context for a non floating mutable appearance, things are gonna go to hell on multiz maps")
 	else if(!isnull(offset_spokesman) && !isatom(offset_spokesman))
-		stack_trace("Why did you pass in offset_spokesman as [offset_spokesman]?")
+		stack_trace("Why did you pass in offset_spokesman as [offset_spokesman]? We need an atom to properly offset planes")
 
 	var/mutable_appearance/MA = new()
 	MA.icon = icon
