@@ -643,7 +643,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 			playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
 			qdel(rcd_effect)
 			return FALSE
-	if(!do_after(user, A, time = delay))
+	if(!do_after(user, A, delay))
 		qdel(rcd_effect)
 		return FALSE
 	if(!checkResource(rcd_results["cost"], user))
@@ -1239,7 +1239,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		if(machine_target.anchored)
 			to_chat(user, span_warning("The [target.name] needs to be unanchored!"))
 			return
-		if(do_after(user, target, 20))
+		if(do_after(user, target, 2 SECONDS))
 			machine_target.deconstruct() //Let's not substract matter
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE) //this is just such a great sound effect
 	else

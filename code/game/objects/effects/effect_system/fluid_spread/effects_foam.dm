@@ -333,7 +333,7 @@
 			to_chat(user, span_warning("You need two sheets of iron to finish a wall on [src]!"))
 			return
 		to_chat(user, span_notice("You start adding plating to the foam structure..."))
-		if (do_after(user, src, 40 * platingmodifier))
+		if (do_after(user, src, 4 SECONDS * platingmodifier))
 			if(!sheet_for_plating.use(2))
 				return
 			to_chat(user, span_notice("You add the plating."))

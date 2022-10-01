@@ -599,7 +599,7 @@
 			return
 	if(istype(I, /obj/item/plunger))
 		balloon_alert(user, "plunging...")
-		if(do_after(user, src, 10))
+		if(do_after(user, src, 1 SECONDS))
 			balloon_alert(user, "plunged")
 			reagents.clear_reagents()
 		return

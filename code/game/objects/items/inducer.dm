@@ -121,7 +121,7 @@
 			return TRUE
 		user.visible_message(span_notice("[user] starts recharging [A] with [src]."), span_notice("You start recharging [A] with [src]."))
 		while(C.charge < C.maxcharge)
-			if(do_after(user, user, 10) && cell.charge)
+			if(do_after(user, user, 1 SECONDS) && cell.charge)
 				done_any = TRUE
 				induce(C, coefficient)
 				do_sparks(1, FALSE, A)

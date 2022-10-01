@@ -21,7 +21,7 @@
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
 		return
 	to_chat(user, span_notice("You start pressing [src]'s unlink button..."))
-	if(do_after(user, src, 40))
+	if(do_after(user, src, 4 SECONDS))
 		to_chat(user, span_notice("The keycard beeps twice and disconnects the quantum link."))
 		qpad = null
 

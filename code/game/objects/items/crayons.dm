@@ -360,7 +360,7 @@
 		wait_time *= 3
 
 	if(!instant)
-		if(!do_after(user, target, 50))
+		if(!do_after(user, target, 5 SECONDS))
 			return
 
 	var/charges_used = use_charges(user, cost)

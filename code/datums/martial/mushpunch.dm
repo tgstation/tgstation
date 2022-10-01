@@ -5,7 +5,7 @@
 /datum/martial_art/mushpunch/harm_act(mob/living/A, mob/living/D)
 	var/atk_verb
 	to_chat(A, span_spider("You begin to wind up an attack..."))
-	if(!do_after(A, D, 25))
+	if(!do_after(A, D, 2.5 SECONDS))
 		to_chat(A, span_spider("<b>Your attack was interrupted!</b>"))
 		return TRUE //martial art code was a mistake
 	A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)

@@ -181,7 +181,7 @@
 	user.visible_message(span_notice("You see [user] kicking against the door of [src]!"), \
 		span_notice("You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(600)].)"), \
 		span_hear("You hear a metallic creaking from [src]."))
-	if(do_after(user, src, 600))
+	if(do_after(user, src, 1 MINUTES))
 		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open)
 			return
 		user.visible_message(span_warning("[user] successfully broke out of [src]!"), \

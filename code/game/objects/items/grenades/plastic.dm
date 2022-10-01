@@ -93,7 +93,7 @@
 
 	to_chat(user, span_notice("You start planting [src]. The timer is set to [det_time]..."))
 
-	if(do_after(user, bomb_target, 30))
+	if(do_after(user, bomb_target, 3 SECONDS))
 		if(!user.temporarilyRemoveItemFromInventory(src))
 			return
 		target = bomb_target

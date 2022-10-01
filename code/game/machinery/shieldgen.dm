@@ -219,7 +219,7 @@
 			to_chat(user, span_warning("You need one length of cable to repair [src]!"))
 			return
 		to_chat(user, span_notice("You begin to replace the wires..."))
-		if(do_after(user, src, 30))
+		if(do_after(user, src, 3 SECONDS))
 			if(coil.get_amount() < 1)
 				return
 			coil.use(1)
