@@ -93,7 +93,7 @@
 	initialize_actionspeed()
 	update_movespeed(TRUE)
 	become_hearing_sensitive()
-	log_mob_tag("\[[tag]\] CREATED: [key_name(src)]")
+	log_mob_tag("\[[tag]\] CREATED: [key_name(src)] \[[src.type]\]")
 
 /**
  * Generate the tag for this mob
