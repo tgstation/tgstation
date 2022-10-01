@@ -540,7 +540,7 @@
 			if(!(unres_sides & heading))
 				continue
 			var/image/floorlight = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_[heading]")
-			floorlight.plane = ABOVE_LIGHTING_PLANE
+			SET_PLANE_EXPLICIT(floorlight, ABOVE_LIGHTING_PLANE, src)
 			switch (heading)
 				if (NORTH)
 					floorlight.pixel_x = 0
