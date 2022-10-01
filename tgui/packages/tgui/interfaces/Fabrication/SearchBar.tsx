@@ -1,4 +1,4 @@
-import { debounce } from 'common/timer';
+import { Component } from 'inferno';
 import { Stack, Input, Icon } from '../../components';
 
 /**
@@ -21,28 +21,36 @@ export type SearchBarProps = {
   onSearchTextChanged: (newSearchText: string) => void;
 };
 
-/**
- * A simple, stylized search bar.
- */
-export const SearchBar = (props: SearchBarProps, context) => {
-  const { searchText, onSearchTextChanged, hint } = props;
+export class SearchBar extends Component<SearchBarProps> {
+  protected timeout?: NodeJS.Timeout;
 
-  // Only actually update the search query every 200 milliseconds at most.
-  const db = debounce(onSearchTextChanged, 200);
+  protected onInput(value: string) {
+    const { onSearchTextChanged } = this.props;
 
-  return (
-    <Stack align="baseline">
-      <Stack.Item>
-        <Icon name="search" />
-      </Stack.Item>
-      <Stack.Item grow>
-        <Input
-          fluid
-          placeholder={hint ? hint : 'Search for...'}
-          onInput={(_e: unknown, v: string) => db(v)}
-          value={searchText}
-        />
-      </Stack.Item>
-    </Stack>
-  );
-};
+    if (this.timeout) {
+      clearTimeout(this.timeout);
+    }
+
+    this.timeout = setTimeout(() => onSearchTextChanged(value), 200);
+  }
+
+  render() {
+    const { searchText, hint } = this.props;
+
+    return (
+      <Stack align="baseline">
+        <Stack.Item>
+          <Icon name="search" />
+        </Stack.Item>
+        <Stack.Item grow>
+          <Input
+            fluid
+            placeholder={hint ? hint : 'Search for...'}
+            onInput={(_e: unknown, v: string) => this.onInput(v)}
+            value={searchText}
+          />
+        </Stack.Item>
+      </Stack>
+    );
+  }
+}
