@@ -146,7 +146,7 @@
 
 /obj/item/clothing/neck/necklace/memento_mori/proc/memento(mob/living/carbon/human/user)
 	to_chat(user, span_warning("You feel your life being drained by the pendant..."))
-	if(do_after(user, user, 4 SECONDS))
+	if(do_after(user, time = 4 SECONDS))
 		to_chat(user, span_notice("Your lifeforce is now linked to the pendant! You feel like removing it would kill you, and yet you instinctively know that until then, you won't die."))
 		ADD_TRAIT(user, TRAIT_NODEATH, CLOTHING_TRAIT)
 		ADD_TRAIT(user, TRAIT_NOHARDCRIT, CLOTHING_TRAIT)

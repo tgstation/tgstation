@@ -118,7 +118,7 @@
 			return
 
 	to_chat(user, span_notice("You start to unwrap the package..."))
-	if(!do_after(user, user, 1.5 SECONDS))
+	if(!do_after(user, time = 1.5 SECONDS))
 		return
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	if(contents.len)

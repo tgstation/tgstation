@@ -30,7 +30,7 @@
 		owner.balloon_alert(dragon, "needs stable ground!")
 		return
 	owner.balloon_alert(owner, "You begin to open a rift...")
-	if(!do_after(owner, owner, 10 SECONDS))
+	if(!do_after(owner, time = 10 SECONDS))
 		return
 	if(locate(/obj/structure/carp_rift) in owner.loc)
 		return

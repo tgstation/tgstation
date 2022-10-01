@@ -14,7 +14,7 @@
  */
 /obj/item/delivery/proc/attempt_pre_unwrap_contents(mob/user)
 	to_chat(user, span_notice("You start to unwrap the package..."))
-	return do_after(user, user, 1.5 SECONDS)
+	return do_after(user, time = 1.5 SECONDS)
 
 /**
  * Signals for unwrapping.

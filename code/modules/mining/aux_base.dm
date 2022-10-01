@@ -271,7 +271,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 
 	to_chat(user, span_notice("You begin setting the landing zone parameters..."))
 	setting = TRUE
-	if(!do_after(user, user, 5 SECONDS)) //You get a few seconds to cancel if you do not want to drop there.
+	if(!do_after(user, time = 5 SECONDS)) //You get a few seconds to cancel if you do not want to drop there.
 		setting = FALSE
 		return
 	setting = FALSE

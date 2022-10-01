@@ -154,7 +154,7 @@
 			return
 		else
 			to_chat(user, span_notice("You begin to replace the bulb..."))
-			if(do_after(user, user, 2 SECONDS))
+			if(do_after(user, time = 2 SECONDS))
 				if(flash.burnt_out || !flash || QDELETED(flash))
 					return
 				playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)

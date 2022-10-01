@@ -705,7 +705,7 @@
 			to_chat(src, span_warning("You're not injured, there's no reason to heal."))
 			return
 		visible_message(span_notice("[src] begins mending themselves..."),span_notice("You begin mending your wounds..."))
-		if(do_after(src, src, 2 SECONDS, interaction_key = INTERACTION_SPIDER_KEY))
+		if(do_after(src, time = 2 SECONDS, interaction_key = INTERACTION_SPIDER_KEY))
 			heal_overall_damage(maxHealth * 0.5, maxHealth * 0.5)
 			new /obj/effect/temp_visual/heal(get_turf(src), "#80F5FF")
 			visible_message(span_notice("[src]'s wounds mend together."),span_notice("You mend your wounds together."))

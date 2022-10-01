@@ -110,7 +110,7 @@
 	playsound(src, 'sound/machines/airlock_alien_prying.ogg', 50, TRUE)
 	balloon_alert(src, "overriding...")
 	// Now begin hacking
-	if(!do_after(src, hacking_cable.machine, 15 SECONDS, timed_action_flags = NONE, progress = TRUE))
+	if(!do_after(src, hacking_cable.machine, 15 SECONDS, timed_action_flags = NONE))
 		balloon_alert(src, "failed! retracting...")
 		hacking_cable.visible_message(
 			span_warning("The cable rapidly retracts back into its spool."), span_hear("You hear a click and the sound of wire spooling rapidly."))

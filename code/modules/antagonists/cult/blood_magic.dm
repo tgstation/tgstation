@@ -76,7 +76,7 @@
 	else
 		to_chat(owner, span_cultitalic("You are already invoking blood magic!"))
 		return
-	if(do_after(owner, owner, 100 - rune*60))
+	if(do_after(owner, time = 100 - rune*60))
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			H.bleed(40 - rune*32)
@@ -610,7 +610,7 @@
 			channeling = TRUE
 			playsound(T, 'sound/machines/airlockforced.ogg', 50, TRUE)
 			do_sparks(5, TRUE, target)
-			if(do_after(user, user, 50))
+			if(do_after(user, time = 50))
 				if(QDELETED(target))
 					channeling = FALSE
 					return

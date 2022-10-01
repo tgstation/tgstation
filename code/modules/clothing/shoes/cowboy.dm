@@ -58,7 +58,7 @@
 		to_chat(user, span_notice("[target] slithers into [src]."))
 
 /obj/item/clothing/shoes/cowboy/container_resist_act(mob/living/user)
-	if(!do_after(user, user, 1 SECONDS))
+	if(!do_after(user, time = 1 SECONDS))
 		return
 	user.forceMove(drop_location())
 

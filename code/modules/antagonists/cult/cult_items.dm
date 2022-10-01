@@ -757,12 +757,12 @@ Striking a noncultist, however, will tear their flesh."}
 		return
 	charging = TRUE
 	INVOKE_ASYNC(src, .proc/charge, user)
-	if(do_after(user, user, 9 SECONDS))
+	if(do_after(user, time = 9 SECONDS))
 		firing = TRUE
 		ADD_TRAIT(user, TRAIT_IMMOBILIZED, CULT_TRAIT)
 		INVOKE_ASYNC(src, .proc/pewpew, user, clickparams)
 		var/obj/structure/emergency_shield/cult/weak/N = new(user.loc)
-		if(do_after(user, user, 9 SECONDS))
+		if(do_after(user, time = 9 SECONDS))
 			user.Paralyze(40)
 			to_chat(user, "<span class='cult italic'>You have exhausted the power of this spell!</span>")
 		REMOVE_TRAIT(user, TRAIT_IMMOBILIZED, CULT_TRAIT)

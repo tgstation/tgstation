@@ -45,7 +45,7 @@
 
 /obj/item/seeds/kudzu/attack_self(mob/user)
 	user.visible_message(span_danger("[user] begins throwing seeds on the ground..."))
-	if(do_after(user, user.drop_location(), 5 SECONDS, progress = TRUE))
+	if(do_after(user, user.drop_location(), 5 SECONDS))
 		plant(user)
 		to_chat(user, span_notice("You plant the kudzu. You monster."))
 

@@ -329,7 +329,7 @@
 		return
 	add_fingerprint(user)
 	user.visible_message(span_notice("[user] starts setting down [src]..."), span_notice("You start setting up [pad]..."))
-	if(do_after(user, user, 3 SECONDS))
+	if(do_after(user, time = 3 SECONDS))
 		pad.forceMove(get_turf(src))
 		pad.update_indicator()
 		pad.closed = FALSE
