@@ -9,17 +9,21 @@
 	/// Our ice overlay we generate
 	var/image/ice_overlay
 	/// How long will we be frozen today
-	var/ice_duration = 6 SECONDS
+	var/ice_duration
 	/// Will we play the ice freeze sound?
-	var/play_ice_sound = TRUE
+	var/play_ice_sound
+
+/datum/hallucination/ice/New(mob/living/hallucinator, duration = 6 SECONDS, play_freeze_sound = TRUE)
+	src.ice_duration = duration
+	src.play_ice_sound = play_freeze_sound
+	return ..()
 
 /datum/hallucination/ice/start()
 	ice_overlay = image(ice_icon, hallucinator, ice_icon_state, ABOVE_MOB_LAYER)
 	hallucinator.client?.images |= ice_overlay
 	ADD_TRAIT(hallucinator, TRAIT_IMMOBILIZED, HALLUCINATION_TRAIT)
 	to_chat(hallucinator, span_userdanger("You become frozen in a cube!"))
-	hallucinator.cause_hallucination(/datum/hallucination/fake_alert/cold, "ice hallucination")
-	/datum/hallucination/fake_alert/cold
+	hallucinator.cause_hallucination(/datum/hallucination/fake_alert/cold, "ice hallucination", duration = (ice_duration + 6 SECONDS))
 	if(play_ice_sound)
 		hallucinator.cause_hallucination(/datum/hallucination/fake_sound/weird/ice_crack, "ice hallucination")
 
@@ -38,8 +42,3 @@
 	if(ice_overlay)
 		hallucinator.client?.images -= ice_overlay
 		ice_overlay = null
-
-/datum/hallucination/ice/freezer
-	random_hallucination_weight = 0
-	ice_duration = 11 SECONDS
-	play_ice_sound = FALSE

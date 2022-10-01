@@ -83,14 +83,14 @@
 /datum/hallucination/body/freezer/queue_cleanup()
 	QDEL_IN(src, 12 SECONDS) //The freezer stays on screen while you're frozen
 	addtimer(CALLBACK(src, .proc/freeze_player), 1 SECONDS) // You barely have a moment to react before you're frozen
-	addtimer(CALLBACK(src, .proc/freeze_intimidate), 11 SECONDS)
+	addtimer(CALLBACK(src, .proc/freeze_intimidate), 11.8 SECONDS)
 	hallucinator.cause_hallucination(/datum/hallucination/fake_sound/weird/radio_static, "freezer hallucination")
 	return TRUE
 
 /datum/hallucination/body/freezer/proc/freeze_player()
 	if(QDELETED(src))
 		return
-	hallucinator.cause_hallucination(/datum/hallucination/ice/freezer, "freezer hallucination")
+	hallucinator.cause_hallucination(/datum/hallucination/ice, "freezer hallucination", duration = 11 SECONDS, play_freeze_sound = FALSE)
 
 
 /datum/hallucination/body/freezer/proc/freeze_intimidate()
