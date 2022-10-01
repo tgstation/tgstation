@@ -358,7 +358,8 @@ DEFINE_BITFIELD(smoothing_junction, list(
 	SEND_SIGNAL(src, COMSIG_ATOM_SET_SMOOTHED_ICON_STATE, new_junction)
 	. = smoothing_junction
 	smoothing_junction = new_junction
-	icon_state = "[base_icon_state]-[smoothing_junction]"
+	if(!(smoothing_flags & SMOOTH_BITMASK_DROP_ICON))
+		icon_state = "[base_icon_state]-[smoothing_junction]"
 
 
 /turf/closed/set_smoothed_icon_state(new_junction)
@@ -506,7 +507,6 @@ DEFINE_BITFIELD(smoothing_junction, list(
 	smoothing_flags = SMOOTH_CORNERS|SMOOTH_DIAGONAL_CORNERS|SMOOTH_BORDER
 	smoothing_groups = null
 	canSmoothWith = null
-	frill_icon = null
 
 #undef NORTH_JUNCTION
 #undef SOUTH_JUNCTION

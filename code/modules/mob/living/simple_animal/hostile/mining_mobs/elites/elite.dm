@@ -373,12 +373,13 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	else
 		to_chat(user, span_info("[src] only works on the corpse of a sentient lavaland elite."))
 
+// wallening todo:	does this work?
 /obj/effect/temp_visual/elite_tumor_wall
 	name = "magic wall"
-// wallening todo:	icon = 'icons/turf/walls/hierophant_wall_temp.dmi'
+	icon = 'icons/turf/walls/hierophant_wall.dmi'
 	icon_state = "hierophant_wall_temp-0"
 	base_icon_state = "hierophant_wall_temp"
-	smoothing_flags = SMOOTH_BITMASK
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BITMASK_DROP_ICON
 	smoothing_groups = list(SMOOTH_GROUP_HIERO_WALL)
 	canSmoothWith = list(SMOOTH_GROUP_HIERO_WALL)
 	duration = 50

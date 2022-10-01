@@ -47,8 +47,10 @@ GLOBAL_LIST_EMPTY(split_visibility_objects)
 		return ELEMENT_INCOMPATIBLE
 	. = ..()
 	var/turf/target_turf = target
-	if(!target_turf.opacity)
-		CRASH("Just attempted to attach a split visibility object to [target] which is not opaque. This makes no sense.")
+	if(!(target_turf.smoothing_flags & SMOOTH_BITMASK))
+		CRASH("We tried to splitvis something without bitmask smoothing. What?")
+	if(!(target_turf.smoothing_flags & SMOOTH_BITMASK_DROP_ICON))
+		CRASH("You're trying to use the split vis element while using someone else's smoothing. ya done fucked up")
 
 	// Temporary stuff to hide that we don't have good "over" sprites
 	target_turf.icon = 'wall_blackness.dmi'

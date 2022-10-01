@@ -3,18 +3,21 @@
 #define SMOOTH_CORNERS (1<<0)
 /// Smoothing system in where adjacencies are calculated and used to select a pre-baked icon_state, encoded by bitmasking.
 #define SMOOTH_BITMASK (1<<1)
+/// Drops any changes to icon_state caused by SMOOTH_BITMASK. essentially says: let me handle it
+#define SMOOTH_BITMASK_DROP_ICON (1<<2)
 /// Atom has diagonal corners, with underlays under them.
-#define SMOOTH_DIAGONAL_CORNERS (1<<2)
+#define SMOOTH_DIAGONAL_CORNERS (1<<3)
 /// Atom will smooth with the borders of the map.
-#define SMOOTH_BORDER (1<<3)
+#define SMOOTH_BORDER (1<<4)
 /// Atom is currently queued to smooth.
-#define SMOOTH_QUEUED (1<<4)
+#define SMOOTH_QUEUED (1<<5)
 /// Smooths with objects, and will thus need to scan turfs for contents.
-#define SMOOTH_OBJ (1<<5)
+#define SMOOTH_OBJ (1<<6)
 
 DEFINE_BITFIELD(smoothing_flags, list(
 	"SMOOTH_CORNERS" = SMOOTH_CORNERS,
 	"SMOOTH_BITMASK" = SMOOTH_BITMASK,
+	"SMOOTH_BITMASK_DROP_ICON" = SMOOTH_BITMASK_DROP_ICON,
 	"SMOOTH_DIAGONAL_CORNERS" = SMOOTH_DIAGONAL_CORNERS,
 	"SMOOTH_BORDER" = SMOOTH_BORDER,
 	"SMOOTH_QUEUED" = SMOOTH_QUEUED,
@@ -124,8 +127,10 @@ DEFINE_BITFIELD(smoothing_flags, list(
 #define SMOOTH_GROUP_SURVIVAL_TITANIUM_POD S_OBJ(14) ///turf/closed/wall/mineral/titanium/survival/pod, /obj/machinery/door/airlock/survival_pod, /obj/structure/window/reinforced/shuttle/survival_pod
 #define SMOOTH_GROUP_HIERO_WALL S_OBJ(15) ///obj/effect/temp_visual/elite_tumor_wall, /obj/effect/temp_visual/hierophant/wall
 #define SMOOTH_GROUP_BAMBOO_WALLS S_TURF(16) //![/turf/closed/wall/mineral/bamboo, /obj/structure/falsewall/material/bamboo]
-#define SMOOTH_GROUP_PLASTINUM_WALLS S_TURF(17) //![turf/closed/indestructible/riveted/plastinum]
-#define SMOOTH_GROUP_PIZZA_WALLS S_OBJ(17)  ///turf/closed/wall/mineral/pizza, /obj/structure/falsewall/pizza (wallening todo: these don't exist)
+#define SMOOTH_GROUP_MEAT_WALLS S_TURF(17) //![/turf/closed/wall/mineral/meat, /obj/structure/falsewall/material/meat]
+#define SMOOTH_GROUP_PLASTINUM_WALLS S_TURF(18) //![turf/closed/indestructible/riveted/plastinum]
+#define SMOOTH_GROUP_PIZZA_WALLS S_OBJ(19)  ///turf/closed/wall/mineral/pizza, /obj/structure/falsewall/material/pizza (wallening todo: these don't exist)
+#define SMOOTH_GROUP_CLOCK_WALLS S_OBJ(20) ///turf/closed/wall/mineral/bronze,
 
 #define SMOOTH_GROUP_PAPERFRAME S_OBJ(20) ///obj/structure/window/paperframe, /obj/structure/mineral_door/paperframe
 

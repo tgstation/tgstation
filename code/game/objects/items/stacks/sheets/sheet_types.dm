@@ -777,6 +777,7 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 	merge_type = /obj/item/stack/sheet/meat
 	material_type = /datum/material/meat
 	material_modifier = 1 //None of that wussy stuff
+	walltype = /turf/closed/wall/mineral/meat
 
 /obj/item/stack/sheet/meat/fifty
 	amount = 50
