@@ -766,10 +766,6 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	create_plane_offsets(gen_from, new_offset)
 	for(var/offset in gen_from to new_offset)
 		GLOB.fullbright_overlays += create_fullbright_overlay(offset)
-		GLOB.cryo_overlays_cover_on += create_cryo_overlay(offset, "cover-on")
-		GLOB.cryo_overlays_cover_off += create_cryo_overlay(offset, "cover-off")
-		GLOB.cleaning_bubbles_lower += generate_bubbles(GAME_PLANE, offset)
-		GLOB.cleaning_bubbles_higher += generate_bubbles(ABOVE_GAME_PLANE, offset)
 
 	for(var/datum/gas/gas_type as anything in GLOB.meta_gas_info)
 		var/list/gas_info = GLOB.meta_gas_info[gas_type]

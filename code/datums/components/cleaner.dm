@@ -1,9 +1,3 @@
-GLOBAL_LIST_INIT_TYPED(cleaning_bubbles_lower, /mutable_appearance, list(generate_bubbles(GAME_PLANE, 0)))
-GLOBAL_LIST_INIT_TYPED(cleaning_bubbles_higher, /mutable_appearance, list(generate_bubbles(ABOVE_GAME_PLANE, 0)))
-
-/proc/generate_bubbles(plane, offset)
-	return mutable_appearance('icons/effects/effects.dmi', "bubbles", layer = FLOOR_CLEAN_LAYER, plane = plane, offset_const = offset)
-
 /**
  * Component that can be used to clean things.
  * Takes care of duration, cleaning skill and special cleaning interactions.
@@ -74,10 +68,8 @@ GLOBAL_LIST_INIT_TYPED(cleaning_bubbles_higher, /mutable_appearance, list(genera
 
 		// We need to update our planes on overlay changes
 		RegisterSignal(target, COMSIG_MOVABLE_Z_CHANGED, .proc/cleaning_target_moved)
-		var/turf/target_turf = get_turf(target)
-		var/offset = GET_TURF_PLANE_OFFSET(target_turf)
-		var/mutable_appearance/low_bubble = GLOB.cleaning_bubbles_lower[offset + 1]
-		var/mutable_appearance/high_bubble = GLOB.cleaning_bubbles_higher[offset + 1]
+		var/mutable_appearance/low_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, target, GAME_PLANE)
+		var/mutable_appearance/high_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, target, ABOVE_GAME_PLANE)
 		if(target.plane > low_bubble.plane) //check if the higher overlay is necessary
 			target.add_overlay(high_bubble)
 		else if(target.plane == low_bubble.plane)
@@ -85,7 +77,7 @@ GLOBAL_LIST_INIT_TYPED(cleaning_bubbles_higher, /mutable_appearance, list(genera
 				target.add_overlay(high_bubble)
 			else
 				target.add_overlay(low_bubble)
-		else //(target.plane < GLOB.cleaning_bubbles_lower.plane)
+		else //(target.plane < low_bubble.plane)
 			target.add_overlay(low_bubble)
 
 	//set the cleaning duration
@@ -129,15 +121,13 @@ GLOBAL_LIST_INIT_TYPED(cleaning_bubbles_higher, /mutable_appearance, list(genera
 	if(same_z_layer)
 		return
 	// First, get rid of the old overlay
-	var/old_offset = GET_TURF_PLANE_OFFSET(old_turf)
-	var/mutable_appearance/old_low_bubble = GLOB.cleaning_bubbles_lower[old_offset + 1]
-	var/mutable_appearance/old_high_bubble = GLOB.cleaning_bubbles_higher[old_offset + 1]
+	var/mutable_appearance/old_low_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, old_turf, GAME_PLANE)
+	var/mutable_appearance/old_high_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, old_turf, ABOVE_GAME_PLANE)
 	source.cut_overlay(old_low_bubble)
 	source.cut_overlay(old_high_bubble)
 
 	// Now, add the new one
-	var/new_offset = GET_TURF_PLANE_OFFSET(new_turf)
-	var/mutable_appearance/new_low_bubble = GLOB.cleaning_bubbles_lower[new_offset + 1]
-	var/mutable_appearance/new_high_bubble = GLOB.cleaning_bubbles_higher[new_offset + 1]
+	var/mutable_appearance/new_low_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, new_turf, GAME_PLANE)
+	var/mutable_appearance/new_high_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, new_turf, ABOVE_GAME_PLANE)
 	source.add_overlay(new_low_bubble)
 	source.add_overlay(new_high_bubble)
