@@ -62,6 +62,17 @@ SUBSYSTEM_DEF(job)
 	/// Dictionary that maps job priorities to low/medium/high. Keys have to be number-strings as assoc lists cannot be indexed by integers. Set in setup_job_lists.
 	var/list/job_priorities_to_strings
 
+	/// Are we using the old job config system (txt) or the new job config system (TOML)? IF we are going to use the txt file, then we are in "legacy mode", and this will flip to TRUE.
+	var/legacy_mode = FALSE
+
+	/// This is just the message we prepen and put into all of the config files to ensure documentation. We use this in more than one place, so let's put it in the SS to make life a bit easier.
+	var/config_documentation = "# This is the configuration file for the job system.\n# This will only be enabled when the config flag LOAD_JOBS_FROM_TXT is enabled.\n\
+	# We use a system of keys here that directly correlate to the job, just to ensure they don't desync if we choose to change the name of a job.\n# You are able to change (as of now) four different variables in this file.\n\
+	# Total Positions are how many job slots you get in a shift, Spawn Positions are how many you get that load in at spawn. If you set this to -1, it is unrestricted. \n# Playtime Requirements is in minutes, and the job will unlock when a player reaches that amount of time.\n\
+	# However, that can be superseded by Required Account Age, which is a time in days that you need to have had an account on the server for.\n# As time goes on, more config options will be added to this file.\n\
+	# You can use the admin_verb (checks for R_DEBUG) 'Reload Job Configuration' to reload this file without having to restart the server.\n# It will always respect prior-existing values in the config, but will appropriately add more fields when they generate.\n\
+	# Best of luck editing!\n"
+
 /datum/controller/subsystem/job/Initialize()
 	setup_job_lists()
 	if(!length(all_occupations))
@@ -590,40 +601,57 @@ SUBSYSTEM_DEF(job)
 		else //We ran out of spare locker spawns!
 			break
 
-/// Called in jobs subsystem initialize if LOAD_JOBS_FROM_TXT config flag is set, reads jobconfig.json to set all of the datum's values to what the server operator wants. If we don't have jobconfig.json, calls a proc to create one.
+/// Called in jobs subsystem initialize if LOAD_JOBS_FROM_TXT config flag is set reads jobconfig.toml (or if in legacy mode, jobs.txt) to set all of the datum's values to what the server operator wants.
 /datum/controller/subsystem/job/proc/load_jobs_from_config()
-	var/json_file = file("[global.config.directory]/jobconfig.json")
+	var/toml_file = "[global.config.directory]/jobconfig.toml"
 
-	if(!fexists(json_file)) // No config file, create one and return back to this proc to finish it out.
-		generate_config()
+	if(!legacy_mode) // this flag is set during the setup of SSconfig, and all warnings were handled there.
+		var/job_config = rustg_read_toml_file(toml_file)
 
-	var/job_config = json_decode(file2text(json_file))
+		for(var/datum/job/occupation as anything in joinable_occupations)
+			var/job_title = occupation.title
+			var/job_key = occupation.config_tag
+			if(!job_config[job_key])
+				message_admins(span_notice("[job_title] (with config key [job_key]) is missing from jobconfig.toml! Using codebase defaults.")) // we add both the title and the config key in case they desync over time and someone needs to fix the box for some reason
+				continue
 
-	for(var/datum/job/occupation as anything in joinable_occupations)
-		var/job_title = occupation.title
-		var/job_key = occupation.config_tag
-		if(!job_config["[job_key]"])
-			message_admins("[job_title] (with config key [job_key]) is missing from jobconfig.json! Using codebase defaults.") // we add both the title and the config key in case they desync over time and someone needs to fix the box for some reason
-			continue
+			occupation.total_positions = job_config[job_key]["Total Positions"]
+			occupation.spawn_positions = job_config[job_key]["Spawn Positions"]
+			occupation.exp_requirements = job_config[job_key]["Playtime Requirements"]
+			occupation.minimal_player_age = job_config[job_key]["Required Account Age"]
 
-		occupation.total_positions = job_config["[job_key]"]["Total Positions"]
-		occupation.spawn_positions = job_config["[job_key]"]["Spawn Positions"]
-		occupation.exp_requirements = job_config["[job_key]"]["Playtime Requirements"]
-		occupation.minimal_player_age = job_config["[job_key]"]["Required Account Age"]
+		return
 
-/// Called from load_jobs_from_config (or could be called directly if you are fucked up) to generate a jobconfig.json file with the default values from the codebase, or jobs.txt if that is still present in the config folder.
-/datum/controller/subsystem/job/proc/generate_config()
-	var/json_file = file("[global.config.directory]/jobconfig.json")
-	var/jobstext = file("[global.config.directory]/jobs.txt")
+	else
+		var/jobstext = file("[global.config.directory]/jobs.txt")
+		if(!fexists(jobstext))
+			return
+		for(var/datum/job/occupation as anything in joinable_occupations)
+			jobstext = file2text(jobstext)
+			var/regex/parser = new("[occupation.title]=(-1|\\d+),(-1|\\d+)")
+			parser.Find(jobstext)
+			occupation.total_positions = text2num(parser.group[1])
+			occupation.spawn_positions = text2num(parser.group[2])
+
+/// Called from an admin debug verb that generates the jobconfig.toml file and then allows the end user to download it to their machine. Returns TRUE if a file is successfully generated, FALSE otherwise.
+/datum/controller/subsystem/job/proc/generate_config(mob/user)
+	var/toml_file = "[global.config.directory]/jobconfig.toml"
+	var/jobstext = "[global.config.directory]/jobs.txt"
+	var/caller = user
 	var/list/file_data = list()
 
-	if(fexists(jobstext)) // Generate the new JSON format, migrating from the text format.
-		message_admins("Found jobs.txt in config directory! Migrating to jobconfig.json...")
-		jobstext = file2text(jobstext)
+	if(fexists(file(toml_file)))
+		to_chat(src, span_notice("Generating new jobconfig.toml, pulling from the old config settings."))
+		if(!regenerate_job_config(caller))
+			return FALSE
+		return TRUE
+
+	if(fexists(file(jobstext))) // Generate the new TOML format, migrating from the text format.
+		to_chat(caller, span_notice("Found jobs.txt in config directory! Generating jobconfig.toml from it."))
+		jobstext = file2text(file(jobstext)) // walter i'm dying (get the file from the string, then parse it into a larger text string)
 		for(var/datum/job/occupation as anything in joinable_occupations)
-			var/job_name = occupation.title
 			var/job_key = occupation.config_tag
-			var/regex/parser = new("[job_name]=(-1|\\d+),(-1|\\d+)") // TXT system used the occupation's name, we convert it to the new config_key system here.
+			var/regex/parser = new("[occupation.title]=(-1|\\d+),(-1|\\d+)") // TXT system used the occupation's name, we convert it to the new config_key system here.
 			parser.Find(jobstext)
 			// Playtime Requirements and Required Account Age are new and we want to see it migrated, so we will just pull codebase defaults for them.
 			file_data["[job_key]"] = list(
@@ -632,16 +660,18 @@ SUBSYSTEM_DEF(job)
 				"Playtime Requirements" = occupation.exp_requirements,
 				"Required Account Age" = occupation.minimal_player_age,
 			)
-		fdel(jobstext) // Bid adieu.
-		if(fexists(json_file))
-			fdel(json_file) // just in case we have some chicanery here, open it up so we can write to it.
-		WRITE_FILE(json_file, json_encode(file_data))
+		var/payload = rustg_toml_encode(file_data)
+		var/temp_file = file("data/jobconfig.toml")
+		if(fexists(temp_file))
+			fdel(temp_file) // ensure it writes properly in case it exists
+		WRITE_FILE(temp_file, "[config_documentation]\n[payload]")
+		DIRECT_OUTPUT(caller, ftp(temp_file, "jobconfig.toml"))
+		return TRUE
 
-	else // No jobs.txt found! Let's spin up the new system.
-		message_admins("Creating jobconfig.json in config directory...")
+	else // Generate the new TOML format, using codebase defaults.
+		to_chat(caller, span_notice("Found jobs.txt in config directory! Generating jobconfig.toml from it."))
 		for(var/datum/job/occupation as anything in joinable_occupations)
 			var/job_key = occupation.config_tag
-
 			if(is_assistant_job(occupation)) // there's a concession made in jobs.txt that we should just rapidly account for here I KNOW I KNOW.
 				file_data["[job_key]"] = list(
 					"Total Positions" = -1,
@@ -650,7 +680,6 @@ SUBSYSTEM_DEF(job)
 					"Required Account Age" = occupation.minimal_player_age,
 				)
 				continue
-
 			// Generate new config from codebase defaults.
 			file_data["[job_key]"] = list(
 				"Total Positions" = occupation.total_positions,
@@ -658,43 +687,52 @@ SUBSYSTEM_DEF(job)
 				"Playtime Requirements" = occupation.exp_requirements,
 				"Required Account Age" = occupation.minimal_player_age,
 			)
-		if(fexists(json_file))
-			fdel(json_file) // just in case we have some chicanery here, open it up so we can write to it.
-		WRITE_FILE(json_file, json_encode(file_data))
+		var/payload = rustg_toml_encode(file_data)
+		var/temp_file = file("data/jobconfig.toml")
+		if(fexists(temp_file))
+			fdel(temp_file) // ensure it writes properly in case it exists
+		WRITE_FILE(temp_file, "[config_documentation]\n[payload]")
+		DIRECT_OUTPUT(caller, ftp(temp_file, "jobconfig.toml"))
+		return TRUE
 
-/// If we add a new job, quickly spin up a brand new config that inherits all of your old settings, but adds the new job with codebase defaults. Splendid, eh?
-/datum/controller/subsystem/job/proc/regenerate_job_config()
-	var/json_file = file("[global.config.directory]/jobconfig.json")
+/// If we add a new job or more fields to config a job with, quickly spin up a brand new config that inherits all of your old settings, but adds the new job with codebase defaults. Returns TRUE if a file is successfully generated, FALSE otherwise.
+/datum/controller/subsystem/job/proc/regenerate_job_config(mob/user)
+	var/toml_file = "[global.config.directory]/jobconfig.toml"
 	var/list/file_data = list()
+	var/caller = user
 
-	if(!fexists(json_file)) // Sanity check because we're going to use the new config_key system here and we don't want to fuck up if we still have jobs.txt kicking around.
-		message_admins("No jobconfig.json found! Generating one...")
-		generate_config()
-		return
+	if(!fexists(file(toml_file))) // You need an existing (valid) TOML for this to work. Sanity check if someone calls this directly.
+		to_chat(caller, span_notice("No jobconfig.toml found in the config folder! If this is not expected, please notify a server operator or coders. You may need to generate a new config file by running 'Generate Job Configuration' from the Server tab."))
+		return FALSE
 
-	var/job_config = json_decode(file2text(json_file))
+	var/job_config = json_decode(file2text(toml_file))
 	for(var/datum/job/occupation as anything in joinable_occupations)
 		var/job_name = occupation.title
 		var/job_key = occupation.config_tag
 
 		if(job_config["[job_key]"]) // Let's see if any data for this job exists.
-			file_data["[job_name]"] = list(
-				"Total Positions" = job_config["[job_name]"]["Total Positions"],
-				"Spawn Positions" = job_config["[job_name]"]["Spawn Positions"],
-				"Playtime Requirements" = job_config["[job_name]"]["Playtime Requirements"],
-				"Required Account Age" = job_config["[job_name]"]["Required Account Age"],
+			file_data["[job_key]"] = list(
+				"Total Positions" = job_config[job_key]["Total Positions"],
+				"Spawn Positions" = job_config[job_key]["Spawn Positions"],
+				"Playtime Requirements" = job_config[job_key]["Playtime Requirements"],
+				"Required Account Age" = job_config[job_key]["Required Account Age"],
 			)
 
 		else
-			message_admins("New job [job_name] (using key [job_key]) detected! Adding to jobconfig.json using default codebase values...")
+			to_chat(caller, span_notice("New job [job_name] (using key [job_key]) detected! Adding to jobconfig.toml using default codebase values..."))
 			file_data["[job_key]"] = list(
 				"Total Positions" = occupation.total_positions,
 				"Spawn Positions" = occupation.spawn_positions,
 				"Playtime Requirements" = occupation.exp_requirements,
 				"Required Account Age" = occupation.minimal_player_age,
 			)
-	fdel(json_file) // to ensure we can (over)write properly.
-	WRITE_FILE(json_file, json_encode(file_data))
+		var/payload = rustg_toml_encode(file_data)
+		var/temp_file = file("data/jobconfig.toml")
+		if(fexists(temp_file))
+			fdel(temp_file) // ensure it writes properly in case it exists
+		WRITE_FILE(temp_file, "[config_documentation]\n[payload]")
+		DIRECT_OUTPUT(caller, ftp(temp_file, "jobconfig.toml"))
+		return TRUE
 
 /datum/controller/subsystem/job/proc/HandleFeedbackGathering()
 	for(var/datum/job/job as anything in joinable_occupations)

@@ -88,6 +88,7 @@
 	LoadMOTD()
 	LoadPolicy()
 	LoadChatFilter()
+	validate_job_config()
 
 	loaded = TRUE
 
@@ -467,6 +468,34 @@ Example config:
 	var/word_bounds = @"(\b(" + jointext(to_join_on_word_bounds, "|") + @")\b)"
 	var/regex_filter = whitespace_split != "" ? "([whitespace_split]|[word_bounds])" : word_bounds
 	return regex(regex_filter, "i")
+
+/// Check to ensure that the jobconfig is valid/in-date.
+/datum/controller/configuration/proc/validate_job_config()
+	if(!CONFIG_GET(flag/load_jobs_from_txt)) // server operators didn't set this flag, so we don't need to bother continuing
+		return
+
+	var/config_toml = "[directory]/jobconfig.toml"
+	var/config_txt = "[directory]/jobs.txt"
+	var/message = "Notify Server Operators: "
+	log_config("Validating config file jobconfig.toml...")
+
+	if(!fexists(file(config_toml)))
+		SSjob.legacy_mode = TRUE
+		message += "jobconfig.toml not found, falling back to legacy mode (using jobs.txt). To surpress this warning, generate a jobconfig.toml by running the verb 'Generate Job Configuration' in the Server tab.\n\
+			From there, you can then add it to the /config folder of your server to have it take effect for future rounds."
+
+		if(!fexists(file(config_txt)))
+			message += "\n\nFailed to set up legacy mode, jobs.txt not found! Codebase defaults will be used. If you do not wish to use this system, please disable it by commenting out the LOAD_JOBS_FROM_TXT config flag."
+
+		log_config(message)
+		DelayedMessageAdmins(span_notice(message))
+		return
+
+	var/list/result = rustg_raw_read_toml_file(config_toml)
+	if(!result["success"])
+		message += "The job config (jobconfig.toml) is not configured correctly! [result["content"]]"
+		log_config(message)
+		DelayedMessageAdmins(span_notice(message))
 
 //Message admins when you can.
 /datum/controller/configuration/proc/DelayedMessageAdmins(text)
