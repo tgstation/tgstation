@@ -119,7 +119,7 @@
 	glasses = /obj/item/clothing/glasses/hud/health
 	l_hand = /obj/item/storage/medkit/regular
 	r_hand = /obj/item/gun/energy/e_gun
-	l_pocket = /obj/item/healthanalyzer
+	l_pocket = /obj/item/healthanalyzer/advanced
 
 /datum/outfit/centcom/ert/medic/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
