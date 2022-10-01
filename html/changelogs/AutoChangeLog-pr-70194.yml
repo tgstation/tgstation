@@ -1,5 +1,0 @@
-author: "Salex08"
-delete-after: True
-changes: 
-  - balance: "Removes the ghost check for the battlecruiser objective to appear"
-  - bugfix: "Same player cant reroll battlecruiser multiple times anymore"

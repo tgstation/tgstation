@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes: 
-  - admin: "List Bombers, List Law Changes, List Manifest, List Signalers, List DNA, List Fingerprints, and Show Law Changes have all been replicated to exist outside of the Secrets panel. You may still access these verbs from the Secrets panel, but they are able to be called as individual verbs."

@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - balance: "Flypeople's eyes are now immune to native FOV, if native FOV is enabled."

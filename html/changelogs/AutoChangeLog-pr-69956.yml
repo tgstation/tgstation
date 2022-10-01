@@ -1,6 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Wanted/missing posters are no longer broken."
-  - bugfix: "Missing posters no longer change text color after being taken down."
-  - bugfix: "Posters no longer fail to get put up 4 seconds after you walk away while placing them lol"

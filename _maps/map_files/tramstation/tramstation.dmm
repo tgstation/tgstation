@@ -436,6 +436,14 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/transit_tube)
+"aiP" = (
+/obj/structure/disposalpipe/sorting/mail{
+	dir = 1;
+	sortType = 7;
+	name = "sorting disposal pipe (Security)"
+	},
+/turf/open/floor/iron,
+/area/station/security/office)
 "aiQ" = (
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
 	dir = 8
@@ -8029,6 +8037,16 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron/smooth,
 /area/station/command/gateway)
+"cTu" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/duct,
+/obj/structure/disposalpipe/junction/flip{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/station/medical/medbay/central)
 "cTE" = (
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 4
@@ -10086,6 +10104,9 @@
 	c_tag = "Security - Main Office South";
 	network = list("ss13","Security")
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/security/office)
 "dCz" = (
@@ -11605,6 +11626,8 @@
 /obj/machinery/duct,
 /obj/effect/mapping_helpers/airlock/access/all/medical/general,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/medical)
 "edC" = (
@@ -12270,6 +12293,7 @@
 /area/station/security/courtroom)
 "erP" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/security/office)
 "esc" = (
@@ -16236,6 +16260,7 @@
 	c_tag = "Medical - Main West";
 	network = list("ss13","medbay")
 	},
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "fQV" = (
@@ -16335,6 +16360,13 @@
 	},
 /turf/open/floor/plating,
 /area/station/science/robotics/lab)
+"fSI" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/iron/white,
+/area/station/medical/medbay/central)
 "fSM" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 10
@@ -16793,6 +16825,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
 	},
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/security/office)
 "gbZ" = (
@@ -20237,6 +20270,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/security/office)
 "hpz" = (
@@ -20331,6 +20365,9 @@
 "hqV" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
@@ -23138,10 +23175,10 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 4;
-	name = "sorting disposal pipe (Head of Security's Office)";
-	sortType = 8
+/obj/structure/disposalpipe/sorting/mail{
+	dir = 8;
+	sortType = 8;
+	name = "sorting disposal pipe (Head of Security's Office)"
 	},
 /turf/open/floor/iron,
 /area/station/security/office)
@@ -28286,6 +28323,7 @@
 /area/station/security/checkpoint/supply)
 "kja" = (
 /obj/effect/turf_decal/trimline/red/filled/corner,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/security/office)
 "kjr" = (
@@ -31503,6 +31541,12 @@
 /obj/machinery/duct,
 /turf/open/floor/iron,
 /area/station/security/prison)
+"loe" = (
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/turf/closed/wall,
+/area/station/medical/surgery/fore)
 "lof" = (
 /obj/item/toy/balloon,
 /turf/open/floor/eighties/red,
@@ -34919,6 +34963,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/security/brig)
 "mxJ" = (
@@ -36374,15 +36419,6 @@
 /obj/structure/fluff/tram_rail/end,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/right)
-"mWW" = (
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 1
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/station/security/office)
 "mXa" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
@@ -42469,6 +42505,11 @@
 	},
 /obj/machinery/duct,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "pmc" = (
@@ -44530,6 +44571,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/security/office)
 "pVW" = (
@@ -46463,6 +46505,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/security/office)
 "qDK" = (
@@ -49364,10 +49407,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/obj/structure/disposalpipe/junction/flip{
-	dir = 1
-	},
 /obj/machinery/duct,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "rDR" = (
@@ -51164,6 +51205,9 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
 /turf/open/floor/iron,
 /area/station/security/office)
 "shF" = (
@@ -52436,8 +52480,8 @@
 /obj/structure/cable,
 /obj/structure/disposalpipe/sorting/mail/flip{
 	dir = 4;
-	name = "sorting disposal pipe (Medbay)";
-	sortType = 9
+	name = "sorting disposal pipe (Chemistry)";
+	sortType = 11
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
@@ -53408,22 +53452,6 @@
 	dir = 8
 	},
 /obj/machinery/door/firedoor,
-/turf/open/floor/iron/white,
-/area/station/medical/medbay/central)
-"sZo" = (
-/obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/duct,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "sZu" = (
@@ -54824,6 +54852,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/ai_monitored/command/storage/eva)
+"tze" = (
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/turf/open/floor/iron,
+/area/station/security/office)
 "tzJ" = (
 /obj/machinery/light/directional/north,
 /obj/machinery/door/firedoor/border_only{
@@ -56542,6 +56576,9 @@
 /area/station/security/brig)
 "ufY" = (
 /obj/effect/turf_decal/trimline/red/filled/line,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/security/office)
 "ugb" = (
@@ -60347,7 +60384,7 @@
 	network = list("ss13","Security")
 	},
 /obj/structure/disposalpipe/segment{
-	dir = 4
+	dir = 10
 	},
 /turf/open/floor/iron,
 /area/station/security/office)
@@ -60596,8 +60633,10 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/disposalpipe/segment,
 /obj/effect/mapping_helpers/airlock/access/all/medical/general,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/storage)
 "vCZ" = (
@@ -62080,6 +62119,9 @@
 	network = list("prison");
 	pixel_x = 30
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
 /turf/open/floor/iron,
 /area/station/security/office)
 "whg" = (
@@ -63008,7 +63050,13 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
 	},
-/obj/machinery/firealarm/directional/west,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/duct,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "wyS" = (
@@ -65719,11 +65767,6 @@
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "xuR" = (
@@ -67328,10 +67371,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/obj/structure/disposalpipe/junction/yjunction{
-	dir = 1
-	},
 /obj/machinery/duct,
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "xZq" = (
@@ -154990,7 +155033,7 @@ iuO
 wLC
 eTz
 xsL
-yiB
+nLi
 tfp
 nca
 nca
@@ -155247,7 +155290,7 @@ mOn
 shg
 pVT
 mxI
-aIf
+yiB
 bVN
 tTJ
 tTJ
@@ -156265,7 +156308,7 @@ mAT
 mAT
 mAT
 vyM
-wbH
+aiP
 qDz
 hpn
 erP
@@ -156521,8 +156564,8 @@ vMy
 nZS
 hHf
 ykX
-mWW
-wbH
+jXo
+tze
 gRW
 fAg
 oUx
@@ -163011,7 +163054,7 @@ qYZ
 qhJ
 iWl
 rrE
-xRx
+loe
 bBy
 vCk
 xhs
@@ -163529,7 +163572,7 @@ hiI
 mrY
 wyH
 fQK
-sZo
+xuE
 mIZ
 plY
 vGB
@@ -163784,11 +163827,11 @@ qws
 wma
 qws
 qws
-qws
+cTu
 lno
 rDJ
 lno
-lno
+cTu
 lno
 xZh
 tam
@@ -165319,7 +165362,7 @@ avr
 rfI
 uPz
 iZh
-dyI
+fSI
 cJL
 xSv
 xSZ

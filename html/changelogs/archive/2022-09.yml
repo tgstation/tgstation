@@ -1001,3 +1001,56 @@
       valuable to Nar'Sie, and she will grant special weapons if you manage to do
       so.
   - rscadd: Fantasy affixes can also include soul-stealing items!
+2022-09-30:
+  Bluedino1025:
+  - imageadd: Adds Moffra wing and antennae sprites
+  JohnFulpWillard:
+  - balance: Flypeople's eyes are now immune to native FOV, if native FOV is enabled.
+  - refactor: Cleanbots have been entirely reworked, please report any bugs you might
+      find.
+  - bugfix: You can manually pump your blood while asleep/in crit, rather than instantly
+      lose all your blood and die forever.
+  - bugfix: Wizard's anonymous event won't run near the start of a round anymore.
+  Profakos:
+  - bugfix: Various tramstation medbay disposal and air pipe issues have been fixed
+  - bugfix: Medbay and Chemistry tagged packages will arrive properly to Tramstation's
+      medical equipment storage, and the apothecary, respectively
+  - bugfix: Gaps have been plugged in the tramstation disposal loop
+  - bugfix: Errant fire alarm no longer hovers above the surgery door
+  - bugfix: Trash flushed down HoS and the Security Meeting area's disposals no longer
+      get ejected below the HoS's door
+  RandomGamer123:
+  - bugfix: Stops the export value for erroneous manifests from decreasing into the
+      deep negatives exponentially over time
+  Salex08:
+  - bugfix: adds missing blood filter in medborg
+  - balance: Removes the ghost check for the battlecruiser objective to appear
+  - bugfix: Same player cant reroll battlecruiser multiple times anymore
+  ShizCalev:
+  - bugfix: Fixed an exploit allowing non-alien mobs to move facehuggers without triggering
+      them.
+  - bugfix: Wanted/missing posters are no longer broken.
+  - bugfix: Missing posters no longer change text color after being taken down.
+  - bugfix: Posters no longer fail to get put up 4 seconds after you walk away while
+      placing them lol
+  SuperSayu:
+  - balance: Welding fuel tank explosions have been scaled slightly down and require
+      the fuel tanks to actually be full of welding fuel
+  - bugfix: You can detonate welding fuel tanks with an igniter-sensor assembly
+  - bugfix: You can reach your one-tank bomb's assembly controls by activating the
+      item in your hand.
+  - bugfix: Certain assemblies should no longer turn themselves off.
+  - bugfix: Clumsy fools handling a mousetrap-based multi-part assembly may set it
+      off by accident
+  Y0SH1M4S73R:
+  - bugfix: Fixed a runtime that happens when the MC invokes a varedited callback
+      synchronously.
+  san7890:
+  - admin: List Bombers, List Law Changes, List Manifest, List Signalers, List DNA,
+      List Fingerprints, and Show Law Changes have all been replicated to exist outside
+      of the Secrets panel. You may still access these verbs from the Secrets panel,
+      but they are able to be called as individual verbs.
+  timothymtorres:
+  - bugfix: Fix psicodine to suppress all phobias (including claustrophobia and nyctophobia)
+  tralezab:
+  - bugfix: baguette swords make that satisfying slash sound now
