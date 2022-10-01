@@ -1877,10 +1877,10 @@
 	pixel_y = 16
 	},
 /obj/structure/table/reinforced,
-/obj/item/bodypart/l_arm/robot{
+/obj/item/bodypart/arm/l_arm/robot{
 	pixel_x = -6
 	},
-/obj/item/bodypart/r_arm/robot{
+/obj/item/bodypart/arm/r_arm/robot{
 	pixel_x = 6
 	},
 /obj/item/hemostat,

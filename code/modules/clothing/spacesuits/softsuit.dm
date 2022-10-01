@@ -50,7 +50,7 @@
 	. = ..()
 	if(.)
 		return
-	if(!istype(attacked_with, /obj/item/bodypart/l_leg/robot) && !istype(attacked_with, /obj/item/bodypart/r_leg/robot))
+	if(!istype(attacked_with, /obj/item/bodypart/leg/l_leg/robot) && !istype(attacked_with, /obj/item/bodypart/leg/r_leg/robot))
 		return
 	if(ismob(loc))
 		user.balloon_alert(user, "drop the helmet first!")

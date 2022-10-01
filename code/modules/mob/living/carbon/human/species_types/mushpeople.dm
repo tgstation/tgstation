@@ -33,11 +33,11 @@
 	species_language_holder = /datum/language_holder/mushroom
 
 	bodypart_overrides = list(
-		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/mushroom,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/mushroom,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/l_arm/mushroom,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/r_arm/mushroom,
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/mushroom,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/mushroom,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/mushroom,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/l_leg/mushroom,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/r_leg/mushroom,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/mushroom,
 	)
 

@@ -222,14 +222,14 @@
 
 /obj/structure/closet/crate/freezer/surplus_limbs/PopulateContents()
 	. = ..()
-	new /obj/item/bodypart/l_arm/robot/surplus(src)
-	new /obj/item/bodypart/l_arm/robot/surplus(src)
-	new /obj/item/bodypart/r_arm/robot/surplus(src)
-	new /obj/item/bodypart/r_arm/robot/surplus(src)
-	new /obj/item/bodypart/l_leg/robot/surplus(src)
-	new /obj/item/bodypart/l_leg/robot/surplus(src)
-	new /obj/item/bodypart/r_leg/robot/surplus(src)
-	new /obj/item/bodypart/r_leg/robot/surplus(src)
+	new /obj/item/bodypart/arm/l_arm/robot/surplus(src)
+	new /obj/item/bodypart/arm/l_arm/robot/surplus(src)
+	new /obj/item/bodypart/arm/r_arm/robot/surplus(src)
+	new /obj/item/bodypart/arm/r_arm/robot/surplus(src)
+	new /obj/item/bodypart/leg/l_leg/robot/surplus(src)
+	new /obj/item/bodypart/leg/l_leg/robot/surplus(src)
+	new /obj/item/bodypart/leg/r_leg/robot/surplus(src)
+	new /obj/item/bodypart/leg/r_leg/robot/surplus(src)
 
 /obj/structure/closet/crate/radiation
 	desc = "A crate with a radiation sign on it."

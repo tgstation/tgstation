@@ -48,10 +48,10 @@
 	bodypart_overrides = list(
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/lizard,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/lizard,
-		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/lizard,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/lizard,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/lizard,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/lizard,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/l_arm/lizard,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/r_arm/lizard,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/l_leg/lizard,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/r_leg/lizard,
 	)
 
 /// Lizards are cold blooded and do not stabilize body temperature naturally
@@ -131,13 +131,21 @@ Lizard subspecies: ASHWALKERS
 	mutantlungs = /obj/item/organ/internal/lungs/ashwalker
 	mutantbrain = /obj/item/organ/internal/brain/primitive
 	inherent_traits = list(
-		TRAIT_CHUNKYFINGERS,
 		//TRAIT_LITERATE,
 		TRAIT_VIRUSIMMUNE,
 	)
 	species_language_holder = /datum/language_holder/lizard/ash
 	digitigrade_customization = DIGITIGRADE_FORCED
 	examine_limb_id = SPECIES_LIZARD
+	bodypart_overrides = list(
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/lizard,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/lizard,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/l_arm/lizard/ashwalker,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/r_arm/lizard/ashwalker,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/l_leg/lizard,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/r_leg/lizard,
+	)
+
 /*
 Lizard subspecies: SILVER SCALED
 */

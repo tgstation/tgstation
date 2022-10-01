@@ -33,10 +33,10 @@
 	bodypart_overrides = list(
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/robot,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/robot,
-		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/robot,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/robot,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/robot,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/robot,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/l_arm/robot,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/r_arm/robot,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/l_leg/robot,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/r_leg/robot,
 	)
 	examine_limb_id = SPECIES_HUMAN
 

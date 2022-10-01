@@ -137,7 +137,7 @@
 	illustration = "clown"
 
 /obj/item/storage/box/clown/attackby(obj/item/I, mob/user, params)
-	if((istype(I, /obj/item/bodypart/l_arm/robot)) || (istype(I, /obj/item/bodypart/r_arm/robot)))
+	if((istype(I, /obj/item/bodypart/arm/l_arm/robot)) || (istype(I, /obj/item/bodypart/arm/r_arm/robot)))
 		if(contents.len) //prevent accidently deleting contents
 			balloon_alert(user, "items inside!")
 			return

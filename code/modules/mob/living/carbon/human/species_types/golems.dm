@@ -4,7 +4,6 @@
 	id = SPECIES_GOLEM
 	species_traits = list(NOBLOOD,NOTRANSSTING, MUTCOLORS,NO_UNDERWEAR, NO_DNA_COPY)
 	inherent_traits = list(
-		TRAIT_CHUNKYFINGERS,
 		TRAIT_GENELESS,
 		TRAIT_NOBREATH,
 		TRAIT_NODISMEMBER,
@@ -36,11 +35,11 @@
 	fixed_mut_color = "#aaaaaa"
 
 	bodypart_overrides = list(
-		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/golem,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/golem,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/l_arm/golem,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/r_arm/golem,
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/golem,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/golem,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/golem,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/l_leg/golem,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/r_leg/golem,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/golem,
 	)
 
@@ -108,7 +107,6 @@
 	//Can burn and takes damage from heat
 	//no RESISTHEAT, NOFIRE
 	inherent_traits = list(
-		TRAIT_CHUNKYFINGERS,
 		TRAIT_GENELESS,
 		TRAIT_NOBREATH,
 		TRAIT_NODISMEMBER,
@@ -316,7 +314,6 @@
 	meat = /obj/item/stack/sheet/mineral/wood
 	//Can burn and take damage from heat
 	inherent_traits = list(
-		TRAIT_CHUNKYFINGERS,
 		TRAIT_GENELESS,
 		TRAIT_NOBREATH,
 		TRAIT_NODISMEMBER,
@@ -582,7 +579,6 @@
 	fixed_mut_color = "#ffff00"
 	say_mod = "honks"
 	inherent_traits = list(
-		TRAIT_CHUNKYFINGERS,
 		TRAIT_CLUMSY,
 		TRAIT_GENELESS,
 		TRAIT_NOBREATH,
@@ -688,7 +684,6 @@
 	info_text = "As a <span class='danger'>Runic Golem</span>, you possess eldritch powers granted by the Elder Goddess Nar'Sie."
 	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYESPRITES) //no mutcolors
 	inherent_traits = list(
-		TRAIT_CHUNKYFINGERS,
 		TRAIT_GENELESS,
 		TRAIT_NOBREATH,
 		TRAIT_NODISMEMBER,
@@ -707,11 +702,11 @@
 	inherent_factions = list("cult")
 	species_language_holder = /datum/language_holder/golem/runic
 	bodypart_overrides = list(
-		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/golem/cult,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/golem/cult,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/l_arm/golem/cult,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/r_arm/golem/cult,
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/golem/cult,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/golem/cult,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/golem/cult,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/l_leg/golem/cult,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/r_leg/golem/cult,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/golem/cult,
 	)
 
@@ -773,7 +768,6 @@
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
-		TRAIT_CHUNKYFINGERS,
 		TRAIT_GENELESS,
 		TRAIT_LITERATE,
 		TRAIT_NOBREATH,
@@ -794,11 +788,11 @@
 	prefix = "Cloth"
 	special_names = null
 	bodypart_overrides = list(
-		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/golem/cloth,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/golem/cloth,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/l_arm/golem/cloth,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/r_arm/golem/cloth,
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/golem/cloth,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/golem/cloth,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/golem/cloth,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/l_leg/golem/cloth,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/r_leg/golem/cloth,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/golem/cloth,
 	)
 
@@ -946,7 +940,6 @@
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
-		TRAIT_CHUNKYFINGERS,
 		TRAIT_GENELESS,
 		TRAIT_LITERATE,
 		TRAIT_NOBREATH,
@@ -1046,7 +1039,6 @@
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
-		TRAIT_CHUNKYFINGERS,
 		TRAIT_GENELESS,
 		TRAIT_LITERATE,
 		TRAIT_NOBREATH,
@@ -1070,11 +1062,11 @@
 	punchstunthreshold = 7
 	punchdamagehigh = 8
 	bodypart_overrides = list(
-		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/golem/cardboard,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/golem/cardboard,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/l_arm/golem/cardboard,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/r_arm/golem/cardboard,
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/golem/cardboard,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/golem/cardboard,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/golem/cardboard,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/l_leg/golem/cardboard,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/r_leg/golem/cardboard,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/golem/cardboard,
 	)
 	var/last_creation = 0
@@ -1112,7 +1104,6 @@
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
-		TRAIT_CHUNKYFINGERS,
 		TRAIT_GENELESS,
 		TRAIT_LITERATE,
 		TRAIT_NOBREATH,
@@ -1140,7 +1131,6 @@
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
-		TRAIT_CHUNKYFINGERS,
 		TRAIT_GENELESS,
 		TRAIT_LITERATE,
 		TRAIT_NOBREATH,
@@ -1154,11 +1144,11 @@
 	)
 	info_text = "As a <span class='danger'>Durathread Golem</span>, your strikes will cause those your targets to start choking, but your woven body won't withstand fire as well."
 	bodypart_overrides = list(
-		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/golem/durathread,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/golem/durathread,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/l_arm/golem/durathread,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/r_arm/golem/durathread,
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/golem/durathread,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/golem/durathread,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/golem/durathread,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/l_leg/golem/durathread,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/r_leg/golem/durathread,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/golem/durathread,
 	)
 
@@ -1183,7 +1173,6 @@
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
-		TRAIT_CHUNKYFINGERS,
 		TRAIT_FAKEDEATH,
 		TRAIT_GENELESS,
 		TRAIT_LITERATE,
@@ -1201,11 +1190,11 @@
 	species_language_holder = /datum/language_holder/golem/bone
 	info_text = "As a <span class='danger'>Bone Golem</span>, You have a powerful spell that lets you chill your enemies with fear, and milk heals you! Just make sure to watch our for bone-hurting juice."
 	bodypart_overrides = list(
-		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/golem/bone,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/golem/bone,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/l_arm/golem/bone,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/r_arm/golem/bone,
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/golem/bone,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/golem/bone,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/golem/bone,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/l_leg/golem/bone,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/r_leg/golem/bone,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/golem/bone,
 	)
 	var/datum/action/innate/bonechill/bonechill
@@ -1297,7 +1286,6 @@
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
-		TRAIT_CHUNKYFINGERS,
 		TRAIT_GENELESS,
 		TRAIT_LITERATE,
 		TRAIT_NOBREATH,
@@ -1309,11 +1297,11 @@
 		TRAIT_RESISTLOWPRESSURE,
 	)
 	bodypart_overrides = list(
-		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/golem/snow,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/golem/snow,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/l_arm/golem/snow,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/r_arm/golem/snow,
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/golem/snow,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/golem/snow,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/golem/snow,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/l_leg/golem/snow,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/r_leg/golem/snow,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/golem/snow,
 	)
 
@@ -1359,7 +1347,6 @@
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
-		TRAIT_CHUNKYFINGERS,
 		TRAIT_GENELESS,
 		TRAIT_LITERATE,
 		TRAIT_NOBREATH,

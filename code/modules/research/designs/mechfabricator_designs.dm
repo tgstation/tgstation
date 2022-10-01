@@ -30,7 +30,7 @@
 	name = "Cyborg Left Arm"
 	id = "borg_l_arm"
 	build_type = MECHFAB
-	build_path = /obj/item/bodypart/l_arm/robot
+	build_path = /obj/item/bodypart/arm/l_arm/robot
 	materials = list(/datum/material/iron=10000)
 	construction_time = 200
 	category = list(RND_CATEGORY_CYBORG)
@@ -39,7 +39,7 @@
 	name = "Cyborg Right Arm"
 	id = "borg_r_arm"
 	build_type = MECHFAB
-	build_path = /obj/item/bodypart/r_arm/robot
+	build_path = /obj/item/bodypart/arm/r_arm/robot
 	materials = list(/datum/material/iron=10000)
 	construction_time = 200
 	category = list(RND_CATEGORY_CYBORG)
@@ -48,7 +48,7 @@
 	name = "Cyborg Left Leg"
 	id = "borg_l_leg"
 	build_type = MECHFAB
-	build_path = /obj/item/bodypart/l_leg/robot
+	build_path = /obj/item/bodypart/leg/l_leg/robot
 	materials = list(/datum/material/iron=10000)
 	construction_time = 200
 	category = list(RND_CATEGORY_CYBORG)
@@ -57,7 +57,7 @@
 	name = "Cyborg Right Leg"
 	id = "borg_r_leg"
 	build_type = MECHFAB
-	build_path = /obj/item/bodypart/r_leg/robot
+	build_path = /obj/item/bodypart/leg/r_leg/robot
 	materials = list(/datum/material/iron=10000)
 	construction_time = 200
 	category = list(RND_CATEGORY_CYBORG)

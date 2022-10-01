@@ -4608,7 +4608,7 @@
 /area/space/nearstation)
 "HN" = (
 /obj/item/bodypart/head/monkey,
-/obj/item/bodypart/l_leg/monkey{
+/obj/item/bodypart/leg/l_leg/monkey{
 	pixel_x = 8;
 	pixel_y = -5
 	},
@@ -5021,7 +5021,7 @@
 	pixel_y = 17;
 	pixel_x = 10
 	},
-/obj/item/bodypart/r_leg/monkey{
+/obj/item/bodypart/leg/r_leg/monkey{
 	pixel_x = -5
 	},
 /obj/item/bodypart/head/monkey{

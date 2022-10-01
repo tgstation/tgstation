@@ -7,16 +7,16 @@
 	limb_id = SPECIES_SNAIL
 	is_dimorphic = FALSE
 
-/obj/item/bodypart/l_arm/snail
+/obj/item/bodypart/arm/l_arm/snail
 	limb_id = SPECIES_SNAIL
 
-/obj/item/bodypart/r_arm/snail
+/obj/item/bodypart/arm/r_arm/snail
 	limb_id = SPECIES_SNAIL
 
-/obj/item/bodypart/l_leg/snail
+/obj/item/bodypart/leg/l_leg/snail
 	limb_id = SPECIES_SNAIL
 
-/obj/item/bodypart/r_leg/snail
+/obj/item/bodypart/leg/r_leg/snail
 	limb_id = SPECIES_SNAIL
 
 ///ABDUCTOR
@@ -30,19 +30,21 @@
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 
-/obj/item/bodypart/l_arm/abductor
+/obj/item/bodypart/arm/l_arm/abductor
+	limb_id = SPECIES_ABDUCTOR
+	should_draw_greyscale = FALSE
+	chunky = TRUE
+
+/obj/item/bodypart/arm/r_arm/abductor
+	limb_id = SPECIES_ABDUCTOR
+	should_draw_greyscale = FALSE
+	chunky = TRUE
+
+/obj/item/bodypart/leg/l_leg/abductor
 	limb_id = SPECIES_ABDUCTOR
 	should_draw_greyscale = FALSE
 
-/obj/item/bodypart/r_arm/abductor
-	limb_id = SPECIES_ABDUCTOR
-	should_draw_greyscale = FALSE
-
-/obj/item/bodypart/l_leg/abductor
-	limb_id = SPECIES_ABDUCTOR
-	should_draw_greyscale = FALSE
-
-/obj/item/bodypart/r_leg/abductor
+/obj/item/bodypart/leg/r_leg/abductor
 	limb_id = SPECIES_ABDUCTOR
 	should_draw_greyscale = FALSE
 
@@ -57,19 +59,19 @@
 	is_dimorphic = TRUE
 	dmg_overlay_type = null
 
-/obj/item/bodypart/l_arm/jelly
+/obj/item/bodypart/arm/l_arm/jelly
 	limb_id = SPECIES_JELLYPERSON
 	dmg_overlay_type = null
 
-/obj/item/bodypart/r_arm/jelly
+/obj/item/bodypart/arm/r_arm/jelly
 	limb_id = SPECIES_JELLYPERSON
 	dmg_overlay_type = null
 
-/obj/item/bodypart/l_leg/jelly
+/obj/item/bodypart/leg/l_leg/jelly
 	limb_id = SPECIES_JELLYPERSON
 	dmg_overlay_type = null
 
-/obj/item/bodypart/r_leg/jelly
+/obj/item/bodypart/leg/r_leg/jelly
 	limb_id = SPECIES_JELLYPERSON
 	dmg_overlay_type = null
 
@@ -82,16 +84,16 @@
 	limb_id = SPECIES_SLIMEPERSON
 	is_dimorphic = TRUE
 
-/obj/item/bodypart/l_arm/slime
+/obj/item/bodypart/arm/l_arm/slime
 	limb_id = SPECIES_SLIMEPERSON
 
-/obj/item/bodypart/r_arm/slime
+/obj/item/bodypart/arm/r_arm/slime
 	limb_id = SPECIES_SLIMEPERSON
 
-/obj/item/bodypart/l_leg/slime
+/obj/item/bodypart/leg/l_leg/slime
 	limb_id = SPECIES_SLIMEPERSON
 
-/obj/item/bodypart/r_leg/slime
+/obj/item/bodypart/leg/r_leg/slime
 	limb_id = SPECIES_SLIMEPERSON
 
 ///LUMINESCENT
@@ -103,16 +105,16 @@
 	limb_id = SPECIES_LUMINESCENT
 	is_dimorphic = TRUE
 
-/obj/item/bodypart/l_arm/luminescent
+/obj/item/bodypart/arm/l_arm/luminescent
 	limb_id = SPECIES_LUMINESCENT
 
-/obj/item/bodypart/r_arm/luminescent
+/obj/item/bodypart/arm/r_arm/luminescent
 	limb_id = SPECIES_LUMINESCENT
 
-/obj/item/bodypart/l_leg/luminescent
+/obj/item/bodypart/leg/l_leg/luminescent
 	limb_id = SPECIES_LUMINESCENT
 
-/obj/item/bodypart/r_leg/luminescent
+/obj/item/bodypart/leg/r_leg/luminescent
 	limb_id = SPECIES_LUMINESCENT
 
 ///ZOMBIE
@@ -126,19 +128,19 @@
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 
-/obj/item/bodypart/l_arm/zombie
+/obj/item/bodypart/arm/l_arm/zombie
 	limb_id = SPECIES_ZOMBIE
 	should_draw_greyscale = FALSE
 
-/obj/item/bodypart/r_arm/zombie
+/obj/item/bodypart/arm/r_arm/zombie
 	limb_id = SPECIES_ZOMBIE
 	should_draw_greyscale = FALSE
 
-/obj/item/bodypart/l_leg/zombie
+/obj/item/bodypart/leg/l_leg/zombie
 	limb_id = SPECIES_ZOMBIE
 	should_draw_greyscale = FALSE
 
-/obj/item/bodypart/r_leg/zombie
+/obj/item/bodypart/leg/r_leg/zombie
 	limb_id = SPECIES_ZOMBIE
 	should_draw_greyscale = FALSE
 
@@ -151,16 +153,16 @@
 	limb_id = SPECIES_PODPERSON
 	is_dimorphic = TRUE
 
-/obj/item/bodypart/l_arm/pod
+/obj/item/bodypart/arm/l_arm/pod
 	limb_id = SPECIES_PODPERSON
 
-/obj/item/bodypart/r_arm/pod
+/obj/item/bodypart/arm/r_arm/pod
 	limb_id = SPECIES_PODPERSON
 
-/obj/item/bodypart/l_leg/pod
+/obj/item/bodypart/leg/l_leg/pod
 	limb_id = SPECIES_PODPERSON
 
-/obj/item/bodypart/r_leg/pod
+/obj/item/bodypart/leg/r_leg/pod
 	limb_id = SPECIES_PODPERSON
 
 ///FLY
@@ -174,19 +176,19 @@
 	is_dimorphic = TRUE
 	should_draw_greyscale = FALSE
 
-/obj/item/bodypart/l_arm/fly
+/obj/item/bodypart/arm/l_arm/fly
 	limb_id = SPECIES_FLYPERSON
 	should_draw_greyscale = FALSE
 
-/obj/item/bodypart/r_arm/fly
+/obj/item/bodypart/arm/r_arm/fly
 	limb_id = SPECIES_FLYPERSON
 	should_draw_greyscale = FALSE
 
-/obj/item/bodypart/l_leg/fly
+/obj/item/bodypart/leg/l_leg/fly
 	limb_id = SPECIES_FLYPERSON
 	should_draw_greyscale = FALSE
 
-/obj/item/bodypart/r_leg/fly
+/obj/item/bodypart/leg/r_leg/fly
 	limb_id = SPECIES_FLYPERSON
 	should_draw_greyscale = FALSE
 
@@ -201,21 +203,27 @@
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 
-/obj/item/bodypart/l_arm/shadow
+/obj/item/bodypart/arm/l_arm/shadow
 	limb_id = SPECIES_SHADOW
 	should_draw_greyscale = FALSE
 
-/obj/item/bodypart/r_arm/shadow
+/obj/item/bodypart/arm/r_arm/shadow
 	limb_id = SPECIES_SHADOW
 	should_draw_greyscale = FALSE
 
-/obj/item/bodypart/l_leg/shadow
+/obj/item/bodypart/leg/l_leg/shadow
 	limb_id = SPECIES_SHADOW
 	should_draw_greyscale = FALSE
 
-/obj/item/bodypart/r_leg/shadow
+/obj/item/bodypart/leg/r_leg/shadow
 	limb_id = SPECIES_SHADOW
 	should_draw_greyscale = FALSE
+
+/obj/item/bodypart/arm/l_arm/shadow/nightmare
+	chunky = TRUE
+
+/obj/item/bodypart/arm/r_arm/shadow/nightmare
+	chunky = TRUE
 
 ///SKELETON
 /obj/item/bodypart/head/skeleton
@@ -230,22 +238,22 @@
 	should_draw_greyscale = FALSE
 	dmg_overlay_type = null
 
-/obj/item/bodypart/l_arm/skeleton
+/obj/item/bodypart/arm/l_arm/skeleton
 	limb_id = SPECIES_SKELETON
 	should_draw_greyscale = FALSE
 	dmg_overlay_type = null
 
-/obj/item/bodypart/r_arm/skeleton
+/obj/item/bodypart/arm/r_arm/skeleton
 	limb_id = SPECIES_SKELETON
 	should_draw_greyscale = FALSE
 	dmg_overlay_type = null
 
-/obj/item/bodypart/l_leg/skeleton
+/obj/item/bodypart/leg/l_leg/skeleton
 	limb_id = SPECIES_SKELETON
 	should_draw_greyscale = FALSE
 	dmg_overlay_type = null
 
-/obj/item/bodypart/r_leg/skeleton
+/obj/item/bodypart/leg/r_leg/skeleton
 	limb_id = SPECIES_SKELETON
 	should_draw_greyscale = FALSE
 	dmg_overlay_type = null
@@ -259,16 +267,16 @@
 	limb_id = SPECIES_MUSHROOM
 	is_dimorphic = TRUE
 
-/obj/item/bodypart/l_arm/mushroom
+/obj/item/bodypart/arm/l_arm/mushroom
 	limb_id = SPECIES_MUSHROOM
 
-/obj/item/bodypart/r_arm/mushroom
+/obj/item/bodypart/arm/r_arm/mushroom
 	limb_id = SPECIES_MUSHROOM
 
-/obj/item/bodypart/l_leg/mushroom
+/obj/item/bodypart/leg/l_leg/mushroom
 	limb_id = SPECIES_MUSHROOM
 
-/obj/item/bodypart/r_leg/mushroom
+/obj/item/bodypart/leg/r_leg/mushroom
 	limb_id = SPECIES_MUSHROOM
 
 ///GOLEMS (i hate xenobio SO FUCKING MUCH)
@@ -282,19 +290,21 @@
 	is_dimorphic = TRUE
 	dmg_overlay_type = null
 
-/obj/item/bodypart/l_arm/golem
+/obj/item/bodypart/arm/l_arm/golem
+	limb_id = SPECIES_GOLEM
+	dmg_overlay_type = null
+	chunky = TRUE
+
+/obj/item/bodypart/arm/r_arm/golem
+	limb_id = SPECIES_GOLEM
+	dmg_overlay_type = null
+	chunky = TRUE
+
+/obj/item/bodypart/leg/l_leg/golem
 	limb_id = SPECIES_GOLEM
 	dmg_overlay_type = null
 
-/obj/item/bodypart/r_arm/golem
-	limb_id = SPECIES_GOLEM
-	dmg_overlay_type = null
-
-/obj/item/bodypart/l_leg/golem
-	limb_id = SPECIES_GOLEM
-	dmg_overlay_type = null
-
-/obj/item/bodypart/r_leg/golem
+/obj/item/bodypart/leg/r_leg/golem
 	limb_id = SPECIES_GOLEM
 	dmg_overlay_type = null
 
@@ -309,19 +319,19 @@
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 
-/obj/item/bodypart/l_arm/golem/cult
+/obj/item/bodypart/arm/l_arm/golem/cult
 	limb_id = SPECIES_GOLEM_CULT
 	should_draw_greyscale = FALSE
 
-/obj/item/bodypart/r_arm/golem/cult
+/obj/item/bodypart/arm/r_arm/golem/cult
 	limb_id = SPECIES_GOLEM_CULT
 	should_draw_greyscale = FALSE
 
-/obj/item/bodypart/l_leg/golem/cult
+/obj/item/bodypart/leg/l_leg/golem/cult
 	limb_id = SPECIES_GOLEM_CULT
 	should_draw_greyscale = FALSE
 
-/obj/item/bodypart/r_leg/golem/cult
+/obj/item/bodypart/leg/r_leg/golem/cult
 	limb_id = SPECIES_GOLEM_CULT
 	should_draw_greyscale = FALSE
 
@@ -336,19 +346,19 @@
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 
-/obj/item/bodypart/l_arm/golem/cloth
+/obj/item/bodypart/arm/l_arm/golem/cloth
 	limb_id = SPECIES_GOLEM_CLOTH
 	should_draw_greyscale = FALSE
 
-/obj/item/bodypart/r_arm/golem/cloth
+/obj/item/bodypart/arm/r_arm/golem/cloth
 	limb_id = SPECIES_GOLEM_CLOTH
 	should_draw_greyscale = FALSE
 
-/obj/item/bodypart/l_leg/golem/cloth
+/obj/item/bodypart/leg/l_leg/golem/cloth
 	limb_id = SPECIES_GOLEM_CLOTH
 	should_draw_greyscale = FALSE
 
-/obj/item/bodypart/r_leg/golem/cloth
+/obj/item/bodypart/leg/r_leg/golem/cloth
 	limb_id = SPECIES_GOLEM_CLOTH
 	should_draw_greyscale = FALSE
 
@@ -363,19 +373,19 @@
 	is_dimorphic = TRUE
 	should_draw_greyscale = FALSE
 
-/obj/item/bodypart/l_arm/golem/cardboard
+/obj/item/bodypart/arm/l_arm/golem/cardboard
 	limb_id = SPECIES_GOLEM_CARDBOARD
 	should_draw_greyscale = FALSE
 
-/obj/item/bodypart/r_arm/golem/cardboard
+/obj/item/bodypart/arm/r_arm/golem/cardboard
 	limb_id = SPECIES_GOLEM_CARDBOARD
 	should_draw_greyscale = FALSE
 
-/obj/item/bodypart/l_leg/golem/cardboard
+/obj/item/bodypart/leg/l_leg/golem/cardboard
 	limb_id = SPECIES_GOLEM_CARDBOARD
 	should_draw_greyscale = FALSE
 
-/obj/item/bodypart/r_leg/golem/cardboard
+/obj/item/bodypart/leg/r_leg/golem/cardboard
 	limb_id = SPECIES_GOLEM_CARDBOARD
 	should_draw_greyscale = FALSE
 
@@ -390,19 +400,19 @@
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 
-/obj/item/bodypart/l_arm/golem/durathread
+/obj/item/bodypart/arm/l_arm/golem/durathread
 	limb_id = SPECIES_GOLEM_DURATHREAD
 	should_draw_greyscale = FALSE
 
-/obj/item/bodypart/r_arm/golem/durathread
+/obj/item/bodypart/arm/r_arm/golem/durathread
 	limb_id = SPECIES_GOLEM_DURATHREAD
 	should_draw_greyscale = FALSE
 
-/obj/item/bodypart/l_leg/golem/durathread
+/obj/item/bodypart/leg/l_leg/golem/durathread
 	limb_id = SPECIES_GOLEM_DURATHREAD
 	should_draw_greyscale = FALSE
 
-/obj/item/bodypart/r_leg/golem/durathread
+/obj/item/bodypart/leg/r_leg/golem/durathread
 	limb_id = SPECIES_GOLEM_DURATHREAD
 	should_draw_greyscale = FALSE
 
@@ -417,19 +427,19 @@
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 
-/obj/item/bodypart/l_arm/golem/bone
+/obj/item/bodypart/arm/l_arm/golem/bone
 	limb_id = SPECIES_GOLEM_BONE
 	should_draw_greyscale = FALSE
 
-/obj/item/bodypart/r_arm/golem/bone
+/obj/item/bodypart/arm/r_arm/golem/bone
 	limb_id = SPECIES_GOLEM_BONE
 	should_draw_greyscale = FALSE
 
-/obj/item/bodypart/l_leg/golem/bone
+/obj/item/bodypart/leg/l_leg/golem/bone
 	limb_id = SPECIES_GOLEM_BONE
 	should_draw_greyscale = FALSE
 
-/obj/item/bodypart/r_leg/golem/bone
+/obj/item/bodypart/leg/r_leg/golem/bone
 	limb_id = SPECIES_GOLEM_BONE
 	should_draw_greyscale = FALSE
 
@@ -444,18 +454,18 @@
 	is_dimorphic = TRUE //WHO MADE SNOW BREASTS?
 	should_draw_greyscale = FALSE
 
-/obj/item/bodypart/l_arm/golem/snow
+/obj/item/bodypart/arm/l_arm/golem/snow
 	limb_id = SPECIES_GOLEM_SNOW
 	should_draw_greyscale = FALSE
 
-/obj/item/bodypart/r_arm/golem/snow
+/obj/item/bodypart/arm/r_arm/golem/snow
 	limb_id = SPECIES_GOLEM_SNOW
 	should_draw_greyscale = FALSE
 
-/obj/item/bodypart/l_leg/golem/snow
+/obj/item/bodypart/leg/l_leg/golem/snow
 	limb_id = SPECIES_GOLEM_SNOW
 	should_draw_greyscale = FALSE
 
-/obj/item/bodypart/r_leg/golem/snow
+/obj/item/bodypart/leg/r_leg/golem/snow
 	limb_id = SPECIES_GOLEM_SNOW
 	should_draw_greyscale = FALSE

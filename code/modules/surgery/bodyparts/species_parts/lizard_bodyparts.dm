@@ -8,28 +8,34 @@
 	limb_id = SPECIES_LIZARD
 	is_dimorphic = TRUE
 
-/obj/item/bodypart/l_arm/lizard
+/obj/item/bodypart/arm/l_arm/lizard/ashwalker
 	icon_greyscale = 'icons/mob/species/lizard/bodyparts.dmi'
 	limb_id = SPECIES_LIZARD
 
-/obj/item/bodypart/r_arm/lizard
+/obj/item/bodypart/arm/r_arm/lizard
 	icon_greyscale = 'icons/mob/species/lizard/bodyparts.dmi'
 	limb_id = SPECIES_LIZARD
 
-/obj/item/bodypart/l_leg/lizard
+/obj/item/bodypart/arm/l_arm/lizard/ashwalker
+	chunky = TRUE
+
+/obj/item/bodypart/arm/r_arm/lizard/ashwalker
+	chunky = TRUE
+
+/obj/item/bodypart/leg/l_leg/lizard
 	icon_greyscale = 'icons/mob/species/lizard/bodyparts.dmi'
 	limb_id = SPECIES_LIZARD
 
-/obj/item/bodypart/r_leg/lizard
+/obj/item/bodypart/leg/r_leg/lizard
 	icon_greyscale = 'icons/mob/species/lizard/bodyparts.dmi'
 	limb_id = SPECIES_LIZARD
 
-/obj/item/bodypart/l_leg/digitigrade
+/obj/item/bodypart/leg/l_leg/digitigrade
 	icon_greyscale = 'icons/mob/species/lizard/bodyparts.dmi'
 	limb_id = BODYPART_ID_DIGITIGRADE
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC | BODYTYPE_DIGITIGRADE
 
-/obj/item/bodypart/l_leg/digitigrade/update_limb(dropping_limb = FALSE, is_creating = FALSE)
+/obj/item/bodypart/leg/l_leg/digitigrade/update_limb(dropping_limb = FALSE, is_creating = FALSE)
 	. = ..()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
@@ -50,12 +56,12 @@
 		else
 			limb_id = SPECIES_LIZARD
 
-/obj/item/bodypart/r_leg/digitigrade
+/obj/item/bodypart/leg/r_leg/digitigrade
 	icon_greyscale = 'icons/mob/species/lizard/bodyparts.dmi'
 	limb_id = BODYPART_ID_DIGITIGRADE
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC | BODYTYPE_DIGITIGRADE
 
-/obj/item/bodypart/r_leg/digitigrade/update_limb(dropping_limb = FALSE, is_creating = FALSE)
+/obj/item/bodypart/leg/r_leg/digitigrade/update_limb(dropping_limb = FALSE, is_creating = FALSE)
 	. = ..()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner

@@ -16,7 +16,6 @@
 		TRAIT_NOBREATH,
 		TRAIT_RESISTHIGHPRESSURE,
 		TRAIT_RESISTLOWPRESSURE,
-		TRAIT_CHUNKYFINGERS,
 		TRAIT_RADIMMUNE,
 		TRAIT_VIRUSIMMUNE,
 		TRAIT_PIERCEIMMUNE,
@@ -26,6 +25,14 @@
 
 	mutantheart = /obj/item/organ/internal/heart/nightmare
 	mutantbrain = /obj/item/organ/internal/brain/shadow/nightmare
+	bodypart_overrides = list(
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/l_arm/shadow/nightmare,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/r_arm/shadow/nightmare,
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/shadow,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/l_leg/shadow,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/r_leg/shadow,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/shadow,
+	)
 
 /datum/species/shadow/nightmare/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()

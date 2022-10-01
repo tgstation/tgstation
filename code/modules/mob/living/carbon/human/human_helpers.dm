@@ -88,7 +88,8 @@
 /mob/living/carbon/human/can_use_guns(obj/item/G)
 	. = ..()
 	if(G.trigger_guard == TRIGGER_GUARD_NORMAL)
-		if(HAS_TRAIT(src, TRAIT_CHUNKYFINGERS))
+		var/obj/item/bodypart/arm/hand = get_active_hand()
+		if(HAS_TRAIT(src, TRAIT_CHUNKYFINGERS) || hand.chunky)
 			balloon_alert(src, "fingers are too big!")
 			return FALSE
 	if(HAS_TRAIT(src, TRAIT_NOGUNS))

@@ -17,10 +17,10 @@
 	bodyparts = list(
 		/obj/item/bodypart/chest/alien,
 		/obj/item/bodypart/head/alien,
-		/obj/item/bodypart/l_arm/alien,
-		/obj/item/bodypart/r_arm/alien,
-		/obj/item/bodypart/r_leg/alien,
-		/obj/item/bodypart/l_leg/alien,
+		/obj/item/bodypart/arm/l_arm/alien,
+		/obj/item/bodypart/arm/r_arm/alien,
+		/obj/item/bodypart/leg/r_leg/alien,
+		/obj/item/bodypart/leg/l_leg/alien,
 	)
 
 GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(

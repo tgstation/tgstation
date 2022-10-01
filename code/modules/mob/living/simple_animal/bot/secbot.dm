@@ -488,9 +488,9 @@
 			disabler_gun.cell.charge = 0
 			disabler_gun.update_appearance()
 			if(prob(50))
-				new /obj/item/bodypart/l_leg/robot(Tsec)
+				new /obj/item/bodypart/leg/l_leg/robot(Tsec)
 				if(prob(25))
-					new /obj/item/bodypart/r_leg/robot(Tsec)
+					new /obj/item/bodypart/leg/r_leg/robot(Tsec)
 			if(prob(25))//50% chance for a helmet OR vest
 				if(prob(50))
 					new /obj/item/clothing/head/helmet(Tsec)
