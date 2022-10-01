@@ -20,8 +20,9 @@
 	var/list/possible_points = list()
 	if(spawn_under_hallucinator)
 		possible_points += get_turf(hallucinator)
-	else for(var/turf/open/floor/open_floor in view(hallucinator))
-		possible_points += open_floor
+	else
+		for(var/turf/open/floor/open_floor in view(hallucinator))
+			possible_points += open_floor
 
 	if(!length(possible_points))
 		return FALSE
