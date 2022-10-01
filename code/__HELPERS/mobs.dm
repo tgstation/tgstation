@@ -254,9 +254,6 @@ GLOBAL_LIST_EMPTY(species_list)
 		return FALSE
 	if(!target)
 		target = user
-	var/atom/target_loc
-	if(!isturf(target))
-		target_loc = target.loc
 
 	if(!interaction_key)
 		interaction_key = target //Use the direct ref to the target
@@ -267,6 +264,7 @@ GLOBAL_LIST_EMPTY(species_list)
 		LAZYSET(user.do_afters, interaction_key, current_interaction_count + 1)
 
 	var/atom/user_loc = user.loc
+	var/atom/target_loc = target.loc
 
 	var/drifting = FALSE
 	if(SSmove_manager.processing_on(user, SSspacedrift))
@@ -300,8 +298,7 @@ GLOBAL_LIST_EMPTY(species_list)
 			|| (!(timed_action_flags & IGNORE_TARGET_LOC_CHANGE) && target.loc != target_loc) \
 			|| (!(timed_action_flags & IGNORE_HELD_ITEM) && user.get_active_held_item() != holding) \
 			|| (!(timed_action_flags & IGNORE_INCAPACITATED) && HAS_TRAIT(user, TRAIT_INCAPACITATED)) \
-			|| (extra_checks && !extra_checks.Invoke()) \
-		)
+			|| (extra_checks && !extra_checks.Invoke()))
 			. = FALSE
 			break
 
