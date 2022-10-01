@@ -243,7 +243,7 @@ GLOBAL_LIST_EMPTY(species_list)
 
 
 /**
- * Timed action involving one mob user. Target is optional.
+ * Timed action involving one mob user. Target defaults to user.
  *
  * Checks that `user` does not move, change hands, get stunned, etc. for the
  * given `time`. Returns `TRUE` on success or `FALSE` on failure.
