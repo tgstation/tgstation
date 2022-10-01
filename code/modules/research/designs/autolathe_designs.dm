@@ -450,7 +450,10 @@
 	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(/datum/material/iron = 4000, /datum/material/plastic = 500)
 	build_path = /obj/item/boxcutter
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS, RND_CATEGORY_EQUIPMENT, RND_CATEGORY_MISC)
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_CARGO
+	)
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO
 
 /datum/design/iron
