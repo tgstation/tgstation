@@ -51,7 +51,8 @@ export const MaterialCostSequence = (
   props: MaterialCostSequenceProps,
   context
 ) => {
-  let { design, amount, costMap, available, align, justify } = props;
+  const { design, amount, available, align, justify } = props;
+  let { costMap } = props;
 
   if (!costMap && !design) {
     return null;
