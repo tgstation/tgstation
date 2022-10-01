@@ -95,16 +95,17 @@
 	return ..()
 
 /datum/hallucination/death/dust/start()
-	. = ..()
-	if(!.)
-		return
 
 	if(!ishuman(hallucinator))
-		return
+		return FALSE
 
 	var/mob/living/carbon/human/hallucinating_human = hallucinator
 	var/dust_icon_state = hallucinating_human.dna?.species?.dust_anim
 	if(!dust_icon_state)
+		return FALSE
+
+	. = ..()
+	if(!.)
 		return
 
 	created_images = list()

@@ -50,12 +50,12 @@
 	return created_image
 
 /datum/hallucination/body/husk
-	random_hallucination_weight = 12
+	random_hallucination_weight = 8
 	body_image_file = 'icons/mob/species/human/human.dmi'
 	body_image_state = "husk"
 
 /datum/hallucination/body/husk/sideways
-	random_hallucination_weight = 6
+	random_hallucination_weight = 4
 
 /datum/hallucination/body/husk/sideways/make_body_image(turf/location)
 	var/image/body = ..()
@@ -86,26 +86,36 @@
 		UnregisterSignal(hallucinator, COMSIG_MOVABLE_MOVED)
 	if(del_timerid)
 		deltimer(del_timerid)
+		del_timerid = null
 	return ..()
 
 /datum/hallucination/body/staticguy/queue_clean_up()
 	RegisterSignal(hallucinator, COMSIG_MOVABLE_MOVED, .proc/on_move)
-	del_timerid = QDEL_IN(src, rand(20 SECONDS, 30 SECONDS))
+	del_timerid = QDEL_IN(src, rand(2 MINUTES, 3 MINUTES))
 	return TRUE
 
 /// Signal proc for [COMSIG_MOVABLE_MOVED] - if we move out of view of the hallucination, it disappears, how spooky
 /datum/hallucination/body/staticguy/proc/on_move(datum/source)
 	SIGNAL_HANDLER
 
-	if((shown_body.loc in view(hallucinator)) && shown_body.loc != hallucinator.loc)
+	// Entering its turf will cause it to fade out then delete
+	if(shown_body.loc == hallucinator.loc)
+		animate(shown_body, alpha = 0, time = 0.5 SECONDS)
+		deltimer(del_timerid)
+		del_timerid = QDEL_IN(src, 0.6 SECONDS)
 		return
 
+	// Staying in view will do nothing
+	if(shown_body.loc in view(hallucinator))
+		return
+
+	// Leaving view will delete it immediately
 	deltimer(del_timerid)
 	del_timerid = null
 	qdel(src)
 
 /datum/hallucination/body/weird
-	random_hallucination_weight = 0.2 // These are very uncommon
+	random_hallucination_weight = 0.15 // These are very uncommon
 	abstract_hallucination_parent = /datum/hallucination/body/weird
 
 /datum/hallucination/body/weird/alien
@@ -136,6 +146,6 @@
 	body_image_file = 'icons/mob/simple/simple_human.dmi'
 	body_image_state = "faceless"
 
-/datum/hallucination/body/weird/faceless
+/datum/hallucination/body/weird/bones
 	body_image_file = 'icons/mob/simple/simple_human.dmi'
 	body_image_state = "mrbones"
