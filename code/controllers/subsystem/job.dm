@@ -641,7 +641,7 @@ SUBSYSTEM_DEF(job)
 
 	if(fexists(file(toml_file)))
 		to_chat(src, span_notice("Generating new jobconfig.toml, pulling from the old config settings."))
-		if(!regenerate_job_config(caller))
+		if(!regenerate_job_config(user))
 			return FALSE
 		return TRUE
 
@@ -700,7 +700,7 @@ SUBSYSTEM_DEF(job)
 	var/list/file_data = list()
 
 	if(!fexists(file(toml_file))) // You need an existing (valid) TOML for this to work. Sanity check if someone calls this directly.
-		to_chat(caller, span_notice("No jobconfig.toml found in the config folder! If this is not expected, please notify a server operator or coders. You may need to generate a new config file by running 'Generate Job Configuration' from the Server tab."))
+		to_chat(user, span_notice("No jobconfig.toml found in the config folder! If this is not expected, please notify a server operator or coders. You may need to generate a new config file by running 'Generate Job Configuration' from the Server tab."))
 		return FALSE
 
 	var/job_config = json_decode(file2text(toml_file))
