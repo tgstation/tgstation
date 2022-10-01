@@ -18,7 +18,7 @@
 		if(!isnull(offset_const))
 			plane = GET_NEW_PLANE(plane, offset_const)
 		// That, or you need to pass in some non null object to reference
-		else if(!isnull(offset_spokesman))
+		else if(isatom(offset_spokesman))
 			// Note, we are ok with null turfs, that's not an error condition we'll just default to 0, the error would be
 			// Not passing ANYTHING in, key difference
 			var/turf/our_turf = get_turf(offset_spokesman)
@@ -26,6 +26,9 @@
 		// otherwise if you're setting plane you better have the guts to back it up
 		else
 			stack_trace("No plane offset passed in as context for a non floating mutable appearance, ya done fucked up")
+	else if(!isnull(offset_spokesman) && !isatom(offset_spokesman))
+		stack_trace("Why did you pass in offset_spokesman as [offset_spokesman]?")
+
 	var/mutable_appearance/MA = new()
 	MA.icon = icon
 	MA.icon_state = icon_state
