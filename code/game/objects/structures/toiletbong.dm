@@ -80,7 +80,7 @@
 		return FALSE
 	tool.play_tool_sound(src)
 	to_chat(user, span_notice("You begin taking apart the [src]."))
-	if (!do_after(user, src, 10 SECONDS))
+	if(!do_after(user, src, 10 SECONDS))
 		return FALSE
 	new /obj/item/flamethrower(get_turf(src))
 	new /obj/item/stack/sheet/iron(get_turf(src))

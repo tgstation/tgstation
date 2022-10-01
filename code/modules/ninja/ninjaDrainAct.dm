@@ -151,7 +151,7 @@
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/computer/secure_data/proc/ninjadrain_charge(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
-	if(!do_after(ninja, time = 20 SECONDS))
+	if(!do_after(ninja, src, time = 20 SECONDS))
 		return
 	for(var/datum/data/record/rec in sort_record(GLOB.data_core.general, sortBy, order))
 		for(var/datum/data/record/security_record in GLOB.data_core.security)

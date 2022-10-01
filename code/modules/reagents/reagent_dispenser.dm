@@ -87,7 +87,7 @@
 
 		user.balloon_alert_to_viewers("attaching rig...")
 		add_fingerprint(user)
-		if(!do_after(user, 2 SECONDS, target = src) || !user.transferItemToLoc(holder, src))
+		if(!do_after(user, src, 2 SECONDS) || !user.transferItemToLoc(holder, src))
 			return
 		rig = holder
 		holder.master = src
@@ -131,7 +131,7 @@
 	if(QDELETED(src))
 		return
 	user.balloon_alert_to_viewers("detaching rig...")
-	if(!do_after(user, 2 SECONDS, target = src))
+	if(!do_after(user, src, 2 SECONDS))
 		return
 	user.balloon_alert_to_viewers("detached rig")
 	user.log_message("detached [rig] from [src].", LOG_GAME)

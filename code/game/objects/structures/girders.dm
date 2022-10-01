@@ -138,7 +138,7 @@
 					balloon_alert(user, "need [amount] sheets!")
 					return
 				balloon_alert(user, "adding plating...")
-				if (do_after(user, src, 40*platingmodifier))
+				if(do_after(user, src, 40*platingmodifier))
 					if(sheets.get_amount() < amount)
 						return
 					sheets.use(amount)
