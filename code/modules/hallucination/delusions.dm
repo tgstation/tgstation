@@ -49,7 +49,7 @@
 /datum/hallucination/delusion/Destroy()
 	if(!QDELETED(hallucinator) && LAZYLEN(delusions))
 		hallucinator.client?.images -= delusions
-		delusions.Cut()
+		LAZYNULL(delusions)
 
 	return ..()
 
