@@ -245,7 +245,7 @@
 
 	H.notransform = TRUE
 
-	if(do_after(owner, time = time = 6 SECONDS, timed_action_flags = IGNORE_HELD_ITEM))
+	if(do_after(owner, time = 6 SECONDS, timed_action_flags = IGNORE_HELD_ITEM))
 		if(H.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
 			make_dupe()
 		else
