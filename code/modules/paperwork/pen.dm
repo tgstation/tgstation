@@ -142,7 +142,7 @@
 		to_chat(user, span_warning("You must be holding the pen to continue!"))
 		return
 	var/deg = tgui_input_number(user, "What angle would you like to rotate the pen head to? (0-360)", "Rotate Pen Head", max_value = 360)
-	if(isnull(deg) || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) || loc != user)
+	if(isnull(deg) || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE) || loc != user)
 		return
 	degrees = deg
 	to_chat(user, span_notice("You rotate the top of the pen to [deg] degrees."))
@@ -163,12 +163,12 @@
 	//Changing name/description of items. Only works if they have the UNIQUE_RENAME object flag set
 	if(isobj(O) && proximity && (O.obj_flags & UNIQUE_RENAME))
 		var/penchoice = tgui_input_list(user, "What would you like to edit?", "Pen Setting", list("Rename", "Description", "Reset"))
-		if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
+		if(QDELETED(O) || !user.canUseTopic(O, be_close = TRUE))
 			return
 		if(penchoice == "Rename")
 			var/input = tgui_input_text(user, "What do you want to name [O]?", "Object Name", "[O.name]", MAX_NAME_LEN)
 			var/oldname = O.name
-			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
+			if(QDELETED(O) || !user.canUseTopic(O, be_close = TRUE))
 				return
 			if(input == oldname || !input)
 				to_chat(user, span_notice("You changed [O] to... well... [O]."))
@@ -184,7 +184,7 @@
 		if(penchoice == "Description")
 			var/input = tgui_input_text(user, "Describe [O]", "Description", "[O.desc]", 140)
 			var/olddesc = O.desc
-			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
+			if(QDELETED(O) || !user.canUseTopic(O, be_close = TRUE))
 				return
 			if(input == olddesc || !input)
 				to_chat(user, span_notice("You decide against changing [O]'s description."))
@@ -194,7 +194,7 @@
 				O.renamedByPlayer = TRUE
 
 		if(penchoice == "Reset")
-			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
+			if(QDELETED(O) || !user.canUseTopic(O, be_close = TRUE))
 				return
 
 			qdel(O.GetComponent(/datum/component/rename))

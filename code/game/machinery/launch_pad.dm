@@ -287,7 +287,7 @@
 /obj/machinery/launchpad/briefcase/MouseDrop(over_object, src_location, over_location)
 	. = ..()
 	if(over_object == usr)
-		if(!briefcase || !usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
+		if(!briefcase || !usr.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = TRUE))
 			return
 		usr.visible_message(span_notice("[usr] starts closing [src]..."), span_notice("You start closing [src]..."))
 		if(do_after(usr, 30, target = usr))
