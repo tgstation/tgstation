@@ -123,8 +123,12 @@
 /obj/structure/closet/wardrobe/pjs/PopulateContents()
 	new /obj/item/clothing/under/misc/pj/red(src)
 	new /obj/item/clothing/under/misc/pj/red(src)
+	new /obj/item/clothing/head/nightcap/red(src)
+	new /obj/item/clothing/head/nightcap/red(src)
 	new /obj/item/clothing/under/misc/pj/blue(src)
 	new /obj/item/clothing/under/misc/pj/blue(src)
+	new /obj/item/clothing/head/nightcap/blue(src)
+	new /obj/item/clothing/head/nightcap/blue(src)
 	for(var/i in 1 to 4)
 		new /obj/item/clothing/shoes/sneakers/white(src)
 	return

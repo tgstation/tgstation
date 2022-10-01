@@ -1,0 +1,21 @@
+2022-10-01:
+  Guillaume Prata:
+  - bugfix: Fix an accidental revert on noblium's reagent effect on plasmamen
+  JohnFulpWillard:
+  - qol: '[ICEBOX] Arrivals now won''t depower from a single cable being bit.'
+  - qol: '[ICEBOX] There''s now an ORM-locked windoor in front of the ORM.'
+  - qol: '[ICEBOX] The maintenance door leading to Abandoned Kitchen & Bar, on the
+      right side, now also has Service access tied to it.'
+  Tramz:
+  - imageadd: Adds new icons and a new animation for the Bloody blade.
+  VexingRaven:
+  - bugfix: Multi-Z Ruins work again (Ice Moon Mining Site spawns again with the Demonic
+      Frost Miner)
+  san7890:
+  - bugfix: When a Nuclear Operative makes a golem, they no longer immediately turn
+      into a fully functioning reinforcement.
+  tralezab:
+  - rscadd: Changelings once again have reestablished their changeling hivemind, and
+      can secretly communicate between each other.
+  - bugfix: Fixed up the Changeling UI a bit, like for example some dimmers would
+      never render.

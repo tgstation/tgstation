@@ -1,5 +1,0 @@
-author: "san7890"
-delete-after: True
-changes: 
-  - admin: "When a voice analyzer is attached to a bomb or a chemical grenade, the respective logs to game as well as the message_admins will contain the recorded phrase on that voice analyzer."
-  - bugfix: "Voice analyzers should now properly trigger TTVs to blow up."

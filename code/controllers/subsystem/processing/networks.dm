@@ -215,7 +215,7 @@ SUBSYSTEM_DEF(networks)
  * * network - optional, It can be a ntnet or just the text equivalent
  * * hardware_id = optional, text, will look it up and return with the parent.name as well
  */
-/datum/controller/subsystem/networks/proc/add_log(log_string, network = null , hardware_id = null)
+/datum/controller/subsystem/networks/proc/add_log(log_string, network = null)
 	set waitfor = FALSE // so process keeps running
 	var/list/log_text = list()
 	log_text += "\[[station_time_timestamp()]\]"
@@ -228,15 +228,7 @@ SUBSYSTEM_DEF(networks)
 		else // bad network?
 			log_text += "{[network] *BAD*}"
 
-	if(hardware_id)
-		var/datum/component/ntnet_interface/conn = interfaces_by_hardware_id[hardware_id]
-		if(conn)
-			log_text += " ([hardware_id])[conn.parent]"
-		else
-			log_text += " ([hardware_id])*BAD ID*"
-	else
-		log_text += "*SYSTEM*"
-	log_text += " - "
+	log_text += "*SYSTEM* - "
 	log_text += log_string
 	log_string = log_text.Join()
 

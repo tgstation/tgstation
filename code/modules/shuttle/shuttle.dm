@@ -150,7 +150,7 @@
 //Debug proc used to highlight bounding area
 /obj/docking_port/proc/highlight(_color = "#f00")
 	invisibility = 0
-	plane = GHOST_PLANE
+	SET_PLANE_IMPLICIT(src, GHOST_PLANE)
 	var/list/L = return_coords()
 	var/turf/T0 = locate(L[1],L[2],z)
 	var/turf/T1 = locate(L[3],L[4],z)
@@ -429,6 +429,12 @@
 	var/can_move_docking_ports = FALSE
 	var/list/hidden_turfs = list()
 
+/**
+ * Actions to be taken after shuttle is loaded but before it has been moved out of transit z-level to its final location
+ *
+ * Arguments:
+ * * replace - TRUE if this shuttle is replacing an existing one. FALSE by default.
+ */
 /obj/docking_port/mobile/register(replace = FALSE)
 	. = ..()
 	if(!shuttle_id)
@@ -450,6 +456,15 @@
 			SSshuttle.assoc_mobile[shuttle_id] = 1
 
 	SSshuttle.mobile_docking_ports += src
+
+/**
+ * Actions to be taken after shuttle is loaded and has been moved to its final location
+ *
+ * Arguments:
+ * * replace - TRUE if this shuttle is replacing an existing one. FALSE by default.
+ */
+/obj/docking_port/mobile/proc/postregister(replace = FALSE)
+	return
 
 /obj/docking_port/mobile/unregister()
 	. = ..()

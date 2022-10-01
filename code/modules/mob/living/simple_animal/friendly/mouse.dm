@@ -30,7 +30,7 @@
 	can_be_held = TRUE
 	held_w_class = WEIGHT_CLASS_TINY
 	held_state = "mouse_gray"
-	faction = list("rat")
+	faction = list(FACTION_RAT)
 
 /mob/living/simple_animal/mouse/Initialize(mapload)
 	. = ..()
