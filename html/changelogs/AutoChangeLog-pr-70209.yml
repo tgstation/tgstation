@@ -1,6 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - qol: "[ICEBOX] Arrivals now won't depower from a single cable being bit."
-  - qol: "[ICEBOX] There's now an ORM-locked windoor in front of the ORM."
-  - qol: "[ICEBOX] The maintenance door leading to Abandoned Kitchen & Bar, on the right side, now also has Service access tied to it."
