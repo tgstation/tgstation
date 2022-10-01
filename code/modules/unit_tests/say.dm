@@ -58,10 +58,10 @@
 
 /// This runs some simple speech tests on a speaker and listener and determines if a person can hear whispering or speaking as they are moved a distance away
 /datum/unit_test/speech
-	var/handle_speech_result
-	var/handle_hearing_resul
+	var/list/handle_speech_result
+	var/list/handle_hearing_resul
 
-/datum/unit_test/speech/proc/handle_speech(datum/source, mob/speech_args)
+/datum/unit_test/speech/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
 
 	TEST_ASSERT(speech_args[SPEECH_MESSAGE], "Handle speech signal does not have a message arg")
@@ -113,7 +113,7 @@
 	TEST_ASSERT_EQUAL(islist(handle_hearing_result), distance <= NORMAL_HEARING_RANGE, "Handle hearing signal was not fired")
 	handle_speech_result = null
 	handle_hearing_result = null
-	
+
 	// whispering
 	speaker.whisper("The quick brown fox jumps over the lazy dog")
 	TEST_ASSERT(handle_speech_result, "Handle speech signal was not fired")
