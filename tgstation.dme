@@ -3085,6 +3085,7 @@
 #include "code\modules\hallucination\fake_sound.dm"
 #include "code\modules\hallucination\hazard.dm"
 #include "code\modules\hallucination\hud_screw.dm"
+#include "code\modules\hallucination\ice_cube.dm"
 #include "code\modules\hallucination\inhand_fake_item.dm"
 #include "code\modules\hallucination\nearby_fake_item.dm"
 #include "code\modules\hallucination\on_fire.dm"
