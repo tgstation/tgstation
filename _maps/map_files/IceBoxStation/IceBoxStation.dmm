@@ -33676,8 +33676,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/sorting/mail{
 	dir = 4;
-	sortType = 20;
-	sortTypes = list(18,19,21)
+	sortTypes = list(18,19,20,21)
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
@@ -75899,8 +75898,9 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/junction/flip{
-	dir = 8
+/obj/structure/disposalpipe/sorting/mail/flip{
+	dir = 8;
+	sortType = 20
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/bar)
