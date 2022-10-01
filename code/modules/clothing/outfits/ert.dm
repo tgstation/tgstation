@@ -15,14 +15,18 @@
 	gloves = /obj/item/clothing/gloves/combat
 	mask = /obj/item/clothing/mask/gas/sechailer
 	shoes = /obj/item/clothing/shoes/combat/swat
+	var/additional_radio
 
 /datum/outfit/centcom/ert/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
 
-	var/obj/item/radio/R = H.ears
+	var/obj/item/radio/headset/R = H.ears
 	R.set_frequency(FREQ_CENTCOM)
 	R.freqlock = TRUE
+	if(additional_radio)
+		R.keyslot2 = new additional_radio()
+		R.recalculateChannels()
 
 	var/obj/item/card/id/W = H.wear_id
 	if(W)
@@ -45,15 +49,7 @@
 	belt = /obj/item/storage/belt/security/full
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 	l_pocket = /obj/item/switchblade
-
-/datum/outfit/centcom/ert/commander/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	..()
-
-	if(visualsOnly)
-		return
-	var/obj/item/radio/R = H.ears
-	R.keyslot = new /obj/item/encryptionkey/heads/captain
-	R.recalculateChannels()
+	additional_radio = /obj/item/encryptionkey/heads/captain
 
 /datum/outfit/centcom/ert/commander/alert
 	name = "ERT Commander - High Alert"
@@ -81,16 +77,7 @@
 	belt = /obj/item/storage/belt/security/full
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
-
-/datum/outfit/centcom/ert/security/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	..()
-
-	if(visualsOnly)
-		return
-
-	var/obj/item/radio/R = H.ears
-	R.keyslot = new /obj/item/encryptionkey/heads/hos
-	R.recalculateChannels()
+	additional_radio = /obj/item/encryptionkey/heads/hos
 
 /datum/outfit/centcom/ert/security/alert
 	name = "ERT Security - High Alert"
@@ -119,16 +106,7 @@
 	glasses = /obj/item/clothing/glasses/hud/health
 	l_hand = /obj/item/storage/medkit/regular
 	r_hand = /obj/item/gun/energy/e_gun
-
-/datum/outfit/centcom/ert/medic/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	..()
-
-	if(visualsOnly)
-		return
-
-	var/obj/item/radio/R = H.ears
-	R.keyslot = new /obj/item/encryptionkey/heads/cmo
-	R.recalculateChannels()
+	additional_radio = /obj/item/encryptionkey/heads/cmo
 
 /datum/outfit/centcom/ert/medic/alert
 	name = "ERT Medic - High Alert"
@@ -159,16 +137,7 @@
 	belt = /obj/item/storage/belt/utility/full/powertools
 	glasses = /obj/item/clothing/glasses/meson/engine
 	l_pocket = /obj/item/rcd_ammo/large
-
-/datum/outfit/centcom/ert/engineer/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	..()
-
-	if(visualsOnly)
-		return
-
-	var/obj/item/radio/R = H.ears
-	R.keyslot = new /obj/item/encryptionkey/heads/ce
-	R.recalculateChannels()
+	additional_radio = /obj/item/encryptionkey/heads/ce
 
 /datum/outfit/centcom/ert/engineer/alert
 	name = "ERT Engineer - High Alert"
@@ -263,14 +232,7 @@
 		/obj/item/nullrod = 1,
 		/obj/item/storage/box/survival/engineer = 1,
 	)
-
-/datum/outfit/centcom/ert/chaplain/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	..()
-	if(visualsOnly)
-		return
-	var/obj/item/radio/R = H.ears
-	R.keyslot = new /obj/item/encryptionkey/heads/hop
-	R.recalculateChannels()
+	additional_radio = /obj/item/encryptionkey/heads/hop
 
 /datum/outfit/centcom/ert/chaplain/inquisitor
 	name = "Inquisition Chaplain"
@@ -302,16 +264,7 @@
 	l_pocket = /obj/item/grenade/chem_grenade/cleaner
 	r_pocket = /obj/item/grenade/chem_grenade/cleaner
 	l_hand = /obj/item/storage/bag/trash/bluespace
-
-/datum/outfit/centcom/ert/janitor/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	..()
-
-	if(visualsOnly)
-		return
-
-	var/obj/item/radio/R = H.ears
-	R.keyslot = new /obj/item/encryptionkey/headset_service
-	R.recalculateChannels()
+	additional_radio = /obj/item/encryptionkey/heads/hop
 
 /datum/outfit/centcom/ert/janitor/heavy
 	name = "ERT Janitor - Heavy Duty"
@@ -342,14 +295,12 @@
 	shoes = /obj/item/clothing/shoes/clown_shoes/combat
 	l_pocket = /obj/item/food/grown/banana
 	r_pocket = /obj/item/bikehorn/golden
+	additional_radio = /obj/item/encryptionkey/heads/hop
 
 /datum/outfit/centcom/ert/clown/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
 	if(visualsOnly)
 		return
-	var/obj/item/radio/R = H.ears
-	R.keyslot = new /obj/item/encryptionkey/headset_service
-	R.recalculateChannels()
 	ADD_TRAIT(H, TRAIT_NAIVE, INNATE_TRAIT)
 	H.dna.add_mutation(/datum/mutation/human/clumsy)
 	for(var/datum/mutation/human/clumsy/M in H.dna.mutations)
@@ -565,7 +516,7 @@
 	if(visualsOnly)
 		return
 	var/obj/item/radio/headset = equipper.ears
-	headset.keyslot = new /obj/item/encryptionkey/heads/captain
+	headset.keyslot = /obj/item/encryptionkey/heads/captain
 	headset.recalculateChannels()
 
 /datum/outfit/centcom/ert/marine/security
@@ -583,7 +534,7 @@
 		return
 
 	var/obj/item/radio/headset = equipper.ears
-	headset.keyslot = new /obj/item/encryptionkey/heads/hos
+	headset.keyslot = /obj/item/encryptionkey/heads/hos
 	headset.recalculateChannels()
 
 /datum/outfit/centcom/ert/marine/medic
@@ -610,7 +561,7 @@
 		return
 
 	var/obj/item/radio/headset = equipper.ears
-	headset.keyslot = new /obj/item/encryptionkey/heads/cmo
+	headset.keyslot = /obj/item/encryptionkey/heads/cmo
 	headset.recalculateChannels()
 
 /datum/outfit/centcom/ert/marine/engineer
@@ -632,5 +583,5 @@
 		return
 
 	var/obj/item/radio/headset = equipper.ears
-	headset.keyslot = new /obj/item/encryptionkey/heads/ce
+	headset.keyslot = /obj/item/encryptionkey/heads/ce
 	headset.recalculateChannels()

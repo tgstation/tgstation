@@ -81,6 +81,8 @@
 	secure_radio_connections = list()
 	. = ..()
 
+	if(ispath(keyslot))
+		keyslot = new keyslot()
 	for(var/ch_name in channels)
 		secure_radio_connections[ch_name] = add_radio(src, GLOB.radiochannels[ch_name])
 
@@ -141,7 +143,7 @@
 
 /obj/item/radio/proc/make_syndie() // Turns normal radios into Syndicate radios!
 	qdel(keyslot)
-	keyslot = new /obj/item/encryptionkey/syndicate
+	keyslot = /obj/item/encryptionkey/syndicate
 	syndie = TRUE
 	recalculateChannels()
 
@@ -503,7 +505,7 @@
 
 /obj/item/radio/borg/syndicate
 	syndie = TRUE
-	keyslot = new /obj/item/encryptionkey/syndicate
+	keyslot = /obj/item/encryptionkey/syndicate
 
 /obj/item/radio/borg/syndicate/Initialize(mapload)
 	. = ..()
