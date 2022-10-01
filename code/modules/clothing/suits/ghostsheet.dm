@@ -22,8 +22,6 @@
 		if(!isinhands)
 			. += emissive_appearance('icons/mob/simple/mob.dmi', "ghost", offset_spokesman = src, alpha = src.alpha)
 
-
-
 /obj/item/clothing/suit/costume/ghost_sheet/spooky
 	name = "spooky ghost"
 	desc = "This is obviously just a bedsheet, but maybe try it on?"
