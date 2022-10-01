@@ -1,0 +1,4 @@
+author: "Wallem"
+delete-after: True
+changes: 
+  - qol: "Anchoring a microwave on the same tile as a table will align it to the table"

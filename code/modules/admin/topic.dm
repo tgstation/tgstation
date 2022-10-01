@@ -1145,12 +1145,13 @@
 		if(!paths)
 			tgui_alert(usr,"The path list you sent is empty.")
 			return
-		if(length(paths) > 5)
-			tgui_alert(usr,"Select fewer object types, (max 5).")
+
+		var/number = clamp(text2num(href_list["object_count"]), 1, ADMIN_SPAWN_CAP)
+		if(length(paths) * number > ADMIN_SPAWN_CAP)
+			tgui_alert(usr,"Select fewer object types!")
 			return
 
 		var/list/offset = splittext(href_list["offset"],",")
-		var/number = clamp(text2num(href_list["object_count"]), 1, ADMIN_SPAWN_CAP)
 		var/X = offset.len > 0 ? text2num(offset[1]) : 0
 		var/Y = offset.len > 1 ? text2num(offset[2]) : 0
 		var/Z = offset.len > 2 ? text2num(offset[3]) : 0

@@ -37,6 +37,7 @@
 	wires = new /datum/wires/microwave(src)
 	create_reagents(100)
 	soundloop = new(src, FALSE)
+	set_on_table()
 
 	update_icon_state()
 
@@ -46,6 +47,10 @@
 		QDEL_NULL(wires)
 	QDEL_NULL(soundloop)
 	. = ..()
+
+/obj/machinery/microwave/set_anchored(anchorvalue)
+	. = ..()
+	set_on_table()
 
 /obj/machinery/microwave/RefreshParts()
 	. = ..()
@@ -459,6 +464,14 @@
 /obj/machinery/microwave/proc/close()
 	open = FALSE
 	update_appearance()
+
+/// Go on top of a table if we're anchored & not varedited
+/obj/machinery/microwave/proc/set_on_table()
+	var/obj/structure/table/counter = locate(/obj/structure/table) in get_turf(src)
+	if(anchored && counter && !pixel_y)
+		pixel_y = 6
+	else if(!anchored)
+		pixel_y = initial(pixel_y)
 
 /// Type of microwave that automatically turns it self on erratically. Probably don't use this outside of the holodeck program "Microwave Paradise".
 /// You could also live your life with a microwave that will continously run in the background of everything while also not having any power draw. I think the former makes more sense.

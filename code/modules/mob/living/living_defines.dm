@@ -206,8 +206,6 @@
 
 	/// FOV view that is applied from either nativeness or traits
 	var/fov_view
-	/// Native FOV that will be applied if a config is enabled
-	var/native_fov = FOV_90_DEGREES
 	/// Lazy list of FOV traits that will apply a FOV view when handled.
 	var/list/fov_traits
 	///what multiplicative slowdown we get from turfs currently.
