@@ -60,6 +60,8 @@
 /datum/unit_test/speech
 	var/list/handle_speech_result
 	var/list/handle_hearing_result
+	var/mob/living/carbon/human/speaker
+	var/mob/living/carbon/human/listener
 
 /datum/unit_test/speech/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
