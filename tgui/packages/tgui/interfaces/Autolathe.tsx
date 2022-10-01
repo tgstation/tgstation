@@ -4,17 +4,17 @@ import { Window } from '../layouts';
 import { capitalize } from 'common/string';
 import { Design, MaterialMap } from './Fabrication/Types';
 import { DesignBrowser } from './Fabrication/DesignBrowser';
-import { classes } from 'common/react';
+import { BooleanLike, classes } from 'common/react';
 import { MaterialCostSequence } from './Fabrication/MaterialCostSequence';
 import { Material } from './Fabrication/Types';
 
 type AutolatheDesign = Design & {
-  buildable: boolean;
-  mult5: boolean;
-  mult10: boolean;
-  mult25: boolean;
-  mult50: boolean;
-  sheet: boolean;
+  buildable: BooleanLike;
+  mult5: BooleanLike;
+  mult10: BooleanLike;
+  mult25: BooleanLike;
+  mult50: BooleanLike;
+  sheet: BooleanLike;
   maxmult: number;
 };
 
@@ -23,7 +23,7 @@ type AutolatheData = {
   materialtotal: number;
   materialsmax: number;
   designs: AutolatheDesign[];
-  active: boolean;
+  active: BooleanLike;
 };
 
 export const Autolathe = (props, context) => {
@@ -89,7 +89,7 @@ export const Autolathe = (props, context) => {
           </Stack.Item>
           <Stack.Item grow>
             <DesignBrowser
-              busy={active}
+              busy={!!active}
               designs={designs}
               availableMaterials={availableMaterials}
               buildRecipeElement={(
