@@ -637,7 +637,6 @@ SUBSYSTEM_DEF(job)
 /datum/controller/subsystem/job/proc/generate_config(mob/user)
 	var/toml_file = "[global.config.directory]/jobconfig.toml"
 	var/jobstext = "[global.config.directory]/jobs.txt"
-	var/caller = user
 	var/list/file_data = list()
 
 	if(fexists(file(toml_file)))
@@ -647,7 +646,7 @@ SUBSYSTEM_DEF(job)
 		return TRUE
 
 	if(fexists(file(jobstext))) // Generate the new TOML format, migrating from the text format.
-		to_chat(caller, span_notice("Found jobs.txt in config directory! Generating jobconfig.toml from it."))
+		to_chat(user, span_notice("Found jobs.txt in config directory! Generating jobconfig.toml from it."))
 		jobstext = file2text(file(jobstext)) // walter i'm dying (get the file from the string, then parse it into a larger text string)
 		for(var/datum/job/occupation as anything in joinable_occupations)
 			var/job_key = occupation.config_tag
@@ -665,11 +664,11 @@ SUBSYSTEM_DEF(job)
 		if(fexists(temp_file))
 			fdel(temp_file) // ensure it writes properly in case it exists
 		WRITE_FILE(temp_file, "[config_documentation]\n[payload]")
-		DIRECT_OUTPUT(caller, ftp(temp_file, "jobconfig.toml"))
+		DIRECT_OUTPUT(user, ftp(temp_file, "jobconfig.toml"))
 		return TRUE
 
 	else // Generate the new TOML format, using codebase defaults.
-		to_chat(caller, span_notice("Found jobs.txt in config directory! Generating jobconfig.toml from it."))
+		to_chat(user, span_notice("Found jobs.txt in config directory! Generating jobconfig.toml from it."))
 		for(var/datum/job/occupation as anything in joinable_occupations)
 			var/job_key = occupation.config_tag
 			if(is_assistant_job(occupation)) // there's a concession made in jobs.txt that we should just rapidly account for here I KNOW I KNOW.
@@ -692,14 +691,13 @@ SUBSYSTEM_DEF(job)
 		if(fexists(temp_file))
 			fdel(temp_file) // ensure it writes properly in case it exists
 		WRITE_FILE(temp_file, "[config_documentation]\n[payload]")
-		DIRECT_OUTPUT(caller, ftp(temp_file, "jobconfig.toml"))
+		DIRECT_OUTPUT(user, ftp(temp_file, "jobconfig.toml"))
 		return TRUE
 
 /// If we add a new job or more fields to config a job with, quickly spin up a brand new config that inherits all of your old settings, but adds the new job with codebase defaults. Returns TRUE if a file is successfully generated, FALSE otherwise.
 /datum/controller/subsystem/job/proc/regenerate_job_config(mob/user)
 	var/toml_file = "[global.config.directory]/jobconfig.toml"
 	var/list/file_data = list()
-	var/caller = user
 
 	if(!fexists(file(toml_file))) // You need an existing (valid) TOML for this to work. Sanity check if someone calls this directly.
 		to_chat(caller, span_notice("No jobconfig.toml found in the config folder! If this is not expected, please notify a server operator or coders. You may need to generate a new config file by running 'Generate Job Configuration' from the Server tab."))
@@ -719,7 +717,7 @@ SUBSYSTEM_DEF(job)
 			)
 
 		else
-			to_chat(caller, span_notice("New job [job_name] (using key [job_key]) detected! Adding to jobconfig.toml using default codebase values..."))
+			to_chat(user, span_notice("New job [job_name] (using key [job_key]) detected! Adding to jobconfig.toml using default codebase values..."))
 			file_data["[job_key]"] = list(
 				"Total Positions" = occupation.total_positions,
 				"Spawn Positions" = occupation.spawn_positions,
@@ -731,7 +729,7 @@ SUBSYSTEM_DEF(job)
 		if(fexists(temp_file))
 			fdel(temp_file) // ensure it writes properly in case it exists
 		WRITE_FILE(temp_file, "[config_documentation]\n[payload]")
-		DIRECT_OUTPUT(caller, ftp(temp_file, "jobconfig.toml"))
+		DIRECT_OUTPUT(user, ftp(temp_file, "jobconfig.toml"))
 		return TRUE
 
 /datum/controller/subsystem/job/proc/HandleFeedbackGathering()
