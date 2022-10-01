@@ -25,13 +25,11 @@ export class SearchBar extends Component<SearchBarProps> {
   protected timeout?: NodeJS.Timeout;
 
   protected onInput(value: string) {
-    const { onSearchTextChanged } = this.props;
-
     if (this.timeout) {
       clearTimeout(this.timeout);
     }
 
-    this.timeout = setTimeout(() => onSearchTextChanged(value), 200);
+    this.timeout = setTimeout(() => this.props.onSearchTextChanged(value), 200);
   }
 
   render() {
