@@ -553,7 +553,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	if(affecting && !IS_ORGANIC_LIMB(affecting))
 		if(user == H)
 			user.visible_message(span_notice("[user] starts to fix some of the wires in [H]'s [affecting.name]."), span_notice("You start fixing some of the wires in [H == user ? "your" : "[H]'s"] [affecting.name]."))
-			if(!do_mob(user, H, 50))
+			if(!do_after(user, H, 5 SECONDS))
 				return
 		if(item_heal_robotic(H, user, 0, 15))
 			use(1)
@@ -661,7 +661,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	machinery_node.color = "black"
 	machinery_node?.alpha = machinery_layer & MACHINERY_LAYER_1 ? 255 : 0
 	underlays += machinery_node
-	
+
 /obj/structure/cable/multilayer/Initialize(mapload)
 	. = ..()
 	var/turf/T = get_turf(src)

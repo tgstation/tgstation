@@ -532,7 +532,7 @@
 		visible_message(span_notice("[src] is trying to perform CPR on [target.name]!"), \
 						span_notice("You try to perform CPR on [target.name]... Hold still!"))
 
-		if (!do_mob(src, target, time = panicking ? CPR_PANIC_SPEED : (3 SECONDS)))
+		if (!do_after(src, target, time = panicking ? CPR_PANIC_SPEED : (3 SECONDS)))
 			to_chat(src, span_warning("You fail to perform CPR on [target]!"))
 			return FALSE
 
