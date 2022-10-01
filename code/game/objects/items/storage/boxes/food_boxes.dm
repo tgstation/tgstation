@@ -490,6 +490,7 @@
 
 
 /obj/item/storage/box/coffeepack/arabica
+	illustration = null
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "arabica_beans"
 	name = "arabica beans"
@@ -501,6 +502,7 @@
 
 
 /obj/item/storage/box/coffeepack/robusta
+	illustration = null
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "robusta_beans"
 	name = "robusta beans"
