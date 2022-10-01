@@ -282,7 +282,7 @@
 	sound_type = 'sound/hallucinations/radio_static.ogg'
 
 /datum/hallucination/fake_sound/weird/ice_crack
-	random_hallucination_weight = 2 // Reserved for The Freezer (& subsidiaries)
+	random_hallucination_weight = 2
 	volume = 100
 	no_source = TRUE
 	sound_type = 'sound/effects/ice_shovel.ogg'
