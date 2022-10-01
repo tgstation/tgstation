@@ -59,28 +59,27 @@ GLOBAL_LIST_EMPTY(split_visibility_objects)
 
 	src.icon_path = icon_path
 
-	add_split_vis_objects(target_turf, icon_path)
+	add_split_vis_objects(target_turf)
 	RegisterSignal(target, COMSIG_ATOM_SET_SMOOTHED_ICON_STATE, .proc/on_junction_change)
 
 #define DIR_TO_PIXEL_Y(dir) ((dir & NORTH) ? 32 : (dir & SOUTH) ? -32 : 0)
 #define DIR_TO_PIXEL_X(dir) ((dir & EAST) ? 32 : (dir & WEST) ? -32 : 0)
 
 
-/datum/element/split_visibility/proc/add_split_vis_objects(turf/target_turf, icon_path, new_junction)
-	apply_splitvis_objs(target_turf, icon_path, new_junction)
+/datum/element/split_visibility/proc/add_split_vis_objects(turf/target_turf, new_junction)
+	apply_splitvis_objs(target_turf, new_junction)
 
-/datum/element/split_visibility/proc/remove_split_vis_objects(turf/target_turf, icon_path, new_junction)
-	apply_splitvis_objs(target_turf, icon_path, new_junction, add_to_turfs = FALSE)
+/datum/element/split_visibility/proc/remove_split_vis_objects(turf/target_turf, new_junction)
+	apply_splitvis_objs(target_turf, new_junction, add_to_turfs = FALSE)
 
-/turf
-	var/icon_state_key
-
-/datum/element/split_visibility/proc/apply_splitvis_objs(turf/target_turf, icon_path, new_junction, add_to_turfs = TRUE)
-	var/static/frilled_dirs = (NORTH)
+/datum/element/split_visibility/proc/apply_splitvis_objs(turf/target_turf, new_junction, add_to_turfs = TRUE)
+	// cache for sonic speed
+	var/icon_path = src.icon_path
 
 	var/junction = new_junction
 	if(isnull(junction))
 		junction = target_turf.smoothing_junction
+	var/diagonal_connections = junction_to_diag_dir(junction)
 
 	for(var/direction in GLOB.cardinals)
 		// If we're connected in this direction, please don't draw a wall side
@@ -89,7 +88,7 @@ GLOBAL_LIST_EMPTY(split_visibility_objects)
 
 		var/active_plane = WALL_PLANE
 		var/uses_shadow = FALSE
-		if(direction & frilled_dirs)
+		if(direction & NORTH)
 			active_plane = FRILL_PLANE
 			uses_shadow = TRUE
 
@@ -105,8 +104,9 @@ GLOBAL_LIST_EMPTY(split_visibility_objects)
 			operating_turf.overlays -= vis
 
 	for(var/direction in GLOB.diagonals)
-		// If we're not connected in this direction, don't draw a joiner
-		if((junction & direction) != direction)
+		// If we're connected in the two components of this direction
+		// But we aren't drawing anything TO it
+		if((junction & direction) != direction || (diagonal_connections & direction) == direction)
 			continue
 
 		var/turf/operating_turf = get_step(target_turf, direction)
@@ -122,7 +122,7 @@ GLOBAL_LIST_EMPTY(split_visibility_objects)
 			operating_turf.overlays -= vis
 
 /datum/element/split_visibility/Detach(turf/target)
-	remove_split_vis_objects(target, icon_path)
+	remove_split_vis_objects(target)
 	UnregisterSignal(target, COMSIG_ATOM_SET_SMOOTHED_ICON_STATE)
 	return ..()
 
@@ -130,5 +130,5 @@ GLOBAL_LIST_EMPTY(split_visibility_objects)
 /datum/element/split_visibility/proc/on_junction_change(atom/source, new_junction)
 	SIGNAL_HANDLER
 	var/turf/turf_or_movable = source
-	remove_split_vis_objects(turf_or_movable, icon_path)
-	add_split_vis_objects(turf_or_movable, icon_path, new_junction)
+	remove_split_vis_objects(turf_or_movable)
+	add_split_vis_objects(turf_or_movable, new_junction)

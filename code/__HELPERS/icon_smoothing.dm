@@ -498,6 +498,19 @@ DEFINE_BITFIELD(smoothing_junction, list(
 		else
 			return NONE
 
+/// Takes a junction, converts it to a dir representing JUST the diagonal connections
+/// This way we can & with it to extract info about those cheaply
+/proc/junction_to_diag_dir(junction)
+	var/result = NONE
+	if(junction & NORTHWEST_JUNCTION)
+		result |= NORTHWEST
+	if(junction & NORTHEAST_JUNCTION)
+		result |= NORTHEAST
+	if(junction & SOUTHEAST_JUNCTION)
+		result |= SOUTHEAST
+	if(junction & SOUTHWEST_JUNCTION)
+		result |= SOUTHWEST
+	return NONE
 
 //Example smooth wall
 /turf/closed/wall/smooth
