@@ -41,9 +41,9 @@
 	return ..()
 
 /datum/hallucination/delusion/Destroy()
-	if(!QDELETED(hallucinator))
-		for(var/image/to_remove as anything in delusions)
-			hallucinator.client?.images -= to_remove
+	if(!QDELETED(hallucinator) && LAZYLEN(delusions))
+		hallucinator.client?.images -= delusions
+		delusions.Cut()
 
 	return ..()
 
@@ -175,3 +175,39 @@
 /datum/hallucination/delusion/preset/cyborg/make_delusion_image(mob/over_who)
 	. = ..()
 	hallucinator.playsound_local(get_turf(over_who), 'sound/voice/liveagain.ogg', 75, TRUE)
+
+/datum/hallucination/delusion/preset/ghost
+	delusion_icon_file = 'icons/mob/simple/mob.dmi'
+	delusion_icon_state = "ghost"
+	delusion_name = "ghost"
+
+/datum/hallucination/delusion/preset/ghost/make_delusion_image(mob/over_who)
+	var/image/funny_image = ..()
+	funny_image.name = over_who.name
+	DO_FLOATING_ANIM(funny_image)
+	return ..()
+
+/datum/hallucination/delusion/preset/syndies
+	random_hallucination_weight = 1
+	delusion_icon_file = 'icons/mob/simple/simple_human.dmi'
+	delusion_icon_state = "syndicate_space"
+	delusion_name = "Syndicate"
+
+/datum/hallucination/delusion/preset/cyborg/make_delusion_image(mob/over_who)
+	var/static/list/syndicate_icon_states
+
+	if(!syndicate_icon_states)
+		syndicate_icon_states = list()
+		for(var/state in icon_states(delusion_icon_file))
+			if(!findtext(state, "syndicate"))
+				continue
+
+			syndicate_icon_states += state
+
+	if(length(syndicate_icon_states) > 0)
+		delusion_name = over_who.name
+		delusion_icon_state = pick(syndicate_icon_states)
+	else
+		stack_trace("Hey! The hallucination [type] couldn't find a single icon state to use, it'll be invisible. Correct this.")
+
+	return ..()

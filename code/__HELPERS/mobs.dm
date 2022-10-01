@@ -943,6 +943,10 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		. = invoked_callback.Invoke()
 	usr = temp
 
+#define DO_FLOATING_ANIM(target) \
+	animate(target, pixel_y = 2, time = 1 SECONDS, loop = -1, flags = ANIMATION_RELATIVE);\
+	animate(pixel_y = -2, time = 1 SECONDS, flags = ANIMATION_RELATIVE)
+
 #undef FACING_SAME_DIR
 #undef FACING_EACHOTHER
 #undef FACING_INIT_FACING_TARGET_TARGET_FACING_PERPENDICULAR
