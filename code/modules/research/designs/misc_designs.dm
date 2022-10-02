@@ -267,6 +267,16 @@
 	category = list(RND_CATEGORY_EQUIPMENT)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
+/datum/design/botpad_remote
+	name = "Bot launchpad controller"
+	desc = "Allows you to control the connected bot launchpad"
+	id = "botpad_remote"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/glass = 500, /datum/material/iron = 500)
+	build_path = /obj/item/botpad_remote
+	category = list(RND_CATEGORY_EQUIPMENT)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
 /datum/design/anomaly_neutralizer
 	name = "Anomaly Neutralizer"
 	desc = "An advanced tool capable of instantly neutralizing anomalies, designed to capture the fleeting aberrations created by the engine."

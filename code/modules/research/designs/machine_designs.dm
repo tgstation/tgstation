@@ -108,6 +108,15 @@
 	category = list (RND_CATEGORY_TELEPORTATION_MACHINERY)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
+/datum/design/board/botpad
+	name = "Machine Design (Bot launchpad)"
+	desc = "The circuit board for a bot launchpad."
+	id = "botpad"
+	build_type = IMPRINTER
+	build_path = /obj/item/circuitboard/machine/botpad
+	category = list (RND_CATEGORY_RESEARCH_MACHINERY)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
 /datum/design/board/launchpad
 	name = "Machine Design (Bluespace Launchpad Board)"
 	desc = "The circuit board for a bluespace Launchpad."
