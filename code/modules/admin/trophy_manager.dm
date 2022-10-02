@@ -43,7 +43,7 @@
 			return TRUE
 		if("edit_message")
 			var/old_message = trophy.message
-			var/new_message = tgui_input_text(user, "New trophy message?", "Message Editing", trophy.message, max_length = MAX_BROADCAST_LEN)
+			var/new_message = tgui_input_text(user, "New trophy message?", "Message Editing", trophy.message, max_length = MAX_PLAQUE_LEN)
 			if(!new_message)
 				return
 			trophy.message = new_message

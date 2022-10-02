@@ -9,16 +9,25 @@
 	armor = list(MELEE = 30, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, FIRE = 70, ACID = 100)
 	max_integrity = 200
 	integrity_failure = 0.25
+	///The showpiece item inside the case
 	var/obj/item/showpiece = null
-	var/obj/item/showpiece_type = null //This allows for showpieces that can only hold items if they're the same istype as this.
+	///This allows for showpieces that can only hold items if they're the same istype as this.
+	var/obj/item/showpiece_type = null
+	///Is the displaycase hooked up to a burglar alarm?
 	var/alert = TRUE
+	///Is the displaycase open at the moment?
 	var/open = FALSE
-	var/custom_glass_overlay = FALSE ///If we have a custom glass overlay to use.
+	///If we have a custom glass overlay to use.
+	var/custom_glass_overlay = FALSE
 	var/obj/item/electronics/airlock/electronics
-	var/start_showpiece_type = null //add type for items on display
+	///add type for items on display
+	var/start_showpiece_type = null
+	///displaycase is fixed by glass
 	var/glass_fix = TRUE
 	///Represents a signel source of screaming when broken
 	var/datum/alarm_handler/alarm_manager
+	///Used for subtypes that have a UI in them, which makes displaying its contents on click not neccessary
+	var/examine_on_click = TRUE
 
 /obj/structure/displaycase/Initialize(mapload)
 	. = ..()
@@ -193,6 +202,8 @@
 		if (!Adjacent(user))
 			return
 		if (!user.combat_mode)
+			if(!examine_on_click)
+				return
 			if(!user.is_blind())
 				user.examinate(src)
 			return
@@ -281,6 +292,7 @@
 	desc = "Store your trophies of accomplishment in here, and they will stay forever."
 	integrity_failure = 0
 	req_access = list(ACCESS_LIBRARY)
+	examine_on_click = FALSE
 	///the key of the player who placed the item in the case
 	var/placer_key = ""
 	///is the trophy a hologram, not a real item placed by a player?
@@ -330,13 +342,14 @@
 
 /obj/structure/displaycase/trophy/toggle_lock(mob/user)
 	..()
+	examine_on_click = open
 	SStgui.close_uis(src)
 
 /obj/structure/displaycase/trophy/ui_data(mob/user)
 	var/list/data = list()
 	data["historian_mode"] = historian_mode
 	data["holographic_showpiece"] = holographic_showpiece
-	data["max_length"] = MAX_BROADCAST_LEN
+	data["max_length"] = MAX_PLAQUE_LEN
 	data["has_showpiece"] = showpiece ? TRUE : FALSE
 	if(showpiece)
 		data["showpiece_name"] = capitalize(format_text(showpiece.name))
@@ -360,7 +373,7 @@
 			return
 		if("change_message")
 			if(!holographic_showpiece)
-				var/new_trophy_message = trim("[params["passedMessage"]]", MAX_BROADCAST_LEN)
+				var/new_trophy_message = trim("[params["passedMessage"]]", MAX_PLAQUE_LEN)
 				trophy_message = new_trophy_message
 				return TRUE
 		if("lock")

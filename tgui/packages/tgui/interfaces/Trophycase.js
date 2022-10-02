@@ -5,59 +5,25 @@ import { Window } from '../layouts';
 
 export const Trophycase = (props, context) => {
   const { act, data } = useBackend(context);
-  const { showpiece_name } = data;
   return (
-    <Window width={300} height={420}>
+    <Window width={300} height={400}>
       <Window.Content>
-        <Stack vertical fill>
+        <Stack fill vertical>
           <Stack.Item>
-            <Section align="left">
-              <HistorianPanel />
-            </Section>
+            <ShowpieceName />
           </Stack.Item>
           <Stack.Item>
-            <Section align="center">
-              <b>
-                {showpiece_name
-                  ? decodeHtmlEntities(showpiece_name)
-                  : 'Under construction.'}
-              </b>
-            </Section>
+            <ShowpieceImage />
           </Stack.Item>
           <Stack.Item>
-            <Section align="center">
-              <ShowpieceImage />
-            </Section>
-          </Stack.Item>
-          <Stack.Item grow>
             <ShowpieceDescription />
           </Stack.Item>
         </Stack>
+        <Stack.Item>
+          <HistorianPanel />
+        </Stack.Item>
       </Window.Content>
     </Window>
-  );
-};
-
-const ShowpieceImage = (props, context) => {
-  const { data } = useBackend(context);
-  const { showpiece_icon } = data;
-  return showpiece_icon ? (
-    <Box
-      as="img"
-      m={1}
-      src={`data:image/jpeg;base64,${showpiece_icon}`}
-      height="96px"
-      width="96px"
-      style={{
-        '-ms-interpolation-mode': 'nearest-neighbor',
-      }}
-    />
-  ) : (
-    <Box height="96px" width="96px">
-      <Dimmer fontSize="32px">
-        <Icon name="landmark" spin />
-      </Dimmer>
-    </Box>
   );
 };
 
@@ -71,7 +37,7 @@ const HistorianPanel = (props, context) => {
   } = data;
 
   return (
-    <Section>
+    <Section align="left">
       {!historian_mode && (
         <Button
           icon="key"
@@ -120,7 +86,7 @@ const ShowpieceDescription = (props, context) => {
     showpiece_description,
   } = data;
   return (
-    <Section align="center" fill scrollable>
+    <Section align="center">
       {!has_showpiece && (
         <Box fill className="Trophycase-description">
           <b>This exhibit is empty. History awaits your contribution!</b>
@@ -137,7 +103,7 @@ const ShowpieceDescription = (props, context) => {
       {!holographic_showpiece && !!historian_mode && !!has_showpiece && (
         <Box fill>
           <TextArea
-            height="80px"
+            height="60px"
             fluid
             maxLength={max_length}
             placeholder="Let's make history!"
@@ -151,5 +117,44 @@ const ShowpieceDescription = (props, context) => {
         </Box>
       )}
     </Section>
+  );
+};
+
+const ShowpieceImage = (props, context) => {
+  const { data } = useBackend(context);
+  const { showpiece_icon } = data;
+  return showpiece_icon ? (
+    <Section align="center">
+      <Box
+        as="img"
+        m={1}
+        src={`data:image/jpeg;base64,${showpiece_icon}`}
+        height="96px"
+        width="96px"
+        style={{
+          '-ms-interpolation-mode': 'nearest-neighbor',
+        }}
+      />
+    </Section>
+  ) : (
+    <Section align="center">
+      <Box height="96px" width="96px">
+        <Dimmer fontSize="32px">
+          <Icon name="landmark" spin />
+        </Dimmer>
+      </Box>
+    </Section>
+  );
+};
+
+const ShowpieceName = (props, context) => {
+  const { data } = useBackend(context);
+  const { showpiece_name } = data;
+  return (
+    <b>
+      {showpiece_name
+        ? decodeHtmlEntities(showpiece_name)
+        : 'Under construction.'}
+    </b>
   );
 };
