@@ -268,7 +268,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/botpad_remote
-	name = "Bot launchpad controller"
+	name = "Bot Launchpad Controller"
 	desc = "Allows you to control the connected bot launchpad"
 	id = "botpad_remote"
 	build_type = PROTOLATHE | AWAY_LATHE
