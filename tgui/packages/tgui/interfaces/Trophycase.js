@@ -6,22 +6,22 @@ import { Window } from '../layouts';
 export const Trophycase = (props, context) => {
   const { act, data } = useBackend(context);
   return (
-    <Window width={300} height={400}>
+    <Window width={300} height={360}>
       <Window.Content>
-        <Stack fill vertical>
+        <Stack vertical fill>
           <Stack.Item>
             <ShowpieceName />
           </Stack.Item>
           <Stack.Item>
             <ShowpieceImage />
           </Stack.Item>
-          <Stack.Item>
+          <Stack.Item grow>
             <ShowpieceDescription />
           </Stack.Item>
+          <Stack.Item>
+            <HistorianPanel />
+          </Stack.Item>
         </Stack>
-        <Stack.Item>
-          <HistorianPanel />
-        </Stack.Item>
       </Window.Content>
     </Window>
   );
@@ -151,10 +151,12 @@ const ShowpieceName = (props, context) => {
   const { data } = useBackend(context);
   const { showpiece_name } = data;
   return (
-    <b>
-      {showpiece_name
-        ? decodeHtmlEntities(showpiece_name)
-        : 'Under construction.'}
-    </b>
+    <Section align="center">
+      <b>
+        {showpiece_name
+          ? decodeHtmlEntities(showpiece_name)
+          : 'Under construction.'}
+      </b>
+    </Section>
   );
 };
