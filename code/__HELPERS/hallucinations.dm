@@ -59,7 +59,7 @@ GLOBAL_LIST_EMPTY(all_ongoing_hallucinations)
  * optional_messages - optional list of messages passed. Those affected by pulses will be given one of the messages in said list.
  */
 /proc/visible_hallucination_pulse(atom/center, radius = 7, hallucination_duration = 50 SECONDS, hallucination_max_duration, list/optional_messages)
-	for(var/mob/living/nearby_living in view(center, radius))
+	for(var/mob/living/carbon/human/nearby_living in view(center, radius))
 		if(HAS_TRAIT(nearby_living, TRAIT_MADNESS_IMMUNE) || (nearby_living.mind && HAS_TRAIT(nearby_living.mind, TRAIT_MADNESS_IMMUNE)))
 			continue
 
