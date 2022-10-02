@@ -458,7 +458,7 @@
 
 	var/list/hard_filter_result = is_ic_filtered(message)
 	if(hard_filter_result)
-		tgui_alert(user, "Your message contains: (\"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\"), which is not allowed on this server.")
+		tgui_alert(user, "Your message contains: (\"[hard_filter_result[CHAT_FILTER_INDEX_WORD]]\"), which is not allowed on this server.")
 		return
 
 	var/list/soft_filter_result = is_soft_ooc_filtered(message)
