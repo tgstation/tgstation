@@ -23820,11 +23820,11 @@
 /obj/structure/table{
 	name = "Jim Norton's Quebecois Coffee table"
 	},
-/obj/item/reagent_containers/cup/glass/coffee{
+/obj/item/reagent_containers/cup/glass/coffee/full{
 	pixel_x = -3;
 	pixel_y = 9
 	},
-/obj/item/reagent_containers/cup/glass/coffee{
+/obj/item/reagent_containers/cup/glass/coffee/full{
 	pixel_x = 5;
 	pixel_y = 12
 	},
@@ -25900,7 +25900,7 @@
 	pixel_x = 4;
 	pixel_y = 2
 	},
-/obj/item/reagent_containers/cup/glass/coffee{
+/obj/item/reagent_containers/cup/glass/coffee/full{
 	pixel_x = -3
 	},
 /obj/structure/table/reinforced{

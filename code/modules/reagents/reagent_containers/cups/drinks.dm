@@ -93,15 +93,12 @@
 // rather then having to add it to something else first. They should only contain liquids. They have a default container size of 50.
 // Formatting is the same as food.
 
-/obj/item/reagent_containers/cup/glass/coffee
+/obj/item/reagent_containers/cup/glass/coffee/full
 	name = "robust coffee"
 	desc = "Careful, the beverage you're about to enjoy is extremely hot."
 	icon_state = "coffee"
 	list_reagents = list(/datum/reagent/consumable/coffee = 30)
-	spillable = TRUE
-	resistance_flags = FREEZE_PROOF
-	isGlass = FALSE
-	drink_type = BREAKFAST
+
 
 /obj/item/reagent_containers/cup/glass/ice
 	name = "ice cup"
@@ -148,6 +145,22 @@
 
 /obj/item/reagent_containers/cup/glass/mug/nanotrasen/update_icon_state()
 	icon_state = reagents.total_volume ? "mug_nt" : "mug_nt_empty"
+	return ..()
+
+/obj/item/reagent_containers/cup/glass/coffee
+	name = "robust coffee"
+	desc = "Careful, the beverage you're about to enjoy is extremely hot."
+	icon_state = "coffee_empty"
+	var/lid_open = 0
+	spillable = TRUE
+	resistance_flags = FREEZE_PROOF
+	isGlass = FALSE
+	drink_type = BREAKFAST
+
+//TODO:add alt-click interaction closing coffe cup lid
+
+/obj/item/reagent_containers/cup/glass/coffee/update_icon_state()
+	icon_state = reagents.total_volume ? "coffee" : "coffee_empty"
 	return ..()
 
 /obj/item/reagent_containers/cup/glass/coffee_cup

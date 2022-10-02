@@ -23536,7 +23536,7 @@
 "fFU" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/table,
-/obj/item/reagent_containers/cup/glass/coffee{
+/obj/item/reagent_containers/cup/glass/coffee/full{
 	pixel_x = -3;
 	pixel_y = 4
 	},
@@ -27382,7 +27382,7 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/cup/glass/coffee{
+/obj/item/reagent_containers/cup/glass/coffee/full{
 	pixel_x = -4;
 	pixel_y = 2
 	},

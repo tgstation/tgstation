@@ -901,6 +901,20 @@
 	pixel_x = 5;
 	pixel_y = 7
 	},
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/obj/structure/table,
+/obj/item/storage/fancy/coffee_cart_rack{
+	pixel_x = -8
+	},
+/obj/item/reagent_containers/cup/glass/coffee/full{
+	pixel_y = 7;
+	pixel_x = 5
+	},
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "asP" = (
@@ -23214,6 +23228,22 @@
 	pixel_x = -4;
 	pixel_y = 4
 	},
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 4
+	},
+/obj/structure/table/glass,
+/obj/item/storage/fancy/coffee_cart_rack{
+	pixel_y = 6;
+	pixel_x = 8
+	},
+/obj/item/reagent_containers/cup/glass/coffee/full{
+	pixel_x = -4;
+	pixel_y = 4
+	},
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "irH" = (
@@ -32536,6 +32566,30 @@
 /obj/item/reagent_containers/cup/glass/coffee{
 	pixel_x = 8;
 	pixel_y = 4
+	},
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/obj/effect/turf_decal/trimline/green/filled/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 8
+	},
+/obj/machinery/requests_console/directional/west{
+	announcementConsole = 1;
+	department = "Bridge";
+	departmentType = 5;
+	name = "Bridge Requests Console"
+	},
+/obj/structure/table/glass,
+/obj/item/storage/fancy/coffee_cart_rack{
+	pixel_x = -7
+	},
+/obj/item/reagent_containers/cup/glass/coffee/full{
+	pixel_y = 4;
+	pixel_x = 8
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)

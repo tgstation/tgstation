@@ -6,7 +6,7 @@
 	icon_vend = "coffee-vend"
 	panel_type = "panel9"
 	products = list(
-		/obj/item/reagent_containers/cup/glass/coffee = 6,
+		/obj/item/reagent_containers/cup/glass/coffee/full = 6,
 		/obj/item/reagent_containers/cup/glass/mug/tea = 6,
 		/obj/item/reagent_containers/cup/glass/mug/coco = 3,
 	)
