@@ -232,7 +232,7 @@
 		/obj/item/grown,
 		/obj/item/reagent_containers/honeycomb,
 		/obj/item/seeds,
-		))
+	))
 ////////
 /obj/item/storage/bag/plants/portaseeder
 	name = "portable seed extractor"
