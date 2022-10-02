@@ -45,11 +45,11 @@
 		balloon_alert(user, "deactivate the suit first!")
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
-	var/deploy = FALSE
+	var/deploy = TRUE
 	for(var/obj/item/part as anything in mod_parts)
-		if(part.loc != src)
+		if(part.loc == src)
 			continue
-		deploy = TRUE
+		deploy = FALSE
 	for(var/obj/item/part as anything in mod_parts)
 		if(deploy && part.loc == src)
 			deploy(null, part)

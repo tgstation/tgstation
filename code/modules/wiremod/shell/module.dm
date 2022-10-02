@@ -81,6 +81,9 @@
 	/// The name of the module to select
 	var/datum/port/input/module_to_select
 
+	/// The signal to toggle deployment of the modsuit
+	var/datum/port/input/toggle_deploy
+
 	/// The signal to toggle the suit
 	var/datum/port/input/toggle_suit
 
@@ -90,22 +93,38 @@
 	/// A reference to the wearer of the MODsuit
 	var/datum/port/output/wearer
 
+	/// Whether or not the suit is activated or deactivated
+	var/datum/port/output/activated
+
 	/// The name of the last selected module
 	var/datum/port/output/selected_module
 
 	/// The signal that is triggered when a module is selected
 	var/datum/port/output/on_module_selected
 
+	/// The signal that is triggered when the suit is deployed
+	var/datum/port/output/on_deploy
+
+	/// The signal that is triggered when the suit has finished toggling itself
+	var/datum/port/output/on_toggle_finish
+
+/obj/item/circuit_component/mod_adapter_core/populate_options()
+	var/component_options = list()
+	module_to_select = add_option_port("Module to Select", component_options)
+
 /obj/item/circuit_component/mod_adapter_core/populate_ports()
 	// Input Signals
-	module_to_select = add_input_port("Module to Select", PORT_TYPE_STRING)
+	toggle_deploy = add_input_port("Toggle Deployment", PORT_TYPE_SIGNAL)
 	toggle_suit = add_input_port("Toggle Suit", PORT_TYPE_SIGNAL)
 	select_module = add_input_port("Select Module", PORT_TYPE_SIGNAL)
 	// States
 	wearer = add_output_port("Wearer", PORT_TYPE_ATOM)
+	activated = add_output_port("Activated", PORT_TYPE_NUMBER)
 	selected_module = add_output_port("Selected Module", PORT_TYPE_STRING)
 	// Output Signals
 	on_module_selected = add_output_port("On Module Selected", PORT_TYPE_SIGNAL)
+	on_deploy = add_output_port("On Deploy", PORT_TYPE_SIGNAL)
+	on_toggle_finish = add_output_port("Finished Toggling", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/mod_adapter_core/register_shell(atom/movable/shell)
 	. = ..()
