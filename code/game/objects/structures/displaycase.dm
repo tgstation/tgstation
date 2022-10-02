@@ -66,6 +66,7 @@
 	if(QDELETED(showpiece))
 		return
 	showpiece.forceMove(drop_location())
+	showpiece.dropped()
 	showpiece = null
 	update_appearance()
 
@@ -122,27 +123,27 @@
 		. += "[initial(icon_state)]_closed"
 		return
 
-/obj/structure/displaycase/attackby(obj/item/W, mob/living/user, params)
-	if(W.GetID() && !broken)
+/obj/structure/displaycase/attackby(obj/item/tool, mob/living/user, params)
+	if(tool.GetID() && !broken)
 		if(allowed(user))
 			to_chat(user,  span_notice("You [open ? "close":"open"] [src]."))
 			toggle_lock(user)
 		else
 			to_chat(user, span_alert("Access denied."))
-	else if(W.tool_behaviour == TOOL_WELDER && !user.combat_mode && !broken)
+	else if(tool.tool_behaviour == TOOL_WELDER && !user.combat_mode && !broken)
 		if(atom_integrity < max_integrity)
-			if(!W.tool_start_check(user, amount=5))
+			if(!tool.tool_start_check(user, amount=5))
 				return
 
 			to_chat(user, span_notice("You begin repairing [src]..."))
-			if(W.use_tool(src, user, 40, amount=5, volume=50))
+			if(tool.use_tool(src, user, 40, amount=5, volume=50))
 				atom_integrity = max_integrity
 				update_appearance()
 				to_chat(user, span_notice("You repair [src]."))
 		else
 			to_chat(user, span_warning("[src] is already in good condition!"))
 		return
-	else if(!alert && W.tool_behaviour == TOOL_CROWBAR) //Only applies to the lab cage and player made display cases
+	else if(!alert && tool.tool_behaviour == TOOL_CROWBAR) //Only applies to the lab cage and player made display cases
 		if(broken)
 			if(showpiece)
 				to_chat(user, span_warning("Remove the displayed object first!"))
@@ -151,32 +152,32 @@
 				qdel(src)
 		else
 			to_chat(user, span_notice("You start to [open ? "close":"open"] [src]..."))
-			if(W.use_tool(src, user, 20))
+			if(tool.use_tool(src, user, 20))
 				to_chat(user,  span_notice("You [open ? "close":"open"] [src]."))
 				toggle_lock(user)
 	else if(open && !showpiece)
-		insert_showpiece(W, user)
-	else if(glass_fix && broken && istype(W, /obj/item/stack/sheet/glass))
-		var/obj/item/stack/sheet/glass/G = W
-		if(G.get_amount() < 2)
+		insert_showpiece(tool, user)
+	else if(glass_fix && broken && istype(tool, /obj/item/stack/sheet/glass))
+		var/obj/item/stack/sheet/glass/glass_sheet = tool
+		if(glass_sheet.get_amount() < 2)
 			to_chat(user, span_warning("You need two glass sheets to fix the case!"))
 			return
 		to_chat(user, span_notice("You start fixing [src]..."))
 		if(do_after(user, 20, target = src))
-			G.use(2)
+			glass_sheet.use(2)
 			broken = FALSE
 			atom_integrity = max_integrity
 			update_appearance()
 	else
 		return ..()
 
-/obj/structure/displaycase/proc/insert_showpiece(obj/item/wack, mob/user)
-	if(showpiece_type && !istype(wack, showpiece_type))
+/obj/structure/displaycase/proc/insert_showpiece(obj/item/new_showpiece, mob/user)
+	if(showpiece_type && !istype(new_showpiece, showpiece_type))
 		to_chat(user, span_notice("This doesn't belong in this kind of display."))
 		return TRUE
-	if(user.transferItemToLoc(wack, src))
-		showpiece = wack
-		to_chat(user, span_notice("You put [wack] on display."))
+	if(user.transferItemToLoc(new_showpiece, src))
+		showpiece = new_showpiece
+		to_chat(user, span_notice("You put [new_showpiece] on display."))
 		update_appearance()
 
 /obj/structure/displaycase/proc/toggle_lock(mob/user)
@@ -328,10 +329,10 @@
 		placer_key = ""
 		trophy_message = null
 
-/obj/structure/displaycase/trophy/insert_showpiece(obj/item/wack, mob/user)
+/obj/structure/displaycase/trophy/insert_showpiece(obj/item/new_showpiece, mob/user)
 	if(..())
 		return
-	if(showpiece == wack)
+	if(showpiece == new_showpiece)
 		placer_key = user.ckey
 
 /obj/structure/displaycase/trophy/proc/toggle_historian_mode(mob/user)
