@@ -22,7 +22,7 @@
 	if(connected_botpad)
 		connected_botpad.recall(user)
 		return
-	to_chat(user, span_warning("[src] has no connected pad!"))
+	user.balloon_alert(user, "[src] has no connected pad!")
 	return
 
 /obj/item/botpad_remote/multitool_act(mob/living/user, obj/item/tool)
@@ -40,16 +40,16 @@
 			multitool.buffer = null
 			to_chat(user, span_notice("You connect the remote to the pad with data from the [multitool.name]'s buffer."))
 		else
-			to_chat(user, span_warning("Unable top upload"))
+			to_chat(user, span_warning("Unable to upload!"))
 
 /obj/item/botpad_remote/proc/try_launch(mob/living/user)
 	if(!connected_botpad)
-		to_chat(user, span_warning("[src] has no connected pad!"))
+		user.balloon_alert(user, "[src] has no connected pad!")
 		return
 	if(connected_botpad.panel_open)
-		to_chat(user, span_warning("[src]'s pad has its' panel open! It won't work!"))
+		user.balloon_alert(user, "[src]'s pad has its' panel open! It won't work!")
 		return
 	if(!(locate(/mob/living/simple_animal/bot) in get_turf(connected_botpad)))
-		to_chat(user, span_warning("[src] detects no bot on the pad!"))
+		user.balloon_alert(user, "[src] detects no bot on the pad!")
 		return
 	connected_botpad.launch(user)

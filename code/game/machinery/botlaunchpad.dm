@@ -9,9 +9,6 @@
 	var/obj/item/botpad_remote/connected_remote
 	var/mob/living/simple_animal/bot/launched_bot // we need this to recall the bot
 
-/obj/machinery/botpad/Initialize(mapload)
-	. = ..()
-
 /obj/machinery/botpad/Destroy()
 	if(connected_remote)
 		connected_remote.connected_botpad = null
@@ -50,7 +47,7 @@
 				bot_count += 1 // this counts the number of bots so we don't launch if there multiple bots.
 				possible_bot = ROI  // We don't change the launched_bot var here because we are not sure if there is another bot on the pad.
 			else
-				to_chat(user, span_warning("There is an unidentified creature on the pad"))
+				user.balloon_alert(user, "There is an unidentified creature on the pad!")
 				return
 	if(bot_count == 1)
 		launched_bot = possible_bot
@@ -62,13 +59,13 @@
 		))
 		use_power(active_power_usage)
 	else
-		to_chat(user, span_warning("There is more than one bot on the pad"))
+		user.balloon_alert(user, "There is more than one bot on the pad!")
 
 /obj/machinery/botpad/proc/recall(mob/living/user)
 	if(!launched_bot)
-		to_chat(user, span_warning("No bot detected!"))
+		user.balloon_alert(user, "No bot detected!")
 		return
-	to_chat(user, span_notice("Sending the bot back to it's pad"))
+	user.balloon_alert(user, "Sending the bot back to it's pad")
 	launched_bot.call_bot(src,  get_turf(src))
 
 /obj/structure/closet/supplypod/botpod
