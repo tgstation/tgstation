@@ -131,8 +131,6 @@
 	if(istype(shell, /obj/item/mod/module))
 		attached_module = shell
 	RegisterSignal(attached_module, COMSIG_MOVABLE_MOVED, .proc/on_move)
-	RegisterSignal(attached_module, COMSIG_MOD_TOGGLED, .proc/on_mod_toggled)
-	//RegisterSignal(attached_module, COMSIG_MOD_MODULE_CHANGED, .proc/on_module_changed)
 
 /obj/item/circuit_component/mod_adapter_core/unregister_shell(atom/movable/shell)
 	UnregisterSignal(attached_module, COMSIG_MOVABLE_MOVED)
@@ -159,12 +157,17 @@
 	SIGNAL_HANDLER
 	if(istype(source.loc, /obj/item/mod/control))
 		RegisterSignal(source.loc, COMSIG_MOD_MODULE_SELECTED, .proc/on_module_select)
+		RegisterSignal(source.loc, COMSIG_MOD_TOGGLED, .proc/on_mod_toggled)
+		//RegisterSignal(source.loc, COMSIG_MOD_MODULE_CHANGED, .proc/on_module_changed)
 		RegisterSignal(source.loc, COMSIG_ITEM_EQUIPPED, .proc/equip_check)
 		equip_check()
 	else if(istype(old_loc, /obj/item/mod/control))
 		UnregisterSignal(old_loc, list(COMSIG_MOD_MODULE_SELECTED, COMSIG_ITEM_EQUIPPED))
+		UnregisterSignal(old_loc, COMSIG_MOD_TOGGLED)
+		//UnregisterSignal(old.loc, COMSIG_MOD_MODULE_CHANGED)
 		selected_module.set_output(null)
 		wearer.set_output(null)
+		activated.set_output(FALSE)
 
 /obj/item/circuit_component/mod_adapter_core/proc/on_module_select(datum/source, obj/item/mod/module/module)
 	SIGNAL_HANDLER
@@ -180,8 +183,8 @@
 
 /obj/item/circuit_component/mod_adapter_core/proc/on_mod_toggled()
 	SIGNAL_HANDLER
-	on_toggle_finish.set_output(COMPONENT_SIGNAL)
 	activated.set_output(attached_module.mod.active)
+	on_toggle_finish.set_output(COMPONENT_SIGNAL)
 
 /obj/item/circuit_component/mod_adapter_core/proc/equip_check()
 	SIGNAL_HANDLER
