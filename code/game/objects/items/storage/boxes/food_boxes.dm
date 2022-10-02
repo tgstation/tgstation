@@ -487,18 +487,6 @@
 
 
 
-/obj/item/storage/box/coffeepack/arabica
-	illustration = null
-	icon = 'icons/obj/food/containers.dmi'
-	icon_state = "arabica_beans"
-	name = "arabica beans"
-	desc = "A bag containing fresh, dry coffee arabica beans. Ethically courced and packaged by Waffle Corp."
-
-/obj/item/storage/box/coffeepack/arabica/PopulateContents()
-	atom_storage.max_slots = 5
-	atom_storage.set_holdable(list(/obj/item/food/grown/coffee))
-	for(var/i in 1 to 5)
-		new /obj/item/food/grown/coffee(src)
 
 
 /obj/item/storage/box/coffeepack/robusta
@@ -506,10 +494,28 @@
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "robusta_beans"
 	name = "robusta beans"
-	desc = "A bag containing fresh, dry coffee robusta beans. Ethically courced and packaged by Waffle Corp."
+	desc = "A bag containing fresh, dry coffee robusta beans. Ethically sourced and packaged by Waffle Corp."
 
 /obj/item/storage/box/coffeepack/robusta/PopulateContents()
 	atom_storage.max_slots = 5
 	atom_storage.set_holdable(list(/obj/item/food/grown/coffee))
 	for(var/i in 1 to 5)
-		new /obj/item/food/grown/coffee/robusta(src)
+		var/obj/item/food/grown/coffee/robusta/bean = new(src)
+		ADD_TRAIT(bean, TRAIT_DRIED, ELEMENT_TRAIT(type))
+		bean.add_atom_colour("#ad7257", FIXED_COLOUR_PRIORITY)	//give them the tan just like from the drying rack
+
+/obj/item/storage/box/coffeepack/arabica
+	illustration = null
+	icon = 'icons/obj/food/containers.dmi'
+	icon_state = "arabica_beans"
+	name = "arabica beans"
+	desc = "A bag containing fresh, dry coffee arabica beans. Ethically sourced and packaged by Waffle Corp."
+
+/obj/item/storage/box/coffeepack/arabica/PopulateContents()
+	atom_storage.max_slots = 5
+	atom_storage.set_holdable(list(/obj/item/food/grown/coffee))
+	for(var/i in 1 to 5)
+		var/obj/item/food/grown/coffee/bean = new(src)
+		ADD_TRAIT(bean, TRAIT_DRIED, ELEMENT_TRAIT(type))
+		bean.add_atom_colour("#ad7257", FIXED_COLOUR_PRIORITY)	//give them the tan just like from the drying rack
+
