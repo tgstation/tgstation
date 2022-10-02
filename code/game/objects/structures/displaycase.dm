@@ -354,7 +354,7 @@
 	data["has_showpiece"] = showpiece ? TRUE : FALSE
 	if(showpiece)
 		data["showpiece_name"] = capitalize(format_text(showpiece.name))
-		var/base64 = icon2base64(icon(showpiece.icon, showpiece.icon_state))
+		var/base64 = icon2base64(getFlatIcon(showpiece,  no_anim=TRUE))
 		data["showpiece_icon"] = base64
 		data["showpiece_description"] = trophy_message ? format_text(trophy_message) : null
 	return data
@@ -447,7 +447,7 @@
 		data["owner_name"] = payments_acc.account_holder
 	if(showpiece)
 		data["product_name"] = capitalize(format_text(showpiece.name))
-		var/base64 = icon2base64(icon(showpiece.icon, showpiece.icon_state))
+		var/base64 = icon2base64(getFlatIcon(showpiece,  no_anim=TRUE))
 		data["product_icon"] = base64
 	data["registered"] = register
 	data["product_cost"] = sale_price
