@@ -73,8 +73,8 @@
 	name = "acidic bile"
 	icon_state = "neurotoxin"
 	hitsound = 'sound/weapons/sear.ogg'
-	damage = 20
-	armour_penetration = 100
+	damage = 15
+	armour_penetration = 50
 	speed = 2
 	jitter = 3 SECONDS
 	stutter = 3 SECONDS
