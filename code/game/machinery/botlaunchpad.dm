@@ -9,9 +9,6 @@
 	var/obj/item/botpad_remote/connected_remote
 	var/mob/living/simple_animal/bot/launched_bot // we need this to recall the bot
 
-/obj/machinery/botpad/Initialize(mapload)
-	. = ..()
-
 /obj/machinery/botpad/Destroy()
 	if(connected_remote)
 		connected_remote.connected_botpad = null
