@@ -350,7 +350,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 
 /obj/item/chair/proc/plant(mob/user)
 	var/turf/T = get_turf(loc)
-	if(!isfloorturf(T))
+	if(isgroundlessturf(T))
 		to_chat(user, span_warning("You need ground to plant this on!"))
 		return
 	for(var/obj/A in T)
