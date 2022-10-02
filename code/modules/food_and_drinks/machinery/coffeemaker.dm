@@ -446,6 +446,7 @@
 	desc = "An impressa modello 5 coffeemaker of the Piccionaia Home Appliances premium coffeemakers product line. Makes coffee from freshly ground beans from its integrated grinder."
 	icon = 'icons/obj/machines/coffeemaker.dmi'
 	icon_state = "coffeemaker_impressa"
+	circuit = /obj/item/circuitboard/machine/coffeemaker/impressa
 	brew_time = 10 SECONDS //industrial grade, its faster than the regular one
 	var/const/grinder_capacity = 10	//how many beans can fit inside
 
