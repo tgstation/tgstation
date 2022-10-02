@@ -483,7 +483,10 @@
 /obj/machinery/coffeemaker/impressa/update_overlays()
 	. = ..()
 	if(coffeepot)
-		. += "pot_full"
+		if(coffeepot.reagents.total_volume > 0)
+			. += "pot_full"
+		else
+			. += "pot_empty"
 	if(coffee_cups > 0)
 		if(coffee_cups >= max_coffee_cups/3)
 			if(coffee_cups > max_coffee_cups/1.5)
@@ -493,11 +496,11 @@
 		else
 			. += "cups_1"
 	if(sugar_packs)
-		. += "spoons_full"
+		. += "extras_1"
 	if(creamer_packs)
-		. += "extras_full"
+		. += "extras_2"
 	if(sweetener_packs)
-		. += "chocolate_full"
+		. += "extras_3"
 	if(coffee_amount)
 		if(coffee_amount < grinder_capacity/2)
 			. += "grinder_half"
@@ -636,3 +639,4 @@
 	coffeepot.reagents.add_reagent_list(list(/datum/reagent/consumable/coffee = 120))
 	coffee[coffee_amount+1] = null
 	coffee_amount--
+	update_appearance()
