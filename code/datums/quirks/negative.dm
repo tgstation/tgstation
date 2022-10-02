@@ -67,7 +67,6 @@
 	if(NOBLOOD in bloodless.dna.species.species_traits) // if your species does not have blood, we double oxygen damage instead
 		bloodless.physiology.oxy_mod *= 2
 		bloodless_species = TRUE
-		STOP_PROCESSING(SSquirks, src)
 		processing_quirk = FALSE
 
 /datum/quirk/blooddeficiency/remove()
