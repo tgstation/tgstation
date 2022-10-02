@@ -15,6 +15,8 @@
 	var/passed_cycle_id
 	/// A holder of the electronics, in case of them working as an integrated part
 	var/holder
+	/// Whether this airlock can have an integrated circuit inside of it or not
+	var/shell = FALSE
 
 /obj/item/electronics/airlock/examine(mob/user)
 	. = ..()
@@ -47,6 +49,7 @@
 	data["unres_direction"] = unres_sides
 	data["passedName"] = passed_name
 	data["passedCycleId"] = passed_cycle_id
+	data["shell"] = shell
 	return data
 
 /obj/item/electronics/airlock/ui_act(action, params)
@@ -71,6 +74,9 @@
 				accesses += access
 			else
 				accesses -= access
+			. = TRUE
+		if("set_shell")
+			shell = !!params["on"]
 			. = TRUE
 		if("direc_set")
 			var/unres_direction = text2num(params["unres_direction"])

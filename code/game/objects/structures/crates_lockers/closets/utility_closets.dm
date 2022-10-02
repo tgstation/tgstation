@@ -20,13 +20,19 @@
 /obj/structure/closet/emcloset/anchored
 	anchored = TRUE
 
+/obj/structure/closet/emcloset/Initialize(mapload)
+	. = ..()
+
+	if (prob(1))
+		return INITIALIZE_HINT_QDEL
+
 /obj/structure/closet/emcloset/PopulateContents()
 	..()
 
 	if (prob(40))
 		new /obj/item/storage/toolbox/emergency(src)
 
-	switch (pick_weight(list("small" = 35, "aid" = 30, "tank" = 20, "both" = 10, "nothing" = 4, "delete" = 1)))
+	switch (pick_weight(list("small" = 35, "aid" = 30, "tank" = 20, "both" = 10, "nothing" = 4)))
 		if ("small")
 			new /obj/item/tank/internals/emergency_oxygen(src)
 			new /obj/item/tank/internals/emergency_oxygen(src)
@@ -48,10 +54,7 @@
 
 		if ("nothing")
 			// doot
-
-		// teehee //Fuck you
-		if ("delete")
-			qdel(src)
+			pass()
 
 /*
  * Fire Closet

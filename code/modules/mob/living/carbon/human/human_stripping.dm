@@ -67,7 +67,7 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 		return
 
 	var/mob/mob_source = source
-	mob_source.update_inv_w_uniform()
+	mob_source.update_worn_undersuit()
 	mob_source.update_body()
 
 /datum/strippable_item/mob_item_slot/suit

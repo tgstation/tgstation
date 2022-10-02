@@ -54,6 +54,11 @@
 	gender = FEMALE
 	gold_core_spawnable = NO_SPAWN
 
+/mob/living/simple_animal/crab/jon //holodeck crab
+	name = "Jon"
+	real_name = "Jon"
+	gold_core_spawnable = NO_SPAWN
+
 /mob/living/simple_animal/crab/evil
 	name = "Evil Crab"
 	real_name = "Evil Crab"

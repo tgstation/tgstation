@@ -5,6 +5,7 @@ SUBSYSTEM_DEF(vote)
 	name = "Vote"
 	wait = 1 SECONDS
 	flags = SS_KEEP_TIMING
+	init_order = INIT_ORDER_VOTE
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 
 	/// A list of all generated action buttons
@@ -18,7 +19,7 @@ SUBSYSTEM_DEF(vote)
 	/// A list of all ckeys currently voting for the current vote.
 	var/list/voting = list()
 
-/datum/controller/subsystem/vote/Initialize(start_timeofday)
+/datum/controller/subsystem/vote/Initialize()
 	for(var/vote_type in subtypesof(/datum/vote))
 		var/datum/vote/vote = new vote_type()
 		if(!vote.is_accessible_vote())
@@ -27,7 +28,7 @@ SUBSYSTEM_DEF(vote)
 
 		possible_votes[vote.name] = vote
 
-	return ..()
+	return SS_INIT_SUCCESS
 
 
 // Called by master_controller
@@ -94,7 +95,8 @@ SUBSYSTEM_DEF(vote)
 	to_chat(world, span_infoplain(vote_font("\n[to_display]")))
 
 	// Finally, doing any effects on vote completion
-	current_vote.finalize_vote(final_winner)
+	if (final_winner) // if no one voted final_winner will be null
+		current_vote.finalize_vote(final_winner)
 
 /datum/controller/subsystem/vote/proc/submit_vote(mob/voter, their_vote)
 	if(!current_vote)
@@ -238,6 +240,7 @@ SUBSYSTEM_DEF(vote)
 			"name" = vote_name,
 			"canBeInitiated" = vote.can_be_initiated(forced = is_lower_admin),
 			"config" = vote.is_config_enabled(),
+			"message" = vote.message,
 		)
 
 		if(vote == current_vote)
@@ -274,7 +277,7 @@ SUBSYSTEM_DEF(vote)
 			if(!voter.client?.holder)
 				return
 
-			voter.log_message("[key_name_admin(voter)] cancelled a vote.", LOG_ADMIN)
+			voter.log_message("cancelled a vote.", LOG_ADMIN)
 			message_admins("[key_name_admin(voter)] has cancelled the current vote.")
 			reset()
 			return TRUE

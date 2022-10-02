@@ -108,7 +108,7 @@ GLOBAL_VAR(command_name)
 	var/name = ""
 
 	// Prefix
-	name += pick("Clandestine", "Prima", "Blue", "Zero-G", "Max", "Blasto", "Waffle", "North", "Omni", "Newton", "Cyber", "Bonk", "Gene", "Gib")
+	name += pick("Clandestine", "Prima", "Blue", "Zero-G", "Max", "Blasto", "North", "Omni", "Newton", "Cyber", "Bonk", "Gene", "Gib")
 
 	// Suffix
 	if (prob(80))
@@ -121,11 +121,11 @@ GLOBAL_VAR(command_name)
 		else
 			name += pick("Syndi", "Corp", "Bio", "System", "Prod", "Chem", "Inter", "Hive")
 			name += pick("", "-")
-			name += pick("Tech", "Sun", "Co", "Tek", "X", "Inc", "Code")
+			name += pick("Tech", "Co", "Tek", "X", "Inc", "Code")
 	// Small
 	else
 		name += pick("-", "*", "")
-		name += pick("Tech", "Sun", "Co", "Tek", "X", "Inc", "Gen", "Star", "Dyne", "Code", "Hive")
+		name += pick("Tech", "Co", "Tek", "X", "Inc", "Gen", "Star", "Dyne", "Code", "Hive")
 
 	return name
 

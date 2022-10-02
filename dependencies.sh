@@ -5,10 +5,10 @@
 
 # byond version
 export BYOND_MAJOR=514
-export BYOND_MINOR=1560
+export BYOND_MINOR=1588
 
 #rust_g git tag
-export RUST_G_VERSION=0.5.0
+export RUST_G_VERSION=1.0.2
 
 #node version
 export NODE_VERSION=14
@@ -24,4 +24,4 @@ export PYTHON_VERSION=3.7.9
 export AUXLUA_REPO=tgstation/auxlua
 
 #auxlua git tag
-export AUXLUA_VERSION=0.2.0
+export AUXLUA_VERSION=1.3.0

@@ -164,7 +164,7 @@
 	pushed_mob.visible_message(span_danger("[user] slams [pushed_mob] onto \the [src]!"), \
 								span_userdanger("[user] slams you onto \the [src]!"))
 	log_combat(user, pushed_mob, "tabled", null, "onto [src]")
-	SEND_SIGNAL(pushed_mob, COMSIG_ADD_MOOD_EVENT, "table", /datum/mood_event/table)
+	pushed_mob.add_mood_event("table", /datum/mood_event/table)
 
 /obj/structure/table/proc/tablelimbsmash(mob/living/user, mob/living/pushed_mob)
 	pushed_mob.Knockdown(30)
@@ -178,10 +178,10 @@
 	if(user.mind?.martial_art.smashes_tables && user.mind?.martial_art.can_use(user))
 		deconstruct(FALSE)
 	playsound(pushed_mob, 'sound/effects/bang.ogg', 90, TRUE)
-	pushed_mob.visible_message(span_danger("[user] smashes [pushed_mob]'s [banged_limb.name] against \the [src]!"),
-								span_userdanger("[user] smashes your [banged_limb.name] against \the [src]"))
+	pushed_mob.visible_message(span_danger("[user] smashes [pushed_mob]'s [banged_limb.plaintext_zone] against \the [src]!"),
+								span_userdanger("[user] smashes your [banged_limb.plaintext_zone] against \the [src]"))
 	log_combat(user, pushed_mob, "head slammed", null, "against [src]")
-	SEND_SIGNAL(pushed_mob, COMSIG_ADD_MOOD_EVENT, "table", /datum/mood_event/table_limbsmash, banged_limb)
+	pushed_mob.add_mood_event("table", /datum/mood_event/table_limbsmash, banged_limb)
 
 /obj/structure/table/screwdriver_act_secondary(mob/living/user, obj/item/tool)
 	if(flags_1 & NODECONSTRUCT_1 || !deconstruction_ready)
@@ -330,6 +330,14 @@
 	base_icon_state = "table_greyscale"
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	buildstack = null //No buildstack, so generate from mat datums
+
+/obj/structure/table/greyscale/set_custom_materials(list/materials, multiplier)
+	. = ..()
+	var/list/materials_list = list()
+	for(var/custom_material in custom_materials)
+		var/datum/material/current_material = GET_MATERIAL_REF(custom_material)
+		materials_list += "[current_material.name]"
+	desc = "A square [(materials_list.len > 1) ? "amalgamation" : "piece"] of [english_list(materials_list)] on four legs. It can not move."
 
 ///Table on wheels
 /obj/structure/table/rolling
@@ -671,8 +679,8 @@
 /obj/structure/table/optable
 	name = "operating table"
 	desc = "Used for advanced medical procedures."
-	icon = 'icons/obj/surgery.dmi'
-	icon_state = "optable"
+	icon = 'icons/obj/medical/surgery_table.dmi'
+	icon_state = "surgery_table"
 	buildstack = /obj/item/stack/sheet/mineral/silver
 	smoothing_flags = NONE
 	smoothing_groups = null
@@ -681,7 +689,7 @@
 	buckle_lying = NO_BUCKLE_LYING
 	buckle_requires_restraints = TRUE
 	custom_materials = list(/datum/material/silver = 2000)
-	var/mob/living/carbon/human/patient = null
+	var/mob/living/carbon/patient = null
 	var/obj/machinery/computer/operating/computer = null
 
 /obj/structure/table/optable/Initialize(mapload)
@@ -691,44 +699,57 @@
 		if(computer)
 			computer.table = src
 			break
+	RegisterSignal(loc, COMSIG_ATOM_ENTERED, .proc/mark_patient)
+	RegisterSignal(loc, COMSIG_ATOM_EXITED, .proc/unmark_patient)
 
 /obj/structure/table/optable/Destroy()
-	. = ..()
 	if(computer && computer.table == src)
 		computer.table = null
+	patient = null
+	UnregisterSignal(loc, COMSIG_ATOM_ENTERED)
+	UnregisterSignal(loc, COMSIG_ATOM_EXITED)
+	return ..()
 
 /obj/structure/table/optable/tablepush(mob/living/user, mob/living/pushed_mob)
 	pushed_mob.forceMove(loc)
 	pushed_mob.set_resting(TRUE, TRUE)
 	visible_message(span_notice("[user] lays [pushed_mob] on [src]."))
-	get_patient()
 
-/obj/structure/table/optable/proc/get_patient()
-	var/mob/living/carbon/M = locate(/mob/living/carbon) in loc
-	if(M)
-		if(M.resting)
-			set_patient(M)
-	else
-		set_patient(null)
-
-/obj/structure/table/optable/proc/set_patient(new_patient)
-	if(patient)
-		UnregisterSignal(patient, COMSIG_PARENT_QDELETING)
-	patient = new_patient
-	if(patient)
-		RegisterSignal(patient, COMSIG_PARENT_QDELETING, .proc/patient_deleted)
-
-/obj/structure/table/optable/proc/patient_deleted(datum/source)
+/// Any mob that enters our tile will be marked as a potential patient. They will be turned into a patient if they lie down.
+/obj/structure/table/optable/proc/mark_patient(datum/source, mob/living/carbon/potential_patient)
 	SIGNAL_HANDLER
-	set_patient(null)
+	if(!istype(potential_patient))
+		return
+	RegisterSignal(potential_patient, COMSIG_LIVING_SET_BODY_POSITION, .proc/recheck_patient)
+	recheck_patient(potential_patient) // In case the mob is already lying down before they entered.
 
-/obj/structure/table/optable/proc/check_eligible_patient()
-	get_patient()
-	if(!patient)
-		return FALSE
-	if(ishuman(patient))
-		return TRUE
-	return FALSE
+/// Unmark the potential patient.
+/obj/structure/table/optable/proc/unmark_patient(datum/source, mob/living/carbon/potential_patient)
+	SIGNAL_HANDLER
+	if(!istype(potential_patient))
+		return
+	if(potential_patient == patient)
+		recheck_patient(patient) // Can just set patient to null, but doing the recheck lets us find a replacement patient.
+	UnregisterSignal(potential_patient, COMSIG_LIVING_SET_BODY_POSITION)
+
+/// Someone on our tile just lied down, got up, moved in, or moved out.
+/// potential_patient is the mob that had one of those four things change.
+/// The check is a bit broad so we can find a replacement patient.
+/obj/structure/table/optable/proc/recheck_patient(mob/living/carbon/potential_patient)
+	SIGNAL_HANDLER
+	if(patient && patient != potential_patient)
+		return
+
+	if(potential_patient.body_position == LYING_DOWN && potential_patient.loc == loc)
+		patient = potential_patient
+		return
+
+	// Find another lying mob as a replacement.
+	for (var/mob/living/carbon/replacement_patient in loc.contents)
+		if(replacement_patient.body_position == LYING_DOWN)
+			patient = replacement_patient
+			return
+	patient = null
 
 /*
  * Racks
@@ -757,7 +778,7 @@
 
 /obj/structure/rack/MouseDrop_T(obj/O, mob/user)
 	. = ..()
-	if ((!( istype(O, /obj/item) ) || user.get_active_held_item() != O))
+	if ((!( isitem(O) ) || user.get_active_held_item() != O))
 		return
 	if(!user.dropItemToGround(O))
 		return
@@ -818,7 +839,7 @@
 /obj/item/rack_parts
 	name = "rack parts"
 	desc = "Parts of a rack."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "rack_parts"
 	flags_1 = CONDUCT_1
 	custom_materials = list(/datum/material/iron=2000)

@@ -297,7 +297,7 @@
 	icon_state = "power_kick"
 	module_type = MODULE_ACTIVE
 	removable = FALSE
-	use_power_cost = DEFAULT_CHARGE_DRAIN*5
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
 	incompatible_modules = list(/obj/item/mod/module/power_kick)
 	cooldown_time = 5 SECONDS
 	/// Damage on kick.

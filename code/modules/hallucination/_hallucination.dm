@@ -1,162 +1,233 @@
-GLOBAL_LIST_INIT(hallucination_list, list(
-	/datum/hallucination/chat = 100,
-	/datum/hallucination/message = 60,
-	/datum/hallucination/sounds = 50,
-	/datum/hallucination/battle = 20,
-	/datum/hallucination/dangerflash = 15,
-	/datum/hallucination/hudscrew = 12,
-	/datum/hallucination/fake_health_doll = 12,
-	/datum/hallucination/fake_alert = 12,
-	/datum/hallucination/weird_sounds = 8,
-	/datum/hallucination/stationmessage = 7,
-	/datum/hallucination/fake_flood = 7,
-	/datum/hallucination/stray_bullet = 7,
-	/datum/hallucination/bolts = 7,
-	/datum/hallucination/items_other = 7,
-	/datum/hallucination/husks = 7,
-	/datum/hallucination/items = 4,
-	/datum/hallucination/fire = 3,
-	/datum/hallucination/self_delusion = 2,
-	/datum/hallucination/delusion = 2,
-	/datum/hallucination/shock = 1,
-	/datum/hallucination/death = 1,
-	/datum/hallucination/oh_yeah = 1
-	))
-
-
-/mob/living/carbon/proc/handle_hallucinations(delta_time, times_fired)
-	if(!hallucination)
-		return
-
-	hallucination = max(hallucination - (0.5 * delta_time), 0)
-	if(world.time < next_hallucination)
-		return
-
-	var/halpick = pick_weight(GLOB.hallucination_list)
-	new halpick(src, FALSE)
-
-	next_hallucination = world.time + rand(100, 600)
-
-/mob/living/carbon/proc/set_screwyhud(hud_type)
-	hal_screwyhud = hud_type
-	update_health_hud()
-
+/**
+ * # Hallucination datum.
+ *
+ * Handles effects of a hallucination on a living mob.
+ * Created and triggered via the [cause hallucination proc][/mob/living/proc/cause_hallucination].
+ *
+ * See also: [the hallucination status effect][/datum/status_effect/hallucination].
+ */
 /datum/hallucination
-	var/natural = TRUE
-	var/mob/living/carbon/target
-	var/feedback_details //extra info for investigate
+	/// What is this hallucination's weight in the random hallucination pool?
+	var/random_hallucination_weight = 0
+	/// Who's our next highest abstract parent type?
+	var/abstract_hallucination_parent = /datum/hallucination
+	/// Extra info about the hallucination displayed in the log.
+	var/feedback_details = ""
+	/// The mob we're targeting with the hallucination.
+	var/mob/living/hallucinator
 
-/datum/hallucination/New(mob/living/carbon/C, forced = TRUE)
-	set waitfor = FALSE
-	target = C
-	natural = !forced
+/datum/hallucination/New(mob/living/hallucinator)
+	if(!isliving(hallucinator))
+		stack_trace("[type] was created without a hallucinating mob.")
+		qdel(src)
+		return
 
-	// Cancel early if the target is deleted
-	RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/target_deleting)
+	src.hallucinator = hallucinator
+	RegisterSignal(hallucinator, COMSIG_PARENT_QDELETING, .proc/target_deleting)
+	GLOB.all_ongoing_hallucinations += src
 
+/// Signal proc for [COMSIG_PARENT_QDELETING], if the mob hallucinating us is deletes, we should delete too.
 /datum/hallucination/proc/target_deleting()
 	SIGNAL_HANDLER
 
 	qdel(src)
 
-/datum/hallucination/proc/wake_and_restore()
-	target.set_screwyhud(SCREWYHUD_NONE)
-	target.SetSleeping(0)
+/// Starts the hallucination.
+/datum/hallucination/proc/start()
+	SHOULD_CALL_PARENT(FALSE)
+	stack_trace("[type] didn't implement any hallucination effects in start.")
 
 /datum/hallucination/Destroy()
-	target.investigate_log("was afflicted with a hallucination of type [type] by [natural?"hallucination status":"an external source"]. [feedback_details]", INVESTIGATE_HALLUCINATIONS)
+	if(hallucinator)
+		UnregisterSignal(hallucinator, COMSIG_PARENT_QDELETING)
+		hallucinator = null
 
-	if (target)
-		UnregisterSignal(target, COMSIG_PARENT_QDELETING)
-
-	target = null
+	GLOB.all_ongoing_hallucinations -= src
 	return ..()
 
-//Returns a random turf in a ring around the target mob, useful for sound hallucinations
+/// Returns a random turf in a ring around the hallucinator mob.
+/// Useful for sound hallucinations.
 /datum/hallucination/proc/random_far_turf()
-	var/x_based = prob(50)
-	var/first_offset = pick(-8,-7,-6,-5,5,6,7,8)
-	var/second_offset = rand(-8,8)
-	var/x_off
-	var/y_off
-	if(x_based)
-		x_off = first_offset
-		y_off = second_offset
+	var/first_offset = pick(-8, -7, -6, -5, 5, 6, 7, 8)
+	var/second_offset = rand(-8, 8)
+	var/x_offset
+	var/y_offset
+	if(prob(50))
+		x_offset = first_offset
+		y_offset = second_offset
 	else
-		y_off = first_offset
-		x_off = second_offset
-	var/turf/T = locate(target.x + x_off, target.y + y_off, target.z)
-	return T
+		x_offset = second_offset
+		y_offset = first_offset
 
-/obj/effect/hallucination
+	return locate(hallucinator.x + x_offset, hallucinator.y + y_offset, hallucinator.z)
+
+/// Gets a random non-security member of the crew that is at least 8 tiles away.
+/datum/hallucination/proc/random_non_sec_crewmember()
+	var/list/possible_fakes = list()
+	for(var/datum/mind/possible_fake as anything in get_crewmember_minds())
+		// Sec won't make sense. (Neither will cap but we'll just let it slide)
+		if(possible_fake.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY)
+			continue
+		// Look for minds on the manifest in control of humans
+		var/mob/living/carbon/human/fake_body = possible_fake.current
+		if(!istype(fake_body) || fake_body == hallucinator)
+			continue
+		// This also won't make sense in most cases
+		if(get_dist(fake_body, hallucinator) < 8)
+			continue
+		possible_fakes += fake_body
+
+	return length(possible_fakes) ? pick(possible_fakes) : null
+
+/**
+ * Simple effect that holds an image
+ * to be shown to one or multiple clients only.
+ *
+ * Pass a list of mobs in initialize() that corresponds to all mobs that can see it.
+ */
+/obj/effect/client_image_holder
 	invisibility = INVISIBILITY_OBSERVER
 	anchored = TRUE
-	var/mob/living/carbon/target = null
 
-/obj/effect/hallucination/simple
-	var/image_icon = 'icons/mob/alien.dmi'
-	var/image_state = "alienh_pounce"
-	var/px = 0
-	var/py = 0
-	var/col_mod = null
-	var/image/current_image = null
+	/// A list of mobs which can see us.
+	var/list/mob/who_sees_us
+	/// The created image, what we look like.
+	var/image/shown_image
+	/// The icon file the image uses. If null, we have no image
+	var/image_icon
+	/// The icon state the image uses
+	var/image_state
+	/// The x pixel offset of the image
+	var/image_pixel_x = 0
+	/// The y pixel offset of the image
+	var/image_pixel_y = 0
+	/// Optional, the color of the image
+	var/image_color
+	/// The layer of the image
 	var/image_layer = MOB_LAYER
+	/// The plane of the image
 	var/image_plane = GAME_PLANE
-	var/active = TRUE //qdelery
 
-/obj/effect/hallucination/singularity_pull()
-	return
-
-/obj/effect/hallucination/singularity_act()
-	return
-
-/obj/effect/hallucination/simple/Initialize(mapload, mob/living/carbon/T)
+/obj/effect/client_image_holder/Initialize(mapload, list/mobs_which_see_us)
 	. = ..()
-	if(!T)
-		stack_trace("A hallucination was created with no target")
+	if(isnull(mobs_which_see_us))
+		stack_trace("Client image holder was created with no mobs to see it.")
 		return INITIALIZE_HINT_QDEL
-	target = T
-	current_image = GetImage()
-	if(target.client)
-		target.client.images |= current_image
 
-/obj/effect/hallucination/simple/proc/GetImage()
-	var/image/I = image(image_icon,src,image_state,image_layer,dir=src.dir)
-	I.plane = image_plane
-	I.pixel_x = px
-	I.pixel_y = py
-	if(col_mod)
-		I.color = col_mod
-	return I
+	shown_image = generate_image()
 
-/obj/effect/hallucination/simple/proc/Show(update=1)
-	if(active)
-		if(target.client)
-			target.client.images.Remove(current_image)
-		if(update)
-			current_image = GetImage()
-		if(target.client)
-			target.client.images |= current_image
+	if(!islist(mobs_which_see_us))
+		mobs_which_see_us = list(mobs_which_see_us)
 
-/obj/effect/hallucination/simple/update_icon(updates=ALL, new_state, new_icon, new_px=0, new_py=0)
-	image_state = new_state
-	if(new_icon)
-		image_icon = new_icon
-	else
-		image_icon = initial(image_icon)
-	px = new_px
-	py = new_py
+	who_sees_us = list()
+	for(var/mob/seer as anything in mobs_which_see_us)
+		RegisterSignal(seer, COMSIG_MOB_LOGIN, .proc/show_image_to)
+		RegisterSignal(seer, COMSIG_PARENT_QDELETING, .proc/remove_seer)
+		who_sees_us += seer
+		show_image_to(seer)
+
+/obj/effect/client_image_holder/Destroy(force)
+	if(shown_image)
+		for(var/mob/seer as anything in who_sees_us)
+			remove_seer(seer)
+		shown_image = null
+
+	who_sees_us.Cut() // probably not needed but who knows
+	return ..()
+
+/obj/effect/client_image_holder/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	. = ..()
-	Show()
+	if(same_z_layer)
+		return
+	SET_PLANE(shown_image, PLANE_TO_TRUE(shown_image.plane), new_turf)
 
-/obj/effect/hallucination/simple/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
+/// Signal proc to clean up references if people who see us are deleted.
+/obj/effect/client_image_holder/proc/remove_seer(mob/source)
+	SIGNAL_HANDLER
+
+	UnregisterSignal(source, list(COMSIG_MOB_LOGIN, COMSIG_PARENT_QDELETING))
+	hide_image_from(source)
+	who_sees_us -= source
+
+	// No reason to exist, anymore
+	if(!QDELETED(src) && !length(who_sees_us))
+		qdel(src)
+
+/// Generates the image which we take on.
+/obj/effect/client_image_holder/proc/generate_image()
+	var/image/created = image(image_icon, src, image_state, image_layer, dir = src.dir)
+	SET_PLANE_EXPLICIT(created, image_plane, src)
+	created.pixel_x = image_pixel_x
+	created.pixel_y = image_pixel_y
+	if(image_color)
+		created.color = image_color
+	return created
+
+/// Shows the image we generated to the passed mob
+/obj/effect/client_image_holder/proc/show_image_to(mob/show_to)
+	SIGNAL_HANDLER
+
+	show_to.client?.images |= shown_image
+
+/// Hides the image we generated from the passed mob
+/obj/effect/client_image_holder/proc/hide_image_from(mob/hide_from)
+	SIGNAL_HANDLER
+
+	hide_from.client?.images -= shown_image
+
+/// Simple helper for refreshing / showing the image to everyone in our list.
+/obj/effect/client_image_holder/proc/regenerate_image()
+	for(var/mob/seer as anything in who_sees_us)
+		hide_image_from(seer)
+
+	shown_image = generate_image()
+
+	for(var/mob/seer as anything in who_sees_us)
+		show_image_to(seer)
+
+// Whenever we perform icon updates, regenerate our image
+/obj/effect/client_image_holder/update_icon(updates = ALL)
+	. = ..()
+	regenerate_image()
+
+// If we move for some reason, regenerate our image
+/obj/effect/client_image_holder/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(!loc)
 		return
-	Show()
+	regenerate_image()
 
-/obj/effect/hallucination/simple/Destroy()
-	if(target.client)
-		target.client.images.Remove(current_image)
-	active = FALSE
+/obj/effect/client_image_holder/singularity_pull()
+	return
+
+/obj/effect/client_image_holder/singularity_act()
+	return
+
+/**
+ * A client-side image effect tied to the existence of a hallucination.
+ */
+/obj/effect/client_image_holder/hallucination
+	invisibility = INVISIBILITY_OBSERVER
+	anchored = TRUE
+	/// The hallucination that created us.
+	var/datum/hallucination/parent
+
+/obj/effect/client_image_holder/hallucination/Initialize(mapload, list/mobs_which_see_us, datum/hallucination/parent)
+	. = ..()
+	if(!parent)
+		stack_trace("[type] was created without a parent hallucination.")
+		return INITIALIZE_HINT_QDEL
+
+	RegisterSignal(parent, COMSIG_PARENT_QDELETING, .proc/parent_deleting)
+	src.parent = parent
+
+/obj/effect/client_image_holder/hallucination/Destroy(force)
+	UnregisterSignal(parent, COMSIG_PARENT_QDELETING)
+	parent = null
 	return ..()
+
+/// Signal proc for [COMSIG_PARENT_QDELETING], if our associated hallucination deletes, we should too
+/obj/effect/client_image_holder/hallucination/proc/parent_deleting(datum/source)
+	SIGNAL_HANDLER
+
+	qdel(src)

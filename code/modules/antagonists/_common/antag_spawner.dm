@@ -100,11 +100,16 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "locator"
 	var/borg_to_spawn
-	var/special_role_name = ROLE_NUCLEAR_OPERATIVE ///The name of the special role given to the recruit
-	var/datum/outfit/syndicate/outfit = /datum/outfit/syndicate/no_crystals ///The applied outfit
-	var/datum/antagonist/nukeop/antag_datum = /datum/antagonist/nukeop ///The antag datam applied
+	/// The name of the special role given to the recruit
+	var/special_role_name = ROLE_NUCLEAR_OPERATIVE
+	/// The applied outfit
+	var/datum/outfit/syndicate/outfit = /datum/outfit/syndicate/reinforcement
+	/// The antag datam applied
+	var/datum/antagonist/nukeop/antag_datum = /datum/antagonist/nukeop
 	/// Style used by the droppod
 	var/pod_style = STYLE_SYNDICATE
+	/// Do we use a random subtype of the outfit?
+	var/use_subtypes = TRUE
 
 /obj/item/antag_spawner/nuke_ops/proc/check_usability(mob/user)
 	if(used)
@@ -152,7 +157,7 @@
 
 	antag_datum = new()
 	antag_datum.send_to_spawnpoint = FALSE
-	antag_datum.nukeop_outfit = outfit
+	antag_datum.nukeop_outfit = use_subtypes ? pick(subtypesof(outfit)) : outfit
 
 	var/datum/antagonist/nukeop/creator_op = user.has_antag_datum(/datum/antagonist/nukeop, TRUE)
 	op_mind.add_antag_datum(antag_datum, creator_op ? creator_op.get_team() : null)
@@ -168,6 +173,7 @@
 	outfit = /datum/outfit/syndicate/clownop/no_crystals
 	antag_datum = /datum/antagonist/nukeop/clownop
 	pod_style = STYLE_HONK
+	use_subtypes = FALSE
 
 //////SYNDICATE BORG
 /obj/item/antag_spawner/nuke_ops/borg_tele

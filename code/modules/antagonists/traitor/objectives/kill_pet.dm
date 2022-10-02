@@ -64,6 +64,7 @@
 		possible_heads -= objective.target.title
 	if(limited_to_department_head)
 		possible_heads = possible_heads & role.department_head
+	possible_heads -= role.title
 
 	if(!length(possible_heads))
 		return FALSE
@@ -71,7 +72,7 @@
 	var/pet_type = possible_heads[target.title]
 	if(islist(pet_type))
 		for(var/type in pet_type)
-			target_pet = locate(pet_type) in GLOB.mob_living_list
+			target_pet = locate(type) in GLOB.mob_living_list
 			if(target_pet)
 				break
 	else

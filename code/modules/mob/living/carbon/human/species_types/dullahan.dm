@@ -3,9 +3,6 @@
 	id = SPECIES_DULLAHAN
 	species_traits = list(EYECOLOR, HAIR, FACEHAIR, LIPS, HAS_FLESH, HAS_BONE)
 	inherent_traits = list(
-		TRAIT_ADVANCEDTOOLUSER,
-		TRAIT_CAN_STRIP,
-		TRAIT_LITERATE,
 		TRAIT_NOBREATH,
 		TRAIT_NOHUNGER,
 	)
@@ -18,7 +15,7 @@
 	mutantears = /obj/item/organ/internal/ears/dullahan
 	examine_limb_id = SPECIES_HUMAN
 	skinned_type = /obj/item/stack/sheet/animalhide/human
-	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | ERT_SPAWN
+	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
 
 	/// The dullahan relay that's associated with the owner, used to handle many things such as talking and hearing.
 	var/obj/item/dullahan_relay/my_head
@@ -157,7 +154,7 @@
 
 /obj/item/organ/internal/brain/dullahan
 	decoy_override = TRUE
-	organ_flags = 0
+	organ_flags = NONE
 
 /obj/item/organ/internal/tongue/dullahan
 	zone = "abstract"

@@ -151,3 +151,10 @@
 	reward = CARGO_CRATE_VALUE * 60 //that's a lot of dead dogs
 	required_count = 12
 	wanted_types = list(/obj/item/stack/sheet/animalhide/corgi = TRUE)
+
+/datum/bounty/item/chef/pickles
+	name = "Pickles"
+	description = "The food control department lacks enough pickles to properly evaluate some of the different types of hard liquor."
+	reward = CARGO_CRATE_VALUE * 10
+	required_count = 7
+	wanted_types = list(/obj/item/food/pickle = TRUE)

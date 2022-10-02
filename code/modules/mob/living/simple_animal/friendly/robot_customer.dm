@@ -5,7 +5,7 @@
 	health = 150
 	desc = "I wonder what they'll order..."
 	gender = NEUTER
-	icon = 'icons/mob/tourists.dmi'
+	icon = 'icons/mob/simple/tourists.dmi'
 	icon_state = "amerifat"
 	icon_living = "amerifat"
 	///Override so it uses datum ai

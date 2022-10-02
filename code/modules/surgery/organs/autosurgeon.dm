@@ -34,7 +34,7 @@
 	. = ..()
 	if(stored_organ)
 		. += loaded_overlay
-		. += emissive_appearance(icon, loaded_overlay)
+		. += emissive_appearance(icon, loaded_overlay, src)
 
 /obj/item/autosurgeon/proc/load_organ(obj/item/organ/loaded_organ, mob/living/user)
 	if(user)
@@ -105,7 +105,7 @@
 	use_autosurgeon(target, user, 8 SECONDS)
 
 /obj/item/autosurgeon/attackby(obj/item/attacking_item, mob/user, params)
-	if(istype(attacking_item, /obj/item/organ))
+	if(isorgan(attacking_item))
 		load_organ(attacking_item, user)
 	else
 		return ..()

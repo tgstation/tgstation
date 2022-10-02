@@ -6,7 +6,7 @@
 /obj/docking_port/mobile/elevator{
 	dir = 4;
 	height = 6;
-	id = "snowdin_excavation";
+	shuttle_id = "snowdin_excavation";
 	name = "excavation elevator";
 	width = 6
 	},

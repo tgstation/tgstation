@@ -58,7 +58,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/bar,
-/obj/item/reagent_containers/food/drinks/drinkingglass{
+/obj/item/reagent_containers/cup/glass/drinkingglass{
 	pixel_x = 4;
 	pixel_y = 5
 	},
@@ -446,11 +446,11 @@
 /turf/open/floor/iron,
 /area/centcom/ctf)
 "iv" = (
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
 	pixel_x = -9;
 	pixel_y = -4
 	},
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass,
 /obj/structure/table/wood{
 	resistance_flags = 64
 	},
@@ -941,7 +941,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/bar,
-/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/item/reagent_containers/cup/glass/bottle/beer,
 /obj/structure/table/wood{
 	resistance_flags = 64
 	},
@@ -1031,7 +1031,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/bar,
-/obj/item/reagent_containers/food/drinks/bottle/cognac,
+/obj/item/reagent_containers/cup/glass/bottle/cognac,
 /obj/structure/table/reinforced/ctf,
 /turf/open/floor/iron,
 /area/centcom/ctf)
@@ -1467,7 +1467,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/bar,
-/obj/item/reagent_containers/food/drinks/bottle/absinthe,
+/obj/item/reagent_containers/cup/glass/bottle/absinthe,
 /obj/structure/table/reinforced/ctf,
 /turf/open/floor/iron,
 /area/centcom/ctf)
@@ -1483,7 +1483,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/bar,
-/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/item/reagent_containers/cup/glass/bottle/beer,
 /obj/structure/table/reinforced/ctf,
 /turf/open/floor/iron,
 /area/centcom/ctf)
@@ -1528,7 +1528,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "EJ" = (
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass,
 /obj/structure/table/wood{
 	resistance_flags = 64
 	},
@@ -2100,7 +2100,7 @@
 /turf/open/floor/iron,
 /area/centcom/ctf)
 "Rj" = (
-/obj/item/reagent_containers/food/condiment/saltshaker,
+/obj/item/reagent_containers/condiment/saltshaker,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/fluff/bus/passable{
 	resistance_flags = 64
@@ -2158,14 +2158,14 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/bar,
-/obj/item/reagent_containers/food/drinks/drinkingglass,
+/obj/item/reagent_containers/cup/glass/drinkingglass,
 /obj/structure/table/wood{
 	resistance_flags = 64
 	},
 /turf/open/floor/iron,
 /area/centcom/ctf)
 "RX" = (
-/obj/item/reagent_containers/food/drinks/drinkingglass/filled/cola,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/cola,
 /obj/structure/table/wood{
 	resistance_flags = 64
 	},
@@ -2252,7 +2252,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/bar,
-/obj/item/reagent_containers/food/drinks/bottle/gin,
+/obj/item/reagent_containers/cup/glass/bottle/gin,
 /obj/structure/table/reinforced/ctf,
 /turf/open/floor/iron,
 /area/centcom/ctf)

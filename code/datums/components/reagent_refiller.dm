@@ -18,7 +18,7 @@
 	power_to_draw = 30,
 	whitelisted_reagents = list(/datum/reagent/consumable)
 )
-	if(!istype(parent, /obj/item/reagent_containers))
+	if(!is_reagent_container(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.time_to_refill = time_to_refill

@@ -31,7 +31,9 @@
 	. = ..()
 	if(istype(A, /obj/machinery/door))
 		var/obj/machinery/door/conditionalwall = A
-		for(var/occupant in occupants)
+		for(var/mob/occupant as anything in return_drivers())
+			if(conditionalwall.try_safety_unlock(occupant))
+				return
 			conditionalwall.bumpopen(occupant)
 
 /obj/vehicle/sealed/after_add_occupant(mob/M)

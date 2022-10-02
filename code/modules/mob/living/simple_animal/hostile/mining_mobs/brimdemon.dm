@@ -4,7 +4,7 @@
 	name = "brimdemon"
 	desc = "A misshapen demon with big, red eyes and a hinged mouth. Not much is known about the creatures \
 		due to their response to any unexpected stimulus being \"brimbeam\", a deadly blood-laser barrage."
-	icon = 'icons/mob/brimdemon.dmi'
+	icon = 'icons/mob/simple/lavaland/brimdemon.dmi'
 	icon_state = "brimdemon"
 	icon_living = "brimdemon"
 	icon_dead = "brimdemon_dead"
@@ -33,8 +33,8 @@
 	loot = list()
 	robust_searching = TRUE
 	footstep_type = FOOTSTEP_MOB_CLAW
-	deathmessage = "wails as infernal energy escapes from its wounds, leaving it an empty husk."
-	deathsound = 'sound/magic/demon_dies.ogg'
+	death_message = "wails as infernal energy escapes from its wounds, leaving it an empty husk."
+	death_sound = 'sound/magic/demon_dies.ogg'
 	light_color = LIGHT_COLOR_BLOOD_MAGIC
 	light_power = 5
 	light_range = 1.4
@@ -157,7 +157,7 @@
 
 /obj/effect/brimbeam
 	name = "brimbeam"
-	icon = 'icons/mob/brimdemon.dmi'
+	icon = 'icons/mob/simple/lavaland/brimdemon.dmi'
 	icon_state = "brimbeam_mid"
 	layer = ABOVE_MOB_LAYER
 	plane = ABOVE_GAME_PLANE
@@ -166,7 +166,7 @@
 	light_power = 3
 	light_range = 2
 
-/obj/effect/brimbeam/Initialize()
+/obj/effect/brimbeam/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSfastprocess, src)
 
@@ -220,7 +220,7 @@
 
 /obj/item/ore_sensor/equipped(mob/user, slot, initial)
 	. = ..()
-	if(slot == ITEM_SLOT_EARS)
+	if(slot & ITEM_SLOT_EARS)
 		START_PROCESSING(SSobj, src)
 	else
 		STOP_PROCESSING(SSobj, src)

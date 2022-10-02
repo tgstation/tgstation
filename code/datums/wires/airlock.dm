@@ -87,7 +87,7 @@
 /datum/wires/airlock/get_status()
 	var/obj/machinery/door/airlock/A = holder
 	var/list/status = list()
-	status += "The door bolts [A.locked ? "have fallen!" : "look up."]"
+	status += "The door bolts [A.locked ? "have engaged!" : "have disengaged."]"
 	status += "The test light is [A.hasPower() ? "on" : "off"]."
 	status += "The AI connection light is [A.aiControlDisabled || (A.obj_flags & EMAGGED) ? "off" : "on"]."
 	status += "The check wiring light is [A.safe ? "off" : "on"]."
@@ -106,9 +106,9 @@
 	set waitfor = FALSE
 	var/obj/machinery/door/airlock/A = holder
 	switch(wire)
-		if(WIRE_POWER1, WIRE_POWER2) // Pulse to loose power.
+		if(WIRE_POWER1, WIRE_POWER2) // Pulse to lose power.
 			A.loseMainPower()
-		if(WIRE_BACKUP1, WIRE_BACKUP2) // Pulse to loose backup power.
+		if(WIRE_BACKUP1, WIRE_BACKUP2) // Pulse to lose backup power.
 			A.loseBackupPower()
 		if(WIRE_OPEN) // Pulse to open door (only works not emagged and ID wire is cut or no access is required).
 			if(A.obj_flags & EMAGGED)
@@ -118,14 +118,14 @@
 					INVOKE_ASYNC(A, /obj/machinery/door/airlock.proc/open, 1)
 				else
 					INVOKE_ASYNC(A, /obj/machinery/door/airlock.proc/close, 1)
-		if(WIRE_BOLTS) // Pulse to toggle bolts (but only raise if power is on).
+		if(WIRE_BOLTS) // Pulse to toggle bolts (but only raises if power is on).
 			if(!A.locked)
 				A.bolt()
 			else
 				if(A.hasPower())
 					A.unbolt()
 			A.update_appearance()
-		if(WIRE_IDSCAN) // Pulse to disable emergency access and flash red lights.
+		if(WIRE_IDSCAN) // Pulse to disable emergency access and flash the red lights.
 			if(A.hasPower() && A.density)
 				A.do_animate("deny")
 				if(A.emergency)
@@ -165,21 +165,21 @@
 /datum/wires/airlock/on_cut(wire, mend)
 	var/obj/machinery/door/airlock/A = holder
 	switch(wire)
-		if(WIRE_POWER1, WIRE_POWER2) // Cut to loose power, repair all to gain power.
+		if(WIRE_POWER1, WIRE_POWER2) // Cut to lose power, repair all to gain power.
 			if(mend && !is_cut(WIRE_POWER1) && !is_cut(WIRE_POWER2))
 				A.regainMainPower()
 			else
 				A.loseMainPower()
 			if(isliving(usr))
 				A.shock(usr, 50)
-		if(WIRE_BACKUP1, WIRE_BACKUP2) // Cut to loose backup power, repair all to gain backup power.
+		if(WIRE_BACKUP1, WIRE_BACKUP2) // Cut to lose backup power, repair all to gain backup power.
 			if(mend && !is_cut(WIRE_BACKUP1) && !is_cut(WIRE_BACKUP2))
 				A.regainBackupPower()
 			else
 				A.loseBackupPower()
 			if(isliving(usr))
 				A.shock(usr, 50)
-		if(WIRE_BOLTS) // Cut to drop bolts, mend does nothing.
+		if(WIRE_BOLTS) // Cut to engage bolts, mend does nothing.
 			if(!mend)
 				A.bolt()
 		if(WIRE_AI) // Cut to disable WIRE_AI control, mend to re-enable.
@@ -213,8 +213,8 @@
 		if(WIRE_ZAP1, WIRE_ZAP2) // Ouch.
 			if(isliving(usr))
 				A.shock(usr, 50)
-		if(WIRE_UNRESTRICTED_EXIT) // If you cut this wire, the unrestricted helper goes way. If you mend it, it'll go "haywire" and pick a new direction at random. Might have to cut/mend a time or two to get the direction you want.
-			if(!A.unres_sensor) //only works if the "sensor" is installed (a variable that we assign to the door either upon creation of a door with unrestricted directions or if an unrestricted helper is added to a door in mapping)
+		if(WIRE_UNRESTRICTED_EXIT) // If this wire is cut, the unrestricted helper goes away. If you mend it, it'll go "haywire" and pick a new direction at random. Might have to cut/mend a time or two to get the direction you want.
+			if(!A.unres_sensor) //only works if the "sensor" is installed (a variable that we assign to the door either upon creation of a door with unrestricted directions, or if an unrestricted helper is added to a door in mapping)
 				return
 			if(mend)
 				A.unres_sides = pick(NORTH, SOUTH, EAST, WEST)

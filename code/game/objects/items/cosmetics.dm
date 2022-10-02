@@ -2,7 +2,7 @@
 	gender = PLURAL
 	name = "red lipstick"
 	desc = "A generic brand of lipstick."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "lipstick"
 	w_class = WEIGHT_CLASS_TINY
 	var/colour = "red"
@@ -104,7 +104,7 @@
 /obj/item/razor
 	name = "electric razor"
 	desc = "The latest and greatest power razor born from the science of shaving."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "razor"
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
@@ -121,7 +121,7 @@
 	else
 		H.hairstyle = "Skinhead"
 
-	H.update_hair(is_creating = TRUE)
+	H.update_body_parts()
 	playsound(loc, 'sound/items/welder2.ogg', 20, TRUE)
 
 
@@ -138,7 +138,7 @@
 					if (H == user)
 						to_chat(user, span_warning("You need a mirror to properly style your own facial hair!"))
 						return
-					if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+					if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 						return
 					var/new_style = tgui_input_list(user, "Select a facial hairstyle", "Grooming", GLOB.facial_hairstyles_list)
 					if(isnull(new_style))
@@ -150,7 +150,7 @@
 					if(new_style && do_after(user, 60, target = H))
 						user.visible_message(span_notice("[user] successfully changes [H]'s facial hairstyle using [src]."), span_notice("You successfully change [H]'s facial hairstyle using [src]."))
 						H.facial_hairstyle = new_style
-						H.update_hair(is_creating = TRUE)
+						H.update_body_parts()
 						return
 				else
 					return
@@ -186,7 +186,7 @@
 				if (H == user)
 					to_chat(user, span_warning("You need a mirror to properly style your own hair!"))
 					return
-				if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+				if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 					return
 				var/new_style = tgui_input_list(user, "Select a hairstyle", "Grooming", GLOB.hairstyles_list)
 				if(isnull(new_style))
@@ -201,7 +201,7 @@
 				if(new_style && do_after(user, 60, target = H))
 					user.visible_message(span_notice("[user] successfully changes [H]'s hairstyle using [src]."), span_notice("You successfully change [H]'s hairstyle using [src]."))
 					H.hairstyle = new_style
-					H.update_hair(is_creating = TRUE)
+					H.update_body_parts()
 					return
 
 			else

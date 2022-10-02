@@ -1923,6 +1923,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/marked@npm:^4.0.3":
+  version: 4.0.3
+  resolution: "@types/marked@npm:4.0.3"
+  checksum: 2fc409a6291cb770688731a444f54e7eab6257c9b565dea4e9d2f3b6654b606e9dd8ea4a924e306b2d2f581dedcb7a27f10f2ca7aed828b11642ab85955341f1
+  languageName: node
+  linkType: hard
+
 "@types/node@npm:*":
   version: 15.14.9
   resolution: "@types/node@npm:15.14.9"
@@ -9146,6 +9153,7 @@ resolve@^2.0.0-next.3:
   resolution: "tgui@workspace:packages/tgui"
   dependencies:
     "@popperjs/core": ^2.9.3
+    "@types/marked": ^4.0.3
     common: "workspace:*"
     dateformat: ^4.5.1
     dompurify: ^2.3.1

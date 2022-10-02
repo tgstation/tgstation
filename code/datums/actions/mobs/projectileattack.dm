@@ -18,6 +18,7 @@
 	var/projectile_speed_multiplier = 1
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/Activate(atom/target_atom)
+	StartCooldown(360 SECONDS, 360 SECONDS)
 	attack_sequence(owner, target_atom)
 	StartCooldown()
 
@@ -52,7 +53,7 @@
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire
 	name = "Rapid Fire"
-	icon_icon = 'icons/obj/guns/energy.dmi'
+	icon_icon = 'icons/obj/weapons/guns/energy.dmi'
 	button_icon_state = "kineticgun"
 	desc = "Fires projectiles repeatedly at a given target."
 	cooldown_time = 1.5 SECONDS
@@ -172,7 +173,7 @@
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/shotgun_blast
 	name = "Shotgun Fire"
-	icon_icon = 'icons/obj/guns/ballistic.dmi'
+	icon_icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	button_icon_state = "shotgun"
 	desc = "Fires projectiles in a shotgun pattern."
 	cooldown_time = 2 SECONDS
@@ -220,7 +221,7 @@
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots
 	name = "Directional Shots"
-	icon_icon = 'icons/obj/guns/ballistic.dmi'
+	icon_icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	button_icon_state = "pistol"
 	desc = "Fires projectiles in specific directions."
 	cooldown_time = 4 SECONDS
@@ -240,9 +241,8 @@
 	if(!islist(dirs))
 		dirs = GLOB.alldirs.Copy()
 	playsound(firer, projectile_sound, 200, TRUE, 2)
-	for(var/d in dirs)
-		var/turf/E = get_step(firer, d)
-		shoot_projectile(firer, E, null, firer, null, null)
+	for(var/dir in dirs)
+		shoot_projectile(firer, target, dir2angle(dir), firer)
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/alternating
 	name = "Alternating Shots"
@@ -266,7 +266,7 @@
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/kinetic_accelerator
 	name = "Fire Kinetic Accelerator"
-	icon_icon = 'icons/obj/guns/energy.dmi'
+	icon_icon = 'icons/obj/weapons/guns/energy.dmi'
 	button_icon_state = "kineticgun"
 	desc = "Fires a kinetic accelerator projectile at the target."
 	cooldown_time = 1.5 SECONDS
@@ -286,6 +286,7 @@
 	cooldown_time = 2.5 SECONDS
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/colossus_final/Activate(atom/target_atom)
+	StartCooldown(360 SECONDS, 360 SECONDS)
 	attack_sequence(owner, target_atom)
 	StartCooldown()
 	Remove(owner)

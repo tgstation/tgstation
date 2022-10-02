@@ -158,9 +158,9 @@
 		return
 
 	if(brutal_noogie)
-		SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, "noogie_harsh", /datum/mood_event/noogie_harsh)
+		target.add_mood_event("noogie_harsh", /datum/mood_event/noogie_harsh)
 	else
-		SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, "noogie", /datum/mood_event/noogie)
+		target.add_mood_event("noogie", /datum/mood_event/noogie)
 
 	noogie_loop(user, target, 0)
 
@@ -234,7 +234,7 @@
 		SEND_SOUND(slapped, sound('sound/weapons/flash_ring.ogg'))
 		shake_camera(slapped, 2, 2)
 		slapped.Paralyze(2.5 SECONDS)
-		slapped.adjust_timed_status_effect(7 SECONDS, /datum/status_effect/confusion)
+		slapped.adjust_confusion(7 SECONDS)
 		slapped.adjustStaminaLoss(40)
 	else if(user.zone_selected == BODY_ZONE_HEAD || user.zone_selected == BODY_ZONE_PRECISE_MOUTH)
 		if(user == slapped)
@@ -321,7 +321,7 @@
 
 	if(!open_hands_taker)
 		to_chat(taker, span_warning("You can't high-five [offerer] with no open hands!"))
-		SEND_SIGNAL(taker, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_five_full_hand) // not so successful now!
+		taker.add_mood_event("high_five", /datum/mood_event/high_five_full_hand) // not so successful now!
 		return
 
 	for(var/i in offerer.held_items)
@@ -335,22 +335,52 @@
 		playsound(offerer, 'sound/weapons/slap.ogg', 100, TRUE, 1)
 		offerer.mind.add_memory(MEMORY_HIGH_FIVE, list(DETAIL_DEUTERAGONIST = taker, DETAIL_HIGHFIVE_TYPE = "high ten"), story_value = STORY_VALUE_OKAY)
 		taker.mind.add_memory(MEMORY_HIGH_FIVE, list(DETAIL_DEUTERAGONIST = offerer, DETAIL_HIGHFIVE_TYPE = "high ten"), story_value = STORY_VALUE_OKAY)
-		SEND_SIGNAL(offerer, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_ten)
-		SEND_SIGNAL(taker, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_ten)
+		offerer.add_mood_event("high_five", /datum/mood_event/high_ten)
+		taker.add_mood_event("high_five", /datum/mood_event/high_ten)
 	else
 		offerer.visible_message(span_notice("[taker] high-fives [offerer]!"), span_nicegreen("All right! You're high-fived by [taker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), ignored_mobs=taker)
 		to_chat(taker, span_nicegreen("You high-five [offerer]!"))
 		playsound(offerer, 'sound/weapons/slap.ogg', 50, TRUE, -1)
 		offerer.mind.add_memory(MEMORY_HIGH_FIVE, list(DETAIL_DEUTERAGONIST = taker, DETAIL_HIGHFIVE_TYPE = "high five"), story_value = STORY_VALUE_OKAY)
 		taker.mind.add_memory(MEMORY_HIGH_FIVE, list(DETAIL_DEUTERAGONIST = offerer, DETAIL_HIGHFIVE_TYPE = "high five"), story_value = STORY_VALUE_OKAY)
-		SEND_SIGNAL(offerer, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_five)
-		SEND_SIGNAL(taker, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_five)
+		offerer.add_mood_event("high_five", /datum/mood_event/high_five)
+		taker.add_mood_event("high_five", /datum/mood_event/high_five)
 	qdel(src)
+
+/obj/item/hand_item/stealer
+	name = "steal"
+	desc = "Your filthy little fingers are ready to commit crimes."
+	icon_state = "latexballon"
+	inhand_icon_state = "nothing"
+	attack_verb_continuous = list("steals")
+	attack_verb_simple = list("steal")
+
+/obj/item/hand_item/stealer/attack(mob/living/target_mob, mob/living/user, params)
+	. = ..()
+	if (!ishuman(target_mob))
+		return
+	var/mob/living/carbon/human/target_human = target_mob
+	if (!target_human.shoes)
+		return
+	if (user.body_position != LYING_DOWN)
+		return
+	var/obj/item/item_to_strip = target_human.shoes
+	user.visible_message(span_warning("[user] starts stealing [target_human]'s [item_to_strip.name]!"), \
+		span_danger("You start stealing [target_human]'s [item_to_strip.name]..."))
+	to_chat(target_human, span_userdanger("[user] starts stealing your [item_to_strip.name]!"))
+	if (!do_after(user, item_to_strip.strip_delay, target_human))
+		return
+	if(!target_human.dropItemToGround(item_to_strip))
+		return
+	user.put_in_hands(item_to_strip)
+	user.visible_message(span_warning("[user] stole [target_human]'s [item_to_strip.name]!"), \
+		span_notice("You stole [target_human]'s [item_to_strip.name]!"))
+	to_chat(target_human, span_userdanger("[user] stole your [item_to_strip.name]!"))
 
 /obj/item/hand_item/kisser
 	name = "kiss"
 	desc = "I want you all to know, everyone and anyone, to seal it with a kiss."
-	icon = 'icons/mob/animal.dmi'
+	icon = 'icons/mob/simple/animal.dmi'
 	icon_state = "heart"
 	inhand_icon_state = "nothing"
 	/// The kind of projectile this version of the kiss blower fires
@@ -410,7 +440,7 @@
 
 /obj/projectile/kiss
 	name = "kiss"
-	icon = 'icons/mob/animal.dmi'
+	icon = 'icons/mob/simple/animal.dmi'
 	icon_state = "heart"
 	hitsound = 'sound/effects/kiss.ogg'
 	hitsound_wall = 'sound/effects/kiss.ogg'
@@ -445,7 +475,7 @@
 		living_target.visible_message(span_danger("[living_target] is hit by \a [src]."), span_userdanger("You're hit by \a [src]!"), vision_distance=COMBAT_MESSAGE_RANGE)
 
 	living_target.mind?.add_memory(MEMORY_KISS, list(DETAIL_PROTAGONIST = living_target, DETAIL_KISSER = firer), story_value = STORY_VALUE_OKAY)
-	SEND_SIGNAL(living_target, COMSIG_ADD_MOOD_EVENT, "kiss", /datum/mood_event/kiss, firer, suppressed)
+	living_target.add_mood_event("kiss", /datum/mood_event/kiss, firer, suppressed)
 	if(isliving(firer))
 		var/mob/living/kisser = firer
 		kisser.mind?.add_memory(MEMORY_KISS, list(DETAIL_PROTAGONIST = living_target, DETAIL_KISSER = firer), story_value = STORY_VALUE_OKAY, memory_flags = MEMORY_CHECK_BLINDNESS)
@@ -465,12 +495,12 @@
 		if(1)
 			other_msg = "stumbles slightly, turning a bright red!"
 			self_msg = "You lose control of your limbs for a moment as your blood rushes to your face, turning it bright red!"
-			living_target.adjust_timed_status_effect(rand(5 SECONDS, 10 SECONDS), /datum/status_effect/confusion)
+			living_target.adjust_confusion(rand(5 SECONDS, 10 SECONDS))
 		if(2)
 			other_msg = "stammers softly for a moment before choking on something!"
 			self_msg = "You feel your tongue disappear down your throat as you fight to remember how to make words!"
 			addtimer(CALLBACK(living_target, /atom/movable.proc/say, pick("Uhhh...", "O-oh, uhm...", "I- uhhhhh??", "You too!!", "What?")), rand(0.5 SECONDS, 1.5 SECONDS))
-			living_target.adjust_timed_status_effect(rand(10 SECONDS, 30 SECONDS), /datum/status_effect/speech/stutter)
+			living_target.adjust_stutter(rand(10 SECONDS, 30 SECONDS))
 		if(3)
 			other_msg = "locks up with a stunned look on [living_target.p_their()] face, staring at [firer ? firer : "the ceiling"]!"
 			self_msg = "Your brain completely fails to process what just happened, leaving you rooted in place staring at [firer ? "[firer]" : "the ceiling"] for what feels like an eternity!"
@@ -483,8 +513,9 @@
 	def_zone = BODY_ZONE_HEAD // let's keep it PG, people
 	. = ..()
 	if(isliving(target))
-		SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, "kiss", /datum/mood_event/kiss, firer, suppressed)
-		try_fluster(target)
+		var/mob/living/living_target = target
+		living_target.add_mood_event("kiss", /datum/mood_event/kiss, firer, suppressed)
+		try_fluster(living_target)
 
 /obj/projectile/kiss/death
 	name = "kiss of death"

@@ -177,12 +177,12 @@
 #define ui_pai_chassis "SOUTH:6,WEST+2"
 #define ui_pai_rest "SOUTH:6,WEST+3"
 #define ui_pai_light "SOUTH:6,WEST+4"
-#define ui_pai_newscaster "SOUTH:6,WEST+5"
-#define ui_pai_host_monitor "SOUTH:6,WEST+6"
-#define ui_pai_crew_manifest "SOUTH:6,WEST+7"
-#define ui_pai_state_laws "SOUTH:6,WEST+8"
+#define ui_pai_state_laws "SOUTH:6,WEST+5"
+#define ui_pai_crew_manifest "SOUTH:6,WEST+6"
+#define ui_pai_host_monitor "SOUTH:6,WEST+7"
+#define ui_pai_internal_gps "SOUTH:6,WEST+8"
 #define ui_pai_mod_int "SOUTH:6,WEST+9"
-#define ui_pai_internal_gps "SOUTH:6,WEST+10"
+#define ui_pai_newscaster "SOUTH:6,WEST+10"
 #define ui_pai_take_picture "SOUTH:6,WEST+11"
 #define ui_pai_view_images "SOUTH:6,WEST+12"
 #define ui_pai_radio "SOUTH:6,WEST+13"
@@ -213,3 +213,12 @@
 #define SCRN_OBJ_IN_PALETTE "palette"
 ///Inserted first in the list
 #define SCRN_OBJ_INSERT_FIRST "first"
+
+// Plane group keys, used to group swaths of plane masters that need to appear in subwindows
+/// The primary group, holds everything on the main window
+#define PLANE_GROUP_MAIN "main"
+/// A secondary group, used when a client views a generic window
+#define PLANE_GROUP_POPUP_WINDOW(screen) "popup-[REF(screen)]"
+
+/// The filter name for the hover outline
+#define HOVER_OUTLINE_FILTER "hover_outline"

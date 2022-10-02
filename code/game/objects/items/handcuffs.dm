@@ -331,6 +331,9 @@
 	///How much damage the trap deals when triggered.
 	var/trap_damage = 20
 
+/obj/item/restraints/legcuffs/beartrap/prearmed
+	armed = TRUE
+
 /obj/item/restraints/legcuffs/beartrap/Initialize(mapload)
 	. = ..()
 	update_appearance()

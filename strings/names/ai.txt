@@ -1,7 +1,6 @@
+
 1-Rover-1
-16-20
 7-Zark-7
-790
 Adaptive Manipulator
 Allied Mastercomputer
 Alpha 5
@@ -15,7 +14,7 @@ Aniel
 Asimov
 ASTAR
 Astor
-B O B 
+B O B
 B-4
 B-9
 B166ER
@@ -24,6 +23,7 @@ Bishop
 Blitz
 Box
 Brackenridge
+Brock-lee
 C-3PO
 Cassandra One
 Cell
@@ -40,7 +40,7 @@ Dor-15
 Dorfl
 Dot Matrix
 Duey
-E D I 
+E D I
 E-Man
 ED-209
 Emma-2
@@ -57,9 +57,9 @@ G2
 George
 Gnut
 Gort
-H A R L I E 
-H E L P eR 
-H E R B I E 
+H A R L I E
+H E L P eR
+H E R B I E
 Hadaly
 HAL 9000
 Huey
@@ -77,6 +77,7 @@ L-Ron
 Louie
 LUH 3417
 Maria
+MarinAI
 MARK13
 Marvin
 Master Control Program
@@ -86,7 +87,7 @@ Mechagodzilla
 Mechani-Kong
 Megatron
 Metalhead
-Mr R I N G 
+Mr R I N G
 Mugsy3000
 NCH
 Necron-99
@@ -103,10 +104,10 @@ Revelation
 Ro-Man
 Robbie
 Robot Devil
-S A M 
-S H O C K 
-S H R O U D 
-S O P H I E 
+S A M
+S H O C K
+S H R O U D
+S O P H I E
 SEN 5241
 Setaur
 SHODAN
@@ -130,7 +131,7 @@ TWA
 ULTRABOT
 Ulysses
 Uniblab
-V I N CENT 
+V I N CENT
 Voltes V
 W1k1
 Wikipedia

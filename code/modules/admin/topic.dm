@@ -47,30 +47,6 @@
 			to_chat(usr, span_danger("ERROR: Mob not found."), confidential = TRUE)
 			return
 		cmd_show_exp_panel(M.client)
-	else if(href_list["forceevent"])
-		if(!check_rights(R_FUN))
-			return
-		var/datum/round_event_control/E = locate(href_list["forceevent"]) in SSevents.control
-		if(E)
-			E.admin_setup(usr)
-			var/datum/round_event/event = E.runEvent()
-			if(event.cancel_event)
-				return
-			if(event.announceWhen>0)
-				event.processing = FALSE
-				var/prompt = tgui_alert(usr, "Would you like to alert the crew?", "Alert", list("Yes", "No", "Cancel"))
-				switch(prompt)
-					if("Yes")
-						event.announceChance = 100
-					if("Cancel")
-						event.kill()
-						return
-					if("No")
-						event.announceChance = 0
-				event.processing = TRUE
-			message_admins("[key_name_admin(usr)] has triggered an event. ([E.name])")
-			log_admin("[key_name(usr)] has triggered an event. ([E.name])")
-		return
 
 	else if(href_list["editrightsbrowser"])
 		edit_admin_permissions(0)
@@ -158,28 +134,11 @@
 			return
 		shuttle_console.admin_controlled = !shuttle_console.admin_controlled
 		to_chat(usr, "[shuttle_console] was [shuttle_console.admin_controlled ? "locked" : "unlocked"].", confidential = TRUE)
+
 	else if(href_list["delay_round_end"])
-		if(!check_rights(R_SERVER))
-			return
+		// Permissions are checked in delay_round_end
+		delay_round_end()
 
-		if(SSticker.delay_end)
-			tgui_alert(usr, "The round end is already delayed. The reason for the current delay is: \"[SSticker.admin_delay_notice]\"", "Alert", list("Ok"))
-			return
-
-		var/delay_reason = input(usr, "Enter a reason for delaying the round end", "Round Delay Reason") as null|text
-
-		if(isnull(delay_reason))
-			return
-
-		if(SSticker.delay_end)
-			tgui_alert(usr, "The round end is already delayed. The reason for the current delay is: \"[SSticker.admin_delay_notice]\"", "Alert", list("Ok"))
-			return
-
-		SSticker.delay_end = TRUE
-		SSticker.admin_delay_notice = delay_reason
-
-		log_admin("[key_name(usr)] delayed the round end for reason: [SSticker.admin_delay_notice]")
-		message_admins("[key_name_admin(usr)] delayed the round end for reason: [SSticker.admin_delay_notice]")
 	else if(href_list["undelay_round_end"])
 		if(!check_rights(R_SERVER))
 			return
@@ -944,7 +903,7 @@
 			return
 		var/obj/item/new_item = new H.dna.species.species_cookie(H)
 		if(H.put_in_hands(new_item))
-			H.update_inv_hands()
+			H.update_held_items()
 		else
 			qdel(new_item)
 			log_admin("[key_name(H)] has their hands full, so they did not receive their [new_item.name], spawned by [key_name(src.owner)].")
@@ -1186,12 +1145,13 @@
 		if(!paths)
 			tgui_alert(usr,"The path list you sent is empty.")
 			return
-		if(length(paths) > 5)
-			tgui_alert(usr,"Select fewer object types, (max 5).")
+
+		var/number = clamp(text2num(href_list["object_count"]), 1, ADMIN_SPAWN_CAP)
+		if(length(paths) * number > ADMIN_SPAWN_CAP)
+			tgui_alert(usr,"Select fewer object types!")
 			return
 
 		var/list/offset = splittext(href_list["offset"],",")
-		var/number = clamp(text2num(href_list["object_count"]), 1, ADMIN_SPAWN_CAP)
 		var/X = offset.len > 0 ? text2num(offset[1]) : 0
 		var/Y = offset.len > 1 ? text2num(offset[2]) : 0
 		var/Z = offset.len > 2 ? text2num(offset[3]) : 0
@@ -1285,248 +1245,6 @@
 					message_admins("[key_name_admin(usr)] created [number]ea [english_list(paths)]")
 					break
 		return
-
-	else if(href_list["ac_view_wanted"])            //Admin newscaster Topic() stuff be here
-		if(!check_rights(R_ADMIN))
-			return
-		src.admincaster_screen = 18                 //The ac_ prefix before the hrefs stands for AdminCaster.
-		src.access_news_network()
-
-	else if(href_list["ac_set_channel_name"])
-		if(!check_rights(R_ADMIN))
-			return
-		src.admincaster_feed_channel.channel_name = stripped_input(usr, "Provide a Feed Channel Name.", "Network Channel Handler", "")
-		src.access_news_network()
-
-	else if(href_list["ac_set_channel_lock"])
-		if(!check_rights(R_ADMIN))
-			return
-		src.admincaster_feed_channel.locked = !src.admincaster_feed_channel.locked
-		src.access_news_network()
-
-	else if(href_list["ac_submit_new_channel"])
-		if(!check_rights(R_ADMIN))
-			return
-		var/check = 0
-		for(var/datum/feed_channel/FC in GLOB.news_network.network_channels)
-			if(FC.channel_name == src.admincaster_feed_channel.channel_name)
-				check = 1
-				break
-		if(src.admincaster_feed_channel.channel_name == "" || src.admincaster_feed_channel.channel_name == "\[REDACTED\]" || check )
-			src.admincaster_screen=7
-		else
-			var/choice = tgui_alert(usr,"Please confirm Feed channel creation.","Network Channel Handler",list("Confirm","Cancel"))
-			if(choice=="Confirm")
-				GLOB.news_network.create_feed_channel(src.admincaster_feed_channel.channel_name, src.admin_signature, "New information from on high." , src.admincaster_feed_channel.locked, 1)
-				SSblackbox.record_feedback("tally", "newscaster_channels", 1, src.admincaster_feed_channel.channel_name)
-				log_admin("[key_name(usr)] created command feed channel: [src.admincaster_feed_channel.channel_name]!")
-				src.admincaster_screen=5
-		src.access_news_network()
-
-	else if(href_list["ac_set_channel_receiving"])
-		if(!check_rights(R_ADMIN))
-			return
-		var/list/available_channels = list()
-		for(var/datum/feed_channel/F in GLOB.news_network.network_channels)
-			available_channels += F.channel_name
-		src.admincaster_feed_channel.channel_name = adminscrub(input(usr, "Choose receiving Feed Channel.", "Network Channel Handler") in sort_list(available_channels) )
-		src.access_news_network()
-
-	else if(href_list["ac_set_new_message"])
-		if(!check_rights(R_ADMIN))
-			return
-		src.admincaster_feed_message.body = adminscrub(stripped_input(usr, "Write your Feed story.", "Network Channel Handler", ""))
-		src.access_news_network()
-
-	else if(href_list["ac_submit_new_message"])
-		if(!check_rights(R_ADMIN))
-			return
-		if(src.admincaster_feed_message.return_body(-1) =="" || src.admincaster_feed_message.return_body(-1) =="\[REDACTED\]" || src.admincaster_feed_channel.channel_name == "" )
-			src.admincaster_screen = 6
-		else
-			GLOB.news_network.submit_article(src.admincaster_feed_message.return_body(-1), src.admin_signature, src.admincaster_feed_channel.channel_name, null, 1)
-			SSblackbox.record_feedback("amount", "newscaster_stories", 1)
-			src.admincaster_screen=4
-
-		for(var/obj/machinery/newscaster/NEWSCASTER in GLOB.allCasters)
-			NEWSCASTER.news_alert(src.admincaster_feed_channel.channel_name)
-
-		log_admin("[key_name(usr)] submitted a feed story to channel: [src.admincaster_feed_channel.channel_name]!")
-		src.access_news_network()
-
-	else if(href_list["ac_create_channel"])
-		if(!check_rights(R_ADMIN))
-			return
-		src.admincaster_screen=2
-		src.access_news_network()
-
-	else if(href_list["ac_create_feed_story"])
-		if(!check_rights(R_ADMIN))
-			return
-		src.admincaster_screen=3
-		src.access_news_network()
-
-	else if(href_list["ac_menu_censor_story"])
-		if(!check_rights(R_ADMIN))
-			return
-		src.admincaster_screen=10
-		src.access_news_network()
-
-	else if(href_list["ac_menu_censor_channel"])
-		if(!check_rights(R_ADMIN))
-			return
-		src.admincaster_screen=11
-		src.access_news_network()
-
-	else if(href_list["ac_menu_wanted"])
-		if(!check_rights(R_ADMIN))
-			return
-		var/already_wanted = 0
-		if(GLOB.news_network.wanted_issue.active)
-			already_wanted = 1
-
-		if(already_wanted)
-			src.admincaster_wanted_message.criminal = GLOB.news_network.wanted_issue.criminal
-			src.admincaster_wanted_message.body = GLOB.news_network.wanted_issue.body
-		src.admincaster_screen = 14
-		src.access_news_network()
-
-	else if(href_list["ac_set_wanted_name"])
-		if(!check_rights(R_ADMIN))
-			return
-		src.admincaster_wanted_message.criminal = adminscrub(stripped_input(usr, "Provide the name of the Wanted person.", "Network Security Handler", ""))
-		src.access_news_network()
-
-	else if(href_list["ac_set_wanted_desc"])
-		if(!check_rights(R_ADMIN))
-			return
-		src.admincaster_wanted_message.body = adminscrub(stripped_input(usr, "Provide the a description of the Wanted person and any other details you deem important.", "Network Security Handler", ""))
-		src.access_news_network()
-
-	else if(href_list["ac_submit_wanted"])
-		if(!check_rights(R_ADMIN))
-			return
-		var/input_param = text2num(href_list["ac_submit_wanted"])
-		if(src.admincaster_wanted_message.criminal == "" || src.admincaster_wanted_message.body == "")
-			src.admincaster_screen = 16
-		else
-			var/choice = tgui_alert(usr,"Please confirm Wanted Issue [(input_param==1) ? ("creation.") : ("edit.")]","Network Security Handler",list("Confirm","Cancel"))
-			if(choice=="Confirm")
-				if(input_param==1)          //If input_param == 1 we're submitting a new wanted issue. At 2 we're just editing an existing one. See the else below
-					GLOB.news_network.submit_wanted(admincaster_wanted_message.criminal, admincaster_wanted_message.body, admin_signature, null, 1, 1)
-					src.admincaster_screen = 15
-				else
-					GLOB.news_network.submit_wanted(admincaster_wanted_message.criminal, admincaster_wanted_message.body, admin_signature)
-					src.admincaster_screen = 19
-				log_admin("[key_name(usr)] issued a Station-wide Wanted Notification for [src.admincaster_wanted_message.criminal]!")
-		src.access_news_network()
-
-	else if(href_list["ac_cancel_wanted"])
-		if(!check_rights(R_ADMIN))
-			return
-		var/choice = tgui_alert(usr,"Please confirm Wanted Issue removal.","Network Security Handler",list("Confirm","Cancel"))
-		if(choice=="Confirm")
-			GLOB.news_network.delete_wanted()
-			src.admincaster_screen=17
-		src.access_news_network()
-
-	else if(href_list["ac_censor_channel_author"])
-		if(!check_rights(R_ADMIN))
-			return
-		var/datum/feed_channel/FC = locate(href_list["ac_censor_channel_author"])
-		FC.toggle_censor_author()
-		src.access_news_network()
-
-	else if(href_list["ac_censor_channel_story_author"])
-		if(!check_rights(R_ADMIN))
-			return
-		var/datum/feed_message/MSG = locate(href_list["ac_censor_channel_story_author"])
-		MSG.toggle_censor_author()
-		src.access_news_network()
-
-	else if(href_list["ac_censor_channel_story_body"])
-		if(!check_rights(R_ADMIN))
-			return
-		var/datum/feed_message/MSG = locate(href_list["ac_censor_channel_story_body"])
-		MSG.toggle_censor_body()
-		src.access_news_network()
-
-	else if(href_list["ac_pick_d_notice"])
-		if(!check_rights(R_ADMIN))
-			return
-		var/datum/feed_channel/FC = locate(href_list["ac_pick_d_notice"])
-		src.admincaster_feed_channel = FC
-		src.admincaster_screen=13
-		src.access_news_network()
-
-	else if(href_list["ac_toggle_d_notice"])
-		if(!check_rights(R_ADMIN))
-			return
-		var/datum/feed_channel/FC = locate(href_list["ac_toggle_d_notice"])
-		FC.toggle_censor_D_class()
-		src.access_news_network()
-
-	else if(href_list["ac_view"])
-		if(!check_rights(R_ADMIN))
-			return
-		src.admincaster_screen=1
-		src.access_news_network()
-
-	else if(href_list["ac_setScreen"]) //Brings us to the main menu and resets all fields~
-		if(!check_rights(R_ADMIN))
-			return
-		src.admincaster_screen = text2num(href_list["ac_setScreen"])
-		if (src.admincaster_screen == 0)
-			if(src.admincaster_feed_channel)
-				src.admincaster_feed_channel = new /datum/feed_channel
-			if(src.admincaster_feed_message)
-				src.admincaster_feed_message = new /datum/feed_message
-			if(admincaster_wanted_message)
-				admincaster_wanted_message = new /datum/wanted_message
-		src.access_news_network()
-
-	else if(href_list["ac_show_channel"])
-		if(!check_rights(R_ADMIN))
-			return
-		var/datum/feed_channel/FC = locate(href_list["ac_show_channel"])
-		src.admincaster_feed_channel = FC
-		src.admincaster_screen = 9
-		src.access_news_network()
-
-	else if(href_list["ac_pick_censor_channel"])
-		if(!check_rights(R_ADMIN))
-			return
-		var/datum/feed_channel/FC = locate(href_list["ac_pick_censor_channel"])
-		src.admincaster_feed_channel = FC
-		src.admincaster_screen = 12
-		src.access_news_network()
-
-	else if(href_list["ac_refresh"])
-		if(!check_rights(R_ADMIN))
-			return
-		src.access_news_network()
-
-	else if(href_list["ac_set_signature"])
-		if(!check_rights(R_ADMIN))
-			return
-		src.admin_signature = adminscrub(input(usr, "Provide your desired signature.", "Network Identity Handler", ""))
-		src.access_news_network()
-
-	else if(href_list["ac_del_comment"])
-		if(!check_rights(R_ADMIN))
-			return
-		var/datum/feed_comment/FC = locate(href_list["ac_del_comment"])
-		var/datum/feed_message/FM = locate(href_list["ac_del_comment_msg"])
-		FM.comments -= FC
-		qdel(FC)
-		src.access_news_network()
-
-	else if(href_list["ac_lock_comment"])
-		if(!check_rights(R_ADMIN))
-			return
-		var/datum/feed_message/FM = locate(href_list["ac_lock_comment"])
-		FM.locked ^= 1
-		src.access_news_network()
 
 	else if(href_list["check_antagonist"])
 		if(!check_rights(R_ADMIN))
@@ -1991,8 +1709,6 @@
 		if(log_index <= state_to_view.log.len)
 			var/list/log_entry = state_to_view.log[log_index]
 			if(log_entry["chunk"])
-				LAZYINITLIST(editor.tgui_shared_states)
-				editor.tgui_shared_states["viewedChunk"] = json_encode(log_entry["chunk"])
-				editor.tgui_shared_states["modal"] = json_encode("viewChunk")
+				editor.force_view_chunk = log_entry["chunk"]
+				editor.force_modal = "viewChunk"
 		editor.ui_interact(usr)
-		editor.tgui_shared_states = null

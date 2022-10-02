@@ -64,7 +64,7 @@
 "ap" = (
 /obj/structure/table,
 /obj/machinery/light/directional/west,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/cup/bucket,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "aq" = (

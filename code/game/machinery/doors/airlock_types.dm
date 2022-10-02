@@ -518,7 +518,7 @@
 /obj/machinery/door/airlock/cult/allowed(mob/living/L)
 	if(!density)
 		return TRUE
-	if(friendly || IS_CULTIST(L) || istype(L, /mob/living/simple_animal/shade) || isconstruct(L))
+	if(friendly || IS_CULTIST(L) || isshade(L) || isconstruct(L))
 		if(!stealthy)
 			new openingoverlaytype(loc)
 		return TRUE

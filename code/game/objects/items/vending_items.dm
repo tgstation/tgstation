@@ -9,8 +9,8 @@
 	icon_state = "refill_snack"
 	inhand_icon_state = "restock_unit"
 	desc = "A vending machine restock cart."
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	flags_1 = CONDUCT_1
 	force = 7
 	throwforce = 10
@@ -22,6 +22,7 @@
 	// Built automatically from the corresponding vending machine.
 	// If null, considered to be full. Otherwise, is list(/typepath = amount).
 	var/list/products
+	var/list/product_categories
 	var/list/contraband
 	var/list/premium
 
@@ -40,7 +41,7 @@
 		. += "It can restock [num] item\s."
 
 /obj/item/vending_refill/get_part_rating()
-	if (!products || !contraband || !premium)
+	if (!products || !product_categories || !contraband || !premium)
 		return INFINITY
 	. = 0
 	for(var/key in products)
@@ -49,3 +50,10 @@
 		. += contraband[key]
 	for(var/key in premium)
 		. += premium[key]
+
+	for (var/list/category as anything in product_categories)
+		var/list/products = category["products"]
+		for (var/product_key in products)
+			. += products[product_key]
+
+	return .

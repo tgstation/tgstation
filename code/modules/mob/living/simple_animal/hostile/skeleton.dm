@@ -1,7 +1,7 @@
 /mob/living/simple_animal/hostile/skeleton
 	name = "reanimated skeleton"
 	desc = "A real bonefied skeleton, doesn't seem like it wants to socialize."
-	icon = 'icons/mob/simple_human.dmi'
+	icon = 'icons/mob/simple/simple_human.dmi'
 	icon_state = "skeleton"
 	icon_living = "skeleton"
 	icon_dead = "skeleton"
@@ -31,7 +31,7 @@
 	faction = list("skeleton")
 	see_in_dark = NIGHTVISION_FOV_RANGE
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-	deathmessage = "collapses into a pile of bones!"
+	death_message = "collapses into a pile of bones!"
 	del_on_death = 1
 	loot = list(/obj/effect/decal/remains/human)
 
@@ -48,7 +48,7 @@
 	weather_immunities = list(TRAIT_SNOWSTORM_IMMUNE)
 	melee_damage_lower = 17
 	melee_damage_upper = 20
-	deathmessage = "collapses into a pile of bones, its gear falling to the floor!"
+	death_message = "collapses into a pile of bones, its gear falling to the floor!"
 	loot = list(/obj/effect/decal/remains/human,
 				/obj/item/spear,
 				/obj/item/clothing/shoes/winterboots,
@@ -71,7 +71,7 @@
 	obj_damage = 50
 	melee_damage_lower = 25
 	melee_damage_upper = 30
-	deathmessage = "collapses into a pile of bones, its gear clanging as it hits the ground!"
+	death_message = "collapses into a pile of bones, its gear clanging as it hits the ground!"
 	loot = list(/obj/effect/decal/remains/human,
 				/obj/item/clothing/suit/chaplainsuit/armor/templar,
 				/obj/item/clothing/head/helmet/chaplain,
@@ -99,7 +99,7 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 20
 	light_color = LIGHT_COLOR_PURPLE
-	deathmessage = "collapses into a pile of bones, their suit dissolving among the plasma!"
+	death_message = "collapses into a pile of bones, their suit dissolving among the plasma!"
 	loot = list(/obj/effect/decal/remains/plasma)
 
 /mob/living/simple_animal/hostile/skeleton/plasmaminer/jackhammer

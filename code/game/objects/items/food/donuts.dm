@@ -78,7 +78,7 @@
 	icon_state = "donut_meat"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/ketchup = 3)
 	tastes = list("meat" = 1)
-	foodtypes = JUNKFOOD | MEAT | GROSS | FRIED | BREAKFAST
+	foodtypes = JUNKFOOD | MEAT | GORE | FRIED | BREAKFAST
 	is_decorated = TRUE
 
 /obj/item/food/donut/berry

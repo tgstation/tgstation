@@ -109,7 +109,7 @@
 	desc = "It looks dangerous."
 	item_flags = EXAMINE_SKIP
 
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "bug"
 
 	/// The area at which this bug can be planted at. Has to be a type.
@@ -169,6 +169,7 @@
 		return
 	forceMove(target)
 	target.vis_contents += src
+	vis_flags |= VIS_INHERIT_PLANE
 	planted_on = target
 	RegisterSignal(planted_on, COMSIG_PARENT_QDELETING, .proc/handle_planted_on_deletion)
 	SEND_SIGNAL(src, COMSIG_TRAITOR_BUG_PLANTED_OBJECT, target)
@@ -178,12 +179,14 @@
 
 /obj/item/traitor_bug/Destroy()
 	if(planted_on)
+		vis_flags &= ~VIS_INHERIT_PLANE
 		planted_on.vis_contents -= src
 	return ..()
 
 /obj/item/traitor_bug/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(planted_on)
+		vis_flags &= ~VIS_INHERIT_PLANE
 		planted_on.vis_contents -= src
 		anchored = FALSE
 		UnregisterSignal(planted_on, COMSIG_PARENT_QDELETING)
@@ -195,7 +198,7 @@
 
 	anchored = TRUE
 
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "bug-animated"
 
 /obj/structure/traitor_bug/Initialize(mapload)

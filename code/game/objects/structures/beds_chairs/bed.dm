@@ -53,12 +53,19 @@
  */
 /obj/structure/bed/roller
 	name = "roller bed"
-	icon = 'icons/obj/rollerbed.dmi'
+	icon = 'icons/obj/medical/rollerbed.dmi'
 	icon_state = "down"
 	anchored = FALSE
 	resistance_flags = NONE
+	///The item it spawns when it's folded up.
 	var/foldabletype = /obj/item/roller
 
+/obj/structure/bed/roller/Initialize(mapload)
+	. = ..()
+	AddElement( \
+		/datum/element/contextual_screentip_bare_hands, \
+		rmb_text = "Fold up", \
+	)
 
 /obj/structure/bed/roller/examine(mob/user)
 	. = ..()
@@ -89,7 +96,7 @@
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	if(!ishuman(user) || !user.canUseTopic(src, BE_CLOSE))
+	if(!ishuman(user) || !user.canUseTopic(src, be_close = TRUE))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(has_buckled_mobs())
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -121,7 +128,7 @@
 /obj/item/roller
 	name = "roller bed"
 	desc = "A collapsed roller bed that can be carried around."
-	icon = 'icons/obj/rollerbed.dmi'
+	icon = 'icons/obj/medical/rollerbed.dmi'
 	icon_state = "folded"
 	w_class = WEIGHT_CLASS_NORMAL // No more excuses, stop getting blood everywhere
 

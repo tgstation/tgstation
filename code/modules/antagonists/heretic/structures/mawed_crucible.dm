@@ -72,7 +72,7 @@
 		balloon_alert(user, "[anchored ? "":"un"]anchored")
 		return TRUE
 
-	if(istype(weapon, /obj/item/bodypart))
+	if(isbodypart(weapon))
 
 		var/obj/item/bodypart/consumed = weapon
 		if(!IS_ORGANIC_LIMB(consumed))
@@ -82,7 +82,7 @@
 		consume_fuel(user, consumed)
 		return TRUE
 
-	if(istype(weapon, /obj/item/organ))
+	if(isorgan(weapon))
 		var/obj/item/organ/consumed = weapon
 		if(consumed.status != ORGAN_ORGANIC || (consumed.organ_flags & ORGAN_SYNTHETIC))
 			balloon_alert(user, "not organic!")

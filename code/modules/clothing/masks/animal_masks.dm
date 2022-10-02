@@ -70,7 +70,7 @@ GLOBAL_LIST_INIT(cursed_animal_masks, list(
 			if(update_speech_mod)
 				RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
 			to_chat(M, span_userdanger("[src] was cursed!"))
-			M.update_inv_wear_mask()
+			M.update_worn_mask()
 
 /obj/item/clothing/mask/animal/proc/clear_curse()
 	REMOVE_TRAIT(src, TRAIT_NODROP, CURSED_MASK_TRAIT)
@@ -87,7 +87,7 @@ GLOBAL_LIST_INIT(cursed_animal_masks, list(
 			to_chat(M, span_notice("[src]'s curse has been lifted!"))
 			if(update_speech_mod)
 				UnregisterSignal(M, COMSIG_MOB_SAY)
-			M.update_inv_wear_mask()
+			M.update_worn_mask()
 
 /obj/item/clothing/mask/animal/handle_speech(datum/source, list/speech_args)
 	if(clothing_flags & VOICEBOX_DISABLED)
@@ -99,7 +99,7 @@ GLOBAL_LIST_INIT(cursed_animal_masks, list(
 /obj/item/clothing/mask/animal/equipped(mob/user, slot)
 	if(!iscarbon(user))
 		return ..()
-	if(slot == ITEM_SLOT_MASK && HAS_TRAIT_FROM(src, TRAIT_NODROP, CURSED_MASK_TRAIT))
+	if((slot & ITEM_SLOT_MASK) && HAS_TRAIT_FROM(src, TRAIT_NODROP, CURSED_MASK_TRAIT))
 		to_chat(user, span_userdanger("[src] was cursed!"))
 	return ..()
 

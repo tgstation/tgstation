@@ -30,6 +30,20 @@
 	fishing_line_traits = FISHING_LINE_BOUNCY
 	line_color = "#99313f"
 
+/obj/item/fishing_line/sinew
+	name = "fishing sinew"
+	desc = "an all-natural fishing line made of stretched out sinew"
+	icon = 'icons/obj/fishing.dmi'
+	icon_state = "reel_sinew"
+	line_color = "#d1cca3"
+
+/datum/crafting_recipe/sinew_line
+	name = "Sinew Fishing Line Reel"
+	result = /obj/item/fishing_line/sinew
+	reqs = list(/obj/item/stack/sheet/sinew = 2)
+	time = 2 SECONDS
+	category = CAT_PRIMAL
+
 // Hooks
 
 /obj/item/fishing_hook
@@ -62,6 +76,17 @@
 	fishing_hook_traits = FISHING_HOOK_WEIGHTED
 	rod_overlay_icon_state = "hook_weighted_overlay"
 
+/obj/item/fishing_hook/bone
+	name = "bone hook"
+	desc = "a simple hook carved from sharpened bone"
+	icon_state = "hook_bone"
+
+/datum/crafting_recipe/bone_hook
+	name = "Goliath Bone Hook"
+	result = /obj/item/fishing_hook/bone
+	reqs = list(/obj/item/stack/sheet/bone = 1)
+	time = 2 SECONDS
+	category = CAT_PRIMAL
 
 /obj/item/storage/toolbox/fishing
 	name = "fishing toolbox"
@@ -70,7 +95,7 @@
 	inhand_icon_state = "artistic_toolbox"
 	material_flags = NONE
 
-/obj/item/storage/toolbox/Initialize()
+/obj/item/storage/toolbox/Initialize(mapload)
 	. = ..()
 	// Can hold fishing rod despite the size
 	var/static/list/exception_cache = typecacheof(/obj/item/fishing_rod)

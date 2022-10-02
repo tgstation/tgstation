@@ -58,7 +58,7 @@
 	GLOB.religious_sect.adjust_favor(0.2)
 
 /datum/religion_rites/song_tuner/evangelism/finish_effect(mob/living/carbon/human/listener, atom/song_source)
-	SEND_SIGNAL(listener, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
+	listener.add_mood_event("blessing", /datum/mood_event/blessing)
 
 /datum/religion_rites/song_tuner/nullwave
 	name = "Nullwave Vibrato"

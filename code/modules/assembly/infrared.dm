@@ -217,7 +217,7 @@
 
 /obj/effect/beam/i_beam
 	name = "infrared beam"
-	icon = 'icons/obj/guns/projectiles.dmi'
+	icon = 'icons/obj/weapons/guns/projectiles.dmi'
 	icon_state = "ibeam"
 	anchored = TRUE
 	density = FALSE

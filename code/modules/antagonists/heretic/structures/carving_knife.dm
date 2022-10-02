@@ -239,10 +239,10 @@
 	var/mob/living/carbon/carbon_victim = victim
 	carbon_victim.adjustStaminaLoss(80)
 	carbon_victim.silent += 10
-	carbon_victim.adjust_timed_status_effect(1 MINUTES, /datum/status_effect/speech/stutter)
-	carbon_victim.adjust_timed_status_effect(5 SECONDS, /datum/status_effect/confusion)
-	carbon_victim.set_timed_status_effect(20 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
-	carbon_victim.set_timed_status_effect(40 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
-	carbon_victim.blind_eyes(2)
-	SEND_SIGNAL(carbon_victim, COMSIG_ADD_MOOD_EVENT, "gates_of_mansus", /datum/mood_event/gates_of_mansus)
+	carbon_victim.adjust_stutter(1 MINUTES)
+	carbon_victim.adjust_confusion(5 SECONDS)
+	carbon_victim.set_jitter_if_lower(20 SECONDS)
+	carbon_victim.set_dizzy_if_lower(40 SECONDS)
+	carbon_victim.adjust_blindness(2)
+	carbon_victim.add_mood_event("gates_of_mansus", /datum/mood_event/gates_of_mansus)
 	playsound(src, 'sound/magic/blind.ogg', 75, TRUE)

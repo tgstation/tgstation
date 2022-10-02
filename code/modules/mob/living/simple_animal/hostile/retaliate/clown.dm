@@ -1,7 +1,7 @@
 /mob/living/simple_animal/hostile/retaliate/clown
 	name = "Clown"
 	desc = "A denizen of clown planet."
-	icon = 'icons/mob/clown_mobs.dmi'
+	icon = 'icons/mob/simple/clown_mobs.dmi'
 	icon_state = "clown"
 	icon_living = "clown"
 	icon_dead = "clown_dead"
@@ -390,7 +390,7 @@
 	attack_verb_continuous = "slams"
 	attack_verb_simple = "slam"
 	loot = list(/obj/effect/gibspawner/xeno/bodypartless, /obj/effect/gibspawner/generic, /obj/effect/gibspawner/generic/animal, /obj/effect/gibspawner/human/bodypartless)
-	deathsound = 'sound/misc/sadtrombone.ogg'
+	death_sound = 'sound/misc/sadtrombone.ogg'
 	///This is the list of items we are ready to regurgitate,
 	var/list/prank_pouch = list()
 
@@ -477,6 +477,7 @@
 	icon_icon = 'icons/mob/actions/actions_animal.dmi'
 	button_icon_state = "regurgitate"
 	check_flags = AB_CHECK_CONSCIOUS
+	melee_cooldown_time = 0 SECONDS
 	click_to_activate = TRUE
 
 /datum/action/cooldown/regurgitate/set_click_ability(mob/on_who)

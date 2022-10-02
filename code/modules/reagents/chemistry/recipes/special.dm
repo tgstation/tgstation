@@ -5,9 +5,9 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 
 /proc/build_reagents_to_food()
 	. = list()
-	for (var/type in subtypesof(/obj/item/reagent_containers/food))
-		var/obj/item/reagent_containers/food/item = new type()
-		for(var/datum/reagent/reagent as anything in item.list_reagents)
+	for (var/type in subtypesof(/obj/item/food))
+		var/obj/item/food/item = new type()
+		for(var/datum/reagent/reagent as anything in item.food_reagents)
 			var/chem_flags = initial(reagent.chemical_flags)
 			if(!VALID_RANDOM_RECIPE_REAGENT(chem_flags))
 				continue
@@ -255,7 +255,7 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 	persistent = TRUE
 	persistence_period = 7 //Reset every week
 	randomize_container = TRUE
-	possible_containers = list(/obj/item/reagent_containers/glass/bucket) //easy way to ensure no common conflicts
+	possible_containers = list(/obj/item/reagent_containers/cup/bucket) //easy way to ensure no common conflicts
 	randomize_req_temperature = TRUE
 	results = list(/datum/reagent/consumable/secretsauce=1)
 
@@ -285,7 +285,7 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 	return ..()
 
 /obj/item/paper/secretrecipe
-	name = "old recipe"
+	name = "Old Recipe"
 
 	///List of possible recipes we could display
 	var/list/possible_recipes = list(/datum/chemical_reaction/randomized/secret_sauce, /datum/chemical_reaction/randomized/metalgen)
@@ -316,7 +316,8 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 /obj/item/paper/secretrecipe/proc/UpdateInfo()
 	var/datum/chemical_reaction/recipe = get_chemical_reaction(recipe_id)
 	if(!recipe)
-		info = "This recipe is illegible."
+		add_raw_text("This recipe is illegible.")
+		update_appearance()
 		return
 	var/list/dat = list("<ul>")
 	for(var/rid in recipe.required_reagents)
@@ -352,7 +353,7 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 			dat += "<li> and your purity above [recipe.purity_min]</li>"
 	dat += "</ul>"
 	dat += "."
-	info = dat.Join("")
+	add_raw_text(dat.Join(""))
 	update_appearance()
 
 #undef VALID_RANDOM_RECIPE_REAGENT

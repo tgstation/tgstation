@@ -32,17 +32,17 @@
 "ag" = (
 /obj/structure/table/reinforced,
 /obj/machinery/light/directional/west,
-/obj/item/reagent_containers/food/drinks/bottle/whiskey{
+/obj/item/reagent_containers/cup/glass/bottle/whiskey{
 	desc = "A bottle of whiskey. There's a label that reads 'tears' taped to the front.";
 	name = "Bottle of Tears";
 	pixel_x = 3;
 	pixel_y = 5
 	},
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
 	pixel_x = -7;
 	pixel_y = 10
 	},
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
 	pixel_x = -7;
 	pixel_y = 4
 	},
@@ -245,7 +245,7 @@
 /area/shuttle/syndicate/bridge)
 "az" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/computer/monitor/secret{
+/obj/machinery/computer/monitor{
 	dir = 8
 	},
 /obj/structure/cable,
@@ -595,7 +595,7 @@
 /obj/item/reagent_containers/hypospray/medipen{
 	pixel_y = -6
 	},
-/obj/item/reagent_containers/glass/bottle/multiver,
+/obj/item/reagent_containers/cup/bottle/multiver,
 /obj/structure/table/reinforced,
 /obj/machinery/light/directional/north,
 /obj/effect/decal/cleanable/dirt,
@@ -1184,8 +1184,7 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/syndicate/medical)
 "cx" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/plasma/plastitanium,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /obj/structure/shuttle/engine/heater,
 /turf/open/floor/plating,
 /area/shuttle/syndicate/medical)
@@ -1244,8 +1243,7 @@
 /turf/closed/wall/r_wall/syndicate,
 /area/shuttle/syndicate/armory)
 "cH" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/plasma/plastitanium,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /obj/structure/shuttle/engine/heater,
 /turf/open/floor/plating,
 /area/shuttle/syndicate/armory)
@@ -1275,8 +1273,7 @@
 /turf/closed/wall/r_wall/syndicate,
 /area/shuttle/syndicate/hallway)
 "cN" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/plasma/plastitanium,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /obj/structure/shuttle/engine/heater,
 /turf/open/floor/plating,
 /area/shuttle/syndicate/hallway)

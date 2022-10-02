@@ -86,13 +86,11 @@
 /datum/martial_art/krav_maga/proc/leg_sweep(mob/living/attacker, mob/living/defender)
 	if(defender.stat || defender.IsParalyzed())
 		return FALSE
-	var/obj/item/bodypart/affecting = defender.get_bodypart(BODY_ZONE_CHEST)
-	var/armor_block = defender.run_armor_check(affecting, MELEE)
 	defender.visible_message(span_warning("[attacker] leg sweeps [defender]!"), \
 					span_userdanger("Your legs are sweeped by [attacker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, attacker)
 	to_chat(attacker, span_danger("You leg sweep [defender]!"))
 	playsound(get_turf(attacker), 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
-	defender.apply_damage(rand(20, 30), STAMINA, affecting, armor_block)
+	defender.apply_damage(5, BRUTE, BODY_ZONE_CHEST)
 	defender.Knockdown(60)
 	log_combat(attacker, defender, "leg sweeped")
 	return TRUE
@@ -113,8 +111,8 @@
 					span_userdanger("Your neck is karate chopped by [attacker], rendering you unable to speak!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, attacker)
 	to_chat(attacker, span_danger("You karate chop [defender]'s neck, rendering [defender.p_them()] unable to speak!"))
 	playsound(get_turf(attacker), 'sound/effects/hit_punch.ogg', 50, TRUE, -1)
-	defender.apply_damage(5, attacker.get_attack_type())
-	if (iscarbon(defender))
+	defender.apply_damage(10, attacker.get_attack_type(), BODY_ZONE_HEAD)
+	if(iscarbon(defender))
 		var/mob/living/carbon/carbon_defender = defender
 		if(carbon_defender.silent <= 10)
 			carbon_defender.silent = clamp(carbon_defender.silent + 10, 0, 10)
@@ -131,14 +129,13 @@
 	if(check_streak(attacker, defender))
 		return TRUE
 	log_combat(attacker, defender, "punched")
-	var/obj/item/bodypart/affecting = defender.get_bodypart(ran_zone(attacker.zone_selected))
-	var/armor_block = defender.run_armor_check(affecting, MELEE)
+	var/obj/item/bodypart/affecting = defender.get_bodypart(defender.get_random_valid_zone(attacker.zone_selected))
 	var/picked_hit_type = pick("punch", "kick")
 	var/bonus_damage = 0
 	if(defender.body_position == LYING_DOWN)
 		bonus_damage += 5
 		picked_hit_type = "stomp"
-	defender.apply_damage(rand(5, 10) + bonus_damage, attacker.get_attack_type(), affecting, armor_block)
+	defender.apply_damage(10 + bonus_damage, attacker.get_attack_type(), affecting)
 	if(picked_hit_type == "kick" || picked_hit_type == "stomp")
 		attacker.do_attack_animation(defender, ATTACK_EFFECT_KICK)
 		playsound(get_turf(defender), 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
@@ -154,28 +151,17 @@
 /datum/martial_art/krav_maga/disarm_act(mob/living/attacker, mob/living/defender)
 	if(check_streak(attacker, defender))
 		return TRUE
-	var/obj/item/bodypart/affecting = defender.get_bodypart(ran_zone(attacker.zone_selected))
-	var/armor_block = defender.run_armor_check(affecting, MELEE)
-	if(defender.body_position == STANDING_UP)
-		defender.visible_message(span_danger("[attacker] reprimands [defender]!"), \
-					span_userdanger("You're slapped by [attacker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, attacker)
-		to_chat(attacker, span_danger("You jab [defender]!"))
-		attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
-		playsound(defender, 'sound/effects/hit_punch.ogg', 50, TRUE, -1)
-		defender.apply_damage(rand(5, 10), STAMINA, affecting, armor_block)
-		log_combat(attacker, defender, "punched nonlethally")
-	if(defender.body_position == LYING_DOWN)
-		defender.visible_message(span_danger("[attacker] reprimands [defender]!"), \
-					span_userdanger("You're manhandled by [attacker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, attacker)
-		to_chat(attacker, span_danger("You stomp [defender]!"))
-		attacker.do_attack_animation(defender, ATTACK_EFFECT_KICK)
-		playsound(defender, 'sound/effects/hit_punch.ogg', 50, TRUE, -1)
-		defender.apply_damage(rand(10, 15), STAMINA, affecting, armor_block)
-		log_combat(attacker, defender, "stomped nonlethally")
-	if(prob(defender.getStaminaLoss()) && defender.stat < UNCONSCIOUS)
-		defender.visible_message(span_warning("[defender] sputters and recoils in pain!"), span_userdanger("You recoil in pain as you are jabbed in a nerve!"))
-		defender.drop_all_held_items()
-	return TRUE
+	var/obj/item/stuff_in_hand = null
+	stuff_in_hand = defender.get_active_held_item()
+	if(prob(60) && stuff_in_hand)
+		if(defender.temporarilyRemoveItemFromInventory(stuff_in_hand))
+			attacker.put_in_hands(stuff_in_hand)
+			defender.visible_message("<span class='danger'>[attacker] disarms [defender]!</span>", \
+				"<span class='userdanger'>You're disarmed by [attacker]!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", COMBAT_MESSAGE_RANGE, attacker)
+			to_chat(attacker, "<span class='danger'>You disarm [defender]!</span>")
+			playsound(defender, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
+	log_combat(attacker, defender, "shoved (Krav Maga)", "[stuff_in_hand ? " removing \the [stuff_in_hand]" : ""]")
+	return FALSE
 
 //Krav Maga Gloves
 
@@ -184,7 +170,7 @@
 
 /obj/item/clothing/gloves/krav_maga/equipped(mob/user, slot)
 	. = ..()
-	if(slot == ITEM_SLOT_GLOVES)
+	if(slot & ITEM_SLOT_GLOVES)
 		style.teach(user, TRUE)
 
 /obj/item/clothing/gloves/krav_maga/dropped(mob/user)

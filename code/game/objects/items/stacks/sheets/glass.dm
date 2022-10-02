@@ -9,9 +9,9 @@
  * Glass sheets
  */
 GLOBAL_LIST_INIT(glass_recipes, list ( \
-	new/datum/stack_recipe("directional window", /obj/structure/window/unanchored, time = 0, on_floor = TRUE, window_checks = TRUE), \
-	new/datum/stack_recipe("fulltile window", /obj/structure/window/fulltile/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE), \
-	new/datum/stack_recipe("glass shard", /obj/item/shard, time = 0, on_floor = TRUE), \
+	new/datum/stack_recipe("directional window", /obj/structure/window/unanchored, time = 0, on_solid_ground = TRUE, window_checks = TRUE), \
+	new/datum/stack_recipe("fulltile window", /obj/structure/window/fulltile/unanchored, 2, time = 0, on_solid_ground = TRUE, window_checks = TRUE), \
+	new/datum/stack_recipe("glass shard", /obj/item/shard, time = 0, on_solid_ground = TRUE), \
 	new/datum/stack_recipe("glass tile", /obj/item/stack/tile/glass, 1, 4, 20) \
 ))
 
@@ -75,9 +75,9 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 	return ..()
 
 GLOBAL_LIST_INIT(pglass_recipes, list ( \
-	new/datum/stack_recipe("directional window", /obj/structure/window/plasma/unanchored, time = 0, on_floor = TRUE, window_checks = TRUE), \
-	new/datum/stack_recipe("fulltile window", /obj/structure/window/plasma/fulltile/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE), \
-	new/datum/stack_recipe("plasma glass shard", /obj/item/shard/plasma, time = 20, on_floor = TRUE), \
+	new/datum/stack_recipe("directional window", /obj/structure/window/plasma/unanchored, time = 0, on_solid_ground = TRUE, window_checks = TRUE), \
+	new/datum/stack_recipe("fulltile window", /obj/structure/window/plasma/fulltile/unanchored, 2, time = 0, on_solid_ground = TRUE, window_checks = TRUE), \
+	new/datum/stack_recipe("plasma glass shard", /obj/item/shard/plasma, time = 20, on_solid_ground = TRUE), \
 	new/datum/stack_recipe("plasma glass tile", /obj/item/stack/tile/glass/plasma, 1, 4, 20) \
 ))
 
@@ -127,11 +127,11 @@ GLOBAL_LIST_INIT(pglass_recipes, list ( \
  * Reinforced glass sheets
  */
 GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
-	new/datum/stack_recipe("windoor frame", /obj/structure/windoor_assembly, 5, time = 0, on_floor = TRUE, window_checks = TRUE), \
+	new/datum/stack_recipe("windoor frame", /obj/structure/windoor_assembly, 5, time = 0, on_solid_ground = TRUE, window_checks = TRUE), \
 	null, \
-	new/datum/stack_recipe("directional reinforced window", /obj/structure/window/reinforced/unanchored, time = 0, on_floor = TRUE, window_checks = TRUE), \
-	new/datum/stack_recipe("fulltile reinforced window", /obj/structure/window/reinforced/fulltile/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE), \
-	new/datum/stack_recipe("glass shard", /obj/item/shard, time = 10, on_floor = TRUE), \
+	new/datum/stack_recipe("directional reinforced window", /obj/structure/window/reinforced/unanchored, time = 0, on_solid_ground = TRUE, window_checks = TRUE), \
+	new/datum/stack_recipe("fulltile reinforced window", /obj/structure/window/reinforced/fulltile/unanchored, 2, time = 0, on_solid_ground = TRUE, window_checks = TRUE), \
+	new/datum/stack_recipe("glass shard", /obj/item/shard, time = 10, on_solid_ground = TRUE), \
 	new/datum/stack_recipe("reinforced glass tile", /obj/item/stack/tile/rglass, 1, 4, 20) \
 ))
 
@@ -183,9 +183,9 @@ GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 	. += GLOB.reinforced_glass_recipes
 
 GLOBAL_LIST_INIT(prglass_recipes, list ( \
-	new/datum/stack_recipe("directional reinforced window", /obj/structure/window/reinforced/plasma/unanchored, time = 0, on_floor = TRUE, window_checks = TRUE), \
-	new/datum/stack_recipe("fulltile reinforced window", /obj/structure/window/reinforced/plasma/fulltile/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE), \
-	new/datum/stack_recipe("plasma glass shard", /obj/item/shard/plasma, time = 40, on_floor = TRUE), \
+	new/datum/stack_recipe("directional reinforced window", /obj/structure/window/reinforced/plasma/unanchored, time = 0, on_solid_ground = TRUE, window_checks = TRUE), \
+	new/datum/stack_recipe("fulltile reinforced window", /obj/structure/window/reinforced/plasma/fulltile/unanchored, 2, time = 0, on_solid_ground = TRUE, window_checks = TRUE), \
+	new/datum/stack_recipe("plasma glass shard", /obj/item/shard/plasma, time = 40, on_solid_ground = TRUE), \
 	new/datum/stack_recipe("reinforced plasma glass tile", /obj/item/stack/tile/rglass/plasma, 1, 4, 20) \
 ))
 
@@ -210,8 +210,8 @@ GLOBAL_LIST_INIT(prglass_recipes, list ( \
 	. += GLOB.prglass_recipes
 
 GLOBAL_LIST_INIT(titaniumglass_recipes, list(
-	new/datum/stack_recipe("shuttle window", /obj/structure/window/reinforced/shuttle/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE), \
-	new/datum/stack_recipe("titanium glass shard", /obj/item/shard/titanium, time = 40, on_floor = TRUE) \
+	new/datum/stack_recipe("shuttle window", /obj/structure/window/reinforced/shuttle/unanchored, 2, time = 0, on_solid_ground = TRUE, window_checks = TRUE), \
+	new/datum/stack_recipe("titanium glass shard", /obj/item/shard/titanium, time = 40, on_solid_ground = TRUE) \
 	))
 
 /obj/item/stack/sheet/titaniumglass
@@ -235,7 +235,7 @@ GLOBAL_LIST_INIT(titaniumglass_recipes, list(
 	. += GLOB.titaniumglass_recipes
 
 GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
-	new/datum/stack_recipe("plastitanium window", /obj/structure/window/reinforced/plasma/plastitanium/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE) \
+	new/datum/stack_recipe("plastitanium window", /obj/structure/window/reinforced/plasma/plastitanium/unanchored, 2, time = 0, on_solid_ground = TRUE, window_checks = TRUE) \
 	))
 
 /obj/item/stack/sheet/plastitaniumglass
@@ -290,7 +290,10 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 /obj/item/shard/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/caltrop, min_damage = force)
-	AddComponent(/datum/component/butchering, 150, 65)
+	AddComponent(/datum/component/butchering, \
+	speed = 15 SECONDS, \
+	effectiveness = 65, \
+	)
 	icon_state = pick("large", "medium", "small")
 	switch(icon_state)
 		if("small")
@@ -354,18 +357,12 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 		return ..()
 
 /obj/item/shard/welder_act(mob/living/user, obj/item/I)
-	..()
 	if(I.use_tool(src, user, 0, volume=50))
-		var/obj/item/stack/sheet/NG = new weld_material(user.loc)
-		for(var/obj/item/stack/sheet/G in user.loc)
-			if(G == NG)
-				continue
-			if(G.amount >= G.max_amount)
-				continue
-			G.attackby(NG, user)
-		to_chat(user, span_notice("You add the newly-formed [NG.name] to the stack. It now contains [NG.amount] sheet\s."))
+		var/obj/item/stack/sheet/new_glass = new weld_material
+		to_chat(user, span_notice("You melt [src] down into [new_glass.name]."))
+		new_glass.forceMove((Adjacent(user) ? user.drop_location() : loc)) //stack merging is handled automatically.
 		qdel(src)
-	return TRUE
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/item/shard/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER

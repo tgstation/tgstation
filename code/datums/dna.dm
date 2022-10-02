@@ -97,13 +97,12 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 
 	return ..()
 
-/datum/dna/proc/transfer_identity(mob/living/carbon/destination, transfer_SE = 0)
+/datum/dna/proc/transfer_identity(mob/living/carbon/destination, transfer_SE = FALSE, transfer_species = TRUE)
 	if(!istype(destination))
 		return
 	destination.dna.unique_enzymes = unique_enzymes
 	destination.dna.unique_identity = unique_identity
 	destination.dna.blood_type = blood_type
-	destination.set_species(species.type, icon_update=0)
 	destination.dna.unique_features = unique_features
 	destination.dna.features = features.Copy()
 	destination.dna.real_name = real_name
@@ -111,6 +110,8 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	if(transfer_SE)
 		destination.dna.mutation_index = mutation_index
 		destination.dna.default_mutation_genes = default_mutation_genes
+	if(transfer_species)
+		destination.set_species(species.type, icon_update=0)
 
 /datum/dna/proc/copy_dna(datum/dna/new_dna)
 	new_dna.unique_enzymes = unique_enzymes
@@ -473,7 +474,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 			new_race = mrace
 		else
 			return
-		deathsound = new_race.deathsound
+		death_sound = new_race.death_sound
 		dna.species.on_species_loss(src, new_race, pref_load)
 		var/datum/species/old_species = dna.species
 		dna.species = new_race
@@ -564,7 +565,10 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	eye_color_left = sanitize_hexcolor(get_uni_identity_block(structure, DNA_EYE_COLOR_LEFT_BLOCK))
 	eye_color_right = sanitize_hexcolor(get_uni_identity_block(structure, DNA_EYE_COLOR_RIGHT_BLOCK))
 	facial_hairstyle = GLOB.facial_hairstyles_list[deconstruct_block(get_uni_identity_block(structure, DNA_FACIAL_HAIRSTYLE_BLOCK), GLOB.facial_hairstyles_list.len)]
-	hairstyle = GLOB.hairstyles_list[deconstruct_block(get_uni_identity_block(structure, DNA_HAIRSTYLE_BLOCK), GLOB.hairstyles_list.len)]
+	if(HAS_TRAIT(src, TRAIT_BALD))
+		hairstyle = "Bald"
+	else
+		hairstyle = GLOB.hairstyles_list[deconstruct_block(get_uni_identity_block(structure, DNA_HAIRSTYLE_BLOCK), GLOB.hairstyles_list.len)]
 	var/features = dna.unique_features
 	if(dna.features["mcolor"])
 		dna.features["mcolor"] = sanitize_hexcolor(get_uni_feature_block(features, DNA_MUTANT_COLOR_BLOCK))
@@ -605,8 +609,8 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		external_organ.mutate_feature(features, src)
 
 	if(icon_update)
-		dna.species.handle_body(src) // We want 'update_body_parts()' to be called only if mutcolor_update is TRUE, so no 'update_body()' here.
-		update_hair(is_creating = TRUE)
+		dna.species.handle_body(src) // We want 'update_body_parts(update_limb_data = TRUE)' to be called only if mutcolor_update is TRUE, so no 'update_body()' here.
+		update_body_parts() //We can call this because it doesnt refresh limb data, and it handles hair and such.
 		if(mutcolor_update)
 			update_body_parts(update_limb_data = TRUE)
 		if(mutations_overlay_update)

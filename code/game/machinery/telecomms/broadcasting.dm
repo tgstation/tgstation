@@ -151,7 +151,8 @@
 		if (TRANSMISSION_SUBSPACE)
 			// Reaches any radios on the levels
 			var/list/all_radios_of_our_frequency = GLOB.all_radios["[frequency]"]
-			radios = all_radios_of_our_frequency.Copy()
+			if(LAZYLEN(all_radios_of_our_frequency))
+				radios = all_radios_of_our_frequency.Copy()
 
 			for(var/obj/item/radio/subspace_radio in radios)
 				if(!subspace_radio.can_receive(frequency, signal_reaches_every_z_level))

@@ -4,8 +4,8 @@
 	female_sprite_flags = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
 	custom_price = PAYCHECK_CREW
-	icon = 'icons/obj/clothing/under/shorts_pants.dmi'
-	worn_icon = 'icons/mob/clothing/under/shorts_pants.dmi'
+	icon = 'icons/obj/clothing/under/shorts_pants_shirts.dmi'
+	worn_icon = 'icons/mob/clothing/under/shorts_pants_shirts.dmi'
 	species_exception = list(/datum/species/golem)
 
 /obj/item/clothing/under/pants/slacks

@@ -137,17 +137,18 @@
 		else
 			last_pump = world.time //lets be extra fair *sigh*
 
-/obj/item/organ/internal/heart/cursed/Insert(mob/living/carbon/accursed, special = 0)
+/obj/item/organ/internal/heart/cursed/Insert(mob/living/carbon/accursed, special = FALSE, drop_if_replaced = TRUE)
 	..()
 	if(owner)
 		to_chat(owner, span_userdanger("Your heart has been replaced with a cursed one, you have to pump this one manually otherwise you'll die!"))
 
-/obj/item/organ/internal/heart/cursed/Remove(mob/living/carbon/accursed, special = 0)
+/obj/item/organ/internal/heart/cursed/Remove(mob/living/carbon/accursed, special = FALSE)
 	..()
 	accursed.remove_client_colour(/datum/client_colour/cursed_heart_blood)
 
 /datum/action/item_action/organ_action/cursed_heart
 	name = "Pump your blood"
+	check_flags = NONE
 
 //You are now brea- pumping blood manually
 /datum/action/item_action/organ_action/cursed_heart/Trigger(trigger_flags)
@@ -216,7 +217,7 @@
 	if(. & EMP_PROTECT_SELF)
 		return
 	if(!COOLDOWN_FINISHED(src, severe_cooldown)) //So we cant just spam emp to kill people.
-		owner.set_timed_status_effect(20 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
+		owner.set_dizzy_if_lower(20 SECONDS)
 		owner.losebreath += 10
 		COOLDOWN_START(src, severe_cooldown, 20 SECONDS)
 	if(prob(emp_vulnerability/severity)) //Chance of permanent effects
@@ -242,7 +243,7 @@
 /obj/item/organ/internal/heart/freedom
 	name = "heart of freedom"
 	desc = "This heart pumps with the passion to give... something freedom."
-	organ_flags = ORGAN_SYNTHETIC //the power of freedom prevents heart attacks
+	organ_flags = ORGAN_SYNTHETIC  //the power of freedom prevents heart attacks
 	/// The cooldown until the next time this heart can give the host an adrenaline boost.
 	COOLDOWN_DECLARE(adrenaline_cooldown)
 
@@ -276,13 +277,13 @@
 	. = ..()
 	add_atom_colour(ethereal_color, FIXED_COLOUR_PRIORITY)
 
-/obj/item/organ/internal/heart/ethereal/Insert(mob/living/carbon/owner, special = 0)
+/obj/item/organ/internal/heart/ethereal/Insert(mob/living/carbon/owner, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
 	RegisterSignal(owner, COMSIG_MOB_STATCHANGE, .proc/on_stat_change)
 	RegisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL, .proc/on_owner_fully_heal)
 	RegisterSignal(owner, COMSIG_PARENT_QDELETING, .proc/owner_deleted)
 
-/obj/item/organ/internal/heart/ethereal/Remove(mob/living/carbon/owner, special = 0)
+/obj/item/organ/internal/heart/ethereal/Remove(mob/living/carbon/owner, special = FALSE)
 	UnregisterSignal(owner, list(COMSIG_MOB_STATCHANGE, COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_PARENT_QDELETING))
 	REMOVE_TRAIT(owner, TRAIT_CORPSELOCKED, SPECIES_TRAIT)
 	stop_crystalization_process(owner)
@@ -344,7 +345,7 @@
 	crystalize_timer_id = addtimer(CALLBACK(src, .proc/crystalize, victim), CRYSTALIZE_PRE_WAIT_TIME, TIMER_STOPPABLE)
 
 	RegisterSignal(victim, COMSIG_HUMAN_DISARM_HIT, .proc/reset_crystalizing)
-	RegisterSignal(victim, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	RegisterSignal(victim, COMSIG_PARENT_EXAMINE, .proc/on_examine, override = TRUE)
 	RegisterSignal(victim, COMSIG_MOB_APPLY_DAMAGE, .proc/on_take_damage)
 
 ///Ran when disarmed, prevents the ethereal from reviving

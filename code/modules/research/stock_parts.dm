@@ -7,32 +7,25 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	icon_state = "RPED"
 	inhand_icon_state = "RPED"
 	worn_icon_state = "RPED"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_HUGE
 	var/works_from_distance = FALSE
 	var/pshoom_or_beepboopblorpzingshadashwoosh = 'sound/items/rped.ogg'
 	var/alt_sound = null
 
-/obj/item/storage/part_replacer/Initialize()
+/obj/item/storage/part_replacer/Initialize(mapload)
 	. = ..()
-
-	atom_storage.allow_quick_empty = TRUE
-	atom_storage.allow_quick_gather = TRUE
-	atom_storage.max_slots = 50
-	atom_storage.max_total_storage = 100
-	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
-	atom_storage.numerical_stacking = TRUE
-	atom_storage.set_holdable(list(/obj/item/stock_parts), null)
+	create_storage(type = /datum/storage/rped)
 
 /obj/item/storage/part_replacer/pre_attack(obj/attacked_object, mob/living/user, params)
-	if(!istype(attacked_object, /obj/machinery) && !istype(attacked_object, /obj/structure/frame/machine))
+	if(!ismachinery(attacked_object) && !istype(attacked_object, /obj/structure/frame/machine))
 		return ..()
 
 	if(!user.Adjacent(attacked_object)) // no TK upgrading.
 		return ..()
 
-	if(istype(attacked_object, /obj/machinery))
+	if(ismachinery(attacked_object))
 		var/obj/machinery/attacked_machinery = attacked_object
 
 		if(!attacked_machinery.component_parts)
@@ -54,13 +47,13 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	return TRUE
 
 /obj/item/storage/part_replacer/afterattack(obj/attacked_object, mob/living/user, adjacent, params)
-	if(!istype(attacked_object, /obj/machinery) && !istype(attacked_object, /obj/structure/frame/machine))
+	if(!ismachinery(attacked_object) && !istype(attacked_object, /obj/structure/frame/machine))
 		return ..()
 
 	if(adjacent)
 		return ..()
 
-	if(istype(attacked_object, /obj/machinery))
+	if(ismachinery(attacked_object))
 		var/obj/machinery/attacked_machinery = attacked_object
 
 		if(!attacked_machinery.component_parts)
@@ -132,7 +125,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 
 	if(inserted_cell.rigged || inserted_cell.corrupted)
 		message_admins("[ADMIN_LOOKUPFLW(usr)] has inserted rigged/corrupted [inserted_cell] into [src].")
-		log_game("[key_name(usr)] has inserted rigged/corrupted [inserted_cell] into [src].")
+		usr.log_message("has inserted rigged/corrupted [inserted_cell] into [src].", LOG_GAME)
 		usr.log_message("inserted rigged/corrupted [inserted_cell] into [src]", LOG_ATTACK)
 
 /**
@@ -220,8 +213,8 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	desc = "Special mechanical module made to store, sort, and apply standard machine parts."
 	icon_state = "borgrped"
 	inhand_icon_state = "RPED"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 
 /proc/cmp_rped_sort(obj/item/A, obj/item/B)
 	return B.get_part_rating() - A.get_part_rating()

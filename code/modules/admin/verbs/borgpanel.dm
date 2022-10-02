@@ -6,9 +6,9 @@
 	if(!check_rights(R_ADMIN))
 		return
 
-	if (!istype(borgo, /mob/living/silicon/robot))
+	if (!iscyborg(borgo))
 		borgo = input("Select a borg", "Select a borg", null, null) as null|anything in sort_names(GLOB.silicon_mobs)
-	if (!istype(borgo, /mob/living/silicon/robot))
+	if (!iscyborg(borgo))
 		to_chat(usr, span_warning("Borg is required for borgpanel"), confidential = TRUE)
 
 	var/datum/borgpanel/borgpanel = new(usr, borgo)

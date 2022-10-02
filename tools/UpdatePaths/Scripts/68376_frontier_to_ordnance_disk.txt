@@ -1,0 +1,3 @@
+# Merging scipaper data disk into regular
+
+/obj/item/computer_hardware/hard_drive/portable/scipaper_program : /obj/item/computer_hardware/hard_drive/portable/ordnance{@OLD}

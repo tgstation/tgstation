@@ -50,7 +50,7 @@
 /turf/open/floor/plating,
 /area/ruin/powered/snow_biodome)
 "am" = (
-/obj/item/reagent_containers/food/drinks/mug,
+/obj/item/reagent_containers/cup/glass/mug,
 /turf/open/floor/plating,
 /area/ruin/powered/snow_biodome)
 "an" = (
@@ -138,7 +138,7 @@
 /area/ruin/powered/snow_biodome)
 "aF" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/mug/coco,
+/obj/item/reagent_containers/cup/glass/mug/coco,
 /turf/open/floor/wood,
 /area/ruin/powered/snow_biodome)
 "aG" = (
@@ -449,7 +449,7 @@
 /turf/open/floor/pod/dark,
 /area/ruin/powered/snow_biodome)
 "UM" = (
-/obj/machinery/computer/monitor/secret{
+/obj/machinery/computer/monitor{
 	dir = 1
 	},
 /turf/open/floor/pod/dark,

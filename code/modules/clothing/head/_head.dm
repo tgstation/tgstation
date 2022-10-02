@@ -1,6 +1,8 @@
 /obj/item/clothing/head
 	name = BODY_ZONE_HEAD
 	icon = 'icons/obj/clothing/hats.dmi'
+	lefthand_file = 'icons/mob/inhands/clothing/hats_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/hats_righthand.dmi'
 	body_parts_covered = HEAD
 	slot_flags = ITEM_SLOT_HEAD
 	var/can_toggle = null
@@ -37,7 +39,7 @@
 				H.visible_message(span_warning("[src] knocks [WH] off [H]'s head!"), span_warning("[WH] is suddenly knocked off your head by [src]!"))
 		if(H.equip_to_slot_if_possible(src, ITEM_SLOT_HEAD, 0, 1, 1))
 			H.visible_message(span_notice("[src] lands neatly on [H]'s head!"), span_notice("[src] lands perfectly onto your head!"))
-			H.update_inv_hands() //force update hands to prevent ghost sprites appearing when throw mode is on
+			H.update_held_items() //force update hands to prevent ghost sprites appearing when throw mode is on
 		return
 	if(iscyborg(hit_atom))
 		var/mob/living/silicon/robot/R = hit_atom
@@ -72,4 +74,4 @@
 	..()
 	if(ismob(loc))
 		var/mob/M = loc
-		M.update_inv_head()
+		M.update_worn_head()

@@ -15,7 +15,7 @@
 
 	..()
 	var/datum/mind/stored_mind = user.mind
-	var/list/organs = user.getorganszone(BODY_ZONE_HEAD, 1)
+	var/list/organs = user.getorganszone(BODY_ZONE_HEAD, TRUE)
 
 	explosion(user, light_impact_range = 2, adminlog = TRUE, explosion_cause = src)
 	for(var/mob/living/carbon/human/blinded_humans in range(2, user))
@@ -25,7 +25,7 @@
 		to_chat(blinded_humans, span_userdanger("You are blinded by a shower of blood!"))
 		blinded_humans.Stun(20)
 		blinded_humans.blur_eyes(20)
-		blinded_humans.adjust_timed_status_effect(3 SECONDS, /datum/status_effect/confusion)
+		blinded_humans.adjust_confusion(3 SECONDS)
 
 	for(var/mob/living/silicon/blinded_silicons in range(2,user))
 		to_chat(blinded_silicons, span_userdanger("Your sensors are disabled by a shower of blood!"))

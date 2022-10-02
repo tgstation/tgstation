@@ -9,7 +9,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	name = "Blob Overmind"
 	real_name = "Blob Overmind"
 	desc = "The overmind. It controls the blob."
-	icon = 'icons/mob/cameramob.dmi'
+	icon = 'icons/mob/silicon/cameramob.dmi'
 	icon_state = "marker"
 	mouse_opacity = MOUSE_OPACITY_ICON
 	move_on_shuttle = 1
@@ -185,7 +185,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 				continue
 			A.color = blobstrain.color
 			A.name = "blob"
-			A.icon = 'icons/mob/blob.dmi'
+			A.icon = 'icons/mob/nonhuman-player/blob.dmi'
 			A.icon_state = "blob_shield"
 			A.layer = BELOW_MOB_LAYER
 			A.invisibility = 0
@@ -281,7 +281,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	var/rendered = span_big("<font color=\"#EE4000\"><b>\[Blob Telepathy\] [name](<font color=\"[blobstrain.color]\">[blobstrain.name]</font>)</b> [message_a]</font>")
 
 	for(var/mob/M in GLOB.mob_list)
-		if(isovermind(M) || istype(M, /mob/living/simple_animal/hostile/blob))
+		if(isovermind(M) || isblobmonster(M))
 			to_chat(M, rendered)
 		if(isobserver(M))
 			var/link = FOLLOW_LINK(M, src)

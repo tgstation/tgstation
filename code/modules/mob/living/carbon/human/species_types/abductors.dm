@@ -5,12 +5,9 @@
 	sexes = FALSE
 	species_traits = list(NOBLOOD,NOEYESPRITES)
 	inherent_traits = list(
-		TRAIT_ADVANCEDTOOLUSER,
-		TRAIT_CAN_STRIP,
 		TRAIT_CHUNKYFINGERS,
 		TRAIT_NOBREATH,
 		TRAIT_NOHUNGER,
-		TRAIT_LITERATE,
 		TRAIT_VIRUSIMMUNE,
 	)
 	mutanttongue = /obj/item/organ/internal/tongue/abductor

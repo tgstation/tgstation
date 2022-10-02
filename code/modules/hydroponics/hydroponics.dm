@@ -153,7 +153,7 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "hydrotray3"
 
-/obj/machinery/hydroponics/constructable/ComponentInitialize()
+/obj/machinery/hydroponics/constructable/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/simple_rotation)
 	AddComponent(/datum/component/plumbing/hydroponics)
@@ -798,8 +798,8 @@
  */
 /obj/machinery/hydroponics/proc/mutatepest(mob/user)
 	if(pestlevel > 5)
-		message_admins("[ADMIN_LOOKUPFLW(user)] last altered a hydro tray's contents which spawned spiderlings")
-		log_game("[key_name(user)] last altered a hydro tray, which spiderlings spawned from.")
+		message_admins("[ADMIN_LOOKUPFLW(user)] last altered a hydro tray's contents which spawned spiderlings.")
+		user.log_message("last altered a hydro tray, which spiderlings spawned from.", LOG_GAME)
 		visible_message(span_warning("The pests seem to behave oddly..."))
 		spawn_atom_to_turf(/obj/structure/spider/spiderling/hunter, src, 3, FALSE)
 	else if(myseed)
@@ -812,7 +812,7 @@
 
 /obj/machinery/hydroponics/attackby(obj/item/O, mob/user, params)
 	//Called when mob user "attacks" it with object O
-	if(IS_EDIBLE(O) || istype(O, /obj/item/reagent_containers))  // Syringe stuff (and other reagent containers now too)
+	if(IS_EDIBLE(O) || is_reagent_container(O))  // Syringe stuff (and other reagent containers now too)
 		var/obj/item/reagent_containers/reagent_source = O
 
 		if(!reagent_source.reagents.total_volume)
@@ -928,7 +928,7 @@
 		var/removed_trait = tgui_input_list(user, "Trait to remove from the [myseed.plantname]", "Plant Trait Removal", sort_list(current_traits))
 		if(isnull(removed_trait))
 			return
-		if(!user.canUseTopic(src, BE_CLOSE))
+		if(!user.canUseTopic(src, be_close = TRUE))
 			return
 		if(!myseed)
 			return
@@ -961,7 +961,7 @@
 	else if(istype(O, /obj/item/storage/bag/plants))
 		attack_hand(user)
 		for(var/obj/item/food/grown/G in locate(user.x,user.y,user.z))
-			O.atom_storage?.attempt_insert(O, G, user, TRUE)
+			O.atom_storage?.attempt_insert(G, user, TRUE)
 		return
 
 	else if(istype(O, /obj/item/shovel/spade))
@@ -1008,7 +1008,7 @@
 				return
 			if(isnull(fresh_mut_list[locked_mutation]))
 				return
-			if(!user.canUseTopic(src, BE_CLOSE))
+			if(!user.canUseTopic(src, be_close = TRUE))
 				return
 			myseed.mutatelist = list(fresh_mut_list[locked_mutation])
 			myseed.set_endurance(myseed.endurance/2)
@@ -1051,7 +1051,7 @@
 
 /obj/machinery/hydroponics/CtrlClick(mob/user)
 	. = ..()
-	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 		return
 	if(!powered())
 		to_chat(user, span_warning("[name] has no power."))
@@ -1073,7 +1073,7 @@
 		update_appearance()
 		return FALSE
 	var/warning = tgui_alert(user, "Are you sure you wish to empty the tray's nutrient beaker?","Empty Tray Nutrients?", list("Yes", "No"))
-	if(warning == "Yes" && user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(warning == "Yes" && user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 		reagents.clear_reagents()
 		to_chat(user, span_warning("You empty [src]'s nutrient tank."))
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

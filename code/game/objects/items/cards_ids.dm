@@ -623,7 +623,7 @@
 /obj/item/card/id/proc/alt_click_can_use_id(mob/living/user)
 	if(!isliving(user))
 		return
-	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 		return
 
 	return TRUE
@@ -701,7 +701,7 @@
 			user.playsound_local(get_turf(src), slowbeat, 40, 0, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
 			if(isliving(user))
 				var/mob/living/living_user = user
-				living_user.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/jitter)
+				living_user.adjust_jitter(10 SECONDS)
 			addtimer(CALLBACK(src, .proc/drop_card, user), 10 SECONDS)
 	. += span_notice("<i>There's more information below, you can look again to take a closer look...</i>")
 
@@ -923,7 +923,7 @@
 			balloon_alert(user, "recolored")
 		update_icon()
 
-/obj/item/card/id/advanced/proc/update_intern_status(datum/source, mob/user)
+/obj/item/card/id/advanced/proc/update_intern_status(datum/source, mob/user, slot)
 	SIGNAL_HANDLER
 
 	if(!user?.client)
@@ -1239,7 +1239,7 @@
 		to_chat(user, "Restating prisoner ID to default parameters.")
 		return
 	var/choice = tgui_input_number(user, "Sentence time in seconds", "Sentencing")
-	if(!choice || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) || loc != user)
+	if(!choice || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE) || loc != user)
 		return FALSE
 	time_to_assign = choice
 	to_chat(user, "You set the sentence time to [time_to_assign] seconds.")
@@ -1350,7 +1350,7 @@
 	if(!proximity)
 		return
 
-	if(istype(target, /obj/item/card/id))
+	if(isidcard(target))
 		theft_target = WEAKREF(target)
 		ui_interact(user)
 		return
@@ -1361,7 +1361,7 @@
 	// If we're attacking a human, we want it to be covert. We're not ATTACKING them, we're trying
 	// to sneakily steal their accesses by swiping our agent ID card near them. As a result, we
 	// return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN to cancel any part of the following the attack chain.
-	if(istype(target, /mob/living/carbon/human))
+	if(ishuman(target))
 		to_chat(user, "<span class='notice'>You covertly start to scan [target] with \the [src], hoping to pick up a wireless ID card signal...</span>")
 
 		if(!do_mob(user, target, 2 SECONDS))
@@ -1382,7 +1382,7 @@
 		ui_interact(user)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-	if(istype(target, /obj/item))
+	if(isitem(target))
 		var/obj/item/target_item = target
 
 		to_chat(user, "<span class='notice'>You covertly start to scan [target] with your [src], hoping to pick up a wireless ID card signal...</span>")
@@ -1565,7 +1565,7 @@
 					assignment = target_occupation
 
 				var/new_age = tgui_input_number(user, "Choose the ID's age", "Agent card age", AGE_MIN, AGE_MAX, AGE_MIN)
-				if(QDELETED(user) || QDELETED(src) || !user.canUseTopic(user, BE_CLOSE, NO_DEXTERITY, NO_TK))
+				if(QDELETED(user) || QDELETED(src) || !user.canUseTopic(user, be_close = TRUE, no_dexterity = TRUE, no_tk = TRUE))
 					return
 				if(new_age)
 					registered_age = new_age
@@ -1577,7 +1577,7 @@
 				update_icon()
 				forged = TRUE
 				to_chat(user, span_notice("You successfully forge the ID card."))
-				log_game("[key_name(user)] has forged \the [initial(name)] with name \"[registered_name]\", occupation \"[assignment]\" and trim \"[trim?.assignment]\".")
+				user.log_message("forged \the [initial(name)] with name \"[registered_name]\", occupation \"[assignment]\" and trim \"[trim?.assignment]\".", LOG_GAME)
 
 				if(!registered_account)
 					if(ishuman(user))
@@ -1594,7 +1594,7 @@
 				assignment = initial(assignment)
 				SSid_access.remove_trim_from_chameleon_card(src)
 				REMOVE_TRAIT(src, TRAIT_MAGNETIC_ID_CARD, CHAMELEON_ITEM_TRAIT)
-				log_game("[key_name(user)] has reset \the [initial(name)] named \"[src]\" to default.")
+				user.log_message("reset \the [initial(name)] named \"[src]\" to default.", LOG_GAME)
 				update_label()
 				update_icon()
 				forged = FALSE

@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - bugfix: "The Veteran's cloak now only respects people who meet the requirements, rather than being the other way around."

@@ -21,9 +21,6 @@
 	// Device loadout
 	var/dev_battery = 1 // 1: Default, 2: Upgraded, 3: Advanced
 	var/dev_disk = 1 // 1: Default, 2: Upgraded, 3: Advanced
-	var/dev_netcard = 0 // 0: None, 1: Basic, 2: Long-Range
-	var/dev_apc_recharger = 0 // 0: None, 1: Standard (LAPTOP ONLY)
-	var/dev_printer = 0 // 0: None, 1: Standard
 	var/dev_card = 0 // 0: None, 1: Standard
 
 // Removes all traces of old order and allows you to begin configuration from scratch.
@@ -38,9 +35,6 @@
 		fabricated_tablet = null
 	dev_battery = 1
 	dev_disk = 1
-	dev_netcard = 0
-	dev_apc_recharger = 0
-	dev_printer = 0
 	dev_card = 0
 
 // Recalculates the price and optionally even fabricates the device.
@@ -78,23 +72,6 @@
 				if(fabricate)
 					fabricated_laptop.install_component(new /obj/item/computer_hardware/hard_drive/super)
 				total_price += 299
-		switch(dev_netcard)
-			if(1) // Basic(Short-Range)
-				if(fabricate)
-					fabricated_laptop.install_component(new /obj/item/computer_hardware/network_card)
-				total_price += 99
-			if(2) // Advanced (Long Range)
-				if(fabricate)
-					fabricated_laptop.install_component(new /obj/item/computer_hardware/network_card/advanced)
-				total_price += 299
-		if(dev_apc_recharger)
-			total_price += 399
-			if(fabricate)
-				fabricated_laptop.install_component(new /obj/item/computer_hardware/recharger/apc_recharger)
-		if(dev_printer)
-			total_price += 99
-			if(fabricate)
-				fabricated_laptop.install_component(new /obj/item/computer_hardware/printer/mini)
 		if(dev_card)
 			total_price += 199
 			if(fabricate)
@@ -133,19 +110,6 @@
 				if(fabricate)
 					fabricated_tablet.install_component(new /obj/item/computer_hardware/hard_drive)
 				total_price += 299
-		switch(dev_netcard)
-			if(1) // Basic(Short-Range)
-				if(fabricate)
-					fabricated_tablet.install_component(new/obj/item/computer_hardware/network_card)
-				total_price += 99
-			if(2) // Advanced (Long Range)
-				if(fabricate)
-					fabricated_tablet.install_component(new/obj/item/computer_hardware/network_card/advanced)
-				total_price += 299
-		if(dev_printer)
-			total_price += 99
-			if(fabricate)
-				fabricated_tablet.install_component(new/obj/item/computer_hardware/printer/mini)
 		if(dev_card)
 			total_price += 199
 			if(fabricate)
@@ -191,18 +155,6 @@
 			dev_disk = text2num(params["disk"])
 			fabricate_and_recalc_price(FALSE)
 			return TRUE
-		if("hw_netcard")
-			dev_netcard = text2num(params["netcard"])
-			fabricate_and_recalc_price(FALSE)
-			return TRUE
-		if("hw_tesla")
-			dev_apc_recharger = text2num(params["tesla"])
-			fabricate_and_recalc_price(FALSE)
-			return TRUE
-		if("hw_nanoprint")
-			dev_printer = text2num(params["print"])
-			fabricate_and_recalc_price(FALSE)
-			return TRUE
 		if("hw_card")
 			dev_card = text2num(params["card"])
 			fabricate_and_recalc_price(FALSE)
@@ -235,7 +187,7 @@
 		visible_message(span_info("[user] inserts a [HC.credits] cr holocredit chip into [src]."))
 		qdel(HC)
 		return
-	else if(istype(I, /obj/item/card/id))
+	else if(isidcard(I))
 		if(state != 2)
 			return
 		var/obj/item/card/id/ID = I
@@ -265,9 +217,6 @@
 		data["devtype"] = devtype
 		data["hw_battery"] = dev_battery
 		data["hw_disk"] = dev_disk
-		data["hw_netcard"] = dev_netcard
-		data["hw_tesla"] = dev_apc_recharger
-		data["hw_nanoprint"] = dev_printer
 		data["hw_card"] = dev_card
 	if(state == 1 || state == 2)
 		data["totalprice"] = total_price

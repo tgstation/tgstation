@@ -86,7 +86,7 @@
 		for(var/turf/nearby_turf as anything in spiral_range_turfs(i + 1, centre))
 			new /obj/effect/hotspot(nearby_turf)
 			nearby_turf.hotspot_expose(750, 50, 1)
-			for(var/mob/living/fried_living in nearby_turf.contents - centre)
+			for(var/mob/living/fried_living in nearby_turf.contents - owner)
 				fried_living.apply_damage(5, BURN)
 
 		stoplag(0.3 SECONDS)
@@ -138,7 +138,7 @@
 /datum/action/cooldown/spell/pointed/ash_beams/proc/fire_line(atom/source, list/turfs)
 	var/list/hit_list = list()
 	for(var/turf/T in turfs)
-		if(istype(T, /turf/closed))
+		if(isclosedturf(T))
 			break
 
 		for(var/mob/living/L in T.contents)

@@ -4,6 +4,7 @@
 /obj/item/food/chocolateegg
 	name = "chocolate egg"
 	desc = "Such, sweet, fattening food."
+	icon = 'icons/obj/food/egg.dmi'
 	icon_state = "chocolateegg"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/sugar = 2, /datum/reagent/consumable/coco = 2, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("chocolate" = 4, "sweetness" = 1)
@@ -14,6 +15,7 @@
 /obj/item/food/egg
 	name = "egg"
 	desc = "An egg!"
+	icon = 'icons/obj/food/egg.dmi'
 	icon_state = "egg"
 	food_reagents = list(/datum/reagent/consumable/eggyolk = 2, /datum/reagent/consumable/eggwhite = 4)
 	microwaved_type = /obj/item/food/boiledegg
@@ -106,9 +108,6 @@
 	qdel(src)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-
-
-
 /obj/item/food/egg/blue
 	icon_state = "egg-blue"
 
@@ -136,6 +135,7 @@
 /obj/item/food/friedegg
 	name = "fried egg"
 	desc = "A fried egg. Would go well with a touch of salt and pepper."
+	icon = 'icons/obj/food/egg.dmi'
 	icon_state = "friedegg"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/eggyolk = 2 , /datum/reagent/consumable/nutriment/vitamin = 2)
 	bite_consumption = 1
@@ -147,6 +147,7 @@
 /obj/item/food/rawegg
 	name = "raw egg"
 	desc = "Supposedly good for you, if you can stomach it. Better fried."
+	icon = 'icons/obj/food/egg.dmi'
 	icon_state = "rawegg"
 	food_reagents = list() //Recieves all reagents from its whole egg counterpart
 	bite_consumption = 1
@@ -161,6 +162,7 @@
 /obj/item/food/boiledegg
 	name = "boiled egg"
 	desc = "A hard boiled egg."
+	icon = 'icons/obj/food/egg.dmi'
 	icon_state = "egg"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("egg" = 1)
@@ -173,6 +175,7 @@
 /obj/item/food/eggsausage
 	name = "egg with sausage"
 	desc = "A good egg with a side of sausages."
+	icon = 'icons/obj/food/egg.dmi'
 	icon_state = "eggsausage"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/nutriment = 4)
 	foodtypes = MEAT | FRIED | BREAKFAST
@@ -188,6 +191,7 @@
 /obj/item/food/omelette //FUCK THIS
 	name = "omelette du fromage"
 	desc = "That's all you can say!"
+	icon = 'icons/obj/food/egg.dmi'
 	icon_state = "omelette"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 10, /datum/reagent/consumable/nutriment/vitamin = 3)
 	bite_consumption = 1
@@ -217,6 +221,7 @@
 /obj/item/food/benedict
 	name = "eggs benedict"
 	desc = "There is only one egg on this, how rude."
+	icon = 'icons/obj/food/egg.dmi'
 	icon_state = "benedict"
 	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 6, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment = 3)
 	w_class = WEIGHT_CLASS_SMALL
@@ -227,6 +232,7 @@
 /obj/item/food/eggwrap
 	name = "egg wrap"
 	desc = "The precursor to Pigs in a Blanket."
+	icon = 'icons/obj/food/egg.dmi'
 	icon_state = "eggwrap"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 3)
 	tastes = list("egg" = 1)
@@ -236,6 +242,7 @@
 /obj/item/food/chawanmushi
 	name = "chawanmushi"
 	desc = "A legendary egg custard that makes friends out of enemies. Probably too hot for a cat to eat."
+	icon = 'icons/obj/food/egg.dmi'
 	icon_state = "chawanmushi"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("custard" = 1)

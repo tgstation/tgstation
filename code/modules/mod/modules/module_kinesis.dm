@@ -9,7 +9,7 @@
 	icon_state = "kinesis"
 	module_type = MODULE_ACTIVE
 	complexity = 3
-	use_power_cost = DEFAULT_CHARGE_DRAIN*3
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 3
 	incompatible_modules = list(/obj/item/mod/module/anomaly_locked/kinesis)
 	cooldown_time = 0.5 SECONDS
 	overlay_state_inactive = "module_kinesis"
@@ -138,12 +138,16 @@
 	COOLDOWN_START(src, hit_cooldown, hit_cooldown_time)
 
 /obj/item/mod/module/anomaly_locked/kinesis/proc/can_grab(atom/target)
+	if(mod.wearer == target)
+		return FALSE
 	if(!ismovable(target))
 		return FALSE
 	if(iseffect(target))
 		return FALSE
 	var/atom/movable/movable_target = target
 	if(movable_target.anchored)
+		return FALSE
+	if(movable_target.throwing)
 		return FALSE
 	if(movable_target.move_resist >= MOVE_FORCE_OVERPOWERING)
 		return FALSE

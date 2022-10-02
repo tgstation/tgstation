@@ -17,7 +17,7 @@
 		return
 	..()
 
-/mob/living/silicon/ai/attack_slime(mob/living/simple_animal/slime/user)
+/mob/living/silicon/ai/attack_slime(mob/living/simple_animal/slime/user, list/modifiers)
 	return //immune to slimes
 
 /mob/living/silicon/ai/blob_act(obj/structure/blob/B)

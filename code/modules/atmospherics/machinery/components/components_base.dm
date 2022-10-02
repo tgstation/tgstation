@@ -60,7 +60,7 @@
 	underlays.Cut()
 
 	color = null
-	plane = showpipe ? GAME_PLANE : FLOOR_PLANE
+	SET_PLANE_IMPLICIT(src, showpipe ? GAME_PLANE : FLOOR_PLANE)
 
 	if(!showpipe)
 		return ..()
@@ -242,7 +242,7 @@
 /obj/machinery/atmospherics/components/paint(paint_color)
 	if(paintable)
 		add_atom_colour(paint_color, FIXED_COLOUR_PRIORITY)
-		pipe_color = paint_color
+		set_pipe_color(paint_color)
 		update_node_icon()
 	return paintable
 

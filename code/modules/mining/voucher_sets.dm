@@ -59,7 +59,7 @@
 /datum/voucher_set/minebot_kit
 	name = "Minebot Kit"
 	description = "Contains a little minebot companion that helps you in storing ore and hunting wildlife. Also comes with an upgraded industrial welding tool (80u), a welding mask and a KA modkit that allows shots to pass through the minebot."
-	icon = 'icons/mob/aibots.dmi'
+	icon = 'icons/mob/silicon/aibots.dmi'
 	icon_state = "mining_drone"
 	set_items = list(
 		/mob/living/simple_animal/hostile/mining_drone,
@@ -71,8 +71,8 @@
 /datum/voucher_set/conscription_kit
 	name = "Mining Conscription Kit"
 	description = "Contains a whole new mining starter kit for one crewmember, consisting of a proto-kinetic accelerator, a survival knife, a seclite, an explorer's suit, a mesons, an automatic mining scanner, a mining satchel, a gas mask, a mining radio key and a special ID card with a basic mining access."
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/storage/storage.dmi'
 	icon_state = "duffel-explorer"
 	set_items = list(
 		/obj/item/storage/backpack/duffelbag/mining_conscript,
-		)
+	)

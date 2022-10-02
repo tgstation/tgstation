@@ -28,7 +28,7 @@
 	modkit_design = /datum/design/unique_modkit/bounty
 
 /datum/design/unique_modkit
-	category = list("Mining Designs", "Cyborg Upgrade Modules") //can't be normally obtained
+	category = list(RND_CATEGORY_MINING_DESIGNS, RND_CATEGORY_CYBORG_UPGRADE_MODULES) //can't be normally obtained
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO
 
@@ -131,7 +131,7 @@
 	var/mob/living/carbon/human/active_owner
 
 /obj/item/clothing/neck/necklace/memento_mori/item_action_slot_check(slot)
-	return slot == ITEM_SLOT_NECK
+	return (slot & ITEM_SLOT_NECK)
 
 /obj/item/clothing/neck/necklace/memento_mori/dropped(mob/user)
 	..()
@@ -168,7 +168,7 @@
 /obj/item/clothing/neck/necklace/memento_mori/proc/check_health(mob/living/source)
 	SIGNAL_HANDLER
 
-	var/list/guardians = source.hasparasites()
+	var/list/guardians = source.get_all_linked_holoparasites()
 	if(!length(guardians))
 		return
 	if(source.health <= HEALTH_THRESHOLD_DEAD)
@@ -277,7 +277,7 @@
 
 /obj/effect/wisp/proc/update_user_sight(mob/user)
 	SIGNAL_HANDLER
-	user.sight |= sight_flags
+	user.add_sight(sight_flags)
 	if(!isnull(lighting_alpha))
 		user.lighting_alpha = min(user.lighting_alpha, lighting_alpha)
 
@@ -478,23 +478,24 @@
 	if(!user.can_read(src))
 		return FALSE
 	to_chat(user, span_notice("You flip through the pages of the book, quickly and conveniently learning every language in existence. Somewhat less conveniently, the aging book crumbles to dust in the process. Whoops."))
+	user.remove_blocked_language(GLOB.all_languages, source = LANGUAGE_ALL)
 	user.grant_all_languages()
 	new /obj/effect/decal/cleanable/ash(get_turf(user))
 	qdel(src)
 
 
 //Potion of Flight
-/obj/item/reagent_containers/glass/bottle/potion
+/obj/item/reagent_containers/cup/bottle/potion
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "potionflask"
 
-/obj/item/reagent_containers/glass/bottle/potion/flight
+/obj/item/reagent_containers/cup/bottle/potion/flight
 	name = "strange elixir"
 	desc = "A flask with an almost-holy aura emitting from it. The label on the bottle says: 'erqo'hyy tvi'rf lbh jv'atf'."
 	list_reagents = list(/datum/reagent/flightpotion = 5)
 
-/obj/item/reagent_containers/glass/bottle/potion/update_icon_state()
-	icon_state = "potionflask[reagents.total_volume ? null : "_empty"]"
+/obj/item/reagent_containers/cup/bottle/potion/update_icon_state()
+	icon_state = "potionflask[reagents?.total_volume ? null : "_empty"]"
 	return ..()
 
 /datum/reagent/flightpotion
@@ -567,7 +568,7 @@
 
 /obj/item/clothing/gloves/gauntlets/equipped(mob/user, slot)
 	. = ..()
-	if(slot == ITEM_SLOT_GLOVES)
+	if(slot & ITEM_SLOT_GLOVES)
 		tool_behaviour = TOOL_MINING
 		RegisterSignal(user, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, .proc/rocksmash)
 		RegisterSignal(user, COMSIG_MOVABLE_BUMP, .proc/rocksmash)
@@ -585,7 +586,7 @@
 
 /obj/item/clothing/gloves/gauntlets/proc/rocksmash(mob/living/carbon/human/H, atom/A, proximity)
 	SIGNAL_HANDLER
-	if(!istype(A, /turf/closed/mineral))
+	if(!ismineralturf(A))
 		return
 	A.attackby(src, H)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
@@ -594,6 +595,7 @@
 	name = "berserker armor"
 	desc = "Voices echo from the armor, driving the user insane. Is not space-proof."
 	icon_state = "berserker"
+	icon = 'icons/obj/clothing/suits/armor.dmi'
 	worn_icon = 'icons/mob/clothing/suits/armor.dmi'
 	hoodtype = /obj/item/clothing/head/hooded/berserker
 	armor = list(MELEE = 30, BULLET = 30, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 0, FIRE = 100, ACID = 100)
@@ -727,7 +729,7 @@
 
 /obj/item/clothing/glasses/godeye/equipped(mob/living/user, slot)
 	. = ..()
-	if(ishuman(user) && slot == ITEM_SLOT_EYES)
+	if(ishuman(user) && (slot & ITEM_SLOT_EYES))
 		ADD_TRAIT(src, TRAIT_NODROP, EYE_OF_GOD_TRAIT)
 		pain(user)
 		scan_ability.Grant(user)
@@ -773,17 +775,20 @@
 	var/datum/status_effect/agent_pinpointer/scan_pinpointer = living_owner.apply_status_effect(/datum/status_effect/agent_pinpointer/scan)
 	scan_pinpointer.scan_target = living_scanned
 
-	living_scanned.set_timed_status_effect(100 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
+	living_scanned.set_jitter_if_lower(100 SECONDS)
 	to_chat(living_scanned, span_warning("You've been staggered!"))
 	living_scanned.add_filter("scan", 2, list("type" = "outline", "color" = COLOR_YELLOW, "size" = 1))
 	addtimer(CALLBACK(living_scanned, /atom/.proc/remove_filter, "scan"), 30 SECONDS)
 
 	owner.playsound_local(get_turf(owner), 'sound/magic/smoke.ogg', 50, TRUE)
 	owner.balloon_alert(owner, "[living_scanned] scanned")
-	addtimer(CALLBACK(src, /atom/.proc/balloon_alert, owner, "scan recharged"), cooldown_time)
+	addtimer(CALLBACK(src, .proc/send_cooldown_end_message, cooldown_time))
 
 	StartCooldown()
 	return TRUE
+
+/datum/action/cooldown/scan/proc/send_cooldown_end_message()
+	owner?.balloon_alert(owner, "scan recharged")
 
 /datum/status_effect/agent_pinpointer/scan
 	duration = 15 SECONDS
@@ -973,7 +978,7 @@
 			target.ranged_cooldown += 5 SECONDS
 		else if(iscarbon(source))
 			var/mob/living/carbon/target = source
-			target.set_timed_status_effect(8 SECONDS, /datum/status_effect/confusion, only_if_higher = TRUE)
+			target.set_confusion_if_lower(8 SECONDS)
 	return NONE
 
 /obj/item/cursed_katana/proc/slice(mob/living/target, mob/user)
@@ -995,7 +1000,7 @@
 /obj/item/cursed_katana/proc/cloak(mob/living/target, mob/user)
 	user.alpha = 150
 	user.invisibility = INVISIBILITY_OBSERVER // so hostile mobs cant see us or target us
-	user.sight |= SEE_SELF // so we can see us
+	user.add_sight(SEE_SELF) // so we can see us
 	user.visible_message(span_warning("[user] vanishes into thin air!"),
 		span_notice("You enter the dark cloak."))
 	playsound(src, 'sound/magic/smoke.ogg', 50, TRUE)
@@ -1007,7 +1012,7 @@
 /obj/item/cursed_katana/proc/uncloak(mob/user)
 	user.alpha = 255
 	user.invisibility = 0
-	user.sight &= ~SEE_SELF
+	user.clear_sight(SEE_SELF)
 	user.visible_message(span_warning("[user] appears from thin air!"),
 		span_notice("You exit the dark cloak."))
 	playsound(src, 'sound/magic/summonitems_generic.ogg', 50, TRUE)

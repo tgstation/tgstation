@@ -20,7 +20,7 @@ Slimecrossing Weapons
 /obj/item/knife/rainbowknife
 	name = "rainbow knife"
 	desc = "A strange, transparent knife which constantly shifts color. It hums slightly when moved."
-	icon = 'icons/obj/slimecrossing.dmi'
+	icon = 'icons/obj/xenobiology/slimecrossing.dmi'
 	icon_state = "rainbowknife"
 	inhand_icon_state = "rainbowknife"
 	force = 15
@@ -28,7 +28,7 @@ Slimecrossing Weapons
 	damtype = BRUTE
 
 /obj/item/knife/rainbowknife/afterattack(atom/O, mob/user, proximity)
-	if(proximity && istype(O, /mob/living))
+	if(proximity && isliving(O))
 		damtype = pick(BRUTE, BURN, TOX, OXY, CLONE)
 	switch(damtype)
 		if(BRUTE)
@@ -57,7 +57,7 @@ Slimecrossing Weapons
 /obj/item/shield/adamantineshield
 	name = "adamantine shield"
 	desc = "A gigantic shield made of solid adamantium."
-	icon = 'icons/obj/slimecrossing.dmi'
+	icon = 'icons/obj/xenobiology/slimecrossing.dmi'
 	icon_state = "adamshield"
 	inhand_icon_state = "adamshield"
 	w_class = WEIGHT_CLASS_HUGE
@@ -71,7 +71,7 @@ Slimecrossing Weapons
 	attack_verb_simple = list("bash", "pound", "slam")
 	item_flags = SLOWS_WHILE_IN_HAND
 
-/obj/item/shield/adamantineshield/ComponentInitialize()
+/obj/item/shield/adamantineshield/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/two_handed, require_twohands=TRUE, force_wielded=15)
 
@@ -79,7 +79,7 @@ Slimecrossing Weapons
 /obj/item/gun/magic/bloodchill
 	name = "blood chiller"
 	desc = "A horrifying weapon made of your own bone and blood vessels. It shoots slowing globules of your own blood. Ech."
-	icon = 'icons/obj/slimecrossing.dmi'
+	icon = 'icons/obj/xenobiology/slimecrossing.dmi'
 	icon_state = "bloodgun"
 	inhand_icon_state = "bloodgun"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'

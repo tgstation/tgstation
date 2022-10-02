@@ -1,7 +1,7 @@
 /obj/item/reagent_containers/pill
 	name = "pill"
 	desc = "A tablet or capsule."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "pill"
 	inhand_icon_state = "pill"
 	worn_icon_state = "pen"

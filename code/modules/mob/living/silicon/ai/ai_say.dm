@@ -121,7 +121,7 @@
 
 	announcing_vox = world.time + VOX_DELAY
 
-	log_game("[key_name(src)] made a vocal announcement with the following message: [message].")
+	log_message("made a vocal announcement with the following message: [message].", LOG_GAME)
 	log_talk(message, LOG_SAY, tag="VOX Announcement")
 	say(";[message]", forced = "VOX Announcement")
 

@@ -25,7 +25,7 @@
 
 /obj/item/clothing/mask/madness_mask/equipped(mob/user, slot)
 	. = ..()
-	if(slot != ITEM_SLOT_MASK)
+	if(!(slot & ITEM_SLOT_MASK))
 		return
 	if(!ishuman(user) || !user.mind)
 		return
@@ -58,17 +58,17 @@
 		if(human_in_range.is_blind())
 			continue
 
-		SEND_SIGNAL(human_in_range, COMSIG_HERETIC_MASK_ACT, rand(-2, -20) * delta_time)
+		human_in_range.mob_mood.direct_sanity_drain(rand(-2, -20) * delta_time)
 
 		if(DT_PROB(60, delta_time))
-			human_in_range.hallucination = min(human_in_range.hallucination + 5, 120)
+			human_in_range.adjust_hallucinations_up_to(10 SECONDS, 240 SECONDS)
 
 		if(DT_PROB(40, delta_time))
-			human_in_range.set_timed_status_effect(10 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
+			human_in_range.set_jitter_if_lower(10 SECONDS)
 
 		if(human_in_range.getStaminaLoss() <= 85 && DT_PROB(30, delta_time))
 			human_in_range.emote(pick("giggle", "laugh"))
 			human_in_range.adjustStaminaLoss(10)
 
 		if(DT_PROB(25, delta_time))
-			human_in_range.set_timed_status_effect(10 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
+			human_in_range.set_dizzy_if_lower(10 SECONDS)

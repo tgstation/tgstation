@@ -22,7 +22,7 @@
 /obj/machinery/computer/camera_advanced/abductor/CreateEye()
 	..()
 	eyeobj.visible_icon = TRUE
-	eyeobj.icon = 'icons/mob/cameramob.dmi'
+	eyeobj.icon = 'icons/mob/silicon/cameramob.dmi'
 	eyeobj.icon_state = "abductor_camera"
 	eyeobj.invisibility = INVISIBILITY_OBSERVER
 

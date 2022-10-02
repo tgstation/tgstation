@@ -476,7 +476,7 @@
 	carbies.adjustToxLoss((harmies+burnies)*(0.5 + (0.25*(1-creation_purity)))) //0.5 - 0.75
 	if(show_message)
 		to_chat(carbies, span_danger("You feel your burns and bruises healing! It stings like hell!"))
-	SEND_SIGNAL(carbies, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
+	carbies.add_mood_event("painful_medicine", /datum/mood_event/painful_medicine)
 	if(HAS_TRAIT_FROM(exposed_mob, TRAIT_HUSK, BURN) && carbies.getFireLoss() < UNHUSK_DAMAGE_THRESHOLD && (carbies.reagents.get_reagent_amount(/datum/reagent/medicine/c2/synthflesh) + reac_volume >= SYNTHFLESH_UNHUSK_AMOUNT))
 		carbies.cure_husk(BURN)
 		carbies.visible_message("<span class='nicegreen'>A rubbery liquid coats [carbies]'s burns. [carbies] looks a lot healthier!") //we're avoiding using the phrases "burnt flesh" and "burnt skin" here because carbies could be a skeleton or a golem or something
@@ -524,8 +524,8 @@
 
 		H.adjustOrganLoss(ORGAN_SLOT_HEART, max(volume/10, 1) * REM * delta_time) // your heart is barely keeping up!
 
-		H.set_timed_status_effect(rand(0 SECONDS, 4 SECONDS) * REM * delta_time, /datum/status_effect/jitter, only_if_higher = TRUE)
-		H.set_timed_status_effect(rand(0 SECONDS, 4 SECONDS) * REM * delta_time, /datum/status_effect/dizziness, only_if_higher = TRUE)
+		H.set_jitter_if_lower(rand(0 SECONDS, 4 SECONDS) * REM * delta_time)
+		H.set_dizzy_if_lower(rand(0 SECONDS, 4 SECONDS) * REM * delta_time)
 
 		if(DT_PROB(18, delta_time))
 			to_chat(H,span_danger("Your body is trying to give up, but your heart is still beating!"))

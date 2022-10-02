@@ -1,7 +1,7 @@
 /obj/item/ammo_casing
 	name = "bullet casing"
 	desc = "A bullet casing."
-	icon = 'icons/obj/guns/ammo.dmi'
+	icon = 'icons/obj/weapons/guns/ammo.dmi'
 	icon_state = "s-casing"
 	worn_icon_state = "bullet"
 	flags_1 = CONDUCT_1

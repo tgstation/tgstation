@@ -1,6 +1,6 @@
 /mob/living/carbon/alien/humanoid/royal
 	//Common stuffs for Praetorian and Queen
-	icon = 'icons/mob/alienqueen.dmi'
+	icon = 'icons/mob/nonhuman-player/alienqueen.dmi'
 	status_flags = 0
 	pixel_x = -16
 	base_pixel_x = -16
@@ -13,7 +13,7 @@
 	pressure_resistance = 200 //Because big, stompy xenos should not be blown around like paper.
 	butcher_results = list(/obj/item/food/meat/slab/xeno = 20, /obj/item/stack/sheet/animalhide/xeno = 3)
 
-	var/alt_inhands_file = 'icons/mob/alienqueen.dmi'
+	var/alt_inhands_file = 'icons/mob/nonhuman-player/alienqueen.dmi'
 
 /mob/living/carbon/alien/humanoid/royal/Initialize(mapload)
 	. = ..()
@@ -22,11 +22,11 @@
 
 /mob/living/carbon/alien/humanoid/royal/on_lying_down(new_lying_angle)
 	. = ..()
-	plane = GAME_PLANE_FOV_HIDDEN //So it won't hide smaller mobs.
+	SET_PLANE_IMPLICIT(src, GAME_PLANE_FOV_HIDDEN) //So it won't hide smaller mobs.
 
 /mob/living/carbon/alien/humanoid/royal/on_standing_up(new_lying_angle)
 	. = ..()
-	plane = initial(plane)
+	SET_PLANE_IMPLICIT(src, initial(plane))
 
 /mob/living/carbon/alien/humanoid/royal/can_inject(mob/user, target_zone, injection_flags)
 	return FALSE
@@ -136,7 +136,7 @@
 	desc = "Inject this into one of your grown children to promote her to a Praetorian!"
 	icon_state = "alien_medal"
 	item_flags = NOBLUDGEON | ABSTRACT | DROPDEL
-	icon = 'icons/mob/alien.dmi'
+	icon = 'icons/mob/nonhuman-player/alien.dmi'
 
 /obj/item/queen_promotion/attack(mob/living/to_promote, mob/living/carbon/alien/humanoid/queen)
 	. = ..()

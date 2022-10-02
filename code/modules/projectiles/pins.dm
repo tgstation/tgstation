@@ -17,13 +17,13 @@
 
 /obj/item/firing_pin/New(newloc)
 	..()
-	if(istype(newloc, /obj/item/gun))
+	if(isgun(newloc))
 		gun = newloc
 
 /obj/item/firing_pin/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
 	if(proximity_flag)
-		if(istype(target, /obj/item/gun))
+		if(isgun(target))
 			var/obj/item/gun/G = target
 			var/obj/item/firing_pin/old_pin = G.pin
 			if(old_pin && (force_replace || old_pin.pin_removeable))
@@ -247,7 +247,7 @@
 	..()
 
 /obj/item/firing_pin/paywall/attackby(obj/item/M, mob/user, params)
-	if(istype(M, /obj/item/card/id))
+	if(isidcard(M))
 		var/obj/item/card/id/id = M
 		if(!id.registered_account)
 			to_chat(user, span_warning("ERROR: Identification card lacks registered bank account!"))
@@ -262,7 +262,7 @@
 			owned = FALSE
 			return
 		var/transaction_amount = tgui_input_number(user, "Insert valid deposit amount for gun purchase", "Money Deposit")
-		if(!transaction_amount || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		if(!transaction_amount || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 			return
 		pin_owner = id
 		owned = TRUE
@@ -285,7 +285,7 @@
 	if(credit_card_details && !active_prompt)
 		var/license_request = tgui_alert(user, "Do you wish to pay [payment_amount] credit[( payment_amount > 1 ) ? "s" : ""] for [( multi_payment ) ? "each shot of [gun.name]" : "usage license of [gun.name]"]?", "Weapon Purchase", list("Yes", "No"))
 		active_prompt = TRUE
-		if(!user.canUseTopic(src, BE_CLOSE))
+		if(!user.canUseTopic(src, be_close = TRUE))
 			active_prompt = FALSE
 			return FALSE
 		switch(license_request)

@@ -6,7 +6,7 @@
 /obj/machinery/power/energy_accumulator/tesla_coil
 	name = "tesla coil"
 	desc = "For the union!"
-	icon = 'icons/obj/tesla_engine/tesla_coil.dmi'
+	icon = 'icons/obj/engine/tesla_coil.dmi'
 	icon_state = "coil0"
 
 	// Executing a traitor caught releasing tesla was never this fun!
@@ -91,8 +91,8 @@
 /obj/machinery/power/energy_accumulator/tesla_coil/zap_act(power, zap_flags)
 	if(!anchored || panel_open)
 		return ..()
-	obj_flags |= BEING_SHOCKED
-	addtimer(CALLBACK(src, .proc/reset_shocked), 1 SECONDS)
+	ADD_TRAIT(src, TRAIT_BEING_SHOCKED, WAS_SHOCKED)
+	addtimer(TRAIT_CALLBACK_REMOVE(src, TRAIT_BEING_SHOCKED, WAS_SHOCKED), 1 SECONDS)
 	flick("coilhit", src)
 	if(!(zap_flags & ZAP_GENERATES_POWER)) //Prevent infinite recursive power
 		return 0
@@ -117,7 +117,7 @@
 /obj/machinery/power/energy_accumulator/grounding_rod
 	name = "grounding rod"
 	desc = "Keeps an area from being fried by Edison's Bane."
-	icon = 'icons/obj/tesla_engine/tesla_coil.dmi'
+	icon = 'icons/obj/engine/tesla_coil.dmi'
 	icon_state = "grounding_rod0"
 	anchored = FALSE
 	density = TRUE

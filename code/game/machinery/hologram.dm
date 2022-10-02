@@ -90,7 +90,7 @@ Possible to do for anyone motivated enough:
 /obj/machinery/holopad/Initialize(mapload)
 	. = ..()
 	/// We set the plane on mapload such that we can see the holopad render over atmospherics pipe and cabling in a map editor (without initialization), but so it gets that "inset" look in the floor in-game.
-	plane = FLOOR_PLANE
+	SET_PLANE_IMPLICIT(src, FLOOR_PLANE)
 	update_appearance()
 
 /obj/machinery/holopad/secure
@@ -216,6 +216,22 @@ Possible to do for anyone motivated enough:
 	. = ..()
 	default_unfasten_wrench(user, tool)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/machinery/holopad/set_anchored(anchorvalue)
+	. = ..()
+	if(isnull(.) || anchorvalue)
+		return
+
+	if(outgoing_call)
+		outgoing_call.ConnectionFailure(src) //disconnect the call if we got unwrenched.
+
+	for(var/datum/holocall/holocall_to_disconnect as anything in holo_calls)
+		holocall_to_disconnect.ConnectionFailure(src)
+
+	if(replay_mode)
+		replay_stop()
+	if(record_mode)
+		record_stop()
 
 /obj/machinery/holopad/attackby(obj/item/P, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "holopad_open", "holopad0", P))
@@ -515,7 +531,7 @@ Possible to do for anyone motivated enough:
 
 		Hologram.mouse_opacity = MOUSE_OPACITY_TRANSPARENT//So you can't click on it.
 		Hologram.layer = FLY_LAYER //Above all the other objects/mobs. Or the vast majority of them.
-		Hologram.plane = ABOVE_GAME_PLANE
+		SET_PLANE_EXPLICIT(Hologram, ABOVE_GAME_PLANE, src)
 		Hologram.set_anchored(TRUE)//So space wind cannot drag it.
 		Hologram.name = "[user.name] (Hologram)"//If someone decides to right click.
 		Hologram.set_light(2) //hologram lighting
@@ -564,6 +580,9 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	var/total_users = LAZYLEN(masters) + LAZYLEN(holo_calls)
 	if(ringing)
 		icon_state = "[base_icon_state]_ringing"
+		return ..()
+	if(panel_open)
+		icon_state = "[base_icon_state]_open"
 		return ..()
 	icon_state = "[base_icon_state][(total_users || replay_mode) ? 1 : 0]"
 	return ..()
@@ -653,6 +672,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 				transfered = TRUE
 		//All is good.
 		holo.abstract_move(new_turf)
+		SET_PLANE(holo, ABOVE_GAME_PLANE, new_turf)
 		if(!transfered)
 			update_holoray(user,new_turf)
 	return TRUE
@@ -693,7 +713,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	holder.selected_language = record.language
 	Hologram.mouse_opacity = MOUSE_OPACITY_TRANSPARENT//So you can't click on it.
 	Hologram.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
-	Hologram.plane = ABOVE_GAME_PLANE
+	SET_PLANE_EXPLICIT(Hologram, ABOVE_GAME_PLANE, src)
 	Hologram.set_anchored(TRUE)//So space wind cannot drag it.
 	Hologram.name = "[record.caller_name] (Hologram)"//If someone decides to right click.
 	Hologram.set_light(2) //hologram lighting

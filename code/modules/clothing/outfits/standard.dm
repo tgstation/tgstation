@@ -79,13 +79,13 @@
 	r_pocket = /obj/item/grenade/chem_grenade/cleaner
 	l_pocket = /obj/item/grenade/chem_grenade/cleaner
 	r_hand = /obj/item/mop
-	l_hand = /obj/item/reagent_containers/glass/bucket
+	l_hand = /obj/item/reagent_containers/cup/bucket
 
 /datum/outfit/tournament/janitor/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
 
-	var/obj/item/reagent_containers/glass/bucket/bucket = H.get_item_for_held_index(1)
+	var/obj/item/reagent_containers/cup/bucket/bucket = H.get_item_for_held_index(1)
 	bucket.reagents.add_reagent(/datum/reagent/water,70)
 
 /datum/outfit/laser_tag
@@ -138,6 +138,12 @@
 		outfit_id.registered_name = equipped.real_name
 		outfit_id.update_label()
 		outfit_id.update_icon()
+	
+	var/obj/item/clothing/under/pirate_uniform = equipped.w_uniform
+	if(pirate_uniform)
+		pirate_uniform.has_sensor = NO_SENSORS
+		pirate_uniform.sensor_mode = SENSOR_OFF
+		equipped.update_suit_sensors()
 
 /datum/outfit/pirate/captain
 	name = "Space Pirate Captain"

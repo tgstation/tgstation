@@ -62,11 +62,15 @@
 	new /obj/item/storage/box/flashbangs(src)
 	new /obj/item/shield/riot/tele(src)
 	new /obj/item/storage/belt/security/full(src)
-	new /obj/item/gun/energy/e_gun/hos(src)
-	new /obj/item/pinpointer/nuke(src)
 	new /obj/item/circuitboard/machine/techfab/department/security(src)
 	new /obj/item/storage/photo_album/hos(src)
 
+/obj/structure/closet/secure_closet/hos/populate_contents_immediate()
+	. = ..()
+
+	// Traitor steal objectives
+	new /obj/item/gun/energy/e_gun/hos(src)
+	new /obj/item/pinpointer/nuke(src)
 
 /obj/structure/closet/secure_closet/warden
 	name = "\proper warden's locker"
@@ -267,13 +271,18 @@
 
 /obj/structure/closet/secure_closet/armory1/PopulateContents()
 	..()
-	new /obj/item/clothing/suit/hooded/ablative(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/suit/armor/riot(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/head/helmet/riot(src)
 	for(var/i in 1 to 3)
 		new /obj/item/shield/riot(src)
+
+/obj/structure/closet/secure_closet/armory1/populate_contents_immediate()
+	. = ..()
+
+	// Traitor steal objective
+	new /obj/item/clothing/suit/hooded/ablative(src)
 
 /obj/structure/closet/secure_closet/armory2
 	name = "armory ballistics locker"

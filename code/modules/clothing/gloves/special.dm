@@ -19,7 +19,7 @@
 /obj/item/clothing/gloves/cargo_gauntlet/proc/on_glove_equip(datum/source, mob/equipper, slot)
 	SIGNAL_HANDLER
 
-	if(slot != ITEM_SLOT_GLOVES)
+	if(!(slot & ITEM_SLOT_GLOVES))
 		return
 
 	var/datum/component/strong_pull/pull_component = pull_component_weakref?.resolve()
@@ -56,7 +56,7 @@
 	inhand_icon_state = "rapid"
 	clothing_traits = list(TRAIT_FINGERPRINT_PASSTHROUGH)
 
-/obj/item/clothing/gloves/rapid/ComponentInitialize()
+/obj/item/clothing/gloves/rapid/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/wearertargeting/punchcooldown)
 

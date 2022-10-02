@@ -22,12 +22,28 @@
 // /mob/living/carbon physiology signals
 #define COMSIG_CARBON_GAIN_WOUND "carbon_gain_wound" //from /datum/wound/proc/apply_wound() (/mob/living/carbon/C, /datum/wound/W, /obj/item/bodypart/L)
 #define COMSIG_CARBON_LOSE_WOUND "carbon_lose_wound" //from /datum/wound/proc/remove_wound() (/mob/living/carbon/C, /datum/wound/W, /obj/item/bodypart/L)
-///from base of /obj/item/bodypart/proc/attach_limb(): (new_limb, special) allows you to fail limb attachment
-#define COMSIG_CARBON_ATTACH_LIMB "carbon_attach_limb"
+///from base of /obj/item/bodypart/proc/can_attach_limb(): (new_limb, special) allows you to fail limb attachment
+#define COMSIG_ATTEMPT_CARBON_ATTACH_LIMB "attempt_carbon_attach_limb"
 	#define COMPONENT_NO_ATTACH (1<<0)
-#define COMSIG_CARBON_REMOVE_LIMB "carbon_remove_limb" //from base of /obj/item/bodypart/proc/drop_limb(lost_limb, dismembered)
+///from base of /obj/item/bodypart/proc/try_attach_limb(): (new_limb, special)
+#define COMSIG_CARBON_ATTACH_LIMB "carbon_attach_limb"
 #define COMSIG_BODYPART_GAUZED "bodypart_gauzed" // from /obj/item/bodypart/proc/apply_gauze(/obj/item/stack/gauze)
 #define COMSIG_BODYPART_GAUZE_DESTROYED "bodypart_degauzed" // from [/obj/item/bodypart/proc/seep_gauze] when it runs out of absorption
+
+/// Called from update_health_hud, whenever a bodypart is being updated on the health doll
+#define COMSIG_BODYPART_UPDATING_HEALTH_HUD "bodypart_updating_health_hud"
+	/// Return to override that bodypart's health hud with your own icon
+	#define COMPONENT_OVERRIDE_BODYPART_HEALTH_HUD (1<<0)
+
+/// Called from /obj/item/bodypart/check_for_injuries (mob/living/carbon/examiner, list/check_list)
+#define COMSIG_BODYPART_CHECKED_FOR_INJURY "bodypart_injury_checked"
+/// Called from /obj/item/bodypart/check_for_injuries (obj/item/bodypart/examined, list/check_list)
+#define COMSIG_CARBON_CHECKING_BODYPART "carbon_checking_injury"
+
+/// Called from carbon losing a limb /obj/item/bodypart/proc/drop_limb(obj/item/bodypart/lost_limb, dismembered)
+#define COMSIG_CARBON_REMOVE_LIMB "carbon_remove_limb"
+/// Called from bodypart being removed /obj/item/bodypart/proc/drop_limb(mob/living/carbon/old_owner, dismembered)
+#define COMSIG_BODYPART_REMOVED "bodypart_removed"
 
 ///from base of mob/living/carbon/soundbang_act(): (list(intensity))
 #define COMSIG_CARBON_SOUNDBANG "carbon_soundbang"
@@ -62,10 +78,16 @@
 #define COMSIG_CARBON_LOSE_TRAUMA "carbon_lose_trauma"
 ///Called when a carbon updates their health (source = carbon)
 #define COMSIG_CARBON_HEALTH_UPDATE "carbon_health_update"
+///Called when a carbon's health hud is updated. (source = carbon, shown_health_amount)
+#define COMSIG_CARBON_UPDATING_HEALTH_HUD "carbon_health_hud_update"
+	/// Return if you override the carbon's health hud with something else
+	#define COMPONENT_OVERRIDE_HEALTH_HUD (1<<0)
 ///Called when a carbon updates their sanity (source = carbon)
 #define COMSIG_CARBON_SANITY_UPDATE "carbon_sanity_update"
 ///Called when a carbon breathes, before the breath has actually occured
 #define COMSIG_CARBON_PRE_BREATHE "carbon_pre_breathe"
+///Called when a carbon updates their mood
+#define COMSIG_CARBON_MOOD_UPDATE "carbon_mood_update"
 
 // /mob/living/carbon/human signals
 

@@ -19,6 +19,7 @@
 	else
 		return ..()
 
-/mob/living/brain/treat_message(message)
-	message = capitalize(message)
+/mob/living/brain/treat_message(message, capitalize_message = TRUE)
+	if(capitalize_message)
+		message = capitalize(message)
 	return message

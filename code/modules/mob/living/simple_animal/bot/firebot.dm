@@ -7,7 +7,7 @@
 /mob/living/simple_animal/bot/firebot
 	name = "\improper Firebot"
 	desc = "A little fire extinguishing bot. He looks rather anxious."
-	icon = 'icons/mob/aibots.dmi'
+	icon = 'icons/mob/silicon/aibots.dmi'
 	icon_state = "firebot"
 	density = FALSE
 	anchored = FALSE
@@ -89,7 +89,6 @@
 	..()
 	target_fire = null
 	old_target_fire = null
-	ignore_list = list()
 	set_anchored(FALSE)
 	update_appearance()
 
@@ -250,19 +249,16 @@
 
 //Look for burning people or turfs around the bot
 /mob/living/simple_animal/bot/firebot/process_scan(atom/scan_target)
-	var/result
-
 	if(scan_target == src)
-		return result
+		return src
+	if(!is_burning(scan_target))
+		return null
 
-	if(is_burning(scan_target))
-		if((detected_cooldown + DETECTED_VOICE_INTERVAL) < world.time)
-			speak("Fire detected!")
-			playsound(src, 'sound/voice/firebot/detected.ogg', 50, FALSE)
-			detected_cooldown = world.time
-		result = scan_target
-
-	return result
+	if((detected_cooldown + DETECTED_VOICE_INTERVAL) < world.time)
+		speak("Fire detected!")
+		playsound(src, 'sound/voice/firebot/detected.ogg', 50, FALSE)
+		detected_cooldown = world.time
+		return scan_target
 
 /mob/living/simple_animal/bot/firebot/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return (exposed_temperature > T0C + 200 || exposed_temperature < BODYTEMP_COLD_DAMAGE_LIMIT)
