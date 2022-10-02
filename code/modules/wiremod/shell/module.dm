@@ -150,6 +150,8 @@
 			module = potential_module
 	if(COMPONENT_TRIGGERED_BY(toggle_suit, port))
 		INVOKE_ASYNC(attached_module.mod, /obj/item/mod/control.proc/toggle_activate, attached_module.mod.wearer)
+	if(COMPONENT_TRIGGERED_BY(toggle_deploy, port))
+		INVOKE_ASYNC(attached_module.mod, /obj/item/mod/control.proc/quick_deploy, attached_module.mod.wearer)
 	if(attached_module.mod.active && module && COMPONENT_TRIGGERED_BY(select_module, port))
 		INVOKE_ASYNC(module, /obj/item/mod/module.proc/on_select)
 
