@@ -63,7 +63,7 @@
 
 /obj/machinery/botpad/proc/recall(mob/living/user)
 	if(!launched_bot)
-		user.balloon_alert(user, "No bot detected!")
+		user.balloon_alert(user, "No bots detected on the pad!")
 		return
 	user.balloon_alert(user, "Sending the bot back to it's pad")
 	launched_bot.call_bot(src,  get_turf(src))

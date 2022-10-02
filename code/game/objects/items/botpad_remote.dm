@@ -15,14 +15,16 @@
 	return ..()
 
 /obj/item/botpad_remote/attack_self(mob/living/user)
+	user.balloon_alert(user, "Pressed the launch button")
 	try_launch(user)
 	return
 
 /obj/item/botpad_remote/attack_self_secondary(mob/living/user)
+	user.balloon_alert(user, "Pressed the recall button")
 	if(connected_botpad)
 		connected_botpad.recall(user)
 		return
-	user.balloon_alert(user, "[src] has no connected pad!")
+	user.balloon_alert(user, "Controller has no connected pad!")
 	return
 
 /obj/item/botpad_remote/multitool_act(mob/living/user, obj/item/tool)
@@ -32,7 +34,7 @@
 	if(istype(multitool.buffer, /obj/machinery/botpad))
 		var/obj/machinery/botpad/buffered_remote = multitool.buffer
 		if(buffered_remote == connected_botpad)
-			to_chat(user, span_warning("[src] cannot connect to its own botpad!"))
+			to_chat(user, span_warning("Controller cannot connect to its own botpad!"))
 		else if(!connected_botpad && istype(buffered_remote, /obj/machinery/botpad))
 			connected_botpad = buffered_remote
 			connected_botpad.connected_remote = src
@@ -44,12 +46,12 @@
 
 /obj/item/botpad_remote/proc/try_launch(mob/living/user)
 	if(!connected_botpad)
-		user.balloon_alert(user, "[src] has no connected pad!")
+		user.balloon_alert(user, "Controller has no connected pad!")
 		return
 	if(connected_botpad.panel_open)
-		user.balloon_alert(user, "[src]'s pad has its' panel open! It won't work!")
+		user.balloon_alert(user, "Connected pad has its' panel open! It won't work!")
 		return
 	if(!(locate(/mob/living/simple_animal/bot) in get_turf(connected_botpad)))
-		user.balloon_alert(user, "[src] detects no bot on the pad!")
+		user.balloon_alert(user, "No bots detected on the pad!")
 		return
 	connected_botpad.launch(user)
