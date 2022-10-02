@@ -81,6 +81,9 @@
 		return
 
 	var/mob/living/carbon/human/human = quirk_holder
+	if(NOBLOOD in human.dna.species.species_traits) //can't lose blood if your species doesn't have any - this is needed if we change species after the quirk is added
+		return
+
 	if (human.blood_volume > (BLOOD_VOLUME_SAFE - 25)) // just barely survivable without treatment
 		human.blood_volume -= 0.275 * delta_time
 
