@@ -109,10 +109,8 @@
 
 	//remove the cleaning overlay
 	if(!already_cleaning)
-		var/turf/target_turf = get_turf(target)
-		var/offset = GET_TURF_PLANE_OFFSET(target_turf)
-		var/mutable_appearance/low_bubble = GLOB.cleaning_bubbles_lower[offset + 1]
-		var/mutable_appearance/high_bubble = GLOB.cleaning_bubbles_higher[offset + 1]
+		var/mutable_appearance/low_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, target, GAME_PLANE)
+		var/mutable_appearance/high_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, target, ABOVE_GAME_PLANE)
 		target.cut_overlay(low_bubble)
 		target.cut_overlay(high_bubble)
 		REMOVE_TRAIT(target, CURRENTLY_CLEANING, src)
