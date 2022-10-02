@@ -6,7 +6,7 @@ import { Window } from '../layouts';
 export const Trophycase = (props, context) => {
   const { act, data } = useBackend(context);
   return (
-    <Window width={300} height={360}>
+    <Window width={300} height={380}>
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
@@ -18,6 +18,7 @@ export const Trophycase = (props, context) => {
           <Stack.Item grow>
             <ShowpieceDescription />
           </Stack.Item>
+          <Stack.Divider />
           <Stack.Item>
             <HistorianPanel />
           </Stack.Item>
@@ -41,12 +42,16 @@ const HistorianPanel = (props, context) => {
       {!historian_mode && (
         <Button
           icon="key"
-          content="Insert key"
+          content="Insert key for historian mode"
           onClick={() => act('insert_key')}
         />
       )}
       {!!historian_mode && (
-        <Button icon="times" content="Lock" onClick={() => act('lock')} />
+        <Button
+          icon="times"
+          content="Lock historian mode"
+          onClick={() => act('lock')}
+        />
       )}
       {!!historian_mode && !!holographic_showpiece && (
         <Box>
@@ -86,7 +91,7 @@ const ShowpieceDescription = (props, context) => {
     showpiece_description,
   } = data;
   return (
-    <Section align="center">
+    <Section fill align="center">
       {!has_showpiece && (
         <Box fill className="Trophycase-description">
           <b>This exhibit is empty. History awaits your contribution!</b>
@@ -140,7 +145,7 @@ const ShowpieceImage = (props, context) => {
     <Section align="center">
       <Box height="96px" width="96px">
         <Dimmer fontSize="32px">
-          <Icon name="landmark" spin />
+          <Icon name="landmark" />
         </Dimmer>
       </Box>
     </Section>
