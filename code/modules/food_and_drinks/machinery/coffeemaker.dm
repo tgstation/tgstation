@@ -450,20 +450,18 @@
 	var/const/grinder_capacity = 10	//how many beans can fit inside
 
 	//this type of coffeemaker takes fresh whole beans insted of cartidges
-	var/obj/item/food/grown/coffee/coffee[grinder_capacity]
+	var/list/coffee= list()
 	var/coffee_amount = 0
 	coffee_cups = 15
 	sugar_packs = 10
 	sweetener_packs = 10
-	creamer_packs = 10
+	creamer_packs = 1
 
 /obj/machinery/coffeemaker/impressa/Initialize(mapload)
 	. = ..()
 	if(mapload)
 		coffeepot = new /obj/item/reagent_containers/cup/coffeepot(src)
-		var/i
-		for(i=1,i<=grinder_capacity+1,i++)
-			coffee[i] = new /obj/item/food/grown/coffee(src)
+		coffee = new /obj/item/food/grown/coffee(src)
 
 
 /obj/machinery/coffeemaker/impressa/Destroy()
@@ -475,9 +473,7 @@
 	if(gone == coffeepot)
 		coffeepot = null
 	if(gone == coffee)
-		var/i
-		for(i=1,i<=grinder_capacity+1,i++)
-			coffee[i] = null
+		coffee = null
 	return ..()
 
 /obj/machinery/coffeemaker/impressa/update_overlays()
@@ -502,7 +498,7 @@
 	if(sweetener_packs)
 		. += "extras_3"
 	if(coffee_amount)
-		if(coffee_amount < grinder_capacity/2)
+		if(coffee_amount < 0.4*grinder_capacity)
 			. += "grinder_half"
 		else
 			. += "grinder_full"
@@ -604,7 +600,7 @@
 		return TRUE //no afterattack
 
 	if (istype(attack_item, /obj/item/food/grown/coffee) && !(attack_item.item_flags & ABSTRACT))
-		if(coffee_amount >= grinder_capacity-1)
+		if(coffee_amount >= grinder_capacity)
 			balloon_alert(user, "the coffee container is full!")
 			return TRUE
 		if(!HAS_TRAIT(attack_item, TRAIT_DRIED))
@@ -614,12 +610,37 @@
 		. = TRUE //no afterattack
 		if(!user.transferItemToLoc(new_coffee, src))
 			return TRUE
-		coffee[coffee_amount+1] = new_coffee
+		coffee += new_coffee
 		coffee_amount++
-
 		balloon_alert(user, "added coffee")
-		update_appearance()
-		return TRUE //no afterattack
+
+
+	if (istype(attack_item, /obj/item/storage/box/coffeepack))
+		if(coffee_amount >= grinder_capacity)
+			balloon_alert(user, "the coffee container is full!")
+			return TRUE
+		var/obj/item/storage/box/coffeepack/new_coffee_pack = attack_item
+		for(var/obj/item/food/grown/coffee/new_coffee in new_coffee_pack.contents)
+			if(HAS_TRAIT(new_coffee, TRAIT_DRIED))    //the coffee beans inside must be dry
+				if(coffee_amount < grinder_capacity)
+					if(user.transferItemToLoc(new_coffee, src))
+						coffee += new_coffee
+						coffee_amount++
+						new_coffee.forceMove(src)
+						balloon_alert(user, "added coffee")
+						update_appearance()
+					else
+						return TRUE
+				else
+					return TRUE
+			else
+				balloon_alert(user, "non-dried beans inside of coffee pack!")
+				return TRUE
+
+	. = TRUE //no afterattack
+
+	update_appearance()
+	return TRUE //no afterattack
 
 /obj/machinery/coffeemaker/impressa/take_cup(mob/user)
 	if(!coffee_cups) //shouldn't happen, but we all know how stuff manages to break
@@ -637,6 +658,6 @@
 		return
 	operate_for(brew_time)
 	coffeepot.reagents.add_reagent_list(list(/datum/reagent/consumable/coffee = 120))
-	coffee[coffee_amount+1] = null
+	coffee.Cut(1,2) //remove the first item from the list
 	coffee_amount--
 	update_appearance()
