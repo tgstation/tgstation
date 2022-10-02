@@ -19,3 +19,15 @@
       can secretly communicate between each other.
   - bugfix: Fixed up the Changeling UI a bit, like for example some dimmers would
       never render.
+2022-10-02:
+  PKPenguin321:
+  - balance: Railings take twice as many rods and twice as much time to make
+  Shadyyy66:
+  - rscadd: Added boxcutter to cargo.
+  Vishenka0704:
+  - bugfix: if payday free, don't send you extra message where "payday aborted"
+  - code_imp: clarity to "account.dm" code
+  Wallem:
+  - qol: Anchoring a microwave on the same tile as a table will align it to the table
+  tralezab:
+  - spellcheck: wall clocks no longer have a desc talking about bluespace

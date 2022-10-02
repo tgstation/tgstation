@@ -1,5 +1,0 @@
-author: "Vishenka0704"
-delete-after: True
-changes: 
-  - bugfix: "if payday free, don't send you extra message where \"payday aborted\""
-  - code_imp: "clarity to \"account.dm\" code"
