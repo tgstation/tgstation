@@ -889,7 +889,7 @@
 /obj/item/storage/fancy/coffee_cart_rack{
 	pixel_x = -8
 	},
-/obj/item/reagent_containers/cup/glass/coffee{
+/obj/item/reagent_containers/cup/glass/coffee/full{
 	pixel_y = 7;
 	pixel_x = 5
 	},
@@ -23129,7 +23129,7 @@
 	pixel_y = 6;
 	pixel_x = 8
 	},
-/obj/item/reagent_containers/cup/glass/coffee{
+/obj/item/reagent_containers/cup/glass/coffee/full{
 	pixel_x = -4;
 	pixel_y = 4
 	},
@@ -32452,7 +32452,7 @@
 /obj/item/storage/fancy/coffee_cart_rack{
 	pixel_x = -7
 	},
-/obj/item/reagent_containers/cup/glass/coffee{
+/obj/item/reagent_containers/cup/glass/coffee/full{
 	pixel_y = 4;
 	pixel_x = 8
 	},

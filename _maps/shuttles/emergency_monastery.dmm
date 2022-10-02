@@ -3121,7 +3121,7 @@
 "Qs" = (
 /obj/structure/table/wood,
 /obj/item/newspaper,
-/obj/item/reagent_containers/cup/glass/coffee,
+/obj/item/reagent_containers/cup/glass/coffee/full,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Qt" = (
