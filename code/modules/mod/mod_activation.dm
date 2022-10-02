@@ -178,6 +178,7 @@
 		else
 			playsound(src, 'sound/machines/synth_no.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, frequency = 6000)
 	activating = FALSE
+	SEND_SIGNAL(src, COMSIG_MOD_TOGGLED, user)
 	return TRUE
 
 ///Seals or unseals the given part

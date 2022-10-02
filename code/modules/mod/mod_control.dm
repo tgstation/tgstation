@@ -361,6 +361,7 @@
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 			return FALSE
 		install(attacking_item, user)
+		SEND_SIGNAL(src, COMSIG_MOD_MODULE_CHANGED, user)
 		return TRUE
 	else if(istype(attacking_item, /obj/item/mod/core))
 		if(!open)

@@ -1,10 +1,14 @@
 //MODsuit signals
 /// Called when a module is selected to be the active one from on_select(obj/item/mod/module/module)
 #define COMSIG_MOD_MODULE_SELECTED "mod_module_selected"
+/// Called when a MOD is finished toggling itself.
+#define COMSIG_MOD_TOGGLED "mod_toggled"
 /// Called when a MOD activation is called from toggle_activate(mob/user)
 #define COMSIG_MOD_ACTIVATE "mod_activate"
 	/// Cancels the suit's activation
 	#define MOD_CANCEL_ACTIVATE (1 << 0)
+/// Called when a MOD finishes having a module added or removed from it
+#define COMSIG_MOD_MODULE_CHANGED "mod_module_changed"
 /// Called when a MOD is having modules removed from crowbar_act(mob/user, obj/crowbar)
 #define COMSIG_MOD_MODULE_REMOVAL "mod_module_removal"
 	/// Cancels the removal of modules

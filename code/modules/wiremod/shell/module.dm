@@ -102,10 +102,10 @@
 	/// The signal that is triggered when a module is selected
 	var/datum/port/output/on_module_selected
 
-	/// The signal that is triggered when the suit is deployed
+	/// The signal that is triggered when the suit is deployed by a signal
 	var/datum/port/output/on_deploy
 
-	/// The signal that is triggered when the suit has finished toggling itself
+	/// The signal that is triggered when the suit has finished toggling itself after being activated by a signal
 	var/datum/port/output/on_toggle_finish
 
 /obj/item/circuit_component/mod_adapter_core/populate_options()
@@ -131,9 +131,13 @@
 	if(istype(shell, /obj/item/mod/module))
 		attached_module = shell
 	RegisterSignal(attached_module, COMSIG_MOVABLE_MOVED, .proc/on_move)
+	RegisterSignal(attached_module, COMSIG_MOD_TOGGLED, .proc/on_mod_toggled)
+	//RegisterSignal(attached_module, COMSIG_MOD_MODULE_CHANGED, .proc/on_module_changed)
 
 /obj/item/circuit_component/mod_adapter_core/unregister_shell(atom/movable/shell)
 	UnregisterSignal(attached_module, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(attached_module, COMSIG_MOD_TOGGLED)
+	//UnregisterSignal(attached_module, COMSIG_MOD_MODULE_CHANGED, .proc/on_module_changed)
 	attached_module = null
 	return ..()
 
@@ -165,6 +169,17 @@
 	selected_module.set_output(module.name)
 	on_module_selected.set_output(COMPONENT_SIGNAL)
 
+/*/obj/item/circuit_component/mod_adapter_core/proc/on_module_changed()
+	SIGNAL_HANDLER
+	module_to_select.possible_options = attached_module.mod.modules
+	if (module_to_select.possible_options.length)
+		module_to_select.set_value(module_to_select.possible_options[1])
+*/
+
+/obj/item/circuit_component/mod_adapter_core/proc/on_mod_toggled()
+	SIGNAL_HANDLER
+	on_toggle_finish.set_output(COMPONENT_SIGNAL)
+	activated.set_output(attached_module.mod.active)
 
 /obj/item/circuit_component/mod_adapter_core/proc/equip_check()
 	SIGNAL_HANDLER
