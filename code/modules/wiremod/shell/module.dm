@@ -93,7 +93,10 @@
 	/// A reference to the wearer of the MODsuit
 	var/datum/port/output/wearer
 
-	/// Whether or not the suit is activated or deactivated
+	/// Whether or not the suit is deployed
+	var/datum/port/output/deployed
+
+	/// Whether or not the suit is activated
 	var/datum/port/output/activated
 
 	/// The name of the last selected module
@@ -119,6 +122,7 @@
 	select_module = add_input_port("Select Module", PORT_TYPE_SIGNAL)
 	// States
 	wearer = add_output_port("Wearer", PORT_TYPE_ATOM)
+	deployed = add_output_port("Deployed", PORT_TYPE_NUMBER)
 	activated = add_output_port("Activated", PORT_TYPE_NUMBER)
 	selected_module = add_output_port("Selected Module", PORT_TYPE_STRING)
 	// Output Signals
@@ -157,16 +161,19 @@
 	SIGNAL_HANDLER
 	if(istype(source.loc, /obj/item/mod/control))
 		RegisterSignal(source.loc, COMSIG_MOD_MODULE_SELECTED, .proc/on_module_select)
+		RegisterSignal(source.loc, COMSIG_MOD_PART_TOGGLED, .proc/on_mod_part_toggled)
 		RegisterSignal(source.loc, COMSIG_MOD_TOGGLED, .proc/on_mod_toggled)
 		//RegisterSignal(source.loc, COMSIG_MOD_MODULE_CHANGED, .proc/on_module_changed)
 		RegisterSignal(source.loc, COMSIG_ITEM_EQUIPPED, .proc/equip_check)
 		equip_check()
 	else if(istype(old_loc, /obj/item/mod/control))
 		UnregisterSignal(old_loc, list(COMSIG_MOD_MODULE_SELECTED, COMSIG_ITEM_EQUIPPED))
+		UnregisterSignal(old_loc, COMSIG_MOD_PART_TOGGLED)
 		UnregisterSignal(old_loc, COMSIG_MOD_TOGGLED)
 		//UnregisterSignal(old.loc, COMSIG_MOD_MODULE_CHANGED)
 		selected_module.set_output(null)
 		wearer.set_output(null)
+		deployed.set_output(FALSE)
 		activated.set_output(FALSE)
 
 /obj/item/circuit_component/mod_adapter_core/proc/on_module_select(datum/source, obj/item/mod/module/module)
@@ -180,6 +187,16 @@
 	if (module_to_select.possible_options.length)
 		module_to_select.set_value(module_to_select.possible_options[1])
 */
+
+/obj/item/circuit_component/mod_adapter_core/proc/on_mod_part_toggled()
+	SIGNAL_HANDLER
+	var/is_deployed = TRUE
+	for(var/obj/item/part as anything in attached_module.mod.mod_parts)
+		if(part.loc == src)
+			is_deployed = FALSE
+			break
+	deployed.set_output(is_deployed)
+	on_deploy.set_output(COMPONENT_SIGNAL)
 
 /obj/item/circuit_component/mod_adapter_core/proc/on_mod_toggled()
 	SIGNAL_HANDLER

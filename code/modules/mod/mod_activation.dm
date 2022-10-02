@@ -38,6 +38,7 @@
 				continue
 			choose_deploy(user)
 			break
+	SEND_SIGNAL(src, COMSIG_MOD_PART_TOGGLED, user)
 
 /// Quickly deploys all parts (or retracts if all are on the wearer)
 /obj/item/mod/control/proc/quick_deploy(mob/user)
@@ -59,6 +60,7 @@
 		span_notice("[src] [deploy ? "deploys" : "retracts"] its' parts with a mechanical hiss."),
 		span_hear("You hear a mechanical hiss."))
 	playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	SEND_SIGNAL(src, COMSIG_MOD_PART_TOGGLED, user)
 	return TRUE
 
 /// Deploys a part of the suit onto the user.

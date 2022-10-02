@@ -1,6 +1,8 @@
 //MODsuit signals
 /// Called when a module is selected to be the active one from on_select(obj/item/mod/module/module)
 #define COMSIG_MOD_MODULE_SELECTED "mod_module_selected"
+/// Called when a MOD deploys or retracts one of its parts.
+#define COMSIG_MOD_PART_TOGGLED "mod_part_toggled"
 /// Called when a MOD is finished toggling itself.
 #define COMSIG_MOD_TOGGLED "mod_toggled"
 /// Called when a MOD activation is called from toggle_activate(mob/user)
