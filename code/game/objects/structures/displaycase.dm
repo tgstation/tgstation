@@ -26,8 +26,8 @@
 	var/glass_fix = TRUE
 	///Represents a signel source of screaming when broken
 	var/datum/alarm_handler/alarm_manager
-	///Used for subtypes that have a UI in them, which makes displaying its contents on click not neccessary
-	var/examine_on_click = TRUE
+	///Used for subtypes that have a UI in them. The examine on click while adjecent will not fire, as we already get a popup
+	var/autoexamine_while_closed = TRUE
 
 /obj/structure/displaycase/Initialize(mapload)
 	. = ..()
@@ -66,7 +66,6 @@
 	if(QDELETED(showpiece))
 		return
 	showpiece.forceMove(drop_location())
-	showpiece.dropped()
 	showpiece = null
 	update_appearance()
 
@@ -203,7 +202,7 @@
 		if (!Adjacent(user))
 			return
 		if (!user.combat_mode)
-			if(!examine_on_click)
+			if(!open && !autoexamine_while_closed)
 				return
 			if(!user.is_blind())
 				user.examinate(src)
@@ -293,7 +292,7 @@
 	desc = "Store your trophies of accomplishment in here, and they will stay forever."
 	integrity_failure = 0
 	req_access = list(ACCESS_LIBRARY)
-	examine_on_click = FALSE
+	autoexamine_while_closed = FALSE
 	///the key of the player who placed the item in the case
 	var/placer_key = ""
 	///is the trophy a hologram, not a real item placed by a player?
@@ -343,7 +342,6 @@
 
 /obj/structure/displaycase/trophy/toggle_lock(mob/user)
 	..()
-	examine_on_click = open
 	SStgui.close_uis(src)
 
 /obj/structure/displaycase/trophy/ui_data(mob/user)
@@ -418,6 +416,7 @@
 	alert = FALSE //No, we're not calling the fire department because someone stole your cookie.
 	glass_fix = FALSE //Fixable with tools instead.
 	pass_flags = PASSTABLE ///Can be placed and moved onto a table.
+	autoexamine_while_closed = FALSE
 	///The price of the item being sold. Altered by grab intent ID use.
 	var/sale_price = 20
 	///The Account which will receive payment for purchases. Set by the first ID to swipe the tray.
