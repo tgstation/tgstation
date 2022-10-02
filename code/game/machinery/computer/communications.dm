@@ -332,13 +332,13 @@
 				GLOB.admins,
 				span_adminnotice( \
 					"<b color='orange'>CROSS-SECTOR MESSAGE (OUTGOING):</b> [ADMIN_LOOKUPFLW(usr)] is about to send \
-					the following message to <b>[destination]</b> (will autoapprove in [DisplayTimeText(CROSS_SECTOR_CANCEL_TIME)]): \
+					the following message to <b>[destination]</b> (will autoapprove in [SScommunications.soft_filtering ? DisplayTimeText(EXTENDED_CROSS_SECTOR_CANCEL_TIME) : DisplayTimeText(CROSS_SECTOR_CANCEL_TIME)]): \
 					<b><a href='?src=[REF(src)];reject_cross_comms_message=1'>REJECT</a></b><br> \
 					[html_encode(message)]" \
 				)
 			)
 
-			send_cross_comms_message_timer = addtimer(CALLBACK(src, .proc/send_cross_comms_message, usr, destination, message), CROSS_SECTOR_CANCEL_TIME, TIMER_STOPPABLE)
+			send_cross_comms_message_timer = addtimer(CALLBACK(src, .proc/send_cross_comms_message, usr, destination, message), SScommunications.soft_filtering ? EXTENDED_CROSS_SECTOR_CANCEL_TIME : CROSS_SECTOR_CANCEL_TIME, TIMER_STOPPABLE)
 
 			COOLDOWN_START(src, important_action_cooldown, IMPORTANT_ACTION_COOLDOWN)
 		if ("setState")
@@ -453,7 +453,20 @@
 	return FALSE //if we are not in cooldown, allow using the button
 
 /obj/machinery/computer/communications/proc/send_cross_comms_message(mob/user, destination, message)
+	SScommunications.soft_filtering = FALSE
 	send_cross_comms_message_timer = null
+
+	var/list/hard_filter_result = is_ic_filtered(message)
+	if(hard_filter_result)
+		tgui_alert(user, "Your message contains: (\"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\"), which is not allowed on this server.")
+		return
+
+	var/list/soft_filter_result = is_soft_ooc_filtered(message)
+	if(soft_filter_result)
+		if(tgui_alert(user,"Your message contains \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". \"[soft_filter_result[CHAT_FILTER_INDEX_REASON]]\", Are you sure you want to use it?", "Soft Blocked Word", list("Yes", "No")) != "Yes")
+			return
+		message_admins("[ADMIN_LOOKUPFLW(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". They may be using a disallowed term for a cross-station message. Increasing delay time to reject.\n\n Message: \"[html_encode(message)]\"")
+		log_admin_private("[key_name(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". They may be using a disallowed term for a cross-station message. Increasing delay time to reject.\n\n Message: \"[message]\"")
 
 	var/list/payload = list()
 
@@ -624,6 +637,7 @@
 			return
 
 		deltimer(send_cross_comms_message_timer)
+		SScommunications.soft_filtering = FALSE
 		send_cross_comms_message_timer = null
 
 		log_admin("[key_name(usr)] has cancelled the outgoing cross-comms message.")

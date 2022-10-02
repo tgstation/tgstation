@@ -900,6 +900,7 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 	additional_data["message_sender"] = source
 	additional_data["message"] = msg
 	additional_data["source"] = "([our_id])"
+	additional_data["is_filtered"] = SScommunications.soft_filtering // only useful for stuff like player-generated cross-server messages
 	additional_data += type
 
 	var/list/servers = CONFIG_GET(keyed_list/cross_server)
