@@ -74,7 +74,7 @@
 	icon_state = "neurotoxin"
 	hitsound = 'sound/weapons/sear.ogg'
 	damage = 15
-	armour_penetration = 50
+	armour_penetration = 100
 	speed = 2
 	jitter = 3 SECONDS
 	stutter = 3 SECONDS
