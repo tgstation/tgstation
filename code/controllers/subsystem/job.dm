@@ -66,12 +66,13 @@ SUBSYSTEM_DEF(job)
 	var/legacy_mode = FALSE
 
 	/// This is just the message we prepen and put into all of the config files to ensure documentation. We use this in more than one place, so let's put it in the SS to make life a bit easier.
-	var/config_documentation = "# This is the configuration file for the job system.\n# This will only be enabled when the config flag LOAD_JOBS_FROM_TXT is enabled.\n\
-	# We use a system of keys here that directly correlate to the job, just to ensure they don't desync if we choose to change the name of a job.\n# You are able to change (as of now) four different variables in this file.\n\
-	# Total Positions are how many job slots you get in a shift, Spawn Positions are how many you get that load in at spawn. If you set this to -1, it is unrestricted. \n# Playtime Requirements is in minutes, and the job will unlock when a player reaches that amount of time.\n\
-	# However, that can be superseded by Required Account Age, which is a time in days that you need to have had an account on the server for.\n# As time goes on, more config options will be added to this file.\n\
-	# You can use the admin_verb (checks for R_DEBUG) 'Reload Job Configuration' to reload this file without having to restart the server.\n# It will always respect prior-existing values in the config, but will appropriately add more fields when they generate.\n\
-	# Best of luck editing!\n"
+	var/config_documentation = "## This is the configuration file for the job system.\n## This will only be enabled when the config flag LOAD_JOBS_FROM_TXT is enabled.\n\
+	## We use a system of keys here that directly correlate to the job, just to ensure they don't desync if we choose to change the name of a job.\n## You are able to change (as of now) four different variables in this file.\n\
+	## Total Positions are how many job slots you get in a shift, Spawn Positions are how many you get that load in at spawn. If you set this to -1, it is unrestricted. \n## Playtime Requirements is in minutes, and the job will unlock when a player reaches that amount of time.\n\
+	## However, that can be superseded by Required Account Age, which is a time in days that you need to have had an account on the server for.\n## As time goes on, more config options will be added to this file.\n\
+	## You can use the admin_verb (checks for R_DEBUG) 'Reload Job Configuration' to reload this file without having to restart the server.\n## It will always respect prior-existing values in the config, but will appropriately add more fields when they generate.\n\n\
+	## The game will not read any line that is commented out with a '#', as it is commented out. If you want to override the codebase values, add the value and then uncomment that line.\n\
+	## Best of luck editing!\n"
 
 /datum/controller/subsystem/job/Initialize()
 	setup_job_lists()
@@ -611,14 +612,24 @@ SUBSYSTEM_DEF(job)
 		for(var/datum/job/occupation as anything in joinable_occupations)
 			var/job_title = occupation.title
 			var/job_key = occupation.config_tag
-			if(!job_config[job_key])
-				message_admins(span_notice("[job_title] (with config key [job_key]) is missing from jobconfig.toml! Using codebase defaults.")) // we add both the title and the config key in case they desync over time and someone needs to fix the box for some reason
+			if(!job_config[job_key]) // Job isn't listed, skip it.
+				message_admins(span_notice("[job_title] (with config key [job_key]) is missing from jobconfig.toml! Using codebase defaults.")) // List both job_title and job_key in case they de-sync over time.
 				continue
 
-			occupation.total_positions = job_config[job_key]["Total Positions"]
-			occupation.spawn_positions = job_config[job_key]["Spawn Positions"]
-			occupation.exp_requirements = job_config[job_key]["Playtime Requirements"]
-			occupation.minimal_player_age = job_config[job_key]["Required Account Age"]
+			// If the value is commented out, we assume that the server operate did not want to override the codebase default values, so we skip it.
+			var/default_positions = job_config[job_key]["Total Positions"]
+			var/starting_positions = job_config[job_key]["Spawn Positions"]
+			var/playtime_requirements = job_config[job_key]["Playtime Requirements"]
+			var/required_account_age = job_config[job_key]["Required Account Age"]
+
+			if(default_positions)
+				occupation.total_positions = job_config[job_key]["Total Positions"]
+			if(starting_positions)
+				occupation.spawn_positions = job_config[job_key]["Spawn Positions"]
+			if(playtime_requirements)
+				occupation.exp_requirements = job_config[job_key]["Playtime Requirements"]
+			if(required_account_age)
+				occupation.minimal_player_age = job_config[job_key]["Required Account Age"]
 
 		return
 
@@ -652,15 +663,30 @@ SUBSYSTEM_DEF(job)
 			var/job_key = occupation.config_tag
 			var/regex/parser = new("[occupation.title]=(-1|\\d+),(-1|\\d+)") // TXT system used the occupation's name, we convert it to the new config_key system here.
 			parser.Find(jobstext)
+
+			var/default_positions = text2num(parser.group[1])
+			var/starting_positions = text2num(parser.group[2])
+
 			// Playtime Requirements and Required Account Age are new and we want to see it migrated, so we will just pull codebase defaults for them.
+			// Remember, every time we write the TOML from scratch, we want to have it commented out by default to ensure that the server operator is knows that they codebase defaults when they remove the comment.
 			file_data["[job_key]"] = list(
-				"Total Positions" = text2num(parser.group[1]),
-				"Spawn Positions" = text2num(parser.group[2]),
-				"Playtime Requirements" = occupation.exp_requirements,
-				"Required Account Age" = occupation.minimal_player_age,
+				"#Playtime Requirements" = occupation.exp_requirements,
+				"#Required Account Age" = occupation.minimal_player_age,
 			)
+
+			if(default_positions != occupation.total_positions) // If the total positions are different from the codebase default, we want to write it to the file. Uncommented to allow for flush migration.
+				file_data["[job_key]"]["Total Positions"] = default_positions
+			else // handle it normally by commenting it out.
+				file_data["[job_key]"]["#Total Positions"] = occupation.total_positions
+
+			if(starting_positions != occupation.spawn_positions) // Same pattern as above.
+				file_data["[job_key]"]["Spawn Positions"] = starting_positions
+			else
+				file_data["[job_key]"]["#Spawn Positions"] = occupation.spawn_positions
+
 		var/payload = rustg_toml_encode(file_data)
 		var/temp_file = file("data/jobconfig.toml")
+		config_documentation += "\n\n ## This TOML was migrated from jobs.txt. Any variables that did not match standing codebase defaults are left uncommented, please verify to ensure that they are correct." // small warning
 		if(fexists(temp_file))
 			fdel(temp_file) // ensure it writes properly in case it exists
 		WRITE_FILE(temp_file, "[config_documentation]\n[payload]")
@@ -668,23 +694,25 @@ SUBSYSTEM_DEF(job)
 		return TRUE
 
 	else // Generate the new TOML format, using codebase defaults.
-		to_chat(user, span_notice("Found jobs.txt in config directory! Generating jobconfig.toml from it."))
+		to_chat(user, span_notice("Generating new jobconfig.toml, using codebase defaults."))
 		for(var/datum/job/occupation as anything in joinable_occupations)
 			var/job_key = occupation.config_tag
+			// Remember, every time we write the TOML from scratch, we want to have it commented out by default to ensure that the server operator is knows that they override codebase defaults when they remove the comment.
+			// Having comments mean that we allow server operators to defer to codebase standards when they deem acceptable. They must uncomment to override the codebase default.
 			if(is_assistant_job(occupation)) // there's a concession made in jobs.txt that we should just rapidly account for here I KNOW I KNOW.
 				file_data["[job_key]"] = list(
-					"Total Positions" = -1,
-					"Spawn Positions" = -1,
-					"Playtime Requirements" = occupation.exp_requirements,
-					"Required Account Age" = occupation.minimal_player_age,
+					"#Total Positions" = -1,
+					"#Spawn Positions" = -1,
+					"#Playtime Requirements" = occupation.exp_requirements,
+					"#Required Account Age" = occupation.minimal_player_age,
 				)
 				continue
 			// Generate new config from codebase defaults.
 			file_data["[job_key]"] = list(
-				"Total Positions" = occupation.total_positions,
-				"Spawn Positions" = occupation.spawn_positions,
-				"Playtime Requirements" = occupation.exp_requirements,
-				"Required Account Age" = occupation.minimal_player_age,
+				"#Total Positions" = occupation.total_positions,
+				"#Spawn Positions" = occupation.spawn_positions,
+				"#Playtime Requirements" = occupation.exp_requirements,
+				"#Required Account Age" = occupation.minimal_player_age,
 			)
 		var/payload = rustg_toml_encode(file_data)
 		var/temp_file = file("data/jobconfig.toml")
@@ -708,21 +736,41 @@ SUBSYSTEM_DEF(job)
 		var/job_name = occupation.title
 		var/job_key = occupation.config_tag
 
+		var/default_positions = job_config[job_key]["Total Positions"]
+		var/starting_positions = job_config[job_key]["Spawn Positions"]
+		var/playtime_requirements = job_config[job_key]["Playtime Requirements"]
+		var/required_account_age = job_config[job_key]["Required Account Age"]
+
+		// When we regenerate, we want to make sure commented stuff stays commented, but we also want to migrate information that remains uncommented. So, let's make sure we keep that pattern.
 		if(job_config["[job_key]"]) // Let's see if any data for this job exists.
-			file_data["[job_key]"] = list(
-				"Total Positions" = job_config[job_key]["Total Positions"],
-				"Spawn Positions" = job_config[job_key]["Spawn Positions"],
-				"Playtime Requirements" = job_config[job_key]["Playtime Requirements"],
-				"Required Account Age" = job_config[job_key]["Required Account Age"],
-			)
+			if(default_positions != occupation.total_positions) // If the total positions are different from the codebase default, we want to write it to the file. Uncommented to allow for flush migration.
+				file_data["[job_key]"]["Total Positions"] = default_positions
+			else // handle it normally by commenting it out.
+				file_data["[job_key]"]["#Total Positions"] = occupation.total_positions
+
+			if(starting_positions != occupation.spawn_positions) // Same pattern as above.
+				file_data["[job_key]"]["Spawn Positions"] = starting_positions
+			else
+				file_data["[job_key]"]["#Spawn Positions"] = occupation.spawn_positions
+
+			if(playtime_requirements != occupation.exp_requirements) // Same pattern as above.
+				file_data["[job_key]"]["Playtime Requirements"] = playtime_requirements
+			else
+				file_data["[job_key]"]["#Playtime Requirements"] = occupation.exp_requirements
+
+			if(required_account_age != occupation.minimal_player_age) // Same pattern as above.
+				file_data["[job_key]"]["Required Account Age"] = required_account_age
+			else
+				file_data["[job_key]"]["#Required Account Age"] = occupation.minimal_player_age
 
 		else
 			to_chat(user, span_notice("New job [job_name] (using key [job_key]) detected! Adding to jobconfig.toml using default codebase values..."))
+			// Commented out keys here in case server operators wish to defer to codebase defaults.
 			file_data["[job_key]"] = list(
-				"Total Positions" = occupation.total_positions,
-				"Spawn Positions" = occupation.spawn_positions,
-				"Playtime Requirements" = occupation.exp_requirements,
-				"Required Account Age" = occupation.minimal_player_age,
+				"#Total Positions" = occupation.total_positions,
+				"#Spawn Positions" = occupation.spawn_positions,
+				"#Playtime Requirements" = occupation.exp_requirements,
+				"#Required Account Age" = occupation.minimal_player_age,
 			)
 		var/payload = rustg_toml_encode(file_data)
 		var/temp_file = file("data/jobconfig.toml")
