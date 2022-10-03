@@ -94,7 +94,7 @@
 	contraband = TRUE
 	contains = list(/obj/vehicle/ridden/atv,
 					/obj/item/key/atv,
-					/obj/item/clothing/suit/jacket/leather/overcoat,
+					/obj/item/clothing/suit/jacket/leather/biker,
 					/obj/item/clothing/gloves/color/black,
 					/obj/item/clothing/head/soft,
 					/obj/item/clothing/mask/bandana/skull/black)//so you can properly #cargoniabikergang
