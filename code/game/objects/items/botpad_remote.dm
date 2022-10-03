@@ -15,13 +15,11 @@
 	return ..()
 
 /obj/item/botpad_remote/attack_self(mob/living/user)
-	user.balloon_alert(user, "Pressed the launch button")
 	playsound(src, get_sfx(SFX_TERMINAL_TYPE), 25, FALSE)
 	try_launch(user)
 	return
 
 /obj/item/botpad_remote/attack_self_secondary(mob/living/user)
-	user.balloon_alert(user, "Pressed the recall button")
 	playsound(src, get_sfx(SFX_TERMINAL_TYPE), 25, FALSE)
 	if(connected_botpad)
 		connected_botpad.recall(user)
