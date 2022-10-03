@@ -2439,9 +2439,9 @@
 					/obj/item/clothing/head/helmet/bluetaghelm)
 	crate_name = "laser tag crate"
 
-/datum/supply_pack/costumes_toys/knucklebone
-	name = "Knucklebone Game Crate"
-	desc = "A fun dice game to keep you entertaned for hours and is totaly not ripped off from another game!"
+/datum/supply_pack/costumes_toys/knucklebones
+	name = "Knucklebones Game Crate"
+	desc = "A fun dice game to keep you entertained for hours!"
 	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/item/dice/d6,
 					/obj/item/dice/d6,
@@ -2460,8 +2460,9 @@
 					/obj/item/dice/d6,
 					/obj/item/dice/d6,
 					/obj/item/dice/d6,
-					/obj/item/dice/d6)
-	crate_name = "knucklebone game crate"
+					/obj/item/dice/d6,
+					/obj/item/paper/guides/knucklebone)
+	crate_name = "knucklebones game crate"
 	crate_type = /obj/structure/closet/crate/wooden
 
 /datum/supply_pack/costumes_toys/lasertag/pins
