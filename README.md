@@ -9,17 +9,6 @@
 
 This is a temporary fork, setup to speed up development of the wallening, a 2 year old project to resprite /tg/station's walls, windows, and wall hangings.
 
-We have two main branches:
-### stable 
-
-Stable exists as our "this will be merged into master someday" branch. PR any long term changes here
-
-### experimental
-
-Experimental is our testing branch, and what is running on live. 
-It contains changes that would cause major merge conflicts or potential code drift, such as code post FOV, and map changes. 
-It is kept up to parity with stable as pulls are made to it.
-
 We run a modified version of pubby station 24/7, for the purposes of avoiding merge conflicts, and large scale map changes.
 We will not be doing a full map pass until the project is more mature, and ready to be pr'd to master.
 
@@ -27,17 +16,6 @@ We will not be doing a full map pass until the project is more mature, and ready
 
 Pubby specific issues, missing sprites, fucked behavior, that sort of thing.
 This codebase is very much still in beta right now, expect lots of missing stuff.
-
-### Contributor beware
-
-This project relies on changing the map format we use, from the legacy topdown mode to side_map.
-This has the upside of allowing you to be both under and over an object at once, but it comes with a new class of bug too.
-Because layering is based on y position (and other things) you can now enter a layering conflict.
-
-As a side effect of this, the way we handle multiz (using vis_contents) is kinda borked right now.
-Before this project can be complete we will need to hack our multiz implementation to function with this restriction, or get https://www.byond.com/forum/post/2784126 accepted.
-
-Before either of those things happens, we're effectively building into a wall. Please be aware of this before you contribute, I don't want to crush your soul if things go south
 
 ## DOWNLOADING
 [Downloading](.github/guides/DOWNLOADING.md)
