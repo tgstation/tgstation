@@ -2441,7 +2441,7 @@
 
 /datum/supply_pack/costumes_toys/knucklebones
 	name = "Knucklebones Game Crate"
-	desc = "A fun dice game to keep you entertained for hours!"
+	desc = "A fun dice game definitely not invented by a cult. Consult your local chaplain regarding approved religious activity."
 	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/item/dice/d6,
 					/obj/item/dice/d6,
