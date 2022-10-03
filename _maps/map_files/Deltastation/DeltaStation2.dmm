@@ -88256,6 +88256,7 @@
 "vzD" = (
 /obj/structure/table/wood,
 /obj/structure/cable,
+/obj/item/radio/intercom,
 /turf/open/floor/iron/dark,
 /area/station/command/corporate_showroom)
 "vzK" = (
