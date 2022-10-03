@@ -39,6 +39,7 @@
 			break
 		if(foundAlready)
 			continue
+		disease_candidates += candidate
 
 /datum/round_event/disease_outbreak
 	announce_when = 15
