@@ -66107,11 +66107,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/storage)
-"xmg" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/item/radio/intercom/command/directional/north,
-/turf/open/floor/plating,
-/area/station/hallway/primary/central)
 "xml" = (
 /obj/machinery/computer/message_monitor{
 	dir = 4
@@ -96773,7 +96768,7 @@ wtZ
 vpQ
 iLk
 tGL
-xmg
+tKN
 aaf
 dho
 oYd
