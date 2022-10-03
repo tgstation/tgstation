@@ -371,6 +371,12 @@
  * Non-roles
  */
 
+/obj/item/modular_computer/tablet/pda/assistant
+	name = "assistant PDA"
+	default_applications = list(
+		/datum/computer_file/program/bounty_board,
+	)
+
 /obj/item/modular_computer/tablet/pda/syndicate
 	name = "military PDA"
 	greyscale_colors = "#891417#80FF80"
