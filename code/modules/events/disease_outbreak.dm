@@ -9,9 +9,9 @@
 
 /datum/round_event/disease_outbreak
 	announce_when = 15
-
-	var/virus_type
-
+	//The disease type we will be spawning
+	var/datum/disease/virus_type
+	//Number of symptoms for our virus
 	var/max_severity = 3
 
 
