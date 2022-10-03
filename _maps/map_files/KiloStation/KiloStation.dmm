@@ -3292,7 +3292,7 @@
 	},
 /obj/effect/landmark/start/captain,
 /obj/structure/sign/poster/contraband/random/directional/north,
-/obj/item/radio/intercom/command/directional/west,
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/carpet/royalblue,
 /area/station/command/heads_quarters/captain/private)
 "aVI" = (
@@ -44749,8 +44749,8 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/item/radio/intercom/directional/north,
 /obj/structure/chair/comfy,
+/obj/item/radio/intercom/command/directional/north,
 /turf/open/floor/iron,
 /area/station/security/courtroom)
 "mKw" = (
