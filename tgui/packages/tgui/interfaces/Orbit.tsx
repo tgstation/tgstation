@@ -4,7 +4,6 @@ import { capitalizeFirst, multiline } from 'common/string';
 import { Button, Collapsible, Icon, Input, Section, Stack } from '../components';
 import { Window } from '../layouts';
 import { flow } from 'common/fp';
-import { COLORS } from '../constants';
 
 type AntagGroup = [string, Observable[]];
 
@@ -34,7 +33,7 @@ const ANTAG2COLOR = {
   'Abductors': 'pink',
   'Ash Walkers': 'olive',
   'Biohazards': 'brown',
-  'CentCom': COLORS.department.centcom,
+  'CentCom': 'teal',
 } as const;
 
 const ANTAG2GROUP = {
