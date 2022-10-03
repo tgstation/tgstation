@@ -1,0 +1,4 @@
+author: "Gamer025"
+delete-after: True
+changes: 
+  - admin: "Expanded mob_tag logging. Logs spawn renames, typepaths and species changes now!"
