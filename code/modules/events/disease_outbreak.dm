@@ -72,14 +72,6 @@
 
 	var/datum/disease/new_disease
 	new_disease = new virus_type()
-	//if(virus_type == /datum/disease/dnaspread) //Dnaspread needs strain_data set to work.
-	//	if(!H.dna || (HAS_TRAIT(H, TRAIT_BLIND))) //A blindness disease would be the worst.
-	//		continue
-	//	new_disease = new virus_type()
-	//	var/datum/disease/dnaspread/DS = new_disease
-	//	DS.strain_data["name"] = H.real_name
-	//	DS.strain_data["UI"] = H.dna.unique_identity
-	//	DS.strain_data["SE"] = H.dna.mutation_index
 	new_disease.carrier = TRUE //fuck you virus code I'm not dealing with your dna spread snowflake bullshit right now
 	for(var/mob/living/carbon/human/victim in afflicted)
 		victim.ForceContractDisease(new_disease, FALSE, TRUE)
