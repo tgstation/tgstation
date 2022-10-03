@@ -23,7 +23,7 @@
 	name = "Electric Guitar"
 	id = "eguitar"
 	legacy_instrument_ext = "ogg"
-	legacy_instrument_path = "elec_guitar"
+	legacy_instrument_path = "electric_guitar"
 
 /datum/instrument/hardcoded/glockenspiel
 	name = "Glockenspiel"
