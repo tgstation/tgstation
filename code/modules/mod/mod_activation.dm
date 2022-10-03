@@ -51,6 +51,7 @@
 		if(part.loc == src)
 			continue
 		deploy = FALSE
+		break
 	for(var/obj/item/part as anything in mod_parts)
 		if(deploy && part.loc == src)
 			deploy(null, part)

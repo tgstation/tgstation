@@ -112,8 +112,7 @@
 	var/datum/port/output/on_toggle_finish
 
 /obj/item/circuit_component/mod_adapter_core/populate_options()
-	var/component_options = list()
-	module_to_select = add_option_port("Module to Select", component_options)
+	module_to_select = add_option_port("Module to Select", list())
 
 /obj/item/circuit_component/mod_adapter_core/populate_ports()
 	// Input Signals
