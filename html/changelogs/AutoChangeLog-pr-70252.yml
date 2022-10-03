@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - qol: "janitor and clown erts have access to command radio"

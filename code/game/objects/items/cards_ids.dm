@@ -623,7 +623,7 @@
 /obj/item/card/id/proc/alt_click_can_use_id(mob/living/user)
 	if(!isliving(user))
 		return
-	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 		return
 
 	return TRUE
@@ -1239,7 +1239,7 @@
 		to_chat(user, "Restating prisoner ID to default parameters.")
 		return
 	var/choice = tgui_input_number(user, "Sentence time in seconds", "Sentencing")
-	if(!choice || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) || loc != user)
+	if(!choice || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE) || loc != user)
 		return FALSE
 	time_to_assign = choice
 	to_chat(user, "You set the sentence time to [time_to_assign] seconds.")
@@ -1565,7 +1565,7 @@
 					assignment = target_occupation
 
 				var/new_age = tgui_input_number(user, "Choose the ID's age", "Agent card age", AGE_MIN, AGE_MAX, AGE_MIN)
-				if(QDELETED(user) || QDELETED(src) || !user.canUseTopic(user, BE_CLOSE, NO_DEXTERITY, NO_TK))
+				if(QDELETED(user) || QDELETED(src) || !user.canUseTopic(user, be_close = TRUE, no_dexterity = TRUE, no_tk = TRUE))
 					return
 				if(new_age)
 					registered_age = new_age

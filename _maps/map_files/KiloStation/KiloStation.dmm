@@ -6022,22 +6022,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
-"bSC" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/structure/disposalpipe/junction/flip{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/station/hallway/primary/central/fore)
 "bSM" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -11277,7 +11261,6 @@
 /turf/open/floor/iron/white,
 /area/station/security/prison/mess)
 "dsc" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command/glass{
 	name = "Control Room"
 	},
@@ -27281,6 +27264,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/structure/cable,
+/obj/effect/turf_decal/box,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "hMf" = (
@@ -44655,7 +44639,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard)
 "mIq" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Server Room"
 	},
@@ -46616,7 +46599,6 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/starboard)
 "nms" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Server Room"
 	},
@@ -51340,9 +51322,6 @@
 	},
 /obj/effect/turf_decal/plaque{
 	icon_state = "L4"
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 10
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
@@ -68266,6 +68245,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/effect/turf_decal/box,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "tth" = (
@@ -115179,7 +115159,7 @@ xDm
 vqw
 dAZ
 oHD
-bSC
+fzL
 vSq
 qTC
 hZt

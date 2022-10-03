@@ -49,7 +49,7 @@
 /obj/item/clothing/head/wig/attack_self(mob/user)
 	var/new_style = tgui_input_list(user, "Select a hairstyle", "Wig Styling", GLOB.hairstyles_list - "Bald")
 	var/newcolor = adjustablecolor ? input(usr,"","Choose Color",color) as color|null : null
-	if(!user.canUseTopic(src, BE_CLOSE))
+	if(!user.canUseTopic(src, be_close = TRUE))
 		return
 	if(new_style && new_style != hairstyle)
 		hairstyle = new_style
