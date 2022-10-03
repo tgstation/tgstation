@@ -2443,24 +2443,7 @@
 	name = "Knucklebones Game Crate"
 	desc = "A fun dice game definitely not invented by a cult. Consult your local chaplain regarding approved religious activity."
 	cost = CARGO_CRATE_VALUE * 2
-	contains = list(/obj/item/dice/d6,
-					/obj/item/dice/d6,
-					/obj/item/dice/d6,
-					/obj/item/dice/d6,
-					/obj/item/dice/d6,
-					/obj/item/dice/d6,
-					/obj/item/dice/d6,
-					/obj/item/dice/d6,
-					/obj/item/dice/d6,
-					/obj/item/dice/d6,
-					/obj/item/dice/d6,
-					/obj/item/dice/d6,
-					/obj/item/dice/d6,
-					/obj/item/dice/d6,
-					/obj/item/dice/d6,
-					/obj/item/dice/d6,
-					/obj/item/dice/d6,
-					/obj/item/dice/d6,
+	contains = list(/obj/item/dice/d6 = 18,
 					/obj/item/paper/guides/knucklebone)
 	crate_name = "knucklebones game crate"
 	crate_type = /obj/structure/closet/crate/wooden
