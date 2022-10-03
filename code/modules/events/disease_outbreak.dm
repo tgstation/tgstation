@@ -66,6 +66,8 @@
 		//The wacky ones
 		virus_candidates += list(/datum/disease/dnaspread, /datum/disease/magnitis)
 
+		virus_type = pick(virus_candidates)
+
 	var/datum/disease/new_disease
 	new_disease = new virus_type()
 	new_disease.carrier = TRUE
