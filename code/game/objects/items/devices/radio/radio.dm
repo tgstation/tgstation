@@ -81,6 +81,8 @@
 	secure_radio_connections = list()
 	. = ..()
 
+	if(ispath(keyslot))
+		keyslot = new keyslot()
 	for(var/ch_name in channels)
 		secure_radio_connections[ch_name] = add_radio(src, GLOB.radiochannels[ch_name])
 
@@ -94,7 +96,8 @@
 /obj/item/radio/Destroy()
 	remove_radio_all(src) //Just to be sure
 	QDEL_NULL(wires)
-	QDEL_NULL(keyslot)
+	if(istype(keyslot))
+		QDEL_NULL(keyslot)
 	return ..()
 
 /obj/item/radio/proc/set_frequency(new_frequency)
@@ -141,7 +144,7 @@
 
 /obj/item/radio/proc/make_syndie() // Turns normal radios into Syndicate radios!
 	qdel(keyslot)
-	keyslot = new /obj/item/encryptionkey/syndicate
+	keyslot = new /obj/item/encryptionkey/syndicate()
 	syndie = TRUE
 	recalculateChannels()
 
@@ -469,12 +472,6 @@
 	user.visible_message(span_suicide("[user] starts bouncing [src] off [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
 
-/obj/item/radio/Destroy()
-	remove_radio_all(src) //Just to be sure
-	QDEL_NULL(wires)
-	QDEL_NULL(keyslot)
-	return ..()
-
 /obj/item/radio/proc/end_emp_effect(curremp)
 	if(emped != curremp) //Don't fix it if it's been EMP'd again
 		return FALSE
@@ -503,7 +500,7 @@
 
 /obj/item/radio/borg/syndicate
 	syndie = TRUE
-	keyslot = new /obj/item/encryptionkey/syndicate
+	keyslot = /obj/item/encryptionkey/syndicate
 
 /obj/item/radio/borg/syndicate/Initialize(mapload)
 	. = ..()
