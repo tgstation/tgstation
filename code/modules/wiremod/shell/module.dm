@@ -146,7 +146,7 @@
 		return
 	var/obj/item/mod/module/module
 	for(var/obj/item/mod/module/potential_module as anything in attached_module.mod.modules)
-		if(potential_module.name == module_to_select.value)
+		if(potential_module.name == module_to_select.value || potential_module == module_to_select.value)
 			module = potential_module
 	if(COMPONENT_TRIGGERED_BY(toggle_suit, port))
 		INVOKE_ASYNC(attached_module.mod, /obj/item/mod/control.proc/toggle_activate, attached_module.mod.wearer)
