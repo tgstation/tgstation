@@ -19,13 +19,13 @@
 
 /datum/round_event_control/disease_outbreak/admin_setup()
 	if(!check_rights(R_FUN))
-		return
+		return FALSE
 
 	generate_candidates()
 
 	if(!length(disease_candidates))
 		message_admins("No disease candidates found!")
-		return
+		return FALSE
 
 /datum/round_event_control/disease_outbreak/proc/generate_candidates() //this is fucked up rn fix it tomorrow
 	for(var/mob/living/carbon/human/candidate in shuffle(GLOB.player_list)) //Player list is much more up to date and requires less checks(?)
@@ -42,7 +42,7 @@
 		disease_candidates += candidate
 
 /datum/round_event/disease_outbreak
-	announce_when = 15
+	announce_when = 120
 	///The disease type we will be spawning
 	var/datum/disease/virus_type
 	///Disease recipient candidates, passed from the round_event_control object
@@ -58,9 +58,14 @@
 	var/datum/round_event_control/disease_outbreak/disease_event = control
 	afflicted = disease_event.disease_candidates //Pick our NUMBER here (do this later)
 
-	if(!virus_type)
-		virus_type = pick(/datum/disease/dnaspread, /datum/disease/advance/flu, /datum/disease/advance/cold, /datum/disease/brainrot, /datum/disease/magnitis)
-
+	if(!virus_type) //I wanted to handle this by searching through the presets and checking by disease severity defines but we'd still need to filter out some of them anyways.
+		switch(rand(1,3)) //This is UGLY please change later
+			if(1) //Not particularly harmful diseases
+				virus_type = pick(/datum/disease/advance/flu, /datum/disease/advance/cold, /datum/disease/brainrot, /datum/disease/magnitis)
+			if(2) //The more dangerous ones
+				virus_type = pick(/datum/disease/beesease)
+			if(3) //The wacky ones
+				virus_type = pick(/datum/disease/dnaspread)
 
 	var/datum/disease/new_disease
 	new_disease = new virus_type()
@@ -87,9 +92,6 @@
 /datum/round_event/disease_outbreak/advanced
 	///Number of symptoms for our virus
 	var/max_severity = 3
-
-/datum/round_event_control/disease_outbreak/advanced/generate_candidates()
-	return TRUE
 
 /datum/round_event/disease_outbreak/advanced/start()
 	max_severity = 3 + max(FLOOR((world.time - control.earliest_start)/6000, 1),0) //3 symptoms at 20 minutes, plus 1 per 10 minutes
