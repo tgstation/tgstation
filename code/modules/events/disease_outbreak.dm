@@ -17,7 +17,17 @@
 	if(length(disease_candidates))
 		return TRUE
 
-/datum/round_event_control/disease_outbreak/proc/generate_candidates()
+/datum/round_event_control/disease_outbreak/admin_setup()
+	if(!check_rights(R_FUN))
+		return
+
+	generate_candidates()
+
+	if(!length(disease_candidates))
+		message_admins("No disease candidates found!")
+		return
+
+/datum/round_event_control/disease_outbreak/proc/generate_candidates() //this is fucked up rn fix it tomorrow
 	for(var/mob/living/carbon/human/candidate in shuffle(GLOB.player_list)) //Player list is much more up to date and requires less checks(?)
 		if(!(candidate.mind.assigned_role.job_flags & JOB_CREW_MEMBER) || candidate.stat == DEAD)
 			continue
@@ -29,6 +39,7 @@
 			break
 		if(foundAlready)
 			continue
+
 /datum/round_event/disease_outbreak
 	announce_when = 15
 	///The disease type we will be spawning
@@ -44,7 +55,6 @@
 
 /datum/round_event/disease_outbreak/start()
 	var/datum/round_event_control/disease_outbreak/disease_event = control
-
 	afflicted = disease_event.disease_candidates //Pick our NUMBER here (do this later)
 
 	if(!virus_type)
@@ -65,6 +75,7 @@
 	for(var/mob/living/carbon/human/victim in afflicted)
 		victim.ForceContractDisease(new_disease, FALSE, TRUE)
 		log_game("An event has given [key_name(victim)] the [new_disease]")
+		message_admins("An event has triggered a [new_disease.name] virus outbreak on [ADMIN_LOOKUPFLW(victim)]!")
 
 /datum/round_event_control/disease_outbreak/advanced
 	name = "Disease Outbreak: Advanced"
