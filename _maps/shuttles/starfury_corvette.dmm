@@ -120,7 +120,6 @@
 "ao" = (
 /obj/machinery/light/small/directional/west{
 	brightness = 3;
-	
 	},
 /obj/structure/chair/comfy/shuttle{
 	dir = 1;
