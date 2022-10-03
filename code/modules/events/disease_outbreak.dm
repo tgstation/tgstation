@@ -33,11 +33,7 @@
 			continue
 		if(HAS_TRAIT(candidate, TRAIT_VIRUSIMMUNE)) //Don't pick someone who's virus immune, only for it to not do anything.
 			continue
-		var/foundAlready = FALSE // don't infect someone that already has a disease
-		for(var/thing in candidate.diseases)
-			foundAlready = TRUE
-			break
-		if(foundAlready)
+		if(length(candidate.diseases)) //Is our candidate already sick?
 			continue
 		disease_candidates += candidate
 
@@ -72,7 +68,11 @@
 
 	var/datum/disease/new_disease
 	new_disease = new virus_type()
-	new_disease.carrier = TRUE //fuck you virus code I'm not dealing with your dna spread snowflake bullshit right now
+	new_disease.carrier = TRUE
+
+	infect_players(new_disease)
+
+/datum/round_event/disease_outbreak/proc/infect_players(var/datum/disease/new_disease)
 	for(var/mob/living/carbon/human/victim in afflicted)
 		victim.ForceContractDisease(new_disease, FALSE, TRUE)
 		log_game("An event has given [key_name(victim)] the [new_disease]")
@@ -91,6 +91,10 @@
 /datum/round_event/disease_outbreak/advanced/start()
 	max_severity = 3 + max(FLOOR((world.time - control.earliest_start)/6000, 1),0) //3 symptoms at 20 minutes, plus 1 per 10 minutes
 	var/datum/disease/advance/advanced_disease = new /datum/disease/advance/random(max_severity, max_severity)
+
+	infect_players(advanced_disease)
+
+/datum/round_event/disease_outbreak/advanced/infect_players(var/datum/disease/advance/advanced_disease)
 	var/list/name_symptoms = list() //for feedback
 	for(var/datum/symptom/new_symptom in advanced_disease.symptoms)
 		name_symptoms += new_symptom.name
