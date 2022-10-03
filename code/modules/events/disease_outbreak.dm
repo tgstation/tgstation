@@ -59,13 +59,16 @@
 	afflicted = disease_event.disease_candidates //Pick our NUMBER here (do this later)
 
 	if(!virus_type) //I wanted to handle this by searching through the presets and checking by disease severity defines but we'd still need to filter out some of them anyways.
-		switch(rand(1,3)) //This is UGLY please change later
-			if(1) //Not particularly harmful diseases
-				virus_type = pick(/datum/disease/advance/flu, /datum/disease/advance/cold, /datum/disease/brainrot, /datum/disease/magnitis)
-			if(2) //The more dangerous ones
-				virus_type = pick(/datum/disease/beesease)
-			if(3) //The wacky ones
-				virus_type = pick(/datum/disease/dnaspread)
+		var/list/virus_candidates = list()
+
+		//Practically harmless diseases. Mostly just gives medical something to do.
+		virus_candidates += list(/datum/disease/flu, /datum/disease/advance/flu, /datum/disease/advance/cold)
+
+		//The more dangerous ones
+		virus_candidates += list(/datum/disease/beesease, /datum/disease/brainrot)
+
+		//The wacky ones
+		virus_candidates += list(/datum/disease/dnaspread, /datum/disease/magnitis)
 
 	var/datum/disease/new_disease
 	new_disease = new virus_type()
