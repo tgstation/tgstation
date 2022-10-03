@@ -439,8 +439,8 @@
 "aiP" = (
 /obj/structure/disposalpipe/sorting/mail{
 	dir = 1;
-	sortType = 7;
-	name = "sorting disposal pipe (Security)"
+	name = "sorting disposal pipe (Security)";
+	sortType = 7
 	},
 /turf/open/floor/iron,
 /area/station/security/office)
@@ -10389,6 +10389,14 @@
 /area/station/science/xenobiology)
 "dHv" = (
 /obj/structure/table/glass,
+/obj/item/reagent_containers/cup/beaker/cryoxadone{
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/cup/beaker/cryoxadone{
+	pixel_x = 6;
+	pixel_y = 6
+	},
 /turf/open/floor/iron/dark,
 /area/station/medical/treatment_center)
 "dHw" = (
@@ -23177,8 +23185,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/sorting/mail{
 	dir = 8;
-	sortType = 8;
-	name = "sorting disposal pipe (Head of Security's Office)"
+	name = "sorting disposal pipe (Head of Security's Office)";
+	sortType = 8
 	},
 /turf/open/floor/iron,
 /area/station/security/office)
@@ -36299,6 +36307,10 @@
 	dir = 4
 	},
 /obj/structure/sign/clock/directional/north,
+/obj/item/reagent_containers/cup/beaker/large{
+	pixel_x = 6;
+	pixel_y = 4
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
 "mUM" = (
@@ -36850,6 +36862,10 @@
 	},
 /obj/item/reagent_containers/dropper,
 /obj/item/reagent_containers/syringe,
+/obj/item/reagent_containers/cup/beaker/large{
+	pixel_x = 6;
+	pixel_y = 4
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "ney" = (
@@ -58440,6 +58456,10 @@
 	dir = 6
 	},
 /obj/machinery/airalarm/directional/south,
+/obj/item/reagent_containers/cup/beaker/large{
+	pixel_x = 6;
+	pixel_y = 4
+	},
 /turf/open/floor/iron,
 /area/station/science/lab)
 "uOl" = (
