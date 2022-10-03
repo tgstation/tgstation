@@ -47,7 +47,7 @@
 				bot_count += 1 // this counts the number of bots so we don't launch if there multiple bots.
 				possible_bot = ROI  // We don't change the launched_bot var here because we are not sure if there is another bot on the pad.
 			else
-				user.balloon_alert(user, "There is an unidentified creature on the pad!")
+				user.balloon_alert(user, "There is an unidentified life form on the pad!")
 				return
 	if(bot_count == 1)
 		launched_bot = possible_bot
