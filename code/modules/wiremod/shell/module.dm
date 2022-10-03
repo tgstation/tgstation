@@ -139,7 +139,6 @@
 /obj/item/circuit_component/mod_adapter_core/unregister_shell(atom/movable/shell)
 	UnregisterSignal(attached_module, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(attached_module, COMSIG_MOD_TOGGLED)
-	//UnregisterSignal(attached_module, COMSIG_MOD_MODULE_CHANGED, .proc/on_module_changed)
 	attached_module = null
 	return ..()
 
@@ -163,14 +162,19 @@
 		RegisterSignal(source.loc, COMSIG_MOD_MODULE_SELECTED, .proc/on_module_select)
 		RegisterSignal(source.loc, COMSIG_MOD_PART_TOGGLED, .proc/on_mod_part_toggled)
 		RegisterSignal(source.loc, COMSIG_MOD_TOGGLED, .proc/on_mod_toggled)
-		//RegisterSignal(source.loc, COMSIG_MOD_MODULE_CHANGED, .proc/on_module_changed)
+		RegisterSignal(source.loc, COMSIG_MOD_MODULE_CHANGED, .proc/on_module_changed)
 		RegisterSignal(source.loc, COMSIG_ITEM_EQUIPPED, .proc/equip_check)
 		equip_check()
+		var/datum/port/input/option/option = module_to_select
+		var/obj/item/mod/control/mod = source
+		option.possible_options = mod.modules
+		if (option.possible_options.len)
+			option.set_value(option.possible_options[1])
 	else if(istype(old_loc, /obj/item/mod/control))
 		UnregisterSignal(old_loc, list(COMSIG_MOD_MODULE_SELECTED, COMSIG_ITEM_EQUIPPED))
 		UnregisterSignal(old_loc, COMSIG_MOD_PART_TOGGLED)
 		UnregisterSignal(old_loc, COMSIG_MOD_TOGGLED)
-		//UnregisterSignal(old.loc, COMSIG_MOD_MODULE_CHANGED)
+		UnregisterSignal(old_loc, COMSIG_MOD_MODULE_CHANGED)
 		selected_module.set_output(null)
 		wearer.set_output(null)
 		deployed.set_output(FALSE)
@@ -181,12 +185,13 @@
 	selected_module.set_output(module.name)
 	on_module_selected.set_output(COMPONENT_SIGNAL)
 
-/*/obj/item/circuit_component/mod_adapter_core/proc/on_module_changed()
+/obj/item/circuit_component/mod_adapter_core/proc/on_module_changed()
 	SIGNAL_HANDLER
-	module_to_select.possible_options = attached_module.mod.modules
-	if (module_to_select.possible_options.length)
-		module_to_select.set_value(module_to_select.possible_options[1])
-*/
+	var/datum/port/input/option/option = module_to_select
+	option.possible_options = attached_module.mod.modules
+	if (option.possible_options.len)
+		option.set_value(option.possible_options[1])
+
 
 /obj/item/circuit_component/mod_adapter_core/proc/on_mod_part_toggled()
 	SIGNAL_HANDLER
