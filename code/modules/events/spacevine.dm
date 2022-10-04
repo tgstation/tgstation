@@ -395,14 +395,11 @@
 	quality = POSITIVE
 	severity = SEVERITY_MINOR
 
-//This specific mutation only covers floors instead of structures, items, mobs
+//This specific mutation only covers floors instead of structures, items, mobs and cant tangle mobs
 /datum/spacevine_mutation/timid/on_birth(obj/structure/spacevine/holder)
 	holder.plane = FLOOR_PLANE
-	return ..()
-
-//This Kudzu cant tangle mobs anymore
-/datum/spacevine_mutation/timid/on_buckle(obj/structure/spacevine/holder, mob/living/buckled)
 	holder.can_tangle = FALSE
+	return ..()
 
 /datum/spacevine_mutation/flowering
 	name = "Flowering"
