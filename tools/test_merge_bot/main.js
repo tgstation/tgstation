@@ -41,6 +41,8 @@ export async function processTestMerges({ github, context }) {
 		}
 	}
 
+	console.log(JSON.stringify(testMergesPerPr, null, 2));
+
 	for (const [prNumber, servers] of Object.entries(testMergesPerPr)) {
 		const comments = await github.graphql(
 			`
