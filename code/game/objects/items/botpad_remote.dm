@@ -24,7 +24,7 @@
 	if(connected_botpad)
 		connected_botpad.recall(user)
 		return
-	user.balloon_alert(user, "Controller has no connected pad!")
+	user?.balloon_alert(user, "Controller has no connected pad!")
 	return
 
 /obj/item/botpad_remote/multitool_act(mob/living/user, obj/item/tool)
