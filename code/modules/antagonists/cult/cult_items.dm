@@ -321,16 +321,17 @@ Striking a noncultist, however, will tear their flesh."}
 
 /obj/item/clothing/suit/hooded/cultrobes/berserker
 	name = "flagellant's robes"
-	desc = "Blood-soaked robes infused with dark magic; allows the user to move at inhuman speeds, but at the cost of increased damage."
+	desc = "Blood-soaked robes infused with dark magic; allows the user to move at inhuman speeds, but at the cost of increased damage. Provides an even greater speed boost if its hood is worn."
 	allowed = list(/obj/item/tome, /obj/item/melee/cultblade)
 	armor = list(MELEE = -45, BULLET = -45, LASER = -45,ENERGY = -55, BOMB = -45, BIO = 0, FIRE = 0, ACID = 0)
-	slowdown = -0.6
+	slowdown = -0.3 //the hood gives an additional -0.3 if you have it flipped up, for a total of -0.6
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/berserkerhood
 
 /obj/item/clothing/head/hooded/cult_hoodie/berserkerhood
 	name = "flagellant's hood"
-	desc = "Blood-soaked hood infused with dark magic."
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
+	desc = "A blood-soaked hood infused with dark magic."
+	armor = list(MELEE = -45, BULLET = -45, LASER = -45,ENERGY = -55, BOMB = -45, BIO = 0, FIRE = 0, ACID = 0)
+	slowdown = -0.3
 
 /obj/item/clothing/suit/hooded/cultrobes/berserker/equipped(mob/living/user, slot)
 	..()

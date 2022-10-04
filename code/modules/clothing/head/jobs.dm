@@ -232,7 +232,7 @@
 	. = ..()
 	UnregisterSignal(M, COMSIG_MOB_SAY)
 
-/obj/item/clothing/head/warden/drill/proc/handle_speech(datum/source, mob/speech_args)
+/obj/item/clothing/head/warden/drill/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
 	var/message = speech_args[SPEECH_MESSAGE]
 	if(message[1] != "*")
@@ -405,7 +405,7 @@
 	icon_state = "beret_badge"
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
-	greyscale_colors = "#397F3F#FFCE5B"
+	greyscale_colors = "#46b946#f2c42e"
 	armor = list(MELEE = 80, BULLET = 80, LASER = 50, ENERGY = 50, BOMB = 100, BIO = 100, FIRE = 100, ACID = 90, WOUND = 10)
 	strip_delay = 10 SECONDS
 

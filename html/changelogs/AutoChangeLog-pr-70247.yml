@@ -1,0 +1,6 @@
+author: "ATHATH"
+delete-after: True
+changes: 
+  - balance: "Half of the speed boost from wearing flagellant's robes has been moved to wearing the hoods that come with said robes."
+  - balance: "Flagellant's hoods now have the same (negative) armor values as the robes they're attached to."
+  - spellcheck: "The descriptions of flagellant's robes and hoods have been updated."
