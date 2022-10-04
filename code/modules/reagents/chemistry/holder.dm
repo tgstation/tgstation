@@ -516,9 +516,9 @@
 			R.expose_multiple(r_to_send, target_atom, methods, part, show_message)
 
 		for(var/datum/reagent/reagent as anything in reagents_to_remove)
-			var/transfer_amount = reagent.volume * part
 			if(methods)
 				reagent.on_transfer(target_atom, methods, transfer_amount * multiplier)
+			var/transfer_amount = reagent.volume * part
 			remove_reagent(reagent.type, transfer_amount)
 			var/list/reagent_qualities = list(REAGENT_TRANSFER_AMOUNT = transfer_amount, REAGENT_PURITY = reagent.purity)
 			transfer_log[reagent.type] = reagent_qualities
