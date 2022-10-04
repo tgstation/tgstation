@@ -623,11 +623,6 @@
 			continue
 		if(!C.can_use())
 			continue
-
-		tempnetwork.Remove("rd", "ordnance", "prison")
-		if(!C.can_use())
-			continue
-
 		tempnetwork.Remove("rd", "ordnance", "prison")
 		if(length(tempnetwork))
 			for(var/i in C.network)
