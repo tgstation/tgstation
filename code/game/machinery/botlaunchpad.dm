@@ -56,7 +56,7 @@
 		))
 		use_power(active_power_usage)
 	else
-		user.balloon_alert(user, "There is more than one bot on the pad!")
+		user?.balloon_alert(user, "There is more than one bot on the pad!")
 
 /obj/machinery/botpad/proc/recall(mob/living/user)
 	if(!user)
