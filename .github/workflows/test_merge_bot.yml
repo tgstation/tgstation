@@ -1,7 +1,7 @@
 name: Test Merge Detector
 on:
   schedule:
-  - cron: "5 4 * * *"
+  - cron: "*/30 * * * *"
   workflow_dispatch:
 jobs:
   test_merge_bot:
