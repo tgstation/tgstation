@@ -1,5 +1,5 @@
 import fetch from "node-fetch";
-import { GET_TEST_MERGES_URL } from "./config";
+import { GET_TEST_MERGES_URL } from "./config.js";
 
 const TEST_MERGE_COMMENT_HEADER = "<!-- test_merge_bot:";
 
