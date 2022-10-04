@@ -442,8 +442,6 @@
 	food_reagents = list(/datum/reagent/blood = 15)
 	tastes = list("hell" = 1, "people" = 1)
 	metabolization_amount = REAGENTS_METABOLISM
-	/// What the player hears from the bubblegum hallucination, and also says one of these when suiciding
-	var/static/list/hallucination_lines = list("I AM IMMORTAL.", "I SHALL TAKE YOUR WORLD.", "I SEE YOU.", "YOU CANNOT ESCAPE ME FOREVER.", "NOTHING CAN HOLD ME.")
 
 /obj/item/food/bubblegum/bubblegum/process()
 	. = ..()
@@ -470,16 +468,15 @@
 
 ///This proc has a 5% chance to have a bubblegum line appear, with an 85% chance for just text and 15% for a bubblegum hallucination and scarier text.
 /obj/item/food/bubblegum/bubblegum/proc/hallucinate(mob/living/carbon/victim)
-	if(!prob(5)) //cursed by bubblegum
+	if(prob(95)) //cursed by bubblegum
 		return
 	if(prob(15))
-		new /datum/hallucination/oh_yeah(victim)
-		to_chat(victim, span_colossus("<b>[pick(hallucination_lines)]</b>"))
+		victim.cause_hallucination(/datum/hallucination/oh_yeah, "bubblegum bubblegum", haunt_them = TRUE)
 	else
 		to_chat(victim, span_warning("[pick("You hear faint whispers.", "You smell ash.", "You feel hot.", "You hear a roar in the distance.")]"))
 
 /obj/item/food/bubblegum/bubblegum/suicide_act(mob/user)
-	user.say(";[pick(hallucination_lines)]")
+	user.say(";[pick(BUBBLEGUM_HALLUCINATION_LINES)]")
 	return ..()
 
 /obj/item/food/gumball
@@ -930,4 +927,14 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/medicine/antihol = 2)
 	tastes = list("pickle" = 1, "spices" = 1, "salt water" = 2)
 	foodtypes = VEGETABLES
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/springroll
+	name = "spring roll"
+	desc = "A plate of translucent rice wrappers filled with fresh vegetables, served with sweet chili sauce. You either love them or hate them."
+	icon = 'icons/obj/food/food.dmi'
+	icon_state = "springroll"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/consumable/capsaicin = 2)
+	tastes = list("rice wrappers" = 1, "spice" = 1, "crunchy veggies" = 1)
+	foodtypes = GRAIN | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL

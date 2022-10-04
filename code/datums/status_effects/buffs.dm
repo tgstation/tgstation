@@ -141,36 +141,6 @@
 	if(islist(owner.stun_absorption) && owner.stun_absorption["blooddrunk"])
 		owner.stun_absorption -= "blooddrunk"
 
-/datum/status_effect/sword_spin
-	id = "Bastard Sword Spin"
-	duration = 50
-	tick_interval = 8
-	alert_type = null
-
-
-/datum/status_effect/sword_spin/on_apply()
-	owner.visible_message(span_danger("[owner] begins swinging the sword with inhuman strength!"))
-	var/oldcolor = owner.color
-	owner.color = "#ff0000"
-	owner.add_stun_absorption("bloody bastard sword", duration, 2, "doesn't even flinch as the sword's power courses through them!", "You shrug off the stun!", " glowing with a blazing red aura!")
-	owner.spin(duration,1)
-	animate(owner, color = oldcolor, time = duration, easing = EASE_IN)
-	addtimer(CALLBACK(owner, /atom/proc/update_atom_colour), duration)
-	playsound(owner, 'sound/weapons/fwoosh.ogg', 75, FALSE)
-	return ..()
-
-
-/datum/status_effect/sword_spin/tick()
-	playsound(owner, 'sound/weapons/fwoosh.ogg', 75, FALSE)
-	var/obj/item/slashy
-	slashy = owner.get_active_held_item()
-	for(var/mob/living/M in orange(1,owner))
-		slashy.attack(M, owner)
-
-/datum/status_effect/sword_spin/on_remove()
-	owner.visible_message(span_warning("[owner]'s inhuman strength dissipates and the sword's runes grow cold!"))
-
-
 //Used by changelings to rapidly heal
 //Heals 10 brute and oxygen damage every second, and 5 fire
 //Being on fire will suppress this healing
@@ -267,7 +237,7 @@
 					//If user does not have the corresponding hand anymore, give them one and return the rod to their hand
 					if(((hand % 2) == 0))
 						var/obj/item/bodypart/L = itemUser.newBodyPart(BODY_ZONE_R_ARM, FALSE, FALSE)
-						if(L.attach_limb(itemUser))
+						if(L.try_attach_limb(itemUser))
 							itemUser.put_in_hand(newRod, hand, forced = TRUE)
 						else
 							qdel(L)
@@ -275,7 +245,7 @@
 							return
 					else
 						var/obj/item/bodypart/L = itemUser.newBodyPart(BODY_ZONE_L_ARM, FALSE, FALSE)
-						if(L.attach_limb(itemUser))
+						if(L.try_attach_limb(itemUser))
 							itemUser.put_in_hand(newRod, hand, forced = TRUE)
 						else
 							qdel(L)
@@ -318,9 +288,9 @@
 
 /datum/status_effect/good_music/tick()
 	if(owner.can_hear())
-		owner.adjust_timed_status_effect(-4 SECONDS, /datum/status_effect/dizziness)
-		owner.adjust_timed_status_effect(-4 SECONDS, /datum/status_effect/jitter)
-		owner.adjust_timed_status_effect(-1 SECONDS, /datum/status_effect/confusion)
+		owner.adjust_dizzy(-4 SECONDS)
+		owner.adjust_jitter(-4 SECONDS)
+		owner.adjust_confusion(-1 SECONDS)
 		owner.add_mood_event("goodmusic", /datum/mood_event/goodmusic)
 
 /atom/movable/screen/alert/status_effect/regenerative_core
@@ -378,17 +348,30 @@
 	. = ..()
 	to_chat(owner, "<span class='reallybig redtext'>RIP AND TEAR</span>")
 	SEND_SOUND(owner, sound('sound/hallucinations/veryfar_noise.ogg'))
-	new /datum/hallucination/delusion(owner, forced = TRUE, force_kind = "demon", duration = duration, skip_nearby = FALSE)
-	chainsaw = new(get_turf(owner))
-	owner.log_message("entered a blood frenzy", LOG_ATTACK)
-	ADD_TRAIT(chainsaw, TRAIT_NODROP, CHAINSAW_FRENZY_TRAIT)
+	owner.cause_hallucination( \
+		/datum/hallucination/delusion/preset/demon, \
+		"[id] status effect", \
+		duration = duration, \
+		affects_us = FALSE, \
+		affects_others = TRUE, \
+		skip_nearby = FALSE, \
+		play_wabbajack = FALSE, \
+	)
+
 	owner.drop_all_held_items()
+
+	chainsaw = new(get_turf(owner))
+	ADD_TRAIT(chainsaw, TRAIT_NODROP, CHAINSAW_FRENZY_TRAIT)
 	owner.put_in_hands(chainsaw, forced = TRUE)
 	chainsaw.attack_self(owner)
-	owner.reagents.add_reagent(/datum/reagent/medicine/adminordrazine,25)
+
+	owner.log_message("entered a blood frenzy", LOG_ATTACK)
+	owner.reagents.add_reagent(/datum/reagent/medicine/adminordrazine, 25)
 	to_chat(owner, span_warning("KILL, KILL, KILL! YOU HAVE NO ALLIES ANYMORE, KILL THEM ALL!"))
+
 	var/datum/client_colour/colour = owner.add_client_colour(/datum/client_colour/bloodlust)
 	QDEL_IN(colour, 1.1 SECONDS)
+	return TRUE
 
 /datum/status_effect/mayhem/on_remove()
 	. = ..()

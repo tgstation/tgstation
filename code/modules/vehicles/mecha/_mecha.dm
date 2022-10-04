@@ -71,8 +71,6 @@
 	var/allow_diagonal_movement = FALSE
 	///Whether or not the mech destroys walls by running into it.
 	var/bumpsmash = FALSE
-	///What mobs are currently repairing us.
-	var/list/mob/living/repairing_mobs
 
 	///////////ATMOS
 	///Whether we are currrently drawing from the internal tank
@@ -196,14 +194,15 @@
 	/// Ui size, so you can make the UI bigger if you let it load a lot of stuff
 	var/ui_y = 600
 	/// ref to screen object that displays in the middle of the UI
-	var/atom/movable/screen/mech_view/ui_view
+	var/atom/movable/screen/map_view/ui_view
 
 /obj/item/radio/mech //this has to go somewhere
 	subspace_transmission = TRUE
 
 /obj/vehicle/sealed/mecha/Initialize(mapload)
 	. = ..()
-	ui_view = new(null, src)
+	ui_view = new()
+	ui_view.generate_view("mech_view_[REF(src)]")
 	if(enclosed)
 		internal_tank = new (src)
 		RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE , .proc/disconnect_air)

@@ -1,0 +1,4 @@
+author: "san7890"
+delete-after: True
+changes: 
+  - admin: "Messages regarding a random event triggering will no longer message you twice."

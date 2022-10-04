@@ -69,18 +69,22 @@
 #define BP_BLOCK_CHANGE_SPECIES (1<<0)
 
 //Bodytype defines for how things can be worn, surgery, and other misc things.
-///The limb is organic
+///The limb is organic.
 #define BODYTYPE_ORGANIC (1<<0)
-///The limb is robotic
+///The limb is robotic.
 #define BODYTYPE_ROBOTIC (1<<1)
-///The limb fits the human mold
+///The limb fits the human mold. This is not meant to be literal, if the sprite "fits" on a human, it is "humanoid", regardless of origin.
 #define BODYTYPE_HUMANOID (1<<2)
-///The limb is digitigrade
-#define BODYTYPE_DIGITIGRADE (1<<3) //Cancer
-///The limb fits the monkey mold
+///The limb is digitigrade.
+#define BODYTYPE_DIGITIGRADE (1<<3)
+///The limb fits the monkey mold.
 #define BODYTYPE_MONKEY (1<<4)
-///The limb is snouted
+///The limb is snouted.
 #define BODYTYPE_SNOUTED (1<<5)
+///A placeholder bodytype for xeno larva, so their limbs cannot be attached to anything.
+#define BODYTYPE_LARVA_PLACEHOLDER (1<<6)
+///The limb is from a xenomorph.
+#define BODYTYPE_ALIEN (1<<7)
 
 // Defines for Species IDs. Used to refer to the name of a species, for things like bodypart names or species preferences.
 #define SPECIES_ABDUCTOR "abductor"
@@ -112,9 +116,10 @@
 #define SPECIES_ZOMBIE_KROKODIL "krokodil_zombie"
 
 // Like species IDs, but not specifically attached a species.
-#define BODYPART_TYPE_ALIEN "alien"
-#define BODYPART_TYPE_ROBOTIC "robotic"
-#define BODYPART_TYPE_DIGITIGRADE "digitigrade"
+#define BODYPART_ID_ALIEN "alien"
+#define BODYPART_ID_ROBOTIC "robotic"
+#define BODYPART_ID_DIGITIGRADE "digitigrade"
+#define BODYPART_ID_LARVA "larva"
 
 //See: datum/species/var/digitigrade_customization
 ///The species does not have digitigrade legs in generation.
@@ -126,14 +131,6 @@
 
 ///Digitigrade's prefs, used in features for legs if you're meant to be a Digitigrade.
 #define DIGITIGRADE_LEGS "Digitigrade Legs"
-
-//TODO: Remove entirely in favor of the BODYTYPE system
-///Body type bitfields for allowed_animal_origin used to check compatible surgery body types (use NONE for no matching body type)
-#define HUMAN_BODY (1 << 0)
-#define MONKEY_BODY (1 << 1)
-#define ALIEN_BODY (1 << 2)
-#define LARVA_BODY (1 << 3)
-/*see __DEFINES/inventory.dm for bodypart bitflag defines*/
 
 // Health/damage defines
 #define MAX_LIVING_HEALTH 100
@@ -435,6 +432,7 @@
 #define REAGENTS_EFFECT_MULTIPLIER (REAGENTS_METABOLISM / 0.4) // By defining the effect multiplier this way, it'll exactly adjust all effects according to how they originally were with the 0.4 metabolism
 
 // Eye protection
+#define FLASH_PROTECTION_HYPER_SENSITIVE -2
 #define FLASH_PROTECTION_SENSITIVE -1
 #define FLASH_PROTECTION_NONE 0
 #define FLASH_PROTECTION_FLASH 1
@@ -704,16 +702,6 @@
 /// The layer above mutant body parts
 #define ABOVE_BODY_FRONT_LAYER (BODY_FRONT_LAYER-1)
 
-//used by canUseTopic()
-/// If silicons need to be next to the atom to use this
-#define BE_CLOSE TRUE
-/// If other mobs (monkeys, aliens, etc) can use this
-#define NO_DEXTERITY TRUE // I had to change 20+ files because some non-dnd-playing fuckchumbis can't spell "dexterity"
-// If telekinesis you can use it from a distance
-#define NO_TK TRUE
-/// If mobs can use this while resting
-#define FLOOR_OKAY TRUE
-
 /// The default mob sprite size (used for shrinking or enlarging the mob sprite to regular size)
 #define RESIZE_DEFAULT_SIZE 1
 
@@ -731,3 +719,7 @@
 #define EYE_COVER_CHECK_GLASSES (1<<0)
 #define EYE_COVER_CHECK_HEAD (1<<1)
 #define EYE_COVER_CHECK_MASK (1<<2)
+
+/// Checking flags for [/mob/proc/can_read()]
+#define READING_CHECK_LITERACY (1<<0)
+#define READING_CHECK_LIGHT (1<<1)

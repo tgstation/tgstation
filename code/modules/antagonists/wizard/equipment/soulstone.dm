@@ -276,7 +276,7 @@
 			to_chat(user, span_danger("An overwhelming feeling of dread comes over you as you attempt to place [SS] into the shell. It would be wise to be rid of this quickly."))
 			if(isliving(user))
 				var/mob/living/living_user = user
-				living_user.set_timed_status_effect(1 MINUTES, /datum/status_effect/dizziness, only_if_higher = TRUE)
+				living_user.set_dizzy_if_lower(1 MINUTES)
 			return
 		if(SS.theme == THEME_HOLY && IS_CULTIST(user))
 			SS.hot_potato(user)

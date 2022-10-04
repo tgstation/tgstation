@@ -117,15 +117,22 @@
 	/// The antag datum to give to the player spawned
 	var/antag_datum_to_give = /datum/antagonist/battlecruiser
 
+/obj/effect/mob_spawn/ghost_role/human/syndicate/battlecruiser/allow_spawn(mob/user, silent = FALSE)
+	if(!(user.ckey in antag_team.players_spawned))
+		return TRUE
+	to_chat(user, span_boldwarning("You have already used up your chance to roll as Battlecruiser."))
+	return FALSE
+
 /obj/effect/mob_spawn/ghost_role/human/syndicate/battlecruiser/special(mob/living/spawned_mob, mob/possesser)
 	. = ..()
 	if(!spawned_mob.mind)
 		spawned_mob.mind_initialize()
 	var/datum/mind/mob_mind = spawned_mob.mind
 	mob_mind.add_antag_datum(antag_datum_to_give, antag_team)
+	antag_team.players_spawned += (spawned_mob.ckey)
 
 /datum/team/battlecruiser
-	name = "Battlecruiser Crew"
+	name = "\improper Battlecruiser Crew"
 	member_name = "crewmember"
 	/// The central objective of this battlecruiser
 	var/core_objective = /datum/objective/nuclear

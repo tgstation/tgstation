@@ -378,7 +378,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 		if(baton.cell?.charge && baton.active)
 			flick("baton_active", src)
 			user.Paralyze(baton.knockdown_time)
-			user.set_timed_status_effect(baton.knockdown_time, /datum/status_effect/speech/stutter)
+			user.set_stutter(baton.knockdown_time)
 			baton.cell.use(baton.cell_hit_cost)
 			user.visible_message(span_warning("[user] shocks [user.p_them()]self while attempting to wash the active [baton.name]!"), \
 								span_userdanger("You unwisely attempt to wash [baton] while it's still on."))
@@ -626,7 +626,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 		if(baton.cell?.charge && baton.active)
 			flick("baton_active", src)
 			user.Paralyze(baton.knockdown_time)
-			user.set_timed_status_effect(baton.knockdown_time, /datum/status_effect/speech/stutter)
+			user.set_stutter(baton.knockdown_time)
 			baton.cell.use(baton.cell_hit_cost)
 			user.visible_message(span_warning("[user] shocks [user.p_them()]self while attempting to wash the active [baton.name]!"), \
 								span_userdanger("You unwisely attempt to wash [baton] while it's still on."))
@@ -724,12 +724,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 	open = !open
 	if(open)
 		layer = SIGN_LAYER
-		plane = GAME_PLANE
+		SET_PLANE_IMPLICIT(src, GAME_PLANE)
 		set_density(FALSE)
 		set_opacity(FALSE)
 	else
 		layer = WALL_OBJ_LAYER
-		plane = GAME_PLANE_UPPER
+		SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
 		set_density(TRUE)
 		if(opaque_closed)
 			set_opacity(TRUE)
@@ -826,7 +826,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 /obj/structure/curtain/cloth/fancy/mechanical/proc/open()
 	icon_state = "[icon_type]-open"
 	layer = SIGN_LAYER
-	plane = GAME_PLANE
+	SET_PLANE_IMPLICIT(src, GAME_PLANE)
 	set_density(FALSE)
 	open = TRUE
 	set_opacity(FALSE)
@@ -834,7 +834,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 /obj/structure/curtain/cloth/fancy/mechanical/proc/close()
 	icon_state = "[icon_type]-closed"
 	layer = WALL_OBJ_LAYER
-	plane = GAME_PLANE_UPPER
+	SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
 	set_density(TRUE)
 	open = FALSE
 	if(opaque_closed)

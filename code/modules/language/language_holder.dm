@@ -183,6 +183,18 @@ Key procs
 /datum/language_holder/proc/get_random_spoken_language()
 	return pick(spoken_languages)
 
+/// Gets a random spoken language, trying to get a non-common language.
+/datum/language_holder/proc/get_random_spoken_uncommon_language()
+	var/list/languages_minus_common = assoc_to_keys(spoken_languages) - /datum/language/common
+
+	// They have a language other than common
+	if(length(languages_minus_common))
+		return pick(languages_minus_common)
+
+	// They can only speak common, oh well.
+	else
+		return /datum/language/common
+
 /// Opens a language menu reading from the language holder.
 /datum/language_holder/proc/open_language_menu(mob/user)
 	if(!language_menu)

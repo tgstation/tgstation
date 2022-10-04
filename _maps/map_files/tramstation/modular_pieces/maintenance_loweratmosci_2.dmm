@@ -426,6 +426,7 @@
 /area/station/maintenance/starboard/lesser)
 "In" = (
 /obj/item/relic,
+/obj/effect/landmark/blobstart,
 /turf/open/misc/asteroid/dug,
 /area/station/maintenance/starboard/lesser)
 "IF" = (
@@ -471,6 +472,11 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
+/area/station/maintenance/starboard/lesser)
+"Lj" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/lesser)
 "LI" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
@@ -1115,7 +1121,7 @@ Jk
 Jk
 Kz
 QK
-hl
+AU
 Jk
 Jk
 Jk
@@ -1146,7 +1152,7 @@ Jk
 Jk
 GF
 QK
-AU
+QK
 Jk
 Jk
 Jk
@@ -1177,7 +1183,7 @@ Jk
 Jk
 hl
 QK
-QK
+AU
 Jk
 Jk
 Jk
@@ -1208,7 +1214,7 @@ Jk
 Jk
 hl
 QK
-AU
+hl
 Jk
 Jk
 Jk
@@ -1392,7 +1398,7 @@ Jk
 Jk
 Jk
 Jk
-AU
+Lj
 AU
 hl
 zQ

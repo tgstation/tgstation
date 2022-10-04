@@ -14,6 +14,11 @@
 "c" = (
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/science)
+"e" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/science)
 "f" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/emcloset,
@@ -47,11 +52,18 @@
 /obj/effect/spawner/random/engineering/toolbox,
 /obj/effect/spawner/random/engineering/material_cheap,
 /obj/effect/spawner/random/engineering/flashlight,
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/medical)
 "o" = (
 /turf/open/misc/asteroid/airless,
 /area/template_noop)
+"p" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/south,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/science)
 "r" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -91,6 +103,10 @@
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/template_noop)
+"D" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/misc/asteroid/airless,
+/area/template_noop)
 "E" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
@@ -126,6 +142,12 @@
 /obj/item/storage/bag/ore,
 /turf/open/misc/asteroid/airless,
 /area/template_noop)
+"T" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/blobstart,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/medical)
 "U" = (
 /turf/closed/wall,
 /area/station/maintenance/department/science)
@@ -654,7 +676,7 @@ o
 o
 o
 o
-o
+D
 C
 O
 o
@@ -662,7 +684,7 @@ w
 w
 Y
 n
-B
+T
 Z
 Z
 Z
@@ -946,7 +968,7 @@ Z
 Z
 Z
 V
-V
+p
 U
 Z
 Z
@@ -974,7 +996,7 @@ Z
 Z
 Z
 l
-V
+e
 Z
 Z
 Z
@@ -1002,7 +1024,7 @@ Z
 Z
 Z
 f
-V
+e
 Z
 Z
 Z

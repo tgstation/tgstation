@@ -383,7 +383,7 @@
 			victim.emote("cry")
 			victim.set_eye_blur_if_lower(10 SECONDS)
 			victim.adjust_temp_blindness(6 SECONDS)
-			victim.set_timed_status_effect(5 SECONDS, /datum/status_effect/confusion, only_if_higher = TRUE)
+			victim.set_confusion_if_lower(5 SECONDS)
 			victim.Knockdown(3 SECONDS)
 			victim.add_movespeed_modifier(/datum/movespeed_modifier/reagent/pepperspray)
 			addtimer(CALLBACK(victim, /mob.proc/remove_movespeed_modifier, /datum/movespeed_modifier/reagent/pepperspray), 10 SECONDS)
@@ -395,7 +395,7 @@
 			if(prob(10))
 				victim.set_eye_blur_if_lower(2 SECONDS)
 			if(prob(10))
-				victim.set_timed_status_effect(2 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
+				victim.set_dizzy_if_lower(2 SECONDS)
 			if(prob(5))
 				victim.vomit()
 
@@ -459,7 +459,7 @@
 		if(DT_PROB(min(current_cycle/2, 12.5), delta_time))
 			to_chat(M, span_danger("You can't get the scent of garlic out of your nose! You can barely think..."))
 			M.Paralyze(10)
-			M.set_timed_status_effect(20 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
+			M.set_jitter_if_lower(20 SECONDS)
 	else
 		var/obj/item/organ/internal/liver/liver = M.getorganslot(ORGAN_SLOT_LIVER)
 		if(liver && HAS_TRAIT(liver, TRAIT_CULINARY_METABOLISM))
@@ -467,6 +467,26 @@
 				M.heal_bodypart_damage(brute = 1, burn = 1)
 				. = TRUE
 	..()
+
+/datum/reagent/consumable/tearjuice
+	name = "Tear Juice"
+	description = "A blinding substance extracted from certain onions."
+	color = "#c0c9a0"
+	taste_description = "bitterness"
+	ph = 5
+
+/datum/reagent/consumable/tearjuice/expose_mob(mob/living/exposed_mob, methods = INGEST, reac_volume)
+	. = ..()
+	if(!ishuman(exposed_mob))
+		return
+
+	var/mob/living/carbon/victim = exposed_mob
+	if(methods & (INGEST | VAPOR))
+		var/tear_proof = victim.is_eyes_covered()
+		if (!tear_proof)
+			to_chat(exposed_mob, span_warning("Your eyes sting!"))
+			victim.emote("cry")
+			victim.adjust_eye_blur(6 SECONDS)
 
 /datum/reagent/consumable/sprinkles
 	name = "Sprinkles"
@@ -692,38 +712,6 @@
 	color ="#708a88"
 	taste_description = "rotten eggs"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/consumable/tearjuice
-	name = "Tear Juice"
-	description = "A blinding substance extracted from certain onions."
-	color = "#c0c9a0"
-	taste_description = "bitterness"
-	ph = 5
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/consumable/tearjuice/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
-	. = ..()
-	if(!(methods & INGEST) || !((methods & (TOUCH|PATCH|VAPOR)) && (exposed_mob.is_mouth_covered() || exposed_mob.is_eyes_covered())))
-		return
-
-	if(!exposed_mob.getorganslot(ORGAN_SLOT_EYES)) //can't blind somebody with no eyes
-		to_chat(exposed_mob, span_notice("Your eye sockets feel wet."))
-	else
-		if(!exposed_mob.has_status_effect(/datum/status_effect/eye_blur))
-			to_chat(exposed_mob, span_warning("Tears well up in your eyes!"))
-		exposed_mob.adjust_temp_blindness(4 SECONDS)
-		exposed_mob.set_eye_blur_if_lower(10 SECONDS)
-
-/datum/reagent/consumable/tearjuice/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	..()
-	if(!M.has_status_effect(/datum/status_effect/eye_blur))
-		return
-
-	M.adjust_eye_blur(8 SECONDS * REM * delta_time)
-	if(DT_PROB(5, delta_time))
-		to_chat(M, span_warning("Your eyes sting!"))
-		M.adjust_temp_blindness(4 SECONDS)
-
 
 /datum/reagent/consumable/nutriment/stabilized
 	name = "Stabilized Nutriment"
@@ -1020,7 +1008,7 @@
 /datum/reagent/consumable/peanut_butter/on_mob_life(mob/living/carbon/M, delta_time, times_fired) //ET loves peanut butter
 	if(isabductor(M))
 		M.add_mood_event("ET_pieces", /datum/mood_event/et_pieces, name)
-		M.set_timed_status_effect(30 SECONDS * REM * delta_time, /datum/status_effect/drugginess)
+		M.set_drugginess(30 SECONDS * REM * delta_time)
 	..()
 
 /datum/reagent/consumable/vinegar

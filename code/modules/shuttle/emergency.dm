@@ -765,7 +765,7 @@
 		SSshuttle.backup_shuttle = null
 	return ..()
 
-/obj/docking_port/mobile/emergency/shuttle_build/register()
+/obj/docking_port/mobile/emergency/shuttle_build/postregister()
 	. = ..()
 	initiate_docking(SSshuttle.getDock("emergency_home"))
 
