@@ -57,6 +57,7 @@
 			/datum/status_effect/drowsiness,
 			/datum/status_effect/jitter,
 			/datum/status_effect/hallucination,
+			/datum/status_effect/inebriated,
 		)
 		// All speech effects and all incapacitation effects
 		status_effects_to_clear += typesof(/datum/status_effect/speech)

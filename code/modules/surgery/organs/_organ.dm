@@ -189,7 +189,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 
 	if(damage >= maxHealth)
 		organ_flags |= ORGAN_FAILING
-	if(damage < maxHealth)
+	else
 		organ_flags &= ~ORGAN_FAILING
 
 	if(mess && owner && owner.stat <= SOFT_CRIT)
@@ -223,13 +223,6 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 			return high_threshold_cleared
 		if(prev_damage == maxHealth)
 			return now_fixed
-
-///Checks if an organ should/shouldn't be failing and gives the appropriate organ flag
-/obj/item/organ/proc/check_failing_thresholds()
-	if(damage >= maxHealth)
-		organ_flags |= ORGAN_FAILING
-	if(damage < maxHealth)
-		organ_flags &= ~ORGAN_FAILING
 
 //Looking for brains?
 //Try code/modules/mob/living/carbon/brain/brain_item.dm
