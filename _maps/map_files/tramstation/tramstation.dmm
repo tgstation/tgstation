@@ -439,8 +439,8 @@
 "aiP" = (
 /obj/structure/disposalpipe/sorting/mail{
 	dir = 1;
-	sortType = 7;
-	name = "sorting disposal pipe (Security)"
+	name = "sorting disposal pipe (Security)";
+	sortType = 7
 	},
 /turf/open/floor/iron,
 /area/station/security/office)
@@ -15418,6 +15418,7 @@
 "fzm" = (
 /obj/structure/table/wood,
 /obj/machinery/light/dim/directional/east,
+/obj/item/reagent_containers/cup/glass/shaker,
 /turf/open/floor/wood,
 /area/station/service/bar/backroom)
 "fzo" = (
@@ -23177,8 +23178,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/sorting/mail{
 	dir = 8;
-	sortType = 8;
-	name = "sorting disposal pipe (Head of Security's Office)"
+	name = "sorting disposal pipe (Head of Security's Office)";
+	sortType = 8
 	},
 /turf/open/floor/iron,
 /area/station/security/office)
