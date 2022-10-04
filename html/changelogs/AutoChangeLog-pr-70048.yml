@@ -1,7 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes: 
-  - rscadd: "New achievement -- Preventing a heart attack with exercise now gives you a shiny new achievement badge. Show it to all of your gym buddies, be the coolest guy in the locker room."
-  - imageadd: "Cool new achievement badge. Wow!"
-  - refactor: "Rewrites the heart attack event file to be a bit more flexible. Integrates the heart attack eligibility check to canSpawnEvent to prevent edge cases. Migrates the exercise status effect check to the round_event."
-  - admin: "MULTI-HEART ATTACK COMBO functionality added (trigger the heart_attack event and select how many victims you want)."

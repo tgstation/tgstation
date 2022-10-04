@@ -78,7 +78,7 @@
 
 	var/image/plasma_image = image(image_icon, image_holder, image_state, FLY_LAYER)
 	plasma_image.alpha = 50
-	plasma_image.plane = ABOVE_GAME_PLANE
+	SET_PLANE_EXPLICIT(plasma_image, ABOVE_GAME_PLANE, to_flood)
 	flood_images += plasma_image
 
 /datum/hallucination/fake_flood/Destroy()

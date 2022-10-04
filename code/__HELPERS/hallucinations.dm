@@ -63,6 +63,9 @@ GLOBAL_LIST_EMPTY(all_ongoing_hallucinations)
 		if(HAS_TRAIT(nearby_living, TRAIT_MADNESS_IMMUNE) || (nearby_living.mind && HAS_TRAIT(nearby_living.mind, TRAIT_MADNESS_IMMUNE)))
 			continue
 
+		if(nearby_living.mob_biotypes & (MOB_ROBOTIC|MOB_SPIRIT|MOB_EPIC))
+			continue
+
 		if(nearby_living.is_blind())
 			continue
 

@@ -19,7 +19,7 @@
 
 /obj/item/clothing/shoes/clown_shoes/equipped(mob/living/user, slot)
 	. = ..()
-	if(slot == ITEM_SLOT_FEET)
+	if(slot & ITEM_SLOT_FEET)
 		if(enabled_waddle)
 			user.AddElement(/datum/element/waddling)
 		if(is_clown_job(user.mind?.assigned_role))

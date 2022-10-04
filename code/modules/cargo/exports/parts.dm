@@ -113,38 +113,12 @@
 	export_types = list(/obj/item/computer_hardware/hard_drive)
 	include_subtypes = TRUE
 
-//Networking Parts
-
-/datum/export/modular_part/networkcard/advanced
-	cost = CARGO_CRATE_VALUE * 0.5
-	unit_name = "advanced network card"
-	export_types = list(/obj/item/computer_hardware/network_card/advanced)
-	include_subtypes = FALSE
-
-/datum/export/modular_part/networkcard/wired
-	cost = CARGO_CRATE_VALUE
-	unit_name = "wired network card"
-	export_types = list(/obj/item/computer_hardware/network_card/wired)
-	include_subtypes = FALSE
-
-/datum/export/modular_part/networkcard/standard
-	cost = CARGO_CRATE_VALUE * 0.25
-	unit_name = "network card"
-	export_types = list(/obj/item/computer_hardware/network_card)
-	include_subtypes = TRUE
-
 //Miscellaneous Parts
 
 /datum/export/modular_part/idcard
 	cost = CARGO_CRATE_VALUE * 0.2
 	unit_name = "computer ID card slot"
 	export_types = list(/obj/item/computer_hardware/card_slot)
-	include_subtypes = TRUE
-
-/datum/export/modular_part/miniprinter
-	cost = CARGO_CRATE_VALUE * 0.2
-	unit_name = "miniprinter"
-	export_types = list(/obj/item/computer_hardware/printer/mini)
 	include_subtypes = TRUE
 
 /datum/export/modular_part/misc

@@ -229,7 +229,7 @@ effective or pretty fucking useless.
 	return
 
 /obj/item/shadowcloak/item_action_slot_check(slot, mob/user)
-	if(slot == ITEM_SLOT_BELT)
+	if(slot & ITEM_SLOT_BELT)
 		return 1
 
 /obj/item/shadowcloak/proc/Activate(mob/living/carbon/human/user)
@@ -291,6 +291,10 @@ effective or pretty fucking useless.
 		GLOB.active_jammers -= src
 
 	update_appearance()
+
+/obj/item/jammer/Destroy()
+	GLOB.active_jammers -= src
+	return ..()
 
 /obj/item/storage/toolbox/emergency/turret
 	desc = "You feel a strange urge to hit this with a wrench."

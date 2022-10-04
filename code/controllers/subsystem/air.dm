@@ -627,12 +627,16 @@ GLOBAL_LIST_EMPTY(colored_turfs)
 GLOBAL_LIST_EMPTY(colored_images)
 /datum/controller/subsystem/air/proc/setup_turf_visuals()
 	for(var/sharp_color in GLOB.contrast_colors)
-		var/obj/effect/overlay/atmos_excited/suger_high = new()
-		GLOB.colored_turfs += suger_high
-		var/image/shiny = new('icons/effects/effects.dmi', suger_high, "atmos_top")
-		shiny.plane = ATMOS_GROUP_PLANE
-		shiny.color = sharp_color
-		GLOB.colored_images += shiny
+		var/list/add_to = list()
+		GLOB.colored_turfs += list(add_to)
+		for(var/offset in 0 to SSmapping.max_plane_offset)
+			var/obj/effect/overlay/atmos_excited/suger_high = new()
+			SET_PLANE_W_SCALAR(suger_high, HIGH_GAME_PLANE, offset)
+			add_to += suger_high
+			var/image/shiny = new('icons/effects/effects.dmi', suger_high, "atmos_top")
+			SET_PLANE_W_SCALAR(shiny, HIGH_GAME_PLANE, offset)
+			shiny.color = sharp_color
+			GLOB.colored_images += shiny
 
 /datum/controller/subsystem/air/proc/setup_template_machinery(list/atmos_machines)
 	var/obj/machinery/atmospherics/AM
@@ -671,16 +675,17 @@ GLOBAL_LIST_EMPTY(colored_images)
 		atmos_gen[initial(atmostype.id)] = new atmostype
 
 /// Takes a gas string, returns the matching mutable gas_mixture
-/datum/controller/subsystem/air/proc/parse_gas_string(gas_string)
-	var/datum/gas_mixture/cached = strings_to_mix[gas_string]
+/datum/controller/subsystem/air/proc/parse_gas_string(gas_string, gastype = /datum/gas_mixture)
+	var/datum/gas_mixture/cached = strings_to_mix["[gas_string]-[gastype]"]
+
 	if(cached)
 		if(istype(cached, /datum/gas_mixture/immutable))
 			return cached
 		return cached.copy()
 
-	var/datum/gas_mixture/canonical_mix = new()
+	var/datum/gas_mixture/canonical_mix = new gastype()
 	// We set here so any future key changes don't fuck us
-	strings_to_mix[gas_string] = canonical_mix
+	strings_to_mix["[gas_string]-[gastype]"] = canonical_mix
 	gas_string = preprocess_gas_string(gas_string)
 
 	var/list/gases = canonical_mix.gases
@@ -787,8 +792,7 @@ GLOBAL_LIST_EMPTY(colored_images)
 	#else
 	data["display_max"] = FALSE
 	#endif
-	var/atom/movable/screen/plane_master/plane = user.hud_used.plane_masters["[ATMOS_GROUP_PLANE]"]
-	data["showing_user"] = (plane.alpha == 255)
+	data["showing_user"] = user.hud_used.atmos_debug_overlays
 	return data
 
 /datum/controller/subsystem/air/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -826,13 +830,10 @@ GLOBAL_LIST_EMPTY(colored_images)
 					group.hide_turfs()
 			return TRUE
 		if("toggle_user_display")
-			var/atom/movable/screen/plane_master/plane = ui.user.hud_used.plane_masters["[ATMOS_GROUP_PLANE]"]
-			if(!plane.alpha)
-				if(ui.user.client)
-					ui.user.client.images += GLOB.colored_images
-				plane.alpha = 255
+			var/mob/user = ui.user
+			user.hud_used.atmos_debug_overlays = !user.hud_used.atmos_debug_overlays
+			if(user.hud_used.atmos_debug_overlays)
+				user.client.images += GLOB.colored_images
 			else
-				if(ui.user.client)
-					ui.user.client.images -= GLOB.colored_images
-				plane.alpha = 0
+				user.client.images -= GLOB.colored_images
 			return TRUE

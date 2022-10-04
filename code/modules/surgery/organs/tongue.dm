@@ -361,6 +361,10 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	languages_possible = languages_possible_alien
 
 /obj/item/organ/internal/tongue/alien/modify_speech(datum/source, list/speech_args)
+	var/datum/saymode/xeno/hivemind = speech_args[SPEECH_SAYMODE]
+	if(hivemind)
+		return
+
 	playsound(owner, SFX_HISS, 25, TRUE, TRUE)
 
 /obj/item/organ/internal/tongue/bone

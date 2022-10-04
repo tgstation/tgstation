@@ -28,8 +28,10 @@
 	modkit_design = /datum/design/unique_modkit/bounty
 
 /datum/design/unique_modkit
-	category = list(RND_CATEGORY_MINING_DESIGNS, RND_CATEGORY_CYBORG_UPGRADE_MODULES) //can't be normally obtained
-	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
+	category = list(
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_PKA_MODS,
+	)
+	build_type = PROTOLATHE
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO
 
 /datum/design/unique_modkit/offensive_turf_aoe
@@ -131,7 +133,7 @@
 	var/mob/living/carbon/human/active_owner
 
 /obj/item/clothing/neck/necklace/memento_mori/item_action_slot_check(slot)
-	return slot == ITEM_SLOT_NECK
+	return (slot & ITEM_SLOT_NECK)
 
 /obj/item/clothing/neck/necklace/memento_mori/dropped(mob/user)
 	..()
@@ -277,7 +279,7 @@
 
 /obj/effect/wisp/proc/update_user_sight(mob/user)
 	SIGNAL_HANDLER
-	user.sight |= sight_flags
+	user.add_sight(sight_flags)
 	if(!isnull(lighting_alpha))
 		user.lighting_alpha = min(user.lighting_alpha, lighting_alpha)
 
@@ -495,7 +497,7 @@
 	list_reagents = list(/datum/reagent/flightpotion = 5)
 
 /obj/item/reagent_containers/cup/bottle/potion/update_icon_state()
-	icon_state = "potionflask[reagents.total_volume ? null : "_empty"]"
+	icon_state = "potionflask[reagents?.total_volume ? null : "_empty"]"
 	return ..()
 
 /datum/reagent/flightpotion
@@ -568,7 +570,7 @@
 
 /obj/item/clothing/gloves/gauntlets/equipped(mob/user, slot)
 	. = ..()
-	if(slot == ITEM_SLOT_GLOVES)
+	if(slot & ITEM_SLOT_GLOVES)
 		tool_behaviour = TOOL_MINING
 		RegisterSignal(user, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, .proc/rocksmash)
 		RegisterSignal(user, COMSIG_MOVABLE_BUMP, .proc/rocksmash)
@@ -729,7 +731,7 @@
 
 /obj/item/clothing/glasses/godeye/equipped(mob/living/user, slot)
 	. = ..()
-	if(ishuman(user) && slot == ITEM_SLOT_EYES)
+	if(ishuman(user) && (slot & ITEM_SLOT_EYES))
 		ADD_TRAIT(src, TRAIT_NODROP, EYE_OF_GOD_TRAIT)
 		pain(user)
 		scan_ability.Grant(user)
@@ -1000,7 +1002,7 @@
 /obj/item/cursed_katana/proc/cloak(mob/living/target, mob/user)
 	user.alpha = 150
 	user.invisibility = INVISIBILITY_OBSERVER // so hostile mobs cant see us or target us
-	user.sight |= SEE_SELF // so we can see us
+	user.add_sight(SEE_SELF) // so we can see us
 	user.visible_message(span_warning("[user] vanishes into thin air!"),
 		span_notice("You enter the dark cloak."))
 	playsound(src, 'sound/magic/smoke.ogg', 50, TRUE)
@@ -1012,7 +1014,7 @@
 /obj/item/cursed_katana/proc/uncloak(mob/user)
 	user.alpha = 255
 	user.invisibility = 0
-	user.sight &= ~SEE_SELF
+	user.clear_sight(SEE_SELF)
 	user.visible_message(span_warning("[user] appears from thin air!"),
 		span_notice("You exit the dark cloak."))
 	playsound(src, 'sound/magic/summonitems_generic.ogg', 50, TRUE)

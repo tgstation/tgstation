@@ -13,7 +13,7 @@
 
 /obj/item/clothing/shoes/magboots/equipped(mob/user, slot)
 	. = ..()
-	if(slot == ITEM_SLOT_FEET)
+	if(slot & ITEM_SLOT_FEET)
 		update_gravity_trait(user)
 	else
 		REMOVE_TRAIT(user, TRAIT_NEGATES_GRAVITY, type)
