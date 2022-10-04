@@ -1,0 +1,5 @@
+author: "VexingRaven"
+delete-after: True
+changes: 
+  - rscadd: "Tramstation now has 2 cryoxadone beakers in the Medbay Treatment Center."
+  - rscadd: "Tramstation now has a large beaker in the pharmacy, chemistry lab, and R&D."
