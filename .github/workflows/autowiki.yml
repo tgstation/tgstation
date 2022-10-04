@@ -1,7 +1,7 @@
 name: Autowiki
 on:
   schedule:
-  - cron: "22 */6 * * *"
+  - cron: "*/30 * * * *"
   workflow_dispatch:
 permissions:
   contents: read
