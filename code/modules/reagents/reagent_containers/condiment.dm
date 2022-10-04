@@ -395,6 +395,7 @@
 /obj/item/reagent_containers/condiment/pack/astrotame
 	name = "astrotame pack"
 	originalname = "astrotame"
+	volume = 5
 	list_reagents = list(/datum/reagent/consumable/astrotame = 5)
 
 /obj/item/reagent_containers/condiment/pack/bbqsauce
@@ -405,9 +406,11 @@
 /obj/item/reagent_containers/condiment/pack/creamer
 	name = "creamer pack"
 	originalname = "creamer"
+	volume = 5
 	list_reagents = list(/datum/reagent/consumable/creamer = 5)
 
 /obj/item/reagent_containers/condiment/pack/sugar
 	name = "sugar pack"
 	originalname = "sugar"
+	volume = 5
 	list_reagents = list(/datum/reagent/consumable/sugar = 5)

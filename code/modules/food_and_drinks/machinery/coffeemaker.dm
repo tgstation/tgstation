@@ -19,14 +19,14 @@
 	var/coffee_cups = 15
 	var/max_coffee_cups = 15
 	/// The amount of sugar packets left
-	var/sugar_packs = 20
-	var/max_sugar_packs = 20
+	var/sugar_packs = 10
+	var/max_sugar_packs = 10
 	/// The amount of sweetener packets left
-	var/sweetener_packs = 20
-	var/max_sweetener_packs = 20
+	var/sweetener_packs = 10
+	var/max_sweetener_packs = 10
 	/// The amount of creamer packets left
-	var/creamer_packs = 20
-	var/max_creamer_packs = 20
+	var/creamer_packs = 10
+	var/max_creamer_packs = 10
 
 	var/static/radial_examine = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_examine")
 	var/static/radial_brew = image(icon = 'icons/hud/radial_coffee.dmi', icon_state = "radial_brew")
@@ -194,6 +194,66 @@
 			return TRUE
 		replace_pot(user, new_pot)
 		balloon_alert(user, "added pot")
+		update_appearance()
+		return TRUE //no afterattack
+
+	if (istype(attack_item, /obj/item/reagent_containers/cup/glass/coffee_cup) && !(attack_item.item_flags & ABSTRACT) && attack_item.is_open_container())
+		var/obj/item/reagent_containers/cup/glass/coffee_cup/new_cup = attack_item
+		if(new_cup.reagents.total_volume > 0 )
+			balloon_alert(user, "the cup must be empty!")
+			return TRUE
+		if(coffee_cups >= max_coffee_cups)
+			balloon_alert(user, "the cup holder is full!")
+			return TRUE
+		. = TRUE //no afterattack
+		if(!user.transferItemToLoc(attack_item, src))
+			return TRUE
+		coffee_cups++
+		update_appearance()
+		return TRUE //no afterattack
+
+	if (istype(attack_item, /obj/item/reagent_containers/condiment/pack/sugar))
+		var/obj/item/reagent_containers/condiment/pack/sugar/new_pack = attack_item
+		if(new_pack.reagents.total_volume < new_pack.reagents.maximum_volume)
+			balloon_alert(user, "the pack must be full!")
+			return TRUE
+		if(sugar_packs >= max_sugar_packs)
+			balloon_alert(user, "the sugar compartment is full!")
+			return TRUE
+		. = TRUE //no afterattack
+		if(!user.transferItemToLoc(attack_item, src))
+			return TRUE
+		sugar_packs++
+		update_appearance()
+		return TRUE //no afterattack
+
+	if (istype(attack_item, /obj/item/reagent_containers/condiment/pack/creamer))
+		var/obj/item/reagent_containers/condiment/pack/creamer/new_pack = attack_item
+		if(new_pack.reagents.total_volume < new_pack.reagents.maximum_volume)
+			balloon_alert(user, "the pack must be full!")
+			return TRUE
+		if(creamer_packs >= max_creamer_packs)
+			balloon_alert(user, "the creamer compartment is full!")
+			return TRUE
+		. = TRUE //no afterattack
+		if(!user.transferItemToLoc(attack_item, src))
+			return TRUE
+		creamer_packs++
+		update_appearance()
+		return TRUE //no afterattack
+
+	if (istype(attack_item, /obj/item/reagent_containers/condiment/pack/astrotame))
+		var/obj/item/reagent_containers/condiment/pack/astrotame/new_pack = attack_item
+		if(new_pack.reagents.total_volume < new_pack.reagents.maximum_volume)
+			balloon_alert(user, "the pack must be full!")
+			return TRUE
+		if(sweetener_packs >= max_sweetener_packs)
+			balloon_alert(user, "the sweetener compartment is full!")
+			return TRUE
+		. = TRUE //no afterattack
+		if(!user.transferItemToLoc(attack_item, src))
+			return TRUE
+		sweetener_packs++
 		update_appearance()
 		return TRUE //no afterattack
 
@@ -453,10 +513,6 @@
 	//this type of coffeemaker takes fresh whole beans insted of cartidges
 	var/list/coffee= list()
 	var/coffee_amount = 0
-	coffee_cups = 15
-	sugar_packs = 10
-	sweetener_packs = 10
-	creamer_packs = 1
 
 /obj/machinery/coffeemaker/impressa/Initialize(mapload)
 	. = ..()
@@ -600,6 +656,65 @@
 		update_appearance()
 		return TRUE //no afterattack
 
+	if (istype(attack_item, /obj/item/reagent_containers/cup/glass/coffee) && !(attack_item.item_flags & ABSTRACT) && attack_item.is_open_container())
+		var/obj/item/reagent_containers/cup/glass/coffee/new_cup = attack_item		//different type of cup
+		if(new_cup.reagents.total_volume > 0 )
+			balloon_alert(user, "the cup must be empty!")
+			return TRUE
+		if(coffee_cups >= max_coffee_cups)
+			balloon_alert(user, "the cup holder is full!")
+			return TRUE
+		. = TRUE //no afterattack
+		if(!user.transferItemToLoc(attack_item, src))
+			return TRUE
+		coffee_cups++
+		update_appearance()
+		return TRUE //no afterattack
+
+	if (istype(attack_item, /obj/item/reagent_containers/condiment/pack/sugar))
+		var/obj/item/reagent_containers/condiment/pack/sugar/new_pack = attack_item
+		if(new_pack.reagents.total_volume < new_pack.reagents.maximum_volume)
+			balloon_alert(user, "the pack must be full!")
+			return TRUE
+		if(sugar_packs >= max_sugar_packs)
+			balloon_alert(user, "the sugar compartment is full!")
+			return TRUE
+		. = TRUE //no afterattack
+		if(!user.transferItemToLoc(attack_item, src))
+			return TRUE
+		sugar_packs++
+		update_appearance()
+		return TRUE //no afterattack
+
+	if (istype(attack_item, /obj/item/reagent_containers/condiment/pack/creamer))
+		var/obj/item/reagent_containers/condiment/pack/creamer/new_pack = attack_item
+		if(new_pack.reagents.total_volume < new_pack.reagents.maximum_volume)
+			balloon_alert(user, "the pack must be full!")
+			return TRUE
+		if(creamer_packs >= max_creamer_packs)
+			balloon_alert(user, "the creamer compartment is full!")
+			return TRUE
+		. = TRUE //no afterattack
+		if(!user.transferItemToLoc(attack_item, src))
+			return TRUE
+		creamer_packs++
+		update_appearance()
+		return TRUE //no afterattack
+
+	if (istype(attack_item, /obj/item/reagent_containers/condiment/pack/astrotame))
+		var/obj/item/reagent_containers/condiment/pack/astrotame/new_pack = attack_item
+		if(new_pack.reagents.total_volume < new_pack.reagents.maximum_volume)
+			balloon_alert(user, "the pack must be full!")
+			return TRUE
+		if(sweetener_packs >= max_sweetener_packs)
+			balloon_alert(user, "the sweetener compartment is full!")
+			return TRUE
+		. = TRUE //no afterattack
+		if(!user.transferItemToLoc(attack_item, src))
+			return TRUE
+		sweetener_packs++
+		update_appearance()
+		return TRUE //no afterattack
 	if (istype(attack_item, /obj/item/food/grown/coffee) && !(attack_item.item_flags & ABSTRACT))
 		if(coffee_amount >= grinder_capacity)
 			balloon_alert(user, "the coffee container is full!")
