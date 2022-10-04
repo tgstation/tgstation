@@ -1,5 +1,5 @@
 /// Helper macro, for ease of expanding checks for mobs which cannot be blinded
-#define can_be_blind(mob) !isanimal_or_basicmob(mob) && !isbrain(mob)
+#define CAN_BE_BLIND(mob) !isanimal_or_basicmob(mob) && !isbrain(mob)
 
 /datum/status_effect/grouped/visually_impaired
 	alert_type = null
@@ -65,7 +65,6 @@
 
 	owner.clear_fullscreen(id)
 
-
 /// Blindness
 /datum/status_effect/grouped/visually_impaired/blindness
 	id = "blindness"
@@ -73,7 +72,7 @@
 	overlay_type = /atom/movable/screen/fullscreen/blind
 
 /datum/status_effect/grouped/visually_impaired/blindness/on_apply()
-	if(!can_be_blind(owner)) // No reason why they can't be blind other than design decisions
+	if(!CAN_BE_BLIND(owner)) // No reason why they can't be blind other than design decisions
 		return FALSE
 
 	. = ..()
@@ -96,7 +95,7 @@
 	alert_type = null
 
 /datum/status_effect/temporary_blindness/on_apply()
-	if(!can_be_blind(owner))
+	if(!CAN_BE_BLIND(owner))
 		return FALSE
 
 	owner.become_blind(id)
@@ -118,4 +117,4 @@
 
 	qdel(src)
 
-#undef can_be_blind
+#undef CAN_BE_BLIND
