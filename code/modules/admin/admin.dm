@@ -133,36 +133,6 @@
 	message_admins("[key_name_admin(usr)] toggled tinted_weldhelh.")
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Tinted Welding Helmets", "[GLOB.tinted_weldhelh ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/datum/admins/proc/output_ai_laws()
-	var/ai_number = 0
-	for(var/i in GLOB.silicon_mobs)
-		var/mob/living/silicon/S = i
-		ai_number++
-
-		var/message = ""
-
-		if(isAI(S))
-			message += "<b>AI [key_name(S, usr)]'s laws:</b>"
-		else if(iscyborg(S))
-			var/mob/living/silicon/robot/R = S
-			message += "<b>CYBORG [key_name(S, usr)] [R.connected_ai?"(Slaved to: [key_name(R.connected_ai)])":"(Independent)"]: laws:</b>"
-		else if (ispAI(S))
-			message += "<b>pAI [key_name(S, usr)]'s laws:</b>"
-		else
-			message += "<b>SOMETHING SILICON [key_name(S, usr)]'s laws:</b>"
-
-		message += "<br>"
-
-		if (S.laws == null)
-			message += "[key_name(S, usr)]'s laws are null?? Contact a coder."
-		else
-			message += jointext(S.laws.get_law_list(include_zeroth = TRUE), "<br>")
-
-		to_chat(usr, message, confidential = TRUE)
-
-	if(!ai_number)
-		to_chat(usr, "<b>No AIs located</b>" , confidential = TRUE)
-
 /datum/admins/proc/dynamic_mode_options(mob/user)
 	var/dat = {"
 		<center><B><h2>Dynamic Mode Options</h2></B></center><hr>

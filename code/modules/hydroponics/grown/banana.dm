@@ -21,7 +21,7 @@
 	name = "banana"
 	desc = "It's an excellent prop for a clown."
 	icon_state = "banana"
-	inhand_icon_state = "banana"
+	inhand_icon_state = "banana_peel"
 	trash_type = /obj/item/grown/bananapeel
 	bite_consumption_mod = 3
 	foodtypes = FRUIT
@@ -141,6 +141,7 @@
 	name = "bluespace banana peel"
 	desc = "A peel from a bluespace banana."
 	icon_state = "bluenana_peel"
+	inhand_icon_state = "bluespace_peel"
 
 // Other
 /obj/item/grown/bananapeel/specialpeel //used by /obj/item/clothing/shoes/clown_shoes/banana_shoes

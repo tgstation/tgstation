@@ -278,8 +278,7 @@
 	var/mob/living/carbon/wearer = loc
 	if(istype(wearer) && DT_PROB(1, delta_time)) //cursed by bubblegum
 		if(prob(7.5))
-			new /datum/hallucination/oh_yeah(wearer)
-			to_chat(wearer, span_colossus("<b>[pick("I AM IMMORTAL.","I SHALL TAKE BACK WHAT'S MINE.","I SEE YOU.","YOU CANNOT ESCAPE ME FOREVER.","DEATH CANNOT HOLD ME.")]</b>"))
+			wearer.cause_hallucination(/datum/hallucination/oh_yeah, "H.E.C.K suit", haunt_them = TRUE)
 		else
 			to_chat(wearer, span_warning("[pick("You hear faint whispers.","You smell ash.","You feel hot.","You hear a roar in the distance.")]"))
 
@@ -342,6 +341,7 @@
 	desc = "An old relic of hell created by devils to establish themselves as the leadership of hell over the demons. It grows stronger while it possesses a powerful soul."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "soulscythe"
+	inhand_icon_state = "soulscythe"
 	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
 	attack_verb_continuous = list("chops", "slices", "cuts", "reaps")
@@ -742,6 +742,7 @@
 	name = "staff of lava"
 	desc = "The ability to fill the emergency shuttle with lava. What more could you want out of life?"
 	icon_state = "lavastaff"
+	inhand_icon_state = "lavastaff"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	icon = 'icons/obj/weapons/guns/magic.dmi'
@@ -935,6 +936,7 @@
 	name = "staff of storms"
 	desc = "An ancient staff retrieved from the remains of Legion. The wind stirs as you move it."
 	icon_state = "staffofstorms"
+	inhand_icon_state = "staffofstorms"
 	icon = 'icons/obj/weapons/guns/magic.dmi'
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'

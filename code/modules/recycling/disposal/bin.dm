@@ -392,15 +392,15 @@
 	//check for items in disposal - occupied light
 	if(contents.len > 0)
 		. += "dispover-full"
-		. += emissive_appearance(icon, "dispover-full", alpha = src.alpha)
+		. += emissive_appearance(icon, "dispover-full", src, alpha = src.alpha)
 
 	//charging and ready light
 	if(pressure_charging)
 		. += "dispover-charge"
-		. += emissive_appearance(icon, "dispover-charge-glow", alpha = src.alpha)
+		. += emissive_appearance(icon, "dispover-charge-glow", src, alpha = src.alpha)
 	else if(full_pressure)
 		. += "dispover-ready"
-		. += emissive_appearance(icon, "dispover-ready-glow", alpha = src.alpha)
+		. += emissive_appearance(icon, "dispover-ready-glow", src, alpha = src.alpha)
 
 /obj/machinery/disposal/bin/proc/do_flush()
 	set waitfor = FALSE

@@ -107,7 +107,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 	)),
 	"spiders" = typecacheof(list(/obj/structure/spider)),
 	"security" = typecacheof(list(
-		/obj/effect/hallucination/simple/securitron,
+		/obj/effect/client_image_holder/securitron,
 		/obj/item/clothing/under/rank/security/detective,
 		/obj/item/clothing/under/rank/security/head_of_security,
 		/obj/item/clothing/under/rank/security/officer,

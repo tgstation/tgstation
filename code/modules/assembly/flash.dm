@@ -164,7 +164,7 @@
 
 	if(targeted)
 		if(flashed.flash_act(1, 1))
-			flashed.set_timed_status_effect(confusion_duration * CONFUSION_STACK_MAX_MULTIPLIER, /datum/status_effect/confusion, only_if_higher = TRUE)
+			flashed.set_confusion_if_lower(confusion_duration * CONFUSION_STACK_MAX_MULTIPLIER)
 			// Special check for if we're a revhead. Special cases to attempt conversion.
 			if(converter)
 				// Did we try to flash them from behind?
@@ -184,7 +184,7 @@
 			to_chat(flashed, span_danger("[src] fails to blind you!"))
 	else
 		if(flashed.flash_act())
-			flashed.set_timed_status_effect(confusion_duration * CONFUSION_STACK_MAX_MULTIPLIER, /datum/status_effect/confusion, only_if_higher = TRUE)
+			flashed.set_confusion_if_lower(confusion_duration * CONFUSION_STACK_MAX_MULTIPLIER)
 
 /**
  * Handles the directionality of the attack
@@ -252,7 +252,7 @@
 			user.visible_message(span_warning("[user] fails to blind [flashed_borgo] with the flash!"), span_warning("You fail to blind [flashed_borgo] with the flash!"))
 			return
 		flashed_borgo.Paralyze(rand(80,120))
-		flashed_borgo.set_timed_status_effect(5 SECONDS * CONFUSION_STACK_MAX_MULTIPLIER, /datum/status_effect/confusion, only_if_higher = TRUE)
+		flashed_borgo.set_confusion_if_lower(5 SECONDS * CONFUSION_STACK_MAX_MULTIPLIER)
 		user.visible_message(span_warning("[user] overloads [flashed_borgo]'s sensors with the flash!"), span_danger("You overload [flashed_borgo]'s sensors with the flash!"))
 		return
 
@@ -396,8 +396,8 @@
 
 			if(!hypnosis)
 				to_chat(M, span_hypnophrase("The light makes you feel oddly relaxed..."))
-				M.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/confusion, max_duration = 20 SECONDS)
-				M.adjust_timed_status_effect(20 SECONDS, /datum/status_effect/dizziness, max_duration = 40 SECONDS)
+				M.adjust_confusion_up_to(10 SECONDS, 20 SECONDS)
+				M.adjust_dizzy_up_to(20 SECONDS, 40 SECONDS)
 				M.adjust_drowsyness(min(M.drowsyness+10, 20))
 				M.apply_status_effect(/datum/status_effect/pacify, 100)
 			else
@@ -410,8 +410,8 @@
 
 	else if(M.flash_act())
 		to_chat(M, span_notice("Such a pretty light..."))
-		M.adjust_timed_status_effect(4 SECONDS, /datum/status_effect/confusion, max_duration = 20 SECONDS)
-		M.adjust_timed_status_effect(8 SECONDS, /datum/status_effect/dizziness, max_duration = 40 SECONDS)
+		M.adjust_confusion_up_to(4 SECONDS, 20 SECONDS)
+		M.adjust_dizzy_up_to(8 SECONDS, 40 SECONDS)
 		M.adjust_drowsyness(min(M.drowsyness+4, 20))
 		M.apply_status_effect(/datum/status_effect/pacify, 40)
 

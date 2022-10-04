@@ -34,6 +34,7 @@
 # JohnFulpWizard
 
 /code/modules/mob/living/simple_animal/bot/ @JohnFulpWillard
+/code/modules/modular_computers/ @JohnFulpWillard
 
 # Kylerace
 
@@ -103,6 +104,7 @@
 # Watermelon914
 
 /code/modules/wiremod/ @Watermelon914
+/code/modules/antagonists/traitor/ @Watermelon914
 
 # CONTRIBUTORS
 

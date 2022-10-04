@@ -13,6 +13,8 @@ GLOBAL_LIST_EMPTY(antagonist_teams)
 	var/list/datum/mind/members = list()
 	///Common objectives, these won't be added or removed automatically, subtypes handle this, this is here for bookkeeping purposes.
 	var/list/datum/objective/objectives = list()
+	///List of players in a team, mainly used to make sure someone cant spawn ghost roll more then once in a row
+	var/list/players_spawned = list()
 
 /datum/team/New(starting_members)
 	. = ..()
@@ -70,16 +72,28 @@ GLOBAL_LIST_EMPTY(antagonist_teams)
 
 	return "<div class='panel redborder'>[report.Join("<br>")]</div>"
 
+/**
+ * Finds all minds in a team antagonist, then checks their individual datums
+ * Checks if that antag datum is in the team, then checks if it's the right datum
+ * If it all passes, they're put in the list
+ *
+ * Args:
+ * antag_datum - The antag datum path we are looking for
+ * include_subtypes - Whether we allow suntypes of the antag_datum, otherwise it will stricly be type
+ */
 /datum/team/proc/get_team_antags(antag_datum, include_subtypes = TRUE)
 	var/list/antag_list = list()
-	for(var/datum/antagonist/antagonists as anything in GLOB.antagonists)
-		if(!(antagonists.owner in members))
-			continue
+	for(var/datum/mind/team_mind as anything in members)
+		for(var/datum/antagonist/individual_datum in team_mind.antag_datums)
+			if(individual_datum.get_team() != src) //only let the antag datum part of our team go through
+				continue
 
-		if(include_subtypes && istype(antagonists, antag_datum))
-			antag_list += antagonists
-		else if(antagonists.type == antag_datum)
-			antag_list += antagonists
+			if(!antag_datum) //there's no antag_datum to check
+				antag_list += individual_datum
+			if(include_subtypes && istype(individual_datum, antag_datum))
+				antag_list += individual_datum
+			else if(individual_datum.type == antag_datum)
+				antag_list += individual_datum
 
 	return antag_list
 

@@ -50,7 +50,7 @@
 	name = "paper sack"
 	desc = "A sack neatly crafted out of paper."
 	icon_state = "paperbag_None"
-	inhand_icon_state = "paperbag_None"
+	inhand_icon_state = null
 	illustration = null
 	resistance_flags = FLAMMABLE
 	foldable = null

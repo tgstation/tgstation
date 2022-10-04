@@ -11,23 +11,32 @@
 	subsystem_type = /datum/controller/subsystem/processing/fastprocess
 
 	/// Current items in the build queue.
-	var/list/queue = list()
+	var/list/datum/design/queue = list()
+
 	/// Whether or not the machine is building the entire queue automagically.
 	var/process_queue = FALSE
 
 	/// The current design datum that the machine is building.
 	var/datum/design/being_built
+
 	/// World time when the build will finish.
 	var/build_finish = 0
+
 	/// World time when the build started.
 	var/build_start = 0
+
+	/// The job ID of the part currently being processed. This is used for ordering list items for the client UI.
+	var/top_job_id = 0
+
 	/// Reference to all materials used in the creation of the item being_built.
 	var/list/build_materials
+
 	/// Part currently stored in the Exofab.
 	var/obj/item/stored_part
 
 	/// Coefficient for the speed of item building. Based on the installed parts.
 	var/time_coeff = 1
+
 	/// Coefficient for the efficiency of material usage in item building. Based on the installed parts.
 	var/component_coeff = 1
 
@@ -40,37 +49,13 @@
 	/// Reference to a remote material inventory, such as an ore silo.
 	var/datum/component/remote_materials/rmat
 
-	/// A list of part sets used for TGUI static data. Updated on Init() and syncing with the R&D console.
-	var/list/final_sets = list()
-
-	/// A list of individual parts used for TGUI static data. Updated on Init() and syncing with the R&D console.
-	var/list/buildable_parts = list()
-
-	/// A list of categories that valid MECHFAB design datums will broadly categorise themselves under.
-	var/list/part_sets = list(
-								"Cyborg",
-								"Ripley",
-								"Odysseus",
-								"Clarke",
-								"Gygax",
-								"Durand",
-								"H.O.N.K",
-								"Phazon",
-								"Savannah-Ivanov",
-								"Exosuit Equipment",
-								"Exosuit Ammunition",
-								"Cyborg Upgrade Modules",
-								"Cybernetics",
-								"Implants",
-								"Control Interfaces",
-								"MOD Construction",
-								"MOD Modules",
-								"Misc"
-								)
+	/// All designs in the techweb that can be fabricated by this machine, since the last update.
+	var/list/datum/design/cached_designs
 
 /obj/machinery/mecha_part_fabricator/Initialize(mapload)
 	stored_research = SSresearch.science_tech
 	rmat = AddComponent(/datum/component/remote_materials, "mechfab", mapload && link_on_init, mat_container_flags=BREAKDOWN_FLAGS_LATHE)
+	cached_designs = list()
 	RefreshParts() //Recalculating local material sizes if the fab isn't linked
 	update_menu_tech()
 	RegisterSignal(
@@ -85,7 +70,7 @@
 
 	// We're probably going to get more than one update (design) at a time, so batch
 	// them together.
-	addtimer(CALLBACK(src, .proc/update_menu_tech), 0.25 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
+	addtimer(CALLBACK(src, .proc/update_menu_tech), 2 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 /obj/machinery/mecha_part_fabricator/RefreshParts()
 	. = ..()
@@ -127,7 +112,7 @@
 
 /obj/machinery/mecha_part_fabricator/AltClick(mob/user)
 	. = ..()
-	if(!user.canUseTopic(src, BE_CLOSE))
+	if(!user.canUseTopic(src, be_close = TRUE))
 		return
 	if(panel_open)
 		dir = turn(dir, -90)
@@ -135,114 +120,24 @@
 		return TRUE
 
 /**
- * Generates an info list for a given part.
- *
- * Returns a list of part information.
- * * D - Design datum to get information on.
- * * categories - Boolean, whether or not to parse snowflake categories into the part information list.
- */
-/obj/machinery/mecha_part_fabricator/proc/output_part_info(datum/design/D, categories = FALSE)
-	var/cost = list()
-	for(var/c in D.materials)
-		var/datum/material/M = c
-		cost[M.name] = get_resource_cost_w_coeff(D, M)
-
-	var/obj/built_item = D.build_path
-
-	var/list/category_override = null
-	var/list/sub_category = null
-
-	if(categories)
-		// Handle some special cases to build up sub-categories for the fab interface.
-		// Start with checking if this design builds a cyborg module.
-		if(ispath(built_item, /obj/item/borg/upgrade))
-			var/obj/item/borg/upgrade/U = built_item
-			var/model_types = initial(U.model_flags)
-			sub_category = list()
-			if(model_types)
-				if(model_types & BORG_MODEL_SECURITY)
-					sub_category += "Security"
-				if(model_types & BORG_MODEL_MINER)
-					sub_category += "Mining"
-				if(model_types & BORG_MODEL_JANITOR)
-					sub_category += "Janitor"
-				if(model_types & BORG_MODEL_MEDICAL)
-					sub_category += "Medical"
-				if(model_types & BORG_MODEL_ENGINEERING)
-					sub_category += "Engineering"
-			else
-				sub_category += "All Cyborgs"
-
-		else if(ispath(built_item, /obj/item/mecha_parts/mecha_equipment))
-			var/obj/item/mecha_parts/mecha_equipment/E = built_item
-			var/mech_types = initial(E.mech_flags)
-			sub_category = "Equipment"
-			if(mech_types)
-				category_override = list()
-				if(mech_types & EXOSUIT_MODULE_RIPLEY)
-					category_override += "Ripley"
-				if(mech_types & EXOSUIT_MODULE_ODYSSEUS)
-					category_override += "Odysseus"
-				if(mech_types & EXOSUIT_MODULE_CLARKE)
-					category_override += "Clarke"
-				if(mech_types & EXOSUIT_MODULE_GYGAX)
-					category_override += "Gygax"
-				if(mech_types & EXOSUIT_MODULE_DURAND)
-					category_override += "Durand"
-				if(mech_types & EXOSUIT_MODULE_HONK)
-					category_override += "H.O.N.K"
-				if(mech_types & EXOSUIT_MODULE_PHAZON)
-					category_override += "Phazon"
-				if(mech_types & EXOSUIT_MODULE_SAVANNAH)
-					category_override += "Savannah-Ivanov"
-
-		else if(ispath(built_item, /obj/item/borg_restart_board))
-			sub_category += "All Cyborgs" //Otherwise the restart board shows in the "parts" category, which seems dumb
-
-		else if(istype(D, /datum/design/module))
-			var/datum/design/module/module_design = D
-			sub_category = list(module_design.department_type)
-
-	var/list/part = list(
-		"name" = D.name,
-		"desc" = D.get_description(),
-		"printTime" = get_construction_time_w_coeff(initial(D.construction_time))/10,
-		"cost" = cost,
-		"id" = D.id,
-		"subCategory" = sub_category,
-		"category_override" = category_override,
-		"searchMeta" = D.search_metadata
-	)
-
-	return part
-
-/**
  * Updates the `final_sets` and `buildable_parts` for the current mecha fabricator.
  */
 /obj/machinery/mecha_part_fabricator/proc/update_menu_tech()
-	final_sets = list()
-	buildable_parts = list()
-	final_sets += part_sets
+	var/previous_design_count = cached_designs.len
+
+	cached_designs.Cut()
 
 	for(var/v in stored_research.researched_designs)
-		var/datum/design/D = SSresearch.techweb_design_by_id(v)
-		if(D.build_type & MECHFAB)
-			// This is for us.
-			var/list/part = output_part_info(D, TRUE)
+		var/datum/design/design = SSresearch.techweb_design_by_id(v)
 
-			if(part["category_override"])
-				for(var/cat in part["category_override"])
-					buildable_parts[cat] += list(part)
-					if(!(cat in part_sets))
-						final_sets += cat
-				continue
+		if(design.build_type & MECHFAB)
+			cached_designs |= design
 
-			for(var/cat in part_sets)
-				// Find all matching categories.
-				if(!(cat in D.category))
-					continue
+	var/design_delta = cached_designs.len - previous_design_count
 
-				buildable_parts[cat] += list(part)
+	if(design_delta > 0)
+		say("Received [design_delta] new design[design_delta == 1 ? "" : "s"].")
+		playsound(src, 'sound/machines/twobeep_high.ogg', 50, TRUE)
 
 	update_static_data_for_all_viewers()
 
@@ -399,20 +294,10 @@
 
 	say("The fabrication of [I] is now complete.")
 	I.forceMove(exit)
-	return TRUE
 
-/**
- * Adds a list of datum designs to the build queue.
- *
- * Will only add designs that are in this machine's stored techweb.
- * Does final checks for datum IDs and makes sure this machine can build the designs.
- * * part_list - List of datum design ids for designs to add to the queue.
- */
-/obj/machinery/mecha_part_fabricator/proc/add_part_set_to_queue(list/part_list)
-	for(var/v in stored_research.researched_designs)
-		var/datum/design/D = SSresearch.techweb_design_by_id(v)
-		if((D.build_type & MECHFAB) && (D.id in part_list))
-			add_to_queue(D)
+	top_job_id += 1
+
+	return TRUE
 
 /**
  * Adds a datum design to the build queue.
@@ -423,9 +308,11 @@
 /obj/machinery/mecha_part_fabricator/proc/add_to_queue(datum/design/D)
 	if(!istype(queue))
 		queue = list()
+
 	if(D)
 		queue[++queue.len] = D
 		return TRUE
+
 	return FALSE
 
 /**
@@ -439,21 +326,6 @@
 		return FALSE
 	queue.Cut(index,++index)
 	return TRUE
-
-/**
- * Generates a list of parts formatted for tgui based on the current build queue.
- *
- * Returns a formatted list of lists containing formatted part information for every part in the build queue.
- */
-/obj/machinery/mecha_part_fabricator/proc/list_queue()
-	if(!istype(queue) || !length(queue))
-		return null
-
-	var/list/queued_parts = list()
-	for(var/datum/design/D in queue)
-		var/list/part = output_part_info(D)
-		queued_parts += list(part)
-	return queued_parts
 
 /**
  * Calculates the coefficient-modified resource cost of a single material component of a design's recipe.
@@ -478,7 +350,8 @@
 
 /obj/machinery/mecha_part_fabricator/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/sheetmaterials)
+		get_asset_datum(/datum/asset/spritesheet/sheetmaterials),
+		get_asset_datum(/datum/asset/spritesheet/research_designs)
 	)
 
 /obj/machinery/mecha_part_fabricator/ui_interact(mob/user, datum/tgui/ui)
@@ -489,9 +362,30 @@
 
 /obj/machinery/mecha_part_fabricator/ui_static_data(mob/user)
 	var/list/data = list()
+	var/list/designs = list()
 
-	data["partSets"] = final_sets
-	data["buildableParts"] = buildable_parts
+	var/datum/asset/spritesheet/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet/research_designs)
+	var/size32x32 = "[spritesheet.name]32x32"
+
+	for(var/datum/design/design in cached_designs)
+		var/cost = list()
+
+		for(var/datum/material/material in design.materials)
+			cost[material.name] = get_resource_cost_w_coeff(design, material)
+
+		var/icon_size = spritesheet.icon_size_id(design.id)
+
+		designs[design.id] = list(
+			"name" = design.name,
+			"desc" = design.get_description(),
+			"cost" = cost,
+			"id" = design.id,
+			"categories" = design.category,
+			"icon" = "[icon_size == size32x32 ? "" : "[icon_size] "][design.id]",
+			"constructionTime" = get_construction_time_w_coeff(design.construction_time)
+		)
+
+	data["designs"] = designs
 
 	return data
 
@@ -499,30 +393,34 @@
 	var/list/data = list()
 
 	data["materials"] = rmat.mat_container?.ui_data()
+	data["queue"] = list()
+	data["processing"] = process_queue
 
 	if(being_built)
-		var/list/part = list(
-			"name" = being_built.name,
-			"duration" = build_finish - world.time,
-			"printTime" = get_construction_time_w_coeff(initial(being_built.construction_time))
-		)
-		data["buildingPart"] = part
-	else
-		data["buildingPart"] = null
+		data["queue"] += list(list(
+			"jobId" = top_job_id,
+			"designId" = being_built.id,
+			"processing" = TRUE,
+			"timeLeft" = (build_finish - world.time)
+		))
 
-	data["queue"] = list_queue()
+	var/offset = 0
 
-	if(stored_part)
-		data["storedPart"] = stored_part.name
-	else
-		data["storedPart"] = null
+	for(var/datum/design/design in queue)
+		offset += 1
 
-	data["isProcessingQueue"] = process_queue
+		data["queue"] += list(list(
+			"jobId" = top_job_id + offset,
+			"designId" = design.id,
+			"processing" = FALSE,
+			"timeLeft" = get_construction_time_w_coeff(design.construction_time) / 10
+		))
 
 	return data
 
 /obj/machinery/mecha_part_fabricator/ui_act(action, list/params)
 	. = ..()
+
 	if(.)
 		return
 
@@ -532,69 +430,68 @@
 	usr.set_machine(src)
 
 	switch(action)
-		if("add_queue_set")
-			// Add all parts of a set to queue
-			var/part_list = params["part_list"]
-			add_part_set_to_queue(part_list)
-			return
-		if("add_queue_part")
-			// Add a specific part to queue
-			var/id = params["id"]
-			if(!stored_research.researched_designs.Find(id))
-				stack_trace("ID did not map to a researched datum [id]")
+		if("build")
+			var/designs = params["designs"]
+
+			if(!islist(designs))
 				return
-			var/datum/design/design = SSresearch.techweb_design_by_id(id)
-			if(!(design.build_type & MECHFAB) || design.id != id)
-				return
-			add_to_queue(design)
+
+			for(var/design_id in designs)
+				if(!istext(design_id))
+					continue
+
+				if(!stored_research.researched_designs.Find(design_id))
+					continue
+
+				var/datum/design/design = SSresearch.techweb_design_by_id(design_id)
+
+				if(!(design.build_type & MECHFAB) || design.id != design_id)
+					continue
+
+				add_to_queue(design)
+
+			if(params["now"])
+				if(process_queue)
+					return
+
+				process_queue = TRUE
+
+				if(!being_built)
+					begin_processing()
+
 			return
+
 		if("del_queue_part")
 			// Delete a specific from from the queue
 			var/index = text2num(params["index"])
 			remove_from_queue(index)
+
 			return
+
 		if("clear_queue")
 			// Delete everything from queue
 			queue.Cut()
+
 			return
+
 		if("build_queue")
 			// Build everything in queue
 			if(process_queue)
 				return
+
 			process_queue = TRUE
 
 			if(!being_built)
 				begin_processing()
+
 			return
+
 		if("stop_queue")
 			// Pause queue building. Also known as stop.
 			process_queue = FALSE
-			return
-		if("build_part")
-			// Build a single part
-			if(being_built || process_queue)
-				return
-
-			var/id = params["id"]
-			if(!stored_research.researched_designs.Find(id))
-				stack_trace("ID did not map to a researched datum [id]")
-				return
-			var/datum/design/design = SSresearch.techweb_design_by_id(id)
-			if(!(design.build_type & MECHFAB) || design.id != id)
-				return
-			if(build_part(design))
-				on_start_printing()
-				begin_processing()
 
 			return
-		if("move_queue_part")
-			// Moves a part up or down in the queue.
-			var/index = text2num(params["index"])
-			var/new_index = index + text2num(params["newindex"])
-			if(isnum(index) && isnum(new_index) && ISINTEGER(index) && ISINTEGER(new_index))
-				if(ISINRANGE(new_index,1,length(queue)))
-					queue.Swap(index,new_index)
-			return
+
 		if("remove_mat")
 			var/datum/material/material = locate(params["ref"])
 			var/amount = text2num(params["amount"])

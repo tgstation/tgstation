@@ -1,0 +1,4 @@
+author: "ATHATH"
+delete-after: True
+changes: 
+  - bugfix: "Self-respiration now makes you no longer need to breath at stage 4 again."

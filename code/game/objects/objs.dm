@@ -30,8 +30,6 @@
 
 	var/drag_slowdown // Amont of multiplicative slowdown applied if pulled. >1 makes you slower, <1 makes you faster.
 
-	vis_flags = VIS_INHERIT_PLANE //when this be added to vis_contents of something it inherit something.plane, important for visualisation of obj in openspace.
-
 	/// Map tag for something.  Tired of it being used on snowflake items.  Moved here for some semblance of a standard.
 	/// Next pr after the network fix will have me refactor door interactions, so help me god.
 	var/id_tag = null
@@ -290,7 +288,7 @@
 
 /obj/AltClick(mob/user)
 	. = ..()
-	if(unique_reskin && !current_skin && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
+	if(unique_reskin && !current_skin && user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE))
 		reskin_obj(user)
 
 /**
