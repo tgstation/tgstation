@@ -157,10 +157,20 @@
 	isGlass = FALSE
 	drink_type = BREAKFAST
 
-//TODO:add alt-click interaction closing coffe cup lid
+/obj/item/reagent_containers/cup/glass/coffee/examine(mob/user)
+	. = ..()
+	. += span_notice("Alt-click to toggle cup lid.")
+
+/obj/item/reagent_containers/cup/glass/coffee/AltClick(mob/user)
+	lid_open = lid_open ? 0 : 1
+	update_icon_state()
+	return ..()
 
 /obj/item/reagent_containers/cup/glass/coffee/update_icon_state()
-	icon_state = reagents.total_volume ? "coffee" : "coffee_empty"
+	if(lid_open)
+		icon_state = reagents.total_volume ? "coffee_full" : "coffee_empty"
+	else
+		icon_state = "coffee"
 	return ..()
 
 /obj/item/reagent_containers/cup/glass/coffee_cup
