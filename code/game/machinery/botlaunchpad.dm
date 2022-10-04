@@ -55,7 +55,7 @@
 			"reverse_dropoff_coords" = list(reverse_turf.x, reverse_turf.y, reverse_turf.z)
 		))
 		use_power(active_power_usage)
-	else if(user)
+	else
 		user.balloon_alert(user, "There is more than one bot on the pad!")
 
 /obj/machinery/botpad/proc/recall(mob/living/user)
