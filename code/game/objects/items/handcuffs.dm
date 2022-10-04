@@ -29,6 +29,7 @@
 	gender = PLURAL
 	icon_state = "handcuff"
 	worn_icon_state = "handcuff"
+	inhand_icon_state = "handcuff"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	flags_1 = CONDUCT_1
@@ -137,15 +138,17 @@
 	name = "cable restraints"
 	desc = "Looks like some cables tied together. Could be used to tie something up."
 	icon_state = "cuff"
-	inhand_icon_state = "coil"
-	color = "#ff0000"
+	inhand_icon_state = "coil_red"
+	color = CABLE_HEX_COLOR_RED
+	///for generating the correct icons based off the original cable's color.
+	var/cable_color = CABLE_COLOR_RED
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	custom_materials = list(/datum/material/iron=150, /datum/material/glass=75)
 	breakouttime = 30 SECONDS
 	cuffsound = 'sound/weapons/cablecuff.ogg'
 
-/obj/item/restraints/handcuffs/cable/Initialize(mapload)
+/obj/item/restraints/handcuffs/cable/Initialize(mapload, new_color)
 	. = ..()
 
 	var/static/list/hovering_item_typechecks = list(
@@ -159,6 +162,29 @@
 	)
 
 	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
+	AddElement(/datum/element/update_icon_updates_onmob, (slot_flags|ITEM_SLOT_HANDCUFFED))
+
+	if(new_color)
+		set_cable_color(new_color)
+
+/obj/item/restraints/handcuffs/cable/proc/set_cable_color(new_color)
+	color = GLOB.cable_colors[new_color]
+	cable_color = new_color
+	update_appearance(UPDATE_ICON)
+
+/obj/item/restraints/handcuffs/cable/vv_edit_var(vname, vval)
+	if(vname == NAMEOF(src, cable_color))
+		set_cable_color(vval)
+		datum_flags |= DF_VAR_EDITED
+		return TRUE
+	return ..()
+
+/obj/item/restraints/handcuffs/cable/update_icon_state()
+	. = ..()
+	if(cable_color)
+		var/new_inhand_icon = "coil_[cable_color]"
+		if(new_inhand_icon != inhand_icon_state)
+			inhand_icon_state = new_inhand_icon //small memory optimization.
 
 /**
  * # Sinew restraints
@@ -171,7 +197,8 @@
 	name = "sinew restraints"
 	desc = "A pair of restraints fashioned from long strands of flesh."
 	icon_state = "sinewcuff"
-	inhand_icon_state = "sinewcuff"
+	inhand_icon_state = null
+	cable_color = null
 	custom_materials = null
 	color = null
 
@@ -179,49 +206,65 @@
  * Red cable restraints
 */
 /obj/item/restraints/handcuffs/cable/red
-	color = "#ff0000"
+	color = CABLE_HEX_COLOR_RED
+	cable_color = CABLE_COLOR_RED
+	inhand_icon_state = "coil_red"
 
 /**
  * Yellow cable restraints
 */
 /obj/item/restraints/handcuffs/cable/yellow
-	color = "#ffff00"
+	color = CABLE_HEX_COLOR_YELLOW
+	cable_color = CABLE_COLOR_YELLOW
+	inhand_icon_state = "coil_yellow"
 
 /**
  * Blue cable restraints
 */
 /obj/item/restraints/handcuffs/cable/blue
-	color = "#1919c8"
+	color =CABLE_HEX_COLOR_BLUE
+	cable_color = CABLE_COLOR_BLUE
+	inhand_icon_state = "coil_blue"
 
 /**
  * Green cable restraints
 */
 /obj/item/restraints/handcuffs/cable/green
-	color = "#00aa00"
+	color = CABLE_HEX_COLOR_GREEN
+	cable_color = CABLE_COLOR_GREEN
+	inhand_icon_state = "coil_green"
 
 /**
  * Pink cable restraints
 */
 /obj/item/restraints/handcuffs/cable/pink
-	color = "#ff3ccd"
+	color = CABLE_HEX_COLOR_PINK
+	cable_color = CABLE_COLOR_PINK
+	inhand_icon_state = "coil_pink"
 
 /**
  * Orange (the color) cable restraints
 */
 /obj/item/restraints/handcuffs/cable/orange
-	color = "#ff8000"
+	color = CABLE_HEX_COLOR_ORANGE
+	cable_color = CABLE_COLOR_ORANGE
+	inhand_icon_state = "coil_orange"
 
 /**
  * Cyan cable restraints
 */
 /obj/item/restraints/handcuffs/cable/cyan
-	color = "#00ffff"
+	color = CABLE_HEX_COLOR_CYAN
+	cable_color = CABLE_COLOR_CYAN
+	inhand_icon_state = "coil_cyan"
 
 /**
  * White cable restraints
 */
 /obj/item/restraints/handcuffs/cable/white
-	color = null
+	color = CABLE_HEX_COLOR_WHITE
+	cable_color = CABLE_COLOR_WHITE
+	inhand_icon_state = "coil_white"
 
 /obj/item/restraints/handcuffs/cable/attackby(obj/item/I, mob/user, params) //Slapcrafting
 	if(istype(I, /obj/item/stack/rods))
@@ -262,12 +305,14 @@
 	name = "zipties"
 	desc = "Plastic, disposable zipties that can be used to restrain temporarily but are destroyed after use."
 	icon_state = "cuff"
+	inhand_icon_state = "cuff_white"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	custom_materials = null
 	breakouttime = 45 SECONDS
 	trashtype = /obj/item/restraints/handcuffs/cable/zipties/used
 	color = null
+	cable_color = null
 
 /**
  * # Used zipties
@@ -277,7 +322,6 @@
 /obj/item/restraints/handcuffs/cable/zipties/used
 	desc = "A pair of broken zipties."
 	icon_state = "cuff_used"
-	inhand_icon_state = "cuff"
 
 /obj/item/restraints/handcuffs/cable/zipties/used/attack()
 	return
@@ -295,7 +339,6 @@
 /obj/item/restraints/handcuffs/cable/zipties/fake/used
 	desc = "A pair of broken fake zipties."
 	icon_state = "cuff_used"
-	inhand_icon_state = "cuff"
 
 /**
  * # Generic leg cuffs
@@ -307,6 +350,7 @@
 	desc = "Use this to keep prisoners in line."
 	gender = PLURAL
 	icon_state = "handcuff"
+	inhand_icon_state = "handcuff"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	flags_1 = CONDUCT_1

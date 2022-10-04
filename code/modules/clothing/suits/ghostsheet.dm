@@ -2,7 +2,7 @@
 	name = "ghost sheet"
 	desc = "The hands float by themselves, so it's extra spooky."
 	icon_state = "ghost_sheet"
-	inhand_icon_state = "ghost_sheet"
+	inhand_icon_state = null
 	throwforce = 0
 	throw_speed = 1
 	throw_range = 2
