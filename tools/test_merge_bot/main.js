@@ -50,6 +50,7 @@ export async function processTestMerges({ github, context }) {
 					comments(last: 100) {
 						nodes {
 							body
+							id
 							author {
 								login
 							}
@@ -65,18 +66,10 @@ export async function processTestMerges({ github, context }) {
 			}
 		);
 
-		console.log(
-			JSON.stringify(
-				comments.repository.pullRequest.comments.nodes,
-				null,
-				2
-			)
-		);
-
 		const existingComment =
 			comments.repository.pullRequest.comments.nodes.find(
 				(comment) =>
-					comment.author.login === "github-actions[bot]" &&
+					comment.author.login === "github-actions" &&
 					comment.body.startsWith(TEST_MERGE_COMMENT_HEADER)
 			);
 
@@ -88,9 +81,8 @@ export async function processTestMerges({ github, context }) {
 
 		const newHeader = `<!-- test_merge_bot: ${roundIds} -->`;
 
-		console.log(existingComment);
-
 		if (existingComment && existingComment.body.startsWith(newHeader)) {
+			console.log(`Comment is up to date for #${prNumber}`);
 			continue;
 		}
 
@@ -119,11 +111,20 @@ export async function processTestMerges({ github, context }) {
 			listOfRounds +
 			"\n</details>\n";
 
-		// await github.rest.issues.createComment({
-		// 	owner: context.repo.owner,
-		// 	repo: context.repo.repo,
-		// 	issue_number: prNumber,
-		// 	body: newBody,
-		// });
+		if (existingComment === undefined) {
+			await github.rest.issues.createComment({
+				owner: context.repo.owner,
+				repo: context.repo.repo,
+				issue_number: prNumber,
+				body: newBody,
+			});
+		} else {
+			await github.rest.issues.updateComment({
+				owner: context.repo.owner,
+				repo: context.repo.repo,
+				comment_id: existingComment.id,
+				body: newBody,
+			});
+		}
 	}
 }
