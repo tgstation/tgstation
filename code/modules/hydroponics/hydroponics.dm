@@ -854,8 +854,7 @@
 				var/water_amt = reagent_source.reagents.get_reagent_amount(/datum/reagent/water) * transfer_amount / reagent_source.reagents.total_volume
 				var/water_amt_adjusted = H.adjust_waterlevel(round(water_amt))
 				reagent_source.reagents.remove_reagent(/datum/reagent/water, water_amt_adjusted)
-				for(var/iteration in reagent_source.reagents.reagent_list)
-					var/datum/reagent/not_water_reagent = iteration
+				for(var/datum/reagent/not_water_reagent as anything in reagent_source.reagents.reagent_list)
 					if(istype(not_water_reagent,/datum/reagent/water))
 						continue
 					var/transfer_me_to_tray = reagent_source.reagents.get_reagent_amount(not_water_reagent.type) * transfer_amount / reagent_source.reagents.total_volume
