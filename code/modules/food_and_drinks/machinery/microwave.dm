@@ -39,7 +39,7 @@
 	soundloop = new(src, FALSE)
 	set_on_table()
 
-	update_icon_state()
+	update_appearance(UPDATE_ICON)
 
 /obj/machinery/microwave/Destroy()
 	eject()
