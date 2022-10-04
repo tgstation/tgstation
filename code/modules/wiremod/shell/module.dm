@@ -158,14 +158,14 @@
 /obj/item/circuit_component/mod_adapter_core/proc/on_move(atom/movable/source, atom/old_loc, dir, forced)
 	SIGNAL_HANDLER
 	if(istype(source.loc, /obj/item/mod/control))
-		RegisterSignal(source.loc, COMSIG_MOD_MODULE_SELECTED, .proc/on_module_select)
-		RegisterSignal(source.loc, COMSIG_MOD_PART_TOGGLED, .proc/on_mod_part_toggled)
-		RegisterSignal(source.loc, COMSIG_MOD_TOGGLED, .proc/on_mod_toggled)
-		RegisterSignal(source.loc, COMSIG_MOD_MODULE_CHANGED, .proc/on_module_changed)
-		RegisterSignal(source.loc, COMSIG_ITEM_EQUIPPED, .proc/equip_check)
-		equip_check()
+		var/obj/item/mod/control/mod = source.loc
+		RegisterSignal(mod, COMSIG_MOD_MODULE_SELECTED, .proc/on_module_select)
+		RegisterSignal(mod, COMSIG_MOD_PART_TOGGLED, .proc/on_mod_part_toggled)
+		RegisterSignal(mod, COMSIG_MOD_TOGGLED, .proc/on_mod_toggled)
+		RegisterSignal(mod, COMSIG_MOD_MODULE_CHANGED, .proc/on_module_changed)
+		RegisterSignal(mod, COMSIG_ITEM_EQUIPPED, .proc/equip_check)
+		wearer.set_output(mod.wearer)
 		var/datum/port/input/option/option = module_to_select
-		var/obj/item/mod/control/mod = source
 		option.possible_options = mod.modules
 		if (option.possible_options.len)
 			option.set_value(option.possible_options[1])
@@ -209,7 +209,6 @@
 
 /obj/item/circuit_component/mod_adapter_core/proc/equip_check()
 	SIGNAL_HANDLER
-
 	if(!attached_module.mod?.wearer)
 		return
 	wearer.set_output(attached_module.mod.wearer)
