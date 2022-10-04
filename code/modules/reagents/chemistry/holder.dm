@@ -507,7 +507,6 @@
 				continue
 			if(methods)
 				r_to_send += reagent
-				reagent.on_transfer(target_atom, methods, transfer_amount * multiplier)
 
 			reagents_to_remove += reagent
 
@@ -521,6 +520,8 @@
 			remove_reagent(reagent.type, transfer_amount)
 			var/list/reagent_qualities = list(REAGENT_TRANSFER_AMOUNT = transfer_amount, REAGENT_PURITY = reagent.purity)
 			transfer_log[reagent.type] = reagent_qualities
+			if(methods)
+				reagent.on_transfer(target_atom, methods, transfer_amount * multiplier)
 
 	else
 		var/to_transfer = amount
