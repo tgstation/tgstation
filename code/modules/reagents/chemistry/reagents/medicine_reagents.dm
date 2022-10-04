@@ -42,6 +42,25 @@
 	color = "#E0BB00" //golden for the gods
 	taste_description = "badmins"
 	chemical_flags = REAGENT_DEAD_PROCESS
+	/// Static list of all status effects we nuke on life ticks
+	var/static/list/status_effects_to_clear
+
+/datum/reagent/medicine/adminordrazine/New()
+	. = ..()
+	if(!status_effects_to_clear)
+		// A variety of normal status effects
+		status_effects_to_clear = list(
+			/datum/status_effect/eye_blur,
+			/datum/status_effect/temporary_blindness,
+			/datum/status_effect/confusion,
+			/datum/status_effect/dizziness,
+			/datum/status_effect/drowsiness,
+			/datum/status_effect/jitter,
+			/datum/status_effect/hallucination,
+		)
+		// All speech effects and all incapacitation effects
+		status_effects_to_clear += typesof(/datum/status_effect/speech)
+		status_effects_to_clear += typesof(/datum/status_effect/incapacitating)
 
 // The best stuff there is. For testing/debugging.
 /datum/reagent/medicine/adminordrazine/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
@@ -68,27 +87,12 @@
 	M.adjustToxLoss(-5 * REM * delta_time, FALSE, TRUE)
 	M.setOxyLoss(0, 0)
 	M.setCloneLoss(0, 0)
-
-	M.remove_status_effect(/datum/status_effect/eye_blur)
-	M.remove_status_effect(/datum/status_effect/temporary_blindness)
-	M.SetKnockdown(0)
-	M.SetStun(0)
-	M.SetUnconscious(0)
-	M.SetParalyzed(0)
-	M.SetImmobilized(0)
-	M.remove_status_effect(/datum/status_effect/confusion)
-	M.SetSleeping(0)
-
-	M.silent = FALSE
-	M.remove_status_effect(/datum/status_effect/dizziness)
+	M.silent = 0
 	M.disgust = 0
-	M.remove_status_effect(/datum/status_effect/drowsiness)
-	// Remove all speech related status effects
-	for(var/effect in typesof(/datum/status_effect/speech))
+
+	for(var/effect in status_effects_to_clear)
 		M.remove_status_effect(effect)
-	M.remove_status_effect(/datum/status_effect/jitter)
-	M.remove_status_effect(/datum/status_effect/hallucination)
-	REMOVE_TRAITS_NOT_IN(M, list(SPECIES_TRAIT, ROUNDSTART_TRAIT, ORGAN_TRAIT))
+
 	M.reagents.remove_all_type(/datum/reagent/toxin, 5 * REM * delta_time, FALSE, TRUE)
 	if(M.blood_volume < BLOOD_VOLUME_NORMAL)
 		M.blood_volume = BLOOD_VOLUME_NORMAL
@@ -987,7 +991,7 @@
 	inverse_chem = /datum/reagent/inverse/antihol
 	/// All status effects we remove on metabolize.
 	/// Does not include drunk as that's decresed gradually
-	var/static/list/statis_effects_to_clear = list(
+	var/static/list/status_effects_to_clear = list(
 		/datum/status_effect/confusion,
 		/datum/status_effect/dizziness,
 		/datum/status_effect/drowsiness,
@@ -995,7 +999,7 @@
 	)
 
 /datum/reagent/medicine/antihol/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	for(var/effect in statis_effects_to_clear)
+	for(var/effect in status_effects_to_clear)
 		M.remove_status_effect(effect)
 	M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 3 * REM * delta_time * normalise_creation_purity(), FALSE, TRUE)
 	M.adjustToxLoss(-0.2 * REM * delta_time, 0)
