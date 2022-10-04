@@ -100,7 +100,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "aB" = (
-/obj/machinery/power/supermatter_crystal/shard/hugbox/fakecrystal,
+/obj/machinery/power/supermatter_crystal/hugbox,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "aD" = (

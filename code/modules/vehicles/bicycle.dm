@@ -5,8 +5,6 @@
 	max_integrity = 150
 	integrity_failure = 0.5
 	var/fried = FALSE
-		///What mobs are currently repairing us.
-	var/list/mob/living/repairing_mobs
 
 /obj/vehicle/ridden/bicycle/Initialize(mapload)
 	. = ..()
@@ -29,7 +27,7 @@
 	. = TRUE
 	if(fried)
 		balloon_alert(user, "it's fried!")
-	if(LAZYFIND(repairing_mobs, user))
+	if(DOING_INTERACTION(user, src))
 		balloon_alert(user, "you're already repairing it!")
 		return
 	if(atom_integrity >= max_integrity)
@@ -37,7 +35,6 @@
 		return
 	if(!W.tool_start_check(user, amount=1))
 		return
-	LAZYADD(repairing_mobs, user)
 	user.balloon_alert_to_viewers("started welding [src]", "started repairing [src]")
 	audible_message(span_hear("You hear welding."))
 	var/did_the_thing
@@ -52,7 +49,6 @@
 		user.balloon_alert_to_viewers("[(atom_integrity >= max_integrity) ? "fully" : "partially"] repaired [src]")
 	else
 		user.balloon_alert_to_viewers("stopped welding [src]", "interrupted the repair!")
-	LAZYREMOVE(repairing_mobs, user)
 
 ///can we still fix the bike lol
 /obj/vehicle/ridden/bicycle/proc/can_still_fix()

@@ -277,7 +277,7 @@
 		if(HAS_TRAIT(victim, TRAIT_LIMBATTACHMENT))
 			if(!human_victim.get_bodypart(body_zone))
 				user.temporarilyRemoveItemFromInventory(src, TRUE)
-				if(!attach_limb(victim))
+				if(!try_attach_limb(victim))
 					to_chat(user, span_warning("[human_victim]'s body rejects [src]!"))
 					forceMove(human_victim.loc)
 				if(human_victim == user)

@@ -145,7 +145,6 @@ SUBSYSTEM_DEF(mapping)
 	setup_map_transitions()
 	generate_station_area_list()
 	initialize_reserved_level(transit.z_value)
-	generate_z_level_linkages()
 	calculate_default_z_level_gravities()
 
 	return SS_INIT_SUCCESS
@@ -397,7 +396,13 @@ Used by the AI doomsday and the self-destruct nuke.
 GLOBAL_LIST_EMPTY(the_station_areas)
 
 /datum/controller/subsystem/mapping/proc/generate_station_area_list()
-	var/static/list/station_areas_blacklist = typecacheof(list(/area/space, /area/mine, /area/ruin, /area/centcom/asteroid/nearstation))
+	var/static/list/station_areas_blacklist = typecacheof(list(
+		/area/space,
+		/area/mine,
+		/area/ruin,
+		/area/centcom/asteroid/nearstation,
+		/area/icemoon,
+	))
 	for(var/area/A in world)
 		if (is_type_in_typecache(A, station_areas_blacklist))
 			continue

@@ -485,7 +485,7 @@
 
 			var/obj/item/bodypart/BP = new path ()
 			BP.held_index = i
-			BP.attach_limb(src, TRUE)
+			BP.try_attach_limb(src, TRUE)
 			hand_bodyparts[i] = BP
 	..() //Don't redraw hands until we have organs for them
 
