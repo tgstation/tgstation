@@ -430,8 +430,10 @@
 	pass_flags = PASSTABLE | PASSGRILLE
 	max_integrity = 50
 	var/energy = 0
-	var/can_spread = TRUE //Can this kudzu spread?
-	var/can_tangle = TRUE //Can this kudzu tangle
+	/// Can this kudzu spread?
+	var/can_spread = TRUE
+	/// Can this kudzu buckle mobs in?
+	var/can_tangle = TRUE
 	var/datum/spacevine_controller/master = null
 	/// List of mutations for a specific vine
 	var/list/mutations = list()
