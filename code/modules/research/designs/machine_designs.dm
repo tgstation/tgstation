@@ -140,7 +140,7 @@
 	id = "botpad"
 	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/machine/botpad
-	category = list(RND_CATEGORY_RESEARCH_MACHINERY)
+	category = list(RND_CATEGORY_MACHINE)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/launchpad
