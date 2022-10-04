@@ -1,4 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes: 
-  - bugfix: "Spirits (Revenants), Robotic mobs (drones), and epic mobs (megafauna) are no longer affected by hallucinations"
