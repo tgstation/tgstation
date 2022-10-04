@@ -349,6 +349,7 @@
 		uninstall(module_to_remove)
 		module_to_remove.forceMove(drop_location())
 		crowbar.play_tool_sound(src, 100)
+		SEND_SIGNAL(src, COMSIG_MOD_MODULE_CHANGED, user)
 		return TRUE
 	balloon_alert(user, "no modules!")
 	playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
