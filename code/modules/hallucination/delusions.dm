@@ -202,7 +202,7 @@
 	affects_others = TRUE
 	affects_us = FALSE
 
-/datum/hallucination/delusion/preset/cyborg/make_delusion_image(mob/over_who)
+/datum/hallucination/delusion/preset/syndies/make_delusion_image(mob/over_who)
 	var/static/list/syndicate_icon_states
 
 	if(!syndicate_icon_states)
