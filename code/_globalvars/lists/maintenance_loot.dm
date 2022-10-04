@@ -46,7 +46,7 @@ GLOBAL_LIST_INIT(trash_loot, list(//junk: useless, very easy to get, or ghetto c
 		/obj/item/food/urinalcake = 1,
 		/obj/item/light/bulb = 1,
 		/obj/item/light/tube = 1,
-		/obj/item/reagent_containers/food/drinks/drinkingglass = 1,
+		/obj/item/reagent_containers/cup/glass/drinkingglass = 1,
 
 		/obj/item/airlock_painter = 1,
 		/obj/item/airlock_painter/decal = 1,
@@ -77,7 +77,7 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		/obj/item/geiger_counter = 1,
 		/obj/item/mop = 1,
 		/obj/item/pushbroom = 1,
-		/obj/item/reagent_containers/glass/bucket = 1,
+		/obj/item/reagent_containers/cup/bucket = 1,
 		/obj/item/screwdriver = 1,
 		/obj/item/t_scanner = 1,
 		/obj/item/toy/crayon/spraycan = 1,
@@ -126,9 +126,9 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 	list(//medical and chemicals
 		/obj/item/grenade/chem_grenade/cleaner = 1,
 		/obj/item/lead_pipe = 1,
-		/obj/item/reagent_containers/glass/beaker = 1,
-		/obj/item/reagent_containers/glass/bottle/random_buffer = 2,
-		/obj/item/reagent_containers/glass/rag = 1,
+		/obj/item/reagent_containers/cup/beaker = 1,
+		/obj/item/reagent_containers/cup/bottle/random_buffer = 2,
+		/obj/item/reagent_containers/cup/rag = 1,
 		/obj/item/reagent_containers/hypospray/medipen/pumpup = 2,
 		/obj/item/reagent_containers/syringe = 1,
 		/obj/item/stock_parts/cell/lead = 1,
@@ -137,8 +137,8 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		) = 1,
 
 	list(//food
-		/obj/item/reagent_containers/food/drinks/bottle/beer = 1,
-		/obj/item/reagent_containers/food/drinks/coffee = 1,
+		/obj/item/reagent_containers/cup/glass/bottle/beer = 1,
+		/obj/item/reagent_containers/cup/glass/coffee = 1,
 		) = 1,
 
 	list(//misc
@@ -213,14 +213,14 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 			/obj/item/stack/medical/suture = 1,
 			) = 1,
 		list(//medical chems
-			/obj/item/reagent_containers/glass/bottle/multiver = 1,
+			/obj/item/reagent_containers/cup/bottle/multiver = 1,
 			/obj/item/reagent_containers/hypospray/medipen = 1,
 			/obj/item/reagent_containers/syringe/convermol = 1,
 			) = 1,
 		list(//drinks
-			/obj/item/reagent_containers/food/drinks/bottle/vodka = 1,
-			/obj/item/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola = 1,
-			/obj/item/reagent_containers/food/drinks/soda_cans/grey_bull = 1,
+			/obj/item/reagent_containers/cup/glass/bottle/vodka = 1,
+			/obj/item/reagent_containers/cup/glass/drinkingglass/filled/nuka_cola = 1,
+			/obj/item/reagent_containers/cup/soda_cans/grey_bull = 1,
 			) = 1,
 		list(//sprayers
 			/obj/item/reagent_containers/spray = 1,
@@ -393,6 +393,3 @@ GLOBAL_LIST_INIT(ratking_coins, list(//Coins: Used by the regal rat mob when spa
 			/obj/item/coin/silver,
 			/obj/item/coin/titanium,
 		))
-
-// List of all maintenance loot spawners, for easy finding at roundstart.
-GLOBAL_LIST_EMPTY(maintenance_loot_spawners)

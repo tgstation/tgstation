@@ -1,3 +1,6 @@
+GLOBAL_DATUM_INIT(cleaning_bubbles_lower, /mutable_appearance, mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, GAME_PLANE)) //displays at the top of floor tiles, but under mobs
+GLOBAL_DATUM_INIT(cleaning_bubbles_higher, /mutable_appearance, mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, ABOVE_GAME_PLANE)) //displays above mobs
+
 /**
  * Component that can be used to clean things.
  * Takes care of duration, cleaning skill and special cleaning interactions.
@@ -61,6 +64,20 @@
  * * clean_target set this to false if the target should not be washed and if experience should not be awarded to the user
  */
 /datum/component/cleaner/proc/clean(datum/source, atom/target, mob/living/user, clean_target = TRUE)
+	//add the cleaning overlay
+	var/already_cleaning = HAS_TRAIT(target, CURRENTLY_CLEANING) //tracks if atom had the cleaning trait when you started cleaning
+	if(!already_cleaning) //add the trait and overlay
+		ADD_TRAIT(target, CURRENTLY_CLEANING, src)
+		if(target.plane > GLOB.cleaning_bubbles_lower.plane) //check if the higher overlay is necessary
+			target.add_overlay(GLOB.cleaning_bubbles_higher)
+		else if(target.plane == GLOB.cleaning_bubbles_lower.plane)
+			if(target.layer > GLOB.cleaning_bubbles_lower.layer)
+				target.add_overlay(GLOB.cleaning_bubbles_higher)
+			else
+				target.add_overlay(GLOB.cleaning_bubbles_lower)
+		else //(target.plane < GLOB.cleaning_bubbles_lower.plane)
+			target.add_overlay(GLOB.cleaning_bubbles_lower)
+
 	//set the cleaning duration
 	var/cleaning_duration = base_cleaning_duration
 	if(user.mind) //higher cleaning skill can make the duration shorter
@@ -69,22 +86,27 @@
 
 	//do the cleaning
 	user.visible_message(span_notice("[user] starts to clean [target]!"), span_notice("You start to clean [target]..."))
-	if(!do_after(user, cleaning_duration, target = target))
-		return
-	user.visible_message(span_notice("[user] finishes cleaning [target]!"), span_notice("You finish cleaning [target]."))
-	if(clean_target)
-		if(isturf(target)) //cleaning the floor and every bit of filth on top of it
-			for(var/obj/effect/decal/cleanable/cleanable_decal in target) //it's important to do this before you wash all of the cleanables off
-				user.mind?.adjust_experience(/datum/skill/cleaning, round(cleanable_decal.beauty / CLEAN_SKILL_BEAUTY_ADJUSTMENT))
-		else if(istype(target, /obj/structure/window)) //window cleaning
-			target.set_opacity(initial(target.opacity))
-			target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-			var/obj/structure/window/window = target
-			if(window.bloodied)
-				for(var/obj/effect/decal/cleanable/blood/iter_blood in window)
-					window.vis_contents -= iter_blood
-					qdel(iter_blood)
-					window.bloodied = FALSE
-		user.mind?.adjust_experience(/datum/skill/cleaning, round(CLEAN_SKILL_GENERIC_WASH_XP))
-		target.wash(cleaning_strength)
-	on_cleaned_callback?.Invoke(source, target, user, clean_target)
+	if(do_after(user, cleaning_duration, target = target))
+		user.visible_message(span_notice("[user] finishes cleaning [target]!"), span_notice("You finish cleaning [target]."))
+		if(clean_target)
+			if(isturf(target)) //cleaning the floor and every bit of filth on top of it
+				for(var/obj/effect/decal/cleanable/cleanable_decal in target) //it's important to do this before you wash all of the cleanables off
+					user.mind?.adjust_experience(/datum/skill/cleaning, round(cleanable_decal.beauty / CLEAN_SKILL_BEAUTY_ADJUSTMENT))
+			else if(istype(target, /obj/structure/window)) //window cleaning
+				target.set_opacity(initial(target.opacity))
+				target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+				var/obj/structure/window/window = target
+				if(window.bloodied)
+					for(var/obj/effect/decal/cleanable/blood/iter_blood in window)
+						window.vis_contents -= iter_blood
+						qdel(iter_blood)
+						window.bloodied = FALSE
+			user.mind?.adjust_experience(/datum/skill/cleaning, round(CLEAN_SKILL_GENERIC_WASH_XP))
+			target.wash(cleaning_strength)
+		on_cleaned_callback?.Invoke(source, target, user, clean_target)
+
+	//remove the cleaning overlay
+	if(!already_cleaning)
+		target.cut_overlay(GLOB.cleaning_bubbles_lower)
+		target.cut_overlay(GLOB.cleaning_bubbles_higher)
+		REMOVE_TRAIT(target, CURRENTLY_CLEANING, src)

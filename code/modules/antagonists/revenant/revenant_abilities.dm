@@ -1,3 +1,6 @@
+#define REVENANT_DEFILE_MIN_DAMAGE 30
+#define REVENANT_DEFILE_MAX_DAMAGE 50
+
 
 /mob/living/simple_animal/revenant/ClickOn(atom/A, params) //revenants can't interact with the world directly.
 	var/list/modifiers = params2list(params)
@@ -154,7 +157,7 @@
 
 /datum/action/cooldown/spell/aoe/revenant/New(Target)
 	. = ..()
-	if(!istype(target, /mob/living/simple_animal/revenant))
+	if(!isrevenant(target))
 		stack_trace("[type] was given to a non-revenant mob, please don't.")
 		qdel(src)
 		return
@@ -168,7 +171,7 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	if(!istype(owner, /mob/living/simple_animal/revenant))
+	if(!isrevenant(owner))
 		stack_trace("[type] was owned by a non-revenant mob, please don't.")
 		return FALSE
 
@@ -302,8 +305,9 @@
 	for(var/obj/machinery/dna_scannernew/dna in victim)
 		dna.open_machine()
 	for(var/obj/structure/window/window in victim)
-		window.take_damage(rand(30, 80))
-		if(window?.fulltile)
+		if(window.get_integrity() > REVENANT_DEFILE_MAX_DAMAGE)
+			window.take_damage(rand(REVENANT_DEFILE_MIN_DAMAGE, REVENANT_DEFILE_MAX_DAMAGE))
+		if(window.fulltile)
 			new /obj/effect/temp_visual/revenant/cracks(window.loc)
 	for(var/obj/machinery/light/light in victim)
 		light.flicker(20) //spooky
@@ -399,3 +403,57 @@
 		tray.set_pestlevel(rand(8, 10))
 		tray.set_weedlevel(rand(8, 10))
 		tray.set_toxic(rand(45, 55))
+
+/datum/action/cooldown/spell/aoe/revenant/haunt_object
+	name = "Haunt Object"
+	desc = "Empower nearby objects to you with ghostly energy, causing them to attack nearby mortals. \
+		Items closer to you are more likely to be haunted."
+	icon_icon = 'icons/mob/actions/actions_revenant.dmi'
+	button_icon_state = "r_haunt"
+	max_targets = 7
+	aoe_radius = 5
+
+	unlock_amount = 30 // Similar to overload lights
+	cast_amount = 50 // but has a longer lasting effect
+	stun_duration = 3 SECONDS
+	reveal_duration = 6 SECONDS
+
+/datum/action/cooldown/spell/aoe/revenant/haunt_object/get_things_to_cast_on(atom/center)
+	var/list/things = list()
+	for(var/obj/item/nearby_item in range(aoe_radius, center))
+		// Don't throw around anchored things or dense things
+		// (Or things not on a turf but I am not sure if range can catch that)
+		if(nearby_item.anchored || nearby_item.density || !isturf(nearby_item.loc))
+			continue
+		// Don't throw abstract things
+		if(nearby_item.item_flags & ABSTRACT)
+			continue
+		// Don't throw things we can't see
+		if(nearby_item.invisibility >= INVISIBILITY_REVENANT)
+			continue
+		// Don't throw things that are already throwing themself
+		if(istype(nearby_item.ai_controller, /datum/ai_controller/haunted))
+			continue
+
+		things += nearby_item
+
+	return things
+
+/datum/action/cooldown/spell/aoe/revenant/haunt_object/cast_on_thing_in_aoe(obj/item/victim, mob/living/simple_animal/revenant/caster)
+	var/distance_from_caster = get_dist(get_turf(victim), get_turf(caster))
+	var/chance_of_haunting = 150 * (1 / distance_from_caster)
+	if(!prob(chance_of_haunting))
+		return
+
+	new /obj/effect/temp_visual/revenant(get_turf(victim))
+
+	victim.AddComponent(/datum/component/haunted_item, \
+		haunt_color = "#823abb", \
+		haunt_duration = rand(1 MINUTES, 3 MINUTES), \
+		aggro_radius = aoe_radius - 1, \
+		spawn_message = span_revenwarning("[victim] begins to float and twirl into the air as it glows a ghastly purple!"), \
+		despawn_message = span_revenwarning("[victim] falls back to the ground, stationary once more."), \
+	)
+
+#undef REVENANT_DEFILE_MIN_DAMAGE
+#undef REVENANT_DEFILE_MAX_DAMAGE

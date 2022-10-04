@@ -140,7 +140,6 @@ The console is located at computer/gulag_teleporter.dm
 					continue
 				if(linked_reclaimer)
 					linked_reclaimer.stored_items[mob_occupant] += W
-					linked_reclaimer.contents += W
 					W.forceMove(linked_reclaimer)
 				else
 					W.forceMove(src)

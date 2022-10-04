@@ -1,0 +1,3 @@
+# comment finally changed paicard to pai_card
+
+/obj/item/paicard : /obj/item/pai_card{@OLD}

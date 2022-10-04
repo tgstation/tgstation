@@ -20,6 +20,12 @@
 #define POLL_IGNORE_CONTRACTOR_SUPPORT "contractor_support"
 #define POLL_IGNORE_ACADEMY_WIZARD "academy_wizard"
 #define POLL_IGNORE_PAI "pai"
+#define POLL_IGNORE_VENUSHUMANTRAP "venus_human_trap"
+#define POLL_IGNORE_REGAL_RAT "regal_rat"
+#define POLL_IGNORE_CARGORILLA "cargorilla"
+#define POLL_IGNORE_MONKEY_HELMET "mind_magnified_monkey"
+#define POLL_IGNORE_LAVALAND_ELITE "lavaland_elite"
+#define POLL_IGNORE_SHUTTLE_DENIZENS "shuttle_denizens"
 
 
 GLOBAL_LIST_INIT(poll_ignore_desc, list(
@@ -43,6 +49,12 @@ GLOBAL_LIST_INIT(poll_ignore_desc, list(
 	POLL_IGNORE_CONTRACTOR_SUPPORT = "Contractor Support Unit",
 	POLL_IGNORE_ACADEMY_WIZARD = "Academy Wizard Defender",
 	POLL_IGNORE_PAI = JOB_PERSONAL_AI,
+	POLL_IGNORE_VENUSHUMANTRAP = "Venus Human Traps",
+	POLL_IGNORE_REGAL_RAT = "Regal rat",
+	POLL_IGNORE_CARGORILLA = "Cargorilla",
+	POLL_IGNORE_MONKEY_HELMET = "Mind magnified monkey",
+	POLL_IGNORE_LAVALAND_ELITE = "Lavaland elite",
+	POLL_IGNORE_SHUTTLE_DENIZENS = "Shuttle denizens",
 ))
 GLOBAL_LIST_INIT(poll_ignore, init_poll_ignore())
 

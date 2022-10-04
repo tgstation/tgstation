@@ -118,6 +118,7 @@
 	var/static/list/non_ruleset_antagonists = list(
 		ROLE_FUGITIVE = /datum/antagonist/fugitive,
 		ROLE_LONE_OPERATIVE = /datum/antagonist/nukeop/lone,
+		ROLE_SENTIENCE = /datum/antagonist/sentient_creature,
 	)
 
 	var/list/antagonists = non_ruleset_antagonists.Copy()

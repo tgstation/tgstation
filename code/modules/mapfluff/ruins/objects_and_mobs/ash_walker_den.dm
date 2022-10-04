@@ -3,7 +3,7 @@
 /obj/structure/lavaland/ash_walker
 	name = "necropolis tendril nest"
 	desc = "A vile tendril of corruption. It's surrounded by a nest of rapidly growing eggs..."
-	icon = 'icons/mob/nest.dmi'
+	icon = 'icons/mob/simple/lavaland/nest.dmi'
 	icon_state = "ash_walker_nest"
 
 	move_resist=INFINITY // just killing it tears a massive hole in the ground, let's not move it
@@ -36,7 +36,8 @@
 	return ..()
 
 /obj/structure/lavaland/ash_walker/deconstruct(disassembled)
-	new /obj/item/assembly/signaler/anomaly (get_step(loc, pick(GLOB.alldirs)))
+	var/core_to_drop = pick(subtypesof(/obj/item/assembly/signaler/anomaly))
+	new core_to_drop (get_step(loc, pick(GLOB.alldirs)))
 	new /obj/effect/collapse(loc)
 	return ..()
 
@@ -85,9 +86,9 @@
 			atom_integrity = min(atom_integrity + max_integrity*0.05,max_integrity)//restores 5% hp of tendril
 			for(var/mob/living/L in view(src, 5))
 				if(L.mind?.has_antag_datum(/datum/antagonist/ashwalker))
-					SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "oogabooga", /datum/mood_event/sacrifice_good)
+					L.add_mood_event("oogabooga", /datum/mood_event/sacrifice_good)
 				else
-					SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "oogabooga", /datum/mood_event/sacrifice_bad)
+					L.add_mood_event("oogabooga", /datum/mood_event/sacrifice_bad)
 
 /obj/structure/lavaland/ash_walker/proc/remake_walker(datum/mind/oldmind, oldname)
 	var/mob/living/carbon/human/M = new /mob/living/carbon/human(get_step(loc, pick(GLOB.alldirs)))

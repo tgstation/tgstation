@@ -1,9 +1,13 @@
 ///Wing base type. doesn't really do anything
 /obj/item/organ/external/wings
+	name = "wings"
+	desc = "Spread your wings and FLLLLLLLLYYYYY!"
+
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_EXTERNAL_WINGS
 	layers = ALL_EXTERNAL_OVERLAYS
 
+	use_mob_sprite_as_obj_sprite = TRUE
 	feature_key = "wings"
 
 /obj/item/organ/external/wings/can_draw_on_bodypart(mob/living/carbon/human/human)
@@ -161,6 +165,9 @@
 
 ///Moth wings! They can flutter in low-grav and burn off in heat
 /obj/item/organ/external/wings/moth
+	name = "moth wings"
+	desc = "Spread your wings and FLOOOOAAAAAT!"
+
 	feature_key = "moth_wings"
 	preference = "feature_moth_wings"
 	layers = EXTERNAL_BEHIND | EXTERNAL_FRONT
@@ -214,7 +221,7 @@
 
 	if(!burnt && human.bodytemperature >= 800 && human.fire_stacks > 0) //do not go into the extremely hot light. you will not survive
 		to_chat(human, span_danger("Your precious wings burn to a crisp!"))
-		SEND_SIGNAL(human, COMSIG_ADD_MOOD_EVENT, "burnt_wings", /datum/mood_event/burnt_wings)
+		human.add_mood_event("burnt_wings", /datum/mood_event/burnt_wings)
 
 		burn_wings()
 		human.update_body_parts()

@@ -73,7 +73,7 @@
 	icon = 'icons/obj/food/frozen_treats.dmi'
 	icon_state = "flavorless_sc"
 	w_class = WEIGHT_CLASS_SMALL
-	trash_type = /obj/item/reagent_containers/food/drinks/sillycup //We dont eat paper cups
+	trash_type = /obj/item/reagent_containers/cup/glass/sillycup //We dont eat paper cups
 	food_reagents = list(/datum/reagent/water = 11) // We dont get food for water/juices
 	tastes = list("ice" = 1, "water" = 1)
 	foodtypes = SUGAR //We use SUGAR as a base line to act in as junkfood, other wise we use fruit

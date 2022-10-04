@@ -29,7 +29,7 @@
 /obj/structure/holopay/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 
-	if(istype(held_item, /obj/item/card/id))
+	if(isidcard(held_item))
 		context[SCREENTIP_CONTEXT_LMB] = "Pay"
 		var/obj/item/card/id/held_id = held_item
 		if(held_id.my_store && held_id.my_store == src)
@@ -72,7 +72,7 @@
 	if(!isliving(user))
 		return ..()
 	/// Users can pay with an ID to skip the UI
-	if(istype(held_item, /obj/item/card/id))
+	if(isidcard(held_item))
 		if(force_fee && tgui_alert(item_holder, "This holopay has a [force_fee] cr fee. Confirm?", "Holopay Fee", list("Pay", "Cancel")) != "Pay")
 			return TRUE
 		process_payment(user)
@@ -90,7 +90,7 @@
 		/// Exit sanity checks
 		if(!cash_deposit)
 			return TRUE
-		if(QDELETED(held_item) || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		if(QDELETED(held_item) || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 			return FALSE
 		if(!chip.spend(cash_deposit, FALSE))
 			balloon_alert(user, "insufficient credits")
@@ -110,7 +110,7 @@
 
 /obj/structure/holopay/attackby_secondary(obj/item/weapon, mob/user, params)
 	/// Can kill it by right-clicking with ID because it seems useful and intuitive, to me, at least
-	if(!istype(weapon, /obj/item/card/id))
+	if(!isidcard(weapon))
 		return ..()
 	var/obj/item/card/id/attacking_id = weapon
 	if(!attacking_id.my_store || attacking_id.my_store != src)
@@ -260,7 +260,7 @@
 	/// If the user has enough money, ask them the amount or charge the force fee
 	var/amount = force_fee || tgui_input_number(user, "How much? (Max: [payee.account_balance])", "Patronage", max_value = payee.account_balance)
 	/// Exit checks in case the user cancelled or entered an invalid amount
-	if(!amount || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(!amount || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 		return FALSE
 	if(!payee.adjust_money(-amount))
 		balloon_alert(user, "insufficient credits")

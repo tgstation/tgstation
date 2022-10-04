@@ -65,12 +65,13 @@
 	mask = /obj/item/clothing/mask/gas/explorer
 	shoes = /obj/item/clothing/shoes/workboots/mining
 
-/datum/outfit/consumed_miner/pre_equip(mob/living/carbon/human/ashwalker, visualsOnly = FALSE)
+/datum/outfit/consumed_miner/pre_equip(mob/living/carbon/human/miner, visualsOnly = FALSE)
 	var/regular_uniform = FALSE
 	if(visualsOnly)
 		regular_uniform = TRUE //assume human
 	else
 		var/new_species_type = pick_weight(list(/datum/species/human = 70, /datum/species/lizard = 26, /datum/species/fly = 2, /datum/species/plasmaman = 2))
+		miner.set_species(new_species_type)
 		if(new_species_type != /datum/species/plasmaman)
 			regular_uniform = TRUE
 		else
@@ -139,7 +140,7 @@
 	if(!visualsOnly)
 		clown.fully_replace_character_name(clown.name, pick(GLOB.clown_names))
 	if(prob(70))
-		var/backpack_loot = pick(list(/obj/item/stamp/clown = 1, /obj/item/reagent_containers/spray/waterflower = 1, /obj/item/food/grown/banana = 1, /obj/item/megaphone/clown = 1, /obj/item/reagent_containers/food/drinks/soda_cans/canned_laughter = 1, /obj/item/pneumatic_cannon/pie))
+		var/backpack_loot = pick(list(/obj/item/stamp/clown = 1, /obj/item/reagent_containers/spray/waterflower = 1, /obj/item/food/grown/banana = 1, /obj/item/megaphone/clown = 1, /obj/item/reagent_containers/cup/soda_cans/canned_laughter = 1, /obj/item/pneumatic_cannon/pie))
 		if(backpack_loot == /obj/item/pneumatic_cannon/pie)
 			drop_a_pie_cannon = TRUE
 		else
@@ -217,4 +218,4 @@
 	suit_store = /obj/item/tome
 	back = /obj/item/storage/backpack/cultpack
 	r_pocket = /obj/item/clothing/glasses/hud/health/night/cultblind
-	backpack_contents = list(/obj/item/reagent_containers/glass/beaker/unholywater = 1, /obj/item/cult_shift = 1, /obj/item/flashlight/flare/culttorch = 1, /obj/item/stack/sheet/runed_metal = 15)
+	backpack_contents = list(/obj/item/reagent_containers/cup/beaker/unholywater = 1, /obj/item/cult_shift = 1, /obj/item/flashlight/flare/culttorch = 1, /obj/item/stack/sheet/runed_metal = 15)

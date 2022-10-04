@@ -12,7 +12,7 @@
 	var/zoom_out_amt = 5.5
 	var/zoom_amt = 10
 
-/obj/item/binoculars/ComponentInitialize()
+/obj/item/binoculars/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/two_handed, force_unwielded=8, force_wielded=12, wield_callback = CALLBACK(src, .proc/on_wield), unwield_callback = CALLBACK(src, .proc/on_unwield))
 

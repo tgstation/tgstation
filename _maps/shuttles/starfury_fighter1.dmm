@@ -19,9 +19,7 @@
 /obj/structure/rack,
 /obj/item/clothing/mask/gas/syndicate,
 /obj/item/tank/internals/emergency_oxygen/engi,
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/sbc_fighter1)
 "q" = (
@@ -51,9 +49,8 @@
 /obj/structure/rack,
 /obj/item/storage/toolbox/mechanical,
 /obj/item/multitool,
-/obj/machinery/light/small{
+/obj/machinery/light/small/directional/west{
 	brightness = 3;
-	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/sbc_fighter1)

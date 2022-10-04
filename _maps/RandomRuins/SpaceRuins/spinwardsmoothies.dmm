@@ -1,8 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/spinwardsmoothies)
 "dq" = (
@@ -36,9 +34,7 @@
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/spinwardsmoothies)
 "ri" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /obj/structure/flora/bush/flowers_pp/style_random,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/spinwardsmoothies)
@@ -64,7 +60,7 @@
 /area/ruin/space/has_grav/spinwardsmoothies)
 "xc" = (
 /obj/structure/table/wood,
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /obj/effect/turf_decal/siding/thinplating/terracotta{
 	dir = 1
 	},
@@ -92,13 +88,11 @@
 /area/ruin/space/has_grav/spinwardsmoothies)
 "CK" = (
 /obj/structure/flora/bush/flowers_br/style_random,
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/spinwardsmoothies)
 "CV" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /obj/effect/turf_decal/siding/thinplating/terracotta{
 	dir = 8
 	},
@@ -154,7 +148,7 @@
 /turf/open/floor/bamboo,
 /area/ruin/space/has_grav/spinwardsmoothies)
 "KV" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/spinwardsmoothies)
 "OI" = (

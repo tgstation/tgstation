@@ -119,8 +119,7 @@
 	//We are now going to move
 	var/add_delay = mob.cached_multiplicative_slowdown
 	var/new_glide_size = DELAY_TO_GLIDE_SIZE(add_delay * ( (NSCOMPONENT(direct) && EWCOMPONENT(direct)) ? SQRT_2 : 1 ) )
-	if(mob.glide_size != new_glide_size)
-		mob.set_glide_size(new_glide_size) // set it now in case of pulled objects
+	mob.set_glide_size(new_glide_size) // set it now in case of pulled objects
 	//If the move was recent, count using old_move_delay
 	//We want fractional behavior and all
 	if(old_move_delay + world.tick_lag > world.time)
@@ -145,8 +144,7 @@
 	else
 		after_glide = DELAY_TO_GLIDE_SIZE(add_delay)
 
-	if(after_glide != mob.glide_size)
-		mob.set_glide_size(after_glide)
+	mob.set_glide_size(after_glide)
 
 	move_delay += add_delay
 	if(.) // If mob is null here, we deserve the runtime

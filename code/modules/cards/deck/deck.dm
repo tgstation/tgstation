@@ -4,7 +4,7 @@
 /obj/item/toy/cards/deck
 	name = "deck of cards"
 	desc = "A deck of space-grade playing cards."
-	icon = 'icons/obj/playing_cards.dmi'
+	icon = 'icons/obj/toys/playing_cards.dmi'
 	icon_state = "deck_nanotrasen_full"
 	w_class = WEIGHT_CLASS_SMALL
 	worn_icon_state = "card"
@@ -131,7 +131,7 @@
 			var/other_players = english_list(card_players - player)
 			var/obj/item/toy/held_card_item = card_players[player]
 
-			SEND_SIGNAL(player, COMSIG_ADD_MOOD_EVENT, "playing_cards", /datum/mood_event/playing_cards)
+			player.add_mood_event("playing_cards", /datum/mood_event/playing_cards)
 			player.mind?.add_memory(
 				MEMORY_PLAYING_CARDS,
 				list(
@@ -147,7 +147,7 @@
 
 
 /obj/item/toy/cards/deck/attack_hand(mob/living/user, list/modifiers, flip_card = FALSE)
-	if(!ishuman(user) || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK, !iscyborg(user)))
+	if(!ishuman(user) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = TRUE, need_hands = !iscyborg(user)))
 		return
 
 	var/obj/item/toy/singlecard/card = draw(user)
@@ -164,7 +164,7 @@
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/toy/cards/deck/AltClick(mob/living/user)
-	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK, !iscyborg(user)))
+	if(user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = TRUE, need_hands = !iscyborg(user)))
 		if(wielded)
 			shuffle_cards(user)
 		else
@@ -214,8 +214,8 @@
 	var/mob/living/thrower = throwingdatum.thrower
 
 	target.visible_message(span_warning("[target] is forced to play 52 card pickup!"), span_warning("You are forced to play 52 card pickup."))
-	SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, "lost_52_card_pickup", /datum/mood_event/lost_52_card_pickup)
-	SEND_SIGNAL(thrower, COMSIG_ADD_MOOD_EVENT, "won_52_card_pickup", /datum/mood_event/won_52_card_pickup)
+	target.add_mood_event("lost_52_card_pickup", /datum/mood_event/lost_52_card_pickup)
+	thrower.add_mood_event("won_52_card_pickup", /datum/mood_event/won_52_card_pickup)
 	add_memory_in_range(
 		target,
 		7,

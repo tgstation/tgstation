@@ -9,7 +9,7 @@
 		cut_overlay(I)
 		gorilla_overlays[cache_index] = null
 
-/mob/living/simple_animal/hostile/gorilla/update_inv_hands()
+/mob/living/simple_animal/hostile/gorilla/update_held_items()
 	cut_overlays("standing_overlay")
 	remove_overlay(GORILLA_HANDS_LAYER)
 
@@ -49,5 +49,5 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/gorilla/regenerate_icons()
-	update_inv_hands()
+	update_held_items()
 

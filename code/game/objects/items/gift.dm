@@ -13,7 +13,7 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 /obj/item/a_gift
 	name = "gift"
 	desc = "PRESENTS!!!! eek!"
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/storage/storage.dmi'
 	icon_state = "giftdeliverypackage3"
 	inhand_icon_state = "gift"
 	resistance_flags = FLAMMABLE
@@ -77,17 +77,17 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 		/obj/item/banhammer,
 		/obj/item/food/grown/ambrosia/deus,
 		/obj/item/food/grown/ambrosia/vulgaris,
-		/obj/item/paicard,
+		/obj/item/pai_card,
 		/obj/item/instrument/violin,
 		/obj/item/instrument/guitar,
 		/obj/item/storage/belt/utility/full,
 		/obj/item/clothing/neck/tie/horrible,
 		/obj/item/clothing/suit/jacket/leather,
 		/obj/item/clothing/suit/jacket/leather/overcoat,
-		/obj/item/clothing/suit/poncho,
-		/obj/item/clothing/suit/poncho/green,
-		/obj/item/clothing/suit/poncho/red,
-		/obj/item/clothing/suit/snowman,
+		/obj/item/clothing/suit/costume/poncho,
+		/obj/item/clothing/suit/costume/poncho/green,
+		/obj/item/clothing/suit/costume/poncho/red,
+		/obj/item/clothing/suit/costume/snowman,
 		/obj/item/clothing/head/snowman,
 		/obj/item/stack/sheet/mineral/coal)
 

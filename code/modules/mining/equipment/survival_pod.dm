@@ -88,7 +88,7 @@
 	icon_state = "pod_window-0"
 	base_icon_state = "pod_window"
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = list(SMOOTH_GROUP_SHUTTLE_PARTS, SMOOTH_GROUP_SURVIVAL_TITANIUM_POD)
+	smoothing_groups = list(SMOOTH_GROUP_SURVIVAL_TITANIUM_POD, SMOOTH_GROUP_SHUTTLE_PARTS)
 	canSmoothWith = list(SMOOTH_GROUP_SURVIVAL_TITANIUM_POD)
 
 /obj/structure/window/reinforced/shuttle/survival_pod/spawner/north
@@ -111,7 +111,7 @@
 	icon = 'icons/obj/doors/airlocks/survival/survival.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/survival/survival_overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_pod
-	smoothing_groups = list(SMOOTH_GROUP_AIRLOCK, SMOOTH_GROUP_SURVIVAL_TITANIUM_POD)
+	smoothing_groups = list(SMOOTH_GROUP_SURVIVAL_TITANIUM_POD, SMOOTH_GROUP_AIRLOCK)
 
 /obj/machinery/door/airlock/survival_pod/glass
 	opacity = FALSE
@@ -205,9 +205,9 @@
 	pixel_y = -4
 	flags_1 = NODECONSTRUCT_1
 
-/obj/machinery/smartfridge/survival_pod/ComponentInitialize()
-	. = ..()
+/obj/machinery/smartfridge/survival_pod/Initialize(mapload)
 	AddElement(/datum/element/update_icon_blocker)
+	return ..()
 
 /obj/machinery/smartfridge/survival_pod/preloaded/Initialize(mapload)
 	. = ..()

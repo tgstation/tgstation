@@ -67,7 +67,7 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 		return
 
 	var/mob/mob_source = source
-	mob_source.update_inv_w_uniform()
+	mob_source.update_worn_undersuit()
 	mob_source.update_body()
 
 /datum/strippable_item/mob_item_slot/suit
@@ -221,11 +221,9 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 		carbon_source.internal = null
 
 		// This isn't meant to be FALSE, it correlates to the icon's name.
-		carbon_source.update_internals_hud_icon(0)
 	else if (!QDELETED(item))
 		if((carbon_source.wear_mask?.clothing_flags & MASKINTERNALS) || carbon_source.getorganslot(ORGAN_SLOT_BREATHING_TUBE))
 			carbon_source.internal = item
-			carbon_source.update_internals_hud_icon(1)
 
 	carbon_source.visible_message(
 		span_danger("[user] [isnull(carbon_source.internal) ? "closes": "opens"] the valve on [source]'s [item.name]."),

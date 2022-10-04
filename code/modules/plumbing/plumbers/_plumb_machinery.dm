@@ -76,6 +76,11 @@
 	. = ..()
 	AddComponent(/datum/component/plumbing/simple_demand, bolt, layer)
 
+/obj/machinery/plumbing/output/tap
+	name = "drinking tap"
+	desc = "A manual output for plumbing systems, for taking drinks directly into glasses."
+	icon_state = "tap_output"
+
 /obj/machinery/plumbing/tank
 	name = "chemical tank"
 	desc = "A massive chemical holding tank."

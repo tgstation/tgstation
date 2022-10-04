@@ -1,7 +1,7 @@
 /obj/item/borg/apparatus
 	name = "unknown storage apparatus"
 	desc = "This device seems nonfunctional."
-	icon = 'icons/mob/robot_items.dmi'
+	icon = 'icons/mob/silicon/robot_items.dmi'
 	icon_state = "hugmodule"
 	/// The item stored inside of this apparatus
 	var/obj/item/stored
@@ -95,8 +95,8 @@
 	name = "beaker storage apparatus"
 	desc = "A special apparatus for carrying beakers without spilling the contents."
 	icon_state = "borg_beaker_apparatus"
-	storable = list(/obj/item/reagent_containers/glass/beaker,
-					/obj/item/reagent_containers/glass/bottle)
+	storable = list(/obj/item/reagent_containers/cup/beaker,
+					/obj/item/reagent_containers/cup/bottle)
 
 /obj/item/borg/apparatus/beaker/Initialize(mapload)
 	add_glass()
@@ -105,7 +105,7 @@
 	return ..()
 
 /obj/item/borg/apparatus/beaker/proc/add_glass()
-	stored = new /obj/item/reagent_containers/glass/beaker/large(src)
+	stored = new /obj/item/reagent_containers/cup/beaker/large(src)
 
 /obj/item/borg/apparatus/beaker/Destroy()
 	if(stored)
@@ -132,11 +132,10 @@
 	. = ..()
 	var/mutable_appearance/arm = mutable_appearance(icon = icon, icon_state = "borg_beaker_apparatus_arm")
 	if(stored)
-		COMPILE_OVERLAYS(stored)
 		stored.pixel_x = 0
 		stored.pixel_y = 0
 		var/mutable_appearance/stored_copy = new /mutable_appearance(stored)
-		if(istype(stored, /obj/item/reagent_containers/glass/beaker))
+		if(istype(stored, /obj/item/reagent_containers/cup/beaker))
 			arm.pixel_y = arm.pixel_y - 3
 		stored_copy.layer = FLOAT_LAYER
 		stored_copy.plane = FLOAT_PLANE
@@ -162,14 +161,14 @@
 	name = "beverage storage apparatus"
 	desc = "A special apparatus for carrying drinks without spilling the contents. Will resynthesize any drinks you pour out!"
 	icon_state = "borg_beaker_apparatus"
-	storable = list(/obj/item/reagent_containers/food/drinks,
-					/obj/item/reagent_containers/food/condiment)
+	storable = list(/obj/item/reagent_containers/cup/glass,
+					/obj/item/reagent_containers/condiment)
 
 /obj/item/borg/apparatus/beaker/service/add_glass()
-	stored = new /obj/item/reagent_containers/food/drinks/drinkingglass(src)
+	stored = new /obj/item/reagent_containers/cup/glass/drinkingglass(src)
 	handle_reflling(stored, loc.loc, force = TRUE)
 
-/obj/item/borg/apparatus/beaker/service/proc/handle_reflling(obj/item/reagent_containers/glass, mob/living/silicon/robot/bro, force = FALSE)
+/obj/item/borg/apparatus/beaker/service/proc/handle_reflling(obj/item/reagent_containers/cup/glass, mob/living/silicon/robot/bro, force = FALSE)
 	if (isnull(bro))
 		bro = loc
 	if (!iscyborg(bro))
@@ -179,7 +178,7 @@
 		glass.AddComponent(/datum/component/reagent_refiller, power_draw_callback = CALLBACK(bro, /mob/living/silicon/robot.proc/draw_power))
 
 /obj/item/borg/apparatus/beaker/service/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
-	if (!istype(arrived, /obj/item/reagent_containers/food/drinks))
+	if (!istype(arrived, /obj/item/reagent_containers/cup/glass))
 		return
 	handle_reflling(arrived)
 	return ..()
@@ -188,7 +187,7 @@
 /obj/item/borg/apparatus/organ_storage
 	name = "organ storage bag"
 	desc = "A container for holding body parts."
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/storage/storage.dmi'
 	icon_state = "evidenceobj"
 	item_flags = SURGICAL_TOOL
 	storable = list(/obj/item/organ,
@@ -209,7 +208,6 @@
 	icon_state = null // hides the original icon (otherwise it's drawn underneath)
 	var/mutable_appearance/bag
 	if(stored)
-		COMPILE_OVERLAYS(stored)
 		var/mutable_appearance/stored_organ = new /mutable_appearance(stored)
 		stored_organ.layer = FLOAT_LAYER
 		stored_organ.plane = FLOAT_PLANE
@@ -247,7 +245,6 @@
 	. = ..()
 	var/mutable_appearance/arm = mutable_appearance(icon, "borg_hardware_apparatus_arm1")
 	if(stored)
-		COMPILE_OVERLAYS(stored)
 		stored.pixel_x = -3
 		stored.pixel_y = 0
 		if(!istype(stored, /obj/item/circuitboard))

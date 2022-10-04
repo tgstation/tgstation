@@ -12,7 +12,7 @@
 			BP = def_zone
 		else
 			if(!def_zone)
-				def_zone = ran_zone(def_zone)
+				def_zone = get_random_valid_zone(def_zone)
 			BP = get_bodypart(check_zone(def_zone))
 			if(!BP)
 				BP = bodyparts[1]
@@ -60,7 +60,6 @@
 		var/obj/item/bodypart/BP = X
 		amount += BP.burn_dam
 	return amount
-
 
 /mob/living/carbon/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_status)
 	if(!forced && (status_flags & GODMODE))

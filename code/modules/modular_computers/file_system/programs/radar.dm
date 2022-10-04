@@ -22,7 +22,7 @@
 	///Used by the tgui interface, themed for NT or Syndicate colors.
 	var/pointercolor = "green"
 
-/datum/computer_file/program/radar/run_program(mob/living/user)
+/datum/computer_file/program/radar/on_start(mob/living/user)
 	. = ..()
 	if(.)
 		START_PROCESSING(SSfastprocess, src)
@@ -197,7 +197,7 @@
 	computer.setDir(get_dir(here_turf, target_turf))
 
 //We can use process_tick to restart fast processing, since the computer will be running this constantly either way.
-/datum/computer_file/program/radar/process_tick()
+/datum/computer_file/program/radar/process_tick(delta_time)
 	if(computer.active_program == src)
 		START_PROCESSING(SSfastprocess, src)
 
@@ -310,25 +310,19 @@
 	arrowstyle = "ntosradarpointerS.png"
 	pointercolor = "red"
 
-/datum/computer_file/program/radar/fission360/run_program(mob/living/user)
+/datum/computer_file/program/radar/fission360/on_start(mob/living/user)
 	. = ..()
 	if(!.)
 		return
 
 	RegisterSignal(SSdcs, COMSIG_GLOB_NUKE_DEVICE_ARMED, .proc/on_nuke_armed)
-	if(computer)
-		RegisterSignal(computer, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 
 /datum/computer_file/program/radar/fission360/kill_program(forced)
 	UnregisterSignal(SSdcs, COMSIG_GLOB_NUKE_DEVICE_ARMED)
-	if(computer)
-		UnregisterSignal(computer, COMSIG_PARENT_EXAMINE)
 	return ..()
 
 /datum/computer_file/program/radar/fission360/Destroy()
 	UnregisterSignal(SSdcs, COMSIG_GLOB_NUKE_DEVICE_ARMED)
-	if(computer)
-		UnregisterSignal(computer, COMSIG_PARENT_EXAMINE)
 	return ..()
 
 /datum/computer_file/program/radar/fission360/find_atom()
@@ -364,16 +358,14 @@
 		)
 	objects += list(ship_info)
 
-/*
- * Signal proc for [COMSIG_PARENT_EXAMINE], registered on the computer.
- * Shows how long any armed nukes are to detonating.
- */
-/datum/computer_file/program/radar/fission360/proc/on_examine(datum/source, mob/user, list/examine_list)
-	SIGNAL_HANDLER
+///Shows how long until the nuke detonates, if one is active.
+/datum/computer_file/program/radar/fission360/on_examine(obj/item/modular_computer/source, mob/user)
+	var/list/examine_list = list()
 
 	for(var/obj/machinery/nuclearbomb/bomb as anything in GLOB.nuke_list)
 		if(bomb.timing)
 			examine_list += span_danger("Extreme danger. Arming signal detected. Time remaining: [bomb.get_time_left()].")
+	return examine_list
 
 /*
  * Signal proc for [COMSIG_GLOB_NUKE_DEVICE_ARMED].
@@ -392,4 +384,4 @@
 		computer.audible_message(
 			span_danger("[computer] vibrates and lets out an ominous alarm. Uh oh."),
 			span_notice("[computer] begins to vibrate rapidly. Wonder what that means..."),
-			)
+		)

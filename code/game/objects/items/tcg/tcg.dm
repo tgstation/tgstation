@@ -103,7 +103,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 /obj/item/tcgcard/update_desc(updates)
 	. = ..()
 	if(!flipped)
-		var/datum/card/template = SStrading_card_game.cached_cards[series]["ALL"][id]
+		var/datum/card/template = extract_datum()
 		desc = "<i>[template.desc]</i>"
 	else
 		desc = "It's the back of a trading card... no peeking!"
@@ -113,7 +113,9 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 		icon_state = "cardback"
 		return ..()
 
-	var/datum/card/template = SStrading_card_game.cached_cards[series]["ALL"][id]
+	var/datum/card/template = extract_datum()
+	if(!template)
+		return
 	icon_state = template.icon_state
 	return ..()
 
@@ -173,7 +175,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 /obj/item/tcgcard_deck
 	name = "Trading Card Pile"
 	desc = "A stack of TCG cards."
-	icon = 'icons/obj/tcgmisc.dmi'
+	icon = 'icons/obj/toys/tcgmisc.dmi'
 	icon_state = "deck_up"
 	base_icon_state = "deck"
 	obj_flags = UNIQUE_RENAME
@@ -306,7 +308,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 /obj/item/cardpack
 	name = "Trading Card Pack: Coder"
 	desc = "Contains six complete fuckups by the coders. Report this on github please!"
-	icon = 'icons/obj/tcgmisc.dmi'
+	icon = 'icons/obj/toys/tcgmisc.dmi'
 	icon_state = "cardback_nt"
 	w_class = WEIGHT_CLASS_TINY
 	custom_price = PAYCHECK_CREW * 2 //Effectively expensive as long as you're not a very high paying job... in which case, why are you playing trading card games?
@@ -376,7 +378,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 /obj/item/coin/thunderdome
 	name = "\improper TGC Flipper"
 	desc = "A TGC flipper, for deciding who gets to go first. Also conveniently acts as a counter, for various purposes."
-	icon = 'icons/obj/tcgmisc.dmi'
+	icon = 'icons/obj/toys/tcgmisc.dmi'
 	icon_state = "coin_nanotrasen"
 	custom_materials = list(/datum/material/plastic = 400)
 	material_flags = NONE
@@ -385,11 +387,11 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 /obj/item/storage/card_binder
 	name = "card binder"
 	desc = "The perfect way to keep your collection of cards safe and valuable."
-	icon = 'icons/obj/tcgmisc.dmi'
+	icon = 'icons/obj/toys/tcgmisc.dmi'
 	icon_state = "binder"
 	inhand_icon_state = "album"
-	lefthand_file = 'icons/mob/inhands/misc/books_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/books_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/books_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/books_righthand.dmi'
 	resistance_flags = FLAMMABLE //burn your enemies' collections, for only you can Collect Them All!
 	w_class = WEIGHT_CLASS_SMALL
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1

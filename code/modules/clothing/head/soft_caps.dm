@@ -23,7 +23,7 @@
 
 /obj/item/clothing/head/soft/AltClick(mob/user)
 	..()
-	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
+	if(user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = !iscyborg(user)))
 		flip(user)
 
 
@@ -36,7 +36,7 @@
 		else
 			icon_state = "[soft_type]soft"
 			to_chat(user, span_notice("You flip the hat back in normal position."))
-		usr.update_inv_head() //so our mob-overlays update
+		usr.update_worn_head() //so our mob-overlays update
 
 /obj/item/clothing/head/soft/examine(mob/user)
 	. = ..()

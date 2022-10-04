@@ -1,0 +1,28 @@
+{
+	"plaidskirt": [
+		{
+			"type": "icon_state",
+			"icon_state": "plaidskirt_plaid",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "plaidskirt_base",
+			"blend_mode": "overlay"
+		}
+	],
+	"plaidskirt_d" : [
+		{
+			"type": "icon_state",
+			"icon_state": "plaidskirt_plaid_d",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "plaidskirt_base_d",
+			"blend_mode": "overlay"
+		}
+	]
+}

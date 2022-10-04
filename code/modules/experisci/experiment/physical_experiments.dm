@@ -3,7 +3,7 @@
 	description = "There has been interest in using our engineering equipment to see what kind of new cooking appliances we can create"
 
 /datum/experiment/physical/meat_wall_explosion/register_events()
-	if(!istype(currently_scanned_atom, /turf/closed/wall))
+	if(!iswallturf(currently_scanned_atom))
 		linked_experiment_handler.announce_message("Incorrect object for experiment.")
 		return FALSE
 

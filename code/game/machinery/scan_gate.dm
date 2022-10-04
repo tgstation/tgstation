@@ -164,7 +164,7 @@
 						beep = TRUE
 		if(SCANGATE_GUNS)
 			for(var/I in M.get_contents())
-				if(istype(I, /obj/item/gun))
+				if(isgun(I))
 					beep = TRUE
 					break
 		if(SCANGATE_NUTRITION)

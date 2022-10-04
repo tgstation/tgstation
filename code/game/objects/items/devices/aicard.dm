@@ -5,8 +5,8 @@
 	icon_state = "aicard" // aicard-full
 	inhand_icon_state = "electronic"
 	worn_icon_state = "electronic"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT
 	item_flags = NOBLUDGEON
@@ -104,7 +104,7 @@
 		if("wireless")
 			AI.control_disabled = !AI.control_disabled
 			if(!AI.control_disabled)
-				AI.interaction_range = null
+				AI.interaction_range = INFINITY
 			else
 				AI.interaction_range = 0
 			to_chat(AI, span_warning("[src]'s wireless port has been [AI.control_disabled ? "disabled" : "enabled"]!"))

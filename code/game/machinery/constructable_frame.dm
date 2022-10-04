@@ -277,7 +277,7 @@
 			if(isitem(P) && get_req_components_amt())
 				for(var/I in req_components)
 					if(istype(P, I) && (req_components[I] > 0))
-						if(istype(P, /obj/item/stack))
+						if(isstack(P))
 							var/obj/item/stack/S = P
 							var/used_amt = min(round(S.get_amount()), req_components[I])
 

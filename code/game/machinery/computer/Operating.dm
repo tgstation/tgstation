@@ -91,10 +91,10 @@
 		return data
 
 	data["table"] = table
-	if(!table.check_eligible_patient())
-		return data
 	data["patient"] = list()
-	var/mob/living/carbon/human/patient = table.patient
+	if(!table.patient)
+		return data
+	var/mob/living/carbon/patient = table.patient
 
 	switch(patient.stat)
 		if(CONSCIOUS)
@@ -110,7 +110,15 @@
 			data["patient"]["stat"] = "Dead"
 			data["patient"]["statstate"] = "bad"
 	data["patient"]["health"] = patient.health
-	data["patient"]["blood_type"] = patient.dna.blood_type
+
+	// check here to see if the patient has standard blood reagent, or special blood (like how ethereals bleed liquid electricity) to show the proper name in the computer
+	var/blood_id = patient.get_blood_id()
+	if(blood_id == /datum/reagent/blood)
+		data["patient"]["blood_type"] = patient.dna?.blood_type
+	else
+		var/datum/reagent/special_blood = GLOB.chemical_reagents_list[blood_id]
+		data["patient"]["blood_type"] = special_blood ? special_blood.name : blood_id
+
 	data["patient"]["maxHealth"] = patient.maxHealth
 	data["patient"]["minHealth"] = HEALTH_THRESHOLD_DEAD
 	data["patient"]["bruteLoss"] = patient.getBruteLoss()

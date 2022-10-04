@@ -132,6 +132,8 @@
 #define CLOTHING_DIGITIGRADE_VARIATION (1<<1)
 ///The sprite works fine for digitigrade legs as-is.
 #define CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON (1<<2)
+///has a sprite for monkeys
+#define CLOTHING_MONKEY_VARIATION (1<<3)
 
 //flags for covering body parts
 #define GLASSESCOVERSEYES (1<<0)

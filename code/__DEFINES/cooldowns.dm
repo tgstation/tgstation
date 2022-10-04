@@ -59,9 +59,9 @@
 #define COOLDOWN_YAWN_PROPAGATION "yawn_propagation_cooldown"
 
 //Shared cooldowns for actions
-#define MOB_SHARED_COOLDOWN_1 "mob_shared_cooldown_1"
-#define MOB_SHARED_COOLDOWN_2 "mob_shared_cooldown_2"
-#define MOB_SHARED_COOLDOWN_3 "mob_shared_cooldown_3"
+#define MOB_SHARED_COOLDOWN_1 (1<<0)
+#define MOB_SHARED_COOLDOWN_2 (1<<1)
+#define MOB_SHARED_COOLDOWN_3 (1<<2)
 
 //TIMER COOLDOWN MACROS
 

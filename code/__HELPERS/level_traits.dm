@@ -3,7 +3,22 @@
 // Basic levels
 #define is_centcom_level(z) SSmapping.level_trait(z, ZTRAIT_CENTCOM)
 
-#define is_station_level(z) SSmapping.level_trait(z, ZTRAIT_STATION)
+GLOBAL_LIST_EMPTY(station_levels_cache)
+
+// Used to prevent z from being re-evaluated
+GLOBAL_VAR(station_level_z_scratch)
+
+// Called a lot, somewhat slow, so has its own cache
+#define is_station_level(z) \
+	( \
+		( \
+			/* The right hand side of this guarantees that we'll have the space to fill later on, while also not failing the condition */ \
+			(GLOB.station_levels_cache.len < (GLOB.station_level_z_scratch = z) && (GLOB.station_levels_cache.len = GLOB.station_level_z_scratch)) \
+			|| isnull(GLOB.station_levels_cache[GLOB.station_level_z_scratch]) \
+		) \
+			? (GLOB.station_levels_cache[GLOB.station_level_z_scratch] = !!SSmapping.level_trait(z, ZTRAIT_STATION)) \
+			: GLOB.station_levels_cache[GLOB.station_level_z_scratch] \
+	)
 
 #define is_mining_level(z) SSmapping.level_trait(z, ZTRAIT_MINING)
 

@@ -1,7 +1,7 @@
 /obj/item/suspiciousphone
 	name = "suspicious phone"
 	desc = "This device raises pink levels to unknown highs."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "suspiciousphone"
 	w_class = WEIGHT_CLASS_SMALL
 	attack_verb_continuous = list("dumps")
@@ -30,6 +30,11 @@
 			var/datum/bank_account/B = i
 			B.being_dumped = TRUE
 		new /obj/effect/dumpeet_target(targetturf, L)
+
+		to_chat(user, span_notice("You have activated Protocol CRAB-17."))
+		message_admins("[ADMIN_LOOKUPFLW(user)] has activated Protocol CRAB-17.")
+		user.log_message("activated Protocol CRAB-17.", LOG_GAME)
+
 		dumped = TRUE
 
 /obj/structure/checkoutmachine
@@ -45,6 +50,7 @@
 	max_integrity = 5000
 	var/list/accounts_to_rob
 	var/mob/living/bogdanoff
+	/// Are we able to start moving?
 	var/canwalk = FALSE
 
 /obj/structure/checkoutmachine/examine(mob/living/user)
@@ -71,6 +77,10 @@
 		user.safe_throw_at(throwtarget, 1, 1, force = MOVE_FORCE_EXTREMELY_STRONG)
 		playsound(get_turf(src),'sound/magic/repulse.ogg', 100, TRUE)
 
+		return
+
+	if(!canwalk)
+		to_chat(user, span_warning("Space-Coin only accepts transactions while mobile!"))
 		return
 
 	if(!card.registered_account)
@@ -161,8 +171,8 @@
 	add_overlay("screen_lines")
 	cut_overlay("text")
 	add_overlay("text")
+	START_PROCESSING(SSfastprocess, src) // we only start doing economy draining stuff once our machinery is initialized, thematically
 	canwalk = TRUE
-	START_PROCESSING(SSfastprocess, src)
 
 /obj/structure/checkoutmachine/Destroy()
 	stop_dumping()

@@ -14,7 +14,7 @@
 	dir = 2;
 	dwidth = 8;
 	height = 16;
-	id = "whiteship";
+	shuttle_id = "whiteship";
 	launch_status = 0;
 	name = "NT Recovery White-Ship";
 	port_direction = 8;

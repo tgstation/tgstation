@@ -322,4 +322,4 @@ rough example of the "cone" made by the 3 dirs checked
 	var/datum/storage/storage_datum = target.loc.atom_storage
 	if(!storage_datum)
 		return
-	. += storage_datum.parent
+	. += storage_datum.real_location?.resolve()

@@ -1,6 +1,6 @@
 /obj/item/storage
 	name = "storage"
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/storage/storage.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	var/rummage_if_nodrop = TRUE
 	/// Should we preload the contents of this type?
@@ -12,9 +12,9 @@
 	. = ..()
 
 	create_storage()
-	
+
 	PopulateContents()
-	
+
 	for (var/obj/item/item in src)
 		item.item_flags |= IN_STORAGE
 

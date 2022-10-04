@@ -203,11 +203,6 @@
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/computer/monitor
 
-/obj/item/circuitboard/computer/powermonitor/secret
-	name = "Outdated Power Monitor" //Variant used on ruins to prevent them from showing up on PDA's.
-	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
-	build_path = /obj/machinery/computer/monitor/secret
-
 /obj/item/circuitboard/computer/sat_control
 	name = "Satellite Network Control"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING

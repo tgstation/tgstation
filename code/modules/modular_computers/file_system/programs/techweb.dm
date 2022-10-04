@@ -21,7 +21,7 @@
 	/// Sequence var for the id cache
 	var/id_cache_seq = 1
 
-/datum/computer_file/program/science/run_program(mob/living/user)
+/datum/computer_file/program/science/on_start(mob/living/user)
 	. = ..()
 	stored_research = SSresearch.science_tech
 

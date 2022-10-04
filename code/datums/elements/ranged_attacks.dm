@@ -35,7 +35,13 @@
 	if(casingtype)
 		var/obj/item/ammo_casing/casing = new casingtype(startloc)
 		playsound(firer, projectilesound, 100, TRUE)
-		casing.fire_casing(target, firer, null, null, null, ran_zone(), 0,  firer)
+		var/target_zone
+		if(ismob(target))
+			var/mob/target_mob = target
+			target_zone = target_mob.get_random_valid_zone()
+		else
+			target_zone = ran_zone()
+		casing.fire_casing(target, firer, null, null, null, target_zone, 0,  firer)
 
 	else if(projectiletype)
 		var/obj/projectile/P = new projectiletype(startloc)

@@ -510,7 +510,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/survive/malf/check_completion()
 	var/list/datum/mind/owners = get_owners()
 	for(var/datum/mind/mindobj in owners)
-		if(!istype(mindobj, /mob/living/silicon/robot) && !considered_alive(mindobj, FALSE)) //Shells (and normal borgs for that matter) are considered alive for Malf
+		if(!iscyborg(mindobj) && !considered_alive(mindobj, FALSE)) //Shells (and normal borgs for that matter) are considered alive for Malf
 			return FALSE
 		return TRUE
 
@@ -685,7 +685,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 			continue
 		captured_amount+=1
 	for(var/mob/living/carbon/alien/humanoid/M in A)//Aliens are worth twice as much as humans.
-		if(istype(M, /mob/living/carbon/alien/humanoid/royal/queen))//Queens are worth three times as much as humans.
+		if(isalienqueen(M))//Queens are worth three times as much as humans.
 			if(M.stat == DEAD)
 				captured_amount+=1.5
 			else
@@ -880,10 +880,6 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 /datum/objective/steal_n_of_type/summon_guns/check_if_valid_item(obj/item/current_item)
 	var/obj/item/gun/gun = current_item
 	return !(gun.gun_flags & NOT_A_REAL_GUN)
-
-/datum/objective/steal_n_of_type/summon_guns/thief
-	explanation_text = "Steal at least 3 guns!"
-	amount = 3
 
 /datum/objective/steal_n_of_type/summon_magic
 	name = "steal magic"

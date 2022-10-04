@@ -47,8 +47,6 @@
 	name = "nurse's hat"
 	desc = "It allows quick identification of trained medical personnel."
 	icon_state = "nursehat"
-
-
 	dog_fashion = /datum/dog_fashion/head/nurse
 
 /obj/item/clothing/head/bowler
@@ -56,7 +54,6 @@
 	desc = "Gentleman, elite aboard!"
 	icon_state = "bowler"
 	inhand_icon_state = "bowler"
-
 
 /obj/item/clothing/head/bearpelt
 	name = "bear pelt hat"
@@ -207,15 +204,14 @@
 	icon_state = "ushankadown"
 	inhand_icon_state = "ushankadown"
 	flags_inv = HIDEEARS|HIDEHAIR
-	var/earflaps = TRUE
 	cold_protection = HEAD
+	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
+	dog_fashion = /datum/dog_fashion/head/ushanka
+	var/earflaps = TRUE
 	///Sprite visible when the ushanka flaps are folded up.
 	var/upsprite = "ushankaup"
 	///Sprite visible when the ushanka flaps are folded down.
 	var/downsprite = "ushankadown"
-	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
-
-	dog_fashion = /datum/dog_fashion/head/ushanka
 
 /obj/item/clothing/head/ushanka/attack_self(mob/user)
 	if(earflaps)
@@ -228,11 +224,12 @@
 		to_chat(user, span_notice("You lower the ear flaps on the ushanka."))
 	earflaps = !earflaps
 
+/obj/item/clothing/head/nightcap/blue
+	name = "blue nightcap"
+	desc = "A blue nightcap for all the dreamers and snoozers out there."
+	icon_state = "sleep_blue"
 
-/obj/item/clothing/head/ushanka/soviet
-	name = "soviet ushanka"
-	desc = "For the union!"
-	icon_state = "sovietushankadown"
-	inhand_icon_state = "sovietushankadown"
-	upsprite = "sovietushankaup"
-	downsprite = "sovietushankadown"
+/obj/item/clothing/head/nightcap/red
+	name = "red nightcap"
+	desc = "A red nightcap for all the sleepyheads and dozers out there."
+	icon_state = "sleep_red"

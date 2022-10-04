@@ -7,9 +7,9 @@
 	dog_fashion = /datum/dog_fashion/head/kitty
 
 /obj/item/clothing/head/kitty/visual_equipped(mob/living/carbon/human/user, slot)
-	if(ishuman(user) && slot == ITEM_SLOT_HEAD)
+	if(ishuman(user) && (slot & ITEM_SLOT_HEAD))
 		update_icon(ALL, user)
-		user.update_inv_head() //Color might have been changed by update_appearance.
+		user.update_worn_head() //Color might have been changed by update_appearance.
 	..()
 
 /obj/item/clothing/head/kitty/update_icon(updates=ALL, mob/living/carbon/human/user)

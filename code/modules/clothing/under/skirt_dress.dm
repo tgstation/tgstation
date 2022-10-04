@@ -6,18 +6,6 @@
 	icon = 'icons/obj/clothing/under/dress.dmi'
 	worn_icon = 'icons/mob/clothing/under/dress.dmi'
 
-/obj/item/clothing/under/dress/sundress
-	name = "sundress"
-	desc = "Makes you want to frolic in a field of daisies."
-	icon_state = "sundress"
-	inhand_icon_state = "sundress"
-
-/obj/item/clothing/under/dress/blacktango
-	name = "black tango dress"
-	desc = "Filled with Latin fire."
-	icon_state = "black_tango"
-	inhand_icon_state = "wcoat"
-
 /obj/item/clothing/under/dress/striped
 	name = "striped dress"
 	desc = "Fashion in space."
@@ -50,50 +38,44 @@
 	desc = "A black skirt, very fancy!"
 	icon_state = "blackskirt"
 
-/obj/item/clothing/under/dress/skirt/blue
-	name = "blue skirt"
-	desc = "A blue, casual skirt."
-	icon_state = "blueskirt"
-	inhand_icon_state = "b_suit"
-	custom_price = PAYCHECK_CREW
-
-/obj/item/clothing/under/dress/skirt/red
-	name = "red skirt"
-	desc = "A red, casual skirt."
-	icon_state = "redskirt"
-	inhand_icon_state = "r_suit"
-	custom_price = PAYCHECK_CREW
-
-/obj/item/clothing/under/dress/skirt/purple
-	name = "purple skirt"
-	desc = "A purple, casual skirt."
-	icon_state = "purpleskirt"
-	inhand_icon_state = "p_suit"
-	custom_price = PAYCHECK_CREW
-
 /obj/item/clothing/under/dress/skirt/plaid
-	name = "red plaid skirt"
-	desc = "A preppy red skirt with a white blouse."
-	icon_state = "plaid_red"
-	inhand_icon_state = "plaid_red"
+	name = "plaid skirt"
+	desc = "A preppy plaid skirt with a white blouse."
+	icon_state = "plaidskirt"
 	can_adjust = TRUE
 	alt_covers_chest = TRUE
 	custom_price = PAYCHECK_CREW
+	greyscale_colors = "#CC2102"
+	greyscale_config = /datum/greyscale_config/plaidskirt
+	greyscale_config_worn = /datum/greyscale_config/plaidskirt_worn
+	flags_1 = IS_PLAYER_COLORABLE_1
 
-/obj/item/clothing/under/dress/skirt/plaid/blue
-	name = "blue plaid skirt"
-	desc = "A preppy blue skirt with a white blouse."
-	icon_state = "plaid_blue"
-	inhand_icon_state = "plaid_blue"
+/obj/item/clothing/under/dress/skirt/turtleskirt
+	name = "turtleneck skirt"
+	desc = "A casual turtleneck skirt."
+	icon_state = "turtleskirt"
+	custom_price = PAYCHECK_CREW
+	greyscale_colors = "#cc0000#5f5f5f"
+	greyscale_config = /datum/greyscale_config/turtleskirt
+	greyscale_config_worn = /datum/greyscale_config/turtleskirt_worn
+	flags_1 = IS_PLAYER_COLORABLE_1
 
-/obj/item/clothing/under/dress/skirt/plaid/purple
-	name = "purple plaid skirt"
-	desc = "A preppy purple skirt with a white blouse."
-	icon_state = "plaid_purple"
-	inhand_icon_state = "plaid_purple"
+/obj/item/clothing/under/dress/tango
+	name = "tango dress"
+	desc = "Filled with Latin fire."
+	icon_state = "tango"
+	custom_price = PAYCHECK_CREW
+	greyscale_colors = "#ff0000#1c1c1c"
+	greyscale_config = /datum/greyscale_config/tango
+	greyscale_config_worn = /datum/greyscale_config/tango_worn
+	flags_1 = IS_PLAYER_COLORABLE_1
 
-/obj/item/clothing/under/dress/skirt/plaid/green
-	name = "green plaid skirt"
-	desc = "A preppy green skirt with a white blouse."
-	icon_state = "plaid_green"
-	inhand_icon_state = "plaid_green"
+/obj/item/clothing/under/dress/sundress
+	name = "sundress"
+	desc = "Makes you want to frolic in a field of daisies."
+	icon_state = "sundress"
+	custom_price = PAYCHECK_CREW
+	greyscale_colors = "#FFE60F#9194A5#1F243C"
+	greyscale_config = /datum/greyscale_config/sundress
+	greyscale_config_worn = /datum/greyscale_config/sundress_worn
+	flags_1 = IS_PLAYER_COLORABLE_1

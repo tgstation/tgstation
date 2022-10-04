@@ -1,7 +1,7 @@
-import { multiline } from '../../common/string';
-import { useBackend } from '../backend';
-import { Button, Icon, LabeledControls, NoticeBox, Section, Slider, Stack, Tooltip } from '../components';
-import { Window } from '../layouts';
+import { capitalizeAll, multiline } from 'common/string';
+import { useBackend } from 'tgui/backend';
+import { Button, Icon, LabeledControls, NoticeBox, Section, Slider, Stack, Tooltip } from 'tgui/components';
+import { Window } from 'tgui/layouts';
 
 type SimpleBotContext = {
   can_hack: number;
@@ -205,11 +205,7 @@ const ControlsDisplay = (props, context) => {
           <LabeledControls.Item
             pb={2}
             key={control[0]}
-            label={control[0]
-              .replace('_', ' ')
-              .replace(/(^\w{1})|(\s+\w{1})/g, (letter) =>
-                letter.toUpperCase()
-              )}>
+            label={capitalizeAll(control[0].replace('_', ' '))}>
             <ControlHelper control={control} />
           </LabeledControls.Item>
         );

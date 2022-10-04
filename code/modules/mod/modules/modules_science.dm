@@ -49,7 +49,7 @@
 	devastation_range, heavy_impact_range, light_impact_range, took, orig_dev_range, orig_heavy_range, orig_light_range)
 	SIGNAL_HANDLER
 	var/turf/wearer_turf = get_turf(mod.wearer)
-	if(wearer_turf.z != epicenter.z)
+	if(!is_valid_z_level(wearer_turf, epicenter))
 		return
 	if(get_dist(epicenter, wearer_turf) > explosion_detection_dist)
 		return

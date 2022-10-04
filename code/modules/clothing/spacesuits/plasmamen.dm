@@ -75,7 +75,7 @@
 		. += span_notice("There's nothing placed on the helmet.")
 
 /obj/item/clothing/head/helmet/space/plasmaman/AltClick(mob/user)
-	if(user.canUseTopic(src, BE_CLOSE))
+	if(user.canUseTopic(src, be_close = TRUE))
 		toggle_welding_screen(user)
 
 /obj/item/clothing/head/helmet/space/plasmaman/ui_action_click(mob/user, action)
@@ -142,7 +142,7 @@
 
 /obj/item/clothing/head/helmet/space/plasmaman/wash(clean_types)
 	. = ..()
-	if(smile && (clean_types & CLEAN_TYPE_PAINT))
+	if(smile && (clean_types & CLEAN_TYPE_HARD_DECAL))
 		smile = FALSE
 		update_appearance()
 		return TRUE
@@ -151,7 +151,7 @@
 	helmet_on = !helmet_on
 	icon_state = "[initial(icon_state)][helmet_on ? "-light":""]"
 	inhand_icon_state = icon_state
-	user.update_inv_head() //So the mob overlay updates
+	user.update_worn_head() //So the mob overlay updates
 
 	if(helmet_on)
 		if(!up)

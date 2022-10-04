@@ -108,7 +108,7 @@
 		var/atom/food = parent
 		to_chat(user, span_notice("You slip [inserted_item.name] inside \the [parent]."))
 		inserted_item.forceMove(food)
-		user.log_message("[key_name(user)] inserted [inserted_item] into [parent] at [AREACOORD(user)]", LOG_ATTACK)
+		user.log_message("inserted [inserted_item] into [parent].", LOG_ATTACK)
 		food.add_fingerprint(user)
 		inserted_item.add_fingerprint(user)
 
@@ -166,7 +166,7 @@
 		to_chat(target, span_warning("It feels like there's something in \the [parent]...!"))
 
 	else if(prob(bad_chance_of_discovery)) //finding the item, BY biting it
-		user.log_message("[key_name(user)] just fed [key_name(target)] a/an [stored_item] which was hidden in [parent] at [AREACOORD(target)]", LOG_ATTACK)
+		user.log_message("just fed [key_name(target)] \a [stored_item] which was hidden in [parent].", LOG_ATTACK)
 		discovered = stored_item.on_accidental_consumption(target, user, parent)
 		update_stored_item() //make sure if the item was changed, the reference changes as well
 

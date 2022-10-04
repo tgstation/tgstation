@@ -123,6 +123,9 @@ jobs:
           sudo apt update || true
           sudo apt install -o APT::Immediate-Configure=false libssl1.1:i386
           bash tools/ci/install_rust_g.sh
+      - name: Install auxlua
+        run: |
+          bash tools/ci/install_auxlua.sh
       - name: Compile Tests
         run: |
           bash tools/ci/install_byond.sh

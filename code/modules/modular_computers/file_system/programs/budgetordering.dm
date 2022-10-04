@@ -22,12 +22,12 @@
 		homing beacons, unstable eigenstates, or machinery housing any form of artificial intelligence."
 	///If you're being raided by pirates, what do you tell the crew?
 	var/blockade_warning = "Bluespace instability detected. Shuttle movement impossible."
-	///The name of the shuttle template being used as the cargo shuttle. 'supply' is default and contains critical code. Don't change this unless you know what you're doing.
-	var/cargo_shuttle = "supply"
+	///The name of the shuttle template being used as the cargo shuttle. 'cargo' is default and contains critical code. Don't change this unless you know what you're doing.
+	var/cargo_shuttle = "cargo"
 	///The docking port called when returning to the station.
-	var/docking_home = "supply_home"
+	var/docking_home = "cargo_home"
 	///The docking port called when leaving the station.
-	var/docking_away = "supply_away"
+	var/docking_away = "cargo_away"
 	///If this console can loan the cargo shuttle. Set to false to disable.
 	var/stationcargo = TRUE
 	///The account this console processes and displays. Independent from the account the shuttle processes.
@@ -187,7 +187,7 @@
 				SSshuttle.shuttle_loan.loan_shuttle()
 				computer.say("The supply shuttle has been loaned to CentCom.")
 				computer.investigate_log("[key_name(usr)] accepted a shuttle loan event.", INVESTIGATE_CARGO)
-				log_game("[key_name(usr)] accepted a shuttle loan event.")
+				usr.log_message("accepted a shuttle loan event.", LOG_GAME)
 				. = TRUE
 		if("add")
 			var/id = text2path(params["id"])
@@ -234,7 +234,7 @@
 				computer.say("ERROR: Small crates may only be purchased by private accounts.")
 				return
 
-			if(!self_paid && ishuman(usr) && !account)
+			if(!requestonly && !self_paid && ishuman(usr) && !account)
 				var/obj/item/card/id/id_card = card_slot?.GetID()
 				account = SSeconomy.get_dep_account(id_card?.registered_account?.account_job.paycheck_department)
 

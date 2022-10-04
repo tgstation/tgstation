@@ -8,24 +8,16 @@
 	name = "AI photo camera"
 	flash_enabled = FALSE
 
-/obj/item/camera/siliconcam/proc/toggle_camera_mode(mob/user)
-	if(in_camera_mode)
-		camera_mode_off(user)
-	else
-		camera_mode_on(user)
-
-/obj/item/camera/siliconcam/proc/camera_mode_off(mob/user)
-	in_camera_mode = FALSE
-	to_chat(user, "<span class='infoplain'><B>Camera Mode deactivated</B></span>")
-
-/obj/item/camera/siliconcam/proc/camera_mode_on(mob/user)
-	in_camera_mode = TRUE
-	to_chat(user, "<span class='infoplain'><B>Camera Mode activated</B></span>")
+/obj/item/camera/siliconcam/proc/toggle_camera_mode(mob/user, sound = TRUE)
+	in_camera_mode = !in_camera_mode
+	if(sound)
+		playsound(src, 'sound/items/wirecutter.ogg', 50, TRUE)
+	to_chat(user, span_notice("Camera mode: [in_camera_mode ? "Activated" : "Deactivated"]."))
 
 /obj/item/camera/siliconcam/proc/selectpicture(mob/user)
 	var/list/nametemp = list()
-	if(!stored.len)
-		to_chat(usr, "<span class='infoplain'><font color=red><b>No images saved</b></font></span>")
+	if(!length(stored))
+		to_chat(usr, span_warning("No images saved"))
 		return
 	var/list/temp = list()
 	for(var/i in stored)
@@ -45,10 +37,10 @@
 		show_picture(user, selection)
 
 /obj/item/camera/siliconcam/ai_camera/after_picture(mob/user, datum/picture/picture)
-	var/number = stored.len
+	var/number = length(stored)
 	picture.picture_name = "Image [number] (taken by [loc.name])"
 	stored[picture] = TRUE
-	to_chat(usr, "<span class='infoplain'>[span_unconscious("Image recorded")]</span>")
+	to_chat(user, span_notice("Image recorded."))
 
 /obj/item/camera/siliconcam/robot_camera
 	name = "Cyborg photo camera"
@@ -60,12 +52,12 @@
 		var/number = C.connected_ai.aicamera.stored.len
 		picture.picture_name = "Image [number] (taken by [loc.name])"
 		C.connected_ai.aicamera.stored[picture] = TRUE
-		to_chat(usr, "<span class='infoplain'>[span_unconscious("Image recorded and saved to remote database")]</span>")
+		to_chat(usr, span_notice("Image recorded and saved to remote database."))
 	else
 		var/number = stored.len
 		picture.picture_name = "Image [number] (taken by [loc.name])"
 		stored[picture] = TRUE
-		to_chat(usr, "<span class='infoplain'>[span_unconscious("Image recorded and saved to local storage. Upload will happen automatically if unit is lawsynced.")]</span>")
+		to_chat(usr, span_notice("Image recorded and saved to local storage. Upload will happen automatically if unit is lawsynced."))
 
 /obj/item/camera/siliconcam/robot_camera/selectpicture(mob/user)
 	var/mob/living/silicon/robot/R = loc
@@ -88,13 +80,4 @@
 	p.pixel_x = p.base_pixel_x + rand(-10, 10)
 	p.pixel_y = p.base_pixel_y + rand(-10, 10)
 	C.toner -= printcost  //All fun allowed.
-	user.visible_message(span_notice("[C.name] spits out a photograph from a narrow slot on its chassis."),span_notice("You print a photograph."))
-
-/obj/item/camera/siliconcam/proc/paiprint(mob/user)
-	var/mob/living/silicon/pai/paimob = loc
-	var/datum/picture/selection = selectpicture(user)
-	if(!istype(selection))
-		to_chat(user, span_warning("Invalid Image."))
-		return
-	printpicture(user,selection)
-	user.visible_message(span_notice("A picture appears on top of the chassis of [paimob.name]!"),span_notice("You print a photograph."))
+	user.visible_message(span_notice("[C.name] spits out a photograph from a narrow slot on its chassis."), span_notice("You print a photograph."))
