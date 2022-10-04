@@ -79,7 +79,7 @@
 	var/obj/item/mod/module/attached_module
 
 	/// The name of the module to select
-	var/datum/port/input/module_to_select
+	var/datum/port/input/option/module_to_select
 
 	/// The signal to toggle deployment of the modsuit
 	var/datum/port/input/toggle_deploy
@@ -133,11 +133,10 @@
 	. = ..()
 	if(istype(shell, /obj/item/mod/module))
 		attached_module = shell
-	RegisterSignal(attached_module, COMSIG_MOVABLE_MOVED, .proc/on_move)
+		RegisterSignal(attached_module, COMSIG_MOVABLE_MOVED, .proc/on_move)
 
 /obj/item/circuit_component/mod_adapter_core/unregister_shell(atom/movable/shell)
 	UnregisterSignal(attached_module, COMSIG_MOVABLE_MOVED)
-	UnregisterSignal(attached_module, COMSIG_MOD_TOGGLED)
 	attached_module = null
 	return ..()
 
@@ -162,18 +161,19 @@
 		RegisterSignal(mod, COMSIG_MOD_MODULE_SELECTED, .proc/on_module_select)
 		RegisterSignal(mod, COMSIG_MOD_PART_TOGGLED, .proc/on_mod_part_toggled)
 		RegisterSignal(mod, COMSIG_MOD_TOGGLED, .proc/on_mod_toggled)
-		RegisterSignal(mod, COMSIG_MOD_MODULE_CHANGED, .proc/on_module_changed)
+		RegisterSignal(mod, COMSIG_MOD_MODULE_ADDED, .proc/on_module_changed)
+		RegisterSignal(mod, COMSIG_MOD_MODULE_REMOVED, .proc/on_module_changed)
 		RegisterSignal(mod, COMSIG_ITEM_EQUIPPED, .proc/equip_check)
 		wearer.set_output(mod.wearer)
-		var/datum/port/input/option/option = module_to_select
-		option.possible_options = mod.modules
-		if (option.possible_options.len)
-			option.set_value(option.possible_options[1])
+		module_to_select.possible_options = mod.modules
+		if (module_to_select.possible_options.len)
+			module_to_select.set_value(module_to_select.possible_options[1])
 	else if(istype(old_loc, /obj/item/mod/control))
 		UnregisterSignal(old_loc, list(COMSIG_MOD_MODULE_SELECTED, COMSIG_ITEM_EQUIPPED))
 		UnregisterSignal(old_loc, COMSIG_MOD_PART_TOGGLED)
 		UnregisterSignal(old_loc, COMSIG_MOD_TOGGLED)
-		UnregisterSignal(old_loc, COMSIG_MOD_MODULE_CHANGED)
+		UnregisterSignal(old_loc, COMSIG_MOD_MODULE_ADDED)
+		UnregisterSignal(old_loc, COMSIG_MOD_MODULE_REMOVED)
 		selected_module.set_output(null)
 		wearer.set_output(null)
 		deployed.set_output(FALSE)
@@ -186,10 +186,9 @@
 
 /obj/item/circuit_component/mod_adapter_core/proc/on_module_changed()
 	SIGNAL_HANDLER
-	var/datum/port/input/option/option = module_to_select
-	option.possible_options = attached_module.mod.modules
-	if (option.possible_options.len)
-		option.set_value(option.possible_options[1])
+	module_to_select.possible_options = attached_module.mod.modules
+	if (module_to_select.possible_options.len)
+		module_to_select.set_value(module_to_select.possible_options[1])
 
 
 /obj/item/circuit_component/mod_adapter_core/proc/on_mod_part_toggled()
