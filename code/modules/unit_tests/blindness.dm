@@ -107,8 +107,8 @@
 
 	// Test blindness due to eye damage
 	// Cause critical eye damage
-	var/critical_damage = eyes.maxHealth * 0.9
-	eyes.setOrganDamage(critical_damage) // ~45 damage
+	var/critical_damage = eyes.maxHealth
+	eyes.setOrganDamage(critical_damage) // ~50 damage
 	TEST_ASSERT(HAS_BLINDNESS(dummy), "After sustaining critical eye damage ([critical_damage]), the dummy was not blind.")
 	// Heal eye damage
 	eyes.setOrganDamage(0)

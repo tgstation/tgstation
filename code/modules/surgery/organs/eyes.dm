@@ -42,7 +42,7 @@
 	var/old_eye_color_right = "fff"
 
 	/// Glasses cannot be worn over these eyes. Currently unused
-	var/no_glasses
+	var/no_glasses = FALSE
 	/// indication that the eyes are undergoing some negative effect
 	var/damaged = FALSE
 	/// Native FOV that will be applied if a config is enabled
