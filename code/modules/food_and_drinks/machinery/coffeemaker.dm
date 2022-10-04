@@ -499,7 +499,7 @@
 	if(sweetener_packs)
 		. += "extras_3"
 	if(coffee_amount)
-		if(coffee_amount < 0.4*grinder_capacity)
+		if(coffee_amount < 0.7*grinder_capacity)
 			. += "grinder_half"
 		else
 			. += "grinder_full"
