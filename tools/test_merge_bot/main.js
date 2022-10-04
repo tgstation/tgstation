@@ -22,7 +22,7 @@ export async function processTestMerges({ github, context }) {
 			process.exit(1);
 		});
 
-	// PR # -> server name -> test merges
+	// PR # -> server name -> test merge struct
 	const testMergesPerPr = {};
 
 	for (const round of rounds) {
@@ -37,7 +37,7 @@ export async function processTestMerges({ github, context }) {
 				testMergesPerPr[testMerge][server] = [];
 			}
 
-			testMergesPerPr[testMerge][server].push(testMerge);
+			testMergesPerPr[testMerge][server].push(round);
 		}
 	}
 
@@ -63,7 +63,7 @@ export async function processTestMerges({ github, context }) {
 			{
 				owner: context.repo.owner,
 				repo: context.repo.repo,
-				prNumber,
+				prNumber: parseInt(prNumber, 10),
 			}
 		);
 
