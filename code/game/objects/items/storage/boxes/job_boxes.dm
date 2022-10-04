@@ -77,6 +77,16 @@
 	new /obj/item/screwdriver/red(src)
 	new /obj/item/weldingtool/mini(src)
 
+/obj/item/storage/box/survival/centcom
+	name = "emergency response survival box"
+	desc = "A box with the bare essentials of ensuring the survival of your team. This one is labelled to contain a double tank."
+	illustration = "extendedtank"
+	internal_type = /obj/item/tank/internals/emergency_oxygen/double
+
+/obj/item/storage/box/survival/centcom/PopulateContents()
+	. = ..()
+	new /obj/item/crowbar(src)
+
 // Security survival box
 /obj/item/storage/box/survival/security
 	mask_type = /obj/item/clothing/mask/gas/sechailer
