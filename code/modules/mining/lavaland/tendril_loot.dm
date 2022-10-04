@@ -472,7 +472,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/book_of_babel/attack_self(mob/user)
-	if(is_blind(user))
+	if(user.is_blind())
 		to_chat(user, span_warning("You are blind and can't read anything!"))
 		return FALSE
 	if(!user.can_read(src))

@@ -268,7 +268,7 @@
 			continue
 
 		// Blind people don't get supermatter hallucinations.
-		if (is_blind(seen_by_sm))
+		if (seen_by_sm.is_blind())
 			continue
 
 		// Everyone else gets hallucinations.

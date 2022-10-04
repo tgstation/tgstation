@@ -24,7 +24,7 @@
 /datum/mind/proc/add_memory(memory_type, extra_info, story_value, memory_flags)
 	if(current)
 		var/check_for_consciousness = !(memory_flags & MEMORY_SKIP_UNCONSCIOUS) && (current.stat >= UNCONSCIOUS)
-		var/check_for_blindness = (memory_flags & MEMORY_CHECK_BLINDNESS) && !!is_blind(current)
+		var/check_for_blindness = (memory_flags & MEMORY_CHECK_BLINDNESS) && current.is_blind()
 		var/check_for_deafness = (memory_flags & MEMORY_CHECK_DEAFNESS) && HAS_TRAIT(current, TRAIT_DEAF)
 		if(check_for_consciousness || check_for_blindness || check_for_deafness)
 			return

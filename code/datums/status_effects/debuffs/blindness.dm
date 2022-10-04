@@ -1,6 +1,8 @@
 /// Helper macro, for ease of expanding checks for mobs which cannot be blinded
-#define CAN_BE_BLIND(mob) !isanimal_or_basicmob(mob) && !isbrain(mob)
+/// There are no reason why these cannot be blinded, it is simply for design reasons
+#define CAN_BE_BLIND(mob) (!isanimal_or_basicmob(mob) && !isbrain(mob) && !isrevenant(mob))
 
+/// Grouped status effect that applies a visual imparity (a fullscreen overlay)
 /datum/status_effect/grouped/visually_impaired
 	alert_type = null
 	/// A list of sources we remove when we're fullhealed. If no sources remain, we will self-delete.
@@ -72,7 +74,7 @@
 	overlay_type = /atom/movable/screen/fullscreen/blind
 
 /datum/status_effect/grouped/visually_impaired/blindness/on_apply()
-	if(!CAN_BE_BLIND(owner)) // No reason why they can't be blind other than design decisions
+	if(!CAN_BE_BLIND(owner))
 		return FALSE
 
 	. = ..()
@@ -94,6 +96,10 @@
 	tick_interval = 2 SECONDS
 	alert_type = null
 
+/datum/status_effect/temporary_blindness/on_creation(mob/living/new_owner, duration = 10 SECONDS)
+	src.duration = duration
+	return ..()
+
 /datum/status_effect/temporary_blindness/on_apply()
 	if(!CAN_BE_BLIND(owner))
 		return FALSE
@@ -107,9 +113,24 @@
 	UnregisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL)
 
 /datum/status_effect/temporary_blindness/tick(delta_time, times_fired)
+	if(owner.stat == DEAD)
+		return
+
 	// Temp. blindness heals faster if our eyes are covered
-	if(owner.stat != DEAD && owner.is_blind_from(EYES_COVERED))
+	if(owner.is_blind_from(EYES_COVERED))
+		// Knocks 2 seconds off of our duration
 		duration -= 2 SECONDS
+
+		// If we should be deleted, give a message letting them know
+		if(duration < world.time)
+			to_chat(owner, span_green("Your eyes start to feel better!"))
+			qdel(src)
+
+		// Otherwise add a chance to let them know that it's working
+		else if(DT_PROB(5, delta_time))
+			var/obj/item/thing_covering_eyes = owner.is_eyes_covered()
+			// "Your blindfold soothes your eyes", for example
+			to_chat(owner, span_green("Your [thing_covering_eyes?.name || "eye covering"] soothes your eyes."))
 
 /// Signal proc for [COMSIG_LIVING_POST_FULLY_HEAL]. When healed, self delete
 /datum/status_effect/temporary_blindness/proc/remove_temp_blindness(datum/source)
@@ -118,3 +139,46 @@
 	qdel(src)
 
 #undef CAN_BE_BLIND
+
+// I wish these could be macros but an inordinate amount of places
+// check for blindness for mobs which are not typecasted to living
+// which I don't want to go through and sort out, so here we are for now
+
+/// Checks if this mob is blind.
+/mob/proc/is_blind()
+	return FALSE
+
+/mob/living/is_blind()
+	return !!has_status_effect(/datum/status_effect/grouped/visually_impaired/blindness)
+
+/// Checks if this mob is blind from one or multiple sources.
+/// Can be passed a list of sources or a singular non-list source.
+/mob/proc/is_blind_from(sources)
+	return FALSE
+
+/mob/living/is_blind_from(sources)
+	return !!has_status_effect_from_source(/datum/status_effect/grouped/visually_impaired/blindness, sources)
+
+/// Checks if this mob is nearsighted.
+/// This will pass on all mobs that are nearsighted, including those which have it disabled temporarily.
+/mob/proc/is_nearsighted()
+	return FALSE
+
+/mob/living/is_nearsighted()
+	return !!has_status_effect(/datum/status_effect/grouped/visually_impaired/nearsighted)
+
+/// Checks if this mob is nearsighted, currently.
+/// This will only pass on mobs which are nearsighted but have it disabled temporarily (by glasses).
+/mob/proc/is_nearsighted_currently()
+	return FALSE
+
+/mob/living/is_nearsighted_currently()
+	return !HAS_TRAIT(src, TRAIT_NEARSIGHTED_CORRECTED) && has_status_effect(/datum/status_effect/grouped/visually_impaired/nearsighted)
+
+/// Checks if this mob is nearsighted from one or multiple sources.
+/// Can be passed a list of sources or a singular non-list source.
+/mob/proc/is_nearsighted_from(sources)
+	return FALSE
+
+/mob/living/is_nearsighted_from(sources)
+	return !!has_status_effect_from_source(/datum/status_effect/grouped/visually_impaired/blindness, sources)

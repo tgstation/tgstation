@@ -67,7 +67,7 @@
 					eyes.Remove(ill_mob)
 					eyes.forceMove(get_turf(ill_mob))
 
-				else if(!is_blind(ill_mob))
+				else if(!ill_mob.is_blind())
 					to_chat(ill_mob, span_userdanger("You go blind!"))
 					eyes.applyOrganDamage(eyes.maxHealth)
 

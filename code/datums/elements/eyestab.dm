@@ -94,7 +94,7 @@
 	if (target.stat != DEAD)
 		to_chat(target, span_danger("Your eyes start to bleed profusely!"))
 
-	if (!is_blind(target) && !is_nearsighted(target))
+	if (!target.is_blind() && !target.is_nearsighted())
 		to_chat(target, span_danger("You become nearsighted!"))
 
 	target.become_nearsighted(EYE_DAMAGE)

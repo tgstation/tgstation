@@ -2,7 +2,7 @@
 
 /mob/living/carbon/get_eye_protection()
 	. = ..()
-	if(HAS_TRAIT_NOT_FROM(src, TRAIT_BLIND, list(UNCONSCIOUS_TRAIT, HYPNOCHAIR_TRAIT)))
+	if(is_blind() && !is_blind_from(list(UNCONSCIOUS_TRAIT, HYPNOCHAIR_TRAIT)))
 		return INFINITY //For all my homies that can not see in the world
 	var/obj/item/organ/internal/eyes/eyes = getorganslot(ORGAN_SLOT_EYES)
 	if(!eyes)
@@ -30,13 +30,16 @@
 	if( (!mask_only && head && (head.flags_cover & HEADCOVERSMOUTH)) || (!head_only && wear_mask && (wear_mask.flags_cover & MASKCOVERSMOUTH)) )
 		return TRUE
 
-/mob/living/carbon/is_eyes_covered(check_glasses = TRUE, check_head = TRUE, check_mask = TRUE)
-	if(check_head && head && (head.flags_cover & HEADCOVERSEYES))
+/mob/living/carbon/is_eyes_covered(check_flags = ALL)
+	if((check_flags & ITEM_SLOT_HEAD) && head && (head.flags_cover & HEADCOVERSEYES))
 		return head
-	if(check_mask && wear_mask && (wear_mask.flags_cover & MASKCOVERSEYES))
+	if((check_flags & ITEM_SLOT_MASK) && wear_mask && (wear_mask.flags_cover & MASKCOVERSEYES))
 		return wear_mask
-	if(check_glasses && glasses && (glasses.flags_cover & GLASSESCOVERSEYES))
+	if((check_flags & ITEM_SLOT_EYES) && glasses && (glasses.flags_cover & GLASSESCOVERSEYES))
 		return glasses
+
+	return null
+
 /mob/living/carbon/is_pepper_proof(check_head = TRUE, check_mask = TRUE)
 	if(check_head &&(head?.flags_cover & PEPPERPROOF))
 		return head
@@ -558,12 +561,12 @@
 
 			if(eyes.damage > 20)
 				if(prob(eyes.damage - 20))
-					if(!is_nearsighted(src))
+					if(!is_nearsighted())
 						to_chat(src, span_warning("Your eyes start to burn badly!"))
 					become_nearsighted(EYE_DAMAGE)
 
 				else if(prob(eyes.damage - 25))
-					if(!is_blind(src))
+					if(!is_blind())
 						to_chat(src, span_warning("You can't see anything!"))
 					eyes.applyOrganDamage(eyes.maxHealth)
 

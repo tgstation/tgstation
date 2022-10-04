@@ -2,7 +2,7 @@
 /mob/living/proc/in_fov(atom/observed_atom, ignore_self = FALSE)
 	if(ignore_self && observed_atom == src)
 		return TRUE
-	if(is_blind(src))
+	if(is_blind())
 		return FALSE
 	. = FALSE
 	var/turf/my_turf = get_turf(src) //Because being inside contents of something will cause our x,y to not be updated
@@ -45,7 +45,7 @@
 		. = TRUE
 
 	// Handling nearsightnedness
-	if(. && is_nearsighted_currently(src))
+	if(. && is_nearsighted_currently())
 		if((rel_x >= NEARSIGHTNESS_FOV_BLINDNESS || rel_x <= -NEARSIGHTNESS_FOV_BLINDNESS) || (rel_y >= NEARSIGHTNESS_FOV_BLINDNESS || rel_y <= -NEARSIGHTNESS_FOV_BLINDNESS))
 			return FALSE
 

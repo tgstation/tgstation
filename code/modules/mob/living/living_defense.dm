@@ -47,10 +47,15 @@
 /mob/living/proc/is_mouth_covered(head_only = 0, mask_only = 0)
 	return FALSE
 
-/mob/living/proc/is_eyes_covered(check_glasses = 1, check_head = 1, check_mask = 1)
-	return FALSE
+/// Checks if our mob has their eyes covered
+/// check_flags: What item slots should we check?
+/// Retuns a truthy value (a ref to what is covering eyes), or a falsy value (null)
+/mob/living/proc/is_eyes_covered(check_flags = ALL)
+	return null
+
 /mob/living/proc/is_pepper_proof(check_head = TRUE, check_mask = TRUE)
 	return FALSE
+
 /mob/living/proc/on_hit(obj/projectile/P)
 	return BULLET_ACT_HIT
 
@@ -441,7 +446,7 @@
 		return FALSE
 	if(get_eye_protection() >= intensity)
 		return FALSE
-	if(is_blind(src) && !(override_blindness_check || affect_silicon))
+	if(is_blind() && !(override_blindness_check || affect_silicon))
 		return FALSE
 
 	// this forces any kind of flash (namely normal and static) to use a black screen for photosensitive players

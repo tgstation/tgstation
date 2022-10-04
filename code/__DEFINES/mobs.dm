@@ -727,3 +727,7 @@
 
 /// Possible value of [/atom/movable/buckle_lying]. If set to a different (positive-or-zero) value than this, the buckling thing will force a lying angle on the buckled.
 #define NO_BUCKLE_LYING -1
+
+#define EYE_COVER_CHECK_GLASSES (1<<0)
+#define EYE_COVER_CHECK_HEAD (1<<1)
+#define EYE_COVER_CHECK_MASK (1<<2)

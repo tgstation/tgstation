@@ -204,7 +204,7 @@
 		if (!Adjacent(user))
 			return
 		if (!user.combat_mode)
-			if(!is_blind(user))
+			if(!user.is_blind())
 				user.examinate(src)
 			return
 		user.visible_message(span_danger("[user] kicks the display case."), null, null, COMBAT_MESSAGE_RANGE)
