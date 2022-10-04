@@ -6,7 +6,7 @@
 	desc = "A fragile, circuitry embedded helmet for boosting the intelligence of a monkey to a higher level. You see several warning labels..."
 
 	icon_state = "monkeymind"
-	inhand_icon_state = "monkeymind"
+	inhand_icon_state = null
 	strip_delay = 100
 	var/mob/living/carbon/human/magnification = null ///if the helmet is on a valid target (just works like a normal helmet if not (cargo please stop))
 	var/polling = FALSE///if the helmet is currently polling for targets (special code for removal)

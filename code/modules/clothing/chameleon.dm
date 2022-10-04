@@ -468,6 +468,7 @@
 	name = "insulated gloves"
 	icon_state = "yellow"
 	inhand_icon_state = "ygloves"
+	greyscale_colors = null
 
 	resistance_flags = NONE
 	armor = list(MELEE = 10, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 50)
@@ -598,6 +599,7 @@
 /obj/item/clothing/shoes/chameleon
 	name = "black shoes"
 	icon_state = "sneakers"
+	inhand_icon_state = "sneakers_back"
 	greyscale_colors = "#545454#ffffff"
 	greyscale_config = /datum/greyscale_config/sneakers
 	greyscale_config_worn = /datum/greyscale_config/sneakers_worn

@@ -505,6 +505,7 @@
 
 /obj/item/scythe
 	icon_state = "scythe0"
+	inhand_icon_state = "scythe0"
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
 	name = "scythe"
@@ -559,7 +560,7 @@
 	desc = "It's a tool for cutting grafts off plants."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "secateurs"
-	inhand_icon_state = "secateurs"
+	inhand_icon_state = null
 	worn_icon_state = "cutters"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
@@ -609,7 +610,7 @@
 	desc = "A high tech, high fidelity pair of plant shears, capable of cutting genetic traits out of a plant."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "genesheers"
-	inhand_icon_state = "secateurs"
+	inhand_icon_state = null
 	worn_icon_state = "cutters"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'

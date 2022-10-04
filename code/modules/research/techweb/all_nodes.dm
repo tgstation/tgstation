@@ -877,6 +877,17 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
+/datum/techweb_node/adv_bots
+	id = "adv_bots"
+	display_name = "Advanced Bots Research"
+	description = "Grants access to a special launchpad designed for bots."
+	prereq_ids = list("robotics")
+	design_ids = list(
+		"botpad",
+		"botpad_remote",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+
 /datum/techweb_node/exodrone_tech
 	id = "exodrone"
 	display_name = "Exploration Drone Research"

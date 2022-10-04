@@ -18,7 +18,7 @@
 	name = "Patriotic Suit"
 	desc = "Motorcycle not included."
 	icon_state = "ek"
-	inhand_icon_state = "ek"
+	inhand_icon_state = null
 	can_adjust = FALSE
 
 /obj/item/clothing/under/misc/mailman
@@ -60,7 +60,7 @@
 	name = "burial garments"
 	desc = "Traditional burial garments from the early 22nd century."
 	icon_state = "burial"
-	inhand_icon_state = "burial"
+	inhand_icon_state = null
 	can_adjust = FALSE
 	has_sensor = NO_SENSORS
 
@@ -83,7 +83,7 @@
 	name = "durathread jumpsuit"
 	desc = "A jumpsuit made from durathread, its resilient fibres provide some protection to the wearer."
 	icon_state = "durathread"
-	inhand_icon_state = "durathread"
+	inhand_icon_state = null
 	can_adjust = FALSE
 	armor = list(MELEE = 10, LASER = 10, FIRE = 40, ACID = 10, BOMB = 5, BIO = 10, FIRE = 0, ACID = 0)
 
@@ -91,7 +91,7 @@
 	name = "bouncer uniform"
 	desc = "A uniform made from a little bit more resistant fibers, makes you seem like a cool guy."
 	icon_state = "bouncer"
-	inhand_icon_state = "bouncer"
+	inhand_icon_state = null
 	can_adjust = FALSE
 	armor = list(MELEE = 5, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 30, ACID = 30)
 
@@ -101,7 +101,7 @@
 	icon = 'icons/obj/clothing/under/captain.dmi'
 	worn_icon = 'icons/mob/clothing/under/captain.dmi'
 	icon_state = "captain_parade"
-	inhand_icon_state = "by_suit"
+	inhand_icon_state = null
 	can_adjust = FALSE
 
 /obj/item/clothing/under/misc/syndicate_souvenir

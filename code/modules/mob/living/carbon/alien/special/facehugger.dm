@@ -276,7 +276,7 @@
 
 /obj/item/clothing/mask/facehugger/impregnated
 	icon_state = "facehugger_impregnated"
-	inhand_icon_state = "facehugger_impregnated"
+	inhand_icon_state = null
 	worn_icon_state = "facehugger_impregnated"
 	stat = DEAD
 
