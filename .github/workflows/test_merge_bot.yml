@@ -10,10 +10,10 @@ jobs:
       name: Check for ACTION_ENABLER secret and pass true to output if it exists to be checked by later steps
       runs-on: ubuntu-20.04
       steps:
-        - name: Cheeck for ACTION_ENABLER
+        - name: Check for ACTION_ENABLER
           id: secrets_set
           env:
-            ENABLER_SECRET: ${{ secrets.ACTION_ENABLER }}
+            ENABLER_SECRET: ${{ secrets.MOTHBLOCKS_TODO_REPLACE_WITH_ACTIONS_ENABLED_TM_BOT }}
           run: |
             unset SECRET_EXISTS
             if [ -n "$ENABLER_SECRET" ]; then SECRET_EXISTS=true ; fi
