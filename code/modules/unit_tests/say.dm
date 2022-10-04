@@ -69,8 +69,7 @@
 	TEST_ASSERT(speech_args[SPEECH_MESSAGE], "Handle speech signal does not have a message arg")
 	TEST_ASSERT(speech_args[SPEECH_SPANS], "Handle speech signal does not have spans arg")
 	TEST_ASSERT(speech_args[SPEECH_LANGUAGE], "Handle speech signal does not have a language arg")
-	// Uncomment this when the other SPEECH_RANGE PR gets merged
-	//TEST_ASSERT(speech_args[SPEECH_RANGE], "Handle speech signal does not have a range arg")
+	TEST_ASSERT(speech_args[SPEECH_RANGE], "Handle speech signal does not have a range arg")
 
 	handle_speech_result = speech_args
 
