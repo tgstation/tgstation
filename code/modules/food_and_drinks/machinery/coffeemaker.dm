@@ -86,6 +86,10 @@
 			. += span_notice("- \A [coffeepot].")
 		if(cartridge)
 			. += span_notice("- \A [cartridge].")
+		//TODO: fix the examine proc to neglect caridges and display coffee amount in the impressa model
+		// if(istype(src, /obj/machinery/coffeemaker/impressa))
+		// 	if(coffee)
+		// 		. += span_notice("- [coffee.len] [coffee.len == 1 ? "scoop" : "scoops"] of coffee beans")
 
 	if(!(machine_stat & (NOPOWER|BROKEN)))
 		. += "[span_notice("The status display reads:")]\n"+\
@@ -158,6 +162,7 @@
 		try_put_in_hand(coffeepot, user)
 	if(new_coffeepot)
 		coffeepot = new_coffeepot
+	balloon_alert(user, "replaced pot")
 	update_appearance()
 	return TRUE
 
@@ -193,7 +198,6 @@
 		if(!user.transferItemToLoc(new_pot, src))
 			return TRUE
 		replace_pot(user, new_pot)
-		balloon_alert(user, "added pot")
 		update_appearance()
 		return TRUE //no afterattack
 
@@ -358,7 +362,6 @@
 	if(!coffee_cups) //shouldn't happen, but we all know how stuff manages to break
 		balloon_alert("no cups left!")
 		return
-	balloon_alert_to_viewers("took cup")
 	var/obj/item/reagent_containers/cup/glass/coffee_cup/new_cup = new(get_turf(src))
 	user.put_in_hands(new_cup)
 	coffee_cups--
@@ -368,7 +371,6 @@
 	if(!sugar_packs)
 		balloon_alert("no sugar left!")
 		return
-	balloon_alert_to_viewers("took sugar packet")
 	var/obj/item/reagent_containers/condiment/pack/sugar/new_pack = new(get_turf(src))
 	user.put_in_hands(new_pack)
 	sugar_packs--
@@ -378,7 +380,6 @@
 	if(!sweetener_packs)
 		balloon_alert("no sweetener left!")
 		return
-	balloon_alert_to_viewers("took sweetener packet")
 	var/obj/item/reagent_containers/condiment/pack/astrotame/new_pack = new(get_turf(src))
 	user.put_in_hands(new_pack)
 	sweetener_packs--
@@ -388,7 +389,6 @@
 	if(!creamer_packs)
 		balloon_alert("no creamer left!")
 		return
-	balloon_alert_to_viewers("took creamer packet")
 	var/obj/item/reagent_containers/condiment/pack/creamer/new_pack = new(get_turf(src))
 	user.put_in_hands(new_pack)
 	creamer_packs--
@@ -503,12 +503,13 @@
 /obj/machinery/coffeemaker/impressa
 	density = TRUE
 	name = "impressa coffeemaker"
-	desc = "An impressa modello 5 coffeemaker of the Piccionaia Home Appliances premium coffeemakers product line. Makes coffee from freshly ground beans from its integrated grinder."
+	desc = "An impressa modello 5 coffeemaker of the Piccionaia Home Appliances premium coffeemakers product line. Makes coffee from fresh dried whole beans."
 	icon = 'icons/obj/machines/coffeemaker.dmi'
 	icon_state = "coffeemaker_impressa"
 	circuit = /obj/item/circuitboard/machine/coffeemaker/impressa
+	initial_cartridge = null //no cartridge, just coffee beans
 	brew_time = 10 SECONDS //industrial grade, its faster than the regular one
-	var/const/grinder_capacity = 10	//how many beans can fit inside
+	var/const/bean_capacity = 10	//how many beans can fit inside
 
 	//this type of coffeemaker takes fresh whole beans insted of cartidges
 	var/list/coffee= list()
@@ -555,60 +556,10 @@
 	if(sweetener_packs)
 		. += "extras_3"
 	if(coffee_amount)
-		if(coffee_amount < 0.7*grinder_capacity)
+		if(coffee_amount < 0.7*bean_capacity)
 			. += "grinder_half"
 		else
 			. += "grinder_full"
-
-
-/obj/machinery/coffeemaker/impressa/examine(mob/user)
-	. = ..()
-	if(!in_range(user, src) && !issilicon(user) && !isobserver(user))
-		. += span_warning("You're too far away to examine [src]'s contents and display!")
-		return
-
-	if(brewing)
-		. += span_warning("\The [src] is brewing.")
-		return
-
-	if(panel_open)
-		. += span_notice("[src]'s maintenance hatch is open!")
-		return
-
-	if(coffeepot || coffee)
-		. += span_notice("\The [src] contains:")
-		if(coffeepot)
-			. += span_notice("- \A [coffeepot].")
-		if(coffee)
-			. += span_notice("- \A [coffee].")
-
-	if(!(machine_stat & (NOPOWER|BROKEN)))
-		. += "[span_notice("The status display reads:")]\n"+\
-		span_notice("- Brewing coffee at <b>[speed*100]%</b>.")
-		if(coffeepot)
-			for(var/datum/reagent/consumable/cawfee as anything in coffeepot.reagents.reagent_list)
-				. += span_notice("- [cawfee.volume] units of coffee in pot.")
-
-	if (coffee_cups >= 1)
-		. += span_notice("There [coffee_cups == 1 ? "is" : "are"] [coffee_cups] coffee cup[coffee_cups != 1 && "s"] left.")
-	else
-		. += span_notice("There are no cups left.")
-
-	if (sugar_packs >= 1)
-		. += span_notice("There [sugar_packs == 1 ? "is" : "are"] [sugar_packs] packet[sugar_packs != 1 && "s"] of sugar left.")
-	else
-		. += span_notice("There is no sugar left.")
-
-	if (sweetener_packs >= 1)
-		. += span_notice("There [sweetener_packs == 1 ? "is" : "are"] [sweetener_packs] packet[sweetener_packs != 1 && "s"] of sweetener left.")
-	else
-		. += span_notice("There is no sweetener left.")
-
-	if (creamer_packs > 1)
-		. += span_notice("There [creamer_packs == 1 ? "is" : "are"] [creamer_packs] packet[creamer_packs != 1 && "s"] of creamer left.")
-	else
-		. += span_notice("There is no creamer left.")
-
 
 /obj/machinery/coffeemaker/impressa/handle_atom_del(atom/A)
 	. = ..()
@@ -616,7 +567,7 @@
 		coffeepot = null
 	if(A == coffee)
 		var/i
-		for(i=1,i<=grinder_capacity+1,i++)
+		for(i=1,i<=bean_capacity+1,i++)
 			coffee[i] = null
 	update_appearance()
 
@@ -652,7 +603,6 @@
 		if(!user.transferItemToLoc(new_pot, src))
 			return TRUE
 		replace_pot(user, new_pot)
-		balloon_alert(user, "added pot")
 		update_appearance()
 		return TRUE //no afterattack
 
@@ -716,7 +666,7 @@
 		update_appearance()
 		return TRUE //no afterattack
 	if (istype(attack_item, /obj/item/food/grown/coffee) && !(attack_item.item_flags & ABSTRACT))
-		if(coffee_amount >= grinder_capacity)
+		if(coffee_amount >= bean_capacity)
 			balloon_alert(user, "the coffee container is full!")
 			return TRUE
 		if(!HAS_TRAIT(attack_item, TRAIT_DRIED))
@@ -732,13 +682,13 @@
 
 
 	if (istype(attack_item, /obj/item/storage/box/coffeepack))
-		if(coffee_amount >= grinder_capacity)
+		if(coffee_amount >= bean_capacity)
 			balloon_alert(user, "the coffee container is full!")
 			return TRUE
 		var/obj/item/storage/box/coffeepack/new_coffee_pack = attack_item
 		for(var/obj/item/food/grown/coffee/new_coffee in new_coffee_pack.contents)
 			if(HAS_TRAIT(new_coffee, TRAIT_DRIED))    //the coffee beans inside must be dry
-				if(coffee_amount < grinder_capacity)
+				if(coffee_amount < bean_capacity)
 					if(user.transferItemToLoc(new_coffee, src))
 						coffee += new_coffee
 						coffee_amount++
@@ -767,6 +717,12 @@
 	user.put_in_hands(new_cup)
 	coffee_cups--
 	update_appearance()
+
+/obj/machinery/coffeemaker/impressa/toggle_steam()
+	QDEL_NULL(particles)
+	if(brewing)
+		particles = new /particles/smoke/steam/mild()
+		particles.position = list(-2, 1, 0)
 
 /obj/machinery/coffeemaker/impressa/brew()
 	power_change()
