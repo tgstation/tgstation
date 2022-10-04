@@ -1,5 +1,5 @@
 /// Helper macro, for ease of expanding checks for mobs which cannot be blinded
-/// There are no reason why these cannot be blinded, it is simply for design reasons
+/// There are no reason why these cannot be blinded, it is simply for "design reasons" (these things shouldn't be blinded)
 #define CAN_BE_BLIND(mob) (!isanimal_or_basicmob(mob) && !isbrain(mob) && !isrevenant(mob))
 
 /// Grouped status effect that applies a visual imparity (a fullscreen overlay)
@@ -173,7 +173,7 @@
 	return FALSE
 
 /mob/living/is_nearsighted_currently()
-	return !HAS_TRAIT(src, TRAIT_NEARSIGHTED_CORRECTED) && has_status_effect(/datum/status_effect/grouped/visually_impaired/nearsighted)
+	return !HAS_TRAIT(src, TRAIT_NEARSIGHTED_CORRECTED) && is_nearsighted()
 
 /// Checks if this mob is nearsighted from one or multiple sources.
 /// Can be passed a list of sources or a singular non-list source.
