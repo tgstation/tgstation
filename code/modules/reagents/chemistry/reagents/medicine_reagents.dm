@@ -704,10 +704,10 @@
 			// While healing, gives some eye blur
 			if(owner.is_blind_from(EYE_DAMAGE))
 				to_chat(owner, span_warning("Your vision slowly returns..."))
-				ill_mob.adjust_eye_blur(20 SECONDS)
+				owner.adjust_eye_blur(20 SECONDS)
 			else if(owner.is_nearsighted_from(EYE_DAMAGE))
 				to_chat(owner, span_warning("The blackness in your peripheral vision begins to fade."))
-				ill_mob.adjust_eye_blur(5 SECONDS)
+				owner.adjust_eye_blur(5 SECONDS)
 
 	return ..()
 

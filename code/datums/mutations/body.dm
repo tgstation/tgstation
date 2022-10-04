@@ -484,11 +484,11 @@
 		var/obj/item/organ/internal/eyes/eyes = H.getorganslot(ORGAN_SLOT_EYES)
 		if(eyes)
 			to_chat(H, span_userdanger("You are blinded by a shower of blood!"))
+			eyes.applyOrganDamage(5)
 		else
 			to_chat(H, span_userdanger("You are knocked down by a wave of... blood?!"))
 		H.Stun(20)
 		H.set_eye_blur_if_lower(40 SECONDS)
-		eyes?.applyOrganDamage(5)
 		H.adjust_confusion(3 SECONDS)
 	for(var/mob/living/silicon/S in view(2,owner))
 		to_chat(S, span_userdanger("Your sensors are disabled by a shower of blood!"))
