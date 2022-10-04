@@ -192,7 +192,7 @@
 	var/image/funny_image = ..()
 	funny_image.name = over_who.name
 	DO_FLOATING_ANIM(funny_image)
-	return ..()
+	return funny_image
 
 /datum/hallucination/delusion/preset/syndies
 	random_hallucination_weight = 1

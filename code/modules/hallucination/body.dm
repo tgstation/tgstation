@@ -68,6 +68,7 @@
 	random_hallucination_weight = 2
 	body_image_file = 'icons/mob/simple/mob.dmi'
 	body_image_state = "ghost"
+	body_floats = TRUE
 
 /datum/hallucination/body/hole
 	random_hallucination_weight = 1
