@@ -1236,11 +1236,11 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
 /obj/item/toy/cards/deck,
-/obj/item/reagent_containers/food/drinks/bottle/beer/almost_empty{
+/obj/item/reagent_containers/cup/glass/bottle/beer/almost_empty{
 	pixel_x = 4;
 	pixel_y = 5
 	},
-/obj/item/reagent_containers/food/drinks/bottle/beer{
+/obj/item/reagent_containers/cup/glass/bottle/beer{
 	pixel_x = -5
 	},
 /obj/item/clothing/mask/cigarette/robust{
@@ -4642,7 +4642,7 @@
 /area/awaymission/caves/main_outpost/seconadry/secpost)
 "uF" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/reagent_containers/food/drinks/coffee{
+/obj/item/reagent_containers/cup/glass/coffee{
 	list_reagents = list(/datum/reagent/consumable/coffee=10)
 	},
 /turf/open/floor/mineral/titanium/tiled{
@@ -8022,8 +8022,8 @@
 "KJ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
-/obj/item/reagent_containers/food/drinks/bottle/whiskey,
-/obj/item/reagent_containers/food/drinks/bottle/rum{
+/obj/item/reagent_containers/cup/glass/bottle/whiskey,
+/obj/item/reagent_containers/cup/glass/bottle/rum{
 	pixel_x = 4;
 	pixel_y = 4
 	},
@@ -10544,7 +10544,7 @@
 /area/awaymission/caves/second_outpost/barracks)
 "Xh" = (
 /obj/structure/table/wood,
-/obj/item/paicard,
+/obj/item/pai_card,
 /turf/open/floor/iron{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
