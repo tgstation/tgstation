@@ -675,14 +675,22 @@ SUBSYSTEM_DEF(job)
 			)
 
 			if(default_positions != occupation.total_positions) // If the total positions are different from the codebase default, we want to write it to the file. Uncommented to allow for flush migration.
-				file_data["[job_key]"]["Total Positions"] = default_positions
-			else // handle it normally by commenting it out.
-				file_data["[job_key]"]["#Total Positions"] = occupation.total_positions
+				file_data["[job_key]"] += list(
+					"Total Positions" = default_positions,
+				)
+			else // If we can't find anything for this variable, then we just throw in the codebase default with it commented out.
+				file_data["[job_key]"] += list(
+					"#Total Positions" = occupation.total_positions,
+				)
 
 			if(starting_positions != occupation.spawn_positions) // Same pattern as above.
-				file_data["[job_key]"]["Spawn Positions"] = starting_positions
+				file_data["[job_key]"] += list(
+					"Spawn Positions" = starting_positions,
+				)
 			else
-				file_data["[job_key]"]["#Spawn Positions"] = occupation.spawn_positions
+				file_data["[job_key]"] += list(
+					"#Spawn Positions" = occupation.spawn_positions,
+				)
 
 		var/payload = rustg_toml_encode(file_data)
 		var/temp_file = file("data/jobconfig.toml")
@@ -727,11 +735,11 @@ SUBSYSTEM_DEF(job)
 	var/toml_file = "[global.config.directory]/jobconfig.toml"
 	var/list/file_data = list()
 
-	if(!fexists(file(toml_file))) // You need an existing (valid) TOML for this to work. Sanity check if someone calls this directly.
+	if(!fexists(file(toml_file))) // You need an existing (valid) TOML for this to work. Sanity check if someone calls this directly instead of through 'Generate Job Configuration' verb.
 		to_chat(user, span_notice("No jobconfig.toml found in the config folder! If this is not expected, please notify a server operator or coders. You may need to generate a new config file by running 'Generate Job Configuration' from the Server tab."))
 		return FALSE
 
-	var/job_config = json_decode(file2text(toml_file))
+	var/job_config = rustg_read_toml_file(toml_file)
 	for(var/datum/job/occupation as anything in joinable_occupations)
 		var/job_name = occupation.title
 		var/job_key = occupation.config_tag
@@ -743,26 +751,44 @@ SUBSYSTEM_DEF(job)
 
 		// When we regenerate, we want to make sure commented stuff stays commented, but we also want to migrate information that remains uncommented. So, let's make sure we keep that pattern.
 		if(job_config["[job_key]"]) // Let's see if any data for this job exists.
-			if(default_positions != occupation.total_positions) // If the total positions are different from the codebase default, we want to write it to the file. Uncommented to allow for flush migration.
-				file_data["[job_key]"]["Total Positions"] = default_positions
-			else // handle it normally by commenting it out.
-				file_data["[job_key]"]["#Total Positions"] = occupation.total_positions
+			if(file_data["[job_key]"]) // Sanity, let's just make sure we don't overwrite anything or add any dupe keys.
+				continue
+			if(default_positions) // If the variable exists, we want to ensure it migrated into the new TOML uncommented, to allow for flush migration.
+				file_data["[job_key]"] += list(
+					"Total Positions" = default_positions,
+				)
+			else // If we can't find anything for this variable, then we just throw in the codebase default with it commented out.
+				file_data["[job_key]"] += list(
+					"#Total Positions" = occupation.total_positions,
+				)
 
-			if(starting_positions != occupation.spawn_positions) // Same pattern as above.
-				file_data["[job_key]"]["Spawn Positions"] = starting_positions
+			if(starting_positions) // Same pattern as above.
+				file_data["[job_key]"] += list(
+					"Spawn Positions" = starting_positions,
+				)
 			else
-				file_data["[job_key]"]["#Spawn Positions"] = occupation.spawn_positions
+				file_data["[job_key]"] += list(
+					"#Spawn Positions" = occupation.spawn_positions,
+				)
 
-			if(playtime_requirements != occupation.exp_requirements) // Same pattern as above.
-				file_data["[job_key]"]["Playtime Requirements"] = playtime_requirements
+			if(playtime_requirements) // Same pattern as above.
+				file_data["[job_key]"] += list(
+					"Playtime Requirements" = playtime_requirements,
+				)
 			else
-				file_data["[job_key]"]["#Playtime Requirements"] = occupation.exp_requirements
+				file_data["[job_key]"] += list(
+					"#Playtime Requirements" = occupation.exp_requirements,
+				)
 
-			if(required_account_age != occupation.minimal_player_age) // Same pattern as above.
-				file_data["[job_key]"]["Required Account Age"] = required_account_age
+			if(required_account_age) // Same pattern as above.
+				file_data["[job_key]"] += list(
+					"Required Account Age" = required_account_age,
+				)
 			else
-				file_data["[job_key]"]["#Required Account Age"] = occupation.minimal_player_age
-
+				file_data["[job_key]"] += list(
+					"#Required Account Age" = occupation.minimal_player_age,
+				)
+			continue
 		else
 			to_chat(user, span_notice("New job [job_name] (using key [job_key]) detected! Adding to jobconfig.toml using default codebase values..."))
 			// Commented out keys here in case server operators wish to defer to codebase defaults.
@@ -772,13 +798,13 @@ SUBSYSTEM_DEF(job)
 				"#Playtime Requirements" = occupation.exp_requirements,
 				"#Required Account Age" = occupation.minimal_player_age,
 			)
-		var/payload = rustg_toml_encode(file_data)
-		var/temp_file = file("data/jobconfig.toml")
-		if(fexists(temp_file))
-			fdel(temp_file) // ensure it writes properly in case it exists
-		WRITE_FILE(temp_file, "[config_documentation]\n[payload]")
-		DIRECT_OUTPUT(user, ftp(temp_file, "jobconfig.toml"))
-		return TRUE
+	var/payload = rustg_toml_encode(file_data)
+	var/temp_file = file("data/jobconfig.toml")
+	if(fexists(temp_file))
+		fdel(temp_file) // ensure it writes properly in case it exists
+	WRITE_FILE(temp_file, "[config_documentation]\n[payload]")
+	DIRECT_OUTPUT(user, ftp(temp_file, "jobconfig.toml"))
+	return TRUE
 
 /datum/controller/subsystem/job/proc/HandleFeedbackGathering()
 	for(var/datum/job/job as anything in joinable_occupations)
