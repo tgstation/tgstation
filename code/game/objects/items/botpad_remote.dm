@@ -45,8 +45,6 @@
 			to_chat(user, span_warning("Unable to upload!"))
 
 /obj/item/botpad_remote/proc/try_launch(mob/living/user)
-	if(!user)
-		return
 	if(!connected_botpad)
 		user.balloon_alert(user, "Controller has no connected pad!")
 		return
