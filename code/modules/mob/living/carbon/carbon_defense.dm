@@ -548,40 +548,39 @@
 		if(visual)
 			return
 
-		if (damage == 1)
-			to_chat(src, span_warning("Your eyes sting a little."))
-			if(prob(40))
-				eyes.applyOrganDamage(1)
+		switch(damage)
+			if(1)
+				to_chat(src, span_warning("Your eyes sting a little."))
+				if(prob(40))
+					eyes.applyOrganDamage(1)
 
-		else if (damage == 2)
-			to_chat(src, span_warning("Your eyes burn."))
-			eyes.applyOrganDamage(rand(2, 4))
+			if(2)
+				to_chat(src, span_warning("Your eyes burn."))
+				eyes.applyOrganDamage(rand(2, 4))
 
-		else if( damage >= 3)
-			to_chat(src, span_warning("Your eyes itch and burn severely!"))
-			eyes.applyOrganDamage(rand(12, 16))
+			if(3 to INFINITY)
+				to_chat(src, span_warning("Your eyes itch and burn severely!"))
+				eyes.applyOrganDamage(rand(12, 16))
 
 		if(eyes.damage > 10)
 			adjust_temp_blindness(damage * 2 SECONDS)
 			set_eye_blur_if_lower(damage * rand(6 SECONDS, 12 SECONDS))
 
-			if(eyes.damage > 20)
-				if(prob(eyes.damage - 20))
-					if(!is_nearsighted())
-						to_chat(src, span_warning("Your eyes start to burn badly!"))
-					become_nearsighted(EYE_DAMAGE)
+			if(eyes.damage > eyes.low_threshold)
+				if(!is_nearsighted_from(EYE_DAMAGE) && prob(eyes.damage - eyes.low_threshold))
+					to_chat(src, span_warning("Your eyes start to burn badly!"))
+					eyes.applyOrganDamage(eyes.low_threshold)
 
-				else if(prob(eyes.damage - 25))
-					if(!is_blind())
-						to_chat(src, span_warning("You can't see anything!"))
+				else if(!is_blind() && prob(eyes.damage - eyes.high_threshold))
+					to_chat(src, span_warning("You can't see anything!"))
 					eyes.applyOrganDamage(eyes.maxHealth)
 
 			else
 				to_chat(src, span_warning("Your eyes are really starting to hurt. This can't be good for you!"))
-		return 1
-	else if(damage == 0) // just enough protection
-		if(prob(20))
-			to_chat(src, span_notice("Something bright flashes in the corner of your vision!"))
+		return TRUE
+
+	else if(damage == 0 && prob(20)) // just enough protection
+		to_chat(src, span_notice("Something bright flashes in the corner of your vision!"))
 
 
 /mob/living/carbon/soundbang_act(intensity = 1, stun_pwr = 20, damage_pwr = 5, deafen_pwr = 15)

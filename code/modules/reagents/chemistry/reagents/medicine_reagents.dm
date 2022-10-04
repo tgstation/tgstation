@@ -697,23 +697,36 @@
 	owner.adjust_temp_blindness(-4 SECONDS * REM * delta_time * normalise_creation_purity())
 	owner.adjust_eye_blur(-4 SECONDS * REM * delta_time * normalise_creation_purity())
 	var/obj/item/organ/internal/eyes/eyes = owner.getorganslot(ORGAN_SLOT_EYES)
-	if (!eyes)
-		return ..()
+	if(eyes)
+		// Healing eye damage will cure nearsightedness and blindness from ... eye damage
+		eyes.applyOrganDamage(-2 * REM * delta_time * normalise_creation_purity())
+		if(eyes.damaged && DT_PROB(10, delta_time))
+			// While healing, gives some eye blur
+			if(owner.is_blind_from(EYE_DAMAGE))
+				to_chat(owner, span_warning("Your vision slowly returns..."))
+				ill_mob.adjust_eye_blur(20 SECONDS)
+			else if(owner.is_nearsighted_from(EYE_DAMAGE))
+				to_chat(owner, span_warning("The blackness in your peripheral vision begins to fade."))
+				ill_mob.adjust_eye_blur(5 SECONDS)
+
+	return ..()
+
+	/*
 	var/fix_prob = 10
 	if(creation_purity >= 1)
 		fix_prob = 100
-	eyes.applyOrganDamage(-2 * REM * delta_time * normalise_creation_purity())
+
 	if(owner.is_blind_from(EYE_DAMAGE))
 		if(DT_PROB(fix_prob, delta_time))
 			to_chat(owner, span_warning("Your vision slowly returns..."))
 			owner.cure_blind(EYE_DAMAGE)
 			owner.cure_nearsighted(EYE_DAMAGE)
 			owner.set_eye_blur_if_lower(70 SECONDS)
+
 	else if(owner.is_nearsighted_from(EYE_DAMAGE))
-		to_chat(owner, span_warning("The blackness in your peripheral vision fades."))
 		owner.cure_nearsighted(EYE_DAMAGE)
 		owner.set_eye_blur_if_lower(20 SECONDS)
-	..()
+	*/
 
 /datum/reagent/medicine/oculine/on_mob_delete(mob/living/owner)
 	var/obj/item/organ/internal/eyes/eyes = owner.getorganslot(ORGAN_SLOT_EYES)

@@ -173,8 +173,8 @@
 		return
 
 	//various degrees of "oh fuck my eyes", from "point a laser at your eye" to "staring at the Sun" intensities
-	// 50-40 - blind
-	// 40-30 - nearsighted (2 severity)
+	// 50 - blind
+	// 49-31 - nearsighted (2 severity)
 	// 30-20 - nearsighted (1 severity)
 	if(organ_flags & ORGAN_FAILING)
 		// become blind from damage

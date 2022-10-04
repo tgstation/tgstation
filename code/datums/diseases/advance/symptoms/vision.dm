@@ -58,16 +58,20 @@
 			ill_mob.set_eye_blur_if_lower(40 SECONDS)
 			eyes.applyOrganDamage(5)
 
-			if(eyes.damage >= 10)
-				ill_mob.become_nearsighted(EYE_DAMAGE)
+			// Applies nearsighted at minimum
+			if(!ill_mob.is_nearsighted_from(EYE_DAMAGE) && eyes.damage <= eyes.low_threshold)
+				eyes.setOrganDamage(eyes.low_threshold)
 
-			if(prob(eyes.damage - 10 + 1))
+			if(prob(eyes.damage - eyes.low_threshold + 1))
 				if(remove_eyes)
-					ill_mob.visible_message(span_warning("[ill_mob]'s eyes fall out of their sockets!"), span_userdanger("Your eyes fall out of their sockets!"))
+					ill_mob.visible_message(
+						span_warning("[ill_mob]'s eyes fall out of their sockets!"),
+						span_userdanger("Your eyes fall out of their sockets!"),
+					)
 					eyes.Remove(ill_mob)
 					eyes.forceMove(get_turf(ill_mob))
 
-				else if(!ill_mob.is_blind())
+				else if(!ill_mob.is_blind_from(EYE_DAMAGE))
 					to_chat(ill_mob, span_userdanger("You go blind!"))
 					eyes.applyOrganDamage(eyes.maxHealth)
 

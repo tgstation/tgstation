@@ -5,15 +5,12 @@
 /// Grouped status effect that applies a visual imparity (a fullscreen overlay)
 /datum/status_effect/grouped/visually_impaired
 	alert_type = null
-	/// A list of sources we remove when we're fullhealed. If no sources remain, we will self-delete.
-	var/static/list/sources_removed_on_fullheal = list(EYE_DAMAGE)
 	/// What overlay do we give out?
 	var/overlay_type = /atom/movable/screen/fullscreen/impaired
 	/// What serverity to give to the overlay? Can be null (no severity)
 	var/overlay_severity
 
 /datum/status_effect/grouped/visually_impaired/on_apply()
-	RegisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL, .proc/on_full_heal)
 	apply_fullscreen_overlay()
 	return TRUE
 
@@ -27,15 +24,6 @@
 /datum/status_effect/grouped/visually_impaired/proc/set_overlay_severity(to_value)
 	overlay_severity = to_value
 	apply_fullscreen_overlay()
-
-/// Signal proc for [COMSIG_LIVING_POST_FULLY_HEAL].
-/// Getting fully healed will remove eye damage from sources, and self-delete if we have none
-/datum/status_effect/grouped/visually_impaired/proc/on_full_heal(datum/source)
-	SIGNAL_HANDLER
-
-	sources -= sources_removed_on_fullheal
-	if(!length(sources))
-		qdel(src)
 
 /// Nearsighted
 /datum/status_effect/grouped/visually_impaired/nearsighted

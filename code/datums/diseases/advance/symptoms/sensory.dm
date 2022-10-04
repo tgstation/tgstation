@@ -103,17 +103,14 @@
 				return
 
 			eyes.applyOrganDamage(-2)
-			if(ill_mob.is_blind_from(EYE_DAMAGE))
-				if(prob(20))
+			if(prob(20))
+				if(ill_mob.is_blind_from(EYE_DAMAGE))
 					to_chat(ill_mob, span_warning("Your vision slowly returns..."))
-					ill_mob.cure_blind(EYE_DAMAGE)
-					ill_mob.cure_nearsighted(EYE_DAMAGE)
-					ill_mob.set_eye_blur_if_lower(70 SECONDS)
+					ill_mob.adjust_eye_blur(20 SECONDS)
 
-			else if(ill_mob.is_nearsighted_from(EYE_DAMAGE))
-				to_chat(ill_mob, span_warning("The blackness in your peripheral vision fades."))
-				ill_mob.cure_nearsighted(EYE_DAMAGE)
-				ill_mob.set_eye_blur_if_lower(20 SECONDS)
+				else if(ill_mob.is_nearsighted_from(EYE_DAMAGE))
+					to_chat(ill_mob, span_warning("The blackness in your peripheral vision begins to fade."))
+					ill_mob.adjust_eye_blur(5 SECONDS)
 
 		else
 			if(prob(base_message_chance))

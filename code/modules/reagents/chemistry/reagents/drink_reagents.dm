@@ -60,23 +60,23 @@
 	color = "#973800" // rgb: 151, 56, 0
 	taste_description = "carrots"
 	glass_icon_state = "carrotjuice"
-	glass_name = "glass of  carrot juice"
+	glass_name = "glass of carrot juice"
 	glass_desc = "It's just like a carrot but without crunching."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/carrotjuice/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjust_eye_blur(-2 SECONDS * REM * delta_time)
 	M.adjust_temp_blindness(-2 SECONDS * REM * delta_time)
+	// Carrot juice, if consumed in large quantities, can heal eyes
 	switch(current_cycle)
 		if(1 to 20)
 			//nothing
 		if(21 to 110)
 			if(DT_PROB(100 * (1 - (sqrt(110 - current_cycle) / 10)), delta_time))
-				M.cure_nearsighted(EYE_DAMAGE)
+				M.adjustOrganLoss(ORGAN_SLOT_EYES, -2)
 		if(110 to INFINITY)
-			M.cure_nearsighted(EYE_DAMAGE)
-	..()
-	return
+			M.adjustOrganLoss(ORGAN_SLOT_EYES, -2)
+	return ..()
 
 /datum/reagent/consumable/berryjuice
 	name = "Berry Juice"
