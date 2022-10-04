@@ -64,7 +64,7 @@
 	if(!launched_bot)
 		user.balloon_alert(user, "No bots detected on the pad!")
 		return
-	user.balloon_alert(user, "Sending the bot back to its pad")
+	user?.balloon_alert(user, "Sending the bot back to its pad")
 	launched_bot.call_bot(src,  get_turf(src))
 
 /obj/structure/closet/supplypod/botpod
