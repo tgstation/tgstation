@@ -107,11 +107,14 @@
 
 	LAZYADD(timers, timer_id)
 
+	var/extended_time_display = DisplayTimeText(EXTENDED_CROSS_SECTOR_CANCEL_TIME)
+	var/normal_time_display = DisplayTimeText(CROSS_SECTOR_CANCEL_TIME)
+
 	to_chat(
 		GLOB.admins,
 		span_adminnotice( \
 			"<b color='orange'>CROSS-SECTOR MESSAGE (INCOMING):</b> [input["sender_ckey"]] (from [input["source"]]) is about to send \
-			the following message (will autoapprove in [data["is_filtered"] ? DisplayTimeText(EXTENDED_CROSS_SECTOR_CANCEL_TIME) : DisplayTimeText(CROSS_SECTOR_CANCEL_TIME)): \
+			the following message (will autoapprove in [data["is_filtered"] ? "[extended_time_display]" : "[normal_time_display]"]): \
 			<b><a href='?src=[REF(src)];reject_cross_comms_message=[timer_id]'>REJECT</a></b><br> \
 			[html_encode(input["message"])]" \
 		)
