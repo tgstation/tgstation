@@ -616,13 +616,14 @@
 	var/mob/living/silicon/ai/U = usr
 
 	for (var/obj/machinery/camera/C in GLOB.cameranet.cameras)
-		var/turf/camera_turf = get_turf(C)
+		var/turf/camera_turf = get_turf(C) //get camera's turf in case it's built into something so we don't get z=0
+
+		var/list/tempnetwork = C.network
 		if(!camera_turf || !(is_station_level(camera_turf.z) || is_mining_level(camera_turf.z) || ("ss13" in tempnetwork)))
 			continue
 		if(!C.can_use())
 			continue
-			
-		var/list/tempnetwork = C.network
+
 		tempnetwork.Remove("rd", "ordnance", "prison")
 		if(!C.can_use())
 			continue
