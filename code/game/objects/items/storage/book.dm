@@ -229,7 +229,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 			for(var/obj/item/soulstone/SS in sword.contents)
 				SS.required_role = null
 				for(var/mob/living/simple_animal/shade/EX in SS)
-					var/datum/antagonist/cult/cultist = EX.mind.has_antag_datum(/datum/antagonist/cult)
+					var/datum/antagonist/bloodcult/cultist = EX.mind.has_antag_datum(/datum/antagonist/bloodcult)
 					if (cultist)
 						cultist.silent = TRUE
 						cultist.on_removal()

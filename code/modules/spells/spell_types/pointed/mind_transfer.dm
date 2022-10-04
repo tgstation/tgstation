@@ -97,7 +97,7 @@
 	var/datum/mind/mind_to_swap = to_swap.mind
 	if(to_swap.can_block_magic(antimagic_flags) \
 		|| mind_to_swap.has_antag_datum(/datum/antagonist/wizard) \
-		|| mind_to_swap.has_antag_datum(/datum/antagonist/cult) \
+		|| mind_to_swap.has_antag_datum(/datum/antagonist/bloodcult) \
 		|| mind_to_swap.has_antag_datum(/datum/antagonist/changeling) \
 		|| mind_to_swap.has_antag_datum(/datum/antagonist/rev) \
 		|| mind_to_swap.key?[1] == "@" \

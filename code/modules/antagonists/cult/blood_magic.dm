@@ -1,75 +1,327 @@
-/datum/action/innate/cult/blood_spell/manipulation //Default spell, used as the basis of cult.
+// Default values for blood cult spells
+/datum/action/cooldown/spell/touch/blood_cult_spell
+	name = "Generic Name" // Name of the spell
+	desc = "Generic Description" // Description of the spell itself
+	icon_icon = 'icons/mob/actions/actions_cult.dmi'
+	background_icon_state = "bg_demon"
+	buttontooltipstyle = "cult"
+	// Icon of the spell
+	button_icon_state = "carve"
+	school = SCHOOL_EVOCATION
+	// If we want the spell to have a cooldown, set to anything but 0
+	cooldown_time = 0 SECONDS
+	// What the cultist says when they cast the spell
+	invocation = "Hello"
+	// Allows being able to cast the spell without saying anything.
+	invocation_type = INVOCATION_WHISPER
+	// Mimes can cast it. Chaplains can cast it. Anyone can cast it, so long as they have a hand. (This makes invocation_type only for flavor)
+	spell_requirements = SPELL_CASTABLE_WITHOUT_INVOCATION
+	// If this spell has a cost, how much should it cost
+	var/spell_blood_cost
+
+// BLOOD RITES //
+/datum/action/cooldown/spell/touch/blood_cult_spell/rites
 	name = "Blood Rites"
-	desc = "Empowers your hand to absorb blood to be used for advanced rites, or heal a cultist on contact. Use the spell in-hand to cast advanced rites."
+	desc = "Empowers your hand to absorb blood from mobs or from the floor, used to cast Blood spells."
 	invocation = "Fel'th Dol Ab'orod!"
 	button_icon_state = "manip"
-	charges = 5
-	magic_path = "/obj/item/melee/blood_magic/manipulator"
-	default_button_position = DEFAULT_BLOODSPELLS
+	default_button_position = DEFAULT_BLOODSPELLS // Places it in the default spell position.
+	hand_path = /obj/item/melee/touch_attack/Rites_Hand
+
+/obj/item/melee/touch_attack/Rites_Hand
+	name = "Blood Rite Aura"
+	desc = "Absorbs blood from anything you touch. Touching cultists and constructs can heal them. Use in-hand to cast an advanced rite."
+	inhand_icon_state = "disintegrate"
+	icon = 'icons/mob/actions/actions_cult.dmi'
+	icon_state = "hand"
+	color = COLOR_BLOOD_RITES
+	var/datum/antagonist/bloodcult/cult_datum
+
+/obj/item/melee/touch_attack/Rites_Hand/Initialize(mapload, datum/action/cooldown/spell/spell)
+	. = ..()
+	cult_datum = IS_CULTIST(spell.owner)
+
+/obj/item/melee/touch_attack/Rites_Hand/Destroy(force)
+	cult_datum = null
+	return ..()
+
+// TODO : Make Blood rites heal constructs (Does it heal constructs in the old code?)
+/obj/item/melee/touch_attack/Rites_Hand/afterattack(atom/target, mob/living/carbon/human/user, proximity)
+	. = ..()
+	if(!proximity)
+		return // If you click on something that isn't in your 1-tile radius, this stops
+	if(istype(target, /obj/effect/decal/cleanable/blood))
+		return blood_draw(target, user) // If you click on blood on the floor, this will cast blood_draw Spell
+	if(!ishuman(target))
+		return // If the target you clicked on isnt a human, this stops
+	var/mob/living/carbon/human/human_target = target
+	if(NOBLOOD in human_target.dna.species.species_traits)
+		to_chat(user,span_warning("Blood rites do not work on species with no blood!"))
+		return // If the target has no usable blood level, this stops, and tells the caster why it stopped in chat
+	if(IS_CULTIST(human_target))
+		return heal_touch(target, user) // If the target is a cultist, this will stop and cast Heal_Touch Spell
+	if(human_target.stat == DEAD) // Blood Rites can only drain living
+		to_chat(user,span_warning("[human_target.p_their(TRUE)] blood has stopped flowing, you'll have to find another way to extract it."))
+		return
+	if(human_target.blood_volume <= BLOOD_VOLUME_SAFE) // Blood Rites can only drain if they have enough blood
+		to_chat(user, span_warning("[human_target.p_theyre(TRUE)] missing too much blood - you cannot drain [human_target.p_them()] further!"))
+		return
+	// After all the checks, this will drain the blood of the target to give blood rites charges
+	to_chat(user, span_cultitalic("Your blood rite gains 50 charges from draining [human_target]'s blood."))
+	human_target.blood_volume -= 100
+	cult_datum.stored_blood += 50
+	user.Beam(human_target, icon_state= "drainbeam", time = 1 SECONDS)
+	playsound(get_turf(human_target), 'sound/magic/enter_blood.ogg', 50)
+	human_target.visible_message(span_danger("[user] drains some of [human_target]'s blood!"))
+	new /obj/effect/temp_visual/cult/sparks(get_turf(human_target))
+
+/obj/item/melee/touch_attack/Rites_Hand/proc/blood_draw(atom/target, mob/living/carbon/human/user)
+	var/temp = 0
+	var/turf/T = get_turf(target)
+	if(T)
+		for(var/obj/effect/decal/cleanable/blood/B in view(T, 2))
+			if(B.blood_state == BLOOD_STATE_HUMAN)
+				if(B.bloodiness == 100) //Bonus for "pristine" bloodpools, also to prevent cheese with footprint spam
+					temp += 30
+				else
+					temp += max((B.bloodiness**2)/800,1)
+				new /obj/effect/temp_visual/cult/turf/floor(get_turf(B))
+				qdel(B)
+		for(var/obj/effect/decal/cleanable/trail_holder/TH in view(T, 2))
+			qdel(TH)
+		if(temp)
+			user.Beam(T,icon_state="drainbeam", time = 15)
+			new /obj/effect/temp_visual/cult/sparks(get_turf(user))
+			playsound(T, 'sound/magic/enter_blood.ogg', 50)
+			to_chat(user, span_cultitalic("Your blood rite has gained [round(temp)] charge\s from blood sources around you!"))
+			cult_datum.stored_blood += max(1, round(temp))
+
+/obj/item/melee/touch_attack/Rites_Hand/proc/heal_touch(atom/target, mob/living/carbon/human/user)
+	var/mob/living/carbon/human/human_target = target
+	if(human_target.stat == DEAD)
+		to_chat(user,span_warning("Blood rites do not work on species with no blood!"))
+		return
+	// Restoring Blood to cultists that are under the safe threshold
+	if(human_target.blood_volume < BLOOD_VOLUME_SAFE)
+		var/blood_restored = BLOOD_VOLUME_SAFE - human_target.blood_volume
+		if(cult_datum.stored_blood*2 < blood_restored)
+			human_target.blood_volume += cult_datum.stored_blood*2
+			to_chat(user,span_danger("You use the last of your blood rites to restore what blood you could!"))
+			cult_datum.stored_blood = 0
+			return
+		else
+			human_target.blood_volume = BLOOD_VOLUME_SAFE
+			cult_datum.stored_blood -= round(blood_restored/2)
+			to_chat(user,span_warning("Your blood rites have restored [human_target == user ? "your" : "[human_target.p_their()]"] blood to safe levels!"))
+	// Healing Cultists that have damage dealt to them
+	var/total_damage = human_target.getBruteLoss() + human_target.getFireLoss() + human_target.getToxLoss() + human_target.getOxyLoss()
+	if(total_damage == 0)
+		to_chat(user,span_cult("That cultist doesn't require healing!"))
+	if(human_target.stat == DEAD)
+		to_chat(user,span_warning("Only a revive rune can bring back the dead!"))
+		return
+	else
+		var/ratio = cult_datum.stored_blood/total_damage
+		if(human_target == user)
+			to_chat(user,span_cult("<b>Your blood healing is far less efficient when used on yourself!</b>"))
+			ratio *= 0.35 // Healing is half as effective if you can't perform a full heal
+			cult_datum.stored_blood -= round(total_damage) // Healing is 65% more "expensive" even if you can still perform the full heal
+		if(ratio > 1)
+			ratio = 1
+			cult_datum.stored_blood -= round(total_damage)
+			human_target.visible_message(span_warning("[human_target] is fully healed by [human_target==user ? "[human_target.p_their()]":"[human_target]'s"] blood magic!"))
+		else
+			human_target.visible_message(span_warning("[human_target] is partially healed by [human_target==user ? "[human_target.p_their()]":"[human_target]'s"] blood magic."))
+			cult_datum.stored_blood = 0
+		ratio *= -1
+		human_target.adjustOxyLoss((total_damage*ratio) * (human_target.getOxyLoss() / total_damage), 0)
+		human_target.adjustToxLoss((total_damage*ratio) * (human_target.getToxLoss() / total_damage), 0)
+		human_target.adjustFireLoss((total_damage*ratio) * (human_target.getFireLoss() / total_damage), 0)
+		human_target.adjustBruteLoss((total_damage*ratio) * (human_target.getBruteLoss() / total_damage), 0)
+		human_target.updatehealth()
+		playsound(get_turf(human_target), 'sound/magic/staff_healing.ogg', 25)
+		new /obj/effect/temp_visual/cult/sparks(get_turf(human_target))
+		user.Beam(human_target, icon_state="sendbeam", time = 15)
+
+/obj/item/melee/touch_attack/Rites_Hand/attack_self(mob/user, modifiers)
+	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SELF, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
+		return TRUE
+	interact(user)
+	var/static/list/spells = list(
+		"Ritual Knife (30)" = image(icon = 'icons/obj/cult/items_and_weapons.dmi', icon_state = "render"),
+		"Bloody Halberd (150)" = image(icon = 'icons/obj/cult/items_and_weapons.dmi', icon_state = "occultpoleaxe0"),
+		"Blood Bolt Barrage (300)" = image(icon = 'icons/obj/weapons/guns/ballistic.dmi', icon_state = "arcane_barrage"),
+		"Blood Beam (500)" = image(icon = 'icons/obj/weapons/items_and_weapons.dmi', icon_state = "disintegrate"),
+		"Eldritch Longsword (300)" = image(icon = 'icons/obj/cult/items_and_weapons.dmi', icon_state = "cultblade")
+		)
+	var/choice = show_radial_menu(user, src, spells, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE)
+	if(!check_menu(user))
+		to_chat(user, span_cultitalic("You decide against conducting a greater blood rite."))
+		return
+	switch(choice)
+		if("Ritual Knife (30)")
+			if(cult_datum.stored_blood < BLOOD_DAGGER_COST)
+				to_chat(user, span_cultitalic("You need [BLOOD_DAGGER_COST] charges to perform this rite."))
+			else
+				cult_datum.stored_blood -= BLOOD_DAGGER_COST
+				qdel(src)
+				var/obj/item/melee/cultblade/dagger/new_dagger = new(src)
+				user.put_in_hand(new_dagger)
+				if(user.put_in_hands(new_dagger))
+					to_chat(user, span_cultitalic("A [new_dagger.name] appears in your hand!"))
+		if("Eldritch Longsword (300)")
+			if(cult_datum.stored_blood < ELDRITCH_LONGSWORD_COST)
+				to_chat(user, span_cultitalic("You need [ELDRITCH_LONGSWORD_COST] charges to perform this rite."))
+			else
+				cult_datum.stored_blood -= ELDRITCH_LONGSWORD_COST
+				qdel(src)
+				var/obj/item/melee/cultblade/sword/new_sword = new(src)
+				user.put_in_hand(new_sword)
+				if(user.put_in_hands(new_sword))
+					to_chat(user, span_cultitalic("A [new_sword.name] appears in your hand!"))
+		if("Bloody Halberd (150)")
+			if(cult_datum.stored_blood < BLOOD_HALBERD_COST)
+				to_chat(user, span_cultitalic("You need [BLOOD_HALBERD_COST] charges to perform this rite."))
+			else
+				cult_datum.stored_blood -= BLOOD_HALBERD_COST
+				var/turf/current_position = get_turf(user)
+				qdel(src)
+				var/datum/action/innate/blood_cult/halberd/halberd_act_granted = new(user)
+				var/obj/item/melee/cultblade/halberd/rite = new(current_position)
+				halberd_act_granted.Grant(user, rite)
+				rite.halberd_act = halberd_act_granted
+				if(user.put_in_hands(rite))
+					to_chat(user, span_cultitalic("A [rite.name] appears in your hand!"))
+				else
+					user.visible_message(span_warning("A [rite.name] appears at [user]'s feet!"), \
+						span_cultitalic("A [rite.name] materializes at your feet."))
+		if("Blood Bolt Barrage (300)")
+			if(cult_datum.stored_blood < BLOOD_BARRAGE_COST)
+				to_chat(user, span_cultitalic("You need [BLOOD_BARRAGE_COST] charges to perform this rite."))
+			else
+				var/obj/rite = new /obj/item/gun/ballistic/rifle/enchanted/arcane_barrage/blood()
+				cult_datum.stored_blood -= BLOOD_BARRAGE_COST
+				qdel(src)
+				if(user.put_in_hands(rite))
+					to_chat(user, span_cult("<b>Your hands glow with power!</b>"))
+				else
+					to_chat(user, span_cultitalic("You need a free hand for this rite!"))
+					qdel(rite)
+		if("Blood Beam (500)")
+			if(cult_datum.stored_blood < BLOOD_BEAM_COST)
+				to_chat(user, span_cultitalic("You need [BLOOD_BEAM_COST] charges to perform this rite."))
+			else
+				var/obj/rite = new /obj/item/blood_beam()
+				cult_datum.stored_blood -= BLOOD_BEAM_COST
+				qdel(src)
+				if(user.put_in_hands(rite))
+					to_chat(user, span_cultlarge("<b>Your hands glow with POWER OVERWHELMING!!!</b>"))
+				else
+					to_chat(user, span_cultitalic("You need a free hand for this rite!"))
+					qdel(rite)
+
+/obj/item/melee/touch_attack/Rites_Hand/proc/check_menu(mob/living/user)
+	if(!istype(user))
+		CRASH("The Blood Rites manipulator radial menu was accessed by something other than a valid user.")
+	if(user.incapacitated() || !user.Adjacent(src))
+		return FALSE
+	return TRUE
+
+// STUN SPELL //
+/datum/action/cooldown/spell/touch/blood_cult_spell/stun
+	name = "Stun" // Name of the spell
+	desc = "Will stun and mute a weak-minded victim on contact." // Description of the spell itself
+	button_icon_state = "carve"
+	invocation = "Fuu ma'jin!"
+	invocation_type = INVOCATION_SHOUT
+	// If we want the spell to have a cooldown, set to anything but 0
+	cooldown_time = 0 SECONDS
+	spell_blood_cost = 30
+	default_button_position = "6:10,4:-2"
+	hand_path = /obj/item/melee/touch_attack/Stun_Hand
+
+/datum/action/cooldown/spell/touch/blood_cult_spell/stun/can_cast_spell(feedback = TRUE)
+	var/datum/antagonist/bloodcult/cult_datum = IS_CULTIST(owner)
+	if(cult_datum.stored_blood < spell_blood_cost)
+		to_chat(owner, span_warning("You need least [spell_blood_cost] unit\s of blood to cast this!"))
+		return
+	return ..() && !!IS_CULTIST(owner)
+
+/obj/item/melee/touch_attack/Stun_Hand
+	name = "Stunning Aura"
+	desc = "Will stun and mute a weak-minded victim on contact."
+	color = RUNE_COLOR_RED
+	inhand_icon_state = "disintegrate"
+	icon = 'icons/mob/actions/actions_cult.dmi'
+	icon_state = "hand"
+	var/datum/antagonist/bloodcult/cult_datum
+
+/datum/action/cooldown/spell/touch/blood_cult_spell/stun/cast_on_hand_hit(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
+	var/datum/antagonist/bloodcult/cult_datum = IS_CULTIST(owner)
+	if(!isliving(victim))
+		return FALSE
+	var/mob/living/living_target = victim
+	if(living_target.can_block_magic(antimagic_flags))
+		victim.visible_message(
+			span_danger("The spell bounces off of [victim]!"),
+			span_danger("The spell bounces off of you!"),
+		)
+		return FALSE
+	if(HAS_TRAIT(living_target, TRAIT_MINDSHIELD))
+		victim.visible_message(
+			span_danger("[victim]\s mind is too strong to be affected."),
+			span_danger("Your mindshield repels the spell."),
+		)
+		return FALSE
+
+	if(!isliving(victim))
+		return
+	if(!ishuman(living_target))
+		return
+	if(IS_CULTIST(living_target))
+		return
+	if(IS_CULTIST(caster))
+		caster.visible_message(span_warning("[caster] holds up [caster.p_their()] hand, which explodes in a flash of red light!"), \
+		span_cultitalic("You attempt to stun [living_target] with the spell!"))
+		var/mob/living/living_user = caster
+		living_user.mob_light(_range = 3, _color = LIGHT_COLOR_BLOOD_MAGIC, _duration = 0.2 SECONDS)
+	if(IS_HERETIC(living_target))
+		to_chat(caster, span_warning("Some force greater than you intervenes! [living_target] is protected by the Forgotten Gods!"))
+		to_chat(living_target, span_warning("You are protected by your faith to the Forgotten Gods."))
+		var/old_color = living_target.color
+		living_target.color = rgb(0, 128, 0)
+		animate(living_target, color = old_color, time = 1 SECONDS, easing = EASE_IN)
+	else
+		to_chat(caster, span_cultitalic("In a brilliant flash of red, [living_target] falls to the ground!"))
+		living_target.Paralyze(16 SECONDS)
+		living_target.flash_act(1, TRUE)
+		if(issilicon(living_target))
+			var/mob/living/silicon/silicon_target = victim
+			silicon_target.emp_act(EMP_HEAVY)
+		else if(iscarbon(living_target))
+			var/mob/living/carbon/carbon_target = victim
+			carbon_target.silent += 6
+			carbon_target.adjust_stutter(30 SECONDS)
+			carbon_target.adjust_timed_status_effect(30 SECONDS, /datum/status_effect/speech/slurring/cult)
+			carbon_target.set_jitter_if_lower(30 SECONDS)
+		cult_datum.stored_blood -= 30
+		return TRUE
+
+
+
+
+
 
 /*
-/datum/action/innate/cult/blood_spell //The next generation of talismans, handles storage/creation of blood magic /// /datum/action/cooldown/spell
-	name = "Blood Magic"
-	button_icon_state = "telerune"
-	desc = "Fear the Old Blood."
-	var/charges = 1
-	var/magic_path = null
-	var/obj/item/melee/blood_magic/hand_magic
-	var/datum/action/innate/cult/blood_magic/all_magic
-	var/base_desc //To allow for updating tooltips
-	var/invocation
-	var/health_cost = 0
-	/// Have we already been positioned into our starting location?
-	var/positioned = FALSE
-
-/datum/action/innate/cult/blood_spell/Grant(mob/living/owner, datum/action/innate/cult/blood_magic/BM)
-	if(health_cost)
-		desc += "<br>Deals <u>[health_cost] damage</u> to your arm per use."
-	base_desc = desc
-	desc += "<br><b><u>Has [charges] use\s remaining</u></b>."
-	all_magic = BM
-	return ..()
-
-/datum/action/innate/cult/blood_spell/Remove()
-	if(all_magic)
-		all_magic.spells -= src
-	if(hand_magic)
-		qdel(hand_magic)
-		hand_magic = null
-	..()
-
-/datum/action/innate/cult/blood_spell/IsAvailable()
-	if(!IS_CULTIST(owner) || owner.incapacitated() || !charges)
-		return FALSE
-	return ..()
-*/
-
-/datum/action/innate/cult/blood_spell/Activate()
-	if(magic_path) //If this spell flows from the hand
-		if(!hand_magic)
-			hand_magic = new magic_path(owner, src)
-			if(!owner.put_in_hands(hand_magic))
-				qdel(hand_magic)
-				hand_magic = null
-				to_chat(owner, span_warning("You have no empty hand for invoking blood magic!"))
-				return
-			to_chat(owner, span_notice("Your wounds glow as you invoke the [name]."))
-			return
-		if(hand_magic)
-			qdel(hand_magic)
-			hand_magic = null
-			to_chat(owner, span_warning("You snuff out the spell, saving it for later."))
-
-
 //Cult Blood Spells
-/datum/action/innate/cult/blood_spell/emp
+/datum/action/innate/blood_cult/blood_spell/emp
 	name = "Electromagnetic Pulse"
 	desc = "Emits a large electromagnetic pulse."
 	button_icon_state = "emp"
 	health_cost = 10
 	invocation = "Ta'gh fara'qha fel d'amar det!"
 
-/datum/action/innate/cult/blood_spell/emp/Activate()
+/datum/action/innate/blood_cult/blood_spell/emp/Activate()
 	owner.whisper(invocation, language = /datum/language/common)
 	owner.visible_message(span_warning("[owner]'s hand flashes a bright blue!"), \
 		span_cultitalic("You speak the cursed words, emitting an EMP blast from your hand."))
@@ -78,36 +330,12 @@
 	if(charges<=0)
 		qdel(src)
 
-/datum/action/innate/cult/blood_spell/construction
+/datum/action/innate/blood_cult/blood_spell/construction
 	name = "Twisted Construction"
 	desc = "Empowers your hand to corrupt certain metalic objects.<br><u>Converts:</u><br>Plasteel into runed metal<br>50 metal into a construct shell<br>Living cyborgs into constructs after a delay<br>Cyborg shells into construct shells<br>Purified soulstones (and any shades inside) into cultist soulstones<br>Airlocks into brittle runed airlocks after a delay (harm intent)"
 	button_icon_state = "transmute"
 	magic_path = "/obj/item/melee/blood_magic/construction"
 	health_cost = 12
-
-/datum/action/innate/cult/blood_spell/dagger
-	name = "Summon Ritual Dagger"
-	desc = "Allows you to summon a ritual dagger, in case you've lost the dagger that was given to you."
-	invocation = "Wur d'dai leev'mai k'sagan!" //where did I leave my keys, again?
-	button_icon_state = "equip" //this is the same icon that summon equipment uses, but eh, I'm not a spriter
-	/// The item given to the cultist when the spell is invoked. Typepath.
-	var/obj/item/summoned_type = /obj/item/melee/cultblade/dagger
-
-/datum/action/innate/cult/blood_spell/dagger/Activate()
-	var/turf/owner_turf = get_turf(owner)
-	owner.whisper(invocation, language = /datum/language/common)
-	owner.visible_message(span_warning("[owner]'s hand glows red for a moment."), \
-		span_cultitalic("Your plea for aid is answered, and light begins to shimmer and take form within your hand!"))
-	var/obj/item/summoned_blade = new summoned_type(owner_turf)
-	if(owner.put_in_hands(summoned_blade))
-		to_chat(owner, span_warning("A [summoned_blade] appears in your hand!"))
-	else
-		owner.visible_message(span_warning("A [summoned_blade] appears at [owner]'s feet!"), \
-			span_cultitalic("A [summoned_blade] materializes at your feet."))
-	SEND_SOUND(owner, sound('sound/effects/magic.ogg', FALSE, 0, 25))
-	charges--
-	if(charges <= 0)
-		qdel(src)
 
 // The "magic hand" items
 /obj/item/melee/blood_magic
@@ -127,7 +355,7 @@
 	var/invocation
 	var/uses = 1
 	var/health_cost = 0 //The amount of health taken from the user when invoking the spell
-	var/datum/action/innate/cult/blood_spell/source
+	var/datum/action/innate/blood_cult/blood_spell/source
 
 /obj/item/melee/blood_magic/Initialize(mapload, spell)
 	. = ..()
@@ -310,192 +538,4 @@
 		C.put_in_hands(new /obj/item/melee/cultblade/dagger(user))
 		C.put_in_hands(new /obj/item/restraints/legcuffs/bola/cult(user))
 		..()
-
-/obj/item/melee/blood_magic/manipulator
-	name = "Blood Rite Aura"
-	desc = "Absorbs blood from anything you touch. Touching cultists and constructs can heal them. Use in-hand to cast an advanced rite."
-	color = "#7D1717"
-
-/obj/item/melee/blood_magic/manipulator/examine(mob/user)
-	. = ..()
-	. += "Bloody halberd, blood bolt barrage, and blood beam cost [BLOOD_HALBERD_COST], [BLOOD_BARRAGE_COST], and [BLOOD_BEAM_COST] charges respectively."
-
-/obj/item/melee/blood_magic/manipulator/afterattack(atom/target, mob/living/carbon/human/user, proximity)
-	if(proximity)
-		if(ishuman(target))
-			var/mob/living/carbon/human/H = target
-			if(NOBLOOD in H.dna.species.species_traits)
-				to_chat(user,span_warning("Blood rites do not work on species with no blood!"))
-				return
-			if(IS_CULTIST(H))
-				if(H.stat == DEAD)
-					to_chat(user,span_warning("Only a revive rune can bring back the dead!"))
-					return
-				if(H.blood_volume < BLOOD_VOLUME_SAFE)
-					var/restore_blood = BLOOD_VOLUME_SAFE - H.blood_volume
-					if(uses*2 < restore_blood)
-						H.blood_volume += uses*2
-						to_chat(user,span_danger("You use the last of your blood rites to restore what blood you could!"))
-						uses = 0
-						return ..()
-					else
-						H.blood_volume = BLOOD_VOLUME_SAFE
-						uses -= round(restore_blood/2)
-						to_chat(user,span_warning("Your blood rites have restored [H == user ? "your" : "[H.p_their()]"] blood to safe levels!"))
-				var/overall_damage = H.getBruteLoss() + H.getFireLoss() + H.getToxLoss() + H.getOxyLoss()
-				if(overall_damage == 0)
-					to_chat(user,span_cult("That cultist doesn't require healing!"))
-				else
-					var/ratio = uses/overall_damage
-					if(H == user)
-						to_chat(user,span_cult("<b>Your blood healing is far less efficient when used on yourself!</b>"))
-						ratio *= 0.35 // Healing is half as effective if you can't perform a full heal
-						uses -= round(overall_damage) // Healing is 65% more "expensive" even if you can still perform the full heal
-					if(ratio>1)
-						ratio = 1
-						uses -= round(overall_damage)
-						H.visible_message(span_warning("[H] is fully healed by [H==user ? "[H.p_their()]":"[H]'s"] blood magic!"))
-					else
-						H.visible_message(span_warning("[H] is partially healed by [H==user ? "[H.p_their()]":"[H]'s"] blood magic."))
-						uses = 0
-					ratio *= -1
-					H.adjustOxyLoss((overall_damage*ratio) * (H.getOxyLoss() / overall_damage), 0)
-					H.adjustToxLoss((overall_damage*ratio) * (H.getToxLoss() / overall_damage), 0)
-					H.adjustFireLoss((overall_damage*ratio) * (H.getFireLoss() / overall_damage), 0)
-					H.adjustBruteLoss((overall_damage*ratio) * (H.getBruteLoss() / overall_damage), 0)
-					H.updatehealth()
-					playsound(get_turf(H), 'sound/magic/staff_healing.ogg', 25)
-					new /obj/effect/temp_visual/cult/sparks(get_turf(H))
-					user.Beam(H, icon_state="sendbeam", time = 15)
-			else
-				if(H.stat == DEAD)
-					to_chat(user,span_warning("[H.p_their(TRUE)] blood has stopped flowing, you'll have to find another way to extract it."))
-					return
-				if(H.has_status_effect(/datum/status_effect/speech/slurring/cult))
-					to_chat(user,span_danger("[H.p_their(TRUE)] blood has been tainted by an even stronger form of blood magic, it's no use to us like this!"))
-					return
-				if(H.blood_volume > BLOOD_VOLUME_SAFE)
-					H.blood_volume -= 100
-					uses += 50
-					user.Beam(H, icon_state="drainbeam", time = 1 SECONDS)
-					playsound(get_turf(H), 'sound/magic/enter_blood.ogg', 50)
-					H.visible_message(span_danger("[user] drains some of [H]'s blood!"))
-					to_chat(user,span_cultitalic("Your blood rite gains 50 charges from draining [H]'s blood."))
-					new /obj/effect/temp_visual/cult/sparks(get_turf(H))
-				else
-					to_chat(user,span_warning("[H.p_theyre(TRUE)] missing too much blood - you cannot drain [H.p_them()] further!"))
-					return
-		if(isconstruct(target))
-			var/mob/living/simple_animal/M = target
-			var/missing = M.maxHealth - M.health
-			if(missing)
-				if(uses > missing)
-					M.adjustHealth(-missing)
-					M.visible_message(span_warning("[M] is fully healed by [user]'s blood magic!"))
-					uses -= missing
-				else
-					M.adjustHealth(-uses)
-					M.visible_message(span_warning("[M] is partially healed by [user]'s blood magic!"))
-					uses = 0
-				playsound(get_turf(M), 'sound/magic/staff_healing.ogg', 25)
-				user.Beam(M, icon_state="sendbeam", time = 1 SECONDS)
-		if(istype(target, /obj/effect/decal/cleanable/blood))
-			blood_draw(target, user)
-		..()
-
-/obj/item/melee/blood_magic/manipulator/proc/blood_draw(atom/target, mob/living/carbon/human/user)
-	var/temp = 0
-	var/turf/T = get_turf(target)
-	if(T)
-		for(var/obj/effect/decal/cleanable/blood/B in view(T, 2))
-			if(B.blood_state == BLOOD_STATE_HUMAN)
-				if(B.bloodiness == 100) //Bonus for "pristine" bloodpools, also to prevent cheese with footprint spam
-					temp += 30
-				else
-					temp += max((B.bloodiness**2)/800,1)
-				new /obj/effect/temp_visual/cult/turf/floor(get_turf(B))
-				qdel(B)
-		for(var/obj/effect/decal/cleanable/trail_holder/TH in view(T, 2))
-			qdel(TH)
-		if(temp)
-			user.Beam(T,icon_state="drainbeam", time = 15)
-			new /obj/effect/temp_visual/cult/sparks(get_turf(user))
-			playsound(T, 'sound/magic/enter_blood.ogg', 50)
-			to_chat(user, span_cultitalic("Your blood rite has gained [round(temp)] charge\s from blood sources around you!"))
-			uses += max(1, round(temp))
-
-/obj/item/melee/blood_magic/manipulator/attack_self(mob/living/user)
-	if(IS_CULTIST(user))
-		var/static/list/spells = list(
-			"Sacrificial Dagger (1)" = image(icon = 'icons/obj/cult/items_and_weapons.dmi', icon_state = "render"),
-			"Bloody Halberd (150)" = image(icon = 'icons/obj/cult/items_and_weapons.dmi', icon_state = "occultpoleaxe0"),
-			"Blood Bolt Barrage (300)" = image(icon = 'icons/obj/weapons/guns/ballistic.dmi', icon_state = "arcane_barrage"),
-			"Blood Beam (500)" = image(icon = 'icons/obj/weapons/items_and_weapons.dmi', icon_state = "disintegrate")
-			)
-		var/choice = show_radial_menu(user, src, spells, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE)
-		if(!check_menu(user))
-			to_chat(user, span_cultitalic("You decide against conducting a greater blood rite."))
-			return
-		switch(choice)
-			if("Sacrificial Dagger (1)")
-				if(uses <= BLOOD_DAGGER_COST)
-					to_chat(user, span_cultitalic("You need [BLOOD_DAGGER_COST] charges to perform this rite."))
-				else
-					uses -= BLOOD_DAGGER_COST
-					var/turf/current_position = get_turf(user)
-					qdel(src)
-					invocation = "Wur d'dai leev'mai k'sagan!" //where did I leave my keys, again?
-					var/obj/item/summoned_type = new /obj/item/melee/cultblade/dagger
-					var/obj/item/melee/cultblade/dagger = new(current_position)
-					if(user.put_in_hands(summoned_type))
-						to_chat(user, span_cultitalic("A [summoned_type.name] appears in your hand!"))
-					else
-						user.visible_message(span_warning("A [summoned_type.name] appears at [user]'s feet!"), \
-							span_cultitalic("A [summoned_type.name] materializes at your feet."))
-			if("Bloody Halberd (150)")
-				if(uses < BLOOD_HALBERD_COST)
-					to_chat(user, span_cultitalic("You need [BLOOD_HALBERD_COST] charges to perform this rite."))
-				else
-					uses -= BLOOD_HALBERD_COST
-					var/turf/current_position = get_turf(user)
-					qdel(src)
-					var/datum/action/innate/cult/halberd/halberd_act_granted = new(user)
-					var/obj/item/melee/cultblade/halberd/rite = new(current_position)
-					halberd_act_granted.Grant(user, rite)
-					rite.halberd_act = halberd_act_granted
-					if(user.put_in_hands(rite))
-						to_chat(user, span_cultitalic("A [rite.name] appears in your hand!"))
-					else
-						user.visible_message(span_warning("A [rite.name] appears at [user]'s feet!"), \
-							span_cultitalic("A [rite.name] materializes at your feet."))
-			if("Blood Bolt Barrage (300)")
-				if(uses < BLOOD_BARRAGE_COST)
-					to_chat(user, span_cultitalic("You need [BLOOD_BARRAGE_COST] charges to perform this rite."))
-				else
-					var/obj/rite = new /obj/item/gun/ballistic/rifle/enchanted/arcane_barrage/blood()
-					uses -= BLOOD_BARRAGE_COST
-					qdel(src)
-					if(user.put_in_hands(rite))
-						to_chat(user, span_cult("<b>Your hands glow with power!</b>"))
-					else
-						to_chat(user, span_cultitalic("You need a free hand for this rite!"))
-						qdel(rite)
-			if("Blood Beam (500)")
-				if(uses < BLOOD_BEAM_COST)
-					to_chat(user, span_cultitalic("You need [BLOOD_BEAM_COST] charges to perform this rite."))
-				else
-					var/obj/rite = new /obj/item/blood_beam()
-					uses -= BLOOD_BEAM_COST
-					qdel(src)
-					if(user.put_in_hands(rite))
-						to_chat(user, span_cultlarge("<b>Your hands glow with POWER OVERWHELMING!!!</b>"))
-					else
-						to_chat(user, span_cultitalic("You need a free hand for this rite!"))
-						qdel(rite)
-
-/obj/item/melee/blood_magic/manipulator/proc/check_menu(mob/living/user)
-	if(!istype(user))
-		CRASH("The Blood Rites manipulator radial menu was accessed by something other than a valid user.")
-	if(user.incapacitated() || !user.Adjacent(src))
-		return FALSE
-	return TRUE
+*/

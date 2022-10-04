@@ -301,7 +301,7 @@
 		/datum/action/cooldown/spell/conjure/soulstone,
 		/datum/action/cooldown/spell/conjure/construct/lesser,
 		/datum/action/cooldown/spell/aoe/magic_missile/lesser,
-		/datum/action/innate/cult/create_rune/revive,
+		/datum/action/innate/blood_cult/create_rune/revive,
 	)
 	playstyle_string = "<b>You are an Artificer. You are incredibly weak and fragile, \
 		but you are able to construct fortifications, use magic missile, and repair allied constructs, shades, \
@@ -367,7 +367,7 @@
 		/datum/action/cooldown/spell/conjure/soulstone/purified,
 		/datum/action/cooldown/spell/conjure/construct/lesser,
 		/datum/action/cooldown/spell/aoe/magic_missile/lesser,
-		/datum/action/innate/cult/create_rune/revive,
+		/datum/action/innate/blood_cult/create_rune/revive,
 	)
 /mob/living/simple_animal/hostile/construct/artificer/mystic
 	theme = THEME_WIZARD
@@ -378,7 +378,7 @@
 		/datum/action/cooldown/spell/conjure/soulstone/mystic,
 		/datum/action/cooldown/spell/conjure/construct/lesser,
 		/datum/action/cooldown/spell/aoe/magic_missile/lesser,
-		/datum/action/innate/cult/create_rune/revive,
+		/datum/action/innate/blood_cult/create_rune/revive,
 	)
 
 /mob/living/simple_animal/hostile/construct/artificer/noncult
@@ -388,7 +388,7 @@
 		/datum/action/cooldown/spell/conjure/soulstone/noncult,
 		/datum/action/cooldown/spell/conjure/construct/lesser,
 		/datum/action/cooldown/spell/aoe/magic_missile/lesser,
-		/datum/action/innate/cult/create_rune/revive,
+		/datum/action/innate/blood_cult/create_rune/revive,
 	)
 
 /////////////////////////////Harvester/////////////////////////
@@ -477,7 +477,7 @@
 	..()
 
 /datum/action/innate/seek_master/Activate()
-	var/datum/antagonist/cult/C = owner.mind.has_antag_datum(/datum/antagonist/cult)
+	var/datum/antagonist/bloodcult/C = owner.mind.has_antag_datum(/datum/antagonist/bloodcult)
 	if(!C)
 		return
 	var/datum/objective/eldergod/summon_objective = locate() in C.cult_team.objectives

@@ -3,30 +3,40 @@
 #define CULT_LOSS 0
 #define CULT_NARSIE_KILLED -1
 
-/datum/antagonist/cult
+/// Helper to format the text that gets thrown onto the blood storage hud element.
+#define FORMAT_STORED_BLOOD_TEXT(charges) MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#dd66dd'>[round(stored_blood)]</font></div>")
+
+/datum/antagonist/bloodcult
 	name = "Cultist"
 	roundend_category = "cultists"
 	antagpanel_category = "Cult"
 	antag_moodlet = /datum/mood_event/cult
 	suicide_cry = "FOR NAR'SIE!!"
 	preview_outfit = /datum/outfit/cultist
-	var/datum/action/innate/cult/comm/communion = new
-	var/datum/action/innate/cult/mastervote/vote = new
-	var/datum/action/innate/cult/blood_spell/manipulation/magic = new
 	job_rank = ROLE_CULTIST
 	antag_hud_name = "cult"
-	var/ignore_implant = FALSE
+	///Whether the Cultist gets their equipment or not, set TRUE on Admin add.
 	var/give_equipment = FALSE
+	///The cultist's full team, which holds their objectives.
 	var/datum/team/cult/cult_team
+	///How much Blood the cultist has gained through Blood spells, used for Powers.
+	var/stored_blood = 50
+	/// UI displaying how much blood a cultist has
+	var/atom/movable/screen/blood_cult/stored_blood/stored_blood_display
+	/** Powers **/
+	var/datum/action/innate/blood_cult/comm/communion = new
+	var/datum/action/innate/blood_cult/mastervote/vote = new
+	var/datum/action/cooldown/spell/touch/blood_cult_spell/rites/brites = new
+	var/datum/action/cooldown/spell/touch/blood_cult_spell/stun/bstun = new
 
 
-/datum/antagonist/cult/get_team()
+/datum/antagonist/bloodcult/get_team()
 	return cult_team
 
-/datum/antagonist/cult/create_team(datum/team/cult/new_team)
+/datum/antagonist/bloodcult/create_team(datum/team/cult/new_team)
 	if(!new_team)
 		//todo remove this and allow admin buttons to create more than one cult
-		for(var/datum/antagonist/cult/H in GLOB.antagonists)
+		for(var/datum/antagonist/bloodcult/H in GLOB.antagonists)
 			if(!H.owner)
 				continue
 			if(H.cult_team)
@@ -39,25 +49,27 @@
 		stack_trace("Wrong team type passed to [type] initialization.")
 	cult_team = new_team
 
-/datum/antagonist/cult/proc/add_objectives()
+/datum/antagonist/bloodcult/proc/add_objectives()
 	objectives |= cult_team.objectives
 
-/datum/antagonist/cult/Destroy()
+/datum/antagonist/bloodcult/Destroy()
 	QDEL_NULL(communion)
 	QDEL_NULL(vote)
+	QDEL_NULL(brites)
+	QDEL_NULL(bstun)
 	return ..()
 
-/datum/antagonist/cult/can_be_owned(datum/mind/new_owner)
+/datum/antagonist/bloodcult/can_be_owned(datum/mind/new_owner)
 	. = ..()
-	if(. && !ignore_implant)
-		. = is_convertable_to_cult(new_owner.current,cult_team)
+	if(.)
+		. = is_convertable_to_cult(new_owner.current, cult_team)
 
-/datum/antagonist/cult/greet()
+/datum/antagonist/bloodcult/greet()
 	. = ..()
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/bloodcult.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)//subject to change
 	owner.announce_objectives()
 
-/datum/antagonist/cult/on_gain()
+/datum/antagonist/bloodcult/on_gain()
 	add_objectives()
 	. = ..()
 	var/mob/living/current = owner.current
@@ -70,7 +82,7 @@
 
 	ADD_TRAIT(current, TRAIT_HEALS_FROM_CULT_PYLONS, CULT_TRAIT)
 
-/datum/antagonist/cult/on_removal()
+/datum/antagonist/bloodcult/on_removal()
 	REMOVE_TRAIT(owner.current, TRAIT_HEALS_FROM_CULT_PYLONS, CULT_TRAIT)
 	if(!silent)
 		owner.current.visible_message(span_deconversion_message("[owner.current] looks like [owner.current.p_theyve()] just reverted to [owner.current.p_their()] old faith!"), ignored_mobs = owner.current)
@@ -81,7 +93,7 @@
 
 	return ..()
 
-/datum/antagonist/cult/get_preview_icon()
+/datum/antagonist/bloodcult/get_preview_icon()
 	var/icon/icon = render_preview_outfit(preview_outfit)
 
 	// The longsword is 64x64, but getFlatIcon crunches to 32x32.
@@ -100,7 +112,7 @@
 
 	return finish_preview_icon(icon)
 
-/datum/antagonist/cult/proc/equip_cultist(metal=TRUE)
+/datum/antagonist/bloodcult/proc/equip_cultist(metal=TRUE)
 	var/mob/living/carbon/H = owner.current
 	if(!istype(H))
 		return
@@ -110,7 +122,7 @@
 	to_chat(owner, "These will help you start the cult on this station. Use them well, and remember - you are not the only one.</span>")
 
 
-/datum/antagonist/cult/proc/cult_give_item(obj/item/item_path, mob/living/carbon/human/mob)
+/datum/antagonist/bloodcult/proc/cult_give_item(obj/item/item_path, mob/living/carbon/human/mob)
 	var/list/slots = list(
 		"backpack" = ITEM_SLOT_BACKPACK,
 		"left pocket" = ITEM_SLOT_LPOCKET,
@@ -129,9 +141,25 @@
 			mob.back.atom_storage?.show_contents(mob)
 		return TRUE
 
-/datum/antagonist/cult/apply_innate_effects(mob/living/mob_override)
+/datum/antagonist/bloodcult/apply_innate_effects(mob/living/mob_override)
 	. = ..()
+	var/mob/mob_to_tweak = mob_override || owner.current
+	if(!isliving(mob_to_tweak))
+		return
+	var/mob/living/living_mob = mob_to_tweak
+	RegisterSignal(living_mob, COMSIG_LIVING_LIFE, .proc/on_life)
 	var/mob/living/current = owner.current
+	if(living_mob.hud_used)
+		var/datum/hud/hud_used = living_mob.hud_used
+
+		stored_blood_display = new /atom/movable/screen/blood_cult/stored_blood()
+		stored_blood_display.hud = hud_used
+		hud_used.infodisplay += stored_blood_display
+
+		hud_used.show_hud(hud_used.hud_version)
+	else
+		RegisterSignal(living_mob, COMSIG_MOB_HUD_CREATED, .proc/on_cult_hud_created)
+
 	if(mob_override)
 		current = mob_override
 	handle_clown_mutation(current, mob_override ? null : "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
@@ -141,7 +169,8 @@
 		vote.Grant(current)
 	communion.Grant(current)
 	if(ishuman(current))
-		magic.Grant(current)
+		brites.Grant(current)
+		bstun.Grant(current)
 	current.throw_alert("bloodsense", /atom/movable/screen/alert/bloodsense)
 	if(cult_team.cult_risen)
 		current.AddElement(/datum/element/cult_eyes, initial_delay = 0 SECONDS)
@@ -150,8 +179,30 @@
 
 	add_team_hud(current)
 
-/datum/antagonist/cult/remove_innate_effects(mob/living/mob_override)
+/datum/antagonist/bloodcult/proc/on_life(datum/source, delta_time, times_fired)
+	SIGNAL_HANDLER
+	adjust_stored_blood(stored_blood)
+
+/datum/antagonist/bloodcult/proc/adjust_stored_blood(amount)
+	stored_blood_display.maptext = FORMAT_STORED_BLOOD_TEXT(stored_blood)
+
+/datum/antagonist/bloodcult/proc/on_cult_hud_created(datum/source)
+	SIGNAL_HANDLER
+
+	var/datum/hud/blood_cult_hud = owner.current.hud_used
+
+	stored_blood_display = new
+	stored_blood_display.hud = blood_cult_hud
+	blood_cult_hud.infodisplay += stored_blood_display
+
+	blood_cult_hud.show_hud(blood_cult_hud.hud_version)
+
+/datum/antagonist/bloodcult/remove_innate_effects(mob/living/mob_override)
 	. = ..()
+	var/mob/mob_to_tweak = mob_override || owner.current
+	if(!isliving(mob_to_tweak))
+		return
+	var/mob/living/living_mob = mob_to_tweak
 	var/mob/living/current = owner.current
 	if(mob_override)
 		current = mob_override
@@ -160,67 +211,72 @@
 	current.remove_language(/datum/language/narsie, TRUE, TRUE, LANGUAGE_CULTIST)
 	vote.Remove(current)
 	communion.Remove(current)
-	magic.Remove(current)
+	brites.Remove(current)
+	bstun.Remove(current)
 	current.clear_alert("bloodsense")
 	if (HAS_TRAIT(current, TRAIT_UNNATURAL_RED_GLOWY_EYES))
 		current.RemoveElement(/datum/element/cult_eyes)
 	if (HAS_TRAIT(current, TRAIT_CULT_HALO))
 		current.RemoveElement(/datum/element/cult_halo)
+	if(living_mob.hud_used)
+		var/datum/hud/hud_used = living_mob.hud_used
 
-/datum/antagonist/cult/on_mindshield(mob/implanter)
+		hud_used.infodisplay -= stored_blood_display
+		QDEL_NULL(stored_blood_display)
+
+/datum/antagonist/bloodcult/on_mindshield(mob/implanter)
 	if(!silent)
 		to_chat(owner.current, span_warning("You feel something interfering with your mental conditioning, but you resist it!"))
 	return
 
-/datum/antagonist/cult/admin_add(datum/mind/new_owner,mob/admin)
+/datum/antagonist/bloodcult/admin_add(datum/mind/new_owner,mob/admin)
 	give_equipment = FALSE
 	new_owner.add_antag_datum(src)
 	message_admins("[key_name_admin(admin)] has cult-ed [key_name_admin(new_owner)].")
 	log_admin("[key_name(admin)] has cult-ed [key_name(new_owner)].")
 
-/datum/antagonist/cult/admin_remove(mob/user)
+/datum/antagonist/bloodcult/admin_remove(mob/user)
 	silent = TRUE
 	return ..()
 
-/datum/antagonist/cult/get_admin_commands()
+/datum/antagonist/bloodcult/get_admin_commands()
 	. = ..()
 	.["Dagger"] = CALLBACK(src,.proc/admin_give_dagger)
 	.["Dagger and Metal"] = CALLBACK(src,.proc/admin_give_metal)
 	.["Remove Dagger and Metal"] = CALLBACK(src, .proc/admin_take_all)
 
-/datum/antagonist/cult/proc/admin_give_dagger(mob/admin)
+/datum/antagonist/bloodcult/proc/admin_give_dagger(mob/admin)
 	if(!equip_cultist(metal=FALSE))
 		to_chat(admin, span_danger("Spawning dagger failed!"))
 
-/datum/antagonist/cult/proc/admin_give_metal(mob/admin)
+/datum/antagonist/bloodcult/proc/admin_give_metal(mob/admin)
 	if (!equip_cultist(metal=TRUE))
 		to_chat(admin, span_danger("Spawning runed metal failed!"))
 
-/datum/antagonist/cult/proc/admin_take_all(mob/admin)
+/datum/antagonist/bloodcult/proc/admin_take_all(mob/admin)
 	var/mob/living/current = owner.current
 	for(var/o in current.get_all_contents())
 		if(istype(o, /obj/item/melee/cultblade/dagger) || istype(o, /obj/item/stack/sheet/runed_metal))
 			qdel(o)
 
-/datum/antagonist/cult/master
-	ignore_implant = TRUE
+/datum/antagonist/bloodcult/master
 	show_in_antagpanel = FALSE //Feel free to add this later
 	antag_hud_name = "cultmaster"
-	var/datum/action/innate/cult/master/finalreck/reckoning = new
-	var/datum/action/innate/cult/master/cultmark/bloodmark = new
-	var/datum/action/innate/cult/master/pulse/throwing = new
+	var/datum/action/innate/blood_cult/master/finalreck/reckoning = new
+	var/datum/action/innate/blood_cult/master/cultmark/bloodmark = new
+	var/datum/action/innate/blood_cult/master/pulse/throwing = new
 
-/datum/antagonist/cult/master/Destroy()
+/datum/antagonist/bloodcult/master/Destroy()
 	QDEL_NULL(reckoning)
 	QDEL_NULL(bloodmark)
 	QDEL_NULL(throwing)
 	return ..()
 
-/datum/antagonist/cult/master/greet()
+/datum/antagonist/bloodcult/master/greet()
 	to_chat(owner.current, "<span class='warningplain'><span class='cultlarge'>You are the cult's Master</span>. As the cult's Master, you have a unique title and loud voice when communicating, are capable of marking \
 	targets, such as a location or a noncultist, to direct the cult to them, and, finally, you are capable of summoning the entire living cult to your location <b><i>once</i></b>. Use these abilities to direct the cult to victory at any cost.</span>")
 
-/datum/antagonist/cult/master/apply_innate_effects(mob/living/mob_override)
+/datum/antagonist/bloodcult/master/apply_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/current = owner.current
 	if(mob_override)
@@ -235,9 +291,9 @@
 		current.AddElement(/datum/element/cult_eyes, initial_delay = 0 SECONDS)
 	if(cult_team.cult_ascendent)
 		current.AddElement(/datum/element/cult_halo, initial_delay = 0 SECONDS)
-	add_team_hud(current, /datum/antagonist/cult)
+	add_team_hud(current, /datum/antagonist/bloodcult)
 
-/datum/antagonist/cult/master/remove_innate_effects(mob/living/mob_override)
+/datum/antagonist/bloodcult/master/remove_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/current = owner.current
 	if(mob_override)
@@ -345,12 +401,12 @@
 	var/datum/team/cult/cult = team
 	var/list/target_candidates = list()
 	for(var/mob/living/carbon/human/player in GLOB.player_list)
-		if(player.mind && !player.mind.has_antag_datum(/datum/antagonist/cult) && !is_convertable_to_cult(player) && player.stat != DEAD)
+		if(player.mind && !player.mind.has_antag_datum(/datum/antagonist/bloodcult) && !is_convertable_to_cult(player) && player.stat != DEAD)
 			target_candidates += player.mind
 	if(target_candidates.len == 0)
 		message_admins("Cult Sacrifice: Could not find unconvertible target, checking for convertible target.")
 		for(var/mob/living/carbon/human/player in GLOB.player_list)
-			if(player.mind && !player.mind.has_antag_datum(/datum/antagonist/cult) && player.stat != DEAD)
+			if(player.mind && !player.mind.has_antag_datum(/datum/antagonist/bloodcult) && player.stat != DEAD)
 				target_candidates += player.mind
 	list_clear_nulls(target_candidates)
 	if(LAZYLEN(target_candidates))

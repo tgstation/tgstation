@@ -21,7 +21,7 @@
 	/// THEME_HOLY is for purified soul stone
 	var/theme = THEME_CULT
 	/// Role check, if any needed
-	var/required_role = /datum/antagonist/cult
+	var/required_role = /datum/antagonist/bloodcult
 
 /obj/item/soulstone/Initialize(mapload)
 	. = ..()
@@ -114,13 +114,13 @@
 	if(theme == THEME_CULT)
 		return FALSE
 
-	required_role = /datum/antagonist/cult
+	required_role = /datum/antagonist/bloodcult
 	theme = THEME_CULT
 	update_appearance()
 	for(var/mob/shade_to_convert in contents)
 		if(IS_CULTIST(shade_to_convert))
 			continue
-		shade_to_convert.mind?.add_antag_datum(/datum/antagonist/cult)
+		shade_to_convert.mind?.add_antag_datum(/datum/antagonist/bloodcult)
 
 	RegisterSignal(src, COMSIG_BIBLE_SMACKED)
 	return TRUE
@@ -296,7 +296,7 @@
 		return FALSE
 
 	if(!forced)
-		var/datum/antagonist/cult/cultist = IS_CULTIST(user)
+		var/datum/antagonist/bloodcult/cultist = IS_CULTIST(user)
 		if(cultist)
 			var/datum/team/cult/cult_team = cultist.get_team()
 			if(victim.mind && cult_team.is_sacrifice_target(victim.mind))
@@ -348,7 +348,7 @@
 	if(QDELETED(shell) || !construct_class)
 		return FALSE
 	make_new_construct_from_class(construct_class, theme, shade, user, FALSE, shell.loc)
-	shade.mind?.remove_antag_datum(/datum/antagonist/cult)
+	shade.mind?.remove_antag_datum(/datum/antagonist/bloodcult)
 	qdel(shell)
 	qdel(src)
 	return TRUE
@@ -385,7 +385,7 @@
 	if(user)
 		soulstone_spirit.faction |= "[REF(user)]" //Add the master as a faction, allowing inter-mob cooperation
 		if(IS_CULTIST(user))
-			soulstone_spirit.mind.add_antag_datum(/datum/antagonist/cult)
+			soulstone_spirit.mind.add_antag_datum(/datum/antagonist/bloodcult)
 
 	soulstone_spirit.cancel_camera()
 	update_appearance()
@@ -412,14 +412,14 @@
 		return
 
 	// Cult shades get cult datum
-	if (user.mind.has_antag_datum(/datum/antagonist/cult))
+	if (user.mind.has_antag_datum(/datum/antagonist/bloodcult))
 		shade.mind.remove_antag_datum(/datum/antagonist/shade_minion)
-		shade.mind.add_antag_datum(/datum/antagonist/cult)
+		shade.mind.add_antag_datum(/datum/antagonist/bloodcult)
 		return
 
 	// Only blessed soulstones can de-cult shades
 	if(theme == THEME_HOLY)
-		shade.mind.remove_antag_datum(/datum/antagonist/cult)
+		shade.mind.remove_antag_datum(/datum/antagonist/bloodcult)
 
 	var/datum/antagonist/shade_minion/shade_datum = shade.mind.has_antag_datum(/datum/antagonist/shade_minion)
 	if (!shade_datum)
@@ -507,7 +507,7 @@
 	newstruct.key = target.key
 	var/atom/movable/screen/alert/bloodsense/BS
 	if(newstruct.mind && ((stoner && IS_CULTIST(stoner)) || cultoverride) && SSticker?.mode)
-		newstruct.mind.add_antag_datum(/datum/antagonist/cult)
+		newstruct.mind.add_antag_datum(/datum/antagonist/bloodcult)
 	if(IS_CULTIST(stoner) || cultoverride)
 		to_chat(newstruct, "<b>You are still bound to serve the cult[stoner ? " and [stoner]":""], follow [stoner ? stoner.p_their() : "their"] orders and help [stoner ? stoner.p_them() : "them"] complete [stoner ? stoner.p_their() : "their"] goals at all costs.</b>")
 	else if(stoner)

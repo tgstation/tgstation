@@ -221,7 +221,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/mob/living/L = pick(myriad_targets)
 
 	var/mob/living/F = invokers[1]
-	var/datum/antagonist/cult/C = F.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
+	var/datum/antagonist/bloodcult/C = F.mind.has_antag_datum(/datum/antagonist/bloodcult,TRUE)
 	var/datum/team/cult/Cult_team = C.cult_team
 	var/is_convertable = is_convertable_to_cult(L,C.cult_team)
 	if(L.stat && is_convertable)
@@ -250,7 +250,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		log_game("Offer rune with [convertee] on it failed - convertee had anti-magic.")
 		return FALSE
 	convertee.revive(full_heal = TRUE, admin_revive = TRUE)
-	convertee.mind?.add_antag_datum(/datum/antagonist/cult)
+	convertee.mind?.add_antag_datum(/datum/antagonist/bloodcult)
 	convertee.Unconscious(100)
 	new /obj/item/melee/cultblade/dagger(get_turf(src))
 	convertee.mind.special_role = ROLE_CULTIST
@@ -275,7 +275,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/mob/living/first_invoker = invokers[1]
 	if(!first_invoker)
 		return FALSE
-	var/datum/antagonist/cult/C = first_invoker.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
+	var/datum/antagonist/bloodcult/C = first_invoker.mind.has_antag_datum(/datum/antagonist/bloodcult,TRUE)
 	if(!C)
 		return FALSE
 
@@ -362,7 +362,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	if(!is_station_level(z))
 		return
 	var/mob/living/user = invokers[1]
-	var/datum/antagonist/cult/user_antag = user.mind.has_antag_datum(/datum/antagonist/cult, TRUE)
+	var/datum/antagonist/bloodcult/user_antag = user.mind.has_antag_datum(/datum/antagonist/bloodcult, TRUE)
 	var/datum/objective/eldergod/summon_objective = locate() in user_antag.cult_team.objectives
 	var/area/place = get_area(src)
 	if(!(place in summon_objective.summon_spots))
@@ -391,6 +391,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		color = RUNE_COLOR_RED
 	new /obj/narsie(rune_turf) //Causes Nar'Sie to spawn even if the rune has been removed
 
+/*
 /obj/effect/rune/empower
 	cultist_name = "Prepare Spell"
 	cultist_desc = "allows cultists to prepare up to 2 advanced spells."
@@ -412,8 +413,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 			return
 		qdel(nullify_spell)
 	var/list/possible_spells = list()
-	for(var/I in subtypesof(/datum/action/innate/cult/blood_spell))
-		var/datum/action/innate/cult/blood_spell/J = I
+	for(var/I in subtypesof(/datum/action/innate/blood_cult/blood_spell))
+		var/datum/action/innate/blood_cult/blood_spell/J = I
 		var/cult_name = initial(J.name)
 		possible_spells[cult_name] = J
 	possible_spells += "(REMOVE SPELL)"
@@ -425,7 +426,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		if(isnull(nullify_spell))
 			return
 		qdel(nullify_spell)
-	var/datum/action/innate/cult/blood_spell/BS = possible_spells[entered_spell_name]
+	var/datum/action/innate/blood_cult/blood_spell/BS = possible_spells[entered_spell_name]
 	if(user.incapacitated() || !BS || !(src in range(1, user)) || (length(spells) >= limit))
 		return
 	to_chat(user,span_warning("You begin to carve unnatural symbols into your flesh!"))
@@ -439,7 +440,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			H.bleed(40 - rune*32)
-		var/datum/action/innate/cult/blood_spell/new_spell = new BS(user)
+		var/datum/action/innate/blood_cult/blood_spell/new_spell = new BS(user)
 		new_spell.Grant(user, src)
 		spells += new_spell
 		Positioning()
@@ -447,19 +448,19 @@ structure_check() searches for nearby cultist structures required for the invoca
 	channeling = FALSE
 
 /*
-/datum/action/innate/cult/blood_magic/IsAvailable()
+/datum/action/innate/blood_cult/blood_magic/IsAvailable()
 	if(!IS_CULTIST(user))
 		return FALSE
 	return ..()
 */ /// Checks if a cultist can take a spell, but only a cultist is supposed to be able to use the rune.
 
-/datum/action/innate/cult/blood_magic/proc/Positioning()
+/datum/action/innate/blood_cult/blood_magic/proc/Positioning()
 	for(var/datum/hud/hud as anything in viewers)
 		var/our_view = hud.mymob?.client?.view || "15x15"
 		var/atom/movable/screen/movable/action_button/button = viewers[hud]
 		var/position = screen_loc_to_offset(button.screen_loc)
 		var/spells_iterated = 0
-		for(var/datum/action/innate/cult/blood_spell/blood_spell in spells)
+		for(var/datum/action/innate/blood_cult/blood_spell/blood_spell in spells)
 			spells_iterated += 1
 			if(blood_spell.positioned)
 				continue
@@ -469,7 +470,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			var/our_x = position[1] + spells_iterated * world.icon_size // Offset any new buttons into our list
 			hud.position_action(moving_button, offset_to_screen_loc(our_x, position[2], our_view))
 			blood_spell.positioned = TRUE
-
+*/ ///EMPOWER RUNE, SPELLS ARE CURRENTLY BEING REWORKED. (Reuse Empower, maybe change into "Summon Equipment"?)
 
 
 

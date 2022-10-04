@@ -476,7 +476,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	if(!owner.mind)
 		return
 
-	var/datum/antagonist/cult/antag = owner.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
+	var/datum/antagonist/bloodcult/antag = owner.mind.has_antag_datum(/datum/antagonist/bloodcult,TRUE)
 	if(!antag)
 		return
 	var/datum/objective/sacrifice/sac_objective = locate() in antag.cult_team.objectives

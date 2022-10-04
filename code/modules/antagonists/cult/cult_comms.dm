@@ -1,28 +1,28 @@
 // Contains cult communion, guide, and cult master abilities
 
-/datum/action/innate/cult
+/datum/action/innate/blood_cult
 	icon_icon = 'icons/mob/actions/actions_cult.dmi'
 	background_icon_state = "bg_demon"
 	buttontooltipstyle = "cult"
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_CONSCIOUS
 	ranged_mousepointer = 'icons/effects/mouse_pointers/cult_target.dmi'
 
-/datum/action/innate/cult/IsAvailable()
+/datum/action/innate/blood_cult/IsAvailable()
 	if(!IS_CULTIST(owner))
 		return FALSE
 	return ..()
 
-/datum/action/innate/cult/comm
+/datum/action/innate/blood_cult/comm
 	name = "Communion"
 	desc = "Whispered words that all cultists can hear.<br><b>Warning:</b>Nearby non-cultists can still hear you."
 	button_icon_state = "cult_comms"
 
-/datum/action/innate/cult/comm/IsAvailable()
+/datum/action/innate/blood_cult/comm/IsAvailable()
 	if(isshade(owner) && IS_CULTIST(owner))
 		return TRUE
 	return ..()
 
-/datum/action/innate/cult/comm/Activate()
+/datum/action/innate/blood_cult/comm/Activate()
 	var/input = tgui_input_text(usr, "Message to tell to the other acolytes", "Voice of Blood")
 	if(!input || !IsAvailable())
 		return
@@ -40,7 +40,7 @@
 		log_admin_private("[key_name(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term. Message: \"[input]\"")
 	cultist_commune(usr, input)
 
-/datum/action/innate/cult/comm/proc/cultist_commune(mob/living/user, message)
+/datum/action/innate/blood_cult/comm/proc/cultist_commune(mob/living/user, message)
 	var/my_message
 	if(!message)
 		return
@@ -48,7 +48,7 @@
 	user.whisper(html_decode(message), filterproof = TRUE)
 	var/title = "Acolyte"
 	var/span = "cult italic"
-	if(user.mind && user.mind.has_antag_datum(/datum/antagonist/cult/master))
+	if(user.mind && user.mind.has_antag_datum(/datum/antagonist/bloodcult/master))
 		span = "cultlarge"
 		title = "Master"
 	else if(!ishuman(user))
@@ -64,16 +64,16 @@
 
 	user.log_talk(message, LOG_SAY, tag="cult")
 
-/datum/action/innate/cult/comm/spirit
+/datum/action/innate/blood_cult/comm/spirit
 	name = "Spiritual Communion"
 	desc = "Conveys a message from the spirit realm that all cultists can hear."
 
-/datum/action/innate/cult/comm/spirit/IsAvailable()
+/datum/action/innate/blood_cult/comm/spirit/IsAvailable()
 	if(IS_CULTIST(owner.mind.current))
 		return TRUE
 	return ..()
 
-/datum/action/innate/cult/comm/spirit/cultist_commune(mob/living/user, message)
+/datum/action/innate/blood_cult/comm/spirit/cultist_commune(mob/living/user, message)
 	var/my_message
 	if(!message)
 		return
@@ -85,20 +85,20 @@
 			var/link = FOLLOW_LINK(player_list, user)
 			to_chat(player_list, "[link] [my_message]")
 
-/datum/action/innate/cult/mastervote
+/datum/action/innate/blood_cult/mastervote
 	name = "Assert Leadership"
 	button_icon_state = "cultvote"
 
-/datum/action/innate/cult/mastervote/IsAvailable()
-	var/datum/antagonist/cult/C = owner.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
+/datum/action/innate/blood_cult/mastervote/IsAvailable()
+	var/datum/antagonist/bloodcult/C = owner.mind.has_antag_datum(/datum/antagonist/bloodcult,TRUE)
 	if(!C || C.cult_team.cult_vote_called || !ishuman(owner))
 		return FALSE
 	return ..()
 
-/datum/action/innate/cult/mastervote/Activate()
+/datum/action/innate/blood_cult/mastervote/Activate()
 	var/choice = tgui_alert(owner, "The mantle of leadership is heavy. Success in this role requires an expert level of communication and experience. Are you sure?",, list("Yes", "No"))
 	if(choice == "Yes" && IsAvailable())
-		var/datum/antagonist/cult/C = owner.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
+		var/datum/antagonist/bloodcult/C = owner.mind.has_antag_datum(/datum/antagonist/bloodcult,TRUE)
 		pollCultists(owner,C.cult_team)
 
 /proc/pollCultists(mob/living/Nominee,datum/team/cult/team) //Cult Master Poll
@@ -144,31 +144,31 @@
 					to_chat(B.current, span_cultlarge("[Nominee] could not win the cult's support and shall continue to serve as an acolyte."))
 		return FALSE
 	team.cult_master = Nominee
-	var/datum/antagonist/cult/cultist = Nominee.mind.has_antag_datum(/datum/antagonist/cult)
+	var/datum/antagonist/bloodcult/cultist = Nominee.mind.has_antag_datum(/datum/antagonist/bloodcult)
 	if (cultist)
 		cultist.silent = TRUE
 		cultist.on_removal()
-	Nominee.mind.add_antag_datum(/datum/antagonist/cult/master)
+	Nominee.mind.add_antag_datum(/datum/antagonist/bloodcult/master)
 	for(var/datum/mind/B in team.members)
 		if(B.current)
-			for(var/datum/action/innate/cult/mastervote/vote in B.current.actions)
+			for(var/datum/action/innate/blood_cult/mastervote/vote in B.current.actions)
 				vote.Remove(B.current)
 			if(!B.current.incapacitated())
 				to_chat(B.current,span_cultlarge("[Nominee] has won the cult's support and is now their master. Follow [Nominee.p_their()] orders to the best of your ability!"))
 	return TRUE
 
-/datum/action/innate/cult/master/IsAvailable()
-	if(!owner.mind || !owner.mind.has_antag_datum(/datum/antagonist/cult/master) || GLOB.cult_narsie)
+/datum/action/innate/blood_cult/master/IsAvailable()
+	if(!owner.mind || !owner.mind.has_antag_datum(/datum/antagonist/bloodcult/master) || GLOB.cult_narsie)
 		return FALSE
 	return ..()
 
-/datum/action/innate/cult/master/finalreck
+/datum/action/innate/blood_cult/master/finalreck
 	name = "Final Reckoning"
 	desc = "A single-use spell that brings the entire cult to the master's location."
 	button_icon_state = "sintouch"
 
-/datum/action/innate/cult/master/finalreck/Activate()
-	var/datum/antagonist/cult/antag = owner.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
+/datum/action/innate/blood_cult/master/finalreck/Activate()
+	var/datum/antagonist/bloodcult/antag = owner.mind.has_antag_datum(/datum/antagonist/bloodcult,TRUE)
 	if(!antag)
 		return
 	var/place = get_area(owner)
@@ -218,7 +218,7 @@
 	new /obj/effect/temp_visual/cult/blood/out(get_turf(src))
 	forceMove(final)
 
-/datum/action/innate/cult/master/finalreck/proc/chant(chant_number)
+/datum/action/innate/blood_cult/master/finalreck/proc/chant(chant_number)
 	switch(chant_number)
 		if(1)
 			owner.say("C'arta forbici!", language = /datum/language/common, forced = "cult invocation")
@@ -232,7 +232,7 @@
 			owner.say("N'ath reth sh'yro eth d'rekkathnor!!!", language = /datum/language/common, forced = "cult invocation")
 			playsound(get_turf(owner),'sound/magic/clockwork/narsie_attack.ogg', 100, TRUE)
 
-/datum/action/innate/cult/master/cultmark
+/datum/action/innate/blood_cult/master/cultmark
 	name = "Mark Target"
 	desc = "Marks a target for the cult."
 	button_icon_state = "cult_mark"
@@ -246,10 +246,10 @@
 	/// The actual cooldown tracked of the action
 	COOLDOWN_DECLARE(cult_mark_cooldown)
 
-/datum/action/innate/cult/master/cultmark/IsAvailable()
+/datum/action/innate/blood_cult/master/cultmark/IsAvailable()
 	return ..() && COOLDOWN_FINISHED(src, cult_mark_cooldown)
 
-/datum/action/innate/cult/master/cultmark/InterceptClickOn(mob/caller, params, atom/clicked_on)
+/datum/action/innate/blood_cult/master/cultmark/InterceptClickOn(mob/caller, params, atom/clicked_on)
 	var/turf/caller_turf = get_turf(caller)
 	if(!isturf(caller_turf))
 		return FALSE
@@ -259,8 +259,8 @@
 
 	return ..()
 
-/datum/action/innate/cult/master/cultmark/do_ability(mob/living/caller, atom/clicked_on)
-	var/datum/antagonist/cult/cultist = caller.mind.has_antag_datum(/datum/antagonist/cult, TRUE)
+/datum/action/innate/blood_cult/master/cultmark/do_ability(mob/living/caller, atom/clicked_on)
+	var/datum/antagonist/bloodcult/cultist = caller.mind.has_antag_datum(/datum/antagonist/bloodcult, TRUE)
 	if(!cultist)
 		CRASH("[type] was casted by someone without a cult antag datum.")
 
@@ -282,7 +282,7 @@
 	unset_ranged_ability(caller, span_cult("The marking rite failed!"))
 	return TRUE
 
-/datum/action/innate/cult/ghostmark //Ghost version
+/datum/action/innate/blood_cult/ghostmark //Ghost version
 	name = "Blood Mark your Target"
 	desc = "Marks whatever you are orbiting for the entire cult to track."
 	button_icon_state = "cult_mark"
@@ -293,11 +293,11 @@
 	/// The actual cooldown tracked of the action
 	COOLDOWN_DECLARE(cult_mark_cooldown)
 
-/datum/action/innate/cult/ghostmark/IsAvailable()
+/datum/action/innate/blood_cult/ghostmark/IsAvailable()
 	return ..() && isobserver(owner)
 
-/datum/action/innate/cult/ghostmark/Activate()
-	var/datum/antagonist/cult/cultist = owner.mind?.has_antag_datum(/datum/antagonist/cult, TRUE)
+/datum/action/innate/blood_cult/ghostmark/Activate()
+	var/datum/antagonist/bloodcult/cultist = owner.mind?.has_antag_datum(/datum/antagonist/bloodcult, TRUE)
 	if(!cultist)
 		CRASH("[type] was casted by someone without a cult antag datum.")
 
@@ -332,7 +332,7 @@
 	to_chat(owner, span_cult("The marking failed!"))
 	return FALSE
 
-/datum/action/innate/cult/ghostmark/proc/update_button_status()
+/datum/action/innate/blood_cult/ghostmark/proc/update_button_status()
 	if(!owner)
 		return
 
@@ -347,7 +347,7 @@
 
 	UpdateButtons()
 
-/datum/action/innate/cult/ghostmark/proc/reset_button()
+/datum/action/innate/blood_cult/ghostmark/proc/reset_button()
 	if(QDELETED(owner) || QDELETED(src))
 		return
 
@@ -357,7 +357,7 @@
 
 //////// ELDRITCH PULSE /////////
 
-/datum/action/innate/cult/master/pulse
+/datum/action/innate/blood_cult/master/pulse
 	name = "Eldritch Pulse"
 	desc = "Seize upon a fellow cultist or cult structure and teleport it to a nearby location."
 	icon_icon = 'icons/mob/actions/actions_spells.dmi'
@@ -372,10 +372,10 @@
 	/// The actual cooldown tracked of the action
 	COOLDOWN_DECLARE(pulse_cooldown)
 
-/datum/action/innate/cult/master/pulse/IsAvailable()
+/datum/action/innate/blood_cult/master/pulse/IsAvailable()
 	return ..() && COOLDOWN_FINISHED(src, pulse_cooldown)
 
-/datum/action/innate/cult/master/pulse/InterceptClickOn(mob/living/caller, params, atom/clicked_on)
+/datum/action/innate/blood_cult/master/pulse/InterceptClickOn(mob/living/caller, params, atom/clicked_on)
 	var/turf/caller_turf = get_turf(caller)
 	if(!isturf(caller_turf))
 		return FALSE
@@ -388,7 +388,7 @@
 
 	return ..()
 
-/datum/action/innate/cult/master/pulse/do_ability(mob/living/caller, atom/clicked_on)
+/datum/action/innate/blood_cult/master/pulse/do_ability(mob/living/caller, atom/clicked_on)
 	var/atom/throwee = throwee_ref?.resolve()
 
 	if(QDELETED(throwee))

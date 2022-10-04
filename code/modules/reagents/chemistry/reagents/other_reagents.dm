@@ -285,11 +285,12 @@
 
 	data["misc"] += delta_time SECONDS * REM
 	M.adjust_jitter_up_to(4 SECONDS * delta_time, 20 SECONDS)
-	if(IS_CULTIST(M))
-		for(var/datum/action/innate/cult/blood_magic/BM in M.actions) /// Removes the entire list of spells you can prepare as a cultist
-			to_chat(M, span_cultlarge("Your blood rites falter as holy water scours your body!"))
-			for(var/datum/action/innate/cult/blood_spell/BS in BM.spells)
-				qdel(BS)
+	/// Commenting out Holy Water negating cult spells, will be changed functionality later
+	/* if(IS_CULTIST(M))
+		for(var/datum/action/innate/blood_cult/blood_magic/BM in M.actions) /// Removes the entire list of spells you can prepare as a cultist
+			/// to_chat(M, span_cultlarge("Your blood rites falter as holy water scours your body!"))
+			/// for(var/datum/action/innate/blood_cult/blood_spell/BS in BM.spells)
+				qdel(BS) */
 	if(data["misc"] >= (25 SECONDS)) // 10 units
 		M.adjust_stutter_up_to(4 SECONDS * delta_time, 20 SECONDS)
 		M.set_dizzy_if_lower(10 SECONDS)
@@ -302,7 +303,7 @@
 				"All that power, and you still fail?", "If you cannot scour this poison, I shall scour your meager life!")].</span>")
 	if(data["misc"] >= (1 MINUTES)) // 24 units
 		if(IS_CULTIST(M))
-			M.mind.remove_antag_datum(/datum/antagonist/cult)
+			M.mind.remove_antag_datum(/datum/antagonist/bloodcult)
 			M.Unconscious(100)
 		M.remove_status_effect(/datum/status_effect/jitter)
 		M.remove_status_effect(/datum/status_effect/speech/stutter)

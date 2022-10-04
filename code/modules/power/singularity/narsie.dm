@@ -64,7 +64,7 @@
 	GLOB.cult_narsie = src
 	var/list/all_cults = list()
 
-	for (var/datum/antagonist/cult/cultist in GLOB.antagonists)
+	for (var/datum/antagonist/bloodcult/cultist in GLOB.antagonists)
 		if (!cultist.owner)
 			continue
 		all_cults |= cultist.cult_team
@@ -77,7 +77,7 @@
 		if(summon_objective)
 			summon_objective.summoned = TRUE
 
-	for (var/datum/mind/cult_mind as anything in get_antag_minds(/datum/antagonist/cult))
+	for (var/datum/mind/cult_mind as anything in get_antag_minds(/datum/antagonist/bloodcult))
 		if (isliving(cult_mind.current))
 			var/mob/living/L = cult_mind.current
 			L.narsie_act()
@@ -95,7 +95,7 @@
 
 	var/list/all_cults = list()
 
-	for (var/datum/antagonist/cult/cultist in GLOB.antagonists)
+	for (var/datum/antagonist/bloodcult/cultist in GLOB.antagonists)
 		if (!cultist.owner)
 			continue
 		all_cults |= cultist.cult_team

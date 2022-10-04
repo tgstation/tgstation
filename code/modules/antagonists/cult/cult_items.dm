@@ -25,7 +25,7 @@
 	wound_bonus = -10
 	bare_wound_bonus = 20
 	armour_penetration = 35
-	var/datum/action/innate/cult/dagger/dagger_act
+	var/datum/action/innate/blood_cult/dagger/dagger_act
 
 /obj/item/melee/cultblade/dagger/Initialize(mapload)
 	. = ..()
@@ -525,7 +525,7 @@ Striking a noncultist, however, will tear their flesh."}
 		return
 
 	var/list/cultists = list()
-	for(var/datum/mind/M as anything in get_antag_minds(/datum/antagonist/cult))
+	for(var/datum/mind/M as anything in get_antag_minds(/datum/antagonist/bloodcult))
 		if(M.current && M.current.stat != DEAD)
 			cultists |= M.current
 	var/mob/living/cultist_to_receive = tgui_input_list(user, "Who do you wish to call to [src]?", "Followers of the Geometer", (cultists - user))
@@ -572,7 +572,7 @@ Striking a noncultist, however, will tear their flesh."}
 	attack_verb_simple = list("attack", "slice", "shred", "sunder", "lacerate", "cleave")
 	sharpness = SHARP_EDGED
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	var/datum/action/innate/cult/halberd/halberd_act
+	var/datum/action/innate/blood_cult/halberd/halberd_act
 
 /obj/item/melee/cultblade/halberd/Initialize(mapload)
 	. = ..()
@@ -641,7 +641,7 @@ Striking a noncultist, however, will tear their flesh."}
 	else
 		return FALSE
 
-/datum/action/innate/cult/halberd
+/datum/action/innate/blood_cult/halberd
 	name = "Bloody Bond"
 	desc = "Call the bloody halberd back to your hand!"
 	background_icon_state = "bg_demon"
@@ -650,11 +650,11 @@ Striking a noncultist, however, will tear their flesh."}
 	var/obj/item/melee/cultblade/halberd/halberd
 	var/cooldown = 0
 
-/datum/action/innate/cult/halberd/Grant(mob/user, obj/blood_halberd)
+/datum/action/innate/blood_cult/halberd/Grant(mob/user, obj/blood_halberd)
 	. = ..()
 	halberd = blood_halberd
 
-/datum/action/innate/cult/halberd/Activate()
+/datum/action/innate/blood_cult/halberd/Activate()
 	if(owner == halberd.loc || cooldown > world.time)
 		return
 	var/halberd_location = get_turf(halberd)

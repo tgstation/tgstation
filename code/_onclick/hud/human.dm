@@ -33,6 +33,15 @@
 	var/mob/living/carbon/human/H = usr
 	H.quick_equip()
 
+// PLACEHOLDER FOR BLOOD STORAGE UI (BORROWING THE UI FROM CHANGELING)
+/atom/movable/screen/blood_cult
+	icon = 'icons/hud/screen_changeling.dmi'
+
+/atom/movable/screen/blood_cult/stored_blood
+	name = "Blood Stored"
+	icon_state = "power_display"
+	screen_loc = ui_stored_blood_display
+
 /atom/movable/screen/ling
 	icon = 'icons/hud/screen_changeling.dmi'
 

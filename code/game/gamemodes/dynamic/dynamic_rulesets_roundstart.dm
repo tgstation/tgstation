@@ -309,7 +309,7 @@
 /datum/dynamic_ruleset/roundstart/bloodcult
 	name = "Blood Cult"
 	antag_flag = ROLE_CULTIST
-	antag_datum = /datum/antagonist/cult
+	antag_datum = /datum/antagonist/bloodcult
 	minimum_required_age = 14
 	restricted_roles = list(
 		JOB_AI,
@@ -351,7 +351,7 @@
 /datum/dynamic_ruleset/roundstart/bloodcult/execute()
 	main_cult = new
 	for(var/datum/mind/M in assigned)
-		var/datum/antagonist/cult/new_cultist = new antag_datum()
+		var/datum/antagonist/bloodcult/new_cultist = new antag_datum()
 		new_cultist.cult_team = main_cult
 		new_cultist.give_equipment = TRUE
 		M.add_antag_datum(new_cultist)

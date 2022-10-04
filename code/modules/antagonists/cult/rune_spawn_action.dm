@@ -1,5 +1,5 @@
 //after a delay, creates a rune below you. for constructs creating runes.
-/datum/action/innate/cult/create_rune
+/datum/action/innate/blood_cult/create_rune
 	name = "Summon Rune"
 	desc = "Summons a rune"
 	background_icon_state = "bg_demon"
@@ -14,12 +14,12 @@
 	var/obj/effect/temp_visual/cult/rune_spawn/rune_center_type
 	var/rune_color
 
-/datum/action/innate/cult/create_rune/IsAvailable()
+/datum/action/innate/blood_cult/create_rune/IsAvailable()
 	if(!rune_type || cooldown > world.time)
 		return FALSE
 	return ..()
 
-/datum/action/innate/cult/create_rune/proc/turf_check(turf/T)
+/datum/action/innate/blood_cult/create_rune/proc/turf_check(turf/T)
 	if(!T)
 		return FALSE
 	if(isspaceturf(T))
@@ -34,7 +34,7 @@
 	return TRUE
 
 
-/datum/action/innate/cult/create_rune/Activate()
+/datum/action/innate/blood_cult/create_rune/Activate()
 	var/turf/T = get_turf(owner)
 	if(turf_check(T))
 		var/chosen_keyword
@@ -79,7 +79,7 @@
 			cooldown = 0
 			owner.update_action_buttons_icon()
 
-/datum/action/innate/cult/create_rune/revive
+/datum/action/innate/blood_cult/create_rune/revive
 	name = "Summon Revive Rune"
 	desc = "Summons a revive rune to your location, as though it has been there all along..."
 	button_icon_state = "revive"

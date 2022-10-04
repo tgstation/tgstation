@@ -16,7 +16,8 @@
 /// percent before ascend
 #define CULT_ASCENDENT 0.4
 /// Cost of spells in terms of Blood Rites
-#define BLOOD_DAGGER_COST 1
+#define BLOOD_DAGGER_COST 30
+#define ELDRITCH_LONGSWORD_COST 300
 #define BLOOD_HALBERD_COST 150
 #define BLOOD_BARRAGE_COST 300
 #define BLOOD_BEAM_COST 500
