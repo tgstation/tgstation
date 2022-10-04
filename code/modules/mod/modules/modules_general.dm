@@ -60,6 +60,18 @@
 	max_combined_w_class = 30
 	max_items = 21
 
+/obj/item/mod/module/storage/belt
+	name = "MOD case storage module"
+	desc = "Some concessions had to be made when creating a compressed modular suit core. \
+	As a result, Roseus Galactic equipped their suit with a slimline storage case.  \
+	If you find this equipped to a standard modular suit, then someone has almost certainly shortchanged you on a proper storage module."
+	icon_state = "storage_case"
+	complexity = 0
+	max_w_class = WEIGHT_CLASS_SMALL
+	removable = FALSE
+	max_combined_w_class = 21
+	max_items = 7
+
 /obj/item/mod/module/storage/bluespace
 	name = "MOD bluespace storage module"
 	desc = "A storage system developed by Nanotrasen, these compartments employ \

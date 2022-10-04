@@ -231,15 +231,6 @@
 	. = ..()
 	allowed = GLOB.detective_vest_allowed
 
-/obj/item/clothing/suit/armor/vest/infiltrator
-	name = "infiltrator vest"
-	desc = "This vest appears to be made of of highly flexible materials that absorb impacts with ease."
-	icon_state = "infiltrator"
-	inhand_icon_state = "infiltrator"
-	armor = list(MELEE = 40, BULLET = 40, LASER = 30, ENERGY = 40, BOMB = 70, BIO = 0, FIRE = 100, ACID = 100)
-	resistance_flags = FIRE_PROOF | ACID_PROOF
-	strip_delay = 80
-
 /obj/item/clothing/suit/armor/swat
 	name = "MK.I SWAT Suit"
 	desc = "A tactical suit first developed in a joint effort by the defunct IS-ERI and Nanotrasen in 2321 for military operations. It has a minor slowdown, but offers decent protection."
