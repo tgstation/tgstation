@@ -672,29 +672,12 @@ SUBSYSTEM_DEF(job)
 			file_data["[job_key]"] = list(
 				"#Playtime Requirements" = occupation.exp_requirements,
 				"#Required Account Age" = occupation.minimal_player_age,
+				"#Total Positions" = default_positions,
+				"#Spawn Positions" = starting_positions,
 			)
-
-			if(default_positions != occupation.total_positions) // If the total positions are different from the codebase default, we want to write it to the file. Uncommented to allow for flush migration.
-				file_data["[job_key]"] += list(
-					"Total Positions" = default_positions,
-				)
-			else // If we can't find anything for this variable, then we just throw in the codebase default with it commented out.
-				file_data["[job_key]"] += list(
-					"#Total Positions" = occupation.total_positions,
-				)
-
-			if(starting_positions != occupation.spawn_positions) // Same pattern as above.
-				file_data["[job_key]"] += list(
-					"Spawn Positions" = starting_positions,
-				)
-			else
-				file_data["[job_key]"] += list(
-					"#Spawn Positions" = occupation.spawn_positions,
-				)
-
 		var/payload = rustg_toml_encode(file_data)
 		var/temp_file = file("data/jobconfig.toml")
-		config_documentation += "\n\n## This TOML was migrated from jobs.txt. Any variables that did not match standing codebase defaults are left uncommented, please verify to ensure that they are correct.\n\n" // small warning
+		config_documentation += "\n\n## This TOML was migrated from jobs.txt. All variables are COMMENTED and will not load by default! Please verify to ensure that they are correct, and uncomment the key as you want.\n\n" // small warning
 		if(fexists(temp_file))
 			fdel(temp_file) // ensure it writes properly in case it exists
 		WRITE_FILE(temp_file, "[config_documentation]\n[payload]")
