@@ -1,19 +1,17 @@
 name: Test Merge Detector
 on:
-  push:
-    branches:
-    - tm-bot
-  # MOTHBLOCKS TODO: cron
+  schedule:
+  - cron: "5 4 * * *"
   workflow_dispatch:
 jobs:
   test_merge_bot:
       name: Test Merge Detector
       runs-on: ubuntu-20.04
       steps:
-        - name: Check for ACTION_ENABLER
+        - name: Check for ACTIONS_ENABLED
           id: secrets_set
           env:
-            ENABLER_SECRET: ${{ secrets.MOTHBLOCKS_TODO_REPLACE_WITH_ACTIONS_ENABLED_TM_BOT }}
+            ENABLER_SECRET: ${{ secrets.ACTIONS_ENABLED }}
           run: |
             unset SECRET_EXISTS
             if [ -n "$ENABLER_SECRET" ]; then SECRET_EXISTS=true ; fi
@@ -21,8 +19,6 @@ jobs:
         - name: Checkout
           if: steps.secrets_set.outputs.ACTIONS_ENABLED
           uses: actions/checkout@v3
-          with:
-            ref: "tm-bot" # MOTHBLOCKS TODO: Remove
         - name: Prepare module
           if: steps.secrets_set.outputs.ACTIONS_ENABLED
           run: |
