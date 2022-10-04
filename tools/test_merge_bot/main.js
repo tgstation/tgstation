@@ -50,7 +50,7 @@ export async function processTestMerges({ github, context }) {
 					comments(last: 100) {
 						nodes {
 							body
-							id
+							databaseId
 							author {
 								login
 							}
@@ -96,7 +96,9 @@ export async function processTestMerges({ github, context }) {
 
 			listOfRounds += `${"\n"}### ${server}`;
 
-			for (const { datetime, round_id, url } of rounds) {
+			for (const { datetime, round_id, url } of rounds.sort(
+				(a, b) => b.round_id - a.round_id
+			)) {
 				listOfRounds += `${"\n"}- [${round_id} @ ${datetime}](${url})`;
 			}
 
@@ -122,7 +124,7 @@ export async function processTestMerges({ github, context }) {
 			await github.rest.issues.updateComment({
 				owner: context.repo.owner,
 				repo: context.repo.repo,
-				comment_id: existingComment.id,
+				comment_id: existingComment.databaseId,
 				body: newBody,
 			});
 		}
