@@ -17,6 +17,8 @@
 	throwforce = 15
 	demolition_mod = 0.25
 	inhand_icon_state = "beer" //Generic held-item sprite until unique ones are made.
+	lefthand_file = 'icons/mob/inhands/items/drinks_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/drinks_righthand.dmi'
 	drink_type = ALCOHOL
 	age_restricted = TRUE // wrryy can't set an init value to see if drink_type contains ALCOHOL so here we go
 	///Directly relates to the 'knockdown' duration. Lowered by armor (i.e. helmets)
@@ -117,6 +119,8 @@
 	demolition_mod = 0.25
 	w_class = WEIGHT_CLASS_TINY
 	inhand_icon_state = "broken_beer"
+	lefthand_file = 'icons/mob/inhands/items/drinks_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/drinks_righthand.dmi'
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("stabs", "slashes", "attacks")
 	attack_verb_simple = list("stab", "slash", "attack")
@@ -689,6 +693,8 @@
 /obj/item/reagent_containers/cup/glass/bottle/juice
 	custom_price = PAYCHECK_CREW
 	inhand_icon_state = "carton"
+	lefthand_file = 'icons/mob/inhands/items/drinks_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/drinks_righthand.dmi'
 	isGlass = FALSE
 	age_restricted = FALSE
 

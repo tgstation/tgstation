@@ -261,7 +261,7 @@
 	name = "banana lamp"
 	desc = "Only a clown would think to make a ghetto banana-shaped lamp. Even has a goofy pullstring."
 	icon_state = "bananalamp"
-	inhand_icon_state = "bananalamp"
+	inhand_icon_state = null
 
 // FLARES
 
@@ -369,7 +369,7 @@
 	name = "suspicious lantern"
 	desc = "A suspicious looking lantern."
 	icon_state = "syndilantern"
-	inhand_icon_state = "syndilantern"
+	inhand_icon_state = null
 	light_range = 10
 
 /obj/item/flashlight/lantern/jade
@@ -384,7 +384,7 @@
 	desc = "Extract from a yellow slime. It emits a strong light when squeezed."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "slime"
-	inhand_icon_state = "slime"
+	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = null
@@ -457,7 +457,7 @@
 	color = LIGHT_COLOR_GREEN
 	icon_state = "glowstick"
 	base_icon_state = "glowstick"
-	inhand_icon_state = "glowstick"
+	inhand_icon_state = null
 	worn_icon_state = "lightstick"
 	grind_results = list(/datum/reagent/phenol = 15, /datum/reagent/hydrogen = 10, /datum/reagent/oxygen = 5) //Meth-in-a-stick
 	/// How many seconds of fuel we have left

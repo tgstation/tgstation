@@ -7,7 +7,7 @@
 //Chef
 /obj/item/clothing/head/chefhat
 	name = "chef's hat"
-	inhand_icon_state = "chef"
+	inhand_icon_state = "chefhat"
 	icon_state = "chef"
 	desc = "The commander in chef's head wear."
 	strip_delay = 10
@@ -97,6 +97,7 @@
 	desc = "There's only one man who can sniff out the dirty stench of crime, and he's likely wearing this hat."
 	armor = list(MELEE = 25, BULLET = 5, LASER = 25, ENERGY = 35, BOMB = 0, BIO = 0, FIRE = 30, ACID = 50, WOUND = 5)
 	icon_state = "detective"
+	inhand_icon_state = "det_hat"
 	var/candy_cooldown = 0
 	dog_fashion = /datum/dog_fashion/head/detective
 
@@ -193,7 +194,7 @@
 	name = "warden's campaign hat"
 	desc = "A special armored campaign hat with the security insignia emblazoned on it. Uses reinforced fabric to offer sufficient protection."
 	icon_state = "wardendrill"
-	inhand_icon_state = "wardendrill"
+	inhand_icon_state = null
 	dog_fashion = null
 	var/mode = DRILL_DEFAULT
 

@@ -642,7 +642,6 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	desc = "An advanced alien headset designed to monitor communications of human space stations. Why does it have a microphone? No one knows."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "abductor_headset"
-	inhand_icon_state = "abductor_headset"
 	keyslot2 = /obj/item/encryptionkey/heads/captain
 
 /obj/item/radio/headset/abductor/Initialize(mapload)
@@ -730,7 +729,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	name = "agent headgear"
 	desc = "Abduct with style - spiky style. Prevents digital tracking."
 	icon_state = "alienhelmet"
-	inhand_icon_state = "alienhelmet"
+	inhand_icon_state = null
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
 /obj/item/clothing/head/helmet/abductor/equipped(mob/living/user, slot)

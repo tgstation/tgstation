@@ -434,7 +434,7 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	desc = "Is it cotton? Linen? Denim? Burlap? Canvas? You can't tell."
 	singular_name = "cloth roll"
 	icon_state = "sheet-cloth"
-	inhand_icon_state = "sheet-cloth"
+	inhand_icon_state = null
 	resistance_flags = FLAMMABLE
 	force = 0
 	throwforce = 0
@@ -465,7 +465,7 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 	desc = "A fabric sown from incredibly durable threads, known for its usefulness in armor production."
 	singular_name = "durathread roll"
 	icon_state = "sheet-durathread"
-	inhand_icon_state = "sheet-cloth"
+	inhand_icon_state = null
 	resistance_flags = FLAMMABLE
 	force = 0
 	throwforce = 0
@@ -674,7 +674,7 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	desc = "Rare kind of gems which are only gained by blood sacrifice to minor deities. They are needed in crafting powerful objects."
 	singular_name = "lesser gem"
 	icon_state = "sheet-lessergem"
-	inhand_icon_state = "sheet-lessergem"
+	inhand_icon_state = null
 	novariants = TRUE
 	merge_type = /obj/item/stack/sheet/lessergem
 
@@ -683,7 +683,7 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	desc = "Rare kind of gems which are only gained by blood sacrifice to minor deities. They are needed in crafting powerful objects."
 	singular_name = "greater gem"
 	icon_state = "sheet-greatergem"
-	inhand_icon_state = "sheet-greatergem"
+	inhand_icon_state = null
 	novariants = TRUE
 	merge_type = /obj/item/stack/sheet/greatergem
 
@@ -694,7 +694,7 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	name = "bones"
 	icon = 'icons/obj/stack_objects.dmi'
 	icon_state = "bone"
-	inhand_icon_state = "sheet-bone"
+	inhand_icon_state = null
 	mats_per_unit = list(/datum/material/bone = MINERAL_MATERIAL_AMOUNT)
 	singular_name = "bone"
 	desc = "Someone's been drinking their milk."
