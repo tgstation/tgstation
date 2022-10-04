@@ -23,6 +23,12 @@ jobs:
           uses: actions/checkout@v3
           with:
             ref: "tm-bot" # MOTHBLOCKS TODO: Remove
+        - name: Prepare module
+          if: steps.secrets_set.outputs.SECRETS_ENABLED
+          run: |
+            # This is needed because node-fetch needs import and doesn't work with require :/
+            echo "{\"type\": \"module\"}" > package.json
+            npm install node-fetch
         - name: Check for test merges
           if: steps.secrets_set.outputs.ACTIONS_ENABLED
           uses: actions/github-script@v6
