@@ -694,7 +694,7 @@ SUBSYSTEM_DEF(job)
 
 		var/payload = rustg_toml_encode(file_data)
 		var/temp_file = file("data/jobconfig.toml")
-		config_documentation += "\n\n ## This TOML was migrated from jobs.txt. Any variables that did not match standing codebase defaults are left uncommented, please verify to ensure that they are correct." // small warning
+		config_documentation += "\n\n## This TOML was migrated from jobs.txt. Any variables that did not match standing codebase defaults are left uncommented, please verify to ensure that they are correct.\n\n" // small warning
 		if(fexists(temp_file))
 			fdel(temp_file) // ensure it writes properly in case it exists
 		WRITE_FILE(temp_file, "[config_documentation]\n[payload]")
