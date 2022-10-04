@@ -86,10 +86,7 @@
 			. += span_notice("- \A [coffeepot].")
 		if(cartridge)
 			. += span_notice("- \A [cartridge].")
-		//TODO: fix the examine proc to neglect caridges and display coffee amount in the impressa model
-		// if(istype(src, /obj/machinery/coffeemaker/impressa))
-		// 	if(coffee)
-		// 		. += span_notice("- [coffee.len] [coffee.len == 1 ? "scoop" : "scoops"] of coffee beans")
+		return
 
 	if(!(machine_stat & (NOPOWER|BROKEN)))
 		. += "[span_notice("The status display reads:")]\n"+\
@@ -231,8 +228,8 @@
 		update_appearance()
 		return TRUE //no afterattack
 
-	if (istype(attack_item, /obj/item/reagent_containers/condiment/pack/creamer))
-		var/obj/item/reagent_containers/condiment/pack/creamer/new_pack = attack_item
+	if (istype(attack_item, /obj/item/reagent_containers/condiment/creamer))
+		var/obj/item/reagent_containers/condiment/creamer/new_pack = attack_item
 		if(new_pack.reagents.total_volume < new_pack.reagents.maximum_volume)
 			balloon_alert(user, "the pack must be full!")
 			return TRUE
@@ -389,7 +386,7 @@
 	if(!creamer_packs)
 		balloon_alert("no creamer left!")
 		return
-	var/obj/item/reagent_containers/condiment/pack/creamer/new_pack = new(get_turf(src))
+	var/obj/item/reagent_containers/condiment/creamer/new_pack = new(get_turf(src))
 	user.put_in_hands(new_pack)
 	creamer_packs--
 	update_appearance()
@@ -534,6 +531,12 @@
 		coffee = null
 	return ..()
 
+/obj/machinery/coffeemaker/impressa/examine(mob/user)
+	. = ..()
+	if(coffee)
+		. += span_notice("The internal grinder conatins [coffee.len] [coffee.len == 1 ? "scoop" : "scoops"] of coffee beans")
+	return
+
 /obj/machinery/coffeemaker/impressa/update_overlays()
 	. = ..()
 	if(coffeepot)
@@ -636,8 +639,8 @@
 		update_appearance()
 		return TRUE //no afterattack
 
-	if (istype(attack_item, /obj/item/reagent_containers/condiment/pack/creamer))
-		var/obj/item/reagent_containers/condiment/pack/creamer/new_pack = attack_item
+	if (istype(attack_item, /obj/item/reagent_containers/condiment/creamer))
+		var/obj/item/reagent_containers/condiment/creamer/new_pack = attack_item
 		if(new_pack.reagents.total_volume < new_pack.reagents.maximum_volume)
 			balloon_alert(user, "the pack must be full!")
 			return TRUE
