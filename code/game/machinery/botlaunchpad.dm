@@ -16,9 +16,11 @@
 	return ..()
 
 /obj/machinery/botpad/screwdriver_act(mob/user, obj/item/tool)
-	return default_deconstruction_screwdriver(user, "botpad-open", "botpad", tool)
-
+	. = ..()
+	if(!.)
+		return default_deconstruction_screwdriver(user, "botpad-open", "botpad", tool)
 /obj/machinery/botpad/crowbar_act(mob/user, obj/item/tool)
+	..()
 	return default_deconstruction_crowbar(tool)
 
 /obj/machinery/botpad/multitool_act(mob/living/user, obj/item/tool)
