@@ -28,7 +28,7 @@
 	var/obj/item/multitool/multitool = tool
 	multitool.buffer = src
 	to_chat(user, span_notice("You save the data in the [multitool.name]'s buffer."))
-	return TRUE
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 
 // Checks the turf for a bot and launches it if it's the only mob on the pad.
