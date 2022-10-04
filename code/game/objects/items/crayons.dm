@@ -424,9 +424,9 @@
 		if(iscarbon(M))
 			var/mob/living/carbon/C = M
 			var/covered = ""
-			if(C.is_mouth_covered(head_only = 1))
+			if(C.is_mouth_covered(ITEM_SLOT_HEAD))
 				covered = "headgear"
-			else if(C.is_mouth_covered(mask_only = 1))
+			else if(C.is_mouth_covered(ITEM_SLOT_MASK))
 				covered = "mask"
 			if(covered)
 				to_chat(C, span_warning("You have to remove your [covered] first!"))

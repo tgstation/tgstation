@@ -482,15 +482,16 @@
 			priority_absorb_key["stuns_absorbed"] += amount
 		return TRUE
 
-/mob/living/proc/add_quirk(quirktype) //separate proc due to the way these ones are handled
-	if(HAS_TRAIT(src, quirktype))
-		return
+/mob/living/proc/add_quirk(quirktype, no_unique_add = FALSE) //separate proc due to the way these ones are handled
 	var/datum/quirk/quirk = quirktype
 	var/qname = initial(quirk.name)
+	var/quirk_trait = initial(quirk.mob_trait)
 	if(!SSquirks || !SSquirks.quirks[qname])
-		return
+		return FALSE
+	if(quirk_trait && HAS_TRAIT(src, quirk_trait))
+		return FALSE
 	quirk = new quirktype()
-	if(quirk.add_to_holder(src))
+	if(quirk.add_to_holder(src, no_unique_add))
 		return TRUE
 	qdel(quirk)
 	return FALSE

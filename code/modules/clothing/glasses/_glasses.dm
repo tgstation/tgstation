@@ -376,18 +376,9 @@
 	icon_state = "blindfold"
 	inhand_icon_state = "blindfold"
 	flash_protect = FLASH_PROTECTION_WELDER
-	tint = 3
+	tint = INFINITY // You WILL Be blind, no matter what
 	darkness_view = 1
 	dog_fashion = /datum/dog_fashion/head
-
-/obj/item/clothing/glasses/blindfold/equipped(mob/living/carbon/human/user, slot)
-	. = ..()
-	if(slot & ITEM_SLOT_EYES)
-		user.become_blind(EYES_COVERED)
-
-/obj/item/clothing/glasses/blindfold/dropped(mob/living/carbon/human/user)
-	. = ..()
-	user.cure_blind(EYES_COVERED)
 
 /obj/item/clothing/glasses/trickblindfold
 	name = "blindfold"

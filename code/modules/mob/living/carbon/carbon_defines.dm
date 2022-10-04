@@ -65,9 +65,6 @@
 
 	var/rotate_on_lying = 1
 
-	/// Total level of visualy impairing items
-	var/tinttotal = 0
-
 	///Gets filled up in [create_bodyparts()][/mob/living/carbon/proc/create_bodyparts]
 	var/list/bodyparts = list(
 		/obj/item/bodypart/chest,

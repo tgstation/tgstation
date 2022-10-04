@@ -24,6 +24,10 @@
 /datum/status_effect/grouped/visually_impaired/proc/apply_fullscreen_overlay()
 	owner.overlay_fullscreen(id, overlay_type, overlay_severity)
 
+/datum/status_effect/grouped/visually_impaired/proc/set_overlay_severity(to_value)
+	overlay_severity = to_value
+	apply_fullscreen_overlay()
+
 /// Signal proc for [COMSIG_LIVING_POST_FULLY_HEAL].
 /// Getting fully healed will remove eye damage from sources, and self-delete if we have none
 /datum/status_effect/grouped/visually_impaired/proc/on_full_heal(datum/source)
@@ -59,13 +63,13 @@
 /datum/status_effect/grouped/visually_impaired/nearsighted/proc/stop_nearsightedness(datum/source)
 	SIGNAL_HANDLER
 
-	apply_fullscreen_overlay()
+	owner.clear_fullscreen(id)
 
 /// Signal proc for when we gain [TRAIT_NEARSIGHTED_CORRECTED] - re-enable the overlay
 /datum/status_effect/grouped/visually_impaired/nearsighted/proc/resume_nearsightedness(datum/source)
 	SIGNAL_HANDLER
 
-	owner.clear_fullscreen(id)
+	apply_fullscreen_overlay()
 
 /// Blindness
 /datum/status_effect/grouped/visually_impaired/blindness
@@ -146,31 +150,31 @@
 
 /// Checks if this mob is blind.
 /mob/proc/is_blind()
-	return FALSE
+	return null
 
 /mob/living/is_blind()
-	return !!has_status_effect(/datum/status_effect/grouped/visually_impaired/blindness)
+	return has_status_effect(/datum/status_effect/grouped/visually_impaired/blindness)
 
 /// Checks if this mob is blind from one or multiple sources.
 /// Can be passed a list of sources or a singular non-list source.
 /mob/proc/is_blind_from(sources)
-	return FALSE
+	return null
 
 /mob/living/is_blind_from(sources)
-	return !!has_status_effect_from_source(/datum/status_effect/grouped/visually_impaired/blindness, sources)
+	return has_status_effect_from_source(/datum/status_effect/grouped/visually_impaired/blindness, sources)
 
 /// Checks if this mob is nearsighted.
 /// This will pass on all mobs that are nearsighted, including those which have it disabled temporarily.
 /mob/proc/is_nearsighted()
-	return FALSE
+	return null
 
 /mob/living/is_nearsighted()
-	return !!has_status_effect(/datum/status_effect/grouped/visually_impaired/nearsighted)
+	return has_status_effect(/datum/status_effect/grouped/visually_impaired/nearsighted)
 
 /// Checks if this mob is nearsighted, currently.
 /// This will only pass on mobs which are nearsighted but have it disabled temporarily (by glasses).
 /mob/proc/is_nearsighted_currently()
-	return FALSE
+	return null
 
 /mob/living/is_nearsighted_currently()
 	return !HAS_TRAIT(src, TRAIT_NEARSIGHTED_CORRECTED) && is_nearsighted()
@@ -178,7 +182,7 @@
 /// Checks if this mob is nearsighted from one or multiple sources.
 /// Can be passed a list of sources or a singular non-list source.
 /mob/proc/is_nearsighted_from(sources)
-	return FALSE
+	return null
 
 /mob/living/is_nearsighted_from(sources)
-	return !!has_status_effect_from_source(/datum/status_effect/grouped/visually_impaired/blindness, sources)
+	return has_status_effect_from_source(/datum/status_effect/grouped/visually_impaired/blindness, sources)

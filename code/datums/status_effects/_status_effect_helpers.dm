@@ -86,7 +86,7 @@
  *
  * Returns an instance of a status effect, or NULL if none were found.
  */
-/mob/living/proc/has_status_effect_from_source(datum/status_effect/grouped/checked_effect, list/sources)
+/mob/living/proc/has_status_effect_from_source(datum/status_effect/grouped/checked_effect, sources)
 	RETURN_TYPE(/datum/status_effect)
 
 	if(!ispath(checked_effect))
