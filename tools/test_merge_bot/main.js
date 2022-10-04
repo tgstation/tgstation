@@ -82,6 +82,8 @@ export async function processTestMerges({ github, context }) {
 
 		const newHeader = `<!-- test_merge_bot: ${roundIds} -->`;
 
+		console.log(existingComment);
+
 		if (existingComment && existingComment.body.startsWith(newHeader)) {
 			continue;
 		}
@@ -111,11 +113,11 @@ export async function processTestMerges({ github, context }) {
 			listOfRounds +
 			"\n</details>\n";
 
-		await github.rest.issues.createComment({
-			owner: context.repo.owner,
-			repo: context.repo.repo,
-			issue_number: prNumber,
-			body: newBody,
-		});
+		// await github.rest.issues.createComment({
+		// 	owner: context.repo.owner,
+		// 	repo: context.repo.repo,
+		// 	issue_number: prNumber,
+		// 	body: newBody,
+		// });
 	}
 }
