@@ -443,6 +443,11 @@
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/security/sec)
+"gn" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/item/tape/captains_log,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
 "gr" = (
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/plating/airless,
@@ -9271,7 +9276,7 @@ CU
 Xj
 uf
 rk
-qG
+gn
 ZD
 aa
 aa
