@@ -24,7 +24,7 @@ jobs:
           with:
             ref: "tm-bot" # MOTHBLOCKS TODO: Remove
         - name: Prepare module
-          if: steps.secrets_set.outputs.SECRETS_ENABLED
+          if: steps.secrets_set.outputs.ACTIONS_ENABLED
           run: |
             # This is needed because node-fetch needs import and doesn't work with require :/
             echo "{\"type\": \"module\"}" > package.json
