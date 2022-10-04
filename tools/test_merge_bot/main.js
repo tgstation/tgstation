@@ -1,8 +1,8 @@
-import { GET_TEST_MERGES_URL } from "./config";
+const { GET_TEST_MERGES_URL } = require("./config.js");
 
 const TEST_MERGE_COMMENT_HEADER = "<!-- test_merge_bot:";
 
-export async function processTestMerges({ github, context }) {
+async function processTestMerges({ github, context }) {
 	const rounds = await fetch(GET_TEST_MERGES_URL)
 		.then(async (response) => {
 			if (response.status !== 200) {
@@ -116,3 +116,7 @@ export async function processTestMerges({ github, context }) {
 		});
 	}
 }
+
+module.exports = {
+	processTestMerges,
+};

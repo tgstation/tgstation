@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 jobs:
   test_merge_bot:
-      name: Check for ACTION_ENABLER secret and pass true to output if it exists to be checked by later steps
+      name: Test Merge Detector
       runs-on: ubuntu-20.04
       steps:
         - name: Check for ACTION_ENABLER
