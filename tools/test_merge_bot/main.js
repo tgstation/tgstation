@@ -42,7 +42,8 @@ export async function processTestMerges({ github, context }) {
 
 	for (const [prNumber, servers] of Object.entries(testMergesPerPr)) {
 		const comments = await github.graphql(
-			`query($owner:String!, $repo:String!, $prNumber:Int!) {
+			`
+		query($owner:String!, $repo:String!, $prNumber:Int!) {
 			repository(owner: $owner, name: $repo) {
 				pullRequest(number: $prNumber) {
 					comments(last: 100) {
