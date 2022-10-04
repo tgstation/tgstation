@@ -134,7 +134,7 @@
 					qdel(src)
 					return
 				here.PlaceOnTop(/turf/closed/wall)
-				qdel(src)
+				qdel(airlock)
 				return
 			if(9 to 11)
 				airlock.lights = FALSE
