@@ -1,4 +1,0 @@
-author: "Cobby"
-delete-after: True
-changes: 
-  - bugfix: "The cucumber bounty will now accept cucumbers instead of seeds."

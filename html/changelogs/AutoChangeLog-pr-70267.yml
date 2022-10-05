@@ -1,6 +1,0 @@
-author: "YusufEmirKoroglu"
-delete-after: True
-changes: 
-  - rscadd: "Added bot launchpad and bot launch pad controller."
-  - rscadd: "New research node for bot launchpad and bot launch pad controller."
-  - imageadd: "added icons for bot launchpad and bot launch pad controller."

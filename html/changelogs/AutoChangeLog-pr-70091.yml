@@ -1,7 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes: 
-  - rscadd: "Add mail goodies based on different quirks."
-  - rscadd: "Add mapping spawners for flower, money, plushie, delux plushie, single donkpockets."
-  - imageadd: "Add random mapping spawner icons for flower, plushie, and single dockpockets."
-  - balance: "Changed mail goodies weight chance for generic items.  The chance for cash has been decreased and the chance for toys and snacks has been increased."
