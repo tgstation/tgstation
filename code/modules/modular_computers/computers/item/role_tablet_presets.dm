@@ -368,7 +368,7 @@
 			msg.allow_emojis = TRUE
 
 /**
- * Non-roles
+ * No Department
  */
 
 /obj/item/modular_computer/tablet/pda/assistant
@@ -376,6 +376,10 @@
 	default_applications = list(
 		/datum/computer_file/program/bounty_board,
 	)
+
+/**
+ * Non-roles
+ */
 
 /obj/item/modular_computer/tablet/pda/syndicate
 	name = "military PDA"
