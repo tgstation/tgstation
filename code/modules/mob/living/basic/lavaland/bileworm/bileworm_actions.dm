@@ -65,7 +65,7 @@
 /datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/bileworm/attack_sequence(mob/living/firer, atom/target)
 	fire_in_directions(firer, target, GLOB.cardinals)
 	SLEEP_CHECK_DEATH(0.25 SECONDS, firer)
-	fire_in_directions(firer, target, GLOB.cardinals)
+	fire_in_directions(firer, target, GLOB.diagonals)
 
 /obj/projectile/bileworm_acid
 	name = "acidic bile"
