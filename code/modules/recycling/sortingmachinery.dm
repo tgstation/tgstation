@@ -144,8 +144,10 @@
 		note = item
 		update_appearance()
 
-	else if(istype(item, /obj/item/sales_tagger))
-		var/obj/item/sales_tagger/sales_tagger = item
+	else if(istype(item, /obj/item/export_scanner))
+		var/obj/item/export_scanner/sales_tagger = item
+		if(sales_tagger.scanning_mode != SCAN_SALES_TAG)
+			return
 		if(sticker)
 			to_chat(user, span_warning("This package already has a barcode attached!"))
 			return

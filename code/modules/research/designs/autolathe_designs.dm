@@ -1044,15 +1044,6 @@
 	build_path = /obj/item/dest_tagger
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_ELECTRONICS)
 
-/datum/design/salestagger
-	name = "Sales Tagger"
-	id = "salestagger"
-	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 700, /datum/material/glass = 200)
-	build_path = /obj/item/sales_tagger
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_ELECTRONICS)
-	departmental_flags = DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_SERVICE
-
 /datum/design/handlabeler
 	name = "Hand Labeler"
 	id = "handlabel"
@@ -1179,14 +1170,6 @@
 	build_path = /obj/item/stack/tile/circuit/red
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_MISC)
 	maxstack = 50
-
-/datum/design/price_tagger
-	name = "Price Tagger"
-	id = "price_tagger"
-	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = 1500, /datum/material/glass = 500)
-	build_path = /obj/item/price_tagger
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_MISC)
 
 /datum/design/custom_vendor_refill
 	name = "Custom Vendor Refill"
