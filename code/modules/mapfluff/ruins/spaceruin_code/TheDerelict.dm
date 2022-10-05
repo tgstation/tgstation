@@ -194,7 +194,7 @@
 		"\[00:28\] But someones got it out for me",
 		"\[00:36\] On the station I may well be called 'Captain'",
 		"\[00:42\] But the title brings with it all the prestige and responsibility of some kind of fucking manchild kindergarten teacher",
-		"\[00:55\] To think NanoTrasen loves to call this hellhole:",
+		"\[00:55\] To think Nanotrasen loves to call this hellhole:",
 		"\[01:03\] A state of the art orbital plasma research facility",
 		"\[01:10\] If I remember correctly though",
 		"\[01:15\] It was all about the plasma",
@@ -244,7 +244,7 @@
 		"\[47:32\] Once they called me captain, but when it's all said and done",
 		"\[47:41\] I'll be a hero",
 		"\[47:45\] If you run across this transmission by chance",
-		"\[47:52\] Get you pudgy little nerd ass over to space station 13 and start busting heads.",
+		"\[47:52\] Get you pudgy little nerd ass over to Space Station 13 and start busting heads.",
 		"\[48:00\] (farting noises)",
 	)
 	timestamp = list(
@@ -310,5 +310,5 @@
 	)
 
 /obj/item/tape/captains_log/Initialize(mapload)
-	..()
+	. = ..()
 	unspool() // the tape spawns damaged
