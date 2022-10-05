@@ -395,3 +395,4 @@
 	icon_state = "pda-clear"
 	greyscale_config = null
 	greyscale_colors = null
+	long_ranged = TRUE
