@@ -46,13 +46,14 @@
 	name = "\improper Magus helm"
 	desc = "A mysterious helmet that hums with an unearthly power."
 	icon_state = "magus"
-	inhand_icon_state = "magus"
+	inhand_icon_state = null
 	dog_fashion = null
 
 /obj/item/clothing/head/wizard/santa
 	name = "Santa's hat"
 	desc = "Ho ho ho. Merrry X-mas!"
 	icon_state = "santahat"
+	inhand_icon_state = "santahat"
 	flags_inv = HIDEHAIR|HIDEFACIALHAIR
 	dog_fashion = null
 
@@ -76,37 +77,37 @@
 	name = "red wizard robe"
 	desc = "A magnificent red gem-lined robe that seems to radiate power."
 	icon_state = "redwizard"
-	inhand_icon_state = "redwizrobe"
+	inhand_icon_state = null
 
 /obj/item/clothing/suit/wizrobe/yellow
 	name = "yellow wizard robe"
 	desc = "A magnificent yellow gem-lined robe that seems to radiate power."
 	icon_state = "yellowwizard"
-	inhand_icon_state = "yellowwizrobe"
+	inhand_icon_state = null
 
 /obj/item/clothing/suit/wizrobe/black
 	name = "black wizard robe"
 	desc = "An unnerving black gem-lined robe that reeks of death and decay."
 	icon_state = "blackwizard"
-	inhand_icon_state = "blackwizrobe"
+	inhand_icon_state = null
 
 /obj/item/clothing/suit/wizrobe/marisa
 	name = "witch robe"
 	desc = "Magic is all about the spell power, ZE!"
 	icon_state = "marisa"
-	inhand_icon_state = "marisarobe"
+	inhand_icon_state = null
 
 /obj/item/clothing/suit/wizrobe/magusblue
 	name = "\improper Magus robe"
 	desc = "A set of armored robes that seem to radiate a dark power."
 	icon_state = "magusblue"
-	inhand_icon_state = "magusblue"
+	inhand_icon_state = null
 
 /obj/item/clothing/suit/wizrobe/magusred
 	name = "\improper Magus robe"
 	desc = "A set of armored robes that seem to radiate a dark power."
 	icon_state = "magusred"
-	inhand_icon_state = "magusred"
+	inhand_icon_state = null
 
 
 /obj/item/clothing/suit/wizrobe/santa
@@ -134,7 +135,7 @@
 	name = "witch robe"
 	desc = "Magic is all about the spell power, ZE!"
 	icon_state = "marisa"
-	inhand_icon_state = "marisarobe"
+	inhand_icon_state = null
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
 	resistance_flags = FLAMMABLE
 
@@ -142,7 +143,7 @@
 	name = "papier-mache robe" // no non-latin characters!
 	desc = "A robe held together by various bits of clear-tape and paste."
 	icon_state = "wizard-paper"
-	inhand_icon_state = "wizard-paper"
+	inhand_icon_state = null
 	var/robe_charge = TRUE
 	actions_types = list(/datum/action/item_action/stickmen)
 

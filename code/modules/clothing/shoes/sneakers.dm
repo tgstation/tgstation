@@ -1,9 +1,14 @@
 /obj/item/clothing/shoes/sneakers
 	dying_key = DYE_REGISTRY_SNEAKERS
 	icon_state = "sneakers"
+	inhand_icon_state = "sneakers_back"
+	lefthand_file = 'icons/mob/inhands/clothing/shoes_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/shoes_righthand.dmi'
 	greyscale_colors = "#2d2d33#ffffff"
 	greyscale_config = /datum/greyscale_config/sneakers
 	greyscale_config_worn = /datum/greyscale_config/sneakers_worn
+	greyscale_config_inhand_left = /datum/greyscale_config/sneakers_inhand_left
+	greyscale_config_inhand_right = /datum/greyscale_config/sneakers_inhand_right
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/shoes/sneakers/black
@@ -52,6 +57,7 @@
 	name = "rainbow shoes"
 	desc = "Very gay shoes."
 	icon_state = "rain_bow"
+	inhand_icon_state = "rainbow_sneakers"
 
 	greyscale_colors = null
 	greyscale_config = null
@@ -65,30 +71,72 @@
 	greyscale_colors = "#d15b1b#ffffff"
 	greyscale_config = /datum/greyscale_config/sneakers_orange
 	greyscale_config_worn = /datum/greyscale_config/sneakers_orange_worn
+	greyscale_config_inhand_left = /datum/greyscale_config/sneakers_orange_inhand_left
+	greyscale_config_inhand_right = /datum/greyscale_config/sneakers_orange_inhand_right
 	flags_1 = NONE
+	var/obj/item/restraints/handcuffs/attached_cuffs
+
+/obj/item/clothing/shoes/sneakers/orange/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob, (slot_flags|ITEM_SLOT_HANDCUFFED))
+
+/obj/item/clothing/shoes/sneakers/orange/handle_atom_del(atom/deleting_atom)
+	if(deleting_atom == attached_cuffs)
+		moveToNullspace(attached_cuffs)
+	return ..()
+
+/obj/item/clothing/shoes/sneakers/orange/Destroy()
+	QDEL_NULL(attached_cuffs)
+	return ..()
+
+/obj/item/clothing/shoes/sneakers/orange/Exited(atom/movable/gone, direction)
+	if(gone == attached_cuffs)
+		attached_cuffs = null
+		slowdown = SHOES_SLOWDOWN
+		update_appearance(UPDATE_ICON)
+	return ..()
+
+/obj/item/clothing/shoes/sneakers/orange/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	if(arrived.type == /obj/item/restraints/handcuffs)
+		attached_cuffs = arrived
+		slowdown = 15
+		update_appearance(UPDATE_ICON)
+	return ..()
+
+/obj/item/clothing/shoes/sneakers/orange/update_icon_state()
+	. = ..()
+	if(attached_cuffs)
+		icon_state = inhand_icon_state = "sneakers_chained"
+	else
+		icon_state = initial(icon_state)
+		inhand_icon_state = initial(inhand_icon_state)
+	update_greyscale()
 
 /obj/item/clothing/shoes/sneakers/orange/attack_self(mob/user)
-	if (chained)
-		chained = FALSE
-		slowdown = SHOES_SLOWDOWN
-		new /obj/item/restraints/handcuffs( user.loc )
-		icon_state = initial(icon_state)
-	return
+	if(attached_cuffs)
+		to_chat(user, span_notice("You remove [attached_cuffs] from [src]."))
+		if(Adjacent(user)) //tk is love, tk is life.
+			user.put_in_hands(attached_cuffs)
+		else
+			attached_cuffs.forceMove(drop_location())
+		return
+	return ..()
 
-/obj/item/clothing/shoes/sneakers/orange/attackby(obj/H, loc, params)
-	..()
-	// Note: not using istype here because we want to ignore all subtypes
-	if (H.type == /obj/item/restraints/handcuffs && !chained)
-		qdel(H)
-		chained = TRUE
-		slowdown = 15
-		icon_state = "sneakers_chained"
-	return
+/obj/item/clothing/shoes/sneakers/orange/pre_attack(atom/movable/attacking_movable, mob/living/user, params)
+	if(attached_cuffs || attacking_movable.type != /obj/item/restraints/handcuffs)
+		return ..()
+	attacking_movable.forceMove(src)
+	return TRUE
+
+/obj/item/clothing/shoes/sneakers/orange/attackby(obj/item/attacking_item, mob/user, params)
+	if(attached_cuffs || attacking_item.type != /obj/item/restraints/handcuffs) 	// Note: not using istype here because we want to ignore all subtypes
+		return ..()
+	attacking_item.forceMove(src)
 
 /obj/item/clothing/shoes/sneakers/orange/allow_attack_hand_drop(mob/user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/C = user
-		if(C.shoes == src && chained == 1)
+		if(C.shoes == src && attached_cuffs)
 			to_chat(user, span_warning("You need help taking these off!"))
 			return FALSE
 	return ..()
@@ -97,7 +145,7 @@
 	var/mob/m = usr
 	if(ishuman(m))
 		var/mob/living/carbon/human/c = m
-		if(c.shoes == src && chained == 1)
+		if(c.shoes == src && attached_cuffs)
 			to_chat(c, span_warning("You need help taking these off!"))
 			return
 	return ..()

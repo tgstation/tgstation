@@ -671,7 +671,7 @@
 	name = "wings"
 	desc = "Granted to the henchmen who deserve it. This probably doesn't include you."
 	icon_state = "henchmen"
-	inhand_icon_state = "henchmen"
+	inhand_icon_state = null
 
 /obj/item/storage/backpack/duffelbag/cops
 	name = "police bag"
