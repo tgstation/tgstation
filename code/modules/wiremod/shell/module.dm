@@ -203,7 +203,7 @@
 	var/string_list = list()
 	var/is_deployed = TRUE
 	for(var/obj/item/part as anything in attached_module.mod.mod_parts)
-		if(part.loc == src)
+		if(part.loc == attached_module.mod)
 			is_deployed = FALSE
 		else
 			var/part_name = "Undefined"
