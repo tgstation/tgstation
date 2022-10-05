@@ -19,7 +19,7 @@
 
 	//don't setup timer yet, timer calc requires the round to have started
 	if(!SSticker.HasRoundStarted())
-		RegisterSignal(src, COMSIG_TICKER_ROUND_STARTING, .proc/comp_on_round_start)
+		RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, .proc/comp_on_round_start)
 		return
 
 	//if the round has already taken long enough, just leap right away
@@ -34,12 +34,12 @@
 	deltimer(timer_id)
 
 /datum/component/evolutionary_leap/UnregisterFromParent()
-	UnregisterSignal(src, COMSIG_TICKER_ROUND_STARTING)
+	UnregisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING)
 
 /// Proc ran when round starts.
 /datum/component/evolutionary_leap/proc/comp_on_round_start()
 	SIGNAL_HANDLER
-	UnregisterSignal(src, COMSIG_TICKER_ROUND_STARTING)
+	UnregisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING)
 	setup_timer()
 	return
 
