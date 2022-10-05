@@ -37,9 +37,9 @@
 	//Space carp aren't affected by cold.
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
-	maxbodytemp = 1500
+	maxbodytemp = INFINITY
 	faction = list("carp")
-	pressure_resistance = 200
+	pressure_resistance = INFINITY
 	gold_core_spawnable = HOSTILE_SPAWN
 	/// If the carp uses random coloring
 	var/random_color = TRUE

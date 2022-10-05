@@ -1,5 +1,13 @@
 /// The darkness threshold for space dragon when choosing a color
 #define DARKNESS_THRESHOLD 50
+/// The maximum amount of plasma that can get stored in moles.
+#define MAXIMUM_STORED_PLASMA_MOLES 800
+/// The maximum amount of plasma that can get released in a single fire breath in moles.
+#define MAXIMUM_PLASMA_MOLES_RELEASED 400
+/// The rate that plasma gets generated in moles per second.
+#define PLASMA_GENERATION_RATE 20
+/// The amount of oxygen that gets released per plasma.
+#define OXYGEN_RATIO 0.4
 
 /**
  * # Space Dragon
@@ -15,7 +23,7 @@
  * Alternatively, if the shuttle arrives while Space Dragon is still active, their victory condition will automatically be met and all the rifts will immediately become fully charged.
  * If a charging rift is destroyed, Space Dragon will be incredibly slowed, and the endlag on his gust attack is greatly increased on each use.
  * Space Dragon has the following abilities to assist him with his objective:
- * - Can shoot fire in straight line, dealing 30 burn damage and setting those suseptible on fire.
+ * - Can shoot fire in straight line, dealing 30 burn damage, setting those susceptible on fire, and releasing plasma.
  * - Can use his wings to temporarily stun and knock back any nearby mobs.  This attack has no cooldown, but instead has endlag after the attack where Space Dragon cannot act.  This endlag's time decreases over time, but is added to every time he uses the move.
  * - Can swallow mob corpses to heal for half their max health.  Any corpses swallowed are stored within him, and will be regurgitated on death.
  * - Can tear through any type of wall.  This takes 4 seconds for most walls, and 12 seconds for reinforced walls.
@@ -58,9 +66,9 @@
 	death_message = "screeches as its wings turn to dust and it collapses on the floor, its life extinguished."
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
-	maxbodytemp = 1500
+	maxbodytemp = INFINITY
 	faction = list("carp")
-	pressure_resistance = 200
+	pressure_resistance = INFINITY
 	/// How much endlag using Wing Gust should apply.  Each use of wing gust increments this, and it decreases over time.
 	var/tiredness = 0
 	/// A multiplier to how much each use of wing gust should add to the tiredness variable.  Set to 5 if the current rift is destroyed.
@@ -81,6 +89,8 @@
 	var/devastation_damage_min_percentage = 0.4
 	/// Maximum devastation damage dealt coefficient based on max health
 	var/devastation_damage_max_percentage = 0.75
+	/// The amount of plasma stored. Up to 100 moles of plasma can get
+	var/plasma = 400
 
 /mob/living/simple_animal/hostile/space_dragon/Initialize(mapload)
 	. = ..()
@@ -113,6 +123,7 @@
 		visible_message(span_danger("[src] vomits up [consumed_mob]!"))
 		consumed_mob.forceMove(loc)
 		consumed_mob.Paralyze(50)
+	plasma = min(plasma + PLASMA_GENERATION_RATE * delta_time, MAXIMUM_STORED_PLASMA_MOLES)
 
 /mob/living/simple_animal/hostile/space_dragon/AttackingTarget()
 	if(using_special)
@@ -260,30 +271,44 @@
 	return (get_line(src, T) - get_turf(src))
 
 /**
+ * Returns a list of open turfs that do not have windows or doors with a density.
+ * Arguments:
+ * * atom/atom - The target.
+ * * range - The maximum number of turfs it can return.
+*/
+/mob/living/simple_animal/hostile/space_dragon/proc/get_stream_turfs(atom/atom, range)
+	var/list/turfs = list()
+	for(var/turf/turf in line_target(0, range, atom))
+		if(isclosedturf(turf))
+			return turfs
+		for(var/obj/structure/window/window in turf.contents)
+			return turfs
+		for(var/obj/machinery/door/door in turf.contents)
+			if(door.density)
+				return turfs
+		turfs += turf
+	return turfs
+
+/**
  * Spawns fire at each position in a line from the source to the target.
  *
  * Spawns fire at each position in a line from the source to the target.
  * Stops if it comes into contact with a solid wall, a window, or a door.
  * Delays the spawning of each fire by 1.5 deciseconds.
  * Arguments:
- * * atom/at - The target
+ * * atom/atom - The target.
  */
-/mob/living/simple_animal/hostile/space_dragon/proc/fire_stream(atom/at = target)
+/mob/living/simple_animal/hostile/space_dragon/proc/fire_stream(atom/atom = target)
 	playsound(get_turf(src),'sound/magic/fireball.ogg', 200, TRUE)
 	var/range = 20
-	var/list/turfs = list()
-	turfs = line_target(0, range, at)
 	var/delayFire = -1.0
-	for(var/turf/T in turfs)
-		if(isclosedturf(T))
-			return
-		for(var/obj/structure/window/W in T.contents)
-			return
-		for(var/obj/machinery/door/D in T.contents)
-			if(D.density)
-				return
+	var/list/stream_turfs = list()
+	stream_turfs = get_stream_turfs(target, range)
+	for(var/turf/turf in stream_turfs)
 		delayFire += 1.5
-		addtimer(CALLBACK(src, .proc/dragon_fire_line, T), delayFire)
+		addtimer(CALLBACK(src, .proc/dragon_fire_line, turf, length(stream_turfs), min(plasma, MAXIMUM_PLASMA_MOLES_RELEASED)), delayFire)
+	if(length(stream_turfs))
+		plasma -= min(plasma, MAXIMUM_PLASMA_MOLES_RELEASED)
 
 /**
  * What occurs on each tile to actually create the fire.
@@ -292,25 +317,29 @@
  * It creates a hotspot on the given turf, damages any living mob with 30 burn damage, and damages mechs by 50.
  * It can only hit any given target once.
  * Arguments:
- * * turf/T - The turf to trigger the effects on.
+ * * turf/turf - The turf to trigger the effects on.
+ * * affected_volume - The number of turfs that got influenced by the fire stream.
  */
-/mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/T)
+/mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/turf, affected_volume, total_plasma_released)
 	var/list/hit_list = list()
 	hit_list += src
-	new /obj/effect/hotspot(T)
-	T.hotspot_expose(700,50,1)
-	for(var/mob/living/L in T.contents)
-		if(L in hit_list)
+	if(isopenturf(turf))
+		var/turf/open/open_turf = turf
+		open_turf.atmos_spawn_air("plasma=[total_plasma_released / affected_volume];o2=[OXYGEN_RATIO * total_plasma_released / affected_volume];TEMP=2000")
+	new /obj/effect/hotspot(turf)
+	turf.hotspot_expose(2000,50,1)
+	for(var/mob/living/living in turf.contents)
+		if(living in hit_list)
 			continue
-		hit_list += L
-		L.adjustFireLoss(30)
-		to_chat(L, span_userdanger("You're hit by [src]'s fire breath!"))
+		hit_list += living
+		living.adjustFireLoss(30)
+		to_chat(living, span_userdanger("You're hit by [src]'s fire breath!"))
 	// deals damage to mechs
-	for(var/obj/vehicle/sealed/mecha/M in T.contents)
-		if(M in hit_list)
+	for(var/obj/vehicle/sealed/mecha/mecha in turf.contents)
+		if(mecha in hit_list)
 			continue
-		hit_list += M
-		M.take_damage(50, BRUTE, MELEE, 1)
+		hit_list += mecha
+		mecha.take_damage(50, BRUTE, MELEE, 1)
 
 /**
  * Handles consuming and storing consumed things inside Space Dragon
@@ -340,6 +369,10 @@
 		icon_state = "spacedragon"
 	using_special = FALSE
 	add_dragon_overlay()
+
+/mob/living/simple_animal/hostile/space_dragon/get_status_tab_items()
+	. = ..()
+	. += "Plasma: [plasma]/[MAXIMUM_STORED_PLASMA_MOLES]"
 
 /**
  * Handles wing gust from the windup all the way to the endlag at the end.
@@ -380,3 +413,7 @@
 	tiredness = tiredness + (gust_tiredness * tiredness_mult)
 
 #undef DARKNESS_THRESHOLD
+#undef MAXIMUM_STORED_PLASMA_MOLES
+#undef MAXIMUM_PLASMA_MOLES_RELEASED
+#undef PLASMA_GENERATION_RATE
+#undef OXYGEN_RATIO
