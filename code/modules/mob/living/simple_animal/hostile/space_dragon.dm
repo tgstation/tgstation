@@ -89,8 +89,8 @@
 	var/devastation_damage_min_percentage = 0.4
 	/// Maximum devastation damage dealt coefficient based on max health
 	var/devastation_damage_max_percentage = 0.75
-	/// The amount of plasma stored. Up to 100 moles of plasma can get
-	var/plasma = 400
+	/// The amount of plasma stored. Up to [MAXIMUM_PLASMA_MOLES_RELEASED] moles of plasma can get released.
+	var/plasma = MAXIMUM_STORED_PLASMA_MOLES
 
 /mob/living/simple_animal/hostile/space_dragon/Initialize(mapload)
 	. = ..()
