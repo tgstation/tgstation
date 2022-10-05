@@ -25,6 +25,10 @@
 	var/replaceable = FALSE
 	///Cooldown timer on replacing a civilain bounty. Bounties can only be replaced once every 5 minutes.
 	COOLDOWN_DECLARE(bounty_timer)
+	///A special semi-tandom token for tranfering money from NT pay app
+	var/pay_token
+	///List with a transaction history for NT pay app
+	var/list/transaction_history = list()
 
 /datum/bank_account/New(newname, job, modifier = 1, player_account = TRUE)
 	account_holder = newname
@@ -32,6 +36,7 @@
 	payday_modifier = modifier
 	add_to_accounts = player_account
 	setup_unique_account_id()
+	pay_token = uppertext("[copytext(newname, 1, 2)][copytext(newname, -1)]-[random_capital_letter()]-[rand(1111,9999)]")
 
 /datum/bank_account/Destroy()
 	if(add_to_accounts)
@@ -59,6 +64,7 @@
 
 /datum/bank_account/vv_edit_var(var_name, var_value) // just so you don't have to do it manually
 	var/old_id = account_id
+	var/old_balance = account_balance
 	. = ..()
 	switch(var_name)
 		if(NAMEOF(src, account_id))
@@ -70,6 +76,8 @@
 				setup_unique_account_id()
 			else
 				SSeconomy.bank_accounts_by_id -= "[account_id]"
+		if(NAMEOF(src, account_balance))
+			add_log_to_history(var_value - old_balance, "Nanotrasen: Moderator Action")
 
 /**
  * Sets the bank_account to behave as though a CRAB-17 event is happening.
@@ -100,10 +108,13 @@
  * Adjusts the balance of a bank_account as well as sanitizes the numerical input.
  * Arguments:
  * * amount - the quantity of credits that will be written off if the value is negative, or added if it is positive.
+ * * reason - the reason for the appearance or loss of money
  */
-/datum/bank_account/proc/adjust_money(amount)
+/datum/bank_account/proc/adjust_money(amount, reason)
 	if((amount < 0 && has_money(-amount)) || amount > 0)
 		_adjust_money(amount)
+		if(reason)
+			add_log_to_history(amount, reason)
 		return TRUE
 	return FALSE
 
@@ -112,13 +123,25 @@
  * Arguments:
  * * datum/bank_account/from - The bank account that is sending the credits to this bank_account datum.
  * * amount - the quantity of credits that are being moved between bank_account datums.
+ * * transfer_reason - override for adjust_money reason. Use if no default reason(Transfer to/from Name Surname).
  */
-/datum/bank_account/proc/transfer_money(datum/bank_account/from, amount)
+/datum/bank_account/proc/transfer_money(datum/bank_account/from, amount, transfer_reason)
 	if(from.has_money(amount))
-		adjust_money(amount)
+		var/reason_to = "Transfer: From [from.account_holder]"
+		var/reason_from = "Transfer: To [account_holder]"
+
+		if(istype(from, /datum/bank_account/department))
+			reason_to = "Nanotrasen: Salary"
+			reason_from = ""
+		
+		if(transfer_reason)
+			reason_to = istype(src, /datum/bank_account/department) ? "" : transfer_reason
+			reason_from = transfer_reason
+		
+		adjust_money(amount, reason_to)
+		from.adjust_money(-amount, reason_from)
 		SSblackbox.record_feedback("amount", "credits_transferred", amount)
 		log_econ("[amount] credits were transferred from [from.account_holder]'s account to [src.account_holder]")
-		from.adjust_money(-amount)
 		return TRUE
 	return FALSE
 
@@ -136,7 +159,7 @@
 	if(amount_of_paychecks == 1)
 		money_to_transfer = clamp(money_to_transfer, 0, PAYCHECK_CREW) //We want to limit single, passive paychecks to regular crew income.
 	if(free)
-		adjust_money(money_to_transfer)
+		adjust_money(money_to_transfer, "Nanotrasen: Shift Payment")
 		SSblackbox.record_feedback("amount", "free_income", money_to_transfer)
 		SSeconomy.station_target += money_to_transfer
 		log_econ("[money_to_transfer] credits were given to [src.account_holder]'s account from income.")
@@ -247,5 +270,21 @@
 
 /datum/bank_account/remote // Bank account not belonging to the local station
 	add_to_accounts = FALSE
+
+/**
+ * Add log to transactions history. Deletes the oldest log when the history has more than 20 entries.
+ * Main format: Category: Reason in Reason. Example: Vending: Machinery Using
+ * Arguments:
+ * * adjusted_money - How much was added, negative values removing cash.
+ * * reason - The reason of interact with balance, for example, "Bought chips" or "Payday".
+ */
+/datum/bank_account/proc/add_log_to_history(adjusted_money, reason)
+	if(transaction_history.len >= 20)
+		transaction_history.Cut(1,2)
+	
+	transaction_history += list(list(
+		"adjusted_money" = adjusted_money,
+		"reason" = reason,
+	))
 
 #undef DUMPTIME
