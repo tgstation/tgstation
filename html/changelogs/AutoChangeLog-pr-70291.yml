@@ -1,0 +1,4 @@
+author: "Mickyan"
+delete-after: True
+changes: 
+  - qol: "Assistant PDAs now start with the bounty board app preinstalled"
