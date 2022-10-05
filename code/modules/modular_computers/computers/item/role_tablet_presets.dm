@@ -355,6 +355,7 @@
 	greyscale_colors = null
 	icon_state = "pda-library"
 	inserted_item = /obj/item/pen/fountain
+	long_ranged = TRUE
 	default_applications = list(
 		/datum/computer_file/program/newscaster,
 	)
