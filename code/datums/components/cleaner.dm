@@ -14,7 +14,7 @@ GLOBAL_DATUM_INIT(cleaning_bubbles_higher, /mutable_appearance, mutable_appearan
 	var/skill_duration_modifier_offset
 	/// Determines what this cleaner can wash off, [the available options are found here](code/__DEFINES/cleaning.html).
 	var/cleaning_strength
-	/// Gets called before you start cleaning.
+	/// Gets called before you start cleaning, returns TRUE/FALSE whether the clean should actually wash tiles, or DO_NOT_CLEAN to not clean at all.
 	var/datum/callback/pre_clean_callback
 	/// Gets called when something is successfully cleaned.
 	var/datum/callback/on_cleaned_callback
