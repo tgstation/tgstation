@@ -157,8 +157,9 @@
 	drink_type = BREAKFAST
 
 /obj/item/reagent_containers/cup/glass/coffee/examine(mob/user)
-	. = span_notice("Alt-click to toggle cup lid.")
-	. += ..()
+	. = ..()
+	. += span_notice("Alt-click to toggle cup lid.")
+	return
 
 /obj/item/reagent_containers/cup/glass/coffee/AltClick(mob/user)
 	lid_open = lid_open ? 0 : 1
