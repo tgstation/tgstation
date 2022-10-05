@@ -679,7 +679,7 @@
 		return
 	if(!alt_click_can_use_id(user))
 		return
-	if(registered_account.adjust_money(-amount_to_remove, "System: Withdraw"))
+	if(registered_account.adjust_money(-amount_to_remove, "System: Withdrawal"))
 		var/commission_amount = amount_to_remove < 100 ? commission_minimal : round(amount_to_remove * commission)
 		var/obj/item/holochip/holochip = new (user.drop_location(), amount_to_remove - commission_amount)
 		user.put_in_hands(holochip)
