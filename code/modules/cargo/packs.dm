@@ -2171,6 +2171,16 @@
 					/obj/item/clothing/head/helmet/bluetaghelm = 3)
 	crate_name = "laser tag crate"
 
+/datum/supply_pack/costumes_toys/knucklebones
+	name = "Knucklebones Game Crate"
+	desc = "A fun dice game definitely not invented by a cult. Consult your local chaplain regarding approved religious activity."
+	cost = CARGO_CRATE_VALUE * 2
+	contains = list(/obj/item/dice/d6 = 18,
+					/obj/item/paper/guides/knucklebone,
+					/obj/item/toy/crayon/white)
+	crate_name = "knucklebones game crate"
+	crate_type = /obj/structure/closet/crate/wooden
+
 /datum/supply_pack/costumes_toys/lasertag/pins
 	name = "Laser Tag Firing Pins Crate"
 	desc = "Three laser tag firing pins used in laser-tag units to ensure users are wearing their vests."
