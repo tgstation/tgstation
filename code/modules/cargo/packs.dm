@@ -2445,7 +2445,7 @@
 	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/item/dice/d6 = 18,
 					/obj/item/paper/guides/knucklebone,
-					/obj/item/crayon/paintcan)
+					/obj/item/toy/crayon/white)
 	crate_name = "knucklebones game crate"
 	crate_type = /obj/structure/closet/crate/wooden
 
