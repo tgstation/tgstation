@@ -1,0 +1,4 @@
+author: "Zonespace27"
+delete-after: True
+changes: 
+  - bugfix: "The NTNet DOS tool now works again"
