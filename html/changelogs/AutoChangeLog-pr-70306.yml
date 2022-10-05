@@ -1,0 +1,5 @@
+author: "Salex08"
+delete-after: True
+changes: 
+  - rscadd: "Adds a new kudzu mutation called timid"
+  - balance: "lowers severity of the kudzu mutation temperature stabilisation from average to minor"
