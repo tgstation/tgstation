@@ -150,7 +150,7 @@
 		return
 	var/obj/item/mod/module/module
 	for(var/obj/item/mod/module/potential_module as anything in attached_module.mod.modules)
-		if(potential_module.name == module_to_select.value || potential_module == module_to_select.value)
+		if(potential_module.name == module_to_select.value)
 			module = potential_module
 	if(COMPONENT_TRIGGERED_BY(toggle_suit, port))
 		INVOKE_ASYNC(attached_module.mod, /obj/item/mod/control.proc/toggle_activate, attached_module.mod.wearer)
@@ -171,7 +171,11 @@
 		RegisterSignal(mod, COMSIG_MOD_MODULE_REMOVED, .proc/on_module_changed)
 		RegisterSignal(mod, COMSIG_ITEM_EQUIPPED, .proc/equip_check)
 		wearer.set_output(mod.wearer)
-		module_to_select.possible_options = mod.modules
+		var/modules_list = list()
+		for(var/obj/item/mod/module/module in mod.modules)
+			if(module.module_type != MODULE_PASSIVE)
+				modules_list += module.name
+		module_to_select.possible_options = modules_list
 		if (module_to_select.possible_options.len)
 			module_to_select.set_value(module_to_select.possible_options[1])
 	else if(istype(old_loc, /obj/item/mod/control))
@@ -193,10 +197,13 @@
 
 /obj/item/circuit_component/mod_adapter_core/proc/on_module_changed()
 	SIGNAL_HANDLER
-	module_to_select.possible_options = attached_module.mod.modules
+	var/modules_list = list()
+	for(var/obj/item/mod/module/module in attached_module.mod.modules)
+		if(module.module_type != MODULE_PASSIVE)
+			modules_list += module.name
+	module_to_select.possible_options = modules_list
 	if (module_to_select.possible_options.len)
 		module_to_select.set_value(module_to_select.possible_options[1])
-
 
 /obj/item/circuit_component/mod_adapter_core/proc/on_mod_part_toggled()
 	SIGNAL_HANDLER
