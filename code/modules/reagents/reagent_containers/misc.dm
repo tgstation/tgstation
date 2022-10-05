@@ -154,9 +154,8 @@
 			carbon_target.visible_message(span_notice("[user] touches \the [carbon_target] with \the [src]."))
 			log_combat(user, carbon_target, "touched", src, log_object)
 		return
-
 	return ..()
 
 ///Checks whether or not we should clean.
-/obj/item/reagent_containers/cup/rag/proc/should_clean(datum/cleaning_source, turf/cleaned_turf, mob/living/cleaner)
+/obj/item/reagent_containers/cup/rag/proc/should_clean(datum/cleaning_source, atom/atom_to_clean, mob/living/cleaner)
 	return (src in cleaner)

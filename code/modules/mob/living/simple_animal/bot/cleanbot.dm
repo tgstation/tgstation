@@ -30,7 +30,6 @@
 	///The current bot's target.
 	var/atom/target
 
-	var/obj/item/mop/advanced/cleaning_mop
 	///Currently attached weapon, usually a knife.
 	var/obj/item/weapon
 
@@ -98,7 +97,6 @@
 
 /mob/living/simple_animal/bot/cleanbot/Initialize(mapload)
 	. = ..()
-	cleaning_mop = new(src)
 
 	AddComponent(/datum/component/cleaner, CLEANBOT_CLEANING_TIME, \
 		on_cleaned_callback = CALLBACK(src, /atom/.proc/update_appearance, UPDATE_ICON))
@@ -119,13 +117,10 @@
 		var/atom/drop_loc = drop_location()
 		weapon.force = initial(weapon.force)
 		drop_part(weapon, drop_loc)
-	QDEL_NULL(cleaning_mop)
 	return ..()
 
 /mob/living/simple_animal/bot/cleanbot/examine(mob/user)
 	. = ..()
-	if(!cleaning_mop)
-		. += "[span_warning("It's missing their trusty mop!")]"
 	if(!weapon)
 		return .
 	. += "[span_warning("Is that \a [weapon] taped to it...?")]"
@@ -233,9 +228,6 @@
 	if(deleting_atom == weapon)
 		weapon = null
 		update_appearance(UPDATE_ICON)
-	if(deleting_atom == cleaning_mop)
-		cleaning_mop = null
-		update_appearance(UPDATE_ICON)
 	return ..()
 
 /mob/living/simple_animal/bot/cleanbot/handle_automated_action()
@@ -248,9 +240,9 @@
 	if(bot_cover_flags & BOT_COVER_EMAGGED) //Emag functions
 		var/mob/living/carbon/victim = locate(/mob/living/carbon) in loc
 		if(victim && victim == target)
-			UnarmedAttack(victim) // Acid spray
+			UnarmedAttack(victim, TRUE) // Acid spray
 		if(isopenturf(loc) && prob(15)) // Wets floors and spawns foam randomly
-			UnarmedAttack(src)
+			UnarmedAttack(src, TRUE)
 	else if(prob(5))
 		audible_message("[src] makes an excited beeping booping sound!")
 
@@ -276,7 +268,7 @@
 				shuffle = TRUE //Shuffle the list the next time we scan so we dont both go the same way.
 				path = list()
 			else
-				UnarmedAttack(target) //Rather than check at every step of the way, let's check before we do an action, so we can rescan before the other bot.
+				UnarmedAttack(target, TRUE) //Rather than check at every step of the way, let's check before we do an action, so we can rescan before the other bot.
 				if(QDELETED(target)) //We done here.
 					target = null
 					mode = BOT_IDLE
@@ -342,12 +334,10 @@
 /mob/living/simple_animal/bot/cleanbot/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
-	. = ..()
 	if(ismopable(attack_target))
 		mode = BOT_CLEANING
 		update_icon_state()
-		var/turf/turf_to_clean = get_turf(attack_target)
-		cleaning_mop.afterattack(turf_to_clean, src)
+		..()
 		target = null
 		mode = BOT_IDLE
 

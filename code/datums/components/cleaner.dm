@@ -40,10 +40,24 @@ GLOBAL_DATUM_INIT(cleaning_bubbles_higher, /mutable_appearance, mutable_appearan
 	return ..()
 
 /datum/component/cleaner/RegisterWithParent()
+	if(isbot(parent))
+		RegisterSignal(parent, COMSIG_LIVING_UNARMED_ATTACK, .proc/on_unarmed_attack)
+		return
 	RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, .proc/on_afterattack)
 
 /datum/component/cleaner/UnregisterFromParent()
+	if(isbot(parent))
+		UnregisterSignal(parent, COMSIG_LIVING_UNARMED_ATTACK)
+		return
 	UnregisterSignal(parent, COMSIG_ITEM_AFTERATTACK)
+
+/**
+ * Handles the COMSIG_LIVING_UNARMED_ATTACK signal used for cleanbots
+ * Redirects to afterattack, while setting parent (the bot) as user.
+ */
+/datum/component/cleaner/proc/on_unarmed_attack(datum/source, atom/target, proximity_flags, modifiers)
+	SIGNAL_HANDLER
+	return on_afterattack(source, target, parent, proximity_flags, modifiers)
 
 /**
  * Handles the COMSIG_ITEM_AFTERATTACK signal by calling the clean proc.
@@ -56,9 +70,13 @@ GLOBAL_DATUM_INIT(cleaning_bubbles_higher, /mutable_appearance, mutable_appearan
  */
 /datum/component/cleaner/proc/on_afterattack(datum/source, atom/target, mob/user, proximity_flag, click_parameters)
 	SIGNAL_HANDLER
+	if(!proximity_flag)
+		return
 	var/clean_target
 	if(pre_clean_callback)
 		clean_target = pre_clean_callback?.Invoke(source, target, user)
+		if(clean_target == DO_NOT_CLEAN)
+			return
 	INVOKE_ASYNC(src, .proc/clean, source, target, user, clean_target) //signal handlers can't have do_afters inside of them
 
 /**
