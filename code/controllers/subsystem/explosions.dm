@@ -2,7 +2,20 @@
 GLOBAL_LIST_EMPTY(explosions)
 
 SUBSYSTEM_DEF(explosions)
-	name = "Explosions"
+	/*
+	On September 5th, 2022, drsingh/magic mountain/delari passed away.
+	https://forum.ss13.co/showthread.php?tid=19810
+	I don't really know what to type. I didn't think I'd have to type something like this for someone I knew for a long, long time, but here I am typing this.
+	DrSingh was one of the best coders Space Station 13's ever had, and one of the people I've looked up to for over 10 years. They taught me a lot of what I know
+	as a developer and their work was inspirational. They taught me the basics of BYOND, they went to bat for me on the goonchem port, they taught everyone how to make
+	byond do garbage collection to speed up deletion(might be wrong it's been like 10 years and my brain doesn't work so good), and they taught me how to make
+	explosions extremely fast, and instant on a local copy of SS13. I used their work and theories and methodologies to make this instant explosions subsystem.
+	So, I'm renaming it in honor of them. I'm gonna miss you, you brilliant motherfucker, we all are. I'm sorry I didn't reach out before you passed. And I'm sorry I 
+	never contributed to Goon after it went open source even though I said I would. 
+	Goodbye, man. See you in the next life.
+	- Iamgoofball
+	*/
+	name = "DrSingh's Lightning Fast Explosions"
 	init_order = INIT_ORDER_EXPLOSIONS
 	priority = FIRE_PRIORITY_EXPLOSIONS
 	wait = 1
