@@ -10,8 +10,8 @@
 
 /datum/uplink_item/suits/infiltrator_bundle
 	name = "Infiltrator Modsuit"
-	desc = "Developed by Roseus Galactic Actors Guild in conjunction with the Gorlex Marauders to produce a functional suit for urban operations, \
-			this suit proves to be cheaper than your standard issue MODsuit, with none of the movement restrictions of the vacuum-sealed suits employed by the company. \
+	desc = "Developed by the Roseus Galactic Actors Guild in conjunction with the Gorlex Marauders to produce a functional suit for urban operations, \
+			this suit proves to be cheaper than your standard issue MODsuit, with none of the movement restrictions of the space suits employed by the company. \
 			However, this greater mobility comes at a cost, and the suit is ineffective at protecting the wearer from the vacuum of space. \
 			The suit does come pre-equipped with a special psi-emitter stealth module that makes it impossible to recognize the wearer \
 			as well as causing significant demoralization amongst Nanotrasen crew."
@@ -60,7 +60,7 @@
 
 /datum/uplink_item/suits/plate_compression
 	name = "MODsuit Plate Compression Module"
-	desc = "A MODsuit module that lets the suit compress into a smaller size. Not compatible with storage modules or the Infiltrator Modsuit."
+	desc = "A MODsuit module that lets the suit compress into a smaller size. Not compatible with storage modules or the Infiltrator MODsuit."
 	item = /obj/item/mod/module/plate_compression
 	progression_minimum = 20 MINUTES
 	cost = 2

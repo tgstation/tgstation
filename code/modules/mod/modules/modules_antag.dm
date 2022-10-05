@@ -479,22 +479,11 @@
 	removable = FALSE
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0
 	incompatible_modules = list(/obj/item/mod/module/infiltrator)
-	// The suits original wearable slot before installing the mod
-	var/old_slot
-	// The new wearable slot after installing the mod
-	var/new_slot = ITEM_SLOT_BELT
 
 /obj/item/mod/module/infiltrator/on_install()
-	old_slot = mod.slot_flags
-	mod.slot_flags = new_slot
 	mod.item_flags |= EXAMINE_SKIP
 
 /obj/item/mod/module/infiltrator/on_uninstall(deleting = FALSE)
-	mod.slot_flags = old_slot
-	old_slot = null
-	if(!mod.loc)
-		return
-	mod.forceMove(drop_location())
 	mod.item_flags &= ~EXAMINE_SKIP
 
 /obj/item/mod/module/infiltrator/on_suit_activation()
