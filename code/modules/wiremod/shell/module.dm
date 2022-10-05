@@ -102,6 +102,9 @@
 	/// The name of the last selected module
 	var/datum/port/output/selected_module
 
+	/// A list of the names of all currently deployed parts
+	var/datum/port/output/deployed_parts
+
 	/// The signal that is triggered when a module is selected
 	var/datum/port/output/on_module_selected
 
@@ -124,6 +127,7 @@
 	deployed = add_output_port("Deployed", PORT_TYPE_NUMBER)
 	activated = add_output_port("Activated", PORT_TYPE_NUMBER)
 	selected_module = add_output_port("Selected Module", PORT_TYPE_STRING)
+	deployed_parts = add_output_port("Deployed Parts", PORT_TYPE_LIST(PORT_TYPE_STRING))
 	// Output Signals
 	on_module_selected = add_output_port("On Module Selected", PORT_TYPE_SIGNAL)
 	on_deploy = add_output_port("On Deploy", PORT_TYPE_SIGNAL)
@@ -196,11 +200,14 @@
 
 /obj/item/circuit_component/mod_adapter_core/proc/on_mod_part_toggled()
 	SIGNAL_HANDLER
+	var/string_list = list()
 	var/is_deployed = TRUE
 	for(var/obj/item/part as anything in attached_module.mod.mod_parts)
 		if(part.loc == src)
 			is_deployed = FALSE
-			break
+		else
+			string_list += part.name
+	deployed_parts.set_output(string_list)
 	deployed.set_output(is_deployed)
 	on_deploy.set_output(COMPONENT_SIGNAL)
 
