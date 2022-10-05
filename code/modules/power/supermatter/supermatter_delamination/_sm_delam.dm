@@ -59,8 +59,6 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 		sm.lastwarning = REALTIMEOFDAY - (SUPERMATTER_WARNING_DELAY / 2) // Cut the time to next announcement in half.
 	else // Taking damage, in warning
 		sm.radio.talk_into(sm, "Danger! Crystal hyperstructure integrity faltering! Integrity: [sm.get_integrity_percent()]%", sm.warning_channel)
-		if(sm.damage_archived < sm.warning_point)
-			SEND_SIGNAL(sm, COMSIG_SUPERMATTER_DELAM_START_ALARM)
 
 	SEND_SIGNAL(sm, COMSIG_SUPERMATTER_DELAM_ALARM)
 	return TRUE
@@ -87,11 +85,6 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 		return list(mutable_appearance(sm.icon, "causality_field"))
 	return list()
 
-/// Modifies the damage dealt to the sm.
-/// [/obj/machinery/power/supermatter_crystal/proc/deal_damage]
-/datum/sm_delam/proc/damage_multiplier(obj/machinery/power/supermatter_crystal/sm)
-	return 1
-
 /// Returns a set of messages to be spouted during delams
 /// First message is start of count down, second message is quitting of count down (if sm healed), third is 5 second intervals
 /datum/sm_delam/proc/count_down_messages(obj/machinery/power/supermatter_crystal/sm)
@@ -100,3 +93,7 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 	messages += "Crystalline hyperstructure returning to safe operating parameters. Failsafe has been disengaged."
 	messages += "remain before causality stabilization."
 	return messages
+
+/// Adjusts the damage and mole limit at which we start taking damage.
+/datum/sm_delam/proc/mole_power_damage_limit(obj/machinery/power/supermatter_crystal/sm)
+	return 1

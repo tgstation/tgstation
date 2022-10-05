@@ -146,17 +146,20 @@
 	material_flags = NONE
 
 /obj/item/storage/toolbox/electrical/PopulateContents()
-	var/pickedcolor = pick("red","yellow","green","blue","pink","orange","cyan","white")
+	var/pickedcolor = pick(GLOB.cable_colors)
 	new /obj/item/screwdriver(src)
 	new /obj/item/wirecutters(src)
 	new /obj/item/t_scanner(src)
 	new /obj/item/crowbar(src)
-	new /obj/item/stack/cable_coil(src,MAXCOIL,pickedcolor)
-	new /obj/item/stack/cable_coil(src,MAXCOIL,pickedcolor)
+	var/obj/item/stack/cable_coil/new_cable_one = new(src, MAXCOIL)
+	new_cable_one.set_cable_color(pickedcolor)
+	var/obj/item/stack/cable_coil/new_cable_two = new(src, MAXCOIL)
+	new_cable_two.set_cable_color(pickedcolor)
 	if(prob(5))
 		new /obj/item/clothing/gloves/color/yellow(src)
 	else
-		new /obj/item/stack/cable_coil(src,MAXCOIL,pickedcolor)
+		var/obj/item/stack/cable_coil/new_cable_three = new(src, MAXCOIL)
+		new_cable_three.set_cable_color(pickedcolor)
 
 /obj/item/storage/toolbox/syndicate
 	name = "suspicious looking toolbox"
@@ -206,7 +209,7 @@
 /obj/item/storage/toolbox/artistic/Initialize(mapload)
 	. = ..()
 	atom_storage.max_total_storage = 20
-	atom_storage.max_slots = 10
+	atom_storage.max_slots = 11
 
 /obj/item/storage/toolbox/artistic/PopulateContents()
 	new /obj/item/storage/crayons(src)
@@ -219,6 +222,7 @@
 	new /obj/item/stack/pipe_cleaner_coil/orange(src)
 	new /obj/item/stack/pipe_cleaner_coil/cyan(src)
 	new /obj/item/stack/pipe_cleaner_coil/white(src)
+	new /obj/item/stack/pipe_cleaner_coil/brown(src)
 
 /obj/item/storage/toolbox/ammo
 	name = "ammo box"

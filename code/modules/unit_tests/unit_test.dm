@@ -97,7 +97,7 @@ GLOBAL_LIST_EMPTY(unit_test_mapping_logs)
 	if (fexists(filename))
 		var/data_filename = "data/screenshots/[path_prefix]_[name].png"
 		fcopy(icon, data_filename)
-		log_test("[path_prefix]_[name] was found, putting in data/screenshots")
+		log_test("\t[path_prefix]_[name] was found, putting in data/screenshots")
 	else if (fexists("code"))
 		// We are probably running in a local build
 		fcopy(icon, filename)
@@ -106,7 +106,7 @@ GLOBAL_LIST_EMPTY(unit_test_mapping_logs)
 		// We are probably running in real CI, so just pretend it worked and move on
 		fcopy(icon, "data/screenshots_new/[path_prefix]_[name].png")
 
-		log_test("[path_prefix]_[name] was put in data/screenshots_new")
+		log_test("\t[path_prefix]_[name] was put in data/screenshots_new")
 
 /// Logs a test message. Will use GitHub action syntax found at https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions
 /datum/unit_test/proc/log_for_test(text, priority, file, line)

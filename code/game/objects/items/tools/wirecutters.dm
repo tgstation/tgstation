@@ -9,6 +9,9 @@
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 
 	greyscale_config = /datum/greyscale_config/wirecutters
+	greyscale_config_belt = /datum/greyscale_config/wirecutters_belt_overlay
+	greyscale_config_inhand_left = /datum/greyscale_config/wirecutter_inhand_left
+	greyscale_config_inhand_right = /datum/greyscale_config/wirecutter_inhand_right
 
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT

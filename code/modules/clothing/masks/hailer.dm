@@ -80,7 +80,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	name = "spacepol mask"
 	desc = "A close-fitting tactical mask created in cooperation with a certain megacorporation, comes with an especially aggressive Compli-o-nator 3000."
 	icon_state = "spacepol"
-	inhand_icon_state = "spacepol"
+	inhand_icon_state = "spacepol_mask"
 	tint = 1.5
 	flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
 	visor_flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
@@ -189,7 +189,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	name = "police whistle"
 	desc = "A police whistle for when you need to make sure the criminals hear you."
 	icon_state = "whistle"
-	inhand_icon_state = "whistle"
+	inhand_icon_state = null
 	slot_flags = ITEM_SLOT_MASK|ITEM_SLOT_NECK
 	custom_price = PAYCHECK_COMMAND * 1.5
 	w_class = WEIGHT_CLASS_SMALL

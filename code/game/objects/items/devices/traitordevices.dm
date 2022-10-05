@@ -207,6 +207,8 @@ effective or pretty fucking useless.
 	icon = 'icons/obj/clothing/belts.dmi'
 	icon_state = "utility"
 	inhand_icon_state = "utility"
+	lefthand_file = 'icons/mob/inhands/equipment/belt_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/belt_righthand.dmi'
 	worn_icon_state = "utility"
 	slot_flags = ITEM_SLOT_BELT
 	attack_verb_continuous = list("whips", "lashes", "disciplines")
@@ -291,6 +293,10 @@ effective or pretty fucking useless.
 		GLOB.active_jammers -= src
 
 	update_appearance()
+
+/obj/item/jammer/Destroy()
+	GLOB.active_jammers -= src
+	return ..()
 
 /obj/item/storage/toolbox/emergency/turret
 	desc = "You feel a strange urge to hit this with a wrench."

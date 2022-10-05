@@ -224,4 +224,4 @@
 
 /datum/bounty/item/botany/cucumber
 	name = "Cucumbers"
-	wanted_types = list(/obj/item/seeds/cucumber = TRUE)
+	wanted_types = list(/obj/item/food/grown/cucumber = TRUE)

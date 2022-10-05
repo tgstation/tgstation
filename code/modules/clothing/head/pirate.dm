@@ -2,7 +2,7 @@
 	name = "pirate hat"
 	desc = "Yarr."
 	icon_state = "pirate"
-	inhand_icon_state = "pirate"
+	inhand_icon_state = null
 	dog_fashion = /datum/dog_fashion/head/pirate
 
 /obj/item/clothing/head/pirate
@@ -33,13 +33,13 @@
 /obj/item/clothing/head/pirate/captain
 	name = "pirate captain hat"
 	icon_state = "hgpiratecap"
-	inhand_icon_state = "hgpiratecap"
+	inhand_icon_state = null
 
 /obj/item/clothing/head/bandana
 	name = "pirate bandana"
 	desc = "Yarr."
 	icon_state = "bandana"
-	inhand_icon_state = "bandana"
+	inhand_icon_state = null
 
 
 /obj/item/clothing/head/bandana/armored
