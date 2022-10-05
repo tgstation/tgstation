@@ -1,6 +1,7 @@
 /obj/item/food/pie
 	icon = 'icons/obj/food/piecake.dmi'
 
+
 	bite_consumption = 3
 	w_class = WEIGHT_CLASS_NORMAL
 	max_volume = 80

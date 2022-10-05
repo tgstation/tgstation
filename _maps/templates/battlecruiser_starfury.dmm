@@ -117,9 +117,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_starfury)
 "as" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer,
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/siding/thinplating_new{

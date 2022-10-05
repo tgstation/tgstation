@@ -34,7 +34,7 @@ GLOBAL_LIST_INIT(sandstone_recipes, list ( \
 	desc = "This appears to be a combination of both sand and stone."
 	singular_name = "sandstone brick"
 	icon_state = "sheet-sandstone"
-	inhand_icon_state = "sheet-sandstone"
+	inhand_icon_state = null
 	throw_speed = 3
 	throw_range = 5
 	mats_per_unit = list(/datum/material/sandstone=MINERAL_MATERIAL_AMOUNT)
@@ -240,7 +240,7 @@ GLOBAL_LIST_INIT(silver_recipes, list ( \
 /obj/item/stack/sheet/mineral/bananium
 	name = "bananium"
 	icon_state = "sheet-bananium"
-	inhand_icon_state = "sheet-bananium"
+	inhand_icon_state = null
 	singular_name = "bananium sheet"
 	sheettype = "bananium"
 	mats_per_unit = list(/datum/material/bananium=MINERAL_MATERIAL_AMOUNT)
@@ -331,7 +331,7 @@ GLOBAL_LIST_INIT(plastitanium_recipes, list ( \
 /obj/item/stack/sheet/mineral/snow
 	name = "snow"
 	icon_state = "sheet-snow"
-	inhand_icon_state = "sheet-snow"
+	inhand_icon_state = null
 	mats_per_unit = list(/datum/material/snow = MINERAL_MATERIAL_AMOUNT)
 	singular_name = "snow block"
 	force = 1
@@ -475,7 +475,7 @@ GLOBAL_LIST_INIT(metalhydrogen_recipes, list(
 /obj/item/stack/sheet/mineral/metal_hydrogen
 	name = "metal hydrogen"
 	icon_state = "sheet-metalhydrogen"
-	inhand_icon_state = "sheet-metalhydrogen"
+	inhand_icon_state = null
 	singular_name = "metal hydrogen sheet"
 	w_class = WEIGHT_CLASS_NORMAL
 	resistance_flags = FIRE_PROOF | LAVA_PROOF | ACID_PROOF | INDESTRUCTIBLE

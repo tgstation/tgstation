@@ -59,7 +59,7 @@
 /obj/item/clothing/head/bunnyhead
 	name = "Easter Bunny Head"
 	icon_state = "bunnyhead"
-	inhand_icon_state = "bunnyhead"
+	inhand_icon_state = null
 	desc = "Considerably more cute than 'Frank'."
 	slowdown = -0.3
 	clothing_flags = THICKMATERIAL | SNUG_FIT
@@ -71,7 +71,7 @@
 	icon_state = "bunnysuit"
 	icon = 'icons/obj/clothing/suits/costume.dmi'
 	worn_icon = 'icons/mob/clothing/suits/costume.dmi'
-	inhand_icon_state = "bunnysuit"
+	inhand_icon_state = null
 	slowdown = -0.3
 	clothing_flags = THICKMATERIAL
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
@@ -82,7 +82,7 @@
 	name = "Easter Bunny Satchel"
 	desc = "Good for your eyes."
 	icon_state = "satchel_carrot"
-	inhand_icon_state = "satchel_carrot"
+	inhand_icon_state = null
 
 //Egg prizes and egg spawns!
 /obj/item/surprise_egg

@@ -118,9 +118,8 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/sbc_corvette)
 "ao" = (
-/obj/machinery/light/small{
+/obj/machinery/light/small/directional/west{
 	brightness = 3;
-	dir = 8
 	},
 /obj/structure/chair/comfy/shuttle{
 	dir = 1;
@@ -182,7 +181,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/sbc_corvette)
 "aw" = (
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /obj/structure/chair/comfy/shuttle{
 	dir = 1;
 	name = "tactical chair"
@@ -251,9 +250,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/sbc_corvette)
 "aG" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small/directional/north,
 /obj/structure/chair/comfy/shuttle{
 	name = "tactical chair"
 	},
@@ -319,9 +316,8 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_corvette)
 "aR" = (
-/obj/machinery/light/small{
+/obj/machinery/light/small/directional/west{
 	brightness = 3;
-	dir = 8
 	},
 /obj/structure/chair/comfy/shuttle{
 	name = "tactical chair"
@@ -345,9 +341,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_corvette)
 "aT" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 1
 	},
@@ -358,9 +352,8 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/sbc_corvette)
 "aU" = (
-/obj/machinery/light/small{
+/obj/machinery/light/small/directional/west{
 	brightness = 3;
-	dir = 8
 	},
 /obj/effect/turf_decal/siding/thinplating_new/dark,
 /obj/effect/turf_decal/siding/thinplating_new/dark{

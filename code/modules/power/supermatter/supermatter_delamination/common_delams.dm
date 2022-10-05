@@ -32,7 +32,7 @@
 /datum/sm_delam/tesla
 
 /datum/sm_delam/tesla/can_select(obj/machinery/power/supermatter_crystal/sm)
-	return (sm.power > POWER_PENALTY_THRESHOLD)
+	return (sm.internal_energy > POWER_PENALTY_THRESHOLD)
 
 /datum/sm_delam/tesla/delam_progress(obj/machinery/power/supermatter_crystal/sm)
 	. = ..()

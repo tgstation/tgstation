@@ -202,9 +202,8 @@
 	var/obj/item/stack/cable_coil/binding_cable
 
 /obj/item/paper_bin/bundlenatural/Initialize(mapload)
-	binding_cable = new /obj/item/stack/cable_coil(src, 2)
-	binding_cable.color = COLOR_ORANGE_BROWN
-	binding_cable.cable_color = "brown"
+	binding_cable = new(src, 2)
+	binding_cable.set_cable_color(CABLE_COLOR_BROWN)
 	binding_cable.desc += " Non-natural."
 	return ..()
 

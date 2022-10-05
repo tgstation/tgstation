@@ -976,6 +976,12 @@
 	build_path = /obj/machinery/mechpad
 	req_components = list()
 
+/obj/item/circuitboard/machine/botpad
+	name = "Bot launchpad"
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
+	build_path = /obj/machinery/botpad
+	req_components = list()
+
 //Security
 
 /obj/item/circuitboard/machine/protolathe/department/security

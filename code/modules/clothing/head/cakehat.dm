@@ -6,12 +6,6 @@
 	hat_type = "cakehat"
 	lefthand_file = 'icons/mob/inhands/clothing/hats_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing/hats_righthand.dmi'
-	hitsound = 'sound/weapons/tap.ogg'
-	var/hitsound_on = 'sound/weapons/sear.ogg' //so we can differentiate between cakehat and energyhat
-	var/hitsound_off = 'sound/weapons/tap.ogg'
-	var/force_on = 15
-	var/throwforce_on = 15
-	var/damtype_on = BURN
 	flags_inv = HIDEEARS|HIDEHAIR
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
 	light_range = 2 //luminosity when on
@@ -20,9 +14,15 @@
 	heat = 999
 
 	dog_fashion = /datum/dog_fashion/head
+	hitsound = 'sound/weapons/tap.ogg'
+	var/hitsound_on = 'sound/weapons/sear.ogg' //so we can differentiate between cakehat and energyhat
+	var/hitsound_off = 'sound/weapons/tap.ogg'
+	var/force_on = 15
+	var/throwforce_on = 15
+	var/damtype_on = BURN
 
 /obj/item/clothing/head/hardhat/cakehat/process()
-	var/turf/location = src.loc
+	var/turf/location = loc
 	if(ishuman(location))
 		var/mob/living/carbon/human/wearer = location
 		if(wearer.is_holding(src) || wearer.head == src)
@@ -65,11 +65,11 @@
 	heat = 0
 
 /obj/item/clothing/head/hardhat/cakehat/energycake/turn_on(mob/living/user)
-	playsound(user, 'sound/weapons/saberon.ogg', 5, TRUE)
+	playsound(src, 'sound/weapons/saberon.ogg', 5, TRUE)
 	to_chat(user, span_warning("You turn on \the [src]."))
-	..()
+	return ..()
 
 /obj/item/clothing/head/hardhat/cakehat/energycake/turn_off(mob/living/user)
-	playsound(user, 'sound/weapons/saberoff.ogg', 5, TRUE)
+	playsound(src, 'sound/weapons/saberoff.ogg', 5, TRUE)
 	to_chat(user, span_warning("You turn off \the [src]."))
-	..()
+	return ..()

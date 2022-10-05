@@ -59,7 +59,7 @@
 	name = "firesuit"
 	desc = "An expensive firesuit that protects against even the most deadly of station fires. Designed to protect even if the wearer is set aflame."
 	icon_state = "atmos_firesuit"
-	inhand_icon_state = "firesuit_atmos"
+	inhand_icon_state = null
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 
 /*
@@ -87,7 +87,7 @@
 	name = "bomb suit"
 	desc = "A suit designed for safety when handling explosives."
 	icon_state = "bombsuit"
-	inhand_icon_state = "bombsuit"
+	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_BULKY
 	clothing_flags = THICKMATERIAL
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -105,21 +105,21 @@
 
 /obj/item/clothing/head/bomb_hood/security
 	icon_state = "bombsuit_sec"
-	inhand_icon_state = "bombsuit_sec"
+	inhand_icon_state = null
 
 /obj/item/clothing/suit/utility/bomb_suit/security
 	icon_state = "bombsuit_sec"
-	inhand_icon_state = "bombsuit_sec"
+	inhand_icon_state = null
 	allowed = list(/obj/item/gun/energy, /obj/item/melee/baton, /obj/item/restraints/handcuffs)
 
 
 /obj/item/clothing/head/bomb_hood/white
 	icon_state = "bombsuit_white"
-	inhand_icon_state = "bombsuit_white"
+	inhand_icon_state = null
 
 /obj/item/clothing/suit/utility/bomb_suit/white
 	icon_state = "bombsuit_white"
-	inhand_icon_state = "bombsuit_white"
+	inhand_icon_state = null
 
 /*
 * Radiation protection

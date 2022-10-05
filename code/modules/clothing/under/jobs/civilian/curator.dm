@@ -3,7 +3,7 @@
 	desc = "It's very... sensible."
 	icon = 'icons/obj/clothing/under/suits.dmi'
 	icon_state = "red_suit"
-	inhand_icon_state = "red_suit"
+	inhand_icon_state = null
 	worn_icon = 'icons/mob/clothing/under/suits.dmi'
 	can_adjust = FALSE
 
@@ -12,7 +12,7 @@
 	desc = "It's very... sensible."
 	icon = 'icons/obj/clothing/under/suits.dmi'
 	icon_state = "red_suit_skirt"
-	inhand_icon_state = "red_suit"
+	inhand_icon_state = null
 	worn_icon = 'icons/mob/clothing/under/suits.dmi'
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
@@ -25,7 +25,7 @@
 	desc = "A rugged uniform suitable for treasure hunting."
 	icon = 'icons/obj/clothing/under/civilian.dmi'
 	icon_state = "curator"
-	inhand_icon_state = "curator"
+	inhand_icon_state = null
 	worn_icon = 'icons/mob/clothing/under/civilian.dmi'
 
 /obj/item/clothing/under/rank/civilian/curator/nasa
