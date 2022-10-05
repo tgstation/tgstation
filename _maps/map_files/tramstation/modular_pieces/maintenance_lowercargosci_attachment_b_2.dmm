@@ -5,7 +5,9 @@
 "b" = (
 /obj/effect/decal/cleanable/ash,
 /obj/item/reagent_containers/cup/bowl,
-/turf/open/misc/asteroid/dug,
+/turf/open/misc/asteroid{
+	icon_state = "asteroid_dug"
+	},
 /area/station/maintenance/starboard/central)
 "c" = (
 /turf/open/misc/asteroid,

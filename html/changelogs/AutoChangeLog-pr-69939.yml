@@ -1,4 +1,0 @@
-author: "Pickle-Coding"
-delete-after: True
-changes: 
-  - code_imp: "Fixes gas mixer node concentration logging."

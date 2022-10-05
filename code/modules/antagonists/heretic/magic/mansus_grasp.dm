@@ -100,7 +100,7 @@
 			playsound(carbon_user, 'sound/effects/wounds/sizzle1.ogg', 70, vary = TRUE)
 			if(prob(50))
 				carbon_user.emote("scream")
-				carbon_user.adjust_timed_status_effect(26 SECONDS, /datum/status_effect/speech/stutter)
+				carbon_user.adjust_stutter(26 SECONDS)
 
 		source?.cast_on_hand_hit(src, user, user)
 

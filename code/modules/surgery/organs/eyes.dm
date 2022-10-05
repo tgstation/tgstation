@@ -36,6 +36,8 @@
 	var/no_glasses
 	/// indication that the eyes are undergoing some negative effect
 	var/damaged = FALSE
+	/// Native FOV that will be applied if a config is enabled
+	var/native_fov = FOV_90_DEGREES
 
 /obj/item/organ/internal/eyes/Insert(mob/living/carbon/eye_owner, special = FALSE, drop_if_replaced = FALSE, initialising)
 	. = ..()
@@ -53,6 +55,8 @@
 			eye_color_right = human_owner.eye_color_right
 		if(HAS_TRAIT(human_owner, TRAIT_NIGHT_VISION) && !lighting_alpha)
 			lighting_alpha = LIGHTING_PLANE_ALPHA_NV_TRAIT
+		if(CONFIG_GET(flag/native_fov) && native_fov)
+			human_owner.add_fov_trait(type, native_fov)
 	eye_owner.update_tint()
 	owner.update_sight()
 	if(eye_owner.has_dna() && ishuman(eye_owner))
@@ -89,6 +93,8 @@
 		if(initial(eye_color_right))
 			human_owner.eye_color_right = old_eye_color_right
 		human_owner.update_body()
+		if(native_fov)
+			eye_owner.remove_fov_trait(type)
 	eye_owner.cure_blind(EYE_DAMAGE)
 	eye_owner.cure_nearsighted(EYE_DAMAGE)
 	eye_owner.set_blindness(0)
@@ -114,8 +120,8 @@
 
 	var/obscured = parent.check_obscured_slots(TRUE)
 	if(overlay_ignore_lighting && !(obscured & ITEM_SLOT_EYES))
-		eye_left.overlays += emissive_appearance(eye_left.icon, eye_left.icon_state, alpha = eye_left.alpha)
-		eye_right.overlays += emissive_appearance(eye_right.icon, eye_right.icon_state, alpha = eye_right.alpha)
+		eye_left.overlays += emissive_appearance(eye_left.icon, eye_left.icon_state, parent, alpha = eye_left.alpha)
+		eye_right.overlays += emissive_appearance(eye_right.icon, eye_right.icon_state, parent, alpha = eye_right.alpha)
 
 	// Cry emote overlay
 	if (HAS_TRAIT(parent, TRAIT_CRYING)) // Caused by the *cry emote
@@ -183,7 +189,6 @@
 			lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
 		else
 			lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
-			sight_flags &= ~SEE_BLACKNESS
 	owner.update_sight()
 
 /obj/item/organ/internal/eyes/night_vision/alien
@@ -517,19 +522,13 @@
 	desc = "These eyes seem to stare back no matter the direction you look at it from."
 	eye_icon_state = "flyeyes"
 	icon_state = "eyeballs-fly"
-
-/obj/item/organ/internal/eyes/fly/Insert(mob/living/carbon/eye_owner, special = FALSE, drop_if_replaced = TRUE)
-	. = ..()
-	ADD_TRAIT(eye_owner, TRAIT_FLASH_SENSITIVE, ORGAN_TRAIT)
-
-/obj/item/organ/internal/eyes/fly/Remove(mob/living/carbon/eye_owner, special = FALSE)
-	REMOVE_TRAIT(eye_owner, TRAIT_FLASH_SENSITIVE, ORGAN_TRAIT)
-	return ..()
+	flash_protect = FLASH_PROTECTION_HYPER_SENSITIVE
+	native_fov = NONE //flies can see all around themselves.
 
 /obj/item/organ/internal/eyes/night_vision/maintenance_adapted
 	name = "adapted eyes"
 	desc = "These red eyes look like two foggy marbles. They give off a particularly worrying glow in the dark."
-	flash_protect = FLASH_PROTECTION_SENSITIVE
+	flash_protect = FLASH_PROTECTION_HYPER_SENSITIVE
 	eye_color_left = "f00"
 	eye_color_right = "f00"
 	icon_state = "adapted_eyes"
@@ -545,8 +544,6 @@
 	adapt_light.on = TRUE
 	adapt_light.forceMove(adapted)
 	adapt_light.update_brightness(adapted)
-	//traits
-	ADD_TRAIT(adapted, TRAIT_FLASH_SENSITIVE, ORGAN_TRAIT)
 	ADD_TRAIT(adapted, TRAIT_UNNATURAL_RED_GLOWY_EYES, ORGAN_TRAIT)
 
 /obj/item/organ/internal/eyes/night_vision/maintenance_adapted/on_life(delta_time, times_fired)
@@ -565,7 +562,5 @@
 	adapt_light.on = FALSE
 	adapt_light.update_brightness(unadapted)
 	adapt_light.forceMove(src)
-	//traits
-	REMOVE_TRAIT(unadapted, TRAIT_FLASH_SENSITIVE, ORGAN_TRAIT)
 	REMOVE_TRAIT(unadapted, TRAIT_UNNATURAL_RED_GLOWY_EYES, ORGAN_TRAIT)
 	return ..()

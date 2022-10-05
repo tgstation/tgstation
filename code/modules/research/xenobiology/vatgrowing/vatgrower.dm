@@ -93,7 +93,7 @@
 	if(isnull(on_overlay))
 		on_overlay = iconstate2appearance(icon, "growing_vat_on")
 		off_overlay = iconstate2appearance(icon, "growing_vat_off")
-		emissive_overlay = emissive_appearance(icon, "growing_vat_glow", alpha = src.alpha)
+		emissive_overlay = emissive_appearance(icon, "growing_vat_glow", src, alpha = src.alpha)
 	. += emissive_overlay
 	if(is_operational)
 		if(resampler_active)

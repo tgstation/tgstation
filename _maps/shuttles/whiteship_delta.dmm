@@ -589,7 +589,7 @@
 	dir = 1
 	},
 /obj/item/storage/wallet/random,
-/obj/item/clothing/under/rank/centcom/officer,
+/obj/item/clothing/under/rank/centcom/official,
 /obj/item/clothing/under/rank/centcom/commander,
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{

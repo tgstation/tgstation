@@ -77,7 +77,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	new/datum/stack_recipe("tram wall girders (anchored)", /obj/structure/girder/tram, 2, time = 40, one_per_turf = TRUE, on_solid_ground = FALSE, on_tram = TRUE, trait_booster = TRAIT_QUICK_BUILD, trait_modifier = 0.75), \
 	null, \
 	new/datum/stack_recipe("computer frame", /obj/structure/frame/computer, 5, time = 25, one_per_turf = TRUE, on_solid_ground = TRUE), \
-	new/datum/stack_recipe("modular console", /obj/machinery/modular_computer/console/buildable/, 10, time = 25, one_per_turf = TRUE, on_solid_ground = TRUE), \
+	new/datum/stack_recipe("modular console", /obj/machinery/modular_computer/console/buildable, 10, time = 25, one_per_turf = TRUE, on_solid_ground = TRUE), \
 	new/datum/stack_recipe("machine frame", /obj/structure/frame/machine, 5, time = 25, one_per_turf = TRUE, on_solid_ground = TRUE), \
 	null, \
 	new /datum/stack_recipe_list("airlock assemblies", list( \
@@ -434,7 +434,7 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	desc = "Is it cotton? Linen? Denim? Burlap? Canvas? You can't tell."
 	singular_name = "cloth roll"
 	icon_state = "sheet-cloth"
-	inhand_icon_state = "sheet-cloth"
+	inhand_icon_state = null
 	resistance_flags = FLAMMABLE
 	force = 0
 	throwforce = 0
@@ -465,7 +465,7 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 	desc = "A fabric sown from incredibly durable threads, known for its usefulness in armor production."
 	singular_name = "durathread roll"
 	icon_state = "sheet-durathread"
-	inhand_icon_state = "sheet-cloth"
+	inhand_icon_state = null
 	resistance_flags = FLAMMABLE
 	force = 0
 	throwforce = 0
@@ -674,7 +674,7 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	desc = "Rare kind of gems which are only gained by blood sacrifice to minor deities. They are needed in crafting powerful objects."
 	singular_name = "lesser gem"
 	icon_state = "sheet-lessergem"
-	inhand_icon_state = "sheet-lessergem"
+	inhand_icon_state = null
 	novariants = TRUE
 	merge_type = /obj/item/stack/sheet/lessergem
 
@@ -683,7 +683,7 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	desc = "Rare kind of gems which are only gained by blood sacrifice to minor deities. They are needed in crafting powerful objects."
 	singular_name = "greater gem"
 	icon_state = "sheet-greatergem"
-	inhand_icon_state = "sheet-greatergem"
+	inhand_icon_state = null
 	novariants = TRUE
 	merge_type = /obj/item/stack/sheet/greatergem
 
@@ -694,7 +694,7 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	name = "bones"
 	icon = 'icons/obj/stack_objects.dmi'
 	icon_state = "bone"
-	inhand_icon_state = "sheet-bone"
+	inhand_icon_state = null
 	mats_per_unit = list(/datum/material/bone = MINERAL_MATERIAL_AMOUNT)
 	singular_name = "bone"
 	desc = "Someone's been drinking their milk."

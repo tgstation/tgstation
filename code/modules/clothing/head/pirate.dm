@@ -2,7 +2,7 @@
 	name = "pirate hat"
 	desc = "Yarr."
 	icon_state = "pirate"
-	inhand_icon_state = "pirate"
+	inhand_icon_state = null
 	dog_fashion = /datum/dog_fashion/head/pirate
 
 /obj/item/clothing/head/pirate
@@ -12,7 +12,7 @@
 	. = ..()
 	if(!ishuman(user))
 		return
-	if(slot == ITEM_SLOT_HEAD)
+	if(slot & ITEM_SLOT_HEAD)
 		user.grant_language(/datum/language/piratespeak/, TRUE, TRUE, LANGUAGE_HAT)
 		to_chat(user, span_boldnotice("You suddenly know how to speak like a pirate!"))
 
@@ -33,13 +33,13 @@
 /obj/item/clothing/head/pirate/captain
 	name = "pirate captain hat"
 	icon_state = "hgpiratecap"
-	inhand_icon_state = "hgpiratecap"
+	inhand_icon_state = null
 
 /obj/item/clothing/head/bandana
 	name = "pirate bandana"
 	desc = "Yarr."
 	icon_state = "bandana"
-	inhand_icon_state = "bandana"
+	inhand_icon_state = null
 
 
 /obj/item/clothing/head/bandana/armored

@@ -321,6 +321,14 @@
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/greater)
+"LR" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/starboard/greater)
 "MI" = (
 /turf/closed/wall/rock/porous,
 /area/template_noop)
@@ -945,7 +953,7 @@ po
 Nw
 aM
 TQ
-mu
+LR
 jb
 hb
 xa

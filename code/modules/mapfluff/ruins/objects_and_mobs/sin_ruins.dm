@@ -52,7 +52,7 @@
 	. = ..()
 	var/overlay_state = icon_screen
 	. += mutable_appearance(icon, overlay_state)
-	. += emissive_appearance(icon, overlay_state)
+	. += emissive_appearance(icon, overlay_state, src)
 
 /obj/structure/cursed_money
 	name = "bag of money"

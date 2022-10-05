@@ -46,14 +46,15 @@
 		living_mob.Paralyze(10)
 		living_mob.Knockdown(100)
 		to_chat(living_mob, span_hypnophrase("The sound echoes in your brain..."))
-		living_mob.hallucination += 50
+		living_mob.adjust_hallucinations(100 SECONDS)
+
 	else
 		if(distance <= 1)
 			living_mob.Paralyze(5)
 			living_mob.Knockdown(30)
 		if(hypno_sound)
 			to_chat(living_mob, span_hypnophrase("The sound echoes in your brain..."))
-			living_mob.hallucination += 50
+			living_mob.adjust_hallucinations(100 SECONDS)
 
 	//Flash
 	if(living_mob.flash_act(affect_silicon = 1))
@@ -66,5 +67,5 @@
 			else
 				to_chat(target, span_hypnophrase("The light is so pretty..."))
 				target.adjust_drowsyness(min(target.drowsyness + 10, 20))
-				target.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/confusion, max_duration = 20 SECONDS)
-				target.adjust_timed_status_effect(20 SECONDS, /datum/status_effect/dizziness, max_duration = 40 SECONDS)
+				target.adjust_confusion_up_to(10 SECONDS, 20 SECONDS)
+				target.adjust_dizzy_up_to(20 SECONDS, 40 SECONDS)

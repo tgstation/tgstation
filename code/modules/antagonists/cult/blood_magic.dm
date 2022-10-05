@@ -237,9 +237,9 @@
 
 	return ..()
 
-/datum/action/innate/cult/blood_spell/horror/do_ability(mob/living/caller, params, mob/living/carbon/human/clicked_on)
+/datum/action/innate/cult/blood_spell/horror/do_ability(mob/living/caller, mob/living/carbon/human/clicked_on)
 
-	clicked_on.hallucination = max(clicked_on.hallucination, 120)
+	clicked_on.set_hallucinations_if_lower(240 SECONDS)
 	SEND_SOUND(caller, sound('sound/effects/ghost.ogg', FALSE, TRUE, 50))
 
 	var/image/sparkle_image = image('icons/effects/cult/effects.dmi', clicked_on, "bloodsparkles", ABOVE_MOB_LAYER)
@@ -407,7 +407,13 @@
 
 		user.mob_light(_range = 3, _color = LIGHT_COLOR_BLOOD_MAGIC, _duration = 0.2 SECONDS)
 
-		if(target.can_block_magic())
+		if(IS_HERETIC(target))
+			to_chat(user, span_warning("Some force greater than you intervenes! [target] is protected by the Forgotten Gods!"))
+			to_chat(target, span_warning("You are protected by your faith to the Forgotten Gods."))
+			var/old_color = target.color
+			target.color = rgb(0, 128, 0)
+			animate(target, color = old_color, time = 1 SECONDS, easing = EASE_IN)
+		else if(target.can_block_magic())
 			to_chat(user, span_warning("The spell had no effect!"))
 		else
 			to_chat(user, span_cultitalic("In a brilliant flash of red, [target] falls to the ground!"))
@@ -419,9 +425,9 @@
 			else if(iscarbon(target))
 				var/mob/living/carbon/carbon_target = target
 				carbon_target.silent += 6
-				carbon_target.adjust_timed_status_effect(30 SECONDS, /datum/status_effect/speech/stutter)
+				carbon_target.adjust_stutter(30 SECONDS)
 				carbon_target.adjust_timed_status_effect(30 SECONDS, /datum/status_effect/speech/slurring/cult)
-				carbon_target.set_timed_status_effect(30 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
+				carbon_target.set_jitter_if_lower(30 SECONDS)
 		uses--
 	..()
 

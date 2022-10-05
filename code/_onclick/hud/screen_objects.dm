@@ -9,10 +9,11 @@
 /atom/movable/screen
 	name = ""
 	icon = 'icons/hud/screen_gen.dmi'
+	// NOTE: screen objects do NOT change their plane to match the z layer of their owner
+	// You shouldn't need this, but if you ever do and it's widespread, reconsider what you're doing.
 	plane = HUD_PLANE
 	animate_movement = SLIDE_STEPS
 	speech_span = SPAN_ROBOT
-	vis_flags = VIS_INHERIT_PLANE
 	appearance_flags = APPEARANCE_UI
 	/// A reference to the object in the slot. Grabs or items, generally.
 	var/obj/master = null
@@ -179,7 +180,7 @@
 	var/image/item_overlay = image(holding)
 	item_overlay.alpha = 92
 
-	if(!user.can_equip(holding, slot_id, disable_warning = TRUE, bypass_equip_delay_self = TRUE))
+	if(!holding.mob_can_equip(user, slot_id, disable_warning = TRUE, bypass_equip_delay_self = TRUE))
 		item_overlay.color = "#FF0000"
 	else
 		item_overlay.color = "#00ff00"
@@ -455,6 +456,7 @@
 	vis_contents -= hover_overlays_cache[hovering]
 	hovering = choice
 
+	// Don't need to account for turf cause we're on the hud babyyy
 	var/obj/effect/overlay/zone_sel/overlay_object = hover_overlays_cache[choice]
 	if(!overlay_object)
 		overlay_object = new

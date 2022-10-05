@@ -2,7 +2,7 @@
 	name = "jump boots"
 	desc = "A specialized pair of combat boots with a built-in propulsion system for rapid foward movement."
 	icon_state = "jetboots"
-	inhand_icon_state = "jetboots"
+	inhand_icon_state = null
 	resistance_flags = FIRE_PROOF
 	actions_types = list(/datum/action/item_action/bhop)
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 90, FIRE = 0, ACID = 0)
@@ -14,7 +14,7 @@
 
 /obj/item/clothing/shoes/bhop/Initialize(mapload)
 	. = ..()
-	
+
 	create_storage(type = /datum/storage/pockets/shoes)
 
 /obj/item/clothing/shoes/bhop/ui_action_click(mob/user, action)
@@ -39,7 +39,7 @@
 	name = "rocket boots"
 	desc = "Very special boots with built-in rocket thrusters! SHAZBOT!"
 	icon_state = "rocketboots"
-	inhand_icon_state = "rocketboots"
+	inhand_icon_state = null
 	actions_types = list(/datum/action/item_action/bhop/brocket)
 	jumpdistance = 20 //great for throwing yourself into walls and people at high speeds
 	jumpspeed = 5
