@@ -2,9 +2,9 @@
 	/// The skin we apply to the suit, defaults to the default_skin of the theme.
 	var/applied_skin
 	/// The MOD core we apply to the suit.
-	var/applied_core = /obj/item/mod/core/standard
+	var/obj/item/mod/core/applied_core = /obj/item/mod/core/standard
 	/// The cell we apply to the core. Only applies to standard core suits.
-	var/applied_cell = /obj/item/stock_parts/cell/high
+	var/obj/item/stock_parts/cell/applied_cell = /obj/item/stock_parts/cell/high
 
 /obj/item/mod/control/pre_equipped/Initialize(mapload, new_theme, new_skin, new_core)
 	new_skin = applied_skin

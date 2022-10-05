@@ -132,7 +132,7 @@
 		part.siemens_coefficient = theme.siemens_coefficient
 	for(var/obj/item/part as anything in mod_parts)
 		RegisterSignal(part, COMSIG_ATOM_DESTRUCTION, .proc/on_part_destruction)
-		RegisterSignal(part, COMSIG_PARENT_QDELETING, .proc/on_part_deletion)
+		RegisterSignal(part, COMSIG_PARENT_PREQDELETED, .proc/on_part_deletion)
 	set_mod_skin(new_skin || theme.default_skin)
 	update_speed()
 	for(var/obj/item/mod/module/module as anything in initial_modules)
@@ -142,36 +142,35 @@
 	RegisterSignal(src, COMSIG_SPEED_POTION_APPLIED, .proc/on_potion)
 	movedelay = CONFIG_GET(number/movedelay/run_delay)
 
+
+/obj/item/mod/control/handle_atom_del(atom/deleting_atom)
+	if(deleting_atom in mod_parts)
+		mod_parts -= deleting_atom
+	if(deleting_atom in overslotting_parts)
+		overslotting_parts -= deleting_atom
+	if(deleting_atom in modules)
+		modules -= deleting_atom
+	if(deleting_atom == helmet)
+		helmet = null
+	if(deleting_atom == chestplate)
+		chestplate = null
+	if(deleting_atom == gauntlets)
+		gauntlets = null
+	if(deleting_atom == boots)
+		boots = null
+	if(deleting_atom == core)
+		core = null
+	if(deleting_atom == wearer)
+		wearer = null
+	return ..()
+
 /obj/item/mod/control/Destroy()
 	if(active)
 		STOP_PROCESSING(SSobj, src)
 	for(var/obj/item/mod/module/module as anything in modules)
 		uninstall(module, deleting = TRUE)
-	for(var/obj/item/part as anything in mod_parts)
-		overslotting_parts -= part
-	var/atom/deleting_atom
-	if(!QDELETED(helmet))
-		deleting_atom = helmet
-		helmet = null
-		mod_parts -= deleting_atom
-		qdel(deleting_atom)
-	if(!QDELETED(chestplate))
-		deleting_atom = chestplate
-		chestplate = null
-		mod_parts -= deleting_atom
-		qdel(deleting_atom)
-	if(!QDELETED(gauntlets))
-		deleting_atom = gauntlets
-		gauntlets = null
-		mod_parts -= deleting_atom
-		qdel(deleting_atom)
-	if(!QDELETED(boots))
-		deleting_atom = boots
-		boots = null
-		mod_parts -= deleting_atom
-		qdel(deleting_atom)
-	if(core)
-		QDEL_NULL(core)
+	QDEL_LIST(mod_parts)
+	QDEL_NULL(core)
 	QDEL_NULL(wires)
 	return ..()
 
@@ -694,12 +693,13 @@
 		return
 	atom_destruction(damage_flag)
 
-/obj/item/mod/control/proc/on_part_deletion(obj/item/part) //the part doesnt count as being qdeleted, so our destroying does an infinite loop, fix later
+/obj/item/mod/control/proc/on_part_deletion(obj/item/part)
 	SIGNAL_HANDLER
 
 	if(QDELETED(src))
 		return
 	qdel(src)
+	return TRUE
 
 /obj/item/mod/control/proc/on_overslot_exit(datum/source, atom/movable/overslot, direction)
 	SIGNAL_HANDLER
