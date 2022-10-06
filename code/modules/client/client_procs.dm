@@ -223,7 +223,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	// Instantiate stat panel
 	stat_panel = new(src, "statbrowser")
-	stat_panel.subscribe(src, .proc/on_stat_panel_message)
 
 	// Instantiate tgui panel
 	tgui_panel = new(src, "browseroutput")
@@ -1198,23 +1197,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		SSambience.ambience_listening_clients[src] = world.time + 10 SECONDS //Just wait 10 seconds before the next one aight mate? cheers.
 	else
 		SSambience.remove_ambience_client(src)
-
-/**
- * Handles incoming messages from the stat-panel TGUI.
- */
-/client/proc/on_stat_panel_message(type, payload)
-	switch(type)
-		if("Update-Verbs")
-			init_verbs()
-		if("Remove-Tabs")
-			panel_tabs -= payload["tab"]
-		if("Send-Tabs")
-			panel_tabs |= payload["tab"]
-		if("Reset-Tabs")
-			panel_tabs = list()
-		if("Set-Tab")
-			stat_tab = payload["tab"]
-			SSstatpanels.immediate_send_stat_data(src)
 
 /// Checks if this client has met the days requirement passed in, or if
 /// they are exempt from it.

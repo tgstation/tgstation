@@ -299,6 +299,38 @@ SUBSYSTEM_DEF(statpanels)
 	else if(length(GLOB.sdql2_queries) && target.stat_tab == "SDQL2")
 		set_SDQL2_tab(target)
 
+/// verbs that send information from the browser UI
+/client/verb/set_tab(tab as text|null)
+	set name = "Set Tab"
+	set hidden = TRUE
+
+	stat_tab = tab
+	SSstatpanels.immediate_send_stat_data(src)
+
+/client/verb/send_tabs(tabs as text|null)
+	set name = "Send Tabs"
+	set hidden = TRUE
+
+	panel_tabs |= tabs
+
+/client/verb/remove_tabs(tabs as text|null)
+	set name = "Remove Tabs"
+	set hidden = TRUE
+
+	panel_tabs -= tabs
+
+/client/verb/reset_tabs()
+	set name = "Reset Tabs"
+	set hidden = TRUE
+
+	panel_tabs = list()
+
+/client/verb/update_verbs()
+	set name = "Update Verbs"
+	set hidden = TRUE
+
+	init_verbs()
+
 /// Stat panel window declaration
 /client/var/datum/tgui_window/stat_panel
 

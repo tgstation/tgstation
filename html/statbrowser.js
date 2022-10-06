@@ -37,11 +37,43 @@ var statcontentdiv = document.getElementById('statcontent');
 var storedimages = [];
 var split_admin_tabs = false;
 
+var connected = false;
+var commandQueue = [];
+
+// Any BYOND verb call must go through this, as if a verb is sent during reconnect then
+// it will cause the reconnect to fail.
+// This function will either call immediately, or queue until
+// BYOND confirms we are connected.
+function send_byond_command(command) {
+	var href = "byond://winset?command=" + command;
+
+	if (connected) {
+		window.location.href = href;
+	} else {
+		commandQueue.push(href);
+	}
+}
+
 // Any BYOND commands that could result in the client's focus changing go through this
 // to ensure that when we relinquish our focus, we don't do it after the result of
 // a command has already taken focus for itself.
 function run_after_focus(callback) {
 	setTimeout(callback, 0);
+}
+
+function connected_to_server() {
+	if (connected) {
+		return;
+	}
+
+	connected = true;
+
+	for (var index = 0; index < commandQueue.length; index++) {
+		// This is just setting it a lot, is this not going to cancel?
+		window.location.href = commandQueue[index];
+	}
+
+	commandQueue = [];
 }
 
 function createStatusTab(name) {
@@ -203,7 +235,7 @@ function wipe_verbs() {
 
 function update_verbs() {
 	wipe_verbs();
-	Byond.sendMessage("Update-Verbs");
+	send_byond_command("Update-Verbs");
 }
 
 function SendTabsToByond() {
@@ -215,12 +247,12 @@ function SendTabsToByond() {
 }
 
 function SendTabToByond(tab) {
-	Byond.sendMessage("Send-Tabs", {tab: tab});
+	send_byond_command("Send-Tabs " + tab);
 }
 
 //Byond can't have this tab anymore since we're removing it
 function TakeTabFromByond(tab) {
-	Byond.sendMessage("Remove-Tabs", {tab: tab});
+	send_byond_command("Remove-Tabs " + tab);
 }
 
 function spell_cat_check(cat) {
@@ -274,7 +306,7 @@ function tab_change(tab) {
 }
 
 function set_byond_tab(tab) {
-	Byond.sendMessage("Set-Tab", {tab: tab});
+	send_byond_command("Set-Tab " + tab);
 }
 
 function draw_debug() {
@@ -365,7 +397,7 @@ function draw_status() {
 		}
 	}
 	if (verb_tabs.length == 0 || !verbs) {
-		Byond.command("Fix-Stat-Panel");
+		send_byond_command("Fix-Stat-Panel");
 	}
 }
 
@@ -803,7 +835,7 @@ if (!current_tab) {
 }
 
 window.onload = function () {
-	Byond.sendMessage("Update-Verbs");
+	send_byond_command("Update-Verbs");
 };
 
 Byond.subscribeTo('update_spells', function (payload) {
@@ -837,6 +869,7 @@ Byond.subscribeTo('remove_verb_list', function (v) {
 // passes a 2D list of (verbcategory, verbname) creates tabs and adds verbs to respective list
 // example (IC, Say)
 Byond.subscribeTo('init_verbs', function (payload) {
+	connected_to_server();
 	wipe_verbs(); // remove all verb categories so we can replace them
 	checkStatusTab(); // remove all status tabs
 	verb_tabs = payload.panel_tabs;
