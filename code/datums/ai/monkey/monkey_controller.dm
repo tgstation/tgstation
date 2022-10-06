@@ -99,6 +99,10 @@ have ways of interacting with a specific mob and control it.
 		return FALSE
 	return ..()
 
+/datum/ai_controller/monkey/get_human_examine_text()
+	var/text = "[span_monkey("[pawn.p_they(TRUE)] have a primal look in [pawn.p_their()] eyes.")]"
+	return text
+
 /datum/ai_controller/monkey/proc/set_trip_mode(mode = TRUE)
 	var/mob/living/carbon/regressed_monkey = pawn
 	var/brain = regressed_monkey.getorganslot(ORGAN_SLOT_BRAIN)
@@ -228,3 +232,5 @@ have ways of interacting with a specific mob and control it.
 /datum/ai_controller/monkey/proc/target_del(target)
 	SIGNAL_HANDLER
 	blackboard[BB_MONKEY_BLACKLISTITEMS] -= target
+
+
