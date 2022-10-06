@@ -26,8 +26,13 @@
 	if(!length(disease_candidates))
 		message_admins("No disease candidates found!")
 		return FALSE
+	else
+		message_admins("[length(disease_candidates)] candidates found!")
 
-/datum/round_event_control/disease_outbreak/proc/generate_candidates() //this is fucked up rn fix it tomorrow
+/datum/round_event_control/disease_outbreak/proc/generate_candidates()
+	if(length(disease_candidates))
+		disease_candidates = list() //Wipe the candidate list clean and start over
+
 	for(var/mob/living/carbon/human/candidate in shuffle(GLOB.player_list)) //Player list is much more up to date and requires less checks(?)
 		if(!(candidate.mind.assigned_role.job_flags & JOB_CREW_MEMBER) || candidate.stat == DEAD)
 			continue
@@ -75,8 +80,9 @@
 	infect_players(new_disease)
 
 /datum/round_event/disease_outbreak/proc/infect_players(var/datum/disease/new_disease)
-	for(var/mob/living/carbon/human/victim in afflicted)
-		victim.ForceContractDisease(new_disease, FALSE, TRUE)
+	for(var/i in 1 to 3) //do this better
+		var/mob/living/carbon/human/victim = pick_n_take(afflicted)
+		victim.ForceContractDisease(new_disease, FALSE, FALSE)
 		log_game("An event has given [key_name(victim)] the [new_disease]")
 		message_admins("An event has triggered a [new_disease.name] virus outbreak on [ADMIN_LOOKUPFLW(victim)]!")
 
@@ -91,6 +97,9 @@
 	var/max_severity = 3
 
 /datum/round_event/disease_outbreak/advanced/start()
+	var/datum/round_event_control/disease_outbreak/disease_event = control
+	afflicted = disease_event.disease_candidates
+
 	max_severity = 3 + max(FLOOR((world.time - control.earliest_start)/6000, 1),0) //3 symptoms at 20 minutes, plus 1 per 10 minutes
 	var/datum/disease/advance/advanced_disease = new /datum/disease/advance/random(max_severity, max_severity)
 
@@ -101,7 +110,8 @@
 	for(var/datum/symptom/new_symptom in advanced_disease.symptoms)
 		name_symptoms += new_symptom.name
 
-	for(var/mob/living/carbon/human/victim in afflicted)
-		victim.ForceContractDisease(advanced_disease, FALSE, TRUE)
+	for(var/i in 1 to 3) //Find a cooler way of doing this
+		var/mob/living/carbon/human/victim = pick_n_take(afflicted)
+		victim.ForceContractDisease(advanced_disease, FALSE, FALSE)
 		message_admins("An event has triggered a random advanced virus outbreak on [ADMIN_LOOKUPFLW(victim)]! It has these symptoms: [english_list(name_symptoms)]")
 		log_game("An event has triggered a random advanced virus outbreak on [key_name(victim)]! It has these symptoms: [english_list(name_symptoms)].")
