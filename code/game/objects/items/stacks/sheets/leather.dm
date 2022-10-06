@@ -194,7 +194,7 @@ GLOBAL_LIST_INIT(leather_recipes, list ( \
 	new/datum/stack_recipe("bandolier", /obj/item/storage/belt/bandolier, 5), \
 	new/datum/stack_recipe("leather jacket", /obj/item/clothing/suit/jacket/leather, 7), \
 	new/datum/stack_recipe("leather shoes", /obj/item/clothing/shoes/laceup, 2), \
-	new/datum/stack_recipe("leather overcoat", /obj/item/clothing/suit/jacket/leather/overcoat, 10), \
+	new/datum/stack_recipe("biker jacket", /obj/item/clothing/suit/jacket/leather/biker, 7), \
 	new/datum/stack_recipe("saddle", /obj/item/saddle, 5), \
 	new/datum/stack_recipe("sheriff vest", /obj/item/clothing/accessory/vest_sheriff, 4), \
 	new/datum/stack_recipe_list("cowboy hats", list( \
