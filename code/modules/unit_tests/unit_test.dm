@@ -131,9 +131,7 @@ GLOBAL_LIST_EMPTY(unit_test_mapping_logs)
 	GLOB.current_test = null
 	GLOB.failed_any_test |= !test.succeeded
 
-	var/list/log_entry = list(
-		"[test.succeeded ? TEST_OUTPUT_GREEN("PASS") : TEST_OUTPUT_RED("FAIL")]: [test_path] [duration / 10]s",
-	)
+	var/list/log_entry = list()
 	var/list/fail_reasons = test.fail_reasons
 
 	for(var/reasonID in 1 to LAZYLEN(fail_reasons))
@@ -144,14 +142,13 @@ GLOBAL_LIST_EMPTY(unit_test_mapping_logs)
 		test.log_for_test(text, "error", file, line)
 
 		// Normal log message
-		log_entry += "\tREASON #[reasonID]: [text] at [file]:[line]"
+		log_entry += "\tFAILURE #[reasonID]: [text] at [file]:[line]"
 
 	var/message = log_entry.Join("\n")
 	log_test(message)
 	log_world("::endgroup::")
 
-	if (!test.succeeded)
-		log_world("::error::[test_path] failed! The error logs can be found in the group above.")
+	log_world("[test.succeeded ? TEST_OUTPUT_GREEN("PASS") : TEST_OUTPUT_RED("FAIL")]: [test_path] [duration / 10]s")
 
 	test_results[test_path] = list("status" = test.succeeded ? UNIT_TEST_PASSED : UNIT_TEST_FAILED, "message" = message, "name" = test_path)
 
