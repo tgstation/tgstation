@@ -941,7 +941,7 @@
 		Scrubbed statistical data presented a single correlation within documented psychological profiles. The fear of the Unknown."
 	default_skin = "infiltrator"
 	armor = list(MELEE = 50, BULLET = 50, LASER = 40, ENERGY = 50, BOMB = 40, BIO = 0, FIRE = 100, ACID = 100, WOUND = 25)
-	resistance_flags = FIRE_PROOF|ACID_PROOF
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	atom_flags = PREVENT_CONTENTS_EXPLOSION_1
 	siemens_coefficient = 0
 	slowdown_inactive = 0
