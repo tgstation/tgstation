@@ -29,7 +29,7 @@
 	///The item currently inserted into the PDA, starts with a pen.
 	var/obj/item/inserted_item = /obj/item/pen
 	///List of items that can be stored in a PDA
-	var/list/contained_item = list(
+	var/static/list/contained_item = list(
 		/obj/item/pen,
 		/obj/item/toy/crayon,
 		/obj/item/lipstick,

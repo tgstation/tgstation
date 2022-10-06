@@ -748,7 +748,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 /obj/item/modular_computer/screwdriver_act(mob/user, obj/item/tool)
 	. = ..()
-	if(!(resistance_flags & INDESTRUCTIBLE))
+	if((resistance_flags & INDESTRUCTIBLE) || (flags_1 & NODECONSTRUCT_1))
 		return
 	if(!length(all_components))
 		balloon_alert(user, "no components installed!")
