@@ -141,7 +141,7 @@
 		user.visible_message(span_notice("[user] pours the contents of [O] onto [src], causing it to reform its original shape and turn a slightly brighter shade of pink."), span_notice("You pour the contents of [O] onto [src], causing it to reform its original shape and turn a slightly brighter shade of pink."))
 		var/amount = O.reagents.get_reagent_amount(/datum/reagent/medicine/mannitol)
 		var/healto = max(0, damage - amount * 2)
-		O.reagents.remove_all(amount / O.reagents.total_volume * (damage - healto) * 0.5)
+		O.reagents.remove_all(amount / O.reagents.total_volume * (damage - healto) * 0.5) //only removes however much solution is needed while also taking into account how much of the solution is mannitol
 		setOrganDamage(healto) //heals 2 damage per unit of mannitol, and by using "setorgandamage", we clear the failing variable if that was up
 		return
 
