@@ -17,8 +17,7 @@
 	guaranteed_butcher_results = list(
 		/obj/effect/gibspawner/generic = 1,
 		/obj/item/stack/sheet/animalhide/bileworm = 1,
-		/obj/item/stack/ore/gold,
-		/obj/item/stack/ore/gold,
+		/obj/item/stack/ore/gold = 2,
 	)
 	death_message = "seizes up and falls limp, slowly receeding into its burrow with a dying gurgle..."
 
