@@ -842,7 +842,7 @@
 	update_worn_handcuffs()
 	update_hud_handcuffed()
 
-/mob/living/carbon/revive(full_heal_flags = NONE, excess_healing = 0)
+/mob/living/carbon/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
 	if(excess_healing)
 		if(dna && !(NOBLOOD in dna.species.species_traits))
 			blood_volume += (excess_healing * 2) //1 excess = 10 blood
@@ -871,12 +871,9 @@
 
 /mob/living/carbon/fully_heal(heal_flags = HEAL_ALL)
 
-	// Should be handled via signal on embeded, or via heal on bodypart
+	// Should be handled via signal on embedded, or via heal on bodypart
+	// Otherwise I don't care to give it a separate flag
 	remove_all_embedded_objects()
-
-	if(mind)
-		for(var/addiction_type in subtypesof(/datum/addiction))
-			mind.remove_addiction_points(addiction_type, MAX_ADDICTION_POINTS) //Remove the addiction!
 
 	if(heal_flags & HEAL_NEGATIVE_DISEASES)
 		for(var/datum/disease/disease as anything in diseases)
@@ -895,6 +892,10 @@
 
 	if(heal_flags & HEAL_TRAUMAS)
 		cure_all_traumas(TRAUMA_RESILIENCE_MAGIC)
+		// Addictions are like traumas
+		if(mind)
+			for(var/addiction_type in subtypesof(/datum/addiction))
+				mind.remove_addiction_points(addiction_type, MAX_ADDICTION_POINTS) //Remove the addiction!
 
 	if(heal_flags & HEAL_RESTRAINTS)
 		QDEL_NULL(handcuffed)

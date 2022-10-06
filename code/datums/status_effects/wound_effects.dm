@@ -8,6 +8,7 @@
 /datum/status_effect/determined
 	id = "determined"
 	alert_type = /atom/movable/screen/alert/status_effect/determined
+	remove_on_fullheal = TRUE
 
 /datum/status_effect/determined/on_apply()
 	. = ..()

@@ -176,22 +176,38 @@
 //Being on fire will suppress this healing
 /datum/status_effect/fleshmend
 	id = "fleshmend"
-	duration = 100
+	duration = 10 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/fleshmend
+
+/datum/status_effect/fleshmend/on_apply()
+	. = ..()
+	if(iscarbon(owner))
+		var/mob/living/carbon/carbon_owner = owner
+		QDEL_LAZYLIST(carbon_owner.all_scars)
+
+	RegisterSignal(owner, COMSIG_LIVING_IGNITED, .proc/on_ignited)
+	RegisterSignal(owner, COMSIG_LIVING_EXTINGUISHED, .proc/on_extinguished)
+
+/datum/status_effect/fleshmend/on_remove()
+	UnregisterSignal(owner, list(COMSIG_LIVING_IGNITED, COMSIG_LIVING_EXTINGUISHED))
 
 /datum/status_effect/fleshmend/tick()
 	if(owner.on_fire)
-		linked_alert.icon_state = "fleshmend_fire"
 		return
-	else
-		linked_alert.icon_state = "fleshmend"
+
 	owner.adjustBruteLoss(-10, FALSE)
 	owner.adjustFireLoss(-5, FALSE)
 	owner.adjustOxyLoss(-10)
-	if(!iscarbon(owner))
-		return
-	var/mob/living/carbon/C = owner
-	QDEL_LIST(C.all_scars)
+
+/datum/status_effect/fleshmend/proc/on_ignited(datum/source)
+	SIGNAL_HANDLER
+
+	linked_alert?.icon_state = "fleshmend_fire"
+
+/datum/status_effect/fleshmend/proc/on_extinguished(datum/source)
+	SIGNAL_HANDLER
+
+	linked_alert?.icon_state = "fleshmend"
 
 /atom/movable/screen/alert/status_effect/fleshmend
 	name = "Fleshmend"
@@ -338,7 +354,7 @@
 	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, STATUS_EFFECT_TRAIT)
 	owner.adjustBruteLoss(-25)
 	owner.adjustFireLoss(-25)
-	owner.fully_heal(HEAL_STUNS)
+	owner.fully_heal(HEAL_STAM|HEAL_STATUS)
 	owner.bodytemperature = owner.get_body_temp_normal()
 	if(istype(owner, /mob/living/carbon/human))
 		var/mob/living/carbon/human/humi = owner

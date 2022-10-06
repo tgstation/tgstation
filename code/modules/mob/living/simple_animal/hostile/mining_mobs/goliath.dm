@@ -50,7 +50,7 @@
 		return
 	icon_state = pre_attack_icon
 
-/mob/living/simple_animal/hostile/asteroid/goliath/revive(full_heal_flags = NONE, excess_healing = 0)//who the fuck anchors mobs
+/mob/living/simple_animal/hostile/asteroid/goliath/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)//who the fuck anchors mobs
 	. = ..()
 	if(!.)
 		return

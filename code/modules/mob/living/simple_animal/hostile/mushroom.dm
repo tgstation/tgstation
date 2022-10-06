@@ -116,7 +116,7 @@
 		return TRUE
 	return ..()
 
-/mob/living/simple_animal/hostile/mushroom/revive(full_heal_flags = NONE, excess_healing = 0)
+/mob/living/simple_animal/hostile/mushroom/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
 	. = ..()
 	if(!.)
 		return

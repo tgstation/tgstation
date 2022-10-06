@@ -762,7 +762,6 @@
 /// Combination flag to heal negative things affecting the mob.
 #define HEAL_AFFLICTIONS (HEAL_NEGATIVE_DISEASES|HEAL_NEGATIVE_MUTATIONS|HEAL_ALL_REAGENTS|HEAL_STATUS)
 
-
 /// Full heal that isn't admin forced
 #define HEAL_ALL ~(HEAL_ADMIN|HEAL_RESTRAINTS)
 /// Heals everything and is as strong as / is an admin heal

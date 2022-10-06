@@ -70,6 +70,13 @@
 		heal_overall_damage(abs(amount), 0, 0, required_status ? required_status : BODYTYPE_ORGANIC, updating_health)
 	return amount
 
+/mob/living/carbon/setBruteLoss(amount, updating_health = TRUE, forced = FALSE)
+	var/current = getBruteLoss()
+	var/diff = amount - current
+	if(!diff)
+		return
+	adjustBruteLoss(diff, updating_health, forced)
+
 /mob/living/carbon/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE, required_status)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
@@ -78,6 +85,13 @@
 	else
 		heal_overall_damage(0, abs(amount), 0, required_status ? required_status : BODYTYPE_ORGANIC, updating_health)
 	return amount
+
+/mob/living/carbon/setFireLoss(amount, updating_health = TRUE, forced = FALSE)
+	var/current = getFireLoss()
+	var/diff = amount - current
+	if(!diff)
+		return
+	adjustFireLoss(diff, updating_health, forced)
 
 /mob/living/carbon/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && HAS_TRAIT(src, TRAIT_TOXINLOVER)) //damage becomes healing and healing becomes damage

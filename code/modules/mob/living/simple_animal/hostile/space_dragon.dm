@@ -208,7 +208,7 @@
 	add_dragon_overlay()
 	UnregisterSignal(small_sprite, COMSIG_ACTION_TRIGGER)
 
-/mob/living/simple_animal/hostile/space_dragon/revive(full_heal_flags = NONE, excess_healing = 0)
+/mob/living/simple_animal/hostile/space_dragon/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
 	. = ..()
 	add_dragon_overlay()
 	RegisterSignal(small_sprite, COMSIG_ACTION_TRIGGER, .proc/add_dragon_overlay)

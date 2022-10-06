@@ -85,7 +85,7 @@
 		else
 			make_tameable()
 
-/mob/living/simple_animal/hostile/carp/revive(full_heal_flags = NONE, excess_healing = 0)
+/mob/living/simple_animal/hostile/carp/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
 	. = ..()
 	if(!. || !tamed)
 		return

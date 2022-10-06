@@ -97,7 +97,7 @@
 
 	/// A list of all memories we've stolen through absorbs.
 	var/list/stolen_memories = list()
-	
+
 	///	Keeps track of the currently selected profile.
 	var/datum/changeling_profile/current_profile
 
@@ -135,6 +135,7 @@
 	handle_clown_mutation(living_mob, "You have evolved beyond your clownish nature, allowing you to wield weapons without harming yourself.")
 	RegisterSignal(living_mob, COMSIG_MOB_LOGIN, .proc/on_login)
 	RegisterSignal(living_mob, COMSIG_LIVING_LIFE, .proc/on_life)
+	RegisterSignal(living_mob, COMSIG_LIVING_POST_FULLY_HEAL, .proc/on_fullhealed)
 	RegisterSignal(living_mob, list(COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON), .proc/on_click_sting)
 
 	if(living_mob.hud_used)
@@ -176,7 +177,7 @@
 /datum/antagonist/changeling/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/living_mob = mob_override || owner.current
 	handle_clown_mutation(living_mob, removing = FALSE)
-	UnregisterSignal(living_mob, list(COMSIG_MOB_LOGIN, COMSIG_LIVING_LIFE, COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON))
+	UnregisterSignal(living_mob, list(COMSIG_MOB_LOGIN, COMSIG_LIVING_LIFE, COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON))
 
 	if(living_mob.hud_used)
 		var/datum/hud/hud_used = living_mob.hud_used
@@ -250,6 +251,12 @@
 	// If we're not dead - we go up to the full chem cap.
 	else
 		adjust_chemicals((chem_recharge_rate - chem_recharge_slowdown) * delta_time)
+
+/datum/antagonist/changeling/proc/on_fullhealed(datum/source, heal_flags)
+	SIGNAL_HANDLER
+
+	if(heal_flags & HEAL_ADMIN)
+		adjust_chemicals(INFINITY)
 
 /*
  * Signal proc for [COMSIG_MOB_MIDDLECLICKON] and [COMSIG_MOB_ALTCLICKON].
@@ -461,7 +468,7 @@
 	new_profile.dna = new_dna
 	new_profile.name = target.real_name
 	new_profile.protected = protect
-	
+
 	new_profile.age = target.age
 	new_profile.physique = target.physique
 
@@ -474,7 +481,7 @@
 	new_profile.underwear_color = target.underwear_color
 	new_profile.undershirt = target.undershirt
 	new_profile.socks = target.socks
-	
+
 	// Hair and facial hair gradients, alongside their colours.
 	new_profile.grad_style = LAZYLISTDUPLICATE(target.grad_style)
 	new_profile.grad_color = LAZYLISTDUPLICATE(target.grad_color)

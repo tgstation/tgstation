@@ -821,6 +821,7 @@
 	if(heal_flags & HEAL_STAM)
 		setStaminaLoss(0, FALSE, TRUE)
 
+	// I don't really care to keep this under a flag
 	set_nutrition(NUTRITION_LEVEL_FED + 50)
 
 	// These should be status effects

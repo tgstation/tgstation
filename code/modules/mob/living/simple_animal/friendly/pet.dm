@@ -55,7 +55,7 @@
 		access_card = null
 	return ..()
 
-/mob/living/simple_animal/pet/revive(full_heal_flags = NONE, excess_healing = 0)
+/mob/living/simple_animal/pet/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
 	. = ..()
 	if(!.)
 		return

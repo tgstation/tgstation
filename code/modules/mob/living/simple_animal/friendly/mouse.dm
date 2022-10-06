@@ -69,7 +69,7 @@
 		SSmobs.cheeserats -= src // remove play controlled mouse also
 		..(gibbed)
 
-/mob/living/simple_animal/mouse/revive(full_heal_flags = NONE, excess_healing = 0)
+/mob/living/simple_animal/mouse/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
 	var/cap = CONFIG_GET(number/ratcap)
 	if(!(full_heal_flags & HEAL_ADMIN) && !ckey && LAZYLEN(SSmobs.cheeserats) >= cap)
 		visible_message(span_warning("[src] twitched but does not continue moving due to the overwhelming rodent population on the station!"))

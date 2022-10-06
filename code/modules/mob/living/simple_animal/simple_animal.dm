@@ -492,7 +492,7 @@
 /mob/living/simple_animal/extinguish_mob()
 	return
 
-/mob/living/simple_animal/revive(full_heal_flags = NONE, excess_healing = 0)
+/mob/living/simple_animal/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
 	. = ..()
 	if(!.)
 		return

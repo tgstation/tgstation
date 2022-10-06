@@ -174,7 +174,7 @@
 	return amount
 
 /mob/living/proc/setBruteLoss(amount, updating_health = TRUE, forced = FALSE)
-	if(!forced && status_flags & GODMODE)
+	if(!forced && (status_flags & GODMODE))
 		return
 	. = bruteloss
 	bruteloss = amount

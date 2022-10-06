@@ -949,7 +949,7 @@
 		else
 			clear_fullscreen("remote_view", 0)
 
-/mob/living/silicon/ai/revive(full_heal_flags = NONE, excess_healing = 0)
+/mob/living/silicon/ai/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
 	. = ..()
 	if(!.) //successfully ressuscitated from death
 		return
