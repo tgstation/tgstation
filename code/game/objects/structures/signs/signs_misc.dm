@@ -12,3 +12,9 @@
 
 /obj/structure/sign/gym/mirrored/right
 	icon_state = "gymmirror-right"
+
+/obj/structure/sign/chalkboard_menu
+	name = "\improper Chalboard coffee menu"
+	icon_state = "chalkboard_menu"
+	icon = 'icons/obj/barsigns.dmi'
+	desc = "80cr for a iced lactose-free caramel frappe?! Who buys that?!"
