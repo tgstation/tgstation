@@ -681,8 +681,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	additive_damage[SM_DAMAGE_POWER] = clamp((internal_energy - POWER_PENALTY_THRESHOLD) / 2000, 0, 1)
 	additive_damage[SM_DAMAGE_MOLES] = clamp((total_moles - MOLE_PENALTY_THRESHOLD) / 320, 0, 1)
 
-	for(var/turf/open/space/turf_to_check in RANGE_TURFS(1, loc))
-		if(LAZYLEN(turf_to_check.atmos_adjacent_turfs))
+	if(isturf(src.loc))
+		var/turf/local_turf = src.loc
+		for (var/turf/open/space/turf in ((local_turf.atmos_adjacent_turfs || list()) + local_turf))
 			additive_damage[SM_DAMAGE_SPACED] = clamp(internal_energy * 0.00125, 0, 10)
 			break
 
