@@ -1,0 +1,5 @@
+author: "MMMiracles"
+delete-after: True
+changes: 
+  - bugfix: "Tramstation installed CS:Source and maintenance will now no longer blow up into purple textured flooring."
+  - bugfix: "The entire lower hall with Hydroponics on Tramstation is now considered the Service Hallway for use in ordering service crates."
