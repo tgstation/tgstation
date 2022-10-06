@@ -15,6 +15,8 @@ SUBSYSTEM_DEF(mapping)
 	var/map_force_chosen = FALSE
 	/// Has the map vote been rocked?
 	var/map_vote_rocked = FALSE
+	/// Has the emergency shuttle left the station? Important for tracking the map vote for rotation of stations.
+	var/emergency_shuttle_departed = FALSE
 
 	var/list/map_templates = list()
 

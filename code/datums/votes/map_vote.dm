@@ -19,6 +19,13 @@
 /datum/vote/map_vote/create_vote()
 	. = ..()
 	check_population(create_vote = TRUE)
+	if((length(choices) == 1) && SSmapping.emergency_shuttle_departed) // Only one choice, no need to vote. Let's just auto-rotate it to the only remaining map because it would just happen anyways.
+		var/de_facto_winner = choices[1]
+		var/datum/map_config/change_me_out = global.config.maplist[de_facto_winner]
+		SSmapping.changemap(change_me_out)
+		to_chat(world, span_boldannounce("The map vote has been skipped because there is only one map left to vote for. The map has been changed to [change_me_out.map_name]."))
+		SSmapping.map_voted = TRUE // voted by not voting, very sad.
+		return FALSE
 
 /datum/vote/map_vote/toggle_votable(mob/toggler)
 	if(!toggler)
