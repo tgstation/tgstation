@@ -81,5 +81,5 @@
 	return FALSE
 
 /mob/living/carbon/human/get_alt_name()
-	if(name != GetVoice() && !HAS_TRAIT(src, TRAIT_UNKNOWN))
+	if(name != GetVoice())
 		return " (as [get_id_name("Unknown")])"

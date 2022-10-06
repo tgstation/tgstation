@@ -478,7 +478,7 @@
 	complexity = 0
 	removable = FALSE
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0
-	incompatible_modules = list(/obj/item/mod/module/infiltrator)
+	incompatible_modules = list(/obj/item/mod/module/infiltrator, /obj/item/mod/module/armor_booster, /obj/item/mod/module/welding)
 
 /obj/item/mod/module/infiltrator/on_install()
 	mod.item_flags |= EXAMINE_SKIP
