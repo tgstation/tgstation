@@ -23,6 +23,8 @@
 	can_be_held = TRUE
 	held_w_class = WEIGHT_CLASS_TINY
 	worn_slot_flags = ITEM_SLOT_HEAD
+	held_lh = 'icons/mob/inhands/animal_item_lefthand.dmi'
+	held_rh = 'icons/mob/inhands/animal_item_righthand.dmi'
 	head_icon = 'icons/mob/clothing/head/animal_item_head.dmi'
 
 /mob/living/simple_animal/axolotl/Initialize(mapload)
