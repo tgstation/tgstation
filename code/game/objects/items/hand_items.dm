@@ -365,8 +365,11 @@
 	if (user.body_position != LYING_DOWN)
 		return
 	var/obj/item/item_to_strip = target_human.shoes
-	if(target_human.shoes.chained && target_human == user)
-		to_chat(user, span_warning("Despite your best efforts, you still need help taking these off!"))
+	if(target_human == user)
+		to_chat(user, span_notice("Why would you try stealing your own shoes?"))
+		return
+	if(target_human.shoes.chained)
+		to_chat(user, span_warning("[item_to_strip] has been chained up! Stealing these is going to be more involved than expected."))
 		return
 	user.visible_message(span_warning("[user] starts stealing [target_human]'s [item_to_strip.name]!"), \
 		span_danger("You start stealing [target_human]'s [item_to_strip.name]..."))
