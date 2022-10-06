@@ -331,6 +331,8 @@
 	new /obj/effect/hotspot(turf)
 	turf.hotspot_expose(exposed_temperature = PLASMA_TEMPERATURE, exposed_volume = 50, soh = 1)
 	for(var/mob/living/living in turf.contents)
+		if("carp" in living.faction)
+			hit_list += living
 		if(living in hit_list)
 			continue
 		hit_list += living
