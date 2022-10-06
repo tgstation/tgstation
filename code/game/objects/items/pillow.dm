@@ -9,10 +9,10 @@
 	righthand_file = 'icons/mob/inhands/items/pillow_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	damtype = STAMINA
-	var/last_fighter
+	var/last_fighter //whoever last use this pillow 
 	var/obj/item/clothing/neck/pillow_tag/pillow_trophy
-	var/static/tag_desc = "This one seems to have its tag removed" 
-	var/variation
+	var/static/tag_desc = "This one seems to have its tag removed." 
+	var/variation //for selecting the various sprite variation
 
 
 /obj/item/pillow/Initialize(mapload)
@@ -92,7 +92,7 @@
 
 /obj/item/clothing/suit/pillow_suit/Destroy()
 	. = ..()
-	unstoppably_plushed = null
+	QDEL_NULL(unstoppably_plushed)
 
 /obj/item/clothing/head/pillow_hood
 	name = "pillow hood"

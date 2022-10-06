@@ -1,11 +1,17 @@
+/**
+ * Add an auto attack on bump behaviour to item
+ * 
+ */
+
+
 /datum/component/bumpattack
     dupe_mode = COMPONENT_DUPE_UNIQUE
-
+    //inventory slot that the item could be stored while still being able to attack with it
     var/valid_slots
+
     var/active = FALSE
 
     var/mob/living/wearer
-
     var/obj/item/proxy_weapon
 
 
