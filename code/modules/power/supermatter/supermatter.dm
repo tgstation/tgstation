@@ -681,16 +681,14 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	additive_damage[SM_DAMAGE_HEAT] = clamp((absorbed_gasmix.temperature - temp_limit) / 2400, 0, 1.5)
 	additive_damage[SM_DAMAGE_POWER] = clamp((internal_energy - POWER_PENALTY_THRESHOLD) / 2000, 0, 1)
 	additive_damage[SM_DAMAGE_MOLES] = clamp((total_moles - MOLE_PENALTY_THRESHOLD) / 320, 0, 1)
-	// Can be unified with [SM_DAMAGE_HEAT] but splitting heating and healing is better for presentation.
-	// Lets us tack on additional logic too.
-	if(total_moles)
-		additive_damage[SM_DAMAGE_HEAL_HEAT] = clamp((absorbed_gasmix.temperature - temp_limit) / 600, -1, 0)
 
 	for(var/turf/open/space/turf_to_check in RANGE_TURFS(1, loc))
 		if(LAZYLEN(turf_to_check.atmos_adjacent_turfs))
 			additive_damage[SM_DAMAGE_SPACED] = clamp(internal_energy * 0.00125, 0, 10)
-			additive_damage[SM_DAMAGE_HEAL_HEAT] = 0
 			break
+
+	if(total_moles > 0 && !additive_damage[SM_DAMAGE_SPACED])
+		additive_damage[SM_DAMAGE_HEAL_HEAT] = clamp((absorbed_gasmix.temperature - temp_limit) / 600, -1, 0)
 
 	var/total_damage = 0
 	for (var/damage_type in additive_damage)
