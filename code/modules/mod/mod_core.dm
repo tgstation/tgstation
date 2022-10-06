@@ -79,11 +79,6 @@
 	/// Installed cell.
 	var/obj/item/stock_parts/cell/cell
 
-/obj/item/mod/core/standard/handle_atom_del(atom/deleting_atom)
-	if(deleting_atom == cell)
-		cell = null
-	return ..()
-
 
 /obj/item/mod/core/standard/Destroy()
 	QDEL_NULL(cell)
