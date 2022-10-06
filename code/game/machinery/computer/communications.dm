@@ -725,7 +725,10 @@
 	else
 		//No cheating, mime/random mute guy!
 		input = "..."
-		to_chat(user, span_notice("You leave the mic on in awkward silence..."))
+		user.visible_message(
+			span_notice("You leave the mic on in awkward silence..."),
+			span_notice("[user] holds down [src]'s announcement button, leaving the mic on in awkward silence."),
+		)
 
 	var/list/players = get_communication_players()
 	SScommunications.make_announcement(user, is_ai, input, syndicate || (obj_flags & EMAGGED), players)
