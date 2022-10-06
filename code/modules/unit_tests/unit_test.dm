@@ -146,9 +146,15 @@ GLOBAL_LIST_EMPTY(unit_test_mapping_logs)
 
 	var/message = log_entry.Join("\n")
 	log_test(message)
+
+	var/test_output_desc = "[test_path] [duration / 10]s"
+	if (test.succeeded)
+		log_world("[TEST_OUTPUT_GREEN("PASS")] [test_output_desc]")
+
 	log_world("::endgroup::")
 
-	log_world("[test.succeeded ? TEST_OUTPUT_GREEN("PASS") : TEST_OUTPUT_RED("FAIL")]: [test_path] [duration / 10]s")
+	if (!test.succeeded)
+		log_world("::error::[TEST_OUTPUT_RED("FAIL")] [test_output_desc]")
 
 	test_results[test_path] = list("status" = test.succeeded ? UNIT_TEST_PASSED : UNIT_TEST_FAILED, "message" = message, "name" = test_path)
 
