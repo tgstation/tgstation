@@ -18,16 +18,7 @@
 
 /datum/vote/map_vote/create_vote()
 	. = ..()
-
-	// Before we create a vote, remove all maps from our choices that are outside of our population range.
-	// Note that this can result in zero remaining choices for our vote, which is not ideal (but technically fine).
-	for(var/map in choices)
-		var/datum/map_config/possible_config = config.maplist[map]
-		if(possible_config.config_min_users > 0 && GLOB.clients.len < possible_config.config_min_users)
-			choices -= map
-
-		else if(possible_config.config_max_users > 0 && GLOB.clients.len > possible_config.config_max_users)
-			choices -= map
+	check_population(create_vote = TRUE)
 
 /datum/vote/map_vote/toggle_votable(mob/toggler)
 	if(!toggler)
@@ -49,6 +40,11 @@
 	if(forced)
 		return TRUE
 
+	var/number_of_choices = length(check_population())
+	if(number_of_choices < 2)
+		message = "There [number_of_choices ? "is only one map" : "are no maps"] to choose from."
+		return FALSE
+
 	if(SSmapping.map_vote_rocked)
 		return TRUE
 
@@ -62,6 +58,23 @@
 
 	message = initial(message)
 	return TRUE
+
+/// Before we create a vote, remove all maps from our choices that are outside of our population range. Note that this can result in zero remaining choices for our vote, which is not ideal. Let's warn users about that if it comes up.
+/// Argument create_vote is typically FALSE, pass as TRUE if calling from the create_vote proc.
+/datum/vote/map_vote/proc/check_population(create_vote = FALSE)
+	if(!create_vote) // We simulate the parent of create_vote here if this is called outside of the create_vote proc.
+		for(var/key in default_choices)
+			choices[key] = 0
+
+	for(var/map in choices)
+		var/datum/map_config/possible_config = config.maplist[map]
+		if(possible_config.config_min_users > 0 && GLOB.clients.len < possible_config.config_min_users)
+			choices -= map
+
+		else if(possible_config.config_max_users > 0 && GLOB.clients.len > possible_config.config_max_users)
+			choices -= map
+
+	return choices
 
 /datum/vote/map_vote/get_vote_result(list/non_voters)
 	// Even if we have default no vote off,
