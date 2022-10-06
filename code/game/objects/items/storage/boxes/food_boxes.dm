@@ -70,6 +70,11 @@
 		))
 	update_appearance()
 
+/obj/item/storage/box/papersack/vv_edit_var(vname, vval)
+	. = ..()
+	if(vname == NAMEOF(src, design_choice))
+		update_appearance()
+
 /obj/item/storage/box/papersack/update_icon_state()
 	icon_state = "paperbag_[design_choice][(contents.len == 0) ? null : "_closed"]"
 	return ..()
