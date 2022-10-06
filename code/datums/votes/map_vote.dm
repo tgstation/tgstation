@@ -19,7 +19,7 @@
 /datum/vote/map_vote/create_vote()
 	. = ..()
 	check_population(create_vote = TRUE)
-	if((length(choices) == 1) && SSmapping.emergency_shuttle_departed) // Only one choice, no need to vote. Let's just auto-rotate it to the only remaining map because it would just happen anyways.
+	if((length(choices) == 1) && EMERGENCY_ESCAPED_OR_ENDGAMED) // Only one choice, no need to vote. Let's just auto-rotate it to the only remaining map because it would just happen anyways.
 		var/de_facto_winner = choices[1]
 		var/datum/map_config/change_me_out = global.config.maplist[de_facto_winner]
 		SSmapping.changemap(change_me_out)
