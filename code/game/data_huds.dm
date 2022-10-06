@@ -446,6 +446,12 @@ Diagnostic HUDs!
 			new_icon_state = "hudtracking"
 	holder.icon_state = new_icon_state
 
+/obj/vehicle/sealed/mecha/proc/diag_hud_set_camera()
+	var/image/holder = hud_list[DIAG_TRACK_HUD]
+	var/icon/I = icon(icon, icon_state, dir)
+	holder.pixel_y = I.Height() - world.icon_size
+	holder.icon_state = "hudcamera"
+
 /*~~~~~~~~~
 	Bots!
 ~~~~~~~~~~*/
