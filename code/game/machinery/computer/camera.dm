@@ -132,7 +132,7 @@
 	var/list/visible_turfs = list()
 
 	// Is this camera located in or attached to a living thing? If so, assume the camera's loc is the living thing.
-	var/cam_location = isliving(active_camera.loc) ? active_camera.loc : active_camera
+	var/cam_location = (isliving(active_camera.loc) || ismecha(active_camera.loc)) ? active_camera.loc : active_camera
 
 	// If we're not forcing an update for some reason and the cameras are in the same location,
 	// we don't need to update anything.

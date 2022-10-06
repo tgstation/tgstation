@@ -71,7 +71,6 @@
 /obj/machinery/camera/autoname/exosuit
 	c_tag = "Exosuit: unspecified"
 	network = list("ss13", "rd")
-	status = FALSE
 	///Reference to the exosuit this camera is in, if any
 	var/obj/vehicle/sealed/mecha/camera_chassis
 
@@ -85,7 +84,7 @@
 		for(var/obj/machinery/camera/autoname/exosuit/existing_mech_cam in GLOB.cameranet.cameras)
 			if(existing_mech_cam == src)
 				continue
-			if(existing_mech_cam.camera_chassis.name == mech.name)
+			if(existing_mech_cam.camera_chassis?.name == mech.name)
 				number = max(number, existing_mech_cam.number+1)
 		c_tag = "Exosuit: [format_text(mech.name)] #[number]"
 

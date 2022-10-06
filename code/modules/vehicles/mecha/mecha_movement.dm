@@ -148,3 +148,26 @@
 		var/mob/mob_obstacle = obstacle
 		if(mob_obstacle.move_resist <= move_force)
 			step(obstacle, dir)
+
+/obj/vehicle/sealed/mecha/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
+	. = ..()
+	update_camera_location(old_loc)
+
+/obj/vehicle/sealed/mecha/forceMove(atom/destination)
+	. = ..()
+	//Only bother updating the camera if we actually managed to move
+	if(.)
+		update_camera_location(destination)
+
+/obj/vehicle/sealed/mecha/proc/do_camera_update(oldLoc)
+	if(!QDELETED(chassis_camera) && oldLoc != get_turf(src))
+		GLOB.cameranet.updatePortableCamera(chassis_camera)
+	updating = FALSE
+
+#define MECHA_CAMERA_BUFFER 1 SECONDS
+/obj/vehicle/sealed/mecha/proc/update_camera_location(oldLoc)
+	oldLoc = get_turf(oldLoc)
+	if(!QDELETED(chassis_camera) && !updating && oldLoc != get_turf(src))
+		updating = TRUE
+		addtimer(CALLBACK(src, .proc/do_camera_update, oldLoc), MECHA_CAMERA_BUFFER)
+#undef MECHA_CAMERA_BUFFER

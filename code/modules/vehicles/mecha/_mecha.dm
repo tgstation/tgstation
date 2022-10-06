@@ -87,6 +87,9 @@
 	///Special version of the radio, which is unsellable
 	var/obj/item/radio/mech/radio
 	var/list/trackers = list()
+	var/obj/machinery/camera/autoname/exosuit/chassis_camera
+	///Portable camera camerachunk update
+	var/updating = FALSE
 
 	var/max_temperature = 25000
 
