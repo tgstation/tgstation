@@ -37,7 +37,7 @@
 	. = ..()
 	RegisterSignal(granted_to, COMSIG_MONKEY_HUMANIZE, .proc/give_lesserform)
 
-/datum/action/changeling/humanform/from_monkey/Destroy()
+/datum/action/changeling/humanform/from_monkey/Remove(mob/remove_from)
 	UnregisterSignal(owner, COMSIG_MONKEY_HUMANIZE)
 	return ..()
 

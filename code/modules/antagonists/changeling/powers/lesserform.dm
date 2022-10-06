@@ -11,7 +11,7 @@
 	. = ..()
 	RegisterSignal(granted_to, COMSIG_HUMAN_MONKEYIZE, .proc/swap_powers)
 
-/datum/action/changeling/lesserform/Destroy()
+/datum/action/changeling/lesserform/Remove(mob/remove_from)
 	UnregisterSignal(owner, COMSIG_HUMAN_MONKEYIZE)
 	return ..()
 
