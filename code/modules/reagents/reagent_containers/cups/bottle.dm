@@ -457,3 +457,72 @@
 	name = "bottle of caramel"
 	desc = "A bottle containing caramalized sugar, also known as caramel. Do not lick."
 	list_reagents = list(/datum/reagent/consumable/caramel = 30)
+
+/*
+ *	Syrup bottles, basically a unspillable cup that transfers reagents upon clicking on it with a cup
+ *	Exclusive, can only be ordered from cargo, you cant refill them.
+ */
+
+/obj/item/reagent_containers/cup/bottle/syrup_bottle
+	name = "syrup bottle"
+	desc = "A plastic bottle with a syrup pump to dispense the delicious substance directly into your coffee cup."
+	icon = 'icons/obj/food/containers.dmi'
+	icon_state = "syrup"
+	fill_icon_state = "syrup_"
+	fill_icon_thresholds = list(0, 5, 15, 35, 50)
+	possible_transfer_amounts = list(5, 10)
+	volume = 60
+	amount_per_transfer_from_this = 5
+	spillable = FALSE
+
+//the attackby of this container is a little wild, it works exactly as the regular afterattack of any other container, you cick it with a cup in hand, it transfers to that cup
+/obj/item/reagent_containers/cup/bottle/syrup_bottle/attackby(obj/item/attacking_item, mob/user, params)
+	SHOULD_CALL_PARENT(FALSE)
+
+	if(!check_allowed_items(attacking_item,target_self=1))
+		return
+
+	if(attacking_item.is_refillable()) //Something like a glass. Player probably wants to transfer TO it.
+		if(!reagents.total_volume)
+			to_chat(user, span_warning("[src] is empty!"))
+			return
+
+		if(attacking_item.reagents.holder_full())
+			to_chat(user, span_warning("[attacking_item] is full."))
+			return
+
+		var/trans = reagents.trans_to(attacking_item, amount_per_transfer_from_this, transfered_by = user)
+		to_chat(user, span_notice("You transfer [trans] unit\s of the solution to [attacking_item]."))
+		flick("syrup_anim",src)
+
+	attacking_item.update_appearance()
+
+	return
+
+//there is no action on afterattack
+/obj/item/reagent_containers/cup/bottle/syrup_bottle/afterattack(obj/target, mob/living/user, proximity)
+	SHOULD_CALL_PARENT(FALSE)
+	return
+
+//types of syrups
+
+/obj/item/reagent_containers/cup/bottle/syrup_bottle/caramel
+	name = "pump bottle of caramel syrup"
+	desc = "A pump bottle containing caramalized sugar, also known as caramel. Do not lick."
+	list_reagents = list(/datum/reagent/consumable/caramel = 60)
+
+/obj/item/reagent_containers/cup/bottle/syrup_bottle/liqueur
+	name = "pump bottle of coffee liqueur syrup"
+	desc = "A pump bottle containing mexican coffee-flavoured liqueur syrup. In production since 1936, HONK."
+	list_reagents = list(/datum/reagent/consumable/ethanol/kahlua = 60)
+
+/obj/item/reagent_containers/cup/bottle/syrup_bottle/korta_nectar
+	name = "pump bottle of coffee korta syrup"
+	desc = "A pump bottle containing korta syrup. A sweet, sugary substance made from crushed sweet korta nuts."
+	list_reagents = list(/datum/reagent/consumable/vanilla = 60)
+
+//secret syrup, better don't add to coffee!
+/obj/item/reagent_containers/cup/bottle/syrup_bottle/laughsyrup
+	name = "pump bottle of coffee laugh syrup"
+	desc = "A pump bottle containing laugh syrup. The product of juicing Laughin' Peas. Fizzy, and seems to change flavour based on what it's used with!"
+	list_reagents = list(/datum/reagent/consumable/laughsyrup = 60)
