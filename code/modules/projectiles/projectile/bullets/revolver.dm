@@ -123,9 +123,9 @@
 /obj/projectile/bullet/marksman
 	name = "nanoshot"
 	hitscan = TRUE
-	tracer_type = /obj/effect/projectile/tracer/laser
-	muzzle_type = /obj/effect/projectile/muzzle/laser
-	impact_type = /obj/effect/projectile/impact/laser
+	tracer_type = /obj/effect/projectile/tracer/solar
+	muzzle_type = /obj/effect/projectile/muzzle/bullet
+	impact_type = /obj/effect/projectile/impact/sniper
 
 /obj/projectile/bullet/marksman/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
@@ -135,7 +135,7 @@
 	var/coin_coords
 	if(last_coin)
 		coin_coords = ("([last_coin.x] [last_coin.y]) dist: [get_dist(src, last_coin)]")
-	testing("moved>> [x] [y] [coin_coords]")
+	//testing("moved>> [x] [y] [coin_coords]")
 
 	var/obj/projectile/bullet/coin/coin_check = cur_turf ? locate(/obj/projectile/bullet/coin) in cur_turf.contents : null
 	if(!coin_check || coin_check.used)
@@ -143,7 +143,8 @@
 
 	testing("found a coin!")
 	coin_check.shot_at(firer, src)
-	testing("moved end!")
+	Impact(coin_check)
+	//testing("moved end!")
 
 // coin
 /obj/projectile/bullet/coin
@@ -155,16 +156,14 @@
 
 	var/valid = FALSE
 
-	var/list/ignored_coins = list()
-
 	var/used = FALSE
+
+	var/num_of_splitshots = 2
 
 /obj/projectile/bullet/coin/Initialize(mapload, turf/the_target, list/parent_ignored_coins)
 	. = ..()
 	target_turf = the_target
 	target_turf?.color = COLOR_RED
-	if(parent_ignored_coins)
-		ignored_coins = deep_copy_list(parent_ignored_coins)
 	//range = get_dist()
 
 /obj/projectile/bullet/coin/Destroy()
@@ -178,12 +177,12 @@
 /obj/projectile/bullet/coin/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
 	if(!valid && get_dist(loc, target_turf) <= 1)
-		playsound(src, 'sound/machines/ping.ogg', 50)
+		playsound(src, 'sound/machines/ping.ogg', 30)
 		valid = TRUE
 		color = COLOR_YELLOW
 
-/obj/projectile/bullet/coin/proc/shot_at(mob/living/shooter, obj/projectile/incoming_shot)
-	if(get_dist(src, target_turf) > 1)
+/obj/projectile/bullet/coin/proc/shot_at(mob/living/shooter, obj/projectile/incoming_shot, forced = FALSE)
+	if(!forced && get_dist(src, target_turf) > 1)
 		return FALSE
 
 	testing("coin hit!")
@@ -191,24 +190,24 @@
 	var/turf/cur_tur = get_turf(src)
 	cur_tur.visible_message(span_nicegreen("[incoming_shot] impacts [src]!"))
 	splitshot(shooter, incoming_shot)
-	qdel(src)
+	QDEL_IN(src, 0.25 SECONDS)
 
 /obj/projectile/bullet/coin/proc/splitshot(mob/living/shooter, obj/projectile/incoming_shot)
-	var/list/possible_victims = list()
-
-	for(var/mob/living/iter_living in range(4, src.loc))
-		if(can_see(iter_living, src))
-			possible_victims += iter_living
-
-	var/mob/living/victim = pick(possible_victims)
-	if(victim)
-		fire_splitshot(victim, incoming_shot)
-	else
-		var/atom/random_thing = pick(range(3, src))
-		fire_splitshot(random_thing, incoming_shot)
+	testing("splitshot! num of ss's [num_of_splitshots]")
+	for(var/i in 1 to num_of_splitshots)
+		testing("splitshot [i] of [num_of_splitshots]")
+		var/atom/next_target = find_next_target() //////////////////////////////// < if this is a coin, do coin_check.shot_at(firer, src) / Impact() or whatever
+		testing("found next target: [next_target]")
+		fire_splitshot(next_target, incoming_shot)
+		testing("finished splitshot [i]!")
 
 /// Minor convenience function for creating each shrapnel piece with circle explosions, mostly stolen from the MIRV component
 /obj/projectile/bullet/coin/proc/fire_splitshot(atom/target, obj/projectile/incoming_shot)
+	if(!istype(target))
+		return
+
+	ADD_TRAIT(target, TRAIT_RECENTLY_COINED, ABSTRACT_ITEM_TRAIT)
+	addtimer(TRAIT_CALLBACK_REMOVE(target, TRAIT_RECENTLY_COINED, ABSTRACT_ITEM_TRAIT), 0.5 SECONDS)
 	var/projectile_type = incoming_shot.type
 	var/obj/projectile/new_splitshot = new projectile_type(get_turf(src))
 
@@ -218,3 +217,37 @@
 	new_splitshot.firer = incoming_shot.firer
 	new_splitshot.preparePixelProjectile(target, src)
 	new_splitshot.fire()
+	new_splitshot.damage *= 1.5
+
+	if(istype(target, /obj/projectile/bullet/coin))
+		var/obj/projectile/bullet/coin/our_coin = target
+		our_coin.shot_at(incoming_shot.firer, new_splitshot, forced = TRUE)
+
+/// Minor convenience function for creating each shrapnel piece with circle explosions, mostly stolen from the MIRV component
+/obj/projectile/bullet/coin/proc/find_next_target()
+	var/list/valid_targets = (oview(4, src.loc))
+	valid_targets -= firer
+	testing("Finding next target- len: [valid_targets.len]")
+
+	for(var/obj/projectile/bullet/coin/iter_coin in valid_targets)
+		if(!iter_coin.used) // this will prevent shooting itself as well
+			return iter_coin
+
+	testing("no coin found to rico, try living")
+	var/list/possible_victims = list()
+
+	for(var/mob/living/iter_living in valid_targets)
+		if(!HAS_TRAIT(iter_living, TRAIT_RECENTLY_COINED))
+			if(get_dist(src, iter_living) <= 2)
+				testing("got close person!")
+				return iter_living
+			possible_victims += iter_living
+
+	if(possible_victims.len)
+		testing("got mob!")
+		return pick(possible_victims)
+
+	for(var/atom/last_ditch in valid_targets)
+		if(!HAS_TRAIT(last_ditch, TRAIT_RECENTLY_COINED))
+			testing("did last ditch")
+			return last_ditch

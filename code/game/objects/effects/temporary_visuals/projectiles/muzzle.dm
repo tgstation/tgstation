@@ -38,3 +38,6 @@
 
 /obj/effect/projectile/muzzle/sniper
 	icon_state = "sniper"
+
+/obj/effect/projectile/muzzle/bullet
+	icon_state = "muzzle_bullet"
