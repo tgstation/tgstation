@@ -6,18 +6,18 @@
 
 /obj/item/clothing/head/fedora/Initialize(mapload)
 	. = ..()
-	
+
 	create_storage(type = /datum/storage/pockets/small/fedora)
 
 /obj/item/clothing/head/fedora/white
 	name = "white fedora"
 	icon_state = "fedora_white"
-	inhand_icon_state = "fedora_white"
+	inhand_icon_state = null
 
 /obj/item/clothing/head/fedora/beige
 	name = "beige fedora"
 	icon_state = "fedora_beige"
-	inhand_icon_state = "fedora_beige"
+	inhand_icon_state = null
 
 /obj/item/clothing/head/fedora/suicide_act(mob/user)
 	if(user.gender == FEMALE)
@@ -32,4 +32,4 @@
 /obj/item/clothing/head/fedora/carpskin
 	name = "carpskin fedora"
 	icon_state = "fedora_carpskin"
-	inhand_icon_state = "fedora_carpskin"
+	inhand_icon_state = null

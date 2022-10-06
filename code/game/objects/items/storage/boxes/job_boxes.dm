@@ -77,6 +77,16 @@
 	new /obj/item/screwdriver/red(src)
 	new /obj/item/weldingtool/mini(src)
 
+/obj/item/storage/box/survival/centcom
+	name = "emergency response survival box"
+	desc = "A box with the bare essentials of ensuring the survival of your team. This one is labelled to contain a double tank."
+	illustration = "extendedtank"
+	internal_type = /obj/item/tank/internals/emergency_oxygen/double
+
+/obj/item/storage/box/survival/centcom/PopulateContents()
+	. = ..()
+	new /obj/item/crowbar(src)
+
 // Security survival box
 /obj/item/storage/box/survival/security
 	mask_type = /obj/item/clothing/mask/gas/sechailer
@@ -154,8 +164,8 @@
 /obj/item/storage/box/clown/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] opens [src] and gets consumed by [p_them()]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(user, 'sound/misc/scary_horn.ogg', 70, vary = TRUE)
+	forceMove(user.drop_location())
 	var/obj/item/clothing/head/mob_holder/consumed = new(src, user)
-	user.forceMove(consumed)
 	consumed.desc = "It's [user.real_name]! It looks like [user.p_they()] committed suicide!"
 	return OXYLOSS
 
@@ -195,21 +205,9 @@
 	desc = "A lovely little box filled with soft, cute plushies, perfect for calming down people who have just suffered a traumatic event. Legend has it there's a special part of hell \
 	for Medical Officers who just take the box for themselves."
 
-	/// the plushies that aren't of things trying to kill you
-	var/list/static/approved_by_corporate = list(
-		/obj/item/toy/plush/carpplushie, // well, maybe they can be something that tries to kill you a little bit
-		/obj/item/toy/plush/slimeplushie,
-		/obj/item/toy/plush/lizard_plushie,
-		/obj/item/toy/plush/snakeplushie,
-		/obj/item/toy/plush/plasmamanplushie,
-		/obj/item/toy/plush/beeplushie,
-		/obj/item/toy/plush/moth,
-		/obj/item/toy/plush/pkplush,
-	)
-
 /obj/item/storage/box/hug/plushes/PopulateContents()
 	for(var/i in 1 to 7)
-		var/plush_path = pick(approved_by_corporate)
+		var/plush_path = /obj/effect/spawner/random/entertainment/plushie
 		new plush_path(src)
 
 /obj/item/storage/box/skillchips

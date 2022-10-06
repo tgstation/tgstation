@@ -199,7 +199,7 @@
 	name = "Temperature stabilisation"
 	hue = "#B09856"
 	quality = POSITIVE
-	severity = SEVERITY_AVERAGE
+	severity = SEVERITY_MINOR
 
 /datum/spacevine_mutation/temp_stabilisation/add_mutation_to_vinepiece(obj/structure/spacevine/holder)
 	. = ..()
@@ -389,6 +389,18 @@
 	else
 		. = expected_damage
 
+/datum/spacevine_mutation/timid
+	name = "Timid"
+	hue = "#a4a9ac"
+	quality = POSITIVE
+	severity = SEVERITY_MINOR
+
+//This specific mutation only covers floors instead of structures, items, mobs and cant tangle mobs
+/datum/spacevine_mutation/timid/on_birth(obj/structure/spacevine/holder)
+	holder.plane = FLOOR_PLANE
+	holder.can_tangle = FALSE
+	return ..()
+
 /datum/spacevine_mutation/flowering
 	name = "Flowering"
 	hue = "#66DE93"
@@ -418,7 +430,10 @@
 	pass_flags = PASSTABLE | PASSGRILLE
 	max_integrity = 50
 	var/energy = 0
-	var/can_spread = TRUE //Can this kudzu spread?
+	/// Can this kudzu spread?
+	var/can_spread = TRUE
+	/// Can this kudzu buckle mobs in?
+	var/can_tangle = TRUE
 	var/datum/spacevine_controller/master = null
 	/// List of mutations for a specific vine
 	var/list/mutations = list()
@@ -684,7 +699,7 @@
 		return
 	for(var/datum/spacevine_mutation/mutation in mutations)
 		mutation.on_buckle(src, victim)
-	if((victim.stat != DEAD) && (victim.buckled != src)) //not dead or captured
+	if((victim.stat != DEAD) && (victim.buckled != src) && can_tangle) //not dead and not captured and can tangle
 		to_chat(victim, span_userdanger("The vines [pick("wind", "tangle", "tighten")] around you!"))
 		buckle_mob(victim, 1)
 

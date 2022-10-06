@@ -44046,6 +44046,7 @@
 	dir = 1;
 	pixel_y = 23
 	},
+/obj/structure/sign/delamination_counter/directional/west,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "kDL" = (
@@ -66819,7 +66820,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/service/barber)
 "qlK" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /obj/structure/table,
 /obj/item/fuel_pellet{
 	pixel_x = 8
@@ -76596,9 +76597,7 @@
 "sJd" = (
 /obj/structure/cable,
 /obj/item/kirbyplants/random,
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /obj/machinery/light_switch/directional/west,
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 8
@@ -92531,6 +92530,7 @@
 /obj/structure/cable,
 /obj/effect/landmark/start/hangover,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/delamination_counter/directional/north,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "wyN" = (

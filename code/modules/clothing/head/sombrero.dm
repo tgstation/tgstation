@@ -23,7 +23,6 @@
 /obj/item/clothing/head/sombrero/shamebrero
 	name = "shamebrero"
 	icon_state = "shamebrero"
-	inhand_icon_state = "shamebrero"
 	desc = "Once it's on, it never comes off."
 	dog_fashion = null
 	greyscale_colors = "#d565d3#f8db18"

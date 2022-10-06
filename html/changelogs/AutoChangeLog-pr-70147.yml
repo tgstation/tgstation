@@ -1,5 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes: 
-  - code_imp: "All round event control/round event datums have been migrated to the events module"
-  - code_imp: "Anomaly and ghost_role events now have their own respective folders in the events module"

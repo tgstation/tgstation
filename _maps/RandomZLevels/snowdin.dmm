@@ -2101,7 +2101,7 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/dorm)
 "gj" = (
-/obj/structure/shuttle/engine/propulsion/left{
+/obj/machinery/power/shuttle_engine/propulsion/left{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -8041,7 +8041,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/minipost)
 "zz" = (
-/obj/structure/shuttle/engine/propulsion/right{
+/obj/machinery/power/shuttle_engine/propulsion/right{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -8870,7 +8870,7 @@
 /turf/open/floor/circuit/red,
 /area/awaymission/snowdin/cave)
 "CP" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -8883,7 +8883,7 @@
 /turf/open/floor/plating/snowed,
 /area/awaymission/snowdin/cave)
 "CQ" = (
-/obj/structure/shuttle/engine/propulsion/left{
+/obj/machinery/power/shuttle_engine/propulsion/left{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -8938,7 +8938,7 @@
 /turf/open/floor/circuit/red,
 /area/awaymission/snowdin/cave)
 "Da" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -8987,7 +8987,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/snowdin/cave)
 "Dl" = (
-/obj/structure/shuttle/engine/propulsion/right{
+/obj/machinery/power/shuttle_engine/propulsion/right{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -9091,7 +9091,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/cave)
 "DU" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -12861,7 +12861,7 @@
 /turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "Vl" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{

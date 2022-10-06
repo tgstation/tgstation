@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes: 
-  - bugfix: "Whenever you put a species with some type of exotic, non-human blood on a surgery table: the corresponding blood type should no longer report it as if the patient in question had a Rhesus blood type, and will instead declare the name of the actual reagent circulating within their system."

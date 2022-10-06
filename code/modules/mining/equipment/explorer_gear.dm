@@ -5,7 +5,7 @@
 	icon_state = "explorer"
 	icon = 'icons/obj/clothing/suits/utility.dmi'
 	worn_icon = 'icons/mob/clothing/suits/utility.dmi'
-	inhand_icon_state = "explorer"
+	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
@@ -50,6 +50,7 @@
 	name = "explorer gas mask"
 	desc = "A military-grade gas mask that can be connected to an air supply."
 	icon_state = "gas_mining"
+	inhand_icon_state = "explorer_gasmask"
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
 	visor_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	visor_flags_inv = HIDEFACIALHAIR
@@ -62,10 +63,14 @@
 /obj/item/clothing/mask/gas/explorer/attack_self(mob/user)
 	adjustmask(user)
 
-/obj/item/clothing/mask/gas/explorer/adjustmask(user)
+/obj/item/clothing/mask/gas/explorer/adjustmask(mob/user)
 	. = ..()
 	// adjusted = out of the way = smaller = can fit in boxes
 	w_class = mask_adjusted ? WEIGHT_CLASS_SMALL : WEIGHT_CLASS_NORMAL
+	inhand_icon_state = mask_adjusted ? "[initial(inhand_icon_state)]_up" : initial(inhand_icon_state)
+	if(user)
+		user.update_held_items()
+
 
 /obj/item/clothing/mask/gas/explorer/examine(mob/user)
 	. = ..()

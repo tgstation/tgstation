@@ -53,7 +53,7 @@
 	name = "bulletproof helmet"
 	desc = "A bulletproof combat helmet that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."
 	icon_state = "helmetalt"
-	inhand_icon_state = "helmetalt"
+	inhand_icon_state = "swat_helmet"
 	armor = list(MELEE = 15, BULLET = 60, LASER = 10, ENERGY = 10, BOMB = 40, BIO = 0, FIRE = 50, ACID = 50, WOUND = 5)
 	dog_fashion = null
 
@@ -65,7 +65,7 @@
 	name = "tactical combat helmet"
 	desc = "A tactical black helmet, sealed from outside hazards with a plate of glass and not much else."
 	icon_state = "marine_command"
-	inhand_icon_state = "helmetalt"
+	inhand_icon_state = "marine_helmet"
 	armor = list(MELEE = 50, BULLET = 50, LASER = 30, ENERGY = 25, BOMB = 50, BIO = 100, FIRE = 40, ACID = 50, WOUND = 20)
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	clothing_flags = STOPSPRESSUREDAMAGE | PLASMAMAN_HELMET_EXEMPT
@@ -97,14 +97,14 @@
 	name = "blue helmet"
 	desc = "A reliable, blue tinted helmet reminding you that you <i>still</i> owe that engineer a beer."
 	icon_state = "blueshift"
-	inhand_icon_state = "blueshift"
+	inhand_icon_state = "blueshift_helmet"
 	custom_premium_price = PAYCHECK_COMMAND
 
 /obj/item/clothing/head/helmet/riot
 	name = "riot helmet"
 	desc = "It's a helmet specifically designed to protect against close range attacks."
 	icon_state = "riot"
-	inhand_icon_state = "helmet"
+	inhand_icon_state = "riot_helmet"
 	toggle_message = "You pull the visor down on"
 	alt_toggle_message = "You push the visor up on"
 	can_toggle = 1
@@ -145,6 +145,7 @@
 	name = "helmet of justice"
 	desc = "WEEEEOOO. WEEEEEOOO. WEEEEOOOO."
 	icon_state = "justice"
+	inhand_icon_state = "justice_helmet"
 	toggle_message = "You turn off the lights on"
 	alt_toggle_message = "You turn on the lights on"
 	actions_types = list(/datum/action/item_action/toggle_helmet_light)
@@ -180,7 +181,7 @@
 	name = "\improper SWAT helmet"
 	desc = "An extremely robust, space-worthy helmet in a nefarious red and black stripe pattern."
 	icon_state = "swatsyndie"
-	inhand_icon_state = "swatsyndie"
+	inhand_icon_state = "swatsyndie_helmet"
 	armor = list(MELEE = 40, BULLET = 30, LASER = 30,ENERGY = 40, BOMB = 50, BIO = 90, FIRE = 100, ACID = 100, WOUND = 15)
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
@@ -195,7 +196,7 @@
 	name = "\improper SWAT helmet"
 	desc = "An extremely robust helmet with the Nanotrasen logo emblazoned on the top."
 	icon_state = "swat"
-	inhand_icon_state = "swat"
+	inhand_icon_state = "swat_helmet"
 	clothing_flags = PLASMAMAN_HELMET_EXEMPT
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
@@ -209,7 +210,7 @@
 	desc = "<i>'Let the battle commence!'</i>"
 	flags_inv = HIDEEARS|HIDEHAIR
 	icon_state = "thunderdome"
-	inhand_icon_state = "thunderdome"
+	inhand_icon_state = "thunderdome_helmet"
 	armor = list(MELEE = 80, BULLET = 80, LASER = 50, ENERGY = 50, BOMB = 100, BIO = 100, FIRE = 90, ACID = 90)
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
@@ -231,7 +232,7 @@
 	armor = list(MELEE = 25, BULLET = 0, LASER = 25, ENERGY = 10, BOMB = 10, BIO = 0, FIRE = 100, ACID = 50, WOUND = 5)
 	resistance_flags = FIRE_PROOF
 	icon_state = "roman"
-	inhand_icon_state = "roman"
+	inhand_icon_state = "roman_helmet"
 	strip_delay = 100
 	dog_fashion = null
 
@@ -243,7 +244,6 @@
 	name = "\improper Roman legionnaire helmet"
 	desc = "An ancient helmet made of bronze and leather. Has a red crest on top of it."
 	icon_state = "roman_c"
-	inhand_icon_state = "roman_c"
 
 /obj/item/clothing/head/helmet/roman/legionnaire/fake
 	desc = "An ancient helmet made of plastic and leather. Has a red crest on top of it."
@@ -253,7 +253,7 @@
 	name = "gladiator helmet"
 	desc = "Ave, Imperator, morituri te salutant."
 	icon_state = "gladiator"
-	inhand_icon_state = "gladiator"
+	inhand_icon_state = "gladiator_helmet"
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR
 	flags_cover = HEADCOVERSEYES
 	dog_fashion = null
@@ -263,7 +263,7 @@
 	desc = "They have chosen their own end."
 	icon_state = "redtaghelm"
 	flags_cover = HEADCOVERSEYES
-	inhand_icon_state = "redtaghelm"
+	inhand_icon_state = "redtag_helmet"
 	armor = list(MELEE = 15, BULLET = 10, LASER = 20,ENERGY = 10, BOMB = 20, BIO = 0, FIRE = 0, ACID = 50)
 	// Offer about the same protection as a hardhat.
 	dog_fashion = null
@@ -273,7 +273,7 @@
 	desc = "They'll need more men."
 	icon_state = "bluetaghelm"
 	flags_cover = HEADCOVERSEYES
-	inhand_icon_state = "bluetaghelm"
+	inhand_icon_state = "bluetag_helmet"
 	armor = list(MELEE = 15, BULLET = 10, LASER = 20,ENERGY = 10, BOMB = 20, BIO = 0, FIRE = 0, ACID = 50)
 	// Offer about the same protection as a hardhat.
 	dog_fashion = null
@@ -282,7 +282,7 @@
 	name = "medieval helmet"
 	desc = "A classic metal helmet."
 	icon_state = "knight_green"
-	inhand_icon_state = "knight_green"
+	inhand_icon_state = "knight_helmet"
 	armor = list(MELEE = 50, BULLET = 10, LASER = 10, ENERGY = 10, BOMB = 0, BIO = 0, FIRE = 80, ACID = 80) // no wound armor cause getting domed in a bucket head sounds like concussion city
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
@@ -291,21 +291,18 @@
 
 /obj/item/clothing/head/helmet/knight/blue
 	icon_state = "knight_blue"
-	inhand_icon_state = "knight_blue"
 
 /obj/item/clothing/head/helmet/knight/yellow
 	icon_state = "knight_yellow"
-	inhand_icon_state = "knight_yellow"
 
 /obj/item/clothing/head/helmet/knight/red
 	icon_state = "knight_red"
-	inhand_icon_state = "knight_red"
 
 /obj/item/clothing/head/helmet/knight/greyscale
 	name = "knight helmet"
 	desc = "A classic medieval helmet, if you hold it upside down you could see that it's actually a bucket."
 	icon_state = "knight_greyscale"
-	inhand_icon_state = "knight_greyscale"
+	inhand_icon_state = null
 	armor = list(MELEE = 35, BULLET = 10, LASER = 10, ENERGY = 10, BOMB = 10, BIO = 10, FIRE = 40, ACID = 40)
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS //Can change color and add prefix
 
@@ -316,14 +313,14 @@
 	flags_cover = HEADCOVERSEYES
 	armor = list(MELEE = 35, BULLET = 25, LASER = 25, ENERGY = 35, BOMB = 25, BIO = 0, FIRE = 50, ACID = 50)
 	icon_state = "skull"
-	inhand_icon_state = "skull"
+	inhand_icon_state = null
 	strip_delay = 100
 
 /obj/item/clothing/head/helmet/durathread
 	name = "durathread helmet"
 	desc = "A helmet made from durathread and leather."
 	icon_state = "durathread"
-	inhand_icon_state = "durathread"
+	inhand_icon_state = "durathread_helmet"
 	resistance_flags = FLAMMABLE
 	armor = list(MELEE = 20, BULLET = 10, LASER = 30, ENERGY = 40, BOMB = 15, BIO = 0, FIRE = 40, ACID = 50, WOUND = 5)
 	strip_delay = 60
@@ -354,7 +351,7 @@
 	name = "infiltrator helmet"
 	desc = "The galaxy isn't big enough for the two of us."
 	icon_state = "infiltrator"
-	inhand_icon_state = "infiltrator"
+	inhand_icon_state = "infiltrator_helmet"
 	armor = list(MELEE = 40, BULLET = 40, LASER = 30, ENERGY = 40, BOMB = 70, BIO = 0, FIRE = 100, ACID = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	flash_protect = FLASH_PROTECTION_WELDER
@@ -366,7 +363,7 @@
 	name = "\improper Elder Atmosian Helmet"
 	desc = "A superb helmet made with the toughest and rarest materials available to man."
 	icon_state = "h2helmet"
-	inhand_icon_state = "h2helmet"
+	inhand_icon_state = "h2_helmet"
 	armor = list(MELEE = 25, BULLET = 20, LASER = 30, ENERGY = 30, BOMB = 85, BIO = 10, FIRE = 65, ACID = 40, WOUND = 15)
 	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS //Can change color and add prefix
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT

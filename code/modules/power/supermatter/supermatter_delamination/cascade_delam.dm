@@ -7,7 +7,7 @@
 	if(total_moles < MOLE_PENALTY_THRESHOLD * sm.absorption_ratio)
 		return FALSE
 	for (var/gas_path in list(/datum/gas/antinoblium, /datum/gas/hypernoblium))
-		var/percent = sm.absorbed_gasmix.gases[gas_path]?[MOLES] / total_moles
+		var/percent = sm.gas_percentage[gas_path]
 		if(!percent || percent < 0.4)
 			return FALSE
 	return TRUE
@@ -66,7 +66,7 @@
 	SSsupermatter_cascade.can_fire = TRUE
 	SSsupermatter_cascade.cascade_initiated = TRUE
 	effect_crystal_mass(sm, rift)
-	qdel(sm)
+	return ..()
 
 /datum/sm_delam/cascade/examine(obj/machinery/power/supermatter_crystal/sm)
 	return list(span_bolddanger("The crystal is vibrating at immense speeds, warping space around it!"))
@@ -74,15 +74,15 @@
 /datum/sm_delam/cascade/overlays(obj/machinery/power/supermatter_crystal/sm)
 	return list()
 
-/datum/sm_delam/cascade/damage_multiplier(obj/machinery/power/supermatter_crystal/sm)
-	return 0.25
-
 /datum/sm_delam/cascade/count_down_messages(obj/machinery/power/supermatter_crystal/sm)
 	var/list/messages = list()
 	messages += "CRYSTAL DELAMINATION IMMINENT. The supermatter has reached critical integrity failure. Harmonic frequency limits exceeded. Causality destabilization field could not be engaged."
 	messages += "Crystalline hyperstructure returning to safe operating parameters. Harmonic frequency restored within emergency bounds. Anti-resonance filter initiated."
 	messages += "remain before resonance-induced stabilization."
 	return messages
+
+/datum/sm_delam/cascade/mole_power_damage_limit(obj/machinery/power/supermatter_crystal/sm)
+	return 0.25
 
 /datum/sm_delam/cascade/proc/announce_cascade(obj/machinery/power/supermatter_crystal/sm)
 	if(QDELETED(sm))

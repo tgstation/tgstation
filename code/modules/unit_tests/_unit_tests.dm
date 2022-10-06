@@ -41,6 +41,11 @@
 /// Intended to be used in the manner of `TEST_FOCUS(/datum/unit_test/math)`
 #define TEST_FOCUS(test_path) ##test_path { focus = TRUE; }
 
+/// Logs a noticable message on GitHub, but will not mark as an error.
+/// Use this when something shouldn't happen and is of note, but shouldn't block CI.
+/// Does not mark the test as failed.
+#define TEST_NOTICE(source, message) source.log_for_test((##message), "notice", __FILE__, __LINE__)
+
 /// Constants indicating unit test completion status
 #define UNIT_TEST_PASSED 0
 #define UNIT_TEST_FAILED 1
@@ -105,6 +110,7 @@
 #include "hydroponics_harvest.dm"
 #include "hydroponics_self_mutations.dm"
 #include "hydroponics_validate_genes.dm"
+#include "inhands.dm"
 #include "keybinding_init.dm"
 #include "knockoff_component.dm"
 #include "limbsanity.dm"
