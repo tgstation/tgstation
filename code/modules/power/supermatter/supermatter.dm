@@ -670,6 +670,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		return
 
 	var/list/additive_damage = list()
+	var/total_moles = absorbed_gasmix.total_moles()
 
 	// We dont let external factors deal more damage than the emergency point.
 	// Only cares about var/damage (last tick) and not the var/damage + damage this tick.
