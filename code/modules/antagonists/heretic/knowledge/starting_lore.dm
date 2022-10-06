@@ -146,11 +146,6 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	if(our_new_heart.status != ORGAN_ORGANIC || (our_new_heart.organ_flags & ORGAN_SYNTHETIC))
 		var/obj/item/organ/our_replacement_heart = locate(required_organ_type) in selected_atoms
 		if(our_replacement_heart)
-			// Icky snowflake but if the organ is a heart, it needs to be restarted / start beating again
-			if(istype(our_replacement_heart, /obj/item/organ/internal/heart))
-				var/obj/item/organ/internal/heart/actually_a_heart_replacement = our_replacement_heart
-				actually_a_heart_replacement.Restart()
-
 			// Throw our current heart out of our chest, violently
 			user.visible_message(span_boldwarning("[user]'s [our_new_heart.name] bursts suddenly out of [user.p_their()] chest!"))
 			INVOKE_ASYNC(user, /mob/proc/emote, "scream")
@@ -161,6 +156,15 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 			our_new_heart = our_replacement_heart
 		else
 			CRASH("[type] required a replacement organic heart in on_finished_recipe, but did not find one.")
+
+	if(!our_new_heart)
+		CRASH("[type] somehow made it to on_finished_recipe without a heart. What?")
+
+	// Snowflakey, but if the user used a heart that wasn't beating
+	// they'll immediately collapse into a heart attack. Funny but not ideal.
+	if(iscarbon(user))
+		var/mob/living/carbon/carbon_user = user
+		carbon_user.set_heartattack(FALSE)
 
 	// Don't delete our shiny new heart
 	selected_atoms -= our_new_heart
