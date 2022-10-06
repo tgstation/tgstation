@@ -19,7 +19,7 @@
 	var/max_paper_count = 20
 
 	/// The price of the item used by price tagger mode.
-	var/price = 1
+	var/new_custom_price = 1
 
 	/// The account which is receiving the split profits in sales tagger mode.
 	var/datum/bank_account/payments_acc = null
@@ -33,9 +33,9 @@
 /obj/item/export_scanner/Initialize(mapload)
 	. = ..()
 	scale_mode = sort_list(list(
-		"export_scanner" = image(icon = src.icon, icon_state = "export_scanner"),
-		"pricetagger" = image(icon = src.icon, icon_state = "pricetagger"),
-		"salestagger" = image(icon = src.icon, icon_state = "salestagger")
+		"export scanner" = image(icon = src.icon, icon_state = "export scanner"),
+		"price tagger" = image(icon = src.icon, icon_state = "price tagger"),
+		"sales tagger" = image(icon = src.icon, icon_state = "sales tagger")
 		))
 
 /obj/item/export_scanner/attack_self(mob/user, modifiers)
@@ -46,11 +46,11 @@
 	if(icon_state == "[choice]")
 		return FALSE
 	switch(choice)
-		if("export_scanner")
+		if("export scanner")
 			scanning_mode = SCAN_EXPORTS
-		if("pricetagger")
+		if("price tagger")
 			scanning_mode = SCAN_PRICE_TAG
-		if("salestagger")
+		if("sales tagger")
 			scanning_mode = SCAN_SALES_TAG
 	icon_state = "[choice]"
 	playsound(src, 'sound/machines/click.ogg', 40, TRUE)
@@ -96,19 +96,29 @@
 
 /obj/item/export_scanner/attack_self_secondary(mob/user, modifiers)
 	. = ..()
-	if(paper_count <= 0)
-		to_chat(user, span_warning("You're out of paper!'."))
-		return
-	if(!payments_acc)
-		to_chat(user, span_warning("You need to swipe [src] with an ID card first."))
-		return
-	paper_count -= 1
-	playsound(src, 'sound/machines/click.ogg', 40, TRUE)
-	to_chat(user, span_notice("You print a new barcode."))
-	var/obj/item/barcode/new_barcode = new /obj/item/barcode(src)
-	new_barcode.payments_acc = payments_acc		// The sticker gets the scanner's registered account.
-	new_barcode.cut_multiplier = cut_multiplier		// Also the registered percent cut.
-	user.put_in_hands(new_barcode)
+	if(scanning_mode == SCAN_SALES_TAG)
+		if(paper_count <= 0)
+			to_chat(user, span_warning("You're out of paper!'."))
+			return
+		if(!payments_acc)
+			to_chat(user, span_warning("You need to swipe [src] with an ID card first."))
+			return
+		paper_count -= 1
+		playsound(src, 'sound/machines/click.ogg', 40, TRUE)
+		to_chat(user, span_notice("You print a new barcode."))
+		var/obj/item/barcode/new_barcode = new /obj/item/barcode(src)
+		new_barcode.payments_acc = payments_acc		// The sticker gets the scanner's registered account.
+		new_barcode.cut_multiplier = cut_multiplier		// Also the registered percent cut.
+		user.put_in_hands(new_barcode)
+	if(scanning_mode == SCAN_PRICE_TAG)
+		if(loc != user)
+			to_chat(user, span_warning("You must be holding \the [src] to continue!"))
+			return
+		var/chosen_price = tgui_input_number(user, "Set price", "Price", new_custom_price)
+		if(!chosen_price || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE) || loc != user)
+			return
+		new_custom_price = chosen_price
+		to_chat(user, span_notice(" The [src] will now give things a [new_custom_price] cr tag."))
 
 /obj/item/export_scanner/CtrlClick(mob/user)
 	. = ..()
@@ -135,8 +145,11 @@
 			. += span_notice("<b>Ctrl-click</b> to clear the registered account.")
 
 	if(scanning_mode == SCAN_PRICE_TAG)
-		. += span_notice("The current custom price is set to [price] cr.")
+		. += span_notice("The current custom price is set to [new_custom_price] cr.")
 
+/**
+ * Scans an object, O, and providesit's export value based on selling to the cargo shuttle, to mob/user.
+ */
 /obj/item/export_scanner/proc/export_scan(obj/O, mob/user)
 	// Before you fix it:
 	// yes, checking manifests is a part of intended functionality.
@@ -173,11 +186,14 @@
 			else
 				to_chat(user, span_warning("Bank account not detected. Handling tip not registered."))
 
+/**
+ * Scans an object, target, and sets it's custom_price variable to new_custom_price, presenting it to the user.
+ */
 /obj/item/export_scanner/proc/price_tag(obj/target, mob/user)
 	if(isitem(target))
 		var/obj/item/I = target
-		I.custom_price = price
-		to_chat(user, span_notice("You set the price of [I] to [price] cr."))
+		I.custom_price = new_custom_price
+		to_chat(user, span_notice("You set the price of [I] to [new_custom_price] cr."))
 
 /**
  * check_menu: Checks if we are allowed to interact with a radial menu
@@ -191,3 +207,13 @@
 	if(user.incapacitated())
 		return FALSE
 	return TRUE
+
+/obj/item/barcode
+	name = "barcode tag"
+	desc = "A tiny tag, associated with a crewmember's account. Attach to a wrapped item to give that account a portion of the wrapped item's profit."
+	icon = 'icons/obj/bureaucracy.dmi'
+	icon_state = "barcode"
+	w_class = WEIGHT_CLASS_TINY
+	///All values inheirited from the sales tagger it came from.
+	var/datum/bank_account/payments_acc = null
+	var/cut_multiplier = 0.5
