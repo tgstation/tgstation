@@ -1968,6 +1968,12 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/main)
+"lH" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 6
+	},
+/turf/open/floor/iron,
+/area/station/hallway/secondary/exit/departure_lounge)
 "lX" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -7461,7 +7467,7 @@ fI
 ga
 ga
 ga
-aa
+ga
 aa
 aa
 aa
@@ -7552,8 +7558,8 @@ cS
 fO
 fO
 fO
+fO
 gf
-aa
 aa
 aa
 aa
@@ -7644,8 +7650,8 @@ cS
 fO
 fO
 fO
+fO
 fb
-aa
 aa
 aa
 aa
@@ -7736,8 +7742,8 @@ cS
 fO
 fO
 fO
+fO
 gf
-aa
 aa
 aa
 aa
@@ -7828,8 +7834,8 @@ cS
 fP
 fO
 fO
+fO
 fb
-aa
 aa
 aa
 aa
@@ -7920,8 +7926,8 @@ cS
 gz
 fO
 fO
+fO
 gf
-aa
 aa
 aa
 aa
@@ -8012,8 +8018,8 @@ cS
 fQ
 fO
 fO
+fO
 ga
-aa
 aa
 aa
 aa
@@ -8102,10 +8108,10 @@ dJ
 dJ
 cS
 fS
-fO
+lH
+gb
 fO
 gk
-aa
 aa
 aa
 aa
@@ -8194,10 +8200,10 @@ eH
 fH
 fR
 fW
-gb
+lH
+fO
 fO
 ga
-aa
 aa
 aa
 aa
@@ -8288,8 +8294,8 @@ cS
 pv
 fO
 fO
+fO
 gf
-aa
 aa
 aa
 aa
@@ -8380,9 +8386,9 @@ cS
 Ih
 fO
 fO
+fO
 fb
 fp
-aa
 aa
 aa
 aa
@@ -8472,8 +8478,8 @@ et
 Sp
 fO
 fO
+fO
 gf
-aa
 aa
 aa
 aa
@@ -8564,8 +8570,8 @@ et
 fO
 fO
 fO
+fO
 fb
-aa
 aa
 aa
 aa
@@ -8656,8 +8662,8 @@ et
 fO
 fO
 fO
+fO
 gf
-aa
 aa
 aa
 aa
@@ -8749,7 +8755,7 @@ ga
 ga
 ga
 ga
-aa
+ga
 aa
 aa
 aa
