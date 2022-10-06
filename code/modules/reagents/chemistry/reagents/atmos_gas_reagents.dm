@@ -66,15 +66,10 @@
 	taste_description = "searingly cold"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
-/datum/reagent/hypernoblium/on_mob_metabolize(mob/living/breather)
-	. = ..()
+/datum/reagent/hypernoblium/on_mob_life(mob/living/carbon/breather, delta_time, times_fired)
 	if(isplasmaman(breather))
-		ADD_TRAIT(breather, TRAIT_NOFIRE, type)
-
-/datum/reagent/hypernoblium/on_mob_end_metabolize(mob/living/breather)
-	if(isplasmaman(breather))
-		REMOVE_TRAIT(breather, TRAIT_NOFIRE, type)
-	return ..()
+		breather.set_timed_status_effect(10 SECONDS * REM * delta_time, /datum/status_effect/hypernob_protection)
+	..()
 
 /datum/reagent/nitrium_high_metabolization
 	name = "Nitrosyl plasmide"

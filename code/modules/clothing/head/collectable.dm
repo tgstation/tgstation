@@ -25,7 +25,7 @@
 	name = "collectable chef's hat"
 	desc = "A rare chef's hat meant for hat collectors!"
 	icon_state = "chef"
-	inhand_icon_state = "chef"
+	inhand_icon_state = "chefhat"
 
 	dog_fashion = /datum/dog_fashion/head/chef
 
@@ -46,7 +46,7 @@
 	name = "collectable captain's hat"
 	desc = "A collectable hat that'll make you look just like a real comdom!"
 	icon_state = "captain"
-	inhand_icon_state = "caphat"
+	inhand_icon_state = null
 
 	dog_fashion = /datum/dog_fashion/head/captain
 
@@ -72,13 +72,15 @@
 	desc = "A collectable welding helmet. Now with 80% less lead! Not for actual welding. Any welding done while wearing this helmet is done so at the owner's own risk!"
 	icon_state = "welding"
 	inhand_icon_state = "welding"
+	lefthand_file = 'icons/mob/inhands/clothing/masks_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/masks_righthand.dmi'
 	clothing_flags = SNUG_FIT
 
 /obj/item/clothing/head/collectable/slime
 	name = "collectable slime hat"
 	desc = "Just like a real brain slug!"
 	icon_state = "headslime"
-	inhand_icon_state = "headslime"
+	inhand_icon_state = null
 	clothing_flags = SNUG_FIT
 
 
@@ -89,13 +91,13 @@
 	greyscale_config = /datum/greyscale_config/beret
 	greyscale_config_worn = /datum/greyscale_config/beret/worn
 	greyscale_colors = "#8F7654"
-	inhand_icon_state = "detective"
+	inhand_icon_state = null
 
 /obj/item/clothing/head/collectable/pirate
 	name = "collectable pirate hat"
 	desc = "You'd make a great Dread Syndie Roberts!"
 	icon_state = "pirate"
-	inhand_icon_state = "pirate"
+	inhand_icon_state = null
 
 	dog_fashion = /datum/dog_fashion/head/pirate
 
@@ -103,7 +105,7 @@
 	name = "collectable kitty ears"
 	desc = "The fur feels... a bit too realistic."
 	icon_state = "kitty"
-	inhand_icon_state = "kitty"
+	inhand_icon_state = null
 
 
 	dog_fashion = /datum/dog_fashion/head/kitty
@@ -112,7 +114,7 @@
 	name = "collectable rabbit ears"
 	desc = "Not as lucky as the feet!"
 	icon_state = "bunny"
-	inhand_icon_state = "bunny"
+	inhand_icon_state = null
 
 
 	dog_fashion = /datum/dog_fashion/head/rabbit
@@ -129,7 +131,7 @@
 	desc = "WARNING! Offers no real protection, or luminosity, but damn, is it fancy!"
 	clothing_flags = SNUG_FIT
 	icon_state = "hardhat0_yellow"
-	inhand_icon_state = "hardhat0_yellow"
+	inhand_icon_state = null
 
 	dog_fashion = /datum/dog_fashion/head
 
@@ -149,14 +151,14 @@
 	name = "collectable Thunderdome helmet"
 	desc = "Go Red! I mean Green! I mean Red! No Green!"
 	icon_state = "thunderdome"
-	inhand_icon_state = "thunderdome"
+	inhand_icon_state = "thunderdome_helmet"
 	clothing_flags = SNUG_FIT
-	flags_inv = HIDEHAIR
+	flags_inv = HIDEHAIR|HIDEHAIR
 
 /obj/item/clothing/head/collectable/swat
 	name = "collectable SWAT helmet"
 	desc = "That's not real blood. That's red paint." //Reference to the actual description
-	icon_state = "swat"
-	inhand_icon_state = "swat"
+	icon_state = "swatsyndie"
+	inhand_icon_state = "swatsyndie_helmet"
 	clothing_flags = SNUG_FIT
 	flags_inv = HIDEHAIR

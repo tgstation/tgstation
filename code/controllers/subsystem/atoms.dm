@@ -28,7 +28,7 @@ SUBSYSTEM_DEF(atoms)
 
 	initialized = INITIALIZATION_INSSATOMS
 
-/datum/controller/subsystem/atoms/Initialize(timeofday)
+/datum/controller/subsystem/atoms/Initialize()
 	GLOB.fire_overlay.appearance_flags = RESET_COLOR
 	setupGenetics() //to set the mutations' sequence
 
@@ -36,7 +36,7 @@ SUBSYSTEM_DEF(atoms)
 	InitializeAtoms()
 	initialized = INITIALIZATION_INNEW_REGULAR
 
-	return ..()
+	return SS_INIT_SUCCESS
 
 #ifdef PROFILE_MAPLOAD_INIT_ATOM
 #define PROFILE_INIT_ATOM_BEGIN(...) var/__profile_stat_time = TICK_USAGE

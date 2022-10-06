@@ -50,7 +50,7 @@
 	name = "engineer's hazard jumpsuit"
 	desc = "A high visibility jumpsuit. Made from fire resistant materials."
 	icon_state = "hazard"
-	inhand_icon_state = "suit-orange"
+	inhand_icon_state = "syndicate-orange"
 	alt_covers_chest = TRUE
 
 /obj/item/clothing/under/rank/engineering/engineer/skirt

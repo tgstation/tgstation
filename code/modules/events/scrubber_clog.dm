@@ -85,6 +85,16 @@
 			scrubber_list += scrubber
 	return pick(scrubber_list)
 
+/datum/round_event_control/scrubber_clog/can_spawn_event(players_amt)
+	. = ..()
+	if(!.)
+		return
+	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber in GLOB.machines)
+		var/turf/scrubber_turf = get_turf(scrubber)
+		if(scrubber_turf && is_station_level(scrubber_turf.z) && !scrubber.welded && !scrubber.clogged)
+			return TRUE //make sure we have a valid scrubber to spawn from.
+	return FALSE
+
 /**
  * Checks which mobs in the mob spawn list are alive.
  *

@@ -260,7 +260,8 @@
 	var/ctf_enabled = FALSE
 	///assoc list for classes. If there's only one, it'll just equip. Otherwise, it lets you pick which outfit!
 	var/list/ctf_gear = list("Rifleman" = /datum/outfit/ctf, "Assaulter" = /datum/outfit/ctf/assault, "Marksman" = /datum/outfit/ctf/marksman)
-	var/instagib_gear = /datum/outfit/ctf/instagib
+	var/list/instagib_gear = list("Instagib" = /datum/outfit/ctf/instagib)
+	var/list/default_gear
 	var/ammo_type = /obj/effect/powerup/ammo/ctf
 	// Fast paced gameplay, no real time for burn infections.
 	var/player_traits = list(TRAIT_NEVER_WOUNDED)
@@ -276,6 +277,7 @@
 /obj/machinery/capture_the_flag/Initialize(mapload)
 	. = ..()
 	SSpoints_of_interest.make_point_of_interest(src)
+	default_gear = ctf_gear
 	ctf_landmark = GLOB.ctf_spawner
 
 /obj/machinery/capture_the_flag/Destroy()
@@ -303,7 +305,7 @@
 	team = RED_TEAM
 	team_span = "redteamradio"
 	ctf_gear = list("Rifleman" = /datum/outfit/ctf/red, "Assaulter" = /datum/outfit/ctf/assault/red, "Marksman" = /datum/outfit/ctf/marksman/red)
-	instagib_gear = /datum/outfit/ctf/red/instagib
+	instagib_gear = list("Instagib" = /datum/outfit/ctf/red/instagib)
 
 /obj/machinery/capture_the_flag/blue
 	name = "Blue CTF Controller"
@@ -311,7 +313,7 @@
 	team = BLUE_TEAM
 	team_span = "blueteamradio"
 	ctf_gear = list("Rifleman" = /datum/outfit/ctf/blue, "Assaulter" = /datum/outfit/ctf/assault/blue, "Marksman" = /datum/outfit/ctf/marksman/blue)
-	instagib_gear = /datum/outfit/ctf/blue/instagib
+	instagib_gear = list("Instagib" = /datum/outfit/ctf/blue/instagib)
 
 /obj/machinery/capture_the_flag/green
 	name = "Green CTF Controller"
@@ -319,7 +321,7 @@
 	team = GREEN_TEAM
 	team_span = "greenteamradio"
 	ctf_gear = list("Rifleman" = /datum/outfit/ctf/green, "Assaulter" = /datum/outfit/ctf/assault/green, "Marksman" = /datum/outfit/ctf/marksman/green)
-	instagib_gear = /datum/outfit/ctf/green/instagib
+	instagib_gear = list("Instagib" = /datum/outfit/ctf/green/instagib)
 
 /obj/machinery/capture_the_flag/yellow
 	name = "Yellow CTF Controller"
@@ -327,7 +329,7 @@
 	team = YELLOW_TEAM
 	team_span = "yellowteamradio"
 	ctf_gear = list("Rifleman" = /datum/outfit/ctf/yellow, "Assaulter" = /datum/outfit/ctf/assault/yellow, "Marksman" = /datum/outfit/ctf/marksman/yellow)
-	instagib_gear = /datum/outfit/ctf/yellow/instagib
+	instagib_gear = list("Instagib" = /datum/outfit/ctf/yellow/instagib)
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/machinery/capture_the_flag/attack_ghost(mob/user)
@@ -523,17 +525,15 @@
 	for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
 		if(CTF.game_id != game_id)
 			continue
-		if(CTF.ctf_enabled == TRUE)
-			CTF.ctf_gear = CTF.instagib_gear
-			CTF.respawn_cooldown = INSTAGIB_RESPAWN
+		CTF.ctf_gear = CTF.instagib_gear
+		CTF.respawn_cooldown = INSTAGIB_RESPAWN
 
 /obj/machinery/capture_the_flag/proc/normal_mode()
 	for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
 		if(CTF.game_id != game_id)
 			continue
-		if(CTF.ctf_enabled == TRUE)
-			CTF.ctf_gear = initial(ctf_gear)
-			CTF.respawn_cooldown = DEFAULT_RESPAWN
+		CTF.ctf_gear = CTF.default_gear
+		CTF.respawn_cooldown = DEFAULT_RESPAWN
 
 /obj/structure/trap/ctf
 	name = "Spawn protection"

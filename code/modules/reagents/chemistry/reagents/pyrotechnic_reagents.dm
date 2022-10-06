@@ -112,15 +112,6 @@
 		UnregisterSignal(holder.my_atom, COMSIG_ATOM_EX_ACT)
 	return ..()
 
-/datum/reagent/gunpowder/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	. = TRUE
-	..()
-	if(!isplasmaman(M))
-		return
-	M.set_timed_status_effect(30 SECONDS * REM * delta_time, /datum/status_effect/drugginess)
-	if(M.hallucination < volume)
-		M.hallucination += 5 * REM * delta_time
-
 /datum/reagent/gunpowder/proc/on_ex_act(atom/source, severity, target)
 	SIGNAL_HANDLER
 	if(source.flags_1 & PREVENT_CONTENTS_EXPLOSION_1)

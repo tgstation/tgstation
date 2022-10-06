@@ -3,7 +3,7 @@
 	name = "warning cone"
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "cone"
-	inhand_icon_state = "cone"
+	inhand_icon_state = null
 	force = 1
 	throwforce = 3
 	throw_speed = 2
@@ -13,10 +13,9 @@
 	attack_verb_simple = list("warn", "caution", "smash")
 	resistance_flags = NONE
 
-
 /obj/item/clothing/head/cone/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
 	if(!isinhands)
-		. += emissive_appearance(icon_file, "[icon_state]-emissive", alpha = src.alpha)
+		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
 
 

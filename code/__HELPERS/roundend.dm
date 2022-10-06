@@ -589,19 +589,25 @@
 	var/list/all_teams = list()
 	var/list/all_antagonists = list()
 
-	for(var/datum/team/A in GLOB.antagonist_teams)
-		all_teams |= A
+	for(var/datum/team/team as anything in GLOB.antagonist_teams)
+		all_teams |= team
 
-	for(var/datum/antagonist/A in GLOB.antagonists)
-		if(!A.owner)
+	for(var/datum/antagonist/antagonists as anything in GLOB.antagonists)
+		if(!antagonists.owner)
 			continue
-		all_antagonists |= A
+		all_antagonists |= antagonists
 
-	for(var/datum/team/T in all_teams)
-		result += T.roundend_report()
-		for(var/datum/antagonist/X in all_antagonists)
-			if(X.get_team() == T)
-				all_antagonists -= X
+	for(var/datum/team/active_teams as anything in all_teams)
+		//check if we should show the team
+		if(!active_teams.show_roundend_report)
+			continue
+
+		//remove the team's individual antag reports, if the team actually shows up in the report.
+		for(var/datum/mind/team_minds as anything in active_teams.members)
+			if(!isnull(team_minds.antag_datums)) // is_special_character passes if they have a special role instead of an antag
+				all_antagonists -= team_minds.antag_datums
+
+		result += active_teams.roundend_report()
 		result += " "//newline between teams
 		CHECK_TICK
 
@@ -610,18 +616,18 @@
 
 	sortTim(all_antagonists, /proc/cmp_antag_category)
 
-	for(var/datum/antagonist/A in all_antagonists)
-		if(!A.show_in_roundend)
+	for(var/datum/antagonist/antagonists in all_antagonists)
+		if(!antagonists.show_in_roundend)
 			continue
-		if(A.roundend_category != currrent_category)
+		if(antagonists.roundend_category != currrent_category)
 			if(previous_category)
 				result += previous_category.roundend_report_footer()
 				result += "</div>"
 			result += "<div class='panel redborder'>"
-			result += A.roundend_report_header()
-			currrent_category = A.roundend_category
-			previous_category = A
-		result += A.roundend_report()
+			result += antagonists.roundend_report_header()
+			currrent_category = antagonists.roundend_category
+			previous_category = antagonists
+		result += antagonists.roundend_report()
 		result += "<br><br>"
 		CHECK_TICK
 

@@ -20,22 +20,12 @@
 //
 // EMAGGED FEATURES
 //
-// NOTICE: The Cyborg cannot use the emagged Light Replacer and the light's explosion was nerfed. It cannot create holes in the station anymore.
+// I'm not sure everyone will react the emag's features so please say what your opinions are of it. (I'm pretty sure the players like it)
 //
-// I'm not sure everyone will react the emag's features so please say what your opinions are of it.
-//
-// When emagged it will rig every light it replaces, which will explode when the light is on.
+// When emagged it will rig every light it replaces with plasma, which will slowly heat up and ignite while the light is on.
 // This is VERY noticable, even the device's name changes when you emag it so if anyone
 // examines you when you're holding it in your hand, you will be discovered.
-// It will also be very obvious who is setting all these lights off, since only Janitor Borgs and Janitors have easy
-// access to them, and only one of them can emag their device.
 //
-// The explosion cannot insta-kill anyone with 30% or more health.
-
-#define LIGHT_OK 0
-#define LIGHT_EMPTY 1
-#define LIGHT_BROKEN 2
-#define LIGHT_BURNED 3
 
 
 /obj/item/lightreplacer
@@ -203,14 +193,13 @@
 
 			target.status = L2.status
 			target.switchcount = L2.switchcount
-			target.rigged = (obj_flags & EMAGGED ? 1 : 0)
 			target.brightness = L2.brightness
+			if(obj_flags & EMAGGED)
+				target.create_reagents(LIGHT_REAGENT_CAPACITY, SEALED_CONTAINER | TRANSPARENT)
+				target.reagents.add_reagent(/datum/reagent/toxin/plasma, 10)
 			target.on = target.has_power()
 			target.update()
 			qdel(L2)
-
-			if(target.on && target.rigged)
-				target.explode()
 			return
 
 		else
@@ -257,8 +246,3 @@
 /obj/item/lightreplacer/cyborg/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
-
-#undef LIGHT_OK
-#undef LIGHT_EMPTY
-#undef LIGHT_BROKEN
-#undef LIGHT_BURNED

@@ -241,6 +241,7 @@
 	name = "\improper novaflower"
 	desc = "These beautiful flowers have a crisp smokey scent, like a summer bonfire."
 	icon_state = "novaflower"
+	inhand_icon_state = "novaflower"
 	lefthand_file = 'icons/mob/inhands/weapons/plants_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/plants_righthand.dmi'
 	damtype = BURN
@@ -292,7 +293,7 @@
 
 /obj/item/food/grown/rose/equipped(mob/user, slot, initial)
 	. = ..()
-	if(slot == ITEM_SLOT_MASK)
+	if(slot & ITEM_SLOT_MASK)
 		worn_icon_state = "[base_icon_state]_mouth"
 		user.update_worn_mask()
 	else

@@ -189,7 +189,7 @@
 
 /obj/machinery/mineral/ore_redemption/AltClick(mob/living/user)
 	. = ..()
-	if(!user.canUseTopic(src, BE_CLOSE))
+	if(!user.canUseTopic(src, be_close = TRUE))
 		return
 	if(panel_open)
 		input_dir = turn(input_dir, -90)
@@ -288,7 +288,7 @@
 					desired = text2num(params["sheets"])
 				else
 					desired = tgui_input_number(usr, "How many sheets would you like to smelt?", "Smelt",  max_value = stored_amount)
-					if(!desired || QDELETED(usr) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+					if(!desired || QDELETED(usr) || QDELETED(src) || !usr.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 						return
 				var/sheets_to_remove = round(min(desired,50,stored_amount))
 
@@ -336,7 +336,7 @@
 					desired = text2num(params["sheets"])
 				else
 					desired = tgui_input_number(usr, "How many sheets would you like to smelt?", "Smelt", max_value = smelt_amount)
-					if(!desired || QDELETED(usr) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+					if(!desired || QDELETED(usr) || QDELETED(src) || !usr.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 						return
 				var/amount = round(min(desired,50,smelt_amount))
 				if(amount < 1) //no negative mats
@@ -391,10 +391,10 @@
 			ore_output.pixel_x = 32
 	ore_input.color = COLOR_MODERATE_BLUE
 	ore_output.color = COLOR_SECURITY_RED
-	var/mutable_appearance/light_in = emissive_appearance(ore_input.icon, ore_input.icon_state, alpha = ore_input.alpha)
+	var/mutable_appearance/light_in = emissive_appearance(ore_input.icon, ore_input.icon_state, offset_spokesman = src, alpha = ore_input.alpha)
 	light_in.pixel_y = ore_input.pixel_y
 	light_in.pixel_x = ore_input.pixel_x
-	var/mutable_appearance/light_out = emissive_appearance(ore_output.icon, ore_output.icon_state, alpha = ore_output.alpha)
+	var/mutable_appearance/light_out = emissive_appearance(ore_output.icon, ore_output.icon_state, offset_spokesman = src, alpha = ore_output.alpha)
 	light_out.pixel_y = ore_output.pixel_y
 	light_out.pixel_x = ore_output.pixel_x
 	. += ore_input

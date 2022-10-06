@@ -18,7 +18,7 @@
 	icon = 'icons/obj/clothing/suits/armor.dmi'
 	icon_state = "ablativecoat"
 	worn_icon = 'icons/mob/clothing/suits/armor.dmi'
-	inhand_icon_state = "ablativecoat"
+	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	armor = list(MELEE = 10, BULLET = 10, LASER = 60, ENERGY = 60, BOMB = 0, BIO = 0, FIRE = 100, ACID = 100)
 	hoodtype = /obj/item/clothing/head/hooded/ablative

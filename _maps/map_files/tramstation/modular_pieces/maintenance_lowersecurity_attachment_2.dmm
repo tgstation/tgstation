@@ -17,6 +17,13 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/greater)
+"p" = (
+/obj/structure/grille,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/greater)
 "u" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -94,22 +101,22 @@
 
 (1,1,1) = {"
 a
-K
+a
 K
 K
 K
 K
 "}
 (2,1,1) = {"
-a
 W
 U
+p
 C
 M
 a
 "}
 (3,1,1) = {"
-a
+x
 x
 u
 x

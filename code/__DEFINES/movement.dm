@@ -4,7 +4,7 @@
 /// This shouldn't be higher than the icon size, and generally you shouldn't be changing this, but it's here just in case.
 #define MAX_GLIDE_SIZE 32
 
-/// Compensating for time dialation
+/// Compensating for time dilation
 GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
 
 ///Broken down, here's what this does:

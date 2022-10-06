@@ -9,8 +9,6 @@
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/glass=100)
 	grind_results = list(/datum/reagent/silicon = 5, /datum/reagent/nitrogen = 10) //Nitrogen is used as a cheaper alternative to argon in incandescent lighbulbs
-	///True if rigged to explode
-	var/rigged = FALSE
 	///How much light it gives off
 	var/brightness = 2
 	///LIGHT_OK, LIGHT_BURNED or LIGHT_BROKEN
@@ -75,7 +73,7 @@
 
 /obj/item/light/Initialize(mapload)
 	. = ..()
-	create_reagents(LIGHT_REAGENT_CAPACITY, INJECTABLE | DRAINABLE)
+	create_reagents(LIGHT_REAGENT_CAPACITY, INJECTABLE | DRAINABLE | SEALED_CONTAINER | TRANSPARENT)
 	AddComponent(/datum/component/caltrop, min_damage = force)
 	update()
 	var/static/list/loc_connections = list(
@@ -91,49 +89,23 @@
 	if(!(moving_mob.movement_type & (FLYING|FLOATING)) || moving_mob.buckled)
 		playsound(src, 'sound/effects/glass_step.ogg', HAS_TRAIT(moving_mob, TRAIT_LIGHT_STEP) ? 30 : 50, TRUE)
 		if(status == LIGHT_BURNED || status == LIGHT_OK)
-			shatter()
-
-/obj/item/light/create_reagents(max_vol, flags)
-	. = ..()
-	RegisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT), .proc/on_reagent_change)
-	RegisterSignal(reagents, COMSIG_PARENT_QDELETING, .proc/on_reagents_del)
-
-/**
- * Handles rigging the cell if it contains enough plasma.
- */
-/obj/item/light/proc/on_reagent_change(datum/reagents/holder, ...)
-	SIGNAL_HANDLER
-	rigged = (reagents.has_reagent(/datum/reagent/toxin/plasma, LIGHT_REAGENT_CAPACITY)) ? TRUE : FALSE //has_reagent returns the reagent datum, we don't want to hold a reference to prevent hard dels
-	return NONE
-
-/**
- * Handles the reagent holder datum being deleted for some reason. Probably someone making pizza lights.
- */
-/obj/item/light/proc/on_reagents_del(datum/reagents/holder)
-	SIGNAL_HANDLER
-	UnregisterSignal(holder, list(
-		COMSIG_PARENT_QDELETING,
-		COMSIG_REAGENTS_NEW_REAGENT,
-		COMSIG_REAGENTS_ADD_REAGENT,
-		COMSIG_REAGENTS_REM_REAGENT,
-		COMSIG_REAGENTS_DEL_REAGENT,
-	))
-	return NONE
+			shatter(moving_mob)
 
 /obj/item/light/attack(mob/living/M, mob/living/user, def_zone)
 	..()
-	shatter()
+	shatter(M)
 
 /obj/item/light/attack_atom(obj/O, mob/living/user, params)
 	..()
-	shatter()
+	shatter(O)
 
-/obj/item/light/proc/shatter()
+/obj/item/light/proc/shatter(target)
 	if(status == LIGHT_OK || status == LIGHT_BURNED)
 		visible_message(span_danger("[src] shatters."),span_hear("You hear a small glass object shatter."))
 		status = LIGHT_BROKEN
 		force = 5
-		playsound(src.loc, 'sound/effects/glasshit.ogg', 75, TRUE)
-		if(rigged)
-			atmos_spawn_air("plasma=5") //5u of plasma are required to rig a light bulb/tube
+		playsound(loc, 'sound/effects/glasshit.ogg', 75, TRUE)
+		if(length(reagents.reagent_list))
+			visible_message(span_danger("The contents of [src] splash onto you as you step on it!"),span_hear("You feel the contents of [src] splash onto you as you step on it!."))
+			reagents.expose(target, TOUCH)
 		update()

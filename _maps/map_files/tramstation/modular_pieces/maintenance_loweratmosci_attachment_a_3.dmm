@@ -79,8 +79,18 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "q" = (
-/obj/item/reagent_containers/cup/glass/bottle/beer/almost_empty,
-/turf/open/misc/asteroid,
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/rack,
+/obj/item/fishing_rod{
+	pixel_x = 10;
+	pixel_y = 2
+	},
+/obj/structure/rack,
+/obj/item/fishing_rod{
+	pixel_x = 3;
+	pixel_y = 2
+	},
+/turf/open/floor/plating,
 /area/mine/explored)
 "r" = (
 /obj/effect/decal/cleanable/dirt,
@@ -97,15 +107,7 @@
 /turf/open/misc/asteroid,
 /area/mine/explored)
 "u" = (
-/obj/structure/rack,
-/obj/item/fishing_rod{
-	pixel_x = 8;
-	pixel_y = 5
-	},
-/obj/item/fishing_rod{
-	pixel_x = 3;
-	pixel_y = 2
-	},
+/obj/item/reagent_containers/cup/glass/bottle/beer/light,
 /turf/open/misc/asteroid,
 /area/mine/explored)
 "w" = (
@@ -128,12 +130,6 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/lesser)
-"B" = (
-/obj/structure/closet/mini_fridge,
-/obj/item/reagent_containers/cup/glass/bottle/beer/light,
-/obj/item/reagent_containers/cup/glass/bottle/beer/light,
-/turf/open/misc/asteroid,
-/area/mine/explored)
 "C" = (
 /turf/closed/wall/rust,
 /area/station/maintenance/starboard/lesser)
@@ -153,7 +149,7 @@
 /area/mine/explored)
 "F" = (
 /obj/effect/turf_decal/sand/plating,
-/obj/structure/chair/stool/directional/west,
+/obj/structure/chair/stool/directional/east,
 /turf/open/floor/plating,
 /area/mine/explored)
 "O" = (
@@ -506,9 +502,9 @@ O
 E
 E
 E
-O
-f
-f
+u
+F
+q
 f
 O
 E
@@ -547,11 +543,11 @@ E
 E
 E
 E
+E
+E
+f
 O
-q
-F
 u
-O
 O
 V
 T
@@ -570,9 +566,9 @@ E
 E
 E
 V
-B
-O
-O
+E
+E
+E
 E
 E
 T

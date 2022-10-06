@@ -32,3 +32,6 @@
 #define EVENT_CATEGORY_SPACE "Space Threats"
 ///Events summoned by a wizard
 #define EVENT_CATEGORY_WIZARD "Wizard"
+
+/// Return from admin setup to stop the event from triggering entirely.
+#define ADMIN_CANCEL_EVENT "cancel event"

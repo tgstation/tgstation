@@ -50,6 +50,7 @@
 	max_integrity = 5000
 	var/list/accounts_to_rob
 	var/mob/living/bogdanoff
+	/// Are we able to start moving?
 	var/canwalk = FALSE
 
 /obj/structure/checkoutmachine/examine(mob/living/user)
@@ -76,6 +77,10 @@
 		user.safe_throw_at(throwtarget, 1, 1, force = MOVE_FORCE_EXTREMELY_STRONG)
 		playsound(get_turf(src),'sound/magic/repulse.ogg', 100, TRUE)
 
+		return
+
+	if(!canwalk)
+		to_chat(user, span_warning("Space-Coin only accepts transactions while mobile!"))
 		return
 
 	if(!card.registered_account)
@@ -166,8 +171,8 @@
 	add_overlay("screen_lines")
 	cut_overlay("text")
 	add_overlay("text")
+	START_PROCESSING(SSfastprocess, src) // we only start doing economy draining stuff once our machinery is initialized, thematically
 	canwalk = TRUE
-	START_PROCESSING(SSfastprocess, src)
 
 /obj/structure/checkoutmachine/Destroy()
 	stop_dumping()
@@ -195,7 +200,7 @@
 		var/amount = B.account_balance * percentage_lost
 		var/datum/bank_account/account = bogdanoff?.get_bank_account()
 		if (account) // get_bank_account() may return FALSE
-			account.transfer_money(B, amount)
+			account.transfer_money(B, amount, "?VIVA¿: !LA CRABBE¡")
 			B.bank_card_talk("You have lost [percentage_lost * 100]% of your funds! A spacecoin credit deposit machine is located at: [get_area(src)].")
 	addtimer(CALLBACK(src, .proc/dump), 150) //Drain every 15 seconds
 
