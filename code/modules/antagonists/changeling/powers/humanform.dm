@@ -27,6 +27,8 @@
 
 	changeling.transform(user, chosen_prof)
 	user.regenerate_icons()
+	// Delete ourselves when we're done.
+	qdel(src)
 	return TRUE
 
 // Subtype used when a changeling uses lesser form.
@@ -55,4 +57,3 @@
 	changeling.purchased_powers += monkey_form_ability
 
 	monkey_form_ability.Grant(source)
-	qdel(src)
