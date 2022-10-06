@@ -77,8 +77,6 @@
 	TEST_ASSERT_NOTNULL(right_arm_equipment, "[demo_mech] spawned without any equipment in their right arm slot.")
 	TEST_ASSERT_EQUAL(right_arm_equipment.get_integrity(), right_arm_equipment.max_integrity, "[demo_mech] somehow took damage to its right arm, despite not being targeted.")
 
-	TEST_FAIL("this test intentionally fails to see if the ux will be good with groups")
-
 /// Simple helper to check if the integrity of an atom involved has taken damage, and if they took the amount of damage it should have.
 /datum/unit_test/mecha_damage/proc/check_integrity(atom/checking, pre_integrity, expected_damage, hit_by_phrase)
 	var/post_hit_health = checking.get_integrity()
