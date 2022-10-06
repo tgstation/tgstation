@@ -124,6 +124,7 @@ GLOBAL_LIST_EMPTY(unit_test_mapping_logs)
 	GLOB.current_test = test
 	var/duration = REALTIMEOFDAY
 
+	log_world("::group::[test_path]")
 	test.Run()
 
 	duration = REALTIMEOFDAY - duration
@@ -147,6 +148,7 @@ GLOBAL_LIST_EMPTY(unit_test_mapping_logs)
 
 	var/message = log_entry.Join("\n")
 	log_test(message)
+	log_world("::endgroup::")
 
 	test_results[test_path] = list("status" = test.succeeded ? UNIT_TEST_PASSED : UNIT_TEST_FAILED, "message" = message, "name" = test_path)
 
