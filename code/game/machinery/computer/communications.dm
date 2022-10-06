@@ -323,6 +323,19 @@
 			if (!message)
 				return
 
+			var/list/hard_filter_result = is_ic_filtered(message)
+			if(hard_filter_result)
+				tgui_alert(usr, "Your message contains: (\"[hard_filter_result[CHAT_FILTER_INDEX_WORD]]\"), which is not allowed on this server.")
+				return
+
+			var/list/soft_filter_result = is_soft_ooc_filtered(message)
+			if(soft_filter_result)
+				if(tgui_alert(usr,"Your message contains \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". \"[soft_filter_result[CHAT_FILTER_INDEX_REASON]]\", Are you sure you want to use it?", "Soft Blocked Word", list("Yes", "No")) != "Yes")
+					return
+				message_admins("[ADMIN_LOOKUPFLW(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". They may be using a disallowed term for a cross-station message. Increasing delay time to reject.\n\n Message: \"[html_encode(message)]\"")
+				log_admin_private("[key_name(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". They may be using a disallowed term for a cross-station message. Increasing delay time to reject.\n\n Message: \"[message]\"")
+				SScommunications.soft_filtering = TRUE
+
 			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 
 			var/destination = params["destination"]
@@ -453,21 +466,7 @@
 	return FALSE //if we are not in cooldown, allow using the button
 
 /obj/machinery/computer/communications/proc/send_cross_comms_message(mob/user, destination, message)
-	SScommunications.soft_filtering = FALSE
 	send_cross_comms_message_timer = null
-
-	var/list/hard_filter_result = is_ic_filtered(message)
-	if(hard_filter_result)
-		tgui_alert(user, "Your message contains: (\"[hard_filter_result[CHAT_FILTER_INDEX_WORD]]\"), which is not allowed on this server.")
-		return
-
-	var/list/soft_filter_result = is_soft_ooc_filtered(message)
-	if(soft_filter_result)
-		if(tgui_alert(user,"Your message contains \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". \"[soft_filter_result[CHAT_FILTER_INDEX_REASON]]\", Are you sure you want to use it?", "Soft Blocked Word", list("Yes", "No")) != "Yes")
-			return
-		message_admins("[ADMIN_LOOKUPFLW(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". They may be using a disallowed term for a cross-station message. Increasing delay time to reject.\n\n Message: \"[html_encode(message)]\"")
-		log_admin_private("[key_name(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". They may be using a disallowed term for a cross-station message. Increasing delay time to reject.\n\n Message: \"[message]\"")
-		SScommunications.soft_filtering = TRUE
 
 	var/list/payload = list()
 
@@ -481,6 +480,7 @@
 	usr.log_talk(message, LOG_SAY, tag = "message to the other server")
 	message_admins("[ADMIN_LOOKUPFLW(usr)] has sent a message to the other server\[s].")
 	deadchat_broadcast(" has sent an outgoing message to the other station(s).</span>", "<span class='bold'>[usr.real_name]", usr, message_type = DEADCHAT_ANNOUNCEMENT)
+	SScommunications.soft_filtering = FALSE // set it to false at the end of the proc to ensure that everything prior reads as intended
 
 /obj/machinery/computer/communications/ui_data(mob/user)
 	var/list/data = list(
