@@ -8,6 +8,8 @@
 #define PLASMA_GENERATION_RATE 20
 /// The amount of oxygen that gets released per plasma.
 #define OXYGEN_RATIO 0.4
+/// The temperature of the plasma oxygen gasmixture released from space dragon fire breath in Kelvin.
+#define PLASMA_TEMPERATURE 2000
 
 /**
  * # Space Dragon
@@ -325,14 +327,14 @@
 	hit_list += src
 	if(isopenturf(turf))
 		var/turf/open/open_turf = turf
-		open_turf.atmos_spawn_air("plasma=[total_plasma_released / affected_volume];o2=[OXYGEN_RATIO * total_plasma_released / affected_volume];TEMP=2000")
+		open_turf.atmos_spawn_air("plasma=[total_plasma_released / affected_volume];o2=[OXYGEN_RATIO * total_plasma_released / affected_volume];TEMP=[PLASMA_TEMPERATURE]")
 	new /obj/effect/hotspot(turf)
-	turf.hotspot_expose(2000,50,1)
+	turf.hotspot_expose(exposed_temperature = PLASMA_TEMPERATURE, exposed_volume = 50, soh = 1)
 	for(var/mob/living/living in turf.contents)
 		if(living in hit_list)
 			continue
 		hit_list += living
-		living.adjustFireLoss(30)
+		living.apply_damages(brute = 10, burn = 20)
 		to_chat(living, span_userdanger("You're hit by [src]'s fire breath!"))
 	// deals damage to mechs
 	for(var/obj/vehicle/sealed/mecha/mecha in turf.contents)
@@ -417,3 +419,4 @@
 #undef MAXIMUM_PLASMA_MOLES_RELEASED
 #undef PLASMA_GENERATION_RATE
 #undef OXYGEN_RATIO
+#undef PLASMA_TEMPERATURE
