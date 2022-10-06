@@ -16,6 +16,7 @@
 		return ELEMENT_INCOMPATIBLE
 
 	src.evolve_mark = evolve_mark
+	src.evolve_path = evolve_path
 
 	//don't setup timer yet, timer calc requires the round to have started
 	if(!SSticker.HasRoundStarted())
