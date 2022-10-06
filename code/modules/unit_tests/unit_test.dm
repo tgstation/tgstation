@@ -150,6 +150,9 @@ GLOBAL_LIST_EMPTY(unit_test_mapping_logs)
 	log_test(message)
 	log_world("::endgroup::")
 
+	if (!test.succeeded)
+		log_world("::error::[test_path] failed! The error logs can be found in the group above.")
+
 	test_results[test_path] = list("status" = test.succeeded ? UNIT_TEST_PASSED : UNIT_TEST_FAILED, "message" = message, "name" = test_path)
 
 	qdel(test)
