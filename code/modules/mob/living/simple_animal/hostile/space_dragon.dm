@@ -275,19 +275,20 @@
 /**
  * Returns a list of open turfs that do not have windows or doors with a density.
  * Arguments:
- * * atom/atom - The target.
+ * * atom/target - The target.
  * * range - The maximum number of turfs it can return.
 */
-/mob/living/simple_animal/hostile/space_dragon/proc/get_stream_turfs(atom/atom, range)
+/mob/living/simple_animal/hostile/space_dragon/proc/get_stream_turfs(atom/target, range)
 	var/list/turfs = list()
-	for(var/turf/turf in line_target(0, range, atom))
+	for(var/turf/turf in line_target(0, range, target))
 		if(isclosedturf(turf))
 			return turfs
-		for(var/obj/structure/window/window in turf.contents)
+		if(isspaceturf(turf))
+			for(var/atom/atom in turf)
+				if(!atom.can_atmos_pass(turf))
+					return turfs
+		else if(!TURF_SHARES(turf))
 			return turfs
-		for(var/obj/machinery/door/door in turf.contents)
-			if(door.density)
-				return turfs
 		turfs += turf
 	return turfs
 
