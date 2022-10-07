@@ -15229,7 +15229,7 @@
 	height = 13;
 	name = "pubby arrivals";
 	roundstart_template = /datum/map_template/shuttle/arrival/pubby;
-	shuttle_id = "arrivals_stationary";
+	shuttle_id = "arrival_stationary";
 	width = 6
 	},
 /turf/open/space/basic,
