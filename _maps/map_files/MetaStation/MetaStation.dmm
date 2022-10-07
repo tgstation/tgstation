@@ -10091,7 +10091,7 @@
 /area/station/security/prison/safe)
 "dLY" = (
 /obj/structure/table/wood,
-/obj/item/clothing/head/costume/sombrero,
+/obj/item/clothing/head/costume/sombrero/green,
 /obj/structure/sign/poster/random/directional/east,
 /turf/open/floor/wood,
 /area/station/service/theater)

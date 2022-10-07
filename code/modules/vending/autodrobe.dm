@@ -96,7 +96,6 @@
 		/obj/item/clothing/head/cowboy/brown =1,
 		/obj/item/clothing/head/cowboy/red =1,
 		/obj/item/clothing/head/cowboy/black =1,
-		/obj/item/clothing/head/costume/sombrero = 1,
 		/obj/item/clothing/head/costume/sombrero/green = 1,
 		/obj/item/clothing/suit/costume/poncho = 1,
 		/obj/item/clothing/suit/costume/poncho/green = 1,

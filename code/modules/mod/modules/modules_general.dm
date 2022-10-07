@@ -497,7 +497,7 @@
 			/obj/item/clothing/head/costume/pirate,
 			/obj/item/clothing/head/costume/santa,
 			/obj/item/clothing/head/utility/hardhat/reindeer,
-			/obj/item/clothing/head/costume/sombrero,
+			/obj/item/clothing/head/costume/sombrero/green,
 			/obj/item/clothing/head/costume/kitty,
 			/obj/item/clothing/head/costume/rabbitears,
 			/obj/item/clothing/head/costume/festive,

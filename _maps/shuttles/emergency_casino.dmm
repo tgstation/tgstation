@@ -1040,7 +1040,7 @@
 /obj/machinery/roulette{
 	anchored = 1
 	},
-/obj/item/clothing/head/costume/sombrero,
+/obj/item/clothing/head/costume/sombrero/green,
 /turf/open/floor/carpet/green,
 /area/shuttle/escape)
 "Ev" = (
