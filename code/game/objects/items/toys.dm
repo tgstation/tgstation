@@ -381,12 +381,14 @@
 	name = "toy sword"
 	desc = "A cheap, plastic replica of an energy sword. Realistic sounds! Ages 8 and up."
 	icon_state = "e_sword"
+	inhand_icon_state = "e_sword"
 	icon = 'icons/obj/weapons/transforming_energy.dmi'
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	attack_verb_continuous = list("attacks", "strikes", "hits")
 	attack_verb_simple = list("attack", "strike", "hit")
+	var/sword_turned_on
 	/// Whether our sword has been multitooled to rainbow
 	var/hacked = FALSE
 	/// The color of our fake energy sword
@@ -408,12 +410,29 @@
 /obj/item/toy/sword/proc/on_transform(obj/item/source, mob/user, active)
 	SIGNAL_HANDLER
 
+	sword_turned_on = active
 	if(active)
 		icon_state = "[icon_state]_[saber_color]"
-
+		inhand_icon_state = "[inhand_icon_state]_[saber_color]"
+		if(ismob(loc))
+			var/mob/loc_mob = loc
+			loc_mob.update_held_items()
 	balloon_alert(user, "[active ? "flicked out":"pushed in"] [src]")
 	playsound(user ? user : src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 20, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
+
+/obj/item/toy/sword/multitool_act(mob/living/user, obj/item/tool)
+	if(hacked)
+		to_chat(user, span_warning("It's already fabulous!"))
+		return
+	hacked = TRUE
+	saber_color = "rainbow"
+	to_chat(user, span_warning("RNBW_ENGAGE"))
+	if(sword_turned_on)
+		icon_state = "[initial(icon_state)]_on_rainbow"
+		inhand_icon_state = "[initial(inhand_icon_state)]_on_rainbow"
+		user?.update_held_items()
+
 
 // Copied from /obj/item/melee/energy/sword/attackby
 /obj/item/toy/sword/attackby(obj/item/weapon, mob/living/user, params)
@@ -434,13 +453,6 @@
 			qdel(weapon)
 			qdel(src)
 			user.put_in_hands(new_saber)
-	else if(weapon.tool_behaviour == TOOL_MULTITOOL)
-		if(hacked)
-			to_chat(user, span_warning("It's already fabulous!"))
-		else
-			hacked = TRUE
-			saber_color = "rainbow"
-			to_chat(user, span_warning("RNBW_ENGAGE"))
 	else
 		return ..()
 
