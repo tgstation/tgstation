@@ -1,6 +1,6 @@
 //predominantly negative traits
 
-/datum/quirk/item_quirk/badback
+/datum/quirk/badback
 	name = "Bad Back"
 	desc = "Thanks to your poor posture, backpacks and other bags never sit right on your back. More evenly weighted objects are fine, though."
 	icon = "hiking"
@@ -14,19 +14,13 @@
 	var/datum/weakref/first_cane
 	var/datum/weakref/second_cane
 
-/datum/quirk/item_quirk/badback/add_unique()
-	give_item_to_holder(
-		/obj/item/cane,
-		list(
-			LOCATION_HANDS = ITEM_SLOT_HANDS,
-			LOCATION_BACKPACK = ITEM_SLOT_BACKPACK
-		),
-		flavour_text = "This cane will help your back problems.",
-	)
-
-/datum/quirk/item_quirk/badback/add()
+/datum/quirk/badback/add_unique()
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/obj/item/storage/backpack/equipped_backpack = human_holder.back
+
+	var/turf/holder_turf = get_turf(human_holder)
+	var/obj/item/cane/spawn_cane = new /obj/item/cane(holder_turf)
+	human_holder.put_in_hands(spawn_cane)
 	var/is_holding_cane = human_holder.is_holding_item_of_type(/obj/item/cane)
 
 	if(istype(equipped_backpack) && !is_holding_cane)
@@ -49,11 +43,10 @@
 				second_cane = WEAKREF(right_hand_cane)
 				RegisterSignal(second_cane, COMSIG_ITEM_POST_UNEQUIP, .proc/on_unequipped_cane)
 
-
-	else if(!istype(equipped_backpack))
+	else if(istype(equipped_backpack))
 		RegisterSignal(human_holder, COMSIG_MOB_EQUIPPED_ITEM, .proc/on_equipped_item)
 
-/datum/quirk/item_quirk/badback/remove()
+/datum/quirk/badback/remove()
 	UnregisterSignal(quirk_holder, COMSIG_MOB_EQUIPPED_ITEM)
 	var/obj/item/storage/equipped_backpack = backpack?.resolve()
 	var/obj/item/cane/primary_cane = first_cane?.resolve()
@@ -72,7 +65,7 @@
 			UnregisterSignal(secondary_cane, COMSIG_ITEM_POST_UNEQUIP)
 
 /// Signal handler for when the badback quirk_holder equips an item
-/datum/quirk/item_quirk/badback/proc/on_equipped_item(mob/living/source, obj/item/equipped_item, slot)
+/datum/quirk/badback/proc/on_equipped_item(mob/living/source, obj/item/equipped_item, slot)
 	SIGNAL_HANDLER
 
 	var/is_holding_cane = quirk_holder.is_holding_item_of_type(/obj/item/cane)
@@ -83,7 +76,7 @@
 			quirk_holder.add_movespeed_modifier(/datum/movespeed_modifier/human_carry)
 			quirk_holder.add_mood_event("back_pain", /datum/mood_event/back_pain)
 		RegisterSignal(equipped_item, COMSIG_ITEM_POST_UNEQUIP, .proc/on_unequipped_backpack)
-		UnregisterSignal(quirk_holder, COMSIG_MOB_EQUIPPED_ITEM)
+		//UnregisterSignal(quirk_holder, COMSIG_MOB_EQUIPPED_ITEM)
 		backpack = WEAKREF(equipped_item)
 
 	if((slot & ITEM_SLOT_HANDS) && istype(equipped_item, /obj/item/cane))
@@ -98,17 +91,23 @@
 		RegisterSignal(equipped_item, COMSIG_ITEM_POST_UNEQUIP, .proc/on_unequipped_cane)
 
 /// Signal handler for when the quirk_holder unequips an equipped backpack. Removes the back_pain mood event.
-/datum/quirk/item_quirk/badback/proc/on_unequipped_backpack(obj/item/source, force, atom/newloc, no_move, invdrop, silent)
+/datum/quirk/badback/proc/on_unequipped_backpack(obj/item/source, force, atom/newloc, no_move, invdrop, silent)
 	SIGNAL_HANDLER
 
 	UnregisterSignal(source, COMSIG_ITEM_POST_UNEQUIP)
 	quirk_holder.clear_mood_event("back_pain")
 	quirk_holder.remove_movespeed_modifier(/datum/movespeed_modifier/human_carry)
 	backpack = null
+	if(first_cane)
+		UnregisterSignal(first_cane, COMSIG_ITEM_POST_UNEQUIP)
+		first_cane = null
+	if(second_cane)
+		UnregisterSignal(second_cane, COMSIG_ITEM_POST_UNEQUIP)
+		second_cane = null
 	RegisterSignal(quirk_holder, COMSIG_MOB_EQUIPPED_ITEM, .proc/on_equipped_item)
 
 /// Signal handler for when the quirk_holder unequips an equipped cane
-/datum/quirk/item_quirk/badback/proc/on_unequipped_cane(obj/item/source, force, atom/newloc, no_move, invdrop, silent)
+/datum/quirk/badback/proc/on_unequipped_cane(obj/item/source, force, atom/newloc, no_move, invdrop, silent)
 	SIGNAL_HANDLER
 
 	// if they have dual canes then no need to change mood/speed
