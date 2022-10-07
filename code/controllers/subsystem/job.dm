@@ -68,7 +68,7 @@ SUBSYSTEM_DEF(job)
 	/// This is just the message we prepen and put into all of the config files to ensure documentation. We use this in more than one place, so let's put it in the SS to make life a bit easier.
 	var/config_documentation = "## This is the configuration file for the job system.\n## This will only be enabled when the config flag LOAD_JOBS_FROM_TXT is enabled.\n\
 	## We use a system of keys here that directly correlate to the job, just to ensure they don't desync if we choose to change the name of a job.\n## You are able to change (as of now) four different variables in this file.\n\
-	## Total Positions are how many job slots you get in a shift, Spawn Positions are how many you get that load in at spawn. If you set this to -1, it is unrestricted. \n## Playtime Requirements is in minutes, and the job will unlock when a player reaches that amount of time.\n\
+	## Total Positions are how many job slots you get in a shift, Spawn Positions are how many you get that load in at spawn. If you set this to -1, it is unrestricted.\n## Playtime Requirements is in minutes, and the job will unlock when a player reaches that amount of time.\n\
 	## However, that can be superseded by Required Account Age, which is a time in days that you need to have had an account on the server for.\n## As time goes on, more config options will be added to this file.\n\
 	## You can use the admin_verb (checks for R_DEBUG) 'Reload Job Configuration' to reload this file without having to restart the server.\n## It will always respect prior-existing values in the config, but will appropriately add more fields when they generate.\n\n\
 	## The game will not read any line that is commented out with a '#', as to allow you to defer to codebase defaults.\n## If you want to override the codebase values, add the value and then uncomment that line by removing the # from the job key's name.\n\
@@ -649,6 +649,7 @@ SUBSYSTEM_DEF(job)
 	var/toml_file = "[global.config.directory]/jobconfig.toml"
 	var/jobstext = "[global.config.directory]/jobs.txt"
 	var/list/file_data = list()
+	config_documentation = initial(config_documentation) // Reset to default juuuuust in case.
 
 	if(fexists(file(toml_file)))
 		to_chat(src, span_notice("Generating new jobconfig.toml, pulling from the old config settings."))
@@ -675,13 +676,9 @@ SUBSYSTEM_DEF(job)
 				"#Total Positions" = default_positions,
 				"#Spawn Positions" = starting_positions,
 			)
-		var/payload = rustg_toml_encode(file_data)
-		var/temp_file = file("data/jobconfig.toml")
 		config_documentation += "\n\n## This TOML was migrated from jobs.txt. All variables are COMMENTED and will not load by default! Please verify to ensure that they are correct, and uncomment the key as you want.\n\n" // small warning
-		if(fexists(temp_file))
-			fdel(temp_file) // ensure it writes properly in case it exists
-		WRITE_FILE(temp_file, "[config_documentation]\n[payload]")
-		DIRECT_OUTPUT(user, ftp(temp_file, "jobconfig.toml"))
+		if(!export_toml(user, file_data))
+			return FALSE
 		return TRUE
 
 	else // Generate the new TOML format, using codebase defaults.
@@ -705,12 +702,8 @@ SUBSYSTEM_DEF(job)
 				"#Playtime Requirements" = occupation.exp_requirements,
 				"#Required Account Age" = occupation.minimal_player_age,
 			)
-		var/payload = rustg_toml_encode(file_data)
-		var/temp_file = file("data/jobconfig.toml")
-		if(fexists(temp_file))
-			fdel(temp_file) // ensure it writes properly in case it exists
-		WRITE_FILE(temp_file, "[config_documentation]\n[payload]")
-		DIRECT_OUTPUT(user, ftp(temp_file, "jobconfig.toml"))
+		if(!export_toml(user, file_data))
+			return FALSE
 		return TRUE
 
 /// If we add a new job or more fields to config a job with, quickly spin up a brand new config that inherits all of your old settings, but adds the new job with codebase defaults. Returns TRUE if a file is successfully generated, FALSE otherwise.
@@ -781,7 +774,14 @@ SUBSYSTEM_DEF(job)
 				"#Playtime Requirements" = occupation.exp_requirements,
 				"#Required Account Age" = occupation.minimal_player_age,
 			)
-	var/payload = rustg_toml_encode(file_data)
+
+	if(!export_toml(user, file_data))
+		return FALSE
+	return TRUE
+
+/// Proc that we call to generate a new jobconfig.toml file and send it to the requesting client. Returns TRUE if a file is successfully generated, FALSE otherwise.
+/datum/controller/subsystem/job/proc/export_toml(mob/user, data)
+	var/payload = rustg_toml_encode(data)
 	var/temp_file = file("data/jobconfig.toml")
 	if(fexists(temp_file))
 		fdel(temp_file) // ensure it writes properly in case it exists
