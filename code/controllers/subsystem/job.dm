@@ -624,13 +624,13 @@ SUBSYSTEM_DEF(job)
 			var/required_account_age = job_config[job_key]["Required Account Age"]
 
 			if(default_positions)
-				occupation.total_positions = job_config[job_key]["Total Positions"]
+				occupation.total_positions = default_positions
 			if(starting_positions)
-				occupation.spawn_positions = job_config[job_key]["Spawn Positions"]
+				occupation.spawn_positions = starting_positions
 			if(playtime_requirements)
-				occupation.exp_requirements = job_config[job_key]["Playtime Requirements"]
+				occupation.exp_requirements = playtime_requirements
 			if(required_account_age)
-				occupation.minimal_player_age = job_config[job_key]["Required Account Age"]
+				occupation.minimal_player_age = required_account_age
 
 		return
 
