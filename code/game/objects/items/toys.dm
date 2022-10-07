@@ -768,6 +768,7 @@
 	desc = "Relive the excitement of a meteor shower! SweetMeat-eor Co. is not responsible for any injuries, headaches or hearing loss caused by Mini-Meteor."
 	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "minimeteor"
+	inhand_icon_state = "minimeteor"
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/toy/minimeteor/emag_act(mob/user)
