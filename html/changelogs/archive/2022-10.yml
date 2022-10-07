@@ -216,3 +216,31 @@
   - bugfix: The NTNet DOS tool now works again
   carshalash:
   - bugfix: A cobbler shaker will now spawn in the bar under room on tramstation.
+2022-10-07:
+  Iamgoofball:
+  - bugfix: Removes an undocumented 5 credit tax that was added to all ID card in-hand
+      withdrawals.
+  IndieanaJones:
+  - bugfix: Rat King no longer attacks living lick targets after he finishes licking
+      them.
+  Jacquerel:
+  - bugfix: If an admin gives you Void Phase, you won't be hurt by your own spell
+      whenever you cast it.
+  JohnFulpWillard:
+  - rscadd: 'Engines are now machines, not structures. If destroyed, they will drop
+      circuit boards so you can rebuild them. removal: In-wall engines have been remvoed.
+      The Tram now uses full-blown engines.'
+  MMMiracles:
+  - bugfix: Tramstation installed CS:Source and maintenance will now no longer blow
+      up into purple textured flooring.
+  - bugfix: The entire lower hall with Hydroponics on Tramstation is now considered
+      the Service Hallway for use in ordering service crates.
+  Wallem:
+  - rscadd: A new ice-based hallucination has been added to the game
+  axietheaxolotl:
+  - imageadd: brand new sprites for the curator explorer jacket, and regular leather
+      jacket.
+  - rscdel: Non-HoS leather overcoat.
+  - rscadd: Biker leather jacket.
+  kawoppi:
+  - imageadd: added inhand sprites for axolotls
