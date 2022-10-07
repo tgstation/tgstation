@@ -50,6 +50,7 @@
 	. = ..()
 
 /obj/item/modular_computer/tablet/interact(mob/user)
+	. = ..()
 	if(HAS_TRAIT(src, TRAIT_PDA_MESSAGE_MENU_RIGGED))
 		explode(usr, from_message_menu = TRUE)
 		return
