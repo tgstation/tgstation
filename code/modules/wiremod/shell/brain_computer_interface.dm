@@ -293,7 +293,7 @@
 	drop_stored_bci()
 
 /obj/machinery/bci_implanter/Destroy()
-	drop_stored_bci()
+	qdel(bci_to_implant)
 	return ..()
 
 /obj/machinery/bci_implanter/examine(mob/user)
@@ -348,7 +348,6 @@
 		balloon_alert(user, "no bci inserted!")
 	else
 		user.put_in_hands(bci_to_implant)
-		bci_to_implant = null
 		balloon_alert(user, "ejected bci")
 
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -432,7 +431,6 @@
 	else if (bci_to_implant)
 		say("Occupant has been injected with [bci_to_implant].")
 		bci_to_implant.Insert(carbon_occupant)
-		bci_to_implant = null
 
 /obj/machinery/bci_implanter/open_machine()
 	if(state_open)
@@ -490,12 +488,15 @@
 	if (!bci_to_implant)
 		return
 	bci_to_implant.forceMove(drop_location())
-	bci_to_implant = null
 
 /obj/machinery/bci_implanter/dump_inventory_contents(list/subset)
 	// Prevents opening the machine dropping the BCI.
 	// "dump_contents()" still drops the BCI.
-	subset = contents - bci_to_implant
+	return ..(contents - bci_to_implant)
+
+/obj/machinery/bci_implanter/Exited(atom/movable/gone, direction)
+	if (gone == bci_to_implant)
+		bci_to_implant = null
 	return ..()
 
 /obj/item/circuitboard/machine/bci_implanter
