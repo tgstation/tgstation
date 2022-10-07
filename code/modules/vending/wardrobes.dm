@@ -586,9 +586,9 @@
 		/obj/item/clothing/suit/armor/centcom_formal = 3,
 		/obj/item/clothing/suit/space/officer = 3,
 		/obj/item/clothing/suit/hooded/wintercoat/centcom = 3,
-		/obj/item/clothing/head/centcom_cap = 3,
-		/obj/item/clothing/head/centhat = 3,
-		/obj/item/clothing/head/intern = 3,
+		/obj/item/clothing/head/hats/centcom_cap = 3,
+		/obj/item/clothing/head/hats/centhat = 3,
+		/obj/item/clothing/head/hats/intern = 3,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/cent_wardrobe
 /obj/item/vending_refill/wardrobe/cent_wardrobe

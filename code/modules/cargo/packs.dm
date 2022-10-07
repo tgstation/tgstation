@@ -199,7 +199,7 @@
 	name = "Radiation Protection Crate"
 	desc = "Survive the Nuclear Apocalypse and Supermatter Engine alike with two sets of Radiation suits. Each set contains a helmet, suit, and Geiger counter. We'll even throw in a bottle of vodka and some glasses too, considering the life-expectancy of people who order this."
 	cost = CARGO_CRATE_VALUE * 2
-	contains = list(/obj/item/clothing/head/radiation = 2,
+	contains = list(/obj/item/clothing/head/utility/radiation = 2,
 					/obj/item/clothing/suit/utility/radiation = 2,
 					/obj/item/geiger_counter = 2,
 					/obj/item/clothing/suit/utility/radiation,
@@ -624,7 +624,7 @@
 	contains = list(/obj/item/storage/belt/utility = 3,
 					/obj/item/clothing/suit/hazardvest = 3,
 					/obj/item/clothing/head/welding = 3,
-					/obj/item/clothing/head/hardhat = 3,
+					/obj/item/clothing/head/utility/hardhat = 3,
 					/obj/item/clothing/glasses/meson/engine = 2)
 	crate_name = "engineering gear crate"
 
@@ -2139,7 +2139,7 @@
 					/obj/item/clothing/head/fedora,
 					/obj/item/clothing/head/flatcap,
 					/obj/item/clothing/head/beret,
-					/obj/item/clothing/head/that,
+					/obj/item/clothing/head/hats/tophat,
 					/obj/item/clothing/shoes/laceup = 3,
 					/obj/item/clothing/under/suit/charcoal,
 					/obj/item/clothing/under/suit/navy,
