@@ -18,6 +18,7 @@
 	symptom_delay_min = 5
 	symptom_delay_max = 25
 	var/scratch = FALSE
+	focuses = list(/datum/reagent/toxin/itching_powder, /datum/reagent/toxin/acid)
 	threshold_descs = list(
 		"Transmission 6" = "Increases frequency of itching.",
 		"Stage Speed 7" = "The host will scrath itself when itching, causing superficial damage.",

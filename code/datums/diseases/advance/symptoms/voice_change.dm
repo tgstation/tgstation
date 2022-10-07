@@ -21,6 +21,7 @@
 	symptom_delay_max = 120
 	var/scramble_language = FALSE
 	var/datum/language/current_language
+	focuses = list(/datum/reagent/toxin/mutetoxin)
 	threshold_descs = list(
 		"Transmission 14" = "The host's language center of the brain is damaged, leading to complete inability to speak or understand any language.",
 		"Stage Speed 7" = "Changes voice more often.",

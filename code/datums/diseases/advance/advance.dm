@@ -194,6 +194,35 @@
 	for(var/i = 1; number_of >= i && possible_symptoms.len; i++)
 		. += pick_n_take(possible_symptoms)
 
+/// Returns the currently focused symptoms, if there are any. Determined by the reagents in the container. Maximum returned symptom amount is dependent on the symptom limit.
+/datum/disease/advance/proc/GetFocusedSymptoms(datum/reagents/container, level_min, level_max)
+	. = list() // The currently focused symptoms, if there are any.
+	if (symptoms.len >= VIRUS_SYMPTOM_LIMIT) // If the symptom cap is reached, we simply return an empty list.
+		return
+	var/list/possible_focuses = list()
+	var/list/reagents_to_consume = list()
+	for(var/symp in SSdisease.list_symptoms)
+		var/datum/symptom/S = new symp
+		if(S.naturally_occuring && S.focuses.len && S.level >= level_min && S.level <= level_max) // Among the usual level and natural occur checks, this checks if the symptom can be focused.
+			if(!HasSymptom(S))
+				var/list/not_focused = S.focuses
+				for(var/datum/reagent/focus as anything in S.focuses)
+					if(!container.has_reagent(focus))
+						break
+					not_focused -= focus
+					if(!reagents_to_consume.Find(focus))
+						reagents_to_consume += focus
+				if(!not_focused.len) // If a chemical has all of it's focuses matched, the if statement will pass, adding it to the pool.
+					possible_focuses += S
+	if(possible_focuses.len + symptoms.len > VIRUS_SYMPTOM_LIMIT) // If there are too many focused symptoms in the pool to add, we simply remove some until we're under the cap again.
+		for(var/i = possible_focuses.len, i > 0, i--)
+			if (possible_focuses.len <= VIRUS_SYMPTOM_LIMIT)
+				break
+			pick_n_take(possible_focuses)
+	for(var/datum/reagent/reagent as anything in reagents_to_consume)
+		container.del_reagent(reagent)
+	. += possible_focuses // Finally, we return the pool of focused symptoms.
+
 /datum/disease/advance/proc/Refresh(new_name = FALSE)
 	GenerateProperties()
 	AssignProperties()
@@ -305,9 +334,15 @@
 		var/datum/reagent/D = GLOB.chemical_reagents_list[cures[1]]
 		cure_text = D.name
 
-// Randomly generate a symptom, has a chance to lose or gain a symptom.
-/datum/disease/advance/proc/Evolve(min_level, max_level, ignore_mutable = FALSE)
-	if(!mutable && !ignore_mutable)
+// Randomly generate a symptom if no symptoms are focused. If symptoms are focused, adds all of them at once.
+/datum/disease/advance/proc/Evolve(datum/reagents/container, min_level, max_level, ignore_mutable = FALSE)
+	if(!container || !mutable && !ignore_mutable)
+		return
+	var/list/focused_symptoms = GetFocusedSymptoms(container, min_level, max_level)
+	if(focused_symptoms.len)
+		for(var/datum/symptom/S as anything in focused_symptoms)
+			AddSymptom(S)
+		Refresh(TRUE)
 		return
 	var/list/generated_symptoms = GenerateSymptoms(min_level, max_level, 1)
 	if(length(generated_symptoms))

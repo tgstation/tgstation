@@ -17,6 +17,7 @@
 	base_message_chance = 100
 	symptom_delay_min = 15
 	symptom_delay_max = 45
+	focuses = list(/datum/reagent/toxin/lipolicide, /datum/reagent/toxin/acid)
 	threshold_descs = list(
 		"Stealth 4" = "The symptom is less noticeable."
 	)

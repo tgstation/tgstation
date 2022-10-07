@@ -21,6 +21,7 @@ and your disease can spread via people walking on vomit.
 	symptom_delay_max = 80
 	var/vomit_blood = FALSE
 	var/proj_vomit = 0
+	focuses = list(/datum/reagent/yuck)
 	threshold_descs = list(
 		"Resistance 7" = "Host will vomit blood, causing internal damage.",
 		"Transmission 7" = "Host will projectile vomit, increasing vomiting range.",

@@ -231,7 +231,7 @@
 	if(B?.data)
 		var/datum/disease/advance/D = locate(/datum/disease/advance) in B.data["viruses"]
 		if(D)
-			D.Evolve(level_min, level_max)
+			D.Evolve(holder, level_min, level_max)
 
 
 /datum/chemical_reaction/mix_virus/mix_virus_2

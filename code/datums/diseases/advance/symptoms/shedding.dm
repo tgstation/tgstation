@@ -18,6 +18,7 @@
 	base_message_chance = 50
 	symptom_delay_min = 45
 	symptom_delay_max = 90
+	focuses = list(/datum/reagent/baldium)
 
 /datum/symptom/shedding/Activate(datum/disease/advance/A)
 	. = ..()

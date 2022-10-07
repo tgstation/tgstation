@@ -20,6 +20,7 @@
 	symptom_delay_min = 10
 	symptom_delay_max = 30
 	var/unsafe = FALSE //over the cold threshold
+	focuses = list(/datum/reagent/cryostylane)
 	threshold_descs = list(
 		"Stage Speed 5" = "Increases the intensity of the cooling; the host can fall below safe temperature levels.",
 		"Stage Speed 10" = "Increases the intensity of the cooling even further."

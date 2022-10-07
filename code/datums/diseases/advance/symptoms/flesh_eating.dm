@@ -22,6 +22,7 @@ Bonus
 	symptom_delay_max = 60
 	var/bleed = FALSE
 	var/pain = FALSE
+	focuses = list(/datum/reagent/toxin/heparin)
 	threshold_descs = list(
 		"Resistance 7" = "Host will bleed profusely during necrosis.",
 		"Transmission 8" = "Causes extreme pain to the host, weakening it.",
@@ -93,6 +94,7 @@ Bonus
 	symptom_delay_max = 6
 	var/chems = FALSE
 	var/zombie = FALSE
+	focuses = list(/datum/reagent/drug/krokodil)
 	threshold_descs = list(
 		"Stage Speed 7" = "Synthesizes Heparin and Lipolicide inside the host, causing increased bleeding and hunger.",
 		"Stealth 5" = "The symptom remains hidden until active.",

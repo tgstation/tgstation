@@ -22,6 +22,7 @@
 	var/excludemuts = NONE
 	var/no_reset = FALSE
 	var/mutadone_proof = NONE
+	focuses = list(/datum/reagent/medicine/mutadone, /datum/reagent/chlorine)
 	threshold_descs = list(
 		"Resistance 8" = "The negative and mildly negative mutations caused by the virus are mutadone-proof (but will still be undone when the virus is cured if the resistance 14 threshold is not met).",
 		"Resistance 14" = "The host's genetic alterations are not undone when the virus is cured.",

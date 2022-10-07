@@ -19,6 +19,7 @@
 	base_message_chance = 50
 	symptom_delay_min = 15
 	symptom_delay_max = 30
+	focuses = list(/datum/reagent/impedrezene, /datum/reagent/toxin/mindbreaker)
 	threshold_descs = list(
 		"Transmission 6" = "Also causes druggy vision.",
 		"Stealth 4" = "The symptom remains hidden until active.",

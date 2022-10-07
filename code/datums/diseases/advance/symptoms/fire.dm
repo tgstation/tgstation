@@ -20,6 +20,7 @@
 	symptom_delay_min = 20
 	symptom_delay_max = 75
 	var/infective = FALSE
+	focuses = list(/datum/reagent/phlogiston)
 	threshold_descs = list(
 		"Stage Speed 4" = "Increases the intensity of the flames.",
 		"Stage Speed 8" = "Further increases flame intensity.",
@@ -101,6 +102,7 @@ Bonus
 	symptom_delay_max = 90
 	var/chems = FALSE
 	var/explosion_power = 1
+	focuses = list(/datum/reagent/water, /datum/reagent/napalm)
 	threshold_descs = list(
 		"Resistance 9" = "Doubles the intensity of the immolation effect, but reduces the frequency of all of this symptom's effects.",
 		"Stage Speed 8" = "Increases explosion radius and explosion damage to the host when the host is wet.",

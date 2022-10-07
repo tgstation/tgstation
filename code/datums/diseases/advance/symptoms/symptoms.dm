@@ -32,6 +32,8 @@
 	///A neutered symptom has no effect, and only affects statistics.
 	var/neutered = FALSE
 	var/list/thresholds
+	///A list of all reagents required to target this symptom. Only affects naturally occuring symptoms. Make sure none of these are reagents that can mutate viruses or conflict with other focuses. (Eg. unstable mutagen.)
+	var/list/focuses = list()
 	///If this symptom can appear from /datum/disease/advance/GenerateSymptoms()
 	var/naturally_occuring = TRUE
 

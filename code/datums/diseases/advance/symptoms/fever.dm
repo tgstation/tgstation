@@ -21,6 +21,7 @@
 	symptom_delay_min = 10
 	symptom_delay_max = 30
 	var/unsafe = FALSE //over the heat threshold
+	focuses = list(/datum/reagent/pyrosium)
 	threshold_descs = list(
 		"Resistance 5" = "Increases fever intensity, fever can overheat and harm the host.",
 		"Resistance 10" = "Further increases fever intensity.",

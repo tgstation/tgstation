@@ -19,6 +19,7 @@
 	base_message_chance = 100
 	symptom_delay_min = 25
 	symptom_delay_max = 50
+	focuses = list(/datum/reagent/colorful_reagent, /datum/reagent/medicine/mannitol)
 
 /datum/symptom/youth/Activate(datum/disease/advance/A)
 	. = ..()

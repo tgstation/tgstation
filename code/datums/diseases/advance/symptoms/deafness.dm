@@ -18,6 +18,7 @@
 	base_message_chance = 100
 	symptom_delay_min = 25
 	symptom_delay_max = 80
+	focuses = list(/datum/reagent/medicine/inacusiate, /datum/reagent/fuel/oil)
 	threshold_descs = list(
 		"Resistance 9" = "Causes permanent deafness, instead of intermittent.",
 		"Stealth 4" = "The symptom remains hidden until active.",

@@ -18,6 +18,7 @@
 	symptom_delay_max = 85
 	severity = 4
 	var/yawning = FALSE
+	focuses = list(/datum/reagent/medicine/c2/tirimol)
 	threshold_descs = list(
 		"Transmission 4" = "Causes the host to periodically emit a yawn that spreads the virus in a manner similar to that of a sneeze.",
 		"Stage Speed 10" = "Causes narcolepsy more often, increasing the chance of the host falling asleep.",

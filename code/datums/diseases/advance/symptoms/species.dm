@@ -15,6 +15,7 @@
 	transmittable = 0
 	level = 5
 	severity = 0
+	focuses = list(/datum/reagent/medicine/epinephrine, /datum/reagent/consumable/sugar)
 
 /datum/symptom/undead_adaptation/OnAdd(datum/disease/advance/A)
 	A.process_dead = TRUE
@@ -41,6 +42,7 @@
 	transmittable = 3
 	level = 5
 	severity = 0
+	focuses = list(/datum/reagent/gold, /datum/reagent/consumable/sugar)
 
 /datum/symptom/inorganic_adaptation/OnAdd(datum/disease/advance/A)
 	A.infectable_biotypes |= MOB_MINERAL //Mineral covers plasmamen and golems.

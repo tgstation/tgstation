@@ -18,6 +18,7 @@
 	var/purge_alcohol = FALSE
 	var/trauma_heal_mild = FALSE
 	var/trauma_heal_severe = FALSE
+	focuses = list(/datum/reagent/medicine/antihol, /datum/reagent/medicine/mannitol)
 	threshold_descs = list(
 		"Resistance 6" = "Heals minor brain traumas.",
 		"Resistance 9" = "Heals severe brain traumas.",
@@ -83,6 +84,7 @@
 	base_message_chance = 7
 	symptom_delay_min = 1
 	symptom_delay_max = 1
+	focuses = list(/datum/reagent/medicine/inacusiate, /datum/reagent/medicine/oculine)
 
 /datum/symptom/sensory_restoration/Activate(datum/disease/advance/A)
 	. = ..()

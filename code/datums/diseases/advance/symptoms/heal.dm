@@ -55,6 +55,7 @@
 	level = 6
 	passive_message = "<span class='notice'>You miss the feeling of starlight on your skin.</span>"
 	var/nearspace_penalty = 0.3
+	focuses = list(/datum/reagent/flash_powder, /datum/reagent/stable_plasma)
 	threshold_descs = list(
 		"Stage Speed 6" = "Increases healing speed.",
 		"Transmission 6" = "Removes penalty for only being close to space.",
@@ -188,6 +189,7 @@
 	level = 7
 	var/food_conversion = FALSE
 	desc = "The virus rapidly breaks down any foreign chemicals in the bloodstream."
+	focuses = list(/datum/reagent/medicine/pen_acid)
 	threshold_descs = list(
 		"Resistance 7" = "Increases chem removal speed.",
 		"Stage Speed 6" = "Consumed chemicals nourish the host.",
@@ -231,6 +233,7 @@
 	var/reduced_hunger = FALSE
 	desc = "The virus causes the host's metabolism to accelerate rapidly, making them process chemicals twice as fast,\
 		but also causing increased hunger."
+	focuses = list(/datum/reagent/toxin/lipolicide, /datum/reagent/consumable/sugar)
 	threshold_descs = list(
 		"Stealth 3" = "Reduces hunger rate.",
 		"Stage Speed 10" = "Chemical metabolization is tripled instead of doubled.",
@@ -272,6 +275,7 @@
 	transmittable = -1
 	level = 6
 	passive_message = "<span class='notice'>You feel tingling on your skin as light passes over it.</span>"
+	focuses = list(/datum/reagent/flash_powder, /datum/reagent/stabilizing_agent)
 	threshold_descs = list(
 		"Stage Speed 8" = "Doubles healing speed.",
 	)
@@ -331,6 +335,7 @@
 	var/deathgasp = FALSE
 	var/stabilize = FALSE
 	var/active_coma = FALSE //to prevent multiple coma procs
+	focuses = list(/datum/reagent/medicine/atropine, /datum/reagent/toxin/chloralhydrate)
 	threshold_descs = list(
 		"Stealth 2" = "Host appears to die when falling into a coma.",
 		"Resistance 4" = "The virus also stabilizes the host while they are in critical condition.",
@@ -427,6 +432,7 @@
 	level = 6
 	passive_message = "<span class='notice'>Your skin feels oddly dry...</span>"
 	var/absorption_coeff = 1
+	focuses = list(/datum/reagent/drying_agent)
 	threshold_descs = list(
 		"Resistance 5" = "Water is consumed at a much slower rate.",
 		"Stage Speed 7" = "Increases healing speed.",
@@ -489,6 +495,7 @@
 	level = 8
 	passive_message = "<span class='notice'>You feel an odd attraction to plasma.</span>"
 	var/temp_rate = 1
+	focuses = list(/datum/reagent/stable_plasma, /datum/reagent/medicine/c2/seiver)
 	threshold_descs = list(
 		"Transmission 6" = "Increases temperature adjustment rate.",
 		"Stage Speed 7" = "Increases healing speed.",
@@ -562,6 +569,7 @@
 	symptom_delay_max = 1
 	passive_message = "<span class='notice'>Your skin glows faintly for a moment.</span>"
 	var/cellular_damage = FALSE
+	focuses = list(/datum/reagent/medicine/clonexadone)
 	threshold_descs = list(
 		"Transmission 6" = "Additionally heals cellular damage.",
 		"Resistance 7" = "Increases healing speed.",
