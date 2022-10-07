@@ -388,7 +388,6 @@
 	w_class = WEIGHT_CLASS_SMALL
 	attack_verb_continuous = list("attacks", "strikes", "hits")
 	attack_verb_simple = list("attack", "strike", "hit")
-	var/sword_turned_on
 	/// Whether our sword has been multitooled to rainbow
 	var/hacked = FALSE
 	/// The color of our fake energy sword
@@ -401,6 +400,7 @@
 		hitsound_on = hitsound, \
 		clumsy_check = FALSE)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
+	AddElement(/datum/element/update_icon_updates_onmob)
 
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
@@ -409,17 +409,23 @@
  */
 /obj/item/toy/sword/proc/on_transform(obj/item/source, mob/user, active)
 	SIGNAL_HANDLER
-
-	sword_turned_on = active
-	if(active)
-		icon_state = "[icon_state]_[saber_color]"
-		inhand_icon_state = "[inhand_icon_state]_[saber_color]"
-		if(ismob(loc))
-			var/mob/loc_mob = loc
-			loc_mob.update_held_items()
 	balloon_alert(user, "[active ? "flicked out":"pushed in"] [src]")
 	playsound(user ? user : src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 20, TRUE)
+	update_appearance(UPDATE_ICON)
 	return COMPONENT_NO_DEFAULT_MESSAGE
+
+/obj/item/toy/sword/vv_edit_var(vname, vval)
+	. = ..()
+	if(vname == NAMEOF(src, saber_color))
+		update_appearance(UPDATE_ICON)
+
+/obj/item/toy/sword/update_icon_state()
+	. = ..()
+	var/datum/component/transforming/transforming_comp = GetComponent(/datum/component/transforming)
+	var/active = transforming_comp?.active
+	var/last_part = active ? "_on[saber_color ? "_[saber_color]" : null]" : null
+	icon_state = "[initial(icon_state)][last_part]"
+	inhand_icon_state = "[initial(inhand_icon_state)][last_part]"
 
 /obj/item/toy/sword/multitool_act(mob/living/user, obj/item/tool)
 	if(hacked)
@@ -428,10 +434,7 @@
 	hacked = TRUE
 	saber_color = "rainbow"
 	to_chat(user, span_warning("RNBW_ENGAGE"))
-	if(sword_turned_on)
-		icon_state = "[initial(icon_state)]_on_rainbow"
-		inhand_icon_state = "[initial(inhand_icon_state)]_on_rainbow"
-		user?.update_held_items()
+	update_appearance(UPDATE_ICON)
 
 
 // Copied from /obj/item/melee/energy/sword/attackby
