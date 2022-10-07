@@ -511,18 +511,17 @@
 	if(!locate(/obj/item/mecha_parts/mecha_equipment/concealed_weapon_bay) in mech.contents) //if no others exist
 		mech.mech_type &= ~EXOSUIT_MODULE_CONCEALED_WEP_BAY
 
-/obj/item/mecha_parts/mecha_equipment/camera_kit
+/obj/item/mecha_parts/camera_kit
 	name = "camera installation kit"
 	desc = "A kit for installing an EMP-proof camera into an exosuit."
-	icon = 'icons/obj/machines/camera.dmi'
-	icon_state = "cameracase"
+	icon = 'icons/mecha/mecha_equipment.dmi'
+	icon_state = "mecha_camera"
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/mecha_parts/mecha_equipment/camera_kit/try_attach_part(mob/user, obj/vehicle/sealed/mecha/mech, attach_right = FALSE)
+/obj/item/mecha_parts/camera_kit/try_attach_part(mob/user, obj/vehicle/sealed/mecha/mech, attach_right = FALSE)
 	if(!..())
 		return
-	mech.chassis_camera = new /obj/machinery/camera/autoname/exosuit (mech)
+	mech.chassis_camera = new /obj/machinery/camera/emp_proof/exosuit (mech)
 	mech.chassis_camera.camera_chassis = mech
 	mech.chassis_camera.update_c_tag(mech)
 	mech.diag_hud_set_camera()
-	chassis = mech
