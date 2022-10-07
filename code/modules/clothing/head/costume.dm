@@ -17,8 +17,8 @@
 
 /obj/item/clothing/head/syndicatefake
 	name = "black space-helmet replica"
-	icon = 'icons/obj/clothing/head/helmet.dmi'
-	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
+	icon = 'icons/obj/clothing/head/spacehelm.dmi'
+	worn_icon = 'icons/mob/clothing/head/spacehelm.dmi'
 	icon_state = "syndicate-helm-black-red"
 	inhand_icon_state = "syndicate-helm-black-red"
 	desc = "A plastic replica of a Syndicate agent's space helmet. You'll look just like a real murderous Syndicate agent in this! This is a toy, it is not made for use in space!"
