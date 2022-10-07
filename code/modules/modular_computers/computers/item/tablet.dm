@@ -37,6 +37,15 @@
 	return ..()
 
 /obj/item/modular_computer/tablet/interact(mob/user)
+	// bypass literacy checks to access syndicate uplink
+	if(HAS_TRAIT(user, TRAIT_ILLITERATE))
+		var/datum/component/uplink/hidden_uplink = GetComponent(/datum/component/uplink)
+		if(hidden_uplink)
+			if(owner != user?.key) 
+			locked = FALSE
+			hidden_uplink.interact(null, user)
+			return // hidden_uplink.interact(null, user)
+
 	. = ..()
 	if(HAS_TRAIT(src, TRAIT_PDA_MESSAGE_MENU_RIGGED))
 		explode(usr, from_message_menu = TRUE)
