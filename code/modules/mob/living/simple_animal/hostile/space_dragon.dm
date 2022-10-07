@@ -91,7 +91,7 @@
 	var/devastation_damage_min_percentage = 0.4
 	/// Maximum devastation damage dealt coefficient based on max health
 	var/devastation_damage_max_percentage = 0.75
-	/// The amount of plasma stored. Up to [MAXIMUM_PLASMA_MOLES_RELEASED] moles of plasma can get released.
+	/// The amount of plasma stored. Up to [MAXIMUM_PLASMA_MOLES_RELEASED] moles of plasma can get released in a single fire breath.
 	var/plasma = MAXIMUM_STORED_PLASMA_MOLES
 
 /mob/living/simple_animal/hostile/space_dragon/Initialize(mapload)
@@ -273,9 +273,9 @@
 	return (get_line(src, T) - get_turf(src))
 
 /**
- * Returns a list of open turfs that do not have windows or doors with a density.
+ * Returns a list of open turfs that allow gas to pass in a line.
  * Arguments:
- * * atom/target - The target.
+ * * atom/target - The target for the line.
  * * range - The maximum number of turfs it can return.
 */
 /mob/living/simple_animal/hostile/space_dragon/proc/get_stream_turfs(atom/target, range)
