@@ -781,12 +781,10 @@ SUBSYSTEM_DEF(job)
 
 /// Proc that we call to generate a new jobconfig.toml file and send it to the requesting client. Returns TRUE if a file is successfully generated, FALSE otherwise.
 /datum/controller/subsystem/job/proc/export_toml(mob/user, data)
-	var/payload = rustg_toml_encode(data)
-	var/temp_file = file("data/jobconfig.toml")
-	if(fexists(temp_file))
-		fdel(temp_file) // ensure it writes properly in case it exists
-	WRITE_FILE(temp_file, "[config_documentation]\n[payload]")
-	DIRECT_OUTPUT(user, ftp(temp_file, "jobconfig.toml"))
+	var/file_location = "data/jobconfig.toml"
+	var/payload = "[config_documentation]\n[rustg_toml_encode(data)]"
+	rustg_file_write(payload, file_location)
+	DIRECT_OUTPUT(user, ftp(file(file_location), "jobconfig.toml"))
 	return TRUE
 
 /datum/controller/subsystem/job/proc/HandleFeedbackGathering()
