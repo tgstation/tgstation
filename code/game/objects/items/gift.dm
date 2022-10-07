@@ -88,7 +88,7 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 		/obj/item/clothing/suit/costume/poncho/green,
 		/obj/item/clothing/suit/costume/poncho/red,
 		/obj/item/clothing/suit/costume/snowman,
-		/obj/item/clothing/head/snowman,
+		/obj/item/clothing/head/costume/snowman,
 		/obj/item/stack/sheet/mineral/coal)
 
 	gift_type_list += subtypesof(/obj/item/clothing/head/collectable)

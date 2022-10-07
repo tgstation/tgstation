@@ -25,7 +25,7 @@
 	worn_slot_flags = ITEM_SLOT_HEAD
 	held_lh = 'icons/mob/inhands/animal_item_lefthand.dmi'
 	held_rh = 'icons/mob/inhands/animal_item_righthand.dmi'
-	head_icon = 'icons/mob/clothing/head/animal_item_head.dmi'
+	head_icon = 'icons/mob/clothing/head/pets_head.dmi'
 
 /mob/living/simple_animal/axolotl/Initialize(mapload)
 	. = ..()
