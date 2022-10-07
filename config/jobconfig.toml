@@ -5,8 +5,8 @@
 ## Total Positions are how many job slots you get in a shift, Spawn Positions are how many you get that load in at spawn. If you set this to -1, it is unrestricted.
 ## Playtime Requirements is in minutes, and the job will unlock when a player reaches that amount of time.
 ## However, that can be superseded by Required Account Age, which is a time in days that you need to have had an account on the server for.
-## As time goes on, more config options will be added to this file.
-## You can use the admin_verb (checks for R_DEBUG) 'Reload Job Configuration' to reload this file without having to restart the server.
+## As time goes on, more config options may be added to this file.
+## You can use the admin verb 'Generate Job Configuration' to auto-regenerate this config as a downloadable file without having to manually edit this file if we add more jobs or more things you can edit via config.
 ## It will always respect prior-existing values in the config, but will appropriately add more fields when they generate.
 
 ## The game will not read any line that is commented out with a '#', as to allow you to defer to codebase defaults.
@@ -222,4 +222,3 @@
 "#Required Account Age" = 7
 "#Spawn Positions" = 1
 "#Total Positions" = 1
-
