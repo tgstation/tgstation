@@ -47,7 +47,7 @@
 		hidden_uplink.interact(null, user)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
-	. = ..()
+	return ..()
 
 /obj/item/modular_computer/tablet/interact(mob/user)
 	. = ..()
