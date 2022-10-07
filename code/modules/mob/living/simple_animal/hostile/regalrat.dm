@@ -140,6 +140,7 @@
 		if (do_mob(src, target, 2 SECONDS, interaction_key = REGALRAT_INTERACTION))
 			target.reagents.add_reagent(/datum/reagent/rat_spit,rand(1,3),no_react = TRUE)
 			to_chat(src, span_notice("You finish licking [target]."))
+			return
 	else
 		SEND_SIGNAL(target, COMSIG_RAT_INTERACT, src)
 

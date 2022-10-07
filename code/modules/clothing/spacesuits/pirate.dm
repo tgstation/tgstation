@@ -2,14 +2,14 @@
 	name = "modified EVA helmet"
 	desc = "A modified helmet to allow space pirates to intimidate their customers whilst staying safe from the void. Comes with some additional protection."
 	icon_state = "spacepirate"
-	inhand_icon_state = "spacepiratehelmet"
+	inhand_icon_state = "space_pirate_helmet"
 	armor = list(MELEE = 30, BULLET = 50, LASER = 30,ENERGY = 40, BOMB = 30, BIO = 30, FIRE = 60, ACID = 75)
 	strip_delay = 40
 	equip_delay_other = 20
 
 /obj/item/clothing/head/helmet/space/pirate/bandana
 	icon_state = "spacebandana"
-	inhand_icon_state = "spacepiratehelmet"
+	inhand_icon_state = "space_bandana_helmet"
 
 /obj/item/clothing/suit/space/pirate
 	name = "modified EVA suit"

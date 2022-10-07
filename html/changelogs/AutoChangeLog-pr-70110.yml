@@ -1,6 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - balance: "You can no longer upgrade your tablets to have signals to the NTnet despite not being anywhere near telecomms. Instead, the Mining base has a lesser connection, and all computers have Ethernet connections."
-  - balance: "All tablets now have a printer in them, rather than it being an external part.
-removal: NTNet tablet cards has been removed."

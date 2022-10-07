@@ -12,11 +12,12 @@
 	name = "bandana"
 	desc = "A fine bandana with nanotech lining."
 	icon_state = "bandana"
+	inhand_icon_state = "greyscale_bandana"
 	worn_icon_state = "bandana_worn"
 	greyscale_config = /datum/greyscale_config/bandana
 	greyscale_config_worn = /datum/greyscale_config/bandana_worn
-	var/greyscale_config_up = /datum/greyscale_config/bandana_up
-	var/greyscale_config_worn_up = /datum/greyscale_config/bandana_worn_up
+	greyscale_config_inhand_left = /datum/greyscale_config/bandana_inhands_left
+	greyscale_config_inhand_right = /datum/greyscale_config/bandana_inhands_right
 	greyscale_colors = "#2e2e2e"
 
 /obj/item/clothing/mask/bandana/attack_self(mob/user)
@@ -24,20 +25,16 @@
 		to_chat(user, span_warning("You must undo [src] in order to push it into a hat!"))
 		return
 	adjustmask(user)
-	if(greyscale_config == initial(greyscale_config) && greyscale_config_worn == initial(greyscale_config_worn))
+
+/obj/item/clothing/mask/bandana/adjustmask(mob/living/user)
+	. = ..()
+	if(mask_adjusted)
 		worn_icon_state += "_up"
 		undyeable = TRUE
-		set_greyscale(
-			new_config = greyscale_config_up,
-			new_worn_config = greyscale_config_worn_up
-		)
 	else
+		inhand_icon_state = initial(inhand_icon_state)
 		worn_icon_state = initial(worn_icon_state)
 		undyeable = initial(undyeable)
-		set_greyscale(
-			new_config = initial(greyscale_config),
-			new_worn_config = initial(greyscale_config_worn)
-		)
 
 /obj/item/clothing/mask/bandana/AltClick(mob/user)
 	. = ..()
@@ -128,8 +125,8 @@
 	worn_icon_state = "bandstriped_worn"
 	greyscale_config = /datum/greyscale_config/bandstriped
 	greyscale_config_worn = /datum/greyscale_config/bandstriped_worn
-	greyscale_config_up = /datum/greyscale_config/bandstriped_up
-	greyscale_config_worn_up = /datum/greyscale_config/bandstriped_worn_up
+	greyscale_config_inhand_left = /datum/greyscale_config/bandana_striped_inhands_left
+	greyscale_config_inhand_right = /datum/greyscale_config/bandana_striped_inhands_right
 	greyscale_colors = "#2e2e2e#C6C6C6"
 	undyeable = TRUE
 
@@ -182,8 +179,8 @@
 	worn_icon_state = "bandskull_worn"
 	greyscale_config = /datum/greyscale_config/bandskull
 	greyscale_config_worn = /datum/greyscale_config/bandskull_worn
-	greyscale_config_up = /datum/greyscale_config/bandskull_up
-	greyscale_config_worn_up = /datum/greyscale_config/bandskull_worn_up
+	greyscale_config_inhand_left = /datum/greyscale_config/bandana_skull_inhands_left
+	greyscale_config_inhand_right = /datum/greyscale_config/bandana_skull_inhands_right
 	greyscale_colors = "#2e2e2e#C6C6C6"
 	undyeable = TRUE
 

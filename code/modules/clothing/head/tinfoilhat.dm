@@ -2,7 +2,7 @@
 	name = "tinfoil hat"
 	desc = "Thought control rays, psychotronic scanning. Don't mind that, I'm protected cause I made this hat."
 	icon_state = "foilhat"
-	inhand_icon_state = "foilhat"
+	inhand_icon_state = null
 	armor = list(MELEE = 0, BULLET = 0, LASER = -5,ENERGY = -15, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
 	equip_delay_other = 140
 	clothing_flags = ANTI_TINFOIL_MANEUVER
@@ -24,7 +24,7 @@
 
 /obj/item/clothing/head/costume/foilhat/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
-	if(slot != ITEM_SLOT_HEAD || warped)
+	if(!(slot & ITEM_SLOT_HEAD) || warped)
 		return
 	if(paranoia)
 		QDEL_NULL(paranoia)

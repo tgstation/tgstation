@@ -15,7 +15,7 @@
 	name = "constable helmet"
 	desc = "A british looking helmet."
 	icon_state = "constable"
-	inhand_icon_state = "constable"
+	inhand_icon_state = null
 	custom_price = PAYCHECK_COMMAND * 1.5
 	worn_y_offset = 4
 
@@ -23,13 +23,13 @@
 	name = "space police cap"
 	desc = "A blue cap for patrolling the daily beat."
 	icon_state = "policecap_families"
-	inhand_icon_state = "policecap_families"
+	inhand_icon_state = null
 
 /obj/item/clothing/head/costume/canada
 	name = "striped red tophat"
 	desc = "It smells like fresh donut holes. / <i>Il sent comme des trous de beignets frais.</i>"
 	icon_state = "canada"
-	inhand_icon_state = "canada"
+	inhand_icon_state = null
 
 /obj/item/clothing/head/costume/redcoat
 	name = "redcoat's hat"
@@ -57,13 +57,13 @@
 	name = "bowler-hat"
 	desc = "Gentleman, elite aboard!"
 	icon_state = "bowler"
-	inhand_icon_state = "bowler"
+	inhand_icon_state = null
 
 /obj/item/clothing/head/costume/bearpelt
 	name = "bear pelt hat"
 	desc = "Fuzzy."
 	icon_state = "bearpelt"
-	inhand_icon_state = "bearpelt"
+	inhand_icon_state = null
 
 /obj/item/clothing/head/flatcap
 	name = "flat cap"
@@ -72,7 +72,7 @@
 	greyscale_config = /datum/greyscale_config/beret
 	greyscale_config_worn = /datum/greyscale_config/beret/worn
 	greyscale_colors = "#8F7654"
-	inhand_icon_state = "detective"
+	inhand_icon_state = null
 
 /obj/item/clothing/head/cowboy
 	name = "bounty hunting hat"
@@ -81,7 +81,7 @@
 	worn_icon = 'icons/mob/clothing/head/cowboy.dmi'
 	icon_state = "cowboy"
 	worn_icon_state = "hunter"
-	inhand_icon_state = "hunter"
+	inhand_icon_state = null
 	armor = list(MELEE = 5, BULLET = 5, LASER = 5, ENERGY = 15, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
@@ -156,7 +156,7 @@
 	name = "pharaoh hat"
 	desc = "Walk like an Egyptian."
 	icon_state = "pharoah_hat"
-	inhand_icon_state = "pharoah_hat"
+	inhand_icon_state = null
 
 /obj/item/clothing/head/costume/nemes
 	name = "headdress of Nemes"
@@ -172,7 +172,7 @@
 	name = "\improper CentCom Head Intern beancap"
 	desc = "A horrifying mix of beanie and softcap in CentCom green. You'd have to be pretty desperate for power over your peers to agree to wear this."
 	icon_state = "intern_hat"
-	inhand_icon_state = "intern_hat"
+	inhand_icon_state = null
 
 /obj/item/clothing/head/hats/coordinator
 	name = "coordinator cap"
@@ -185,13 +185,13 @@
 	name = "frosty hat"
 	desc = "Hee-ho!"
 	icon_state = "JackFrostHat"
-	inhand_icon_state = "JackFrostHat"
+	inhand_icon_state = null
 
 /obj/item/clothing/head/costume/weddingveil
 	name = "wedding veil"
 	desc = "A gauzy white veil."
 	icon_state = "weddingveil"
-	inhand_icon_state = "weddingveil"
+	inhand_icon_state = null
 
 /obj/item/clothing/head/hats/centcom_cap
 	name = "\improper CentCom commander cap"
@@ -206,23 +206,22 @@
 	name = "human skin hat"
 	desc = "This will scare them. All will know my power."
 	icon_state = "human_leather"
-	inhand_icon_state = "human_leather"
+	inhand_icon_state = null
 
 /obj/item/clothing/head/costume/ushanka
 	name = "ushanka"
 	desc = "Perfect for winter in Siberia, da?"
 	icon_state = "ushankadown"
-	inhand_icon_state = "ushankadown"
+	inhand_icon_state = null
 	flags_inv = HIDEEARS|HIDEHAIR
-	var/earflaps = TRUE
 	cold_protection = HEAD
+	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
+	dog_fashion = /datum/dog_fashion/head/ushanka
+	var/earflaps = TRUE
 	///Sprite visible when the ushanka flaps are folded up.
 	var/upsprite = "ushankaup"
 	///Sprite visible when the ushanka flaps are folded down.
 	var/downsprite = "ushankadown"
-	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
-
-	dog_fashion = /datum/dog_fashion/head/ushanka
 
 /obj/item/clothing/head/costume/ushanka/attack_self(mob/user)
 	if(earflaps)
@@ -234,3 +233,13 @@
 		inhand_icon_state = downsprite
 		to_chat(user, span_notice("You lower the ear flaps on the ushanka."))
 	earflaps = !earflaps
+
+/obj/item/clothing/head/costume/nightcap/blue
+	name = "blue nightcap"
+	desc = "A blue nightcap for all the dreamers and snoozers out there."
+	icon_state = "sleep_blue"
+
+/obj/item/clothing/head/costume/nightcap/red
+	name = "red nightcap"
+	desc = "A red nightcap for all the sleepyheads and dozers out there."
+	icon_state = "sleep_red"

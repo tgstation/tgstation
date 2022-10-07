@@ -47,6 +47,21 @@
 	icon_file = 'icons/obj/tools.dmi'
 	json_config = 'code/datums/greyscale/json_configs/wirecutters.json'
 
+/datum/greyscale_config/wirecutters_belt_overlay
+	name = "Belt Worn Icon"
+	icon_file = 'icons/obj/clothing/belt_overlays.dmi'
+	json_config = 'code/datums/greyscale/json_configs/wirecutters.json'
+
+/datum/greyscale_config/wirecutter_inhand_left
+	name = "Held Wirecutter, Left"
+	icon_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/wirecutter_worn.json'
+
+/datum/greyscale_config/wirecutter_inhand_right
+	name = "Held Wirecutter, Right"
+	icon_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/wirecutter_worn.json'
+
 /datum/greyscale_config/screwdriver
 	name = "Screwdriver"
 	icon_file = 'icons/obj/tools.dmi'
@@ -66,6 +81,16 @@
 	name = "Belt Worn Screwdriver"
 	icon_file = 'icons/obj/clothing/belt_overlays.dmi'
 	json_config = 'code/datums/greyscale/json_configs/screwdriver_worn.json'
+
+/datum/greyscale_config/gloves_inhand_left
+	name = "Held Gloves, Left"
+	icon_file = 'icons/mob/inhands/clothing/gloves_lefthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/gloves_inhand.json'
+
+/datum/greyscale_config/gloves_inhand_right
+	name = "Held Gloves, Right"
+	icon_file = 'icons/mob/inhands/clothing/gloves_righthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/gloves_inhand.json'
 
 /datum/greyscale_config/jumpsuit
 	name = "Jumpsuit"
@@ -154,6 +179,16 @@
 	icon_file = 'icons/mob/clothing/feet.dmi'
 	json_config = 'code/datums/greyscale/json_configs/sneakers_worn.json'
 
+/datum/greyscale_config/sneakers_inhand_left
+	name = "Held Sneakers, Left"
+	icon_file = 'icons/mob/inhands/clothing/shoes_lefthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/sneakers_inhand.json'
+
+/datum/greyscale_config/sneakers_inhand_right
+	name = "Held Sneakers, Right"
+	icon_file = 'icons/mob/inhands/clothing/shoes_righthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/sneakers_inhand.json'
+
 /datum/greyscale_config/sneakers_orange
 	name = "Orange Sneakers"
 	icon_file = 'icons/obj/clothing/shoes.dmi'
@@ -163,6 +198,16 @@
 	name = "Worn Orange Sneakers"
 	icon_file = 'icons/mob/clothing/feet.dmi'
 	json_config = 'code/datums/greyscale/json_configs/sneakers_orange_worn.json'
+
+/datum/greyscale_config/sneakers_orange_inhand_left
+	name = "Held Orange Sneakers, Left"
+	icon_file = 'icons/mob/inhands/clothing/shoes_lefthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/sneakers_orange_inhand.json'
+
+/datum/greyscale_config/sneakers_orange_inhand_right
+	name = "Held Orange Sneakers, Right"
+	icon_file = 'icons/mob/inhands/clothing/shoes_righthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/sneakers_orange_inhand.json'
 
 /datum/greyscale_config/sneakers_wheelys
 	name = "Wheeled Sneakers"
@@ -478,60 +523,60 @@
 	icon_file = 'icons/obj/clothing/masks.dmi'
 	json_config = 'code/datums/greyscale/json_configs/bandana.json'
 
-/datum/greyscale_config/bandana_up
-	name = "Bandana Up"
-	icon_file = 'icons/obj/clothing/masks.dmi'
-	json_config = 'code/datums/greyscale/json_configs/bandana_up.json'
-
 /datum/greyscale_config/bandana_worn
 	name = "Worn Bandana"
 	icon_file = 'icons/mob/clothing/mask.dmi'
 	json_config = 'code/datums/greyscale/json_configs/bandana_worn.json'
 
-/datum/greyscale_config/bandana_worn_up
-	name = "Worn Bandana Up"
-	icon_file = 'icons/mob/clothing/mask.dmi'
-	json_config = 'code/datums/greyscale/json_configs/bandana_worn_up.json'
+/datum/greyscale_config/bandana_inhands_left
+	name = "Held Bandana, Left"
+	icon_file = 'icons/mob/inhands/clothing/masks_lefthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/bandana_inhands.json'
+
+/datum/greyscale_config/bandana_inhands_right
+	name = "Held Bandana, Left"
+	icon_file = 'icons/mob/inhands/clothing/masks_righthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/bandana_inhands.json'
 
 /datum/greyscale_config/bandstriped
 	name = "Striped Bandana"
 	icon_file = 'icons/obj/clothing/masks.dmi'
 	json_config = 'code/datums/greyscale/json_configs/bandstriped.json'
 
-/datum/greyscale_config/bandstriped_up
-	name = "Striped Bandana Up"
-	icon_file = 'icons/obj/clothing/masks.dmi'
-	json_config = 'code/datums/greyscale/json_configs/bandstriped_up.json'
-
 /datum/greyscale_config/bandstriped_worn
 	name = "Worn Striped Bandana"
 	icon_file = 'icons/mob/clothing/mask.dmi'
 	json_config = 'code/datums/greyscale/json_configs/bandstriped_worn.json'
 
-/datum/greyscale_config/bandstriped_worn_up
-	name = "Worn Striped Bandana Up"
-	icon_file = 'icons/mob/clothing/mask.dmi'
-	json_config = 'code/datums/greyscale/json_configs/bandstriped_worn_up.json'
+/datum/greyscale_config/bandana_striped_inhands_left
+	name = "Held Striped Bandana, Left"
+	icon_file = 'icons/mob/inhands/clothing/masks_lefthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/bandanastriped_inhands.json'
+
+/datum/greyscale_config/bandana_striped_inhands_right
+	name = "Held Striped Bandana, Left"
+	icon_file = 'icons/mob/inhands/clothing/masks_righthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/bandanastriped_inhands.json'
 
 /datum/greyscale_config/bandskull
 	name = "Skull Bandana"
 	icon_file = 'icons/obj/clothing/masks.dmi'
 	json_config = 'code/datums/greyscale/json_configs/bandskull.json'
 
-/datum/greyscale_config/bandskull_up
-	name = "Skull Bandana Up"
-	icon_file = 'icons/obj/clothing/masks.dmi'
-	json_config = 'code/datums/greyscale/json_configs/bandskull_up.json'
+/datum/greyscale_config/bandana_skull_inhands_left
+	name = "Held Skull Bandana, Left"
+	icon_file = 'icons/mob/inhands/clothing/masks_lefthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/bandanaskull_inhands.json'
+
+/datum/greyscale_config/bandana_skull_inhands_right
+	name = "Held Skull Bandana, Left"
+	icon_file = 'icons/mob/inhands/clothing/masks_righthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/bandanaskull_inhands.json'
 
 /datum/greyscale_config/bandskull_worn
 	name = "Worn Skull Bandana"
 	icon_file = 'icons/mob/clothing/mask.dmi'
 	json_config = 'code/datums/greyscale/json_configs/bandskull_worn.json'
-
-/datum/greyscale_config/bandskull_worn_up
-	name = "Worn Skull Bandana Up"
-	icon_file = 'icons/mob/clothing/mask.dmi'
-	json_config = 'code/datums/greyscale/json_configs/bandskull_worn_up.json'
 
 /datum/greyscale_config/material_airlock
 	name = "Material Airlock"

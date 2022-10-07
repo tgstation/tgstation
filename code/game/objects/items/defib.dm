@@ -107,13 +107,13 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/defibrillator/attack_hand(mob/user, list/modifiers)
 	if(loc == user)
-		if(slot_flags == ITEM_SLOT_BACK)
+		if(slot_flags & ITEM_SLOT_BACK)
 			if(user.get_item_by_slot(ITEM_SLOT_BACK) == src)
 				ui_action_click()
 			else
 				to_chat(user, span_warning("Put the defibrillator on your back first!"))
 
-		else if(slot_flags == ITEM_SLOT_BELT)
+		else if(slot_flags & ITEM_SLOT_BELT)
 			if(user.get_item_by_slot(ITEM_SLOT_BELT) == src)
 				ui_action_click()
 			else
@@ -210,13 +210,13 @@
 
 /obj/item/defibrillator/equipped(mob/user, slot)
 	..()
-	if((slot_flags == ITEM_SLOT_BACK && slot != ITEM_SLOT_BACK) || (slot_flags == ITEM_SLOT_BELT && slot != ITEM_SLOT_BELT))
+	if(!(slot_flags & slot))
 		remove_paddles(user)
 		update_power()
 
 /obj/item/defibrillator/item_action_slot_check(slot, mob/user)
-	if(slot == user.getBackSlot())
-		return 1
+	if(slot_flags & slot)
+		return TRUE
 
 /obj/item/defibrillator/proc/remove_paddles(mob/user) //this fox the bug with the paddles when other player stole you the defib when you have the paddles equiped
 	if(ismob(paddles.loc))
@@ -268,7 +268,7 @@
 	name = "compact defibrillator"
 	desc = "A belt-equipped defibrillator that can be rapidly deployed."
 	icon_state = "defibcompact"
-	inhand_icon_state = "defibcompact"
+	inhand_icon_state = null
 	worn_icon_state = "defibcompact"
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BELT
@@ -279,7 +279,7 @@
 	emagged_state = "defibcompact-emagged"
 
 /obj/item/defibrillator/compact/item_action_slot_check(slot, mob/user)
-	if(slot == user.getBeltSlot())
+	if(slot & user.getBeltSlot())
 		return TRUE
 
 /obj/item/defibrillator/compact/loaded/Initialize(mapload)
@@ -291,7 +291,7 @@
 	name = "combat defibrillator"
 	desc = "A belt-equipped blood-red defibrillator. Can revive through thick clothing, has an experimental self-recharging battery, and can be utilized in combat via applying the paddles in a disarming or aggressive manner."
 	icon_state = "defibcombat" //needs defib inhand sprites
-	inhand_icon_state = "defibcombat"
+	inhand_icon_state = null
 	worn_icon_state = "defibcombat"
 	combat = TRUE
 	safety = FALSE
@@ -315,7 +315,7 @@
 	name = "elite Nanotrasen defibrillator"
 	desc = "A belt-equipped state-of-the-art defibrillator. Can revive through thick clothing, has an experimental self-recharging battery, and can be utilized in combat via applying the paddles in a disarming or aggressive manner."
 	icon_state = "defibnt" //needs defib inhand sprites
-	inhand_icon_state = "defibnt"
+	inhand_icon_state = null
 	worn_icon_state = "defibnt"
 	paddle_type = /obj/item/shockpaddles/syndicate/nanotrasen
 	paddle_state = "defibnt-paddles"

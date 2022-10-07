@@ -1,0 +1,5 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - rscadd: "Engines are now machines, not structures. If destroyed, they will drop circuit boards so you can rebuild them.
+removal: In-wall engines have been remvoed. The Tram now uses full-blown engines."

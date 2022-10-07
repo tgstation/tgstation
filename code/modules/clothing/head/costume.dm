@@ -29,7 +29,7 @@
 	name = "cueball helmet"
 	desc = "A large, featureless white orb meant to be worn on your head. How do you even see out of this thing?"
 	icon_state = "cueball"
-	inhand_icon_state="cueball"
+	inhand_icon_state = null
 	clothing_flags = SNUG_FIT
 	flags_cover = HEADCOVERSEYES|HEADCOVERSMOUTH
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
@@ -38,7 +38,7 @@
 	name = "snowman head"
 	desc = "A ball of white styrofoam. So festive."
 	icon_state = "snowman_h"
-	inhand_icon_state = "snowman_h"
+	inhand_icon_state = null
 	clothing_flags = SNUG_FIT
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
@@ -47,7 +47,7 @@
 	name = "witch costume wig"
 	desc = "Eeeee~heheheheheheh!"
 	icon_state = "witch"
-	inhand_icon_state = "witch"
+	inhand_icon_state = null
 	flags_inv = HIDEHAIR
 
 /obj/item/clothing/head/costume/maidheadband
@@ -59,7 +59,7 @@
 	name = "chicken suit head"
 	desc = "Bkaw!"
 	icon_state = "chickenhead"
-	inhand_icon_state = "chickensuit"
+	inhand_icon_state = "chicken_head"
 	clothing_flags = SNUG_FIT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
@@ -67,7 +67,7 @@
 	name = "griffon head"
 	desc = "Why not 'eagle head'? Who knows."
 	icon_state = "griffinhat"
-	inhand_icon_state = "griffinhat"
+	inhand_icon_state = null
 	clothing_flags = SNUG_FIT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
@@ -98,7 +98,7 @@
 	desc = "Purify in style!"
 	flags_inv = HIDEHAIR //bald
 	icon_state = "shrine_wig"
-	inhand_icon_state = "shrine_wig"
+	inhand_icon_state = null
 	worn_y_offset = 1
 
 /obj/item/clothing/head/costume/cardborg
@@ -114,7 +114,7 @@
 
 /obj/item/clothing/head/costume/cardborg/equipped(mob/living/user, slot)
 	..()
-	if(ishuman(user) && slot == ITEM_SLOT_HEAD)
+	if(ishuman(user) && (slot & ITEM_SLOT_HEAD))
 		var/mob/living/carbon/human/H = user
 		if(istype(H.wear_suit, /obj/item/clothing/suit/costume/cardborg))
 			var/obj/item/clothing/suit/costume/cardborg/CB = H.wear_suit
@@ -173,26 +173,26 @@
 /obj/item/clothing/head/costume/irs
 	name = "internal revenue service cap"
 	icon_state = "irs_hat"
-	inhand_icon_state = "irs_hat"
+	inhand_icon_state = null
 
 /obj/item/clothing/head/costume/tmc
 	name = "Lost M.C. bandana"
 	icon_state = "tmc_hat"
-	inhand_icon_state = "tmc_hat"
+	inhand_icon_state = null
 
 /obj/item/clothing/head/costume/deckers
 	name = "Decker headphones"
 	icon_state = "decker_hat"
-	inhand_icon_state = "decker_hat"
+	inhand_icon_state = null
 
 /obj/item/clothing/head/costume/yuri
 	name = "yuri initiate helmet"
 	icon_state = "yuri_helmet"
-	inhand_icon_state = "yuri_helmet"
+	inhand_icon_state = null
 	clothing_flags = SNUG_FIT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
 /obj/item/clothing/head/costume/allies
 	name = "allies helmet"
 	icon_state = "allies_helmet"
-	inhand_icon_state = "allies_helmet"
+	inhand_icon_state = null

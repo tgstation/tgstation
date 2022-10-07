@@ -17,7 +17,7 @@
 	name = "ominous armor"
 	desc = "A ragged, dusty set of robes. Strange eyes line the inside."
 	icon_state = "eldritch_armor"
-	inhand_icon_state = "eldritch_armor"
+	inhand_icon_state = null
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
 	allowed = list(/obj/item/melee/sickly_blade)
@@ -57,7 +57,7 @@
 	desc = "Black like tar, doesn't reflect any light. Runic symbols line the outside, \
 		with each flash you loose comprehension of what you are seeing."
 	icon_state = "void_cloak"
-	inhand_icon_state = "void_cloak"
+	inhand_icon_state = null
 	allowed = list(/obj/item/melee/sickly_blade)
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/void
 	flags_inv = NONE

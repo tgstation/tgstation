@@ -179,7 +179,7 @@
 		/obj/item/clothing/head/costume/mailman = 1,
 		/obj/item/clothing/under/misc/mailman = 1,
 		/obj/item/clothing/suit/jacket/leather = 1,
-		/obj/item/clothing/suit/jacket/leather/overcoat = 1,
+		/obj/item/clothing/suit/jacket/leather/biker = 1,
 		/obj/item/clothing/neck/necklace/dope = 3,
 		/obj/item/clothing/suit/jacket/letterman_nanotrasen = 1,
 		/obj/item/clothing/under/costume/swagoutfit = 1,

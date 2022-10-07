@@ -95,11 +95,15 @@
 
 ///Apply the trickery image and animation
 /datum/component/seethrough/proc/trick_mob(mob/fool)
+	var/datum/hud/our_hud = fool.hud_used
+	var/atom/movable/screen/plane_master/seethrough = our_hud.get_plane_master(SEETHROUGH_PLANE)
+	seethrough.unhide_plane(fool)
+
 	var/image/user_overlay = new(parent)
 	user_overlay.loc = parent
 	user_overlay.override = TRUE
 	//Special plane so we can click through the overlay
-	user_overlay.plane = ABOVE_GAME_NO_MOUSE_PLANE
+	SET_PLANE_EXPLICIT(user_overlay, SEETHROUGH_PLANE, parent)
 
 	//These are inherited, but we already use the atom's loc so we end up at double the pixel offset
 	user_overlay.pixel_x = 0
@@ -135,6 +139,9 @@
 		var/image/trickery_image = tricked_mobs[fool]
 		fool.client?.images -= trickery_image
 		UnregisterSignal(fool, COMSIG_MOB_LOGOUT)
+		var/datum/hud/our_hud = fool.hud_used
+		var/atom/movable/screen/plane_master/seethrough = our_hud.get_plane_master(SEETHROUGH_PLANE)
+		seethrough.hide_plane(fool)
 
 	tricked_mobs.Cut()
 
@@ -145,3 +152,6 @@
 	tricked_mobs.Remove(fool)
 	UnregisterSignal(fool, COMSIG_MOB_LOGOUT)
 	RegisterSignal(fool, COMSIG_MOB_LOGIN, .proc/trick_mob)
+	var/datum/hud/our_hud = fool.hud_used
+	var/atom/movable/screen/plane_master/seethrough = our_hud.get_plane_master(SEETHROUGH_PLANE)
+	seethrough.hide_plane(fool)

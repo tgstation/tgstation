@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Scrubber events will no longer trigger if there are no valid scrubbers on the station."

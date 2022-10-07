@@ -4,6 +4,8 @@
 	icon_state = "welding"
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	inhand_icon_state = "welding"
+	lefthand_file = 'icons/mob/inhands/clothing/masks_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/masks_righthand.dmi'
 	custom_materials = list(/datum/material/iron=1750, /datum/material/glass=400)
 	flash_protect = FLASH_PROTECTION_WELDER
 	tint = 2
@@ -17,3 +19,8 @@
 
 /obj/item/clothing/head/utility/welding/attack_self(mob/user)
 	weldingvisortoggle(user)
+
+/obj/item/clothing/head/welding/visor_toggling()
+	. = ..()
+	inhand_icon_state = "[initial(inhand_icon_state)][up ? "off" : ""]"
+

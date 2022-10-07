@@ -58,10 +58,10 @@
 
 	var/original_host = holder
 	var/fakename = sanitize_name(tgui_input_text(user, "Enter a name for the rigged message.", "Forge Message", max_length = MAX_NAME_LEN), allow_numbers = TRUE)
-	if(!fakename || holder != original_host || !user.canUseTopic(holder, BE_CLOSE))
+	if(!fakename || holder != original_host || !user.canUseTopic(holder, be_close = TRUE))
 		return
 	var/fakejob = sanitize_name(tgui_input_text(user, "Enter a job for the rigged message.", "Forge Message", max_length = MAX_NAME_LEN), allow_numbers = TRUE)
-	if(!fakejob || holder != original_host || !user.canUseTopic(holder, BE_CLOSE))
+	if(!fakejob || holder != original_host || !user.canUseTopic(holder, be_close = TRUE))
 		return
 
 	var/obj/item/computer_hardware/hard_drive/drive = holder.all_components[MC_HDD]

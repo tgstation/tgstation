@@ -622,7 +622,7 @@
 /turf/open/misc/grass,
 /area/shuttle/escape/simulation)
 "Ck" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -680,7 +680,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "CY" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
 /turf/open/floor/plating,
