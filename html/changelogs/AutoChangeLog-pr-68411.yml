@@ -1,0 +1,6 @@
+author: "timothymtorres"
+delete-after: True
+changes: 
+  - rscadd: "Add mail goodies for curator. (random books)"
+  - rscadd: "Adds easter egg - Captain's Log. Tape recorder that spawns on derelict station."
+  - rscadd: "Adds easter egg - Woody's Got Wood.  Will rarely appear as a mail goodie for curator."
