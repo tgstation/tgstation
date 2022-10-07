@@ -137,7 +137,7 @@
 	AddElement(/datum/element/weapon_description, attached_proc = .proc/add_notes_ballistic)
 
 /obj/item/gun/ballistic/fire_sounds()
-	var/frequency_to_use = sin((90/magazine?.max_ammo) * get_ammo())
+	var/frequency_to_use = sin((90/(magazine?.max_ammo+1)) * get_ammo())
 	var/click_frequency_to_use = 1 - frequency_to_use * 0.75
 	var/play_click = round(sqrt(magazine?.max_ammo * 2)) > get_ammo()
 	if(suppressed)
