@@ -453,7 +453,7 @@
 	if (istype(occupant))
 		var/obj/item/organ/internal/cyberimp/bci/bci_organ = carbon_occupant.getorgan(/obj/item/organ/internal/cyberimp/bci)
 		if (isnull(bci_organ) && isnull(bci_to_implant))
-			say("No brain-computer interface inserted and the occupant doesn't have one. Insert a BCI to implant one.")
+			say("No brain-computer interface inserted, and occupant does not have one. Insert a BCI to implant one.")
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
 			return FALSE
 
