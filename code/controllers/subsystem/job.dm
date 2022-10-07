@@ -603,7 +603,7 @@ SUBSYSTEM_DEF(job)
 		else //We ran out of spare locker spawns!
 			break
 
-/// Called in jobs subsystem initialize if LOAD_JOBS_FROM_TXT config flag is set reads jobconfig.toml (or if in legacy mode, jobs.txt) to set all of the datum's values to what the server operator wants.
+/// Called in jobs subsystem initialize if LOAD_JOBS_FROM_TXT config flag is set: reads jobconfig.toml (or if in legacy mode, jobs.txt) to set all of the datum's values to what the server operator wants.
 /datum/controller/subsystem/job/proc/load_jobs_from_config()
 	var/toml_file = "[global.config.directory]/jobconfig.toml"
 
