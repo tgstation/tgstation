@@ -9,9 +9,11 @@
 
 /obj/item/bodypart/arm/l_arm/snail
 	limb_id = SPECIES_SNAIL
+	unarmed_attack_verb = "slap"
 
 /obj/item/bodypart/arm/r_arm/snail
 	limb_id = SPECIES_SNAIL
+	unarmed_attack_verb = "slap"
 
 /obj/item/bodypart/leg/l_leg/snail
 	limb_id = SPECIES_SNAIL
@@ -155,9 +157,11 @@
 
 /obj/item/bodypart/arm/l_arm/pod
 	limb_id = SPECIES_PODPERSON
+	unarmed_attack_verb = "slash"
 
 /obj/item/bodypart/arm/r_arm/pod
 	limb_id = SPECIES_PODPERSON
+	unarmed_attack_verb = "slash"
 
 /obj/item/bodypart/leg/l_leg/pod
 	limb_id = SPECIES_PODPERSON
@@ -376,6 +380,7 @@
 /obj/item/bodypart/arm/l_arm/golem/cardboard
 	limb_id = SPECIES_GOLEM_CARDBOARD
 	should_draw_greyscale = FALSE
+	unarmed_attack_verb = "whip"
 
 /obj/item/bodypart/arm/r_arm/golem/cardboard
 	limb_id = SPECIES_GOLEM_CARDBOARD
@@ -469,3 +474,12 @@
 /obj/item/bodypart/leg/r_leg/golem/snow
 	limb_id = SPECIES_GOLEM_SNOW
 	should_draw_greyscale = FALSE
+
+
+/obj/item/bodypart/arm/l_arm/golem/uranium
+	attack_type = BURN
+	unarmed_attack_verb = "burn"
+
+/obj/item/bodypart/arm/r_arm/golem/uranium
+	attack_type = BURN
+	unarmed_attack_verb = "burn"

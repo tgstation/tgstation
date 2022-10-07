@@ -19,6 +19,7 @@
 	scars_covered_by_clothes = FALSE
 	grind_results = null
 	is_dimorphic = TRUE
+	unarmed_attack_verb = "bite"
 
 	var/mob/living/brain/brainmob //The current occupant.
 	var/obj/item/organ/internal/brain/brain //The brain organ
@@ -216,7 +217,7 @@
 					facial_overlay.color = facial_hair_color
 					facial_overlay.alpha = hair_alpha
 					. += facial_overlay
-				
+
 			if(!eyes)
 				. += image('icons/mob/species/human/human_face.dmi', "eyes_missing", -BODY_LAYER, SOUTH)
 

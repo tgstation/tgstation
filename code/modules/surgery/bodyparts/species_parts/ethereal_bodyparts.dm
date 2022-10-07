@@ -28,6 +28,8 @@
 	icon_greyscale = 'icons/mob/species/ethereal/bodyparts.dmi'
 	limb_id = SPECIES_ETHEREAL
 	dmg_overlay_type = null
+	attack_type = BURN //burn bish
+	unarmed_attack_verb = "burn"
 
 /obj/item/bodypart/arm/l_arm/ethereal/update_limb(dropping_limb, is_creating)
 	. = ..()
@@ -40,6 +42,8 @@
 	icon_greyscale = 'icons/mob/species/ethereal/bodyparts.dmi'
 	limb_id = SPECIES_ETHEREAL
 	dmg_overlay_type = null
+	attack_type = BURN // bish buzz
+	unarmed_attack_verb = "burn"
 
 /obj/item/bodypart/arm/r_arm/ethereal/update_limb(dropping_limb, is_creating)
 	. = ..()

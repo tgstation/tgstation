@@ -142,6 +142,13 @@
 	///A list of all the external organs we've got stored to draw horns, wings and stuff with (special because we are actually in the limbs unlike normal organs :/ )
 	var/list/obj/item/organ/external/external_organs = list()
 
+	/// Type of an attack from this limb does. Arms will do punches, Legs for kicks, and head for bites. (TO ADD: tactical chestbumps)
+	var/attack_type = BRUTE
+	/// the verb used for an unarmed attack when using this limb, such as arm.unarmed_attack_verb = punch
+	var/unarmed_attack_verb = "bump"
+	/// what visual effect is used when this limb is used to strike someone.
+	var/unarmed_strike_attack_effect = ATTACK_EFFECT_PUNCH
+
 /obj/item/bodypart/Initialize(mapload)
 	. = ..()
 	if(can_be_disabled)

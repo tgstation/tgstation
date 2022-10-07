@@ -11,10 +11,12 @@
 /obj/item/bodypart/arm/l_arm/lizard/ashwalker
 	icon_greyscale = 'icons/mob/species/lizard/bodyparts.dmi'
 	limb_id = SPECIES_LIZARD
+	unarmed_attack_verb = "slash"
 
 /obj/item/bodypart/arm/r_arm/lizard
 	icon_greyscale = 'icons/mob/species/lizard/bodyparts.dmi'
 	limb_id = SPECIES_LIZARD
+	unarmed_attack_verb = "slash"
 
 /obj/item/bodypart/arm/l_arm/lizard/ashwalker
 	chunky = TRUE

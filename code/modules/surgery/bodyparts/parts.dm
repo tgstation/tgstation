@@ -80,7 +80,8 @@
 	aux_layer = HANDS_PART_LAYER
 	body_damage_coeff = 0.75
 	can_be_disabled = TRUE
-	/// Stops the user from operating firearms and the like
+	unarmed_attack_verb = "punch"
+	///If our fingers are too big to fire guns
 	var/chunky = FALSE
 
 
@@ -289,6 +290,7 @@
 	body_damage_coeff = 0.75
 	max_stamina_damage = 50
 	can_be_disabled = TRUE
+	unarmed_attack_verb = "kick"
 
 
 /obj/item/bodypart/leg/l_leg

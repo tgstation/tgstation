@@ -1309,9 +1309,9 @@
 
 
 /mob/living/carbon/get_attack_type()
-	var/datum/species/species = dna?.species
-	if (species)
-		return species.attack_type
+	if(has_active_hand())
+		var/obj/item/bodypart/arm/active_arm = get_active_hand()
+		return active_arm.attack_type
 	return ..()
 
 

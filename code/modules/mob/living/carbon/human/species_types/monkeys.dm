@@ -3,7 +3,7 @@
 	id = SPECIES_MONKEY
 	say_mod = "chimpers"
 	bodytype = BODYTYPE_ORGANIC | BODYTYPE_MONKEY
-	attack_verb = "bite"
+	//attack_verb = "bite"
 	attack_effect = ATTACK_EFFECT_BITE
 	attack_sound = 'sound/weapons/bite.ogg'
 	miss_sound = 'sound/weapons/bite.ogg'

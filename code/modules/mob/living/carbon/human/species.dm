@@ -125,14 +125,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/stunmod = 1
 	///multiplier for money paid at payday
 	var/payday_modifier = 1
-	///Type of damage attack does. Ethereals attack with burn damage for example.
-	var/attack_type = BRUTE
-	///Lowest possible punch damage this species can give. If this is set to 0, punches will always miss.
-	var/punchdamagelow = 1
-	///Highest possible punch damage this species can give.
-	var/punchdamagehigh = 10
-	///Damage at which punches from this race will stun
-	var/punchstunthreshold = 10 //yes it should be to the attacked race but it's not useful that way even if it's logical
 	///Base electrocution coefficient.  Basically a multiplier for damage from electrocutions.
 	var/siemens_coeff = 1
 	///To use MUTCOLOR with a fixed color that's independent of the mcolor feature in DNA.
@@ -178,9 +170,14 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	///List of factions the mob gain upon gaining this species.
 	var/list/inherent_factions
 
-	///Punch-specific attack verb.
-	var/attack_verb = SFX_PUNCH
-	/// The visual effect of the attack.
+	///Lowest possible punch damage this arm can give. If this is set to 0, punches will always miss.
+	var/punchdamagelow = 1
+	///Highest possible punch damage this arm can give.
+	var/punchdamagehigh = 10
+	///Damage at which punches from this arm will stun
+	var/punchstunthreshold = 10
+
+	///The visual effect of the attack.
 	var/attack_effect = ATTACK_EFFECT_PUNCH
 	var/sound/attack_sound = 'sound/weapons/punch1.ogg'
 	var/sound/miss_sound = 'sound/weapons/punchmiss.ogg'
@@ -1093,7 +1090,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		return TRUE
 	else
 
-		var/atk_verb = user.dna.species.attack_verb
+		var/obj/item/bodypart/arm/active_arm = user.get_active_hand()
+
+		var/atk_verb = active_arm.unarmed_attack_verb
 		var/atk_effect = user.dna.species.attack_effect
 		if(target.body_position == LYING_DOWN)
 			atk_verb = "kick"
@@ -1140,13 +1139,14 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			target.dismembering_strike(user, affecting.body_zone)
 
 		var/attack_direction = get_dir(user, target)
+		var/attack_type = active_arm.attack_type
 		if(atk_effect == ATTACK_EFFECT_KICK)//kicks deal 1.5x raw damage
-			target.apply_damage(damage*1.5, user.dna.species.attack_type, affecting, armor_block, attack_direction = attack_direction)
+			target.apply_damage(damage*1.5, attack_type, affecting, armor_block, attack_direction = attack_direction)
 			if((damage * 1.5) >= 9)
 				target.force_say()
 			log_combat(user, target, "kicked")
 		else//other attacks deal full raw damage + 1.5x in stamina damage
-			target.apply_damage(damage, user.dna.species.attack_type, affecting, armor_block, attack_direction = attack_direction)
+			target.apply_damage(damage, attack_type, affecting, armor_block, attack_direction = attack_direction)
 			target.apply_damage(damage*1.5, STAMINA, affecting, armor_block)
 			if(damage >= 9)
 				target.force_say()
@@ -1959,7 +1959,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/create_pref_combat_perks()
 	var/list/to_add = list()
 
-	if(attack_type != BRUTE)
+/*	if(attack_type != BRUTE)
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 			SPECIES_PERK_ICON = "fist-raised",
@@ -1968,7 +1968,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		))
 
 	return to_add
-
+*/
 /**
  * Adds adds any perks related to sustaining damage.
  * For example, brute damage vulnerability, or fire damage resistance.

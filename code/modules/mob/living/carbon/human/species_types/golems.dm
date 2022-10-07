@@ -225,7 +225,6 @@
 	speedmod = 4 //pretty fucking slow
 	meat = /obj/item/stack/ore/iron
 	info_text = "As a <span class='danger'>Plasteel Golem</span>, you are slower, but harder to stun, and hit very hard when punching. You also magnetically attach to surfaces and so don't float without gravity and cannot have positions swapped with other beings."
-	attack_verb = "smash"
 	attack_effect = ATTACK_EFFECT_SMASH
 	attack_sound = 'sound/effects/meteorimpact.ogg' //hits pretty hard
 	prefix = "Plasteel"
@@ -366,9 +365,7 @@
 	fixed_mut_color = "#77ff00"
 	meat = /obj/item/stack/ore/uranium
 	info_text = "As an <span class='danger'>Uranium Golem</span>, your very touch burns and irradiates organic lifeforms. You don't hit as hard as most golems, but you are far more durable against blunt force trauma."
-	attack_verb = "burn"
 	attack_sound = 'sound/weapons/sear.ogg'
-	attack_type = BURN
 	var/last_event = 0
 	var/active = null
 	armor = 40
@@ -380,6 +377,14 @@
 	special_names = list("Oxide", "Rod", "Meltdown", "235")
 	COOLDOWN_DECLARE(radiation_emission_cooldown)
 	examine_limb_id = SPECIES_GOLEM
+	bodypart_overrides = list(
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/l_arm/golem/uranium,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/r_arm/golem/uranium,
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/golem,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/l_leg/golem,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/r_leg/golem,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/golem,
+	)
 
 /datum/species/golem/uranium/proc/radiation_emission(mob/living/carbon/human/H)
 	if(!COOLDOWN_FINISHED(src, radiation_emission_cooldown))
@@ -480,7 +485,6 @@
 	fixed_mut_color = "#3333ff"
 	meat = /obj/item/stack/ore/bluespace_crystal
 	info_text = "As a <span class='danger'>Bluespace Golem</span>, you are spatially unstable: You will teleport when hit, and you can teleport manually at a long distance."
-	attack_verb = "bluespace punch"
 	attack_sound = 'sound/effects/phasein.ogg'
 	prefix = "Bluespace"
 	special_names = list("Crystal", "Polycrystal")
@@ -596,7 +600,6 @@
 	punchstunthreshold = 2 //Harmless and can't stun
 	meat = /obj/item/stack/ore/bananium
 	info_text = "As a <span class='danger'>Bananium Golem</span>, you are made for pranking. Your body emits natural honks, and you can barely even hurt people when punching them. Your skin also bleeds banana peels when damaged."
-	attack_verb = "honk"
 	attack_sound = 'sound/items/airhorn2.ogg'
 	prefix = "Bananium"
 	special_names = null
@@ -1050,7 +1053,6 @@
 		TRAIT_RESISTHIGHPRESSURE,
 		TRAIT_RESISTLOWPRESSURE,
 	)
-	attack_verb = "whips"
 	attack_sound = 'sound/weapons/whip.ogg'
 	miss_sound = 'sound/weapons/etherealmiss.ogg'
 	fixed_mut_color = null
