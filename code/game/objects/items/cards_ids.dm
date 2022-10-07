@@ -671,19 +671,15 @@
 	if(loc != user)
 		to_chat(user, span_warning("You must be holding the ID to continue!"))
 		return
-	if(registered_account.account_balance < (commission_minimal + 1) )
-		to_chat(user, span_warning("You must be holding the ID to continue!"))
-		return
-	var/amount_to_remove = tgui_input_number(user, "How much do you want to withdraw? (Max: [registered_account.account_balance] cr)(Commission is [commission_minimal] credits. From 100 credits is [commission * 100]% with rounding.)", "Withdraw Funds", max_value = registered_account.account_balance, min_value = 6)
+	var/amount_to_remove = tgui_input_number(user, "How much do you want to withdraw? (Max: [registered_account.account_balance] cr)", "Withdraw Funds", max_value = registered_account.account_balance)
 	if(!amount_to_remove || QDELETED(user) || QDELETED(src) || issilicon(user) || loc != user)
 		return
 	if(!alt_click_can_use_id(user))
 		return
-	if(registered_account.adjust_money(-amount_to_remove, "System: Withdrawal"))
-		var/commission_amount = amount_to_remove < 100 ? commission_minimal : round(amount_to_remove * commission)
-		var/obj/item/holochip/holochip = new (user.drop_location(), amount_to_remove - commission_amount)
+	if(registered_account.adjust_money(-amount_to_remove))
+		var/obj/item/holochip/holochip = new (user.drop_location(), amount_to_remove)
 		user.put_in_hands(holochip)
-		to_chat(user, span_notice("You withdraw [amount_to_remove - commission_amount] credits into a holochip. Commission was [commission_amount] credits"))
+		to_chat(user, span_notice("You withdraw [amount_to_remove] credits into a holochip."))
 		SSblackbox.record_feedback("amount", "credits_removed", amount_to_remove)
 		log_econ("[amount_to_remove] credits were removed from [src] owned by [src.registered_name]")
 		return
