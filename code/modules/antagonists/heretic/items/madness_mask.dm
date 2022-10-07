@@ -3,7 +3,7 @@
 	name = "Abyssal Mask"
 	desc = "A mask created from the suffering of existance. Looking down it's eyes, you notice something gazing back at you."
 	icon_state = "mad_mask"
-	inhand_icon_state = "mad_mask"
+	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_SMALL
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
@@ -25,7 +25,7 @@
 
 /obj/item/clothing/mask/madness_mask/equipped(mob/user, slot)
 	. = ..()
-	if(slot != ITEM_SLOT_MASK)
+	if(!(slot & ITEM_SLOT_MASK))
 		return
 	if(!ishuman(user) || !user.mind)
 		return

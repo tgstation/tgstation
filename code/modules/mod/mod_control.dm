@@ -112,7 +112,7 @@
 	helmet = new /obj/item/clothing/head/mod(src)
 	mod_parts += helmet
 	chestplate = new /obj/item/clothing/suit/mod(src)
-	chestplate.allowed = typecacheof(theme.allowed_suit_storage)
+	chestplate.allowed += typecacheof(theme.allowed_suit_storage)
 	mod_parts += chestplate
 	gauntlets = new /obj/item/clothing/gloves/mod(src)
 	mod_parts += gauntlets
@@ -240,7 +240,7 @@
 
 /obj/item/mod/control/equipped(mob/user, slot)
 	..()
-	if(slot == slot_flags)
+	if(slot & slot_flags)
 		set_wearer(user)
 	else if(wearer)
 		unset_wearer()
@@ -252,7 +252,7 @@
 	clean_up()
 
 /obj/item/mod/control/item_action_slot_check(slot)
-	if(slot == slot_flags)
+	if(slot & slot_flags)
 		return TRUE
 
 /obj/item/mod/control/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
@@ -349,6 +349,7 @@
 		uninstall(module_to_remove)
 		module_to_remove.forceMove(drop_location())
 		crowbar.play_tool_sound(src, 100)
+		SEND_SIGNAL(src, COMSIG_MOD_MODULE_REMOVED, user)
 		return TRUE
 	balloon_alert(user, "no modules!")
 	playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
@@ -361,6 +362,7 @@
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 			return FALSE
 		install(attacking_item, user)
+		SEND_SIGNAL(src, COMSIG_MOD_MODULE_ADDED, user)
 		return TRUE
 	else if(istype(attacking_item, /obj/item/mod/core))
 		if(!open)

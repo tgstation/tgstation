@@ -2,7 +2,7 @@
 	name = "Kindle Kicks"
 	desc = "They'll sure kindle something in you, and it's not childhood nostalgia..."
 	icon_state = "kindleKicks"
-	inhand_icon_state = "kindleKicks"
+	inhand_icon_state = null
 	actions_types = list(/datum/action/item_action/kindle_kicks)
 	light_system = MOVABLE_LIGHT
 	light_range = 2

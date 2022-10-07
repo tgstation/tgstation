@@ -85,14 +85,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 /obj/machinery/newscaster/update_overlays()
 	. = ..()
 
+
 	if(!(machine_stat & (NOPOWER|BROKEN)))
 		var/state = "[base_icon_state]_[GLOB.news_network.wanted_issue.active ? "wanted" : "normal"]"
 		. += mutable_appearance(icon, state)
-		. += emissive_appearance(icon, state, alpha = src.alpha)
+		. += emissive_appearance(icon, state, src, alpha = src.alpha)
 
 		if(GLOB.news_network.wanted_issue.active && alert)
 			. += mutable_appearance(icon, "[base_icon_state]_alert")
-			. += emissive_appearance(icon, "[base_icon_state]_alert", alpha = src.alpha)
+			. += emissive_appearance(icon, "[base_icon_state]_alert", src, alpha = src.alpha,)
 
 	var/hp_percent = atom_integrity * 100 / max_integrity
 	switch(hp_percent)
@@ -100,13 +101,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			return
 		if(50 to 75)
 			. += "crack1"
-			. += emissive_blocker(icon, "crack1", alpha = src.alpha)
+			. += emissive_blocker(icon, "crack1", src, alpha = src.alpha)
 		if(25 to 50)
 			. += "crack2"
-			. += emissive_blocker(icon, "crack2", alpha = src.alpha)
+			. += emissive_blocker(icon, "crack2", src, alpha = src.alpha)
 		else
 			. += "crack3"
-			. += emissive_blocker(icon, "crack3", alpha = src.alpha)
+			. += emissive_blocker(icon, "crack3", src, alpha = src.alpha)
 
 /obj/machinery/newscaster/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -791,7 +792,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	if(!current_user.has_money(active_request.value) || (current_user.account_holder != active_request.owner))
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
 		return TRUE
-	payment_target.transfer_money(current_user, active_request.value)
+	payment_target.transfer_money(current_user, active_request.value, "Bounty Request")
 	say("Paid out [active_request.value] credits.")
 	GLOB.request_list.Remove(active_request)
 	qdel(active_request)

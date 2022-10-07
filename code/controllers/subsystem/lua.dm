@@ -2,6 +2,7 @@ SUBSYSTEM_DEF(lua)
 	name = "Lua Scripting"
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 	wait = 0.1 SECONDS
+	flags = SS_OK_TO_FAIL_INIT
 
 	/// A list of all lua states
 	var/list/datum/lua_state/states = list()

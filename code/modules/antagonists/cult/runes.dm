@@ -297,7 +297,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 	if(!C)
 		return FALSE
 
-	if(SEND_SIGNAL(sacrificial, COMSIG_LIVING_CULT_SACRIFICED, invokers) & STOP_SACRIFICE)
+	var/signal_result = SEND_SIGNAL(sacrificial, COMSIG_LIVING_CULT_SACRIFICED, invokers)
+	if(signal_result & STOP_SACRIFICE)
 		return FALSE
 
 	var/big_sac = FALSE
@@ -306,6 +307,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			to_chat(M, span_cultitalic("[sacrificial] is too greatly linked to the world! You need three acolytes!"))
 		log_game("Offer rune with [sacrificial] on it failed - not enough acolytes and target is living or sac target")
 		return FALSE
+
 	if(sacrificial.mind)
 		LAZYADD(GLOB.sacrificed, WEAKREF(sacrificial.mind))
 		for(var/datum/objective/sacrifice/sac_objective in C.cult_team.objectives)
@@ -318,14 +320,16 @@ structure_check() searches for nearby cultist structures required for the invoca
 		LAZYADD(GLOB.sacrificed, WEAKREF(sacrificial))
 
 	new /obj/effect/temp_visual/cult/sac(get_turf(src))
-	for(var/M in invokers)
-		if(big_sac)
-			to_chat(M, span_cultlarge("\"Yes! This is the one I desire! You have done well.\""))
-		else
+
+	if(!(signal_result & SILENCE_SACRIFICE_MESSAGE))
+		for(var/invoker in invokers)
+			if(big_sac)
+				to_chat(invoker, span_cultlarge("\"Yes! This is the one I desire! You have done well.\""))
+				continue
 			if(ishuman(sacrificial) || iscyborg(sacrificial))
-				to_chat(M, span_cultlarge("\"I accept this sacrifice.\""))
+				to_chat(invoker, span_cultlarge("\"I accept this sacrifice.\""))
 			else
-				to_chat(M, span_cultlarge("\"I accept this meager sacrifice.\""))
+				to_chat(invoker, span_cultlarge("\"I accept this meager sacrifice.\""))
 
 	if(iscyborg(sacrificial))
 		var/construct_class = show_radial_menu(first_invoker, sacrificial, GLOB.construct_radial_images, require_near = TRUE, tooltips = TRUE)
@@ -729,7 +733,12 @@ structure_check() searches for nearby cultist structures required for the invoca
 									  "<span class='cult italic'><b>Overwhelming vertigo consumes you as you are hurled through the air!</b></span>")
 	..()
 	visible_message(span_warning("A foggy shape materializes atop [src] and solidifies into [cultist_to_summon]!"))
-	cultist_to_summon.forceMove(get_turf(src))
+	if(!do_teleport(cultist_to_summon, get_turf(src)))
+		to_chat(user, span_warning("The summoning has completely failed for [cultist_to_summon]!"))
+		fail_logmsg += "target failed criteria to teleport." //catch-all term, just means they failed do_teleport somehow. The most common reasons why someone should fail to be summoned already have verbose messages.
+		log_game(fail_logmsg)
+		fail_invoke()
+		return
 	qdel(src)
 
 //Rite of Boiling Blood: Deals extremely high amounts of damage to non-cultists nearby
@@ -852,9 +861,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 		new_human.alpha = 150 //Makes them translucent
 		new_human.equipOutfit(/datum/outfit/ghost_cultist) //give them armor
 		new_human.apply_status_effect(/datum/status_effect/cultghost) //ghosts can't summon more ghosts
-		new_human.see_invisible = SEE_INVISIBLE_OBSERVER
+		new_human.set_invis_see(SEE_INVISIBLE_OBSERVER)
 		ADD_TRAIT(new_human, TRAIT_NOBREATH, INNATE_TRAIT)
-
 		ghosts++
 		playsound(src, 'sound/magic/exit_blood.ogg', 50, TRUE)
 		visible_message(span_warning("A cloud of red mist forms above [src], and from within steps... a [new_human.gender == FEMALE ? "wo":""]man."))
