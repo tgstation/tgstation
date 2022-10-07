@@ -105,12 +105,12 @@
 	if(attacking_item.get_sharpness() && !contents.len)
 		if(design_choice == "None")
 			user.show_message(span_notice("You cut eyeholes into [src]."), MSG_VISUAL)
-			new /obj/item/clothing/head/papersack(drop_location())
+			new /obj/item/clothing/head/costume/papersack(drop_location())
 			qdel(src)
 			return FALSE
 		else if(design_choice == "SmileyFace")
 			user.show_message(span_notice("You cut eyeholes into [src] and modify the design."), MSG_VISUAL)
-			new /obj/item/clothing/head/papersack/smiley(drop_location())
+			new /obj/item/clothing/head/costume/papersack/smiley(drop_location())
 			qdel(src)
 			return FALSE
 	return ..()

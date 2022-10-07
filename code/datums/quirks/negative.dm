@@ -257,9 +257,9 @@
 		/obj/item/clothing/glasses/blindfold,
 		/obj/item/bedsheet/random,
 		/obj/item/clothing/under/misc/pj/red,
-		/obj/item/clothing/head/nightcap/red,
+		/obj/item/clothing/head/costume/nightcap/red,
 		/obj/item/clothing/under/misc/pj/blue,
-		/obj/item/clothing/head/nightcap/blue,
+		/obj/item/clothing/head/costume/nightcap/blue,
 	)
 
 /datum/quirk/hypersensitive
@@ -958,7 +958,7 @@
 	if(istype(possible_saint_nick.back, /obj/item/storage/backpack/santabag))
 		return TRUE
 
-	if(istype(possible_saint_nick.head, /obj/item/clothing/head/santa))
+	if(istype(possible_saint_nick.head, /obj/item/clothing/head/costume/santa))
 		return TRUE
 
 	if(istype(possible_saint_nick.wear_suit, /obj/item/clothing/suit/space/santa))

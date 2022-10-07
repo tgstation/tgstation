@@ -1,5 +1,0 @@
-author: "RikuTheKiller"
-delete-after: True
-changes: 
-  - rscadd: "Massively expanded the functionality of the modsuit adapter shell"
-  - qol: "Modsuit quick deploy now retracts the already extended pieces if used while the suit is partially extended"

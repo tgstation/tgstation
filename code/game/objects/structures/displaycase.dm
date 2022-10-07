@@ -471,9 +471,9 @@
 				to_chat(usr, span_notice("You do not possess the funds to purchase this."))
 				return TRUE
 			else
-				account.adjust_money(-sale_price)
+				account.adjust_money(-sale_price, "Display Case: [capitalize(showpiece)]")
 				if(payments_acc)
-					payments_acc.adjust_money(sale_price)
+					payments_acc.adjust_money(sale_price, "Display Case: [capitalize(showpiece)]")
 				usr.put_in_hands(showpiece)
 				to_chat(usr, span_notice("You purchase [showpiece] for [sale_price] credits."))
 				playsound(src, 'sound/effects/cashregister.ogg', 40, TRUE)

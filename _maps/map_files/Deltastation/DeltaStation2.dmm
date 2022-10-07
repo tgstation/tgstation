@@ -3463,7 +3463,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weldingtool,
 /obj/item/assembly/voice,
-/obj/item/clothing/head/welding,
+/obj/item/clothing/head/utility/welding,
 /obj/effect/spawner/random/maintenance,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -5751,8 +5751,8 @@
 /obj/structure/sign/poster/contraband/random/directional/west,
 /obj/structure/table/wood,
 /obj/item/newspaper,
-/obj/item/clothing/head/bowler,
-/obj/item/clothing/head/festive{
+/obj/item/clothing/head/hats/bowler,
+/obj/item/clothing/head/costume/festive{
 	pixel_x = 6;
 	pixel_y = 13
 	},
@@ -10043,19 +10043,19 @@
 	pixel_x = -3;
 	pixel_y = -3
 	},
-/obj/item/clothing/head/hardhat/orange{
+/obj/item/clothing/head/utility/hardhat/orange{
 	name = "protective hat";
 	pixel_y = 9
 	},
-/obj/item/clothing/head/hardhat/orange{
+/obj/item/clothing/head/utility/hardhat/orange{
 	name = "protective hat";
 	pixel_y = 9
 	},
-/obj/item/clothing/head/hardhat/orange{
+/obj/item/clothing/head/utility/hardhat/orange{
 	name = "protective hat";
 	pixel_y = 9
 	},
-/obj/item/clothing/head/hardhat/orange{
+/obj/item/clothing/head/utility/hardhat/orange{
 	name = "protective hat";
 	pixel_y = 9
 	},
@@ -12375,7 +12375,7 @@
 /obj/structure/table/reinforced,
 /obj/item/storage/belt/utility,
 /obj/item/weldingtool,
-/obj/item/clothing/head/welding,
+/obj/item/clothing/head/utility/welding,
 /obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
@@ -15744,7 +15744,7 @@
 /obj/machinery/light/small/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/clothing/suit/costume/cardborg,
-/obj/item/clothing/head/cardborg,
+/obj/item/clothing/head/costume/cardborg,
 /turf/open/floor/wood,
 /area/station/service/theater/abandoned)
 "dKg" = (
@@ -19776,7 +19776,7 @@
 /obj/effect/turf_decal/bot,
 /obj/item/wrench,
 /obj/item/storage/belt/utility,
-/obj/item/clothing/head/welding,
+/obj/item/clothing/head/utility/welding,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/radio/intercom/directional/south,
 /turf/open/floor/iron,
@@ -22516,23 +22516,23 @@
 	pixel_x = -3;
 	pixel_y = -3
 	},
-/obj/item/clothing/head/hardhat/orange{
+/obj/item/clothing/head/utility/hardhat/orange{
 	name = "protective hat";
 	pixel_y = 9
 	},
-/obj/item/clothing/head/hardhat/orange{
+/obj/item/clothing/head/utility/hardhat/orange{
 	name = "protective hat";
 	pixel_y = 9
 	},
-/obj/item/clothing/head/hardhat/orange{
+/obj/item/clothing/head/utility/hardhat/orange{
 	name = "protective hat";
 	pixel_y = 9
 	},
-/obj/item/clothing/head/hardhat/orange{
+/obj/item/clothing/head/utility/hardhat/orange{
 	name = "protective hat";
 	pixel_y = 9
 	},
-/obj/item/clothing/head/hardhat/orange{
+/obj/item/clothing/head/utility/hardhat/orange{
 	name = "protective hat";
 	pixel_y = 9
 	},
@@ -23930,7 +23930,7 @@
 "fLc" = (
 /obj/structure/table/wood,
 /obj/item/clothing/neck/tie/red,
-/obj/item/clothing/head/that,
+/obj/item/clothing/head/hats/tophat,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/service/electronic_marketing_den)
@@ -28864,7 +28864,7 @@
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/clothing/suit/apron/chef,
-/obj/item/clothing/head/chefhat,
+/obj/item/clothing/head/utility/chefhat,
 /obj/item/reagent_containers/condiment/flour,
 /obj/effect/turf_decal/bot,
 /obj/structure/sign/poster/contraband/random/directional/south,
@@ -29046,7 +29046,7 @@
 /area/station/service/abandoned_gambling_den/gaming)
 "gWz" = (
 /obj/structure/closet/secure_closet/chief_medical,
-/obj/item/clothing/head/nursehat,
+/obj/item/clothing/head/costume/nursehat,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/status_display/ai/directional/north,
@@ -29252,7 +29252,7 @@
 	pixel_x = 1
 	},
 /obj/item/multitool,
-/obj/item/clothing/head/welding,
+/obj/item/clothing/head/utility/welding,
 /obj/effect/turf_decal/siding/purple{
 	dir = 8
 	},
@@ -33460,15 +33460,15 @@
 	pixel_x = -3;
 	pixel_y = -3
 	},
-/obj/item/clothing/head/hardhat/orange{
+/obj/item/clothing/head/utility/hardhat/orange{
 	name = "protective hat";
 	pixel_y = 9
 	},
-/obj/item/clothing/head/hardhat/orange{
+/obj/item/clothing/head/utility/hardhat/orange{
 	name = "protective hat";
 	pixel_y = 9
 	},
-/obj/item/clothing/head/hardhat/orange{
+/obj/item/clothing/head/utility/hardhat/orange{
 	name = "protective hat";
 	pixel_y = 9
 	},
@@ -35571,7 +35571,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/table/wood,
 /obj/item/clothing/under/costume/maid,
-/obj/item/clothing/head/kitty,
+/obj/item/clothing/head/costume/kitty,
 /obj/structure/sign/poster/official/report_crimes{
 	pixel_y = 32
 	},
@@ -36502,7 +36502,7 @@
 /obj/machinery/door/firedoor,
 /obj/item/storage/bag/tray,
 /obj/item/clothing/suit/apron/chef,
-/obj/item/clothing/head/chefhat,
+/obj/item/clothing/head/utility/chefhat,
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 8;
 	id = "cafe_counter";
@@ -36517,7 +36517,7 @@
 /obj/structure/rack,
 /obj/item/weldingtool,
 /obj/item/wrench,
-/obj/item/clothing/head/welding,
+/obj/item/clothing/head/utility/welding,
 /obj/item/clothing/gloves/color/yellow,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -40867,7 +40867,7 @@
 "jPX" = (
 /obj/structure/table,
 /obj/item/cane,
-/obj/item/clothing/head/bowler{
+/obj/item/clothing/head/hats/bowler{
 	pixel_y = 2
 	},
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
@@ -42455,7 +42455,7 @@
 	},
 /obj/structure/reagent_dispensers/servingdish,
 /obj/structure/reagent_dispensers/servingdish,
-/obj/item/clothing/head/chefhat,
+/obj/item/clothing/head/utility/chefhat,
 /turf/open/floor/iron/cafeteria,
 /area/station/security/prison/mess)
 "kic" = (
@@ -52467,15 +52467,15 @@
 	pixel_x = -3;
 	pixel_y = -3
 	},
-/obj/item/clothing/head/hardhat/orange{
+/obj/item/clothing/head/utility/hardhat/orange{
 	name = "protective hat";
 	pixel_y = 9
 	},
-/obj/item/clothing/head/hardhat/orange{
+/obj/item/clothing/head/utility/hardhat/orange{
 	name = "protective hat";
 	pixel_y = 9
 	},
-/obj/item/clothing/head/hardhat/orange{
+/obj/item/clothing/head/utility/hardhat/orange{
 	name = "protective hat";
 	pixel_y = 9
 	},
@@ -60543,15 +60543,15 @@
 	pixel_x = -3;
 	pixel_y = -3
 	},
-/obj/item/clothing/head/hardhat/orange{
+/obj/item/clothing/head/utility/hardhat/orange{
 	name = "protective hat";
 	pixel_y = 9
 	},
-/obj/item/clothing/head/hardhat/orange{
+/obj/item/clothing/head/utility/hardhat/orange{
 	name = "protective hat";
 	pixel_y = 9
 	},
-/obj/item/clothing/head/hardhat/orange{
+/obj/item/clothing/head/utility/hardhat/orange{
 	name = "protective hat";
 	pixel_y = 9
 	},
@@ -61888,7 +61888,7 @@
 /obj/item/weldingtool,
 /obj/effect/turf_decal/bot,
 /obj/item/wrench,
-/obj/item/clothing/head/welding,
+/obj/item/clothing/head/utility/welding,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "pes" = (
@@ -67529,7 +67529,7 @@
 /area/station/science/explab)
 "qvv" = (
 /obj/structure/table/wood,
-/obj/item/clothing/head/papersack/smiley,
+/obj/item/clothing/head/costume/papersack/smiley,
 /obj/item/pen,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -80139,7 +80139,7 @@
 /obj/effect/spawner/random/trash/box,
 /obj/effect/spawner/random/clothing/twentyfive_percent_cyborg_mask,
 /obj/item/clothing/suit/costume/cardborg,
-/obj/item/clothing/head/cardborg,
+/obj/item/clothing/head/costume/cardborg,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "tCq" = (
@@ -84192,7 +84192,7 @@
 /obj/item/weldingtool,
 /obj/machinery/light/directional/north,
 /obj/item/wrench,
-/obj/item/clothing/head/welding,
+/obj/item/clothing/head/utility/welding,
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
@@ -87142,7 +87142,7 @@
 /obj/effect/turf_decal/siding/yellow,
 /obj/structure/table,
 /obj/item/storage/toolbox/mechanical,
-/obj/item/clothing/head/welding,
+/obj/item/clothing/head/utility/welding,
 /turf/open/floor/iron/dark,
 /area/station/medical/chemistry)
 "vmL" = (
@@ -97885,9 +97885,9 @@
 /obj/machinery/airalarm/directional/north,
 /obj/effect/landmark/start/hangover/closet,
 /obj/effect/spawner/random/structure/closet_private,
-/obj/item/clothing/head/kitty,
+/obj/item/clothing/head/costume/kitty,
 /obj/item/clothing/under/costume/maid,
-/obj/item/clothing/head/rabbitears,
+/obj/item/clothing/head/costume/rabbitears,
 /obj/item/clothing/under/dress/redeveninggown,
 /turf/open/floor/wood,
 /area/station/commons/dorms)
@@ -98802,7 +98802,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/stack/package_wrap,
 /obj/item/hand_labeler,
-/obj/item/clothing/head/welding,
+/obj/item/clothing/head/utility/welding,
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron,
 /area/station/science/robotics/mechbay)

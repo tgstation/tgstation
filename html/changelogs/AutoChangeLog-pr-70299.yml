@@ -1,4 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes: 
-  - bugfix: "Multitooling a screwed-open fire alarm - or, if you're a borg/AI, control-clicking a fire alarm - now toggles the atmospherics sensors of firelocks in the area. (Borgs/AIs still had this but it was undocumented.)"

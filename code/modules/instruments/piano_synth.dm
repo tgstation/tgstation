@@ -17,6 +17,7 @@
 	name = "headphones"
 	desc = "Unce unce unce unce. Boop!"
 	icon = 'icons/obj/clothing/accessories.dmi'
+	worn_icon = 'icons/mob/clothing/head/costume.dmi'
 	lefthand_file = 'icons/mob/inhands/clothing/ears_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing/ears_righthand.dmi'
 	icon_state = "headphones"
