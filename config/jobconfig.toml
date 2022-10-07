@@ -6,7 +6,7 @@
 ## Playtime Requirements is in minutes, and the job will unlock when a player reaches that amount of time.
 ## However, that can be superseded by Required Account Age, which is a time in days that you need to have had an account on the server for.
 ## As time goes on, more config options may be added to this file.
-## You can use the admin verb 'Generate Job Configuration' to auto-regenerate this config as a downloadable file without having to manually edit this file if we add more jobs or more things you can edit via config.
+## You can use the admin verb 'Generate Job Configuration' in-game to auto-regenerate this config as a downloadable file without having to manually edit this file if we add more jobs or more things you can edit here.
 ## It will always respect prior-existing values in the config, but will appropriately add more fields when they generate.
 
 ## The game will not read any line that is commented out with a '#', as to allow you to defer to codebase defaults.
