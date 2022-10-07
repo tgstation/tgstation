@@ -38,12 +38,6 @@
 				first_cane = WEAKREF(left_hand_cane)
 				RegisterSignal(first_cane, COMSIG_ITEM_POST_UNEQUIP, .proc/on_unequipped_cane)
 			if(istype(right_hand_cane))
-				// make sure when canes are equipped they go in the right slots
-				//
-				//if(!first_cane)
-				//	first_cane = WEAKREF(right_hand_cane)
-				//	RegisterSignal(first_cane, COMSIG_ITEM_POST_UNEQUIP, .proc/on_unequipped_cane)
-				//else
 				second_cane = WEAKREF(right_hand_cane)
 				RegisterSignal(second_cane, COMSIG_ITEM_POST_UNEQUIP, .proc/on_unequipped_cane)
 
@@ -87,9 +81,9 @@
 			quirk_holder.clear_mood_event("back_pain")
 			quirk_holder.remove_movespeed_modifier(/datum/movespeed_modifier/human_carry)
 
-		if(!first_cane)
+		if(quirk_holder.active_hand_index == 1)  // left hand
 			first_cane = WEAKREF(equipped_item)
-		else if(!second_cane)
+		else if(quirk_holder.active_hand_index == 2) // right hand
 			second_cane = WEAKREF(equipped_item)
 		RegisterSignal(equipped_item, COMSIG_ITEM_POST_UNEQUIP, .proc/on_unequipped_cane)
 
