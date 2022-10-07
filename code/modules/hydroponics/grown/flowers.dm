@@ -179,6 +179,7 @@
 	name = "sunflower"
 	desc = "It's beautiful! A certain person might beat you to death if you trample these."
 	icon_state = "sunflower"
+	inhand_icon_state = "sunflower"
 	lefthand_file = 'icons/mob/inhands/weapons/plants_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/plants_righthand.dmi'
 	foodtypes = VEGETABLES

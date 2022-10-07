@@ -494,6 +494,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "Apparently a staff used by the wizard."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "staff"
+	inhand_icon_state = "staff"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	force = 3
@@ -511,6 +512,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "Used for sweeping, and flying into the night while cackling. Black cat not included."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "broom"
+	inhand_icon_state = "broom"
 	resistance_flags = FLAMMABLE
 
 /obj/item/staff/stick
