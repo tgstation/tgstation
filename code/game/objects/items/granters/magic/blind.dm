@@ -22,7 +22,7 @@
 	name = "Woody's Got Wood"
 	pages_to_mastery = 69 // Andy's favorite number
 	uses = 0 // it's spent
-	desc = "This book looks dangerious. Only suffering awaits those who read."
+	desc = "This book looks dangerous. Only suffering awaits those who read."
 	remarks = list( // Death awaits
 		"T-T-This is bad...",
 		"This is REALLY bad...",
