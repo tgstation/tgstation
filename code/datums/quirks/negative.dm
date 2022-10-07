@@ -23,28 +23,31 @@
 	human_holder.put_in_hands(spawn_cane)
 	var/is_holding_cane = human_holder.is_holding_item_of_type(/obj/item/cane)
 
-	if(istype(equipped_backpack) && !is_holding_cane)
-		human_holder.add_mood_event("back_pain", /datum/mood_event/back_pain)
-		human_holder.add_movespeed_modifier(/datum/movespeed_modifier/human_carry) // TODO make this it's own modifier at some point
+	if(istype(equipped_backpack))
 		backpack = WEAKREF(equipped_backpack)
 		RegisterSignal(human_holder.back, COMSIG_ITEM_POST_UNEQUIP, .proc/on_unequipped_backpack)
-	else if(istype(equipped_backpack) && is_holding_cane)
-		var/obj/item/cane/left_hand_cane = human_holder.held_items[1]
-		var/obj/item/cane/right_hand_cane = human_holder.held_items[2]
 
-		if(istype(left_hand_cane))
-			first_cane = WEAKREF(left_hand_cane)
-			RegisterSignal(first_cane, COMSIG_ITEM_POST_UNEQUIP, .proc/on_unequipped_cane)
-		if(istype(right_hand_cane))
-			if(!first_cane)
-				first_cane = WEAKREF(right_hand_cane)
+		if(!is_holding_cane)
+			human_holder.add_mood_event("back_pain", /datum/mood_event/back_pain)
+			human_holder.add_movespeed_modifier(/datum/movespeed_modifier/human_carry) // TODO make this it's own modifier at some point
+		else if(is_holding_cane)
+			var/obj/item/cane/left_hand_cane = human_holder.held_items[1]
+			var/obj/item/cane/right_hand_cane = human_holder.held_items[2]
+
+			if(istype(left_hand_cane))
+				first_cane = WEAKREF(left_hand_cane)
 				RegisterSignal(first_cane, COMSIG_ITEM_POST_UNEQUIP, .proc/on_unequipped_cane)
-			else
+			if(istype(right_hand_cane))
+				// make sure when canes are equipped they go in the right slots
+				//
+				//if(!first_cane)
+				//	first_cane = WEAKREF(right_hand_cane)
+				//	RegisterSignal(first_cane, COMSIG_ITEM_POST_UNEQUIP, .proc/on_unequipped_cane)
+				//else
 				second_cane = WEAKREF(right_hand_cane)
 				RegisterSignal(second_cane, COMSIG_ITEM_POST_UNEQUIP, .proc/on_unequipped_cane)
 
-	else if(istype(equipped_backpack))
-		RegisterSignal(human_holder, COMSIG_MOB_EQUIPPED_ITEM, .proc/on_equipped_item)
+	RegisterSignal(human_holder, COMSIG_MOB_EQUIPPED_ITEM, .proc/on_equipped_item)
 
 /datum/quirk/badback/remove()
 	UnregisterSignal(quirk_holder, COMSIG_MOB_EQUIPPED_ITEM)
