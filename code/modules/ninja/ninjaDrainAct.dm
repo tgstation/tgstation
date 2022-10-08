@@ -178,8 +178,11 @@
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/computer/communications/proc/ninjadrain_charge(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
+	if(!can_hack())
+		balloon_alert(ninja, "can't hack this console!")
+		return
+
 	if(!try_hack_console(ninja))
-		balloon_alert(ninja, "can't hack here!")
 		return
 
 	hacking_module.communication_console_hack_success = TRUE

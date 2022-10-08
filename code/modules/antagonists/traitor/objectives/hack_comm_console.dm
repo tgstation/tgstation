@@ -44,8 +44,11 @@
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /datum/traitor_objective/hack_comm_console/proc/begin_hack(mob/user, obj/machinery/computer/communications/target)
+	if(!target.can_hack())
+		target.balloon_alert(user, "can't hack this console!")
+		return
+
 	if(!target.try_hack_console(user))
-		target.balloon_alert(user, "can't hack here!")
 		return
 
 	succeed_objective()
