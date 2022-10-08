@@ -195,8 +195,10 @@
 		. += pick_n_take(possible_symptoms)
 
 /// Returns a different type of focused symptom. This one is dependent on the amount of silver in the container when adding either formaldehyde or synaptizine.
-/datum/disease/advance/proc/get_silver_focus(datum/reagents/container, level_min, level_max)
-	for(var/datum/symptom/symptom as anything in symptoms)
+/datum/disease/advance/proc/get_silver_focus(datum/reagents/container)
+	if (!container.has_reagent(/datum/reagent/silver))
+		return null
+	return symptoms[min(ROUND_UP(container.get_reagent_amount(/datum/reagent/silver)), symptoms.len)]
 
 /// Returns the currently focused symptoms, if there are any. Determined by the reagents in the container. Maximum returned symptom amount is dependent on the symptom limit.
 /datum/disease/advance/proc/get_focused_symptoms(datum/reagents/container, level_min, level_max)
@@ -218,7 +220,7 @@
 				reagents_to_consume += focus
 		if(!not_focused.len) // If a chemical has all of it's focuses matched, the if statement will pass, adding it to the pool.
 			possible_focuses += symptom
-	for(var/_ to VIRUS_SYMPTOM_LIMIT - possible_focuses.len) // If there are too many focused symptoms in the pool to add, we simply remove some until we're under the cap again.
+	for(var/_ = 1 to VIRUS_SYMPTOM_LIMIT - possible_focuses.len) // If there are too many focused symptoms in the pool to add, we simply remove some until we're under the cap again.
 		pick_n_take(possible_focuses)
 	for(var/datum/reagent/reagent as anything in reagents_to_consume)
 		container.del_reagent(reagent)
@@ -353,24 +355,34 @@
 		Refresh(TRUE)
 
 // Randomly remove a symptom.
-/datum/disease/advance/proc/Devolve(ignore_mutable = FALSE)
-	if(!mutable && !ignore_mutable)
+/datum/disease/advance/proc/Devolve(datum/reagents/container, ignore_mutable = FALSE)
+	if(!container || !mutable && !ignore_mutable)
 		return
-	if(length(symptoms) > 1)
-		var/datum/symptom/S = pick(symptoms)
-		if(S)
-			RemoveSymptom(S)
-			Refresh(TRUE)
+	if(symptoms.len > 1)
+		var/datum/symptom/symptom = get_silver_focus(container)
+		if(symptom)
+			RemoveSymptom(symptom)
+			Refresh(new_name = TRUE)
+			return
+		symptom = pick(symptoms)
+		if(symptom)
+			RemoveSymptom(symptom)
+			Refresh(new_name = TRUE)
 
 // Randomly neuter a symptom.
-/datum/disease/advance/proc/Neuter(ignore_mutable = FALSE)
-	if(!mutable && !ignore_mutable)
+/datum/disease/advance/proc/Neuter(datum/reagents/container, ignore_mutable = FALSE)
+	if(!container || !mutable && !ignore_mutable)
 		return
-	if(length(symptoms))
-		var/datum/symptom/S = pick(symptoms)
-		if(S)
-			NeuterSymptom(S)
-			Refresh(TRUE)
+	if(symptoms.len)
+		var/datum/symptom/symptom = get_silver_focus(container)
+		if(symptom)
+			NeuterSymptom(symptom)
+			Refresh(new_name = TRUE)
+			return
+		symptom = pick(symptoms)
+		if(symptom)
+			NeuterSymptom(symptom)
+			Refresh(new_name = TRUE)
 
 // Name the disease.
 /datum/disease/advance/proc/AssignName(name = "Unknown")

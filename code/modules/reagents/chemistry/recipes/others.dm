@@ -298,7 +298,7 @@
 	if(B?.data)
 		var/datum/disease/advance/D = locate(/datum/disease/advance) in B.data["viruses"]
 		if(D)
-			D.Devolve()
+			D.Devolve(holder)
 
 /datum/chemical_reaction/mix_virus/neuter_virus
 	required_reagents = list(/datum/reagent/toxin/formaldehyde = 1)
@@ -309,7 +309,7 @@
 	if(B?.data)
 		var/datum/disease/advance/D = locate(/datum/disease/advance) in B.data["viruses"]
 		if(D)
-			D.Neuter()
+			D.Neuter(holder)
 
 
 
