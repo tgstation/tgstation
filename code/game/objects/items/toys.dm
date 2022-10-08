@@ -402,6 +402,13 @@
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
 	AddElement(/datum/element/update_icon_updates_onmob)
 
+	var/static/list/tool_behaviors = list(
+		TOOL_SCREWDRIVER = list(
+			SCREENTIP_CONTEXT_LMB = "Change blade color"
+		),
+	)
+	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
+
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
  *
@@ -419,7 +426,6 @@
 	. += span_notice("It has a lighting dial currently set to [saber_color] which looks like it can be turned with a <b>screwdriver</b>.")
 
 /obj/item/toy/sword/screwdriver_act(mob/living/user, obj/item/tool)
-	. = TOOLACT_SUCCESSFUL
 	switch(saber_color)
 		if("red")
 			saber_color = "blue"
@@ -430,9 +436,10 @@
 		if("purple")
 			saber_color = "red"
 		else
-			return
+			return TOOL_ACT_TOOLTYPE_SUCCESS
 	balloon_alert(user, "changed to [saber_color]")
 	update_appearance(UPDATE_ICON)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/item/toy/sword/vv_edit_var(vname, vval)
 	. = ..()
