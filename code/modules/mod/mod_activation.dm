@@ -27,7 +27,7 @@
 	var/parts_to_check = parts - part
 	if(part.loc == src)
 		deploy(user, part)
-		on_mod_deployed(user)
+		SEND_SIGNAL(src, COMSIG_MOD_DEPLOYED, user)
 		for(var/obj/item/checking_part as anything in parts_to_check)
 			if(checking_part.loc != src)
 				continue
@@ -35,7 +35,7 @@
 			break
 	else
 		retract(user, part)
-		on_mod_retracted(user)
+		SEND_SIGNAL(src, COMSIG_MOD_RETRACTED, user)
 		for(var/obj/item/checking_part as anything in parts_to_check)
 			if(checking_part.loc == src)
 				continue
@@ -64,9 +64,9 @@
 		span_hear("You hear a mechanical hiss."))
 	playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	if(deploy)
-		on_mod_deployed(user)
+		SEND_SIGNAL(src, COMSIG_MOD_DEPLOYED, user)
 	else
-		on_mod_retracted(user)
+		SEND_SIGNAL(src, COMSIG_MOD_RETRACTED, user)
 	return TRUE
 
 /// Deploys a part of the suit onto the user.
@@ -229,11 +229,5 @@
 
 /obj/item/mod/control/proc/has_wearer()
 	return wearer
-
-/obj/item/mod/control/proc/on_mod_deployed(mob/user)
-	SEND_SIGNAL(src, COMSIG_MOD_DEPLOYED, user)
-
-/obj/item/mod/control/proc/on_mod_retracted(mob/user)
-	SEND_SIGNAL(src, COMSIG_MOD_RETRACTED, user)
 
 #undef MOD_ACTIVATION_STEP_FLAGS
