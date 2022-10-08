@@ -258,43 +258,6 @@
 	new /obj/item/gun_maintenance_supplies(src)
 	new /obj/item/gun_maintenance_supplies(src)
 
-/obj/item/storage/toolbox/infiltrator
-	name = "insidious case"
-	desc = "Bearing the emblem of the Syndicate, this case contains a full infiltrator stealth suit, and has enough room to fit weaponry if necessary."
-	icon_state = "infiltrator_case"
-	inhand_icon_state = "infiltrator_case"
-	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
-	force = 15
-	throwforce = 18
-	w_class = WEIGHT_CLASS_NORMAL
-	has_latches = FALSE
-
-/obj/item/storage/toolbox/infiltrator/Initialize(mapload)
-	. = ..()
-	atom_storage.max_slots = 10
-	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
-	atom_storage.max_total_storage = 24
-	atom_storage.set_holdable(list(
-		/obj/item/clothing/head/helmet/infiltrator,
-		/obj/item/clothing/suit/armor/vest/infiltrator,
-		/obj/item/clothing/under/syndicate/bloodred,
-		/obj/item/clothing/gloves/color/infiltrator,
-		/obj/item/clothing/mask/infiltrator,
-		/obj/item/clothing/shoes/combat/sneakboots,
-		/obj/item/gun/ballistic/automatic/pistol,
-		/obj/item/gun/ballistic/revolver,
-		/obj/item/ammo_box
-		))
-
-/obj/item/storage/toolbox/infiltrator/PopulateContents()
-	new /obj/item/clothing/head/helmet/infiltrator(src)
-	new /obj/item/clothing/suit/armor/vest/infiltrator(src)
-	new /obj/item/clothing/under/syndicate/bloodred(src)
-	new /obj/item/clothing/gloves/color/infiltrator(src)
-	new /obj/item/clothing/mask/infiltrator(src)
-	new /obj/item/clothing/shoes/combat/sneakboots(src)
-
 //floorbot assembly
 /obj/item/storage/toolbox/attackby(obj/item/stack/tile/iron/T, mob/user, params)
 	var/list/allowed_toolbox = list(/obj/item/storage/toolbox/emergency, //which toolboxes can be made into floorbots
