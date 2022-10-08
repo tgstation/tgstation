@@ -158,6 +158,19 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom, 26)
 	icon_state = "intercom_command"
 	freerange = TRUE
 
+/obj/item/radio/intercom/command/set_frequency(new_frequency)
+	SEND_SIGNAL(src, COMSIG_RADIO_NEW_FREQUENCY, args)
+	remove_radio(src, frequency)
+	if(new_frequency)
+		if(new_frequency == FREQ_SYNDICATE && !syndie)
+			frequency = FREQ_COMMON
+			say("Unable to connect to this encrypted radio network!", range=3)
+		else
+			frequency = new_frequency
+
+	if(listening && on)
+		add_radio(src, frequency)
+
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/prison, 26)
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/chapel, 26)
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/command, 26)
