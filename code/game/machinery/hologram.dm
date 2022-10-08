@@ -132,7 +132,7 @@ Possible to do for anyone motivated enough:
 	for(var/obj/effect/overlay/holoray/ray as anything in holorays)
 		ray.abstract_move(loc)
 	var/list/non_call_masters = masters?.Copy()
-	for(var/datum/holocall/holocall as anything in holo_calls)
+	for(var/datum/holocall/holocall in holo_calls)
 		if(!holocall.user || !LAZYACCESS(masters, holocall.user))
 			continue
 		non_call_masters -= holocall.user
