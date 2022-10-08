@@ -194,34 +194,36 @@
 	for(var/i = 1; number_of >= i && possible_symptoms.len; i++)
 		. += pick_n_take(possible_symptoms)
 
+/// Returns a different type of focused symptom. This one is dependent on the amount of silver in the container when adding either formaldehyde or synaptizine.
+/datum/disease/advance/proc/get_silver_focus(datum/reagents/container, level_min, level_max)
+	for(var/datum/symptom/symptom as anything in symptoms)
+
 /// Returns the currently focused symptoms, if there are any. Determined by the reagents in the container. Maximum returned symptom amount is dependent on the symptom limit.
-/datum/disease/advance/proc/GetFocusedSymptoms(datum/reagents/container, level_min, level_max)
+/datum/disease/advance/proc/get_focused_symptoms(datum/reagents/container, level_min, level_max)
 	. = list() // The currently focused symptoms, if there are any.
 	if (symptoms.len >= VIRUS_SYMPTOM_LIMIT) // If the symptom cap is reached, we simply return an empty list.
-		return
+		return .
 	var/list/possible_focuses = list()
 	var/list/reagents_to_consume = list()
-	for(var/symp in SSdisease.list_symptoms)
-		var/datum/symptom/S = new symp
-		if(S.naturally_occuring && S.focuses.len && S.level >= level_min && S.level <= level_max) // Among the usual level and natural occur checks, this checks if the symptom can be focused.
-			if(!HasSymptom(S))
-				var/list/not_focused = S.focuses
-				for(var/datum/reagent/focus as anything in S.focuses)
-					if(!container.has_reagent(focus))
-						break
-					not_focused -= focus
-					if(!reagents_to_consume.Find(focus))
-						reagents_to_consume += focus
-				if(!not_focused.len) // If a chemical has all of it's focuses matched, the if statement will pass, adding it to the pool.
-					possible_focuses += S
-	if(possible_focuses.len + symptoms.len > VIRUS_SYMPTOM_LIMIT) // If there are too many focused symptoms in the pool to add, we simply remove some until we're under the cap again.
-		for(var/i = possible_focuses.len, i > 0, i--) // Guh C-style loop, had to do it because the entire purpose of the loop is to remove things from the list determining it's length.
-			if (possible_focuses.len <= VIRUS_SYMPTOM_LIMIT)
+	for(var/symptom_type in SSdisease.list_symptoms)
+		var/datum/symptom/symptom = new symptom_type
+		if(symptom.naturally_occuring && symptom.focuses.len && symptom.level >= level_min && symptom.level <= level_max && !HasSymptom(symptom)) // Among the usual level and natural occur checks, this checks if the symptom can be focused.
+			continue
+		var/list/not_focused = symptom.focuses
+		for(var/datum/reagent/focus as anything in symptom.focuses)
+			if(!container.has_reagent(focus))
 				break
-			pick_n_take(possible_focuses)
+			not_focused -= focus
+			if(!reagents_to_consume.Find(focus))
+				reagents_to_consume += focus
+		if(!not_focused.len) // If a chemical has all of it's focuses matched, the if statement will pass, adding it to the pool.
+			possible_focuses += symptom
+	for(var/_ to VIRUS_SYMPTOM_LIMIT - possible_focuses.len) // If there are too many focused symptoms in the pool to add, we simply remove some until we're under the cap again.
+		pick_n_take(possible_focuses)
 	for(var/datum/reagent/reagent as anything in reagents_to_consume)
 		container.del_reagent(reagent)
 	. += possible_focuses // Finally, we return the pool of focused symptoms.
+	return .
 
 /datum/disease/advance/proc/Refresh(new_name = FALSE)
 	GenerateProperties()
@@ -338,11 +340,11 @@
 /datum/disease/advance/proc/Evolve(datum/reagents/container, min_level, max_level, ignore_mutable = FALSE)
 	if(!container || !mutable && !ignore_mutable)
 		return
-	var/list/focused_symptoms = GetFocusedSymptoms(container, min_level, max_level)
+	var/list/focused_symptoms = get_focused_symptoms(container, min_level, max_level)
 	if(focused_symptoms.len)
-		for(var/datum/symptom/S as anything in focused_symptoms)
-			AddSymptom(S)
-		Refresh(TRUE)
+		for(var/datum/symptom/symptom as anything in focused_symptoms)
+			AddSymptom(symptom)
+		Refresh(new_name = TRUE)
 		return
 	var/list/generated_symptoms = GenerateSymptoms(min_level, max_level, 1)
 	if(length(generated_symptoms))
