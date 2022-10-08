@@ -1,7 +1,13 @@
 import fetch from "node-fetch";
-import { GET_TEST_MERGES_URL } from "./config.js";
 
 const TEST_MERGE_COMMENT_HEADER = "<!-- test_merge_bot:";
+
+const { GET_TEST_MERGES_URL } = process.env;
+
+if (!GET_TEST_MERGES_URL) {
+	console.error("GET_TEST_MERGES_URL was not set.");
+	process.exit(1);
+}
 
 export async function processTestMerges({ github, context }) {
 	const rounds = await fetch(GET_TEST_MERGES_URL)
