@@ -274,9 +274,9 @@
 		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/food/baguette/examine(mob/user)
-	var/examine_list = ..()
+	. = ..()
 	if(user.mind?.miming)
-		examine_list += span_notice("You can wield this like a sword by using it in your hand.")
+		. += span_notice("You can wield this like a sword by using it in your hand.")
 
 /obj/item/food/baguette/attack_self(mob/user, modifiers)
 	. = ..()
