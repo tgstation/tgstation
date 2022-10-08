@@ -146,6 +146,10 @@
 /obj/machinery/computer/secure_data/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
 	if(!ninja || !hacking_module)
 		return NONE
+	var/area/console_area = get_area(src)
+	if(!console_area || !(console_area.area_flags & VALID_TERRITORY))
+		return NONE
+
 	AI_notify_hack()
 	INVOKE_ASYNC(src, .proc/ninjadrain_charge, ninja, hacking_module)
 	return COMPONENT_CANCEL_ATTACK_CHAIN

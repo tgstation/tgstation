@@ -790,7 +790,9 @@
 /obj/machinery/computer/communications/proc/can_hack()
 	if(machine_stat & (NOPOWER|BROKEN))
 		return FALSE
-
+	var/area/console_area = get_area(src)
+	if(!console_area || !(console_area.area_flags & VALID_TERRITORY))
+		return FALSE
 	return TRUE
 
 /**
