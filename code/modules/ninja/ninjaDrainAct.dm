@@ -146,9 +146,8 @@
 /obj/machinery/computer/secure_data/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
 	if(!ninja || !hacking_module)
 		return NONE
-	var/area/console_area = get_area(src)
-	if(!console_area || !(console_area.area_flags & VALID_TERRITORY))
-		balloon_alert(ninja, "can't hack here!")
+	if(!can_hack())
+		balloon_alert(ninja, "can't hack this console!")
 		return NONE
 
 	AI_notify_hack()
@@ -156,7 +155,7 @@
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/computer/secure_data/proc/ninjadrain_charge(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
-	if(!do_after(ninja, 20 SECONDS))
+	if(!do_after(ninja, 20 SECONDS, src, extra_checks = CALLBACK(src, .proc/can_hack)))
 		return
 	for(var/datum/data/record/rec in sort_record(GLOB.data_core.general, sortBy, order))
 		for(var/datum/data/record/security_record in GLOB.data_core.security)
@@ -167,6 +166,14 @@
 	var/datum/objective/security_scramble/objective = locate() in ninja_antag.objectives
 	if(objective)
 		objective.completed = TRUE
+
+/obj/machinery/computer/secure_data/proc/can_hack()
+	if(machine_stat & (NOPOWER|BROKEN))
+		return FALSE
+	var/area/console_area = get_area(src)
+	if(!console_area || !(console_area.area_flags & VALID_TERRITORY))
+		return FALSE
+	return TRUE
 
 //COMMUNICATIONS CONSOLE//
 /obj/machinery/computer/communications/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
