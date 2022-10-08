@@ -49,7 +49,7 @@
 	suit_store = /obj/item/flashlight/pen
 	belt = /obj/item/modular_computer/tablet/pda/medical
 	ears = /obj/item/radio/headset/headset_med
-	head = /obj/item/clothing/head/surgerycap
+	head = /obj/item/clothing/head/utility/surgerycap
 	shoes = /obj/item/clothing/shoes/sneakers/white
 	l_hand = /obj/item/storage/medkit/surgery
 

@@ -475,7 +475,7 @@
 	..()
 
 /datum/reagent/toxin/fakebeer //disguised as normal beer for use by emagged brobots
-	name = "Beer...?"
+	name = "B33r"
 	description = "A specially-engineered sedative disguised as beer. It induces instant sleep in its target."
 	color = "#664300" // rgb: 102, 67, 0
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
@@ -981,16 +981,16 @@
 			var/atom/movable/plane_master_controller/pm_controller = M.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 
 			var/rotation = min(round(current_cycle/20), 89) // By this point the player is probably puking and quitting anyway
-			for(var/key in pm_controller.controlled_planes)
-				animate(pm_controller.controlled_planes[key], transform = matrix(rotation, MATRIX_ROTATE), time = 5, easing = QUAD_EASING, loop = -1)
+			for(var/atom/movable/screen/plane_master/plane as anything in pm_controller.get_planes())
+				animate(plane, transform = matrix(rotation, MATRIX_ROTATE), time = 5, easing = QUAD_EASING, loop = -1)
 				animate(transform = matrix(-rotation, MATRIX_ROTATE), time = 5, easing = QUAD_EASING)
 	return ..()
 
 /datum/reagent/toxin/rotatium/on_mob_end_metabolize(mob/living/M)
 	if(M?.hud_used)
 		var/atom/movable/plane_master_controller/pm_controller = M.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
-		for(var/key in pm_controller.controlled_planes)
-			animate(pm_controller.controlled_planes[key], transform = matrix(), time = 5, easing = QUAD_EASING)
+		for(var/atom/movable/screen/plane_master/plane as anything in pm_controller.get_planes())
+			animate(plane, transform = matrix(), time = 5, easing = QUAD_EASING)
 	..()
 
 /datum/reagent/toxin/anacea

@@ -1,0 +1,4 @@
+author: "Tastyfish"
+delete-after: True
+changes: 
+  - bugfix: "Baguettes can now be examined again."

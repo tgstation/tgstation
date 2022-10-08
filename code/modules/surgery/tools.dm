@@ -3,6 +3,7 @@
 	desc = "Retracts stuff."
 	icon = 'icons/obj/medical/surgery_tools.dmi'
 	icon_state = "retractor"
+	inhand_icon_state = "retractor"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	custom_materials = list(/datum/material/iron = 6000, /datum/material/glass = 3000, /datum/material/silver = 3000)
@@ -22,6 +23,7 @@
 	desc = "You think you have seen this before."
 	icon = 'icons/obj/medical/surgery_tools.dmi'
 	icon_state = "hemostat"
+	inhand_icon_state = "hemostat"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	custom_materials = list(/datum/material/iron = 5000, /datum/material/glass = 2500, /datum/material/silver = 2500)
@@ -43,6 +45,7 @@
 	desc = "This stops bleeding."
 	icon = 'icons/obj/medical/surgery_tools.dmi'
 	icon_state = "cautery"
+	inhand_icon_state = "cautery"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	custom_materials = list(/datum/material/iron = 2500, /datum/material/glass = 750, /datum/material/silver = 1250)
@@ -66,6 +69,7 @@
 	desc = "It projects a high power laser used for medical applications."
 	icon = 'icons/obj/medical/surgery_tools.dmi'
 	icon_state = "e_cautery"
+	inhand_icon_state = "e_cautery"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	custom_materials = list(/datum/material/iron = 4000, /datum/material/glass = 2000, /datum/material/plasma = 2000, /datum/material/uranium = 3000, /datum/material/titanium = 3000)
@@ -108,6 +112,7 @@
 	desc = "You can drill using this item. You dig?"
 	icon = 'icons/obj/medical/surgery_tools.dmi'
 	icon_state = "drill"
+	inhand_icon_state = "drill"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	hitsound = 'sound/weapons/circsawhit.ogg'
@@ -148,6 +153,7 @@
 	desc = "Cut, cut, and once more cut."
 	icon = 'icons/obj/medical/surgery_tools.dmi'
 	icon_state = "scalpel"
+	inhand_icon_state = "scalpel"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	flags_1 = CONDUCT_1
@@ -191,6 +197,7 @@
 	desc = "For heavy duty cutting."
 	icon = 'icons/obj/medical/surgery_tools.dmi'
 	icon_state = "saw"
+	inhand_icon_state = "saw"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	hitsound = 'sound/weapons/circsawhit.ogg'
@@ -254,7 +261,7 @@
 
 /obj/item/surgical_processor/equipped(mob/user, slot, initial)
 	. = ..()
-	if(slot != ITEM_SLOT_HANDS)
+	if(!(slot & ITEM_SLOT_HANDS))
 		UnregisterSignal(user, COMSIG_SURGERY_STARTING)
 		return
 	RegisterSignal(user, COMSIG_SURGERY_STARTING, .proc/check_surgery)
@@ -296,6 +303,7 @@
 	name = "laser scalpel"
 	desc = "An advanced scalpel which uses laser technology to cut."
 	icon_state = "e_scalpel"
+	inhand_icon_state = "e_scalpel"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	custom_materials = list(/datum/material/iron = 6000, /datum/material/glass = 1500, /datum/material/silver = 2000, /datum/material/gold = 1500, /datum/material/diamond = 200, /datum/material/titanium = 4000)
@@ -349,6 +357,7 @@
 	icon = 'icons/obj/medical/surgery_tools.dmi'
 	custom_materials = list(/datum/material/iron = 12000, /datum/material/glass = 4000, /datum/material/silver = 4000, /datum/material/titanium = 5000)
 	icon_state = "adv_retractor"
+	inhand_icon_state = "adv_retractor"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL

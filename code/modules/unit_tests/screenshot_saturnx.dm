@@ -14,7 +14,6 @@
 
 /datum/unit_test/screenshot_saturnx/proc/get_flat_icon_for_all_directions(atom/thing)
 	var/icon/output = icon('icons/effects/effects.dmi', "nothing")
-	COMPILE_OVERLAYS(thing)
 
 	for (var/direction in GLOB.cardinals)
 		var/icon/partial = getFlatIcon(thing, defdir = direction)

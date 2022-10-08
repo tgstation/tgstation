@@ -242,7 +242,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	var/obj/item/choice = tgui_input_list(user, "Select a part to remove", "Part Removal", sort_names(droppable_parts))
 	if(isnull(choice))
 		return
-	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 		return
 	to_chat(user, span_notice("You remove [choice] from [src]."))
 	if(choice == assembly.xray_module)
@@ -488,7 +488,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		GLOB.cameranet.removeCamera(src)
 		if (isarea(myarea))
 			LAZYREMOVE(myarea.cameras, src)
-	GLOB.cameranet.updateChunk(x, y, z)
+	// We are not guarenteed that the camera will be on a turf. account for that
+	var/turf/our_turf = get_turf(src)
+	GLOB.cameranet.updateChunk(our_turf.x, our_turf.y, our_turf.z)
 	var/change_msg = "deactivates"
 	if(status)
 		change_msg = "reactivates"
@@ -532,10 +534,32 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 /obj/machinery/camera/proc/can_see()
 	var/list/see = null
 	var/turf/pos = get_turf(src)
+	var/check_lower = pos != get_lowest_turf(pos)
+	var/check_higher = pos != get_highest_turf(pos)
+
 	if(isXRay())
 		see = range(view_range, pos)
 	else
 		see = get_hear(view_range, pos)
+	if(check_lower || check_higher)
+		// Haha datum var access KILL ME
+		var/datum/controller/subsystem/mapping/local_mapping = SSmapping
+		for(var/turf/seen in see)
+			if(check_lower)
+				var/turf/visible = seen
+				while(visible && istransparentturf(visible))
+					var/turf/below = local_mapping.get_turf_below(visible)
+					for(var/turf/adjacent in range(1, below))
+						see += adjacent
+						see += adjacent.contents
+					visible = below
+			if(check_higher)
+				var/turf/above = local_mapping.get_turf_above(seen)
+				while(above && istransparentturf(above))
+					for(var/turf/adjacent in range(1, above))
+						see += adjacent
+						see += adjacent.contents
+					above = local_mapping.get_turf_above(above)
 	return see
 
 /obj/machinery/camera/proc/Togglelight(on=0)
@@ -553,11 +577,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 2)
 
 /obj/machinery/camera/update_remote_sight(mob/living/user)
-	user.see_invisible = SEE_INVISIBLE_LIVING //can't see ghosts through cameras
+	user.set_invis_see(SEE_INVISIBLE_LIVING) //can't see ghosts through cameras
 	if(isXRay())
-		user.sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
-		user.see_in_dark = max(user.see_in_dark, 8)
+		user.add_sight(SEE_TURFS|SEE_MOBS|SEE_OBJS)
+		user.set_see_in_dark(max(user.see_in_dark, 8))
 	else
+		user.clear_sight(SEE_TURFS|SEE_MOBS|SEE_OBJS)
 		user.sight = 0
-		user.see_in_dark = 2
+		user.set_see_in_dark(2)
 	return 1

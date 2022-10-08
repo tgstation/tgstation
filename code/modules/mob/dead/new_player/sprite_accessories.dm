@@ -1571,6 +1571,10 @@
 	name = "Knee-high (Thin)"
 	icon_state = "thin_knee"
 
+/datum/sprite_accessory/socks/trans_knee
+	name = "Knee-high (Trans)"
+	icon_state = "trans_knee"
+
 /datum/sprite_accessory/socks/uk_knee
 	name = "Knee-High (UK)"
 	icon_state = "uk_knee"
@@ -1662,6 +1666,10 @@
 /datum/sprite_accessory/socks/thin_thigh
 	name = "Thigh-high (Thin)"
 	icon_state = "thin_thigh"
+
+/datum/sprite_accessory/socks/trans_thigh
+	name = "Thigh-high (Trans)"
+	icon_state = "trans_thigh"
 
 /datum/sprite_accessory/socks/uk_thigh
 	name = "Thigh-high (UK)"
@@ -2157,6 +2165,10 @@
 /datum/sprite_accessory/moth_wings/plasmafire
 	name = "Plasmafire"
 	icon_state = "plasmafire"
+	
+/datum/sprite_accessory/moth_wings/moffra
+	name = "Moffra"
+	icon_state = "moffra"
 
 /datum/sprite_accessory/moth_antennae //Finally splitting the sprite
 	icon = 'icons/mob/species/moth/moth_antennae.dmi'
@@ -2240,6 +2252,10 @@
 /datum/sprite_accessory/moth_antennae/plasmafire
 	name = "Plasmafire"
 	icon_state = "plasmafire"
+	
+/datum/sprite_accessory/moth_antennae/moffra
+	name = "Moffra"
+	icon_state = "moffra"
 
 /datum/sprite_accessory/moth_markings // the markings that moths can have. finally something other than the boring tan
 	icon = 'icons/mob/species/moth/moth_markings.dmi'

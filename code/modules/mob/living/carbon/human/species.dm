@@ -718,7 +718,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				accessory_overlay.icon_state = "m_[bodypart]_[accessory.icon_state]_[layertext]"
 
 			if(accessory.em_block)
-				accessory_overlay.overlays += emissive_blocker(accessory_overlay.icon, accessory_overlay.icon_state, accessory_overlay.alpha)
+				accessory_overlay.overlays += emissive_blocker(accessory_overlay.icon, accessory_overlay.icon_state, source, accessory_overlay.alpha)
 
 			if(accessory.center)
 				accessory_overlay = center_image(accessory_overlay, accessory.dimension_x, accessory.dimension_y)
@@ -828,9 +828,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(!(I.slot_flags & slot))
 		var/excused = FALSE
 		// Anything that's small or smaller can fit into a pocket by default
-		if((slot == ITEM_SLOT_RPOCKET || slot == ITEM_SLOT_LPOCKET) && I.w_class <= WEIGHT_CLASS_SMALL)
+		if((slot & (ITEM_SLOT_RPOCKET|ITEM_SLOT_LPOCKET)) && I.w_class <= WEIGHT_CLASS_SMALL)
 			excused = TRUE
-		else if(slot == ITEM_SLOT_SUITSTORE || slot == ITEM_SLOT_BACKPACK || slot == ITEM_SLOT_HANDS)
+		else if(slot & (ITEM_SLOT_SUITSTORE|ITEM_SLOT_BACKPACK|ITEM_SLOT_HANDS))
 			excused = TRUE
 		if(!excused)
 			return FALSE

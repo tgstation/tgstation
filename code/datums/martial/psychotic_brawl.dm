@@ -51,7 +51,7 @@
 			A.apply_damage(rand(5,10), A.get_attack_type(), BODY_ZONE_HEAD)
 			if (iscarbon(D))
 				var/mob/living/carbon/defender = D
-				if(!istype(defender.head,/obj/item/clothing/head/helmet/) && !istype(defender.head,/obj/item/clothing/head/hardhat))
+				if(!istype(defender.head,/obj/item/clothing/head/helmet/) && !istype(defender.head,/obj/item/clothing/head/utility/hardhat))
 					defender.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
 			A.Stun(rand(10,45))
 			D.Stun(rand(5,30))

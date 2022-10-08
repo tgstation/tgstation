@@ -59,7 +59,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "dR" = (
-/obj/structure/shuttle/engine/heater,
+/obj/machinery/power/shuttle_engine/heater,
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "eb" = (
@@ -391,7 +391,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "sW" = (
-/obj/structure/shuttle/engine/huge,
+/obj/machinery/power/shuttle_engine/huge,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "tx" = (

@@ -9,7 +9,7 @@
 	icon_state = "apron"
 	icon = 'icons/obj/clothing/suits/utility.dmi'
 	worn_icon = 'icons/mob/clothing/suits/utility.dmi'
-	inhand_icon_state = "apron"
+	inhand_icon_state = null
 	blood_overlay_type = "armor"
 	body_parts_covered = CHEST|GROIN
 	allowed = list(
@@ -33,7 +33,7 @@
 	name = "horticultural waders"
 	desc = "A pair of heavy duty leather waders, perfect for insulating your soft flesh from spills, soil and thorns."
 	icon_state = "hort_waders"
-	inhand_icon_state = "hort_waders"
+	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS
 
 //Captain
@@ -63,9 +63,9 @@
 	name = "chef's apron"
 	desc = "An apron-jacket used by a high class chef."
 	icon_state = "chef"
+	inhand_icon_state = "chef"
 	icon = 'icons/obj/clothing/suits/jacket.dmi'
 	worn_icon = 'icons/mob/clothing/suits/jacket.dmi'
-	inhand_icon_state = "chef"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 50, FIRE = 0, ACID = 0)
 	body_parts_covered = CHEST|GROIN|ARMS
 	allowed = list(
@@ -81,7 +81,7 @@
 	name = "cook's apron"
 	desc = "A basic, dull, white chef's apron."
 	icon_state = "apronchef"
-	inhand_icon_state = "apronchef"
+	inhand_icon_state = null
 	blood_overlay_type = "armor"
 	body_parts_covered = CHEST|GROIN
 	allowed = list(
@@ -110,25 +110,25 @@
 	name = "noir trenchcoat"
 	desc = "A hard-boiled private investigator's dark trenchcoat."
 	icon_state = "noirdet"
-	inhand_icon_state = "greydet"
+	inhand_icon_state = null
 
 /obj/item/clothing/suit/jacket/det_suit/noir
 	name = "noir suit coat"
 	desc = "A dapper private investigator's dark suit coat."
 	icon_state = "detsuit"
-	inhand_icon_state = "detsuit"
+	inhand_icon_state = null
 
 /obj/item/clothing/suit/jacket/det_suit/kim
 	name = "aerostatic bomber jacket"
 	desc = "A jacket once worn by the revolutionary air brigades during the Antecentennial Revolution. There are quite a few pockets on the inside, mostly for storing notebooks and compasses."
 	icon_state = "aerostatic_bomber_jacket"
-	inhand_icon_state = "aerostatic_bomber_jacket"
+	inhand_icon_state = null
 
 /obj/item/clothing/suit/jacket/det_suit/disco
 	name = "disco ass blazer"
 	desc = "Looks like someone skinned this blazer off some long extinct disco-animal. It has an enigmatic white rectangle on the back and the right sleeve."
 	icon_state = "jamrock_blazer"
-	inhand_icon_state = "jamrock_blazer"
+	inhand_icon_state = null
 
 //Engineering
 /obj/item/clothing/suit/hazardvest
@@ -137,7 +137,7 @@
 	icon_state = "hazard"
 	icon = 'icons/obj/clothing/suits/utility.dmi'
 	worn_icon = 'icons/mob/clothing/suits/utility.dmi'
-	inhand_icon_state = "hazard"
+	inhand_icon_state = null
 	blood_overlay_type = "armor"
 	allowed = list(
 		/obj/item/fireaxe/metal_h2_axe,
@@ -151,10 +151,11 @@
 	resistance_flags = NONE
 	species_exception = list(/datum/species/golem)
 
+// Lemom todo: and here
 /obj/item/clothing/suit/hazardvest/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
 	if(!isinhands)
-		. += emissive_appearance(icon_file, "[icon_state]-emissive", alpha = src.alpha)
+		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
 
 //Lawyer
 /obj/item/clothing/suit/toggle/lawyer
@@ -163,7 +164,7 @@
 	icon_state = "suitjacket_blue"
 	icon = 'icons/obj/clothing/suits/jacket.dmi'
 	worn_icon = 'icons/mob/clothing/suits/jacket.dmi'
-	inhand_icon_state = "suitjacket_blue"
+	inhand_icon_state = null
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|ARMS
 	species_exception = list(/datum/species/golem)
@@ -172,7 +173,7 @@
 	name = "purple suit jacket"
 	desc = "A foppish dress jacket."
 	icon_state = "suitjacket_purp"
-	inhand_icon_state = "suitjacket_purp"
+	inhand_icon_state = null
 
 /obj/item/clothing/suit/toggle/lawyer/black
 	name = "black suit jacket"
@@ -201,42 +202,42 @@
 	name = "security officer's jacket"
 	desc = "This jacket is for those special occasions when a security officer isn't required to wear their armor."
 	icon_state = "officerbluejacket"
-	inhand_icon_state = "officerbluejacket"
+	inhand_icon_state = null
 	body_parts_covered = CHEST|ARMS
 
 /obj/item/clothing/suit/jacket/officer/tan
 	name = "security officer's jacket"
 	desc = "This jacket is for those special occasions when a security officer isn't required to wear their armor."
 	icon_state = "officertanjacket"
-	inhand_icon_state = "officertanjacket"
+	inhand_icon_state = null
 	body_parts_covered = CHEST|ARMS
 
 /obj/item/clothing/suit/jacket/warden/blue
 	name = "warden's jacket"
 	desc = "Perfectly suited for the warden that wants to leave an impression of style on those who visit the brig."
 	icon_state = "wardenbluejacket"
-	inhand_icon_state = "wardenbluejacket"
+	inhand_icon_state = null
 	body_parts_covered = CHEST|ARMS
 
 /obj/item/clothing/suit/jacket/warden/tan
 	name = "warden's jacket"
 	desc = "Perfectly suited for the warden that wants to leave an impression of style on those who visit the brig."
 	icon_state = "wardentanjacket"
-	inhand_icon_state = "wardentanjacket"
+	inhand_icon_state = null
 	body_parts_covered = CHEST|ARMS
 
 /obj/item/clothing/suit/jacket/hos/blue
 	name = "head of security's jacket"
 	desc = "This piece of clothing was specifically designed for asserting superior authority."
 	icon_state = "hosbluejacket"
-	inhand_icon_state = "hosbluejacket"
+	inhand_icon_state = null
 	body_parts_covered = CHEST|ARMS
 
 /obj/item/clothing/suit/jacket/hos/tan
 	name = "head of security's jacket"
 	desc = "This piece of clothing was specifically designed for asserting superior authority."
 	icon_state = "hostanjacket"
-	inhand_icon_state = "hostanjacket"
+	inhand_icon_state = null
 	body_parts_covered = CHEST|ARMS
 
 //Surgeon
@@ -267,7 +268,7 @@
 	name = "treasure hunter's coat"
 	desc = "Both fashionable and lightly armoured, this jacket is favoured by treasure hunters the galaxy over."
 	icon_state = "curator"
-	inhand_icon_state = "curator"
+	inhand_icon_state = null
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|ARMS
 	allowed = list(
@@ -286,14 +287,16 @@
 	icon_state = "techpriest"
 	icon = 'icons/obj/clothing/suits/costume.dmi'
 	worn_icon = 'icons/mob/clothing/suits/costume.dmi'
-	inhand_icon_state = "techpriest"
+	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	hoodtype = /obj/item/clothing/head/hooded/techpriest
 
 /obj/item/clothing/head/hooded/techpriest
 	name = "techpriest's hood"
+	icon = 'icons/obj/clothing/head/costume.dmi'
+	worn_icon = 'icons/mob/clothing/head/costume.dmi'
 	desc = "A hood for those who REALLY love their toasters."
 	icon_state = "techpriesthood"
-	inhand_icon_state = "techpriesthood"
+	inhand_icon_state = null
 	body_parts_covered = HEAD
 	flags_inv = HIDEHAIR|HIDEEARS

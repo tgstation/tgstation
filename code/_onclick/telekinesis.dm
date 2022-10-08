@@ -127,7 +127,7 @@
 //stops TK grabs being equipped anywhere but into hands
 /obj/item/tk_grab/equipped(mob/user, slot)
 	. = ..()
-	if(slot == ITEM_SLOT_HANDS)
+	if(slot & ITEM_SLOT_HANDS)
 		return
 	qdel(src)
 
@@ -282,7 +282,7 @@
 
 	var/mutable_appearance/focus_overlay = new(focus)
 	focus_overlay.layer = layer + 0.01
-	focus_overlay.plane = ABOVE_HUD_PLANE
+	SET_PLANE_EXPLICIT(focus_overlay, ABOVE_HUD_PLANE, focus)
 	. += focus_overlay
 
 /obj/item/tk_grab/suicide_act(mob/user)

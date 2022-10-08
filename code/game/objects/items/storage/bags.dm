@@ -511,7 +511,7 @@
 	name = "harpoon quiver"
 	desc = "A quiver for holding harpoons."
 	icon_state = "quiver"
-	inhand_icon_state = "quiver"
+	inhand_icon_state = null
 	worn_icon_state = "harpoon_quiver"
 
 /obj/item/storage/bag/harpoon_quiver/Initialize(mapload)
