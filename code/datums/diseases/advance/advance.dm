@@ -198,7 +198,9 @@
 /datum/disease/advance/proc/get_silver_focus(datum/reagents/container)
 	if (!container.has_reagent(/datum/reagent/silver))
 		return null
-	return symptoms[min(ROUND_UP(container.get_reagent_amount(/datum/reagent/silver)), symptoms.len)]
+	. = symptoms[min(ROUND_UP(container.get_reagent_amount(/datum/reagent/silver)), symptoms.len)]
+	container.del_reagent(/datum/reagent/silver)
+	return .
 
 /// Returns the currently focused symptoms, if there are any. Determined by the reagents in the container. Maximum returned symptom amount is dependent on the symptom limit.
 /datum/disease/advance/proc/get_focused_symptoms(datum/reagents/container, level_min, level_max)
