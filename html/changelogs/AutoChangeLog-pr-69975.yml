@@ -1,0 +1,4 @@
+author: "MMMiracles"
+delete-after: True
+changes: 
+  - bugfix: "Cameras and Lights on external hulls are no long safe havens from the rough reality of the outdoors in harsh weather situations."
