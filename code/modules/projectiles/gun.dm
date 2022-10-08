@@ -143,7 +143,7 @@
 	return !user.contains(src)
 
 /obj/item/gun/proc/shoot_with_empty_chamber(mob/living/user as mob|obj)
-	balloon_alert_to_viewers("*click*")
+	balloon_alert_to_viewers("*click*", vision_distance = COMBAT_MESSAGE_RANGE)
 	playsound(src, dry_fire_sound, 30, TRUE)
 
 /obj/item/gun/proc/fire_sounds()
