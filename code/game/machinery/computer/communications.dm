@@ -474,6 +474,7 @@
 	if (network_name)
 		payload["network"] = network_name
 	payload["sender_ckey"] = usr.ckey
+	payload["is_filtered"] = SScommunications.soft_filtering
 
 	send2otherserver(html_decode(station_name()), message, "Comms_Console", destination == "all" ? null : list(destination), additional_data = payload)
 	minor_announce(message, title = "Outgoing message to allied station")
