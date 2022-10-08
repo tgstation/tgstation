@@ -415,6 +415,26 @@
 	playsound(user ? user : src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 20, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
+/obj/item/toy/sword/examine(mob/user)
+	. = ..()
+	. += span_notice("It has a lighting dial currently set to [saber_color] which looks like it can be turned with a <b>screwdriver</b>.")
+
+/obj/item/toy/sword/screwdriver_act(mob/living/user, obj/item/tool)
+	. = TOOLACT_SUCCESSFUL
+	switch(saber_color)
+		if("red")
+			saber_color = "blue"
+		if("blue")
+			saber_color = "green"
+		if("green")
+			saber_color = "purple"
+		if("purple")
+			saber_color = "red"
+		else
+			return
+	to_chat(user, span_notice("You turn [src]'s lighting dial to [saber_color]."))
+	update_appearance(UPDATE_ICON)
+
 // Copied from /obj/item/melee/energy/sword/attackby
 /obj/item/toy/sword/attackby(obj/item/weapon, mob/living/user, params)
 	if(istype(weapon, /obj/item/toy/sword))
