@@ -35,11 +35,11 @@
 	if(!select)
 		burst_size = 1
 		fire_delay = 0
-		balloon_alert(user, "semi-automatic")
+		balloon_alert(user, "switched to semi-automatic")
 	else
 		burst_size = initial(burst_size)
 		fire_delay = initial(fire_delay)
-		balloon_alert(user, "[burst_size]-round burst")
+		balloon_alert(user, "switched to [burst_size]-round burst")
 
 	playsound(user, 'sound/weapons/empty.ogg', 100, TRUE)
 	update_appearance()

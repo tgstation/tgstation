@@ -54,7 +54,7 @@
 
 /obj/item/gun/syringe/attack_self(mob/living/user)
 	if(!syringes.len)
-		balloon_alert(user, "empty")
+		balloon_alert(user, "it's empty!")
 		return FALSE
 
 	var/obj/item/reagent_containers/syringe/S = syringes[syringes.len]

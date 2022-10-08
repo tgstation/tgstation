@@ -262,7 +262,7 @@
 	if (bolt_type == BOLT_TYPE_OPEN)
 		if(!bolt_locked) //If it's an open bolt, racking again would do nothing
 			if (user)
-				balloon_alert(user, "[bolt_wording] already cocked")
+				balloon_alert(user, "[bolt_wording] already cocked!")
 			return
 		bolt_locked = FALSE
 	if (user)
@@ -341,7 +341,7 @@
 			if (tac_reloads)
 				eject_magazine(user, FALSE, AM)
 			else
-				balloon_alert(user, "already loaded")
+				balloon_alert(user, "already loaded!")
 		return
 	if (isammocasing(A) || istype(A, /obj/item/ammo_box))
 		if (bolt_type == BOLT_TYPE_NO_BOLT || internal_magazine)
@@ -489,7 +489,7 @@
 			playsound(user, eject_sound, eject_sound_volume, eject_sound_vary)
 			update_appearance()
 		else
-			balloon_alert(user, "empty")
+			balloon_alert(user, "it's empty!")
 		return
 	if(bolt_type == BOLT_TYPE_LOCKING && bolt_locked)
 		drop_bolt(user)
