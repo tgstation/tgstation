@@ -41,7 +41,7 @@
 	var/datum/component/uplink/hidden_uplink = GetComponent(/datum/component/uplink)
 	if(hidden_uplink?.owner && HAS_TRAIT(user, TRAIT_ILLITERATE))
 		if(hidden_uplink.owner != user.key)
-			return COMPONENT_CANCEL_ATTACK_CHAIN
+			return ..()
 
 		hidden_uplink.locked = FALSE
 		hidden_uplink.interact(null, user)
