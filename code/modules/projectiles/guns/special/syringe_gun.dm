@@ -54,7 +54,7 @@
 
 /obj/item/gun/syringe/attack_self(mob/living/user)
 	if(!syringes.len)
-		to_chat(user, span_warning("[src] is empty!"))
+		balloon_alert(user, "empty")
 		return FALSE
 
 	var/obj/item/reagent_containers/syringe/S = syringes[syringes.len]
@@ -64,7 +64,7 @@
 	user.put_in_hands(S)
 
 	syringes.Remove(S)
-	to_chat(user, span_notice("You unload [S] from \the [src]."))
+	balloon_alert(user, "[S.name] unloaded")
 	update_appearance()
 
 	return TRUE
@@ -77,7 +77,7 @@
 		if(syringes.len < max_syringes)
 			if(!user.transferItemToLoc(A, src))
 				return FALSE
-			to_chat(user, span_notice("You load [A] into \the [src]."))
+			balloon_alert(user, "[A.name] loaded")
 			syringes += A
 			recharge_newshot()
 			update_appearance()
@@ -159,7 +159,7 @@
 		if(syringes.len < max_syringes)
 			if(!user.transferItemToLoc(D, src))
 				return FALSE
-			to_chat(user, span_notice("You load \the [D] into \the [src]."))
+			balloon_alert(user, "[D.name] loaded")
 			syringes += D
 			recharge_newshot()
 			update_appearance()

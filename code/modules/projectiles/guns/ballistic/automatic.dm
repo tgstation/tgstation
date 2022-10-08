@@ -35,11 +35,11 @@
 	if(!select)
 		burst_size = 1
 		fire_delay = 0
-		to_chat(user, span_notice("You switch to semi-automatic."))
+		balloon_alert(user, "semi-automatic")
 	else
 		burst_size = initial(burst_size)
 		fire_delay = initial(fire_delay)
-		to_chat(user, span_notice("You switch to [burst_size]-round burst."))
+		balloon_alert(user, "[burst_size]-round burst")
 
 	playsound(user, 'sound/weapons/empty.ogg', 100, TRUE)
 	update_appearance()
@@ -192,23 +192,6 @@
 			. += "[initial(icon_state)]_semi"
 		if(1)
 			. += "[initial(icon_state)]_burst"
-
-/obj/item/gun/ballistic/automatic/m90/burst_select()
-	var/mob/living/carbon/human/user = usr
-	switch(select)
-		if(0)
-			select = 1
-			burst_size = initial(burst_size)
-			fire_delay = initial(fire_delay)
-			to_chat(user, span_notice("You switch to [burst_size]-rnd burst."))
-		if(1)
-			select = 0
-			burst_size = 1
-			fire_delay = 0
-			to_chat(user, span_notice("You switch to semi-auto."))
-	playsound(user, 'sound/weapons/empty.ogg', 100, TRUE)
-	update_appearance()
-	return
 
 /obj/item/gun/ballistic/automatic/tommygun
 	name = "\improper Thompson SMG"
