@@ -432,7 +432,7 @@
 			saber_color = "red"
 		else
 			return
-	to_chat(user, span_notice("You turn [src]'s lighting dial to [saber_color]."))
+	balloon_alert(user, "changed to [saber_color]")
 	update_appearance(UPDATE_ICON)
 
 // Copied from /obj/item/melee/energy/sword/attackby
