@@ -231,23 +231,23 @@
 	pixel_x = -3;
 	pixel_y = -3
 	},
-/obj/item/clothing/head/hardhat/orange{
+/obj/item/clothing/head/utility/hardhat/orange{
 	name = "protective hat";
 	pixel_y = 9
 	},
-/obj/item/clothing/head/hardhat/orange{
+/obj/item/clothing/head/utility/hardhat/orange{
 	name = "protective hat";
 	pixel_y = 9
 	},
-/obj/item/clothing/head/hardhat/orange{
+/obj/item/clothing/head/utility/hardhat/orange{
 	name = "protective hat";
 	pixel_y = 9
 	},
-/obj/item/clothing/head/hardhat/orange{
+/obj/item/clothing/head/utility/hardhat/orange{
 	name = "protective hat";
 	pixel_y = 9
 	},
-/obj/item/clothing/head/hardhat/orange{
+/obj/item/clothing/head/utility/hardhat/orange{
 	name = "protective hat";
 	pixel_y = 9
 	},
@@ -718,7 +718,7 @@
 /obj/item/skub,
 /obj/effect/turf_decal/delivery,
 /obj/item/reagent_containers/cup/glass/bottle/hooch,
-/obj/item/clothing/head/foilhat,
+/obj/item/clothing/head/costume/foilhat,
 /obj/structure/sign/poster/random/directional/west,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
@@ -1040,7 +1040,7 @@
 /obj/machinery/roulette{
 	anchored = 1
 	},
-/obj/item/clothing/head/sombrero,
+/obj/item/clothing/head/costume/sombrero/green,
 /turf/open/floor/carpet/green,
 /area/shuttle/escape)
 "Ev" = (

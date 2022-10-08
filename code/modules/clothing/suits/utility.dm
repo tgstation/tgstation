@@ -65,7 +65,7 @@
 /*
  * Bomb protection
  */
-/obj/item/clothing/head/bomb_hood
+/obj/item/clothing/head/utility/bomb_hood
 	name = "bomb hood"
 	desc = "Use in case of bomb."
 	icon_state = "bombsuit"
@@ -81,7 +81,6 @@
 	equip_delay_other = 70
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = NONE
-
 
 /obj/item/clothing/suit/utility/bomb_suit
 	name = "bomb suit"
@@ -102,8 +101,7 @@
 	equip_delay_other = 70
 	resistance_flags = NONE
 
-
-/obj/item/clothing/head/bomb_hood/security
+/obj/item/clothing/head/utility/bomb_hood/security
 	icon_state = "bombsuit_sec"
 	inhand_icon_state = null
 
@@ -112,8 +110,7 @@
 	inhand_icon_state = null
 	allowed = list(/obj/item/gun/energy, /obj/item/melee/baton, /obj/item/restraints/handcuffs)
 
-
-/obj/item/clothing/head/bomb_hood/white
+/obj/item/clothing/head/utility/bomb_hood/white
 	icon_state = "bombsuit_white"
 	inhand_icon_state = null
 
@@ -125,7 +122,7 @@
 * Radiation protection
 */
 
-/obj/item/clothing/head/radiation
+/obj/item/clothing/head/utility/radiation
 	name = "radiation hood"
 	icon_state = "rad"
 	desc = "A hood with radiation protective properties. The label reads, 'Made with lead. Please do not consume insulation.'"
@@ -137,7 +134,7 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = NONE
 
-/obj/item/clothing/head/radiation/Initialize(mapload)
+/obj/item/clothing/head/utility/radiation/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/radiation_protected_clothing)
 

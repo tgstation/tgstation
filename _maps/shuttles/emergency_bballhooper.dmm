@@ -157,23 +157,23 @@
 	pixel_x = -3;
 	pixel_y = -3
 	},
-/obj/item/clothing/head/hardhat/orange{
+/obj/item/clothing/head/utility/hardhat/orange{
 	name = "protective hat";
 	pixel_y = 9
 	},
-/obj/item/clothing/head/hardhat/orange{
+/obj/item/clothing/head/utility/hardhat/orange{
 	name = "protective hat";
 	pixel_y = 9
 	},
-/obj/item/clothing/head/hardhat/orange{
+/obj/item/clothing/head/utility/hardhat/orange{
 	name = "protective hat";
 	pixel_y = 9
 	},
-/obj/item/clothing/head/hardhat/orange{
+/obj/item/clothing/head/utility/hardhat/orange{
 	name = "protective hat";
 	pixel_y = 9
 	},
-/obj/item/clothing/head/hardhat/orange{
+/obj/item/clothing/head/utility/hardhat/orange{
 	name = "protective hat";
 	pixel_y = 9
 	},
@@ -637,34 +637,34 @@
 /area/shuttle/escape)
 "JR" = (
 /obj/structure/table,
-/obj/item/clothing/head/hardhat/red{
+/obj/item/clothing/head/utility/hardhat/red{
 	name = "A La Penners' Helmet";
 	pixel_x = 8;
 	pixel_y = -5
 	},
 /obj/machinery/light/cold/directional/north,
-/obj/item/clothing/head/hardhat/red{
+/obj/item/clothing/head/utility/hardhat/red{
 	name = "A La Penners' Helmet";
 	pixel_x = 8;
 	pixel_y = 1
 	},
-/obj/item/clothing/head/hardhat/red{
+/obj/item/clothing/head/utility/hardhat/red{
 	name = "A La Penners' Helmet";
 	pixel_x = 8;
 	pixel_y = 7
 	},
 /obj/machinery/status_display/evac/directional/north,
-/obj/item/clothing/head/hardhat/red{
+/obj/item/clothing/head/utility/hardhat/red{
 	name = "A La Penners' Helmet";
 	pixel_x = -7;
 	pixel_y = -5
 	},
-/obj/item/clothing/head/hardhat/red{
+/obj/item/clothing/head/utility/hardhat/red{
 	name = "A La Penners' Helmet";
 	pixel_x = -7;
 	pixel_y = 1
 	},
-/obj/item/clothing/head/hardhat/red{
+/obj/item/clothing/head/utility/hardhat/red{
 	name = "A La Penners' Helmet";
 	pixel_x = -7;
 	pixel_y = 7
@@ -817,32 +817,32 @@
 /area/shuttle/escape)
 "Tg" = (
 /obj/structure/table,
-/obj/item/clothing/head/hardhat/dblue{
+/obj/item/clothing/head/utility/hardhat/dblue{
 	pixel_x = 8;
 	pixel_y = -5;
 	name = "Hopping Jezzerton's Helmet"
 	},
-/obj/item/clothing/head/hardhat/dblue{
+/obj/item/clothing/head/utility/hardhat/dblue{
 	pixel_x = 8;
 	pixel_y = 1;
 	name = "Hopping Jezzerton's Helmet"
 	},
-/obj/item/clothing/head/hardhat/dblue{
+/obj/item/clothing/head/utility/hardhat/dblue{
 	pixel_x = 8;
 	pixel_y = 9;
 	name = "Hopping Jezzerton's Helmet"
 	},
-/obj/item/clothing/head/hardhat/dblue{
+/obj/item/clothing/head/utility/hardhat/dblue{
 	pixel_x = -7;
 	pixel_y = -5;
 	name = "Hopping Jezzerton's Helmet"
 	},
-/obj/item/clothing/head/hardhat/dblue{
+/obj/item/clothing/head/utility/hardhat/dblue{
 	pixel_x = -7;
 	pixel_y = 1;
 	name = "Hopping Jezzerton's Helmet"
 	},
-/obj/item/clothing/head/hardhat/dblue{
+/obj/item/clothing/head/utility/hardhat/dblue{
 	pixel_x = -7;
 	pixel_y = 9;
 	name = "Hopping Jezzerton's Helmet"

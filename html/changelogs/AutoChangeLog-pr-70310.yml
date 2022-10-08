@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes: 
-  - bugfix: "If an admin gives you Void Phase, you won't be hurt by your own spell whenever you cast it."

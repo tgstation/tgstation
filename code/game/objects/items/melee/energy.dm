@@ -225,7 +225,7 @@
 
 // The colored energy swords we all know and love.
 /obj/item/melee/energy/sword/saber
-	/// Assoc list of all possible saber colors to color define.
+	/// Assoc list of all possible saber colors to color define. If you add a new color, make sure to update /obj/item/toy/sword too!
 	var/list/possible_sword_colors = list(
 		"red" = COLOR_SOFT_RED,
 		"blue" = LIGHT_COLOR_LIGHT_CYAN,
