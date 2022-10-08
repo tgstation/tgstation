@@ -45,6 +45,7 @@
 
 /datum/traitor_objective/hack_comm_console/proc/begin_hack(mob/user, obj/machinery/computer/communications/target)
 	if(!target.try_hack_console(user))
+		target.balloon_alert(user, "can't hack here!")
 		return
 
 	succeed_objective()

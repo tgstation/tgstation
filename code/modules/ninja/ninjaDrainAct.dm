@@ -148,6 +148,7 @@
 		return NONE
 	var/area/console_area = get_area(src)
 	if(!console_area || !(console_area.area_flags & VALID_TERRITORY))
+		balloon_alert(ninja, "can't hack here!")
 		return NONE
 
 	AI_notify_hack()
@@ -178,6 +179,7 @@
 
 /obj/machinery/computer/communications/proc/ninjadrain_charge(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
 	if(!try_hack_console(ninja))
+		balloon_alert(ninja, "can't hack here!")
 		return
 
 	hacking_module.communication_console_hack_success = TRUE
