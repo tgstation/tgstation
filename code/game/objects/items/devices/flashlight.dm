@@ -24,10 +24,7 @@
 	if(icon_state == "[initial(icon_state)]-on")
 		on = TRUE
 	update_brightness()
-	AddElement( \
-		/datum/element/contextual_screentip_bare_hands, \
-		rmb_text = "Toggle light", \
-	)
+	AddElement(/datum/element/contextual_screentip_bare_hands, rmb_text = "Toggle light")
 
 /obj/item/flashlight/proc/update_brightness(mob/user)
 	if(on)
