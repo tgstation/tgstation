@@ -54,7 +54,7 @@
 
 	var/is_holding_cane = quirk_holder.is_holding_item_of_type(/obj/item/cane)
 
-	if(backpack & !is_holding_cane)
+	if(backpack && !is_holding_cane)
 		quirk_holder.add_movespeed_modifier(/datum/movespeed_modifier/human_carry)
 		quirk_holder.add_mood_event("back_pain", /datum/mood_event/back_pain)
 	else // has no backpack or is holding a cane with a backpack
@@ -66,7 +66,7 @@
 
 	var/is_holding_cane = quirk_holder.is_holding_item_of_type(/obj/item/cane)
 
-	if(backpack & !is_holding_cane)
+	if(backpack && !is_holding_cane)
 		quirk_holder.add_movespeed_modifier(/datum/movespeed_modifier/human_carry)
 		quirk_holder.add_mood_event("back_pain", /datum/mood_event/back_pain)
 	else // has no backpack or is holding a cane with a backpack
