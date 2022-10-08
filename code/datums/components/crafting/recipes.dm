@@ -1141,25 +1141,27 @@
 	reqs = list(/obj/item/aicard = 1,
 					/obj/item/food/grown/potato = 1,
 					/obj/item/stack/cable_coil = 5)
+	parts = list(/obj/item/aicard = 1)
 	category = CAT_MISC
 
-/datum/crafting_recipe/aitater/check_requirements(mob/user, list/collected_requirements)
-	var/obj/item/aicard/aicard = collected_requirements[/obj/item/aicard][1]
-	if(!aicard.AI)
-		return TRUE
-
-	to_chat(user, span_boldwarning("You can't craft an intelliTater with an AI in the card!"))
-	return FALSE
-
-/datum/crafting_recipe/aispook
+/datum/crafting_recipe/aitater/aispook
 	name = "intelliLantern"
 	result = /obj/item/aicard/aispook
-	time = 30
-	tool_behaviors = list(TOOL_WIRECUTTER)
 	reqs = list(/obj/item/aicard = 1,
 					/obj/item/food/grown/pumpkin = 1,
 					/obj/item/stack/cable_coil = 5)
-	category = CAT_MISC
+
+/datum/crafting_recipe/aitater/on_craft_completion(mob/user, atom/result)
+	var/obj/item/aicard/new_card = result
+	var/obj/item/aicard/base_card = result.contents[1]
+	var/mob/living/silicon/ai = base_card.AI
+
+	if(ai)
+		base_card.AI = null
+		ai.forceMove(new_card)
+		new_card.AI = ai
+		new_card.update_appearance()
+	qdel(base_card)
 
 /datum/crafting_recipe/ghettojetpack
 	name = "Improvised Jetpack"
