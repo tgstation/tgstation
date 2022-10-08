@@ -8143,6 +8143,12 @@
 	pixel_y = -6;
 	req_access = list("science")
 	},
+/obj/item/stock_parts/matter_bin,
+/obj/item/stock_parts/matter_bin{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/stock_parts/micro_laser,
 /turf/open/floor/iron,
 /area/station/science/lab)
 "dbh" = (
@@ -16766,10 +16772,10 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "gle" = (
-/obj/structure/table/glass,
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
+/obj/machinery/photocopier,
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "gll" = (
@@ -18153,16 +18159,15 @@
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "gLU" = (
-/obj/structure/table,
 /obj/effect/turf_decal/siding{
 	dir = 9
 	},
-/obj/item/stock_parts/matter_bin{
-	pixel_x = 3;
-	pixel_y = 3
+/obj/machinery/fax{
+	fax_name = "Research Division";
+	name = "Research Division Fax Machine";
+	pixel_x = 1
 	},
-/obj/item/stock_parts/matter_bin,
-/obj/item/stock_parts/micro_laser,
+/obj/structure/table,
 /turf/open/floor/iron,
 /area/station/science/lab)
 "gMc" = (
@@ -56013,12 +56018,7 @@
 /turf/open/floor/plating,
 /area/station/hallway/primary/central)
 "tKR" = (
-/obj/structure/table/glass,
-/obj/machinery/fax{
-	fax_name = "Research Division";
-	name = "Research Division Fax Machine";
-	pixel_x = 1
-	},
+/obj/machinery/modular_computer/console/preset/cargochat/science,
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "tKS" = (
@@ -67440,7 +67440,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "xKk" = (
-/obj/machinery/photocopier,
+/obj/machinery/computer/department_orders/science,
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "xKl" = (
