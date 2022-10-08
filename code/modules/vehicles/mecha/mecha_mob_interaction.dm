@@ -112,6 +112,7 @@
 		mob_container = brain.container
 	else if(isAI(M))
 		var/mob/living/silicon/ai/AI = M
+		AI.eyeobj?.UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
 		if(forced)//This should only happen if there are multiple AIs in a round, and at least one is Malf.
 			AI.gib()  //If one Malf decides to steal a mech from another AI (even other Malfs!), they are destroyed, as they have nowhere to go when replaced.
 			AI = null
