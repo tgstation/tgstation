@@ -448,7 +448,7 @@
 	if(current_holder)
 		remove_dynamic_lumi()
 	overlay_lighting_flags &= ~LIGHTING_ON
-	if(current_holder)
+	if(current_holder && current_holder != parent && current_holder != parent_attached_to)
 		UnregisterSignal(current_holder, COMSIG_MOVABLE_MOVED)
 	clean_old_turfs()
 
