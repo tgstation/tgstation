@@ -115,7 +115,7 @@
 		return
 	UnregisterSignal(owner, COMSIG_MOB_SAY)
 
-/datum/mutation/human/chav/proc/handle_speech(datum/source, mob/speech_args)
+/datum/mutation/human/chav/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
 
 	var/message = speech_args[SPEECH_MESSAGE]

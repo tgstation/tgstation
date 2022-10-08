@@ -368,6 +368,7 @@
 
 	icon = 'icons/obj/medical/surgery_tools.dmi'
 	icon_state = "bone-gel"
+	inhand_icon_state = "bone-gel"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 

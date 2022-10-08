@@ -66,7 +66,7 @@
 	ears = /obj/item/radio/headset/heads/captain/alt
 	glasses = /obj/item/clothing/glasses/sunglasses
 	gloves = /obj/item/clothing/gloves/color/captain
-	head = /obj/item/clothing/head/caphat
+	head = /obj/item/clothing/head/hats/caphat
 	shoes = /obj/item/clothing/shoes/laceup
 
 

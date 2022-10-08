@@ -119,7 +119,7 @@
 	singular_name = "fairygrass floor tile"
 	desc = "A patch of odd, glowing blue grass."
 	icon_state = "tile_fairygrass"
-	inhand_icon_state = "tile-fairygrass"
+	inhand_icon_state = null
 	turf_type = /turf/open/floor/grass/fairy
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/tile/fairygrass

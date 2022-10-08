@@ -88,13 +88,16 @@
 	UnregisterSignal(owner, COMSIG_MOB_SAY)
 	UnregisterSignal(owner, COMSIG_MOB_CLICKON)
 
-/datum/mutation/human/hulk/proc/handle_speech(original_message, wrapped_message)
+/datum/mutation/human/hulk/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
 
-	var/message = wrapped_message[1]
+	var/message = speech_args[SPEECH_MESSAGE]
 	if(message)
 		message = "[replacetext(message, ".", "!")]!!"
-	wrapped_message[1] = message
+	speech_args[SPEECH_MESSAGE] = message
+
+	// the reason we don't just uppertext(message) in this proc is so that our hulk speech
+	// can uppercase all other speech moidifiers after they are done (by returning COMPONENT_UPPERCASE_SPEECH)
 	return COMPONENT_UPPERCASE_SPEECH
 
 /// How many steps it takes to throw the mob

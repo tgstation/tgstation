@@ -841,6 +841,7 @@
 	desc = "Parts of a rack."
 	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "rack_parts"
+	inhand_icon_state = "rack_parts"
 	flags_1 = CONDUCT_1
 	custom_materials = list(/datum/material/iron=2000)
 	var/building = FALSE

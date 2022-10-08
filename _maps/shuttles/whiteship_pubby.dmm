@@ -6,7 +6,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "c" = (
-/obj/structure/shuttle/engine/propulsion/burst{
+/obj/machinery/power/shuttle_engine/propulsion/burst{
 	dir = 1
 	},
 /turf/closed/wall/mineral/titanium,
@@ -24,7 +24,7 @@
 /turf/open/floor/iron,
 /area/shuttle/abandoned)
 "g" = (
-/obj/structure/shuttle/engine/propulsion/burst{
+/obj/machinery/power/shuttle_engine/propulsion/burst{
 	dir = 8
 	},
 /turf/closed/wall/mineral/titanium,
@@ -59,7 +59,7 @@
 /turf/open/floor/plating/abductor,
 /area/shuttle/abandoned)
 "k" = (
-/obj/structure/shuttle/engine/propulsion/burst{
+/obj/machinery/power/shuttle_engine/propulsion/burst{
 	dir = 4
 	},
 /turf/closed/wall/mineral/titanium,
@@ -123,7 +123,7 @@
 /turf/open/floor/plating/abductor,
 /area/shuttle/abandoned)
 "s" = (
-/obj/structure/shuttle/engine/propulsion/burst,
+/obj/machinery/power/shuttle_engine/propulsion/burst,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 

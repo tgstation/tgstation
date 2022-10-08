@@ -9,7 +9,7 @@ Slimecrossing Armor
 	name = "rebreather mask"
 	desc = "A transparent mask, resembling a conventional breath mask, but made of bluish slime. Seems to lack any air supply tube, though."
 	icon_state = "slime"
-	inhand_icon_state = "slime"
+	inhand_icon_state = "b_mask"
 	body_parts_covered = NONE
 	w_class = WEIGHT_CLASS_SMALL
 	clothing_traits = list(TRAIT_NOBREATH)
@@ -96,17 +96,18 @@ Slimecrossing Armor
 	name = "heroine bud"
 	desc = "An extremely addictive flower, full of peace magic."
 	icon = 'icons/obj/xenobiology/slimecrossing.dmi'
+	worn_icon = 'icons/mob/clothing/head/costume.dmi'
 	icon_state = "peaceflower"
-	inhand_icon_state = "peaceflower"
+	inhand_icon_state = null
 	slot_flags = ITEM_SLOT_HEAD
 	clothing_traits = list(TRAIT_PACIFISM)
 	body_parts_covered = NONE
-
 	force = 0
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 1
 	throw_range = 3
+
 /obj/item/clothing/head/peaceflower/proc/at_peace_check(mob/user)
 	if(iscarbon(user))
 		var/mob/living/carbon/carbon_user = user
@@ -131,7 +132,7 @@ Slimecrossing Armor
 	icon_state = "adamsuit"
 	icon = 'icons/obj/clothing/suits/armor.dmi'
 	worn_icon = 'icons/mob/clothing/suits/armor.dmi'
-	inhand_icon_state = "adamsuit"
+	inhand_icon_state = null
 	flags_inv = NONE
 	obj_flags = IMMUTABLE_SLOW
 	slowdown = 4

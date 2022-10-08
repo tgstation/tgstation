@@ -1,6 +1,6 @@
 GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't really work on borgos
 	/obj/item/clothing/head/helmet/space,
-	/obj/item/clothing/head/welding,
+	/obj/item/clothing/head/utility/welding,
 	/obj/item/clothing/head/chameleon/broken \
 	)))
 

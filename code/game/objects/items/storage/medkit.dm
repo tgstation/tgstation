@@ -12,6 +12,7 @@
 	name = "medkit"
 	desc = "It's an emergency medical kit for those serious boo-boos."
 	icon_state = "medkit"
+	inhand_icon_state = "medkit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	throw_speed = 3

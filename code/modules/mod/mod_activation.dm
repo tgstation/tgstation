@@ -26,6 +26,7 @@
 	var/parts_to_check = mod_parts - part
 	if(part.loc == src)
 		deploy(user, part)
+		on_mod_deployed(user)
 		for(var/obj/item/checking_part as anything in parts_to_check)
 			if(checking_part.loc != src)
 				continue
@@ -33,6 +34,7 @@
 			break
 	else
 		retract(user, part)
+		on_mod_retracted(user)
 		for(var/obj/item/checking_part as anything in parts_to_check)
 			if(checking_part.loc == src)
 				continue
@@ -45,11 +47,12 @@
 		balloon_alert(user, "deactivate the suit first!")
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
-	var/deploy = FALSE
+	var/deploy = TRUE
 	for(var/obj/item/part as anything in mod_parts)
-		if(part.loc != src)
+		if(part.loc == src)
 			continue
-		deploy = TRUE
+		deploy = FALSE
+		break
 	for(var/obj/item/part as anything in mod_parts)
 		if(deploy && part.loc == src)
 			deploy(null, part)
@@ -59,6 +62,10 @@
 		span_notice("[src] [deploy ? "deploys" : "retracts"] its' parts with a mechanical hiss."),
 		span_hear("You hear a mechanical hiss."))
 	playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	if(deploy)
+		on_mod_deployed(user)
+	else
+		on_mod_retracted(user)
 	return TRUE
 
 /// Deploys a part of the suit onto the user.
@@ -178,6 +185,7 @@
 		else
 			playsound(src, 'sound/machines/synth_no.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, frequency = 6000)
 	activating = FALSE
+	SEND_SIGNAL(src, COMSIG_MOD_TOGGLED, user)
 	return TRUE
 
 ///Seals or unseals the given part
@@ -242,5 +250,11 @@
 
 /obj/item/mod/control/proc/has_wearer()
 	return wearer
+
+/obj/item/mod/control/proc/on_mod_deployed(mob/user)
+	SEND_SIGNAL(src, COMSIG_MOD_DEPLOYED, user)
+
+/obj/item/mod/control/proc/on_mod_retracted(mob/user)
+	SEND_SIGNAL(src, COMSIG_MOD_RETRACTED, user)
 
 #undef MOD_ACTIVATION_STEP_FLAGS

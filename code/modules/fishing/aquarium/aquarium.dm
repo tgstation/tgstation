@@ -101,7 +101,7 @@
 	. += span_notice("Alt-click to [panel_open ? "close" : "open"] the control panel.")
 
 /obj/structure/aquarium/AltClick(mob/user)
-	if(!user.canUseTopic(src, BE_CLOSE))
+	if(!user.canUseTopic(src, be_close = TRUE))
 		return ..()
 	panel_open = !panel_open
 	update_appearance()

@@ -223,11 +223,13 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		if(10)
 			user.visible_message(span_warning("[user]'s eyes light up with a vengeful fire!"), \
 			span_userdanger("YOU FEEL THE POWER OF VALHALLA FLOWING THROUGH YOU! <i>THERE CAN BE ONLY ONE!!!</i>"))
-			user.update_icons()
 			new_name = "GORE-DRENCHED CLAYMORE OF [pick("THE WHIMSICAL SLAUGHTER", "A THOUSAND SLAUGHTERED CATTLE", "GLORY AND VALHALLA", "ANNIHILATION", "OBLITERATION")]"
 			icon_state = "claymore_gold"
 			inhand_icon_state = "cultblade"
+			lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
+			righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
 			remove_atom_colour(ADMIN_COLOUR_PRIORITY)
+			user.update_held_items()
 
 	name = new_name
 	playsound(user, 'sound/items/screwdriver2.ogg', 50, TRUE)
@@ -342,7 +344,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	name = "throwing star"
 	desc = "An ancient weapon still used to this day, due to its ease of lodging itself into its victim's body parts."
 	icon_state = "throwingstar"
-	inhand_icon_state = "eshield0"
+	inhand_icon_state = "eshield"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
 	force = 2
@@ -492,6 +494,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "Apparently a staff used by the wizard."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "staff"
+	inhand_icon_state = "staff"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	force = 3
@@ -509,6 +512,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "Used for sweeping, and flying into the night while cackling. Black cat not included."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "broom"
+	inhand_icon_state = "broom"
 	resistance_flags = FLAMMABLE
 
 /obj/item/staff/stick
