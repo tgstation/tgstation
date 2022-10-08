@@ -32676,7 +32676,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/tram/left)
 "lHN" = (
-/obj/item/wheelchair/gold,
+/obj/vehicle/ridden/wheelchair/motorized,
 /turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "lIs" = (
