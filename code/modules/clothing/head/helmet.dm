@@ -349,18 +349,6 @@
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	armor = list(MELEE = 25, BULLET = 20, LASER = 20, ENERGY = 30, BOMB = 20, BIO = 50, FIRE = -10, ACID = 50, WOUND = 5)
 
-/obj/item/clothing/head/helmet/infiltrator
-	name = "infiltrator helmet"
-	desc = "The galaxy isn't big enough for the two of us."
-	icon_state = "infiltrator"
-	inhand_icon_state = "infiltrator_helmet"
-	armor = list(MELEE = 40, BULLET = 40, LASER = 30, ENERGY = 40, BOMB = 70, BIO = 0, FIRE = 100, ACID = 100)
-	resistance_flags = FIRE_PROOF | ACID_PROOF
-	flash_protect = FLASH_PROTECTION_WELDER
-	flags_inv = HIDEHAIR|HIDEFACIALHAIR|HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDESNOUT
-	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
-	strip_delay = 80
-
 /obj/item/clothing/head/helmet/elder_atmosian
 	name = "\improper Elder Atmosian Helmet"
 	desc = "A superb helmet made with the toughest and rarest materials available to man."

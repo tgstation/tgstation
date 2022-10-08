@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Fixed lighting overlays from an item sometimes showing up on inventory slots / backpack slots instead of from the mob holding them."
