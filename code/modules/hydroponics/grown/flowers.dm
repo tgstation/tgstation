@@ -179,6 +179,7 @@
 	name = "sunflower"
 	desc = "It's beautiful! A certain person might beat you to death if you trample these."
 	icon_state = "sunflower"
+	inhand_icon_state = "sunflower"
 	lefthand_file = 'icons/mob/inhands/weapons/plants_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/plants_righthand.dmi'
 	foodtypes = VEGETABLES
@@ -217,6 +218,7 @@
 	name = "moonflower"
 	desc = "Store in a location at least 50 yards away from werewolves."
 	icon_state = "moonflower"
+	inhand_icon_state = "moonflower"
 	slot_flags = ITEM_SLOT_HEAD
 	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 	distill_reagent = /datum/reagent/consumable/ethanol/absinthe //It's made from flowers.
@@ -241,6 +243,7 @@
 	name = "\improper novaflower"
 	desc = "These beautiful flowers have a crisp smokey scent, like a summer bonfire."
 	icon_state = "novaflower"
+	inhand_icon_state = "novaflower"
 	lefthand_file = 'icons/mob/inhands/weapons/plants_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/plants_righthand.dmi'
 	damtype = BURN
@@ -282,6 +285,7 @@
 	desc = "The classic fleur d'amour - flower of love. Watch for its thorns!"
 	base_icon_state = "rose"
 	icon_state = "rose"
+	inhand_icon_state = "rose"
 	worn_icon_state = "rose"
 	lefthand_file = 'icons/mob/inhands/items/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/food_righthand.dmi'
@@ -292,7 +296,7 @@
 
 /obj/item/food/grown/rose/equipped(mob/user, slot, initial)
 	. = ..()
-	if(slot == ITEM_SLOT_MASK)
+	if(slot & ITEM_SLOT_MASK)
 		worn_icon_state = "[base_icon_state]_mouth"
 		user.update_worn_mask()
 	else

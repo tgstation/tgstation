@@ -3,7 +3,7 @@
 INITIALIZE_IMMEDIATE(/mob/dead)
 
 /mob/dead
-	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
+	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF | SEE_BLACKNESS
 	move_resist = INFINITY
 	throwforce = 0
 
@@ -12,6 +12,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	if(flags_1 & INITIALIZED_1)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	flags_1 |= INITIALIZED_1
+	SET_PLANE_IMPLICIT(src, plane)
 	tag = "mob_[next_mob_id++]"
 	add_to_mob_list()
 
@@ -21,6 +22,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 		add_verb(src, /mob/dead/proc/server_hop)
 	set_focus(src)
 	become_hearing_sensitive()
+	log_mob_tag("CREATED: [key_name(src)] \[[src.type]\]")
 	return INITIALIZE_HINT_NORMAL
 
 /mob/dead/canUseStorage()
@@ -30,7 +32,8 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	var/turf/old_turf = get_turf(src)
 	var/turf/new_turf = get_turf(destination)
 	if (old_turf?.z != new_turf?.z)
-		on_changed_z_level(old_turf, new_turf)
+		var/same_z_layer = (GET_TURF_PLANE_OFFSET(old_turf) == GET_TURF_PLANE_OFFSET(new_turf))
+		on_changed_z_level(old_turf, new_turf, same_z_layer)
 	return ..()
 
 /mob/dead/get_status_tab_items()
@@ -120,6 +123,6 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	update_z(null)
 	return ..()
 
-/mob/dead/on_changed_z_level(turf/old_turf, turf/new_turf)
+/mob/dead/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	..()
 	update_z(new_turf?.z)

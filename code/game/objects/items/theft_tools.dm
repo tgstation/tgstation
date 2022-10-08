@@ -161,7 +161,7 @@
 	name = "supermatter sliver"
 	desc = "A tiny, highly volatile sliver of a supermatter crystal. Do not handle without protection!"
 	icon_state = "supermatter_sliver"
-	inhand_icon_state = "supermattersliver"
+	inhand_icon_state = null //touching it dusts you, so no need for an inhand icon.
 	pulseicon = "supermatter_sliver_pulse"
 	layer = ABOVE_MOB_LAYER
 	plane = GAME_PLANE_UPPER
@@ -287,6 +287,10 @@
 	toolspeed = 0.75
 	damtype = BURN
 	var/obj/item/nuke_core/supermatter_sliver/sliver
+
+/obj/item/hemostat/supermatter/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/hemostat/supermatter/Destroy()
 	QDEL_NULL(sliver)

@@ -171,7 +171,7 @@
 			channel.ping_user(src, pinged)
 			return TRUE
 
-/datum/computer_file/program/chatclient/process_tick()
+/datum/computer_file/program/chatclient/process_tick(delta_time)
 	. = ..()
 	var/datum/ntnet_conversation/channel = SSnetworks.station_network.get_chat_channel_by_id(active_channel)
 	if(program_state != PROGRAM_STATE_KILLED)

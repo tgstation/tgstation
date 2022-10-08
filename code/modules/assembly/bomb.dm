@@ -136,6 +136,7 @@
 
 	bomb.bombassembly = assembly //Tell the bomb about its assembly part
 	assembly.master = bomb //Tell the assembly about its new owner
+	assembly.on_attach()
 
 	bomb.bombtank = src //Same for tank
 	master = bomb

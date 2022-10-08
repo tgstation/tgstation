@@ -591,10 +591,13 @@
 /**
  * Adjust water.
  * Raises or lowers tray water values by a set value. Adding water will dillute toxicity from the tray.
+ * Returns the amount of water actually added/taken
  * * adjustamt - determines how much water the tray will be adjusted upwards or downwards.
  */
 /obj/machinery/hydroponics/proc/adjust_waterlevel(amt)
-	set_waterlevel(clamp(waterlevel + amt, 0, maxwater), FALSE)
+	var/initial_waterlevel = waterlevel
+	set_waterlevel(clamp(waterlevel+amt, 0, maxwater), FALSE)
+	return waterlevel-initial_waterlevel
 
 /**
  * Adjust Health.
@@ -849,9 +852,15 @@
 			//This was originally in apply_chemicals, but due to apply_chemicals only holding nutrients, we handle it here now.
 			if(reagent_source.reagents.has_reagent(/datum/reagent/water, 1))
 				var/water_amt = reagent_source.reagents.get_reagent_amount(/datum/reagent/water) * transfer_amount / reagent_source.reagents.total_volume
-				H.adjust_waterlevel(round(water_amt))
-				reagent_source.reagents.remove_reagent(/datum/reagent/water, water_amt)
-			reagent_source.reagents.trans_to(H.reagents, transfer_amount, transfered_by = user)
+				var/water_amt_adjusted = H.adjust_waterlevel(round(water_amt))
+				reagent_source.reagents.remove_reagent(/datum/reagent/water, water_amt_adjusted)
+				for(var/datum/reagent/not_water_reagent as anything in reagent_source.reagents.reagent_list)
+					if(istype(not_water_reagent,/datum/reagent/water))
+						continue
+					var/transfer_me_to_tray = reagent_source.reagents.get_reagent_amount(not_water_reagent.type) * transfer_amount / reagent_source.reagents.total_volume
+					reagent_source.reagents.trans_id_to(H.reagents, not_water_reagent.type, transfer_me_to_tray)
+			else
+				reagent_source.reagents.trans_to(H.reagents, transfer_amount, transfered_by = user)
 			lastuser = WEAKREF(user)
 			if(IS_EDIBLE(reagent_source) || istype(reagent_source, /obj/item/reagent_containers/pill))
 				qdel(reagent_source)
@@ -928,7 +937,7 @@
 		var/removed_trait = tgui_input_list(user, "Trait to remove from the [myseed.plantname]", "Plant Trait Removal", sort_list(current_traits))
 		if(isnull(removed_trait))
 			return
-		if(!user.canUseTopic(src, BE_CLOSE))
+		if(!user.canUseTopic(src, be_close = TRUE))
 			return
 		if(!myseed)
 			return
@@ -1008,7 +1017,7 @@
 				return
 			if(isnull(fresh_mut_list[locked_mutation]))
 				return
-			if(!user.canUseTopic(src, BE_CLOSE))
+			if(!user.canUseTopic(src, be_close = TRUE))
 				return
 			myseed.mutatelist = list(fresh_mut_list[locked_mutation])
 			myseed.set_endurance(myseed.endurance/2)
@@ -1051,7 +1060,7 @@
 
 /obj/machinery/hydroponics/CtrlClick(mob/user)
 	. = ..()
-	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 		return
 	if(!powered())
 		to_chat(user, span_warning("[name] has no power."))
@@ -1073,7 +1082,7 @@
 		update_appearance()
 		return FALSE
 	var/warning = tgui_alert(user, "Are you sure you wish to empty the tray's nutrient beaker?","Empty Tray Nutrients?", list("Yes", "No"))
-	if(warning == "Yes" && user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(warning == "Yes" && user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 		reagents.clear_reagents()
 		to_chat(user, span_warning("You empty [src]'s nutrient tank."))
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

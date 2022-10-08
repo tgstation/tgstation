@@ -17,7 +17,7 @@
 	name = "chicken costume spawner"
 	items = list(
 		/obj/item/clothing/suit/costume/chickensuit,
-		/obj/item/clothing/head/chicken,
+		/obj/item/clothing/head/costume/chicken,
 		/obj/item/food/egg,
 	)
 
@@ -49,7 +49,7 @@
 	name = "nyangirl costume spawner"
 	items = list(
 		/obj/item/clothing/under/costume/schoolgirl,
-		/obj/item/clothing/head/kitty,
+		/obj/item/clothing/head/costume/kitty,
 		/obj/item/clothing/glasses/blindfold,
 	)
 
@@ -68,7 +68,7 @@
 		/obj/item/clothing/accessory/waistcoat,
 		/obj/item/clothing/under/suit/black,
 		/obj/item/clothing/neck/tie/black,
-		/obj/item/clothing/head/that,
+		/obj/item/clothing/head/hats/tophat,
 	)
 
 /obj/effect/spawner/costume/referee
@@ -104,7 +104,7 @@
 	name = "plague doctor costume spawner"
 	items = list(
 		/obj/item/clothing/suit/bio_suit/plaguedoctorsuit,
-		/obj/item/clothing/head/plaguedoctorhat,
+		/obj/item/clothing/head/bio_hood/plague,
 		/obj/item/clothing/mask/gas/plaguedoctor,
 	)
 
@@ -122,7 +122,7 @@
 		/obj/item/clothing/suit/toggle/owlwings/griffinwings,
 		/obj/item/clothing/shoes/griffin,
 		/obj/item/clothing/under/costume/griffin,
-		/obj/item/clothing/head/griffin,
+		/obj/item/clothing/head/costume/griffin,
 	)
 
 /obj/effect/spawner/costume/waiter
@@ -146,7 +146,7 @@
 	name = "commie costume spawner"
 	items = list(
 		/obj/item/clothing/under/costume/soviet,
-		/obj/item/clothing/head/ushanka,
+		/obj/item/clothing/head/costume/ushanka,
 	)
 
 /obj/effect/spawner/costume/imperium_monk
@@ -172,7 +172,7 @@
 	name = "cute witch costume spawner"
 	items = list(
 		/obj/item/clothing/under/dress/sundress,
-		/obj/item/clothing/head/witchwig,
+		/obj/item/clothing/head/costume/witchwig,
 		/obj/item/staff/broom,
 	)
 

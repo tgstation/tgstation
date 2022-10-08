@@ -31,7 +31,7 @@
 	name = "reactive armor"
 	desc = "Doesn't seem to do much for some reason."
 	icon_state = "reactiveoff"
-	inhand_icon_state = "reactiveoff"
+	inhand_icon_state = null
 	blood_overlay_type = "armor"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 100)
 	actions_types = list(/datum/action/item_action/toggle)
@@ -50,19 +50,13 @@
 	///The cooldown itself of the reactive armor for when it can activate again.
 	var/reactivearmor_cooldown = 0
 
-
 /obj/item/clothing/suit/armor/reactive/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_OCLOTHING)
 
 /obj/item/clothing/suit/armor/reactive/update_icon_state()
 	. = ..()
-	if(active)
-		icon_state = "reactive"
-		inhand_icon_state = "reactive"
-	else
-		icon_state = "reactiveoff"
-		inhand_icon_state = "reactiveoff"
+	icon_state = "reactive[active ? null : "off"]"
 
 /obj/item/clothing/suit/armor/reactive/attack_self(mob/user)
 	active = !active
@@ -225,19 +219,13 @@
 	siemens_coefficient = -1
 	cooldown_message = span_danger("The tesla capacitors on the reactive tesla armor are still recharging! The armor merely emits some sparks.")
 	emp_message = span_warning("The tesla capacitors beep ominously for a moment.")
+	clothing_traits = list(TRAIT_TESLA_SHOCKIMMUNE)
+	/// How strong are the zaps we give off?
 	var/zap_power = 25000
+	/// How far to the zaps we give off go?
 	var/zap_range = 20
+	/// What flags do we pass to the zaps we give off?
 	var/zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE
-
-/obj/item/clothing/suit/armor/reactive/tesla/dropped(mob/user)
-	..()
-	if(istype(user))
-		REMOVE_TRAIT(user, TRAIT_TESLA_SHOCKIMMUNE, "reactive_tesla_armor")
-
-/obj/item/clothing/suit/armor/reactive/tesla/equipped(mob/user, slot)
-	..()
-	if(slot_flags & slot) //Was equipped to a valid slot for this item?
-		ADD_TRAIT(user, TRAIT_TESLA_SHOCKIMMUNE, "reactive_tesla_armor")
 
 /obj/item/clothing/suit/armor/reactive/tesla/cooldown_activation(mob/living/carbon/human/owner)
 	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
@@ -253,9 +241,9 @@
 
 /obj/item/clothing/suit/armor/reactive/tesla/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	owner.visible_message(span_danger("[src] blocks [attack_text], but pulls a massive charge of energy into [owner] from the surrounding environment!"))
-	REMOVE_TRAIT(owner, TRAIT_TESLA_SHOCKIMMUNE, "reactive_tesla_armor") //oops! can't shock without this!
+	REMOVE_CLOTHING_TRAIT(owner, TRAIT_TESLA_SHOCKIMMUNE) //oops! can't shock without this!
 	electrocute_mob(owner, get_area(src), src, 1)
-	ADD_TRAIT(owner, TRAIT_TESLA_SHOCKIMMUNE, "reactive_tesla_armor")
+	ADD_CLOTHING_TRAIT(owner, TRAIT_TESLA_SHOCKIMMUNE)
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 	return TRUE
 

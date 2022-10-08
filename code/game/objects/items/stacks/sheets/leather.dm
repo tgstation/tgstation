@@ -2,7 +2,7 @@
 	name = "hide"
 	desc = "Something went wrong."
 	icon_state = "sheet-hide"
-	inhand_icon_state = "sheet-hide"
+	inhand_icon_state = null
 	novariants = TRUE
 	merge_type = /obj/item/stack/sheet/animalhide
 
@@ -15,7 +15,7 @@
 
 GLOBAL_LIST_INIT(human_recipes, list( \
 	new/datum/stack_recipe("bloated human costume", /obj/item/clothing/suit/hooded/bloated_human, 5), \
-	new/datum/stack_recipe("human skin hat", /obj/item/clothing/head/human_leather, 1), \
+	new/datum/stack_recipe("human skin hat", /obj/item/clothing/head/fedora/human_leather, 1), \
 	))
 
 /obj/item/stack/sheet/animalhide/human/get_main_recipes()
@@ -34,7 +34,7 @@ GLOBAL_LIST_INIT(human_recipes, list( \
 	desc = "The by-product of corgi farming."
 	singular_name = "corgi hide piece"
 	icon_state = "sheet-corgi"
-	inhand_icon_state = "sheet-corgi"
+	inhand_icon_state = null
 	merge_type = /obj/item/stack/sheet/animalhide/corgi
 
 GLOBAL_LIST_INIT(gondola_recipes, list ( \
@@ -47,7 +47,7 @@ GLOBAL_LIST_INIT(gondola_recipes, list ( \
 	desc = "A thin layer of mothroach hide."
 	singular_name = "mothroach hide piece"
 	icon_state = "sheet-mothroach"
-	inhand_icon_state = "sheet-mothroach"
+	inhand_icon_state = null
 	merge_type = /obj/item/stack/sheet/animalhide/mothroach
 
 /obj/item/stack/sheet/animalhide/gondola
@@ -55,7 +55,7 @@ GLOBAL_LIST_INIT(gondola_recipes, list ( \
 	desc = "The extremely valuable product of gondola hunting."
 	singular_name = "gondola hide piece"
 	icon_state = "sheet-gondola"
-	inhand_icon_state = "sheet-gondola"
+	inhand_icon_state = null
 	merge_type = /obj/item/stack/sheet/animalhide/gondola
 
 /obj/item/stack/sheet/animalhide/gondola/get_main_recipes()
@@ -75,7 +75,7 @@ GLOBAL_LIST_INIT(corgi_recipes, list ( \
 	desc = "The by-product of cat farming."
 	singular_name = "cat hide piece"
 	icon_state = "sheet-cat"
-	inhand_icon_state = "sheet-cat"
+	inhand_icon_state = null
 	merge_type = /obj/item/stack/sheet/animalhide/cat
 
 /obj/item/stack/sheet/animalhide/monkey
@@ -83,7 +83,7 @@ GLOBAL_LIST_INIT(corgi_recipes, list ( \
 	desc = "The by-product of monkey farming."
 	singular_name = "monkey hide piece"
 	icon_state = "sheet-monkey"
-	inhand_icon_state = "sheet-monkey"
+	inhand_icon_state = null
 	merge_type = /obj/item/stack/sheet/animalhide/monkey
 
 GLOBAL_LIST_INIT(monkey_recipes, list ( \
@@ -100,7 +100,7 @@ GLOBAL_LIST_INIT(monkey_recipes, list ( \
 	desc = "Sssssss..."
 	singular_name = "lizard skin piece"
 	icon_state = "sheet-lizard"
-	inhand_icon_state = "sheet-lizard"
+	inhand_icon_state = null
 	merge_type = /obj/item/stack/sheet/animalhide/lizard
 
 /obj/item/stack/sheet/animalhide/xeno
@@ -108,11 +108,11 @@ GLOBAL_LIST_INIT(monkey_recipes, list ( \
 	desc = "The skin of a terrible creature."
 	singular_name = "alien hide piece"
 	icon_state = "sheet-xeno"
-	inhand_icon_state = "sheet-xeno"
+	inhand_icon_state = null
 	merge_type = /obj/item/stack/sheet/animalhide/xeno
 
 GLOBAL_LIST_INIT(xeno_recipes, list ( \
-	new/datum/stack_recipe("alien helmet", /obj/item/clothing/head/xenos, 1), \
+	new/datum/stack_recipe("alien helmet", /obj/item/clothing/head/costume/xenos, 1), \
 	new/datum/stack_recipe("alien suit", /obj/item/clothing/suit/costume/xenos, 2), \
 	))
 
@@ -147,7 +147,7 @@ GLOBAL_LIST_INIT(xeno_recipes, list ( \
 	desc = "This hide was stripped of its hair, but still needs washing and tanning."
 	singular_name = "hairless hide piece"
 	icon_state = "sheet-hairlesshide"
-	inhand_icon_state = "sheet-hairlesshide"
+	inhand_icon_state = null
 	merge_type = /obj/item/stack/sheet/hairlesshide
 
 /obj/item/stack/sheet/wethide
@@ -155,7 +155,7 @@ GLOBAL_LIST_INIT(xeno_recipes, list ( \
 	desc = "This hide has been cleaned but still needs to be dried."
 	singular_name = "wet hide piece"
 	icon_state = "sheet-wetleather"
-	inhand_icon_state = "sheet-wetleather"
+	inhand_icon_state = null
 	merge_type = /obj/item/stack/sheet/wethide
 	/// Reduced when exposed to high temperatures
 	var/wetness = 30
@@ -182,7 +182,7 @@ GLOBAL_LIST_INIT(xeno_recipes, list ( \
 	desc = "The by-product of mob grinding."
 	singular_name = "leather piece"
 	icon_state = "sheet-leather"
-	inhand_icon_state = "sheet-leather"
+	inhand_icon_state = null
 	merge_type = /obj/item/stack/sheet/leather
 
 GLOBAL_LIST_INIT(leather_recipes, list ( \
@@ -194,15 +194,15 @@ GLOBAL_LIST_INIT(leather_recipes, list ( \
 	new/datum/stack_recipe("bandolier", /obj/item/storage/belt/bandolier, 5), \
 	new/datum/stack_recipe("leather jacket", /obj/item/clothing/suit/jacket/leather, 7), \
 	new/datum/stack_recipe("leather shoes", /obj/item/clothing/shoes/laceup, 2), \
-	new/datum/stack_recipe("leather overcoat", /obj/item/clothing/suit/jacket/leather/overcoat, 10), \
+	new/datum/stack_recipe("biker jacket", /obj/item/clothing/suit/jacket/leather/biker, 7), \
 	new/datum/stack_recipe("saddle", /obj/item/saddle, 5), \
 	new/datum/stack_recipe("sheriff vest", /obj/item/clothing/accessory/vest_sheriff, 4), \
 	new/datum/stack_recipe_list("cowboy hats", list( \
-		new/datum/stack_recipe("sheriff hat", /obj/item/clothing/head/cowboy_hat_brown, 2), \
-		new/datum/stack_recipe("desperado hat", /obj/item/clothing/head/cowboy_hat_black, 2), \
-		new/datum/stack_recipe("ten-gallon hat", /obj/item/clothing/head/cowboy_hat_white, 2), \
-		new/datum/stack_recipe("deputy hat", /obj/item/clothing/head/cowboy_hat_red, 2), \
-		new/datum/stack_recipe("drifter hat", /obj/item/clothing/head/cowboy_hat_grey, 2), \
+		new/datum/stack_recipe("sheriff hat", /obj/item/clothing/head/cowboy/brown, 2), \
+		new/datum/stack_recipe("desperado hat", /obj/item/clothing/head/cowboy/black, 2), \
+		new/datum/stack_recipe("ten-gallon hat", /obj/item/clothing/head/cowboy/white, 2), \
+		new/datum/stack_recipe("deputy hat", /obj/item/clothing/head/cowboy/red, 2), \
+		new/datum/stack_recipe("drifter hat", /obj/item/clothing/head/cowboy/grey, 2), \
 		)),
 ))
 
@@ -307,7 +307,7 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	desc = "The scaly skin of a space carp. It looks quite beatiful when detached from the foul creature who once wore it."
 	singular_name = "carp scale"
 	icon_state = "sheet-carp"
-	inhand_icon_state = "sheet-carp"
+	inhand_icon_state = null
 	merge_type = /obj/item/stack/sheet/animalhide/carp
 
 GLOBAL_LIST_INIT(carp_recipes, list ( \

@@ -374,7 +374,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered)
 "gq" = (
-/obj/structure/shuttle/engine/propulsion/burst/left{
+/obj/machinery/power/shuttle_engine/propulsion/burst/left{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
@@ -421,13 +421,13 @@
 /turf/open/floor/iron/dark/airless,
 /area/shuttle/caravan/freighter3)
 "gP" = (
-/obj/structure/shuttle/engine/propulsion/burst{
+/obj/machinery/power/shuttle_engine/propulsion/burst{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/caravan/freighter3)
 "gQ" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
 /obj/structure/window/reinforced{
@@ -605,7 +605,7 @@
 /turf/open/floor/iron/airless,
 /area/shuttle/caravan/freighter3)
 "hQ" = (
-/obj/structure/shuttle/engine/propulsion/burst/left{
+/obj/machinery/power/shuttle_engine/propulsion/burst/left{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
@@ -735,13 +735,13 @@
 /turf/open/floor/iron/airless,
 /area/shuttle/caravan/freighter3)
 "io" = (
-/obj/structure/shuttle/engine/propulsion/burst{
+/obj/machinery/power/shuttle_engine/propulsion/burst{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/caravan/freighter2)
 "ip" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
 /obj/structure/window/reinforced{
@@ -1064,7 +1064,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/caravan/freighter2)
 "jV" = (
-/obj/structure/shuttle/engine/propulsion/burst/right{
+/obj/machinery/power/shuttle_engine/propulsion/burst/right{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
@@ -1188,7 +1188,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered)
 "tH" = (
-/obj/structure/shuttle/engine/propulsion/burst{
+/obj/machinery/power/shuttle_engine/propulsion/burst{
 	dir = 8
 	},
 /turf/closed/wall/mineral/plastitanium,

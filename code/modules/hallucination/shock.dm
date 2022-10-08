@@ -39,7 +39,7 @@
 	hallucinator.adjustStaminaLoss(50)
 	hallucinator.Stun(4 SECONDS)
 	hallucinator.do_jitter_animation(300) // Maximum jitter
-	hallucinator.adjust_timed_status_effect(20 SECONDS, /datum/status_effect/jitter)
+	hallucinator.adjust_jitter(20 SECONDS)
 
 	addtimer(CALLBACK(src, .proc/reset_shock_animation), 4 SECONDS)
 	addtimer(CALLBACK(src, .proc/shock_drop), 2 SECONDS)
