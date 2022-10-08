@@ -215,7 +215,7 @@
 				if(!not_focused.len) // If a chemical has all of it's focuses matched, the if statement will pass, adding it to the pool.
 					possible_focuses += S
 	if(possible_focuses.len + symptoms.len > VIRUS_SYMPTOM_LIMIT) // If there are too many focused symptoms in the pool to add, we simply remove some until we're under the cap again.
-		for(var/i = possible_focuses.len, i > 0, i--)
+		for(var/i = possible_focuses.len, i > 0, i--) // Guh C-style loop, had to do it because the entire purpose of the loop is to remove things from the list determining it's length.
 			if (possible_focuses.len <= VIRUS_SYMPTOM_LIMIT)
 				break
 			pick_n_take(possible_focuses)
