@@ -360,14 +360,14 @@
 	if (!ishuman(target_mob))
 		return
 	var/mob/living/carbon/human/target_human = target_mob
+	if(target_human == user)
+		to_chat(user, span_notice("Why would you try stealing your own shoes?"))
+		return
 	if (!target_human.shoes)
 		return
 	if (user.body_position != LYING_DOWN)
 		return
 	var/obj/item/clothing/shoes/item_to_strip = target_human.shoes
-	if(target_human == user)
-		to_chat(user, span_notice("Why would you try stealing your own shoes?"))
-		return
 	if(item_to_strip.chained)
 		to_chat(user, span_warning("[target_human]'s [item_to_strip.name] are chained up! Stealing these is going to be more involved than expected."))
 		return
