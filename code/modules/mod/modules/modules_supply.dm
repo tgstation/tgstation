@@ -522,14 +522,14 @@
 	animate(mod.wearer) //stop the animation
 	mod.wearer.SpinAnimation(1.5) //start it back again
 	if(!mod.wearer.has_gravity())
-		on_deactivation() //deactivate in no grav
+		deactivate() //deactivate in no grav
 
 /obj/item/mod/module/sphere_transform/proc/on_statchange(datum/source)
 	SIGNAL_HANDLER
 
 	if(!mod.wearer.stat)
 		return
-	on_deactivation()
+	deactivate()
 
 /obj/projectile/bullet/reusable/mining_bomb
 	name = "mining bomb"

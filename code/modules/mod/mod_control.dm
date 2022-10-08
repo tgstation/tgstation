@@ -428,7 +428,7 @@
 
 /obj/item/mod/control/proc/make_part(obj/item/part)
 	var/datum/mod_part/part_datum = new(part)
-	mod_parts += part_datum
+	mod_parts[part.slot_flags] = part_datum
 
 /obj/item/mod/control/proc/set_wearer(mob/user)
 	wearer = user

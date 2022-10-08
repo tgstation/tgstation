@@ -39,7 +39,7 @@
 	to_chat(mod.wearer, span_warning("[src] gets discharged from contact!"))
 	do_sparks(2, TRUE, src)
 	drain_power(use_power_cost)
-	on_deactivation(display_message = TRUE, deleting = FALSE)
+	deactivate()
 
 /obj/item/mod/module/stealth/proc/on_unarmed_attack(datum/source, atom/target)
 	SIGNAL_HANDLER

@@ -207,7 +207,7 @@ As we want this effect to be on demand, we probably want this to be an usable mo
 - Usable: You can use these for a one time effect.
 - Active: You can only have one selected at a time. It gives you a special click effect.
 
-As we have an usable module, we want to set a cooldown time. All modules are also incompatible with themselves, have a specific power cost and complexity varying on how powerful they are, so let's update our definition, and also add a new variable for how much brain damage we'll heal.
+As we have an usable module, we want to set a cooldown time. All modules are also incompatible with themselves, have a specific power cost and complexity varying on how powerful they are, and are equippable to certain slots, so let's update our definition, and also add a new variable for how much brain damage we'll heal.
 
 ```dm
 /obj/item/mod/module/neuron_healer
@@ -220,6 +220,7 @@ As we have an usable module, we want to set a cooldown time. All modules are als
 	use_power_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/neuron_healer)
 	cooldown_time = 15 SECONDS
+	required_slot = list(ITEM_SLOT_HEAD)
 	var/brain_damage_healed = 25
 ```
 

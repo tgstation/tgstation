@@ -59,8 +59,8 @@
 			deploy(null, part)
 		else if(!deploy && part.loc != src)
 			retract(null, part)
-	wearer.visible_message(span_notice("[wearer]'s [src] [deploy ? "deploys" : "retracts"] its' parts with a mechanical hiss."),
-		span_notice("[src] [deploy ? "deploys" : "retracts"] its' parts with a mechanical hiss."),
+	wearer.visible_message(span_notice("[wearer]'s [src] [deploy ? "deploys" : "retracts"] its parts with a mechanical hiss."),
+		span_notice("[src] [deploy ? "deploys" : "retracts"] its parts with a mechanical hiss."),
 		span_hear("You hear a mechanical hiss."))
 	playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	if(deploy)
@@ -91,6 +91,7 @@
 			span_notice("[part] deploy[part.p_s()] with a mechanical hiss."),
 			span_hear("You hear a mechanical hiss."))
 		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		SEND_SIGNAL(src, COMSIG_MOD_PART_DEPLOYED, user, part)
 		return TRUE
 	else
 		if(!user)
@@ -115,6 +116,7 @@
 		if(!wearer.equip_to_slot_if_possible(overslot, overslot.slot_flags, qdel_on_fail = FALSE, disable_warning = TRUE))
 			wearer.dropItemToGround(overslot, force = TRUE, silent = TRUE)
 		part_datum.overslotting = null
+	SEND_SIGNAL(src, COMSIG_MOD_PART_RETRACTED, user, part)
 	if(!user)
 		return
 	wearer.visible_message(span_notice("[wearer]'s [part.name] retract[part.p_s()] back into [src] with a mechanical hiss."),

@@ -77,7 +77,7 @@
 	desc = "A personal, protective forcefield typically seen in military applications. \
 		This advanced deflector shield is essentially a scaled down version of those seen on starships, \
 		and the power cost can be an easy indicator of this. However, it is capable of blocking nearly any incoming attack, \
-		though with its' low amount of separate charges, the user remains mortal."
+		though with its low amount of separate charges, the user remains mortal."
 	icon_state = "energy_shield"
 	complexity = 3
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.5

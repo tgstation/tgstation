@@ -78,7 +78,7 @@
 	for(var/part_slot in parts)
 		if(need_extended)
 			var/datum/mod_part/part_datum = parts[part_slot]
-			if(part_datum.part_item.loc == mod)
+			if(part_datum.part_item == mod || part_datum.part_item.loc == mod)
 				continue
 		total_slot_flags |= part_slot
 	var/list/needed_slots = required_slots.Copy()
@@ -91,9 +91,12 @@
 
 /// Called when the module is selected from the TGUI, radial or the action button
 /obj/item/mod/module/proc/on_select()
+	if(!mod.wearer)
+		if(ismob(mod.loc))
+			balloon_alert(mod.loc, "not equipped!")
+		return
 	if(((!mod.active || mod.activating) && !allowed_inactive) || module_type == MODULE_PASSIVE)
-		if(mod.wearer)
-			balloon_alert(mod.wearer, "not active!")
+		balloon_alert(mod.wearer, "not active!")
 		return
 	if(module_type != MODULE_USABLE)
 		if(active)
@@ -187,7 +190,7 @@
 	if(mod.wearer.incapacitated(IGNORE_GRAB))
 		return FALSE
 	mod.wearer.face_atom(target)
-	if(!on_use())
+	if(!used())
 		return FALSE
 	return TRUE
 
@@ -201,7 +204,7 @@
 /obj/item/mod/module/proc/on_process(delta_time)
 	if(active)
 		if(!drain_power(active_power_cost * delta_time))
-			on_deactivation()
+			deactivate()
 			return FALSE
 		on_active_process(delta_time)
 	else
@@ -287,7 +290,7 @@
 	if(part.loc == mod.wearer)
 		return
 	if(part == device)
-		on_deactivation(display_message = FALSE)
+		deactivate(display_message = FALSE)
 
 /// Called when the device gets deleted on active modules
 /obj/item/mod/module/proc/on_device_deletion(datum/source)
@@ -341,7 +344,7 @@
 
 	if(user.get_active_held_item() != device)
 		return
-	on_deactivation()
+	deactivate()
 	return COMSIG_KB_ACTIVATED
 
 ///Anomaly Locked - Causes the module to not function without an anomaly.
