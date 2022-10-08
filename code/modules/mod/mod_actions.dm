@@ -33,7 +33,7 @@
 	if(!IsAvailable())
 		return FALSE
 	var/obj/item/mod/control/mod = target
-	if(mod.malfunctioning && prob(25))
+	if(mod.malfunctioning && prob(75))
 		mod.balloon_alert(usr, "button malfunctions!")
 		return FALSE
 	return TRUE

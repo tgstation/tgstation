@@ -198,7 +198,7 @@
 	update_charge_alert()
 	for(var/obj/item/mod/module/module as anything in modules)
 		if(malfunctioning && module.active && DT_PROB(5, delta_time))
-			module.on_deactivation(display_message = TRUE)
+			module.deactivate(display_message = TRUE)
 		module.on_process(delta_time)
 
 /obj/item/mod/control/equipped(mob/user, slot)
@@ -375,7 +375,7 @@
 	to_chat(wearer, span_notice("[severity > 1 ? "Light" : "Strong"] electromagnetic pulse detected!"))
 	if(. & EMP_PROTECT_CONTENTS)
 		return
-	selected_module?.on_deactivation(display_message = TRUE)
+	selected_module?.deactivate(display_message = TRUE)
 	wearer.apply_damage(5 / severity, BURN, spread_damage=TRUE)
 	to_chat(wearer, span_danger("You feel [src] heat up from the EMP, burning you slightly."))
 	if(wearer.stat < UNCONSCIOUS && prob(10))
@@ -452,7 +452,7 @@
 		for(var/obj/item/mod/module/module as anything in modules)
 			if(!module.active)
 				continue
-			module.on_deactivation(display_message = FALSE)
+			module.deactivate(display_message = FALSE)
 		for(var/obj/item/part as anything in get_parts(items = TRUE))
 			seal_part(part, seal = FALSE)
 	for(var/obj/item/part as anything in get_parts(items = TRUE))
@@ -517,16 +517,16 @@
 				balloon_alert(user, "[new_module] incompatible with [old_module]!")
 				playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 			return
-	if(is_type_in_list(new_module, theme.module_blacklist))
-		if(user)
-			balloon_alert(user, "[src] doesn't accept [new_module]!")
-			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
-		return
 	var/complexity_with_module = complexity
 	complexity_with_module += new_module.complexity
 	if(complexity_with_module > complexity_max)
 		if(user)
 			balloon_alert(user, "[new_module] would make [src] too complex!")
+			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+		return
+	if(!new_module.has_required_parts(mod_parts))
+		if(user)
+			balloon_alert(user, "[new_module] incompatible with [src]'s parts!")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return
 	new_module.forceMove(src)
@@ -536,7 +536,6 @@
 	new_module.on_install()
 	if(wearer)
 		new_module.on_equip()
-
 	if(user)
 		balloon_alert(user, "[new_module] added")
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
@@ -547,7 +546,7 @@
 	if(active)
 		old_module.on_suit_deactivation(deleting = deleting)
 		if(old_module.active)
-			old_module.on_deactivation(display_message = !deleting, deleting = deleting)
+			old_module.deactivate(display_message = !deleting, deleting = deleting)
 	old_module.on_uninstall(deleting = deleting)
 	QDEL_LIST_ASSOC_VAL(old_module.pinned_to)
 	old_module.mod = null

@@ -15,9 +15,6 @@
 	var/list/visor_traits = list()
 
 /obj/item/mod/module/visor/on_activation()
-	. = ..()
-	if(!.)
-		return
 	if(hud_type)
 		var/datum/atom_hud/hud = GLOB.huds[hud_type]
 		hud.show_to(mod.wearer)
@@ -26,9 +23,6 @@
 	mod.wearer.update_sight()
 
 /obj/item/mod/module/visor/on_deactivation(display_message = TRUE, deleting = FALSE)
-	. = ..()
-	if(!.)
-		return
 	if(hud_type)
 		var/datum/atom_hud/hud = GLOB.huds[hud_type]
 		hud.hide_from(mod.wearer)

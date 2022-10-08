@@ -14,15 +14,9 @@
 	cooldown_time = 0.5 SECONDS
 
 /obj/item/mod/module/reagent_scanner/on_activation()
-	. = ..()
-	if(!.)
-		return
 	ADD_TRAIT(mod.wearer, TRAIT_REAGENT_SCANNER, MOD_TRAIT)
 
 /obj/item/mod/module/reagent_scanner/on_deactivation(display_message = TRUE, deleting = FALSE)
-	. = ..()
-	if(!.)
-		return
 	REMOVE_TRAIT(mod.wearer, TRAIT_REAGENT_SCANNER, MOD_TRAIT)
 
 /obj/item/mod/module/reagent_scanner/advanced
@@ -32,16 +26,10 @@
 	var/explosion_detection_dist = 21
 
 /obj/item/mod/module/reagent_scanner/advanced/on_activation()
-	. = ..()
-	if(!.)
-		return
 	ADD_TRAIT(mod.wearer, TRAIT_RESEARCH_SCANNER, MOD_TRAIT)
 	RegisterSignal(SSdcs, COMSIG_GLOB_EXPLOSION, .proc/sense_explosion)
 
 /obj/item/mod/module/reagent_scanner/advanced/on_deactivation(display_message = TRUE, deleting = FALSE)
-	. = ..()
-	if(!.)
-		return
 	REMOVE_TRAIT(mod.wearer, TRAIT_RESEARCH_SCANNER, MOD_TRAIT)
 	UnregisterSignal(SSdcs, COMSIG_GLOB_EXPLOSION)
 
@@ -68,9 +56,6 @@
 	accepted_anomalies = list(/obj/item/assembly/signaler/anomaly/grav)
 
 /obj/item/mod/module/anomaly_locked/antigrav/on_activation()
-	. = ..()
-	if(!.)
-		return
 	if(mod.wearer.has_gravity())
 		new /obj/effect/temp_visual/mook_dust(get_turf(src))
 	mod.wearer.AddElement(/datum/element/forced_gravity, 0)
@@ -78,9 +63,6 @@
 	playsound(src, 'sound/effects/gravhit.ogg', 50)
 
 /obj/item/mod/module/anomaly_locked/antigrav/on_deactivation(display_message = TRUE, deleting = FALSE)
-	. = ..()
-	if(!.)
-		return
 	mod.wearer.RemoveElement(/datum/element/forced_gravity, 0)
 	mod.wearer.update_gravity(mod.wearer.has_gravity())
 	if(deleting)

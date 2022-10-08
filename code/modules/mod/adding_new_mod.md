@@ -227,18 +227,12 @@ Now, we want to override the on_use proc for our new effect. We want to make sur
 
 ```dm
 /obj/item/mod/module/neuron_healer/on_use()
-	. = ..()
-	if(!.)
-		return
 ```
 
 After this, we want to put our special code, a basic effect of healing all mobs nearby for their brain damage and creating a beam to them.
 
 ```dm
 /obj/item/mod/module/neuron_healer/on_use()
-	. = ..()
-	if(!.)
-		return
 	for(var/mob/living/carbon/carbon_mob in range(5, src))
 		if(carbon_mob == mod.wearer)
 			continue

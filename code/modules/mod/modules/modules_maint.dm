@@ -99,18 +99,12 @@
 		selection = songs[song_name]
 
 /obj/item/mod/module/visor/rave/on_activation()
-	. = ..()
-	if(!.)
-		return
 	rave_screen = mod.wearer.add_client_colour(/datum/client_colour/rave)
 	rave_screen.update_colour(rainbow_order[rave_number])
 	if(selection)
 		mod.wearer.playsound_local(get_turf(src), null, 50, channel = CHANNEL_JUKEBOX, sound_to_use = sound(selection.song_path), use_reverb = FALSE)
 
 /obj/item/mod/module/visor/rave/on_deactivation(display_message = TRUE, deleting = FALSE)
-	. = ..()
-	if(!.)
-		return
 	QDEL_NULL(rave_screen)
 	if(selection)
 		mod.wearer.stop_sound_channel(CHANNEL_JUKEBOX)
@@ -160,9 +154,6 @@
 	cooldown_time = 30 SECONDS
 
 /obj/item/mod/module/tanner/on_use()
-	. = ..()
-	if(!.)
-		return
 	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 50, TRUE)
 	var/datum/reagents/holder = new()
 	holder.add_reagent(/datum/reagent/spraytan, 10)
@@ -183,9 +174,6 @@
 	cooldown_time = 15 SECONDS
 
 /obj/item/mod/module/balloon/on_use()
-	. = ..()
-	if(!.)
-		return
 	if(!do_after(mod.wearer, 10 SECONDS, target = mod))
 		return FALSE
 	mod.wearer.adjustOxyLoss(20)
@@ -209,9 +197,6 @@
 	var/num_sheets_dispensed = 0
 
 /obj/item/mod/module/paper_dispenser/on_use()
-	. = ..()
-	if(!.)
-		return
 	if(!do_after(mod.wearer, 1 SECONDS, target = mod))
 		return FALSE
 
@@ -280,9 +265,6 @@
 	var/you_fucked_up = FALSE
 
 /obj/item/mod/module/atrocinator/on_activation()
-	. = ..()
-	if(!.)
-		return
 	playsound(src, 'sound/effects/curseattack.ogg', 50)
 	mod.wearer.AddElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY)
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, .proc/check_upstairs)
@@ -290,14 +272,14 @@
 	ADD_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, MOD_TRAIT)
 	check_upstairs() //todo at some point flip your screen around
 
-/obj/item/mod/module/atrocinator/on_deactivation(display_message = TRUE, deleting = FALSE)
+/obj/item/mod/module/atrocinator/deactivated(display_message = TRUE, deleting = FALSE)
 	if(you_fucked_up && !deleting)
 		to_chat(mod.wearer, span_danger("It's too late."))
 		return FALSE
-	. = ..()
-	if(!.)
-		return
-	if(deleting)
+	return ..()
+
+/obj/item/mod/module/atrocinator/on_deactivation(display_message = TRUE, deleting = FALSE)
+	if(!deleting)
 		playsound(src, 'sound/effects/curseattack.ogg', 50)
 	qdel(mod.wearer.RemoveElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY))
 	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)

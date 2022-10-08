@@ -13,9 +13,6 @@
 	cooldown_time = 1 SECONDS
 
 /obj/item/mod/module/bikehorn/on_use()
-	. = ..()
-	if(!.)
-		return
 	playsound(src, 'sound/items/bikehorn.ogg', 100, FALSE)
 	drain_power(use_power_cost)
 

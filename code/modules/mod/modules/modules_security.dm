@@ -73,9 +73,6 @@
 	UnregisterSignal(mod.wearer, COMSIG_HUMAN_CHECK_SHIELDS)
 
 /obj/item/mod/module/pepper_shoulders/on_use()
-	. = ..()
-	if(!.)
-		return
 	playsound(src, 'sound/effects/spray.ogg', 30, TRUE, -6)
 	var/datum/reagents/capsaicin_holder = new(10)
 	capsaicin_holder.add_reagent(/datum/reagent/consumable/condensedcapsaicin, 10)
@@ -92,7 +89,7 @@
 	if(!check_power(use_power_cost))
 		return
 	mod.wearer.visible_message(span_warning("[src] reacts to the attack with a smoke of pepper spray!"), span_notice("Your [src] releases a cloud of pepper spray!"))
-	on_use()
+	used()
 
 ///Holster - Instantly holsters any not huge gun.
 /obj/item/mod/module/holster
@@ -111,9 +108,6 @@
 	var/obj/item/gun/holstered
 
 /obj/item/mod/module/holster/on_use()
-	. = ..()
-	if(!.)
-		return
 	if(!holstered)
 		var/obj/item/gun/holding = mod.wearer.get_active_held_item()
 		if(!holding)
@@ -159,15 +153,9 @@
 	var/list/voicespan = list(SPAN_COMMAND)
 
 /obj/item/mod/module/megaphone/on_activation()
-	. = ..()
-	if(!.)
-		return
 	RegisterSignal(mod.wearer, COMSIG_MOB_SAY, .proc/handle_speech)
 
 /obj/item/mod/module/megaphone/on_deactivation(display_message = TRUE, deleting = FALSE)
-	. = ..()
-	if(!.)
-		return
 	UnregisterSignal(mod.wearer, COMSIG_MOB_SAY)
 
 /obj/item/mod/module/megaphone/proc/handle_speech(datum/source, list/speech_args)
@@ -203,10 +191,7 @@
 	idle_power_cost = linked_bodybag ? (DEFAULT_CHARGE_DRAIN * 3) : 0
 	return ..()
 
-/obj/item/mod/module/criminalcapture/on_deactivation(display_message, deleting)
-	. = ..()
-	if(!.)
-		return
+/obj/item/mod/module/criminalcapture/on_deactivation(display_message = TRUE, deleting = FALSE)
 	if(!linked_bodybag)
 		return
 	packup()
@@ -273,9 +258,6 @@
 	dispense_type = /obj/item/grenade/mirage
 
 /obj/item/mod/module/dispenser/mirage/on_use()
-	. = ..()
-	if(!.)
-		return
 	var/obj/item/grenade/mirage/grenade = .
 	grenade.arm_grenade(mod.wearer)
 
@@ -328,9 +310,6 @@
 	projectile_effect = image('icons/effects/fields.dmi', "projectile_dampen_effect")
 
 /obj/item/mod/module/projectile_dampener/on_activation()
-	. = ..()
-	if(!.)
-		return
 	if(istype(dampening_field))
 		QDEL_NULL(dampening_field)
 	dampening_field = new(mod.wearer, field_radius, TRUE, src)
@@ -366,9 +345,6 @@
 	cooldown_time = 25 SECONDS
 
 /obj/item/mod/module/active_sonar/on_use()
-	. = ..()
-	if(!.)
-		return
 	balloon_alert(mod.wearer, "readying sonar...")
 	playsound(mod.wearer, 'sound/mecha/skyfall_power_up.ogg', vol = 20, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 	if(!do_after(mod.wearer, 1.1 SECONDS, target = mod))

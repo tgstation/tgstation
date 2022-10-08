@@ -157,7 +157,7 @@
 	for(var/obj/item/mod/module/module as anything in modules)
 		if(!module.active || module.allowed_inactive)
 			continue
-		module.on_deactivation(display_message = FALSE)
+		module.deactivate(display_message = FALSE)
 	activating = TRUE
 	to_chat(wearer, span_notice("MODsuit [active ? "shutting down" : "starting up"]."))
 	var/activation_step_time = activation_time / length(mod_parts)
