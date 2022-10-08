@@ -1,0 +1,6 @@
+author: "RikuTheKiller"
+delete-after: True
+changes: 
+  - bugfix: "Fixed brains not accepting mannitol pours when not fully decayed"
+  - qol: "Mannitol solutions are now only partially consumed when poured on a brain and you don't need 10u to do so"
+  - qol: "Pouring mannitol on a brain now takes 3 seconds instead of 6 seconds and the messages are slightly more consistent"
