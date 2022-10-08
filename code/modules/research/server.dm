@@ -17,6 +17,7 @@
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "RD-server-on"
 	base_icon_state = "RD-server"
+	circuit = /obj/item/circuitboard/machine/rdserver
 	req_access = list(ACCESS_RD)
 
 	/// if TRUE, we are currently operational and giving out research points.
