@@ -49,6 +49,7 @@ export type Symptom = {
   stage_speed: number;
   transmission: number;
   level: number;
+  focus_desc: string;
   neutered: BooleanLike;
   threshold_desc: Threshold[];
 };

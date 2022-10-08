@@ -106,4 +106,11 @@
 	data["level"] = level
 	data["neutered"] = neutered
 	data["threshold_desc"] = threshold_descs
+	if (!focuses.len)
+		data["focus_desc"] = " This symptom cannot be focused on."
+		return data
+	var/list/focus_names = list()
+	for(var/datum/reagent/focus as anything in focuses)
+		focus_names += initial(focus.name)
+	data["focus_desc"] = " This symptom can be focused on by adding " + 	lowertext(english_list(focus_names, nothing_text = "error")) + " before the mutation agent."
 	return data

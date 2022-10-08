@@ -15,12 +15,12 @@ export const SymptomDisplay = (props, context) => {
   return (
     <Section fill title="Symptoms">
       {symptoms.map((symptom) => {
-        const { name, desc, threshold_desc } = symptom;
+        const { name, desc, focus_desc, threshold_desc } = symptom;
         return (
           <Collapsible key={name} title={name}>
             <Stack fill>
               <Stack.Item grow={3}>
-                {desc}
+                {desc + focus_desc}
                 <Thresholds thresholds={threshold_desc} />
               </Stack.Item>
               <Stack.Divider />
@@ -62,7 +62,7 @@ const Thresholds = (props, context) => {
 /** Displays the numerical trait modifiers for a virus symptom */
 const Traits = (props, context) => {
   const {
-    symptom: { level, resistance, stage_speed, stealth, transmission },
+    symptom: { level, resistance, stage_speed, stealth, transmission, focuses },
   } = props;
 
   return (
