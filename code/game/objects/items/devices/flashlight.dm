@@ -19,12 +19,15 @@
 	light_on = FALSE
 	var/on = FALSE
 
-
 /obj/item/flashlight/Initialize(mapload)
 	. = ..()
 	if(icon_state == "[initial(icon_state)]-on")
 		on = TRUE
 	update_brightness()
+	AddElement( \
+		/datum/element/contextual_screentip_bare_hands, \
+		rmb_text = "Toggle light", \
+	)
 
 /obj/item/flashlight/proc/update_brightness(mob/user)
 	if(on)
@@ -35,13 +38,18 @@
 	if(light_system == STATIC_LIGHT)
 		update_light()
 
-
-/obj/item/flashlight/attack_self(mob/user)
+/obj/item/flashlight/proc/toggle_light(mob/user)
 	on = !on
 	playsound(user, on ? 'sound/weapons/magin.ogg' : 'sound/weapons/magout.ogg', 40, TRUE)
 	update_brightness(user)
 	update_action_buttons()
-	return 1
+
+/obj/item/flashlight/attack_self(mob/user)
+	toggle_light(user)
+
+/obj/item/flashlight/attack_hand_secondary(mob/user, list/modifiers)
+	toggle_light(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/flashlight/suicide_act(mob/living/carbon/human/user)
 	if (user.is_blind())
