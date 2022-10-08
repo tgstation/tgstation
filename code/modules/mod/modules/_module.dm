@@ -45,6 +45,8 @@
 	var/allowed_in_phaseout = FALSE
 	/// If we're allowed to use this module while the suit is disabled.
 	var/allowed_inactive = FALSE
+	/// A list of slots required in the suit to work. Formatted like list(x|y, z, ...) where either x or y are required and z is required.
+	var/list/required_slots = list(ITEM_SLOT_BACK|ITEM_SLOT_BELT)
 	/// Timer for the cooldown
 	COOLDOWN_DECLARE(cooldown_timer)
 
