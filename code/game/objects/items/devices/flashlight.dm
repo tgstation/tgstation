@@ -17,6 +17,13 @@
 	light_range = 4
 	light_power = 1
 	light_on = FALSE
+	/// Can we toggle this light on and off
+	var/can_toggle = TRUE
+	/// The sound the light makes when it's turned on
+	var/sound_on = 'sound/weapons/magin.ogg'
+	/// The sound the light makes when it's turned off
+	var/sound_off = 'sound/weapons/magout.ogg'
+	/// Is the light turned on or off currently
 	var/on = FALSE
 
 /obj/item/flashlight/Initialize(mapload)
@@ -24,7 +31,19 @@
 	if(icon_state == "[initial(icon_state)]-on")
 		on = TRUE
 	update_brightness()
-	AddElement(/datum/element/contextual_screentip_bare_hands, rmb_text = "Toggle light")
+	register_context()
+
+/obj/item/flashlight/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	// single use lights can be toggled on once
+	if(isnull(held_item) && (can_toggle || !on))
+		context[SCREENTIP_CONTEXT_RMB] = "Toggle light"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(istype(held_item, /obj/item/flashlight) && (can_toggle || !on))
+		context[SCREENTIP_CONTEXT_LMB] = "Toggle light"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	return NONE
 
 /obj/item/flashlight/proc/update_brightness(mob/user)
 	if(on)
@@ -37,7 +56,7 @@
 
 /obj/item/flashlight/proc/toggle_light(mob/user)
 	on = !on
-	playsound(user, on ? 'sound/weapons/magin.ogg' : 'sound/weapons/magout.ogg', 40, TRUE)
+	playsound(user, on ? sound_on : sound_off, 40, TRUE)
 	update_brightness(user)
 	update_action_buttons()
 
@@ -270,6 +289,8 @@
 	light_color = LIGHT_COLOR_FLARE
 	light_system = MOVABLE_LIGHT
 	grind_results = list(/datum/reagent/sulfur = 15)
+	sound_on = 'sound/items/match_strike.ogg'
+	can_toggle = FALSE
 	/// How many seconds of fuel we have left
 	var/fuel = 0
 	var/on_damage = 7
@@ -451,6 +472,8 @@
 	inhand_icon_state = null
 	worn_icon_state = "lightstick"
 	grind_results = list(/datum/reagent/phenol = 15, /datum/reagent/hydrogen = 10, /datum/reagent/oxygen = 5) //Meth-in-a-stick
+	sound_on = 'sound/effects/wounds/crack2.ogg' // the cracking sound isn't just for wounds silly
+	can_toggle = FALSE
 	/// How many seconds of fuel we have left
 	var/fuel = 0
 
