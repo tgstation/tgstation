@@ -20,7 +20,7 @@
 	symptom_delay_min = 25
 	symptom_delay_max = 90
 	var/fake_healthy = FALSE
-	focuses = list(/datum/reagent/toxin/mindbreaker, /datum/reagent/consumable/sugar)
+	focuses = list(/datum/reagent/toxin/mindbreaker)
 	threshold_descs = list(
 		"Stage Speed 7" = "Increases the amount of hallucinations.",
 		"Stealth 4" = "The virus mimics positive symptoms.",

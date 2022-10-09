@@ -19,7 +19,7 @@
 	symptom_delay_max = 35
 	var/spread_range = 4
 	var/cartoon_sneezing = FALSE //ah, ah, AH, AH-CHOO!!
-	focuses = list(/datum/reagent/toxin/itching_powder, /datum/reagent/fuel/oil)
+	focuses = list(/datum/reagent/smoke_powder)
 	threshold_descs = list(
 		"Transmission 9" = "Increases sneezing range, spreading the virus over 6 meter cone instead of over a 4 meter cone.",
 		"Stealth 4" = "The symptom remains hidden until active.",

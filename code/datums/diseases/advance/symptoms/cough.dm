@@ -19,7 +19,7 @@
 	symptom_delay_min = 2
 	symptom_delay_max = 15
 	var/spread_range = 1
-	focuses = list(/datum/reagent/toxin/itching_powder, /datum/reagent/consumable/salt)
+	focuses = list(/datum/reagent/drug/nicotine)
 	threshold_descs = list(
 		"Resistance 11" = "The host will drop small items when coughing.",
 		"Resistance 15" = "Occasionally causes coughing fits that stun the host. The extra coughs do not spread the virus.",

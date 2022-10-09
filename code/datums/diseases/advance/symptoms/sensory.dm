@@ -18,7 +18,7 @@
 	var/purge_alcohol = FALSE
 	var/trauma_heal_mild = FALSE
 	var/trauma_heal_severe = FALSE
-	focuses = list(/datum/reagent/medicine/antihol, /datum/reagent/medicine/mannitol)
+	focuses = list(/datum/reagent/medicine/neurine)
 	threshold_descs = list(
 		"Resistance 6" = "Heals minor brain traumas.",
 		"Resistance 9" = "Heals severe brain traumas.",

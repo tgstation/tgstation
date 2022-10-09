@@ -14,7 +14,7 @@
 	stage_speed = -3
 	transmittable = 0
 	level = 3
-	focuses = list(/datum/reagent/consumable/ice)
+	focuses = list(/datum/reagent/inverse/technetium)
 
 /*Viral evolution
  * Reduces stealth
@@ -33,4 +33,4 @@
 	stage_speed = 5
 	transmittable = 3
 	level = 3
-	focuses = list(/datum/reagent/smoke_powder)
+	focuses = list(/datum/reagent/fluorosurfactant)

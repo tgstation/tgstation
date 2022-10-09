@@ -17,7 +17,7 @@
 	severity = 1
 	symptom_delay_min = 7
 	symptom_delay_max = 14
-	focuses = list(/datum/reagent/colorful_reagent, /datum/reagent/toxin/mindbreaker)
+	focuses = list(/datum/reagent/colorful_reagent)
 
 /datum/symptom/polyvitiligo/Activate(datum/disease/advance/A)
 	. = ..()

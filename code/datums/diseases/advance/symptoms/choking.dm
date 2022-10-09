@@ -95,7 +95,7 @@ Bonus
 	symptom_delay_min = 14
 	symptom_delay_max = 30
 	var/paralysis = FALSE
-	focuses = list(/datum/reagent/toxin/lexorin, /datum/reagent/toxin/cyanide)
+	focuses = list(/datum/reagent/toxin/lexorin)
 	threshold_descs = list(
 		"Stage Speed 8" = "Additionally synthesizes pancuronium and sodium thiopental inside the host.",
 		"Transmission 8" = "Doubles the damage caused by the symptom."

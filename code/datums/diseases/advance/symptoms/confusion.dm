@@ -18,7 +18,7 @@
 	base_message_chance = 25
 	symptom_delay_min = 10
 	symptom_delay_max = 30
-	focuses = list(/datum/reagent/impedrezene, /datum/reagent/mercury)
+	focuses = list(/datum/reagent/impedrezene)
 	threshold_descs = list(
 		"Stage Speed 6" = "Prevents any form of reading or writing.",
 		"Resistance 6" = "Causes brain damage over time.",

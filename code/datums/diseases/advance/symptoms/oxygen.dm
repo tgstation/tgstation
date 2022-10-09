@@ -18,7 +18,7 @@
 	symptom_delay_min = 1
 	symptom_delay_max = 1
 	var/regenerate_blood = FALSE
-	focuses = list(/datum/reagent/iron, /datum/reagent/medicine/salbutamol)
+	focuses = list(/datum/reagent/medicine/salbutamol)
 	threshold_descs = list(
 		"Resistance 8" = "Additionally regenerates lost blood."
 	)
