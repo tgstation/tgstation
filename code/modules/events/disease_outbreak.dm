@@ -8,10 +8,11 @@
 	description = "A 'classic' virus will infect some members of the crew." //These are the ones with PERSONALITY
 	///Disease recipient candidates
 	var/list/disease_candidates = list()
+	///Admin selected disease, to be passed down to the round_event
+	var/chosen_disease
 
 /datum/round_event_control/disease_outbreak/can_spawn_event(players_amt)
 	. = ..()
-	if(!.)
 		return .
 	generate_candidates()
 	if(length(disease_candidates))
@@ -28,6 +29,11 @@
 		return FALSE
 	else
 		message_admins("[length(disease_candidates)] candidates found!")
+
+	if(tgui_alert(usr, "Select a specific disease?", "Sickening behavior", list("Yes", "No")) == "Yes")
+		var/list/disease_list = list()
+		disease_list += subtypesof(/datum/disease)
+		chosen_disease = tgui_input_list(usr, "Pick your poison!","Bacteria Hysteria", disease_list)
 
 /datum/round_event_control/disease_outbreak/proc/generate_candidates()
 	if(length(disease_candidates))
@@ -57,7 +63,9 @@
 
 /datum/round_event/disease_outbreak/start()
 	var/datum/round_event_control/disease_outbreak/disease_event = control
-	afflicted = disease_event.disease_candidates //Pick our NUMBER here (do this later)
+	afflicted = disease_event.disease_candidates
+	if(disease_event.chosen_disease)
+		virus_type = disease_event.chosen_disease
 
 	if(!virus_type) //I wanted to handle this by searching through the presets and checking by disease severity defines but we'd still need to filter out some of them anyways.
 		var/list/virus_candidates = list()
@@ -90,17 +98,33 @@
 	name = "Disease Outbreak: Advanced"
 	typepath = /datum/round_event/disease_outbreak/advanced
 	category = EVENT_CATEGORY_HEALTH
-	description = "An advanced disease will infect some crewmembers."
+	description = "An advanced disease will infect some members of the crew."
+	///The admin-selected virus severity, passed down to the round_event (might not be used)
+	var/severity
+
+/datum/round_event_control/disease_outbreak/advanced/admin_setup()
+	if(!check_rights(R_FUN))
+		return FALSE
+
+	generate_candidates()
+
+	if(!length(disease_candidates))
+		message_admins("No disease candidates found!")
+		return FALSE
+	else
+		message_admins("[length(disease_candidates)] candidates found!")
 
 /datum/round_event/disease_outbreak/advanced
 	///Number of symptoms for our virus
 	var/max_severity = 3
 
 /datum/round_event/disease_outbreak/advanced/start()
-	var/datum/round_event_control/disease_outbreak/disease_event = control
+	var/datum/round_event_control/disease_outbreak/advanced/disease_event = control
 	afflicted = disease_event.disease_candidates
-
-	max_severity = 3 + max(FLOOR((world.time - control.earliest_start)/6000, 1),0) //3 symptoms at 20 minutes, plus 1 per 10 minutes
+	if(disease_event.severity)
+		max_severity = disease_event.severity
+	else
+		max_severity = 3 + max(FLOOR((world.time - control.earliest_start)/6000, 1),0) //3 symptoms at 20 minutes, plus 1 per 10 minutes
 	var/datum/disease/advance/advanced_disease = new /datum/disease/advance/random(max_severity, max_severity)
 
 	infect_players(advanced_disease)
