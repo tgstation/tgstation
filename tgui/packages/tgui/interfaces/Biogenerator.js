@@ -1,7 +1,7 @@
 import { classes } from 'common/react';
 import { createSearch } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Dimmer, Flex, Icon, Input, NoticeBox, NumberInput, ProgressBar, Section, Table, Tabs } from '../components';
+import { Box, Button, Dimmer, Divider, Flex, Icon, Input, NoticeBox, NumberInput, ProgressBar, Section, Table, Tabs } from '../components';
 import { formatMoney } from '../format';
 import { Window } from '../layouts';
 
@@ -87,15 +87,17 @@ export const BiogeneratorContent = (props, context) => {
                 </Tabs.Tab>
               ))}
             </Tabs>
+            <Divider />
+            <div>
+              Container Contents:
+            </div>
             <ProgressBar
-              style={{
-                transform: 'scaleX(-1) scaleY(1)',
-              }}
-              value={beakerMaxVolume - beakerCurrentVolume}
+              mt={1}
+              value={beakerCurrentVolume}
               maxValue={beakerMaxVolume}
-              backgroundColor={reagent_color}
-              color="black">
-              <div style={{ transform: 'scaleX(-1)' }}>
+              backgroundColor="black"
+              color={reagent_color}>
+              <div>
                 {beakerCurrentVolume + '/' + beakerMaxVolume}
               </div>
             </ProgressBar>
