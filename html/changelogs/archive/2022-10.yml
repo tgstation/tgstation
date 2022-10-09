@@ -259,3 +259,35 @@
       station.
   - rscadd: Adds easter egg - Woody's Got Wood.  Will rarely appear as a mail goodie
       for curator.
+2022-10-09:
+  Fikou:
+  - bugfix: makes dehydrated carps be friends again
+  IndieanaJones:
+  - balance: Abductors are now a light midround as opposed to a heavy midround. This
+      means they can spawn earlier in the round.
+  MMMiracles:
+  - bugfix: Cameras and Lights on external hulls are no long safe havens from the
+      rough reality of the outdoors in harsh weather situations.
+  Melbert:
+  - rscadd: Some new hallucinations, and some modifications to old ones to be slightly
+      more authentic. Find them all!
+  RikuTheKiller:
+  - bugfix: Fixed brains not accepting mannitol pours when not fully decayed
+  - qol: Mannitol solutions are now only partially consumed when poured on a brain
+      and you don't need 10u to do so
+  - qol: Pouring mannitol on a brain now takes 3 seconds instead of 6 seconds and
+      the messages are slightly more consistent
+  - bugfix: Fixed a nullspacing bug related to BCIs, specifically MMI components that
+      are contained inside of them.
+  - refactor: Refactored some of the BCI manipulation chamber's code.
+  ShizCalev:
+  - bugfix: Fixed lighting overlays from an item sometimes showing up on inventory
+      slots / backpack slots instead of from the mob holding them.
+  - bugfix: AI camera lights now work again.
+  - bugfix: Fixed the papersack.
+  Tastyfish:
+  - bugfix: Baguettes can now be examined again.
+  necromanceranne:
+  - balance: 'The Infiltrator suit has been remade into an Infiltrator MODsuit. Has
+      all the original features, but now also has additional powers: total anonymity,
+      and a demoralization aura.'
