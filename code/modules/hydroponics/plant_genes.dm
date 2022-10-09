@@ -495,7 +495,6 @@
 	var/obj/item/food/grown/grown_plant = our_plant
 	if(istype(grown_plant, /obj/item/food/grown))
 		//Grown foods use the edible component so we need to change their max_volume var
-		message_admins("upping max vol")
 		grown_plant.max_volume *= rate
 	else
 		//Grown inedibles however just use a reagents holder, so.

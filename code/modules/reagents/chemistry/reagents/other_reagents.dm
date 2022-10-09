@@ -2835,5 +2835,5 @@
 		holder.del_reagent(type)
 		return
 
-	if(DT_PROB(1, delta_time))
+	if(DT_PROB(10, delta_time))
 		carbon_metabolizer.set_heartattack(TRUE)
