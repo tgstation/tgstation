@@ -296,6 +296,7 @@
 			return FALSE
 	else
 		to_chat(user, span_warning("[src]'s trigger is locked. This weapon doesn't have a firing pin installed!"))
+		balloon_alert(user, "trigger locked!")
 	return FALSE
 
 /obj/item/gun/proc/recharge_newshot()
