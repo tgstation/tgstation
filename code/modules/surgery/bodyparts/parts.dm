@@ -80,7 +80,10 @@
 	aux_layer = HANDS_PART_LAYER
 	body_damage_coeff = 0.75
 	can_be_disabled = TRUE
-	unarmed_attack_verb = "punch"
+	unarmed_attack_verb = "punch" /// The classic punch, wonderfully classic and completely random
+	unarmed_damage_low = 1
+	unarmed_damage_high = 10
+	unarmed_stun_threshold = 10
 	///If our fingers are too big to fire guns
 	var/chunky = FALSE
 
@@ -169,6 +172,9 @@
 	px_x = -5
 	px_y = -3
 	dmg_overlay_type = SPECIES_MONKEY
+	unarmed_damage_low = 1 /// monkey punches must be really weak, considering they bite people instead and their bites are weak as hell.
+	unarmed_damage_high = 2
+	unarmed_stun_threshold = 3
 
 /obj/item/bodypart/arm/l_arm/alien
 	icon = 'icons/mob/species/alien/bodyparts.dmi'
@@ -266,6 +272,9 @@
 	px_x = 5
 	px_y = -3
 	dmg_overlay_type = SPECIES_MONKEY
+	unarmed_damage_low = 1
+	unarmed_damage_high = 2
+	unarmed_stun_threshold = 3
 
 /obj/item/bodypart/arm/r_arm/alien
 	icon = 'icons/mob/species/alien/bodyparts.dmi'
@@ -290,7 +299,11 @@
 	body_damage_coeff = 0.75
 	max_stamina_damage = 50
 	can_be_disabled = TRUE
-	unarmed_attack_verb = "kick"
+	unarmed_attack_effect = ATTACK_EFFECT_KICK
+	unarmed_attack_verb = "kick" // The lovely kick, typically only accessable by attacking a grouded foe. 1.5 times better than the punch.
+	unarmed_damage_low = 2
+	unarmed_damage_high = 15
+	unarmed_stun_threshold = 10
 
 
 /obj/item/bodypart/leg/l_leg
@@ -366,6 +379,9 @@
 	wound_resistance = -10
 	px_y = 4
 	dmg_overlay_type = SPECIES_MONKEY
+	unarmed_damage_low = 2
+	unarmed_damage_high = 3
+	unarmed_stun_threshold = 4
 
 /obj/item/bodypart/leg/l_leg/alien
 	icon = 'icons/mob/species/alien/bodyparts.dmi'
@@ -461,6 +477,9 @@
 	wound_resistance = -10
 	px_y = 4
 	dmg_overlay_type = SPECIES_MONKEY
+	unarmed_damage_low = 2
+	unarmed_damage_high = 3
+	unarmed_stun_threshold = 4
 
 /obj/item/bodypart/leg/r_leg/alien
 	icon = 'icons/mob/species/alien/bodyparts.dmi'

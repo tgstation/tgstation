@@ -6,7 +6,6 @@
 		TRAIT_NOSLIPALL,
 	)
 
-	attack_effect = ATTACK_EFFECT_DISARM
 	say_mod = "slurs"
 	coldmod = 0.5 //snails only come out when its cold and wet
 	burnmod = 2

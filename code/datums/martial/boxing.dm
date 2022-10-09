@@ -14,6 +14,7 @@
 
 	var/mob/living/carbon/human/attacker_human = A
 	var/datum/species/species = attacker_human.dna.species
+	var/obj/item/bodypart/arm/active_arm = attacker_human.get_active_hand()
 
 	A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 
@@ -21,7 +22,7 @@
 
 	var/damage = rand(5, 8) + species.punchdamagelow
 	if(!damage)
-		playsound(D.loc, species.miss_sound, 25, TRUE, -1)
+		playsound(D.loc, active_arm.unarmed_miss_sound, 25, TRUE, -1)
 		D.visible_message(span_warning("[A]'s [atk_verb] misses [D]!"), \
 						span_danger("You avoid [A]'s [atk_verb]!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, A)
 		to_chat(A, span_warning("Your [atk_verb] misses [D]!"))
@@ -32,7 +33,7 @@
 	var/obj/item/bodypart/affecting = D.get_bodypart(D.get_random_valid_zone(A.zone_selected))
 	var/armor_block = D.run_armor_check(affecting, MELEE)
 
-	playsound(D.loc, species.attack_sound, 25, TRUE, -1)
+	playsound(D.loc, active_arm.unarmed_attack_sound, 25, TRUE, -1)
 
 	D.visible_message(span_danger("[A] [atk_verb]ed [D]!"), \
 					span_userdanger("You're [atk_verb]ed by [A]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, A)

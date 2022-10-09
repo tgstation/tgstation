@@ -147,7 +147,16 @@
 	/// the verb used for an unarmed attack when using this limb, such as arm.unarmed_attack_verb = punch
 	var/unarmed_attack_verb = "bump"
 	/// what visual effect is used when this limb is used to strike someone.
-	var/unarmed_strike_attack_effect = ATTACK_EFFECT_PUNCH
+	var/unarmed_attack_effect = ATTACK_EFFECT_PUNCH
+	/// Sounds when this bodypart is used in an umarmed attack
+	var/sound/unarmed_attack_sound = 'sound/weapons/punch1.ogg'
+	var/sound/unarmed_miss_sound = 'sound/weapons/punchmiss.ogg'
+	///Lowest possible punch damage this bodypart can give. If this is set to 0, unarmed attacks will always miss.
+	var/unarmed_damage_low = 1
+	///Highest possible punch damage this bodypart can give.
+	var/unarmed_damage_high = 1
+	///Damage at which attacks from this bodypart will stun
+	var/unarmed_stun_threshold = 2
 
 /obj/item/bodypart/Initialize(mapload)
 	. = ..()

@@ -3,10 +3,6 @@
 	id = SPECIES_MONKEY
 	say_mod = "chimpers"
 	bodytype = BODYTYPE_ORGANIC | BODYTYPE_MONKEY
-	//attack_verb = "bite"
-	attack_effect = ATTACK_EFFECT_BITE
-	attack_sound = 'sound/weapons/bite.ogg'
-	miss_sound = 'sound/weapons/bite.ogg'
 	external_organs = list(
 		/obj/item/organ/external/tail/monkey = "Monkey"
 	)
@@ -234,3 +230,7 @@
 	if(in_the_way_mob.pass_flags & PASSTABLE)
 		return
 	in_the_way_mob.knockOver(owner)
+
+/obj/item/organ/internal/brain/primate/get_attacking_limb(mob/living/carbon/human/target)
+
+	return

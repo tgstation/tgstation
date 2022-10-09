@@ -10,10 +10,12 @@
 /obj/item/bodypart/arm/l_arm/snail
 	limb_id = SPECIES_SNAIL
 	unarmed_attack_verb = "slap"
+	unarmed_attack_effect = ATTACK_EFFECT_DISARM
 
 /obj/item/bodypart/arm/r_arm/snail
 	limb_id = SPECIES_SNAIL
 	unarmed_attack_verb = "slap"
+	unarmed_attack_effect = ATTACK_EFFECT_DISARM
 
 /obj/item/bodypart/leg/l_leg/snail
 	limb_id = SPECIES_SNAIL
@@ -158,10 +160,16 @@
 /obj/item/bodypart/arm/l_arm/pod
 	limb_id = SPECIES_PODPERSON
 	unarmed_attack_verb = "slash"
+	unarmed_attack_effect = ATTACK_EFFECT_CLAW
+	unarmed_attack_sound = 'sound/weapons/slice.ogg'
+	unarmed_miss_sound = 'sound/weapons/slashmiss.ogg'
 
 /obj/item/bodypart/arm/r_arm/pod
 	limb_id = SPECIES_PODPERSON
 	unarmed_attack_verb = "slash"
+	unarmed_attack_effect = ATTACK_EFFECT_CLAW
+	unarmed_attack_sound = 'sound/weapons/slice.ogg'
+	unarmed_miss_sound = 'sound/weapons/slashmiss.ogg'
 
 /obj/item/bodypart/leg/l_leg/pod
 	limb_id = SPECIES_PODPERSON
@@ -273,17 +281,29 @@
 
 /obj/item/bodypart/arm/l_arm/mushroom
 	limb_id = SPECIES_MUSHROOM
+	unarmed_damage_low = 6
+	unarmed_damage_high = 14
+	unarmed_stun_threshold = 14
 
 /obj/item/bodypart/arm/r_arm/mushroom
 	limb_id = SPECIES_MUSHROOM
+	unarmed_damage_low = 6
+	unarmed_damage_high = 14
+	unarmed_stun_threshold = 14
 
 /obj/item/bodypart/leg/l_leg/mushroom
 	limb_id = SPECIES_MUSHROOM
+	unarmed_damage_low = 9
+	unarmed_damage_high = 21
+	unarmed_stun_threshold = 14
 
 /obj/item/bodypart/leg/r_leg/mushroom
 	limb_id = SPECIES_MUSHROOM
+	unarmed_damage_low = 9
+	unarmed_damage_high = 21
+	unarmed_stun_threshold = 14
 
-///GOLEMS (i hate xenobio SO FUCKING MUCH)
+///GOLEMS (i hate xenobio SO FUCKING MUCH) (from 2022: Yeah I fucking feel your pain brother)
 /obj/item/bodypart/head/golem
 	limb_id = SPECIES_GOLEM
 	is_dimorphic = FALSE
@@ -298,6 +318,9 @@
 	limb_id = SPECIES_GOLEM
 	dmg_overlay_type = null
 	chunky = TRUE
+	unarmed_damage_low = 5 // I'd like to take the moment that maintaining all of these random ass golem speciese is hell and oranges was right
+	unarmed_damage_high = 14
+	unarmed_stun_threshold = 11
 
 /obj/item/bodypart/arm/r_arm/golem
 	limb_id = SPECIES_GOLEM
@@ -353,18 +376,30 @@
 /obj/item/bodypart/arm/l_arm/golem/cloth
 	limb_id = SPECIES_GOLEM_CLOTH
 	should_draw_greyscale = FALSE
+	unarmed_damage_low = 4
+	unarmed_stun_threshold = 7
+	unarmed_damage_high = 8
 
 /obj/item/bodypart/arm/r_arm/golem/cloth
 	limb_id = SPECIES_GOLEM_CLOTH
 	should_draw_greyscale = FALSE
+	unarmed_damage_low = 4
+	unarmed_stun_threshold = 7
+	unarmed_damage_high = 8
 
 /obj/item/bodypart/leg/l_leg/golem/cloth
 	limb_id = SPECIES_GOLEM_CLOTH
 	should_draw_greyscale = FALSE
+	unarmed_damage_low = 6
+	unarmed_stun_threshold = 7
+	unarmed_damage_high = 12
 
 /obj/item/bodypart/leg/r_leg/golem/cloth
 	limb_id = SPECIES_GOLEM_CLOTH
 	should_draw_greyscale = FALSE
+	unarmed_damage_low = 6
+	unarmed_stun_threshold = 7
+	unarmed_damage_high = 12
 
 ///
 /obj/item/bodypart/head/golem/cardboard
@@ -381,18 +416,39 @@
 	limb_id = SPECIES_GOLEM_CARDBOARD
 	should_draw_greyscale = FALSE
 	unarmed_attack_verb = "whip"
+	unarmed_attack_sound = 'sound/weapons/whip.ogg'
+	unarmed_miss_sound = 'sound/weapons/etherealmiss.ogg'
+	unarmed_damage_low = 4
+	unarmed_stun_threshold = 7
+	unarmed_damage_high = 8
 
 /obj/item/bodypart/arm/r_arm/golem/cardboard
 	limb_id = SPECIES_GOLEM_CARDBOARD
 	should_draw_greyscale = FALSE
+	unarmed_attack_verb = "whip"
+	unarmed_attack_sound = 'sound/weapons/whip.ogg'
+	unarmed_miss_sound = 'sound/weapons/etherealmiss.ogg'
+	unarmed_damage_low = 4
+	unarmed_stun_threshold = 7
+	unarmed_damage_high = 8
 
 /obj/item/bodypart/leg/l_leg/golem/cardboard
 	limb_id = SPECIES_GOLEM_CARDBOARD
 	should_draw_greyscale = FALSE
+	unarmed_attack_sound = 'sound/weapons/whip.ogg'
+	unarmed_miss_sound = 'sound/weapons/etherealmiss.ogg'
+	unarmed_damage_low = 6
+	unarmed_stun_threshold = 7
+	unarmed_damage_high = 12
 
 /obj/item/bodypart/leg/r_leg/golem/cardboard
 	limb_id = SPECIES_GOLEM_CARDBOARD
 	should_draw_greyscale = FALSE
+	unarmed_attack_sound = 'sound/weapons/whip.ogg'
+	unarmed_miss_sound = 'sound/weapons/etherealmiss.ogg'
+	unarmed_damage_low = 6
+	unarmed_stun_threshold = 7
+	unarmed_damage_high = 12
 
 ///
 /obj/item/bodypart/head/golem/durathread
@@ -479,7 +535,88 @@
 /obj/item/bodypart/arm/l_arm/golem/uranium
 	attack_type = BURN
 	unarmed_attack_verb = "burn"
+	unarmed_attack_sound = 'sound/weapons/sear.ogg'
+	unarmed_damage_low = 1
+	unarmed_damage_high = 10
+	unarmed_stun_threshold = 9
 
 /obj/item/bodypart/arm/r_arm/golem/uranium
 	attack_type = BURN
 	unarmed_attack_verb = "burn"
+	unarmed_attack_sound = 'sound/weapons/sear.ogg'
+	unarmed_damage_low = 1
+	unarmed_damage_high = 10
+	unarmed_stun_threshold = 9
+
+/obj/item/bodypart/leg/l_leg/golem/uranium
+	attack_type = BURN
+	unarmed_attack_sound = 'sound/weapons/sear.ogg'
+	unarmed_damage_low = 2
+	unarmed_damage_high = 15
+	unarmed_stun_threshold = 9
+
+/obj/item/bodypart/leg/r_leg/golem/uranium
+	attack_type = BURN
+	unarmed_attack_sound = 'sound/weapons/sear.ogg'
+	unarmed_damage_low = 2
+	unarmed_damage_high = 15
+	unarmed_stun_threshold = 9
+
+/obj/item/bodypart/arm/l_arm/golem/plasteel
+	unarmed_attack_verb = "smash"
+	unarmed_attack_effect = ATTACK_EFFECT_SMASH
+	unarmed_attack_sound = 'sound/effects/meteorimpact.ogg' //hits pretty hard
+	unarmed_damage_low = 12
+	unarmed_damage_high = 21
+	unarmed_stun_threshold = 18
+
+/obj/item/bodypart/arm/r_arm/golem/plasteel
+	unarmed_attack_verb = "smash"
+	unarmed_attack_effect = ATTACK_EFFECT_SMASH
+	unarmed_attack_sound = 'sound/effects/meteorimpact.ogg'
+	unarmed_damage_low = 12
+	unarmed_damage_high = 21
+	unarmed_stun_threshold = 18
+
+
+/obj/item/bodypart/leg/l_leg/golem/plasteel
+	unarmed_attack_effect = ATTACK_EFFECT_SMASH
+	unarmed_attack_sound = 'sound/effects/meteorimpact.ogg'
+	unarmed_damage_low = 18
+	unarmed_damage_high = 32
+	unarmed_stun_threshold = 18
+
+/obj/item/bodypart/leg/r_leg/golem/plasteel
+	unarmed_attack_effect = ATTACK_EFFECT_SMASH
+	unarmed_attack_sound = 'sound/effects/meteorimpact.ogg'
+	unarmed_damage_low = 18
+	unarmed_damage_high = 32
+	unarmed_stun_threshold = 18
+
+/obj/item/bodypart/arm/l_arm/golem/bananium
+	unarmed_attack_verb = "honk"
+	unarmed_attack_sound = 'sound/items/airhorn2.ogg'
+	unarmed_damage_low = 0
+	unarmed_damage_high = 1
+	unarmed_stun_threshold = 2 //Harmless and can't stun
+
+/obj/item/bodypart/arm/r_arm/golem/bananium
+	unarmed_attack_verb = "honk"
+	unarmed_attack_sound = 'sound/items/airhorn2.ogg'
+	unarmed_damage_low = 0
+	unarmed_damage_high = 1
+	unarmed_stun_threshold = 2
+
+/obj/item/bodypart/leg/r_leg/golem/bananium
+	unarmed_attack_verb = "honk"
+	unarmed_attack_sound = 'sound/items/airhorn2.ogg'
+	unarmed_damage_low = 0
+	unarmed_damage_high = 1
+	unarmed_stun_threshold = 2
+
+/obj/item/bodypart/leg/l_leg/golem/bananium
+	unarmed_attack_verb = "honk"
+	unarmed_attack_sound = 'sound/items/airhorn2.ogg'
+	unarmed_damage_low = 0
+	unarmed_damage_high = 1
+	unarmed_stun_threshold = 2
