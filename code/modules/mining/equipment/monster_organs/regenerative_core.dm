@@ -1,4 +1,7 @@
-/************************Hivelord core*******************/
+/**
+ * On use in hand, heals you over time and removes injury movement debuffs. Also makes you a bit sad.
+ * On use when implanted, fully heals. Automatically fully heals if you would enter crit.
+ */
 /obj/item/organ/internal/monster_core/regenerative_core
 	name = "regenerative core"
 	desc = "All that remains of a hivelord. It can be used to help keep your body going, but it will rapidly decay into uselessness."
@@ -20,17 +23,11 @@
 		return
 	SSblackbox.record_feedback("nested tally", "hivelord_core", 1, list("[type]", "inert"))
 
-/obj/item/organ/internal/monster_core/regenerative_core/on_life(delta_time, times_fired)
-	..()
-	if (owner.health <= owner.crit_threshold)
-		ui_action_click()
+/obj/item/organ/internal/monster_core/regenerative_core/should_apply_on_life()
+	return owner.health <= owner.crit_threshold
 
-/obj/item/organ/internal/monster_core/regenerative_core/ui_action_click()
-	if (inert)
-		to_chat(owner, span_notice("[src] breaks down as it tries to activate."))
-	else
-		owner.revive(full_heal = TRUE, admin_revive = FALSE)
-	qdel(src)
+/obj/item/organ/internal/monster_core/regenerative_core/activate_implanted()
+	owner.revive(full_heal = TRUE, admin_revive = FALSE)
 
 /// Log applications.
 /obj/item/organ/internal/monster_core/regenerative_core/apply_to(mob/living/target, mob/user)
@@ -42,7 +39,7 @@
 		SSblackbox.record_feedback("nested tally", "hivelord_core", 1, list("[type]", "used", "self"))
 	return ..()
 
-/*************************Legion core********************/
+/// Different graphics/desc for the lavaland legion
 /obj/item/organ/internal/monster_core/regenerative_core/legion
 	desc = "A strange rock that crackles with power. It can be used to heal completely, but it will rapidly decay into uselessness."
 	desc_preserved = "The core has been stabilized, allowing you to use it to heal completely without danger of decay."

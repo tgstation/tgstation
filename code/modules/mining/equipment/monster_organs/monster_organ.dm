@@ -164,3 +164,36 @@
 	if (moodlet)
 		target.add_mood_event("core", moodlet)
 	qdel(src)
+
+/obj/item/organ/internal/monster_core/on_life(delta_time, times_fired)
+	..()
+	if (!should_apply_on_life())
+		return
+	try_activate_implanted()
+
+/// Return true under conditions where we want an implanted organ to trigger
+/obj/item/organ/internal/monster_core/proc/should_apply_on_life()
+	return FALSE
+
+/obj/item/organ/internal/monster_core/ui_action_click()
+	try_activate_implanted()
+
+/**
+ * Called when activated while implanted inside someone.
+ * This performs checking for interness, you should usually override activate_implanted() instead.
+ * This also consumes the organ, so if you don't want to do that, do override this.
+ */
+/obj/item/organ/internal/monster_core/proc/try_activate_implanted()
+	if (inert)
+		to_chat(owner, span_notice("[src] breaks down as it tries to activate."))
+	else
+		activate_implanted()
+	qdel(src)
+
+/**
+ * Called when activated while implanted inside someone.
+ * This is either when they press the UI button or if should_apply_on_life() returns true.
+ */
+/obj/item/organ/internal/monster_core/proc/activate_implanted()
+	SHOULD_CALL_PARENT(FALSE)
+	CRASH("Implanted organ behaviour not implemented for [type]!")

@@ -432,3 +432,45 @@
 /datum/status_effect/limited_buff/health_buff/maxed_out()
 	. = ..()
 	to_chat(owner, span_warning("You don't feel any healthier."))
+
+/// Makes you run really fast and leave after-images, if you run into a station wall you fall over
+/datum/status_effect/lobster_rush
+	id = "lobster_rush"
+	duration = 3 SECONDS
+	alert_type = /atom/movable/screen/alert/status_effect/lobster_rush
+	var/spawned_last_move = FALSE
+
+/atom/movable/screen/alert/status_effect/lobster_rush
+	name = "Lobster Rush"
+	desc = "Adrenaline is surging through you!"
+	icon_state = "antalert"
+
+/datum/status_effect/lobster_rush/on_apply()
+	. = ..()
+	RegisterSignal(owner, COMSIG_MOVABLE_PRE_MOVE, .proc/on_move)
+	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, "[STATUS_EFFECT_TRAIT]_[id]")
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/lobster_rush)
+	to_chat(owner, span_notice("You feel your blood pumping!"))
+
+/datum/status_effect/lobster_rush/on_remove()
+	. = ..()
+	UnregisterSignal(owner, COMSIG_MOVABLE_PRE_MOVE)
+	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, "[STATUS_EFFECT_TRAIT]_[id]")
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/lobster_rush)
+	to_chat(owner, span_notice("Your pulse returns to normal."))
+
+/// Spawn an afterimage every other step, because every step was too many
+/datum/status_effect/lobster_rush/proc/on_move()
+	if (!spawned_last_move)
+		new /obj/effect/temp_visual/decoy/fading(owner.loc, owner)
+	spawned_last_move = !spawned_last_move
+
+/// You get a longer buff if you take the time to implant it in yourself, and you ignore all slowdown
+/datum/status_effect/lobster_rush/extended
+	duration = 6 SECONDS
+
+/datum/status_effect/lobster_rush/extended/on_apply()
+	ADD_TRAIT(owner, TRAIT_IGNORESLOWDOWN, "[STATUS_EFFECT_TRAIT]_[id]")
+
+/datum/status_effect/lobster_rush/extended/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_IGNORESLOWDOWN, "[STATUS_EFFECT_TRAIT]_[id]")
