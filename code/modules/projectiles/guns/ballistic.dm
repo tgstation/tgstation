@@ -287,7 +287,7 @@
 ///Handles all the logic needed for magazine insertion
 /obj/item/gun/ballistic/proc/insert_magazine(mob/user, obj/item/ammo_box/magazine/AM, display_message = TRUE)
 	if(!istype(AM, mag_type))
-		to_chat(user, span_warning("[AM] doesn't seem to fit into [src]..."))
+		balloon_alert(user, "[AM.name] doesn't fit!")
 		return FALSE
 	if(user.transferItemToLoc(AM, src))
 		magazine = AM
@@ -314,7 +314,7 @@
 	var/obj/item/ammo_box/magazine/old_mag = magazine
 	if (tac_load)
 		if (insert_magazine(user, tac_load, FALSE))
-			to_chat(user, span_notice("You perform a tactical reload on [src]."))
+			balloon_alert(user, "[magazine_wording] swapped")
 		else
 			to_chat(user, span_warning("You dropped the old [magazine_wording], but the new one doesn't fit. How embarassing."))
 			magazine = null
@@ -360,16 +360,16 @@
 	if(istype(A, /obj/item/suppressor))
 		var/obj/item/suppressor/S = A
 		if(!can_suppress)
-			to_chat(user, span_warning("You can't seem to figure out how to fit [S] on [src]!"))
+			balloon_alert(user, "[S.name] doesn't fit!")
 			return
 		if(!user.is_holding(src))
-			to_chat(user, span_warning("You need be holding [src] to fit [S] to it!"))
+			balloon_alert(user, "must be held to attach!")
 			return
 		if(suppressed)
-			to_chat(user, span_warning("[src] already has a suppressor!"))
+			balloon_alert(user, "already has a supressor!")
 			return
 		if(user.transferItemToLoc(A, src))
-			to_chat(user, span_notice("You screw [S] onto [src]."))
+			balloon_alert(user, "[S.name] attached")
 			install_suppressor(A)
 			return
 	if (can_be_sawn_off)
@@ -423,7 +423,7 @@
 			var/obj/item/suppressor/S = suppressed
 			if(!user.is_holding(src))
 				return ..()
-			to_chat(user, span_notice("You unscrew [S] from [src]."))
+			balloon_alert(user, "[S.name] removed")
 			user.put_in_hands(S)
 			clear_suppressor()
 
@@ -575,10 +575,10 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 	if(!saw.get_sharpness() || (!is_type_in_typecache(saw, GLOB.gun_saw_types) && saw.tool_behaviour != TOOL_SAW)) //needs to be sharp. Otherwise turned off eswords can cut this.
 		return
 	if(sawn_off)
-		to_chat(user, span_warning("[src] is already shortened!"))
+		balloon_alert(user, "it's already shortened!")
 		return
 	if(bayonet)
-		to_chat(user, span_warning("You cannot saw-off [src] with [bayonet] attached!"))
+		balloon_alert(user, "[bayonet.name] must be removed!")
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.visible_message(span_notice("[user] begins to shorten [src]."), span_notice("You begin to shorten [src]..."))
@@ -611,7 +611,7 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 
 /obj/item/gun/ballistic/proc/guncleaning(mob/user, obj/item/A)
 	if(misfire_probability == 0)
-		to_chat(user, span_notice("[src] seems to be already clean of fouling."))
+		balloon_alert(user, "it's already clean!")
 		return
 
 	user.changeNext_move(CLICK_CD_MELEE)

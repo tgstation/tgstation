@@ -287,7 +287,7 @@
 
 /obj/item/gun/ballistic/automatic/l6_saw/afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, flag, params)
 	if(cover_open)
-		to_chat(user, span_warning("[src]'s cover is open! Close it before firing!"))
+		balloon_alert(user, "cover must be closed first!")
 		return
 	else
 		. = ..()
@@ -299,13 +299,13 @@
 		..()
 		return
 	if (!cover_open)
-		to_chat(user, span_warning("[src]'s cover is closed! Open it before trying to remove the magazine!"))
+		balloon_alert(user, "cover must be opened first!")
 		return
 	..()
 
 /obj/item/gun/ballistic/automatic/l6_saw/attackby(obj/item/A, mob/user, params)
 	if(!cover_open && istype(A, mag_type))
-		to_chat(user, span_warning("[src]'s dust cover prevents a magazine from being fit."))
+		balloon_alert(user, "cover must be opened first!")
 		return
 	..()
 

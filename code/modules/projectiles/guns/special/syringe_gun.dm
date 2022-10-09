@@ -71,7 +71,7 @@
 
 /obj/item/gun/syringe/attackby(obj/item/A, mob/user, params, show_msg = TRUE)
 	if(istype(A, /obj/item/reagent_containers/syringe/bluespace))
-		to_chat(user, span_notice("[A] is too big to load into [src]."))
+		balloon_alert(user, "[A.name] is too big!")
 		return TRUE
 	if(istype(A, /obj/item/reagent_containers/syringe))
 		if(syringes.len < max_syringes)
@@ -84,7 +84,7 @@
 			playsound(loc, load_sound, 40)
 			return TRUE
 		else
-			to_chat(user, span_warning("[src] cannot hold more syringes!"))
+			balloon_alert(user, "it's already full!")
 	return FALSE
 
 /obj/item/gun/syringe/update_overlays()
@@ -154,7 +154,7 @@
 	if(istype(A, /obj/item/dnainjector))
 		var/obj/item/dnainjector/D = A
 		if(D.used)
-			to_chat(user, span_warning("This injector is used up!"))
+			balloon_alert("[D.name] is used up!")
 			return
 		if(syringes.len < max_syringes)
 			if(!user.transferItemToLoc(D, src))
@@ -166,7 +166,7 @@
 			playsound(loc, load_sound, 40)
 			return TRUE
 		else
-			to_chat(user, span_warning("[src] cannot hold more syringes!"))
+			balloon_alert(user, "it's already full!")
 	return FALSE
 
 /obj/item/gun/syringe/blowgun

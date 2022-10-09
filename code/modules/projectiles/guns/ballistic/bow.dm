@@ -38,7 +38,7 @@
 
 /obj/item/gun/ballistic/bow/attack_self(mob/user)
 	if(chambered)
-		to_chat(user, span_notice("You [drawn ? "release the tension on" : "draw the string on"] [src]."))
+		balloon_alert(user, [drawn ? "string released" : "string drawn"])
 		drawn = !drawn
 	update_appearance()
 

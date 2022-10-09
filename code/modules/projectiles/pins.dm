@@ -185,7 +185,7 @@
 		var/mob/living/carbon/M = target
 		if(M.dna && M.dna.unique_enzymes)
 			unique_enzymes = M.dna.unique_enzymes
-			to_chat(user, span_notice("DNA-LOCK SET."))
+			balloon_alert(user, "dna lock set")
 
 /obj/item/firing_pin/dna/pin_auth(mob/living/carbon/user)
 	if(user && user.dna && user.dna.unique_enzymes)
@@ -197,7 +197,7 @@
 	if(!unique_enzymes)
 		if(user && user.dna && user.dna.unique_enzymes)
 			unique_enzymes = user.dna.unique_enzymes
-			to_chat(user, span_notice("DNA-LOCK SET."))
+			balloon_alert(user, "dna lock set")
 	else
 		..()
 
@@ -315,7 +315,6 @@
 /obj/item/firing_pin/explorer/pin_auth(mob/living/user)
 	var/turf/station_check = get_turf(user)
 	if(!station_check||is_station_level(station_check.z))
-		to_chat(user, span_warning("You cannot use your weapon while on the station!"))
 		return FALSE
 	return TRUE
 

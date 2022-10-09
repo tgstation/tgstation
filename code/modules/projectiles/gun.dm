@@ -196,10 +196,10 @@
 	if (gunpoint_component)
 		if(gunpoint_component.target == victim)
 			return ..() //we're already holding them up, shoot that mans instead of complaining
-		to_chat(user, span_warning("You are already holding someone up!"))
+		balloon_alert(user, "already holding someone up!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if (user == victim)
-		to_chat(user,span_warning("You can't hold yourself up!"))
+		balloon_alert(user, "can't hold yourself up!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	user.AddComponent(/datum/component/gunpoint, victim, src)
@@ -296,7 +296,7 @@
 			return FALSE
 	else
 		to_chat(user, span_warning("[src]'s trigger is locked. This weapon doesn't have a firing pin installed!"))
-		balloon_alert(user, "trigger locked!")
+		balloon_alert(user, "trigger locked, firing pin needed!")
 	return FALSE
 
 /obj/item/gun/proc/recharge_newshot()
