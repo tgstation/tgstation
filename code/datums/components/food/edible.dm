@@ -162,7 +162,7 @@ Behavior that's still missing from this component that original food items had t
 		if(islist(cached_tastes))
 			var/list/mixed_tastes = cached_tastes.Copy()
 			for(var/new_taste in tastes)
-				mixed_tastes[new_tastes] += tastes[new_taste]
+				mixed_tastes[new_taste] += tastes[new_taste]
 
 			src.tastes = string_assoc_list(mixed_tastes)
 		else
