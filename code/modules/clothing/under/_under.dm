@@ -47,9 +47,9 @@
 
 	if(attatched_accessory)
 		context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove accessory"
-	else if(can_adjust)			
+	else if(can_adjust)
 		context[SCREENTIP_CONTEXT_ALT_LMB] = adjusted == ALT_STYLE ? "Wear normally" : "Wear casually"
-		
+
 	return CONTEXTUAL_SCREENTIP_SET
 
 	return NONE
@@ -72,9 +72,7 @@
 		C.use(1)
 		has_sensor = HAS_SENSORS
 		to_chat(user,span_notice("You repair the suit sensors on [src] with [C]."))
-		if(
-		AddElement(/datum/element/contextual_screentip_bare_hands, rmb_text = "Toggle suit sensors)
-		return 1
+		return TRUE
 	if(!attach_accessory(I, user))
 		return ..()
 
