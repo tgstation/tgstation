@@ -35,14 +35,14 @@
 		src.positive_result = positive_result
 
 /datum/component/bakeable/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ITEM_BAKING_START, .proc/on_baking_start)
-	RegisterSignal(parent, COMSIG_ITEM_BAKED, .proc/on_bake)
+	RegisterSignal(parent, COMSIG_ITEM_OVEN_PLACED_IN, .proc/on_baking_start)
+	RegisterSignal(parent, COMSIG_ITEM_OVEN_PROCESS, .proc/on_bake)
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 
 /datum/component/bakeable/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_ITEM_BAKING_START, COMSIG_ITEM_BAKED, COMSIG_PARENT_EXAMINE))
+	UnregisterSignal(parent, list(COMSIG_ITEM_OVEN_PLACED_IN, COMSIG_ITEM_OVEN_PROCESS, COMSIG_PARENT_EXAMINE))
 
-/// Signal proc for [COMSIG_ITEM_BAKING_START] when baking starts (parent enters an oven)
+/// Signal proc for [COMSIG_ITEM_OVEN_PLACED_IN] when baking starts (parent enters an oven)
 /datum/component/bakeable/proc/on_baking_start(datum/source, atom/used_oven, mob/baker)
 	SIGNAL_HANDLER
 
@@ -83,7 +83,7 @@
 		used_oven.visible_message(span_notice("You smell something great coming from [used_oven]."), blind_message = span_notice("You smell something great..."))
 	else
 		used_oven.visible_message(span_warning("You smell a burnt smell coming from [used_oven]."), blind_message = span_warning("You smell a burnt smell..."))
-	SEND_SIGNAL(parent, COMSIG_BAKE_COMPLETED, baked_result)
+	SEND_SIGNAL(parent, COMSIG_ITEM_BAKED, baked_result)
 	qdel(parent)
 
 ///Gives info about the items baking status so you can see if its almost done

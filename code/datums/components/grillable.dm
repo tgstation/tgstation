@@ -24,12 +24,12 @@
 	src.use_large_steam_sprite = use_large_steam_sprite
 
 /datum/component/grillable/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ITEM_GRILL_START, .proc/on_grill_start)
-	RegisterSignal(parent, COMSIG_ITEM_GRILLED, .proc/on_grill)
+	RegisterSignal(parent, COMSIG_ITEM_GRILL_PLACED_ON, .proc/on_grill_start)
+	RegisterSignal(parent, COMSIG_ITEM_GRILL_PROCESS, .proc/on_grill)
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 
 /datum/component/grillable/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_ITEM_GRILL_START, COMSIG_ITEM_GRILLED, COMSIG_PARENT_EXAMINE))
+	UnregisterSignal(parent, list(COMSIG_ITEM_GRILL_PLACED_ON, COMSIG_ITEM_GRILL_PROCESS, COMSIG_PARENT_EXAMINE))
 
 // Inherit the new values passed to the component
 /datum/component/grillable/InheritComponent(datum/component/grillable/new_comp, original, cook_result, required_cook_time, positive_result, use_large_steam_sprite)
@@ -44,7 +44,7 @@
 	if(use_large_steam_sprite)
 		src.use_large_steam_sprite = use_large_steam_sprite
 
-/// Signal proc for [COMSIG_ITEM_GRILL_START], starts the grilling process.
+/// Signal proc for [COMSIG_ITEM_GRILL_PLACED_ON], starts the grilling process.
 /datum/component/grillable/proc/on_grill_start(datum/source, mob/griller)
 	SIGNAL_HANDLER
 
@@ -82,7 +82,7 @@
 		if(original_object.custom_materials)
 			grilled_result.set_custom_materials(original_object.custom_materials)
 
-	SEND_SIGNAL(parent, COMSIG_GRILL_COMPLETED, grilled_result)
+	SEND_SIGNAL(parent, COMSIG_ITEM_GRILLED, grilled_result)
 	if(who_placed_us)
 		ADD_TRAIT(grilled_result, TRAIT_FOOD_CHEF_MADE, who_placed_us)
 

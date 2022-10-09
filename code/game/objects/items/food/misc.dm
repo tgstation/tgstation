@@ -152,7 +152,7 @@
 
 /obj/item/food/badrecipe/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_ITEM_GRILLED, .proc/OnGrill)
+	RegisterSignal(src, COMSIG_ITEM_GRILL_PROCESS, .proc/OnGrill)
 
 /obj/item/food/badrecipe/moldy
 	name = "moldy mess"

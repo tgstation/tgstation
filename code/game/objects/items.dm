@@ -1475,11 +1475,6 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 /obj/item/proc/set_painting_tool_color(chosen_color)
 	SEND_SIGNAL(src, COMSIG_PAINTING_TOOL_SET_COLOR, chosen_color)
 
-/// Triggered from a silver slime reaction, sends a signal for the listener in component/edible
-/obj/item/proc/mark_silver_slime_reaction()
-	SIGNAL_HANDLER
-	SEND_SIGNAL(src, COMSIG_FOOD_SILVER_SPAWNED)
-
 /**
  * Returns null if this object cannot be used to interact with physical writing mediums such as paper.
  * Returns a list of key attributes for this object interacting with paper otherwise.

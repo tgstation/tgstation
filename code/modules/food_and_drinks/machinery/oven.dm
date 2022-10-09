@@ -66,7 +66,7 @@
 	var/worst_cooked_food_state = 0
 	for(var/obj/item/baked_item in used_tray.contents)
 
-		var/signal_result = SEND_SIGNAL(baked_item, COMSIG_ITEM_BAKED, src, delta_time)
+		var/signal_result = SEND_SIGNAL(baked_item, COMSIG_ITEM_OVEN_PROCESS, src, delta_time)
 
 		if(signal_result & COMPONENT_HANDLED_BAKING) //This means something responded to us baking!
 			if(signal_result & COMPONENT_BAKING_GOOD_RESULT && worst_cooked_food_state < OVEN_SMOKE_STATE_GOOD)
@@ -143,7 +143,7 @@
 
 			// yeah yeah i figure you don't need connect loc for just baking trays
 			for(var/obj/item/baked_item in used_tray.contents)
-				SEND_SIGNAL(baked_item, COMSIG_ITEM_BAKING_START, src, user)
+				SEND_SIGNAL(baked_item, COMSIG_ITEM_OVEN_PLACED_IN, src, user)
 
 	update_appearance()
 	update_baking_audio()
