@@ -363,7 +363,7 @@
 
 	// How many items are we cooking that aren't already food items
 	var/non_food_ingedients = length(ingredients)
-	for(var/potential_fooditem in ingredients)
+	for(var/atom/movable/potential_fooditem as anything in ingredients)
 		if(IS_EDIBLE(potential_fooditem))
 			non_food_ingedients--
 

@@ -79,8 +79,11 @@
 
 /obj/item/clothing/head/costume/foilhat/microwave_act(obj/machinery/microwave/microwave_source, mob/microwaver)
 	. = ..()
-	if(!warped)
-		warp_up()
+	if(warped)
+		return
+
+	warp_up()
+	return . | COMPONENT_MICROWAVE_SUCCESS
 
 /obj/item/clothing/head/costume/foilhat/proc/call_suicide(datum/source)
 	SIGNAL_HANDLER

@@ -500,7 +500,7 @@
 /obj/item/food/meat/rawcutlet/MakeGrillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/cutlet/plain, rand(35 SECONDS, 50 SECONDS), TRUE, TRUE)
 
-/obj/item/food/meat/rawcutlet/OnCreatedFromProcessing(mob/living/user, obj/item/item, list/chosen_option, atom/original_atom)
+/obj/item/food/meat/rawcutlet/OnCreatedFromProcessing(mob/living/user, obj/item/work_tool, list/chosen_option, atom/original_atom)
 	. = ..()
 	if(!istype(original_atom, /obj/item/food/meat/slab))
 		return
@@ -602,6 +602,7 @@
 	foodtypes = MEAT
 	burns_on_grill = TRUE
 
+/obj/item/food/meat/cutlet/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_ITEM_MICROWAVE_COOKED, .proc/on_microwave_cooked)
 

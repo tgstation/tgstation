@@ -557,28 +557,27 @@
 /obj/projectile/kiss/chef/on_hit(atom/target, blocked, pierce_hit)
 	. = ..()
 	if(!IS_EDIBLE(target) || !target.reagents)
+		message_admins("Not edible")
 		return
 	if(!firer || !target.Adjacent(firer))
+		message_admins("Not adjacent")
 		return
 
 	// From here on, no message
 	suppressed = SUPPRESSED_VERY
 
 	if(!HAS_TRAIT_FROM(target, TRAIT_FOOD_CHEF_MADE, REF(firer)))
-		to_chat(firer, span_warning("Wait a second, you didn't make this [target.name]. \
-			How can you claim this as your's?"))
+		to_chat(firer, span_warning("Wait a second, you didn't make this [target.name]. How can you claim it as your own?"))
 		return
 	if(target.reagents.has_reagent(/datum/reagent/love))
+		to_chat(firer, span_warning("You've already blessed [target.name] with your heart and soul."))
 		return
 
-	var/amount_nutriment = target.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment) + \
-		target.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment/vitamin) + \
-		target.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment/protein)
-	if(!amount_nutriment)
+	var/amount_nutriment = target.reagents.get_multiple_reagent_amounts(typesof(/datum/reagent/consumable/nutriment))
+	if(amount_nutriment <= 0)
+		to_chat(firer, span_warning("There's not enough nutrition in [target.name] for it to be a proper meal."))
 		return
 
+	to_chat(firer, span_green("You deliver a chef's kiss over [target], declaring it perfect."))
+	target.visible_message(span_notice("[firer] delivers a chef's kiss over [target]."), ignored_mobs = firer)
 	target.reagents.add_reagent(/datum/reagent/love, amount_nutriment / 4)
-	firer.visible_message(
-		span_notice("[firer] delivers a chef's kiss over [target]."),
-		span_green("You deliver a chef's kiss over [target], declaring it perfect."),
-	)

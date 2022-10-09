@@ -2820,21 +2820,20 @@
 
 /datum/reagent/love/on_mob_metabolize(mob/living/metabolizer)
 	. = ..()
-	SEND_SIGNAL(metabolizer, COMSIG_ADD_MOOD_EVENT, "love", /datum/mood_event/love_reagent)
+	metabolizer.add_mood_event(name, /datum/mood_event/love_reagent)
 
 /datum/reagent/love/on_mob_delete(mob/living/deleted_from)
 	. = ..()
 	// When we exit the system we'll leave the moodlet based on the amount we had
 	var/duration_of_moodlet = current_cycle * 20 SECONDS
-	SEND_SIGNAL(deleted_from, COMSIG_CLEAR_MOOD_EVENT, "love")
-	SEND_SIGNAL(deleted_from, COMSIG_ADD_MOOD_EVENT, "love", /datum/mood_event/love_reagent, duration_of_moodlet)
+	deleted_from.clear_mood_event(name)
+	deleted_from.add_mood_event(name, /datum/mood_event/love_reagent, duration_of_moodlet)
 
 /datum/reagent/love/overdose_process(mob/living/metabolizer, delta_time, times_fired)
-	if(!iscarbon(metabolizer))
-		return
-	var/mob/living/carbon/carbon_metabloizer = metabolizer
-	if(carbon_metabloizer.undergoing_cardiac_arrest() || !carbon_metabloizer.can_heartattack())
+	var/mob/living/carbon/carbon_metabolizer = metabolizer
+	if(!istype(carbon_metabolizer) || !carbon_metabolizer.can_heartattack() || carbon_metabolizer.undergoing_cardiac_arrest())
+		holder.del_reagent(type)
 		return
 
 	if(DT_PROB(1, delta_time))
-		carbon_metabloizer.set_heartattack(TRUE)
+		carbon_metabolizer.set_heartattack(TRUE)

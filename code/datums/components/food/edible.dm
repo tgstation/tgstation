@@ -146,23 +146,23 @@ Behavior that's still missing from this component that original food items had t
 /datum/component/edible/proc/examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	if(!(food_flags & FOOD_IN_CONTAINER))
-		switch (bitecount)
-			if (0)
-				return
-			if(1)
-				examine_list += "[parent] was bitten by someone!"
-			if(2,3)
-				examine_list += "[parent] was bitten [bitecount] times!"
-			else
-				examine_list += "[parent] was bitten multiple times!"
-
 	if(foodtypes)
 		var/list/types = bitfield_to_list(foodtypes, FOOD_FLAGS)
 		examine_list += span_notice("It is [lowertext(english_list(types))].")
 
 	if(HAS_TRAIT_FROM(parent, TRAIT_FOOD_CHEF_MADE, REF(user)))
-		examine_list += "[parent] was made by you."
+		examine_list += span_green("[parent] was made by you!")
+
+	if(!(food_flags & FOOD_IN_CONTAINER))
+		switch(bitecount)
+			if(0)
+				// pass
+			if(1)
+				examine_list += span_notice("[parent] was bitten by someone!")
+			if(2, 3)
+				examine_list += span_notice("[parent] was bitten [bitecount] times!")
+			else
+				examine_list += span_notice("[parent] was bitten multiple times!")
 
 /datum/component/edible/proc/UseFromHand(obj/item/source, mob/living/M, mob/living/user)
 	SIGNAL_HANDLER
