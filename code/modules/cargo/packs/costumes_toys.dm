@@ -55,7 +55,8 @@
 					/obj/item/storage/fancy/cigarettes/cigpack_shadyjims,
 					/obj/item/clothing/mask/gas/syndicate,
 					/obj/item/clothing/neck/necklace/dope,
-					/obj/item/vending_refill/donksoft)
+					/obj/item/vending_refill/donksoft,
+				)
 	crate_name = "crate"
 
 /datum/supply_pack/costumes_toys/foamforce
@@ -136,7 +137,8 @@
 	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/item/dice/d6 = 18,
 					/obj/item/paper/guides/knucklebone,
-					/obj/item/toy/crayon/white)
+					/obj/item/toy/crayon/white,
+				)
 	crate_name = "knucklebones game crate"
 	crate_type = /obj/structure/closet/crate/wooden
 
