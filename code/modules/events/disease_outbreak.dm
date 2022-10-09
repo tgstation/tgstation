@@ -13,7 +13,6 @@
 
 /datum/round_event_control/disease_outbreak/can_spawn_event(players_amt)
 	. = ..()
-		return .
 	generate_candidates()
 	if(length(disease_candidates))
 		return TRUE
