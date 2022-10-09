@@ -3,7 +3,7 @@
 	name = "universal scanner"
 	desc = "A device used to check objects against Nanotrasen exports database, assign price tags, or ready an item for a custom vending machine."
 	icon = 'icons/obj/device.dmi'
-	icon_state = "export_scanner"
+	icon_state = "export scanner"
 	inhand_icon_state = "radio"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
