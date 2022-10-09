@@ -308,7 +308,7 @@
 	// Show it to ghosts
 	var/ghost_message = span_name("[message_data["name"]] </span><span class='game say'>[rigged ? "Rigged" : ""] PDA Message</span> --> [span_name("[signal.format_target()]")]: <span class='message'>[signal.format_message()]")
 	for(var/mob/M in GLOB.player_list)
-		if(isobserver(M) && (M.client?.prefs.chat_toggles & CHAT_GHOSTPDA))
+		if(isobserver(M) && (M.client?.prefs?.chat_toggles & CHAT_GHOSTPDA))
 			to_chat(M, "[FOLLOW_LINK(M, user)] [ghost_message]")
 
 	// Log in the talk log
