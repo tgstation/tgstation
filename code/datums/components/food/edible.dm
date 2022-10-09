@@ -187,6 +187,7 @@ Behavior that's still missing from this component that original food items had t
 /datum/component/edible/Destroy(force, silent)
 	QDEL_NULL(after_eat)
 	QDEL_NULL(on_consume)
+	QDEL_NULL(check_liked)
 	return ..()
 
 /// Sets up the initial reagents of the food.

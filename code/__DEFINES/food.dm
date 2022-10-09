@@ -19,7 +19,7 @@
 #define BUGS (1<<18)
 #define GORE (1<<19)
 
-DEFINE_BITFIELD(food_types, list(
+DEFINE_BITFIELD(foodtypes, list(
 	"MEAT" = MEAT,
 	"VEGETABLES" = VEGETABLES,
 	"RAW" = RAW,
