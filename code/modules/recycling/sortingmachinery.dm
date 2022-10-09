@@ -258,8 +258,8 @@
 	name = "destination tagger"
 	desc = "Used to set the destination of properly wrapped packages."
 	icon = 'icons/obj/device.dmi'
-	icon_state = "cargotagger"
-	worn_icon_state = "cargotagger"
+	icon_state = "cargo tagger"
+	worn_icon_state = "cargo tagger"
 	var/currTag = 0 //Destinations are stored in code\globalvars\lists\flavor_misc.dm
 	var/locked_destination = FALSE //if true, users can't open the destination tag window to prevent changing the tagger's current destination
 	w_class = WEIGHT_CLASS_TINY
