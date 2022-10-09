@@ -20,6 +20,7 @@
 	icon_state = "savannah_ivanov_0_0"
 	//does not include mmi compatibility
 	mecha_flags = ADDING_ACCESS_POSSIBLE | CANSTRAFE | IS_ENCLOSED | HAS_LIGHTS
+	mech_type = EXOSUIT_MODULE_SAVANNAH
 	movedelay = 3
 	max_integrity = 450 //really tanky, like damn
 	armor = list(MELEE = 45, BULLET = 40, LASER = 30, ENERGY = 30, BOMB = 40, BIO = 0, FIRE = 100, ACID = 100)
@@ -132,7 +133,7 @@
 	chassis.movedelay = 1
 	chassis.density = FALSE
 	chassis.layer = ABOVE_ALL_MOB_LAYER
-	chassis.plane = GAME_PLANE_UPPER_FOV_HIDDEN
+	SET_PLANE(chassis, GAME_PLANE_UPPER_FOV_HIDDEN, launch_turf)
 	animate(chassis, alpha = 0, time = 8, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
 	animate(chassis, pixel_z = 400, time = 10, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL) //Animate our rising mech (just like pods hehe)
 	addtimer(CALLBACK(src, .proc/begin_landing), 2 SECONDS)
@@ -155,6 +156,7 @@
  * it's just the animations of the mecha coming down + another timer for the final landing effect
  */
 /datum/action/vehicle/sealed/mecha/skyfall/proc/land()
+	var/turf/landed_on = get_turf(chassis)
 	chassis.visible_message(span_danger("[chassis] lands from above!"))
 	playsound(chassis, 'sound/effects/explosion1.ogg', 50, 1)
 	chassis.resistance_flags &= ~INDESTRUCTIBLE
@@ -163,12 +165,11 @@
 	chassis.movedelay = initial(chassis.movedelay)
 	chassis.density = TRUE
 	chassis.layer = initial(chassis.layer)
-	chassis.plane = initial(chassis.plane)
+	SET_PLANE(chassis, initial(chassis.plane), landed_on)
 	skyfall_charge_level = 0
 	chassis.update_appearance(UPDATE_ICON_STATE)
 	for(var/mob/living/shaken in range(7, chassis))
 		shake_camera(shaken, 5, 5)
-	var/turf/landed_on = get_turf(chassis)
 	for(var/thing in range(1, chassis))
 		if(isopenturf(thing))
 			var/turf/open/floor/crushed_tile = thing

@@ -8,7 +8,7 @@
 	show_to_ghosts = TRUE
 	antag_moodlet = /datum/mood_event/focused
 	suicide_cry = "FOR THE SPIDER CLAN!!"
-	preview_outfit = /datum/outfit/ninja
+	preview_outfit = /datum/outfit/ninja_preview
 	///Whether or not this ninja will obtain objectives
 	var/give_objectives = TRUE
 	///Whether or not this ninja receives the standard equipment
@@ -32,7 +32,7 @@
  */
 /datum/antagonist/ninja/proc/addMemories()
 	antag_memory += "I am an elite mercenary of the mighty Spider Clan. A <font color='red'><B>SPACE NINJA</B></font>!<br>"
-	antag_memory += "Surprise is my weapon. Shadows are my armor. Without them, I am nothing. (//initialize your suit by clicking the initialize UI button, to use abilities like stealth)!<br>"
+	antag_memory += "Surprise is my weapon. Shadows are my armor. Without them, I am nothing.<br>"
 
 /datum/objective/cyborg_hijack
 	explanation_text = "Use your gloves to convert at least one cyborg to aide you in sabotaging the station."
@@ -101,8 +101,10 @@
 /datum/antagonist/ninja/greet()
 	. = ..()
 	SEND_SOUND(owner.current, sound('sound/effects/ninja_greeting.ogg'))
-	to_chat(owner.current, "I am an elite mercenary of the mighty Spider Clan!")
-	to_chat(owner.current, "Surprise is my weapon. Shadows are my armor. Without them, I am nothing. (//initialize your suit by right clicking on it, to use abilities like stealth)!")
+	to_chat(owner.current, span_danger("I am an elite mercenary of the mighty Spider Clan!"))
+	to_chat(owner.current, span_warning("Surprise is my weapon. Shadows are my armor. Without them, I am nothing."))
+	to_chat(owner.current, span_notice("The station is located to your [dir2text(get_dir(owner.current, locate(world.maxx/2, world.maxy/2, owner.current.z)))]. A thrown ninja star will be a great way to get there."))
+	to_chat(owner.current, span_notice("<i>For easier ability access, you can pin your modules to your action bar in your suit's UI.</i>"))
 	owner.announce_objectives()
 
 /datum/antagonist/ninja/on_gain()

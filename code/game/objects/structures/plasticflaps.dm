@@ -4,7 +4,7 @@
 	gender = PLURAL
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "plasticflaps"
-	armor = list(MELEE = 100, BULLET = 80, LASER = 80, ENERGY = 100, BOMB = 50, BIO = 100, FIRE = 50, ACID = 50)
+	armor = list(MELEE = 100, BULLET = 80, LASER = 80, ENERGY = 100, BOMB = 50, BIO = 0, FIRE = 50, ACID = 50)
 	density = FALSE
 	anchored = TRUE
 	can_atmos_pass = ATMOS_PASS_NO
@@ -15,7 +15,18 @@
 /obj/structure/plasticflaps/Initialize(mapload)
 	. = ..()
 	alpha = 0
-	SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, GAME_PLANE_UPPER, dir, add_appearance_flags = RESET_ALPHA) //you see mobs under it, but you hit them like they are above it
+	gen_overlay()
+
+/obj/structure/plasticflaps/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	if(same_z_layer)
+		return ..()
+	SSvis_overlays.remove_vis_overlay(managed_vis_overlays)
+	gen_overlay()
+	return ..()
+
+/obj/structure/plasticflaps/proc/gen_overlay()
+	var/turf/our_turf = get_turf(src)
+	SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, MUTATE_PLANE(GAME_PLANE_UPPER, our_turf), dir, add_appearance_flags = RESET_ALPHA) //you see mobs under it, but you hit them like they are above it
 
 /obj/structure/plasticflaps/examine(mob/user)
 	. = ..()
@@ -62,7 +73,7 @@
 		return FALSE
 	return TRUE
 
-/obj/structure/plasticflaps/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller)
+/obj/structure/plasticflaps/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller, no_id = FALSE)
 	if(isliving(caller))
 		if(isbot(caller))
 			return TRUE
@@ -73,7 +84,7 @@
 			return FALSE
 
 	if(caller?.pulling)
-		return CanAStarPass(ID, to_dir, caller.pulling)
+		return CanAStarPass(ID, to_dir, caller.pulling, no_id = no_id)
 	return TRUE //diseases, stings, etc can pass
 
 

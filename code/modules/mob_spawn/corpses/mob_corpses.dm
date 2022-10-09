@@ -38,6 +38,15 @@
 	id = /obj/item/card/id/advanced/chameleon
 	id_trim = /datum/id_trim/chameleon/operative
 
+/obj/effect/mob_spawn/corpse/human/syndicatecommando/lessenedgear
+	outfit = /datum/outfit/syndicatecommandocorpse/lessenedgear
+
+/datum/outfit/syndicatecommandocorpse/lessenedgear
+	name = "Syndicate Commando Corpse"
+	gloves = /obj/item/clothing/gloves/tackler
+	back = null
+	id = null
+	id_trim = null
 
 /obj/effect/mob_spawn/corpse/human/syndicatestormtrooper
 	name = "Syndicate Stormtrooper"
@@ -68,7 +77,7 @@
 	uniform = /obj/item/clothing/under/costume/pirate
 	shoes = /obj/item/clothing/shoes/jackboots
 	glasses = /obj/item/clothing/glasses/eyepatch
-	head = /obj/item/clothing/head/bandana
+	head = /obj/item/clothing/head/costume/pirate/bandana
 
 
 /obj/effect/mob_spawn/corpse/human/pirate/ranged
@@ -77,8 +86,8 @@
 
 /datum/outfit/piratecorpse/ranged
 	name = "Pirate Gunner Corpse"
-	suit = /obj/item/clothing/suit/pirate
-	head = /obj/item/clothing/head/pirate
+	suit = /obj/item/clothing/suit/costume/pirate
+	head = /obj/item/clothing/head/costume/pirate
 
 
 /obj/effect/mob_spawn/corpse/human/russian
@@ -91,7 +100,7 @@
 	name = "Russian Corpse"
 	uniform = /obj/item/clothing/under/costume/soviet
 	shoes = /obj/item/clothing/shoes/jackboots
-	head = /obj/item/clothing/head/bearpelt
+	head = /obj/item/clothing/head/costume/bearpelt
 	gloves = /obj/item/clothing/gloves/color/black
 	mask = /obj/item/clothing/mask/gas
 
@@ -102,7 +111,7 @@
 
 /datum/outfit/russiancorpse/ranged
 	name = "Ranged Russian Corpse"
-	head = /obj/item/clothing/head/ushanka
+	head = /obj/item/clothing/head/costume/ushanka
 
 
 /obj/effect/mob_spawn/corpse/human/russian/ranged/trooper
@@ -126,10 +135,10 @@
 /datum/outfit/russiancorpse/officer
 	name = "Russian Officer Corpse"
 	uniform = /obj/item/clothing/under/costume/russian_officer
-	suit = /obj/item/clothing/suit/security/officer/russian
+	suit = /obj/item/clothing/suit/jacket/officer/tan
 	shoes = /obj/item/clothing/shoes/combat
 	ears = /obj/item/radio/headset
-	head = /obj/item/clothing/head/ushanka
+	head = /obj/item/clothing/head/costume/ushanka
 
 
 /obj/effect/mob_spawn/corpse/human/wizard
@@ -219,4 +228,4 @@
 	belt = /obj/item/storage/belt/fannypack/yellow/bee_terrorist
 	id = /obj/item/card/id/advanced
 	l_pocket = /obj/item/paper/fluff/bee_objectives
-	mask = /obj/item/clothing/mask/animal/rat/bee
+	mask = /obj/item/clothing/mask/animal/small/bee

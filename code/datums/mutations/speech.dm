@@ -9,7 +9,7 @@
 
 /datum/mutation/human/nervousness/on_life(delta_time, times_fired)
 	if(DT_PROB(5, delta_time))
-		owner.set_timed_status_effect(20 SECONDS, /datum/status_effect/speech/stutter, only_if_higher = TRUE)
+		owner.set_stutter_if_lower(20 SECONDS)
 
 /datum/mutation/human/wacky
 	name = "Wacky"
@@ -115,7 +115,7 @@
 		return
 	UnregisterSignal(owner, COMSIG_MOB_SAY)
 
-/datum/mutation/human/chav/proc/handle_speech(datum/source, mob/speech_args)
+/datum/mutation/human/chav/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
 
 	var/message = speech_args[SPEECH_MESSAGE]

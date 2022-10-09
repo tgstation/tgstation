@@ -6,49 +6,42 @@ import { Window } from '../layouts';
 
 export const Jukebox = (props, context) => {
   const { act, data } = useBackend(context);
-  const {
-    active,
-    track_selected,
-    track_length,
-    track_beat,
-    volume,
-  } = data;
-  const songs = flow([
-    sortBy(
-      song => song.name),
-  ])(data.songs || []);
+  const { active, track_selected, track_length, track_beat, volume } = data;
+  const songs = flow([sortBy((song) => song.name)])(data.songs || []);
   return (
-    <Window
-      width={370}
-      height={313}>
+    <Window width={370} height={313}>
       <Window.Content>
         <Section
           title="Song Player"
-          buttons={(
+          buttons={
             <Button
               icon={active ? 'pause' : 'play'}
               content={active ? 'Stop' : 'Play'}
               selected={active}
-              onClick={() => act('toggle')} />
-          )}>
+              onClick={() => act('toggle')}
+            />
+          }>
           <LabeledList>
             <LabeledList.Item label="Track Selected">
               <Dropdown
                 overflow-y="scroll"
                 width="240px"
-                options={songs.map(song => song.name)}
+                options={songs.map((song) => song.name)}
                 disabled={active}
-                selected={track_selected || "Select a Track"}
-                onSelected={value => act('select_track', {
-                  track: value,
-                })} />
+                selected={track_selected || 'Select a Track'}
+                onSelected={(value) =>
+                  act('select_track', {
+                    track: value,
+                  })
+                }
+              />
             </LabeledList.Item>
             <LabeledList.Item label="Track Length">
-              {track_selected ? track_length : "No Track Selected"}
+              {track_selected ? track_length : 'No Track Selected'}
             </LabeledList.Item>
             <LabeledList.Item label="Track Beat">
-              {track_selected ? track_beat : "No Track Selected"}
-              {track_beat === 1 ? " beat" : " beats"}
+              {track_selected ? track_beat : 'No Track Selected'}
+              {track_beat === 1 ? ' beat' : ' beats'}
             </LabeledList.Item>
           </LabeledList>
         </Section>
@@ -66,9 +59,12 @@ export const Jukebox = (props, context) => {
                   step={1}
                   stepPixelSize={1}
                   disabled={active}
-                  onDrag={(e, value) => act('set_volume', {
-                    volume: value,
-                  })} />
+                  onDrag={(e, value) =>
+                    act('set_volume', {
+                      volume: value,
+                    })
+                  }
+                />
                 <Button
                   fluid
                   position="absolute"
@@ -76,9 +72,12 @@ export const Jukebox = (props, context) => {
                   right="-22px"
                   color="transparent"
                   icon="fast-backward"
-                  onClick={() => act('set_volume', {
-                    volume: "min",
-                  })} />
+                  onClick={() =>
+                    act('set_volume', {
+                      volume: 'min',
+                    })
+                  }
+                />
                 <Button
                   fluid
                   position="absolute"
@@ -86,9 +85,12 @@ export const Jukebox = (props, context) => {
                   right="-22px"
                   color="transparent"
                   icon="fast-forward"
-                  onClick={() => act('set_volume', {
-                    volume: "max",
-                  })} />
+                  onClick={() =>
+                    act('set_volume', {
+                      volume: 'max',
+                    })
+                  }
+                />
                 <Button
                   fluid
                   position="absolute"
@@ -96,9 +98,12 @@ export const Jukebox = (props, context) => {
                   right="-22px"
                   color="transparent"
                   icon="undo"
-                  onClick={() => act('set_volume', {
-                    volume: "reset",
-                  })} />
+                  onClick={() =>
+                    act('set_volume', {
+                      volume: 'reset',
+                    })
+                  }
+                />
               </Box>
             </LabeledControls.Item>
           </LabeledControls>

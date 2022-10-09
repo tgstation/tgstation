@@ -17,7 +17,7 @@ type AlertModalData = {
 const KEY_DECREMENT = -1;
 const KEY_INCREMENT = 1;
 
-export const AlertModal = (_, context) => {
+export const AlertModal = (props, context) => {
   const { act, data } = useBackend<AlertModalData>(context);
   const {
     autofocus,
@@ -29,10 +29,10 @@ export const AlertModal = (_, context) => {
   } = data;
   const [selected, setSelected] = useLocalState<number>(context, 'selected', 0);
   // Dynamically sets window dimensions
-  const windowHeight
-    = 115
-    + (message.length > 30 ? Math.ceil(message.length / 4) : 0)
-    + (message.length && large_buttons ? 5 : 0);
+  const windowHeight =
+    115 +
+    (message.length > 30 ? Math.ceil(message.length / 4) : 0) +
+    (message.length && large_buttons ? 5 : 0);
   const windowWidth = 325 + (buttons.length > 2 ? 55 : 0);
   const onKey = (direction: number) => {
     if (selected === 0 && direction === KEY_DECREMENT) {

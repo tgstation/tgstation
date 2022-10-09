@@ -1,7 +1,7 @@
 /obj/item/stack/medical
 	name = "medical pack"
 	singular_name = "medical pack"
-	icon = 'icons/obj/stack_medical.dmi'
+	icon = 'icons/obj/medical/stack_medical.dmi'
 	amount = 6
 	max_amount = 6
 	w_class = WEIGHT_CLASS_TINY
@@ -145,7 +145,7 @@
 		to_chat(user, span_notice("There's nothing there to bandage!"))
 		return
 	if(!LAZYLEN(limb.wounds))
-		to_chat(user, span_notice("There's no wounds that require bandaging on [user==M ? "your" : "[M]'s"] [limb.name]!")) // good problem to have imo
+		to_chat(user, span_notice("There's no wounds that require bandaging on [user==M ? "your" : "[M]'s"] [limb.plaintext_zone]!")) // good problem to have imo
 		return
 
 	var/gauzeable_wound = FALSE
@@ -155,18 +155,18 @@
 			gauzeable_wound = TRUE
 			break
 	if(!gauzeable_wound)
-		to_chat(user, span_notice("There's no wounds that require bandaging on [user==M ? "your" : "[M]'s"] [limb.name]!")) // good problem to have imo
+		to_chat(user, span_notice("There's no wounds that require bandaging on [user==M ? "your" : "[M]'s"] [limb.plaintext_zone]!")) // good problem to have imo
 		return
 
 	if(limb.current_gauze && (limb.current_gauze.absorption_capacity * 0.8 > absorption_capacity)) // ignore if our new wrap is < 20% better than the current one, so someone doesn't bandage it 5 times in a row
-		to_chat(user, span_warning("The bandage currently on [user==M ? "your" : "[M]'s"] [limb.name] is still in good condition!"))
+		to_chat(user, span_warning("The bandage currently on [user==M ? "your" : "[M]'s"] [limb.plaintext_zone] is still in good condition!"))
 		return
 
-	user.visible_message(span_warning("[user] begins wrapping the wounds on [M]'s [limb.name] with [src]..."), span_warning("You begin wrapping the wounds on [user == M ? "your" : "[M]'s"] [limb.name] with [src]..."))
+	user.visible_message(span_warning("[user] begins wrapping the wounds on [M]'s [limb.plaintext_zone] with [src]..."), span_warning("You begin wrapping the wounds on [user == M ? "your" : "[M]'s"] [limb.plaintext_zone] with [src]..."))
 	if(!do_after(user, (user == M ? self_delay : other_delay), target=M))
 		return
 
-	user.visible_message("<span class='infoplain'><span class='green'>[user] applies [src] to [M]'s [limb.name].</span></span>", "<span class='infoplain'><span class='green'>You bandage the wounds on [user == M ? "your" : "[M]'s"] [limb.name].</span></span>")
+	user.visible_message("<span class='infoplain'><span class='green'>[user] applies [src] to [M]'s [limb.plaintext_zone].</span></span>", "<span class='infoplain'><span class='green'>You bandage the wounds on [user == M ? "your" : "[M]'s"] [limb.plaintext_zone].</span></span>")
 	limb.apply_gauze(src)
 
 /obj/item/stack/medical/gauze/twelve
@@ -369,8 +369,9 @@
 	singular_name = "bone gel"
 	desc = "A potent medical gel that, when applied to a damaged bone in a proper surgical setting, triggers an intense melding reaction to repair the wound. Can be directly applied alongside surgical sticky tape to a broken bone in dire circumstances, though this is very harmful to the patient and not recommended."
 
-	icon = 'icons/obj/surgery.dmi'
+	icon = 'icons/obj/medical/surgery_tools.dmi'
 	icon_state = "bone-gel"
+	inhand_icon_state = "bone-gel"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 

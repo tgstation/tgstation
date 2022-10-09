@@ -92,20 +92,17 @@
 	if (isnull(outcome) && isnull(expected_reason))
 		return
 
-	if (isnull(outcome))
-		Fail("[message] was not blocked on the [filter_type] filter when it was expected to")
-		return
+	TEST_ASSERT_NOTNULL(outcome,
+		"[message] was not blocked on the [filter_type] filter when it was expected to")
 
-	if (isnull(expected_reason))
-		Fail("[message] was blocked on the [filter_type] filter when it wasn't expected to: [json_encode(outcome)]")
-		return
+	TEST_ASSERT_NOTNULL(expected_reason,
+		"[message] was blocked on the [filter_type] filter when it wasn't expected to: [json_encode(outcome)]")
 
-	if (outcome[CHAT_FILTER_INDEX_WORD] != expected_blocked_word)
-		Fail("[message] was blocked on the [filter_type] filter, but for a different word: \"[outcome[CHAT_FILTER_INDEX_WORD]]\" (instead of [expected_blocked_word])")
-		return
+	TEST_ASSERT_EQUAL(outcome[CHAT_FILTER_INDEX_WORD], expected_blocked_word,
+		"[message] was blocked on the [filter_type] filter, but for a different word: \"[outcome[CHAT_FILTER_INDEX_WORD]]\" (instead of [expected_blocked_word])")
 
-	if (outcome[CHAT_FILTER_INDEX_REASON] != expected_reason)
-		Fail("[message] was blocked on the [filter_type] filter, but for a different reason: \"[outcome[CHAT_FILTER_INDEX_REASON]]\" (instead of [expected_reason])")
+	TEST_ASSERT_EQUAL(outcome[CHAT_FILTER_INDEX_REASON], expected_reason,
+		"[message] was blocked on the [filter_type] filter, but for a different reason: \"[outcome[CHAT_FILTER_INDEX_REASON]]\" (instead of [expected_reason])")
 
 #undef BLOCKED_IC
 #undef BLOCKED_IC_OUTSIDE_PDA

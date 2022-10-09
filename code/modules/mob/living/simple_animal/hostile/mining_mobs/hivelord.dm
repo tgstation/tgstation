@@ -1,7 +1,7 @@
 /mob/living/simple_animal/hostile/asteroid/hivelord
 	name = "hivelord"
 	desc = "A truly alien creature, it is a mass of unknown organic material, constantly fluctuating. When attacking, pieces of it split off and attack in tandem with the original."
-	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	icon_state = "Hivelord"
 	icon_living = "Hivelord"
 	icon_aggro = "Hivelord_alert"
@@ -30,7 +30,7 @@
 	retreat_distance = 3
 	minimum_distance = 3
 	pass_flags = PASSTABLE
-	loot = list(/obj/item/organ/regenerative_core)
+	loot = list(/obj/item/organ/internal/regenerative_core)
 	var/brood_type = /mob/living/simple_animal/hostile/asteroid/hivelordbrood
 	var/has_clickbox = TRUE
 
@@ -53,9 +53,6 @@
 	OpenFire()
 	return TRUE
 
-/mob/living/simple_animal/hostile/asteroid/hivelord/spawn_crusher_loot()
-	loot += crusher_loot //we don't butcher
-
 /mob/living/simple_animal/hostile/asteroid/hivelord/death(gibbed)
 	mouse_opacity = MOUSE_OPACITY_ICON
 	..(gibbed)
@@ -64,7 +61,7 @@
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood
 	name = "hivelord brood"
 	desc = "A fragment of the original Hivelord, rallying behind its original. One isn't much of a threat, but..."
-	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	icon_state = "Hivelordbrood"
 	icon_living = "Hivelordbrood"
 	icon_aggro = "Hivelordbrood"
@@ -105,7 +102,7 @@
 /mob/living/simple_animal/hostile/asteroid/hivelord/legion
 	name = "legion"
 	desc = "You can still see what was once a human under the shifting mass of corruption."
-	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	icon_state = "legion"
 	icon_living = "legion"
 	icon_aggro = "legion"
@@ -122,7 +119,7 @@
 	attack_sound = 'sound/weapons/pierce.ogg'
 	throw_message = "bounces harmlessly off of"
 	crusher_loot = /obj/item/crusher_trophy/legion_skull
-	loot = list(/obj/item/organ/regenerative_core/legion)
+	loot = list(/obj/item/organ/internal/regenerative_core/legion)
 	brood_type = /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion
 	del_on_death = 1
 	stat_attack = HARD_CRIT
@@ -172,7 +169,7 @@
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion
 	name = "legion"
 	desc = "One of many."
-	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	icon_state = "legion_head"
 	icon_living = "legion_head"
 	icon_aggro = "legion_head"
@@ -250,7 +247,7 @@
 /mob/living/simple_animal/hostile/big_legion
 	name = "legion"
 	desc = "One of many."
-	icon = 'icons/mob/lavaland/64x64megafauna.dmi'
+	icon = 'icons/mob/simple/lavaland/64x64megafauna.dmi'
 	icon_state = "legion"
 	icon_living = "legion"
 	icon_dead = "legion"
@@ -267,7 +264,7 @@
 	layer = MOB_LAYER
 	del_on_death = TRUE
 	sentience_type = SENTIENCE_BOSS
-	loot = list(/obj/item/organ/regenerative_core/legion = 3, /obj/effect/mob_spawn/corpse/human/legioninfested = 5)
+	loot = list(/obj/item/organ/internal/regenerative_core/legion = 3, /obj/effect/mob_spawn/corpse/human/legioninfested = 5)
 	move_to_delay = 14
 	vision_range = 5
 	aggro_vision_range = 9
@@ -288,13 +285,13 @@
 /mob/living/simple_animal/hostile/asteroid/hivelord/legion/snow
 	name = "snow legion"
 	desc = "You can still see what was once a human under the shifting snowy mass, clearly decorated by a clown."
-	icon = 'icons/mob/icemoon/icemoon_monsters.dmi'
+	icon = 'icons/mob/simple/icemoon/icemoon_monsters.dmi'
 	icon_state = "snowlegion"
 	icon_living = "snowlegion"
 	icon_aggro = "snowlegion_alive"
 	icon_dead = "snowlegion"
 	crusher_loot = /obj/item/crusher_trophy/legion_skull
-	loot = list(/obj/item/organ/regenerative_core/legion)
+	loot = list(/obj/item/organ/internal/regenerative_core/legion)
 	brood_type = /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/snow
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/snow/make_legion(mob/living/carbon/human/H)
@@ -304,7 +301,7 @@
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/snow
 	name = "snow legion"
 	desc = "One of many."
-	icon = 'icons/mob/icemoon/icemoon_monsters.dmi'
+	icon = 'icons/mob/simple/icemoon/icemoon_monsters.dmi'
 	icon_state = "snowlegion_head"
 	icon_living = "snowlegion_head"
 	icon_aggro = "snowlegion_head"

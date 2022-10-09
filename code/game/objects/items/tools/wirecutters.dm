@@ -9,6 +9,9 @@
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 
 	greyscale_config = /datum/greyscale_config/wirecutters
+	greyscale_config_belt = /datum/greyscale_config/wirecutters_belt_overlay
+	greyscale_config_inhand_left = /datum/greyscale_config/wirecutter_inhand_left
+	greyscale_config_inhand_right = /datum/greyscale_config/wirecutter_inhand_right
 
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
@@ -50,15 +53,8 @@
 		user.visible_message(span_notice("[user] cuts [attacked_carbon]'s restraints with [src]!"))
 		qdel(attacked_carbon.handcuffed)
 		return
-	else if(istype(attacked_carbon) && attacked_carbon.has_status_effect(/datum/status_effect/strandling))
-		user.visible_message(span_notice("[user] attempts to cut the durathread strand from around [attacked_carbon]'s neck."))
-		if(do_after(user, 1.5 SECONDS, attacked_carbon))
-			user.visible_message(span_notice("[user] succesfully cuts the durathread strand from around [attacked_carbon]'s neck."))
-			attacked_carbon.remove_status_effect(/datum/status_effect/strandling)
-			playsound(loc, usesound, 50, TRUE, -1)
-		return
-	else
-		..()
+
+	return ..()
 
 /obj/item/wirecutters/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is cutting at [user.p_their()] arteries with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))

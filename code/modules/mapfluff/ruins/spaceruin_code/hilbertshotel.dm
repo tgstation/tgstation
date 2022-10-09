@@ -149,7 +149,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	user.forceMove(locate(roomReservation.bottom_left_coords[1] + hotelRoomTemp.landingZoneRelativeX, roomReservation.bottom_left_coords[2] + hotelRoomTemp.landingZoneRelativeY, roomReservation.bottom_left_coords[3]))
 
 /obj/item/hilbertshotel/proc/linkTurfs(datum/turf_reservation/currentReservation, currentRoomnumber)
-	var/area/hilbertshotel/currentArea = get_area(locate(currentReservation.bottom_left_coords[1], currentReservation.bottom_left_coords[2], currentReservation.bottom_left_coords[3]))
+	var/area/misc/hilbertshotel/currentArea = get_area(locate(currentReservation.bottom_left_coords[1], currentReservation.bottom_left_coords[2], currentReservation.bottom_left_coords[3]))
 	currentArea.name = "Hilbert's Hotel Room [currentRoomnumber]"
 	currentArea.parentSphere = src
 	currentArea.storageTurf = storageTurf
@@ -307,10 +307,10 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 /turf/closed/indestructible/hoteldoor/attack_hulk(mob/living/carbon/human/user)
 	promptExit(user)
 
-/turf/closed/indestructible/hoteldoor/attack_larva(mob/user)
+/turf/closed/indestructible/hoteldoor/attack_larva(mob/user, list/modifiers)
 	promptExit(user)
 
-/turf/closed/indestructible/hoteldoor/attack_slime(mob/user)
+/turf/closed/indestructible/hoteldoor/attack_slime(mob/user, list/modifiers)
 	promptExit(user)
 
 /turf/closed/indestructible/hoteldoor/attack_robot(mob/user)
@@ -345,8 +345,10 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
 	qdel(src)
 
-/area/hilbertshotel
+// Despite using the ruins.dmi, hilbertshotel is not a ruin
+/area/misc/hilbertshotel
 	name = "Hilbert's Hotel Room"
+	icon = 'icons/area/areas_ruins.dmi'
 	icon_state = "hilbertshotel"
 	requires_power = FALSE
 	has_gravity = TRUE
@@ -358,7 +360,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	var/datum/turf_reservation/reservation
 	var/turf/storageTurf
 
-/area/hilbertshotel/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+/area/misc/hilbertshotel/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
 	if(istype(arrived, /obj/item/hilbertshotel))
 		relocate(arrived)
@@ -367,7 +369,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 		if(parentSphere == H)
 			relocate(H)
 
-/area/hilbertshotel/proc/relocate(obj/item/hilbertshotel/H)
+/area/misc/hilbertshotel/proc/relocate(obj/item/hilbertshotel/H)
 	if(prob(0.135685)) //Because screw you
 		qdel(H)
 		return
@@ -395,7 +397,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 		to_chat(M, span_danger("[H] almost implodes in upon itself, but quickly rebounds, shooting off into a random point in space!"))
 	H.forceMove(targetturf)
 
-/area/hilbertshotel/Exited(atom/movable/gone, direction)
+/area/misc/hilbertshotel/Exited(atom/movable/gone, direction)
 	. = ..()
 	if(ismob(gone))
 		var/mob/M = gone
@@ -409,7 +411,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 			if(!stillPopulated)
 				storeRoom()
 
-/area/hilbertshotel/proc/storeRoom()
+/area/misc/hilbertshotel/proc/storeRoom()
 	var/roomSize = (reservation.top_right_coords[1]-reservation.bottom_left_coords[1]+1)*(reservation.top_right_coords[2]-reservation.bottom_left_coords[2]+1)
 	var/storage[roomSize]
 	var/turfNumber = 1
@@ -431,8 +433,9 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	parentSphere.activeRooms -= "[roomnumber]"
 	qdel(reservation)
 
-/area/hilbertshotelstorage
+/area/misc/hilbertshotelstorage
 	name = "Hilbert's Hotel Storage Room"
+	icon = 'icons/area/areas_ruins.dmi'
 	icon_state = "hilbertshotel"
 	requires_power = FALSE
 	area_flags = HIDDEN_AREA | NOTELEPORT | UNIQUE_AREA
@@ -491,19 +494,22 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 		else
 			to_chat(user, "No vacated rooms.")
 
+/obj/effect/landmark/lift_id/hilbert
+	specific_lift_id = HILBERT_TRAM
+
 /obj/effect/landmark/tram/left_part/hilbert
+	specific_lift_id = HILBERT_TRAM
 	destination_id = "left_part_hilbert"
-	tram_id = "tram_hilbert"
 	tgui_icons = list("Reception" = "briefcase", "Botany" = "leaf", "Chemistry" = "flask")
 
 /obj/effect/landmark/tram/middle_part/hilbert
+	specific_lift_id = HILBERT_TRAM
 	destination_id = "middle_part_hilbert"
-	tram_id = "tram_hilbert"
 	tgui_icons = list("Processing" = "cogs", "Xenobiology" = "paw")
 
 /obj/effect/landmark/tram/right_part/hilbert
+	specific_lift_id = HILBERT_TRAM
 	destination_id = "right_part_hilbert"
-	tram_id = "tram_hilbert"
 	tgui_icons = list("Ordnance" = "bullseye", "Office" = "user", "Dormitories" = "bed")
 
 /obj/item/keycard/hilbert
@@ -517,6 +523,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	puzzle_id = "hilbert_office"
 
 /datum/outfit/doctorhilbert
+	name = "Doctor Hilbert"
 	id = /obj/item/card/id/advanced/silver
 	uniform = /obj/item/clothing/under/rank/rnd/research_director/doctor_hilbert
 	shoes = /obj/item/clothing/shoes/sneakers/brown
@@ -534,8 +541,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	name = "note to the institute"
 
 /obj/item/paper/crumpled/ruins/note_institute/Initialize(mapload)
-	. = ..()
-	info = {"Note to the Institute<br>
+	default_raw_text = {"Note to the Institute<br>
 	If you're reading this, I hope you're from the Institute. First things first, I should apologise. I won't be coming back to teach in the new semester.<br>
 	We've made some powerful enemies. Very powerful. More powerful than any of you can imagine, and so we can't come back.<br>
 	So, we've made the decision to vanish. Perhaps more literally than you might think. Do not try to find us- for your own safety.<br>
@@ -543,9 +549,11 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	Best of luck with the research. From all of us in the Hilbert Group, it's been a pleasure working with you.<br>
 	- David, Phil, Fiona and Jen"}
 
+	return ..()
+
 /obj/item/paper/crumpled/ruins/postdocs_memo
 	name = "memo to the postdocs"
-	info = {"Memo to the Postdocs
+	default_raw_text = {"Memo to the Postdocs
 	Remember, if you're going in to retrieve the prototype for any reason (not that you should be without my supervision), that the security systems are always live- they have no shutoff.<br>
 	Instead, remember: what you can't see can't hurt you.<br>
 	Take care of the lab during my vacation. See you all in June.<br>
@@ -553,7 +561,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 
 /obj/item/paper/crumpled/ruins/hotel_note
 	name = "hotel note"
-	info = {"Hotel Note<br>
+	default_raw_text = {"Hotel Note<br>
 	Well, you figured out the puzzle. Looks like someone's done their homework on my research.<br>
 	I suppose you deserve to know some more about our situation. Our research has attracted some undue attention and so, for our own safety, we've taken to the Bluespace.<br>
 	Yes, you did read that correctly. I'm sure the physics and maths would bore you, but in layman's terms, the manifested link to the Bluespace the crystals provide can be exploited. With the correct technology, one can "surf" the Bluespace, as Jen likes to call it.<br>
@@ -564,7 +572,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 
 /obj/item/paper/fluff/ruins/docslabnotes
 	name = "lab notebook page"
-	info = {"Laboratory Notebook<br>
+	default_raw_text = {"Laboratory Notebook<br>
 	PROPERTY OF DOCTOR D. HILBERT<br>
 	May 10th, 2555<br>
 	Finally, my new facility is complete, and not a moment too soon!<br>
@@ -587,7 +595,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 
 /obj/item/paper/fluff/ruins/romans_emails
 	name = "e-mail readout - 14.05.2558"
-	info = {"Logs of Roman P.<br>
+	default_raw_text = {"Logs of Roman P.<br>
 	<h4>New Job</h4><br>
 	<i>Sent to: natalya_petroyenko@kosmokomm.net</i><br>
 	Hello sis! Figured I should update you on what's going on with the career change.<br>

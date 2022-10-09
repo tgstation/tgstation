@@ -18,9 +18,9 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/hatch{
 	heat_proof = 1;
-	name = "Experimentation Room";
-	req_access_txt = "150"
+	name = "Experimentation Room"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/machinery/door/poddoor/preopen{
 	id = "lavalandsyndi";
 	name = "Syndicate Research Experimentation Shutters"
@@ -77,9 +77,7 @@
 /turf/open/floor/plating,
 /area/ruin/syndicate_lava_base/testlab)
 "n" = (
-/obj/structure/sign/warning/explosives/alt{
-	pixel_x = -32
-	},
+/obj/structure/sign/warning/explosives/alt/directional/west,
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/testlab)
 "p" = (
@@ -87,7 +85,7 @@
 /obj/item/storage/toolbox/syndicate,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/item/paper/crumpled{
-	info = "Explosive testing on site is STRICTLY forbidden, as this outpost's walls are lined with explosives intended for intentional self-destruct purposes that may be set off prematurely through careless experiments.";
+	default_raw_text = "Explosive testing on site is STRICTLY forbidden, as this outpost's walls are lined with explosives intended for intentional self-destruct purposes that may be set off prematurely through careless experiments.";
 	name = "Explosives Testing Warning";
 	pixel_x = -6;
 	pixel_y = -3
@@ -132,9 +130,9 @@
 /area/ruin/syndicate_lava_base/testlab)
 "u" = (
 /obj/machinery/door/airlock/hatch{
-	name = "Monkey Pen";
-	req_access_txt = "150"
+	name = "Monkey Pen"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -183,7 +181,7 @@
 	id = "lavalandsyndi";
 	name = "Syndicate Experimentation Lockdown Control";
 	pixel_y = 26;
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/corner{
@@ -206,9 +204,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/machinery/door/airlock/hatch{
-	name = "Experimentation Lab";
-	req_access_txt = "150"
+	name = "Experimentation Lab"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/cable,
 /obj/modular_map_connector,
@@ -223,7 +221,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
 "I" = (
-/obj/structure/sign/warning/securearea,
+/obj/structure/sign/warning/secure_area,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/syndicate_lava_base/testlab)
 "K" = (
@@ -236,9 +234,7 @@
 /turf/open/floor/plating,
 /area/ruin/syndicate_lava_base/testlab)
 "P" = (
-/obj/structure/sign/warning/explosives/alt{
-	pixel_x = 32
-	},
+/obj/structure/sign/warning/explosives/alt/directional/east,
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/testlab)
 "R" = (
@@ -278,7 +274,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/south{
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)

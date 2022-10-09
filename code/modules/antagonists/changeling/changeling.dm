@@ -46,6 +46,8 @@
 	var/chem_recharge_slowdown = 0
 	/// The range this ling can sting things.
 	var/sting_range = 2
+	/// Changeling name, what other lings see over the hivemind when talking.
+	var/changelingID = "Changeling"
 	/// The number of genetics points (to buy powers) this ling currently has.
 	var/genetic_points = 10
 	/// The max number of genetics points (to buy powers) this ling can have..
@@ -78,10 +80,14 @@
 	/// Static typecache of all changeling powers that are usable.
 	var/static/list/all_powers = typecacheof(/datum/action/changeling, ignore_root_path = TRUE)
 
+	/// Static list of possible ids. Initialized into the greek alphabet the first time it is used
+	var/static/list/possible_changeling_IDs
+
 	/// Satic list of what each slot associated with (in regard to changeling flesh items).
 	var/static/list/slot2type = list(
 		"head" = /obj/item/clothing/head/changeling,
 		"wear_mask" = /obj/item/clothing/mask/changeling,
+		"wear_neck" = /obj/item/changeling,
 		"back" = /obj/item/changeling,
 		"wear_suit" = /obj/item/clothing/suit/changeling,
 		"w_uniform" = /obj/item/clothing/under/changeling,
@@ -97,6 +103,9 @@
 	/// A list of all memories we've stolen through absorbs.
 	var/list/stolen_memories = list()
 
+	///	Keeps track of the currently selected profile.
+	var/datum/changeling_profile/current_profile
+
 /datum/antagonist/changeling/New()
 	. = ..()
 	hive_name = hive_name()
@@ -109,9 +118,11 @@
 /datum/antagonist/changeling/Destroy()
 	QDEL_NULL(emporium_action)
 	QDEL_NULL(cellular_emporium)
+	current_profile = null
 	return ..()
 
 /datum/antagonist/changeling/on_gain()
+	generate_name()
 	create_emporium()
 	create_innate_actions()
 	create_initial_profile()
@@ -148,10 +159,26 @@
 		RegisterSignal(living_mob, COMSIG_MOB_HUD_CREATED, .proc/on_hud_created)
 
 	// Brains are optional for lings.
-	var/obj/item/organ/brain/our_ling_brain = living_mob.getorganslot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/internal/brain/our_ling_brain = living_mob.getorganslot(ORGAN_SLOT_BRAIN)
 	if(our_ling_brain)
 		our_ling_brain.organ_flags &= ~ORGAN_VITAL
 		our_ling_brain.decoy_override = TRUE
+
+/datum/antagonist/changeling/proc/generate_name()
+	var/honorific
+	if(owner.current.gender == FEMALE)
+		honorific = "Ms."
+	else if(owner.current.gender == MALE)
+		honorific = "Mr."
+	else
+		honorific = "Mx."
+
+	if(!possible_changeling_IDs)
+		possible_changeling_IDs = GLOB.greek_letters.Copy()
+	if(possible_changeling_IDs.len)
+		changelingID = "[honorific] [pick_n_take(possible_changeling_IDs)]"
+	else
+		changelingID = "[honorific] [rand(1,999)]"
 
 /datum/antagonist/changeling/proc/on_hud_created(datum/source)
 	SIGNAL_HANDLER
@@ -186,7 +213,7 @@
 	if(!iscarbon(owner.current))
 		return
 	var/mob/living/carbon/carbon_owner = owner.current
-	var/obj/item/organ/brain/not_ling_brain = carbon_owner.getorganslot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/internal/brain/not_ling_brain = carbon_owner.getorganslot(ORGAN_SLOT_BRAIN)
 	if(not_ling_brain && (not_ling_brain.decoy_override != initial(not_ling_brain.decoy_override)))
 		not_ling_brain.organ_flags |= ORGAN_VITAL
 		not_ling_brain.decoy_override = FALSE
@@ -457,10 +484,22 @@
 	new_profile.name = target.real_name
 	new_profile.protected = protect
 
+	new_profile.age = target.age
+	new_profile.physique = target.physique
+
+	// Grab the target's quirks.
+	for(var/datum/quirk/target_quirk as anything in target.quirks)
+		LAZYADD(new_profile.quirks, new target_quirk.type)
+
 	// Clothes, of course
 	new_profile.underwear = target.underwear
+	new_profile.underwear_color = target.underwear_color
 	new_profile.undershirt = target.undershirt
 	new_profile.socks = target.socks
+
+	// Hair and facial hair gradients, alongside their colours.
+	new_profile.grad_style = LAZYLISTDUPLICATE(target.grad_style)
+	new_profile.grad_color = LAZYLISTDUPLICATE(target.grad_color)
 
 	// Grab skillchips they have
 	new_profile.skillchips = target.clone_skillchip_list(TRUE)
@@ -480,7 +519,7 @@
 	// Grab the target's sechut icon.
 	new_profile.id_icon = target.wear_id?.get_sechud_job_icon_state()
 
-	var/list/slots = list("head", "wear_mask", "back", "wear_suit", "w_uniform", "shoes", "belt", "gloves", "glasses", "ears", "wear_id", "s_store")
+	var/list/slots = list("head", "wear_mask", "wear_neck", "back", "wear_suit", "w_uniform", "shoes", "belt", "gloves", "glasses", "ears", "wear_id", "s_store")
 	for(var/slot in slots)
 		if(!(slot in target.vars))
 			continue
@@ -512,6 +551,7 @@
 
 	if(!first_profile)
 		first_profile = new_profile
+		current_profile = first_profile
 
 	stored_profiles += new_profile
 	absorbed_count++
@@ -663,7 +703,7 @@
 	var/static/list/slot2slot = list(
 		"head" = ITEM_SLOT_HEAD,
 		"wear_mask" = ITEM_SLOT_MASK,
-		"neck" = ITEM_SLOT_NECK,
+		"wear_neck" = ITEM_SLOT_NECK,
 		"back" = ITEM_SLOT_BACK,
 		"wear_suit" = ITEM_SLOT_OCLOTHING,
 		"w_uniform" = ITEM_SLOT_ICLOTHING,
@@ -679,8 +719,13 @@
 	var/datum/dna/chosen_dna = chosen_profile.dna
 	user.real_name = chosen_profile.name
 	user.underwear = chosen_profile.underwear
+	user.underwear_color = chosen_profile.underwear_color
 	user.undershirt = chosen_profile.undershirt
 	user.socks = chosen_profile.socks
+	user.age = chosen_profile.age
+	user.physique = chosen_profile.physique
+	user.grad_style = LAZYLISTDUPLICATE(chosen_profile.grad_style)
+	user.grad_color = LAZYLISTDUPLICATE(chosen_profile.grad_color)
 
 	chosen_dna.transfer_identity(user, TRUE)
 
@@ -776,6 +821,7 @@
 			attempted_fake_scar.fake = TRUE
 
 	user.regenerate_icons()
+	current_profile = chosen_profile
 
 // Changeling profile themselves. Store a data to store what every DNA instance looked like.
 /datum/changeling_profile
@@ -805,6 +851,8 @@
 	var/list/worn_icon_state_list = list()
 	/// The underwear worn by the profile source
 	var/underwear
+	/// The colour of the underwear worn by the profile source
+	var/underwear_color
 	/// The undershirt worn by the profile source
 	var/undershirt
 	/// The socks worn by the profile source
@@ -817,10 +865,21 @@
 	var/datum/icon_snapshot/profile_snapshot
 	/// ID HUD icon associated with the profile
 	var/id_icon
+	/// The age of the profile source.
+	var/age
+	/// The body type of the profile source.
+	var/physique
+	/// The quirks of the profile source.
+	var/list/quirks = list()
+	/// The hair and facial hair gradient styles of the profile source.
+	var/list/grad_style = list("None", "None")
+	/// The hair and facial hair gradient colours of the profile source.
+	var/list/grad_color = list(null, null)
 
 /datum/changeling_profile/Destroy()
 	qdel(dna)
 	LAZYCLEARLIST(stored_scars)
+	QDEL_LAZYLIST(quirks)
 	return ..()
 
 /*
@@ -840,6 +899,7 @@
 	new_profile.righthand_file_list = righthand_file_list.Copy()
 	new_profile.inhand_icon_state_list = inhand_icon_state_list.Copy()
 	new_profile.underwear = underwear
+	new_profile.underwear_color = underwear_color
 	new_profile.undershirt = undershirt
 	new_profile.socks = socks
 	new_profile.worn_icon_list = worn_icon_list.Copy()
@@ -848,6 +908,11 @@
 	new_profile.stored_scars = stored_scars.Copy()
 	new_profile.profile_snapshot = profile_snapshot
 	new_profile.id_icon = id_icon
+	new_profile.age = age
+	new_profile.physique = physique
+	new_profile.quirks = quirks.Copy()
+	new_profile.grad_style = LAZYLISTDUPLICATE(grad_style)
+	new_profile.grad_color = LAZYLISTDUPLICATE(grad_color)
 
 /datum/antagonist/changeling/roundend_report()
 	var/list/parts = list()
@@ -898,6 +963,7 @@
 		memories += list(list("name" = memory_key, "story" = stolen_memories[memory_key]))
 
 	data["memories"] = memories
+	data["true_name"] = changelingID
 	data["hive_name"] = hive_name
 	data["stolen_antag_info"] = antag_memory
 	data["objectives"] = get_objectives()
@@ -908,7 +974,7 @@
 	name = "\improper Headslug Changeling"
 	show_in_antagpanel = FALSE
 	give_objectives = FALSE
-	soft_antag = TRUE
+	count_against_dynamic_roll_chance = FALSE
 
 	genetic_points = 5
 	total_genetic_points = 5

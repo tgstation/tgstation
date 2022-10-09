@@ -99,7 +99,7 @@
 	name = "Charcoal Stylus"
 	result = /obj/item/pen/charcoal
 	reqs = list(/obj/item/stack/sheet/mineral/wood = 1, /datum/reagent/ash = 30)
-	time = 30
+	time = 3 SECONDS
 	category = CAT_PRIMAL
 
 /obj/item/pen/fountain/captain
@@ -123,7 +123,11 @@
 
 /obj/item/pen/fountain/captain/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/butchering, 200, 115) //the pen is mightier than the sword
+	AddComponent(/datum/component/butchering, \
+	speed = 20 SECONDS, \
+	effectiveness = 115, \
+	)
+	//the pen is mightier than the sword
 
 /obj/item/pen/fountain/captain/reskin_obj(mob/M)
 	..()
@@ -138,7 +142,7 @@
 		to_chat(user, span_warning("You must be holding the pen to continue!"))
 		return
 	var/deg = tgui_input_number(user, "What angle would you like to rotate the pen head to? (0-360)", "Rotate Pen Head", max_value = 360)
-	if(isnull(deg) || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) || loc != user)
+	if(isnull(deg) || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE) || loc != user)
 		return
 	degrees = deg
 	to_chat(user, span_notice("You rotate the top of the pen to [deg] degrees."))
@@ -159,12 +163,12 @@
 	//Changing name/description of items. Only works if they have the UNIQUE_RENAME object flag set
 	if(isobj(O) && proximity && (O.obj_flags & UNIQUE_RENAME))
 		var/penchoice = tgui_input_list(user, "What would you like to edit?", "Pen Setting", list("Rename", "Description", "Reset"))
-		if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
+		if(QDELETED(O) || !user.canUseTopic(O, be_close = TRUE))
 			return
 		if(penchoice == "Rename")
 			var/input = tgui_input_text(user, "What do you want to name [O]?", "Object Name", "[O.name]", MAX_NAME_LEN)
 			var/oldname = O.name
-			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
+			if(QDELETED(O) || !user.canUseTopic(O, be_close = TRUE))
 				return
 			if(input == oldname || !input)
 				to_chat(user, span_notice("You changed [O] to... well... [O]."))
@@ -180,7 +184,7 @@
 		if(penchoice == "Description")
 			var/input = tgui_input_text(user, "Describe [O]", "Description", "[O.desc]", 140)
 			var/olddesc = O.desc
-			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
+			if(QDELETED(O) || !user.canUseTopic(O, be_close = TRUE))
 				return
 			if(input == olddesc || !input)
 				to_chat(user, span_notice("You decide against changing [O]'s description."))
@@ -190,7 +194,7 @@
 				O.renamedByPlayer = TRUE
 
 		if(penchoice == "Reset")
-			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
+			if(QDELETED(O) || !user.canUseTopic(O, be_close = TRUE))
 				return
 
 			qdel(O.GetComponent(/datum/component/rename))
@@ -203,6 +207,14 @@
 
 			to_chat(user, span_notice("You have successfully reset [O]'s name and description."))
 			O.renamedByPlayer = FALSE
+
+/obj/item/pen/get_writing_implement_details()
+	return list(
+		interaction_mode = MODE_WRITING,
+		font = font,
+		color = colour,
+		use_bold = FALSE,
+	)
 
 /*
  * Sleepypens
@@ -233,10 +245,17 @@
 	attack_verb_continuous = list("slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts") //these won't show up if the pen is off
 	attack_verb_simple = list("slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	sharpness = SHARP_POINTY
+	armour_penetration = 20
+	bare_wound_bonus = 10
+	light_system = MOVABLE_LIGHT
+	light_range = 1.5
+	light_power = 0.75
+	light_color = COLOR_SOFT_RED
+	light_on = FALSE
 	/// The real name of our item when extended.
 	var/hidden_name = "energy dagger"
 	/// The real desc of our item when extended.
-	var/hidden_desc = "It's a normal black ink pen."
+	var/hidden_desc = "It's a normal black ink pe- Wait. That's a thing used to stab people!"
 	/// The real icons used when extended.
 	var/hidden_icon = "edagger"
 	/// Whether or pen is extended
@@ -244,7 +263,10 @@
 
 /obj/item/pen/edagger/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/butchering, _speed = 6 SECONDS, _butcher_sound = 'sound/weapons/blade1.ogg')
+	AddComponent(/datum/component/butchering, \
+	speed = 6 SECONDS, \
+	butcher_sound = 'sound/weapons/blade1.ogg', \
+	)
 	AddComponent(/datum/component/transforming, \
 		force_on = 18, \
 		throwforce_on = 35, \
@@ -291,16 +313,8 @@
 	updateEmbedding()
 	balloon_alert(user, "[hidden_name] [active ? "active":"concealed"]")
 	playsound(user ? user : src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 5, TRUE)
+	set_light_on(active)
 	return COMPONENT_NO_DEFAULT_MESSAGE
-
-///syndicate prototype for smuggling missions
-/obj/item/pen/edagger/prototype
-	name = "odd pen"
-	desc = "It's an abnormal black ink pen, with weird chunks of metal sticking out of it..."
-	hidden_name = "prototype hardlight dagger"
-	hidden_desc = "Waffle Corp R&D's prototype for energy daggers. Hardlight may be inferior \
-	to energy weapons, but it's still surprisingly deadly."
-	hidden_icon = "eprototypedagger"
 
 /obj/item/pen/survival
 	name = "survival pen"
@@ -318,3 +332,10 @@
 	toolspeed = 10 //You will never willingly choose to use one of these over a shovel.
 	font = FOUNTAIN_PEN_FONT
 	colour = "#0000FF"
+
+/obj/item/pen/destroyer
+	name = "Fine Tipped Pen"
+	desc = "A pen with an infinitly sharpened tip. Capable of striking the weakest point of a strucutre or robot and annihilating it instantly. Good at putting holes in people too."
+	force = 5
+	wound_bonus = 100
+	demolition_mod = 9000

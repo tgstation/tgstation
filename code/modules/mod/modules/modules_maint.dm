@@ -105,7 +105,7 @@
 	rave_screen = mod.wearer.add_client_colour(/datum/client_colour/rave)
 	rave_screen.update_colour(rainbow_order[rave_number])
 	if(selection)
-		SEND_SOUND(mod.wearer, sound(selection.song_path, volume = 50, channel = CHANNEL_JUKEBOX))
+		mod.wearer.playsound_local(get_turf(src), null, 50, channel = CHANNEL_JUKEBOX, sound_to_use = sound(selection.song_path), use_reverb = FALSE)
 
 /obj/item/mod/module/visor/rave/on_deactivation(display_message = TRUE, deleting = FALSE)
 	. = ..()
@@ -127,7 +127,7 @@
 	rave_number++
 	if(rave_number > length(rainbow_order))
 		rave_number = 1
-	mod.wearer.update_inv_back()
+	mod.wearer.update_clothing(mod.slot_flags)
 	rave_screen.update_colour(rainbow_order[rave_number])
 
 /obj/item/mod/module/visor/rave/get_configuration()
@@ -178,7 +178,7 @@
 	icon_state = "bloon"
 	module_type = MODULE_USABLE
 	complexity = 1
-	use_power_cost = DEFAULT_CHARGE_DRAIN*0.5
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
 	incompatible_modules = list(/obj/item/mod/module/balloon)
 	cooldown_time = 15 SECONDS
 
@@ -237,6 +237,8 @@
 	drain_power(use_power_cost)
 	num_sheets_dispensed++
 
+
+///Stamper - Extends a stamp that can switch between accept/deny modes.
 /obj/item/mod/module/stamp
 	name = "MOD stamper module"
 	desc = "A module installed into the wrist of the suit, this functions as a high-power stamp, \
@@ -328,7 +330,7 @@
 	playsound(src, 'sound/effects/whirthunk.ogg', 75)
 	to_chat(mod.wearer, span_userdanger("That was stupid."))
 	mod.wearer.Stun(FLY_TIME, ignore_canstun = TRUE)
-	animate(mod.wearer, FLY_TIME, pixel_y = 256, alpha = 0)
+	animate(mod.wearer, FLY_TIME, pixel_z = 256, alpha = 0)
 	QDEL_IN(mod.wearer, FLY_TIME)
 
 #undef FLY_TIME

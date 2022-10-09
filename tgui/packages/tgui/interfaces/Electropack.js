@@ -5,17 +5,9 @@ import { Window } from '../layouts';
 
 export const Electropack = (props, context) => {
   const { act, data } = useBackend(context);
-  const {
-    power,
-    code,
-    frequency,
-    minFrequency,
-    maxFrequency,
-  } = data;
+  const { power, code, frequency, minFrequency, maxFrequency } = data;
   return (
-    <Window
-      width={260}
-      height={137}>
+    <Window width={260} height={137}>
       <Window.Content>
         <Section>
           <LabeledList>
@@ -24,18 +16,22 @@ export const Electropack = (props, context) => {
                 icon={power ? 'power-off' : 'times'}
                 content={power ? 'On' : 'Off'}
                 selected={power}
-                onClick={() => act('power')} />
+                onClick={() => act('power')}
+              />
             </LabeledList.Item>
             <LabeledList.Item
               label="Frequency"
-              buttons={(
+              buttons={
                 <Button
                   icon="sync"
                   content="Reset"
-                  onClick={() => act('reset', {
-                    reset: "freq",
-                  })} />
-              )}>
+                  onClick={() =>
+                    act('reset', {
+                      reset: 'freq',
+                    })
+                  }
+                />
+              }>
               <NumberInput
                 animate
                 unit="kHz"
@@ -44,22 +40,28 @@ export const Electropack = (props, context) => {
                 minValue={minFrequency / 10}
                 maxValue={maxFrequency / 10}
                 value={frequency / 10}
-                format={value => toFixed(value, 1)}
+                format={(value) => toFixed(value, 1)}
                 width="80px"
-                onDrag={(e, value) => act('freq', {
-                  freq: value,
-                })} />
+                onDrag={(e, value) =>
+                  act('freq', {
+                    freq: value,
+                  })
+                }
+              />
             </LabeledList.Item>
             <LabeledList.Item
               label="Code"
-              buttons={(
+              buttons={
                 <Button
                   icon="sync"
                   content="Reset"
-                  onClick={() => act('reset', {
-                    reset: "code",
-                  })} />
-              )}>
+                  onClick={() =>
+                    act('reset', {
+                      reset: 'code',
+                    })
+                  }
+                />
+              }>
               <NumberInput
                 animate
                 step={1}
@@ -68,9 +70,12 @@ export const Electropack = (props, context) => {
                 maxValue={100}
                 value={code}
                 width="80px"
-                onDrag={(e, value) => act('code', {
-                  code: value,
-                })} />
+                onDrag={(e, value) =>
+                  act('code', {
+                    code: value,
+                  })
+                }
+              />
             </LabeledList.Item>
           </LabeledList>
         </Section>

@@ -16,7 +16,7 @@
 /mob/living/simple_animal/bot/medbot
 	name = "\improper Medibot"
 	desc = "A little medical robot. He looks somewhat underwhelmed."
-	icon = 'icons/mob/aibots.dmi'
+	icon = 'icons/mob/silicon/aibots.dmi'
 	icon_state = "medibot0"
 	base_icon_state = "medibot"
 	density = FALSE
@@ -42,7 +42,6 @@
 	var/skin
 	var/mob/living/carbon/patient
 	var/mob/living/carbon/oldpatient
-	var/oldloc
 	var/last_found = 0
 	/// How much healing do we do at a time?
 	var/heal_amount = 2.5
@@ -152,7 +151,6 @@
 	..()
 	patient = null
 	oldpatient = null
-	oldloc = null
 	last_found = world.time
 	update_appearance()
 
@@ -234,20 +232,20 @@
 
 /mob/living/simple_animal/bot/medbot/process_scan(mob/living/carbon/human/H)
 	if(H.stat == DEAD)
-		return
-
+		return null
 	if((H == oldpatient) && (world.time < last_found + 200))
-		return
+		return null
+	if(!assess_patient(H))
+		return null
 
-	if(assess_patient(H))
-		last_found = world.time
-		if(COOLDOWN_FINISHED(src, last_newpatient_speak))
-			COOLDOWN_START(src, last_newpatient_speak, MEDBOT_NEW_PATIENTSPEAK_DELAY)
-			var/list/messagevoice = list("Hey, [H.name]! Hold on, I'm coming." = 'sound/voice/medbot/coming.ogg',"Wait [H.name]! I want to help!" = 'sound/voice/medbot/help.ogg',"[H.name], you appear to be injured!" = 'sound/voice/medbot/injured.ogg')
-			var/message = pick(messagevoice)
-			speak(message)
-			playsound(src, messagevoice[message], 50, FALSE)
-		return H
+	last_found = world.time
+	if(COOLDOWN_FINISHED(src, last_newpatient_speak))
+		COOLDOWN_START(src, last_newpatient_speak, MEDBOT_NEW_PATIENTSPEAK_DELAY)
+		var/list/messagevoice = list("Hey, [H.name]! Hold on, I'm coming." = 'sound/voice/medbot/coming.ogg',"Wait [H.name]! I want to help!" = 'sound/voice/medbot/help.ogg',"[H.name], you appear to be injured!" = 'sound/voice/medbot/injured.ogg')
+		var/message = pick(messagevoice)
+		speak(message)
+		playsound(src, messagevoice[message], 50, FALSE)
+	return H
 
 /*
  * Proc used in a callback for before this medibot is tipped by the tippable component.
@@ -358,7 +356,13 @@
 	if(QDELETED(patient))
 		if(medical_mode_flags & MEDBOT_SPEAK_MODE && prob(1))
 			if(bot_cover_flags & BOT_COVER_EMAGGED && prob(30))
-				var/list/i_need_scissors = list('sound/voice/medbot/fuck_you.ogg', 'sound/voice/medbot/turn_off.ogg', 'sound/voice/medbot/im_different.ogg', 'sound/voice/medbot/close.ogg', 'sound/voice/medbot/shindemashou.ogg')
+				var/list/i_need_scissors = list(
+					'sound/voice/medbot/fuck_you.ogg',
+					'sound/voice/medbot/turn_off.ogg',
+					'sound/voice/medbot/im_different.ogg',
+					'sound/voice/medbot/close.ogg',
+					'sound/voice/medbot/shindemashou.ogg',
+				)
 				playsound(src, pick(i_need_scissors), 70)
 			else
 				var/list/messagevoice = list("Radar, put a mask on!" = 'sound/voice/medbot/radar.ogg',"There's always a catch, and I'm the best there is." = 'sound/voice/medbot/catch.ogg',"I knew it, I should've been a plastic surgeon." = 'sound/voice/medbot/surgeon.ogg',"What kind of medbay is this? Everyone's dropping like flies." = 'sound/voice/medbot/flies.ogg',"Delicious!" = 'sound/voice/medbot/delicious.ogg', "Why are we still here? Just to suffer?" = 'sound/voice/medbot/why.ogg')
@@ -366,7 +370,7 @@
 				speak(message)
 				playsound(src, messagevoice[message], 50)
 		var/scan_range = (medical_mode_flags & MEDBOT_STATIONARY_MODE ? 1 : DEFAULT_SCAN_RANGE) //If in stationary mode, scan range is limited to adjacent patients.
-		patient = scan(/mob/living/carbon/human, oldpatient, scan_range)
+		patient = scan(list(/mob/living/carbon/human), oldpatient, scan_range)
 		oldpatient = patient
 
 	if(patient && (get_dist(src,patient) <= 1) && !tending) //Patient is next to us, begin treatment!

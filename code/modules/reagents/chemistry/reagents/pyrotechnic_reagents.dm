@@ -73,7 +73,7 @@
 /datum/reagent/clf3/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
 	exposed_mob.adjust_fire_stacks(min(reac_volume/5, 10))
-	exposed_mob.IgniteMob()
+	exposed_mob.ignite_mob()
 	if(!locate(/obj/effect/hotspot) in exposed_mob.loc)
 		new /obj/effect/hotspot(exposed_mob.loc)
 
@@ -111,15 +111,6 @@
 	if(holder?.my_atom)
 		UnregisterSignal(holder.my_atom, COMSIG_ATOM_EX_ACT)
 	return ..()
-
-/datum/reagent/gunpowder/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	. = TRUE
-	..()
-	if(!isplasmaman(M))
-		return
-	M.set_timed_status_effect(30 SECONDS * REM * delta_time, /datum/status_effect/drugginess)
-	if(M.hallucination < volume)
-		M.hallucination += 5 * REM * delta_time
 
 /datum/reagent/gunpowder/proc/on_ex_act(atom/source, severity, target)
 	SIGNAL_HANDLER
@@ -185,7 +176,7 @@
 	exposed_mob.adjust_fire_stacks(1)
 	var/burndmg = max(0.3*exposed_mob.fire_stacks, 0.3)
 	exposed_mob.adjustFireLoss(burndmg, 0)
-	exposed_mob.IgniteMob()
+	exposed_mob.ignite_mob()
 
 /datum/reagent/phlogiston/on_mob_life(mob/living/carbon/metabolizer, delta_time, times_fired)
 	metabolizer.adjust_fire_stacks(1 * REM * delta_time)
@@ -233,10 +224,8 @@
 	taste_description = "icey bitterness"
 	purity = REAGENT_STANDARD_PURITY
 	self_consuming = TRUE
-	impure_chem = /datum/reagent/consumable/ice
 	inverse_chem_val = 0.5
 	inverse_chem = /datum/reagent/inverse/cryostylane
-	failed_chem = null
 	burning_volume = 0.05
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_DEAD_PROCESS
 
@@ -371,7 +360,7 @@
 		return
 
 	if(reac_volume >= 1)
-		var/obj/effect/particle_effect/foam/firefighting/foam = (locate(/obj/effect/particle_effect/foam) in exposed_turf)
+		var/obj/effect/particle_effect/fluid/foam/firefighting/foam = (locate(/obj/effect/particle_effect/fluid/foam) in exposed_turf)
 		if(!foam)
 			foam = new(exposed_turf)
 		else if(istype(foam))

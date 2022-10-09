@@ -1,7 +1,7 @@
 /// Atoms that can be microwaved from one type to another.
 /datum/element/microwavable
 	element_flags = ELEMENT_BESPOKE
-	id_arg_index = 2
+	id_arg_index = 3
 	/// The typepath we default to if we were passed no microwave result
 	var/atom/default_typepath = /obj/item/food/badrecipe
 	/// Resulting atom typepath on a completed microwave.
@@ -31,18 +31,16 @@
 	SIGNAL_HANDLER
 
 	var/atom/result
-
+	var/turf/result_loc = get_turf(used_microwave || source)
 	if(isstack(source))
 		var/obj/item/stack/stack_source = source
-		result = new result_typepath(get_turf(used_microwave || source), stack_source.amount)
+		result = new result_typepath(result_loc, stack_source.amount)
 
 	else
-		result = new result_typepath(get_turf(used_microwave || source))
+		result = new result_typepath(result_loc)
 
 	var/efficiency = istype(used_microwave) ? used_microwave.efficiency : 1
 	SEND_SIGNAL(result, COMSIG_ITEM_MICROWAVE_COOKED, source, efficiency)
-
-
 
 	if(IS_EDIBLE(result))
 		if(microwaver)

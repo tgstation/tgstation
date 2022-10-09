@@ -6,16 +6,10 @@
 	var/required_cook_time = 2 MINUTES
 	///Is this a positive grill result?
 	var/positive_result = TRUE
-
 	///Time spent cooking so far
 	var/current_cook_time = 0
-
-	///Are we currently grilling?
-	var/currently_grilling = FALSE
-
 	///Do we use the large steam sprite?
 	var/use_large_steam_sprite = FALSE
-
 	/// REF() to the mob which placed us on the griddle
 	var/who_placed_us
 
@@ -85,9 +79,8 @@
 
 	else
 		grilled_result = new cook_result(original_object.loc)
-
 		if(original_object.custom_materials)
-			grilled_result.set_custom_materials(original_object.custom_materials, 1)
+			grilled_result.set_custom_materials(original_object.custom_materials)
 
 	SEND_SIGNAL(parent, COMSIG_GRILL_COMPLETED, grilled_result)
 	if(who_placed_us)

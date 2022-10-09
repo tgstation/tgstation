@@ -1,12 +1,8 @@
 /datum/species/snail
 	name = "Snailperson"
 	id = SPECIES_SNAIL
-	offset_features = list(OFFSET_GLASSES = list(0,4))
-	default_color = "336600" //vomit green
 	species_traits = list(MUTCOLORS, NO_UNDERWEAR, HAS_FLESH, HAS_BONE)
 	inherent_traits = list(
-		TRAIT_ADVANCEDTOOLUSER,
-		TRAIT_CAN_STRIP,
 		TRAIT_NOSLIPALL,
 	)
 	attack_verb = "slap"
@@ -20,8 +16,8 @@
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP
 	sexes = FALSE //snails are hermaphrodites
 
-	mutanteyes = /obj/item/organ/eyes/snail
-	mutanttongue = /obj/item/organ/tongue/snail
+	mutanteyes = /obj/item/organ/internal/eyes/snail
+	mutanttongue = /obj/item/organ/internal/tongue/snail
 	exotic_blood = /datum/reagent/lube
 
 	bodypart_overrides = list(
@@ -61,7 +57,7 @@
 	name = "snail shell"
 	desc = "Worn by snails as armor and storage compartment."
 	icon_state = "snailshell"
-	inhand_icon_state = "snailshell"
+	inhand_icon_state = null
 	lefthand_file = 'icons/mob/inhands/equipment/backpack_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
 	armor = list(MELEE = 40, BULLET = 30, LASER = 30, ENERGY = 10, BOMB = 25, BIO = 0, FIRE = 0, ACID = 50)

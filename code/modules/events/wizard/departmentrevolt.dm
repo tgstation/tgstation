@@ -4,6 +4,7 @@
 	typepath = /datum/round_event/wizard/deprevolt
 	max_occurrences = 1
 	earliest_start = 0 MINUTES
+	description = "A department is turned into an independent state."
 
 	///manual choice of what department to revolt for admins to pick
 	var/datum/job_department/picked_department
@@ -12,14 +13,14 @@
 	///admin choice on whether this nation will have objectives to attack other nations, default true for !fun!
 	var/dangerous_nation = TRUE
 
-/datum/round_event_control/wizard/deprevolt/admin_setup()
+/datum/round_event_control/wizard/deprevolt/admin_setup(mob/admin)
 	if(!check_rights(R_FUN))
 		return
 
 	var/list/options = list()
 	var/list/pickable_departments = subtypesof(/datum/job_department)
 	for(var/datum/job_department/dep as anything in pickable_departments)
-		options[dep.department_name] = dep
+		options[initial(dep.department_name)] = dep
 	picked_department = options[(input(usr,"Which department should revolt? Select none for a random department.","Select a department") as null|anything in options)]
 	if(!picked_department)
 		return //eh just random they dont care

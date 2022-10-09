@@ -1,53 +1,55 @@
-/obj/effect/proc_holder/spell/pointed/barnyardcurse
+/datum/action/cooldown/spell/pointed/barnyardcurse
 	name = "Curse of the Barnyard"
 	desc = "This spell dooms an unlucky soul to possess the speech and facial attributes of a barnyard animal."
+	button_icon_state = "barn"
+	ranged_mousepointer = 'icons/effects/mouse_pointers/barn_target.dmi'
+
 	school = SCHOOL_TRANSMUTATION
-	charge_type = "recharge"
-	charge_max = 150
-	charge_counter = 0
-	clothes_req = FALSE
-	stat_allowed = FALSE
+	cooldown_time = 15 SECONDS
+	cooldown_reduction_per_rank = 3 SECONDS
+
 	invocation = "KN'A FTAGHU, PUCK 'BTHNK!"
 	invocation_type = INVOCATION_SHOUT
-	range = 7
-	cooldown_min = 30
-	ranged_mousepointer = 'icons/effects/mouse_pointers/barn_target.dmi'
-	action_icon_state = "barn"
+	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
+
 	active_msg = "You prepare to curse a target..."
-	deactive_msg = "You dispel the curse..."
-	/// List of mobs which are allowed to be a target of the spell
-	var/static/list/compatible_mobs_typecache = typecacheof(list(/mob/living/carbon/human))
+	deactive_msg = "You dispel the curse."
 
-/obj/effect/proc_holder/spell/pointed/barnyardcurse/cast(list/targets, mob/user)
-	if(!targets.len)
-		to_chat(user, span_warning("No target found in range!"))
-		return FALSE
-	if(!can_target(targets[1], user))
-		return FALSE
-
-	var/mob/living/carbon/target = targets[1]
-	if(target.can_block_magic())
-		to_chat(user, span_warning("The spell had no effect!"))
-		target.visible_message(span_danger("[target]'s face bursts into flames, which instantly burst outward, leaving [target] unharmed!"), \
-						span_danger("Your face starts burning up, but the flames are repulsed by your anti-magic protection!"))
-		return FALSE
-
-	var/choice = pick(GLOB.cursed_animal_masks)
-	var/obj/item/clothing/mask/magichead = new choice(get_turf(target))
-
-	target.visible_message(span_danger("[target]'s face bursts into flames, and a barnyard animal's head takes its place!"), \
-						   span_danger("Your face burns up, and shortly after the fire you realise you have the face of a barnyard animal!"))
-	if(!target.dropItemToGround(target.wear_mask))
-		qdel(target.wear_mask)
-	target.equip_to_slot_if_possible(magichead, ITEM_SLOT_MASK, 1, 1)
-	target.flash_act()
-
-/obj/effect/proc_holder/spell/pointed/barnyardcurse/can_target(atom/target, mob/user, silent)
+/datum/action/cooldown/spell/pointed/barnyardcurse/is_valid_target(atom/cast_on)
 	. = ..()
 	if(!.)
 		return FALSE
-	if(!is_type_in_typecache(target, compatible_mobs_typecache))
-		if(!silent)
-			to_chat(user, span_warning("You are unable to curse [target]!"))
+	if(!ishuman(cast_on))
 		return FALSE
+
+	var/mob/living/carbon/human/human_target = cast_on
+	if(!human_target.wear_mask)
+		return TRUE
+
+	return !(human_target.wear_mask.type in GLOB.cursed_animal_masks)
+
+/datum/action/cooldown/spell/pointed/barnyardcurse/cast(mob/living/carbon/human/cast_on)
+	. = ..()
+	if(cast_on.can_block_magic(antimagic_flags))
+		cast_on.visible_message(
+			span_danger("[cast_on]'s face bursts into flames, which instantly burst outward, leaving [cast_on.p_them()] unharmed!"),
+			span_danger("Your face starts burning up, but the flames are repulsed by your anti-magic protection!"),
+		)
+		to_chat(owner, span_warning("The spell had no effect!"))
+		return FALSE
+
+	var/chosen_type = pick(GLOB.cursed_animal_masks)
+	var/obj/item/clothing/mask/animal/cursed_mask = new chosen_type(get_turf(target))
+
+	cast_on.visible_message(
+		span_danger("[target]'s face bursts into flames, and a barnyard animal's head takes its place!"),
+		span_userdanger("Your face burns up, and shortly after the fire you realise you have the face of a [cursed_mask.animal_type]!"),
+	)
+
+	// Can't drop? Nuke it
+	if(!cast_on.dropItemToGround(cast_on.wear_mask))
+		qdel(cast_on.wear_mask)
+
+	cast_on.equip_to_slot_if_possible(cursed_mask, ITEM_SLOT_MASK, TRUE, TRUE)
+	cast_on.flash_act()
 	return TRUE

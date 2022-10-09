@@ -1,42 +1,13 @@
-/// A preview of the mech for the UI
-/atom/movable/screen/mech_view
-	name = "mechview"
-	del_on_map_removal = FALSE
-	layer = OBJ_LAYER
-	plane = GAME_PLANE
-
-	/// The body that is displayed
-	var/obj/vehicle/sealed/mecha/owner
-	///list of plane masters to apply to owners
-	var/list/plane_masters = list()
-
-/atom/movable/screen/mech_view/Initialize(mapload, obj/vehicle/sealed/mecha/newowner)
-	. = ..()
-	owner = newowner
-	assigned_map = "mech_view_[REF(owner)]"
-	set_position(1, 1)
-	for(var/plane_master_type in subtypesof(/atom/movable/screen/plane_master) - /atom/movable/screen/plane_master/blackness)
-		var/atom/movable/screen/plane_master/plane_master = new plane_master_type()
-		plane_master.screen_loc = "[assigned_map]:CENTER"
-		plane_masters += plane_master
-
-/atom/movable/screen/mech_view/Destroy()
-	QDEL_LIST(plane_masters)
-	owner = null
-	return ..()
-
 /obj/vehicle/sealed/mecha/ui_close(mob/user)
 	. = ..()
-	user.client?.screen -= ui_view.plane_masters
-	user.client?.clear_map(ui_view.assigned_map)
+	ui_view.hide_from(user)
 
 /obj/vehicle/sealed/mecha/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "Mecha", name, ui_x, ui_y)
 		ui.open()
-		user.client?.screen |= ui_view.plane_masters
-		user.client?.register_map_obj(ui_view)
+		ui_view.display_to(user)
 
 /obj/vehicle/sealed/mecha/ui_status(mob/user)
 	if(contains(user))
@@ -115,6 +86,7 @@
 	data["power_max"] = cell?.maxcharge
 	data["mecha_flags"] = mecha_flags
 	data["internal_damage"] = internal_damage
+	data["airtank_present"] = !!internal_tank
 	data["air_source"] = use_internal_tank ? "Internal Airtank" : "Environment"
 	data["airtank_pressure"] = int_tank_air ? round(int_tank_air.return_pressure(), 0.01) : null
 	data["airtank_temp"] = int_tank_air?.temperature
@@ -122,6 +94,7 @@
 	data["cabin_pressure"] = round(return_pressure(), 0.01)
 	data["cabin_temp"] = return_temperature()
 	data["dna_lock"] = dna_lock
+	data["weapons_safety"] = weapons_safety
 	data["mech_view"] = ui_view.assigned_map
 	if(radio)
 		data["mech_electronics"] = list(
@@ -268,6 +241,9 @@
 				tgui_alert(usr, "You cannot set a name that contains a word prohibited in IC chat!")
 				return
 			name = userinput
+		if("toggle_safety")
+			set_safety(usr)
+			return
 		if("dna_lock")
 			var/mob/living/carbon/user = usr
 			if(!istype(user) || !user.dna)
@@ -281,6 +257,8 @@
 			tgui_alert(usr, "Enzymes detected: " + dna_lock)
 			return FALSE
 		if("toggle_airsource")
+			if(!internal_tank)
+				return
 			use_internal_tank = !use_internal_tank
 			balloon_alert(usr, "taking air from [use_internal_tank ? "internal airtank" : "environment"]")
 			log_message("Now taking air from [use_internal_tank?"internal airtank":"environment"].", LOG_MECHA)

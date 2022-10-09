@@ -12,7 +12,7 @@
 	name = "reaction chamber" //Maybe this name is more accurate?
 	density = TRUE
 	pass_flags_self = PASSMACHINE | LETPASSTHROW
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "mixer0b"
 	base_icon_state = "mixer"
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.4
@@ -64,7 +64,7 @@
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-	if(!can_interact(user) || !user.canUseTopic(src, !issilicon(user), FALSE, NO_TK))
+	if(!can_interact(user) || !user.canUseTopic(src, !issilicon(user), FALSE, no_tk = TRUE))
 		return
 	replace_beaker(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -163,7 +163,7 @@
 	if(default_deconstruction_crowbar(I))
 		return
 
-	if(istype(I, /obj/item/reagent_containers) && !(I.item_flags & ABSTRACT) && I.is_open_container())
+	if(is_reagent_container(I) && !(I.item_flags & ABSTRACT) && I.is_open_container())
 		. = TRUE //no afterattack
 		var/obj/item/reagent_containers/B = I
 		if(!user.transferItemToLoc(B, src))
@@ -469,17 +469,17 @@ To continue set your target temperature to 390K."}
 /obj/machinery/chem_heater/proc/get_purity_color(datum/equilibrium/equilibrium)
 	var/_reagent = equilibrium.reaction.results[1]
 	var/datum/reagent/reagent = equilibrium.holder.get_reagent(_reagent)
-	switch(reagent.purity)
-		if(1 to INFINITY)
-			return "blue"
-		if(0.8 to 1)
-			return "green"
-		if(reagent.inverse_chem_val to 0.8)
-			return "olive"
-		if(equilibrium.reaction.purity_min to reagent.inverse_chem_val)
-			return "orange"
-		if(-INFINITY to equilibrium.reaction.purity_min)
-			return "red"
+	// Can't be a switch due to http://www.byond.com/forum/post/2750423
+	if(reagent.purity in 1 to INFINITY)
+		return "blue"
+	else if(reagent.purity in 0.8 to 1)
+		return "green"
+	else if(reagent.purity in reagent.inverse_chem_val to 0.8)
+		return "olive"
+	else if(reagent.purity in equilibrium.reaction.purity_min to reagent.inverse_chem_val)
+		return "orange"
+	else if(reagent.purity in -INFINITY to equilibrium.reaction.purity_min)
+		return "red"
 
 //Has a lot of buffer and is upgraded
 /obj/machinery/chem_heater/debug

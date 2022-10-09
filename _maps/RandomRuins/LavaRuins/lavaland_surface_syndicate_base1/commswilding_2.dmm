@@ -15,7 +15,7 @@
 	id = "lavalandsyndi_telecomms";
 	name = "Telecomms Blast Door Control";
 	pixel_x = 26;
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/structure/rack,
 /turf/open/floor/wood,
@@ -55,7 +55,7 @@
 	use_power = 0
 	},
 /obj/machinery/door/window/brigdoor/left/directional/south{
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/effect/turf_decal/siding/thinplating/dark,
 /turf/open/floor/circuit/green,
@@ -172,9 +172,9 @@
 	},
 /obj/structure/cable,
 /obj/machinery/door/airlock/hatch{
-	name = "Telecommunications";
-	req_access_txt = "150"
+	name = "Telecommunications"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/modular_map_connector,
 /turf/template_noop,
 /area/ruin/syndicate_lava_base/telecomms)

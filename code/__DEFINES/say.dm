@@ -45,6 +45,10 @@
 #define MODE_ALIEN "alientalk"
 #define MODE_HOLOPAD "holopad"
 
+#define MODE_CHANGELING "changeling"
+#define MODE_KEY_CHANGELING "g"
+#define MODE_TOKEN_CHANGELING ":g"
+
 #define MODE_VOCALCORDS "cords"
 #define MODE_KEY_VOCALCORDS "x"
 
@@ -69,6 +73,7 @@
 #define SPAN_CLOWN "clown"
 #define SPAN_SINGING "singing"
 #define SPAN_TAPE_RECORDER "tape_recorder"
+#define SPAN_HELIUM "small"
 
 //bitflag #defines for return value of the radio() proc.
 #define ITALICS (1<<0)

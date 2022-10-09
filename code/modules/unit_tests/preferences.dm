@@ -29,10 +29,10 @@
 	for (var/preference_type in GLOB.preference_entries)
 		var/datum/preference/preference = GLOB.preference_entries[preference_type]
 		if (!istext(preference.savefile_key))
-			Fail("[preference_type] has an invalid savefile_key.")
+			TEST_FAIL("[preference_type] has an invalid savefile_key.")
 
 		if (preference.savefile_key in known_savefile_keys)
-			Fail("[preference_type] has a non-unique savefile_key `[preference.savefile_key]`!")
+			TEST_FAIL("[preference_type] has a non-unique savefile_key `[preference.savefile_key]`!")
 
 		known_savefile_keys += preference.savefile_key
 

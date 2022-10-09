@@ -23,9 +23,9 @@
 		to_chat(AI, span_userdanger("Your current laws and objectives remain unchanged.")) //this unlocks malf powers, but does not give the license to plasma flood
 		AI.add_malf_picker()
 		AI.hack_software = TRUE
-		log_game("[key_name(user)] has upgraded [key_name(AI)] with a [src].")
+		log_silicon("[key_name(user)] has upgraded [key_name(AI)] with a [src].")
 		message_admins("[ADMIN_LOOKUPFLW(user)] has upgraded [ADMIN_LOOKUPFLW(AI)] with a [src].")
-	to_chat(user, span_notice("You upgrade [AI]. [src] is consumed in the process."))
+	to_chat(user, span_notice("You install [src], upgrading [AI]."))
 	qdel(src)
 	return TRUE
 
@@ -48,7 +48,7 @@
 		to_chat(AI, span_userdanger("[user] has upgraded you with surveillance software!"))
 		to_chat(AI, "Via a combination of hidden microphones and lip reading software, you are able to use your cameras to listen in on conversations.")
 	to_chat(user, span_notice("You upgrade [AI]. [src] is consumed in the process."))
-	log_game("[key_name(user)] has upgraded [key_name(AI)] with a [src].")
+	user.log_message("has upgraded [key_name(AI)] with a [src].", LOG_GAME)
 	message_admins("[ADMIN_LOOKUPFLW(user)] has upgraded [ADMIN_LOOKUPFLW(AI)] with a [src].")
 	qdel(src)
 	return TRUE

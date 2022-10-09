@@ -122,7 +122,7 @@ Industrial extracts:
 /obj/item/slimecross/industrial/silver/do_after_spawn(obj/item/spawned)
 	if(istype(spawned, /obj/item/food))
 		var/obj/item/food/food_object = spawned
-		food_object.food_flags |= FOOD_SILVER_SPAWNED
+		food_object.mark_silver_slime_reaction()
 
 /obj/item/slimecross/industrial/bluespace
 	colour = "bluespace"

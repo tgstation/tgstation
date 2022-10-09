@@ -6,9 +6,11 @@
 // Organ signals
 /// Called on the organ when it is implanted into someone (mob/living/carbon/receiver)
 #define COMSIG_ORGAN_IMPLANTED "comsig_organ_implanted"
-
+/// Called when using the *wag emote
+#define COMSIG_ORGAN_WAG_TAIL "comsig_wag_tail"
 /// Called on the organ when it is removed from someone (mob/living/carbon/old_owner)
 #define COMSIG_ORGAN_REMOVED "comsig_organ_removed"
+
 ///from base of mob/update_transform()
 #define COMSIG_LIVING_POST_UPDATE_TRANSFORM "living_post_update_transform"
 
@@ -16,7 +18,7 @@
 #define COMSIG_LIVING_DOORCRUSHED "living_doorcrush"
 ///from base of mob/living/resist() (/mob/living)
 #define COMSIG_LIVING_RESIST "living_resist"
-///from base of mob/living/IgniteMob() (/mob/living)
+///from base of mob/living/ignite_mob() (/mob/living)
 #define COMSIG_LIVING_IGNITED "living_ignite"
 ///from base of mob/living/extinguish_mob() (/mob/living)
 #define COMSIG_LIVING_EXTINGUISHED "living_extinguished"
@@ -41,8 +43,6 @@
 
 ///from base of element/bane/activate(): (item/weapon, mob/user)
 #define COMSIG_LIVING_BANED "living_baned"
-///Sent when bloodcrawl ends in mob/living/phasein(): (phasein_decal)
-#define COMSIG_LIVING_AFTERPHASEIN "living_phasein"
 
 ///from base of mob/living/death(): (gibbed)
 #define COMSIG_LIVING_DEATH "living_death"
@@ -94,3 +94,22 @@
 
 ///From obj/item/toy/crayon/spraycan
 #define COMSIG_LIVING_MOB_PAINTED "living_mob_painted"
+
+///From mob/living/proc/wabbajack(): (randomize_type)
+#define COMSIG_LIVING_PRE_WABBAJACKED "living_mob_wabbajacked"
+	/// Return to stop the rest of the wabbajack from triggering.
+	#define STOP_WABBAJACK (1<<0)
+///From mob/living/proc/on_wabbajack(): (mob/living/new_mob)
+#define COMSIG_LIVING_ON_WABBAJACKED "living_wabbajacked"
+
+/// From /datum/status_effect/shapechange_mob/on_apply(): (mob/living/shape)
+#define COMSIG_LIVING_SHAPESHIFTED "living_shapeshifted"
+/// From /datum/status_effect/shapechange_mob/after_unchange(): (mob/living/caster)
+#define COMSIG_LIVING_UNSHAPESHIFTED "living_unshapeshifted"
+
+///From /obj/effect/rune/convert/do_sacrifice() : (list/invokers)
+#define COMSIG_LIVING_CULT_SACRIFICED "living_cult_sacrificed"
+	/// Return to stop the sac from occurring
+	#define STOP_SACRIFICE (1<<0)
+	/// Don't send a message for sacrificing this thing, we have our own
+	#define SILENCE_SACRIFICE_MESSAGE (1<<1)

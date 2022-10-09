@@ -64,7 +64,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			if(GLOB.admin_datums)
 				for(var/ckey in GLOB.admin_datums)
 					var/datum/admins/D = GLOB.admin_datums[ckey]
-					dat += "[ckey] - [D.rank.name]<br>"
+					dat += "[ckey] - [D.rank_names()]<br>"
 				holder << browse(dat, "window=showadmins;size=600x500")
 		//Buttons for debug.
 		if("maint_access_engiebrig")
@@ -74,7 +74,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 				M.check_access()
 				if (ACCESS_MAINT_TUNNELS in M.req_access)
 					M.req_access = list()
-					M.req_one_access = list(ACCESS_BRIG,ACCESS_ENGINE)
+					M.req_one_access = list(ACCESS_BRIG,ACCESS_ENGINEERING)
 			message_admins("[key_name_admin(holder)] made all maint doors engineering and brig access-only.")
 		if("maint_access_brig")
 			if(!is_debugger)
@@ -91,6 +91,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			sec_job.total_positions = -1
 			sec_job.spawn_positions = -1
 			message_admins("[key_name_admin(holder)] has removed the cap on security officers.")
+
 		//Buttons for helpful stuff. This is where people land in the tgui
 		if("clear_virus")
 			var/choice = tgui_alert(usr, "Are you sure you want to cure all disease?",, list("Yes", "Cancel"))
@@ -99,51 +100,31 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 				for(var/thing in SSdisease.active_diseases)
 					var/datum/disease/D = thing
 					D.cure(0)
+
 		if("list_bombers")
-			var/dat = "<B>Bombing List</B><HR>"
-			for(var/l in GLOB.bombers)
-				dat += text("[l]<BR>")
-			holder << browse(dat, "window=bombers")
+			holder.list_bombers()
 
 		if("list_signalers")
-			var/dat = "<B>Showing last [length(GLOB.lastsignalers)] signalers.</B><HR>"
-			for(var/sig in GLOB.lastsignalers)
-				dat += "[sig]<BR>"
-			holder << browse(dat, "window=lastsignalers;size=800x500")
+			holder.list_signalers()
+
 		if("list_lawchanges")
-			var/dat = "<B>Showing last [length(GLOB.lawchanges)] law changes.</B><HR>"
-			for(var/sig in GLOB.lawchanges)
-				dat += "[sig]<BR>"
-			holder << browse(dat, "window=lawchanges;size=800x500")
+			holder.list_law_changes()
+
 		if("showailaws")
-			holder.holder.output_ai_laws()//huh, inconvenient var naming, huh?
+			holder.check_ai_laws()
+
 		if("manifest")
-			var/dat = "<B>Showing Crew Manifest.</B><HR>"
-			dat += "<table cellspacing=5><tr><th>Name</th><th>Position</th></tr>"
-			for(var/datum/data/record/t in GLOB.data_core.general)
-				dat += "<tr><td>[t.fields["name"]]</td><td>[t.fields["rank"]][t.fields["rank"] != t.fields["trim"] ? " ([t.fields["trim"]])" : ""]</td></tr>"
-			dat += "</table>"
-			holder << browse(dat, "window=manifest;size=440x410")
+			holder.show_manifest()
+
 		if("dna")
-			var/dat = "<B>Showing DNA from blood.</B><HR>"
-			dat += "<table cellspacing=5><tr><th>Name</th><th>DNA</th><th>Blood Type</th></tr>"
-			for(var/i in GLOB.human_list)
-				var/mob/living/carbon/human/H = i
-				if(H.ckey)
-					dat += "<tr><td>[H]</td><td>[H.dna.unique_enzymes]</td><td>[H.dna.blood_type]</td></tr>"
-			dat += "</table>"
-			holder << browse(dat, "window=DNA;size=440x410")
+			holder.list_dna()
+
 		if("fingerprints")
-			var/dat = "<B>Showing Fingerprints.</B><HR>"
-			dat += "<table cellspacing=5><tr><th>Name</th><th>Fingerprints</th></tr>"
-			for(var/i in GLOB.human_list)
-				var/mob/living/carbon/human/H = i
-				if(H.ckey)
-					dat += "<tr><td>[H]</td><td>[md5(H.dna.unique_identity)]</td></tr>"
-			dat += "</table>"
-			holder << browse(dat, "window=fingerprints;size=440x410")
+			holder.list_fingerprints()
+
 		if("ctfbutton")
 			toggle_id_ctf(holder, "centcom")
+
 		if("tdomereset")
 			var/delete_mobs = tgui_alert(usr,"Clear all mobs?","Confirm",list("Yes","No","Cancel"))
 			if(delete_mobs == "Cancel")
@@ -152,7 +133,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			log_admin("[key_name(holder)] reset the thunderdome to default with delete_mobs==[delete_mobs].", 1)
 			message_admins(span_adminnotice("[key_name_admin(holder)] reset the thunderdome to default with delete_mobs==[delete_mobs]."))
 
-			var/area/thunderdome = GLOB.areas_by_type[/area/tdome/arena]
+			var/area/thunderdome = GLOB.areas_by_type[/area/centcom/tdome/arena]
 			if(delete_mobs == "Yes")
 				for(var/mob/living/mob in thunderdome)
 					qdel(mob) //Clear mobs
@@ -332,7 +313,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Egalitarian Station"))
 			for(var/obj/machinery/door/airlock/W in GLOB.machines)
-				if(is_station_level(W.z) && !istype(get_area(W), /area/command) && !istype(get_area(W), /area/commons) && !istype(get_area(W), /area/service) && !istype(get_area(W), /area/command/heads_quarters) && !istype(get_area(W), /area/security/prison))
+				if(is_station_level(W.z) && !istype(get_area(W), /area/station/command) && !istype(get_area(W), /area/station/commons) && !istype(get_area(W), /area/station/service) && !istype(get_area(W), /area/station/command/heads_quarters) && !istype(get_area(W), /area/station/security/prison))
 					W.req_access = list()
 			message_admins("[key_name_admin(holder)] activated Egalitarian Station mode")
 			priority_announce("CentCom airlock control override activated. Please take this time to get acquainted with your coworkers.", null, SSstation.announcer.get_rand_report_sound())
@@ -414,9 +395,12 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 				if (prefs["announce_players"]["value"] == "Yes")
 					portalAnnounce(prefs["announcement"]["value"], (prefs["playlightning"]["value"] == "Yes" ? TRUE : FALSE))
 
-				var/mutable_appearance/storm = mutable_appearance('icons/obj/tesla_engine/energy_ball.dmi', "energy_ball_fast", FLY_LAYER)
-				storm.plane =  ABOVE_GAME_PLANE
-				storm.color = prefs["color"]["value"]
+				var/list/storm_appearances = list()
+				for(var/offset in 0 to SSmapping.max_plane_offset)
+					var/mutable_appearance/storm = mutable_appearance('icons/obj/engine/energy_ball.dmi', "energy_ball_fast", FLY_LAYER)
+					SET_PLANE_W_SCALAR(storm, ABOVE_GAME_PLANE, offset)
+					storm.color = prefs["color"]["value"]
+					storm_appearances += storm
 
 				message_admins("[key_name_admin(holder)] has created a customized portal storm that will spawn [prefs["portalnum"]["value"]] portals, each of them spawning [prefs["amount"]["value"]] of [pathToSpawn]")
 				log_admin("[key_name(holder)] has created a customized portal storm that will spawn [prefs["portalnum"]["value"]] portals, each of them spawning [prefs["amount"]["value"]] of [pathToSpawn]")
@@ -430,9 +414,9 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 						var/ghostcandidates = list()
 						for (var/j in 1 to min(prefs["amount"]["value"], length(candidates)))
 							ghostcandidates += pick_n_take(candidates)
-							addtimer(CALLBACK(GLOBAL_PROC, .proc/doPortalSpawn, get_random_station_turf(), pathToSpawn, length(ghostcandidates), storm, ghostcandidates, outfit), i*prefs["delay"]["value"])
+							addtimer(CALLBACK(GLOBAL_PROC, .proc/doPortalSpawn, get_random_station_turf(), pathToSpawn, length(ghostcandidates), storm_appearances, ghostcandidates, outfit), i*prefs["delay"]["value"])
 					else if (prefs["playersonly"]["value"] != "Yes")
-						addtimer(CALLBACK(GLOBAL_PROC, .proc/doPortalSpawn, get_random_station_turf(), pathToSpawn, prefs["amount"]["value"], storm, null, outfit), i*prefs["delay"]["value"])
+						addtimer(CALLBACK(GLOBAL_PROC, .proc/doPortalSpawn, get_random_station_turf(), pathToSpawn, prefs["amount"]["value"], storm_appearances, null, outfit), i*prefs["delay"]["value"])
 		if("changebombcap")
 			if(!is_funmin)
 				return
@@ -501,8 +485,8 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 
 				if(H.dna.species.id == SPECIES_HUMAN)
 					if(H.dna.features["tail_human"] == "None" || H.dna.features["ears"] == "None")
-						var/obj/item/organ/ears/cat/ears = new
-						var/obj/item/organ/tail/cat/tail = new
+						var/obj/item/organ/internal/ears/cat/ears = new
+						var/obj/item/organ/external/tail/cat/tail = new
 						ears.Insert(H, drop_if_replaced=FALSE)
 						tail.Insert(H, drop_if_replaced=FALSE)
 					var/list/honorifics = list("[MALE]" = list("kun"), "[FEMALE]" = list("chan","tan"), "[NEUTER]" = list("san"), "[PLURAL]" = list("san")) //John Robust -> Robust-kun
@@ -572,21 +556,21 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 				candidates -= chosen_candidate
 				nerd = new /mob/living/simple_animal/drone/classic(spawnpoint)
 				nerd.key = chosen_candidate.key
-				log_game("[key_name(nerd)] has been selected as a Nanotrasen emergency response drone")
+				nerd.log_message("has been selected as a Nanotrasen emergency response drone.", LOG_GAME)
 				teamsize--
 
 			return TRUE
 	if(E)
 		E.processing = FALSE
-		if(E.announceWhen>0)
+		if(E.announce_when>0)
 			switch(tgui_alert(holder, "Would you like to alert the crew?", "Alert", list("Yes", "No", "Cancel")))
 				if("Yes")
-					E.announceChance = 100
+					E.announce_chance = 100
 				if("Cancel")
 					E.kill()
 					return
 				if("No")
-					E.announceChance = 0
+					E.announce_chance = 0
 		E.processing = TRUE
 	if(holder)
 		log_admin("[key_name(holder)] used secret [action]")
@@ -602,7 +586,9 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 		sleep(20)
 		sound_to_playing_players('sound/magic/lightningbolt.ogg')
 
-/proc/doPortalSpawn(turf/loc, mobtype, numtospawn, portal_appearance, players, humanoutfit)
+/// Spawns a portal storm that spawns in sentient/non sentient mobs
+/// portal_appearance is a list in the form (turf's plane offset + 1) -> appearance to use
+/proc/doPortalSpawn(turf/loc, mobtype, numtospawn, list/portal_appearance, players, humanoutfit)
 	for (var/i in 1 to numtospawn)
 		var/mob/spawnedMob = new mobtype(loc)
 		if (length(players))
@@ -615,7 +601,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			var/mob/living/carbon/human/H = spawnedMob
 			H.equipOutfit(humanoutfit)
 	var/turf/T = get_step(loc, SOUTHWEST)
-	flick_overlay_static(portal_appearance, T, 15)
+	flick_overlay_static(portal_appearance[GET_TURF_PLANE_OFFSET(T) + 1], T, 15)
 	playsound(T, 'sound/magic/lightningbolt.ogg', rand(80, 100), TRUE)
 
 ///Makes sure latejoining crewmembers also become traitors.
@@ -643,6 +629,9 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 		new_objective.explanation_text = objective
 		traitor_datum.objectives += new_objective
 		player.mind.add_antag_datum(traitor_datum)
+		var/datum/uplink_handler/uplink = traitor_datum.uplink_handler
+		uplink.has_progression = FALSE
+		uplink.has_objectives = FALSE
 	else if(isAI(player))
 		var/datum/antagonist/malf_ai/malfunction_datum = new(give_objectives = FALSE)
 		var/datum/objective/new_objective = new

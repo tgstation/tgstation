@@ -1,7 +1,7 @@
 /obj/item/gun/syringe
 	name = "medical syringe gun"
 	desc = "A spring loaded gun designed to fit syringes, used to incapacitate unruly patients from a distance."
-	icon = 'icons/obj/guns/syringegun.dmi'
+	icon = 'icons/obj/weapons/guns/syringegun.dmi'
 	icon_state = "medicalsyringegun"
 	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
@@ -23,6 +23,7 @@
 	var/list/syringes = list()
 	var/max_syringes = 1 ///The number of syringes it can store.
 	var/has_syringe_overlay = TRUE ///If it has an overlay for inserted syringes. If true, the overlay is determined by the number of syringes inserted into it.
+	gun_flags = NOT_A_REAL_GUN
 
 /obj/item/gun/syringe/Initialize(mapload)
 	. = ..()
@@ -129,13 +130,6 @@
 	can_unsuppress = FALSE //Permanently silenced
 	syringes = list(new /obj/item/reagent_containers/syringe())
 
-///syndicate prototype for smuggling missions
-/obj/item/gun/syringe/syndicate/prototype
-	name = "prototype dart pistol"
-	desc = "Cybersun Industries prototype dart pistols. Delivering the syringes at the same \
-	speed in a smaller weapon proved to be a surprisingly complicated task."
-	syringes = list()
-
 /obj/item/gun/syringe/dna
 	name = "modified compact syringe gun"
 	desc = "A syringe gun that has been modified to be compact and fit DNA injectors instead of normal syringes."
@@ -178,7 +172,7 @@
 /obj/item/gun/syringe/blowgun
 	name = "blowgun"
 	desc = "Fire syringes at a short distance."
-	icon = 'icons/obj/guns/ballistic.dmi'
+	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "blowgun"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'

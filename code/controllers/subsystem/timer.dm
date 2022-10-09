@@ -127,7 +127,9 @@ SUBSYSTEM_DEF(timer)
 		ctime_timer.spent = REALTIMEOFDAY
 		callBack.InvokeAsync()
 
-		if(ctime_timer.flags & TIMER_LOOP)
+		if(ctime_timer.flags & TIMER_LOOP) // Re-insert valid looping client timers into the client timer list.
+			if (QDELETED(ctime_timer)) // Don't re-insert timers deleted inside their callbacks.
+				continue
 			ctime_timer.spent = 0
 			ctime_timer.timeToRun = REALTIMEOFDAY + ctime_timer.wait
 			BINARY_INSERT(ctime_timer, clienttime_timers, /datum/timedevent, ctime_timer, timeToRun, COMPARE_KEY)
@@ -173,7 +175,9 @@ SUBSYSTEM_DEF(timer)
 				callBack.InvokeAsync()
 				last_invoke_tick = world.time
 
-			if (timer.flags & TIMER_LOOP) // Prepare looping timers to re-enter the queue
+			if (timer.flags & TIMER_LOOP) // Prepare valid looping timers to re-enter the queue
+				if(QDELETED(timer)) // If a loop is deleted in its callback, we need to avoid re-inserting it.
+					continue
 				timer.spent = 0
 				timer.timeToRun = world.time + timer.wait
 				timer.bucketJoin()
@@ -565,6 +569,7 @@ SUBSYSTEM_DEF(timer)
  * * callback the callback to call on timer finish
  * * wait deciseconds to run the timer for
  * * flags flags for this timer, see: code\__DEFINES\subsystems.dm
+ * * timer_subsystem the subsystem to insert this timer into
  */
 /proc/_addtimer(datum/callback/callback, wait = 0, flags = 0, datum/controller/subsystem/timer/timer_subsystem, file, line)
 	if (!callback)
@@ -577,7 +582,10 @@ SUBSYSTEM_DEF(timer)
 		stack_trace("addtimer called with a callback assigned to a qdeleted object. In the future such timers will not \
 			be supported and may refuse to run or run with a 0 wait")
 
-	wait = max(CEILING(wait, world.tick_lag), world.tick_lag)
+	if (flags & TIMER_CLIENT_TIME) // REALTIMEOFDAY has a resolution of 1 decisecond
+		wait = max(CEILING(wait, 1), 1) // so if we use tick_lag timers may be inserted in the "past"
+	else
+		wait = max(CEILING(wait, world.tick_lag), world.tick_lag)
 
 	if(wait >= INFINITY)
 		CRASH("Attempted to create timer with INFINITY delay")
@@ -606,7 +614,7 @@ SUBSYSTEM_DEF(timer)
 						. = hash_timer.id
 					return
 	else if(flags & TIMER_OVERRIDE)
-		stack_trace("TIMER_OVERRIDE used without TIMER_UNIQUE")
+		stack_trace("TIMER_OVERRIDE used without TIMER_UNIQUE") //this is also caught by grep.
 
 	var/datum/timedevent/timer = new(callback, wait, flags, timer_subsystem, hash, file && "[file]:[line]")
 	return timer.id

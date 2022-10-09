@@ -9,8 +9,9 @@
  */
 /obj/item/tank
 	name = "tank"
-	icon = 'icons/obj/tank.dmi'
+	icon = 'icons/obj/atmospherics/tank.dmi'
 	icon_state = "generic"
+	inhand_icon_state = "generic_tank"
 	lefthand_file = 'icons/mob/inhands/equipment/tanks_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tanks_righthand.dmi'
 	flags_1 = CONDUCT_1
@@ -22,6 +23,7 @@
 	throwforce = 10
 	throw_speed = 1
 	throw_range = 4
+	demolition_mod = 1.25
 	custom_materials = list(/datum/material/iron = 500)
 	actions_types = list(/datum/action/item_action/set_internals)
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, FIRE = 80, ACID = 30)
@@ -54,7 +56,6 @@
 	if(H.internal == src)
 		to_chat(H, span_notice("You close [src] valve."))
 		H.internal = null
-		H.update_internals_hud_icon(0)
 	else
 		if(!H.getorganslot(ORGAN_SLOT_BREATHING_TUBE))
 			if(!H.wear_mask)
@@ -72,12 +73,14 @@
 		else
 			to_chat(H, span_notice("You open [src] valve."))
 		H.internal = src
-		H.update_internals_hud_icon(1)
 	H.update_action_buttons_icon()
 
 
 /obj/item/tank/Initialize(mapload)
 	. = ..()
+
+	if(tank_holder_icon_state)
+		AddComponent(/datum/component/container_item/tank_holder, tank_holder_icon_state)
 
 	air_contents = new(volume) //liters
 	air_contents.temperature = T20C
@@ -89,7 +92,7 @@
 
 	AddComponent(/datum/component/atmos_reaction_recorder, reset_criteria = list(COMSIG_GASMIX_MERGING = air_contents, COMSIG_GASMIX_REMOVING = air_contents), target_list = reaction_info)
 
-	// This is separate from the reaction recorder. 
+	// This is separate from the reaction recorder.
 	// In this case we are only listening to determine if the tank is overpressurized but not destroyed.
 	RegisterSignal(air_contents, COMSIG_GASMIX_MERGED, .proc/merging_information)
 
@@ -97,11 +100,6 @@
 
 /obj/item/tank/proc/populate_gas()
 	return
-
-/obj/item/tank/ComponentInitialize()
-	. = ..()
-	if(tank_holder_icon_state)
-		AddComponent(/datum/component/container_item/tank_holder, tank_holder_icon_state)
 
 /obj/item/tank/Destroy()
 	UnregisterSignal(air_contents, COMSIG_GASMIX_MERGED)

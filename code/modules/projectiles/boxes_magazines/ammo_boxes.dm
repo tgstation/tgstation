@@ -4,6 +4,7 @@
 	icon_state = "357"
 	ammo_type = /obj/item/ammo_casing/a357
 	max_ammo = 7
+	caliber = CALIBER_357
 	multiple_sprites = AMMO_BOX_PER_BULLET
 	item_flags = NO_MAT_REDEMPTION
 
@@ -18,6 +19,7 @@
 	icon_state = "38"
 	ammo_type = /obj/item/ammo_casing/c38
 	max_ammo = 6
+	caliber = CALIBER_38
 	multiple_sprites = AMMO_BOX_PER_BULLET
 	custom_materials = list(/datum/material/iron = 20000)
 
@@ -82,6 +84,7 @@
 	icon_state = "762"
 	ammo_type = /obj/item/ammo_casing/a762
 	max_ammo = 5
+	caliber = CALIBER_A762
 	multiple_sprites = AMMO_BOX_PER_BULLET
 
 /obj/item/ammo_box/n762
@@ -92,7 +95,7 @@
 
 /obj/item/ammo_box/foambox
 	name = "ammo box (Foam Darts)"
-	icon = 'icons/obj/guns/toy.dmi'
+	icon = 'icons/obj/weapons/guns/toy.dmi'
 	icon_state = "foambox"
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart
 	max_ammo = 40

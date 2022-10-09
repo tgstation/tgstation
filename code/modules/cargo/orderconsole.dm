@@ -15,7 +15,7 @@
 	var/self_paid = FALSE
 	var/safety_warning = "For safety and ethical reasons, the automated supply shuttle cannot transport live organisms, \
 		human remains, classified nuclear weaponry, mail, undelivered departmental order crates, syndicate bombs, \
-		homing beacons, unstable eigenstates, or machinery housing any form of artificial intelligence."
+		homing beacons, unstable eigenstates, fax machines, or machinery housing any form of artificial intelligence."
 	var/blockade_warning = "Bluespace instability detected. Shuttle movement impossible."
 	/// radio used by the console to send messages on supply channel
 	var/obj/item/radio/headset/radio
@@ -24,12 +24,12 @@
 	var/list/loaded_coupons
 	/// var that makes express console use rockets
 	var/is_express = FALSE
-	///The name of the shuttle template being used as the cargo shuttle. 'supply' is default and contains critical code. Don't change this unless you know what you're doing.
-	var/cargo_shuttle = "supply"
+	///The name of the shuttle template being used as the cargo shuttle. 'cargo' is default and contains critical code. Don't change this unless you know what you're doing.
+	var/cargo_shuttle = "cargo"
 	///The docking port called when returning to the station.
-	var/docking_home = "supply_home"
+	var/docking_home = "cargo_home"
 	///The docking port called when leaving the station.
-	var/docking_away = "supply_away"
+	var/docking_away = "cargo_away"
 	///If this console can loan the cargo shuttle. Set to false to disable.
 	var/stationcargo = TRUE
 	///The account this console processes and displays. Independent from the account the shuttle processes.
@@ -98,6 +98,7 @@
 
 /obj/machinery/computer/cargo/ui_data()
 	var/list/data = list()
+	data["department"] = "Cargo" // Hardcoded here, for customization in budgetordering.dm AKA NT IRN
 	data["location"] = SSshuttle.supply.getStatusText()
 	var/datum/bank_account/D = SSeconomy.get_dep_account(cargo_account)
 	if(D)
@@ -149,7 +150,7 @@
 				"name" = P.group,
 				"packs" = list()
 			)
-		if((P.hidden && !(obj_flags & EMAGGED)) || (P.contraband && !contraband) || (P.special && !P.special_enabled) || P.DropPodOnly)
+		if((P.hidden && !(obj_flags & EMAGGED)) || (P.contraband && !contraband) || (P.special && !P.special_enabled) || P.drop_pod_only)
 			continue
 		data["supplies"][P.group]["packs"] += list(list(
 			"name" = P.name,
@@ -199,7 +200,7 @@
 				SSshuttle.shuttle_loan.loan_shuttle()
 				say("The supply shuttle has been loaned to CentCom.")
 				investigate_log("[key_name(usr)] accepted a shuttle loan event.", INVESTIGATE_CARGO)
-				log_game("[key_name(usr)] accepted a shuttle loan event.")
+				usr.log_message("accepted a shuttle loan event.", LOG_GAME)
 				. = TRUE
 		if("add")
 			if(is_express)
@@ -209,7 +210,7 @@
 			var/datum/supply_pack/pack = SSshuttle.supply_packs[id]
 			if(!istype(pack))
 				CRASH("Unknown supply pack id given by order console ui. ID: [params["id"]]")
-			if((pack.hidden && !(obj_flags & EMAGGED)) || (pack.contraband && !contraband) || pack.DropPodOnly || (pack.special && !pack.special_enabled))
+			if((pack.hidden && !(obj_flags & EMAGGED)) || (pack.contraband && !contraband) || pack.drop_pod_only || (pack.special && !pack.special_enabled))
 				return
 
 			var/name = "*None Provided*"

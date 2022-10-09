@@ -76,9 +76,13 @@ SUBSYSTEM_DEF(move_manager)
 ///Adds a loop to our parent. Returns the created loop if a success, null otherwise
 /datum/movement_packet/proc/add_loop(datum/controller/subsystem/movement/subsystem, datum/move_loop/loop_type, priority, flags, datum/extra_info)
 	var/datum/move_loop/existing_loop = existing_loops[subsystem]
+
 	if(existing_loop && existing_loop.priority > priority)
 		if(!(existing_loop.flags & MOVEMENT_LOOP_IGNORE_PRIORITY) && !(flags & MOVEMENT_LOOP_IGNORE_PRIORITY))
 			return //Give up
+
+	if(existing_loop?.compare_loops(arglist(args.Copy(2))))
+		return //it already exists stop trying to make the same moveloop
 
 	var/datum/move_loop/new_loop = new loop_type(src, subsystem, parent, priority, flags, extra_info) //Pass the mob to move and ourselves in via new
 	var/list/arguments = args.Copy(6) //Just send the args we've not already dealt with

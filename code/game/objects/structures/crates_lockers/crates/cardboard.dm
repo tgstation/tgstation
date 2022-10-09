@@ -14,3 +14,8 @@
 	name = "\improper Mothic Fleet box"
 	desc = "For holding moths, presumably."
 	icon_state = "cardboard_moth"
+
+/obj/structure/closet/crate/cardboard/tiziran
+	name = "\improper Tiziran shipment box"
+	desc = "For holding lizards, presumably."
+	icon_state = "cardboard_tiziran"

@@ -174,12 +174,12 @@
 		mod.visible_message(span_warning("[mod.wearer] leaps out of the timeline!"))
 		mod.wearer.SetAllImmobility(0)
 		mod.wearer.setStaminaLoss(0, 0)
-		phased_mob = new(get_turf(mod.wearer.loc))
-		mod.wearer.forceMove(phased_mob)
+		phased_mob = new(get_turf(mod.wearer.loc), mod.wearer)
 		RegisterSignal(mod, COMSIG_MOD_ACTIVATE, .proc/on_activate_block)
 	else
 		//phasing in
-		QDEL_NULL(phased_mob)
+		phased_mob.eject_jaunter()
+		phased_mob = null
 		UnregisterSignal(mod, COMSIG_MOD_ACTIVATE)
 		mod.visible_message(span_warning("[mod.wearer] drops into the timeline!"))
 
@@ -314,17 +314,17 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	move_resist = INFINITY
 	interaction_flags_atom = NONE
-	///mob being eradicated by this field
+	/// Mob being eradicated by this field
 	var/mob/living/captured
-	///linked module. while this exists, the field will progress towards eradication. while it isn't, the field progresses away until it disappears. see attached for a special case
+	/// Linked module. while this exists, the field will progress towards eradication. while it isn't, the field progresses away until it disappears. see attached for a special case
 	var/obj/item/mod/module/tem/tem
-	///time in seconds before someone is eradicated, assuming progress isn't interrupted
+	/// Time in seconds before someone is eradicated, assuming progress isn't interrupted
 	var/timetokill = 3 SECONDS
-	///the eradication appearance
+	/// The eradication appearance
 	var/mutable_appearance/mob_underlay
-	///the actual frame the animation is at in eradication, only changing when the progress towards eradication progresses enough to move to the next frame.
+	/// The actual frame the animation is at in eradication, only changing when the progress towards eradication progresses enough to move to the next frame.
 	var/RPpos = null
-	///if a tem to link to isn't provided initially, this chrono field will progress towards eradication by itself without one.
+	/// If a TEM to link to isn't provided initially, this chrono field will progress towards eradication by itself without one.
 	var/attached = TRUE
 
 /obj/structure/chrono_field/Initialize(mapload, mob/living/target, obj/item/mod/module/tem/tem)

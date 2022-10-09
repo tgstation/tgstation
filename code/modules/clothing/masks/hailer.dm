@@ -80,7 +80,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	name = "spacepol mask"
 	desc = "A close-fitting tactical mask created in cooperation with a certain megacorporation, comes with an especially aggressive Compli-o-nator 3000."
 	icon_state = "spacepol"
-	inhand_icon_state = "spacepol"
+	inhand_icon_state = "spacepol_mask"
 	tint = 1.5
 	flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
 	visor_flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
@@ -123,7 +123,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 /obj/item/clothing/mask/gas/sechailer/emag_act(mob/user)
 	if(safety)
 		safety = FALSE
-		to_chat(user, span_warning("You silently fry [src]'s vocal circuit with the cryptographic sequencer."))
+		to_chat(user, span_warning("You silently fry [src]'s vocal circuit."))
 
 /obj/item/clothing/mask/gas/sechailer/verb/halt()
 	set category = "Object"
@@ -189,9 +189,10 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	name = "police whistle"
 	desc = "A police whistle for when you need to make sure the criminals hear you."
 	icon_state = "whistle"
-	inhand_icon_state = "whistle"
+	inhand_icon_state = null
 	slot_flags = ITEM_SLOT_MASK|ITEM_SLOT_NECK
 	custom_price = PAYCHECK_COMMAND * 1.5
+	w_class = WEIGHT_CLASS_SMALL
 	actions_types = list(/datum/action/item_action/halt)
 
 /obj/item/clothing/mask/whistle/ui_action_click(mob/user, action)
@@ -199,6 +200,9 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 		usr.audible_message("<font color='red' size='5'><b>HALT!</b></font>")
 		playsound(src, 'sound/misc/whistle.ogg', 75, FALSE, 4)
 		cooldown = world.time
+
+/datum/action/item_action/halt
+	name = "HALT!"
 
 #undef PHRASE_COOLDOWN
 #undef OVERUSE_COOLDOWN

@@ -3,7 +3,7 @@
 /mob/living/simple_animal/hostile/carp
 	name = "space carp"
 	desc = "A ferocious, fang-bearing creature that resembles a fish."
-	icon = 'icons/mob/carp.dmi'
+	icon = 'icons/mob/simple/carp.dmi'
 	icon_state = "base"
 	icon_living = "base"
 	icon_dead = "base_dead"
@@ -66,6 +66,8 @@
 	var/static/list/carp_colors_rare = list(
 		"silver" = "#fdfbf3"
 	)
+	/// Is the carp tamed?
+	var/tamed = FALSE
 
 /mob/living/simple_animal/hostile/carp/Initialize(mapload, mob/tamer)
 	AddElement(/datum/element/simple_flying)
@@ -83,11 +85,24 @@
 		else
 			make_tameable()
 
+/mob/living/simple_animal/hostile/carp/revive(full_heal, admin_revive)
+	if (tamed)
+		var/datum/weakref/friendref = ai_controller.blackboard[BB_HOSTILE_FRIEND]
+		var/mob/living/friend = friendref?.resolve()
+		if(friend)
+			tamed(friend)
+	return ..()
+
+/mob/living/simple_animal/hostile/carp/death(gibbed)
+	if (tamed)
+		can_buckle = FALSE
+	return ..()
+
 /mob/living/simple_animal/hostile/carp/proc/make_tameable()
 	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/meat), tame_chance = 10, bonus_tame_chance = 5, after_tame = CALLBACK(src, .proc/tamed))
 
 /mob/living/simple_animal/hostile/carp/proc/tamed(mob/living/tamer)
-	can_buckle = TRUE
+	tamed = TRUE
 	buckle_lying = 0
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/carp)
 	if(ai_controller)
@@ -149,7 +164,7 @@
 	return
 
 /mob/living/simple_animal/hostile/carp/megacarp
-	icon = 'icons/mob/broadMobs.dmi'
+	icon = 'icons/mob/simple/broadMobs.dmi'
 	name = "Mega Space Carp"
 	desc = "A ferocious, fang bearing creature that resembles a shark. This one seems especially ticked off."
 	icon_state = "megacarp"
@@ -237,7 +252,7 @@
 	/// Keeping track of the nuke disk for the functionality of storing it.
 	var/obj/item/disk/nuclear/disky
 	/// Location of the file storing disk overlays
-	var/icon/disk_overlay_file = 'icons/mob/carp.dmi'
+	var/icon/disk_overlay_file = 'icons/mob/simple/carp.dmi'
 	/// Colored disk mouth appearance for adding it as a mouth overlay
 	var/mutable_appearance/colored_disk_mouth
 

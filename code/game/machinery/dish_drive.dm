@@ -11,8 +11,8 @@
 	pass_flags = PASSTABLE
 	var/static/list/collectable_items = list(/obj/item/trash/waffles,
 		/obj/item/trash/tray,
-		/obj/item/reagent_containers/glass/bowl,
-		/obj/item/reagent_containers/food/drinks/drinkingglass,
+		/obj/item/reagent_containers/cup/bowl,
+		/obj/item/reagent_containers/cup/glass/drinkingglass,
 		/obj/item/kitchen/fork,
 		/obj/item/shard,
 		/obj/item/broken_bottle)

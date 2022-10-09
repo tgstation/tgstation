@@ -2,6 +2,8 @@
 /obj/item/clothing/glasses
 	name = "glasses"
 	icon = 'icons/obj/clothing/glasses.dmi'
+	lefthand_file = 'icons/mob/inhands/clothing/glasses_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/glasses_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	flags_cover = GLASSESCOVERSEYES
 	slot_flags = ITEM_SLOT_EYES
@@ -56,12 +58,12 @@
 /obj/item/clothing/glasses/proc/thermal_overload()
 	if(ishuman(src.loc))
 		var/mob/living/carbon/human/H = src.loc
-		var/obj/item/organ/eyes/eyes = H.getorganslot(ORGAN_SLOT_EYES)
+		var/obj/item/organ/internal/eyes/eyes = H.getorganslot(ORGAN_SLOT_EYES)
 		if(!H.is_blind())
 			if(H.glasses == src)
 				to_chat(H, span_danger("[src] overloads and blinds you!"))
 				H.flash_act(visual = 1)
-				H.blind_eyes(3)
+				H.adjust_blindness(3)
 				H.blur_eyes(5)
 				eyes.applyOrganDamage(5)
 
@@ -105,7 +107,7 @@
 	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting conditions."
 	icon_state = "meson"
 	inhand_icon_state = "meson"
-	clothing_traits = list(TRAIT_SUPERMATTER_MADNESS_IMMUNE)
+	clothing_traits = list(TRAIT_MADNESS_IMMUNE)
 	darkness_view = 2
 	vision_flags = SEE_TURFS
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
@@ -150,7 +152,7 @@
 	clothing_traits = list(TRAIT_REAGENT_SCANNER, TRAIT_RESEARCH_SCANNER)
 
 /obj/item/clothing/glasses/science/item_action_slot_check(slot)
-	if(slot == ITEM_SLOT_EYES)
+	if(slot & ITEM_SLOT_EYES)
 		return 1
 
 /obj/item/clothing/glasses/science/suicide_act(mob/living/carbon/user)
@@ -180,13 +182,15 @@
 	name = "eyepatch"
 	desc = "Yarr."
 	icon_state = "eyepatch"
-	inhand_icon_state = "eyepatch"
+	inhand_icon_state = null
 
 /obj/item/clothing/glasses/monocle
 	name = "monocle"
 	desc = "Such a dapper eyepiece!"
 	icon_state = "monocle"
 	inhand_icon_state = "headset" // lol
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 
 /obj/item/clothing/glasses/material
 	name = "optical material scanner"
@@ -227,7 +231,7 @@
 
 /obj/item/clothing/glasses/regular/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/knockoff,25,list(BODY_ZONE_PRECISE_EYES),list(ITEM_SLOT_EYES))
+	AddComponent(/datum/component/knockoff, 25, list(BODY_ZONE_PRECISE_EYES), slot_flags)
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
@@ -282,13 +286,13 @@
 	name = "prescription glasses"
 	desc = "Made by Uncool. Co."
 	icon_state = "hipster_glasses"
-	inhand_icon_state = "hipster_glasses"
+	inhand_icon_state = null
 
 /obj/item/clothing/glasses/regular/circle
 	name = "circle glasses"
 	desc = "Why would you wear something so controversial yet so brave?"
 	icon_state = "circle_glasses"
-	inhand_icon_state = "circle_glasses"
+	inhand_icon_state = null
 
 //Here lies green glasses, so ugly they died. RIP
 
@@ -366,6 +370,9 @@
 /obj/item/clothing/glasses/welding/attack_self(mob/user)
 	weldingvisortoggle(user)
 
+/obj/item/clothing/glasses/welding/up/Initialize(mapload)
+	. = ..()
+	visor_toggling()
 
 /obj/item/clothing/glasses/blindfold
 	name = "blindfold"
@@ -379,7 +386,7 @@
 
 /obj/item/clothing/glasses/blindfold/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
-	if(slot == ITEM_SLOT_EYES)
+	if(slot & ITEM_SLOT_EYES)
 		user.become_blind(BLINDFOLD_TRAIT)
 
 /obj/item/clothing/glasses/blindfold/dropped(mob/living/carbon/human/user)
@@ -396,19 +403,19 @@
 	name = "blind personnel blindfold"
 	desc = "Indicates that the wearer suffers from blindness."
 	icon_state = "blindfoldwhite"
-	inhand_icon_state = "blindfoldwhite"
+	inhand_icon_state = null
 	var/colored_before = FALSE
 
 /obj/item/clothing/glasses/blindfold/white/visual_equipped(mob/living/carbon/human/user, slot)
-	if(ishuman(user) && slot == ITEM_SLOT_EYES)
+	if(ishuman(user) && (slot & ITEM_SLOT_EYES))
 		update_icon(ALL, user)
-		user.update_inv_glasses() //Color might have been changed by update_icon.
+		user.update_worn_glasses() //Color might have been changed by update_icon.
 	..()
 
 /obj/item/clothing/glasses/blindfold/white/update_icon(updates=ALL, mob/living/carbon/human/user)
 	. = ..()
 	if(ishuman(user) && !colored_before)
-		add_atom_colour(user.eye_color, FIXED_COLOUR_PRIORITY)
+		add_atom_colour(user.eye_color_left, FIXED_COLOUR_PRIORITY) // I want this to be an average of the colors of both eyes, but that can be done later
 		colored_before = TRUE
 
 /obj/item/clothing/glasses/blindfold/white/worn_overlays(mutable_appearance/standing, isinhands = FALSE, file2use)
@@ -419,13 +426,13 @@
 	var/mob/living/carbon/human/H = loc
 	var/mutable_appearance/M = mutable_appearance('icons/mob/clothing/eyes.dmi', "blindfoldwhite")
 	M.appearance_flags |= RESET_COLOR
-	M.color = H.eye_color
+	M.color = H.eye_color_left
 	. += M
 
 /obj/item/clothing/glasses/sunglasses/big
 	desc = "Strangely ancient technology used to help provide rudimentary eye cover. Larger than average enhanced shielding blocks flashes."
 	icon_state = "bigsunglasses"
-	inhand_icon_state = "bigsunglasses"
+	inhand_icon_state = null
 
 /obj/item/clothing/glasses/thermal
 	name = "optical thermal scanner"
@@ -448,6 +455,16 @@
 	desc = "A pair of xray goggles manufactured by the Syndicate."
 	vision_flags = SEE_TURFS|SEE_MOBS|SEE_OBJS
 
+/obj/item/clothing/glasses/thermal/xray/equipped(mob/living/carbon/human/user, slot)
+	. = ..()
+	if(!(slot & ITEM_SLOT_EYES) || !istype(user))
+		return
+	ADD_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
+
+/obj/item/clothing/glasses/thermal/xray/dropped(mob/living/carbon/human/user)
+	. = ..()
+	REMOVE_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
+
 /obj/item/clothing/glasses/thermal/syndi //These are now a traitor item, concealed as mesons. -Pete
 	name = "chameleon thermals"
 	desc = "A pair of thermal optic goggles with an onboard chameleon generator."
@@ -461,6 +478,7 @@
 	chameleon_action.chameleon_name = "Glasses"
 	chameleon_action.chameleon_blacklist = typecacheof(/obj/item/clothing/glasses/changeling, only_root_path = TRUE)
 	chameleon_action.initialize_disguises()
+	add_item_action(chameleon_action)
 
 /obj/item/clothing/glasses/thermal/syndi/emp_act(severity)
 	. = ..()
@@ -486,32 +504,32 @@
 	name = "optical thermal eyepatch"
 	desc = "An eyepatch with built-in thermal optics."
 	icon_state = "eyepatch"
-	inhand_icon_state = "eyepatch"
+	inhand_icon_state = null
 
 /obj/item/clothing/glasses/cold
 	name = "cold goggles"
 	desc = "A pair of goggles meant for low temperatures."
 	icon_state = "cold"
-	inhand_icon_state = "cold"
+	inhand_icon_state = null
 
 /obj/item/clothing/glasses/heat
 	name = "heat goggles"
 	desc = "A pair of goggles meant for high temperatures."
 	icon_state = "heat"
-	inhand_icon_state = "heat"
+	inhand_icon_state = null
 
 /obj/item/clothing/glasses/orange
 	name = "orange glasses"
 	desc = "A sweet pair of orange shades."
 	icon_state = "orangeglasses"
-	inhand_icon_state = "orangeglasses"
+	inhand_icon_state = null
 	glass_colour_type = /datum/client_colour/glass_colour/lightorange
 
 /obj/item/clothing/glasses/red
 	name = "red glasses"
 	desc = "Hey, you're looking good, senpai!"
 	icon_state = "redglasses"
-	inhand_icon_state = "redglasses"
+	inhand_icon_state = null
 	glass_colour_type = /datum/client_colour/glass_colour/red
 
 /obj/item/clothing/glasses/geist_gazers
@@ -537,58 +555,51 @@
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	glass_colour_type = FALSE
 	vision_flags = SEE_TURFS
-	clothing_traits = list(TRAIT_REAGENT_SCANNER, TRAIT_SUPERMATTER_MADNESS_IMMUNE)
+	clothing_traits = list(TRAIT_REAGENT_SCANNER, TRAIT_MADNESS_IMMUNE)
 	var/list/hudlist = list(DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_ADVANCED, DATA_HUD_SECURITY_ADVANCED)
 	var/xray = FALSE
 
 /obj/item/clothing/glasses/debug/equipped(mob/user, slot)
 	. = ..()
-	if(slot != ITEM_SLOT_EYES)
+	if(!(slot & ITEM_SLOT_EYES))
 		return
 	if(ishuman(user))
 		for(var/hud in hudlist)
-			var/datum/atom_hud/H = GLOB.huds[hud]
-			H.add_hud_to(user)
+			var/datum/atom_hud/our_hud = GLOB.huds[hud]
+			our_hud.show_to(user)
 		ADD_TRAIT(user, TRAIT_MEDICAL_HUD, GLASSES_TRAIT)
 		ADD_TRAIT(user, TRAIT_SECURITY_HUD, GLASSES_TRAIT)
+		if(xray)
+			ADD_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
 
 /obj/item/clothing/glasses/debug/dropped(mob/user)
 	. = ..()
 	REMOVE_TRAIT(user, TRAIT_MEDICAL_HUD, GLASSES_TRAIT)
 	REMOVE_TRAIT(user, TRAIT_SECURITY_HUD, GLASSES_TRAIT)
+	REMOVE_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
 	if(ishuman(user))
 		for(var/hud in hudlist)
-			var/datum/atom_hud/H = GLOB.huds[hud]
-			H.remove_hud_from(user)
+			var/datum/atom_hud/our_hud = GLOB.huds[hud]
+			our_hud.hide_from(user)
 
 /obj/item/clothing/glasses/debug/AltClick(mob/user)
 	. = ..()
 	if(ishuman(user))
 		if(xray)
 			vision_flags -= SEE_MOBS|SEE_OBJS
+			REMOVE_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
 		else
 			vision_flags += SEE_MOBS|SEE_OBJS
+			ADD_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
 		xray = !xray
 		var/mob/living/carbon/human/H = user
 		H.update_sight()
-
-/obj/item/clothing/glasses/osi
-	name = "O.S.I. Sunglasses"
-	desc = "There's no such thing as good news! Just bad news and... weird news.."
-	icon_state = "osi_glasses"
-	inhand_icon_state = "osi_glasses"
-
-/obj/item/clothing/glasses/phantom
-	name = "Phantom Thief Mask"
-	desc = "Lookin' cool."
-	icon_state = "phantom_glasses"
-	inhand_icon_state = "phantom_glasses"
 
 /obj/item/clothing/glasses/regular/kim
 	name = "binoclard lenses"
 	desc = "Shows you know how to sew a lapel and center a back vent."
 	icon_state = "binoclard_lenses"
-	inhand_icon_state = "binoclard_lenses"
+	inhand_icon_state = null
 
 /obj/item/clothing/glasses/salesman
 	name = "colored glasses"
@@ -600,7 +611,7 @@
 
 /obj/item/clothing/glasses/salesman/equipped(mob/living/carbon/human/user, slot)
 	..()
-	if(slot != ITEM_SLOT_EYES)
+	if(!(slot & ITEM_SLOT_EYES))
 		return
 	bigshot = user
 	RegisterSignal(bigshot, COMSIG_CARBON_SANITY_UPDATE, .proc/moodshift)
@@ -617,11 +628,11 @@
 	if(amount < SANITY_UNSTABLE)
 		icon_state = "salesman_fzz"
 		desc = "A pair of glasses, the lenses are full of TV static. They've certainly seen better days..."
-		bigshot.update_inv_glasses()
+		bigshot.update_worn_glasses()
 	else
 		icon_state = initial(icon_state)
 		desc = initial(desc)
-		bigshot.update_inv_glasses()
+		bigshot.update_worn_glasses()
 
 /obj/item/clothing/glasses/nightmare_vision
 	name = "nightmare vision goggles"
@@ -630,3 +641,15 @@
 	inhand_icon_state = "glasses"
 	glass_colour_type = /datum/client_colour/glass_colour/nightmare
 	forced_glass_color = TRUE
+
+/obj/item/clothing/glasses/osi
+	name = "O.S.I. Sunglasses"
+	desc = "There's no such thing as good news! Just bad news and... weird news.."
+	icon_state = "osi_glasses"
+	inhand_icon_state = null
+
+/obj/item/clothing/glasses/phantom
+	name = "Phantom Thief Mask"
+	desc = "Lookin' cool."
+	icon_state = "phantom_glasses"
+	inhand_icon_state = null

@@ -156,8 +156,8 @@
 
 /datum/objective/traitor_progression/New(text)
 	. = ..()
-	required_total_progression_points = round(rand(possible_range[1], possible_range[2]) / 60)
-	explanation_text = replacetext(explanation_text, "%REPUTATION%", required_total_progression_points)
+	required_total_progression_points = round(rand(possible_range[1], possible_range[2]))
+	explanation_text = replacetext(explanation_text, "%REPUTATION%", DISPLAY_PROGRESSION(required_total_progression_points))
 
 /datum/objective/traitor_progression/check_completion()
 	if(!owner)
@@ -180,8 +180,8 @@
 
 /datum/objective/traitor_objectives/New(text)
 	. = ..()
-	required_progression_in_objectives = round(rand(possible_range[1], possible_range[2]) / 60)
-	explanation_text = replacetext(explanation_text, "%REPUTATION%", required_progression_in_objectives)
+	required_progression_in_objectives = round(rand(possible_range[1], possible_range[2]))
+	explanation_text = replacetext(explanation_text, "%REPUTATION%", DISPLAY_PROGRESSION(required_progression_in_objectives))
 
 /datum/objective/traitor_objectives/check_completion()
 	if(!owner)
@@ -295,7 +295,7 @@
 		var/completed_objectives_text = "Completed Uplink Objectives: "
 		for(var/datum/traitor_objective/objective as anything in uplink_handler.completed_objectives)
 			if(objective.objective_state == OBJECTIVE_STATE_COMPLETED)
-				completed_objectives_text += "<br><B>[objective.name]</B> - ([objective.telecrystal_reward] TC, [round(objective.progression_reward/600, 0.1)] Reputation)"
+				completed_objectives_text += "<br><B>[objective.name]</B> - ([objective.telecrystal_reward] TC, [DISPLAY_PROGRESSION(objective.progression_reward)] Reputation)"
 		result += completed_objectives_text
 
 	var/special_role_text = lowertext(name)
@@ -329,7 +329,12 @@
 
 /datum/outfit/traitor/post_equip(mob/living/carbon/human/H, visualsOnly)
 	var/obj/item/melee/energy/sword/sword = locate() in H.held_items
-	sword.icon_state = "e_sword_on_red"
-	sword.worn_icon_state = "e_sword_on_red"
+	if(sword.flags_1 & INITIALIZED_1)
+		sword.attack_self()
+	else //Atoms aren't initialized during the screenshots unit test, so we can't call attack_self for it as the sword doesn't have the transforming weapon component to handle the icon changes. The below part is ONLY for the antag screenshots unit test.
+		sword.icon_state = "e_sword_on_red"
+		sword.inhand_icon_state = "e_sword_on_red"
+		sword.worn_icon_state = "e_sword_on_red"
 
-	H.update_inv_hands()
+		H.update_held_items()
+

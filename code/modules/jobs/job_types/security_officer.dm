@@ -7,7 +7,7 @@
 	faction = FACTION_STATION
 	total_positions = 5 //Handled in /datum/controller/occupations/proc/setup_officer_positions()
 	spawn_positions = 5 //Handled in /datum/controller/occupations/proc/setup_officer_positions()
-	supervisors = "the head of security, and the head of your assigned department (if applicable)"
+	supervisors = "the Head of Security, and the head of your assigned department (if applicable)"
 	selection_color = "#ffeeee"
 	minimal_player_age = 7
 	exp_requirements = 300
@@ -85,22 +85,22 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 		if(SEC_DEPT_SUPPLY)
 			ears = /obj/item/radio/headset/headset_sec/alt/department/supply
 			dep_trim = /datum/id_trim/job/security_officer/supply
-			destination = /area/security/checkpoint/supply
+			destination = /area/station/security/checkpoint/supply
 			accessory = /obj/item/clothing/accessory/armband/cargo
 		if(SEC_DEPT_ENGINEERING)
 			ears = /obj/item/radio/headset/headset_sec/alt/department/engi
 			dep_trim = /datum/id_trim/job/security_officer/engineering
-			destination = /area/security/checkpoint/engineering
+			destination = /area/station/security/checkpoint/engineering
 			accessory = /obj/item/clothing/accessory/armband/engine
 		if(SEC_DEPT_MEDICAL)
 			ears = /obj/item/radio/headset/headset_sec/alt/department/med
 			dep_trim = /datum/id_trim/job/security_officer/medical
-			destination = /area/security/checkpoint/medical
+			destination = /area/station/security/checkpoint/medical
 			accessory = /obj/item/clothing/accessory/armband/medblue
 		if(SEC_DEPT_SCIENCE)
 			ears = /obj/item/radio/headset/headset_sec/alt/department/sci
 			dep_trim = /datum/id_trim/job/security_officer/science
-			destination = /area/security/checkpoint/science
+			destination = /area/station/security/checkpoint/science
 			accessory = /obj/item/clothing/accessory/armband/science
 
 	if(accessory)
@@ -198,7 +198,7 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 
 	id_trim = /datum/id_trim/job/security_officer
 	uniform = /obj/item/clothing/under/rank/security/officer
-	suit = /obj/item/clothing/suit/armor/vest/alt
+	suit = /obj/item/clothing/suit/armor/vest/alt/sec
 	suit_store = /obj/item/gun/energy/disabler
 	backpack_contents = list(
 		/obj/item/evidencebag = 1,
@@ -207,7 +207,7 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 	ears = /obj/item/radio/headset/headset_sec/alt
 	gloves = /obj/item/clothing/gloves/color/black
 	head = /obj/item/clothing/head/helmet/sec
-	shoes = /obj/item/clothing/shoes/jackboots
+	shoes = /obj/item/clothing/shoes/jackboots/sec
 	l_pocket = /obj/item/restraints/handcuffs
 	r_pocket = /obj/item/assembly/flash/handheld
 
@@ -241,19 +241,19 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 	recalculateChannels()
 
 /obj/item/radio/headset/headset_sec/alt/department/engi
-	keyslot = new /obj/item/encryptionkey/headset_sec
-	keyslot2 = new /obj/item/encryptionkey/headset_eng
+	keyslot = /obj/item/encryptionkey/headset_sec
+	keyslot2 = /obj/item/encryptionkey/headset_eng
 
 /obj/item/radio/headset/headset_sec/alt/department/supply
-	keyslot = new /obj/item/encryptionkey/headset_sec
-	keyslot2 = new /obj/item/encryptionkey/headset_cargo
+	keyslot = /obj/item/encryptionkey/headset_sec
+	keyslot2 = /obj/item/encryptionkey/headset_cargo
 /obj/item/radio/headset/headset_sec/alt/department/med
-	keyslot = new /obj/item/encryptionkey/headset_sec
-	keyslot2 = new /obj/item/encryptionkey/headset_med
+	keyslot = /obj/item/encryptionkey/headset_sec
+	keyslot2 = /obj/item/encryptionkey/headset_med
 
 /obj/item/radio/headset/headset_sec/alt/department/sci
-	keyslot = new /obj/item/encryptionkey/headset_sec
-	keyslot2 = new /obj/item/encryptionkey/headset_sci
+	keyslot = /obj/item/encryptionkey/headset_sec
+	keyslot2 = /obj/item/encryptionkey/headset_sci
 
 /// Returns the distribution of splitting the given security officers into departments.
 /// Return value is an assoc list of candidate => SEC_DEPT_*.

@@ -102,6 +102,12 @@
 	/// Boolean value. If TRUE, the [Intern] tag gets prepended to this ID card when the label is updated.
 	var/is_intern = FALSE
 
+	///Way to use NT pay. Or how to save money. 1 - 100%, 0.05 - 5%
+	var/commission =  0.05
+
+	///Payment under >99 credits withdraw. (this + 1 = min value to withdraw)
+	var/commission_minimal = 5
+
 /obj/item/card/id/Initialize(mapload)
 	. = ..()
 
@@ -120,6 +126,8 @@
 	register_context()
 
 	RegisterSignal(src, COMSIG_ATOM_UPDATED_ICON, .proc/update_in_wallet)
+	if(prob(1))
+		ADD_TRAIT(src, TRAIT_TASTEFULLY_THICK_ID_CARD, ROUNDSTART_TRAIT)
 
 /obj/item/card/id/Destroy()
 	if (registered_account)
@@ -578,7 +586,7 @@
 	if(!cash_money)
 		to_chat(user, span_warning("[money] doesn't seem to be worth anything!"))
 		return
-	registered_account.adjust_money(cash_money)
+	registered_account.adjust_money(cash_money, "System: Deposit")
 	SSblackbox.record_feedback("amount", "credits_inserted", cash_money)
 	log_econ("[cash_money] credits were inserted into [src] owned by [src.registered_name]")
 	if(physical_currency)
@@ -610,7 +618,7 @@
 		total += physical_money.get_item_credit_value()
 		CHECK_TICK
 
-	registered_account.adjust_money(total)
+	registered_account.adjust_money(total, "System: Deposit")
 	SSblackbox.record_feedback("amount", "credits_inserted", total)
 	log_econ("[total] credits were inserted into [src] owned by [src.registered_name]")
 	QDEL_LIST(money)
@@ -621,7 +629,7 @@
 /obj/item/card/id/proc/alt_click_can_use_id(mob/living/user)
 	if(!isliving(user))
 		return
-	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 		return
 
 	return TRUE
@@ -681,13 +689,43 @@
 
 /obj/item/card/id/examine(mob/user)
 	. = ..()
+	if(!user.can_read(src))
+		return
+
 	if(registered_account)
 		. += "The account linked to the ID belongs to '[registered_account.account_holder]' and reports a balance of [registered_account.account_balance] cr."
+		if((ACCESS_COMMAND in access) || (ACCESS_QM in access))
+			var/datum/bank_account/linked_dept = SSeconomy.get_dep_account(registered_account.account_job.paycheck_department)
+			. += "The [linked_dept.account_holder] linked to the ID reports a balance of [linked_dept.account_balance] cr."
+
 	if(HAS_TRAIT(user, TRAIT_ID_APPRAISER))
 		. += HAS_TRAIT(src, TRAIT_JOB_FIRST_ID_CARD) ? span_boldnotice("Hmm... yes, this ID was issued from Central Command!") : span_boldnotice("This ID was created in this sector, not by Central Command.")
+		if(HAS_TRAIT(src, TRAIT_TASTEFULLY_THICK_ID_CARD) && (user.is_holding(src) || (user.CanReach(src) && user.put_in_hands(src, ignore_animation = FALSE))))
+			ADD_TRAIT(src, TRAIT_NODROP, "psycho")
+			. += span_hypnophrase("Look at that subtle coloring... The tasteful thickness of it. Oh my God, it even has a watermark...")
+			var/sound/slowbeat = sound('sound/health/slowbeat.ogg', repeat = TRUE)
+			user.playsound_local(get_turf(src), slowbeat, 40, 0, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
+			if(isliving(user))
+				var/mob/living/living_user = user
+				living_user.adjust_jitter(10 SECONDS)
+			addtimer(CALLBACK(src, .proc/drop_card, user), 10 SECONDS)
 	. += span_notice("<i>There's more information below, you can look again to take a closer look...</i>")
 
+/obj/item/card/id/proc/drop_card(mob/user)
+	user.stop_sound_channel(CHANNEL_HEARTBEAT)
+	REMOVE_TRAIT(src, TRAIT_NODROP, "psycho")
+	if(user.is_holding(src))
+		user.dropItemToGround(src)
+	for(var/mob/living/carbon/human/viewing_mob in viewers(user, 2))
+		if(viewing_mob.stat || viewing_mob == user)
+			continue
+		viewing_mob.say("Is something wrong? [user.first_name()]... you're sweating.", forced = "psycho")
+		break
+
 /obj/item/card/id/examine_more(mob/user)
+	if(!user.can_read(src))
+		return
+
 	. = ..()
 	. += span_notice("<i>You examine [src] closer, and note the following...</i>")
 
@@ -797,6 +835,11 @@
 	desc = "A special ID card that allows access to APC terminals."
 	trim = /datum/id_trim/away/old/apc
 
+/obj/item/card/id/away/old/robo
+	name = "Delta Station Roboticist's ID card"
+	desc = "An ID card that allows access to bots maintenance protocols."
+	trim = /datum/id_trim/away/old/robo
+
 /obj/item/card/id/away/deep_storage //deepstorage.dmm space ruin
 	name = "bunker access ID"
 
@@ -841,6 +884,7 @@
 	worn_icon_state = "card_grey"
 
 	wildcard_slots = WILDCARD_LIMIT_GREY
+	flags_1 = UNPAINTABLE_1
 
 	/// An overlay icon state for when the card is assigned to a name. Usually manifests itself as a little scribble to the right of the job icon.
 	var/assigned_icon_state = "assigned"
@@ -849,6 +893,12 @@
 	var/trim_icon_override
 	/// If this is set, will manually override the icon state for the trim. Intended for admins to VV edit and chameleon ID cards.
 	var/trim_state_override
+	/// If this is set, will manually override the department color for this trim. Intended for admins to VV edit and chameleon ID cards.
+	var/department_color_override
+	/// If this is set, will manually override the department icon state for the trim. Intended for admins to VV edit and chameleon ID cards.
+	var/department_state_override
+	/// If this is set, will manually override the subdepartment color for this trim. Intended for admins to VV edit and chameleon ID cards.
+	var/subdepartment_color_override
 	/// If this is set, will manually override the trim's assignmment as it appears in the crew monitor and elsewhere. Intended for admins to VV edit and chameleon ID cards.
 	var/trim_assignment_override
 	/// If this is set, will manually override the trim shown for SecHUDs. Intended for admins to VV edit and chameleon ID cards.
@@ -864,7 +914,22 @@
 
 	return ..()
 
-/obj/item/card/id/advanced/proc/update_intern_status(datum/source, mob/user)
+
+/obj/item/card/id/advanced/attackby(obj/item/W, mob/user, params)
+	. = ..()
+	if(istype(W, /obj/item/toy/crayon))
+		var/obj/item/toy/crayon/our_crayon = W
+		if(tgui_alert(usr, "Recolor Department or Subdepartment?", "Recoloring ID...", list("Department", "Subdepartment")) == "Department")
+			if(!do_after(user, 2 SECONDS)) // Doesn't technically require a spraycan's cap to be off but shhh
+				return
+			department_color_override = our_crayon.paint_color
+			balloon_alert(user, "recolored")
+		else if(do_after(user, 1 SECONDS))
+			subdepartment_color_override = our_crayon.paint_color
+			balloon_alert(user, "recolored")
+		update_icon()
+
+/obj/item/card/id/advanced/proc/update_intern_status(datum/source, mob/user, slot)
 	SIGNAL_HANDLER
 
 	if(!user?.client)
@@ -908,16 +973,16 @@
 		RegisterSignal(source.loc, COMSIG_ITEM_EQUIPPED, .proc/update_intern_status)
 		RegisterSignal(source.loc, COMSIG_ITEM_DROPPED, .proc/remove_intern_status)
 
-/obj/item/card/id/advanced/Moved(atom/OldLoc, Dir)
+/obj/item/card/id/advanced/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 
-	if(istype(OldLoc, /obj/item/storage/wallet))
-		UnregisterSignal(OldLoc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
+	if(istype(old_loc, /obj/item/storage/wallet))
+		UnregisterSignal(old_loc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 
-	if(istype(OldLoc, /obj/item/computer_hardware/card_slot))
-		var/obj/item/computer_hardware/card_slot/slot = OldLoc
+	if(istype(old_loc, /obj/item/computer_hardware/card_slot))
+		var/obj/item/computer_hardware/card_slot/slot = old_loc
 
-		UnregisterSignal(OldLoc, COMSIG_MOVABLE_MOVED)
+		UnregisterSignal(old_loc, COMSIG_MOVABLE_MOVED)
 
 		if(istype(slot.holder, /obj/item/modular_computer/tablet))
 			var/obj/item/modular_computer/tablet/slot_holder = slot.holder
@@ -945,10 +1010,23 @@
 
 	var/trim_icon_file = trim_icon_override ? trim_icon_override : trim?.trim_icon
 	var/trim_icon_state = trim_state_override ? trim_state_override : trim?.trim_state
+	var/trim_department_color = department_color_override ? department_color_override : trim?.department_color
+	var/trim_department_state = department_state_override ? department_state_override : trim?.department_state
+	var/trim_subdepartment_color = subdepartment_color_override ? subdepartment_color_override : trim?.subdepartment_color
 
-	if(!trim_icon_file || !trim_icon_state)
+	if(!trim_icon_file || !trim_icon_state || !trim_department_color || !trim_subdepartment_color || !trim_department_state)
 		return
 
+	/// We handle department and subdepartment overlays first, so the job icon is always on top.
+	var/mutable_appearance/department_overlay = mutable_appearance(trim_icon_file, trim_department_state)
+	department_overlay.color = trim_department_color
+	. += department_overlay
+
+	var/mutable_appearance/subdepartment_overlay = mutable_appearance(trim_icon_file, "subdepartment")
+	subdepartment_overlay.color = trim_subdepartment_color
+	. += subdepartment_overlay
+
+	/// Then we handle the job's icon here.
 	. += mutable_appearance(trim_icon_file, trim_icon_state)
 
 /obj/item/card/id/advanced/get_trim_assignment()
@@ -965,12 +1043,19 @@
 /obj/item/card/id/advanced/get_trim_sechud_icon_state()
 	return sechud_icon_state_override || ..()
 
+/obj/item/card/id/advanced/rainbow
+	name = "rainbow identification card"
+	desc = "A rainbow card, promoting fun in a 'business proper' sense!"
+	icon_state = "card_rainbow"
+	worn_icon_state = "card_rainbow"
+
 /obj/item/card/id/advanced/silver
 	name = "silver identification card"
 	desc = "A silver card which shows honour and dedication."
 	icon_state = "card_silver"
 	worn_icon_state = "card_silver"
 	inhand_icon_state = "silver_id"
+	assigned_icon_state = "assigned_silver"
 	wildcard_slots = WILDCARD_LIMIT_SILVER
 
 /datum/id_trim/maint_reaper
@@ -989,7 +1074,12 @@
 	icon_state = "card_gold"
 	worn_icon_state = "card_gold"
 	inhand_icon_state = "gold_id"
+	assigned_icon_state = "assigned_gold"
 	wildcard_slots = WILDCARD_LIMIT_GOLD
+
+/obj/item/card/id/advanced/gold/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_TASTEFULLY_THICK_ID_CARD, ROUNDSTART_TRAIT)
 
 /obj/item/card/id/advanced/gold/captains_spare
 	name = "captain's spare ID"
@@ -1155,7 +1245,7 @@
 		to_chat(user, "Restating prisoner ID to default parameters.")
 		return
 	var/choice = tgui_input_number(user, "Sentence time in seconds", "Sentencing")
-	if(!choice || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) || loc != user)
+	if(!choice || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE) || loc != user)
 		return FALSE
 	time_to_assign = choice
 	to_chat(user, "You set the sentence time to [time_to_assign] seconds.")
@@ -1167,6 +1257,9 @@
 
 /obj/item/card/id/advanced/prisoner/examine(mob/user)
 	. = ..()
+	if(!.)
+		return
+
 	if(timed)
 		if(time_left <= 0)
 			. += span_notice("The digital timer on the card has zero seconds remaining. You leave a changed man, but a free man nonetheless.")
@@ -1253,6 +1346,7 @@
 	chameleon_card_action.chameleon_type = /obj/item/card/id/advanced
 	chameleon_card_action.chameleon_name = "ID Card"
 	chameleon_card_action.initialize_disguises()
+	add_item_action(chameleon_card_action)
 
 /obj/item/card/id/advanced/chameleon/Destroy()
 	theft_target = null
@@ -1262,7 +1356,7 @@
 	if(!proximity)
 		return
 
-	if(istype(target, /obj/item/card/id))
+	if(isidcard(target))
 		theft_target = WEAKREF(target)
 		ui_interact(user)
 		return
@@ -1273,7 +1367,7 @@
 	// If we're attacking a human, we want it to be covert. We're not ATTACKING them, we're trying
 	// to sneakily steal their accesses by swiping our agent ID card near them. As a result, we
 	// return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN to cancel any part of the following the attack chain.
-	if(istype(target, /mob/living/carbon/human))
+	if(ishuman(target))
 		to_chat(user, "<span class='notice'>You covertly start to scan [target] with \the [src], hoping to pick up a wireless ID card signal...</span>")
 
 		if(!do_mob(user, target, 2 SECONDS))
@@ -1294,7 +1388,7 @@
 		ui_interact(user)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-	if(istype(target, /obj/item))
+	if(isitem(target))
 		var/obj/item/target_item = target
 
 		to_chat(user, "<span class='notice'>You covertly start to scan [target] with your [src], hoping to pick up a wireless ID card signal...</span>")
@@ -1439,7 +1533,7 @@
 		if(popup_input == "Forge/Reset")
 			if(!forged)
 				var/input_name = tgui_input_text(user, "What name would you like to put on this card? Leave blank to randomise.", "Agent card name", registered_name ? registered_name : (ishuman(user) ? user.real_name : user.name), MAX_NAME_LEN)
-				input_name = sanitize_name(input_name)
+				input_name = sanitize_name(input_name, allow_numbers = TRUE)
 				if(!input_name)
 					// Invalid/blank names give a randomly generated one.
 					if(user.gender == MALE)
@@ -1477,7 +1571,7 @@
 					assignment = target_occupation
 
 				var/new_age = tgui_input_number(user, "Choose the ID's age", "Agent card age", AGE_MIN, AGE_MAX, AGE_MIN)
-				if(QDELETED(user) || QDELETED(src) || !user.canUseTopic(user, BE_CLOSE, NO_DEXTERITY, NO_TK))
+				if(QDELETED(user) || QDELETED(src) || !user.canUseTopic(user, be_close = TRUE, no_dexterity = TRUE, no_tk = TRUE))
 					return
 				if(new_age)
 					registered_age = new_age
@@ -1489,7 +1583,7 @@
 				update_icon()
 				forged = TRUE
 				to_chat(user, span_notice("You successfully forge the ID card."))
-				log_game("[key_name(user)] has forged \the [initial(name)] with name \"[registered_name]\", occupation \"[assignment]\" and trim \"[trim?.assignment]\".")
+				user.log_message("forged \the [initial(name)] with name \"[registered_name]\", occupation \"[assignment]\" and trim \"[trim?.assignment]\".", LOG_GAME)
 
 				if(!registered_account)
 					if(ishuman(user))
@@ -1506,7 +1600,7 @@
 				assignment = initial(assignment)
 				SSid_access.remove_trim_from_chameleon_card(src)
 				REMOVE_TRAIT(src, TRAIT_MAGNETIC_ID_CARD, CHAMELEON_ITEM_TRAIT)
-				log_game("[key_name(user)] has reset \the [initial(name)] named \"[src]\" to default.")
+				user.log_message("reset \the [initial(name)] named \"[src]\" to default.", LOG_GAME)
 				update_label()
 				update_icon()
 				forged = FALSE

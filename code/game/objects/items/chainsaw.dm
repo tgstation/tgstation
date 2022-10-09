@@ -13,6 +13,7 @@
 	throwforce = 13
 	throw_speed = 2
 	throw_range = 4
+	demolition_mod = 1.5
 	custom_materials = list(/datum/material/iron=13000)
 	attack_verb_continuous = list("saws", "tears", "lacerates", "cuts", "chops", "dices")
 	attack_verb_simple = list("saw", "tear", "lacerate", "cut", "chop", "dice")
@@ -20,31 +21,19 @@
 	sharpness = SHARP_EDGED
 	actions_types = list(/datum/action/item_action/startchainsaw)
 	tool_behaviour = TOOL_SAW
-	toolspeed = 0.5
+	toolspeed = 1.5 //Turn it on first you dork
 	var/on = FALSE
-	var/wielded = FALSE // track wielded status on item
 
 /obj/item/chainsaw/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
-	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
-
-/obj/item/chainsaw/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/butchering, 30, 100, 0, 'sound/weapons/chainsawhit.ogg', TRUE)
+	AddComponent(/datum/component/butchering, \
+		speed = 3 SECONDS, \
+		effectiveness = 100, \
+		bonus_modifier = 0, \
+		butcher_sound = 'sound/weapons/chainsawhit.ogg', \
+		disabled = TRUE, \
+	)
 	AddComponent(/datum/component/two_handed, require_twohands=TRUE)
-
-/// triggered on wield of two handed item
-/obj/item/chainsaw/proc/on_wield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-
-	wielded = TRUE
-
-/// triggered on unwield of two handed item
-/obj/item/chainsaw/proc/on_unwield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-
-	wielded = FALSE
 
 /obj/item/chainsaw/suicide_act(mob/living/carbon/user)
 	if(on)
@@ -72,8 +61,9 @@
 	else
 		hitsound = SFX_SWING_HIT
 
+	toolspeed = on ? 0.5 : initial(toolspeed) //Turning it on halves the speed
 	if(src == user.get_active_held_item()) //update inhands
-		user.update_inv_hands()
+		user.update_held_items()
 	update_action_buttons()
 
 /obj/item/chainsaw/doomslayer
@@ -88,3 +78,6 @@
 		playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
 		return TRUE
 	return FALSE
+
+/datum/action/item_action/startchainsaw
+	name = "Pull The Starting Cord"

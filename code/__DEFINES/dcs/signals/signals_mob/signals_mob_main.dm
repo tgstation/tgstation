@@ -26,19 +26,27 @@
 #define COMSIG_MOB_BOT_STEP "mob_bot_step"
 
 /// From base of /client/Move()
-#define COMSIG_MOB_CLIENT_PRE_MOVE "mob_client_pre_move"
-	/// Should always match COMPONENT_MOVABLE_BLOCK_PRE_MOVE as these are interchangeable and used to block movement.
-	#define COMSIG_MOB_CLIENT_BLOCK_PRE_MOVE COMPONENT_MOVABLE_BLOCK_PRE_MOVE
-	/// From base of /client/Move()
 #define COMSIG_MOB_CLIENT_PRE_LIVING_MOVE "mob_client_pre_living_move"
 	/// Should we stop the current living movement attempt
 	#define COMSIG_MOB_CLIENT_BLOCK_PRE_LIVING_MOVE COMPONENT_MOVABLE_BLOCK_PRE_MOVE
+
+/// From base of /client/Move(): (list/move_args)
+#define COMSIG_MOB_CLIENT_PRE_MOVE "mob_client_pre_move"
+	/// Should always match COMPONENT_MOVABLE_BLOCK_PRE_MOVE as these are interchangeable and used to block movement.
+	#define COMSIG_MOB_CLIENT_BLOCK_PRE_MOVE COMPONENT_MOVABLE_BLOCK_PRE_MOVE
+	/// The argument of move_args which corresponds to the loc we're moving to
+	#define MOVE_ARG_NEW_LOC 1
+	/// The arugment of move_args which dictates our movement direction
+	#define MOVE_ARG_DIRECTION 2
 /// From base of /client/Move()
 #define COMSIG_MOB_CLIENT_MOVED "mob_client_moved"
 /// From base of /client/proc/change_view() (mob/source, new_size)
 #define COMSIG_MOB_CLIENT_CHANGE_VIEW "mob_client_change_view"
-/// From base of /mob/proc/reset_perspective() (mob/source)
+/// From base of /mob/proc/reset_perspective() : ()
 #define COMSIG_MOB_RESET_PERSPECTIVE "mob_reset_perspective"
+/// from base of /client/proc/set_eye() : (atom/old_eye, atom/new_eye)
+#define COMSIG_CLIENT_SET_EYE "client_set_eye"
+
 
 ///from mind/transfer_to. Sent to the receiving mob.
 #define COMSIG_MOB_MIND_TRANSFERRED_INTO "mob_mind_transferred_into"
@@ -57,6 +65,16 @@
 
 ///from base of mob/create_mob_hud(): ()
 #define COMSIG_MOB_HUD_CREATED "mob_hud_created"
+///from base of hud/show_to(): (datum/hud/hud_source)
+#define COMSIG_MOB_HUD_REFRESHED "mob_hud_refreshed"
+
+///from base of mob/set_sight(): (new_sight, old_sight)
+#define COMSIG_MOB_SIGHT_CHANGE "mob_sight_changed"
+///from base of mob/set_invis_see(): (new_invis, old_invis)
+#define COMSIG_MOB_SEE_INVIS_CHANGE "mob_see_invis_change"
+///from base of mob/set_see_in_dark(): (new_range, old_range)
+#define COMSIG_MOB_SEE_IN_DARK_CHANGE "mob_see_in_dark_change"
+
 
 ///from base of /mob/living/proc/apply_damage(): (damage, damagetype, def_zone)
 #define COMSIG_MOB_APPLY_DAMAGE "mob_apply_damage"
@@ -77,13 +95,15 @@
 	#define COMPONENT_UPPERCASE_SPEECH (1<<0)
 	// used to access COMSIG_MOB_SAY argslist
 	#define SPEECH_MESSAGE 1
-	// #define SPEECH_BUBBLE_TYPE 2
+	#define SPEECH_BUBBLE_TYPE 2
 	#define SPEECH_SPANS 3
-	// #define SPEECH_SANITIZE 4
+	#define SPEECH_SANITIZE 4
 	#define SPEECH_LANGUAGE 5
-	/* #define SPEECH_IGNORE_SPAM 6
-	#define SPEECH_FORCED 7 */
-	#define SPEECH_RANGE 8
+	#define SPEECH_IGNORE_SPAM 6
+	#define SPEECH_FORCED 7
+	#define SPEECH_FILTERPROOF 8
+	#define SPEECH_RANGE 9
+	#define SPEECH_SAYMODE 10
 
 ///from /mob/say_dead(): (mob/speaker, message)
 #define COMSIG_MOB_DEADSAY "mob_deadsay"
@@ -142,3 +162,6 @@
 #define COMSIG_MOB_AUTOMUTE_CHECK "client_automute_check" // The check is performed by the client.
 	/// Prevents the automute system checking this client for repeated messages.
 	#define WAIVE_AUTOMUTE_CHECK (1<<0)
+
+///from living/flash_act(), when a mob is successfully flashed.
+#define COMSIG_MOB_FLASHED "mob_flashed"

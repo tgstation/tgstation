@@ -15,53 +15,38 @@
 	var/list/concurrent_users = list()
 
 	// Stuff needed to render the map
-	var/map_name
 	var/atom/movable/screen/map_view/cam_screen
 	/// All the plane masters that need to be applied.
-	var/list/cam_plane_masters
 	var/atom/movable/screen/background/cam_background
 
-	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_SET_MACHINE | INTERACT_MACHINE_REQUIRES_SIGHT
+	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_SET_MACHINE|INTERACT_MACHINE_REQUIRES_SIGHT
 
 /obj/machinery/computer/security/Initialize(mapload)
 	. = ..()
 	// Map name has to start and end with an A-Z character,
 	// and definitely NOT with a square bracket or even a number.
 	// I wasted 6 hours on this. :agony:
-	map_name = "camera_console_[REF(src)]_map"
+	var/map_name = "camera_console_[REF(src)]_map"
 	// Convert networks to lowercase
 	for(var/i in network)
 		network -= i
 		network += lowertext(i)
 	// Initialize map objects
 	cam_screen = new
-	cam_screen.name = "screen"
-	cam_screen.assigned_map = map_name
-	cam_screen.del_on_map_removal = FALSE
-	cam_screen.screen_loc = "[map_name]:1,1"
-	cam_plane_masters = list()
-	for(var/plane in subtypesof(/atom/movable/screen/plane_master) - /atom/movable/screen/plane_master/blackness)
-		var/atom/movable/screen/plane_master/instance = new plane()
-		if(instance.blend_mode_override)
-			instance.blend_mode = instance.blend_mode_override
-		instance.assigned_map = map_name
-		instance.del_on_map_removal = FALSE
-		instance.screen_loc = "[map_name]:CENTER"
-		cam_plane_masters += instance
+	cam_screen.generate_view(map_name)
 	cam_background = new
 	cam_background.assigned_map = map_name
 	cam_background.del_on_map_removal = FALSE
 
 /obj/machinery/computer/security/Destroy()
 	QDEL_NULL(cam_screen)
-	QDEL_LIST(cam_plane_masters)
 	QDEL_NULL(cam_background)
 	return ..()
 
-/obj/machinery/computer/security/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
+/obj/machinery/computer/security/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	for(var/i in network)
 		network -= i
-		network += "[port.id]_[i]"
+		network += "[port.shuttle_id]_[i]"
 
 /obj/machinery/computer/security/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -83,9 +68,7 @@
 			playsound(src, 'sound/machines/terminal_on.ogg', 25, FALSE)
 			use_power(active_power_usage)
 		// Register map objects
-		user.client.register_map_obj(cam_screen)
-		for(var/plane in cam_plane_masters)
-			user.client.register_map_obj(plane)
+		cam_screen.display_to(user)
 		user.client.register_map_obj(cam_background)
 		// Open UI
 		ui = new(user, src, "CameraConsole", name)
@@ -110,7 +93,7 @@
 
 /obj/machinery/computer/security/ui_static_data()
 	var/list/data = list()
-	data["mapRef"] = map_name
+	data["mapRef"] = cam_screen.assigned_map
 	var/list/cameras = get_available_cameras()
 	data["cameras"] = list()
 	for(var/i in cameras)
@@ -127,7 +110,7 @@
 		return
 
 	if(action == "switch_camera")
-		var/c_tag = format_text(params["name"])
+		var/c_tag = params["name"]
 		var/list/cameras = get_available_cameras()
 		var/obj/machinery/camera/selected_camera = cameras[c_tag]
 		active_camera = selected_camera
@@ -181,7 +164,7 @@
 	// Living creature or not, we remove you anyway.
 	concurrent_users -= user_ref
 	// Unregister map objects
-	user.client.clear_map(map_name)
+	cam_screen.hide_from(user)
 	// Turn off the console
 	if(length(concurrent_users) == 0 && is_living)
 		active_camera = null
@@ -280,10 +263,10 @@
 	desc = "Damn, they better have the /tg/ channel on these things."
 	icon = 'icons/obj/status_display.dmi'
 	icon_state = "entertainment_blank"
-	network = list("thunder")
+	network = list()
 	density = FALSE
 	circuit = null
-	interaction_flags_atom = NONE  // interact() is called by BigClick()
+	interaction_flags_atom = INTERACT_ATOM_UI_INTERACT | INTERACT_ATOM_NO_FINGERPRINT_INTERACT | INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND | INTERACT_MACHINE_REQUIRES_SIGHT
 	var/icon_state_off = "entertainment_blank"
 	var/icon_state_on = "entertainment"
 
@@ -297,18 +280,73 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 /obj/machinery/computer/security/telescreen/entertainment/proc/BigClick()
 	SIGNAL_HANDLER
 
+	if(!network.len)
+		balloon_alert(usr, "there's nothing on TV!")
+		return
+
 	INVOKE_ASYNC(src, /atom.proc/interact, usr)
 
-/obj/machinery/computer/security/telescreen/entertainment/proc/notify(on)
+///Sets the monitor's icon to the selected state, and says an announcement
+/obj/machinery/computer/security/telescreen/entertainment/proc/notify(on, announcement)
 	if(on && icon_state == icon_state_off)
-		say(pick(
-			"Feats of bravery live now at the thunderdome!",
-			"Two enter, one leaves! Tune in now!",
-			"Violence like you've never seen it before!",
-			"Spears! Camera! Action! LIVE NOW!"))
 		icon_state = icon_state_on
 	else
 		icon_state = icon_state_off
+	if(announcement)
+		say(announcement)
+
+/// Adds a camera network ID to the entertainment monitor, and turns off the monitor if network list is empty
+/obj/machinery/computer/security/telescreen/entertainment/proc/update_shows(is_show_active, tv_show_id, announcement)
+	if(!network)
+		return
+
+	if(is_show_active)
+		network |= tv_show_id
+	else
+		network -= tv_show_id
+
+	notify(network.len, announcement)
+
+/// A button that adds a camera network to the entertainment monitors
+/obj/machinery/button/showtime
+	name = "thunderdome showtime button"
+	desc = "Use this button to allow entertainment monitors to broadcast the big game."
+	device_type = /obj/item/assembly/control/showtime
+	req_access = list()
+	id = "showtime_1"
+
+/obj/machinery/button/showtime/Initialize(mapload)
+	. = ..()
+	if(device)
+		var/obj/item/assembly/control/showtime/ours = device
+		ours.id = id
+
+/obj/item/assembly/control/showtime
+	name = "showtime controller"
+	desc = "A remote controller for entertainment monitors."
+	/// Stores if the show associated with this controller is active or not
+	var/is_show_active = FALSE
+	/// The camera network id this controller toggles
+	var/tv_network_id = "thunder"
+	/// The display TV show name
+	var/tv_show_name = "Thunderdome"
+	/// List of phrases the entertainment console may say when the show begins
+	var/list/tv_starters = list("Feats of bravery live now at the thunderdome!",
+		"Two enter, one leaves! Tune in now!",
+		"Violence like you've never seen it before!",
+		"Spears! Camera! Action! LIVE NOW!")
+	/// List of phrases the entertainment console may say when the show ends
+	var/list/tv_enders = list("Thank you for tuning in to the slaughter!",
+		"What a show! And we guarantee next one will be bigger!",
+		"Celebrate the results with Thundermerch!",
+		"This show was brought to you by Nanotrasen.")
+
+/obj/item/assembly/control/showtime/activate()
+	is_show_active = !is_show_active
+	say("The [tv_show_name] show has [is_show_active ? "begun" : "ended"]")
+	var/announcement = is_show_active ? pick(tv_starters) : pick(tv_enders)
+	for(var/obj/machinery/computer/security/telescreen/entertainment/tv in GLOB.machines)
+		tv.update_shows(is_show_active, tv_network_id, announcement)
 
 /obj/machinery/computer/security/telescreen/rd
 	name = "\improper Research Director's telescreen"

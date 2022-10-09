@@ -24,7 +24,20 @@
 
 /obj/effect/countdown/proc/attach(atom/A)
 	attached_to = A
-	forceMove(get_turf(A))
+	var/turf/loc_turf = get_turf(A)
+	if(!loc_turf)
+		RegisterSignal(attached_to, COMSIG_MOVABLE_MOVED, .proc/retry_attach, TRUE)
+	else
+		forceMove(loc_turf)
+
+/obj/effect/countdown/proc/retry_attach()
+	SIGNAL_HANDLER
+
+	var/turf/loc_turf = get_turf(attached_to)
+	if(!loc_turf)
+		return
+	forceMove(loc_turf)
+	UnregisterSignal(attached_to, COMSIG_MOVABLE_MOVED)
 
 /obj/effect/countdown/proc/start()
 	if(!started)
@@ -127,6 +140,8 @@
 	var/obj/effect/anomaly/A = attached_to
 	if(!istype(A))
 		return
+	else if(A.immortal) //we can't die, why are we still here? just to suffer?
+		stop()
 	else
 		var/time_left = max(0, (A.death_time - world.time) / 10)
 		return round(time_left)

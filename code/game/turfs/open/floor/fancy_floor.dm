@@ -111,7 +111,7 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
 /turf/open/floor/bamboo/setup_broken_states()
-	return list("damaged")
+	return list("bamboodamaged")
 
 /turf/open/floor/grass
 	name = "grass patch"
@@ -132,7 +132,8 @@
 /turf/open/floor/grass/Initialize(mapload)
 	. = ..()
 	spawniconchange()
-	AddComponent(/datum/component/diggable, /obj/item/stack/ore/glass, 2, "uproot")
+	AddElement(/datum/element/diggable, /obj/item/stack/ore/glass, 2, worm_chance = 50, \
+		action_text = "uproot", action_text_third_person = "uproots")
 
 /turf/open/floor/grass/proc/spawniconchange()
 	icon_state = "grass[rand(0,3)]"
@@ -170,7 +171,7 @@
 
 /turf/open/floor/fake_snow/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/diggable, /obj/item/stack/tile/mineral/snow, 2, "dig up")
+	AddElement(/datum/element/diggable, /obj/item/stack/tile/mineral/snow, 2, worm_chance = 0)
 
 /turf/open/floor/fake_snow/setup_broken_states()
 	return list("snow_dug")
@@ -197,7 +198,7 @@
 
 /turf/open/floor/fakebasalt/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/diggable, /obj/item/stack/ore/glass/basalt, 2, "dig up")
+	AddElement(/datum/element/diggable, /obj/item/stack/ore/glass/basalt, 2, worm_chance = 0)
 	if(prob(15))
 		icon_state = "basalt[rand(0, 12)]"
 		set_basalt_light(src)
@@ -219,9 +220,6 @@
 	clawfootstep = FOOTSTEP_CARPET_BAREFOOT
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = FALSE
-
-/turf/open/floor/carpet/setup_broken_states()
-	return list("damaged")
 
 /turf/open/floor/carpet/examine(mob/user)
 	. = ..()
@@ -410,7 +408,7 @@
 
 /turf/open/floor/emissive_test/update_overlays()
 	. = ..()
-	. += emissive_appearance(icon, icon_state, alpha = src.alpha)
+	. += emissive_appearance(icon, icon_state, src, alpha = src.alpha)
 
 /turf/open/floor/emissive_test/white
 	icon_state = "pure_white"
@@ -772,6 +770,19 @@
 	underlay_appearance.icon_state = "basalt"
 	return TRUE
 
+/turf/open/floor/fakeice
+	desc = "Is it marble, polished to a mirror finish? Or just really, really grippy ice?"
+	icon = 'icons/turf/floors/ice_turf.dmi'
+	icon_state = "ice_turf-0"
+	base_icon_state = "ice_turf-0"
+
+/turf/open/floor/fakeice/slippery
+	desc = "Somehow, it is not melting under these conditions. Must be some very thick ice. Just as slippery too."
+
+/turf/open/floor/fakeice/slippery/Initialize(mapload)
+	. = ..()
+	MakeSlippery(TURF_WET_PERMAFROST, INFINITY, 0, INFINITY, TRUE)
+
 /turf/open/floor/fakespace
 	icon = 'icons/turf/space.dmi'
 	icon_state = "0"
@@ -784,10 +795,10 @@
 
 /turf/open/floor/fakespace/Initialize(mapload)
 	. = ..()
-	icon_state = SPACE_ICON_STATE
+	icon_state = SPACE_ICON_STATE(x, y, z)
 
 /turf/open/floor/fakespace/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	underlay_appearance.icon = 'icons/turf/space.dmi'
-	underlay_appearance.icon_state = SPACE_ICON_STATE
-	underlay_appearance.plane = PLANE_SPACE
+	underlay_appearance.icon_state = SPACE_ICON_STATE(x, y, z)
+	SET_PLANE(underlay_appearance, PLANE_SPACE, src)
 	return TRUE

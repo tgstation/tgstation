@@ -24,18 +24,18 @@
 		return
 	var/mob/living/carbon/human/human_target = target
 	var/beard_or_hair = tgui_alert(user, "What do you want to dye?", "Character Preference", list("Hair", "Facial Hair"))
-	if(!beard_or_hair || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE))
+	if(!beard_or_hair || !user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE))
 		return
 
 	var/list/choices = beard_or_hair == "Hair" ? GLOB.hair_gradients_list : GLOB.facial_hair_gradients_list
 	var/new_grad_style = tgui_input_list(user, "Choose a color pattern", "Character Preference", choices)
 	if(isnull(new_grad_style))
 		return
-	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE))
+	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE))
 		return
 
 	var/new_grad_color = input(user, "Choose a secondary hair color:", "Character Preference",human_target.grad_color) as color|null
-	if(!new_grad_color || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE) || !user.CanReach(target))
+	if(!new_grad_color || !user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE) || !user.CanReach(target))
 		return
 
 	to_chat(user, span_notice("You start applying the hair dye..."))
@@ -47,4 +47,4 @@
 	human_target.grad_style[gradient_key] = new_grad_style
 	human_target.grad_color[gradient_key] = sanitize_hexcolor(new_grad_color)
 	playsound(src, 'sound/effects/spray.ogg', 5, TRUE, 5)
-	human_target.update_hair()
+	human_target.update_body_parts()

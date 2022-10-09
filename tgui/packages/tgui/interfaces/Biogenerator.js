@@ -9,14 +9,9 @@ const MAX_SEARCH_RESULTS = 25;
 
 export const Biogenerator = (props, context) => {
   const { data } = useBackend(context);
-  const {
-    beaker,
-    processing,
-  } = data;
+  const { beaker, processing } = data;
   return (
-    <Window
-      width={550}
-      height={420}>
+    <Window width={550} height={420}>
       {!!processing && (
         <Dimmer fontSize="32px">
           <Icon name="cog" spin={1} />
@@ -24,12 +19,8 @@ export const Biogenerator = (props, context) => {
         </Dimmer>
       )}
       <Window.Content scrollable>
-        {!beaker && (
-          <NoticeBox>No Container</NoticeBox>
-        )}
-        {!!beaker && (
-          <BiogeneratorContent />
-        )}
+        {!beaker && <NoticeBox>No Container</NoticeBox>}
+        {!!beaker && <BiogeneratorContent />}
       </Window.Content>
     </Window>
   );
@@ -37,67 +28,57 @@ export const Biogenerator = (props, context) => {
 
 export const BiogeneratorContent = (props, context) => {
   const { act, data } = useBackend(context);
-  const {
-    biomass,
-    can_process,
-    categories = [],
-  } = data;
-  const [
-    searchText,
-    setSearchText,
-  ] = useLocalState(context, 'searchText', '');
-  const [
-    selectedCategory,
-    setSelectedCategory,
-  ] = useLocalState(context, 'category', categories[0]?.name);
-  const testSearch = createSearch(searchText, item => {
+  const { biomass, can_process, categories = [] } = data;
+  const [searchText, setSearchText] = useLocalState(context, 'searchText', '');
+  const [selectedCategory, setSelectedCategory] = useLocalState(
+    context,
+    'category',
+    categories[0]?.name
+  );
+  const testSearch = createSearch(searchText, (item) => {
     return item.name;
   });
-  const items = searchText.length > 0
-    // Flatten all categories and apply search to it
-    && categories
-      .flatMap(category => category.items || [])
-      .filter(testSearch)
-      .filter((item, i) => i < MAX_SEARCH_RESULTS)
+  const items =
+    (searchText.length > 0 &&
+      // Flatten all categories and apply search to it
+      categories
+        .flatMap((category) => category.items || [])
+        .filter(testSearch)
+        .filter((item, i) => i < MAX_SEARCH_RESULTS)) ||
     // Select a category and show all items in it
-    || categories
-      .find(category => category.name === selectedCategory)
-      ?.items
+    categories.find((category) => category.name === selectedCategory)?.items ||
     // If none of that results in a list, return an empty list
-    || [];
+    [];
   return (
     <Section
-      title={(
-        <Box
-          inline
-          color={biomass > 0 ? 'good' : 'bad'}>
+      title={
+        <Box inline color={biomass > 0 ? 'good' : 'bad'}>
           {formatMoney(biomass)} Biomass
         </Box>
-      )}
-      buttons={(
+      }
+      buttons={
         <>
           Search
           <Input
             autoFocus
             value={searchText}
             onInput={(e, value) => setSearchText(value)}
-            mx={1} />
-          <Button
-            icon="eject"
-            content="Eject"
-            onClick={() => act('eject')} />
+            mx={1}
+          />
+          <Button icon="eject" content="Eject" onClick={() => act('eject')} />
           <Button
             icon="cog"
             content="Activate"
             disabled={!can_process}
-            onClick={() => act('activate')} />
+            onClick={() => act('activate')}
+          />
         </>
-      )}>
+      }>
       <Flex>
         {searchText.length === 0 && (
           <Flex.Item>
             <Tabs vertical>
-              {categories.map(category => (
+              {categories.map((category) => (
                 <Tabs.Tab
                   key={category.name}
                   selected={category.name === selectedCategory}
@@ -117,9 +98,7 @@ export const BiogeneratorContent = (props, context) => {
             </NoticeBox>
           )}
           <Table>
-            <ItemList
-              biomass={biomass}
-              items={items} />
+            <ItemList biomass={biomass} items={items} />
           </Table>
         </Flex.Item>
       </Flex>
@@ -129,20 +108,18 @@ export const BiogeneratorContent = (props, context) => {
 
 const ItemList = (props, context) => {
   const { act } = useBackend(context);
-  const [
-    hoveredItem,
-    setHoveredItem,
-  ] = useLocalState(context, 'hoveredItem', {});
+  const [hoveredItem, setHoveredItem] = useLocalState(
+    context,
+    'hoveredItem',
+    {}
+  );
   const hoveredCost = hoveredItem.cost || 0;
   // Append extra hover data to items
-  const items = props.items.map(item => {
-    const [
-      amount,
-      setAmount,
-    ] = useLocalState(context, "amount" + item.name, 1);
+  const items = props.items.map((item) => {
+    const [amount, setAmount] = useLocalState(context, 'amount' + item.name, 1);
     const notSameItem = hoveredItem.name !== item.name;
-    const notEnoughHovered = props.biomass - hoveredCost
-      * hoveredItem.amount < item.cost * amount;
+    const notEnoughHovered =
+      props.biomass - hoveredCost * hoveredItem.amount < item.cost * amount;
     const disabledDueToHovered = notSameItem && notEnoughHovered;
     const disabled = props.biomass < item.cost * amount || disabledDueToHovered;
     return {
@@ -152,15 +129,16 @@ const ItemList = (props, context) => {
       setAmount,
     };
   });
-  return items.map(item => (
+  return items.map((item) => (
     <Table.Row key={item.id}>
       <Table.Cell>
         <span
           className={classes(['design32x32', item.id])}
           style={{
             'vertical-align': 'middle',
-          }} />
-        {' '}<b>{item.name}</b>
+          }}
+        />{' '}
+        <b>{item.name}</b>
       </Table.Cell>
       <Table.Cell collapsing>
         <NumberInput
@@ -168,7 +146,8 @@ const ItemList = (props, context) => {
           width="35px"
           minValue={1}
           maxValue={10}
-          onChange={(e, value) => item.setAmount(value)} />
+          onChange={(e, value) => item.setAmount(value)}
+        />
       </Table.Cell>
       <Table.Cell collapsing>
         <Button
@@ -176,14 +155,17 @@ const ItemList = (props, context) => {
             'text-align': 'right',
           }}
           fluid
-          content={item.cost * item.amount + ' ' + "BIO"}
+          content={item.cost * item.amount + ' ' + 'BIO'}
           disabled={item.disabled}
           onmouseover={() => setHoveredItem(item)}
           onmouseout={() => setHoveredItem({})}
-          onClick={() => act('create', {
-            id: item.id,
-            amount: item.amount,
-          })} />
+          onClick={() =>
+            act('create', {
+              id: item.id,
+              amount: item.amount,
+            })
+          }
+        />
       </Table.Cell>
     </Table.Row>
   ));

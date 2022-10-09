@@ -348,7 +348,7 @@
 					else
 						for(var/mob/living/carbon/C in targets)
 							if(!Discipline && DT_PROB(2.5, delta_time))
-								if(ishuman(C) || isalienadult(C))
+								if(ishuman(C) || isalienhumanoid(C))
 									set_target(C)
 									break
 

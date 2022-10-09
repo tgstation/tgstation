@@ -4,7 +4,6 @@
 	quality = POSITIVE
 	difficulty = 16
 	text_gain_indication = "<span class='notice'>Your body feels warm!</span>"
-	time_coeff = 5
 	instability = 25
 	conflicts = list(/datum/mutation/human/pressure_adaptation)
 
@@ -34,7 +33,6 @@
 	quality = POSITIVE
 	difficulty = 16
 	text_gain_indication = "<span class='notice'>Your body feels numb!</span>"
-	time_coeff = 5
 	instability = 25
 	conflicts = list(/datum/mutation/human/temperature_adaptation)
 

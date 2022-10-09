@@ -38,7 +38,7 @@
 			visible_message(span_danger("[user] knocks [src] down!"), \
 							span_userdanger("[user] knocks you down!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, user)
 			to_chat(user, span_danger("You knock [src] down!"))
-		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(user.zone_selected))
+		var/obj/item/bodypart/affecting = get_bodypart(get_random_valid_zone(user.zone_selected))
 		apply_damage(damage, BRUTE, affecting)
 		log_combat(user, src, "attacked")
 	else

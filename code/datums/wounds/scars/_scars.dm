@@ -136,7 +136,7 @@
 		if(WOUND_SEVERITY_CRITICAL)
 			msg = span_smallnoticeital("<b>[msg]</b>")
 		if(WOUND_SEVERITY_LOSS)
-			msg = "[victim.p_their(TRUE)] [limb.name] [description]." // different format
+			msg = "[victim.p_their(TRUE)] [limb.plaintext_zone] [description]." // different format
 			msg = span_notice("<i><b>[msg]</b></i>")
 	return "\t[msg]"
 

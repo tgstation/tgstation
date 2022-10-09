@@ -44,11 +44,12 @@
 		var/mob/living/silicon/ai/ai = user
 		data["can_detonate"] = !isnull(ai.malf_picker)
 
+	var/turf/current_turf = get_turf(src)
 	data["cyborgs"] = list()
 	for(var/mob/living/silicon/robot/R in GLOB.silicon_mobs)
 		if(!can_control(user, R))
 			continue
-		if(z != (get_turf(R)).z)
+		if(!is_valid_z_level(current_turf, get_turf(R)))
 			continue
 		var/list/cyborg_data = list(
 			name = R.name,
@@ -66,7 +67,7 @@
 	for(var/mob/living/simple_animal/drone/D in GLOB.drones_list)
 		if(D.hacked)
 			continue
-		if(z != (get_turf(D)).z)
+		if(!is_valid_z_level(current_turf, get_turf(D)))
 			continue
 		var/list/drone_data = list(
 			name = D.name,

@@ -66,7 +66,7 @@ GLOBAL_VAR(command_name)
 		new_station_name = name + " "
 		name = ""
 
-	if(prob(1))
+	if(prob(0.1))
 		random = 999999999 //ridiculously long name in written numbers
 
 	// Prefix
@@ -101,14 +101,14 @@ GLOBAL_VAR(command_name)
 		if(13)
 			new_station_name += pick("13","XIII","Thirteen")
 		if(999999999)
-			new_station_name = "Space Station " + convert_integer_to_words(rand(111111111,999999999), capitalise = TRUE)
+			new_station_name += convert_integer_to_words(rand(111111111,999999999), capitalise = TRUE)
 	return new_station_name
 
 /proc/syndicate_name()
 	var/name = ""
 
 	// Prefix
-	name += pick("Clandestine", "Prima", "Blue", "Zero-G", "Max", "Blasto", "Waffle", "North", "Omni", "Newton", "Cyber", "Bonk", "Gene", "Gib")
+	name += pick("Clandestine", "Prima", "Blue", "Zero-G", "Max", "Blasto", "North", "Omni", "Newton", "Cyber", "Bonk", "Gene", "Gib")
 
 	// Suffix
 	if (prob(80))
@@ -121,11 +121,11 @@ GLOBAL_VAR(command_name)
 		else
 			name += pick("Syndi", "Corp", "Bio", "System", "Prod", "Chem", "Inter", "Hive")
 			name += pick("", "-")
-			name += pick("Tech", "Sun", "Co", "Tek", "X", "Inc", "Code")
+			name += pick("Tech", "Co", "Tek", "X", "Inc", "Code")
 	// Small
 	else
 		name += pick("-", "*", "")
-		name += pick("Tech", "Sun", "Co", "Tek", "X", "Inc", "Gen", "Star", "Dyne", "Code", "Hive")
+		name += pick("Tech", "Co", "Tek", "X", "Inc", "Gen", "Star", "Dyne", "Code", "Hive")
 
 	return name
 

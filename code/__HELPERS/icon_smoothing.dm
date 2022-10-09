@@ -309,8 +309,7 @@ DEFINE_BITFIELD(smoothing_junction, list(
 			return ADJ_FOUND
 
 	if(smoothing_flags & SMOOTH_OBJ)
-		for(var/am in target_turf)
-			var/atom/movable/thing = am
+		for(var/atom/movable/thing as anything in target_turf)
 			if(!thing.anchored || isnull(thing.smoothing_groups))
 				continue
 			for(var/target in canSmoothWith)
@@ -380,7 +379,7 @@ DEFINE_BITFIELD(smoothing_junction, list(
 					var/junction_dir = reverse_ndir(smoothing_junction)
 					var/turned_adjacency = REVERSE_DIR(junction_dir)
 					var/turf/neighbor_turf = get_step(src, turned_adjacency & (NORTH|SOUTH))
-					var/mutable_appearance/underlay_appearance = mutable_appearance(layer = TURF_LAYER, plane = FLOOR_PLANE)
+					var/mutable_appearance/underlay_appearance = mutable_appearance(layer = TURF_LAYER, offset_spokesman = src, plane = FLOOR_PLANE)
 					if(!neighbor_turf.get_smooth_underlay_icon(underlay_appearance, src, turned_adjacency))
 						neighbor_turf = get_step(src, turned_adjacency & (EAST|WEST))
 
@@ -402,20 +401,18 @@ DEFINE_BITFIELD(smoothing_junction, list(
 //Icon smoothing helpers
 /proc/smooth_zlevel(zlevel, now = FALSE)
 	var/list/away_turfs = block(locate(1, 1, zlevel), locate(world.maxx, world.maxy, zlevel))
-	for(var/V in away_turfs)
-		var/turf/T = V
-		if(T.smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
+	for(var/turf/turf_to_smooth as anything in away_turfs)
+		if(turf_to_smooth.smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
 			if(now)
-				T.smooth_icon()
+				turf_to_smooth.smooth_icon()
 			else
-				QUEUE_SMOOTH(T)
-		for(var/R in T)
-			var/atom/A = R
-			if(A.smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
+				QUEUE_SMOOTH(turf_to_smooth)
+		for(var/atom/movable/movable_to_smooth as anything in turf_to_smooth)
+			if(movable_to_smooth.smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
 				if(now)
-					A.smooth_icon()
+					movable_to_smooth.smooth_icon()
 				else
-					QUEUE_SMOOTH(A)
+					QUEUE_SMOOTH(movable_to_smooth)
 
 
 /atom/proc/clear_smooth_overlays()

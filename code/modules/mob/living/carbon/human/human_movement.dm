@@ -15,12 +15,12 @@
 	if (!(lube & GALOSHES_DONT_HELP))
 		if(HAS_TRAIT(src, TRAIT_NOSLIPWATER))
 			return FALSE
-		if(shoes && istype(shoes, /obj/item/clothing))
+		if(shoes && isclothing(shoes))
 			var/obj/item/clothing/CS = shoes
 			if (CS.clothing_flags & NOSLIP)
 				return FALSE
 	if (lube & SLIDE_ICE)
-		if(shoes && istype(shoes, /obj/item/clothing))
+		if(shoes && isclothing(shoes))
 			var/obj/item/clothing/CS = shoes
 			if (CS.clothing_flags & NOSLIP_ICE)
 				return FALSE
@@ -34,7 +34,7 @@
 	if(shoes && body_position == STANDING_UP && loc == NewLoc && has_gravity(loc))
 		SEND_SIGNAL(shoes, COMSIG_SHOES_STEP_ACTION)
 
-/mob/living/carbon/human/Process_Spacemove(movement_dir = 0)
+/mob/living/carbon/human/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
 	if(movement_type & FLYING || HAS_TRAIT(src, TRAIT_FREE_FLOAT_MOVEMENT))
 		return TRUE
 	return ..()

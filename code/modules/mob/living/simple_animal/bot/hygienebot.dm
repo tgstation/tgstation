@@ -2,7 +2,7 @@
 /mob/living/simple_animal/bot/hygienebot
 	name = "\improper Hygienebot"
 	desc = "A flying cleaning robot, he'll chase down people who can't shower properly!"
-	icon = 'icons/mob/aibots.dmi'
+	icon = 'icons/mob/silicon/aibots.dmi'
 	icon_state = "hygienebot"
 	base_icon_state = "hygienebot"
 	pass_flags = PASSMOB | PASSFLAPS | PASSTABLE
@@ -53,7 +53,7 @@
 	ADD_TRAIT(src, TRAIT_SPRAY_PAINTABLE, INNATE_TRAIT)
 
 /mob/living/simple_animal/bot/hygienebot/explode()
-	new /obj/effect/particle_effect/foam(loc)
+	new /obj/effect/particle_effect/fluid/foam(loc)
 
 	return ..()
 
@@ -211,7 +211,7 @@
 	for(var/X in list(ITEM_SLOT_HEAD, ITEM_SLOT_MASK, ITEM_SLOT_ICLOTHING, ITEM_SLOT_OCLOTHING, ITEM_SLOT_FEET))
 
 		var/obj/item/I = L.get_item_by_slot(X)
-		if(I && HAS_BLOOD_DNA(I))
+		if(I && GET_ATOM_BLOOD_DNA_LENGTH(I))
 			return FALSE
 	return TRUE
 

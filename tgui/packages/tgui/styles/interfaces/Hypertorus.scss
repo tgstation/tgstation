@@ -4,12 +4,12 @@
 
 .hypertorus-layout {
   margin-right: -0.5em;
-};
+}
 
 .hypertorus-layout > * {
   margin-bottom: 0.5em;
   margin-right: 0.5em;
-};
+}
 
 /// @}
 
@@ -17,33 +17,33 @@
 
 // Subtle horizontal stripes for the table
 .hypertorus-recipes__row:nth-child(odd) {
-  background-color: rgba(0, 0, 0, .37);
-};
+  background-color: rgba(0, 0, 0, 0.37);
+}
 .hypertorus-recipes__row:nth-child(even) {
-  background-color: rgba(14, 14, 14, .37);
-};
+  background-color: rgba(14, 14, 14, 0.37);
+}
 
 // Highlight an active row
 .hypertorus-recipes__activerow:nth-child(odd) {
-  background-color: rgba(20, 50, 81, .37);
-};
+  background-color: rgba(20, 50, 81, 0.37);
+}
 .hypertorus-recipes__activerow:nth-child(even) {
-  background-color: rgba(29, 61, 98, .37);
-};
+  background-color: rgba(29, 61, 98, 0.37);
+}
 
 // Headers shouldn't get stripes, but should take the label text color.
 // Headers get left borders as a separator, except if they're furtherest left.
 .hypertorus-recipes__row.Table__row--header {
   color: colors.fg(colors.$label);
-  background-color: rgba(0,0,0,0);
-};
+  background-color: rgba(0, 0, 0, 0);
+}
 .hypertorus-recipes__row.Table__row--header > td {
   border-left: 1px solid colors.bg(colors.$label);
   text-align: center;
-};
+}
 .hypertorus-recipes__row.Table__row--header > td:first-child {
   border-left: none;
-};
+}
 
 // Recipe icons are red, unless they're in a header
 .hypertorus-recipes__icon {
@@ -51,10 +51,10 @@
   position: relative;
   color: colors.fg(colors.$red);
   width: 10px;
-};
+}
 .hypertorus-recipes__row.Table__row--header * .hypertorus-recipes__icon {
   color: colors.fg(colors.$label);
-};
+}
 
 /// @}
 
@@ -89,7 +89,7 @@ $yAxisMargin: $yAxisLabelWidth + $yAxisIconWidth + $yAxisIconPadding * 2;
   height: 1px;
   left: $yAxisMargin;
   right: 0;
-};
+}
 
 .hypertorus-temperatures__y-axis {
   background-color: colors.bg(colors.$label);
@@ -97,14 +97,14 @@ $yAxisMargin: $yAxisLabelWidth + $yAxisIconWidth + $yAxisIconPadding * 2;
   width: 1px;
   left: $yAxisMargin;
   height: $height;
-};
+}
 
 // Note: top set in js
 .hypertorus-temperatures__y-axis-tick-anchor {
   position: absolute;
   left: 0px;
   right: 0;
-};
+}
 
 .hypertorus-temperatures__y-axis-tick {
   background-color: colors.bg(colors.$label);
@@ -112,7 +112,7 @@ $yAxisMargin: $yAxisLabelWidth + $yAxisIconWidth + $yAxisIconPadding * 2;
   left: $yAxisMargin;
   right: 0;
   height: 1px;
-};
+}
 
 .hypertorus-temperatures__y-axis-label {
   text-align: right;
@@ -121,7 +121,7 @@ $yAxisMargin: $yAxisLabelWidth + $yAxisIconWidth + $yAxisIconPadding * 2;
   top: 0;
   left: 0;
   width: $yAxisMargin;
-};
+}
 
 .hypertorus-temperatures__y-axis-icon {
   display: inline-block;
@@ -132,14 +132,14 @@ $yAxisMargin: $yAxisLabelWidth + $yAxisIconWidth + $yAxisIconPadding * 2;
   left: 0;
   right: 0;
   margin-left: $yAxisMargin;
-};
+}
 
 .hypertorus-temperatures__vertical-bar {
   height: $height;
   position: relative;
   width: 17px;
   bottom: 0;
-};
+}
 
 // Note: top set in js
 .hypertorus-temperatures__vertical-bar > * {
@@ -148,11 +148,11 @@ $yAxisMargin: $yAxisLabelWidth + $yAxisIconWidth + $yAxisIconPadding * 2;
   right: -0.5px;
   bottom: 0px;
   border-radius: 0.16em;
-};
+}
 
 .hypertorus__unselectable {
   user-select: none;
   -ms-user-select: none;
-};
+}
 
 /// @}

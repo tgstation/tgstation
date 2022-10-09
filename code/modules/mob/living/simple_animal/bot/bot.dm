@@ -1,6 +1,6 @@
 // AI (i.e. game AI, not the AI player) controlled bots
 /mob/living/simple_animal/bot
-	icon = 'icons/mob/aibots.dmi'
+	icon = 'icons/mob/silicon/aibots.dmi'
 	layer = MOB_LAYER
 	gender = NEUTER
 	mob_biotypes = MOB_ROBOTIC
@@ -37,10 +37,8 @@
 	var/maints_access_required = list(ACCESS_ROBOTICS)
 	///The Robot arm attached to this robot - has a 50% chance to drop on death.
 	var/robot_arm = /obj/item/bodypart/r_arm/robot
-	///People currently looking into a bot's UI panel.
-	var/list/users = list()
 	///The inserted (if any) pAI in this bot.
-	var/obj/item/paicard/paicard
+	var/obj/item/pai_card/paicard
 	///The type of bot it is, for radio control.
 	var/bot_type = NONE
 
@@ -104,8 +102,8 @@
 	var/beacon_freq = FREQ_NAV_BEACON
 	///The type of data HUD the bot uses. Diagnostic by default.
 	var/data_hud_type = DATA_HUD_DIAGNOSTIC_BASIC
-	var/datum/atom_hud/data/bot_path/path_hud = new /datum/atom_hud/data/bot_path()
-	var/path_image_icon = 'icons/mob/aibots.dmi'
+	var/datum/atom_hud/data/bot_path/path_hud
+	var/path_image_icon = 'icons/mob/silicon/aibots.dmi'
 	var/path_image_icon_state = "path_indicator"
 	var/path_image_color = "#FFFFFF"
 	var/reset_access_timer_id
@@ -164,6 +162,11 @@
 /mob/living/simple_animal/bot/Initialize(mapload)
 	. = ..()
 	GLOB.bots_list += src
+
+	path_hud = new /datum/atom_hud/data/bot_path()
+	for(var/hud in path_hud.hud_icons) // You get to see your own path
+		set_hud_image_active(hud, exclusive_hud = path_hud)
+
 	// Give bots a fancy new ID card that can hold any access.
 	access_card = new /obj/item/card/id/advanced/simple_bot(src)
 	// This access is so bots can be immediately set to patrol and leave Robotics, instead of having to be let out first.
@@ -178,7 +181,7 @@
 	//Adds bot to the diagnostic HUD system
 	prepare_huds()
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
-		diag_hud.add_to_hud(src)
+		diag_hud.add_atom_to_hud(src)
 	diag_hud_set_bothealth()
 	diag_hud_set_botstat()
 	diag_hud_set_botmode()
@@ -186,11 +189,13 @@
 	//If a bot has its own HUD (for player bots), provide it.
 	if(!isnull(data_hud_type))
 		var/datum/atom_hud/datahud = GLOB.huds[data_hud_type]
-		datahud.add_hud_to(src)
+		datahud.show_to(src)
 	if(path_hud)
-		path_hud.add_to_hud(src)
-		path_hud.add_hud_to(src)
+		path_hud.add_atom_to_hud(src)
+		path_hud.show_to(src)
 
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_BOTS_GLITCHED))
+		randomize_language_if_on_station()
 
 /mob/living/simple_animal/bot/Destroy()
 	if(path_hud)
@@ -226,7 +231,7 @@
 
 /mob/living/simple_animal/bot/death(gibbed)
 	explode()
-	..()
+	return ..()
 
 /mob/living/simple_animal/bot/proc/explode()
 	visible_message(span_boldnotice("[src] blows apart!"))
@@ -252,7 +257,7 @@
 		if(user)
 			log_combat(user, src, "emagged")
 		return
-	else //Bot is unlocked, but the maint panel has not been opened with a screwdriver yet.
+	else //Bot is unlocked, but the maint panel has not been opened with a screwdriver (or through the UI) yet.
 		to_chat(user, span_warning("You need to open maintenance panel first!"))
 
 /mob/living/simple_animal/bot/examine(mob/user)
@@ -279,7 +284,7 @@
 /mob/living/simple_animal/bot/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	if(amount > 0 && prob(10))
 		new /obj/effect/decal/cleanable/oil(loc)
-	. = ..()
+	return ..()
 
 /mob/living/simple_animal/bot/updatehealth()
 	..()
@@ -393,7 +398,7 @@
 /mob/living/simple_animal/bot/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(attacking_item.GetID())
 		unlock_with_id(user)
-	else if(istype(attacking_item, /obj/item/paicard))
+	else if(istype(attacking_item, /obj/item/pai_card))
 		insertpai(user, attacking_item)
 	else if(attacking_item.tool_behaviour == TOOL_HEMOSTAT && paicard)
 		if(bot_cover_flags & BOT_COVER_OPEN)
@@ -482,65 +487,60 @@
 
 //Generalized behavior code, override where needed!
 
-/*
-scan() will search for a given type (such as turfs, human mobs, or objects) in the bot's view range, and return a single result.
-Arguments: The object type to be searched (such as "/mob/living/carbon/human"), the old scan result to be ignored, if one exists,
-and the view range, which defaults to 7 (full screen) if an override is not passed.
-If the bot maintains an ignore list, it is also checked here.
-
-Example usage: patient = scan(/mob/living/carbon/human, oldpatient, 1)
-The proc would return a human next to the bot to be set to the patient var.
-Pass the desired type path itself, declaring a temporary var beforehand is not required.
-*/
-/mob/living/simple_animal/bot/proc/scan(scan_type, old_target, scan_range = DEFAULT_SCAN_RANGE)
-	var/turf/T = get_turf(src)
-	if(!T)
+/**
+ * Attempt to scan tiles near [src], first by checking adjacent, then if a target is still not found, nearby.
+ *
+ * scan_types - list (of typepaths) that nearby tiles are being scanned for.
+ * old_target - what has already been scanned, and will early return at checkscan.
+ * scan_range - how far away from [src] will be scanned, if nothing is found directly adjacent.
+ */
+/mob/living/simple_animal/bot/proc/scan(list/scan_types, old_target, scan_range = DEFAULT_SCAN_RANGE)
+	var/turf/current_turf = get_turf(src)
+	if(!current_turf)
 		return
-	var/list/adjacent = T.get_atmos_adjacent_turfs(1)
+	var/list/adjacent = current_turf.get_atmos_adjacent_turfs(1)
 	if(shuffle) //If we were on the same tile as another bot, let's randomize our choices so we dont both go the same way
 		adjacent = shuffle(adjacent)
 		shuffle = FALSE
-	for(var/scan in adjacent)//Let's see if there's something right next to us first!
+
+	for(var/turf/scan as anything in adjacent) //Let's see if there's something right next to us first!
 		if(check_bot(scan)) //Is there another bot there? Then let's just skip it
 			continue
-		if(isturf(scan_type)) //If we're lookeing for a turf we can just run the checks directly!
-			var/final_result = checkscan(scan,scan_type,old_target)
-			if(final_result)
-				return final_result
-		else
-			var/turf/turfy = scan
-			for(var/deepscan in turfy.contents)//Check the contents since adjacent is turfs
-				var/final_result = checkscan(deepscan,scan_type,old_target)
-				if(final_result)
-					return final_result
-	for (var/scan in shuffle(view(scan_range, src))-adjacent) //Search for something in range!
-		var/final_result = checkscan(scan,scan_type,old_target)
+		var/final_result = checkscan(scan, scan_types, old_target)
 		if(final_result)
 			return final_result
 
-/mob/living/simple_animal/bot/proc/checkscan(scan, scan_type, old_target)
-	if(!istype(scan, scan_type)) //Check that the thing we found is the type we want!
-		return FALSE //If not, keep searching!
-	if((REF(scan) in ignore_list) || (scan == old_target)) //Filter for blacklisted elements, usually unreachable or previously processed oness
-		return FALSE
+	for(var/turf/scanned_turfs as anything in shuffle(view(scan_range, src)) - adjacent) //Search for something in range, minus what we already checked.
+		if(check_bot(scanned_turfs)) //Is there another bot there? Then let's just skip it
+			continue
+		var/final_result = checkscan(scanned_turfs, scan_types, old_target)
+		if(final_result)
+			return final_result
 
-	var/scan_result = process_scan(scan) //Some bots may require additional processing when a result is selected.
-	if(scan_result)
-		return scan_result
-	else
-		return FALSE //The current element failed assessment, move on to the next.
+/mob/living/simple_animal/bot/proc/checkscan(atom/scan, list/scan_types, old_target)
+	for(var/scan_type in scan_types)
+		if(!istype(scan, scan_type)) //Check that the thing we found is the type we want!
+			continue //If not, keep searching!
+		if((REF(scan) in ignore_list) || (scan == old_target)) //Filter for blacklisted elements, usually unreachable or previously processed oness
+			continue
 
-/mob/living/simple_animal/bot/proc/check_bot(targ)
-	var/turf/T = get_turf(targ)
-	if(T)
-		for(var/C in T.contents)
-			if(istype(C,type) && (C != src)) //Is there another bot there already? If so, let's skip it so we dont all atack on top of eachother.
-				return TRUE //Let's abort if we find a bot so we dont have to keep rechecking
+		var/scan_result = process_scan(scan) //Some bots may require additional processing when a result is selected.
+		if(!isnull(scan_result))
+			return scan_result
 
 //When the scan finds a target, run bot specific processing to select it for the next step. Empty by default.
 /mob/living/simple_animal/bot/proc/process_scan(scan_target)
 	return scan_target
 
+/mob/living/simple_animal/bot/proc/check_bot(targ)
+	var/turf/target_turf = get_turf(targ)
+	if(!target_turf)
+		return FALSE
+	for(var/turf_contents in target_turf.contents)
+		//Is there another bot there already? If so, let's skip it so we dont all atack on top of eachother.
+		if(istype(turf_contents, type) && (turf_contents != src))
+			return TRUE //Let's abort if we find a bot so we dont have to keep rechecking
+	return FALSE
 
 /mob/living/simple_animal/bot/proc/add_to_ignore(subject)
 	if(ignore_list.len < 50) //This will help keep track of them, so the bot is always trying to reach a blocked spot.
@@ -646,6 +646,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	access_card.set_access(prev_access)
 	tries = 0
 	mode = BOT_IDLE
+	ignore_list = list()
 	diag_hud_set_botstat()
 	diag_hud_set_botmode()
 
@@ -910,14 +911,14 @@ Pass a positive integer as an argument to override a bot's default speed.
 				bot_cover_flags |= (BOT_COVER_EMAGGED|BOT_COVER_HACKED|BOT_COVER_LOCKED)
 				to_chat(usr, span_warning("You overload [src]'s [hackables]."))
 				message_admins("Safety lock of [ADMIN_LOOKUPFLW(src)] was disabled by [ADMIN_LOOKUPFLW(usr)] in [ADMIN_VERBOSEJMP(src)]")
-				log_game("Safety lock of [src] was disabled by [key_name(usr)] in [AREACOORD(src)]")
+				usr.log_message("disabled safety lock of [src]", LOG_GAME)
 				bot_reset()
 			else if(!(bot_cover_flags & BOT_COVER_HACKED))
 				to_chat(usr, span_boldannounce("You fail to repair [src]'s [hackables]."))
 			else
 				bot_cover_flags &= ~(BOT_COVER_EMAGGED|BOT_COVER_HACKED)
 				to_chat(usr, span_notice("You reset the [src]'s [hackables]."))
-				log_game("Safety lock of [src] was re-enabled by [key_name(usr)] in [AREACOORD(src)]")
+				usr.log_message("re-enabled safety lock of [src]", LOG_GAME)
 				bot_reset()
 		if("eject_pai")
 			if(paicard)
@@ -939,7 +940,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 			return TRUE
 	return FALSE
 
-/mob/living/simple_animal/bot/proc/insertpai(mob/user, obj/item/paicard/card)
+/mob/living/simple_animal/bot/proc/insertpai(mob/user, obj/item/pai_card/card)
 	if(paicard)
 		to_chat(user, span_warning("A [paicard] is already inserted!"))
 		return
@@ -1022,11 +1023,10 @@ Pass a positive integer as an argument to override a bot's default speed.
 	var/list/path_huds_watching_me = list(GLOB.huds[DATA_HUD_DIAGNOSTIC_ADVANCED])
 	if(path_hud)
 		path_huds_watching_me += path_hud
-	for(var/V in path_huds_watching_me)
-		var/datum/atom_hud/H = V
-		H.remove_from_hud(src)
+	for(var/datum/atom_hud/hud as anything in path_huds_watching_me)
+		hud.remove_atom_from_hud(src)
 
-	var/list/path_images = hud_list[DIAG_PATH_HUD]
+	var/list/path_images = active_hud_list[DIAG_PATH_HUD]
 	QDEL_LIST(path_images)
 	if(newpath)
 		for(var/i in 1 to newpath.len)
@@ -1056,7 +1056,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 			MA.icon = path_image_icon
 			MA.icon_state = path_image_icon_state
 			MA.layer = ABOVE_OPEN_TURF_LAYER
-			MA.plane = GAME_PLANE
+			SET_PLANE(MA, GAME_PLANE, T)
 			MA.appearance_flags = RESET_COLOR|RESET_TRANSFORM
 			MA.color = path_image_color
 			MA.dir = direction
@@ -1065,9 +1065,8 @@ Pass a positive integer as an argument to override a bot's default speed.
 			path[T] = I
 			path_images += I
 
-	for(var/V in path_huds_watching_me)
-		var/datum/atom_hud/H = V
-		H.add_to_hud(src)
+	for(var/datum/atom_hud/hud as anything in path_huds_watching_me)
+		hud.add_atom_to_hud(src)
 
 /mob/living/simple_animal/bot/proc/increment_path()
 	if(!length(path))
@@ -1082,3 +1081,22 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 /mob/living/simple_animal/bot/rust_heretic_act()
 	adjustBruteLoss(400)
+
+/**
+ * Randomizes our bot's language if:
+ * - They are on the setation Z level
+ * OR
+ * - They are on the escape shuttle
+ */
+/mob/living/simple_animal/bot/proc/randomize_language_if_on_station()
+	var/turf/bot_turf = get_turf(src)
+	var/area/bot_area = get_area(src)
+	if(!is_station_level(bot_turf.z) && !istype(bot_area, /area/shuttle/escape))
+		// Why snowflake check for escape shuttle? Well, a lot of shuttles spawn with bots
+		// but docked at centcom, and I wanted those bots to also speak funny languages
+		return FALSE
+
+	/// The bot's language holder - so we can randomize and change their language
+	var/datum/language_holder/bot_languages = get_language_holder()
+	bot_languages.selected_language = bot_languages.get_random_spoken_uncommon_language()
+	return TRUE

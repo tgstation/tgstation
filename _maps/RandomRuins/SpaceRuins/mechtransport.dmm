@@ -60,9 +60,9 @@
 /area/ruin/space/has_grav/powered/mechtransport)
 "p" = (
 /obj/machinery/door/airlock/hatch{
-	name = "Cockpit";
-	req_access_txt = "101"
+	name = "Cockpit"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/admin/general,
 /turf/open/floor/mineral/titanium,
 /area/ruin/space/has_grav/powered/mechtransport)
 "r" = (
@@ -154,14 +154,8 @@
 /turf/open/floor/mineral/titanium/yellow/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "M" = (
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg1"
-	},
-/area/ruin/space/has_grav/powered/mechtransport)
-"N" = (
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg2"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "O" = (
 /obj/structure/mecha_wreckage/odysseus,
@@ -175,11 +169,6 @@
 /obj/structure/mecha_wreckage/gygax,
 /turf/open/floor/mineral/titanium/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
-"R" = (
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg3"
-	},
-/area/ruin/space/has_grav/powered/mechtransport)
 "S" = (
 /obj/item/stack/rods,
 /turf/open/floor/plating/airless,
@@ -192,7 +181,7 @@
 /turf/template_noop,
 /area/ruin/space/has_grav/powered/mechtransport)
 "X" = (
-/obj/structure/shuttle/engine/propulsion,
+/obj/machinery/power/shuttle_engine/propulsion,
 /turf/template_noop,
 /area/ruin/space/has_grav/powered/mechtransport)
 
@@ -226,7 +215,7 @@ H
 S
 H
 I
-R
+M
 V
 T
 "}
@@ -241,7 +230,7 @@ w
 F
 w
 H
-N
+M
 I
 I
 T

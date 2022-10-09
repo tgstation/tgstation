@@ -5,7 +5,7 @@
 	faction = FACTION_STATION
 	total_positions = 5
 	spawn_positions = 3
-	supervisors = "the research director"
+	supervisors = SUPERVISOR_RD
 	selection_color = "#ffeeff"
 	exp_requirements = 60
 	exp_required_type = EXP_TYPE_CREW
@@ -16,6 +16,8 @@
 
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SCI
+
+	liver_traits = list(TRAIT_BALLMER_SCIENTIST)
 
 	display_order = JOB_DISPLAY_ORDER_SCIENTIST
 	bounty_types = CIV_JOB_SCI
@@ -51,9 +53,19 @@
 
 /datum/outfit/job/scientist/pre_equip(mob/living/carbon/human/H)
 	..()
-	if(prob(0.4))
+	try_giving_horrible_tie()
+
+/datum/outfit/job/scientist/proc/try_giving_horrible_tie()
+	if (prob(0.4))
 		neck = /obj/item/clothing/neck/tie/horrible
 
 /datum/outfit/job/scientist/get_types_to_preload()
 	. = ..()
 	. += /obj/item/clothing/neck/tie/horrible
+
+/// A version of the scientist outfit that is guaranteed to be the same every time
+/datum/outfit/job/scientist/consistent
+	name = "Scientist - Consistent"
+
+/datum/outfit/job/scientist/consistent/try_giving_horrible_tie()
+	return

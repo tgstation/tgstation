@@ -12,8 +12,8 @@
 /obj/structure/ore_box/attackby(obj/item/W, mob/user, params)
 	if (istype(W, /obj/item/stack/ore))
 		user.transferItemToLoc(W, src)
-	else if(SEND_SIGNAL(W, COMSIG_CONTAINS_STORAGE))
-		SEND_SIGNAL(W, COMSIG_TRY_STORAGE_TAKE_TYPE, /obj/item/stack/ore, src)
+	else if(W.atom_storage)
+		W.atom_storage.remove_type(/obj/item/stack/ore, src, INFINITY, TRUE, FALSE, user, null)
 		to_chat(user, span_notice("You empty the ore in [W] into \the [src]."))
 	else
 		return ..()
@@ -44,14 +44,17 @@
 
 /obj/structure/ore_box/proc/dump_box_contents()
 	var/drop = drop_location()
+	var/turf/our_turf = get_turf(src)
 	for(var/obj/item/stack/ore/O in src)
 		if(QDELETED(O))
 			continue
 		if(QDELETED(src))
 			break
 		O.forceMove(drop)
+		SET_PLANE(O, PLANE_TO_TRUE(O.plane), our_turf)
 		if(TICK_CHECK)
 			stoplag()
+			our_turf = get_turf(src)
 			drop = drop_location()
 
 /obj/structure/ore_box/ui_interact(mob/user, datum/tgui/ui)
@@ -95,5 +98,5 @@
 	qdel(src)
 
 /// Special override for notify_contents = FALSE.
-/obj/structure/ore_box/on_changed_z_level(turf/old_turf, turf/new_turf, notify_contents = FALSE)
+/obj/structure/ore_box/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents = FALSE)
 	return ..()

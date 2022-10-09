@@ -19,6 +19,8 @@
 		armor plating being installed by default, and their actuators only lead to slightly greater speed than industrial suits."
 	/// Default skin of the MOD.
 	var/default_skin = "standard"
+	/// The slot this mod theme fits on
+	var/slot_flags = ITEM_SLOT_BACK
 	/// Armor shared across the MOD parts.
 	var/armor = list(MELEE = 10, BULLET = 5, LASER = 5, ENERGY = 5, BOMB = 0, BIO = 100, FIRE = 25, ACID = 25, WOUND = 5)
 	/// Resistance flags shared across the MOD parts.
@@ -29,8 +31,6 @@
 	var/max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	/// Max cold protection shared across the MOD parts.
 	var/min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
-	/// Permeability shared across the MOD parts.
-	var/permeability_coefficient = 0.01
 	/// Siemens shared across the MOD parts.
 	var/siemens_coefficient = 0.5
 	/// How much modules can the MOD carry without malfunctioning.
@@ -48,10 +48,7 @@
 	/// Modules blacklisted from the MOD.
 	var/list/module_blacklist = list()
 	/// Allowed items in the chestplate's suit storage.
-	var/list/allowed_suit_storage = list(
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
-	)
+	var/list/allowed_suit_storage = list()
 	/// List of skins with their appropriate clothing flags.
 	var/list/skins = list(
 		"standard" = list(
@@ -120,9 +117,8 @@
 	slowdown_inactive = 1.5
 	slowdown_active = 1
 	allowed_suit_storage = list(
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
 		/obj/item/construction/rcd,
+		/obj/item/fireaxe/metal_h2_axe,
 		/obj/item/storage/bag/construction,
 	)
 	skins = list(
@@ -168,11 +164,10 @@
 	slowdown_inactive = 1.5
 	slowdown_active = 1
 	allowed_suit_storage = list(
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
 		/obj/item/analyzer,
-		/obj/item/t_scanner,
+		/obj/item/fireaxe/metal_h2_axe,
 		/obj/item/pipe_dispenser,
+		/obj/item/t_scanner,
 	)
 	skins = list(
 		"atmospheric" = list(
@@ -220,14 +215,13 @@
 	slowdown_active = 0.5
 	inbuilt_modules = list(/obj/item/mod/module/magboot/advanced)
 	allowed_suit_storage = list(
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
 		/obj/item/analyzer,
-		/obj/item/t_scanner,
-		/obj/item/pipe_dispenser,
 		/obj/item/construction/rcd,
-		/obj/item/storage/bag/construction,
+		/obj/item/fireaxe/metal_h2_axe,
 		/obj/item/melee/baton/telescopic,
+		/obj/item/pipe_dispenser,
+		/obj/item/storage/bag/construction,
+		/obj/item/t_scanner,
 	)
 	skins = list(
 		"advanced" = list(
@@ -285,8 +279,6 @@
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 5
 	charge_drain = DEFAULT_CHARGE_DRAIN * 2
 	allowed_suit_storage = list(
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
 		/obj/item/resonator,
 		/obj/item/mining_scanner,
 		/obj/item/t_scanner/adv_mining_scanner,
@@ -365,14 +357,11 @@
 	armor = list(MELEE = 15, BULLET = 5, LASER = 5, ENERGY = 5, BOMB = 10, BIO = 10, FIRE = 25, ACID = 25, WOUND = 10)
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
-	permeability_coefficient = 0.5
 	siemens_coefficient = 0.25
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 5
 	slowdown_inactive = 0.5
 	slowdown_active = 0
 	allowed_suit_storage = list(
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
 		/obj/item/mail,
 		/obj/item/delivery/small,
 		/obj/item/paper,
@@ -417,12 +406,10 @@
 	slowdown_inactive = 1
 	slowdown_active = 0.5
 	allowed_suit_storage = list(
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
 		/obj/item/healthanalyzer,
 		/obj/item/reagent_containers/dropper,
-		/obj/item/reagent_containers/glass/beaker,
-		/obj/item/reagent_containers/glass/bottle,
+		/obj/item/reagent_containers/cup/beaker,
+		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/hypospray,
 		/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/syringe,
@@ -503,12 +490,10 @@
 	slowdown_active = 0.25
 	inbuilt_modules = list(/obj/item/mod/module/quick_carry/advanced)
 	allowed_suit_storage = list(
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
 		/obj/item/healthanalyzer,
 		/obj/item/reagent_containers/dropper,
-		/obj/item/reagent_containers/glass/beaker,
-		/obj/item/reagent_containers/glass/bottle,
+		/obj/item/reagent_containers/cup/beaker,
+		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/hypospray,
 		/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/syringe,
@@ -567,8 +552,6 @@
 	slowdown_active = 1.25
 	inbuilt_modules = list(/obj/item/mod/module/reagent_scanner/advanced)
 	allowed_suit_storage = list(
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
 		/obj/item/analyzer,
 		/obj/item/dnainjector,
 		/obj/item/biopsy_tool,
@@ -605,24 +588,19 @@
 
 /datum/mod_theme/security
 	name = "security"
-	desc = "An Apadyne Technologies security suit, offering shock protection and quicker speed, at the cost of carrying capacity."
+	desc = "An Apadyne Technologies security suit, offering quicker speed at the cost of carrying capacity."
 	extended_desc = "An Apadyne Technologies classic, this model of MODsuit has been designed for quick response to \
 		hostile situations. These suits have been layered with plating worthy enough for fires or corrosive environments, \
 		and come with composite cushioning and an advanced honeycomb structure underneath the hull to ensure protection \
 		against broken bones or possible avulsions. The suit's legs have been given more rugged actuators, \
-		allowing the suit to do more work in carrying the weight. Lastly, these have been given a shock-absorbing \
-		insulating layer on the gauntlets, making sure the user isn't under risk of electricity. \
-		However, the systems used in these suits are more than a few years out of date, \
-		leading to an overall lower capacity for modules."
+		allowing the suit to do more work in carrying the weight. However, the systems used in these suits are more than \
+		a few years out of date, leading to an overall lower capacity for modules."
 	default_skin = "security"
 	armor = list(MELEE = 15, BULLET = 15, LASER = 15, ENERGY = 15, BOMB = 25, BIO = 100, FIRE = 75, ACID = 75, WOUND = 15)
-	siemens_coefficient = 0
-	complexity_max = DEFAULT_MAX_COMPLEXITY - 5
+	complexity_max = DEFAULT_MAX_COMPLEXITY - 3
 	slowdown_inactive = 1
 	slowdown_active = 0.5
 	allowed_suit_storage = list(
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
 		/obj/item/ammo_box,
 		/obj/item/ammo_casing,
 		/obj/item/reagent_containers/spray/pepper,
@@ -672,13 +650,9 @@
 	armor = list(MELEE = 15, BULLET = 15, LASER = 15, ENERGY = 15, BOMB = 40, BIO = 100, FIRE = 100, ACID = 95, WOUND = 15)
 	resistance_flags = FIRE_PROOF
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
-	siemens_coefficient = 0
-	complexity_max = DEFAULT_MAX_COMPLEXITY - 5
 	slowdown_inactive = 0.75
 	slowdown_active = 0.25
 	allowed_suit_storage = list(
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
 		/obj/item/ammo_box,
 		/obj/item/ammo_casing,
 		/obj/item/reagent_containers/spray/pepper,
@@ -735,8 +709,6 @@
 	slowdown_inactive = 0.75
 	slowdown_active = 0.25
 	allowed_suit_storage = list(
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
 		/obj/item/ammo_box,
 		/obj/item/ammo_casing,
 		/obj/item/restraints/handcuffs,
@@ -785,8 +757,6 @@
 	slowdown_inactive = 1.75
 	slowdown_active = 1.25
 	allowed_suit_storage = list(
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
 		/obj/item/bikehorn,
 		/obj/item/food/grown/banana,
 		/obj/item/grown/bananapeel,
@@ -841,8 +811,6 @@
 	ui_theme = "syndicate"
 	inbuilt_modules = list(/obj/item/mod/module/armor_booster)
 	allowed_suit_storage = list(
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
 		/obj/item/ammo_box,
 		/obj/item/ammo_casing,
 		/obj/item/restraints/handcuffs,
@@ -924,8 +892,6 @@
 	ui_theme = "syndicate"
 	inbuilt_modules = list(/obj/item/mod/module/armor_booster)
 	allowed_suit_storage = list(
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
 		/obj/item/ammo_box,
 		/obj/item/ammo_casing,
 		/obj/item/restraints/handcuffs,
@@ -983,8 +949,6 @@
 	ui_theme = "wizard"
 	inbuilt_modules = list(/obj/item/mod/module/anti_magic/wizard)
 	allowed_suit_storage = list(
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
 		/obj/item/teleportation_scroll,
 		/obj/item/highfrequencyblade/wizard,
 		/obj/item/gun/magic,
@@ -993,10 +957,63 @@
 		"enchanted" = list(
 			HELMET_FLAGS = list(
 				UNSEALED_LAYER = null,
-				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
+				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL|CASTING_CLOTHES,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT,
 				UNSEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
+			),
+			CHESTPLATE_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL|CASTING_CLOTHES,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				SEALED_INVISIBILITY = HIDEJUMPSUIT,
+			),
+			GAUNTLETS_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
+			),
+			BOOTS_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
+			),
+		),
+	)
+
+/datum/mod_theme/ninja
+	name = "ninja"
+	desc = "A unique, vacuum-proof suit of nano-enhanced armor designed specifically for Spider Clan assassins."
+	extended_desc = "A suit of nano-enhanced armor designed specifically for Spider Clan assassin-saboteurs. \
+		This MODsuit employs the cutting edge of stealth and combat technology, built skin-tight but just as durable as \
+		suits two or three times as thick. The nanomachines making up the outermost layer of armor \
+		are capable of shifting their form into almost-microscopic radiating fins, rendering the suit itself \
+		nigh-immune to even volcanic heat. It's entirely sealed against even the strongest acids, \
+		and the myoelectric artifical muscles of the suit leave it light as a feather during movement."
+	default_skin = "ninja"
+	armor = list(MELEE = 40, BULLET = 30, LASER = 20, ENERGY = 30, BOMB = 30, BIO = 100, FIRE = 100, ACID = 100, WOUND = 10)
+	resistance_flags = LAVA_PROOF|FIRE_PROOF|ACID_PROOF
+	charge_drain = DEFAULT_CHARGE_DRAIN * 0.5
+	siemens_coefficient = 0
+	slowdown_inactive = 0.5
+	slowdown_active = 0
+	ui_theme = "hackerman"
+	inbuilt_modules = list(/obj/item/mod/module/welding/camera_vision, /obj/item/mod/module/hacker, /obj/item/mod/module/weapon_recall, /obj/item/mod/module/adrenaline_boost, /obj/item/mod/module/energy_net)
+	allowed_suit_storage = list(
+		/obj/item/gun,
+		/obj/item/ammo_box,
+		/obj/item/ammo_casing,
+		/obj/item/melee/baton,
+		/obj/item/restraints/handcuffs,
+	)
+	skins = list(
+		"ninja" = list(
+			HELMET_FLAGS = list(
+				UNSEALED_LAYER = null,
+				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				UNSEALED_INVISIBILITY = HIDEEARS|HIDEHAIR,
+				SEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEMASK|HIDEEYES|HIDEFACE|HIDESNOUT,
+				SEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
 			),
 			CHESTPLATE_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
@@ -1029,6 +1046,7 @@
 	default_skin = "prototype"
 	armor = list(MELEE = 20, BULLET = 5, LASER = 10, ENERGY = 10, BOMB = 50, BIO = 100, FIRE = 100, ACID = 75, WOUND = 5)
 	resistance_flags = FIRE_PROOF
+	siemens_coefficient = 0
 	complexity_max = DEFAULT_MAX_COMPLEXITY + 5
 	charge_drain = DEFAULT_CHARGE_DRAIN * 2
 	slowdown_inactive = 2
@@ -1036,8 +1054,6 @@
 	ui_theme = "hackerman"
 	inbuilt_modules = list(/obj/item/mod/module/anomaly_locked/kinesis/prebuilt/prototype)
 	allowed_suit_storage = list(
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
 		/obj/item/analyzer,
 		/obj/item/t_scanner,
 		/obj/item/pipe_dispenser,
@@ -1087,8 +1103,6 @@
 	slowdown_inactive = 0.5
 	slowdown_active = 0
 	allowed_suit_storage = list(
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
 		/obj/item/ammo_box,
 		/obj/item/ammo_casing,
 		/obj/item/restraints/handcuffs,
@@ -1164,8 +1178,6 @@
 	siemens_coefficient = 0
 	complexity_max = DEFAULT_MAX_COMPLEXITY + 10
 	allowed_suit_storage = list(
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
 		/obj/item/ammo_box,
 		/obj/item/ammo_casing,
 		/obj/item/restraints/handcuffs,
@@ -1219,8 +1231,6 @@
 	slowdown_inactive = 0.5
 	slowdown_active = 0
 	allowed_suit_storage = list(
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
 		/obj/item/ammo_box,
 		/obj/item/ammo_casing,
 		/obj/item/restraints/handcuffs,
@@ -1270,8 +1280,6 @@
 	slowdown_inactive = 0
 	slowdown_active = 0
 	allowed_suit_storage = list(
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
 		/obj/item/restraints/handcuffs,
 	)
 	skins = list(
@@ -1318,8 +1326,6 @@
 	slowdown_inactive = 0.5
 	slowdown_active = 0
 	allowed_suit_storage = list(
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
 		/obj/item/gun,
 	)
 	skins = list(
@@ -1369,8 +1375,6 @@
 	slowdown_inactive = 0
 	slowdown_active = 0
 	allowed_suit_storage = list(
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
 		/obj/item/gun,
 	)
 	skins = list(

@@ -96,7 +96,7 @@
 
 /obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/comms/space/Initialize(mapload)
 	. = ..()
-	if(prob(90)) //only has a 10% chance of existing, otherwise it'll just be a NPC syndie.
+	if(prob(85)) //only has a 15% chance of existing, otherwise it'll just be a NPC syndie.
 		new /mob/living/simple_animal/hostile/syndicate/ranged(get_turf(src))
 		return INITIALIZE_HINT_QDEL
 
@@ -110,11 +110,18 @@
 	prompt_name = "a battlecruiser crewmember"
 	outfit = /datum/outfit/syndicate_empty/battlecruiser
 	spawner_job_path = /datum/job/battlecruiser_crew
+	uses = 4
 
 	/// The antag team to apply the player to
 	var/datum/team/antag_team
 	/// The antag datum to give to the player spawned
 	var/antag_datum_to_give = /datum/antagonist/battlecruiser
+
+/obj/effect/mob_spawn/ghost_role/human/syndicate/battlecruiser/allow_spawn(mob/user, silent = FALSE)
+	if(!(user.ckey in antag_team.players_spawned))
+		return TRUE
+	to_chat(user, span_boldwarning("You have already used up your chance to roll as Battlecruiser."))
+	return FALSE
 
 /obj/effect/mob_spawn/ghost_role/human/syndicate/battlecruiser/special(mob/living/spawned_mob, mob/possesser)
 	. = ..()
@@ -122,9 +129,10 @@
 		spawned_mob.mind_initialize()
 	var/datum/mind/mob_mind = spawned_mob.mind
 	mob_mind.add_antag_datum(antag_datum_to_give, antag_team)
+	antag_team.players_spawned += (spawned_mob.ckey)
 
 /datum/team/battlecruiser
-	name = "Battlecruiser Crew"
+	name = "\improper Battlecruiser Crew"
 	member_name = "crewmember"
 	/// The central objective of this battlecruiser
 	var/core_objective = /datum/objective/nuclear
@@ -185,8 +193,9 @@
 
 /datum/outfit/syndicate_empty/battlecruiser
 	name = "Syndicate Battlecruiser Ship Operative"
-	l_pocket = /obj/item/gun/ballistic/automatic/pistol
+	l_pocket = /obj/item/gun/ballistic/automatic/pistol/clandestine
 	r_pocket = /obj/item/knife/combat/survival
+	box = /obj/item/storage/box/survival/syndie
 	belt = /obj/item/storage/belt/military/assault
 
 /obj/effect/mob_spawn/ghost_role/human/syndicate/battlecruiser/assault
@@ -196,6 +205,7 @@
 	important_text = "Work as a team with your fellow operatives and work out a plan of attack. If you are overwhelmed, escape back to your ship!"
 	prompt_name = "a battlecruiser operative"
 	outfit = /datum/outfit/syndicate_empty/battlecruiser/assault
+	uses = 8
 
 /datum/outfit/syndicate_empty/battlecruiser/assault
 	name = "Syndicate Battlecruiser Assault Operative"
@@ -204,8 +214,8 @@
 	r_pocket = /obj/item/modular_computer/tablet/nukeops
 	belt = /obj/item/storage/belt/military
 	suit = /obj/item/clothing/suit/armor/vest
-	suit_store = /obj/item/gun/ballistic/automatic/pistol
-	back = /obj/item/storage/backpack/security
+	suit_store = /obj/item/gun/ballistic/automatic/pistol/clandestine
+	back = /obj/item/storage/backpack
 	mask = /obj/item/clothing/mask/gas/syndicate
 
 /obj/effect/mob_spawn/ghost_role/human/syndicate/battlecruiser/captain
@@ -217,6 +227,7 @@
 	outfit = /datum/outfit/syndicate_empty/battlecruiser/assault/captain
 	spawner_job_path = /datum/job/battlecruiser_captain
 	antag_datum_to_give = /datum/antagonist/battlecruiser/captain
+	uses = 1
 
 /datum/outfit/syndicate_empty/battlecruiser/assault/captain
 	name = "Syndicate Battlecruiser Captain"
@@ -225,7 +236,7 @@
 	suit = /obj/item/clothing/suit/armor/vest/capcarapace/syndicate
 	suit_store = /obj/item/gun/ballistic/revolver/mateba
 	back = /obj/item/storage/backpack/satchel/leather
-	head = /obj/item/clothing/head/hos/syndicate
+	head = /obj/item/clothing/head/hats/hos/syndicate
 	mask = /obj/item/clothing/mask/cigarette/cigar/havana
 	ears = /obj/item/radio/headset/syndicate/alt/leader
 	glasses = /obj/item/clothing/glasses/thermal/eyepatch

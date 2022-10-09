@@ -7,7 +7,7 @@
 /mob/living/simple_animal/bot/firebot
 	name = "\improper Firebot"
 	desc = "A little fire extinguishing bot. He looks rather anxious."
-	icon = 'icons/mob/aibots.dmi'
+	icon = 'icons/mob/silicon/aibots.dmi'
 	icon_state = "firebot"
 	density = FALSE
 	anchored = FALSE
@@ -89,7 +89,6 @@
 	..()
 	target_fire = null
 	old_target_fire = null
-	ignore_list = list()
 	set_anchored(FALSE)
 	update_appearance()
 
@@ -187,12 +186,14 @@
 		target_fire = null
 		var/scan_range = (stationary_mode ? 1 : DEFAULT_SCAN_RANGE)
 
+		var/list/things_to_extinguish = list()
 		if(extinguish_people)
-			target_fire = scan(/mob/living, old_target_fire, scan_range) // Scan for burning humans first
+			things_to_extinguish += list(/mob/living)
 
 		if(target_fire == null && extinguish_fires)
-			target_fire = scan(/turf/open, old_target_fire, scan_range) // Scan for burning turfs second
+			things_to_extinguish += list(/turf/open)
 
+		target_fire = scan(things_to_extinguish, old_target_fire, scan_range) // Scan for burning turfs second
 		old_target_fire = target_fire
 
 	// Target reached ENGAGE WATER CANNON
@@ -248,26 +249,23 @@
 
 //Look for burning people or turfs around the bot
 /mob/living/simple_animal/bot/firebot/process_scan(atom/scan_target)
-	var/result
-
 	if(scan_target == src)
-		return result
+		return src
+	if(!is_burning(scan_target))
+		return null
 
-	if(is_burning(scan_target))
-		if((detected_cooldown + DETECTED_VOICE_INTERVAL) < world.time)
-			speak("Fire detected!")
-			playsound(src, 'sound/voice/firebot/detected.ogg', 50, FALSE)
-			detected_cooldown = world.time
-		result = scan_target
-
-	return result
+	if((detected_cooldown + DETECTED_VOICE_INTERVAL) < world.time)
+		speak("Fire detected!")
+		playsound(src, 'sound/voice/firebot/detected.ogg', 50, FALSE)
+		detected_cooldown = world.time
+		return scan_target
 
 /mob/living/simple_animal/bot/firebot/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return (exposed_temperature > T0C + 200 || exposed_temperature < BODYTEMP_COLD_DAMAGE_LIMIT)
 
 /mob/living/simple_animal/bot/firebot/atmos_expose(datum/gas_mixture/air, exposed_temperature)
 	if(COOLDOWN_FINISHED(src, foam_cooldown))
-		new /obj/effect/particle_effect/foam/firefighting(loc)
+		new /obj/effect/particle_effect/fluid/foam/firefighting(loc)
 		COOLDOWN_START(src, foam_cooldown, FOAM_INTERVAL)
 
 /mob/living/simple_animal/bot/firebot/proc/spray_water(atom/target, mob/user)
@@ -292,7 +290,7 @@
 	var/atom/Tsec = drop_location()
 
 	new /obj/item/assembly/prox_sensor(Tsec)
-	new /obj/item/clothing/head/hardhat/red(Tsec)
+	new /obj/item/clothing/head/utility/hardhat/red(Tsec)
 
 	var/turf/T = get_turf(Tsec)
 

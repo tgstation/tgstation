@@ -47,3 +47,13 @@
 	for (var/datum/tgui/tgui as anything in client.mob?.tgui_open_uis)
 		// Force it to reload either way
 		tgui.update_static_data(client.mob)
+
+/// Light mode for tgui say
+/datum/preference/toggle/tgui_say_light_mode
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	savefile_key = "tgui_say_light_mode"
+	savefile_identifier = PREFERENCE_PLAYER
+	default_value = FALSE
+
+/datum/preference/toggle/tgui_say_light_mode/apply_to_client(client/client)
+	client.tgui_say?.load()

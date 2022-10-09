@@ -7,10 +7,10 @@
 	name = "pirate outfits"
 	},
 /obj/item/clothing/head/collectable/pirate,
-/obj/item/clothing/suit/pirate,
+/obj/item/clothing/suit/costume/pirate,
 /obj/item/clothing/under/costume/pirate,
 /obj/item/clothing/shoes/jackboots,
-/obj/item/clothing/head/bandana,
+/obj/item/clothing/head/costume/pirate/bandana,
 /turf/open/floor/iron/dark/side{
 	dir = 5
 	},
@@ -142,7 +142,7 @@
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "jU" = (
-/obj/structure/shuttle/engine/propulsion/burst{
+/obj/machinery/power/shuttle_engine/propulsion/burst{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
@@ -240,10 +240,10 @@
 	name = "pirate outfits"
 	},
 /obj/item/clothing/head/collectable/pirate,
-/obj/item/clothing/suit/pirate,
+/obj/item/clothing/suit/costume/pirate,
 /obj/item/clothing/under/costume/pirate,
 /obj/item/clothing/shoes/jackboots,
-/obj/item/clothing/head/bandana,
+/obj/item/clothing/head/costume/pirate/bandana,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -311,7 +311,7 @@
 /obj/item/storage/box/donkpockets{
 	pixel_x = -6
 	},
-/obj/item/reagent_containers/food/drinks/bottle/rum{
+/obj/item/reagent_containers/cup/glass/bottle/rum{
 	pixel_x = 8;
 	pixel_y = 3
 	},
@@ -322,7 +322,7 @@
 /area/shuttle/caravan/pirate)
 "qX" = (
 /obj/structure/reagent_dispensers/watertank,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/cup/bucket,
 /obj/item/mop,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -355,11 +355,11 @@
 /area/shuttle/caravan/pirate)
 "to" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/drinks/bottle/rum{
+/obj/item/reagent_containers/cup/glass/bottle/rum{
 	pixel_x = 3;
 	pixel_y = 6
 	},
-/obj/item/reagent_containers/food/drinks/bottle/rum,
+/obj/item/reagent_containers/cup/glass/bottle/rum,
 /turf/open/floor/iron/dark,
 /area/shuttle/caravan/pirate)
 "tM" = (
@@ -634,7 +634,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/caravan/pirate)
 "HD" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
 /obj/structure/window/reinforced{
@@ -669,7 +669,7 @@
 	dir = 2;
 	dwidth = 14;
 	height = 13;
-	id = "caravanpirate";
+	shuttle_id = "caravanpirate";
 	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
 	name = "Pirate Cutter";
 	port_direction = 8;
@@ -724,7 +724,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/caravan/pirate)
 "Nx" = (
-/obj/structure/shuttle/engine/propulsion/burst/right{
+/obj/machinery/power/shuttle_engine/propulsion/burst/right{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
@@ -745,7 +745,7 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/caravan/pirate)
 "Pn" = (
-/obj/structure/shuttle/engine/propulsion/burst/left{
+/obj/machinery/power/shuttle_engine/propulsion/burst/left{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
@@ -813,9 +813,7 @@
 /area/shuttle/caravan/pirate)
 "Sd" = (
 /obj/machinery/light/small/directional/west,
-/obj/structure/sign/warning/vacuum{
-	pixel_x = -32
-	},
+/obj/structure/sign/warning/vacuum/directional/west,
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "Sk" = (

@@ -14,29 +14,30 @@ export const BlackMarketUplink = (props, context) => {
     viewing_category,
   } = data;
   return (
-    <Window
-      width={670}
-      height={480}
-      theme="hackerman">
+    <Window width={670} height={480} theme="hackerman">
       <ShipmentSelector />
       <Window.Content scrollable>
         <Section
           title="Black Market Uplink"
-          buttons={(
+          buttons={
             <Box inline bold>
               <AnimatedNumber
                 value={money}
-                format={value => formatMoney(value) + ' cr'} />
+                format={(value) => formatMoney(value) + ' cr'}
+              />
             </Box>
-          )} />
+          }
+        />
         <Tabs>
-          {markets.map(market => (
+          {markets.map((market) => (
             <Tabs.Tab
               key={market.id}
               selected={market.id === viewing_market}
-              onClick={() => act('set_market', {
-                market: market.id,
-              })}>
+              onClick={() =>
+                act('set_market', {
+                  market: market.id,
+                })
+              }>
               {market.name}
             </Tabs.Tab>
           ))}
@@ -44,45 +45,42 @@ export const BlackMarketUplink = (props, context) => {
         <Stack>
           <Stack.Item>
             <Tabs vertical>
-              {categories.map(category => (
+              {categories.map((category) => (
                 <Tabs.Tab
                   key={category}
                   mt={0.5}
                   selected={viewing_category === category}
-                  onClick={() => act('set_category', {
-                    category: category,
-                  })}>
+                  onClick={() =>
+                    act('set_category', {
+                      category: category,
+                    })
+                  }>
                   {category}
                 </Tabs.Tab>
               ))}
             </Tabs>
           </Stack.Item>
           <Stack.Item grow>
-            {items.map(item => (
-              <Box
-                key={item.name}
-                className="candystripe"
-                p={1}
-                pb={2}>
+            {items.map((item) => (
+              <Box key={item.name} className="candystripe" p={1} pb={2}>
                 <Stack align="baseline">
                   <Stack.Item grow bold>
                     {item.name}
                   </Stack.Item>
                   <Stack.Item color="label">
-                    {item.amount
-                      ? item.amount + " in stock"
-                      : "Out of stock"}
+                    {item.amount ? item.amount + ' in stock' : 'Out of stock'}
                   </Stack.Item>
-                  <Stack.Item>
-                    {formatMoney(item.cost) + ' cr'}
-                  </Stack.Item>
+                  <Stack.Item>{formatMoney(item.cost) + ' cr'}</Stack.Item>
                   <Stack.Item>
                     <Button
                       content="Buy"
                       disabled={!item.amount || item.cost > money}
-                      onClick={() => act('select', {
-                        item: item.id,
-                      })} />
+                      onClick={() =>
+                        act('select', {
+                          item: item.id,
+                        })
+                      }
+                    />
                   </Stack.Item>
                 </Stack>
                 {item.desc}
@@ -97,15 +95,11 @@ export const BlackMarketUplink = (props, context) => {
 
 const ShipmentSelector = (props, context) => {
   const { act, data } = useBackend(context);
-  const {
-    buying,
-    ltsrbt_built,
-    money,
-  } = data;
+  const { buying, ltsrbt_built, money } = data;
   if (!buying) {
     return null;
   }
-  const deliveryMethods = data.delivery_methods.map(method => {
+  const deliveryMethods = data.delivery_methods.map((method) => {
     const description = data.delivery_method_description[method.name];
     return {
       ...method,
@@ -115,36 +109,29 @@ const ShipmentSelector = (props, context) => {
   return (
     <Modal textAlign="center">
       <Stack mb={1}>
-        {deliveryMethods.map(method => {
+        {deliveryMethods.map((method) => {
           if (method.name === 'LTSRBT' && !ltsrbt_built) {
             return null;
           }
           return (
-            <Stack.Item
-              key={method.name}
-              mx={1}
-              width="17.5rem">
-              <Box fontSize="30px">
-                {method.name}
-              </Box>
-              <Box mt={1}>
-                {method.description}
-              </Box>
+            <Stack.Item key={method.name} mx={1} width="17.5rem">
+              <Box fontSize="30px">{method.name}</Box>
+              <Box mt={1}>{method.description}</Box>
               <Button
                 mt={2}
                 content={formatMoney(method.price) + ' cr'}
                 disabled={money < method.price}
-                onClick={() => act('buy', {
-                  method: method.name,
-                })} />
+                onClick={() =>
+                  act('buy', {
+                    method: method.name,
+                  })
+                }
+              />
             </Stack.Item>
           );
         })}
       </Stack>
-      <Button
-        content="Cancel"
-        color="bad"
-        onClick={() => act('cancel')} />
+      <Button content="Cancel" color="bad" onClick={() => act('cancel')} />
     </Modal>
   );
 };

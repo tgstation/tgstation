@@ -5,7 +5,7 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 		for(var/K in alternate_appearances)
 			var/datum/atom_hud/alternate_appearance/AA = alternate_appearances[K]
 			if(AA.appearance_key == key)
-				AA.remove_from_hud(src)
+				AA.remove_atom_from_hud(src)
 				break
 
 /atom/proc/add_alt_appearance(type, key, ...)
@@ -24,13 +24,16 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 	var/transfer_overlays = FALSE
 
 /datum/atom_hud/alternate_appearance/New(key)
-	..()
-	GLOB.active_alternate_appearances += src
+	// We use hud_icons to register our hud, so we need to do this before the parent call
 	appearance_key = key
+	hud_icons = list(appearance_key)
+	..()
+
+	GLOB.active_alternate_appearances += src
 
 	for(var/mob in GLOB.player_list)
 		if(mobShouldSee(mob))
-			add_hud_to(mob)
+			show_to(mob)
 
 /datum/atom_hud/alternate_appearance/Destroy()
 	GLOB.active_alternate_appearances -= src
@@ -38,18 +41,18 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 
 /datum/atom_hud/alternate_appearance/proc/onNewMob(mob/M)
 	if(mobShouldSee(M))
-		add_hud_to(M)
+		show_to(M)
 
 /datum/atom_hud/alternate_appearance/proc/mobShouldSee(mob/M)
 	return FALSE
 
-/datum/atom_hud/alternate_appearance/add_to_hud(atom/A, image/I)
+/datum/atom_hud/alternate_appearance/add_atom_to_hud(atom/A, image/I)
 	. = ..()
 	if(.)
 		LAZYINITLIST(A.alternate_appearances)
 		A.alternate_appearances[appearance_key] = src
 
-/datum/atom_hud/alternate_appearance/remove_from_hud(atom/A)
+/datum/atom_hud/alternate_appearance/remove_atom_from_hud(atom/A)
 	. = ..()
 	if(.)
 		LAZYREMOVE(A.alternate_appearances, appearance_key)
@@ -62,20 +65,23 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 	var/atom/target
 	var/image/image
 	var/add_ghost_version = FALSE
-	var/ghost_appearance
+	var/datum/atom_hud/alternate_appearance/basic/observers/ghost_appearance
+	uses_global_hud_category = FALSE
 
 /datum/atom_hud/alternate_appearance/basic/New(key, image/I, options = AA_TARGET_SEE_APPEARANCE)
 	..()
 	transfer_overlays = options & AA_MATCH_TARGET_OVERLAYS
 	image = I
 	target = I.loc
+	LAZYADD(target.update_on_z, image)
 	if(transfer_overlays)
 		I.copy_overlays(target)
 
-	hud_icons = list(appearance_key)
-	add_to_hud(target, I)
+	add_atom_to_hud(target)
+	target.set_hud_image_active(appearance_key, exclusive_hud = src)
+
 	if((options & AA_TARGET_SEE_APPEARANCE) && ismob(target))
-		add_hud_to(target)
+		show_to(target)
 	if(add_ghost_version)
 		var/image/ghost_image = image(icon = I.icon , icon_state = I.icon_state, loc = I.loc)
 		ghost_image.override = FALSE
@@ -84,19 +90,21 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 
 /datum/atom_hud/alternate_appearance/basic/Destroy()
 	. = ..()
+	LAZYREMOVE(target.update_on_z, image)
 	QDEL_NULL(image)
 	target = null
 	if(ghost_appearance)
 		QDEL_NULL(ghost_appearance)
 
-/datum/atom_hud/alternate_appearance/basic/add_to_hud(atom/A)
+/datum/atom_hud/alternate_appearance/basic/add_atom_to_hud(atom/A)
 	LAZYINITLIST(A.hud_list)
 	A.hud_list[appearance_key] = image
 	. = ..()
 
-/datum/atom_hud/alternate_appearance/basic/remove_from_hud(atom/A)
+/datum/atom_hud/alternate_appearance/basic/remove_atom_from_hud(atom/A)
 	. = ..()
-	A.hud_list -= appearance_key
+	LAZYREMOVE(A.hud_list, appearance_key)
+	A.set_hud_image_inactive(appearance_key)
 	if(. && !QDELETED(src))
 		qdel(src)
 

@@ -1,6 +1,7 @@
 #define FILE_RECENT_MAPS "data/RecentMaps.json"
 
 #define KEEP_ROUNDS_MAP 3
+#define ROUNDCOUNT_ENGINE_JUST_EXPLODED 0
 
 SUBSYSTEM_DEF(persistence)
 	name = "Persistence"
@@ -21,7 +22,7 @@ SUBSYSTEM_DEF(persistence)
 	var/list/picture_logging_information = list()
 	var/list/obj/structure/sign/picture_frame/photo_frames
 	var/list/obj/item/storage/photo_album/photo_albums
-
+	var/rounds_since_engine_exploded = 0
 
 /datum/controller/subsystem/persistence/Initialize()
 	LoadPoly()
@@ -32,9 +33,10 @@ SUBSYSTEM_DEF(persistence)
 	LoadPhotoPersistence()
 	LoadRandomizedRecipes()
 	load_custom_outfits()
+	load_delamination_counter()
 
 	load_adventures()
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/persistence/proc/collect_data()
 	save_wall_engravings()
@@ -45,6 +47,7 @@ SUBSYSTEM_DEF(persistence)
 	SaveRandomizedRecipes()
 	SaveScars()
 	save_custom_outfits()
+	save_delamination_counter()
 
 /datum/controller/subsystem/persistence/proc/LoadPoly()
 	for(var/mob/living/simple_animal/parrot/poly/P in GLOB.alive_mob_list)
@@ -64,7 +67,7 @@ SUBSYSTEM_DEF(persistence)
 
 	var/successfully_loaded_engravings = 0
 
-	var/list/viable_turfs = get_area_turfs(/area/maintenance, subtypes = TRUE) + get_area_turfs(/area/security/prison, subtypes = TRUE)
+	var/list/viable_turfs = get_area_turfs(/area/station/maintenance, subtypes = TRUE) + get_area_turfs(/area/station/security/prison, subtypes = TRUE)
 	var/list/turfs_to_pick_from = list()
 
 	for(var/turf/T as anything in viable_turfs)
@@ -407,14 +410,7 @@ SUBSYSTEM_DEF(persistence)
 	for(var/randomized_type in subtypesof(/datum/chemical_reaction/randomized))
 		var/datum/chemical_reaction/randomized/R = get_chemical_reaction(randomized_type) //ew, would be nice to add some simple tracking
 		if(R?.persistent)
-			var/recipe_data = list()
-			recipe_data["timestamp"] = R.created
-			recipe_data["required_reagents"] = R.required_reagents
-			recipe_data["required_catalysts"] = R.required_catalysts
-			recipe_data["required_temp"] = R.required_temp
-			recipe_data["is_cold_recipe"] = R.is_cold_recipe
-			recipe_data["results"] = R.results
-			recipe_data["required_container"] = "[R.required_container]"
+			var/list/recipe_data = R.SaveOldRecipe()
 			file_data["[R.type]"] = recipe_data
 
 	fdel(json_file)
@@ -467,3 +463,18 @@ SUBSYSTEM_DEF(persistence)
 		data += list(outfit.get_json_data())
 
 	WRITE_FILE(file, json_encode(data))
+
+/// Location where we save the information about how many rounds it has been since the engine blew up
+#define DELAMINATION_COUNT_FILEPATH "data/rounds_since_delamination.txt"
+
+/datum/controller/subsystem/persistence/proc/load_delamination_counter()
+	if (!fexists(DELAMINATION_COUNT_FILEPATH))
+		return
+	rounds_since_engine_exploded = text2num(file2text(DELAMINATION_COUNT_FILEPATH))
+	for (var/obj/structure/sign/delamination_counter/sign as anything in GLOB.map_delamination_counters)
+		sign.update_count(rounds_since_engine_exploded)
+
+/datum/controller/subsystem/persistence/proc/save_delamination_counter()
+	rustg_file_write("[rounds_since_engine_exploded + 1]", DELAMINATION_COUNT_FILEPATH)
+
+#undef DELAMINATION_COUNT_FILEPATH

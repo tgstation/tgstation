@@ -1,0 +1,223 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/template_noop)
+"d" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"f" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/ore_box,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/greater)
+"g" = (
+/turf/template_noop,
+/area/template_noop)
+"h" = (
+/obj/effect/turf_decal/sand,
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"i" = (
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/greater)
+"j" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/neutral/filled/warning{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"p" = (
+/obj/effect/turf_decal/sand,
+/obj/effect/turf_decal/trimline/neutral/filled/warning{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"w" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/machinery/door/airlock/external{
+	name = "External Access"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/access/any/supply/maintenance,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/greater)
+"x" = (
+/turf/closed/wall/rust,
+/area/station/maintenance/starboard/greater)
+"y" = (
+/obj/effect/turf_decal/sand,
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"z" = (
+/obj/effect/turf_decal/sand,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"C" = (
+/obj/structure/ladder,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/greater)
+"F" = (
+/turf/closed/wall,
+/area/station/maintenance/starboard/greater)
+"I" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/machinery/door/airlock/external{
+	name = "External Access"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/access/any/supply/maintenance,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/greater)
+"K" = (
+/obj/modular_map_connector,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/falsewall,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"L" = (
+/obj/machinery/light/small/directional/west,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/neutral/filled/warning{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"T" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/item/pickaxe,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/greater)
+"V" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/greater)
+"X" = (
+/turf/closed/wall/rock/porous,
+/area/station/maintenance/starboard/greater)
+
+(1,1,1) = {"
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+"}
+(2,1,1) = {"
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+"}
+(3,1,1) = {"
+g
+g
+X
+X
+F
+F
+x
+x
+g
+g
+"}
+(4,1,1) = {"
+g
+a
+f
+i
+z
+L
+d
+F
+g
+g
+"}
+(5,1,1) = {"
+K
+i
+i
+i
+T
+C
+j
+V
+g
+g
+"}
+(6,1,1) = {"
+g
+a
+a
+x
+y
+p
+h
+F
+g
+g
+"}
+(7,1,1) = {"
+g
+g
+g
+F
+F
+I
+F
+F
+g
+g
+"}
+(8,1,1) = {"
+g
+g
+g
+g
+F
+i
+F
+g
+g
+g
+"}
+(9,1,1) = {"
+g
+g
+g
+g
+F
+w
+F
+g
+g
+g
+"}

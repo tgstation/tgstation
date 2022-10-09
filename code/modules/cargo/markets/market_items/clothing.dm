@@ -4,7 +4,7 @@
 /datum/market_item/clothing/ninja_mask
 	name = "Space Ninja Mask"
 	desc = "Apart from being acid, lava, fireproof and being hard to take off someone it does nothing special on it's own."
-	item = /obj/item/clothing/mask/gas/space_ninja
+	item = /obj/item/clothing/mask/gas/ninja
 
 	price_min = CARGO_CRATE_VALUE
 	price_max = CARGO_CRATE_VALUE * 2.5

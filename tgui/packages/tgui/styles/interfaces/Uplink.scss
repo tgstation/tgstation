@@ -1,7 +1,7 @@
 $badGradient: linear-gradient(to right, #9c1e1e, #6c2828, #9c1e1e);
 $normalGradient: linear-gradient(to right, #5d5041, #40372d, #5d5041);
 $goodGradient: linear-gradient(to right, #515d6c, #252a30, #515d6c);
-$veryGoodGradient:  linear-gradient(to right, #977949, #534328, #977949);
+$veryGoodGradient: linear-gradient(to right, #977949, #534328, #977949);
 $superGoodGradient: linear-gradient(to right, #9d9948, #777437, #9d9948);
 $bestGradient: linear-gradient(to right, #9d486b, #57283c, #9d486b);
 
@@ -11,7 +11,7 @@ $_rep_map: (
   'good': $goodGradient,
   'very-good': $veryGoodGradient,
   'super-good': $superGoodGradient,
-  'best': $bestGradient
+  'best': $bestGradient,
 );
 
 @each $reputation-name, $gradient-value in $_rep_map {
@@ -70,7 +70,6 @@ $_rep_map: (
   padding-top: 0.5rem;
   padding-bottom: 0;
 }
-
 
 .UplinkObjective__Footer {
   background-color: rgba(0, 0, 0, 0.4);

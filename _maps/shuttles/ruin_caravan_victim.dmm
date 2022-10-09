@@ -72,9 +72,7 @@
 /obj/structure/toilet{
 	dir = 4
 	},
-/obj/structure/sink{
-	pixel_y = 24
-	},
+/obj/structure/sink/directional/south,
 /obj/machinery/light/small/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -138,21 +136,21 @@
 	locked = 0;
 	name = "fridge"
 	},
-/obj/item/reagent_containers/food/drinks/bottle/beer{
+/obj/item/reagent_containers/cup/glass/bottle/beer{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/food/drinks/bottle/beer,
-/obj/item/reagent_containers/food/drinks/bottle/beer{
+/obj/item/reagent_containers/cup/glass/bottle/beer,
+/obj/item/reagent_containers/cup/glass/bottle/beer{
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/item/reagent_containers/food/drinks/waterbottle{
+/obj/item/reagent_containers/cup/glass/waterbottle{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/food/drinks/waterbottle,
-/obj/item/reagent_containers/food/drinks/waterbottle{
+/obj/item/reagent_containers/cup/glass/waterbottle,
+/obj/item/reagent_containers/cup/glass/waterbottle{
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -232,9 +230,8 @@
 /obj/effect/turf_decal/box/white/corners{
 	dir = 1
 	},
-/turf/open/floor/iron/airless{
-	icon_state = "damaged4"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/airless,
 /area/shuttle/caravan/freighter1)
 "lC" = (
 /obj/machinery/power/port_gen/pacman{
@@ -251,13 +248,11 @@
 /area/shuttle/caravan/freighter1)
 "lM" = (
 /obj/machinery/light/small/directional/west,
-/obj/structure/sign/warning/vacuum{
-	pixel_x = 32
-	},
+/obj/structure/sign/warning/vacuum/directional/east,
 /turf/open/floor/plating,
 /area/shuttle/caravan/freighter1)
 "mo" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
 /obj/structure/window/reinforced{
@@ -429,12 +424,11 @@
 /area/shuttle/caravan/freighter1)
 "ur" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg3"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/airless,
 /area/shuttle/caravan/freighter1)
 "vt" = (
-/obj/structure/shuttle/engine/propulsion/burst{
+/obj/machinery/power/shuttle_engine/propulsion/burst{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
@@ -443,9 +437,8 @@
 /obj/effect/turf_decal/box/white/corners{
 	dir = 4
 	},
-/turf/open/floor/iron/airless{
-	icon_state = "damaged5"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/airless,
 /area/shuttle/caravan/freighter1)
 "xG" = (
 /obj/machinery/light/small/directional/south,
@@ -517,15 +510,13 @@
 /area/shuttle/caravan/freighter1)
 "zy" = (
 /obj/structure/girder,
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg1"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/airless,
 /area/shuttle/caravan/freighter1)
 "Ax" = (
 /obj/item/stack/sheet/iron/fifty,
-/turf/open/floor/iron/airless{
-	icon_state = "floorscorched2"
-	},
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/iron/airless,
 /area/shuttle/caravan/freighter1)
 "AM" = (
 /obj/machinery/door/firedoor,
@@ -561,9 +552,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/iron/airless{
-	icon_state = "damaged1"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/airless,
 /area/shuttle/caravan/freighter1)
 "BN" = (
 /obj/machinery/door/firedoor,
@@ -579,9 +569,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/iron/airless{
-	icon_state = "floorscorched1"
-	},
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/iron/airless,
 /area/shuttle/caravan/freighter1)
 "Dt" = (
 /obj/effect/decal/cleanable/dirt,
@@ -743,13 +732,13 @@
 	},
 /area/shuttle/caravan/freighter1)
 "KC" = (
-/obj/structure/shuttle/engine/propulsion/burst/right{
+/obj/machinery/power/shuttle_engine/propulsion/burst/right{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/caravan/freighter1)
 "KX" = (
-/obj/structure/shuttle/engine/propulsion/burst/left{
+/obj/machinery/power/shuttle_engine/propulsion/burst/left{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
@@ -791,9 +780,8 @@
 	name = "Cargo Blast Door"
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg3"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/airless,
 /area/shuttle/caravan/freighter1)
 "Od" = (
 /obj/effect/decal/cleanable/dirt,
@@ -822,9 +810,8 @@
 /area/shuttle/caravan/freighter1)
 "Ov" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/airless{
-	icon_state = "damaged2"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/airless,
 /area/shuttle/caravan/freighter1)
 "Ow" = (
 /obj/effect/decal/cleanable/dirt,
@@ -894,15 +881,8 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg3"
-	},
-/area/shuttle/caravan/freighter1)
-"Su" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/airless{
-	icon_state = "damaged3"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/airless,
 /area/shuttle/caravan/freighter1)
 "SO" = (
 /obj/machinery/door/airlock{
@@ -935,9 +915,8 @@
 	pixel_x = 24
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg1"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/airless,
 /area/shuttle/caravan/freighter1)
 "VD" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
@@ -950,7 +929,7 @@
 	dir = 2;
 	dwidth = 5;
 	height = 11;
-	id = "caravantrade1";
+	shuttle_id = "caravantrade1";
 	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
 	name = "Small Freighter";
 	port_direction = 8;
@@ -999,9 +978,8 @@
 /obj/structure/closet/crate,
 /obj/item/stack/sheet/plasteel/twenty,
 /obj/item/stack/sheet/plasteel/twenty,
-/turf/open/floor/iron/airless{
-	icon_state = "damaged5"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/airless,
 /area/shuttle/caravan/freighter1)
 "WZ" = (
 /obj/machinery/power/smes,
@@ -1153,7 +1131,7 @@ QY
 if
 Ax
 AO
-Su
+Ov
 eP
 "}
 (10,1,1) = {"

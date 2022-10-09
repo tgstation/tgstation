@@ -1,10 +1,4 @@
-import {
-  Button,
-  TextArea,
-  Section,
-  BlockQuote,
-  NoticeBox,
-} from '../components';
+import { Button, TextArea, Section, BlockQuote, NoticeBox } from '../components';
 import { Window } from '../layouts';
 import { useBackend } from '../backend';
 
@@ -62,8 +56,8 @@ export const Interview = (props, context) => {
           <Section title="Welcome!">
             <p>{linkify_text(welcome_message)}</p>
           </Section>
-        ))
-          || rendered_status(status)}
+        )) ||
+          rendered_status(status)}
         <Section
           title="Questionnaire"
           buttons={
@@ -116,11 +110,12 @@ export const Interview = (props, context) => {
                   maxLength={500}
                   placeholder="Write your response here, max of 500 characters."
                   onChange={(e, input) =>
-                    input !== response
-                    && act('update_answer', {
+                    input !== response &&
+                    act('update_answer', {
                       qidx: qidx,
                       answer: input,
-                    })}
+                    })
+                  }
                 />
               )}
             </Section>

@@ -22,7 +22,7 @@ Nothing else in the console has ID requirements.
 	icon_screen = "rdcomp"
 	icon_keyboard = "rd_key"
 	circuit = /obj/item/circuitboard/computer/rdconsole
-	req_access = list(ACCESS_RND) // Locking and unlocking the console requires science access
+	req_access = list(ACCESS_RESEARCH) // Locking and unlocking the console requires research access
 	/// Reference to global science techweb
 	var/datum/techweb/stored_research
 	/// The stored technology disk, if present
@@ -328,7 +328,7 @@ Nothing else in the console has ID requirements.
 				if(design.build_type & (AUTOLATHE|PROTOLATHE|AWAY_LATHE)) // Specifically excludes circuit imprinter and mechfab
 					if(design.autolathe_exportable && !design.reagents_list.len)
 						design.build_type |= AUTOLATHE
-					design.category |= "Imported"
+					design.category |= RND_CATEGORY_IMPORTED
 				d_disk.blueprints[slot] = design
 			return TRUE
 		if ("uploadDesignSlot")

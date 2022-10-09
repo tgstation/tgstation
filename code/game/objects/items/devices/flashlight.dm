@@ -6,8 +6,8 @@
 	icon_state = "flashlight"
 	inhand_icon_state = "flashlight"
 	worn_icon_state = "flashlight"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
@@ -75,7 +75,7 @@
 					to_chat(user, span_warning("You're going to need to remove that [(M.head && M.head.flags_cover & HEADCOVERSEYES) ? "helmet" : (M.wear_mask && M.wear_mask.flags_cover & MASKCOVERSEYES) ? "mask": "glasses"] first!"))
 					return
 
-				var/obj/item/organ/eyes/E = M.getorganslot(ORGAN_SLOT_EYES)
+				var/obj/item/organ/internal/eyes/E = M.getorganslot(ORGAN_SLOT_EYES)
 				if(!E)
 					to_chat(user, span_warning("[M] doesn't have any eyes!"))
 					return
@@ -104,9 +104,9 @@
 				var/their = M.p_their()
 
 				var/list/mouth_organs = new
-				for(var/obj/item/organ/O in M.internal_organs)
-					if(O.zone == BODY_ZONE_PRECISE_MOUTH)
-						mouth_organs.Add(O)
+				for(var/obj/item/organ/organ as anything in M.internal_organs)
+					if(organ.zone == BODY_ZONE_PRECISE_MOUTH)
+						mouth_organs.Add(organ)
 				var/organ_list = ""
 				var/organ_count = LAZYLEN(mouth_organs)
 				if(organ_count)
@@ -261,7 +261,7 @@
 	name = "banana lamp"
 	desc = "Only a clown would think to make a ghetto banana-shaped lamp. Even has a goofy pullstring."
 	icon_state = "bananalamp"
-	inhand_icon_state = "bananalamp"
+	inhand_icon_state = null
 
 // FLARES
 
@@ -369,7 +369,7 @@
 	name = "suspicious lantern"
 	desc = "A suspicious looking lantern."
 	icon_state = "syndilantern"
-	inhand_icon_state = "syndilantern"
+	inhand_icon_state = null
 	light_range = 10
 
 /obj/item/flashlight/lantern/jade
@@ -384,7 +384,7 @@
 	desc = "Extract from a yellow slime. It emits a strong light when squeezed."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "slime"
-	inhand_icon_state = "slime"
+	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = null
@@ -457,7 +457,7 @@
 	color = LIGHT_COLOR_GREEN
 	icon_state = "glowstick"
 	base_icon_state = "glowstick"
-	inhand_icon_state = "glowstick"
+	inhand_icon_state = null
 	worn_icon_state = "lightstick"
 	grind_results = list(/datum/reagent/phenol = 15, /datum/reagent/hydrogen = 10, /datum/reagent/oxygen = 5) //Meth-in-a-stick
 	/// How many seconds of fuel we have left
@@ -527,7 +527,7 @@
 	if(!fuel)
 		user.visible_message(span_suicide("[user] is trying to squirt [src]'s fluids into [user.p_their()] eyes... but it's empty!"))
 		return SHAME
-	var/obj/item/organ/eyes/eyes = user.getorganslot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/internal/eyes/eyes = user.getorganslot(ORGAN_SLOT_EYES)
 	if(!eyes)
 		user.visible_message(span_suicide("[user] is trying to squirt [src]'s fluids into [user.p_their()] eyes... but [user.p_they()] don't have any!"))
 		return SHAME

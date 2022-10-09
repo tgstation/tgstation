@@ -15,9 +15,11 @@
   right: 0;
   color: base.$color-fg;
   background-color: base.$color-bg;
-  background-image: linear-gradient(to bottom,
+  background-image: linear-gradient(
+    to bottom,
     base.$color-bg-start 0%,
-    base.$color-bg-end 100%);
+    base.$color-bg-end 100%
+  );
 }
 
 .Window__titleBar {

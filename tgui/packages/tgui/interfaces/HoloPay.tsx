@@ -1,6 +1,7 @@
-import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Dropdown, Icon, NoticeBox, RestrictedInput, Section, Stack, Table, TextArea, Tooltip } from '../components';
-import { Window } from '../layouts';
+import { decodeHtmlEntities } from 'common/string';
+import { useBackend, useLocalState } from 'tgui/backend';
+import { Box, Button, Dropdown, Icon, NoticeBox, RestrictedInput, Section, Stack, Table, TextArea, Tooltip } from 'tgui/components';
+import { Window } from 'tgui/layouts';
 
 type HoloPayData = {
   available_logos: string[];
@@ -19,7 +20,7 @@ Use of departmental funds is prohibited. For more information, visit
 the Head of Personnel. All rights reserved. All trademarks are property
 of their respective owners.`;
 
-export const HoloPay = (_, context) => {
+export const HoloPay = (props, context) => {
   const { data } = useBackend<HoloPayData>(context);
   const { owner } = data;
   const [setupMode, setSetupMode] = useLocalState(context, 'setupMode', false);
@@ -55,7 +56,7 @@ export const HoloPay = (_, context) => {
 /**
  * Displays the current user's bank information (if any)
  */
-const AccountDisplay = (_, context) => {
+const AccountDisplay = (props, context) => {
   const { data } = useBackend<HoloPayData>(context);
   const { user } = data;
   if (!user) {
@@ -92,11 +93,8 @@ const TerminalDisplay = (props, context) => {
   const { description, force_fee, name, owner, user, shop_logo } = data;
   const { onClick } = props;
   const is_owner = owner === user?.name;
-  const cannot_pay
-    = is_owner || !user || user?.balance < 1 || user?.balance < force_fee;
-  const decodedName = name.replace(/&#(\d+);/g, (_, dec) => {
-    return String.fromCharCode(dec);
-  });
+  const cannot_pay =
+    is_owner || !user || user?.balance < 1 || user?.balance < force_fee;
 
   return (
     <Section
@@ -104,7 +102,8 @@ const TerminalDisplay = (props, context) => {
         is_owner && (
           <Button icon="edit" onClick={onClick}>
             Setup
-          </Button>)
+          </Button>
+        )
       }
       fill
       title="Terminal">
@@ -115,7 +114,7 @@ const TerminalDisplay = (props, context) => {
         <Stack.Item grow textAlign="center">
           <Tooltip content={description} position="bottom">
             <Box color="label" fontSize="17px" overflow="hidden">
-              {decodedName}
+              {decodeHtmlEntities(name)}
             </Box>
           </Tooltip>
         </Stack.Item>
@@ -173,9 +172,6 @@ const SetupDisplay = (props, context) => {
   const { act, data } = useBackend<HoloPayData>(context);
   const { available_logos = [], force_fee, max_fee, name, shop_logo } = data;
   const { onClick } = props;
-  const decodedName = name.replace(/&#(\d+);/g, (_, dec) => {
-    return String.fromCharCode(dec);
-  });
 
   return (
     <Section
@@ -215,7 +211,7 @@ const SetupDisplay = (props, context) => {
             onChange={(_, value) => {
               value?.length > 3 && act('rename', { name: value });
             }}
-            placeholder={decodedName}
+            placeholder={decodeHtmlEntities(name)}
           />
         </Stack.Item>
         <Stack.Item>

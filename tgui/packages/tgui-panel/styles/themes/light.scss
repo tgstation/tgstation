@@ -32,23 +32,29 @@
   @include meta.load-css('~tgui/styles/atomic/color.scss');
 
   // Components
-  @include meta.load-css('~tgui/styles/components/Tabs.scss', $with: (
-    'text-color': rgba(0, 0, 0, 0.5),
-    'color-default': rgba(0, 0, 0, 1),
-  ));
+  @include meta.load-css(
+    '~tgui/styles/components/Tabs.scss',
+    $with: ('text-color': rgba(0, 0, 0, 0.5), 'color-default': rgba(0, 0, 0, 1))
+  );
   @include meta.load-css('~tgui/styles/components/Section.scss');
-  @include meta.load-css('~tgui/styles/components/Button.scss', $with: (
-    'color-default': #bbbbbb,
-    'color-disabled': #363636,
-    'color-selected': #0668b8,
-    'color-caution': #be6209,
-    'color-danger': #9a9d00,
-    'color-transparent-text': rgba(0, 0, 0, 0.5),
-  ));
-  @include meta.load-css('~tgui/styles/components/Input.scss', $with: (
-    'border-color': colors.fg(colors.$label),
-    'background-color': #ffffff,
-  ));
+  @include meta.load-css(
+    '~tgui/styles/components/Button.scss',
+    $with: (
+      'color-default': #bbbbbb,
+      'color-disabled': #363636,
+      'color-selected': #0668b8,
+      'color-caution': #be6209,
+      'color-danger': #9a9d00,
+      'color-transparent-text': rgba(0, 0, 0, 0.5)
+    )
+  );
+  @include meta.load-css(
+    '~tgui/styles/components/Input.scss',
+    $with: (
+      'border-color': colors.fg(colors.$label),
+      'background-color': #ffffff
+    )
+  );
   @include meta.load-css('~tgui/styles/components/NumberInput.scss');
   @include meta.load-css('~tgui/styles/components/TextArea.scss');
   @include meta.load-css('~tgui/styles/components/Knob.scss');
@@ -56,20 +62,25 @@
   @include meta.load-css('~tgui/styles/components/ProgressBar.scss');
 
   // Components specific to tgui-panel
-  @include meta.load-css('../components/Chat.scss', $with: (
-    'text-color': #000000,
-  ));
+  @include meta.load-css(
+    '../components/Chat.scss',
+    $with: ('text-color': #000000)
+  );
 
   // Layouts
-  @include meta.load-css('~tgui/styles/layouts/Layout.scss', $with: (
-    'scrollbar-color-multiplier': -1,
-  ));
+  @include meta.load-css(
+    '~tgui/styles/layouts/Layout.scss',
+    $with: ('scrollbar-color-multiplier': -1)
+  );
   @include meta.load-css('~tgui/styles/layouts/Window.scss');
-  @include meta.load-css('~tgui/styles/layouts/TitleBar.scss', $with: (
-    'text-color': rgba(0, 0, 0, 0.75),
-    'background-color': base.$color-bg,
-    'shadow-color-core': rgba(0, 0, 0, 0.25),
-  ));
+  @include meta.load-css(
+    '~tgui/styles/layouts/TitleBar.scss',
+    $with: (
+      'text-color': rgba(0, 0, 0, 0.75),
+      'background-color': base.$color-bg,
+      'shadow-color-core': rgba(0, 0, 0, 0.25)
+    )
+  );
 
   // Goonchat styles
   @include meta.load-css('../goon/chat-light.scss');

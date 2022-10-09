@@ -4,28 +4,31 @@ import { OperatorData, InternalDamageToDamagedDesc, InternalDamageToNormalDesc }
 
 export const AlertPane = (props, context) => {
   const { act, data } = useBackend<OperatorData>(context);
-  const {
-    internal_damage,
-    internal_damage_keys,
-  } = data;
+  const { internal_damage, internal_damage_keys } = data;
   return (
     <Stack fill vertical>
-      {Object.keys(internal_damage_keys).map(t => (
+      {Object.keys(internal_damage_keys).map((t) => (
         <Stack.Item key={t}>
           <Stack justify="space-between">
             <Stack.Item>
-              <Box color={(internal_damage & internal_damage_keys[t]) ? "red" : "green"}>
-                {(internal_damage & internal_damage_keys[t])
-                  ?InternalDamageToDamagedDesc[t]:InternalDamageToNormalDesc[t]}
+              <Box
+                color={
+                  internal_damage & internal_damage_keys[t] ? 'red' : 'green'
+                }>
+                {internal_damage & internal_damage_keys[t]
+                  ? InternalDamageToDamagedDesc[t]
+                  : InternalDamageToNormalDesc[t]}
               </Box>
             </Stack.Item>
             <Stack.Item>
               <Button
-                onClick={() => act('repair_int_damage', {
-                  flag: internal_damage_keys[t],
-                })}
-                color={"red"}
-                disabled={!(internal_damage&internal_damage_keys[t])}>
+                onClick={() =>
+                  act('repair_int_damage', {
+                    flag: internal_damage_keys[t],
+                  })
+                }
+                color={'red'}
+                disabled={!(internal_damage & internal_damage_keys[t])}>
                 Repair
               </Button>
             </Stack.Item>

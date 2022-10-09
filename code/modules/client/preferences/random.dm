@@ -31,7 +31,7 @@
 	if (!..(preferences))
 		return FALSE
 
-	return preferences.parent.get_exp_living(pure_numeric = TRUE) >= PLAYTIME_HARDCORE_RANDOM
+	return preferences.parent && (preferences.parent.get_exp_living(pure_numeric = TRUE) >= PLAYTIME_HARDCORE_RANDOM)
 
 /datum/preference/choiced/random_name
 	category = PREFERENCE_CATEGORY_NON_CONTEXTUAL

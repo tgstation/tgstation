@@ -1,6 +1,6 @@
 GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't really work on borgos
 	/obj/item/clothing/head/helmet/space,
-	/obj/item/clothing/head/welding,
+	/obj/item/clothing/head/utility/welding,
 	/obj/item/clothing/head/chameleon/broken \
 	)))
 
@@ -43,7 +43,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			to_chat(user, span_warning("You can't reach the wiring!"))
 		return
 
-	if(W.slot_flags & ITEM_SLOT_HEAD && hat_offset != INFINITY && !user.combat_mode && !is_type_in_typecache(W, GLOB.blacklisted_borg_hats))
+	if((W.slot_flags & ITEM_SLOT_HEAD) && hat_offset != INFINITY && !user.combat_mode && !is_type_in_typecache(W, GLOB.blacklisted_borg_hats))
 		if(user == src)
 			to_chat(user,  span_notice("You can't seem to manage to place [W] on your head by yourself!") )
 			return
@@ -68,7 +68,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			to_chat(user, span_warning("This defibrillator unit will not function on a deceased cyborg!"))
 			return
 		var/obj/item/defibrillator/D = W
-		if(D.slot_flags != ITEM_SLOT_BACK) //belt defibs need not apply
+		if(!(D.slot_flags & ITEM_SLOT_BACK)) //belt defibs need not apply
 			to_chat(user, span_warning("This defibrillator unit doesn't seem to fit correctly!"))
 			return
 		if(D.cell)
@@ -204,7 +204,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		..()
 	return
 
-/mob/living/silicon/robot/attack_slime(mob/living/simple_animal/slime/M)
+/mob/living/silicon/robot/attack_slime(mob/living/simple_animal/slime/M, list/modifiers)
 	if(..()) //successful slime shock
 		flash_act()
 		var/stunprob = M.powerlevel * 7 + 10
@@ -312,7 +312,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 
 /mob/living/silicon/robot/fire_act()
 	if(!on_fire) //Silicons don't gain stacks from hotspots, but hotspots can ignite them
-		IgniteMob()
+		ignite_mob()
 
 /mob/living/silicon/robot/emp_act(severity)
 	. = ..()
@@ -363,7 +363,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	lawupdate = FALSE
 	set_connected_ai(null)
 	message_admins("[ADMIN_LOOKUPFLW(user)] emagged cyborg [ADMIN_LOOKUPFLW(src)].  Laws overridden.")
-	log_silicon("EMAG: [key_name(user)] emagged cyborg [key_name(src)].  Laws overridden.")
+	log_silicon("EMAG: [key_name(user)] emagged cyborg [key_name(src)]. Laws overridden.")
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	if(user)
 		GLOB.lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")

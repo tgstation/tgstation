@@ -2,7 +2,7 @@
 /obj/singularity
 	name = "gravitational singularity"
 	desc = "A gravitational singularity."
-	icon = 'icons/obj/singularity.dmi'
+	icon = 'icons/obj/engine/singularity.dmi'
 	icon_state = "singularity_s1"
 	anchored = TRUE
 	density = TRUE
@@ -184,7 +184,7 @@
 	switch(temp_allowed_size)
 		if(STAGE_ONE)
 			current_size = STAGE_ONE
-			icon = 'icons/obj/singularity.dmi'
+			icon = 'icons/obj/engine/singularity.dmi'
 			icon_state = "singularity_s1"
 			pixel_x = 0
 			pixel_y = 0
@@ -396,7 +396,7 @@
 			span_userdanger("You feel an inner fire as your skin bursts into flames!")
 		)
 		burned_mob.adjust_fire_stacks(5)
-		burned_mob.IgniteMob()
+		burned_mob.ignite_mob()
 	return
 
 /obj/singularity/proc/mezzer()
@@ -411,7 +411,7 @@
 		var/mob/living/carbon/human/stunned_human = stunned_mob
 		if(istype(stunned_human.glasses, /obj/item/clothing/glasses/meson))
 			var/obj/item/clothing/glasses/meson/check_meson = stunned_human.glasses
-			if(check_meson.vision_flags == SEE_TURFS)
+			if(check_meson.vision_flags & SEE_TURFS)
 				to_chat(stunned_human, span_notice("You look directly into the [name], good thing you had your protective eyewear on!"))
 				continue
 

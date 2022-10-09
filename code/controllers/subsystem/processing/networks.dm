@@ -72,7 +72,7 @@ SUBSYSTEM_DEF(networks)
 	// At round start, fix the network_id's so the station root is on them
 	initialized = TRUE
 	// Now when the objects Initialize they will join the right network
-	return ..()
+	return SS_INIT_SUCCESS
 
 /*
  * Process incoming queued packet and return NAK/ACK signals
@@ -215,7 +215,7 @@ SUBSYSTEM_DEF(networks)
  * * network - optional, It can be a ntnet or just the text equivalent
  * * hardware_id = optional, text, will look it up and return with the parent.name as well
  */
-/datum/controller/subsystem/networks/proc/add_log(log_string, network = null , hardware_id = null)
+/datum/controller/subsystem/networks/proc/add_log(log_string, network = null)
 	set waitfor = FALSE // so process keeps running
 	var/list/log_text = list()
 	log_text += "\[[station_time_timestamp()]\]"
@@ -228,15 +228,7 @@ SUBSYSTEM_DEF(networks)
 		else // bad network?
 			log_text += "{[network] *BAD*}"
 
-	if(hardware_id)
-		var/datum/component/ntnet_interface/conn = interfaces_by_hardware_id[hardware_id]
-		if(conn)
-			log_text += " ([hardware_id])[conn.parent]"
-		else
-			log_text += " ([hardware_id])*BAD ID*"
-	else
-		log_text += "*SYSTEM*"
-	log_text += " - "
+	log_text += "*SYSTEM* - "
 	log_text += log_string
 	log_string = log_text.Join()
 
@@ -312,7 +304,7 @@ SUBSYSTEM_DEF(networks)
 	if(!A.network_root_id) // not assigned?  Then lets use some defaults
 		// Anything in Centcom is completely isolated
 		// Special case for holodecks.
-		if(istype(A,/area/holodeck))
+		if(istype(A,/area/station/holodeck))
 			A.network_root_id = "HOLODECK" // isolated from the station network
 		else if(SSmapping.level_trait(A.z, ZTRAIT_CENTCOM))
 			A.network_root_id = CENTCOM_NETWORK_ROOT

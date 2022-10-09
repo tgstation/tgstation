@@ -1,7 +1,7 @@
 //I will need to recode parts of this but I am way too tired atm //I don't know who left this comment but they never did come back
 /obj/structure/blob
 	name = "blob"
-	icon = 'icons/mob/blob.dmi'
+	icon = 'icons/mob/nonhuman-player/blob.dmi'
 	light_range = 2
 	desc = "A thick wall of writhing tendrils."
 	density = TRUE
@@ -317,7 +317,7 @@
 /obj/structure/blob/examine(mob/user)
 	. = ..()
 	var/datum/atom_hud/hud_to_check = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
-	if(HAS_TRAIT(user, TRAIT_RESEARCH_SCANNER) || hud_to_check.hudusers[user])
+	if(HAS_TRAIT(user, TRAIT_RESEARCH_SCANNER) || hud_to_check.hud_users[user])
 		. += "<b>Your HUD displays an extensive report...</b><br>"
 		if(overmind)
 			. += overmind.blobstrain.examine(user)

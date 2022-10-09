@@ -23,7 +23,7 @@
 		return FALSE
 	if(HAS_TRAIT(target, TRAIT_DEFIB_BLACKLISTED))
 		return FALSE
-	var/obj/item/organ/brain/target_brain = target.getorganslot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/internal/brain/target_brain = target.getorganslot(ORGAN_SLOT_BRAIN)
 	if(!target_brain)
 		return FALSE
 	return TRUE
@@ -44,7 +44,7 @@
 	. = TRUE
 	if(istype(tool, /obj/item/shockpaddles))
 		var/obj/item/shockpaddles/paddles = tool
-		if((paddles.req_defib && !paddles.defib.powered) || !paddles.wielded || paddles.cooldown || paddles.busy)
+		if((paddles.req_defib && !paddles.defib.powered) || !HAS_TRAIT(paddles, TRAIT_WIELDED) || paddles.cooldown || paddles.busy)
 			to_chat(user, span_warning("You need to wield both paddles, and [paddles.defib] must be powered!"))
 			return FALSE
 	if(istype(tool, /obj/item/melee/baton/security))

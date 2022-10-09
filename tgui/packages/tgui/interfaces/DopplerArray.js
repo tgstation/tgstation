@@ -1,14 +1,5 @@
 import { useBackend, useSharedState } from '../backend';
-import {
-  Box,
-  Button,
-  Flex,
-  LabeledList,
-  NoticeBox,
-  Section,
-  Stack,
-  Tabs,
-} from '../components';
+import { Box, Button, Flex, LabeledList, NoticeBox, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
 
 export const DopplerArray = (props, context) => {
@@ -74,7 +65,8 @@ const DopplerArrayContent = (props, context) => {
                     onClick={() =>
                       act('delete_record', {
                         'ref': activeRecord.ref,
-                      })}
+                      })
+                    }
                   />
                   <Button
                     icon="print"
@@ -85,7 +77,8 @@ const DopplerArrayContent = (props, context) => {
                     onClick={() =>
                       act('print_record', {
                         'ref': activeRecord.ref,
-                      })}
+                      })
+                    }
                   />
                 </>
               }>
@@ -101,22 +94,22 @@ const DopplerArrayContent = (props, context) => {
                 </LabeledList.Item>
                 <LabeledList.Item label="Epicenter Radius">
                   {activeRecord.factual_epicenter_radius}
-                  {activeRecord.theory_epicenter_radius
-                    && ' (Theoretical: '
-                      + activeRecord.theory_epicenter_radius
-                      + ')'}
+                  {activeRecord.theory_epicenter_radius &&
+                    ' (Theoretical: ' +
+                      activeRecord.theory_epicenter_radius +
+                      ')'}
                 </LabeledList.Item>
                 <LabeledList.Item label="Outer Radius">
                   {activeRecord.factual_outer_radius}
-                  {activeRecord.theory_outer_radius
-                    && ' (Theoretical: ' + activeRecord.theory_outer_radius + ')'}
+                  {activeRecord.theory_outer_radius &&
+                    ' (Theoretical: ' + activeRecord.theory_outer_radius + ')'}
                 </LabeledList.Item>
                 <LabeledList.Item label="Shockwave Radius">
                   {activeRecord.factual_shockwave_radius}
-                  {activeRecord.theory_shockwave_radius
-                    && ' (Theoretical: '
-                      + activeRecord.theory_shockwave_radius
-                      + ')'}
+                  {activeRecord.theory_shockwave_radius &&
+                    ' (Theoretical: ' +
+                      activeRecord.theory_shockwave_radius +
+                      ')'}
                 </LabeledList.Item>
                 <LabeledList.Item label="Possible Cause(s)">
                   {activeRecord.reaction_results.length

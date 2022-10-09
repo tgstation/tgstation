@@ -11,7 +11,7 @@
 /obj/item/clothing/mask/facehugger
 	name = "alien"
 	desc = "It has some sort of a tube at the end of its tail."
-	icon = 'icons/mob/alien.dmi'
+	icon = 'icons/mob/nonhuman-player/alien.dmi'
 	icon_state = "facehugger"
 	base_icon_state = "facehugger"
 	inhand_icon_state = "facehugger"
@@ -41,6 +41,8 @@
 	AddElement(/datum/element/connect_loc, loc_connections)
 	AddElement(/datum/element/atmos_sensitive, mapload)
 
+	RegisterSignal(src, COMSIG_LIVING_TRYING_TO_PULL, .proc/react_to_mob)
+
 /obj/item/clothing/mask/facehugger/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	..()
 	if(atom_integrity < 90)
@@ -48,6 +50,12 @@
 
 /obj/item/clothing/mask/facehugger/attackby(obj/item/O, mob/user, params)
 	return O.attack_atom(src, user, params)
+
+/obj/item/clothing/mask/facehugger/proc/react_to_mob(datum/source, mob/user)
+	SIGNAL_HANDLER
+	if((stat == CONSCIOUS && !sterile) && !isalien(user))
+		if(Leap(user))
+			return COMSIG_LIVING_CANCEL_PULL
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/mask/facehugger/attack_hand(mob/user, list/modifiers)
@@ -202,10 +210,10 @@
 		worn_icon_state = "[base_icon_state]_impregnated"
 
 		var/obj/item/bodypart/chest/LC = target.get_bodypart(BODY_ZONE_CHEST)
-		if((!LC || IS_ORGANIC_LIMB(LC)) && !target.getorgan(/obj/item/organ/body_egg/alien_embryo))
-			new /obj/item/organ/body_egg/alien_embryo(target)
-			var/turf/T = get_turf(target)
-			log_game("[key_name(target)] was impregnated by a facehugger at [loc_name(T)]")
+		if((!LC || IS_ORGANIC_LIMB(LC)) && !target.getorgan(/obj/item/organ/internal/body_egg/alien_embryo))
+			new /obj/item/organ/internal/body_egg/alien_embryo(target)
+			target.log_message("was impregnated by a facehugger", LOG_GAME)
+			target.log_message("was impregnated by a facehugger", LOG_VICTIM, log_globally = FALSE)
 
 	else
 		target.visible_message(span_danger("[src] violates [target]'s face!"), \
@@ -245,7 +253,7 @@
 		return FALSE
 	if(M.stat == DEAD)
 		return FALSE
-	if(M.getorgan(/obj/item/organ/alien/hivenode))
+	if(M.getorgan(/obj/item/organ/internal/alien/hivenode))
 		return FALSE
 	var/mob/living/carbon/C = M
 	if(ishuman(C) && !(ITEM_SLOT_MASK in C.dna.species.no_equip))
@@ -268,7 +276,7 @@
 
 /obj/item/clothing/mask/facehugger/impregnated
 	icon_state = "facehugger_impregnated"
-	inhand_icon_state = "facehugger_impregnated"
+	inhand_icon_state = null
 	worn_icon_state = "facehugger_impregnated"
 	stat = DEAD
 

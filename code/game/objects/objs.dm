@@ -3,7 +3,6 @@
 	animate_movement = SLIDE_STEPS
 	speech_span = SPAN_ROBOT
 	var/obj_flags = CAN_BE_HIT
-	var/set_obj_flags // ONLY FOR MAPPING: Sets flags from a string list, handled in Initialize. Usage: set_obj_flags = "EMAGGED;!CAN_BE_HIT" to set EMAGGED and clear CAN_BE_HIT.
 
 	var/damtype = BRUTE
 	var/force = 0
@@ -12,6 +11,9 @@
 	var/wound_bonus = 0
 	/// If this attacks a human with no wound armor on the affected body part, add this to the wound mod. Some attacks may be significantly worse at wounding if there's even a slight layer of armor to absorb some of it vs bare flesh
 	var/bare_wound_bonus = 0
+
+	/// A multiplier to an objecet's force when used against a stucture, vechicle, machine, or robot.
+	var/demolition_mod = 1
 
 	var/current_skin //Has the item been reskinned?
 	var/list/unique_reskin //List of options to reskin.
@@ -28,8 +30,6 @@
 
 	var/drag_slowdown // Amont of multiplicative slowdown applied if pulled. >1 makes you slower, <1 makes you faster.
 
-	vis_flags = VIS_INHERIT_PLANE //when this be added to vis_contents of something it inherit something.plane, important for visualisation of obj in openspace.
-
 	/// Map tag for something.  Tired of it being used on snowflake items.  Moved here for some semblance of a standard.
 	/// Next pr after the network fix will have me refactor door interactions, so help me god.
 	var/id_tag = null
@@ -45,36 +45,18 @@
 			return FALSE
 	return ..()
 
-/obj/Initialize(mapload)
-	. = ..()
-
-	if (set_obj_flags)
-		var/flagslist = splittext(set_obj_flags,";")
-		var/list/string_to_objflag = GLOB.bitfields["obj_flags"]
-		for (var/flag in flagslist)
-			if(flag[1] == "!")
-				flag = copytext(flag, length(flag[1]) + 1) // Get all but the initial !
-				obj_flags &= ~string_to_objflag[flag]
-			else
-				obj_flags |= string_to_objflag[flag]
-
-	if((obj_flags & ON_BLUEPRINTS) && isturf(loc))
-		var/turf/T = loc
-		T.add_blueprints_preround(src)
-
-	if(network_id)
-		var/area/A = get_area(src)
-		if(A)
-			if(!A.network_root_id)
-				log_telecomms("Area '[A.name]([REF(A)])' has no network network_root_id, force assigning in object [src]([REF(src)])")
-				SSnetworks.lookup_area_root_id(A)
-			network_id = NETWORK_NAME_COMBINE(A.network_root_id, network_id) // I regret nothing!!
-		else
-			log_telecomms("Created [src]([REF(src)] in nullspace, assuming network to be in station")
-			network_id = NETWORK_NAME_COMBINE(STATION_NETWORK_ROOT, network_id) // I regret nothing!!
-		AddComponent(/datum/component/ntnet_interface, network_id, id_tag)
-		/// Needs to run before as ComponentInitialize runs after this statement...why do we have ComponentInitialize again?
-
+// Call this if you want to add your object to a network
+/obj/proc/init_network_id(network_id)
+	var/area/A = get_area(src)
+	if(A)
+		if(!A.network_root_id)
+			log_telecomms("Area '[A.name]([REF(A)])' has no network network_root_id, force assigning in object [src]([REF(src)])")
+			SSnetworks.lookup_area_root_id(A)
+		network_id = NETWORK_NAME_COMBINE(A.network_root_id, network_id) // I regret nothing!!
+	else
+		log_telecomms("Created [src]([REF(src)] in nullspace, assuming network to be in station")
+		network_id = NETWORK_NAME_COMBINE(STATION_NETWORK_ROOT, network_id) // I regret nothing!!
+	AddComponent(/datum/component/ntnet_interface, network_id, id_tag)
 
 /obj/Destroy(force)
 	if(!ismachinery(src))
@@ -82,13 +64,24 @@
 	SStgui.close_uis(src)
 	. = ..()
 
+/obj/attacked_by(obj/item/attacking_item, mob/living/user)
+	if(!attacking_item.force)
+		return
 
-/obj/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
-	. = ..()
-	if(obj_flags & FROZEN)
-		visible_message(span_danger("[src] shatters into a million pieces!"))
-		qdel(src)
+	var/total_force = (attacking_item.force * attacking_item.demolition_mod)
 
+	var/damage = take_damage(total_force, attacking_item.damtype, MELEE, 1)
+
+	var/damage_verb = "hit"
+
+	if(attacking_item.demolition_mod > 1 && damage)
+		damage_verb = "pulverise"
+	if(attacking_item.demolition_mod < 1)
+		damage_verb = "ineffectively pierce"
+
+	user.visible_message(span_danger("[user] [damage_verb][plural_s(damage_verb)] [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]"), \
+		span_danger("You [damage_verb] [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]"), null, COMBAT_MESSAGE_RANGE)
+	log_combat(user, src, "attacked", attacking_item)
 
 /obj/assume_air(datum/gas_mixture/giver)
 	if(loc)
@@ -295,7 +288,7 @@
 
 /obj/AltClick(mob/user)
 	. = ..()
-	if(unique_reskin && !current_skin && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
+	if(unique_reskin && !current_skin && user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE))
 		reskin_obj(user)
 
 /**
@@ -341,7 +334,7 @@
 	return TRUE
 
 /obj/analyzer_act(mob/living/user, obj/item/analyzer/tool)
-	if(atmos_scan(user=user, target=src, tool=tool, silent=FALSE))
+	if(atmos_scan(user=user, target=src, silent=FALSE))
 		return TRUE
 	return ..()
 
@@ -372,3 +365,17 @@
 	for(var/reagent in reagents)
 		var/datum/reagent/R = reagent
 		. |= R.expose_obj(src, reagents[R])
+
+///attempt to freeze this obj if possible. returns TRUE if it succeeded, FALSE otherwise.
+/obj/proc/freeze()
+	if(HAS_TRAIT(src, TRAIT_FROZEN))
+		return FALSE
+	if(obj_flags & FREEZE_PROOF)
+		return FALSE
+
+	AddElement(/datum/element/frozen)
+	return TRUE
+
+///unfreezes this obj if its frozen
+/obj/proc/unfreeze()
+	SEND_SIGNAL(src, COMSIG_OBJ_UNFREEZE)

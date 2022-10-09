@@ -4,6 +4,8 @@
 	weight = 100
 	max_occurrences = 20
 	alert_observers = FALSE
+	category = EVENT_CATEGORY_ENGINEERING
+	description = "Turns off a random amount of cameras."
 
 /datum/round_event/camera_failure
 	fakeable = FALSE

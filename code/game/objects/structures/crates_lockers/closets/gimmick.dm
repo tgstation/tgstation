@@ -28,7 +28,7 @@
 /obj/structure/closet/gimmick/russian/PopulateContents()
 	..()
 	for(var/i in 1 to 5)
-		new /obj/item/clothing/head/ushanka(src)
+		new /obj/item/clothing/head/costume/ushanka(src)
 	for(var/i in 1 to 5)
 		new /obj/item/clothing/under/costume/soviet(src)
 
@@ -117,7 +117,7 @@
 	icon_state = "mini_fridge"
 	icon_welded = "welded_small"
 	max_mob_size = MOB_SIZE_SMALL
-	storage_capacity = 7
+	storage_capacity = 10
 
 /obj/structure/closet/mini_fridge/PopulateContents()
 	. = ..()

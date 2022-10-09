@@ -1,0 +1,172 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/effect/turf_decal/sand,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"b" = (
+/turf/open/misc/asteroid,
+/area/station/maintenance/starboard/greater)
+"f" = (
+/obj/structure/girder,
+/obj/item/stack/sheet/iron,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/greater)
+"h" = (
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/greater)
+"j" = (
+/turf/closed/wall,
+/area/station/maintenance/starboard/greater)
+"m" = (
+/obj/item/shovel,
+/obj/item/clothing/head/utility/hardhat,
+/turf/open/misc/asteroid,
+/area/station/maintenance/starboard/greater)
+"p" = (
+/obj/modular_map_connector,
+/obj/effect/turf_decal/sand,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/supply/maintenance,
+/obj/effect/mapping_helpers/airlock/locked,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"s" = (
+/obj/item/stack/ore/glass,
+/turf/open/misc/asteroid/dug,
+/area/station/maintenance/starboard/greater)
+"t" = (
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"z" = (
+/obj/item/stack/ore/glass,
+/turf/open/misc/asteroid,
+/area/station/maintenance/starboard/greater)
+"D" = (
+/obj/structure/closet,
+/obj/effect/spawner/random/maintenance/four,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"E" = (
+/turf/closed/wall/rock/porous,
+/area/station/maintenance/starboard/greater)
+"H" = (
+/turf/closed/wall/rust,
+/area/station/maintenance/starboard/greater)
+"M" = (
+/obj/item/stack/sheet/iron,
+/turf/open/misc/asteroid,
+/area/station/maintenance/starboard/greater)
+"S" = (
+/obj/effect/turf_decal/sand,
+/obj/item/stack/ore/glass,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"W" = (
+/obj/structure/girder,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/greater)
+"Y" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/station/maintenance/starboard/greater)
+
+(1,1,1) = {"
+Y
+Y
+h
+h
+a
+p
+"}
+(2,1,1) = {"
+Y
+Y
+b
+h
+a
+H
+"}
+(3,1,1) = {"
+b
+E
+b
+H
+Y
+j
+"}
+(4,1,1) = {"
+b
+b
+b
+Y
+j
+j
+"}
+(5,1,1) = {"
+b
+b
+Y
+Y
+j
+t
+"}
+(6,1,1) = {"
+b
+s
+b
+b
+H
+a
+"}
+(7,1,1) = {"
+z
+m
+b
+b
+f
+S
+"}
+(8,1,1) = {"
+E
+b
+b
+b
+h
+a
+"}
+(9,1,1) = {"
+b
+b
+b
+M
+W
+a
+"}
+(10,1,1) = {"
+Y
+b
+b
+E
+j
+D
+"}
+(11,1,1) = {"
+Y
+Y
+Y
+Y
+j
+j
+"}
+(12,1,1) = {"
+Y
+Y
+Y
+Y
+Y
+j
+"}

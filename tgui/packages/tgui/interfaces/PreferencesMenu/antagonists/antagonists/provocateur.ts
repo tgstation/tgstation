@@ -1,10 +1,10 @@
-import { Antagonist, Category } from "../base";
-import { multiline } from "common/string";
-import { REVOLUTIONARY_MECHANICAL_DESCRIPTION } from "./headrevolutionary";
+import { Antagonist, Category } from '../base';
+import { multiline } from 'common/string';
+import { REVOLUTIONARY_MECHANICAL_DESCRIPTION } from './headrevolutionary';
 
 const Provocateur: Antagonist = {
-  key: "provocateur",
-  name: "Provocateur",
+  key: 'provocateur',
+  name: 'Provocateur',
   description: [
     multiline`
       A form of head revolutionary that can activate when joining an ongoing

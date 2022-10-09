@@ -10,7 +10,7 @@
 	///what weapons will be allowed during the sparring match
 	var/weapons_condition = CONDITION_MELEE_ONLY
 	///what arena the fight will take place in
-	var/arena_condition = /area/service/chapel
+	var/arena_condition = /area/station/service/chapel
 	///what stakes the fight will have
 	var/stakes_condition = STAKES_NONE
 	///who has signed this contract. fills itself with WEAKREFS, to prevent hanging references

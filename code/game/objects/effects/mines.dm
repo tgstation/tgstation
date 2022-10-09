@@ -3,7 +3,7 @@
 	desc = "Better stay away from that thing."
 	density = FALSE
 	anchored = TRUE
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "uglymine"
 	/// We manually check to see if we've been triggered in case multiple atoms cross us in the time between the mine being triggered and it actually deleting, to avoid a race condition with multiple detonations
 	var/triggered = FALSE
@@ -205,6 +205,6 @@
 	playsound(loc, 'sound/machines/chime.ogg', 30, FALSE, -3)
 	var/obj/effect/mine/new_mine = new mine_type(get_turf(src))
 	visible_message(span_danger("\The [src] releases a puff of smoke, revealing \a [new_mine]!"))
-	var/obj/effect/particle_effect/smoke/poof = new (get_turf(src))
+	var/obj/effect/particle_effect/fluid/smoke/poof = new (get_turf(src))
 	poof.lifetime = 3
 	qdel(src)

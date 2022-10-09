@@ -39,7 +39,7 @@
 /datum/crafting_recipe/food/appendixburger
 	name = "Appendix burger"
 	reqs = list(
-		/obj/item/organ/appendix = 1,
+		/obj/item/organ/internal/appendix = 1,
 		/obj/item/food/bun = 1
 	)
 	result = /obj/item/food/burger/appendix
@@ -48,7 +48,7 @@
 /datum/crafting_recipe/food/brainburger
 	name = "Brain burger"
 	reqs = list(
-		/obj/item/organ/brain = 1,
+		/obj/item/organ/internal/brain = 1,
 		/obj/item/food/bun = 1
 	)
 	result = /obj/item/food/burger/brain
@@ -237,7 +237,8 @@
 		/obj/item/food/cheese/wedge = 3,
 		/obj/item/food/boiledegg = 1,
 		/obj/item/food/meat/bacon = 1,
-		/obj/item/food/bun = 1
+		/obj/item/food/bun = 1,
+		/obj/item/food/pickle = 1,
 
 	)
 	result = /obj/item/food/burger/superbite
@@ -314,8 +315,8 @@
 	reqs = list(
 		/obj/item/food/bun = 1,
 		/obj/item/food/patty/plain = 1,
-		/obj/item/organ/ears/cat = 1,
-		/obj/item/organ/tail/cat = 1,
+		/obj/item/organ/internal/ears/cat = 1,
+		/obj/item/organ/external/tail/cat = 1,
 	)
 	result = /obj/item/food/burger/catburger
 	subcategory = CAT_BURGER

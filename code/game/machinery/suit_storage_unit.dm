@@ -112,6 +112,7 @@
 
 /obj/machinery/suit_storage_unit/rd
 	mask_type = /obj/item/clothing/mask/breath
+	storage_type = /obj/item/tank/internals/oxygen
 	mod_type = /obj/item/mod/control/pre_equipped/research
 
 /obj/machinery/suit_storage_unit/syndicate
@@ -121,8 +122,8 @@
 
 /obj/machinery/suit_storage_unit/radsuit
 	name = "radiation suit storage unit"
-	suit_type = /obj/item/clothing/suit/radiation
-	helmet_type = /obj/item/clothing/head/radiation
+	suit_type = /obj/item/clothing/suit/utility/radiation
+	helmet_type = /obj/item/clothing/head/utility/radiation
 	storage_type = /obj/item/geiger_counter
 
 /obj/machinery/suit_storage_unit/open
@@ -388,8 +389,8 @@
 		if(uv_super)
 			visible_message(span_warning("[src]'s door creaks open with a loud whining noise. A cloud of foul black smoke escapes from its chamber."))
 			playsound(src, 'sound/machines/airlock_alien_prying.ogg', 50, TRUE)
-			var/datum/effect_system/smoke_spread/bad/black/smoke = new
-			smoke.set_up(0, src)
+			var/datum/effect_system/fluid_spread/smoke/bad/black/smoke = new
+			smoke.set_up(0, holder = src, location = src)
 			smoke.start()
 			QDEL_NULL(helmet)
 			QDEL_NULL(suit)

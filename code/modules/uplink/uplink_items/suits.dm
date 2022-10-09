@@ -11,7 +11,7 @@
 /datum/uplink_item/suits/infiltrator_bundle
 	name = "Infiltrator Case"
 	desc = "Developed by Roseus Galactic in conjunction with the Gorlex Marauders to produce a functional suit for urban operations, \
-			this suit proves to be cheaper than your standard issue hardsuit, with none of the movement restrictions of the outdated spacesuits employed by the company. \
+			this suit proves to be cheaper than your standard issue MODsuit, with none of the movement restrictions of the outdated spacesuits employed by the company. \
 			Comes with an armor vest, helmet, sneaksuit, sneakboots, specialized combat gloves and a high-tech balaclava. The case is also rather useful as a storage container."
 	item = /obj/item/storage/toolbox/infiltrator
 	cost = 6
@@ -50,6 +50,29 @@
 	progression_minimum = 20 MINUTES
 	cost = 2
 
+/datum/uplink_item/suits/chameleon
+	name = "MODsuit Chameleon Module"
+	desc = "A MODsuit module that lets the suit disguise itself as other objects."
+	item = /obj/item/mod/module/chameleon
+	progression_minimum = 20 MINUTES
+	cost = 2
+
+/datum/uplink_item/suits/plate_compression
+	name = "MODsuit Plate Compression Module"
+	desc = "A MODsuit module that lets the suit compress into a smaller size. Not compatible with storage modules."
+	item = /obj/item/mod/module/plate_compression
+	progression_minimum = 20 MINUTES
+	cost = 2
+
+// Medium progression cost
+
+/datum/uplink_item/suits/noslip
+	name = "MODsuit Anti-Slip Module"
+	desc = "A MODsuit module preventing the user from slipping on water."
+	item = /obj/item/mod/module/noslip
+	progression_minimum = 90 MINUTES
+	cost = 2
+
 // Very high progression cost
 
 /datum/uplink_item/suits/modsuit/elite_traitor
@@ -61,10 +84,3 @@
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 	progression_minimum = 90 MINUTES
 	cost = 16
-
-/datum/uplink_item/suits/noslip
-	name = "MODsuit Anti-Slip Module"
-	desc = "A MODsuit module preventing the user from slipping on water."
-	item = /obj/item/mod/module/noslip
-	progression_minimum = 90 MINUTES
-	cost = 4

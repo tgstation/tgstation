@@ -119,13 +119,18 @@
 
 /mob/living/simple_animal/hostile/attacked_by(obj/item/I, mob/living/user)
 	if(stat == CONSCIOUS && !target && AIStatus != AI_OFF && !client && user)
-		FindTarget(list(user), 1)
+		FindTarget(list(user))
+	return ..()
+
+/mob/living/simple_animal/hostile/electrocute_act(shock_damage, source, siemens_coeff, flags)
+	if(stat == CONSCIOUS && !target && AIStatus != AI_OFF && !client)
+		FindTarget(list(source))
 	return ..()
 
 /mob/living/simple_animal/hostile/bullet_act(obj/projectile/P)
 	if(stat == CONSCIOUS && !target && AIStatus != AI_OFF && !client)
 		if(P.firer && get_dist(src, P.firer) <= aggro_vision_range)
-			FindTarget(list(P.firer), 1)
+			FindTarget(list(P.firer))
 		Goto(P.starting, move_to_delay, 3)
 	return ..()
 
@@ -144,22 +149,27 @@
 	else
 		. = oview(vision_range, target_from)
 
-/mob/living/simple_animal/hostile/proc/FindTarget(list/possible_targets, HasTargetsList = 0)//Step 2, filter down possible targets to things we actually care about
-	. = list()
-	if(!HasTargetsList)
-		possible_targets = ListTargets()
-	for(var/pos_targ in possible_targets)
-		var/atom/A = pos_targ
-		if(Found(A))//Just in case people want to override targetting
-			. = list(A)
-			break
-		if(CanAttack(A))//Can we attack it?
-			. += A
-			continue
-	var/Target = PickTarget(.)
-	GiveTarget(Target)
-	return Target //We now have a target
+/mob/living/simple_animal/hostile/proc/FindTarget(list/possible_targets)//Step 2, filter down possible targets to things we actually care about
+	var/list/all_potential_targets = list()
 
+	if(isnull(possible_targets))
+		possible_targets = ListTargets()
+
+	for(var/atom/pos_targ as anything in possible_targets)
+		if(Found(pos_targ)) //Just in case people want to override targetting
+			all_potential_targets = list(pos_targ)
+			break
+
+		if(isitem(pos_targ) && ismob(pos_targ.loc)) //If source is from an item, check the holder of it.
+			if(CanAttack(pos_targ.loc))
+				all_potential_targets += pos_targ.loc
+		else
+			if(CanAttack(pos_targ))
+				all_potential_targets += pos_targ
+
+	var/found_target = PickTarget(all_potential_targets)
+	GiveTarget(found_target)
+	return found_target //We now have a target
 
 
 /mob/living/simple_animal/hostile/proc/PossibleThreats()
@@ -282,7 +292,7 @@
 		if(ranged) //We ranged? Shoot at em
 			if(!target.Adjacent(target_from) && ranged_cooldown <= world.time) //But make sure they're not in range for a melee attack and our range attack is off cooldown
 				OpenFire(target)
-		if(!Process_Spacemove()) //Drifting
+		if(!Process_Spacemove(0)) //Drifting
 			SSmove_manager.stop_looping(src)
 			return 1
 		if(retreat_distance != null) //If we have a retreat distance, check if we need to run from our target
@@ -416,7 +426,13 @@
 	if(casingtype)
 		var/obj/item/ammo_casing/casing = new casingtype(startloc)
 		playsound(src, projectilesound, 100, TRUE)
-		casing.fire_casing(targeted_atom, src, null, null, null, ran_zone(), 0,  src)
+		var/targeted_zone
+		if(ismob(targeted_atom))
+			var/mob/targeted_mob = targeted_atom
+			targeted_zone = targeted_mob.get_random_valid_zone()
+		else
+			targeted_zone = ran_zone()
+		casing.fire_casing(targeted_atom, src, null, null, null, targeted_zone, 0,  src)
 	else if(projectiletype)
 		var/obj/projectile/P = new projectiletype(startloc)
 		playsound(src, projectilesound, 100, TRUE)
@@ -523,14 +539,14 @@
 		if(AI_ON)
 			. = 1
 		if(AI_IDLE)
-			if(FindTarget(possible_targets, 1))
+			if(FindTarget(possible_targets))
 				. = 1
 				toggle_ai(AI_ON) //Wake up for more than one Life() cycle.
 			else
 				. = 0
 
 /mob/living/simple_animal/hostile/proc/AIShouldSleep(list/possible_targets)
-	return !FindTarget(possible_targets, 1)
+	return !FindTarget(possible_targets)
 
 
 //These two procs handle losing our target if we've failed to attack them for
@@ -575,7 +591,7 @@
 	else
 		tlist = ListTargets()
 
-	if(AIStatus == AI_IDLE && FindTarget(tlist, 1))
+	if(AIStatus == AI_IDLE && FindTarget(tlist))
 		if(cheap_search) //Try again with full effort
 			FindTarget()
 		toggle_ai(AI_ON)

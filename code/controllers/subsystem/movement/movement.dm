@@ -67,13 +67,20 @@ SUBSYSTEM_DEF(movement)
 
 /// Removes a bucket from our system. You only need to pass in the time, but if you pass in the index of the list you save us some work
 /datum/controller/subsystem/movement/proc/smash_bucket(index, bucket_time)
+	var/sorted_length = length(sorted_buckets)
 	if(!index)
-		for(var/i in 1 to length(sorted_buckets))
+		index = sorted_length + 1 // let's setup the failure condition
+		for(var/i in 1 to sorted_length)
 			var/list/bucket_info = sorted_buckets[i]
 			if(bucket_info[MOVEMENT_BUCKET_TIME] != bucket_time)
 				continue
 			index = i
 			break
+	//This is technically possible, if our bucket is smashed inside the loop's process
+	//Let's be nice, the cost of doing it is cheap
+	if(index > sorted_length || !buckets["[bucket_time]"])
+		return
+
 	sorted_buckets.Cut(index, index + 1) //Removes just this list
 	//Removes the assoc lookup too
 	buckets -= "[bucket_time]"
@@ -81,18 +88,19 @@ SUBSYSTEM_DEF(movement)
 /datum/controller/subsystem/movement/proc/queue_loop(datum/move_loop/loop)
 	var/target_time = loop.timer
 	var/string_time = "[target_time]"
-	if(buckets[string_time])
-		buckets[string_time] += loop
-	else
-		buckets[string_time] = list(loop)
-		// This makes buckets and sorted buckets point to the same place, allowing for quicker inserts
+	// If there's no bucket for this, lets set them up
+	if(!buckets[string_time])
+		buckets[string_time] = list()
+		// This makes assoc buckets and sorted buckets point to the same place, allowing for quicker inserts
 		var/list/new_bucket = list(list(target_time, buckets[string_time]))
 		BINARY_INSERT_DEFINE(new_bucket, sorted_buckets, SORT_VAR_NO_TYPE, list(target_time), SORT_FIRST_INDEX, COMPARE_KEY)
+
+	buckets[string_time] += loop
 
 /datum/controller/subsystem/movement/proc/dequeue_loop(datum/move_loop/loop)
 	var/list/our_entries = buckets["[loop.timer]"]
 	our_entries -= loop
-	if(!our_entries)
+	if(!length(our_entries))
 		smash_bucket(bucket_time = loop.timer) // We can't pass an index in for context because we don't know our position
 
 /datum/controller/subsystem/movement/proc/add_loop(datum/move_loop/add)

@@ -32,8 +32,8 @@ export const COLORS = {
   },
   // reagent / chemistry related colours
   reagent: {
-    acidicbuffer: "#fbc314",
-    basicbuffer: "#3853a4",
+    acidicbuffer: '#fbc314',
+    basicbuffer: '#3853a4',
   },
 };
 
@@ -140,139 +140,178 @@ export const RADIO_CHANNELS = [
 
 const GASES = [
   {
-    'id': 'o2',
-    'name': 'Oxygen',
-    'label': 'O₂',
-    'color': 'blue',
+    id: 'o2',
+    path: '/datum/gas/oxygen',
+    name: 'Oxygen',
+    label: 'O₂',
+    color: 'blue',
   },
   {
-    'id': 'n2',
-    'name': 'Nitrogen',
-    'label': 'N₂',
-    'color': 'red',
+    id: 'n2',
+    path: '/datum/gas/nitrogen',
+    name: 'Nitrogen',
+    label: 'N₂',
+    color: 'red',
   },
   {
-    'id': 'co2',
-    'name': 'Carbon Dioxide',
-    'label': 'CO₂',
-    'color': 'grey',
+    id: 'co2',
+    path: '/datum/gas/carbon_dioxide',
+    name: 'Carbon Dioxide',
+    label: 'CO₂',
+    color: 'grey',
   },
   {
-    'id': 'plasma',
-    'name': 'Plasma',
-    'label': 'Plasma',
-    'color': 'pink',
+    id: 'plasma',
+    path: '/datum/gas/plasma',
+    name: 'Plasma',
+    label: 'Plasma',
+    color: 'pink',
   },
   {
-    'id': 'water_vapor',
-    'name': 'Water Vapor',
-    'label': 'H₂O',
-    'color': 'lightsteelblue',
+    id: 'water_vapor',
+    path: '/datum/gas/water_vapor',
+    name: 'Water Vapor',
+    label: 'H₂O',
+    color: 'lightsteelblue',
   },
   {
-    'id': 'nob',
-    'name': 'Hyper-noblium',
-    'label': 'Hyper-nob',
-    'color': 'teal',
+    id: 'nob',
+    path: '/datum/gas/hypernoblium',
+    name: 'Hyper-noblium',
+    label: 'Hyper-nob',
+    color: 'teal',
   },
   {
-    'id': 'n2o',
-    'name': 'Nitrous Oxide',
-    'label': 'N₂O',
-    'color': 'bisque',
+    id: 'n2o',
+    path: '/datum/gas/nitrous_oxide',
+    name: 'Nitrous Oxide',
+    label: 'N₂O',
+    color: 'bisque',
   },
   {
-    'id': 'no2',
-    'name': 'Nitrium',
-    'label': 'Nitrium',
-    'color': 'brown',
+    id: 'no2',
+    path: '/datum/gas/nitrium',
+    name: 'Nitrium',
+    label: 'Nitrium',
+    color: 'brown',
   },
   {
-    'id': 'tritium',
-    'name': 'Tritium',
-    'label': 'Tritium',
-    'color': 'limegreen',
+    id: 'tritium',
+    path: '/datum/gas/tritium',
+    name: 'Tritium',
+    label: 'Tritium',
+    color: 'limegreen',
   },
   {
-    'id': 'bz',
-    'name': 'BZ',
-    'label': 'BZ',
-    'color': 'mediumpurple',
+    id: 'bz',
+    path: '/datum/gas/bz',
+    name: 'BZ',
+    label: 'BZ',
+    color: 'mediumpurple',
   },
   {
-    'id': 'pluox',
-    'name': 'Pluoxium',
-    'label': 'Pluoxium',
-    'color': 'mediumslateblue',
+    id: 'pluox',
+    path: '/datum/gas/pluoxium',
+    name: 'Pluoxium',
+    label: 'Pluoxium',
+    color: 'mediumslateblue',
   },
   {
-    'id': 'miasma',
-    'name': 'Miasma',
-    'label': 'Miasma',
-    'color': 'olive',
+    id: 'miasma',
+    path: '/datum/gas/miasma',
+    name: 'Miasma',
+    label: 'Miasma',
+    color: 'olive',
   },
   {
-    'id': 'Freon',
-    'name': 'Freon',
-    'label': 'Freon',
-    'color': 'paleturquoise',
+    id: 'Freon',
+    path: '/datum/gas/freon',
+    name: 'Freon',
+    label: 'Freon',
+    color: 'paleturquoise',
   },
   {
-    'id': 'hydrogen',
-    'name': 'Hydrogen',
-    'label': 'H₂',
-    'color': 'white',
+    id: 'hydrogen',
+    path: '/datum/gas/hydrogen',
+    name: 'Hydrogen',
+    label: 'H₂',
+    color: 'white',
   },
   {
-    'id': 'healium',
-    'name': 'Healium',
-    'label': 'Healium',
-    'color': 'salmon',
+    id: 'healium',
+    path: '/datum/gas/healium',
+    name: 'Healium',
+    label: 'Healium',
+    color: 'salmon',
   },
   {
-    'id': 'proto_nitrate',
-    'name': 'Proto Nitrate',
-    'label': 'Proto-Nitrate',
-    'color': 'greenyellow',
+    id: 'proto_nitrate',
+    path: '/datum/gas/proto_nitrate',
+    name: 'Proto Nitrate',
+    label: 'Proto-Nitrate',
+    color: 'greenyellow',
   },
   {
-    'id': 'zauker',
-    'name': 'Zauker',
-    'label': 'Zauker',
-    'color': 'darkgreen',
+    id: 'zauker',
+    path: '/datum/gas/zauker',
+    name: 'Zauker',
+    label: 'Zauker',
+    color: 'darkgreen',
   },
   {
-    'id': 'halon',
-    'name': 'Halon',
-    'label': 'Halon',
-    'color': 'purple',
+    id: 'halon',
+    path: '/datum/gas/halon',
+    name: 'Halon',
+    label: 'Halon',
+    color: 'purple',
   },
   {
-    'id': 'helium',
-    'name': 'Helium',
-    'label': 'He',
-    'color': 'aliceblue',
+    id: 'helium',
+    path: '/datum/gas/helium',
+    name: 'Helium',
+    label: 'He',
+    color: 'aliceblue',
   },
   {
-    'id': 'antinoblium',
-    'name': 'Antinoblium',
-    'label': 'Anti-Noblium',
-    'color': 'maroon',
+    id: 'antinoblium',
+    path: '/datum/gas/antinoblium',
+    name: 'Antinoblium',
+    label: 'Anti-Noblium',
+    color: 'maroon',
   },
 ];
 
 export const getGasLabel = (gasId, fallbackValue) => {
   const gasSearchString = String(gasId).toLowerCase();
-  const gas = GASES.find(gas => gas.id === gasSearchString
-    || gas.name.toLowerCase() === gasSearchString);
-  return gas && gas.label
-    || fallbackValue
-    || gasId;
+  // prettier-ignore
+  const gas = GASES.find((gas) => (
+    gas.id === gasSearchString
+      || gas.name.toLowerCase() === gasSearchString
+  ));
+  return (gas && gas.label) || fallbackValue || gasId;
 };
 
-export const getGasColor = gasId => {
+export const getGasColor = (gasId) => {
   const gasSearchString = String(gasId).toLowerCase();
-  const gas = GASES.find(gas => gas.id === gasSearchString
-    || gas.name.toLowerCase() === gasSearchString);
+  // prettier-ignore
+  const gas = GASES.find((gas) => (
+    gas.id === gasSearchString
+      || gas.name.toLowerCase() === gasSearchString
+  ));
   return gas && gas.color;
+};
+
+export const getGasFromId = (gasId) => {
+  const gasSearchString = String(gasId).toLowerCase();
+  // prettier-ignore
+  const gas = GASES.find((gas) => (
+    gas.id === gasSearchString
+      || gas.name.toLowerCase() === gasSearchString
+  ));
+  return gas;
+};
+
+// Paths need to be exact matches so we dont need to lowercase stuffs.
+export const getGasFromPath = (gasPath) => {
+  return GASES.find((gas) => gasPath === gas.path);
 };

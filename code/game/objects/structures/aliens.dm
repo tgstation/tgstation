@@ -8,7 +8,7 @@
 
 
 /obj/structure/alien
-	icon = 'icons/mob/alien.dmi'
+	icon = 'icons/mob/nonhuman-player/alien.dmi'
 	max_integrity = 100
 
 /obj/structure/alien/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
@@ -99,7 +99,7 @@
 
 /obj/structure/alien/resin/wall/creature
 	name = "gelatinous wall"
-	desc = "Thick material shaped into a wall. Eugh."
+	desc = "Thick material shaped into a wall. Yuck."
 	color = "#8EC127"
 
 /obj/structure/alien/resin/membrane
@@ -143,7 +143,7 @@
 	max_integrity = 15
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_ALIEN_RESIN, SMOOTH_GROUP_ALIEN_WEEDS)
-	canSmoothWith = list(SMOOTH_GROUP_ALIEN_WEEDS, SMOOTH_GROUP_WALLS)
+	canSmoothWith = list(SMOOTH_GROUP_WALLS, SMOOTH_GROUP_ALIEN_WEEDS)
 	///the range of the weeds going to be affected by the node
 	var/node_range = NODERANGE
 	///the parent node that will determine if we grow or die
@@ -307,7 +307,7 @@
 
 /obj/structure/alien/weeds/creature
 	name = "gelatinous floor"
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes."
+	desc = "A thick gelatinous surface covers the floor.  Someone get the galoshes."
 	color = "#4BAE56"
 
 
@@ -375,7 +375,7 @@
 	. = ..()
 	if(.)
 		return
-	if(user.getorgan(/obj/item/organ/alien/plasmavessel))
+	if(user.getorgan(/obj/item/organ/internal/alien/plasmavessel))
 		switch(status)
 			if(BURSTING)
 				to_chat(user, span_notice("The child is hatching out."))
@@ -443,7 +443,7 @@
 			return
 
 		var/mob/living/carbon/C = AM
-		if(C.stat == CONSCIOUS && C.getorgan(/obj/item/organ/body_egg/alien_embryo))
+		if(C.stat == CONSCIOUS && C.getorgan(/obj/item/organ/internal/body_egg/alien_embryo))
 			return
 
 		Burst(kill=FALSE)

@@ -84,4 +84,4 @@
 
 /mob/living/carbon/human/get_alt_name()
 	if(name != GetVoice())
-		return " (as [get_id_name("Unknown")])"\
+		return " (as [get_id_name("Unknown")])"

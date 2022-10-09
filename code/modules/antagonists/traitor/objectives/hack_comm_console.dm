@@ -21,8 +21,11 @@
 		return FALSE
 	AddComponent(/datum/component/traitor_objective_mind_tracker, generating_for, \
 		signals = list(COMSIG_HUMAN_EARLY_UNARMED_ATTACK = .proc/on_unarmed_attack))
-	RegisterSignal(generating_for, COMSIG_GLOB_TRAITOR_OBJECTIVE_COMPLETED, .proc/on_global_obj_completed)
+	RegisterSignal(SSdcs, COMSIG_GLOB_TRAITOR_OBJECTIVE_COMPLETED, .proc/on_global_obj_completed)
 	return TRUE
+
+/datum/traitor_objective/hack_comm_console/ungenerate_objective()
+	UnregisterSignal(SSdcs, COMSIG_GLOB_TRAITOR_OBJECTIVE_COMPLETED)
 
 /datum/traitor_objective/hack_comm_console/proc/on_global_obj_completed(datum/source, datum/traitor_objective/objective)
 	SIGNAL_HANDLER
@@ -41,8 +44,7 @@
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /datum/traitor_objective/hack_comm_console/proc/begin_hack(mob/user, obj/machinery/computer/communications/target)
-	target.AI_notify_hack()
-	if(!do_after(user, 30 SECONDS, target))
+	if(!target.try_hack_console(user))
 		return
+
 	succeed_objective()
-	target.hack_console(user)

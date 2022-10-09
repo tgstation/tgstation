@@ -1,7 +1,7 @@
 /obj/item/melee/baton
 	name = "police baton"
 	desc = "A wooden truncheon for beating criminal scum. Left click to stun, right click to harm."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "classic_baton"
 	inhand_icon_state = "classic_baton"
 	worn_icon_state = "classic_baton"
@@ -180,7 +180,7 @@
 		set_batoned(target, user, cooldown)
 
 /obj/item/melee/baton/proc/baton_effect(mob/living/target, mob/living/user, modifiers, stun_override)
-	var/trait_check = HAS_TRAIT(target, TRAIT_STUNRESISTANCE)
+	var/trait_check = HAS_TRAIT(target, TRAIT_BATON_RESISTANCE)
 	if(iscyborg(target))
 		if(!affect_cyborg)
 			return FALSE
@@ -189,7 +189,8 @@
 		additional_effects_cyborg(target, user)
 	else
 		target.apply_damage(stamina_damage, STAMINA, BODY_ZONE_CHEST)
-		target.Knockdown((isnull(stun_override) ? knockdown_time : stun_override) * (trait_check ? 0.1 : 1))
+		if(!trait_check)
+			target.Knockdown((isnull(stun_override) ? knockdown_time : stun_override))
 		additional_effects_non_cyborg(target, user)
 	return TRUE
 
@@ -270,7 +271,7 @@
 /obj/item/conversion_kit
 	name = "conversion kit"
 	desc = "A strange box containing wood working tools and an instruction paper to turn stun batons into something else."
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/storage/storage.dmi'
 	icon_state = "uk"
 	custom_price = PAYCHECK_COMMAND * 4.5
 
@@ -312,7 +313,7 @@
 
 /obj/item/melee/baton/telescopic/suicide_act(mob/user)
 	var/mob/living/carbon/human/human_user = user
-	var/obj/item/organ/brain/our_brain = human_user.getorgan(/obj/item/organ/brain)
+	var/obj/item/organ/internal/brain/our_brain = human_user.getorgan(/obj/item/organ/internal/brain)
 
 	user.visible_message(span_suicide("[user] stuffs [src] up [user.p_their()] nose and presses the 'extend' button! It looks like [user.p_theyre()] trying to clear [user.p_their()] mind."))
 	if(active)
@@ -347,7 +348,7 @@
 /obj/item/melee/baton/telescopic/contractor_baton
 	name = "contractor baton"
 	desc = "A compact, specialised baton assigned to Syndicate contractors. Applies light electrical shocks to targets."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "contractor_baton"
 	worn_icon_state = "contractor_baton"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
@@ -370,8 +371,8 @@
 	return span_danger("The baton is still charging!")
 
 /obj/item/melee/baton/telescopic/contractor_baton/additional_effects_non_cyborg(mob/living/target, mob/living/user)
-	target.Jitter(20)
-	target.adjust_timed_status_effect(40 SECONDS, /datum/status_effect/speech/stutter)
+	target.set_jitter_if_lower(40 SECONDS)
+	target.adjust_stutter(40 SECONDS)
 
 /obj/item/melee/baton/security
 	name = "stun baton"
@@ -562,16 +563,16 @@
  * After a period of time, we then check to see what stun duration we give.
  */
 /obj/item/melee/baton/security/additional_effects_non_cyborg(mob/living/target, mob/living/user)
-	target.Jitter(20)
-	target.set_confusion(max(10, target.get_confusion()))
-	target.set_timed_status_effect(16 SECONDS, /datum/status_effect/speech/stutter, only_if_higher = TRUE)
+	target.set_jitter_if_lower(40 SECONDS)
+	target.set_confusion_if_lower(10 SECONDS)
+	target.set_stutter_if_lower(16 SECONDS)
 
 	SEND_SIGNAL(target, COMSIG_LIVING_MINOR_SHOCK)
 	addtimer(CALLBACK(src, .proc/apply_stun_effect_end, target), 2 SECONDS)
 
 /// After the initial stun period, we check to see if the target needs to have the stun applied.
 /obj/item/melee/baton/security/proc/apply_stun_effect_end(mob/living/target)
-	var/trait_check = HAS_TRAIT(target, TRAIT_STUNRESISTANCE) //var since we check it in out to_chat as well as determine stun duration
+	var/trait_check = HAS_TRAIT(target, TRAIT_BATON_RESISTANCE) //var since we check it in out to_chat as well as determine stun duration
 	if(!target.IsKnockdown())
 		to_chat(target, span_warning("Your muscles seize, making you collapse[trait_check ? ", but your body quickly recovers..." : "!"]"))
 

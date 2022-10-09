@@ -72,6 +72,7 @@
 
 /datum/movespeed_modifier/bulky_drag
 	variable = TRUE
+	blacklisted_movetypes = FLOATING
 
 /datum/movespeed_modifier/cold
 	blacklisted_movetypes = FLOATING
@@ -82,6 +83,7 @@
 
 /datum/movespeed_modifier/human_carry
 	multiplicative_slowdown = HUMAN_CARRY_SLOWDOWN
+	blacklisted_movetypes = FLOATING
 
 /datum/movespeed_modifier/limbless
 	variable = TRUE

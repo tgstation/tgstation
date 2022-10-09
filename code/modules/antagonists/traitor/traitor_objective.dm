@@ -30,12 +30,12 @@
 	var/skipped = FALSE
 
 	/// Determines how influential global progression will affect this objective. Set to 0 to disable.
-	var/global_progression_influence_intensity = 0.5
+	var/global_progression_influence_intensity = 0.1
 	/// Determines how great the deviance has to be before progression starts to get reduced.
-	var/global_progression_deviance_required = 0.5
+	var/global_progression_deviance_required = 1
 	/// Determines the minimum and maximum progression this objective can be worth as a result of being influenced by global progression
 	/// Should only be smaller than or equal to 1
-	var/global_progression_limit_coeff = 0.1
+	var/global_progression_limit_coeff = 0.6
 	/// The deviance coefficient used to determine the randomness of the progression rewards.
 	var/progression_cost_coeff_deviance = 0.05
 	/// This gets added onto the coeff when calculating the updated progression cost. Used for variability and a slight bit of randomness

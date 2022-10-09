@@ -5,6 +5,7 @@
  */
 
 /* eslint-disable */
+// prettier-ignore
 (function(window){
   'use strict';
   /* jshint loopfunc: true, noempty: false*/
@@ -745,6 +746,8 @@
     }());
   }
 }(window));
+
+// prettier-ignore
 (function (global){'use strict';
 
   // a WeakMap fallback for DOM nodes only used as key

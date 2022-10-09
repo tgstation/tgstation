@@ -22,6 +22,7 @@
 /datum/element/atmos_sensitive/Detach(datum/source)
 	var/atom/us = source
 	us.RemoveElement(/datum/element/connect_loc, pass_on)
+	UnregisterSignal(source, COMSIG_MOVABLE_MOVED)
 	if(us.flags_1 & ATMOS_IS_PROCESSING_1)
 		us.atmos_end()
 		SSair.atom_process -= us
@@ -49,7 +50,7 @@
 
 /atom/proc/process_exposure()
 	var/turf/open/spot = loc
-	if(!istype(loc, /turf/open))
+	if(!isopenturf(loc))
 		//If you end up in a locker or a wall reconsider your life decisions
 		atmos_end()
 		SSair.atom_process -= src

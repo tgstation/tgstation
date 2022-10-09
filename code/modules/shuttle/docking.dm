@@ -152,7 +152,7 @@
 
 
 /obj/docking_port/mobile/proc/cleanup_runway(obj/docking_port/stationary/new_dock, list/old_turfs, list/new_turfs, list/areas_to_move, list/moved_atoms, rotation, movement_direction, area/underlying_old_area)
-	underlying_old_area.afterShuttleMove()
+	underlying_old_area.afterShuttleMove(0)
 
 	// Parallax handling
 	// This needs to be done before the atom after move

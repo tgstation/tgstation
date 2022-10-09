@@ -33,7 +33,7 @@
 	///Prefix file to uise
 	var/prefix_file = "strings/names/american_prefix.txt"
 	///Base icon for the customer
-	var/base_icon = 'icons/mob/tourists.dmi'
+	var/base_icon = 'icons/mob/simple/tourists.dmi'
 	///Base icon state for the customer
 	var/base_icon_state = "amerifat"
 	///Sound to use when this robot type speaks
@@ -82,6 +82,7 @@
 			/obj/item/food/pancakes = 4,
 			/obj/item/food/eggsausage = 5,
 			/datum/custom_order/icecream = 14,
+			/obj/item/food/danish_hotdog = 3,
 		),
 		VENUE_BAR = list(
 			/datum/reagent/consumable/ethanol/b52 = 6,
@@ -122,6 +123,7 @@
 			/obj/item/food/eggplantparm = 3,
 			/obj/item/food/cornuto = 2,
 			/datum/custom_order/icecream = 10,
+			/obj/item/food/salad/greek_salad = 6,
 		),
 		VENUE_BAR = list(
 			/datum/reagent/consumable/ethanol/fanciulli = 5,
@@ -132,6 +134,7 @@
 			/datum/reagent/consumable/ethanol/wine = 3,
 			/datum/reagent/consumable/ethanol/grappa = 3,
 			/datum/reagent/consumable/ethanol/amaretto = 5,
+			/datum/reagent/consumable/cucumberlemonade = 2,
 		),
 	)
 
@@ -167,6 +170,7 @@
 			/datum/reagent/consumable/ethanol/between_the_sheets = 4,
 			/datum/reagent/consumable/ethanol/beer = 5,
 			/datum/reagent/consumable/ethanol/wine = 5,
+			/datum/reagent/consumable/ethanol/gin_garden = 2,
 		),
 	)
 
@@ -204,6 +208,7 @@
 			/obj/item/food/muffin/berry = 2,
 			/obj/item/food/beef_stroganoff = 2,
 			/datum/custom_order/icecream = 4,
+			/obj/item/food/fish_poke = 5,
 		),
 		VENUE_BAR = list(
 			/datum/reagent/consumable/ethanol/sake = 8,
@@ -245,6 +250,7 @@
 			/obj/item/food/chawanmushi = 4,
 			/obj/item/food/meatbun = 4,
 			/obj/item/food/beef_stroganoff = 2,
+			/obj/item/food/meat_poke = 4,
 		),
 		VENUE_BAR = list(
 			/datum/reagent/consumable/ethanol/beer = 14,
@@ -305,7 +311,7 @@
 
 	var/datum/sprite_accessory/moth_wings/wings = get_wings(customer)
 
-	var/mutable_appearance/wings_behind = mutable_appearance(icon = 'icons/mob/moth_wings.dmi', icon_state = "m_moth_wings_[wings.icon_state]_BEHIND")
+	var/mutable_appearance/wings_behind = mutable_appearance(icon = 'icons/mob/species/moth/moth_wings.dmi', icon_state = "m_moth_wings_[wings.icon_state]_BEHIND")
 	wings_behind.appearance_flags = RESET_COLOR
 	underlays += wings_behind
 
@@ -316,7 +322,7 @@
 
 	var/datum/sprite_accessory/moth_wings/wings = get_wings(customer)
 
-	var/mutable_appearance/wings_front = mutable_appearance(icon = 'icons/mob/moth_wings.dmi', icon_state = "m_moth_wings_[wings.icon_state]_FRONT")
+	var/mutable_appearance/wings_front = mutable_appearance(icon = 'icons/mob/species/moth/moth_wings.dmi', icon_state = "m_moth_wings_[wings.icon_state]_FRONT")
 	wings_front.appearance_flags = RESET_COLOR
 	overlays += wings_front
 

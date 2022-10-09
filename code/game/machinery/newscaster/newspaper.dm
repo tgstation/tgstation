@@ -3,8 +3,9 @@
 	desc = "An issue of The Griffon, the newspaper circulating aboard Nanotrasen Space Stations."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "newspaper"
-	lefthand_file = 'icons/mob/inhands/misc/books_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/books_righthand.dmi'
+	inhand_icon_state = "newspaper"
+	lefthand_file = 'icons/mob/inhands/items/books_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/books_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	attack_verb_continuous = list("baps")
 	attack_verb_simple = list("bap")
@@ -25,7 +26,7 @@
 	user.visible_message(span_suicide("[user] is focusing intently on [src]! It looks like [user.p_theyre()] trying to commit sudoku... until [user.p_their()] eyes light up with realization!"))
 	user.say(";JOURNALISM IS MY CALLING! EVERYBODY APPRECIATES UNBIASED REPORTI-GLORF", forced="newspaper suicide")
 	var/mob/living/carbon/human/H = user
-	var/obj/W = new /obj/item/reagent_containers/food/drinks/bottle/whiskey(H.loc)
+	var/obj/W = new /obj/item/reagent_containers/cup/glass/bottle/whiskey(H.loc)
 	playsound(H.loc, 'sound/items/drink.ogg', rand(10,50), TRUE)
 	W.reagents.trans_to(H, W.reagents.total_volume, transfered_by = user)
 	user.visible_message(span_suicide("[user] downs the contents of [W.name] in one gulp! Shoulda stuck to sudoku!"))
@@ -33,10 +34,8 @@
 	return(TOXLOSS)
 
 /obj/item/newspaper/attack_self(mob/user)
-	if(!ishuman(user))
-		to_chat(user, span_warning("The paper is full of unintelligible symbols!"))
+	if(!istype(user) || !user.can_read(src))
 		return
-	var/mob/living/carbon/human/human_user = user
 	var/dat
 	pages = 0
 	switch(screen)
@@ -61,7 +60,7 @@
 				dat+="</ul>"
 			if(scribble_page==curr_page)
 				dat+="<BR><I>There is a small scribble near the end of this page... It reads: \"[scribble]\"</I>"
-			dat+= "<HR><DIV STYLE='float:right;'><A href='?src=[REF(src)];next_page=1'>Next Page</A></DIV> <div style='float:left;'><A href='?src=[REF(human_user)];mach_close=newspaper_main'>Done reading</A></DIV>"
+			dat+= "<HR><DIV STYLE='float:right;'><A href='?src=[REF(src)];next_page=1'>Next Page</A></DIV> <div style='float:left;'><A href='?src=[REF(user)];mach_close=newspaper_main'>Done reading</A></DIV>"
 		if(1) // X channel pages inbetween.
 			for(var/datum/feed_channel/NP in news_content)
 				pages++
@@ -110,8 +109,8 @@
 				dat+="<BR><I>There is a small scribble near the end of this page... It reads: \"[scribble]\"</I>"
 			dat+= "<HR><DIV STYLE='float:left;'><A href='?src=[REF(src)];prev_page=1'>Previous Page</A></DIV>"
 	dat+="<BR><HR><div align='center'>[curr_page+1]</div>"
-	human_user << browse(dat, "window=newspaper_main;size=300x400")
-	onclose(human_user, "newspaper_main")
+	user << browse(dat, "window=newspaper_main;size=300x400")
+	onclose(user, "newspaper_main")
 
 /obj/item/newspaper/proc/notContent(list/L)
 	if(!L.len)
@@ -160,8 +159,7 @@
 		return
 
 	if(istype(W, /obj/item/pen))
-		if(!user.is_literate())
-			to_chat(user, span_notice("You scribble illegibly on [src]!"))
+		if(!user.can_write(W))
 			return
 		if(scribble_page == curr_page)
 			to_chat(user, span_warning("There's already a scribble in this page... You wouldn't want to make things too cluttered, would you?"))
@@ -169,7 +167,7 @@
 			var/s = tgui_input_text(user, "Write something", "Newspaper")
 			if (!s)
 				return
-			if(!user.canUseTopic(src, BE_CLOSE))
+			if(!user.canUseTopic(src, be_close = TRUE))
 				return
 			scribble_page = curr_page
 			scribble = s

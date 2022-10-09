@@ -10,7 +10,7 @@
 		return
 	var/client/player_client = GLOB.directory[player_ckey]
 	if(player_client)
-		var/list/ban_cache = player_client.ban_cache || build_ban_cache(player_client)
+		var/list/ban_cache = retrieve_ban_cache(player_client)
 		if(!islist(ban_cache))
 			return // Disconnected while building the list.
 		if(islist(roles))
@@ -85,12 +85,43 @@
 		. += list(list("id" = query_check_ban.item[1], "bantime" = query_check_ban.item[2], "round_id" = query_check_ban.item[3], "expiration_time" = query_check_ban.item[4], "duration" = query_check_ban.item[5], "applies_to_admins" = query_check_ban.item[6], "reason" = query_check_ban.item[7], "key" = query_check_ban.item[8], "ip" = query_check_ban.item[9], "computerid" = query_check_ban.item[10], "admin_key" = query_check_ban.item[11]))
 	qdel(query_check_ban)
 
+/// Gets the ban cache of the passed in client
+/// If the cache has not been generated, we start off a query
+/// If we still have a query going for this request, we just sleep until it's recieved back
+/proc/retrieve_ban_cache(client/player_client)
+	if(QDELETED(player_client))
+		return
+
+	if(player_client.ban_cache)
+		return player_client.ban_cache
+
+	var/config_delay = CONFIG_GET(number/blocking_query_timeout) SECONDS
+	// If we haven't got a query going right now, or we've timed out on the old query
+	if(player_client.ban_cache_start + config_delay < REALTIMEOFDAY)
+		return build_ban_cache(player_client)
+
+	// Ok so we've got a request going, lets start a wait cycle
+	// If we wait longer then config/db_ban_timeout we'll send another request
+	// We use timeofday here because we're talking human time
+	// We do NOT cache the start time because it can update, and we want it to be able to
+	while(player_client && player_client?.ban_cache_start + config_delay >= REALTIMEOFDAY && !player_client?.ban_cache)
+		// Wait a decisecond or two would ya?
+		// If this causes lag on client join, increase this delay. it doesn't need to be too fast since this should
+		// Realllly only happen near Login, and we're unlikely to make any new requests in that time
+		stoplag(2)
+
+	// If we have a ban cache, use it. if we've timed out, go ahead and start another query would you?
+	// This will update any other sleep loops, so we should only run one at a time
+	return player_client?.ban_cache || build_ban_cache(player_client)
 
 /proc/build_ban_cache(client/player_client)
 	if(!SSdbcore.Connect())
 		return
 	if(QDELETED(player_client))
 		return
+	var/current_time = REALTIMEOFDAY
+	player_client.ban_cache_start = current_time
+
 	var/ckey = player_client.ckey
 	var/list/ban_cache = list()
 	var/is_admin = FALSE
@@ -100,9 +131,14 @@
 		"SELECT role, applies_to_admins FROM [format_table_name("ban")] WHERE ckey = :ckey AND unbanned_datetime IS NULL AND (expiration_time IS NULL OR expiration_time > NOW())",
 		list("ckey" = ckey)
 	)
-	if(!query_build_ban_cache.warn_execute())
+	var/query_successful = query_build_ban_cache.warn_execute()
+	// After we sleep, we check if this was the most recent cache build, and if so we clear our start time
+	if(player_client?.ban_cache_start == current_time)
+		player_client.ban_cache_start = 0
+	if(!query_successful)
 		qdel(query_build_ban_cache)
 		return
+
 	while(query_build_ban_cache.NextRow())
 		if(is_admin && !text2num(query_build_ban_cache.item[2]))
 			continue
@@ -311,7 +347,6 @@
 				ROLE_BROTHER,
 				ROLE_CHANGELING,
 				ROLE_CULTIST,
-				ROLE_FAMILIES,
 				ROLE_HERETIC,
 				ROLE_HIVE,
 				ROLE_MALF,
@@ -972,7 +1007,7 @@
 	if(query_check_adminban_count.NextRow())
 		var/adminban_count = text2num(query_check_adminban_count.item[1])
 		var/max_adminbans = MAX_ADMINBANS_PER_ADMIN
-		if(check_rights(R_PERMISSIONS, show_msg = FALSE) && (rank.can_edit_rights & R_EVERYTHING) == R_EVERYTHING) //edit rights are a more effective way to check hierarchical rank since many non-headmins have R_PERMISSIONS now
+		if(check_rights(R_PERMISSIONS, show_msg = FALSE) && (can_edit_rights_flags() & R_EVERYTHING) == R_EVERYTHING) //edit rights are a more effective way to check hierarchical rank since many non-headmins have R_PERMISSIONS now
 			max_adminbans = MAX_ADMINBANS_PER_HEADMIN
 		if(adminban_count >= max_adminbans)
 			to_chat(usr, span_danger("You've already logged [max_adminbans] admin ban(s) or more. Do not abuse this function!"), confidential = TRUE)

@@ -70,7 +70,7 @@
 		var/datum/action/small_sprite/small_action = new small_sprite_type()
 		small_action.Grant(src)
 
-/mob/living/simple_animal/hostile/megafauna/Moved()
+/mob/living/simple_animal/hostile/megafauna/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	//Safety check
 	if(!loc)
 		return ..()

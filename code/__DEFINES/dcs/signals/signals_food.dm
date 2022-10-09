@@ -13,12 +13,13 @@
 ///from base of Component/edible/On_Consume: (mob/living/eater, mob/living/feeder)
 #define COMSIG_FOOD_CONSUMED "food_consumed"
 
+///from base of Component/edible/on_silver_slime_reaction: (obj/item/source)
+#define COMSIG_FOOD_SILVER_SPAWNED "food_silver_spawned"
+
 #define COMSIG_ITEM_FRIED "item_fried"
 	#define COMSIG_FRYING_HANDLED (1<<0)
 
 //Drink
 
-///from base of obj/item/reagent_containers/food/drinks/attack(): (mob/living/M, mob/user)
-#define COMSIG_DRINK_DRANK "drink_drank"
-///from base of obj/item/reagent_containers/glass/attack(): (mob/M, mob/user)
+///from base of obj/item/reagent_containers/cup/attack(): (mob/M, mob/user)
 #define COMSIG_GLASS_DRANK "glass_drank"

@@ -27,64 +27,70 @@ export const GhostPoolProtection = (props, context) => {
                   color="good"
                   icon="plus-circle"
                   content="Enable Everything"
-                  onClick={() => act("all_roles")} />
+                  onClick={() => act('all_roles')}
+                />
                 <Button
                   color="bad"
                   icon="minus-circle"
                   content="Disable Everything"
-                  onClick={() => act("no_roles")} />
+                  onClick={() => act('no_roles')}
+                />
               </>
             }>
             <NoticeBox danger>
-              For people creating a sneaky event: If you
-              toggle Station Created Sentience, people may
-              catch on that admins have disabled roles for
+              For people creating a sneaky event: If you toggle Station Created
+              Sentience, people may catch on that admins have disabled roles for
               your event...
             </NoticeBox>
             <Flex.Item>
               <Button
                 fluid
                 textAlign="center"
-                color={events_or_midrounds ? "good" : "bad"}
+                color={events_or_midrounds ? 'good' : 'bad'}
                 icon="meteor"
                 content="Events and Midround Rulesets"
-                onClick={() => act("toggle_events_or_midrounds")} />
+                onClick={() => act('toggle_events_or_midrounds')}
+              />
             </Flex.Item>
             <Flex.Item>
               <Button
                 fluid
                 textAlign="center"
-                color={spawners ? "good" : "bad"}
+                color={spawners ? 'good' : 'bad'}
                 icon="pastafarianism"
                 content="Ghost Role Spawners"
-                onClick={() => act("toggle_spawners")} />
+                onClick={() => act('toggle_spawners')}
+              />
             </Flex.Item>
             <Flex.Item>
               <Button
                 fluid
                 textAlign="center"
-                color={station_sentience ? "good" : "bad"}
+                color={station_sentience ? 'good' : 'bad'}
                 icon="user-astronaut"
                 content="Station Created Sentience"
-                onClick={() => act("toggle_station_sentience")} />
+                onClick={() => act('toggle_station_sentience')}
+              />
             </Flex.Item>
             <Flex.Item>
               <Button
                 fluid
                 textAlign="center"
-                color={silicons ? "good" : "bad"}
+                color={silicons ? 'good' : 'bad'}
                 icon="robot"
                 content="Silicons"
-                onClick={() => act("toggle_silicons")} />
+                onClick={() => act('toggle_silicons')}
+              />
             </Flex.Item>
             <Flex.Item>
               <Button
                 fluid
                 textAlign="center"
-                color={minigames ? "good" : "bad"}
+                color={minigames ? 'good' : 'bad'}
                 icon="gamepad"
                 content="Minigames"
-                onClick={() => act("toggle_minigames")} />
+                onClick={() => act('toggle_minigames')}
+              />
             </Flex.Item>
             <Flex.Item>
               <Button
@@ -93,7 +99,8 @@ export const GhostPoolProtection = (props, context) => {
                 color="orange"
                 icon="check"
                 content="Apply Changes"
-                onClick={() => act("apply_settings")} />
+                onClick={() => act('apply_settings')}
+              />
             </Flex.Item>
           </Section>
         </Flex>

@@ -14,7 +14,6 @@
 	var/buffer = 50
 	///Flags for reagents, like INJECTABLE, TRANSPARENT bla bla everything thats in DEFINES/reagents.dm
 	var/reagent_flags = TRANSPARENT
-	///wheter we partake in rcd construction or not
 
 /obj/machinery/plumbing/Initialize(mapload, bolt = TRUE)
 	. = ..()
@@ -77,6 +76,11 @@
 	. = ..()
 	AddComponent(/datum/component/plumbing/simple_demand, bolt, layer)
 
+/obj/machinery/plumbing/output/tap
+	name = "drinking tap"
+	desc = "A manual output for plumbing systems, for taking drinks directly into glasses."
+	icon_state = "tap_output"
+
 /obj/machinery/plumbing/tank
 	name = "chemical tank"
 	desc = "A massive chemical holding tank."
@@ -98,6 +102,8 @@
 /obj/machinery/plumbing/layer_manifold/Initialize(mapload, bolt, layer)
 	. = ..()
 
+	AddComponent(/datum/component/plumbing/manifold, bolt, FIRST_DUCT_LAYER)
 	AddComponent(/datum/component/plumbing/manifold, bolt, SECOND_DUCT_LAYER)
 	AddComponent(/datum/component/plumbing/manifold, bolt, THIRD_DUCT_LAYER)
 	AddComponent(/datum/component/plumbing/manifold, bolt, FOURTH_DUCT_LAYER)
+	AddComponent(/datum/component/plumbing/manifold, bolt, FIFTH_DUCT_LAYER)

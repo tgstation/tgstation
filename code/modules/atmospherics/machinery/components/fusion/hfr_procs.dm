@@ -353,10 +353,11 @@
 				investigate_log("has reached the emergency point for the first time.", INVESTIGATE_HYPERTORUS)
 				message_admins("[src] has reached the emergency point [ADMIN_JMP(src)].")
 				has_reached_emergency = TRUE
+			send_radio_explanation()
 		else if(critical_threshold_proximity >= critical_threshold_proximity_archived) // The damage is still going up
 			radio.talk_into(src, "[warning_alert] Integrity: [get_integrity_percent()]%", engineering_channel)
 			lastwarning = REALTIMEOFDAY - (WARNING_TIME_DELAY * 5)
-
+			send_radio_explanation()
 		else // Phew, we're safe
 			radio.talk_into(src, "[safe_alert] Integrity: [get_integrity_percent()]%", engineering_channel)
 			lastwarning = REALTIMEOFDAY
@@ -364,6 +365,39 @@
 	//Melt
 	if(critical_threshold_proximity > melting_point)
 		countdown()
+
+/obj/machinery/atmospherics/components/unary/hypertorus/core/emp_act(severity)
+	. = ..()
+	if (. & EMP_PROTECT_SELF)
+		return
+	warning_damage_flags |= HYPERTORUS_FLAG_EMPED
+
+
+/**
+ * Called by check_alert() in this file
+ * Called to explain in radio what the issues are with the HFR
+ */
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/send_radio_explanation()
+
+	if(warning_damage_flags & HYPERTORUS_FLAG_EMPED)
+		var/list/characters = list()
+		characters += GLOB.alphabet
+		characters += GLOB.alphabet_upper
+		characters += GLOB.numerals
+		characters += GLOB.space
+		characters += GLOB.space //double the amount of them
+		var/message = random_string(rand(50,70), characters)
+		radio.talk_into(src, "[message]", engineering_channel)
+		return
+
+	if(warning_damage_flags & HYPERTORUS_FLAG_HIGH_POWER_DAMAGE)
+		radio.talk_into(src, "Warning! Shield destabilizing due to excessive power!", engineering_channel)
+	if(warning_damage_flags & HYPERTORUS_FLAG_IRON_CONTENT_DAMAGE)
+		radio.talk_into(src, "Warning! Iron shards are damaging the internal core shielding!", engineering_channel)
+	if(warning_damage_flags & HYPERTORUS_FLAG_HIGH_FUEL_MIX_MOLE)
+		radio.talk_into(src, "Warning! Fuel mix moles reaching critical levels!", engineering_channel)
+	if(warning_damage_flags & HYPERTORUS_FLAG_IRON_CONTENT_INCREASE)
+		radio.talk_into(src, "Warning! Iron amount inside the core is increasing!", engineering_channel)
 
 /**
  * Called by check_alert() in this file
@@ -522,29 +556,6 @@
 
 	qdel(src)
 
-/**
- * Induce hallucinations in nearby humans.
- *
- * force will make hallucinations ignore meson protection.
- */
-/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/induce_hallucination(strength, delta_time, force=FALSE)
-	for(var/mob/living/carbon/human/human in view(src, HALLUCINATION_HFR(heat_output)))
-		if(!force && istype(human.glasses, /obj/item/clothing/glasses/meson))
-			continue
-		var/distance_root = sqrt(1 / max(1, get_dist(human, src)))
-		human.hallucination += strength * distance_root * delta_time
-		human.hallucination = clamp(human.hallucination, 0, 200)
-
-/**
- * Emit radiation
- */
-/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/emit_rads()
-	radiation_pulse(
-		src,
-		max_range = 6,
-		threshold = 0.3,
-	)
-
 /*
  * HFR cracking related procs
  */
@@ -616,4 +627,3 @@
 		)
 	spill_gases(cracked_part, moderator_internal, ratio = HYPERTORUS_STRONG_SPILL_INITIAL)
 	return
-

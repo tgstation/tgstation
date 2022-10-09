@@ -2,12 +2,12 @@
 	var/list/values = list()
 
 	var/icon/lizard = icon('icons/mob/species/lizard/bodyparts.dmi', "lizard_head", EAST)
-	var/icon/eyes = icon('icons/mob/human_face.dmi', "eyes", EAST)
+	var/icon/eyes = icon('icons/mob/species/human/human_face.dmi', "eyes", EAST)
 	eyes.Blend(COLOR_GRAY, ICON_MULTIPLY)
 	lizard.Blend(eyes, ICON_OVERLAY)
 
 	if (include_snout)
-		lizard.Blend(icon('icons/mob/mutant_bodyparts.dmi', "m_snout_round_ADJ", EAST), ICON_OVERLAY)
+		lizard.Blend(icon('icons/mob/species/mutant_bodyparts.dmi', "m_snout_round_ADJ", EAST), ICON_OVERLAY)
 
 	for (var/name in sprite_accessories)
 		var/datum/sprite_accessory/sprite_accessory = sprite_accessories[name]
@@ -46,7 +46,7 @@
 
 		if (sprite_accessory.icon_state != "none")
 			var/icon/body_markings_icon = icon(
-				'icons/mob/mutant_bodyparts.dmi',
+				'icons/mob/species/mutant_bodyparts.dmi',
 				"m_body_markings_[sprite_accessory.icon_state]_ADJ",
 			)
 
@@ -131,10 +131,14 @@
 	savefile_key = "feature_lizard_tail"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
-	relevant_mutant_bodypart = "tail_lizard"
+	relevant_external_organ = /obj/item/organ/external/tail/lizard
 
 /datum/preference/choiced/lizard_tail/init_possible_values()
 	return assoc_to_keys(GLOB.tails_list_lizard)
 
 /datum/preference/choiced/lizard_tail/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["tail_lizard"] = value
+
+/datum/preference/choiced/lizard_tail/create_default_value()
+	var/datum/sprite_accessory/tails/lizard/smooth/tail = /datum/sprite_accessory/tails/lizard/smooth
+	return initial(tail.name)

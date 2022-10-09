@@ -8,7 +8,7 @@
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "Nanotrasen officials and Space law"
+	supervisors = "Nanotrasen officials and Space Law"
 	selection_color = "#ccccff"
 	req_admin_notify = 1
 	minimal_player_age = 14
@@ -31,12 +31,12 @@
 		/datum/job_department/command,
 	)
 
-	family_heirlooms = list(/obj/item/reagent_containers/food/drinks/flask/gold, /obj/item/toy/captainsaid/collector)
+	family_heirlooms = list(/obj/item/reagent_containers/cup/glass/flask/gold, /obj/item/toy/captainsaid/collector)
 
 	mail_goodies = list(
 		/obj/item/clothing/mask/cigarette/cigar/havana = 20,
 		/obj/item/storage/fancy/cigarettes/cigars/havana = 15,
-		/obj/item/reagent_containers/food/drinks/bottle/champagne = 10,
+		/obj/item/reagent_containers/cup/glass/bottle/champagne = 10,
 		/obj/item/toy/captainsaid/collector = 20
 	)
 
@@ -62,12 +62,12 @@
 		/obj/item/melee/baton/telescopic = 1,
 		/obj/item/station_charter = 1,
 		)
-	belt = /obj/item/modular_computer/tablet/pda/captain
+	belt = /obj/item/modular_computer/tablet/pda/heads/captain
 	ears = /obj/item/radio/headset/heads/captain/alt
 	glasses = /obj/item/clothing/glasses/sunglasses
 	gloves = /obj/item/clothing/gloves/color/captain
-	head = /obj/item/clothing/head/caphat
-	shoes = /obj/item/clothing/shoes/sneakers/brown
+	head = /obj/item/clothing/head/hats/caphat
+	shoes = /obj/item/clothing/shoes/laceup
 
 
 	backpack = /obj/item/storage/backpack/captain
@@ -89,7 +89,7 @@
 	var/list/job_changes = SSmapping.config.job_changes
 	if(!length(job_changes))
 		return
-	var/list/captain_changes = job_changes["captain"]
+	var/list/captain_changes = job_changes[JOB_CAPTAIN]
 	if(!length(captain_changes))
 		return
 	special_charter = captain_changes["special_charter"]

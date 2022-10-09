@@ -14,11 +14,11 @@
 		if(iscarbon(M))
 			var/mob/living/carbon/C = M
 			if(!C.mind || !C.mind.has_antag_datum(/datum/antagonist/changeling))
-				var/obj/item/organ/ears/ears = C.getorganslot(ORGAN_SLOT_EARS)
+				var/obj/item/organ/internal/ears/ears = C.getorganslot(ORGAN_SLOT_EARS)
 				if(ears)
 					ears.adjustEarDamage(0, 30)
-				C.add_confusion(25)
-				C.Jitter(50)
+				C.adjust_confusion(25 SECONDS)
+				C.set_jitter_if_lower(100 SECONDS)
 			else
 				SEND_SOUND(C, sound('sound/effects/screech.ogg'))
 

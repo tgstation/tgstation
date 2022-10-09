@@ -37,8 +37,8 @@
 	speed = 1
 	move_to_delay = 3
 	mouse_opacity = MOUSE_OPACITY_ICON
-	deathsound = 'sound/magic/curse.ogg'
-	deathmessage = "'s arms reach out before it falls apart onto the floor, lifeless."
+	death_sound = 'sound/magic/curse.ogg'
+	death_message = "'s arms reach out before it falls apart onto the floor, lifeless."
 	loot_drop = /obj/item/crusher_trophy/legionnaire_spine
 
 	attack_action_types = list(/datum/action/innate/elite_attack/legionnaire_charge,
@@ -147,15 +147,15 @@
 	playsound(src,'sound/effects/bang.ogg', 200, 1)
 	var/list/hit_things = list()
 	var/throwtarget = get_edge_target_turf(src, move_dir)
-	for(var/mob/living/L in T.contents - hit_things - src)
-		if(faction_check_mob(L))
-			return
-		hit_things += L
-		visible_message(span_boldwarning("[src] tramples and kicks [L]!"))
-		to_chat(L, span_userdanger("[src] tramples you and kicks you away!"))
-		L.safe_throw_at(throwtarget, 10, 1, src)
-		L.Paralyze(20)
-		L.adjustBruteLoss(melee_damage_upper)
+	for(var/mob/living/trample_target in T.contents - hit_things - src)
+		hit_things += trample_target
+		if(faction_check_mob(trample_target))
+			continue
+		visible_message(span_boldwarning("[src] tramples and kicks [trample_target]!"))
+		to_chat(trample_target, span_userdanger("[src] tramples you and kicks you away!"))
+		trample_target.safe_throw_at(throwtarget, 10, 1, src)
+		trample_target.Paralyze(20)
+		trample_target.adjustBruteLoss(melee_damage_upper)
 	addtimer(CALLBACK(src, .proc/legionnaire_charge_2, move_dir, (times_ran + 1)), 0.7)
 
 /mob/living/simple_animal/hostile/asteroid/elite/legionnaire/proc/head_detach(target)
@@ -230,8 +230,8 @@
 		visible_message(span_boldwarning("[src] spews smoke from the tip of their spine!"))
 	else
 		visible_message(span_boldwarning("[src] spews smoke from its maw!"))
-	var/datum/effect_system/smoke_spread/smoke = new
-	smoke.set_up(2, smoke_location)
+	var/datum/effect_system/fluid_spread/smoke/smoke = new
+	smoke.set_up(2, holder = src, location = smoke_location)
 	smoke.start()
 
 //The legionnaire's head.  Basically the same as any legion head, but we have to tell our creator when we die so they can generate another head.
@@ -255,7 +255,7 @@
 	speed = 0
 	move_to_delay = 2
 	del_on_death = 1
-	deathmessage = "crumbles away!"
+	death_message = "crumbles away!"
 	faction = list()
 	ranged = FALSE
 	var/mob/living/simple_animal/hostile/asteroid/elite/legionnaire/body = null
@@ -294,7 +294,7 @@
 	if(isliving(mover))
 		var/mob/living/fire_walker = mover
 		fire_walker.adjust_fire_stacks(5)
-		fire_walker.IgniteMob()
+		fire_walker.ignite_mob()
 
 /obj/structure/legionnaire_bonfire/Destroy()
 	if(myowner != null)
@@ -326,7 +326,7 @@
 	return "mark detonation to have a <b>[bonus_value]%</b> chance to summon a loyal legion skull"
 
 /obj/item/crusher_trophy/legionnaire_spine/on_mark_detonation(mob/living/target, mob/living/user)
-	if(!rand(1, 100) <= bonus_value || target.stat == DEAD)
+	if(!prob(bonus_value) || target.stat == DEAD)
 		return
 	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/A = new /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion(user.loc)
 	A.GiveTarget(target)

@@ -7,13 +7,14 @@
 /obj/item/his_grace
 	name = "artistic toolbox"
 	desc = "A toolbox painted bright green. Looking at it makes you feel uneasy."
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/storage/storage.dmi'
 	icon_state = "green"
 	inhand_icon_state = "artistic_toolbox"
 	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
 	w_class = WEIGHT_CLASS_GIGANTIC
 	force = 12
+	demolition_mod = 1.25
 	attack_verb_continuous = list("robusts")
 	attack_verb_simple = list("robust")
 	hitsound = 'sound/weapons/smash.ogg'
@@ -268,7 +269,7 @@
 	update_appearance()
 	playsound(src, 'sound/effects/his_grace_ascend.ogg', 100)
 	if(istype(master))
-		master.update_inv_hands()
+		master.update_held_items()
 		master.visible_message("<span class='his_grace big bold'>Gods will be watching.</span>")
 		name = "[master]'s mythical toolbox of three powers"
 		master.client?.give_award(/datum/award/achievement/misc/ascension, master)

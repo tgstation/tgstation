@@ -5,7 +5,7 @@
 	health = 150
 	desc = "I wonder what they'll order..."
 	gender = NEUTER
-	icon = 'icons/mob/tourists.dmi'
+	icon = 'icons/mob/simple/tourists.dmi'
 	icon_state = "amerifat"
 	icon_living = "amerifat"
 	///Override so it uses datum ai
@@ -57,11 +57,11 @@
 
 /mob/living/simple_animal/robot_customer/MouseEntered(location, control, params)
 	. = ..()
-	hud_to_show_on_hover?.add_hud_to(usr)
+	hud_to_show_on_hover?.show_to(usr)
 
 /mob/living/simple_animal/robot_customer/MouseExited(location, control, params)
 	. = ..()
-	hud_to_show_on_hover?.remove_hud_from(usr)
+	hud_to_show_on_hover?.hide_from(usr)
 
 /mob/living/simple_animal/robot_customer/update_overlays()
 	. = ..()

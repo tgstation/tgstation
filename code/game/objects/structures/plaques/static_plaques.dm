@@ -137,3 +137,7 @@
 /obj/structure/sign/plaques/kiddie/perfect_drone
 	name = "\improper 'Perfect Drone' sign"
 	desc = "A guide to the drone shell dispenser, detailing the constructive and destructive applications of modern repair drones, as well as the development of the incorruptible cyborg servants of tomorrow, available today."
+
+/obj/structure/sign/plaques/kiddie/gameoflife
+	name = "\improper Conway's The Game Of Life plaque"
+	desc = "A plaque detailing the historical significance of The Game Of Life in the field of computer science, and that the mural underfoot is a representation of the game in action."

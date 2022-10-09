@@ -134,7 +134,7 @@
 		insert_pda(O, user)
 		return
 
-	if(istype(O, /obj/item/card/id))
+	if(isidcard(O))
 		if(stored_id_card)
 			to_chat(user, span_warning("There is already an ID card inside!"))
 			return
@@ -305,7 +305,7 @@
 				return TRUE
 
 			var/obj/item/held_item = usr.get_active_held_item()
-			if(istype(held_item, /obj/item/card/id))
+			if(isidcard(held_item))
 				// If we successfully inserted, we've ejected the old item. Return early.
 				if(insert_id_card(held_item, usr))
 					return TRUE
@@ -377,3 +377,8 @@
 /obj/machinery/pdapainter/engineering
 	name = "\improper Engineering PDA & ID Painter"
 	target_dept = REGION_ENGINEERING
+
+/// Supply departmental variant. Limited to PDAs defined in the SSid_access.sub_department_managers_tgui data structure.
+/obj/machinery/pdapainter/supply
+	name = "\improper Supply PDA & ID Painter"
+	target_dept = REGION_SUPPLY

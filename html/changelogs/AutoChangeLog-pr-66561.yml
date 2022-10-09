@@ -1,4 +1,0 @@
-author: "OperativeLyn"
-delete-after: True
-changes: 
-  - bugfix: "Moved an intercom in Metastation's captain's office to prevent overlapping visible to ghosts."
