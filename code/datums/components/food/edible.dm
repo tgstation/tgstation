@@ -141,10 +141,6 @@ Behavior that's still missing from this component that original food items had t
 	if(!i_am_original)
 		return
 
-	// add newly passed in reagents
-	if(islist(initial_reagents))
-		setup_initial_reagents(initial_reagents)
-
 	// add food flags and types
 	src.food_flags |= food_flags
 	src.foodtypes |= foodtypes
@@ -174,8 +170,6 @@ Behavior that's still missing from this component that original food items had t
 		src.bite_consumption = bite_consumption
 	if(!isnull(volume))
 		src.volume = volume
-		// update max volume
-		reagents.max_volume = volume
 	if(!isnull(eat_time))
 		src.eat_time = eat_time
 	if(!isnull(junkiness))
@@ -187,6 +181,9 @@ Behavior that's still missing from this component that original food items had t
 	if(!isnull(check_liked))
 		src.check_liked = check_liked
 
+	// add newly passed in reagents
+	setup_initial_reagents(initial_reagents)
+
 /datum/component/edible/Destroy(force, silent)
 	QDEL_NULL(after_eat)
 	QDEL_NULL(on_consume)
@@ -196,7 +193,9 @@ Behavior that's still missing from this component that original food items had t
 /// Sets up the initial reagents of the food.
 /datum/component/edible/proc/setup_initial_reagents(list/reagents)
 	var/atom/owner = parent
-	if(!owner.reagents)
+	if(owner.reagents)
+		owner.reagents.maximum_volume = volume
+	else
 		owner.create_reagents(volume, INJECTABLE)
 
 	for(var/rid in reagents)
