@@ -1,8 +1,10 @@
 #define ENGINE_COOLDOWN 5 SECONDS
 #define DASH_COOLDOWN 2.5 SECONDS
+#define HOUSE_EDGE_ICONS_MAX 3
+#define HOUSE_EDGE_ICONS_MIN 0
 
 /obj/item/v8_engine
-	name = "Ancient Engine"
+	name = "ancient engine"
 	desc = "An extremely well perserved, massive V8 engine from the early 2000s. It seems to be missing the rest of the vehicle. There's a tiny label on the side."
 	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "v8_engine"
@@ -66,23 +68,23 @@
 		return
 	if(HAS_TRAIT(src, TRAIT_WIELDED))
 		//Add a fire charge to a max of 3, updates icon_state.
-		fire_charges = clamp((fire_charges + 1), 0, 3)
+		fire_charges = clamp((fire_charges + 1), HOUSE_EDGE_ICONS_MIN, HOUSE_EDGE_ICONS_MAX)
 		icon_state = "house_edge[fire_charges]"
 		COOLDOWN_RESET(src, fire_charge_cooldown)
 	else
 		//Lose a fire charge to a min of 0, updates icon_state.
 		fire_charges = clamp((fire_charges - 1), 0, 3)
 		icon_state = "house_edge[fire_charges]"
-		do_sparks(0, TRUE, src)
+		do_sparks(number = 0, cardinal_only = TRUE, source = src)
 
 /obj/item/house_edge/pre_attack_secondary(atom/target, mob/living/user, params)
 	. = ..()
 	if(!COOLDOWN_FINISHED(src, fire_charge_cooldown))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(fire_charges <= 0)
-		src.balloon_alert(user, "No fire charges")
+		balloon_alert(user, "no fire charges")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	user.throw_at(target = get_turf(target), range = 2 * fire_charges, speed = 5, thrower = user, spin = FALSE, force = 6 * fire_charges, gentle = FALSE, quickstart = TRUE)
+	user.throw_at(target = get_turf(target), range = 2 * fire_charges, speed = 5, thrower = user, spin = FALSE, gentle = FALSE, quickstart = TRUE)
 	COOLDOWN_START(src, fire_charge_cooldown, DASH_COOLDOWN)
 	reset_charges(on_dash = TRUE)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -91,9 +93,12 @@
 	if(!COOLDOWN_FINISHED(src, fire_charge_cooldown) && !on_dash)
 		return
 	if(fire_charges)
-		src.balloon_alert_to_viewers("Charges lost")
+		balloon_alert_to_viewers("Charges lost")
 	fire_charges = 0
 	icon_state = "house_edge[fire_charges]"
 	update_icon()
 
 #undef ENGINE_COOLDOWN
+#undef DASH_COOLDOWN
+#undef HOUSE_EDGE_ICONS_MAX
+#undef HOUSE_EDGE_ICONS_MIN

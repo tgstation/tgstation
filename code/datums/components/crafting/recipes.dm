@@ -1839,6 +1839,7 @@
 /datum/crafting_recipe/house_edge
 	name = "House Edge"
 	result = /obj/item/house_edge
+	always_available = FALSE
 	tool_behaviors = list(TOOL_WRENCH, TOOL_SCREWDRIVER, TOOL_WELDER)
 	reqs = list(
 		/obj/item/v8_engine = 1,
