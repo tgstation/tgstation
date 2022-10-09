@@ -41,8 +41,8 @@
 	name = "external airlock access"
 	icon = 'icons/obj/doors/airlocks/station/maintenanceexternal.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_extmai
-	greyscale_config = /datum/greyscale_config/airlocks
-	greyscale_colors = "#4d4d4d#4d4d4d#5f5f5f#5f5f5f#998d67#998d67#333333"
+	greyscale_config = /datum/greyscale_config/airlocks/custom
+	greyscale_colors = "#585858#585858#5f5f5f#6d6b6b#ae4e26#ae4e26#4a4a4a"
 
 /obj/machinery/door/airlock/mining
 	name = "mining airlock"
@@ -334,7 +334,6 @@
 
 /obj/machinery/door/airlock/public
 	icon = 'icons/obj/doors/airlocks/station2/glass.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/station2/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_public
 	greyscale_config = null
 	greyscale_colors = null

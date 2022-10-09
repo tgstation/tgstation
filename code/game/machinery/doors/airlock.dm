@@ -159,6 +159,9 @@
 	wires = set_wires()
 	if(frequency)
 		set_frequency(frequency)
+
+	// Here we check the style of greyscale_config, then cut down the number of colors passed along to 6 colors for window airlocks, or 5 for solids.
+	// This way we only need to pass along the full 7 color set when making a new airlock pattern.
 	if(glass && !istype(greyscale_config, /datum/greyscale_config/airlocks/custom))
 		airlock_material = "glass"
 		greyscale_config = /datum/greyscale_config/airlocks/window

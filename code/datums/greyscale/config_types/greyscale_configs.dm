@@ -393,10 +393,6 @@
 /datum/greyscale_config/janicart_upgrade/installed
 	json_config = 'code/datums/greyscale/json_configs/janicart_upgrade_installed.json'
 
-/datum/greyscale_config/airlocks/custom
-	name = "Airlock with Decorations"
-	json_config = 'code/datums/greyscale/json_configs/airlock_custom.json'
-
 /datum/greyscale_config/bench_middle
 	name = "Bench Middle"
 	icon_file = 'icons/obj/sofa.dmi'
@@ -452,6 +448,15 @@
 /datum/greyscale_config/airlocks/window
 	name = "Airlock with Window"
 	json_config = 'code/datums/greyscale/json_configs/airlock_window.json'
+
+/datum/greyscale_config/airlocks/custom
+	name = "Airlock with Decorations"
+	json_config = 'code/datums/greyscale/json_configs/airlock_custom.json'
+
+/datum/greyscale_config/material_airlock
+	name = "Material Airlock"
+	icon_file = 'icons/obj/doors/airlocks/material/material.dmi'
+	json_config = 'code/datums/greyscale/json_configs/material_airlock.json'
 
 /datum/greyscale_config/mothcoat
 	name = "Moth Coat"
@@ -552,11 +557,6 @@
 	name = "Worn Skull Bandana Up"
 	icon_file = 'icons/mob/clothing/mask.dmi'
 	json_config = 'code/datums/greyscale/json_configs/bandskull_worn_up.json'
-
-/datum/greyscale_config/material_airlock
-	name = "Material Airlock"
-	icon_file = 'icons/obj/doors/airlocks/material/material.dmi'
-	json_config = 'code/datums/greyscale/json_configs/material_airlock.json'
 
 /datum/greyscale_config/vape
 	name = "Vape"
