@@ -557,10 +557,8 @@
 /obj/projectile/kiss/chef/on_hit(atom/target, blocked, pierce_hit)
 	. = ..()
 	if(!IS_EDIBLE(target) || !target.reagents)
-		message_admins("Not edible")
 		return
 	if(!firer || !target.Adjacent(firer))
-		message_admins("Not adjacent")
 		return
 
 	// From here on, no message
