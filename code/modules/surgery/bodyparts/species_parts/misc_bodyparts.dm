@@ -11,17 +11,21 @@
 	limb_id = SPECIES_SNAIL
 	unarmed_attack_verb = "slap"
 	unarmed_attack_effect = ATTACK_EFFECT_DISARM
+	unarmed_damage_high = 0.5 //snails are soft and squishy
+
 
 /obj/item/bodypart/arm/r_arm/snail
 	limb_id = SPECIES_SNAIL
 	unarmed_attack_verb = "slap"
 	unarmed_attack_effect = ATTACK_EFFECT_DISARM
+	unarmed_damage_high = 0.5
 
 /obj/item/bodypart/leg/l_leg/snail
 	limb_id = SPECIES_SNAIL
-
+	unarmed_damage_high = 0.5
 /obj/item/bodypart/leg/r_leg/snail
 	limb_id = SPECIES_SNAIL
+	unarmed_damage_high = 0.5
 
 ///ABDUCTOR
 /obj/item/bodypart/head/abductor

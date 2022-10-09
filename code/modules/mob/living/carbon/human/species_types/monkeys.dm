@@ -36,9 +36,6 @@
 	liked_food = MEAT | FRUIT | BUGS
 	disliked_food = CLOTH
 	sexes = FALSE
-	punchdamagelow = 1
-	punchdamagehigh = 3
-	punchstunthreshold = 4 // no stun punches
 	species_language_holder = /datum/language_holder/monkey
 
 	bodypart_overrides = list(
@@ -95,7 +92,8 @@
 				span_danger("You avoid [user]'s bite!"), span_hear("You hear jaws snapping shut!"), COMBAT_MESSAGE_RANGE, user)
 			to_chat(user, span_danger("Your bite misses [victim]!"))
 			return TRUE
-		victim.apply_damage(rand(punchdamagelow, punchdamagehigh), BRUTE, affecting, armor)
+		var/obj/item/bodypart/arm/mouth = user.get_bodypart(BODY_ZONE_HEAD)
+		victim.apply_damage(rand(mouth.unarmed_damage_low, mouth.unarmed_damage_high), BRUTE, affecting, armor)
 		victim.visible_message(span_danger("[name] bites [victim]!"),
 			span_userdanger("[name] bites you!"), span_hear("You hear a chomp!"), COMBAT_MESSAGE_RANGE, name)
 		to_chat(user, span_danger("You bite [victim]!"))
@@ -232,5 +230,4 @@
 	in_the_way_mob.knockOver(owner)
 
 /obj/item/organ/internal/brain/primate/get_attacking_limb(mob/living/carbon/human/target)
-
-	return
+	return owner.get_bodypart(BODY_ZONE_HEAD)

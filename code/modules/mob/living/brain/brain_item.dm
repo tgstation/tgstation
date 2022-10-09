@@ -450,7 +450,7 @@
 		amount_cured++
 	return amount_cured
 
-/// This proc lets the mob's brain decide what bodypart to attack with in an unarmed strike. This should NEVER return null.
+/// This proc lets the mob's brain decide what bodypart to attack with in an unarmed strike.
 /obj/item/organ/internal/brain/proc/get_attacking_limb(mob/living/carbon/human/target)
 	var/obj/item/bodypart/arm/active_hand = owner.get_active_hand()
 	var/dexter = active_hand.held_index
