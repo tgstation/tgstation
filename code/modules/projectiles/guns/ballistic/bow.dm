@@ -14,6 +14,7 @@
 	weapon_weight = WEAPON_HEAVY
 	w_class = WEIGHT_CLASS_BULKY
 	internal_magazine = TRUE
+	magazine_wording = "arrow"
 	bolt_type = BOLT_TYPE_NO_BOLT
 	var/drawn = FALSE
 
@@ -38,7 +39,7 @@
 
 /obj/item/gun/ballistic/bow/attack_self(mob/user)
 	if(chambered)
-		balloon_alert(user, [drawn ? "string released" : "string drawn"])
+		balloon_alert(user, "[drawn ? "string released" : "string drawn"]")
 		drawn = !drawn
 	update_appearance()
 
