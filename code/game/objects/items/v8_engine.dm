@@ -87,7 +87,7 @@
 	reset_charges(on_dash = TRUE)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/item/house_edge/proc/reset_charges(var/on_dash = FALSE)
+/obj/item/house_edge/proc/reset_charges(on_dash = FALSE)
 	if(!COOLDOWN_FINISHED(src, fire_charge_cooldown) && !on_dash)
 		return
 	if(fire_charges)
