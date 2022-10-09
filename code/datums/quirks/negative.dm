@@ -394,7 +394,7 @@
 	lose_text = null
 	medical_record_text = "Patient has an untreatable impairment in motor function in the lower extremities."
 	hardcore_value = 15
-	mail_goodies = list(/obj/item/wheelchair/gold)
+	mail_goodies = list(/obj/vehicle/ridden/wheelchair/motorized) //yes a fullsized unfolded motorized wheelchair does fit
 
 /datum/quirk/paraplegic/add_unique()
 	if(quirk_holder.buckled) // Handle late joins being buckled to arrival shuttle chairs.
