@@ -37,7 +37,7 @@ Behavior that's still missing from this component that original food items had t
 	///Last time we checked for food likes
 	var/last_check_time
 	///The initial volume of the foods reagents
-	var/volume
+	var/volume = 50
 	///The flavortext for taste (haha get it flavor text)
 	var/list/tastes
 
@@ -61,6 +61,7 @@ Behavior that's still missing from this component that original food items had t
 	src.bite_consumption = bite_consumption
 	src.food_flags = food_flags
 	src.foodtypes = foodtypes
+	src.volume = volume
 	src.eat_time = eat_time
 	src.eatverbs = string_list(eatverbs)
 	src.junkiness = junkiness
@@ -173,6 +174,8 @@ Behavior that's still missing from this component that original food items had t
 		src.bite_consumption = bite_consumption
 	if(!isnull(volume))
 		src.volume = volume
+		// update max volume
+		reagents.max_volume = volume
 	if(!isnull(eat_time))
 		src.eat_time = eat_time
 	if(!isnull(junkiness))
