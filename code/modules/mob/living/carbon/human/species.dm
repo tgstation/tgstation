@@ -1901,7 +1901,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	// and language perk last, as it comes at the end of the perks list
 	species_perks += create_pref_unique_perks()
 	species_perks += create_pref_blood_perks()
-	species_perks += create_pref_combat_perks()
 	species_perks += create_pref_damage_perks()
 	species_perks += create_pref_temperature_perks()
 	species_perks += create_pref_traits_perks()
@@ -1939,25 +1938,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/create_pref_unique_perks()
 	return null
 
-/**
- * Adds adds any perks related to combat.
- * For example, the damage type of their punches.
- *
- * Returns a list containing perks, or an empty list.
- */
-/datum/species/proc/create_pref_combat_perks()
-	var/list/to_add = list()
-
-/*	if(attack_type != BRUTE)
-		to_add += list(list(
-			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
-			SPECIES_PERK_ICON = "fist-raised",
-			SPECIES_PERK_NAME = "Elemental Attacker",
-			SPECIES_PERK_DESC = "[plural_form] deal [attack_type] damage with their punches instead of brute.",
-		))
-
-	return to_add
-*/
 /**
  * Adds adds any perks related to sustaining damage.
  * For example, brute damage vulnerability, or fire damage resistance.

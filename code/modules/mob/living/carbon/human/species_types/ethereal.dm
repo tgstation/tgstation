@@ -214,6 +214,12 @@
 				at the cost of a permanent brain trauma.",
 		),
 		list(
+			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
+			SPECIES_PERK_ICON = "fist-raised",
+			SPECIES_PERK_NAME = "Elemental Attacker",
+			SPECIES_PERK_DESC = "Ethereals deal burn damage with their punches instead of brute.",
+		),
+		list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "biohazard",
 			SPECIES_PERK_NAME = "Starving Artist",
