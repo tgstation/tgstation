@@ -287,7 +287,7 @@
 
 /obj/item/gun/ballistic/automatic/l6_saw/afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, flag, params)
 	if(cover_open)
-		balloon_alert(user, "cover must be closed first!")
+		balloon_alert(user, "close the cover!")
 		return
 	else
 		. = ..()
@@ -299,13 +299,13 @@
 		..()
 		return
 	if (!cover_open)
-		balloon_alert(user, "cover must be opened first!")
+		balloon_alert(user, "open the cover!")
 		return
 	..()
 
 /obj/item/gun/ballistic/automatic/l6_saw/attackby(obj/item/A, mob/user, params)
 	if(!cover_open && istype(A, mag_type))
-		balloon_alert(user, "cover must be opened first!")
+		balloon_alert(user, "close the cover!")
 		return
 	..()
 
