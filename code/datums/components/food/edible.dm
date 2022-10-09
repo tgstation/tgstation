@@ -150,16 +150,23 @@ Behavior that's still missing from this component that original food items had t
 
 	// add all new eatverbs to the list
 	if(islist(eatverbs))
-		var/list/cached_verbs = GLOB.string_lists[src.eatverbs]
-		if(cached_verbs)
+		var/list/cached_verbs = src.eatverbs
+		if(islist(cached_verbs))
 			src.eatverbs = string_list(cached_verbs.Copy() | eatverbs)
 		else
 			src.eatverbs = string_list(eatverbs)
 
 	// add all new tastes to the tastes
 	if(islist(tastes))
-		for(var/new_taste in tastes)
-			LAZYADDASSOC(src.tastes, new_taste, tastes[new_taste])
+		var/list/cached_tastes = src.tastes
+		if(islist(cached_tastes))
+			var/list/mixed_tastes = cached_tastes.Copy()
+			for(var/new_taste in tastes)
+				mixed_tastes[new_tastes] += tastes[new_taste]
+
+			src.tastes = string_assoc_list(mixed_tastes)
+		else
+			src.tastes = string_assoc_list(tastes)
 
 	// just set these directly
 	if(!isnull(bite_consumption))
