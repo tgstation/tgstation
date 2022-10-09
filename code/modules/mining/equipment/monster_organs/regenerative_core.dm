@@ -9,6 +9,7 @@
 	desc_inert = "All that remains of a hivelord. It has decayed, and is completely useless."
 	user_status = /datum/status_effect/regenerative_core
 	moodlet = /datum/mood_event/healsbadman
+	consumed_internal = TRUE
 
 /obj/item/organ/internal/monster_core/regenerative_core/preserve(implanted = FALSE)
 	if (implanted)
@@ -28,6 +29,7 @@
 
 /obj/item/organ/internal/monster_core/regenerative_core/activate_implanted()
 	owner.revive(full_heal = TRUE, admin_revive = FALSE)
+	return ..()
 
 /// Log applications.
 /obj/item/organ/internal/monster_core/regenerative_core/apply_to(mob/living/target, mob/user)

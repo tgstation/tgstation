@@ -471,6 +471,8 @@
 
 /datum/status_effect/lobster_rush/extended/on_apply()
 	ADD_TRAIT(owner, TRAIT_IGNORESLOWDOWN, "[STATUS_EFFECT_TRAIT]_[id]")
+	return ..()
 
 /datum/status_effect/lobster_rush/extended/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_IGNORESLOWDOWN, "[STATUS_EFFECT_TRAIT]_[id]")
+	return ..()

@@ -21,3 +21,4 @@
 
 /obj/item/organ/internal/monster_core/rush_gland/activate_implanted()
 	owner.apply_status_effect(/datum/status_effect/lobster_rush/extended)
+	return ..()
