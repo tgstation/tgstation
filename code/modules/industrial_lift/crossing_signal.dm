@@ -29,7 +29,8 @@
 	var/tram_id = MAIN_STATION_TRAM
 	/// Weakref to the tram piece we control
 	var/datum/weakref/tram_ref
-	/// Proximity threshold for amber warning (slow people may be in danger) This is specific to Tramstation and may need to be adjusted if the map changes in the distance between tram stops.
+	/// Proximity threshold for amber warning (slow people may be in danger).
+	/// This is specific to Tramstation and may need to be adjusted if the map changes in the distance between tram stops.
 	var/amber_distance_threshold = 60
 	/** Proximity threshold for red warning (running people will likely not be able to cross) This is specific to Tramstation and may need to be adjusted if the map changes in the distance between tram stops.
 	* This checks the distance between the tram and the signal, and based on the current Tramstation map this is the optimal number to prevent the lights from turning red for no reason for a few moments.
