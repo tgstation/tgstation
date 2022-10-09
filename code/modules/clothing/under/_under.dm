@@ -31,28 +31,30 @@
 	register_context()
 
 /obj/item/clothing/under/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	var/screentip_change = FALSE
+
 	if(isnull(held_item) && has_sensor == HAS_SENSORS)
 		context[SCREENTIP_CONTEXT_RMB] = "Toggle suit sensors"
-		return CONTEXTUAL_SCREENTIP_SET
+		screentip_change = TRUE
 
 	if(istype(held_item, /obj/item/clothing/accessory) && !attached_accessory)
 		var/obj/item/clothing/accessory/accessory = held_item
 		if(accessory.can_attach_accessory(src, user))
 			context[SCREENTIP_CONTEXT_LMB] = "Attach accessory"
-			return CONTEXTUAL_SCREENTIP_SET
+			screentip_change = TRUE
 
 	if(istype(held_item, /obj/item/stack/cable_coil) && has_sensor == BROKEN_SENSORS)
 		context[SCREENTIP_CONTEXT_LMB] = "Repair suit sensors"
-		return CONTEXTUAL_SCREENTIP_SET
+		screentip_change = TRUE
 
-	if(attatched_accessory)
+	if(attached_accessory)
 		context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove accessory"
+		screentip_change = TRUE
 	else if(can_adjust)
 		context[SCREENTIP_CONTEXT_ALT_LMB] = adjusted == ALT_STYLE ? "Wear normally" : "Wear casually"
+		screentip_change = TRUE
 
-	return CONTEXTUAL_SCREENTIP_SET
-
-	return NONE
+	return screentip_change ? CONTEXTUAL_SCREENTIP_SET : NONE
 
 /obj/item/clothing/under/worn_overlays(mutable_appearance/standing, isinhands = FALSE)
 	. = ..()
