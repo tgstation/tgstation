@@ -689,7 +689,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			is_spaced = true
 			break
 
-	if(total_moles > 0 && !spaced)
+	if(total_moles > 0 && !is_spaced)
 		additive_damage[SM_DAMAGE_HEAL_HEAT] = clamp((absorbed_gasmix.temperature - temp_limit) / 600, -1, 0)
 
 	var/total_damage = 0
