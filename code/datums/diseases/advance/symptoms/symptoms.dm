@@ -112,5 +112,5 @@
 	var/list/focus_names = list()
 	for(var/datum/reagent/focus as anything in focuses)
 		focus_names += initial(focus.name)
-	data["focus_desc"] = " This symptom can be focused on by adding " + 	lowertext(english_list(focus_names, nothing_text = "error")) + " before the mutation agent."
+	data["focus_desc"] = " This symptom can be focused on by adding " + lowertext(english_list(focus_names, nothing_text = "error")) + " before the mutation agent."
 	return data
