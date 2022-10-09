@@ -1,0 +1,4 @@
+author: "LT3"
+delete-after: True
+changes: 
+  - bugfix: "Tramstation's crossing signals are actually fixed this time. Honest."
