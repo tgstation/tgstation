@@ -458,7 +458,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	name = "white cane"
 	desc = "A cane traditionally used by the blind to help them see. Folds down to be easier to transport."
 	icon_state = "cane_white"
-	inhand_icon_state = null
+	inhand_icon_state = "cane_white"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	force = 1
