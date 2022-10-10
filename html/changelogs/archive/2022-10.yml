@@ -291,3 +291,29 @@
   - balance: 'The Infiltrator suit has been remade into an Infiltrator MODsuit. Has
       all the original features, but now also has additional powers: total anonymity,
       and a demoralization aura.'
+2022-10-10:
+  Hatterhat:
+  - bugfix: You can no longer steal shoes off of yourself. Just take them off normally.
+  LT3:
+  - bugfix: Tramstation's crossing signals are actually fixed this time. Honest.
+  Time-Green:
+  - rscdel: Golden wheelchairs in Tram maintenance and mail have been replaced by
+      T1 motorized wheelchairs
+  itseasytosee:
+  - qol: You can now put clothing, backpacks, and belts onto people by clicking on
+      them with it in your hand and targeting the right area.
+  vincentiusvin:
+  - bugfix: Fixed sm space exposure damage going through walls
+  - rscdel: got rid of the molar multiplier for sm heating damage. It will now only
+      impact molar damage and temp limit. We apply the lowest value directly so this
+      slows down sm delams a tiny bit.
+  - rscdel: got rid of cascades making sm delam at 450 moles and 1250 mev. It delams
+      normally now.
+  - balance: Applied the sm damage hardcap of 1.8 individually to heat (1.5), moles
+      (1), power (1). Meaning most sm delams are slower now, but the really bad ones
+      can be faster.
+  - balance: Halved sm temp healing across the board. Temp limits are still the same
+      though so you shouldn't notice it that much.
+  - balance: Halved SM power damage across the board.
+  - balance: Changed sm space exposure damage to just check for the current tile and
+      adjacent atmos connected tiles.
