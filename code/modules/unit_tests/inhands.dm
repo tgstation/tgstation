@@ -3,6 +3,9 @@
 	var/static/list/possible_icon_states = list()
 	var/fallback_log_message
 	var/unset_inhand_var_message
+	var/alternative_inhands_location = null
+	//alternative_inhands_location is for downstream modularity support. as an example, for skyrat's usage, set alternative_inhands_location = "modular_skyrat/master_files/icons/mob/inhands/"
+	//make sure this location is also present in tools/deploy.sh
 
 /datum/unit_test/defined_inhand_icon_states/proc/generate_possible_icon_states_list(directory_path)
 	if(!directory_path)
@@ -16,6 +19,8 @@
 
 /datum/unit_test/defined_inhand_icon_states/Run()
 	generate_possible_icon_states_list()
+	if(alternative_inhands_location)
+		generate_possible_icon_states_list(alternative_inhands_location)
 
 	for(var/obj/item/item_path as anything in subtypesof(/obj/item))
 		if(initial(item_path.item_flags) & ABSTRACT)
