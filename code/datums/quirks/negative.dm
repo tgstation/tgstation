@@ -98,6 +98,10 @@
 			else if(!primary_cane)
 				left_cane = WEAKREF(left_hand_cane)
 				RegisterSignal(left_cane, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED), .proc/on_unequipped_cane)
+		else if(primary_cane) // no cane in hand, time to remove the signal and weakref
+			UnregisterSignal(primary_cane, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
+			left_cane = null
+
 		if(istype(right_hand_cane))
 			if(secondary_cane && (secondary_cane != right_hand_cane))
 				UnregisterSignal(secondary_cane, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
@@ -105,6 +109,9 @@
 			else if(!secondary_cane)
 				right_cane = WEAKREF(right_hand_cane)
 				RegisterSignal(right_cane, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED), .proc/on_unequipped_cane)
+		else if(secondary_cane) // no cane in hand, time to remove the signal and weakref
+			UnregisterSignal(secondary_cane, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
+			right_cane = null
 
 /*
 /datum/quirk/badback/proc/on_unequipped_item(datum/source, obj/item/dropped_item, force, new_location)
