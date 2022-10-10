@@ -130,6 +130,7 @@
 /obj/item/shield/riot/flash/Initialize(mapload)
 	. = ..()
 	embedded_flash = new(src)
+	embedded_flash.set_light_flags(embedded_flash.light_flags | LIGHT_ATTACHED)
 	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/shield/riot/flash/vv_edit_var(vname, vval)
@@ -168,7 +169,7 @@
 	flick("flashshield_flash", src)
 	inhand_icon_state = "flashshield_flash"
 	owner?.update_held_items()
-	addtimer(CALLBACK(src, /atom.proc/update_appearance), 0.5 SECONDS) //.5 second delay so the inhands sprite finishes its anim since inhands don't support flick().
+	addtimer(CALLBACK(src, /atom.proc/update_appearance), 0.5 SECONDS, (TIMER_UNIQUE|TIMER_OVERRIDE)) //.5 second delay so the inhands sprite finishes its anim since inhands don't support flick().
 
 /obj/item/shield/riot/flash/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/assembly/flash/handheld))
@@ -185,6 +186,7 @@
 				qdel(embedded_flash)
 				embedded_flash = flash
 				flash.forceMove(src)
+				embedded_flash.set_light_flags(embedded_flash.light_flags | LIGHT_ATTACHED)
 				update_appearance(UPDATE_ICON)
 				return
 	return ..()
