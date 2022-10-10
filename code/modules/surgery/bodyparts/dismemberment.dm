@@ -138,7 +138,7 @@
 			organ.transfer_to_limb(src, phantom_owner)
 
 	for(var/trait in bodypart_traits)
-		REMOVE_TRAIT(owner, trait, bodypart_trait_source)
+		REMOVE_TRAIT(phantom_owner, trait, bodypart_trait_source)
 
 	update_icon_dropped()
 	synchronize_bodytypes(phantom_owner)
