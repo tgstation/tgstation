@@ -52,8 +52,8 @@
  * source - Monkey user who is now turning into a human
  */
 /datum/action/changeling/humanform/from_monkey/proc/give_lesserform(mob/living/carbon/source)
-   SIGNAL_HANDLER
-   
+	SIGNAL_HANDLER
+
 	var/datum/antagonist/changeling/changeling = source.mind.has_antag_datum(/datum/antagonist/changeling)
 	var/datum/action/changeling/lesserform/monkey_form_ability = new()
 	changeling.purchased_powers += monkey_form_ability

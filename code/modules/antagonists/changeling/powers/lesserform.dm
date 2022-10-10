@@ -32,8 +32,8 @@
  * source - Human user who is now turning into a monkey
  */
 /datum/action/changeling/lesserform/proc/swap_powers(mob/living/carbon/source)
-   SIGNAL_HANDLER
-   
+	SIGNAL_HANDLER
+
 	var/datum/antagonist/changeling/changeling = source.mind.has_antag_datum(/datum/antagonist/changeling)
 	// Drops all flesh disguise items after monkeyizing, because they don't drop automatically like real clothing.
 	for(var/slot in changeling.slot2type)
