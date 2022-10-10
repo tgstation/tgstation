@@ -32,7 +32,7 @@
 	if(tgui_alert(usr, "Select a specific disease?", "Sickening behavior", list("Yes", "No")) == "Yes")
 		var/list/disease_list = list()
 		disease_list += subtypesof(/datum/disease)
-		chosen_disease = tgui_input_list(usr, "Pick your poison!","Bacteria Hysteria", disease_list)
+		chosen_disease = tgui_input_list(usr, "Warning: Some of these are EXTREMELY dangerous.","Bacteria Hysteria", disease_list)
 
 /datum/round_event_control/disease_outbreak/proc/generate_candidates()
 	if(length(disease_candidates))
@@ -87,7 +87,7 @@
 	infect_players(new_disease)
 
 /datum/round_event/disease_outbreak/proc/infect_players(var/datum/disease/new_disease)
-	for(var/i in 1 to 3) //do this better
+	for(var/i in 1 to 3) //This runtimes whenever the event fires with < 3 candidates pls fix
 		var/mob/living/carbon/human/victim = pick_n_take(afflicted)
 		victim.ForceContractDisease(new_disease, FALSE, FALSE)
 		log_game("An event has given [key_name(victim)] the [new_disease]")
@@ -98,8 +98,6 @@
 	typepath = /datum/round_event/disease_outbreak/advanced
 	category = EVENT_CATEGORY_HEALTH
 	description = "An advanced disease will infect some members of the crew."
-	///The admin-selected virus severity, passed down to the round_event (might not be used)
-	var/severity
 
 /datum/round_event_control/disease_outbreak/advanced/admin_setup()
 	if(!check_rights(R_FUN))
@@ -118,12 +116,7 @@
 	var/max_severity = 3
 
 /datum/round_event/disease_outbreak/advanced/start()
-	var/datum/round_event_control/disease_outbreak/advanced/disease_event = control
-	afflicted = disease_event.disease_candidates
-	if(disease_event.severity)
-		max_severity = disease_event.severity
-	else
-		max_severity = 3 + max(FLOOR((world.time - control.earliest_start)/6000, 1),0) //3 symptoms at 20 minutes, plus 1 per 10 minutes
+	max_severity = 3 + max(FLOOR((world.time - control.earliest_start)/6000, 1),0) //3 symptoms at 20 minutes, plus 1 per 10 minutes
 	var/datum/disease/advance/advanced_disease = new /datum/disease/advance/random(max_severity, max_severity)
 
 	infect_players(advanced_disease)
@@ -133,7 +126,7 @@
 	for(var/datum/symptom/new_symptom in advanced_disease.symptoms)
 		name_symptoms += new_symptom.name
 
-	for(var/i in 1 to 3) //Find a cooler way of doing this
+	for(var/i in 1 to 3)
 		var/mob/living/carbon/human/victim = pick_n_take(afflicted)
 		victim.ForceContractDisease(advanced_disease, FALSE, FALSE)
 		message_admins("An event has triggered a random advanced virus outbreak on [ADMIN_LOOKUPFLW(victim)]! It has these symptoms: [english_list(name_symptoms)]")
