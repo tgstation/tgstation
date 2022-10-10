@@ -132,6 +132,21 @@
 	embedded_flash = new(src)
 	AddElement(/datum/element/update_icon_updates_onmob)
 
+/obj/item/shield/riot/flash/vv_edit_var(vname, vval)
+	. = ..()
+	if(vname == NAMEOF(src, embedded_flash))
+		update_appearance(UPDATE_ICON)
+
+/obj/item/shield/riot/flash/handle_atom_del(atom/deleting_atom)
+	if(deleting_atom == embedded_flash)
+		embedded_flash = null
+		update_appearance(UPDATE_ICON)
+	return ..()
+
+/obj/item/shield/riot/flash/Destroy(force)
+	QDEL_NULL(embedded_flash)
+	return ..()
+
 /obj/item/shield/riot/flash/attack(mob/living/target_mob, mob/user)
 	flash_away(user, target_mob)
 
@@ -145,6 +160,8 @@
 
 ///Handles calls for the actual flash object + plays the flashing animations.
 /obj/item/shield/riot/flash/proc/flash_away(mob/owner, mob/target, animation_only)
+	if(QDELETED(embedded_flash) || (embedded_flash.burnt_out && !animation_only))
+		return
 	var/flick = animation_only ? TRUE : (target ? embedded_flash.attack(target, owner) : embedded_flash.AOE_flash(user = owner))
 	if(!flick)
 		return
@@ -162,26 +179,26 @@
 		else
 			to_chat(user, span_notice("You begin to replace the bulb..."))
 			if(do_after(user, 20, target = user))
-				if(flash.burnt_out || !flash || QDELETED(flash))
+				if(QDELETED(flash) || flash.burnt_out)
 					return
 				playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 				qdel(embedded_flash)
 				embedded_flash = flash
 				flash.forceMove(src)
-				update_appearance()
+				update_appearance(UPDATE_ICON)
 				return
 	return ..()
 
 /obj/item/shield/riot/flash/emp_act(severity)
 	. = ..()
-	if(embedded_flash.burnt_out)
+	if(QDELETED(embedded_flash) || embedded_flash.burnt_out)
 		return
 	embedded_flash.emp_act(severity)
 	if(embedded_flash.burnt_out) // a little hacky but no good way to check otherwise.
 		flash_away((ismob(loc) ? loc : null), animation_only = TRUE)
 
 /obj/item/shield/riot/flash/update_icon_state()
-	if(!embedded_flash || embedded_flash.burnt_out)
+	if(QDELETED(embedded_flash) || embedded_flash.burnt_out)
 		icon_state = "riot"
 		inhand_icon_state = "riot"
 	else
