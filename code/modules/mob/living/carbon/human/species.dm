@@ -413,7 +413,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			I.Remove(C)
 			QDEL_NULL(I)
 
-	for(var/organ_path in mutant_organs)
+	var/list/species_organs = mutant_organs + external_organs
+
+	for(var/organ_path in species_organs)
 		var/obj/item/organ/current_organ = C.getorgan(organ_path)
 		if(!current_organ || replace_current)
 			var/obj/item/organ/replacement = SSwardrobe.provide_type(organ_path)
@@ -423,16 +425,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if(current_organ)
 				current_organ.before_organ_replacement(replacement)
 			// organ.Insert will qdel any current organs in that slot, so we don't need to.
-			replacement.Insert(C, TRUE, FALSE)
-
-	// Add in the external organs this species is meant to have. Identical to above code.
-	for(var/organ_path in external_organs)
-		var/obj/item/organ/current_organ = C.getorgan(organ_path)
-		if(!current_organ || replace_current)
-			var/obj/item/organ/replacement = SSwardrobe.provide_type(organ_path)
-
-			if(current_organ)
-				current_organ.before_organ_replacement(replacement)
 			replacement.Insert(C, TRUE, FALSE)
 
 /datum/species/proc/worn_items_fit_body_check(mob/living/carbon/wearer)
