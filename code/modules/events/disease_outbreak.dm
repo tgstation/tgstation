@@ -70,13 +70,13 @@
 		var/list/virus_candidates = list()
 
 		//Practically harmless diseases. Mostly just gives medical something to do.
-		virus_candidates += list(/datum/disease/flu, /datum/disease/advance/flu, /datum/disease/advance/cold)
+		virus_candidates += list(/datum/disease/flu, /datum/disease/advance/flu, /datum/disease/advance/cold, /datum/disease/cold9, /datum/disease/cold)
 
 		//The more dangerous ones
-		virus_candidates += list(/datum/disease/beesease, /datum/disease/brainrot)
+		virus_candidates += list(/datum/disease/beesease, /datum/disease/brainrot, /datum/disease/tuberculosis, /datum/disease/fluspanish)
 
 		//The wacky ones
-		virus_candidates += list(/datum/disease/dnaspread, /datum/disease/magnitis)
+		virus_candidates += list(/datum/disease/dnaspread, /datum/disease/magnitis, /datum/disease/anxiety)
 
 		virus_type = pick(virus_candidates)
 
@@ -97,7 +97,7 @@
 	name = "Disease Outbreak: Advanced"
 	typepath = /datum/round_event/disease_outbreak/advanced
 	category = EVENT_CATEGORY_HEALTH
-	description = "An advanced disease will infect some members of the crew."
+	description = "An 'advanced' disease will infect some members of the crew."
 
 /datum/round_event_control/disease_outbreak/advanced/admin_setup()
 	if(!check_rights(R_FUN))
@@ -108,8 +108,6 @@
 	if(!length(disease_candidates))
 		message_admins("No disease candidates found!")
 		return FALSE
-	else
-		message_admins("[length(disease_candidates)] candidates found!")
 
 /datum/round_event/disease_outbreak/advanced
 	///Number of symptoms for our virus
