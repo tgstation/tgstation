@@ -182,13 +182,15 @@
 	name = "eyepatch"
 	desc = "Yarr."
 	icon_state = "eyepatch"
-	inhand_icon_state = "eyepatch"
+	inhand_icon_state = null
 
 /obj/item/clothing/glasses/monocle
 	name = "monocle"
 	desc = "Such a dapper eyepiece!"
 	icon_state = "monocle"
 	inhand_icon_state = "headset" // lol
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 
 /obj/item/clothing/glasses/material
 	name = "optical material scanner"
@@ -284,13 +286,13 @@
 	name = "prescription glasses"
 	desc = "Made by Uncool. Co."
 	icon_state = "hipster_glasses"
-	inhand_icon_state = "hipster_glasses"
+	inhand_icon_state = null
 
 /obj/item/clothing/glasses/regular/circle
 	name = "circle glasses"
 	desc = "Why would you wear something so controversial yet so brave?"
 	icon_state = "circle_glasses"
-	inhand_icon_state = "circle_glasses"
+	inhand_icon_state = null
 
 //Here lies green glasses, so ugly they died. RIP
 
@@ -401,7 +403,7 @@
 	name = "blind personnel blindfold"
 	desc = "Indicates that the wearer suffers from blindness."
 	icon_state = "blindfoldwhite"
-	inhand_icon_state = "blindfoldwhite"
+	inhand_icon_state = null
 	var/colored_before = FALSE
 
 /obj/item/clothing/glasses/blindfold/white/visual_equipped(mob/living/carbon/human/user, slot)
@@ -430,7 +432,7 @@
 /obj/item/clothing/glasses/sunglasses/big
 	desc = "Strangely ancient technology used to help provide rudimentary eye cover. Larger than average enhanced shielding blocks flashes."
 	icon_state = "bigsunglasses"
-	inhand_icon_state = "bigsunglasses"
+	inhand_icon_state = null
 
 /obj/item/clothing/glasses/thermal
 	name = "optical thermal scanner"
@@ -502,32 +504,32 @@
 	name = "optical thermal eyepatch"
 	desc = "An eyepatch with built-in thermal optics."
 	icon_state = "eyepatch"
-	inhand_icon_state = "eyepatch"
+	inhand_icon_state = null
 
 /obj/item/clothing/glasses/cold
 	name = "cold goggles"
 	desc = "A pair of goggles meant for low temperatures."
 	icon_state = "cold"
-	inhand_icon_state = "cold"
+	inhand_icon_state = null
 
 /obj/item/clothing/glasses/heat
 	name = "heat goggles"
 	desc = "A pair of goggles meant for high temperatures."
 	icon_state = "heat"
-	inhand_icon_state = "heat"
+	inhand_icon_state = null
 
 /obj/item/clothing/glasses/orange
 	name = "orange glasses"
 	desc = "A sweet pair of orange shades."
 	icon_state = "orangeglasses"
-	inhand_icon_state = "orangeglasses"
+	inhand_icon_state = null
 	glass_colour_type = /datum/client_colour/glass_colour/lightorange
 
 /obj/item/clothing/glasses/red
 	name = "red glasses"
 	desc = "Hey, you're looking good, senpai!"
 	icon_state = "redglasses"
-	inhand_icon_state = "redglasses"
+	inhand_icon_state = null
 	glass_colour_type = /datum/client_colour/glass_colour/red
 
 /obj/item/clothing/glasses/geist_gazers
@@ -597,7 +599,7 @@
 	name = "binoclard lenses"
 	desc = "Shows you know how to sew a lapel and center a back vent."
 	icon_state = "binoclard_lenses"
-	inhand_icon_state = "binoclard_lenses"
+	inhand_icon_state = null
 
 /obj/item/clothing/glasses/salesman
 	name = "colored glasses"
@@ -644,10 +646,10 @@
 	name = "O.S.I. Sunglasses"
 	desc = "There's no such thing as good news! Just bad news and... weird news.."
 	icon_state = "osi_glasses"
-	inhand_icon_state = "osi_glasses"
+	inhand_icon_state = null
 
 /obj/item/clothing/glasses/phantom
 	name = "Phantom Thief Mask"
 	desc = "Lookin' cool."
 	icon_state = "phantom_glasses"
-	inhand_icon_state = "phantom_glasses"
+	inhand_icon_state = null

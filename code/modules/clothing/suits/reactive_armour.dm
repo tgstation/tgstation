@@ -31,7 +31,7 @@
 	name = "reactive armor"
 	desc = "Doesn't seem to do much for some reason."
 	icon_state = "reactiveoff"
-	inhand_icon_state = "reactiveoff"
+	inhand_icon_state = null
 	blood_overlay_type = "armor"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 100)
 	actions_types = list(/datum/action/item_action/toggle)
@@ -50,19 +50,13 @@
 	///The cooldown itself of the reactive armor for when it can activate again.
 	var/reactivearmor_cooldown = 0
 
-
 /obj/item/clothing/suit/armor/reactive/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_OCLOTHING)
 
 /obj/item/clothing/suit/armor/reactive/update_icon_state()
 	. = ..()
-	if(active)
-		icon_state = "reactive"
-		inhand_icon_state = "reactive"
-	else
-		icon_state = "reactiveoff"
-		inhand_icon_state = "reactiveoff"
+	icon_state = "reactive[active ? null : "off"]"
 
 /obj/item/clothing/suit/armor/reactive/attack_self(mob/user)
 	active = !active

@@ -194,6 +194,8 @@
 		path_hud.add_atom_to_hud(src)
 		path_hud.show_to(src)
 
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_BOTS_GLITCHED))
+		randomize_language_if_on_station()
 
 /mob/living/simple_animal/bot/Destroy()
 	if(path_hud)
@@ -1079,3 +1081,22 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 /mob/living/simple_animal/bot/rust_heretic_act()
 	adjustBruteLoss(400)
+
+/**
+ * Randomizes our bot's language if:
+ * - They are on the setation Z level
+ * OR
+ * - They are on the escape shuttle
+ */
+/mob/living/simple_animal/bot/proc/randomize_language_if_on_station()
+	var/turf/bot_turf = get_turf(src)
+	var/area/bot_area = get_area(src)
+	if(!is_station_level(bot_turf.z) && !istype(bot_area, /area/shuttle/escape))
+		// Why snowflake check for escape shuttle? Well, a lot of shuttles spawn with bots
+		// but docked at centcom, and I wanted those bots to also speak funny languages
+		return FALSE
+
+	/// The bot's language holder - so we can randomize and change their language
+	var/datum/language_holder/bot_languages = get_language_holder()
+	bot_languages.selected_language = bot_languages.get_random_spoken_uncommon_language()
+	return TRUE

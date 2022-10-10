@@ -26,13 +26,13 @@
 		/datum/job_department/engineering,
 		)
 
-	family_heirlooms = list(/obj/item/clothing/head/hardhat, /obj/item/screwdriver, /obj/item/wrench, /obj/item/weldingtool, /obj/item/crowbar, /obj/item/wirecutters)
+	family_heirlooms = list(/obj/item/clothing/head/utility/hardhat, /obj/item/screwdriver, /obj/item/wrench, /obj/item/weldingtool, /obj/item/crowbar, /obj/item/wirecutters)
 
 	mail_goodies = list(
 		/obj/item/storage/box/lights/mixed = 20,
 		/obj/item/lightreplacer = 10,
 		/obj/item/holosign_creator/engineering = 8,
-		/obj/item/clothing/head/hardhat/red/upgraded = 1
+		/obj/item/clothing/head/utility/hardhat/red/upgraded = 1
 	)
 	rpg_title = "Crystallomancer"
 	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
@@ -46,7 +46,7 @@
 	uniform = /obj/item/clothing/under/rank/engineering/engineer
 	belt = /obj/item/storage/belt/utility/full/engi
 	ears = /obj/item/radio/headset/headset_eng
-	head = /obj/item/clothing/head/hardhat
+	head = /obj/item/clothing/head/utility/hardhat
 	shoes = /obj/item/clothing/shoes/workboots
 	l_pocket = /obj/item/modular_computer/tablet/pda/engineering
 	r_pocket = /obj/item/t_scanner

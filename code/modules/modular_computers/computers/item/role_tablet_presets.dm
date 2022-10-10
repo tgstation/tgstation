@@ -368,6 +368,16 @@
 			msg.allow_emojis = TRUE
 
 /**
+ * No Department
+ */
+
+/obj/item/modular_computer/tablet/pda/assistant
+	name = "assistant PDA"
+	default_applications = list(
+		/datum/computer_file/program/bounty_board,
+	)
+
+/**
  * Non-roles
  */
 

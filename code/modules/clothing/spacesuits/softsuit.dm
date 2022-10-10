@@ -3,12 +3,12 @@
 	name = "NASA Void Helmet"
 	desc = "An old, NASA CentCom branch designed, dark red space suit helmet."
 	icon_state = "void"
-	inhand_icon_state = "void"
+	inhand_icon_state = "void_helmet"
 
 /obj/item/clothing/suit/space/nasavoid
 	name = "NASA Voidsuit"
 	icon_state = "void"
-	inhand_icon_state = "void"
+	inhand_icon_state = null
 	desc = "An old, NASA CentCom branch designed, dark red space suit."
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/multitool)
 
@@ -16,12 +16,11 @@
 	name = "Engineering Void Helmet"
 	desc = "A CentCom engineering dark red space suit helmet. While old and dusty, it still gets the job done."
 	icon_state = "void"
-	inhand_icon_state = "void"
 
 /obj/item/clothing/suit/space/nasavoid/old
 	name = "Engineering Voidsuit"
 	icon_state = "void"
-	inhand_icon_state = "void"
+	inhand_icon_state = null
 	desc = "A CentCom engineering dark red space suit. Age has degraded the suit making it difficult to move around in."
 	slowdown = 4
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/multitool)
@@ -37,7 +36,7 @@
 /obj/item/clothing/head/helmet/space/eva
 	name = "EVA helmet"
 	icon_state = "space"
-	inhand_icon_state = "space"
+	inhand_icon_state = "space_helmet"
 	desc = "A lightweight space helmet with the basic ability to protect the wearer from the vacuum of space during emergencies."
 	flash_protect = FLASH_PROTECTION_NONE
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 50, ACID = 65)
@@ -65,7 +64,7 @@
 	name = "emergency space helmet"
 	desc = "A bulky, air-tight helmet meant to protect the user during emergency situations. It doesn't look very durable."
 	icon_state = "syndicate-helm-orange"
-	inhand_icon_state = "syndicate-helm-orange"
+	inhand_icon_state = "syndicate-helm-orange" //resprite?
 	armor = list(MELEE = 5, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
 	strip_delay = 65
 

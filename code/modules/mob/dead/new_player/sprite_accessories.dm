@@ -1571,6 +1571,10 @@
 	name = "Knee-high (Thin)"
 	icon_state = "thin_knee"
 
+/datum/sprite_accessory/socks/trans_knee
+	name = "Knee-high (Trans)"
+	icon_state = "trans_knee"
+
 /datum/sprite_accessory/socks/uk_knee
 	name = "Knee-High (UK)"
 	icon_state = "uk_knee"
@@ -1662,6 +1666,10 @@
 /datum/sprite_accessory/socks/thin_thigh
 	name = "Thigh-high (Thin)"
 	icon_state = "thin_thigh"
+
+/datum/sprite_accessory/socks/trans_thigh
+	name = "Thigh-high (Trans)"
+	icon_state = "trans_thigh"
 
 /datum/sprite_accessory/socks/uk_thigh
 	name = "Thigh-high (UK)"

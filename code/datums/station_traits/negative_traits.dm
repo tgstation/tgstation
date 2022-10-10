@@ -60,12 +60,12 @@
 	if(!prob(35))
 		return
 	var/obj/item/hat = pick(
-		/obj/item/clothing/head/sombrero,
+		/obj/item/clothing/head/costume/sombrero/green,
 		/obj/item/clothing/head/fedora,
 		/obj/item/clothing/mask/balaclava,
-		/obj/item/clothing/head/ushanka,
-		/obj/item/clothing/head/cardborg,
-		/obj/item/clothing/head/pirate,
+		/obj/item/clothing/head/costume/ushanka,
+		/obj/item/clothing/head/costume/cardborg,
+		/obj/item/clothing/head/costume/pirate,
 		/obj/item/clothing/head/cone,
 		)
 	hat = new hat(spawned_mob)
@@ -132,23 +132,22 @@
 /datum/station_trait/bot_languages
 	name = "Bot Language Matrix Malfunction"
 	trait_type = STATION_TRAIT_NEGATIVE
-	weight = 3
+	weight = 4
 	show_in_report = TRUE
 	report_message = "Your station's friendly bots have had their language matrix fried due to an event, resulting in some strange and unfamiliar speech patterns."
+	trait_to_give = STATION_TRAIT_BOTS_GLITCHED
 
 /datum/station_trait/bot_languages/New()
 	. = ..()
-	/// What "caused" our robots to go haywire (fluff)
-	var/event_source = pick(list("an ion storm", "a syndicate hacking attempt", "a malfunction", "issues with your onboard AI", "an intern's mistakes", "budget cuts"))
+	// What "caused" our robots to go haywire (fluff)
+	var/event_source = pick("an ion storm", "a syndicate hacking attempt", "a malfunction", "issues with your onboard AI", "an intern's mistakes", "budget cuts")
 	report_message = "Your station's friendly bots have had their language matrix fried due to [event_source], resulting in some strange and unfamiliar speech patterns."
 
 /datum/station_trait/bot_languages/on_round_start()
 	. = ..()
-	//All bots that exist round start have their set language randomized.
-	for(var/mob/living/simple_animal/bot/found_bot in GLOB.alive_mob_list)
-		/// The bot's language holder - so we can randomize and change their language
-		var/datum/language_holder/bot_languages = found_bot.get_language_holder()
-		bot_languages.selected_language = bot_languages.get_random_spoken_language()
+	// All bots that exist round start on station Z OR on the escape shuttle have their set language randomized.
+	for(var/mob/living/simple_animal/bot/found_bot as anything in GLOB.bots_list)
+		found_bot.randomize_language_if_on_station()
 
 /datum/station_trait/revenge_of_pun_pun
 	name = "Revenge of Pun Pun"

@@ -2,6 +2,7 @@
 	name = "wig"
 	desc = "A bunch of hair without a head attached."
 	icon = 'icons/mob/species/human/human_face.dmi'   // default icon for all hairs
+	worn_icon = 'icons/mob/clothing/head/costume.dmi'
 	icon_state = "hair_vlong"
 	inhand_icon_state = "pwig"
 	worn_icon_state = "wig"
@@ -49,7 +50,7 @@
 /obj/item/clothing/head/wig/attack_self(mob/user)
 	var/new_style = tgui_input_list(user, "Select a hairstyle", "Wig Styling", GLOB.hairstyles_list - "Bald")
 	var/newcolor = adjustablecolor ? input(usr,"","Choose Color",color) as color|null : null
-	if(!user.canUseTopic(src, BE_CLOSE))
+	if(!user.canUseTopic(src, be_close = TRUE))
 		return
 	if(new_style && new_style != hairstyle)
 		hairstyle = new_style

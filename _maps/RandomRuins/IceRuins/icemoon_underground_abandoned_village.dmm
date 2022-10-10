@@ -76,7 +76,7 @@
 /turf/open/floor/wood,
 /area/ruin/powered)
 "jH" = (
-/obj/item/clothing/head/bearpelt,
+/obj/item/clothing/head/costume/bearpelt,
 /obj/structure/table/wood,
 /obj/item/food/burger/fish,
 /obj/item/reagent_containers/cup/glass/bottle/beer{

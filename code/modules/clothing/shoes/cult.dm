@@ -2,7 +2,7 @@
 	name = "\improper Nar'Sien invoker boots"
 	desc = "A pair of boots worn by the followers of Nar'Sie."
 	icon_state = "cult"
-	inhand_icon_state = "cult"
+	inhand_icon_state = null
 	cold_protection = FEET
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
 	heat_protection = FEET

@@ -123,7 +123,7 @@
 
 /obj/machinery/iv_drip/MouseDrop(mob/living/target)
 	. = ..()
-	if(!ishuman(usr) || !usr.canUseTopic(src, BE_CLOSE) || !isliving(target))
+	if(!ishuman(usr) || !usr.canUseTopic(src, be_close = TRUE) || !isliving(target))
 		return
 
 	if(attached)
