@@ -13,6 +13,31 @@
 	var/datum/weakref/backpack
 	var/datum/weakref/left_cane
 	var/datum/weakref/right_cane
+	/// List of objects that should count as canes
+	var/static/list/cane_whitelist = typecacheof(list(
+		/obj/item/cane,
+		/obj/item/staff,
+		/obj/item/godstaff,
+		/obj/item/scythe,
+		/obj/item/gun/magic/staff,
+		/obj/item/nullrod/staff,
+		/obj/item/nullrod/scythe,
+		/obj/item/nullrod/claymore/bostaff,
+		/obj/item/nullrod/pitchfork,
+		/obj/item/nullrod/egyptian,
+		/obj/item/nullrod/spear,
+		/obj/item/spear, // why yes, even the common spear is valid
+		/obj/item/pushbroom,
+		/obj/item/mop,
+	))
+	/// List of objects that should NOT count as canes
+	/// (all of these are swords with staff subtypes)
+	var/static/list/cane_blacklist = typecacheof(list(
+		/obj/item/gun/magic/staff/spellblade,
+		/obj/item/nullrod/scythe/vibro,
+		/obj/item/nullrod/scythe/spellblade,
+		/obj/item/nullrod/scythe/talking,
+	))
 
 /datum/quirk/badback/add_unique()
 	var/mob/living/carbon/human/human_holder = quirk_holder
@@ -22,7 +47,12 @@
 	var/turf/holder_turf = get_turf(human_holder)
 	var/obj/item/cane/spawn_cane = new /obj/item/cane(holder_turf)
 	human_holder.put_in_hands(spawn_cane)
-	var/is_holding_cane = human_holder.is_holding_item_of_type(/obj/item/cane)
+
+	var/obj/item/left_hand_item = human_holder.held_items[1]
+	var/obj/item/right_hand_item = human_holder.held_items[2]
+	var/is_cane_left_hand = cane_whitelist[left_hand_item?.type] && !cane_blacklist[left_hand_item?.type]
+	var/is_cane_right_hand = cane_whitelist[right_hand_item?.type] && !cane_blacklist[right_hand_item?.type]
+	var/is_holding_cane = is_cane_left_hand || is_cane_right_hand
 
 	if(istype(equipped_backpack))
 		backpack = WEAKREF(equipped_backpack)
@@ -30,33 +60,36 @@
 
 		if(!is_holding_cane)
 			human_holder.add_mood_event("back_pain", /datum/mood_event/back_pain)
-			human_holder.add_movespeed_modifier(/datum/movespeed_modifier/human_carry) // TODO make this it's own modifier at some point
+			human_holder.add_movespeed_modifier(/datum/movespeed_modifier/bad_back_slowdown) // TODO make this it's own modifier at some point
 		else if(is_holding_cane)
-			var/obj/item/cane/left_hand_cane = human_holder.held_items[1]
-			var/obj/item/cane/right_hand_cane = human_holder.held_items[2]
-
-			if(istype(left_hand_cane))
-				left_cane = WEAKREF(left_hand_cane)
-				RegisterSignal(left_cane, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED), .proc/on_unequipped_cane)
-			if(istype(right_hand_cane))
-				right_cane = WEAKREF(right_hand_cane)
-				RegisterSignal(right_cane, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED), .proc/on_unequipped_cane)
-
+			if(is_cane_left_hand)
+				left_cane = WEAKREF(left_hand_item)
+				RegisterSignal(left_hand_item, COMSIG_ITEM_DROPPED, .proc/on_unequipped_cane)
+				RegisterSignal(left_hand_item, COMSIG_PARENT_QDELETING, .proc/on_unequipped_cane)
+				RegisterSignal(left_hand_item, COMSIG_MOVABLE_MOVED, .proc/on_unequipped_cane)
+			if(is_cane_right_hand)
+				right_cane = WEAKREF(right_hand_item)
+				RegisterSignal(right_hand_item, COMSIG_ITEM_DROPPED, .proc/on_unequipped_cane)
+				RegisterSignal(right_hand_item, COMSIG_PARENT_QDELETING, .proc/on_unequipped_cane)
+				RegisterSignal(right_hand_item, COMSIG_MOVABLE_MOVED, .proc/on_unequipped_cane)
 	RegisterSignal(human_holder, COMSIG_MOB_EQUIPPED_ITEM, .proc/on_equipped_item)
-	//RegisterSignal(human_holder, COMSIG_MOB_UNEQUIPPED_ITEM, .proc/on_unequipped_item)
 
 /datum/quirk/badback/remove()
 	UnregisterSignal(quirk_holder, list(COMSIG_MOB_EQUIPPED_ITEM, COMSIG_MOB_UNEQUIPPED_ITEM))
 	var/obj/item/storage/equipped_backpack = backpack?.resolve()
-	var/obj/item/cane/primary_cane = left_cane?.resolve()
-	var/obj/item/cane/secondary_cane = right_cane?.resolve()
+	var/obj/item/primary_cane = left_cane?.resolve()
+	var/obj/item/secondary_cane = right_cane?.resolve()
 
-	var/is_holding_cane = quirk_holder.is_holding_item_of_type(/obj/item/cane)
+	var/obj/item/left_hand_item = quirk_holder.held_items[1]
+	var/obj/item/right_hand_item = quirk_holder.held_items[2]
+	var/is_cane_left_hand = cane_whitelist[left_hand_item?.type] && !cane_blacklist[left_hand_item?.type]
+	var/is_cane_right_hand = cane_whitelist[right_hand_item?.type] && !cane_blacklist[right_hand_item?.type]
+	var/is_holding_cane = is_cane_left_hand || is_cane_right_hand
 
 	if(equipped_backpack && !is_holding_cane)
 		UnregisterSignal(equipped_backpack, COMSIG_ITEM_POST_UNEQUIP)
 		quirk_holder.clear_mood_event("back_pain")
-		quirk_holder.remove_movespeed_modifier(/datum/movespeed_modifier/human_carry)
+		quirk_holder.remove_movespeed_modifier(/datum/movespeed_modifier/bad_back_slowdown)
 	else if(equipped_backpack && is_holding_cane)
 		if(primary_cane)
 			UnregisterSignal(primary_cane, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
@@ -76,69 +109,63 @@
 		//RegisterSignal(quirk_holder, COMSIG_MOB_UNEQUIPPED_ITEM, .proc/on_unequipped_item)
 		backpack = WEAKREF(equipped_item)
 
-	var/is_holding_cane = quirk_holder.is_holding_item_of_type(/obj/item/cane)
+	var/obj/item/left_hand_item = quirk_holder.held_items[1]
+	var/obj/item/right_hand_item = quirk_holder.held_items[2]
+	var/is_cane_left_hand = cane_whitelist[left_hand_item?.type] && !cane_blacklist[left_hand_item?.type]
+	var/is_cane_right_hand = cane_whitelist[right_hand_item?.type] && !cane_blacklist[right_hand_item?.type]
+	var/is_holding_cane = is_cane_left_hand || is_cane_right_hand
 
 	if(backpack && !is_holding_cane)
-		quirk_holder.add_movespeed_modifier(/datum/movespeed_modifier/human_carry)
+		quirk_holder.add_movespeed_modifier(/datum/movespeed_modifier/bad_back_slowdown)
 		quirk_holder.add_mood_event("back_pain", /datum/mood_event/back_pain)
 	else // has no backpack or is holding a cane with a backpack
 		quirk_holder.clear_mood_event("back_pain")
-		quirk_holder.remove_movespeed_modifier(/datum/movespeed_modifier/human_carry)
+		quirk_holder.remove_movespeed_modifier(/datum/movespeed_modifier/bad_back_slowdown)
 
 	if(backpack)
-		var/obj/item/cane/left_hand_cane = quirk_holder.held_items[1]
-		var/obj/item/cane/right_hand_cane = quirk_holder.held_items[2]
-		var/obj/item/cane/primary_cane = left_cane?.resolve()
-		var/obj/item/cane/secondary_cane = right_cane?.resolve()
+		var/obj/item/primary_cane = left_cane?.resolve()
+		var/obj/item/secondary_cane = right_cane?.resolve()
 
-		if(istype(left_hand_cane))
-			if(primary_cane && (primary_cane != left_hand_cane))
+		if(is_cane_left_hand)
+			if(primary_cane && (primary_cane != left_hand_item))
 				UnregisterSignal(primary_cane, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
 				left_cane = null
 			else if(!primary_cane)
-				left_cane = WEAKREF(left_hand_cane)
-				RegisterSignal(left_cane, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED), .proc/on_unequipped_cane)
+				left_cane = WEAKREF(left_hand_item)
+				primary_cane = left_hand_item
+				RegisterSignal(primary_cane, COMSIG_ITEM_DROPPED, .proc/on_unequipped_cane)
+				RegisterSignal(primary_cane, COMSIG_PARENT_QDELETING, .proc/on_unequipped_cane)
+				RegisterSignal(primary_cane, COMSIG_MOVABLE_MOVED, .proc/on_unequipped_cane)
 		else if(primary_cane) // no cane in hand, time to remove the signal and weakref
 			UnregisterSignal(primary_cane, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
 			left_cane = null
 
-		if(istype(right_hand_cane))
-			if(secondary_cane && (secondary_cane != right_hand_cane))
+		if(is_cane_right_hand)
+			if(secondary_cane && (secondary_cane != right_hand_item))
 				UnregisterSignal(secondary_cane, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
 				right_cane = null
 			else if(!secondary_cane)
-				right_cane = WEAKREF(right_hand_cane)
-				RegisterSignal(right_cane, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED), .proc/on_unequipped_cane)
+				right_cane = WEAKREF(right_hand_item)
+				secondary_cane = right_hand_item
+				RegisterSignal(secondary_cane, COMSIG_ITEM_DROPPED, .proc/on_unequipped_cane)
+				RegisterSignal(secondary_cane, COMSIG_PARENT_QDELETING, .proc/on_unequipped_cane)
+				RegisterSignal(secondary_cane, COMSIG_MOVABLE_MOVED, .proc/on_unequipped_cane)
 		else if(secondary_cane) // no cane in hand, time to remove the signal and weakref
 			UnregisterSignal(secondary_cane, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
 			right_cane = null
-
-/*
-/datum/quirk/badback/proc/on_unequipped_item(datum/source, obj/item/dropped_item, force, new_location)
-	SIGNAL_HANDLER
-
-	var/is_holding_cane = quirk_holder.is_holding_item_of_type(/obj/item/cane)
-
-	if(backpack && !is_holding_cane)
-		quirk_holder.add_movespeed_modifier(/datum/movespeed_modifier/human_carry)
-		quirk_holder.add_mood_event("back_pain", /datum/mood_event/back_pain)
-	else // has no backpack or is holding a cane with a backpack
-		quirk_holder.clear_mood_event("back_pain")
-		quirk_holder.remove_movespeed_modifier(/datum/movespeed_modifier/human_carry)
-*/
 
 /// Signal handler for when the quirk_holder unequips an equipped backpack. Removes the back_pain mood event.
 /datum/quirk/badback/proc/on_unequipped_backpack(obj/item/storage/backpack/backpack_source, force, atom/newloc, no_move, invdrop, silent)
 	SIGNAL_HANDLER
 
 	var/obj/item/storage/equipped_backpack = backpack?.resolve()
-	var/obj/item/cane/primary_cane = left_cane?.resolve()
-	var/obj/item/cane/secondary_cane = right_cane?.resolve()
+	var/obj/item/primary_cane = left_cane?.resolve()
+	var/obj/item/secondary_cane = right_cane?.resolve()
 
 	UnregisterSignal(equipped_backpack, COMSIG_ITEM_POST_UNEQUIP)
 	UnregisterSignal(quirk_holder, COMSIG_MOB_UNEQUIPPED_ITEM)
 	quirk_holder.clear_mood_event("back_pain")
-	quirk_holder.remove_movespeed_modifier(/datum/movespeed_modifier/human_carry)
+	quirk_holder.remove_movespeed_modifier(/datum/movespeed_modifier/bad_back_slowdown)
 
 	if(primary_cane)
 		UnregisterSignal(primary_cane, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
@@ -150,20 +177,20 @@
 	right_cane = null
 
 /// Signal handler for when the quirk_holder unequips an equipped cane
-/datum/quirk/badback/proc/on_unequipped_cane(obj/item/cane/source)
+/datum/quirk/badback/proc/on_unequipped_cane(obj/item/source)
 	SIGNAL_HANDLER
 
 	// if they have dual canes then no need to change mood/speed
-	var/both_hands_have_canes = left_cane && right_cane
+	var/both_hands_have_canes = left_cane?.resolve() && right_cane?.resolve()
 
 	if(backpack && !both_hands_have_canes)
-		quirk_holder.add_movespeed_modifier(/datum/movespeed_modifier/human_carry)
+		quirk_holder.add_movespeed_modifier(/datum/movespeed_modifier/bad_back_slowdown)
 		quirk_holder.add_mood_event("back_pain", /datum/mood_event/back_pain)
 
 	UnregisterSignal(source, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
-	if(left_cane == source)
+	if(left_cane?.resolve() == source)
 		left_cane = null
-	else if (right_cane == source)
+	else if (right_cane?.resolve() == source)
 		right_cane = null
 
 /datum/quirk/blooddeficiency
