@@ -86,9 +86,7 @@
 	unarmed_damage_low = 1
 	unarmed_damage_high = 10
 	unarmed_stun_threshold = 10
-	///If our fingers are too big to fire guns
-	var/chunky = FALSE
-
+	body_zone = BODY_ZONE_L_ARM
 
 /obj/item/bodypart/arm/left
 	name = "left arm"
@@ -303,6 +301,7 @@
 	max_stamina_damage = 50
 	can_be_disabled = TRUE
 	unarmed_attack_effect = ATTACK_EFFECT_KICK
+	body_zone = BODY_ZONE_L_LEG
 	unarmed_attack_verb = "kick" // The lovely kick, typically only accessable by attacking a grouded foe. 1.5 times better than the punch.
 	unarmed_damage_low = 2
 	unarmed_damage_high = 15
