@@ -85,6 +85,7 @@
 	unarmed_damage_low = 1
 	unarmed_damage_high = 10
 	unarmed_stun_threshold = 10
+	icon_state = "default_human_l_arm"
 	///If our fingers are too big to fire guns
 	var/chunky = FALSE
 
@@ -305,6 +306,7 @@
 	unarmed_damage_low = 2
 	unarmed_damage_high = 15
 	unarmed_stun_threshold = 10
+	icon_state = "default_human_r_leg"
 
 
 /obj/item/bodypart/leg/left
