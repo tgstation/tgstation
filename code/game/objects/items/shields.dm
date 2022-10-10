@@ -164,7 +164,7 @@
 	if(QDELETED(embedded_flash) || (embedded_flash.burnt_out && !animation_only))
 		return
 	var/flick = animation_only ? TRUE : (target ? embedded_flash.attack(target, owner) : embedded_flash.AOE_flash(user = owner))
-	if(!flick)
+	if(!flick && !embedded_flash.burnt_out)
 		return
 	flick("flashshield_flash", src)
 	inhand_icon_state = "flashshield_flash"
