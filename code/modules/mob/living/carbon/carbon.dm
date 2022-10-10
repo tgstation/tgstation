@@ -987,7 +987,7 @@
 ///Proc to hook behavior on bodypart removals.  Do not directly call. You're looking for [/obj/item/bodypart/proc/drop_limb()].
 /mob/living/carbon/proc/remove_bodypart(obj/item/bodypart/old_bodypart)
 	SHOULD_NOT_OVERRIDE(TRUE)
-
+	old_bodypart.on_removal()
 	bodyparts -= old_bodypart
 	switch(old_bodypart.body_part)
 		if(LEG_LEFT, LEG_RIGHT)

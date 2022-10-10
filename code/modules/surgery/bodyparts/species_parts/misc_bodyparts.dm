@@ -41,12 +41,12 @@
 /obj/item/bodypart/arm/left/abductor
 	limb_id = SPECIES_ABDUCTOR
 	should_draw_greyscale = FALSE
-	chunky = TRUE
+	bodypart_traits = list(TRAIT_CHUNKYFINGERS)
 
 /obj/item/bodypart/arm/right/abductor
 	limb_id = SPECIES_ABDUCTOR
 	should_draw_greyscale = FALSE
-	chunky = TRUE
+	bodypart_traits = list(TRAIT_CHUNKYFINGERS)
 
 /obj/item/bodypart/leg/left/abductor
 	limb_id = SPECIES_ABDUCTOR
@@ -236,10 +236,10 @@
 	should_draw_greyscale = FALSE
 
 /obj/item/bodypart/arm/left/shadow/nightmare
-	chunky = TRUE
+	bodypart_traits = list(TRAIT_CHUNKYFINGERS)
 
 /obj/item/bodypart/arm/right/shadow/nightmare
-	chunky = TRUE
+	bodypart_traits = list(TRAIT_CHUNKYFINGERS)
 
 ///SKELETON
 /obj/item/bodypart/head/skeleton
@@ -321,7 +321,7 @@
 /obj/item/bodypart/arm/left/golem
 	limb_id = SPECIES_GOLEM
 	dmg_overlay_type = null
-	chunky = TRUE
+	bodypart_traits = list(TRAIT_CHUNKYFINGERS)
 	unarmed_damage_low = 5 // I'd like to take the moment that maintaining all of these random ass golem speciese is hell and oranges was right
 	unarmed_damage_high = 14
 	unarmed_stun_threshold = 11
@@ -329,15 +329,24 @@
 /obj/item/bodypart/arm/right/golem
 	limb_id = SPECIES_GOLEM
 	dmg_overlay_type = null
-	chunky = TRUE
+	bodypart_traits = list(TRAIT_CHUNKYFINGERS)
+	unarmed_damage_low = 5
+	unarmed_damage_high = 14
+	unarmed_stun_threshold = 11
 
 /obj/item/bodypart/leg/left/golem
 	limb_id = SPECIES_GOLEM
 	dmg_overlay_type = null
+	unarmed_damage_low = 7
+	unarmed_damage_high = 21
+	unarmed_stun_threshold = 11
 
 /obj/item/bodypart/leg/right/golem
 	limb_id = SPECIES_GOLEM
 	dmg_overlay_type = null
+	unarmed_damage_low = 7
+	unarmed_damage_high = 21
+	unarmed_stun_threshold = 11
 
 ///
 /obj/item/bodypart/head/golem/cult

@@ -25,10 +25,10 @@
 	unarmed_miss_sound = 'sound/weapons/slashmiss.ogg'
 
 /obj/item/bodypart/arm/left/lizard/ashwalker
-	chunky = TRUE
+	bodypart_traits = list(TRAIT_CHUNKYFINGERS)
 
 /obj/item/bodypart/arm/right/lizard/ashwalker
-	chunky = TRUE
+	bodypart_traits = list(TRAIT_CHUNKYFINGERS)
 
 /obj/item/bodypart/leg/left/lizard
 	icon_greyscale = 'icons/mob/species/lizard/bodyparts.dmi'

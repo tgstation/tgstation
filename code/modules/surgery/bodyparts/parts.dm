@@ -14,6 +14,7 @@
 	max_stamina_damage = 120
 	grind_results = null
 	wound_resistance = 10
+	bodypart_trait_source = CHEST_TRAIT
 	///The bodytype(s) allowed to attach to this chest.
 	var/acceptable_bodytype = BODYTYPE_HUMANOID
 
@@ -103,6 +104,7 @@
 	held_index = 1
 	px_x = -6
 	px_y = 0
+	bodypart_trait_source = LEFT_ARM_TRAIT
 
 
 /obj/item/bodypart/arm/left/set_owner(new_owner)
@@ -203,7 +205,7 @@
 	held_index = 2
 	px_x = 6
 	px_y = 0
-
+	bodypart_trait_source = RIGHT_ARM_TRAIT
 
 /obj/item/bodypart/arm/right/set_owner(new_owner)
 	. = ..()
@@ -317,7 +319,7 @@
 	px_x = -2
 	px_y = 12
 	can_be_disabled = TRUE
-
+	bodypart_trait_source = LEFT_LEG_TRAIT
 
 /obj/item/bodypart/leg/left/set_owner(new_owner)
 	. = ..()
@@ -415,7 +417,7 @@
 	/// Why? Both legs share the same layer for rendering, and since we don't want to do redraws on
 	/// each dir changes, we're doing it with a mask instead, which we cache for efficiency reasons.
 	var/static/list/left_leg_mask_cache = list()
-
+	bodypart_trait_source = RIGHT_LEG_TRAIT
 
 /obj/item/bodypart/leg/right/set_owner(new_owner)
 	. = ..()

@@ -153,10 +153,15 @@
 	var/sound/unarmed_miss_sound = 'sound/weapons/punchmiss.ogg'
 	///Lowest possible punch damage this bodypart can give. If this is set to 0, unarmed attacks will always miss.
 	var/unarmed_damage_low = 1
-	///Highest possible punch damage this bodypart can give.
+	///Highest possible punch damage this bodypart can ive.
 	var/unarmed_damage_high = 1
 	///Damage at which attacks from this bodypart will stun
 	var/unarmed_stun_threshold = 2
+
+	/// Traits that are given to the holder of the part. If you want an effect that changes this, don't add directly to this. Use the add_bodypart_trait() proc
+	var/list/bodypart_traits = list()
+	/// The name of the trait source that the organ gives. Should not be altered during the events of gameplay, and will cause problems if it is.
+	var/bodypart_trait_source = BODYPART_TRAIT
 
 /obj/item/bodypart/Initialize(mapload)
 	. = ..()
@@ -604,7 +609,6 @@
 ///Proc to change the value of the `owner` variable and react to the event of its change.
 /obj/item/bodypart/proc/set_owner(new_owner)
 	SHOULD_CALL_PARENT(TRUE)
-
 	if(owner == new_owner)
 		return FALSE //`null` is a valid option, so we need to use a num var to make it clear no change was made.
 	var/mob/living/carbon/old_owner = owner
@@ -636,9 +640,25 @@
 		if(needs_update_disabled)
 			update_disabled()
 
+	update_bodypart_traits(new_owner)
 	refresh_bleed_rate()
 	return old_owner
 
+/obj/item/bodypart/proc/update_bodypart_traits()
+	for(var/trait in bodypart_traits)
+		ADD_TRAIT(owner, trait, bodypart_trait_source)
+
+/obj/item/bodypart/proc/add_bodypart_trait(trait)
+	bodypart_traits += trait
+	update_bodypart_traits()
+
+/obj/item/bodypart/proc/remove_bodypart_trait(trait)
+	bodypart_traits -= trait
+	REMOVE_TRAIT(owner, trait, bodypart_trait_source)
+
+/obj/item/bodypart/proc/on_removal()
+	for(var/trait in bodypart_traits)
+		REMOVE_TRAIT(owner, trait, bodypart_trait_source)
 
 ///Proc to change the value of the `can_be_disabled` variable and react to the event of its change.
 /obj/item/bodypart/proc/set_can_be_disabled(new_can_be_disabled)
