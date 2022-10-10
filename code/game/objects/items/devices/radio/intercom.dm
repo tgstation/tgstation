@@ -163,7 +163,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom, 26)
 	remove_radio(src, frequency)
 	if(new_frequency)
 		if(new_frequency == FREQ_SYNDICATE && !syndie)
-			frequency = FREQ_COMMON
 			say("Unable to connect to this encrypted radio network!")
 		else
 			frequency = new_frequency
