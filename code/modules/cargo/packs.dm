@@ -1775,6 +1775,26 @@
 		var/item = pick(contains)
 		new item(C)
 
+/datum/supply_pack/service/coffeekit
+	name = "Coffee Equippment Crate"
+	desc = "A complete kit to setup your own cozy coffee shop, the coffeemaker is for some reason not included."
+	cost = CARGO_CRATE_VALUE * 4
+	contains = list(/obj/item/storage/box/coffeepack/robusta,
+					/obj/item/storage/box/coffeepack/arabica,
+					/obj/item/reagent_containers/cup/coffeepot,
+					/obj/item/storage/fancy/coffee_condi_display,
+					/obj/item/reagent_containers/cup/bottle/syrup_bottle/caramel)	//one extra syrup as a treat
+	crate_name = "coffee equippemnt crate"
+
+/datum/supply_pack/service/coffeemaker
+	name = "Impressa Coffeemaker Crate"
+	desc = "A assembled Impressa model coffeemaker."
+	cost = CARGO_CRATE_VALUE * 4
+	contains = list(/obj/machinery/coffeemaker/impressa)
+	crate_name = "coffeemaker crate"
+	crate_type = /obj/structure/closet/crate/large
+
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Organic /////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -2095,6 +2115,16 @@
 					/obj/item/storage/box/mothic_rations)
 	crate_name = "\improper Mothic Supply box"
 	crate_type = /obj/structure/closet/crate/cardboard/mothic
+
+/datum/supply_pack/organic/syrup
+	name = "Coffee Syrups Box"
+	desc = "A packaged box of various syrups, perfect to make your delicious coffee even more diabetic."
+	cost = CARGO_CRATE_VALUE * 3
+	contains = list(/obj/item/reagent_containers/cup/bottle/syrup_bottle/caramel,
+					/obj/item/reagent_containers/cup/bottle/syrup_bottle/liqueur,
+					/obj/item/reagent_containers/cup/bottle/syrup_bottle/korta_nectar)
+	crate_name = "coffee syrups box"
+	crate_type = /obj/structure/closet/crate/cardboard
 
 //////////////////////////////////////////////////////////////////////////////
 ////////////////////////////// Livestock /////////////////////////////////////
