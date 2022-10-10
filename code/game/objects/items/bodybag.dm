@@ -5,6 +5,7 @@
 	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "bodybag_folded"
 	w_class = WEIGHT_CLASS_SMALL
+	///Stored path we use for spawning a new body bag entity when unfolded.
 	var/unfoldedbag_path = /obj/structure/closet/body_bag
 
 /obj/item/bodybag/attack_self(mob/user)
@@ -19,6 +20,11 @@
 		if(isopenturf(target))
 			deploy_bodybag(user, target)
 
+/**
+ * Creates a new body bag item when unfolded, at the provided location, replacing the body bag item.
+ * * mob/user: User opening the body bag.
+ * * atom/location: the place/entity/mob where the body bag is being deployed from.
+ */
 /obj/item/bodybag/proc/deploy_bodybag(mob/user, atom/location)
 	var/obj/structure/closet/body_bag/item_bag = new unfoldedbag_path(location)
 	item_bag.open(user)

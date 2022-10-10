@@ -8,7 +8,7 @@
 	desc = "Holemaker Deluxe: A sporty model with a good stop power. Any cannon enthusiast should be expected to start here."
 	density = TRUE
 	anchored = TRUE
-	icon = 'icons/obj/cannons.dmi'
+	icon = 'icons/obj/weapons/cannons.dmi'
 	icon_state = "falconet_patina"
 	max_integrity = 300
 	///whether the cannon can be unwrenched from the ground.
@@ -75,16 +75,17 @@
 			balloon_alert(user, "needs [reagents.maximum_volume]u of charge!")
 			return
 		visible_message(ignition_message)
-		log_game("Cannon fired by [key_name(user)] in [AREACOORD(src)]")
+		user.log_message("fired a cannon", LOG_ATTACK)
+		log_game("[key_name(user)] fired a cannon in [AREACOORD(src)]")
 		addtimer(CALLBACK(src, .proc/fire), fire_delay)
 		charge_ignited = TRUE
 		return
 
-	else if(istype(used_item, /obj/item/reagent_containers))
+	else if(is_reagent_container(used_item))
 		var/obj/item/reagent_containers/powder_keg = used_item
 		if(!(powder_keg.reagent_flags & OPENCONTAINER))
 			return ..()
-		if(istype(powder_keg, /obj/item/reagent_containers/glass/rag))
+		if(istype(powder_keg, /obj/item/reagent_containers/cup/rag))
 			return ..()
 
 		if(!powder_keg.reagents.total_volume)

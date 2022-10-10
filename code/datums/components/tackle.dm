@@ -276,23 +276,23 @@
 	defense_mod -= round(leg_wounds * 0.5)
 
 	if(ishuman(target))
-		var/mob/living/carbon/human/T = target
+		var/mob/living/carbon/human/tackle_target = target
 
-		if(isnull(T.wear_suit) && isnull(T.w_uniform)) // who honestly puts all of their effort into tackling a naked guy?
+		if(isnull(tackle_target.wear_suit) && isnull(tackle_target.w_uniform)) // who honestly puts all of their effort into tackling a naked guy?
 			defense_mod += 2
-		if(T.mob_negates_gravity())
+		if(tackle_target.mob_negates_gravity())
 			defense_mod += 1
-		if(T.is_shove_knockdown_blocked()) // riot armor and such
+		if(tackle_target.is_shove_knockdown_blocked()) // riot armor and such
 			defense_mod += 5
-		if(T.is_holding_item_of_type(/obj/item/shield))
+		if(tackle_target.is_holding_item_of_type(/obj/item/shield))
 			defense_mod += 2
 
-		if(islizard(T))
-			var/obj/item/organ/external/tail/el_tail = T.getorganslot(ORGAN_SLOT_EXTERNAL_TAIL)
-			if(!el_tail) // lizards without tails are off-balance
-				defense_mod -= 1
-			else if(el_tail.wag_flags & WAG_WAGGING) // lizard tail wagging is robust and can swat away assailants!
-				defense_mod += 1
+
+		var/obj/item/organ/external/tail/lizard/el_tail = tackle_target.getorganslot(ORGAN_SLOT_EXTERNAL_TAIL)
+		if(HAS_TRAIT(tackle_target, TRAIT_TACKLING_TAILED_DEFENDER) && !el_tail)
+			defense_mod -= 1
+		if(el_tail && (el_tail.wag_flags & WAG_WAGGING)) // lizard tail wagging is robust and can swat away assailants!
+			defense_mod += 1
 
 	// OF-FENSE
 	var/mob/living/carbon/sacker = parent
@@ -307,6 +307,14 @@
 	if(HAS_TRAIT(sacker, TRAIT_DWARF))
 		attack_mod -= 2
 	if(HAS_TRAIT(sacker, TRAIT_GIANT))
+		attack_mod += 2
+
+	if(HAS_TRAIT(sacker, TRAIT_TACKLING_WINGED_ATTACKER))
+		var/obj/item/organ/external/wings/moth/sacker_moth_wing = sacker.getorganslot(ORGAN_SLOT_EXTERNAL_WINGS)
+		if(!sacker_moth_wing || sacker_moth_wing.burnt)
+			attack_mod -= 2
+	var/obj/item/organ/external/wings/sacker_wing = sacker.getorganslot(ORGAN_SLOT_EXTERNAL_WINGS)
+	if(sacker_wing)
 		attack_mod += 2
 
 	if(ishuman(target))
@@ -365,13 +373,16 @@
 		var/mob/living/carbon/human/S = user
 		var/head_slot = S.get_item_by_slot(ITEM_SLOT_HEAD)
 		var/suit_slot = S.get_item_by_slot(ITEM_SLOT_OCLOTHING)
-		if(head_slot && (istype(head_slot,/obj/item/clothing/head/helmet) || istype(head_slot,/obj/item/clothing/head/hardhat)))
+		if(head_slot && (istype(head_slot,/obj/item/clothing/head/helmet) || istype(head_slot,/obj/item/clothing/head/utility/hardhat)))
 			oopsie_mod -= 6
 		if(suit_slot && (istype(suit_slot,/obj/item/clothing/suit/armor/riot)))
 			oopsie_mod -= 6
 
 	if(HAS_TRAIT(user, TRAIT_CLUMSY))
 		oopsie_mod += 6 //honk!
+
+	if(HAS_TRAIT(user, TRAIT_TACKLING_FRAIL_ATTACKER))
+		oopsie_mod += 6 // flies don't take smacking into a window/wall easily
 
 	var/oopsie = rand(danger_zone, 100)
 	if(oopsie >= 94 && oopsie_mod < 0) // good job avoiding getting paralyzed! gold star!
@@ -425,7 +436,7 @@
 			user.visible_message(span_danger("[user] slams head-first into [hit], suffering major cranial trauma!"), span_userdanger("You slam head-first into [hit], and the world explodes around you!"))
 			user.adjustStaminaLoss(30, updating_health=FALSE)
 			user.adjustBruteLoss(30)
-			user.adjust_timed_status_effect(15 SECONDS, /datum/status_effect/confusion)
+			user.adjust_confusion(15 SECONDS)
 			if(prob(80))
 				user.gain_trauma(/datum/brain_trauma/mild/concussion)
 			user.playsound_local(get_turf(user), 'sound/weapons/flashbang.ogg', 100, TRUE, 8)
@@ -437,7 +448,7 @@
 			user.visible_message(span_danger("[user] slams hard into [hit], knocking [user.p_them()] senseless!"), span_userdanger("You slam hard into [hit], knocking yourself senseless!"))
 			user.adjustStaminaLoss(30, updating_health=FALSE)
 			user.adjustBruteLoss(10)
-			user.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/confusion)
+			user.adjust_confusion(10 SECONDS)
 			user.Knockdown(30)
 			shake_camera(user, 3, 4)
 

@@ -89,7 +89,7 @@
 			inhand.rider = riding_target_override
 		inhand.parent = AM
 		for(var/obj/item/I in user.held_items) // delete any hand items like slappers that could still totally be used to grab on
-			if((I.obj_flags & HAND_ITEM))
+			if((I.item_flags & HAND_ITEM))
 				qdel(I)
 
 		// this would be put_in_hands() if it didn't have the chance to sleep, since this proc gets called from a signal handler that relies on what this returns
@@ -163,7 +163,7 @@
 
 /obj/item/riding_offhand
 	name = "offhand"
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "offhand"
 	w_class = WEIGHT_CLASS_HUGE
 	item_flags = ABSTRACT | DROPDEL | NOBLUDGEON

@@ -42,6 +42,7 @@
  */
 /datum/security_level/green
 	name = "green"
+	sound = 'sound/misc/notice2.ogg' // Friendly beep
 	number_level = SEC_LEVEL_GREEN
 	lowering_to_configuration_key = /datum/config_entry/string/alert_green
 	shuttle_call_time_mod = 2
@@ -53,6 +54,7 @@
  */
 /datum/security_level/blue
 	name = "blue"
+	sound = 'sound/misc/notice1.ogg' // Angry alarm
 	number_level = SEC_LEVEL_BLUE
 	lowering_to_configuration_key = /datum/config_entry/string/alert_blue_downto
 	elevating_to_configuration_key = /datum/config_entry/string/alert_blue_upto
@@ -65,6 +67,7 @@
  */
 /datum/security_level/red
 	name = "red"
+	sound = 'sound/misc/notice1.ogg' // The same angry alarm
 	number_level = SEC_LEVEL_RED
 	lowering_to_configuration_key = /datum/config_entry/string/alert_red_downto
 	elevating_to_configuration_key = /datum/config_entry/string/alert_red_upto
@@ -77,6 +80,7 @@
  */
 /datum/security_level/delta
 	name = "delta"
+	sound = 'sound/misc/notice1.ogg' // The same angry alarm, again
 	number_level = SEC_LEVEL_DELTA
 	elevating_to_configuration_key = /datum/config_entry/string/alert_delta
 	shuttle_call_time_mod = 0.25

@@ -6,7 +6,7 @@
 	density = FALSE
 	anchored = TRUE
 	var/obj/item/spear/spear
-	var/obj/item/spear/speartype
+	var/obj/item/spear/speartype = /obj/item/spear
 	var/obj/item/bodypart/head/victim
 
 /obj/structure/headpike/bone //for bone spears

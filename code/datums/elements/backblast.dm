@@ -64,7 +64,7 @@
 /// For firing an actual backblast pellet
 /datum/element/backblast/proc/pew(turf/target_turf, obj/item/gun/weapon, mob/living/user)
 	//Shooting Code:
-	var/obj/projectile/bullet/incendiary/backblast/P = new (get_turf(user))
+	var/obj/projectile/bullet/incendiary/fire/backblast/P = new (get_turf(user))
 	P.original = target_turf
 	P.range = range
 	P.fired_from = weapon

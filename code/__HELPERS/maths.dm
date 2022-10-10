@@ -143,3 +143,15 @@
 			return "centuple"
 		else //It gets too tedious to use latin prefixes from here.
 			return "[number]-tuple"
+
+/// Takes a value, and a threshold it has to at least match
+/// returns the correctly signed value max'd to the threshold
+/proc/at_least(new_value, threshold)
+	var/sign = SIGN(new_value)
+	// SIGN will return 0 if the value is 0, so we just go to the positive threshold
+	if(!sign)
+		return threshold
+	if(sign == 1)
+		return max(new_value, threshold)
+	if(sign == -1)
+		return min(new_value, threshold * -1)

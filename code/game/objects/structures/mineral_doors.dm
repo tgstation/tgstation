@@ -76,13 +76,11 @@
 	if(isSwitchingStates || !anchored)
 		return
 	if(isliving(user))
-		var/mob/living/M = user
-		if(world.time - M.last_bumped <= 60)
-			return //NOTE do we really need that?
-		if(M.client)
-			if(iscarbon(M))
-				var/mob/living/carbon/C = M
-				if(!C.handcuffed)
+		var/mob/living/matters = user
+		if(matters.client)
+			if(iscarbon(matters))
+				var/mob/living/carbon/carbon_user = matters
+				if(!carbon_user.handcuffed)
 					SwitchState()
 			else
 				SwitchState()
@@ -233,9 +231,6 @@
 	max_integrity = 300
 	light_range = 2
 
-/obj/structure/mineral_door/uranium/ComponentInitialize()
-	return
-
 /obj/structure/mineral_door/sandstone
 	name = "sandstone door"
 	icon_state = "sandstone"
@@ -331,9 +326,6 @@
 			return TRUE
 
 	return ..()
-
-/obj/structure/mineral_door/paperframe/ComponentInitialize()
-	return
 
 /obj/structure/mineral_door/paperframe/Destroy()
 	if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))

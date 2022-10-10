@@ -115,7 +115,7 @@
 		var/turf/T = get_step(src,adir)
 		if(!T)
 			continue
-		if(istype(T, /turf/closed))
+		if(isclosedturf(T))
 			continue
 		target = T
 		break

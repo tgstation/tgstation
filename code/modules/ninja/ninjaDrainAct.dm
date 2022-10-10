@@ -169,16 +169,13 @@
 		return NONE
 	if(hacking_module.communication_console_hack_success)
 		return NONE
-	if(machine_stat & (NOPOWER|BROKEN))
-		return NONE
-	AI_notify_hack()
 	INVOKE_ASYNC(src, .proc/ninjadrain_charge, ninja, hacking_module)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/computer/communications/proc/ninjadrain_charge(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
-	if(!do_after(ninja, 30 SECONDS, src))
+	if(!try_hack_console(ninja))
 		return
-	hack_console(ninja)
+
 	hacking_module.communication_console_hack_success = TRUE
 	var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
 	if(!ninja_antag)

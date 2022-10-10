@@ -9,7 +9,7 @@
   "scripts": {
     "tgui:analyze": "webpack --analyze",
     "tgui:bench": "webpack --env TGUI_BENCH=1 && node packages/tgui-bench/index.js",
-    "tgui:build": "webpack",
+    "tgui:build": "BROWSERSLIST_IGNORE_OLD_DATA=true webpack",
     "tgui:dev": "node --experimental-modules packages/tgui-dev-server/index.js",
     "tgui:lint": "eslint packages --ext .js,.cjs,.ts,.tsx",
     "tgui:prettier": "prettierx --check .",

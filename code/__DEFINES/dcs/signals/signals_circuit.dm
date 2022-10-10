@@ -62,5 +62,13 @@
 /// Called when the circuit component is saved.
 #define COMSIG_CIRCUIT_COMPONENT_SAVE "circuit_component_save"
 
+/// Called when circuit component data should be saved
+#define COMSIG_CIRCUIT_COMPONENT_SAVE_DATA "circuit_component_save_data"
+/// Called when circuit component data should be loaded
+#define COMSIG_CIRCUIT_COMPONENT_LOAD_DATA "circuit_component_load_data"
+
 /// Called when an external object is loaded.
 #define COMSIG_MOVABLE_CIRCUIT_LOADED "movable_circuit_loaded"
+
+/// Called when a ui action is sent for the circuit component
+#define COMSIG_CIRCUIT_COMPONENT_PERFORM_ACTION "circuit_component_perform_action"

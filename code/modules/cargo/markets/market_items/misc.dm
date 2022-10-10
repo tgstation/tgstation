@@ -44,7 +44,7 @@
 /datum/market_item/misc/holywater
 	name = "Flask of holy water"
 	desc = "Father Lootius' own brand of ready-made holy water."
-	item = /obj/item/reagent_containers/food/drinks/bottle/holywater
+	item = /obj/item/reagent_containers/cup/glass/bottle/holywater
 
 	price_min = CARGO_CRATE_VALUE * 2
 	price_max = CARGO_CRATE_VALUE * 3
@@ -53,7 +53,7 @@
 
 /datum/market_item/misc/holywater/spawn_item(loc)
 	if (prob(6.66))
-		return new /obj/item/reagent_containers/glass/beaker/unholywater(loc)
+		return new /obj/item/reagent_containers/cup/beaker/unholywater(loc)
 	return ..()
 
 /datum/market_item/misc/strange_seed

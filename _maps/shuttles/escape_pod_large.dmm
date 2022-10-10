@@ -72,7 +72,7 @@
 /turf/template_noop,
 /area/template_noop)
 "Z" = (
-/obj/structure/shuttle/engine/propulsion/burst,
+/obj/machinery/power/shuttle_engine/propulsion/burst,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/pod_1)
 

@@ -14,7 +14,7 @@
 /datum/element/venomous/Attach(datum/target, poison_type, amount_added)
 	. = ..()
 
-	if(isgun(target))
+	if(ismachinery(target) || isstructure(target) || isgun(target) || isprojectilespell(target))
 		RegisterSignal(target, COMSIG_PROJECTILE_ON_HIT, .proc/projectile_hit)
 	else if(isitem(target))
 		RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, .proc/item_afterattack)

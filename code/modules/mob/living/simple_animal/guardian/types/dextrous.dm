@@ -43,7 +43,7 @@
 //SLOT HANDLING BULLSHIT FOR INTERNAL STORAGE
 /mob/living/simple_animal/hostile/guardian/dextrous/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE, silent = FALSE)
 	if(..())
-		update_inv_hands()
+		update_held_items()
 		if(I == internal_storage)
 			internal_storage = null
 			update_inv_internal_storage()
@@ -57,6 +57,16 @@
 				return FALSE
 			return TRUE
 	..()
+
+/mob/living/simple_animal/hostile/guardian/dextrous/get_item_by_slot(slot_id)
+	if(slot_id == ITEM_SLOT_DEX_STORAGE)
+		return internal_storage
+	return ..()
+
+/mob/living/simple_animal/hostile/guardian/dextrous/get_slot_by_item(obj/item/looking_for)
+	if(internal_storage == looking_for)
+		return ITEM_SLOT_DEX_STORAGE
+	return ..()
 
 /mob/living/simple_animal/hostile/guardian/dextrous/equip_to_slot(obj/item/I, slot)
 	if(!..())

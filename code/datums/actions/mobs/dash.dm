@@ -8,11 +8,9 @@
 	var/dash_range = 4
 	/// The distance you will be from the target after you dash
 	var/pick_range = 5
-	/// The pick range if a client is using this ability
-	var/client_pick_range = 0
 
 /datum/action/cooldown/mob_cooldown/dash/Activate(atom/target_atom)
-	StartCooldown(10 SECONDS)
+	StartCooldown(360 SECONDS, 360 SECONDS)
 	dash_to(target_atom)
 	StartCooldown()
 

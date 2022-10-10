@@ -70,14 +70,11 @@
 	if(requires_tech)
 		. = FALSE
 
-	if(iscyborg(user))
-		var/mob/living/silicon/robot/robo_surgeon = user
-		var/obj/item/surgical_processor/surgical_processor = locate() in robo_surgeon.model.modules
-		if(surgical_processor) //no early return for !surgical_processor since we want to check optable should this not exist.
-			if(replaced_by in surgical_processor.advanced_surgeries)
-				return FALSE
-			if(type in surgical_processor.advanced_surgeries)
-				return TRUE
+	var/surgery_signal = SEND_SIGNAL(user, COMSIG_SURGERY_STARTING, src, patient)
+	if(surgery_signal & COMPONENT_FORCE_SURGERY)
+		return TRUE
+	if(surgery_signal & COMPONENT_CANCEL_SURGERY)
+		return FALSE
 
 	var/turf/patient_turf = get_turf(patient)
 
@@ -92,6 +89,8 @@
 
 /datum/surgery/proc/next_step(mob/living/user, modifiers)
 	if(location != user.zone_selected)
+		return FALSE
+	if(user.combat_mode)
 		return FALSE
 	if(step_in_progress)
 		return TRUE

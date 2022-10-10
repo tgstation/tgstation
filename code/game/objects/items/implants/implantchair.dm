@@ -93,7 +93,7 @@
 		if(P.implant(M))
 			visible_message(span_warning("[M] is implanted by [src]."))
 			return TRUE
-	else if(istype(I, /obj/item/organ))
+	else if(isorgan(I))
 		var/obj/item/organ/P = I
 		P.Insert(M, FALSE, FALSE)
 		visible_message(span_warning("[M] is implanted by [src]."))
@@ -195,7 +195,7 @@
 			return FALSE
 		objective = tgui_input_text(user, "What order do you want to imprint on [C]?", "Brainwashing", max_length = 120)
 		message_admins("[ADMIN_LOOKUPFLW(user)] set brainwash machine objective to '[objective]'.")
-		log_game("[key_name(user)] set brainwash machine objective to '[objective]'.")
+		user.log_message("set brainwash machine objective to '[objective]'.", LOG_GAME)
 	if(HAS_TRAIT(C, TRAIT_MINDSHIELD))
 		return FALSE
 	brainwash(C, objective)

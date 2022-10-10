@@ -174,12 +174,12 @@
 		mod.visible_message(span_warning("[mod.wearer] leaps out of the timeline!"))
 		mod.wearer.SetAllImmobility(0)
 		mod.wearer.setStaminaLoss(0, 0)
-		phased_mob = new(get_turf(mod.wearer.loc))
-		mod.wearer.forceMove(phased_mob)
+		phased_mob = new(get_turf(mod.wearer.loc), mod.wearer)
 		RegisterSignal(mod, COMSIG_MOD_ACTIVATE, .proc/on_activate_block)
 	else
 		//phasing in
-		QDEL_NULL(phased_mob)
+		phased_mob.eject_jaunter()
+		phased_mob = null
 		UnregisterSignal(mod, COMSIG_MOD_ACTIVATE)
 		mod.visible_message(span_warning("[mod.wearer] drops into the timeline!"))
 

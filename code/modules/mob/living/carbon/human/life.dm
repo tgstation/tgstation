@@ -73,9 +73,9 @@
 
 /mob/living/carbon/human/handle_traits(delta_time, times_fired)
 	if (getOrganLoss(ORGAN_SLOT_BRAIN) >= 60)
-		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "brain_damage", /datum/mood_event/brain_damage)
+		add_mood_event("brain_damage", /datum/mood_event/brain_damage)
 	else
-		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "brain_damage")
+		clear_mood_event("brain_damage")
 	return ..()
 
 /mob/living/carbon/human/breathe()

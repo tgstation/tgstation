@@ -3,7 +3,7 @@
  */
 /obj/item/light_eater
 	name = "light eater" //as opposed to heavy eater
-	icon = 'icons/obj/changeling_items.dmi'
+	icon = 'icons/obj/weapons/changeling_items.dmi'
 	icon_state = "arm_blade"
 	inhand_icon_state = "arm_blade"
 	force = 25
@@ -21,5 +21,8 @@
 /obj/item/light_eater/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
-	AddComponent(/datum/component/butchering, 80, 70)
+	AddComponent(/datum/component/butchering, \
+	speed = 8 SECONDS, \
+	effectiveness = 70, \
+	)
 	AddComponent(/datum/component/light_eater)

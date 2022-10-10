@@ -90,7 +90,7 @@
 /obj/item/broken_missile
 	name = "\improper broken missile"
 	desc = "A missile that did not detonate. The tail has snapped and it is in no way fit to be used again."
-	icon = 'icons/obj/guns/projectiles.dmi'
+	icon = 'icons/obj/weapons/guns/projectiles.dmi'
 	icon_state = "missile_broken"
 	w_class = WEIGHT_CLASS_TINY
 
@@ -101,5 +101,5 @@
 		if(istype(target, i))
 			explosion(target, heavy_impact_range = 1, light_impact_range = 1, flash_range = 2, explosion_cause = src)
 			return BULLET_ACT_HIT
-	//if(istype(target, /turf/closed) || ismecha(target))
+	//if(isclosedturf(target) || ismecha(target))
 	new /obj/item/broken_missile(get_turf(src), 1)

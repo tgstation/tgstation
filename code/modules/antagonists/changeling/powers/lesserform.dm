@@ -20,6 +20,15 @@
 	var/datum/action/changeling/humanform/from_monkey/human_form_ability = new()
 	changeling.purchased_powers += human_form_ability
 	changeling.purchased_powers -= src
+	
+	// Drops all flesh disguise items after monkeyizing, because they don't drop automatically like real clothing.
+	for(var/slot in changeling.slot2type)
+		if(istype(user.vars[slot], changeling.slot2type[slot]))
+			qdel(user.vars[slot])
+	for(var/datum/scar/iter_scar as anything in user.all_scars)
+		if(iter_scar.fake)
+			qdel(iter_scar)
+	user.regenerate_icons()
 
 	Remove(user)
 	human_form_ability.Grant(user)

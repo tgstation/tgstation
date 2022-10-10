@@ -5,7 +5,7 @@
 	var/frequency = FREQ_ATMOS_STORAGE
 	var/datum/radio_frequency/radio_connection
 
-/obj/machinery/meter/monitored/Initialize()
+/obj/machinery/meter/monitored/Initialize(mapload)
 	id_tag = chamber_id + "_sensor"
 	radio_connection = SSradio.add_object(src, frequency, RADIO_ATMOSIA)
 	return ..()
@@ -31,7 +31,7 @@
 	. = ..()
 	if(!radio_connection)
 		return
-	
+
 	var/datum/signal/signal = new(list(
 		"tag" = id_tag,
 		"device" = "AM",

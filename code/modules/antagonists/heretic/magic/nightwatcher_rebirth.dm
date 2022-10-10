@@ -1,38 +1,53 @@
-/obj/effect/proc_holder/spell/targeted/fiery_rebirth
+/datum/action/cooldown/spell/aoe/fiery_rebirth
 	name = "Nightwatcher's Rebirth"
 	desc = "A spell that extinguishes you drains nearby heathens engulfed in flames of their life force, \
-		healing you for each victim drained. Those in critical condition will have the last of their vitality drained, killing them."
+		healing you for each victim drained. Those in critical condition \
+		will have the last of their vitality drained, killing them."
+	background_icon_state = "bg_ecult"
+	icon_icon = 'icons/mob/actions/actions_ecult.dmi'
+	button_icon_state = "smoke"
+
+	school = SCHOOL_FORBIDDEN
+	cooldown_time = 1 MINUTES
+
 	invocation = "GL'RY T' TH' N'GHT'W'TCH'ER"
 	invocation_type = INVOCATION_WHISPER
-	school = SCHOOL_FORBIDDEN
-	clothes_req = FALSE
-	action_background_icon_state = "bg_ecult"
-	range = -1
-	include_user = TRUE
-	charge_max = 600
-	action_icon = 'icons/mob/actions/actions_ecult.dmi'
-	action_icon_state = "smoke"
+	spell_requirements = SPELL_REQUIRES_HUMAN
 
-/obj/effect/proc_holder/spell/targeted/fiery_rebirth/cast(list/targets, mob/user)
-	if(!ishuman(user))
-		return
-	var/mob/living/carbon/human/human_user = user
-	human_user.extinguish_mob()
+/datum/action/cooldown/spell/aoe/fiery_rebirth/cast(mob/living/carbon/human/cast_on)
+	cast_on.extinguish_mob()
+	return ..()
 
-	for(var/mob/living/carbon/target in view(7, user))
-		if(!target.mind || !target.client || target.stat == DEAD || !target.on_fire || IS_HERETIC_OR_MONSTER(target))
+/datum/action/cooldown/spell/aoe/fiery_rebirth/get_things_to_cast_on(atom/center)
+	var/list/things = list()
+	for(var/mob/living/carbon/nearby_mob in range(aoe_radius, center))
+		if(nearby_mob == owner || nearby_mob == center)
 			continue
-		//This is essentially a death mark, use this to finish your opponent quicker.
-		if(HAS_TRAIT(target, TRAIT_CRITICAL_CONDITION) && !HAS_TRAIT(target, TRAIT_NODEATH))
-			target.death()
+		if(!nearby_mob.mind || !nearby_mob.client)
+			continue
+		if(IS_HERETIC_OR_MONSTER(nearby_mob))
+			continue
+		if(nearby_mob.stat == DEAD || !nearby_mob.on_fire)
+			continue
 
-		target.adjustFireLoss(20)
-		new /obj/effect/temp_visual/eldritch_smoke(target.drop_location())
-		human_user.adjustBruteLoss(-10, FALSE)
-		human_user.adjustFireLoss(-10, FALSE)
-		human_user.adjustToxLoss(-10, FALSE)
-		human_user.adjustOxyLoss(-10, FALSE)
-		human_user.adjustStaminaLoss(-10)
+		things += nearby_mob
+
+	return things
+
+/datum/action/cooldown/spell/aoe/fiery_rebirth/cast_on_thing_in_aoe(mob/living/carbon/victim, mob/living/carbon/human/caster)
+	new /obj/effect/temp_visual/eldritch_smoke(victim.drop_location())
+
+	//This is essentially a death mark, use this to finish your opponent quicker.
+	if(HAS_TRAIT(victim, TRAIT_CRITICAL_CONDITION) && !HAS_TRAIT(victim, TRAIT_NODEATH))
+		victim.death()
+	victim.apply_damage(20, BURN)
+
+	// Heal the caster for every victim damaged
+	caster.adjustBruteLoss(-10, FALSE)
+	caster.adjustFireLoss(-10, FALSE)
+	caster.adjustToxLoss(-10, FALSE)
+	caster.adjustOxyLoss(-10, FALSE)
+	caster.adjustStaminaLoss(-10)
 
 /obj/effect/temp_visual/eldritch_smoke
 	icon = 'icons/effects/eldritch.dmi'

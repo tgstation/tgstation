@@ -11,14 +11,14 @@ import { Modal } from '../types';
 export const handleRadioPrefix = function (this: Modal) {
   const { channel } = this.state;
   const { radioPrefix, value } = this.fields;
-  if (channel > 1 || value.length < 3) {
+  if (channel > 1 || !value || value.length < 3) {
     return;
   }
-  const nextPrefix = value.slice(0, 3)?.toLowerCase();
+  const nextPrefix = value?.slice(0, 3)?.toLowerCase();
   if (!RADIO_PREFIXES[nextPrefix] || radioPrefix === nextPrefix) {
     return;
   }
-  this.fields.value = value.slice(3);
+  this.fields.value = value?.slice(3);
   // Binary is a "secret" channel
   if (nextPrefix === ':b ') {
     Byond.sendMessage('thinking', { mode: false });

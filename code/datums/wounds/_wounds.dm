@@ -232,12 +232,12 @@
 	RegisterSignal(new_value, COMSIG_PARENT_QDELETING, .proc/source_died)
 	if(. && disabling)
 		var/obj/item/bodypart/old_limb = .
-		REMOVE_TRAIT(old_limb, TRAIT_PARALYSIS, src)
-		REMOVE_TRAIT(old_limb, TRAIT_DISABLED_BY_WOUND, src)
+		REMOVE_TRAIT(old_limb, TRAIT_PARALYSIS, REF(src))
+		REMOVE_TRAIT(old_limb, TRAIT_DISABLED_BY_WOUND, REF(src))
 	if(limb)
 		if(disabling)
-			ADD_TRAIT(limb, TRAIT_PARALYSIS, src)
-			ADD_TRAIT(limb, TRAIT_DISABLED_BY_WOUND, src)
+			ADD_TRAIT(limb, TRAIT_PARALYSIS, REF(src))
+			ADD_TRAIT(limb, TRAIT_DISABLED_BY_WOUND, REF(src))
 
 
 /// Proc called to change the variable `disabling` and react to the event.
@@ -248,11 +248,11 @@
 	disabling = new_value
 	if(disabling)
 		if(!. && limb) //Gained disabling.
-			ADD_TRAIT(limb, TRAIT_PARALYSIS, src)
-			ADD_TRAIT(limb, TRAIT_DISABLED_BY_WOUND, src)
+			ADD_TRAIT(limb, TRAIT_PARALYSIS, REF(src))
+			ADD_TRAIT(limb, TRAIT_DISABLED_BY_WOUND, REF(src))
 	else if(. && limb) //Lost disabling.
-		REMOVE_TRAIT(limb, TRAIT_PARALYSIS, src)
-		REMOVE_TRAIT(limb, TRAIT_DISABLED_BY_WOUND, src)
+		REMOVE_TRAIT(limb, TRAIT_PARALYSIS, REF(src))
+		REMOVE_TRAIT(limb, TRAIT_DISABLED_BY_WOUND, REF(src))
 	if(limb?.can_be_disabled)
 		limb.update_disabled()
 

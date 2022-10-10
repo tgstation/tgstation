@@ -35,8 +35,6 @@
 	var/job_changes = list()
 	/// List of additional areas that count as a part of the library
 	var/library_areas = list()
-	/// What message shows up when the orbit is shifted.
-	var/orbit_shift_replacement = "Attention crew, it appears that someone on your station has shifted your orbit into more dangerous territory."
 
 /**
  * Proc that simply loads the default map config, which should always be functional.
@@ -167,9 +165,6 @@
 	else if (!isnull(temp))
 		log_world("map_config space_empty_levels is not a number!")
 		return
-
-	if("orbit_shift_replacement" in json)
-		orbit_shift_replacement = json["orbit_shift_replacement"]
 
 	if ("minetype" in json)
 		minetype = json["minetype"]

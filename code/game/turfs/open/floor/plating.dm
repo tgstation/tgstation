@@ -81,6 +81,7 @@
 			icon_state = base_icon_state
 			burnt = FALSE
 			broken = FALSE
+			update_appearance()
 
 
 /turf/open/floor/plating/welder_act(mob/living/user, obj/item/I)
@@ -90,6 +91,7 @@
 		icon_state = base_icon_state
 		burnt = FALSE
 		broken = FALSE
+		update_appearance()
 
 	return TRUE
 

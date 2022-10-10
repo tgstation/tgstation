@@ -23,10 +23,9 @@
 	var/datum/radial_menu/persistent/wiring_gui_menu
 	var/mob/listeningTo
 
-
-/obj/item/rcl/ComponentInitialize()
+/obj/item/rcl/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob)
+	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HANDS)
 	AddComponent(/datum/component/two_handed, wield_callback = CALLBACK(src, .proc/on_wield), unwield_callback = CALLBACK(src, .proc/on_unwield))
 
 /// triggered on wield of two handed item
@@ -206,7 +205,7 @@
 					return //If we've run out, display message and exit
 			else
 				last = null
-		loaded.color = GLOB.pipe_cleaner_colors[colors[current_color_index]]
+		loaded.color = GLOB.cable_colors[colors[current_color_index]]
 		loaded.update_appearance()
 		last = loaded.place_turf(get_turf(src), user, turn(user.dir, 180))
 		is_empty(user) //If we've run out, display message
@@ -226,7 +225,7 @@
 	for(var/obj/structure/pipe_cleaner/C in T)
 		if(!C)
 			continue
-		if(C.color != GLOB.pipe_cleaner_colors[colors[current_color_index]])
+		if(C.color != GLOB.cable_colors[colors[current_color_index]])
 			continue
 		if(C.d1 == 0)
 			return C
@@ -244,7 +243,7 @@
 		if(fromdir == dirnum) //pipe_cleaners can't loop back on themselves
 			pipe_cleanersuffix = "invalid"
 		var/image/img = image(icon = 'icons/hud/radial.dmi', icon_state = "cable_[pipe_cleanersuffix]")
-		img.color = GLOB.pipe_cleaner_colors[colors[current_color_index]]
+		img.color = GLOB.cable_colors[colors[current_color_index]]
 		wiredirs[icondir] = img
 	return wiredirs
 
@@ -279,7 +278,7 @@
 	if(!T.can_have_cabling())
 		return
 
-	loaded.color = GLOB.pipe_cleaner_colors[colors[current_color_index]]
+	loaded.color = GLOB.cable_colors[colors[current_color_index]]
 	loaded.update_appearance()
 
 	var/obj/structure/pipe_cleaner/linkingCable = findLinkingCable(user)
@@ -313,7 +312,7 @@
 		var/cwname = colors[current_color_index]
 		to_chat(user, "Color changed to [cwname]!")
 		if(loaded)
-			loaded.color = GLOB.pipe_cleaner_colors[colors[current_color_index]]
+			loaded.color = GLOB.cable_colors[colors[current_color_index]]
 			loaded.update_appearance()
 		if(wiring_gui_menu)
 			wiringGuiUpdate(user)
@@ -342,3 +341,13 @@
 			icon_state = "rclg-1"
 			inhand_icon_state = "rclg-1"
 	return ..()
+
+/datum/action/item_action/rcl_col
+	name = "Change Cable Color"
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon_state = "rcl_rainbow"
+
+/datum/action/item_action/rcl_gui
+	name = "Toggle Fast Wiring Gui"
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon_state = "rcl_gui"

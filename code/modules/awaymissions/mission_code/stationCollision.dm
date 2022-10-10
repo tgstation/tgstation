@@ -29,8 +29,8 @@
 	B.deity_name = "Narsie"
 	B.icon_state = "melted"
 	B.inhand_icon_state = "melted"
-	B.lefthand_file = 'icons/mob/inhands/misc/books_lefthand.dmi'
-	B.righthand_file = 'icons/mob/inhands/misc/books_righthand.dmi'
+	B.lefthand_file = 'icons/mob/inhands/items/books_lefthand.dmi'
+	B.righthand_file = 'icons/mob/inhands/items/books_righthand.dmi'
 	new /obj/item/paper/fluff/awaymissions/stationcollision/safehint_paper_bible(B)
 	new /obj/item/pen(B)
 	return INITIALIZE_HINT_QDEL
@@ -85,32 +85,32 @@ GLOBAL_VAR_INIT(sc_safecode5, "[rand(0,9)]")
 	name = "smudged paper"
 
 /obj/item/paper/fluff/awaymissions/stationcollision/safehint_paper_prison/Initialize(mapload)
-	. = ..()
-	info = "<i>The ink is smudged, you can only make out a couple numbers:</i> '[GLOB.sc_safecode1]**[GLOB.sc_safecode4]*'"
+	default_raw_text = "<i>The ink is smudged, you can only make out a couple numbers:</i> '[GLOB.sc_safecode1]**[GLOB.sc_safecode4]*'"
+	return ..()
 
 /obj/item/paper/fluff/awaymissions/stationcollision/safehint_paper_hydro
 	name = "shredded paper"
 
 /obj/item/paper/fluff/awaymissions/stationcollision/safehint_paper_hydro/Initialize(mapload)
-	. = ..()
-	info = "<i>Although the paper is shredded, you can clearly see the number:</i> '[GLOB.sc_safecode2]'"
+	default_raw_text = "<i>Although the paper is shredded, you can clearly see the number:</i> '[GLOB.sc_safecode2]'"
+	return ..()
 
 /obj/item/paper/fluff/awaymissions/stationcollision/safehint_paper_caf
 	name = "blood-soaked paper"
 	//This does not have to be in New() because it is a constant. There are no variables in it i.e. [sc_safcode]
-	info = "<font color=red><i>This paper is soaked in blood, it is impossible to read any text.</i></font>"
+	default_raw_text = "<font color=red><i>This paper is soaked in blood, it is impossible to read any text.</i></font>"
 
 /obj/item/paper/fluff/awaymissions/stationcollision/safehint_paper_bible
 	name = "hidden paper"
 
 /obj/item/paper/fluff/awaymissions/stationcollision/safehint_paper_bible/Initialize(mapload)
-	. = ..()
-	info = {"<i>It would appear that the pen hidden with the paper had leaked ink over the paper.
+	default_raw_text = {"<i>It would appear that the pen hidden with the paper had leaked ink over the paper.
 			However you can make out the last three digits:</i>'[GLOB.sc_safecode3][GLOB.sc_safecode4][GLOB.sc_safecode5]'
 			"}
+	return ..()
 
 /obj/item/paper/fluff/awaymissions/stationcollision/safehint_paper_shuttle
-	info = {"<b>Target:</b> Research-station Epsilon<br>
+	default_raw_text = {"<b>Target:</b> Research-station Epsilon<br>
 			<b>Objective:</b> Prototype weaponry. The captain likely keeps them locked in her safe.<br>
 			<br>
 			Our on-board spy has learned the code and has hidden away a few copies of the code around the station. Unfortunately he has been captured by security

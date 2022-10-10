@@ -190,7 +190,7 @@ const StorageButtons = (props, context) => {
   );
 };
 
-const StorageChromosomes = (_, context) => {
+const StorageChromosomes = (props, context) => {
   const { data, act } = useBackend(context);
   const chromos = data.chromoStorage ?? [];
   const uniqueChromos = uniqBy((chromo) => chromo.Name)(chromos);

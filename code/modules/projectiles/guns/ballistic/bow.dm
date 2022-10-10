@@ -2,7 +2,7 @@
 /obj/item/gun/ballistic/bow
 	name = "longbow"
 	desc = "While pretty finely crafted, surely you can find something better to use in the current year."
-	icon = 'icons/obj/guns/ballistic.dmi'
+	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "bow"
 	inhand_icon_state = "bow"
 	load_sound = null
@@ -68,6 +68,7 @@
 	name = "arrow"
 	desc = "Stabby Stabman!"
 	icon_state = "arrow"
+	inhand_icon_state = "arrow"
 	flags_1 = NONE
 	throwforce = 1
 	projectile_type = /obj/projectile/bullet/reusable/arrow
@@ -97,17 +98,16 @@
 	name = "quiver"
 	desc = "Holds arrows for your bow. Good, because while pocketing arrows is possible, it surely can't be pleasant."
 	icon_state = "quiver"
-	inhand_icon_state = "quiver"
+	inhand_icon_state = null
 	worn_icon_state = "harpoon_quiver"
 	var/arrow_path = /obj/item/ammo_casing/caseless/arrow
 
 /obj/item/storage/bag/quiver/Initialize(mapload)
 	. = ..()
-	var/datum/component/storage/storage = GetComponent(/datum/component/storage)
-	storage.max_w_class = WEIGHT_CLASS_TINY
-	storage.max_items = 40
-	storage.max_combined_w_class = 100
-	storage.set_holdable(list(
+	atom_storage.max_specific_storage = WEIGHT_CLASS_TINY
+	atom_storage.max_slots = 40
+	atom_storage.max_total_storage = 100
+	atom_storage.set_holdable(list(
 		/obj/item/ammo_casing/caseless/arrow
 		))
 

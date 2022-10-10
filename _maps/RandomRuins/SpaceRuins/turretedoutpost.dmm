@@ -144,7 +144,7 @@
 /area/ruin/space/has_grav/turretedoutpost)
 "aB" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/head/ushanka,
+/obj/item/clothing/head/costume/ushanka,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 4
@@ -266,11 +266,11 @@
 /area/ruin/space/has_grav/turretedoutpost)
 "aV" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/bottle/vodka{
+/obj/item/reagent_containers/cup/glass/bottle/vodka{
 	pixel_x = -4;
 	pixel_y = 4
 	},
-/obj/item/reagent_containers/food/drinks/bottle/vodka/badminka{
+/obj/item/reagent_containers/cup/glass/bottle/vodka/badminka{
 	pixel_x = 3
 	},
 /turf/open/floor/iron,

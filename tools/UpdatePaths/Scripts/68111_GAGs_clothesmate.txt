@@ -1,0 +1,11 @@
+#comment This replaces various clothing items with GAGs version https://github.com/tgstation/tgstation/pull/68111
+
+/obj/item/clothing/head/beanie/rasta : /obj/item/clothing/head/rasta{@OLD}
+/obj/item/clothing/head/beanie/waldo : /obj/item/clothing/head/waldo{@OLD}
+/obj/item/clothing/neck/stripedbluescarf : /obj/item/clothing/neck/large_scarf/blue{@OLD}
+/obj/item/clothing/neck/stripedgreenscarf : /obj/item/clothing/neck/large_scarf/green{@OLD}
+/obj/item/clothing/neck/stripedredscarf : /obj/item/clothing/neck/large_scarf/red{@OLD}
+/obj/item/clothing/head/beanie/stripedred : /obj/item/clothing/head/beanie/red{@OLD}
+/obj/item/clothing/under/pants/youngfolksjeans : /obj/item/clothing/under/pants/jeans{@OLD}
+/obj/item/clothing/under/pants/classicjeans : /obj/item/clothing/under/pants/jeans{@OLD}
+/obj/item/clothing/under/dress/blacktango : /obj/item/clothing/under/dress/tango{@OLD}

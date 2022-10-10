@@ -63,13 +63,13 @@
 
 	return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 
-/datum/component/stationloving/proc/check_soul_imbue()
+/datum/component/stationloving/proc/check_soul_imbue(datum/source)
 	SIGNAL_HANDLER
 
 	if(disallow_soul_imbue)
 		return COMPONENT_BLOCK_IMBUE
 
-/datum/component/stationloving/proc/check_mark_retrieval()
+/datum/component/stationloving/proc/check_mark_retrieval(datum/source)
 	SIGNAL_HANDLER
 
 	return COMPONENT_BLOCK_MARK_RETRIEVAL

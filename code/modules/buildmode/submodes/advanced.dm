@@ -36,7 +36,7 @@
 	var/alt_click = LAZYACCESS(modifiers, ALT_CLICK)
 
 	if(left_click && alt_click)
-		if (istype(object, /turf) || istype(object, /obj) || istype(object, /mob))
+		if (istype(object, /turf) || isobj(object) || istype(object, /mob))
 			objholder = object.type
 			to_chat(c, span_notice("[initial(object.name)] ([object.type]) selected."))
 		else

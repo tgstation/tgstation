@@ -4,8 +4,8 @@
 	icon = 'icons/obj/clothing/modsuit/mod_construction.dmi'
 	icon_state = "mod-core"
 	inhand_icon_state = "electronic"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	/// MOD unit we are powering.
 	var/obj/item/mod/control/mod
 
@@ -283,13 +283,13 @@
 	name = "MOD plasma core"
 	icon_state = "mod-core-plasma"
 	desc = "Nanotrasen's attempt at capitalizing on their plasma research. These plasma cores are refueled \
-		through plasma ore, allowing for easy continued use by their mining squads."
+		through plasma fuel, allowing for easy continued use by their mining squads."
 	/// How much charge we can store.
 	var/maxcharge = 10000
 	/// How much charge we are currently storing.
 	var/charge = 10000
-	/// Charge per plasma ore.
-	var/charge_given = 1500
+	/// Associated list of charge sources and how much they charge, only stacks allowed.
+	var/list/charger_list = list(/obj/item/stack/ore/plasma = 1500, /obj/item/stack/sheet/mineral/plasma = 2000)
 
 /obj/item/mod/core/plasma/install(obj/item/mod/control/mod_unit)
 	. = ..()
@@ -345,12 +345,13 @@
 		return COMPONENT_NO_AFTERATTACK
 	return NONE
 
-/obj/item/mod/core/plasma/proc/charge_plasma(obj/item/stack/ore/plasma/plasma, mob/user)
-	if(!istype(plasma))
+/obj/item/mod/core/plasma/proc/charge_plasma(obj/item/stack/plasma, mob/user)
+	var/charge_given = is_type_in_list(plasma, charger_list, zebra = TRUE)
+	if(!charge_given)
 		return FALSE
-	var/uses_needed = min(plasma.amount, round((max_charge_amount() - charge_amount()) / charge_given))
+	var/uses_needed = min(plasma.amount, ROUND_UP((max_charge_amount() - charge_amount()) / charge_given))
 	if(!plasma.use(uses_needed))
 		return FALSE
-	add_charge(uses_needed*charge_given)
+	add_charge(uses_needed * charge_given)
 	balloon_alert(user, "core refueled")
 	return TRUE

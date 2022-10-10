@@ -9,7 +9,7 @@
 
 /obj/item/clothing/glasses/hud/equipped(mob/living/carbon/human/user, slot)
 	..()
-	if(slot != ITEM_SLOT_EYES)
+	if(!(slot & ITEM_SLOT_EYES))
 		return
 	if(hud_type)
 		var/datum/atom_hud/our_hud = GLOB.huds[hud_type]
@@ -132,6 +132,7 @@
 	chameleon_action.chameleon_name = "Glasses"
 	chameleon_action.chameleon_blacklist = typecacheof(/obj/item/clothing/glasses/changeling, only_root_path = TRUE)
 	chameleon_action.initialize_disguises()
+	add_item_action(chameleon_action)
 
 /obj/item/clothing/glasses/hud/security/chameleon/emp_act(severity)
 	. = ..()
@@ -142,7 +143,7 @@
 
 /obj/item/clothing/glasses/hud/security/sunglasses/eyepatch
 	name = "eyepatch HUD"
-	desc = "A heads-up display that connects directly to the optical nerve of the user, replacing the need for that useless eyeball."
+	desc = "The cooler looking cousin of HUDSunglasses."
 	icon_state = "hudpatch"
 
 /obj/item/clothing/glasses/hud/security/sunglasses
@@ -211,6 +212,9 @@
 		var/datum/atom_hud/our_hud = GLOB.huds[hud_type]
 		our_hud.show_to(user)
 
+/datum/action/item_action/switch_hud
+	name = "Switch HUD"
+
 /obj/item/clothing/glasses/hud/toggle/thermal
 	name = "thermal HUD scanner"
 	desc = "Thermal imaging HUD in the shape of glasses."
@@ -232,7 +236,7 @@
 		else
 			icon_state = "purple"
 			change_glass_color(user, /datum/client_colour/glass_colour/purple)
-	user.update_inv_glasses()
+	user.update_worn_glasses()
 
 /obj/item/clothing/glasses/hud/toggle/thermal/emp_act(severity)
 	. = ..()
@@ -255,4 +259,3 @@
 	desc = "These sunglasses are special, and let you view potential criminals."
 	icon_state = "sun"
 	inhand_icon_state = "sunglasses"
-

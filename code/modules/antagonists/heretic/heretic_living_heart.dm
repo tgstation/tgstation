@@ -14,14 +14,13 @@
 	var/datum/action/item_action/organ_action/track_target/action
 	/// The icon of the heart before we made it a living heart.
 	var/old_icon
-	/// The icon_state of the heart before we made it a living heart.
-	var/old_icon_state
 
 /datum/component/living_heart/Initialize()
 	if(!isorgan(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	var/obj/item/organ/organ_parent = parent
+	// These are incompatible for "balance" reasons, not due to code limitations.
 	if(organ_parent.status != ORGAN_ORGANIC || (organ_parent.organ_flags & ORGAN_SYNTHETIC))
 		return COMPONENT_INCOMPATIBLE
 
@@ -34,12 +33,10 @@
 	ADD_TRAIT(parent, TRAIT_LIVING_HEART, REF(src))
 	RegisterSignal(parent, COMSIG_ORGAN_REMOVED, .proc/on_organ_removed)
 
-	// It's not technically visible,
-	// but the organ sprite shows up in the action
-	// So we'll do this anyways
+	// The heart's not technically visible (and is never visible to anyone besides the heretic),
+	// but the organ sprite shows up in the organ action  - so we'll do this anyways
 	parent.AddElement(/datum/element/update_icon_blocker)
 	old_icon = organ_parent.icon
-	old_icon_state = organ_parent.icon_state
 
 	organ_parent.icon = 'icons/obj/eldritch.dmi'
 	organ_parent.icon_state = "living_heart"
@@ -50,10 +47,14 @@
 	REMOVE_TRAIT(parent, TRAIT_LIVING_HEART, REF(src))
 	UnregisterSignal(parent, COMSIG_ORGAN_REMOVED)
 
+	// Restore the heart to look normal
 	parent.RemoveElement(/datum/element/update_icon_blocker)
 	var/obj/item/organ/organ_parent = parent
 	organ_parent.icon = old_icon
-	organ_parent.icon_state = old_icon_state
+	organ_parent.icon_state = initial(organ_parent.icon_state)
+
+	// Sets the icon state to be the correct state
+	organ_parent.update_appearance(UPDATE_ICON_STATE)
 
 	return ..()
 
@@ -82,7 +83,7 @@
 	/// Whether the target radial is currently opened.
 	var/radial_open = FALSE
 	/// How long we have to wait between tracking uses.
-	var/track_cooldown_lenth = 8 SECONDS
+	var/track_cooldown_lenth = 4 SECONDS
 	/// The cooldown between button uses.
 	COOLDOWN_DECLARE(track_cooldown)
 
@@ -106,12 +107,15 @@
 	if(radial_open)
 		return FALSE
 
+	return TRUE
+
 /datum/action/item_action/organ_action/track_target/Trigger(trigger_flags)
 	. = ..()
 	if(!.)
 		return
 
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(owner)
+	var/datum/heretic_knowledge/sac_knowledge = heretic_datum.get_knowledge(/datum/heretic_knowledge/hunt_and_sacrifice)
 	if(!LAZYLEN(heretic_datum.sac_targets))
 		owner.balloon_alert(owner, "no targets, visit a rune!")
 		return TRUE
@@ -147,14 +151,71 @@
 		return FALSE
 
 	COOLDOWN_START(src, track_cooldown, track_cooldown_lenth)
-	var/balloon_message = "error text!"
-
+	UpdateButtons()
+	addtimer(CALLBACK(src, .proc/UpdateButtons), track_cooldown_lenth + 1)
 	playsound(owner, 'sound/effects/singlebeat.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
-	if(isturf(tracked_mob.loc) && owner.z != tracked_mob.z)
+	owner.balloon_alert(owner, get_balloon_message(tracked_mob))
+
+	// Let them know how to sacrifice people if they're able to be sac'd
+	if(tracked_mob.stat == DEAD)
+		to_chat(owner, span_hierophant("[tracked_mob] is dead. Bring them to a transmutation rune \
+			and invoke \"[sac_knowledge.name]\" to sacrifice them!"))
+
+	return TRUE
+
+/// Callback for the radial to ensure it's closed when not allowed.
+/datum/action/item_action/organ_action/track_target/proc/check_menu()
+	if(QDELETED(src))
+		return FALSE
+	if(!IS_HERETIC(owner))
+		return FALSE
+	if(!HAS_TRAIT(target, TRAIT_LIVING_HEART))
+		return FALSE
+	return TRUE
+
+/// Gets the balloon message for who we're tracking.
+/datum/action/item_action/organ_action/track_target/proc/get_balloon_message(mob/living/carbon/human/tracked_mob)
+	var/balloon_message = "error text!"
+	var/turf/their_turf = get_turf(tracked_mob)
+	var/turf/our_turf = get_turf(owner)
+	var/their_z = their_turf?.z
+	var/our_z = our_turf?.z
+
+	// One of us is in somewhere we shouldn't be
+	if(!our_z || !their_z)
+		// "Hell if I know"
 		balloon_message = "on another plane!"
+
+	// They're not on the same z-level as us
+	else if(our_z != their_z)
+		// They're on the station
+		if(is_station_level(their_z))
+			// We're on a multi-z station
+			if(is_station_level(our_z))
+				if(our_z > their_z)
+					balloon_message = "below you!"
+				else
+					balloon_message = "above you!"
+			// We're off station, they're not
+			else
+				balloon_message = "on station!"
+
+		// Mining
+		else if(is_mining_level(their_z))
+			balloon_message = "on lavaland!"
+
+		// In the gateway
+		else if(is_away_level(their_z) || is_secret_level(their_z))
+			balloon_message = "beyond the gateway!"
+
+		// They're somewhere we probably can't get too - sacrifice z-level, centcom, etc
+		else
+			balloon_message = "on another plane!"
+
+	// They're on the same z-level as us!
 	else
-		var/dist = get_dist(get_turf(owner), get_turf(tracked_mob))
-		var/dir = get_dir(get_turf(owner), get_turf(tracked_mob))
+		var/dist = get_dist(our_turf, their_turf)
+		var/dir = get_dir(our_turf, their_turf)
 
 		switch(dist)
 			if(0 to 15)
@@ -169,15 +230,4 @@
 	if(tracked_mob.stat == DEAD)
 		balloon_message = "they're dead, " + balloon_message
 
-	owner.balloon_alert(owner, balloon_message)
-	return TRUE
-
-/// Callback for the radial to ensure it's closed when not allowed.
-/datum/action/item_action/organ_action/track_target/proc/check_menu()
-	if(QDELETED(src))
-		return FALSE
-	if(!IS_HERETIC(owner))
-		return FALSE
-	if(!HAS_TRAIT(target, TRAIT_LIVING_HEART))
-		return FALSE
-	return TRUE
+	return balloon_message

@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "Service members can access the service dorms on Deltastation again"
-  - bugfix: "Miners can access the shipping office on Deltastation again"

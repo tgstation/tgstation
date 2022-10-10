@@ -1,5 +1,7 @@
 /obj/item/clothing/head/hooded/ablative
 	name = "ablative hood"
+	icon = 'icons/obj/clothing/head/helmet.dmi'
+	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
 	desc = "Hood hopefully belonging to an ablative trenchcoat. Includes a visor for cool-o-vision."
 	icon_state = "ablativehood"
 	armor = list(MELEE = 10, BULLET = 10, LASER = 60, ENERGY = 60, BOMB = 0, BIO = 0, FIRE = 100, ACID = 100)
@@ -15,8 +17,10 @@
 /obj/item/clothing/suit/hooded/ablative
 	name = "ablative trenchcoat"
 	desc = "Experimental trenchcoat specially crafted to reflect and absorb laser and disabler shots. Don't expect it to do all that much against an axe or a shotgun, however."
+	icon = 'icons/obj/clothing/suits/armor.dmi'
 	icon_state = "ablativecoat"
-	inhand_icon_state = "ablativecoat"
+	worn_icon = 'icons/mob/clothing/suits/armor.dmi'
+	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	armor = list(MELEE = 10, BULLET = 10, LASER = 60, ENERGY = 60, BOMB = 0, BIO = 0, FIRE = 100, ACID = 100)
 	hoodtype = /obj/item/clothing/head/hooded/ablative

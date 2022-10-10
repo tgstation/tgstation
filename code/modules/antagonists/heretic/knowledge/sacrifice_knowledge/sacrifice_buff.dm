@@ -45,9 +45,9 @@
 		healing_amount *= -0.5
 
 	if(owner.health > owner.crit_threshold && prob(4))
-		owner.set_timed_status_effect(20 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
-		owner.set_timed_status_effect(10 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
-		owner.hallucination = min(owner.hallucination + 3, 24)
+		owner.set_jitter_if_lower(20 SECONDS)
+		owner.set_dizzy_if_lower(10 SECONDS)
+		owner.adjust_hallucinations_up_to(6 SECONDS, 48 SECONDS)
 
 	if(prob(2))
 		playsound(owner, pick(GLOB.creepy_ambience), 50, TRUE)
@@ -102,5 +102,7 @@
 		if(iter_wound.blood_flow && (iter_wound.blood_flow > bloodiest_wound?.blood_flow))
 			bloodiest_wound = iter_wound
 
-	if(bloodiest_wound)
-		bloodiest_wound.set_blood_flow(max(0, bloodiest_wound.blood_flow - 0.5))
+	if(!bloodiest_wound)
+		return
+
+	bloodiest_wound.adjust_blood_flow(-0.5)

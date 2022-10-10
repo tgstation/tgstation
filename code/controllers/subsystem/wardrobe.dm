@@ -38,8 +38,7 @@ SUBSYSTEM_DEF(wardrobe)
 	/// How many items would we make just by loading the master list once?
 	var/one_go_master = 0
 
-/datum/controller/subsystem/wardrobe/Initialize(start_timeofday)
-	. = ..()
+/datum/controller/subsystem/wardrobe/Initialize()
 	setup_callbacks()
 	load_outfits()
 	load_species()
@@ -47,6 +46,7 @@ SUBSYSTEM_DEF(wardrobe)
 	hard_refresh_queue()
 	stock_hit = 0
 	stock_miss = 0
+	return SS_INIT_SUCCESS
 
 /// Resets the load queue to the master template, accounting for the existing stock
 /datum/controller/subsystem/wardrobe/proc/hard_refresh_queue()

@@ -16,7 +16,7 @@ type Reagent = {
   description: string;
 };
 
-export const BorgHypo = (_, context) => {
+export const BorgHypo = (props, context) => {
   const { data } = useBackend<BorgHypoContext>(context);
   const { maxVolume, theme, reagents, selectedReagent } = data;
 
