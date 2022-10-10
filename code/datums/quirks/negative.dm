@@ -19,6 +19,7 @@
 		/obj/item/staff,
 		/obj/item/godstaff,
 		/obj/item/scythe,
+		/obj/item/pitchfork,
 		/obj/item/gun/magic/staff,
 		/obj/item/nullrod/staff,
 		/obj/item/nullrod/scythe,
