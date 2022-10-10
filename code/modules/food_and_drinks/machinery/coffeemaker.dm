@@ -494,7 +494,8 @@
 
 
 /*
- *  impressa coffee maker
+ * impressa coffee maker
+ * its supposed to be a premium line product, so its cargo-only, the board cant be therefore researched
  */
 
 /obj/machinery/coffeemaker/impressa
