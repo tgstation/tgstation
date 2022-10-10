@@ -137,6 +137,9 @@
 				continue
 			organ.transfer_to_limb(src, phantom_owner)
 
+	for(var/trait in bodypart_traits)
+		REMOVE_TRAIT(owner, trait, bodypart_trait_source)
+
 	update_icon_dropped()
 	synchronize_bodytypes(phantom_owner)
 	phantom_owner.update_health_hud() //update the healthdoll

@@ -640,22 +640,11 @@
 		if(needs_update_disabled)
 			update_disabled()
 
-	update_bodypart_traits(new_owner)
-	refresh_bleed_rate()
-	return old_owner
-
-/obj/item/bodypart/proc/update_bodypart_traits()
 	for(var/trait in bodypart_traits)
 		ADD_TRAIT(owner, trait, bodypart_trait_source)
 
-/obj/item/bodypart/proc/add_bodypart_trait(trait)
-	bodypart_traits += trait
-	update_bodypart_traits()
-
-/obj/item/bodypart/proc/remove_bodypart_trait(trait)
-	bodypart_traits -= trait
-	REMOVE_TRAIT(owner, trait, bodypart_trait_source)
-
+	refresh_bleed_rate()
+	return old_owner
 /obj/item/bodypart/proc/on_removal()
 	for(var/trait in bodypart_traits)
 		REMOVE_TRAIT(owner, trait, bodypart_trait_source)
