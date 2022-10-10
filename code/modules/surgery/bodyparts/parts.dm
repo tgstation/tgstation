@@ -86,6 +86,10 @@
 	unarmed_damage_high = 10
 	unarmed_stun_threshold = 10
 	icon_state = "default_human_l_arm"
+	body_zone = BODY_ZONE_L_ARM
+	body_part = ARM_LEFT
+	plaintext_zone = "left arm"
+	aux_zone = BODY_ZONE_PRECISE_L_HAND
 	///If our fingers are too big to fire guns
 	var/chunky = FALSE
 
@@ -307,6 +311,9 @@
 	unarmed_damage_high = 15
 	unarmed_stun_threshold = 10
 	icon_state = "default_human_r_leg"
+	body_zone = BODY_ZONE_R_LEG
+	body_part = LEG_RIGHT
+	plaintext_zone = "right leg"
 
 
 /obj/item/bodypart/leg/left
