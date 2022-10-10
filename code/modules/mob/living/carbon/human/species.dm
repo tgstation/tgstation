@@ -402,6 +402,16 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if(I)
 				I.Remove(C)
 				QDEL_NULL(I)
+	for(var/external_organ in C.external_organs)
+		// External organ checking. We need to check the external organs owned by the carbon itself,
+		// because we want to also remove ones not shared by its species.
+		// This should be done even if species was not changed.
+		if(external_organ in external_organs)
+			continue // Don't remove external organs this species is supposed to have.
+		var/obj/item/organ/I = C.getorgan(external_organ)
+		if(I)
+			I.Remove(C)
+			QDEL_NULL(I)
 
 	for(var/organ_path in mutant_organs)
 		var/obj/item/organ/current_organ = C.getorgan(organ_path)
@@ -413,6 +423,16 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if(current_organ)
 				current_organ.before_organ_replacement(replacement)
 			// organ.Insert will qdel any current organs in that slot, so we don't need to.
+			replacement.Insert(C, TRUE, FALSE)
+
+	// Add in the external organs this species is meant to have. Identical to above code.
+	for(var/organ_path in external_organs)
+		var/obj/item/organ/current_organ = C.getorgan(organ_path)
+		if(!current_organ || replace_current)
+			var/obj/item/organ/replacement = SSwardrobe.provide_type(organ_path)
+
+			if(current_organ)
+				current_organ.before_organ_replacement(replacement)
 			replacement.Insert(C, TRUE, FALSE)
 
 /datum/species/proc/worn_items_fit_body_check(mob/living/carbon/wearer)
@@ -470,7 +490,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		for(var/obj/item/organ/external/organ_path as anything in external_organs)
 			//Load a persons preferences from DNA
 			var/obj/item/organ/external/new_organ = SSwardrobe.provide_type(organ_path)
-			new_organ.Insert(human)
+			new_organ.Insert(human, TRUE, FALSE)
 
 	for(var/X in inherent_traits)
 		ADD_TRAIT(C, X, SPECIES_TRAIT)
