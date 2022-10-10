@@ -70,9 +70,10 @@
 	bodytype = BODYTYPE_LARVA_PLACEHOLDER | BODYTYPE_ORGANIC
 	acceptable_bodytype = BODYTYPE_LARVA_PLACEHOLDER
 
+/// Parent Type for arms, should not appear in game.
 /obj/item/bodypart/arm
 	name = "arm"
-	desc = "Need a hand?"
+	desc = "Hey buddy give me a HAND and report this to the github because you shouldn't be seeing this."
 	attack_verb_continuous = list("slaps", "punches")
 	attack_verb_simple = list("slap", "punch")
 	max_damage = 50
@@ -289,10 +290,10 @@
 	max_damage = 100
 	should_draw_greyscale = FALSE
 
-
+/// Parent Type for arms, should not appear in game.
 /obj/item/bodypart/leg
 	name = "leg"
-	desc = "In case you needed a leg up."
+	desc = "This item shouldn't exist. Talk about breaking a leg. Badum-Tss!"
 	attack_verb_continuous = list("kicks", "stomps")
 	attack_verb_simple = list("kick", "stomp")
 	max_damage = 50

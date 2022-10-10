@@ -35,8 +35,7 @@
 	var/which_hand = BODY_ZONE_PRECISE_L_HAND
 	if(!(active_hand_index % 2))
 		which_hand = BODY_ZONE_PRECISE_R_HAND
-	var/obj/item/bodypart/arm/arm_item = get_bodypart(check_zone(which_hand))
-	return arm_item
+	return get_bodypart(check_zone(which_hand))
 
 
 /mob/proc/has_left_hand(check_disabled = TRUE)
