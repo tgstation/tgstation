@@ -125,24 +125,34 @@
 	desc = "A shield with a built in, high intensity light capable of blinding and disorienting suspects. Takes regular handheld flashes as bulbs."
 	icon_state = "flashshield"
 	inhand_icon_state = "flashshield"
-	var/obj/item/assembly/flash/handheld/embedded_flash
+	var/obj/item/assembly/flash/handheld/embedded_flash = /obj/item/assembly/flash/handheld
 
 /obj/item/shield/riot/flash/Initialize(mapload)
 	. = ..()
-	embedded_flash = new(src)
-	embedded_flash.set_light_flags(embedded_flash.light_flags | LIGHT_ATTACHED)
 	AddElement(/datum/element/update_icon_updates_onmob)
+	if(embedded_flash)
+		embedded_flash = new(src)
+		embedded_flash.set_light_flags(embedded_flash.light_flags | LIGHT_ATTACHED)
+		update_appearance(UPDATE_ICON)
+
+/obj/item/shield/riot/flash/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	if(istype(arrived, /obj/item/assembly/flash/handheld))
+		embedded_flash = arrived
+		embedded_flash.set_light_flags(embedded_flash.light_flags | LIGHT_ATTACHED)
+		update_appearance(UPDATE_ICON)
+	return ..()
+
+/obj/item/shield/riot/flash/Exited(atom/movable/gone, direction)
+	if(gone == embedded_flash)
+		embedded_flash.set_light_flags(embedded_flash.light_flags & ~LIGHT_ATTACHED)
+		embedded_flash = null
+		update_appearance(UPDATE_ICON)
+	return ..()
 
 /obj/item/shield/riot/flash/vv_edit_var(vname, vval)
 	. = ..()
 	if(vname == NAMEOF(src, embedded_flash))
 		update_appearance(UPDATE_ICON)
-
-/obj/item/shield/riot/flash/handle_atom_del(atom/deleting_atom)
-	if(deleting_atom == embedded_flash)
-		embedded_flash = null
-		update_appearance(UPDATE_ICON)
-	return ..()
 
 /obj/item/shield/riot/flash/Destroy(force)
 	QDEL_NULL(embedded_flash)
@@ -184,10 +194,7 @@
 					return
 				playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 				qdel(embedded_flash)
-				embedded_flash = flash
 				flash.forceMove(src)
-				embedded_flash.set_light_flags(embedded_flash.light_flags | LIGHT_ATTACHED)
-				update_appearance(UPDATE_ICON)
 				return
 	return ..()
 
