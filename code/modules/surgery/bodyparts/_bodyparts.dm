@@ -640,8 +640,6 @@
 		if(needs_update_disabled)
 			update_disabled()
 
-	for(var/trait in bodypart_traits)
-		ADD_TRAIT(owner, trait, bodypart_trait_source)
 
 	refresh_bleed_rate()
 	return old_owner
