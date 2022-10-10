@@ -1,0 +1,7 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - qol: "Spell buttons update every so slightly more accurately when they become unavailable or available."
+  - refactor: "Refactored temporary mute effects and sign language."
+  - code_imp: "Cleaned up vocal checks into \"try_speak\" and \"can_speak\"."
+  - admin: "VV dropdown removing \"Tongue Tied\" quirk actually removes the quirk"
