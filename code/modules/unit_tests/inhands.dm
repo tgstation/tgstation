@@ -3,10 +3,10 @@
 	var/static/list/possible_icon_states = list()
 	var/fallback_log_message
 	var/unset_inhand_var_message
-	/// alternative_inhands_location is for downstream modularity support. as an example, for skyrat's usage, set alternative_inhands_location = "modular_skyrat/master_files/icons/mob/inhands/"
+	/// additional_inhands_location is for downstream modularity support. as an example, for skyrat's usage, set additional_inhands_location = "modular_skyrat/master_files/icons/mob/inhands/"
 	/// Make sure this location is also present in tools/deploy.sh
-	/// If you need additional paths ontop of this second one, you can add another generate_possible_icon_states_list("your/folder/path/inhands/") below the if(alternative_inhands_location) block in Run(), and make sure to add that path to tools/deploy.sh as well.
-	var/alternative_inhands_location = null
+	/// If you need additional paths ontop of this second one, you can add another generate_possible_icon_states_list("your/folder/path/inhands/") below the if(additional_inhands_location) block in Run(), and make sure to add that path to tools/deploy.sh as well.
+	var/additional_inhands_location = null
 
 /datum/unit_test/defined_inhand_icon_states/proc/generate_possible_icon_states_list(directory_path)
 	if(!directory_path)
@@ -20,10 +20,10 @@
 
 /datum/unit_test/defined_inhand_icon_states/Run()
 	generate_possible_icon_states_list()
-	if(alternative_inhands_location)
-		generate_possible_icon_states_list(alternative_inhands_location)
+	if(additional_inhands_location)
+		generate_possible_icon_states_list(additional_inhands_location)
 
-	//Add additional paths if needed here!
+	//Add EVEN MORE paths if needed here!
 	//generate_possible_icon_states_list("your/folder/path/inhands/")
 
 	for(var/obj/item/item_path as anything in subtypesof(/obj/item))
