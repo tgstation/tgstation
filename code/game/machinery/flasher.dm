@@ -9,7 +9,7 @@
 	max_integrity = 250
 	integrity_failure = 0.4
 	damage_deflection = 10
-	///The contained flasher. Mostly just handles the bulb burning out & needing placement.
+	///The contained flash. Mostly just handles the bulb burning out & needing placement.
 	var/obj/item/assembly/flash/handheld/bulb
 	var/id = null
 	/// How far this flash reaches. Affects both proximity distance and the actual stun effect.
@@ -19,7 +19,7 @@
 	var/strength = 100
 
 	COOLDOWN_DECLARE(flash_cooldown)
-	/// Duration of time betwee flashes.
+	/// Duration of time between flashes.
 	var/flash_cooldown_duration = 15 SECONDS
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
@@ -147,7 +147,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(bulb)
 			bulb.forceMove(loc)
-			bulb = null
 		if(disassembled)
 			var/obj/item/wallframe/flasher/F = new(get_turf(src))
 			transfer_fingerprints_to(F)
