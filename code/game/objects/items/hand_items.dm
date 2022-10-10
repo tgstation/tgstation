@@ -578,4 +578,4 @@
 
 	to_chat(firer, span_green("You deliver a chef's kiss over [target], declaring it perfect."))
 	target.visible_message(span_notice("[firer] delivers a chef's kiss over [target]."), ignored_mobs = firer)
-	target.reagents.add_reagent(/datum/reagent/love, amount_nutriment / 4)
+	target.reagents.add_reagent(/datum/reagent/love, clamp(amount_nutriment / 4, 1, 10)) // clamped to about half of the most dense food I think we have (super bite burger)

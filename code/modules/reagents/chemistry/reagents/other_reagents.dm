@@ -2818,6 +2818,12 @@
 	taste_mult = 10
 	overdose_threshold = 50 // too much love is a bad thing
 
+/datum/reagent/love/expose_mob(mob/living/exposed_mob, methods, reac_volume, show_message, touch_protection)
+	. = ..()
+	// A syringe is not grandma's cooking
+	if(methods & ~INGEST)
+		exposed_mob.reagents.del_reagent(type)
+
 /datum/reagent/love/on_mob_metabolize(mob/living/metabolizer)
 	. = ..()
 	metabolizer.add_mood_event(name, /datum/mood_event/love_reagent)
@@ -2832,7 +2838,7 @@
 /datum/reagent/love/overdose_process(mob/living/metabolizer, delta_time, times_fired)
 	var/mob/living/carbon/carbon_metabolizer = metabolizer
 	if(!istype(carbon_metabolizer) || !carbon_metabolizer.can_heartattack() || carbon_metabolizer.undergoing_cardiac_arrest())
-		holder.del_reagent(type)
+		metabolizer.reagents.del_reagent(type)
 		return
 
 	if(DT_PROB(10, delta_time))
