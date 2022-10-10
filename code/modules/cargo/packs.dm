@@ -2119,11 +2119,20 @@
 /datum/supply_pack/organic/syrup
 	name = "Coffee Syrups Box"
 	desc = "A packaged box of various syrups, perfect to make your delicious coffee even more diabetic."
-	cost = CARGO_CRATE_VALUE * 3
+	cost = CARGO_CRATE_VALUE * 4
 	contains = list(/obj/item/reagent_containers/cup/bottle/syrup_bottle/caramel,
 					/obj/item/reagent_containers/cup/bottle/syrup_bottle/liqueur,
 					/obj/item/reagent_containers/cup/bottle/syrup_bottle/korta_nectar)
 	crate_name = "coffee syrups box"
+	crate_type = /obj/structure/closet/crate/cardboard
+
+/datum/supply_pack/organic/syrup_contraband
+	name = "Contraband Syrups Box"
+	desc = "A packaged box containing illegal coffee syrups. Possesion of these carries a penalty established in the galactic penal code"
+	cost = CARGO_CRATE_VALUE * 6
+	contains = list(/obj/item/reagent_containers/cup/bottle/syrup_bottle/laughsyrup,
+					/obj/item/reagent_containers/cup/bottle/syrup_bottle/laughsyrup)
+	crate_name = "illegal syrups box"
 	crate_type = /obj/structure/closet/crate/cardboard
 
 //////////////////////////////////////////////////////////////////////////////
