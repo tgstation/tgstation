@@ -145,7 +145,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Blacklist for mobs that can't read or write
 #define TRAIT_ILLITERATE "illiterate"
 #define TRAIT_BLIND "blind"
+/// Mute. Can't talk.
 #define TRAIT_MUTE "mute"
+/// Emotemute. Can't... emote.
 #define TRAIT_EMOTEMUTE "emotemute"
 #define TRAIT_DEAF "deaf"
 #define TRAIT_NEARSIGHT "nearsighted"

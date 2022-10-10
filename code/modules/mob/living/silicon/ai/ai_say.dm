@@ -13,8 +13,14 @@
 	//Also includes the </a> for AI hrefs, for convenience.
 	return "[radio_freq ? " (" + speaker.GetJob() + ")" : ""]" + "[speaker.GetSource() ? "</a>" : ""]"
 
-/mob/living/silicon/ai/IsVocal()
-	return !CONFIG_GET(flag/silent_ai)
+/mob/living/silicon/ai/try_speak(message, ignore_spam = FALSE, forced = FALSE)
+	// AIs cannot speak if silent AI is on.
+	// Unless forced is set, as that's probably stating laws or something.
+	if(!forced && CONFIG_GET(flag/silent_ai))
+		to_chat(src, span_danger("The ability for AIs to speak is currently disabled via server config."))
+		return FALSE
+
+	return ..()
 
 /mob/living/silicon/ai/radio(message, list/message_mods = list(), list/spans, language)
 	if(incapacitated())
