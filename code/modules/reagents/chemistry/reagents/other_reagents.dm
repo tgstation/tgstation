@@ -40,6 +40,8 @@
 			else
 				exposed_carbon.blood_volume = min(exposed_carbon.blood_volume + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM)
 
+			exposed_carbon.reagents.remove_reagent(/datum/reagent/blood, reac_volume) // Because we don't want blood to just lie around in the patient's blood, makes no sense.
+
 
 /datum/reagent/blood/on_new(list/data)
 	. = ..()
