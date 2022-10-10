@@ -32,11 +32,11 @@
 	fixed_mut_color = "#aaaaaa"
 
 	bodypart_overrides = list(
-		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/l_arm/golem,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/r_arm/golem,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/golem,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/golem,
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/golem,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/l_leg/golem,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/r_leg/golem,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/golem,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/golem,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/golem,
 	)
 
@@ -222,11 +222,11 @@
 	special_names = null
 	examine_limb_id = SPECIES_GOLEM
 	bodypart_overrides = list(
-		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/l_arm/golem/plasteel,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/r_arm/golem/plasteel,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/golem/plasteel,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/golem/plasteel,
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/golem,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/l_leg/golem/plasteel,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/r_leg/golem/plasteel,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/golem/plasteel,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/golem/plasteel,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/golem,
 	)
 
@@ -373,11 +373,11 @@
 	COOLDOWN_DECLARE(radiation_emission_cooldown)
 	examine_limb_id = SPECIES_GOLEM
 	bodypart_overrides = list(
-		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/l_arm/golem/uranium,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/r_arm/golem/uranium,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/golem/uranium,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/golem/uranium,
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/golem,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/l_leg/golem,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/r_leg/golem,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/golem,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/golem,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/golem,
 	)
 
@@ -593,11 +593,11 @@
 	special_names = null
 	examine_limb_id = SPECIES_GOLEM
 	bodypart_overrides = list(
-		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/l_arm/golem/bananium,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/r_arm/golem/bananium,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/golem/bananium,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/golem/bananium,
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/golem,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/l_leg/golem/bananium,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/r_leg/golem/bananium,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/golem/bananium,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/golem/bananium,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/golem,
 	)
 
@@ -701,11 +701,11 @@
 	inherent_factions = list("cult")
 	species_language_holder = /datum/language_holder/golem/runic
 	bodypart_overrides = list(
-		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/l_arm/golem/cult,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/r_arm/golem/cult,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/golem/cult,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/golem/cult,
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/golem/cult,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/l_leg/golem/cult,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/r_leg/golem/cult,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/golem/cult,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/golem/cult,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/golem/cult,
 	)
 
@@ -784,11 +784,11 @@
 	prefix = "Cloth"
 	special_names = null
 	bodypart_overrides = list(
-		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/l_arm/golem/cloth,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/r_arm/golem/cloth,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/golem/cloth,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/golem/cloth,
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/golem/cloth,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/l_leg/golem/cloth,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/r_leg/golem/cloth,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/golem/cloth,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/golem/cloth,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/golem/cloth,
 	)
 
@@ -1052,11 +1052,11 @@
 	heatmod = 2
 	speedmod = 1.5
 	bodypart_overrides = list(
-		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/l_arm/golem/cardboard,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/r_arm/golem/cardboard,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/golem/cardboard,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/golem/cardboard,
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/golem/cardboard,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/l_leg/golem/cardboard,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/r_leg/golem/cardboard,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/golem/cardboard,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/golem/cardboard,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/golem/cardboard,
 	)
 	var/last_creation = 0
@@ -1134,11 +1134,11 @@
 	)
 	info_text = "As a <span class='danger'>Durathread Golem</span>, your strikes will cause those your targets to start choking, but your woven body won't withstand fire as well."
 	bodypart_overrides = list(
-		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/l_arm/golem/durathread,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/r_arm/golem/durathread,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/golem/durathread,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/golem/durathread,
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/golem/durathread,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/l_leg/golem/durathread,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/r_leg/golem/durathread,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/golem/durathread,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/golem/durathread,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/golem/durathread,
 	)
 
@@ -1180,11 +1180,11 @@
 	species_language_holder = /datum/language_holder/golem/bone
 	info_text = "As a <span class='danger'>Bone Golem</span>, You have a powerful spell that lets you chill your enemies with fear, and milk heals you! Just make sure to watch our for bone-hurting juice."
 	bodypart_overrides = list(
-		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/l_arm/golem/bone,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/r_arm/golem/bone,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/golem/bone,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/golem/bone,
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/golem/bone,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/l_leg/golem/bone,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/r_leg/golem/bone,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/golem/bone,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/golem/bone,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/golem/bone,
 	)
 	var/datum/action/innate/bonechill/bonechill
@@ -1287,11 +1287,11 @@
 		TRAIT_RESISTLOWPRESSURE,
 	)
 	bodypart_overrides = list(
-		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/l_arm/golem/snow,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/r_arm/golem/snow,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/golem/snow,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/golem/snow,
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/golem/snow,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/l_leg/golem/snow,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/r_leg/golem/snow,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/golem/snow,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/golem/snow,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/golem/snow,
 	)
 

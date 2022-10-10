@@ -32,11 +32,11 @@
 	species_language_holder = /datum/language_holder/skeleton
 
 	bodypart_overrides = list(
-		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/l_arm/plasmaman,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/r_arm/plasmaman,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/plasmaman,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/plasmaman,
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/plasmaman,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/l_leg/plasmaman,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/r_leg/plasmaman,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/plasmaman,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/plasmaman,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/plasmaman,
 	)
 

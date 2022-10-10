@@ -88,7 +88,7 @@
 	var/chunky = FALSE
 
 
-/obj/item/bodypart/arm/l_arm
+/obj/item/bodypart/arm/left
 	name = "left arm"
 	desc = "Did you know that the word 'sinister' stems originally from the \
 		Latin 'sinestra' (left hand), because the left hand was supposed to \
@@ -104,7 +104,7 @@
 	px_y = 0
 
 
-/obj/item/bodypart/arm/l_arm/set_owner(new_owner)
+/obj/item/bodypart/arm/left/set_owner(new_owner)
 	. = ..()
 	if(. == FALSE)
 		return
@@ -126,7 +126,7 @@
 
 
 ///Proc to react to the owner gaining the TRAIT_PARALYSIS_L_ARM trait.
-/obj/item/bodypart/arm/l_arm/proc/on_owner_paralysis_gain(mob/living/carbon/source)
+/obj/item/bodypart/arm/left/proc/on_owner_paralysis_gain(mob/living/carbon/source)
 	SIGNAL_HANDLER
 	ADD_TRAIT(src, TRAIT_PARALYSIS, TRAIT_PARALYSIS_L_ARM)
 	UnregisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_PARALYSIS_L_ARM))
@@ -134,14 +134,14 @@
 
 
 ///Proc to react to the owner losing the TRAIT_PARALYSIS_L_ARM trait.
-/obj/item/bodypart/arm/l_arm/proc/on_owner_paralysis_loss(mob/living/carbon/source)
+/obj/item/bodypart/arm/left/proc/on_owner_paralysis_loss(mob/living/carbon/source)
 	SIGNAL_HANDLER
 	REMOVE_TRAIT(src, TRAIT_PARALYSIS, TRAIT_PARALYSIS_L_ARM)
 	UnregisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_PARALYSIS_L_ARM))
 	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_PARALYSIS_L_ARM), .proc/on_owner_paralysis_gain)
 
 
-/obj/item/bodypart/arm/l_arm/set_disabled(new_disabled)
+/obj/item/bodypart/arm/left/set_disabled(new_disabled)
 	. = ..()
 	if(isnull(.) || !owner)
 		return
@@ -161,7 +161,7 @@
 		hand_screen_object?.update_appearance()
 
 
-/obj/item/bodypart/arm/l_arm/monkey
+/obj/item/bodypart/arm/left/monkey
 	icon = 'icons/mob/species/monkey/bodyparts.dmi'
 	icon_static = 'icons/mob/species/monkey/bodyparts.dmi'
 	icon_state = "default_monkey_l_arm"
@@ -176,7 +176,7 @@
 	unarmed_damage_high = 2
 	unarmed_stun_threshold = 3
 
-/obj/item/bodypart/arm/l_arm/alien
+/obj/item/bodypart/arm/left/alien
 	icon = 'icons/mob/species/alien/bodyparts.dmi'
 	icon_static = 'icons/mob/species/alien/bodyparts.dmi'
 	icon_state = "alien_l_arm"
@@ -190,7 +190,7 @@
 	should_draw_greyscale = FALSE
 
 
-/obj/item/bodypart/arm/r_arm
+/obj/item/bodypart/arm/right
 	name = "right arm"
 	desc = "Over 87% of humans are right handed. That figure is much lower \
 		among humans missing their right arm."
@@ -204,7 +204,7 @@
 	px_y = 0
 
 
-/obj/item/bodypart/arm/r_arm/set_owner(new_owner)
+/obj/item/bodypart/arm/right/set_owner(new_owner)
 	. = ..()
 	if(. == FALSE)
 		return
@@ -226,7 +226,7 @@
 
 
 ///Proc to react to the owner gaining the TRAIT_PARALYSIS_R_ARM trait.
-/obj/item/bodypart/arm/r_arm/proc/on_owner_paralysis_gain(mob/living/carbon/source)
+/obj/item/bodypart/arm/right/proc/on_owner_paralysis_gain(mob/living/carbon/source)
 	SIGNAL_HANDLER
 	ADD_TRAIT(src, TRAIT_PARALYSIS, TRAIT_PARALYSIS_R_ARM)
 	UnregisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_PARALYSIS_R_ARM))
@@ -234,14 +234,14 @@
 
 
 ///Proc to react to the owner losing the TRAIT_PARALYSIS_R_ARM trait.
-/obj/item/bodypart/arm/r_arm/proc/on_owner_paralysis_loss(mob/living/carbon/source)
+/obj/item/bodypart/arm/right/proc/on_owner_paralysis_loss(mob/living/carbon/source)
 	SIGNAL_HANDLER
 	REMOVE_TRAIT(src, TRAIT_PARALYSIS, TRAIT_PARALYSIS_R_ARM)
 	UnregisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_PARALYSIS_R_ARM))
 	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_PARALYSIS_R_ARM), .proc/on_owner_paralysis_gain)
 
 
-/obj/item/bodypart/arm/r_arm/set_disabled(new_disabled)
+/obj/item/bodypart/arm/right/set_disabled(new_disabled)
 	. = ..()
 	if(isnull(.) || !owner)
 		return
@@ -261,7 +261,7 @@
 		hand_screen_object?.update_appearance()
 
 
-/obj/item/bodypart/arm/r_arm/monkey
+/obj/item/bodypart/arm/right/monkey
 	icon = 'icons/mob/species/monkey/bodyparts.dmi'
 	icon_static = 'icons/mob/species/monkey/bodyparts.dmi'
 	icon_state = "default_monkey_r_arm"
@@ -276,7 +276,7 @@
 	unarmed_damage_high = 2
 	unarmed_stun_threshold = 3
 
-/obj/item/bodypart/arm/r_arm/alien
+/obj/item/bodypart/arm/right/alien
 	icon = 'icons/mob/species/alien/bodyparts.dmi'
 	icon_static = 'icons/mob/species/alien/bodyparts.dmi'
 	icon_state = "alien_r_arm"
@@ -306,7 +306,7 @@
 	unarmed_stun_threshold = 10
 
 
-/obj/item/bodypart/leg/l_leg
+/obj/item/bodypart/leg/left
 	name = "left leg"
 	desc = "Some athletes prefer to tie their left shoelaces first for good \
 		luck. In this instance, it probably would not have helped."
@@ -319,7 +319,7 @@
 	can_be_disabled = TRUE
 
 
-/obj/item/bodypart/leg/l_leg/set_owner(new_owner)
+/obj/item/bodypart/leg/left/set_owner(new_owner)
 	. = ..()
 	if(. == FALSE)
 		return
@@ -341,7 +341,7 @@
 
 
 ///Proc to react to the owner gaining the TRAIT_PARALYSIS_L_LEG trait.
-/obj/item/bodypart/leg/l_leg/proc/on_owner_paralysis_gain(mob/living/carbon/source)
+/obj/item/bodypart/leg/left/proc/on_owner_paralysis_gain(mob/living/carbon/source)
 	SIGNAL_HANDLER
 	ADD_TRAIT(src, TRAIT_PARALYSIS, TRAIT_PARALYSIS_L_LEG)
 	UnregisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_PARALYSIS_L_LEG))
@@ -349,14 +349,14 @@
 
 
 ///Proc to react to the owner losing the TRAIT_PARALYSIS_L_LEG trait.
-/obj/item/bodypart/leg/l_leg/proc/on_owner_paralysis_loss(mob/living/carbon/source)
+/obj/item/bodypart/leg/left/proc/on_owner_paralysis_loss(mob/living/carbon/source)
 	SIGNAL_HANDLER
 	REMOVE_TRAIT(src, TRAIT_PARALYSIS, TRAIT_PARALYSIS_L_LEG)
 	UnregisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_PARALYSIS_L_LEG))
 	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_PARALYSIS_L_LEG), .proc/on_owner_paralysis_gain)
 
 
-/obj/item/bodypart/leg/l_leg/set_disabled(new_disabled)
+/obj/item/bodypart/leg/left/set_disabled(new_disabled)
 	. = ..()
 	if(isnull(.) || !owner)
 		return
@@ -369,7 +369,7 @@
 	else if(!bodypart_disabled)
 		owner.set_usable_legs(owner.usable_legs + 1)
 
-/obj/item/bodypart/leg/l_leg/monkey
+/obj/item/bodypart/leg/left/monkey
 	icon = 'icons/mob/species/monkey/bodyparts.dmi'
 	icon_static = 'icons/mob/species/monkey/bodyparts.dmi'
 	icon_state = "default_monkey_l_leg"
@@ -383,7 +383,7 @@
 	unarmed_damage_high = 3
 	unarmed_stun_threshold = 4
 
-/obj/item/bodypart/leg/l_leg/alien
+/obj/item/bodypart/leg/left/alien
 	icon = 'icons/mob/species/alien/bodyparts.dmi'
 	icon_static = 'icons/mob/species/alien/bodyparts.dmi'
 	icon_state = "alien_l_leg"
@@ -396,7 +396,7 @@
 	max_damage = 100
 	should_draw_greyscale = FALSE
 
-/obj/item/bodypart/leg/r_leg
+/obj/item/bodypart/leg/right
 	name = "right leg"
 	desc = "You put your right leg in, your right leg out. In, out, in, out, \
 		shake it all about. And apparently then it detaches.\n\
@@ -417,7 +417,7 @@
 	var/static/list/left_leg_mask_cache = list()
 
 
-/obj/item/bodypart/leg/r_leg/set_owner(new_owner)
+/obj/item/bodypart/leg/right/set_owner(new_owner)
 	. = ..()
 	if(. == FALSE)
 		return
@@ -439,7 +439,7 @@
 
 
 ///Proc to react to the owner gaining the TRAIT_PARALYSIS_R_LEG trait.
-/obj/item/bodypart/leg/r_leg/proc/on_owner_paralysis_gain(mob/living/carbon/source)
+/obj/item/bodypart/leg/right/proc/on_owner_paralysis_gain(mob/living/carbon/source)
 	SIGNAL_HANDLER
 	ADD_TRAIT(src, TRAIT_PARALYSIS, TRAIT_PARALYSIS_R_LEG)
 	UnregisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_PARALYSIS_R_LEG))
@@ -447,14 +447,14 @@
 
 
 ///Proc to react to the owner losing the TRAIT_PARALYSIS_R_LEG trait.
-/obj/item/bodypart/leg/r_leg/proc/on_owner_paralysis_loss(mob/living/carbon/source)
+/obj/item/bodypart/leg/right/proc/on_owner_paralysis_loss(mob/living/carbon/source)
 	SIGNAL_HANDLER
 	REMOVE_TRAIT(src, TRAIT_PARALYSIS, TRAIT_PARALYSIS_R_LEG)
 	UnregisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_PARALYSIS_R_LEG))
 	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_PARALYSIS_R_LEG), .proc/on_owner_paralysis_gain)
 
 
-/obj/item/bodypart/leg/r_leg/set_disabled(new_disabled)
+/obj/item/bodypart/leg/right/set_disabled(new_disabled)
 	. = ..()
 	if(isnull(.) || !owner)
 		return
@@ -467,7 +467,7 @@
 	else if(!bodypart_disabled)
 		owner.set_usable_legs(owner.usable_legs + 1)
 
-/obj/item/bodypart/leg/r_leg/monkey
+/obj/item/bodypart/leg/right/monkey
 	icon = 'icons/mob/species/monkey/bodyparts.dmi'
 	icon_static = 'icons/mob/species/monkey/bodyparts.dmi'
 	icon_state = "default_monkey_r_leg"
@@ -481,7 +481,7 @@
 	unarmed_damage_high = 3
 	unarmed_stun_threshold = 4
 
-/obj/item/bodypart/leg/r_leg/alien
+/obj/item/bodypart/leg/right/alien
 	icon = 'icons/mob/species/alien/bodyparts.dmi'
 	icon_static = 'icons/mob/species/alien/bodyparts.dmi'
 	icon_state = "alien_r_leg"

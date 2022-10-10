@@ -26,10 +26,10 @@
 	bodypart_overrides = list(
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/moth,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/moth,
-		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/l_arm/moth,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/r_arm/moth,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/l_leg/moth,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/r_leg/moth,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/moth,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/moth,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/moth,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/moth,
 	)
 
 /datum/species/moth/regenerate_organs(mob/living/carbon/C, datum/species/old_species, replace_current= TRUE, list/excluded_zones, visual_only)

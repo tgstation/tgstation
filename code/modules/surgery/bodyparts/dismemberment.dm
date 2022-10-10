@@ -237,7 +237,7 @@
 	if(special)
 		return ..()
 
-/obj/item/bodypart/arm/r_arm/drop_limb(special)
+/obj/item/bodypart/arm/right/drop_limb(special)
 	. = ..()
 
 	var/mob/living/carbon/arm_owner = owner
@@ -256,7 +256,7 @@
 		arm_owner.update_worn_gloves() //to remove the bloody hands overlay
 
 
-/obj/item/bodypart/arm/l_arm/drop_limb(special)
+/obj/item/bodypart/arm/left/drop_limb(special)
 	var/mob/living/carbon/arm_owner = owner
 	. = ..()
 	if(arm_owner && !special)
@@ -274,7 +274,7 @@
 		arm_owner.update_worn_gloves() //to remove the bloody hands overlay
 
 
-/obj/item/bodypart/leg/r_leg/drop_limb(special)
+/obj/item/bodypart/leg/right/drop_limb(special)
 	if(owner && !special)
 		if(owner.legcuffed)
 			owner.legcuffed.forceMove(owner.drop_location()) //At this point bodypart is still in nullspace
@@ -285,7 +285,7 @@
 			owner.dropItemToGround(owner.shoes, TRUE)
 	return ..()
 
-/obj/item/bodypart/leg/l_leg/drop_limb(special) //copypasta
+/obj/item/bodypart/leg/left/drop_limb(special) //copypasta
 	if(owner && !special)
 		if(owner.legcuffed)
 			owner.legcuffed.forceMove(owner.drop_location())

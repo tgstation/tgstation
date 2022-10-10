@@ -833,7 +833,7 @@
 	icon_exists(limb.icon, limb.icon_state, TRUE) //Prints a stack trace on the first failure of a given iconstate.
 
 	if(body_zone == BODY_ZONE_R_LEG)
-		var/obj/item/bodypart/leg/r_leg/leg = src
+		var/obj/item/bodypart/leg/right/leg = src
 		var/limb_overlays = limb.overlays
 		var/image/new_limb = leg.generate_masked_right_leg(limb.icon, limb.icon_state, image_dir)
 		if(new_limb)

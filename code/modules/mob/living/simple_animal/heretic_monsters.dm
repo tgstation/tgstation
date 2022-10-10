@@ -54,7 +54,7 @@
 	maxHealth = 65
 	health = 65
 	sight = SEE_MOBS|SEE_OBJS|SEE_TURFS|SEE_BLACKNESS
-	loot = list(/obj/effect/gibspawner/human, /obj/item/bodypart/arm/l_arm, /obj/item/organ/internal/eyes)
+	loot = list(/obj/effect/gibspawner/human, /obj/item/bodypart/arm/left, /obj/item/organ/internal/eyes)
 	actions_to_add = list(
 		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash/long,
 		/datum/action/cooldown/spell/list_target/telepathy/eldritch,
