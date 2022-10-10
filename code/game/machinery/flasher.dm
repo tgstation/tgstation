@@ -8,39 +8,44 @@
 	base_icon_state = "mflash"
 	max_integrity = 250
 	integrity_failure = 0.4
-	light_color = COLOR_WHITE
-	light_power = FLASH_LIGHT_POWER
 	damage_deflection = 10
+	///The contained flasher. Mostly just handles the bulb burning out & needing placement.
 	var/obj/item/assembly/flash/handheld/bulb
 	var/id = null
-	var/range = 2 //this is roughly the size of brig cell
-	var/last_flash = 0 //Don't want it getting spammed like regular flashes
-	var/strength = 100 //How knocked down targets are when flashed.
+	/// How far this flash reaches. Affects both proximity distance and the actual stun effect.
+	var/flash_range = 2 //this is roughly the size of a brig cell.
+
+	/// How strong Paralyze()'d targets are when flashed.
+	var/strength = 100
+
+	COOLDOWN_DECLARE(flash_cooldown)
+	/// Duration of time betwee flashes.
+	var/flash_cooldown_duration = 15 SECONDS
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
-
-/obj/machinery/flasher/portable //Portable version of the flasher. Only flashes when anchored
-	name = "portable flasher"
-	desc = "A portable flashing device. Wrench to activate and deactivate. Cannot detect slow movements."
-	icon_state = "pflash1-p"
-	base_icon_state = "pflash"
-	strength = 80
-	anchored = FALSE
-	density = TRUE
-	light_system = MOVABLE_LIGHT //Used as a flash here.
-	light_range = FLASH_LIGHT_RANGE
-	light_on = FALSE
-	///Proximity monitor associated with this atom, needed for proximity checks.
-	var/datum/proximity_monitor/proximity_monitor
 
 /obj/machinery/flasher/Initialize(mapload, ndir = 0, built = 0)
 	. = ..() // ..() is EXTREMELY IMPORTANT, never forget to add it
 	if(!built)
 		bulb = new(src)
 
+/obj/machinery/flasher/vv_edit_var(vname, vval)
+	. = ..()
+	if(vname == NAMEOF(src, flash_cooldown_duration) && (COOLDOWN_TIMELEFT(src, flash_cooldown) > flash_cooldown_duration))
+		COOLDOWN_START(src, flash_cooldown, flash_cooldown_duration)
 
 /obj/machinery/flasher/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	id = "[port.shuttle_id]_[id]"
+
+/obj/machinery/flasher/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	if(istype(arrived, /obj/item/assembly/flash/handheld))
+		bulb = arrived
+	return ..()
+
+/obj/machinery/flasher/Exited(atom/movable/gone, direction)
+	if(gone == bulb)
+		bulb = null
+	return ..()
 
 /obj/machinery/flasher/Destroy()
 	QDEL_NULL(bulb)
@@ -64,7 +69,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 			if(W.use_tool(src, user, 30, volume=50) && bulb)
 				user.visible_message(span_notice("[user] disconnects [src]'s flashbulb!"), span_notice("You disconnect [src]'s flashbulb."))
 				bulb.forceMove(loc)
-				bulb = null
 				power_change()
 
 	else if (istype(W, /obj/item/assembly/flash/handheld))
@@ -72,7 +76,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 			if(!user.transferItemToLoc(W, src))
 				return
 			user.visible_message(span_notice("[user] installs [W] into [src]."), span_notice("You install [W] into [src]."))
-			bulb = W
 			power_change()
 		else
 			to_chat(user, span_warning("A flashbulb is already installed in [src]!"))
@@ -97,24 +100,23 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 	if (!powered() || !bulb)
 		return
 
-	if (bulb.burnt_out || (last_flash && world.time < src.last_flash + 150))
+	if (bulb.burnt_out || !COOLDOWN_FINISHED(src, flash_cooldown))
 		return
 
 	if(!bulb.flash_recharge(30)) //Bulb can burn out if it's used too often too fast
 		power_change()
 		return
 
-	playsound(src.loc, 'sound/weapons/flash.ogg', 100, TRUE)
+	playsound(src, 'sound/weapons/flash.ogg', 100, TRUE)
 	flick("[base_icon_state]_flash", src)
-	set_light_on(TRUE)
-	addtimer(CALLBACK(src, .proc/flash_end), FLASH_LIGHT_DURATION, TIMER_OVERRIDE|TIMER_UNIQUE)
+	flash_lighting_fx()
 
-	last_flash = world.time
+	COOLDOWN_START(src, flash_cooldown, flash_cooldown_duration)
 	use_power(1000)
 
 	var/flashed = FALSE
 	for (var/mob/living/L in viewers(src, null))
-		if (get_dist(src, L) > range)
+		if (get_dist(src, L) > flash_range)
 			continue
 
 		if(L.flash_act(affect_silicon = 1))
@@ -125,12 +127,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 	if(flashed)
 		bulb.times_used++
 
-	return 1
-
-
-/obj/machinery/flasher/proc/flash_end()
-	set_light_on(FALSE)
-
+	return TRUE
 
 /obj/machinery/flasher/emp_act(severity)
 	. = ..()
@@ -160,18 +157,34 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 			new /obj/item/stack/sheet/iron (loc, 2)
 	qdel(src)
 
+/obj/machinery/flasher/portable //Portable version of the flasher. Only flashes when anchored
+	name = "portable flasher"
+	desc = "A portable flashing device. Wrench to activate and deactivate. Cannot detect slow movements."
+	icon_state = "pflash1-p"
+	base_icon_state = "pflash"
+	strength = 80
+	anchored = FALSE
+	density = TRUE
+	///Proximity monitor associated with this atom, needed for proximity checks.
+	var/datum/proximity_monitor/proximity_monitor
+
 /obj/machinery/flasher/portable/Initialize(mapload)
 	. = ..()
 	proximity_monitor = new(src, 0)
 
 /obj/machinery/flasher/portable/HasProximity(atom/movable/AM)
-	if (last_flash && world.time < last_flash + 150)
+	if(!COOLDOWN_FINISHED(src, flash_cooldown))
 		return
 
 	if(iscarbon(AM))
 		var/mob/living/carbon/M = AM
 		if (M.m_intent != MOVE_INTENT_WALK && anchored)
 			flash()
+
+/obj/machinery/flasher/portable/vv_edit_var(vname, vval)
+	. = ..()
+	if(vname == NAMEOF(src, flash_range))
+		proximity_monitor?.set_range(flash_range)
 
 /obj/machinery/flasher/portable/attackby(obj/item/W, mob/user, params)
 	if (W.tool_behaviour == TOOL_WRENCH)
@@ -182,7 +195,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 			add_overlay("[base_icon_state]-s")
 			set_anchored(TRUE)
 			power_change()
-			proximity_monitor.set_range(range)
+			proximity_monitor.set_range(flash_range)
 		else
 			to_chat(user, span_notice("[src] can now be moved."))
 			cut_overlays()
