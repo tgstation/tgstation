@@ -113,6 +113,24 @@
 	if(prob(10))
 		name = "spess cube"
 
+/obj/item/paper/guides/knucklebone
+	name = "knucklebones rules"
+	default_raw_text = "How to play knucklebones<br>\
+	<ul>\
+	<li>Make two 3x3 grids right next to eachother using anything you can find to mark the ground. I like using the bartenders hologram projector.</li>\
+	<li>Take turns rolling the dice and moving the dice into one of the three rows on your 3x3 grid.</li>\
+	<li>Your goal is to get the most points by putting die of the same number in the same row.</li>\
+	<li>If you have two of the same die in the same row, you will add them together and then times the sum by two. Then add that to the rest of the die.</li>\
+	<li>If you have three of the same die in the same row, you will do the same thing but times it by three.</li>\
+	<li>But if your opponent places a die across from one of your rows, you must remove all die that are the same number.</li>\
+	<li>For example, if you have two 5's and a 2 in a row and your opponent places a 5 in the same row you must remove the two 5's from that row.</li>\
+	<li>Note that you do not multiply the die if they are in the same collum. Only if they are in the same row.</li>\
+	<li>If you find it hard to tell whether it multiplies up and down or left and right, base it off the position of your opponents 3x3.</li>\
+	<li>If their rows line up with your rows, those rows are the rows that will multiply your die</li>\
+	<li>The game ends when one person fills up their 3x3. The other person does not get to roll the rest of their die.</li>\
+	<li>The winner is decided by who gets the most points</li>\
+	<li>Have fun!</li>\
+	</ul>"
 /obj/item/dice/fudge
 	name = "fudge die"
 	desc = "A die with six sides but only three results. Is this a plus or a minus? Your mind is drawing a blank..."
@@ -432,7 +450,7 @@
 	uniform = /obj/item/clothing/under/suit/black_really
 	neck = /obj/item/clothing/neck/tie/red/tied
 	shoes = /obj/item/clothing/shoes/laceup
-	head = /obj/item/clothing/head/bowler
+	head = /obj/item/clothing/head/hats/bowler
 	glasses = /obj/item/clothing/glasses/monocle
 	gloves = /obj/item/clothing/gloves/color/white
 

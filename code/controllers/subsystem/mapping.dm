@@ -145,7 +145,6 @@ SUBSYSTEM_DEF(mapping)
 	setup_map_transitions()
 	generate_station_area_list()
 	initialize_reserved_level(transit.z_value)
-	generate_z_level_linkages()
 	calculate_default_z_level_gravities()
 
 	return SS_INIT_SUCCESS

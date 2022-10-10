@@ -1,6 +1,6 @@
 /obj/structure/sign/clock
 	name = "wall clock"
-	desc = "It's a bluespace-controlled wall clock showing both the local Coalition Standard Time and the galactic Treaty Coordinated Time. Perfect for staring at instead of working."
+	desc = "It's your run-of-the-mill wall clock showing both the local Coalition Standard Time and the galactic Treaty Coordinated Time. Perfect for staring at instead of working."
 	icon_state = "clock"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/clock, 32)

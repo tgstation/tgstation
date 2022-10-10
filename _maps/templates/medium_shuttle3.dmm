@@ -3,7 +3,7 @@
 /turf/template_noop,
 /area/template_noop)
 "b" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 1
 	},
 /turf/template_noop,
@@ -12,7 +12,7 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/ruin/powered/shuttle/medium_3)
 "d" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
@@ -35,13 +35,13 @@
 /turf/open/floor/plating,
 /area/ruin/powered/shuttle/medium_3)
 "n" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 8
 	},
 /turf/template_noop,
 /area/ruin/powered/shuttle/medium_3)
 "o" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
@@ -51,13 +51,13 @@
 /turf/open/floor/iron,
 /area/ruin/powered/shuttle/medium_3)
 "q" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/powered/shuttle/medium_3)
 "r" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 4
 	},
 /turf/template_noop,
@@ -85,11 +85,11 @@
 /turf/open/floor/iron/dark,
 /area/ruin/powered/shuttle/medium_3)
 "E" = (
-/obj/structure/shuttle/engine/heater,
+/obj/machinery/power/shuttle_engine/heater,
 /turf/open/floor/plating/airless,
 /area/ruin/powered/shuttle/medium_3)
 "F" = (
-/obj/structure/shuttle/engine/propulsion,
+/obj/machinery/power/shuttle_engine/propulsion,
 /turf/template_noop,
 /area/ruin/powered/shuttle/medium_3)
 "G" = (

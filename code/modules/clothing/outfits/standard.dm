@@ -122,7 +122,7 @@
 	suit = /obj/item/clothing/suit/costume/pirate/armored
 	ears = /obj/item/radio/headset/syndicate
 	glasses = /obj/item/clothing/glasses/eyepatch
-	head = /obj/item/clothing/head/bandana/armored
+	head = /obj/item/clothing/head/costume/pirate/bandana/armored
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 
 /datum/outfit/pirate/post_equip(mob/living/carbon/human/equipped)
@@ -138,7 +138,7 @@
 		outfit_id.registered_name = equipped.real_name
 		outfit_id.update_label()
 		outfit_id.update_icon()
-	
+
 	var/obj/item/clothing/under/pirate_uniform = equipped.w_uniform
 	if(pirate_uniform)
 		pirate_uniform.has_sensor = NO_SENSORS
@@ -149,7 +149,7 @@
 	name = "Space Pirate Captain"
 
 	id_trim = /datum/id_trim/pirate/captain
-	head = /obj/item/clothing/head/pirate/armored
+	head = /obj/item/clothing/head/costume/pirate/armored
 
 /datum/outfit/pirate/space
 	name = "Space Pirate (EVA)"
@@ -180,7 +180,7 @@
 	name = "Silver Scale Captain"
 
 	id_trim = /datum/id_trim/pirate/captain/silverscale
-	head = /obj/item/clothing/head/crown
+	head = /obj/item/clothing/head/costume/crown
 	mask = /obj/item/clothing/mask/cigarette/cigar/havana
 	l_pocket = /obj/item/lighter
 
@@ -218,7 +218,7 @@
 	ears = /obj/item/radio/headset
 	glasses = /obj/item/clothing/glasses/thermal/monocle
 	gloves = /obj/item/clothing/gloves/color/latex
-	head = /obj/item/clothing/head/welding
+	head = /obj/item/clothing/head/utility/welding
 	mask = /obj/item/clothing/mask/surgical
 	l_pocket = /obj/item/knife/kitchen
 	r_pocket = /obj/item/scalpel
@@ -285,7 +285,7 @@
 	ears = /obj/item/radio/headset/headset_cent/commander
 	glasses = /obj/item/clothing/glasses/sunglasses
 	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
-	head = /obj/item/clothing/head/centhat
+	head = /obj/item/clothing/head/hats/centhat
 	mask = /obj/item/clothing/mask/cigarette/cigar/cohiba
 	shoes = /obj/item/clothing/shoes/combat/swat
 	l_pocket = /obj/item/ammo_box/a357
@@ -384,7 +384,7 @@
 	ears = /obj/item/radio/headset/headset_cent
 	glasses = /obj/item/clothing/glasses/thermal/eyepatch
 	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
-	head = /obj/item/clothing/head/pirate/captain
+	head = /obj/item/clothing/head/costume/pirate/captain
 	shoes = /obj/item/clothing/shoes/combat
 
 /datum/outfit/centcom/soviet/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)

@@ -373,7 +373,7 @@
 		var/mob/living/carbon/human/S = user
 		var/head_slot = S.get_item_by_slot(ITEM_SLOT_HEAD)
 		var/suit_slot = S.get_item_by_slot(ITEM_SLOT_OCLOTHING)
-		if(head_slot && (istype(head_slot,/obj/item/clothing/head/helmet) || istype(head_slot,/obj/item/clothing/head/hardhat)))
+		if(head_slot && (istype(head_slot,/obj/item/clothing/head/helmet) || istype(head_slot,/obj/item/clothing/head/utility/hardhat)))
 			oopsie_mod -= 6
 		if(suit_slot && (istype(suit_slot,/obj/item/clothing/suit/armor/riot)))
 			oopsie_mod -= 6
