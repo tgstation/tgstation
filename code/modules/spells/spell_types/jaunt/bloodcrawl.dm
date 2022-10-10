@@ -21,6 +21,25 @@
 	/// If TRUE, we equip "blood crawl" hands to the jaunter to prevent using items
 	var/equip_blood_hands = TRUE
 
+/datum/action/cooldown/spell/jaunt/bloodcrawl/Grant(mob/grant_to)
+	. = ..()
+	RegisterSignal(grant_to, COMSIG_MOVABLE_MOVED, .proc/update_icon_on_signal)
+
+/datum/action/cooldown/spell/jaunt/bloodcrawl/Remove(mob/remove_from)
+	. = ..()
+	UnregisterSignal(remove_from, COMSIG_MOVABLE_MOVED)
+
+/datum/action/cooldown/spell/jaunt/bloodcrawl/can_cast_spell(feedback = TRUE)
+	. = ..()
+	if(!.)
+		return FALSE
+	for(var/obj/effect/decal/cleanable/blood_nearby in range(blood_radius, get_turf(owner)))
+		if(blood_nearby.can_bloodcrawl_in())
+			return TRUE
+	if(feedback)
+		to_chat(owner, span_warning("There must be a nearby source of blood!"))
+	return FALSE
+
 /datum/action/cooldown/spell/jaunt/bloodcrawl/cast(mob/living/cast_on)
 	. = ..()
 	for(var/obj/effect/decal/cleanable/blood_nearby in range(blood_radius, get_turf(cast_on)))
@@ -65,6 +84,7 @@
 		jaunter.notransform = FALSE
 		return FALSE
 
+	RegisterSignal(holder, COMSIG_MOVABLE_MOVED, .proc/update_icon_on_signal)
 	if(equip_blood_hands && iscarbon(jaunter))
 		jaunter.drop_all_held_items()
 		// Give them some bloody hands to prevent them from doing things
@@ -100,20 +120,17 @@
 	if(!exit_jaunt(jaunter, get_turf(blood)))
 		return FALSE
 
-	if(equip_blood_hands && iscarbon(jaunter))
-		for(var/obj/item/bloodcrawl/blood_hand in jaunter.held_items)
-			jaunter.temporarilyRemoveItemFromInventory(blood_hand, force = TRUE)
-			qdel(blood_hand)
-
 	blood.visible_message(span_boldwarning("[jaunter] rises out of [blood]!"))
 	return TRUE
 
-/datum/action/cooldown/spell/jaunt/bloodcrawl/exit_jaunt(mob/living/unjaunter, turf/loc_override)
-	. = ..()
-	if(!.)
-		return
-
+/datum/action/cooldown/spell/jaunt/bloodcrawl/on_jaunt_exited(obj/effect/dummy/phased_mob/jaunt, mob/living/unjaunter)
+	UnregisterSignal(jaunt, COMSIG_MOVABLE_MOVED)
 	exit_blood_effect(unjaunter)
+	if(equip_blood_hands && iscarbon(unjaunter))
+		for(var/obj/item/bloodcrawl/blood_hand in unjaunter.held_items)
+			unjaunter.temporarilyRemoveItemFromInventory(blood_hand, force = TRUE)
+			qdel(blood_hand)
+	return ..()
 
 /// Adds an coloring effect to mobs which exit blood crawl.
 /datum/action/cooldown/spell/jaunt/bloodcrawl/proc/exit_blood_effect(mob/living/exited)

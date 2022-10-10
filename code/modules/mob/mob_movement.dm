@@ -536,6 +536,10 @@
 			to_chat(src, span_warning("You are not Superman."))
 		return
 
+	if(isobj(loc) || ismob(loc)) //Inside an object, tell it we moved
+		var/atom/O = loc
+		return O.relaymove(src, UP)
+
 	if(zMove(UP, z_move_flags = ZMOVE_FLIGHT_FLAGS|ZMOVE_FEEDBACK|ventcrawling_flag))
 		to_chat(src, span_notice("You move upwards."))
 
@@ -543,6 +547,10 @@
 /mob/verb/down()
 	set name = "Move Down"
 	set category = "IC"
+
+	if(isobj(loc) || ismob(loc)) //Inside an object, tell it we moved
+		var/atom/O = loc
+		return O.relaymove(src, DOWN)
 
 	var/ventcrawling_flag = HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) ? ZMOVE_VENTCRAWLING : 0
 	if(zMove(DOWN, z_move_flags = ZMOVE_FLIGHT_FLAGS|ZMOVE_FEEDBACK|ventcrawling_flag))

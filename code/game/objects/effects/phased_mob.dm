@@ -32,7 +32,7 @@
 /// Removes [jaunter] from our phased mob
 /obj/effect/dummy/phased_mob/proc/eject_jaunter()
 	if(!jaunter)
-		CRASH("Phased mob ([type]) attempted to eject null jaunter.")
+		return // This is weird but it can happen if the jaunt is gibbed by an arriving shuttle
 	var/turf/eject_spot = get_turf(src)
 	if(!eject_spot) //You're in nullspace you clown!
 		return
@@ -48,7 +48,6 @@
 				shake_camera(living_cheaterson, 20, 1)
 				addtimer(CALLBACK(living_cheaterson, /mob/living/carbon.proc/vomit), 2 SECONDS)
 			jaunter.forceMove(find_safe_turf(z))
-
 	else
 		jaunter.forceMove(eject_spot)
 	qdel(src)
@@ -56,6 +55,7 @@
 /obj/effect/dummy/phased_mob/Exited(atom/movable/gone, direction)
 	. = ..()
 	if(gone == jaunter)
+		SEND_SIGNAL(src, COMSIG_MOB_EJECTED_FROM_JAUNT, jaunter)
 		jaunter = null
 
 /obj/effect/dummy/phased_mob/ex_act()
