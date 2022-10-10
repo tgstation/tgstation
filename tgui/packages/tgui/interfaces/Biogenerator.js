@@ -28,7 +28,14 @@ export const Biogenerator = (props, context) => {
 
 export const BiogeneratorContent = (props, context) => {
   const { act, data } = useBackend(context);
-  const { beakerCurrentVolume, beakerMaxVolume, biomass, can_process, categories = [], reagent_color } = data;
+  const {
+    beakerCurrentVolume,
+    beakerMaxVolume,
+    biomass,
+    can_process,
+    categories = [],
+    reagent_color,
+  } = data;
   const [searchText, setSearchText] = useLocalState(context, 'searchText', '');
   const [selectedCategory, setSelectedCategory] = useLocalState(
     context,
@@ -88,18 +95,14 @@ export const BiogeneratorContent = (props, context) => {
               ))}
             </Tabs>
             <Divider />
-            <div>
-              Container Contents:
-            </div>
+            <div>Container Contents:</div>
             <ProgressBar
               mt={1}
               value={beakerCurrentVolume}
               maxValue={beakerMaxVolume}
               backgroundColor="black"
               color={reagent_color}>
-              <div>
-                {beakerCurrentVolume + '/' + beakerMaxVolume}
-              </div>
+              <div>{beakerCurrentVolume + '/' + beakerMaxVolume}</div>
             </ProgressBar>
           </Flex.Item>
         )}
