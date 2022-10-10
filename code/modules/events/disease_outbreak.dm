@@ -30,9 +30,7 @@
 	message_admins("[length(disease_candidates)] candidates found!")
 
 	if(tgui_alert(usr, "Select a specific disease?", "Sickening behavior", list("Yes", "No")) == "Yes")
-		var/list/disease_list = list()
-		disease_list += subtypesof(/datum/disease)
-		chosen_disease = tgui_input_list(usr, "Warning: Some of these are EXTREMELY dangerous.","Bacteria Hysteria", disease_list)
+		chosen_disease = tgui_input_list(usr, "Warning: Some of these are EXTREMELY dangerous.","Bacteria Hysteria", subtypesof(/datum/disease))
 
 /datum/round_event_control/disease_outbreak/proc/generate_candidates()
 	if(length(disease_candidates))
