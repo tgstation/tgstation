@@ -26,8 +26,8 @@
 	if(!length(disease_candidates))
 		message_admins("No disease candidates found!")
 		return FALSE
-	else
-		message_admins("[length(disease_candidates)] candidates found!")
+
+	message_admins("[length(disease_candidates)] candidates found!")
 
 	if(tgui_alert(usr, "Select a specific disease?", "Sickening behavior", list("Yes", "No")) == "Yes")
 		var/list/disease_list = list()
@@ -108,6 +108,8 @@
 	if(!length(disease_candidates))
 		message_admins("No disease candidates found!")
 		return FALSE
+
+	message_admins("[length(disease_candidates)] candidates found!")
 
 /datum/round_event/disease_outbreak/advanced
 	///Number of symptoms for our virus
