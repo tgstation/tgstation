@@ -89,9 +89,6 @@
 		qdel(AM)
 
 /mob/living/simple_animal/mouse/handle_automated_action()
-	#ifdef UNIT_TESTS // Basically, mice biting on cables could cause a powernet to become disconnected before the unit test cable_powernets would check to make sure that the entire station's powernet is all connected and good.
-	return // A powernet being disconnected causes that unit test to fail, even if a station map is perfectly valid. It's a source of randomness that we do not need or want to deal with.
-	#endif // At the end of the day, lol. lmao.
 	if(prob(chew_probability))
 		var/turf/open/floor/F = get_turf(src)
 		if(istype(F) && F.underfloor_accessibility >= UNDERFLOOR_INTERACTABLE)

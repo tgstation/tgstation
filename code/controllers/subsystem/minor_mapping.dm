@@ -11,6 +11,9 @@ SUBSYSTEM_DEF(minor_mapping)
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/minor_mapping/proc/trigger_migration(num_mice=10)
+	#ifdef UNIT_TESTS // Basically, mice biting on cables could cause a powernet to become disconnected before the unit test cable_powernets would check to make sure that the entire station's powernet is all connected and good.
+	return // A powernet being disconnected causes that unit test to fail, even if a station map is perfectly valid. It's a source of randomness that we do not need or want to deal with.
+	#endif // They also might cause some more completely random behavior, so let's ensure we never get random mice migrations when we compile for UNIT_TESTS.
 	var/list/exposed_wires = find_exposed_wires()
 
 	var/mob/living/simple_animal/mouse/mouse
