@@ -97,7 +97,7 @@
 	icon_state = "default_human_l_arm"
 	body_zone = BODY_ZONE_L_ARM
 	body_part = ARM_LEFT
-	plaintext_zone = "left_arm"
+	plaintext_zone = "left arm"
 	aux_zone = BODY_ZONE_PRECISE_L_HAND
 	held_index = 1
 	px_x = -6
@@ -197,7 +197,8 @@
 		among humans missing their right arm."
 	body_zone = BODY_ZONE_R_ARM
 	body_part = ARM_RIGHT
-	plaintext_zone = "right_arm"
+	icon_state = "default_human_r_arm"
+	plaintext_zone = "right arm"
 	aux_zone = BODY_ZONE_PRECISE_R_HAND
 	aux_layer = HANDS_PART_LAYER
 	held_index = 2
