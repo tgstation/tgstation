@@ -197,7 +197,7 @@
 		among humans missing their right arm."
 	body_zone = BODY_ZONE_R_ARM
 	body_part = ARM_RIGHT
-	plaintext_zone = "right arm"
+	plaintext_zone = "right_arm"
 	aux_zone = BODY_ZONE_PRECISE_R_HAND
 	aux_layer = HANDS_PART_LAYER
 	held_index = 2
