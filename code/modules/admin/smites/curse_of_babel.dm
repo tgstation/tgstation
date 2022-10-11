@@ -5,15 +5,7 @@
 	var/duration
 
 /datum/smite/curse_of_babel/configure(client/user)
-	switch(tgui_alert(user, "How long would you like this effect to last?", list("Permanent", "1 MINUTE", "5 MINUTES", "10 MINUTES")))
-		if("Permanent")
-			duration = INFINITE
-		if("1 MINUTE")
-			duration = 1 MINUTES
-		if("5 MINUTES")
-			duration = 5 MINUTES
-		if("10 MINUTES")
-			duration = 10 MINUTES
+	duration = tgui_input_number(user, "How many minutes would you like this effect to last?", "Time", 1, 60, -1, round_value = FALSE) MINUTES
 
 /datum/smite/curse_of_babel/effect(client/user, mob/living/carbon/target)
 	. = ..()
@@ -21,5 +13,5 @@
 		to_chat(user, span_warning("This must be used on a carbon mob."), confidential = TRUE)
 		return
 
-	target.adjust_timed_status_effect(duration, /datum/status_effect/tower_of_babel/magical)
+	target.apply_status_effect(/datum/status_effect/tower_of_babel, duration)
 	to_chat(target, span_userdanger("The gods have punished you for your sins!"), confidential = TRUE)
