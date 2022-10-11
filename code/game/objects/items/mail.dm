@@ -305,7 +305,7 @@
 		add_raw_text("<i>You need to escape the simulation. Don't forget the numbers, they help you remember:</i> '[rand(0,9)][rand(0,9)][rand(0,9)]...'")
 		return ..()
 
-	if(self_destruct.r_code == "ADMIN")
+	if(self_destruct.r_code == NUKE_CODE_UNSET)
 		self_destruct.r_code = random_nukecode()
 		message_admins("Through junkmail, the self-destruct code was set to \"[self_destruct.r_code]\".")
 	add_raw_text("<i>You need to escape the simulation. Don't forget the numbers, they help you remember:</i> '[self_destruct.r_code[rand(1,5)]][self_destruct.r_code[rand(1,5)]]...'")
