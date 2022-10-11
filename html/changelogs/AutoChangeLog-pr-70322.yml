@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes: 
+  - bugfix: "Tramstation security/toxins now have their own EOD closets. Icebox toxins now has an EOD closet as well, in the nearby maintenance area."
