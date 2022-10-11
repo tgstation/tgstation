@@ -53,8 +53,7 @@ GLOBAL_DATUM(tower_of_babel, /datum/tower_of_babel)
 	// use this method for drugs effects?
 	// to_curse.adjust_timed_status_effect(4 SECONDS, /datum/status_effect/tower_of_babel)
 
-	to_curse.apply_status_effect(/datum/status_effect/tower_of_babel/magical)
-
+	to_curse.adjust_timed_status_effect(INFINITE, /datum/status_effect/tower_of_babel/magical)
 /*
 	var/random_language = pick(GLOB.all_languages)
 	to_curse.grant_language(random_language, source = LANGUAGE_BABEL)
