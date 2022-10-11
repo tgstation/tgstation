@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - rscadd: "Having very low sanity (insane or crazy, the last two sanity levels) will cause you to experience hallucinations rarely."
+  - admin: "Removing RDS via the VV menu will actually remove the associated effects."
