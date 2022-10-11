@@ -97,7 +97,7 @@
 	icon_state = "default_human_l_arm"
 	body_zone = BODY_ZONE_L_ARM
 	body_part = ARM_LEFT
-	plaintext_zone = "left arm"
+	plaintext_zone = "left_arm"
 	aux_zone = BODY_ZONE_PRECISE_L_HAND
 	held_index = 1
 	px_x = -6
