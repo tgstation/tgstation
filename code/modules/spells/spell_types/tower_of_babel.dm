@@ -50,6 +50,12 @@ GLOBAL_DATUM(tower_of_babel, /datum/tower_of_babel)
 		to_chat(to_curse, span_notice("You have a strange feeling for a moment, but then it passes."))
 		return
 
+	// use this method for drugs effects?
+	// to_curse.adjust_timed_status_effect(4 SECONDS, /datum/status_effect/tower_of_babel)
+
+	to_curse.apply_status_effect(/datum/status_effect/tower_of_babel/magical)
+
+/*
 	var/random_language = pick(GLOB.all_languages)
 	to_curse.grant_language(random_language, source = LANGUAGE_BABEL)
 	// block every language except the randomized one
@@ -64,6 +70,7 @@ GLOBAL_DATUM(tower_of_babel, /datum/tower_of_babel)
 
 	to_curse.playsound_local(get_turf(to_curse), 'sound/magic/magic_block_mind.ogg', 75, vary = TRUE) // sound of creepy whispers
 	to_chat(to_curse, span_reallybig(span_hypnophrase("You feel a magical force affecting your speech patterns!")))
+*/
 	return TRUE
 
 /// Mainly so admin triggered tower of babel can be undone
@@ -75,6 +82,8 @@ GLOBAL_DATUM(tower_of_babel, /datum/tower_of_babel)
 	if(!HAS_TRAIT_FROM(to_cure, TRAIT_TOWER_OF_BABEL, TRAUMA_TRAIT))
 		return
 
+	to_cure.remove_status_effect(/datum/status_effect/tower_of_babel/magical)
+/*
 	// if user is affected by tower of babel, we remove the blocked languages
 	to_cure.remove_blocked_language(GLOB.all_languages, source = LANGUAGE_BABEL)
 	to_cure.remove_all_languages(source = LANGUAGE_BABEL)
@@ -84,6 +93,7 @@ GLOBAL_DATUM(tower_of_babel, /datum/tower_of_babel)
 
 	REMOVE_TRAIT(to_cure, TRAIT_TOWER_OF_BABEL, TRAUMA_TRAIT)
 	to_chat(to_cure, span_reallybig(span_hypnophrase("You feel the magical force affecting your speech patterns fade away...")))
+*/
 
 /client/proc/tower_of_babel()
 	if(!SSticker.HasRoundStarted())
