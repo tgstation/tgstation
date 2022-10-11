@@ -4,7 +4,7 @@
 	alert_type = /atom/movable/screen/alert/status_effect/tower_of_babel
 	var/trait_source = STATUS_EFFECT_TRAIT
 
-/datum/status_effect/tower_of_babel/on_creation(mob/living/new_owner, duration = 10 SECONDS)
+/datum/status_effect/tower_of_babel/on_creation(mob/living/new_owner, duration = 15 SECONDS)
 	src.duration = duration
 	return ..()
 
@@ -17,7 +17,6 @@
 	// no tongue, tongue tied, etc. curse of babel shouldn't let people who have a tongue disability speak
 	ADD_TRAIT(owner, TRAIT_TOWER_OF_BABEL, trait_source)
 	owner.add_mood_event(id, /datum/mood_event/tower_of_babel)
-	owner.emote("mumble")
 	return ..()
 
 /datum/status_effect/tower_of_babel/on_remove()
@@ -40,7 +39,7 @@
 	if(!.)
 		return
 
-	owner.say(";Nimrod, the Tower of Babel has fallen!", forced = "tower of babel")
+	owner.emote("mumble")
 	owner.playsound_local(get_turf(owner), 'sound/magic/magic_block_mind.ogg', 75, vary = TRUE) // sound of creepy whispers
 	to_chat(owner, span_reallybig(span_hypnophrase("You feel a magical force affecting your speech patterns!")))
 
