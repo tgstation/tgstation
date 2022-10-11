@@ -28,6 +28,33 @@
 	if(random_sensor)
 		//make the sensor mode favor higher levels, except coords.
 		sensor_mode = pick(SENSOR_VITALS, SENSOR_VITALS, SENSOR_VITALS, SENSOR_LIVING, SENSOR_LIVING, SENSOR_COORDS, SENSOR_COORDS, SENSOR_OFF)
+	register_context()
+
+/obj/item/clothing/under/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	var/screentip_change = FALSE
+
+	if(isnull(held_item) && has_sensor == HAS_SENSORS)
+		context[SCREENTIP_CONTEXT_RMB] = "Toggle suit sensors"
+		screentip_change = TRUE
+
+	if(istype(held_item, /obj/item/clothing/accessory) && !attached_accessory)
+		var/obj/item/clothing/accessory/accessory = held_item
+		if(accessory.can_attach_accessory(src, user))
+			context[SCREENTIP_CONTEXT_LMB] = "Attach accessory"
+			screentip_change = TRUE
+
+	if(istype(held_item, /obj/item/stack/cable_coil) && has_sensor == BROKEN_SENSORS)
+		context[SCREENTIP_CONTEXT_LMB] = "Repair suit sensors"
+		screentip_change = TRUE
+
+	if(attached_accessory)
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove accessory"
+		screentip_change = TRUE
+	else if(can_adjust)
+		context[SCREENTIP_CONTEXT_ALT_LMB] = adjusted == ALT_STYLE ? "Wear normally" : "Wear casually"
+		screentip_change = TRUE
+
+	return screentip_change ? CONTEXTUAL_SCREENTIP_SET : NONE
 
 /obj/item/clothing/under/worn_overlays(mutable_appearance/standing, isinhands = FALSE)
 	. = ..()
@@ -47,7 +74,7 @@
 		C.use(1)
 		has_sensor = HAS_SENSORS
 		to_chat(user,span_notice("You repair the suit sensors on [src] with [C]."))
-		return 1
+		return TRUE
 	if(!attach_accessory(I, user))
 		return ..()
 
@@ -88,7 +115,6 @@
 			var/mob/living/carbon/human/ooman = loc
 			if(ooman.w_uniform == src)
 				ooman.update_suit_sensors()
-
 
 /obj/item/clothing/under/visual_equipped(mob/user, slot)
 	..()
