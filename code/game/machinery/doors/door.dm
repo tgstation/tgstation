@@ -402,7 +402,7 @@
 
 /obj/machinery/door/proc/CheckForMobs()
 	if(locate(/mob/living) in get_turf(src))
-		sleep(0.1 SECONDS)
+		sleep(1 TICKS)
 		open()
 
 /obj/machinery/door/proc/crush()

@@ -268,7 +268,7 @@ If you make a derivative work from this code, you must include this notification
 				D.pixel_y = D.base_pixel_y
 			return
 
-		sleep(0.1 SECONDS)
+		sleep(1 TICKS)
 
 	if (A && D)
 		A.pixel_x = A.base_pixel_x

@@ -81,7 +81,7 @@
 	if(!islist)
 		for(var/V in D.vars)
 			names += V
-	sleep(0.1 SECONDS)
+	sleep(1 TICKS)
 
 	var/list/variable_html = list()
 	if(islist)

@@ -875,7 +875,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			if(user.stat != CONSCIOUS || HAS_TRAIT(new_human, TRAIT_CRITICAL_CONDITION))
 				break
 			user.apply_damage(0.1, BRUTE)
-			sleep(0.1 SECONDS)
+			sleep(1 TICKS)
 
 		qdel(N)
 		ghosts--

@@ -268,7 +268,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 
 	if(sleep_offline_after_initializations)
 		world.sleep_offline = TRUE
-	sleep(0.1 SECONDS)
+	sleep(1 TICKS)
 
 	if(sleep_offline_after_initializations && CONFIG_GET(flag/resume_after_initializations))
 		world.sleep_offline = FALSE

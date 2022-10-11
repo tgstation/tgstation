@@ -383,7 +383,7 @@
 				initial_matrix = matrix(M.transform)
 				initial_matrix.Translate(-3,0)
 				animate(M, transform = initial_matrix, time = 1, loop = 0)
-		sleep(0.1 SECONDS)
+		sleep(1 TICKS)
 	M.lying_fix()
 
 /obj/machinery/jukebox/disco/proc/dance4(mob/living/M)
@@ -430,7 +430,7 @@
 				initial_matrix = matrix(M.transform)
 				initial_matrix.Translate(-3,0)
 				animate(M, transform = initial_matrix, time = 1, loop = 0)
-		sleep(0.1 SECONDS)
+		sleep(1 TICKS)
 	M.lying_fix()
 
 /mob/living/proc/lying_fix()
