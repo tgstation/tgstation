@@ -777,18 +777,22 @@
 /// Begin the process of hacking into the comms console to call in a threat.
 /obj/machinery/computer/communications/proc/try_hack_console(mob/living/hacker, duration = 30 SECONDS)
 	AI_notify_hack()
-	if(!do_after(hacker, duration, src, extra_checks = CALLBACK(src, .proc/can_hack)))
+	if(!do_after(hacker, duration, src, extra_checks = CALLBACK(src, .proc/can_hack, hacker)))
 		return FALSE
 
 	hack_console(hacker)
 	return TRUE
 
 /// Checks if this console is hackable. Used as a callback during try_hack_console's doafter as well.
-/obj/machinery/computer/communications/proc/can_hack()
+/obj/machinery/computer/communications/proc/can_hack(mob/living/hacker, feedback = FALSE)
 	if(machine_stat & (NOPOWER|BROKEN))
+		if(feedback && hacker)
+			balloon_alert(hacker, "can't hack this console!")
 		return FALSE
 	var/area/console_area = get_area(src)
 	if(!console_area || !(console_area.area_flags & VALID_TERRITORY))
+		if(feedback && hacker)
+			balloon_alert(hacker, "signal too weak, can't hack here!")
 		return FALSE
 	return TRUE
 
