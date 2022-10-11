@@ -854,10 +854,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	obj_flags |= EMAGGED
 	to_chat(user, span_notice("You short out the product lock on [src]."))
 
-/obj/machinery/vending/_try_interact(mob/user)
-	if(!user.Adjacent(src))
-		return
-
+/obj/machinery/vending/interact(mob/user)
 	if(seconds_electrified && !(machine_stat & NOPOWER))
 		if(shock(user, 100))
 			return
