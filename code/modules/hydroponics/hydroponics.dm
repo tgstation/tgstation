@@ -235,49 +235,85 @@
 	nutri_reagents = null
 	return ..()
 
-/datum/component/plumbing/hydroponics/send_request(dir)
+// We need a secondary check here because the reagents holder doesn't handle water
+/datum/component/plumbing/hydroponics/process()
+	if(!demand_connects || !reagents)
+		STOP_PROCESSING(SSplumbing, src)
+		return
 	var/obj/machinery/hydroponics/constructable/hydro_parent = parent
+	if(reagents.total_volume < reagents.maximum_volume || hydro_parent.waterlevel < hydro_parent.maxwater)
+		for(var/D in GLOB.cardinals)
+			if(D & demand_connects)
+				send_request(D)
 
-	var/initial_nutri_amount = nutri_reagents.total_volume
-	if(initial_nutri_amount < nutri_reagents.maximum_volume)
-		// Well boy howdy, we have no way to tell a supply to not mix the water with everything else,
-		// So we'll let it leak in, and move the water over.
+// The old hydroponics plumbing system dumped water out onto the floor if the nutrients tray was empty but the water tray was full
+// This occurred constantly if you plumb a water tank into the system and could waste a thousand units of water in minutes.
+// To fix this we will handle the system with more nuance than mundane metal pipes probably desreve, but whatever.
+/datum/component/plumbing/hydroponics/process_request(amount, reagent, dir)
+	var/obj/machinery/hydroponics/constructable/hydro_parent = parent
+	var/datum/ductnet/net
+	dir = num2text(dir)
+	if(!ducts.Find(dir))
+		return
+	net = ducts[dir]
+	var/list/water_suppliers = list()
+	var/list/other_suppliers = list()
+
+	// To be clear, nutri_reagents is the parent's reagents datum while water_reagents is a temporary attached to this datum.
+	var/water_desired = clamp(hydro_parent.maxwater - hydro_parent.waterlevel, 0, MACHINE_REAGENT_TRANSFER)
+	var/nutri_desired = clamp(nutri_reagents.maximum_volume - nutri_reagents.total_volume, 0, MACHINE_REAGENT_TRANSFER)
+	var/total_desired = min(water_desired + nutri_desired, MACHINE_REAGENT_TRANSFER)
+
+	for(var/datum/component/plumbing/supplier as anything in net.suppliers)
+		if(supplier.can_give(amount, /datum/reagent/water, net))
+			water_suppliers += supplier
+			if(!supplier.is_pure_source())
+				other_suppliers += supplier
+		else if(supplier.can_give(amount,null,net))
+			other_suppliers += supplier
+
+	if(other_suppliers.len && nutri_desired) // someone hooked something up to the network that provides only non-water nutrients
 		set_recipient_reagents_holder(nutri_reagents)
-		reagents = nutri_reagents
-		process_request(
-			amount = MACHINE_REAGENT_TRANSFER,
-			reagent = null,
-			dir = dir
-		)
+		if(water_desired > 0)
+			nutri_desired -= round(water_desired / 2) // save some capacity for universal juice
+		var/targetVolume = nutri_reagents.total_volume + nutri_desired
+		var/originalVolume = nutri_reagents.total_volume
+		var/suppliersLeft = other_suppliers.len
+		for(var/datum/component/plumbing/give as anything in other_suppliers)
+			var/currentRequest = (targetVolume - nutri_reagents.total_volume) / suppliersLeft
+			give.transfer_to(src, currentRequest, reagent, net)
+			suppliersLeft--
+		// We can only transfer so much
+		total_desired -= (nutri_reagents.total_volume - originalVolume)
+		// The other_suppliers list includes anything that isn't pure water, but it may include water
+		var/mixed_water_amount = nutri_reagents.get_reagent_amount(/datum/reagent/water)
+		if(mixed_water_amount)
+			nutri_reagents.trans_id_to(water_reagents, /datum/reagent/water, mixed_water_amount)
 
-		// Move the leaked water from nutrients to... water
-		var/leaking_water_amount = nutri_reagents.get_reagent_amount(/datum/reagent/water)
-		if(leaking_water_amount)
-			nutri_reagents.trans_id_to(water_reagents, /datum/reagent/water, leaking_water_amount)
-
-	// We should only take MACHINE_REAGENT_TRANSFER every tick; this is the remaining amount we can take
-	var/remaining_transfer_amount = max(MACHINE_REAGENT_TRANSFER - (nutri_reagents.total_volume - initial_nutri_amount), 0)
-
-	// How much extra water we should gather this tick to try to fill the water tray.
-	var/extra_water_to_gather = clamp(hydro_parent.maxwater - hydro_parent.waterlevel - water_reagents.total_volume, 0, remaining_transfer_amount)
-	if(extra_water_to_gather > 0)
+	if(water_suppliers.len && water_desired)
 		set_recipient_reagents_holder(water_reagents)
-		reagents = water_reagents
-		process_request(
-			amount = extra_water_to_gather,
-			reagent = /datum/reagent/water,
-			dir = dir,
-		)
-
-	// Now transfer all remaining water in that buffer and clear it out.
-	var/final_water_amount = water_reagents.total_volume
-	if(final_water_amount)
-		hydro_parent.adjust_waterlevel(round(final_water_amount))
-		// Using a pipe doesn't afford you extra water storage and the baseline behavior for trays is that excess water goes into the shadow realm.
+		var/targetVolume = water_reagents.total_volume + min(water_desired,total_desired) // If we drank a lot of nutrients, skip some water
+		var/suppliersLeft = water_suppliers.len
+		var/reagent_constraint = null
+		if(nutri_desired < 1) // prevent waste by only accepting water
+			reagent_constraint = /datum/reagent/water
+		for(var/datum/component/plumbing/give as anything in water_suppliers)
+			var/currentRequest = (targetVolume - water_reagents.total_volume) / suppliersLeft
+			give.transfer_to(src, currentRequest, reagent_constraint, net)
+			suppliersLeft--
+		// Hydroponics machine doesn't actually care about the water reagent itself, only the quantity
+		var/water_total = water_reagents.get_reagent_amount(/datum/reagent/water)
+		hydro_parent.adjust_waterlevel(round(water_total))
 		water_reagents.del_reagent(/datum/reagent/water)
+		// Water source may not have been pure water, dump whatever in the nutri bin
+		if(water_reagents.total_volume)
+			water_reagents.trans_to(nutri_reagents, water_reagents.total_volume)
 
-	// Plumbing pauses if reagents is full.. so let's cheat and make sure it ticks unless both trays are happy
-	reagents = hydro_parent.waterlevel < hydro_parent.maxwater ? water_reagents : nutri_reagents
+	// This might have been filled when looking for nutrients, but no water was needed,
+	// or it may have nutrient left over from getting water and the nutrient tray was full.
+	// Either way, dispose of it.
+	if(water_reagents.total_volume)
+		chem_splash(hydro_parent.loc, water_reagents, affected_range = 1, adminlog = 0)
 
 /obj/machinery/hydroponics/bullet_act(obj/projectile/Proj) //Works with the Somatoray to modify plant variables.
 	if(!myseed)

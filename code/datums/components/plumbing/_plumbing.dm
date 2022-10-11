@@ -124,6 +124,10 @@
 	else if(reagents.total_volume > 0) //take whatever
 		return TRUE
 
+///returns TRUE if the source's reagents has only one entry
+/datum/component/plumbing/proc/is_pure_source()
+	return reagents.reagent_list.len == 1
+
 ///this is where the reagent is actually transferred and is thus the finish point of our process()
 /datum/component/plumbing/proc/transfer_to(datum/component/plumbing/target, amount, reagent, datum/ductnet/net)
 	if(!reagents || !target || !target.reagents)
