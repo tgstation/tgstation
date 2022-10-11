@@ -246,6 +246,19 @@
 			if(D & demand_connects)
 				send_request(D)
 
+// the transfer_to proc uses round robin which means it will try to drain all of one reagent before moving on
+// one of my test cases here is a varedited water dispenser with 50k water and 50k plant food,
+// which will not run out of either reagent anytime soon. Given that we are looking for a consistent source of both,
+// I don't think it's wrong to expect this use case, even if players don't necessarily have an easy means to create such a supply.
+///replacement for transfer_to that does not use round robin reagent transfer
+/datum/component/plumbing/hydroponics/proc/transfer_from(datum/component/plumbing/source, amount, reagent, datum/ductnet/net)
+	if(!reagents || !source || !source.reagents)
+		return FALSE
+	if(reagent)
+		source.reagents.trans_id_to(recipient_reagents_holder, reagent, amount)
+	else
+		source.reagents.trans_to(recipient_reagents_holder, amount, methods = methods)
+
 // The old hydroponics plumbing system dumped water out onto the floor if the nutrients tray was empty but the water tray was full
 // This occurred constantly if you plumb a water tank into the system and could waste a thousand units of water in minutes.
 // To fix this we will handle the system with more nuance than mundane metal pipes probably desreve, but whatever.
@@ -281,7 +294,7 @@
 		var/suppliersLeft = other_suppliers.len
 		for(var/datum/component/plumbing/give as anything in other_suppliers)
 			var/currentRequest = (targetVolume - nutri_reagents.total_volume) / suppliersLeft
-			give.transfer_to(src, currentRequest, reagent, net)
+			transfer_from(give, currentRequest, reagent, net)
 			suppliersLeft--
 		// We can only transfer so much
 		total_desired -= (nutri_reagents.total_volume - originalVolume)
@@ -295,11 +308,11 @@
 		var/targetVolume = water_reagents.total_volume + min(water_desired,total_desired) // If we drank a lot of nutrients, skip some water
 		var/suppliersLeft = water_suppliers.len
 		var/reagent_constraint = null
-		if(nutri_desired < 1) // prevent waste by only accepting water
+		if(nutri_desired < 0.25) // prevent waste by only accepting water
 			reagent_constraint = /datum/reagent/water
 		for(var/datum/component/plumbing/give as anything in water_suppliers)
 			var/currentRequest = (targetVolume - water_reagents.total_volume) / suppliersLeft
-			give.transfer_to(src, currentRequest, reagent_constraint, net)
+			transfer_from(give, currentRequest, reagent_constraint, net)
 			suppliersLeft--
 		// Hydroponics machine doesn't actually care about the water reagent itself, only the quantity
 		var/water_total = water_reagents.get_reagent_amount(/datum/reagent/water)
@@ -681,8 +694,8 @@
 	else
 		. += span_info("It's empty.")
 
-	. += span_info("Water: [waterlevel]/[maxwater].")
-	. += span_info("Nutrient: [reagents.total_volume]/[maxnutri].")
+	. += span_info("Water: [round(waterlevel,0.1)]/[maxwater].")
+	. += span_info("Nutrient: [round(reagents.total_volume,0.1)]/[maxnutri].")
 	if(self_sustaining)
 		. += span_info("The tray's autogrow is active, protecting it from species mutations, weeds, and pests.")
 
