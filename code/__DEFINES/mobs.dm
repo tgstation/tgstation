@@ -712,4 +712,3 @@
 /// Checking flags for [/mob/proc/can_read()]
 #define READING_CHECK_LITERACY (1<<0)
 #define READING_CHECK_LIGHT (1<<1)
-
