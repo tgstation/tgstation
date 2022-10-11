@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - rscadd: "Revenants have a new spell available. Haunt Object, it allows them to cause nearby loose items to lift off the ground and start attacking people! The objects will return to peace after a few minutes, or if someone dispels them with a null rod or bible."

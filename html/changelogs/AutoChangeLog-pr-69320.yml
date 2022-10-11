@@ -1,4 +1,0 @@
-author: "Guillaume Prata"
-delete-after: True
-changes: 
-  - balance: "The pluoxium reagent won't heal suffocation damage and instead will slowly heals organ damage if the target is sleeping. Hint: Cryotubes."
