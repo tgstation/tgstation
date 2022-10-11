@@ -223,3 +223,5 @@
 				ui_interact(user)
 		else
 			balloon_alert(user, "access denied!")
+			if(isethereal(user))
+				sleep(1 SECONDS) // sleep here to prevent later balloon alerts that show up to ethereals from overlapping and making it completely unreadable
