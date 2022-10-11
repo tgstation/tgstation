@@ -77,9 +77,8 @@ GLOBAL_DATUM(tower_of_babel, /datum/tower_of_babel)
 
 	// if user is affected by tower of babel, we remove the blocked languages
 	to_cure.remove_blocked_language(GLOB.all_languages, source = LANGUAGE_BABEL)
-	to_cure.remove_language(GLOB.all_languages, source = LANGUAGE_BABEL)
+	to_cure.remove_all_languages(source = LANGUAGE_BABEL)
 	to_cure.update_atom_languages()
-	//to_cure.get_selected_language()  update_atom_languages already does this?
 
 	to_cure.clear_mood_event("curse_of_babel")
 
