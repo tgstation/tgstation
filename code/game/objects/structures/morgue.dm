@@ -292,7 +292,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 		if(!locate(/obj/effect/decal/cleanable/ash) in get_step(src, dir))//prevent pile-up
 			new/obj/effect/decal/cleanable/ash/crematorium(src)
 
-		sleep(30)
+		sleep(3 SECONDS)
 
 		if(!QDELETED(src))
 			locked = FALSE
