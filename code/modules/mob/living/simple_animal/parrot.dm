@@ -29,7 +29,7 @@
 /mob/living/simple_animal/parrot
 	name = "parrot"
 	desc = "The parrot squawks, \"They're a Parrot! BAWWK!\"" //'
-	icon = 'icons/mob/animal.dmi'
+	icon = 'icons/mob/simple/animal.dmi'
 	icon_state = "parrot_fly"
 	icon_living = "parrot_fly"
 	icon_dead = "parrot_dead"

@@ -41,41 +41,41 @@
 		"The engraving has a surrealist style."
 	],
 	"engraving_forewords":[
-		"The engraving depicts",
 		"Embedded in the wall is a story of",
 		"In the engraving you can see the tale of",
 		"On the wall, you see",
+		"The engraving depicts",
 		"This piece depicts"
 	],
 	"engraving_somethings":[
-		"%PROTAGONIST can also be seen cringing at the sight of a %SOMETHING.",
-		"in the meantime, %CREWMEMBER is being arrested, clutching a %SOMETHING.",
+		"%CREWMEMBER is berating %PROTAGONIST over the ordeal.",
 		"%CREWMEMBER is doing a sick ass backflip in the meantime!",
-		"%PROTAGONIST also appears to be locked inside of an escape pod.",
-		"A classic easter egg can be found in way of a %SOMETHING",
-		"%PROTAGONIST can also be seen secretly admiring a %SOMETHING.",
+		"%CREWMEMBER is shocked by the situation.",
+		"%CREWMEMBER is watching, crying at the situation.",
+		"%CREWMEMBER is watching, laughing at %PROTAGONIST.",
 		"%MEMORIZER is also shown floating slightly above the ground.",
-		"also depicted is %CREWMEMBER standing on top of a soapbox.",
-		"depicted also is %MEMORIZER, having an intellectual talk with a %SOMETHING.",
-		"in the middle a %SOMETHING is being worshipped by %MEMORIZER.",
-		"there is also a %SOMETHING etched in the corner. It was done so crudely you'd think a three-year-old did it.",
-		"%PROTAGONIST has a cartoony thought bubble in the engraving.",
 		"%MEMORIZER is lying on the floor, defeated by a %SOMETHING.",
+		"%PROTAGONIST also appears to be locked inside of an escape pod.",
+		"%PROTAGONIST can also be seen cringing at the sight of a %SOMETHING.",
+		"%PROTAGONIST can also be seen secretly admiring a %SOMETHING.",
+		"%PROTAGONIST has a cartoony thought bubble in the engraving.",
 		"A %SOMETHING stands in the background.",
+		"A classic easter egg can be found in way of a %SOMETHING",
 		"A crowd can be seen cheering in the background.",
 		"A heavily pixelated %SOMETHING is sitting there, ominously.",
-		"it is engraved as a political comic, with %SOMETHING saying a snarky line in the bottom left.",
 		"A weeping statue of liberty can be seen in the corner",
+		"also depicted is %CREWMEMBER standing on top of a soapbox.",
+		"depicted also is %MEMORIZER, having an intellectual talk with a %SOMETHING.",
+		"For some reason, %CREWMEMBER is also there.",
+		"in the meantime, %CREWMEMBER is being arrested, clutching a %SOMETHING.",
+		"in the middle a %SOMETHING is being worshipped by %MEMORIZER.",
+		"it is engraved as a political comic, with %SOMETHING saying a snarky line in the bottom left.",
 		"The bottom left has been signed by the author, %MEMORIZER",
 		"The engraving has repeating text behind the foreground.",
 		"The top part is dominated by a %SOMETHING.",
 		"There is a circle of danging %SOMETHINGs.",
 		"There is a tiny %SOMETHING in the corner.",
-		"%CREWMEMBER is watching, laughing at %PROTAGONIST.",
-		"%CREWMEMBER is watching, crying at the situation.",
-		"%CREWMEMBER is shocked by the situation.",
-		"%CREWMEMBER is berating %PROTAGONIST over the ordeal.",
-		"For some reason, %CREWMEMBER is also there."
+		"there is also a %SOMETHING etched in the corner. It was done so crudely you'd think a three-year-old did it."
 	],
 	"changeling_absorb_forewords":[
 		"A story of the past reveals itself, speaking of",
@@ -88,10 +88,10 @@
 		"Your mental spines dive deeper into the memory."
 	],
 	"tattoo_forewords":[
-		"This tattoo's story is of",
 		"Inked into the skin is a story of",
 		"On the tattoo is a tale of",
-		"The tattoo depicts"
+		"The tattoo depicts",
+		"This tattoo's story is of"
 	],
 	"tattoo_somethings":[
 		"%CREWMEMBER looms over the tattoo.",
@@ -120,7 +120,7 @@
 		"The tattoo is in a mad max style.",
 		"The tattoo is styled to look cyberpunk.",
 		"The tattoo looks cartoony.",
-		"The tattoo looks like it was done by an ameteur.",
+		"The tattoo looks like it was done by an amateur.",
 		"The tattoo looks professional.",
 		"This tattoo is Nanotrasen approved",
 		"This tattoo is Syndicate approved"
@@ -205,10 +205,10 @@
 		"The death of %PROTAGONIST."
 	],
 	"death_starts":[
-		"%PROTAGONIST's heart stopping",
 		"%PROTAGONIST having perished",
-		"the death of %PROTAGONIST",
-		"%PROTAGONIST seizing up and falling limp, their eyes appearing dead and lifeless"
+		"%PROTAGONIST seizing up and falling limp, their eyes appearing dead and lifeless",
+		"%PROTAGONIST's heart stopping",
+		"the death of %PROTAGONIST"
 	],
 	"death_moods":[
 		"There shouldn't be any; this is set to be a moodless memory!"
@@ -218,7 +218,7 @@
 	],
 	"creampied_starts":[
 		"%PROTAGONIST's face being covered in cream",
-		"%PROTAGONIST getting creampied"
+		"%PROTAGONIST getting cream-pied"
 	],
 	"creampied_moods":[
 		"%PROTAGONIST %MOOD as the cream drips off their face",
@@ -229,8 +229,8 @@
 		"The slipping of %PROTAGONIST."
 	],
 	"slipped_starts":[
-		"%PROTAGONIST tumbling right over a %WHAT_BY",
 		"%PROTAGONIST not being able to keep standing when faced with a %WHAT_BY",
+		"%PROTAGONIST tumbling right over a %WHAT_BY",
 		"the perilous %WHAT_BY which took %PROTAGONIST down a notch"
 	],
 	"slipped_moods":[
@@ -266,9 +266,9 @@
 		"%PROTAGONIST's smoking problem."
 	],
 	"quirk_drug_starts":[
-		"%PROTAGONIST fiending for some %FAV_BRAND ciggies.",
 		"%FAV_BRAND cigarettes being plundered by %PROTAGONIST.",
-		"%PROTAGONIST buying a box of %FAV_BRAND nicotine sticks."
+		"%PROTAGONIST buying a box of %FAV_BRAND nicotine sticks.",
+		"%PROTAGONIST fiending for some %FAV_BRAND ciggies."
 	],
 	"quirk_drug_moods":[
 		"%MEMORIZER %MOOD as they light another up."
@@ -277,11 +277,11 @@
 		"A delicious %FOOD %PROTAGONIST ate"
 	],
 	"meal_starts":[
-		"%PROTAGONIST enjoying an incredibly good %FOOD",
-		"%PROTAGONIST producing a slice of life anime reaction to eating %FOOD",
-		"%FOOD leaving a long lasting impression on %PROTAGONIST",
 		"%FOOD changing %PROTAGONIST's outlook on food",
-		"%FOOD is leaving %PROTAGONIST round and full"
+		"%FOOD is leaving %PROTAGONIST round and full",
+		"%FOOD leaving a long lasting impression on %PROTAGONIST",
+		"%PROTAGONIST enjoying an incredibly good %FOOD",
+		"%PROTAGONIST producing a slice of life anime reaction to eating %FOOD"
 	],
 	"meal_moods":[
 		"%PROTAGONIST %MOOD as they take another bite."
@@ -290,10 +290,10 @@
 		"a delicious %DRINK %PROTAGONIST consumed"
 	],
 	"drink_starts":[
-		"%PROTAGONIST enjoying an incredibly good %DRINK",
-		"%PROTAGONIST slurping some tasty %DRINK",
+		"%DRINK changing %PROTAGONIST's outlook on classy drinking",
 		"%DRINK leaving a long lasting impression on %PROTAGONIST",
-		"%DRINK changing %PROTAGONIST's outlook on classy drinking"
+		"%PROTAGONIST enjoying an incredibly good %DRINK",
+		"%PROTAGONIST slurping some tasty %DRINK"
 	],
 	"drink_moods":[
 		"%PROTAGONIST %MOOD as they take another sip."
@@ -313,9 +313,9 @@
 		"The loss of %PROTAGONIST's %LOST_LIMB."
 	],
 	"dismembered_starts":[
-		"%PROTAGONIST's %LOST_LIMB flinging away",
+		"%PROTAGONIST becoming eligible for handicapped parking",
 		"%PROTAGONIST's %LOST_LIMB being shot into the abyss",
-		"%PROTAGONIST becoming eligble for handicapped parking"
+		"%PROTAGONIST's %LOST_LIMB flinging away"
 	],
 	"dismembered_moods":[
 		"%PROTAGONIST %MOOD after losing %LOST_LIMB.",
@@ -326,7 +326,7 @@
 	],
 	"pet_dead_starts":[
 		"honoring %DEUTERAGONIST, the station's pet",
-		"%DEUTERAGONIST's funeral, which is attended by a group of crewmembers",
+		"%DEUTERAGONIST's funeral, which is attended by a group of crew members",
 		"a shallow hole, with %PROPER %DEUTERAGONIST inside"
 	],
 	"pet_dead_moods":[
@@ -339,8 +339,8 @@
 	"won_revolution_starts":[
 		"%PROTAGONIST raising the flag of the revolution over the corpses of the former dictators",
 		"a flag waving above a pile of corpses with %PROTAGONIST standing over it",
-		"a statue of the former captain toppled over, with %PROTAGONIST next to it",
-		"a poster that says %STATION_NAME with a cross in it, hailing in a new era"
+		"a poster that says %STATION_NAME with a cross in it, hailing in a new era",
+		"a statue of the former captain toppled over, with %PROTAGONIST next to it"
 	],
 	"won_revolution_moods":[
 		"%PROTAGONIST %MOOD at the fall of %STATION_NAME.",
@@ -350,8 +350,8 @@
 		"The award ceremony of %MEDAL_TYPE to %PROTAGONIST."
 	],
 	"received_medal_starts":[
-		"%PROTAGONIST receiving a %MEDAL_TYPE with the inscription \"%MEDAL_REASON\"",
 		"%PROTAGONIST accepting a %MEDAL_TYPE inscribed with \"%MEDAL_REASON\" from %DEUTERAGONIST",
+		"%PROTAGONIST receiving a %MEDAL_TYPE with the inscription \"%MEDAL_REASON\"",
 		"a %MEDAL_TYPE with the inscription \"%MEDAL_REASON\" being awarded to %PROTAGONIST by %DEUTERAGONIST"
 	],
 	"received_medal_moods":[
@@ -362,8 +362,8 @@
 		"The slaughter of %DEUTERAGONIST."
 	],
 	"megafauna_kill_starts":[
-		"%PROTAGONIST standing with the head of %DEUTERAGONIST in their hand",
 		"%PROTAGONIST performing the final strike on %DEUTERAGONIST, taking it down",
+		"%PROTAGONIST standing with the head of %DEUTERAGONIST in their hand",
 		"the killing of %DEUTERAGONIST, the dangerous megafauna, by %PROTAGONIST"
 	],
 	"megafauna_kill_moods":[

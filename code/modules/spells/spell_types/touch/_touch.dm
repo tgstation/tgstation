@@ -220,8 +220,8 @@
 	name = "\improper outstretched hand"
 	desc = "High Five?"
 	icon = 'icons/obj/weapons/items_and_weapons.dmi'
-	lefthand_file = 'icons/mob/inhands/misc/touchspell_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/touchspell_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/touchspell_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/touchspell_righthand.dmi'
 	icon_state = "latexballon"
 	inhand_icon_state = null
 	item_flags = NEEDS_PERMIT | ABSTRACT

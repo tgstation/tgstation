@@ -4,6 +4,8 @@
 	ammo_type = /obj/item/ammo_casing/magic
 	icon_state = "nothingwand"
 	inhand_icon_state = "wand"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	base_icon_state = "nothingwand"
 	w_class = WEIGHT_CLASS_SMALL
 	can_charge = FALSE
@@ -147,7 +149,7 @@
 	max_charges = 10 //10, 5, 5, 4
 
 /obj/item/gun/magic/wand/polymorph/zap_self(mob/living/user)
-	..() //because the user mob ceases to exists by the time wabbajack fully resolves
+	. = ..() //because the user mob ceases to exists by the time wabbajack fully resolves
 
 	user.wabbajack()
 	charges--

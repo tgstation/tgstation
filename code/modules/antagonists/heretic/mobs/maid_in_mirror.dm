@@ -3,7 +3,7 @@
 	name = "Maid in the Mirror"
 	real_name = "Maid in the Mirror"
 	desc = "A floating and flowing wisp of chilled air. Glancing at it causes it to shimmer slightly."
-	icon = 'icons/mob/mob.dmi'
+	icon = 'icons/mob/simple/mob.dmi'
 	icon_state = "stand"
 	icon_living = "stand" // Placeholder sprite
 	speak_emote = list("whispers")
@@ -14,7 +14,7 @@
 	health = 80
 	melee_damage_lower = 12
 	melee_damage_upper = 16
-	sight = SEE_MOBS | SEE_OBJS | SEE_TURFS
+	sight = SEE_MOBS | SEE_OBJS | SEE_TURFS | SEE_BLACKNESS
 	death_message = "shatters and vanishes, releasing a gust of cold air."
 	loot = list(
 		/obj/item/shard,

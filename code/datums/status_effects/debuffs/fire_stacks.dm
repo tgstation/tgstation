@@ -26,9 +26,15 @@
 /datum/status_effect/fire_handler/on_creation(mob/living/new_owner, new_stacks, forced = FALSE)
 	. = ..()
 
-	if(isanimal(owner))
+	if(isbasicmob(owner))
 		qdel(src)
 		return
+
+	if(isanimal(owner))
+		var/mob/living/simple_animal/animal_owner = owner
+		if(!animal_owner.flammable)
+			qdel(src)
+			return
 
 	owner = new_owner
 	set_stacks(new_stacks)
@@ -138,10 +144,13 @@
 		qdel(src)
 		return TRUE
 
-	if(!on_fire || isanimal(owner))
+	if(!on_fire)
 		return TRUE
 
-	if(iscyborg(owner))
+	if(isanimal(owner))
+		var/mob/living/simple_animal/animal_owner = owner
+		adjust_stacks(animal_owner.fire_stack_removal_speed * delta_time)
+	else if(iscyborg(owner))
 		adjust_stacks(-0.55 * delta_time)
 	else
 		adjust_stacks(-0.05 * delta_time)

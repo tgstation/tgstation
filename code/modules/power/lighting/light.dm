@@ -36,8 +36,6 @@
 	var/fitting = "tube"
 	///Count of number of times switched on/off, this is used to calculate the probability the light burns out
 	var/switchcount = 0
-	///True if rigged to explode
-	var/rigged = FALSE
 	///Cell reference
 	var/obj/item/stock_parts/cell/cell
 	///If true, this fixture generates a very weak cell at roundstart
@@ -83,7 +81,7 @@
 	. = ..()
 
 	if(!mapload) //sync up nightshift lighting for player made lights
-		var/area/our_area = get_area(src)
+		var/area/our_area = get_room_area(src)
 		var/obj/machinery/power/apc/temp_apc = our_area.apc
 		nightshift_enabled = temp_apc?.nightshift_lights
 
@@ -106,7 +104,7 @@
 	addtimer(CALLBACK(src, .proc/update, FALSE), 0.1 SECONDS)
 
 /obj/machinery/light/Destroy()
-	var/area/local_area = get_area(src)
+	var/area/local_area =get_room_area(src)
 	if(local_area)
 		on = FALSE
 	QDEL_NULL(cell)
@@ -115,7 +113,7 @@
 /obj/machinery/light/update_icon_state()
 	switch(status) // set icon_states
 		if(LIGHT_OK)
-			var/area/local_area = get_area(src)
+			var/area/local_area =get_room_area(src)
 			if(low_power_mode || major_emergency || (local_area?.fire))
 				icon_state = "[base_state]_emergency"
 			else
@@ -133,7 +131,7 @@
 	if(!on || status != LIGHT_OK)
 		return
 
-	var/area/local_area = get_area(src)
+	var/area/local_area = get_room_area(src)
 	if(low_power_mode || major_emergency || (local_area?.fire))
 		. += mutable_appearance(overlay_icon, "[base_state]_emergency")
 		return
@@ -148,7 +146,7 @@
 	. = ..()
 	if(!.)
 		return
-	var/area/our_area = get_area(src)
+	var/area/our_area =get_room_area(src)
 	RegisterSignal(our_area, COMSIG_AREA_FIRE_CHANGED, .proc/handle_fire)
 
 /obj/machinery/light/on_enter_area(datum/source, area/area_to_register)
@@ -176,7 +174,9 @@
 		var/color_set = bulb_colour
 		if(color)
 			color_set = color
-		var/area/local_area = get_area(src)
+		if(reagents)
+			START_PROCESSING(SSmachines, src)
+		var/area/local_area =get_room_area(src)
 		if (local_area?.fire)
 			color_set = bulb_low_power_colour
 		else if (nightshift_enabled)
@@ -190,10 +190,7 @@
 		var/matching = light && brightness_set == light.light_range && power_set == light.light_power && color_set == light.light_color
 		if(!matching)
 			switchcount++
-			if(rigged)
-				if(status == LIGHT_OK && trigger)
-					explode()
-			else if( prob( min(60, (switchcount**2)*0.01) ) )
+			if( prob( min(60, (switchcount**2)*0.01) ) )
 				if(trigger)
 					burn_out()
 			else
@@ -220,7 +217,7 @@
 		static_power_used = 0
 	else if(on) //Light is on, just recalculate usage
 		var/static_power_used_new = 0
-		var/area/local_area = get_area(src)
+		var/area/local_area = get_room_area(src)
 		if (nightshift_enabled && !local_area?.fire)
 			static_power_used_new = nightshift_brightness * nightshift_light_power * power_consumption_rate
 		else
@@ -241,13 +238,15 @@
 		var/delay = rand(BROKEN_SPARKS_MIN, BROKEN_SPARKS_MAX)
 		addtimer(CALLBACK(src, .proc/broken_sparks), delay, TIMER_UNIQUE | TIMER_NO_HASH_WAIT)
 
-/obj/machinery/light/process()
-	if (!cell)
-		return PROCESS_KILL
-	if(has_power())
-		if (cell.charge == cell.maxcharge)
-			return PROCESS_KILL
-		cell.charge = min(cell.maxcharge, cell.charge + LIGHT_EMERGENCY_POWER_USE) //Recharge emergency power automatically while not using it
+/obj/machinery/light/process(delta_time)
+	if(has_power()) //If the light is being powered by the station.
+		if(cell)
+			if(cell.charge == cell.maxcharge && !reagents) //If the cell is done mooching station power, and reagents don't need processing, stop processing
+				return PROCESS_KILL
+			cell.charge = min(cell.maxcharge, cell.charge + LIGHT_EMERGENCY_POWER_USE) //Recharge emergency power automatically while not using it
+	if(reagents) //with most reagents coming out at 300, and with most meaningful reactions coming at 370+, this rate gives a few seconds of time to place it in and get out of dodge regardless of input.
+		reagents.adjust_thermal_energy(8 * reagents.total_volume * SPECIFIC_HEAT_DEFAULT * delta_time)
+		reagents.handle_reactions()
 	if(low_power_mode && !use_emergency_power(LIGHT_EMERGENCY_POWER_USE))
 		update(FALSE) //Disables emergency mode and sets the color to normal
 
@@ -313,17 +312,17 @@
 			to_chat(user, span_notice("You replace [light_object]."))
 		else
 			to_chat(user, span_notice("You insert [light_object]."))
+		if(length(light_object.reagents.reagent_list))
+			create_reagents(LIGHT_REAGENT_CAPACITY, SEALED_CONTAINER | TRANSPARENT)
+			light_object.reagents.trans_to(reagents, LIGHT_REAGENT_CAPACITY)
 		status = light_object.status
 		switchcount = light_object.switchcount
-		rigged = light_object.rigged
 		brightness = light_object.brightness
 		on = has_power()
 		update()
 
 		qdel(light_object)
 
-		if(on && rigged)
-			explode()
 		return
 
 	// attempt to stick weapon into light socket
@@ -404,13 +403,13 @@
 // returns if the light has power /but/ is manually turned off
 // if a light is turned off, it won't activate emergency power
 /obj/machinery/light/proc/turned_off()
-	var/area/local_area = get_area(src)
+	var/area/local_area = get_room_area(src)
 	return !local_area.lightswitch && local_area.power_light || flickering
 
 // returns whether this light has power
 // true if area has power and lightswitch is on
 /obj/machinery/light/proc/has_power()
-	var/area/local_area = get_area(src)
+	var/area/local_area =get_room_area(src)
 	return local_area.lightswitch && local_area.power_light
 
 // returns whether this light has emergency power
@@ -542,8 +541,10 @@
 
 /obj/machinery/light/proc/drop_light_tube(mob/user)
 	var/obj/item/light/light_object = new light_type()
+	if(reagents)
+		reagents.trans_to(light_object.reagents, LIGHT_REAGENT_CAPACITY)
+		QDEL_NULL(reagents)
 	light_object.status = status
-	light_object.rigged = rigged
 	light_object.brightness = brightness
 
 	// light item inherits the switchcount, then zero it
@@ -603,7 +604,7 @@
 // called when area power state changes
 /obj/machinery/light/power_change()
 	SHOULD_CALL_PARENT(FALSE)
-	var/area/local_area = get_area(src)
+	var/area/local_area =get_room_area(src)
 	set_on(local_area.lightswitch && local_area.power_light)
 
 // called when heated
@@ -614,16 +615,6 @@
 /obj/machinery/light/atmos_expose(datum/gas_mixture/air, exposed_temperature)
 	if(prob(max(0, exposed_temperature - 673)))   //0% at <400C, 100% at >500C
 		break_light_tube()
-
-// explode the light
-
-/obj/machinery/light/proc/explode()
-	set waitfor = 0
-	break_light_tube() // break it first to give a warning
-	sleep(2)
-	explosion(src, light_impact_range = 2, flash_range = -1)
-	sleep(1)
-	qdel(src)
 
 /obj/machinery/light/proc/on_light_eater(obj/machinery/light/source, datum/light_eater)
 	SIGNAL_HANDLER

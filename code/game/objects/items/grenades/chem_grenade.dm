@@ -145,7 +145,7 @@
 			beaker.forceMove(drop_location())
 			if(!beaker.reagents)
 				continue
-			var/reagent_list = pretty_string_from_reagent_list(beaker.reagents)
+			var/reagent_list = pretty_string_from_reagent_list(beaker.reagents.reagent_list)
 			user.log_message("removed [beaker] ([reagent_list]) from [src]", LOG_GAME)
 		beakers = list()
 		to_chat(user, span_notice("You open the [initial(name)] assembly and remove the payload."))
@@ -173,7 +173,7 @@
 					return
 				to_chat(user, span_notice("You add [item] to the [initial(name)] assembly."))
 				beakers += item
-				var/reagent_list = pretty_string_from_reagent_list(item.reagents)
+				var/reagent_list = pretty_string_from_reagent_list(item.reagents.reagent_list)
 				user.log_message("inserted [item] ([reagent_list]) into [src]", LOG_GAME)
 			else
 				to_chat(user, span_warning("[item] is empty!"))
@@ -355,7 +355,7 @@
 	if (active)
 		return
 	var/newspread = tgui_input_number(user, "Please enter a new spread amount", "Grenade Spread", 5, 100, 5)
-	if(!newspread || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(!newspread || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 		return
 	unit_spread = newspread
 	to_chat(user, span_notice("You set the time release to [unit_spread] units per detonation."))

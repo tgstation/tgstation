@@ -248,6 +248,14 @@
 	impressiveness = 100
 	abstract_type = /obj/structure/statue/elder_atmosian //This one is uncarvable
 
+///////////Goliath//////////////////////////////////////////////////
+/obj/structure/statue/goliath
+	desc = "A lifelike statue of a horrifying monster."
+	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
+	icon_state = "goliath"
+	name = "goliath"
+
+///////////Other Stuff//////////////////////////////////////////////
 /obj/item/chisel
 	name = "chisel"
 	desc = "Breaking and making art since 4000 BC. This one uses advanced technology to allow the creation of lifelike moving statues."
@@ -531,21 +539,41 @@ Moving interrupts
 	/// Ideally we'd have knowledge what we're removing but i'd have to be done on target appearance retrieval
 	var/list/overlays_to_remove = list()
 	for(var/mutable_appearance/special_overlay as anything in content_ma.overlays)
-		if(special_overlay.plane in plane_whitelist)
+		var/mutable_appearance/real = new()
+		real.appearance = special_overlay
+		if(PLANE_TO_TRUE(real.plane) in plane_whitelist)
 			continue
-		overlays_to_remove += special_overlay
+		overlays_to_remove += real
 	content_ma.overlays -= overlays_to_remove
 
 	var/list/underlays_to_remove = list()
 	for(var/mutable_appearance/special_underlay as anything in content_ma.underlays)
-		if(special_underlay.plane in plane_whitelist)
+		var/mutable_appearance/real = new()
+		real.appearance = special_underlay
+		if(PLANE_TO_TRUE(real.plane) in plane_whitelist)
 			continue
-		underlays_to_remove += special_underlay
+		underlays_to_remove += real
 	content_ma.underlays -= underlays_to_remove
 
 	content_ma.appearance_flags &= ~KEEP_APART //Don't want this
 	content_ma.filters = filter(type="color",color=greyscale_with_value_bump,space=FILTER_COLOR_HSV)
+	update_content_planes()
 	update_appearance()
+
+/obj/structure/statue/custom/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	if(same_z_layer)
+		return ..()
+	update_content_planes()
+	update_appearance()
+
+/obj/structure/statue/custom/proc/update_content_planes()
+	if(!content_ma)
+		return
+	var/turf/our_turf = get_turf(src)
+	// MA's stored in the overlays list are not actually mutable, they've been flattened
+	// This proc unflattens them, updates them, and then reapplies
+	var/list/created = update_appearance_planes(list(content_ma), GET_TURF_PLANE_OFFSET(our_turf))
+	content_ma = created[1]
 
 /obj/structure/statue/custom/update_overlays()
 	. = ..()

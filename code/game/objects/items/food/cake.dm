@@ -186,7 +186,7 @@
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cakeslice/birthday, 5, 3 SECONDS, table_required = TRUE)
 
 /obj/item/food/cake/birthday/microwave_act(obj/machinery/microwave/microwave) //super sekrit club
-	new /obj/item/clothing/head/hardhat/cakehat(get_turf(src))
+	new /obj/item/clothing/head/utility/hardhat/cakehat(get_turf(src))
 	qdel(src)
 
 /obj/item/food/cakeslice/birthday
@@ -221,7 +221,7 @@
 	energy_bite(target_mob, user)
 
 /obj/item/food/cake/birthday/energy/microwave_act(obj/machinery/microwave/M) //super sekriter club
-	new /obj/item/clothing/head/hardhat/cakehat/energycake(get_turf(src))
+	new /obj/item/clothing/head/utility/hardhat/cakehat/energycake(get_turf(src))
 	qdel(src)
 
 /obj/item/food/cakeslice/birthday/energy
@@ -360,7 +360,7 @@
 	desc = "A condensed cake made for filling people up quickly."
 	icon_state = "pound_cake"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 60, /datum/reagent/consumable/nutriment/vitamin = 5)
-	tastes = list("cake" = 5, "sweetness" = 1, "batter" = 1)
+	tastes = list("cake" = 5, "sweetness" = 5, "batter" = 1)
 	foodtypes = GRAIN | DAIRY | SUGAR | JUNKFOOD
 	venue_value = FOOD_PRICE_CHEAP
 
@@ -444,7 +444,7 @@
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cakeslice/trumpet, 5, 3 SECONDS, table_required = TRUE)
 
 /obj/item/food/cakeslice/trumpet
-	name = "spaceman's cake"
+	name = "spaceman's cake slice"
 	desc = "A spaceman's trumpet frosted cake."
 	icon_state = "trumpetcakeslice"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/consumable/cream = 1, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/consumable/berryjuice = 1)

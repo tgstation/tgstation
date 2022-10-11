@@ -34,9 +34,10 @@
 		hasprox_receiver = new_host
 	host = new_host
 	RegisterSignal(new_host, COMSIG_PARENT_QDELETING, .proc/on_host_or_receiver_del)
-	var/static/list/containers_connections = list(COMSIG_MOVABLE_MOVED = .proc/on_moved)
+	var/static/list/containers_connections = list(COMSIG_MOVABLE_MOVED = .proc/on_moved, COMSIG_MOVABLE_Z_CHANGED = .proc/on_z_change)
 	AddComponent(/datum/component/connect_containers, host, containers_connections)
 	RegisterSignal(host, COMSIG_MOVABLE_MOVED, .proc/on_moved)
+	RegisterSignal(host, COMSIG_MOVABLE_Z_CHANGED, .proc/on_z_change)
 	set_range(current_range, TRUE)
 
 /datum/proximity_monitor/proc/on_host_or_receiver_del(datum/source)
@@ -61,6 +62,10 @@
 	SIGNAL_HANDLER
 	if(source == host)
 		hasprox_receiver?.HasProximity(host)
+
+/datum/proximity_monitor/proc/on_z_change()
+	SIGNAL_HANDLER
+	return
 
 /datum/proximity_monitor/proc/set_ignore_if_not_on_turf(does_ignore = TRUE)
 	if(ignore_if_not_on_turf == does_ignore)

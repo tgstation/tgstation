@@ -107,7 +107,7 @@
 /datum/component/shielded/proc/on_equipped(datum/source, mob/user, slot)
 	SIGNAL_HANDLER
 
-	if(slot == ITEM_SLOT_HANDS && !shield_inhand)
+	if((slot & ITEM_SLOT_HANDS) && !shield_inhand)
 		lost_wearer(source, user)
 		return
 	set_wearer(source, user)

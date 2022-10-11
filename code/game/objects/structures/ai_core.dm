@@ -4,7 +4,7 @@
 	density = TRUE
 	anchored = FALSE
 	name = "\improper AI core"
-	icon = 'icons/mob/ai.dmi'
+	icon = 'icons/mob/silicon/ai.dmi'
 	icon_state = "0"
 	desc = "The framework for an artificial intelligence core."
 	max_integrity = 500

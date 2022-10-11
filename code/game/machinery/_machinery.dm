@@ -370,7 +370,7 @@
 /obj/machinery/proc/can_be_occupant(atom/movable/occupant_atom)
 	return occupant_typecache ? is_type_in_typecache(occupant_atom, occupant_typecache) : isliving(occupant_atom)
 
-/obj/machinery/proc/close_machine(atom/movable/target = null)
+/obj/machinery/proc/close_machine(atom/movable/target)
 	state_open = FALSE
 	set_density(TRUE)
 	if(!target)
@@ -485,6 +485,21 @@
 
 	return TRUE
 
+///Get a valid powered area to reference for power use, mainly for wall-mounted machinery that isn't always mapped directly in a powered location.
+/obj/machinery/proc/get_room_area(area/machine_room)
+	var/area/machine_area = get_area(src)
+	if(!machine_area.always_unpowered) ///check our loc first to see if its a powered area
+		machine_room = machine_area
+		return machine_room
+	var/turf/mounted_wall = get_step(src,dir)
+	if (mounted_wall && istype(mounted_wall, /turf/closed))
+		var/area/wall_area = get_area(mounted_wall)
+		if(!wall_area.always_unpowered) //loc area wasn't good, checking adjacent wall for a good area to use
+			machine_room = wall_area
+			return machine_room
+	machine_room = machine_area ///couldn't find a proper powered area on loc or adjacent wall, defaulting back to loc and blaming mappers
+	return machine_room
+
 ///makes this machine draw power from its area according to which use_power mode it is set to
 /obj/machinery/proc/update_current_power_usage()
 	if(static_power_usage)
@@ -562,7 +577,7 @@
 		return FALSE
 
 	// machines have their own lit up display screens and LED buttons so we don't need to check for light
-	if((interaction_flags_machine & INTERACT_MACHINE_REQUIRES_LITERACY) && !user.can_read(src, check_for_light = FALSE))
+	if((interaction_flags_machine & INTERACT_MACHINE_REQUIRES_LITERACY) && !user.can_read(src, READING_CHECK_LITERACY))
 		return FALSE
 
 	if(panel_open && !(interaction_flags_machine & INTERACT_MACHINE_OPEN))
@@ -1012,6 +1027,11 @@
 		set_occupant(vval)
 		datum_flags |= DF_VAR_EDITED
 		return TRUE
+	if(vname == NAMEOF(src, machine_stat))
+		set_machine_stat(vval)
+		datum_flags |= DF_VAR_EDITED
+		return TRUE
+
 	return ..()
 
 /**

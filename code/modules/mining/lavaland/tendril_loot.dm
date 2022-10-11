@@ -28,8 +28,10 @@
 	modkit_design = /datum/design/unique_modkit/bounty
 
 /datum/design/unique_modkit
-	category = list(RND_CATEGORY_MINING_DESIGNS, RND_CATEGORY_CYBORG_UPGRADE_MODULES) //can't be normally obtained
-	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
+	category = list(
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_PKA_MODS,
+	)
+	build_type = PROTOLATHE
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO
 
 /datum/design/unique_modkit/offensive_turf_aoe
@@ -71,8 +73,25 @@
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	icon_state = "asclepius_dormant"
+	inhand_icon_state = "asclepius_dormant"
 	var/activated = FALSE
-	var/usedHand
+
+/obj/item/rod_of_asclepius/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+
+/obj/item/rod_of_asclepius/update_desc(updates)
+	. = ..()
+	desc = activated ? "A short wooden rod with a mystical snake inseparably gripping itself and the rod to your forearm. It flows with a healing energy that disperses amongst yourself and those around you." : initial(desc)
+
+/obj/item/rod_of_asclepius/update_icon_state()
+	. = ..()
+	icon_state = inhand_icon_state = "ascelpius_[activated ? "active" : "dormant"]"
+
+/obj/item/rod_of_asclepius/vv_edit_var(vname, vval)
+	. = ..()
+	if(vname == NAMEOF(src, activated) && activated)
+		activated()
 
 /obj/item/rod_of_asclepius/attack_self(mob/user)
 	if(activated)
@@ -81,7 +100,7 @@
 		to_chat(user, span_warning("The snake carving seems to come alive, if only for a moment, before returning to its dormant state, almost as if it finds you incapable of holding its oath."))
 		return
 	var/mob/living/carbon/itemUser = user
-	usedHand = itemUser.get_held_index_of_item(src)
+	var/usedHand = itemUser.get_held_index_of_item(src)
 	if(itemUser.has_status_effect(/datum/status_effect/hippocratic_oath))
 		to_chat(user, span_warning("You can't possibly handle the responsibility of more than one rod!"))
 		return
@@ -115,9 +134,8 @@
 /obj/item/rod_of_asclepius/proc/activated()
 	item_flags = DROPDEL
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT(type))
-	desc = "A short wooden rod with a mystical snake inseparably gripping itself and the rod to your forearm. It flows with a healing energy that disperses amongst yourself and those around you. "
-	icon_state = "asclepius_active"
 	activated = TRUE
+	update_appearance()
 
 //Memento Mori
 /obj/item/clothing/neck/necklace/memento_mori
@@ -131,7 +149,7 @@
 	var/mob/living/carbon/human/active_owner
 
 /obj/item/clothing/neck/necklace/memento_mori/item_action_slot_check(slot)
-	return slot == ITEM_SLOT_NECK
+	return (slot & ITEM_SLOT_NECK)
 
 /obj/item/clothing/neck/necklace/memento_mori/dropped(mob/user)
 	..()
@@ -168,7 +186,7 @@
 /obj/item/clothing/neck/necklace/memento_mori/proc/check_health(mob/living/source)
 	SIGNAL_HANDLER
 
-	var/list/guardians = source.hasparasites()
+	var/list/guardians = source.get_all_linked_holoparasites()
 	if(!length(guardians))
 		return
 	if(source.health <= HEALTH_THRESHOLD_DEAD)
@@ -277,7 +295,7 @@
 
 /obj/effect/wisp/proc/update_user_sight(mob/user)
 	SIGNAL_HANDLER
-	user.sight |= sight_flags
+	user.add_sight(sight_flags)
 	if(!isnull(lighting_alpha))
 		user.lighting_alpha = min(user.lighting_alpha, lighting_alpha)
 
@@ -478,8 +496,9 @@
 	if(!user.can_read(src))
 		return FALSE
 	to_chat(user, span_notice("You flip through the pages of the book, quickly and conveniently learning every language in existence. Somewhat less conveniently, the aging book crumbles to dust in the process. Whoops."))
-	user.grant_all_languages(source=LANGUAGE_BABEL)
 	cure_curse_of_babel(user) // removes tower of babel if we have it
+	user.grant_all_languages(source=LANGUAGE_BABEL)
+	user.remove_blocked_language(GLOB.all_languages, source = LANGUAGE_ALL)
 	ADD_TRAIT(user, TRAIT_TOWER_OF_BABEL, MAGIC_TRAIT) // this makes you immune to babel effects
 	new /obj/effect/decal/cleanable/ash(get_turf(user))
 	qdel(src)
@@ -496,7 +515,7 @@
 	list_reagents = list(/datum/reagent/flightpotion = 5)
 
 /obj/item/reagent_containers/cup/bottle/potion/update_icon_state()
-	icon_state = "potionflask[reagents.total_volume ? null : "_empty"]"
+	icon_state = "potionflask[reagents?.total_volume ? null : "_empty"]"
 	return ..()
 
 /datum/reagent/flightpotion
@@ -556,7 +575,7 @@
 	name = "concussive gauntlets"
 	desc = "Pickaxes... for your hands!"
 	icon_state = "concussive_gauntlets"
-	inhand_icon_state = "concussive_gauntlets"
+	inhand_icon_state = null
 	toolspeed = 0.1
 	strip_delay = 40
 	equip_delay_other = 20
@@ -569,7 +588,7 @@
 
 /obj/item/clothing/gloves/gauntlets/equipped(mob/user, slot)
 	. = ..()
-	if(slot == ITEM_SLOT_GLOVES)
+	if(slot & ITEM_SLOT_GLOVES)
 		tool_behaviour = TOOL_MINING
 		RegisterSignal(user, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, .proc/rocksmash)
 		RegisterSignal(user, COMSIG_MOVABLE_BUMP, .proc/rocksmash)
@@ -712,7 +731,7 @@
 	name = "eye of god"
 	desc = "A strange eye, said to have been torn from an omniscient creature that used to roam the wastes."
 	icon_state = "godeye"
-	inhand_icon_state = "godeye"
+	inhand_icon_state = null
 	vision_flags = SEE_TURFS
 	darkness_view = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
@@ -730,7 +749,7 @@
 
 /obj/item/clothing/glasses/godeye/equipped(mob/living/user, slot)
 	. = ..()
-	if(ishuman(user) && slot == ITEM_SLOT_EYES)
+	if(ishuman(user) && (slot & ITEM_SLOT_EYES))
 		ADD_TRAIT(src, TRAIT_NODROP, EYE_OF_GOD_TRAIT)
 		pain(user)
 		scan_ability.Grant(user)
@@ -776,7 +795,7 @@
 	var/datum/status_effect/agent_pinpointer/scan_pinpointer = living_owner.apply_status_effect(/datum/status_effect/agent_pinpointer/scan)
 	scan_pinpointer.scan_target = living_scanned
 
-	living_scanned.set_timed_status_effect(100 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
+	living_scanned.set_jitter_if_lower(100 SECONDS)
 	to_chat(living_scanned, span_warning("You've been staggered!"))
 	living_scanned.add_filter("scan", 2, list("type" = "outline", "color" = COLOR_YELLOW, "size" = 1))
 	addtimer(CALLBACK(living_scanned, /atom/.proc/remove_filter, "scan"), 30 SECONDS)
@@ -979,7 +998,7 @@
 			target.ranged_cooldown += 5 SECONDS
 		else if(iscarbon(source))
 			var/mob/living/carbon/target = source
-			target.set_timed_status_effect(8 SECONDS, /datum/status_effect/confusion, only_if_higher = TRUE)
+			target.set_confusion_if_lower(8 SECONDS)
 	return NONE
 
 /obj/item/cursed_katana/proc/slice(mob/living/target, mob/user)
@@ -1001,7 +1020,7 @@
 /obj/item/cursed_katana/proc/cloak(mob/living/target, mob/user)
 	user.alpha = 150
 	user.invisibility = INVISIBILITY_OBSERVER // so hostile mobs cant see us or target us
-	user.sight |= SEE_SELF // so we can see us
+	user.add_sight(SEE_SELF) // so we can see us
 	user.visible_message(span_warning("[user] vanishes into thin air!"),
 		span_notice("You enter the dark cloak."))
 	playsound(src, 'sound/magic/smoke.ogg', 50, TRUE)
@@ -1013,7 +1032,7 @@
 /obj/item/cursed_katana/proc/uncloak(mob/user)
 	user.alpha = 255
 	user.invisibility = 0
-	user.sight &= ~SEE_SELF
+	user.clear_sight(SEE_SELF)
 	user.visible_message(span_warning("[user] appears from thin air!"),
 		span_notice("You exit the dark cloak."))
 	playsound(src, 'sound/magic/summonitems_generic.ogg', 50, TRUE)

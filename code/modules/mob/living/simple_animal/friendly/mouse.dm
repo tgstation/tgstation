@@ -30,7 +30,7 @@
 	can_be_held = TRUE
 	held_w_class = WEIGHT_CLASS_TINY
 	held_state = "mouse_gray"
-	faction = list("rat")
+	faction = list(FACTION_RAT)
 
 /mob/living/simple_animal/mouse/Initialize(mapload)
 	. = ..()
@@ -119,7 +119,7 @@
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
 	. = ..()
-	if(istype(A, /obj/item/food/cheese) && canUseTopic(A, BE_CLOSE, NO_DEXTERITY))
+	if(istype(A, /obj/item/food/cheese) && canUseTopic(A, be_close = TRUE, no_dexterity = TRUE))
 		if(health == maxHealth)
 			to_chat(src,span_warning("You don't need to eat or heal."))
 			return
@@ -195,7 +195,7 @@
 /obj/item/food/deadmouse
 	name = "dead mouse"
 	desc = "They look like somebody dropped the bass on it. A lizard's favorite meal."
-	icon = 'icons/mob/animal.dmi'
+	icon = 'icons/mob/simple/animal.dmi'
 	icon_state = "mouse_gray_dead"
 	bite_consumption = 3
 	eatverbs = list("devour")

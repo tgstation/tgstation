@@ -2,7 +2,7 @@
 /mob/living/simple_animal/pet/cat
 	name = "cat"
 	desc = "Kitty!!"
-	icon = 'icons/mob/pets.dmi'
+	icon = 'icons/mob/simple/pets.dmi'
 	icon_state = "cat2"
 	icon_living = "cat2"
 	icon_dead = "cat2_dead"
@@ -34,7 +34,9 @@
 	collar_type = "cat"
 	can_be_held = TRUE
 	held_state = "cat2"
-	///In the case 'melee_damage_upper' is somehow raised above 0
+	///only for attacking rats
+	melee_damage_upper = 6
+	melee_damage_lower = 4
 	attack_verb_continuous = "claws"
 	attack_verb_simple = "claw"
 	attack_sound = 'sound/weapons/slash.ogg'
@@ -221,22 +223,30 @@
 			else
 				manual_emote(pick("grooms [p_their()] fur.", "twitches [p_their()] whiskers.", "shakes out [p_their()] coat."))
 
-	//MICE!
+	//MICE! RATS! OH MY!
 	if((src.loc) && isturf(src.loc))
 		if(!stat && !resting && !buckled)
-			for(var/mob/living/simple_animal/mouse/M in view(1,src))
-				if(istype(M, /mob/living/simple_animal/mouse/brown/tom) && inept_hunter)
-					if(COOLDOWN_FINISHED(src, emote_cooldown))
-						visible_message(span_warning("[src] chases [M] around, to no avail!"))
-						step(M, pick(GLOB.cardinals))
-						COOLDOWN_START(src, emote_cooldown, 1 MINUTES)
-					break
+			//Targeting anything in the rat faction nearby
+			for(var/mob/living/M in view(1,src))
 				if(!M.stat && Adjacent(M))
-					manual_emote("splats \the [M]!")
-					M.splat()
-					movement_target = null
-					stop_automated_movement = 0
-					break
+					if (FACTION_RAT in M.faction)
+						//Jerry can never catch Tom snowflaking
+						if(istype(M, /mob/living/simple_animal/mouse/brown/tom) && inept_hunter)
+							if(COOLDOWN_FINISHED(src, emote_cooldown))
+								visible_message(span_warning("[src] chases [M] around, to no avail!"))
+								step(M, pick(GLOB.cardinals))
+								COOLDOWN_START(src, emote_cooldown, 1 MINUTES)
+							break
+						//Mouse splatting
+						if(istype(M, /mob/living/simple_animal/mouse))
+							manual_emote("splats \the [M]!")
+							var/mob/living/simple_animal/mouse/snack = M
+							snack.splat()
+							movement_target = null
+							stop_automated_movement = 0
+							break
+						//Rat scratching, or anything else that could be in the rat faction
+						M.attack_animal(src)
 			for(var/obj/item/toy/cattoy/T in view(1,src))
 				if (T.cooldown < (world.time - 400))
 					manual_emote("bats \the [T] around with \his paw!")
@@ -257,10 +267,12 @@
 			if( !movement_target || !(movement_target.loc in oview(src, 3)) )
 				movement_target = null
 				stop_automated_movement = 0
-				for(var/mob/living/simple_animal/mouse/snack in oview(src,3))
-					if(isturf(snack.loc) && !snack.stat)
-						movement_target = snack
-						break
+				//Targeting mice and mobs in the rat faction
+				for(var/mob/living/target in oview(src,3))
+					if(isturf(target.loc) && !target.stat)
+						if(FACTION_RAT in target.faction)
+							movement_target = target
+							break
 			if(movement_target)
 				stop_automated_movement = 1
 				SSmove_manager.move_to(src, movement_target, 0, 3)

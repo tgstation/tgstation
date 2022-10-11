@@ -12,7 +12,6 @@ Slimecrossing Items
 	pictures_max = 1
 	can_customise = FALSE
 	default_picture_name = "A nostalgic picture"
-	var/used = FALSE
 
 /datum/saved_bodypart
 	var/obj/item/bodypart/old_part
@@ -58,16 +57,15 @@ Slimecrossing Items
 /obj/item/camera/rewind/afterattack(atom/target, mob/user, flag)
 	if(!on || !pictures_left || !isturf(target.loc))
 		return
-	if(!used)//selfie time
-		if(user == target)
-			to_chat(user, span_notice("You take a selfie!"))
-		else
-			to_chat(user, span_notice("You take a photo with [target]!"))
-			to_chat(target, span_notice("[user] takes a photo with you!"))
-		to_chat(target, span_boldnotice("You'll remember this moment forever!"))
 
-		used = TRUE
-		target.AddComponent(/datum/component/dejavu, 2)
+	if(user == target)
+		to_chat(user, span_notice("You take a selfie!"))
+	else
+		to_chat(user, span_notice("You take a photo with [target]!"))
+		to_chat(target, span_notice("[user] takes a photo with you!"))
+	to_chat(target, span_boldnotice("You'll remember this moment forever!"))
+
+	target.AddComponent(/datum/component/dejavu, 2)
 	.=..()
 
 
@@ -78,22 +76,18 @@ Slimecrossing Items
 	desc = "They say a picture is like a moment stopped in time."
 	pictures_left = 1
 	pictures_max = 1
-	var/used = FALSE
 
 /obj/item/camera/timefreeze/afterattack(atom/target, mob/user, flag)
 	if(!on || !pictures_left || !isturf(target.loc))
 		return
-	if(!used) //refilling the film does not refill the timestop
-		new /obj/effect/timestop(get_turf(target), 2, 50, list(user))
-		used = TRUE
-		desc = "This camera has seen better days."
+	new /obj/effect/timestop(get_turf(target), 2, 50, list(user))
 	. = ..()
 
 //Hypercharged slime cell - Charged Yellow
 /obj/item/stock_parts/cell/high/slime_hypercharged
 	name = "hypercharged slime core"
 	desc = "A charged yellow slime extract, infused with plasma. It almost hurts to touch."
-	icon = 'icons/mob/slimes.dmi'
+	icon = 'icons/mob/simple/slimes.dmi'
 	icon_state = "yellow slime extract"
 	rating = 7
 	custom_materials = null
@@ -182,7 +176,7 @@ Slimecrossing Items
 	if(M.mind)
 		to_chat(user, span_notice("You offer the device to [M]."))
 		if(tgui_alert(M, "Would you like to enter [user]'s capture device?", "Gold Capture Device", list("Yes", "No")) == "Yes")
-			if(user.canUseTopic(src, BE_CLOSE) && user.canUseTopic(M, BE_CLOSE))
+			if(user.canUseTopic(src, be_close = TRUE) && user.canUseTopic(M, be_close = TRUE))
 				to_chat(user, span_notice("You store [M] in the capture device."))
 				to_chat(M, span_notice("The world warps around you, and you're suddenly in an endless void, with a window to the outside floating in front of you."))
 				store(M, user)

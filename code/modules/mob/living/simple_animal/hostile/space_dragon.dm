@@ -35,7 +35,7 @@
 	attack_sound = 'sound/magic/demon_attack1.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	death_sound = 'sound/creatures/space_dragon_roar.ogg'
-	icon = 'icons/mob/spacedragon.dmi'
+	icon = 'icons/mob/nonhuman-player/spacedragon.dmi'
 	icon_state = "spacedragon"
 	icon_living = "spacedragon"
 	icon_dead = "spacedragon_dead"
@@ -88,7 +88,6 @@
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_HEALS_FROM_CARP_RIFTS, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_ALERT_GHOSTS_ON_DEATH, INNATE_TRAIT)
 	AddElement(/datum/element/content_barfer)
 	small_sprite = new
 	small_sprite.Grant(src)
@@ -170,8 +169,7 @@
 	fire_stream()
 
 /mob/living/simple_animal/hostile/space_dragon/death(gibbed)
-	empty_contents()
-	..()
+	. = ..()
 	add_dragon_overlay()
 	UnregisterSignal(small_sprite, COMSIG_ACTION_TRIGGER)
 
@@ -179,10 +177,6 @@
 	. = ..()
 	add_dragon_overlay()
 	RegisterSignal(small_sprite, COMSIG_ACTION_TRIGGER, .proc/add_dragon_overlay)
-
-/mob/living/simple_animal/hostile/space_dragon/wabbajack_act(mob/living/new_mob)
-	empty_contents()
-	. = ..()
 
 /**
  * Allows space dragon to choose its own name.
@@ -333,18 +327,6 @@
 		A.forceMove(src)
 		return TRUE
 	return FALSE
-
-/**
- * Disperses the contents of the mob on the surrounding tiles.
- *
- * Randomly places the contents of the mob onto surrounding tiles.
- * Has a 10% chance to place on the same tile as the mob.
- */
-/mob/living/simple_animal/hostile/space_dragon/proc/empty_contents()
-	for(var/atom/movable/AM in src)
-		AM.forceMove(loc)
-		if(prob(90))
-			step(AM, pick(GLOB.alldirs))
 
 /**
  * Resets Space Dragon's status after using wing gust.

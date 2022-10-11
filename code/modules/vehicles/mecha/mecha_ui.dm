@@ -1,42 +1,13 @@
-/// A preview of the mech for the UI
-/atom/movable/screen/mech_view
-	name = "mechview"
-	del_on_map_removal = FALSE
-	layer = OBJ_LAYER
-	plane = GAME_PLANE
-
-	/// The body that is displayed
-	var/obj/vehicle/sealed/mecha/owner
-	///list of plane masters to apply to owners
-	var/list/plane_masters = list()
-
-/atom/movable/screen/mech_view/Initialize(mapload, obj/vehicle/sealed/mecha/newowner)
-	. = ..()
-	owner = newowner
-	assigned_map = "mech_view_[REF(owner)]"
-	set_position(1, 1)
-	for(var/plane_master_type in subtypesof(/atom/movable/screen/plane_master) - /atom/movable/screen/plane_master/blackness)
-		var/atom/movable/screen/plane_master/plane_master = new plane_master_type()
-		plane_master.screen_loc = "[assigned_map]:CENTER"
-		plane_masters += plane_master
-
-/atom/movable/screen/mech_view/Destroy()
-	QDEL_LIST(plane_masters)
-	owner = null
-	return ..()
-
 /obj/vehicle/sealed/mecha/ui_close(mob/user)
 	. = ..()
-	user.client?.screen -= ui_view.plane_masters
-	user.client?.clear_map(ui_view.assigned_map)
+	ui_view.hide_from(user)
 
 /obj/vehicle/sealed/mecha/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "Mecha", name, ui_x, ui_y)
 		ui.open()
-		user.client?.screen |= ui_view.plane_masters
-		user.client?.register_map_obj(ui_view)
+		ui_view.display_to(user)
 
 /obj/vehicle/sealed/mecha/ui_status(mob/user)
 	if(contains(user))

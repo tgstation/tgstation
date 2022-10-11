@@ -332,8 +332,8 @@
 	alert_type = null
 
 /datum/status_effect/cultghost/on_apply()
-	owner.see_invisible = SEE_INVISIBLE_OBSERVER
-	owner.see_in_dark = 2
+	owner.set_invis_see(SEE_INVISIBLE_OBSERVER)
+	owner.set_see_in_dark(2)
 
 /datum/status_effect/cultghost/tick()
 	if(owner.reagents)
@@ -551,7 +551,7 @@
 /datum/status_effect/trance/tick()
 	if(stun)
 		owner.Stun(6 SECONDS, TRUE)
-	owner.set_timed_status_effect(40 SECONDS, /datum/status_effect/dizziness)
+	owner.set_dizzy(40 SECONDS)
 
 /datum/status_effect/trance/on_apply()
 	if(!iscarbon(owner))
@@ -671,7 +671,7 @@
 				span_notice("[H]'s hand convulses, and they drop their [I.name]!"),
 				span_userdanger("Your hand convulses violently, and you drop what you were holding!"),
 			)
-			H.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/jitter)
+			H.adjust_jitter(10 SECONDS)
 
 /atom/movable/screen/alert/status_effect/convulsing
 	name = "Shaky Hands"
@@ -769,78 +769,6 @@
 		to_chat(owner, fake_msg)
 
 	msg_stage++
-
-/datum/status_effect/corrosion_curse
-	id = "corrosion_curse"
-	status_type = STATUS_EFFECT_REPLACE
-	alert_type = null
-	tick_interval = 1 SECONDS
-
-/datum/status_effect/corrosion_curse/on_creation(mob/living/new_owner, ...)
-	. = ..()
-	to_chat(owner, span_userdanger("Your body starts to break apart!"))
-
-/datum/status_effect/corrosion_curse/tick()
-	. = ..()
-	if(!ishuman(owner))
-		return
-	var/mob/living/carbon/human/human_owner = owner
-	var/chance = rand(0, 100)
-	switch(chance)
-		if(0 to 10)
-			human_owner.vomit()
-		if(20 to 30)
-			human_owner.set_timed_status_effect(100 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
-			human_owner.set_timed_status_effect(100 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
-		if(30 to 40)
-			human_owner.adjustOrganLoss(ORGAN_SLOT_LIVER, 5)
-		if(40 to 50)
-			human_owner.adjustOrganLoss(ORGAN_SLOT_HEART, 5, 90)
-		if(50 to 60)
-			human_owner.adjustOrganLoss(ORGAN_SLOT_STOMACH, 5)
-		if(60 to 70)
-			human_owner.adjustOrganLoss(ORGAN_SLOT_EYES, 10)
-		if(70 to 80)
-			human_owner.adjustOrganLoss(ORGAN_SLOT_EARS, 10)
-		if(80 to 90)
-			human_owner.adjustOrganLoss(ORGAN_SLOT_LUNGS, 10)
-		if(90 to 95)
-			human_owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 20, 190)
-		if(95 to 100)
-			human_owner.adjust_timed_status_effect(12 SECONDS, /datum/status_effect/confusion)
-
-/datum/status_effect/cloudstruck
-	id = "cloudstruck"
-	status_type = STATUS_EFFECT_REPLACE
-	duration = 3 SECONDS
-	on_remove_on_mob_delete = TRUE
-	///This overlay is applied to the owner for the duration of the effect.
-	var/mutable_appearance/mob_overlay
-
-/datum/status_effect/cloudstruck/on_creation(mob/living/new_owner, set_duration)
-	if(isnum(set_duration))
-		duration = set_duration
-	. = ..()
-
-/datum/status_effect/cloudstruck/on_apply()
-	mob_overlay = mutable_appearance('icons/effects/eldritch.dmi', "cloud_swirl", ABOVE_MOB_LAYER)
-	owner.overlays += mob_overlay
-	owner.update_appearance()
-	ADD_TRAIT(owner, TRAIT_BLIND, STATUS_EFFECT_TRAIT)
-	return TRUE
-
-/datum/status_effect/cloudstruck/on_remove()
-	. = ..()
-	if(QDELETED(owner))
-		return
-	REMOVE_TRAIT(owner, TRAIT_BLIND, STATUS_EFFECT_TRAIT)
-	if(owner)
-		owner.overlays -= mob_overlay
-		owner.update_appearance()
-
-/datum/status_effect/cloudstruck/Destroy()
-	. = ..()
-	QDEL_NULL(mob_overlay)
 
 //Deals with ants covering someone.
 /datum/status_effect/ants

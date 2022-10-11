@@ -12,7 +12,7 @@
 	var/datum/antagonist/obsessed/antagonist
 	var/viewing = FALSE //it's a lot better to store if the owner is watching the obsession than checking it twice between two procs
 
-	var/total_time_creeping = 0 //just for roundend fun
+	var/total_time_creeping = 0 //just for round end fun
 	var/time_spent_away = 0
 	var/obsession_hug_count = 0
 
@@ -41,7 +41,7 @@
 		viewing = FALSE//important, makes sure you no longer stutter when happy if you murdered them while viewing
 		return
 	if(get_dist(get_turf(owner), get_turf(obsession)) > 7)
-		viewing = FALSE //they are further than our viewrange they are not viewing us
+		viewing = FALSE //they are further than our view range they are not viewing us
 		out_of_view()
 		return//so we're not searching everything in view every tick
 	if(obsession in view(7, owner))
@@ -78,7 +78,7 @@
 			addtimer(CALLBACK(src, .proc/on_failed_social_interaction), rand(1, 3) SECONDS)
 		else if(!owner.has_status_effect(/datum/status_effect/speech/stutter))
 			to_chat(owner, span_warning("Being near [obsession] makes you nervous and you begin to stutter..."))
-		owner.set_timed_status_effect(6 SECONDS, /datum/status_effect/speech/stutter, only_if_higher = TRUE)
+		owner.set_stutter_if_lower(6 SECONDS)
 
 /// Singal proc for [COMSIG_CARBON_HELPED], when our obsessed helps (hugs) our obsession, increases hug count
 /datum/brain_trauma/special/obsessed/proc/on_hug(datum/source, mob/living/hugged)
@@ -104,7 +104,7 @@
 			to_chat(owner, span_userdanger("You feel your heart lurching in your chest..."))
 		if(81 to 100)
 			INVOKE_ASYNC(owner, /mob.proc/emote, "cough")
-			owner.adjust_timed_status_effect(20 SECONDS, /datum/status_effect/dizziness)
+			owner.adjust_dizzy(20 SECONDS)
 			owner.adjust_disgust(5)
 			to_chat(owner, span_userdanger("You gag and swallow a bit of bile..."))
 
@@ -129,7 +129,7 @@
 	var/list/special_pool = list() //The special list, for quirk-based
 	var/chosen_victim  //The obsession target
 
-	for(var/mob/player as anything in GLOB.player_list)//prevents crewmembers falling in love with nuke ops they never met, and other annoying hijinks
+	for(var/mob/player as anything in GLOB.player_list)//prevents crew members falling in love with nuke ops they never met, and other annoying hijinks
 		if(!player.client || !player.mind || isnewplayer(player) || player.stat == DEAD || isbrain(player) || player == owner)
 			continue
 		if(!(player.mind.assigned_role.job_flags & JOB_CREW_MEMBER))

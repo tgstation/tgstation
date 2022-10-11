@@ -1,4 +1,4 @@
-/mob/living/silicon/ai/say(message, bubble_type,list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null)
+/mob/living/silicon/ai/say(message, bubble_type,list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null, message_range = 7, datum/saymode/saymode = null)
 	if(parent && istype(parent) && parent.stat != DEAD) //If there is a defined "parent" AI, it is actually an AI, and it is alive, anything the AI tries to say is said by the parent instead.
 		return parent.say(arglist(args))
 	return ..()
@@ -13,8 +13,14 @@
 	//Also includes the </a> for AI hrefs, for convenience.
 	return "[radio_freq ? " (" + speaker.GetJob() + ")" : ""]" + "[speaker.GetSource() ? "</a>" : ""]"
 
-/mob/living/silicon/ai/IsVocal()
-	return !CONFIG_GET(flag/silent_ai)
+/mob/living/silicon/ai/try_speak(message, ignore_spam = FALSE, forced = FALSE)
+	// AIs cannot speak if silent AI is on.
+	// Unless forced is set, as that's probably stating laws or something.
+	if(!forced && CONFIG_GET(flag/silent_ai))
+		to_chat(src, span_danger("The ability for AIs to speak is currently disabled via server config."))
+		return FALSE
+
+	return ..()
 
 /mob/living/silicon/ai/radio(message, list/message_mods = list(), list/spans, language)
 	if(incapacitated())

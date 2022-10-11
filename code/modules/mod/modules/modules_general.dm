@@ -25,6 +25,7 @@
 	var/datum/storage/modstorage = mod.create_storage(max_specific_storage = max_w_class, max_total_storage = max_combined_w_class, max_slots = max_items)
 	modstorage.set_real_location(src)
 	atom_storage.locked = FALSE
+	RegisterSignal(mod.chestplate, COMSIG_ITEM_PRE_UNEQUIP, .proc/on_chestplate_unequip)
 
 /obj/item/mod/module/storage/on_uninstall(deleting = FALSE)
 	var/datum/storage/modstorage = mod.atom_storage
@@ -38,7 +39,8 @@
 	if(QDELETED(source) || !mod.wearer || newloc == mod.wearer || !mod.wearer.s_store)
 		return
 	to_chat(mod.wearer, span_notice("[src] tries to store [mod.wearer.s_store] inside itself."))
-	atom_storage?.attempt_insert(mod.wearer.s_store, mod.wearer, override = TRUE)
+	if(atom_storage?.attempt_insert(mod.wearer.s_store, mod.wearer, override = TRUE))
+		mod.wearer.temporarilyRemoveItemFromInventory(mod.wearer.s_store)
 
 /obj/item/mod/module/storage/large_capacity
 	name = "MOD expanded storage module"
@@ -57,6 +59,18 @@
 	icon_state = "storage_syndi"
 	max_combined_w_class = 30
 	max_items = 21
+
+/obj/item/mod/module/storage/belt
+	name = "MOD case storage module"
+	desc = "Some concessions had to be made when creating a compressed modular suit core. \
+	As a result, Roseus Galactic equipped their suit with a slimline storage case.  \
+	If you find this equipped to a standard modular suit, then someone has almost certainly shortchanged you on a proper storage module."
+	icon_state = "storage_case"
+	complexity = 0
+	max_w_class = WEIGHT_CLASS_SMALL
+	removable = FALSE
+	max_combined_w_class = 21
+	max_items = 7
 
 /obj/item/mod/module/storage/bluespace
 	name = "MOD bluespace storage module"
@@ -488,23 +502,23 @@
 	//This list should also be gimmicky, so captains can have fun. I.E. the Santahat, Pirate hat, Tophat, Chefhat...
 	//Yes, I said it, the captain should have fun.
 		list(
-			/obj/item/clothing/head/caphat,
-			/obj/item/clothing/head/crown,
-			/obj/item/clothing/head/centhat,
-			/obj/item/clothing/head/centcom_cap,
-			/obj/item/clothing/head/pirate,
-			/obj/item/clothing/head/santa,
-			/obj/item/clothing/head/hardhat/reindeer,
-			/obj/item/clothing/head/sombrero,
-			/obj/item/clothing/head/kitty,
-			/obj/item/clothing/head/rabbitears,
-			/obj/item/clothing/head/festive,
-			/obj/item/clothing/head/powdered_wig,
-			/obj/item/clothing/head/weddingveil,
-			/obj/item/clothing/head/that,
-			/obj/item/clothing/head/nursehat,
-			/obj/item/clothing/head/chefhat,
-			/obj/item/clothing/head/papersack,
+			/obj/item/clothing/head/hats/caphat,
+			/obj/item/clothing/head/costume/crown,
+			/obj/item/clothing/head/hats/centhat,
+			/obj/item/clothing/head/hats/centcom_cap,
+			/obj/item/clothing/head/costume/pirate,
+			/obj/item/clothing/head/costume/santa,
+			/obj/item/clothing/head/utility/hardhat/reindeer,
+			/obj/item/clothing/head/costume/sombrero/green,
+			/obj/item/clothing/head/costume/kitty,
+			/obj/item/clothing/head/costume/rabbitears,
+			/obj/item/clothing/head/costume/festive,
+			/obj/item/clothing/head/costume/powdered_wig,
+			/obj/item/clothing/head/costume/weddingveil,
+			/obj/item/clothing/head/hats/tophat,
+			/obj/item/clothing/head/costume/nursehat,
+			/obj/item/clothing/head/utility/chefhat,
+			/obj/item/clothing/head/costume/papersack,
 			/obj/item/clothing/head/caphat/beret,
 			))
 
@@ -550,7 +564,7 @@
 /obj/item/mod/module/hat_stabilizer/generate_worn_overlay()
 	. = ..()
 	if(attached_hat)
-		. += attached_hat.build_worn_icon(default_layer = ABOVE_BODY_FRONT_HEAD_LAYER-0.1, default_icon_file = 'icons/mob/clothing/head.dmi')
+		. += attached_hat.build_worn_icon(default_layer = ABOVE_BODY_FRONT_HEAD_LAYER-0.1, default_icon_file = 'icons/mob/clothing/head/default.dmi')
 
 /obj/item/mod/module/hat_stabilizer/proc/remove_hat(datum/source, mob/user)
 	SIGNAL_HANDLER

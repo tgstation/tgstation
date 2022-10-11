@@ -1,0 +1,15 @@
+{
+	"eth_tunic": [
+		{
+			"type": "icon_state",
+			"icon_state": "eth_tunic_base",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "eth_tunic_details",
+			"blend_mode": "overlay"
+		}
+	]
+}

@@ -29,9 +29,6 @@ have ways of interacting with a specific mob and control it.
 	)
 	idle_behavior = /datum/idle_behavior/idle_monkey
 
-	///Whether this AI is immune to being stunned by being crossed into.
-	var/crossed_immune = FALSE
-
 /datum/ai_controller/monkey/pun_pun
 	movement_delay = 0.7 SECONDS //pun pun moves slower so the bartender can keep track of them
 	planning_subtrees = list(
@@ -42,7 +39,6 @@ have ways of interacting with a specific mob and control it.
 		/datum/ai_planning_subtree/punpun_shenanigans,
 	)
 	idle_behavior = /datum/idle_behavior/idle_monkey/pun_pun
-	crossed_immune = TRUE
 
 /datum/ai_controller/monkey/angry
 
@@ -57,8 +53,6 @@ have ways of interacting with a specific mob and control it.
 		return AI_CONTROLLER_INCOMPATIBLE
 
 	var/mob/living/living_pawn = new_pawn
-	if(!crossed_immune)
-		RegisterSignal(new_pawn, COMSIG_MOVABLE_CROSS, .proc/on_crossed)
 	RegisterSignal(new_pawn, COMSIG_PARENT_ATTACKBY, .proc/on_attackby)
 	RegisterSignal(new_pawn, COMSIG_ATOM_ATTACK_HAND, .proc/on_attack_hand)
 	RegisterSignal(new_pawn, COMSIG_ATOM_ATTACK_PAW, .proc/on_attack_paw)
@@ -76,8 +70,6 @@ have ways of interacting with a specific mob and control it.
 	return ..() //Run parent at end
 
 /datum/ai_controller/monkey/UnpossessPawn(destroy)
-	if(!crossed_immune)
-		UnregisterSignal(pawn, COMSIG_MOVABLE_CROSS)
 
 	UnregisterSignal(pawn, list(
 		COMSIG_PARENT_ATTACKBY,
@@ -96,14 +88,9 @@ have ways of interacting with a specific mob and control it.
 
 	return ..() //Run parent at end
 
-// Stops sentient monkeys from being knocked over like weak dunces.
-/datum/ai_controller/monkey/on_sentience_gained()
-	. = ..()
-	UnregisterSignal(pawn, COMSIG_MOVABLE_CROSS)
-
 /datum/ai_controller/monkey/on_sentience_lost()
 	. = ..()
-	RegisterSignal(pawn, COMSIG_MOVABLE_CROSS, .proc/on_crossed)
+	set_trip_mode(mode = TRUE)
 
 /datum/ai_controller/monkey/able_to_run()
 	var/mob/living/living_pawn = pawn
@@ -111,6 +98,13 @@ have ways of interacting with a specific mob and control it.
 	if(IS_DEAD_OR_INCAP(living_pawn))
 		return FALSE
 	return ..()
+
+/datum/ai_controller/monkey/proc/set_trip_mode(mode = TRUE)
+	var/mob/living/carbon/regressed_monkey = pawn
+	var/brain = regressed_monkey.getorganslot(ORGAN_SLOT_BRAIN)
+	if(istype(brain, /obj/item/organ/internal/brain/primate)) // In case we are a monkey AI in a human brain by who was previously controlled by a client but it now not by some marvel
+		var/obj/item/organ/internal/brain/primate/monkeybrain = brain
+		monkeybrain.tripping = mode
 
 ///re-used behavior pattern by monkeys for finding a weapon
 /datum/ai_controller/monkey/proc/TryFindWeapon()
@@ -128,6 +122,10 @@ have ways of interacting with a specific mob and control it.
 	for(var/obj/item/item in oview(2, living_pawn))
 		nearby_items += item
 
+	for(var/obj/item/item in living_pawn.held_items) // If we've got some garbage in out hands thats going to stop us from effectivly attacking, we should get rid of it.
+		if(item.force < 2)
+			living_pawn.dropItemToGround(item)
+
 	weapon = GetBestWeapon(src, nearby_items, living_pawn.held_items)
 
 	var/pickpocket = FALSE
@@ -139,6 +137,9 @@ have ways of interacting with a specific mob and control it.
 		weapon = held_weapon
 
 	if(!weapon || (weapon in living_pawn.held_items))
+		return FALSE
+
+	if(weapon.force < 2) // our bite does 2 damage on avarage, no point in settling for anything less
 		return FALSE
 
 	blackboard[BB_MONKEY_PICKUPTARGET] = weapon
@@ -196,14 +197,6 @@ have ways of interacting with a specific mob and control it.
 		if(I.throwforce && I.throwforce < living_pawn.health && ishuman(thrown_by))
 			var/mob/living/carbon/human/H = thrown_by
 			retaliate(H)
-
-/datum/ai_controller/monkey/proc/on_crossed(datum/source, atom/movable/crossed)
-	SIGNAL_HANDLER
-	var/mob/living/living_pawn = pawn
-	if(!IS_DEAD_OR_INCAP(living_pawn) && isliving(crossed))
-		var/mob/living/in_the_way_mob = crossed
-		in_the_way_mob.knockOver(living_pawn)
-		return
 
 /datum/ai_controller/monkey/proc/on_startpulling(datum/source, atom/movable/puller, state, force)
 	SIGNAL_HANDLER

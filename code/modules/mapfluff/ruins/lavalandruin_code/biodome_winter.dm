@@ -8,6 +8,7 @@
 		Somehow, it does not transfer its freezing temperatures until it comes into contact with a living creature."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "freeze_cube"
+	inhand_icon_state = "freeze_cube"
 	throwforce = 10
 	damtype = BURN
 	var/cooldown_time = 5 SECONDS

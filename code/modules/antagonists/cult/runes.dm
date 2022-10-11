@@ -139,18 +139,17 @@ structure_check() searches for nearby cultist structures required for the invoca
 	if(user)
 		invokers += user
 	if(req_cultists > 1 || istype(src, /obj/effect/rune/convert))
-		var/list/things_in_range = range(1, src)
-		for(var/mob/living/L in things_in_range)
-			if(IS_CULTIST(L))
-				if(L == user)
-					continue
-				if(ishuman(L))
-					var/mob/living/carbon/human/H = L
-					if((HAS_TRAIT(H, TRAIT_MUTE)) || H.silent)
-						continue
-				if(L.stat)
-					continue
-				invokers += L
+		for(var/mob/living/cultist in range(1, src))
+			if(!IS_CULTIST(cultist))
+				continue
+			if(cultist == user)
+				continue
+			if(!cultist.can_speak(allow_mimes = TRUE))
+				continue
+			if(cultist.stat != CONSCIOUS)
+				continue
+			invokers += cultist
+
 	return invokers
 
 /obj/effect/rune/proc/invoke(list/invokers)
@@ -295,24 +294,11 @@ structure_check() searches for nearby cultist structures required for the invoca
 		return FALSE
 	var/datum/antagonist/cult/C = first_invoker.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
 	if(!C)
-		return
-
-	if(ispAI(sacrificial))
-		for(var/M in invokers)
-			to_chat(M, span_cultitalic("You don't think this is what Nar'Sie had in mind when She asked for blood sacrifices..."))
-		log_game("Offer rune with [sacrificial] on it failed - tried sacrificing pAI.")
 		return FALSE
 
-	if(istype(sacrificial, /mob/living/basic/sheep))
-		var/mob/living/basic/sheep/sacrificial_lamb = sacrificial
-		if(sacrificial_lamb.cult_converted)
-			for(var/cultists in invokers)
-				to_chat(cultists, span_cultitalic("[sacrificial] has already been sacrificed!"))
-				return FALSE
-		for(var/cultists in invokers)
-			to_chat(cultists, span_cultitalic("This feels a bit too cliché, don't you think?"))
-		sacrificial_lamb.cult_time()
-		return
+	var/signal_result = SEND_SIGNAL(sacrificial, COMSIG_LIVING_CULT_SACRIFICED, invokers)
+	if(signal_result & STOP_SACRIFICE)
+		return FALSE
 
 	var/big_sac = FALSE
 	if((((ishuman(sacrificial) || iscyborg(sacrificial)) && sacrificial.stat != DEAD) || C.cult_team.is_sacrifice_target(sacrificial.mind)) && length(invokers) < 3)
@@ -320,6 +306,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			to_chat(M, span_cultitalic("[sacrificial] is too greatly linked to the world! You need three acolytes!"))
 		log_game("Offer rune with [sacrificial] on it failed - not enough acolytes and target is living or sac target")
 		return FALSE
+
 	if(sacrificial.mind)
 		LAZYADD(GLOB.sacrificed, WEAKREF(sacrificial.mind))
 		for(var/datum/objective/sacrifice/sac_objective in C.cult_team.objectives)
@@ -332,14 +319,16 @@ structure_check() searches for nearby cultist structures required for the invoca
 		LAZYADD(GLOB.sacrificed, WEAKREF(sacrificial))
 
 	new /obj/effect/temp_visual/cult/sac(get_turf(src))
-	for(var/M in invokers)
-		if(big_sac)
-			to_chat(M, span_cultlarge("\"Yes! This is the one I desire! You have done well.\""))
-		else
+
+	if(!(signal_result & SILENCE_SACRIFICE_MESSAGE))
+		for(var/invoker in invokers)
+			if(big_sac)
+				to_chat(invoker, span_cultlarge("\"Yes! This is the one I desire! You have done well.\""))
+				continue
 			if(ishuman(sacrificial) || iscyborg(sacrificial))
-				to_chat(M, span_cultlarge("\"I accept this sacrifice.\""))
+				to_chat(invoker, span_cultlarge("\"I accept this sacrifice.\""))
 			else
-				to_chat(M, span_cultlarge("\"I accept this meager sacrifice.\""))
+				to_chat(invoker, span_cultlarge("\"I accept this meager sacrifice.\""))
 
 	if(iscyborg(sacrificial))
 		var/construct_class = show_radial_menu(first_invoker, sacrificial, GLOB.construct_radial_images, require_near = TRUE, tooltips = TRUE)
@@ -743,7 +732,12 @@ structure_check() searches for nearby cultist structures required for the invoca
 									  "<span class='cult italic'><b>Overwhelming vertigo consumes you as you are hurled through the air!</b></span>")
 	..()
 	visible_message(span_warning("A foggy shape materializes atop [src] and solidifies into [cultist_to_summon]!"))
-	cultist_to_summon.forceMove(get_turf(src))
+	if(!do_teleport(cultist_to_summon, get_turf(src)))
+		to_chat(user, span_warning("The summoning has completely failed for [cultist_to_summon]!"))
+		fail_logmsg += "target failed criteria to teleport." //catch-all term, just means they failed do_teleport somehow. The most common reasons why someone should fail to be summoned already have verbose messages.
+		log_game(fail_logmsg)
+		fail_invoke()
+		return
 	qdel(src)
 
 //Rite of Boiling Blood: Deals extremely high amounts of damage to non-cultists nearby
@@ -866,9 +860,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 		new_human.alpha = 150 //Makes them translucent
 		new_human.equipOutfit(/datum/outfit/ghost_cultist) //give them armor
 		new_human.apply_status_effect(/datum/status_effect/cultghost) //ghosts can't summon more ghosts
-		new_human.see_invisible = SEE_INVISIBLE_OBSERVER
+		new_human.set_invis_see(SEE_INVISIBLE_OBSERVER)
 		ADD_TRAIT(new_human, TRAIT_NOBREATH, INNATE_TRAIT)
-
 		ghosts++
 		playsound(src, 'sound/magic/exit_blood.ogg', 50, TRUE)
 		visible_message(span_warning("A cloud of red mist forms above [src], and from within steps... a [new_human.gender == FEMALE ? "wo":""]man."))
@@ -983,16 +976,15 @@ structure_check() searches for nearby cultist structures required for the invoca
 	empulse(T, 0.42*(intensity), 1)
 
 	var/list/images = list()
-	var/zmatch = T.z
 	var/datum/atom_hud/sec_hud = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
 	for(var/mob/living/M in GLOB.alive_mob_list)
-		if(M.z != zmatch)
+		if(!is_valid_z_level(T, get_turf(M)))
 			continue
 		if(ishuman(M))
 			if(!IS_CULTIST(M))
 				sec_hud.hide_from(M)
 				addtimer(CALLBACK(GLOBAL_PROC, .proc/hudFix, M), duration)
-			var/image/A = image('icons/mob/cult.dmi',M,"cultist", ABOVE_MOB_LAYER)
+			var/image/A = image('icons/mob/nonhuman-player/cult.dmi',M,"cultist", ABOVE_MOB_LAYER)
 			A.override = 1
 			add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/noncult, "human_apoc", A, NONE)
 			addtimer(CALLBACK(M,/atom/.proc/remove_alt_appearance,"human_apoc",TRUE), duration)
@@ -1000,7 +992,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			SEND_SOUND(M, pick(sound('sound/ambience/antag/bloodcult.ogg'),sound('sound/voice/ghost_whisper.ogg'),sound('sound/misc/ghosty_wind.ogg')))
 		else
 			var/construct = pick("floater","artificer","behemoth")
-			var/image/B = image('icons/mob/mob.dmi',M,construct, ABOVE_MOB_LAYER)
+			var/image/B = image('icons/mob/simple/mob.dmi',M,construct, ABOVE_MOB_LAYER)
 			B.override = 1
 			add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/noncult, "mob_apoc", B, NONE)
 			addtimer(CALLBACK(M,/atom/.proc/remove_alt_appearance,"mob_apoc",TRUE), duration)

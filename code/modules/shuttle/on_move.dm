@@ -115,7 +115,8 @@ All ShuttleMove procs go here
 /atom/movable/proc/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	var/turf/newT = get_turf(src)
 	if (newT.z != oldT.z)
-		on_changed_z_level(oldT, newT)
+		var/same_z_layer = (GET_TURF_PLANE_OFFSET(oldT) == GET_TURF_PLANE_OFFSET(newT))
+		on_changed_z_level(oldT, newT, same_z_layer)
 
 	if(light)
 		update_light()
@@ -327,7 +328,7 @@ All ShuttleMove procs go here
 	Connect_cable(TRUE)
 	propagate_if_no_network()
 
-/obj/structure/shuttle/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)
+/obj/machinery/power/shuttle_engine/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)
 	. = ..()
 	if(. & MOVE_AREA)
 		. |= MOVE_CONTENTS
@@ -359,6 +360,10 @@ All ShuttleMove procs go here
 /obj/docking_port/stationary/onShuttleMove()
 	return FALSE
 
+// Holy shit go away
+/obj/effect/abstract/z_holder/onShuttleMove()
+	return FALSE
+
 // Special movable stationary port, for your mothership shenanigans
 /obj/docking_port/stationary/movable/onShuttleMove(turf/newT, turf/oldT, list/movement_force, move_dir, obj/docking_port/stationary/old_dock, obj/docking_port/mobile/moving_dock)
 	if(!moving_dock.can_move_docking_ports || old_dock == src)
@@ -375,4 +380,4 @@ All ShuttleMove procs go here
 	return TRUE
 
 /obj/docking_port/stationary/public_mining_dock/onShuttleMove(turf/newT, turf/oldT, list/movement_force, move_dir, obj/docking_port/stationary/old_dock, obj/docking_port/mobile/moving_dock)
-	id = "mining_public" //It will not move with the base, but will become enabled as a docking point.
+	shuttle_id = "mining_public" //It will not move with the base, but will become enabled as a docking point.

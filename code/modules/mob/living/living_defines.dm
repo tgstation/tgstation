@@ -1,6 +1,6 @@
 /mob/living
 	see_invisible = SEE_INVISIBLE_LIVING
-	sight = 0
+	sight = SEE_BLACKNESS
 	see_in_dark = 2
 	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD)
 	pressure_resistance = 10
@@ -185,11 +185,11 @@
 
 	//this stuff is here to make it simple for admins to mess with custom held sprites
 	///left hand icon for holding mobs
-	var/icon/held_lh = 'icons/mob/pets_held_lh.dmi'
+	var/icon/held_lh = 'icons/mob/inhands/pets_held_lh.dmi'
 	///right hand icon for holding mobs
-	var/icon/held_rh = 'icons/mob/pets_held_rh.dmi'
+	var/icon/held_rh = 'icons/mob/inhands/pets_held_rh.dmi'
 	///what it looks like when the mob is held on your head
-	var/icon/head_icon = 'icons/mob/pets_held.dmi'
+	var/icon/head_icon = 'icons/mob/clothing/head/pets_head.dmi'
 	/// icon_state for holding mobs.
 	var/held_state = ""
 
@@ -206,8 +206,6 @@
 
 	/// FOV view that is applied from either nativeness or traits
 	var/fov_view
-	/// Native FOV that will be applied if a config is enabled
-	var/native_fov = FOV_90_DEGREES
 	/// Lazy list of FOV traits that will apply a FOV view when handled.
 	var/list/fov_traits
 	///what multiplicative slowdown we get from turfs currently.

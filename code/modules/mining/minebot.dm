@@ -6,7 +6,7 @@
 	name = "\improper Nanotrasen minebot"
 	desc = "The instructions printed on the side read: This is a small robot used to support miners, can be set to search and collect loose ore, or to help fend off wildlife."
 	gender = NEUTER
-	icon = 'icons/mob/aibots.dmi'
+	icon = 'icons/mob/silicon/aibots.dmi'
 	icon_state = "mining_drone"
 	icon_living = "mining_drone"
 	status_flags = CANSTUN|CANKNOCKDOWN|CANPUSH
@@ -206,10 +206,10 @@
 /datum/action/innate/minedrone/toggle_meson_vision/Activate()
 	var/mob/living/simple_animal/hostile/mining_drone/user = owner
 	if(user.sight & SEE_TURFS)
-		user.sight &= ~SEE_TURFS
+		user.clear_sight(SEE_TURFS)
 		user.lighting_alpha = initial(user.lighting_alpha)
 	else
-		user.sight |= SEE_TURFS
+		user.add_sight(SEE_TURFS)
 		user.lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 
 	user.sync_lighting_plane_alpha()

@@ -57,6 +57,7 @@
 	name = "gold cup"
 	desc = "You're winner!"
 	icon_state = "golden_cup"
+	inhand_icon_state = "golden_cup"
 	w_class = WEIGHT_CLASS_BULKY
 	force = 14
 	throwforce = 10
@@ -176,7 +177,7 @@
 	desc = "A bottle of water filled at an old Earth bottling facility."
 	icon = 'icons/obj/drinks.dmi'
 	icon_state = "smallbottle"
-	inhand_icon_state = "bottle"
+	inhand_icon_state = null
 	list_reagents = list(/datum/reagent/water = 49.5, /datum/reagent/fluorine = 0.5)//see desc, don't think about it too hard
 	custom_materials = list(/datum/material/plastic=1000)
 	volume = 50

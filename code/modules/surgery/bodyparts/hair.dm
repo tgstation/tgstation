@@ -25,6 +25,7 @@
 		if(mask.flags_inv & HIDEFACIALHAIR)
 			facial_hair_hidden = TRUE
 	///FACIAL HAIR CHECKS END
+
 	///HAIR CHECKS START
 	hair_hidden = FALSE
 	if(human_head_owner.head)
@@ -42,6 +43,10 @@
 		if(mask.flags_inv & HIDEHAIR)
 			hair_hidden = TRUE
 	///HAIR CHECKS END
+	//invisibility stuff
+	if(HAS_TRAIT(human_head_owner, TRAIT_INVISIBLE_MAN))
+		hair_hidden = TRUE
+		facial_hair_hidden = TRUE
 
 	if(!hair_hidden && !owner.getorganslot(ORGAN_SLOT_BRAIN) && !(NOBLOOD in species_flags_list))
 		show_debrained = TRUE
@@ -62,26 +67,27 @@
 	hair_style = human_head_owner.hairstyle
 	facial_hairstyle = human_head_owner.facial_hairstyle
 
+	var/atom/location = loc || owner || src
 
 	if(facial_hairstyle && !facial_hair_hidden && (FACEHAIR in species_flags_list))
 		sprite_accessory = GLOB.facial_hairstyles_list[facial_hairstyle]
 		if(sprite_accessory)
 			//Create the overlay
 			facial_overlay = mutable_appearance(sprite_accessory.icon, sprite_accessory.icon_state, -HAIR_LAYER)
-			facial_overlay.overlays += emissive_blocker(facial_overlay.icon, facial_overlay.icon_state, alpha = hair_alpha)
+			facial_overlay.overlays += emissive_blocker(facial_overlay.icon, facial_overlay.icon_state, location, alpha = hair_alpha)
 			//Gradients
 			facial_hair_gradient_style = LAZYACCESS(human_head_owner.grad_style, GRADIENT_FACIAL_HAIR_KEY)
 			if(facial_hair_gradient_style)
 				facial_hair_gradient_color = LAZYACCESS(human_head_owner.grad_color, GRADIENT_FACIAL_HAIR_KEY)
 				facial_gradient_overlay = make_gradient_overlay(sprite_accessory.icon, sprite_accessory.icon_state, HAIR_LAYER, GLOB.facial_hair_gradients_list[facial_hair_gradient_style], facial_hair_gradient_color)
 
-			facial_overlay.overlays += emissive_blocker(sprite_accessory.icon, sprite_accessory.icon_state, alpha = hair_alpha)
+			facial_overlay.overlays += emissive_blocker(sprite_accessory.icon, sprite_accessory.icon_state, location, alpha = hair_alpha)
 
 	if(!hair_hidden && !show_debrained && (HAIR in species_flags_list))
 		sprite_accessory = GLOB.hairstyles_list[hair_style]
 		if(sprite_accessory)
 			hair_overlay = mutable_appearance(sprite_accessory.icon, sprite_accessory.icon_state, -HAIR_LAYER)
-			hair_overlay.overlays += emissive_blocker(hair_overlay.icon, hair_overlay.icon_state, alpha = hair_alpha)
+			hair_overlay.overlays += emissive_blocker(hair_overlay.icon, hair_overlay.icon_state, location, alpha = hair_alpha)
 			hair_gradient_style = LAZYACCESS(human_head_owner.grad_style, GRADIENT_HAIR_KEY)
 			if(hair_gradient_style)
 				hair_gradient_color = LAZYACCESS(human_head_owner.grad_color, GRADIENT_HAIR_KEY)

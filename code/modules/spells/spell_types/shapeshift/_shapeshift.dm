@@ -1,9 +1,20 @@
+/// Helper for checking of someone's shapeshifted currently.
+#define is_shifted(mob) mob.has_status_effect(/datum/status_effect/shapechange_mob/from_spell)
+
+/**
+ * Shapeshift spells.
+ *
+ * Allows the caster to transform to and from a different mob type.
+ */
 /datum/action/cooldown/spell/shapeshift
 	button_icon_state = "shapeshift"
 	school = SCHOOL_TRANSMUTATION
 	cooldown_time = 10 SECONDS
 
-	/// Whehter we revert to our human form on death.
+	/// Our spell's requrements before we shapeshifted. Stored on shapeshift so we can restore them after unshifting.
+	var/pre_shift_requirements
+
+	/// Whether we revert to our human form on death.
 	var/revert_on_death = TRUE
 	/// Whether we die when our shapeshifted form is killed
 	var/die_with_shapeshifted_form = TRUE
@@ -12,29 +23,35 @@
 	/// If convert damage is true, the damage type we deal when converting damage back and forth
 	var/convert_damage_type = BRUTE
 
-	/// Our chosen type
+	/// Our chosen type.
 	var/mob/living/shapeshift_type
-	/// All possible types we can become
+	/// All possible types we can become.
+	/// This should be implemented even if there is only one choice.
 	var/list/atom/possible_shapes
 
 /datum/action/cooldown/spell/shapeshift/is_valid_target(atom/cast_on)
 	return isliving(cast_on)
 
-/datum/action/cooldown/spell/shapeshift/proc/is_shifted(mob/living/cast_on)
-	return locate(/obj/shapeshift_holder) in cast_on
-
-/datum/action/cooldown/spell/shapeshift/before_cast(atom/cast_on)
+/datum/action/cooldown/spell/shapeshift/before_cast(mob/living/cast_on)
 	. = ..()
 	if(. & SPELL_CANCEL_CAST)
 		return
 
 	if(shapeshift_type)
+		// If another shapeshift spell was casted while we're already shifted, they could technically go to do_unshapeshift().
+		// However, we don't really want people casting shapeshift A to un-shapeshift from shapeshift B,
+		// as it could cause bugs or unintended behavior. So we'll just stop them here.
+		if(is_shifted(cast_on) && !is_type_in_list(cast_on, possible_shapes))
+			to_chat(cast_on, span_warning("This spell won't un-shapeshift you from this form!"))
+			return . | SPELL_CANCEL_CAST
+
 		return
 
 	if(length(possible_shapes) == 1)
 		shapeshift_type = possible_shapes[1]
 		return
 
+	// Not bothering with caching these as they're only ever shown once
 	var/list/shape_names_to_types = list()
 	var/list/shape_names_to_image = list()
 	if(!length(shape_names_to_types) || !length(shape_names_to_image))
@@ -67,24 +84,25 @@
 	cast_on.buckled?.unbuckle_mob(cast_on, force = TRUE)
 
 	var/currently_ventcrawling = (cast_on.movement_type & VENTCRAWLING)
+	var/mob/living/resulting_mob
 
 	// Do the shift back or forth
 	if(is_shifted(cast_on))
-		restore_form(cast_on)
+		resulting_mob = do_unshapeshift(cast_on)
 	else
-		do_shapeshift(cast_on)
+		resulting_mob = do_shapeshift(cast_on)
 
 	// The shift is done, let's make sure they're in a valid state now
 	// If we're not ventcrawling, we don't need to mind
-	if(!currently_ventcrawling)
+	if(!currently_ventcrawling || !resulting_mob)
 		return
 
 	// We are ventcrawling - can our new form support ventcrawling?
-	if(HAS_TRAIT(cast_on, TRAIT_VENTCRAWLER_ALWAYS) || HAS_TRAIT(cast_on, TRAIT_VENTCRAWLER_NUDE))
+	if(HAS_TRAIT(resulting_mob, TRAIT_VENTCRAWLER_ALWAYS) || HAS_TRAIT(resulting_mob, TRAIT_VENTCRAWLER_NUDE))
 		return
 
 	// Uh oh. You've shapeshifted into something that can't fit into a vent, while ventcrawling.
-	eject_from_vents(cast_on)
+	eject_from_vents(resulting_mob)
 
 /// Whenever someone shapeshifts within a vent,
 /// and enters a state in which they are no longer a ventcrawler,
@@ -107,9 +125,11 @@
 			playsound(possible_vent, 'sound/effects/reee.ogg', 75, TRUE)
 
 	priority_announce("We detected a pipe blockage around [get_area(get_turf(cast_on))], please dispatch someone to investigate.", "Central Command")
-	cast_on.death()
-	qdel(cast_on)
+	// Gib our caster, and make sure to leave nothing behind
+	// (If we leave something behind, it'll drop on the turf of the pipe, which is kinda wrong.)
+	cast_on.gib(TRUE, TRUE, TRUE)
 
+/// Callback for the radial that allows the user to choose their species.
 /datum/action/cooldown/spell/shapeshift/proc/check_menu(mob/living/caster)
 	if(QDELETED(src))
 		return FALSE
@@ -118,153 +138,43 @@
 
 	return !caster.incapacitated()
 
+/// Actually does the shapeshift, for the caster.
 /datum/action/cooldown/spell/shapeshift/proc/do_shapeshift(mob/living/caster)
-	if(is_shifted(caster))
-		to_chat(caster, span_warning("You're already shapeshifted!"))
-		CRASH("[type] called do_shapeshift while shapeshifted.")
-
-	var/mob/living/new_shape = new shapeshift_type(caster.loc)
-	var/obj/shapeshift_holder/new_shape_holder = new(new_shape, src, caster)
-
-	spell_requirements &= ~(SPELL_REQUIRES_HUMAN|SPELL_REQUIRES_WIZARD_GARB)
-
-	return new_shape_holder
-
-/datum/action/cooldown/spell/shapeshift/proc/restore_form(mob/living/caster)
-	var/obj/shapeshift_holder/current_shift = is_shifted(caster)
-	if(QDELETED(current_shift))
+	var/mob/living/new_shape = create_shapeshift_mob(caster.loc)
+	var/datum/status_effect/shapechange_mob/shapechange = new_shape.apply_status_effect(/datum/status_effect/shapechange_mob/from_spell, caster, src)
+	if(!shapechange)
+		// We failed to shift, maybe because we were already shapeshifted?
+		// Whatver the case, this shouldn't happen, so throw a stack trace.
+		to_chat(caster, span_warning("You can't shapeshift in this form!"))
+		stack_trace("[type] do_shapeshift was called when the mob was already shapeshifted (from a spell).")
 		return
 
-	var/mob/living/restored_player = current_shift.stored
+	// Make sure it's castable even in their new form.
+	pre_shift_requirements = spell_requirements
+	spell_requirements &= ~(SPELL_REQUIRES_HUMAN|SPELL_REQUIRES_WIZARD_GARB)
 
-	current_shift.restore()
-	spell_requirements = initial(spell_requirements) // Miiight mess with admin stuff.
+	return new_shape
 
-	return restored_player
+/// Actually does the un-shapeshift, from the caster. (Caster is a shapeshifted mob.)
+/datum/action/cooldown/spell/shapeshift/proc/do_unshapeshift(mob/living/caster)
+	var/datum/status_effect/shapechange_mob/shapechange = caster.has_status_effect(/datum/status_effect/shapechange_mob/from_spell)
+	if(!shapechange)
+		// We made it to do_unshapeshift without having a shapeshift status effect, this shouldn't happen.
+		to_chat(caster, span_warning("You can't un-shapeshift from this form!"))
+		stack_trace("[type] do_unshapeshift was called when the mob wasn't even shapeshifted (from a spell).")
+		return
 
-// Maybe one day, this can be a component or something
-// Until then, this is what holds data between wizard and shapeshift form whenever shapeshift is cast.
-/obj/shapeshift_holder
-	name = "Shapeshift holder"
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ON_FIRE | UNACIDABLE | ACID_PROOF
-	var/mob/living/stored
-	var/mob/living/shape
-	var/restoring = FALSE
-	var/datum/action/cooldown/spell/shapeshift/source
+	// Restore the requirements.
+	spell_requirements = pre_shift_requirements
+	pre_shift_requirements = null
 
-/obj/shapeshift_holder/Initialize(mapload, datum/action/cooldown/spell/shapeshift/_source, mob/living/caster)
-	. = ..()
-	source = _source
-	shape = loc
-	if(!istype(shape))
-		stack_trace("shapeshift holder created outside mob/living")
-		return INITIALIZE_HINT_QDEL
-	stored = caster
+	var/mob/living/unshapeshifted_mob = shapechange.caster_mob
+	caster.remove_status_effect(/datum/status_effect/shapechange_mob/from_spell)
+	return unshapeshifted_mob
 
-	// Transfer the Shapeshift spell over, if we actually own it
-	if(source.owner == caster)
-		source.Grant(shape)
+/// Helper proc that instantiates the mob we shapeshift into.
+/// Returns an instance of a living mob. Can be overridden.
+/datum/action/cooldown/spell/shapeshift/proc/create_shapeshift_mob(atom/loc)
+	return new shapeshift_type(loc)
 
-	// Also transfer over any actions bound to them specifically - this leaves behind item actions and similar
-	// (Mindbound actions are automatically tranferred over, so we don't need to worry about it)
-	for(var/datum/action/bodybound_action as anything in caster.actions)
-		if(bodybound_action.target != caster)
-			continue
-		bodybound_action.Grant(shape)
-
-	if(stored.mind)
-		stored.mind.transfer_to(shape)
-	stored.forceMove(src)
-	stored.notransform = TRUE
-	if(source.convert_damage)
-		var/damage_percent = (stored.maxHealth - stored.health) / stored.maxHealth;
-		var/damapply = damage_percent * shape.maxHealth;
-
-		shape.apply_damage(damapply, source.convert_damage_type, forced = TRUE, wound_bonus = CANT_WOUND);
-		shape.blood_volume = stored.blood_volume;
-
-	RegisterSignal(shape, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH), .proc/shape_death)
-	RegisterSignal(stored, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH), .proc/caster_death)
-
-/obj/shapeshift_holder/Destroy()
-	// restore_form manages signal unregistering. If restoring is TRUE, we've already unregistered the signals and we're here
-	// because restore() qdel'd src.
-	if(!restoring)
-		restore()
-	stored = null
-	shape = null
-	return ..()
-
-/obj/shapeshift_holder/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
-	. = ..()
-	if(!restoring && !QDELETED(src))
-		restore()
-
-/obj/shapeshift_holder/handle_atom_del(atom/A)
-	if(A == stored && !restoring)
-		restore()
-
-/obj/shapeshift_holder/Exited(atom/movable/gone, direction)
-	if(stored == gone && !restoring)
-		restore()
-
-/obj/shapeshift_holder/proc/caster_death()
-	SIGNAL_HANDLER
-
-	//Something kills the stored caster through direct damage.
-	if(source.revert_on_death)
-		restore(death = TRUE)
-	else
-		shape.death()
-
-/obj/shapeshift_holder/proc/shape_death()
-	SIGNAL_HANDLER
-
-	//Shape dies.
-	if(source.die_with_shapeshifted_form)
-		if(source.revert_on_death)
-			restore(death = TRUE)
-	else
-		restore()
-
-/obj/shapeshift_holder/proc/restore(death=FALSE)
-	// Destroy() calls this proc if it hasn't been called. Unregistering here prevents multiple qdel loops
-	// when caster and shape both die at the same time.
-	UnregisterSignal(shape, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH))
-	UnregisterSignal(stored, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH))
-	restoring = TRUE
-
-	// Give Shapeshift back to the OG, if we actually own it
-	// (Shapeshift into mindswap may change the action's owner)
-	if(!QDELETED(source) && source.owner == shape)
-		source.Grant(stored)
-
-	// Also transfer their bodybound actions back
-	for(var/datum/action/bodybound_action as anything in shape.actions)
-		if(bodybound_action.target != stored)
-			continue
-		bodybound_action.Grant(stored)
-
-	stored.forceMove(shape.loc)
-	stored.notransform = FALSE
-	if(shape.mind)
-		shape.mind.transfer_to(stored)
-	if(death)
-		stored.death()
-	else if(source.convert_damage)
-		stored.revive(full_heal = TRUE, admin_revive = FALSE)
-
-		var/damage_percent = (shape.maxHealth - shape.health)/shape.maxHealth;
-		var/damapply = stored.maxHealth * damage_percent
-
-		stored.apply_damage(damapply, source.convert_damage_type, forced = TRUE, wound_bonus=CANT_WOUND)
-	if(source.convert_damage)
-		stored.blood_volume = shape.blood_volume;
-
-	// This guard is important because restore() can also be called on COMSIG_PARENT_QDELETING for shape, as well as on death.
-	// This can happen in, for example, [/proc/wabbajack] where the mob hit is qdel'd.
-	if(!QDELETED(shape))
-		QDEL_NULL(shape)
-
-	qdel(src)
-	return stored
+#undef is_shifted

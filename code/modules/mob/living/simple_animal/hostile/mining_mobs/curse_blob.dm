@@ -1,7 +1,7 @@
 /mob/living/simple_animal/hostile/asteroid/curseblob
 	name = "curse mass"
 	desc = "A mass of purple... smoke?"
-	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	icon_state = "curseblob"
 	icon_living = "curseblob"
 	icon_aggro = "curseblob"

@@ -3,7 +3,7 @@
 /obj/effect/decal/cleanable/robot_debris
 	name = "robot debris"
 	desc = "It's a useless heap of junk... <i>or is it?</i>"
-	icon = 'icons/mob/robots.dmi'
+	icon = 'icons/mob/silicon/robots.dmi'
 	icon_state = "gib1"
 	layer = LOW_OBJ_LAYER
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6", "gib7")
@@ -72,7 +72,7 @@
 /obj/effect/decal/cleanable/oil
 	name = "motor oil"
 	desc = "It's black and greasy. Looks like Beepsky made another mess."
-	icon = 'icons/mob/robots.dmi'
+	icon = 'icons/mob/silicon/robots.dmi'
 	icon_state = "floor1"
 	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
 	blood_state = BLOOD_STATE_OIL

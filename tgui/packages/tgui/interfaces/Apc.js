@@ -83,7 +83,10 @@ const ApcContent = (props, context) => {
   }
   return (
     <>
-      <InterfaceLockNoticeBox />
+      <InterfaceLockNoticeBox
+        siliconUser={data.remoteAccess || data.siliconUser}
+        preventLocking={data.remoteAccess}
+      />
       <Section title="Power Status">
         <LabeledList>
           <LabeledList.Item

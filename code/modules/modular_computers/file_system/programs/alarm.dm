@@ -26,7 +26,7 @@
 	QDEL_NULL(alert_control)
 	return ..()
 
-/datum/computer_file/program/alarm_monitor/process_tick()
+/datum/computer_file/program/alarm_monitor/process_tick(delta_time)
 	..()
 
 	if(has_alert)

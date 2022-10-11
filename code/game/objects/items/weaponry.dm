@@ -129,9 +129,9 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/claymore/highlander/process()
 	if(ishuman(loc))
-		var/mob/living/carbon/human/H = loc
-		loc.plane = GAME_PLANE_UPPER_FOV_HIDDEN //NO HIDING BEHIND PLANTS FOR YOU, DICKWEED (HA GET IT, BECAUSE WEEDS ARE PLANTS)
-		ADD_TRAIT(H, TRAIT_NOBLEED, HIGHLANDER_TRAIT) //AND WE WON'T BLEED OUT LIKE COWARDS
+		var/mob/living/carbon/human/holder = loc
+		SET_PLANE_EXPLICIT(holder, GAME_PLANE_UPPER_FOV_HIDDEN, src) //NO HIDING BEHIND PLANTS FOR YOU, DICKWEED (HA GET IT, BECAUSE WEEDS ARE PLANTS)
+		ADD_TRAIT(holder, TRAIT_NOBLEED, HIGHLANDER_TRAIT) //AND WE WON'T BLEED OUT LIKE COWARDS
 	else
 		if(!(flags_1 & ADMIN_SPAWNED_1))
 			qdel(src)
@@ -223,11 +223,13 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		if(10)
 			user.visible_message(span_warning("[user]'s eyes light up with a vengeful fire!"), \
 			span_userdanger("YOU FEEL THE POWER OF VALHALLA FLOWING THROUGH YOU! <i>THERE CAN BE ONLY ONE!!!</i>"))
-			user.update_icons()
 			new_name = "GORE-DRENCHED CLAYMORE OF [pick("THE WHIMSICAL SLAUGHTER", "A THOUSAND SLAUGHTERED CATTLE", "GLORY AND VALHALLA", "ANNIHILATION", "OBLITERATION")]"
 			icon_state = "claymore_gold"
 			inhand_icon_state = "cultblade"
+			lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
+			righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
 			remove_atom_colour(ADMIN_COLOUR_PRIORITY)
+			user.update_held_items()
 
 	name = new_name
 	playsound(user, 'sound/items/screwdriver2.ogg', 50, TRUE)
@@ -245,7 +247,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		return INITIALIZE_HINT_QDEL
 
 /obj/item/claymore/highlander/robot/process()
-	loc.plane = GAME_PLANE_UPPER_FOV_HIDDEN
+	SET_PLANE_IMPLICIT(loc, GAME_PLANE_UPPER_FOV_HIDDEN)
 
 /obj/item/katana
 	name = "katana"
@@ -342,7 +344,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	name = "throwing star"
 	desc = "An ancient weapon still used to this day, due to its ease of lodging itself into its victim's body parts."
 	icon_state = "throwingstar"
-	inhand_icon_state = "eshield0"
+	inhand_icon_state = "eshield"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
 	force = 2
@@ -456,7 +458,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	name = "white cane"
 	desc = "A cane traditionally used by the blind to help them see. Folds down to be easier to transport."
 	icon_state = "cane_white"
-	inhand_icon_state = null
+	inhand_icon_state = "cane_white"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	force = 1
@@ -492,6 +494,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "Apparently a staff used by the wizard."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "staff"
+	inhand_icon_state = "staff"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	force = 3
@@ -509,6 +512,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "Used for sweeping, and flying into the night while cackling. Black cat not included."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "broom"
+	inhand_icon_state = "broom"
 	resistance_flags = FLAMMABLE
 
 /obj/item/staff/stick
@@ -834,12 +838,16 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb_simple = list("swat", "smack")
 	hitsound = 'sound/effects/snap.ogg'
 	w_class = WEIGHT_CLASS_SMALL
-	//Things in this list will be instantly splatted.  Flyman weakness is handled in the flyman species weakness proc.
+	/// Things in this list will be instantly splatted.  Flyman weakness is handled in the flyman species weakness proc.
+	var/list/splattable
+	/// Things in this list which take a lot more damage from the fly swatter, but not be necessarily killed by it.
 	var/list/strong_against
+	/// How much extra damage the fly swatter does against mobs it is strong against
+	var/extra_strength_damage = 24
 
 /obj/item/melee/flyswatter/Initialize(mapload)
 	. = ..()
-	strong_against = typecacheof(list(
+	splattable = typecacheof(list(
 		/mob/living/simple_animal/hostile/bee,
 		/mob/living/simple_animal/butterfly,
 		/mob/living/basic/cockroach,
@@ -848,24 +856,28 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		/mob/living/simple_animal/hostile/ant,
 		/obj/effect/decal/cleanable/ants,
 	))
+	strong_against = typecacheof(list(
+		/mob/living/simple_animal/hostile/giant_spider,
+	))
 
 
 /obj/item/melee/flyswatter/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
-	if(!proximity_flag)
-		return
-	if(!is_type_in_typecache(target, strong_against))
-		return
-	if (HAS_TRAIT(user, TRAIT_PACIFISM))
+	if(!proximity_flag || HAS_TRAIT(user, TRAIT_PACIFISM))
 		return
 
-	new /obj/effect/decal/cleanable/insectguts(target.drop_location())
-	to_chat(user, span_warning("You easily splat [target]."))
-	if(isliving(target))
-		var/mob/living/bug = target
-		bug.gib()
-	else
-		qdel(target)
+	if(is_type_in_typecache(target, splattable))
+		new /obj/effect/decal/cleanable/insectguts(target.drop_location())
+		to_chat(user, span_warning("You easily splat [target]."))
+		if(isliving(target))
+			var/mob/living/bug = target
+			bug.gib()
+		else
+			qdel(target)
+		return
+	if(is_type_in_typecache(target, strong_against) && isliving(target))
+		var/mob/living/living_target = target
+		living_target.adjustBruteLoss(extra_strength_damage)
 
 /obj/item/proc/can_trigger_gun(mob/living/user)
 	if(!user.can_use_guns(src))
