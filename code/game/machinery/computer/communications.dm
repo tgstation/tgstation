@@ -776,6 +776,9 @@
 
 /// Begin the process of hacking into the comms console to call in a threat.
 /obj/machinery/computer/communications/proc/try_hack_console(mob/living/hacker, duration = 30 SECONDS)
+	if(!can_hack(hacker, feedback = TRUE))
+		return
+
 	AI_notify_hack()
 	if(!do_after(hacker, duration, src, extra_checks = CALLBACK(src, .proc/can_hack, hacker)))
 		return FALSE
