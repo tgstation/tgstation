@@ -169,6 +169,7 @@
 #include "spell_mindswap.dm"
 #include "spell_names.dm"
 #include "spell_shapeshift.dm"
+#include "spritesheets.dm"
 #include "stack_singular_name.dm"
 #include "stomach.dm"
 #include "strippable.dm"
