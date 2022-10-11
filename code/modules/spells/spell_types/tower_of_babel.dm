@@ -36,7 +36,7 @@ GLOBAL_DATUM(tower_of_babel, /datum/tower_of_babel)
 		// some players might be off the z-level or dead but we still need to cure them
 		cure_curse_of_babel(target)
 
-/proc/handle_new_player(datum/source, mob/living/new_crewmember, rank)
+/datum/tower_of_babel/proc/handle_new_player(datum/source, mob/living/new_crewmember, rank)
 	SIGNAL_HANDLER
 
 	curse_of_babel(new_crewmember)
