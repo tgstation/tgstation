@@ -128,6 +128,8 @@
 	var/is_zombie = FALSE
 	///Whether or not this is a fragile spore from Distributed Neurons
 	var/is_weak = FALSE
+	///Whether the spore requires a factory to survive - currently used by Distributed Neurons reagent zombies
+	var/needs_factory = TRUE
 
 /mob/living/simple_animal/hostile/blob/blobspore/Initialize(mapload, obj/structure/blob/special/linked_node)
 	. = ..()
@@ -145,8 +147,9 @@
 			if(!is_weak && H.stat == DEAD)
 				Zombify(H)
 				break
-	if(!is_valid_z_level(get_turf(src), get_turf(factory)))
-		death()
+	if(needs_factory)
+		if(!factory || !is_valid_z_level(get_turf(src), get_turf(factory)))
+			death()
 	return ..()
 
 /mob/living/simple_animal/hostile/blob/blobspore/attack_ghost(mob/user)

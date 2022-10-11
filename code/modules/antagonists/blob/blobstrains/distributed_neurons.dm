@@ -34,6 +34,7 @@
 		if(exposed_mob.stat == DEAD && overmind.can_buy(5))
 			var/mob/living/simple_animal/hostile/blob/blobspore/spore = new/mob/living/simple_animal/hostile/blob/blobspore(get_turf(exposed_mob))
 			spore.overmind = overmind
+			spore.needs_factory = FALSE
 			spore.update_icons()
 			overmind.blob_mobs.Add(spore)
 			spore.Zombify(exposed_mob)
