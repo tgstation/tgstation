@@ -96,9 +96,9 @@
 	var/obj/item/stock_parts/newstockpart = I
 	for(var/obj/item/stock_parts/oldstockpart in contents)
 		var/type_to_check
-		for(var/pathtypes in required_parts)
-			if(ispath(oldstockpart.type, pathtypes))
-				type_to_check = oldstockpart.type
+		for(var/pathtype in required_parts)
+			if(ispath(oldstockpart.type, pathtype))
+				type_to_check = pathtype
 				break
 		if(istype(newstockpart, type_to_check) && istype(oldstockpart, type_to_check))
 			if(newstockpart.get_part_rating() > oldstockpart.get_part_rating())
