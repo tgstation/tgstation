@@ -63,6 +63,7 @@
 	afflicted = disease_event.disease_candidates
 	if(disease_event.chosen_disease)
 		virus_type = disease_event.chosen_disease
+		disease_event.chosen_disease = null
 
 	if(!virus_type) //I wanted to handle this by searching through the presets and checking by disease severity defines but we'd still need to filter out some of them anyways.
 		var/list/virus_candidates = list()
