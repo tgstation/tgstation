@@ -29,13 +29,20 @@ const NoIDDimmer = (props, context) => {
 
 export const NtosMessenger = (props, context) => {
   const { act, data } = useBackend(context);
+  const { viewing_messages } = data;
+  if (viewing_messages) {
+    return <MessageListScreen />;
+  }
+  return <ContactsScreen />;
+};
+
+const ContactsScreen = (props, context) => {
+  const { act, data } = useBackend(context);
   const {
     owner,
-    messages = [],
     ringer_status,
     sending_and_receiving,
     messengers = [],
-    viewing_messages,
     sortByJob,
     canSpam,
     isSilicon,
@@ -43,56 +50,6 @@ export const NtosMessenger = (props, context) => {
     virus_attach,
     sending_virus,
   } = data;
-  if (viewing_messages) {
-    return (
-      <NtosWindow width={600} height={800}>
-        <NtosWindow.Content>
-          <Stack vertical>
-            <Section fill>
-              <Button
-                icon="arrow-left"
-                content="Back"
-                onClick={() => act('PDA_viewMessages')}
-              />
-              <Button
-                icon="trash"
-                content="Clear Messages"
-                onClick={() => act('PDA_clearMessages')}
-              />
-            </Section>
-            {messages.map((message) => (
-              <Stack vertical key={message} mt={1}>
-                <Section fill textAlign="left">
-                  <Box italic opacity={0.5}>
-                    {message.outgoing ? '(OUTGOING)' : '(INCOMING)'}
-                  </Box>
-                  {message.outgoing ? (
-                    <Box bold>{message.name + ' (' + message.job + ')'}</Box>
-                  ) : (
-                    <Button
-                      transparent
-                      content={message.name + ' (' + message.job + ')'}
-                      onClick={() =>
-                        act('PDA_sendMessage', {
-                          name: message.name,
-                          job: message.job,
-                          ref: message.ref,
-                        })
-                      }
-                    />
-                  )}
-                </Section>
-                <Section mt={-1}>
-                  <Box italic>{message.contents}</Box>
-                  {!!message.photo && <Box as="img" src={message.photo} />}
-                </Section>
-              </Stack>
-            ))}
-          </Stack>
-        </NtosWindow.Content>
-      </NtosWindow>
-    );
-  }
   return (
     <NtosWindow width={600} height={800}>
       <NtosWindow.Content scrollable>
@@ -198,6 +155,59 @@ export const NtosMessenger = (props, context) => {
           </Section>
         </Stack>
         {!owner && !isSilicon && <NoIDDimmer />}
+      </NtosWindow.Content>
+    </NtosWindow>
+  );
+};
+
+const MessageListScreen = (props, context) => {
+  const { act, data } = useBackend(context);
+  const { messages = [] } = data;
+  return (
+    <NtosWindow width={600} height={800}>
+      <NtosWindow.Content scrollable>
+        <Stack vertical>
+          <Section fill>
+            <Button
+              icon="arrow-left"
+              content="Back"
+              onClick={() => act('PDA_viewMessages')}
+            />
+            <Button
+              icon="trash"
+              content="Clear Messages"
+              onClick={() => act('PDA_clearMessages')}
+            />
+          </Section>
+          {messages.map((message) => (
+            <Stack vertical key={message} mt={1}>
+              <Section textAlign="left">
+                <Box italic opacity={0.5} mb={1}>
+                  {message.outgoing ? '(OUTGOING)' : '(INCOMING)'}
+                </Box>
+                {message.outgoing ? (
+                  <Box bold>{message.name + ' (' + message.job + ')'}</Box>
+                ) : (
+                  <Button
+                    transparent
+                    content={message.name + ' (' + message.job + ')'}
+                    onClick={() =>
+                      act('PDA_sendMessage', {
+                        name: message.name,
+                        job: message.job,
+                        ref: message.ref,
+                      })
+                    }
+                  />
+                )}
+              </Section>
+              <Section fill mt={-1}>
+                <Box italic>{message.contents}</Box>
+                {!!message.photo && <Box as="img" src={message.photo} mt={1} />}
+              </Section>
+            </Stack>
+          ))}
+        </Stack>
       </NtosWindow.Content>
     </NtosWindow>
   );
