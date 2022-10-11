@@ -1,0 +1,4 @@
+author: "san7890"
+delete-after: True
+changes: 
+  - bugfix: "On RuntimeStation, should you chance upon it, the emergency shuttle should no longer collide by the with the circuits lab."
