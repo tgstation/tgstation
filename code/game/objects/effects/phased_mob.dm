@@ -68,7 +68,9 @@
 	var/turf/newloc = phased_check(user, direction)
 	if(!newloc)
 		return
-	setDir(direction)
+
+	if (direction in GLOB.alldirs)
+		setDir(direction)
 	forceMove(newloc)
 
 /// Checks if the conditions are valid to be able to phase. Returns a turf destination if positive.
@@ -76,7 +78,7 @@
 	RETURN_TYPE(/turf)
 	if (movedelay > world.time || !direction)
 		return
-	var/turf/newloc = get_step(src,direction)
+	var/turf/newloc = get_step_multiz(src,direction)
 	if(!newloc)
 		return
 	var/area/destination_area = newloc.loc
@@ -87,4 +89,7 @@
 	if(destination_area.area_flags & NOTELEPORT || SSmapping.level_trait(newloc.z, ZTRAIT_NOPHASE))
 		to_chat(user, span_danger("Some dull, universal force is blocking the way. It's overwhelmingly oppressive force feels dangerous."))
 		return
+	if (direction == UP || direction == DOWN)
+		newloc = can_z_move(direction, get_turf(src), newloc, ZMOVE_INCAPACITATED_CHECKS | ZMOVE_FEEDBACK | ZMOVE_ALLOW_ANCHORED, user)
+
 	return newloc

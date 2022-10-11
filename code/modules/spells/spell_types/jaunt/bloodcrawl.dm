@@ -33,21 +33,24 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	for(var/obj/effect/decal/cleanable/blood_nearby in range(blood_radius, get_turf(owner)))
-		if(blood_nearby.can_bloodcrawl_in())
-			return TRUE
+	if(find_nearby_blood(get_turf(owner)))
+		return TRUE
 	if(feedback)
 		to_chat(owner, span_warning("There must be a nearby source of blood!"))
 	return FALSE
 
 /datum/action/cooldown/spell/jaunt/bloodcrawl/cast(mob/living/cast_on)
 	. = ..()
-	for(var/obj/effect/decal/cleanable/blood_nearby in range(blood_radius, get_turf(cast_on)))
-		if(blood_nearby.can_bloodcrawl_in())
-			return do_bloodcrawl(blood_nearby, cast_on)
+	// Should always return something because we checked that in can_cast_spell before arriving here
+	var/obj/effect/decal/cleanable/blood_nearby = find_nearby_blood(get_turf(cast_on))
+	do_bloodcrawl(blood_nearby, cast_on)
 
-	reset_spell_cooldown()
-	to_chat(cast_on, span_warning("There must be a nearby source of blood!"))
+/// Returns a nearby blood decal, or null if there aren't any
+/datum/action/cooldown/spell/jaunt/bloodcrawl/proc/find_nearby_blood(turf/origin)
+	for(var/obj/effect/decal/cleanable/blood_nearby in range(blood_radius, origin))
+		if(blood_nearby.can_bloodcrawl_in())
+			return blood_nearby
+	return null
 
 /**
  * Attempts to enter or exit the passed blood pool.

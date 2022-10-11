@@ -106,7 +106,7 @@
 	if(!(L.mobility_flags & MOBILITY_MOVE))
 		return FALSE
 
-	if(isobj(mob.loc) || ismob(mob.loc)) //Inside an object, tell it we moved
+	if(ismovable(mob.loc)) //Inside an object, tell it we moved
 		var/atom/O = mob.loc
 		return O.relaymove(mob, direct)
 
@@ -529,16 +529,16 @@
 		to_chat(src, span_warning("There's nowhere to go in that direction!"))
 		return
 
+	if(ismovable(loc)) //Inside an object, tell it we moved
+		var/atom/O = loc
+		return O.relaymove(src, UP)
+
 	if(can_z_move(DOWN, above_turf, current_turf, ZMOVE_FALL_FLAGS|ventcrawling_flag)) //Will we fall down if we go up?
 		if(buckled)
 			to_chat(src, span_warning("[buckled] is is not capable of flight."))
 		else
 			to_chat(src, span_warning("You are not Superman."))
 		return
-
-	if(isobj(loc) || ismob(loc)) //Inside an object, tell it we moved
-		var/atom/O = loc
-		return O.relaymove(src, UP)
 
 	if(zMove(UP, z_move_flags = ZMOVE_FLIGHT_FLAGS|ZMOVE_FEEDBACK|ventcrawling_flag))
 		to_chat(src, span_notice("You move upwards."))
@@ -548,7 +548,7 @@
 	set name = "Move Down"
 	set category = "IC"
 
-	if(isobj(loc) || ismob(loc)) //Inside an object, tell it we moved
+	if(ismovable(loc)) //Inside an object, tell it we moved
 		var/atom/O = loc
 		return O.relaymove(src, DOWN)
 
