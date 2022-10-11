@@ -55,6 +55,7 @@
 			if(!is_station_level(vendor.z) || !istype(vendor, chosen_vendor))
 				continue
 			vendingMachines.Add(vendor)
+		brand_event.chosen_vendor = null //Event has a max_occurences of 1 but juuust in case
 	if(!length(vendingMachines)) //If no vendors are in vendingMachines, setup defaults back to randomly selecting one.
 		for(var/obj/machinery/vending/vendor in GLOB.machines)
 			if(!is_station_level(vendor.z))

@@ -38,6 +38,9 @@
  * later, at the round_event level, so this proc mostly just checks users for whether or not a heart attack should be possible.
  */
 /datum/round_event_control/heart_attack/proc/generate_candidates()
+	if(length(heart_attack_candidates))
+		heart_attack_candidates.Cut()
+
 	for(var/mob/living/carbon/human/candidate in shuffle(GLOB.player_list))
 		if(candidate.stat == DEAD || HAS_TRAIT(candidate, TRAIT_CRITICAL_CONDITION) || !candidate.can_heartattack() || (/datum/disease/heart_failure in candidate.diseases) || candidate.undergoing_cardiac_arrest())
 			continue
@@ -59,6 +62,7 @@
 
 	attacks_left = heart_attack_event.quantity
 	victims = heart_attack_event.heart_attack_candidates
+	heart_attack_event.quantity = 1
 
 	while(attacks_left > 0 && length(victims))
 		if(attack_heart())
