@@ -295,6 +295,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	rating = 2
 	energy_rating = 3
 	custom_materials = list(/datum/material/iron=30)
+	base_name = null
 
 /obj/item/stock_parts/micro_laser/high
 	name = "high-power micro-laser"
@@ -337,6 +338,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	rating = 3
 	energy_rating = 5
 	custom_materials = list(/datum/material/iron=30)
+	base_name = null
 
 /obj/item/stock_parts/micro_laser/ultra
 	name = "ultra-high-power micro-laser"
@@ -379,6 +381,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	rating = 4
 	energy_rating = 10
 	custom_materials = list(/datum/material/iron=30)
+	base_name = null
 
 /obj/item/stock_parts/micro_laser/quadultra
 	name = "quad-ultra micro-laser"
