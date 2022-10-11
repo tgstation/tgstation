@@ -25,8 +25,6 @@
 	inhand_icon_state = "lb_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
-	alt_covers_chest = TRUE
-
 
 /obj/item/clothing/under/rank/cargo/tech/skirt
 	name = "cargo technician's jumpskirt"
