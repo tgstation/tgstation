@@ -2988,6 +2988,7 @@
 #include "code\modules\events\wizard\rpgtitles.dm"
 #include "code\modules\events\wizard\shuffle.dm"
 #include "code\modules\events\wizard\summons.dm"
+#include "code\modules\events\wizard\tower_of_babel.dm"
 #include "code\modules\experisci\destructive_scanner.dm"
 #include "code\modules\experisci\handheld_scanner.dm"
 #include "code\modules\experisci\experiment\experiments.dm"
