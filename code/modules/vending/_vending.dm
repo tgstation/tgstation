@@ -859,6 +859,9 @@ GLOBAL_LIST_EMPTY(vending_products)
 		if(shock(user, 100))
 			return
 
+	if(!user.Adjacent(src))
+		return
+
 	if(tilted && !user.buckled && !isAI(user))
 		to_chat(user, span_notice("You begin righting [src]."))
 		if(do_after(user, 50, target=src))
