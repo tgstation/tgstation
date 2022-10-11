@@ -39,7 +39,6 @@
 	slot = ORGAN_SLOT_MONSTER_CORE
 	organ_flags = NONE
 	force = 0
-	actions_types = list(/datum/action/item_action/organ_action/use)
 	/// Set to true if this organ has decayed into uselessness.
 	var/inert = FALSE
 	/// ID of the timer which will decay this organ
@@ -58,19 +57,34 @@
 	var/datum/status_effect/user_status
 	/// Moodlet applied by this organ
 	var/datum/mood_event/moodlet
-	/// If true this organ is single use even when implanted
-	var/consumed_internal = FALSE
+	/// Action to grant when organ is implanted
+	var/datum/action/item_action/organ_action/use_internal
 
 /obj/item/organ/internal/monster_core/Initialize(mapload)
 	. = ..()
 	decay_timer = addtimer(CALLBACK(src, .proc/go_inert), time_to_decay, TIMER_STOPPABLE)
+	setup_internal_use_action()
+	add_item_action(use_internal)
+
+/// Set up the action for using the organ internally
+/obj/item/organ/internal/monster_core/proc/setup_internal_use_action()
+	use_internal = new(src)
+
+/obj/item/organ/internal/monster_core/Destroy(force, silent)
+	QDEL_NULL(use_internal)
+	return ..()
 
 /obj/item/organ/internal/monster_core/Insert(mob/living/carbon/target_carbon, special = 0, drop_if_replaced = TRUE)
 	. = ..()
+	if (inert)
+		to_chat(owner, span_notice("[src] breaks down as you try to insert it."))
+		qdel(src)
+		return FALSE
 	if (!decay_timer)
-		return
+		return TRUE
 	preserve(TRUE)
 	owner.visible_message(span_notice("[src] stabilizes as it's inserted."))
+	return TRUE
 
 /obj/item/organ/internal/monster_core/Remove(mob/living/carbon/target_carbon, special = 0)
 	if (!inert && !special)
@@ -172,6 +186,9 @@
 	if (should_apply_on_life())
 		try_activate_implanted()
 
+/obj/item/organ/internal/monster_core/proc/action_is_available()
+	return TRUE
+
 /// Return true under conditions where we want an implanted organ to trigger
 /obj/item/organ/internal/monster_core/proc/should_apply_on_life()
 	return FALSE
@@ -184,10 +201,6 @@
  * This performs checking for interness, you should usually override activate_implanted() instead.
  */
 /obj/item/organ/internal/monster_core/proc/try_activate_implanted()
-	if (inert)
-		to_chat(owner, span_notice("[src] breaks down as it tries to activate."))
-		qdel(src)
-		return
 	activate_implanted()
 
 /**
@@ -195,5 +208,18 @@
  * This is either when they press the UI button or if should_apply_on_life() returns true.
  */
 /obj/item/organ/internal/monster_core/proc/activate_implanted()
-	if (consumed_internal)
-		qdel(src)
+	SHOULD_CALL_PARENT(FALSE)
+	CRASH("Someone forgot to make their organ do something when you implant it.")
+
+/// Monster core which is reusable when implanted
+/obj/item/organ/internal/monster_core/reusable
+	/// How long between activations when implanted?
+	var/internal_use_cooldown = 5 MINUTES
+
+/obj/item/organ/internal/monster_core/reusable/setup_internal_use_action()
+	use_internal = new /datum/action/item_action/organ_action/cooldown(src, internal_use_cooldown)
+
+/obj/item/organ/internal/monster_core/reusable/try_activate_implanted()
+	if (!action_is_available())
+		return
+	return ..()

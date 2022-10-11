@@ -23,3 +23,33 @@
 	..()
 	var/obj/item/organ/organ_target = target
 	name = "Use [organ_target.name]"
+
+/datum/action/item_action/organ_action/cooldown
+	name = "Use Organ"
+	/// How long we have to wait between uses.
+	var/activate_cooldown_length
+	/// The cooldown between button uses.
+	COOLDOWN_DECLARE(activate_cooldown)
+
+/datum/action/item_action/organ_action/cooldown/New(Target, cooldown = 5 MINUTES)
+	..()
+	activate_cooldown_length = cooldown
+	var/obj/item/organ/organ_target = target
+	name = "Use [organ_target.name]"
+
+/datum/action/item_action/organ_action/cooldown/IsAvailable()
+	. = ..()
+	if (!.)
+		return
+	if(!COOLDOWN_FINISHED(src, activate_cooldown))
+		return FALSE
+	return TRUE
+
+/datum/action/item_action/organ_action/cooldown/Trigger(trigger_flags)
+	. = ..()
+	if(!.)
+		return FALSE
+	COOLDOWN_START(src, activate_cooldown, activate_cooldown_length)
+	UpdateButtons()
+	addtimer(CALLBACK(src, .proc/UpdateButtons), activate_cooldown_length)
+	return TRUE
