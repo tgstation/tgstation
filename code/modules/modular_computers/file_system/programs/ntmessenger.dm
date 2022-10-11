@@ -232,25 +232,35 @@
 
 // Gets the input for a message being sent.
 
-/datum/computer_file/program/messenger/proc/msg_input(mob/living/U = usr, rigged = FALSE)
-	var/t = null
+/datum/computer_file/program/messenger/proc/msg_input(mob/living/user = usr, target_name = null, rigged = FALSE)
+	var/message = null
 
 	if(mime_mode)
-		t = emoji_sanitize(tgui_input_text(U, "Enter emojis", "NT Messaging"))
+		message = emoji_sanitize(tgui_input_text(user, "Enter emojis", "NT Messaging[target_name ? " ([target_name])" : ""]"))
 	else
-		t = tgui_input_text(U, "Enter a message", "NT Messaging")
+		message = tgui_input_text(user, "Enter a message", "NT Messaging[target_name ? " ([target_name])" : ""]")
 
-	if (!t || !sending_and_receiving)
+	if (!message || !sending_and_receiving)
 		return
-	if(!U.canUseTopic(computer, be_close = TRUE))
+
+	if(!user.canUseTopic(computer, be_close = TRUE))
 		return
-	return sanitize(t)
+
+	return sanitize(message)
+
 
 /datum/computer_file/program/messenger/proc/send_message(mob/living/user, list/obj/item/modular_computer/targets, everyone = FALSE, rigged = FALSE, fake_name = null, fake_job = null)
-	var/message = msg_input(user, rigged)
-	if(!message || !targets.len)
+	if(!targets.len)
 		return FALSE
+
+	var/target_name = length(targets) == 1 ? targets[1].saved_identification : "Everyone"
+	var/message = msg_input(user, target_name, rigged)
+
+	if(!message)
+		return FALSE
+
 	if((last_text && world.time < last_text + 10) || (everyone && last_text_everyone && world.time < last_text_everyone + 2 MINUTES))
+		user.balloon_alert(user, "on cooldown!")
 		return FALSE
 
 	var/turf/position = get_turf(computer)
