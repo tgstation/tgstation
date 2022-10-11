@@ -1,4 +1,0 @@
-author: "Gamer025"
-delete-after: True
-changes: 
-  - bugfix: "You should no longer receive \"Your previous action was ignored...\" messages when you join a server"

@@ -1,4 +1,0 @@
-author: "GoblinBackwards"
-delete-after: True
-changes: 
-  - bugfix: "You can now remove objects embedded in yourself again"

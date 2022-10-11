@@ -8004,6 +8004,11 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/cargo/miningdock/cafeteria)
+"cSI" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/iron/showroomfloor,
+/area/station/security/lockers)
 "cSV" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/trimline/purple/filled/line{
@@ -21247,9 +21252,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
 "hHf" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 4
-	},
+/obj/structure/closet/bombcloset/security,
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/lockers)
 "hHu" = (
@@ -41743,11 +41746,11 @@
 /turf/open/floor/wood,
 /area/station/commons/vacant_room/office)
 "oXh" = (
-/obj/item/kirbyplants/random,
 /obj/structure/sign/warning/fire{
 	pixel_y = 32
 	},
 /obj/machinery/light/directional/north,
+/obj/structure/closet/bombcloset,
 /turf/open/floor/iron,
 /area/station/science/ordnance/storage)
 "oXk" = (
@@ -156801,7 +156804,7 @@ tag
 bpp
 idF
 jaH
-jaH
+cSI
 koQ
 nxm
 yjs

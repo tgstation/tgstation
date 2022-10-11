@@ -1,0 +1,4 @@
+author: "Enbyy"
+delete-after: True
+changes: 
+  - bugfix: "fixed the medical.dmi having 2 dupe frames for the medical jumpsuit mob sprite."

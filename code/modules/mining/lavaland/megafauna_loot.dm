@@ -819,6 +819,7 @@
 	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
 	icon_state = "cleaving_saw"
+	inhand_icon_state = "cleaving_saw"
 	worn_icon_state = "cleaving_saw"
 	attack_verb_continuous = list("attacks", "saws", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "saw", "slice", "tear", "lacerate", "rip", "dice", "cut")

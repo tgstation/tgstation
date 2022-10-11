@@ -317,3 +317,20 @@
   - balance: Halved SM power damage across the board.
   - balance: Changed sm space exposure damage to just check for the current tile and
       adjacent atmos connected tiles.
+2022-10-11:
+  Gamer025:
+  - bugfix: You should no longer receive "Your previous action was ignored..." messages
+      when you join a server
+  GoblinBackwards:
+  - bugfix: You can now remove objects embedded in yourself again
+  JohnFulpWillard:
+  - spellcheck: The compressed matter cartridge has been renamed to RCD matter cartridge,
+      since it's RCD matter... used to refill an RCD.
+  Melbert:
+  - qol: Spell buttons update every so slightly more accurately when they become unavailable
+      or available.
+  - refactor: Refactored temporary mute effects and sign language.
+  - code_imp: Cleaned up vocal checks into "try_speak" and "can_speak".
+  - admin: VV dropdown removing "Tongue Tied" quirk actually removes the quirk
+  arnociiroc:
+  - balance: reduced shotgun dart reagent amount
