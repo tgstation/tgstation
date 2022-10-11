@@ -27,4 +27,5 @@
 #define DETONATION_NEAR_MISSED_STATION NUKE_NEAR_MISS
 #define DETONATION_MISSED_STATION NUKE_MISS_STATION
 
-#define DEFAULT_NUKE_CODE "ADMIN"
+/// Default code for nukes, intentionally impossible to enter on the UI
+#define NUKE_CODE_UNSET "ADMIN"
