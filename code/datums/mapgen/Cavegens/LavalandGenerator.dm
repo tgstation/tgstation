@@ -14,7 +14,7 @@
 		/mob/living/simple_animal/hostile/asteroid/goldgrub = 10,
 		/mob/living/simple_animal/hostile/asteroid/lobstrosity/lava = 20,
 		/mob/living/simple_animal/hostile/asteroid/brimdemon = 20,
-		/mob/living/basic/bileworm = 20,
+		/mob/living/basic/mining/bileworm = 20,
 	)
 	weighted_flora_spawn_list = list(/obj/structure/flora/ash/leaf_shroom = 2 , /obj/structure/flora/ash/cap_shroom = 2 , /obj/structure/flora/ash/stem_shroom = 2 , /obj/structure/flora/ash/cacti = 1, /obj/structure/flora/ash/tall_shroom = 2, /obj/structure/flora/ash/seraka = 2)
 	///Note that this spawn list is also in the icemoon generator
