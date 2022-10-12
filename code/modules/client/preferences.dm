@@ -97,6 +97,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if(istype(C))
 		if(!is_guest_key(C.key))
 			load_path(C.ckey)
+			if(!fexists(path))
+				try_savefile_type_migration()
 			unlock_content = !!C.IsByondMember()
 			if(unlock_content)
 				max_save_slots = 8
