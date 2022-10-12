@@ -7,8 +7,8 @@
 	icon_dead = "bileworm_dead"
 	mob_size = MOB_SIZE_LARGE
 	mob_biotypes = MOB_BUG
-	maxHealth = 75
-	health = 75
+	maxHealth = 100
+	health = 100
 	verb_say = "spittles"
 	verb_ask = "spittles questioningly"
 	verb_exclaim = "splutters and gurgles"
@@ -30,6 +30,8 @@
 
 	///which action this mob will be given, subtypes have different attacks
 	var/attack_action_path = /datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/bileworm
+	///which, if at all, mob this evolves into at the 30 min mark
+	var/evolve_path = /mob/living/basic/mining/bileworm/vileworm
 
 /mob/living/basic/mining/bileworm/Initialize(mapload)
 	. = ..()
@@ -37,8 +39,8 @@
 
 	ADD_TRAIT(src, TRAIT_IMMOBILIZED, INNATE_TRAIT)
 
-	if(type == /mob/living/basic/mining/bileworm)
-		AddComponent(src, /datum/component/evolutionary_leap, 30 MINUTES, /mob/living/basic/mining/bileworm/vileworm)
+	if(ispath(evolve_path))
+		AddComponent(/datum/component/evolutionary_leap, 30 MINUTES, evolve_path)
 	AddElement(/datum/element/crusher_loot, /obj/item/crusher_trophy/bileworm_spewlet, 15)
 	AddElement(/datum/element/content_barfer)
 

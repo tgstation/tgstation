@@ -1,6 +1,6 @@
 /mob/living/basic/mining/bileworm/vileworm
 	name = "vileworm"
-	desc = "Vileworms, the product of lavaland's corruptive nature on the natural fauna. They don't eat detritus anymore, their appetite is far more... fresh."
+	desc = "Vileworms, the product of lavaland's corruptive nature on the natural fauna."
 	icon_state = "vileworm"
 	icon_living = "vileworm"
 	icon_dead = "vileworm_dead"
@@ -8,6 +8,7 @@
 	health = 150
 
 	attack_action_path = /datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/bileworm/vileworm
+	evolve_path = null
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/bileworm/vileworm
 	name = "Spew Corrupted Bile"
@@ -29,7 +30,7 @@
 	// surprise!
 	if(prob(25))
 		SLEEP_CHECK_DEATH(0.25 SECONDS, firer)
-		fire_in_directions(firer, target, GLOB.cardinals)
+		fire_in_directions(firer, target, GLOB.diagonals)
 
 /obj/projectile/bileworm_acid/vile
 	name = "corrupted bile"

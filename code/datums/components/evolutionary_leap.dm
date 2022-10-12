@@ -13,7 +13,7 @@
 
 /datum/component/evolutionary_leap/Initialize(evolve_mark, evolve_path)
 	if(!isliving(parent))
-		return ELEMENT_INCOMPATIBLE
+		return COMPONENT_INCOMPATIBLE
 
 	src.evolve_mark = evolve_mark
 	src.evolve_path = evolve_path
@@ -23,9 +23,9 @@
 		RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, .proc/comp_on_round_start)
 		return
 
-	//if the round has already taken long enough, just leap right away
+	//if the round has already taken long enough, just leap right away.
 	if((world.time - SSticker.round_start_time) > evolve_mark)
-		leap()
+		leap(silent = TRUE)
 		return
 
 	setup_timer()
@@ -42,10 +42,11 @@
 	SIGNAL_HANDLER
 	UnregisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING)
 	setup_timer()
-	return
 
 /datum/component/evolutionary_leap/proc/setup_timer()
-	var/mark = evolve_mark - (world.time - SSticker.round_start_time)
+	//in cases where this is calculating roundstart, world.time - SSticker.round_start_time should equal 0
+	var/sum = (world.time - SSticker.round_start_time)
+	var/mark = evolve_mark - sum
 	timer_id = addtimer(CALLBACK(src, .proc/leap, FALSE), mark, TIMER_STOPPABLE)
 
 /datum/component/evolutionary_leap/proc/leap(silent)
@@ -53,5 +54,5 @@
 	var/mob/living/new_mob = evolve_path
 	var/new_mob_name = initial(new_mob.name)
 	if(!silent)
-		old_mob.visible_message(span_warning("[src] evolves into \a [new_mob_name]!"))
-	old_mob.change_mob_type(evolve_path, old_mob.loc, delete_old_mob = TRUE)
+		old_mob.visible_message(span_warning("[old_mob] evolves into \a [new_mob_name]!"))
+	old_mob.change_mob_type(evolve_path, old_mob.loc, new_name = new_mob_name, delete_old_mob = TRUE)
