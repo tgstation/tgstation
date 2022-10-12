@@ -17,9 +17,9 @@
 		return
 
 	if(ishuman(user))
-		var/mob/living/carbon/human/human_user
+		var/mob/living/carbon/human/human_user = user
 		if(human_user.check_chunky_fingers())
-			balloon_alert(src, "fingers are too big!")
+			balloon_alert(human_user, "fingers are too big!")
 			return
 
 	// Robots don't really need to see the screen, their wireless connection works as long as computer is on.
