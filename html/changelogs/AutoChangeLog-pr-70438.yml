@@ -1,0 +1,5 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Wall mounted & portable flashers now actually flash again!"
+  - admin: "Flashers can now have their range and cooldown durations vareditted with flash_range and flash_cooldown_duration respectively."
