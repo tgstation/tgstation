@@ -1,6 +1,0 @@
-author: "PositiveEntropy"
-delete-after: True
-changes: 
-  - rscadd: "Adds the CentVend inside Central Command! You're now able to vend Central Command clothing items for all your commanding needs!"
-  - rscadd: "Re-adds the CentCom Official's suit, making it the default clothing option for CentCom Officials! The turtlenecks have instead been made to be the standard ERT uniform."
-  - imageadd: "Nanotrasen returns once again to update CentCom's wardrobe, changing its green to a newer, fresher one!"

@@ -60,12 +60,12 @@
 	if(!prob(35))
 		return
 	var/obj/item/hat = pick(
-		/obj/item/clothing/head/sombrero,
+		/obj/item/clothing/head/costume/sombrero/green,
 		/obj/item/clothing/head/fedora,
 		/obj/item/clothing/mask/balaclava,
-		/obj/item/clothing/head/ushanka,
-		/obj/item/clothing/head/cardborg,
-		/obj/item/clothing/head/pirate,
+		/obj/item/clothing/head/costume/ushanka,
+		/obj/item/clothing/head/costume/cardborg,
+		/obj/item/clothing/head/costume/pirate,
 		/obj/item/clothing/head/cone,
 		)
 	hat = new hat(spawned_mob)

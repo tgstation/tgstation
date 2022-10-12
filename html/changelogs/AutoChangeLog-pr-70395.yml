@@ -1,0 +1,8 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Fixed some missing shield inhand icons."
+  - bugfix: "The strobe shield's inhand icon now plays the flashing animation when triggered again."
+  - bugfix: "The strobe shield will no longer blind the person holding it when it deflects a blow."
+  - bugfix: "The light from the strobe shield's flash no longer appears in your held inventory slot."
+  - bugfix: "Fixed the east facing left-handed strobe shield sprite being misaligned by two pixels."

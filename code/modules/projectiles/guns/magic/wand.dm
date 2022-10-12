@@ -4,6 +4,8 @@
 	ammo_type = /obj/item/ammo_casing/magic
 	icon_state = "nothingwand"
 	inhand_icon_state = "wand"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	base_icon_state = "nothingwand"
 	w_class = WEIGHT_CLASS_SMALL
 	can_charge = FALSE

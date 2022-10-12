@@ -2,6 +2,7 @@
 	desc = "A pair of yellow rubber boots, designed to prevent slipping on wet surfaces."
 	name = "galoshes"
 	icon_state = "galoshes"
+	inhand_icon_state = "galoshes"
 	clothing_flags = NOSLIP
 	slowdown = SHOES_SLOWDOWN+1
 	strip_delay = 30

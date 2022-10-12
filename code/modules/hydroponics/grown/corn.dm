@@ -37,7 +37,7 @@
 	name = "corn cob"
 	desc = "A reminder of meals gone by."
 	icon_state = "corncob"
-	inhand_icon_state = "corncob"
+	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
 	throw_speed = 3
@@ -68,7 +68,7 @@
 	name = "snap corn"
 	desc = "A cob with snap pops."
 	icon_state = "snapcorn"
-	inhand_icon_state = "corncob"
+	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
 	throw_speed = 3

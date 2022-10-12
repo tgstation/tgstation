@@ -1,0 +1,4 @@
+author: "Hatterhat"
+delete-after: True
+changes: 
+  - bugfix: "Bodyparts (e.g. severed heads) stored in organ fridges now freeze the organs stored inside them, if any are present."

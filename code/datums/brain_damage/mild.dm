@@ -14,7 +14,7 @@
 /datum/brain_trauma/mild/hallucinations/on_life(delta_time, times_fired)
 	if(owner.stat != CONSCIOUS || owner.IsSleeping() || owner.IsUnconscious())
 		return
-	if(HAS_TRAIT(owner, TRAIT_HALLUCINATION_SUPPRESSED))
+	if(HAS_TRAIT(owner, TRAIT_RDS_SUPPRESSED))
 		return
 
 	owner.adjust_hallucinations_up_to(10 SECONDS * delta_time, 100 SECONDS)

@@ -300,7 +300,7 @@
 	value = 0
 	medical_record_text = "Fucking creep kept staring at me the whole damn checkup. I'm only diagnosing this because it's less awkward than thinking it was on purpose."
 	mob_trait = TRAIT_SHIFTY_EYES
-	mail_goodies = list(/obj/item/clothing/head/papersack, /obj/item/clothing/head/papersack/smiley)
+	mail_goodies = list(/obj/item/clothing/head/costume/papersack, /obj/item/clothing/head/costume/papersack/smiley)
 
 /datum/quirk/item_quirk/bald
 	name = "Smooth-Headed"
@@ -384,6 +384,23 @@
 
 /datum/quirk/item_quirk/tongue_tied/post_add()
 	to_chat(quirk_holder, span_boldannounce("Because you speak with your hands, having them full hinders your ability to communicate!"))
+
+/datum/quirk/item_quirk/tongue_tied/remove()
+	var/obj/item/organ/internal/tongue/tied/quirk_tongue = quirk_holder.getorganslot(ORGAN_SLOT_TONGUE)
+	if(!istype(quirk_tongue))
+		return
+
+	var/obj/item/organ/internal/tongue/new_tongue_type = /obj/item/organ/internal/tongue
+	if(iscarbon(quirk_holder))
+		var/mob/living/carbon/carbon_quirky = quirk_holder
+		new_tongue_type = carbon_quirky.dna?.species?.mutanttongue
+	if(!new_tongue_type)
+		return
+
+	var/obj/item/organ/internal/tongue/new_tongue = new new_tongue_type()
+	quirk_tongue.Remove(quirk_holder, TRUE)
+	new_tongue.Insert(quirk_holder, TRUE)
+	qdel(quirk_tongue)
 
 /datum/quirk/item_quirk/photographer
 	name = "Photographer"

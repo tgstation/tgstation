@@ -109,7 +109,7 @@
 	id = "bright_helmet"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 4000, /datum/material/glass = 1000, /datum/material/plastic = 3000, /datum/material/silver = 500)
-	build_path = /obj/item/clothing/head/hardhat/red/upgraded
+	build_path = /obj/item/clothing/head/utility/hardhat/red/upgraded
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_ENGINEERING
 	)
@@ -315,6 +315,16 @@
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SCIENCE
 	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/botpad_remote
+	name = "Bot Launchpad Controller"
+	desc = "Allows you to control the connected bot launchpad"
+	id = "botpad_remote"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/glass = 500, /datum/material/iron = 500)
+	build_path = /obj/item/botpad_remote
+	category = list(RND_CATEGORY_EQUIPMENT)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/anomaly_neutralizer

@@ -1,0 +1,4 @@
+author: "san7890"
+delete-after: True
+changes: 
+  - admin: "Whenever a player uses a vial of blood/vial of tickles to bring forth a Slaughter Demon or a Laughter Demon (respectively), it will now log to their individual player log, as well as the global game.log."

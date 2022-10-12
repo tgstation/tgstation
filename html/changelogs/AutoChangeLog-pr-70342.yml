@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Fixed a runtime when clicking an away mission gateway without the partner gateway being active."

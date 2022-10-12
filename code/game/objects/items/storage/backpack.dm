@@ -26,6 +26,7 @@
 /obj/item/storage/backpack/Initialize(mapload)
 	. = ..()
 	create_storage(max_slots = 21, max_total_storage = 21)
+	AddElement(/datum/element/attack_equip)
 
 /*
  * Backpack Types
@@ -671,7 +672,7 @@
 	name = "wings"
 	desc = "Granted to the henchmen who deserve it. This probably doesn't include you."
 	icon_state = "henchmen"
-	inhand_icon_state = "henchmen"
+	inhand_icon_state = null
 
 /obj/item/storage/backpack/duffelbag/cops
 	name = "police bag"
