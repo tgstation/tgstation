@@ -84,6 +84,7 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		/obj/item/weldingtool = 1,
 		/obj/item/wirecutters = 1,
 		/obj/item/wrench = 1,
+		/obj/item/pen/screwdriver = 1
 		) = 1,
 
 	list(//equipment
