@@ -41,7 +41,7 @@
 
 	attire.item_start_equip(sharp_dresser, attire, user)
 
-	if(!do_mob(user, sharp_dresser, equip_time))
+	if(!do_after(user, sharp_dresser, equip_time))
 		return
 
 	if(QDELETED(src) || QDELETED(sharp_dresser))

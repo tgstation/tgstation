@@ -8,7 +8,7 @@
  * armour this all but guarantees a wound of some sort. The attack is directed specifically at a limb and the limb takes the damage.
  *
  * Requires the attacker to be aiming for either leg zone, which will be targetted specifically. They will than have a 3-second long
- * do_mob before executing the attack.
+ * do_after before executing the attack.
  *
  * Kneecapping requires the target to either be on the floor, immobilised or buckled to something. And also to have an appropriate leg.
  *
@@ -70,7 +70,7 @@
 	INVOKE_ASYNC(src, .proc/do_kneecap_target, source, leg, target, attacker)
 
 /**
- * After a short do_mob, attacker applies damage to the given leg with a significant wounding bonus, applying the weapon's force as damage.
+ * After a short do_after, attacker applies damage to the given leg with a significant wounding bonus, applying the weapon's force as damage.
  */
 /datum/element/kneecapping/proc/do_kneecap_target(obj/item/weapon, obj/item/bodypart/leg, mob/living/carbon/target, mob/attacker)
 	if(LAZYACCESS(attacker.do_afters, weapon))
