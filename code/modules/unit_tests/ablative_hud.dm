@@ -1,5 +1,5 @@
 // Check that player gains and loses sec hud when toggling the ablative hood
-/datum/unit_test/ablative_hood_hud/
+/datum/unit_test/ablative_hood_hud
 
 /datum/unit_test/ablative_hood_hud/Run()
 	var/mob/living/carbon/human/person = allocate(/mob/living/carbon/human)
