@@ -92,22 +92,6 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	///Whether the PDA can still use NTNet while out of NTNet's reach.
 	var/long_ranged = FALSE
 
-	var/list/idle_threads // Idle programs on background. They still receive process calls but can't be interacted with.
-	var/obj/physical = null // Object that represents our computer. It's used for Adjacent() and UI visibility checks.
-	var/has_light = FALSE //If the computer has a flashlight/LED light/what-have-you installed
-
-	/// How far the computer's light can reach, is not editable by players.
-	var/comp_light_luminosity = 3
-	/// The built-in light's color, editable by players.
-	var/comp_light_color = "#FFFFFF"
-
-	var/invisible = FALSE // whether or not the tablet is invisible in messenger and other apps
-
-	var/datum/picture/saved_image // the saved image used for messaging purpose like come on dude
-
-	/// Stored pAI in the computer
-	var/obj/item/pai_card/inserted_pai = null
-
 	///The amount of paper currently stored in the PDA
 	var/stored_paper = 10
 	///The max amount of paper that can be held at once.
