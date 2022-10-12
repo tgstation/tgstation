@@ -363,7 +363,7 @@
 	if(user)
 		balloon_alert(user, "[extended ? "extended" : "retracted"]!")
 		
-	if(extended)
+	if(!extended)
 		w_class = initial(w_class)
 		tool_behaviour = initial(tool_behaviour)
 		force = initial(force)
