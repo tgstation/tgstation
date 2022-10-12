@@ -62,7 +62,7 @@
     if(!istype(our_weapon))
         qdel(src)
         return
-    if(!TIMER_COOLDOWN_CHECK(src, COOLDOWN_BUMP_ATTACK))
+        if(!TIMER_COOLDOWN_CHECK(src, COOLDOWN_BUMP_ATTACK))
         TIMER_COOLDOWN_START(src, COOLDOWN_BUMP_ATTACK, cooldown)
         INVOKE_ASYNC(target, /atom.proc/attackby , our_weapon, bumper)
         bumper.visible_message(span_danger("[bumper] charges into [target], attacking with [our_weapon]!"), span_danger("You charge into [target], attacking with [our_weapon]!"), vision_distance = COMBAT_MESSAGE_RANGE)
