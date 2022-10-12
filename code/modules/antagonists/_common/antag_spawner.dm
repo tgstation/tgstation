@@ -239,8 +239,8 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "vial"
 
-	var/shatter_msg = "<span class='notice'>You shatter the bottle, no turning back now!</span>"
-	var/veil_msg = "<span class='warning'>You sense a dark presence lurking just beyond the veil...</span>"
+	var/shatter_msg = span_notice("You shatter the bottle, no turning back now!")
+	var/veil_msg = span_warning("You sense a dark presence lurking just beyond the veil...")
 	var/mob/living/demon_type = /mob/living/simple_animal/hostile/imp/slaughter
 	var/antag_type = /datum/antagonist/slaughter
 
@@ -256,8 +256,9 @@
 		if(used || QDELETED(src))
 			return
 		used = TRUE
-		var/mob/dead/observer/C = pick(candidates)
-		spawn_antag(C.client, get_turf(src), initial(demon_type.name),user.mind)
+		var/mob/dead/observer/summoned = pick(candidates)
+		user.log_message("has summoned forth the [initial(demon_type.name)] (played by [key_name(summoned)]) using a [name].", LOG_GAME) // has to be here before we create antag otherwise we can't get the ckey of the demon
+		spawn_antag(summoned.client, get_turf(src), initial(demon_type.name), user.mind)
 		to_chat(user, shatter_msg)
 		to_chat(user, veil_msg)
 		playsound(user.loc, 'sound/effects/glassbr1.ogg', 100, TRUE)
@@ -284,6 +285,6 @@
 	icon_state = "vial"
 	color = "#FF69B4" // HOT PINK
 
-	veil_msg = "<span class='warning'>You sense an adorable presence lurking just beyond the veil...</span>"
+	veil_msg = span_warning("You sense an adorable presence lurking just beyond the veil...")
 	demon_type = /mob/living/simple_animal/hostile/imp/slaughter/laughter
 	antag_type = /datum/antagonist/slaughter/laughter
