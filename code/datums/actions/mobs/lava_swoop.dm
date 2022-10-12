@@ -58,7 +58,7 @@
 	owner.alpha = 255
 	animate(owner, alpha = 204, transform = matrix()*0.9, time = 3, easing = BOUNCE_EASING)
 	for(var/i in 1 to 3)
-		sleep(1 TICKS)
+		sleep(0.1 SECONDS)
 		if(QDELETED(owner) || owner.stat == DEAD) //we got hit and died, rip us
 			qdel(F)
 			if(owner.stat == DEAD)
