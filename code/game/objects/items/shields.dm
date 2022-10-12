@@ -155,7 +155,8 @@
 		update_appearance(UPDATE_ICON)
 
 /obj/item/shield/riot/flash/Destroy(force)
-	QDEL_NULL(embedded_flash)
+	if(embedded_flash)
+		QDEL_NULL(embedded_flash)
 	return ..()
 
 /obj/item/shield/riot/flash/attack(mob/living/target_mob, mob/user)
@@ -193,7 +194,8 @@
 				if(QDELETED(flash) || flash.burnt_out)
 					return
 				playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
-				qdel(embedded_flash)
+				if(embedded_flash)
+					qdel(embedded_flash)
 				flash.forceMove(src)
 				return
 	return ..()
