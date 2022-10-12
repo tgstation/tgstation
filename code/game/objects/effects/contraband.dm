@@ -3,6 +3,14 @@
 
 // The poster item
 
+/**
+ * The rolled up item form of a poster
+ *
+ * In order to create one of these for a specific poster, you must pass the structure form of the poster as an argument to /new().
+ * This structure then gets moved into the contents of the item where it will stay until the poster is placed by a player.
+ * The structure form is [obj/structure/sign/poster] and that's where all the specific posters are defined.
+ * If you just want a random poster, see [/obj/item/poster/random_official] or [/obj/item/poster/random_contraband]
+ */
 /obj/item/poster
 	name = "poorly coded poster"
 	desc = "You probably shouldn't be holding this."
@@ -83,6 +91,12 @@
 
 // The poster sign/structure
 
+/**
+ * The structure form of a poster.
+ *
+ * These are what get placed on maps as posters. They are also what gets created when a player places a poster on a wall.
+ * For the item form that can be spawned for players, see [/obj/item/poster]
+ */
 /obj/structure/sign/poster
 	name = "poster"
 	var/original_name
