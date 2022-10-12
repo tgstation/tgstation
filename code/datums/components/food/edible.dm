@@ -100,18 +100,20 @@ Behavior that's still missing from this component that original food items had t
 
 /datum/component/edible/UnregisterFromParent()
 	UnregisterSignal(parent, list(
-		COMSIG_PARENT_EXAMINE,
 		COMSIG_ATOM_ATTACK_ANIMAL,
+		COMSIG_ATOM_ATTACK_HAND,
 		COMSIG_ATOM_CHECKPARTS,
 		COMSIG_ATOM_CREATEDBY_PROCESSING,
-		COMSIG_FOOD_INGREDIENT_ADDED,
-		COMSIG_OOZE_EAT_ATOM,
 		COMSIG_ATOM_ENTERED,
+		COMSIG_FOOD_INGREDIENT_ADDED,
 		COMSIG_ITEM_ATTACK,
 		COMSIG_ITEM_FRIED,
 		COMSIG_ITEM_USED_AS_INGREDIENT,
-		COMSIG_ATOM_ATTACK_HAND,
+		COMSIG_OOZE_EAT_ATOM,
+		COMSIG_PARENT_EXAMINE,
 	))
+
+	qdel(parent.GetComponent(/datum/component/connect_loc_behalf))
 
 /datum/component/edible/InheritComponent(
 	datum/component/edible/old_comp,
@@ -149,7 +151,8 @@ Behavior that's still missing from this component that original food items had t
 	if(islist(eatverbs))
 		var/list/cached_verbs = src.eatverbs
 		if(islist(cached_verbs))
-			src.eatverbs = string_list(cached_verbs.Copy() | eatverbs)
+			// eatverbs becomes a combination of existing verbs and new ones
+			src.eatverbs = string_list(cached_verbs | eatverbs)
 		else
 			src.eatverbs = string_list(eatverbs)
 
@@ -157,6 +160,7 @@ Behavior that's still missing from this component that original food items had t
 	if(islist(tastes))
 		var/list/cached_tastes = src.tastes
 		if(islist(cached_tastes))
+			// tastes becomes a combination of existing tastes and new ones
 			var/list/mixed_tastes = cached_tastes.Copy()
 			for(var/new_taste in tastes)
 				mixed_tastes[new_taste] += tastes[new_taste]
