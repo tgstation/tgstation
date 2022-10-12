@@ -88,7 +88,7 @@
 		virus_type = pick(virus_candidates)
 
 	var/datum/disease/new_disease
-	new_disease = new virus_type() //DO NOT SUBMIT A PR WITHOUT TESTING THE DNA SPREAD VIRUS DUMMY
+	new_disease = new virus_type()
 	new_disease.carrier = TRUE
 
 	for(var/i in 1 to 2) //Good things come in pairs
