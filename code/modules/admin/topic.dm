@@ -232,6 +232,10 @@
 		log_admin("[key_name(usr)] recreated the mob of [key_name(old_mob)][debug_dump ? ", creating a debug dump file":""].")
 		message_admins(span_adminnotice("[key_name_admin(usr)] recreated the mob of [key_name_admin(old_mob)][debug_dump ? ", creating a debug dump file":""]."))
 
+		// Dump all vars to a new file so people can dig in later to see what was messed up
+		if(debug_dump)
+			rustg_file_write(json_encode(old_mob.vars), "[GLOB.log_directory]/debug_vardump_[REF(old_mob)].json")
+
 		// Create an identical type in the same loc
 		var/mob/living/new_mob = new old_mob.type(old_mob.loc)
 		// Track the equipment and stuff it's got
@@ -295,9 +299,6 @@
 			old_mob.mind.transfer_to(new_mob, TRUE)
 		else
 			new_mob.key = old_mob.key
-
-		if(debug_dump)
-			rustg_file_write(json_encode(old_mob.vars), "[GLOB.log_directory]/debug_vardump_[REF(old_mob)].json")
 
 		// clean up the old mob in a tick
 		// we probably don't need to wait a tick but you never know
