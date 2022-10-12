@@ -859,7 +859,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 		if(shock(user, 100))
 			return
 
-	if(tilted && !user.buckled && !isAI(user))
+	if(tilted && !user.buckled && !isAdminGhostAI(user))
 		to_chat(user, span_notice("You begin righting [src]."))
 		if(do_after(user, 50, target=src))
 			untilt(user)
