@@ -88,10 +88,10 @@
 		virus_type = pick(virus_candidates)
 
 	var/datum/disease/new_disease
-	new_disease = new virus_type()
+	new_disease = new virus_type() //DO NOT SUBMIT A PR WITHOUT TESTING THE DNA SPREAD VIRUS DUMMY
 	new_disease.carrier = TRUE
 
-	for(var/i in 1 to 3)
+	for(var/i in 1 to 2) //Good things come in pairs
 		if(!length(afflicted)) //In case we somehow run out of people
 			break
 		var/mob/living/carbon/human/victim = pick_n_take(afflicted)
@@ -133,11 +133,10 @@
 	var/datum/disease/advance/advanced_disease = new /datum/disease/advance/random(max_severity, max_severity)
 
 	var/list/name_symptoms = list() //for feedback
-
 	for(var/datum/symptom/new_symptom in advanced_disease.symptoms)
 		name_symptoms += new_symptom.name
 
-	for(var/i in 1 to 3)
+	for(var/i in 1 to 2)
 		if(!length(afflicted))
 			break
 		var/mob/living/carbon/human/victim = pick_n_take(afflicted)
