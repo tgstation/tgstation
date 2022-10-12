@@ -203,6 +203,106 @@
 			if("robot")
 				M.change_mob_type( /mob/living/silicon/robot , null, null, delmob )
 
+	else if(href_list["simplerecreate"])
+		if(!check_rights(R_SPAWN))
+			return
+
+		#define ARE_YOU_SURE "Yes, invoke the nuclear option"
+		if(tgui_alert(usr, "This will delete the mob and recreate an identical copy in it's location. This is extreme overkill \
+			in a lot of cases so be sure if you actually need this.", "Recreate", list(ARE_YOU_SURE, "Cancel")) != ARE_YOU_SURE)
+			return
+		#undef ARE_YOU_SURE
+
+		var/debug_dump = tgui_alert(usr, "I'm assuming you're doing this because something has majorly fucked up and not even \
+			aheal will fix it, create a debug dump file for coders to look over afterwards?", "Recreate", list("Yes", "No", "Cancel"))
+		if(debug_dump == "Cancel")
+			return
+		debug_dump = (debug_dump == "Yes")
+
+		if(!check_rights(R_SPAWN))
+			return
+		var/mob/living/old_mob = locate(href_list["simplerecreate"])
+		if(QDELETED(old_mob))
+			tgui_alert(usr, "The mob you were messing with is either deleted or can't be found!", "Recreate")
+			return
+		if(!isliving(old_mob))
+			qdel(old_mob) // Yeah they just "recreated" an observer, straight up deleting it accomplishes the same effect
+			return
+
+		log_admin("[key_name(usr)] recreated the mob of [key_name(old_mob)][debug_dump ? ", creating a debug dump file":""].")
+		message_admins(span_adminnotice("[key_name_admin(usr)] recreated the mob of [key_name_admin(old_mob)][debug_dump ? ", creating a debug dump file":""]."))
+
+		// Create an identical type in the same loc
+		var/mob/living/new_mob = new old_mob.type(old_mob.loc)
+		// Track the equipment and stuff it's got
+		var/list/mob_gear = old_mob.get_equipped_items(TRUE)
+		var/list/mob_held_stuff = old_mob.held_items.Copy()
+		// Clear out any nulls from the list, cause they can probably sneak in somehow
+		list_clear_nulls(mob_gear)
+		list_clear_nulls(mob_held_stuff)
+		// Now drop their stuff before we delete them
+		old_mob.unequip_everything()
+
+		// Ensure the names are correct at the very least
+		new_mob.name = old_mob.name
+		new_mob.real_name = old_mob.real_name
+
+		// I'm making a special case for implants just cause they came to mind
+		// this won't account for stuff like cybernetic organs and stuff so it's whatever
+		for(var/obj/item/implant/passover_implant as anything in old_mob.implants)
+			passover_implant.removed(old_mob, silent = TRUE, special = TRUE)
+			passover_implant.implant(new_mob, silent = TRUE, force = TRUE)
+
+		// Quirks should pass over too
+		for(var/datum/quirk/passover_quirk as anything in old_mob.quirks)
+			new_mob.add_quirk(passover_quirk.type)
+
+		// Give all the held items back to their hands
+		while(length(mob_held_stuff))
+			var/obj/item/pickup_again = popleft(mob_held_stuff)
+			new_mob.put_in_hands(pickup_again)
+
+		// Give all the equipment back on their person
+		// Track all failed equips, for if an equip to slot is unsuccessful
+		var/list/failed_equips = list()
+		while(length(mob_gear))
+			var/obj/item/equip_again = popleft(mob_gear)
+			if(new_mob.equip_to_appropriate_slot(equip_again))
+				continue
+			// Equip failed and they already failed once, just leave it
+			if(equip_again in failed_equips)
+				continue
+			// Equip failed, give them a second chance to loop around
+			failed_equips += equip_again
+			mob_gear += equip_again
+
+		if(iscarbon(old_mob))
+			var/mob/living/carbon/old_mob_carbon = old_mob
+			var/mob/living/carbon/new_mob_carbon = new_mob
+			// if it's a carbon, just transfer its identity across
+			old_mob_carbon.dna.transfer_identity(new_mob, transfer_species = FALSE)
+			new_mob_carbon.updateappearance(mutcolor_update = 1, mutations_overlay_update = 1)
+
+		else if(ishuman(old_mob))
+			// if it's a human, give it their prefs
+			old_mob.client?.prefs.safe_transfer_prefs_to(new_mob)
+			var/mob/living/carbon/human/new_mob_human = new_mob
+			new_mob_human.dna.update_dna_identity()
+			new_mob_human.updateappearance(mutcolor_update = 1, mutations_overlay_update = 1)
+
+		// Pass the mind over
+		if(old_mob.mind)
+			old_mob.mind.transfer_to(new_mob, TRUE)
+		else
+			new_mob.key = old_mob.key
+
+		if(debug_dump)
+			rustg_file_write(json_encode(old_mob.vars), "[GLOB.log_directory]/debug_vardump_[REF(old_mob)].json")
+
+		// clean up the old mob in a tick
+		// we probably don't need to wait a tick but you never know
+		QDEL_IN(old_mob, 1)
+
 	else if(href_list["boot2"])
 		if(!check_rights(R_ADMIN))
 			return
