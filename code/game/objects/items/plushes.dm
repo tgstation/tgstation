@@ -436,7 +436,7 @@
 			P.clashing = FALSE
 			return
 		playsound(src, 'sound/magic/clockwork/ratvar_attack.ogg', 50, TRUE, frequency = 2)
-		sleep(.24 SECONDS)
+		sleep(0.24 SECONDS)
 		if(QDELETED(src))
 			P.clashing = FALSE
 			return
@@ -455,7 +455,7 @@
 			clash_target = null
 			return
 		playsound(P, 'sound/magic/clockwork/narsie_attack.ogg', 50, TRUE, frequency = 2)
-		sleep(.33 SECONDS)
+		sleep(0.33 SECONDS)
 		if(QDELETED(src))
 			P.clashing = FALSE
 			return
