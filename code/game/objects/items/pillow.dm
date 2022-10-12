@@ -1,5 +1,5 @@
 
-/obj/item/pillow 
+/obj/item/pillow
 	name = "pillow"
 	desc = "A soft and fluffy pillow. You can smack someone with this!"
 	icon = 'icons/obj/pillow.dmi'
@@ -9,9 +9,9 @@
 	righthand_file = 'icons/mob/inhands/items/pillow_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	damtype = STAMINA
-	var/last_fighter //whoever last use this pillow 
+	var/last_fighter //whoever last use this pillow
 	var/obj/item/clothing/neck/pillow_tag/pillow_trophy
-	var/static/tag_desc = "This one seems to have its tag removed." 
+	var/static/tag_desc = "This one seems to have its tag removed."
 	var/variation //for selecting the various sprite variation
 
 
@@ -61,7 +61,7 @@
 	update_state()
 	pillow_trophy = null
 
-/obj/item/pillow/proc/update_state()	
+/obj/item/pillow/proc/update_state()
 	desc = "A soft and fluffy pillow. You can smack someone with this! [tag_desc]"
 	icon_state = "pillow_[variation]"
 
@@ -72,13 +72,12 @@
 	variation = rand(1, 4)
 	icon_state = "pillow_[variation]_t"
 
-	
 /obj/item/clothing/suit/pillow_suit
 	name = "pillow suit"
 	desc = "Part man, part pillow. All CARNAGE!"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS|FEET
 	cold_protection = CHEST|GROIN|ARMS|LEGS //a pillow suit must be hella warm
-	allowed = list(/obj/item/pillow) //moar pillow carnage 
+	allowed = list(/obj/item/pillow) //moar pillow carnage
 	icon = 'icons/obj/pillow.dmi'
 	worn_icon = 'icons/mob/clothing/suits/pillow.dmi'
 	icon_state = "pillow_suit"

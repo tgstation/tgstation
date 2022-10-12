@@ -2,10 +2,8 @@
  * Add an auto attack on bump behaviour to item
  * valid_slot: the inventory slot the item could be held in while still bumpattacking with it
  * proxy_weapon: the weapon that will gain this behaviour
- *  * 
  */
 #define COOLDOWN_BUMP_ATTACK "bump_attack"
-
 /datum/component/bumpattack
     dupe_mode = COMPONENT_DUPE_UNIQUE
     ///inventory slot that the item could be stored while still being able to attack with it
@@ -68,5 +66,4 @@
         TIMER_COOLDOWN_START(src, COOLDOWN_BUMP_ATTACK, cooldown)
         INVOKE_ASYNC(target, /atom.proc/attackby , our_weapon, bumper)
         bumper.visible_message(span_danger("[bumper] charges into [target], attacking with [our_weapon]!"), span_danger("You charge into [target], attacking with [our_weapon]!"), vision_distance = COMBAT_MESSAGE_RANGE)
-
 #undef COOLDOWN_BUMP_ATTACK
