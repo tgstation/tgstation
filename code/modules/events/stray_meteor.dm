@@ -12,7 +12,8 @@
 
 /datum/round_event_control/stray_meteor/admin_setup()
 	if(!check_rights(R_FUN))
-		return
+		return ADMIN_CANCEL_EVENT
+
 	if(tgui_alert(usr, "Select a meteor?", "Plasuable Deniability!", list("Yes", "No")) == "Yes")
 		var/list/meteor_list = list()
 		meteor_list += subtypesof(/obj/effect/meteor)

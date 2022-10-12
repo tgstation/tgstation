@@ -12,7 +12,7 @@
 
 /datum/round_event_control/brand_intelligence/admin_setup()
 	if(!check_rights(R_FUN))
-		return
+		return ADMIN_CANCEL_EVENT
 	if(tgui_alert(usr, "Select a specific vendor path?", "Capitalism-ho!", list("Yes", "No")) == "Yes")
 		var/list/vendors = list()
 		vendors += subtypesof(/obj/machinery/vending)
