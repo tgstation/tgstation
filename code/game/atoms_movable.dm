@@ -939,6 +939,8 @@
 		return
 	. = anchored
 	anchored = anchorvalue
+	if(anchored && pulledby)
+		pulledby.stop_pulling()
 	SEND_SIGNAL(src, COMSIG_MOVABLE_SET_ANCHORED, anchorvalue)
 
 /// Sets the currently_z_moving variable to a new value. Used to allow some zMovement sources to have precedence over others.
