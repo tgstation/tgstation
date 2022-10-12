@@ -259,3 +259,123 @@
       station.
   - rscadd: Adds easter egg - Woody's Got Wood.  Will rarely appear as a mail goodie
       for curator.
+2022-10-09:
+  Fikou:
+  - bugfix: makes dehydrated carps be friends again
+  IndieanaJones:
+  - balance: Abductors are now a light midround as opposed to a heavy midround. This
+      means they can spawn earlier in the round.
+  MMMiracles:
+  - bugfix: Cameras and Lights on external hulls are no long safe havens from the
+      rough reality of the outdoors in harsh weather situations.
+  Melbert:
+  - rscadd: Some new hallucinations, and some modifications to old ones to be slightly
+      more authentic. Find them all!
+  RikuTheKiller:
+  - bugfix: Fixed brains not accepting mannitol pours when not fully decayed
+  - qol: Mannitol solutions are now only partially consumed when poured on a brain
+      and you don't need 10u to do so
+  - qol: Pouring mannitol on a brain now takes 3 seconds instead of 6 seconds and
+      the messages are slightly more consistent
+  - bugfix: Fixed a nullspacing bug related to BCIs, specifically MMI components that
+      are contained inside of them.
+  - refactor: Refactored some of the BCI manipulation chamber's code.
+  ShizCalev:
+  - bugfix: Fixed lighting overlays from an item sometimes showing up on inventory
+      slots / backpack slots instead of from the mob holding them.
+  - bugfix: AI camera lights now work again.
+  - bugfix: Fixed the papersack.
+  Tastyfish:
+  - bugfix: Baguettes can now be examined again.
+  necromanceranne:
+  - balance: 'The Infiltrator suit has been remade into an Infiltrator MODsuit. Has
+      all the original features, but now also has additional powers: total anonymity,
+      and a demoralization aura.'
+2022-10-10:
+  Hatterhat:
+  - bugfix: You can no longer steal shoes off of yourself. Just take them off normally.
+  LT3:
+  - bugfix: Tramstation's crossing signals are actually fixed this time. Honest.
+  Time-Green:
+  - rscdel: Golden wheelchairs in Tram maintenance and mail have been replaced by
+      T1 motorized wheelchairs
+  itseasytosee:
+  - qol: You can now put clothing, backpacks, and belts onto people by clicking on
+      them with it in your hand and targeting the right area.
+  vincentiusvin:
+  - bugfix: Fixed sm space exposure damage going through walls
+  - rscdel: got rid of the molar multiplier for sm heating damage. It will now only
+      impact molar damage and temp limit. We apply the lowest value directly so this
+      slows down sm delams a tiny bit.
+  - rscdel: got rid of cascades making sm delam at 450 moles and 1250 mev. It delams
+      normally now.
+  - balance: Applied the sm damage hardcap of 1.8 individually to heat (1.5), moles
+      (1), power (1). Meaning most sm delams are slower now, but the really bad ones
+      can be faster.
+  - balance: Halved sm temp healing across the board. Temp limits are still the same
+      though so you shouldn't notice it that much.
+  - balance: Halved SM power damage across the board.
+  - balance: Changed sm space exposure damage to just check for the current tile and
+      adjacent atmos connected tiles.
+2022-10-11:
+  Gamer025:
+  - bugfix: You should no longer receive "Your previous action was ignored..." messages
+      when you join a server
+  GoblinBackwards:
+  - bugfix: You can now remove objects embedded in yourself again
+  JohnFulpWillard:
+  - spellcheck: The compressed matter cartridge has been renamed to RCD matter cartridge,
+      since it's RCD matter... used to refill an RCD.
+  Melbert:
+  - qol: Spell buttons update every so slightly more accurately when they become unavailable
+      or available.
+  - refactor: Refactored temporary mute effects and sign language.
+  - code_imp: Cleaned up vocal checks into "try_speak" and "can_speak".
+  - admin: VV dropdown removing "Tongue Tied" quirk actually removes the quirk
+  arnociiroc:
+  - balance: reduced shotgun dart reagent amount
+2022-10-12:
+  Enbyy:
+  - bugfix: fixed the medical.dmi having 2 dupe frames for the medical jumpsuit mob
+      sprite.
+  GoldenAlpharex:
+  - bugfix: Health scanners no longer show someone as missing lungs or a liver if
+      their species don't breathe or don't process chemicals, respectively.
+  JohnFulpWillard:
+  - balance: The Curator and Crystal PDA is now upgraded to have long-distance NTnet
+      connections, they are able to use their apps in space.
+  Melbert:
+  - rscadd: Having very low sanity (insane or crazy, the last two sanity levels) will
+      cause you to experience hallucinations rarely.
+  - admin: Removing RDS via the VV menu will actually remove the associated effects.
+  - qol: Completing "The Living Heart" ritual with a replacement heart will restart
+      a heart if it's not beating.
+  Rhials:
+  - bugfix: Tramstation security/toxins now have their own EOD closets. Icebox toxins
+      now has an EOD closet as well, in the nearby maintenance area.
+  Sealed101:
+  - bugfix: Fixed showcase microwaves lacking sprites
+  - bugfix: Fixed RnD Servers not dropping their components & completely vanishing
+      when deconstructed
+  ShizCalev:
+  - bugfix: Fixed a minor runtime when a temporary transit tube exits a loop through
+      a destroyed transit pipe.
+  - bugfix: Boxcutters now have inhands again.
+  Twaticus:
+  - imageadd: fixes previous sec resprite issues, replaces sec helmet and sec wintercoat
+      inhands, replaces sec helmet obj icon
+  coldud13:
+  - imageadd: fixed the holocarp guardian fishsticks icon
+  dragomagol:
+  - bugfix: the cargo department is once again coloured in the crew manifest
+  - spellcheck: replaced a death commando name
+  jlsnow301:
+  - bugfix: Fixed a random crash at the power management console.
+  necromanceranne:
+  - balance: You can put regal pipeguns into the suit storage of high-vis vests and
+      wet floor signs.
+  san7890:
+  - bugfix: On RuntimeStation, should you chance upon it, the emergency shuttle should
+      no longer collide by the with the circuits lab.
+  timothymtorres:
+  - qol: Add contextual screentips to jumpsuits

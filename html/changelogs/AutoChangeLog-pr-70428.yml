@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes: 
+  - code_imp: "Add chat notification for shoes & glove protection when mousetrap triggered"

@@ -13,15 +13,6 @@
 
 	create_storage(type = /datum/storage/pockets/shoes)
 
-/obj/item/clothing/shoes/combat/sneakboots
-	name = "sneakboots"
-	desc = "These boots have special noise cancelling soles. Perfect for stealth, if it wasn't for the color scheme."
-	icon_state = "sneakboots"
-	inhand_icon_state = null
-	w_class = WEIGHT_CLASS_SMALL
-	resistance_flags = FIRE_PROOF | ACID_PROOF
-	clothing_traits = list(TRAIT_SILENT_FOOTSTEPS)
-
 /obj/item/clothing/shoes/combat/swat //overpowered boots for death squads
 	name = "\improper SWAT boots"
 	desc = "High speed, no drag combat boots."

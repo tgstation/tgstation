@@ -97,7 +97,7 @@
 
 /datum/crafting_recipe/strobeshield/New()
 	..()
-	blacklist |= subtypesof(/obj/item/shield/riot/)
+	blacklist |= subtypesof(/obj/item/shield/riot)
 
 /datum/crafting_recipe/molotov
 	name = "Molotov"

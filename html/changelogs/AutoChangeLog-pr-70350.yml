@@ -1,5 +1,0 @@
-author: "RikuTheKiller"
-delete-after: True
-changes: 
-  - bugfix: "Fixed a nullspacing bug related to BCIs, specifically MMI components that are contained inside of them."
-  - refactor: "Refactored some of the BCI manipulation chamber's code."

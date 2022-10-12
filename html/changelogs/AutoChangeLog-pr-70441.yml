@@ -1,0 +1,4 @@
+author: "GoblinBackwards"
+delete-after: True
+changes: 
+  - bugfix: "Ablative trenchcoat no longer gives a permanent sechud if toggled while you already had a helmet on."
