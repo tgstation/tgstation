@@ -349,9 +349,21 @@
 	icon_state = "pendriver"
 	toolspeed = 1.20  // gotta have some downside
 
-/obj/item/pen/screwdriver/attack_self(mob/living/user)
+
+/obj/item/pen/screwdriver/vv_edit_var(var_name, var_value)
+	if(var_name == NAMEOF(src, extended))
+		if(var_value != extended)
+			toggle_screwdriver()
+			datum_flags |= DF_VAR_EDITED
+			return
+	return ..()
+
+/obj/item/pen/screwdriver/proc/toggle_screwdriver(mob/user)
+	extended = !extended
+	if(user)
+		balloon_alert(user, "[extended ? "extended" : "retracted"]!")
+		
 	if(extended)
-		extended = FALSE
 		w_class = initial(w_class)
 		tool_behaviour = initial(tool_behaviour)
 		force = initial(force)
@@ -359,10 +371,7 @@
 		throw_speed = initial(throw_speed)
 		throw_range = initial(throw_range)
 		RemoveElement(/datum/element/eyestab)
-		to_chat(user, span_notice("You retract the screwdriver."))
-
 	else
-		extended = TRUE
 		tool_behaviour = TOOL_SCREWDRIVER
 		w_class = WEIGHT_CLASS_SMALL  // still can fit in pocket
 		force = 4  // copies force from screwdriver
@@ -370,8 +379,11 @@
 		throw_speed = 3
 		throw_range = 5
 		AddElement(/datum/element/eyestab)
-		to_chat(user, span_notice("You extend the screwdriver."))
-	update_apperance(UPDATE_ICON)
+	update_appearance(UPDATE_ICON)
+	
+/obj/item/pen/screwdriver/attack_self(mob/living/user)
+	toggle_screwdriver(user)
+
 
 /obj/item/pen/screwdriver/update_icon_state()
 	. = ..()
