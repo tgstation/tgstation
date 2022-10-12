@@ -254,6 +254,7 @@
 
 	for(var/atom/movable/movable as anything in moving_movs)
 		if(movable.anchored)
+			movable.pulledby.stop_pulling()
 			return
 		movable.currently_z_moving = currently_z_moving || CURRENTLY_Z_MOVING_GENERIC
 		movable.forceMove(target)
