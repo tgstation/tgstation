@@ -2716,6 +2716,7 @@
 #include "code\modules\client\preferences\names.dm"
 #include "code\modules\client\preferences\ooc.dm"
 #include "code\modules\client\preferences\parallax.dm"
+#include "code\modules\client\preferences\pda_ringtone.dm"
 #include "code\modules\client\preferences\persistent_scars.dm"
 #include "code\modules\client\preferences\phobia.dm"
 #include "code\modules\client\preferences\pixel_size.dm"
