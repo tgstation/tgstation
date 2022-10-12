@@ -131,7 +131,7 @@
 					affecting = victim.get_bodypart(type)
 					victim.Stun(60)
 				else
-					to_chat(victim, span_notice("Your [victim.gloves] protects you from the [src]."))
+					to_chat(victim, span_notice("Your [victim.gloves] protects you from [src]."))
 		if(affecting)
 			if(affecting.receive_damage(1, 0))
 				victim.update_damage_overlays()
