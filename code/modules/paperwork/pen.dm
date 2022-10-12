@@ -343,10 +343,15 @@
 // screwdriver pen!
 
 /obj/item/pen/screwdriver
+	/// whether the pen is extended
 	var/extended = FALSE
 	desc = "A pen with an extendable screwdriver tip. This one has a yellow cap."
 	icon_state = "pendriver"
 	toolspeed = 1.20  // gotta have some downside
+
+/obj/item/pen/screwdriver/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/eyestab)
 
 /obj/item/pen/screwdriver/attack_self(mob/living/user)
 	if(extended)
@@ -357,6 +362,7 @@
 		throwforce = initial(throwforce)
 		throw_speed = initial(throw_speed)
 		throw_range = initial(throw_range)
+		RemoveElement(/datum/element/eyestab)
 		to_chat(user, span_notice("You retract the screwdriver."))
 
 	else
@@ -367,22 +373,9 @@
 		throwforce = 5
 		throw_speed = 3
 		throw_range = 5
+		AddElement(/datum/element/eyestab)
 		to_chat(user, span_notice("You extend the screwdriver."))
-	update_icon()
-
-/obj/item/pen/screwdriver/attack(mob/living/carbon/M, mob/living/carbon/user)
-	if(!extended)
-		return ..()
-	if(!istype(M))
-		return ..()
-	if(user.zone_selected != BODY_ZONE_PRECISE_EYES && user.zone_selected != BODY_ZONE_HEAD)
-		return ..()
-	if(HAS_TRAIT(user, TRAIT_PACIFISM))
-		to_chat(user, span_warning("You don't want to harm [M]!</span>"))
-		return
-	if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
-		M = user
-	return eyestab(M,user)
+	update_apperance(UPDATE_ICON)
 
 /obj/item/pen/screwdriver/update_icon()
 	var/base = initial(icon_state)
