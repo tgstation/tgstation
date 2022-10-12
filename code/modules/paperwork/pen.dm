@@ -349,41 +349,38 @@
 	icon_state = "pendriver"
 	toolspeed = 1.2  // gotta have some downside
 
+/obj/item/pen/screwdriver/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/transforming, \
+		throwforce_on = 5,
+		w_class_on = WEIGHT_CLASS_SMALL
+		sharpness_on = TRUE)
+
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/toggle_screwdriver)
+
 
 /obj/item/pen/screwdriver/vv_edit_var(var_name, var_value)
 	if(var_name == NAMEOF(src, extended))
 		if(var_value != extended)
-			toggle_screwdriver()
+			SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SELF)
 			datum_flags |= DF_VAR_EDITED
 			return
 	return ..()
 
-/obj/item/pen/screwdriver/proc/toggle_screwdriver(mob/user)
-	extended = !extended
+/obj/item/pen/screwdriver/proc/toggle_screwdriver(mob/user, active)
+	extended = active
 	if(user)
 		balloon_alert(user, "[extended ? "extended" : "retracted"]!")
-		
+
 	if(!extended)
-		w_class = initial(w_class)
 		tool_behaviour = initial(tool_behaviour)
-		force = initial(force)
-		throwforce = initial(throwforce)
-		throw_speed = initial(throw_speed)
-		throw_range = initial(throw_range)
 		RemoveElement(/datum/element/eyestab)
 	else
 		tool_behaviour = TOOL_SCREWDRIVER
-		w_class = WEIGHT_CLASS_SMALL  // still can fit in pocket
-		force = 4  // copies force from screwdriver
-		throwforce = 5
-		throw_speed = 3
-		throw_range = 5
 		AddElement(/datum/element/eyestab)
-	update_appearance(UPDATE_ICON)
-	
-/obj/item/pen/screwdriver/attack_self(mob/living/user)
-	toggle_screwdriver(user)
 
+	update_appearance(UPDATE_ICON)
+	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/pen/screwdriver/update_icon_state()
 	. = ..()
