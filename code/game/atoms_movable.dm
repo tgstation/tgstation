@@ -253,9 +253,12 @@
 	var/list/moving_movs = get_z_move_affected(z_move_flags)
 
 	for(var/atom/movable/movable as anything in moving_movs)
-		if(movable.anchored)
+		if(movable.anchored) // Clear any pulls when we switch a z-level to prevent pulling anchored objects across z-levels.
+			if(!pulledby) // We know it's a pull because that's how it was passed to us via get_z_move_affected(). Something's wayyy fucked up if this runtimes.
+				STACK_TRACE("zMove() called on [src], which was pulling an anchored [movable] but there wasn't any mob pulling it!")
+				continue
 			movable.pulledby.stop_pulling()
-			return
+			continue
 		movable.currently_z_moving = currently_z_moving || CURRENTLY_Z_MOVING_GENERIC
 		movable.forceMove(target)
 		movable.set_currently_z_moving(FALSE, TRUE)
