@@ -215,7 +215,7 @@
 
 		var/debug_dump = tgui_alert(usr, "I'm assuming you're doing this because something has majorly fucked up and not even \
 			aheal will fix it, create a debug dump file for coders to look over afterwards?", "Recreate", list("Yes", "No", "Cancel"))
-		if(debug_dump == "Cancel")
+		if(!debug_dump || debug_dump == "Cancel")
 			return
 		debug_dump = (debug_dump == "Yes")
 
