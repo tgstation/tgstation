@@ -348,6 +348,20 @@
 	else
 		set_opacity(initial(opacity))
 
+/obj/structure/window/wash(clean_types)
+	. = ..()
+	if(!(clean_types & CLEAN_SCRUB))
+		return
+	set_opacity(initial(opacity))
+	remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+	for(var/atom/movable/cleanables as anything in src)
+		if(cleanables == src)
+			continue 
+		if(!cleanables.wash(clean_types))
+			continue
+		vis_contents -= cleanables
+	bloodied = FALSE
+
 /obj/structure/window/Destroy()
 	set_density(FALSE)
 	air_update_turf(TRUE, FALSE)
