@@ -13,6 +13,8 @@
 
 /datum/round_event_control/disease_outbreak/can_spawn_event(players_amt)
 	. = ..()
+	if(!.)
+		return .
 	generate_candidates()
 	if(length(disease_candidates))
 		return TRUE
@@ -32,10 +34,14 @@
 	if(tgui_alert(usr, "Select a specific disease?", "Sickening behavior", list("Yes", "No")) == "Yes")
 		chosen_disease = tgui_input_list(usr, "Warning: Some of these are EXTREMELY dangerous.","Bacteria Hysteria", subtypesof(/datum/disease))
 
+/**
+ * Creates a list of people who are elligible to become disease carriers for the event
+ *
+ * Searches through the player list, adding anyone who is elligible to be a disease carrier for the event. This checks for
+ * whether or not the candidate is alive, a crewmember, is able to recieve a disease, and whether or not a disease is already present in them.
+ * This proc needs to be run at some point to ensure the event has candidates to infect.
+ */
 /datum/round_event_control/disease_outbreak/proc/generate_candidates()
-	if(length(disease_candidates))
-		disease_candidates = list() //Wipe the candidate list clean and start over
-
 	for(var/mob/living/carbon/human/candidate in shuffle(GLOB.player_list)) //Player list is much more up to date and requires less checks(?)
 		if(!(candidate.mind.assigned_role.job_flags & JOB_CREW_MEMBER) || candidate.stat == DEAD)
 			continue
@@ -66,7 +72,7 @@
 		virus_type = disease_event.chosen_disease
 		disease_event.chosen_disease = null
 
-	if(!virus_type) //I wanted to handle this by searching through the presets and checking by disease severity defines but we'd still need to filter out some of them anyways.
+	if(!virus_type)
 		var/list/virus_candidates = list()
 
 		//Practically harmless diseases. Mostly just gives medical something to do.
@@ -78,16 +84,13 @@
 		//The wacky ones
 		virus_candidates += list(/datum/disease/dnaspread, /datum/disease/magnitis, /datum/disease/anxiety)
 
-		//The rest of the diseases either aren't conventional "disease" or are too unique/extreme to be considered for a normal event
+		//The rest of the diseases either aren't conventional "diseases" or are too unique/extreme to be considered for a normal event
 		virus_type = pick(virus_candidates)
 
 	var/datum/disease/new_disease
 	new_disease = new virus_type()
 	new_disease.carrier = TRUE
 
-	infect_players(new_disease)
-
-/datum/round_event/disease_outbreak/proc/infect_players(var/datum/disease/new_disease)
 	for(var/i in 1 to 3) //This runtimes whenever the event fires with < 3 candidates pls fix
 		var/mob/living/carbon/human/victim = pick_n_take(afflicted)
 		victim.ForceContractDisease(new_disease, FALSE, FALSE)
@@ -124,10 +127,8 @@
 	max_severity = 3 + max(FLOOR((world.time - control.earliest_start)/6000, 1),0) //3 symptoms at 20 minutes, plus 1 per 10 minutes
 	var/datum/disease/advance/advanced_disease = new /datum/disease/advance/random(max_severity, max_severity)
 
-	infect_players(advanced_disease)
-
-/datum/round_event/disease_outbreak/advanced/infect_players(var/datum/disease/advance/advanced_disease)
 	var/list/name_symptoms = list() //for feedback
+
 	for(var/datum/symptom/new_symptom in advanced_disease.symptoms)
 		name_symptoms += new_symptom.name
 
