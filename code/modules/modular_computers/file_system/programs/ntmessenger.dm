@@ -260,7 +260,7 @@
 		return FALSE
 
 	if((last_text && world.time < last_text + 10) || (everyone && last_text_everyone && world.time < last_text_everyone + 2 MINUTES))
-		user.balloon_alert(user, "on cooldown!")
+		to_chat(user, span_warning("The subspace transmitter of your tablet is still cooling down!"))
 		return FALSE
 
 	var/turf/position = get_turf(computer)
