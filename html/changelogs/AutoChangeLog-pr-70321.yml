@@ -1,0 +1,7 @@
+author: "tralezab"
+delete-after: True
+changes: 
+  - rscadd: "After 30 minutes, Bileworms evolve into Vileworms, a more dangerous variant."
+  - balance: "Bileworms are easier"
+  - balance: "Bileworms drop gold"
+  - bugfix: "fixes bileworms spawning too close to other mobs, causing very, VERY tough fights"
