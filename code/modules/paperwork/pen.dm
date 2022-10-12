@@ -387,4 +387,4 @@
 
 /obj/item/pen/screwdriver/update_icon_state()
 	. = ..()
-	icon_state = "[initial(icon_state)][extended ? "out":null]"
+	icon_state = "[initial(icon_state)][extended ? "_out":null]"
