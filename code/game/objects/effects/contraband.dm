@@ -30,7 +30,7 @@
 	)
 	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
 
-	if(new_poster_structure)
+	if(new_poster_structure && (new_poster_structure.loc != src))
 		new_poster_structure.forceMove(src) //The poster structure *must* be in the item's contents for the exited() proc to properly clean up when placing the poster
 	poster_structure = new_poster_structure
 	if(!new_poster_structure && poster_type)
