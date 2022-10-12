@@ -347,7 +347,7 @@
 	var/extended = FALSE
 	desc = "A pen with an extendable screwdriver tip. This one has a yellow cap."
 	icon_state = "pendriver"
-	toolspeed = 1.20  // gotta have some downside
+	toolspeed = 1.2  // gotta have some downside
 
 
 /obj/item/pen/screwdriver/vv_edit_var(var_name, var_value)
