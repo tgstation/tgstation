@@ -240,7 +240,7 @@
 				S.forceMove(get_turf(src))
 		sleep(0.7 SECONDS)
 	if(selection.song_name == "Engineering's Ultimate High-Energy Hustle")
-		sleep(280)
+		sleep(28 SECONDS)
 	for(var/s in sparkles)
 		var/obj/effect/overlay/sparkles/reveal = s
 		reveal.alpha = 255

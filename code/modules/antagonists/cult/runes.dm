@@ -875,7 +875,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			if(user.stat != CONSCIOUS || HAS_TRAIT(new_human, TRAIT_CRITICAL_CONDITION))
 				break
 			user.apply_damage(0.1, BRUTE)
-			sleep(1 TICKS)
+			sleep(0.1 SECONDS)
 
 		qdel(N)
 		ghosts--
@@ -1065,7 +1065,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		for(var/image/I in images)
 			if(I.icon_state != "bloodsparkles")
 				I.override = TRUE
-		sleep(190)
+		sleep(19 SECONDS)
 
 
 

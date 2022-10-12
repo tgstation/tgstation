@@ -750,7 +750,7 @@
 		user.visible_message(span_hear("You hear the click of a button."), span_notice("You activate [src], it plays a loud noise!"))
 		sleep(0.5 SECONDS)
 		playsound(src, 'sound/machines/alarm.ogg', 20, FALSE)
-		sleep(140)
+		sleep(14 SECONDS)
 		user.visible_message(span_alert("[src] violently explodes!"))
 		explosion(src, light_impact_range = 1)
 		qdel(src)
@@ -760,7 +760,7 @@
 		sleep(0.5 SECONDS)
 		icon_state = "nuketoy"
 		playsound(src, 'sound/machines/alarm.ogg', 20, FALSE)
-		sleep(135)
+		sleep(13.5 SECONDS)
 		icon_state = "nuketoycool"
 		sleep(cooldown - world.time)
 		icon_state = "nuketoyidle"

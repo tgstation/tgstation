@@ -698,7 +698,7 @@
 		to_chat(user, span_notice("Fault confirmed: airlock control wire disabled or cut."))
 		sleep(2 SECONDS)
 		to_chat(user, span_notice("Attempting to hack into airlock. This may take some time."))
-		sleep(200)
+		sleep(20 SECONDS)
 		if(canAIControl(user))
 			to_chat(user, span_notice("Alert cancelled. Airlock control has been restored without our assistance."))
 			aiHacking = FALSE
@@ -708,7 +708,7 @@
 			aiHacking = FALSE
 			return
 		to_chat(user, span_notice("Upload access confirmed. Loading control program into airlock software."))
-		sleep(170)
+		sleep(17 SECONDS)
 		if(canAIControl(user))
 			to_chat(user, span_notice("Alert cancelled. Airlock control has been restored without our assistance."))
 			aiHacking = FALSE
