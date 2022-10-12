@@ -24,7 +24,7 @@
 /datum/hud/alien
 	ui_style = 'icons/hud/screen_alien.dmi'
 
-/datum/hud/alien/New(mob/living/carbon/alien/humanoid/owner)
+/datum/hud/alien/New(mob/living/carbon/alien/adult/owner)
 	..()
 
 	var/atom/movable/screen/using

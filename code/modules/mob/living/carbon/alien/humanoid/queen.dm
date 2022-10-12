@@ -138,7 +138,7 @@
 	item_flags = NOBLUDGEON | ABSTRACT | DROPDEL
 	icon = 'icons/mob/nonhuman-player/alien.dmi'
 
-/obj/item/queen_promotion/attack(mob/living/to_promote, mob/living/carbon/alien/humanoid/queen)
+/obj/item/queen_promotion/attack(mob/living/to_promote, mob/living/carbon/alien/adult/queen)
 	. = ..()
 	if(.)
 		return

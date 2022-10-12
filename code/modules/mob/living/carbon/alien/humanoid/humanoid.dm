@@ -50,7 +50,7 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 	pulledby.stop_pulling()
 	. = 0
 
-/mob/living/carbon/alien/adult/alien_evolve(mob/living/carbon/alien/humanoid/new_xeno)
+/mob/living/carbon/alien/adult/alien_evolve(mob/living/carbon/alien/adult/new_xeno)
 	drop_all_held_items()
 	..()
 
