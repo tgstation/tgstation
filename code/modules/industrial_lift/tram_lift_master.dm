@@ -104,6 +104,8 @@
 	from_where = to_where
 	set_travelling(TRUE)
 	set_controls(LIFT_PLATFORM_LOCKED)
+	update_tram_doors(CLOSE_DOORS)
+	sleep(20)
 	SEND_SIGNAL(src, COMSIG_TRAM_TRAVEL, from_where, to_where)
 
 	for(var/obj/structure/industrial_lift/tram/tram_part as anything in lift_platforms) //only thing everyone needs to know is the new location.
@@ -162,6 +164,7 @@
 /datum/lift_master/tram/proc/unlock_controls()
 	set_travelling(FALSE)
 	set_controls(LIFT_PLATFORM_UNLOCKED)
+	update_tram_doors(OPEN_DOORS)
 	for(var/obj/structure/industrial_lift/tram/tram_part as anything in lift_platforms) //only thing everyone needs to know is the new location.
 		tram_part.set_travelling(FALSE)
 
@@ -172,3 +175,19 @@
 
 	travelling = new_travelling
 	SEND_SIGNAL(src, COMSIG_TRAM_SET_TRAVELLING, travelling)
+
+/**
+ * Controls the doors of the tram when it departs and arrives at stations.
+ * The tram doors are in a list of tram_doors and we apply the proc on that list.
+ */
+/datum/lift_master/tram/proc/update_tram_doors(action)
+	for(var/obj/machinery/door/window/tram_door in GLOB.tram_doors)
+		switch(action)
+			if(OPEN_DOORS)
+				INVOKE_ASYNC(tram_door, /obj/machinery/door/window.proc/open)
+
+			if(CLOSE_DOORS)
+				INVOKE_ASYNC(tram_door, /obj/machinery/door/window.proc/close)
+
+			else
+				stack_trace("Tram doors update_tram_doors called with an improper action ([action]).")

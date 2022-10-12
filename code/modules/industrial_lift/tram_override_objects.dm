@@ -23,16 +23,21 @@
 	//DO NOT put something on the tram roundstart that has opacity, it WILL overload SSlighting
 	opacity = FALSE
 
+GLOBAL_LIST_EMPTY_TYPED(tram_doors, /obj/machinery/door/window)
+	//Define a list for the doors of the tram, so they can be controlled in a single proc
+
 /obj/machinery/door/window/left/tram
 /obj/machinery/door/window/right/tram
 
 /obj/machinery/door/window/left/tram/Initialize(mapload, set_dir, unres_sides)
 	. = ..()
 	RemoveElement(/datum/element/atmos_sensitive, mapload)
+	GLOB.tram_doors += src
 
 /obj/machinery/door/window/right/tram/Initialize(mapload, set_dir, unres_sides)
 	. = ..()
 	RemoveElement(/datum/element/atmos_sensitive, mapload)
+	GLOB.tram_doors += src
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/left/tram, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/right/tram, 0)
