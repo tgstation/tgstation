@@ -107,8 +107,8 @@
 		return FALSE
 
 	if(ismovable(mob.loc)) //Inside an object, tell it we moved
-		var/atom/O = mob.loc
-		return O.relaymove(mob, direct)
+		var/atom/loc_atom = mob.loc
+		return loc_atom.relaymove(mob, direct)
 
 	if(!mob.Process_Spacemove(direct))
 		return FALSE
@@ -530,8 +530,8 @@
 		return
 
 	if(ismovable(loc)) //Inside an object, tell it we moved
-		var/atom/O = loc
-		return O.relaymove(src, UP)
+		var/atom/loc_atom = loc
+		return loc_atom.relaymove(src, UP)
 
 	if(can_z_move(DOWN, above_turf, current_turf, ZMOVE_FALL_FLAGS|ventcrawling_flag)) //Will we fall down if we go up?
 		if(buckled)
@@ -549,8 +549,8 @@
 	set category = "IC"
 
 	if(ismovable(loc)) //Inside an object, tell it we moved
-		var/atom/O = loc
-		return O.relaymove(src, DOWN)
+		var/atom/loc_atom = loc
+		return loc_atom.relaymove(src, DOWN)
 
 	var/ventcrawling_flag = HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) ? ZMOVE_VENTCRAWLING : 0
 	if(zMove(DOWN, z_move_flags = ZMOVE_FLIGHT_FLAGS|ZMOVE_FEEDBACK|ventcrawling_flag))

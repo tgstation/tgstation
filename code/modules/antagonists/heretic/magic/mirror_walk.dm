@@ -118,7 +118,8 @@
 		return
 	unjaunter.visible_message(
 		span_boldwarning("[unjaunter] phases into reality before your very eyes!"),
-		span_notice("You jump out of the reflection coming off of [nearby_reflection], exiting the mirror's realm."),)
+		span_notice("You jump out of the reflection coming off of [nearby_reflection], exiting the mirror's realm."),
+	)
 
 /**
  * Goes through all nearby atoms in sight of the
