@@ -91,16 +91,13 @@
 	new_disease = new virus_type()
 	new_disease.carrier = TRUE
 
-	for(var/i in 1 to 2) //Good things come in pairs
-		if(!length(afflicted)) //In case we somehow run out of people
-			break
-		var/mob/living/carbon/human/victim = pick_n_take(afflicted)
-		if(victim.ForceContractDisease(new_disease, FALSE))
-			log_game("An event has given [key_name(victim)] the [new_disease]")
-			message_admins("An event has triggered a [new_disease.name] virus outbreak on [ADMIN_LOOKUPFLW(victim)]!")
-			announce_to_ghosts(victim)
-		else
-			log_game("An event attempted to trigger a [new_disease.name] virus outbreak on [key_name(victim)], but failed.")
+	var/mob/living/carbon/human/victim = pick_n_take(afflicted)
+	if(victim.ForceContractDisease(new_disease, FALSE))
+		log_game("An event has given [key_name(victim)] the [new_disease]")
+		message_admins("An event has triggered a [new_disease.name] virus outbreak on [ADMIN_LOOKUPFLW(victim)]!")
+		announce_to_ghosts(victim)
+	else
+		log_game("An event attempted to trigger a [new_disease.name] virus outbreak on [key_name(victim)], but failed.")
 
 /datum/round_event_control/disease_outbreak/advanced
 	name = "Disease Outbreak: Advanced"
@@ -136,13 +133,10 @@
 	for(var/datum/symptom/new_symptom in advanced_disease.symptoms)
 		name_symptoms += new_symptom.name
 
-	for(var/i in 1 to 2)
-		if(!length(afflicted))
-			break
-		var/mob/living/carbon/human/victim = pick_n_take(afflicted)
-		if(victim.ForceContractDisease(advanced_disease, FALSE))
-			message_admins("An event has triggered a random advanced virus outbreak on [ADMIN_LOOKUPFLW(victim)]! It has these symptoms: [english_list(name_symptoms)]")
-			log_game("An event has triggered a random advanced virus outbreak on [key_name(victim)]! It has these symptoms: [english_list(name_symptoms)].")
-			announce_to_ghosts(victim)
-		else
-			log_game("An event attempted to trigger a random advanced virus outbreak on [key_name(victim)], but failed.")
+	var/mob/living/carbon/human/victim = pick_n_take(afflicted)
+	if(victim.ForceContractDisease(advanced_disease, FALSE))
+		message_admins("An event has triggered a random advanced virus outbreak on [ADMIN_LOOKUPFLW(victim)]! It has these symptoms: [english_list(name_symptoms)]")
+		log_game("An event has triggered a random advanced virus outbreak on [key_name(victim)]! It has these symptoms: [english_list(name_symptoms)].")
+		announce_to_ghosts(victim)
+	else
+		log_game("An event attempted to trigger a random advanced virus outbreak on [key_name(victim)], but failed.")
