@@ -91,7 +91,9 @@
 	new_disease = new virus_type()
 	new_disease.carrier = TRUE
 
-	for(var/i in 1 to 3) //This runtimes whenever the event fires with < 3 candidates pls fix
+	for(var/i in 1 to 3)
+		if(!length(afflicted)) //In case we somehow run out of people
+			break
 		var/mob/living/carbon/human/victim = pick_n_take(afflicted)
 		victim.ForceContractDisease(new_disease, FALSE)
 		log_game("An event has given [key_name(victim)] the [new_disease]")
@@ -133,6 +135,8 @@
 		name_symptoms += new_symptom.name
 
 	for(var/i in 1 to 3)
+		if(!length(afflicted))
+			break
 		var/mob/living/carbon/human/victim = pick_n_take(afflicted)
 		victim.ForceContractDisease(advanced_disease, FALSE)
 		message_admins("An event has triggered a random advanced virus outbreak on [ADMIN_LOOKUPFLW(victim)]! It has these symptoms: [english_list(name_symptoms)]")
