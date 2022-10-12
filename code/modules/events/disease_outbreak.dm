@@ -60,7 +60,8 @@
 
 /datum/round_event/disease_outbreak/start()
 	var/datum/round_event_control/disease_outbreak/disease_event = control
-	afflicted = disease_event.disease_candidates
+	afflicted += disease_event.disease_candidates
+	disease_event.disease_candidates.Cut() //Clean the list after use
 	if(disease_event.chosen_disease)
 		virus_type = disease_event.chosen_disease
 		disease_event.chosen_disease = null
@@ -77,6 +78,7 @@
 		//The wacky ones
 		virus_candidates += list(/datum/disease/dnaspread, /datum/disease/magnitis, /datum/disease/anxiety)
 
+		//The rest of the diseases either aren't conventional "disease" or are too unique/extreme to be considered for a normal event
 		virus_type = pick(virus_candidates)
 
 	var/datum/disease/new_disease
@@ -115,6 +117,10 @@
 	var/max_severity = 3
 
 /datum/round_event/disease_outbreak/advanced/start()
+	var/datum/round_event_control/disease_outbreak/disease_event = control
+	afflicted += disease_event.disease_candidates
+	disease_event.disease_candidates.Cut() //Clean the list after use
+
 	max_severity = 3 + max(FLOOR((world.time - control.earliest_start)/6000, 1),0) //3 symptoms at 20 minutes, plus 1 per 10 minutes
 	var/datum/disease/advance/advanced_disease = new /datum/disease/advance/random(max_severity, max_severity)
 
