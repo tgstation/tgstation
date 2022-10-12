@@ -53,7 +53,7 @@
 	var/list_idx = findlasttext(line, "list(")
 	while(list_idx)
 		var/pos = list_idx
-		while(copytext(., pos, pos + 1) != ")")
+		while(copytext(., pos, pos + 1) != ")")\
 			pos++
 		var/work = copytext(., list_idx + 5, pos)
 		var/finished = ""
@@ -77,6 +77,8 @@
 	var/list/sf_data = list()
 	var/list/region = sf_data
 	var/tab_last
+	var/line_concat
+	var/concat_tab
 	data += SF_CUTOFF_FLAG
 	while(data.len)
 		var/line = popleft(data)
@@ -85,6 +87,17 @@
 
 		if(!line)
 			continue
+
+		if(copytext(line, length(line))== ",")
+			if(!line_concat)
+				concat_tab = tab
+			line_concat += line
+			continue
+
+		if(line_concat)
+			line = line_concat + line
+			tab = concat_tab
+			line_concat = null
 
 		if(tab_last > tab)
 			var/down = tab_last - tab
