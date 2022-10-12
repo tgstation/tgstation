@@ -21,13 +21,13 @@
 
 /datum/round_event_control/disease_outbreak/admin_setup()
 	if(!check_rights(R_FUN))
-		return FALSE
+		return ADMIN_CANCEL_EVENT
 
 	generate_candidates()
 
 	if(!length(disease_candidates))
 		message_admins("No disease candidates found!")
-		return FALSE
+		return ADMIN_CANCEL_EVENT
 
 	message_admins("[length(disease_candidates)] candidates found!")
 
@@ -93,7 +93,7 @@
 
 	for(var/i in 1 to 3) //This runtimes whenever the event fires with < 3 candidates pls fix
 		var/mob/living/carbon/human/victim = pick_n_take(afflicted)
-		victim.ForceContractDisease(new_disease, FALSE, FALSE)
+		victim.ForceContractDisease(new_disease, FALSE)
 		log_game("An event has given [key_name(victim)] the [new_disease]")
 		message_admins("An event has triggered a [new_disease.name] virus outbreak on [ADMIN_LOOKUPFLW(victim)]!")
 
@@ -105,13 +105,13 @@
 
 /datum/round_event_control/disease_outbreak/advanced/admin_setup()
 	if(!check_rights(R_FUN))
-		return FALSE
+		return ADMIN_CANCEL_EVENT
 
 	generate_candidates()
 
 	if(!length(disease_candidates))
 		message_admins("No disease candidates found!")
-		return FALSE
+		return ADMIN_CANCEL_EVENT
 
 	message_admins("[length(disease_candidates)] candidates found!")
 
@@ -134,6 +134,6 @@
 
 	for(var/i in 1 to 3)
 		var/mob/living/carbon/human/victim = pick_n_take(afflicted)
-		victim.ForceContractDisease(advanced_disease, FALSE, FALSE)
+		victim.ForceContractDisease(advanced_disease, FALSE)
 		message_admins("An event has triggered a random advanced virus outbreak on [ADMIN_LOOKUPFLW(victim)]! It has these symptoms: [english_list(name_symptoms)]")
 		log_game("An event has triggered a random advanced virus outbreak on [key_name(victim)]! It has these symptoms: [english_list(name_symptoms)].")
