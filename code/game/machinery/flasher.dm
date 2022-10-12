@@ -16,7 +16,7 @@
 	var/flash_range = 2 //this is roughly the size of a brig cell.
 
 	/// How strong Paralyze()'d targets are when flashed.
-	var/strength = 100
+	var/strength = 10 SECONDS
 
 	COOLDOWN_DECLARE(flash_cooldown)
 	/// Duration of time between flashes.
