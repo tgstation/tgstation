@@ -848,6 +848,7 @@ Striking a noncultist, however, will tear their flesh."}
 	name = "mirror shield"
 	desc = "An infamous shield used by Nar'Sien sects to confuse and disorient their enemies. Its edges are weighted for use as a throwing weapon - capable of disabling multiple foes with preternatural accuracy."
 	icon_state = "mirror_shield" // eshield1 for expanded
+	inhand_icon_state = "mirror_shield"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
 	force = 5

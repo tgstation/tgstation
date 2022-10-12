@@ -79,7 +79,7 @@
 	M.remove_status_effect(/datum/status_effect/confusion)
 	M.SetSleeping(0)
 
-	M.silent = FALSE
+	M.remove_status_effect(/datum/status_effect/silenced)
 	M.remove_status_effect(/datum/status_effect/dizziness)
 	M.disgust = 0
 	M.drowsyness = 0

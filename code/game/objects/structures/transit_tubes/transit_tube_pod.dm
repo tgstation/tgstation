@@ -216,7 +216,8 @@
 	occupied_icon_state = "temppod_occupied"
 
 /obj/structure/transit_tube_pod/dispensed/outside_tube()
-	qdel(src)
+	if(!QDELETED(src))
+		qdel(src)
 
 #undef MOVE_ANIMATION_STAGE_ONE
 #undef MOVE_ANIMATION_STAGE_TWO

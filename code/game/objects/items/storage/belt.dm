@@ -28,6 +28,7 @@
 
 /obj/item/storage/belt/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/attack_equip)
 	update_appearance()
 
 /obj/item/storage/belt/utility

@@ -599,7 +599,7 @@
 		balloon_alert(user, "wrong seat for equipment!")
 		return
 	var/obj/item/mecha_parts/mecha_equipment/selected
-	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+	if(modifiers[BUTTON] == RIGHT_CLICK)
 		selected = equip_by_category[MECHA_R_ARM]
 	else
 		selected = equip_by_category[MECHA_L_ARM]
