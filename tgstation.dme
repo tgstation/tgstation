@@ -3424,6 +3424,7 @@
 #include "code\modules\mining\equipment\resonator.dm"
 #include "code\modules\mining\equipment\survival_pod.dm"
 #include "code\modules\mining\equipment\wormhole_jaunter.dm"
+#include "code\modules\mining\equipment\monster_organs\brimdust_sac.dm"
 #include "code\modules\mining\equipment\monster_organs\monster_organ.dm"
 #include "code\modules\mining\equipment\monster_organs\regenerative_core.dm"
 #include "code\modules\mining\equipment\monster_organs\rush_gland.dm"

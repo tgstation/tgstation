@@ -181,26 +181,7 @@
 		target.add_mood_event("core", moodlet)
 	qdel(src)
 
-/obj/item/organ/internal/monster_core/on_life(delta_time, times_fired)
-	..()
-	if (should_apply_on_life())
-		try_activate_implanted()
-
-/obj/item/organ/internal/monster_core/proc/action_is_available()
-	return TRUE
-
-/// Return true under conditions where we want an implanted organ to trigger
-/obj/item/organ/internal/monster_core/proc/should_apply_on_life()
-	return FALSE
-
 /obj/item/organ/internal/monster_core/ui_action_click()
-	try_activate_implanted()
-
-/**
- * Called when activated while implanted inside someone.
- * This performs checking for interness, you should usually override activate_implanted() instead.
- */
-/obj/item/organ/internal/monster_core/proc/try_activate_implanted()
 	activate_implanted()
 
 /**
@@ -218,8 +199,3 @@
 
 /obj/item/organ/internal/monster_core/reusable/setup_internal_use_action()
 	use_internal = new /datum/action/item_action/organ_action/cooldown(src, internal_use_cooldown)
-
-/obj/item/organ/internal/monster_core/reusable/try_activate_implanted()
-	if (!action_is_available())
-		return
-	return ..()

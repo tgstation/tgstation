@@ -23,8 +23,10 @@
 		return
 	SSblackbox.record_feedback("nested tally", "hivelord_core", 1, list("[type]", "inert"))
 
-/obj/item/organ/internal/monster_core/regenerative_core/should_apply_on_life()
-	return owner.health <= owner.crit_threshold
+/obj/item/organ/internal/monster_core/regenerative_core/on_life(delta_time, times_fired)
+	. = ..()
+	if (owner.health <= owner.crit_threshold)
+		activate_implanted()
 
 /obj/item/organ/internal/monster_core/regenerative_core/activate_implanted()
 	owner.revive(full_heal = TRUE, admin_revive = FALSE)

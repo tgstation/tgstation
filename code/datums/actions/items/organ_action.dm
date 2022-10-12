@@ -51,5 +51,5 @@
 		return FALSE
 	COOLDOWN_START(src, activate_cooldown, activate_cooldown_length)
 	UpdateButtons()
-	addtimer(CALLBACK(src, .proc/UpdateButtons), activate_cooldown_length)
+	addtimer(CALLBACK(src, .proc/UpdateButtons), activate_cooldown_length + 1)
 	return TRUE
