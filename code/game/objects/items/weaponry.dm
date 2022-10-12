@@ -458,12 +458,16 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	name = "white cane"
 	desc = "A cane traditionally used by the blind to help them see. Folds down to be easier to transport."
 	icon_state = "cane_white"
-	inhand_icon_state = "cane_white"
+	inhand_icon_state = "cane_white"//this inhand icon state exists but is completely blank TODO: Create inhand sprite for the unextended white cane
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	force = 1
 	w_class = WEIGHT_CLASS_SMALL
 	custom_materials = list(/datum/material/iron = 600)
+	//dictates whether the cane is extended or not
+	var/active = TRUE
+	//sets inhand_icon_state when extended
+	var/on_inhand_icon_state = "cane_white_on"
 
 /obj/item/cane/white/Initialize(mapload)
 	. = ..()
@@ -485,6 +489,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/cane/white/proc/on_transform(obj/item/source, mob/user, active)
 	SIGNAL_HANDLER
 
+	src.active = active
+	inhand_icon_state = active ? on_inhand_icon_state : inhand_icon_state
 	balloon_alert(user, active ? "extended" : "collapsed")
 	playsound(user ? user : src, 'sound/weapons/batonextend.ogg', 50, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
