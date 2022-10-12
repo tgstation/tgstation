@@ -79,7 +79,7 @@
 		virus_candidates += list(/datum/disease/flu, /datum/disease/advance/flu, /datum/disease/advance/cold, /datum/disease/cold9, /datum/disease/cold)
 
 		//The more dangerous ones
-		virus_candidates += list(/datum/disease/beesease, /datum/disease/brainrot, /datum/disease/tuberculosis, /datum/disease/fluspanish)
+		virus_candidates += list(/datum/disease/beesease, /datum/disease/brainrot, /datum/disease/fluspanish)
 
 		//The wacky ones
 		virus_candidates += list(/datum/disease/dnaspread, /datum/disease/magnitis, /datum/disease/anxiety)
