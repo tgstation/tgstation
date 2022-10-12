@@ -352,8 +352,8 @@
 /obj/item/pen/screwdriver/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/transforming, \
-		throwforce_on = 5,
-		w_class_on = WEIGHT_CLASS_SMALL
+		throwforce_on = 5, \
+		w_class_on = WEIGHT_CLASS_SMALL, \
 		sharpness_on = TRUE)
 
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/toggle_screwdriver)
