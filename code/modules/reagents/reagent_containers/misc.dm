@@ -140,21 +140,20 @@
 /obj/item/reagent_containers/cup/rag/afterattack(atom/target, mob/living/user, proximity_flag, click_parameters)
 	if(!proximity_flag)
 		return
-	if(iscarbon(target) && reagents?.total_volume)
-		var/mob/living/carbon/carbon_target = target
-		var/reagentlist = pretty_string_from_reagent_list(reagents.reagent_list)
-		var/log_object = "containing [reagentlist]"
-		if(user.combat_mode && !carbon_target.is_mouth_covered())
-			reagents.trans_to(carbon_target, reagents.total_volume, transfered_by = user, methods = INGEST)
-			carbon_target.visible_message(span_danger("[user] smothers \the [carbon_target] with \the [src]!"), span_userdanger("[user] smothers you with \the [src]!"), span_hear("You hear some struggling and muffled cries of surprise."))
-			log_combat(user, carbon_target, "smothered", src, log_object)
-		else
-			reagents.expose(carbon_target, TOUCH)
-			reagents.clear_reagents()
-			carbon_target.visible_message(span_notice("[user] touches \the [carbon_target] with \the [src]."))
-			log_combat(user, carbon_target, "touched", src, log_object)
-		return
-	return ..()
+	if(!iscarbon(target) || !reagents?.total_volume)
+		return ..()
+	var/mob/living/carbon/carbon_target = target
+	var/reagentlist = pretty_string_from_reagent_list(reagents.reagent_list)
+	var/log_object = "containing [reagentlist]"
+	if(user.combat_mode && !carbon_target.is_mouth_covered())
+		reagents.trans_to(carbon_target, reagents.total_volume, transfered_by = user, methods = INGEST)
+		carbon_target.visible_message(span_danger("[user] smothers \the [carbon_target] with \the [src]!"), span_userdanger("[user] smothers you with \the [src]!"), span_hear("You hear some struggling and muffled cries of surprise."))
+		log_combat(user, carbon_target, "smothered", src, log_object)
+	else
+		reagents.expose(carbon_target, TOUCH)
+		reagents.clear_reagents()
+		carbon_target.visible_message(span_notice("[user] touches \the [carbon_target] with \the [src]."))
+		log_combat(user, carbon_target, "touched", src, log_object)
 
 ///Checks whether or not we should clean.
 /obj/item/reagent_containers/cup/rag/proc/should_clean(datum/cleaning_source, atom/atom_to_clean, mob/living/cleaner)

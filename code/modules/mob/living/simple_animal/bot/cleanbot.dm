@@ -240,9 +240,9 @@
 	if(bot_cover_flags & BOT_COVER_EMAGGED) //Emag functions
 		var/mob/living/carbon/victim = locate(/mob/living/carbon) in loc
 		if(victim && victim == target)
-			UnarmedAttack(victim, TRUE) // Acid spray
+			UnarmedAttack(victim, proximity_flag = TRUE) // Acid spray
 		if(isopenturf(loc) && prob(15)) // Wets floors and spawns foam randomly
-			UnarmedAttack(src, TRUE)
+			UnarmedAttack(src, proximity_flag = TRUE)
 	else if(prob(5))
 		audible_message("[src] makes an excited beeping booping sound!")
 
@@ -268,7 +268,7 @@
 				shuffle = TRUE //Shuffle the list the next time we scan so we dont both go the same way.
 				path = list()
 			else
-				UnarmedAttack(target, TRUE) //Rather than check at every step of the way, let's check before we do an action, so we can rescan before the other bot.
+				UnarmedAttack(target, proximity_flag = TRUE) //Rather than check at every step of the way, let's check before we do an action, so we can rescan before the other bot.
 				if(QDELETED(target)) //We done here.
 					target = null
 					mode = BOT_IDLE
@@ -337,7 +337,7 @@
 	if(ismopable(attack_target))
 		mode = BOT_CLEANING
 		update_icon_state()
-		..()
+		. = ..()
 		target = null
 		mode = BOT_IDLE
 
