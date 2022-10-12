@@ -161,9 +161,8 @@
 	if(!icon_empty)
 		icon_empty = icon_state
 
-	if(!hud?.mymob || !slot_id || !icon_full)
-		return ..()
-	icon_state = hud.mymob.get_item_by_slot(slot_id) ? icon_full : icon_empty
+	if(hud?.mymob && slot_id && icon_full)
+		icon_state = hud.mymob.get_item_by_slot(slot_id) ? icon_full : icon_empty
 	return ..()
 
 /atom/movable/screen/inventory/proc/add_overlays()
