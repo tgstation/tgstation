@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - imageadd: "Tablets and PDAs now have inhand icons."
