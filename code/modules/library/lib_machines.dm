@@ -646,9 +646,9 @@
 	var/poster_type = SSlibrary.printable_posters[poster_name]
 	if(!poster_type)
 		return
-
-	var/obj/item/poster/random_official/poster = new(loc, new poster_type)
-	poster.name = poster_name
+	var/obj/structure/sign/poster/poster_structure = new poster_type
+	var/obj/item/poster/poster = new(loc, poster_structure)
+	poster_structure.forceMove(poster)
 
 /obj/machinery/computer/libraryconsole/bookmanagement/proc/print_book(id)
 	if (!SSdbcore.Connect())
