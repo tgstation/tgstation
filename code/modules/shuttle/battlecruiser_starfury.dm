@@ -161,7 +161,7 @@
 	if(!team)
 		team = new()
 		var/obj/machinery/nuclearbomb/selfdestruct/nuke = locate() in GLOB.nuke_list
-		if(nuke.r_code == "ADMIN")
+		if(nuke.r_code == NUKE_CODE_UNSET)
 			nuke.r_code = random_nukecode()
 		team.nuke = nuke
 		team.update_objectives()
