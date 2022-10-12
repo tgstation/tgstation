@@ -349,10 +349,6 @@
 	icon_state = "pendriver"
 	toolspeed = 1.20  // gotta have some downside
 
-/obj/item/pen/screwdriver/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/eyestab)
-
 /obj/item/pen/screwdriver/attack_self(mob/living/user)
 	if(extended)
 		extended = FALSE
@@ -377,9 +373,6 @@
 		to_chat(user, span_notice("You extend the screwdriver."))
 	update_apperance(UPDATE_ICON)
 
-/obj/item/pen/screwdriver/update_icon()
-	var/base = initial(icon_state)
-	if(extended)
-		icon_state = "[base]out"
-	else
-		icon_state = base
+/obj/item/pen/screwdriver/update_icon_state()
+	. = ..()
+	icon_state = "[initial(icon_state)][extended ? "out":null]
