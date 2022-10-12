@@ -288,6 +288,10 @@
 	damtype = BURN
 	var/obj/item/nuke_core/supermatter_sliver/sliver
 
+/obj/item/hemostat/supermatter/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+
 /obj/item/hemostat/supermatter/Destroy()
 	QDEL_NULL(sliver)
 	return ..()

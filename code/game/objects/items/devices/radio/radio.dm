@@ -226,16 +226,9 @@
 		set_listening(FALSE, actual_setting = FALSE)
 
 /obj/item/radio/talk_into(atom/movable/talking_movable, message, channel, list/spans, datum/language/language, list/message_mods)
-	if(HAS_TRAIT(talking_movable, TRAIT_SIGN_LANG)) //Forces Sign Language users to wear the translation gloves to speak over radios
-		var/mob/living/carbon/mute = talking_movable
-		if(istype(mute))
-			if(!HAS_TRAIT(talking_movable, TRAIT_CAN_SIGN_ON_COMMS))
-				return FALSE
-			switch(mute.check_signables_state())
-				if(SIGN_ONE_HAND) // One hand full
-					message = stars(message)
-				if(SIGN_HANDS_FULL to SIGN_CUFFED)
-					return FALSE
+	if(SEND_SIGNAL(talking_movable, COMSIG_MOVABLE_USING_RADIO, src) & COMPONENT_CANNOT_USE_RADIO)
+		return
+
 	if(!spans)
 		spans = list(talking_movable.speech_span)
 	if(!language)
@@ -250,7 +243,7 @@
 		return
 	if(wires.is_cut(WIRE_TX))  // Permacell and otherwise tampered-with radios
 		return
-	if(!talking_movable.IsVocal())
+	if(!talking_movable.try_speak(message))
 		return
 
 	if(use_command)

@@ -10403,8 +10403,8 @@
 	dir = 4;
 	dwidth = 4;
 	height = 7;
-	shuttle_id = "cargo_home";
 	name = "Cargo Bay";
+	shuttle_id = "cargo_home";
 	width = 12
 	},
 /turf/open/space/basic,
@@ -12425,8 +12425,8 @@
 	pixel_y = 5
 	},
 /obj/item/storage/belt/utility,
-/obj/item/clothing/head/welding,
-/obj/item/clothing/head/welding,
+/obj/item/clothing/head/utility/welding,
+/obj/item/clothing/head/utility/welding,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
@@ -14419,7 +14419,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/item/clothing/head/welding{
+/obj/item/clothing/head/utility/welding{
 	pixel_y = 4
 	},
 /obj/machinery/camera/directional/north{
@@ -18009,8 +18009,8 @@
 	dir = 4;
 	dwidth = 11;
 	height = 18;
-	shuttle_id = "emergency_home";
 	name = "KiloStation emergency evac bay";
+	shuttle_id = "emergency_home";
 	width = 30
 	},
 /turf/open/space/basic,
@@ -20442,9 +20442,9 @@
 	dir = 8;
 	dwidth = 4;
 	height = 9;
-	shuttle_id = "aux_base_zone";
 	name = "Aux Base Zone";
 	roundstart_template = /datum/map_template/shuttle/aux_base/default;
+	shuttle_id = "aux_base_zone";
 	width = 9
 	},
 /turf/open/floor/plating,
@@ -20570,7 +20570,7 @@
 	},
 /obj/structure/rack,
 /obj/item/clothing/under/costume/lobster,
-/obj/item/clothing/head/lobsterhat,
+/obj/item/clothing/head/costume/lobsterhat,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 1
@@ -20754,11 +20754,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
-"fWZ" = (
-/obj/machinery/light/small/directional/south,
-/obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating/airless,
-/area/station/maintenance/starboard/fore)
 "fXm" = (
 /obj/structure/table,
 /obj/effect/turf_decal/tile/neutral{
@@ -25654,7 +25649,7 @@
 	},
 /obj/item/storage/belt/utility,
 /obj/item/weldingtool/largetank,
-/obj/item/clothing/head/welding,
+/obj/item/clothing/head/utility/welding,
 /obj/machinery/firealarm/directional/east,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
@@ -27297,8 +27292,8 @@
 	dir = 8;
 	dwidth = 2;
 	height = 11;
-	shuttle_id = "ferry_home";
 	name = "port bay 2";
+	shuttle_id = "ferry_home";
 	width = 5
 	},
 /turf/open/space/basic,
@@ -28344,8 +28339,8 @@
 /area/station/service/hydroponics/garden)
 "iak" = (
 /obj/docking_port/stationary/random{
-	shuttle_id = "pod_3_lavaland";
-	name = "lavaland"
+	name = "lavaland";
+	shuttle_id = "pod_3_lavaland"
 	},
 /turf/open/space,
 /area/space/nearstation)
@@ -28528,15 +28523,15 @@
 /obj/item/clothing/suit/hazardvest,
 /obj/item/clothing/suit/hazardvest,
 /obj/item/clothing/suit/hazardvest,
-/obj/item/clothing/head/hardhat/orange{
+/obj/item/clothing/head/utility/hardhat/orange{
 	name = "protective hat";
 	pixel_y = 6
 	},
-/obj/item/clothing/head/hardhat/orange{
+/obj/item/clothing/head/utility/hardhat/orange{
 	name = "protective hat";
 	pixel_y = 6
 	},
-/obj/item/clothing/head/hardhat/orange{
+/obj/item/clothing/head/utility/hardhat/orange{
 	name = "protective hat";
 	pixel_y = 6
 	},
@@ -29859,12 +29854,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/station/commons/toilet/restrooms)
-"ius" = (
-/obj/structure/disposalpipe/segment,
-/obj/effect/turf_decal/sand/plating,
-/obj/structure/cable,
-/turf/open/floor/plating/airless,
-/area/station/maintenance/starboard/fore)
 "iuC" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -30326,11 +30315,11 @@
 /obj/structure/table,
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/iron/fifty,
-/obj/item/clothing/head/welding{
+/obj/item/clothing/head/utility/welding{
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/clothing/head/welding,
+/obj/item/clothing/head/utility/welding,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -32266,6 +32255,11 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
+"jaU" = (
+/obj/machinery/light/small/directional/south,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
 "jaW" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -32722,7 +32716,7 @@
 /area/station/service/chapel/funeral)
 "jhc" = (
 /obj/structure/table/bronze,
-/obj/item/clothing/head/bronze{
+/obj/item/clothing/head/costume/bronze{
 	pixel_x = 5;
 	pixel_y = 4
 	},
@@ -33278,7 +33272,7 @@
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
-/obj/item/clothing/head/chefhat{
+/obj/item/clothing/head/utility/chefhat{
 	pixel_x = -4;
 	pixel_y = 4
 	},
@@ -38528,7 +38522,7 @@
 /obj/effect/decal/cleanable/blood/gibs/old,
 /obj/effect/spawner/random/structure/crate,
 /mob/living/simple_animal/chicken{
-	atmos_requirements = list("min_oxy"=0,"max_oxy"=0,"min_tox"=0,"max_tox"=1,"min_co2"=0,"max_co2"=0,"min_n2"=0,"max_n2"=0);
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0);
 	desc = "A timeless classic.";
 	name = "Kentucky"
 	},
@@ -41229,8 +41223,8 @@
 "lHD" = (
 /obj/docking_port/stationary/random{
 	dir = 8;
-	shuttle_id = "pod_2_lavaland";
-	name = "lavaland"
+	name = "lavaland";
+	shuttle_id = "pod_2_lavaland"
 	},
 /turf/open/space,
 /area/space/nearstation)
@@ -41643,9 +41637,9 @@
 	dir = 4;
 	dwidth = 3;
 	height = 14;
-	shuttle_id = "arrival_stationary";
 	name = "kilo arrivals";
 	roundstart_template = /datum/map_template/shuttle/arrival/kilo;
+	shuttle_id = "arrival_stationary";
 	width = 7
 	},
 /turf/open/floor/plating/airless,
@@ -43070,7 +43064,7 @@
 /obj/structure/table/wood,
 /obj/machinery/light/small/directional/north,
 /obj/item/clothing/suit/toggle/suspenders,
-/obj/item/clothing/head/papersack/smiley,
+/obj/item/clothing/head/costume/papersack/smiley,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/port/fore)
@@ -44479,7 +44473,7 @@
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/storage/belt/utility,
-/obj/item/clothing/head/welding,
+/obj/item/clothing/head/utility/welding,
 /obj/item/clothing/glasses/welding,
 /obj/structure/noticeboard/directional/north,
 /turf/open/floor/iron/dark,
@@ -46547,7 +46541,7 @@
 	},
 /obj/item/storage/briefcase,
 /obj/item/clothing/neck/tie/red,
-/obj/item/clothing/head/bowler{
+/obj/item/clothing/head/hats/bowler{
 	pixel_y = 8
 	},
 /obj/item/cane,
@@ -47944,7 +47938,7 @@
 "nFN" = (
 /obj/machinery/igniter/incinerator_ordmix,
 /mob/living/simple_animal/chicken{
-	atmos_requirements = list("min_oxy"=0,"max_oxy"=0,"min_tox"=0,"max_tox"=1,"min_co2"=0,"max_co2"=0,"min_n2"=0,"max_n2"=0);
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0);
 	desc = "A timeless classic.";
 	name = "Kentucky"
 	},
@@ -51552,8 +51546,8 @@
 	dir = 8;
 	dwidth = 12;
 	height = 17;
-	shuttle_id = "syndicate_nw";
 	name = "northwest of station";
+	shuttle_id = "syndicate_nw";
 	width = 23
 	},
 /turf/open/space/basic,
@@ -51745,7 +51739,7 @@
 	pixel_x = -2;
 	pixel_y = 6
 	},
-/obj/item/clothing/head/welding{
+/obj/item/clothing/head/utility/welding{
 	pixel_y = 5
 	},
 /obj/item/crowbar/red,
@@ -61927,7 +61921,7 @@
 	},
 /obj/structure/table,
 /obj/item/storage/toolbox/mechanical,
-/obj/item/clothing/head/welding,
+/obj/item/clothing/head/utility/welding,
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/chemistry)
@@ -64152,7 +64146,7 @@
 	},
 /obj/item/reagent_containers/cup/glass/bottle/beer{
 	desc = "A station exclusive. Consumption may result in seizures, blindness, drunkenness, or even death.";
-	list_reagents = list(/datum/reagent/consumable/ethanol/thirteenloko=30);
+	list_reagents = list(/datum/reagent/consumable/ethanol/thirteenloko = 30);
 	name = "Kilo-Kocktail";
 	pixel_x = 5;
 	pixel_y = 5
@@ -67221,6 +67215,12 @@
 /obj/structure/sign/warning/secure_area,
 /turf/closed/wall/r_wall/rust,
 /area/station/engineering/supermatter/room)
+"tfi" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/cable,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
 "tfs" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
@@ -67416,8 +67416,8 @@
 	dir = 2;
 	dwidth = 11;
 	height = 22;
-	shuttle_id = "whiteship_home";
 	name = "SS13: Auxiliary Dock, Station-Fore";
+	shuttle_id = "whiteship_home";
 	width = 35
 	},
 /turf/open/space/basic,
@@ -72591,7 +72591,7 @@
 "uHc" = (
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/blood/old,
-/obj/item/clothing/head/that{
+/obj/item/clothing/head/hats/tophat{
 	pixel_x = 1;
 	pixel_y = 6
 	},
@@ -75110,8 +75110,8 @@
 "vsx" = (
 /obj/docking_port/stationary/random{
 	dir = 2;
-	shuttle_id = "pod_lavaland";
-	name = "lavaland"
+	name = "lavaland";
+	shuttle_id = "pod_lavaland"
 	},
 /turf/open/space,
 /area/space/nearstation)
@@ -76554,7 +76554,7 @@
 /turf/open/floor/engine/vacuum,
 /area/station/maintenance/disposal/incinerator)
 "vKp" = (
-/obj/item/clothing/head/cardborg,
+/obj/item/clothing/head/costume/cardborg,
 /obj/item/clothing/suit/costume/cardborg,
 /obj/structure/closet/cardboard/metal,
 /obj/machinery/airalarm/directional/east,
@@ -77966,7 +77966,7 @@
 /obj/machinery/light/small/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/clothing/neck/tie/red,
-/obj/item/clothing/head/bowler{
+/obj/item/clothing/head/hats/bowler{
 	pixel_x = -6;
 	pixel_y = 6
 	},
@@ -79361,8 +79361,8 @@
 "wxy" = (
 /obj/docking_port/stationary/random{
 	dir = 4;
-	shuttle_id = "pod_4_lavaland";
-	name = "lavaland"
+	name = "lavaland";
+	shuttle_id = "pod_4_lavaland"
 	},
 /obj/structure/lattice,
 /turf/open/space,
@@ -80464,7 +80464,7 @@
 	},
 /obj/item/poster/random_official,
 /obj/effect/turf_decal/stripes/corner,
-/obj/item/clothing/head/festive{
+/obj/item/clothing/head/costume/festive{
 	pixel_x = -4;
 	pixel_y = 6
 	},
@@ -84336,7 +84336,7 @@
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/storage/belt/utility,
-/obj/item/clothing/head/welding,
+/obj/item/clothing/head/utility/welding,
 /obj/item/clothing/glasses/welding,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/west,
@@ -120779,7 +120779,7 @@ aaa
 aaa
 aaa
 aeU
-fWZ
+jaU
 fvU
 oqa
 fvU
@@ -121036,7 +121036,7 @@ aaa
 aaa
 aca
 aji
-ius
+tfi
 udA
 xUP
 lRZ

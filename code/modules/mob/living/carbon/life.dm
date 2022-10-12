@@ -410,9 +410,6 @@
 		if(DT_PROB(2.5, delta_time))
 			AdjustSleeping(10 SECONDS)
 
-	if(silent)
-		silent = max(silent - (0.5 * delta_time), 0)
-
 /// Base carbon environment handler, adds natural stabilization
 /mob/living/carbon/handle_environment(datum/gas_mixture/environment, delta_time, times_fired)
 	var/areatemp = get_temperature(environment)

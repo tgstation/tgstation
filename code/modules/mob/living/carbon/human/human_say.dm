@@ -10,6 +10,9 @@
 	return ..()
 
 /mob/living/carbon/human/GetVoice()
+	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
+		return ("Unknown")
+
 	if(istype(wear_mask, /obj/item/clothing/mask/chameleon))
 		var/obj/item/clothing/mask/chameleon/V = wear_mask
 		if(V.voice_change && wear_id)
@@ -20,12 +23,7 @@
 				return real_name
 		else
 			return real_name
-	if(istype(wear_mask, /obj/item/clothing/mask/infiltrator))
-		var/obj/item/clothing/mask/infiltrator/V = wear_mask
-		if(V.voice_unknown)
-			return ("Unknown")
-		else
-			return real_name
+
 	if(mind)
 		var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
 		if(changeling?.mimicing)
@@ -33,14 +31,6 @@
 	if(GetSpecialVoice())
 		return GetSpecialVoice()
 	return real_name
-
-/mob/living/carbon/human/IsVocal()
-	// how do species that don't breathe talk? magic, that's what.
-	if(!HAS_TRAIT_FROM(src, TRAIT_NOBREATH, SPECIES_TRAIT) && !getorganslot(ORGAN_SLOT_LUNGS))
-		return FALSE
-	if(mind)
-		return !mind.miming
-	return TRUE
 
 /mob/living/carbon/human/proc/SetSpecialVoice(new_voice)
 	if(new_voice)

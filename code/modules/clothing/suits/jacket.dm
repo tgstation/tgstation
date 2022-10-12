@@ -56,12 +56,10 @@
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter, /obj/item/gun/ballistic/automatic/pistol, /obj/item/gun/ballistic/revolver, /obj/item/gun/ballistic/revolver/detective, /obj/item/radio)
 	species_exception = list(/datum/species/golem/bone) //bad to the bone
 
-/obj/item/clothing/suit/jacket/leather/overcoat
-	name = "leather overcoat"
-	desc = "That's a damn fine coat."
-	icon_state = "leathercoat"
-	body_parts_covered = CHEST|GROIN|ARMS|LEGS
-	cold_protection = CHEST|GROIN|ARMS|LEGS
+/obj/item/clothing/suit/jacket/leather/biker
+	name = "biker jacket"
+	desc = "You think I'm not even worth a single dollar, but I feel like a millionare."
+	icon_state = "leatherjacket_biker"
 
 /obj/item/clothing/suit/jacket/puffer
 	name = "puffer jacket"
