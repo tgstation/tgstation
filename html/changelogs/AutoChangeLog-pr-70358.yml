@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - qol: "Completing \"The Living Heart\" ritual with a replacement heart will restart a heart if it's not beating."

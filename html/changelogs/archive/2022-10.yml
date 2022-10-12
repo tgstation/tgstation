@@ -334,3 +334,48 @@
   - admin: VV dropdown removing "Tongue Tied" quirk actually removes the quirk
   arnociiroc:
   - balance: reduced shotgun dart reagent amount
+2022-10-12:
+  Enbyy:
+  - bugfix: fixed the medical.dmi having 2 dupe frames for the medical jumpsuit mob
+      sprite.
+  GoldenAlpharex:
+  - bugfix: Health scanners no longer show someone as missing lungs or a liver if
+      their species don't breathe or don't process chemicals, respectively.
+  JohnFulpWillard:
+  - balance: The Curator and Crystal PDA is now upgraded to have long-distance NTnet
+      connections, they are able to use their apps in space.
+  Melbert:
+  - rscadd: Having very low sanity (insane or crazy, the last two sanity levels) will
+      cause you to experience hallucinations rarely.
+  - admin: Removing RDS via the VV menu will actually remove the associated effects.
+  - qol: Completing "The Living Heart" ritual with a replacement heart will restart
+      a heart if it's not beating.
+  Rhials:
+  - bugfix: Tramstation security/toxins now have their own EOD closets. Icebox toxins
+      now has an EOD closet as well, in the nearby maintenance area.
+  Sealed101:
+  - bugfix: Fixed showcase microwaves lacking sprites
+  - bugfix: Fixed RnD Servers not dropping their components & completely vanishing
+      when deconstructed
+  ShizCalev:
+  - bugfix: Fixed a minor runtime when a temporary transit tube exits a loop through
+      a destroyed transit pipe.
+  - bugfix: Boxcutters now have inhands again.
+  Twaticus:
+  - imageadd: fixes previous sec resprite issues, replaces sec helmet and sec wintercoat
+      inhands, replaces sec helmet obj icon
+  coldud13:
+  - imageadd: fixed the holocarp guardian fishsticks icon
+  dragomagol:
+  - bugfix: the cargo department is once again coloured in the crew manifest
+  - spellcheck: replaced a death commando name
+  jlsnow301:
+  - bugfix: Fixed a random crash at the power management console.
+  necromanceranne:
+  - balance: You can put regal pipeguns into the suit storage of high-vis vests and
+      wet floor signs.
+  san7890:
+  - bugfix: On RuntimeStation, should you chance upon it, the emergency shuttle should
+      no longer collide by the with the circuits lab.
+  timothymtorres:
+  - qol: Add contextual screentips to jumpsuits

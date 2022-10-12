@@ -1,4 +1,0 @@
-author: "GoldenAlpharex"
-delete-after: True
-changes: 
-  - bugfix: "Health scanners no longer show someone as missing lungs or a liver if their species don't breathe or don't process chemicals, respectively."
