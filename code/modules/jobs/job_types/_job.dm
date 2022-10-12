@@ -155,6 +155,16 @@
 	if(!ishuman(spawned))
 		return
 
+	var/mob/living/carbon/human/spawned_human = spawned
+
+	// Look for PDA in belt or left pocket to update its ringtone based on our client's prefs.
+	var/obj/item/modular_computer/tablet/pda/pda = spawned_human.belt
+	if(!istype(pda))
+		pda = spawned_human.l_store
+
+	if(istype(pda))
+		pda.update_ringtone(player_client)
+
 	var/list/roundstart_experience
 
 	if(!config) //Needed for robots.
@@ -166,9 +176,8 @@
 		roundstart_experience = skills
 
 	if(roundstart_experience)
-		var/mob/living/carbon/human/experiencer = spawned
 		for(var/i in roundstart_experience)
-			experiencer.mind.adjust_experience(i, roundstart_experience[i], TRUE)
+			spawned_human.mind.adjust_experience(i, roundstart_experience[i], TRUE)
 
 /datum/job/proc/announce_job(mob/living/joining_mob)
 	if(head_announce)
