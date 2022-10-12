@@ -253,6 +253,8 @@
 	var/list/moving_movs = get_z_move_affected(z_move_flags)
 
 	for(var/atom/movable/movable as anything in moving_movs)
+		if(movable.anchored)
+			return
 		movable.currently_z_moving = currently_z_moving || CURRENTLY_Z_MOVING_GENERIC
 		movable.forceMove(target)
 		movable.set_currently_z_moving(FALSE, TRUE)
