@@ -305,8 +305,7 @@
 	playsound(get_turf(src),'sound/magic/fireball.ogg', 200, TRUE)
 	var/range = 20
 	var/delayFire = -1.0
-	var/list/stream_turfs = list()
-	stream_turfs = get_stream_turfs(target, range)
+	var/list/stream_turfs = get_stream_turfs(target, range)
 	for(var/turf/turf in stream_turfs)
 		delayFire += 1.5
 		addtimer(CALLBACK(src, .proc/dragon_fire_line, turf, length(stream_turfs), min(plasma, MAXIMUM_PLASMA_MOLES_RELEASED)), delayFire)
