@@ -276,7 +276,7 @@
 	consume_returns(matter_increase, damage_increase)
 	var/obj/machinery/power/supermatter_crystal/our_crystal = parent
 	if(!our_crystal.has_been_powered)
-		our_crystal.set_active(source = consumed_object)
+		our_crystal.log_activation(source = consumed_object)
 
 /datum/component/supermatter_crystal/proc/consume_returns(matter_increase = 0, damage_increase = 0)
 	if(consume_callback)
