@@ -48,23 +48,23 @@
 /json_savefile/proc/decode_line_value(line)
 	var/list_index = findlasttext(line, "list(")
 	while(list_index)
-		var/pos = list_index
-		while(copytext(line, pos, pos + 1) != ")")\
-			pos++
-		var/work = copytext(line, list_index + 5, pos)
+		var/target_char_index = list_index
+		while(copytext(line, target_char_index, target_char_index + 1) != ")")\
+			target_char_index++
+		var/work = copytext(line, list_index + 5, target_char_index)
 		var/finished = ""
 		if(findtext(work, " = "))
 			finished = "{"
 			for(var/entree in splittext(work, ","))
-				var/kvp = splittext(entree, " = ")
-				if(length(kvp)==1)
-					kvp += "null"
-				finished += "[kvp[1]]:[kvp[2]][SF_REPLACE_COMMA]"
+				var/key_value_pair = splittext(entree, " = ")
+				if(length(key_value_pair)==1)
+					key_value_pair += "null"
+				finished += "[key_value_pair[1]]:[key_value_pair[2]][SF_REPLACE_COMMA]"
 			finished = copytext(finished, 1, -length(SF_REPLACE_COMMA))
 			finished += "}"
 		else
 			finished = "\[" + replacetext(work, ",", SF_REPLACE_COMMA) + "\]"
-		line = copytext(line, 1, list_index) + finished + copytext(line, pos + 1)
+		line = copytext(line, 1, list_index) + finished + copytext(line, target_char_index + 1)
 		list_index = findlasttext(line, "list(")
 	return json_decode(replacetext(line, SF_REPLACE_COMMA, ","))
 
