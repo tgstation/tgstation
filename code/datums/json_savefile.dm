@@ -46,12 +46,12 @@
 	rustg_file_write(json_encode(tree), path)
 
 /json_savefile/proc/decode_line_value(line)
-	var/list_idx = findlasttext(line, "list(")
-	while(list_idx)
-		var/pos = list_idx
+	var/list_index = findlasttext(line, "list(")
+	while(list_index)
+		var/pos = list_index
 		while(copytext(line, pos, pos + 1) != ")")\
 			pos++
-		var/work = copytext(line, list_idx + 5, pos)
+		var/work = copytext(line, list_index + 5, pos)
 		var/finished = ""
 		if(findtext(work, " = "))
 			finished = "{"
@@ -64,14 +64,14 @@
 			finished += "}"
 		else
 			finished = "\[" + replacetext(work, ",", SF_REPLACE_COMMA) + "\]"
-		line = copytext(line, 1, list_idx) + finished + copytext(line, pos + 1)
-		list_idx = findlasttext(line, "list(")
+		line = copytext(line, 1, list_index) + finished + copytext(line, pos + 1)
+		list_index = findlasttext(line, "list(")
 	return json_decode(replacetext(line, SF_REPLACE_COMMA, ","))
 
-/json_savefile/proc/import_byond_savefile(savefile/sfile)
-	var/list/data = splittext(sfile.ExportText("/"), "\n")
-	var/list/sf_data = list()
-	var/list/region = sf_data
+/json_savefile/proc/import_byond_savefile(savefile/savefile)
+	var/list/data = splittext(savefile.ExportText("/"), "\n")
+	var/list/savefile_data = list()
+	var/list/region = savefile_data
 	var/tab_last
 	var/line_concat
 	var/concat_tab
@@ -120,7 +120,7 @@
 		else
 			region[header] = decode_line_value(line_value)
 		tab_last = tab
-	tree = sf_data
+	tree = savefile_data
 
 #undef SF_CUTOFF_FLAG
 #undef SF_REPLACE_COMMA
