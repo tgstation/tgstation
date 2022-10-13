@@ -23,7 +23,7 @@
 		return
 
 	message = tgui_input_text(owner, "What do you wish to whisper to [cast_on]?", "[src]")
-	if(QDELETED(src) || QDELETED(owner) || QDELETED(cast_on) || !can_cast_spell())
+	if(QDELETED(src) || QDELETED(owner) || QDELETED(cast_on) || !can_cast_spell() || owner.stat >= UNCONSCIOUS)
 		return . | SPELL_CANCEL_CAST
 
 	if(!message)
