@@ -32,6 +32,8 @@
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/jelly,
 	)
 
+	hud_icon = "species_ooze"
+
 /datum/species/jelly/on_species_loss(mob/living/carbon/old_jellyperson)
 	if(regenerate_limbs)
 		regenerate_limbs.Remove(old_jellyperson)

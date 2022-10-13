@@ -35,6 +35,8 @@
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/fly,
 	)
 
+	hud_icon = "species_fly"
+
 /datum/species/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, delta_time, times_fired)
 	if(chem.type == /datum/reagent/toxin/pestkiller)
 		H.adjustToxLoss(3 * REAGENTS_EFFECT_MULTIPLIER * delta_time)

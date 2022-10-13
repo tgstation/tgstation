@@ -53,6 +53,8 @@
 	var/special_name_chance = 5
 	var/owner //dobby is a free golem
 
+	hud_icon = "species_golem"
+
 /datum/species/golem/random_name(gender,unique,lastname)
 	var/golem_surname = pick(GLOB.golem_names)
 	// 3% chance that our golem has a human surname, because

@@ -45,6 +45,8 @@
 #define ANTAG_HUD "23"
 // for fans to identify pins
 #define FAN_HUD "24"
+// species overlay info, used in both med and sec huds
+#define SPECIES_HUD "25"
 
 //by default everything in the hud_list of an atom is an image
 //a value in hud_list with one of these will change that behavior

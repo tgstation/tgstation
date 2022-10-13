@@ -49,6 +49,8 @@
 	var/obj/effect/dummy/lighting_obj/ethereal_light
 	var/default_color
 
+	hud_icon = "species_glowy"
+
 
 
 /datum/species/ethereal/Destroy(force)

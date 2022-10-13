@@ -54,6 +54,8 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/lizard,
 	)
 
+	hud_icon = "species_lizard"
+
 /// Lizards are cold blooded and do not stabilize body temperature naturally
 /datum/species/lizard/body_temperature_core(mob/living/carbon/human/humi, delta_time, times_fired)
 	return

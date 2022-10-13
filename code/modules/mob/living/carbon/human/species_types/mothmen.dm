@@ -36,6 +36,8 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/moth,
 	)
 
+	hud_icon = "species_moth"
+
 /datum/species/moth/regenerate_organs(mob/living/carbon/C, datum/species/old_species, replace_current= TRUE, list/excluded_zones, visual_only)
 	. = ..()
 	if(ishuman(C))

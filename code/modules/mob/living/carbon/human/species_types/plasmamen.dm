@@ -54,6 +54,8 @@
 	/// If the bones themselves are burning clothes won't help you much
 	var/internal_fire = FALSE
 
+	hud_icon = "species_plasman"
+
 /datum/species/plasmaman/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
 	. = ..()
 	C.set_safe_hunger_level()

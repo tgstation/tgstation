@@ -40,6 +40,7 @@
 	check_sensors(H) ? add_atom_to_hud(H) : remove_atom_from_hud(H)
 
 /datum/atom_hud/data/human/medical/advanced
+	hud_icons = list(STATUS_HUD, HEALTH_HUD, SPECIES_HUD)
 
 /datum/atom_hud/data/human/security
 
@@ -509,3 +510,11 @@ Diagnostic HUDs!
 	var/image/holder = hud_list[DIAG_AIRLOCK_HUD]
 	holder.icon_state = "electrified"
 	set_hud_image_active(DIAG_AIRLOCK_HUD)
+
+// Species info!
+/mob/living/carbon/proc/update_species_hud()
+	var/image/holder = hud_list[SPECIES_HUD]
+
+	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
+	if(!skipface && dna?.species)
+		holder.icon_state = dna.species.hud_icon
