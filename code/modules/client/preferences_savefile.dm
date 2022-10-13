@@ -143,7 +143,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 /datum/preferences/proc/load_path(ckey,filename="preferences.json")
 	if(!ckey)
 		return
-	path = "data/player_saves/[ckey[1]]/[ckey]/[filename]"
+	// path = "data/player_saves/[ckey[1]]/[ckey]/[filename]"
+	path = "data/player_saves_json_testing/[ckey[1]]/[ckey]/[filename]"
 
 /datum/preferences/proc/load_preferences()
 	if(!path)
