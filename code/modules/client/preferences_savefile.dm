@@ -332,7 +332,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if (preference.type in value_cache)
 			write_preference(preference, preference.serialize(value_cache[preference.type]))
 
-	save_data["version"] = SAVEFILE_VERSION_MAX //load_character will sanitize any bad data, so assume up-to-date.)
+	save_data["version"] = SAVEFILE_VERSION_MAX //load_character will sanitize any bad data, so assume up-to-date.
 
 	// This is the version when the random security department was removed.
 	// When the minimum is higher than that version, it's impossible for someone to have the "Random" department.
