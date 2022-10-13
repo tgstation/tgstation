@@ -28,6 +28,16 @@
 /obj/structure/stairs/west
 	dir = WEST
 
+/obj/structure/stairs/wood
+	icon_state = "stairs_wood"
+
+/obj/structure/stairs/stone
+	icon_state = "stairs_stone"
+
+/obj/structure/stairs/material
+	icon_state = "stairs_material"
+	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+
 /obj/structure/stairs/Initialize(mapload)
 	GLOB.stairs += src
 	if(force_open_above)
@@ -77,10 +87,6 @@
 /obj/structure/stairs/Cross(atom/movable/AM)
 	if(isTerminator() && (get_dir(src, AM) == dir))
 		return FALSE
-	return ..()
-
-/obj/structure/stairs/update_icon_state()
-	icon_state = "stairs[isTerminator() ? "_t" : null]"
 	return ..()
 
 /obj/structure/stairs/proc/stair_ascend(atom/movable/climber)
