@@ -5,56 +5,53 @@ import { Button, Collapsible, Icon, Input, Section, Stack } from '../components'
 import { Window } from '../layouts';
 import { flow } from 'common/fp';
 
-type AntagGroup = [string, Observable[]];
+type AntagGroup = [string, Antags];
+
+type Antags = Array<Observable & { antag: string }>;
 
 type Data = {
-  alive: Observable[];
-  antagonists: Observable[];
-  dead: Observable[];
-  ghosts: Observable[];
-  misc: Observable[];
-  npcs: Observable[];
+  alive: POIs;
+  antagonists: Antags;
+  dead: POIs;
+  ghosts: POIs;
+  misc: POIs;
+  npcs: POIs;
 };
 
 type Observable = {
   ref: string;
-  antag?: string;
   name: string;
   orbiters?: number;
 };
 
-type SectionProps = {
-  color?: string;
-  section: Observable[];
-  title: string;
-};
+type POIs = Array<Observable>;
 
-const ANTAG2COLOR = {
-  'Abductors': 'pink',
-  'Ash Walkers': 'olive',
-  'Biohazards': 'brown',
-  'CentCom': 'teal',
-} as const;
+enum ANTAG2COLOR {
+  'Abductors' = 'pink',
+  'Ash Walkers' = 'olive',
+  'Biohazards' = 'brown',
+  'CentCom' = 'teal',
+}
 
-const ANTAG2GROUP = {
-  'Abductor Agent': 'Abductors',
-  'Abductor Scientist': 'Abductors',
-  'Ash Walker': 'Ash Walkers',
-  'Blob': 'Biohazards',
-  'Sentient Disease': 'Biohazards',
-  'CentCom Commander': 'CentCom',
-  'CentCom Head Intern': 'CentCom',
-  'CentCom Intern': 'CentCom',
-  'CentCom Official': 'CentCom',
-  'Central Command': 'CentCom',
-  'Clown Operative': 'Clown Operatives',
-  'Clown Operative Leader': 'Clown Operatives',
-  'Nuclear Operative': 'Nuclear Operatives',
-  'Nuclear Operative Leader': 'Nuclear Operatives',
-  'Space Wizard': 'Wizard Federation',
-  'Wizard Apprentice': 'Wizard Federation',
-  'Wizard Minion': 'Wizard Federation',
-} as const;
+enum ANTAG2GROUP {
+  'Abductor Agent' = 'Abductors',
+  'Abductor Scientist' = 'Abductors',
+  'Ash Walker' = 'Ash Walkers',
+  'Blob' = 'Biohazards',
+  'Sentient Disease' = 'Biohazards',
+  'CentCom Commander' = 'CentCom',
+  'CentCom Head Intern' = 'CentCom',
+  'CentCom Intern' = 'CentCom',
+  'CentCom Official' = 'CentCom',
+  'Central Command' = 'CentCom',
+  'Clown Operative' = 'Clown Operatives',
+  'Clown Operative Leader' = 'Clown Operatives',
+  'Nuclear Operative' = 'Nuclear Operatives',
+  'Nuclear Operative Leader' = 'Nuclear Operatives',
+  'Space Wizard' = 'Wizard Federation',
+  'Wizard Apprentice' = 'Wizard Federation',
+  'Wizard Minion' = 'Wizard Federation',
+}
 
 enum THREAT {
   None,
@@ -103,7 +100,7 @@ const ObservableSearch = (props, context) => {
     'searchQuery',
     ''
   );
-  /** Gets a list of Observable[], then filters the most relevant to orbit */
+  /** Gets a list of POIs, then filters the most relevant to orbit */
   const orbitMostRelevant = (searchQuery: string): void => {
     /** Returns the most orbited observable that matches the search. */
     const mostRelevant: Observable = flow([
@@ -113,7 +110,7 @@ const ObservableSearch = (props, context) => {
       ),
       // Sorts descending by orbiters
       sortBy<Observable>((poi) => -(poi.orbiters || 0)),
-      // Makes a single Observable[] list for an easy search
+      // Makes a single POIs list for an easy search
     ])([alive, antagonists, dead, ghosts, misc, npcs].flat())[0];
     if (mostRelevant !== undefined) {
       act('orbit', {
@@ -180,7 +177,7 @@ const ObservableContent = (props, context) => {
     misc = [],
     npcs = [],
   } = data;
-  let collatedAntagonists: AntagGroup[] = [];
+  let collatedAntagonists: Array<AntagGroup> = [];
   if (antagonists.length) {
     collatedAntagonists = collateAntagonists(antagonists);
   }
@@ -210,7 +207,14 @@ const ObservableContent = (props, context) => {
  * Displays a collapsible with a map of observable items.
  * Filters the results if there is a provided search query.
  */
-const ObservableSection = (props: SectionProps, context) => {
+const ObservableSection = (
+  props: {
+    color?: string;
+    section: POIs;
+    title: string;
+  },
+  context
+) => {
   const { color = 'grey', section = [], title } = props;
   if (!section.length) {
     return null;
@@ -220,7 +224,7 @@ const ObservableSection = (props: SectionProps, context) => {
     'searchQuery',
     ''
   );
-  const filteredSection: Observable[] = flow([
+  const filteredSection: POIs = flow([
     filter<Observable>((poi) =>
       poi.name?.toLowerCase().includes(searchQuery?.toLowerCase())
     ),
@@ -283,17 +287,18 @@ const ObservableItem = (
  * Some antags are grouped together lest they be listed separately,
  * ie: Nuclear Operatives. See: ANTAG_GROUPS.
  */
-const collateAntagonists = (antagonists: Observable[]): AntagGroup[] => {
-  const collatedAntagonists = {};
-  for (const antagonist of antagonists) {
-    const { antag } = antagonist;
-    const resolvedName = ANTAG2GROUP[antag!] || antag;
-    if (collatedAntagonists[resolvedName] === undefined) {
-      collatedAntagonists[resolvedName] = [];
-    }
-    collatedAntagonists[resolvedName].push(antagonist);
-  }
-  const sortedAntagonists = sortBy<AntagGroup>((antagonist) => antagonist[0])(
+const collateAntagonists = (antagonists: Antags) => {
+  const collatedAntagonists = new Map<string, Antags>();
+  antagonists.map((player) => {
+    const { antag } = player;
+    const resolvedName: string = ANTAG2GROUP[antag] || antag;
+    collatedAntagonists.set(resolvedName, [
+      // If the group already exists, add the player to it
+      ...(collatedAntagonists.get(resolvedName) || []),
+      player,
+    ]);
+  });
+  const sortedAntagonists = sortBy<AntagGroup>(([key]) => key)(
     Object.entries(collatedAntagonists)
   );
 
@@ -301,7 +306,7 @@ const collateAntagonists = (antagonists: Observable[]): AntagGroup[] => {
 };
 
 /** Takes the amount of orbiters and returns some style options */
-const getThreat = (orbiters: number): THREAT => {
+const getThreat = (orbiters: number) => {
   if (!orbiters || orbiters <= 2) {
     return THREAT.None;
   } else if (orbiters === 3) {
