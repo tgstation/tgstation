@@ -169,12 +169,12 @@
 /obj/machinery/computer/secure_data/proc/can_hack(mob/living/hacker, feedback = FALSE)
 	if(machine_stat & (NOPOWER|BROKEN))
 		if(feedback && hacker)
-			balloon_alert(hacker, "can't hack this console!")
+			balloon_alert(hacker, "can't hack!")
 		return FALSE
 	var/area/console_area = get_area(src)
 	if(!console_area || !(console_area.area_flags & VALID_TERRITORY))
 		if(feedback && hacker)
-			balloon_alert(hacker, "signal too weak, can't hack here!")
+			balloon_alert(hacker, "signal too weak!")
 		return FALSE
 	return TRUE
 
