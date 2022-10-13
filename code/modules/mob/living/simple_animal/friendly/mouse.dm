@@ -94,7 +94,7 @@
 		var/turf/open/floor/position = get_turf(src)
 		if(istype(position) && position.underfloor_accessibility >= UNDERFLOOR_INTERACTABLE)
 			var/obj/structure/cable/wire = locate() in position
-			if(wire && cable_chew_probability())
+			if(wire && should_chew_cable())
 				var/powered = wire.avail()
 				if(powered && !HAS_TRAIT(src, TRAIT_SHOCKIMMUNE))
 					visible_message(span_warning("[src] chews through the [wire]. It's toast!"))
@@ -117,7 +117,7 @@
 		return
 
 /// Proc to pass the probability of a mouse chewing on a wire to handle_automated_action. Overriden on applicable subtypes.
-/mob/living/simple_animal/mouse/proc/cable_chew_probability()
+/mob/living/simple_animal/mouse/proc/should_chew_cable()
 	return prob(15)
 
 /mob/living/simple_animal/mouse/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
@@ -200,7 +200,7 @@
 /// Subtype that only exists in tests, it fucking loves eating cables.
 /mob/living/simple_animal/mouse/cable_lover
 
-/mob/living/simple_animal/mouse/cable_lover/cable_chew_probability()
+/mob/living/simple_animal/mouse/cable_lover/should_chew_cable()
 	return TRUE // Always chew.
 
 /obj/item/food/deadmouse
