@@ -152,8 +152,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		return FALSE
 
 	savefile = new /json_savefile(path)
-	savefile.Load()
-	var/needs_update = save_data_needs_update(savefile.tree)
+	var/needs_update = save_data_needs_update(savefile.get_entry())
 	if(needs_update == -2) //fatal, can't load any data
 		var/bacpath = "[path].updatebac" //todo: if the savefile version is higher then the server, check the backup, and give the player a prompt to load the backup
 		if (fexists(bacpath))
@@ -164,19 +163,19 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	apply_all_client_preferences()
 
 	//general preferences
-	lastchangelog = savefile.Get("lastchangelog")
-	be_special = savefile.Get("be_special")
-	default_slot = savefile.Get("default_slot")
-	chat_toggles = savefile.Get("chat_toggles")
-	toggles = savefile.Get("toggles")
-	ignoring = savefile.Get("ignoring")
+	lastchangelog = savefile.get_entry("lastchangelog")
+	be_special = savefile.get_entry("be_special")
+	default_slot = savefile.get_entry("default_slot")
+	chat_toggles = savefile.get_entry("chat_toggles")
+	toggles = savefile.get_entry("toggles")
+	ignoring = savefile.get_entry("ignoring")
 
 	// OOC commendations
-	hearted_until = savefile.Get("hearted_until")
+	hearted_until = savefile.get_entry("hearted_until")
 	if(hearted_until > world.realtime)
 		hearted = TRUE
 	//favorite outfits
-	favorite_outfits = savefile.Get("favorite_outfits")
+	favorite_outfits = savefile.get_entry("favorite_outfits")
 
 	var/list/parsed_favs = list()
 	for(var/typetext in favorite_outfits)
@@ -186,7 +185,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	favorite_outfits = unique_list(parsed_favs)
 
 	// Custom hotkeys
-	key_bindings = savefile.Get("key_bindings")
+	key_bindings = savefile.get_entry("key_bindings")
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -211,7 +210,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		var/old_default_slot = default_slot
 		var/old_max_save_slots = max_save_slots
 
-		for (var/slot in savefile.tree) //but first, update all current character slots.
+		for (var/slot in savefile.get_entry()) //but first, update all current character slots.
 			if (copytext(slot, 1, 10) != "character")
 				continue
 			var/slotnum = text2num(copytext(slot, 10))
@@ -228,7 +227,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	return TRUE
 
 /datum/preferences/proc/save_preferences()
-	savefile.Set("version", SAVEFILE_VERSION_MAX) //updates (or failing that the sanity checks) will ensure data is not invalid at load. Assume up-to-date
+	savefile.set_entry("version", SAVEFILE_VERSION_MAX) //updates (or failing that the sanity checks) will ensure data is not invalid at load. Assume up-to-date
 
 	for (var/preference_type in GLOB.preference_entries)
 		var/datum/preference/preference = GLOB.preference_entries[preference_type]
@@ -243,7 +242,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if (preference_type in value_cache)
 			write_preference(preference, preference.serialize(value_cache[preference_type]))
 
-	savefile.Save()
+	savefile.save()
 	return TRUE
 
 /datum/preferences/proc/load_character(slot)
@@ -254,10 +253,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	slot = sanitize_integer(slot, 1, max_save_slots, initial(default_slot))
 	if(slot != default_slot)
 		default_slot = slot
-		savefile.Set("default_slot", slot)
+		savefile.set_entry("default_slot", slot)
 
 	var/tree_key = "character[slot]"
-	var/list/save_data = savefile.Get(tree_key)
+	var/list/save_data = savefile.get_entry(tree_key)
 	var/needs_update = save_data_needs_update(save_data)
 	if(needs_update == -2) //fatal, can't load any data
 		return FALSE
@@ -304,9 +303,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(!path)
 		return FALSE
 	var/tree_key = "character[default_slot]"
-	if(!(tree_key in savefile.tree))
-		savefile.tree[tree_key] = list()
-	var/save_data = savefile.Get(tree_key)
+	if(!(tree_key in savefile.get_entry()))
+		savefile.set_entry(tree_key, list())
+	var/save_data = savefile.get_entry(tree_key)
 
 	for (var/datum/preference/preference as anything in get_preferences_in_priority_order())
 		if (preference.savefile_identifier != PREFERENCE_CHARACTER)

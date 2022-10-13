@@ -217,9 +217,9 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 	switch (savefile_identifier)
 		if (PREFERENCE_CHARACTER)
-			return savefile.Get("character[default_slot]")
+			return savefile.get_entry("character[default_slot]")
 		if (PREFERENCE_PLAYER)
-			return savefile.tree
+			return savefile.get_entry()
 		else
 			CRASH("Unknown savefile identifier [savefile_identifier]")
 

@@ -379,7 +379,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			continue
 
 		var/tree_key = "character[index]"
-		var/save_data = savefile.Get(tree_key)
+		var/save_data = savefile.get_entry(tree_key)
 		var/name = save_data?["real_name"]
 
 		if (isnull(name))

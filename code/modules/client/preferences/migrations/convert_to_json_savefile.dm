@@ -4,7 +4,7 @@
 	load_path(parent.ckey)
 	if(!fexists(old_path))
 		return
-	var/json_savefile/jsf = new(path)
-	jsf.Import(new /savefile(old_path))
-	jsf.Save()
+	var/json_savefile/json_savefile = new(path)
+	json_savefile.import_byond_savefile(new /savefile(old_path))
+	json_savefile.save()
 	return TRUE

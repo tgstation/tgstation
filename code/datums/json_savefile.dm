@@ -8,31 +8,29 @@
 
 /json_savefile/New(path)
 	src.path = path
-	src.tree = list()
+	tree = list()
 	if(fexists(path))
-		Load()
+		load()
 
-/json_savefile/Destroy(force, ...)
-	tree.Cut()
-	return ..()
-
-/json_savefile/proc/Get(key, default_value)
+/json_savefile/proc/get_entry(key, default_value)
+	if(!key)
+		return tree
 	return (key in tree) ? tree[key] : default_value
 
-/json_savefile/proc/Set(key, value)
+/json_savefile/proc/set_entry(key, value)
 	tree[key] = value
 	if(auto_save)
-		Save()
+		save()
 
-/json_savefile/proc/Clear(key)
+/json_savefile/proc/clear(key)
 	if(key)
 		tree -= key
 	else
 		tree.Cut()
 	if(auto_save)
-		Save()
+		save()
 
-/json_savefile/proc/Load()
+/json_savefile/proc/load()
 	if(!fexists(path))
 		return FALSE
 	try
@@ -42,19 +40,18 @@
 		stack_trace("failed to load json savefile: [err]")
 		return FALSE
 
-/json_savefile/proc/Save()
+/json_savefile/proc/save()
 	if(fexists(path))
 		fdel(path)
 	text2file(json_encode(tree), path)
 
 /json_savefile/proc/decode_line_value(line)
-	. = line
 	var/list_idx = findlasttext(line, "list(")
 	while(list_idx)
 		var/pos = list_idx
-		while(copytext(., pos, pos + 1) != ")")\
+		while(copytext(line, pos, pos + 1) != ")")\
 			pos++
-		var/work = copytext(., list_idx + 5, pos)
+		var/work = copytext(line, list_idx + 5, pos)
 		var/finished = ""
 		if(findtext(work, " = "))
 			finished = "{"
@@ -67,11 +64,11 @@
 			finished += "}"
 		else
 			finished = "\[" + replacetext(work, ",", SF_REPLACE_COMMA) + "\]"
-		. = copytext(., 1, list_idx) + finished + copytext(., pos + 1)
-		list_idx = findlasttext(., "list(")
-	return json_decode(replacetext(., SF_REPLACE_COMMA, ","))
+		line = copytext(line, 1, list_idx) + finished + copytext(line, pos + 1)
+		list_idx = findlasttext(line, "list(")
+	return json_decode(replacetext(line, SF_REPLACE_COMMA, ","))
 
-/json_savefile/proc/Import(savefile/sfile)
+/json_savefile/proc/import_byond_savefile(savefile/sfile)
 	var/list/data = splittext(sfile.ExportText("/"), "\n")
 	var/list/sf_data = list()
 	var/list/region = sf_data

@@ -27,11 +27,8 @@
 	test_savefile["basic_list"] << basic_list
 	test_savefile["assoc_list"] << assoc_list
 
-	test_savefile.cd = "/v1"
-	test_savefile["var_string"] << var_string
-
 	test_savefile.cd = "/v1/v2"
-	test_savefile["var_number"] << var_number
+	test_savefile["var_string"] << var_string
 
 /datum/unit_test/json_savefiles/Destroy()
 	qdel(test_savefile)
@@ -40,18 +37,18 @@
 
 /datum/unit_test/json_savefiles/Run()
 	// first, we import the file to json
-	json_savefile.Import(test_savefile)
+	json_savefile.import_byond_savefile(test_savefile)
 
 	// now we seperate out the different values
 	var/byond_basic_list = json_encode(basic_list)
-	var/json_basic_list json_encode(json_savefile.Get("basic_list"))
+	var/json_basic_list = json_encode(json_savefile.get_entry("basic_list"))
 
 	var/byond_assoc_list = json_encode(assoc_list)
-	var/json_assoc_list json_encode(json_savefile.Get("assoc_list"))
+	var/json_assoc_list = json_encode(json_savefile.get_entry("assoc_list"))
 
 	// Now we check to ensure dir traversal is working as intended
 	// we are expecting v1 -> v2 -> var_string
-	var/dir_v1 = json_savefile.Get("v1")
+	var/dir_v1 = json_savefile.get_entry("v1")
 	var/dir_v2 = dir_v1?["v2"]
 	var/dir_string = dir_v1?["var_string"]
 
