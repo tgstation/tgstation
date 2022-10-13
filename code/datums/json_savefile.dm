@@ -43,7 +43,7 @@
 /json_savefile/proc/save()
 	if(fexists(path))
 		fdel(path)
-	text2file(json_encode(tree), path)
+	rustg_file_write(json_encode(tree), path)
 
 /json_savefile/proc/decode_line_value(line)
 	var/list_idx = findlasttext(line, "list(")
