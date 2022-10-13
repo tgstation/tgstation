@@ -368,6 +368,7 @@
 	return ..()
 
 /obj/item/pen/screwdriver/proc/toggle_screwdriver(mob/user, active)
+	SIGNAL_HANDLER
 	extended = active
 	if(user)
 		balloon_alert(user, "[extended ? "extended" : "retracted"]!")
