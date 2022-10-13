@@ -146,9 +146,9 @@
 
 	cell.update_appearance()
 	cell.forceMove(get_turf(src))
+	balloon_alert(user, "removed [cell]")
 	cell = null
 	tool.play_tool_sound(src, 50)
-	to_chat(user, span_notice("You remove the cell from [src]."))
 	update_power()
 	return TRUE
 
