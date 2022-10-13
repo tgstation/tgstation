@@ -44,5 +44,5 @@
 		TEST_FAIL("assoc list was not converted correctly")
 	if(var_string != json_savefile.Get("v1")?["var_string"])
 		TEST_FAIL("var_string was not imported correctly")
-	if(var_number != json_savefile.Get("v1")?["v2"]/["var_number"])
+	if(var_number != json_savefile.Get("v1")?["v2"]?["var_number"])
 		TEST_FAIL("var_number was not imported correctly")
