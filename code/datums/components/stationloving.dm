@@ -122,12 +122,11 @@
 
 	var/turf/current_turf = get_turf(parent)
 
-	if(inform_admins && force)
+	if(force && inform_admins)
 		message_admins("[parent] has been !!force deleted!! in [ADMIN_VERBOSEJMP(current_turf)].")
 		log_game("[parent] has been !!force deleted!! in [loc_name(current_turf)].")
 
 	if(force || allow_item_destruction)
-		UnregisterSignal(parent, list(COMSIG_MOVABLE_PRE_MOVE, COMSIG_MOVABLE_SECLUDED_LOCATION))
 		return FALSE
 
 	var/turf/new_turf = relocate()
