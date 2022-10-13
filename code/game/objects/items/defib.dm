@@ -22,6 +22,7 @@
 	var/on = FALSE //if the paddles are equipped (1) or on the defib (0)
 	var/safety = TRUE //if you can zap people with the defibs on harm mode
 	var/powered = FALSE //if there's a cell in the defib with enough power for a revive, blocks paddles from reviving otherwise
+	var/cell_removable = TRUE //Can the cell be removed?
 	var/obj/item/shockpaddles/paddles
 	var/obj/item/stock_parts/cell/high/cell
 	var/combat = FALSE //if true, revive through space suits, allow for combat shocking
@@ -53,6 +54,8 @@
 
 /obj/item/defibrillator/examine(mob/user)
 	. = ..()
+	if(!cell_removable)
+		return
 	if(cell)
 		. += span_notice("Use a screwdriver to remove the cell.")
 	else
@@ -132,13 +135,16 @@
 			M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 
 /obj/item/defibrillator/screwdriver_act(mob/living/user, obj/item/tool)
-	if(cell)
-		cell.update_appearance()
-		cell.forceMove(get_turf(src))
-		cell = null
-		tool.play_tool_sound(src, 50)
-		to_chat(user, span_notice("You remove the cell from [src]."))
-		update_power()
+	if(!(cell && cell_removable))
+		return FALSE
+
+	cell.update_appearance()
+	cell.forceMove(get_turf(src))
+	cell = null
+	tool.play_tool_sound(src, 50)
+	to_chat(user, span_notice("You remove the cell from [src]."))
+	update_power()
+	return TRUE
 
 /obj/item/defibrillator/attackby(obj/item/W, mob/user, params)
 	if(W == paddles)
@@ -300,6 +306,9 @@
 	paddle_state = "defibcombat-paddles"
 	powered_state = null
 	emagged_state = null
+
+/obj/item/defibrillator/compact/combat/loaded
+	cell_removable = FALSE // Don't let people just have an infinite power cell
 
 /obj/item/defibrillator/compact/combat/loaded/Initialize(mapload)
 	. = ..()
