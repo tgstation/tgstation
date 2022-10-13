@@ -82,7 +82,7 @@
 		virus_candidates += list(/datum/disease/beesease, /datum/disease/brainrot, /datum/disease/fluspanish)
 
 		//The wacky ones
-		virus_candidates += list(/datum/disease/dnaspread, /datum/disease/magnitis, /datum/disease/anxiety)
+		virus_candidates += list(/datum/disease/dnaspread, /datum/disease/magnitis, /datum/disease/anxiety, /datum/disease/pierrot_throat)
 
 		//The rest of the diseases either aren't conventional "diseases" or are too unique/extreme to be considered for a normal event
 		virus_type = pick(virus_candidates)
