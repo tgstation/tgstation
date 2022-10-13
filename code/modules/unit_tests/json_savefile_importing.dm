@@ -1,3 +1,7 @@
+/**
+ * The job of this unit test is to ensure that save files are correctly imported from BYOND to JSON
+ * Its a rather convoluted process and so this test ensures that something didnt fucking up somewhere
+ */
 /datum/unit_test/json_savefiles
 	var/savefile/test_savefile
 	var/json_savefile/json_savefile
@@ -5,7 +9,6 @@
 	var/list/basic_list
 	var/list/assoc_list
 	var/var_string
-	var/var_number
 
 /datum/unit_test/json_savefiles/New()
 	var/path_sfile = "data/temp.sav"
@@ -17,7 +20,6 @@
 	test_savefile = new /savefile(path_sfile)
 	json_savefile = new /json_savefile(path_jfile)
 
-	var_number = rand()
 	var_string = random_nukecode()
 	basic_list = list(rand(), rand(), rand(), "3", "6")
 	assoc_list = list("2" = rand(), "4" = "3", "341" = "15134123")
@@ -37,12 +39,22 @@
 	return ..()
 
 /datum/unit_test/json_savefiles/Run()
+	// first, we import the file to json
 	json_savefile.Import(test_savefile)
-	if(json_encode(basic_list) != json_encode(json_savefile.Get("basic_list")))
-		TEST_FAIL("basic_list was not converted correctly")
-	if(json_encode(assoc_list) != json_encode(json_savefile.Get("assoc_list")))
-		TEST_FAIL("assoc list was not converted correctly")
-	if(var_string != json_savefile.Get("v1")?["var_string"])
-		TEST_FAIL("var_string was not imported correctly")
-	if(var_number != json_savefile.Get("v1")?["v2"]?["var_number"])
-		TEST_FAIL("var_number was not imported correctly")
+
+	// now we seperate out the different values
+	var/byond_basic_list = json_encode(basic_list)
+	var/json_basic_list json_encode(json_savefile.Get("basic_list"))
+
+	var/byond_assoc_list = json_encode(assoc_list)
+	var/json_assoc_list json_encode(json_savefile.Get("assoc_list"))
+
+	// Now we check to ensure dir traversal is working as intended
+	// we are expecting v1 -> v2 -> var_string
+	var/dir_v1 = json_savefile.Get("v1")
+	var/dir_v2 = dir_v1?["v2"]
+	var/dir_string = dir_v1?["var_string"]
+
+	TEST_ASSERT_EQUAL(byond_basic_list, json_basic_list, "didn't convert basic list correctly")
+	TEST_ASSERT_EQUAL(byond_assoc_list, json_assoc_list, "didn't convert associative list correctly")
+	TEST_ASSERT_EQUAL(dir_string, var_string, "didn't traverse dirs correctly")
