@@ -195,7 +195,7 @@
 /// Monster core which is reusable when implanted
 /obj/item/organ/internal/monster_core/reusable
 	/// How long between activations when implanted?
-	var/internal_use_cooldown = 5 MINUTES
+	var/internal_use_cooldown = 3 MINUTES
 
 /obj/item/organ/internal/monster_core/reusable/setup_internal_use_action()
 	use_internal = new /datum/action/item_action/organ_action/cooldown(src, internal_use_cooldown)

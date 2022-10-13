@@ -8,7 +8,6 @@
 	desc_preserved = "A lobstrosity's engorged adrenal gland. It is preserved, allowing you to use it for a burst of speed whenever you need it."
 	desc_inert = "A lobstrosity's adrenal gland. It is all shrivelled up."
 	user_status = /datum/status_effect/lobster_rush
-	internal_use_cooldown = 3 MINUTES
 
 #define HEALTH_DANGER_ZONE 30
 
