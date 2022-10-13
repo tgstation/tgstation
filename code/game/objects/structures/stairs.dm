@@ -212,44 +212,42 @@
 	qdel(src)
 
 /obj/structure/stairs_frame/attackby(obj/item/attacked_by, mob/user, params)
-	if(!anchored)
-		if(isstack(attacked_by))
-			user.balloon_alert(user, "secure frame first")
-			return TRUE
+	if(!isstack(attacked_by))
 		return ..()
-	if(isstack(attacked_by))
-		var/obj/item/stack/material = attacked_by
-		if(material.stairs_type)
-			if(material.get_amount() < 10)
-				to_chat(user, span_warning("You need ten [material.name] sheets to do this!"))
-				return
-			if(locate(/obj/structure/stairs) in loc)
-				to_chat(user, span_warning("There's already stairs built here!"))
-				return
-			to_chat(user, span_notice("You start adding [material] to [src]..."))
-			if(!do_after(user, 10 SECONDS, target = src) || !material.use(10) || (locate(/obj/structure/table) in loc))
-				return
-			make_new_stairs(material.stairs_type)
-		else if(istype(material, /obj/item/stack/sheet))
-			if(material.get_amount() < 10)
-				to_chat(user, span_warning("You need ten sheets to do this!"))
-				return
-			if(locate(/obj/structure/stairs) in loc)
-				to_chat(user, span_warning("There's already stairs built here!"))
-				return
-			to_chat(user, span_notice("You start adding [material] to [src]..."))
-			if(!do_after(user, 10 SECONDS, target = src) || !material.use(10) || (locate(/obj/structure/table) in loc))
-				return
-			var/list/material_list = list()
-			if(material.material_type)
-				material_list[material.material_type] = MINERAL_MATERIAL_AMOUNT * 10
-			make_new_stairs(/obj/structure/stairs/material, material_list)
+	if(!anchored)
+		user.balloon_alert(user, "secure frame first")
 		return TRUE
-	return ..()
+	var/obj/item/stack/material = attacked_by
+	if(material.stairs_type)
+		if(material.get_amount() < 10)
+			to_chat(user, span_warning("You need ten [material.name] sheets to do this!"))
+			return
+		if(locate(/obj/structure/stairs) in loc)
+			to_chat(user, span_warning("There's already stairs built here!"))
+			return
+		to_chat(user, span_notice("You start adding [material] to [src]..."))
+		if(!do_after(user, 10 SECONDS, target = src) || !material.use(10) || (locate(/obj/structure/table) in loc))
+			return
+		make_new_stairs(material.stairs_type)
+	else if(istype(material, /obj/item/stack/sheet))
+		if(material.get_amount() < 10)
+			to_chat(user, span_warning("You need ten sheets to do this!"))
+			return
+		if(locate(/obj/structure/stairs) in loc)
+			to_chat(user, span_warning("There's already stairs built here!"))
+			return
+		to_chat(user, span_notice("You start adding [material] to [src]..."))
+		if(!do_after(user, 10 SECONDS, target = src) || !material.use(10) || (locate(/obj/structure/table) in loc))
+			return
+		var/list/material_list = list()
+		if(material.material_type)
+			material_list[material.material_type] = MINERAL_MATERIAL_AMOUNT * 10
+		make_new_stairs(/obj/structure/stairs/material, material_list)
+	return TRUE
 
 /obj/structure/stairs_frame/proc/make_new_stairs(stairs_type, custom_materials)
 	var/obj/structure/stairs/new_stairs = new stairs_type(loc)
-	new_stairs.dir = dir
+	new_stairs.setDir(dir)
 	if(custom_materials)
 		new_stairs.set_custom_materials(custom_materials)
 	qdel(src)
