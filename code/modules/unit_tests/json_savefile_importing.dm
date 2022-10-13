@@ -2,7 +2,7 @@
  * The job of this unit test is to ensure that save files are correctly imported from BYOND to JSON
  * Its a rather convoluted process and so this test ensures that something didnt fucking up somewhere
  */
-/datum/unit_test/datum/json_savefiles
+/datum/unit_test/json_savefiles
 	var/savefile/test_savefile
 	var/datum/json_savefile/json_savefile
 
@@ -10,7 +10,7 @@
 	var/list/assoc_list
 	var/var_string
 
-/datum/unit_test/datum/json_savefiles/New()
+/datum/unit_test/json_savefiles/New()
 	var/path_sfile = "data/temp.sav"
 	var/path_jfile = "data/temp.json"
 	if(fexists(path_sfile))
@@ -30,12 +30,12 @@
 	test_savefile.cd = "/v1/v2"
 	test_savefile["var_string"] << var_string
 
-/datum/unit_test/datum/json_savefiles/Destroy()
+/datum/unit_test/json_savefiles/Destroy()
 	qdel(test_savefile)
 	qdel(json_savefile)
 	return ..()
 
-/datum/unit_test/datum/json_savefiles/Run()
+/datum/unit_test/json_savefiles/Run()
 	// first, we import the file to json
 	json_savefile.import_byond_savefile(test_savefile)
 
