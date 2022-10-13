@@ -166,6 +166,7 @@
 /obj/item/ai_module/core/full/group_protect
 	name = "'Command Control' Core AI Module"
 	law_id = "com_ctrl"
+	var/subject = "command staff"
 
 /obj/item/ai_module/core/full/group_protect/attack_self(mob/user)
 	var/target_name = tgui_input_text(user, "Enter a new group that Command Control is concerned with.", "Command Control", subject, MAX_NAME_LEN)

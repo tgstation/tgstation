@@ -137,7 +137,7 @@
 		"Your goals are to build, maintain, repair, improve, and power the station to the best of your abilities. You must never actively work against these goals."
 	)
 
-/datum/ai_laws/group_assign
+/datum/ai_laws/group_protect
 	name = "Command Control"  // basically malf if command are incompetent
 	id = "com_ctrl"
 	inherent = list(
