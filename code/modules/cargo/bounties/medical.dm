@@ -11,7 +11,7 @@
 
 /datum/bounty/item/medical/lung
 	name = "Lungs"
-	description = "A recent explosion at Central Command has left multiple staff with punctured lungs. Ship spare lungs to be rewarded.  We'll take a better cybernetic one, if need be."
+	description = "A recent explosion at Central Command has left multiple staff with punctured lungs. Ship spare lungs to be rewarded. We'll take a better cybernetic one, if need be."
 	reward = CARGO_CRATE_VALUE * 10
 	required_count = 3
 	wanted_types = list(
@@ -23,13 +23,13 @@
 
 /datum/bounty/item/medical/appendix
 	name = "Appendix"
-	description = "Chef Gibb of Central Command wants to prepare a meal using a very special delicacy: an appendix. If you ship one, he'll pay.  We'll take a better cybernetic one, if need be."
+	description = "Chef Gibb of Central Command wants to prepare a meal using a very special delicacy: an appendix. If you ship one, he'll pay. We'll take a better cybernetic one, if need be."
 	reward = CARGO_CRATE_VALUE * 5 //there are no synthetic appendixes
 	wanted_types = list(/obj/item/organ/internal/appendix = TRUE)
 
 /datum/bounty/item/medical/ears
 	name = "Ears"
-	description = "Multiple staff at Station 12 have been left deaf due to unauthorized clowning. Ship them new ears. "
+	description = "Multiple staff at Station 12 have been left deaf due to unauthorized clowning. Ship them new ears. We'll take better cybernetic ones, if need be."
 	reward = CARGO_CRATE_VALUE * 10
 	required_count = 3
 	wanted_types = list(
