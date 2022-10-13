@@ -1,6 +1,6 @@
 /**
- * The job of this unit test is to ensure that save files are correctly imported from BYOND to JSON
- * Its a rather convoluted process and so this test ensures that something didnt fucking up somewhere
+ * The job of this unit test is to ensure that save files are correctly imported from BYOND to JSON.
+ * It's a rather convoluted process and so this test ensures that something didn't fuck up somewhere.
  */
 /datum/unit_test/json_savefiles
 	var/savefile/test_savefile
