@@ -14,7 +14,7 @@
 	biter.forceMove(stage)
 	biter.handle_automated_action(force_chew = TRUE) // it's not so automated since we're forcing it and doing everything we can to ensure that mice fucking bites that wire but potato potato
 
-	TEST_ASSERT(QDELETED(biter), "Mouse did not die after biting a cable.") // we qdel the mouse mob on death
+	TEST_ASSERT(QDELETED(biter), "Mouse did not die after biting a powered cable.") // we qdel the mouse mob on death
 	TEST_ASSERT(QDELETED(wire), "Cable was not deleted after being bitten by a mouse.")
 
 	stage.underfloor_accessibility = initial(stage.underfloor_accessibility) // reset the floor to its original state, to be nice to other tests in case that matters
