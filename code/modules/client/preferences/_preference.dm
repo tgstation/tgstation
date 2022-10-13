@@ -562,7 +562,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	return ""
 
 /datum/preference/text/is_valid(value)
-	return istext(value) && value.len < maximum_value_length
+	return istext(value) && length(value) < maximum_value_length
 
 /datum/preference/text/compile_constant_data()
 	return list("maximum_length" = maximum_value_length)
