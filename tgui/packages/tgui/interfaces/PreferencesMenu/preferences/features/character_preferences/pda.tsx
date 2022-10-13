@@ -16,7 +16,6 @@ export const pda_style: Feature<string> = {
 
 export const pda_ringtone: Feature<string> = {
   name: 'PDA Ringtone',
-  description:
-    'Want your PDA to say something other than "beep"? Accepts the first 20 characters.',
+  description: "The ringtone you'll hear when someone sends you a PDA message.",
   component: FeatureShortTextInput,
 };

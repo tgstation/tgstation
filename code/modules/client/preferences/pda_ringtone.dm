@@ -1,3 +1,8 @@
+/**
+ * This is the preference for the player's SpaceMessenger ringtone.
+ * Currently only applies to humans spawned in with a job, as it's hooked
+ * into `/datum/job/proc/after_spawn()`.
+ */
 /datum/preference/text/pda_ringtone
 	savefile_key = "pda_ringtone"
 	category = PREFERENCE_CATEGORY_NON_CONTEXTUAL

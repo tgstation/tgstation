@@ -551,15 +551,18 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	/// What is the maximum length of the value allowed in this field?
 	var/maximum_value_length = 256
 
+	/// Should we strip HTML the input or simply restrict it to the maximum_value_length?
+	var/should_strip_html = TRUE
+
 
 /datum/preference/text/deserialize(input, datum/preferences/preferences)
-	return STRIP_HTML_SIMPLE(input, maximum_value_length)
+	return should_strip_html ? STRIP_HTML_SIMPLE(input, maximum_value_length) : copytext(input, 1, maximum_value_length)
 
 /datum/preference/text/create_default_value()
 	return ""
 
 /datum/preference/text/is_valid(value)
-	return istext(value)
+	return istext(value) && value.len < maximum_value_length
 
 /datum/preference/text/compile_constant_data()
 	return list("maximum_length" = maximum_value_length)
