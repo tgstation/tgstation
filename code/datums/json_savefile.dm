@@ -1,6 +1,10 @@
 #define JSON_SAVEFILE_PARSE_CUTOFF_FLAG "||__||__||"
 #define JSON_SAVEFILE_PARSE_REPLACE_COMMA "|||_|||"
 
+/**
+ * A savefile implementation that handles all data using json
+ * also saves it using JSON too, fancy
+ */
 /datum/json_savefile
 	var/path
 	VAR_PRIVATE/list/tree
@@ -12,16 +16,22 @@
 	if(fexists(path))
 		load()
 
+/**
+ * Gets an entry from the json tree, with an optional default value.
+ * If no key is specified it throws the entire tree at you instead
+ */
 /datum/json_savefile/proc/get_entry(key, default_value)
 	if(!key)
 		return tree
 	return (key in tree) ? tree[key] : default_value
 
+/// Sets an entry in the tree to the given value
 /datum/json_savefile/proc/set_entry(key, value)
 	tree[key] = value
 	if(auto_save)
 		save()
 
+/// Removes the given key from the tree, if no key is given it clears the entire tree
 /datum/json_savefile/proc/clear(key)
 	if(key)
 		tree -= key
@@ -45,6 +55,14 @@
 		fdel(path)
 	rustg_file_write(json_encode(tree), path)
 
+/**
+ * The bread and butter of the importing system.
+ * This piece of shit parses the garbage data BYOND throws out when you ExportText on a savefile
+ * And attempts to stitch it back together into a json decodable string.
+ * It works, and it works quickly and error free.
+ * If anything about the byond savefile format changes this will be the first thing to crash and burn.
+ * Ping @ZephyrTFA if this shit breaks.
+ */
 /datum/json_savefile/proc/decode_line_value(line)
 	var/list_index = findlasttext(line, "list(")
 	while(list_index)
@@ -68,6 +86,7 @@
 		list_index = findlasttext(line, "list(")
 	return json_decode(replacetext(line, JSON_SAVEFILE_PARSE_REPLACE_COMMA, ","))
 
+/// A front end for importing savefiles that just does the logic of converting a byond savefile into a string list for you
 /datum/json_savefile/proc/import_byond_savefile(savefile/savefile)
 	var/list/data = splittext(savefile.ExportText("/"), "\n")
 	var/list/savefile_data = list()
