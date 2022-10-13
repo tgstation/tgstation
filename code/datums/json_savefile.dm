@@ -67,5 +67,5 @@
 				region[entry] = list()
 				dirs_to_go["[dir]/[entry]"] = region[entry]
 				continue
-			savefile >> entry_value //we are cd'ed to the entry, so we don't need to specify a path to read from
+			READ_FILE(savefile, entry_value) //we are cd'ed to the entry, so we don't need to specify a path to read from
 			region[entry] = entry_value
