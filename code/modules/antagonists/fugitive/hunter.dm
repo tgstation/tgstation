@@ -55,6 +55,15 @@
 /datum/antagonist/fugitive_hunter/get_team()
 	return hunter_team
 
+/datum/antagonist/fugitive_hunter/apply_innate_effects(mob/living/mob_override)
+	var/mob/living/M = mob_override || owner.current
+	handle_clown_mutation(M, mob_override ? null : "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
+	add_team_hud(M)
+
+/datum/antagonist/rev/remove_innate_effects(mob/living/mob_override)
+	var/mob/living/M = mob_override || owner.current
+	handle_clown_mutation(M, removing = FALSE)
+
 /datum/team/fugitive_hunters
 	var/backstory = "error"
 
