@@ -1,0 +1,5 @@
+author: "san7890"
+delete-after: True
+changes: 
+  - bugfix: "Cyborgs can now no longer untip vending machines that they are not directly next to."
+  - bugfix: "Those with the technoshy/technovert trait are now able to untip vending machines."
