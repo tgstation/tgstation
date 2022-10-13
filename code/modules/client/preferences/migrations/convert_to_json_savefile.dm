@@ -4,7 +4,7 @@
 	load_path(parent.ckey)
 	if(!fexists(old_path))
 		return
-	var/json_savefile/json_savefile = new(path)
+	var/datum/json_savefile/datum/json_savefile = new(path)
 	json_savefile.import_byond_savefile(new /savefile(old_path))
 	json_savefile.save()
 	return TRUE

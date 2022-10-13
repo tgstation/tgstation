@@ -67,7 +67,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/list/datum/preference_middleware/middleware = list()
 
 	/// The json savefile for this datum
-	var/json_savefile/savefile
+	var/datum/json_savefile/savefile
 
 	/// The savefile relating to character preferences, PREFERENCE_CHARACTER
 	var/list/character_data

@@ -1,28 +1,28 @@
 #define JSON_SAVEFILE_PARSE_CUTOFF_FLAG "||__||__||"
 #define JSON_SAVEFILE_PARSE_REPLACE_COMMA "|||_|||"
 
-/json_savefile
+/datum/json_savefile
 	var/path
 	VAR_PRIVATE/list/tree
 	var/auto_save = FALSE
 
-/json_savefile/New(path)
+/datum/json_savefile/New(path)
 	src.path = path
 	tree = list()
 	if(fexists(path))
 		load()
 
-/json_savefile/proc/get_entry(key, default_value)
+/datum/json_savefile/proc/get_entry(key, default_value)
 	if(!key)
 		return tree
 	return (key in tree) ? tree[key] : default_value
 
-/json_savefile/proc/set_entry(key, value)
+/datum/json_savefile/proc/set_entry(key, value)
 	tree[key] = value
 	if(auto_save)
 		save()
 
-/json_savefile/proc/clear(key)
+/datum/json_savefile/proc/clear(key)
 	if(key)
 		tree -= key
 	else
@@ -30,7 +30,7 @@
 	if(auto_save)
 		save()
 
-/json_savefile/proc/load()
+/datum/json_savefile/proc/load()
 	if(!fexists(path))
 		return FALSE
 	try
@@ -40,12 +40,12 @@
 		stack_trace("failed to load json savefile at '[path]': [err]")
 		return FALSE
 
-/json_savefile/proc/save()
+/datum/json_savefile/proc/save()
 	if(fexists(path))
 		fdel(path)
 	rustg_file_write(json_encode(tree), path)
 
-/json_savefile/proc/decode_line_value(line)
+/datum/json_savefile/proc/decode_line_value(line)
 	var/list_index = findlasttext(line, "list(")
 	while(list_index)
 		var/target_char_index = list_index
@@ -68,7 +68,7 @@
 		list_index = findlasttext(line, "list(")
 	return json_decode(replacetext(line, JSON_SAVEFILE_PARSE_REPLACE_COMMA, ","))
 
-/json_savefile/proc/import_byond_savefile(savefile/savefile)
+/datum/json_savefile/proc/import_byond_savefile(savefile/savefile)
 	var/list/data = splittext(savefile.ExportText("/"), "\n")
 	var/list/savefile_data = list()
 	var/list/region = savefile_data

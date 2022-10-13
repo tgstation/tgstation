@@ -151,7 +151,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(!fexists(path))
 		return FALSE
 
-	savefile = new /json_savefile(path)
+	savefile = new /datum/json_savefile(path)
 	var/needs_update = save_data_needs_update(savefile.get_entry())
 	if(needs_update == -2) //fatal, can't load any data
 		var/bacpath = "[path].updatebac" //todo: if the savefile version is higher then the server, check the backup, and give the player a prompt to load the backup
