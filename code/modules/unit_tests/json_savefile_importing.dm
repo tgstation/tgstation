@@ -4,7 +4,7 @@
  */
 /datum/unit_test/datum/json_savefiles
 	var/savefile/test_savefile
-	var/datum/json_savefile/datum/json_savefile
+	var/datum/json_savefile/json_savefile
 
 	var/list/basic_list
 	var/list/assoc_list

@@ -39,7 +39,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 //This only really meant to avoid annoying frequent players
 //if your savefile is 3 months out of date, then 'tough shit'.
 
-/datum/preferences/proc/update_preferences(current_version, json_savefile/S)
+/datum/preferences/proc/update_preferences(current_version, datum/json_savefile/S)
 	if(current_version < 33)
 		toggles |= SOUND_ENDOFROUND
 
