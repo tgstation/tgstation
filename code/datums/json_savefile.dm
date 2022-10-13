@@ -3,7 +3,7 @@
  * Also saves it using JSON too, fancy.
  */
 /datum/json_savefile
-	var/path
+	var/path = ""
 	VAR_PRIVATE/list/tree
 	var/auto_save = FALSE
 
