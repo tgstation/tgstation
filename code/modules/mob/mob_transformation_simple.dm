@@ -56,7 +56,7 @@
 	if(mind && isliving(desired_mob) && (!isobserver(src) || mind.current == src || QDELETED(mind.current)))
 		if (ckey(mind.key) != ckey) 
 			//we could actually prevent the bug from happening here, but then nobody would know to look for the stack trace we are about to print.
-			stack_trace("DEBUG: The bug where mob transfers or transforms sometimes kick unrelated people out of mobs has happened again. mob [type](\ref[src]) owned by [ckey] is being changed into a [new_type] but has a mind owned by [ckey(mind.key)].")
+			stack_trace("DEBUG: The bug where mob transfers or transforms sometimes kick unrelated people out of mobs has happened again. mob [src]([type])\ref[src] owned by [ckey] is being changed into a [new_type] but has a mind owned by [ckey(mind.key)].")
 		
 		mind.transfer_to(desired_mob, 1) // second argument to force key move to new mob
 	else
