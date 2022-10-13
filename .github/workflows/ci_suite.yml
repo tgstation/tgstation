@@ -11,6 +11,9 @@ jobs:
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
     name: Run Linters
     runs-on: ubuntu-20.04
+    concurrency:
+      group: run_linters-${{ github.ref }}
+      cancel-in-progress: true
     steps:
       - uses: actions/checkout@v2
       - name: Restore SpacemanDMM cache
@@ -54,6 +57,9 @@ jobs:
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
     name: Compile Maps
     runs-on: ubuntu-20.04
+    concurrency:
+      group: compile_all_maps-${{ github.ref }}
+      cancel-in-progress: true
     steps:
       - uses: actions/checkout@v2
       - name: Restore BYOND cache
@@ -73,6 +79,9 @@ jobs:
     runs-on: ubuntu-20.04
     outputs:
       maps: ${{ steps.map_finder.outputs.maps }}
+    concurrency:
+      group: find_all_maps-${{ github.ref }}
+      cancel-in-progress: true
     steps:
       - uses: actions/checkout@v2
       - name: Find Maps
@@ -101,7 +110,7 @@ jobs:
           - 3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     concurrency:
-      group: ci-${{ github.ref }}-${{ matrix.map }}
+      group: run_all_tests-${{ github.ref }}-${{ matrix.map }}
       cancel-in-progress: true
     steps:
       - uses: actions/checkout@v2
@@ -182,6 +191,9 @@ jobs:
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
     name: Windows Build
     runs-on: windows-latest
+    concurrency:
+      group: test_windows-${{ github.ref }}
+      cancel-in-progress: true
     steps:
       - uses: actions/checkout@v2
       - name: Restore Yarn cache
