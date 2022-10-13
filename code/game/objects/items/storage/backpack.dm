@@ -110,6 +110,7 @@
 	desc = "It's useful for both carrying extra gear and proudly declaring your insanity."
 	icon_state = "backpack-cult"
 	inhand_icon_state = "backpack"
+	alternate_worn_layer = 4
 
 /obj/item/storage/backpack/clown
 	name = "Giggles von Honkerton"
