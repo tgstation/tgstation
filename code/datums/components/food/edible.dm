@@ -113,7 +113,7 @@ Behavior that's still missing from this component that original food items had t
 		COMSIG_PARENT_EXAMINE,
 	))
 
-	qdel(parent.GetComponent(/datum/component/connect_loc_behalf))
+	qdel(GetComponent(/datum/component/connect_loc_behalf))
 
 /datum/component/edible/InheritComponent(
 	datum/component/edible/old_comp,
