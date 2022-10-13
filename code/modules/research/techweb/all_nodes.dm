@@ -1016,6 +1016,7 @@
 		"freeformcore_module",
 		"onehuman_module",
 		"purge_module",
+		"com_module"
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
 

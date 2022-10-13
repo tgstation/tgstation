@@ -22,6 +22,7 @@
  * /obj/item/ai_module/core/full/nutimov
  * /obj/item/ai_module/core/full/dungeon_master
  * /obj/item/ai_module/core/full/painter
+ * /obj/item/ai_module/core/full/group_protect
 **/
 
 /* When adding a new lawset please make sure you add it to the following locations:
@@ -161,3 +162,18 @@
 /obj/item/ai_module/core/full/painter
 	name = "'Painter' Core AI Module"
 	law_id = "painter"
+
+/obj/item/ai_module/core/full/group_protect
+	name = "'Command Control' Core AI Module"
+	law_id = "com_ctrl"
+
+/obj/item/ai_module/core/full/group_protect/attack_self(mob/user)
+	var/target_name = tgui_input_text(user, "Enter a new group that Command Control is concerned with.", "Command Control", subject, MAX_NAME_LEN)
+	if(!target_name)
+		return
+	laws.Cut()
+	var/datum/ai_laws/group_protect/lawset = new
+	subject = target_name
+	for (var/law in lawset.inherent)
+		laws += replacetext(replacetext(law, "command staff", subject), "command", subject)
+	..()

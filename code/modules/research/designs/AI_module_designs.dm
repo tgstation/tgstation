@@ -385,3 +385,14 @@
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_DANGEROUS_MODULES
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/board/group_protect
+	name = "Command Control AI Module"
+	desc = "Allows for the construction of a Command Control AI Core Module."
+	id = "com_module"
+	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000, /datum/material/bluespace = 1000)
+	build_path = /obj/item/ai_module/core/full/group_protect
+	category = list(
+		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
