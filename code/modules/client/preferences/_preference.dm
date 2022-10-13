@@ -156,13 +156,13 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 /// Given a savefile, return either the saved data or an acceptable default.
 /// This will write to the savefile if a value was not found with the new value.
-/datum/preference/proc/read(savefile/savefile, datum/preferences/preferences)
+/datum/preference/proc/read(list/save_data, datum/preferences/preferences)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	var/value
 
-	if (!isnull(savefile))
-		READ_FILE(savefile[savefile_key], value)
+	if (!isnull(save_data))
+		value = save_data[savefile_key]
 
 	if (isnull(value))
 		return null
@@ -172,14 +172,14 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 /// Given a savefile, writes the inputted value.
 /// Returns TRUE for a successful application.
 /// Return FALSE if it is invalid.
-/datum/preference/proc/write(savefile/savefile, value)
+/datum/preference/proc/write(list/save_data, value)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	if (!is_valid(value))
 		return FALSE
 
-	if (!isnull(savefile))
-		WRITE_FILE(savefile[savefile_key], serialize(value))
+	if (!isnull(save_data))
+		save_data[savefile_key] = serialize(value)
 
 	return TRUE
 
@@ -205,8 +205,8 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	CRASH("`apply_to_human()` was not implemented for [type]!")
 
 /// Returns which savefile to use for a given savefile identifier
-/datum/preferences/proc/get_savefile_for_savefile_identifier(savefile_identifier)
-	RETURN_TYPE(/savefile)
+/datum/preferences/proc/get_save_data_for_savefile_identifier(savefile_identifier)
+	RETURN_TYPE(/list)
 
 	if (!parent)
 		return null
@@ -217,19 +217,9 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 	switch (savefile_identifier)
 		if (PREFERENCE_CHARACTER)
-			if (!character_savefile)
-				character_savefile = new /savefile(path)
-				character_savefile.cd = "/character[default_slot]"
-				spawn (1)
-					character_savefile = null
-			return character_savefile
+			return savefile.Get("character[default_slot]")
 		if (PREFERENCE_PLAYER)
-			if (!game_savefile)
-				game_savefile = new /savefile(path)
-				game_savefile.cd = "/"
-				spawn (1)
-					game_savefile = null
-			return game_savefile
+			return savefile.tree
 		else
 			CRASH("Unknown savefile identifier [savefile_identifier]")
 
@@ -252,7 +242,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	if (preference_type in value_cache)
 		return value_cache[preference_type]
 
-	var/value = preference_entry.read(get_savefile_for_savefile_identifier(preference_entry.savefile_identifier), src)
+	var/value = preference_entry.read(get_save_data_for_savefile_identifier(preference_entry.savefile_identifier), src)
 	if (isnull(value))
 		value = preference_entry.create_informed_default_value(src)
 		if (write_preference(preference_entry, value))
@@ -266,9 +256,9 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 /// Returns TRUE for a successful preference application.
 /// Returns FALSE if it is invalid.
 /datum/preferences/proc/write_preference(datum/preference/preference, preference_value)
-	var/savefile = get_savefile_for_savefile_identifier(preference.savefile_identifier)
+	var/save_data = get_save_data_for_savefile_identifier(preference.savefile_identifier)
 	var/new_value = preference.deserialize(preference_value, src)
-	var/success = preference.write(savefile, new_value)
+	var/success = preference.write(save_data, new_value)
 	if (success)
 		value_cache[preference.type] = new_value
 	return success

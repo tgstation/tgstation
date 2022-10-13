@@ -66,11 +66,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	/// A list of instantiated middleware
 	var/list/datum/preference_middleware/middleware = list()
 
-	/// The savefile relating to core preferences, PREFERENCE_PLAYER
-	var/savefile/game_savefile
+	/// The json savefile for this datum
+	var/json_savefile/savefile
 
 	/// The savefile relating to character preferences, PREFERENCE_CHARACTER
-	var/savefile/character_savefile
+	var/list/character_data
 
 	/// A list of keys that have been updated since the last save.
 	var/list/recently_updated_keys = list()
@@ -372,17 +372,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 /datum/preferences/proc/create_character_profiles()
 	var/list/profiles = list()
 
-	var/savefile/savefile = new(path)
 	for (var/index in 1 to max_save_slots)
 		// It won't be updated in the savefile yet, so just read the name directly
 		if (index == default_slot)
 			profiles += read_preference(/datum/preference/name/real_name)
 			continue
 
-		savefile.cd = "/character[index]"
-
-		var/name
-		READ_FILE(savefile["real_name"], name)
+		var/tree_key = "character[index]"
+		var/save_data = savefile.Get(tree_key)
+		var/name = save_data?["real_name"]
 
 		if (isnull(name))
 			profiles += null
