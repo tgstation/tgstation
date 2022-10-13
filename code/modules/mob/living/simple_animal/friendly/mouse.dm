@@ -31,6 +31,8 @@
 	held_w_class = WEIGHT_CLASS_TINY
 	held_state = "mouse_gray"
 	faction = list(FACTION_RAT)
+	/// Boolean to determine if a mouse will ALWAYS chew on a wire when it sees one, overriding any probabilities.
+	var/always_chew = FALSE
 
 /mob/living/simple_animal/mouse/Initialize(mapload)
 	. = ..()
@@ -89,12 +91,12 @@
 		qdel(AM)
 
 /// How miceys go nom nom nom on things. force_chew is used to bypass the probability check (for unit tests).
-/mob/living/simple_animal/mouse/handle_automated_action(force_chew = FALSE)
+/mob/living/simple_animal/mouse/handle_automated_action()
 	if(prob(chew_probability))
 		var/turf/open/floor/position = get_turf(src)
 		if(istype(position) && position.underfloor_accessibility >= UNDERFLOOR_INTERACTABLE)
 			var/obj/structure/cable/wire = locate() in position
-			if(wire && (prob(15) || force_chew))
+			if(wire && should_chew())
 				var/powered = wire.avail()
 				if(powered && !HAS_TRAIT(src, TRAIT_SHOCKIMMUNE))
 					visible_message(span_warning("[src] chews through the [wire]. It's toast!"))
@@ -115,6 +117,12 @@
 		qdel(bigcheese)
 		evolve()
 		return
+
+/// This proc is used to determine if a mouse should chew on a wire or not. Returns TRUE if it should, FALSE if it shouldn't.
+/mob/living/simple_animal/mouse/proc/should_chew()
+	if(prob(15) || always_chew)
+		return TRUE
+	return FALSE
 
 /mob/living/simple_animal/mouse/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
@@ -192,6 +200,10 @@
 	AddElement(/datum/element/pet_bonus, "squeaks happily!")
 	// Tom fears no cable.
 	ADD_TRAIT(src, TRAIT_SHOCKIMMUNE, INNATE_TRAIT)
+
+/// Subtype that only exists in tests, it fucking loves eating cables.
+/mob/living/simple_animal/mouse/cable_lover
+	always_chew = TRUE
 
 /obj/item/food/deadmouse
 	name = "dead mouse"
