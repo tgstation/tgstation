@@ -59,11 +59,13 @@
 		var/list/region = dirs_to_go[dir]
 		dirs_to_go.Cut(1, 2)
 		savefile.cd = dir
-		for(var/entry in savefile)
+		for(var/entry in savefile.dir)
 			var/entry_value
-			savefile[entry] >> entry_value
-			if(!isnull(entry_value))
-				region[entry] = entry_value
-			else
+			savefile.cd = "[dir]/[entry]" 
+			//eof refers to the path you are cd'ed into, not the savefile as a whole. being false right after cding into an entry means this entry has no buffer, which only happens with nested save file directories
+			if (savefile.eof)
 				region[entry] = list()
 				dirs_to_go["[dir]/[entry]"] = region[entry]
+				continue
+			savefile >> entry_value //we are cd'ed to the entry, so we don't need to specify a path to read from
+			region[entry] = entry_value
