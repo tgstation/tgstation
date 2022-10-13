@@ -41,15 +41,13 @@
 	if(!fexists(path))
 		return FALSE
 	try
-		tree = json_decode(file2text(path))
+		tree = json_decode(rustg_file_read(path))
 		return TRUE
 	catch(var/exception/err)
 		stack_trace("failed to load json savefile at '[path]': [err]")
 		return FALSE
 
 /datum/json_savefile/proc/save()
-	if(fexists(path))
-		fdel(path)
 	rustg_file_write(json_encode(tree), path)
 
 /// Traverses the entire dir tree of the given savefile and dynamically assembles the tree from it
