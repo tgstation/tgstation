@@ -104,6 +104,10 @@
 	typepath = /datum/round_event/disease_outbreak/advanced
 	category = EVENT_CATEGORY_HEALTH
 	description = "An 'advanced' disease will infect some members of the crew." //These are the ones that get viro lynched!
+	///Admin selected custom severity rating for the event
+	var/chosen_severity
+	///Admin selected custom value for the maximum symptoms this virus should have
+	var/chosen_max_symptoms
 
 /datum/round_event_control/disease_outbreak/advanced/admin_setup()
 	if(!check_rights(R_FUN))
@@ -117,17 +121,35 @@
 
 	message_admins("[length(disease_candidates)] candidates found!")
 
+	if(tgui_alert(usr,"Customize your virus?", "Glorified Debug Tool", list("Yes", "No")) == "Yes")
+		chosen_severity = tgui_input_number(usr, "Select a custom severity for your virus!", "Plague Incorporation!", 3, 15)
+		chosen_max_symptoms = tgui_input_number(usr, "How many symptoms do you want your virus to have?", "A pox upon ye!", 3, 15)
+
 /datum/round_event/disease_outbreak/advanced
 	///Number of symptoms for our virus
-	var/max_severity = 3
+	var/max_severity
+	//Maximum symptoms for our virus
+	var/max_symptoms
 
 /datum/round_event/disease_outbreak/advanced/start()
-	var/datum/round_event_control/disease_outbreak/disease_event = control
+	var/datum/round_event_control/disease_outbreak/advanced/disease_event = control
 	afflicted += disease_event.disease_candidates
 	disease_event.disease_candidates.Cut() //Clean the list after use
 
-	max_severity = 3 + max(FLOOR((world.time - control.earliest_start)/6000, 1),0) //3 symptoms at 20 minutes, plus 1 per 10 minutes
-	var/datum/disease/advance/advanced_disease = new /datum/disease/advance/random(max_severity, max_severity)
+	if(disease_event.chosen_max_symptoms)
+		max_symptoms = disease_event.chosen_max_symptoms
+		disease_event.chosen_max_symptoms = null
+	else
+		max_symptoms = 3 + max(FLOOR((world.time - control.earliest_start)/6000, 1),0) //3 symptoms at 20 minutes, plus 1 per 10 minutes.
+		max_symptoms = clamp(max_symptoms, 3, 8) //Capping the virus symptoms prevents the event from becoming "smite one poor player with an -12 transmission hell virus" after a certain round length.
+
+	if(disease_event.chosen_severity)
+		max_severity = disease_event.chosen_severity
+		disease_event.chosen_severity = null
+	else
+		max_severity = 3 + max(FLOOR((world.time - control.earliest_start)/6000, 1),0) //Max severity doesn't need clamping
+
+	var/datum/disease/advance/advanced_disease = new /datum/disease/advance/random(max_symptoms, max_severity)
 
 	var/list/name_symptoms = list() //for feedback
 	for(var/datum/symptom/new_symptom in advanced_disease.symptoms)
