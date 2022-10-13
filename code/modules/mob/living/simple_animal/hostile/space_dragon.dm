@@ -343,7 +343,7 @@
 		if(mecha in hit_list)
 			continue
 		hit_list += mecha
-		mecha.take_damage(50, BRUTE, MELEE, 1)
+		mecha.take_damage(50, BRUTE, MELEE)
 
 /**
  * Handles consuming and storing consumed things inside Space Dragon
