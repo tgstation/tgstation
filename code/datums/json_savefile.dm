@@ -37,7 +37,7 @@
 		tree = json_decode(file2text(path))
 		return TRUE
 	catch(var/exception/err)
-		stack_trace("failed to load json savefile: [err]")
+		stack_trace("failed to load json savefile at '[path]': [err]")
 		return FALSE
 
 /json_savefile/proc/save()
