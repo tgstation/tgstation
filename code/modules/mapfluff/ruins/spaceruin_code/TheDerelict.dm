@@ -175,3 +175,140 @@
 	icon = 'icons/obj/weapons/turrets.dmi'
 	icon_state = "turretCover"
 	density = TRUE
+
+/// Captain's log
+/// Credits to goonstation13 for orginal SS13 lore
+/// https://wiki.ss13.co/Storyline
+/// https://www.youtube.com/watch?v=7M-JPH5SOmI (old video)
+/// https://www.youtube.com/watch?v=FHH1vfY6HTA (new video)
+/obj/item/tape/captains_log
+	name = "captain's log"
+	desc = "A dusty old tape."
+	icon_state = "tape_blue"
+	used_capacity = 10 MINUTES // so the tape is full and can't be recorded over
+	storedinfo = list( // the captain recorded this in several segements
+		// 1st monologue (start of shift)
+		"\[00:01\] Every single day I spend on this station",
+		"\[00:07\] I become more and more certain that this was some kind of macabre punishment assignment",
+		"\[00:17\] I don't know what I did to deserve being consigned to this glued together ball of orbital wreckage",
+		"\[00:28\] But someones got it out for me",
+		"\[00:36\] On the station I may well be called 'Captain'",
+		"\[00:42\] But the title brings with it all the prestige and responsibility of some kind of fucking manchild kindergarten teacher",
+		"\[00:55\] To think Nanotrasen loves to call this hellhole:",
+		"\[01:03\] A state of the art orbital plasma research facility",
+		"\[01:10\] If I remember correctly though",
+		"\[01:15\] It was all about the plasma",
+		"\[01:19\] It was like the new oil",
+		"\[01:25\] As soon as we got all the fun exploration and discovery shit out of the way",
+		"\[01:35\] We started drilling",
+		"\[01:40\] All the companies and industries wanted to guzzle it up",
+		"\[01:48\] Despite the fact we knew jack shit about it and still don't",
+		"\[01:55\] But that didn't stop them",
+		"\[01:59\] (clicking sound)",
+		// 2nd monologue (early shift)
+		"\[15:05\] So they give me a crew of scientists and engineers to research and harness this so called plasma",
+		"\[15:15\] Not to mention the INCOMPETENT security",
+		"\[15:20\] The HOMICIDAL chef",
+		"\[15:25\] SUSPICIOUS fucking detective",
+		"\[15:29\] USELESS clown",
+		"\[15:35\] And BATSHIT fucking janitors",
+		"\[15:46\] That includes the crotchety fucking IBM piece of shit we're supposed to call an AI",
+		"\[15:52\] And it's legion of cyborg assholes",
+		"\[15:58\] If this wasn't bad enough there is the wizards federation to worry about",
+		"\[16:06\] Crazy bastards",
+		"\[16:10\] What can be worse than a bunch of plasma-humping-space-freaks?",
+		"\[16:17\] The syndicate",
+		"\[16:21\] Hell bent on nuking everything we've accomplished to kingdom come",
+		"\[16:27\] Yet the crew still goes about their daily business",
+		"\[16:33\] Constantly looking over their shoulder in suspicion of one another",
+		"\[16:40\] And who wouldn't? Even the monkeys on board for genetic testing are monitored 24/7",
+		"\[16:52\] Despite it all though",
+		"\[16:56\] These cruel, paranoid, rejects spend every waking hour perfecting their robust combat skills",
+		"\[17:00\] Or wondering in awe at the promise plasma has to offer",
+		"\[17:07\] And if things go wrong it's hardly a problem",
+		"\[17:17\] Our advanced genetics and medical staff can ensure a 2nd life in matter of minutes",
+		// 3rd monologue (middle shift)
+		"\[28:03\] I don't know why i'm even recording this...",
+		"\[28:13\] I sure as hell don't need it for myself",
+		"\[28:25\] Sure, I could upload it with all the evidence and dirt i've found over the years on Nanotrasen",
+		"\[28:32\] But what's the point?",
+		"\[28:36\] Who would give a shit other than corporate making me suddenly disappear?",
+		"\[28:47\] I suppose I could send and upload it to the network and let people make their own judgements",
+		"\[28:59\] After all, i'm the one sitting out here in deep space, cruising along leisurely",
+		// 4th monologue (end of shift)
+		"\[47:01\] I don't care what they call me back on the station",
+		"\[47:06\] I'm not a traitor!",
+		"\[47:10\] I'm a man of principles and standards",
+		"\[47:17\] And if lives get in the way of those principles, so be it",
+		"\[47:22\] I'd say I'm the better man here",
+		"\[47:32\] Once they called me captain, but when it's all said and done",
+		"\[47:41\] I'll be a hero",
+		"\[47:45\] If you run across this transmission by chance",
+		"\[47:52\] Get you pudgy little nerd ass over to Space Station 13 and start busting heads.",
+		"\[48:00\] (farting noises)",
+	)
+	timestamp = list(
+		// 1st monologue (start of shift)
+		1 SECONDS,
+		7 SECONDS,
+		17 SECONDS,
+		28 SECONDS,
+		36 SECONDS,
+		42 SECONDS,
+		55 SECONDS,
+		1 MINUTES + 3 SECONDS,
+		1 MINUTES + 10 SECONDS,
+		1 MINUTES + 15 SECONDS,
+		1 MINUTES + 19 SECONDS,
+		1 MINUTES + 25 SECONDS,
+		1 MINUTES + 35 SECONDS,
+		1 MINUTES + 40 SECONDS,
+		1 MINUTES + 48 SECONDS,
+		1 MINUTES + 55 SECONDS,
+		1 MINUTES + 59 SECONDS,
+		// 2nd monologue (early shift)
+		15 MINUTES + 5 SECONDS,
+		15 MINUTES + 15 SECONDS,
+		15 MINUTES + 20 SECONDS,
+		15 MINUTES + 25 SECONDS,
+		15 MINUTES + 29 SECONDS,
+		15 MINUTES + 35 SECONDS,
+		15 MINUTES + 46 SECONDS,
+		15 MINUTES + 52 SECONDS,
+		15 MINUTES + 58 SECONDS,
+		16 MINUTES + 6 SECONDS,
+		16 MINUTES + 10 SECONDS,
+		16 MINUTES + 17 SECONDS,
+		16 MINUTES + 21 SECONDS,
+		16 MINUTES + 27 SECONDS,
+		16 MINUTES + 33 SECONDS,
+		16 MINUTES + 40 SECONDS,
+		16 MINUTES + 52 SECONDS,
+		16 MINUTES + 56 SECONDS,
+		17 MINUTES + 0 SECONDS,
+		17 MINUTES + 7 SECONDS,
+		17 MINUTES + 17 SECONDS,
+		// 3rd monologue (middle shift)
+		28 MINUTES + 3 SECONDS,
+		28 MINUTES + 13 SECONDS,
+		28 MINUTES + 25 SECONDS,
+		28 MINUTES + 32 SECONDS,
+		28 MINUTES + 36 SECONDS,
+		28 MINUTES + 47 SECONDS,
+		28 MINUTES + 59 SECONDS,
+		// 4th monologue (end of shift)
+		47 MINUTES + 1 SECONDS,
+		47 MINUTES + 6 SECONDS,
+		47 MINUTES + 10 SECONDS,
+		47 MINUTES + 17 SECONDS,
+		47 MINUTES + 22 SECONDS,
+		47 MINUTES + 32 SECONDS,
+		47 MINUTES + 41 SECONDS,
+		47 MINUTES + 45 SECONDS,
+		47 MINUTES + 52 SECONDS,
+		48 MINUTES + 0 SECONDS,
+	)
+
+/obj/item/tape/captains_log/Initialize(mapload)
+	. = ..()
+	unspool() // the tape spawns damaged

@@ -294,7 +294,7 @@
 			var/datum/bank_account/winner_account = winner.get_bank_account()
 			if(!loser_account || !winner_account)//the winner is pretty owned in this case but whatever shoulda read the fine print of the contract
 				return
-			winner_account.transfer_money(loser_account, loser_account.account_balance)
+			winner_account.transfer_money(loser_account, loser_account.account_balance, "Bet: Sparring")
 		if(STAKES_YOUR_SOUL)
 			var/turf/shard_turf = get_turf(loser)
 			if(!shard_turf)

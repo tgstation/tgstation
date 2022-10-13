@@ -44,7 +44,7 @@
 	. = ..()
 	if(.)
 		return
-	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 		return
 	if(obj_flags & IN_USE)
 		to_chat(user, span_warning("It's already in use - wait a bit!"))

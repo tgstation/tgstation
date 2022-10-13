@@ -123,25 +123,22 @@
 	if(istype(O, /obj/item/borg/apparatus/organ_storage))
 		return //Borg organ bags shouldn't be killing brains
 
-	if((organ_flags & ORGAN_FAILING) && O.is_drainable() && O.reagents.has_reagent(/datum/reagent/medicine/mannitol)) //attempt to heal the brain
+	if(damage && O.is_drainable() && O.reagents.has_reagent(/datum/reagent/medicine/mannitol)) //attempt to heal the brain
 		. = TRUE //don't do attack animation.
 		if(brainmob?.health <= HEALTH_THRESHOLD_DEAD) //if the brain is fucked anyway, do nothing
 			to_chat(user, span_warning("[src] is far too damaged, there's nothing else we can do for it!"))
 			return
 
-		if(!O.reagents.has_reagent(/datum/reagent/medicine/mannitol, 10))
-			to_chat(user, span_warning("There's not enough mannitol in [O] to restore [src]!"))
-			return
-
-		user.visible_message(span_notice("[user] starts to pour the contents of [O] onto [src]."), span_notice("You start to slowly pour the contents of [O] onto [src]."))
-		if(!do_after(user, 6 SECONDS, src))
-			to_chat(user, span_warning("You failed to pour [O] onto [src]!"))
+		user.visible_message(span_notice("[user] starts to slowly pour the contents of [O] onto [src]."), span_notice("You start to slowly pour the contents of [O] onto [src]."))
+		if(!do_after(user, 3 SECONDS, src))
+			to_chat(user, span_warning("You failed to pour the contents of [O] onto [src]!"))
 			return
 
 		user.visible_message(span_notice("[user] pours the contents of [O] onto [src], causing it to reform its original shape and turn a slightly brighter shade of pink."), span_notice("You pour the contents of [O] onto [src], causing it to reform its original shape and turn a slightly brighter shade of pink."))
-		var/healby = O.reagents.get_reagent_amount(/datum/reagent/medicine/mannitol)
-		setOrganDamage(damage - healby*2) //heals 2 damage per unit of mannitol, and by using "setorgandamage", we clear the failing variable if that was up
-		O.reagents.clear_reagents()
+		var/amount = O.reagents.get_reagent_amount(/datum/reagent/medicine/mannitol)
+		var/healto = max(0, damage - amount * 2)
+		O.reagents.remove_all(ROUND_UP(O.reagents.total_volume / amount * (damage - healto) * 0.5)) //only removes however much solution is needed while also taking into account how much of the solution is mannitol
+		setOrganDamage(healto) //heals 2 damage per unit of mannitol, and by using "setorgandamage", we clear the failing variable if that was up
 		return
 
 	// Cutting out skill chips.

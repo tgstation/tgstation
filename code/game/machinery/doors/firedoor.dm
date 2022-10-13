@@ -160,7 +160,7 @@
 				context[SCREENTIP_CONTEXT_RMB] = "Open permanently"
 			return CONTEXTUAL_SCREENTIP_SET
 		if (TOOL_WELDER)
-			context[SCREENTIP_CONTEXT_LMB] = welded ? "Unweld shut" : "Weld shut"
+			context[SCREENTIP_CONTEXT_RMB] = welded ? "Unweld shut" : "Weld shut"
 			return CONTEXTUAL_SCREENTIP_SET
 		if (TOOL_WRENCH)
 			if (welded && !boltslocked)
@@ -498,7 +498,7 @@
 /obj/machinery/door/firedoor/try_to_activate_door(mob/user, access_bypass = FALSE)
 	return
 
-/obj/machinery/door/firedoor/try_to_weld(obj/item/weldingtool/W, mob/user)
+/obj/machinery/door/firedoor/try_to_weld_secondary(obj/item/weldingtool/W, mob/user)
 	if(!W.tool_start_check(user, amount=0))
 		return
 	user.visible_message(span_notice("[user] starts [welded ? "unwelding" : "welding"] [src]."), span_notice("You start welding [src]."))

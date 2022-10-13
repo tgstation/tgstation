@@ -43,6 +43,7 @@
 
 # Mothblocks
 
+/.github/workflows/ @Mothblocks
 /code/game/gamemodes/ @Mothblocks
 /code/modules/autowiki/ @Mothblocks
 /code/modules/unit_tests/ @Mothblocks
@@ -52,6 +53,7 @@
 /code/modules/preferences_savefile.dm @Mothblocks
 /tgui/packages/tgui/interfaces/PreferencesMenu/ @Mothblocks
 /tools/screenshot-test-comparison/ @Mothblocks
+/tools/test_merge_bot/ @Mothblocks
 
 # MrMelbert
 

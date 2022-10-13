@@ -249,7 +249,7 @@
 	desc = "Bon appetit!"
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "baguette"
-	inhand_icon_state = "baguette"
+	inhand_icon_state = null
 	worn_icon_state = "baguette"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 3)
 	bite_consumption = 3
@@ -274,9 +274,9 @@
 		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/food/baguette/examine(mob/user)
-	var/examine_list = ..()
+	. = ..()
 	if(user.mind?.miming)
-		examine_list += span_notice("You can wield this like a sword by using it in your hand.")
+		. += span_notice("You can wield this like a sword by using it in your hand.")
 
 /obj/item/food/baguette/attack_self(mob/user, modifiers)
 	. = ..()
@@ -332,7 +332,7 @@
 	desc = "Alas, it is limited."
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "garlicbread"
-	inhand_icon_state = "garlicbread"
+	inhand_icon_state = null
 	food_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/vitamin = 6, /datum/reagent/consumable/garlic = 2)
 	bite_consumption = 3
 	tastes = list("bread" = 1, "garlic" = 1, "butter" = 1)

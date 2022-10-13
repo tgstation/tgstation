@@ -66,6 +66,9 @@
 
 #define FULLSCREEN_PLANE 23
 
+///Visuals that represent sounds happening, and can be seen while blind.
+#define SOUND_EFFECT_VISUAL_PLANE 25
+
 ///--------------- FULLSCREEN RUNECHAT BUBBLES ------------
 
 ///Popup Chat Messages
@@ -209,11 +212,11 @@
 #define BLIND_LAYER 4
 #define CRIT_LAYER 5
 #define CURSE_LAYER 6
-#define FOV_EFFECTS_LAYER 10000 //Blindness effects are not layer 4, they lie to you
 
-///--------------- FULLSCREEN RUNECHAT BUBBLES ------------
+///--------------- SOUND EFFECT VISUALS ------------
 /// Bubble for typing indicators
-#define TYPING_LAYER 500
+#define TYPING_LAYER 1
+#define FOV_EFFECTS_LAYER 2 //Blindness effects are not layer 4, they lie to you
 
 #define RADIAL_BACKGROUND_LAYER 0
 ///1000 is an unimportant number, it's just to normalize copied layers

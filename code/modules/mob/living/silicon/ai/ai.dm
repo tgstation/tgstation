@@ -615,12 +615,13 @@
 	var/mob/living/silicon/ai/U = usr
 
 	for (var/obj/machinery/camera/C in GLOB.cameranet.cameras)
+		var/turf/camera_turf = get_turf(C) //get camera's turf in case it's built into something so we don't get z=0
+
 		var/list/tempnetwork = C.network
-		if(!(is_station_level(C.z) || is_mining_level(C.z) || ("ss13" in tempnetwork)))
+		if(!camera_turf || !(is_station_level(camera_turf.z) || is_mining_level(camera_turf.z) || ("ss13" in tempnetwork)))
 			continue
 		if(!C.can_use())
 			continue
-
 		tempnetwork.Remove("rd", "ordnance", "prison")
 		if(length(tempnetwork))
 			for(var/i in C.network)
@@ -784,7 +785,7 @@
 	for (var/datum/camerachunk/chunk as anything in eyeobj.visibleCameraChunks)
 		for (var/z_key in chunk.cameras)
 			for(var/obj/machinery/camera/camera as anything in chunk.cameras[z_key])
-				if (!camera.can_use() || get_dist(camera, src) > 7 || !camera.internal_light)
+				if (!camera.can_use() || get_dist(camera, eyeobj) > 7 || !camera.internal_light)
 					continue
 				visible |= camera
 

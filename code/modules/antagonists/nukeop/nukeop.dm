@@ -84,7 +84,7 @@
 		var/obj/machinery/nuclearbomb/syndicate/nuke = locate() in GLOB.nuke_list
 		if(nuke)
 			nuke_team.tracked_nuke = nuke
-			if(nuke.r_code == "ADMIN")
+			if(nuke.r_code == NUKE_CODE_UNSET)
 				nuke.r_code = nuke_team.memorized_code
 			else //Already set by admins/something else?
 				nuke_team.memorized_code = nuke.r_code
@@ -306,7 +306,7 @@
 		var/obj/machinery/nuclearbomb/selfdestruct/nuke = locate() in GLOB.nuke_list
 		if(nuke)
 			nuke_team.tracked_nuke = nuke
-			if(nuke.r_code == "ADMIN")
+			if(nuke.r_code == NUKE_CODE_UNSET)
 				nuke.r_code = nuke_team.memorized_code
 			else //Already set by admins/something else?
 				nuke_team.memorized_code = nuke.r_code

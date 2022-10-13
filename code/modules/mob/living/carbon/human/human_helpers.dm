@@ -9,6 +9,8 @@
 //Useful when player do something with computers
 /mob/living/carbon/human/proc/get_assignment(if_no_id = "No id", if_no_job = "No job", hand_first = TRUE)
 	var/obj/item/card/id/id = get_idcard(hand_first)
+	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
+		return if_no_id
 	if(id)
 		. = id.assignment
 	else
@@ -24,6 +26,8 @@
 //Useful when player do something with computers
 /mob/living/carbon/human/proc/get_authentification_name(if_no_id = "Unknown")
 	var/obj/item/card/id/id = get_idcard(FALSE)
+	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
+		return if_no_id
 	if(id)
 		return id.registered_name
 	var/obj/item/modular_computer/pda = wear_id
@@ -35,6 +39,8 @@
 /mob/living/carbon/human/get_visible_name()
 	var/face_name = get_face_name("")
 	var/id_name = get_id_name("")
+	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
+		return "Unknown"
 	if(name_override)
 		return name_override
 	if(face_name)
@@ -47,6 +53,8 @@
 
 //Returns "Unknown" if facially disfigured and real_name if not. Useful for setting name when Fluacided or when updating a human's name variable
 /mob/living/carbon/human/proc/get_face_name(if_no_face="Unknown")
+	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
+		return if_no_face //We're Unknown, no face information for you
 	if( wear_mask && (wear_mask.flags_inv&HIDEFACE) ) //Wearing a mask which hides our face, use id-name if possible
 		return if_no_face
 	if( head && (head.flags_inv&HIDEFACE) )
@@ -62,6 +70,8 @@
 	var/obj/item/storage/wallet/wallet = wear_id
 	var/obj/item/modular_computer/tablet/pda/pda = wear_id
 	var/obj/item/card/id/id = wear_id
+	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
+		. = if_no_id //You get NOTHING, no id name, good day sir
 	if(istype(wallet))
 		id = wallet.front_id
 	if(istype(id))

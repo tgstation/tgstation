@@ -792,7 +792,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	if(!current_user.has_money(active_request.value) || (current_user.account_holder != active_request.owner))
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
 		return TRUE
-	payment_target.transfer_money(current_user, active_request.value)
+	payment_target.transfer_money(current_user, active_request.value, "Bounty Request")
 	say("Paid out [active_request.value] credits.")
 	GLOB.request_list.Remove(active_request)
 	qdel(active_request)

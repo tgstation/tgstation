@@ -1,0 +1,8 @@
+author: "Jacquerel"
+delete-after: True
+changes: 
+  - bugfix: "Changing z-level while jaunting will no longer reveal you."
+  - bugfix: "If a shuttle lands on you while jaunting you will die rather than be stuck in a weird purgatory state."
+  - bugfix: "Mirror Walk will not appear tinted as if it can be cast when it can't, and vice versa."
+  - qol: "Blood Crawl and Shadow Walk will now display whether you can use them or not in the same manner as Mirror Walk."
+  - refactor: "Jaunt code which adds and removes temporary traits or effects should hopefully be easier to work with in the future."

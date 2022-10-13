@@ -71,6 +71,7 @@
 /// A trait source when adding traits through unit tests
 #define TRAIT_SOURCE_UNIT_TESTS "unit_tests"
 
+#include "ablative_hud.dm"
 #include "achievements.dm"
 #include "anchored_mobs.dm"
 #include "anonymous_themes.dm"
@@ -110,6 +111,7 @@
 #include "hydroponics_harvest.dm"
 #include "hydroponics_self_mutations.dm"
 #include "hydroponics_validate_genes.dm"
+#include "inhands.dm"
 #include "keybinding_init.dm"
 #include "knockoff_component.dm"
 #include "limbsanity.dm"
@@ -169,6 +171,7 @@
 #include "spell_mindswap.dm"
 #include "spell_names.dm"
 #include "spell_shapeshift.dm"
+#include "spritesheets.dm"
 #include "stack_singular_name.dm"
 #include "stomach.dm"
 #include "strippable.dm"

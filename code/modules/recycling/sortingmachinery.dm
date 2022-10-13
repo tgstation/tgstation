@@ -1,5 +1,6 @@
 /obj/item/delivery
 	icon = 'icons/obj/storage/storage.dmi'
+	inhand_icon_state = "deliverypackage"
 	var/giftwrapped = 0
 	var/sort_tag = 0
 	var/obj/item/paper/note
@@ -12,9 +13,9 @@
 /**
  * Initial check if manually unwrapping
  */
-/obj/item/delivery/proc/attempt_pre_unwrap_contents(mob/user)
+/obj/item/delivery/proc/attempt_pre_unwrap_contents(mob/user, time = 1.5 SECONDS)
 	to_chat(user, span_notice("You start to unwrap the package..."))
-	return do_after(user, 15, target = user)
+	return do_after(user, time, target = user)
 
 /**
  * Signals for unwrapping.
@@ -28,11 +29,14 @@
 /**
  * Effects after completing unwrapping
  */
-/obj/item/delivery/proc/post_unwrap_contents(mob/user)
+/obj/item/delivery/proc/post_unwrap_contents(mob/user, rip_open = TRUE)
 	var/turf/turf_loc = get_turf(user || src)
-	playsound(loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
-	new /obj/effect/decal/cleanable/wrapping(turf_loc)
-
+	if(rip_open)
+		playsound(loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
+		new /obj/effect/decal/cleanable/wrapping(turf_loc)
+	else
+		playsound(loc, 'sound/items/box_cut.ogg', 50, TRUE)
+		new /obj/item/stack/package_wrap(turf_loc, 1)
 	for(var/atom/movable/movable_content as anything in contents)
 		movable_content.forceMove(turf_loc)
 
@@ -114,7 +118,7 @@
 		if(!user.can_write(item))
 			return
 		var/str = tgui_input_text(user, "Label text?", "Set label", max_length = MAX_NAME_LEN)
-		if(!user.canUseTopic(src, BE_CLOSE))
+		if(!user.canUseTopic(src, be_close = TRUE))
 			return
 		if(!str || !length(str))
 			to_chat(user, span_warning("Invalid text!"))
@@ -184,6 +188,17 @@
 				continue
 			wrapped_item.AddComponent(/datum/component/pricetag, sticker.payments_acc, sticker.cut_multiplier)
 		update_appearance()
+
+	else if(istype(item, /obj/item/boxcutter))
+		var/obj/item/boxcutter/boxcutter_item = item
+		if(boxcutter_item.on)
+			if(!attempt_pre_unwrap_contents(user, time = 0.5 SECONDS))
+				return
+			unwrap_contents()
+			balloon_alert(user, "cutting open package...")
+			post_unwrap_contents(user, rip_open = FALSE)
+		else
+			balloon_alert(user, "prime the boxcutter!")
 
 	else
 		return ..()

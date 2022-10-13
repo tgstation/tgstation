@@ -70,7 +70,7 @@
 		if(client && hud_used?.hud_shown)
 			head.screen_loc = ui_drone_head
 			client.screen += head
-		var/used_head_icon = 'icons/mob/clothing/head.dmi'
+		var/used_head_icon = 'icons/mob/clothing/head/utility.dmi'
 		if(istype(head, /obj/item/clothing/mask))
 			used_head_icon = 'icons/mob/clothing/mask.dmi'
 		var/mutable_appearance/head_overlay = head.build_worn_icon(default_layer = DRONE_HEAD_LAYER, default_icon_file = used_head_icon)

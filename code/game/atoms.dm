@@ -246,7 +246,7 @@
 
 	SET_PLANE_IMPLICIT(src, plane)
 
-	if(greyscale_config && greyscale_colors)
+	if(greyscale_config && greyscale_colors) //we'll check again at item/init for inhand/belt/worn configs.
 		update_greyscale()
 
 	//atom color stuff
@@ -1161,15 +1161,14 @@
  */
 /atom/proc/wash(clean_types)
 	SHOULD_CALL_PARENT(TRUE)
-
-	. = FALSE
 	if(SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, clean_types) & COMPONENT_CLEANED)
-		. = TRUE
+		return TRUE
 
 	// Basically "if has washable coloration"
 	if(length(atom_colours) >= WASHABLE_COLOUR_PRIORITY && atom_colours[WASHABLE_COLOUR_PRIORITY])
 		remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 		return TRUE
+	return FALSE
 
 /**
  * call back when a var is edited on this atom
@@ -1233,6 +1232,7 @@
 	switch(var_name)
 		if(NAMEOF(src, color))
 			add_atom_colour(color, ADMIN_COLOUR_PRIORITY)
+			update_appearance()
 
 
 /**
@@ -2066,16 +2066,3 @@
 	if(caller && (caller.pass_flags & pass_flags_self))
 		return TRUE
 	. = !density
-
-/**
- * Starts cleaning something by sending the COMSIG_START_CLEANING signal.
- * This signal is received by the [cleaner component](code/datums/components/cleaner.html).
- *
- * Arguments
- * * source the datum to send the signal from
- * * target the thing being cleaned
- * * user the person doing the cleaning
- * * clean_target set this to false if the target should not be washed and if experience should not be awarded to the user
- */
-/atom/proc/start_cleaning(datum/source, atom/target, mob/living/user, clean_target = TRUE)
-	SEND_SIGNAL(source, COMSIG_START_CLEANING, target, user, clean_target)
