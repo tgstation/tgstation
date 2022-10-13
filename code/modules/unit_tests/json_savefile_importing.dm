@@ -30,11 +30,6 @@
 	test_savefile.cd = "/v1/v2"
 	test_savefile["var_string"] << var_string
 
-/datum/unit_test/json_savefiles/Destroy()
-	qdel(test_savefile)
-	qdel(json_savefile)
-	return ..()
-
 /datum/unit_test/json_savefiles/Run()
 	// first, we import the file to json
 	json_savefile.import_byond_savefile(test_savefile)
