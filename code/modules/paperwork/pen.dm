@@ -357,6 +357,7 @@
 		sharpness_on = TRUE)
 
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/toggle_screwdriver)
+	AddElement(/datum/element/update_icon_updates_onmob)
 
 
 /obj/item/pen/screwdriver/vv_edit_var(var_name, var_value)
