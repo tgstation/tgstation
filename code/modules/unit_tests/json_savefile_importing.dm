@@ -7,8 +7,6 @@
 	var/var_string
 	var/var_number
 
-	focus = TRUE
-
 /datum/unit_test/json_savefiles/New()
 	var/path_sfile = "data/temp.sav"
 	var/path_jfile = "data/temp.json"
