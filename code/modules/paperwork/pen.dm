@@ -343,11 +343,11 @@
 // screwdriver pen!
 
 /obj/item/pen/screwdriver
-	/// whether the pen is extended
-	var/extended = FALSE
 	desc = "A pen with an extendable screwdriver tip. This one has a yellow cap."
 	icon_state = "pendriver"
 	toolspeed = 1.2  // gotta have some downside
+	/// whether the pen is extended
+	var/extended = FALSE
 
 /obj/item/pen/screwdriver/Initialize(mapload)
 	. = ..()
