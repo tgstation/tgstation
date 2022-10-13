@@ -1,4 +1,0 @@
-author: "GoldenAlpharex"
-delete-after: True
-changes: 
-  - bugfix: "Blood no longer trail in anyone's bloodstream as a reagent after being inserted in their body."
