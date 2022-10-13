@@ -122,7 +122,7 @@
 	message_admins("[length(disease_candidates)] candidates found!")
 
 	if(tgui_alert(usr,"Customize your virus?", "Glorified Debug Tool", list("Yes", "No")) == "Yes")
-		chosen_severity = tgui_input_number(usr, "Select a custom severity for your virus!", "Plague Incorporation!", 3, 15)
+		chosen_severity = tgui_input_number(usr, "Select a custom severity for your virus!", "Plague Incorporation!", 3, 8)
 		chosen_max_symptoms = tgui_input_number(usr, "How many symptoms do you want your virus to have?", "A pox upon ye!", 3, 15)
 
 /datum/round_event/disease_outbreak/advanced
