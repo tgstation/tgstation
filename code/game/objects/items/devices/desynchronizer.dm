@@ -48,10 +48,6 @@
 	new /obj/effect/temp_visual/desynchronizer(drop_location())
 	to_chat(user, span_notice("You activate [src], desynchronizing yourself from the present. You can still see your surroundings, but you feel eerily dissociated from reality."))
 	user.forceMove(sync_holder)
-	SEND_SIGNAL(user, COMSIG_MOVABLE_SECLUDED_LOCATION)
-	for(var/thing in user)
-		var/atom/movable/AM = thing
-		SEND_SIGNAL(AM, COMSIG_MOVABLE_SECLUDED_LOCATION)
 	last_use = world.time
 	icon_state = "desynchronizer-on"
 	resync_timer = addtimer(CALLBACK(src, .proc/resync), duration , TIMER_STOPPABLE)
@@ -80,6 +76,10 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE
+
+/obj/effect/abstract/sync_holder/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/secluded_atom)
 
 /obj/effect/abstract/sync_holder/Destroy()
 	for(var/I in contents)

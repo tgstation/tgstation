@@ -10,17 +10,34 @@
 /datum/component/stationloving/Initialize(inform_admins = FALSE, allow_item_destruction = FALSE)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(parent, COMSIG_MOVABLE_Z_CHANGED, .proc/on_parent_z_change)
-	RegisterSignal(parent, COMSIG_MOVABLE_SECLUDED_LOCATION, .proc/on_parent_unreachable)
-	RegisterSignal(parent, COMSIG_PARENT_PREQDELETED, .proc/on_parent_pre_qdeleted)
-	RegisterSignal(parent, COMSIG_ITEM_IMBUE_SOUL, .proc/check_soul_imbue)
-	RegisterSignal(parent, COMSIG_ITEM_MARK_RETRIEVAL, .proc/check_mark_retrieval)
 	src.inform_admins = inform_admins
 	src.allow_item_destruction = allow_item_destruction
 
 	// Just in case something is being created outside of station/centcom
 	if(!atom_in_bounds(parent))
 		relocate()
+
+/datum/component/stationloving/RegisterWithParent()
+	RegisterSignal(parent, COMSIG_MOVABLE_Z_CHANGED, .proc/on_parent_z_change)
+	RegisterSignal(parent, COMSIG_PARENT_PREQDELETED, .proc/on_parent_pre_qdeleted)
+	RegisterSignal(parent, COMSIG_ITEM_IMBUE_SOUL, .proc/check_soul_imbue)
+	RegisterSignal(parent, COMSIG_ITEM_MARK_RETRIEVAL, .proc/check_mark_retrieval)
+	// Relocate when we become unreachable
+	RegisterSignal(parent, COMSIG_MOVABLE_SECLUDED_LOCATION, .proc/on_parent_unreachable)
+	// Relocate when our loc, or any of our loc's locs, becomes unreachable
+	var/static/list/loc_connections = list(COMSIG_MOVABLE_SECLUDED_LOCATION = .proc/on_parent_unreachable)
+	AddComponent(/datum/component/connect_containers, parent, loc_connections)
+
+/datum/component/stationloving/UnregisterFromParent()
+	UnregisterSignal(parent, list(
+		COMSIG_MOVABLE_Z_CHANGED,
+		COMSIG_PARENT_PREQDELETED,
+		COMSIG_ITEM_IMBUE_SOUL,
+		COMSIG_ITEM_MARK_RETRIEVAL,
+		COMSIG_MOVABLE_SECLUDED_LOCATION,
+	))
+
+	qdel(GetComponent(/datum/component/connect_containers))
 
 /datum/component/stationloving/InheritComponent(datum/component/stationloving/newc, original, inform_admins, allow_death)
 	if (original)
@@ -38,12 +55,17 @@
 		if(GLOB.blobstart.len > 0)
 			target_turf = get_turf(pick(GLOB.blobstart))
 		else
-			CRASH("Unable to find a blobstart landmark")
+			CRASH("Unable to find a blobstart landmark for stationliving component to relocate.")
 
 	var/atom/movable/movable_parent = parent
 	playsound(movable_parent, 'sound/machines/synth_no.ogg', 5, TRUE)
+
+	var/mob/holder = get(movable_parent, /mob)
+	if(holder)
+		to_chat(holder, span_danger("You can't help but feel that you just lost something back there..."))
+		holder.temporarilyRemoveItemFromInventory(parent, TRUE) // prevents ghost diskie
+
 	movable_parent.forceMove(target_turf)
-	to_chat(get(parent, /mob), span_danger("You can't help but feel that you just lost something back there..."))
 
 	return target_turf
 
@@ -123,5 +145,3 @@
 	log_game("[parent] has been moved to unreachable location in [loc_name(current_turf)]. Moving it to [loc_name(new_turf)].")
 	if(inform_admins)
 		message_admins("[parent] has been moved to unreachable location in [ADMIN_VERBOSEJMP(current_turf)]. Moving it to [ADMIN_VERBOSEJMP(new_turf)].")
-
-	return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
