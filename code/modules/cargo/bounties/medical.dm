@@ -93,12 +93,12 @@
 
 /datum/bounty/item/medical/surgerycomp
 	name = "Surgery Computer"
-	description = "After another freak bombing incident at our annual cheesefest at centcom, we have a massive stack of injured crew on our end. Please send us a fresh surgery computer, if at all possible."
+	description = "After another freak bombing incident at our annual cheesefest at CentCom, we have a massive stack of injured crew on our end. Please send us a fresh surgery computer, if at all possible."
 	reward = CARGO_CRATE_VALUE * 12
 	wanted_types = list(/obj/machinery/computer/operating = TRUE)
 
 /datum/bounty/item/medical/surgerytable
 	name = "Operating Table"
-	description = "After a recent influx of infected crew members recently, we've seen that masks just aren't cutting it alone. Silver Operating tables might just do the trick though, send us one to use."
+	description = "After a recent influx of infected crew members, we've seen that masks just aren't cutting it alone. Silver operating tables might just do the trick though, send us one to use."
 	reward = CARGO_CRATE_VALUE * 6
 	wanted_types = list(/obj/structure/table/optable = TRUE)

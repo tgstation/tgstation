@@ -1,0 +1,4 @@
+author: "san7890"
+delete-after: True
+changes: 
+  - bugfix: "If you exit out of the TGUI options menu when hitting the \"Make AI\" link there, it will actually assume that you wanted to cancel out of the proc entirely, rather than proceed without your knowledge."
