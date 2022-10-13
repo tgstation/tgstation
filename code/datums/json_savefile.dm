@@ -3,12 +3,14 @@
 
 /json_savefile
 	var/path
-	var/list/tree
+	VAR_PRIVATE/list/tree
 	var/auto_save = FALSE
 
 /json_savefile/New(path)
 	src.path = path
 	src.tree = list()
+	if(fexists(path))
+		Load()
 
 /json_savefile/Destroy(force, ...)
 	tree.Cut()
@@ -44,9 +46,6 @@
 	if(fexists(path))
 		fdel(path)
 	text2file(json_encode(tree), path)
-
-/json_savefile/proc/operator[](key)
-	return Get(key)
 
 /json_savefile/proc/decode_line_value(line)
 	. = line
