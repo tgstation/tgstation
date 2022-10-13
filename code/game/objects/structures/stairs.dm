@@ -169,6 +169,11 @@
 	/// How much of frame_stack should this drop on deconstruction?
 	var/frame_stack_amount = 10
 
+/obj/structure/stairs_frame/wood
+	name = "wooden stairs frame"
+	desc = "Everything you need to build a staircase, minus the actual stairs, this one is made of wood."
+	frame_stack = /obj/item/stack/sheet/mineral/wood
+
 /obj/structure/stairs_frame/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/simple_rotation)
@@ -210,6 +215,7 @@
 	if(!anchored)
 		if(isstack(attacked_by))
 			user.balloon_alert(user, "secure frame first")
+			return TRUE
 		return ..()
 	if(isstack(attacked_by))
 		var/obj/item/stack/material = attacked_by
@@ -238,7 +244,7 @@
 			if(material.material_type)
 				material_list[material.material_type] = MINERAL_MATERIAL_AMOUNT * 10
 			make_new_stairs(/obj/structure/stairs/material, material_list)
-		return
+		return TRUE
 	return ..()
 
 /obj/structure/stairs_frame/proc/make_new_stairs(stairs_type, custom_materials)
