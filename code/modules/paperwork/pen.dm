@@ -387,3 +387,4 @@
 /obj/item/pen/screwdriver/update_icon_state()
 	. = ..()
 	icon_state = "[initial(icon_state)][extended ? "_out":null]"
+	inhand_icon_state = initial(inhand_icon_state) //since transforming component switches the icon.
