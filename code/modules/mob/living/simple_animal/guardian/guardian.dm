@@ -451,7 +451,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	set category = "Guardian"
 	set desc = "Communicate telepathically with your guardian."
 	var/input = tgui_input_text(src, "Enter a message to tell your guardian", "Message")
-	if(!input || stat >= UNCONCIOUS)
+	if(!input || stat >= UNCONSCIOUS)
 		return
 
 	var/preliminary_message = "<span class='holoparasite bold'>[input]</span>" //apply basic color/bolding
