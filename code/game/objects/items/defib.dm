@@ -19,14 +19,20 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 50)
 
 	var/obj/item/shockpaddles/paddle_type = /obj/item/shockpaddles
-	var/on = FALSE //if the paddles are equipped (1) or on the defib (0)
-	var/safety = TRUE //if you can zap people with the defibs on harm mode
-	var/powered = FALSE //if there's a cell in the defib with enough power for a revive, blocks paddles from reviving otherwise
-	var/cell_removable = TRUE //Can the cell be removed?
+	/// If the paddles are equipped (1) or on the defib (0)
+	var/on = FALSE
+	/// If you can zap people with the defibs on harm mode
+	var/safety = TRUE
+	/// If there's a cell in the defib with enough power for a revive, blocks paddles from reviving otherwise
+	var/powered = FALSE
+	/// If the cell can be removed via screwdriver
+	var/cell_removable = TRUE
 	var/obj/item/shockpaddles/paddles
 	var/obj/item/stock_parts/cell/high/cell
-	var/combat = FALSE //if true, revive through space suits, allow for combat shocking
-	var/cooldown_duration = 5 SECONDS//how long does it take to recharge
+	/// If true, revive through space suits, allow for combat shocking
+	var/combat = FALSE
+	/// How long does it take to recharge
+	var/cooldown_duration = 5 SECONDS
 	/// The icon state for the paddle overlay, not applied if null
 	var/paddle_state = "defibunit-paddles"
 	/// The icon state for the powered on overlay, not applied if null
@@ -135,7 +141,7 @@
 			M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 
 /obj/item/defibrillator/screwdriver_act(mob/living/user, obj/item/tool)
-	if(!(cell && cell_removable))
+	if(!cell || !cell_removable)
 		return FALSE
 
 	cell.update_appearance()
