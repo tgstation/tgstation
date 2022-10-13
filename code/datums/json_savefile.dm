@@ -1,5 +1,5 @@
-#define SF_CUTOFF_FLAG "||__||__||"
-#define SF_REPLACE_COMMA "|||_|||"
+#define JSON_SAVEFILE_PARSE_CUTOFF_FLAG "||__||__||"
+#define JSON_SAVEFILE_PARSE_REPLACE_COMMA "|||_|||"
 
 /json_savefile
 	var/path
@@ -59,14 +59,14 @@
 				var/key_value_pair = splittext(entree, " = ")
 				if(length(key_value_pair)==1)
 					key_value_pair += "null"
-				finished += "[key_value_pair[1]]:[key_value_pair[2]][SF_REPLACE_COMMA]"
-			finished = copytext(finished, 1, -length(SF_REPLACE_COMMA))
+				finished += "[key_value_pair[1]]:[key_value_pair[2]][JSON_SAVEFILE_PARSE_REPLACE_COMMA]"
+			finished = copytext(finished, 1, -length(JSON_SAVEFILE_PARSE_REPLACE_COMMA))
 			finished += "}"
 		else
-			finished = "\[" + replacetext(work, ",", SF_REPLACE_COMMA) + "\]"
+			finished = "\[" + replacetext(work, ",", JSON_SAVEFILE_PARSE_REPLACE_COMMA) + "\]"
 		line = copytext(line, 1, list_index) + finished + copytext(line, target_char_index + 1)
 		list_index = findlasttext(line, "list(")
-	return json_decode(replacetext(line, SF_REPLACE_COMMA, ","))
+	return json_decode(replacetext(line, JSON_SAVEFILE_PARSE_REPLACE_COMMA, ","))
 
 /json_savefile/proc/import_byond_savefile(savefile/savefile)
 	var/list/data = splittext(savefile.ExportText("/"), "\n")
@@ -75,7 +75,7 @@
 	var/tab_last
 	var/line_concat
 	var/concat_tab
-	data += SF_CUTOFF_FLAG
+	data += JSON_SAVEFILE_PARSE_CUTOFF_FLAG
 	while(data.len)
 		var/line = popleft(data)
 		var/tab = findlasttext(line, "\t")
@@ -103,7 +103,7 @@
 				region -= ".."
 				region = next
 
-		if(line == SF_CUTOFF_FLAG)
+		if(line == JSON_SAVEFILE_PARSE_CUTOFF_FLAG)
 			break
 
 		var/list/line_data = splittext(line, " = ")
@@ -122,5 +122,5 @@
 		tab_last = tab
 	tree = savefile_data
 
-#undef SF_CUTOFF_FLAG
-#undef SF_REPLACE_COMMA
+#undef JSON_SAVEFILE_PARSE_CUTOFF_FLAG
+#undef JSON_SAVEFILE_PARSE_REPLACE_COMMA
