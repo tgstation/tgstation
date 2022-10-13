@@ -40,7 +40,7 @@
 	json_savefile.Import(test_savefile)
 	if(json_encode(basic_list) != json_encode(json_savefile.Get("basic_list")))
 		TEST_FAIL("basic_list was not converted correctly")
-	if(json_encode(assoc_list) != json_encode(json_savefile.Get("assoc_list"))
+	if(json_encode(assoc_list) != json_encode(json_savefile.Get("assoc_list")))
 		TEST_FAIL("assoc list was not converted correctly")
 	if(var_string != json_savefile.Get("v1")?["var_string"])
 		TEST_FAIL("var_string was not imported correctly")
