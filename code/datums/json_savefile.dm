@@ -1,6 +1,6 @@
 /**
- * A savefile implementation that handles all data using json
- * also saves it using JSON too, fancy
+ * A savefile implementation that handles all data using json.
+ * Also saves it using JSON too, fancy.
  */
 /datum/json_savefile
 	var/path
