@@ -67,10 +67,20 @@
 	else
 		C.set_suicide(suicided)
 
-	for(var/X in traumas)
-		var/datum/brain_trauma/BT = X
-		BT.owner = owner
-		BT.on_gain()
+	for(var/datum/brain_trauma/trauma as anything in traumas)
+		if(trauma.owner)
+			if(trauma.owner == owner)
+				// if we're being special replaced, the trauma is already applied, so this is expected
+				// but if we're not... this is likely a bug, and should be reported
+				if(!special)
+					stack_trace("A brain trauma ([trauma]) is being re-applied to its owning mob ([owner])!")
+				continue
+
+			stack_trace("A brain trauma ([trauma]) is being applied to a new mob ([owner]) when it's owned by someone else ([trauma.owner])!")
+			continue
+
+		trauma.owner = owner
+		trauma.on_gain()
 
 	//Update the body's icon so it doesnt appear debrained anymore
 	C.update_body_parts()
@@ -415,7 +425,7 @@
 		WARNING("gain_trauma was given an already active trauma.")
 		return FALSE
 
-	add_trauma_to_traumas(trauma)
+	add_trauma_to_traumas(actual_trauma)
 	if(owner)
 		actual_trauma.owner = owner
 		SEND_SIGNAL(owner, COMSIG_CARBON_GAIN_TRAUMA, trauma)
