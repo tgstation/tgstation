@@ -80,16 +80,11 @@
 	var/last_tracked_name
 	/// Whether the target radial is currently opened.
 	var/radial_open = FALSE
-	/// Tracks the name of our sacrifice knowledge ritual.
-	var/sacrifice_knowlege_name
 
 /datum/action/cooldown/track_target/Grant(mob/granted)
-	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(granted)
-	if(!heretic_datum)
+	if(!IS_HERETIC(granted))
 		return
 
-	var/datum/heretic_knowledge/sac_knowledge = heretic_datum.get_knowledge(/datum/heretic_knowledge/hunt_and_sacrifice)
-	sacrifice_knowlege_name = sac_knowledge.name
 	return ..()
 
 /datum/action/cooldown/track_target/IsAvailable()
@@ -110,6 +105,7 @@
 
 /datum/action/cooldown/track_target/Activate(atom/target)
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(owner)
+	var/datum/heretic_knowledge/sac_knowledge = heretic_datum.get_knowledge(/datum/heretic_knowledge/hunt_and_sacrifice)
 	if(!LAZYLEN(heretic_datum.sac_targets))
 		owner.balloon_alert(owner, "no targets, visit a rune!")
 		StartCooldown(1 SECONDS)
@@ -151,7 +147,7 @@
 	// Let them know how to sacrifice people if they're able to be sac'd
 	if(tracked_mob.stat == DEAD)
 		to_chat(owner, span_hierophant("[tracked_mob] is dead. Bring them to a transmutation rune \
-			and invoke \"[sacrifice_knowlege_name]\" to sacrifice them!"))
+			and invoke \"[sac_knowledge.name]\" to sacrifice them!"))
 
 	StartCooldown()
 	return TRUE

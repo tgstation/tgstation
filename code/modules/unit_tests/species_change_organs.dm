@@ -4,7 +4,7 @@
 	var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human)
 
 	// Give a trauma
-	dummy.gain_trauma_type(/datum/brain_trauma/severe/blindness)
+	dummy.gain_trauma(/datum/brain_trauma/severe/blindness)
 	// Give a cyber heart
 	var/obj/item/organ/internal/heart/cybernetic/cyber_heart = new()
 	cyber_heart.Insert(dummy, TRUE, FALSE)
