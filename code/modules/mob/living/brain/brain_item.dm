@@ -435,10 +435,14 @@
 	SSblackbox.record_feedback("tally", "traumas", 1, actual_trauma.type)
 	return actual_trauma
 
+/// Adds the passed trauma instance to our list of traumas and links it to our brain.
+/// DOES NOT handle setting up the trauma, that's done by [proc/brain_gain_trauma]!
 /obj/item/organ/internal/brain/proc/add_trauma_to_traumas(datum/brain_trauma/trauma)
 	trauma.brain = src
 	traumas += trauma
 
+/// Removes the passed trauma instance to our list of traumas and links it to our brain
+/// DOES NOT handle removing the trauma's effects, that's done by [/datum/brain_trauma/Destroy()]!
 /obj/item/organ/internal/brain/proc/remove_trauma_from_traumas(datum/brain_trauma/trauma)
 	trauma.brain = null
 	traumas -= trauma
