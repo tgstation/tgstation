@@ -282,6 +282,8 @@
 	if(!istype(replacement_brain))
 		return
 
+	// Transfer over skillcips to the new brain
+
 	// If we have some sort of brain type or subtype change and have skillchips, engage the failsafe procedure!
 	if(owner && length(skillchips) && (replacement_brain.type != type))
 		activate_skillchip_failsafe(FALSE)
@@ -307,6 +309,11 @@
 
 	// Any skillchips has been transferred over, time to empty the list.
 	LAZYCLEARLIST(skillchips)
+
+	// Transfer over traumas as well
+	for(var/datum/brain_trauma/trauma as anything in traumas)
+		remove_trauma_from_traumas(trauma)
+		replacement_brain.add_trauma_to_traumas(trauma)
 
 /obj/item/organ/internal/brain/machine_wash(obj/machinery/washing_machine/brainwasher)
 	. = ..()
@@ -408,8 +415,7 @@
 		WARNING("gain_trauma was given an already active trauma.")
 		return FALSE
 
-	traumas += actual_trauma
-	actual_trauma.brain = src
+	add_trauma_to_traumas(trauma)
 	if(owner)
 		actual_trauma.owner = owner
 		SEND_SIGNAL(owner, COMSIG_CARBON_GAIN_TRAUMA, trauma)
@@ -418,6 +424,14 @@
 		actual_trauma.resilience = resilience
 	SSblackbox.record_feedback("tally", "traumas", 1, actual_trauma.type)
 	return actual_trauma
+
+/obj/item/organ/internal/brain/proc/add_trauma_to_traumas(datum/brain_trauma/trauma)
+	trauma.brain = src
+	traumas += trauma
+
+/obj/item/organ/internal/brain/proc/remove_trauma_from_traumas(datum/brain_trauma/trauma)
+	trauma.brain = null
+	traumas -= trauma
 
 //Add a random trauma of a certain subtype
 /obj/item/organ/internal/brain/proc/gain_trauma_type(brain_trauma_type = /datum/brain_trauma, resilience, natural_gain = FALSE)
