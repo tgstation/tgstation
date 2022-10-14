@@ -23,7 +23,7 @@
 
 /datum/bounty/item/medical/appendix
 	name = "Appendix"
-	description = "Chef Gibb of Central Command wants to prepare a meal using a very special delicacy: an appendix. If you ship one, he'll pay. We'll take a cybernetic one if need be."
+	description = "Chef Gibb of Central Command wants to prepare a meal using a very special delicacy: an appendix. If you ship one, he'll pay."
 	reward = CARGO_CRATE_VALUE * 5 //there are no synthetic appendixes
 	wanted_types = list(/obj/item/organ/internal/appendix = TRUE)
 
