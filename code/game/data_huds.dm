@@ -511,7 +511,7 @@ Diagnostic HUDs!
 	set_hud_image_active(DIAG_AIRLOCK_HUD)
 
 // Species info!
-/mob/living/carbon/proc/update_species_hud()
+/mob/living/carbon/human/proc/update_species_hud()
 	var/image/holder = hud_list[SPECIES_HUD]
 
 	var/perpname = get_face_name(get_id_name(""))
