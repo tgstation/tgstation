@@ -25,6 +25,7 @@
 /obj/item/pitchfork/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/two_handed, force_unwielded=7, force_wielded=15, icon_wielded="[base_icon_state]1")
+	ADD_TRAIT(src, TRAIT_CANE_TOOL, TRAIT_GENERIC)
 
 /obj/item/pitchfork/update_icon_state()
 	icon_state = "[base_icon_state]0"

@@ -25,6 +25,7 @@
 	AddComponent(/datum/component/cleaner, mopspeed, on_cleaned_callback=CALLBACK(src, .proc/apply_reagents))
 	create_reagents(max_reagent_volume)
 	GLOB.janitor_devices += src
+	ADD_TRAIT(src, TRAIT_CANE_TOOL, TRAIT_GENERIC)
 
 /obj/item/mop/Destroy(force)
 	GLOB.janitor_devices -= src

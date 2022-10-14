@@ -21,6 +21,7 @@
 /obj/item/pushbroom/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/two_handed, force_unwielded=8, force_wielded=12, icon_wielded="[base_icon_state]1", wield_callback = CALLBACK(src, .proc/on_wield), unwield_callback = CALLBACK(src, .proc/on_unwield))
+	ADD_TRAIT(src, TRAIT_CANE_TOOL, TRAIT_GENERIC)
 
 /obj/item/pushbroom/update_icon_state()
 	icon_state = "[base_icon_state]0"

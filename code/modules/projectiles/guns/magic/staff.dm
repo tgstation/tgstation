@@ -10,6 +10,10 @@
 	/// If FALSE, only wizards or survivalists can use the staff to its full potential - If TRUE, anyone can
 	var/allow_intruder_use = FALSE
 
+/obj/item/gun/magic/staff/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_CANE_TOOL, TRAIT_GENERIC)
+
 /obj/item/gun/magic/staff/proc/is_wizard_or_friend(mob/user)
 	if(!user?.mind?.has_antag_datum(/datum/antagonist/wizard) \
 		&& !user.mind.has_antag_datum(/datum/antagonist/survivalist/magic) \
@@ -212,6 +216,7 @@
 		bonus_modifier = 0, \
 		butcher_sound = hitsound, \
 	)
+	REMOVE_TRAIT(src, TRAIT_CANE_TOOL, TRAIT_GENERIC) // swords don't count as canes
 
 /obj/item/gun/magic/staff/spellblade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(attack_type == PROJECTILE_ATTACK)

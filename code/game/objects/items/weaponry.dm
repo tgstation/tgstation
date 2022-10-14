@@ -452,6 +452,10 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb_continuous = list("bludgeons", "whacks", "disciplines", "thrashes")
 	attack_verb_simple = list("bludgeon", "whack", "discipline", "thrash")
 
+/obj/item/cane/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_CANE_TOOL, TRAIT_GENERIC)
+
 /obj/item/cane/white
 	name = "white cane"
 	desc = "A cane traditionally used by the blind to help them see. Folds down to be easier to transport."
@@ -474,6 +478,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		attack_verb_simple_on = list("smack", "strike", "crack", "beat"))
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
 	ADD_TRAIT(src, TRAIT_BLIND_TOOL, ITEM_BLIND_TRAIT)
+	REMOVE_TRAIT(src, TRAIT_CANE_TOOL, TRAIT_GENERIC) // cane is folded by default so doesn't count until extended
 
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
@@ -485,6 +490,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 	balloon_alert(user, active ? "extended" : "collapsed")
 	playsound(user ? user : src, 'sound/weapons/batonextend.ogg', 50, TRUE)
+	if(active)
+		ADD_TRAIT(src, TRAIT_CANE_TOOL, TRAIT_GENERIC)
+	else
+		REMOVE_TRAIT(src, TRAIT_CANE_TOOL, TRAIT_GENERIC)
+
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/staff
@@ -503,6 +513,10 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb_continuous = list("bludgeons", "whacks", "disciplines")
 	attack_verb_simple = list("bludgeon", "whack", "discipline")
 	resistance_flags = FLAMMABLE
+
+/obj/item/staff/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_CANE_TOOL, TRAIT_GENERIC)
 
 /obj/item/staff/broom
 	name = "broom"

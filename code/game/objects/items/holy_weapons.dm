@@ -93,6 +93,10 @@
 	/// The icon which appears over the mob holding the item
 	var/shield_icon = "shield-red"
 
+/obj/item/nullrod/staff/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_CANE_TOOL, TRAIT_GENERIC)
+
 /obj/item/nullrod/staff/worn_overlays(mutable_appearance/standing, isinhands)
 	. = ..()
 	if(isinhands)
@@ -250,11 +254,12 @@
 
 /obj/item/nullrod/scythe/Initialize(mapload)
 	. = ..()
+	// the harvest gives a high bonus chance
 	AddComponent(/datum/component/butchering, \
 	speed = 7 SECONDS, \
 	effectiveness = 110, \
 	)
-	//the harvest gives a high bonus chance
+	ADD_TRAIT(src, TRAIT_CANE_TOOL, TRAIT_GENERIC)
 
 /obj/item/nullrod/scythe/vibro
 	name = "high frequency blade"
@@ -269,6 +274,10 @@
 	hitsound = 'sound/weapons/rapierhit.ogg'
 	menu_description = "A sharp blade which partially penetrates armor. Very effective at butchering bodies. Can be worn on the back."
 
+/obj/item/nullrod/scythe/vibro/Initialize(mapload)
+	. = ..()
+	REMOVE_TRAIT(src, TRAIT_CANE_TOOL, TRAIT_GENERIC) // swords don't count as canes
+
 /obj/item/nullrod/scythe/spellblade
 	name = "dormant spellblade"
 	desc = "The blade grants the wielder nearly limitless power...if they can figure out how to turn it on, that is."
@@ -280,6 +289,10 @@
 	icon = 'icons/obj/weapons/guns/magic.dmi'
 	hitsound = 'sound/weapons/rapierhit.ogg'
 	menu_description = "A sharp blade which partially penetrates armor. Very effective at butchering bodies. Can be worn on the back."
+
+/obj/item/nullrod/scythe/spellblade/Initialize(mapload)
+	. = ..()
+	REMOVE_TRAIT(src, TRAIT_CANE_TOOL, TRAIT_GENERIC) // swords don't count as canes
 
 /obj/item/nullrod/scythe/talking
 	name = "possessed blade"
@@ -297,6 +310,7 @@
 /obj/item/nullrod/scythe/talking/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/spirit_holding)
+	REMOVE_TRAIT(src, TRAIT_CANE_TOOL, TRAIT_GENERIC) // swords don't count as canes
 
 /obj/item/nullrod/scythe/talking/chainsword
 	name = "possessed chainsaw sword"
@@ -504,6 +518,10 @@
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	menu_description = "A staff which provides a medium-low chance of blocking incoming melee attacks and deals a little less damage due to being made of wood. Can be worn on the back."
 
+/obj/item/nullrod/claymore/bostaff/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_CANE_TOOL, TRAIT_GENERIC)
+
 /obj/item/nullrod/tribal_knife
 	icon_state = "crysknife"
 	desc = "They say fear is the true mind killer, but stabbing them in the head works too. Honour compels you to not sheathe it once drawn."
@@ -555,6 +573,10 @@
 	sharpness = SHARP_EDGED
 	menu_description = "A sharp pitchfork. Can be worn on the back."
 
+/obj/item/nullrod/pitchfork/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_CANE_TOOL, TRAIT_GENERIC)
+
 /obj/item/nullrod/egyptian
 	name = "egyptian staff"
 	desc = "A tutorial in mummification is carved into the staff. You could probably craft the wraps if you had some cloth."
@@ -569,6 +591,10 @@
 	attack_verb_continuous = list("bashes", "smacks", "whacks")
 	attack_verb_simple = list("bash", "smack", "whack")
 	menu_description = "A staff. Can be used as a tool to craft exclusive egyptian items. Easily stored. Can be worn on the back."
+
+/obj/item/nullrod/egyptian/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_CANE_TOOL, TRAIT_GENERIC)
 
 /obj/item/nullrod/hypertool
 	name = "hypertool"
@@ -603,3 +629,7 @@
 	attack_verb_simple = list("stab", "poke", "slash", "clock")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	menu_description = "A pointy spear which penetrates armor a little. Can be worn only on the belt."
+
+/obj/item/nullrod/spear/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_CANE_TOOL, TRAIT_GENERIC)

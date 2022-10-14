@@ -433,6 +433,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Item still allows you to examine items while blind and actively held.
 #define TRAIT_BLIND_TOOL "blind_tool"
 
+/// Item negates the bad back quirk while it's being actively held
+#define TRAIT_CANE_TOOL "cane_tool"
+
 // METABOLISMS
 // Various jobs on the station have historically had better reactions
 // to various drinks and foodstuffs. Security liking donuts is a classic

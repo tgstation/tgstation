@@ -308,6 +308,9 @@
 	var/staffcooldown = 0
 	var/staffwait = 30
 
+/obj/item/godstaff/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_CANE_TOOL, TRAIT_GENERIC)
 
 /obj/item/godstaff/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()

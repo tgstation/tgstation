@@ -528,6 +528,7 @@
 	speed = 9 SECONDS, \
 	effectiveness = 105, \
 	)
+	ADD_TRAIT(src, TRAIT_CANE_TOOL, TRAIT_GENERIC)
 
 /obj/item/scythe/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is beheading [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))

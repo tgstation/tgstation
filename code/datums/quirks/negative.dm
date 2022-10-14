@@ -13,32 +13,6 @@
 	var/datum/weakref/backpack
 	var/datum/weakref/left_cane
 	var/datum/weakref/right_cane
-	/// List of objects that should count as canes
-	var/static/list/cane_whitelist = typecacheof(list(
-		/obj/item/cane,
-		/obj/item/staff,
-		/obj/item/godstaff,
-		/obj/item/scythe,
-		/obj/item/pitchfork,
-		/obj/item/gun/magic/staff,
-		/obj/item/nullrod/staff,
-		/obj/item/nullrod/scythe,
-		/obj/item/nullrod/claymore/bostaff,
-		/obj/item/nullrod/pitchfork,
-		/obj/item/nullrod/egyptian,
-		/obj/item/nullrod/spear,
-		/obj/item/spear, // why yes, even the common spear is valid
-		/obj/item/pushbroom,
-		/obj/item/mop,
-	))
-	/// List of objects that should NOT count as canes
-	/// (all of these are swords with staff subtypes)
-	var/static/list/cane_blacklist = typecacheof(list(
-		/obj/item/gun/magic/staff/spellblade,
-		/obj/item/nullrod/scythe/vibro,
-		/obj/item/nullrod/scythe/spellblade,
-		/obj/item/nullrod/scythe/talking,
-	))
 
 /datum/quirk/badback/add_unique()
 	var/mob/living/carbon/human/human_holder = quirk_holder
@@ -51,8 +25,8 @@
 
 	var/obj/item/left_hand_item = human_holder.held_items[1]
 	var/obj/item/right_hand_item = human_holder.held_items[2]
-	var/is_cane_left_hand = cane_whitelist[left_hand_item?.type] && !cane_blacklist[left_hand_item?.type]
-	var/is_cane_right_hand = cane_whitelist[right_hand_item?.type] && !cane_blacklist[right_hand_item?.type]
+	var/is_cane_left_hand = istype(left_hand_item) && HAS_TRAIT(left_hand_item, TRAIT_CANE_TOOL)
+	var/is_cane_right_hand = istype(right_hand_item) && HAS_TRAIT(right_hand_item, TRAIT_CANE_TOOL)
 	var/is_holding_cane = is_cane_left_hand || is_cane_right_hand
 
 	if(istype(equipped_backpack))
@@ -83,8 +57,8 @@
 
 	var/obj/item/left_hand_item = quirk_holder.held_items[1]
 	var/obj/item/right_hand_item = quirk_holder.held_items[2]
-	var/is_cane_left_hand = cane_whitelist[left_hand_item?.type] && !cane_blacklist[left_hand_item?.type]
-	var/is_cane_right_hand = cane_whitelist[right_hand_item?.type] && !cane_blacklist[right_hand_item?.type]
+	var/is_cane_left_hand = istype(left_hand_item) && HAS_TRAIT(left_hand_item, TRAIT_CANE_TOOL)
+	var/is_cane_right_hand = istype(right_hand_item) && HAS_TRAIT(right_hand_item, TRAIT_CANE_TOOL)
 	var/is_holding_cane = is_cane_left_hand || is_cane_right_hand
 
 	if(equipped_backpack && !is_holding_cane)
@@ -112,8 +86,8 @@
 
 	var/obj/item/left_hand_item = quirk_holder.held_items[1]
 	var/obj/item/right_hand_item = quirk_holder.held_items[2]
-	var/is_cane_left_hand = cane_whitelist[left_hand_item?.type] && !cane_blacklist[left_hand_item?.type]
-	var/is_cane_right_hand = cane_whitelist[right_hand_item?.type] && !cane_blacklist[right_hand_item?.type]
+	var/is_cane_left_hand = istype(left_hand_item) && HAS_TRAIT(left_hand_item, TRAIT_CANE_TOOL)
+	var/is_cane_right_hand = istype(right_hand_item) && HAS_TRAIT(right_hand_item, TRAIT_CANE_TOOL)
 	var/is_holding_cane = is_cane_left_hand || is_cane_right_hand
 
 	if(backpack && !is_holding_cane)

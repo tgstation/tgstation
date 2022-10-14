@@ -46,6 +46,7 @@
 		force_wielded = force_wielded, \
 		icon_wielded = "[icon_prefix]1", \
 	)
+	ADD_TRAIT(src, TRAIT_CANE_TOOL, TRAIT_GENERIC)
 	update_appearance()
 
 /obj/item/spear/update_icon_state()
