@@ -18,7 +18,7 @@
 /datum/atom_hud/data
 
 /datum/atom_hud/data/human/medical
-	hud_icons = list(STATUS_HUD, HEALTH_HUD)
+	hud_icons = list(STATUS_HUD, HEALTH_HUD, SPECIES_HUD)
 
 /datum/atom_hud/data/human/medical/basic
 
@@ -40,7 +40,6 @@
 	check_sensors(H) ? add_atom_to_hud(H) : remove_atom_from_hud(H)
 
 /datum/atom_hud/data/human/medical/advanced
-	hud_icons = list(STATUS_HUD, HEALTH_HUD, SPECIES_HUD)
 
 /datum/atom_hud/data/human/security
 
@@ -48,7 +47,7 @@
 	hud_icons = list(ID_HUD)
 
 /datum/atom_hud/data/human/security/advanced
-	hud_icons = list(ID_HUD, IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, WANTED_HUD)
+	hud_icons = list(ID_HUD, IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, WANTED_HUD, SPECIES_HUD)
 
 /datum/atom_hud/data/human/fan_hud
 	hud_icons = list(FAN_HUD)
@@ -518,3 +517,5 @@ Diagnostic HUDs!
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
 	if(!skipface && dna?.species)
 		holder.icon_state = dna.species.hud_icon
+
+	set_hud_image_active(SPECIES_HUD)
