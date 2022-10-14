@@ -27436,6 +27436,10 @@
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/door/window/left/directional/north{
+	name = "Ore Redemption";
+	req_access = list("cargo")
+	},
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "jSJ" = (
