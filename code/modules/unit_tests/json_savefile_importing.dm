@@ -47,7 +47,7 @@
 	// we are expecting v1 -> v2 -> var_string
 	var/dir_v1 = json_savefile.get_entry("v1")
 	var/dir_v2 = dir_v1?["v2"]
-	var/dir_string = dir_v1?["var_string"]
+	var/dir_string = dir_v2?["var_string"]
 
 	TEST_ASSERT_EQUAL(byond_basic_list, json_basic_list, "didn't convert basic list correctly")
 	TEST_ASSERT_EQUAL(byond_assoc_list, json_assoc_list, "didn't convert associative list correctly")
