@@ -24,7 +24,9 @@
 	pixel_x = rand(-8, 8)
 
 /obj/structure/headpike/Destroy()
-	QDEL_NULL(victim)
+	if(victim)
+		victim.forceMove(drop_location())
+		victim = null
 	QDEL_NULL(spear)
 	return ..()
 
