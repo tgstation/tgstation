@@ -666,7 +666,7 @@
 
 /datum/action/innate/project_thought/Activate()
 	var/mob/living/carbon/human/telepath = owner
-	if(telepath.stat >= UNCONCIOUS)
+	if(telepath.stat >= UNCONSCIOUS)
 		return
 	if(!is_species(telepath, /datum/species/jelly/stargazer))
 		return
@@ -680,7 +680,7 @@
 	if(isnull(recipient))
 		return
 	var/msg = tgui_input_text(telepath, title = "Telepathy")
-	if(isnull(msg))
+	if(isnull(msg) || )
 		return
 	if(recipient.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))
 		to_chat(telepath, span_warning("As you reach into [recipient]'s mind, you are stopped by a mental blockage. It seems you've been foiled."))
