@@ -74,6 +74,7 @@
 	unit_name = "pair"
 	message = "of handcuffs"
 	export_types = list(/obj/item/restraints/handcuffs)
+
 /datum/export/weapon/wt550
 	cost = CARGO_CRATE_VALUE * 1.5
 	unit_name = "WT-550 automatic rifle"
