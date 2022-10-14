@@ -6,6 +6,15 @@
 	category = EVENT_CATEGORY_ENGINEERING
 	description = "Bolts open all doors in one or more departments."
 
+/datum/round_event_control/grey_tide/admin_setup()
+	if(!check_rights(R_FUN))
+		return ADMIN_CANCEL_EVENT
+
+	//The plan here is to create some sort of ui that lets the user select which departments get selected, and submits their choices to the round_event..
+	//First I need to learn tgui I guess
+
+
+
 /datum/round_event/grey_tide
 	announce_when = 50
 	end_when = 20
@@ -19,7 +28,6 @@
 									/area/station/service)
 	var/severity = 1
 
-
 /datum/round_event/grey_tide/setup()
 	announce_when = rand(50, 60)
 	end_when = rand(20, 30)
@@ -29,7 +37,6 @@
 		for(var/area/A as anything in GLOB.areas)
 			if(istype(A, picked_area))
 				areasToOpen += A
-
 
 /datum/round_event/grey_tide/announce(fake)
 	priority_announce("Gr3y.T1d3 virus detected in [station_name()] secure locking encryption subroutines. Severity level of [severity]. Recommend station AI involvement.", "Security Alert") //It affects more than just doors!
