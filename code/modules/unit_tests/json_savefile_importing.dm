@@ -61,7 +61,7 @@
 			TEST_FAIL("empty_list was not empty")
 
 	var/empty_list_check_default = json_savefile.get_entry("empty_list", "123")
-	TEST_ASSERT_NOTEQUAL(empty_list_check_default, "123", "grabbed the default value for a key when key exists in tre")
+	TEST_ASSERT_NOTEQUAL(empty_list_check_default, "123", "grabbed the default value for a key when key exists in tree")
 
 	// Now we check to ensure dir traversal is working as intended
 	// we are expecting v1 -> v2 -> var_string
