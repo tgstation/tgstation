@@ -257,6 +257,23 @@
 			passover_implant.removed(old_mob, silent = TRUE, special = TRUE)
 			passover_implant.implant(new_mob, silent = TRUE, force = TRUE)
 
+		// I'm also making a special case for skillchips since they can include job related stuff
+		var/obj/item/organ/internal/brain/old_brain = old_mob.getorgan(/obj/item/organ/internal/brain)
+		var/obj/item/organ/internal/brain/new_brain = new_mob.getorgan(/obj/item/organ/internal/brain)
+		if(old_brain && new_brain)
+			for(var/obj/item/skillchip/passover_chip as anything in old_brain.skillchips)
+				// Deactivate chip from the old body
+				passover_chip.try_deactivate_skillchip(silent = TRUE, force = TRUE)
+				// Slam it in the new brain
+				passover_chip.holding_brain = new_brain
+				passover_chip.forceMove(new_brain)
+				LAZYADD(new_brain.skillchips, passover_chip)
+				// Activate it again
+				passover_chip.try_activate_skillchip(silent = TRUE, force = TRUE)
+
+			// Clear out the old
+			LAZYCLEARLIST(old_brain.skillchips)
+
 		// Quirks should pass over too
 		for(var/datum/quirk/passover_quirk as anything in old_mob.quirks)
 			new_mob.add_quirk(passover_quirk.type)
