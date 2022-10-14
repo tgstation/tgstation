@@ -1,7 +1,7 @@
 import { classes } from 'common/react';
 import { createSearch } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Dimmer, Flex, Icon, Input, NoticeBox, NumberInput, Section, Table, Tabs } from '../components';
+import { Box, Button, Dimmer, Divider, Flex, Icon, Input, NoticeBox, NumberInput, ProgressBar, Section, Table, Tabs } from '../components';
 import { formatMoney } from '../format';
 import { Window } from '../layouts';
 
@@ -28,7 +28,14 @@ export const Biogenerator = (props, context) => {
 
 export const BiogeneratorContent = (props, context) => {
   const { act, data } = useBackend(context);
-  const { biomass, can_process, categories = [] } = data;
+  const {
+    beakerCurrentVolume,
+    beakerMaxVolume,
+    biomass,
+    can_process,
+    categories = [],
+    reagent_color,
+  } = data;
   const [searchText, setSearchText] = useLocalState(context, 'searchText', '');
   const [selectedCategory, setSelectedCategory] = useLocalState(
     context,
@@ -87,6 +94,16 @@ export const BiogeneratorContent = (props, context) => {
                 </Tabs.Tab>
               ))}
             </Tabs>
+            <Divider />
+            <div>Container Contents:</div>
+            <ProgressBar
+              mt={1}
+              value={beakerCurrentVolume}
+              maxValue={beakerMaxVolume}
+              backgroundColor="black"
+              color={reagent_color}>
+              <div>{beakerCurrentVolume + '/' + beakerMaxVolume}</div>
+            </ProgressBar>
           </Flex.Item>
         )}
         <Flex.Item grow={1} basis={0}>

@@ -523,6 +523,8 @@
 	medical_record_text = "Patient suffers from acute Reality Dissociation Syndrome and experiences vivid hallucinations."
 	hardcore_value = 6
 	mail_goodies = list(/obj/item/storage/pill_bottle/lsdpsych)
+	/// Weakref to the trauma we give out
+	var/datum/weakref/added_trama_ref
 
 /datum/quirk/insanity/add()
 	if(!iscarbon(quirk_holder))
@@ -541,6 +543,7 @@
 	added_trauma.lose_text = null
 
 	carbon_quirk_holder.gain_trauma(added_trauma)
+	added_trama_ref = WEAKREF(added_trauma)
 
 /datum/quirk/insanity/post_add()
 	if(!quirk_holder.mind || quirk_holder.mind.special_role)
@@ -549,6 +552,9 @@
 	// it's probably a good thing to have.
 	to_chat(quirk_holder, "<span class='big bold info'>Please note that your [lowertext(name)] does NOT give you the right to attack people or otherwise cause any interference to \
 		the round. You are not an antagonist, and the rules will treat you the same as other crewmembers.</span>")
+
+/datum/quirk/insanity/remove()
+	QDEL_NULL(added_trama_ref)
 
 /datum/quirk/social_anxiety
 	name = "Social Anxiety"

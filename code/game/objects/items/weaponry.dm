@@ -727,20 +727,21 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	return ..()
 
 /obj/item/melee/baseball_bat/attack(mob/living/target, mob/living/user)
-	. = ..()
-	if(HAS_TRAIT(user, TRAIT_PACIFISM))
-		return
 	// we obtain the relative direction from the bat itself to the target
 	var/relative_direction = get_cardinal_dir(src, target)
 	var/atom/throw_target = get_edge_target_turf(target, relative_direction)
+	. = ..()
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		return
 	if(homerun_ready)
 		user.visible_message(span_userdanger("It's a home run!"))
-		target.throw_at(throw_target, rand(8,10), 14, user)
+		if(!QDELETED(target))
+			target.throw_at(throw_target, rand(8,10), 14, user)
 		SSexplosions.medturf += throw_target
 		playsound(get_turf(src), 'sound/weapons/homerun.ogg', 100, TRUE)
 		homerun_ready = FALSE
 		return
-	else if(!target.anchored)
+	else if(!QDELETED(target) && !target.anchored)
 		var/whack_speed = (prob(60) ? 1 : 4)
 		target.throw_at(throw_target, rand(1, 2), whack_speed, user, gentle = TRUE) // sorry friends, 7 speed batting caused wounds to absolutely delete whoever you knocked your target into (and said target)
 
