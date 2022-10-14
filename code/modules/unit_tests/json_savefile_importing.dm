@@ -11,14 +11,14 @@
 	var/var_string
 
 /datum/unit_test/json_savefiles/proc/setup()
-	var/path_sfile = "data/temp.sav"
-	var/path_jfile = "data/temp.json"
-	if(fexists(path_sfile))
-		fdel(path_sfile)
-	if(fexists(path_jfile))
-		fdel(path_jfile)
-	test_savefile = new /savefile(path_sfile)
-	json_savefile = new /datum/json_savefile(path_jfile)
+	var/path_byond_file = "data/json_savefile_test.sav"
+	var/path_json_file = "data/json_savefile_test.json"
+	if(fexists(path_byond_file))
+		fdel(path_byond_file)
+	if(fexists(path_json_file))
+		fdel(path_json_file)
+	test_savefile = new /savefile(path_byond_file)
+	json_savefile = new /datum/json_savefile(path_json_file)
 
 	var_string = random_nukecode()
 	basic_list = list(rand(), rand(), rand(), "3", "6")
