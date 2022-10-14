@@ -41,7 +41,7 @@
 
 	for(var/area/area_to_open in areasToOpen)
 		for(var/obj/machinery/light/chosen_light in area_to_open)
-			chosen_light.flicker(10)
+			chosen_light.flicker(25)
 
 /datum/round_event/grey_tide/end()
 	for(var/area/area_to_open in areasToOpen)
