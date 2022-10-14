@@ -115,8 +115,8 @@
 	if(!can_be_seen(get_turf(loc)))
 		..()
 
-/mob/living/simple_animal/hostile/netherworld/statue/IsVocal() //we're a statue, of course we can't talk.
-	return FALSE
+/mob/living/simple_animal/hostile/netherworld/statue/can_speak(allow_mimes = FALSE)
+	return FALSE // We're a statue, of course we can't talk.
 
 // Cannot talk
 

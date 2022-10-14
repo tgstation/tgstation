@@ -16,3 +16,8 @@
 	attack_verb_simple = list("warn", "caution", "smash")
 	armor = list(MELEE = 5, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
 	species_exception = list(/datum/species/golem)
+	allowed = list(
+		/obj/item/tank/internals/emergency_oxygen,
+		/obj/item/tank/internals/plasmaman,
+		/obj/item/gun/ballistic/rifle/boltaction/pipegun/prime,
+	)
