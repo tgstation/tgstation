@@ -44,15 +44,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/security/medical)
-"abD" = (
-/obj/machinery/elevator_control_panel/directional/north{
-	linked_elevator_id = "dumbwaiter_lift";
-	preset_destination_names = list("2" = "Hydroponics", "3" = "Kitchen");
-	name = "Dumbwaiter Control Panel";
-	desc = "A small control panel used to move the kitchen dumbwaiter up and down."
-	},
-/turf/closed/wall,
-/area/station/service/kitchen)
 "abE" = (
 /turf/closed/wall/r_wall,
 /area/station/hallway/primary/tram/center)
@@ -20333,7 +20324,7 @@
 /obj/effect/turf_decal/bot_white,
 /obj/machinery/elevator_control_panel/directional/north{
 	linked_elevator_id = "dumbwaiter_lift";
-	preset_destination_names = list("2" = "Hydroponics", "3" = "Kitchen");
+	preset_destination_names = list("2"="Hydroponics","3"="Kitchen");
 	name = "Dumbwaiter Control Panel";
 	desc = "A small control panel used to move the kitchen dumbwaiter up and down."
 	},
@@ -21651,13 +21642,6 @@
 /obj/effect/landmark/start/lawyer,
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
-"hPM" = (
-/obj/machinery/elevator_control_panel/directional/north{
-	pixel_y = 36;
-	linked_elevator_id = "dumbwaiter_lift"
-	},
-/turf/closed/wall,
-/area/station/service/hydroponics)
 "hQf" = (
 /obj/effect/landmark/event_spawn,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -44337,7 +44321,7 @@
 	},
 /obj/machinery/elevator_control_panel/directional/south{
 	linked_elevator_id = "dumbwaiter_lift";
-	preset_destination_names = list("2" = "Hydroponics", "3" = "Kitchen");
+	preset_destination_names = list("2"="Hydroponics","3"="Kitchen");
 	name = "Dumbwaiter Control Panel";
 	desc = "A small control panel used to move the kitchen dumbwaiter up and down."
 	},
@@ -62172,12 +62156,6 @@
 /obj/structure/table,
 /obj/machinery/processor{
 	pixel_y = 12
-	},
-/obj/machinery/elevator_control_panel/directional/north{
-	linked_elevator_id = "dumbwaiter_lift";
-	preset_destination_names = list("2" = "Hydroponics", "3" = "Kitchen");
-	name = "Dumbwaiter Control Panel";
-	desc = "A small control panel used to move the kitchen dumbwaiter up and down."
 	},
 /turf/open/floor/iron/white,
 /area/station/service/kitchen)
@@ -98767,7 +98745,7 @@ nZZ
 meD
 phH
 meD
-hPM
+nUP
 xYu
 xpb
 xpb
@@ -167132,7 +167110,7 @@ dhe
 dhe
 eSx
 eSx
-abD
+eSx
 eSx
 eSx
 eSx
