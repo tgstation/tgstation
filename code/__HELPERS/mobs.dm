@@ -943,6 +943,77 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		. = invoked_callback.Invoke()
 	usr = temp
 
+/proc/species_name_to_hud(species)
+	species = lowertext(species) // sanitize your text
+	if(species == "human")  // gotta *love* species code!!
+		return "species_human"
+
+	// theres so many repeats here to try and catch every variant for species players would enter
+	var/static/list/lookup = list(
+		"cat" 			= /datum/species/human/felinid,
+		"catgirl" 		= /datum/species/human/felinid,
+		"catboy"		= /datum/species/human/felinid,
+		"meow"			= /datum/species/human/felinid,
+		"degenerate" 	= /datum/species/human/felinid,
+
+		"fly" 			= /datum/species/fly,
+		"bug" 			= /datum/species/fly,
+
+		"rock"			= /datum/species/golem,
+		"golem"			= /datum/species/golem,
+		"rockman"		= /datum/species/golem,  // megaman
+		"xeno guy"		= /datum/species/golem,
+
+		"ooze"			= /datum/species/jelly,  // one day..
+		"oozeling"		= /datum/species/jelly,
+		"slime"			= /datum/species/jelly,
+		"slimeling"		= /datum/species/jelly,
+		"xenobiologist"	= /datum/species/jelly,
+		"jelly"			= /datum/species/jelly,
+		"jelley"		= /datum/species/jelly,
+		"jellyperson"	= /datum/species/jelly,
+		"jelleyperson"	= /datum/species/jelly,
+		"jellyguy"		= /datum/species/jelly,
+		"jelleyguy"		= /datum/species/jelly,
+
+		"lizard"		= /datum/species/lizard,
+		"lizardperson"	= /datum/species/lizard,
+		"lizardguy"		= /datum/species/lizard,
+		"liz"			= /datum/species/lizard,
+		"dragon"		= /datum/species/lizard,
+		"ash"			= /datum/species/lizard,
+		"ashie"			= /datum/species/lizard,
+		"ashwalker"		= /datum/species/lizard,
+
+		"ether"			= /datum/species/ethereal,  // hey thats me :)
+		"ethereal"		= /datum/species/ethereal,
+		"ethey"			= /datum/species/ethereal,
+		"danceball"		= /datum/species/ethereal,
+		"discoball"		= /datum/species/ethereal,
+		"electric"		= /datum/species/ethereal,
+		"shock"			= /datum/species/ethereal,
+		"shock guy"		= /datum/species/ethereal,
+
+		"moth"			= /datum/species/moth,
+		"moff"			= /datum/species/moth,  // moff
+		"good bug"		= /datum/species/moth,
+		"wingie"		= /datum/species/moth,
+
+		"plasma"		= /datum/species/plasmaman,
+		"plasma man"	= /datum/species/plasmaman,
+		"plasmaman"		= /datum/species/plasmaman,
+		"plasman"		= /datum/species/plasmaman,
+		"burning guy"	= /datum/species/plasmaman,
+		"liability"		= /datum/species/plasmaman,
+		"gas skeleton"	= /datum/species/plasmaman
+	)
+
+	var/pointer = lookup[species]
+	if(!pointer)
+		return "hudunknown1"
+	var/datum/species/species_pointer = new pointer
+	return species_pointer.hud_icon
+
 #undef FACING_SAME_DIR
 #undef FACING_EACHOTHER
 #undef FACING_INIT_FACING_TARGET_TARGET_FACING_PERPENDICULAR

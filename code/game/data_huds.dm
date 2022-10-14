@@ -515,6 +515,19 @@ Diagnostic HUDs!
 /mob/living/carbon/proc/update_species_hud()
 	var/image/holder = hud_list[SPECIES_HUD]
 
+	var/perpname = get_face_name(get_id_name(""))
+	if(perpname && GLOB.data_core)
+		var/datum/data/record/R = find_record("name", perpname, GLOB.data_core.medical)
+		if(R)
+			var/data_species = lowertext(R.fields["species"])
+			holder.icon_state = species_name_to_hud(data_species)
+			if(data_species == "human")  // so you can only protect nonhumans instead of harming humans
+				return
+
+	// the hud is set to the medrecord's, but if the person is recgonized set it to that
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
-	if(!skipface && dna?.species)
-		holder.icon_state = dna.species.hud_icon
+	if(!skipface)
+		if(ishumanbasic(src))
+			holder.icon_state = "species_human"  // fun species coding
+		if(dna?.species?.hud_icon)
+			holder.icon_state = dna.species.hud_icon
