@@ -372,7 +372,7 @@
 /datum/supply_pack/security/armory/wt550ammo
 	name = "Recalled Ammo Case"
 	desc = "Contains four 20-round magazine for the Recalled WT-550 Auto Rifle. Each magazine is designed to facilitate rapid tactical reloads.\
-		Requires Armory access to open. Recalled due to security demands"
+		Requires Armory access to open. Recalled due to Security demands"
 	cost = CARGO_CRATE_VALUE * 3.5
 	hidden = TRUE
 	contains = list(/obj/item/ammo_box/magazine/wt550m9,
