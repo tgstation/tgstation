@@ -666,7 +666,7 @@
 
 /datum/action/innate/project_thought/Activate()
 	var/mob/living/carbon/human/telepath = owner
-	if(telepath.stat == DEAD)
+	if(telepath.stat >= UNCONCIOUS)
 		return
 	if(!is_species(telepath, /datum/species/jelly/stargazer))
 		return
