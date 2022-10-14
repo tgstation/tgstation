@@ -306,9 +306,10 @@
 	var/range = 20
 	var/delayFire = -1.0
 	var/list/stream_turfs = get_stream_turfs(target, range)
+	var/turf_plasma_moles = min(plasma, MAXIMUM_PLASMA_MOLES_RELEASED) / length(stream_turfs)
 	for(var/turf/turf in stream_turfs)
 		delayFire += 1.5
-		addtimer(CALLBACK(src, .proc/dragon_fire_line, turf, length(stream_turfs), min(plasma, MAXIMUM_PLASMA_MOLES_RELEASED)), delayFire)
+		addtimer(CALLBACK(src, .proc/dragon_fire_line, turf, turf_plasma_moles), delayFire)
 	if(length(stream_turfs))
 		plasma -= min(plasma, MAXIMUM_PLASMA_MOLES_RELEASED)
 
@@ -320,14 +321,14 @@
  * It can only hit any given target once.
  * Arguments:
  * * turf/turf - The turf to trigger the effects on.
- * * affected_volume - The number of turfs that got influenced by the fire stream.
+ * * plasma_released - The amount of plasma that gets released into the turf.
  */
-/mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/turf, affected_volume, total_plasma_released)
+/mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/turf, plasma_released)
 	var/list/hit_list = list()
 	hit_list += src
 	if(isopenturf(turf))
 		var/turf/open/open_turf = turf
-		open_turf.atmos_spawn_air("plasma=[total_plasma_released / affected_volume];o2=[OXYGEN_RATIO * total_plasma_released / affected_volume];TEMP=[PLASMA_TEMPERATURE]")
+		open_turf.atmos_spawn_air("plasma=[plasma_released];o2=[OXYGEN_RATIO * plasma_released];TEMP=[PLASMA_TEMPERATURE]")
 	new /obj/effect/hotspot(turf)
 	turf.hotspot_expose(exposed_temperature = PLASMA_TEMPERATURE, exposed_volume = 50, soh = 1)
 	for(var/mob/living/living in turf.contents)
@@ -337,7 +338,7 @@
 			continue
 		hit_list += living
 		living.apply_damages(brute = 10, burn = 20)
-		to_chat(living, span_userdanger("You're hit by [src]'s fire breath!"))
+		balloon_alert(living, "Engulfed by [src]'s fire breath!")
 	// deals damage to mechs
 	for(var/obj/vehicle/sealed/mecha/mecha in turf.contents)
 		if(mecha in hit_list)
