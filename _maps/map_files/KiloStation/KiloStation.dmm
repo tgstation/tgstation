@@ -69825,6 +69825,11 @@
 	name = "Ore Redemtion Window";
 	req_access = list("mineral_storeroom")
 	},
+/obj/machinery/door/window/left/directional/north{
+	name = "Ore Redemption";
+	req_access = list("cargo");
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/station/cargo/office)
 "tQM" = (

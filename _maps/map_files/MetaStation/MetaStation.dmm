@@ -35573,6 +35573,11 @@
 /obj/machinery/door/window/left/directional/east{
 	name = "Ore Redemtion Window"
 	},
+/obj/machinery/door/window/left/directional/north{
+	name = "Ore Redemption";
+	req_access = list("cargo");
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/station/construction/storage_wing)
 "mJE" = (

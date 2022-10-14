@@ -37003,6 +37003,11 @@
 	output_dir = 4
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/window/left/directional/north{
+	name = "Ore Redemption";
+	req_access = list("cargo");
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/station/cargo/office)
 "lmB" = (

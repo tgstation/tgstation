@@ -74502,9 +74502,9 @@
 /obj/machinery/mineral/ore_redemption,
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes/box,
-/obj/machinery/door/window/left/directional/south{
-	name = "Ore Redemption Access";
-	req_access = list("mineral_storeroom")
+/obj/machinery/door/window/left/directional/north{
+	name = "Ore Redemption";
+	req_access = list("cargo")
 	},
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
@@ -84063,7 +84063,8 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/window/right/directional/south{
 	name = "Delivery Office Desk";
-	req_access = list("shipping")
+	req_access = list("shipping");
+	dir = 1
 	},
 /obj/structure/desk_bell{
 	pixel_x = 7
