@@ -232,5 +232,3 @@ have ways of interacting with a specific mob and control it.
 /datum/ai_controller/monkey/proc/target_del(target)
 	SIGNAL_HANDLER
 	blackboard[BB_MONKEY_BLACKLISTITEMS] -= target
-
-
