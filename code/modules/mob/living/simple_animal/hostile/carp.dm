@@ -163,6 +163,26 @@
 /mob/living/simple_animal/hostile/carp/holocarp/add_cell_sample()
 	return
 
+/mob/living/simple_animal/hostile/carp/advanced
+	name = "advanced space carp"
+	desc = "A ferocious, fang-bearing creature that resembles a fish. This one seems to be self-aware."
+	maxHealth = 40
+	health = 40
+	gold_core_spawnable = NO_SPAWN
+	obj_damage = 15
+
+/mob/living/simple_animal/hostile/carp/advanced/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null, message_range = 7, datum/saymode/saymode = null)
+	if(sanitize)
+		message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
+	var/spanned_message = say_quote(message)
+	var/rendered = "<font color=\"#1100aa\"><b>\[Carp Wavespeak\] [real_name]</b> [spanned_message]</font>"
+	for(var/mob in GLOB.mob_list)
+		if(istype(mob, /mob/living/simple_animal/hostile/carp/advanced) || istype(mob, /mob/living/simple_animal/hostile/space_dragon))
+			to_chat(mob, rendered)
+		if(isobserver(mob))
+			var/link = FOLLOW_LINK(mob, src)
+			to_chat(mob, "[link] [rendered]")
+
 /mob/living/simple_animal/hostile/carp/megacarp
 	icon = 'icons/mob/simple/broadMobs.dmi'
 	name = "Mega Space Carp"
