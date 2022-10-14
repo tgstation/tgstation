@@ -360,12 +360,13 @@
 	
 /datum/supply_pack/security/armory/wt550
 	name = "Recalled Weapon Pack"
-	desc = "Contains a set of old nanotranset brand autorifles recalled due to choking hazard."
+	desc = "Contains a set of old Nanotrasen brand autorifles recalled due to choking hazard."
 	cost = CARGO_CRATE_VALUE * 7
 	hidden = TRUE
-	contains = list(/obj/item/gun/ballistic/automatic/wt550,/obj/item/ammo_box/magazine/wt550m9,
-					/obj/item/ammo_box/magazine/wt550m9,
-					/obj/item/gun/ballistic/automatic/wt550)
+	contains = list(
+		/obj/item/gun/ballistic/automatic/wt550 = 2,
+		/obj/item/ammo_box/magazine/wt550m9 = 2,
+	)
 	crate_name = "crate"
 	
 /datum/supply_pack/security/armory/wt550ammo
@@ -374,9 +375,6 @@
 	Recalled due to Security demands."
 	cost = CARGO_CRATE_VALUE * 4
 	hidden = TRUE
-	contains = list(/obj/item/ammo_box/magazine/wt550m9,
-					/obj/item/ammo_box/magazine/wt550m9,
-					)
+	contains = list(/obj/item/ammo_box/magazine/wt550m9 = 2)
 	crate_name = "crate" 
-	
-	
+
