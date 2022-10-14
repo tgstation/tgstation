@@ -366,8 +366,7 @@
 	contains = list(/obj/item/gun/ballistic/automatic/wt550,/obj/item/ammo_box/magazine/wt550m9,
                     /obj/item/ammo_box/magazine/wt550m9,
                     /obj/item/gun/ballistic/automatic/wt550)
-    crate_name = "wt-550 auto rifle crate"
-	crate_type = /obj/structure/closet/crate/internals
+    crate_name = "crate"
 	
 /datum/supply_pack/security/armory/wt550ammo
     name = "Recalled Ammo Pack
@@ -378,6 +377,6 @@
 	contains = list(/obj/item/ammo_box/magazine/wt550m9,
                     /obj/item/ammo_box/magazine/wt550m9,
 					)
-    crate_name = "wt-550 ammo crate" 
-	crate_type = /obj/structure/closet/crate/internals
+    crate_name = "crate" 
+	
 	
