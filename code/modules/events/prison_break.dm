@@ -10,6 +10,8 @@
 	if(!check_rights(R_FUN))
 		return ADMIN_CANCEL_EVENT
 
+	while(var/choice != "Submit")
+		tgui_alert(usr, "") //Finish this later
 	//The plan here is to create some sort of ui that lets the user select which departments get selected, and submits their choices to the round_event..
 	//First I need to learn tgui I guess
 
