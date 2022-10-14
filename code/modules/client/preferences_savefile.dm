@@ -245,16 +245,15 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if (preference_type in value_cache)
 			write_preference(preference, preference.serialize(value_cache[preference_type]))
 
-	savefile["lastchangelog"] = lastchangelog
-	savefile["be_special"] = be_special
-	savefile["default_slot"] = default_slot
-	savefile["toggles"] = toggles
-	savefile["chat_toggles"] = chat_toggles
-	savefile["ignoring"] = ignoring
-	savefile["key_bindings"] = key_bindings
-	savefile["hearted_until"] = (hearted_until > world.realtime ? hearted_until : null)
-	savefile["favorite_outfits"] = favorite_outfits
-
+	savefile.set_entry("lastchangelog", lastchangelog)
+	savefile.set_entry("be_special", be_special)
+	savefile.set_entry("default_slot", default_slot)
+	savefile.set_entry("toggles", toggles)
+	savefile.set_entry("chat_toggles", chat_toggles)
+	savefile.set_entry("ignoring", ignoring)
+	savefile.set_entry("key_bindings", key_bindings)
+	savefile.set_entry("hearted_until", (hearted_until > world.realtime ? hearted_until : null))
+	savefile.set_entry("favorite_outfits", favorite_outfits)
 	savefile.save()
 	return TRUE
 
