@@ -1,8 +1,6 @@
 /// Ensures plane masters that get shrunk by multiz NEVER render into each other
 /datum/unit_test/plane_double_transform
 
-TEST_FOCUS(/datum/unit_test/plane_double_transform)
-
 /datum/unit_test/plane_double_transform/Run()
 	// We're going to operate off the actual plane master setup of an actual mob
 	// It's not perfect, but it'll help things a lot
