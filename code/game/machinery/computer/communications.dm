@@ -471,10 +471,10 @@
 
 	var/list/payload = list()
 
-	var/network_name = CONFIG_GET(string/cross_comms_network)
-	if (network_name)
-		payload["network"] = network_name
 	payload["sender_ckey"] = usr.ckey
+	var/network_name = CONFIG_GET(string/cross_comms_network)
+	if(network_name)
+		payload["network"] = network_name
 	if(SScommunications.soft_filtering)
 		payload["is_filtered"] = TRUE
 
