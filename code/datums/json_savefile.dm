@@ -5,7 +5,10 @@
 /datum/json_savefile
 	var/path = ""
 	VAR_PRIVATE/list/tree
+	/// If this is set to true, calling set_entry or remove_entry will automatically call save(), this does not catch modifying a sub-tree, nor do I know how to do that
 	var/auto_save = FALSE
+
+GENERAL_PROTECT_DATUM(/datum/json_savefile)
 
 /datum/json_savefile/New(path)
 	src.path = path
