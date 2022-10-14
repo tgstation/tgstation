@@ -499,7 +499,7 @@
 /obj/structure/rack,
 /obj/machinery/light/small/broken/directional/east,
 /obj/item/pickaxe,
-/obj/item/clothing/head/hardhat/weldhat/orange,
+/obj/item/clothing/head/utility/hardhat/weldhat/orange,
 /turf/open/floor/iron/smooth{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},

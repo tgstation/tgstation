@@ -7,7 +7,7 @@
 	if(total_moles < MOLE_PENALTY_THRESHOLD * sm.absorption_ratio)
 		return FALSE
 	for (var/gas_path in list(/datum/gas/antinoblium, /datum/gas/hypernoblium))
-		var/percent = sm.absorbed_gasmix.gases[gas_path]?[MOLES] / total_moles
+		var/percent = sm.gas_percentage[gas_path]
 		if(!percent || percent < 0.4)
 			return FALSE
 	return TRUE
@@ -66,16 +66,13 @@
 	SSsupermatter_cascade.can_fire = TRUE
 	SSsupermatter_cascade.cascade_initiated = TRUE
 	effect_crystal_mass(sm, rift)
-	qdel(sm)
+	return ..()
 
 /datum/sm_delam/cascade/examine(obj/machinery/power/supermatter_crystal/sm)
 	return list(span_bolddanger("The crystal is vibrating at immense speeds, warping space around it!"))
 
 /datum/sm_delam/cascade/overlays(obj/machinery/power/supermatter_crystal/sm)
 	return list()
-
-/datum/sm_delam/cascade/damage_multiplier(obj/machinery/power/supermatter_crystal/sm)
-	return 0.25
 
 /datum/sm_delam/cascade/count_down_messages(obj/machinery/power/supermatter_crystal/sm)
 	var/list/messages = list()

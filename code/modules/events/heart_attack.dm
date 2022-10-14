@@ -11,11 +11,11 @@
 	///Number of candidates to be smote
 	var/quantity = 1
 
-/datum/round_event_control/heart_attack/canSpawnEvent()
+/datum/round_event_control/heart_attack/can_spawn_event(players_amt)
 	. = ..()
 	if(!.)
 		return .
-	generate_candidates() //generating candidates and checking in canSpawnEvent prevents extreme edge case of there being the 40 minimum players, with all being ineligible for a heart attack, wasting the event
+	generate_candidates() //generating candidates and checking in can_spawn_event prevents extreme edge case of there being the 40 minimum players, with all being ineligible for a heart attack, wasting the event
 	if(length(heart_attack_candidates))
 		return TRUE
 
@@ -23,7 +23,7 @@
 	if(!check_rights(R_FUN))
 		return
 
-	generate_candidates() //canSpawnEvent() is bypassed by admin_setup, so this makes sure that the candidates are still generated
+	generate_candidates() //can_spawn_event() is bypassed by admin_setup, so this makes sure that the candidates are still generated
 
 	if(!length(heart_attack_candidates))
 		message_admins("There are no candidates eligible to recieve a heart attack!")

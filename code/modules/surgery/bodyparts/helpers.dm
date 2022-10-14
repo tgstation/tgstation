@@ -16,7 +16,7 @@
 	var/obj/item/bodypart/old_limb = get_bodypart(new_limb.body_zone)
 	if(old_limb)
 		qdel(old_limb)
-	new_limb.attach_limb(src, special = special)
+	new_limb.try_attach_limb(src, special = special)
 
 /mob/living/carbon/has_hand_for_held_index(i)
 	if(!i)

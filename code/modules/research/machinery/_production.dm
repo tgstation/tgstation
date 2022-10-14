@@ -59,10 +59,12 @@
 
 	// We're probably going to get more than one update (design) at a time, so batch
 	// them together.
-	addtimer(CALLBACK(src, .proc/update_designs), 0.25 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
+	addtimer(CALLBACK(src, .proc/update_designs), 2 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 /// Updates the list of designs this fabricator can print.
 /obj/machinery/rnd/production/proc/update_designs()
+	var/previous_design_count = cached_designs.len
+
 	cached_designs.Cut()
 
 	for(var/design_id in stored_research.researched_designs)
@@ -70,6 +72,12 @@
 
 		if((isnull(allowed_department_flags) || (design.departmental_flags & allowed_department_flags)) && (design.build_type & allowed_buildtypes))
 			cached_designs |= design
+
+	var/design_delta = cached_designs.len - previous_design_count
+
+	if(design_delta > 0)
+		say("Received [design_delta] new design[design_delta == 1 ? "" : "s"].")
+		playsound(src, 'sound/machines/twobeep_high.ogg', 50, TRUE)
 
 	update_static_data_for_all_viewers()
 
@@ -82,6 +90,7 @@
 /obj/machinery/rnd/production/ui_assets(mob/user)
 	return list(
 		get_asset_datum(/datum/asset/spritesheet/sheetmaterials),
+		get_asset_datum(/datum/asset/spritesheet/research_designs)
 	)
 
 /obj/machinery/rnd/production/ui_interact(mob/user, datum/tgui/ui)
@@ -97,6 +106,9 @@
 	var/list/data = list()
 	var/list/designs = list()
 
+	var/datum/asset/spritesheet/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet/research_designs)
+	var/size32x32 = "[spritesheet.name]32x32"
+
 	for(var/datum/design/design in cached_designs)
 		var/cost = list()
 
@@ -104,16 +116,20 @@
 			var/coefficient = efficient_with(design.build_path) ? efficiency_coeff : 1
 			cost[material.name] = design.materials[material] * coefficient
 
+		var/icon_size = spritesheet.icon_size_id(design.id)
+
 		designs[design.id] = list(
 			"name" = design.name,
 			"desc" = design.get_description(),
 			"cost" = cost,
 			"id" = design.id,
-			"categories" = design.category
+			"categories" = design.category,
+			"icon" = "[icon_size == size32x32 ? "" : "[icon_size] "][design.id]",
+			"constructionTime" = 0
 		)
 
 	data["designs"] = designs
-	data["fab_name"] = name
+	data["fabName"] = name
 
 	return data
 
@@ -121,8 +137,10 @@
 	var/list/data = list()
 
 	data["materials"] = materials.mat_container?.ui_data()
-	data["on_hold"] = materials.on_hold()
+	data["onHold"] = materials.on_hold()
 	data["busy"] = busy
+	data["materialMaximum"] = materials.local_size
+	data["queue"] = list()
 
 	return data
 

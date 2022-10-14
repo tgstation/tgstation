@@ -184,14 +184,17 @@
 	else
 		if(maybe_ethereal_stomach.crystal_charge >= ETHEREAL_CHARGE_NORMAL)
 			togglelock(user)
-		ethereal_interact(user,modifiers)
+		ethereal_interact(user, modifiers)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/machinery/power/apc/proc/ethereal_interact(mob/living/user,list/modifiers)
+/// Special behavior for when an ethereal interacts with an APC.
+/obj/machinery/power/apc/proc/ethereal_interact(mob/living/user, list/modifiers)
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/ethereal = user
 	var/obj/item/organ/internal/stomach/maybe_stomach = ethereal.getorganslot(ORGAN_SLOT_STOMACH)
+	// how long we wanna wait before we show the balloon alert. don't want it to be very long in case the ethereal wants to opt-out of doing that action, just long enough to where it doesn't collide with previously queued balloon alerts.
+	var/alert_timer_duration = 0.75 SECONDS
 
 	if(!istype(maybe_stomach, /obj/item/organ/internal/stomach/ethereal))
 		return
@@ -201,13 +204,13 @@
 		return
 	if(ethereal.combat_mode)
 		if(cell.charge <= (cell.maxcharge / 2)) // ethereals can't drain APCs under half charge, this is so that they are forced to look to alternative power sources if the station is running low
-			balloon_alert(ethereal, "safeties prevent draining!")
+			addtimer(CALLBACK(src, /atom.proc/balloon_alert, ethereal, "safeties prevent draining!"), alert_timer_duration)
 			return
 		if(stomach.crystal_charge > charge_limit)
-			balloon_alert(ethereal, "charge is full!")
+			addtimer(CALLBACK(src, /atom.proc/balloon_alert, ethereal, "charge is full!"), alert_timer_duration)
 			return
 		stomach.drain_time = world.time + APC_DRAIN_TIME
-		balloon_alert(ethereal, "draining power")
+		addtimer(CALLBACK(src, /atom.proc/balloon_alert, ethereal, "draining power"), alert_timer_duration)
 		if(do_after(user, APC_DRAIN_TIME, target = src))
 			if(cell.charge <= (cell.maxcharge / 2) || (stomach.crystal_charge > charge_limit))
 				return
@@ -217,13 +220,13 @@
 		return
 
 	if(cell.charge >= cell.maxcharge - APC_POWER_GAIN)
-		balloon_alert(ethereal, "APC can't receive more power!")
+		addtimer(CALLBACK(src, /atom.proc/balloon_alert, ethereal, "APC can't receive more power!"), alert_timer_duration)
 		return
 	if(stomach.crystal_charge < APC_POWER_GAIN)
-		balloon_alert(ethereal, "charge is too low!")
+		addtimer(CALLBACK(src, /atom.proc/balloon_alert, ethereal, "charge is too low!"), alert_timer_duration)
 		return
 	stomach.drain_time = world.time + APC_DRAIN_TIME
-	balloon_alert(ethereal, "transfering power")
+	addtimer(CALLBACK(src, /atom.proc/balloon_alert, ethereal, "transfering power"), alert_timer_duration)
 	if(!do_after(user, APC_DRAIN_TIME, target = src))
 		return
 	if((cell.charge >= (cell.maxcharge - APC_POWER_GAIN)) || (stomach.crystal_charge < APC_POWER_GAIN))

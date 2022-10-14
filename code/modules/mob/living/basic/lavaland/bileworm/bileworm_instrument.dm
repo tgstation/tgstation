@@ -5,7 +5,7 @@
 	icon = 'icons/mob/simple/lavaland/bileworm.dmi'
 	icon_state = "bilehorn"
 	allowed_instrument_ids = "bilehorn"
-	inhand_icon_state = "bilehorn"
+	inhand_icon_state = null
 
 /datum/crafting_recipe/bilehorn
 	name = "Bilehorn"

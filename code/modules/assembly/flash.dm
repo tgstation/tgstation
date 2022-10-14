@@ -268,9 +268,8 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	if(!try_use_flash())
+	if(!AOE_flash())
 		return
-	AOE_flash()
 	burn_out()
 
 /obj/item/assembly/flash/activate()//AOE flash on signal received

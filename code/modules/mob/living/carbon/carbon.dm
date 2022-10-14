@@ -204,7 +204,7 @@
 
 /mob/living/carbon/Topic(href, href_list)
 	..()
-	if(href_list["embedded_object"] && usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
+	if(href_list["embedded_object"] && usr.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE))
 		var/obj/item/bodypart/L = locate(href_list["embedded_limb"]) in bodyparts
 		if(!L)
 			return
@@ -422,7 +422,7 @@
 			visible_message(span_warning("[src] dry heaves!"), \
 							span_userdanger("You try to throw up, but there's nothing in your stomach!"))
 		if(stun)
-			Paralyze(200)
+			Stun(20 SECONDS)
 		return TRUE
 
 	if(is_mouth_covered()) //make this add a blood/vomit overlay later it'll be hilarious
@@ -438,7 +438,7 @@
 				add_mood_event("vomit", /datum/mood_event/vomit)
 
 	if(stun)
-		Paralyze(80)
+		Stun(8 SECONDS)
 
 	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, TRUE)
 	var/turf/T = get_turf(src)
@@ -966,7 +966,7 @@
 				hand_bodyparts += bodypart_instance
 
 
-///Proc to hook behavior on bodypart additions. Do not directly call. You're looking for [/obj/item/bodypart/proc/attach_limb()].
+///Proc to hook behavior on bodypart additions. Do not directly call. You're looking for [/obj/item/bodypart/proc/try_attach_limb()].
 /mob/living/carbon/proc/add_bodypart(obj/item/bodypart/new_bodypart)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
@@ -1336,54 +1336,6 @@
 	to_chat(src, span_danger("You shove [target.name] into [name]!"))
 	log_combat(shover, target, "shoved", addition = "into [name]")
 	return COMSIG_CARBON_SHOVE_HANDLED
-
-#define HANDS_FULL 0
-#define ONE_HAND 1
-#define HANDCUFFS_DISABLE_AMOUNT 2
-
-// Checks to see how many hands this person has to sign with.
-/mob/living/carbon/proc/check_signables_state()
-	// when a hand gets dismembered it gets null'd in hand_bodyparts but for
-	// get_empty_held_index() it will still be counted as empty and will be +1'd
-	var/healthy_hands = 0 // hands that aren't disabled or amputated
-	var/total_hands = length(held_items)
-
-	// being handcuffed, having a missing or disabled arm will count as empty and be +1 incremented
-	var/available_hands = length(get_empty_held_indexes())
-
-	for(var/obj/item/bodypart/hand as anything in hand_bodyparts)
-		if(hand && !hand.bodypart_disabled)
-			healthy_hands++
-
-	if(!healthy_hands) // No arms at all
-		return SIGN_ARMLESS
-
-	var/unhealthy_hands = total_hands - healthy_hands
-	available_hands -= unhealthy_hands // get_empty_held_indexes() counts a disabled or amputed hand as +1
-
-	// items like slappers/zombie claws/etc. should be ignored
-	for(var/obj/item/held_item in held_items)
-		if(held_item.item_flags & HAND_ITEM)
-			available_hands++
-
-	if(handcuffed)
-		available_hands -= HANDCUFFS_DISABLE_AMOUNT
-
-	// If you have 3 hands and are handcuffed you should still be able to sign
-	if(handcuffed && !available_hands) // Cuffed, usually will show visual effort to sign
-		return SIGN_CUFFED
-	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED) || HAS_TRAIT(src, TRAIT_EMOTEMUTE))
-		return SIGN_TRAIT_BLOCKED
-
-	switch(available_hands)
-		if(HANDS_FULL)
-			return SIGN_HANDS_FULL
-		if(ONE_HAND)
-			return SIGN_ONE_HAND
-
-#undef HANDS_FULL
-#undef ONE_HAND
-#undef HANDCUFFS_DISABLE_AMOUNT
 
 /**
  * This proc is a helper for spraying blood for things like slashing/piercing wounds and dismemberment.
