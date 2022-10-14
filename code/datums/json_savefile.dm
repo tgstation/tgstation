@@ -1,9 +1,9 @@
 /**
- * A savefile implementation that handles all data using json
- * also saves it using JSON too, fancy
+ * A savefile implementation that handles all data using json.
+ * Also saves it using JSON too, fancy.
  */
 /datum/json_savefile
-	var/path
+	var/path = ""
 	VAR_PRIVATE/list/tree
 	var/auto_save = FALSE
 
@@ -67,5 +67,5 @@
 				region[entry] = list()
 				dirs_to_go["[dir]/[entry]"] = region[entry]
 				continue
-			savefile >> entry_value //we are cd'ed to the entry, so we don't need to specify a path to read from
+			READ_FILE(savefile, entry_value) //we are cd'ed to the entry, so we don't need to specify a path to read from
 			region[entry] = entry_value
