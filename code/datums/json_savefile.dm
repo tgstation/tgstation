@@ -28,14 +28,16 @@
 	if(auto_save)
 		save()
 
-/// Removes the given key from the tree, if no key is given it clears the entire tree
-/datum/json_savefile/proc/clear(key)
+/// Removes the given key from the tree
+/datum/json_savefile/proc/remove_entry(key)
 	if(key)
 		tree -= key
-	else
-		tree.Cut()
 	if(auto_save)
 		save()
+
+/// Wipes the entire tree
+/datum/json_savefile/proc/wipe()
+	tree?.Cut()
 
 /datum/json_savefile/proc/load()
 	if(!fexists(path))
@@ -61,7 +63,7 @@
 		savefile.cd = dir
 		for(var/entry in savefile.dir)
 			var/entry_value
-			savefile.cd = "[dir]/[entry]" 
+			savefile.cd = "[dir]/[entry]"
 			//eof refers to the path you are cd'ed into, not the savefile as a whole. being false right after cding into an entry means this entry has no buffer, which only happens with nested save file directories
 			if (savefile.eof)
 				region[entry] = list()
