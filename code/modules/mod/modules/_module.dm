@@ -87,7 +87,7 @@
 			continue
 		needed_slots -= needed_slot
 		break
-	return !length(needed_parts)
+	return !length(needed_slots)
 
 /// Called when the module is selected from the TGUI, radial or the action button
 /obj/item/mod/module/proc/on_select()
