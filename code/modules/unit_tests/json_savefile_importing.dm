@@ -21,8 +21,8 @@
 	json_savefile = new /datum/json_savefile(path_json_file)
 
 	var_string = random_nukecode()
-	basic_list = list(rand(), rand(), rand(), "3", "6")
-	assoc_list = list("2" = rand(), "4" = "3", "341" = "15134123")
+	basic_list = list(rand(), rand(), rand(), "3", "6", "null", "\proper house")
+	assoc_list = list("2" = rand(), "4" = "3", "341" = "15134123", "\[22\]\[\]\[\[")
 
 	test_savefile["basic_list"] << basic_list
 	test_savefile["assoc_list"] << assoc_list
