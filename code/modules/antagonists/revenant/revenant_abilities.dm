@@ -195,7 +195,7 @@
 /datum/action/cooldown/spell/aoe/revenant/before_cast(mob/living/simple_animal/revenant/cast_on)
 	. = ..()
 	if(. & SPELL_CANCEL_CAST)
-		return FALSE
+		return
 
 	if(locked)
 		if(!cast_on.unlock(unlock_amount))

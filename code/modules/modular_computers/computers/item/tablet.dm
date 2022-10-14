@@ -36,6 +36,19 @@
 		icon_state = icon_state_powered = icon_state_unpowered = "[base_icon_state]-[finish_color]"
 	return ..()
 
+/obj/item/modular_computer/tablet/attack_self(mob/user)
+	// bypass literacy checks to access syndicate uplink
+	var/datum/component/uplink/hidden_uplink = GetComponent(/datum/component/uplink)
+	if(hidden_uplink?.owner && HAS_TRAIT(user, TRAIT_ILLITERATE))
+		if(hidden_uplink.owner != user.key)
+			return ..()
+
+		hidden_uplink.locked = FALSE
+		hidden_uplink.interact(null, user)
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+	return ..()
+
 /obj/item/modular_computer/tablet/interact(mob/user)
 	. = ..()
 	if(HAS_TRAIT(src, TRAIT_PDA_MESSAGE_MENU_RIGGED))

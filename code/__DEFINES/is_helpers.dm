@@ -124,6 +124,11 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 /// returns whether or not the atom is either a basic mob OR simple animal
 #define isanimal_or_basicmob(A) (istype(A, /mob/living/simple_animal) || istype(A, /mob/living/basic))
 
+/// asteroid mobs, which are both simple and basic atm
+#define isminingpath(A) (ispath(A, /mob/living/simple_animal/hostile/asteroid) || ispath(A, /mob/living/basic/mining))
+
+#define ismining(A) (istype(A, /mob/living/simple_animal/hostile/asteroid) || istype(A, /mob/living/basic/mining))
+
 //Simple animals
 #define isanimal(A) (istype(A, /mob/living/simple_animal))
 
