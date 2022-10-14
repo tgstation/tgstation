@@ -17,8 +17,8 @@
 	light_range = 4
 	light_power = 1
 	light_on = FALSE
-	/// Can we toggle this light on and off
-	var/can_toggle = TRUE
+	/// Can we toggle this light on and off (used for contexual screentips only)
+	var/toggle_context = TRUE
 	/// The sound the light makes when it's turned on
 	var/sound_on = 'sound/weapons/magin.ogg'
 	/// The sound the light makes when it's turned off
@@ -35,11 +35,11 @@
 
 /obj/item/flashlight/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	// single use lights can be toggled on once
-	if(isnull(held_item) && (can_toggle || !on))
+	if(isnull(held_item) && (toggle_context || !on))
 		context[SCREENTIP_CONTEXT_RMB] = "Toggle light"
 		return CONTEXTUAL_SCREENTIP_SET
 
-	if(istype(held_item, /obj/item/flashlight) && (can_toggle || !on))
+	if(istype(held_item, /obj/item/flashlight) && (toggle_context || !on))
 		context[SCREENTIP_CONTEXT_LMB] = "Toggle light"
 		return CONTEXTUAL_SCREENTIP_SET
 
@@ -290,7 +290,7 @@
 	light_system = MOVABLE_LIGHT
 	grind_results = list(/datum/reagent/sulfur = 15)
 	sound_on = 'sound/items/match_strike.ogg'
-	can_toggle = FALSE
+	toggle_context = FALSE
 	/// How many seconds of fuel we have left
 	var/fuel = 0
 	var/on_damage = 7
@@ -473,7 +473,7 @@
 	worn_icon_state = "lightstick"
 	grind_results = list(/datum/reagent/phenol = 15, /datum/reagent/hydrogen = 10, /datum/reagent/oxygen = 5) //Meth-in-a-stick
 	sound_on = 'sound/effects/wounds/crack2.ogg' // the cracking sound isn't just for wounds silly
-	can_toggle = FALSE
+	toggle_context = FALSE
 	/// How many seconds of fuel we have left
 	var/fuel = 0
 
