@@ -6,6 +6,7 @@
 #define PIZZA_DELIVERY 6
 #define ITS_HIP_TO 7
 #define MY_GOD_JC 8
+#define PAPERS_PLEASE 9
 
 
 /datum/round_event_control/shuttle_loan
@@ -26,7 +27,7 @@
 	var/loan_type //for logging
 
 /datum/round_event/shuttle_loan/setup()
-	dispatch_type = pick(HIJACK_SYNDIE, RUSKY_PARTY, SPIDER_GIFT, DEPARTMENT_RESUPPLY, ANTIDOTE_NEEDED, PIZZA_DELIVERY, ITS_HIP_TO, MY_GOD_JC)
+	dispatch_type = pick(HIJACK_SYNDIE, RUSKY_PARTY, SPIDER_GIFT, DEPARTMENT_RESUPPLY, ANTIDOTE_NEEDED, PIZZA_DELIVERY, ITS_HIP_TO, MY_GOD_JC, PAPERS_PLEASE)
 
 /datum/round_event/shuttle_loan/announce(fake)
 	SSshuttle.shuttle_loan = src
@@ -54,6 +55,9 @@
 			priority_announce("Cargo: We have discovered an active Syndicate bomb near our VIP shuttle's fuel lines. If you feel up to the task, we will pay you for defusing it.", "CentCom Security Division")
 			thanks_msg = "Live explosive ordnance incoming via supply shuttle. Evacuating cargo bay is recommended."
 			bonus_points = 45000 //If you mess up, people die and the shuttle gets turned into swiss cheese
+		if(PAPERS_PLEASE)
+			priority_announce("Cargo: A neighboring station has sent us some paperwork that we really don't care to deal with. Could we send it your way?", "CentCom Paperwork Division") //Reminder: this should only pick stamps for heads of staff with someone in the job slot.
+			bonus_points = 0 //Payout is made when the stamped papers are returned (IN THEORY IF I CAN GET THIS TO WORK SUBJECT TO CHANGE ETC.)
 
 /datum/round_event/shuttle_loan/proc/loan_shuttle()
 	priority_announce(thanks_msg, "Cargo shuttle commandeered by CentCom.")
