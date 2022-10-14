@@ -479,6 +479,15 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	. = ..()
 	languages_possible = languages_possible_ethereal
 
+/// Defines used to determine whether a sign language user can sign or not, and if not, why they cannot.
+#define SIGN_OKAY 0
+#define SIGN_ONE_HAND 1
+#define SIGN_HANDS_FULL 2
+#define SIGN_ARMLESS 3
+#define SIGN_ARMS_DISABLED 4
+#define SIGN_TRAIT_BLOCKED 5
+#define SIGN_CUFFED 6
+
 //Sign Language Tongue - yep, that's how you speak sign language.
 /obj/item/organ/internal/tongue/tied
 	name = "tied tongue"
@@ -500,10 +509,12 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	signer.verb_yell = "emphatically signs"
 	signer.bubble_icon = "signlang"
 	ADD_TRAIT(signer, TRAIT_SIGN_LANG, ORGAN_TRAIT)
-	REMOVE_TRAIT(signer, TRAIT_MUTE, ORGAN_TRAIT)
+	RegisterSignal(signer, COMSIG_LIVING_TRY_SPEECH, .proc/on_speech_check)
+	RegisterSignal(signer, COMSIG_LIVING_TREAT_MESSAGE, .proc/on_treat_message)
+	RegisterSignal(signer, COMSIG_MOVABLE_USING_RADIO, .proc/on_use_radio)
 
 /obj/item/organ/internal/tongue/tied/Remove(mob/living/carbon/speaker, special = FALSE)
-	..()
+	. = ..()
 	speaker.verb_ask = initial(speaker.verb_ask)
 	speaker.verb_exclaim = initial(speaker.verb_exclaim)
 	speaker.verb_whisper = initial(speaker.verb_whisper)
@@ -511,7 +522,97 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	speaker.verb_yell = initial(speaker.verb_yell)
 	speaker.bubble_icon = initial(speaker.bubble_icon)
 	REMOVE_TRAIT(speaker, TRAIT_SIGN_LANG, ORGAN_TRAIT)
+	UnregisterSignal(speaker, list(COMSIG_LIVING_TRY_SPEECH, COMSIG_LIVING_TREAT_MESSAGE, COMSIG_MOVABLE_USING_RADIO))
 
+/// Signal proc for [COMSIG_LIVING_TRY_SPEECH]
+/// Sign languagers can always speak regardless of they're mute (as long as they're not mimes)
+/obj/item/organ/internal/tongue/tied/proc/on_speech_check(mob/living/source, message, ignore_spam, forced)
+	SIGNAL_HANDLER
+
+	if(source.mind?.miming)
+		to_chat(source, span_green("You stop yourself from signing in favor of the artform of mimery!"))
+		return COMPONENT_CANNOT_SPEAK
+
+	switch(check_signables_state())
+		if(SIGN_HANDS_FULL) // Full hands
+			source.visible_message("tries to sign, but can't with [source.p_their()] hands full!", visible_message_flags = EMOTE_MESSAGE)
+			return COMPONENT_CANNOT_SPEAK
+
+		if(SIGN_CUFFED) // Restrained
+			source.visible_message("tries to sign, but can't with [source.p_their()] hands bound!", visible_message_flags = EMOTE_MESSAGE)
+			return COMPONENT_CANNOT_SPEAK
+
+		if(SIGN_ARMLESS) // No arms
+			to_chat(source, span_warning("You can't sign with no hands!"))
+			return COMPONENT_CANNOT_SPEAK
+
+		if(SIGN_ARMS_DISABLED) // Arms but they're disabled
+			to_chat(source, span_warning("Your can't sign with your hands right now!"))
+			return COMPONENT_CANNOT_SPEAK
+
+		if(SIGN_TRAIT_BLOCKED) // Hands blocked or emote mute
+			to_chat(source, span_warning("You can't sign at the moment!"))
+			return COMPONENT_CANNOT_SPEAK
+
+	// Assuming none of the above fail, sign language users can speak
+	// regardless of being muzzled or mute toxin'd or whatever.
+	return COMPONENT_CAN_ALWAYS_SPEAK
+
+/// Signal proc for [COMSIG_LIVING_TREAT_MESSAGE] that stars out our message if we only have 1 hand free
+/obj/item/organ/internal/tongue/tied/proc/on_treat_message(mob/living/source, list/message_args)
+	SIGNAL_HANDLER
+
+	if(check_signables_state() == SIGN_ONE_HAND)
+		message_args[TREAT_MESSAGE_MESSAGE] = stars(message_args[TREAT_MESSAGE_MESSAGE])
+
+/// Signal proc for [COMSIG_MOVABLE_USING_RADIO] that disallows us from speaking on comms if we don't have the special trait
+/// Being unable to sign, or having our message be starred out, is handled by the above two signal procs.
+/obj/item/organ/internal/tongue/tied/proc/on_use_radio(atom/movable/source, obj/item/radio/radio)
+	SIGNAL_HANDLER
+
+	return HAS_TRAIT(source, TRAIT_CAN_SIGN_ON_COMMS) ? NONE : COMPONENT_CANNOT_USE_RADIO
+
+/// Checks to see what state this person is in and if they are able to sign or not.
+/obj/item/organ/internal/tongue/tied/proc/check_signables_state()
+	if(!owner)
+		CRASH("[type] called check_signables_state without an owner.")
+
+	// See how many hands we can actually use (this counts disabled / missing limbs for us)
+	var/total_hands = owner.usable_hands
+	// Look ma, no hands!
+	if(total_hands <= 0)
+		// Either our hands are still attached (just disabled) or they're gone entirely
+		return owner.num_hands > 0 ? SIGN_ARMS_DISABLED : SIGN_ARMLESS
+
+	// Now let's see how many of our hands is holding something
+	var/busy_hands = 0
+	// Yes held_items can contain null values, which represents empty hands,
+	// I'm just saving myself a variable cast by using as anything
+	for(var/obj/item/held_item as anything in owner.held_items)
+		// items like slappers/zombie claws/etc. should be ignored
+		if(isnull(held_item) || held_item.item_flags & HAND_ITEM)
+			continue
+
+		busy_hands++
+
+	// Handcuffed or otherwise restrained - can't talk
+	if(HAS_TRAIT(owner, TRAIT_RESTRAINED))
+		return SIGN_CUFFED
+	// Some other trait preventing us from using our hands now
+	else if(HAS_TRAIT(owner, TRAIT_HANDS_BLOCKED) || HAS_TRAIT(owner, TRAIT_EMOTEMUTE))
+		return SIGN_TRAIT_BLOCKED
+
+	// Okay let's compare the total hands to the number of busy hands
+	// to see how many we have left to use for signing right now
+	var/actually_usable_hands = total_hands - busy_hands
+	if(actually_usable_hands <= 0)
+		return SIGN_HANDS_FULL
+	if(actually_usable_hands == 1)
+		return SIGN_ONE_HAND
+
+	return SIGN_OKAY
+
+//Thank you Jwapplephobia for helping me with the literal hellcode below //Shoutout to Jwapplephobia
 /obj/item/organ/internal/tongue/tied/modify_speech(datum/source, list/speech_args)
 	// The message we send instead of our normal one
 	var/new_message
@@ -551,3 +652,11 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 		return
 	owner.cut_overlay(tonal_indicator)
 	tonal_indicator = null
+
+#undef SIGN_OKAY
+#undef SIGN_ONE_HAND
+#undef SIGN_HANDS_FULL
+#undef SIGN_ARMLESS
+#undef SIGN_ARMS_DISABLED
+#undef SIGN_TRAIT_BLOCKED
+#undef SIGN_CUFFED

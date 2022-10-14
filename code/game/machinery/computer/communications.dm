@@ -719,11 +719,19 @@
 	var/input = tgui_input_text(user, "Message to announce to the station crew", "Announcement")
 	if(!input || !user.canUseTopic(src, !issilicon(usr)))
 		return
-	if(!(user.can_speak())) //No more cheating, mime/random mute guy!
-		input = "..."
-		to_chat(user, span_warning("You find yourself unable to speak."))
+	if(user.try_speak(input))
+		//Adds slurs and so on. Someone should make this use languages too.
+		input = user.treat_message(input)
 	else
-		input = user.treat_message(input) //Adds slurs and so on. Someone should make this use languages too.
+		//No cheating, mime/random mute guy!
+		input = "..."
+		user.visible_message(
+			span_notice("You leave the mic on in awkward silence..."),
+			span_notice("[user] holds down [src]'s announcement button, leaving the mic on in awkward silence."),
+			span_hear("You hear an awkward silence, somehow."),
+			vision_distance = 4,
+		)
+
 	var/list/players = get_communication_players()
 	SScommunications.make_announcement(user, is_ai, input, syndicate || (obj_flags & EMAGGED), players)
 	deadchat_broadcast(" made a priority announcement from [span_name("[get_area_name(usr, TRUE)]")].", span_name("[user.real_name]"), user, message_type=DEADCHAT_ANNOUNCEMENT)
@@ -776,21 +784,27 @@
 
 /// Begin the process of hacking into the comms console to call in a threat.
 /obj/machinery/computer/communications/proc/try_hack_console(mob/living/hacker, duration = 30 SECONDS)
-	if(!can_hack())
+	if(!can_hack(hacker, feedback = TRUE))
 		return FALSE
 
 	AI_notify_hack()
-	if(!do_after(hacker, duration, src, extra_checks = CALLBACK(src, .proc/can_hack)))
+	if(!do_after(hacker, duration, src, extra_checks = CALLBACK(src, .proc/can_hack, hacker)))
 		return FALSE
 
 	hack_console(hacker)
 	return TRUE
 
 /// Checks if this console is hackable. Used as a callback during try_hack_console's doafter as well.
-/obj/machinery/computer/communications/proc/can_hack()
+/obj/machinery/computer/communications/proc/can_hack(mob/living/hacker, feedback = FALSE)
 	if(machine_stat & (NOPOWER|BROKEN))
+		if(feedback && hacker)
+			balloon_alert(hacker, "can't hack!")
 		return FALSE
-
+	var/area/console_area = get_area(src)
+	if(!console_area || !(console_area.area_flags & VALID_TERRITORY))
+		if(feedback && hacker)
+			balloon_alert(hacker, "signal too weak!")
+		return FALSE
 	return TRUE
 
 /**
