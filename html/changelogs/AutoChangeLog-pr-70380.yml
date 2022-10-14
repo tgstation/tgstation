@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - balance: "Ninja and Traitors can no longer hack consoles located in maintenance for their objectives. (Basically, it abides by the same rules that Space Dragons have on where they can put their portal.)"
-  - bugfix: "Secure Data consoles abide by the same hacking rules as comms consoles - getting de-powered mid-hack will stop hack progress."

@@ -433,3 +433,58 @@
   - balance: Bileworms drop gold
   - bugfix: fixes bileworms spawning too close to other mobs, causing very, VERY tough
       fights
+2022-10-14:
+  GoldenAlpharex:
+  - qol: Changing your PDA ringtone now has your current ringtone in your input box,
+      like the previous PDAs used to.
+  - bugfix: Fixed the incoming Messenger messages not being properly HTML decoded
+      in the Message History, making it display weird stuff instead of apostrophes.
+  - bugfix: Fixed the formatting of the Messenger's Message History tab.
+  - qol: The prompt to send a PDA message now shows you the person you're trying to
+      send a PDA message to.
+  Jacquerel:
+  - bugfix: Changing z-level while jaunting will no longer reveal you.
+  - bugfix: If a shuttle lands on you while jaunting you will die rather than be stuck
+      in a weird purgatory state.
+  - bugfix: Mirror Walk will not appear tinted as if it can be cast when it can't,
+      and vice versa.
+  - qol: Blood Crawl and Shadow Walk will now display whether you can use them or
+      not in the same manner as Mirror Walk.
+  - refactor: Jaunt code which adds and removes temporary traits or effects should
+      hopefully be easier to work with in the future.
+  JohnFulpWillard:
+  - bugfix: Anchoring an object while pulling it will now make you stop pulling said
+      anchored object.
+  Melbert:
+  - balance: Holy melons are now more melon like - they are now fruits (instead of
+      no food type), normal weight class, and can be juiced into holy water
+  - balance: Ninja and Traitors can no longer hack consoles located in maintenance
+      for their objectives. (Basically, it abides by the same rules that Space Dragons
+      have on where they can put their portal.)
+  - bugfix: Secure Data consoles abide by the same hacking rules as comms consoles
+      - getting de-powered mid-hack will stop hack progress.
+  Profakos:
+  - bugfix: Circuitboards that require a minimum level of manipulators tiers no longer
+      display just "manipulator" when examining machine frames that contain them
+  - bugfix: Marked a few more admin only chem dispenser boards to display their proper
+      manipulator requirements
+  Rhials:
+  - bugfix: Engineers now recieve welding helmets instead of errors when they order
+      an engineering supply pack.
+  - bugfix: Welding helmet inhand sprites now properly update when you flip the visor.
+  Shadyyy66:
+  - bugfix: "T\xF6chta\xFCse berries are now juiceable. You no longer get T\xF6chta\xFC\
+      se juice via grinding them."
+  Wallem:
+  - qol: The Biogen will show how full the container inside it is
+  lizardqueenlexi:
+  - rscadd: Added a new bounty to deliver a refined dimensional anomaly core.
+  - spellcheck: Fixed some typos and awkward grammar in bounty descriptions.
+  san7890:
+  - bugfix: If you exit out of the TGUI options menu when hitting the "Make AI" link
+      there, it will actually assume that you wanted to cancel out of the proc entirely,
+      rather than proceed without your knowledge.
+  - bugfix: Cyborgs can now no longer untip vending machines that they are not directly
+      next to.
+  - bugfix: Those with the technoshy/technovert trait are now able to untip vending
+      machines.

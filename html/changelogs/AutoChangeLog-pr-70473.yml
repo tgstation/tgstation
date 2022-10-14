@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - bugfix: "Anchoring an object while pulling it will now make you stop pulling said anchored object."

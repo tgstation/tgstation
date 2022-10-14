@@ -1,7 +1,0 @@
-author: "GoldenAlpharex"
-delete-after: True
-changes: 
-  - qol: "Changing your PDA ringtone now has your current ringtone in your input box, like the previous PDAs used to."
-  - bugfix: "Fixed the incoming Messenger messages not being properly HTML decoded in the Message History, making it display weird stuff instead of apostrophes."
-  - bugfix: "Fixed the formatting of the Messenger's Message History tab."
-  - qol: "The prompt to send a PDA message now shows you the person you're trying to send a PDA message to."

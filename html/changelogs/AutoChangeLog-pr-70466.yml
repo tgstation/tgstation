@@ -1,5 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes: 
-  - bugfix: "Engineers now recieve welding helmets instead of errors when they order an engineering supply pack."
-  - bugfix: "Welding helmet inhand sprites now properly update when you flip the visor."
