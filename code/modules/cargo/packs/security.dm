@@ -371,8 +371,8 @@
 	
 /datum/supply_pack/security/armory/wt550ammo
 	name = "Recalled Ammo Pack"
-	desc = "Contains four 20-round magazine for the Recalled WT-550 Auto Rifle. Each magazine is designed to facilitate rapid tactical reloads.\
-	Recalled due to Security demands."
+	desc = "Contains four 20-round magazine for the Recalled WT-550 Auto Rifle. \
+	Each magazine is designed to facilitate rapid tactical reloads. Recalled due to Security demands."
 	cost = CARGO_CRATE_VALUE * 4
 	hidden = TRUE
 	contains = list(/obj/item/ammo_box/magazine/wt550m9 = 2)
