@@ -301,6 +301,7 @@
 							if(!canUseMedicalRecordsConsole(usr, t1, a1))
 								return
 							active1.fields["species"] = t1
+							update_species_hud()
 					if("mi_dis")
 						if(active2)
 							var/t1 = stripped_input("Please input minor disabilities list:", "Med. records", active2.fields["mi_dis"], null)
