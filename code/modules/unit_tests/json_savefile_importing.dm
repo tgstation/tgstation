@@ -10,7 +10,7 @@
 	var/list/assoc_list
 	var/var_string
 
-/datum/unit_test/json_savefiles/proc/setup_our_shit()
+/datum/unit_test/json_savefiles/proc/setup()
 	var/path_sfile = "data/temp.sav"
 	var/path_jfile = "data/temp.json"
 	if(fexists(path_sfile))
@@ -31,7 +31,7 @@
 	test_savefile["var_string"] << var_string
 
 /datum/unit_test/json_savefiles/Run()
-	setup_our_shit()
+	setup()
 
 	// first, we import the file to json
 	json_savefile.import_byond_savefile(test_savefile)
