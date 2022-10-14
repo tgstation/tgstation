@@ -15,10 +15,10 @@
 
 	var/progression_objectives_minimum = 20 MINUTES
 
-	/// Reference to the weakpoint locator(if we sent one)
-	var/obj/item/weakpoint_locator/locator
-	/// Reference to the ES8 explosive (if we sent one)
-	var/obj/item/grenade/c4/es8/shatter_charge
+	/// Have we sent a weakpoint locator yet?
+	var/locator_sent = FALSE
+	/// Have we sent a bomb yet?
+	var/bomb_sent = FALSE
 	/// Have we located the weakpoint yet?
 	var/weakpoint_found = FALSE
 	/// Weakpoint scan areas and the weakpoint itself
@@ -83,9 +83,9 @@
 
 /datum/traitor_objective/locate_weakpoint/generate_ui_buttons(mob/user)
 	var/list/buttons = list()
-	if(!locator)
+	if(!locator_sent)
 		buttons += add_ui_button("", "Pressing this will materialize a weakpoint locator in your hand.", "globe", "locator")
-	if(weakpoint_found && !shatter_charge)
+	if(weakpoint_found && !bomb_sent)
 		buttons += add_ui_button("", "Pressing this will materialize an ES8 explosive charge in your hand.", "bomb", "shatter_charge")
 	return buttons
 
@@ -93,18 +93,20 @@
 	. = ..()
 	switch(action)
 		if("locator")
-			if(locator)
+			if(locator_sent)
 				return
-			locator = new(user.drop_location())
+			locator_sent = TRUE
+			var/obj/item/weakpoint_locator/locator = new(user.drop_location())
 			user.put_in_hands(locator, weakpoint_areas[1], weakpoint_areas[2])
 			locator.balloon_alert(user, "the weakpoint locator materializes in your hand")
 
 		if("shatter_charge")
-			if(shatter_charge)
+			if(bomb_sent)
 				return
-			shatter_charge = new(user.drop_location())
-			user.put_in_hands(shatter_charge)
-			shatter_charge.balloon_alert(user, "the ES8 charge materializes in your hand")
+			bomb_sent = TRUE
+			var/obj/item/grenade/c4/es8/bomb = new(user.drop_location())
+			user.put_in_hands(bomb)
+			bomb.balloon_alert(user, "the ES8 charge materializes in your hand")
 
 /datum/traitor_objective/locate_weakpoint/proc/weakpoint_located()
 	description = "Structural weakpoint has been located in %AREA%. Detonate an ES8 explosive charge there to create a shockwave that will severely damage the station."
@@ -210,12 +212,12 @@
 	if(!user.mind)
 		return
 
-	for(var/datum/traitor_objective/locate_weakpoint/weakpoint_objecitve in SStraitor.taken_objectives_by_type[/datum/traitor_objective/locate_weakpoint])
-		var/datum/uplink_handler/handler = weakpoint_objecitve.handler
+	for(var/datum/traitor_objective/locate_weakpoint/weakpoint_objective in SStraitor.taken_objectives_by_type[/datum/traitor_objective/locate_weakpoint])
+		var/datum/uplink_handler/handler = weakpoint_objective.handler
 		if(handler.owner != user.mind)
 			continue
 
-		return weakpoint_objecitve
+		return weakpoint_objective
 
 /obj/item/grenade/c4/es8
 	name = "ES8 explosive charge"
@@ -227,11 +229,11 @@
 
 	boom_sizes = list(3, 6, 9)
 
-	/// Reference to user's objective
-	var/datum/traitor_objective/locate_weakpoint/objective
+	/// Weakref to user's objective
+	var/datum/weakref/objective_weakref
 
 /obj/item/grenade/c4/es8/Destroy()
-	objective = null
+	objective_weakref = null
 	return ..()
 
 /obj/item/grenade/c4/es8/afterattack(atom/movable/target, mob/user, flag)
@@ -242,11 +244,16 @@
 		to_chat(user, span_warning("You can't seem to find a way to detonate the charge."))
 		return
 
-	for(var/datum/traitor_objective/locate_weakpoint/weakpoint_objecitve in SStraitor.taken_objectives_by_type[/datum/traitor_objective/locate_weakpoint])
-		var/datum/uplink_handler/handler = weakpoint_objecitve.handler
+	var/datum/traitor_objective/locate_weakpoint/objective
+	for(var/datum/traitor_objective/locate_weakpoint/weakpoint_objective in SStraitor.taken_objectives_by_type[/datum/traitor_objective/locate_weakpoint])
+		var/datum/uplink_handler/handler = weakpoint_objective.handler
 		if(handler.owner != user.mind)
 			continue
-		objective = weakpoint_objecitve
+		objective_weakref = WEAKREF(weakpoint_objective)
+		objective = weakpoint_objective
+
+	if(!objective)
+		objective = objective_weakref.resolve()
 
 	if(!objective || objective.objective_state == OBJECTIVE_STATE_INACTIVE)
 		to_chat(user, span_warning("You don't think it would be wise to use [src]."))
@@ -266,14 +273,16 @@
 
 /obj/item/grenade/c4/es8/detonate(mob/living/lanced_by)
 	var/area/target_area = get_area(target)
+	var/datum/traitor_objective/locate_weakpoint/objective = objective_weakref.resolve()
+
+	if(!objective)
+		return
+
 	if (target_area.type != objective.weakpoint_areas[3])
 		var/obj/item/grenade/c4/es8/new_bomb = new(target.drop_location())
 		new_bomb.balloon_alert_to_viewers("invalid location!")
 		target.cut_overlay(plastic_overlay, TRUE)
 		qdel(src)
-		return
-
-	if(!objective)
 		return
 
 	objective.create_shockwave(target.x, target.y, target.z)
