@@ -146,6 +146,8 @@
 /obj/item/weakpoint_locator/Initialize(mapload, datum/traitor_objective/locate_weakpoint/objective)
 	. = ..()
 	objective_weakref = WEAKREF(objective)
+	if(!objective)
+		return
 	var/area/area1 = objective.scan_areas[1]
 	var/area/area2 = objective.scan_areas[2]
 	desc = replacetext(desc, "%AREA1%", initial(area1.name))
