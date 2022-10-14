@@ -360,22 +360,24 @@
 	
 /datum/supply_pack/security/armory/wt550
     name = "Recalled Weapon Pack"
-    desc = "Contains a set of old nanotranset brand autorifles recalled due to choking hazard.\
-		Collectors prize still in box requring Armory access to open."
+    desc = "Contains a set of old nanotranset brand autorifles recalled due to choking hazard."
 	cost = CARGO_CRATE_VALUE * 7
 	hidden = TRUE
 	contains = list(/obj/item/gun/ballistic/automatic/wt550,/obj/item/ammo_box/magazine/wt550m9,
                     /obj/item/ammo_box/magazine/wt550m9,
                     /obj/item/gun/ballistic/automatic/wt550)
-    crate_name = "wt-550 auto rifle crate" 
+    crate_name = "wt-550 auto rifle crate"
+	crate_type = /obj/structure/closet/crate/internals
 	
 /datum/supply_pack/security/armory/wt550ammo
     name = "Recalled Ammo Pack
     desc = "Contains four 20-round magazine for the Recalled WT-550 Auto Rifle. Each magazine is designed to facilitate rapid tactical reloads.\
-		Requires Armory access to open. Recalled due to Security demands"
+	Recalled due to Security demands."
 	cost = CARGO_CRATE_VALUE * 4
 	hidden = TRUE
 	contains = list(/obj/item/ammo_box/magazine/wt550m9,
-                    /obj/item/ammo_box/magazine/wt550m9)
+                    /obj/item/ammo_box/magazine/wt550m9,
+					)
     crate_name = "wt-550 ammo crate" 
+	crate_type = /obj/structure/closet/crate/internals
 	
