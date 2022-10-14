@@ -49,9 +49,9 @@
 	TEST_ASSERT_EQUAL(byond_assoc_list, json_assoc_list, "didn't convert associative list correctly")
 
 	var/null_value = json_savefile.get_entry("null_value")
-	var/null_default = json_savefile.get_entry("null_value", "defval")
+	var/default_value = json_savefile.get_entry("this_key_doesnt_exist", "defval")
 	TEST_ASSERT_NULL(null_value, "read an invalid value for what should be null")
-	TEST_ASSERT_EQUAL(null_default, "defval", "didn't grab the default value for a non existant key")
+	TEST_ASSERT_EQUAL(default_value, "defval", "didn't grab the default value for a non existant key")
 
 	var/empty_list = json_savefile.get_entry("empty_list")
 	if(!istype(empty_list, /list))
