@@ -703,7 +703,7 @@
 	if(QDELETED(src))
 		return
 	qdel(src)
-	return TRUE
+	return TRUE //Sends TRUE back to interrupt the part's QDEL so we can handle it ourselves, preventing a qdel loop.
 
 /obj/item/mod/control/proc/on_overslot_exit(datum/source, atom/movable/overslot, direction)
 	SIGNAL_HANDLER
