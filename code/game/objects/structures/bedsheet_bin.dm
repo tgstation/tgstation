@@ -38,6 +38,9 @@ LINEN BINS
 		stack_amount *= 2
 		dying_key = DYE_REGISTRY_DOUBLE_BEDSHEET
 
+/obj/item/bedsheet//attack(mob/living/target, mob/living/user)
+	if(being_used || !ismob(dumb_mob))
+
 /obj/item/bedsheet/attack_self(mob/living/user)
 	if(!user.CanReach(src)) //No telekenetic grabbing.
 		return
@@ -62,6 +65,29 @@ LINEN BINS
 			dir = EAST
 	add_fingerprint(user)
 	return
+
+/obj/item/bedsheet/proc/cover_up(mob/living/sleeper)
+	if(layer == initial(layer))
+		layer = ABOVE_MOB_LAYER
+		SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
+		pixel_x = 0
+		pixel_y = 0
+	else
+		layer = initial(layer)
+		SET_PLANE_IMPLICIT(src, initial(plane))
+	
+	dir = sleeper.dir & WEST || EAST
+
+/* FINISH LATER
+	if(sleeper.body_position == LYING_DOWN) //The player isn't laying down currently
+		dir = sleeper.dir
+	else
+		dir = sleeper.dir & WEST || EAST
+		if(sleeper.dir & WEST)    //The player is rotated to the right, lay the sheet left!
+			dir = WEST
+		else    //The player is rotated to the left, lay the sheet right!
+			dir = EAST
+*/
 
 /obj/item/bedsheet/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_WIRECUTTER || I.get_sharpness())
