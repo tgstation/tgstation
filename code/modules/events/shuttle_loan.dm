@@ -80,7 +80,7 @@
 
 	SSshuttle.supply.mode = SHUTTLE_CALL
 	SSshuttle.supply.destination = SSshuttle.getDock("cargo_home")
-	SSshuttle.supply.setTimer(3000)
+	SSshuttle.supply.setTimer(3) //DEBUG CODE SET BACK TO 3000 PLEASE
 
 	switch(dispatch_type)
 		if(HIJACK_SYNDIE)
@@ -256,7 +256,8 @@
 				else
 					shuttle_spawns.Add(/obj/item/paper/fluff/cargo/bomb/allyourbase)
 			if(PAPERS_PLEASE)
-				shuttle_spawns.Add(/obj/item/paperwork)
+				for(var/i in 1 to 5)
+					shuttle_spawns.Add(/obj/item/paperwork/random)
 
 		var/false_positive = 0
 		while(shuttle_spawns.len && empty_shuttle_turfs.len)
