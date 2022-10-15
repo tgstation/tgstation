@@ -4,6 +4,9 @@
  */
 /obj/item/organ/internal/monster_core/reusable/rush_gland
 	name = "rush gland"
+	icon_state = "lobster_gland"
+	icon_state_preserved = "lobster_gland_stable"
+	icon_state_inert = "lobster_gland_decayed"
 	desc = "A lobstrosity's engorged adrenal gland. You can squeeze it to get a rush of energy on demand."
 	desc_preserved = "A lobstrosity's engorged adrenal gland. It is preserved, allowing you to use it for a burst of speed whenever you need it."
 	desc_inert = "A lobstrosity's adrenal gland. It is all shrivelled up."
@@ -22,7 +25,7 @@
 	owner.apply_status_effect(/datum/status_effect/lobster_rush/extended)
 
 /**
- * Status effect: Makes you run really fast and ignore injury speed penalty for a short duration.
+ * Status effect: Makes you run really fast and ignore speed penalties for a short duration.
  * If you run into a wall indoors you will fall over and lose the buff.
  * If you run into someone you both fall over.
  */
@@ -35,24 +38,20 @@
 /atom/movable/screen/alert/status_effect/lobster_rush
 	name = "Lobster Rush"
 	desc = "Adrenaline is surging through you!"
-	icon_state = "antalert"
-
-/// Returns a string used to identify this status effect for trait application
-/datum/status_effect/lobster_rush/proc/get_trait_id()
-	return "[STATUS_EFFECT_TRAIT]_[id]"
+	icon_state = "lobster"
 
 /datum/status_effect/lobster_rush/on_apply()
 	. = ..()
 	RegisterSignal(owner, COMSIG_MOVABLE_PRE_MOVE, .proc/on_move)
 	RegisterSignal(owner, COMSIG_MOVABLE_BUMP, .proc/on_bump)
-	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, get_trait_id())
+	ADD_TRAIT(owner, TRAIT_IGNORESLOWDOWN, TRAIT_STATUS_EFFECT(id))
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/lobster_rush)
 	to_chat(owner, span_notice("You feel your blood pumping!"))
 
 /datum/status_effect/lobster_rush/on_remove()
 	. = ..()
 	UnregisterSignal(owner, list(COMSIG_MOVABLE_PRE_MOVE, COMSIG_MOVABLE_BUMP))
-	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, get_trait_id())
+	REMOVE_TRAIT(owner, TRAIT_IGNORESLOWDOWN, TRAIT_STATUS_EFFECT(id))
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/lobster_rush)
 	to_chat(owner, span_notice("Your pulse returns to normal."))
 
@@ -82,14 +81,6 @@
 	target.adjustStaminaLoss(40)
 	target.adjustBruteLoss(20)
 
-/// You get a longer buff if you take the time to implant it in yourself, and you ignore all slowdown
+/// You get a longer buff if you take the time to implant it in yourself
 /datum/status_effect/lobster_rush/extended
 	duration = 5 SECONDS
-
-/datum/status_effect/lobster_rush/extended/on_apply()
-	ADD_TRAIT(owner, TRAIT_IGNORESLOWDOWN, get_trait_id())
-	return ..()
-
-/datum/status_effect/lobster_rush/extended/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_IGNORESLOWDOWN, get_trait_id())
-	return ..()

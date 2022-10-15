@@ -33,6 +33,7 @@
 	name = "monster core"
 	desc = "All that remains of a monster. This abstract item should not spawn. \
 		It will rapidly decay into uselessness. but don't worry because it's already useless."
+	icon = 'icons/obj/medical/organs/mining_organs.dmi'
 	icon_state = "roro core 2"
 	visual = FALSE
 	item_flags = NOBLUDGEON

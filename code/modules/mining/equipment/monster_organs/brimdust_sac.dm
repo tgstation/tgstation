@@ -7,9 +7,16 @@
 /obj/item/organ/internal/monster_core/reusable/brimdust_sac
 	name = "brimdust sac"
 	desc = "A strange organ from a brimdemon. You can shake it out to coat yourself in explosive powder."
+	icon_state = "brim_sac"
+	icon_state_preserved = "brim_sac_stable"
+	icon_state_inert = "brim_sac_decayed"
 	desc_preserved = "A strange organ from a brimdemon. It is preserved, allowing you to coat yourself in its explosive contents at your leisure."
 	desc_inert = "A decayed brimdemon organ. There's nothing usable left inside it."
 	user_status = /datum/status_effect/stacking/brimdust_coating
+
+/obj/item/organ/internal/monster_core/reusable/brimdust_sac/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/explodable, light_impact_range = 1)
 
 /obj/item/organ/internal/monster_core/reusable/brimdust_sac/on_life(delta_time, times_fired)
 	. = ..()
@@ -76,20 +83,50 @@
 	var/delay_between_explosions = 5 SECONDS
 	/// Cooldown between explosions
 	COOLDOWN_DECLARE(explosion_cooldown)
+	/// Overlay effect added to mob when buff is present
+	var/mutable_appearance/dust_overlay
 
 /atom/movable/screen/alert/status_effect/brimdust_coating
 	name = "Brimdust Coating"
-	desc = "You are coated with explosive dust, kinetic impacts will cause it to detonate! \
-		The explosion will not harm you, as long as you're not under atmospheric pressure."
-	icon_state = "highbloodpressure"
+	desc = ""
+
+/atom/movable/screen/alert/status_effect/brimdust_coating/MouseEntered(location,control,params)
+	desc = initial(desc)
+	var/datum/status_effect/stacking/brimdust_coating/dust = attached_effect
+	switch(dust.stacks)
+		if (3)
+			desc += "You are heavily caked in explosive dust, "
+		if (2)
+			desc += "You have a generous coating of explosive dust, "
+		if (1)
+			desc += "You are lightly sprinkled with explosive dust, "
+
+	desc += "kinetic impacts will cause it to detonate! \
+		The explosion will not harm you as long as you're not under atmospheric pressure."
+	return ..()
+
+/datum/status_effect/stacking/brimdust_coating/add_stacks(stacks_added)
+	. = ..()
+	if (stacks == 0)
+		return
+	linked_alert.icon_state = "brimdemon_[stacks]"
+
+/datum/status_effect/stacking/brimdust_coating/on_creation(mob/living/new_owner, stacks_to_apply)
+	. = ..()
+	linked_alert?.icon_state = "brimdemon_[stacks]"
 
 /datum/status_effect/stacking/brimdust_coating/on_apply()
 	. = ..()
+
+	dust_overlay = mutable_appearance('icons/effects/weather_effects.dmi', "ash_storm")
+	dust_overlay.blend_mode = BLEND_INSET_OVERLAY
+	owner.add_overlay(dust_overlay)
 	RegisterSignal(owner, COMSIG_COMPONENT_CLEAN_ACT, .proc/on_cleaned)
 	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, .proc/on_take_damage)
 
 /datum/status_effect/stacking/brimdust_coating/on_remove()
 	. = ..()
+	owner.cut_overlay(dust_overlay)
 	UnregisterSignal(owner, list(COMSIG_MOB_APPLY_DAMAGE, COMSIG_COMPONENT_CLEAN_ACT))
 
 /// When you are cleaned, wash off the buff
