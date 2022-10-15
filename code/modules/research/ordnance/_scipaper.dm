@@ -113,7 +113,7 @@
  * Things to check: tier, gain, and partner here. ex_path and record datums in subtypes.
  */
 /datum/scientific_paper/proc/allowed_to_publish(datum/techweb/techweb_to_check)
-	if(!tier || !gains || !partner_path || !gains.len)
+	if(!tier || !gains || !partner_path || (0 in gains))
 		return FALSE
 	return !techweb_to_check.published_papers[experiment_path][tier]
 
