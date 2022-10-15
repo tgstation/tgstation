@@ -36,7 +36,7 @@
 	var/datum/crafting_recipe/house_edge/edge
 	if(!user.mind)
 		return
-	if(user.mind.has_crafting_recipe(edge))
+	if(user.mind.has_crafting_recipe(user = user, potential_recipe = edge))
 		return
 	to_chat(user, span_notice("You peer at the label on the side, reading about some unique modifications that could be made to the engine..."))
 	if(do_after(user, 15 SECONDS, src))

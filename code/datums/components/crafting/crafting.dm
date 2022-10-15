@@ -501,7 +501,7 @@
 		learned_recipes = list()
 	learned_recipes |= R
 
-/datum/mind/proc/has_crafting_recipe(potential_recipe)
+/datum/mind/proc/has_crafting_recipe(mob/user, potential_recipe)
 	if(!learned_recipes)
 		return FALSE
 	if(!istype(potential_recipe, /datum/crafting_recipe))
