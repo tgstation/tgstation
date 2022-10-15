@@ -88200,10 +88200,10 @@
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
 "vyP" = (
-/obj/item/storage/belt,
 /obj/item/radio,
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/storage/belt/utility,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/storage/eva)
 "vyX" = (
