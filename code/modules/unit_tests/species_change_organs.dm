@@ -11,7 +11,7 @@
 	// Give a trauma
 	dummy.gain_trauma(/datum/brain_trauma/severe/blindness)
 	// Give a cyber heart
-	var/obj/item/organ/internal/heart/cybernetic/cyber_heart = new()
+	var/obj/item/organ/internal/heart/cybernetic/cyber_heart = allocate(/obj/item/organ/internal/heart/cybernetic)
 	cyber_heart.Insert(dummy, special = TRUE, drop_if_replaced = FALSE)
 	// Give one of their organs a bit of damage
 	var/obj/item/organ/internal/appendix/existing_appendix = dummy.getorganslot(ORGAN_SLOT_APPENDIX)
