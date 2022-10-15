@@ -186,7 +186,7 @@
 	background_icon_state = linker.speech_action_background_icon_state
 
 /datum/action/innate/linked_speech/IsAvailable()
-	return ..() && (owner.stat != DEAD)
+	return ..() && (owner.stat <= UNCONSCIOUS)
 
 /datum/action/innate/linked_speech/Activate()
 
