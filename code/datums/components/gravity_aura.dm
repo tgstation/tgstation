@@ -37,7 +37,7 @@
 		if(!(candidate in current_alerts))
 			candidate.AddElement(/datum/element/forced_gravity, gravity_strength)
 			current_alerts += candidate
-			candidate.balloon_alert(candidate, "Gravity suddenly changes!")
+			candidate.balloon_alert(candidate, "gravity shifts!")
 	for (var/mob/living/alert_holder in remove_alerts_from)
 		alert_holder.RemoveElement(/datum/element/forced_gravity, gravity_strength)
 		current_alerts -= alert_holder
