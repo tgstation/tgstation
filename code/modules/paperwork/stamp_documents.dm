@@ -22,7 +22,7 @@
 	throw_speed = 1
 	layer = MOB_LAYER
 	///The stamp overlay, used to show that the paperwork is complete without making a bunch of sprites
-	var/image/stamp_overlay
+	var/mutable_appearance/stamp_overlay
 	///The specific stamp icon to be overlaid on the paperwork
 	var/stamp_icon = "paper_stamp-void"
 	///The stamp needed to "complete" this form.
@@ -37,12 +37,14 @@
 
 	if(istype(attacking_item, stamp_requested) || istype(attacking_item, stamp_requested))
 		stamped = TRUE
+		add_overlay(stamp_overlay)
 		update_overlays()
 		desc = "A slightly more organized mess of documents."
 
 /obj/item/paperwork/Initialize(mapload)
 	. = ..()
 	stamp_overlay = mutable_appearance('icons/obj/bureaucracy.dmi', stamp_icon)
+
 	var/datum/job/stamp_title = stamp_job
 	var/title = initial(stamp_title.title)
 	desc += " Trying to read through it makes your head spin. Judging by the few words you can make out, this looks like a job for a [title]." //fix grammar here
@@ -148,5 +150,5 @@
 	. += "\t[span_info("The documents are a friendly correspondence from the captain's desk of a nearby station.")]"
 	. += "\t[span_info("The first few pages are barely-readable scrawlings stating grievances with the station's crew, and their poor performance.")]"
 	. += "\t[span_info("You can't tell what the point of the report actually is, or who the author may be, but their ranting seems to make one thing clear.")]"
-	. += "\t[span_info("The station these papers came from need better engineers. You should probably stamp this.")]"
+	. += "\t[span_info("The station these papers came from needs better engineers. You should probably stamp this.")]"
 
