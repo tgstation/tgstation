@@ -1,9 +1,10 @@
 import { useBackend, useLocalState } from '../backend';
 import { filter, sortBy } from 'common/collections';
 import { capitalizeFirst, multiline } from 'common/string';
-import { Button, Collapsible, Icon, Input, Section, Stack } from '../components';
+import { Box, Button, Collapsible, Icon, Input, LabeledList, Section, Stack } from '../components';
 import { Window } from '../layouts';
 import { flow } from 'common/fp';
+import { logger } from '../logging';
 
 type AntagGroup = [string, Antags];
 
@@ -19,9 +20,12 @@ type Data = {
 };
 
 type Observable = {
-  ref: string;
+  full_name: string;
+  health: number;
+  job: string;
   name: string;
   orbiters?: number;
+  ref: string;
 };
 
 type POIs = Array<Observable>;
@@ -219,11 +223,7 @@ const ObservableSection = (
   if (!section.length) {
     return null;
   }
-  const [searchQuery, setSearchQuery] = useLocalState<string>(
-    context,
-    'searchQuery',
-    ''
-  );
+  const [searchQuery] = useLocalState<string>(context, 'searchQuery', '');
   const filteredSection: POIs = flow([
     filter<Observable>((poi) =>
       poi.name?.toLowerCase().includes(searchQuery?.toLowerCase())
@@ -255,21 +255,17 @@ const ObservableItem = (
   context
 ) => {
   const { act } = useBackend<Data>(context);
-  const {
-    color,
-    item: { name, orbiters, ref },
-  } = props;
-  const [autoObserve, setAutoObserve] = useLocalState<boolean>(
-    context,
-    'autoObserve',
-    false
-  );
+  const { color, item } = props;
+  const { health, name, orbiters, ref } = item;
+  const [autoObserve] = useLocalState<boolean>(context, 'autoObserve', false);
   const threat = getThreat(orbiters || 0);
 
   return (
     <Button
       color={threat || color}
-      onClick={() => act('orbit', { auto_observe: autoObserve, ref: ref })}>
+      onClick={() => act('orbit', { auto_observe: autoObserve, ref: ref })}
+      tooltip={health && <LivingTooltip item={item} />}
+      tooltipPosition="bottom-start">
       {capitalizeFirst(name).slice(0, 44) /** prevents it from overflowing */}
       {!!orbiters && (
         <>
@@ -282,13 +278,30 @@ const ObservableItem = (
   );
 };
 
+/** Displays some info on the mob as a tooltip. */
+const LivingTooltip = (props: { item: Observable }) => {
+  const {
+    item: { job, name, health },
+  } = props;
+
+  return (
+    <LabeledList>
+      <LabeledList.Item label="Name">{name}</LabeledList.Item>
+      <LabeledList.Item label="Job">{job}</LabeledList.Item>
+      <LabeledList.Item label="Health">
+        {getHealthLabel(health)}
+      </LabeledList.Item>
+    </LabeledList>
+  );
+};
+
 /**
  * Collates antagonist groups into their own separate sections.
  * Some antags are grouped together lest they be listed separately,
  * ie: Nuclear Operatives. See: ANTAG_GROUPS.
  */
 const collateAntagonists = (antagonists: Antags) => {
-  const collatedAntagonists = {};
+  const collatedAntagonists = {}; // Hate that I cant use a map here
   antagonists.map((player) => {
     const { antag } = player;
     const resolvedName: string = ANTAG2GROUP[antag] || antag;
@@ -302,6 +315,28 @@ const collateAntagonists = (antagonists: Antags) => {
   );
 
   return sortedAntagonists;
+};
+
+/** Returns some labels for a player's health */
+const getHealthLabel = (health: number) => {
+  if (health === 100) {
+    return <Box color="blue">Great</Box>;
+  }
+  if (health >= 75) {
+    return <Box color="green">Good</Box>;
+  }
+  if (health >= 50) {
+    return <Box color="yellow">Fair</Box>;
+  }
+  if (health >= 25) {
+    return <Box color="orange">Poor</Box>;
+  }
+  if (health > 0) {
+    return <Box color="orange">Bad</Box>;
+  }
+  if (health === 0) {
+    return <Box color="red">Critical</Box>;
+  }
 };
 
 /** Takes the amount of orbiters and returns some style options */
