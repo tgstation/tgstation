@@ -56,10 +56,10 @@
 	// unless relevant step procs are overriden. amounts
 	// must be defined if using /obj/item/stack/sheet types
 	var/obj/inner_plating
-	var/obj/inner_plating_amount
+	var/inner_plating_amount
 
 	var/obj/outer_plating
-	var/obj/outer_plating_amount
+	var/outer_plating_amount
 
 /datum/component/construction/mecha/spawn_result()
 	if(!result)
@@ -418,7 +418,7 @@
 			"key" = /obj/item/stack/rods,
 			"amount" = 10,
 			"back_key" = TOOL_WELDER,
-			"desc" = "Outer plating is welded, and <b>rods</b> can be used to install the cockpit wire."
+			"desc" = "Outer plating is welded, and 10 <b>rods</b> can be used to install the cockpit wire."
 		),
 		list(
 			"key" = TOOL_WELDER,
