@@ -367,7 +367,7 @@
 		/obj/item/gun/ballistic/automatic/wt550 = 2,
 		/obj/item/ammo_box/magazine/wt550m9 = 2,
 	)
-	crate_name = "crate"
+	crate_name = "Recalled rifle crate"
 	
 /datum/supply_pack/security/armory/wt550ammo
 	name = "Recalled Ammo Pack"
@@ -378,5 +378,5 @@
 	contains = list(
 		/obj/item/ammo_box/magazine/wt550m9 = 4,
 	)
-	crate_name = "crate" 
+	crate_name = "Ammo box"
 
