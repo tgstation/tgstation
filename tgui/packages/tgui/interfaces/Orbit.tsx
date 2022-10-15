@@ -222,10 +222,10 @@ const ObservableSection = (
   }
   const [searchQuery] = useLocalState<string>(context, 'searchQuery', '');
   const filteredSection: Array<Observable> = flow([
-    filter<Observable>((poi) =>
-      poi.name?.toLowerCase().includes(searchQuery?.toLowerCase())
+    filter<Observable>((observable) =>
+      observable.full_name?.toLowerCase().includes(searchQuery?.toLowerCase())
     ),
-    sortBy<Observable>((poi) => poi.name.toLowerCase()),
+    sortBy<Observable>((observable) => observable.name?.toLowerCase()),
   ])(section);
   if (!filteredSection.length) {
     return null;
@@ -263,7 +263,7 @@ const ObservableItem = (
       onClick={() => act('orbit', { auto_observe: autoObserve, ref: ref })}
       tooltip={health && <LivingTooltip item={item} />}
       tooltipPosition="bottom-start">
-      {capitalizeFirst(name).slice(0, 44) /** prevents it from overflowing */}
+      {capitalizeFirst(name).slice(0, 44)}
       {!!orbiters && (
         <>
           {' '}
