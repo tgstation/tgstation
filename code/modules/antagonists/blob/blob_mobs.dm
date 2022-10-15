@@ -145,9 +145,8 @@
 			if(!is_weak && H.stat == DEAD)
 				Zombify(H)
 				break
-	if(!independent)
-		if(!factory || !is_valid_z_level(get_turf(src), get_turf(factory)))
-			death()
+	if(factory && !is_valid_z_level(get_turf(src), get_turf(factory)))
+		death()
 	return ..()
 
 /mob/living/simple_animal/hostile/blob/blobspore/attack_ghost(mob/user)

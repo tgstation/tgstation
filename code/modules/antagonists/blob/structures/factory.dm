@@ -19,9 +19,8 @@
 		overmind.factory_blobs += src
 
 /obj/structure/blob/special/factory/Destroy()
-	for(var/mob/living/simple_animal/hostile/blob/blobspore/spore in spores)
-		if(spore.factory == src)
-			spore.factory = null
+	for(var/mob/living/simple_animal/hostile/blob/blobspore/spore in src.spores)
+		spore.death()
 	if(naut)
 		naut.factory = null
 		to_chat(naut, span_userdanger("Your factory was destroyed! You feel yourself dying!"))
