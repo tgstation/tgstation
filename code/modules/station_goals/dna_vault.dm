@@ -124,13 +124,17 @@
 		ui.open()
 
 /obj/machinery/dna_vault/proc/roll_powers(mob/user)
-	if(user in power_lottery)
+	if(user in power_lottery || isdead(user))
 		return
 	var/list/L = list()
 	var/list/possible_powers = list(VAULT_TOXIN,VAULT_NOBREATH,VAULT_FIREPROOF,VAULT_STUNTIME,VAULT_ARMOUR,VAULT_SPEED,VAULT_QUICK)
 	L += pick_n_take(possible_powers)
 	L += pick_n_take(possible_powers)
 	power_lottery[user] = L
+	RegisterSignal(user, COMSIG_PARENT_QDELETING, .proc/deref_mob)
+
+/obj/machinery/dna_vault/proc/deref_mob(datum/source, force)
+	LAZYREMOVE(power_lottery, source)
 
 /obj/machinery/dna_vault/ui_data(mob/user) //TODO Make it % bars maybe
 	var/list/data = list()
