@@ -41,4 +41,4 @@
 	for (var/mob/living/alert_holder in remove_alerts_from)
 		alert_holder.RemoveElement(/datum/element/forced_gravity, gravity_strength)
 		current_alerts -= alert_holder
-		alert_holder.balloon_alert(alert_holder, "Gravity returns to normal...")
+		alert_holder.balloon_alert(alert_holder, "gravity reverts")
