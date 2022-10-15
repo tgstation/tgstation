@@ -30,13 +30,19 @@
 
 /obj/item/v8_engine/examine_more(mob/user)
 	. = ..()
+	INVOKE_ASYNC(src, .proc/start_learning_recipe, user)
+
+/obj/item/v8_engine/proc/start_learning_recipe(mob/user)
 	var/datum/crafting_recipe/house_edge/edge
+	if(!user.mind)
+		return
+	if(user.mind.has_crafting_recipe(edge))
+		return
 	to_chat(user, span_notice("You peer at the label on the side, reading about some unique modifications that could be made to the engine..."))
 	if(do_after(user, 15 SECONDS, src))
-		if(!user.mind)
-			return
 		user.mind.teach_crafting_recipe(edge)
 		to_chat(user, span_notice("You learned how to make the House Edge."))
+
 
 /obj/item/house_edge
 	name = "House Edge"
@@ -82,7 +88,7 @@
 	if(!COOLDOWN_FINISHED(src, fire_charge_cooldown))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(fire_charges <= 0)
-		balloon_alert(user, "no fire charges")
+		balloon_alert(user, "no fire charges!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	user.throw_at(target = get_turf(target), range = 2 * fire_charges, speed = 5, thrower = user, spin = FALSE, gentle = FALSE, quickstart = TRUE)
 	COOLDOWN_START(src, fire_charge_cooldown, DASH_COOLDOWN)
@@ -93,7 +99,7 @@
 	if(!COOLDOWN_FINISHED(src, fire_charge_cooldown) && !on_dash)
 		return
 	if(fire_charges)
-		balloon_alert_to_viewers("Charges lost")
+		balloon_alert_to_viewers("charges lost!")
 	fire_charges = 0
 	icon_state = "house_edge[fire_charges]"
 	update_icon()
