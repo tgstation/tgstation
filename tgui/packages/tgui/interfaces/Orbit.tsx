@@ -4,7 +4,6 @@ import { capitalizeFirst, multiline } from 'common/string';
 import { Box, Button, Collapsible, Icon, Input, LabeledList, Section, Stack } from '../components';
 import { Window } from '../layouts';
 import { flow } from 'common/fp';
-import { logger } from '../logging';
 
 type AntagGroup = [string, Antags];
 
@@ -249,7 +248,7 @@ const ObservableSection = (
   );
 };
 
-/** Renders an observable button */
+/** Renders an observable button that has tooltip info for living POIs*/
 const ObservableItem = (
   props: { color: string; item: Observable },
   context
