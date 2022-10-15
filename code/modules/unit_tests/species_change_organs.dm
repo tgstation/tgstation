@@ -12,7 +12,7 @@
 	dummy.gain_trauma(/datum/brain_trauma/severe/blindness)
 	// Give a cyber heart
 	var/obj/item/organ/internal/heart/cybernetic/cyber_heart = new()
-	cyber_heart.Insert(dummy, TRUE, FALSE)
+	cyber_heart.Insert(dummy, special = TRUE, drop_if_replaced = FALSE)
 	// Give one of their organs a bit of damage
 	var/obj/item/organ/internal/appendix/existing_appendix = dummy.getorganslot(ORGAN_SLOT_APPENDIX)
 	existing_appendix.setOrganDamage(25)
@@ -32,7 +32,7 @@
 
 	// Now make them a lizard
 	dummy.set_species(changed_species)
-	TEST_ASSERT(istype(dummy.dna.species, /datum/species/lizard), "Dummy didn't transform into a lizard when testing species organ changes. ")
+	TEST_ASSERT(istype(dummy.dna.species, /datum/species/lizard), "Dummy didn't transform into a lizard when testing species organ changes.")
 
 	// Grab the lizard's appendix for comparison later
 	// They should've been given a new one, but our damage should also have transferred over
