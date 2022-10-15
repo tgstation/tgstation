@@ -10,12 +10,12 @@ type AntagGroup = [string, Antags];
 type Antags = Array<Observable & { antag: string }>;
 
 type Data = {
-  alive: POIs;
+  alive: Array<Observable>;
   antagonists: Antags;
-  dead: POIs;
-  ghosts: POIs;
-  misc: POIs;
-  npcs: POIs;
+  dead: Array<Observable>;
+  ghosts: Array<Observable>;
+  misc: Array<Observable>;
+  npcs: Array<Observable>;
 };
 
 type Observable = {
@@ -26,8 +26,6 @@ type Observable = {
   orbiters?: number;
   ref: string;
 };
-
-type POIs = Array<Observable>;
 
 const ANTAG2COLOR = {
   'Abductors': 'pink',
@@ -103,7 +101,7 @@ const ObservableSearch = (props, context) => {
     'searchQuery',
     ''
   );
-  /** Gets a list of POIs, then filters the most relevant to orbit */
+  /** Gets a list of Observables, then filters the most relevant to orbit */
   const orbitMostRelevant = (searchQuery: string): void => {
     /** Returns the most orbited observable that matches the search. */
     const mostRelevant: Observable = flow([
@@ -113,7 +111,7 @@ const ObservableSearch = (props, context) => {
       ),
       // Sorts descending by orbiters
       sortBy<Observable>((poi) => -(poi.orbiters || 0)),
-      // Makes a single POIs list for an easy search
+      // Makes a single Observables list for an easy search
     ])([alive, antagonists, dead, ghosts, misc, npcs].flat())[0];
     if (mostRelevant !== undefined) {
       act('orbit', {
@@ -213,7 +211,7 @@ const ObservableContent = (props, context) => {
 const ObservableSection = (
   props: {
     color?: string;
-    section: POIs;
+    section: Array<Observable>;
     title: string;
   },
   context
@@ -223,7 +221,7 @@ const ObservableSection = (
     return null;
   }
   const [searchQuery] = useLocalState<string>(context, 'searchQuery', '');
-  const filteredSection: POIs = flow([
+  const filteredSection: Array<Observable> = flow([
     filter<Observable>((poi) =>
       poi.name?.toLowerCase().includes(searchQuery?.toLowerCase())
     ),
@@ -248,7 +246,7 @@ const ObservableSection = (
   );
 };
 
-/** Renders an observable button that has tooltip info for living POIs*/
+/** Renders an observable button that has tooltip info for living Observables*/
 const ObservableItem = (
   props: { color: string; item: Observable },
   context
