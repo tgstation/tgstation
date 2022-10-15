@@ -514,11 +514,11 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	switch(get_ntnet_status())
 		if(NTNET_NO_SIGNAL)
 			data["PC_ntneticon"] = "sig_none.gif"
-		else if(NTNET_LOW_SIGNAL)
+		if(NTNET_LOW_SIGNAL)
 			data["PC_ntneticon"] = "sig_low.gif"
-		else if(NTNET_GOOD_SIGNAL)
+		if(NTNET_GOOD_SIGNAL)
 			data["PC_ntneticon"] = "sig_high.gif"
-		else if(NTNET_ETHERNET_SIGNAL)
+		if(NTNET_ETHERNET_SIGNAL)
 			data["PC_ntneticon"] = "sig_lan.gif"
 
 	if(length(idle_threads))

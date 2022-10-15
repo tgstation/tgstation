@@ -209,14 +209,7 @@
 	return ..()
 
 /datum/scientific_paper/explosive/set_experiment(ex_path = null, variable = null, data = null)
-	var/invalid = FALSE
-
-	invalid = (invalid \
-		|| !ispath(ex_path, /datum/experiment/ordnance/explosive) \
-		|| !variable \
-		|| !istype(data, /datum/data/tachyon_record))
-
-	if(invalid)
+	if(!ispath(ex_path, /datum/experiment/ordnance/explosive) || !variable || !istype(data, /datum/data/tachyon_record))
 		experiment_path = null
 		tracked_variable = null
 		explosion_record = null
