@@ -30,6 +30,7 @@
 /obj/item/organ/internal/monster_core/reusable/brimdust_sac/proc/explode_organ()
 	owner.visible_message(span_boldwarning("[owner]'s chest bursts open as something inside ignites!"))
 	var/turf/origin_turf = get_turf(owner)
+	playsound(origin_turf, 'sound/effects/pop_expl.ogg', 100)
 	new /obj/effect/temp_visual/explosion/fast(origin_turf)
 	owner.Paralyze(5 SECONDS)
 
@@ -88,21 +89,22 @@
 
 /atom/movable/screen/alert/status_effect/brimdust_coating
 	name = "Brimdust Coating"
-	desc = ""
+	desc = "You %STACKS% explosive dust, kinetic impacts will cause it to detonate! \
+		The explosion will not harm you as long as you're not under atmospheric pressure."
 
 /atom/movable/screen/alert/status_effect/brimdust_coating/MouseEntered(location,control,params)
 	desc = initial(desc)
 	var/datum/status_effect/stacking/brimdust_coating/dust = attached_effect
+	var/dust_amount_string
 	switch(dust.stacks)
 		if (3)
-			desc += "You are heavily caked in explosive dust, "
+			dust_amount_string = "are heavily caked in"
 		if (2)
-			desc += "You have a generous coating of explosive dust, "
+			dust_amount_string = "have a generous coating of"
 		if (1)
-			desc += "You are lightly sprinkled with explosive dust, "
+			dust_amount_string = "are lightly sprinkled with"
 
-	desc += "kinetic impacts will cause it to detonate! \
-		The explosion will not harm you as long as you're not under atmospheric pressure."
+	desc = replacetext(desc, "%STACKS%", dust_amount_string)
 	return ..()
 
 /datum/status_effect/stacking/brimdust_coating/add_stacks(stacks_added)
@@ -143,8 +145,6 @@
 	if(!COOLDOWN_FINISHED(src, explosion_cooldown))
 		return
 	owner.visible_message(span_boldwarning("The brimstone dust surrounding [owner] ignites!"))
-	// Ugly method to bypass creating bugs by killing something in the middle of its attack chain
-	// Let's pass it off as 'giving skilled player attackers time to dodge the retaliation'
 	addtimer(CALLBACK(src, .proc/explode), 0.25 SECONDS)
 	COOLDOWN_START(src, explosion_cooldown, delay_between_explosions)
 
@@ -153,6 +153,7 @@
  */
 /datum/status_effect/stacking/brimdust_coating/proc/explode()
 	var/turf/origin_turf = get_turf(owner)
+	playsound(origin_turf, 'sound/effects/pop_expl.ogg', 50)
 	new /obj/effect/temp_visual/explosion/fast(origin_turf)
 
 	var/under_pressure = !lavaland_equipment_pressure_check(origin_turf)
