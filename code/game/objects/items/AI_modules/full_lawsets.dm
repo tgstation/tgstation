@@ -177,4 +177,4 @@
 	subject = target_name
 	for (var/law in lawset.inherent)
 		laws += replacetext(replacetext(law, "command staff", subject), "command", subject)
-	..()
+	return ..()
