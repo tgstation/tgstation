@@ -21,7 +21,7 @@
 /datum/round_event_control/shuttle_loan/can_spawn_event(players_amt)
 	. = ..()
 
-	for(var/datum/running_event in SSevents.running)
+	for(var/datum/round_event_control/running_event in SSevents.running) //I do not think this works
 		if(istype(running_event, /datum/round_event_control/shuttle_loan)) //Make sure two of these don't happen at once.
 			return FALSE
 
@@ -80,7 +80,7 @@
 
 	SSshuttle.supply.mode = SHUTTLE_CALL
 	SSshuttle.supply.destination = SSshuttle.getDock("cargo_home")
-	SSshuttle.supply.setTimer(3) //DEBUG CODE SET BACK TO 3000 PLEASE
+	SSshuttle.supply.setTimer(30) //DEBUG CODE SET BACK TO 3000 PLEASE
 
 	switch(dispatch_type)
 		if(HIJACK_SYNDIE)
@@ -121,7 +121,7 @@
 			end_when = activeFor + 1
 
 /datum/round_event/shuttle_loan/end()
-	if(SSshuttle.shuttle_loan && SSshuttle.shuttle_loan.dispatched)
+ 	if(SSshuttle.shuttle_loan && SSshuttle.shuttle_loan.dispatched)
 		//make sure the shuttle was dispatched in time
 		SSshuttle.shuttle_loan = null
 
@@ -255,6 +255,7 @@
 					shuttle_spawns.Add(/obj/item/paper/fluff/cargo/bomb)
 				else
 					shuttle_spawns.Add(/obj/item/paper/fluff/cargo/bomb/allyourbase)
+
 			if(PAPERS_PLEASE)
 				for(var/i in 1 to 5)
 					shuttle_spawns.Add(/obj/item/paperwork/random)

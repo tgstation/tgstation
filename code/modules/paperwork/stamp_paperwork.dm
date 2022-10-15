@@ -166,7 +166,24 @@
 /obj/item/paperwork/random/Initialize(mapload)
 	. = ..()
 
-	var/paperwork_type = pick(subtypesof(/obj/item/paperwork))
+	var/paperwork_type = pick(subtypesof(/obj/item/paperwork)) //Change this to a proper list generator later so it doesn't spawn photocopies or other stuff
 	new paperwork_type(get_turf(src))
 
 	return INITIALIZE_HINT_QDEL
+
+/obj/item/paperwork/photocopy
+	desc = ""
+
+/obj/item/paperwork/photocopy/Initialize(mapload)
+	. = ..()
+
+	stamp_overlay = mutable_appearance('icons/obj/bureaucracy.dmi', stamp_icon) //Add grey stamp icon
+
+	if(stamped)
+		add_overlay(stamp_overlay)
+		update_overlays()
+
+/obj/item/paperwork/photocopy/examine(mob/user)
+	. = ..()
+
+	. += " These appear to just be a photocopy of the original documents. Central Command will probably still accept these, right?"

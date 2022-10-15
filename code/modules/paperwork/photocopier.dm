@@ -34,6 +34,8 @@
 	var/mob/living/ass
 	/// A reference to the toner cartridge that's inserted into the copier. Null if there is no cartridge.
 	var/obj/item/toner/toner_cartridge
+	/// A reference to an `/obj/item/paperwork` inside the copier, if one is inserted. Otherwise null.
+	var/obj/item/paperwork/paperwork_copy
 	/// How many copies will be printed with one click of the "copy" button.
 	var/num_copies = 1
 	/// Used with photos. Determines if the copied photo will be in greyscale or color.
@@ -143,6 +145,10 @@
 			if(ass)
 				do_copy_loop(CALLBACK(src, .proc/make_ass_copy), usr)
 				return TRUE
+			// Copying paperwork
+			if(paperwork_copy)
+				do_copy_loop(CALLBACK(src, .proc/make_paperwork_copy), usr)
+				return TRUE
 
 		// Remove the paper/photo/document from the photocopier.
 		if("remove")
@@ -157,6 +163,9 @@
 				document_copy = null
 			else if(check_ass())
 				to_chat(ass, span_notice("You feel a slight pressure on your ass."))
+			else if(paperwork_copy)
+				remove_photocopy(paperwork_copy, usr)
+				paperwork_copy = null
 			return TRUE
 
 		// AI printing photos from their saved images.
@@ -312,6 +321,14 @@
 	give_pixel_offset(copied_doc)
 	toner_cartridge.charges -= DOCUMENT_TONER_USE
 
+/obj/machinery/photocopier/proc/make_paperwork_copy()
+	if(!paperwork_copy)
+		return
+	var/obj/item/paperwork/photocopy/copied_paperwork = new(loc, paperwork_copy)
+	paperwork_copy.stamped = copied_paperwork.stamped
+	give_pixel_offset(copied_paperwork)
+	toner_cartridge.charges -= DOCUMENT_TONER_USE
+
 /**
  * The procedure is called when printing a blank to write off toner consumption.
  */
@@ -429,7 +446,14 @@
 
 	else if(istype(O, /obj/item/areaeditor/blueprints))
 		to_chat(user, span_warning("The Blueprint is too large to put into the copier. You need to find something else to record the document."))
-	else
+	else if(istype(O, /obj/item/paperwork))
+		if(copier_empty())
+			if(!user.temporarilyRemoveItemFromInventory(O))
+				return
+			document_copy = O
+			do_insertion(O, user)
+		else
+			to_chat(user, span_warning("There is already something in [src]!"))
 		return ..()
 
 /obj/machinery/photocopier/atom_break(damage_flag)
