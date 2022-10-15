@@ -377,6 +377,6 @@
 	hidden = TRUE
 	contains = list(
 		/obj/item/ammo_box/magazine/wt550m9 = 2,
-		)
+	)
 	crate_name = "crate" 
 
