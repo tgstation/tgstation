@@ -14,14 +14,14 @@
 		return
 	var/obj/item/organ/internal/monster_core/target_core = target_organ
 	if (!istype(target_core, /obj/item/organ/internal/monster_core))
-		balloon_alert(user, "invalid target")
+		balloon_alert(user, "invalid target!")
 		return
 
 	if (!target_core.preserve())
-		balloon_alert(user, "organ decayed")
+		balloon_alert(user, "organ decayed!")
 		return
 
-	to_chat(user, span_notice("You inject the [target_organ] with the stabilizer. It will no longer go inert."))
+	balloon_alert(user, "organ stabilized")
 	qdel(src)
 
 /**
@@ -77,6 +77,8 @@
 
 /obj/item/organ/internal/monster_core/Insert(mob/living/carbon/target_carbon, special = 0, drop_if_replaced = TRUE)
 	. = ..()
+	if (!.)
+		return
 	if (inert)
 		to_chat(owner, span_notice("[src] breaks down as you try to insert it."))
 		qdel(src)
@@ -113,6 +115,7 @@
 	if (inert)
 		return FALSE
 	inert = TRUE
+	deltimer(decay_timer)
 	decay_timer = null
 	name = "decayed [name]"
 	update_appearance()
@@ -120,20 +123,20 @@
 
 /obj/item/organ/internal/monster_core/update_desc()
 	if (inert)
-		desc = (desc_inert) ? desc_inert : initial(desc)
+		desc = desc_inert ? desc_inert : initial(desc)
 		return ..()
 	if (!decay_timer)
-		desc = (desc_preserved) ? desc_preserved : initial(desc)
+		desc = desc_preserved ? desc_preserved : initial(desc)
 		return ..()
 	desc = initial(desc)
 	return ..()
 
 /obj/item/organ/internal/monster_core/update_icon_state()
 	if (inert)
-		icon_state = (icon_state_inert) ? icon_state_inert : initial(icon_state)
+		icon_state = icon_state_inert ? icon_state_inert : initial(icon_state)
 		return ..()
 	if (!decay_timer)
-		icon_state = (icon_state_preserved) ? icon_state_preserved : initial(icon_state)
+		icon_state = icon_state_preserved ? icon_state_preserved : initial(icon_state)
 		return ..()
 	icon_state = initial(icon_state)
 	return ..()
@@ -158,15 +161,16 @@
  */
 /obj/item/organ/internal/monster_core/proc/try_apply(atom/target, mob/user)
 	if (!isliving(target))
-		balloon_alert(user, "invalid target")
+		balloon_alert(user, "invalid target!")
 		return
 	if (inert)
-		balloon_alert(user, "organ decayed")
+		balloon_alert(user, "organ decayed!")
 		return
 	var/mob/living/live_target = target
 	if (live_target.stat == DEAD)
-		balloon_alert(user, "target is dead")
+		balloon_alert(user, "they're dead!")
 		return
+	balloon_alert(user, "applied organ")
 	apply_to(target, user)
 
 /**

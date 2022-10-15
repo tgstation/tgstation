@@ -634,7 +634,7 @@
 		/obj/item/kinetic_crusher,
 		/obj/item/resonator,
 		/obj/item/melee/cleaving_saw,
-		)
+	)
 
 /obj/item/clothing/suit/hooded/berserker/Initialize(mapload)
 	. = ..()

@@ -36,7 +36,7 @@
 
 	for(var/mob/living/target in range(1, origin_turf))
 		var/armor = target.run_armor_check(attack_flag = BOMB)
-		target.apply_damage(15, damagetype = BURN, blocked = armor)
+		target.apply_damage(15, damagetype = BURN, blocked = armor, spread_damage = TRUE)
 
 	owner.apply_damage(15, damagetype = BRUTE, def_zone = BODY_ZONE_CHEST)
 	var/obj/item/bodypart/chest/torso = owner.get_bodypart(BODY_ZONE_CHEST)
@@ -77,9 +77,9 @@
 	consumed_on_threshold = FALSE
 	alert_type = /atom/movable/screen/alert/status_effect/brimdust_coating
 	/// Damage to deal on explosion
-	var/static/blast_damage = 40
+	var/blast_damage = 40
 	/// Damage reduction when not in a mining pressure area
-	var/static/pressure_modifier = 0.25
+	var/pressure_modifier = 0.25
 	/// Time to wait between consuming stacks
 	var/delay_between_explosions = 5 SECONDS
 	/// Cooldown between explosions
@@ -166,7 +166,7 @@
 		possible_targets -= owner
 	for(var/mob/living/target in possible_targets)
 		var/armor = target.run_armor_check(attack_flag = BOMB)
-		target.apply_damage(damage_dealt, damagetype = BURN, blocked = armor)
+		target.apply_damage(damage_dealt, damagetype = BURN, blocked = armor, spread_damage = TRUE)
 
 	if(under_pressure)
 		owner.adjust_fire_stacks(5)

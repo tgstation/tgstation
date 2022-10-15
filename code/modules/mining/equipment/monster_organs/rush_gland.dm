@@ -1,3 +1,6 @@
+/// Health under which implanted gland will automatically activate
+#define HEALTH_DANGER_ZONE 30
+
 /**
  * On use in hand, makes you run really fast for 5 seconds and ignore injury movement decrease.
  * On use when implanted, run for longer and ignore all negative movement. Automatically triggers if health is low (to escape).
@@ -12,14 +15,10 @@
 	desc_inert = "A lobstrosity's adrenal gland. It is all shrivelled up."
 	user_status = /datum/status_effect/lobster_rush
 
-#define HEALTH_DANGER_ZONE 30
-
 /obj/item/organ/internal/monster_core/reusable/rush_gland/on_life(delta_time, times_fired)
 	. = ..()
 	if (owner.health <= HEALTH_DANGER_ZONE)
 		use_internal.Trigger()
-
-#undef HEALTH_DANGER_ZONE
 
 /obj/item/organ/internal/monster_core/reusable/rush_gland/activate_implanted()
 	owner.apply_status_effect(/datum/status_effect/lobster_rush/extended)
@@ -57,11 +56,13 @@
 
 /// Spawn an afterimage every other step, because every step was too many
 /datum/status_effect/lobster_rush/proc/on_move()
+	SIGNAL_HANDLER
 	if (!spawned_last_move)
 		new /obj/effect/temp_visual/decoy/fading(owner.loc, owner)
 	spawned_last_move = !spawned_last_move
 
 /datum/status_effect/lobster_rush/proc/on_bump(mob/living/source, atom/target)
+	SIGNAL_HANDLER
 	if (!target.density)
 		return
 	if (isliving(target))
@@ -78,9 +79,11 @@
 
 /datum/status_effect/lobster_rush/proc/smack_into(mob/living/target)
 	target.Knockdown(5 SECONDS)
-	target.adjustStaminaLoss(40)
-	target.adjustBruteLoss(20)
+	target.apply_damage(40, STAMINA)
+	target.apply_damage(20, BRUTE, spread_damage = TRUE)
 
 /// You get a longer buff if you take the time to implant it in yourself
 /datum/status_effect/lobster_rush/extended
 	duration = 5 SECONDS
+
+#undef HEALTH_DANGER_ZONE
