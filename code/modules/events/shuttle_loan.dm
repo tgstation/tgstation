@@ -13,7 +13,8 @@
 	name = "Shuttle Loan"
 	typepath = /datum/round_event/shuttle_loan
 	max_occurrences = 3
-	earliest_start = 7 MINUTES
+	earliest_start = 0 //DEBUG CODE PLEASE SET TO 7 MINUTES PLEASE
+	weight = 10000 //DEBUG REMOVE PLS
 	category = EVENT_CATEGORY_BUREAUCRATIC
 	description = "If cargo accepts the offer, fills the shuttle with loot and/or enemies."
 
@@ -21,12 +22,12 @@
 	. = ..()
 
 	for(var/datum/running_event in SSevents.running)
-		if(istype(running_event), /datum/round_event_control/shuttle_loan) //Make sure two of these don't happen at once.
+		if(istype(running_event, /datum/round_event_control/shuttle_loan)) //Make sure two of these don't happen at once.
 			return FALSE
 
 /datum/round_event/shuttle_loan
 	announce_when = 1
-	end_when = 500
+	end_when = 4 //I am speed
 	var/dispatched = FALSE
 	var/dispatch_type = 0
 	var/bonus_points = 10000
@@ -35,6 +36,7 @@
 
 /datum/round_event/shuttle_loan/setup()
 	dispatch_type = pick(HIJACK_SYNDIE, RUSKY_PARTY, SPIDER_GIFT, DEPARTMENT_RESUPPLY, ANTIDOTE_NEEDED, PIZZA_DELIVERY, ITS_HIP_TO, MY_GOD_JC, PAPERS_PLEASE)
+	dispatch_type = PAPERS_PLEASE //debug code :)
 
 /datum/round_event/shuttle_loan/announce(fake)
 	SSshuttle.shuttle_loan = src
@@ -64,6 +66,7 @@
 			bonus_points = 45000 //If you mess up, people die and the shuttle gets turned into swiss cheese
 		if(PAPERS_PLEASE)
 			priority_announce("Cargo: A neighboring station has sent us some paperwork that we really don't care to deal with. Could we send it your way?", "CentCom Paperwork Division") //Reminder: this should only pick stamps for heads of staff with someone in the job slot.
+			thanks_msg = "The cargo shuttle should return in five minutes. Payment will be rendered when the relevant forums are processed and returned."
 			bonus_points = 0 //Payout is made when the stamped papers are returned (IN THEORY IF I CAN GET THIS TO WORK SUBJECT TO CHANGE ETC.)
 
 /datum/round_event/shuttle_loan/proc/loan_shuttle()
@@ -104,6 +107,9 @@
 		if(MY_GOD_JC)
 			SSshuttle.centcom_message += "Live explosive ordnance incoming. Exercise extreme caution."
 			loan_type = "Shuttle with a ticking bomb"
+		if(PAPERS_PLEASE)
+			SSshuttle.centcom_message += "Paperwork in transit."
+			loan_type = "Paperwork shipment"
 
 	log_game("Shuttle loan event firing with type '[loan_type]'.")
 
@@ -249,6 +255,8 @@
 					shuttle_spawns.Add(/obj/item/paper/fluff/cargo/bomb)
 				else
 					shuttle_spawns.Add(/obj/item/paper/fluff/cargo/bomb/allyourbase)
+			if(PAPERS_PLEASE)
+				shuttle_spawns.Add(/obj/item/paperwork)
 
 		var/false_positive = 0
 		while(shuttle_spawns.len && empty_shuttle_turfs.len)
