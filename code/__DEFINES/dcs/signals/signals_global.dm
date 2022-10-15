@@ -74,3 +74,6 @@
 #define COMSIG_GLOB_LIGHT_MECHANISM_COMPLETED "!light_mechanism_completed"
 /// Global Signal sent when the crew wins the revolution (No arguments).
 #define COMSIG_GLOB_REVOLUTION_VICTORY "!revolution_victory"
+
+/// Global Signal sent when medical records is updated
+#define COMSIG_GLOB_DATACORE_MEDICAL_WRITTEN "!datacore_med"

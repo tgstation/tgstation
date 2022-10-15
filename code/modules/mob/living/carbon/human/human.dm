@@ -27,6 +27,7 @@
 	AddComponent(/datum/component/bloodysoles/feet)
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/human)
 	AddElement(/datum/element/strippable, GLOB.strippable_human_items, /mob/living/carbon/human/.proc/should_strip)
+	RegisterSignal(SSdcs, COMSIG_GLOB_DATACORE_MEDICAL_WRITTEN, .proc/incoming_medrecord_hud)
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
