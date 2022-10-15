@@ -280,12 +280,12 @@ const ObservableItem = (
 /** Displays some info on the mob as a tooltip. */
 const LivingTooltip = (props: { item: Observable }) => {
   const {
-    item: { job, name, health },
+    item: { job, full_name, health },
   } = props;
 
   return (
     <LabeledList>
-      <LabeledList.Item label="Name">{name}</LabeledList.Item>
+      <LabeledList.Item label="Name">{full_name}</LabeledList.Item>
       <LabeledList.Item label="Job">{job}</LabeledList.Item>
       <LabeledList.Item label="Health">
         {getHealthLabel(health)}
