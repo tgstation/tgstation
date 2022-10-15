@@ -112,7 +112,7 @@
 	return list(
 		list(
 			"key" = TOOL_WRENCH,
-			"desc" = "The hydraulic systems can be connected by a <b>wrench</b>."
+			"desc" = "The hydraulic systems can be connected with a <b>wrench</b>."
 		),
 		list(
 			"key" = TOOL_SCREWDRIVER,
@@ -128,7 +128,7 @@
 		list(
 			"key" = TOOL_WIRECUTTER,
 			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "The wiring is added, but has to be adjusted by a <b>wirecutter</b>."
+			"desc" = "The wiring is added, but has to be adjusted with a <b>wirecutter</b>."
 		)
 	)
 
@@ -493,7 +493,7 @@
 		list(
 			"key" = TOOL_WRENCH,
 			"back_key" = TOOL_CROWBAR,
-			"desc" = "The treads are installed, and the hydraulic systems can be connected by a <b>wrench</b>."
+			"desc" = "The treads are installed, and the hydraulic systems can be connected with a <b>wrench</b>."
 		),
 		list(
 			"key" = TOOL_SCREWDRIVER,
@@ -509,7 +509,7 @@
 		list(
 			"key" = TOOL_WIRECUTTER,
 			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "The wiring is added, but has to be adjusted by a <b>wirecutter</b>."
+			"desc" = "The wiring is added, but has to be adjusted with a <b>wirecutter</b>."
 		)
 	)
 
@@ -590,7 +590,7 @@
 		list(
 			"key" = /obj/item/clothing/mask/gas/clown_hat,
 			"action" = ITEM_DELETE,
-			"desc" = "Clown mask can be ceremoinously added!"
+			"desc" = "Clown mask can be ceremoniously added!"
 		),
 		list(
 			"key" = /obj/item/bikehorn,
