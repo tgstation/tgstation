@@ -13,7 +13,7 @@
 	///the item that will gain this behaviour
 	var/obj/item/proxy_weapon
 	///cool down between each hit
-	var/cd
+	var/attack_cooldown = CLICK_CD_MELEE
 /datum/component/bumpattack/Initialize(valid_slots, obj/item/proxy_weapon)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -63,7 +63,7 @@
 		qdel(src)
 		return
 	if(!TIMER_COOLDOWN_CHECK(src, COOLDOWN_BUMP_ATTACK))
-		TIMER_COOLDOWN_START(src, COOLDOWN_BUMP_ATTACK, cd)
+		TIMER_COOLDOWN_START(src, COOLDOWN_BUMP_ATTACK, attack_cooldown)
 		INVOKE_ASYNC(target, /atom.proc/attackby , our_weapon, bumper)
 		bumper.visible_message(span_danger("[bumper] charges into [target], attacking with [our_weapon]!"), span_danger("You charge into [target], attacking with [our_weapon]!"), vision_distance = COMBAT_MESSAGE_RANGE)
 #undef COOLDOWN_BUMP_ATTACK

@@ -87,7 +87,7 @@
 /obj/item/clothing/suit/pillow_suit/Initialize(mapload)
 	. = ..()
 	unstoppably_plushed = new(src)
-	AddComponent(/datum/component/bumpattack, proxy_weapon = unstoppably_plushed, valid_slots = ITEM_SLOT_OCLOTHING, cd = 1 SECONDS)
+	AddComponent(/datum/component/bumpattack, proxy_weapon = unstoppably_plushed, valid_slots = ITEM_SLOT_OCLOTHING)
 
 /obj/item/clothing/suit/pillow_suit/Destroy()
 	. = ..()
