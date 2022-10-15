@@ -6,7 +6,7 @@
 	// It's not perfect, but it'll help things a lot
 	var/mob/living/carbon/human/judger = allocate(/mob/living/carbon/human)
 	// Hack to account for not having an actual hud
-	var/datum/plane_master_group/hudless/our_group = new()
+	var/datum/plane_master_group/hudless/our_group = allocate(/datum/plane_master_group/hudless)
 	our_group.our_mob = judger
 	our_group.show_hud()
 	// End hack

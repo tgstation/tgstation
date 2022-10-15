@@ -156,6 +156,10 @@
 /datum/plane_master_group/hudless
 	var/mob/our_mob
 
+/datum/plane_master_group/hudless/Destroy()
+	. = ..()
+	our_mob = null
+
 /datum/plane_master_group/hudless/hide_hud()
 	for(var/thing in plane_masters)
 		var/atom/movable/screen/plane_master/plane = plane_masters[thing]
