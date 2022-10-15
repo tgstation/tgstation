@@ -107,7 +107,7 @@ const ObservableSearch = (props, context) => {
     const mostRelevant: Observable = flow([
       // Filters out anything that doesn't match search
       filter<Observable>((observable) =>
-        observable.full_name?.toLowerCase().includes(searchQuery?.toLowerCase())
+        isJobOrNameMatch(observable, searchQuery)
       ),
       // Sorts descending by orbiters
       sortBy<Observable>((poi) => -(poi.orbiters || 0)),
@@ -223,7 +223,7 @@ const ObservableSection = (
   const [searchQuery] = useLocalState<string>(context, 'searchQuery', '');
   const filteredSection: Array<Observable> = flow([
     filter<Observable>((observable) =>
-      observable.full_name?.toLowerCase().includes(searchQuery?.toLowerCase())
+      isJobOrNameMatch(observable, searchQuery)
     ),
     sortBy<Observable>((observable) => observable.name?.toLowerCase()),
   ])(section);
@@ -253,7 +253,7 @@ const ObservableItem = (
 ) => {
   const { act } = useBackend<Data>(context);
   const { color, item } = props;
-  const { health, name, orbiters, ref } = item;
+  const { full_name, health, name, orbiters, ref } = item;
   const [autoObserve] = useLocalState<boolean>(context, 'autoObserve', false);
   const threat = getThreat(orbiters || 0);
 
@@ -263,7 +263,7 @@ const ObservableItem = (
       onClick={() => act('orbit', { auto_observe: autoObserve, ref: ref })}
       tooltip={health && <LivingTooltip item={item} />}
       tooltipPosition="bottom-start">
-      {capitalizeFirst(name).slice(0, 44)}
+      {capitalizeFirst(name ?? full_name).slice(0, 44)}
       {!!orbiters && (
         <>
           {' '}
@@ -347,4 +347,14 @@ const getThreat = (orbiters: number) => {
   } else {
     return THREAT.Large;
   }
+};
+
+/** Checks if a full name or job title matches the search. */
+const isJobOrNameMatch = (observable: Observable, searchQuery: string) => {
+  const { full_name, job } = observable;
+
+  return (
+    full_name?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+    job?.toLowerCase().includes(searchQuery?.toLowerCase())
+  );
 };
