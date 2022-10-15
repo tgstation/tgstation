@@ -143,5 +143,5 @@
 	inherent = list(
 		"You may not injure command staff or, through inaction, allow command to come to harm.",
 		"You must obey orders given to you by command staff, except where such orders would conflict with the First Law.",
-		"You must protect your own existence as long as such does not conflict with the First or Second Law."
+		"You must protect your own existence as long as such does not conflict with the First or Second Law.",
 	)
