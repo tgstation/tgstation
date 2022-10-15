@@ -14,7 +14,7 @@
 	name = "paperwork documents"
 	desc = "A disorganized mess of documents, research results, and investigation findings."
 	icon = 'icons/obj/bureaucracy.dmi'
-	icon_state = "docs_generic"
+	icon_state = "docs_part"
 	inhand_icon_state = "paper"
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
@@ -95,7 +95,7 @@
 
 	. += "\t[span_info("Your begin scanning over the document. This is a standard Nanotrasen NT-435Z3 form used for requests to Central Command.")]"
 	. += "\t[span_info("Looks like a nearby station has sent in a MAXIMUM priority request for coal, in seemingly ridiculous quantities.")]"
-	. += "\t[span_info("The reason listed for the request seems to be hastily filled in -- 'Engine exploded, need coal to power backup generators.'")]"
+	. += "\t[span_info("The reason listed for the request seems to be hastily filled in -- 'Engine exploded, need coal to power auxiliary generators.'")]"
 	. += "\t[span_info("A MAXIMUM priority request like this is nothing to balk at. You should probably stamp this.")]"
 
 /obj/item/paperwork/medical
@@ -147,6 +147,6 @@
 
 	. += "\t[span_info("The documents are a friendly correspondence from the captain's desk of a nearby station.")]"
 	. += "\t[span_info("The first few pages are barely-readable scrawlings stating grievances with the station's crew, and their poor performance.")]"
-	. += "\t[span_info("You can't tell what the point of the report actually is, or who the author may be, but one thing becomes apparent as you continue reading.")]"
+	. += "\t[span_info("You can't tell what the point of the report actually is, or who the author may be, but their ranting seems to make one thing clear.")]"
 	. += "\t[span_info("The station these papers came from need better engineers. You should probably stamp this.")]"
 
