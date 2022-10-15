@@ -66,14 +66,10 @@
 	data["device_theme"] = device_theme
 	data["login"] = list()
 
-	data["disk"] = null
-
 	var/obj/item/computer_hardware/card_slot/cardholder = all_components[MC_CARD]
-	data["cardholder"] = FALSE
+	data["cardholder"] = !!cardholder
 
 	if(cardholder)
-		data["cardholder"] = TRUE
-
 		var/stored_name = saved_identification
 		var/stored_title = saved_job
 		if(!stored_name)
@@ -107,7 +103,13 @@
 		if(P in idle_threads)
 			running = TRUE
 
-		data["programs"] += list(list("name" = P.filename, "desc" = P.filedesc, "running" = running, "icon" = P.program_icon, "alert" = P.alert_pending))
+		data["programs"] += list(list(
+			"name" = P.filename,
+			"desc" = P.filedesc,
+			"running" = running,
+			"icon" = P.program_icon,
+			"alert" = P.alert_pending,
+		))
 
 	data["has_light"] = has_light
 	data["light_on"] = light_on
@@ -157,10 +159,6 @@
 			to_chat(user, span_notice("Program [P.filename].[P.filetype] with PID [rand(100,999)] has been killed."))
 
 		if("PC_runprogram")
-			// only function of the last implementation (?)
-			if(params["is_disk"])
-				return
-
 			open_program(usr, hard_drive.find_file_by_name(params["name"]))
 
 		if("PC_toggle_light")
