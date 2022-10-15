@@ -110,7 +110,7 @@ const ObservableSearch = (props, context) => {
         isJobOrNameMatch(observable, searchQuery)
       ),
       // Sorts descending by orbiters
-      sortBy<Observable>((poi) => -(poi.orbiters || 0)),
+      sortBy<Observable>((observable) => -(observable.orbiters || 0)),
       // Makes a single Observables list for an easy search
     ])([alive, antagonists, dead, ghosts, misc, npcs].flat())[0];
     if (mostRelevant !== undefined) {
@@ -351,10 +351,11 @@ const getThreat = (orbiters: number) => {
 
 /** Checks if a full name or job title matches the search. */
 const isJobOrNameMatch = (observable: Observable, searchQuery: string) => {
-  const { full_name, job } = observable;
+  const { full_name, name, job } = observable;
+  const displayName = full_name ?? name;
 
   return (
-    full_name?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+    displayName?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
     job?.toLowerCase().includes(searchQuery?.toLowerCase())
   );
 };
