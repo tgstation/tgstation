@@ -12,7 +12,7 @@
 	var/last_fighter //whoever last use this pillow
 	var/obj/item/clothing/neck/pillow_tag/pillow_trophy
 	var/static/tag_desc = "This one seems to have its tag removed."
-	var/variation //for selecting the various sprite variation
+	var/variation = 1 //for selecting the various sprite variation, defaults to the blank white pillow
 
 
 /obj/item/pillow/Initialize(mapload)
@@ -36,6 +36,33 @@
 		user.apply_damage(10, STAMINA) // when hitting with such force we should prolly be getting tired too
 	last_fighter = user
 	playsound(user, 'sound/items/pillow_hit.ogg', 80) //the basic 50 vol is barely audible
+
+/obj/item/pillow/attack_secondary(mob/living/carbon/victim, mob/living/user, params)
+	. = ..()
+	if(!isliving(victim))
+		return
+	if(victim.wear_mask)
+		return
+	if(!user.get_bodypart(BODY_ZONE_HEAD))
+		return
+	if(victim.body_position || user.grab_state >= GRAB_AGGRESSIVE)
+		to_chat(user, span_alert("You being to smother [victim]"))
+		to_chat(victim, span_alertwarning("[user] is begingin to smother you!"))
+		smothering(user, victim)
+
+/obj/item/pillow/proc/smothering(mob/living/carbon/user, mob/living/carbon/victim)
+	RegisterSignal(victim, COMSIG_LIVING_RESIST, .proc/resist_smother)
+	if(victim.body_position == FALSE)
+		return
+	if(!do_after(user, 1 SECONDS, victim))
+		return
+	victim.losebreath += 1
+	smothering(user, victim)
+/obj/item/pillow/proc/resist_smother()
+	SIGNAL_HANDLER
+	
+	INVOKE_ASYNC(src, /mob/living.proc/execute_resist)
+
 
 /obj/item/pillow/examine(mob/user)
 	. = ..()
