@@ -1,4 +1,4 @@
-/obj/item/clothing/head/welding
+/obj/item/clothing/head/utility/welding
 	name = "welding helmet"
 	desc = "A head-mounted face cover designed to protect the wearer completely from space-arc eye."
 	icon_state = "welding"
@@ -17,10 +17,10 @@
 	resistance_flags = FIRE_PROOF
 	clothing_flags = SNUG_FIT | PLASMAMAN_HELMET_EXEMPT
 
-/obj/item/clothing/head/welding/attack_self(mob/user)
+/obj/item/clothing/head/utility/welding/attack_self(mob/user)
 	weldingvisortoggle(user)
 
-/obj/item/clothing/head/welding/visor_toggling()
+/obj/item/clothing/head/utility/welding/visor_toggling()
 	. = ..()
 	inhand_icon_state = "[initial(inhand_icon_state)][up ? "off" : ""]"
 

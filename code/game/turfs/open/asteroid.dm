@@ -16,6 +16,8 @@
 
 	/// Base turf type to be created by the tunnel
 	var/turf_type = /turf/open/misc/asteroid
+			/// Whether this turf has different icon states
+	var/has_floor_variance = TRUE
 	/// Probability floor has a different icon state
 	var/floor_variance = 20
 	/// Itemstack to drop when dug by a shovel
@@ -34,7 +36,7 @@
 	var/proper_name = name
 	. = ..()
 	name = proper_name
-	if(prob(floor_variance))
+	if(has_floor_variance && prob(floor_variance))
 		icon_state = "[base_icon_state][rand(0,12)]"
 
 /// Drops itemstack when dug and changes icon
@@ -92,6 +94,7 @@
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 
 /turf/open/misc/asteroid/dug //When you want one of these to be already dug.
+	has_floor_variance = FALSE
 	dug = TRUE
 	base_icon_state = "asteroid_dug"
 	icon_state = "asteroid_dug"

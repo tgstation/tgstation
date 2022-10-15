@@ -247,17 +247,6 @@
 	greyscale_colors = "#99eeff"
 	clothing_traits = list(TRAIT_QUICKER_CARRY, TRAIT_FASTMED)
 
-/obj/item/clothing/gloves/color/infiltrator
-	name = "infiltrator gloves"
-	desc = "Specialized tactical gloves for carrying people around. Has tactical rubber grips for tactical ease of kidnapping. Tactically."
-	icon_state = "infiltrator"
-	inhand_icon_state = null
-	greyscale_colors = null
-	siemens_coefficient = 0
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 70, FIRE = 0, ACID = 0)
-	clothing_traits = list(TRAIT_QUICKER_CARRY)
-	resistance_flags = FIRE_PROOF | ACID_PROOF
-
 /obj/item/clothing/gloves/color/latex/engineering
 	name = "tinker's gloves"
 	desc = "Overdesigned engineering gloves that have automated construction subrutines dialed in, allowing for faster construction while worn."

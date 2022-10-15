@@ -673,7 +673,7 @@
 
 		var/move = TRUE
 		switch(tgui_alert(usr,"Move new AI to AI spawn location?","Move AI?", list("Yes", "No","Cancel")))
-			if("Cancel")
+			if("Cancel", null)
 				return
 			if("No")
 				move = FALSE

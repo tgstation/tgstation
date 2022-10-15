@@ -83,12 +83,12 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 		/obj/item/storage/belt/utility/full,
 		/obj/item/clothing/neck/tie/horrible,
 		/obj/item/clothing/suit/jacket/leather,
-		/obj/item/clothing/suit/jacket/leather/overcoat,
+		/obj/item/clothing/suit/jacket/leather/biker,
 		/obj/item/clothing/suit/costume/poncho,
 		/obj/item/clothing/suit/costume/poncho/green,
 		/obj/item/clothing/suit/costume/poncho/red,
 		/obj/item/clothing/suit/costume/snowman,
-		/obj/item/clothing/head/snowman,
+		/obj/item/clothing/head/costume/snowman,
 		/obj/item/stack/sheet/mineral/coal)
 
 	gift_type_list += subtypesof(/obj/item/clothing/head/collectable)
