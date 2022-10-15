@@ -72,7 +72,7 @@
 	. = ..()
 
 	. += "\t[span_info("The papers are a stack of mundane cargo shipping orders. Most of these papers are completely unecessary, with seemingly no rhyme or reason to their placement.")]"
-	. += "\t[span_info("Whoever sent this probably just put them in to make the stack of documents look bigger and more important. You should probably still stamp it anyways.")]"
+	. += "\t[span_info("Whoever sent this probably just put extra papers in to make the stack of documents look bigger and more important. You should probably still stamp it anyways.")]"
 
 /obj/item/paperwork/security
 	stamp_requested = /obj/item/stamp/hos
@@ -111,7 +111,7 @@
 	. += "\t[span_info("The stack of documents appear to be a medical report from a nearby station, detailing the vivisection of an unknown xenofauna.")]"
 	. += "\t[span_info("In the report, the specimen was reportedly 'inarticulate and extremely hostile', requiring restraints during the surgical process.")]"
 	. += "\t[span_info("Inspection of the attached photos reveal that the specimen was the station bartender's pet monkey, with parts of its uniform still visible.")]"
-	. += "\t[span_info("Regardless, there don't seem to be any flaws in the actual report. You should probably stamp this.")]"
+	. += "\t[span_info("Regardless, the vivisection results look like they could be useful. You should probably stamp this.")]"
 
 /obj/item/paperwork/ce
 	stamp_requested = /obj/item/stamp/ce
@@ -147,8 +147,7 @@
 /obj/item/paperwork/captain/examine_more()
 	. = ..()
 
-	. += "\t[span_info("The documents are a friendly correspondence from the captain's desk of a nearby station.")]"
-	. += "\t[span_info("The first few pages are barely-readable scrawlings stating grievances with the station's crew, and their poor performance.")]"
-	. += "\t[span_info("You can't tell what the point of the report actually is, or who the author may be, but their ranting seems to make one thing clear.")]"
-	. += "\t[span_info("The station these papers came from needs better engineers. You should probably stamp this.")]"
-
+	. += "\t[span_info("The documents are an unsigned correspondence from the captain's desk of a nearby station.")]"
+	. += "\t[span_info("It seems to be a standard check-in message, reporting that the station is functioning at optimal efficiency.")]"
+	. += "\t[span_info("The message repeatedly asserts that the engine is functioning 'perfectly fine' and is generating 'buttloads' of power.")]"
+	. += "\t[span_info("Everything checks out. You should probably stamp this.")]"
