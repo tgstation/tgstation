@@ -29,32 +29,32 @@ type Observable = {
 
 type POIs = Array<Observable>;
 
-enum ANTAG2COLOR {
-  'Abductors' = 'pink',
-  'Ash Walkers' = 'olive',
-  'Biohazards' = 'brown',
-  'CentCom' = 'teal',
-}
+const ANTAG2COLOR = {
+  'Abductors': 'pink',
+  'Ash Walkers': 'olive',
+  'Biohazards': 'brown',
+  'CentCom': 'teal',
+} as const;
 
-enum ANTAG2GROUP {
-  'Abductor Agent' = 'Abductors',
-  'Abductor Scientist' = 'Abductors',
-  'Ash Walker' = 'Ash Walkers',
-  'Blob' = 'Biohazards',
-  'Sentient Disease' = 'Biohazards',
-  'CentCom Commander' = 'CentCom',
-  'CentCom Head Intern' = 'CentCom',
-  'CentCom Intern' = 'CentCom',
-  'CentCom Official' = 'CentCom',
-  'Central Command' = 'CentCom',
-  'Clown Operative' = 'Clown Operatives',
-  'Clown Operative Leader' = 'Clown Operatives',
-  'Nuclear Operative' = 'Nuclear Operatives',
-  'Nuclear Operative Leader' = 'Nuclear Operatives',
-  'Space Wizard' = 'Wizard Federation',
-  'Wizard Apprentice' = 'Wizard Federation',
-  'Wizard Minion' = 'Wizard Federation',
-}
+const ANTAG2GROUP = {
+  'Abductor Agent': 'Abductors',
+  'Abductor Scientist': 'Abductors',
+  'Ash Walker': 'Ash Walkers',
+  'Blob': 'Biohazards',
+  'Sentient Disease': 'Biohazards',
+  'CentCom Commander': 'CentCom',
+  'CentCom Head Intern': 'CentCom',
+  'CentCom Intern': 'CentCom',
+  'CentCom Official': 'CentCom',
+  'Central Command': 'CentCom',
+  'Clown Operative': 'Clown Operatives',
+  'Clown Operative Leader': 'Clown Operatives',
+  'Nuclear Operative': 'Nuclear Operatives',
+  'Nuclear Operative Leader': 'Nuclear Operatives',
+  'Space Wizard': 'Wizard Federation',
+  'Wizard Apprentice': 'Wizard Federation',
+  'Wizard Minion': 'Wizard Federation',
+} as const;
 
 enum THREAT {
   None,
