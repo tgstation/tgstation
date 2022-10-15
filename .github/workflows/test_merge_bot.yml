@@ -8,9 +8,6 @@ on:
   schedule:
   - cron: "*/30 * * * *"
   workflow_dispatch:
-  push:
-    branches:
-    - fix-tm-bot
 jobs:
   test_merge_bot:
       name: Test Merge Detector
