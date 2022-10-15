@@ -262,12 +262,7 @@
 			new /obj/item/stack/sheet/iron(loc, 3)
 		qdel(src)
 	else
-		var/turf/T = get_turf(src)
-		if(T)
-			for(var/obj/item/I in contents)
-				I.forceMove(T)
-			explosion(src, devastation_range = -1, light_impact_range = 3)
-		return ..()
+		..()
 
 /obj/machinery/vending/update_appearance(updates=ALL)
 	. = ..()
