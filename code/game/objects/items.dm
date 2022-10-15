@@ -706,7 +706,8 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 	user.update_equipment_speed_mods()
 
 	if(ishuman(user))
-		update_species_hud()
+		var/mob/living/carbon/human/human = user
+		human.update_species_hud()
 
 /// Gives one of our item actions to a mob, when equipped to a certain slot
 /obj/item/proc/give_item_action(datum/action/action, mob/to_who, slot)

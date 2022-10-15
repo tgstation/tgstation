@@ -474,7 +474,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			//Load a persons preferences from DNA
 			var/obj/item/organ/external/new_organ = SSwardrobe.provide_type(organ_path)
 			new_organ.Insert(human)
-		update_species_hud()
+		human.update_species_hud()
 
 	for(var/X in inherent_traits)
 		ADD_TRAIT(C, X, SPECIES_TRAIT)
@@ -543,7 +543,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	C.remove_movespeed_modifier(/datum/movespeed_modifier/species)
 
 	if(ishuman(C))
-		update_species_hud()
+		C.update_species_hud()
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_LOSS, src)
 
