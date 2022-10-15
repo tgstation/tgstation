@@ -488,3 +488,27 @@
       next to.
   - bugfix: Those with the technoshy/technovert trait are now able to untip vending
       machines.
+2022-10-15:
+  GoblinBackwards:
+  - qol: Crafting intelliTaters/intelliLanterns now carries over the AI from the card
+      used to craft it.
+  - bugfix: Crafting intelliLanterns with a card that contains an AI no longer deletes
+      the AI.
+  GoldenAlpharex:
+  - bugfix: You should no longer suddenly experience a station-wide mutism event (that
+      didn't affect radios), and will now properly be able to express yourself regardless
+      (hopefully).
+  Melbert:
+  - bugfix: Split personalities can commune again, probably
+  RaveRadbury:
+  - spellcheck: Exploration drone traders now offer exchanges correctly.
+  ReinaCoder:
+  - qol: The Cargo Technician's jumpsuit and skirt no longer cover the chest when
+      adjusted.
+  Tastyfish:
+  - bugfix: ERT and nuke ops players can no longer remove the power cell from a combat
+      defibrillator.
+  itseasytosee:
+  - code_imp: Changed the examine text on monkeized humans.
+  timothymtorres:
+  - bugfix: Fix traitor PDA uplinks to be accessible by illiterate people
