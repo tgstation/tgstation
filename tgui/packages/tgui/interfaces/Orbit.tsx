@@ -107,7 +107,7 @@ const ObservableSearch = (props, context) => {
     const mostRelevant: Observable = flow([
       // Filters out anything that doesn't match search
       filter<Observable>((observable) =>
-        observable.name?.toLowerCase().includes(searchQuery?.toLowerCase())
+        observable.full_name?.toLowerCase().includes(searchQuery?.toLowerCase())
       ),
       // Sorts descending by orbiters
       sortBy<Observable>((poi) => -(poi.orbiters || 0)),
