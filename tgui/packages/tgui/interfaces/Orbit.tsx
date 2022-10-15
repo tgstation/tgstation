@@ -288,15 +288,14 @@ const ObservableItem = (
  * ie: Nuclear Operatives. See: ANTAG_GROUPS.
  */
 const collateAntagonists = (antagonists: Antags) => {
-  const collatedAntagonists = new Map<string, Antags>();
+  const collatedAntagonists = {};
   antagonists.map((player) => {
     const { antag } = player;
     const resolvedName: string = ANTAG2GROUP[antag] || antag;
-    collatedAntagonists.set(resolvedName, [
-      // If the group already exists, add the player to it
-      ...(collatedAntagonists.get(resolvedName) || []),
-      player,
-    ]);
+    if (!collatedAntagonists[resolvedName]) {
+      collatedAntagonists[resolvedName] = [];
+    }
+    collatedAntagonists[resolvedName].push(player);
   });
   const sortedAntagonists = sortBy<AntagGroup>(([key]) => key)(
     Object.entries(collatedAntagonists)
