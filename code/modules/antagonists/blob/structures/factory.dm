@@ -20,6 +20,7 @@
 
 /obj/structure/blob/special/factory/Destroy()
 	for(var/mob/living/simple_animal/hostile/blob/blobspore/spore in src.spores)
+		to_chat(spore, span_userdanger("Your factory was destroyed! You can no longer sustain yourself."))
 		spore.death()
 	if(naut)
 		naut.factory = null
