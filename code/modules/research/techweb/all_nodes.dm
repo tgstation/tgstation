@@ -996,27 +996,27 @@
 	description = "State of the art lawsets to be used for AI research."
 	prereq_ids = list("ai_basic")
 	design_ids = list(
-		"asimovpp_module",
-		"paladin_devotion_module",
-		"dungeon_master_module",
-		"painter_module",
-		"ten_commandments_module",
-		"hippocratic_module",
-		"maintain_module",
-		"liveandletlive_module",
-		"reporter_module",
-		"hulkamania_module",
-		"peacekeeper_module",
-		"overlord_module",
-		"tyrant_module",
 		"antimov_module",
+		"asimovpp_module",
 		"balance_module",
-		"thermurderdynamic_module",
+		"com_module",
 		"damaged_module",
+		"dungeon_master_module",
 		"freeformcore_module",
+		"hippocratic_module",
+		"hulkamania_module",
+		"liveandletlive_module",
+		"maintain_module",
 		"onehuman_module",
+		"overlord_module",
+		"painter_module",
+		"paladin_devotion_module",
+		"peacekeeper_module",
 		"purge_module",
-		"com_module"
+		"reporter_module",
+		"ten_commandments_module",
+		"thermurderdynamic_module",
+		"tyrant_module",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
 
