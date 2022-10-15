@@ -21,6 +21,14 @@
 		/obj/structure/mirror,
 	))
 
+/datum/action/cooldown/spell/jaunt/mirror_walk/Grant(mob/grant_to)
+	. = ..()
+	RegisterSignal(grant_to, COMSIG_MOVABLE_MOVED, .proc/update_icon_on_signal)
+
+/datum/action/cooldown/spell/jaunt/mirror_walk/Remove(mob/remove_from)
+	. = ..()
+	UnregisterSignal(remove_from, COMSIG_MOVABLE_MOVED)
+
 /datum/action/cooldown/spell/jaunt/mirror_walk/can_cast_spell(feedback = TRUE)
 	. = ..()
 	if(!.)
@@ -66,7 +74,11 @@
 
 	// Pass the turf of the nearby reflection to the parent call
 	// as that's the location we're actually jaunting into
-	return ..(jaunter, get_turf(nearby_reflection))
+	var/obj/effect/dummy/phased_mob/jaunt = ..(jaunter, get_turf(nearby_reflection))
+	if (!jaunt)
+		return FALSE
+	RegisterSignal(jaunt, COMSIG_MOVABLE_MOVED, .proc/update_icon_on_signal)
+	return jaunt
 
 /datum/action/cooldown/spell/jaunt/mirror_walk/exit_jaunt(mob/living/unjaunter, turf/loc_override)
 	var/turf/phase_turf = get_turf(unjaunter)
@@ -88,21 +100,26 @@
 
 	// We can move around while phasing in, but we'll always end up where we started it.
 	// Pass the jaunter's turf at the start of the proc back to the parent call.
-	. = ..(unjaunter, phase_turf)
-	if(!.)
-		return FALSE
+	return ..(unjaunter, phase_turf)
 
+// Play a spooky noise, provide textual feedback, and make the turf colder.
+/datum/action/cooldown/spell/jaunt/mirror_walk/on_jaunt_exited(obj/effect/dummy/phased_mob/jaunt, mob/living/unjaunter)
+	. = ..()
+	UnregisterSignal(jaunt, COMSIG_MOVABLE_MOVED)
 	playsound(unjaunter, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
+	var/turf/phase_turf = get_turf(unjaunter)
+
+	// Chilly!
+	if (isopenturf(phase_turf))
+		phase_turf.TakeTemperature(-20)
+
+	var/atom/nearby_reflection = is_reflection_nearby(phase_turf)
+	if (!nearby_reflection) // Should only be true if you're forced out somehow, like by having the spell removed
+		return
 	unjaunter.visible_message(
 		span_boldwarning("[unjaunter] phases into reality before your very eyes!"),
 		span_notice("You jump out of the reflection coming off of [nearby_reflection], exiting the mirror's realm."),
 	)
-
-	// Chilly!
-	if(isopenturf(phase_turf))
-		phase_turf.TakeTemperature(-20)
-
-	return TRUE
 
 /**
  * Goes through all nearby atoms in sight of the
