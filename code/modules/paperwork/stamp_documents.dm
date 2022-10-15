@@ -32,22 +32,20 @@
 	///The job of the associated paperwork form
 	var/stamp_job = /datum/job/assistant
 
-/obj/item/paperwork/attackby(obj/item/attacking_item, mob/user, params)
-	. = ..()
-
-	if(istype(attacking_item, stamp_requested) || istype(attacking_item, stamp_requested))
-		stamped = TRUE
-		add_overlay(stamp_overlay)
-		update_overlays()
-		desc = "A slightly more organized mess of documents."
-
 /obj/item/paperwork/Initialize(mapload)
 	. = ..()
 	stamp_overlay = mutable_appearance('icons/obj/bureaucracy.dmi', stamp_icon)
 
-	var/datum/job/stamp_title = stamp_job
-	var/title = initial(stamp_title.title)
-	desc += " Trying to read through it makes your head spin. Judging by the few words you can make out, this looks like a job for a [title]." //fix grammar here
+/obj/item/paperwork/attackby(obj/item/attacking_item, mob/user, params)
+	. = ..()
+	if(istype(attacking_item, /obj/item/stamp))
+		if(istype(attacking_item, stamp_requested) || istype(attacking_item, stamp_requested))
+			stamped = TRUE
+			add_overlay(stamp_overlay)
+			update_overlays()
+			to_chat(user, span_warning("You skim through the papers until you find a field reading 'STAMP HERE', and complete the paperwork."))
+		else
+			to_chat(user, span_warning("You hunt through the papers for somewhere to use the [attacking_item], but can't find anything."))
 
 /obj/item/paperwork/update_overlays()
 	. = ..()
@@ -55,13 +53,25 @@
 	if(stamped)
 		. += stamp_overlay
 
+/obj/item/paperwork/examine(mob/user)
+	. = ..()
+
+	if(stamped)
+		. += "It looks like these documents have already been stamped. Now they can be returned to Central Command."
+	else
+		var/datum/job/stamp_title = stamp_job
+		var/title = initial(stamp_title.title)
+		. += "Trying to read through it makes your head spin. Judging by the few words you can make out, this looks like a job for a [title]." //fix grammar here
+
 /obj/item/paperwork/examine_more(mob/user)
 	. = ..()
 
 	if(istype(user, /mob/living/carbon/human))
 		var/mob/living/carbon/human/viewer = user
-		if(istype(viewer?.mind.assigned_role, stamp_job)) //Examining the proper
+		if(istype(viewer?.mind.assigned_role, stamp_job)) //Examining the paperwork as the proper job gets you some bonus details
 			return . + span_notice("<i>As you sift through the papers, you slowly start to piece together what you're reading.</i>")
+
+//HEAD OF STAFF DOCUMENTS
 
 /obj/item/paperwork/cargo
 	stamp_requested = /obj/item/stamp/qm
@@ -123,7 +133,7 @@
 
 	. += "\t[span_info("These papers are a power output report from a neighboring station. It details the power output and other engineering data regarding the station during a typical shift.")]"
 	. += "\t[span_info("Checking the logs, you notice the energy output and engine temperature spike dramatically, and shortly after, the surrounding department appears to be depressurized by an unknown force.")]"
-	. += "\t[span_info("Clearly the station's engineering department was testing an experimental engine output, and had to use the air in the nearby rooms to help cool the engine. Totally.")]"
+	. += "\t[span_info("Clearly the station's engineering department was testing an experimental engine setup, and had to use the air in the nearby rooms to help cool the engine. Totally.")]"
 	. += "\t[span_info("Damn, that's impressive stuff. You should probably stamp this.")]"
 
 /obj/item/paperwork/rd
@@ -151,3 +161,12 @@
 	. += "\t[span_info("It seems to be a standard check-in message, reporting that the station is functioning at optimal efficiency.")]"
 	. += "\t[span_info("The message repeatedly asserts that the engine is functioning 'perfectly fine' and is generating 'buttloads' of power.")]"
 	. += "\t[span_info("Everything checks out. You should probably stamp this.")]"
+
+//RANDOM PAPERWORK GROUPS
+/obj/item/paperwork/random/Initialize(mapload)
+	. = ..()
+
+	var/paperwork_type = pick(subtypesof(/obj/item/paperwork))
+	new paperwork_type(get_turf(src))
+
+	return INITIALIZE_HINT_QDEL
