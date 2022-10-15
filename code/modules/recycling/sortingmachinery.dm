@@ -147,8 +147,8 @@
 		note = item
 		update_appearance()
 
-	else if(istype(item, /obj/item/export_scanner))
-		var/obj/item/export_scanner/sales_tagger = item
+	else if(istype(item, /obj/item/universal_scanner))
+		var/obj/item/universal_scanner/sales_tagger = item
 		if(sales_tagger.scanning_mode != SCAN_SALES_TAG)
 			return
 		if(sticker)

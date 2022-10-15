@@ -1,5 +1,6 @@
+#define PAPER_PER_SHEET 10
 
-/obj/item/export_scanner
+/obj/item/universal_scanner
 	name = "universal scanner"
 	desc = "A device used to check objects against Nanotrasen exports database, assign price tags, or ready an item for a custom vending machine."
 	icon = 'icons/obj/device.dmi'
@@ -30,15 +31,15 @@
 	/// Minimum value for cut_multiplier in sales tagger mode.
 	var/cut_min = 0.01
 
-/obj/item/export_scanner/Initialize(mapload)
+/obj/item/universal_scanner/Initialize(mapload)
 	. = ..()
 	scale_mode = sort_list(list(
 		"export scanner" = image(icon = src.icon, icon_state = "export scanner"),
 		"price tagger" = image(icon = src.icon, icon_state = "price tagger"),
-		"sales tagger" = image(icon = src.icon, icon_state = "sales tagger")
-		))
+		"sales tagger" = image(icon = src.icon, icon_state = "sales tagger"),
+))
 
-/obj/item/export_scanner/attack_self(mob/user, modifiers)
+/obj/item/universal_scanner/attack_self(mob/user, modifiers)
 	. = ..()
 	var/choice = show_radial_menu(user, src , scale_mode, custom_check = CALLBACK(src, .proc/check_menu, user), radius = 36, require_near = TRUE)
 	if(!choice)
@@ -57,17 +58,17 @@
 
 
 
-/obj/item/export_scanner/afterattack(obj/O, mob/user, proximity)
+/obj/item/universal_scanner/afterattack(obj/object, mob/user, proximity)
 	. = ..()
-	if(!istype(O) || !proximity)
+	if(!istype(object) || !proximity)
 		return
 	if(scanning_mode == SCAN_EXPORTS)
-		export_scan(O, user)
+		export_scan(object, user)
 		return
 	if(scanning_mode == SCAN_PRICE_TAG)
-		price_tag(target = O, user = user)
+		price_tag(target = object, user = user)
 
-/obj/item/export_scanner/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/universal_scanner/attackby(obj/item/attacking_item, mob/user, params)
 	. = ..()
 	if(scanning_mode == SCAN_SALES_TAG && isidcard(attacking_item))
 		var/obj/item/card/id/potential_acc = attacking_item
@@ -84,7 +85,7 @@
 			return
 	if(istype(attacking_item, /obj/item/paper))
 		if (!(paper_count >= max_paper_count))
-			paper_count += 10
+			paper_count += PAPER_PER_SHEET
 			qdel(attacking_item)
 			if (paper_count >= max_paper_count)
 				paper_count = max_paper_count
@@ -94,7 +95,7 @@
 		else
 			to_chat(user, span_notice("[src]'s paper supply is full."))
 
-/obj/item/export_scanner/attack_self_secondary(mob/user, modifiers)
+/obj/item/universal_scanner/attack_self_secondary(mob/user, modifiers)
 	. = ..()
 	if(scanning_mode == SCAN_SALES_TAG)
 		if(paper_count <= 0)
@@ -103,7 +104,7 @@
 		if(!payments_acc)
 			to_chat(user, span_warning("You need to swipe [src] with an ID card first."))
 			return
-		paper_count -= 1
+		paper_count--
 		playsound(src, 'sound/machines/click.ogg', 40, TRUE)
 		to_chat(user, span_notice("You print a new barcode."))
 		var/obj/item/barcode/new_barcode = new /obj/item/barcode(src)
@@ -118,26 +119,27 @@
 		if(!chosen_price || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE) || loc != user)
 			return
 		new_custom_price = chosen_price
-		to_chat(user, span_notice(" The [src] will now give things a [new_custom_price] cr tag."))
+		to_chat(user, span_notice("The [src] will now give things a [new_custom_price] cr tag."))
 
-/obj/item/export_scanner/CtrlClick(mob/user)
+/obj/item/universal_scanner/CtrlClick(mob/user)
 	. = ..()
 	if(scanning_mode == SCAN_SALES_TAG)
 		payments_acc = null
 		to_chat(user, span_notice("You clear the registered account."))
 
-/obj/item/export_scanner/AltClick(mob/user)
+/obj/item/universal_scanner/AltClick(mob/user)
 	. = ..()
-	if(scanning_mode == SCAN_SALES_TAG)
-		var/potential_cut = input("How much would you like to pay out to the registered card?","Percentage Profit ([round(cut_min*100)]% - [round(cut_max*100)]%)") as num|null
-		if(!potential_cut)
-			cut_multiplier = initial(cut_multiplier)
-		cut_multiplier = clamp(round(potential_cut/100, cut_min), cut_min, cut_max)
-		to_chat(user, span_notice("[round(cut_multiplier*100)]% profit will be received if a package with a barcode is sold."))
+	if(!scanning_mode == SCAN_SALES_TAG)
+		return
+	var/potential_cut = input("How much would you like to pay out to the registered card?","Percentage Profit ([round(cut_min*100)]% - [round(cut_max*100)]%)") as num|null
+	if(!potential_cut)
+		cut_multiplier = initial(cut_multiplier)
+	cut_multiplier = clamp(round(potential_cut/100, cut_min), cut_min, cut_max)
+	to_chat(user, span_notice("[round(cut_multiplier*100)]% profit will be received if a package with a barcode is sold."))
 
-/obj/item/export_scanner/examine(mob/user)
+/obj/item/universal_scanner/examine(mob/user)
 	. = ..()
-	. += span_notice("[src] has [paper_count]/[max_paper_count] available barcodes. Refill with paper.")
+	. += span_notice("It has [paper_count]/[max_paper_count] available barcodes. Refill with paper.")
 
 	if(scanning_mode == SCAN_SALES_TAG)
 		. += span_notice("Profit split on sale is currently set to [round(cut_multiplier*100)]%. <b>Alt-click</b> to change.")
@@ -148,24 +150,24 @@
 		. += span_notice("The current custom price is set to [new_custom_price] cr.")
 
 /**
- * Scans an object, O, and providesit's export value based on selling to the cargo shuttle, to mob/user.
+ * Scans an object, target, and provides it's export value based on selling to the cargo shuttle, to mob/user.
  */
-/obj/item/export_scanner/proc/export_scan(obj/O, mob/user)
+/obj/item/universal_scanner/proc/export_scan(obj/target, mob/user)
 	// Before you fix it:
 	// yes, checking manifests is a part of intended functionality.
-	var/datum/export_report/ex = export_item_and_contents(O, dry_run = TRUE)
+	var/datum/export_report/ex = export_item_and_contents(target, dry_run = TRUE)
 	var/price = 0
 	for(var/x in ex.total_amount)
 		price += ex.total_value[x]
 	if(price)
-		to_chat(user, span_notice("Scanned [O], value: <b>[price]</b> credits[O.contents.len ? " (contents included)" : ""]."))
+		to_chat(user, span_notice("Scanned [target], value: <b>[price]</b> credits[target.contents.len ? " (contents included)" : ""]."))
 	else
-		to_chat(user, span_warning("Scanned [O], no export value."))
+		to_chat(user, span_warning("Scanned [target], no export value."))
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/scan_human = user
-		if(istype(O, /obj/item/bounty_cube))
-			var/obj/item/bounty_cube/cube = O
+		if(istype(target, /obj/item/bounty_cube))
+			var/obj/item/bounty_cube/cube = target
 			var/datum/bank_account/scanner_account = scan_human.get_bank_account()
 
 			if(!istype(get_area(cube), /area/shuttle/supply))
@@ -189,11 +191,11 @@
 /**
  * Scans an object, target, and sets it's custom_price variable to new_custom_price, presenting it to the user.
  */
-/obj/item/export_scanner/proc/price_tag(obj/target, mob/user)
+/obj/item/universal_scanner/proc/price_tag(obj/target, mob/user)
 	if(isitem(target))
-		var/obj/item/I = target
-		I.custom_price = new_custom_price
-		to_chat(user, span_notice("You set the price of [I] to [new_custom_price] cr."))
+		var/obj/item/selected_target = target
+		selected_target.custom_price = new_custom_price
+		to_chat(user, span_notice("You set the price of [selected_target] to [new_custom_price] cr."))
 
 /**
  * check_menu: Checks if we are allowed to interact with a radial menu
@@ -201,7 +203,7 @@
  * Arguments:
  * * user The mob interacting with a menu
  */
-/obj/item/export_scanner/proc/check_menu(mob/living/user)
+/obj/item/universal_scanner/proc/check_menu(mob/living/user)
 	if(!istype(user))
 		return FALSE
 	if(user.incapacitated())
@@ -214,6 +216,10 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "barcode"
 	w_class = WEIGHT_CLASS_TINY
-	///All values inheirited from the sales tagger it came from.
+	//All values inherited from the sales tagger it came from.
+	///The bank account assigned to pay out to from the sales tagger.
 	var/datum/bank_account/payments_acc = null
+	///The percentage of profit to give to the payments_acc, from 0 to 1.
 	var/cut_multiplier = 0.5
+
+#undef PAPER_PER_SHEET
