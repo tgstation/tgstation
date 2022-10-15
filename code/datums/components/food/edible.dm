@@ -434,9 +434,9 @@ Behavior that's still missing from this component that original food items had t
 		var/fraction = min(bite_consumption / owner.reagents.total_volume, 1)
 		owner.reagents.trans_to(eater, bite_consumption, transfered_by = feeder, methods = INGEST)
 		bitecount++
+		checkLiked(fraction, eater)
 		if(!owner.reagents.total_volume)
 			On_Consume(eater, feeder)
-		checkLiked(fraction, eater)
 
 		//Invoke our after eat callback if it is valid
 		if(after_eat)
