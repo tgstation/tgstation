@@ -545,7 +545,7 @@
 		list(
 			"key" = /obj/item/circuitboard/mecha/honker/peripherals,
 			"action" = ITEM_DELETE,
-			"desc" = "Joke <b>Peripheral board</b> can be added!"
+			"desc" = "Joke <b>peripheral board</b> can be added!"
 		),
 		list(
 			"key" = /obj/item/bikehorn,
