@@ -511,17 +511,20 @@ Diagnostic HUDs!
 	set_hud_image_active(DIAG_AIRLOCK_HUD)
 
 // Species info!
-/mob/living/carbon/proc/update_species_hud()
+/mob/living/carbon/proc/update_species_hud(species_overide)
 	var/image/holder = hud_list[SPECIES_HUD]
 
 	var/perpname = get_face_name(get_id_name(""))
 	if(perpname && GLOB.data_core)
 		var/datum/data/record/R = find_record("name", perpname, GLOB.data_core.medical)
 		if(R)
-			var/data_species = lowertext(R.fields["species"])
-			holder.icon_state = species_name_to_hud(data_species)
-			if(data_species == "human")  // so you can only protect nonhumans instead of harming humans
-				return
+			species_overide ||= R.fields["species"]  // if not provided, get official record
+
+	if(species_overide)
+		species_overide = lowertext(species_overide)
+		holder.icon_state = species_name_to_hud(species_overide)
+		if(species_overide == "human")  // so you can only protect nonhumans instead of harming humans
+			return
 
 	// the hud is set to the medrecord's, but if the person is recgonized set it to that
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
@@ -533,3 +536,8 @@ Diagnostic HUDs!
 
 	set_hud_image_active(SPECIES_HUD)
 
+/// wrapper called when the medrecords signal is triggered, to update species hud
+/mob/living/carbon/proc/incoming_medrecord_hud(datum/source, var/list/fields)
+	SIGNAL_HANDLER
+
+	update_species_hud(fields["species"])

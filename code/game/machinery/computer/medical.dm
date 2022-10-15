@@ -274,6 +274,7 @@
 			else if(href_list["field"])
 				var/a1 = active1
 				var/a2 = active2
+				SEND_GLOBAL_SIGNAL(COMSIG_GLOB_DATACORE_MEDICAL_WRITTEN, active1.fields.Copy())
 				switch(href_list["field"])
 					if("fingerprint")
 						if(active1)
