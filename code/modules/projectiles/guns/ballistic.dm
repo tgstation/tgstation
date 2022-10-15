@@ -363,7 +363,7 @@
 			balloon_alert(user, "[S.name] doesn't fit!")
 			return
 		if(!user.is_holding(src))
-			balloon_alert(user, "must be held to attach!")
+			balloon_alert(user, "not in hand!")
 			return
 		if(suppressed)
 			balloon_alert(user, "already has a supressor!")
