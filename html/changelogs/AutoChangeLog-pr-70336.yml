@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - bugfix: "Custom vendors now explode on deconstruct as opposed to delete, causing no practical changes to gameplay but admins will notice slightly fewer ahelps if they ever have to get rid of one."
