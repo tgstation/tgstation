@@ -1,0 +1,8 @@
+author: "jlsnow301"
+delete-after: True
+changes: 
+  - rscadd: "The orbit UI now brings up tooltips to show health, job, and full name information."
+  - rscadd: "The orbit UI now puts disguised names in quotes. \"John Doe\". Hover to get real name."
+  - rscadd: "Orbit UI now gives tooltips on SM crystal, nuke disk, and nuclear devices."
+  - rscadd: "You can now search by job in the orbit UI."
+  - bugfix: "Orbit UI buttons (should) no longer clip on extra long names."
