@@ -20,7 +20,7 @@
 /obj/item/clothing/head/utility/welding/attack_self(mob/user)
 	weldingvisortoggle(user)
 
-/obj/item/clothing/head/welding/visor_toggling()
+/obj/item/clothing/head/utility/welding/visor_toggling()
 	. = ..()
 	inhand_icon_state = "[initial(inhand_icon_state)][up ? "off" : ""]"
 

@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes: 
-  - bugfix: "Ethereals can now actually read the balloon alerts they get whenever they try and recharge/discharge an APC."

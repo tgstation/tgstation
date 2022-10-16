@@ -69,8 +69,6 @@
 #define span_mind_control(str) ("<span class='mind_control'>" + str + "</span>")
 #define span_minorannounce(str) ("<span class='minorannounce'>" + str + "</span>")
 #define span_monkey(str) ("<span class='monkey'>" + str + "</span>")
-#define span_monkeyhive(str) ("<span class='monkeyhive'>" + str + "</span>")
-#define span_monkeylead(str) ("<span class='monkeylead'>" + str + "</span>")
 #define span_name(str) ("<span class='name'>" + str + "</span>")
 #define span_narsie(str) ("<span class='narsie'>" + str + "</span>")
 #define span_narsiesmall(str) ("<span class='narsiesmall'>" + str + "</span>")
