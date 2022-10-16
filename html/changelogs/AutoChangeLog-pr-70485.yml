@@ -1,0 +1,4 @@
+author: "GoldenAlpharex"
+delete-after: True
+changes: 
+  - qol: "Added a preference for PDA ringtones, to save a custom ringtone that will then be applied automatically to your character when spawned in the game. Gone are the days of having to do it manually at the start of every round!"
