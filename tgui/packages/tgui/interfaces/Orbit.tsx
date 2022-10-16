@@ -1,6 +1,6 @@
 import { useBackend, useLocalState } from '../backend';
 import { filter, sortBy } from 'common/collections';
-import { multiline } from 'common/string';
+import { capitalizeFirst, multiline } from 'common/string';
 import { Box, Button, Collapsible, Icon, Input, LabeledList, Section, Stack } from '../components';
 import { Window } from '../layouts';
 import { flow } from 'common/fp';
@@ -264,7 +264,7 @@ const ObservableItem = (
       onClick={() => act('orbit', { auto_observe: autoObserve, ref: ref })}
       tooltip={health && <LivingTooltip item={item} />}
       tooltipPosition="bottom-start">
-      {displayName}
+      {capitalizeFirst(displayName)}
       {!!orbiters && (
         <>
           {' '}
@@ -317,11 +317,18 @@ const collateAntagonists = (antagonists: Antags) => {
 
 /** Returns a disguised name in case the person is wearing someone else's ID */
 const getDisplayName = (name: string, full_name: string) => {
-  if (!full_name?.includes('[') || full_name.includes('(as ')) {
+  if (!name) {
+    return full_name;
+  }
+  if (
+    !full_name?.includes('[') ||
+    full_name.match(/\(as /) ||
+    full_name.match(/^Unknown/)
+  ) {
     return name;
   }
-  // return only the name before the first ' ['
-  return `"${full_name.split(' [')[0]}"`;
+  // return only the name before the first ' [' or ' ('
+  return `"${full_name.split(/ \[| \(/)[0]}"`;
 };
 
 /** Returns some labels for a player's health */
