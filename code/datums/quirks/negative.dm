@@ -62,17 +62,24 @@
 	hardcore_value = 8
 	processing_quirk = TRUE
 	mail_goodies = list(/obj/item/reagent_containers/blood/o_minus) // universal blood type that is safe for all
+	var/minimum_blood = BLOOD_VOLUME_SAFE - 25 // just barely survivable without treatment
 
 /datum/quirk/blooddeficiency/process(delta_time)
 	if(quirk_holder.stat == DEAD)
 		return
 
-	var/mob/living/carbon/human/H = quirk_holder
-	if(NOBLOOD in H.dna.species.species_traits) //can't lose blood if your species doesn't have any
+	var/mob/living/carbon/human/carbon_target = quirk_holder
+	if(NOBLOOD in carbon_target.dna.species.species_traits) //can't lose blood if your species doesn't have any
 		return
 
-	if (H.blood_volume > (BLOOD_VOLUME_SAFE - 25)) // just barely survivable without treatment
-		H.blood_volume -= 0.275 * delta_time
+	if (carbon_target.blood_volume <= minimum_blood)
+		return
+	var/reduced_blood_volume = carbon_target.blood_volume - 0.275 * delta_time
+	// Ensures that we don't reduce total blood volume below minimum_blood.
+	if (reduced_blood_volume < minimum_blood)
+		carbon_target.blood_volume = minimum_blood
+	else
+		carbon_target.blood_volume = reduced_blood_volume
 
 /datum/quirk/item_quirk/blindness
 	name = "Blind"
