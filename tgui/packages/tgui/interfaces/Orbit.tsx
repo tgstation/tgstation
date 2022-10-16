@@ -1,6 +1,6 @@
 import { useBackend, useLocalState } from '../backend';
 import { filter, sortBy } from 'common/collections';
-import { capitalizeFirst, multiline } from 'common/string';
+import { multiline } from 'common/string';
 import { Box, Button, Collapsible, Icon, Input, LabeledList, Section, Stack } from '../components';
 import { Window } from '../layouts';
 import { flow } from 'common/fp';
@@ -256,6 +256,7 @@ const ObservableItem = (
   const { full_name, health, name, orbiters, ref } = item;
   const [autoObserve] = useLocalState<boolean>(context, 'autoObserve', false);
   const threat = getThreat(orbiters || 0);
+  const displayName = getDisplayName(name, full_name);
 
   return (
     <Button
@@ -263,7 +264,7 @@ const ObservableItem = (
       onClick={() => act('orbit', { auto_observe: autoObserve, ref: ref })}
       tooltip={health && <LivingTooltip item={item} />}
       tooltipPosition="bottom-start">
-      {capitalizeFirst(name ?? full_name).slice(0, 44)}
+      {displayName}
       {!!orbiters && (
         <>
           {' '}
@@ -314,9 +315,20 @@ const collateAntagonists = (antagonists: Antags) => {
   return sortedAntagonists;
 };
 
+/** Returns a disguised name in case the person is wearing someone else's ID */
+const getDisplayName = (name: string, full_name: string) => {
+  if (!full_name?.includes('[')) {
+    return name;
+  }
+  // This wild bit of regex is to extract the name from the ID
+  const match =
+    full_name.match(/\(as (.*?)\)/)?.[1] ?? full_name.match(/.*?(?= \[)/)?.[1];
+  return `"${match}"` ?? name;
+};
+
 /** Returns some labels for a player's health */
 const getHealthLabel = (health: number) => {
-  if (health === 100) {
+  if (health >= 100) {
     return <Box color="blue">Great</Box>;
   }
   if (health >= 75) {
@@ -331,7 +343,7 @@ const getHealthLabel = (health: number) => {
   if (health > 0) {
     return <Box color="orange">Bad</Box>;
   }
-  if (health === 0) {
+  if (health <= 0) {
     return <Box color="red">Critical</Box>;
   }
 };
