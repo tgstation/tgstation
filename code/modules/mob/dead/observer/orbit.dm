@@ -81,13 +81,12 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 		var/datum/mind/mind = mob_poi.mind
 		var/was_antagonist = FALSE
 
-		serialized["job"] = mind?.assigned_role?.title
 		serialized["name"] = mob_poi.real_name
-		serialized["health"] = null
-		// Cast the mob so we can get health
-		var/mob/living/player
-		if(isliving(mob_poi)) // Kind of silly here since we've already checked for dead mobs
-			player = mob_poi
+
+		if(isliving(mob_poi)) // A little redundant since we've already checked for dead mobs
+			var/mob/living/player = mob_poi
+			var/obj/item/card/id/id_card = player.get_idcard(hand_first = FALSE)
+			serialized["job"] = id_card?.get_trim_assignment()
 			serialized["health"] = FLOOR((player.health / player.maxHealth * 100), 1)
 
 		for(var/datum/antagonist/antag_datum as anything in mind.antag_datums)
