@@ -190,11 +190,10 @@
 		if(!can_trigger_gun(user))
 			return
 	if(target != user)
-		if(ismob(target))
-			playsound(src, dry_fire_sound, 30, TRUE)
-			user.visible_message(
-				span_danger("[user.name] tries to fire \the [src] at the same time, but only succeeds at looking like an idiot."), \
-				span_danger("\The [src]'s anti-combat mechanism prevents you from firing it at the same time!"))
+		playsound(src, dry_fire_sound, 30, TRUE)
+		user.visible_message(
+			span_danger("[user.name] tries to fire \the [src] at the same time, but only succeeds at looking like an idiot."), \
+			span_danger("\The [src]'s anti-combat mechanism prevents you from firing it at the same time!"))
 		return
 
 	if(ishuman(user))
