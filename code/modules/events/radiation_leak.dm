@@ -1,7 +1,7 @@
 /datum/round_event_control/radiation_leak
 	name = "Radiation Leak"
 	description = "A radiation leak happens somewhere on the station, emanating radiation around a machine in the area. \
-		Engineering can stop the leak by using certain tools on the machine."
+		Engineering can stop the leak by using certain tools on it."
 	typepath = /datum/round_event/radiation_leak
 	weight = 15
 	max_occurrences = 2
@@ -16,16 +16,20 @@
 
 /datum/round_event/radiation_leak/setup()
 	// Pick a xeno spawn somewhere in the world.
-	// We will try to find a machine within 5 turfs of it to start spewing rads from.
+	// We will try to find a machine within a few turfs of it to start spewing rads from.
 	var/list/possible_locs = GLOB.generic_event_spawns.Copy()
 	while(length(possible_locs))
 		var/turf/chosen_loc = get_turf(pick_n_take(possible_locs))
-		for(var/obj/machinery/sick_device in range(5, chosen_loc))
+		for(var/obj/machinery/sick_device in range(3, chosen_loc))
 			// Skip undertiles
 			if(sick_device.IsObscured())
 				continue
 			// Skip invisible stuff
 			if(sick_device.invisibility || !sick_device.alpha || !sick_device.mouse_opacity)
+				continue
+			// Look for dense machinery. Basically stops stuff like wall mounts and pipes, silly ones.
+			// But keep in vents and scrubbers. I think it's funny if they start spitting out radiation
+			if(!sick_device.density && !istype(sick_device, /obj/machinery/atmospherics/components/unary))
 				continue
 
 			// We found something, we can just return now
@@ -82,7 +86,7 @@
 		cooldown_time = 2 SECONDS, \
 		range = 5, \
 		threshold = RAD_MEDIUM_INSULATION, \
-		examine_text = span_green("<i>It's emanating a green gas... You could probably stop it by [english_list(methods_to_fix, and_text = " or ")]</i>."), \
+		examine_text = span_green("<i>It's emanating a green gas... You could probably stop it by [english_list(methods_to_fix, and_text = " or ")].</i>"), \
 		signals_which_delete_us = signals_to_add, \
 		sigreturn = COMPONENT_BLOCK_TOOL_ATTACK, \
 		on_signal_callback = CALLBACK(src, .proc/on_tool), \
