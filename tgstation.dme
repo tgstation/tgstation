@@ -1244,7 +1244,6 @@
 #include "code\datums\storage\subtypes\cards.dm"
 #include "code\datums\storage\subtypes\extract_inventory.dm"
 #include "code\datums\storage\subtypes\implant.dm"
-#include "code\datums\storage\subtypes\modsuit.dm"
 #include "code\datums\storage\subtypes\organ_box.dm"
 #include "code\datums\storage\subtypes\pockets.dm"
 #include "code\datums\storage\subtypes\rped.dm"
