@@ -1029,6 +1029,12 @@ Pass a positive integer as an argument to override a bot's default speed.
 	var/list/path_images = active_hud_list[DIAG_PATH_HUD]
 	QDEL_LIST(path_images)
 	if(newpath)
+		var/mutable_appearance/path_image = new /mutable_appearance()
+		path_image.icon = path_image_icon
+		path_image.icon_state = path_image_icon_state
+		path_image.layer = ABOVE_OPEN_TURF_LAYER
+		path_image.appearance_flags = RESET_COLOR|RESET_TRANSFORM
+		path_image.color = path_image_color
 		for(var/i in 1 to newpath.len)
 			var/turf/T = newpath[i]
 			if(T == loc) //don't bother putting an image if it's where we already exist.
@@ -1052,16 +1058,11 @@ Pass a positive integer as an argument to override a bot's default speed.
 							else
 								ntransform.Scale(1, -1)
 							prevI.transform = ntransform
-			var/mutable_appearance/MA = new /mutable_appearance()
-			MA.icon = path_image_icon
-			MA.icon_state = path_image_icon_state
-			MA.layer = ABOVE_OPEN_TURF_LAYER
-			SET_PLANE(MA, GAME_PLANE, T)
-			MA.appearance_flags = RESET_COLOR|RESET_TRANSFORM
-			MA.color = path_image_color
-			MA.dir = direction
+
+			SET_PLANE(path_image, GAME_PLANE, T)
+			path_image.dir = direction
 			var/image/I = image(loc = T)
-			I.appearance = MA
+			I.appearance = path_image
 			path[T] = I
 			path_images += I
 
