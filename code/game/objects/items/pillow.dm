@@ -51,18 +51,15 @@
 		smothering(user, victim)
 
 /obj/item/pillow/proc/smothering(mob/living/carbon/user, mob/living/carbon/victim)
-	RegisterSignal(victim, COMSIG_LIVING_RESIST, .proc/resist_smother)
-	if(victim.body_position == FALSE)
-		return
-	if(!do_after(user, 1 SECONDS, victim))
-		return
-	victim.losebreath += 1
-	smothering(user, victim)
-/obj/item/pillow/proc/resist_smother()
-	SIGNAL_HANDLER
-	
-	INVOKE_ASYNC(src, /mob/living.proc/execute_resist)
-
+	while(victim)
+		if(victim.body_position == FALSE && user.grab_state <= GRAB_NECK)
+			break
+		if(!do_after(user, 1 SECONDS, victim))
+			break
+		victim.losebreath += 1
+	victim.losebreath = 0
+	to_chat(victim, span_notice("You break out!"))
+	to_chat(user, span_notice("You stop smothering!"))
 
 /obj/item/pillow/examine(mob/user)
 	. = ..()
