@@ -537,7 +537,7 @@ Diagnostic HUDs!
 	set_hud_image_active(SPECIES_HUD)
 
 /// wrapper called when the medrecords signal is triggered, to update species hud
-/mob/living/carbon/human/proc/incoming_medrecord_hud(datum/source, var/list/fields)
+/mob/living/carbon/human/proc/incoming_medrecord_hud(datum/source, list/fields)
 	SIGNAL_HANDLER
 
 	update_species_hud(fields["species"])
