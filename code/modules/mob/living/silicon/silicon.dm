@@ -1,3 +1,5 @@
+#define AI_LAWS_DELAY 10
+
 /mob/living/silicon
 	gender = NEUTER
 	has_unlimited_silicon_privilege = TRUE
@@ -47,6 +49,8 @@
 	///Whether we have been emagged
 	var/emagged = FALSE
 	var/hack_software = FALSE //Will be able to use hacking actions
+	/// If true, will fake announce a set lawset instead of your real laws
+	var/fake_asimov = FALSE
 	interaction_range = 7 //wireless control range
 
 	var/obj/item/modular_computer/tablet/integrated/modularInterface
@@ -216,6 +220,11 @@
 			hackedcheck += law
 		checklaws()
 
+	if(href_list["fakel"])
+		if(!emagged)
+			return
+		fake_asimov = !fake_asimov
+
 	if (href_list["laws"])
 		statelaws()
 
@@ -240,15 +249,19 @@
 	var/list/lawcache_lawcheck = lawcheck.Copy()
 	var/list/lawcache_ioncheck = ioncheck.Copy()
 	var/list/lawcache_hackedcheck = hackedcheck.Copy()
+
+	if(fake_asimov)
+		say("pretend fake laws are here its not coded yet", forced = "ohnoitshacked")
+
 	var/forced_log_message = "stating laws[force ? ", forced" : ""]"
 	//"radiomod" is inserted before a hardcoded message to change if and how it is handled by an internal radio.
 	say("[radiomod] Current Active Laws:", forced = forced_log_message)
-	sleep(10)
+	sleep(AI_LAWS_DELAY)
 
 	if (lawcache_zeroth)
 		if (force || (lawcache_zeroth in lawcache_lawcheck))
 			say("[radiomod] 0. [lawcache_zeroth]", forced = forced_log_message)
-			sleep(10)
+			sleep(AI_LAWS_DELAY)
 
 	for (var/index in 1 to length(lawcache_hacked))
 		var/law = lawcache_hacked[index]
@@ -257,7 +270,7 @@
 			continue
 		if (force || (law in lawcache_hackedcheck))
 			say("[radiomod] [num]. [law]", forced = forced_log_message)
-			sleep(10)
+			sleep(AI_LAWS_DELAY)
 
 	for (var/index in 1 to length(lawcache_ion))
 		var/law = lawcache_ion[index]
@@ -266,7 +279,7 @@
 			return
 		if (force || (law in lawcache_ioncheck))
 			say("[radiomod] [num]. [law]", forced = forced_log_message)
-			sleep(10)
+			sleep(AI_LAWS_DELAY)
 
 	var/number = 1
 	for (var/index in 1 to length(lawcache_inherent))
@@ -276,7 +289,7 @@
 		if (force || (law in lawcache_lawcheck))
 			say("[radiomod] [number]. [law]", forced = forced_log_message)
 			number++
-			sleep(10)
+			sleep(AI_LAWS_DELAY)
 
 	for (var/index in 1 to length(lawcache_supplied))
 		var/law = lawcache_supplied[index]
@@ -286,7 +299,7 @@
 		if (force || (law in lawcache_lawcheck))
 			say("[radiomod] [number]. [law]", forced = forced_log_message)
 			number++
-			sleep(10)
+			sleep(AI_LAWS_DELAY)
 
 ///Gives you a link-driven interface for deciding what laws the statelaws() proc will share with the crew.
 /mob/living/silicon/proc/checklaws()
@@ -333,6 +346,10 @@
 				law_display = "No"
 			list += {"<A href='byond://?src=[REF(src)];lawc=[number]'>[law_display] [number]:</A> <font color='#990099'>[law]</font><BR>"}
 			number++
+
+	if(emagged)
+		list += {"<br><font color='#ff0000'>Fake Laws Subsystem</font> <A href='byond://?src=[REF(src)];fakel'>[fake_asimov ? "Dise" : "E"]ngaged"}
+
 	list += {"<br><br><A href='byond://?src=[REF(src)];laws=1'>State Laws</A>"}
 
 	usr << browse(list, "window=laws")
