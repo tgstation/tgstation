@@ -92,7 +92,7 @@
 	///The next destination in the patrol route
 	var/next_destination
 	///If we should shuffle our adjacency checking
-	var/shuffle = FALSE
+	var/shuffle_adjacent = FALSE
 
 	/// the nearest beacon's tag
 	var/nearest_beacon
@@ -487,6 +487,7 @@
 
 //Generalized behavior code, override where needed!
 
+GLOBAL_LIST_EMPTY(scan_typecaches)
 /**
  * Attempt to scan tiles near [src], first by checking adjacent, then if a target is still not found, nearby.
  *
@@ -495,38 +496,47 @@
  * scan_range - how far away from [src] will be scanned, if nothing is found directly adjacent.
  */
 /mob/living/simple_animal/bot/proc/scan(list/scan_types, old_target, scan_range = DEFAULT_SCAN_RANGE)
+	var/key = scan_types.Join(",")
+	var/list/scan_cache = GLOB.scan_typecaches[key]
+	if(!scan_cache)
+		scan_cache = typecacheof(scan_types)
+		GLOB.scan_typecaches[key] = scan_cache
 	var/turf/current_turf = get_turf(src)
 	if(!current_turf)
 		return
 	var/list/adjacent = current_turf.get_atmos_adjacent_turfs(1)
-	if(shuffle) //If we were on the same tile as another bot, let's randomize our choices so we dont both go the same way
+	if(shuffle_adjacent) //If we were on the same tile as another bot, let's randomize our choices so we dont both go the same way
 		adjacent = shuffle(adjacent)
-		shuffle = FALSE
+		shuffle_adjacent = FALSE
 
-	for(var/turf/scan as anything in adjacent) //Let's see if there's something right next to us first!
-		if(check_bot(scan)) //Is there another bot there? Then let's just skip it
-			continue
-		var/final_result = checkscan(scan, scan_types, old_target)
-		if(final_result)
-			return final_result
+	var/list/turfs_to_walk = list()
+	for(var/turf/victim in view(scan_range, src))
+		turfs_to_walk += victim
 
-	for(var/turf/scanned_turfs as anything in shuffle(view(scan_range, src)) - adjacent) //Search for something in range, minus what we already checked.
-		if(check_bot(scanned_turfs)) //Is there another bot there? Then let's just skip it
-			continue
-		var/final_result = checkscan(scanned_turfs, scan_types, old_target)
-		if(final_result)
-			return final_result
+	turfs_to_walk = shuffle(turfs_to_walk - adjacent)
+	// Now we prepend adjacent since we want to run those first
+	turfs_to_walk = adjacent + turfs_to_walk
 
-/mob/living/simple_animal/bot/proc/checkscan(atom/scan, list/scan_types, old_target)
-	for(var/scan_type in scan_types)
-		if(!istype(scan, scan_type)) //Check that the thing we found is the type we want!
-			continue //If not, keep searching!
-		if((REF(scan) in ignore_list) || (scan == old_target)) //Filter for blacklisted elements, usually unreachable or previously processed oness
+	for(var/turf/scanned as anything in turfs_to_walk)
+		// Check bot is inlined here to save cpu time
+		//Is there another bot there? Then let's just skip it so we dont all atack on top of eachother.
+		var/bot_found = FALSE
+		for(var/mob/living/simple_animal/bot/buddy in scanned.contents)
+			if(istype(buddy, type) && (buddy != src))
+				bot_found = TRUE
+				break
+		if(bot_found)
 			continue
 
-		var/scan_result = process_scan(scan) //Some bots may require additional processing when a result is selected.
-		if(!isnull(scan_result))
-			return scan_result
+		for(var/atom/thing as anything in scanned)
+			if(!scan_cache[thing.type]) //Check that the thing we found is the type we want!
+				continue //If not, keep searching!
+			if(thing == old_target || (REF(thing) in ignore_list)) //Filter for blacklisted elements, usually unreachable or previously processed oness
+				continue
+
+			var/scan_result = process_scan(thing) //Some bots may require additional processing when a result is selected.
+			if(!isnull(scan_result))
+				return scan_result
 
 //When the scan finds a target, run bot specific processing to select it for the next step. Empty by default.
 /mob/living/simple_animal/bot/proc/process_scan(scan_target)
@@ -536,10 +546,9 @@
 	var/turf/target_turf = get_turf(targ)
 	if(!target_turf)
 		return FALSE
-	for(var/turf_contents in target_turf.contents)
-		//Is there another bot there already? If so, let's skip it so we dont all atack on top of eachother.
-		if(istype(turf_contents, type) && (turf_contents != src))
-			return TRUE //Let's abort if we find a bot so we dont have to keep rechecking
+	for(var/mob/living/simple_animal/bot/buddy in target_turf.contents)
+		if(istype(buddy, type) && (buddy != src))
+			return TRUE
 	return FALSE
 
 /mob/living/simple_animal/bot/proc/add_to_ignore(subject)

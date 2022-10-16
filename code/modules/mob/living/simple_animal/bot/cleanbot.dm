@@ -264,7 +264,7 @@
 
 		if(loc == get_turf(target))
 			if(check_bot(target))
-				shuffle = TRUE //Shuffle the list the next time we scan so we dont both go the same way.
+				shuffle_adjacent = TRUE //Shuffle the list the next time we scan so we dont both go the same way.
 				path = list()
 			else
 				UnarmedAttack(target) //Rather than check at every step of the way, let's check before we do an action, so we can rescan before the other bot.
