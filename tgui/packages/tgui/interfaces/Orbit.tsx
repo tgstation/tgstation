@@ -255,7 +255,7 @@ const ObservableItem = (
   const { color, item } = props;
   const { full_name, health, name, orbiters, ref } = item;
   const [autoObserve] = useLocalState<boolean>(context, 'autoObserve', false);
-  const threat = getThreat(orbiters || 0);
+  const threat = getThreat(orbiters ?? 0);
   const displayName = getDisplayName(name, full_name);
 
   return (
@@ -320,8 +320,8 @@ const getDisplayName = (name: string, full_name: string) => {
   if (!full_name?.includes('[') || full_name.includes('(as ')) {
     return name;
   }
-  // This bit of regex extracts names before the first ' ['
-  return `"${full_name.match(/.*?(?= \[)/)?.[1]}"` ?? name;
+  // return only the name before the first ' ['
+  return `"${full_name.split(' [')[0]}"`;
 };
 
 /** Returns some labels for a player's health */
