@@ -37,57 +37,48 @@ LINEN BINS
 	if(bedsheet_type == BEDSHEET_DOUBLE)
 		stack_amount *= 2
 		dying_key = DYE_REGISTRY_DOUBLE_BEDSHEET
+	register_item_context()
 
-/obj/item/bedsheet//attack(mob/living/target, mob/living/user)
-	if(being_used || !ismob(dumb_mob))
+/obj/item/bedsheet/add_item_context(datum/source, list/context, mob/living/target)
+	if(!isliving(target) || target.body_position != LYING_DOWN)
+		return NONE
+
+	context[SCREENTIP_CONTEXT_LMB] = "Cover"
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/bedsheet/attack(mob/living/target, mob/living/user)
+	if(!user.CanReach(target))
+		return
+	if(user.combat_mode)
+		return ..()
+	if(target.body_position != LYING_DOWN)
+		return
+	if(!user.dropItemToGround(src))
+		return
+
+	src.forceMove(get_turf(target))
+	balloon_alert(user, "covered")
+	coverup(target)
+	add_fingerprint(user)
 
 /obj/item/bedsheet/attack_self(mob/living/user)
 	if(!user.CanReach(src)) //No telekenetic grabbing.
 		return
+	if(user.body_position != LYING_DOWN)
+		return
 	if(!user.dropItemToGround(src))
 		return
-	if(layer == initial(layer))
-		layer = ABOVE_MOB_LAYER
-		SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
-		to_chat(user, span_notice("You cover yourself with [src]."))
-		pixel_x = 0
-		pixel_y = 0
-	else
-		layer = initial(layer)
-		SET_PLANE_IMPLICIT(src, initial(plane))
-		to_chat(user, span_notice("You smooth [src] out beneath you."))
-	if(user.body_position == LYING_DOWN)    //The player isn't laying down currently
-		dir = user.dir
-	else
-		if(user.dir & WEST)    //The player is rotated to the right, lay the sheet left!
-			dir = WEST
-		else    //The player is rotated to the left, lay the sheet right!
-			dir = EAST
+
+	coverup(user)
 	add_fingerprint(user)
-	return
 
-/obj/item/bedsheet/proc/cover_up(mob/living/sleeper)
-	if(layer == initial(layer))
-		layer = ABOVE_MOB_LAYER
-		SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
-		pixel_x = 0
-		pixel_y = 0
-	else
-		layer = initial(layer)
-		SET_PLANE_IMPLICIT(src, initial(plane))
-	
-	dir = sleeper.dir & WEST || EAST
-
-/* FINISH LATER
-	if(sleeper.body_position == LYING_DOWN) //The player isn't laying down currently
-		dir = sleeper.dir
-	else
-		dir = sleeper.dir & WEST || EAST
-		if(sleeper.dir & WEST)    //The player is rotated to the right, lay the sheet left!
-			dir = WEST
-		else    //The player is rotated to the left, lay the sheet right!
-			dir = EAST
-*/
+/obj/item/bedsheet/proc/coverup(mob/living/sleeper)
+	layer = ABOVE_MOB_LAYER
+	SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
+	pixel_x = 0
+	pixel_y = 0
+	balloon_alert(sleeper, "covered")
+	dir = sleeper.lying_angle == 90 ? WEST : EAST
 
 /obj/item/bedsheet/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_WIRECUTTER || I.get_sharpness())
