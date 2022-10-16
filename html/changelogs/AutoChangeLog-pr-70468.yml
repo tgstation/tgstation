@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes: 
+  - bugfix: "Choosing admin setup options on certain events will no longer retain the chosen options for future events."
