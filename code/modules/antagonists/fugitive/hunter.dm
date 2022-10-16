@@ -55,8 +55,8 @@
 /datum/antagonist/fugitive_hunter/get_team()
 	return hunter_team
 
-/datum/antagonist/fugitive_hunter/apply_innate_effects()
-	add_team_hud(owner.current)
+/datum/antagonist/fugitive_hunter/apply_innate_effects(mob/living/mob_override)
+	add_team_hud(mob_override || owner.current)
 
 /datum/team/fugitive_hunters
 	var/backstory = "error"
