@@ -43,11 +43,10 @@
 		return
 	if(victim.wear_mask)
 		return
-	if(!user.get_bodypart(BODY_ZONE_HEAD))
+	if(!user.get_bodypart(BODY_ZONE_HEAD) || HAS_TRAIT(user, TRAIT_PACIFISM))
 		return
 	if(victim.body_position || user.grab_state >= GRAB_AGGRESSIVE)
-		to_chat(user, span_alert("You being to smother [victim]"))
-		to_chat(victim, span_alertwarning("[user] is begingin to smother you!"))
+		user.visible_message("[user] starts to smother [victim]", span_notice("You being smothering [victim]"))
 		smothering(user, victim)
 
 /obj/item/pillow/proc/smothering(mob/living/carbon/user, mob/living/carbon/victim)
@@ -72,7 +71,7 @@
 /obj/item/pillow/AltClick(mob/user)
 	. = ..()
 	if(!pillow_trophy)
-		balloon_alert(user, span_notice("no tag!"))
+		balloon_alert(user, "no tag!")
 		return
 	balloon_alert(user, span_notice("removing tag..."))
 	if(!do_after(user, 2 SECONDS, src))
@@ -80,10 +79,11 @@
 	if(last_fighter)
 		pillow_trophy.desc = "a pillow tag taken from [last_fighter] after a gruesome pillow fight."
 	user.put_in_hands(pillow_trophy)
+	pillow_trophy = null
 	balloon_alert(user, span_notice("tag removed"))
 	playsound(user,'sound/items/poster_ripped.ogg', 50)
 	update_state()
-	pillow_trophy = null
+	
 
 /obj/item/pillow/proc/update_state()
 	desc = "A soft and fluffy pillow. You can smack someone with this! [tag_desc]"
