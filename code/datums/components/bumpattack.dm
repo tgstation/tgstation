@@ -14,6 +14,7 @@
 	var/obj/item/proxy_weapon
 	///cool down between each hit
 	var/attack_cooldown = CLICK_CD_MELEE
+
 /datum/component/bumpattack/Initialize(valid_slots, obj/item/proxy_weapon)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
