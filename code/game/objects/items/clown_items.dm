@@ -150,9 +150,9 @@
 		return
 	return ..()
 
-/obj/item/soap/attackby_storage_insert(datum/storage, atom/storage_holder, mob/user)
+/obj/item/soap/attackby_storage_insert(datum/storage, atom/storage_holder, mob/living/user)
 	. = ..()
-	return user.combat_mode  // only cleans a storage item if on combat
+	return !(user?.combat_mode)  // only cleans a storage item if on combat
 
 /*
  * Bike Horns
