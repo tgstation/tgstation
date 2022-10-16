@@ -137,7 +137,7 @@
 
 /obj/effect/client_image_holder/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	. = ..()
-	if(same_z_layer)
+	if(QDELETED(src) || same_z_layer)
 		return
 	SET_PLANE(shown_image, PLANE_TO_TRUE(shown_image.plane), new_turf)
 
