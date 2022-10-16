@@ -39,6 +39,7 @@
 		activate(user)
 	else
 		deactivate()
+
 /datum/component/bumpattack/proc/check_drop(datum/source, mob/living/dropper)
 	SIGNAL_HANDLER
 	deactivate()
