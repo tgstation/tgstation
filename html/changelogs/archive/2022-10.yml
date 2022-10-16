@@ -512,3 +512,27 @@
   - code_imp: Changed the examine text on monkeized humans.
   timothymtorres:
   - bugfix: Fix traitor PDA uplinks to be accessible by illiterate people
+2022-10-16:
+  ShizCalev:
+  - bugfix: Fixed ear bounty not clarifying that it only accepts upgraded cybernetic
+      ears.
+  - bugfix: Fixed a minor runtime when hallucinations are ending.
+  - bugfix: Fixed an unreachable tile in the CMO's office on Kilo
+  - bugfix: Fixed a runtime preventing mafia from starting if a player disconnected
+      during signups.
+  VexingRaven:
+  - qol: Many gun-related chat messages are now balloon alerts instead
+  - spellcheck: The bow no longer says you loaded it with bullets
+  lnGoror:
+  - imageadd: New inhand sprites for the sabre sheath
+  san7890:
+  - admin: Cross-server messages are now filtered against the server's word filter.
+      If it's hard filtered, the message will not send. If it's soft-filtered, it
+      will send slower to allow an admin more time to cancel it.
+  - bugfix: You can no longer pierce the veil between the living and the dead with
+      the power of circuitry.
+  timothymtorres:
+  - qol: Add RMB hotkey to toggle lighting for flashlights.  Add contextual screentips
+      for flashlights.
+  - soundadd: Reuse existing sounds for flares to use `sound/items/match_strike.ogg`
+      and glowsticks to use `sound/effects/wounds/crack2.ogg`
