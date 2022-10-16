@@ -224,6 +224,7 @@
 		if(!emagged)
 			return
 		fake_asimov = !fake_asimov
+		checklaws()
 
 	if (href_list["laws"])
 		statelaws()
@@ -348,7 +349,7 @@
 			number++
 
 	if(emagged)
-		list += {"<br><font color='#ff0000'>Fake Laws Subsystem</font> <A href='byond://?src=[REF(src)];fakel'>[fake_asimov ? "Dise" : "E"]ngaged"}
+		list += {"<br><font color='#ff0000'>Fake Laws Subsystem</font> <A href='byond://?src=[REF(src)];fakel=1'>[fake_asimov ? "E" : "Dise"]ngaged"}
 
 	list += {"<br><br><A href='byond://?src=[REF(src)];laws=1'>State Laws</A>"}
 
