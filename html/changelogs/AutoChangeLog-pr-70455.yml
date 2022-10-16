@@ -1,5 +1,0 @@
-author: "Profakos"
-delete-after: True
-changes: 
-  - bugfix: "Circuitboards that require a minimum level of manipulators tiers no longer display just \"manipulator\" when examining machine frames that contain them"
-  - bugfix: "Marked a few more admin only chem dispenser boards to display their proper manipulator requirements"
