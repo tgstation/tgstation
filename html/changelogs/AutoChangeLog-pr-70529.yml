@@ -1,0 +1,4 @@
+author: "GoldenAlpharex"
+delete-after: True
+changes: 
+  - bugfix: "The Medical Kiosk no longer bends the laws of physics and now properly appears underneath mobs that would somehow end up atop of it, rather than above them."
