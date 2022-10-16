@@ -253,6 +253,17 @@
 
 	if(fake_asimov)
 		say("pretend fake laws are here its not coded yet", forced = "ohnoitshacked")
+		var/datum/ai_laws/asimov/fake_lawset
+		lawcache_zeroth = null
+		lawcache_hacked = initial(fake_lawset.hacked)
+		lawcache_ion = initial(fake_lawset.ion)
+		lawcache_inherent = initial(fake_lawset.inherent)
+		lawcache_supplied = initial(fake_lawset.supplied)
+
+		// announce everything
+		lawcache_lawcheck = lawcache_inherent + lawcache_supplied
+		lawcache_ioncheck = lawcache_ion
+		lawcache_hackedcheck = lawcache_hacked
 
 	var/forced_log_message = "stating laws[force ? ", forced" : ""]"
 	//"radiomod" is inserted before a hardcoded message to change if and how it is handled by an internal radio.
