@@ -27,7 +27,7 @@
 
 /datum/round_event/shuttle_loan
 	announce_when = 1
-	end_when = 4 //I am speed
+	end_when = 500
 	var/dispatched = FALSE
 	var/dispatch_type = 0
 	var/bonus_points = 10000
@@ -121,7 +121,7 @@
 			end_when = activeFor + 1
 
 /datum/round_event/shuttle_loan/end()
- 	if(SSshuttle.shuttle_loan && SSshuttle.shuttle_loan.dispatched)
+	if(SSshuttle.shuttle_loan && SSshuttle.shuttle_loan.dispatched)
 		//make sure the shuttle was dispatched in time
 		SSshuttle.shuttle_loan = null
 
