@@ -1,7 +1,7 @@
 import { useBackend, useLocalState } from '../backend';
 import { filter, sortBy } from 'common/collections';
 import { capitalizeFirst, multiline } from 'common/string';
-import { Box, Button, Collapsible, Icon, Input, LabeledList, Section, Stack } from '../components';
+import { Box, Button, Collapsible, Icon, Input, LabeledList, NoticeBox, Section, Stack } from '../components';
 import { Window } from '../layouts';
 import { flow } from 'common/fp';
 
@@ -19,10 +19,11 @@ type Data = {
 };
 
 type Observable = {
+  extra?: string;
   full_name: string;
-  health: number;
-  job: string;
-  name: string;
+  health?: number;
+  job?: string;
+  name?: string;
   orbiters?: number;
   ref: string;
 };
@@ -253,7 +254,7 @@ const ObservableItem = (
 ) => {
   const { act } = useBackend<Data>(context);
   const { color, item } = props;
-  const { full_name, health, name, orbiters, ref } = item;
+  const { extra, full_name, health, name, orbiters, ref } = item;
   const [autoObserve] = useLocalState<boolean>(context, 'autoObserve', false);
   const threat = getThreat(orbiters ?? 0);
   const displayName = getDisplayName(name, full_name);
@@ -262,13 +263,13 @@ const ObservableItem = (
     <Button
       color={threat || color}
       onClick={() => act('orbit', { auto_observe: autoObserve, ref: ref })}
-      tooltip={health && <LivingTooltip item={item} />}
+      tooltip={(!!health || !!extra) && <ObservableTooltip item={item} />}
       tooltipPosition="bottom-start">
       {capitalizeFirst(displayName)}
       {!!orbiters && (
         <>
           {' '}
-          ({orbiters?.toString()}{' '}
+          ({orbiters}{' '}
           <Icon mr={0} name={threat === THREAT.Large ? 'skull' : 'ghost'} />)
         </>
       )}
@@ -277,19 +278,34 @@ const ObservableItem = (
 };
 
 /** Displays some info on the mob as a tooltip. */
-const LivingTooltip = (props: { item: Observable }) => {
+const ObservableTooltip = (props: { item: Observable }) => {
   const {
-    item: { job, full_name, health },
+    item: { extra, full_name, job, health },
   } = props;
+  const extraInfo = extra?.split(':');
 
   return (
-    <LabeledList>
-      <LabeledList.Item label="Name">{full_name}</LabeledList.Item>
-      <LabeledList.Item label="Job">{job}</LabeledList.Item>
-      <LabeledList.Item label="Health">
-        {getHealthLabel(health)}
-      </LabeledList.Item>
-    </LabeledList>
+    <>
+      <NoticeBox textAlign="center" nowrap>
+        Last Known Data
+      </NoticeBox>
+      <LabeledList>
+        {!!extraInfo && (
+          <LabeledList.Item label={extraInfo[0]}>
+            {extraInfo[1]}
+          </LabeledList.Item>
+        )}
+        {!!full_name && (
+          <LabeledList.Item label="Name">{full_name}</LabeledList.Item>
+        )}
+        {!!job && <LabeledList.Item label="Job">{job}</LabeledList.Item>}
+        {!!health && (
+          <LabeledList.Item label="Health">
+            {getHealthLabel(health!)}
+          </LabeledList.Item>
+        )}
+      </LabeledList>
+    </>
   );
 };
 
@@ -316,7 +332,7 @@ const collateAntagonists = (antagonists: Antags) => {
 };
 
 /** Returns a disguised name in case the person is wearing someone else's ID */
-const getDisplayName = (name: string, full_name: string) => {
+const getDisplayName = (name: string | undefined, full_name: string) => {
   if (!name) {
     return full_name;
   }
@@ -373,6 +389,7 @@ const isJobOrNameMatch = (observable: Observable, searchQuery: string) => {
 
   return (
     displayName?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
-    job?.toLowerCase().includes(searchQuery?.toLowerCase())
+    job?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+    false
   );
 };

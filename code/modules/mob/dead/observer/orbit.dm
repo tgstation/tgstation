@@ -106,7 +106,26 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 		misc += list(list(
 			"ref" = REF(atom_poi),
 			"name" = name,
+			"extra" = null, // Just in case you want to add anything
 		))
+
+		// Display the supermatter crystal integrity
+		if(istype(atom_poi, /obj/machinery/power/supermatter_crystal))
+			var/obj/machinery/power/supermatter_crystal/crystal = atom_poi
+			misc[length(misc)]["extra"] = "Integrity: [crystal.get_integrity_percent()]%"
+			continue
+		// Display the nuke timer
+		if(istype(atom_poi, /obj/machinery/nuclearbomb))
+			var/obj/machinery/nuclearbomb/bomb = atom_poi
+			if(bomb.timing)
+				misc[length(misc)]["extra"] = "Timer: [bomb.countdown?.displayed_text]s"
+			continue
+		// Display the holder if its a nuke disk
+		if(istype(atom_poi, /obj/item/disk/nuclear))
+			var/obj/item/disk/nuclear/disk = atom_poi
+			var/mob/holder = disk.pulledby || get(disk, /mob)
+			misc[length(misc)]["extra"] = "Location: [holder?.real_name || "Unsecured"]"
+			continue
 
 	return list(
 		"alive" = alive,
