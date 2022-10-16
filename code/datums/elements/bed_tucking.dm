@@ -40,10 +40,12 @@
 		return
 
 	to_chat(tucker, span_notice("You lay [tucked] out on [target_bed]."))
-	tucked.pixel_x = x_offset
+	tucked.dir = target_bed.dir
+	tucked.pixel_x = target_bed.dir & EAST ? -x_offset : x_offset
 	tucked.pixel_y = y_offset
 	if(rotation_degree)
-		tucked.transform = turn(tucked.transform, rotation_degree)
+		var/angle = target_bed.dir & EAST ? rotation_degree + 180 : rotation_degree
+		tucked.transform = turn(tucked.transform, angle)
 		RegisterSignal(tucked, COMSIG_ITEM_PICKUP, .proc/untuck)
 
 	return COMPONENT_NO_AFTERATTACK
@@ -56,5 +58,5 @@
 /datum/element/bed_tuckable/proc/untuck(obj/item/tucked)
 	SIGNAL_HANDLER
 
-	tucked.transform = turn(tucked.transform, -rotation_degree)
+	tucked.transform = turn(matrix(), 0) // reset rotation
 	UnregisterSignal(tucked, COMSIG_ITEM_PICKUP)
