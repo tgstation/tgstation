@@ -18,8 +18,7 @@
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 	src.valid_slots = valid_slots
-	if(proxy_weapon)
-		src.proxy_weapon = proxy_weapon
+	src.proxy_weapon = proxy_weapon
 
 /datum/component/bumpattack/Destroy(force, silent)
 	return ..()
