@@ -514,6 +514,11 @@ Diagnostic HUDs!
 /mob/living/carbon/human/proc/update_species_hud(species_overide)
 	var/image/holder = hud_list[SPECIES_HUD]
 
+	// to not inder nerf the agent card, make it always show human
+	if(istype(get_idcard(), /obj/item/card/id/advanced/chameleon))
+		holder.icon_state = "species_human"
+		return
+
 	var/perpname = get_face_name(get_id_name(""))
 	if(perpname && GLOB.data_core)
 		var/datum/data/record/R = find_record("name", perpname, GLOB.data_core.medical)
