@@ -317,13 +317,11 @@ const collateAntagonists = (antagonists: Antags) => {
 
 /** Returns a disguised name in case the person is wearing someone else's ID */
 const getDisplayName = (name: string, full_name: string) => {
-  if (!full_name?.includes('[')) {
+  if (!full_name?.includes('[') || full_name.includes('(as ')) {
     return name;
   }
-  // This wild bit of regex is to extract the name from the ID
-  const match =
-    full_name.match(/\(as (.*?)\)/)?.[1] ?? full_name.match(/.*?(?= \[)/)?.[1];
-  return `"${match}"` ?? name;
+  // This bit of regex extracts names before the first ' ['
+  return `"${full_name.match(/.*?(?= \[)/)?.[1]}"` ?? name;
 };
 
 /** Returns some labels for a player's health */
