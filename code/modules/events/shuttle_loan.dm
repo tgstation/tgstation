@@ -80,7 +80,7 @@
 
 	SSshuttle.supply.mode = SHUTTLE_CALL
 	SSshuttle.supply.destination = SSshuttle.getDock("cargo_home")
-	SSshuttle.supply.setTimer(30) //DEBUG CODE SET BACK TO 3000 PLEASE
+	SSshuttle.supply.setTimer(3000)
 
 	switch(dispatch_type)
 		if(HIJACK_SYNDIE)
