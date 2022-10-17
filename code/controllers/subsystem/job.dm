@@ -642,10 +642,11 @@ SUBSYSTEM_DEF(job)
 
 	else // legacy mode, so just run the old parser.
 		var/jobsfile = file("[global.config.directory]/jobs.txt")
-		if(!fexists(jobsfile))
+		if(!fexists(jobsfile)) // sanity with a trace
+			stack_trace("Despite SSconfig setting SSjob.legacy_mode to TRUE, jobs.txt was not found in the config directory! Something has gone terribly wrong!")
 			return
+		var/jobstext = file2text(jobsfile)
 		for(var/datum/job/occupation as anything in joinable_occupations)
-			var/jobstext = file2text(jobsfile)
 			var/regex/parser = new("[occupation.title]=(-1|\\d+),(-1|\\d+)")
 			parser.Find(jobstext)
 			occupation.total_positions = text2num(parser.group[1])
