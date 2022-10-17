@@ -61,7 +61,7 @@
 // start the movement process
 // argument is the disposal unit the holder started in
 /obj/structure/disposalholder/proc/start(obj/machinery/disposal/D)
-	if(!D.trunk)
+	if(QDELETED(D.trunk))
 		D.expel(src) // no trunk connected, so expel immediately
 		return
 	forceMove(D.trunk)

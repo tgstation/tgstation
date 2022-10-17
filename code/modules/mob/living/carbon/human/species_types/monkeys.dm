@@ -82,7 +82,6 @@
 	C.dna.remove_mutation(/datum/mutation/human/race)
 
 /datum/species/monkey/spec_unarmedattack(mob/living/carbon/human/user, atom/target, modifiers)
-	. = ..()
 	if(HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
 		if(!iscarbon(target))
 			return TRUE
@@ -105,14 +104,15 @@
 		to_chat(user, span_danger("You bite [victim]!"))
 		if(armor >= 2)
 			return TRUE
-		for(var/d in user.diseases)
-			var/datum/disease/bite_infection = d
+		for(var/datum/disease/bite_infection as anything in user.diseases)
 			if(bite_infection.spread_flags & (DISEASE_SPREAD_SPECIAL | DISEASE_SPREAD_NON_CONTAGIOUS))
 				continue
 			victim.ForceContractDisease(bite_infection)
 		return TRUE
-	target.attack_paw(user, modifiers)
-	return TRUE
+	if(!ISADVANCEDTOOLUSER(user))
+		target.attack_paw(user, modifiers)
+		return TRUE
+	return ..()
 
 /datum/species/monkey/check_roundstart_eligible()
 	if(SSevents.holidays && SSevents.holidays[MONKEYDAY])
