@@ -61,7 +61,7 @@
 		myreplacer = null
 	else if(gone in held_signs)
 		held_signs -= null
-	if(!QDELETED(src))
+	if(!QDELING(src))
 		update_appearance(UPDATE_ICON)
 	return ..()
 
@@ -80,13 +80,13 @@
 			else
 				. += "\t[icon2html(sign_obj, user)] \a [sign_obj]"
 		. += span_notice("\n<b>Left-click</b> to [contents.len > 1 ? "search [src]" : "remove [contents[1]]"].")
+		if(mybag)
+			. += span_notice("<b>Right-click</b> with a <b>[weight_class_to_text(mybag.atom_storage.max_specific_storage)] item</b> to put it in [mybag].")
 		if(mymop)
 			. += span_notice("<b>Right-click</b> to quickly remove [mymop].")
-		if(mybag)
-			. += span_notice("<b>Right-click</b> with an object to put it in [mybag].")
 	if(CART_HAS_MINIMUM_REAGENT_VOLUME)
-		. += span_notice("<b>Right-click</b> with a mop to wet it.")
-		. += span_info("<b>Crowbar</b> it to empty its mop bucket onto [get_turf(src)].")
+		. += span_notice("<b>Right-click</b> with a <b>mop</b> to wet it.")
+		. += span_info("<b>Crowbar</b> it to dump its mop bucket onto [get_turf(src)].")
 
 /obj/structure/janitorialcart/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(!held_item)
@@ -137,7 +137,7 @@
 		context[SCREENTIP_CONTEXT_RMB] = "Fill [src]'s mop bucket"
 		return CONTEXTUAL_SCREENTIP_SET
 	if(held_item.tool_behaviour == TOOL_CROWBAR && CART_HAS_MINIMUM_REAGENT_VOLUME)
-		context[SCREENTIP_CONTEXT_LMB] = "Empty [src]'s mop bucket on [loc]"
+		context[SCREENTIP_CONTEXT_LMB] = "Dump [src]'s mop bucket on [loc]"
 		return CONTEXTUAL_SCREENTIP_SET
 	if(mybag?.atom_storage?.max_specific_storage >= held_item.w_class)
 		context[SCREENTIP_CONTEXT_RMB] = "Insert [held_item] into [mybag]"
@@ -147,44 +147,44 @@
 /obj/structure/janitorialcart/attackby(obj/item/attacking_item, mob/user, params)
 	if(istype(attacking_item, /obj/item/mop))
 		if(mymop)
-			to_chat(user, span_warning("There is already a mop in [src]!"))
+			balloon_alert(user, "already has \a [mymop]!")
 		else if(user.transferItemToLoc(attacking_item, src))
-			to_chat(user, span_notice("You put [attacking_item] into [src]."))
+			balloon_alert(user, "placed [attacking_item]")
 		return
 
 	if(istype(attacking_item, /obj/item/pushbroom))
 		if(mybroom)
-			to_chat(user, span_warning("There is already a broom in [src]!"))
+			balloon_alert(user, "already has \a [mybroom]!")
 		else if(user.transferItemToLoc(attacking_item, src))
-			to_chat(user, span_notice("You put [attacking_item] into [src]."))
+			balloon_alert(user, "placed [attacking_item]")
 		return
 
 	if(istype(attacking_item, /obj/item/storage/bag/trash))
 		if(mybag)
-			to_chat(user, span_warning("There is already a trash bag in [src]!"))
+			balloon_alert(user, "already has \a [mybag]!")
 		else if(user.transferItemToLoc(attacking_item, src))
-			to_chat(user, span_notice("You put [attacking_item] into [src]."))
+			balloon_alert(user, "placed [attacking_item]")
 		return
 
 	if(istype(attacking_item, /obj/item/reagent_containers/spray/cleaner))
 		if(myspray)
-			to_chat(user, span_warning("There is already a spray bottle in [src]!"))
+			balloon_alert(user, "already has \a [myspray]!")
 		else if(user.transferItemToLoc(attacking_item, src))
-			to_chat(user, span_notice("You put [attacking_item] into [src]."))
+			balloon_alert(user, "placed [attacking_item]")
 		return
 
 	if(istype(attacking_item, /obj/item/lightreplacer))
 		if(myreplacer)
-			to_chat(user, span_warning("There is already a light replacer in [src]!"))
+			balloon_alert(user, "already has \a [myreplacer]!")
 		else if(user.transferItemToLoc(attacking_item, src))
-			to_chat(user, span_notice("You put [attacking_item] into [src]."))
+			balloon_alert(user, "placed [attacking_item]")
 		return
 
 	else if(istype(attacking_item, /obj/item/clothing/suit/caution))
 		if(held_signs.len >= max_signs)
-			to_chat(user, span_warning("[src] can't hold any more signs!"))
+			balloon_alert(user, "sign rack is full!")
 		else if(user.transferItemToLoc(attacking_item, src))
-			to_chat(user, span_notice("You put [attacking_item] into [src]."))
+			balloon_alert(user, "placed [attacking_item]")
 		return
 
 	if(attacking_item.is_drainable())
@@ -194,27 +194,29 @@
 
 /obj/structure/janitorialcart/crowbar_act(mob/living/user, obj/item/tool)
 	if(!CART_HAS_MINIMUM_REAGENT_VOLUME)
-		to_chat(user, span_warning("[src]'s mop bucket is empty!"))
+		balloon_alert(user, "mop bucket is empty!")
 		return TOOL_ACT_TOOLTYPE_SUCCESS
-	user.visible_message(span_notice("[user] begins to empty the contents of [src]."), span_notice("You begin to empty the contents of [src]..."))
+	user.balloon_alert_to_viewers("starts dumping [src]...", "started dumping [src]...")
+	user.visible_message(span_notice("[user] begins to dumping the contents of [src]'s mop bucket."), span_notice("You begin to dump the contents of [src]'s mop bucket..."))
 	if(tool.use_tool(src, user, 5 SECONDS, volume = 50))
-		to_chat(user, span_notice("You empty the contents of [src]'s mop bucket onto the floor."))
+		balloon_alert(user, "dumped [src]")
+		to_chat(user, span_notice("You dump the contents of [src]'s mop bucket onto the floor."))
 		reagents.expose(loc)
 		reagents.clear_reagents()
-		update_appearance()
+		update_appearance(UPDATE_ICON)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/structure/janitorialcart/attackby_secondary(obj/item/weapon, mob/user, params)
 	if(istype(weapon, /obj/item/mop))
 		var/obj/item/mop/your_mop = weapon
 		if(your_mop.reagents.total_volume >= your_mop.reagents.maximum_volume)
-			to_chat(user, span_warning("[your_mop] is already soaked!"))
+			balloon_alert(user, "[your_mop] is already soaked!")
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 		if(!CART_HAS_MINIMUM_REAGENT_VOLUME)
-			to_chat(user, span_warning("[src]'s mop bucket is empty!"))
+			balloon_alert(user, "mop bucket is empty!")
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 		reagents.trans_to(your_mop, your_mop.reagents.maximum_volume, transfered_by = user)
-		to_chat(user, span_notice("You wet [your_mop] in [src]."))
+		balloon_alert(user, "wet [your_mop]")
 		playsound(src, 'sound/effects/slosh.ogg', 25, TRUE)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
@@ -260,33 +262,33 @@
 		if("Trash bag")
 			if(!mybag)
 				return
-			to_chat(user, span_notice("You take [mybag] from [src]."))
+			balloon_alert(user, "removed [mybag]")
 			user.put_in_hands(mybag)
 		if("Mop")
 			if(!mymop)
 				return
-			to_chat(user, span_notice("You take [mymop] from [src]."))
+			balloon_alert(user, "removed [mymop]")
 			user.put_in_hands(mymop)
 		if("Broom")
 			if(!mybroom)
 				return
-			to_chat(user, span_notice("You take [mybroom] from [src]."))
+			balloon_alert(user, "removed [mybroom]")
 			user.put_in_hands(mybroom)
 		if("Spray bottle")
 			if(!myspray)
 				return
-			to_chat(user, span_notice("You take [myspray] from [src]."))
+			balloon_alert(user, "removed [myspray]")
 			user.put_in_hands(myspray)
 		if("Light replacer")
 			if(!myreplacer)
 				return
-			to_chat(user, span_notice("You take [myreplacer] from [src]."))
+			balloon_alert(user, "removed [myreplacer]")
 			user.put_in_hands(myreplacer)
 		if("Sign")
 			if(!held_signs.len)
 				return
 			var/obj/item/clothing/suit/caution/removed_sign = held_signs[1]
-			to_chat(user, span_notice("You take \a [removed_sign] from [src]."))
+			balloon_alert(user, "removed [held_signs.len > 1 ? "\a " : null][removed_sign]")
 			user.put_in_hands(removed_sign)
 		else
 			return
@@ -294,7 +296,7 @@
 /obj/structure/janitorialcart/attack_hand_secondary(mob/user, list/modifiers)
 	if(!mymop)
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
-	to_chat(user, span_notice("You remove [mymop] from [src]."))
+	balloon_alert(user, "removed [mymop]")
 	user.put_in_hands(mymop)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
