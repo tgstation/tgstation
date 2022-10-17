@@ -193,7 +193,7 @@
 		playsound(src, dry_fire_sound, 30, TRUE)
 		user.visible_message(
 			span_danger("[user.name] tries to fire \the [src] at the same time, but only succeeds at looking like an idiot."), \
-			span_danger("\The [src]'s anti-combat mechanism prevents you from firing it at the same time!"))
+			span_danger("\The [src]'s anti-combat mechanism prevents you from firing it at anyone but yourself!"))
 		return
 
 	if(ishuman(user))
