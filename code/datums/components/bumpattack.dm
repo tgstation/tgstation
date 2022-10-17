@@ -22,7 +22,7 @@
 	src.valid_slots = valid_slots
 	src.proxy_weapon = proxy_weapon
 
-/datum/component/bumpattack/Destroy(force, silent)
+
 	return ..()
 
 /datum/component/bumpattack/RegisterWithParent()
