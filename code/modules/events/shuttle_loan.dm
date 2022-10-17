@@ -65,8 +65,8 @@
 			thanks_msg = "Live explosive ordnance incoming via supply shuttle. Evacuating cargo bay is recommended."
 			bonus_points = 45000 //If you mess up, people die and the shuttle gets turned into swiss cheese
 		if(PAPERS_PLEASE)
-			priority_announce("Cargo: A neighboring station has sent us some paperwork that we really don't care to deal with. Could we send it your way?", "CentCom Paperwork Division") //Reminder: this should only pick stamps for heads of staff with someone in the job slot.
-			thanks_msg = "The cargo shuttle should return in five minutes. Payment will be rendered when the relevant forums are processed and returned."
+			priority_announce("Cargo: A neighboring station has sent us a bunch of paperwork we don't want to deal with. Could you process it for us?", "CentCom Paperwork Division")
+			thanks_msg = "The cargo shuttle should return in five minutes. Payment will be rendered when the paperwork is processed and returned."
 			bonus_points = 0 //Payout is made when the stamped papers are returned (IN THEORY IF I CAN GET THIS TO WORK SUBJECT TO CHANGE ETC.)
 
 /datum/round_event/shuttle_loan/proc/loan_shuttle()
@@ -257,9 +257,9 @@
 					shuttle_spawns.Add(/obj/item/paper/fluff/cargo/bomb/allyourbase)
 
 			if(PAPERS_PLEASE)
-				for(var/i in 1 to 5)
-					var/selected_paperwork = pick(subtypesof(/obj/item/paperwork))
-					shuttle_spawns.Add(selected_paperwork)
+				for(var/obj/item/paperwork/new_paperwork in subtypesof(/obj/item/paperwork))
+					if(!istype(new_paperwork, /obj/item/paperwork/photocopy))
+						shuttle_spawns.Add(new_paperwork)
 
 		var/false_positive = 0
 		while(shuttle_spawns.len && empty_shuttle_turfs.len)
