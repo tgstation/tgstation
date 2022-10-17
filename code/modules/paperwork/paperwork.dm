@@ -105,7 +105,7 @@
 
 	detailed_desc += "[span_info("The stack of documents are related to a criminal case being processed by a neighboring installation.")]"
 	detailed_desc += "[span_info("The document requests that you review a conduct report submitted by the lawyer of the station.")]"
-	detailed_desc += "[span_info("The case file detail accusations against the station's security department, including misconduct, harassment an-")]"
+	detailed_desc += "[span_info("The case file detail accusations against the station's security department, including misconduct, harassment, an-")]"
 	detailed_desc += "[span_info("What a bunch of crap, the security team were clearly just doing what they had to. You should probably stamp this.")]"
 
 /obj/item/paperwork/service
