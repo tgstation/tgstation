@@ -21,8 +21,8 @@
 /datum/round_event_control/shuttle_loan/can_spawn_event(players_amt)
 	. = ..()
 
-	for(var/datum/round_event_control/running_event in SSevents.running) //I do not think this works
-		if(istype(running_event, /datum/round_event_control/shuttle_loan)) //Make sure two of these don't happen at once.
+	for(var/datum/round_event/running_event in SSevents.running) //I do not think this works
+		if(istype(running_event, /datum/round_event/shuttle_loan)) //Make sure two of these don't happen at once.
 			return FALSE
 
 /datum/round_event/shuttle_loan
@@ -258,7 +258,8 @@
 
 			if(PAPERS_PLEASE)
 				for(var/i in 1 to 5)
-					shuttle_spawns.Add(/obj/item/paperwork/random)
+					var/selected_paperwork = pick(subtypesof(/obj/item/paperwork))
+					shuttle_spawns.Add(selected_paperwork)
 
 		var/false_positive = 0
 		while(shuttle_spawns.len && empty_shuttle_turfs.len)

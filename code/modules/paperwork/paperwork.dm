@@ -31,6 +31,8 @@
 	var/stamped = FALSE
 	///The job of the associated paperwork form
 	var/stamp_job = /datum/job/assistant
+	///Used to store the bonus text that displays when the paperwork's associated role reads it
+	var/detailed_desc
 
 /obj/item/paperwork/Initialize(mapload)
 	. = ..()
@@ -38,14 +40,15 @@
 
 /obj/item/paperwork/attackby(obj/item/attacking_item, mob/user, params)
 	. = ..()
-	if(istype(attacking_item, /obj/item/stamp))
-		if(istype(attacking_item, stamp_requested) || istype(attacking_item, stamp_requested))
-			stamped = TRUE
-			add_overlay(stamp_overlay)
-			update_overlays()
-			to_chat(user, span_warning("You skim through the papers until you find a field reading 'STAMP HERE', and complete the paperwork."))
-		else
-			to_chat(user, span_warning("You hunt through the papers for somewhere to use the [attacking_item], but can't find anything."))
+	if(!stamped)
+		if(istype(attacking_item, /obj/item/stamp))
+			if(istype(attacking_item, stamp_requested) || istype(attacking_item, stamp_requested)) //chameleon stamp does not work, this is a CRITICAL issue
+				stamped = TRUE
+				add_overlay(stamp_overlay)
+				update_overlays()
+				to_chat(user, span_warning("You skim through the papers until you find a field reading 'STAMP HERE', and complete the paperwork."))
+			else
+				to_chat(user, span_notice("You hunt through the papers for somewhere to use the [attacking_item], but can't find anything."))
 
 /obj/item/paperwork/update_overlays()
 	. = ..()
@@ -69,7 +72,8 @@
 	if(istype(user, /mob/living/carbon/human))
 		var/mob/living/carbon/human/viewer = user
 		if(istype(viewer?.mind.assigned_role, stamp_job)) //Examining the paperwork as the proper job gets you some bonus details
-			return . + span_notice("<i>As you sift through the papers, you slowly start to piece together what you're reading.</i>")
+			. + span_notice("<i>As you sift through the papers, you slowly start to piece together what you're reading.</i>")
+			return . + detailed_desc
 
 //HEAD OF STAFF DOCUMENTS
 
@@ -78,98 +82,89 @@
 	stamp_job = /datum/job/quartermaster
 	stamp_icon = "paper_stamp-qm"
 
-/obj/item/paperwork/cargo/examine_more()
+/obj/item/paperwork/cargo/Initialize()
 	. = ..()
 
-	. += "\t[span_info("The papers are a stack of mundane cargo shipping orders. Most of these papers are completely unecessary, with seemingly no rhyme or reason to their placement.")]"
-	. += "\t[span_info("Whoever sent this probably just put extra papers in to make the stack of documents look bigger and more important. You should probably still stamp it anyways.")]"
+	detailed_desc += "\t[span_info(" The papers are a stack of mundane cargo shipping orders. Most of these papers are completely unecessary, with seemingly no rhyme or reason to their placement.")]"
+	detailed_desc += "\t[span_info("Whoever sent this probably just put extra papers in to make the stack of documents look bigger and more important. You should probably still stamp it anyways.")]"
 
 /obj/item/paperwork/security
 	stamp_requested = /obj/item/stamp/hos
 	stamp_job = /datum/job/head_of_security
 	stamp_icon = "paper_stamp-hos"
 
-/obj/item/paperwork/security/examine_more()
+/obj/item/paperwork/security/Initialize()
 	. = ..()
 
-	. += "\t[span_info("The stack of documents are related to a criminal case being processed by a neighboring installation.")]"
-	. += "\t[span_info("The document requests that you review a conduct report submitted by the lawyer of the station.")]"
-	. += "\t[span_info("The case file detail accusations against the station's security department, including misconduct, harassment an-")]"
-	. += "\t[span_info("What a bunch of crap, the security team were clearly just doing what they had to. You should probably stamp this.")]"
+	detailed_desc += "\t[span_info("The stack of documents are related to a criminal case being processed by a neighboring installation.")]"
+	detailed_desc += "\t[span_info("The document requests that you review a conduct report submitted by the lawyer of the station.")]"
+	detailed_desc += "\t[span_info("The case file detail accusations against the station's security department, including misconduct, harassment an-")]"
+	detailed_desc += "\t[span_info("What a bunch of crap, the security team were clearly just doing what they had to. You should probably stamp this.")]"
 
 /obj/item/paperwork/hop
 	stamp_requested = /obj/item/stamp/hop
 	stamp_job = /datum/job/head_of_personnel
 	stamp_icon = "paper_stamp-hop"
 
-/obj/item/paperwork/hop/examine_more()
+/obj/item/paperwork/hop/Initialize()
 	. = ..()
 
-	. += "\t[span_info("Your begin scanning over the document. This is a standard Nanotrasen NT-435Z3 form used for requests to Central Command.")]"
-	. += "\t[span_info("Looks like a nearby station has sent in a MAXIMUM priority request for coal, in seemingly ridiculous quantities.")]"
-	. += "\t[span_info("The reason listed for the request seems to be hastily filled in -- 'Engine exploded, need coal to power auxiliary generators.'")]"
-	. += "\t[span_info("A MAXIMUM priority request like this is nothing to balk at. You should probably stamp this.")]"
+	detailed_desc += "\t[span_info("Your begin scanning over the document. This is a standard Nanotrasen NT-435Z3 form used for requests to Central Command.")]"
+	detailed_desc += "\t[span_info("Looks like a nearby station has sent in a MAXIMUM priority request for coal, in seemingly ridiculous quantities.")]"
+	detailed_desc += "\t[span_info("The reason listed for the request seems to be hastily filled in -- 'Engine exploded, need coal to power auxiliary generators.'")]"
+	detailed_desc += "\t[span_info("A MAXIMUM priority request like this is nothing to balk at. You should probably stamp this.")]"
 
 /obj/item/paperwork/medical
 	stamp_requested = /obj/item/stamp/cmo
 	stamp_job = /datum/job/chief_medical_officer
 	stamp_icon = "paper_stamp-cmo"
 
-/obj/item/paperwork/medical/examine_more()
+/obj/item/paperwork/medical/Initialize()
 	. = ..()
 
-	. += "\t[span_info("The stack of documents appear to be a medical report from a nearby station, detailing the vivisection of an unknown xenofauna.")]"
-	. += "\t[span_info("In the report, the specimen was reportedly 'inarticulate and extremely hostile', requiring restraints during the surgical process.")]"
-	. += "\t[span_info("Inspection of the attached photos reveal that the specimen was the station bartender's pet monkey, with parts of its uniform still visible.")]"
-	. += "\t[span_info("Regardless, the vivisection results look like they could be useful. You should probably stamp this.")]"
+	detailed_desc += "\t[span_info("The stack of documents appear to be a medical report from a nearby station, detailing the vivisection of an unknown xenofauna.")]"
+	detailed_desc += "\t[span_info("In the report, the specimen was reportedly 'inarticulate and extremely hostile', requiring restraints during the surgical process.")]"
+	detailed_desc += "\t[span_info("Inspection of the attached photos reveal that the specimen was the station bartender's pet monkey, with parts of its uniform still visible.")]"
+	detailed_desc += "\t[span_info("Regardless, the vivisection results look like they could be useful. You should probably stamp this.")]"
 
 /obj/item/paperwork/ce
 	stamp_requested = /obj/item/stamp/ce
 	stamp_job = /datum/job/chief_engineer
 	stamp_icon = "paper_stamp-ce"
 
-/obj/item/paperwork/ce/examine_more()
+/obj/item/paperwork/ce/Initialize()
 	. = ..()
 
-	. += "\t[span_info("These papers are a power output report from a neighboring station. It details the power output and other engineering data regarding the station during a typical shift.")]"
-	. += "\t[span_info("Checking the logs, you notice the energy output and engine temperature spike dramatically, and shortly after, the surrounding department appears to be depressurized by an unknown force.")]"
-	. += "\t[span_info("Clearly the station's engineering department was testing an experimental engine setup, and had to use the air in the nearby rooms to help cool the engine. Totally.")]"
-	. += "\t[span_info("Damn, that's impressive stuff. You should probably stamp this.")]"
+	detailed_desc += "\t[span_info("These papers are a power output report from a neighboring station. It details the power output and other engineering data regarding the station during a typical shift.")]"
+	detailed_desc += "\t[span_info("Checking the logs, you notice the energy output and engine temperature spike dramatically, and shortly after, the surrounding department appears to be depressurized by an unknown force.")]"
+	detailed_desc += "\t[span_info("Clearly the station's engineering department was testing an experimental engine setup, and had to use the air in the nearby rooms to help cool the engine. Totally.")]"
+	detailed_desc += "\t[span_info("Damn, that's impressive stuff. You should probably stamp this.")]"
 
 /obj/item/paperwork/rd
 	stamp_requested = /obj/item/stamp/rd
 	stamp_job = /datum/job/research_director
 	stamp_icon = "paper_stamp-rd"
 
-/obj/item/paperwork/rd/examine_more()
+/obj/item/paperwork/rd/Initialize()
 	. = ..()
 
-	. += "\t[span_info("The documents detail the results of a standard ordnance test that occured on a nearby station.")]"
-	. += "\t[span_info("As you read further, you realize something strange with the results -- The epicenter doesn't seem to be correct.")]"
-	. += "\t[span_info("If your math is correct, this explosion didn't happen at the station's ordnance site, it occured in the station's engine room.")]"
-	. += "\t[span_info("Regardless, they're still perfectly usable test results. You should probably stamp this.")]"
+	detailed_desc += "\t[span_info("The documents detail the results of a standard ordnance test that occured on a nearby station.")]"
+	detailed_desc += "\t[span_info("As you read further, you realize something strange with the results -- The epicenter doesn't seem to be correct.")]"
+	detailed_desc += "\t[span_info("If your math is correct, this explosion didn't happen at the station's ordnance site, it occured in the station's engine room.")]"
+	detailed_desc += "\t[span_info("Regardless, they're still perfectly usable test results. You should probably stamp this.")]"
 
 /obj/item/paperwork/captain
 	stamp_requested = /obj/item/stamp/captain
 	stamp_job = /datum/job/captain
 	stamp_icon = "paper_stamp-cap"
 
-/obj/item/paperwork/captain/examine_more()
+/obj/item/paperwork/captain/Initialize()
 	. = ..()
 
-	. += "\t[span_info("The documents are an unsigned correspondence from the captain's desk of a nearby station.")]"
-	. += "\t[span_info("It seems to be a standard check-in message, reporting that the station is functioning at optimal efficiency.")]"
-	. += "\t[span_info("The message repeatedly asserts that the engine is functioning 'perfectly fine' and is generating 'buttloads' of power.")]"
-	. += "\t[span_info("Everything checks out. You should probably stamp this.")]"
-
-//RANDOM PAPERWORK GROUPS
-/obj/item/paperwork/random/Initialize(mapload)
-	. = ..()
-
-	var/paperwork_type = pick(subtypesof(/obj/item/paperwork)) //Change this to a proper list generator later so it doesn't spawn photocopies or other stuff
-	new paperwork_type(get_turf(src))
-
-	return INITIALIZE_HINT_QDEL
+	detailed_desc += "\t[span_info("The documents are an unsigned correspondence from the captain's desk of a nearby station.")]"
+	detailed_desc += "\t[span_info("It seems to be a standard check-in message, reporting that the station is functioning at optimal efficiency.")]"
+	detailed_desc += "\t[span_info("The message repeatedly asserts that the engine is functioning 'perfectly fine' and is generating 'buttloads' of power.")]"
+	detailed_desc += "\t[span_info("Everything checks out. You should probably stamp this.")]"
 
 /obj/item/paperwork/photocopy
 	desc = ""

@@ -450,7 +450,7 @@
 		if(copier_empty())
 			if(!user.temporarilyRemoveItemFromInventory(O))
 				return
-			document_copy = O
+			paperwork_copy = O
 			do_insertion(O, user)
 		else
 			to_chat(user, span_warning("There is already something in [src]!"))
