@@ -85,8 +85,6 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 	telecrystal_reward = 0
 	minutes_per_telecrystal = 6
 	possible_items = list(
-		/datum/objective_item/steal/low_risk/techboard/borgupload,
-		/datum/objective_item/steal/low_risk/techboard/aiupload,
 		/datum/objective_item/steal/low_risk/aicard,
 	)
 

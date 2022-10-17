@@ -83,7 +83,7 @@
 				say("No bank account detected!")
 				return
 			var/final_cost = get_total_cost()
-			if(!chef_card.registered_account.adjust_money(-final_cost))
+			if(!chef_card.registered_account.adjust_money(-final_cost, "Chef Order: Purchase"))
 				say("Sorry, but you do not have enough money.")
 				return
 			say("Thank you for your purchase! It will arrive on the next cargo shuttle!")
@@ -106,7 +106,7 @@
 				return
 			var/final_cost = get_total_cost()
 			final_cost *= 2
-			if(!chef_card.registered_account.adjust_money(-final_cost))
+			if(!chef_card.registered_account.adjust_money(-final_cost, "Chef Order: Purchase"))
 				say("Sorry, but you do not have enough money. Remember, Express upcharges the cost!")
 				return
 			say("Thank you for your purchase! Please note: The charge of this purchase and machine cooldown has been doubled!")

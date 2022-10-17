@@ -11,7 +11,7 @@
 /turf/open/floor/plating,
 /area/centcom/mafia)
 "h" = (
-/obj/structure/grille/indestructable,
+/obj/structure/grille/indestructible,
 /turf/open/floor/plating,
 /area/centcom/mafia)
 "i" = (
@@ -83,7 +83,7 @@
 /turf/open/floor/plating/abductor2,
 /area/centcom/mafia)
 "z" = (
-/obj/structure/grille/indestructable,
+/obj/structure/grille/indestructible,
 /turf/open/floor/fakespace,
 /area/centcom/mafia)
 "B" = (

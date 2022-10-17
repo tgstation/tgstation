@@ -49,8 +49,8 @@
 	icon_state = "[base_icon_state][(machine_stat & NOPOWER) ? 0 : on]"
 	return ..()
 
-/obj/machinery/igniter/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
-	id = "[port.id]_[id]"
+/obj/machinery/igniter/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
+	id = "[port.shuttle_id]_[id]"
 
 // Wall mounted remote-control igniter.
 

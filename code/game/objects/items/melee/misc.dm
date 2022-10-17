@@ -37,7 +37,7 @@
 /obj/item/melee/synthetic_arm_blade
 	name = "synthetic arm blade"
 	desc = "A grotesque blade that on closer inspection seems to be made out of synthetic flesh, it still feels like it would hurt very badly as a weapon."
-	icon = 'icons/obj/changeling_items.dmi'
+	icon = 'icons/obj/weapons/changeling_items.dmi'
 	icon_state = "arm_blade"
 	inhand_icon_state = "arm_blade"
 	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
@@ -52,7 +52,11 @@
 
 /obj/item/melee/synthetic_arm_blade/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/butchering, 60, 80) //very imprecise
+	AddComponent(/datum/component/butchering, \
+	speed = 6 SECONDS, \
+	effectiveness = 80, \
+	)
+	//very imprecise
 
 /obj/item/melee/sabre
 	name = "officer's sabre"
@@ -79,20 +83,25 @@
 
 /obj/item/melee/sabre/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/butchering, 30, 95, 5) //fast and effective, but as a sword, it might damage the results.
+	AddComponent(/datum/component/butchering, \
+	speed = 3 SECONDS, \
+	effectiveness = 95, \
+	bonus_modifier = 5, \
+	)
+	//fast and effective, but as a sword, it might damage the results.
 
 /obj/item/melee/sabre/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(attack_type == PROJECTILE_ATTACK)
 		final_block_chance = 0 //Don't bring a sword to a gunfight
 	return ..()
 
-/obj/item/melee/sabre/on_exit_storage(datum/component/storage/concrete/container)
-	var/obj/item/storage/belt/sabre/sabre = container.real_location()
+/obj/item/melee/sabre/on_exit_storage(datum/storage/container)
+	var/obj/item/storage/belt/sabre/sabre = container.real_location?.resolve()
 	if(istype(sabre))
 		playsound(sabre, 'sound/items/unsheath.ogg', 25, TRUE)
 
-/obj/item/melee/sabre/on_enter_storage(datum/component/storage/concrete/container)
-	var/obj/item/storage/belt/sabre/sabre = container.real_location()
+/obj/item/melee/sabre/on_enter_storage(datum/storage/container)
+	var/obj/item/storage/belt/sabre/sabre = container.real_location?.resolve()
 	if(istype(sabre))
 		playsound(sabre, 'sound/items/sheath.ogg', 25, TRUE)
 
@@ -142,7 +151,7 @@
 /obj/item/melee/beesword
 	name = "The Stinger"
 	desc = "Taken from a giant bee and folded over one thousand times in pure honey. Can sting through anything."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "beesword"
 	inhand_icon_state = "stinger"
 	worn_icon_state = "stinger"
@@ -176,7 +185,7 @@
 /obj/item/melee/supermatter_sword
 	name = "supermatter sword"
 	desc = "In a station full of bad ideas, this might just be the worst."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "supermatter_sword"
 	inhand_icon_state = "supermatter_sword"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
@@ -420,7 +429,7 @@
 /obj/item/melee/cleric_mace
 	name = "cleric mace"
 	desc = "The grandson of the club, yet the grandfather of the baseball bat. Most notably used by holy orders in days past."
-	icon = 'icons/obj/items/cleric_mace.dmi'
+	icon = 'icons/obj/weapons/cleric_mace.dmi'
 	icon_state = "default"
 	inhand_icon_state = "default"
 	worn_icon_state = "default_worn"

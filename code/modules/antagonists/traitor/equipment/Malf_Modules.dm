@@ -401,7 +401,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	if(caller.incapacitated())
 		unset_ranged_ability(caller)
 		return FALSE
-	if(!istype(clicked_on, /obj/machinery))
+	if(!ismachinery(clicked_on))
 		to_chat(caller, span_warning("You can only animate machines!"))
 		return FALSE
 	var/obj/machinery/clicked_machine = clicked_on
@@ -480,7 +480,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 
 	var/turf/machine_turf = get_turf(to_explode)
 	message_admins("[ADMIN_LOOKUPFLW(caller)] overloaded [to_explode.name] ([to_explode.type]) at [ADMIN_VERBOSEJMP(machine_turf)].")
-	log_game("[key_name(caller)] overloaded [to_explode.name] ([to_explode.type]) at [AREACOORD(machine_turf)].")
+	caller.log_message("overloaded [to_explode.name] ([to_explode.type])", LOG_ATTACK)
 	explosion(to_explode, heavy_impact_range = 2, light_impact_range = 3)
 	if(!QDELETED(to_explode)) //to check if the explosion killed it before we try to delete it
 		qdel(to_explode)
@@ -489,7 +489,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	if(caller.incapacitated())
 		unset_ranged_ability(caller)
 		return FALSE
-	if(!istype(clicked_on, /obj/machinery))
+	if(!ismachinery(clicked_on))
 		to_chat(caller, span_warning("You can only overload machines!"))
 		return FALSE
 	var/obj/machinery/clicked_machine = clicked_on
@@ -569,7 +569,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 			if(isspaceturf(victim_turf) && !victim_turf.Adjacent(found_intercom)) //Prevents getting honked in space
 				continue
 			if(honk_victim.soundbang_act(intensity = 1, stun_pwr = 20, damage_pwr = 30, deafen_pwr = 60)) //Ear protection will prevent these effects
-				honk_victim.set_timed_status_effect(120 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
+				honk_victim.set_jitter_if_lower(120 SECONDS)
 				to_chat(honk_victim, span_clown("HOOOOONK!"))
 
 /// Robotic Factory: Places a large machine that converts humans that go through it into cyborgs. Unlocking this ability removes shunting.

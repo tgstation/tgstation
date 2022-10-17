@@ -5,6 +5,7 @@
 	background_icon_state = "bg_ecult"
 	icon_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "entropic_plume"
+	sound = 'sound/magic/forcewall.ogg'
 
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 30 SECONDS
@@ -27,10 +28,8 @@
 	if(victim.can_block_magic(antimagic_flags) || IS_HERETIC_OR_MONSTER(victim))
 		return
 	victim.apply_status_effect(/datum/status_effect/amok)
-	victim.apply_status_effect(/datum/status_effect/cloudstruck, (level * 1 SECONDS))
-	if(iscarbon(victim))
-		var/mob/living/carbon/carbon_victim = victim
-		carbon_victim.reagents?.add_reagent(/datum/reagent/eldritch, min(1, 6 - level))
+	victim.apply_status_effect(/datum/status_effect/cloudstruck, level * 1 SECONDS)
+	victim.reagents?.add_reagent(/datum/reagent/eldritch, max(1, 6 - level))
 
 /datum/action/cooldown/spell/cone/staggered/entropic_plume/calculate_cone_shape(current_level)
 	if(current_level == cone_levels)
@@ -88,22 +87,21 @@
 	range = 15
 	speed = 1
 
-/obj/projectile/magic/aoe/rust_wave/Moved(atom/OldLoc, Dir)
+/obj/projectile/magic/aoe/rust_wave/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	playsound(src, 'sound/items/welder.ogg', 75, TRUE)
 	var/list/turflist = list()
 	var/turf/T1
 	turflist += get_turf(src)
-	T1 = get_step(src,turn(dir,90))
+	T1 = get_step(src,turn(movement_dir,90))
 	turflist += T1
-	turflist += get_step(T1,turn(dir,90))
-	T1 = get_step(src,turn(dir,-90))
+	turflist += get_step(T1,turn(movement_dir,90))
+	T1 = get_step(src,turn(movement_dir,-90))
 	turflist += T1
-	turflist += get_step(T1,turn(dir,-90))
-	for(var/X in turflist)
-		if(!X || prob(25))
+	turflist += get_step(T1,turn(movement_dir,-90))
+	for(var/turf/T as anything in turflist)
+		if(!T || prob(25))
 			continue
-		var/turf/T = X
 		T.rust_heretic_act()
 
 /datum/action/cooldown/spell/basic_projectile/rust_wave/short

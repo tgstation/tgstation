@@ -38,7 +38,7 @@
 	display_results(user, target, span_notice("You sever [target]'s [parse_zone(target_zone)]."),
 		span_notice("[user] severs [target]'s [parse_zone(target_zone)]!"),
 		span_notice("[user] severs [target]'s [parse_zone(target_zone)]!"))
-	display_pain(target, "You lose all feeling in your [parse_zone(target_zone)]!")
+	display_pain(target, "You can no longer feel your severed [parse_zone(target_zone)]!")
 	if(surgery.operated_bodypart)
 		var/obj/item/bodypart/target_limb = surgery.operated_bodypart
 		target_limb.drop_limb()

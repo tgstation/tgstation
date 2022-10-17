@@ -2,16 +2,14 @@
 /obj/item/storage/dice
 	name = "bag of dice"
 	desc = "Contains all the luck you'll ever need."
-	icon = 'icons/obj/dice.dmi'
+	icon = 'icons/obj/toys/dice.dmi'
 	icon_state = "dicebag"
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/storage/dice/Initialize(mapload)
 	. = ..()
-	var/datum/component/storage/storage = GetComponent(/datum/component/storage)
-	storage.allow_quick_gather = TRUE
-	storage.click_gather = TRUE
-	storage.set_holdable(list(/obj/item/dice))
+	atom_storage.allow_quick_gather = TRUE
+	atom_storage.set_holdable(list(/obj/item/dice))
 
 /obj/item/storage/dice/PopulateContents()
 	new /obj/item/dice/d4(src)
@@ -52,7 +50,7 @@
 /obj/item/dice
 	name = "die"
 	desc = "A die with six sides. Basic and serviceable."
-	icon = 'icons/obj/dice.dmi'
+	icon = 'icons/obj/toys/dice.dmi'
 	icon_state = "d6"
 	w_class = WEIGHT_CLASS_TINY
 	var/sides = 6
@@ -115,6 +113,24 @@
 	if(prob(10))
 		name = "spess cube"
 
+/obj/item/paper/guides/knucklebone
+	name = "knucklebones rules"
+	default_raw_text = "How to play knucklebones<br>\
+	<ul>\
+	<li>Make two 3x3 grids right next to eachother using anything you can find to mark the ground. I like using the bartenders hologram projector.</li>\
+	<li>Take turns rolling the dice and moving the dice into one of the three rows on your 3x3 grid.</li>\
+	<li>Your goal is to get the most points by putting die of the same number in the same row.</li>\
+	<li>If you have two of the same die in the same row, you will add them together and then times the sum by two. Then add that to the rest of the die.</li>\
+	<li>If you have three of the same die in the same row, you will do the same thing but times it by three.</li>\
+	<li>But if your opponent places a die across from one of your rows, you must remove all die that are the same number.</li>\
+	<li>For example, if you have two 5's and a 2 in a row and your opponent places a 5 in the same row you must remove the two 5's from that row.</li>\
+	<li>Note that you do not multiply the die if they are in the same collum. Only if they are in the same row.</li>\
+	<li>If you find it hard to tell whether it multiplies up and down or left and right, base it off the position of your opponents 3x3.</li>\
+	<li>If their rows line up with your rows, those rows are the rows that will multiply your die</li>\
+	<li>The game ends when one person fills up their 3x3. The other person does not get to roll the rest of their die.</li>\
+	<li>The winner is decided by who gets the most points</li>\
+	<li>Have fun!</li>\
+	</ul>"
 /obj/item/dice/fudge
 	name = "fudge die"
 	desc = "A die with six sides but only three results. Is this a plus or a minus? Your mind is drawing a blank..."
@@ -159,9 +175,9 @@
 	w_class = WEIGHT_CLASS_SMALL
 	sides = 100
 
-/obj/item/dice/d100/ComponentInitialize()
-	. = ..()
+/obj/item/dice/d100/Initialize(mapload)
 	AddElement(/datum/element/update_icon_blocker)
+	return ..()
 
 /obj/item/dice/eightbd20
 	name = "strange d20"
@@ -170,9 +186,9 @@
 	sides = 20
 	special_faces = list("It is certain","It is decidedly so","Without a doubt","Yes, definitely","You may rely on it","As I see it, yes","Most likely","Outlook good","Yes","Signs point to yes","Reply hazy try again","Ask again later","Better not tell you now","Cannot predict now","Concentrate and ask again","Don't count on it","My reply is no","My sources say no","Outlook not so good","Very doubtful")
 
-/obj/item/dice/eightbd20/ComponentInitialize()
-	. = ..()
+/obj/item/dice/eightbd20/Initialize(mapload)
 	AddElement(/datum/element/update_icon_blocker)
+	return ..()
 
 /obj/item/dice/fourdd6
 	name = "4d d6"
@@ -181,9 +197,9 @@
 	sides = 48
 	special_faces = list("Cube-Side: 1-1","Cube-Side: 1-2","Cube-Side: 1-3","Cube-Side: 1-4","Cube-Side: 1-5","Cube-Side: 1-6","Cube-Side: 2-1","Cube-Side: 2-2","Cube-Side: 2-3","Cube-Side: 2-4","Cube-Side: 2-5","Cube-Side: 2-6","Cube-Side: 3-1","Cube-Side: 3-2","Cube-Side: 3-3","Cube-Side: 3-4","Cube-Side: 3-5","Cube-Side: 3-6","Cube-Side: 4-1","Cube-Side: 4-2","Cube-Side: 4-3","Cube-Side: 4-4","Cube-Side: 4-5","Cube-Side: 4-6","Cube-Side: 5-1","Cube-Side: 5-2","Cube-Side: 5-3","Cube-Side: 5-4","Cube-Side: 5-5","Cube-Side: 5-6","Cube-Side: 6-1","Cube-Side: 6-2","Cube-Side: 6-3","Cube-Side: 6-4","Cube-Side: 6-5","Cube-Side: 6-6","Cube-Side: 7-1","Cube-Side: 7-2","Cube-Side: 7-3","Cube-Side: 7-4","Cube-Side: 7-5","Cube-Side: 7-6","Cube-Side: 8-1","Cube-Side: 8-2","Cube-Side: 8-3","Cube-Side: 8-4","Cube-Side: 8-5","Cube-Side: 8-6")
 
-/obj/item/dice/fourdd6/ComponentInitialize()
-	. = ..()
+/obj/item/dice/fourdd6/Initialize(mapload)
 	AddElement(/datum/element/update_icon_blocker)
+	return ..()
 
 /obj/item/dice/attack_self(mob/user)
 	diceroll(user)
@@ -434,7 +450,7 @@
 	uniform = /obj/item/clothing/under/suit/black_really
 	neck = /obj/item/clothing/neck/tie/red/tied
 	shoes = /obj/item/clothing/shoes/laceup
-	head = /obj/item/clothing/head/bowler
+	head = /obj/item/clothing/head/hats/bowler
 	glasses = /obj/item/clothing/glasses/monocle
 	gloves = /obj/item/clothing/gloves/color/white
 

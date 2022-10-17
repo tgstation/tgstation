@@ -125,7 +125,7 @@
 		var/start_time = TICK_USAGE
 		travel_distance--
 
-		MoveLiftHorizontal(travel_direction)
+		move_lift_horizontally(travel_direction)
 
 		var/duration = TICK_USAGE_TO_MS(start_time)
 		if(slowed_down)

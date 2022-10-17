@@ -2,7 +2,7 @@
 	name = "Eldritch Demon"
 	real_name = "Eldritch Demon"
 	desc = "A horror from beyond this realm."
-	icon = 'icons/mob/eldritch_mobs.dmi'
+	icon = 'icons/mob/nonhuman-player/eldritch_mobs.dmi'
 	gender = NEUTER
 	mob_biotypes = NONE
 	attack_sound = 'sound/weapons/punch1.ogg'
@@ -28,7 +28,7 @@
 	movement_type = GROUND
 	pressure_resistance = 100
 	del_on_death = TRUE
-	deathmessage = "implodes into itself."
+	death_message = "implodes into itself."
 	loot = list(/obj/effect/gibspawner/human)
 	faction = list(FACTION_HERETIC)
 	simple_mob_flags = SILENCE_RANGED_MESSAGE
@@ -53,7 +53,7 @@
 	melee_damage_upper = 10
 	maxHealth = 65
 	health = 65
-	sight = SEE_MOBS|SEE_OBJS|SEE_TURFS
+	sight = SEE_MOBS|SEE_OBJS|SEE_TURFS|SEE_BLACKNESS
 	loot = list(/obj/effect/gibspawner/human, /obj/item/bodypart/l_arm, /obj/item/organ/internal/eyes)
 	actions_to_add = list(
 		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash/long,
@@ -102,7 +102,7 @@
 	SpinAnimation(5, 1)
 	last_target = WEAKREF(attacked_target)
 
-/mob/living/simple_animal/hostile/heretic_summon/raw_prophet/Moved(atom/old_loc, movement_dir, forced = FALSE, list/old_locs)
+/mob/living/simple_animal/hostile/heretic_summon/raw_prophet/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	var/rotation_degree = (360 / 3)
 	if(movement_dir & WEST || movement_dir & SOUTH)
@@ -356,7 +356,7 @@
 	health = 75
 	melee_damage_lower = 15
 	melee_damage_upper = 20
-	sight = SEE_TURFS
+	sight = SEE_TURFS|SEE_BLACKNESS
 	actions_to_add = list(
 		/datum/action/cooldown/spell/aoe/rust_conversion/small,
 		/datum/action/cooldown/spell/basic_projectile/rust_wave/short,
@@ -370,7 +370,7 @@
 		icon_state = "rust_walker_s"
 	update_appearance(UPDATE_ICON_STATE)
 
-/mob/living/simple_animal/hostile/heretic_summon/rust_spirit/Moved()
+/mob/living/simple_animal/hostile/heretic_summon/rust_spirit/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	playsound(src, 'sound/effects/footstep/rustystep1.ogg', 100, TRUE)
 
@@ -396,7 +396,7 @@
 	health = 75
 	melee_damage_lower = 15
 	melee_damage_upper = 20
-	sight = SEE_TURFS
+	sight = SEE_TURFS|SEE_BLACKNESS
 	actions_to_add = list(
 		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash,
 		/datum/action/cooldown/spell/pointed/cleave,
@@ -414,9 +414,9 @@
 	health = 150
 	melee_damage_lower = 15
 	melee_damage_upper = 20
-	sight = SEE_MOBS
+	sight = SEE_MOBS|SEE_BLACKNESS
 	actions_to_add = list(
-		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash,
 		/datum/action/cooldown/spell/shapeshift/eldritch,
+		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash,
 		/datum/action/cooldown/spell/emp/eldritch,
 	)

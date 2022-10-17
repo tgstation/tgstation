@@ -1,9 +1,0 @@
-author: "Jolly"
-delete-after: True
-changes: 
-  - rscadd: "KC13 (The big ruin with the drone spawners) has received some new room types.
-bal: [KC13] The ruin now starts DEPOWERED. As some mild compensation, there are more batteries in the ruin. Please don't swallow them."
-  - qol: "KC13 has been spruced up a bit, aesthetically speaking."
-  - qol: "[KC13] Converted any full tile windows to the \"hollow\" window spawners (the one with 4 thin windows)"
-  - bugfix: "[KC13] Fixed the stacked old AI turret in the AI upload hall."
-  - bugfix: "[KC13] Fixed some wall mount items not being directional (icky var edits)."

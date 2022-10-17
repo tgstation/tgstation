@@ -67,7 +67,7 @@
 	SIGNAL_HANDLER
 
 	var/mob/living/thrower = arguments[4] // the 4th arg = the mob throwing our item
-	if(!thrower.is_holding(source))
+	if(!istype(thrower) || !thrower.is_holding(source))
 		return
 	if(!backfire(source, thrower))
 		return

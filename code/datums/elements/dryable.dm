@@ -30,7 +30,7 @@
 		resulting_atom.forceMove(source.drop_location())
 		return
 
-	else if(istype(source, /obj/item/stack)) //Check if its a sheet
+	else if(isstack(source)) //Check if its a sheet
 		var/obj/item/stack/itemstack = dried_atom
 		for(var/i in 1 to itemstack.amount)
 			var/atom/movable/resulting_atom = new dry_result(source.drop_location())

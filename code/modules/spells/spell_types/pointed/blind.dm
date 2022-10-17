@@ -40,7 +40,7 @@
 		return FALSE
 
 	to_chat(cast_on, span_warning("Your eyes cry out in pain!"))
-	cast_on.blind_eyes(eye_blind_amount)
+	cast_on.adjust_blindness(eye_blind_amount)
 	cast_on.blur_eyes(eye_blurry_amount)
 	if(cast_on.dna && blind_mutation_duration > 0 SECONDS)
 		cast_on.dna.add_mutation(/datum/mutation/human/blind)

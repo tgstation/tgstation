@@ -15,8 +15,10 @@
 
 /datum/surgery/hepatectomy/can_start(mob/user, mob/living/carbon/target)
 	var/obj/item/organ/internal/liver/target_liver = target.getorganslot(ORGAN_SLOT_LIVER)
-	if(target_liver?.damage > 50 && !(target_liver.organ_flags & ORGAN_FAILING))
-		return TRUE
+	if(target_liver)
+		if(target_liver.damage > 50 && !target_liver.operated)
+			return TRUE
+	return FALSE
 
 ////hepatectomy, removes damaged parts of the liver so that the liver may regenerate properly
 //95% chance of success, not 100 because organs are delicate
@@ -40,7 +42,10 @@
 
 /datum/surgery_step/hepatectomy/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	var/mob/living/carbon/human/human_target = target
+	var/obj/item/organ/internal/liver/target_liver = target.getorganslot(ORGAN_SLOT_LIVER)
 	human_target.setOrganLoss(ORGAN_SLOT_LIVER, 10) //not bad, not great
+	if(target_liver)
+		target_liver.operated = TRUE
 	display_results(user, target, span_notice("You successfully remove the damaged part of [target]'s liver."),
 		span_notice("[user] successfully removes the damaged part of [target]'s liver."),
 		span_notice("[user] successfully removes the damaged part of [target]'s liver."))

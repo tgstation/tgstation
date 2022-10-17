@@ -21,7 +21,7 @@
 	//Server linked to.
 	var/obj/machinery/telecomms/message_server/linkedServer = null
 	//Sparks effect - For emag
-	var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread
+	var/datum/effect_system/spark_spread/spark_system
 	//Messages - Saves me time if I want to change something.
 	var/noserver = "<span class='alert'>ALERT: No server detected.</span>"
 	var/incorrectkey = "<span class='warning'>ALERT: Incorrect decryption key!</span>"
@@ -56,9 +56,9 @@
 		screen = MSG_MON_SCREEN_HACKED
 		spark_system.set_up(5, 0, src)
 		spark_system.start()
-		var/obj/item/paper/monitorkey/MK = new(loc, linkedServer)
+		var/obj/item/paper/monitorkey/monitor_key_paper = new(loc, linkedServer)
 		// Will help make emagging the console not so easy to get away with.
-		MK.info += "<br><br><font color='red'>£%@%(*$%&(£&?*(%&£/{}</font>"
+		monitor_key_paper.add_raw_text("<br><br><font color='red'>£%@%(*$%&(£&?*(%&£/{}</font>")
 		var/time = 100 * length(linkedServer.decryptkey)
 		addtimer(CALLBACK(src, .proc/UnmagConsole), time)
 		message = rebootmsg
@@ -67,6 +67,7 @@
 
 /obj/machinery/computer/message_monitor/Initialize(mapload)
 	..()
+	spark_system = new
 	GLOB.telecomms_list += src
 	return INITIALIZE_HINT_LATELOAD
 
@@ -475,8 +476,9 @@
 		return INITIALIZE_HINT_LATELOAD
 
 /obj/item/paper/monitorkey/proc/print(obj/machinery/telecomms/message_server/server)
-	info = "<center><h2>Daily Key Reset</h2></center><br>The new message monitor key is '[server.decryptkey]'.<br>Please keep this a secret and away from the clown.<br>If necessary, change the password to a more secure one."
+	add_raw_text("<center><h2>Daily Key Reset</h2></center><br>The new message monitor key is '[server.decryptkey]'.<br>Please keep this a secret and away from the clown.<br>If necessary, change the password to a more secure one.")
 	add_overlay("paper_words")
+	update_appearance()
 
 /obj/item/paper/monitorkey/LateInitialize()
 	for (var/obj/machinery/telecomms/message_server/preset/server in GLOB.telecomms_list)

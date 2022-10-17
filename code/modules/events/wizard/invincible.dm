@@ -4,6 +4,7 @@
 	typepath = /datum/round_event/wizard/invincible
 	max_occurrences = 5
 	earliest_start = 0 MINUTES
+	description = "Everyone is invincible for a short time ticks."
 
 /datum/round_event/wizard/invincible/start()
 

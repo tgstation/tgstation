@@ -22,19 +22,16 @@
 		new /obj/effect/hotspot(location)
 		location.hotspot_expose(700, 50, 1)
 
-/// Used in [the backblast element][/datum/element/backblast]
-/obj/projectile/bullet/incendiary/backblast
+/// Incendiary bullet that more closely resembles a real flamethrower sorta deal, no visible bullet, just flames.
+/obj/projectile/bullet/incendiary/fire
 	damage = 15
-	range = 10 // actually overwritten in the backblast element
+	range = 6
 	alpha = 0
 	pass_flags = PASSTABLE | PASSMOB
 	sharpness = NONE
 	shrapnel_type = null
 	embedding = null
 	impact_effect_type = null
-	ricochet_chance = 10000
-	ricochets_max = 4
-	ricochet_incidence_leeway = 0
 	suppressed = SUPPRESSED_VERY
 	damage_type = BURN
 	armor_flag = BOMB
@@ -44,6 +41,18 @@
 	wound_falloff_tile = -4
 	fire_stacks = 3
 
+/obj/projectile/bullet/incendiary/fire/on_hit(atom/target, blocked)
+	. = ..()
+	var/turf/location = get_turf(target)
+	if(isopenturf(location))
+		new /obj/effect/hotspot(location)
+		location.hotspot_expose(700, 50, 1)
+
+/// Used in [the backblast element][/datum/element/backblast]
+/obj/projectile/bullet/incendiary/fire/backblast
+	ricochet_chance = 10000
+	ricochets_max = 4
+	ricochet_incidence_leeway = 0
 	/// Lazy attempt at knockback, any items this plume hits will be knocked back this far. Decrements with each tile passed.
 	var/knockback_range = 7
 	/// A lazylist of all the items we've already knocked back, so we don't do it again
@@ -52,19 +61,14 @@
 /// we only try to knock back the first 6 items per tile
 #define BACKBLAST_MAX_ITEM_KNOCKBACK 6
 
-/obj/projectile/bullet/incendiary/backblast/on_hit(atom/target, blocked)
-	. = ..()
-	var/turf/location = get_turf(target)
-	if(isopenturf(location))
-		new /obj/effect/hotspot(location)
-		location.hotspot_expose(700, 50, 1)
-
-/obj/projectile/bullet/incendiary/backblast/Move()
+/obj/projectile/bullet/incendiary/fire/backblast/Move()
 	. = ..()
 	if(knockback_range <= 0)
 		return
 	knockback_range--
 	var/turf/current_turf = get_turf(src)
+	if(!current_turf)
+		return
 	var/turf/throw_at_turf = get_turf_in_angle(Angle, current_turf, 7)
 	var/thrown_items = 0
 

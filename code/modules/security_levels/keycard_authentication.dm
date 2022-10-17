@@ -97,7 +97,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
 
 	if(event_source && !(machine_stat & (NOPOWER|BROKEN)))
 		. += mutable_appearance(icon, "auth_on")
-		. += emissive_appearance(icon, "auth_on", alpha = src.alpha)
+		. += emissive_appearance(icon, "auth_on", src, alpha = src.alpha)
 
 /obj/machinery/keycard_auth/proc/sendEvent(event_type)
 	triggerer = usr
@@ -121,7 +121,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
 	update_appearance()
 
 /obj/machinery/keycard_auth/proc/trigger_event(confirmer)
-	log_game("[key_name(triggerer)] triggered and [key_name(confirmer)] confirmed event [event]")
+	triggerer.log_message("triggered and [key_name(confirmer)] confirmed event [event].", LOG_GAME)
 	message_admins("[ADMIN_LOOKUPFLW(triggerer)] triggered and [ADMIN_LOOKUPFLW(confirmer)] confirmed event [event]")
 
 	var/area/A1 = get_area(triggerer)

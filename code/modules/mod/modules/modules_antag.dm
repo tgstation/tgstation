@@ -283,15 +283,12 @@
 	. = ..()
 	if(!.)
 		return
-	var/obj/projectile/flame = new /obj/projectile/bullet/incendiary/backblast/flamethrower(mod.wearer.loc)
+	var/obj/projectile/flame = new /obj/projectile/bullet/incendiary/fire(mod.wearer.loc)
 	flame.preparePixelProjectile(target, mod.wearer)
 	flame.firer = mod.wearer
 	playsound(src, 'sound/items/modsuit/flamethrower.ogg', 75, TRUE)
 	INVOKE_ASYNC(flame, /obj/projectile.proc/fire)
 	drain_power(use_power_cost)
-
-/obj/projectile/bullet/incendiary/backblast/flamethrower
-	range = 6
 
 ///Power kick - Lets the user launch themselves at someone to kick them.
 /obj/item/mod/module/power_kick
@@ -300,7 +297,7 @@
 	icon_state = "power_kick"
 	module_type = MODULE_ACTIVE
 	removable = FALSE
-	use_power_cost = DEFAULT_CHARGE_DRAIN*5
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
 	incompatible_modules = list(/obj/item/mod/module/power_kick)
 	cooldown_time = 5 SECONDS
 	/// Damage on kick.
@@ -450,7 +447,53 @@
 	old_size = null
 	if(!mod.loc)
 		return
-	var/datum/component/storage/holding_storage = mod.loc.GetComponent(/datum/component/storage)
-	if(!holding_storage || holding_storage.max_w_class >= mod.w_class)
+	var/datum/storage/holding_storage = mod.loc.atom_storage
+	if(!holding_storage || holding_storage.max_specific_storage >= mod.w_class)
 		return
 	mod.forceMove(drop_location())
+
+/obj/item/mod/module/demoralizer
+	name = "MOD psi-echo demoralizer module"
+	desc = "One incredibly morbid member of the RND team at Roseus Galactic posed a question to her colleagues. \
+	'I desire the power to scar my enemies mentally as I murder them. Who will stop me implementing this in our next project?' \
+	And thus the Psi-Echo Demoralizer Device was reluctantly invented. The future of psychological warfare, today!"
+	icon_state = "brain_hurties"
+	complexity = 0
+	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.1
+	removable = FALSE
+	var/datum/proximity_monitor/advanced/demoraliser/demoralizer
+
+/obj/item/mod/module/demoralizer/on_suit_activation()
+	var/datum/demoralise_moods/module/mood_category = new()
+	demoralizer = new(mod.wearer, 7, TRUE, mood_category)
+
+/obj/item/mod/module/demoralizer/on_suit_deactivation(deleting = FALSE)
+	QDEL_NULL(demoralizer)
+
+/obj/item/mod/module/infiltrator
+	name = "MOD infiltration core programs module"
+	desc = "The primary stealth systems operating within the suit. Utilizing electromagnetic signals, \
+		the wearer simply cannot be observed closely, or heard clearly by those around them."
+	icon_state = "infiltrator"
+	complexity = 0
+	removable = FALSE
+	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0
+	incompatible_modules = list(/obj/item/mod/module/infiltrator, /obj/item/mod/module/armor_booster, /obj/item/mod/module/welding)
+
+/obj/item/mod/module/infiltrator/on_install()
+	mod.item_flags |= EXAMINE_SKIP
+
+/obj/item/mod/module/infiltrator/on_uninstall(deleting = FALSE)
+	mod.item_flags &= ~EXAMINE_SKIP
+
+/obj/item/mod/module/infiltrator/on_suit_activation()
+	ADD_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, MOD_TRAIT)
+	ADD_TRAIT(mod.wearer, TRAIT_UNKNOWN, MOD_TRAIT)
+	mod.helmet.flash_protect = FLASH_PROTECTION_WELDER
+
+/obj/item/mod/module/infiltrator/on_suit_deactivation(deleting = FALSE)
+	REMOVE_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, MOD_TRAIT)
+	REMOVE_TRAIT(mod.wearer, TRAIT_UNKNOWN, MOD_TRAIT)
+	if(deleting)
+		return
+	mod.helmet.flash_protect = initial(mod.helmet.flash_protect)

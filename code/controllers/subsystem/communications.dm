@@ -10,6 +10,9 @@ SUBSYSTEM_DEF(communications)
 	COOLDOWN_DECLARE(nonsilicon_message_cooldown)
 	COOLDOWN_DECLARE(emergency_meeting_cooldown)
 
+	/// Are we trying to send a cross-station message that contains soft-filtered words? If so, flip to TRUE to extend the time admins have to cancel the message.
+	var/soft_filtering = FALSE
+
 /datum/controller/subsystem/communications/proc/can_announce(mob/living/user, is_silicon)
 	if(is_silicon && COOLDOWN_FINISHED(src, silicon_message_cooldown))
 		return TRUE
@@ -71,10 +74,10 @@ SUBSYSTEM_DEF(communications)
 				var/datum/comm_message/M = new(sending.title,sending.content,sending.possible_answers.Copy())
 				C.add_message(M)
 			if(print)
-				var/obj/item/paper/P = new /obj/item/paper(C.loc)
-				P.name = "paper - '[sending.title]'"
-				P.info = sending.content
-				P.update_appearance()
+				var/obj/item/paper/printed_paper = new /obj/item/paper(C.loc)
+				printed_paper.name = "paper - '[sending.title]'"
+				printed_paper.add_raw_text(sending.content)
+				printed_paper.update_appearance()
 
 #undef COMMUNICATION_COOLDOWN
 #undef COMMUNICATION_COOLDOWN_AI

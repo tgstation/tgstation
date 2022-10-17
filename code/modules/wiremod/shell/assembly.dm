@@ -39,7 +39,7 @@
 /obj/item/circuit_component/assembly_input/unregister_shell(atom/movable/shell)
 	UnregisterSignal(shell, list(COMSIG_ASSEMBLY_PULSED, COMSIG_ITEM_ATTACK_SELF))
 
-/obj/item/circuit_component/assembly_input/proc/on_pulsed()
+/obj/item/circuit_component/assembly_input/proc/on_pulsed(datum/source, mob/pulser)
 	SIGNAL_HANDLER
 	signal.set_output(COMPONENT_SIGNAL)
 
@@ -56,7 +56,7 @@
 
 /obj/item/circuit_component/assembly_output/register_shell(atom/movable/shell)
 	. = ..()
-	if(istype(shell, /obj/item/assembly))
+	if(isassembly(shell))
 		attached_assembly = shell
 
 /obj/item/circuit_component/assembly_output/unregister_shell(atom/movable/shell)

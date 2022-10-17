@@ -16,17 +16,17 @@
 	if(findtext(streak,TORNADO_COMBO))
 		if(A == D)//helps using apotheosis
 			return FALSE
-		reset_streak(A)
+		reset_streak()
 		Tornado(A,D)
 		return TRUE
 	if(findtext(streak,THROWBACK_COMBO))
 		if(A == D)//helps using apotheosis
 			return FALSE
-		reset_streak(A)
+		reset_streak()
 		Throwback(A,D)
 		return TRUE
 	if(findtext(streak,PLASMA_COMBO))
-		reset_streak(A)
+		reset_streak()
 		if(A == D && !nobomb)
 			Apotheosis(A,D)
 		else
@@ -93,7 +93,7 @@
 		var/mob/living/carbon/human/human_attacker = user
 		human_attacker.set_species(/datum/species/plasmaman)
 		ADD_TRAIT(human_attacker, TRAIT_FORCED_STANDING, type)
-		human_attacker.dna.species.species_traits += TRAIT_BOMBIMMUNE
+		ADD_TRAIT(human_attacker, TRAIT_BOMBIMMUNE, type)
 		human_attacker.unequip_everything()
 		human_attacker.underwear = "Nude"
 		human_attacker.undershirt = "Nude"
@@ -116,10 +116,8 @@
 	plasma_power = 1 //just in case there is any clever way to cause it to happen again
 
 /datum/martial_art/plasma_fist/proc/Apotheosis_end(mob/living/dying)
-	if(ishuman(dying))
-		var/mob/living/carbon/human/dying_human = dying
-		REMOVE_TRAIT(dying_human, TRAIT_FORCED_STANDING, type)
-		dying_human.dna.species.species_traits -= TRAIT_BOMBIMMUNE
+	REMOVE_TRAIT(dying, TRAIT_FORCED_STANDING, type)
+	REMOVE_TRAIT(dying, TRAIT_BOMBIMMUNE, type)
 	if(dying.stat == DEAD)
 		return
 	dying.death()

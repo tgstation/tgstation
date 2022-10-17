@@ -100,13 +100,14 @@
 		AddElement(/datum/element/food_trash, trash_type, FOOD_TRASH_OPENABLE, /obj/item/food/grown/.proc/generate_trash)
 	return
 
-/// Callback proc for bonus behavior for generating trash of grown food. Used by [/datum/element/food_trash].
-/obj/item/food/grown/proc/generate_trash()
+/// Generates a piece of trash based on our plant item. Used by [/datum/element/food_trash].
+/// location - Optional. If passed, generates the item at the passed location instead of at src's drop location.
+/obj/item/food/grown/proc/generate_trash(atom/location)
 	// If this is some type of grown thing, we pass a seed arg into its Inititalize()
 	if(ispath(trash_type, /obj/item/grown) || ispath(trash_type, /obj/item/food/grown))
-		return new trash_type(src, seed)
+		return new trash_type(location || drop_location(), seed)
 
-	return new trash_type(src)
+	return new trash_type(location || drop_location())
 
 /obj/item/food/grown/grind_requirements()
 	if(dry_grind && !HAS_TRAIT(src, TRAIT_DRIED))

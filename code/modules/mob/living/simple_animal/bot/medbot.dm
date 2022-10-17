@@ -16,7 +16,7 @@
 /mob/living/simple_animal/bot/medbot
 	name = "\improper Medibot"
 	desc = "A little medical robot. He looks somewhat underwhelmed."
-	icon = 'icons/mob/aibots.dmi'
+	icon = 'icons/mob/silicon/aibots.dmi'
 	icon_state = "medibot0"
 	base_icon_state = "medibot"
 	density = FALSE
@@ -232,20 +232,20 @@
 
 /mob/living/simple_animal/bot/medbot/process_scan(mob/living/carbon/human/H)
 	if(H.stat == DEAD)
-		return
-
+		return null
 	if((H == oldpatient) && (world.time < last_found + 200))
-		return
+		return null
+	if(!assess_patient(H))
+		return null
 
-	if(assess_patient(H))
-		last_found = world.time
-		if(COOLDOWN_FINISHED(src, last_newpatient_speak))
-			COOLDOWN_START(src, last_newpatient_speak, MEDBOT_NEW_PATIENTSPEAK_DELAY)
-			var/list/messagevoice = list("Hey, [H.name]! Hold on, I'm coming." = 'sound/voice/medbot/coming.ogg',"Wait [H.name]! I want to help!" = 'sound/voice/medbot/help.ogg',"[H.name], you appear to be injured!" = 'sound/voice/medbot/injured.ogg')
-			var/message = pick(messagevoice)
-			speak(message)
-			playsound(src, messagevoice[message], 50, FALSE)
-		return H
+	last_found = world.time
+	if(COOLDOWN_FINISHED(src, last_newpatient_speak))
+		COOLDOWN_START(src, last_newpatient_speak, MEDBOT_NEW_PATIENTSPEAK_DELAY)
+		var/list/messagevoice = list("Hey, [H.name]! Hold on, I'm coming." = 'sound/voice/medbot/coming.ogg',"Wait [H.name]! I want to help!" = 'sound/voice/medbot/help.ogg',"[H.name], you appear to be injured!" = 'sound/voice/medbot/injured.ogg')
+		var/message = pick(messagevoice)
+		speak(message)
+		playsound(src, messagevoice[message], 50, FALSE)
+	return H
 
 /*
  * Proc used in a callback for before this medibot is tipped by the tippable component.

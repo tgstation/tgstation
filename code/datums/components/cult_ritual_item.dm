@@ -218,7 +218,7 @@
 		return
 
 	if(rune.log_when_erased)
-		log_game("[rune.cultist_name] rune erased by [key_name(cultist)] with [parent].")
+		cultist.log_message("erased a [rune.cultist_name] rune with [parent].", LOG_GAME)
 		message_admins("[ADMIN_LOOKUPFLW(cultist)] erased a [rune.cultist_name] rune with [parent].")
 
 	to_chat(cultist, span_notice("You carefully erase the [lowertext(rune.cultist_name)] rune."))
@@ -328,7 +328,7 @@
 	made_rune.add_mob_blood(cultist)
 
 	to_chat(cultist, span_cult("The [lowertext(made_rune.cultist_name)] rune [made_rune.cultist_desc]"))
-	cultist.log_message("scribed \a [lowertext(made_rune.cultist_name)] rune at [AREACOORD(made_rune)] using [parent] ([parent.type])", LOG_GAME)
+	cultist.log_message("scribed \a [lowertext(made_rune.cultist_name)] rune using [parent] ([parent.type])", LOG_GAME)
 	SSblackbox.record_feedback("tally", "cult_runes_scribed", 1, made_rune.cultist_name)
 
 	return TRUE

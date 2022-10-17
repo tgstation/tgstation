@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - bugfix: "Fixed some things having inaccurate screentips while holding nothing (Elevators, heaters, bodybags / roller beds)"

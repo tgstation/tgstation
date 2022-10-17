@@ -26,6 +26,7 @@
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/explodable_attack)
 	RegisterSignal(parent, COMSIG_ATOM_EX_ACT, .proc/detonate)
 	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_WELDER), .proc/welder_react)
+	RegisterSignal(parent, COMSIG_ATOM_BULLET_ACT, .proc/projectile_react)
 	if(ismovable(parent))
 		RegisterSignal(parent, COMSIG_MOVABLE_IMPACT, .proc/explodable_impact)
 		RegisterSignal(parent, COMSIG_MOVABLE_BUMP, .proc/explodable_bump)
@@ -34,8 +35,10 @@
 			if(isclothing(parent))
 				RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
 				RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
-	if(SEND_SIGNAL(parent, COMSIG_CONTAINS_STORAGE))
-		RegisterSignal(parent, COMSIG_TRY_STORAGE_INSERT, .proc/explodable_insert_item)
+
+	var/atom/atom_parent = parent
+	if(atom_parent.atom_storage)
+		RegisterSignal(parent, COMSIG_ATOM_ENTERED, .proc/explodable_insert_item)
 
 	if (devastation_range)
 		src.devastation_range = devastation_range
@@ -51,9 +54,10 @@
 	src.delete_after = delete_after
 
 /// Explode if our parent is a storage place and something with high heat is inserted in.
-/datum/component/explodable/proc/explodable_insert_item(datum/source, obj/item/I, mob/M, silent = FALSE, force = FALSE)
+/datum/component/explodable/proc/explodable_insert_item(datum/source, obj/item/I)
 	SIGNAL_HANDLER
-
+	if(!(I.item_flags & IN_STORAGE))
+		return
 	check_if_detonate(I)
 
 /datum/component/explodable/proc/explodable_impact(datum/source, atom/hit_atom, datum/thrownthing/throwingdatum)
@@ -78,6 +82,13 @@
 
 	if(check_if_detonate(tool))
 		return COMPONENT_BLOCK_TOOL_ATTACK
+
+/// Shot by something
+/datum/component/explodable/proc/projectile_react(datum/source, obj/projectile/shot)
+	SIGNAL_HANDLER
+
+	if(shot.damage_type == BURN && !shot.nodamage)
+		detonate()
 
 ///Called when you attack a specific body part of the thing this is equipped on. Useful for exploding pants.
 /datum/component/explodable/proc/explodable_attack_zone(datum/source, damage, damagetype, def_zone)

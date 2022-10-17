@@ -1,7 +1,7 @@
 /// The syndicate infiltrator shuttle port.
 /obj/docking_port/mobile/infiltrator
 	name = "syndicate infiltrator"
-	id = "syndicate"
+	shuttle_id = "syndicate"
 	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0)
 	hidden = TRUE
 	dheight = 1

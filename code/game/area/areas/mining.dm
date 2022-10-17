@@ -44,7 +44,11 @@
 	icon_state = "mining_lobby"
 
 /area/mine/storage
-	name = "Mining Station Storage"
+	name = "Mining Station Production Storage"
+	icon_state = "mining_storage"
+
+/area/mine/storage/public
+	name = "Mining Station Public Storage"
 	icon_state = "mining_storage"
 
 /area/mine/production
@@ -67,29 +71,83 @@
 	icon_state = "mining_eva"
 
 /area/mine/maintenance
+	name = "Mining Station Maintenance"
+
+/area/mine/maintenance/production
+	name = "Mining Station Production Maintenance"
+
+/area/mine/maintenance/living
+	name = "Mining Station Living Quarters Maintenance"
+
+/area/mine/maintenance/living/north
+	name = "Mining Station Living Quarters North Maintenance"
+
+/area/mine/maintenance/living/south
+	name = "Mining Station Living Quarters South Maintenance"
+
+/area/mine/maintenance/public
+	name = "Mining Station Public Maintenance"
+
+/area/mine/maintenance/public/north
+	name = "Mining Station Public North Maintenance"
+
+/area/mine/maintenance/public/south
+	name = "Mining Station Public South Maintenance"
+
+/area/mine/maintenance/service
+	name = "Mining Station Service Maintenance"
+
+/area/mine/maintenance/service/disposals
+	name = "Mining Station Disposals"
+
+/area/mine/maintenance/service/comms
 	name = "Mining Station Communications"
+
+/area/mine/maintenance/labor
+	name = "Labor Camp Maintenance"
 
 /area/mine/cafeteria
 	name = "Mining Station Cafeteria"
+	icon_state = "mining_cafe"
+
+/area/mine/cafeteria/labor
+	name = "Labor Camp Cafeteria"
 	icon_state = "mining_labor_cafe"
 
 /area/mine/hydroponics
 	name = "Mining Station Hydroponics"
-	icon_state = "mining_labor_hydro"
+	icon_state = "mining_hydro"
 
-/area/mine/sleeper
-	name = "Mining Station Emergency Sleeper"
+/area/mine/medical
+	name = "Mining Station Emergency Medbay"
 
 /area/mine/mechbay
 	name = "Mining Station Mech Bay"
 	icon_state = "mechbay"
 
+/area/mine/lounge
+	name = "Mining Station Public Lounge"
+	icon_state = "mining_lounge"
+
 /area/mine/laborcamp
 	name = "Labor Camp"
 	icon_state = "mining_labor"
 
+/area/mine/laborcamp/quarters
+	name = "Labor Camp Quarters"
+	icon_state = "mining_labor_quarters"
+
+/area/mine/laborcamp/production
+	name = "Labor Camp Production"
+	icon_state = "mining_labor_production"
+
 /area/mine/laborcamp/security
 	name = "Labor Camp Security"
+	icon_state = "labor_camp_security"
+	ambience_index = AMBIENCE_DANGER
+
+/area/mine/laborcamp/security/maintenance
+	name = "Labor Camp Security Maintenance"
 	icon_state = "labor_camp_security"
 	ambience_index = AMBIENCE_DANGER
 

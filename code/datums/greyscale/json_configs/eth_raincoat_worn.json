@@ -1,0 +1,28 @@
+{
+	"eth_raincoat": [
+		{
+			"type": "icon_state",
+			"icon_state": "eth_raincoat_worn",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "eth_raincoat_glow_worn",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"eth_raincoat_t": [
+		{
+			"type": "icon_state",
+			"icon_state": "eth_raincoat_worn_t",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "eth_raincoat_glow_worn_t",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}

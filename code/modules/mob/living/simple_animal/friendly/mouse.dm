@@ -30,7 +30,7 @@
 	can_be_held = TRUE
 	held_w_class = WEIGHT_CLASS_TINY
 	held_state = "mouse_gray"
-	faction = list("rat")
+	faction = list(FACTION_RAT)
 
 /mob/living/simple_animal/mouse/Initialize(mapload)
 	. = ..()
@@ -88,22 +88,23 @@
 		evolve()
 		qdel(AM)
 
+/// How miceys go nom nom nom on things. force_chew is used to bypass the probability check (for unit tests).
 /mob/living/simple_animal/mouse/handle_automated_action()
 	if(prob(chew_probability))
-		var/turf/open/floor/F = get_turf(src)
-		if(istype(F) && F.underfloor_accessibility >= UNDERFLOOR_INTERACTABLE)
-			var/obj/structure/cable/C = locate() in F
-			if(C && prob(15))
-				var/powered = C.avail()
+		var/turf/open/floor/position = get_turf(src)
+		if(istype(position) && position.underfloor_accessibility >= UNDERFLOOR_INTERACTABLE)
+			var/obj/structure/cable/wire = locate() in position
+			if(wire && should_chew_cable())
+				var/powered = wire.avail()
 				if(powered && !HAS_TRAIT(src, TRAIT_SHOCKIMMUNE))
-					visible_message(span_warning("[src] chews through the [C]. It's toast!"))
+					visible_message(span_warning("[src] chews through the [wire]. It's toast!"))
 					death(toast = TRUE)
-				else
-					visible_message(span_warning("[src] chews through the [C]."))
-
-				C.deconstruct()
-				if(powered)
+					wire.deconstruct()
 					playsound(src, 'sound/effects/sparks2.ogg', 100, TRUE)
+					return
+				else
+					visible_message(span_warning("[src] chews through the [wire]."))
+					wire.deconstruct()
 
 	for(var/obj/item/food/cheese/cheese in range(1, src))
 		if(prob(10))
@@ -115,11 +116,15 @@
 		evolve()
 		return
 
+/// Proc to pass the probability of a mouse chewing on a wire to handle_automated_action. Overriden on applicable subtypes.
+/mob/living/simple_animal/mouse/proc/should_chew_cable()
+	return prob(15)
+
 /mob/living/simple_animal/mouse/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
 	. = ..()
-	if(istype(A, /obj/item/food/cheese) && canUseTopic(A, BE_CLOSE, NO_DEXTERITY))
+	if(istype(A, /obj/item/food/cheese) && canUseTopic(A, be_close = TRUE, no_dexterity = TRUE))
 		if(health == maxHealth)
 			to_chat(src,span_warning("You don't need to eat or heal."))
 			return
@@ -192,15 +197,21 @@
 	// Tom fears no cable.
 	ADD_TRAIT(src, TRAIT_SHOCKIMMUNE, INNATE_TRAIT)
 
+/// Subtype that only exists in tests, it fucking loves eating cables.
+/mob/living/simple_animal/mouse/cable_lover
+
+/mob/living/simple_animal/mouse/cable_lover/should_chew_cable()
+	return TRUE // Always chew.
+
 /obj/item/food/deadmouse
 	name = "dead mouse"
 	desc = "They look like somebody dropped the bass on it. A lizard's favorite meal."
-	icon = 'icons/mob/animal.dmi'
+	icon = 'icons/mob/simple/animal.dmi'
 	icon_state = "mouse_gray_dead"
 	bite_consumption = 3
 	eatverbs = list("devour")
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
-	foodtypes = GROSS | MEAT | RAW
+	foodtypes = GORE | MEAT | RAW
 	grind_results = list(/datum/reagent/blood = 20, /datum/reagent/liquidgibs = 5)
 	decomp_req_handle = TRUE
 	ant_attracting = FALSE
@@ -243,5 +254,6 @@
 	desc = "A dead rodent, consumed by mold and rot. There is a slim chance that a lizard might still eat it."
 	icon_state = "mouse_gray_dead"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/mold = 10)
+	foodtypes = GORE | MEAT | RAW | GROSS
 	grind_results = list(/datum/reagent/blood = 20, /datum/reagent/liquidgibs = 5, /datum/reagent/consumable/mold = 10)
 	preserved_food = TRUE

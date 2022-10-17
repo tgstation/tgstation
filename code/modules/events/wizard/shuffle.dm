@@ -7,6 +7,7 @@
 	typepath = /datum/round_event/wizard/shuffleloc
 	max_occurrences = 5
 	earliest_start = 0 MINUTES
+	description = "Shuffles everyone around on the station."
 
 /datum/round_event/wizard/shuffleloc/start()
 	var/list/moblocs = list()
@@ -43,6 +44,7 @@
 	typepath = /datum/round_event/wizard/shufflenames
 	max_occurrences = 5
 	earliest_start = 0 MINUTES
+	description = "Shuffles the names of everyone around the station."
 
 /datum/round_event/wizard/shufflenames/start()
 	var/list/mobnames = list()
@@ -77,6 +79,7 @@
 	typepath = /datum/round_event/wizard/shuffleminds
 	max_occurrences = 3
 	earliest_start = 0 MINUTES
+	description = "Shuffles the minds of everyone around the station, except for the wizard."
 
 /datum/round_event/wizard/shuffleminds/start()
 	var/list/mobs_to_swap = list()

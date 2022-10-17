@@ -40,6 +40,43 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 				continue
 			found_turfs += checkT // Since checkT is connected, add it to the list to be processed
 
+/**
+ * Create an atmos zone (Think ZAS), similiar to [proc/detect_room] but it ignores walls and turfs which are non-[atmos_can_pass]
+ *
+ * Arguments
+ * source - the turf which to find all connected atmos turfs
+ * range - the max range to check
+ *
+ * Returns a list of turfs, which is an area of isolated atmos
+ */
+/proc/create_atmos_zone(turf/source, range = INFINITY)
+	var/counter = 1 // a counter which increment each loop
+	var/loops = 0
+	if(source.blocks_air)
+		return
+	var/list/connected_turfs = list(source)
+	. = connected_turfs
+	while(length(connected_turfs))
+		var/list/turf/adjacent_turfs = list(
+			get_step(connected_turfs[counter], NORTH),
+			get_step(connected_turfs[counter], SOUTH),
+			get_step(connected_turfs[counter], EAST),
+			get_step(connected_turfs[counter], WEST)
+		)// get a tile in each cardinal direction at once and add that to the list
+		for(var/turf/valid_turf in adjacent_turfs)//loop through the list and check for atmos adjacency
+			var/turf/reference_turf = connected_turfs[counter]
+			if(valid_turf in connected_turfs)//if the turf is already added, skip
+				loops += 1
+				continue
+			if(length(connected_turfs) >= range)
+				return
+			if(TURFS_CAN_SHARE(reference_turf, valid_turf))
+				loops = 0
+				connected_turfs |= valid_turf//add that to the original list
+		if(loops >= 7)//if the loop has gone 7 consecutive times with no new turfs added, return the result. Number is arbitrary, subject to change
+			return
+		counter += 1 //increment by one so the next loop will start at the next position in the list
+
 /proc/create_area(mob/creator)
 	// Passed into the above proc as list/break_if_found
 	var/static/list/area_or_turf_fail_types = typecacheof(list(
@@ -101,6 +138,7 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 
 	SEND_GLOBAL_SIGNAL(COMSIG_AREA_CREATED, newA, oldA, creator)
 	to_chat(creator, span_notice("You have created a new area, named [newA.name]. It is now weather proof, and constructing an APC will allow it to be powered."))
+	creator.log_message("created a new area: [AREACOORD(creator)] (previously \"[oldA.name]\")", LOG_GAME)
 	return TRUE
 
 #undef BP_MAX_ROOM_SIZE

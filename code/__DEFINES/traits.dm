@@ -145,7 +145,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Blacklist for mobs that can't read or write
 #define TRAIT_ILLITERATE "illiterate"
 #define TRAIT_BLIND "blind"
+/// Mute. Can't talk.
 #define TRAIT_MUTE "mute"
+/// Emotemute. Can't... emote.
 #define TRAIT_EMOTEMUTE "emotemute"
 #define TRAIT_DEAF "deaf"
 #define TRAIT_NEARSIGHT "nearsighted"
@@ -180,19 +182,27 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_IWASBATONED "iwasbatoned"
 #define TRAIT_SLEEPIMMUNE "sleep_immunity"
 #define TRAIT_PUSHIMMUNE "push_immunity"
+/// Are we immune to shocks?
 #define TRAIT_SHOCKIMMUNE "shock_immunity"
+/// Are we immune to specifically tesla / SM shocks?
 #define TRAIT_TESLA_SHOCKIMMUNE "tesla_shock_immunity"
+#define TRAIT_AIRLOCK_SHOCKIMMUNE "airlock_shock_immunity"
+/// Is this atom being actively shocked? Used to prevent repeated shocks.
+#define TRAIT_BEING_SHOCKED "shocked"
 #define TRAIT_STABLEHEART "stable_heart"
 /// Prevents you from leaving your corpse
 #define TRAIT_CORPSELOCKED "corpselocked"
 #define TRAIT_STABLELIVER "stable_liver"
 #define TRAIT_VATGROWN "vatgrown"
 #define TRAIT_RESISTHEAT "resist_heat"
+///For when you've gotten a power from a dna vault
+#define TRAIT_USED_DNA_VAULT "used_dna_vault"
 /// For when you want to be able to touch hot things, but still want fire to be an issue.
 #define TRAIT_RESISTHEATHANDS "resist_heat_handsonly"
 #define TRAIT_RESISTCOLD "resist_cold"
 #define TRAIT_RESISTHIGHPRESSURE "resist_high_pressure"
 #define TRAIT_RESISTLOWPRESSURE "resist_low_pressure"
+/// This human is immune to the effects of being exploded. (ex_act)
 #define TRAIT_BOMBIMMUNE "bomb_immunity"
 #define TRAIT_RADIMMUNE "rad_immunity"
 #define TRAIT_GENELESS "geneless"
@@ -293,8 +303,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NOFLASH "noflash"
 /// prevents xeno huggies implanting skeletons
 #define TRAIT_XENO_IMMUNE "xeno_immune"
-/// Makes you flashable from any direction
-#define TRAIT_FLASH_SENSITIVE "flash_sensitive"
 #define TRAIT_NAIVE "naive"
 #define TRAIT_PRIMITIVE "primitive"
 #define TRAIT_GUNFLIP "gunflip"
@@ -311,6 +319,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NICE_SHOT "nice_shot"
 /// prevents the damage done by a brain tumor
 #define TRAIT_TUMOR_SUPPRESSED "brain_tumor_suppressed"
+/// Prevents hallucinations from the hallucination brain trauma (RDS)
+#define TRAIT_RDS_SUPPRESSED "rds_suppressed"
 /// overrides the update_fire proc to always add fire (for lava)
 #define TRAIT_PERMANENTLY_ONFIRE "permanently_onfire"
 /// Galactic Common Sign Language
@@ -371,7 +381,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SPRAY_PAINTABLE "spray_paintable"
 /// This person is blushing
 #define TRAIT_BLUSHING "blushing"
-
+/// This person is crying
+#define TRAIT_CRYING "crying"
 #define TRAIT_NOBLEED "nobleed" //This carbon doesn't bleed
 /// This atom can ignore the "is on a turf" check for simple AI datum attacks, allowing them to attack from bags or lockers as long as any other conditions are met
 #define TRAIT_AI_BAGATTACK "bagattack"
@@ -421,6 +432,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Item still allows you to examine items while blind and actively held.
 #define TRAIT_BLIND_TOOL "blind_tool"
+
+/// The person with this trait always appears as 'unknown'.
+#define TRAIT_UNKNOWN "unknown"
 
 // METABOLISMS
 // Various jobs on the station have historically had better reactions
@@ -551,6 +565,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_LIVING_HEART "living_heart"
 /// Prevents the same person from being chosen multiple times for kidnapping objective
 #define TRAIT_HAS_BEEN_KIDNAPPED "has_been_kidnapped"
+/// An item still plays its hitsound even if it has 0 force, instead of the tap
+#define TRAIT_CUSTOM_TAP_SOUND "no_tap_sound"
 
 //quirk traits
 #define TRAIT_ALCOHOL_TOLERANCE "alcohol_tolerance"
@@ -580,8 +596,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_EXTROVERT "extrovert"
 #define TRAIT_INTROVERT "introvert"
 #define TRAIT_ANXIOUS "anxious"
-#define TRAIT_INSANITY "insanity"
 #define TRAIT_SMOKER "smoker"
+
 /// Gives you the Shifty Eyes quirk, rarely making people who examine you think you examined them back even when you didn't
 #define TRAIT_SHIFTY_EYES "shifty_eyes"
 
@@ -617,8 +633,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Trait applied when the MMI component is added to an [/obj/item/integrated_circuit]
 #define TRAIT_COMPONENT_MMI "component_mmi"
-/// Trait applied when the MMI component is added to an [/obj/item/integrated_circuit]
-#define TRAIT_COMPONENT_PRINTER "component_printer"
 
 /// Trait applied when an integrated circuit/module becomes undupable
 #define TRAIT_CIRCUIT_UNDUPABLE "circuit_undupable"
@@ -639,6 +653,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// trait denoting someone will sometimes recover out of crit
 #define TRAIT_UNBREAKABLE "unbreakable"
+
+/// trait that prevents AI controllers from planning detached from ai_status to prevent weird state stuff.
+#define TRAIT_AI_PAUSED "TRAIT_AI_PAUSED"
 
 //Medical Categories for quirks
 #define CAT_QUIRK_ALL 0
@@ -669,6 +686,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define QUIRK_TRAIT "quirk_trait"
 /// (B)admins only.
 #define ADMIN_TRAIT "admin"
+/// Any traits given through a smite.
+#define SMITE_TRAIT "smite"
 #define CHANGELING_TRAIT "changeling"
 #define CULT_TRAIT "cult"
 #define LICH_TRAIT "lich"
@@ -694,6 +713,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define INNATE_TRAIT "innate"
 #define CRIT_HEALTH_TRAIT "crit_health"
 #define OXYLOSS_TRAIT "oxyloss"
+/// Trait sorce for "was recently shocked by something"
+#define WAS_SHOCKED "was_shocked"
 #define TURF_TRAIT "turf"
 /// trait associated to being buckled
 #define BUCKLED_TRAIT "buckled"
@@ -718,17 +739,22 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define MAFIA_TRAIT "mafia"
 /// Trait associated with highlander
 #define HIGHLANDER_TRAIT "highlander"
+/// Trait given from playing pretend with baguettes
+#define SWORDPLAY_TRAIT "swordplay"
 
 ///generic atom traits
 /// Trait from [/datum/element/rust]. Its rusty and should be applying a special overlay to denote this.
 #define TRAIT_RUSTY "rust_trait"
 ///stops someone from splashing their reagent_container on an object with this trait
 #define DO_NOT_SPLASH "do_not_splash"
+/// Marks an atom when the cleaning of it is first started, so that the cleaning overlay doesn't get removed prematurely
+#define CURRENTLY_CLEANING "currently_cleaning"
 
 // unique trait sources, still defines
-#define CLONING_POD_TRAIT "cloning-pod"
 #define STATUE_MUTE "statue"
 #define CHANGELING_DRAIN "drain"
+/// changelings with this trait can no longer talk over the hivemind
+#define CHANGELING_HIVEMIND_MUTE "ling_mute"
 #define ABYSSAL_GAZE_BLIND "abyssal_gaze"
 #define HIGHLANDER "highlander"
 #define TRAIT_HULK "hulk"
@@ -762,7 +788,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define LOCKED_HELMET_TRAIT "locked-helmet"
 #define NINJA_SUIT_TRAIT "ninja-suit"
 #define SLEEPING_CARP_TRAIT "sleeping_carp"
-#define MADE_UNCLONEABLE "made-uncloneable"
 #define TIMESTOP_TRAIT "timestop"
 #define LIFECANDLE_TRAIT "lifecandle"
 #define VENTCRAWLING_TRAIT "ventcrawling"
@@ -771,6 +796,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define NO_GRAVITY_TRAIT "no-gravity"
 #define LEAPING_TRAIT "leaping"
 #define LEAPER_BUBBLE_TRAIT "leaper-bubble"
+#define DNA_VAULT_TRAIT "dna_vault"
 /// sticky nodrop sounds like a bad soundcloud rapper's name
 #define STICKY_NODROP "sticky-nodrop"
 #define SKILLCHIP_TRAIT "skillchip"
@@ -811,7 +837,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define LIPSTICK_TRAIT "lipstick_trait"
 /// Self-explainatory.
 #define BEAUTY_ELEMENT_TRAIT "beauty_element"
-#define MOOD_COMPONENT_TRAIT "mood_component"
+#define MOOD_DATUM_TRAIT "mood_datum"
 #define DRONE_SHY_TRAIT "drone_shy"
 /// Pacifism trait given by stabilized light pink extracts.
 #define STABILIZED_LIGHT_PINK_TRAIT "stabilized_light_pink"
@@ -823,6 +849,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define ITEM_SCALING_TRAIT "item_scaling"
 /// Trait given by Objects that provide blindsight
 #define ITEM_BLIND_TRAIT "blind_item_trait"
+/// Trait given by hallucinations
+#define HALLUCINATION_TRAIT "hallucination_trait"
 
 /**
 * Trait granted by [/mob/living/carbon/Initialize] and
@@ -842,8 +870,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define AI_ANCHOR_TRAIT "ai_anchor"
 /// Trait from [/datum/antagonist/nukeop/clownop]
 #define CLOWNOP_TRAIT "clownop"
-/// Trait from [/datum/antagonist/thief]
-#define THIEF_TRAIT "thief"
 
 ///Traits given by station traits
 #define STATION_TRAIT_BANANIUM_SHIPMENTS "station_trait_bananium_shipments"
@@ -857,6 +883,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define STATION_TRAIT_FILLED_MAINT "station_trait_filled_maint"
 #define STATION_TRAIT_EMPTY_MAINT "station_trait_empty_maint"
 #define STATION_TRAIT_PDA_GLITCHED "station_trait_pda_glitched"
+#define STATION_TRAIT_BOTS_GLITCHED "station_trait_bot_glitch"
 
 ///From the market_crash event
 #define MARKET_CRASH_EVENT_TRAIT "crashed_market_event"
@@ -913,3 +940,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Currently fishing
 #define TRAIT_GONE_FISHING "fishing"
+
+/// Makes a species be better/worse at tackling depending on their wing's status
+#define TRAIT_TACKLING_WINGED_ATTACKER "tacking_winged_attacker"
+
+/// Makes a species be frail and more likely to roll bad results if they hit a wall
+#define TRAIT_TACKLING_FRAIL_ATTACKER "tackling_frail_attacker"
+
+/// Makes a species be better/worse at defending against tackling depending on their tail's status
+#define TRAIT_TACKLING_TAILED_DEFENDER "tackling_tailed_defender"

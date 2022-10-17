@@ -1,0 +1,6 @@
+author: "Jackraxxus"
+delete-after: True
+changes: 
+  - bugfix: "Deltastation's EVA now contains a real toolbelt, that can only hold tools."
+  - bugfix: "The Ashwalker Nest now contains a real toolbelt, that can only hold tools."
+  - spellcheck: "The base type of /belt is now more obviously NOT a toolbelt."

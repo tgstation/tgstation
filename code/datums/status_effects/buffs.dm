@@ -141,36 +141,6 @@
 	if(islist(owner.stun_absorption) && owner.stun_absorption["blooddrunk"])
 		owner.stun_absorption -= "blooddrunk"
 
-/datum/status_effect/sword_spin
-	id = "Bastard Sword Spin"
-	duration = 50
-	tick_interval = 8
-	alert_type = null
-
-
-/datum/status_effect/sword_spin/on_apply()
-	owner.visible_message(span_danger("[owner] begins swinging the sword with inhuman strength!"))
-	var/oldcolor = owner.color
-	owner.color = "#ff0000"
-	owner.add_stun_absorption("bloody bastard sword", duration, 2, "doesn't even flinch as the sword's power courses through them!", "You shrug off the stun!", " glowing with a blazing red aura!")
-	owner.spin(duration,1)
-	animate(owner, color = oldcolor, time = duration, easing = EASE_IN)
-	addtimer(CALLBACK(owner, /atom/proc/update_atom_colour), duration)
-	playsound(owner, 'sound/weapons/fwoosh.ogg', 75, FALSE)
-	return ..()
-
-
-/datum/status_effect/sword_spin/tick()
-	playsound(owner, 'sound/weapons/fwoosh.ogg', 75, FALSE)
-	var/obj/item/slashy
-	slashy = owner.get_active_held_item()
-	for(var/mob/living/M in orange(1,owner))
-		slashy.attack(M, owner)
-
-/datum/status_effect/sword_spin/on_remove()
-	owner.visible_message(span_warning("[owner]'s inhuman strength dissipates and the sword's runes grow cold!"))
-
-
 //Used by changelings to rapidly heal
 //Heals 10 brute and oxygen damage every second, and 5 fire
 //Being on fire will suppress this healing
@@ -267,7 +237,7 @@
 					//If user does not have the corresponding hand anymore, give them one and return the rod to their hand
 					if(((hand % 2) == 0))
 						var/obj/item/bodypart/L = itemUser.newBodyPart(BODY_ZONE_R_ARM, FALSE, FALSE)
-						if(L.attach_limb(itemUser))
+						if(L.try_attach_limb(itemUser))
 							itemUser.put_in_hand(newRod, hand, forced = TRUE)
 						else
 							qdel(L)
@@ -275,7 +245,7 @@
 							return
 					else
 						var/obj/item/bodypart/L = itemUser.newBodyPart(BODY_ZONE_L_ARM, FALSE, FALSE)
-						if(L.attach_limb(itemUser))
+						if(L.try_attach_limb(itemUser))
 							itemUser.put_in_hand(newRod, hand, forced = TRUE)
 						else
 							qdel(L)
@@ -318,10 +288,10 @@
 
 /datum/status_effect/good_music/tick()
 	if(owner.can_hear())
-		owner.adjust_timed_status_effect(-4 SECONDS, /datum/status_effect/dizziness)
-		owner.adjust_timed_status_effect(-4 SECONDS, /datum/status_effect/jitter)
-		owner.adjust_timed_status_effect(-1 SECONDS, /datum/status_effect/confusion)
-		SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "goodmusic", /datum/mood_event/goodmusic)
+		owner.adjust_dizzy(-4 SECONDS)
+		owner.adjust_jitter(-4 SECONDS)
+		owner.adjust_confusion(-1 SECONDS)
+		owner.add_mood_event("goodmusic", /datum/mood_event/goodmusic)
 
 /atom/movable/screen/alert/status_effect/regenerative_core
 	name = "Regenerative Core Tendrils"
@@ -340,243 +310,13 @@
 	owner.adjustFireLoss(-25)
 	owner.remove_CC()
 	owner.bodytemperature = owner.get_body_temp_normal()
-	if(istype(owner, /mob/living/carbon/human))
+	if(ishuman(owner))
 		var/mob/living/carbon/human/humi = owner
 		humi.set_coretemperature(humi.get_body_temp_normal())
 	return TRUE
 
 /datum/status_effect/regenerative_core/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, STATUS_EFFECT_TRAIT)
-
-/datum/status_effect/crucible_soul
-	id = "Blessing of Crucible Soul"
-	status_type = STATUS_EFFECT_REFRESH
-	duration = 15 SECONDS
-	alert_type = /atom/movable/screen/alert/status_effect/crucible_soul
-	var/turf/location
-
-/datum/status_effect/crucible_soul/on_apply()
-	to_chat(owner,span_notice("You phase through reality, nothing is out of bounds!"))
-	owner.alpha = 180
-	owner.pass_flags |= PASSCLOSEDTURF | PASSGLASS | PASSGRILLE | PASSMACHINE | PASSSTRUCTURE | PASSTABLE | PASSMOB | PASSDOORS | PASSVEHICLE
-	location = get_turf(owner)
-	return TRUE
-
-/datum/status_effect/crucible_soul/on_remove()
-	to_chat(owner,span_notice("You regain your physicality, returning you to your original location..."))
-	owner.alpha = initial(owner.alpha)
-	owner.pass_flags &= ~(PASSCLOSEDTURF | PASSGLASS | PASSGRILLE | PASSMACHINE | PASSSTRUCTURE | PASSTABLE | PASSMOB | PASSDOORS | PASSVEHICLE)
-	owner.forceMove(location)
-	location = null
-
-/datum/status_effect/crucible_soul/get_examine_text()
-	return span_notice("[owner.p_they(TRUE)] [owner.p_do()]n't seem to be all here.")
-
-/datum/status_effect/duskndawn
-	id = "Blessing of Dusk and Dawn"
-	status_type = STATUS_EFFECT_REFRESH
-	duration = 60 SECONDS
-	alert_type =/atom/movable/screen/alert/status_effect/duskndawn
-
-/datum/status_effect/duskndawn/on_apply()
-	ADD_TRAIT(owner, TRAIT_XRAY_VISION, STATUS_EFFECT_TRAIT)
-	owner.update_sight()
-	return TRUE
-
-/datum/status_effect/duskndawn/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_XRAY_VISION, STATUS_EFFECT_TRAIT)
-	owner.update_sight()
-
-/datum/status_effect/marshal
-	id = "Blessing of Wounded Soldier"
-	status_type = STATUS_EFFECT_REFRESH
-	duration = 60 SECONDS
-	tick_interval = 1 SECONDS
-	alert_type = /atom/movable/screen/alert/status_effect/marshal
-
-/datum/status_effect/marshal/on_apply()
-	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, STATUS_EFFECT_TRAIT)
-	return TRUE
-
-/datum/status_effect/marshal/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, STATUS_EFFECT_TRAIT)
-
-/datum/status_effect/marshal/tick()
-	if(!iscarbon(owner))
-		return
-	var/mob/living/carbon/carbie = owner
-
-	for(var/BP in carbie.bodyparts)
-		var/obj/item/bodypart/part = BP
-		for(var/W in part.wounds)
-			var/datum/wound/wound = W
-			var/heal_amt = 0
-
-			switch(wound.severity)
-				if(WOUND_SEVERITY_MODERATE)
-					heal_amt = 1
-				if(WOUND_SEVERITY_SEVERE)
-					heal_amt = 3
-				if(WOUND_SEVERITY_CRITICAL)
-					heal_amt = 6
-			if(wound.wound_type == WOUND_BURN)
-				carbie.adjustFireLoss(-heal_amt)
-			else
-				carbie.adjustBruteLoss(-heal_amt)
-				carbie.blood_volume += carbie.blood_volume >= BLOOD_VOLUME_NORMAL ? 0 : heal_amt*3
-
-
-/atom/movable/screen/alert/status_effect/crucible_soul
-	name = "Blessing of Crucible Soul"
-	desc = "You phased through reality. You are halfway to your final destination..."
-	icon_state = "crucible"
-
-/atom/movable/screen/alert/status_effect/duskndawn
-	name = "Blessing of Dusk and Dawn"
-	desc = "Many things hide beyond the horizon. With Owl's help I managed to slip past Sun's guard and Moon's watch."
-	icon_state = "duskndawn"
-
-/atom/movable/screen/alert/status_effect/marshal
-	name = "Blessing of Wounded Soldier"
-	desc = "Some people seek power through redemption. One thing many people don't know is that battle \
-		is the ultimate redemption, and wounds let you bask in eternal glory."
-	icon_state = "wounded_soldier"
-
-/// Summons multiple foating knives around the owner.
-/// Each knife will block an attack straight up.
-/datum/status_effect/protective_blades
-	id = "Silver Knives"
-	alert_type = null
-	status_type = STATUS_EFFECT_MULTIPLE
-	tick_interval = -1
-	/// The number of blades we summon up to.
-	var/max_num_blades = 4
-	/// The radius of the blade's orbit.
-	var/blade_orbit_radius = 20
-	/// The time between spawning blades.
-	var/time_between_initial_blades = 0.25 SECONDS
-	/// If TRUE, we self-delete our status effect after all the blades are deleted.
-	var/delete_on_blades_gone = TRUE
-	/// A list of blade effects orbiting / protecting our owner
-	var/list/obj/effect/floating_blade/blades = list()
-
-/datum/status_effect/protective_blades/on_creation(
-	mob/living/new_owner,
-	new_duration = -1,
-	max_num_blades = 4,
-	blade_orbit_radius = 20,
-	time_between_initial_blades = 0.25 SECONDS,
-)
-
-	src.duration = new_duration
-	src.max_num_blades = max_num_blades
-	src.blade_orbit_radius = blade_orbit_radius
-	src.time_between_initial_blades = time_between_initial_blades
-	return ..()
-
-/datum/status_effect/protective_blades/on_apply()
-	RegisterSignal(owner, COMSIG_HUMAN_CHECK_SHIELDS, .proc/on_shield_reaction)
-	for(var/blade_num in 1 to max_num_blades)
-		var/time_until_created = (blade_num - 1) * time_between_initial_blades
-		if(time_until_created <= 0)
-			create_blade()
-		else
-			addtimer(CALLBACK(src, .proc/create_blade), time_until_created)
-
-	return TRUE
-
-/datum/status_effect/protective_blades/on_remove()
-	UnregisterSignal(owner, COMSIG_HUMAN_CHECK_SHIELDS)
-	QDEL_LIST(blades)
-
-	return ..()
-
-/// Creates a floating blade, adds it to our blade list, and makes it orbit our owner.
-/datum/status_effect/protective_blades/proc/create_blade()
-	if(QDELETED(src) || QDELETED(owner))
-		return
-
-	var/obj/effect/floating_blade/blade = new(get_turf(owner))
-	blades += blade
-	blade.orbit(owner, blade_orbit_radius)
-	RegisterSignal(blade, COMSIG_PARENT_QDELETING, .proc/remove_blade)
-	playsound(get_turf(owner), 'sound/items/unsheath.ogg', 33, TRUE)
-
-/// Signal proc for [COMSIG_HUMAN_CHECK_SHIELDS].
-/// If we have a blade in our list, consume it and block the incoming attack (shield it)
-/datum/status_effect/protective_blades/proc/on_shield_reaction(
-	mob/living/carbon/human/source,
-	atom/movable/hitby,
-	damage = 0,
-	attack_text = "the attack",
-	attack_type = MELEE_ATTACK,
-	armour_penetration = 0,
-)
-	SIGNAL_HANDLER
-
-	if(!length(blades))
-		return
-
-	if(HAS_TRAIT(source, TRAIT_BEING_BLADE_SHIELDED))
-		return
-
-	ADD_TRAIT(source, TRAIT_BEING_BLADE_SHIELDED, type)
-
-	var/obj/effect/floating_blade/to_remove = blades[1]
-
-	playsound(get_turf(source), 'sound/weapons/parry.ogg', 100, TRUE)
-	source.visible_message(
-		span_warning("[to_remove] orbiting [source] snaps in front of [attack_text], blocking it before vanishing!"),
-		span_warning("[to_remove] orbiting you snaps in front of [attack_text], blocking it before vanishing!"),
-		span_hear("You hear a clink."),
-	)
-
-	qdel(to_remove)
-
-	addtimer(TRAIT_CALLBACK_REMOVE(source, TRAIT_BEING_BLADE_SHIELDED, type), 1)
-
-	return SHIELD_BLOCK
-
-/// Remove deleted blades from our blades list properly.
-/datum/status_effect/protective_blades/proc/remove_blade(obj/effect/floating_blade/to_remove)
-	SIGNAL_HANDLER
-
-	if(!(to_remove in blades))
-		CRASH("[type] called remove_blade() with a blade that was not in its blades list.")
-
-	to_remove.stop_orbit(owner.orbiters)
-	blades -= to_remove
-
-	if(!length(blades) && !QDELETED(src) && delete_on_blades_gone)
-		qdel(src)
-
-	return TRUE
-
-/// A subtype that doesn't self-delete / disappear when all blades are gone
-/// It instead regenerates over time back to the max after blades are consumed
-/datum/status_effect/protective_blades/recharging
-	delete_on_blades_gone = FALSE
-	/// The amount of time it takes for a blade to recharge
-	var/blade_recharge_time = 1 MINUTES
-
-/datum/status_effect/protective_blades/recharging/on_creation(
-	mob/living/new_owner,
-	new_duration = -1,
-	max_num_blades = 4,
-	blade_orbit_radius = 20,
-	time_between_initial_blades = 0.25 SECONDS,
-	blade_recharge_time = 1 MINUTES,
-)
-
-	src.blade_recharge_time = blade_recharge_time
-	return ..()
-
-/datum/status_effect/protective_blades/recharging/remove_blade(obj/effect/floating_blade/to_remove)
-	. = ..()
-	if(!.)
-		return
-
-	addtimer(CALLBACK(src, .proc/create_blade), blade_recharge_time)
 
 /datum/status_effect/lightningorb
 	id = "Lightning Orb"
@@ -608,17 +348,30 @@
 	. = ..()
 	to_chat(owner, "<span class='reallybig redtext'>RIP AND TEAR</span>")
 	SEND_SOUND(owner, sound('sound/hallucinations/veryfar_noise.ogg'))
-	new /datum/hallucination/delusion(owner, forced = TRUE, force_kind = "demon", duration = duration, skip_nearby = FALSE)
-	chainsaw = new(get_turf(owner))
-	owner.log_message("entered a blood frenzy", LOG_ATTACK)
-	ADD_TRAIT(chainsaw, TRAIT_NODROP, CHAINSAW_FRENZY_TRAIT)
+	owner.cause_hallucination( \
+		/datum/hallucination/delusion/preset/demon, \
+		"[id] status effect", \
+		duration = duration, \
+		affects_us = FALSE, \
+		affects_others = TRUE, \
+		skip_nearby = FALSE, \
+		play_wabbajack = FALSE, \
+	)
+
 	owner.drop_all_held_items()
+
+	chainsaw = new(get_turf(owner))
+	ADD_TRAIT(chainsaw, TRAIT_NODROP, CHAINSAW_FRENZY_TRAIT)
 	owner.put_in_hands(chainsaw, forced = TRUE)
 	chainsaw.attack_self(owner)
-	owner.reagents.add_reagent(/datum/reagent/medicine/adminordrazine,25)
+
+	owner.log_message("entered a blood frenzy", LOG_ATTACK)
+	owner.reagents.add_reagent(/datum/reagent/medicine/adminordrazine, 25)
 	to_chat(owner, span_warning("KILL, KILL, KILL! YOU HAVE NO ALLIES ANYMORE, KILL THEM ALL!"))
+
 	var/datum/client_colour/colour = owner.add_client_colour(/datum/client_colour/bloodlust)
 	QDEL_IN(colour, 1.1 SECONDS)
+	return TRUE
 
 /datum/status_effect/mayhem/on_remove()
 	. = ..()

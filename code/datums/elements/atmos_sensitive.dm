@@ -50,7 +50,7 @@
 
 /atom/proc/process_exposure()
 	var/turf/open/spot = loc
-	if(!istype(loc, /turf/open))
+	if(!isopenturf(loc))
 		//If you end up in a locker or a wall reconsider your life decisions
 		atmos_end()
 		SSair.atom_process -= src

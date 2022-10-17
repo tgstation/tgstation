@@ -1,7 +1,7 @@
 /mob/living/simple_animal/hostile/zombie
 	name = "Shambling Corpse"
 	desc = "When there is no more room in hell, the dead will walk in outer space."
-	icon = 'icons/mob/simple_human.dmi'
+	icon = 'icons/mob/simple/simple_human.dmi'
 	icon_state = "zombie"
 	icon_living = "zombie"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
@@ -39,7 +39,6 @@
 	var/mob/living/carbon/human/dummy/dummy = new
 	dummy.equipOutfit(outfit)
 	dummy.set_species(/datum/species/zombie)
-	COMPILE_OVERLAYS(dummy)
 	icon = getFlatIcon(dummy)
 	qdel(dummy)
 

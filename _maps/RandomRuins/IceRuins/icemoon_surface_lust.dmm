@@ -10,7 +10,7 @@
 /turf/open/floor/mineral/diamond,
 /area/icemoon/surface/outdoors)
 "d" = (
-/obj/item/reagent_containers/food/drinks/trophy/gold_cup,
+/obj/item/reagent_containers/cup/glass/trophy/gold_cup,
 /turf/open/floor/mineral/diamond,
 /area/icemoon/surface/outdoors)
 "e" = (

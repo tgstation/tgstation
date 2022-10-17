@@ -35,7 +35,7 @@
 /obj/structure/musician/piano
 	name = "space piano"
 	desc = "This is a space piano, like a regular piano, but always in tune! Even if the musician isn't."
-	icon = 'icons/obj/musician.dmi'
+	icon = 'icons/obj/art/musician.dmi'
 	icon_state = "piano"
 	anchored = TRUE
 	density = TRUE

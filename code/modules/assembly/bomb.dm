@@ -1,9 +1,9 @@
 /obj/item/onetankbomb
 	name = "bomb"
-	icon = 'icons/obj/tank.dmi'
+	icon = 'icons/obj/atmospherics/tank.dmi'
 	inhand_icon_state = "assembly"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	throwforce = 5
 	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 2
@@ -136,6 +136,7 @@
 
 	bomb.bombassembly = assembly //Tell the bomb about its assembly part
 	assembly.master = bomb //Tell the assembly about its new owner
+	assembly.on_attach()
 
 	bomb.bombtank = src //Same for tank
 	master = bomb

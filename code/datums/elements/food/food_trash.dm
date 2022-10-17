@@ -24,6 +24,7 @@
 		RegisterSignal(target, COMSIG_FOOD_CROSSED, .proc/food_crossed)
 	RegisterSignal(target, COMSIG_ITEM_ON_GRIND, .proc/generate_trash)
 	RegisterSignal(target, COMSIG_ITEM_ON_JUICE, .proc/generate_trash)
+	RegisterSignal(target, COMSIG_ITEM_USED_AS_INGREDIENT, .proc/generate_trash)
 	RegisterSignal(target, COMSIG_ITEM_ON_COMPOSTED, .proc/generate_trash)
 	RegisterSignal(target, COMSIG_ITEM_SOLD_TO_CUSTOMER, .proc/generate_trash)
 

@@ -57,7 +57,7 @@
 #define ORGAN_ORGANIC 1
 #define ORGAN_ROBOTIC 2
 
-#define DEFAULT_BODYPART_ICON_ORGANIC 'icons/mob/human_parts_greyscale.dmi'
+#define DEFAULT_BODYPART_ICON_ORGANIC 'icons/mob/species/human/bodyparts_greyscale.dmi'
 #define DEFAULT_BODYPART_ICON_ROBOTIC 'icons/mob/augmentation/augments.dmi'
 
 #define MONKEY_BODYPART "monkey"
@@ -69,20 +69,24 @@
 #define BP_BLOCK_CHANGE_SPECIES (1<<0)
 
 //Bodytype defines for how things can be worn, surgery, and other misc things.
-///The limb is organic
+///The limb is organic.
 #define BODYTYPE_ORGANIC (1<<0)
-///The limb is robotic
+///The limb is robotic.
 #define BODYTYPE_ROBOTIC (1<<1)
-///The limb fits the human mold
+///The limb fits the human mold. This is not meant to be literal, if the sprite "fits" on a human, it is "humanoid", regardless of origin.
 #define BODYTYPE_HUMANOID (1<<2)
-///The limb is digitigrade
-#define BODYTYPE_DIGITIGRADE (1<<3) //Cancer
-///The limb fits the monkey mold
+///The limb is digitigrade.
+#define BODYTYPE_DIGITIGRADE (1<<3)
+///The limb fits the monkey mold.
 #define BODYTYPE_MONKEY (1<<4)
-///The limb is snouted
+///The limb is snouted.
 #define BODYTYPE_SNOUTED (1<<5)
+///A placeholder bodytype for xeno larva, so their limbs cannot be attached to anything.
+#define BODYTYPE_LARVA_PLACEHOLDER (1<<6)
+///The limb is from a xenomorph.
+#define BODYTYPE_ALIEN (1<<7)
 
-//Defines for Species IDs
+// Defines for Species IDs. Used to refer to the name of a species, for things like bodypart names or species preferences.
 #define SPECIES_ABDUCTOR "abductor"
 #define SPECIES_ANDROID "android"
 #define SPECIES_DULLAHAN "dullahan"
@@ -111,6 +115,12 @@
 #define SPECIES_ZOMBIE_INFECTIOUS "memezombie"
 #define SPECIES_ZOMBIE_KROKODIL "krokodil_zombie"
 
+// Like species IDs, but not specifically attached a species.
+#define BODYPART_ID_ALIEN "alien"
+#define BODYPART_ID_ROBOTIC "robotic"
+#define BODYPART_ID_DIGITIGRADE "digitigrade"
+#define BODYPART_ID_LARVA "larva"
+
 //See: datum/species/var/digitigrade_customization
 ///The species does not have digitigrade legs in generation.
 #define DIGITIGRADE_NEVER 0
@@ -119,13 +129,8 @@
 ///The species is forced to have digitigrade legs in generation.
 #define DIGITIGRADE_FORCED 2
 
-//TODO: Remove entirely in favor of the BODYTYPE system
-///Body type bitfields for allowed_animal_origin used to check compatible surgery body types (use NONE for no matching body type)
-#define HUMAN_BODY (1 << 0)
-#define MONKEY_BODY (1 << 1)
-#define ALIEN_BODY (1 << 2)
-#define LARVA_BODY (1 << 3)
-/*see __DEFINES/inventory.dm for bodypart bitflag defines*/
+///Digitigrade's prefs, used in features for legs if you're meant to be a Digitigrade.
+#define DIGITIGRADE_LEGS "Digitigrade Legs"
 
 // Health/damage defines
 #define MAX_LIVING_HEALTH 100
@@ -216,15 +221,26 @@
 #define BEAUTY_LEVEL_GREAT 100
 
 //Moods levels for humans
-#define MOOD_LEVEL_HAPPY4 15
-#define MOOD_LEVEL_HAPPY3 10
-#define MOOD_LEVEL_HAPPY2 6
-#define MOOD_LEVEL_HAPPY1 2
-#define MOOD_LEVEL_NEUTRAL 0
-#define MOOD_LEVEL_SAD1 -3
-#define MOOD_LEVEL_SAD2 -7
-#define MOOD_LEVEL_SAD3 -15
-#define MOOD_LEVEL_SAD4 -20
+#define MOOD_HAPPY4 15
+#define MOOD_HAPPY3 10
+#define MOOD_HAPPY2 6
+#define MOOD_HAPPY1 2
+#define MOOD_NEUTRAL 0
+#define MOOD_SAD1 -3
+#define MOOD_SAD2 -7
+#define MOOD_SAD3 -15
+#define MOOD_SAD4 -20
+
+//Moods levels for humans
+#define MOOD_LEVEL_HAPPY4 9
+#define MOOD_LEVEL_HAPPY3 8
+#define MOOD_LEVEL_HAPPY2 7
+#define MOOD_LEVEL_HAPPY1 6
+#define MOOD_LEVEL_NEUTRAL 5
+#define MOOD_LEVEL_SAD1 4
+#define MOOD_LEVEL_SAD2 3
+#define MOOD_LEVEL_SAD3 2
+#define MOOD_LEVEL_SAD4 1
 
 //Sanity values for humans
 #define SANITY_MAXIMUM 150
@@ -416,6 +432,7 @@
 #define REAGENTS_EFFECT_MULTIPLIER (REAGENTS_METABOLISM / 0.4) // By defining the effect multiplier this way, it'll exactly adjust all effects according to how they originally were with the 0.4 metabolism
 
 // Eye protection
+#define FLASH_PROTECTION_HYPER_SENSITIVE -2
 #define FLASH_PROTECTION_SENSITIVE -1
 #define FLASH_PROTECTION_NONE 0
 #define FLASH_PROTECTION_FLASH 1
@@ -434,6 +451,13 @@
 
 #define MAX_REVIVE_FIRE_DAMAGE 180
 #define MAX_REVIVE_BRUTE_DAMAGE 180
+
+#define DEFAULT_BRUTE_EXAMINE_TEXT "bruising"
+#define DEFAULT_BURN_EXAMINE_TEXT "burns"
+#define DEFAULT_CLONE_EXAMINE_TEXT "cellular damage"
+
+#define ROBOTIC_BRUTE_EXAMINE_TEXT "denting"
+#define ROBOTIC_BURN_EXAMINE_TEXT "charring"
 
 // If a mob has a higher threshold than this, the icon shown will be increased to the big fire icon.
 #define MOB_BIG_FIRE_STACK_THRESHOLD 3
@@ -460,6 +484,16 @@
 #define SLIME_EXTRACT (1<<5)
 //Wabbacjack staff projectiles
 #define WABBAJACK (1<<6)
+
+// Randomization keys for calling wabbajack with.
+// Note the contents of these keys are important, as they're displayed to the player
+// Ex: (You turn into a "monkey", You turn into a "xenomorph")
+#define WABBAJACK_MONKEY "monkey"
+#define WABBAJACK_ROBOT "robot"
+#define WABBAJACK_SLIME "slime"
+#define WABBAJACK_XENO "xenomorph"
+#define WABBAJACK_HUMAN "humanoid"
+#define WABBAJACK_ANIMAL "animal"
 
 // Reasons a defibrilation might fail
 #define DEFIB_POSSIBLE (1<<0)
@@ -569,13 +603,6 @@
 #define GRADIENT_APPLIES_TO_HAIR (1<<0)
 #define GRADIENT_APPLIES_TO_FACIAL_HAIR (1<<1)
 
-/// Sign Language defines
-#define SIGN_ONE_HAND 0
-#define SIGN_HANDS_FULL 1
-#define SIGN_ARMLESS 2
-#define SIGN_TRAIT_BLOCKED 3
-#define SIGN_CUFFED 4
-
 // Mob Overlays Indexes
 /// Total number of layers for mob overlays
 #define TOTAL_LAYERS 32 //KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
@@ -668,16 +695,6 @@
 /// The layer above mutant body parts
 #define ABOVE_BODY_FRONT_LAYER (BODY_FRONT_LAYER-1)
 
-//used by canUseTopic()
-/// If silicons need to be next to the atom to use this
-#define BE_CLOSE TRUE
-/// If other mobs (monkeys, aliens, etc) can use this
-#define NO_DEXTERITY TRUE // I had to change 20+ files because some non-dnd-playing fuckchumbis can't spell "dexterity"
-// If telekinesis you can use it from a distance
-#define NO_TK TRUE
-/// If mobs can use this while resting
-#define FLOOR_OKAY TRUE
-
 /// The default mob sprite size (used for shrinking or enlarging the mob sprite to regular size)
 #define RESIZE_DEFAULT_SIZE 1
 
@@ -691,3 +708,7 @@
 
 /// Possible value of [/atom/movable/buckle_lying]. If set to a different (positive-or-zero) value than this, the buckling thing will force a lying angle on the buckled.
 #define NO_BUCKLE_LYING -1
+
+/// Checking flags for [/mob/proc/can_read()]
+#define READING_CHECK_LITERACY (1<<0)
+#define READING_CHECK_LIGHT (1<<1)

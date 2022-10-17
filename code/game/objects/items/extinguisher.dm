@@ -1,7 +1,7 @@
 /obj/item/extinguisher
 	name = "fire extinguisher"
 	desc = "A traditional red fire extinguisher."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "fire_extinguisher0"
 	worn_icon_state = "fire_extinguisher"
 	inhand_icon_state = "fire_extinguisher"
@@ -78,12 +78,9 @@
 
 /obj/item/extinguisher/Initialize(mapload)
 	. = ..()
-	refill()
-
-/obj/item/extinguisher/ComponentInitialize()
-	. = ..()
 	if(tank_holder_icon_state)
 		AddComponent(/datum/component/container_item/tank_holder, tank_holder_icon_state)
+	refill()
 
 /obj/item/extinguisher/advanced
 	name = "advanced fire extinguisher"
@@ -237,7 +234,7 @@
 			source.delay = 3
 
 /obj/item/extinguisher/AltClick(mob/user)
-	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
+	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = TRUE))
 		return
 	if(!user.is_holding(src))
 		to_chat(user, span_notice("You must be holding the [src] in your hands do this!"))

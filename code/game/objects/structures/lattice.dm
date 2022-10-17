@@ -13,7 +13,7 @@
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_LATTICE)
-	canSmoothWith = list(SMOOTH_GROUP_LATTICE, SMOOTH_GROUP_OPEN_FLOOR, SMOOTH_GROUP_WALLS)
+	canSmoothWith = list(SMOOTH_GROUP_OPEN_FLOOR, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_LATTICE)
 	var/number_of_mats = 1
 	var/build_material = /obj/item/stack/rods
 
@@ -77,7 +77,7 @@
 	base_icon_state = "catwalk"
 	number_of_mats = 2
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = list(SMOOTH_GROUP_LATTICE, SMOOTH_GROUP_CATWALK, SMOOTH_GROUP_OPEN_FLOOR)
+	smoothing_groups = list(SMOOTH_GROUP_OPEN_FLOOR, SMOOTH_GROUP_LATTICE, SMOOTH_GROUP_CATWALK)
 	canSmoothWith = list(SMOOTH_GROUP_CATWALK)
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
 
@@ -96,6 +96,14 @@
 		C.deconstruct()
 	..()
 
+/obj/structure/lattice/catwalk/mining
+	name = "reinforced catwalk"
+	desc = "A heavily reinforced catwalk used to build bridges in hostile environments. It doesn't look like anything could make this budge."
+	resistance_flags = INDESTRUCTIBLE
+
+/obj/structure/lattice/catwalk/mining/deconstruction_hints(mob/user)
+	return
+
 /obj/structure/lattice/lava
 	name = "heatproof support lattice"
 	desc = "A specialized support beam for building across lava. Watch your step."
@@ -105,7 +113,7 @@
 	number_of_mats = 1
 	color = "#5286b9ff"
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = list(SMOOTH_GROUP_LATTICE, SMOOTH_GROUP_OPEN_FLOOR)
+	smoothing_groups = list(SMOOTH_GROUP_OPEN_FLOOR, SMOOTH_GROUP_LATTICE)
 	canSmoothWith = list(SMOOTH_GROUP_LATTICE)
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
