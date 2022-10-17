@@ -43,9 +43,7 @@
 	if(!stamped)
 		if(istype(attacking_item, /obj/item/stamp))
 			if(istype(attacking_item, stamp_requested) || istype(attacking_item, stamp_requested)) //chameleon stamp does not work, this is a CRITICAL issue
-				stamped = TRUE
-				add_overlay(stamp_overlay)
-				update_overlays()
+				add_stamp()
 				to_chat(user, span_notice("You skim through the papers until you find a field reading 'STAMP HERE', and complete the paperwork."))
 			else
 				to_chat(user, span_warning("You hunt through the papers for somewhere to use the [attacking_item], but can't find anything."))
@@ -71,6 +69,16 @@
 				var/title = initial(stamp_title.title)
 				. += "Trying to read through it makes your head spin. Judging by the few words you can make out, this looks like a job for a [title]." //fix grammar here
 
+/**
+ * Adds the stamp overlay and sets "stamped" to true
+ *
+ * Adds the stamp overlay to a piece of paperwork, and sets "stamped" to true.
+ * Handled as a proc so that an object may be maked as "stamped" even when a stamp isn't present (like the photocopier)
+ */
+/obj/item/paperwork/proc/add_stamp()
+	stamped = TRUE
+	add_overlay(stamp_overlay)
+	update_overlays()
 
 //HEAD OF STAFF DOCUMENTS
 
@@ -169,6 +177,8 @@
 	name = "photocopied paperwork documents"
 	desc = "An even more disorganized mess of photocopied documents and paperwork. Did these even copy in the right order?"
 	stamp_icon = "paper_stamp-pc"
+	/// Has the photocopy been marked with a "void" stamp. Used to prevent documents from draining money if they somehow make their way to cargo.
+	var/voided = FALSE
 
 /obj/item/paperwork/photocopy/Initialize(mapload)
 	. = ..()
@@ -183,8 +193,8 @@
 	. += "These appear to just be a photocopy of the original documents. The stamp on the front appears to be smudged and faded. Central Command will probably still accept these, right?"
 
 /obj/item/paperwork/photocopy/attackby(obj/item/attacking_item, mob/user, params)
-	if(istype(attacking_item, /obj/item/stamp/void) && !stamped)
+	if(istype(attacking_item, /obj/item/stamp/void) && !stamped && !voided)
 		to_chat(user, span_notice("You plant the [attacking_item] firmly onto the front of the documents."))
-		stamp_overlay = mutable_appearance('icons/obj/bureaucracy.dmi', "paper_stamp-void") //This doesn't actually mark it as "stamped", so voided papers still can't be sold to cargo
+		stamp_overlay = mutable_appearance('icons/obj/bureaucracy.dmi', "paper_stamp-void")
 		add_overlay(stamp_overlay)
-
+		voided = TRUE //It won't get you any money, but it also can't LOSE you money now.
