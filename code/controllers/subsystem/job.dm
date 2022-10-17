@@ -73,6 +73,7 @@ SUBSYSTEM_DEF(job)
 	## You can use the admin verb 'Generate Job Configuration' in-game to auto-regenerate this config as a downloadable file without having to manually edit this file if we add more jobs or more things you can edit here.\n\
 	## It will always respect prior-existing values in the config, but will appropriately add more fields when they generate.\n## It's strongly advised you create your own version of this file rather than use the one provisioned on the codebase.\n\n\
 	## The game will not read any line that is commented out with a '#', as to allow you to defer to codebase defaults.\n## If you want to override the codebase values, add the value and then uncomment that line by removing the # from the job key's name.\n\
+	## Ensure that the key is flush, do not introduce any whitespaces when you uncomment a key. For example:\n## \"# Total Positions\" should always be changed to \"Total Positions\", no additional spacing. \n\
 	## Best of luck editing!\n"
 
 /datum/controller/subsystem/job/Initialize()
@@ -640,11 +641,11 @@ SUBSYSTEM_DEF(job)
 		return
 
 	else // legacy mode, so just run the old parser.
-		var/jobstext = file("[global.config.directory]/jobs.txt")
-		if(!fexists(jobstext))
+		var/jobsfile = file("[global.config.directory]/jobs.txt")
+		if(!fexists(jobsfile))
 			return
 		for(var/datum/job/occupation as anything in joinable_occupations)
-			jobstext = file2text(jobstext)
+			var/jobstext = file2text(jobsfile)
 			var/regex/parser = new("[occupation.title]=(-1|\\d+),(-1|\\d+)")
 			parser.Find(jobstext)
 			occupation.total_positions = text2num(parser.group[1])
@@ -666,6 +667,7 @@ SUBSYSTEM_DEF(job)
 	if(fexists(file(jobstext))) // Generate the new TOML format, migrating from the text format.
 		to_chat(user, span_notice("Found jobs.txt in config directory! Generating jobconfig.toml from it."))
 		jobstext = file2text(file(jobstext)) // walter i'm dying (get the file from the string, then parse it into a larger text string)
+		config_documentation += "\n\n## This TOML was migrated from jobs.txt. All variables are COMMENTED and will not load by default! Please verify to ensure that they are correct, and uncomment the key as you want, comparing it to the old config.\n\n" // small warning
 		for(var/datum/job/occupation as anything in joinable_occupations)
 			var/job_key = occupation.config_tag
 			var/regex/parser = new("[occupation.title]=(-1|\\d+),(-1|\\d+)") // TXT system used the occupation's name, we convert it to the new config_key system here.
@@ -682,7 +684,7 @@ SUBSYSTEM_DEF(job)
 				"# [TOTAL_POSITIONS]" = default_positions,
 				"# [SPAWN_POSITIONS]" = starting_positions,
 			)
-		config_documentation += "\n\n## This TOML was migrated from jobs.txt. All variables are COMMENTED and will not load by default! Please verify to ensure that they are correct, and uncomment the key as you want.\n\n" // small warning
+
 		if(!export_toml(user, file_data))
 			return FALSE
 		return TRUE
