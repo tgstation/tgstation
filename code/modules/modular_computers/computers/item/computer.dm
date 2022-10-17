@@ -364,7 +364,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
 	var/obj/item/computer_hardware/card_slot/card_slot2 = all_components[MC_CARD2]
 
-	if(card_slot.stored_card || card_slot2?.stored_card) // IDs get removed first before pAIs
+	if(card_slot?.stored_card || card_slot2?.stored_card) // IDs get removed first before pAIs
 		context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove ID"
 	else if(inserted_pai)
 		context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove pAI"
@@ -372,7 +372,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	if(all_components[MC_SDD])
 		context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB] = "Remove SSD"
 
-	if(all_components[MC_SDD] || card_slot.stored_card || card_slot2?.stored_card || inserted_pai)
+	if(all_components[MC_SDD] || card_slot?.stored_card || card_slot2?.stored_card || inserted_pai)
 		return CONTEXTUAL_SCREENTIP_SET
 	else
 		return NONE
