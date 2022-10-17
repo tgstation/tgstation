@@ -140,10 +140,11 @@
 	. = ..()
 
 	detailed_desc = span_notice("<i>As you sift through the papers, you slowly start to piece together what you're reading.</i>")
-	detailed_desc += "[span_info(" The stack of documents appear to be a medical report from a nearby station, detailing the vivisection of an unknown xenofauna.")]"
-	detailed_desc += "[span_info(" In the report, the specimen was reportedly 'inarticulate and extremely hostile', requiring restraints during the surgical process.")]"
-	detailed_desc += "[span_info(" Inspection of the attached photos reveal that the specimen was the station bartender's pet monkey, with parts of its uniform still visible.")]"
-	detailed_desc += "[span_info(" Regardless, the vivisection results look like they could be useful. You should probably stamp this.")]"
+	detailed_desc += "[span_info(" The stack of documents appear to be a medical report from a nearby station, detailing the autopsy of an unknown xenofauna.")]"
+	detailed_desc += "[span_info(" Skipping to the end of the report reveals that the specimen was the station bartender's pet monkey.")]"
+	detailed_desc += "[span_info(" The specimen had been exposed to radiation during an 'unrelated incident with the engine', leading to it's mutated form.")]"
+	detailed_desc += "[span_info(" Regardless, the autopsy results look like they could be useful. You should probably stamp this.")]"
+
 
 /obj/item/paperwork/engineering
 	stamp_requested = /obj/item/stamp/ce
