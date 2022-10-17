@@ -12506,6 +12506,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/service/general,
+/obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/plastic,
 /area/station/hallway/secondary/service)
 "dIl" = (
@@ -39974,6 +39975,9 @@
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /obj/effect/mapping_helpers/airlock/access/all/service/general,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 1
+	},
 /turf/open/floor/iron/textured_half,
 /area/station/hallway/secondary/service)
 "mny" = (
@@ -62597,6 +62601,9 @@
 	name = "Service Hall"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/service/general,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 1
+	},
 /turf/open/floor/iron/textured_half,
 /area/station/hallway/secondary/service)
 "trb" = (
