@@ -89,7 +89,7 @@
 //did you know you can subtype /image and /mutable_appearance? // Stop telling them that they might actually do it
 /image/fov_image
 	icon = 'icons/effects/fov/fov_effects.dmi'
-	layer = FOV_EFFECTS_LAYER
+	layer = FLY_LAYER
 	appearance_flags = RESET_COLOR | RESET_TRANSFORM
 	plane = SOUND_EFFECT_VISUAL_PLANE
 

@@ -514,6 +514,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	plane = SOUND_EFFECT_VISUAL_PLANE
 	render_relay_planes = list(RENDER_PLANE_NON_GAME)
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	allows_offsetting = FALSE
 
 /atom/movable/screen/plane_master/runechat
 	name = "Runechat"

@@ -213,10 +213,9 @@
 #define CRIT_LAYER 5
 #define CURSE_LAYER 6
 
-///--------------- SOUND EFFECT VISUALS ------------
+///--------------- FULLSCREEN RUNECHAT BUBBLES ------------
 /// Bubble for typing indicators
-#define TYPING_LAYER 1
-#define FOV_EFFECTS_LAYER 2 //Blindness effects are not layer 4, they lie to you
+#define TYPING_LAYER 500
 
 #define RADIAL_BACKGROUND_LAYER 0
 ///1000 is an unimportant number, it's just to normalize copied layers
