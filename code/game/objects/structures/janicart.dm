@@ -20,7 +20,8 @@
 	. = ..()
 	create_reagents(100, OPENCONTAINER)
 	GLOB.janitor_devices += src
-	register_context()
+
+	register_context() //Context sensitive tooltips. See add_context()
 
 /obj/structure/janitorialcart/Destroy()
 	GLOB.janitor_devices -= src
@@ -76,7 +77,7 @@
 		if(held_signs.len)
 			var/obj/item/clothing/suit/caution/sign_obj = held_signs[1]
 			if(held_signs.len > 1)
-				. += "\t[held_signs.len] [icon2html(sign_obj, user)] [sign_obj.name]\s"
+				. += "\t[icon2html(sign_obj, user)] [sign_obj.name]\s x[held_signs.len]"
 			else
 				. += "\t[icon2html(sign_obj, user)] \a [sign_obj]"
 		. += span_notice("\n<b>Left-click</b> to [contents.len > 1 ? "search [src]" : "remove [contents[1]]"].")
@@ -137,7 +138,7 @@
 		context[SCREENTIP_CONTEXT_RMB] = "Fill [src]'s mop bucket"
 		return CONTEXTUAL_SCREENTIP_SET
 	if(held_item.tool_behaviour == TOOL_CROWBAR && CART_HAS_MINIMUM_REAGENT_VOLUME)
-		context[SCREENTIP_CONTEXT_LMB] = "Dump [src]'s mop bucket on [loc]"
+		context[SCREENTIP_CONTEXT_LMB] = "Dump [src]'s mop bucket on [get_turf(src)]"
 		return CONTEXTUAL_SCREENTIP_SET
 	if(mybag?.atom_storage?.max_specific_storage >= held_item.w_class)
 		context[SCREENTIP_CONTEXT_RMB] = "Insert [held_item] into [mybag]"
@@ -163,7 +164,7 @@
 		if(mybag)
 			balloon_alert(user, "already has \a [mybag]!")
 		else if(user.transferItemToLoc(attacking_item, src))
-			balloon_alert(user, "placed [attacking_item]")
+			balloon_alert(user, "attached [attacking_item]")
 		return
 
 	if(istype(attacking_item, /obj/item/reagent_containers/spray/cleaner))
@@ -200,7 +201,7 @@
 	user.visible_message(span_notice("[user] begins to dumping the contents of [src]'s mop bucket."), span_notice("You begin to dump the contents of [src]'s mop bucket..."))
 	if(tool.use_tool(src, user, 5 SECONDS, volume = 50))
 		balloon_alert(user, "dumped [src]")
-		to_chat(user, span_notice("You dump the contents of [src]'s mop bucket onto the floor."))
+		to_chat(user, span_notice("You dumped the contents of [src]'s mop bucket onto the floor."))
 		reagents.expose(loc)
 		reagents.clear_reagents()
 		update_appearance(UPDATE_ICON)
@@ -262,7 +263,7 @@
 		if("Trash bag")
 			if(!mybag)
 				return
-			balloon_alert(user, "removed [mybag]")
+			balloon_alert(user, "detached [mybag]")
 			user.put_in_hands(mybag)
 		if("Mop")
 			if(!mymop)
