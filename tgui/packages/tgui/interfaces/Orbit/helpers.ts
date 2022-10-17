@@ -1,5 +1,5 @@
 import { sortBy } from 'common/collections';
-import { ANTAG2GROUP, Health, Threat } from './constants';
+import { ANTAG2GROUP, HEALTH, THREAT } from './constants';
 import type { AntagGroup, Antags, Observable } from './types';
 
 /**
@@ -43,9 +43,9 @@ export const getDisplayName = (full_name: string, name?: string) => {
 /** Returns the display color for certain health percentages */
 const getHealthColor = (health: number) => {
   switch (true) {
-    case health > Health.GOOD:
+    case health > HEALTH.Good:
       return 'good';
-    case health >= Health.AVERAGE:
+    case health >= HEALTH.Average:
       return 'average';
     default:
       return 'bad';
@@ -55,11 +55,11 @@ const getHealthColor = (health: number) => {
 /** Returns the display color based on orbiter numbers */
 const getThreatColor = (orbiters: number) => {
   switch (true) {
-    case orbiters > Threat.HIGH:
+    case orbiters > THREAT.High:
       return 'violet';
-    case orbiters > Threat.MEDIUM:
+    case orbiters > THREAT.Medium:
       return 'blue';
-    case orbiters > Threat.LOW:
+    case orbiters > THREAT.Low:
       return 'teal';
     default:
       return 'good';
