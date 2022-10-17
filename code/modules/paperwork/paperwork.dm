@@ -90,8 +90,10 @@
 /obj/item/paperwork/cargo/Initialize()
 	. = ..()
 
-	detailed_desc += "[span_info("The papers are a stack of mundane cargo shipping orders. Most of these papers are completely unecessary, with seemingly no rhyme or reason to their placement.")]"
-	detailed_desc += "[span_info("Whoever sent this probably just put extra papers in to make the stack of documents look bigger and more important. You should probably still stamp it anyways.")]"
+	detailed_desc += "[span_info("The papers are a mess of shipping order paperwork. There's no rhyme or reason to how these documents are sorted at all.")]"
+	detailed_desc += "[span_info("By the looks of it, there's nothing out of the ordinary here besides a high-priority request for a second engine.")]"
+	detailed_desc += "[span_info("The 'priority request reason' field is scribbled out, but a note in the margins reads 'we want to try two engines don't worry about it.'")]"
+	detailed_desc += "[span_info("Despite how disorganized the documents are, they're all appropriately filled in. You should probably stamp this.")]"
 
 /obj/item/paperwork/security
 	stamp_requested = /obj/item/stamp/hos
@@ -116,7 +118,7 @@
 
 	detailed_desc += "[span_info("Your begin scanning over the document. This is a standard Nanotrasen NT-435Z3 form used for requests to Central Command.")]"
 	detailed_desc += "[span_info("Looks like a nearby station has sent in a MAXIMUM priority request for coal, in seemingly ridiculous quantities.")]"
-	detailed_desc += "[span_info("The reason listed for the request seems to be hastily filled in -- 'Engine exploded, need coal to power auxiliary generators.'")]"
+	detailed_desc += "[span_info("The reason listed for the request seems to be hastily filled in -- 'Seeking alternative methods to power the station.'")]"
 	detailed_desc += "[span_info("A MAXIMUM priority request like this is nothing to balk at. You should probably stamp this.")]"
 
 /obj/item/paperwork/medical
@@ -179,13 +181,6 @@
 	stamp_icon = "paper_stamp-pc"
 	/// Has the photocopy been marked with a "void" stamp. Used to prevent documents from draining money if they somehow make their way to cargo.
 	var/voided = FALSE
-
-/obj/item/paperwork/photocopy/Initialize(mapload)
-	. = ..()
-
-	if(stamped)
-		add_overlay(stamp_overlay)
-		update_overlays()
 
 /obj/item/paperwork/photocopy/examine(mob/user)
 	. = ..()

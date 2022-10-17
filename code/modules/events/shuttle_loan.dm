@@ -65,9 +65,9 @@
 			thanks_msg = "Live explosive ordnance incoming via supply shuttle. Evacuating cargo bay is recommended."
 			bonus_points = 45000 //If you mess up, people die and the shuttle gets turned into swiss cheese
 		if(PAPERS_PLEASE)
-			priority_announce("Cargo: A neighboring station has sent us a bunch of paperwork we don't want to deal with. Could you process it for us?", "CentCom Paperwork Division")
+			priority_announce("Cargo: A neighboring station needs some help handling some paperwork. Could you help process it for us?", "CentCom Paperwork Division")
 			thanks_msg = "The cargo shuttle should return in five minutes. Payment will be rendered when the paperwork is processed and returned."
-			bonus_points = 0 //Payout is made when the stamped papers are returned (IN THEORY IF I CAN GET THIS TO WORK SUBJECT TO CHANGE ETC.)
+			bonus_points = 0 //Payout is made when the stamped papers are returned
 
 /datum/round_event/shuttle_loan/proc/loan_shuttle()
 	priority_announce(thanks_msg, "Cargo shuttle commandeered by CentCom.")
