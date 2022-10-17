@@ -5,23 +5,25 @@
 	var/list/collected_tags = list()
 	// I CREATED THE NEW SYSTEM TO GET AWAY FROM REGEXING SHIT BUT I AM STUCK IN THIS FILTHY MEAT CAGE FUCK
 	// Check for any whitespace in a config tag.
-	var/regex/tag_regex_whitespace = new("\s")
-	// Check to ensure that no config tag has lowercase characters.
-	var/regex/tag_regex_lowercase = new("[A-Z]+(_[A-Z]+)*")
+	var/regex/tag_regex_whitespace = new("\\s")
+	// Check to ensure that no config tag has lowercase characters (enforce SCREAMING_SNAKE_CASE).
+	var/regex/tag_regex_lowercase = new("\[A-Z\]+_\[A-Z\]*")
+
+	var/number_of_jobs = length(SSjob.joinable_occupations)
+	var/number_of_keys
 
 	for(var/datum/job/occupation as anything in SSjob.joinable_occupations)
-		TEST_ASSERT_NOTEQUAL(occupation.config_tag, "", "Job [occupation.title] has no config_tag!") // The base job datum has an empty string, so it's likely that we forgot to give it a unique config tag in the first place.
-		collected_tags += occupation.config_tag
+		tag = occupation.config_tag
 
-		var/number_of_jobs = length(SSjob.joinable_occupations)
-		var/number_of_keys = length(collected_tags)
+		TEST_ASSERT_NOTEQUAL(tag, "", "Job [occupation.title] has no config_tag!") // The base job datum has an empty string, so it's likely that we forgot to give it a unique config tag in the first place.
+		TEST_ASSERT_NOTNULL(tag_regex_whitespace.Find(tag), "The config tag [tag], for the job [occupation.title] has whitespace in it. Please remove the whitespace.")
+		TEST_ASSERT_NOTNULL(tag_regex_lowercase.Find(tag), "The config tag [tag], for the job [occupation.title] has lowercase characters in it. Please ensure that the config tag is in SCREAMING_SNAKE_CASE!")
 
-		TEST_ASSERT_EQUAL(length(collected_tags), length(SSjob.joinable_occupations), "Mismatch between the number of joinable occupations: [number_of_jobs] against the number of unique config tags: [number_of_keys]!")
+		collected_tags += tag
 
-		for(var/tag in collected_tags)
-			TEST_ASSERT_NOTNULL(tag_regex_whitespace.Find(tag), "The config tag [tag], for the job [occupation.title] has whitespace in it. Please remove the whitespace.")
-			TEST_ASSERT_NOTNULL(tag_regex_lowercase.Find(tag), "The config tag [tag], for the job [occupation.title] has lowercase characters in it. Please ensure that the config tag is in SCREAMING_SNAKE_CASE!")
-			collected_tags -= tag
-			TEST_ASSERT_NULL(collected_tags["[tag]"], "The config tag [tag], for the job [occupation.title] is a duplicate of another config tag. Please ensure that the config tag is unique.")
+	number_of_keys = length(collected_tags)
+	TEST_ASSERT_EQUAL(number_of_keys, number_of_jobs, "Mismatch between the number of joinable occupations: [number_of_jobs] against the number of unique config tags: [number_of_keys]!")
 
-
+	for(var/iterated_tag in collected_tags)
+		collected_tags -= iterated_tag // Remove this tag from the list. If the tag still exists, it means that there are two jobs with the same config tag (duplicate).
+		TEST_ASSERT_NULL(collected_tags[iterated_tag], "The config tag [iterated_tag] is used more than once!")
