@@ -66,10 +66,11 @@
 	message = initial(message)
 	return TRUE
 
-/// Before we create a vote, remove all maps from our choices that are outside of our population range. Note that this can result in zero remaining choices for our vote, which is not ideal. Let's warn users about that if it comes up.
-/// Argument create_vote is typically FALSE, pass as TRUE if calling from the create_vote proc.
+/// Before we create a vote, remove all maps from our choices that are outside of our population range. Note that this can result in zero remaining choices for our vote, which is not ideal (but ultimately okay).
+/// Argument create_vote is typically FALSE, pass as TRUE if calling from the create_vote proc. When FALSE, we collect the default choices in a similar manner to how the create_vote() proc does it.
+/// When TRUE, there's no need to collect the default choices and key it that way since create_vote() already does that in it's own proc handling, so let's avoid doing double work.
 /datum/vote/map_vote/proc/check_population(create_vote = FALSE)
-	if(!create_vote) // We simulate the parent of create_vote here if this is called outside of the create_vote proc.
+	if(!create_vote)
 		for(var/key in default_choices)
 			choices[key] = 0
 
