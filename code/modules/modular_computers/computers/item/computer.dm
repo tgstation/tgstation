@@ -164,16 +164,19 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	if(user.canUseTopic(src, be_close = TRUE))
 		var/obj/item/computer_hardware/card_slot/card_slot2 = all_components[MC_CARD2]
 		var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
-		if(card_slot2?.try_eject(user) || card_slot?.try_eject(user))
+
+		if(istype(card_slot) && card_slot.stored_card && card_slot?.try_eject(user))
 			return TRUE
-		
-		if(inserted_pai) // Remove pAI
+
+		if(istype(card_slot2) && card_slot2?.stored_card && card_slot2?.try_eject(user))
+			return TRUE
+
+		if(istype(inserted_pai)) // Remove pAI
 			user.put_in_hands(inserted_pai)
 			to_chat(user, span_notice("You remove [inserted_pai] from the [name]."))
-			inserted_pai.slotted = FALSE
 			inserted_pai = null
 			return TRUE
-		
+
 		if(!istype(src, /obj/item/modular_computer/tablet))
 			return FALSE
 
@@ -358,13 +361,18 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 /obj/item/modular_computer/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
 
-	if(all_components[MC_CARD] || inserted_pai)
-		// The order is that IDs get removed first before pAIs
-		context[SCREENTIP_CONTEXT_ALT_LMB] = all_components[MC_CARD] ? "Remove ID" : "Remove pAI" 
-	if(all_components[MC_SDD])
-		context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB] = "Remove Disk"
+	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
+	var/obj/item/computer_hardware/card_slot/card_slot2 = all_components[MC_CARD2]
 
-	if(all_components[MC_SDD] || all_components[MC_CARD] || inserted_pai)
+	if(card_slot.stored_card || card_slot2?.stored_card) // IDs get removed first before pAIs
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove ID"
+	else if(inserted_pai)
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove pAI"
+
+	if(all_components[MC_SDD])
+		context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB] = "Remove SSD"
+
+	if(all_components[MC_SDD] || card_slot.stored_card || card_slot2?.stored_card || inserted_pai)
 		return CONTEXTUAL_SCREENTIP_SET
 	else
 		return NONE

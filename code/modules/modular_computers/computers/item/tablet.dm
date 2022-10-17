@@ -58,7 +58,8 @@
 /obj/item/modular_computer/tablet/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 
-	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Remove pen"
+	if(istype(inserted_item, /obj/item/pen))
+		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Remove pen"
 
 	return CONTEXTUAL_SCREENTIP_SET
 
