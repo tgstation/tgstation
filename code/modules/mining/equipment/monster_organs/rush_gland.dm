@@ -5,7 +5,7 @@
  * On use in hand, makes you run really fast for 5 seconds and ignore injury movement decrease.
  * On use when implanted, run for longer and ignore all negative movement. Automatically triggers if health is low (to escape).
  */
-/obj/item/organ/internal/monster_core/reusable/rush_gland
+/obj/item/organ/internal/monster_core/rush_gland
 	name = "rush gland"
 	icon_state = "lobster_gland"
 	icon_state_preserved = "lobster_gland_stable"
@@ -14,13 +14,14 @@
 	desc_preserved = "A lobstrosity's engorged adrenal gland. It is preserved, allowing you to use it for a burst of speed whenever you need it."
 	desc_inert = "A lobstrosity's adrenal gland. It is all shrivelled up."
 	user_status = /datum/status_effect/lobster_rush
+	actions_types = list(/datum/action/cooldown/monster_core_action/adrenal_boost)
 
-/obj/item/organ/internal/monster_core/reusable/rush_gland/on_life(delta_time, times_fired)
+/obj/item/organ/internal/monster_core/rush_gland/on_life(delta_time, times_fired)
 	. = ..()
 	if (owner.health <= HEALTH_DANGER_ZONE)
-		use_internal.Trigger()
+		trigger_interal_action()
 
-/obj/item/organ/internal/monster_core/reusable/rush_gland/activate_implanted()
+/obj/item/organ/internal/monster_core/rush_gland/trigger_interal_action()
 	owner.apply_status_effect(/datum/status_effect/lobster_rush/extended)
 
 /**
@@ -85,5 +86,13 @@
 /// You get a longer buff if you take the time to implant it in yourself
 /datum/status_effect/lobster_rush/extended
 	duration = 5 SECONDS
+
+/// Action used by the rush gland
+/datum/action/cooldown/monster_core_action/adrenal_boost
+	name = "Adrenal Boost"
+	desc = "Pump your rush gland to give yourself a boost of speed. \
+		Impacts with objects can be dangerous under atmospheric pressure."
+	button_icon_state = "lobster_gland_stable"
+	cooldown_time = 3 MINUTES
 
 #undef HEALTH_DANGER_ZONE

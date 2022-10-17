@@ -35,6 +35,7 @@
 		It will rapidly decay into uselessness. but don't worry because it's already useless."
 	icon = 'icons/obj/medical/organs/mining_organs.dmi'
 	icon_state = "roro core 2"
+	actions_types = list(/datum/action/cooldown/monster_core_action)
 	visual = FALSE
 	item_flags = NOBLUDGEON
 	slot = ORGAN_SLOT_MONSTER_CORE
@@ -56,23 +57,13 @@
 	var/desc_inert
 	/// Status effect applied by this organ
 	var/datum/status_effect/user_status
-	/// Moodlet applied by this organ
-	var/datum/mood_event/moodlet
-	/// Action to grant when organ is implanted
-	var/datum/action/item_action/organ_action/use_internal
 
 /obj/item/organ/internal/monster_core/Initialize(mapload)
 	. = ..()
 	decay_timer = addtimer(CALLBACK(src, .proc/go_inert), time_to_decay, TIMER_STOPPABLE)
-	setup_internal_use_action()
-	add_item_action(use_internal)
-
-/// Set up the action for using the organ internally
-/obj/item/organ/internal/monster_core/proc/setup_internal_use_action()
-	use_internal = new(src)
 
 /obj/item/organ/internal/monster_core/Destroy(force, silent)
-	QDEL_NULL(use_internal)
+	deltimer(decay_timer)
 	return ..()
 
 /obj/item/organ/internal/monster_core/Insert(mob/living/carbon/target_carbon, special = 0, drop_if_replaced = TRUE)
@@ -182,25 +173,39 @@
 /obj/item/organ/internal/monster_core/proc/apply_to(mob/living/target, mob/user)
 	if (user_status)
 		target.apply_status_effect(user_status)
-	if (moodlet)
-		target.add_mood_event("core", moodlet)
 	qdel(src)
 
-/obj/item/organ/internal/monster_core/ui_action_click()
-	activate_implanted()
+/**
+ * Utility proc to find the associated monster organ action and trigger it.
+ * Call this instead of on_triggered_internal() if the action needs to trigger automatically, or the cooldown won't happen.
+ */
+/obj/item/organ/internal/monster_core/proc/trigger_interal_action()
+	var/datum/action/cooldown/monster_core_action/action = locate() in actions
+	action?.Trigger()
 
 /**
  * Called when activated while implanted inside someone.
- * This is either when they press the UI button or if should_apply_on_life() returns true.
+ * This could be via clicking the associated action button or through the above method.
  */
-/obj/item/organ/internal/monster_core/proc/activate_implanted()
+/obj/item/organ/internal/monster_core/proc/on_triggered_internal()
 	SHOULD_CALL_PARENT(FALSE)
 	CRASH("Someone forgot to make their organ do something when you implant it.")
 
-/// Monster core which is reusable when implanted
-/obj/item/organ/internal/monster_core/reusable
-	/// How long between activations when implanted?
-	var/internal_use_cooldown = 3 MINUTES
+/**
+ * Boilerplate to set the name and icon of the cooldown action.
+ * Makes it call 'ui_action_click' when the action is activated.
+ */
+/datum/action/cooldown/monster_core_action
+	check_flags = AB_CHECK_CONSCIOUS
+	icon_icon = 'icons/obj/medical/organs/mining_organs.dmi'
+	button_icon_state = "roro core 2"
+	text_cooldown = FALSE //Looks really bad when you have minutes long cooldowns
 
-/obj/item/organ/internal/monster_core/reusable/setup_internal_use_action()
-	use_internal = new /datum/action/item_action/organ_action/cooldown(src, internal_use_cooldown)
+/datum/action/cooldown/monster_core_action/Activate(trigger_flags)
+	. = ..()
+	if (!target)
+		return
+	var/obj/item/organ/internal/monster_core/organ = target
+	if (!istype(organ))
+		return
+	organ.trigger_interal_action()

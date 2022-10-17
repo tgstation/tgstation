@@ -4,7 +4,7 @@
  * If implanted, you can shake off a cloud of brimdust to give this buff to people around you.area
  * I you have this inside you on the station and you catch fire it explodes.
  */
-/obj/item/organ/internal/monster_core/reusable/brimdust_sac
+/obj/item/organ/internal/monster_core/brimdust_sac
 	name = "brimdust sac"
 	desc = "A strange organ from a brimdemon. You can shake it out to coat yourself in explosive powder."
 	icon_state = "brim_sac"
@@ -13,12 +13,13 @@
 	desc_preserved = "A strange organ from a brimdemon. It is preserved, allowing you to coat yourself in its explosive contents at your leisure."
 	desc_inert = "A decayed brimdemon organ. There's nothing usable left inside it."
 	user_status = /datum/status_effect/stacking/brimdust_coating
+	actions_types = list(/datum/action/cooldown/monster_core_action/exhale_brimdust)
 
-/obj/item/organ/internal/monster_core/reusable/brimdust_sac/Initialize(mapload)
+/obj/item/organ/internal/monster_core/brimdust_sac/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/explodable, light_impact_range = 1)
 
-/obj/item/organ/internal/monster_core/reusable/brimdust_sac/on_life(delta_time, times_fired)
+/obj/item/organ/internal/monster_core/brimdust_sac/on_life(delta_time, times_fired)
 	. = ..()
 	if(!owner.on_fire)
 		return
@@ -27,7 +28,7 @@
 	explode_organ()
 
 /// Your gunpowder organ blows up, uh oh
-/obj/item/organ/internal/monster_core/reusable/brimdust_sac/proc/explode_organ()
+/obj/item/organ/internal/monster_core/brimdust_sac/proc/explode_organ()
 	owner.visible_message(span_boldwarning("[owner]'s chest bursts open as something inside ignites!"))
 	var/turf/origin_turf = get_turf(owner)
 	playsound(origin_turf, 'sound/effects/pop_expl.ogg', 100)
@@ -45,7 +46,7 @@
 	qdel(src)
 
 /// Make a cloud which applies brimdust to everyone nearby
-/obj/item/organ/internal/monster_core/reusable/brimdust_sac/activate_implanted()
+/obj/item/organ/internal/monster_core/brimdust_sac/trigger_interal_action()
 	var/turf/origin_turf = get_turf(owner)
 	do_smoke(range = 2, holder = owner, location = origin_turf, smoke_type = /obj/effect/particle_effect/fluid/smoke/bad/brimdust)
 
@@ -172,3 +173,11 @@
 		owner.adjust_fire_stacks(5)
 		owner.ignite_mob()
 	add_stacks(-1)
+
+/// Action used by the rush gland
+/datum/action/cooldown/monster_core_action/exhale_brimdust
+	name = "Exhale Brimdust"
+	desc = "Cough out a cloud of explosive brimdust to coat those nearby. \
+		This organ and the dust it produces are extremely flammable under atmospheric pressure."
+	button_icon_state = "brim_sac_stable"
+	cooldown_time = 3 MINUTES

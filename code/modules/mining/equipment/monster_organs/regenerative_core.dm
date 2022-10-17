@@ -8,7 +8,7 @@
 	desc_preserved = "All that remains of a hivelord. It is preserved, allowing you to use it to heal completely without danger of decay."
 	desc_inert = "All that remains of a hivelord. It has decayed, and is completely useless."
 	user_status = /datum/status_effect/regenerative_core
-	moodlet = /datum/mood_event/healsbadman
+	actions_types = list(/datum/action/cooldown/monster_core_action/regenerative_core)
 
 /obj/item/organ/internal/monster_core/regenerative_core/preserve(implanted = FALSE)
 	if (implanted)
@@ -26,14 +26,15 @@
 /obj/item/organ/internal/monster_core/regenerative_core/on_life(delta_time, times_fired)
 	. = ..()
 	if (owner.health <= owner.crit_threshold)
-		activate_implanted()
+		trigger_interal_action()
 
-/obj/item/organ/internal/monster_core/regenerative_core/activate_implanted()
+/obj/item/organ/internal/monster_core/regenerative_core/trigger_interal_action()
 	owner.revive(full_heal = TRUE, admin_revive = FALSE)
 	qdel(src)
 
-/// Log applications.
+/// Log applications and apply moodlet.
 /obj/item/organ/internal/monster_core/regenerative_core/apply_to(mob/living/target, mob/user)
+	target.add_mood_event("regenerative core", /datum/mood_event/healsbadman)
 	if (target != user)
 		target.visible_message(span_notice("[user] forces [target] to apply [src]... Black tendrils entangle and reinforce [target.p_them()]!"))
 		SSblackbox.record_feedback("nested tally", "hivelord_core", 1, list("[type]", "used", "other"))
@@ -50,3 +51,13 @@
 	icon_state = "legion_soul_unstable"
 	icon_state_inert = "legion_soul_inert"
 	icon_state_preserved = "legion_soul"
+
+/// Action used by the regenerative core
+/datum/action/cooldown/monster_core_action/regenerative_core
+	name = "Regenerate"
+	desc = "Fully regenerate your body, consuming your regenerative core in the process. \
+		This process will trigger automatically if you are badly wounded."
+	button_icon_state = "legion_soul"
+	check_flags = NONE
+
+/datum/action/cooldown/monster_core_action/regenerative_core
