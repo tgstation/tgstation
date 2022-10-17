@@ -45,7 +45,7 @@ const getHealthColor = (health: number) => {
   switch (true) {
     case health > HEALTH.Good:
       return 'good';
-    case health >= HEALTH.Average:
+    case health > HEALTH.Average:
       return 'average';
     default:
       return 'bad';

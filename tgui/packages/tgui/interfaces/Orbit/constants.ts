@@ -38,6 +38,6 @@ export enum THREAT {
 }
 
 export enum HEALTH {
-  Good = 75,
-  Average = 20,
+  Good = 69,
+  Average = 19,
 }
