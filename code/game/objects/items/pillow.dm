@@ -33,7 +33,7 @@
 	if(!iscarbon(target_mob))
 		return
 	if(HAS_TRAIT(src, TRAIT_WIELDED))
-		user.apply_damage(10, STAMINA) // when hitting with such force we should prolly be getting tired too
+		user.apply_damage(5, STAMINA) // when hitting with such force we should prolly be getting tired too
 	last_fighter = user
 	playsound(user, 'sound/items/pillow_hit.ogg', 80) //the basic 50 vol is barely audible
 
