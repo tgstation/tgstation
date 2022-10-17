@@ -76,13 +76,25 @@
 
 /obj/structure/janitorialcart/examine(mob/user)
 	. = ..()
+	if(contents.len)
+		. += span_notice("It is carrying:")
+		for(var/thing in contents)
+			if(thing in held_signs)
+				continue //we'll do this after.
+			. += "\t[icon2html(thing, user)] \a [thing]"
+		if(held_signs.len)
+			var/obj/item/clothing/suit/caution/sign_obj = held_signs[1]
+			if(held_signs.len > 1)
+				. += "\t[held_signs.len] [icon2html(sign_obj, user)] [sign_obj.name]\s"
+			else
+				. += "\t[icon2html(sign_obj, user)] \a [sign_obj]"
 	if(mymop)
-		. += span_info("<b>Right-click</b> to quickly remove [mymop].")
+		. += span_notice("<b>Right-click</b> to quickly remove [mymop].")
 	if(CART_HAS_MINIMUM_REAGENT_VOLUME)
-		. += span_info("<b>Right-click</b> with a mop to wet it.")
+		. += span_notice("<b>Right-click</b> with a mop to wet it.")
 		. += span_info("<b>Crowbar</b> it to empty it onto [get_turf(src)].")
 	if(mybag)
-		. += span_info("<b>Right-click</b> with an object to put it in [mybag].")
+		. += span_notice("<b>Right-click</b> with an object to put it in [mybag].")
 
 /obj/structure/janitorialcart/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(!held_item)
@@ -130,10 +142,10 @@
 		context[SCREENTIP_CONTEXT_LMB] = "Insert [held_item]"
 		return CONTEXTUAL_SCREENTIP_SET
 	if((held_item.is_refillable() && held_item.reagents.total_volume) && reagents.total_volume < reagents.maximum_volume)
-		context[SCREENTIP_CONTEXT_RMB] = "Fill cart bucket"
+		context[SCREENTIP_CONTEXT_RMB] = "Fill [src]'s mop bucket"
 		return CONTEXTUAL_SCREENTIP_SET
 	if(held_item.tool_behaviour == TOOL_CROWBAR && CART_HAS_MINIMUM_REAGENT_VOLUME)
-		context[SCREENTIP_CONTEXT_LMB] = "Empty cart bucket on [loc]"
+		context[SCREENTIP_CONTEXT_LMB] = "Empty [src]'s mop bucket on [loc]"
 		return CONTEXTUAL_SCREENTIP_SET
 	if(mybag?.atom_storage?.max_specific_storage >= held_item.w_class)
 		context[SCREENTIP_CONTEXT_RMB] = "Insert [held_item] into [mybag]"
@@ -194,7 +206,7 @@
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 	user.visible_message(span_notice("[user] begins to empty the contents of [src]."), span_notice("You begin to empty the contents of [src]..."))
 	if(tool.use_tool(src, user, 5 SECONDS, volume = 50))
-		to_chat(usr, span_notice("You empty the contents of [src]'s mop bucket onto the floor."))
+		to_chat(user, span_notice("You empty the contents of [src]'s mop bucket onto the floor."))
 		reagents.expose(loc)
 		reagents.clear_reagents()
 		update_appearance()
@@ -323,7 +335,7 @@
 	if(myreplacer)
 		. += "cart_replacer"
 	if(held_signs.len)
-		. += "cart_sign[max(held_signs.len, 4)]"
+		. += "cart_sign[min(held_signs.len, 4)]"
 	if(reagents.total_volume > 0)
 		. += "cart_water"
 
