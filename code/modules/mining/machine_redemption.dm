@@ -193,7 +193,7 @@
 		if(!item.tool_start_check(user, amount=0))
 			return TRUE
 		user.balloon_alert_to_viewers("unwelding...")
-		if(!item.use_tool(src, user, 20, 1, 50))
+		if(!item.use_tool(src, user, 100, 1, 50))
 			return FALSE
 		welded = FALSE
 		balloon_alert(user, "unwelded")
@@ -205,7 +205,7 @@
 	if(!item.tool_start_check(user, amount=0))
 		return TRUE
 	user.balloon_alert_to_viewers("welding...")
-	if(!item.use_tool(src, user, 20, 1, 50))
+	if(!item.use_tool(src, user, 100, 1, 50))
 		return FALSE
 	welded = TRUE
 	balloon_alert(user, "welded")
