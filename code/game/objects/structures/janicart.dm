@@ -35,50 +35,41 @@
 /obj/structure/janitorialcart/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	if(istype(arrived, /obj/item/storage/bag/trash))
 		mybag = arrived
-		update_appearance(UPDATE_ICON)
 	else if(istype(arrived, /obj/item/mop))
 		mymop = arrived
-		update_appearance(UPDATE_ICON)
 	else if(istype(arrived, /obj/item/pushbroom))
 		mybroom = arrived
-		update_appearance(UPDATE_ICON)
 	else if(istype(arrived, /obj/item/reagent_containers/spray/cleaner))
 		myspray = arrived
-		update_appearance(UPDATE_ICON)
 	else if(istype(arrived, /obj/item/lightreplacer))
 		myreplacer = arrived
-		update_appearance(UPDATE_ICON)
 	else if(istype(arrived, /obj/item/clothing/suit/caution))
 		held_signs += arrived
-		update_appearance(UPDATE_ICON)
+	update_appearance(UPDATE_ICON)
 	return ..()
 
 /obj/structure/janitorialcart/Exited(atom/movable/gone, direction)
 	if(gone == mybag)
 		mybag = null
-		update_appearance(UPDATE_ICON)
 	else if(gone == mymop)
 		mymop = null
-		update_appearance(UPDATE_ICON)
 	else if(gone == mybroom)
 		mybroom = null
-		update_appearance(UPDATE_ICON)
 	else if(gone == myspray)
 		myspray = null
-		update_appearance(UPDATE_ICON)
 	else if(gone == myreplacer)
 		myreplacer = null
-		update_appearance(UPDATE_ICON)
 	else if(gone in held_signs)
 		held_signs -= null
+	if(!QDELETED(src))
 		update_appearance(UPDATE_ICON)
 	return ..()
 
 /obj/structure/janitorialcart/examine(mob/user)
 	. = ..()
 	if(contents.len)
-		. += span_notice("It is carrying:")
-		for(var/thing in contents)
+		. += span_bold(span_info("\nIt is carrying:"))
+		for(var/thing in sort_names(contents))
 			if(thing in held_signs)
 				continue //we'll do this after.
 			. += "\t[icon2html(thing, user)] \a [thing]"
@@ -88,13 +79,14 @@
 				. += "\t[held_signs.len] [icon2html(sign_obj, user)] [sign_obj.name]\s"
 			else
 				. += "\t[icon2html(sign_obj, user)] \a [sign_obj]"
-	if(mymop)
-		. += span_notice("<b>Right-click</b> to quickly remove [mymop].")
+		. += span_notice("\n<b>Left-click</b> to [contents.len > 1 ? "search [src]" : "remove [contents[1]]"].")
+		if(mymop)
+			. += span_notice("<b>Right-click</b> to quickly remove [mymop].")
+		if(mybag)
+			. += span_notice("<b>Right-click</b> with an object to put it in [mybag].")
 	if(CART_HAS_MINIMUM_REAGENT_VOLUME)
 		. += span_notice("<b>Right-click</b> with a mop to wet it.")
-		. += span_info("<b>Crowbar</b> it to empty it onto [get_turf(src)].")
-	if(mybag)
-		. += span_notice("<b>Right-click</b> with an object to put it in [mybag].")
+		. += span_info("<b>Crowbar</b> it to empty its mop bucket onto [get_turf(src)].")
 
 /obj/structure/janitorialcart/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(!held_item)
