@@ -151,7 +151,7 @@
 			"key" = circuit_periph,
 			"action" = ITEM_DELETE,
 			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "Central control module is secured, and the <b>Peripheral control module</b> slot has opened."
+			"desc" = "Central control module is secured, and the <b>peripheral control module</b> slot has opened."
 		),
 		list(
 			"key" = TOOL_SCREWDRIVER,
@@ -168,7 +168,7 @@
 			"key" = circuit_weapon,
 			"action" = ITEM_DELETE,
 			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "Peripherals control module is secured, and the <b>Weapon control module<b> slot has opened."
+			"desc" = "Peripherals control module is secured, and the <b>weapon control module<b> slot has opened."
 		),
 		list(
 			"key" = TOOL_SCREWDRIVER,
@@ -250,7 +250,7 @@
 		list(
 			"key" = TOOL_WELDER,
 			"back_key" = TOOL_WRENCH,
-			"desc" = "Inner Plating is wrenched, and can be <b>welded</b>."
+			"desc" = "Inner plating is wrenched, and can be <b>welded</b>."
 		)
 	)
 
@@ -418,7 +418,7 @@
 			"key" = /obj/item/stack/rods,
 			"amount" = 10,
 			"back_key" = TOOL_WELDER,
-			"desc" = "Outer plating is welded, and 10 <b>rods</b> can be used to install the cockpit wire."
+			"desc" = "Outer plating is welded, and 10 <b>rods</b> can be used to install the cockpit."
 		),
 		list(
 			"key" = TOOL_WELDER,
@@ -509,7 +509,7 @@
 		list(
 			"key" = TOOL_WIRECUTTER,
 			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "The wiring is added, but has to be adjusted with a <b>wirecutter</b>."
+			"desc" = "The wiring is added, but has to be adjusted with <b>wirecutters</b>."
 		)
 	)
 
