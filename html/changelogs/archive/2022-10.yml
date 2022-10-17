@@ -488,3 +488,93 @@
       next to.
   - bugfix: Those with the technoshy/technovert trait are now able to untip vending
       machines.
+2022-10-15:
+  GoblinBackwards:
+  - qol: Crafting intelliTaters/intelliLanterns now carries over the AI from the card
+      used to craft it.
+  - bugfix: Crafting intelliLanterns with a card that contains an AI no longer deletes
+      the AI.
+  GoldenAlpharex:
+  - bugfix: You should no longer suddenly experience a station-wide mutism event (that
+      didn't affect radios), and will now properly be able to express yourself regardless
+      (hopefully).
+  Melbert:
+  - bugfix: Split personalities can commune again, probably
+  RaveRadbury:
+  - spellcheck: Exploration drone traders now offer exchanges correctly.
+  ReinaCoder:
+  - qol: The Cargo Technician's jumpsuit and skirt no longer cover the chest when
+      adjusted.
+  Tastyfish:
+  - bugfix: ERT and nuke ops players can no longer remove the power cell from a combat
+      defibrillator.
+  itseasytosee:
+  - code_imp: Changed the examine text on monkeized humans.
+  timothymtorres:
+  - bugfix: Fix traitor PDA uplinks to be accessible by illiterate people
+2022-10-16:
+  ShizCalev:
+  - bugfix: Fixed ear bounty not clarifying that it only accepts upgraded cybernetic
+      ears.
+  - bugfix: Fixed a minor runtime when hallucinations are ending.
+  - bugfix: Fixed an unreachable tile in the CMO's office on Kilo
+  - bugfix: Fixed a runtime preventing mafia from starting if a player disconnected
+      during signups.
+  VexingRaven:
+  - qol: Many gun-related chat messages are now balloon alerts instead
+  - spellcheck: The bow no longer says you loaded it with bullets
+  lnGoror:
+  - imageadd: New inhand sprites for the sabre sheath
+  san7890:
+  - admin: Cross-server messages are now filtered against the server's word filter.
+      If it's hard filtered, the message will not send. If it's soft-filtered, it
+      will send slower to allow an admin more time to cancel it.
+  - bugfix: You can no longer pierce the veil between the living and the dead with
+      the power of circuitry.
+  timothymtorres:
+  - qol: Add RMB hotkey to toggle lighting for flashlights.  Add contextual screentips
+      for flashlights.
+  - soundadd: Reuse existing sounds for flares to use `sound/items/match_strike.ogg`
+      and glowsticks to use `sound/effects/wounds/crack2.ogg`
+2022-10-17:
+  ArcaneMusic:
+  - bugfix: Custom vendors now explode on deconstruct as opposed to delete, causing
+      no practical changes to gameplay but admins will notice slightly fewer ahelps
+      if they ever have to get rid of one.
+  FernandoJ8:
+  - bugfix: blob zombies created by the Distributed Neurons reagent and cyto no longer
+      die instantly due to not having an associated factory
+  Fikou:
+  - bugfix: you can plant traitor bugs on clown shoes as God intended
+  GoblinBackwards:
+  - bugfix: Sold bounty cubes now display properly in the NT pay app history.
+  GoldenAlpharex:
+  - bugfix: The Medical Kiosk no longer bends the laws of physics and now properly
+      appears underneath mobs that would somehow end up atop of it, rather than above
+      them.
+  - qol: Added a preference for PDA ringtones, to save a custom ringtone that will
+      then be applied automatically to your character when spawned in the game. Gone
+      are the days of having to do it manually at the start of every round!
+  JohnFulpWillard:
+  - balance: Clever monkeys now use items the same way Humans do, meaning they can
+      now use Defibrilators, water tanks, crates, and many other things, but no longer
+      does monkey actions like instant hardstun on disarm and smashing your paw into
+      machines.
+  Melbert:
+  - bugfix: Fixed a plant backfire runtime when throwing plants
+  Rhials:
+  - bugfix: Choosing admin setup options on certain events will no longer retain the
+      chosen options for future events.
+  Wallem:
+  - rscadd: A new scam artist has gotten your home address.
+  jlsnow301:
+  - rscadd: The orbit UI now brings up tooltips to show health, job, and full name
+      information.
+  - rscadd: The orbit UI now puts disguised names in quotes. "John Doe". Hover to
+      get real name.
+  - rscadd: Orbit UI now gives tooltips on SM crystal, nuke disk, and nuclear devices.
+  - rscadd: You can now search by job in the orbit UI.
+  - bugfix: Orbit UI buttons (should) no longer clip on extra long names.
+  lizardqueenlexi:
+  - bugfix: Admin-spawned and changelings transformed into lizards will display the
+      correct tails now

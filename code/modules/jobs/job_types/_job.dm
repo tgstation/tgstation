@@ -155,6 +155,7 @@
 	if(!ishuman(spawned))
 		return
 
+	var/mob/living/carbon/human/spawned_human = spawned
 	var/list/roundstart_experience
 
 	if(!config) //Needed for robots.
@@ -166,9 +167,8 @@
 		roundstart_experience = skills
 
 	if(roundstart_experience)
-		var/mob/living/carbon/human/experiencer = spawned
 		for(var/i in roundstart_experience)
-			experiencer.mind.adjust_experience(i, roundstart_experience[i], TRUE)
+			spawned_human.mind.adjust_experience(i, roundstart_experience[i], TRUE)
 
 /datum/job/proc/announce_job(mob/living/joining_mob)
 	if(head_announce)
@@ -321,34 +321,46 @@
 	if(client?.is_veteran() && client?.prefs.read_preference(/datum/preference/toggle/playtime_reward_cloak))
 		neck = /obj/item/clothing/neck/cloak/skill_reward/playing
 
-/datum/outfit/job/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/job/post_equip(mob/living/carbon/human/equipped, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
 
-	var/datum/job/J = SSjob.GetJobType(jobtype)
-	if(!J)
-		J = SSjob.GetJob(H.job)
+	var/datum/job/equipped_job = SSjob.GetJobType(jobtype)
 
-	var/obj/item/card/id/card = H.wear_id
+	if(!equipped_job)
+		equipped_job = SSjob.GetJob(equipped.job)
+
+	var/obj/item/card/id/card = equipped.wear_id
+
 	if(istype(card))
 		ADD_TRAIT(card, TRAIT_JOB_FIRST_ID_CARD, ROUNDSTART_TRAIT)
 		shuffle_inplace(card.access) // Shuffle access list to make NTNet passkeys less predictable
-		card.registered_name = H.real_name
-		if(H.age)
-			card.registered_age = H.age
+		card.registered_name = equipped.real_name
+
+		if(equipped.age)
+			card.registered_age = equipped.age
+
 		card.update_label()
 		card.update_icon()
-		var/datum/bank_account/B = SSeconomy.bank_accounts_by_id["[H.account_id]"]
-		if(B && B.account_id == H.account_id)
-			card.registered_account = B
-			B.bank_cards += card
-		H.sec_hud_set_ID()
+		var/datum/bank_account/account = SSeconomy.bank_accounts_by_id["[equipped.account_id]"]
 
-	var/obj/item/modular_computer/tablet/pda/PDA = H.get_item_by_slot(pda_slot)
-	if(istype(PDA))
-		PDA.saved_identification = H.real_name
-		PDA.saved_job = J.title
-		PDA.UpdateDisplay()
+		if(account && account.account_id == equipped.account_id)
+			card.registered_account = account
+			account.bank_cards += card
+
+		equipped.sec_hud_set_ID()
+
+	var/obj/item/modular_computer/tablet/pda/pda = equipped.get_item_by_slot(pda_slot)
+
+	if(istype(pda))
+		pda.saved_identification = equipped.real_name
+		pda.saved_job = equipped_job.title
+		pda.UpdateDisplay()
+
+		var/client/equipped_client = GLOB.directory[ckey(equipped.mind?.key)]
+
+		if(equipped_client)
+			pda.update_ringtone(equipped_client)
 
 
 /datum/outfit/job/get_chameleon_disguise_info()

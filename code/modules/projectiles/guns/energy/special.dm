@@ -137,11 +137,11 @@
 		charge_multiplier = 1
 	if(charge_multiplier)
 		if(cell.charge == cell.maxcharge)
-			to_chat(user, span_notice("You try to insert [I] into [src], but it's fully charged.")) //my cell is round and full
+			balloon_alert(user, "already fully charged!")
 			return
 		I.use(1)
 		cell.give(500*charge_multiplier)
-		to_chat(user, span_notice("You insert [I] in [src], recharging it."))
+		balloon_alert(user, "cell recharged")
 	else
 		..()
 
@@ -159,13 +159,13 @@
 // Amount cannot be defaulted to 1: most of the code specifies 0 in the call.
 /obj/item/gun/energy/plasmacutter/tool_use_check(mob/living/user, amount)
 	if(QDELETED(cell))
-		to_chat(user, span_warning("[src] does not have a cell, and cannot be used!"))
+		balloon_alert(user, "no cell inserted!")
 		return FALSE
 	// Amount cannot be used if drain is made continuous, e.g. amount = 5, charge_weld = 25
 	// Then it'll drain 125 at first and 25 periodically, but fail if charge dips below 125 even though it still can finish action
 	// Alternately it'll need to drain amount*charge_weld every period, which is either obscene or makes it free for other uses
 	if(amount ? cell.charge < charge_weld * amount : cell.charge < charge_weld)
-		to_chat(user, span_warning("You need more charge to complete this task!"))
+		balloon_alert(user, "not enough charge!")
 		return FALSE
 
 	return TRUE

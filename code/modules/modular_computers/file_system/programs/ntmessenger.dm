@@ -15,7 +15,7 @@
 	alert_able = TRUE
 
 	/// The current ringtone (displayed in the chat when a message is received).
-	var/ringtone = "beep"
+	var/ringtone = MESSENGER_RINGTONE_DEFAULT
 	/// Whether or not the ringtone is currently on.
 	var/ringer_status = TRUE
 	/// Whether or not we're sending and receiving messages.
@@ -114,7 +114,7 @@
 
 	switch(action)
 		if("PDA_ringSet")
-			var/new_ringtone = tgui_input_text(usr, "Enter a new ringtone", "Ringtone", ringtone, 20)
+			var/new_ringtone = tgui_input_text(usr, "Enter a new ringtone", "Ringtone", ringtone, MESSENGER_RINGTONE_MAX_LENGTH)
 			var/mob/living/usr_mob = usr
 			if(!new_ringtone || !in_range(computer, usr_mob) || computer.loc != usr_mob)
 				return

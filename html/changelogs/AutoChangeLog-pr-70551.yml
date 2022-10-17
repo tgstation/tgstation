@@ -1,0 +1,4 @@
+author: "GoblinBackwards"
+delete-after: True
+changes: 
+  - bugfix: "Fixed being able to weld multiple disposal machines to the same pipe"

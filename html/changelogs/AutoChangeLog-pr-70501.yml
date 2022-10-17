@@ -1,0 +1,4 @@
+author: "etherware-novice"
+delete-after: True
+changes: 
+  - bugfix: "fugitive hunters get team hud"
