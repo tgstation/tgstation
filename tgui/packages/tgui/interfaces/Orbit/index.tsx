@@ -95,7 +95,8 @@ const ObservableSearch = (props, context) => {
             color="transparent"
             icon={!heatMap ? 'heart' : 'ghost'}
             onClick={() => setHeatMap(!heatMap)}
-            tooltip="Toggles between highlighting health or orbiters"
+            tooltip={multiline`Toggles between highlighting health or
+            orbiters.`}
             tooltipPosition="bottom-start"
           />
         </Stack.Item>

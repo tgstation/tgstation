@@ -78,7 +78,7 @@ export const getDisplayColor = (
 ) => {
   const { health, orbiters = 0 } = item;
   if (typeof health !== 'number') {
-    return color ?? 'good';
+    return color ? 'good' : 'grey';
   }
   if (heatMap) {
     return getThreatColor(orbiters);

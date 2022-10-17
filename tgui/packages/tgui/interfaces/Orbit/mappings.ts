@@ -59,7 +59,7 @@ export const JOB2ICON = {
   'Cook': 'utensils',
   'Curator': 'book',
   'Janitor': 'broom',
-  'Mime': 'face-meh-blank',
+  'Mime': 'comment-slash',
   // Security
   'Detective': 'user-secret',
   'Head of Security': 'user-shield',
