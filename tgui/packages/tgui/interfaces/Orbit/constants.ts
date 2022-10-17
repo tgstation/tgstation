@@ -63,6 +63,7 @@ export const JOB2ICON = {
   // Security
   'Detective': 'user-secret',
   'Head of Security': 'user-shield',
+  'Lawyer': 'gavel',
   'Prisoner': 'lock-keyhole',
   'Security Officer': 'shield-halved',
   'Security Officer (Cargo)': 'shield-halved',
@@ -70,7 +71,6 @@ export const JOB2ICON = {
   'Security Officer (Medical)': 'shield-halved',
   'Security Officer (Science)': 'shield-halved',
   'Warden': 'handcuffs',
-  'Lawyer': 'gavel',
   // Silicon
   'AI': 'eye',
   'Cyborg': 'robot',
