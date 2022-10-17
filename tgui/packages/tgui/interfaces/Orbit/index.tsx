@@ -13,7 +13,7 @@ export const Orbit = (props, context) => {
     <Window title="Orbit" width={400} height={550}>
       <Window.Content scrollable>
         <Stack fill vertical>
-          <Stack.Item mt={0}>
+          <Stack.Item>
             <ObservableSearch />
           </Stack.Item>
           <Stack.Item mt={0.2} grow>
@@ -232,7 +232,7 @@ const ObservableTooltip = (props: { item: Observable }) => {
     item: { extra, full_name, job, health },
   } = props;
   const extraInfo = extra?.split(':');
-  const displayHealth = health && health >= 0 ? `${health}%` : 'Critical';
+  const displayHealth = !!health && health >= 0 ? `${health}%` : 'Critical';
 
   return (
     <>
