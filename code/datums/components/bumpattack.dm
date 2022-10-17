@@ -4,6 +4,7 @@
  * proxy_weapon: the weapon that will gain this behaviour
  */
 #define COOLDOWN_BUMP_ATTACK "bump_attack"
+
 /datum/component/bumpattack
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 	///inventory slot that the item could be stored while still being able to attack with it
