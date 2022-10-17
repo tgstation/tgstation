@@ -8,6 +8,9 @@
 	if(!check_rights(R_SERVER))
 		return
 
+	if(tgui_alert(usr, "This verb is not at all useful if you are not a server operator with access to the configuration folder. Do you wish to proceed?", "Generate jobconfig.toml for clients", list("Yes", "No")) != "Yes")
+		return
+
 	if(SSjob.generate_config(usr))
 		to_chat(usr, span_notice("Job configuration file generated. Download prompt should appear now."))
 	else

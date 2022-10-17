@@ -603,6 +603,11 @@ SUBSYSTEM_DEF(job)
 		else //We ran out of spare locker spawns!
 			break
 
+#define TOTAL_POSITIONS "Total Positions"
+#define SPAWN_POSITIONS "Spawn Positions"
+#define PLAYTIME_REQUIREMENTS "Playtime Requirements"
+#define REQUIRED_ACCOUNT_AGE "Required Account Age"
+
 /// Called in jobs subsystem initialize if LOAD_JOBS_FROM_TXT config flag is set: reads jobconfig.toml (or if in legacy mode, jobs.txt) to set all of the datum's values to what the server operator wants.
 /datum/controller/subsystem/job/proc/load_jobs_from_config()
 	var/toml_file = "[global.config.directory]/jobconfig.toml"
@@ -618,10 +623,10 @@ SUBSYSTEM_DEF(job)
 				continue
 
 			// If the value is commented out, we assume that the server operate did not want to override the codebase default values, so we skip it.
-			var/default_positions = job_config[job_key]["Total Positions"]
-			var/starting_positions = job_config[job_key]["Spawn Positions"]
-			var/playtime_requirements = job_config[job_key]["Playtime Requirements"]
-			var/required_account_age = job_config[job_key]["Required Account Age"]
+			var/default_positions = job_config[job_key][TOTAL_POSITIONS]
+			var/starting_positions = job_config[job_key][SPAWN_POSITIONS]
+			var/playtime_requirements = job_config[job_key][PLAYTIME_REQUIREMENTS]
+			var/required_account_age = job_config[job_key][REQUIRED_ACCOUNT_AGE]
 
 			if(default_positions)
 				occupation.total_positions = default_positions
@@ -672,10 +677,10 @@ SUBSYSTEM_DEF(job)
 			// Playtime Requirements and Required Account Age are new and we want to see it migrated, so we will just pull codebase defaults for them.
 			// Remember, every time we write the TOML from scratch, we want to have it commented out by default to ensure that the server operator is knows that they codebase defaults when they remove the comment.
 			file_data["[job_key]"] = list(
-				"#Playtime Requirements" = occupation.exp_requirements,
-				"#Required Account Age" = occupation.minimal_player_age,
-				"#Total Positions" = default_positions,
-				"#Spawn Positions" = starting_positions,
+				"# [PLAYTIME_REQUIREMENTS]" = occupation.exp_requirements,
+				"# [REQUIRED_ACCOUNT_AGE]" = occupation.minimal_player_age,
+				"# [TOTAL_POSITIONS]" = default_positions,
+				"# [SPAWN_POSITIONS]" = starting_positions,
 			)
 		config_documentation += "\n\n## This TOML was migrated from jobs.txt. All variables are COMMENTED and will not load by default! Please verify to ensure that they are correct, and uncomment the key as you want.\n\n" // small warning
 		if(!export_toml(user, file_data))
@@ -690,18 +695,18 @@ SUBSYSTEM_DEF(job)
 			// Having comments mean that we allow server operators to defer to codebase standards when they deem acceptable. They must uncomment to override the codebase default.
 			if(is_assistant_job(occupation)) // there's a concession made in jobs.txt that we should just rapidly account for here I KNOW I KNOW.
 				file_data["[job_key]"] = list(
-					"#Total Positions" = -1,
-					"#Spawn Positions" = -1,
-					"#Playtime Requirements" = occupation.exp_requirements,
-					"#Required Account Age" = occupation.minimal_player_age,
+					"# [TOTAL_POSITIONS]" = -1,
+					"# [SPAWN_POSITIONS]" = -1,
+					"# [PLAYTIME_REQUIREMENTS]" = occupation.exp_requirements,
+					"# [REQUIRED_ACCOUNT_AGE]" = occupation.minimal_player_age,
 				)
 				continue
 			// Generate new config from codebase defaults.
 			file_data["[job_key]"] = list(
-				"#Total Positions" = occupation.total_positions,
-				"#Spawn Positions" = occupation.spawn_positions,
-				"#Playtime Requirements" = occupation.exp_requirements,
-				"#Required Account Age" = occupation.minimal_player_age,
+				"# [TOTAL_POSITIONS]" = occupation.total_positions,
+				"# [SPAWN_POSITIONS]" = occupation.spawn_positions,
+				"# [PLAYTIME_REQUIREMENTS]" = occupation.exp_requirements,
+				"# [REQUIRED_ACCOUNT_AGE]" = occupation.minimal_player_age,
 			)
 		if(!export_toml(user, file_data))
 			return FALSE
@@ -721,10 +726,10 @@ SUBSYSTEM_DEF(job)
 		var/job_name = occupation.title
 		var/job_key = occupation.config_tag
 
-		var/default_positions = job_config[job_key]["Total Positions"]
+		var/default_positions = job_config[job_key][TOTAL_POSITIONS]
 		var/starting_positions = job_config[job_key]["Spawn Positions"]
-		var/playtime_requirements = job_config[job_key]["Playtime Requirements"]
-		var/required_account_age = job_config[job_key]["Required Account Age"]
+		var/playtime_requirements = job_config[job_key][PLAYTIME_REQUIREMENTS]
+		var/required_account_age = job_config[job_key][REQUIRED_ACCOUNT_AGE]
 
 		// When we regenerate, we want to make sure commented stuff stays commented, but we also want to migrate information that remains uncommented. So, let's make sure we keep that pattern.
 		if(job_config["[job_key]"]) // Let's see if any data for this job exists.
@@ -732,48 +737,48 @@ SUBSYSTEM_DEF(job)
 				continue
 			if(default_positions) // If the variable exists, we want to ensure it migrated into the new TOML uncommented, to allow for flush migration.
 				file_data["[job_key]"] += list(
-					"Total Positions" = default_positions,
+					TOTAL_POSITIONS = default_positions,
 				)
 			else // If we can't find anything for this variable, then we just throw in the codebase default with it commented out.
 				file_data["[job_key]"] += list(
-					"#Total Positions" = occupation.total_positions,
+					"# [TOTAL_POSITIONS]" = occupation.total_positions,
 				)
 
 			if(starting_positions) // Same pattern as above.
 				file_data["[job_key]"] += list(
-					"Spawn Positions" = starting_positions,
+					SPAWN_POSITIONS = starting_positions,
 				)
 			else
 				file_data["[job_key]"] += list(
-					"#Spawn Positions" = occupation.spawn_positions,
+					"# [SPAWN_POSITIONS]" = occupation.spawn_positions,
 				)
 
 			if(playtime_requirements) // Same pattern as above.
 				file_data["[job_key]"] += list(
-					"Playtime Requirements" = playtime_requirements,
+					PLAYTIME_REQUIREMENTS = playtime_requirements,
 				)
 			else
 				file_data["[job_key]"] += list(
-					"#Playtime Requirements" = occupation.exp_requirements,
+					"# [PLAYTIME_REQUIREMENTS]" = occupation.exp_requirements,
 				)
 
 			if(required_account_age) // Same pattern as above.
 				file_data["[job_key]"] += list(
-					"Required Account Age" = required_account_age,
+					REQUIRED_ACCOUNT_AGE = required_account_age,
 				)
 			else
 				file_data["[job_key]"] += list(
-					"#Required Account Age" = occupation.minimal_player_age,
+					"# [REQUIRED_ACCOUNT_AGE]" = occupation.minimal_player_age,
 				)
 			continue
 		else
 			to_chat(user, span_notice("New job [job_name] (using key [job_key]) detected! Adding to jobconfig.toml using default codebase values..."))
 			// Commented out keys here in case server operators wish to defer to codebase defaults.
 			file_data["[job_key]"] = list(
-				"#Total Positions" = occupation.total_positions,
-				"#Spawn Positions" = occupation.spawn_positions,
-				"#Playtime Requirements" = occupation.exp_requirements,
-				"#Required Account Age" = occupation.minimal_player_age,
+				"# [TOTAL_POSITIONS]" = occupation.total_positions,
+				"# [SPAWN_POSITIONS]" = occupation.spawn_positions,
+				"# [PLAYTIME_REQUIREMENTS]" = occupation.exp_requirements,
+				"# [REQUIRED_ACCOUNT_AGE]" = occupation.minimal_player_age,
 			)
 
 	if(!export_toml(user, file_data))
@@ -787,6 +792,11 @@ SUBSYSTEM_DEF(job)
 	rustg_file_write(payload, file_location)
 	DIRECT_OUTPUT(user, ftp(file(file_location), "jobconfig.toml"))
 	return TRUE
+
+#undef TOTAL_POSITIONS
+#undef SPAWN_POSITIONS
+#undef PLAYTIME_REQUIREMENTS
+#undef REQUIRED_ACCOUNT_AGE
 
 /datum/controller/subsystem/job/proc/HandleFeedbackGathering()
 	for(var/datum/job/job as anything in joinable_occupations)
