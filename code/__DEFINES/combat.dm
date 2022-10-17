@@ -58,10 +58,15 @@
 #define EFFECT_DROWSY "drowsy"
 
 //Bitflags defining which status effects could be or are inflicted on a mob
+/// If set, this mob can be stunned.
 #define CANSTUN (1<<0)
+/// If set, this mob can be knocked down (or stamcrit)
 #define CANKNOCKDOWN (1<<1)
+/// If set, this mob can be knocked unconscious
 #define CANUNCONSCIOUS (1<<2)
+/// If set, this mob can be grabbed or pushed when bumped into
 #define CANPUSH (1<<3)
+/// Mob godmode. Prevents most statuses and damage from being taken, but is more often than not a crapshoot. Use with caution.
 #define GODMODE (1<<4)
 
 //Health Defines

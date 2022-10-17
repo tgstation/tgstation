@@ -140,12 +140,18 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/claymore/highlander/pickup(mob/living/user)
 	. = ..()
 	to_chat(user, span_notice("The power of Scotland protects you! You are shielded from all stuns and knockdowns."))
-	user.add_stun_absorption("highlander", INFINITY, 1, " is protected by the power of Scotland!", "The power of Scotland absorbs the stun!", " is protected by the power of Scotland!")
 	user.ignore_slowdown(HIGHLANDER)
+	user.add_stun_absorption(
+		source = HIGHLANDER,
+		message = "%EFFECT_OWNER is protected by the power of Scotland!",
+		self_message = "The power of Scotland absorbs the stun!",
+		examine_message = "[user.p_theyre(TRUE)] protected by the power of Scotland!",
+	)
 
 /obj/item/claymore/highlander/dropped(mob/living/user)
 	. = ..()
 	user.unignore_slowdown(HIGHLANDER)
+	user.remove_stun_absorption(HIGHLANDER)
 
 /obj/item/claymore/highlander/examine(mob/user)
 	. = ..()

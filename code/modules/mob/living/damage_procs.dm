@@ -152,7 +152,7 @@
 	if(stamina)
 		apply_damage(stamina, STAMINA, null, blocked)
 
-	if(jitter && (status_flags & CANSTUN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE))
+	if(jitter && !check_stun_immunity(CANSTUN))
 		adjust_jitter(jitter)
 	if(slur)
 		adjust_slurring(slur)

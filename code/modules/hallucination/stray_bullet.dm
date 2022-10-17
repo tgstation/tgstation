@@ -243,7 +243,7 @@
 			";AAAAAAARRRGH!"),
 			forced = "hulk (hallucinating)",
 		)
-	else if((afflicted.status_flags & CANKNOCKDOWN) && !HAS_TRAIT(afflicted, TRAIT_STUNIMMUNE))
+	else if(afflicted.check_stun_immunity(CANKNOCKDOWN))
 		addtimer(CALLBACK(afflicted, /mob/living/carbon.proc/do_jitter_animation, 20), 0.5 SECONDS)
 
 /obj/projectile/hallucination/disabler
