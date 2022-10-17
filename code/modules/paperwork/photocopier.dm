@@ -14,6 +14,8 @@
 #define ASS_TONER_USE 0.625
 /// The maximum amount of copies you can make with one press of the copy button.
 #define MAX_COPIES_AT_ONCE 10
+/// How much toner is used for making a copy of paperwork
+#define PAPERWORK_TONER_USE 0.75
 
 /obj/machinery/photocopier
 	name = "photocopier"
@@ -238,6 +240,8 @@
 		return toner_cartridge.charges >= (PHOTO_TONER_USE * num_copies)
 	else if(ass)
 		return toner_cartridge.charges >= (ASS_TONER_USE * num_copies)
+	else if(paperwork_copy)
+		return toner_cartridge.charges >= (PAPERWORK_TONER_USE * num_copies)
 	return FALSE
 
 /**
@@ -321,13 +325,19 @@
 	give_pixel_offset(copied_doc)
 	toner_cartridge.charges -= DOCUMENT_TONER_USE
 
+/**
+ * Handles the copying of documents.
+ *
+ * Checks first if `paperwork_copy` exists. Since this proc is called from a timer, it's possible that it was removed.
+ * Copies the stamped
+ */
 /obj/machinery/photocopier/proc/make_paperwork_copy()
-	if(!paperwork_copy)
+	if(!paperwork_copy || !toner_cartridge)
 		return
 	var/obj/item/paperwork/photocopy/copied_paperwork = new(loc, paperwork_copy)
 	paperwork_copy.stamped = copied_paperwork.stamped
 	give_pixel_offset(copied_paperwork)
-	toner_cartridge.charges -= DOCUMENT_TONER_USE
+	toner_cartridge.charges -= PAPERWORK_TONER_USE
 
 /**
  * The procedure is called when printing a blank to write off toner consumption.
@@ -578,3 +588,4 @@
 #undef DOCUMENT_TONER_USE
 #undef ASS_TONER_USE
 #undef MAX_COPIES_AT_ONCE
+#undef PAPERWORK_TONER_USE

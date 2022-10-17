@@ -29,10 +29,10 @@
 	var/stamp_requested = /obj/item/stamp/void
 	///Has the paperwork been properly stamped
 	var/stamped = FALSE
-	///The job of the associated paperwork form
+	///The path to the job of the associated paperwork form
 	var/stamp_job
 	///Used to store the bonus text that displays when the paperwork's associated role reads it
-	var/detailed_desc = span_notice("<i>As you sift through the papers, you slowly start to piece together what you're reading.</i>")
+	var/detailed_desc = span_notice("<i>As you sift through the papers, you slowly start to piece together what you're reading. </i>")
 
 /obj/item/paperwork/Initialize(mapload)
 	. = ..()
@@ -56,16 +56,6 @@
 	if(stamped)
 		. += stamp_overlay
 
-/obj/item/paperwork/examine(mob/user)
-	. = ..()
-
-	if(stamped)
-		. += "It looks like these documents have already been stamped. Now they can be returned to Central Command."
-	else
-		var/datum/job/stamp_title = stamp_job
-		var/title = initial(stamp_title.title)
-		. += "Trying to read through it makes your head spin. Judging by the few words you can make out, this looks like a job for a [title]." //fix grammar here
-
 /obj/item/paperwork/examine_more(mob/user)
 	. = ..()
 
@@ -73,6 +63,14 @@
 		var/mob/living/carbon/human/viewer = user
 		if(istype(viewer?.mind.assigned_role, stamp_job)) //Examining the paperwork as the proper job gets you some bonus details
 			. += detailed_desc
+		else
+			if(stamped)
+				. += "It looks like these documents have already been stamped. Now they can be returned to Central Command."
+			else
+				var/datum/job/stamp_title = stamp_job
+				var/title = initial(stamp_title.title)
+				. += "Trying to read through it makes your head spin. Judging by the few words you can make out, this looks like a job for a [title]." //fix grammar here
+
 
 //HEAD OF STAFF DOCUMENTS
 
@@ -100,7 +98,7 @@
 	detailed_desc += "[span_info("The case file detail accusations against the station's security department, including misconduct, harassment an-")]"
 	detailed_desc += "[span_info("What a bunch of crap, the security team were clearly just doing what they had to. You should probably stamp this.")]"
 
-/obj/item/paperwork/hop
+/obj/item/paperwork/service
 	stamp_requested = /obj/item/stamp/hop
 	stamp_job = /datum/job/head_of_personnel
 	stamp_icon = "paper_stamp-hop"
@@ -126,7 +124,7 @@
 	detailed_desc += "[span_info("Inspection of the attached photos reveal that the specimen was the station bartender's pet monkey, with parts of its uniform still visible.")]"
 	detailed_desc += "[span_info("Regardless, the vivisection results look like they could be useful. You should probably stamp this.")]"
 
-/obj/item/paperwork/ce
+/obj/item/paperwork/engineering
 	stamp_requested = /obj/item/stamp/ce
 	stamp_job = /datum/job/chief_engineer
 	stamp_icon = "paper_stamp-ce"
@@ -139,7 +137,7 @@
 	detailed_desc += "[span_info("Clearly the station's engineering department was testing an experimental engine setup, and had to use the air in the nearby rooms to help cool the engine. Totally.")]"
 	detailed_desc += "[span_info("Damn, that's impressive stuff. You should probably stamp this.")]"
 
-/obj/item/paperwork/rd
+/obj/item/paperwork/research
 	stamp_requested = /obj/item/stamp/rd
 	stamp_job = /datum/job/research_director
 	stamp_icon = "paper_stamp-rd"
@@ -160,7 +158,7 @@
 /obj/item/paperwork/captain/Initialize()
 	. = ..()
 
-	detailed_desc += "[span_info(" The documents are an unsigned correspondence from the captain's desk of a nearby station.")]"
+	detailed_desc += "[span_info("The documents are an unsigned correspondence from the captain's desk of a nearby station.")]"
 	detailed_desc += "[span_info("It seems to be a standard check-in message, reporting that the station is functioning at optimal efficiency.")]"
 	detailed_desc += "[span_info("The message repeatedly asserts that the engine is functioning 'perfectly fine' and is generating 'buttloads' of power.")]"
 	detailed_desc += "[span_info("Everything checks out. You should probably stamp this.")]"
@@ -168,19 +166,20 @@
 //Photocopied paperwork. These are created when paperwork, whether stamped or otherwise, is printed. If it is stamped, it can be sold to cargo at the risk of the paperwork not being accepted (which takes a small fee from cargo)..
 //If it is unstamped it is useless, but can be hit with a VOID stamp because paperwork
 /obj/item/paperwork/photocopy
+	name = "photocopied paperwork documents"
 	desc = "An even more disorganized mess of photocopied documents and paperwork. Did these even copy in the right order?"
 	stamp_icon = "paper_stamp-pc"
 
 /obj/item/paperwork/photocopy/Initialize(mapload)
 	. = ..()
 
-	stamp_overlay = mutable_appearance('icons/obj/bureaucracy.dmi', stamp_icon) //Add grey stamp icon
-
 	if(stamped)
 		add_overlay(stamp_overlay)
 		update_overlays()
 
 /obj/item/paperwork/photocopy/examine(mob/user)
+	. = ..()
+
 	. += "These appear to just be a photocopy of the original documents. The stamp on the front appears to be smudged and faded. Central Command will probably still accept these, right?"
 
 /obj/item/paperwork/photocopy/attackby(obj/item/attacking_item, mob/user, params)
@@ -188,3 +187,4 @@
 		to_chat(user, span_notice("You plant the [attacking_item] firmly onto the front of the documents."))
 		stamp_overlay = mutable_appearance('icons/obj/bureaucracy.dmi', "paper_stamp-void") //This doesn't actually mark it as "stamped", so voided papers still can't be sold to cargo
 		add_overlay(stamp_overlay)
+
