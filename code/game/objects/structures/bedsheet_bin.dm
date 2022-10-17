@@ -78,7 +78,8 @@ LINEN BINS
 	pixel_x = 0
 	pixel_y = 0
 	balloon_alert(sleeper, "covered")
-	dir = sleeper.lying_angle == 90 ? WEST : EAST
+	var/angle = sleeper.lying_prev
+	dir = angle == 90 ? WEST : EAST
 
 /obj/item/bedsheet/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_WIRECUTTER || I.get_sharpness())
