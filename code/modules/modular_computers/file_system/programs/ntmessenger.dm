@@ -208,27 +208,23 @@
 
 	return data
 
-////////////////////////
-// MESSAGE HANDLING
-////////////////////////
+//////////////////////
+// MESSAGE HANDLING //
+//////////////////////
 
-// How I Learned To Stop Being A PDA Bloat Chump And Learn To Embrace The Lightweight
-
-// Gets the input for a message being sent.
-
-/datum/computer_file/program/messenger/proc/msg_input(mob/living/U = usr, rigged = FALSE)
-	var/t = null
-
+///Gets an input message from user and returns the sanitized message.
+/datum/computer_file/program/messenger/proc/msg_input(mob/living/user, rigged = FALSE)
+	var/input_message
 	if(mime_mode)
-		t = emoji_sanitize(tgui_input_text(U, "Enter emojis", "NT Messaging"))
+		input_message = emoji_sanitize(tgui_input_text(user, "Enter emojis", "NT Messaging"))
 	else
-		t = tgui_input_text(U, "Enter a message", "NT Messaging")
+		input_message = tgui_input_text(user, "Enter a message", "NT Messaging")
 
-	if (!t || !sending_and_receiving)
+	if (!input_message || !sending_and_receiving)
 		return
-	if(!U.canUseTopic(computer, be_close = TRUE))
+	if(!user.canUseTopic(computer, be_close = TRUE))
 		return
-	return sanitize(t)
+	return sanitize(input_message)
 
 /datum/computer_file/program/messenger/proc/send_message(mob/living/user, list/obj/item/modular_computer/targets, everyone = FALSE, rigged = FALSE, fake_name = null, fake_job = null)
 	var/message = msg_input(user, rigged)
