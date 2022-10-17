@@ -128,7 +128,7 @@
 		list(
 			"key" = TOOL_WIRECUTTER,
 			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "The wiring is added, but has to be adjusted with a <b>wirecutter</b>."
+			"desc" = "The wiring is added, but has to be adjusted with <b>wirecutters</b>."
 		)
 	)
 
