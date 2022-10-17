@@ -149,6 +149,11 @@
 /obj/structure/disposalconstruct/welder_act(mob/living/user, obj/item/I)
 	..()
 	if(anchored)
+		var/turf/T = get_turf(src)
+		if(!is_pipe() && ((locate(/obj/machinery/disposal) in T) || ((locate(/obj/structure/disposaloutlet) in T))))
+			to_chat(user, span_warning("A disposals machine already exists here!"))
+			return TRUE
+
 		if(!I.tool_start_check(user, amount=0))
 			return TRUE
 

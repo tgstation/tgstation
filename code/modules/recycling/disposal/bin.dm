@@ -49,20 +49,23 @@
 	return INITIALIZE_HINT_LATELOAD //we need turfs to have air
 
 /obj/machinery/disposal/proc/trunk_check()
-	trunk = locate() in loc
-	if(!trunk)
+	var/obj/structure/disposalpipe/trunk/found_trunk = locate() in loc
+	if(!found_trunk)
 		pressure_charging = FALSE
 		flush = FALSE
 	else
 		if(initial(pressure_charging))
 			pressure_charging = TRUE
 		flush = initial(flush)
-		trunk.linked = src // link the pipe trunk to self
+
+		found_trunk.set_linked(src) // link the pipe trunk to self
+		trunk = found_trunk
 
 /obj/machinery/disposal/Destroy()
 	eject()
 	if(trunk)
 		trunk.linked = null
+		trunk = null
 	return ..()
 
 /obj/machinery/disposal/handle_atom_del(atom/A)
@@ -466,12 +469,6 @@
 	density = TRUE
 	icon_state = "intake"
 	pressure_charging = FALSE // the chute doesn't need charging and always works
-
-/obj/machinery/disposal/delivery_chute/Initialize(mapload, obj/structure/disposalconstruct/make_from)
-	. = ..()
-	trunk = locate() in loc
-	if(trunk)
-		trunk.linked = src // link the pipe trunk to self
 
 /obj/machinery/disposal/delivery_chute/place_item_in_disposal(obj/item/I, mob/user)
 	if(I.CanEnterDisposals())
