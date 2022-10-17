@@ -60,7 +60,7 @@
 	else if(gone == myreplacer)
 		myreplacer = null
 	else if(gone in held_signs)
-		held_signs -= null
+		held_signs -= gone
 	if(!QDELING(src))
 		update_appearance(UPDATE_ICON)
 	return ..()
