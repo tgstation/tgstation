@@ -1,4 +1,0 @@
-author: "lizardqueenlexi"
-delete-after: True
-changes: 
-  - bugfix: "Admin-spawned and changelings transformed into lizards will display the correct tails now"
