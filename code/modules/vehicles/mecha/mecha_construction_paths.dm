@@ -117,18 +117,18 @@
 		list(
 			"key" = TOOL_SCREWDRIVER,
 			"back_key" = TOOL_WRENCH,
-			"desc" = "The hydraulic systems are connected, and have to be activated via <b>screwdriver</b>."
+			"desc" = "The hydraulic systems are connected, and can be activated via <b>screwdriver</b>."
 		),
 		list(
 			"key" = /obj/item/stack/cable_coil,
 			"amount" = 5,
 			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "The hydraulic systems are active, the frame can now be <b>wired</b>."
+			"desc" = "The hydraulic systems are active, and the frame can be <b>wired</b>."
 		),
 		list(
 			"key" = TOOL_WIRECUTTER,
 			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "The wiring is added, but has to be adjusted with <b>wirecutters</b>."
+			"desc" = "The wiring is added, and can be adjusted with <b>wirecutters</b>."
 		)
 	)
 
@@ -181,7 +181,7 @@
 // Third set of steps by default
 /datum/component/construction/mecha/proc/get_stockpart_steps()
 	var/prevstep_text = circuit_weapon ? "Weapons control module is secured" : "Peripherals control module is secured"
-	prevstep_text += ", and the <b>scanning module</b> is ready to be added."
+	prevstep_text += ", and the <b>scanning module</b> can be added."
 	return list(
 		list(
 			"key" = /obj/item/stock_parts/scanning_module,
@@ -192,29 +192,29 @@
 		list(
 			"key" = TOOL_SCREWDRIVER,
 			"back_key" = TOOL_CROWBAR,
-			"desc" = "Scanner module is installed, and ready to be <b>screwed</b> into place."
+			"desc" = "Scanner module is installed, and can be <b>screwed</b> into place."
 		),
 		list(
 			"key" = /obj/item/stock_parts/capacitor,
 			"action" = ITEM_MOVE_INSIDE,
 			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "Scanner module is secured, the <b>capacitor</b> is ready to be added."
+			"desc" = "Scanner module is secured, the <b>capacitor</b> can be added."
 		),
 		list(
 			"key" = TOOL_SCREWDRIVER,
 			"back_key" = TOOL_CROWBAR,
-			"desc" = "Capacitor is installed, and ready to be <b>screwed</b> into place."
+			"desc" = "Capacitor is installed, and can be <b>screwed</b> into place."
 		),
 		list(
 			"key" = /obj/item/stock_parts/cell,
 			"action" = ITEM_MOVE_INSIDE,
 			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "Capacitor is secured, the <b>power cell</b> is ready to be added."
+			"desc" = "Capacitor is secured, and the <b>power cell</b> can be added."
 		),
 		list(
 			"key" = TOOL_SCREWDRIVER,
 			"back_key" = TOOL_CROWBAR,
-			"desc" = "The power cell is installed, and ready to be <b>screwed</b> into place."
+			"desc" = "The power cell is installed, and can be <b>screwed</b> into place."
 		)
 	)
 
@@ -488,7 +488,7 @@
 		list(
 			"key" = /obj/item/stack/conveyor,
 			"amount" = 4,
-			"desc" = "The treads are ready to be added, by using 4 sheets of conveyor belts."
+			"desc" = "The treads can be added using 4 sheets of conveyor belts."
 		),
 		list(
 			"key" = TOOL_WRENCH,
@@ -498,18 +498,18 @@
 		list(
 			"key" = TOOL_SCREWDRIVER,
 			"back_key" = TOOL_WRENCH,
-			"desc" = "The hydraulic systems are connected, and have to be activated via <b>screwdriver</b>."
+			"desc" = "The hydraulic systems are connected, and can be activated via <b>screwdriver</b>."
 		),
 		list(
 			"key" = /obj/item/stack/cable_coil,
 			"amount" = 5,
 			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "The hydraulic systems are active, the frame can now be <b>wired</b>."
+			"desc" = "The hydraulic systems are active, and the frame can be <b>wired</b>."
 		),
 		list(
 			"key" = TOOL_WIRECUTTER,
 			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "The wiring is added, but has to be adjusted with <b>wirecutters</b>."
+			"desc" = "The wiring is added, and can be adjusted with <b>wirecutters</b>."
 		)
 	)
 
@@ -695,35 +695,35 @@
 			"key" = /obj/item/stock_parts/scanning_module,
 			"action" = ITEM_MOVE_INSIDE,
 			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "Weapons control module is secured, and the <b>scanning module</b> is ready to be added."
+			"desc" = "Weapons control module is secured, and the <b>scanning module</b> can be added."
 		),
 		list(
 			"key" = TOOL_SCREWDRIVER,
 			"back_key" = TOOL_CROWBAR,
-			"desc" = "Scanner module is installed, and ready to be <b>screwed</b> into place."
+			"desc" = "Scanner module is installed, and can be <b>screwed</b> into place."
 		),
 		list(
 			"key" = /obj/item/stock_parts/capacitor,
 			"action" = ITEM_MOVE_INSIDE,
 			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "Scanner module is secured, the <b>capacitor</b> is ready to be added."
+			"desc" = "Scanner module is secured, and the <b>capacitor</b> can be added."
 		),
 		list(
 			"key" = TOOL_SCREWDRIVER,
 			"back_key" = TOOL_CROWBAR,
-			"desc" =  "Capacitor is installed, and ready to be <b>screwed</b> into place."
+			"desc" =  "Capacitor is installed, and can be <b>screwed</b> into place."
 		),
 		list(
 			"key" = /obj/item/stack/ore/bluespace_crystal,
 			"amount" = 1,
 			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "Capacitor is secured, the <b>bluespace crystal</b> is ready to be added."
+			"desc" = "Capacitor is secured, and the <b>bluespace crystal</b> can be added."
 		),
 		list(
 			"key" = /obj/item/stack/cable_coil,
 			"amount" = 5,
 			"back_key" = TOOL_CROWBAR,
-			"desc" = "The bluespace crystal is installed, and ready to be <b>wired</b> to the mech systems."
+			"desc" = "The bluespace crystal is installed, and can be <b>wired</b> to the mech systems."
 		),
 		list(
 			"key" = TOOL_SCREWDRIVER,
@@ -734,12 +734,12 @@
 			"key" = /obj/item/stock_parts/cell,
 			"action" = ITEM_MOVE_INSIDE,
 			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "The bluespace crystal is engaged, the <b>power cell</b> is ready to be added."
+			"desc" = "The bluespace crystal is engaged, and the <b>power cell</b> can be added."
 		),
 		list(
 			"key" = TOOL_SCREWDRIVER,
 			"back_key" = TOOL_CROWBAR,
-			"desc" = "The power cell is installed, and ready to be <b>screwed</b> into place.",
+			"desc" = "The power cell is installed, and can be <b>screwed</b> into place.",
 			"icon_state" = "phazon17"
 			// This is the point where a step icon is skipped, so "icon_state" had to be set manually starting from here.
 		)
