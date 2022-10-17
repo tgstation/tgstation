@@ -76,3 +76,14 @@ export const JOB2ICON = {
   'Cyborg': 'robot',
   'pAI': 'robot',
 } as const;
+
+export enum Threat {
+  'LOW' = 2,
+  'MEDIUM' = 5,
+  'HIGH' = 8,
+}
+
+export enum Health {
+  'GOOD' = 75,
+  'AVERAGE' = 20,
+}
