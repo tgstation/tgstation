@@ -34,10 +34,6 @@
 	///Used to store the bonus text that displays when the paperwork's associated role reads it
 	var/detailed_desc = span_notice("<i>As you sift through the papers, you slowly start to piece together what you're reading. </i>")
 
-/obj/item/paperwork/Initialize(mapload)
-	. = ..()
-	stamp_overlay = mutable_appearance('icons/obj/bureaucracy.dmi', stamp_icon)
-
 /obj/item/paperwork/attackby(obj/item/attacking_item, mob/user, params)
 	. = ..()
 	if(!stamped)
@@ -77,7 +73,9 @@
  */
 /obj/item/paperwork/proc/add_stamp()
 	stamped = TRUE
+	stamp_overlay = mutable_appearance('icons/obj/bureaucracy.dmi', stamp_icon)
 	add_overlay(stamp_overlay)
+	update_overlays()
 
 //HEAD OF STAFF DOCUMENTS
 
@@ -205,6 +203,6 @@
 	. = ..()
 
 	var/obj/item/paperwork/paperwork_type = pick(subtypesof(/obj/item/paperwork)) //Yes this includes photocopies.
-	stamp_requested = paperwork_type.stamp_requested //Copies a random paperwork's requirements.
-	stamp_job =  paperwork_type.stamp_job
-	stamp_icon =  paperwork_type.stamp_icon
+	stamp_requested = initial(paperwork_type.stamp_requested) //Copies a random paperwork's requirements.
+	stamp_job =  initial(paperwork_type.stamp_job)
+	stamp_icon =  initial(paperwork_type.stamp_icon)
