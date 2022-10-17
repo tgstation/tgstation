@@ -78,7 +78,6 @@
 /obj/item/paperwork/proc/add_stamp()
 	stamped = TRUE
 	add_overlay(stamp_overlay)
-	update_overlays()
 
 //HEAD OF STAFF DOCUMENTS
 
@@ -113,7 +112,7 @@
 	stamp_job = /datum/job/head_of_personnel
 	stamp_icon = "paper_stamp-hop"
 
-/obj/item/paperwork/hop/Initialize()
+/obj/item/paperwork/service/Initialize()
 	. = ..()
 
 	detailed_desc += "[span_info("Your begin scanning over the document. This is a standard Nanotrasen NT-435Z3 form used for requests to Central Command.")]"
@@ -139,7 +138,7 @@
 	stamp_job = /datum/job/chief_engineer
 	stamp_icon = "paper_stamp-ce"
 
-/obj/item/paperwork/ce/Initialize()
+/obj/item/paperwork/engineering/Initialize()
 	. = ..()
 
 	detailed_desc += "[span_info("These papers are a power output report from a neighboring station. It details the power output and other engineering data regarding the station during a typical shift.")]"
@@ -152,7 +151,7 @@
 	stamp_job = /datum/job/research_director
 	stamp_icon = "paper_stamp-rd"
 
-/obj/item/paperwork/rd/Initialize()
+/obj/item/paperwork/research/Initialize()
 	. = ..()
 
 	detailed_desc += "[span_info("The documents detail the results of a standard ordnance test that occured on a nearby station.")]"
@@ -193,3 +192,19 @@
 		stamp_overlay = mutable_appearance('icons/obj/bureaucracy.dmi', "paper_stamp-void")
 		add_overlay(stamp_overlay)
 		voided = TRUE //It won't get you any money, but it also can't LOSE you money now.
+
+//Ancient paperwork is a subtype of paperwork, meant to be used for any paperwork not spawned by the event.
+//It doesn't have any of the flavor text that the event ones spawn with.
+
+/obj/item/paperwork/ancient
+	name = "ancient paperwork"
+	desc = "A dusty, ugly mess of papers. It's impossible to really tell how old these are, but Central Command might appreciate them anyways."
+
+
+/obj/item/paperwork/ancient/Initialize(mapload)
+	. = ..()
+
+	var/obj/item/paperwork/paperwork_type = pick(subtypesof(/obj/item/paperwork)) //Yes this includes photocopies.
+	stamp_requested = paperwork_type.stamp_requested //Copies a random paperwork's requirements.
+	stamp_job =  paperwork_type.stamp_job
+	stamp_icon =  paperwork_type.stamp_icon
