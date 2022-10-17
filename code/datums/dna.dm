@@ -484,6 +484,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 			var/species_holder = initial(mrace.species_language_holder)
 			language_holder = new species_holder(src)
 		update_atom_languages()
+		log_mob_tag("SPECIES: [key_name(src)] \[[mrace]\]")
 
 /mob/living/carbon/human/set_species(datum/species/mrace, icon_update = TRUE, pref_load = FALSE)
 	..()
@@ -587,7 +588,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	if(dna.features["tail_cat"])
 		dna.features["tail_cat"] = GLOB.tails_list_human[deconstruct_block(get_uni_feature_block(features, DNA_TAIL_BLOCK), GLOB.tails_list_human.len)]
 	if(dna.features["tail_lizard"])
-		dna.features["tail_cat"] = GLOB.tails_list_lizard[deconstruct_block(get_uni_feature_block(features, DNA_LIZARD_TAIL_BLOCK), GLOB.tails_list_lizard.len)]
+		dna.features["tail_lizard"] = GLOB.tails_list_lizard[deconstruct_block(get_uni_feature_block(features, DNA_LIZARD_TAIL_BLOCK), GLOB.tails_list_lizard.len)]
 	if(dna.features["ears"])
 		dna.features["ears"] = GLOB.ears_list[deconstruct_block(get_uni_feature_block(features, DNA_EARS_BLOCK), GLOB.ears_list.len)]
 	if(dna.features["moth_wings"])

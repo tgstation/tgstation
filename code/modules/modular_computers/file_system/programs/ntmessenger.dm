@@ -15,7 +15,7 @@
 	alert_able = TRUE
 
 	/// The current ringtone (displayed in the chat when a message is received).
-	var/ringtone = "beep"
+	var/ringtone = MESSENGER_RINGTONE_DEFAULT
 	/// Whether or not the ringtone is currently on.
 	var/ringer_status = TRUE
 	/// Whether or not we're sending and receiving messages.
@@ -48,6 +48,14 @@
 	var/mime_mode = FALSE
 	/// Whether this app can send messages to all.
 	var/spam_mode = FALSE
+
+/datum/computer_file/program/messenger/try_insert(obj/item/attacking_item, mob/living/user)
+	if(!istype(attacking_item, /obj/item/photo))
+		return FALSE
+	var/obj/item/photo/pic = attacking_item
+	computer.saved_image = pic.picture
+	ProcessPhoto()
+	return TRUE
 
 /datum/computer_file/program/messenger/proc/ScrubMessengerList()
 	var/list/dictionary = list()
@@ -106,33 +114,42 @@
 
 	switch(action)
 		if("PDA_ringSet")
-			var/t = tgui_input_text(usr, "Enter a new ringtone", "Ringtone", "", 20)
+			var/new_ringtone = tgui_input_text(usr, "Enter a new ringtone", "Ringtone", ringtone, MESSENGER_RINGTONE_MAX_LENGTH)
 			var/mob/living/usr_mob = usr
-			if(in_range(computer, usr_mob) && computer.loc == usr_mob && t)
-				if(SEND_SIGNAL(computer, COMSIG_TABLET_CHANGE_ID, usr_mob, t) & COMPONENT_STOP_RINGTONE_CHANGE)
-					return
-				else
-					ringtone = t
-					return(UI_UPDATE)
+			if(!new_ringtone || !in_range(computer, usr_mob) || computer.loc != usr_mob)
+				return
+
+			if(SEND_SIGNAL(computer, COMSIG_TABLET_CHANGE_ID, usr_mob, new_ringtone) & COMPONENT_STOP_RINGTONE_CHANGE)
+				return
+
+			ringtone = new_ringtone
+			return UI_UPDATE
+
 		if("PDA_ringer_status")
 			ringer_status = !ringer_status
-			return(UI_UPDATE)
+			return UI_UPDATE
+
 		if("PDA_sAndR")
 			sending_and_receiving = !sending_and_receiving
-			return(UI_UPDATE)
+			return UI_UPDATE
+
 		if("PDA_viewMessages")
 			viewing_messages = !viewing_messages
-			return(UI_UPDATE)
+			return UI_UPDATE
+
 		if("PDA_clearMessages")
 			messages = list()
-			return(UI_UPDATE)
+			return UI_UPDATE
+
 		if("PDA_changeSortStyle")
 			sort_by_job = !sort_by_job
-			return(UI_UPDATE)
+			return UI_UPDATE
+
 		if("PDA_sendEveryone")
 			if(!sending_and_receiving)
 				to_chat(usr, span_notice("ERROR: Device has sending disabled."))
 				return
+
 			if(!spam_mode)
 				to_chat(usr, span_notice("ERROR: Device does not have mass-messaging perms."))
 				return
@@ -145,14 +162,17 @@
 			if(targets.len > 0)
 				send_message(usr, targets, TRUE)
 
-			return(UI_UPDATE)
+			return UI_UPDATE
+
 		if("PDA_sendMessage")
 			if(!sending_and_receiving)
 				to_chat(usr, span_notice("ERROR: Device has sending disabled."))
 				return
+
 			var/obj/item/modular_computer/target = locate(params["ref"])
 			if(!target)
 				return // we don't want tommy sending his messages to nullspace
+
 			if(!(target.saved_identification == params["name"] && target.saved_job == params["job"]))
 				to_chat(usr, span_notice("ERROR: User no longer exists."))
 				return
@@ -163,20 +183,24 @@
 				if(!app.sending_and_receiving && !sending_virus)
 					to_chat(usr, span_notice("ERROR: Device has receiving disabled."))
 					return
+
 				if(sending_virus)
 					var/obj/item/computer_hardware/hard_drive/portable/virus/disk = computer.all_components[MC_SDD]
 					if(istype(disk))
 						disk.send_virus(target, usr)
-						return(UI_UPDATE)
+						return UI_UPDATE
+
 				send_message(usr, list(target))
-				return(UI_UPDATE)
+				return UI_UPDATE
+
 		if("PDA_clearPhoto")
 			computer.saved_image = null
 			photo_path = null
-			return(UI_UPDATE)
+			return UI_UPDATE
+
 		if("PDA_toggleVirus")
 			sending_virus = !sending_virus
-			return(UI_UPDATE)
+			return UI_UPDATE
 
 
 /datum/computer_file/program/messenger/ui_data(mob/user)
@@ -208,25 +232,35 @@
 
 // Gets the input for a message being sent.
 
-/datum/computer_file/program/messenger/proc/msg_input(mob/living/U = usr, rigged = FALSE)
-	var/t = null
+/datum/computer_file/program/messenger/proc/msg_input(mob/living/user = usr, target_name = null, rigged = FALSE)
+	var/message = null
 
 	if(mime_mode)
-		t = emoji_sanitize(tgui_input_text(U, "Enter emojis", "NT Messaging"))
+		message = emoji_sanitize(tgui_input_text(user, "Enter emojis", "NT Messaging[target_name ? " ([target_name])" : ""]"))
 	else
-		t = tgui_input_text(U, "Enter a message", "NT Messaging")
+		message = tgui_input_text(user, "Enter a message", "NT Messaging[target_name ? " ([target_name])" : ""]")
 
-	if (!t || !sending_and_receiving)
+	if (!message || !sending_and_receiving)
 		return
-	if(!U.canUseTopic(computer, BE_CLOSE))
+
+	if(!user.canUseTopic(computer, be_close = TRUE))
 		return
-	return sanitize(t)
+
+	return sanitize(message)
+
 
 /datum/computer_file/program/messenger/proc/send_message(mob/living/user, list/obj/item/modular_computer/targets, everyone = FALSE, rigged = FALSE, fake_name = null, fake_job = null)
-	var/message = msg_input(user, rigged)
-	if(!message || !targets.len)
+	if(!targets.len)
 		return FALSE
+
+	var/target_name = length(targets) == 1 ? targets[1].saved_identification : "Everyone"
+	var/message = msg_input(user, target_name, rigged)
+
+	if(!message)
+		return FALSE
+
 	if((last_text && world.time < last_text + 10) || (everyone && last_text_everyone && world.time < last_text_everyone + 2 MINUTES))
+		to_chat(user, span_warning("The subspace transmitter of your tablet is still cooling down!"))
 		return FALSE
 
 	var/turf/position = get_turf(computer)
@@ -299,9 +333,13 @@
 
 	// Show it to ghosts
 	var/ghost_message = span_name("[message_data["name"]] </span><span class='game say'>[rigged ? "Rigged" : ""] PDA Message</span> --> [span_name("[signal.format_target()]")]: <span class='message'>[signal.format_message()]")
-	for(var/mob/M in GLOB.player_list)
-		if(isobserver(M) && (M.client?.prefs.chat_toggles & CHAT_GHOSTPDA))
-			to_chat(M, "[FOLLOW_LINK(M, user)] [ghost_message]")
+	for(var/mob/player_mob in GLOB.player_list)
+		if(player_mob.client && !player_mob.client?.prefs)
+			stack_trace("[player_mob] ([player_mob.ckey]) had null prefs, which shouldn't be possible!")
+			continue
+
+		if(isobserver(player_mob) && (player_mob.client?.prefs.chat_toggles & CHAT_GHOSTPDA))
+			to_chat(player_mob, "[FOLLOW_LINK(player_mob, user)] [ghost_message]")
 
 	// Log in the talk log
 	user.log_talk(message, LOG_PDA, tag="[rigged ? "Rigged" : ""] PDA: [message_data["name"]] to [signal.format_target()]")
@@ -325,7 +363,7 @@
 	var/list/message_data = list()
 	message_data["name"] = signal.data["name"]
 	message_data["job"] = signal.data["job"]
-	message_data["contents"] = signal.format_message()
+	message_data["contents"] = html_decode(signal.format_message())
 	message_data["outgoing"] = FALSE
 	message_data["ref"] = signal.data["ref"]
 	message_data["automated"] = signal.data["automated"]
@@ -373,7 +411,7 @@
 	if(computer.active_program != src)
 		if(!computer.open_program(usr, src))
 			return
-	if(!href_list["close"] && usr.canUseTopic(computer, BE_CLOSE, FALSE, NO_TK))
+	if(!href_list["close"] && usr.canUseTopic(computer, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 		switch(href_list["choice"])
 			if("Message")
 				send_message(usr, list(locate(href_list["target"])))

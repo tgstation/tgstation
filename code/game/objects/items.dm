@@ -224,6 +224,9 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 	if(sharpness && force > 5) //give sharp objects butchering functionality, for consistency
 		AddComponent(/datum/component/butchering, speed = 8 SECONDS * toolspeed)
 
+	if(!greyscale_config && greyscale_colors && (greyscale_config_worn || greyscale_config_belt || greyscale_config_inhand_right || greyscale_config_inhand_left))
+		update_greyscale()
+
 	. = ..()
 
 	// Handle adding item associated actions
@@ -313,11 +316,20 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 /obj/item/proc/add_weapon_description()
 	AddElement(/datum/element/weapon_description)
 
-/obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
-	if(((src in target) && !target_self) || (!isturf(target.loc) && !isturf(target) && not_inside))
-		return 0
-	else
-		return 1
+/**
+ * Checks if an item is allowed to be used on an atom/target
+ * Returns TRUE if allowed.
+ *
+ * Args:
+ * target_self - Whether we will check if we (src) are in target, preventing people from using items on themselves.
+ * not_inside - Whether target (or target's loc) has to be a turf.
+ */
+/obj/item/proc/check_allowed_items(atom/target, not_inside = FALSE, target_self = FALSE)
+	if(!target_self && (src in target))
+		return FALSE
+	if(not_inside && !isturf(target.loc) && !isturf(target))
+		return FALSE
+	return TRUE
 
 /obj/item/blob_act(obj/structure/blob/B)
 	if(B && B.loc == loc)
@@ -689,7 +701,7 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 	if(!initial)
 		if(equip_sound && (slot_flags & slot))
 			playsound(src, equip_sound, EQUIP_SOUND_VOLUME, TRUE, ignore_walls = FALSE)
-		else if(slot == ITEM_SLOT_HANDS)
+		else if(slot & ITEM_SLOT_HANDS)
 			playsound(src, pickup_sound, PICKUP_SOUND_VOLUME, ignore_walls = FALSE)
 	user.update_equipment_speed_mods()
 
@@ -707,7 +719,7 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 
 /// Sometimes we only want to grant the item's action if it's equipped in a specific slot.
 /obj/item/proc/item_action_slot_check(slot, mob/user)
-	if(slot == ITEM_SLOT_BACKPACK || slot == ITEM_SLOT_LEGCUFFED) //these aren't true slots, so avoid granting actions there
+	if(slot & (ITEM_SLOT_BACKPACK|ITEM_SLOT_LEGCUFFED)) //these aren't true slots, so avoid granting actions there
 		return FALSE
 	return TRUE
 
@@ -718,14 +730,13 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
  * Arguments:
  * * disable_warning to TRUE if you wish it to not give you text outputs.
  * * slot is the slot we are trying to equip to
- * * equipper is the mob trying to equip the item
  * * bypass_equip_delay_self for whether we want to bypass the equip delay
  */
-/obj/item/proc/mob_can_equip(mob/living/M, mob/living/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
+/obj/item/proc/mob_can_equip(mob/living/M, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE, ignore_equipped = FALSE)
 	if(!M)
 		return FALSE
 
-	return M.can_equip(src, slot, disable_warning, bypass_equip_delay_self)
+	return M.can_equip(src, slot, disable_warning, bypass_equip_delay_self, ignore_equipped)
 
 /obj/item/verb/verb_pickup()
 	set src in oview(1)
@@ -783,7 +794,7 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 		itempush = 0 //too light to push anything
 	if(isliving(hit_atom)) //Living mobs handle hit sounds differently.
 		var/volume = get_volume_by_throwforce_and_or_w_class()
-		if (throwforce > 0)
+		if (throwforce > 0 || HAS_TRAIT(src, TRAIT_CUSTOM_TAP_SOUND))
 			if (mob_throw_hit_sound)
 				playsound(hit_atom, mob_throw_hit_sound, volume, TRUE, -1)
 			else if(hitsound)
@@ -1100,18 +1111,22 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 	return 0
 
 /obj/item/doMove(atom/destination)
-	if (ismob(loc))
-		var/mob/M = loc
-		var/hand_index = M.get_held_index_of_item(src)
-		if(hand_index)
-			M.held_items[hand_index] = null
-			M.update_held_items()
-			if(M.client)
-				M.client.screen -= src
-			layer = initial(layer)
-			plane = initial(plane)
-			appearance_flags &= ~NO_CLIENT_COLOR
-			dropped(M, FALSE)
+	if (!ismob(loc))
+		return ..()
+
+	var/mob/M = loc
+	var/hand_index = M.get_held_index_of_item(src)
+	if(!hand_index)
+		return ..()
+
+	M.held_items[hand_index] = null
+	M.update_held_items()
+	if(M.client)
+		M.client.screen -= src
+	layer = initial(layer)
+	SET_PLANE_IMPLICIT(src, initial(plane))
+	appearance_flags &= ~NO_CLIENT_COLOR
+	dropped(M, FALSE)
 	return ..()
 
 /obj/item/proc/embedded(atom/embedded_target, obj/item/bodypart/part)
@@ -1349,7 +1364,7 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 	if(!istype(loc, /turf))
 		return
 	var/image/pickup_animation = image(icon = src, loc = loc, layer = layer + 0.1)
-	pickup_animation.plane = GAME_PLANE
+	SET_PLANE(pickup_animation, GAME_PLANE, loc)
 	pickup_animation.transform.Scale(0.75)
 	pickup_animation.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 
@@ -1480,3 +1495,63 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
  */
 /obj/item/proc/get_writing_implement_details()
 	return null
+
+/**
+ * When called on an item, and given a body targeting zone, this will return TRUE if the item slot matches the target zone, and FALSE otherwise.
+ * Currently supports the jumpsuit, outersuit, backpack, belt, gloves, hat, ears, neck, mask, eyes, and feet slots. All other slots will auto return FALSE.
+ */
+/obj/item/proc/compare_zone_to_item_slot(zone)
+	switch(slot_flags)
+		if(ITEM_SLOT_ICLOTHING, ITEM_SLOT_OCLOTHING, ITEM_SLOT_BACK)
+			return (zone == BODY_ZONE_CHEST)
+		if(ITEM_SLOT_BELT)
+			return (zone == BODY_ZONE_PRECISE_GROIN)
+		if(ITEM_SLOT_GLOVES)
+			return (zone == BODY_ZONE_R_ARM || zone == BODY_ZONE_L_ARM)
+		if(ITEM_SLOT_HEAD, ITEM_SLOT_EARS, ITEM_SLOT_NECK)
+			return (zone == BODY_ZONE_HEAD)
+		if(ITEM_SLOT_MASK)
+			return (zone == BODY_ZONE_PRECISE_MOUTH)
+		if(ITEM_SLOT_EYES)
+			return (zone == BODY_ZONE_PRECISE_EYES)
+		if(ITEM_SLOT_FEET)
+			return (zone == BODY_ZONE_L_LEG || zone == BODY_ZONE_R_LEG)
+	return FALSE
+
+/**
+ * This proc calls at the begining of anytime an item is being equiped to a target by another mob.
+ * It handles initial messages, AFK stripping, and initial logging.
+ */
+/obj/item/proc/item_start_equip(atom/target, obj/item/equipping, mob/user, warn_dangerous = TRUE)
+
+	if(warn_dangerous && isclothing(equipping))
+		var/obj/item/clothing/clothing = equipping
+		if(clothing.clothing_flags & DANGEROUS_OBJECT)
+			target.visible_message(
+				span_danger("[user] tries to put [equipping] on [target]."),
+				span_userdanger("[user] tries to put [equipping] on you."),
+				ignored_mobs = user,
+			)
+
+		else
+			target.visible_message(
+				span_notice("[user] tries to put [equipping] on [target]."),
+				span_notice("[user] tries to put [equipping] on you."),
+				ignored_mobs = user,
+			)
+
+		if(ishuman(target))
+			var/mob/living/carbon/human/victim_human = target
+			if(victim_human.key && !victim_human.client) // AKA braindead
+				if(victim_human.stat <= SOFT_CRIT && LAZYLEN(victim_human.afk_thefts) <= AFK_THEFT_MAX_MESSAGES)
+					var/list/new_entry = list(list(user.name, "tried equipping you with [equipping]", world.time))
+					LAZYADD(victim_human.afk_thefts, new_entry)
+
+			else if(victim_human.is_blind())
+				to_chat(target, span_userdanger("You feel someone trying to put something on you."))
+	user.do_item_attack_animation(target, used_item = equipping)
+
+	to_chat(user, span_notice("You try to put [equipping] on [target]..."))
+
+	user.log_message("is putting [equipping] on [key_name(target)]", LOG_ATTACK, color="red")
+	target.log_message("is having [equipping] put on them by [key_name(user)]", LOG_VICTIM, color="orange", log_globally=FALSE)

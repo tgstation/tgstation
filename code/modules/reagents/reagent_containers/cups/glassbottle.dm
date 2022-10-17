@@ -17,6 +17,8 @@
 	throwforce = 15
 	demolition_mod = 0.25
 	inhand_icon_state = "beer" //Generic held-item sprite until unique ones are made.
+	lefthand_file = 'icons/mob/inhands/items/drinks_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/drinks_righthand.dmi'
 	drink_type = ALCOHOL
 	age_restricted = TRUE // wrryy can't set an init value to see if drink_type contains ALCOHOL so here we go
 	///Directly relates to the 'knockdown' duration. Lowered by armor (i.e. helmets)
@@ -46,11 +48,11 @@
 	if(!target || !isliving(target))
 		return ..()
 
+	if(!isGlass)
+		return ..()
+
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, span_warning("You don't want to harm [target]!"))
-		return FALSE
-
-	if(!isGlass)
 		return FALSE
 
 	var/mob/living/living_target = target
@@ -117,6 +119,8 @@
 	demolition_mod = 0.25
 	w_class = WEIGHT_CLASS_TINY
 	inhand_icon_state = "broken_beer"
+	lefthand_file = 'icons/mob/inhands/items/drinks_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/drinks_righthand.dmi'
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("stabs", "slashes", "attacks")
 	attack_verb_simple = list("stab", "slash", "attack")
@@ -135,7 +139,7 @@
 /// Takes the broken bottle to mimic, and the thing the bottle was broken agaisnt as args
 /obj/item/broken_bottle/proc/mimic_broken(obj/item/reagent_containers/cup/glass/to_mimic, atom/target)
 	icon_state = to_mimic.icon_state
-	var/icon/drink_icon = new('icons/obj/drinks.dmi', icon_state)
+	var/icon/drink_icon = new(to_mimic.icon, icon_state)
 	drink_icon.Blend(broken_outline, ICON_OVERLAY, rand(5), 1)
 	drink_icon.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
 	icon = drink_icon
@@ -689,6 +693,8 @@
 /obj/item/reagent_containers/cup/glass/bottle/juice
 	custom_price = PAYCHECK_CREW
 	inhand_icon_state = "carton"
+	lefthand_file = 'icons/mob/inhands/items/drinks_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/drinks_righthand.dmi'
 	isGlass = FALSE
 	age_restricted = FALSE
 

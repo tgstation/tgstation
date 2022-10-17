@@ -187,7 +187,7 @@
 	name = "Royal Cheese"
 	reqs = list(
 		/obj/item/food/cheese/wheel = 1,
-		/obj/item/clothing/head/crown = 1,
+		/obj/item/clothing/head/costume/crown = 1,
 		/datum/reagent/medicine/strange_reagent = 5,
 		/datum/reagent/toxin/mutagen = 5
 	)
@@ -311,4 +311,16 @@
 	)
 	result = /obj/item/storage/fancy/pickles_jar
 	category = CAT_FOOD
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/springroll
+	name = "Spring roll"
+	reqs = list(
+		/obj/item/food/grown/carrot = 1,
+		/obj/item/food/grown/cucumber = 1,
+		/obj/item/food/grown/chili = 1,
+		/datum/reagent/consumable/rice = 10,
+		/datum/reagent/water = 10,
+	)
+	result = /obj/item/food/springroll
 	subcategory = CAT_MISCFOOD

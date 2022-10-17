@@ -1,4 +1,0 @@
-author: "Pickle-Coding"
-delete-after: True
-changes: 
-  - bugfix: "Water vapour electrolysis and hypernoblium electrolysis now respects heat capacity changes."

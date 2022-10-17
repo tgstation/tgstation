@@ -3,6 +3,7 @@
  */
 /obj/item/computer_hardware/hard_drive/portable/command
 	icon_state = "datadisk7"
+	max_capacity = 32
 
 
 /obj/item/computer_hardware/hard_drive/portable/command/install_default_programs()

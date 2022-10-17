@@ -365,7 +365,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 
 	if(shielding_powered)
 		. += mutable_appearance(canister_overlay_file, "shielding")
-		. += emissive_appearance(canister_overlay_file, "shielding")
+		. += emissive_appearance(canister_overlay_file, "shielding", src)
 
 	if(cell_container_opened)
 		. += mutable_appearance(canister_overlay_file, "cell_hatch")
@@ -384,16 +384,16 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	switch(air_pressure)
 		if((40 * ONE_ATMOSPHERE) to INFINITY)
 			. += mutable_appearance(canister_overlay_file, "can-3")
-			. += emissive_appearance(canister_overlay_file, "can-3-light", alpha = src.alpha)
+			. += emissive_appearance(canister_overlay_file, "can-3-light", src, alpha = src.alpha)
 		if((10 * ONE_ATMOSPHERE) to (40 * ONE_ATMOSPHERE))
 			. += mutable_appearance(canister_overlay_file, "can-2")
-			. += emissive_appearance(canister_overlay_file, "can-2-light", alpha = src.alpha)
+			. += emissive_appearance(canister_overlay_file, "can-2-light", src, alpha = src.alpha)
 		if((5 * ONE_ATMOSPHERE) to (10 * ONE_ATMOSPHERE))
 			. += mutable_appearance(canister_overlay_file, "can-1")
-			. += emissive_appearance(canister_overlay_file, "can-1-light", alpha = src.alpha)
+			. += emissive_appearance(canister_overlay_file, "can-1-light", src, alpha = src.alpha)
 		if((10) to (5 * ONE_ATMOSPHERE))
 			. += mutable_appearance(canister_overlay_file, "can-0")
-			. += emissive_appearance(canister_overlay_file, "can-0-light", alpha = src.alpha)
+			. += emissive_appearance(canister_overlay_file, "can-0-light", src, alpha = src.alpha)
 
 	update_window()
 
@@ -411,7 +411,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	cut_overlay(window)
 	window = image(icon, icon_state="window-base", layer=FLOAT_LAYER)
 	var/list/window_overlays = list()
-	for(var/visual in air_contents.return_visuals())
+	for(var/visual in air_contents.return_visuals(get_turf(src)))
 		var/image/new_visual = image(visual, layer=FLOAT_LAYER)
 		new_visual.filters = alpha_filter
 		window_overlays += new_visual
@@ -620,7 +620,9 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		"releasePressure" = round(release_pressure),
 		"valveOpen" = !!valve_open,
 		"isPrototype" = !!prototype,
-		"hasHoldingTank" = !!holding
+		"hasHoldingTank" = !!holding,
+		"hasHypernobCrystal" = !!nob_crystal_inserted,
+		"reactionSuppressionEnabled" = !!suppress_reactions
 	)
 
 	if (prototype)
@@ -644,8 +646,8 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		)
 	. += list(
 		"shielding" = shielding_powered,
-		"has_cell" = (internal_cell ? TRUE : FALSE),
-		"cell_charge" = internal_cell?.percent()
+		"hasCell" = (internal_cell ? TRUE : FALSE),
+		"cellCharge" = internal_cell?.percent()
 	)
 
 /obj/machinery/portable_atmospherics/canister/ui_act(action, params)
@@ -740,7 +742,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 					timer_set = min(maximum_timer_set, timer_set + 10)
 				if("input")
 					var/user_input = tgui_input_number(usr, "Set time to valve toggle", "Canister Timer", timer_set, maximum_timer_set, minimum_timer_set)
-					if(isnull(user_input) || QDELETED(usr) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, TRUE))
+					if(isnull(user_input) || QDELETED(usr) || QDELETED(src) || !usr.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 						return
 					timer_set = user_input
 					log_admin("[key_name(usr)] has activated a prototype valve timer")
@@ -760,6 +762,15 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 			SSair.start_processing_machine(src)
 			message_admins("[ADMIN_LOOKUPFLW(usr)] turned [shielding_powered ? "on" : "off"] the [src] powered shielding.")
 			investigate_log("[key_name(usr)] turned [shielding_powered ? "on" : "off"] the [src] powered shielding.")
+			. = TRUE
+		if("reaction_suppression")
+			if(!nob_crystal_inserted)
+				stack_trace("[usr] tried to toggle reaction suppression on a canister without a noblium crystal inside, possible href exploit attempt.")
+				return
+			suppress_reactions = !suppress_reactions
+			SSair.start_processing_machine(src)
+			message_admins("[ADMIN_LOOKUPFLW(usr)] turned [suppress_reactions ? "on" : "off"] the [src] reaction suppression.")
+			investigate_log("[key_name(usr)] turned [suppress_reactions ? "on" : "off"] the [src] reaction suppression.")
 			. = TRUE
 
 	update_appearance()

@@ -38,13 +38,13 @@
 	. = ..()
 
 	if(obj_flags & IN_USE)
-		. += mutable_appearance(icon, "[base_icon_state]-o", plane = GAME_PLANE_UPPER, layer = ABOVE_MOB_LAYER, alpha = src.alpha)
+		. += mutable_appearance(icon, "[base_icon_state]-o", offset_spokesman = src, plane = GAME_PLANE_UPPER, layer = ABOVE_MOB_LAYER, alpha = src.alpha)
 
 /obj/structure/weightmachine/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
-	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 		return
 	if(obj_flags & IN_USE)
 		to_chat(user, span_warning("It's already in use - wait a bit!"))

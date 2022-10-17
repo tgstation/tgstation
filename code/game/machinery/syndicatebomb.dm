@@ -17,8 +17,8 @@
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_OFFLINE
 
 	use_power = NO_POWER_USE
-	var/minimum_timer = 90
-	var/timer_set = 90
+	var/minimum_timer = SYNDIEBOMB_MIN_TIMER_SECONDS
+	var/timer_set = SYNDIEBOMB_MIN_TIMER_SECONDS
 	var/maximum_timer = 60000
 
 	var/can_unanchor = TRUE
@@ -207,17 +207,15 @@
 	notify_ghosts("\A [src] has been activated at [get_area(src)]!", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Bomb Planted")
 
 /obj/machinery/syndicatebomb/proc/settings(mob/user)
-	if(!user.canUseTopic(src, !issilicon(user)))
+	if(!user.canUseTopic(src, !issilicon(user)) || !user.can_interact_with(src))
 		return
 	var/new_timer = tgui_input_number(user, "Set the timer", "Countdown", timer_set, maximum_timer, minimum_timer)
-	if(!new_timer || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(!new_timer || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 		return
 	timer_set = new_timer
 	loc.visible_message(span_notice("[icon2html(src, viewers(src))] timer set for [timer_set] seconds."))
 	var/choice = tgui_alert(user, "Would you like to start the countdown now?", "Bomb Timer", list("Yes","No"))
 	if(choice != "Yes")
-		return
-	if(!user.canUseTopic(src, !issilicon(user)))
 		return
 	if(active)
 		to_chat(user, span_warning("The bomb is already active!"))
@@ -282,7 +280,7 @@
 	desc = "A powerful secondary explosive of syndicate design and unknown composition, it should be stable under normal conditions..."
 	icon = 'icons/obj/assemblies/assemblies.dmi'
 	icon_state = "bombcore"
-	inhand_icon_state = "eshield0"
+	inhand_icon_state = "eshield"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL

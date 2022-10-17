@@ -1,0 +1,114 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/moisture_trap,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/medical)
+"m" = (
+/turf/template_noop,
+/area/template_noop)
+"n" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/medical)
+"p" = (
+/obj/structure/closet,
+/obj/effect/spawner/random/maintenance/three,
+/obj/effect/spawner/random/engineering/tool,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/medical)
+"r" = (
+/turf/closed/wall,
+/area/station/maintenance/department/medical)
+"x" = (
+/obj/effect/spawner/random/trash/grille_or_waste,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/medical)
+"A" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"C" = (
+/obj/structure/rack,
+/obj/effect/spawner/random/maintenance/two,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/medical)
+"E" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"G" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/hobo_squat,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"J" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/plastic{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/medical)
+"S" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/medical)
+"V" = (
+/obj/structure/falsewall,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/medical)
+"Z" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/modular_map_connector,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/medical)
+
+(1,1,1) = {"
+G
+E
+A
+n
+"}
+(2,1,1) = {"
+E
+E
+S
+J
+"}
+(3,1,1) = {"
+S
+E
+S
+a
+"}
+(4,1,1) = {"
+V
+r
+r
+r
+"}
+(5,1,1) = {"
+p
+x
+S
+C
+"}
+(6,1,1) = {"
+m
+m
+Z
+m
+"}

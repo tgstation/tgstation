@@ -303,6 +303,11 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	var/mob/living/carbon/offerer
 	var/obj/item/receiving
 
+/atom/movable/screen/alert/give/Destroy()
+	offerer = null
+	receiving = null
+	return ..()
+
 /**
  * Handles assigning most of the variables for the alert that pops up when an item is offered
  *

@@ -35,7 +35,7 @@
 	begin_week = 4
 	begin_month = NOVEMBER
 	begin_weekday = THURSDAY
-	drone_hat = /obj/item/clothing/head/that //This is the closest we can get to a pilgrim's hat
+	drone_hat = /obj/item/clothing/head/hats/tophat //This is the closest we can get to a pilgrim's hat
 
 /datum/holiday/nth_week/thanksgiving/canada
 	name = "Thanksgiving in Canada"

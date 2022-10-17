@@ -89,8 +89,17 @@
 #define COMSIG_LIVING_Z_IMPACT "living_z_impact"
 	#define NO_Z_IMPACT_DAMAGE (1<<0)
 
+/// From mob/living/try_speak(): (message, ignore_spam, forced)
+#define COMSIG_LIVING_TRY_SPEECH "living_vocal_speech"
+	/// Return if the mob can speak the message, regardless of any other signal returns or checks.
+	#define COMPONENT_CAN_ALWAYS_SPEAK (1<<0)
+	/// Return if the mob cannot speak.
+	#define COMPONENT_CANNOT_SPEAK (1<<1)
+
 /// From mob/living/treat_message(): (list/message_args)
 #define COMSIG_LIVING_TREAT_MESSAGE "living_treat_message"
+	/// The index of message_args that corresponds to the actual message
+	#define TREAT_MESSAGE_MESSAGE 1
 
 ///From obj/item/toy/crayon/spraycan
 #define COMSIG_LIVING_MOB_PAINTED "living_mob_painted"
@@ -111,3 +120,5 @@
 #define COMSIG_LIVING_CULT_SACRIFICED "living_cult_sacrificed"
 	/// Return to stop the sac from occurring
 	#define STOP_SACRIFICE (1<<0)
+	/// Don't send a message for sacrificing this thing, we have our own
+	#define SILENCE_SACRIFICE_MESSAGE (1<<1)

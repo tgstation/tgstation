@@ -87,37 +87,8 @@
 /// Start the equipping process. This is the proc you should yield in.
 /// Returns TRUE/FALSE depending on if it is allowed.
 /datum/strippable_item/proc/start_equip(atom/source, obj/item/equipping, mob/user)
-	if (warn_dangerous_clothing && isclothing(source))
-		var/obj/item/clothing/clothing = source
-		if(clothing.clothing_flags & DANGEROUS_OBJECT)
-			source.visible_message(
-				span_danger("[user] tries to put [equipping] on [source]."),
-				span_userdanger("[user] tries to put [equipping] on you."),
-				ignored_mobs = user,
-			)
 
-		else
-			source.visible_message(
-				span_notice("[user] tries to put [equipping] on [source]."),
-				span_notice("[user] tries to put [equipping] on you."),
-				ignored_mobs = user,
-			)
-
-		if(ishuman(source))
-			var/mob/living/carbon/human/victim_human = source
-			if(victim_human.key && !victim_human.client) // AKA braindead
-				if(victim_human.stat <= SOFT_CRIT && LAZYLEN(victim_human.afk_thefts) <= AFK_THEFT_MAX_MESSAGES)
-					var/list/new_entry = list(list(user.name, "tried equipping you with [equipping]", world.time))
-					LAZYADD(victim_human.afk_thefts, new_entry)
-
-			else if(victim_human.is_blind())
-				to_chat(source, span_userdanger("You feel someone trying to put something on you."))
-
-	to_chat(user, span_notice("You try to put [equipping] on [source]..."))
-
-	user.log_message("is putting [equipping] on [key_name(source)]", LOG_ATTACK, color="red")
-	source.log_message("is having [equipping] put on them by [key_name(user)]", LOG_VICTIM, color="orange", log_globally=FALSE)
-
+	equipping.item_start_equip(source, equipping, user, warn_dangerous_clothing)
 	return TRUE
 
 /// The proc that places the item on the source. This should not yield.
@@ -225,13 +196,7 @@
 	if (!ismob(source))
 		return FALSE
 
-	if (!equipping.mob_can_equip(
-		source,
-		user,
-		item_slot,
-		disable_warning = TRUE,
-		bypass_equip_delay_self = TRUE,
-	))
+	if (!equipping.mob_can_equip(source, item_slot, disable_warning = TRUE, bypass_equip_delay_self = TRUE))
 		to_chat(user, span_warning("\The [equipping] doesn't fit in that place!"))
 		return FALSE
 
@@ -248,13 +213,7 @@
 	if (!do_mob(user, source, get_equip_delay(equipping)))
 		return FALSE
 
-	if (!equipping.mob_can_equip(
-		source,
-		user,
-		item_slot,
-		disable_warning = TRUE,
-		bypass_equip_delay_self = TRUE,
-	))
+	if (!equipping.mob_can_equip(source, item_slot, disable_warning = TRUE, bypass_equip_delay_self = TRUE))
 		return FALSE
 
 	if (!user.temporarilyRemoveItemFromInventory(equipping))

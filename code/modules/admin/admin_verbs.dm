@@ -79,6 +79,12 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/datum/admins/proc/paintings_manager,
 	/datum/admins/proc/display_tags,
 	/datum/admins/proc/fishing_calculator,
+	/client/proc/list_bombers,
+	/client/proc/list_signalers,
+	/client/proc/list_law_changes,
+	/client/proc/show_manifest,
+	/client/proc/list_dna,
+	/client/proc/list_fingerprints,
 	)
 GLOBAL_LIST_INIT(admin_verbs_ban, list(/client/proc/unban_panel, /client/proc/ban_panel, /client/proc/stickybanpanel))
 GLOBAL_PROTECT(admin_verbs_ban)
@@ -169,6 +175,7 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/cmd_display_del_log,
 	/client/proc/outfit_manager,
 	/client/proc/open_colorblind_test,
+	/client/proc/debug_plane_masters,
 	/client/proc/generate_wikichem_list,
 	/client/proc/modify_goals,
 	/client/proc/debug_huds,
@@ -205,6 +212,7 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/open_lua_editor,
 	/client/proc/validate_puzzgrids,
 	/client/proc/debug_spell_requirements,
+	/client/proc/debug_hallucination_weighted_list_per_type,
 	)
 GLOBAL_LIST_INIT(admin_verbs_possess, list(/proc/possess, /proc/release))
 GLOBAL_PROTECT(admin_verbs_possess)
@@ -347,6 +355,54 @@ GLOBAL_PROTECT(admin_verbs_poll)
 		if(!isobserver(usr) && SSticker.HasRoundStarted())
 			message_admins("[key_name_admin(usr)] checked antagonists.")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Check Antagonists") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/list_bombers()
+	set name = "List Bombers"
+	set category = "Admin.Game"
+	if(!holder)
+		return
+	holder.list_bombers()
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "List Bombers") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/list_signalers()
+	set name = "List Signalers"
+	set category = "Admin.Game"
+	if(!holder)
+		return
+	holder.list_signalers()
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "List Signalers") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/list_law_changes()
+	set name = "List Law Changes"
+	set category = "Debug"
+	if(!holder)
+		return
+	holder.list_law_changes()
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "List Law Changes") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/show_manifest()
+	set name = "Show Manifest"
+	set category = "Debug"
+	if(!holder)
+		return
+	holder.show_manifest()
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Manifest") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/list_dna()
+	set name = "List DNA"
+	set category = "Debug"
+	if(!holder)
+		return
+	holder.list_dna()
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "List DNA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/list_fingerprints()
+	set name = "List Fingerprints"
+	set category = "Debug"
+	if(!holder)
+		return
+	holder.list_fingerprints()
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "List Fingerprints") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/ban_panel()
 	set name = "Banning Panel"
@@ -760,39 +816,16 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	log_admin("[src] re-adminned themselves.")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Readmin")
 
-/client/proc/populate_world(amount = 50 as num)
+/client/proc/populate_world(amount = 50)
 	set name = "Populate World"
 	set category = "Debug"
 	set desc = "(\"Amount of mobs to create\") Populate the world with test mobs."
 
-	if (amount > 0)
-		var/area/area
-		var/list/candidates
-		var/turf/open/floor/tile
-		var/j,k
-
-		for (var/i = 1 to amount)
-			j = 100
-
-			do
-				area = pick(GLOB.the_station_areas)
-
-				if (area)
-
-					candidates = get_area_turfs(area)
-
-					if (length(candidates))
-						k = 100
-
-						do
-							tile = pick(candidates)
-						while ((!tile || !istype(tile)) && --k > 0)
-
-						if (tile)
-							var/mob/living/carbon/human/hooman = new(tile)
-							hooman.equipOutfit(pick(subtypesof(/datum/outfit)))
-							testing("Spawned test mob at [COORD(tile)]")
-			while (!area && --j > 0)
+	for (var/i in 1 to amount)
+		var/turf/tile = get_safe_random_station_turf()
+		var/mob/living/carbon/human/hooman = new(tile)
+		hooman.equipOutfit(pick(subtypesof(/datum/outfit)))
+		testing("Spawned test mob at [get_area_name(tile, TRUE)] ([tile.x],[tile.y],[tile.z])")
 
 /client/proc/toggle_AI_interact()
 	set name = "Toggle Admin AI Interact"

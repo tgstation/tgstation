@@ -158,7 +158,7 @@
 		return
 	add_overlay(
 		list(mutable_appearance(icon, "[initial(icon_state)]-alert"),
-			emissive_appearance(icon, "[initial(icon_state)]-alert", alpha = src.alpha)))
+			emissive_appearance(icon, "[initial(icon_state)]-alert", src, alpha = src.alpha)))
 
 /** Removes any overlays */
 /obj/item/pai_card/proc/remove_alert()

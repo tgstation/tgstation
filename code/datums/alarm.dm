@@ -5,9 +5,9 @@
 //The system as a whole differs from reading off a global list in a few ways.
 //In that A, it allows us to send cameras for ais/borgs/potentially others to jump to
 //And B, it's not like we're giving you all the alarms that have been sent, because of the separate listing for each reviever
-//You only recieve alarms sent after you start to listen
-//Also of note, due to an optimzation done on areas, one alarm handler will only ever send one "on" or "off" alarm
-//So the whole only receving stuff sent post creation thing actually matters
+//You only receive alarms sent after you start to listen
+//Also of note, due to an optimization done on areas, one alarm handler will only ever send one "on" or "off" alarm
+//So the whole only receiving stuff sent post creation thing actually matters
 //Honestly I'm not sure how much of this is a feature, and how much is just old code
 //But I'm leaving it how I found it
 

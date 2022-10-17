@@ -99,7 +99,7 @@
 /obj/effect/turf_decal/bot,
 /obj/item/weldingtool/largetank,
 /obj/item/wrench,
-/obj/item/clothing/head/welding,
+/obj/item/clothing/head/utility/welding,
 /obj/structure/rack,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
@@ -578,7 +578,7 @@
 "Dp" = (
 /obj/structure/table,
 /obj/item/flashlight/lantern/syndicate{
-	light_on = 1
+	on = 1
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation)
