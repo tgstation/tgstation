@@ -218,14 +218,14 @@ const ObservableItem = (
 ) => {
   const { act } = useBackend<OrbitData>(context);
   const { color, item } = props;
-  const { extra, full_name, job, health, name, orbiters, ref } = item;
+  const { extra, full_name, job, job_icon, health, name, orbiters, ref } = item;
   const [autoObserve] = useLocalState<boolean>(context, 'autoObserve', false);
   const [heatMap] = useLocalState<boolean>(context, 'heatMap', false);
 
   return (
     <Button
       color={getDisplayColor(item, heatMap, color)}
-      icon={job && JOB2ICON[job]}
+      icon={job_icon || (job && JOB2ICON[job]) || null}
       onClick={() => act('orbit', { auto_observe: autoObserve, ref: ref })}
       tooltip={(!!health || !!extra) && <ObservableTooltip item={item} />}
       tooltipPosition="bottom-start">
