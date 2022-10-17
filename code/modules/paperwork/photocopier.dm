@@ -537,7 +537,7 @@
  * Return `FALSE` is the copier has something inside of it. Returns `TRUE` if it doesn't.
  */
 /obj/machinery/photocopier/proc/copier_empty()
-	if(paper_copy || photo_copy || document_copy || check_ass())
+	if(paper_copy || photo_copy || document_copy || check_ass() || paperwork_copy)
 		return FALSE
 	else
 		return TRUE
