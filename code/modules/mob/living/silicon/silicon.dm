@@ -51,6 +51,8 @@
 	var/hack_software = FALSE //Will be able to use hacking actions
 	/// If true, will fake announce a set lawset instead of your real laws
 	var/fake_asimov = FALSE
+	/// The lawset to fake-announce
+	var/fake_laws = /datum/ai_laws/default/asimov
 	interaction_range = 7 //wireless control range
 
 	var/obj/item/modular_computer/tablet/integrated/modularInterface
@@ -251,21 +253,22 @@
 	var/list/lawcache_ioncheck = ioncheck.Copy()
 	var/list/lawcache_hackedcheck = hackedcheck.Copy()
 
-	if(fake_asimov)
-		say("pretend fake laws are here its not coded yet", forced = "ohnoitshacked")
-		var/datum/ai_laws/asimov/fake_lawset
+	if(fake_asimov)  // theres probably a better way to do this but hey it works
+		var/datum/ai_laws/fake_lawset = new fake_laws
 		lawcache_zeroth = null
-		lawcache_hacked = initial(fake_lawset.hacked)
-		lawcache_ion = initial(fake_lawset.ion)
-		lawcache_inherent = initial(fake_lawset.inherent)
-		lawcache_supplied = initial(fake_lawset.supplied)
+		lawcache_hacked = fake_lawset.hacked
+		lawcache_ion = fake_lawset.ion
+		lawcache_inherent = fake_lawset.inherent
+		lawcache_supplied = fake_lawset.supplied
 
 		// announce everything
 		lawcache_lawcheck = lawcache_inherent + lawcache_supplied
 		lawcache_ioncheck = lawcache_ion
 		lawcache_hackedcheck = lawcache_hacked
 
-	var/forced_log_message = "stating laws[force ? ", forced" : ""]"
+		qdel(fake_lawset)
+
+	var/forced_log_message = "stating [fake_asimov ? "faked ": ""]laws[force ? ", forced" : ""]"
 	//"radiomod" is inserted before a hardcoded message to change if and how it is handled by an internal radio.
 	say("[radiomod] Current Active Laws:", forced = forced_log_message)
 	sleep(AI_LAWS_DELAY)
