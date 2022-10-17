@@ -54,6 +54,7 @@ export const JOB2ICON = {
   'Bartender': 'cocktail',
   'Botanist': 'seedling',
   'Chaplain': 'cross',
+  'Chef': 'utensils',
   'Clown': 'face-grin-tears',
   'Cook': 'utensils',
   'Curator': 'book',
@@ -64,6 +65,10 @@ export const JOB2ICON = {
   'Head of Security': 'user-shield',
   'Prisoner': 'lock-keyhole',
   'Security Officer': 'shield-halved',
+  'Security Officer (Cargo)': 'shield-halved',
+  'Security Officer (Engineering)': 'shield-halved',
+  'Security Officer (Medical)': 'shield-halved',
+  'Security Officer (Science)': 'shield-halved',
   'Warden': 'handcuffs',
   'Lawyer': 'gavel',
   // Silicon

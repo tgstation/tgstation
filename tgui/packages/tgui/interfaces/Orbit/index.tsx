@@ -4,7 +4,7 @@ import { capitalizeFirst, multiline } from 'common/string';
 import { useBackend, useLocalState } from 'tgui/backend';
 import { Button, Collapsible, Icon, Input, LabeledList, NoticeBox, Section, Stack } from 'tgui/components';
 import { Window } from 'tgui/layouts';
-import { collateAntagonists, getDisplayName, getHealthColor, isJobOrNameMatch } from './helpers';
+import { collateAntagonists, getDisplayColor, getDisplayName, isJobOrNameMatch } from './helpers';
 import { ANTAG2COLOR, JOB2ICON } from './mappings';
 import type { AntagGroup, Observable, OrbitData } from './types';
 
@@ -41,6 +41,11 @@ const ObservableSearch = (props, context) => {
   const [autoObserve, setAutoObserve] = useLocalState<boolean>(
     context,
     'autoObserve',
+    false
+  );
+  const [heatMap, setHeatMap] = useLocalState<boolean>(
+    context,
+    'heatMap',
     false
   );
   const [searchQuery, setSearchQuery] = useLocalState<string>(
@@ -87,6 +92,15 @@ const ObservableSearch = (props, context) => {
         <Stack.Divider />
         <Stack.Item>
           <Button
+            color="transparent"
+            icon={!heatMap ? 'heart' : 'ghost'}
+            onClick={() => setHeatMap(!heatMap)}
+            tooltip="Toggles between highlighting health or orbiters"
+            tooltipPosition="bottom-start"
+          />
+        </Stack.Item>
+        <Stack.Item>
+          <Button
             color={autoObserve ? 'good' : 'transparent'}
             icon={autoObserve ? 'toggle-on' : 'toggle-off'}
             onClick={() => setAutoObserve(!autoObserve)}
@@ -97,12 +111,11 @@ const ObservableSearch = (props, context) => {
         </Stack.Item>
         <Stack.Item>
           <Button
-            inline
             color="transparent"
-            tooltip="Refresh"
-            tooltipPosition="bottom-start"
             icon="sync-alt"
             onClick={() => act('refresh')}
+            tooltip="Refresh"
+            tooltipPosition="bottom-start"
           />
         </Stack.Item>
       </Stack>
@@ -206,10 +219,11 @@ const ObservableItem = (
   const { color, item } = props;
   const { extra, full_name, job, health, name, orbiters, ref } = item;
   const [autoObserve] = useLocalState<boolean>(context, 'autoObserve', false);
+  const [heatMap] = useLocalState<boolean>(context, 'heatMap', false);
 
   return (
     <Button
-      color={getHealthColor(color, health)}
+      color={getDisplayColor(item, heatMap, color)}
       icon={job && JOB2ICON[job]}
       onClick={() => act('orbit', { auto_observe: autoObserve, ref: ref })}
       tooltip={(!!health || !!extra) && <ObservableTooltip item={item} />}

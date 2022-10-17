@@ -41,10 +41,7 @@ export const getDisplayName = (full_name: string, name?: string) => {
 };
 
 /** Returns the display color for certain health percentages */
-export const getHealthColor = (color?: string, health?: number) => {
-  if (health === undefined || health === null) {
-    return color ? 'good' : 'grey';
-  }
+const getHealthColor = (health: number) => {
   switch (true) {
     case health > 75:
       return 'good';
@@ -53,6 +50,40 @@ export const getHealthColor = (color?: string, health?: number) => {
     default:
       return 'bad';
   }
+};
+
+/** Returns the display color based on orbiter numbers */
+const getThreatColor = (orbiters: number) => {
+  switch (true) {
+    case orbiters > 9:
+      return 'violet';
+    case orbiters > 4:
+      return 'blue';
+    default:
+      return 'good';
+  }
+};
+
+/**
+ * ### getDisplayColor
+ * Displays color for buttons based on the health or orbiter count. Toggleable.
+ * @param {Observable} item - The point of interest.
+ * @param {boolean} heatMap - Whether the user has heat map toggled.
+ * @param {string} color - OPTIONAL: The color to default to.
+ */
+export const getDisplayColor = (
+  item: Observable,
+  heatMap: boolean,
+  color?: string
+) => {
+  const { health, orbiters = 0 } = item;
+  if (typeof health !== 'number') {
+    return color ?? 'good';
+  }
+  if (heatMap) {
+    return getThreatColor(orbiters);
+  }
+  return getHealthColor(health);
 };
 
 /** Checks if a full name or job title matches the search. */
