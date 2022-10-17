@@ -177,7 +177,7 @@
 /obj/machinery/mineral/ore_redemption/can_be_unfasten_wrench(mob/user, silent)
 	if(welded)
 		if(!silent)
-			to_chat(user, span_warning("[src] is welded to the floor!"))
+			balloon_alert(user, "it's welded!")
 		return FAILED_UNFASTEN
 
 	return ..()
@@ -192,29 +192,23 @@
 	if(welded)
 		if(!item.tool_start_check(user, amount=0))
 			return TRUE
-		user.visible_message(span_notice("[user.name] starts to cut the [name] free from the floor."), \
-			span_notice("You start to cut [src] free from the floor..."), \
-			span_hear("You hear welding."))
+		user.balloon_alert_to_viewers("unwelding...")
 		if(!item.use_tool(src, user, 20, 1, 50))
 			return FALSE
 		welded = FALSE
-		to_chat(user, span_notice("You cut [src] free from the floor."))
-		update_cable_icons_on_turf(get_turf(src))
+		balloon_alert(user, "unwelded")
 		return TRUE
 
 	if(!anchored)
-		to_chat(user, span_warning("[src] needs to be wrenched to the floor!"))
+	balloon_alert(user, "wrench it first!")
 		return TRUE
 	if(!item.tool_start_check(user, amount=0))
 		return TRUE
-	user.visible_message(span_notice("[user.name] starts to weld the [name] to the floor."), \
-		span_notice("You start to weld [src] to the floor..."), \
-		span_hear("You hear welding."))
+	user.balloon_alert_to_viewers("unwelding...")
 	if(!item.use_tool(src, user, 20, 1, 50))
 		return FALSE
 	welded = TRUE
-	to_chat(user, span_notice("You weld [src] to the floor."))
-	update_cable_icons_on_turf(get_turf(src))
+	balloon_alert(user, "welded")
 	return TRUE
 	
 /obj/machinery/mineral/ore_redemption/attackby(obj/item/W, mob/user, params)
