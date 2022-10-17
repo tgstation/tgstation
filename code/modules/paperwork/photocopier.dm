@@ -335,6 +335,7 @@
 	if(!paperwork_copy || !toner_cartridge)
 		return
 	var/obj/item/paperwork/photocopy/copied_paperwork = new(loc, paperwork_copy)
+	copied_paperwork.copy_stamp_info(paperwork_copy)
 	if(paperwork_copy.stamped)
 		copied_paperwork.add_stamp()
 	give_pixel_offset(copied_paperwork)

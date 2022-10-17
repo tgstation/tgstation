@@ -75,7 +75,17 @@
 	stamped = TRUE
 	stamp_overlay = mutable_appearance('icons/obj/bureaucracy.dmi', stamp_icon)
 	add_overlay(stamp_overlay)
-	update_overlays()
+
+/**
+ * Copies the requested stamp, associated job, and associated icon of a given paperwork type
+ *
+ * Copies the stamp/job related info of a given paperwork type to the object
+ * Used to mutate photocopied/ancient paperwork into behaving like their subtype counterparts without being them
+ */
+/obj/item/paperwork/proc/copy_stamp_info(var/obj/item/paperwork/paperwork_type)
+	stamp_requested = initial(paperwork_type.stamp_requested) //Copies a random paperwork's requirements.
+	stamp_job =  initial(paperwork_type.stamp_job)
+	stamp_icon =  initial(paperwork_type.stamp_icon)
 
 //HEAD OF STAFF DOCUMENTS
 
@@ -179,17 +189,21 @@
 	/// Has the photocopy been marked with a "void" stamp. Used to prevent documents from draining money if they somehow make their way to cargo.
 	var/voided = FALSE
 
-/obj/item/paperwork/photocopy/examine(mob/user)
+/obj/item/paperwork/photocopy/examine_more(mob/user)
 	. = ..()
 
-	. += "These appear to just be a photocopy of the original documents. The stamp on the front appears to be smudged and faded. Central Command will probably still accept these, right?"
+	. += "These appear to just be a photocopy of the original documents."
+
+	if(stamped)
+		. += "The stamp on the front appears to be smudged and faded. Central Command will probably still accept these, right?"
 
 /obj/item/paperwork/photocopy/attackby(obj/item/attacking_item, mob/user, params)
 	if(istype(attacking_item, /obj/item/stamp/void) && !stamped && !voided)
 		to_chat(user, span_notice("You plant the [attacking_item] firmly onto the front of the documents."))
 		stamp_overlay = mutable_appearance('icons/obj/bureaucracy.dmi', "paper_stamp-void")
 		add_overlay(stamp_overlay)
-		voided = TRUE //It won't get you any money, but it also can't LOSE you money now.
+		voided = TRUE
+		stamped = TRUE //It won't get you any money, but it also can't LOSE you money now.
 
 //Ancient paperwork is a subtype of paperwork, meant to be used for any paperwork not spawned by the event.
 //It doesn't have any of the flavor text that the event ones spawn with.
@@ -202,7 +216,5 @@
 /obj/item/paperwork/ancient/Initialize(mapload)
 	. = ..()
 
-	var/obj/item/paperwork/paperwork_type = pick(subtypesof(/obj/item/paperwork)) //Yes this includes photocopies.
-	stamp_requested = initial(paperwork_type.stamp_requested) //Copies a random paperwork's requirements.
-	stamp_job =  initial(paperwork_type.stamp_job)
-	stamp_icon =  initial(paperwork_type.stamp_icon)
+	var/obj/item/paperwork/paperwork_type = pick(subtypesof(/obj/item/paperwork)) //Yes this includes photocopies. Figure out how that will work later.
+	copy_stamp_info(paperwork_type)
