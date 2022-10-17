@@ -24,12 +24,19 @@
 	var/datum/techweb/stored_research
 	var/obj/item/disk/design_disk/inserted_disk
 	var/datum/component/remote_materials/materials
+	var/welded = FALSE
 
 /obj/machinery/mineral/ore_redemption/Initialize(mapload)
 	. = ..()
 	stored_research = new /datum/techweb/specialized/autounlocking/smelter
 	materials = AddComponent(/datum/component/remote_materials, "orm", mapload, mat_container_flags=BREAKDOWN_FLAGS_ORM)
+	welded = TRUE
 
+/obj/machinery/mineral/ore_redemption/set_anchored(anchorvalue)
+	. = ..()
+	if(!anchored && welded) //make sure they're keep in sync in case it was forcibly unanchored by badmins or by a megafauna.
+		welded = FALSE
+		
 /obj/machinery/mineral/ore_redemption/Destroy()
 	QDEL_NULL(stored_research)
 	materials = null
@@ -37,6 +44,13 @@
 
 /obj/machinery/mineral/ore_redemption/examine(mob/user)
 	. = ..()
+	if(welded)
+		. += span_info("It's moored firmly to the floor. You can unsecure its moorings with a <b>welder</b>.")
+	else if(anchored)
+		. += span_info("It's currently anchored to the floor. You can secure its moorings with a <b>welder</b>, or remove it with a <b>wrench</b>.")
+	else
+		. += span_info("It's not anchored to the floor. You can secure it in place with a <b>wrench</b>.")
+
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Smelting <b>[ore_multiplier]</b> sheet(s) per piece of ore.<br>Reward point generation at <b>[point_upgrade*100]%</b>.")
 	if(panel_open)
@@ -151,6 +165,58 @@
 		// gives 5 seconds for a load of ores to be sucked up by the ORM before it sends out request console notifications. This should be enough time for most deposits that people make
 		console_notify_timer = addtimer(CALLBACK(src, .proc/send_console_message), 5 SECONDS)
 
+/obj/machinery/mineral/ore_redemption/default_unfasten_wrench(mob/user, obj/item/I)
+	. = ..()
+	if(. != SUCCESSFUL_UNFASTEN)
+		return
+	if(anchored)
+		register_input_turf() // someone just wrenched us down, re-register the turf
+	else
+		unregister_input_turf() // someone just un-wrenched us, unregister the turf
+
+/obj/machinery/mineral/ore_redemption/can_be_unfasten_wrench(mob/user, silent)
+	if(welded)
+		if(!silent)
+			to_chat(user, span_warning("[src] is welded to the floor!"))
+		return FAILED_UNFASTEN
+
+	return ..()
+	
+/obj/machinery/mineral/ore_redemption/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+	
+/obj/machinery/mineral/ore_redemption/welder_act(mob/living/user, obj/item/item)
+	..()
+	if(welded)
+		if(!item.tool_start_check(user, amount=0))
+			return TRUE
+		user.visible_message(span_notice("[user.name] starts to cut the [name] free from the floor."), \
+			span_notice("You start to cut [src] free from the floor..."), \
+			span_hear("You hear welding."))
+		if(!item.use_tool(src, user, 20, 1, 50))
+			return FALSE
+		welded = FALSE
+		to_chat(user, span_notice("You cut [src] free from the floor."))
+		update_cable_icons_on_turf(get_turf(src))
+		return TRUE
+
+	if(!anchored)
+		to_chat(user, span_warning("[src] needs to be wrenched to the floor!"))
+		return TRUE
+	if(!item.tool_start_check(user, amount=0))
+		return TRUE
+	user.visible_message(span_notice("[user.name] starts to weld the [name] to the floor."), \
+		span_notice("You start to weld [src] to the floor..."), \
+		span_hear("You hear welding."))
+	if(!item.use_tool(src, user, 20, 1, 50))
+		return FALSE
+	welded = TRUE
+	to_chat(user, span_notice("You weld [src] to the floor."))
+	update_cable_icons_on_turf(get_turf(src))
+	return TRUE
+	
 /obj/machinery/mineral/ore_redemption/attackby(obj/item/W, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "ore_redemption-open", "ore_redemption", W))
 		return
