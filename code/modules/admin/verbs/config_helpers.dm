@@ -8,7 +8,7 @@
 	if(!check_rights(R_SERVER))
 		return
 
-	if(tgui_alert(usr, "This verb is not at all useful if you are not a server operator with access to the configuration folder. Do you wish to proceed?", "Generate jobconfig.toml for clients", list("Yes", "No")) != "Yes")
+	if(tgui_alert(usr, "This verb is not at all useful if you are not a server operator with access to the configuration folder. Do you wish to proceed?", "Generate jobconfig.toml for download", list("Yes", "No")) != "Yes")
 		return
 
 	if(SSjob.generate_config(usr))

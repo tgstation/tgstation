@@ -639,7 +639,7 @@ SUBSYSTEM_DEF(job)
 
 		return
 
-	else
+	else // legacy mode, so just run the old parser.
 		var/jobstext = file("[global.config.directory]/jobs.txt")
 		if(!fexists(jobstext))
 			return
@@ -727,7 +727,7 @@ SUBSYSTEM_DEF(job)
 		var/job_key = occupation.config_tag
 
 		var/default_positions = job_config[job_key][TOTAL_POSITIONS]
-		var/starting_positions = job_config[job_key]["Spawn Positions"]
+		var/starting_positions = job_config[job_key][SPAWN_POSITIONS]
 		var/playtime_requirements = job_config[job_key][PLAYTIME_REQUIREMENTS]
 		var/required_account_age = job_config[job_key][REQUIRED_ACCOUNT_AGE]
 
