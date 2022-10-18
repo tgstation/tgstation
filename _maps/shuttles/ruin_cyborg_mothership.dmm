@@ -1,0 +1,1516 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/obj/machinery/power/shuttle_engine/heater,
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"ay" = (
+/obj/machinery/light/cold/no_nightlight/directional/north,
+/mob/living/simple_animal/hostile/hivebot/range,
+/turf/open/floor/circuit/green/airless,
+/area/template_noop)
+"aJ" = (
+/obj/structure/rack,
+/obj/item/storage/toolbox/electrical{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/storage/toolbox/mechanical,
+/obj/item/multitool,
+/obj/machinery/light/cold/no_nightlight/directional/east,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"bi" = (
+/obj/machinery/power/solar,
+/obj/structure/spacevine,
+/turf/open/floor/iron/solarpanel/airless,
+/area/template_noop)
+"bU" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/airlock/external/ruin{
+	id_tag = "caravanpirate_bolt_port"
+	},
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"cO" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "QMLoad"
+	},
+/obj/machinery/door/window/right/directional/east,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"dG" = (
+/obj/machinery/power/smes/engineering{
+	charge = 1e+006
+	},
+/turf/open/floor/circuit/green/airless,
+/area/template_noop)
+"dU" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/table,
+/obj/effect/turf_decal/bot,
+/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/mask/surgical,
+/obj/item/razor,
+/obj/structure/mirror/directional/west,
+/obj/machinery/light/cold/no_nightlight/directional/west,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"ex" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "QMLoad2"
+	},
+/obj/machinery/rnd/production/protolathe/offstation,
+/turf/open/floor/circuit/green/airless,
+/area/template_noop)
+"ey" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "QMLoad2"
+	},
+/obj/structure/lattice/catwalk,
+/obj/machinery/camera/directional/west,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"eN" = (
+/turf/closed/wall/mineral/titanium,
+/area/space)
+"fe" = (
+/obj/structure/spacevine,
+/turf/template_noop,
+/area/template_noop)
+"fS" = (
+/turf/closed/wall/mineral/titanium,
+/area/template_noop)
+"gk" = (
+/turf/open/floor/circuit/airless,
+/area/template_noop)
+"gy" = (
+/obj/structure/lattice,
+/obj/structure/spacevine,
+/turf/template_noop,
+/area/template_noop)
+"gJ" = (
+/obj/machinery/power/shuttle_engine/propulsion,
+/obj/structure/spacevine,
+/turf/open/space/basic,
+/area/template_noop)
+"gV" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"hT" = (
+/obj/item/mmi,
+/turf/open/floor/circuit/airless,
+/area/template_noop)
+"ir" = (
+/obj/machinery/door/window/right/directional/west,
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "QMLoad"
+	},
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"iE" = (
+/obj/machinery/conveyor,
+/obj/structure/lattice/catwalk,
+/obj/structure/spacevine,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"jj" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "QMLoad"
+	},
+/obj/structure/lattice/catwalk,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"jQ" = (
+/turf/open/floor/circuit/green/airless,
+/area/template_noop)
+"jU" = (
+/obj/machinery/power/apc/auto_name/directional/north,
+/turf/open/floor/circuit/airless,
+/area/template_noop)
+"kf" = (
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "QMLoad"
+	},
+/obj/structure/lattice/catwalk,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"kn" = (
+/obj/machinery/conveyor,
+/mob/living/simple_animal/hostile/hivebot,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"kp" = (
+/obj/machinery/rnd/production/circuit_imprinter/offstation,
+/turf/open/space/basic,
+/area/template_noop)
+"kK" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/lattice,
+/turf/template_noop,
+/area/template_noop)
+"lm" = (
+/obj/machinery/light/cold/no_nightlight/directional/west,
+/obj/machinery/light/cold/no_nightlight/directional/west,
+/turf/open/space/basic,
+/area/template_noop)
+"lF" = (
+/obj/machinery/light/cold/no_nightlight/directional/north,
+/turf/open/floor/circuit/green/airless,
+/area/template_noop)
+"mi" = (
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "QMLoad"
+	},
+/obj/machinery/door/window/right/directional/north,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"nQ" = (
+/obj/structure/spacevine,
+/turf/open/space/basic,
+/area/template_noop)
+"nR" = (
+/obj/machinery/mecha_part_fabricator/maint{
+	name = "forgotten exosuit fabricator"
+	},
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "QMLoad"
+	},
+/turf/open/floor/circuit/green/airless,
+/area/template_noop)
+"oc" = (
+/obj/machinery/door/airlock/external/ruin,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/docking_port/mobile{
+	callTime = 250;
+	dir = 2;
+	dwidth = 11;
+	height = 17;
+	shuttle_id = "whiteship";
+	launch_status = 0;
+	movement_force = list("KNOCKDOWN"=0,"THROW"=0);
+	name = "NT Frigate";
+	port_direction = 8;
+	preferred_direction = 4;
+	width = 27
+	},
+/turf/open/floor/plating,
+/area/space)
+"od" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"of" = (
+/obj/structure/ai_core,
+/obj/item/radio/intercom/directional/south,
+/turf/open/floor/circuit/green/airless,
+/area/template_noop)
+"oi" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/table/optable,
+/obj/effect/turf_decal/bot,
+/obj/effect/mob_spawn/corpse/human/assistant,
+/obj/machinery/light/cold/no_nightlight/directional/east,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"os" = (
+/obj/machinery/mineral/processing_unit{
+	dir = 1;
+	input_dir = 8;
+	output_dir = 4
+	},
+/turf/open/space/basic,
+/area/template_noop)
+"pw" = (
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "QMLoad"
+	},
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"pO" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "QMLoad2"
+	},
+/obj/structure/lattice/catwalk,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"pY" = (
+/obj/machinery/conveyor,
+/obj/machinery/door/window/right/directional/south,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"rE" = (
+/obj/machinery/power/terminal,
+/turf/open/floor/circuit/airless,
+/area/template_noop)
+"sd" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/template_noop)
+"sG" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"tr" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/effect/spawner/random/engineering/material{
+	spawn_loot_count = 3;
+	spawn_loot_split = 1
+	},
+/obj/structure/closet/crate{
+	icon_state = "crateopen"
+	},
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"tS" = (
+/obj/machinery/mineral/unloading_machine,
+/turf/open/space/basic,
+/area/template_noop)
+"tU" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"ud" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"uj" = (
+/mob/living/simple_animal/bot/floorbot,
+/turf/open/space/basic,
+/area/template_noop)
+"uz" = (
+/obj/machinery/mineral/stacking_machine{
+	input_dir = 2
+	},
+/obj/machinery/conveyor,
+/obj/structure/lattice/catwalk,
+/obj/machinery/camera/directional/north,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"va" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/catwalk_floor/titanium,
+/area/template_noop)
+"vj" = (
+/obj/machinery/camera/directional/east,
+/turf/template_noop,
+/area/template_noop)
+"vE" = (
+/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
+	dir = 1
+	},
+/turf/open/floor/circuit/airless,
+/area/template_noop)
+"vV" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "QMLoad2"
+	},
+/obj/structure/plasticflaps/opaque,
+/obj/structure/lattice/catwalk,
+/obj/machinery/door/poddoor{
+	id = "whiteship_windows"
+	},
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"wh" = (
+/obj/machinery/camera/directional/west,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"xK" = (
+/obj/machinery/computer/monitor{
+	dir = 1
+	},
+/obj/machinery/camera/directional/south,
+/turf/open/floor/circuit/green/airless,
+/area/template_noop)
+"zf" = (
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"zk" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/table,
+/obj/machinery/cell_charger,
+/obj/item/stack/cable_coil,
+/obj/item/stock_parts/cell/high,
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"zN" = (
+/obj/machinery/autolathe,
+/turf/template_noop,
+/area/template_noop)
+"zR" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/template_noop)
+"zT" = (
+/mob/living/simple_animal/bot/cleanbot,
+/turf/open/space/basic,
+/area/template_noop)
+"Bs" = (
+/obj/machinery/recharge_station,
+/obj/structure/sign/warning/vacuum/external/directional/east,
+/obj/machinery/camera/directional/east,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"CL" = (
+/obj/machinery/camera/directional/east,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"Da" = (
+/obj/machinery/ore_silo,
+/turf/open/floor/circuit/green/airless,
+/area/template_noop)
+"EN" = (
+/mob/living/simple_animal/bot/cleanbot,
+/turf/open/floor/iron/showroomfloor,
+/area/template_noop)
+"Ft" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/closet/crate{
+	icon_state = "crateopen"
+	},
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"FB" = (
+/obj/machinery/power/shuttle_engine/heater,
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"FC" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"FH" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "QMLoad2"
+	},
+/obj/machinery/door/window/right/directional/west,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"Gi" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/effect/spawner/random/structure/crate_abandoned,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"Gr" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/shieldgen{
+	active = 1;
+	anchored = 1;
+	locked = 1;
+	req_access = list("syndicate")
+	},
+/obj/structure/spacevine,
+/turf/template_noop,
+/area/template_noop)
+"HG" = (
+/obj/machinery/camera/directional/west,
+/turf/template_noop,
+/area/template_noop)
+"In" = (
+/obj/machinery/recharge_station,
+/turf/open/space/basic,
+/area/template_noop)
+"Iq" = (
+/turf/open/floor/catwalk_floor/titanium,
+/area/template_noop)
+"IT" = (
+/obj/machinery/door/airlock/hatch,
+/turf/open/floor/circuit/green/airless,
+/area/template_noop)
+"Jb" = (
+/turf/open/space/basic,
+/area/space)
+"Jd" = (
+/obj/machinery/power/smes/engineering{
+	charge = 1e+006
+	},
+/turf/open/space/basic,
+/area/template_noop)
+"Je" = (
+/mob/living/simple_animal/bot/hygienebot,
+/obj/machinery/camera/directional/south,
+/turf/open/floor/iron/showroomfloor,
+/area/template_noop)
+"JF" = (
+/obj/machinery/conveyor,
+/obj/machinery/recycler,
+/obj/structure/lattice/catwalk,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"JL" = (
+/obj/machinery/light/cold/no_nightlight/directional/south,
+/turf/open/floor/circuit/green/airless,
+/area/template_noop)
+"JR" = (
+/turf/open/space/basic,
+/area/template_noop)
+"Kv" = (
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "QMLoad"
+	},
+/obj/structure/lattice/catwalk,
+/obj/machinery/camera/directional/east,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"KB" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "QMLoad"
+	},
+/obj/structure/lattice/catwalk,
+/obj/structure/spacevine,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"Mw" = (
+/obj/machinery/conveyor,
+/obj/structure/lattice/catwalk,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"Na" = (
+/obj/machinery/door/airlock/hatch,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"Np" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/template_noop)
+"Ob" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/lattice,
+/turf/template_noop,
+/area/template_noop)
+"Ot" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "QMLoad"
+	},
+/obj/machinery/door/window/right/directional/west,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"OC" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/computer/operating{
+	dir = 8
+	},
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"OY" = (
+/obj/structure/closet/crate{
+	icon_state = "crateopen"
+	},
+/obj/effect/spawner/random/maintenance/three,
+/obj/machinery/light/cold/no_nightlight/directional/west,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"Pu" = (
+/turf/open/floor/iron/showroomfloor,
+/area/template_noop)
+"PZ" = (
+/obj/structure/spacevine,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/template_noop)
+"Qf" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "QMLoad2"
+	},
+/obj/machinery/door/window/right/directional/west,
+/turf/open/floor/iron/showroomfloor,
+/area/template_noop)
+"QG" = (
+/obj/machinery/power/shuttle_engine/heater,
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"QT" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/table,
+/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/effect/turf_decal/bot,
+/obj/structure/sink/directional/east,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"Rv" = (
+/obj/structure/lattice/catwalk,
+/turf/template_noop,
+/area/template_noop)
+"RC" = (
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "QMLoad"
+	},
+/obj/machinery/door/window/right/directional/south,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"RI" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "QMLoad"
+	},
+/obj/machinery/light/cold/no_nightlight/directional/south,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"Sk" = (
+/obj/machinery/power/shuttle_engine/propulsion,
+/turf/open/space/basic,
+/area/template_noop)
+"Ss" = (
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "QMLoad"
+	},
+/obj/structure/lattice/catwalk,
+/obj/structure/spacevine,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"Sv" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "QMLoad2"
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/template_noop)
+"Tk" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "QMLoad2"
+	},
+/obj/machinery/door/window/right/directional/east,
+/turf/open/floor/iron/showroomfloor,
+/area/template_noop)
+"TU" = (
+/obj/machinery/conveyor,
+/obj/machinery/door/window/right/directional/north,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"Uh" = (
+/obj/item/organ/internal/brain,
+/turf/open/floor/circuit/airless,
+/area/template_noop)
+"Us" = (
+/obj/machinery/conveyor,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"UA" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/shieldgen{
+	active = 1;
+	anchored = 1;
+	locked = 1;
+	req_access = list("syndicate")
+	},
+/turf/template_noop,
+/area/template_noop)
+"UM" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "QMLoad"
+	},
+/obj/structure/plasticflaps/opaque,
+/obj/structure/lattice/catwalk,
+/obj/machinery/door/poddoor{
+	id = "whiteship_windows"
+	},
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"Va" = (
+/obj/structure/sign/warning/vacuum/external/directional/west,
+/obj/structure/closet/emcloset/anchored,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"VJ" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/space)
+"Ww" = (
+/mob/living/simple_animal/hostile/hivebot,
+/turf/open/floor/circuit/airless,
+/area/template_noop)
+"Xp" = (
+/turf/template_noop,
+/area/template_noop)
+"XT" = (
+/obj/machinery/status_display/ai/directional/north,
+/obj/machinery/porta_turret/ai,
+/obj/machinery/computer/security/telescreen{
+	desc = "Used for watching the RD's goons from the safety of his office.";
+	dir = 4;
+	name = "Research Monitor";
+	network = list("rd");
+	pixel_x = -28
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/space)
+"Yb" = (
+/mob/living/simple_animal/hostile/hivebot/mechanic,
+/turf/open/floor/iron/showroomfloor,
+/area/template_noop)
+"YM" = (
+/obj/machinery/autolathe,
+/turf/open/space/basic,
+/area/template_noop)
+"YU" = (
+/obj/machinery/computer/shuttle/white_ship/bridge{
+	dir = 1
+	},
+/turf/open/floor/circuit/airless,
+/area/template_noop)
+"Zs" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "QMLoad2"
+	},
+/obj/structure/lattice/catwalk,
+/obj/structure/spacevine,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+
+(1,1,1) = {"
+Jb
+Jb
+Jb
+JR
+JR
+JR
+JR
+JR
+JR
+JR
+JR
+JR
+JR
+fS
+sd
+FB
+gJ
+JR
+JR
+JR
+JR
+JR
+JR
+JR
+JR
+JR
+JR
+Jd
+"}
+(2,1,1) = {"
+Jb
+XT
+Jb
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+fS
+sd
+OY
+sd
+QG
+gJ
+JR
+JR
+JR
+JR
+JR
+JR
+JR
+JR
+lm
+Iq
+"}
+(3,1,1) = {"
+Jb
+Jb
+Jb
+zf
+Xp
+Xp
+Xp
+Xp
+Xp
+Xp
+Xp
+Xp
+zk
+wh
+zf
+zf
+Gi
+PZ
+Xp
+Xp
+Xp
+Xp
+Xp
+Xp
+Xp
+JR
+JR
+os
+"}
+(4,1,1) = {"
+Jb
+Jb
+Jb
+zf
+Xp
+Xp
+Xp
+Xp
+Xp
+Xp
+pO
+kf
+kf
+mi
+pw
+RC
+Ss
+Ss
+Ss
+Xp
+Xp
+Xp
+Xp
+Xp
+Xp
+zf
+JR
+tS
+"}
+(5,1,1) = {"
+Jb
+Jb
+Jb
+zf
+Xp
+Xp
+Gr
+bi
+bi
+bi
+pO
+Xp
+Xp
+od
+cO
+gV
+Xp
+Xp
+KB
+bi
+bi
+bi
+UA
+Xp
+Xp
+zf
+JR
+YM
+"}
+(6,1,1) = {"
+Jb
+Jb
+Jb
+zf
+Xp
+Xp
+bi
+Zs
+kf
+kf
+kf
+Xp
+Xp
+zR
+jj
+zR
+Xp
+Xp
+jj
+Ss
+kf
+kf
+bi
+Xp
+Xp
+zf
+JR
+kp
+"}
+(7,1,1) = {"
+Jb
+Jb
+Jb
+zf
+Xp
+Xp
+bi
+pO
+zR
+zR
+Xp
+Xp
+Xp
+zR
+jj
+zR
+Xp
+Xp
+Xp
+zR
+zR
+jj
+bi
+Xp
+Xp
+zf
+JR
+nQ
+"}
+(8,1,1) = {"
+Jb
+Jb
+Jb
+zf
+Xp
+Xp
+bi
+Zs
+gy
+zR
+zR
+Xp
+Xp
+zR
+jj
+zR
+Xp
+Xp
+zR
+zR
+zR
+jj
+bi
+Xp
+Xp
+zf
+JR
+Rv
+"}
+(9,1,1) = {"
+Jb
+Jb
+Jb
+zf
+Xp
+pO
+kf
+Kv
+Xp
+zR
+zR
+zR
+Xp
+fS
+UM
+fS
+vj
+zR
+zR
+zR
+Xp
+jj
+Ss
+kf
+Xp
+Xp
+Xp
+JR
+"}
+(10,1,1) = {"
+Jb
+Jb
+Jb
+zf
+fS
+Qf
+sd
+sd
+fS
+Xp
+zR
+zR
+fS
+sd
+nR
+sd
+sd
+fS
+zR
+Xp
+Xp
+Xp
+Xp
+jj
+Xp
+Xp
+Xp
+JR
+"}
+(11,1,1) = {"
+Jb
+Jb
+eN
+sd
+sd
+Sv
+dU
+QT
+sd
+Xp
+Xp
+fS
+sd
+lF
+jQ
+jQ
+JL
+sd
+fS
+Xp
+Xp
+Xp
+Xp
+jj
+kf
+kf
+FB
+Sk
+"}
+(12,1,1) = {"
+Jb
+Jb
+VJ
+Va
+sd
+Sv
+Pu
+Je
+sd
+Ob
+Ob
+sd
+jQ
+Uh
+Ww
+vE
+gk
+Da
+sd
+zR
+zR
+zR
+tU
+ir
+sG
+Ot
+FB
+Sk
+"}
+(13,1,1) = {"
+Jb
+Jb
+oc
+zf
+bU
+Sv
+Pu
+Pu
+Na
+va
+va
+IT
+jQ
+hT
+of
+fS
+jU
+xK
+sd
+uz
+Mw
+JF
+TU
+Us
+Us
+RI
+FB
+Sk
+"}
+(14,1,1) = {"
+Jb
+Jb
+VJ
+Bs
+sd
+Sv
+Yb
+EN
+sd
+kK
+kK
+sd
+jQ
+gk
+gk
+YU
+rE
+dG
+sd
+zR
+gy
+gy
+od
+cO
+ud
+cO
+FB
+Sk
+"}
+(15,1,1) = {"
+Jb
+Jb
+eN
+sd
+sd
+Sv
+oi
+OC
+sd
+Xp
+Xp
+fS
+sd
+ay
+jQ
+jQ
+JL
+sd
+fS
+Xp
+Xp
+fe
+fe
+KB
+Ss
+Ss
+FB
+Sk
+"}
+(16,1,1) = {"
+Jb
+Jb
+Jb
+zf
+fS
+Tk
+sd
+sd
+fS
+Xp
+gy
+gy
+fS
+sd
+ex
+sd
+sd
+fS
+zR
+Xp
+Xp
+Xp
+Xp
+KB
+Xp
+Xp
+Xp
+JR
+"}
+(17,1,1) = {"
+Jb
+Jb
+Jb
+zf
+Xp
+Mw
+Mw
+ey
+Xp
+zR
+gy
+zR
+Xp
+fS
+vV
+fS
+HG
+zR
+zR
+zR
+Xp
+Mw
+iE
+KB
+Xp
+Xp
+Xp
+JR
+"}
+(18,1,1) = {"
+Jb
+Jb
+Jb
+zf
+Xp
+Xp
+bi
+Zs
+zR
+gy
+gy
+Xp
+Xp
+zR
+pO
+gy
+Xp
+Xp
+zR
+zR
+gy
+jj
+bi
+Xp
+Xp
+zf
+JR
+JR
+"}
+(19,1,1) = {"
+Jb
+Jb
+Jb
+zf
+Xp
+Xp
+bi
+Zs
+gy
+gy
+Xp
+Xp
+Xp
+gy
+Zs
+gy
+Xp
+Xp
+Xp
+zR
+zR
+jj
+bi
+Xp
+Xp
+zf
+JR
+JR
+"}
+(20,1,1) = {"
+Jb
+Jb
+Jb
+zf
+Xp
+Xp
+bi
+iE
+iE
+iE
+pO
+Xp
+Xp
+gy
+pO
+zR
+Xp
+Xp
+Mw
+iE
+Mw
+KB
+bi
+Xp
+Xp
+zf
+JR
+JR
+"}
+(21,1,1) = {"
+Jb
+Jb
+Jb
+zf
+Xp
+Xp
+Gr
+bi
+bi
+bi
+pO
+Xp
+Xp
+tU
+FH
+FC
+Xp
+Xp
+jj
+bi
+bi
+bi
+UA
+Xp
+Xp
+zf
+JR
+zN
+"}
+(22,1,1) = {"
+Jb
+Jb
+Jb
+zf
+Xp
+Xp
+Xp
+Xp
+Xp
+Xp
+Mw
+Mw
+Mw
+TU
+kn
+pY
+Mw
+Mw
+jj
+Xp
+Xp
+Xp
+Xp
+Xp
+Xp
+zf
+JR
+JR
+"}
+(23,1,1) = {"
+Jb
+Jb
+Jb
+zf
+Xp
+Xp
+Xp
+Xp
+Xp
+Xp
+Xp
+Xp
+tr
+CL
+zf
+zf
+Ft
+Np
+Xp
+Xp
+Xp
+Xp
+Xp
+Xp
+Xp
+zf
+JR
+In
+"}
+(24,1,1) = {"
+Jb
+Jb
+Jb
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+fS
+sd
+aJ
+sd
+aa
+Sk
+Xp
+Xp
+Xp
+Xp
+Xp
+Xp
+Xp
+zf
+JR
+uj
+"}
+(25,1,1) = {"
+Jb
+Jb
+Jb
+JR
+JR
+JR
+JR
+JR
+JR
+JR
+JR
+JR
+JR
+fS
+sd
+aa
+Sk
+JR
+JR
+JR
+JR
+JR
+JR
+JR
+JR
+JR
+JR
+zT
+"}
