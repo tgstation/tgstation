@@ -186,7 +186,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/equipped(mob/equipee, slot)
 	. = ..()
-	if(slot != ITEM_SLOT_MASK)
+	if(!(slot & ITEM_SLOT_MASK))
 		UnregisterSignal(equipee, COMSIG_HUMAN_FORCESAY)
 		return
 	RegisterSignal(equipee, COMSIG_HUMAN_FORCESAY, .proc/on_forcesay)

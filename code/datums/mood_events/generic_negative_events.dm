@@ -155,7 +155,7 @@
 	mood_change = -2
 
 /datum/mood_event/choke
-	description = "I CAN'T BREATH!!!"
+	description = "I CAN'T BREATHE!!!"
 	mood_change = -10
 
 /datum/mood_event/vomit

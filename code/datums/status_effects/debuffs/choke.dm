@@ -162,7 +162,7 @@
 
 /datum/status_effect/choke/proc/attempt_eat(mob/source, atom/eating)
 	SIGNAL_HANDLER
-	source.balloon_alert(source, "you can't get it down!")
+	source.balloon_alert(source, "can't get it down!")
 	return COMSIG_CARBON_BLOCK_EAT
 
 /datum/status_effect/choke/proc/helped(mob/source, mob/helping)
@@ -179,10 +179,10 @@
 	if(victim == aggressor)
 		return
 	if(DOING_INTERACTION_WITH_TARGET(aggressor, victim))
-		victim.balloon_alert(aggressor, "You are already helping!")
+		victim.balloon_alert(aggressor, "already helping!")
 		return
 	if(DOING_INTERACTION(aggressor, "heimlich"))
-		victim.balloon_alert(aggressor, "You can't heimlich two people at once!") // Yes I know it's kinda runon, but this is a real rare condition
+		victim.balloon_alert(aggressor, "already helping someone!") // Yes I know it's kinda runon, but this is a real rare condition
 		return
 
 	if(!thrusting_continues(victim, aggressor, before_work = TRUE))
@@ -211,7 +211,7 @@
 
 	var/atom/movable/choking_on = choking_on_ref?.resolve()
 	owner.visible_message(span_green("[victim] vomits up \the[choking_on]. [victim.p_theyre()] gonna make it!"), \
-			span_green("You vomit up that accursed blockage. YOU CAN BREATH! The broken chest is a hell of a price to pay."))
+			span_green("You vomit up that accursed blockage. YOU CAN BREATHE! The broken chest is a hell of a price to pay."))
 	if(iscarbon(victim))
 		var/mob/living/carbon/carbon_victim = victim
 		var/obj/item/bodypart/chest = carbon_victim.get_bodypart(BODY_ZONE_CHEST)
@@ -239,7 +239,7 @@
 	if(iscarbon(victim))
 		var/mob/living/carbon/carbon_victim = victim
 		if(!carbon_victim.appears_alive())
-			victim.balloon_alert(aggressor, "cannot be dead!")
+			victim.balloon_alert(aggressor, "too late...")
 			return FALSE
 
 	if(!choking_on_ref)
