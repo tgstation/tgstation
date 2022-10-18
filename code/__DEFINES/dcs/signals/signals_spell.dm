@@ -23,6 +23,8 @@
 #define COMSIG_MOB_CAST_SPELL "mob_cast_spell"
 /// Sent from /datum/action/cooldown/spell/cast() to the spell: (atom/cast_on)
 #define COMSIG_SPELL_CAST "spell_cast"
+// Sent from /datum/action/cooldown/spell/pointed/projectile/fire_projectile() to the caster: (datum/action/cooldown/spell/spell, atom/cast_on, obj/projectile/to_fire)
+#define COMSIG_MOB_SPELL_PROJECTILE "mob_spell_projectile"
 // Sent from /datum/action/cooldown/spell/after_cast() to the caster: (datum/action/cooldown/spell/spell, atom/cast_on)
 #define COMSIG_MOB_AFTER_SPELL_CAST "mob_after_spell_cast"
 /// Sent from /datum/action/cooldown/spell/after_cast() to the spell: (atom/cast_on)
