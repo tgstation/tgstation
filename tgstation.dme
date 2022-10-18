@@ -2113,6 +2113,7 @@
 #include "code\modules\admin\verbs\cinematic.dm"
 #include "code\modules\admin\verbs\color_blind_test.dm"
 #include "code\modules\admin\verbs\commandreport.dm"
+#include "code\modules\admin\verbs\config_helpers.dm"
 #include "code\modules\admin\verbs\deadsay.dm"
 #include "code\modules\admin\verbs\debug.dm"
 #include "code\modules\admin\verbs\diagnostics.dm"
