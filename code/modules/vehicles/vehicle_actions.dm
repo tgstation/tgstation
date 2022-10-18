@@ -381,7 +381,7 @@
 		L.Paralyze(50)
 		if(prob(15))
 			V.visible_message(span_userdanger("You smack against the board, hard."), \
-			span_danger("[L] misses the landing and falls on [L.p_their()] face!)")
+			span_danger("[L] misses the landing and falls on [L.p_their()] face!)"))
 			L.emote("scream")
 			L.adjustBruteLoss(10)  // thats gonna leave a mark
 			return
