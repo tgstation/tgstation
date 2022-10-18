@@ -410,6 +410,7 @@
 	plaintext_zone = "right leg"
 	px_x = 2
 	px_y = 12
+	bodypart_trait_source = RIGHT_LEG_TRAIT
 	/// We store this here to generate our icon key more easily.
 	var/left_leg_mask_key
 	/// The associated list of all the left leg mask keys associated to their cached left leg masks.
@@ -417,7 +418,6 @@
 	/// Why? Both legs share the same layer for rendering, and since we don't want to do redraws on
 	/// each dir changes, we're doing it with a mask instead, which we cache for efficiency reasons.
 	var/static/list/left_leg_mask_cache = list()
-	bodypart_trait_source = RIGHT_LEG_TRAIT
 
 /obj/item/bodypart/leg/right/set_owner(new_owner)
 	. = ..()

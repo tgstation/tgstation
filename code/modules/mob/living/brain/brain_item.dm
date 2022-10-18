@@ -450,10 +450,7 @@
 /// This proc lets the mob's brain decide what bodypart to attack with in an unarmed strike.
 /obj/item/organ/internal/brain/proc/get_attacking_limb(mob/living/carbon/human/target)
 	var/obj/item/bodypart/arm/active_hand = owner.get_active_hand()
-	var/dexter = active_hand.held_index
 	if(target.body_position == LYING_DOWN && owner.usable_legs)
-		if(dexter == 1 && owner.get_bodypart(BODY_ZONE_L_LEG))
-			return owner.get_bodypart(BODY_ZONE_L_LEG)
-		if(dexter == 2 && owner.get_bodypart(BODY_ZONE_R_LEG))
-			return owner.get_bodypart(BODY_ZONE_R_LEG)
+		var/obj/item/bodypart/found_bodypart = owner.get_bodypart((active_hand.held_index % 2) ? BODY_ZONE_L_LEG : BODY_ZONE_R_LEG)
+		return found_bodypart ? found_bodypart : active_hand
 	return active_hand
