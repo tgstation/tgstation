@@ -66,9 +66,6 @@
 
 #define FULLSCREEN_PLANE 23
 
-///Visuals that represent sounds happening, and can be seen while blind.
-#define SOUND_EFFECT_VISUAL_PLANE 25
-
 ///--------------- FULLSCREEN RUNECHAT BUBBLES ------------
 
 ///Popup Chat Messages
@@ -212,6 +209,8 @@
 #define BLIND_LAYER 4
 #define CRIT_LAYER 5
 #define CURSE_LAYER 6
+
+#define FOV_EFFECT_LAYER 100
 
 ///--------------- FULLSCREEN RUNECHAT BUBBLES ------------
 /// Bubble for typing indicators
