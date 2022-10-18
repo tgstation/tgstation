@@ -1,4 +1,0 @@
-author: "Profakos"
-delete-after: True
-changes: 
-  - bugfix: "Goodie lockbox contents can no longer go missing"

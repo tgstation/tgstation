@@ -1,4 +1,0 @@
-author: "Vishenka0704"
-delete-after: True
-changes: 
-  - bugfix: "restores withdrawal log in NT Pay"

@@ -1,5 +1,0 @@
-author: "Paxilmaniac"
-delete-after: True
-changes: 
-  - rscadd: "Stairs can now be built out of iron, wood, or really any rigid material (stuff you can make carving blocks out of)"
-  - rscadd: "Two new types of stairs, wood and stone (wood is buildable in round) for any mappers in the chat"

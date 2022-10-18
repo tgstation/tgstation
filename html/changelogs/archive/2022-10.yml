@@ -578,3 +578,49 @@
   lizardqueenlexi:
   - bugfix: Admin-spawned and changelings transformed into lizards will display the
       correct tails now
+2022-10-18:
+  Dalmationer and Profakos:
+  - imageadd: added icons for motorized wheelchairs (regular and fast)
+  - bugfix: Wheelchairs can be upgraded more than once
+  GoblinBackwards:
+  - bugfix: Fixed being able to weld multiple disposal machines to the same pipe
+  GoldenAlpharex:
+  - bugfix: The prompt to commend someone else for their good behavior will now properly
+      be given out randomly, allowing those that late-join to give them out as well.
+  Imaginos:
+  - imageadd: Updates the station-bounced radio sprite
+  Jackraxxus:
+  - bugfix: Deltastation's EVA now contains a real toolbelt, that can only hold tools.
+  - bugfix: The Ashwalker Nest now contains a real toolbelt, that can only hold tools.
+  - spellcheck: The base type of /belt is now more obviously NOT a toolbelt.
+  MTandi:
+  - imageadd: Added xenobio guide sign
+  Melbert:
+  - bugfix: Fixed some things having inaccurate screentips while holding nothing (Elevators,
+      heaters, bodybags / roller beds)
+  - bugfix: Fixes runtime preventing revolution auto shuttle call
+  Paxilmaniac:
+  - rscadd: Stairs can now be built out of iron, wood, or really any rigid material
+      (stuff you can make carving blocks out of)
+  - rscadd: Two new types of stairs, wood and stone (wood is buildable in round) for
+      any mappers in the chat
+  - imageadd: New and improved sprites for stone floors!
+  Profakos:
+  - bugfix: Goodie lockbox contents can no longer go missing
+  - qol: Added categories to the AutoDrobe
+  - qol: Examining a mech under construction returns the instructions for the next
+      step.
+  Rhials:
+  - bugfix: checking a pocket protector's insertable items list no longer lists the
+      names of ALL possible objects.
+  - bugfix: normal/cosmetology pocket protectors now work again.
+  Vishenka0704:
+  - bugfix: restores withdrawal log in NT Pay
+  Y0SH1M4S73R:
+  - bugfix: Admin lua scripting has been fixed for servers hosted on Linux
+  carshalash:
+  - bugfix: Fixes godfather using godmother sprites and vice versa.
+  etherware-novice:
+  - bugfix: fugitive hunters get team hud
+  lizardqueenlexi:
+  - qol: Reorganized the items in the Booze-o-Mat and implemented product categories
