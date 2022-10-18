@@ -28,7 +28,7 @@ export const ANTAG2GROUP = {
 export const JOB2ICON = {
   'AI': 'eye',
   'Cyborg': 'robot',
-  'pAI': 'robot',
+  'Personal AI': 'mobile-alt',
 } as const;
 
 export enum THREAT {
