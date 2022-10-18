@@ -229,12 +229,12 @@
 //////////////////////
 
 ///Gets an input message from user and returns the sanitized message.
-/datum/computer_file/program/messenger/proc/msg_input(mob/living/user, rigged = FALSE)
+/datum/computer_file/program/messenger/proc/msg_input(mob/living/user, target_name, rigged = FALSE)
 	var/input_message
 	if(mime_mode)
-		input_message = emoji_sanitize(tgui_input_text(user, "Enter emojis", "NT Messaging"))
+		input_message = emoji_sanitize(tgui_input_text(user, "Enter emojis", "NT Messaging[target_name ? " ([target_name])" : ""]"))
 	else
-		input_message = tgui_input_text(user, "Enter a message", "NT Messaging")
+		input_message = tgui_input_text(user, "Enter a message", "NT Messaging[target_name ? " ([target_name])" : ""]")
 
 	if (!input_message || !sending_and_receiving)
 		return
