@@ -18,7 +18,7 @@
 
 /datum/vote/map_vote/create_vote()
 	. = ..()
-	check_population(create_vote = TRUE)
+	check_population(should_key_choices = FALSE)
 	if((length(choices) == 1) && EMERGENCY_ESCAPED_OR_ENDGAMED) // Only one choice, no need to vote. Let's just auto-rotate it to the only remaining map because it would just happen anyways.
 		var/de_facto_winner = choices[1]
 		var/datum/map_config/change_me_out = global.config.maplist[de_facto_winner]
@@ -67,10 +67,9 @@
 	return TRUE
 
 /// Before we create a vote, remove all maps from our choices that are outside of our population range. Note that this can result in zero remaining choices for our vote, which is not ideal (but ultimately okay).
-/// Argument create_vote is typically FALSE, pass as TRUE if calling from the create_vote proc. When FALSE, we collect the default choices in a similar manner to how the create_vote() proc does it.
-/// When TRUE, there's no need to collect the default choices and key it that way since create_vote() already does that in it's own proc handling, so let's avoid doing double work.
-/datum/vote/map_vote/proc/check_population(create_vote = FALSE)
-	if(!create_vote)
+/// Argument should_key_choices is TRUE, pass as FALSE in a context where choices are already keyed in a list.
+/datum/vote/map_vote/proc/check_population(should_key_choices = TRUE)
+	if(should_key_choices)
 		for(var/key in default_choices)
 			choices[key] = 0
 
