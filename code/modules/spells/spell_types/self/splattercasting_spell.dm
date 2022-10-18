@@ -4,8 +4,7 @@
 		the primal essences of life and magic into one. Dramatically lowers the \
 		cooldown on all spells, but each one will cost blood, as well as it naturally \
 		draining from you. You can replenish it from your victims."
-	icon_icon = 'icons/mob/actions/actions_spells.dmi'
-	button_icon_state = "skeleton"
+	button_icon_state = "splattercasting"
 
 	school = SCHOOL_SANGUINE
 	cooldown_time = 1 SECONDS
@@ -24,14 +23,13 @@
 		to_chat(cast_on, span_warning("Your focus is broken, and the simmering slowly fades."))
 		return
 
+	to_chat(cast_on, span_userdanger("You feel your very essense binding to your magic! A stabbing pain within \
+		brings unimaginable momentary torment as your heart stops, and your skin grows cold. You are now \
+		merely a vessel for the arcane flow. Soon, all that is left is not pain, but the hunger."))
+
 	cast_on.set_species(/datum/species/vampire)
 
 	cast_on.AddComponent(/datum/component/splattercasting)
-
-	to_chat(cast_on, span_userdanger("You feel your very essense binding to your magic! A stabbing pain within \
-		brings unimaginable momentary torment as your heart stops, and your skin grows cold. You are now \
-		merely a vessel for the arcane flow. Soon, all that is left is not pain, but the hunger. \
-		You're a vampire!"))
 
 	if(ishuman(cast_on))
 		var/mob/living/carbon/human/human_cast_on = cast_on
