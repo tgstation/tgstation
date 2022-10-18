@@ -109,8 +109,7 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 
 		misc += list(list(
 			"ref" = REF(atom_poi),
-			"name" = name,
-			"extra" = null, // Just in case you want to add anything
+			"full_name" = name,
 		))
 
 		// Display the supermatter crystal integrity

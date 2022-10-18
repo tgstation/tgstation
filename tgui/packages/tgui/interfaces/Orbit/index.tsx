@@ -255,17 +255,22 @@ const ObservableTooltip = (props: { item: Observable }) => {
         Last Known Data
       </NoticeBox>
       <LabeledList>
-        {!!extraInfo && (
+        {extraInfo ? (
           <LabeledList.Item label={extraInfo[0]}>
             {extraInfo[1]}
           </LabeledList.Item>
-        )}
-        {!!full_name && (
-          <LabeledList.Item label="Name">{full_name}</LabeledList.Item>
-        )}
-        {!!job && <LabeledList.Item label="Job">{job}</LabeledList.Item>}
-        {!!health && (
-          <LabeledList.Item label="Health">{displayHealth}</LabeledList.Item>
+        ) : (
+          <>
+            {!!full_name && (
+              <LabeledList.Item label="Name">{full_name}</LabeledList.Item>
+            )}
+            {!!job && <LabeledList.Item label="Job">{job}</LabeledList.Item>}
+            {!!health && (
+              <LabeledList.Item label="Health">
+                {displayHealth}
+              </LabeledList.Item>
+            )}
+          </>
         )}
       </LabeledList>
     </>
