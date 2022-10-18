@@ -1,0 +1,6 @@
+author: "Rhials"
+delete-after: True
+changes: 
+  - rscadd: "Adds the command intercom -- Coming to a conference room near you!"
+  - imageadd: "Adds a sprite for the command intercom."
+  - bugfix: "Freerange intercoms can no longer access the Syndicate frequency."
