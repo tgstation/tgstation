@@ -364,6 +364,41 @@
 	passtable_off(rider, VEHICLE_TRAIT)
 	vehicle.pass_flags &= ~PASSTABLE
 
+/datum/action/vehicle/ridden/scooter/skateboard/kflip
+	name = "Kickflip"
+	desc = "Kick your board up and catch it."
+	button_icon_state = "skateboard_ollie"  // youre still going up
+	check_flags = AB_CHECK_CONSCIOUS
+
+/datum/action/vehicle/ridden/scooter/skateboard/kflip/Trigger()
+	var/obj/vehicle/ridden/scooter/skateboard/V = vehicle_target
+	var/mob/living/L = owner
+
+	L.adjustStaminaLoss(V.instability)
+	if (L.getStaminaLoss() >= 100)
+		playsound(src, 'sound/effects/bang.ogg', 20, TRUE)
+		V.unbuckle_mob(L)
+		L.Paralyze(50)
+		if(prob(15))
+			V.visible_message(span_userdanger("You smack against the board, hard."), \
+			span_danger("[L] misses the landing and falls on [L.p_their()] face!)")
+			L.emote("scream")
+			L.adjustBruteLoss(10)  // thats gonna leave a mark
+			return
+		V.visible_message(span_userdanger("You fall flat onto the board!"), \
+		span_danger("[L] misses the landing and falls on [L.p_their()] face!"))
+	else
+		L.visible_message(span_notice("[L] does a sick kickflip and catches [L.p_their()] board in midair."), \
+		span_notice("You do a sick kickflip, catching the board in midair! Stylish."))
+		playsound(V, 'sound/vehicles/skateboard_ollie.ogg', 50, TRUE)
+		L.spin(4, 1)
+		animate(L, pixel_y = -6, time = 4)
+		animate(V, pixel_y = -6, time = 3)
+		V.unbuckle_mob(L)
+		addtimer(CALLBACK(V, /obj/vehicle/ridden/scooter/skateboard/.proc/pick_up_board, L), 2)  // so the board can still handle "picking it up"
+
+
+
 //VIM ACTION DATUMS
 
 /datum/action/vehicle/sealed/climb_out/vim
