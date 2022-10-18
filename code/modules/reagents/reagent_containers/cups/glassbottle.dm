@@ -491,7 +491,9 @@
 		balloon_alert(user, "preparing to swing...")
 		if(do_after(user, 1 SECONDS, src))
 			if(prob(attacking_item.force * sabrage_success_percentile + \
-			((user.mind.assigned_role.departments_bitflags & (DEPARTMENT_BITFLAG_COMMAND)) ? 20 : 0)))
+			((user.mind.assigned_role.departments_bitflags & (DEPARTMENT_BITFLAG_COMMAND)) ? 20 : 0) + \
+			((HAS_TRAIT(user, TRAIT_SABRAGE_PRO)) ? 35 : 0 )
+			))
 				pop_cork(user, sabrage = TRUE)
 			else
 				user.visible_message(span_danger("[user] fumbles the sabrage and cuts [src] in half, spilling it over themselves!"), \
