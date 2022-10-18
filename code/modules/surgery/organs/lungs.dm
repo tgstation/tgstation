@@ -88,6 +88,15 @@
 
 	var/crit_stabilizing_reagent = /datum/reagent/medicine/epinephrine
 
+///Simply exists so that you don't keep any alerts from your previous lack of lungs.
+/obj/item/organ/internal/lungs/Insert(mob/living/carbon/receiver, special = FALSE, drop_if_replaced = TRUE)
+	receiver.clear_alert(ALERT_NOT_ENOUGH_OXYGEN)
+	receiver.clear_alert(ALERT_NOT_ENOUGH_CO2)
+	receiver.clear_alert(ALERT_NOT_ENOUGH_NITRO)
+	receiver.clear_alert(ALERT_NOT_ENOUGH_PLASMA)
+	receiver.clear_alert(ALERT_NOT_ENOUGH_N2O)
+	return ..()
+
 /obj/item/organ/internal/lungs/proc/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/breather)
 	if(breather.status_flags & GODMODE)
 		breather.failed_last_breath = FALSE //clear oxy issues
