@@ -182,7 +182,7 @@
 		victim.balloon_alert(aggressor, "already helping!")
 		return
 	if(DOING_INTERACTION(aggressor, "heimlich"))
-		victim.balloon_alert(aggressor, "already helping someone!") // Yes I know it's kinda runon, but this is a real rare condition
+		victim.balloon_alert(aggressor, "already helping someone!") 
 		return
 
 	if(!thrusting_continues(victim, aggressor, before_work = TRUE))
