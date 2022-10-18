@@ -324,14 +324,14 @@
 		current_target.set_stutter(10 SECONDS)
 		threat = current_target.assess_threat(judgement_criteria, weaponcheck = CALLBACK(src, .proc/check_for_weapons))
 
-	log_combat(src, target, "stunned")
+	log_combat(src, current_target, "stunned")
 	if(security_mode_flags & SECBOT_DECLARE_ARRESTS)
 		var/area/location = get_area(src)
 		speak("[security_mode_flags & SECBOT_HANDCUFF_TARGET ? "Arresting" : "Detaining"] level [threat] scumbag <b>[current_target]</b> in [location].", radio_channel)
 	current_target.visible_message(span_danger("[src] stuns [current_target]!"),\
 							span_userdanger("[src] stuns you!"))
 
-	target_lastloc = target.loc
+	target_lastloc = current_target.loc
 	mode = BOT_PREP_ARREST
 
 /mob/living/simple_animal/bot/secbot/handle_automated_action()
