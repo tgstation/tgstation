@@ -440,17 +440,19 @@
 	var/static/list/directional_blocker_cache = typecacheof(list(/obj/structure/window, /obj/machinery/door/window, /obj/structure/railing, /obj/machinery/door/firedoor/border_only))
 	// Source border object checks
 	for(var/obj/lad in src)
-		// We can safely assume that if the object isn't dense, we don't need to astar check it, since we will never want to astar something that's got advanced checks here
-		if(!lad.density || !directional_blocker_cache[lad.type])
+		if(!directional_blocker_cache[lad.type])
+			continue
+		if(!lad.density && lad.can_astar_pass == CANASTARPASS_DENSITY)
 			continue
 		if(!lad.CanAStarPass(ID, actual_dir, no_id = no_id))
 			return TRUE
 
-	// List of things that do not care about density for their canpass logic
-	var/static/list/advanced_checks_cache = typecacheof(list(/obj/structure/plasticflaps, /turf/open/openspace))
 	// Destination blockers check
 	var/reverse_dir = get_dir(destination_turf, src)
 	for(var/obj/iter_object in destination_turf)
-		if((iter_object.density || advanced_checks_cache[iter_object.type]) && !iter_object.CanAStarPass(ID, reverse_dir, caller, no_id))
+		// This is an optimization because of the massive call count of this code
+		if(!iter_object.density && iter_object.can_astar_pass == CANASTARPASS_DENSITY)
+			continue
+		if(!iter_object.CanAStarPass(ID, reverse_dir, caller, no_id))
 			return TRUE
 	return FALSE
