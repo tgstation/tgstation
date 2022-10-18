@@ -34,12 +34,23 @@
 /datum/component/splattercasting/proc/on_spell_projectile(mob/living/carbon/source, datum/action/cooldown/spell/spell, atom/cast_on, obj/projectile/to_fire)
 	SIGNAL_HANDLER
 
-	to_fire.color = "#FF0000"
+	if(spell.school == SCHOOL_SANGUINE)
+		//already has blood themed projectiles
+		return
+
+	to_fire.color = "#ff7070"
 	to_fire.name = "blood-[to_fire.name]"
+	to_fire.set_light(2, 2, LIGHT_COLOR_BLOOD_MAGIC, TRUE)
 
 ///signal sent after parent casts a spell
 /datum/component/splattercasting/proc/on_after_spell_cast(mob/living/carbon/source, datum/action/cooldown/spell/spell, atom/cast_on)
 	SIGNAL_HANDLER
+
+	if(spell.school == SCHOOL_SANGUINE)
+		//allows for sanguine spells that work specially with blood to not interact with splattercasting.
+		//might sound weird, but maybe in the future we'll have a spell that adds blood to the user when it hits a target
+		//we wouldn't want that to cost blood.
+		return
 
 	//normal cooldown spell has
 	var/cooldown_remaining = spell.next_use_time - world.time
