@@ -389,3 +389,8 @@
 	description = "I just got squeezed way too hard."
 	mood_change = -1
 	timeout = 2 MINUTES
+
+/datum/mood_event/sabrage_fail
+	description = "Blast it! That stunt didn't go as planned!"
+	mood_change = -2
+	timeout = 4 MINUTES

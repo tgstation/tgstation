@@ -476,6 +476,9 @@
 	///Used for sabrage; increases the chance of success per 1 force of the attacking sharp item
 	var/sabrage_success_percentile = 5
 
+/obj/item/reagent_containers/cup/glass/bottle/champagne/cursed
+	sabrage_success_percentile = 0 //force of the sharp item used to sabrage will not increase success chance
+
 /obj/item/reagent_containers/cup/glass/bottle/champagne/attack_self(mob/user)
 	if(spillable)
 		return ..()
@@ -483,22 +486,29 @@
 	if(do_after(user, 1 SECONDS, src))
 		return pop_cork(user, sabrage = FALSE)
 
-/obj/item/reagent_containers/cup/glass/bottle/champagne/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/reagent_containers/cup/glass/bottle/champagne/attackby(obj/item/attacking_item, mob/living/user, params)
 	. = ..()
 	if(spillable)
 		return
 	if(attacking_item.get_sharpness())
-		balloon_alert(user, "preparing to swing...")
-		if(do_after(user, 1 SECONDS, src))
-			if(prob(attacking_item.force * sabrage_success_percentile + \
-			((user.mind.assigned_role.departments_bitflags & (DEPARTMENT_BITFLAG_COMMAND)) ? 20 : 0) + \
-			((HAS_TRAIT(user, TRAIT_SABRAGE_PRO)) ? 35 : 0 )
-			))
-				pop_cork(user, sabrage = TRUE)
-			else
-				user.visible_message(span_danger("[user] fumbles the sabrage and cuts [src] in half, spilling it over themselves!"), \
-					span_danger("You fail your stunt and cut [src] in half, spilling it over you!"))
-				smash(user, user, ranged = FALSE)
+		if(attacking_item.force < 5)
+			balloon_alert(user, "not strong enough!")
+			return
+		else
+			playsound(user, 'sound/items/unsheath.ogg', 25, TRUE)
+			balloon_alert(user, "preparing to swing...")
+			if(do_after(user, 1 SECONDS, src))
+				//calculate success chance. example: captain's sabre - 15 force = 75% chance
+				if(prob(attacking_item.force * sabrage_success_percentile + \
+				((user.mind.assigned_role.departments_bitflags & (DEPARTMENT_BITFLAG_COMMAND)) ? 20 : 0) + \
+				((HAS_TRAIT(user, TRAIT_SABRAGE_PRO)) ? 35 : 0)
+				))
+					return pop_cork(user, sabrage = TRUE)
+				else //you dun goofed
+					user.visible_message(span_danger("[user] fumbles the sabrage and cuts [src] in half, spilling it over themselves!"), \
+						span_danger("You fail your stunt and cut [src] in half, spilling it over you!"))
+					user.add_mood_event("sabrage_fail", /datum/mood_event/sabrage_fail)
+					return smash(user, user, ranged = FALSE)
 
 /obj/item/reagent_containers/cup/glass/bottle/champagne/update_icon_state()
 	. = ..()
@@ -507,13 +517,22 @@
 	else
 		icon_state = base_icon_state
 
-/obj/item/reagent_containers/cup/glass/bottle/champagne/proc/pop_cork(mob/user, sabrage)
+/obj/item/reagent_containers/cup/glass/bottle/champagne/proc/pop_cork(mob/living/user, sabrage)
 	if(sabrage)
 		user.visible_message(span_danger("[user] cleanly slices off the cork of [src], causing it to fly off the bottle with great force."), \
 			span_nicegreen("You elegantly slice the cork off of [src], causing it to fly off the bottle with great force."))
+		for(var/mob/living/carbon/stunt_witness in view(7, user))
+			for(var/find_previous_showoff in stunt_witness.mob_mood.mood_events) //if someone who did a sabrage before us saw us doing it, clear their success mood event
+				if(istype(stunt_witness.mob_mood.mood_events[find_previous_showoff], /datum/mood_event/sabrage_success))
+					stunt_witness.clear_mood_event("sabrage_success")
+					continue
+			if(stunt_witness == user)
+				stunt_witness.add_mood_event("sabrage_success", /datum/mood_event/sabrage_success)
+				continue
+			stunt_witness.add_mood_event("sabrage_witness", /datum/mood_event/sabrage_witness)
 	else
 		user.visible_message(span_danger("[user] loosens the cork of [src], causing it to pop out of the bottle with great force."), \
-			span_nicegreen("You elegantly loosen the cork of [src] causing it to pop out of the bottle with great force."))
+			span_nicegreen("You elegantly loosen the cork of [src], causing it to pop out of the bottle with great force."))
 	reagents.flags |= OPENCONTAINER
 	playsound(src, 'sound/items/champagne_pop.ogg', 70, TRUE)
 	spillable = TRUE
