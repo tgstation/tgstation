@@ -370,7 +370,7 @@
 	button_icon_state = "skateboard_ollie"  // youre still going up
 	check_flags = AB_CHECK_CONSCIOUS
 
-/datum/action/vehicle/ridden/scooter/skateboard/kflip/Trigger()
+/datum/action/vehicle/ridden/scooter/skateboard/kflip/Trigger(trigger_flags)
 	var/obj/vehicle/ridden/scooter/skateboard/V = vehicle_target
 	var/mob/living/L = owner
 
