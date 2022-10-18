@@ -85,7 +85,7 @@
 /obj/item/grenade/c4/afterattack(atom/movable/bomb_target, mob/user, flag)
 	. = ..()
 	aim_dir = get_dir(user, bomb_target)
-	if(isobserver(bomb_target))
+	if(isdead(bomb_target))
 		return
 	if(!flag)
 		return
