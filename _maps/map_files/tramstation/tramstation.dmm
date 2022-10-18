@@ -45897,6 +45897,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 4
 	},
+/obj/structure/sign/xenobio_guide/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "qrR" = (
