@@ -634,7 +634,6 @@
 
 /obj/item/storage/belt/wands/full/PopulateContents()
 	new /obj/item/gun/magic/wand/death(src)
-	new /obj/item/gun/magic/wand/resurrection(src)
 	new /obj/item/gun/magic/wand/polymorph(src)
 	new /obj/item/gun/magic/wand/teleport(src)
 	new /obj/item/gun/magic/wand/door(src)
