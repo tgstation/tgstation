@@ -334,6 +334,7 @@
 #include "code\__HELPERS\memory_helpers.dm"
 #include "code\__HELPERS\mobs.dm"
 #include "code\__HELPERS\mouse_control.dm"
+#include "code\__HELPERS\nameof.dm"
 #include "code\__HELPERS\names.dm"
 #include "code\__HELPERS\path.dm"
 #include "code\__HELPERS\piping_colors_lists.dm"
