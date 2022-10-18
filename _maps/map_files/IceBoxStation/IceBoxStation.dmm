@@ -50847,6 +50847,14 @@
 	dir = 1
 	},
 /area/station/science/lab)
+"pDr" = (
+/obj/effect/turf_decal/tile/yellow,
+/obj/machinery/camera/directional/east{
+	c_tag = "Aft Primary Hallway South";
+	pixel_y = -22
+	},
+/turf/open/floor/iron,
+/area/station/hallway/primary/aft)
 "pDB" = (
 /obj/item/radio/intercom/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -57321,10 +57329,6 @@
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
-	},
-/obj/machinery/camera/directional/east{
-	c_tag = "Aft Primary Hallway South";
-	pixel_y = -22
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
@@ -239035,8 +239039,8 @@ rWn
 eQX
 rWn
 rWn
-rWn
 jEJ
+pDr
 jqs
 wsN
 uOL
