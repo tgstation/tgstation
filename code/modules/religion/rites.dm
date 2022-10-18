@@ -278,7 +278,7 @@
 	if(!account || account.account_balance < money_cost)
 		to_chat(user, span_warning("This rite requires more money!"))
 		return FALSE
-	account.adjust_money(-money_cost)
+	account.adjust_money(-money_cost, "Church Donation: Rite")
 	. = ..()
 
 /datum/religion_rites/greed/vendatray

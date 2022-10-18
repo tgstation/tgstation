@@ -167,7 +167,7 @@
 			var/datum/species/dullahan/dullahan_species = human.dna.species
 			if(isobj(dullahan_species.my_head.loc))
 				var/obj/head = dullahan_species.my_head.loc
-				head.say(speech_args[SPEECH_MESSAGE], spans = speech_args[SPEECH_SPANS], sanitize = FALSE, language = speech_args[SPEECH_LANGUAGE], range = speech_args[SPEECH_RANGE])
+				head.say(speech_args[SPEECH_MESSAGE], spans = speech_args[SPEECH_SPANS], sanitize = FALSE, language = speech_args[SPEECH_LANGUAGE], message_range = speech_args[SPEECH_RANGE])
 	speech_args[SPEECH_MESSAGE] = ""
 
 /obj/item/organ/internal/ears/dullahan

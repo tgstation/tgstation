@@ -65,7 +65,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			return
 
 	var/stl = CONFIG_GET(number/second_topic_limit)
-	if (!holder && stl)
+	if (!holder && stl && href_list["window_id"] != "statbrowser")
 		var/second = round(world.time, 10)
 		if (!topiclimiter)
 			topiclimiter = new(LIMITER_SIZE)
@@ -1035,6 +1035,12 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 /client/proc/rescale_view(change, min, max)
 	view_size.setTo(clamp(change, min, max), clamp(change, min, max))
 
+/client/proc/set_eye(new_eye)
+	if(new_eye == eye)
+		return
+	var/atom/old_eye = eye
+	eye = new_eye
+	SEND_SIGNAL(src, COMSIG_CLIENT_SET_EYE, old_eye, new_eye)
 /**
  * Updates the keybinds for special keys
  *

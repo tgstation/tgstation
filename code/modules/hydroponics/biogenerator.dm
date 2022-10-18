@@ -150,7 +150,7 @@
 
 /obj/machinery/biogenerator/AltClick(mob/living/user)
 	. = ..()
-	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) && can_interact(user))
+	if(user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE) && can_interact(user))
 		eject_beaker(user)
 
 /**
@@ -307,6 +307,10 @@
 		data["can_process"] = TRUE
 	else
 		data["can_process"] = FALSE
+	if(beaker)
+		data["beakerCurrentVolume"] = round(beaker.reagents.total_volume, 0.01)
+		data["beakerMaxVolume"] = beaker.volume
+		data["reagent_color"] = mix_color_from_reagents(beaker.reagents.reagent_list)
 	return data
 
 /obj/machinery/biogenerator/ui_static_data(mob/user)

@@ -1,6 +1,6 @@
 GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't really work on borgos
 	/obj/item/clothing/head/helmet/space,
-	/obj/item/clothing/head/welding,
+	/obj/item/clothing/head/utility/welding,
 	/obj/item/clothing/head/chameleon/broken \
 	)))
 
@@ -43,7 +43,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			to_chat(user, span_warning("You can't reach the wiring!"))
 		return
 
-	if(W.slot_flags & ITEM_SLOT_HEAD && hat_offset != INFINITY && !user.combat_mode && !is_type_in_typecache(W, GLOB.blacklisted_borg_hats))
+	if((W.slot_flags & ITEM_SLOT_HEAD) && hat_offset != INFINITY && !user.combat_mode && !is_type_in_typecache(W, GLOB.blacklisted_borg_hats))
 		if(user == src)
 			to_chat(user,  span_notice("You can't seem to manage to place [W] on your head by yourself!") )
 			return
@@ -68,7 +68,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			to_chat(user, span_warning("This defibrillator unit will not function on a deceased cyborg!"))
 			return
 		var/obj/item/defibrillator/D = W
-		if(D.slot_flags != ITEM_SLOT_BACK) //belt defibs need not apply
+		if(!(D.slot_flags & ITEM_SLOT_BACK)) //belt defibs need not apply
 			to_chat(user, span_warning("This defibrillator unit doesn't seem to fit correctly!"))
 			return
 		if(D.cell)

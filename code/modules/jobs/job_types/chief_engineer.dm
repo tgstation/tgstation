@@ -16,6 +16,7 @@
 	exp_required_type = EXP_TYPE_CREW
 	exp_required_type_department = EXP_TYPE_ENGINEERING
 	exp_granted_type = EXP_TYPE_CREW
+	config_tag = "CHIEF_ENGINEER"
 
 	outfit = /datum/outfit/job/ce
 	plasmaman_outfit = /datum/outfit/plasmaman/chief_engineer
@@ -32,7 +33,7 @@
 	display_order = JOB_DISPLAY_ORDER_CHIEF_ENGINEER
 	bounty_types = CIV_JOB_ENG
 
-	family_heirlooms = list(/obj/item/clothing/head/hardhat/white, /obj/item/screwdriver, /obj/item/wrench, /obj/item/weldingtool, /obj/item/crowbar, /obj/item/wirecutters)
+	family_heirlooms = list(/obj/item/clothing/head/utility/hardhat/white, /obj/item/screwdriver, /obj/item/wrench, /obj/item/weldingtool, /obj/item/crowbar, /obj/item/wirecutters)
 
 	mail_goodies = list(
 		/obj/item/food/cracker = 25, //you know. for poly
@@ -65,7 +66,7 @@
 	belt = /obj/item/storage/belt/utility/chief/full
 	ears = /obj/item/radio/headset/heads/ce
 	gloves = /obj/item/clothing/gloves/color/black
-	head = /obj/item/clothing/head/hardhat/white
+	head = /obj/item/clothing/head/utility/hardhat/white
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	l_pocket = /obj/item/modular_computer/tablet/pda/heads/ce
 

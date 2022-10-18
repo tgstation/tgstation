@@ -89,6 +89,7 @@
 	preference = "feature_lizard_tail"
 	feature_key = "tail_lizard"
 	wag_flags = WAG_ABLE
+	dna_block = DNA_LIZARD_TAIL_BLOCK
 	///A reference to the paired_spines, since for some fucking reason tail spines are tied to the spines themselves.
 	var/obj/item/organ/external/spines/paired_spines
 

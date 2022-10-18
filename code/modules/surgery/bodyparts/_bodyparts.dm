@@ -263,7 +263,7 @@
 
 	for(var/obj/item/embedded_thing in embedded_objects)
 		var/stuck_word = embedded_thing.isEmbedHarmless() ? "stuck" : "embedded"
-		check_list += "\t <a href='?src=[REF(src)];embedded_object=[REF(embedded_thing)];embedded_limb=[REF(body_part)]' class='warning'>There is \a [embedded_thing] [stuck_word] in your [name]!</a>"
+		check_list += "\t <a href='?src=[REF(examiner)];embedded_object=[REF(embedded_thing)];embedded_limb=[REF(src)]' class='warning'>There is \a [embedded_thing] [stuck_word] in your [name]!</a>"
 
 
 /obj/item/bodypart/blob_act()
@@ -277,7 +277,7 @@
 		if(HAS_TRAIT(victim, TRAIT_LIMBATTACHMENT))
 			if(!human_victim.get_bodypart(body_zone))
 				user.temporarilyRemoveItemFromInventory(src, TRUE)
-				if(!attach_limb(victim))
+				if(!try_attach_limb(victim))
 					to_chat(user, span_warning("[human_victim]'s body rejects [src]!"))
 					forceMove(human_victim.loc)
 				if(human_victim == user)
@@ -841,12 +841,13 @@
 
 	//EMISSIVE CODE START
 	if(blocks_emissive)
-		var/mutable_appearance/limb_em_block = emissive_blocker(limb.icon, limb.icon_state, alpha = limb.alpha)
+		var/atom/location = loc || owner || src
+		var/mutable_appearance/limb_em_block = emissive_blocker(limb.icon, limb.icon_state, location, alpha = limb.alpha)
 		limb_em_block.dir = image_dir
 		limb.overlays += limb_em_block
 
 		if(aux_zone)
-			var/mutable_appearance/aux_em_block = emissive_blocker(aux.icon, aux.icon_state, alpha = aux.alpha)
+			var/mutable_appearance/aux_em_block = emissive_blocker(aux.icon, aux.icon_state, location, alpha = aux.alpha)
 			aux_em_block.dir = image_dir
 			aux.overlays += aux_em_block
 

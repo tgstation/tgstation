@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Fixed a minor runtime keeping player controlled secbots from switching to arrest mode automatically after stunning someone. This also fixed the stun action being combat logged for an incorrect mob."

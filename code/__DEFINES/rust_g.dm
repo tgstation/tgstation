@@ -160,6 +160,15 @@
 	else
 		CRASH(output["content"])
 
+#define rustg_raw_toml_encode(value) json_decode(call(RUST_G, "toml_encode")(json_encode(value)))
+
+/proc/rustg_toml_encode(value)
+	var/list/output = rustg_raw_toml_encode(value)
+	if (output["success"])
+		return output["content"]
+	else
+		CRASH(output["content"])
+
 #define rustg_url_encode(text) call(RUST_G, "url_encode")("[text]")
 #define rustg_url_decode(text) call(RUST_G, "url_decode")(text)
 

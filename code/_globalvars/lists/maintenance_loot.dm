@@ -152,7 +152,7 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 
 		//light sources
 		/obj/effect/spawner/random/decoration/glowstick = 1,
-		/obj/item/clothing/head/hardhat/red = 1,
+		/obj/item/clothing/head/utility/hardhat/red = 1,
 		/obj/item/flashlight = 1,
 		/obj/item/flashlight/flare = 1,
 		) = 1,
@@ -183,7 +183,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/clothing/glasses/welding = 1,
 		/obj/item/clothing/gloves/tackler/offbrand = 1,
 		/obj/item/clothing/head/helmet/old = 1,
-		/obj/item/clothing/head/welding = 1,
+		/obj/item/clothing/head/utility/welding = 1,
 		/obj/item/clothing/mask/muzzle = 1,
 		/obj/item/clothing/suit/armor/vest/old = 1,
 		/obj/item/storage/belt/medical = 1,

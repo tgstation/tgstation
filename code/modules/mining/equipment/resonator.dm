@@ -43,9 +43,9 @@
 		user.changeNext_move(CLICK_CD_MELEE)
 
 /obj/item/resonator/pre_attack(atom/target, mob/user, params)
-	if(check_allowed_items(target, TRUE))
+	if(check_allowed_items(target, not_inside = TRUE))
 		create_resonance(target, user)
-	. = ..()
+	return ..()
 
 //resonance field, crushes rock, damages mobs
 /obj/effect/temp_visual/resonance

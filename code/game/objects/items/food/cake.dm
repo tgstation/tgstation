@@ -186,7 +186,7 @@
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cakeslice/birthday, 5, 3 SECONDS, table_required = TRUE)
 
 /obj/item/food/cake/birthday/microwave_act(obj/machinery/microwave/microwave) //super sekrit club
-	new /obj/item/clothing/head/hardhat/cakehat(get_turf(src))
+	new /obj/item/clothing/head/utility/hardhat/cakehat(get_turf(src))
 	qdel(src)
 
 /obj/item/food/cakeslice/birthday
@@ -221,7 +221,7 @@
 	energy_bite(target_mob, user)
 
 /obj/item/food/cake/birthday/energy/microwave_act(obj/machinery/microwave/M) //super sekriter club
-	new /obj/item/clothing/head/hardhat/cakehat/energycake(get_turf(src))
+	new /obj/item/clothing/head/utility/hardhat/cakehat/energycake(get_turf(src))
 	qdel(src)
 
 /obj/item/food/cakeslice/birthday/energy

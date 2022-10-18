@@ -3,7 +3,7 @@
 	desc = "A combined label printer, applicator, and remover, all in a single portable device. Designed to be easy to operate and use."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "labeler0"
-	inhand_icon_state = "flight"
+	inhand_icon_state = null
 	var/label = null
 	var/labels_left = 30
 	var/mode = 0

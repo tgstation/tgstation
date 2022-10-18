@@ -8,6 +8,7 @@
 	spawn_positions = 1
 	supervisors = SUPERVISOR_HOP
 	selection_color = "#bbe291"
+	config_tag = "CURATOR"
 	exp_granted_type = EXP_TYPE_CREW
 
 	outfit = /datum/outfit/job/curator
@@ -20,6 +21,12 @@
 	departments_list = list(
 		/datum/job_department/service,
 		)
+
+	mail_goodies = list(
+		/obj/item/book/random = 44,
+		/obj/item/book/manual/random = 5,
+		/obj/item/book/granter/action/spell/blind/wgw = 1,
+	)
 
 	family_heirlooms = list(/obj/item/pen/fountain, /obj/item/storage/dice)
 

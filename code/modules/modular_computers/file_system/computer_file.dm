@@ -49,7 +49,7 @@
 /datum/computer_file/proc/on_examine(obj/item/modular_computer/source, mob/user)
 	return null
 
-/// Called when someone tries to insert something one of your applications needs, like an Intellicard for AI restoration.
+/// Called when someone tries to insert something one of your applications needs, like an Intellicard for AI restoration. Return TRUE to cancel attackby chain.
 /datum/computer_file/proc/try_insert(obj/item/attacking_item, mob/living/user)
 	return FALSE
 

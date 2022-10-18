@@ -16,6 +16,7 @@
 	exp_required_type = EXP_TYPE_CREW
 	exp_required_type_department = EXP_TYPE_MEDICAL
 	exp_granted_type = EXP_TYPE_CREW
+	config_tag = "CHIEF_MEDICAL_OFFICER"
 
 	outfit = /datum/outfit/job/cmo
 	plasmaman_outfit = /datum/outfit/plasmaman/chief_medical_officer
@@ -63,7 +64,7 @@
 		)
 	belt = /obj/item/modular_computer/tablet/pda/heads/cmo
 	ears = /obj/item/radio/headset/heads/cmo
-	head = /obj/item/clothing/head/surgerycap/cmo
+	head = /obj/item/clothing/head/utility/surgerycap/cmo
 	shoes = /obj/item/clothing/shoes/sneakers/blue
 	l_pocket = /obj/item/pinpointer/crew
 	l_hand = /obj/item/storage/medkit/surgery

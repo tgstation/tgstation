@@ -17,7 +17,7 @@
 		machinery_computer.cpu = null
 		machinery_computer.UnregisterSignal(src, COMSIG_ATOM_UPDATED_ICON)
 	machinery_computer = null
-	. = ..()
+	return ..()
 
 /obj/item/modular_computer/processor/New(comp)
 	..()

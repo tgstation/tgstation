@@ -83,7 +83,7 @@
 	if(!modularInterface)
 		modularInterface = new /obj/item/modular_computer/tablet/integrated(src)
 	modularInterface.layer = ABOVE_HUD_PLANE
-	modularInterface.plane = ABOVE_HUD_PLANE
+	SET_PLANE_EXPLICIT(modularInterface, ABOVE_HUD_PLANE, src)
 	modularInterface.saved_identification = real_name || name
 	if(iscyborg(src))
 		modularInterface.saved_job = "Cyborg"
@@ -449,7 +449,7 @@
 	if(!modularInterface)
 		stack_trace("Silicon [src] ( [type] ) was somehow missing their integrated tablet. Please make a bug report.")
 		create_modularInterface()
-	var/mob/living/silicon/robot/robo = modularInterface.borgo
+	var/mob/living/silicon/robot/robo = modularInterface.silicon_owner
 	if(istype(robo))
 		modularInterface.borglog += "[station_time_timestamp()] - [string]"
 	var/datum/computer_file/program/robotact/program = modularInterface.get_robotact()
