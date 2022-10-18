@@ -371,31 +371,32 @@
 	check_flags = AB_CHECK_CONSCIOUS
 
 /datum/action/vehicle/ridden/scooter/skateboard/kflip/Trigger(trigger_flags)
-	var/obj/vehicle/ridden/scooter/skateboard/V = vehicle_target
-	var/mob/living/L = owner
+	var/obj/vehicle/ridden/scooter/skateboard/board = vehicle_target
+	var/mob/living/rider = owner
 
-	L.adjustStaminaLoss(V.instability)
-	if (L.getStaminaLoss() >= 100)
+	rider.adjustStaminaLoss(board.instability)
+	if (rider.getStaminaLoss() >= 100)
 		playsound(src, 'sound/effects/bang.ogg', 20, TRUE)
-		V.unbuckle_mob(L)
-		L.Paralyze(50)
+		board.unbuckle_mob(rider)
+		rider.Paralyze(50)
 		if(prob(15))
-			V.visible_message(span_userdanger("You smack against the board, hard."), \
-			span_danger("[L] misses the landing and falls on [L.p_their()] face!)"))
-			L.emote("scream")
-			L.adjustBruteLoss(10)  // thats gonna leave a mark
+			rider.visible_message(span_userdanger("You smack against the board, hard."), \
+			span_danger("[rider] misses the landing and falls on [rider.p_their()] face!)"))
+			rider.emote("scream")
+			rider.adjustBruteLoss(10)  // thats gonna leave a mark
 			return
-		V.visible_message(span_userdanger("You fall flat onto the board!"), \
-		span_danger("[L] misses the landing and falls on [L.p_their()] face!"))
-	else
-		L.visible_message(span_notice("[L] does a sick kickflip and catches [L.p_their()] board in midair."), \
-		span_notice("You do a sick kickflip, catching the board in midair! Stylish."))
-		playsound(V, 'sound/vehicles/skateboard_ollie.ogg', 50, TRUE)
-		L.spin(4, 1)
-		animate(L, pixel_y = -6, time = 4)
-		animate(V, pixel_y = -6, time = 3)
-		V.unbuckle_mob(L)
-		addtimer(CALLBACK(V, /obj/vehicle/ridden/scooter/skateboard/.proc/pick_up_board, L), 2)  // so the board can still handle "picking it up"
+		rider.visible_message(span_userdanger("You fall flat onto the board!"), \
+		span_danger("[rider] misses the landing and falls on [rider.p_their()] face!"))
+		return
+
+	rider.visible_message(span_notice("[rider] does a sick kickflip and catches [rider.p_their()] board in midair."), \
+	span_notice("You do a sick kickflip, catching the board in midair! Stylish."))
+	playsound(board, 'sound/vehicles/skateboard_ollie.ogg', 50, TRUE)
+	rider.spin(4, 1)
+	animate(rider, pixel_y = -6, time = 4)
+	animate(board, pixel_y = -6, time = 3)
+	board.unbuckle_mob(rider)
+	addtimer(CALLBACK(V, /obj/vehicle/ridden/scooter/skateboard/proc/pick_up_board, L), 1 SECONDS)  // so the board can still handle "picking it up"
 
 
 
