@@ -1,3 +1,8 @@
+/// The amount of thermal energy the spark has upon ignition.
+#define IGNITION_THERMAL_ENERGY 525000
+/// The heat capacity of the spark upon ignition.
+#define IGNITION_HEAT_CAPACITY 525
+
 /obj/item/onetankbomb
 	name = "bomb"
 	icon = 'icons/obj/atmospherics/tank.dmi'
@@ -5,7 +10,7 @@
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	throwforce = 5
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = WEIGHT_CLASS_BULKY
 	throw_speed = 2
 	throw_range = 4
 	flags_1 = CONDUCT_1
@@ -80,9 +85,8 @@
 	sleep(10)
 	if(QDELETED(src))
 		return
-	if(status)
-		bombtank.ignite() //if its not a dud, boom (or not boom if you made shitty mix) the ignite proc is below, in this file
-	else
+	bombtank.ignite() //if its not a dud, boom (or not boom if you made shitty mix) the ignite proc is below, in this file
+	if(!status)
 		bombtank.release()
 
 /obj/item/onetankbomb/on_found(mob/finder) //for mousetraps
@@ -150,57 +154,7 @@
 /obj/item/tank/proc/ignite() //This happens when a bomb is told to explode
 	START_PROCESSING(SSobj, src)
 	var/datum/gas_mixture/our_mix = return_air()
-
-	our_mix.assert_gases(/datum/gas/plasma, /datum/gas/oxygen)
-	var/fuel_moles = our_mix.gases[/datum/gas/plasma][MOLES] + our_mix.gases[/datum/gas/oxygen][MOLES]/6
-	our_mix.garbage_collect()
-	var/datum/gas_mixture/bomb_mixture = our_mix.copy()
-	var/strength = 1
-
-	var/turf/ground_zero = get_turf(loc)
-
-	if(bomb_mixture.temperature > (T0C + 400))
-		strength = (fuel_moles/15)
-
-		if(strength >=2)
-			explosion(ground_zero, devastation_range = round(strength,1), heavy_impact_range = round(strength*2,1), light_impact_range = round(strength*3,1), flash_range = round(strength*4,1), explosion_cause = src)
-		else if(strength >=1)
-			explosion(ground_zero, devastation_range = round(strength,1), heavy_impact_range = round(strength*2,1), light_impact_range = round(strength*2,1), flash_range = round(strength*3,1), explosion_cause = src)
-		else if(strength >=0.5)
-			explosion(ground_zero, heavy_impact_range = 1, light_impact_range = 2, flash_range = 4, explosion_cause = src)
-		else if(strength >=0.2)
-			explosion(ground_zero, devastation_range = -1, light_impact_range = 1, flash_range = 2, explosion_cause = src)
-		else
-			ground_zero.assume_air(bomb_mixture)
-			ground_zero.hotspot_expose(1000, 125)
-
-	else if(bomb_mixture.temperature > (T0C + 250))
-		strength = (fuel_moles/20)
-
-		if(strength >=1)
-			explosion(ground_zero, heavy_impact_range = round(strength,1), light_impact_range = round(strength*2,1), flash_range = round(strength*3,1), explosion_cause = src)
-		else if(strength >=0.5)
-			explosion(ground_zero, devastation_range = -1, light_impact_range = 1, flash_range = 2, explosion_cause = src)
-		else
-			ground_zero.assume_air(bomb_mixture)
-			ground_zero.hotspot_expose(1000, 125)
-
-	else if(bomb_mixture.temperature > (T0C + 100))
-		strength = (fuel_moles/25)
-
-		if(strength >=1)
-			explosion(ground_zero, devastation_range = -1, light_impact_range = round(strength,1), flash_range = round(strength*3,1), explosion_cause = src)
-		else
-			ground_zero.assume_air(bomb_mixture)
-			ground_zero.hotspot_expose(1000, 125)
-
-	else
-		ground_zero.assume_air(bomb_mixture)
-		ground_zero.hotspot_expose(1000, 125)
-
-	if(master)
-		qdel(master)
-	qdel(src)
+	our_mix.temperature = (our_mix.temperature * our_mix.heat_capacity() + IGNITION_THERMAL_ENERGY) / (our_mix.heat_capacity() + IGNITION_HEAT_CAPACITY)
 
 /obj/item/tank/proc/release() //This happens when the bomb is not welded. Tank contents are just spat out.
 	var/datum/gas_mixture/our_mix = return_air()
@@ -215,3 +169,6 @@
 		return bombtank.return_analyzable_air()
 	else
 		return null
+
+#undef IGNITION_THERMAL_ENERGY
+#undef IGNITION_HEAT_CAPACITY
