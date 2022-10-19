@@ -196,8 +196,6 @@
 	var/final = FALSE
 	if(bot_cover_flags & BOT_COVER_EMAGGED)
 		final |= JUDGE_EMAGGED
-	if(bot_type == ADVANCED_SEC_BOT)
-		final |= JUDGE_IGNOREMONKEYS
 	if(security_mode_flags & SECBOT_CHECK_IDS)
 		final |= JUDGE_IDCHECK
 	if(security_mode_flags & SECBOT_CHECK_RECORDS)
