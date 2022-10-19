@@ -217,8 +217,6 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 		blacklisted += "vars"
 	if(NAMEOF(src, statclick))
 		blacklisted += "statclick"
-	if(NAMEOF(src, bestF))
-		blacklisted += "bestF"
 
 	return blacklisted
 
