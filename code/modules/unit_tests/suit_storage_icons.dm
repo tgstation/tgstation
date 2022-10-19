@@ -31,7 +31,7 @@
 
 		var/worn_icon = initial(item_path.worn_icon) //override icon file. where our sprite is contained if set. (ie modularity stuff)
 		var/worn_icon_state = initial(item_path.worn_icon_state) //overrides icon_state.
-		var/icon_state = !isnull(worn_icon_state) ? worn_icon_state : initial(item_path.icon_state) //icon_state. what sprite name we are looking for.
+		var/icon_state = worn_icon_state || initial(item_path.icon_state) //icon_state. what sprite name we are looking for.
 
 
 		if(isnull(icon_state))
