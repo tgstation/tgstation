@@ -161,17 +161,18 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 
 /datum/controller/master/Recover()
 	var/msg = "## DEBUG: [time2text(world.timeofday)] MC restarted. Reports:\n"
-	for (var/varname in Master.vars)
-		switch (varname)
-			if("name", "tag", "type", "parent_type", "vars", "statclick") // Built-in junk.
-				continue
+	var/list/master_attributes = Master.vars
+	var/list/filtered_variables = gather_filtered_variables()
+	for (var/varname in master_attributes)
+		if(filtered_variables.Find(varname)) // Built-in junk.
+			continue
+		else
+			var/varval = Master.vars[varname]
+			if (isdatum(varval)) // Check if it has a type var.
+				var/datum/D = varval
+				msg += "\t [varname] = [D]([D.type])\n"
 			else
-				var/varval = Master.vars[varname]
-				if (isdatum(varval)) // Check if it has a type var.
-					var/datum/D = varval
-					msg += "\t [varname] = [D]([D.type])\n"
-				else
-					msg += "\t [varname] = [varval]\n"
+				msg += "\t [varname] = [varval]\n"
 	log_world(msg)
 
 	var/datum/controller/subsystem/BadBoy = Master.last_type_processed
@@ -199,6 +200,27 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	else
 		to_chat(world, span_boldannounce("The Master Controller is having some issues, we will need to re-initialize EVERYTHING"))
 		Initialize(20, TRUE)
+
+/// When we need to recover the MC, we crash out with a report logged to world. However, certain variables cause clutter in this report, so we filter them out.
+/datum/controller/master/proc/gather_filtered_variables()
+	var/list/blacklisted = list()
+	// Use NAMEOF here so we throw a compile error if a variable no longer exists on the Master Controller, so we can remove it from the filter here.
+	if(NAMEOF(src, name))
+		blacklisted += "name"
+	if(NAMEOF(src, tag))
+		blacklisted += "tag"
+	if(NAMEOF(src, type))
+		blacklisted += "type"
+	if(NAMEOF(src, parent_type))
+		blacklisted += "parent_type"
+	if(NAMEOF(src, vars))
+		blacklisted += "vars"
+	if(NAMEOF(src, statclick))
+		blacklisted += "statclick"
+	if(NAMEOF(src, bestF))
+		blacklisted += "bestF"
+
+	return blacklisted
 
 
 // Please don't stuff random bullshit here,
