@@ -199,7 +199,7 @@
 			// scheduled time once the EOL has been executed.
 			if (!m.isFading)
 				var/sched_remaining = timeleft(m.fadertimer, SSrunechat)
-				var/remaining_time = (sched_remaining) * (CHAT_MESSAGE_EXP_DECAY ** idx++) * (CHAT_MESSAGE_HEIGHT_DECAY ** combined_height)
+				var/remaining_time = max(0, (sched_remaining) * (CHAT_MESSAGE_EXP_DECAY ** idx++) * (CHAT_MESSAGE_HEIGHT_DECAY ** combined_height))
 				if (remaining_time)
 					deltimer(m.fadertimer, SSrunechat)
 					m.fadertimer = addtimer(CALLBACK(m, .proc/end_of_life), remaining_time, TIMER_STOPPABLE|TIMER_DELETE_ME, SSrunechat)
