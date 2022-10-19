@@ -63,7 +63,7 @@
 	if(controlled_bot.bot_cover_flags & BOT_COVER_EMAGGED)
 		controller.blackboard[BB_HYGIENE_BOT_ANGRY] = TRUE ///Always angry if emagged!
 
-	controller.current_movement_target = controller.blackboard[BB_HYGIENE_BOT_TARGET]
+	controller.set_movement_target(controller.blackboard[BB_HYGIENE_BOT_TARGET], /datum/ai_movement/basic_avoidance)
 	if(controller.blackboard[BB_HYGIENE_BOT_ANGRY])
 		controller.queue_behavior(/datum/ai_behavior/chase_filthy_person/angry, BB_HYGIENE_BOT_TARGET, BB_TARGETTING_DATUM)
 	else
@@ -73,7 +73,7 @@
 /datum/ai_behavior/chase_filthy_person
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_MOVE_AND_PERFORM
 	required_distance = 0
-	action_cooldown = 0.1 SECONDS
+	action_cooldown = 1 SECONDS
 	///How long before hygiene bot gives up, -1 for infinite
 	var/starting_patience = 8 SECONDS
 	///Speed at which to chase player at, overriden by emag
@@ -107,10 +107,10 @@
 	if(!targetting_datum.can_attack(hygiene_bot, mob_target))
 		finish_action(controller, TRUE) //They're either clean or invisible, either way no longer our problem
 
-	if(chase_lines.len && DT_PROB_RATE(chase_line_prob, delta_time))
+	if(chase_lines.len && DT_PROB(chase_line_prob, delta_time))
 		hygiene_bot.speak(pick(chase_lines))
 
-	controller.blackboard[BB_HYGIENE_BOT_PATIENCE] = controller.blackboard[BB_HYGIENE_BOT_PATIENCE] - delta_time
+	controller.blackboard[BB_HYGIENE_BOT_PATIENCE] = controller.blackboard[BB_HYGIENE_BOT_PATIENCE] - delta_time SECONDS
 
 	if(controller.blackboard[BB_HYGIENE_BOT_PATIENCE] < 0)
 		finish_action(controller, FALSE)
@@ -132,7 +132,7 @@
 		controller.blackboard[BB_HYGIENE_BOT_ANGRY] = TRUE
 		hygiene_bot.speak("Okay now I'm pissed!")
 
-
+///Variant that gets ran once initial patience runs out
 /datum/ai_behavior/chase_filthy_person/angry
 	starting_patience = -1
 	chase_speed = 0.75

@@ -18,7 +18,7 @@
 	if(!controller.blackboard[BB_SIMPLE_CARRY_ITEM] && controller.blackboard[BB_FETCH_TARGET])
 		var/atom/movable/interact_target = controller.blackboard[BB_FETCH_TARGET]
 		if(in_range(living_pawn, interact_target) && (isturf(interact_target.loc)))
-			controller.current_movement_target = interact_target
+			controller.set_movement_target(interact_target)
 			if(IS_EDIBLE(interact_target))
 				controller.queue_behavior(/datum/ai_behavior/eat_snack)
 			else if(isitem(interact_target))
@@ -35,6 +35,6 @@
 			// if the return target isn't in sight, we'll just forget about it and carry the thing around
 			controller.blackboard[BB_FETCH_DELIVER_TO] = null
 			return
-		controller.current_movement_target = return_target
+		controller.set_movement_target(return_target)
 		controller.queue_behavior(/datum/ai_behavior/deliver_item)
 		return

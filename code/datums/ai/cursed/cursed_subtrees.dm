@@ -11,5 +11,5 @@
 	if(get_dist(curse_target, item_pawn) > CURSED_VIEW_RANGE)
 		controller.blackboard[BB_CURSE_TARGET] = null
 		return
-	controller.current_movement_target = curse_target
+	controller.set_movement_target(curse_target)
 	controller.queue_behavior(/datum/ai_behavior/item_move_close_and_attack/ghostly/cursed)

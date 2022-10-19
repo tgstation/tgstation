@@ -180,7 +180,7 @@
 			CancelActions()
 			blackboard[BB_HOSTILE_ORDER_MODE] = HOSTILE_COMMAND_FOLLOW
 			blackboard[BB_FOLLOW_TARGET] = WEAKREF(commander)
-			current_movement_target = commander
+			set_movement_target(commander)
 			var/mob/living/living_pawn = pawn
 			if(living_pawn.buckled)
 				queue_behavior(/datum/ai_behavior/resist)//in case they are in bed or something
@@ -211,7 +211,7 @@
 
 	if(blackboard[BB_HOSTILE_ORDER_MODE] == HOSTILE_COMMAND_ATTACK)
 		pawn.visible_message(span_notice("[pawn] follows [pointing_friend]'s gesture towards [pointed_movable] and [blackboard[BB_HOSTILE_ATTACK_WORD]] intensely!"))
-		current_movement_target = pointed_movable
+		set_movement_target(pointed_movable)
 		blackboard[BB_ATTACK_TARGET] = WEAKREF(pointed_movable)
 		if(living_pawn.buckled)
 			queue_behavior(/datum/ai_behavior/resist)//in case they are in bed or something

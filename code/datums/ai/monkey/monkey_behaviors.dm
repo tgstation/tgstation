@@ -142,7 +142,7 @@
 /datum/ai_behavior/monkey_attack_mob/setup(datum/ai_controller/controller, target_key)
 	. = ..()
 	var/datum/weakref/target_ref = controller.blackboard[target_key]
-	controller.current_movement_target = target_ref?.resolve()
+	controller.set_movement_target(target_ref?.resolve())
 
 /datum/ai_behavior/monkey_attack_mob/perform(delta_time, datum/ai_controller/controller, target_key)
 	. = ..()
@@ -239,7 +239,7 @@
 /datum/ai_behavior/disposal_mob/setup(datum/ai_controller/controller, attack_target_key, disposal_target_key)
 	. = ..()
 	var/datum/weakref/target_ref = controller.blackboard[attack_target_key]
-	controller.current_movement_target = target_ref?.resolve()
+	controller.set_movement_target(target_ref?.resolve())
 
 /datum/ai_behavior/disposal_mob/finish_action(datum/ai_controller/controller, succeeded, attack_target_key, disposal_target_key)
 	. = ..()
@@ -257,7 +257,7 @@
 	var/mob/living/target = target_ref?.resolve()
 	var/mob/living/living_pawn = controller.pawn
 
-	controller.current_movement_target = target
+	controller.set_movement_target(target)
 
 	if(target.pulledby != living_pawn && !HAS_AI_CONTROLLER_TYPE(target.pulledby, /datum/ai_controller/monkey)) //Dont steal from my fellow monkeys.
 		if(living_pawn.Adjacent(target) && isturf(target.loc))
@@ -266,7 +266,7 @@
 
 	var/datum/weakref/disposal_ref = controller.blackboard[disposal_target_key]
 	var/obj/machinery/disposal/disposal = disposal_ref.resolve()
-	controller.current_movement_target = disposal
+	controller.set_movement_target(disposal)
 
 	if(living_pawn.Adjacent(disposal))
 		INVOKE_ASYNC(src, .proc/try_disposal_mob, controller, attack_target_key, disposal_target_key) //put him in!

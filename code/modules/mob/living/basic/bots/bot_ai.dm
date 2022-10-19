@@ -28,6 +28,7 @@
 	var/mob/living/basic/bot/bot_pawn = pawn
 	return bot_pawn.access_card
 
+///Handles basic behavior for a bot (Primarily patrolling)
 /datum/ai_planning_subtree/core_bot_behaviors
 
 /datum/ai_planning_subtree/core_bot_behaviors/SelectBehaviors(datum/ai_controller/controller, delta_time)
@@ -40,11 +41,13 @@
 		if(!controller.blackboard[BB_BOT_CURRENT_PATROL_POINT])
 			return //No patrol point found
 
-		controller.current_movement_target = get_turf(controller.blackboard[BB_BOT_CURRENT_PATROL_POINT])
+		controller.set_movement_target(get_turf(controller.blackboard[BB_BOT_CURRENT_PATROL_POINT]), /datum/ai_movement/jps)
 		PatrolBehavior(controller, delta_time)
 
 		return SUBTREE_RETURN_FINISH_PLANNING
 
+
+/// override this if the bot has patrol behavior (like finding baddies)
 /datum/ai_planning_subtree/core_bot_behaviors/proc/PatrolBehavior(datum/ai_controller/controller, delta_time)
 	controller.queue_behavior(/datum/ai_behavior/move_to_next_patrol_point)
 
@@ -102,7 +105,7 @@
 	for(var/obj/machinery/navbeacon/NB in GLOB.navbeacons["[controller.pawn.z]"])
 		if(NB.location == previous_beacon.codes["next_patrol"]) //Is this beacon the next one?
 			controller.blackboard[BB_BOT_CURRENT_PATROL_POINT] = NB
-			controller.current_movement_target = get_turf(NB)
+			controller.set_movement_target(get_turf(NB), /datum/ai_movement/jps)
 			break //We found it, no need to keep searching!
 
 	controller.CancelActions() //This is important because we are often performing permanent actions (e.g. looking for targets) while patrolling. Maybe we can think of a better solution for this in the future?
