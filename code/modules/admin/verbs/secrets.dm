@@ -580,10 +580,10 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 	set waitfor = FALSE
 	if (playlightning)
 		sound_to_playing_players('sound/magic/lightning_chargeup.ogg')
-		sleep(80)
+		sleep(8 SECONDS)
 	priority_announce(replacetext(announcement, "%STATION%", station_name()))
 	if (playlightning)
-		sleep(20)
+		sleep(2 SECONDS)
 		sound_to_playing_players('sound/magic/lightningbolt.ogg')
 
 /// Spawns a portal storm that spawns in sentient/non sentient mobs
