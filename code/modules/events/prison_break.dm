@@ -21,7 +21,7 @@
 
 /datum/round_event/grey_tide/setup()
 	announce_when = rand(50, 60)
-	end_when = rand(20, 30)
+	end_when = rand(20, 40) //Chance for one or two flickers before everything opens
 	severity = rand(1,3)
 	for(var/i in 1 to severity)
 		var/picked_area = pick_n_take(potential_areas)
@@ -38,7 +38,7 @@
 		kill()
 
 /datum/round_event/grey_tide/tick()
-	if(ISMULTIPLE(activeFor, 10)) //Lights now flicker every 10-ish seconds
+	if(ISMULTIPLE(activeFor, 15))
 		for(var/area/area_to_open in areas_to_open)
 			for(var/obj/machinery/light/chosen_light in area_to_open)
 				chosen_light.flicker(10)
@@ -58,3 +58,8 @@
 			else if(istype(object_to_open, /obj/machinery/status_display/door_timer))
 				var/obj/machinery/status_display/door_timer/prison_timer = object_to_open
 				prison_timer.timer_end(forced = TRUE)
+			else if(istype(object_to_open, /obj/machinery/light_switch))
+				var/obj/machinery/light_switch/switch_to_flick = object_to_open
+				if(area_to_open.lightswitch)
+					switch_to_flick.set_lights(FALSE) //Escape (or sneak into) under the cover of darkness
+
