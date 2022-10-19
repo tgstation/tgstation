@@ -11,7 +11,7 @@
 	health = 100
 	maxHealth = 100
 
-	ai_controller = /datum/ai_controller/basic/bot/hygiene
+	ai_controller = /datum/ai_controller/basic_controller/bot/hygiene
 	maints_access_required = list(ACCESS_ROBOTICS, ACCESS_JANITOR)
 	radio_key = /obj/item/encryptionkey/headset_service
 	radio_channel = RADIO_CHANNEL_SERVICE //Service
