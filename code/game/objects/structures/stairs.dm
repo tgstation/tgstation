@@ -226,7 +226,7 @@
 			to_chat(user, span_warning("There's already stairs built here!"))
 			return
 		to_chat(user, span_notice("You start adding [material] to [src]..."))
-		if(!do_after(user, 10 SECONDS, target = src) || !material.use(10) || (locate(/obj/structure/table) in loc))
+		if(!do_after(user, src, 10 SECONDS) || !material.use(10) || (locate(/obj/structure/table) in loc))
 			return
 		make_new_stairs(material.stairs_type)
 	else if(istype(material, /obj/item/stack/sheet))
@@ -237,7 +237,7 @@
 			to_chat(user, span_warning("There's already stairs built here!"))
 			return
 		to_chat(user, span_notice("You start adding [material] to [src]..."))
-		if(!do_after(user, 10 SECONDS, target = src) || !material.use(10) || (locate(/obj/structure/table) in loc))
+		if(!do_after(user, src, 10 SECONDS) || !material.use(10) || (locate(/obj/structure/table) in loc))
 			return
 		var/list/material_list = list()
 		if(material.material_type)
