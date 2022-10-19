@@ -88,7 +88,6 @@
  * Handles deleting the hacking cable and notifying the user.
  */
 /mob/living/silicon/pai/proc/retract_cable()
-	hacking_cable.visible_message(span_notice("The cable quickly retracts."))
 	balloon_alert(src, "cable retracted")
 	QDEL_NULL(hacking_cable)
 	return TRUE
@@ -112,8 +111,6 @@
 	// Now begin hacking
 	if(!do_after(src, 15 SECONDS, hacking_cable.machine, timed_action_flags = NONE,	progress = TRUE))
 		balloon_alert(src, "failed! retracting...")
-		hacking_cable.visible_message(
-			span_warning("The cable rapidly retracts back into its spool."), span_hear("You hear a click and the sound of wire spooling rapidly."))
 		untrack_pai()
 		untrack_thing(hacking_cable)
 		QDEL_NULL(hacking_cable)
