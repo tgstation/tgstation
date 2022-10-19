@@ -3857,6 +3857,7 @@
 #include "code\modules\modular_computers\computers\item\computer.dm"
 #include "code\modules\modular_computers\computers\item\computer_components.dm"
 #include "code\modules\modular_computers\computers\item\computer_damage.dm"
+#include "code\modules\modular_computers\computers\item\computer_files.dm"
 #include "code\modules\modular_computers\computers\item\computer_power.dm"
 #include "code\modules\modular_computers\computers\item\computer_ui.dm"
 #include "code\modules\modular_computers\computers\item\laptop.dm"

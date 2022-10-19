@@ -33,7 +33,6 @@
 	all_components[install.device_type] = install
 
 	to_chat(user, span_notice("You install \the [install] into \the [src]."))
-	install.holder = src
 	install.forceMove(src)
 	install.on_install(src, user)
 
@@ -60,7 +59,6 @@
 	if(wipe_memory.expansion_hw)
 		LAZYREMOVE(expansion_bays, wipe_memory.device_type)
 	all_components.Remove(wipe_memory.device_type)
-	wipe_memory.holder = null
 
 /// Checks all hardware pieces to determine if name matches, if yes, returns the hardware piece, otherwise returns null
 /obj/item/modular_computer/proc/find_hardware_by_name(name)

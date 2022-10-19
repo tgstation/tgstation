@@ -5,7 +5,7 @@
 /obj/item/modular_computer/tablet/pda/heads
 	greyscale_config = /datum/greyscale_config/tablet/head
 	greyscale_colors = "#67A364#a92323"
-	default_applications = list(
+	starting_programs = list(
 		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/status,
 		/datum/computer_file/program/science,
@@ -26,17 +26,14 @@
 /obj/item/modular_computer/tablet/pda/heads/captain/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_TABLET_CHECK_DETONATE, .proc/tab_no_detonate)
-	var/obj/item/computer_hardware/hard_drive/drive = all_components[MC_HDD]
-	if(!drive)
-		return
-	for(var/datum/computer_file/program/messenger/messenger_app in drive.stored_files)
+	for(var/datum/computer_file/program/messenger/messenger_app in stored_files)
 		messenger_app.spam_mode = TRUE
 
 /obj/item/modular_computer/tablet/pda/heads/hop
 	name = "head of personnel PDA"
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick/head
 	greyscale_colors = "#374f7e#a52f29#a52f29"
-	default_applications = list(
+	starting_programs = list(
 		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/status,
 		/datum/computer_file/program/science,
@@ -50,7 +47,7 @@
 	name = "head of security PDA"
 	greyscale_config = /datum/greyscale_config/tablet/head
 	greyscale_colors = "#EA3232#0000CC"
-	default_applications = list(
+	starting_programs = list(
 		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/status,
 		/datum/computer_file/program/science,
@@ -63,7 +60,7 @@
 	name = "chief engineer PDA"
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick/head
 	greyscale_colors = "#D99A2E#69DBF3#FAFAFA"
-	default_applications = list(
+	starting_programs = list(
 		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/status,
 		/datum/computer_file/program/science,
@@ -78,7 +75,7 @@
 	name = "chief medical officer PDA"
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick/head
 	greyscale_colors = "#FAFAFA#000099#3F96CC"
-	default_applications = list(
+	starting_programs = list(
 		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/status,
 		/datum/computer_file/program/science,
@@ -93,7 +90,7 @@
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick/head
 	greyscale_colors = "#FAFAFA#000099#B347BC"
 	inserted_item = /obj/item/pen/fountain
-	default_applications = list(
+	starting_programs = list(
 		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/status,
 		/datum/computer_file/program/science,
@@ -108,7 +105,7 @@
 	greyscale_colors = "#D6B328#6506CA#927444"
 	inserted_item = /obj/item/pen/survival
 	stored_paper = 20
-	default_applications = list(
+	starting_programs = list(
 		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/status,
 		/datum/computer_file/program/science,
@@ -125,7 +122,7 @@
 /obj/item/modular_computer/tablet/pda/security
 	name = "security PDA"
 	greyscale_colors = "#EA3232#0000cc"
-	default_applications = list(
+	starting_programs = list(
 		/datum/computer_file/program/records/security,
 		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/robocontrol,
@@ -134,7 +131,7 @@
 /obj/item/modular_computer/tablet/pda/detective
 	name = "detective PDA"
 	greyscale_colors = "#805A2F#990202"
-	default_applications = list(
+	starting_programs = list(
 		/datum/computer_file/program/records/security,
 		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/robocontrol,
@@ -145,7 +142,7 @@
 	name = "warden PDA"
 	greyscale_config = /datum/greyscale_config/tablet/stripe_split
 	greyscale_colors = "#EA3232#0000CC#363636"
-	default_applications = list(
+	starting_programs = list(
 		/datum/computer_file/program/records/security,
 		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/robocontrol,
@@ -159,7 +156,7 @@
 	name = "engineering PDA"
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
 	greyscale_colors = "#D99A2E#69DBF3#E3DF3D"
-	default_applications = list(
+	starting_programs = list(
 		/datum/computer_file/program/supermatter_monitor,
 	)
 
@@ -167,7 +164,7 @@
 	name = "atmospherics PDA"
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
 	greyscale_colors = "#EEDC43#00E5DA#727272"
-	default_applications = list(
+	starting_programs = list(
 		/datum/computer_file/program/atmosscan,
 		/datum/computer_file/program/alarm_monitor,
 	)
@@ -180,7 +177,7 @@
 	name = "scientist PDA"
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
 	greyscale_colors = "#FAFAFA#000099#B347BC"
-	default_applications = list(
+	starting_programs = list(
 		/datum/computer_file/program/atmosscan,
 		/datum/computer_file/program/signal_commander,
 	)
@@ -189,7 +186,7 @@
 	name = "roboticist PDA"
 	greyscale_config = /datum/greyscale_config/tablet/stripe_split
 	greyscale_colors = "#484848#0099CC#D94927"
-	default_applications = list(
+	starting_programs = list(
 		/datum/computer_file/program/robocontrol,
 	)
 
@@ -197,7 +194,7 @@
 	name = "geneticist PDA"
 	greyscale_config = /datum/greyscale_config/tablet/stripe_split
 	greyscale_colors = "#FAFAFA#000099#0097CA"
-	default_applications = list(
+	starting_programs = list(
 		/datum/computer_file/program/phys_scanner/medical,
 		/datum/computer_file/program/records/medical,
 	)
@@ -210,7 +207,7 @@
 	name = "medical PDA"
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
 	greyscale_colors = "#FAFAFA#000099#3F96CC"
-	default_applications = list(
+	starting_programs = list(
 		/datum/computer_file/program/phys_scanner/medical,
 		/datum/computer_file/program/records/medical,
 		/datum/computer_file/program/robocontrol,
@@ -218,7 +215,7 @@
 
 /obj/item/modular_computer/tablet/pda/medical/paramedic
 	name = "paramedic PDA"
-	default_applications = list(
+	starting_programs = list(
 		/datum/computer_file/program/phys_scanner/medical,
 		/datum/computer_file/program/records/medical,
 		/datum/computer_file/program/radar/lifeline,
@@ -228,7 +225,7 @@
 	name = "virology PDA"
 	greyscale_config = /datum/greyscale_config/tablet/stripe_split
 	greyscale_colors = "#FAFAFA#355FAC#57C451"
-	default_applications = list(
+	starting_programs = list(
 		/datum/computer_file/program/phys_scanner/medical,
 		/datum/computer_file/program/records/medical,
 		/datum/computer_file/program/robocontrol,
@@ -238,7 +235,7 @@
 	name = "chemist PDA"
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
 	greyscale_colors = "#FAFAFA#355FAC#EA6400"
-	default_applications = list(
+	starting_programs = list(
 		/datum/computer_file/program/phys_scanner/chemistry,
 	)
 
@@ -250,7 +247,7 @@
 	name = "cargo technician PDA"
 	greyscale_colors = "#D6B328#6506CA"
 	stored_paper = 20
-	default_applications = list(
+	starting_programs = list(
 		/datum/computer_file/program/shipping,
 		/datum/computer_file/program/budgetorders,
 		/datum/computer_file/program/robocontrol,
@@ -268,7 +265,7 @@
 /obj/item/modular_computer/tablet/pda/janitor
 	name = "janitor PDA"
 	greyscale_colors = "#933ea8#235AB2"
-	default_applications = list(
+	starting_programs = list(
 		/datum/computer_file/program/radar/custodial_locator,
 	)
 
@@ -281,16 +278,13 @@
 	name = "lawyer PDA"
 	greyscale_colors = "#4C76C8#FFE243"
 	inserted_item = /obj/item/pen/fountain
-	default_applications = list(
+	starting_programs = list(
 		/datum/computer_file/program/records/security,
 	)
 
 /obj/item/modular_computer/tablet/pda/lawyer/Initialize(mapload)
 	. = ..()
-	var/obj/item/computer_hardware/hard_drive/drive = all_components[MC_HDD]
-	if(!drive)
-		return
-	for(var/datum/computer_file/program/messenger/messenger_app in drive.stored_files)
+	for(var/datum/computer_file/program/messenger/messenger_app in stored_files)
 		messenger_app.spam_mode = TRUE
 
 /obj/item/modular_computer/tablet/pda/botanist
@@ -342,13 +336,10 @@
 
 /obj/item/modular_computer/tablet/pda/mime/Initialize(mapload)
 	. = ..()
-	var/obj/item/computer_hardware/hard_drive/hdd = all_components[MC_HDD]
-
-	if(hdd)
-		for(var/datum/computer_file/program/messenger/msg in hdd.stored_files)
-			msg.mime_mode = TRUE
-			msg.allow_emojis = TRUE
-			msg.ringer_status = FALSE
+	for(var/datum/computer_file/program/messenger/msg in stored_files)
+		msg.mime_mode = TRUE
+		msg.allow_emojis = TRUE
+		msg.ringer_status = FALSE
 
 /obj/item/modular_computer/tablet/pda/curator
 	name = "curator PDA"
@@ -358,18 +349,15 @@
 	icon_state = "pda-library"
 	inserted_item = /obj/item/pen/fountain
 	long_ranged = TRUE
-	default_applications = list(
+	starting_programs = list(
 		/datum/computer_file/program/newscaster,
 	)
 
 /obj/item/modular_computer/tablet/pda/curator/Initialize(mapload)
 	. = ..()
-	var/obj/item/computer_hardware/hard_drive/hdd = all_components[MC_HDD]
-
-	if(hdd)
-		for(var/datum/computer_file/program/messenger/msg in hdd.stored_files)
-			msg.allow_emojis = TRUE
-			msg.ringer_status = FALSE
+	for(var/datum/computer_file/program/messenger/msg in stored_files)
+		msg.allow_emojis = TRUE
+		msg.ringer_status = FALSE
 
 /**
  * No Department
@@ -377,7 +365,7 @@
 
 /obj/item/modular_computer/tablet/pda/assistant
 	name = "assistant PDA"
-	default_applications = list(
+	starting_programs = list(
 		/datum/computer_file/program/bounty_board,
 	)
 

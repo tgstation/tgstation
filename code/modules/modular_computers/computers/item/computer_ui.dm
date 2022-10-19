@@ -35,8 +35,7 @@
 
 	// We are still here, that means there is no program loaded. Load the BIOS/ROM/OS/whatever you want to call it.
 	// This screen simply lists available programs and user may select them.
-	var/obj/item/computer_hardware/hard_drive/hard_drive = all_components[MC_HDD]
-	if(!hard_drive || !hard_drive.stored_files || !hard_drive.stored_files.len)
+	if(!stored_files || !stored_files.len)
 		to_chat(user, span_danger("\The [src] beeps three times, it's screen displaying a \"DISK ERROR\" warning."))
 		return // No HDD, No HDD files list or no stored files. Something is very broken.
 
@@ -89,12 +88,10 @@
 			IDJob = cardholder.current_job,
 		)
 
-	var/obj/item/computer_hardware/hard_drive/hard_drive = all_components[MC_HDD]
-
 	data["removable_media"] = list()
 	if(all_components[MC_SDD])
 		data["removable_media"] += "Eject Disk"
-	var/datum/computer_file/program/ai_restorer/airestore_app = locate() in hard_drive.stored_files
+	var/datum/computer_file/program/ai_restorer/airestore_app = locate() in stored_files
 	if(airestore_app?.stored_card)
 		data["removable_media"] += "intelliCard"
 	var/obj/item/computer_hardware/card_slot/secondarycardholder = all_components[MC_CARD2]
@@ -102,7 +99,7 @@
 		data["removable_media"] += "secondary RFID card"
 
 	data["programs"] = list()
-	for(var/datum/computer_file/program/P in hard_drive.stored_files)
+	for(var/datum/computer_file/program/P in stored_files)
 		var/running = FALSE
 		if(P in idle_threads)
 			running = TRUE
@@ -122,7 +119,6 @@
 	if(.)
 		return
 
-	var/obj/item/computer_hardware/hard_drive/hard_drive = all_components[MC_HDD]
 	switch(action)
 		if("PC_exit")
 			kill_program()
@@ -147,8 +143,7 @@
 			var/prog = params["name"]
 			var/datum/computer_file/program/P = null
 			var/mob/user = usr
-			if(hard_drive)
-				P = hard_drive.find_file_by_name(prog)
+			P = find_file_by_name(prog)
 
 			if(!istype(P) || P.program_state == PROGRAM_STATE_KILLED)
 				return
@@ -161,7 +156,7 @@
 			if(params["is_disk"])
 				return
 
-			open_program(usr, hard_drive.find_file_by_name(params["name"]))
+			open_program(usr, find_file_by_name(params["name"]))
 
 		if("PC_toggle_light")
 			return toggle_flashlight()
@@ -190,7 +185,7 @@
 						user.put_in_hands(portable_drive)
 						playsound(src, 'sound/machines/card_slide.ogg', 50)
 				if("intelliCard")
-					var/datum/computer_file/program/ai_restorer/airestore_app = locate() in hard_drive.stored_files
+					var/datum/computer_file/program/ai_restorer/airestore_app = locate() in stored_files
 					if(!airestore_app)
 						return
 					if(airestore_app.try_eject(user))

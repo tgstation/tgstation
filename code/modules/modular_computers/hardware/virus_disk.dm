@@ -33,9 +33,7 @@
 		user.show_message(span_notice("Success!"))
 		charges--
 
-		var/obj/item/computer_hardware/hard_drive/drive = target.all_components[MC_HDD]
-
-		for(var/datum/computer_file/program/messenger/app in drive.stored_files)
+		for(var/datum/computer_file/program/messenger/app in target.stored_files)
 			app.ringer_status = FALSE
 			app.ringtone = ""
 	else
@@ -64,9 +62,7 @@
 	if(!fakejob || holder != original_host || !user.canUseTopic(holder, be_close = TRUE))
 		return
 
-	var/obj/item/computer_hardware/hard_drive/drive = holder.all_components[MC_HDD]
-
-	for(var/datum/computer_file/program/messenger/app in drive.stored_files)
+	for(var/datum/computer_file/program/messenger/app in holder.stored_files)
 		if(charges > 0 && app.send_message(user, list(target), rigged = REF(user), fake_name = fakename, fake_job = fakejob))
 			charges--
 			user.show_message(span_notice("Success!"))

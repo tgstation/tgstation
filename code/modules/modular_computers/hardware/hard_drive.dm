@@ -5,17 +5,10 @@
 	icon_state = "harddisk_mini"
 	critical = 1
 	w_class = WEIGHT_CLASS_TINY
-	device_type = MC_HDD
+	device_type = MC_SDD
 	var/max_capacity = 128
 	var/used_capacity = 0
 	var/list/stored_files = list() // List of stored files on this drive. DO NOT MODIFY DIRECTLY!
-	var/default_installs = TRUE // install the default progs
-
-/obj/item/computer_hardware/hard_drive/Initialize(mapload)
-	. = ..()
-
-	if(default_installs)
-		install_default_programs()
 
 /obj/item/computer_hardware/hard_drive/Destroy()
 	QDEL_LIST(stored_files)
@@ -32,11 +25,6 @@
 	for(var/datum/computer_file/program in stored_files)
 		program.computer = null
 	return ..()
-
-/obj/item/computer_hardware/hard_drive/proc/install_default_programs()
-	store_file(new /datum/computer_file/program/computerconfig) // Computer configuration utility, allows hardware control and displays more info than status bar
-	store_file(new /datum/computer_file/program/ntnetdownload) // NTNet Downloader Utility, allows users to download more software from NTNet repository
-	store_file(new /datum/computer_file/program/filemanager) // File manager, allows text editor functions and basic file manipulation.
 
 /obj/item/computer_hardware/hard_drive/examine(user)
 	. = ..()
@@ -68,7 +56,6 @@
 
 	SEND_SIGNAL(F, COMSIG_MODULAR_COMPUTER_FILE_ADDING)
 
-	F.holder = src
 	F.computer = holder
 	stored_files.Add(F)
 	recalculate_size()
@@ -180,24 +167,6 @@
 	icon_state = "ssd_mini"
 	w_class = WEIGHT_CLASS_TINY
 	custom_price = PAYCHECK_CREW * 2
-
-/obj/item/computer_hardware/hard_drive/small/install_default_programs()
-	. = ..()
-
-	store_file(new /datum/computer_file/program/messenger)
-	store_file(new /datum/computer_file/program/nt_pay)
-	store_file(new /datum/computer_file/program/notepad)
-
-// For borg integrated tablets. No downloader.
-/obj/item/computer_hardware/hard_drive/small/ai/install_default_programs()
-	var/datum/computer_file/program/messenger/messenger = new
-	messenger.is_silicon = TRUE
-	store_file(messenger)
-
-/obj/item/computer_hardware/hard_drive/small/robot/install_default_programs()
-	store_file(new /datum/computer_file/program/computerconfig) // Computer configuration utility, allows hardware control and displays more info than status bar
-	store_file(new /datum/computer_file/program/filemanager) // File manager, allows text editor functions and basic file manipulation.
-	store_file(new /datum/computer_file/program/robotact)
 
 // Syndicate variant - very slight better
 /obj/item/computer_hardware/hard_drive/portable/syndicate

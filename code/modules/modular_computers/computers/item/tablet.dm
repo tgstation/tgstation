@@ -95,10 +95,8 @@
 /obj/item/modular_computer/tablet/proc/get_detomatix_difficulty()
 	var/detomatix_difficulty
 
-	var/obj/item/computer_hardware/hard_drive/hdd = all_components[MC_HDD]
-	if(hdd)
-		for(var/datum/computer_file/program/downloaded_apps as anything in hdd.stored_files)
-			detomatix_difficulty += downloaded_apps.detomatix_resistance
+	for(var/datum/computer_file/program/downloaded_apps as anything in stored_files)
+		detomatix_difficulty += downloaded_apps.detomatix_resistance
 
 	return detomatix_difficulty
 
@@ -163,12 +161,7 @@
 	if(!new_ringtone || new_ringtone == MESSENGER_RINGTONE_DEFAULT)
 		return
 
-	var/obj/item/computer_hardware/hard_drive/drive = all_components[MC_HDD]
-
-	if(!drive)
-		return
-
-	for(var/datum/computer_file/program/messenger/messenger_app in drive.stored_files)
+	for(var/datum/computer_file/program/messenger/messenger_app in stored_files)
 		messenger_app.ringtone = new_ringtone
 
 
@@ -213,12 +206,23 @@
 	has_light = FALSE //tablet light button actually enables/disables the borg lamp
 	comp_light_luminosity = 0
 	has_variants = FALSE
-	///Ref to the silicon we're installed in. Set by the silicon itself during its creation.
-	var/mob/living/silicon/silicon_owner
+	starting_programs = list(
+		/datum/computer_file/program/messenger,
+	)
+
 	///Ref to the RoboTact app. Important enough to borgs to deserve a ref.
 	var/datum/computer_file/program/robotact/robotact
 	///IC log that borgs can view in their personal management app
 	var/list/borglog = list()
+	///Ref to the silicon we're installed in. Set by the silicon itself during its creation.
+	var/mob/living/silicon/silicon_owner
+
+/obj/item/modular_computer/tablet/integrated/cyborg
+	starting_programs = list(
+		/datum/computer_file/program/computerconfig,
+		/datum/computer_file/program/filemanager,
+		/datum/computer_file/program/robotact,
+	)
 
 /obj/item/modular_computer/tablet/integrated/Initialize(mapload)
 	. = ..()
@@ -226,8 +230,14 @@
 	silicon_owner = loc
 	if(!istype(silicon_owner))
 		silicon_owner = null
-		stack_trace("[type] initialized outside of a borg, deleting.")
+		stack_trace("[type] initialized outside of a silicon, deleting.")
 		return INITIALIZE_HINT_QDEL
+
+/obj/item/modular_computer/tablet/integrated/install_default_programs()
+	SHOULD_CALL_PARENT(FALSE)
+	for(var/datum/computer_file/program/program_type as anything in starting_programs)
+		store_file(new program_type)
+		program_type.computer = physical
 
 /obj/item/modular_computer/tablet/integrated/Destroy()
 	silicon_owner = null
@@ -266,22 +276,19 @@
  * RoboTact is supposed to be undeletable, so these will create runtime messages.
  */
 /obj/item/modular_computer/tablet/integrated/proc/get_robotact()
-	if(!silicon_owner)
-		return null
+	if(robotact)
+		return robotact
+	robotact = find_file_by_name("robotact")
 	if(!robotact)
-		var/obj/item/computer_hardware/hard_drive/hard_drive = all_components[MC_HDD]
-		robotact = hard_drive.find_file_by_name("robotact")
-		if(!robotact)
-			stack_trace("Cyborg [silicon_owner] ( [silicon_owner.type] ) was somehow missing their self-manage app in their tablet. A new copy has been created.")
-			robotact = new(hard_drive)
-			if(!hard_drive.store_file(robotact))
-				qdel(robotact)
-				robotact = null
-				CRASH("Cyborg [silicon_owner]'s tablet hard drive rejected recieving a new copy of the self-manage app. To fix, check the hard drive's space remaining. Please make a bug report about this.")
-	return robotact
+		stack_trace("Cyborg [silicon_owner] ( [silicon_owner.type] ) was somehow missing their self-manage app in their tablet. A new copy has been created.")
+		robotact = new(src)
+		if(!store_file(robotact))
+			qdel(robotact)
+			robotact = null
+			CRASH("Cyborg [silicon_owner]'s tablet hard drive rejected recieving a new copy of the self-manage app. To fix, check the hard drive's space remaining. Please make a bug report about this.")
 
 //Makes the light settings reflect the borg's headlamp settings
-/obj/item/modular_computer/tablet/integrated/ui_data(mob/user)
+/obj/item/modular_computer/tablet/integrated/cyborg/ui_data(mob/user)
 	. = ..()
 	.["has_light"] = TRUE
 	if(iscyborg(silicon_owner))
@@ -333,13 +340,25 @@
 	greyscale_config = /datum/greyscale_config/tablet
 	greyscale_colors = "#999875#a92323"
 
+	max_capacity = 64
+	var/static/list/datum/computer_file/pda_programs = list(
+		/datum/computer_file/program/messenger,
+		/datum/computer_file/program/nt_pay,
+		/datum/computer_file/program/notepad,
+	)
+
 	bypass_state = TRUE
 	allow_chunky = TRUE
 
-	///All applications this tablet has pre-installed
-	var/list/default_applications = list()
 	///The pre-installed cartridge that comes with the tablet
 	var/loaded_cartridge
+
+/obj/item/modular_computer/tablet/pda/install_default_programs()
+	for(var/programs as anything in pda_programs)
+		var/datum/computer_file/program/program_type = new programs
+		store_file(program_type)
+		program_type.computer = physical
+	return ..()
 
 /obj/item/modular_computer/tablet/pda/update_overlays()
 	. = ..()
@@ -362,11 +381,6 @@
 	install_component(new /obj/item/computer_hardware/hard_drive/small)
 	install_component(new /obj/item/computer_hardware/battery(src, /obj/item/stock_parts/cell/computer))
 	install_component(new /obj/item/computer_hardware/card_slot)
-
-	if(!isnull(default_applications))
-		var/obj/item/computer_hardware/hard_drive/small/hard_drive = find_hardware_by_name("solid state drive")
-		for(var/datum/computer_file/program/default_programs as anything in default_applications)
-			hard_drive.store_file(new default_programs)
 
 	if(loaded_cartridge)
 		var/obj/item/computer_hardware/hard_drive/portable/disk = new loaded_cartridge(src)
