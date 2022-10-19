@@ -1,7 +1,9 @@
 /datum/ai_controller/basic_controller/hugglebipper
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(),
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/hugglebipper(),
 	)
+
+	ai_movement = /datum/ai_movement/basic_avoidance
 
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
@@ -76,7 +78,9 @@
 /datum/ai_behavior/hugglebipper_stalking/perform(delta_time, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
 	. = ..()
 
-	if(controller.blackboard[BB_HUGGLEBIPPER_STOP_STALKING])
+	var/stop_stalking = controller.blackboard[BB_HUGGLEBIPPER_STOP_STALKING]
+
+	if(stop_stalking)
 		//oh shit, go """help""" them!
 		finish_action(controller, TRUE, target_key)
 		return
@@ -90,7 +94,7 @@
 		finish_action(controller, FALSE, target_key)
 		return
 
-	if(target.stat > SOFT_CRIT)
+	if(target.stat > CONSCIOUS)
 		//oh shit, go actually help them!
 		finish_action(controller, TRUE, target_key)
 
@@ -101,6 +105,8 @@
 	if(target)
 		UnregisterSignal(target, list(COMSIG_FIRER_PROJECTILE_ON_HIT, COMSIG_MOB_ITEM_AFTERATTACK))
 		if(succeeded)
+			//just in case it hasn't been set yet (checks in perform don't)
+			controller.blackboard[BB_HUGGLEBIPPER_STOP_STALKING] = TRUE
 			var/mob/living/basic/hugglebipper = controller.pawn
 			hugglebipper.say("Me help, me help!!")
 	if(!succeeded)
@@ -119,3 +125,10 @@
 	. = ..()
 	var/mob/living/basic/basic_mob = controller.pawn
 	basic_mob.icon_state = initial(basic_mob.icon_state)
+
+/datum/targetting_datum/basic/hugglebipper
+	//metal, but in reality it will only poke the body once
+	beat_them_to = DEAD
+
+/datum/targetting_datum/basic/hugglebipper/new_target(datum/ai_controller/controller)
+	controller.blackboard[BB_HUGGLEBIPPER_STOP_STALKING] = FALSE

@@ -17,6 +17,8 @@
 	pixel_x = -16
 	base_pixel_x = -16
 
+	speed = 2
+
 	death_message = "lets out a pathetic screech as it dies..."
 
 	ai_controller = /datum/ai_controller/basic_controller/hugglebipper
@@ -31,11 +33,10 @@
 		return ..()
 	var/mob/living/living_target = target
 	src.face_atom(living_target)
-	var/list/turf/turf_list = RANGE_TURFS(20, living_target)
+	var/list/turf/turf_list = RIM_TURFS(10, 11, living_target)
 	var/teleported = FALSE
-	for(var/turf/turf in turf_list)
-		var/dist = get_dist(living_target, turf)
-		if(isopenturf(turf) && !isgroundlessturf(turf) && (dist == 11 || dist == 10))
+	for(var/turf/turf as anything in turf_list)
+		if(isopenturf(turf) && !isgroundlessturf(turf))
 			living_target.forceMove(turf)
 			teleported = TRUE
 			break

@@ -19,6 +19,28 @@
 	locate(min(CENTER.x+(H_RADIUS),world.maxx), min(CENTER.y+(V_RADIUS),world.maxy), CENTER.z) \
 	)
 
+/// Returns the set of turfs in a square in JUST a particular range min/max
+/// This allows for cutting out borders of interesting turfs
+/// Process left side, top side, right side, bottom
+/// Each time we rotate, we leave off the turfs at the "end" of the direction we're going, to avoid needing to use |
+#define RIM_TURFS(INNER_RANGE, OUTER_RANGE, CENTER) \
+	(block( \
+		locate(max(CENTER.x-(OUTER_RANGE),1), max(CENTER.y-(OUTER_RANGE),1),            CENTER.z), \
+		locate(max(CENTER.x-(INNER_RANGE),1), min(CENTER.y+(INNER_RANGE-1),world.maxy), CENTER.z) \
+	) + \
+	block( \
+		locate(max(CENTER.x-(OUTER_RANGE),1),            min(CENTER.y+(OUTER_RANGE),world.maxy), CENTER.z), \
+		locate(min(CENTER.x+(INNER_RANGE-1),world.maxx), min(CENTER.y+(INNER_RANGE),world.maxy), CENTER.z) \
+	) + \
+	block( \
+		locate(min(CENTER.x+(OUTER_RANGE),world.maxx), min(CENTER.y+(OUTER_RANGE),world.maxy), CENTER.z), \
+		locate(min(CENTER.x+(INNER_RANGE),world.maxx), max(CENTER.y-(INNER_RANGE-1),1),        CENTER.z) \
+	) + \
+	block( \
+		locate(min(CENTER.x+(OUTER_RANGE),world.maxx), max(CENTER.y-(OUTER_RANGE),1), CENTER.z), \
+		locate(max(CENTER.x-(INNER_RANGE-1),1), max(CENTER.y-(INNER_RANGE),1),        CENTER.z) \
+	))
+
 ///Returns all turfs in a zlevel
 #define Z_TURFS(ZLEVEL) block(locate(1,1,ZLEVEL), locate(world.maxx, world.maxy, ZLEVEL))
 

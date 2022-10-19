@@ -20,7 +20,7 @@
 			potential_targets += HM
 
 	if(!potential_targets.len)
-		finish_action(controller, FALSE)
+		finish_action(controller, FALSE, target_key, targetting_datum_key, hiding_location_key)
 		return
 
 	var/list/filtered_targets = list()
@@ -31,7 +31,7 @@
 			continue
 
 	if(!filtered_targets.len)
-		finish_action(controller, FALSE)
+		finish_action(controller, FALSE, target_key, targetting_datum_key, hiding_location_key)
 		return
 
 	var/atom/target = pick(filtered_targets)
@@ -42,4 +42,10 @@
 	if(potential_hiding_location) //If they're hiding inside of something, we need to know so we can go for that instead initially.
 		controller.blackboard[hiding_location_key] = WEAKREF(potential_hiding_location)
 
-	finish_action(controller, TRUE)
+	finish_action(controller, TRUE, target_key, targetting_datum_key, hiding_location_key)
+
+/datum/ai_behavior/find_potential_targets/finish_action(datum/ai_controller/controller, succeeded, target_key, targetting_datum_key, hiding_location_key)
+	. = ..()
+	if(succeeded)
+		var/datum/targetting_datum/targetting_datum = controller.blackboard[targetting_datum_key]
+		targetting_datum.new_target(controller)

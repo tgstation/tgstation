@@ -12,7 +12,14 @@
 		target_hiding_location = target.loc
 	return target_hiding_location
 
+///Proc for setting/resetting blackboards
+/datum/targetting_datum/proc/new_target()
+	return
+
 /datum/targetting_datum/basic
+	///to what point should a mob attack another mob?
+	///for example, we'll stop considering a target valid when it enters soft crit, aka can't fight us anymore
+	var/beat_them_to = SOFT_CRIT
 
 /datum/targetting_datum/basic/can_attack(mob/living/living_mob, atom/the_target)
 	if(isturf(the_target) || !the_target) // bail out on invalids
@@ -30,9 +37,9 @@
 		return FALSE
 
 	if(isliving(the_target)) //Targeting vs living mobs
-		var/mob/living/L = the_target
-		var/faction_check = living_mob.faction_check_mob(L)
-		if(faction_check || L.stat)
+		var/mob/living/living_target = the_target
+		var/faction_check = living_mob.faction_check_mob(living_target)
+		if(faction_check || living_target.stat >= beat_them_to)
 			return FALSE
 		return TRUE
 
