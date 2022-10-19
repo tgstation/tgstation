@@ -1,8 +1,8 @@
 /datum/action/cooldown/spell/shadow_cloak
-	name = "Shadow Cloak"
-	desc = "Completely conceals your identity, but does not make you invisible. \
-		Can be activated early to disable it. While cloaked, you move faster, but undergo actions slower. \
-		Being repeatedly attacked while cloaked may also cause the cloak lift."
+	name = "Cloak of Shadow"
+	desc = "Completely conceals your identity, but does not make you invisible.  Can be activated early to disable it. \
+		While cloaked, you move faster, but undergo actions much slower. \
+		Taking damage while cloaked may cause it to lift suddenly, causing negative effects. "
 	background_icon_state = "bg_ecult"
 	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "ninja_cloak"
@@ -44,7 +44,7 @@
 /datum/action/cooldown/spell/shadow_cloak/cast(mob/living/cast_on)
 	. = ..()
 	if(active_cloak)
-		var/new_cd = max(1 MINUTES - (timeleft(uncloak_timer) / 3), 6 SECONDS)
+		var/new_cd = max((uncloak_time - timeleft(uncloak_timer)) / 3, cooldown_time)
 		uncloak_mob(cast_on)
 		StartCooldown(new_cd)
 
@@ -58,7 +58,7 @@
 		return
 
 	uncloak_mob(cast_on)
-	StartCooldown(1 MINUTES)
+	StartCooldown(uncloak_timer / 3)
 
 /datum/action/cooldown/spell/shadow_cloak/proc/cloak_mob(mob/living/cast_on)
 	playsound(cast_on, 'sound/chemistry/ahaha.ogg', 50, TRUE, -1, extrarange = SILENCED_SOUND_EXTRARANGE, frequency = 0.5)
@@ -69,18 +69,21 @@
 
 	active_cloak = cast_on.apply_status_effect(/datum/status_effect/shadow_cloak)
 	RegisterSignal(active_cloak, COMSIG_PARENT_QDELETING, .proc/on_early_cloak_loss)
+	RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING), .proc/on_focus_lost)
 
 /datum/action/cooldown/spell/shadow_cloak/proc/uncloak_mob(mob/living/cast_on, show_message = TRUE)
-	if(QDELETED(active_cloak))
-		active_cloak = null
-	else
-		UnregisterSignal(active_cloak, COMSIG_PARENT_QDELETING)
-		QDEL_NULL(active_cloak)
+	// Unregister signals first, so as to not trigger it
+	UnregisterSignal(active_cloak, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING))
+	// Already deleted - just null the ref, otherwise, delete the effect / remove it
+	if(!QDELETED(active_cloak))
+		qdel(active_cloak)
+	active_cloak = null
 
 	playsound(cast_on, 'sound/effects/curseattack.ogg', 50)
 	if(show_message)
 		cast_on.visible_message(
-			span_warning("[cast_on] suddenly appears from the shadows!"),
+			span_warning("[cast_on] appears from the shadows!"),
 			span_notice("You appear from the shadows, identifiable once more."),
 		)
 
@@ -102,7 +105,17 @@
 	removed.Knockdown(0.5 SECONDS)
 	removed.add_movespeed_modifier(/datum/movespeed_modifier/shadow_cloak/early_remove)
 	addtimer(CALLBACK(removed, /mob/proc/remove_movespeed_modifier, /datum/movespeed_modifier/shadow_cloak/early_remove), 2 MINUTES, TIMER_UNIQUE|TIMER_OVERRIDE)
-	StartCooldown(2 MINUTES)
+	StartCooldown(uncloak_time * 2/3)
+
+/datum/action/cooldown/spell/shadow_cloak/proc/on_focus_lost(mob/living/source)
+	SIGNAL_HANDLER
+
+	uncloak_mob(removed, show_message = FALSE)
+	removed.visible_message(
+		span_warning("[removed] suddenly appears from the shadows!"),
+		span_userdanger("As you lose your focus, you are pulled out of the shadows!"),
+	)
+	StartCooldown(uncloak_time / 3)
 
 /datum/status_effect/shadow_cloak
 	id = "shadow_cloak"
@@ -199,11 +212,14 @@
 		return
 
 	// Only create an effect every other step, starting without one
-	if(++steps_taken % 2)
-		new /obj/effect/temp_visual/dir_setting/cloak_walk(old_loc, movement_dir)
+	// if(++steps_taken % 2)
+	var/obj/effect/temp_visual/dir_setting/cloak_walk/trail = new (old_loc, movement_dir)
+	if(owner.body_position == LYING_DOWN)
+		trail.transform = turn(trail.transform, 90)
 
+// Visual effect for the shadow cloak "trail"
 /obj/effect/temp_visual/dir_setting/cloak_walk
-	duration = 0.9 SECONDS
+	duration = 0.75 SECONDS
 	icon_state = "curse"
 
 /obj/effect/temp_visual/dir_setting/cloak_walk/Initialize(mapload, set_dir)
