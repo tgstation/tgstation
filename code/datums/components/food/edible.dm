@@ -458,6 +458,8 @@ Behavior that's still missing from this component that original food items had t
 		var/who = (isnull(feeder) || eater == feeder) ? "your" : "[eater.p_their()]"
 		to_chat(feeder, span_warning("You have to remove [who] [covered] first!"))
 		return FALSE
+	if(SEND_SIGNAL(eater, COMSIG_CARBON_ATTEMPT_EAT, parent) & COMSIG_CARBON_BLOCK_EAT)
+		return
 	return TRUE
 
 ///Check foodtypes to see if we should send a moodlet
@@ -493,7 +495,7 @@ Behavior that's still missing from this component that original food items had t
 			food_taste_reaction = FOOD_LIKED
 
 	if(HAS_TRAIT(parent, TRAIT_FOOD_SILVER)) // it's not real food
-		food_taste_reaction = FOOD_TOXIC
+		food_taste_reaction = isjellyperson(H) ? FOOD_LIKED : FOOD_TOXIC
 
 	switch(food_taste_reaction)
 		if(FOOD_TOXIC)

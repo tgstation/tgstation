@@ -36,6 +36,19 @@
 		icon_state = icon_state_powered = icon_state_unpowered = "[base_icon_state]-[finish_color]"
 	return ..()
 
+/obj/item/modular_computer/tablet/attack_self(mob/user)
+	// bypass literacy checks to access syndicate uplink
+	var/datum/component/uplink/hidden_uplink = GetComponent(/datum/component/uplink)
+	if(hidden_uplink?.owner && HAS_TRAIT(user, TRAIT_ILLITERATE))
+		if(hidden_uplink.owner != user.key)
+			return ..()
+
+		hidden_uplink.locked = FALSE
+		hidden_uplink.interact(null, user)
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+	return ..()
+
 /obj/item/modular_computer/tablet/interact(mob/user)
 	. = ..()
 	if(HAS_TRAIT(src, TRAIT_PDA_MESSAGE_MENU_RIGGED))
@@ -132,6 +145,32 @@
 		else
 			explosion(src, devastation_range = -1, heavy_impact_range = -1, light_impact_range = 2, flash_range = 3)
 	qdel(src)
+
+
+/**
+ * A simple helper proc that applies the client's ringtone prefs to the tablet's messenger app,
+ * if it has one.
+ *
+ * Arguments:
+ * * ringtone_client - The client whose prefs we'll use to set the ringtone of this PDA.
+ */
+/obj/item/modular_computer/tablet/proc/update_ringtone(client/ringtone_client)
+	if(!ringtone_client)
+		return
+
+	var/new_ringtone = ringtone_client?.prefs?.read_preference(/datum/preference/text/pda_ringtone)
+
+	if(!new_ringtone || new_ringtone == MESSENGER_RINGTONE_DEFAULT)
+		return
+
+	var/obj/item/computer_hardware/hard_drive/drive = all_components[MC_HDD]
+
+	if(!drive)
+		return
+
+	for(var/datum/computer_file/program/messenger/messenger_app in drive.stored_files)
+		messenger_app.ringtone = new_ringtone
+
 
 // SUBTYPES
 

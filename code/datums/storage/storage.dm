@@ -312,6 +312,9 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(!resolve_location)
 		return
 
+	if(QDELETED(to_insert))
+		return FALSE
+
 	if(!isitem(to_insert))
 		return FALSE
 

@@ -165,6 +165,12 @@
 /// MULEbot - No destination beacon found (or no route)
 #define BOT_NO_ROUTE "Navigating to Home"
 
+//Secbot and ED209 judgement criteria bitflag values
+#define JUDGE_EMAGGED (1<<0)
+#define JUDGE_IDCHECK (1<<1)
+#define JUDGE_WEAPONCHECK (1<<2)
+#define JUDGE_RECORDCHECK (1<<3)
+
 //SecBOT defines on arresting
 ///Whether arrests should be broadcasted over the Security radio
 #define SECBOT_DECLARE_ARRESTS (1<<0)
