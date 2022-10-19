@@ -193,6 +193,7 @@
  * You'll note this is another mob living level proc living at the client level
  */
 /client/proc/Process_Incorpmove(direct)
+	var/turf/mobloc = get_turf(mob)
 	if(!isliving(mob))
 		return
 	var/mob/living/L = mob
