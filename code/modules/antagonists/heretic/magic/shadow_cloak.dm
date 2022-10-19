@@ -69,17 +69,15 @@
 
 	active_cloak = cast_on.apply_status_effect(/datum/status_effect/shadow_cloak)
 	RegisterSignal(active_cloak, COMSIG_PARENT_QDELETING, .proc/on_early_cloak_loss)
-	RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING), .proc/on_focus_lost)
+	RegisterSignal(cast_on, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING), .proc/on_focus_lost)
 
 /datum/action/cooldown/spell/shadow_cloak/proc/uncloak_mob(mob/living/cast_on, show_message = TRUE)
-	// Unregister signals first, so as to not trigger it
-	UnregisterSignal(active_cloak, COMSIG_PARENT_QDELETING)
-	UnregisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING))
-	// Already deleted - just null the ref, otherwise, delete the effect / remove it
 	if(!QDELETED(active_cloak))
+		UnregisterSignal(active_cloak, COMSIG_PARENT_QDELETING)
 		qdel(active_cloak)
 	active_cloak = null
 
+	UnregisterSignal(cast_on, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING))
 	playsound(cast_on, 'sound/effects/curseattack.ogg', 50)
 	if(show_message)
 		cast_on.visible_message(
