@@ -312,10 +312,14 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 /obj/item/modular_computer/examine(mob/user)
 	. = ..()
-	if(atom_integrity <= integrity_failure * max_integrity)
-		. += span_danger("It is heavily damaged!")
-	else if(atom_integrity < max_integrity)
-		. += span_warning("It is damaged.")
+	var/healthpercent = round((atom_integrity/max_integrity) * 100, 1)
+	switch(healthpercent)
+		if(50 to 99)
+			. += span_info("It looks slightly damaged.")
+		if(25 to 50)
+			. += span_info("It appears heavily damaged.")
+		if(0 to 25)
+			. += span_warning("It's falling apart!")
 
 	if(long_ranged)
 		. += "It is upgraded with an experimental long-ranged network capabilities, picking up NTNet frequencies while further away."
