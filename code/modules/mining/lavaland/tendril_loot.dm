@@ -496,8 +496,10 @@
 	if(!user.can_read(src))
 		return FALSE
 	to_chat(user, span_notice("You flip through the pages of the book, quickly and conveniently learning every language in existence. Somewhat less conveniently, the aging book crumbles to dust in the process. Whoops."))
+	cure_curse_of_babel(user) // removes tower of babel if we have it
+	user.grant_all_languages(source=LANGUAGE_BABEL)
 	user.remove_blocked_language(GLOB.all_languages, source = LANGUAGE_ALL)
-	user.grant_all_languages()
+	ADD_TRAIT(user, TRAIT_TOWER_OF_BABEL, MAGIC_TRAIT) // this makes you immune to babel effects
 	new /obj/effect/decal/cleanable/ash(get_turf(user))
 	qdel(src)
 

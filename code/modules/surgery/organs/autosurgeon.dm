@@ -1,5 +1,3 @@
-#define INFINITE -1
-
 /obj/item/autosurgeon
 	name = "autosurgeon"
 	desc = "A device that automatically inserts an implant, skillchip or organ into the user without the hassle of extensive surgery. \
