@@ -196,6 +196,11 @@
 		beaker = null
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/on_deconstruction()
+	if(occupant)
+		occupant.vis_flags &= ~VIS_INHERIT_PLANE
+		REMOVE_TRAIT(occupant, TRAIT_IMMOBILIZED, CRYO_TRAIT)
+		REMOVE_TRAIT(occupant, TRAIT_FORCED_STANDING, CRYO_TRAIT)
+
 	if(beaker)
 		beaker.forceMove(drop_location())
 		beaker = null
@@ -208,22 +213,16 @@
 	. = ..()
 	SET_PLANE_IMPLICIT(src, initial(plane))
 
-GLOBAL_LIST_INIT_TYPED(cryo_overlays_cover_on, /mutable_appearance, list(create_cryo_overlay(0, "cover-on")))
-GLOBAL_LIST_INIT_TYPED(cryo_overlays_cover_off, /mutable_appearance, list(create_cryo_overlay(0, "cover-off")))
-
-/proc/create_cryo_overlay(offset, icon_state)
-	var/mutable_appearance/cryo_overlay = mutable_appearance('icons/obj/medical/cryogenics.dmi', icon_state, ABOVE_ALL_MOB_LAYER, plane = ABOVE_GAME_PLANE, offset_const = offset)
-	return cryo_overlay
-
 /obj/machinery/atmospherics/components/unary/cryo_cell/update_overlays()
 	. = ..()
 	if(panel_open)
 		. += "pod-panel"
 	if(state_open)
 		return
-	var/turf/our_turf = get_turf(src)
-	var/offset = GET_TURF_PLANE_OFFSET(our_turf) + 1
-	. += (on && is_operational) ? GLOB.cryo_overlays_cover_on[offset] : GLOB.cryo_overlays_cover_off[offset]
+	if(on && is_operational)
+		. += mutable_appearance('icons/obj/medical/cryogenics.dmi', "cover-on", ABOVE_ALL_MOB_LAYER, src, plane = ABOVE_GAME_PLANE)
+	else
+		. += mutable_appearance('icons/obj/medical/cryogenics.dmi', "cover-on", ABOVE_ALL_MOB_LAYER, src, plane = ABOVE_GAME_PLANE)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/nap_violation(mob/violator)
 	open_machine()

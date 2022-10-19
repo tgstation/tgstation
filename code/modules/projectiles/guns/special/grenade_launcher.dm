@@ -25,10 +25,9 @@
 			if(!user.transferItemToLoc(I, src))
 				return
 			grenades += I
-			to_chat(user, span_notice("You put the grenade in the grenade launcher."))
-			to_chat(user, span_notice("[grenades.len] / [max_grenades] Grenades."))
+			balloon_alert(user, "[grenades.len] / [max_grenades] grenades loaded")
 		else
-			to_chat(usr, span_warning("The grenade launcher cannot hold more grenades!"))
+			balloon_alert(user, "it's already full!")
 
 /obj/item/gun/grenadelauncher/can_shoot()
 	return grenades.len

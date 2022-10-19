@@ -159,4 +159,4 @@
 				continue
 			hit_list += M
 			M.take_damage(45, BURN, MELEE, 1)
-		sleep(1.5)
+		sleep(0.15 SECONDS)

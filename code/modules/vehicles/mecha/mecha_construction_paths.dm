@@ -55,10 +55,10 @@
 	// Armor plating typepaths. both must be defined
 	// unless relevant step procs are overriden. amounts
 	// must be defined if using /obj/item/stack/sheet types
-	var/inner_plating
+	var/obj/inner_plating
 	var/inner_plating_amount
 
-	var/outer_plating
+	var/obj/outer_plating
 	var/outer_plating_amount
 
 /datum/component/construction/mecha/spawn_result()
@@ -112,23 +112,23 @@
 	return list(
 		list(
 			"key" = TOOL_WRENCH,
-			"desc" = "The hydraulic systems are disconnected."
+			"desc" = "The hydraulic systems can be connected with a <b>wrench</b>."
 		),
 		list(
 			"key" = TOOL_SCREWDRIVER,
 			"back_key" = TOOL_WRENCH,
-			"desc" = "The hydraulic systems are connected."
+			"desc" = "The hydraulic systems are connected, and can be activated via <b>screwdriver</b>."
 		),
 		list(
 			"key" = /obj/item/stack/cable_coil,
 			"amount" = 5,
 			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "The hydraulic systems are active."
+			"desc" = "The hydraulic systems are active, and the frame can be <b>wired</b>."
 		),
 		list(
 			"key" = TOOL_WIRECUTTER,
 			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "The wiring is added."
+			"desc" = "The wiring is added, and can be adjusted with <b>wirecutters</b>."
 		)
 	)
 
@@ -140,23 +140,23 @@
 			"key" = circuit_control,
 			"action" = ITEM_DELETE,
 			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "The wiring is adjusted."
+			"desc" = "The wiring is adjusted, and the <b>central control module</b> slot has opened."
 		),
 		list(
 			"key" = TOOL_SCREWDRIVER,
 			"back_key" = TOOL_CROWBAR,
-			"desc" = "Central control module is installed."
+			"desc" = "Central control module is installed, and can be <b>screwed</b> into place."
 		),
 		list(
 			"key" = circuit_periph,
 			"action" = ITEM_DELETE,
 			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "Central control module is secured."
+			"desc" = "Central control module is secured, and the <b>peripheral control module</b> slot has opened."
 		),
 		list(
 			"key" = TOOL_SCREWDRIVER,
 			"back_key" = TOOL_CROWBAR,
-			"desc" = "Peripherals control module is installed."
+			"desc" = "Peripheral control module is installed, and can be <b>screwed</b> into place."
 		)
 	)
 
@@ -168,19 +168,20 @@
 			"key" = circuit_weapon,
 			"action" = ITEM_DELETE,
 			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "Peripherals control module is secured."
+			"desc" = "Peripherals control module is secured, and the <b>weapon control module<b> slot has opened."
 		),
 		list(
 			"key" = TOOL_SCREWDRIVER,
 			"back_key" = TOOL_CROWBAR,
-			"desc" = "Weapons control module is installed."
+			"desc" = "Weapons control module is installed, and can be <b>screwed</b> into place."
 		)
 	)
 
 // Default proc for stock part installation
 // Third set of steps by default
 /datum/component/construction/mecha/proc/get_stockpart_steps()
-	var/prevstep_text = circuit_weapon ? "Weapons control module is secured." : "Peripherals control module is secured."
+	var/prevstep_text = circuit_weapon ? "Weapons control module is secured" : "Peripherals control module is secured"
+	prevstep_text += ", and the <b>scanning module</b> can be added."
 	return list(
 		list(
 			"key" = /obj/item/stock_parts/scanning_module,
@@ -191,29 +192,29 @@
 		list(
 			"key" = TOOL_SCREWDRIVER,
 			"back_key" = TOOL_CROWBAR,
-			"desc" = "Scanner module is installed."
+			"desc" = "Scanner module is installed, and can be <b>screwed</b> into place."
 		),
 		list(
 			"key" = /obj/item/stock_parts/capacitor,
 			"action" = ITEM_MOVE_INSIDE,
 			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "Scanner module is secured."
+			"desc" = "Scanner module is secured, the <b>capacitor</b> can be added."
 		),
 		list(
 			"key" = TOOL_SCREWDRIVER,
 			"back_key" = TOOL_CROWBAR,
-			"desc" = "Capacitor is installed."
+			"desc" = "Capacitor is installed, and can be <b>screwed</b> into place."
 		),
 		list(
 			"key" = /obj/item/stock_parts/cell,
 			"action" = ITEM_MOVE_INSIDE,
 			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "Capacitor is secured."
+			"desc" = "Capacitor is secured, and the <b>power cell</b> can be added."
 		),
 		list(
 			"key" = TOOL_SCREWDRIVER,
 			"back_key" = TOOL_CROWBAR,
-			"desc" = "The power cell is installed."
+			"desc" = "The power cell is installed, and can be <b>screwed</b> into place."
 		)
 	)
 
@@ -227,7 +228,7 @@
 				"key" = inner_plating,
 				"amount" = inner_plating_amount,
 				"back_key" = TOOL_SCREWDRIVER,
-				"desc" = "The power cell is secured."
+				"desc" = "The power cell is secured, [inner_plating_amount] sheets of [initial(inner_plating.name)] can be used as inner plating."
 			)
 		)
 	else
@@ -236,7 +237,7 @@
 				"key" = inner_plating,
 				"action" = ITEM_DELETE,
 				"back_key" = TOOL_SCREWDRIVER,
-				"desc" = "The power cell is secured."
+				"desc" = "The power cell is secured, [initial(inner_plating.name)] can be used as inner plating."
 			)
 		)
 
@@ -244,12 +245,12 @@
 		list(
 			"key" = TOOL_WRENCH,
 			"back_key" = TOOL_CROWBAR,
-			"desc" = "Inner plating is installed."
+			"desc" = "Inner plating is installed, and can be <b>wrenched</b> into place."
 		),
 		list(
 			"key" = TOOL_WELDER,
 			"back_key" = TOOL_WRENCH,
-			"desc" = "Inner Plating is wrenched."
+			"desc" = "Inner plating is wrenched, and can be <b>welded</b>."
 		)
 	)
 
@@ -263,7 +264,7 @@
 				"key" = outer_plating,
 				"amount" = outer_plating_amount,
 				"back_key" = TOOL_WELDER,
-				"desc" = "Inner plating is welded."
+				"desc" = "Inner plating is welded, [outer_plating_amount] sheets of [initial(outer_plating.name)] can be used as external armor."
 			)
 		)
 	else
@@ -272,7 +273,7 @@
 				"key" = outer_plating,
 				"action" = ITEM_DELETE,
 				"back_key" = TOOL_WELDER,
-				"desc" = "Inner plating is welded."
+				"desc" = "Inner plating is welded, [initial(outer_plating.name)] can be used as external armor."
 			)
 		)
 
@@ -280,12 +281,12 @@
 		list(
 			"key" = TOOL_WRENCH,
 			"back_key" = TOOL_CROWBAR,
-			"desc" = "External armor is installed."
+			"desc" = "External armor is installed, and can be <b>wrenched</b> into place."
 		),
 		list(
 			"key" = TOOL_WELDER,
 			"back_key" = TOOL_WRENCH,
-			"desc" = "External armor is wrenched."
+			"desc" = "External armor is wrenched, and can be <b>welded</b>."
 		)
 	)
 
@@ -417,12 +418,12 @@
 			"key" = /obj/item/stack/rods,
 			"amount" = 10,
 			"back_key" = TOOL_WELDER,
-			"desc" = "Outer Plating is welded."
+			"desc" = "Outer plating is welded, and 10 <b>rods</b> can be used to install the cockpit."
 		),
 		list(
 			"key" = TOOL_WELDER,
 			"back_key" = TOOL_WIRECUTTER,
-			"desc" = "Cockpit wire screen is installed."
+			"desc" = "Cockpit wire screen is installed, and can be <b>welded</b>."
 		),
 	)
 
@@ -487,28 +488,28 @@
 		list(
 			"key" = /obj/item/stack/conveyor,
 			"amount" = 4,
-			"desc" = "The treads are added."
+			"desc" = "The treads can be added using 4 sheets of conveyor belts."
 		),
 		list(
 			"key" = TOOL_WRENCH,
 			"back_key" = TOOL_CROWBAR,
-			"desc" = "The hydraulic systems are disconnected."
+			"desc" = "The treads are installed, and the hydraulic systems can be connected with a <b>wrench</b>."
 		),
 		list(
 			"key" = TOOL_SCREWDRIVER,
 			"back_key" = TOOL_WRENCH,
-			"desc" = "The hydraulic systems are connected."
+			"desc" = "The hydraulic systems are connected, and can be activated via <b>screwdriver</b>."
 		),
 		list(
 			"key" = /obj/item/stack/cable_coil,
 			"amount" = 5,
 			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "The hydraulic systems are active."
+			"desc" = "The hydraulic systems are active, and the frame can be <b>wired</b>."
 		),
 		list(
 			"key" = TOOL_WIRECUTTER,
 			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "The wiring is added."
+			"desc" = "The wiring is added, and can be adjusted with <b>wirecutters</b>."
 		)
 	)
 
@@ -528,63 +529,81 @@
 	result = /obj/vehicle/sealed/mecha/combat/honker
 	steps = list(
 		list(
-			"key" = /obj/item/bikehorn
+			"key" = /obj/item/bikehorn,
+			"desc" = "HONK!"
 		),
 		list(
 			"key" = /obj/item/circuitboard/mecha/honker/main,
-			"action" = ITEM_DELETE
+			"action" = ITEM_DELETE,
+			"desc" = "Fun <b>central board</b> can be added!"
+
 		),
 		list(
-			"key" = /obj/item/bikehorn
+			"key" = /obj/item/bikehorn,
+			"desc" = "HONK!!"
 		),
 		list(
 			"key" = /obj/item/circuitboard/mecha/honker/peripherals,
-			"action" = ITEM_DELETE
+			"action" = ITEM_DELETE,
+			"desc" = "Joke <b>peripheral board</b> can be added!"
 		),
 		list(
-			"key" = /obj/item/bikehorn
+			"key" = /obj/item/bikehorn,
+			"desc" = "HONK!!!"
 		),
 		list(
 			"key" = /obj/item/circuitboard/mecha/honker/targeting,
-			"action" = ITEM_DELETE
+			"action" = ITEM_DELETE,
+			"desc" = "Prank <b>targetting board</b> can be added!"
 		),
 		list(
-			"key" = /obj/item/bikehorn
+			"key" = /obj/item/bikehorn,
+			"desc" = "HONK!!!!"
 		),
 		list(
 			"key" = /obj/item/stock_parts/scanning_module,
-			"action" = ITEM_MOVE_INSIDE
+			"action" = ITEM_MOVE_INSIDE,
+			"desc" = "Silly <b>scanning</b> module can be added!"
 		),
 		list(
-			"key" = /obj/item/bikehorn
+			"key" = /obj/item/bikehorn,
+			"desc" = "HONK!!!!!"
 		),
 		list(
 			"key" = /obj/item/stock_parts/capacitor,
-			"action" = ITEM_MOVE_INSIDE
+			"action" = ITEM_MOVE_INSIDE,
+			"desc" = "Humor <b>capacitor</b> can be added!"
 		),
 		list(
-			"key" = /obj/item/bikehorn
+			"key" = /obj/item/bikehorn,
+			"desc" = "HONK!!!!!!"
 		),
 		list(
 			"key" = /obj/item/stock_parts/cell,
-			"action" = ITEM_MOVE_INSIDE
+			"action" = ITEM_MOVE_INSIDE,
+			"desc" = "Laughter <b>cell</b> can be added!"
 		),
 		list(
-			"key" = /obj/item/bikehorn
+			"key" = /obj/item/bikehorn,
+			"desc" = "HONK!!!!!!!"
 		),
 		list(
 			"key" = /obj/item/clothing/mask/gas/clown_hat,
-			"action" = ITEM_DELETE
+			"action" = ITEM_DELETE,
+			"desc" = "Clown mask can be ceremoniously added!"
 		),
 		list(
-			"key" = /obj/item/bikehorn
+			"key" = /obj/item/bikehorn,
+			"desc" = "HONK!!!!!!!!"
 		),
 		list(
 			"key" = /obj/item/clothing/shoes/clown_shoes,
-			"action" = ITEM_DELETE
+			"action" = ITEM_DELETE,
+			"desc" = "Clown shoes can be reverently added!"
 		),
 		list(
-			"key" = /obj/item/bikehorn
+			"key" = /obj/item/bikehorn,
+			"desc" = "Honk again, if you are brave enough."
 		),
 	)
 
@@ -603,6 +622,7 @@
 	if(istype(I, /obj/item/bikehorn))
 		playsound(parent, 'sound/items/bikehorn.ogg', 50, TRUE)
 		user.balloon_alert_to_viewers("HONK!")
+		return
 
 	//TODO: better messages.
 	switch(index)
@@ -675,51 +695,51 @@
 			"key" = /obj/item/stock_parts/scanning_module,
 			"action" = ITEM_MOVE_INSIDE,
 			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "Weapon control module is secured."
+			"desc" = "Weapons control module is secured, and the <b>scanning module</b> can be added."
 		),
 		list(
 			"key" = TOOL_SCREWDRIVER,
 			"back_key" = TOOL_CROWBAR,
-			"desc" = "Scanner module is installed."
+			"desc" = "Scanner module is installed, and can be <b>screwed</b> into place."
 		),
 		list(
 			"key" = /obj/item/stock_parts/capacitor,
 			"action" = ITEM_MOVE_INSIDE,
 			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "Scanner module is secured."
+			"desc" = "Scanner module is secured, and the <b>capacitor</b> can be added."
 		),
 		list(
 			"key" = TOOL_SCREWDRIVER,
 			"back_key" = TOOL_CROWBAR,
-			"desc" = "Capacitor is installed."
+			"desc" =  "Capacitor is installed, and can be <b>screwed</b> into place."
 		),
 		list(
 			"key" = /obj/item/stack/ore/bluespace_crystal,
 			"amount" = 1,
 			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "Capacitor is secured."
+			"desc" = "Capacitor is secured, and the <b>bluespace crystal</b> can be added."
 		),
 		list(
 			"key" = /obj/item/stack/cable_coil,
 			"amount" = 5,
 			"back_key" = TOOL_CROWBAR,
-			"desc" = "The bluespace crystal is installed."
+			"desc" = "The bluespace crystal is installed, and can be <b>wired</b> to the mech systems."
 		),
 		list(
 			"key" = TOOL_SCREWDRIVER,
 			"back_key" = TOOL_WIRECUTTER,
-			"desc" = "The bluespace crystal is connected."
+			"desc" = "The bluespace crystal is connected, and the system can be <b>screwed</b> into place."
 		),
 		list(
 			"key" = /obj/item/stock_parts/cell,
 			"action" = ITEM_MOVE_INSIDE,
 			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "The bluespace crystal is engaged."
+			"desc" = "The bluespace crystal is engaged, and the <b>power cell</b> can be added."
 		),
 		list(
 			"key" = TOOL_SCREWDRIVER,
 			"back_key" = TOOL_CROWBAR,
-			"desc" = "The power cell is installed.",
+			"desc" = "The power cell is installed, and can be <b>screwed</b> into place.",
 			"icon_state" = "phazon17"
 			// This is the point where a step icon is skipped, so "icon_state" had to be set manually starting from here.
 		)
@@ -732,23 +752,23 @@
 			"amount" = 1,
 			"action" = ITEM_DELETE,
 			"back_key" = TOOL_WELDER,
-			"desc" = "Internal armor is welded."
+			"desc" = "Internal armor is welded, [initial(outer_plating.name)] can be used as external armor."
 		),
 		list(
 			"key" = TOOL_WRENCH,
 			"back_key" = TOOL_CROWBAR,
-			"desc" = "External armor is installed."
+			"desc" = "External armor is installed, and can be <b>wrenched</b> into place."
 		),
 		list(
 			"key" = TOOL_WELDER,
 			"back_key" = TOOL_WRENCH,
-			"desc" = "External armor is wrenched."
+			"desc" = "External armor is wrenched, and can be <b>welded</b>."
 		),
 		list(
 			"key" = /obj/item/assembly/signaler/anomaly/bluespace,
 			"action" = ITEM_DELETE,
 			"back_key" = TOOL_WELDER,
-			"desc" = "Bluespace anomaly core socket is open.",
+			"desc" = "The external armor is welded, and the <b>bluespace anomaly core</b> socket is open.",
 			"icon_state" = "phazon24"
 		)
 	)

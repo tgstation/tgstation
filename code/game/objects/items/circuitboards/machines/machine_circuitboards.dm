@@ -646,6 +646,7 @@
 
 /obj/item/circuitboard/machine/chem_dispenser/fullupgrade
 	build_path = /obj/machinery/chem_dispenser/fullupgrade
+	specific_parts = TRUE
 	req_components = list(
 		/obj/item/stock_parts/matter_bin/bluespace = 2,
 		/obj/item/stock_parts/capacitor/quadratic = 2,
@@ -656,6 +657,7 @@
 
 /obj/item/circuitboard/machine/chem_dispenser/mutagensaltpeter
 	build_path = /obj/machinery/chem_dispenser/mutagensaltpeter
+	specific_parts = TRUE
 	req_components = list(
 		/obj/item/stock_parts/matter_bin/bluespace = 2,
 		/obj/item/stock_parts/capacitor/quadratic = 2,
@@ -669,6 +671,7 @@
 	name_extension = "(Abductor Machine Board)"
 	icon_state = "abductor_mod"
 	build_path = /obj/machinery/chem_dispenser/abductor
+	specific_parts = TRUE
 	req_components = list(
 		/obj/item/stock_parts/matter_bin/bluespace = 2,
 		/obj/item/stock_parts/capacitor/quadratic = 2,

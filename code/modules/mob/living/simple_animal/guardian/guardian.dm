@@ -775,7 +775,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /obj/item/guardiancreator/carp
 	name = "holocarp fishsticks"
 	desc = "Using the power of Carp'sie, you can catch a carp from byond the veil of Carpthulu, and bind it to your fleshy flesh form."
-	icon = 'icons/obj/food/food.dmi'
+	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "fishfingers"
 	theme = "carp"
 	mob_name = "Holocarp"

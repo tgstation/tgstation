@@ -65,6 +65,8 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	var/allow_chunky = FALSE
 
 	var/honkamnt = 0 /// honk honk honk honk honk honkh onk honkhnoohnk
+	///Whether the PDA can still use NTNet while out of NTNet's reach.
+	var/long_ranged = FALSE
 
 	var/list/idle_threads // Idle programs on background. They still receive process calls but can't be interacted with.
 	var/obj/physical = null // Object that represents our computer. It's used for Adjacent() and UI visibility checks.
@@ -310,10 +312,17 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 /obj/item/modular_computer/examine(mob/user)
 	. = ..()
-	if(atom_integrity <= integrity_failure * max_integrity)
-		. += span_danger("It is heavily damaged!")
-	else if(atom_integrity < max_integrity)
-		. += span_warning("It is damaged.")
+	var/healthpercent = round((atom_integrity/max_integrity) * 100, 1)
+	switch(healthpercent)
+		if(50 to 99)
+			. += span_info("It looks slightly damaged.")
+		if(25 to 50)
+			. += span_info("It appears heavily damaged.")
+		if(0 to 25)
+			. += span_warning("It's falling apart!")
+
+	if(long_ranged)
+		. += "It is upgraded with an experimental long-ranged network capabilities, picking up NTNet frequencies while further away."
 
 	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
 	var/obj/item/computer_hardware/card_slot/card_slot2 = all_components[MC_CARD2]
@@ -610,7 +619,8 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		return NTNET_GOOD_SIGNAL
 	else if(is_mining_level(current_turf.z))
 		return NTNET_LOW_SIGNAL
-
+	else if(long_ranged)
+		return NTNET_LOW_SIGNAL
 	return NTNET_NO_SIGNAL
 
 /obj/item/modular_computer/proc/add_log(text)

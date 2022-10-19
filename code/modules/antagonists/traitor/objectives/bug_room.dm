@@ -192,6 +192,9 @@
 		UnregisterSignal(planted_on, COMSIG_PARENT_QDELETING)
 		planted_on = null
 
+/obj/item/traitor_bug/attackby_storage_insert(datum/storage, atom/storage_holder, mob/user)
+	return !istype(storage_holder, target_object_type)
+
 /obj/structure/traitor_bug
 	name = "suspicious device"
 	desc = "It looks dangerous. Best you leave this alone."

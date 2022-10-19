@@ -8,6 +8,7 @@
 	spawn_positions = 1
 	supervisors = SUPERVISOR_HOP
 	selection_color = "#bbe291"
+	config_tag = "CURATOR"
 	exp_granted_type = EXP_TYPE_CREW
 
 	outfit = /datum/outfit/job/curator
@@ -53,10 +54,12 @@
 
 	accessory = /obj/item/clothing/accessory/pocketprotector/full
 
-/datum/outfit/job/curator/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/job/curator/post_equip(mob/living/carbon/human/translator, visualsOnly = FALSE)
 	..()
 
 	if(visualsOnly)
 		return
 
-	H.grant_all_languages(TRUE, TRUE, TRUE, LANGUAGE_CURATOR)
+	translator.grant_all_languages(source=LANGUAGE_CURATOR)
+	translator.remove_blocked_language(GLOB.all_languages, source=LANGUAGE_ALL)
+	ADD_TRAIT(translator, TRAIT_TOWER_OF_BABEL, JOB_TRAIT)

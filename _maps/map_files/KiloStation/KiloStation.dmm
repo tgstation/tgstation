@@ -3291,11 +3291,8 @@
 	dir = 4
 	},
 /obj/effect/landmark/start/captain,
-/obj/item/radio/intercom/directional/west{
-	freerange = 1;
-	name = "Captain's Intercom"
-	},
 /obj/structure/sign/poster/contraband/random/directional/north,
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/carpet/royalblue,
 /area/station/command/heads_quarters/captain/private)
 "aVI" = (
@@ -7913,12 +7910,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/item/radio/intercom{
-	dir = 8;
-	freerange = 1;
-	name = "Station Intercom (Command)";
-	pixel_x = 1
-	},
+/obj/item/radio/intercom,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "csk" = (
@@ -10403,8 +10395,8 @@
 	dir = 4;
 	dwidth = 4;
 	height = 7;
-	shuttle_id = "cargo_home";
 	name = "Cargo Bay";
+	shuttle_id = "cargo_home";
 	width = 12
 	},
 /turf/open/space/basic,
@@ -18009,8 +18001,8 @@
 	dir = 4;
 	dwidth = 11;
 	height = 18;
-	shuttle_id = "emergency_home";
 	name = "KiloStation emergency evac bay";
+	shuttle_id = "emergency_home";
 	width = 30
 	},
 /turf/open/space/basic,
@@ -20442,9 +20434,9 @@
 	dir = 8;
 	dwidth = 4;
 	height = 9;
-	shuttle_id = "aux_base_zone";
 	name = "Aux Base Zone";
 	roundstart_template = /datum/map_template/shuttle/aux_base/default;
+	shuttle_id = "aux_base_zone";
 	width = 9
 	},
 /turf/open/floor/plating,
@@ -20754,11 +20746,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
-"fWZ" = (
-/obj/machinery/light/small/directional/south,
-/obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating/airless,
-/area/station/maintenance/starboard/fore)
 "fXm" = (
 /obj/structure/table,
 /obj/effect/turf_decal/tile/neutral{
@@ -27297,8 +27284,8 @@
 	dir = 8;
 	dwidth = 2;
 	height = 11;
-	shuttle_id = "ferry_home";
 	name = "port bay 2";
+	shuttle_id = "ferry_home";
 	width = 5
 	},
 /turf/open/space/basic,
@@ -28344,8 +28331,8 @@
 /area/station/service/hydroponics/garden)
 "iak" = (
 /obj/docking_port/stationary/random{
-	shuttle_id = "pod_3_lavaland";
-	name = "lavaland"
+	name = "lavaland";
+	shuttle_id = "pod_3_lavaland"
 	},
 /turf/open/space,
 /area/space/nearstation)
@@ -29859,12 +29846,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/station/commons/toilet/restrooms)
-"ius" = (
-/obj/structure/disposalpipe/segment,
-/obj/effect/turf_decal/sand/plating,
-/obj/structure/cable,
-/turf/open/floor/plating/airless,
-/area/station/maintenance/starboard/fore)
 "iuC" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -32266,6 +32247,11 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
+"jaU" = (
+/obj/machinery/light/small/directional/south,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
 "jaW" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -41229,8 +41215,8 @@
 "lHD" = (
 /obj/docking_port/stationary/random{
 	dir = 8;
-	shuttle_id = "pod_2_lavaland";
-	name = "lavaland"
+	name = "lavaland";
+	shuttle_id = "pod_2_lavaland"
 	},
 /turf/open/space,
 /area/space/nearstation)
@@ -41643,9 +41629,9 @@
 	dir = 4;
 	dwidth = 3;
 	height = 14;
-	shuttle_id = "arrival_stationary";
 	name = "kilo arrivals";
 	roundstart_template = /datum/map_template/shuttle/arrival/kilo;
+	shuttle_id = "arrival_stationary";
 	width = 7
 	},
 /turf/open/floor/plating/airless,
@@ -42140,10 +42126,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/machinery/fax{
-	fax_name = "Chief Medical Officer's Office";
-	name = "Chief Medical Officer's Fax Machine"
+/obj/item/storage/medkit/regular{
+	pixel_x = 2
 	},
+/obj/item/healthanalyzer,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/cmo)
 "lWw" = (
@@ -44758,8 +44744,8 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/item/radio/intercom/directional/north,
 /obj/structure/chair/comfy,
+/obj/item/radio/intercom/command/directional/north,
 /turf/open/floor/iron,
 /area/station/security/courtroom)
 "mKw" = (
@@ -51552,8 +51538,8 @@
 	dir = 8;
 	dwidth = 12;
 	height = 17;
-	shuttle_id = "syndicate_nw";
 	name = "northwest of station";
+	shuttle_id = "syndicate_nw";
 	width = 23
 	},
 /turf/open/space/basic,
@@ -67221,6 +67207,12 @@
 /obj/structure/sign/warning/secure_area,
 /turf/closed/wall/r_wall/rust,
 /area/station/engineering/supermatter/room)
+"tfi" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/cable,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
 "tfs" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
@@ -67416,8 +67408,8 @@
 	dir = 2;
 	dwidth = 11;
 	height = 22;
-	shuttle_id = "whiteship_home";
 	name = "SS13: Auxiliary Dock, Station-Fore";
+	shuttle_id = "whiteship_home";
 	width = 35
 	},
 /turf/open/space/basic,
@@ -75110,8 +75102,8 @@
 "vsx" = (
 /obj/docking_port/stationary/random{
 	dir = 2;
-	shuttle_id = "pod_lavaland";
-	name = "lavaland"
+	name = "lavaland";
+	shuttle_id = "pod_lavaland"
 	},
 /turf/open/space,
 /area/space/nearstation)
@@ -78971,6 +78963,9 @@
 /obj/structure/window/reinforced,
 /obj/machinery/monkey_recycler,
 /obj/item/radio/intercom/directional/north,
+/obj/structure/sign/xenobio_guide/directional/north{
+	pixel_x = 32
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "wqZ" = (
@@ -79361,8 +79356,8 @@
 "wxy" = (
 /obj/docking_port/stationary/random{
 	dir = 4;
-	shuttle_id = "pod_4_lavaland";
-	name = "lavaland"
+	name = "lavaland";
+	shuttle_id = "pod_4_lavaland"
 	},
 /obj/structure/lattice,
 /turf/open/space,
@@ -80930,15 +80925,15 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/item/storage/medkit/regular{
-	pixel_x = 2
-	},
-/obj/item/healthanalyzer,
 /obj/machinery/requests_console/directional/north{
 	announcementConsole = 1;
 	department = "Chief Medical Officer's Desk";
 	departmentType = 5;
 	name = "Chief Medical Officer's Requests Console"
+	},
+/obj/machinery/fax{
+	fax_name = "Chief Medical Officer's Office";
+	name = "Chief Medical Officer's Fax Machine"
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/cmo)
@@ -120779,7 +120774,7 @@ aaa
 aaa
 aaa
 aeU
-fWZ
+jaU
 fvU
 oqa
 fvU
@@ -121036,7 +121031,7 @@ aaa
 aaa
 aca
 aji
-ius
+tfi
 udA
 xUP
 lRZ

@@ -71,6 +71,7 @@
 /// A trait source when adding traits through unit tests
 #define TRAIT_SOURCE_UNIT_TESTS "unit_tests"
 
+#include "ablative_hud.dm"
 #include "achievements.dm"
 #include "anchored_mobs.dm"
 #include "anonymous_themes.dm"
@@ -126,6 +127,7 @@
 #include "mob_spawn.dm"
 #include "modsuit.dm"
 #include "modular_map_loader.dm"
+#include "mouse_bite_cable.dm"
 #include "novaflower_burn.dm"
 #include "ntnetwork_tests.dm"
 #include "nuke_cinematic.dm"
@@ -134,6 +136,7 @@
 #include "outfit_sanity.dm"
 #include "paintings.dm"
 #include "pills.dm"
+#include "plane_double_transform.dm"
 #include "plane_dupe_detector.dm"
 #include "plantgrowth_tests.dm"
 #include "preference_species.dm"
@@ -169,6 +172,7 @@
 #include "spell_mindswap.dm"
 #include "spell_names.dm"
 #include "spell_shapeshift.dm"
+#include "spritesheets.dm"
 #include "stack_singular_name.dm"
 #include "stomach.dm"
 #include "strippable.dm"
@@ -179,6 +183,7 @@
 #include "timer_sanity.dm"
 #include "traitor.dm"
 #include "unit_test.dm"
+#include "verify_config_tags.dm"
 #include "wizard_loadout.dm"
 #ifdef REFERENCE_TRACKING_DEBUG //Don't try and parse this file if ref tracking isn't turned on. IE: don't parse ref tracking please mr linter
 #include "find_reference_sanity.dm"

@@ -9,6 +9,7 @@
 	supervisors = SUPERVISOR_CMO
 	selection_color = "#ffeef0"
 	exp_granted_type = EXP_TYPE_CREW
+	config_tag = "PARAMEDIC"
 
 	outfit = /datum/outfit/job/paramedic
 	plasmaman_outfit = /datum/outfit/plasmaman/paramedic

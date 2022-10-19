@@ -16,7 +16,7 @@ jobs:
         echo "::set-output name=ACTIONS_ENABLED::$SECRET_EXISTS"
     - name: Checkout
       if: steps.value_holder.outputs.ACTIONS_ENABLED
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: Setup git
       if: steps.value_holder.outputs.ACTIONS_ENABLED
       run: |
@@ -24,7 +24,7 @@ jobs:
         git config --global user.email "<>"
     - name: Checkout alternate branch
       if: steps.value_holder.outputs.ACTIONS_ENABLED
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         ref: "gbp-balances" # The branch name
         path: gbp-balances

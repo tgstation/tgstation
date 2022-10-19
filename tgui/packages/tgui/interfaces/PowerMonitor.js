@@ -25,7 +25,7 @@ export const PowerMonitor = () => {
 
 export const PowerMonitorContent = (props, context) => {
   const { data } = useBackend(context);
-  const { history } = data;
+  const { history = { supply: [], demand: [] } } = data;
   const [sortByField, setSortByField] = useLocalState(
     context,
     'sortByField',

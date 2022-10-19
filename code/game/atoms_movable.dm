@@ -312,7 +312,7 @@
 			else
 				to_chat(src, span_warning("You are not Superman."))
 		return FALSE
-	if(!(z_move_flags & ZMOVE_IGNORE_OBSTACLES) && !(start.zPassOut(src, direction, destination) && destination.zPassIn(src, direction, start)))
+	if(!(z_move_flags & ZMOVE_IGNORE_OBSTACLES) && !(start.zPassOut(src, direction, destination, (z_move_flags & ZMOVE_ALLOW_ANCHORED)) && destination.zPassIn(src, direction, start)))
 		if(z_move_flags & ZMOVE_FEEDBACK)
 			to_chat(rider || src, span_warning("You couldn't move there!"))
 		return FALSE
@@ -939,6 +939,8 @@
 		return
 	. = anchored
 	anchored = anchorvalue
+	if(anchored && pulledby)
+		pulledby.stop_pulling()
 	SEND_SIGNAL(src, COMSIG_MOVABLE_SET_ANCHORED, anchorvalue)
 
 /// Sets the currently_z_moving variable to a new value. Used to allow some zMovement sources to have precedence over others.
@@ -1047,9 +1049,17 @@
 		// so we do this. sucks to suck
 		update_appearance()
 
-		// I so much wish this could be somewhere else. alas, no.
-		for(var/image/update in update_on_z)
-			SET_PLANE(update, PLANE_TO_TRUE(update.plane), new_turf)
+		if(update_on_z)
+			// I so much wish this could be somewhere else. alas, no.
+			for(var/image/update in update_on_z)
+				SET_PLANE(update, PLANE_TO_TRUE(update.plane), new_turf)
+		if(update_overlays_on_z)
+			// This EVEN more so
+			cut_overlay(update_overlays_on_z)
+			// This even more so
+			for(var/mutable_appearance/update in update_overlays_on_z)
+				SET_PLANE(update, PLANE_TO_TRUE(update.plane), new_turf)
+			add_overlay(update_overlays_on_z)
 
 	if(!notify_contents)
 		return

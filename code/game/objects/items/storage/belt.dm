@@ -1,6 +1,6 @@
 /obj/item/storage/belt
-	name = "belt"
-	desc = "Can hold various things."
+	name = "not actually a toolbelt"
+	desc = "Can hold various things. This is the base type of /belt, are you sure you should have this?"
 	icon = 'icons/obj/clothing/belts.dmi'
 	icon_state = "utility"
 	inhand_icon_state = "utility"
@@ -28,6 +28,7 @@
 
 /obj/item/storage/belt/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/attack_equip)
 	update_appearance()
 
 /obj/item/storage/belt/utility
@@ -763,7 +764,7 @@
 	name = "sabre sheath"
 	desc = "An ornate sheath designed to hold an officer's blade."
 	icon_state = "sheath"
-	inhand_icon_state = null
+	inhand_icon_state = "sheath"
 	worn_icon_state = "sheath"
 	w_class = WEIGHT_CLASS_BULKY
 
