@@ -305,7 +305,7 @@ GLOBAL_LIST_EMPTY(species_list)
 			. = FALSE
 			break
 		if(user != target && \
-			(QDELETED(target) || (!(timed_action_flags & IGNORE_TARGET_LOC_CHANGE) && target.loc != target_loc))
+			(QDELETED(target) || (!(timed_action_flags & IGNORE_TARGET_LOC_CHANGE) && target.loc != target_loc)))
 			. = FALSE
 			break
 
