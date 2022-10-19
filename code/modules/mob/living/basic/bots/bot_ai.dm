@@ -36,6 +36,11 @@
 	if(bot_pawn.bot_mode_flags & BOT_MODE_AUTOPATROL)
 		if(!controller.blackboard[BB_BOT_CURRENT_PATROL_POINT])
 			controller.queue_behavior(/datum/ai_behavior/find_closest_patrol_point)
+
+		if(!controller.blackboard[BB_BOT_CURRENT_PATROL_POINT])
+			return //No patrol point found
+
+		controller.current_movement_target = get_turf(controller.blackboard[BB_BOT_CURRENT_PATROL_POINT])
 		PatrolBehavior(controller, delta_time)
 
 		return SUBTREE_RETURN_FINISH_PLANNING
@@ -70,7 +75,6 @@
 
 	if(nearest_beacon)
 		controller.blackboard[BB_BOT_CURRENT_PATROL_POINT] = nearest_beacon
-		controller.current_movement_target = get_turf(nearest_beacon)
 		finish_action(controller, TRUE)
 	else
 		bot_pawn.bot_mode_flags &= ~BOT_MODE_AUTOPATROL

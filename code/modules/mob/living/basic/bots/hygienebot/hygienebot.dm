@@ -12,10 +12,11 @@
 	health = 100
 	maxHealth = 100
 
+	ai_controller = /datum/ai_controller/basic_controller/bot/hygiene
 	maints_access_required = list(ACCESS_ROBOTICS, ACCESS_JANITOR)
 	radio_key = /obj/item/encryptionkey/headset_service
 	radio_channel = RADIO_CHANNEL_SERVICE //Service
-	bot_mode_flags = ~BOT_MODE_PAI_CONTROLLABLE
+	bot_mode_flags = BOT_MODE_ON | BOT_MODE_REMOTE_ENABLED
 	bot_type = HYGIENE_BOT
 	hackables = "cleaning service protocols"
 
@@ -58,6 +59,13 @@
 	SIGNAL_HANDLER
 	if(washing)
 		do_wash(AM)
+
+/mob/living/basic/bot/hygienebot/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+	if(washing)
+		var/turf/current_turf = get_turf(src)
+		for(var/atom/washed_atom in current_turf.contents)
+			do_wash(washed_atom)
 
 /mob/living/basic/bot/hygienebot/update_icon_state()
 	. = ..()

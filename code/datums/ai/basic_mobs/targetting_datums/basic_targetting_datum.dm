@@ -81,5 +81,5 @@
 	for(var/X in list(ITEM_SLOT_HEAD, ITEM_SLOT_MASK, ITEM_SLOT_ICLOTHING, ITEM_SLOT_OCLOTHING, ITEM_SLOT_FEET))
 		var/obj/item/I = target_mob.get_item_by_slot(X)
 		if(I && GET_ATOM_BLOOD_DNA_LENGTH(I))
-			return FALSE
-	return TRUE
+			return TRUE
+	return FALSE

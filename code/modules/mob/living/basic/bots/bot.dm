@@ -29,7 +29,7 @@
 	ai_controller = /datum/ai_controller/basic_controller/bot
 
 	///Bot status flags
-	var/bot_mode_flags = BOT_MODE_ON | BOT_MODE_REMOTE_ENABLED | BOT_MODE_PAI_CONTROLLABLE | BOT_MODE_AUTOPATROL
+	var/bot_mode_flags = BOT_MODE_ON | BOT_MODE_REMOTE_ENABLED | BOT_MODE_PAI_CONTROLLABLE
 	///Bot-related cover flags on the Bot to deal with what has been done to their cover, including emagging.
 	var/bot_cover_flags = BOT_COVER_LOCKED
 	///Description of the current task of the bot. Set by the AI
