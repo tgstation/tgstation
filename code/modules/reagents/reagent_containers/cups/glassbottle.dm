@@ -31,14 +31,14 @@
 	volume = 50
 	custom_price = PAYCHECK_CREW * 0.9
 
-/obj/item/reagent_containers/cup/glass/bottle/smash(mob/living/target, mob/thrower, ranged = FALSE)
+/obj/item/reagent_containers/cup/glass/bottle/smash(mob/living/target, mob/thrower, ranged = FALSE, break_top)
 	if(bartender_check(target) && ranged)
 		return
 	SplashReagents(target, ranged, override_spillable = TRUE)
 	var/obj/item/broken_bottle/B = new(loc)
 	if(!ranged && thrower)
 		thrower.put_in_hands(B)
-	B.mimic_broken(src, target)
+	B.mimic_broken(src, target, break_top)
 
 	qdel(src)
 	target.Bumped(B)
@@ -126,6 +126,7 @@
 	attack_verb_simple = list("stab", "slash", "attack")
 	sharpness = SHARP_EDGED
 	var/static/icon/broken_outline = icon('icons/obj/drinks.dmi', "broken")
+	var/static/icon/flipped_broken_outline = icon('icons/obj/drinks.dmi', "broken-flipped")
 
 /obj/item/broken_bottle/Initialize(mapload)
 	. = ..()
@@ -137,10 +138,14 @@
 
 /// Mimics the appearance and properties of the passed in bottle.
 /// Takes the broken bottle to mimic, and the thing the bottle was broken agaisnt as args
-/obj/item/broken_bottle/proc/mimic_broken(obj/item/reagent_containers/cup/glass/to_mimic, atom/target)
+/obj/item/broken_bottle/proc/mimic_broken(obj/item/reagent_containers/cup/glass/to_mimic, atom/target, break_top)
 	icon_state = to_mimic.icon_state
 	var/icon/drink_icon = new(to_mimic.icon, icon_state)
-	drink_icon.Blend(broken_outline, ICON_OVERLAY, rand(5), 1)
+	if(break_top) //if the bottle breaks it's top off instead of the bottom
+		desc = "A bottle with its neck smashed off."
+		drink_icon.Blend(flipped_broken_outline, ICON_OVERLAY, rand(5), 0)
+	else
+		drink_icon.Blend(broken_outline, ICON_OVERLAY, rand(5), 1)
 	drink_icon.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
 	icon = drink_icon
 
@@ -508,7 +513,7 @@
 					user.visible_message(span_danger("[user] fumbles the sabrage and cuts [src] in half, spilling it over themselves!"), \
 						span_danger("You fail your stunt and cut [src] in half, spilling it over you!"))
 					user.add_mood_event("sabrage_fail", /datum/mood_event/sabrage_fail)
-					return smash(user, user, ranged = FALSE)
+					return smash(user, user, ranged = FALSE, break_top = TRUE)
 
 /obj/item/reagent_containers/cup/glass/bottle/champagne/update_icon_state()
 	. = ..()
@@ -523,13 +528,14 @@
 			span_nicegreen("You elegantly slice the cork off of [src], causing it to fly off the bottle with great force."))
 		for(var/mob/living/carbon/stunt_witness in view(7, user))
 			for(var/find_previous_showoff in stunt_witness.mob_mood.mood_events) //if someone who did a sabrage before us saw us doing it, clear their success mood event
-				if(istype(stunt_witness.mob_mood.mood_events[find_previous_showoff], /datum/mood_event/sabrage_success))
-					stunt_witness.clear_mood_event("sabrage_success")
+				if(find_previous_showoff == "sabrage_success")
+					stunt_witness.clear_mood_event(find_previous_showoff)
 					continue
 			if(stunt_witness == user)
 				stunt_witness.add_mood_event("sabrage_success", /datum/mood_event/sabrage_success)
 				continue
-			stunt_witness.add_mood_event("sabrage_witness", /datum/mood_event/sabrage_witness)
+			else
+				stunt_witness.add_mood_event("sabrage_witness", /datum/mood_event/sabrage_witness)
 	else
 		user.visible_message(span_danger("[user] loosens the cork of [src], causing it to pop out of the bottle with great force."), \
 			span_nicegreen("You elegantly loosen the cork of [src], causing it to pop out of the bottle with great force."))
