@@ -364,6 +364,7 @@
 #define SHOCK_NOSTUN (1 << 3)
 
 #define INCORPOREAL_MOVE_BASIC 1 /// normal movement, see: [/mob/living/var/incorporeal_move]
+#define INCORPOREAL_MOVE_SHADOW 2 /// leaves a trail of shadows
 #define INCORPOREAL_MOVE_JAUNT 3 /// is blocked by holy water/salt
 
 //Secbot and ED209 judgement criteria bitflag values

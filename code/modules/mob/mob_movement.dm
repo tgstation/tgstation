@@ -187,6 +187,7 @@
  * The behaviour depends on the incorporeal_move value of the mob
  *
  * * INCORPOREAL_MOVE_BASIC - forceMoved to the next tile with no stop
+ * * INCORPOREAL_MOVE_SHADOW  - the same but leaves a cool effect path
  * * INCORPOREAL_MOVE_JAUNT - the same but blocked by holy tiles
  *
  * You'll note this is another mob living level proc living at the client level
@@ -200,6 +201,48 @@
 			var/T = get_step(L,direct)
 			if(T)
 				L.forceMove(T)
+			L.setDir(direct)
+		if(INCORPOREAL_MOVE_SHADOW)
+			if(prob(50))
+				var/locx
+				var/locy
+				switch(direct)
+					if(NORTH)
+						locx = mobloc.x
+						locy = (mobloc.y+2)
+						if(locy>world.maxy)
+							return
+					if(SOUTH)
+						locx = mobloc.x
+						locy = (mobloc.y-2)
+						if(locy<1)
+							return
+					if(EAST)
+						locy = mobloc.y
+						locx = (mobloc.x+2)
+						if(locx>world.maxx)
+							return
+					if(WEST)
+						locy = mobloc.y
+						locx = (mobloc.x-2)
+						if(locx<1)
+							return
+					else
+						return
+				var/target = locate(locx,locy,mobloc.z)
+				if(target)
+					L.forceMove(target)
+					var/limit = 2//For only two trailing shadows.
+					for(var/turf/T in get_line(mobloc, L.loc))
+						new /obj/effect/temp_visual/dir_setting/ninja/shadow(T, L.dir)
+						limit--
+						if(limit<=0)
+							break
+			else
+				new /obj/effect/temp_visual/dir_setting/ninja/shadow(mobloc, L.dir)
+				var/T = get_step(L,direct)
+				if(T)
+					L.forceMove(T)
 			L.setDir(direct)
 		if(INCORPOREAL_MOVE_JAUNT) //Incorporeal move, but blocked by holy-watered tiles and salt piles.
 			var/turf/open/floor/stepTurf = get_step(L, direct)
