@@ -162,10 +162,8 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 /datum/controller/master/Recover()
 	var/msg = "## DEBUG: [time2text(world.timeofday)] MC restarted. Reports:\n"
 	var/list/master_attributes = Master.vars
-	var/list/filtered_variables = gather_filtered_variables()
-	for (var/varname in master_attributes)
-		if(filtered_variables.Find(varname)) // Built-in junk.
-			continue
+	var/list/filtered_variables = list(NAMEOF(src, name), NAMEOF(src, tag), NAMEOF(src, type), NAMEOF(src, parent_type), NAMEOF(src, vars), NAMEOF(src, statclick))
+	for (var/varname in master_attributes - filtered_variables)
 		else
 			var/varval = Master.vars[varname]
 			if (isdatum(varval)) // Check if it has a type var.
