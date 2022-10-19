@@ -111,9 +111,9 @@
 /datum/action/cooldown/spell/shadow_cloak/proc/on_focus_lost(mob/living/source)
 	SIGNAL_HANDLER
 
-	uncloak_mob(removed, show_message = FALSE)
-	removed.visible_message(
-		span_warning("[removed] suddenly appears from the shadows!"),
+	uncloak_mob(source, show_message = FALSE)
+	source.visible_message(
+		span_warning("[source] suddenly appears from the shadows!"),
 		span_userdanger("As you lose your focus, you are pulled out of the shadows!"),
 	)
 	StartCooldown(uncloak_time / 3)
