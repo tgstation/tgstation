@@ -107,6 +107,7 @@
 	addtimer(CALLBACK(removed, /mob/proc/remove_movespeed_modifier, /datum/movespeed_modifier/shadow_cloak/early_remove), 2 MINUTES, TIMER_UNIQUE|TIMER_OVERRIDE)
 	StartCooldown(uncloak_time * 2/3)
 
+/// Signal proc for [SIGNAL_REMOVETRAIT] via [TRAIT_ALLOW_HERETIC_CASTING], losing our focus midcast will throw us out.
 /datum/action/cooldown/spell/shadow_cloak/proc/on_focus_lost(mob/living/source)
 	SIGNAL_HANDLER
 
@@ -117,12 +118,12 @@
 	)
 	StartCooldown(uncloak_time / 3)
 
+/// Shadow cloak effect. Conceals the owner in a cloud of purple smoke, making them unidentifiable.
+/// Also comes with some other buffs and debuffs - faster movespeed, slower actionspeed, etc.
 /datum/status_effect/shadow_cloak
 	id = "shadow_cloak"
 	alert_type = null
 	tick_interval = -1
-	/// Tracks how many steps we've taken while stealthed, so we can place an effect every other step
-	var/steps_taken = 0
 	/// How much damage we've been hit with
 	var/damage_sustained = 0
 	/// How much damage we can be hit with before it starts rolling reveal chances
@@ -212,7 +213,6 @@
 		return
 
 	// Only create an effect every other step, starting without one
-	// if(++steps_taken % 2)
 	var/obj/effect/temp_visual/dir_setting/cloak_walk/trail = new (old_loc, movement_dir)
 	if(owner.body_position == LYING_DOWN)
 		trail.transform = turn(trail.transform, 90)
