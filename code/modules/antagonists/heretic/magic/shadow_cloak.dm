@@ -137,14 +137,12 @@
 	cloak_image.alpha = 0
 	animate(cloak_image, alpha = 255, 0.2 SECONDS)
 	owner.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, id, cloak_image)
-
 	// Add the relevant traits and modifiers
 	ADD_TRAIT(owner, TRAIT_UNKNOWN, id)
 	ADD_TRAIT(owner, TRAIT_SILENT_FOOTSTEPS, id)
 	owner.name = owner.get_visible_name() // This is done every life tick, we'll just do it here to make sure it's immediate
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/shadow_cloak)
 	owner.add_actionspeed_modifier(/datum/actionspeed_modifier/shadow_cloak)
-
 	// Register signals to cause effects
 	RegisterSignal(owner, COMSIG_ATOM_DIR_CHANGE, .proc/on_dir_change)
 	RegisterSignal(owner, COMSIG_LIVING_SET_BODY_POSITION, .proc/on_body_position_change)
@@ -191,6 +189,7 @@
 /datum/status_effect/shadow_cloak/proc/on_stat_change(datum/source, new_stat, old_stat)
 	SIGNAL_HANDLER
 
+	// Going above unconscious will self-delete
 	if(new_stat >= UNCONSCIOUS)
 		qdel(src)
 
@@ -198,10 +197,17 @@
 /datum/status_effect/shadow_cloak/proc/on_damaged(datum/source, damage, damagetype)
 	SIGNAL_HANDLER
 
+	// Stam damage is generally bursty, so we'll half it
+	if(damagetype == STAMINA)
+		damage *= 0.5
+
+	// Add incoming damage to the total damage sustained
 	damage_sustained += damage
+	// If we're not past the threshold, return
 	if(damage_sustained < damage_before_reveal)
 		return
 
+	// Otherwise, we have a probability based on how much damage sustained to self delete
 	if(prob(damage_sustained))
 		qdel(src)
 
