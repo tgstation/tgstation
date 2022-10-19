@@ -102,6 +102,14 @@
 	QDEL_NULL(access_card)
 	return ..()
 
+
+///Sets the mode of the AI (so UI knows what its doing). If the first param is null it returns to inactive
+/mob/living/basic/bot/proc/set_current_behavior_description(new_status_description)
+	if(new_status_description)
+		current_status_description = new_status_description
+	else
+		current_status_description = "Inactive"
+
 /// Returns the current activity of the bot
 /mob/living/basic/bot/proc/get_current_behavior_description()
 	if(client) //Player bots do not have modes, thus the override. Also an easy way for PDA users/AI to know when a bot is a player.
@@ -621,7 +629,6 @@
 	if(client) //If the bot is player controlled, it will not be following mode logic!
 		holder.icon_state = "hudsentient"
 		return
-
 
 /**
  * Randomizes our bot's language if:

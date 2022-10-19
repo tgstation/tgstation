@@ -62,8 +62,6 @@
 	var/obj/machinery/navbeacon/nearest_beacon = null
 	var/turf/nearest_beacon_turf
 
-	bot_pawn.current_status_description = "Patrolling"
-
 	for(var/obj/machinery/navbeacon/NB in GLOB.navbeacons["[bot_pawn.z]"])
 		var/dist = get_dist(src, NB)
 		if(nearest_beacon) //Loop though the beacon net to find the true closest beacon.
@@ -91,6 +89,12 @@
 	action_cooldown = 0
 	required_distance = 0
 
+
+/datum/ai_behavior/move_to_next_patrol_point/setup(datum/ai_controller/controller, ...)
+	. = ..()
+	var/mob/living/basic/bot/bot_pawn = controller.pawn
+	bot_pawn.set_current_behavior_description("Patrolling")
+
 /datum/ai_behavior/move_to_next_patrol_point/perform(delta_time, datum/ai_controller/controller)
 	. = ..()
 	finish_action(controller, TRUE) //We don't actually need to do anything besides move there.
@@ -108,6 +112,8 @@
 			controller.set_movement_target(get_turf(NB), /datum/ai_movement/jps)
 			break //We found it, no need to keep searching!
 
+
+	var/mob/living/basic/bot/bot_pawn = controller.pawn
+	bot_pawn.set_current_behavior_description()
+
 	controller.CancelActions() //This is important because we are often performing permanent actions (e.g. looking for targets) while patrolling. Maybe we can think of a better solution for this in the future?
-
-

@@ -97,6 +97,8 @@
 	if(!(hygiene_bot.bot_cover_flags & BOT_COVER_EMAGGED)) ///If we're emagged dont set speed here
 		hygiene_bot.set_mob_speed(chase_speed)
 
+	hygiene_bot.set_current_behavior_description("Chasing")
+
 /datum/ai_behavior/chase_filthy_person/perform(delta_time, datum/ai_controller/controller, target_key, targetting_datum_key)
 	. = ..()
 
@@ -120,6 +122,8 @@
 	. = ..()
 
 	var/mob/living/basic/bot/hygienebot/hygiene_bot = controller.pawn
+
+	hygiene_bot.set_current_behavior_description()
 
 	if(succeeded)
 		controller.blackboard[target_key] = null ///Reset target
