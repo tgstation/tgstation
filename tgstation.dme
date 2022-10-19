@@ -3592,6 +3592,7 @@
 #include "code\modules\mob\living\carbon\human\human_say.dm"
 #include "code\modules\mob\living\carbon\human\human_stripping.dm"
 #include "code\modules\mob\living\carbon\human\human_update_icons.dm"
+#include "code\modules\mob\living\carbon\human\init_signals.dm"
 #include "code\modules\mob\living\carbon\human\inventory.dm"
 #include "code\modules\mob\living\carbon\human\life.dm"
 #include "code\modules\mob\living\carbon\human\login.dm"
