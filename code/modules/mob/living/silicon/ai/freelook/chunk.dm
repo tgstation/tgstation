@@ -126,8 +126,8 @@
 
 /// Create a new camera chunk, since the chunks are made as they are needed.
 /datum/camerachunk/New(x, y, lower_z)
-	x &= ~(CHUNK_SIZE - 1)
-	y &= ~(CHUNK_SIZE - 1)
+	x = GET_CHUNK_COORD(x)
+	y = GET_CHUNK_COORD(y)
 
 	src.x = x
 	src.y = y
@@ -171,3 +171,4 @@
 
 #undef UPDATE_BUFFER_TIME
 #undef CHUNK_SIZE
+#undef GET_CHUNK_COORD
