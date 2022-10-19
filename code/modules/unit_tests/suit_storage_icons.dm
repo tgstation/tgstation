@@ -24,6 +24,7 @@
 
 
 	var/list/already_warned_icons = list()
+	var/count = 1 //to be removed once the test goes live / into CI failure mode.
 	for(var/obj/item/item_path as anything in typecacheof(wearable_item_paths))
 		if(initial(item_path.item_flags) & ABSTRACT)
 			continue
@@ -40,9 +41,11 @@
 
 		if(worn_icon) //easiest to check since we override everything.
 			if(!(icon_state in icon_states(worn_icon)))
-				log_test("\t[item_path] using invalid [worn_icon_state ? "worn_icon_state" : "icon_state"], \"[icon_state]\" in worn_icon override file, '[worn_icon]'")
+				log_test("\t[count] - [item_path] using invalid [worn_icon_state ? "worn_icon_state" : "icon_state"], \"[icon_state]\" in worn_icon override file, '[worn_icon]'")
+				count++
 			continue
 
 		if(!(icon_state in icon_states('icons/mob/clothing/belt_mirror.dmi')))
 			already_warned_icons += icon_state
-			log_test("\t[item_path] using invalid [worn_icon_state ? "worn_icon_state" : "icon_state"], \"[icon_state]\"")
+			log_test("\t[count] - [item_path] using invalid [worn_icon_state ? "worn_icon_state" : "icon_state"], \"[icon_state]\"")
+			count++
