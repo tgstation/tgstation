@@ -15,7 +15,7 @@
 	// crush_living() on the recycler should have applied the crush_damage to the assistant.
 	var/damage_incurred = assistant.getBruteLoss()
 	TEST_ASSERT_EQUAL(damage_incurred, chewer.crush_damage, "Assistant did not take the expected amount of brute damage ([chewer.crush_damage]) from the emagged recycler! Took ([damage_incurred]) instead.")
-	TEST_ASSERT_EQUAL(chewer.bloody, TRUE, "The emagged recycler did not become bloody after crushing the assistant!")
+	TEST_ASSERT(chewer.bloody, "The emagged recycler did not become bloody after crushing the assistant!")
 
 	// Now, let's test to see if all of their clothing got properly deleted.
 	TEST_ASSERT_EQUAL(length(assistant.contents), 0, "Assistant still has items in its contents after being put through an emagged recycler!")
