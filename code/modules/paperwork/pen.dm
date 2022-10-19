@@ -363,7 +363,7 @@
 /obj/item/pen/screwdriver/vv_edit_var(var_name, var_value)
 	if(var_name == NAMEOF(src, extended))
 		if(var_value != extended)
-			SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SELF)
+			attack_self()
 			datum_flags |= DF_VAR_EDITED
 			return
 	return ..()
