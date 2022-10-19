@@ -106,9 +106,6 @@
 /// See [code\__DEFINES\sight.dm] for more details
 /mob/proc/set_sight(new_value)
 	SHOULD_CALL_PARENT(TRUE)
-	// Can't turn this off, because we need it to make a plane master we need exist
-	// Sorry brother
-	new_value |= SEE_BLACKNESS
 	if(sight == new_value)
 		return
 	var/old_sight = sight
@@ -136,7 +133,7 @@
 /// see_in_dark is essentially just a range value
 /// Basically, if a tile has 0 luminosity affecting it, it will be counted as "dark"
 /// Then, if said tile is farther then see_in_dark from your mob, it will, rather then being rendered
-/// As a normal tile with contents, instead be covered by "darkness", the same sort exposed by SEE_BLACKNESS
+/// As a normal tile with contents, instead be covered by "darkness". This effectively means it gets masked away, we don't even try to draw it.
 /// You can see this effect by going somewhere dark, and cranking the alpha on the lighting plane to 0
 /mob/proc/set_see_in_dark(new_dark)
 	SHOULD_CALL_PARENT(TRUE)

@@ -30,7 +30,7 @@
 
 #define RENDER_PLANE_GAME_WORLD -1
 
-#define BLACKNESS_PLANE 0 //To keep from conflicts with SEE_BLACKNESS internals
+#define DEFAULT_PLANE 0 //Marks out the default plane, even if we don't use it
 
 #define AREA_PLANE 2
 #define MASSIVE_OBJ_PLANE 3

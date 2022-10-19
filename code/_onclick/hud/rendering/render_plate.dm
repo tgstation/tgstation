@@ -77,6 +77,10 @@
 	. = ..()
 	add_filter("displacer", 1, displacement_map_filter(render_source = OFFSET_RENDER_TARGET(GRAVITY_PULSE_RENDER_TARGET, offset), size = 10))
 
+// Blackness renders weird when you view down openspace, because of transforms and borders and such
+// This is a consequence of not using lummy's grouped transparency, but I couldn't get that to work without totally fucking up
+// Sight flags, and shooting vis_contents usage to the moon. So we're doin it different.
+// If image vis contents worked (it should in 515), and we were ok with a maptick cost (wait for threaded maptick) this could be fixed
 /atom/movable/screen/plane_master/rendering_plate/transparent
 	name = "Transparent plate"
 	documentation = "The master rendering plate from the offset below ours will be mirrored onto this plane. That way we achive a \"stack\" effect.\
