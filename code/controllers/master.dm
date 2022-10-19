@@ -268,7 +268,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 
 	if(sleep_offline_after_initializations)
 		world.sleep_offline = TRUE
-	sleep(1)
+	sleep(1 TICKS)
 
 	if(sleep_offline_after_initializations && CONFIG_GET(flag/resume_after_initializations))
 		world.sleep_offline = FALSE
@@ -451,7 +451,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 			return MC_LOOP_RTN_NEWSTAGES
 		if (processing <= 0)
 			current_ticklimit = TICK_LIMIT_RUNNING
-			sleep(10)
+			sleep(1 SECONDS)
 			continue
 
 		//Anti-tick-contention heuristics:

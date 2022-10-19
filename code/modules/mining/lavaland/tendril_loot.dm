@@ -331,7 +331,7 @@
 	new /obj/effect/temp_visual/warp_cube(get_turf(linked), user, linked.teleport_color, FALSE)
 	var/obj/effect/warp_cube/link_holder = new /obj/effect/warp_cube(T)
 	user.forceMove(link_holder) //mess around with loc so the user can't wander around
-	sleep(2.5)
+	sleep(0.25 SECONDS)
 	if(QDELETED(user))
 		qdel(link_holder)
 		return
@@ -340,7 +340,7 @@
 		qdel(link_holder)
 		return
 	link_holder.forceMove(get_turf(linked))
-	sleep(2.5)
+	sleep(0.25 SECONDS)
 	if(QDELETED(user))
 		qdel(link_holder)
 		return

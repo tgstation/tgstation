@@ -8,6 +8,7 @@
 	spawn_positions = 1
 	supervisors = SUPERVISOR_HOP
 	selection_color = "#bbe291"
+	config_tag = "CURATOR"
 	exp_granted_type = EXP_TYPE_CREW
 
 	outfit = /datum/outfit/job/curator

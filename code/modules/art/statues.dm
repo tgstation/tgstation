@@ -389,7 +389,7 @@ Moving interrupts
 
 /obj/structure/carving_block
 	name = "block"
-	desc = "ready for sculpting."
+	desc = "Ready for sculpting."
 	icon = 'icons/obj/art/statue.dmi'
 	icon_state = "block"
 	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS | MATERIAL_ADD_PREFIX
@@ -460,7 +460,7 @@ Moving interrupts
 		new_statue.set_custom_materials(custom_materials)
 		var/mutable_appearance/ma = current_target
 		new_statue.name = "statue of [ma.name]"
-		new_statue.desc = "statue depicting [ma.name]"
+		new_statue.desc = "A carved statue depicting [ma.name]."
 		qdel(src)
 
 /obj/structure/carving_block/proc/set_completion(value)

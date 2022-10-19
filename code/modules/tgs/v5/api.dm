@@ -92,7 +92,7 @@
 
 /datum/tgs_api/v5/proc/RequireInitialBridgeResponse()
 	while(!version)
-		sleep(1)
+		sleep(1 TICKS)
 
 /datum/tgs_api/v5/OnInitializationComplete()
 	Bridge(DMAPI5_BRIDGE_COMMAND_PRIME)

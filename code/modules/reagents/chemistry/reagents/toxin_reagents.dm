@@ -1239,5 +1239,5 @@
 	health_required = 10
 
 /datum/reagent/toxin/viperspider/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.hallucination += 5 * REM * delta_time
+	M.adjust_hallucinations(10 SECONDS * REM * delta_time)
 	return ..()

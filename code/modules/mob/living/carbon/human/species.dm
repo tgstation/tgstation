@@ -375,19 +375,19 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				var/obj/item/organ/internal/brain/brain = oldorgan
 				if(!brain.decoy_override)//"Just keep it if it's fake" - confucius, probably
 					brain.before_organ_replacement(neworgan)
-					brain.Remove(C,TRUE, TRUE) //brain argument used so it doesn't cause any... sudden death.
+					brain.Remove(C, special=TRUE, no_id_transfer=TRUE) //brain argument used so it doesn't cause any... sudden death.
 					QDEL_NULL(brain)
 					oldorgan = null //now deleted
 			else
 				oldorgan.before_organ_replacement(neworgan)
-				oldorgan.Remove(C,TRUE)
+				oldorgan.Remove(C, special=TRUE)
 				QDEL_NULL(oldorgan) //we cannot just tab this out because we need to skip the deleting if it is a decoy brain.
 
 		if(oldorgan)
 			oldorgan.setOrganDamage(0)
 		else if(should_have && !(initial(neworgan.zone) in excluded_zones))
 			used_neworgan = TRUE
-			neworgan.Insert(C, TRUE, FALSE)
+			neworgan.Insert(C, special=TRUE, drop_if_replaced=FALSE)
 
 		if(!used_neworgan)
 			qdel(neworgan)
@@ -398,12 +398,24 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			// just yet as we'll be properly replacing it later.
 			if(mutantorgan in mutant_organs)
 				continue
-			var/obj/item/organ/I = C.getorgan(mutantorgan)
-			if(I)
-				I.Remove(C)
-				QDEL_NULL(I)
+			var/obj/item/organ/current_organ = C.getorgan(mutantorgan)
+			if(current_organ)
+				current_organ.Remove(C)
+				QDEL_NULL(current_organ)
+	for(var/external_organ in C.external_organs)
+		// External organ checking. We need to check the external organs owned by the carbon itself,
+		// because we want to also remove ones not shared by its species.
+		// This should be done even if species was not changed.
+		if(external_organ in external_organs)
+			continue // Don't remove external organs this species is supposed to have.
+		var/obj/item/organ/current_organ = C.getorgan(external_organ)
+		if(current_organ)
+			current_organ.Remove(C)
+			QDEL_NULL(current_organ)
 
-	for(var/organ_path in mutant_organs)
+	var/list/species_organs = mutant_organs + external_organs
+
+	for(var/organ_path in species_organs)
 		var/obj/item/organ/current_organ = C.getorgan(organ_path)
 		if(!current_organ || replace_current)
 			var/obj/item/organ/replacement = SSwardrobe.provide_type(organ_path)
@@ -413,7 +425,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if(current_organ)
 				current_organ.before_organ_replacement(replacement)
 			// organ.Insert will qdel any current organs in that slot, so we don't need to.
-			replacement.Insert(C, TRUE, FALSE)
+			replacement.Insert(C, special=TRUE, drop_if_replaced=FALSE)
 
 /datum/species/proc/worn_items_fit_body_check(mob/living/carbon/wearer)
 	for(var/obj/item/equipped_item in wearer.get_all_worn_items())
@@ -470,7 +482,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		for(var/obj/item/organ/external/organ_path as anything in external_organs)
 			//Load a persons preferences from DNA
 			var/obj/item/organ/external/new_organ = SSwardrobe.provide_type(organ_path)
-			new_organ.Insert(human)
+			new_organ.Insert(human, special=TRUE, drop_if_replaced=FALSE)
 
 	for(var/X in inherent_traits)
 		ADD_TRAIT(C, X, SPECIES_TRAIT)

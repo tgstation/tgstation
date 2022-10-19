@@ -179,7 +179,7 @@
 
 /mob/living/proc/gravity_pulse_animation()
 	animate(get_filter("gravity"), y = 1, time = 10)
-	sleep(10)
+	sleep(1 SECONDS)
 	animate(get_filter("gravity"), y = 0, time = 10)
 
 /mob/living/proc/handle_high_gravity(gravity, delta_time, times_fired)

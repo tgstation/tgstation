@@ -28571,8 +28571,8 @@
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
 "iLu" = (
-/obj/item/radio/intercom/directional/west,
 /obj/machinery/suit_storage_unit/captain,
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
 "iLv" = (
@@ -39017,11 +39017,7 @@
 /area/station/medical/break_room)
 "lVZ" = (
 /obj/structure/table/wood,
-/obj/item/radio/intercom{
-	dir = 8;
-	freerange = 1;
-	name = "Station Intercom (Command)"
-	},
+/obj/item/radio/intercom/command,
 /turf/open/floor/carpet,
 /area/station/command/meeting_room)
 "lWb" = (
@@ -74809,6 +74805,7 @@
 	dir = 9;
 	network = list("ss13","rd","xeno")
 	},
+/obj/structure/sign/xenobio_guide/directional/north,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "wZC" = (
