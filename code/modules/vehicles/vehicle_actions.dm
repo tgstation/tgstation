@@ -393,8 +393,8 @@
 	span_notice("You do a sick kickflip, catching the board in midair! Stylish."))
 	playsound(board, 'sound/vehicles/skateboard_ollie.ogg', 50, TRUE)
 	rider.spin(4, 1)
-	animate(rider, pixel_y = -6, time = 4)
-	animate(board, pixel_y = -6, time = 3)
+	animate(rider, pixel_y = -6, time = 0.4 SECONDS)
+	animate(board, pixel_y = -6, time = 0.3 SECONDS)
 	board.unbuckle_mob(rider)
 	addtimer(CALLBACK(V, /obj/vehicle/ridden/scooter/skateboard/proc/pick_up_board, L), 1 SECONDS)  // so the board can still handle "picking it up"
 
