@@ -40,9 +40,9 @@
 
 		if(worn_icon) //easiest to check since we override everything.
 			if(!(icon_state in icon_states(worn_icon)))
-				log_test("CS:S - [item_path] using invalid [worn_icon_state ? "worn_icon_state" : "icon_state"], \"[icon_state]\" in worn_icon override file, '[worn_icon]'")
+				log_test("\t[item_path] using invalid [worn_icon_state ? "worn_icon_state" : "icon_state"], \"[icon_state]\" in worn_icon override file, '[worn_icon]'")
 			continue
 
 		if(!(icon_state in icon_states('icons/mob/clothing/belt_mirror.dmi')))
 			already_warned_icons += icon_state
-			log_test("CS:S - [item_path] using invalid [worn_icon_state ? "worn_icon_state" : "icon_state"], \"[icon_state]\"")
+			log_test("\t[item_path] using invalid [worn_icon_state ? "worn_icon_state" : "icon_state"], \"[icon_state]\"")
