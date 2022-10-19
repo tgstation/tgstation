@@ -49,7 +49,7 @@
 
 	var/number_of_choices = length(check_population())
 	if(number_of_choices < 2)
-		message = "There [number_of_choices ? "is only one map" : "are no maps"] to choose from."
+		message = "There [number_of_choices == 1 ? "is only one map" : "are no maps"] to choose from."
 		return FALSE
 
 	if(SSmapping.map_vote_rocked)
