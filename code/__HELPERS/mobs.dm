@@ -264,7 +264,7 @@ GLOBAL_LIST_EMPTY(species_list)
 	if(interaction_key) //Do we have a interaction_key now?
 		var/current_interaction_count = LAZYACCESS(user.do_afters, interaction_key) || 0
 		if(current_interaction_count >= max_interact_count) //We are at our peak
-			return
+			return .
 		LAZYSET(user.do_afters, interaction_key, current_interaction_count + 1)
 
 	var/atom/user_loc = user.loc
@@ -297,12 +297,15 @@ GLOBAL_LIST_EMPTY(species_list)
 			user_loc = user.loc
 
 		if(
-			QDELETED(user) || QDELETED(target) \
+			QDELETED(user) \
 			|| (!(timed_action_flags & IGNORE_USER_LOC_CHANGE) && !drifting && user.loc != user_loc) \
-			|| (!(timed_action_flags & IGNORE_TARGET_LOC_CHANGE) && target.loc != target_loc) \
 			|| (!(timed_action_flags & IGNORE_HELD_ITEM) && user.get_active_held_item() != holding) \
 			|| (!(timed_action_flags & IGNORE_INCAPACITATED) && HAS_TRAIT(user, TRAIT_INCAPACITATED)) \
 			|| (extra_checks && !extra_checks.Invoke()))
+			. = FALSE
+			break
+		if(user != target && \
+			(QDELETED(target) || (!(timed_action_flags & IGNORE_TARGET_LOC_CHANGE) && target.loc != target_loc))
 			. = FALSE
 			break
 
@@ -373,8 +376,7 @@ GLOBAL_LIST_EMPTY(species_list)
 			. = FALSE
 			break
 
-		for(var/t in targets)
-			var/atom/target = t
+		for(var/atom/target as anything in targets)
 			if(
 				(QDELETED(target)) \
 				|| (!(timed_action_flags & IGNORE_TARGET_LOC_CHANGE) && originalloc[target] != target.loc) \
