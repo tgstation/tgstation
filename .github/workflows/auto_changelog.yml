@@ -7,7 +7,6 @@ on:
     branches:
       - master
 permissions:
-  contents: read
   contents: write
 jobs:
   auto_labeler:
