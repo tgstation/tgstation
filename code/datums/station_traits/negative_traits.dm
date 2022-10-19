@@ -148,6 +148,8 @@
 	// All bots that exist round start on station Z OR on the escape shuttle have their set language randomized.
 	for(var/mob/living/simple_animal/bot/found_bot as anything in GLOB.bots_list)
 		found_bot.randomize_language_if_on_station()
+	for(var/mob/living/basic/bot/found_bot as anything in GLOB.basic_bots_list)
+		found_bot.randomize_language_if_on_station()
 
 /datum/station_trait/revenge_of_pun_pun
 	name = "Revenge of Pun Pun"

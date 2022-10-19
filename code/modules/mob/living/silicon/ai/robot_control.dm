@@ -49,6 +49,20 @@
 		)
 		data["robots"] += list(robot_data)
 
+	for(var/mob/living/simple_animal/bot/basic_bot as anything in GLOB.basic_bots_list)
+		//Only non-emagged bots on a valid Z-level are detected!
+		if(!is_valid_z_level(ai_current_turf, get_turf(basic_bot)) || !(basic_bot.bot_mode_flags & BOT_MODE_REMOTE_ENABLED))
+			continue
+		var/list/robot_data = list(
+			name = basic_bot.name,
+			model = basic_bot.bot_type,
+			mode = basic_bot.get_mode(),
+			hacked = !!(basic_bot.bot_cover_flags & BOT_COVER_HACKED),
+			location = get_area_name(basic_bot, TRUE),
+			ref = REF(basic_bot),
+		)
+		data["robots"] += list(robot_data)
+
 	return data
 
 /datum/robot_control/ui_act(action, params)
@@ -73,10 +87,31 @@
 			. = TRUE
 		if("interface") //Remotely connect to a bot!
 			bot = locate(params["ref"]) in GLOB.bots_list
-			if(!bot)
-				bot = locate(params["ref"]) in GLOB.basic_bots_list
 			owner.bot_ref = WEAKREF(bot)
 			if(!bot || !(bot.bot_mode_flags & BOT_MODE_REMOTE_ENABLED) || owner.control_disabled)
 				return
 			bot.attack_ai(usr)
+			. = TRUE
+
+	var/mob/living/basic/bot/basic_bot
+	switch(action)
+		if("callbot") //Command a bot to move to a selected location.
+			if(owner.call_bot_cooldown > world.time)
+				to_chat(usr, span_danger("Error: Your last call bot command is still processing, please wait for the bot to finish calculating a route."))
+				return
+			basic_bot = locate(params["ref"]) in GLOB.basic_bots_list
+			owner.bot_ref = WEAKREF(basic_bot)
+			if(!basic_bot || !(basic_bot.bot_mode_flags & BOT_MODE_REMOTE_ENABLED) || owner.control_disabled)
+				return
+			owner.waypoint_mode = TRUE
+			to_chat(usr, span_notice("Set your waypoint by clicking on a valid location free of obstructions."))
+			. = TRUE
+		if("interface") //Remotely connect to a bot!
+			basic_bot = locate(params["ref"]) in GLOB.basic_bots_list
+			if(!basic_bot)
+				basic_bot = locate(params["ref"]) in GLOB.basic_bots_list
+			owner.bot_ref = WEAKREF(basic_bot)
+			if(!basic_bot || !(basic_bot.bot_mode_flags & BOT_MODE_REMOTE_ENABLED) || owner.control_disabled)
+				return
+			basic_bot.attack_ai(usr)
 			. = TRUE

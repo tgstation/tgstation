@@ -621,19 +621,23 @@
 	if(client) //If the bot is player controlled, it will not be following mode logic!
 		holder.icon_state = "hudsentient"
 		return
-	/*
-	switch(mode)
-		if(BOT_SUMMON, BOT_RESPONDING) //Responding to PDA or AI summons
-			holder.icon_state = "hudcalled"
-		if(BOT_CLEANING, BOT_REPAIRING, BOT_HEALING) //Cleanbot cleaning, Floorbot fixing, or Medibot Healing
-			holder.icon_state = "hudworking"
-		if(BOT_PATROL, BOT_START_PATROL) //Patrol mode
-			holder.icon_state = "hudpatrol"
-		if(BOT_PREP_ARREST, BOT_ARREST, BOT_HUNT) //STOP RIGHT THERE, CRIMINAL SCUM!
-			holder.icon_state = "hudalert"
-		if(BOT_MOVING, BOT_DELIVER, BOT_GO_HOME, BOT_NAV) //Moving to target for normal bots, moving to deliver or go home for MULES.
-			holder.icon_state = "hudmove"
-		else
-			holder.icon_state = ""
-	*/
 
+
+/**
+ * Randomizes our bot's language if:
+ * - They are on the setation Z level
+ * OR
+ * - They are on the escape shuttle
+ */
+/mob/living/basic/bot/proc/randomize_language_if_on_station()
+	var/turf/bot_turf = get_turf(src)
+	var/area/bot_area = get_area(src)
+	if(!is_station_level(bot_turf.z) && !istype(bot_area, /area/shuttle/escape))
+		// Why snowflake check for escape shuttle? Well, a lot of shuttles spawn with bots
+		// but docked at centcom, and I wanted those bots to also speak funny languages
+		return FALSE
+
+	/// The bot's language holder - so we can randomize and change their language
+	var/datum/language_holder/bot_languages = get_language_holder()
+	bot_languages.selected_language = bot_languages.get_random_spoken_uncommon_language()
+	return TRUE
