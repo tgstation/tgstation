@@ -191,7 +191,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	priority = MAX_KNOWLEDGE_PRIORITY - 2 // Not as important as making a heart or sacrificing, but important enough.
 	route = PATH_START
 
-/datum/heretic_knowledge/cloak_of_shadows
+/datum/heretic_knowledge/spell/cloak_of_shadows
 	name = "Shadow Cloak"
 	desc = "Grants you the spell Shadow Cloak. This spell will completely conceal your identity in a purple smoke \
 		for three minutes."
