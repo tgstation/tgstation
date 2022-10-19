@@ -23,9 +23,7 @@
 
 /mob/living/basic/mining/hugglebipper/Initialize(mapload)
 	. = ..()
-	//traits and elements
 	AddElement(/datum/element/waddling)
-	//you should be perfectly able to get the eye every time if you're smart
 	AddElement(/datum/element/crusher_loot, /obj/item/crusher_trophy/hugglebipper_eye, 100)
 
 /mob/living/basic/mining/hugglebipper/melee_attack(atom/target)
