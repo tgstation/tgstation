@@ -1,0 +1,4 @@
+author: "GoblinBackwards"
+delete-after: True
+changes: 
+  - bugfix: "Fixed modular computers not being able to be deconstructed/repaired"
