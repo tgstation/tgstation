@@ -64,7 +64,7 @@ In all, this is a lot like the monkey code. /N
 /mob/living/carbon/alien/attack_paw(mob/living/carbon/human/user, list/modifiers)
 	if(..())
 		if (stat != DEAD)
-			var/obj/item/bodypart/affecting = get_bodypart(ran_zone(user.zone_selected))
+			var/obj/item/bodypart/affecting = get_bodypart(get_random_valid_zone(user.zone_selected))
 			apply_damage(rand(1, 3), BRUTE, affecting)
 
 

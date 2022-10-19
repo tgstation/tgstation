@@ -123,8 +123,8 @@
 	. = ..()
 	if(.)
 		return
-	if(istype(object_used, /obj/item/reagent_containers/food/drinks))
-		var/obj/item/reagent_containers/food/drinks/potential_drink = object_used
+	if(istype(object_used, /obj/item/reagent_containers/cup/glass))
+		var/obj/item/reagent_containers/cup/glass/potential_drink = object_used
 		return potential_drink.reagents.has_reagent(wanted_item, VENUE_BAR_MINIMUM_REAGENTS)
 
 /obj/machinery/restaurant_portal/bar

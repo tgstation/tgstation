@@ -18,8 +18,6 @@
 		add_overlay(overlay)
 	return ..()
 
-
-
 //[[[[BRAIN]]]]
 
 /obj/item/organ/internal/cyberimp/brain

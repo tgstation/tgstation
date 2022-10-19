@@ -85,7 +85,7 @@
 /obj/item/traitor_spraycan
 	name = "seditious spraycan"
 	desc = "This spraycan deploys a subversive pattern containing subliminal priming agents over a 3x3 area. Contains enough primer for just one final coating."
-	icon = 'icons/obj/crayons.dmi'
+	icon = 'icons/obj/art/crayons.dmi'
 	icon_state = "deathcan"
 	worn_icon_state = "spraycan"
 	inhand_icon_state = "spraycan"

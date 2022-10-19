@@ -163,7 +163,7 @@
 
 	//laser pointer image
 	icon_state = "pointer_[pointer_icon_state]"
-	var/image/I = image('icons/obj/guns/projectiles.dmi',targloc,pointer_icon_state,10)
+	var/image/I = image('icons/obj/weapons/guns/projectiles.dmi',targloc,pointer_icon_state,10)
 	var/list/modifiers = params2list(params)
 	if(modifiers)
 		if(LAZYACCESS(modifiers, ICON_X))

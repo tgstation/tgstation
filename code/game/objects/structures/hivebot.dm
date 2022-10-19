@@ -1,7 +1,7 @@
 /obj/structure/hivebot_beacon
 	name = "beacon"
 	desc = "Some odd beacon thing."
-	icon = 'icons/mob/hivebot.dmi'
+	icon = 'icons/mob/simple/hivebot.dmi'
 	icon_state = "def_radar-off"
 	anchored = TRUE
 	density = TRUE
@@ -29,7 +29,7 @@
 				new /mob/living/simple_animal/hostile/hivebot/range(get_turf(src))
 			if("rapid")
 				new /mob/living/simple_animal/hostile/hivebot/rapid(get_turf(src))
-	sleep(100)
+	sleep(10 SECONDS)
 	visible_message(span_boldannounce("[src] warps out!"))
 	playsound(src.loc, 'sound/effects/empulse.ogg', 25, TRUE)
 	qdel(src)

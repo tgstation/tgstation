@@ -25,12 +25,9 @@
 
 /obj/item/grenade/c4/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
 	plastic_overlay = mutable_appearance(icon, "[inhand_icon_state]2", HIGH_OBJ_LAYER)
 	wires = new /datum/wires/explosive/c4(src)
-
-/obj/item/grenade/c4/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
 
 /obj/item/grenade/c4/Destroy()
 	qdel(wires)
@@ -80,7 +77,7 @@
 
 /obj/item/grenade/c4/attack_self(mob/user)
 	var/newtime = tgui_input_number(user, "Please set the timer", "C4 Timer", minimum_timer, maximum_timer, minimum_timer)
-	if(!newtime || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(!newtime || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 		return
 	det_time = newtime
 	to_chat(user, "Timer set for [det_time] seconds.")
@@ -88,6 +85,8 @@
 /obj/item/grenade/c4/afterattack(atom/movable/bomb_target, mob/user, flag)
 	. = ..()
 	aim_dir = get_dir(user, bomb_target)
+	if(isdead(bomb_target))
+		return
 	if(!flag)
 		return
 	if(bomb_target != user && HAS_TRAIT(user, TRAIT_PACIFISM) && isliving(bomb_target))
@@ -108,14 +107,14 @@
 
 		moveToNullspace() //Yep
 
-		if(istype(bomb_target, /obj/item)) //your crappy throwing star can't fly so good with a giant brick of c4 on it.
+		if(isitem(bomb_target)) //your crappy throwing star can't fly so good with a giant brick of c4 on it.
 			var/obj/item/thrown_weapon = bomb_target
 			thrown_weapon.throw_speed = max(1, (thrown_weapon.throw_speed - 3))
 			thrown_weapon.throw_range = max(1, (thrown_weapon.throw_range - 3))
 			if(thrown_weapon.embedding)
 				thrown_weapon.embedding["embed_chance"] = 0
 				thrown_weapon.updateEmbedding()
-		else if(istype(bomb_target, /mob/living))
+		else if(isliving(bomb_target))
 			plastic_overlay.layer = FLOAT_LAYER
 
 		target.add_overlay(plastic_overlay)

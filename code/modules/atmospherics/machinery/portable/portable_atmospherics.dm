@@ -2,7 +2,7 @@
 
 /obj/machinery/portable_atmospherics
 	name = "portable_atmospherics"
-	icon = 'icons/obj/atmos.dmi'
+	icon = 'icons/obj/atmospherics/atmos.dmi'
 	use_power = NO_POWER_USE
 	max_integrity = 250
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 60, ACID = 30)
@@ -16,7 +16,7 @@
 	var/obj/item/tank/holding
 	///Volume (in L) of the inside of the machine
 	var/volume = 0
-	///Used to track if anything of note has happen while running process_atmos(). 
+	///Used to track if anything of note has happen while running process_atmos().
 	///Treat it as a process_atmos() scope var, we just declare it here to pass it between parent calls.
 	///Should be false on start of every process_atmos() proc, since true means we'll process again next tick.
 	var/excited = FALSE
@@ -25,6 +25,11 @@
 	var/temp_limit = 10000
 	/// Max amount of pressure allowed inside of the canister before it starts to break. [PORTABLE_ATMOS_IGNORE_ATMOS_LIMIT] is special value meaning we are immune.
 	var/pressure_limit = 500000
+
+	/// Should reactions inside the object be suppressed
+	var/suppress_reactions = FALSE
+	/// Is there a hypernoblium crystal inserted into this
+	var/nob_crystal_inserted = FALSE
 
 /obj/machinery/portable_atmospherics/Initialize(mapload)
 	. = ..()
@@ -38,7 +43,17 @@
 	air_contents = null
 	SSair.stop_processing_machine(src)
 
+	if(nob_crystal_inserted)
+		new /obj/item/hypernoblium_crystal(src)
+
 	return ..()
+
+/obj/machinery/portable_atmospherics/examine(mob/user)
+	. = ..()
+	if(nob_crystal_inserted)
+		. += "There is a hypernoblium crystal inside it that allows for reactions inside to be suppressed."
+	if(suppress_reactions)
+		. += "The hypernoblium crystal inside is glowing with a faint blue colour, indicating reactions inside are currently being suppressed."
 
 /obj/machinery/portable_atmospherics/ex_act(severity, target)
 	if(resistance_flags & INDESTRUCTIBLE)
@@ -52,7 +67,7 @@
 	return ..()
 
 /obj/machinery/portable_atmospherics/process_atmos()
-	excited = (excited | air_contents.react(src))
+	excited = (!suppress_reactions && (excited || air_contents.react(src)))
 	if(!excited)
 		return PROCESS_KILL
 	excited = FALSE
@@ -138,7 +153,7 @@
 
 /obj/machinery/portable_atmospherics/AltClick(mob/living/user)
 	. = ..()
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)) || !can_interact(user))
+	if(!istype(user) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = !iscyborg(user)) || !can_interact(user))
 		return
 	if(!holding)
 		return

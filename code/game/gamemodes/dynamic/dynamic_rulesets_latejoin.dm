@@ -119,8 +119,6 @@
 	blocking_rules = list(/datum/dynamic_ruleset/roundstart/revs)
 	var/required_heads_of_staff = 3
 	var/finished = FALSE
-	/// How much threat should be injected when the revolution wins?
-	var/revs_win_threat_injection = 20
 	var/datum/team/revolution/revolution
 
 /datum/dynamic_ruleset/latejoin/provocateur/ready(forced=FALSE)
@@ -155,7 +153,7 @@
 		return FALSE
 
 /datum/dynamic_ruleset/latejoin/provocateur/rule_process()
-	var/winner = revolution.process_victory(revs_win_threat_injection)
+	var/winner = revolution.process_victory()
 	if (isnull(winner))
 		return
 
@@ -198,8 +196,8 @@
 	)
 	required_candidates = 1
 	weight = 4
-	cost = 7
-	requirements = list(101,101,101,10,10,10,10,10,10,10)
+	cost = 6
+	requirements = list(101,101,50,10,10,10,10,10,10,10)
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/latejoin/heretic_smuggler/execute()

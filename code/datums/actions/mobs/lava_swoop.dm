@@ -58,7 +58,7 @@
 	owner.alpha = 255
 	animate(owner, alpha = 204, transform = matrix()*0.9, time = 3, easing = BOUNCE_EASING)
 	for(var/i in 1 to 3)
-		sleep(1)
+		sleep(0.1 SECONDS)
 		if(QDELETED(owner) || owner.stat == DEAD) //we got hit and died, rip us
 			qdel(F)
 			if(owner.stat == DEAD)
@@ -149,9 +149,9 @@
 		drakewalls += new /obj/effect/temp_visual/drakewall(T) // no people with lava immunity can just run away from the attack for free
 	var/list/indestructible_turfs = list()
 	for(var/turf/T in RANGE_TURFS(2, center))
-		if(istype(T, /turf/open/indestructible))
+		if(isindestructiblefloor(T))
 			continue
-		if(!istype(T, /turf/closed/indestructible))
+		if(!isindestructiblewall(T))
 			T.ChangeTurf(/turf/open/misc/asteroid/basalt/lava_land_surface, flags = CHANGETURF_INHERIT_AIR)
 		else
 			indestructible_turfs += T
@@ -182,7 +182,7 @@
 		for(var/turf/T in turfs)
 			if(!(T in empty))
 				new /obj/effect/temp_visual/lava_warning(T)
-			else if(!istype(T, /turf/closed/indestructible))
+			else if(!isindestructiblewall(T))
 				new /obj/effect/temp_visual/lava_safe(T)
 		amount--
 		SLEEP_CHECK_DEATH(2.4 SECONDS, owner)
@@ -201,7 +201,7 @@
 	duration = 10
 
 /obj/effect/temp_visual/dragon_flight
-	icon = 'icons/mob/lavaland/64x64megafauna.dmi'
+	icon = 'icons/mob/simple/lavaland/64x64megafauna.dmi'
 	icon_state = "dragon"
 	layer = ABOVE_ALL_MOB_LAYER
 	plane = GAME_PLANE_UPPER_FOV_HIDDEN
@@ -218,7 +218,7 @@
 		animate(src, pixel_x = -SWOOP_HEIGHT*0.1, pixel_z = SWOOP_HEIGHT*0.15, time = 3, easing = BOUNCE_EASING)
 	else
 		animate(src, pixel_x = SWOOP_HEIGHT*0.1, pixel_z = SWOOP_HEIGHT*0.15, time = 3, easing = BOUNCE_EASING)
-	sleep(3)
+	sleep(0.3 SECONDS)
 	icon_state = "swoop"
 	if(negative)
 		animate(src, pixel_x = -SWOOP_HEIGHT, pixel_z = SWOOP_HEIGHT, time = 7)

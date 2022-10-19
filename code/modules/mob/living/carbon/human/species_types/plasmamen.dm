@@ -5,17 +5,13 @@
 	say_mod = "rattles"
 	sexes = 0
 	meat = /obj/item/stack/sheet/mineral/plasma
-	species_traits = list(NOBLOOD,NOTRANSSTING, HAS_BONE)
+	species_traits = list(NOBLOOD, NOTRANSSTING, HAS_BONE, NOAPPENDIX)
 	// plasmemes get hard to wound since they only need a severe bone wound to dismember, but unlike skellies, they can't pop their bones back into place
 	inherent_traits = list(
-		TRAIT_ADVANCEDTOOLUSER,
-		TRAIT_CAN_STRIP,
 		TRAIT_GENELESS,
 		TRAIT_HARDLY_WOUNDED,
-		TRAIT_LITERATE,
 		TRAIT_RADIMMUNE,
 		TRAIT_RESISTCOLD,
-		TRAIT_NOHUNGER,
 	)
 
 	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL
@@ -28,11 +24,10 @@
 	brutemod = 1.5
 	payday_modifier = 0.75
 	breathid = "plas"
-	damage_overlay_type = ""//let's not show bloody wounds or burns over bones.
 	disliked_food = FRUIT | CLOTH
 	liked_food = VEGETABLES
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
-	species_cookie = /obj/item/reagent_containers/food/condiment/milk
+	species_cookie = /obj/item/reagent_containers/condiment/milk
 	outfit_important_for_life = /datum/outfit/plasmaman
 	species_language_holder = /datum/language_holder/skeleton
 
@@ -142,6 +137,7 @@
 			var/datum/wound/iter_wound = i
 			iter_wound.on_xadone(4 * REAGENTS_EFFECT_MULTIPLIER * delta_time) // plasmamen use plasma to reform their bones or whatever
 		return TRUE
+
 	if(istype(chem, /datum/reagent/toxin/bonehurtingjuice))
 		H.adjustStaminaLoss(7.5 * REAGENTS_EFFECT_MULTIPLIER * delta_time, 0)
 		H.adjustBruteLoss(0.5 * REAGENTS_EFFECT_MULTIPLIER * delta_time, 0)
@@ -167,6 +163,13 @@
 					H.emote("sigh")
 		H.reagents.remove_reagent(chem.type, chem.metabolization_rate * delta_time)
 		return TRUE
+
+	if(istype(chem, /datum/reagent/gunpowder))
+		H.set_timed_status_effect(15 SECONDS * delta_time, /datum/status_effect/drugginess)
+		if(H.get_timed_status_effect_duration(/datum/status_effect/hallucination) / 10 < chem.volume)
+			H.adjust_hallucinations(2.5 SECONDS * delta_time)
+		// Do normal metabolism
+		return FALSE
 
 /datum/species/plasmaman/get_species_description()
 	return "Found on the Icemoon of Freyja, plasmamen consist of colonial \

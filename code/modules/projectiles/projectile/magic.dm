@@ -162,13 +162,17 @@
 	damage = 0
 	damage_type = BURN
 	nodamage = TRUE
+	/// If set, this projectile will only do a certain wabbajack effect
+	var/set_wabbajack_effect
+	/// If set, this projectile will only pass certain changeflags to wabbajack
+	var/set_wabbajack_changeflags
 
 /obj/projectile/magic/change/on_hit(atom/target)
 	. = ..()
 
 	if(isliving(target))
 		var/mob/living/victim = target
-		victim.wabbajack()
+		victim.wabbajack(set_wabbajack_effect, set_wabbajack_changeflags)
 
 	if(istype(target, /obj/machinery/hydroponics))
 		var/obj/machinery/hydroponics/plant_tray = target
@@ -210,7 +214,7 @@
 				return
 		else
 			var/obj/O = src
-			if(istype(O, /obj/item/gun))
+			if(isgun(O))
 				new /mob/living/simple_animal/hostile/mimic/copy/ranged(drop_location(), src, owner)
 			else
 				new /mob/living/simple_animal/hostile/mimic/copy(drop_location(), src, owner)
@@ -362,14 +366,15 @@
 		var/atom/throw_target = get_edge_target_turf(target, get_dir(target, firer))
 		target.throw_at(throw_target, 200, 4)
 
-/obj/projectile/magic/sapping
-	name = "bolt of sapping"
-	icon_state = "sapping"
+/obj/projectile/magic/babel
+	name = "bolt of babel"
+	icon_state = "babel"
 
-/obj/projectile/magic/sapping/on_hit(mob/living/target)
+/obj/projectile/magic/babel/on_hit(mob/living/carbon/target)
 	. = ..()
-	if(isliving(target))
-		SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, REF(src), /datum/mood_event/sapped)
+	if(iscarbon(target))
+		if(curse_of_babel(target))
+			target.add_mood_event("curse_of_babel", /datum/mood_event/tower_of_babel)
 
 /obj/projectile/magic/necropotence
 	name = "bolt of necropotence"

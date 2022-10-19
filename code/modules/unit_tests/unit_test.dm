@@ -97,7 +97,7 @@ GLOBAL_LIST_EMPTY(unit_test_mapping_logs)
 	if (fexists(filename))
 		var/data_filename = "data/screenshots/[path_prefix]_[name].png"
 		fcopy(icon, data_filename)
-		log_test("[path_prefix]_[name] was found, putting in data/screenshots")
+		log_test("\t[path_prefix]_[name] was found, putting in data/screenshots")
 	else if (fexists("code"))
 		// We are probably running in a local build
 		fcopy(icon, filename)
@@ -106,7 +106,17 @@ GLOBAL_LIST_EMPTY(unit_test_mapping_logs)
 		// We are probably running in real CI, so just pretend it worked and move on
 		fcopy(icon, "data/screenshots_new/[path_prefix]_[name].png")
 
-		log_test("[path_prefix]_[name] was put in data/screenshots_new")
+		log_test("\t[path_prefix]_[name] was put in data/screenshots_new")
+
+/// Logs a test message. Will use GitHub action syntax found at https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions
+/datum/unit_test/proc/log_for_test(text, priority, file, line)
+	var/map_name = SSmapping.config.map_name
+
+	// Need to escape the text to properly support newlines.
+	var/annotation_text = replacetext(text, "%", "%25")
+	annotation_text = replacetext(annotation_text, "\n", "%0A")
+
+	log_world("::[priority] file=[file],line=[line],title=[map_name]: [type]::[annotation_text]")
 
 /proc/RunUnitTest(test_path, list/test_results)
 	var/datum/unit_test/test = new test_path
@@ -114,37 +124,37 @@ GLOBAL_LIST_EMPTY(unit_test_mapping_logs)
 	GLOB.current_test = test
 	var/duration = REALTIMEOFDAY
 
+	log_world("::group::[test_path]")
 	test.Run()
 
 	duration = REALTIMEOFDAY - duration
 	GLOB.current_test = null
 	GLOB.failed_any_test |= !test.succeeded
 
-	var/list/log_entry = list(
-		"[test.succeeded ? TEST_OUTPUT_GREEN("PASS") : TEST_OUTPUT_RED("FAIL")]: [test_path] [duration / 10]s",
-	)
+	var/list/log_entry = list()
 	var/list/fail_reasons = test.fail_reasons
-	var/map_name = SSmapping.config.map_name
 
 	for(var/reasonID in 1 to LAZYLEN(fail_reasons))
 		var/text = fail_reasons[reasonID][1]
 		var/file = fail_reasons[reasonID][2]
 		var/line = fail_reasons[reasonID][3]
 
-		// Github action annotation.
-		// See https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions
-
-		// Need to escape the text to properly support newlines.
-		var/annotation_text = replacetext(text, "%", "%25")
-		annotation_text = replacetext(annotation_text, "\n", "%0A")
-
-		log_world("::error file=[file],line=[line],title=[map_name]: [test_path]::[annotation_text]")
+		test.log_for_test(text, "error", file, line)
 
 		// Normal log message
-		log_entry += "\tREASON #[reasonID]: [text] at [file]:[line]"
+		log_entry += "\tFAILURE #[reasonID]: [text] at [file]:[line]"
 
 	var/message = log_entry.Join("\n")
 	log_test(message)
+
+	var/test_output_desc = "[test_path] [duration / 10]s"
+	if (test.succeeded)
+		log_world("[TEST_OUTPUT_GREEN("PASS")] [test_output_desc]")
+
+	log_world("::endgroup::")
+
+	if (!test.succeeded)
+		log_world("::error::[TEST_OUTPUT_RED("FAIL")] [test_output_desc]")
 
 	test_results[test_path] = list("status" = test.succeeded ? UNIT_TEST_PASSED : UNIT_TEST_FAILED, "message" = message, "name" = test_path)
 

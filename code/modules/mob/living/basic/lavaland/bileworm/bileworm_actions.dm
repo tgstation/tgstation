@@ -13,7 +13,10 @@
 	var/turf/unburrow_turf = get_unburrow_turf(burrower, target)
 	if(!unburrow_turf) // means all the turfs nearby are station turfs or something, not lavaland
 		to_chat(burrower, span_warning("Couldn't burrow anywhere near the target!"))
-		return //just put it on cooldown and let the other ability reactivate, you couldn't burrow and that's okay.
+		if(burrower.ai_controller?.ai_status == AI_STATUS_ON)
+			//this is a valid reason to give up on a target
+			burrower.ai_controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET] = null
+		return
 	playsound(burrower, 'sound/effects/break_stone.ogg', 50, TRUE)
 	new /obj/effect/temp_visual/mook_dust(get_turf(burrower))
 	burrower.status_flags |= GODMODE
@@ -57,22 +60,20 @@
 	StartCooldownSelf(INFINITY)
 	attack_sequence(owner, target_atom)
 	//resurface now off cooldown shortly
-	StartCooldownOthers(1.5 SECONDS)
+	StartCooldownOthers(2.5 SECONDS)
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/bileworm/attack_sequence(mob/living/firer, atom/target)
 	fire_in_directions(firer, target, GLOB.cardinals)
-	SLEEP_CHECK_DEATH(0.25 SECONDS, firer)
+	SLEEP_CHECK_DEATH(0.5 SECONDS, firer)
 	fire_in_directions(firer, target, GLOB.diagonals)
-	SLEEP_CHECK_DEATH(0.25 SECONDS, firer)
-	fire_in_directions(firer, target, GLOB.cardinals)
 
 /obj/projectile/bileworm_acid
 	name = "acidic bile"
 	icon_state = "neurotoxin"
 	hitsound = 'sound/weapons/sear.ogg'
 	damage = 20
-	armour_penetration = 100
 	speed = 2
+	range = 20
 	jitter = 3 SECONDS
 	stutter = 3 SECONDS
 	damage_type = BURN

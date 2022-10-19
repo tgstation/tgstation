@@ -12,7 +12,7 @@
 	RegisterSignal(parent, COMSIG_MOB_TRIED_ACCESS, .proc/on_tried_access)
 	if(!donor_atom)
 		return
-	if(istype(donor_atom, /obj/item/organ))
+	if(isorgan(donor_atom))
 		RegisterSignal(donor_atom, COMSIG_ORGAN_REMOVED, .proc/on_donor_removed)
 	else if(istype(donor_atom, /obj/item/implant))
 		RegisterSignal(donor_atom, COMSIG_IMPLANT_REMOVED, .proc/on_donor_removed)

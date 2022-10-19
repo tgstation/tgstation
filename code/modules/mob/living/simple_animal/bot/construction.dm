@@ -1,7 +1,7 @@
 //Bot Construction
 
 /obj/item/bot_assembly
-	icon = 'icons/mob/aibots.dmi'
+	icon = 'icons/mob/silicon/aibots.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 3
 	throw_speed = 2
@@ -66,7 +66,7 @@
 	name = "incomplete ED-209 assembly"
 	desc = "Some sort of bizarre assembly."
 	icon_state = "ed209_frame"
-	inhand_icon_state = "ed209_frame"
+	inhand_icon_state = null
 	created_name = "ED-209 Security Robot" //To preserve the name if it's a unique securitron I guess
 	var/lasercolor = ""
 	var/vest_type = /obj/item/clothing/suit/armor/vest
@@ -311,6 +311,8 @@
 	desc = "Some sort of bizarre assembly made from a proximity sensor, helmet, and signaler."
 	icon_state = "helmet_signaler"
 	inhand_icon_state = "helmet"
+	lefthand_file = 'icons/mob/inhands/clothing/hats_righthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/hats_lefthand.dmi'
 	created_name = "Securitron" //To preserve the name if it's a unique securitron I guess
 	var/swordamt = 0 //If you're converting it into a grievousbot, how many swords have you attached
 	var/toyswordamt = 0 //honk
@@ -453,7 +455,7 @@
 	..()
 	switch(build_step)
 		if(ASSEMBLY_FIRST_STEP)
-			if(istype(I, /obj/item/clothing/head/hardhat/red))
+			if(istype(I, /obj/item/clothing/head/utility/hardhat/red))
 				if(!user.temporarilyRemoveItemFromInventory(I))
 					return
 				to_chat(user,span_notice("You add the [I] to [src]!"))

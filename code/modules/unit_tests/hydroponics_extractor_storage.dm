@@ -15,7 +15,7 @@
 	for(var/i in 1 to num_seeds_to_make_of_each)
 		for(var/seed_type in seeds_to_put_in_the_bag)
 			var/obj/item/seeds/new_seed = new seed_type(dummy.loc)
-			storage.atom_storage.attempt_insert(to_insert = new_seed, user = dummy)
+			storage.atom_storage.attempt_insert(new_seed, dummy)
 
 	// Store the number of seeds we start with in the bag for later.
 	var/num_seeds_starting_with = length(storage.contents)

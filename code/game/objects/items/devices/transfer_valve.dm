@@ -1,5 +1,5 @@
 /obj/item/transfer_valve
-	icon = 'icons/obj/assemblies.dmi'
+	icon = 'icons/obj/assemblies/assemblies.dmi'
 	name = "tank transfer valve"
 	icon_state = "valve_1"
 	base_icon_state = "valve"
@@ -65,8 +65,8 @@
 			return
 		attached_device = A
 		to_chat(user, span_notice("You attach the [item] to the valve controls and secure it."))
-		A.on_attach()
 		A.holder = src
+		A.on_attach()
 		A.toggle_secure() //this calls update_icon(), which calls update_icon() on the holder (i.e. the bomb).
 		log_bomber(user, "attached a [item.name] to a ttv -", src, null, FALSE)
 		attacher = user
@@ -175,7 +175,7 @@
 		var/attachment
 		var/attachment_signal_log
 		if(attached_device)
-			if(istype(attached_device, /obj/item/assembly/signaler))
+			if(issignaler(attached_device))
 				var/obj/item/assembly/signaler/attached_signaller = attached_device
 				attachment = "<A HREF='?_src_=holder;[HrefToken()];secrets=list_signalers'>[attached_signaller]</A>"
 				attachment_signal_log = attached_signaller.last_receive_signal_log ? "The following log entry is the last one associated with the attached signaller<br>[attached_signaller.last_receive_signal_log]" : "There is no signal log entry."
@@ -194,12 +194,17 @@
 		if(bomber)
 			admin_bomber_message = "The bomb's most recent set of fingerprints indicate it was last touched by [ADMIN_LOOKUPFLW(bomber)]"
 			bomber_message = " - Last touched by: [key_name_admin(bomber)]"
+			bomber.log_message("opened bomb valve", LOG_GAME, log_globally = FALSE)
+
+		if(istype(attachment, /obj/item/assembly/voice))
+			var/obj/item/assembly/voice/spoken_trigger = attachment
+			attachment_message += " with the following activation message: \"[spoken_trigger.recorded]\""
+			admin_attachment_message += " with the following activation message: \"[spoken_trigger.recorded]\""
 
 		var/admin_bomb_message = "Bomb valve opened in [ADMIN_VERBOSEJMP(bombturf)]<br>[admin_attachment_message]<br>[admin_bomber_message]<br>[attachment_signal_log]"
 		GLOB.bombers += admin_bomb_message
 		message_admins(admin_bomb_message)
 		log_game("Bomb valve opened in [AREACOORD(bombturf)][attachment_message][bomber_message]")
-		bomber.log_message("opened bomb valve at [AREACOORD(bombturf)].", LOG_GAME, log_globally = FALSE)
 
 		valve_open = merge_gases(target, change_volume)
 

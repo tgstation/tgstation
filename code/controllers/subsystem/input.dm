@@ -29,7 +29,7 @@ VERB_MANAGER_SUBSYSTEM_DEF(input)
 
 	refresh_client_macro_sets()
 
-	return ..()
+	return SS_INIT_SUCCESS
 
 // This is for when macro sets are eventualy datumized
 /datum/controller/subsystem/verb_manager/input/proc/setup_default_macro_sets()
@@ -65,9 +65,16 @@ VERB_MANAGER_SUBSYSTEM_DEF(input)
 	if(usr)
 		Click(location, control, params)
 
-
 /datum/controller/subsystem/verb_manager/input/fire()
+	..()
+
 	var/moves_this_run = 0
+	for(var/mob/user in GLOB.keyloop_list)
+		moves_this_run += user.focus?.keyLoop(user.client)//only increments if a player moves due to their own input
+
+	movements_per_second = MC_AVG_SECONDS(movements_per_second, moves_this_run, wait TICKS)
+
+/datum/controller/subsystem/verb_manager/input/run_verb_queue()
 	var/deferred_clicks_this_run = 0 //acts like current_clicks but doesnt count clicks that dont get processed by SSinput
 
 	for(var/datum/callback/verb_callback/queued_click as anything in verb_queue)
@@ -83,16 +90,11 @@ VERB_MANAGER_SUBSYSTEM_DEF(input)
 
 	verb_queue.Cut() //is ran all the way through every run, no exceptions
 
-	for(var/mob/user in GLOB.keyloop_list)
-		moves_this_run += user.focus?.keyLoop(user.client)//only increments if a player changes their movement input from the last tick
-
-	clicks_per_second = MC_AVG_SECONDS(clicks_per_second, current_clicks, wait TICKS)
-	delayed_clicks_per_second = MC_AVG_SECONDS(delayed_clicks_per_second, deferred_clicks_this_run, wait TICKS)
-	movements_per_second = MC_AVG_SECONDS(movements_per_second, moves_this_run, wait TICKS)
-
+	clicks_per_second = MC_AVG_SECONDS(clicks_per_second, current_clicks, wait SECONDS)
+	delayed_clicks_per_second = MC_AVG_SECONDS(delayed_clicks_per_second, deferred_clicks_this_run, wait SECONDS)
 	current_clicks = 0
 
 /datum/controller/subsystem/verb_manager/input/stat_entry(msg)
 	. = ..()
-	. += "M/S:[round(movements_per_second,0.01)] | C/S:[round(clicks_per_second,0.01)]([round(delayed_clicks_per_second,0.01)] | CD: [round(average_click_delay,0.01)])"
+	. += "M/S:[round(movements_per_second,0.01)] | C/S:[round(clicks_per_second,0.01)] ([round(delayed_clicks_per_second,0.01)] | CD: [round(average_click_delay,0.01)])"
 

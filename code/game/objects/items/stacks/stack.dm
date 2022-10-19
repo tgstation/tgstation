@@ -53,6 +53,8 @@
 	var/has_unique_girder = FALSE
 	/// What typepath table we create from this stack
 	var/obj/structure/table/tableVariant
+	/// What typepath stairs do we create from this stack
+	var/obj/structure/stairs/stairs_type
 	/// If TRUE, we'll use a radial instead when displaying recipes
 	var/use_radial = FALSE
 	/// If use_radial is TRUE, this is the radius of the radial
@@ -357,7 +359,8 @@
 		return
 	if(!is_valid_recipe(recipe, recipes)) //href exploit protection
 		return
-	if(!multiplier || multiplier < 1) //href exploit protection
+	if(!multiplier || multiplier < 1 || !IS_FINITE(multiplier)) //href exploit protection
+		stack_trace("Invalid multiplier value in stack creation [multiplier], [usr] is likely attempting an exploit")
 		return
 	if(!building_checks(builder, recipe, multiplier))
 		return
@@ -459,9 +462,13 @@
 			builder.balloon_alert(builder, "must be made on a tram!")
 			return FALSE
 
-	if(recipe.on_floor)
-		if(!isfloorturf(dest_turf))
-			builder.balloon_alert(builder, "must be made on a floor!")
+	if(recipe.on_solid_ground)
+		if(isclosedturf(dest_turf))
+			builder.balloon_alert(builder, "cannot be made on a wall!")
+			return FALSE
+
+		if(is_type_in_typecache(dest_turf, GLOB.turfs_without_ground))
+			builder.balloon_alert(builder, "must be made on solid ground!")
 			return FALSE
 
 		for(var/obj/object in dest_turf)
@@ -571,6 +578,10 @@
 		return FALSE
 	if(ismob(loc) && !inhand) // no merging with items that are on the mob
 		return FALSE
+	if(istype(loc, /obj/machinery)) // no merging items in machines that aren't both in componentparts
+		var/obj/machinery/machine = loc
+		if(!(src in machine.component_parts) || !(check in machine.component_parts))
+			return FALSE
 	return TRUE
 
 /**
@@ -646,13 +657,13 @@
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
 
-	if(is_cyborg || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
+	if(is_cyborg || !user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = !iscyborg(user)))
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	if(is_zero_amount(delete_if_zero = TRUE))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	var/max = get_amount()
 	var/stackmaterial = tgui_input_number(user, "How many sheets do you wish to take out of this stack?", "Stack Split", max_value = max)
-	if(!stackmaterial || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK, !iscyborg(user)))
+	if(!stackmaterial || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE, need_hands = !iscyborg(user)))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	split_stack(user, stackmaterial)
 	to_chat(user, span_notice("You take [stackmaterial] sheets out of the stack."))

@@ -2,8 +2,9 @@
  * Double-Bladed Energy Swords - Cheridan
  */
 /obj/item/dualsaber
-	icon = 'icons/obj/transforming_energy.dmi'
+	icon = 'icons/obj/weapons/transforming_energy.dmi'
 	icon_state = "dualsaber0"
+	inhand_icon_state = "dualsaber0"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	name = "double-bladed energy sword"
@@ -34,10 +35,16 @@
 	var/hacked = FALSE
 	var/list/possible_colors = list("red", "blue", "green", "purple")
 
-/obj/item/dualsaber/ComponentInitialize()
+/obj/item/dualsaber/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=force, force_wielded=two_hand_force, wieldsound='sound/weapons/saberon.ogg', unwieldsound='sound/weapons/saberoff.ogg', \
-		wield_callback = CALLBACK(src, .proc/on_wield), unwield_callback = CALLBACK(src, .proc/on_unwield))
+	AddComponent(/datum/component/two_handed, \
+		force_unwielded = force, \
+		force_wielded = two_hand_force, \
+		wieldsound = 'sound/weapons/saberon.ogg', \
+		unwieldsound = 'sound/weapons/saberoff.ogg', \
+		wield_callback = CALLBACK(src, .proc/on_wield), \
+		unwield_callback = CALLBACK(src, .proc/on_unwield), \
+	)
 
 /// Triggered on wield of two handed item
 /// Specific hulk checks due to reflection chance for balance issues and switches hitsounds.
@@ -65,7 +72,7 @@
 	return HAS_TRAIT(src, TRAIT_WIELDED) && sharpness
 
 /obj/item/dualsaber/update_icon_state()
-	icon_state = HAS_TRAIT(src, TRAIT_WIELDED) ? "dualsaber[saber_color][HAS_TRAIT(src, TRAIT_WIELDED)]" : "dualsaber0"
+	icon_state = inhand_icon_state = HAS_TRAIT(src, TRAIT_WIELDED) ? "dualsaber[saber_color][HAS_TRAIT(src, TRAIT_WIELDED)]" : "dualsaber0"
 	return ..()
 
 /obj/item/dualsaber/suicide_act(mob/living/carbon/user)
@@ -83,7 +90,7 @@
 				user.emote("spin")
 				if (i == 3 && myhead)
 					myhead.drop_limb()
-				sleep(3)
+				sleep(0.3 SECONDS)
 			else
 				user.visible_message(span_suicide("[user] panics and starts choking to death!"))
 				return OXYLOSS

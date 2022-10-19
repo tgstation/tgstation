@@ -298,7 +298,7 @@
 		var/turf/turf_server = get_turf(server)
 		if (!turf_source || !turf_server)
 			break
-		if (turf_source.z == turf_server.z || (SSmapping.level_trait(turf_source.z, ZTRAIT_STATION) && SSmapping.level_trait(turf_server.z, ZTRAIT_STATION)))
+		if(is_valid_z_level(turf_source, turf_server))
 			local_servers += server
 	return local_servers
 

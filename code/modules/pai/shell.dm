@@ -7,7 +7,6 @@
 /mob/living/silicon/pai/start_pulling(atom/movable/thing, state, force = move_force, supress_message = FALSE)
 	return FALSE
 
-
 /mob/living/silicon/pai/update_resting()
 	. = ..()
 	if(resting)
@@ -17,7 +16,7 @@
 	if(loc != card)
 		visible_message(span_notice("[src] [resting? "lays down for a moment..." : "perks up from the ground."]"))
 
-/mob/living/silicon/pai/wabbajack()
+/mob/living/silicon/pai/wabbajack(what_to_randomize, change_flags = WABBAJACK)
 	if(length(possible_chassis) < 2)
 		return FALSE
 	var/holochassis = pick(possible_chassis - chassis)
@@ -84,12 +83,12 @@
 		return FALSE
 	visible_message(span_notice("[src] deactivates its holochassis emitter and folds back into a compact card!"))
 	stop_pulling()
-	if(istype(loc, /obj/item/clothing/head/mob_holder))
+	if(ispickedupmob(loc))
 		var/obj/item/clothing/head/mob_holder/mob_head = loc
 		mob_head.release(display_messages = FALSE)
 	if(client)
 		client.perspective = EYE_PERSPECTIVE
-		client.eye = card
+		client.set_eye(card)
 	var/turf/target = drop_location()
 	card.forceMove(target)
 	forceMove(card)
@@ -140,7 +139,7 @@
 	card.forceMove(src)
 	if(client)
 		client.perspective = EYE_PERSPECTIVE
-		client.eye = src
+		client.set_eye(src)
 	set_light_on(FALSE)
 	icon_state = "[chassis]"
 	held_state = "[chassis]"

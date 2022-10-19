@@ -77,6 +77,8 @@
 		base_icon_state = "sus"
 		desc += " This one looks a bit sus..."
 
+	RegisterSignal(src, COMSIG_MACHINERY_POWER_RESTORED, .proc/on_power_restore)
+	RegisterSignal(src, COMSIG_MACHINERY_POWER_LOST, .proc/on_power_loss)
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/door/firedoor/LateInitialize()
@@ -99,6 +101,7 @@
 
 /obj/machinery/door/firedoor/Destroy()
 	remove_from_areas()
+	unregister_adjacent_turfs(loc)
 	QDEL_NULL(soundloop)
 	return ..()
 
@@ -157,7 +160,7 @@
 				context[SCREENTIP_CONTEXT_RMB] = "Open permanently"
 			return CONTEXTUAL_SCREENTIP_SET
 		if (TOOL_WELDER)
-			context[SCREENTIP_CONTEXT_LMB] = welded ? "Unweld shut" : "Weld shut"
+			context[SCREENTIP_CONTEXT_RMB] = welded ? "Unweld shut" : "Weld shut"
 			return CONTEXTUAL_SCREENTIP_SET
 		if (TOOL_WRENCH)
 			if (welded && !boltslocked)
@@ -340,7 +343,7 @@
 	active = TRUE
 	alarm_type = code
 	add_as_source()
-	update_icon() //Sets the door lights even if the door doesn't move.
+	update_appearance(UPDATE_ICON) //Sets the door lights even if the door doesn't move.
 	correct_state()
 
 /// Adds this fire door as a source of trouble to all of its areas
@@ -367,7 +370,7 @@
 	remove_as_source()
 	soundloop.stop()
 	is_playing_alarm = FALSE
-	update_icon() //Sets the door lights even if the door doesn't move.
+	update_appearance(UPDATE_ICON) //Sets the door lights even if the door doesn't move.
 	correct_state()
 
 /**
@@ -385,7 +388,7 @@
 	soundloop.stop()
 	is_playing_alarm = FALSE
 	remove_as_source()
-	update_icon() //Sets the door lights even if the door doesn't move.
+	update_appearance(UPDATE_ICON) //Sets the door lights even if the door doesn't move.
 	correct_state()
 
 	/// Please be called 3 seconds after the LAST open, rather then 3 seconds after the first
@@ -414,12 +417,11 @@
 		if(place == my_area)
 			place.alarm_manager.clear_alarm(ALARM_FIRE, place)
 
-/obj/machinery/door/firedoor/emag_act(mob/user, obj/item/card/emag/doorjack/digital_crowbar)
+/obj/machinery/door/firedoor/emag_act(mob/user, obj/item/card/emag/emag_type)
 	if(obj_flags & EMAGGED)
 		return
-	if(!isAI(user)) //Skip doorjack-specific code
-		if(!user || digital_crowbar.charges < 1)
-			return
+	if(istype(emag_type, /obj/item/card/emag/doorjack)) //Skip doorjack-specific code
+		var/obj/item/card/emag/doorjack/digital_crowbar = emag_type
 		digital_crowbar.use_charge(user)
 	obj_flags |= EMAGGED
 	INVOKE_ASYNC(src, .proc/open)
@@ -434,13 +436,13 @@
 /obj/machinery/door/firedoor/bumpopen(mob/living/user)
 	return FALSE //No bumping to open, not even in mechs
 
-/obj/machinery/door/firedoor/power_change()
-	. = ..()
-	update_icon()
+/obj/machinery/door/firedoor/proc/on_power_loss()
+	SIGNAL_HANDLER
 
-	if(machine_stat & NOPOWER)
-		soundloop.stop()
-		return
+	soundloop.stop()
+
+/obj/machinery/door/firedoor/proc/on_power_restore()
+	SIGNAL_HANDLER
 
 	correct_state()
 
@@ -496,7 +498,7 @@
 /obj/machinery/door/firedoor/try_to_activate_door(mob/user, access_bypass = FALSE)
 	return
 
-/obj/machinery/door/firedoor/try_to_weld(obj/item/weldingtool/W, mob/user)
+/obj/machinery/door/firedoor/try_to_weld_secondary(obj/item/weldingtool/W, mob/user)
 	if(!W.tool_start_check(user, amount=0))
 		return
 	user.visible_message(span_notice("[user] starts [welded ? "unwelding" : "welding"] [src]."), span_notice("You start welding [src]."))
@@ -598,7 +600,7 @@
 		hazards.pixel_x = light_xoffset
 		hazards.pixel_y = light_yoffset
 		. += hazards
-		hazards = emissive_appearance(icon, "[(obj_flags & EMAGGED) ? "firelock_alarm_type_emag" : alarm_type]", alpha = src.alpha)
+		hazards = emissive_appearance(icon, "[(obj_flags & EMAGGED) ? "firelock_alarm_type_emag" : alarm_type]", src, alpha = src.alpha)
 		hazards.pixel_x = light_xoffset
 		hazards.pixel_y = light_yoffset
 		. += hazards
@@ -689,7 +691,7 @@
 			light_xoffset = 2
 		if(WEST)
 			light_xoffset = -2
-	update_icon()
+	update_appearance(UPDATE_ICON)
 
 /obj/machinery/door/firedoor/border_only/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()

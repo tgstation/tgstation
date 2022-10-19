@@ -1,7 +1,7 @@
 /mob/living/simple_animal/hostile/smspider
 	name = "supermatter spider"
 	desc= "A sliver of supermatter placed upon a robotically enhanced pedestal."
-	icon = 'icons/mob/smspider.dmi'
+	icon = 'icons/mob/simple/smspider.dmi'
 	icon_state = "smspider"
 	icon_living = "smspider"
 	icon_dead = "smspider_dead"
@@ -27,7 +27,7 @@
 	faction = list("hostile")
 	see_in_dark = NIGHTVISION_FOV_RANGE
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-	deathmessage = "falls to the ground, its shard dulling to a miserable grey!"
+	death_message = "falls to the ground, its shard dulling to a miserable grey!"
 	footstep_type = FOOTSTEP_MOB_CLAW
 	var/overcharged = FALSE // if true, spider will not die if it dusts a limb
 

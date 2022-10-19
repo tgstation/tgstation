@@ -7,16 +7,16 @@
 	meat = /obj/item/food/meat/slab/human/mutant/shadow
 	species_traits = list(NOBLOOD,NOEYESPRITES)
 	inherent_traits = list(
-		TRAIT_ADVANCEDTOOLUSER,
-		TRAIT_CAN_STRIP,
-		TRAIT_LITERATE,
 		TRAIT_NOBREATH,
 		TRAIT_RADIMMUNE,
 		TRAIT_VIRUSIMMUNE,
 	)
 	inherent_factions = list("faithless")
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
-	mutanteyes = /obj/item/organ/internal/eyes/night_vision
+
+	mutantbrain = /obj/item/organ/internal/brain/shadow
+	mutanteyes = /obj/item/organ/internal/eyes/night_vision/shadow
+
 	species_language_holder = /datum/language_holder/shadowpeople
 
 	bodypart_overrides = list(
@@ -27,17 +27,6 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/shadow,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/shadow,
 	)
-
-
-/datum/species/shadow/spec_life(mob/living/carbon/human/H, delta_time, times_fired)
-	var/turf/T = H.loc
-	if(istype(T))
-		var/light_amount = T.get_lumcount()
-
-		if(light_amount > SHADOW_SPECIES_LIGHT_THRESHOLD) //if there's enough light, start dying
-			H.take_overall_damage(0.5 * delta_time, 0.5 * delta_time, 0, BODYTYPE_ORGANIC)
-		else if (light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD) //heal in the dark
-			H.heal_overall_damage(0.5 * delta_time, 0.5 * delta_time, 0, BODYTYPE_ORGANIC)
 
 /datum/species/shadow/check_roundstart_eligible()
 	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
@@ -92,3 +81,26 @@
 	)
 
 	return to_add
+
+/// the key to some of their powers
+/obj/item/organ/internal/brain/shadow
+	name = "shadowling tumor"
+	desc = "Something that was once a brain, before being remolded by a shadowling. It has adapted to the dark, irreversibly."
+	icon = 'icons/obj/medical/organs/shadow_organs.dmi'
+
+/obj/item/organ/internal/brain/shadow/on_life(delta_time, times_fired)
+	. = ..()
+	var/turf/owner_turf = owner.loc
+	if(!isturf(owner_turf))
+		return
+	var/light_amount = owner_turf.get_lumcount()
+
+	if(light_amount > SHADOW_SPECIES_LIGHT_THRESHOLD) //if there's enough light, start dying
+		owner.take_overall_damage(0.5 * delta_time, 0.5 * delta_time, 0, BODYTYPE_ORGANIC)
+	else if (light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD) //heal in the dark
+		owner.heal_overall_damage(0.5 * delta_time, 0.5 * delta_time, 0, BODYTYPE_ORGANIC)
+
+/obj/item/organ/internal/eyes/night_vision/shadow
+	name = "burning red eyes"
+	desc = "Even without their shadowy owner, looking at these eyes gives you a sense of dread."
+	icon = 'icons/obj/medical/organs/shadow_organs.dmi'

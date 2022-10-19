@@ -10,9 +10,10 @@ again.
 
 /obj/effect/spawner/structure/Initialize(mapload)
 	. = ..()
-	if(spawn_list?.len)
-		for(var/I in spawn_list)
-			new I(get_turf(src))
+
+	for(var/spawn_type in spawn_list)
+		new spawn_type(loc)
+
 	return INITIALIZE_HINT_QDEL
 
 
@@ -28,9 +29,8 @@ again.
 /obj/effect/spawner/structure/window/Initialize(mapload)
 	. = ..()
 
-	if (is_station_level(z))
-		var/turf/current_turf = get_turf(src)
-		current_turf.rcd_memory = RCD_MEMORY_WINDOWGRILLE
+	var/turf/current_turf = loc
+	current_turf.rcd_memory = RCD_MEMORY_WINDOWGRILLE
 
 /obj/effect/spawner/structure/window/hollow
 	name = "hollow window spawner"
@@ -369,3 +369,9 @@ again.
 		if(NORTHWEST)
 			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/plasma/spawner/north, /obj/structure/window/reinforced/plasma/spawner/west)
 	. = ..()
+
+/obj/effect/spawner/structure/electrified_grille
+	name = "electrified grill spawner"
+	icon = 'icons/obj/structures_spawners.dmi'
+	icon_state = "electrified_grille"
+	spawn_list = list(/obj/structure/grille, /obj/structure/cable)

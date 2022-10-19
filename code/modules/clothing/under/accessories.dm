@@ -63,7 +63,7 @@
 		pixel_x -= 8
 		pixel_y += 8
 	layer = initial(layer)
-	plane = initial(plane)
+	SET_PLANE_IMPLICIT(src, initial(plane))
 	U.cut_overlays()
 	U.attached_accessory = null
 	U.accessory_overlay = null
@@ -76,7 +76,7 @@
 	return
 
 /obj/item/clothing/accessory/attack_self_secondary(mob/user)
-	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
+	if(user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = !iscyborg(user)))
 		above_suit = !above_suit
 		to_chat(user, "[src] will be worn [above_suit ? "above" : "below"] your suit.")
 		return
@@ -92,7 +92,9 @@
 	name = "waistcoat"
 	desc = "For some classy, murderous fun."
 	icon_state = "waistcoat"
-	inhand_icon_state = "waistcoat"
+	inhand_icon_state = "wcoat"
+	lefthand_file = 'icons/mob/inhands/clothing/suits_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
 	minimize_when_attached = FALSE
 	attachment_slot = null
 	greyscale_config = /datum/greyscale_config/waistcoat
@@ -104,6 +106,8 @@
 	name = "sheriff vest"
 	desc = "Now you just have to pick your favourite deputy."
 	icon_state = "vest_sheriff"
+	lefthand_file = 'icons/mob/inhands/clothing/suits_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
 	inhand_icon_state = "vest_sheriff"
 	minimize_when_attached = TRUE
 	attachment_slot = null
@@ -113,6 +117,8 @@
 	desc = "The final touch that holds it all together."
 	icon_state = "maidcorset"
 	inhand_icon_state = "maidapron"
+	lefthand_file = 'icons/mob/inhands/clothing/suits_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
 	minimize_when_attached = FALSE
 	attachment_slot = null
 
@@ -121,6 +127,8 @@
 	desc = "The best part of a maid costume."
 	icon_state = "maidapron"
 	inhand_icon_state = "maidapron"
+	lefthand_file = 'icons/mob/inhands/clothing/suits_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
 	minimize_when_attached = FALSE
 	attachment_slot = null
 
@@ -352,10 +360,13 @@
 	desc = "Can protect your clothing from ink stains, but you'll look like a nerd if you're using one."
 	icon_state = "pocketprotector"
 
-/obj/item/clothing/accessory/pocketprotector/full/Initialize(mapload)
+/obj/item/clothing/accessory/pocketprotector/Initialize(mapload)
 	. = ..()
 
 	create_storage(type = /datum/storage/pockets/pocketprotector)
+
+/obj/item/clothing/accessory/pocketprotector/full/Initialize(mapload)
+	. = ..()
 
 	new /obj/item/pen/red(src)
 	new /obj/item/pen(src)
@@ -378,12 +389,12 @@
 /obj/item/clothing/accessory/clown_enjoyer_pin/on_uniform_equip(obj/item/clothing/under/U, user)
 	var/mob/living/L = user
 	if(HAS_TRAIT(L, TRAIT_CLOWN_ENJOYER))
-		SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "clown_enjoyer_pin", /datum/mood_event/clown_enjoyer_pin)
+		L.add_mood_event("clown_enjoyer_pin", /datum/mood_event/clown_enjoyer_pin)
 
 /obj/item/clothing/accessory/clown_enjoyer_pin/on_uniform_dropped(obj/item/clothing/under/U, user)
 	var/mob/living/L = user
 	if(HAS_TRAIT(L, TRAIT_CLOWN_ENJOYER))
-		SEND_SIGNAL(L, COMSIG_CLEAR_MOOD_EVENT, "clown_enjoyer_pin")
+		L.clear_mood_event("clown_enjoyer_pin")
 
 /obj/item/clothing/accessory/mime_fan_pin
 	name = "\improper Mime Pin"
@@ -393,12 +404,12 @@
 /obj/item/clothing/accessory/mime_fan_pin/on_uniform_equip(obj/item/clothing/under/U, user)
 	var/mob/living/L = user
 	if(HAS_TRAIT(L, TRAIT_MIME_FAN))
-		SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "mime_fan_pin", /datum/mood_event/mime_fan_pin)
+		L.add_mood_event("mime_fan_pin", /datum/mood_event/mime_fan_pin)
 
 /obj/item/clothing/accessory/mime_fan_pin/on_uniform_dropped(obj/item/clothing/under/U, user)
 	var/mob/living/L = user
 	if(HAS_TRAIT(L, TRAIT_MIME_FAN))
-		SEND_SIGNAL(L, COMSIG_CLEAR_MOOD_EVENT, "mime_fan_pin")
+		L.clear_mood_event("mime_fan_pin")
 
 ////////////////
 //OONGA BOONGA//

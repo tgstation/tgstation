@@ -1,8 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - rscadd: "Pun Pun now gives stuff in their hand frequently and rings desk bells."
-  - rscadd: "Pun Pun now has gentleman-like emotes, rather than screeching and roaring."
-  - balance: "Pun Pun no longer looks for weapons in their off time."
-  - balance: "Pun Pun is no longer vulnerable to stuns by being walked into."
-  - qol: "Monkeys can now use desk bells."

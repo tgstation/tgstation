@@ -260,7 +260,7 @@
 		// Or on crew monitors
 		var/obj/item/clothing/under/sensor_clothes = spawned_human.w_uniform
 		if(istype(sensor_clothes))
-			sensor_clothes.sensor_mode = NO_SENSORS
+			sensor_clothes.sensor_mode = SENSOR_OFF
 			spawned_human.update_suit_sensors()
 
 //don't use this in subtypes, just add 1000 brute yourself. that being said, this is a type that has 1000 brute. it doesn't really have a home anywhere else, it just needs to exist

@@ -1,6 +1,6 @@
 /obj/structure/blob/special/core
 	name = "blob core"
-	icon = 'icons/mob/blob.dmi'
+	icon = 'icons/mob/nonhuman-player/blob.dmi'
 	icon_state = "blank_blob"
 	desc = "A huge, pulsating yellow mass."
 	max_integrity = BLOB_CORE_MAX_HP
@@ -27,7 +27,8 @@
 	if(overmind)
 		overmind.blobstrain.on_gain()
 		update_appearance()
-	. = ..()
+	AddComponent(/datum/component/stationloving, FALSE, TRUE)
+	return ..()
 
 /obj/structure/blob/special/core/Destroy()
 	GLOB.blob_cores -= src
@@ -42,11 +43,11 @@
 
 /obj/structure/blob/special/core/update_overlays()
 	. = ..()
-	var/mutable_appearance/blob_overlay = mutable_appearance('icons/mob/blob.dmi', "blob")
+	var/mutable_appearance/blob_overlay = mutable_appearance('icons/mob/nonhuman-player/blob.dmi', "blob")
 	if(overmind)
 		blob_overlay.color = overmind.blobstrain.color
 	. += blob_overlay
-	. += mutable_appearance('icons/mob/blob.dmi', "blob_core_overlay")
+	. += mutable_appearance('icons/mob/nonhuman-player/blob.dmi', "blob_core_overlay")
 
 /obj/structure/blob/special/core/update_icon()
 	. = ..()
@@ -74,10 +75,6 @@
 	reinforce_area(delta_time)
 	produce_spores()
 	..()
-
-/obj/structure/blob/special/core/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/stationloving, FALSE, TRUE)
 
 /obj/structure/blob/special/core/on_changed_z_level(turf/old_turf, turf/new_turf)
 	if(overmind && is_station_level(new_turf?.z))

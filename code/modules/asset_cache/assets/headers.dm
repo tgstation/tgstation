@@ -8,7 +8,6 @@
 		"batt_60.gif" = 'icons/program_icons/batt_60.gif',
 		"batt_80.gif" = 'icons/program_icons/batt_80.gif',
 		"batt_100.gif" = 'icons/program_icons/batt_100.gif',
-		"charging.gif" = 'icons/program_icons/charging.gif',
 		"downloader_finished.gif" = 'icons/program_icons/downloader_finished.gif',
 		"downloader_running.gif" = 'icons/program_icons/downloader_running.gif',
 		"ntnrc_idle.gif" = 'icons/program_icons/ntnrc_idle.gif',

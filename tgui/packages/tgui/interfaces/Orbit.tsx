@@ -1,38 +1,38 @@
 import { useBackend, useLocalState } from '../backend';
 import { filter, sortBy } from 'common/collections';
 import { capitalizeFirst, multiline } from 'common/string';
-import { Button, Collapsible, Icon, Input, Section, Stack } from '../components';
+import { Box, Button, Collapsible, Icon, Input, LabeledList, NoticeBox, Section, Stack } from '../components';
 import { Window } from '../layouts';
 import { flow } from 'common/fp';
 
-type AntagGroup = [string, Observable[]];
+type AntagGroup = [string, Antags];
+
+type Antags = Array<Observable & { antag: string }>;
 
 type Data = {
-  alive: Observable[];
-  antagonists: Observable[];
-  dead: Observable[];
-  ghosts: Observable[];
-  misc: Observable[];
-  npcs: Observable[];
+  alive: Array<Observable>;
+  antagonists: Antags;
+  dead: Array<Observable>;
+  ghosts: Array<Observable>;
+  misc: Array<Observable>;
+  npcs: Array<Observable>;
 };
 
 type Observable = {
-  ref: string;
-  antag?: string;
-  name: string;
+  extra?: string;
+  full_name: string;
+  health?: number;
+  job?: string;
+  name?: string;
   orbiters?: number;
-};
-
-type SectionProps = {
-  color?: string;
-  section: Observable[];
-  title: string;
+  ref: string;
 };
 
 const ANTAG2COLOR = {
   'Abductors': 'pink',
   'Ash Walkers': 'olive',
   'Biohazards': 'brown',
+  'CentCom': 'teal',
 } as const;
 
 const ANTAG2GROUP = {
@@ -41,6 +41,11 @@ const ANTAG2GROUP = {
   'Ash Walker': 'Ash Walkers',
   'Blob': 'Biohazards',
   'Sentient Disease': 'Biohazards',
+  'CentCom Commander': 'CentCom',
+  'CentCom Head Intern': 'CentCom',
+  'CentCom Intern': 'CentCom',
+  'CentCom Official': 'CentCom',
+  'Central Command': 'CentCom',
   'Clown Operative': 'Clown Operatives',
   'Clown Operative Leader': 'Clown Operatives',
   'Nuclear Operative': 'Nuclear Operatives',
@@ -97,17 +102,17 @@ const ObservableSearch = (props, context) => {
     'searchQuery',
     ''
   );
-  /** Gets a list of Observable[], then filters the most relevant to orbit */
+  /** Gets a list of Observables, then filters the most relevant to orbit */
   const orbitMostRelevant = (searchQuery: string): void => {
     /** Returns the most orbited observable that matches the search. */
     const mostRelevant: Observable = flow([
       // Filters out anything that doesn't match search
       filter<Observable>((observable) =>
-        observable.name?.toLowerCase().includes(searchQuery?.toLowerCase())
+        isJobOrNameMatch(observable, searchQuery)
       ),
       // Sorts descending by orbiters
-      sortBy<Observable>((poi) => -(poi.orbiters || 0)),
-      // Makes a single Observable[] list for an easy search
+      sortBy<Observable>((observable) => -(observable.orbiters || 0)),
+      // Makes a single Observables list for an easy search
     ])([alive, antagonists, dead, ghosts, misc, npcs].flat())[0];
     if (mostRelevant !== undefined) {
       act('orbit', {
@@ -174,7 +179,7 @@ const ObservableContent = (props, context) => {
     misc = [],
     npcs = [],
   } = data;
-  let collatedAntagonists: AntagGroup[] = [];
+  let collatedAntagonists: Array<AntagGroup> = [];
   if (antagonists.length) {
     collatedAntagonists = collateAntagonists(antagonists);
   }
@@ -204,21 +209,24 @@ const ObservableContent = (props, context) => {
  * Displays a collapsible with a map of observable items.
  * Filters the results if there is a provided search query.
  */
-const ObservableSection = (props: SectionProps, context) => {
+const ObservableSection = (
+  props: {
+    color?: string;
+    section: Array<Observable>;
+    title: string;
+  },
+  context
+) => {
   const { color = 'grey', section = [], title } = props;
   if (!section.length) {
     return null;
   }
-  const [searchQuery, setSearchQuery] = useLocalState<string>(
-    context,
-    'searchQuery',
-    ''
-  );
-  const filteredSection: Observable[] = flow([
-    filter<Observable>((poi) =>
-      poi.name?.toLowerCase().includes(searchQuery?.toLowerCase())
+  const [searchQuery] = useLocalState<string>(context, 'searchQuery', '');
+  const filteredSection: Array<Observable> = flow([
+    filter<Observable>((observable) =>
+      isJobOrNameMatch(observable, searchQuery)
     ),
-    sortBy<Observable>((poi) => poi.name.toLowerCase()),
+    sortBy<Observable>((observable) => observable.name?.toLowerCase()),
   ])(section);
   if (!filteredSection.length) {
     return null;
@@ -239,36 +247,65 @@ const ObservableSection = (props: SectionProps, context) => {
   );
 };
 
-/** Renders an observable button */
+/** Renders an observable button that has tooltip info for living Observables*/
 const ObservableItem = (
   props: { color: string; item: Observable },
   context
 ) => {
   const { act } = useBackend<Data>(context);
-  const {
-    color,
-    item: { name, orbiters, ref },
-  } = props;
-  const [autoObserve, setAutoObserve] = useLocalState<boolean>(
-    context,
-    'autoObserve',
-    false
-  );
-  const threat = getThreat(orbiters || 0);
+  const { color, item } = props;
+  const { extra, full_name, health, name, orbiters, ref } = item;
+  const [autoObserve] = useLocalState<boolean>(context, 'autoObserve', false);
+  const threat = getThreat(orbiters ?? 0);
+  const displayName = getDisplayName(name, full_name);
 
   return (
     <Button
       color={threat || color}
-      onClick={() => act('orbit', { auto_observe: autoObserve, ref: ref })}>
-      {capitalizeFirst(name).slice(0, 44) /** prevents it from overflowing */}
+      onClick={() => act('orbit', { auto_observe: autoObserve, ref: ref })}
+      tooltip={(!!health || !!extra) && <ObservableTooltip item={item} />}
+      tooltipPosition="bottom-start">
+      {capitalizeFirst(displayName)}
       {!!orbiters && (
         <>
           {' '}
-          ({orbiters?.toString()}{' '}
+          ({orbiters}{' '}
           <Icon mr={0} name={threat === THREAT.Large ? 'skull' : 'ghost'} />)
         </>
       )}
     </Button>
+  );
+};
+
+/** Displays some info on the mob as a tooltip. */
+const ObservableTooltip = (props: { item: Observable }) => {
+  const {
+    item: { extra, full_name, job, health },
+  } = props;
+  const extraInfo = extra?.split(':');
+
+  return (
+    <>
+      <NoticeBox textAlign="center" nowrap>
+        Last Known Data
+      </NoticeBox>
+      <LabeledList>
+        {!!extraInfo && (
+          <LabeledList.Item label={extraInfo[0]}>
+            {extraInfo[1]}
+          </LabeledList.Item>
+        )}
+        {!!full_name && (
+          <LabeledList.Item label="Name">{full_name}</LabeledList.Item>
+        )}
+        {!!job && <LabeledList.Item label="Job">{job}</LabeledList.Item>}
+        {!!health && (
+          <LabeledList.Item label="Health">
+            {getHealthLabel(health!)}
+          </LabeledList.Item>
+        )}
+      </LabeledList>
+    </>
   );
 };
 
@@ -277,25 +314,63 @@ const ObservableItem = (
  * Some antags are grouped together lest they be listed separately,
  * ie: Nuclear Operatives. See: ANTAG_GROUPS.
  */
-const collateAntagonists = (antagonists: Observable[]): AntagGroup[] => {
-  const collatedAntagonists = {};
-  for (const antagonist of antagonists) {
-    const { antag } = antagonist;
-    const resolvedName = ANTAG2GROUP[antag!] || antag;
-    if (collatedAntagonists[resolvedName] === undefined) {
+const collateAntagonists = (antagonists: Antags) => {
+  const collatedAntagonists = {}; // Hate that I cant use a map here
+  antagonists.map((player) => {
+    const { antag } = player;
+    const resolvedName: string = ANTAG2GROUP[antag] || antag;
+    if (!collatedAntagonists[resolvedName]) {
       collatedAntagonists[resolvedName] = [];
     }
-    collatedAntagonists[resolvedName].push(antagonist);
-  }
-  const sortedAntagonists = sortBy<AntagGroup>((antagonist) => antagonist[0])(
+    collatedAntagonists[resolvedName].push(player);
+  });
+  const sortedAntagonists = sortBy<AntagGroup>(([key]) => key)(
     Object.entries(collatedAntagonists)
   );
 
   return sortedAntagonists;
 };
 
+/** Returns a disguised name in case the person is wearing someone else's ID */
+const getDisplayName = (name: string | undefined, full_name: string) => {
+  if (!name) {
+    return full_name;
+  }
+  if (
+    !full_name?.includes('[') ||
+    full_name.match(/\(as /) ||
+    full_name.match(/^Unknown/)
+  ) {
+    return name;
+  }
+  // return only the name before the first ' [' or ' ('
+  return `"${full_name.split(/ \[| \(/)[0]}"`;
+};
+
+/** Returns some labels for a player's health */
+const getHealthLabel = (health: number) => {
+  if (health >= 100) {
+    return <Box color="blue">Great</Box>;
+  }
+  if (health >= 75) {
+    return <Box color="green">Good</Box>;
+  }
+  if (health >= 50) {
+    return <Box color="yellow">Fair</Box>;
+  }
+  if (health >= 25) {
+    return <Box color="orange">Poor</Box>;
+  }
+  if (health > 0) {
+    return <Box color="orange">Bad</Box>;
+  }
+  if (health <= 0) {
+    return <Box color="red">Critical</Box>;
+  }
+};
+
 /** Takes the amount of orbiters and returns some style options */
-const getThreat = (orbiters: number): THREAT => {
+const getThreat = (orbiters: number) => {
   if (!orbiters || orbiters <= 2) {
     return THREAT.None;
   } else if (orbiters === 3) {
@@ -305,4 +380,16 @@ const getThreat = (orbiters: number): THREAT => {
   } else {
     return THREAT.Large;
   }
+};
+
+/** Checks if a full name or job title matches the search. */
+const isJobOrNameMatch = (observable: Observable, searchQuery: string) => {
+  const { full_name, name, job } = observable;
+  const displayName = full_name ?? name;
+
+  return (
+    displayName?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+    job?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+    false
+  );
 };

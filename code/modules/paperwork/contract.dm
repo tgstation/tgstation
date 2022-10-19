@@ -7,14 +7,11 @@
 	item_flags = NOBLUDGEON
 	var/employee_name = ""
 
-/obj/item/paper/employment_contract/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/update_icon_blocker)
-
 /obj/item/paper/employment_contract/Initialize(mapload, new_employee_name)
-	. = ..()
 	if(!new_employee_name)
 		return INITIALIZE_HINT_QDEL
+	AddElement(/datum/element/update_icon_blocker)
+	. = ..()
 	employee_name = new_employee_name
 	name = "paper- [employee_name] employment contract"
 	add_raw_text("<center>Conditions of Employment</center>\

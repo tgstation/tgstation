@@ -98,8 +98,8 @@
 	log_message("[brain_obj] moved in as pilot.", LOG_MECHA)
 	if(!internal_damage)
 		SEND_SOUND(brain_obj, sound('sound/mecha/nominal.ogg',volume=50))
-	user.log_message("has put the MMI/posibrain of [key_name(brain_mob)] into [src] at [AREACOORD(src)].", LOG_GAME)
-	brain_mob.log_message("was put into [src] by [key_name(user)] at [AREACOORD(src)].", LOG_GAME, log_globally = FALSE)
+	user.log_message("has put the MMI/posibrain of [key_name(brain_mob)] into [src]", LOG_GAME)
+	brain_mob.log_message("was put into [src] by [key_name(user)]", LOG_GAME, log_globally = FALSE)
 	return TRUE
 
 /obj/vehicle/sealed/mecha/mob_exit(mob/M, silent, forced)
@@ -149,9 +149,9 @@
 	return ..()
 
 /obj/vehicle/sealed/mecha/add_occupant(mob/M, control_flags)
-	RegisterSignal(M, COMSIG_LIVING_DEATH, .proc/mob_exit)
-	RegisterSignal(M, COMSIG_MOB_CLICKON, .proc/on_mouseclick)
-	RegisterSignal(M, COMSIG_MOB_SAY, .proc/display_speech_bubble)
+	RegisterSignal(M, COMSIG_LIVING_DEATH, .proc/mob_exit, TRUE)
+	RegisterSignal(M, COMSIG_MOB_CLICKON, .proc/on_mouseclick, TRUE)
+	RegisterSignal(M, COMSIG_MOB_SAY, .proc/display_speech_bubble, TRUE)
 	. = ..()
 	update_appearance()
 

@@ -9,11 +9,11 @@
 	melee_damage_upper = 20
 	max_grab = GRAB_AGGRESSIVE
 	var/caste = ""
-	var/alt_icon = 'icons/mob/alienleap.dmi' //used to switch between the two alien icon files.
+	var/alt_icon = 'icons/mob/nonhuman-player/alienleap.dmi' //used to switch between the two alien icon files.
 	var/leap_on_click = 0
 	var/pounce_cooldown = 0
 	var/pounce_cooldown_time = 30
-	deathsound = 'sound/voice/hiss6.ogg'
+	death_sound = 'sound/voice/hiss6.ogg'
 	bodyparts = list(
 		/obj/item/bodypart/chest/alien,
 		/obj/item/bodypart/head/alien,
@@ -21,7 +21,7 @@
 		/obj/item/bodypart/r_arm/alien,
 		/obj/item/bodypart/r_leg/alien,
 		/obj/item/bodypart/l_leg/alien,
-		)
+	)
 
 GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 	/datum/strippable_item/hand/left,

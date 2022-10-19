@@ -53,7 +53,7 @@
 
 
 /datum/disease/transformation/proc/do_disease_transformation(mob/living/affected_mob)
-	if(istype(affected_mob, /mob/living/carbon) && affected_mob.stat != DEAD)
+	if(iscarbon(affected_mob) && affected_mob.stat != DEAD)
 		if(length(stage5))
 			to_chat(affected_mob, pick(stage5))
 		if(QDELETED(affected_mob))
@@ -137,7 +137,7 @@
 		if(3)
 			if(DT_PROB(2, delta_time))
 				to_chat(affected_mob, span_danger("You feel a stabbing pain in your head."))
-				affected_mob.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/confusion)
+				affected_mob.adjust_confusion(10 SECONDS)
 		if(4)
 			if(DT_PROB(1.5, delta_time))
 				affected_mob.say(pick("Eeek, ook ook!", "Eee-eeek!", "Eeee!", "Ungh, ungh."), forced = "jungle fever")

@@ -22,6 +22,7 @@ export const InterfaceLockNoticeBox = (props, context) => {
     locked = data.locked,
     onLockStatusChange = () => act('lock'),
     accessText = 'an ID card',
+    preventLocking = data.preventLocking,
   } = props;
   // For silicon users
   if (siliconUser) {
@@ -36,6 +37,7 @@ export const InterfaceLockNoticeBox = (props, context) => {
               color={locked ? 'red' : 'green'}
               icon={locked ? 'lock' : 'unlock'}
               content={locked ? 'Locked' : 'Unlocked'}
+              disabled={preventLocking}
               onClick={() => {
                 if (onLockStatusChange) {
                   onLockStatusChange(!locked);

@@ -311,7 +311,7 @@
 	var/arena_turfs = get_arena_turfs()
 	for(var/mob/living/L in GLOB.mob_living_list)
 		if(L.stat != DEAD && (get_turf(L) in arena_turfs))
-			var/obj/item/reagent_containers/food/drinks/trophy/gold_cup/G = new(get_turf(L))
+			var/obj/item/reagent_containers/cup/glass/trophy/gold_cup/G = new(get_turf(L))
 			G.name = "[L.real_name]'s Trophy"
 
 /obj/machinery/computer/arena/ui_interact(mob/user)

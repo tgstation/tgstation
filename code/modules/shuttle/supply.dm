@@ -31,7 +31,8 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/obj/item/mail,
 		/obj/machinery/camera,
 		/obj/item/gps,
-		/obj/structure/checkoutmachine
+		/obj/structure/checkoutmachine,
+		/obj/machinery/fax
 	)))
 
 /// How many goody orders we can fit in a lockbox before we upgrade to a crate
@@ -41,7 +42,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 
 /obj/docking_port/mobile/supply
 	name = "supply shuttle"
-	id = "supply"
+	shuttle_id = "cargo"
 	callTime = 600
 
 	dir = WEST
@@ -79,13 +80,13 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	return ..()
 
 /obj/docking_port/mobile/supply/initiate_docking()
-	if(getDockedId() == "supply_away") // Buy when we leave home.
+	if(getDockedId() == "cargo_away") // Buy when we leave home.
 		buy()
 		create_mail()
 	. = ..() // Fly/enter transit.
 	if(. != DOCKING_SUCCESS)
 		return
-	if(getDockedId() == "supply_away") // Sell when we get home
+	if(getDockedId() == "cargo_away") // Sell when we get home
 		sell()
 
 /obj/docking_port/mobile/supply/proc/buy()
@@ -146,7 +147,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 			else
 				paying_for_this = SSeconomy.get_dep_account(ACCOUNT_CAR)
 			if(paying_for_this)
-				if(!paying_for_this.adjust_money(-price))
+				if(!paying_for_this.adjust_money(-price, "Cargo: [spawning_order.pack.name]"))
 					if(spawning_order.paying_account)
 						paying_for_this.bank_card_talk("Cargo order #[spawning_order.id] rejected due to lack of funds. Credits required: [price]")
 					continue
@@ -222,13 +223,13 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 
 	var/datum/export_report/ex = new
 
-	for(var/place in shuttle_areas)
-		var/area/shuttle/shuttle_area = place
+	for(var/area/shuttle/shuttle_area as anything in shuttle_areas)
 		for(var/atom/movable/AM in shuttle_area)
 			if(iscameramob(AM))
 				continue
-			if(!AM.anchored)
-				export_item_and_contents(AM, export_categories , dry_run = FALSE, external_report = ex)
+			if(AM.anchored)
+				continue
+			export_item_and_contents(AM, export_categories, dry_run = FALSE, external_report = ex)
 
 	if(ex.exported_atoms)
 		ex.exported_atoms += "." //ugh

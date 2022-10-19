@@ -82,14 +82,14 @@
 	desc = "It's a slimming black with reinforced seams; great for industrial work."
 	name = "roboticist's jumpsuit"
 	icon_state = "robotics"
-	inhand_icon_state = "robotics"
+	inhand_icon_state = null
 	resistance_flags = NONE
 
 /obj/item/clothing/under/rank/rnd/roboticist/skirt
 	name = "roboticist's jumpskirt"
 	desc = "It's a slimming black with reinforced seams; great for industrial work."
 	icon_state = "robotics_skirt"
-	inhand_icon_state = "robotics"
+	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY

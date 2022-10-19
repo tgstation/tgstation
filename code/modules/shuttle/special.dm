@@ -6,7 +6,7 @@
 /obj/machinery/power/emitter/energycannon
 	name = "Energy Cannon"
 	desc = "A heavy duty industrial laser."
-	icon = 'icons/obj/singularity.dmi'
+	icon = 'icons/obj/engine/singularity.dmi'
 	icon_state = "emitter_+a"
 	base_icon_state = "emitter_+a"
 	anchored = TRUE
@@ -328,11 +328,11 @@
 
 	if(account)
 		if(account.account_balance < threshold - payees[AM])
-			account.adjust_money(-account.account_balance)
+			account.adjust_money(-account.account_balance, "Scanner Gate: Entry Fee")
 			payees[AM] += account.account_balance
 		else
 			var/money_owed = threshold - payees[AM]
-			account.adjust_money(-money_owed)
+			account.adjust_money(-money_owed, "Scanner Gate: Partial Entry Fee")
 			payees[AM] += money_owed
 
 	//Here is all the possible paygate payment methods.
@@ -370,7 +370,7 @@
 
 	if(payees[AM] < threshold) //Suggestions for those with no arms/simple animals.
 		var/armless
-		if(!ishuman(AM) && !istype(AM, /mob/living/simple_animal/slime))
+		if(!ishuman(AM) && !isslime(AM))
 			armless = TRUE
 		else
 			var/mob/living/carbon/human/H = AM
@@ -394,7 +394,7 @@
 			var/obj/item/holochip/HC = new /obj/item/holochip(AM.loc) //Change is made in holocredits exclusively.
 			HC.credits = payees[AM]
 			HC.name = "[HC.credits] credit holochip"
-			if(istype(AM, /mob/living/carbon/human))
+			if(ishuman(AM))
 				var/mob/living/carbon/human/H = AM
 				if(!H.put_in_hands(HC))
 					AM.pulling = HC

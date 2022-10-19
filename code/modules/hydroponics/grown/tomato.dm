@@ -46,7 +46,7 @@
 	icon_state = "bloodtomato"
 	bite_consumption_mod = 3
 	splat_type = /obj/effect/gibspawner/generic
-	foodtypes = FRUIT | GROSS
+	foodtypes = FRUIT | GORE
 	grind_results = list(/datum/reagent/consumable/ketchup = 0, /datum/reagent/blood = 0)
 	distill_reagent = /datum/reagent/consumable/ethanol/bloody_mary
 

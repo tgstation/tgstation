@@ -16,6 +16,7 @@
 	exp_required_type = EXP_TYPE_CREW
 	exp_required_type_department = EXP_TYPE_COMMAND
 	exp_granted_type = EXP_TYPE_CREW
+	config_tag = "CAPTAIN"
 
 	outfit = /datum/outfit/job/captain
 	plasmaman_outfit = /datum/outfit/plasmaman/captain
@@ -31,12 +32,12 @@
 		/datum/job_department/command,
 	)
 
-	family_heirlooms = list(/obj/item/reagent_containers/food/drinks/flask/gold, /obj/item/toy/captainsaid/collector)
+	family_heirlooms = list(/obj/item/reagent_containers/cup/glass/flask/gold, /obj/item/toy/captainsaid/collector)
 
 	mail_goodies = list(
 		/obj/item/clothing/mask/cigarette/cigar/havana = 20,
 		/obj/item/storage/fancy/cigarettes/cigars/havana = 15,
-		/obj/item/reagent_containers/food/drinks/bottle/champagne = 10,
+		/obj/item/reagent_containers/cup/glass/bottle/champagne = 10,
 		/obj/item/toy/captainsaid/collector = 20
 	)
 
@@ -66,8 +67,8 @@
 	ears = /obj/item/radio/headset/heads/captain/alt
 	glasses = /obj/item/clothing/glasses/sunglasses
 	gloves = /obj/item/clothing/gloves/color/captain
-	head = /obj/item/clothing/head/caphat
-	shoes = /obj/item/clothing/shoes/sneakers/brown
+	head = /obj/item/clothing/head/hats/caphat
+	shoes = /obj/item/clothing/shoes/laceup
 
 
 	backpack = /obj/item/storage/backpack/captain

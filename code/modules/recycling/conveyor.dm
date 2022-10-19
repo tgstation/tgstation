@@ -210,6 +210,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		set_operating(FALSE)
 		return FALSE
 
+	update_appearance()
 	// If we're on, start conveying so moveloops on our tile can be refreshed if they stopped for some reason
 	if(operating != CONVEYOR_OFF)
 		for(var/atom/movable/movable in get_turf(src))
@@ -230,6 +231,8 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		SSmove_manager.stop_looping(convayable, SSconveyors)
 
 /obj/machinery/conveyor/proc/start_conveying(atom/movable/moving)
+	if(QDELETED(moving))
+		return
 	var/datum/move_loop/move/moving_loop = SSmove_manager.processing_on(moving, SSconveyors)
 	if(moving_loop)
 		moving_loop.direction = movedir
@@ -407,7 +410,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 
 /obj/machinery/conveyor_switch/multitool_act(mob/living/user, obj/item/I)
 	var/input_speed = tgui_input_number(user, "Set the speed of the conveyor belts in seconds", "Speed", conveyor_speed, 20, 0.2)
-	if(!input_speed || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(!input_speed || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 		return
 	conveyor_speed = input_speed
 	to_chat(user, span_notice("You change the time between moves to [input_speed] seconds."))

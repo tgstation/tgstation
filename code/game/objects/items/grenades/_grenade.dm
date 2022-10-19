@@ -11,7 +11,7 @@
 	name = "grenade"
 	desc = "It has an adjustable timer."
 	w_class = WEIGHT_CLASS_SMALL
-	icon = 'icons/obj/grenade.dmi'
+	icon = 'icons/obj/weapons/grenade.dmi'
 	icon_state = "grenade"
 	inhand_icon_state = "flashbang"
 	worn_icon_state = "grenade"
@@ -181,7 +181,7 @@
 	var/newtime = tgui_input_list(user, "Please enter a new detonation time", "Detonation Timer", list("Instant", 3, 4, 5))
 	if (isnull(newtime))
 		return
-	if(!user.canUseTopic(src, BE_CLOSE))
+	if(!user.canUseTopic(src, be_close = TRUE))
 		return
 	if(newtime == "Instant" && change_det_time(0))
 		to_chat(user, span_notice("You modify the time delay. It's set to be instantaneous."))

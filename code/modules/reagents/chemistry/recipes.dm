@@ -479,7 +479,7 @@
 */
 /datum/chemical_reaction/proc/freeze_radius(datum/reagents/holder, datum/equilibrium/equilibrium, temp, radius = 2, freeze_duration = 50 SECONDS, snowball_chance = 0)
 	for(var/any_turf in circle_range_turfs(center = get_turf(holder.my_atom), radius = radius))
-		if(!istype(any_turf, /turf/open))
+		if(!isopenturf(any_turf))
 			continue
 		var/turf/open/open_turf = any_turf
 		open_turf.MakeSlippery(TURF_WET_PERMAFROST, freeze_duration, freeze_duration, freeze_duration)

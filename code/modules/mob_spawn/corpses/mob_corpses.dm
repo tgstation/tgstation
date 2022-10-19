@@ -77,7 +77,7 @@
 	uniform = /obj/item/clothing/under/costume/pirate
 	shoes = /obj/item/clothing/shoes/jackboots
 	glasses = /obj/item/clothing/glasses/eyepatch
-	head = /obj/item/clothing/head/bandana
+	head = /obj/item/clothing/head/costume/pirate/bandana
 
 
 /obj/effect/mob_spawn/corpse/human/pirate/ranged
@@ -87,7 +87,7 @@
 /datum/outfit/piratecorpse/ranged
 	name = "Pirate Gunner Corpse"
 	suit = /obj/item/clothing/suit/costume/pirate
-	head = /obj/item/clothing/head/pirate
+	head = /obj/item/clothing/head/costume/pirate
 
 
 /obj/effect/mob_spawn/corpse/human/russian
@@ -100,7 +100,7 @@
 	name = "Russian Corpse"
 	uniform = /obj/item/clothing/under/costume/soviet
 	shoes = /obj/item/clothing/shoes/jackboots
-	head = /obj/item/clothing/head/bearpelt
+	head = /obj/item/clothing/head/costume/bearpelt
 	gloves = /obj/item/clothing/gloves/color/black
 	mask = /obj/item/clothing/mask/gas
 
@@ -111,7 +111,7 @@
 
 /datum/outfit/russiancorpse/ranged
 	name = "Ranged Russian Corpse"
-	head = /obj/item/clothing/head/ushanka
+	head = /obj/item/clothing/head/costume/ushanka
 
 
 /obj/effect/mob_spawn/corpse/human/russian/ranged/trooper
@@ -138,7 +138,7 @@
 	suit = /obj/item/clothing/suit/jacket/officer/tan
 	shoes = /obj/item/clothing/shoes/combat
 	ears = /obj/item/radio/headset
-	head = /obj/item/clothing/head/ushanka
+	head = /obj/item/clothing/head/costume/ushanka
 
 
 /obj/effect/mob_spawn/corpse/human/wizard

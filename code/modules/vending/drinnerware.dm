@@ -6,15 +6,15 @@
 	panel_type = "panel4"
 	products = list(
 		/obj/item/storage/bag/tray = 8,
-		/obj/item/reagent_containers/glass/bowl = 20,
+		/obj/item/reagent_containers/cup/bowl = 20,
 		/obj/item/kitchen/fork = 6,
 		/obj/item/kitchen/spoon = 6,
-		/obj/item/reagent_containers/food/drinks/drinkingglass = 8,
-		/obj/item/reagent_containers/food/condiment/pack/ketchup = 5,
-		/obj/item/reagent_containers/food/condiment/pack/hotsauce = 5,
-		/obj/item/reagent_containers/food/condiment/pack/astrotame = 5,
-		/obj/item/reagent_containers/food/condiment/saltshaker = 5,
-		/obj/item/reagent_containers/food/condiment/peppermill = 5,
+		/obj/item/reagent_containers/cup/glass/drinkingglass = 8,
+		/obj/item/reagent_containers/condiment/pack/ketchup = 5,
+		/obj/item/reagent_containers/condiment/pack/hotsauce = 5,
+		/obj/item/reagent_containers/condiment/pack/astrotame = 5,
+		/obj/item/reagent_containers/condiment/saltshaker = 5,
+		/obj/item/reagent_containers/condiment/peppermill = 5,
 		/obj/item/clothing/suit/apron/chef = 2,
 		/obj/item/kitchen/rollingpin = 2,
 		/obj/item/knife/kitchen = 2,
@@ -24,7 +24,7 @@
 		/obj/item/plate/large = 5,
 	)
 	contraband = list(
-		/obj/item/kitchen/rollingpin = 2,
+		/obj/item/kitchen/rollingpin/illegal = 2,
 		/obj/item/knife/butcher = 2,
 	)
 	refill_canister = /obj/item/vending_refill/dinnerware

@@ -17,8 +17,9 @@
 	name = "headphones"
 	desc = "Unce unce unce unce. Boop!"
 	icon = 'icons/obj/clothing/accessories.dmi'
-	lefthand_file = 'icons/mob/inhands/clothing_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/clothing_righthand.dmi'
+	worn_icon = 'icons/mob/clothing/head/costume.dmi'
+	lefthand_file = 'icons/mob/inhands/clothing/ears_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/ears_righthand.dmi'
 	icon_state = "headphones"
 	inhand_icon_state = "headphones"
 	slot_flags = ITEM_SLOT_EARS | ITEM_SLOT_HEAD
@@ -29,7 +30,7 @@
 	circuit_type = /obj/item/circuit_component/synth/headphones
 	shell_capacity = SHELL_CAPACITY_TINY
 
-/obj/item/instrument/piano_synth/headphones/ComponentInitialize()
+/obj/item/instrument/piano_synth/headphones/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
 	RegisterSignal(src, COMSIG_INSTRUMENT_START, .proc/start_playing)
@@ -55,7 +56,7 @@
 	name = "\improper Nanotrasen space pods"
 	desc = "Flex your money, AND ignore what everyone else says, all at once!"
 	icon_state = "spacepods"
-	inhand_icon_state = "spacepods"
+	inhand_icon_state = null
 	slot_flags = ITEM_SLOT_EARS
 	strip_delay = 100 //air pods don't fall out
 	instrument_range = 0 //you're paying for quality here
@@ -127,8 +128,8 @@
 /obj/item/circuit_component/synth/unregister_shell(atom/movable/shell)
 	if(synth.song.music_player == src)
 		synth.song.stop_playing()
-	synth = null
 	UnregisterSignal(synth, list(COMSIG_INSTRUMENT_START, COMSIG_INSTRUMENT_END, COMSIG_INSTRUMENT_SHOULD_STOP_PLAYING))
+	synth = null
 	return ..()
 
 /obj/item/circuit_component/synth/proc/start_playing(datum/port/input/port)

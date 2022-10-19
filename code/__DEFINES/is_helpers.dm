@@ -66,6 +66,8 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define ishuman(A) (istype(A, /mob/living/carbon/human))
 
+#define isdummy(A) (istype(A, /mob/living/carbon/human/dummy))
+
 //Human sub-species
 #define isabductor(A) (is_species(A, /datum/species/abductor))
 #define isgolem(A) (is_species(A, /datum/species/golem))
@@ -117,8 +119,15 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 // basic mobs
 #define isbasicmob(A) (istype(A, /mob/living/basic))
 
+#define iscow(A) (istype(A, /mob/living/basic/cow))
+
 /// returns whether or not the atom is either a basic mob OR simple animal
 #define isanimal_or_basicmob(A) (istype(A, /mob/living/simple_animal) || istype(A, /mob/living/basic))
+
+/// asteroid mobs, which are both simple and basic atm
+#define isminingpath(A) (ispath(A, /mob/living/simple_animal/hostile/asteroid) || ispath(A, /mob/living/basic/mining))
+
+#define ismining(A) (istype(A, /mob/living/simple_animal/hostile/asteroid) || istype(A, /mob/living/basic/mining))
 
 //Simple animals
 #define isanimal(A) (istype(A, /mob/living/simple_animal))
@@ -130,8 +139,6 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 #define isshade(A) (istype(A, /mob/living/simple_animal/shade))
 
 #define ismouse(A) (istype(A, /mob/living/simple_animal/mouse))
-
-#define iscow(A) (istype(A, /mob/living/basic/cow))
 
 #define isslime(A) (istype(A, /mob/living/simple_animal/slime))
 

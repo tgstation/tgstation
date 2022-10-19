@@ -278,7 +278,7 @@
 	if(!account || account.account_balance < money_cost)
 		to_chat(user, span_warning("This rite requires more money!"))
 		return FALSE
-	account.adjust_money(-money_cost)
+	account.adjust_money(-money_cost, "Church Donation: Rite")
 	. = ..()
 
 /datum/religion_rites/greed/vendatray
@@ -510,7 +510,7 @@
 	user.emote("laughs")
 	ADD_TRAIT(user, TRAIT_HOPELESSLY_ADDICTED, "maint_adaptation")
 	//addiction sends some nasty mood effects but we want the maint adaption to be enjoyed like a fine wine
-	SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "maint_adaptation", /datum/mood_event/maintenance_adaptation)
+	user.add_mood_event("maint_adaptation", /datum/mood_event/maintenance_adaptation)
 	if(iscarbon(user))
 		var/mob/living/carbon/vomitorium = user
 		vomitorium.vomit()

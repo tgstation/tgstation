@@ -1,7 +1,6 @@
 /datum/team/ashwalkers
 	name = "Ashwalkers"
 	show_roundend_report = FALSE
-	var/list/players_spawned = new
 
 /datum/antagonist/ashwalker
 	name = "\improper Ash Walker"
@@ -42,4 +41,4 @@
 	SIGNAL_HANDLER
 
 	if(istype(A, /obj/structure/headpike))
-		SEND_SIGNAL(owner.current, COMSIG_ADD_MOOD_EVENT, "oogabooga", /datum/mood_event/sacrifice_good)
+		owner.current.add_mood_event("oogabooga", /datum/mood_event/sacrifice_good)

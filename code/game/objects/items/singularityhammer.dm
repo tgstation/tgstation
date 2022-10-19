@@ -21,10 +21,10 @@
 /obj/item/singularityhammer/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/kneejerk)
-
-/obj/item/singularityhammer/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/two_handed, force_multiplier=4, icon_wielded="[base_icon_state]1")
+	AddComponent(/datum/component/two_handed, \
+		force_multiplier = 4, \
+		icon_wielded = "[base_icon_state]1", \
+	)
 
 /obj/item/singularityhammer/update_icon_state()
 	icon_state = "[base_icon_state]0"
@@ -57,7 +57,7 @@
 	if(HAS_TRAIT(src, TRAIT_WIELDED))
 		if(charged)
 			charged = FALSE
-			if(istype(A, /mob/living/))
+			if(isliving(A))
 				var/mob/living/Z = A
 				Z.take_bodypart_damage(20,0)
 			playsound(user, 'sound/weapons/marauder.ogg', 50, TRUE)
@@ -80,9 +80,13 @@
 	throw_range = 7
 	w_class = WEIGHT_CLASS_HUGE
 
-/obj/item/mjollnir/ComponentInitialize()
+/obj/item/mjollnir/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_multiplier=5, icon_wielded="[base_icon_state]1", attacksound=SFX_SPARKS)
+	AddComponent(/datum/component/two_handed, \
+		force_multiplier = 5, \
+		icon_wielded = "[base_icon_state]1", \
+		attacksound = SFX_SPARKS, \
+	)
 
 /obj/item/mjollnir/update_icon_state()
 	icon_state = "[base_icon_state]0"
@@ -99,16 +103,17 @@
 		span_hear("You hear a heavy electrical crack!"))
 	var/atom/throw_target = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))
 	target.throw_at(throw_target, 200, 4)
-	return
 
-/obj/item/mjollnir/attack(mob/living/M, mob/user)
+/obj/item/mjollnir/attack(mob/living/target_mob, mob/user)
 	..()
+	if(QDELETED(target_mob))
+		return
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		return
 	if(HAS_TRAIT(src, TRAIT_WIELDED))
-		shock(M)
+		shock(target_mob)
 
 /obj/item/mjollnir/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
-	if(isliving(hit_atom))
+	if(!QDELETED(hit_atom) && isliving(hit_atom))
 		shock(hit_atom)

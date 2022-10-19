@@ -11,9 +11,9 @@
 	description = "A regular meteor wave."
 
 /datum/round_event/meteor_wave
-	startWhen = 6
-	endWhen = 66
-	announceWhen = 1
+	start_when = 6
+	end_when = 66
+	announce_when = 1
 	var/list/wave_type
 	var/wave_name = "normal"
 
@@ -78,3 +78,16 @@
 
 /datum/round_event/meteor_wave/catastrophic
 	wave_name = "catastrophic"
+
+/datum/round_event_control/meteor_wave/meaty
+	name = "Meteor Wave: Meaty"
+	typepath = /datum/round_event/meteor_wave/meaty
+	weight = 2
+	max_occurrences = 1
+	description = "A meteor wave made of meat."
+
+/datum/round_event/meteor_wave/meaty
+	wave_name = "meaty"
+
+/datum/round_event/meteor_wave/meaty/announce(fake)
+	priority_announce("Meaty ores have been detected on collision course with the station.", "Oh crap, get the mop.", ANNOUNCER_METEORS)

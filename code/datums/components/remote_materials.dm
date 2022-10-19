@@ -92,7 +92,7 @@ handles linking back and forth.
 /datum/component/remote_materials/proc/OnAttackBy(datum/source, obj/item/I, mob/user)
 	SIGNAL_HANDLER
 
-	if (silo && istype(I, /obj/item/stack))
+	if (silo && isstack(I))
 		if (silo.remote_attackby(parent, user, I, mat_container_flags))
 			return COMPONENT_NO_AFTERATTACK
 
@@ -163,3 +163,10 @@ handles linking back and forth.
 	matlist[material_ref] = eject_amount
 	silo_log(parent, "ejected", -count, "sheets", matlist)
 	return count
+
+/// Returns `TRUE` if and only if the given material ref can be inserted/removed from this component
+/datum/component/remote_materials/proc/can_hold_material(datum/material/material_ref)
+	if(!mat_container)
+		return FALSE
+
+	return mat_container.can_hold_material(material_ref)

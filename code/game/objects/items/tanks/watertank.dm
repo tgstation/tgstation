@@ -33,7 +33,7 @@
 	toggle_mister(user)
 
 /obj/item/watertank/item_action_slot_check(slot, mob/user)
-	if(slot == user.getBackSlot())
+	if(slot & user.getBackSlot())
 		return 1
 
 /obj/item/watertank/proc/toggle_mister(mob/living/user)
@@ -73,7 +73,7 @@
 
 /obj/item/watertank/equipped(mob/user, slot)
 	..()
-	if(slot != ITEM_SLOT_BACK)
+	if(!(slot & ITEM_SLOT_BACK))
 		remove_noz()
 
 /obj/item/watertank/proc/remove_noz()
@@ -311,7 +311,7 @@
 		COOLDOWN_START(src, resin_cooldown, 10 SECONDS)
 		R.remove_any(100)
 		var/obj/effect/resin_container/resin = new (get_turf(src))
-		user.log_message("used Resin Launcher at [AREACOORD(user)].", LOG_GAME)
+		user.log_message("used Resin Launcher", LOG_GAME)
 		playsound(src,'sound/items/syringeproj.ogg',40,TRUE)
 		var/delay = 2
 		var/datum/move_loop/loop = SSmove_manager.move_towards(resin, target, delay, timeout = delay * 5, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
@@ -406,7 +406,7 @@
 	toggle_injection()
 
 /obj/item/reagent_containers/chemtank/item_action_slot_check(slot, mob/user)
-	if(slot == ITEM_SLOT_BACK)
+	if(slot & ITEM_SLOT_BACK)
 		return 1
 
 /obj/item/reagent_containers/chemtank/proc/toggle_injection()
@@ -469,7 +469,7 @@
 	var/used_amount = inj_am / usage_ratio
 	reagents.trans_to(user, used_amount, multiplier=usage_ratio, methods = INJECT)
 	update_appearance()
-	user.update_inv_back() //for overlays update
+	user.update_worn_back() //for overlays update
 
 /datum/action/item_action/activate_injector
 	name = "Activate Injector"

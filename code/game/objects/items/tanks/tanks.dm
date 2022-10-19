@@ -9,8 +9,9 @@
  */
 /obj/item/tank
 	name = "tank"
-	icon = 'icons/obj/tank.dmi'
+	icon = 'icons/obj/atmospherics/tank.dmi'
 	icon_state = "generic"
+	inhand_icon_state = "generic_tank"
 	lefthand_file = 'icons/mob/inhands/equipment/tanks_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tanks_righthand.dmi'
 	flags_1 = CONDUCT_1
@@ -78,6 +79,9 @@
 /obj/item/tank/Initialize(mapload)
 	. = ..()
 
+	if(tank_holder_icon_state)
+		AddComponent(/datum/component/container_item/tank_holder, tank_holder_icon_state)
+
 	air_contents = new(volume) //liters
 	air_contents.temperature = T20C
 
@@ -96,11 +100,6 @@
 
 /obj/item/tank/proc/populate_gas()
 	return
-
-/obj/item/tank/ComponentInitialize()
-	. = ..()
-	if(tank_holder_icon_state)
-		AddComponent(/datum/component/container_item/tank_holder, tank_holder_icon_state)
 
 /obj/item/tank/Destroy()
 	UnregisterSignal(air_contents, COMSIG_GASMIX_MERGED)

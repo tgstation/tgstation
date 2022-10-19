@@ -129,7 +129,7 @@
 
 	for(var/i in to_eat)
 		var/atom/movable/AM = i
-		if(istype(AM, /obj/item))
+		if(isitem(AM))
 			var/obj/item/bodypart/head/as_head = AM
 			var/obj/item/mmi/as_mmi = AM
 			if(istype(AM, /obj/item/organ/internal/brain) || (istype(as_head) && as_head.brain) || (istype(as_mmi) && as_mmi.brain) || istype(AM, /obj/item/dullahan_relay))

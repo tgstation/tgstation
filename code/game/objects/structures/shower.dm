@@ -177,7 +177,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 			if(SHOWER_BOILING)
 				current_temperature = SHOWER_NORMAL
 		user.visible_message(span_notice("[user] adjusts the shower with \the [I]."), span_notice("You adjust the shower with \the [I] to [current_temperature] temperature."))
-		user.log_message("has wrenched a shower at [AREACOORD(src)] to [current_temperature].", LOG_ATTACK)
+		user.log_message("has wrenched a shower to [current_temperature].", LOG_ATTACK)
 		add_hiddenprint(user)
 	handle_mist()
 	return TRUE
@@ -197,7 +197,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 		return
 	var/mutable_appearance/water_falling = mutable_appearance('icons/obj/watercloset.dmi', "water", ABOVE_MOB_LAYER)
 	water_falling.color = mix_color_from_reagents(reagents.reagent_list)
-	water_falling.plane = GAME_PLANE_UPPER
+	SET_PLANE_EXPLICIT(water_falling, GAME_PLANE_UPPER, src)
 	switch(dir)
 		if(NORTH)
 			water_falling.pixel_y += pixel_shift
@@ -208,6 +208,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 		if(WEST)
 			water_falling.pixel_x -= pixel_shift
 	. += water_falling
+
+/obj/machinery/shower/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	if(same_z_layer)
+		return ..()
+	update_appearance()
+	return ..()
 
 /obj/machinery/shower/proc/handle_mist()
 	// If there is no mist, and the shower was turned on (on a non-freezing temp): make mist in 5 seconds
@@ -238,10 +244,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 
 /obj/machinery/shower/proc/wash_atom(atom/target)
 	target.wash(CLEAN_RAD | CLEAN_WASH)
-	SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, "shower", /datum/mood_event/nice_shower)
 	reagents.expose(target, (TOUCH), SHOWER_EXPOSURE_MULTIPLIER * SHOWER_SPRAY_VOLUME / max(reagents.total_volume, SHOWER_SPRAY_VOLUME))
 	if(isliving(target))
-		check_heat(target)
+		var/mob/living/living_target = target
+		check_heat(living_target)
+		living_target.add_mood_event("shower", /datum/mood_event/nice_shower)
 
 /**
  * Toggle whether shower is actually on and outputting water.

@@ -38,7 +38,7 @@
 	if(busy)
 		to_chat(user, span_danger("The machine is busy."))
 		return
-	if(istype(I, /obj/item/reagent_containers) && I.is_open_container())
+	if(is_reagent_container(I) && I.is_open_container())
 		var/obj/item/reagent_containers/RC = I
 		var/units = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this, transfered_by = user)
 		if(units)

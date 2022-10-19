@@ -23,19 +23,19 @@
 
 /obj/item/clothing/mask/joy/reskin_obj(mob/user)
 	. = ..()
-	user.update_inv_wear_mask()
+	user.update_worn_mask()
 	current_skin = null//so we can infinitely reskin
 
 /obj/item/clothing/mask/mummy
 	name = "mummy mask"
 	desc = "Ancient bandages."
 	icon_state = "mummy_mask"
-	inhand_icon_state = "mummy_mask"
+	inhand_icon_state = null
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
 /obj/item/clothing/mask/scarecrow
 	name = "sack mask"
 	desc = "A burlap sack with eyeholes."
 	icon_state = "scarecrow_sack"
-	inhand_icon_state = "scarecrow_sack"
+	inhand_icon_state = null
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT

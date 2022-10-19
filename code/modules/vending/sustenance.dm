@@ -9,14 +9,14 @@
 	products = list(
 		/obj/item/food/tofu/prison = 24,
 		/obj/item/food/breadslice/moldy = 15,
-		/obj/item/reagent_containers/food/drinks/ice/prison = 12,
+		/obj/item/reagent_containers/cup/glass/ice/prison = 12,
 		/obj/item/food/candy_corn/prison = 6,
 		/obj/item/kitchen/spoon/plastic = 6,
 	)
 	contraband = list(
 		/obj/item/knife = 6,
 		/obj/item/kitchen/spoon = 6,
-		/obj/item/reagent_containers/food/drinks/coffee = 12,
+		/obj/item/reagent_containers/cup/glass/coffee = 12,
 		/obj/item/tank/internals/emergency_oxygen = 6,
 		/obj/item/clothing/mask/breath = 6,
 	)

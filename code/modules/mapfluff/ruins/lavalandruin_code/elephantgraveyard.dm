@@ -13,20 +13,20 @@
 	name = "colossal rib"
 	desc = "It's staggering to think that something this big could have lived, let alone died."
 	custom_materials = list(/datum/material/bone=MINERAL_MATERIAL_AMOUNT*4)
-	icon = 'icons/obj/statuelarge.dmi'
+	icon = 'icons/obj/art/statuelarge.dmi'
 	icon_state = "rib"
 
 /obj/structure/statue/bone/skull
 	name = "colossal skull"
 	desc = "The gaping maw of a dead, titanic monster."
 	custom_materials = list(/datum/material/bone=MINERAL_MATERIAL_AMOUNT*12)
-	icon = 'icons/obj/statuelarge.dmi'
+	icon = 'icons/obj/art/statuelarge.dmi'
 	icon_state = "skull"
 
 /obj/structure/statue/bone/skull/half
 	desc = "The gaping maw of a dead, titanic monster. This one is cracked in half."
 	custom_materials = list(/datum/material/bone=MINERAL_MATERIAL_AMOUNT*6)
-	icon = 'icons/obj/statuelarge.dmi'
+	icon = 'icons/obj/art/statuelarge.dmi'
 	icon_state = "skull-half"
 
 //***Wasteland floor and rock turfs here.
@@ -92,7 +92,7 @@
 		O.play_tool_sound(src)
 		deconstruct()
 		return 1
-	if(istype(O, /obj/item/reagent_containers)) //Refilling bottles with oil
+	if(is_reagent_container(O)) //Refilling bottles with oil
 		var/obj/item/reagent_containers/RG = O
 		if(RG.is_refillable())
 			if(!RG.reagents.holder_full())
@@ -115,7 +115,7 @@
 /obj/structure/closet/crate/grave
 	name = "burial mound"
 	desc = "A marked patch of soil, showing signs of a burial long ago. You wouldn't disturb a grave... right?"
-	icon = 'icons/obj/crates.dmi'
+	icon = 'icons/obj/storage/crates.dmi'
 	icon_state = "grave"
 	dense_when_open = TRUE
 	material_drop = /obj/item/stack/ore/glass/basalt
@@ -152,7 +152,7 @@
 			new /obj/item/hemostat(src)
 
 		if(6)
-			new /obj/item/reagent_containers/glass/beaker(src)
+			new /obj/item/reagent_containers/cup/beaker(src)
 			new /obj/item/clothing/glasses/science(src)
 		if(7)
 			new /obj/item/clothing/glasses/sunglasses(src)
@@ -180,7 +180,7 @@
 					locked = TRUE
 					dump_contents()
 					update_appearance()
-					SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "graverobbing", /datum/mood_event/graverobbing)
+					user.add_mood_event("graverobbing", /datum/mood_event/graverobbing)
 					if(lead_tomb == TRUE && first_open == TRUE)
 						user.gain_trauma(/datum/brain_trauma/magic/stalker)
 						to_chat(user, span_boldwarning("Oh no, no no no, THEY'RE EVERYWHERE! EVERY ONE OF THEM IS EVERYWHERE!"))
@@ -199,7 +199,7 @@
 			to_chat(user, span_notice("You start to remove \the [src]  with \the [S]."))
 			if (do_after(user,15, target = src))
 				to_chat(user, span_notice("You remove \the [src]  completely."))
-				SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "graverobbing", /datum/mood_event/graverobbing)
+				user.add_mood_event("graverobbing", /datum/mood_event/graverobbing)
 				deconstruct(TRUE)
 				return 1
 	return
@@ -214,7 +214,7 @@
 /obj/structure/closet/crate/grave/filled/lead_researcher
 	name = "ominous burial mound"
 	desc = "Even in a place filled to the brim with graves, this one shows a level of preperation and planning that fills you with dread."
-	icon = 'icons/obj/crates.dmi'
+	icon = 'icons/obj/storage/crates.dmi'
 	icon_state = "grave_lead"
 	lead_tomb = TRUE
 	first_open = TRUE
