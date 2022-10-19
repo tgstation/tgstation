@@ -4,7 +4,6 @@
 	icon = 'icons/mob/simple/lavaland/hugglebipper.dmi'
 	icon_state = "hugglebipper"
 	icon_living = "hugglebipper"
-	icon_dead = "bileworm_dead"
 	mob_biotypes = MOB_ORGANIC | MOB_HUMANOID
 	basic_mob_flags = DEL_ON_DEATH
 	//we should not give players this power normally, they can teleport on attack
@@ -25,7 +24,8 @@
 /mob/living/basic/mining/hugglebipper/Initialize(mapload)
 	. = ..()
 	//traits and elements
-
+	AddElement(/datum/element/waddling)
+	//you should be perfectly able to get the eye every time if you're smart
 	AddElement(/datum/element/crusher_loot, /obj/item/crusher_trophy/hugglebipper_eye, 100)
 
 /mob/living/basic/mining/hugglebipper/melee_attack(atom/target)

@@ -7,7 +7,7 @@
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/hugglebipper_stalking,
 		//attacking will remove the person it attacked
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree/hugglebipper,
 	)
 
 /datum/ai_planning_subtree/hugglebipper_stalking
@@ -79,6 +79,7 @@
 	if(controller.blackboard[BB_HUGGLEBIPPER_STOP_STALKING])
 		//oh shit, go """help""" them!
 		finish_action(controller, TRUE, target_key)
+		return
 
 	//targetting datum will kill the action if not real anymore
 	var/datum/weakref/weak_target = controller.blackboard[target_key]
@@ -105,3 +106,16 @@
 	if(!succeeded)
 		controller.blackboard -= target_key
 		return
+
+/datum/ai_planning_subtree/basic_melee_attack_subtree/hugglebipper
+	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/hugglebipper
+
+/datum/ai_behavior/basic_melee_attack/hugglebipper/setup(datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
+	. = ..()
+	var/mob/living/basic/basic_mob = controller.pawn
+	basic_mob.icon_state = "hugglebipper_active"
+
+/datum/ai_behavior/basic_melee_attack/hugglebipper/finish_action(datum/ai_controller/controller, succeeded, target_key, targetting_datum_key, hiding_location_key)
+	. = ..()
+	var/mob/living/basic/basic_mob = controller.pawn
+	basic_mob.icon_state = initial(basic_mob.icon_state)
