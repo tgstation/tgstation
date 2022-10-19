@@ -24,6 +24,7 @@
 /// Process left side, top side, right side, bottom
 /// Each time we rotate, we leave off the turfs at the "end" of the direction we're going, to avoid needing to use |
 #define RIM_TURFS(INNER_RANGE, OUTER_RANGE, CENTER) \
+	(INNER_RANGE > 0 ? \
 	(block( \
 		locate(max(CENTER.x-(OUTER_RANGE),1), max(CENTER.y-(OUTER_RANGE),1),            CENTER.z), \
 		locate(max(CENTER.x-(INNER_RANGE),1), min(CENTER.y+(INNER_RANGE-1),world.maxy), CENTER.z) \
@@ -39,7 +40,8 @@
 	block( \
 		locate(min(CENTER.x+(OUTER_RANGE),world.maxx), max(CENTER.y-(OUTER_RANGE),1), CENTER.z), \
 		locate(max(CENTER.x-(INNER_RANGE-1),1), max(CENTER.y-(INNER_RANGE),1),        CENTER.z) \
-	))
+	)) \
+	: RANGE_TURFS(OUTER_RANGE, CENTER))
 
 ///Returns all turfs in a zlevel
 #define Z_TURFS(ZLEVEL) block(locate(1,1,ZLEVEL), locate(world.maxx, world.maxy, ZLEVEL))
