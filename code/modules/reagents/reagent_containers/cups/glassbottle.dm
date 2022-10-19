@@ -480,6 +480,8 @@
 	list_reagents = list(/datum/reagent/consumable/ethanol/champagne = 100)
 	///Used for sabrage; increases the chance of success per 1 force of the attacking sharp item
 	var/sabrage_success_percentile = 5
+	///Whether this bottle was a victim of a successful sabrage attempt
+	var/sabraged
 
 /obj/item/reagent_containers/cup/glass/bottle/champagne/cursed
 	sabrage_success_percentile = 0 //force of the sharp item used to sabrage will not increase success chance
@@ -502,7 +504,7 @@
 		else
 			playsound(user, 'sound/items/unsheath.ogg', 25, TRUE)
 			balloon_alert(user, "preparing to swing...")
-			if(do_after(user, 1 SECONDS, src))
+			if(do_after(user, 2 SECONDS, src)) //takes longer because you are supposed to take the foil off the bottle first
 				//calculate success chance. example: captain's sabre - 15 force = 75% chance
 				if(prob(attacking_item.force * sabrage_success_percentile + \
 				((user.mind.assigned_role.departments_bitflags & (DEPARTMENT_BITFLAG_COMMAND)) ? 20 : 0) + \
@@ -518,12 +520,16 @@
 /obj/item/reagent_containers/cup/glass/bottle/champagne/update_icon_state()
 	. = ..()
 	if(spillable)
-		icon_state = "[base_icon_state]_popped"
+		if(sabraged)
+			icon_state = "[base_icon_state]_sabrage"
+		else
+			icon_state = "[base_icon_state]_popped"
 	else
 		icon_state = base_icon_state
 
 /obj/item/reagent_containers/cup/glass/bottle/champagne/proc/pop_cork(mob/living/user, sabrage)
 	if(sabrage)
+		sabraged = TRUE
 		user.visible_message(span_danger("[user] cleanly slices off the cork of [src], causing it to fly off the bottle with great force."), \
 			span_nicegreen("You elegantly slice the cork off of [src], causing it to fly off the bottle with great force."))
 		for(var/mob/living/carbon/stunt_witness in view(7, user))
@@ -544,6 +550,8 @@
 	spillable = TRUE
 	update_appearance()
 	var/obj/projectile/bullet/reusable/champagne_cork/popped_cork = new (get_turf(src))
+	if(sabraged) ///FIX THIS
+		popped_cork = /obj/projectile/bullet/reusable/champagne_cork/sabrage
 	popped_cork.firer = user
 	popped_cork.fired_from = src
 	popped_cork.fire(dir2angle(user.dir) + rand(-30, 30))
@@ -564,10 +572,20 @@
 	knockdown = 2 SECONDS
 	ammo_type = /obj/item/trash/champagne_cork
 
+/obj/projectile/bullet/reusable/champagne_cork/sabrage
+	icon_state = "champagne_cork_sabrage"
+	damage = 12
+	ricochets_max = 2 //bit heavier
+	range = 6
+	ammo_type = /obj/item/trash/champagne_cork/sabrage
+
 /obj/item/trash/champagne_cork
 	name = "champagne cork"
 	icon = 'icons/obj/drinks.dmi'
 	icon_state = "champagne_cork"
+
+/obj/item/trash/champagne_cork/sabrage
+	icon_state = "champagne_cork_sabrage"
 
 /obj/item/reagent_containers/cup/glass/bottle/blazaam
 	name = "Ginbad's Blazaam"
