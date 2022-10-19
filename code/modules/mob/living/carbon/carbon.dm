@@ -257,7 +257,7 @@
 	spin(32,2)
 	visible_message(span_danger("[src] rolls on the floor, trying to put [p_them()]self out!"), \
 		span_notice("You stop, drop, and roll!"))
-	sleep(30)
+	sleep(3 SECONDS)
 	if(fire_stacks <= 0 && !QDELETED(src))
 		visible_message(span_danger("[src] successfully extinguishes [p_them()]self!"), \
 			span_notice("You extinguish yourself."))
@@ -417,6 +417,8 @@
 	if((HAS_TRAIT(src, TRAIT_NOHUNGER) || HAS_TRAIT(src, TRAIT_TOXINLOVER)) && !force)
 		return TRUE
 
+	SEND_SIGNAL(src, COMSIG_CARBON_VOMITED, distance, force)
+	var/starting_dir = dir
 	if(nutrition < 100 && !blood && !force)
 		if(message)
 			visible_message(span_warning("[src] dry heaves!"), \
@@ -455,7 +457,7 @@
 		else
 			if(T)
 				T.add_vomit_floor(src, vomit_type, purge_ratio) //toxic barf looks different || call purge when doing detoxicfication to pump more chems out of the stomach.
-		T = get_step(T, dir)
+		T = get_step(T, starting_dir)
 		if (T?.is_blocked_turf())
 			break
 	return TRUE

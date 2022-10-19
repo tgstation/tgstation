@@ -196,6 +196,11 @@
 		beaker = null
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/on_deconstruction()
+	if(occupant)
+		occupant.vis_flags &= ~VIS_INHERIT_PLANE
+		REMOVE_TRAIT(occupant, TRAIT_IMMOBILIZED, CRYO_TRAIT)
+		REMOVE_TRAIT(occupant, TRAIT_FORCED_STANDING, CRYO_TRAIT)
+
 	if(beaker)
 		beaker.forceMove(drop_location())
 		beaker = null

@@ -8,6 +8,7 @@
 	supervisors = SUPERVISOR_HOP
 	selection_color = "#bbe291"
 	exp_granted_type = EXP_TYPE_CREW
+	config_tag = "COOK"
 	var/cooks = 0 //Counts cooks amount
 
 	outfit = /datum/outfit/job/cook

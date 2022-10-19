@@ -452,8 +452,8 @@ There are several things that need to be remembered:
 		var/atom/movable/screen/inventory/inv
 
 		inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_LPOCKET) + 1]
+		inv.update_icon()
 		inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_RPOCKET) + 1]
-
 		inv.update_icon()
 
 		if(l_store)

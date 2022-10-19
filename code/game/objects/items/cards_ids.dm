@@ -102,12 +102,6 @@
 	/// Boolean value. If TRUE, the [Intern] tag gets prepended to this ID card when the label is updated.
 	var/is_intern = FALSE
 
-	///Way to use NT pay. Or how to save money. 1 - 100%, 0.05 - 5%
-	var/commission =  0.05
-
-	///Payment under >99 credits withdraw. (this + 1 = min value to withdraw)
-	var/commission_minimal = 5
-
 /obj/item/card/id/Initialize(mapload)
 	. = ..()
 
@@ -676,7 +670,7 @@
 		return
 	if(!alt_click_can_use_id(user))
 		return
-	if(registered_account.adjust_money(-amount_to_remove))
+	if(registered_account.adjust_money(-amount_to_remove, "System: Withdrawal"))
 		var/obj/item/holochip/holochip = new (user.drop_location(), amount_to_remove)
 		user.put_in_hands(holochip)
 		to_chat(user, span_notice("You withdraw [amount_to_remove] credits into a holochip."))

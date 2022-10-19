@@ -53,6 +53,8 @@
 	var/has_unique_girder = FALSE
 	/// What typepath table we create from this stack
 	var/obj/structure/table/tableVariant
+	/// What typepath stairs do we create from this stack
+	var/obj/structure/stairs/stairs_type
 	/// If TRUE, we'll use a radial instead when displaying recipes
 	var/use_radial = FALSE
 	/// If use_radial is TRUE, this is the radius of the radial

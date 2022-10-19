@@ -924,7 +924,7 @@
 	new /obj/effect/temp_visual/mummy_animation(get_turf(src))
 	if(cloth_golem.revive(full_heal = TRUE, admin_revive = TRUE))
 		cloth_golem.grab_ghost() //won't pull if it's a suicide
-	sleep(20)
+	sleep(2 SECONDS)
 	cloth_golem.forceMove(get_turf(src))
 	cloth_golem.visible_message(span_danger("[src] rises and reforms into [cloth_golem]!"),span_userdanger("You reform into yourself!"))
 	cloth_golem = null

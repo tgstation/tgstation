@@ -3291,11 +3291,8 @@
 	dir = 4
 	},
 /obj/effect/landmark/start/captain,
-/obj/item/radio/intercom/directional/west{
-	freerange = 1;
-	name = "Captain's Intercom"
-	},
 /obj/structure/sign/poster/contraband/random/directional/north,
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/carpet/royalblue,
 /area/station/command/heads_quarters/captain/private)
 "aVI" = (
@@ -7913,12 +7910,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/item/radio/intercom{
-	dir = 8;
-	freerange = 1;
-	name = "Station Intercom (Command)";
-	pixel_x = 1
-	},
+/obj/item/radio/intercom,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "csk" = (
@@ -44752,8 +44744,8 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/item/radio/intercom/directional/north,
 /obj/structure/chair/comfy,
+/obj/item/radio/intercom/command/directional/north,
 /turf/open/floor/iron,
 /area/station/security/courtroom)
 "mKw" = (
@@ -78971,6 +78963,9 @@
 /obj/structure/window/reinforced,
 /obj/machinery/monkey_recycler,
 /obj/item/radio/intercom/directional/north,
+/obj/structure/sign/xenobio_guide/directional/north{
+	pixel_x = 32
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "wqZ" = (

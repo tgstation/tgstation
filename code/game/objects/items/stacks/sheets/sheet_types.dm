@@ -144,6 +144,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	matter_amount = 4
 	cost = 500
 	source = /datum/robot_energy_storage/iron
+	stairs_type = /obj/structure/stairs
 
 /obj/item/stack/sheet/iron/Initialize(mapload)
 	. = ..()
@@ -290,6 +291,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	new/datum/stack_recipe("winged wooden chair", /obj/structure/chair/wood/wings, 3, time = 10, one_per_turf = TRUE, on_solid_ground = TRUE), \
 	new/datum/stack_recipe("wooden barricade", /obj/structure/barricade/wooden, 5, time = 50, one_per_turf = TRUE, on_solid_ground = TRUE), \
 	new/datum/stack_recipe("wooden door", /obj/structure/mineral_door/wood, 10, time = 20, one_per_turf = TRUE, on_solid_ground = TRUE), \
+	new/datum/stack_recipe("wooden stairs frame", /obj/structure/stairs_frame/wood, 10, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE), \
 	new/datum/stack_recipe("coffin", /obj/structure/closet/crate/coffin, 5, time = 15, one_per_turf = TRUE, on_solid_ground = TRUE), \
 	new/datum/stack_recipe("book case", /obj/structure/bookcase, 4, time = 15, one_per_turf = TRUE, on_solid_ground = TRUE), \
 	new/datum/stack_recipe("drying rack", /obj/machinery/smartfridge/drying_rack, 10, time = 15, one_per_turf = TRUE, on_solid_ground = TRUE), \
@@ -338,6 +340,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	material_type = /datum/material/wood
 	grind_results = list(/datum/reagent/cellulose = 20) //no lignocellulose or lignin reagents yet,
 	walltype = /turf/closed/wall/mineral/wood
+	stairs_type = /obj/structure/stairs/wood
 
 /obj/item/stack/sheet/mineral/wood/get_main_recipes()
 	. = ..()

@@ -562,7 +562,7 @@
 	while(istype(src, /turf/closed/mineral/gibtonite) && stage == GIBTONITE_ACTIVE && det_time > 0 && mineralAmt >= 1)
 		flick_overlay_view(image('icons/turf/smoothrocks.dmi', src, "rock_Gibtonite_active"), src, 5) //makes the animation pulse one time per tick
 		det_time--
-		sleep(5)
+		sleep(0.5 SECONDS)
 	if(istype(src, /turf/closed/mineral/gibtonite))
 		if(stage == GIBTONITE_ACTIVE && det_time <= 0 && mineralAmt >= 1)
 			var/turf/bombturf = get_turf(src)

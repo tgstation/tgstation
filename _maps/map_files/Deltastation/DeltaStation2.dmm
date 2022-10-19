@@ -352,9 +352,7 @@
 /area/station/science/explab)
 "adM" = (
 /obj/effect/landmark/start/security_officer,
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 2
-	},
+/obj/effect/turf_decal/trimline/red/filled/line,
 /turf/open/floor/iron,
 /area/station/security/lockers)
 "adO" = (
@@ -10313,9 +10311,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "cqm" = (
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 2
-	},
+/obj/effect/turf_decal/trimline/red/filled/line,
 /turf/open/floor/iron,
 /area/station/security/lockers)
 "cqn" = (
@@ -15661,9 +15657,7 @@
 /area/station/commons/toilet/restrooms)
 "dIU" = (
 /obj/structure/bodycontainer/morgue,
-/obj/effect/turf_decal/trimline/neutral/warning{
-	dir = 2
-	},
+/obj/effect/turf_decal/trimline/neutral/warning,
 /obj/effect/turf_decal/trimline/neutral/mid_joiner,
 /turf/open/floor/iron/dark/textured_half,
 /area/station/service/chapel/storage)
@@ -28233,9 +28227,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
-/obj/effect/turf_decal/siding{
-	dir = 2
-	},
+/obj/effect/turf_decal/siding,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/rd)
@@ -39994,9 +39986,7 @@
 "jFh" = (
 /obj/structure/bodycontainer/morgue,
 /obj/machinery/light/small/directional/west,
-/obj/effect/turf_decal/trimline/neutral/warning{
-	dir = 2
-	},
+/obj/effect/turf_decal/trimline/neutral/warning,
 /obj/effect/turf_decal/trimline/neutral/mid_joiner,
 /turf/open/floor/iron/dark/textured_half,
 /area/station/security/detectives_office)
@@ -63854,6 +63844,7 @@
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 1
 	},
+/obj/structure/sign/xenobio_guide/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "pDi" = (
@@ -77318,9 +77309,7 @@
 /area/station/cargo/drone_bay)
 "sRc" = (
 /obj/structure/bodycontainer/morgue,
-/obj/effect/turf_decal/trimline/neutral/warning{
-	dir = 2
-	},
+/obj/effect/turf_decal/trimline/neutral/warning,
 /obj/effect/turf_decal/trimline/neutral/mid_joiner,
 /obj/structure/sign/warning/no_smoking/directional/west,
 /turf/open/floor/iron/dark/textured_half,
@@ -79710,7 +79699,7 @@
 /obj/effect/spawner/random/structure/table_fancy,
 /obj/item/reagent_containers/cup/glass/bottle/beer{
 	desc = "Whatever it is, it reeks of foul, putrid froth.";
-	list_reagents = list(/datum/reagent/consumable/ethanol/bacchus_blessing = 15);
+	list_reagents = list(/datum/reagent/consumable/ethanol/bacchus_blessing=15);
 	name = "Delta-Down";
 	pixel_x = 5;
 	pixel_y = 5
@@ -80078,9 +80067,7 @@
 /obj/structure/bodycontainer/morgue{
 	dir = 8
 	},
-/obj/effect/turf_decal/trimline/neutral/warning{
-	dir = 2
-	},
+/obj/effect/turf_decal/trimline/neutral/warning,
 /obj/effect/turf_decal/trimline/neutral/mid_joiner,
 /turf/open/floor/iron/dark/textured_half,
 /area/station/service/chapel/storage)
@@ -88200,10 +88187,10 @@
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
 "vyP" = (
-/obj/item/storage/belt,
 /obj/item/radio,
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/storage/belt/utility,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/storage/eva)
 "vyX" = (
@@ -98174,6 +98161,7 @@
 "xVo" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/table/wood,
+/obj/item/radio/intercom/command,
 /turf/open/floor/carpet,
 /area/station/command/meeting_room/council)
 "xVr" = (

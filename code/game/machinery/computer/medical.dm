@@ -512,7 +512,7 @@
 					printing = 1
 					GLOB.data_core.medicalPrintCount++
 					playsound(loc, 'sound/items/poster_being_created.ogg', 100, TRUE)
-					sleep(30)
+					sleep(3 SECONDS)
 					var/obj/item/paper/printed_paper = new /obj/item/paper(loc)
 					var/final_paper_text = "<CENTER><B>Medical Record - (MR-[GLOB.data_core.medicalPrintCount])</B></CENTER><BR>"
 					if(active1 in GLOB.data_core.general)
