@@ -939,3 +939,29 @@
 	tastes = list("rice wrappers" = 1, "spice" = 1, "crunchy veggies" = 1)
 	foodtypes = GRAIN | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/caramel_popcorn
+	name = "caramel popcorn"
+	icon_state = "сaramel_popcorn"
+	desc = "caramel-covered popcorn. Sweet!"
+	trash_type = /obj/item/trash/caramel_popcorn
+	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/caramel = 4)
+	bite_consumption = 0.1
+	junkiness = 5
+	tastes = list("caramel" = 2, "popcorn" = 1)
+	foodtypes = JUNKFOOD | SUGAR
+	food_flags = FOOD_FINGER_FOOD
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/salty_popcorn
+	name = "salty popcorn"
+	icon_state = "salty_popcorn"
+	desc = "Salty popcorn, a classic for all time."
+	trash_type = /obj/item/trash/salty_popcorn
+	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/salt = 2)
+	bite_consumption = 0.1
+	junkiness = 5
+	tastes = list("salt" = 2, "popcorn" = 1)
+	foodtypes = JUNKFOOD
+	food_flags = FOOD_FINGER_FOOD
+	w_class = WEIGHT_CLASS_SMALL

@@ -153,3 +153,13 @@
 	name = "empty Ready-donk"
 	desc = "It's been Donk-decimated."
 	icon_state = "ready_donk"
+
+/obj/item/trash/caramel_popcorn
+	name = "empty caramel popcorn"
+	desc = "now it's not a sweet snack, but just a sticky bag..."
+	icon_state = "empty_caramel_popcorn"
+
+/obj/item/trash/salty_popcorn
+	name = "empty salty popcorn"
+	desc = "It looks like there are only a few grains of salt left at the bottom of the bag..."
+	icon_state = "empty_salty_popcorn"
