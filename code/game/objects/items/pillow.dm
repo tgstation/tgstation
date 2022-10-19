@@ -39,14 +39,15 @@
 
 /obj/item/pillow/attack_secondary(mob/living/carbon/victim, mob/living/user, params)
 	. = ..()
-	if(!isliving(victim))
+	if(!isliving(victim) || isdead(victim))
 		return
-	if(victim.wear_mask)
+	if(victim.wear_mask || !user.get_bodypart(BODY_ZONE_HEAD))
 		return
-	if(!user.get_bodypart(BODY_ZONE_HEAD) || HAS_TRAIT(user, TRAIT_PACIFISM))
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		to_chat(user, span_notice("You can't bring yourself to harm [victim]"))
 		return
 	if(victim.body_position || user.grab_state >= GRAB_AGGRESSIVE)
-		user.visible_message("[user] starts to smother [victim]", span_notice("You being smothering [victim]"))
+		user.visible_message("[user] starts to smother [victim]", span_notice("You begin smothering [victim]"), vision_distance = COMBAT_MESSAGE_RANGE)
 		smothering(user, victim)
 
 /obj/item/pillow/proc/smothering(mob/living/carbon/user, mob/living/carbon/victim)
@@ -55,10 +56,9 @@
 			break
 		if(!do_after(user, 1 SECONDS, victim))
 			break
-		victim.losebreath += 1
+		victim.losebreath = 1
 	victim.losebreath = 0
-	to_chat(victim, span_notice("You break out!"))
-	to_chat(user, span_notice("You stop smothering!"))
+	victim.visible_message("[victim] manages to escape being smothered!", span_notice("You break free!"), vision_distance = COMBAT_MESSAGE_RANGE)
 
 /obj/item/pillow/examine(mob/user)
 	. = ..()
