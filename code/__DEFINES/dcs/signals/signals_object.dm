@@ -338,6 +338,8 @@
 #define COMSIG_PROJECTILE_SELF_ON_HIT "projectile_self_on_hit"
 ///from base of /obj/projectile/proc/on_hit(): (atom/movable/firer, atom/target, Angle)
 #define COMSIG_PROJECTILE_ON_HIT "projectile_on_hit"
+///same as above, but sends to the original firer instead of firing source (like guns): (atom/fired_from, atom/target, angle)
+#define COMSIG_FIRER_PROJECTILE_ON_HIT "firer_projectile_on_hit"
 ///from base of /obj/projectile/proc/fire(): (obj/projectile, atom/original_target)
 #define COMSIG_PROJECTILE_BEFORE_FIRE "projectile_before_fire"
 ///from the base of /obj/projectile/proc/fire(): ()

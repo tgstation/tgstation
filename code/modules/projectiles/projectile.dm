@@ -242,6 +242,8 @@
 /obj/projectile/proc/on_hit(atom/target, blocked = FALSE, pierce_hit)
 	if(fired_from)
 		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_ON_HIT, firer, target, Angle)
+	if(firer)
+		SEND_SIGNAL(firer, COMSIG_FIRER_PROJECTILE_ON_HIT, fired_from, target, Angle)
 	// i know that this is probably more with wands and gun mods in mind, but it's a bit silly that the projectile on_hit signal doesn't ping the projectile itself.
 	// maybe we care what the projectile thinks! See about combining these via args some time when it's not 5AM
 	var/obj/item/bodypart/hit_limb
