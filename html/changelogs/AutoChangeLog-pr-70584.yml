@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Fixed a possible scenario which could result in ghosts not sending a chat message properly when pointing during high time dilation."

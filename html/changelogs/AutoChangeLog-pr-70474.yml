@@ -1,6 +1,0 @@
-author: "PositiveEntropy, Fikou"
-delete-after: True
-changes: 
-  - rscadd: "Adds a new HUD: The Trasen-Knox HUD! With a theming based on classic 1970s CRT screen computers!"
-  - code_imp: "Added behavior for unique icons for active hands."
-  - code_imp: "Added behavior that makes it so when you equip an item, the icon behind it defaults to the blank template type."

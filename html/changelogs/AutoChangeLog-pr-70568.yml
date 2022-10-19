@@ -1,5 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - bugfix: "Russian revolvers can now be suicided with."
-  - bugfix: "Russian revolvers won't get monkeys pissed at you for pointing it at them, even if you can't fire it."

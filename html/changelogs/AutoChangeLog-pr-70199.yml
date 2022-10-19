@@ -1,6 +1,0 @@
-author: "san7890, with regards to FernandoJ8"
-delete-after: True
-changes: 
-  - config: "A new TOML system has been introduced to modify different settings and variables regarding jobs! You can edit the standard stuff, like roundstart positions and overall positions of a job like usual (feature parse), but you can edit two new things! You can change how long an account needs to be \"aged\" on a server for to unlock a job, as well as the actual number of minutes a player must get to unlock a specific job. Nifty, eh? Do remember, this is entire system won't load without the overall LOAD_JOBS_FROM_TXT flag!"
-  - server: "Keep in mind that the jobconfig.toml is now the preferred system for updating job-related config, while jobs.txt should be considered deprecated. Support for loading it via jobs.txt will remain indefinitely, but expect to see a small error every time we validate the config."
-  - server: "FYI: To use jobconfig.toml, it is strongly advised that instead of downloading the codebase default that you run the Generate Job Configuration verb (in Server tab) in order to import all of your already set variables from jobs.txt. Please check to ensure that all of your wanted settings are present in the new file."

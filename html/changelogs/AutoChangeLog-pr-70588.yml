@@ -1,4 +1,0 @@
-author: "Darknesshaz"
-delete-after: True
-changes: 
-  - bugfix: "Deconstructing a railing will now give the proper amount of iron rods."
