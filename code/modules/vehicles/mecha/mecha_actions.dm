@@ -126,7 +126,7 @@
 	var/list/drivers = chassis.return_drivers()
 	chassis.balloon_alert(owner, "moving to other seat...")
 	chassis.is_currently_ejecting = TRUE
-	if(!do_after(owner, target, time = chassis.has_gravity() ? chassis.exit_delay : 0))
+	if(!do_after(owner, chassis, time = chassis.has_gravity() ? chassis.exit_delay : 0))
 		chassis.balloon_alert(owner, "interrupted!")
 		chassis.is_currently_ejecting = FALSE
 		return

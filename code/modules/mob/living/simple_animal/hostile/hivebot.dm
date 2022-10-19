@@ -152,7 +152,7 @@
 		to_chat(H, span_warning("There's already something on this tile!"))
 		return
 	to_chat(H, span_warning("You begin to create a foam wall at your position..."))
-	if(do_after(H, H, 5 SECONDS))
+	if(do_after(H, 5 SECONDS))
 		for(var/obj/structure/foamedmetal/FM in T.contents)
 			to_chat(H, span_warning("There's already a foam wall on this tile!"))
 			return

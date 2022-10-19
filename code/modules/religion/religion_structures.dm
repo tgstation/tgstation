@@ -40,7 +40,7 @@
 		to_chat(user, span_warning("[pushed_mob] is buckled to [pushed_mob.buckled]!"))
 		return ..()
 	to_chat(user, span_notice("You try to coax [pushed_mob] onto [src]..."))
-	if(!do_after(user,pushed_mob, 5 SECONDS))
+	if(!do_after(user, pushed_mob, 5 SECONDS))
 		return ..()
 	pushed_mob.forceMove(loc)
 	return ..()
