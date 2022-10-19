@@ -74,7 +74,7 @@
 	var/list/values = list()
 
 	for (var/ghost_form in ghost_forms)
-		values[ghost_form] = icon('icons/mob/mob.dmi', ghost_form)
+		values[ghost_form] = icon('icons/mob/simple/mob.dmi', ghost_form)
 
 	return values
 
@@ -176,3 +176,9 @@
 	savefile_key = "inquisitive_ghost"
 	savefile_identifier = PREFERENCE_PLAYER
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+
+/// When enabled, prevents any and all ghost role pop-ups.
+/datum/preference/toggle/ghost_roles
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	savefile_key = "ghost_roles"
+	savefile_identifier = PREFERENCE_PLAYER

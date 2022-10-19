@@ -42,8 +42,8 @@
 	to_chat(target, span_userdanger("[shooter] aims [weapon] point blank at you!"))
 	add_memory_in_range(target, 7, MEMORY_GUNPOINT, list(DETAIL_PROTAGONIST = target, DETAIL_DEUTERAGONIST = shooter, DETAIL_WHAT_BY = weapon), story_value = STORY_VALUE_OKAY, memory_flags = MEMORY_CHECK_BLINDNESS)
 
-	shooter.apply_status_effect(STATUS_EFFECT_HOLDUP, shooter)
-	target.apply_status_effect(STATUS_EFFECT_HELDUP, shooter)
+	shooter.apply_status_effect(/datum/status_effect/holdup, shooter)
+	target.apply_status_effect(/datum/status_effect/grouped/heldup, REF(shooter))
 
 	if(istype(weapon, /obj/item/gun/ballistic/rocketlauncher) && weapon.chambered)
 		if(target.stat == CONSCIOUS && IS_NUKE_OP(shooter) && !IS_NUKE_OP(target) && (locate(/obj/item/disk/nuclear) in target.get_contents()) && shooter.client)
@@ -51,26 +51,28 @@
 
 	target.do_alert_animation()
 	target.playsound_local(target.loc, 'sound/machines/chime.ogg', 50, TRUE)
-	SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, "gunpoint", /datum/mood_event/gunpoint)
+	target.add_mood_event("gunpoint", /datum/mood_event/gunpoint)
 
 	addtimer(CALLBACK(src, .proc/update_stage, 2), GUNPOINT_DELAY_STAGE_2)
 
 /datum/component/gunpoint/Destroy(force, silent)
 	var/mob/living/shooter = parent
-	shooter.remove_status_effect(STATUS_EFFECT_HOLDUP)
-	target.remove_status_effect(STATUS_EFFECT_HELDUP, shooter)
-	SEND_SIGNAL(target, COMSIG_CLEAR_MOOD_EVENT, "gunpoint")
+	shooter.remove_status_effect(/datum/status_effect/holdup)
+	target.remove_status_effect(/datum/status_effect/grouped/heldup, REF(shooter))
+	target.clear_mood_event("gunpoint")
 	return ..()
 
 /datum/component/gunpoint/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/check_deescalate)
 	RegisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE, .proc/flinch)
 	RegisterSignal(parent, COMSIG_MOB_ATTACK_HAND, .proc/check_shove)
+	RegisterSignal(parent, COMSIG_MOB_UPDATE_SIGHT, .proc/check_deescalate)
 	RegisterSignal(parent, list(COMSIG_LIVING_START_PULL, COMSIG_MOVABLE_BUMP), .proc/check_bump)
 
 /datum/component/gunpoint/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE)
+	UnregisterSignal(parent, COMSIG_MOB_UPDATE_SIGHT)
 	UnregisterSignal(parent, COMSIG_MOB_ATTACK_HAND)
 	UnregisterSignal(parent, list(COMSIG_LIVING_START_PULL, COMSIG_MOVABLE_BUMP))
 
@@ -99,6 +101,8 @@
 
 ///Update the damage multiplier for whatever stage we're entering into
 /datum/component/gunpoint/proc/update_stage(new_stage)
+	if(check_deescalate())
+		return
 	stage = new_stage
 	if(stage == 2)
 		to_chat(parent, span_danger("You steady [weapon] on [target]."))
@@ -114,8 +118,9 @@
 /datum/component/gunpoint/proc/check_deescalate()
 	SIGNAL_HANDLER
 
-	if(!can_see(parent, target, GUNPOINT_SHOOTER_STRAY_RANGE - 1))
+	if(!can_see(parent, target, GUNPOINT_SHOOTER_STRAY_RANGE))
 		cancel()
+		return TRUE
 
 ///Bang bang, we're firing a charged shot off
 /datum/component/gunpoint/proc/trigger_reaction()
@@ -124,9 +129,9 @@
 
 /datum/component/gunpoint/proc/async_trigger_reaction()
 	var/mob/living/shooter = parent
-	shooter.remove_status_effect(STATUS_EFFECT_HOLDUP) // try doing these before the trigger gets pulled since the target (or shooter even) may not exist after pulling the trigger, dig?
-	target.remove_status_effect(STATUS_EFFECT_HELDUP, shooter)
-	SEND_SIGNAL(target, COMSIG_CLEAR_MOOD_EVENT, "gunpoint")
+	shooter.remove_status_effect(/datum/status_effect/holdup) // try doing these before the trigger gets pulled since the target (or shooter even) may not exist after pulling the trigger, dig?
+	target.remove_status_effect(/datum/status_effect/grouped/heldup, REF(shooter))
+	target.clear_mood_event("gunpoint")
 
 	if(point_of_no_return)
 		return
@@ -189,7 +194,6 @@
 			span_danger("You flinch!"))
 		INVOKE_ASYNC(src, .proc/trigger_reaction)
 
-#undef GUNPOINT_SHOOTER_STRAY_RANGE
 #undef GUNPOINT_DELAY_STAGE_2
 #undef GUNPOINT_DELAY_STAGE_3
 #undef GUNPOINT_BASE_WOUND_BONUS

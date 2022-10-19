@@ -1,103 +1,133 @@
-/obj/effect/proc_holder/spell/pointed/mind_transfer
-	name = "Mind Transfer"
+/datum/action/cooldown/spell/pointed/mind_transfer
+	name = "Mind Swap"
 	desc = "This spell allows the user to switch bodies with a target next to him."
+	button_icon_state = "mindswap"
+	ranged_mousepointer = 'icons/effects/mouse_pointers/mindswap_target.dmi'
+
 	school = SCHOOL_TRANSMUTATION
-	charge_max = 600
-	clothes_req = FALSE
+	cooldown_time = 60 SECONDS
+	cooldown_reduction_per_rank =  10 SECONDS
+	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_MIND|SPELL_CASTABLE_AS_BRAIN
+	antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND
+
 	invocation = "GIN'YU CAPAN"
 	invocation_type = INVOCATION_WHISPER
-	range = 1
-	cooldown_min = 200 //100 deciseconds reduction per rank
-	ranged_mousepointer = 'icons/effects/mouse_pointers/mindswap_target.dmi'
-	action_icon_state = "mindswap"
+
 	active_msg = "You prepare to swap minds with a target..."
+	deactive_msg = "You dispel mind swap."
+	cast_range = 1
+
+	/// If TRUE, we cannot mindswap into mobs with minds if they do not currently have a key / player.
+	var/target_requires_key = TRUE
+	/// If TRUE, we cannot mindswap into people without a mind.
+	/// You may be wondering "What's the point of mindswap if the target has no mind"?
+	/// Primarily for debugging - targets hit with this set to FALSE will init a mind, then do the swap.
+	var/target_requires_mind = TRUE
 	/// For how long is the caster stunned for after the spell
 	var/unconscious_amount_caster = 40 SECONDS
 	/// For how long is the victim stunned for after the spell
 	var/unconscious_amount_victim = 40 SECONDS
+	/// List of mobs we cannot mindswap into.
+	var/static/list/mob/living/blacklisted_mobs = typecacheof(list(
+		/mob/living/brain,
+		/mob/living/silicon/pai,
+		/mob/living/simple_animal/hostile/imp/slaughter,
+		/mob/living/simple_animal/hostile/megafauna,
+	))
 
-/obj/effect/proc_holder/spell/pointed/mind_transfer/cast(list/targets, mob/living/user, silent = FALSE)
-	if(!targets.len)
-		if(!silent)
-			to_chat(user, span_warning("No mind found!"))
-		return FALSE
-	if(targets.len > 1)
-		if(!silent)
-			to_chat(user, span_warning("Too many minds! You're not a hive damnit!"))
-		return FALSE
-	if(!can_target(targets[1], user, silent))
-		return FALSE
-
-	var/mob/living/victim = targets[1] //The target of the spell whos body will be transferred to.
-	if(istype(victim, /mob/living/simple_animal/hostile/guardian))
-		var/mob/living/simple_animal/hostile/guardian/stand = victim
-		if(stand.summoner)
-			victim = stand.summoner
-	var/datum/mind/VM = victim.mind
-	if(victim.anti_magic_check(TRUE, FALSE) || VM.has_antag_datum(/datum/antagonist/wizard) || VM.has_antag_datum(/datum/antagonist/cult) || VM.has_antag_datum(/datum/antagonist/changeling) || VM.has_antag_datum(/datum/antagonist/rev) || victim.key[1] == "@")
-		if(!silent)
-			to_chat(user, span_warning("[victim.p_their(TRUE)] mind is resisting your spell!"))
-		return FALSE
-
-	//You should not be able to enter one of the most powerful side-antags as a fucking wizard.
-	if(istype(victim,/mob/living/simple_animal/hostile/imp/slaughter))
-		to_chat(user, span_warning("The devilish contract doesn't include the 'mind swappable' package, please try again another lifetime."))
-		return
-
-	//MIND TRANSFER BEGIN
-	var/mob/dead/observer/ghost = victim.ghostize()
-	user.mind.transfer_to(victim)
-
-	ghost.mind.transfer_to(user)
-	if(ghost.key)
-		user.key = ghost.key //have to transfer the key since the mind was not active
-	qdel(ghost)
-	//MIND TRANSFER END
-
-	//Here we knock both mobs out for a time.
-	user.Unconscious(unconscious_amount_caster)
-	victim.Unconscious(unconscious_amount_victim)
-	SEND_SOUND(user, sound('sound/magic/mandswap.ogg'))
-	SEND_SOUND(victim, sound('sound/magic/mandswap.ogg')) // only the caster and victim hear the sounds, that way no one knows for sure if the swap happened
-	return TRUE
-
-/obj/effect/proc_holder/spell/pointed/mind_transfer/can_target(atom/target, mob/user, silent)
+/datum/action/cooldown/spell/pointed/mind_transfer/can_cast_spell(feedback = TRUE)
 	. = ..()
 	if(!.)
 		return FALSE
-	if(!isliving(target))
-		if(!silent)
-			to_chat(user, span_warning("You can only swap minds with living beings!"))
+	if(!isliving(owner))
 		return FALSE
-	if(user == target)
-		if(!silent)
-			to_chat(user, span_warning("You can't swap minds with yourself!"))
+	if(owner.suiciding)
+		if(feedback)
+			to_chat(owner, span_warning("You're killing yourself! You can't concentrate enough to do this!"))
+		return FALSE
+	return TRUE
+
+/datum/action/cooldown/spell/pointed/mind_transfer/is_valid_target(atom/cast_on)
+	. = ..()
+	if(!.)
 		return FALSE
 
-	var/mob/living/victim = target
-	var/t_He = victim.p_they(TRUE)
+	if(!isliving(cast_on))
+		to_chat(owner, span_warning("You can only swap minds with living beings!"))
+		return FALSE
+	if(is_type_in_typecache(cast_on, blacklisted_mobs))
+		to_chat(owner, span_warning("This creature is too [pick("powerful", "strange", "arcane", "obscene")] to control!"))
+		return FALSE
+	if(isguardian(cast_on))
+		var/mob/living/simple_animal/hostile/guardian/stand = cast_on
+		if(stand.summoner && stand.summoner == owner)
+			to_chat(owner, span_warning("Swapping minds with your own guardian would just put you back into your own head!"))
+			return FALSE
 
-	if(ismegafauna(victim))
-		if(!silent)
-			to_chat(user, span_warning("This creature is too powerful to control!"))
+	var/mob/living/living_target = cast_on
+	if(living_target.stat == DEAD)
+		to_chat(owner, span_warning("You don't particularly want to be dead!"))
 		return FALSE
-	if(victim.stat == DEAD)
-		if(!silent)
-			to_chat(user, span_warning("You don't particularly want to be dead!"))
+	if(!living_target.mind && target_requires_mind)
+		to_chat(owner, span_warning("[living_target.p_theyve(TRUE)] doesn't appear to have a mind to swap into!"))
 		return FALSE
-	if(!victim.key || !victim.mind)
-		if(!silent)
-			to_chat(user, span_warning("[t_He] appear[victim.p_s()] to be catatonic! Not even magic can affect [victim.p_their()] vacant mind."))
+	if(!living_target.key && target_requires_key)
+		to_chat(owner, span_warning("[living_target.p_theyve(TRUE)] appear[living_target.p_s()] to be catatonic! \
+			Not even magic can affect [living_target.p_their()] vacant mind."))
 		return FALSE
-	if(user.suiciding)
-		if(!silent)
-			to_chat(user, span_warning("You're killing yourself! You can't concentrate enough to do this!"))
-		return FALSE
-	if(istype(victim, /mob/living/simple_animal/hostile/guardian))
-		var/mob/living/simple_animal/hostile/guardian/stand = victim
+
+	return TRUE
+
+/datum/action/cooldown/spell/pointed/mind_transfer/cast(mob/living/cast_on)
+	. = ..()
+	swap_minds(owner, cast_on)
+
+/datum/action/cooldown/spell/pointed/mind_transfer/proc/swap_minds(mob/living/caster, mob/living/cast_on)
+
+	var/mob/living/to_swap = cast_on
+	if(isguardian(cast_on))
+		var/mob/living/simple_animal/hostile/guardian/stand = cast_on
 		if(stand.summoner)
-			if(stand.summoner == user)
-				if(!silent)
-					to_chat(user, span_warning("Swapping minds with your own guardian would just put you back into your own head!"))
-				return FALSE
+			to_swap = stand.summoner
+
+	// Gives the target a mind if we don't require one and they don't have one
+	if(!to_swap.mind && !target_requires_mind)
+		to_swap.mind_initialize()
+
+	var/datum/mind/mind_to_swap = to_swap.mind
+	if(to_swap.can_block_magic(antimagic_flags) \
+		|| mind_to_swap.has_antag_datum(/datum/antagonist/wizard) \
+		|| mind_to_swap.has_antag_datum(/datum/antagonist/cult) \
+		|| mind_to_swap.has_antag_datum(/datum/antagonist/changeling) \
+		|| mind_to_swap.has_antag_datum(/datum/antagonist/rev) \
+		|| mind_to_swap.key?[1] == "@" \
+	)
+		to_chat(caster, span_warning("[to_swap.p_their(TRUE)] mind is resisting your spell!"))
+		return FALSE
+
+	// MIND TRANSFER BEGIN
+
+	var/datum/mind/caster_mind = caster.mind
+	var/datum/mind/to_swap_mind = to_swap.mind
+
+	var/to_swap_key = to_swap.key
+
+	caster_mind.transfer_to(to_swap)
+	to_swap_mind.transfer_to(caster)
+
+	// Just in case the swappee's key wasn't grabbed by transfer_to...
+	if(to_swap_key)
+		caster.key = to_swap_key
+
+	// MIND TRANSFER END
+
+	// Now we knock both mobs out for a time.
+	caster.Unconscious(unconscious_amount_caster)
+	to_swap.Unconscious(unconscious_amount_victim)
+
+	// Only the caster and victim hear the sounds,
+	// that way no one knows for sure if the swap happened
+	SEND_SOUND(caster, sound('sound/magic/mandswap.ogg'))
+	SEND_SOUND(to_swap, sound('sound/magic/mandswap.ogg'))
+
 	return TRUE

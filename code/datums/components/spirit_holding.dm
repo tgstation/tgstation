@@ -57,11 +57,14 @@
 	attempting_awakening = TRUE
 	to_chat(awakener, span_notice("You attempt to wake the spirit of [parent]..."))
 
-	var/list/candidates = poll_ghost_candidates("Do you want to play as the spirit of [awakener.real_name]'s blade?", ROLE_PAI, FALSE, 100, POLL_IGNORE_POSSESSED_BLADE)
+	var/mob/dead/observer/candidates = poll_ghost_candidates("Do you want to play as the spirit of [awakener.real_name]'s blade?", ROLE_PAI, FALSE, 100, POLL_IGNORE_POSSESSED_BLADE)
 	if(!LAZYLEN(candidates))
 		to_chat(awakener, span_warning("[parent] is dormant. Maybe you can try again later."))
 		attempting_awakening = FALSE
 		return
+
+	//Immediately unregister to prevent making a new spirit
+	UnregisterSignal(parent, COMSIG_ITEM_ATTACK_SELF)
 
 	var/mob/dead/observer/chosen_spirit = pick(candidates)
 	bound_spirit = new(parent)
@@ -71,16 +74,15 @@
 	bound_spirit.copy_languages(awakener, LANGUAGE_MASTER) //Make sure the sword can understand and communicate with the awakener.
 	bound_spirit.update_atom_languages()
 	bound_spirit.grant_all_languages(FALSE, FALSE, TRUE) //Grants omnitongue
-	var/input = sanitize_name(stripped_input(bound_spirit, "What are you named?", ,"", MAX_NAME_LEN))
+	var/input = sanitize_name(tgui_input_text(bound_spirit, "What are you named?", "Spectral Nomenclature", max_length = MAX_NAME_LEN))
 	if(parent && input)
 		parent = input
 		bound_spirit.fully_replace_character_name(null, "The spirit of [input]")
 
-	//prevents awakening it again + new signals for a now-possessed item
-	attempting_awakening = FALSE
-	UnregisterSignal(parent, COMSIG_ITEM_ATTACK_SELF)
+	//Add new signals for parent and stop attempting to awaken
 	RegisterSignal(parent, COMSIG_ATOM_RELAYMOVE, .proc/block_buckle_message)
 	RegisterSignal(parent, COMSIG_BIBLE_SMACKED, .proc/on_bible_smacked)
+	attempting_awakening = FALSE
 
 ///signal fired from a mob moving inside the parent
 /datum/component/spirit_holding/proc/block_buckle_message(datum/source, mob/living/user, direction)

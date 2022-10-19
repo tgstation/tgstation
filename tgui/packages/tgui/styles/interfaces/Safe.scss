@@ -14,7 +14,7 @@
 }
 
 .Safe__engraving-hinge {
-  content: " ";
+  content: ' ';
   background-color: #191f2a;
   width: 25px;
   height: 40px;
@@ -65,19 +65,15 @@
   font-style: italic;
   color: black;
   box-shadow: 5px 5px #111111;
-  background-image: linear-gradient(to bottom,
-    #b2ae74 0%,
-    #8e8b5d 100%);
+  background-image: linear-gradient(to bottom, #b2ae74 0%, #8e8b5d 100%);
   transform: rotate(-1deg);
 
   &:before {
-    content: " ";
+    content: ' ';
     display: block;
     width: 24px;
     height: 40px;
-    background-image: linear-gradient(to bottom,
-      transparent 0%,
-      #ffffff 100%);
+    background-image: linear-gradient(to bottom, transparent 0%, #ffffff 100%);
     box-shadow: 1px 1px #111111;
     opacity: 0.2;
     position: absolute;

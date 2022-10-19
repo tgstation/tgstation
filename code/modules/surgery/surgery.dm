@@ -7,7 +7,7 @@
 	var/can_cancel = TRUE //Can cancel this surgery after step 1 with cautery
 	var/list/target_mobtypes = list(/mob/living/carbon/human) //Acceptable Species
 	var/location = BODY_ZONE_CHEST //Surgery location
-	var/requires_bodypart_type = BODYPART_ORGANIC //Prevents you from performing an operation on incorrect limbs. 0 for any limb type
+	var/requires_bodypart_type = BODYTYPE_ORGANIC //Prevents you from performing an operation on incorrect limbs. 0 for any limb type
 	var/list/possible_locs = list() //Multiple locations
 	var/ignore_clothes = FALSE //This surgery ignores clothes
 	var/mob/living/carbon/target //Operation target mob
@@ -21,19 +21,25 @@
 	var/self_operable = FALSE //Can the surgery be performed on yourself.
 	var/requires_tech = FALSE //handles techweb-oriented surgeries, previously restricted to the /advanced subtype (You still need to add designs)
 	var/replaced_by //type; doesn't show up if this type exists. Set to /datum/surgery if you want to hide a "base" surgery (useful for typing parents IE healing.dm just make sure to null it out again)
+	/// Organ being directly manipulated, used for checking if the organ is still in the body after surgery has begun
+	var/organ_to_manipulate
 
-/datum/surgery/New(surgery_target, surgery_location, surgery_bodypart)
+/datum/surgery/New(atom/surgery_target, surgery_location, surgery_bodypart)
 	..()
-	if(surgery_target)
-		target = surgery_target
-		target.surgeries += src
-		if(surgery_location)
-			location = surgery_location
-		if(surgery_bodypart)
-			operated_bodypart = surgery_bodypart
-			if(targetable_wound)
-				operated_wound = operated_bodypart.get_wound_type(targetable_wound)
-				operated_wound.attached_surgery = src
+	if(!surgery_target)
+		return
+	target = surgery_target
+	target.surgeries += src
+	if(surgery_location)
+		location = surgery_location
+	if(!surgery_bodypart)
+		return
+	operated_bodypart = surgery_bodypart
+	if(targetable_wound)
+		operated_wound = operated_bodypart.get_wound_type(targetable_wound)
+		operated_wound.attached_surgery = src
+
+	SEND_SIGNAL(surgery_target, COMSIG_MOB_SURGERY_STARTED, src, surgery_location, surgery_bodypart)
 
 /datum/surgery/Destroy()
 	if(operated_wound)
@@ -52,7 +58,7 @@
 		return FALSE
 
 	// True surgeons (like abductor scientists) need no instructions
-	if(HAS_TRAIT(user, TRAIT_SURGEON) || HAS_TRAIT(user.mind, TRAIT_SURGEON))
+	if(HAS_TRAIT(user, TRAIT_SURGEON) || (!isnull(user.mind) && HAS_TRAIT(user.mind, TRAIT_SURGEON)))
 		if(replaced_by) // only show top-level surgeries
 			return FALSE
 		else
@@ -64,25 +70,17 @@
 	if(requires_tech)
 		. = FALSE
 
-	if(iscyborg(user))
-		var/mob/living/silicon/robot/robo_surgeon = user
-		var/obj/item/surgical_processor/surgical_processor = locate() in robo_surgeon.model.modules
-		if(surgical_processor) //no early return for !surgical_processor since we want to check optable should this not exist.
-			if(replaced_by in surgical_processor.advanced_surgeries)
-				return FALSE
-			if(type in surgical_processor.advanced_surgeries)
-				return TRUE
+	var/surgery_signal = SEND_SIGNAL(user, COMSIG_SURGERY_STARTING, src, patient)
+	if(surgery_signal & COMPONENT_FORCE_SURGERY)
+		return TRUE
+	if(surgery_signal & COMPONENT_CANCEL_SURGERY)
+		return FALSE
 
 	var/turf/patient_turf = get_turf(patient)
 
 	//Get the relevant operating computer
-	var/obj/machinery/computer/operating/opcomputer
-	var/obj/structure/table/optable/optable = locate(/obj/structure/table/optable, patient_turf)
-	if(optable?.computer)
-		opcomputer = optable.computer
-	if(!opcomputer)
-		return
-	if(opcomputer.machine_stat & (NOPOWER|BROKEN))
+	var/obj/machinery/computer/operating/opcomputer = locate_operating_computer(patient_turf)
+	if (isnull(opcomputer))
 		return .
 	if(replaced_by in opcomputer.advanced_surgeries)
 		return FALSE
@@ -91,6 +89,8 @@
 
 /datum/surgery/proc/next_step(mob/living/user, modifiers)
 	if(location != user.zone_selected)
+		return FALSE
+	if(user.combat_mode)
 		return FALSE
 	if(step_in_progress)
 		return TRUE
@@ -132,6 +132,22 @@
 		story_value = STORY_VALUE_OKAY
 	)
 	qdel(src)
+
+/// Returns a nearby operating computer linked to an operating table
+/datum/surgery/proc/locate_operating_computer(turf/patient_turf)
+	if (isnull(patient_turf))
+		return null
+
+	var/obj/structure/table/optable/operating_table = locate(/obj/structure/table/optable, patient_turf)
+	var/obj/machinery/computer/operating/operating_computer = operating_table?.computer
+
+	if (isnull(operating_computer))
+		return null
+
+	if(operating_computer.machine_stat & (NOPOWER|BROKEN))
+		return null
+
+	return operating_computer
 
 /datum/surgery/advanced
 	name = "advanced surgery"

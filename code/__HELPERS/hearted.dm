@@ -9,7 +9,10 @@
 		return
 	message_admins("Polling [number_to_ask] players for commendations.")
 
-	for(var/i in GLOB.joined_player_list)
+	// We need the list to be random, otherwise we'll end up always asking the same people to give out commendations.
+	var/list/eligible_player_list = shuffle(GLOB.joined_player_list)
+
+	for(var/i in eligible_player_list)
 		var/mob/check_mob = get_mob_by_ckey(i)
 		if(!check_mob?.mind || !check_mob.client)
 			continue
@@ -42,13 +45,13 @@
 	var/heart_nominee
 	switch(attempt)
 		if(1)
-			heart_nominee = input(src, "What was their name? Just a first or last name may be enough. (Leave blank to cancel)", "<3?")
+			heart_nominee = tgui_input_text(src, "What was their name? Just a first or last name may be enough.", "<3?")
 		if(2)
-			heart_nominee = input(src, "Try again, what was their name? Just a first or last name may be enough. (Leave blank to cancel)", "<3?")
+			heart_nominee = tgui_input_text(src, "Try again, what was their name? Just a first or last name may be enough.", "<3?")
 		if(3)
-			heart_nominee = input(src, "One more try, what was their name? Just a first or last name may be enough. (Leave blank to cancel)", "<3?")
+			heart_nominee = tgui_input_text(src, "One more try, what was their name? Just a first or last name may be enough.", "<3?")
 
-	if(isnull(heart_nominee) || heart_nominee == "")
+	if(!heart_nominee)
 		return
 
 	heart_nominee = lowertext(heart_nominee)

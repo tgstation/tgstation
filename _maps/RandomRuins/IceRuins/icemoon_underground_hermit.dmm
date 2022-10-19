@@ -1,19 +1,18 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aM" = (
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
 "bz" = (
 /obj/item/flashlight/lantern,
 /turf/open/floor/grass/fairy,
 /area/ruin/powered/shuttle)
 "bW" = (
-/obj/item/reagent_containers/glass/bucket/wooden,
+/obj/item/reagent_containers/cup/bucket/wooden,
 /turf/open/floor/plating,
 /area/ruin/powered/shuttle)
 "cI" = (
 /turf/open/floor/plating,
 /area/ruin/powered/shuttle)
-"de" = (
-/obj/item/flashlight/lantern,
-/turf/open/floor/plating/asteroid/snow/icemoon,
-/area/icemoon/underground/explored)
 "ec" = (
 /obj/item/clothing/suit/hooded/wintercoat,
 /turf/open/floor/wood,
@@ -37,18 +36,18 @@
 /turf/open/floor/wood,
 /area/ruin/powered/shuttle)
 "ii" = (
-/obj/effect/mob_spawn/human/hermit,
+/obj/effect/mob_spawn/ghost_role/human/hermit,
 /turf/open/floor/wood,
 /area/ruin/powered/shuttle)
-"lH" = (
+"il" = (
 /obj/structure/barricade/wooden/crude/snow,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "mN" = (
 /turf/closed/wall/mineral/wood,
 /area/ruin/powered/shuttle)
 "oJ" = (
-/obj/structure/sink,
+/obj/structure/sink/directional/south,
 /turf/open/floor/plating,
 /area/ruin/powered/shuttle)
 "pI" = (
@@ -71,13 +70,17 @@
 /obj/item/tank/internals/emergency_oxygen/engi,
 /turf/open/floor/grass/fairy,
 /area/ruin/powered/shuttle)
-"EV" = (
+"zd" = (
 /obj/item/storage/bag/plants/portaseeder,
-/obj/item/storage/firstaid/medical,
+/obj/item/storage/medkit/surgery,
 /obj/item/storage/bag/ore,
 /obj/structure/table/wood,
 /turf/open/floor/grass/fairy,
 /area/ruin/powered/shuttle)
+"CR" = (
+/obj/item/flashlight/lantern,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
 "GU" = (
 /obj/item/storage/toolbox/emergency,
 /turf/open/floor/plating,
@@ -107,12 +110,17 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/grass/fairy,
 /area/ruin/powered/shuttle)
-"OU" = (
-/turf/open/floor/plating/asteroid/snow/icemoon,
+"Qr" = (
+/obj/structure/barricade/wooden/snowed,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "QD" = (
 /turf/template_noop,
 /area/template_noop)
+"Rr" = (
+/obj/structure/flora/tree/pine/style_random,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
 "Si" = (
 /obj/structure/glowshroom/single,
 /turf/open/floor/plating,
@@ -123,20 +131,12 @@
 /obj/item/knife/combat,
 /turf/open/floor/grass/fairy,
 /area/ruin/powered/shuttle)
-"Wb" = (
-/obj/structure/barricade/wooden/snowed,
-/turf/open/floor/plating/asteroid/snow/icemoon,
-/area/icemoon/underground/explored)
-"Wc" = (
-/obj/structure/flora/tree/pine,
-/turf/open/floor/plating/asteroid/snow/icemoon,
-/area/icemoon/underground/explored)
 "WK" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/grass/fairy,
 /area/ruin/powered/shuttle)
 "Xh" = (
-/obj/structure/flora/tree/jungle/small,
+/obj/structure/flora/tree/jungle/small/style_random,
 /turf/open/floor/grass/fairy,
 /area/ruin/powered/shuttle)
 "XI" = (
@@ -182,7 +182,7 @@ QD
 QD
 QD
 QD
-OU
+aM
 QD
 QD
 QD
@@ -221,7 +221,7 @@ YN
 YN
 YN
 YN
-OU
+aM
 "}
 (5,1,1) = {"
 QD
@@ -232,14 +232,14 @@ YN
 YN
 YN
 YN
-OU
-OU
-lH
+aM
+aM
+il
 YN
-OU
-OU
-OU
-OU
+aM
+aM
+aM
+aM
 "}
 (6,1,1) = {"
 QD
@@ -253,11 +253,11 @@ mN
 mN
 mN
 mN
-OU
-OU
-OU
-Wc
-OU
+aM
+aM
+aM
+Rr
+aM
 "}
 (7,1,1) = {"
 YN
@@ -271,11 +271,11 @@ ec
 ii
 ha
 mN
-OU
-OU
-OU
-lH
-OU
+aM
+aM
+aM
+il
+aM
 "}
 (8,1,1) = {"
 YN
@@ -289,11 +289,11 @@ hN
 hN
 hN
 JI
-OU
-OU
-OU
-Wc
-OU
+aM
+aM
+aM
+Rr
+aM
 "}
 (9,1,1) = {"
 YN
@@ -307,11 +307,11 @@ hN
 pI
 sC
 mN
-OU
-OU
-OU
-de
-OU
+aM
+aM
+aM
+CR
+aM
 "}
 (10,1,1) = {"
 YN
@@ -325,11 +325,11 @@ cI
 mN
 mN
 mN
-Wb
-OU
-OU
-OU
-OU
+Qr
+aM
+aM
+aM
+aM
 "}
 (11,1,1) = {"
 YN
@@ -344,10 +344,10 @@ WK
 gr
 YN
 YN
-OU
-OU
-OU
-Wc
+aM
+aM
+aM
+Rr
 "}
 (12,1,1) = {"
 QD
@@ -355,17 +355,17 @@ QD
 YN
 YN
 UL
-EV
+zd
 YN
 YN
 YN
 YN
 YN
 YN
-OU
-OU
-OU
-OU
+aM
+aM
+aM
+aM
 "}
 (13,1,1) = {"
 QD
@@ -378,12 +378,12 @@ YN
 YN
 YN
 YN
-OU
-OU
-OU
-OU
-OU
-OU
+aM
+aM
+aM
+aM
+aM
+aM
 "}
 (14,1,1) = {"
 QD
@@ -395,12 +395,12 @@ YN
 YN
 YN
 YN
-OU
-OU
-OU
-OU
-Wc
-OU
+aM
+aM
+aM
+aM
+Rr
+aM
 QD
 "}
 (15,1,1) = {"
@@ -411,15 +411,15 @@ QD
 QD
 QD
 QD
-OU
-OU
-OU
-OU
-Wc
-OU
-OU
-OU
-OU
+aM
+aM
+aM
+aM
+Rr
+aM
+aM
+aM
+aM
 "}
 (16,1,1) = {"
 QD
@@ -432,10 +432,10 @@ QD
 QD
 QD
 QD
-OU
-OU
+aM
+aM
 QD
 QD
 QD
-OU
+aM
 "}

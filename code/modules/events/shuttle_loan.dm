@@ -13,10 +13,12 @@
 	typepath = /datum/round_event/shuttle_loan
 	max_occurrences = 1
 	earliest_start = 7 MINUTES
+	category = EVENT_CATEGORY_BUREAUCRATIC
+	description = "If cargo accepts the offer, fills the shuttle with loot and/or enemies."
 
 /datum/round_event/shuttle_loan
-	announceWhen = 1
-	endWhen = 500
+	announce_when = 1
+	end_when = 500
 	var/dispatched = FALSE
 	var/dispatch_type = 0
 	var/bonus_points = 10000
@@ -60,10 +62,10 @@
 	var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	if(D)
 		D.adjust_money(bonus_points)
-	endWhen = activeFor + 1
+	end_when = activeFor + 1
 
 	SSshuttle.supply.mode = SHUTTLE_CALL
-	SSshuttle.supply.destination = SSshuttle.getDock("supply_home")
+	SSshuttle.supply.destination = SSshuttle.getDock("cargo_home")
 	SSshuttle.supply.setTimer(3000)
 
 	switch(dispatch_type)
@@ -97,9 +99,9 @@
 /datum/round_event/shuttle_loan/tick()
 	if(dispatched)
 		if(SSshuttle.supply.mode != SHUTTLE_IDLE)
-			endWhen = activeFor
+			end_when = activeFor
 		else
-			endWhen = activeFor + 1
+			end_when = activeFor + 1
 
 /datum/round_event/shuttle_loan/end()
 	if(SSshuttle.shuttle_loan && SSshuttle.shuttle_loan.dispatched)
@@ -155,7 +157,7 @@
 				var/turf/T = pick_n_take(empty_shuttle_turfs)
 
 				new /obj/effect/decal/remains/human(T)
-				new /obj/item/clothing/shoes/space_ninja(T)
+				new /obj/item/clothing/shoes/jackboots/fast(T)
 				new /obj/item/clothing/mask/balaclava(T)
 
 				for(var/i in 1 to 5)
@@ -163,11 +165,11 @@
 					new /obj/structure/spider/stickyweb(T)
 
 			if(ANTIDOTE_NEEDED)
-				var/obj/effect/mob_spawn/human/corpse/assistant/infected_assistant = pick(/obj/effect/mob_spawn/human/corpse/assistant/beesease_infection, /obj/effect/mob_spawn/human/corpse/assistant/brainrot_infection, /obj/effect/mob_spawn/human/corpse/assistant/spanishflu_infection)
+				var/obj/effect/mob_spawn/corpse/human/assistant/infected_assistant = pick(/obj/effect/mob_spawn/corpse/human/assistant/beesease_infection, /obj/effect/mob_spawn/corpse/human/assistant/brainrot_infection, /obj/effect/mob_spawn/corpse/human/assistant/spanishflu_infection)
 				var/turf/T
-				for(var/i=0, i<10, i++)
+				for(var/i in 1 to 10)
 					if(prob(15))
-						shuttle_spawns.Add(/obj/item/reagent_containers/glass/bottle)
+						shuttle_spawns.Add(/obj/item/reagent_containers/cup/bottle)
 					else if(prob(15))
 						shuttle_spawns.Add(/obj/item/reagent_containers/syringe)
 					else if(prob(25))
@@ -175,8 +177,8 @@
 					T = pick_n_take(empty_shuttle_turfs)
 					new infected_assistant(T)
 				shuttle_spawns.Add(/obj/structure/closet/crate)
-				shuttle_spawns.Add(/obj/item/reagent_containers/glass/bottle/pierrot_throat)
-				shuttle_spawns.Add(/obj/item/reagent_containers/glass/bottle/magnitis)
+				shuttle_spawns.Add(/obj/item/reagent_containers/cup/bottle/pierrot_throat)
+				shuttle_spawns.Add(/obj/item/reagent_containers/cup/bottle/magnitis)
 
 			if(DEPARTMENT_RESUPPLY)
 				var/list/crate_types = list(
@@ -206,10 +208,10 @@
 				var/datum/supply_pack/pack = SSshuttle.supply_packs[/datum/supply_pack/organic/hydroponics/beekeeping_fullkit]
 				pack.generate(pick_n_take(empty_shuttle_turfs))
 
-				shuttle_spawns.Add(/obj/effect/mob_spawn/human/corpse/bee_terrorist)
-				shuttle_spawns.Add(/obj/effect/mob_spawn/human/corpse/cargo_tech)
-				shuttle_spawns.Add(/obj/effect/mob_spawn/human/corpse/cargo_tech)
-				shuttle_spawns.Add(/obj/effect/mob_spawn/human/corpse/nanotrasensoldier)
+				shuttle_spawns.Add(/obj/effect/mob_spawn/corpse/human/bee_terrorist)
+				shuttle_spawns.Add(/obj/effect/mob_spawn/corpse/human/cargo_tech)
+				shuttle_spawns.Add(/obj/effect/mob_spawn/corpse/human/cargo_tech)
+				shuttle_spawns.Add(/obj/effect/mob_spawn/corpse/human/nanotrasensoldier)
 				shuttle_spawns.Add(/obj/item/gun/ballistic/automatic/pistol/no_mag)
 				shuttle_spawns.Add(/obj/item/gun/ballistic/automatic/pistol/m1911/no_mag)
 				shuttle_spawns.Add(/obj/item/honey_frame)
@@ -256,7 +258,7 @@
 
 /obj/item/paper/fluff/bee_objectives
 	name = "Objectives of a Bee Liberation Front Operative"
-	info = "<b>Objective #1</b>. Liberate all bees on the NT transport vessel 2416/B. <b>Success!</b>  <br><b>Objective #2</b>. Escape alive. <b>Failed.</b>"
+	default_raw_text = "<b>Objective #1</b>. Liberate all bees on the NT transport vessel 2416/B. <b>Success!</b>  <br><b>Objective #2</b>. Escape alive. <b>Failed.</b>"
 
 /obj/machinery/syndicatebomb/shuttle_loan/Initialize(mapload)
 	. = ..()
@@ -267,10 +269,10 @@
 
 /obj/item/paper/fluff/cargo/bomb
 	name = "hastly scribbled note"
-	info = "GOOD LUCK!"
+	default_raw_text = "GOOD LUCK!"
 
 /obj/item/paper/fluff/cargo/bomb/allyourbase
-	info = "Somebody set us up the bomb!"
+	default_raw_text = "Somebody set us up the bomb!"
 
 #undef HIJACK_SYNDIE
 #undef RUSKY_PARTY

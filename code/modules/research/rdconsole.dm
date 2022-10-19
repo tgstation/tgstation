@@ -22,7 +22,7 @@ Nothing else in the console has ID requirements.
 	icon_screen = "rdcomp"
 	icon_keyboard = "rd_key"
 	circuit = /obj/item/circuitboard/computer/rdconsole
-	req_access = list(ACCESS_RND) // Locking and unlocking the console requires science access
+	req_access = list(ACCESS_RESEARCH) // Locking and unlocking the console requires research access
 	/// Reference to global science techweb
 	var/datum/techweb/stored_research
 	/// The stored technology disk, if present
@@ -105,6 +105,8 @@ Nothing else in the console has ID requirements.
 			var/logname = "Unknown"
 			if(isAI(user))
 				logname = "AI: [user.name]"
+			if(iscyborg(user))
+				logname = "Cyborg: [user.name]"
 			if(iscarbon(user))
 				var/obj/item/card/id/idcard = user.get_active_held_item()
 				if(istype(idcard))
@@ -129,12 +131,13 @@ Nothing else in the console has ID requirements.
 /obj/machinery/computer/rdconsole/emag_act(mob/user)
 	if(!(obj_flags & EMAGGED))
 		to_chat(user, span_notice("You disable the security protocols[locked? " and unlock the console":""]."))
-		playsound(src, "sparks", 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		obj_flags |= EMAGGED
 		locked = FALSE
 	return ..()
 
 /obj/machinery/computer/rdconsole/ui_interact(mob/user, datum/tgui/ui = null)
+	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if (!ui)
 		ui = new(user, src, "Techweb", name)
@@ -316,12 +319,16 @@ Nothing else in the console has ID requirements.
 				say("No Design Disk Inserted!")
 				return TRUE
 			var/slot = text2num(params["slot"])
-			var/datum/design/design = SSresearch.techweb_design_by_id(params["selectedDesign"])
+			var/design_id = params["selectedDesign"]
+			if(!stored_research.researched_designs.Find(design_id))
+				stack_trace("ID did not map to a researched datum [design_id]")
+				return
+			var/datum/design/design = SSresearch.techweb_design_by_id(design_id)
 			if(design)
 				if(design.build_type & (AUTOLATHE|PROTOLATHE|AWAY_LATHE)) // Specifically excludes circuit imprinter and mechfab
 					if(design.autolathe_exportable && !design.reagents_list.len)
 						design.build_type |= AUTOLATHE
-					design.category |= "Imported"
+					design.category |= RND_CATEGORY_IMPORTED
 				d_disk.blueprints[slot] = design
 			return TRUE
 		if ("uploadDesignSlot")

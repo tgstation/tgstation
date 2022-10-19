@@ -15,6 +15,7 @@
 	name = "oxygen tank"
 	desc = "A tank of oxygen, this one is blue."
 	icon_state = "oxygen"
+	inhand_icon_state = "oxygen_tank"
 	tank_holder_icon_state = "holder_oxygen"
 	distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
 	force = 10
@@ -29,12 +30,14 @@
 /obj/item/tank/internals/oxygen/yellow
 	desc = "A tank of oxygen, this one is yellow."
 	icon_state = "oxygen_f"
+	inhand_icon_state = "oxygen_f_tank"
 	tank_holder_icon_state = "holder_oxygen_f"
 	dog_fashion = null
 
 /obj/item/tank/internals/oxygen/red
 	desc = "A tank of oxygen, this one is red."
 	icon_state = "oxygen_fr"
+	inhand_icon_state = "oxygen_fr_tank"
 	tank_holder_icon_state = "holder_oxygen_fr"
 	dog_fashion = null
 
@@ -64,6 +67,7 @@
 	name = "plasma tank"
 	desc = "Contains dangerous plasma. Do not inhale. Warning: extremely flammable."
 	icon_state = "plasma"
+	inhand_icon_state = "plasma_tank"
 	worn_icon_state = "plasmatank"
 	tank_holder_icon_state = null
 	flags_1 = CONDUCT_1
@@ -106,7 +110,7 @@
 	inhand_icon_state = "plasmaman_tank"
 	tank_holder_icon_state = null
 	force = 10
-	distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
+	distribute_pressure = TANK_PLASMAMAN_RELEASE_PRESSURE
 
 /obj/item/tank/internals/plasmaman/populate_gas()
 	air_contents.assert_gas(/datum/gas/plasma)
@@ -125,7 +129,7 @@
 	worn_icon = null
 	slot_flags = ITEM_SLOT_BELT
 	force = 5
-	volume = 24 //enough so they need to refill but not that often to be a chore
+	volume = 6 //same size as the engineering ones but plasmamen have special lungs that consume less plasma per breath
 	w_class = WEIGHT_CLASS_SMALL //thanks i forgot this
 
 /obj/item/tank/internals/plasmaman/belt/full/populate_gas()
@@ -144,6 +148,7 @@
 	name = "emergency oxygen tank"
 	desc = "Used for emergencies. Contains very little oxygen, so try to conserve it until you actually need it."
 	icon_state = "emergency"
+	inhand_icon_state = "emergency_tank"
 	worn_icon_state = "emergency"
 	tank_holder_icon_state = "holder_emergency"
 	worn_icon = null
@@ -166,6 +171,7 @@
 /obj/item/tank/internals/emergency_oxygen/engi
 	name = "extended-capacity emergency oxygen tank"
 	icon_state = "emergency_engi"
+	inhand_icon_state = "emergency_engi_tank"
 	worn_icon_state = "emergency_engi"
 	tank_holder_icon_state = "holder_emergency_engi"
 	worn_icon = null
@@ -192,6 +198,7 @@
 	name = "gas tank"
 	desc = "A generic tank used for storing and transporting gasses. Can be used for internals."
 	icon_state = "generic"
+	inhand_icon_state = "generic_tank"
 	distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
 	force = 10
 	dog_fashion = /datum/dog_fashion/back

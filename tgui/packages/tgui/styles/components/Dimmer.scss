@@ -2,6 +2,7 @@
  * Copyright (c) 2020 Aleksej Komarov
  * SPDX-License-Identifier: MIT
  */
+$background-dimness: 0.75 !default;
 
 .Dimmer {
   // Align everything in the middle.
@@ -16,6 +17,6 @@
   left: 0;
   right: 0;
   // Dim everything around it
-  background-color: rgba(0, 0, 0, 0.75);
+  background-color: rgba(0, 0, 0, $background-dimness);
   z-index: 1;
 }

@@ -4,7 +4,7 @@
 	damage = 6
 	embedding = null
 	shrapnel_type = null
-	var/piercing = FALSE
+	var/inject_flags = null
 
 /obj/projectile/bullet/dart/Initialize(mapload)
 	. = ..()
@@ -14,7 +14,7 @@
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
 		if(blocked != 100) // not completely blocked
-			if(M.can_inject(target_zone = def_zone, injection_flags = piercing ? INJECT_CHECK_PENETRATE_THICK : null)) // Pass the hit zone to see if it can inject by whether it hit the head or the body.
+			if(M.can_inject(target_zone = def_zone, injection_flags = inject_flags)) // Pass the hit zone to see if it can inject by whether it hit the head or the body.
 				..()
 				reagents.trans_to(M, reagents.total_volume, methods = INJECT)
 				return BULLET_ACT_HIT
@@ -47,4 +47,4 @@
 	reagents.flags &= ~NO_REACT
 
 /obj/projectile/bullet/dart/piercing
-	piercing = TRUE
+	inject_flags = INJECT_CHECK_PENETRATE_THICK

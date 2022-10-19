@@ -2,7 +2,7 @@
 	for(var/path in typesof(/obj/projectile))
 		var/obj/projectile/projectile = path
 		if(initial(projectile.movement_type) & PHASING)
-			Fail("[path] has default movement type PHASING. Piercing projectiles should be done using the projectile piercing system, not movement_types!")
+			TEST_FAIL("[path] has default movement type PHASING. Piercing projectiles should be done using the projectile piercing system, not movement_types!")
 
 /datum/unit_test/gun_go_bang/Run()
 	// test is for a ballistic gun that starts loaded + chambered

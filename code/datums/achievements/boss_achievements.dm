@@ -1,6 +1,5 @@
 /datum/award/achievement/boss
 	category = "Bosses"
-	icon = "baseboss"
 
 /datum/award/achievement/boss/tendril_exterminator
 	name = "Tendril Exterminator"
@@ -24,6 +23,7 @@
 	name = "Demonic-Frost Miner Killer"
 	desc = "Definitely harder than the Blood-Drunk Miner."
 	database_id = BOSS_MEDAL_FROSTMINER
+	icon = "frostminer"
 
 /datum/award/achievement/boss/bubblegum_kill
 	name = "Bubblegum Killer"
@@ -65,6 +65,7 @@
 	name = "Wendigo Killer"
 	desc = "You've now ruined years of mythical storytelling."
 	database_id = BOSS_MEDAL_WENDIGO
+	icon = "wendigo"
 
 /datum/award/achievement/boss/blood_miner_crusher
 	name = "Blood-Drunk Miner Crusher"
@@ -76,6 +77,7 @@
 	name = "Demonic-Frost Miner Crusher"
 	desc = "Definitely harder than the Blood-Drunk Miner."
 	database_id = BOSS_MEDAL_FROSTMINER_CRUSHER
+	icon = "frostminer"
 
 /datum/award/achievement/boss/bubblegum_crusher
 	name = "Bubblegum Crusher"
@@ -105,16 +107,19 @@
 	name = "Legion Crusher"
 	desc = "We were many... now we are none."
 	database_id = BOSS_MEDAL_LEGION_CRUSHER
+	icon = "legion"
 
 /datum/award/achievement/boss/swarmer_beacon_crusher
 	name = "Swarm Beacon Crusher"
 	desc = "GET THEM OFF OF ME!"
 	database_id = BOSS_MEDAL_SWARMERS_CRUSHER
+	icon = "swarmer"
 
 /datum/award/achievement/boss/wendigo_crusher
 	name = "Wendigo Crusher"
 	desc = "You've now ruined years of mythical storytelling."
 	database_id = BOSS_MEDAL_WENDIGO_CRUSHER
+	icon = "wendigo"
 
 //should be removed soon
 /datum/award/achievement/boss/king_goat_kill

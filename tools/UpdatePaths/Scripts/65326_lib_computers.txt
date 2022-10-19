@@ -1,0 +1,1 @@
+/obj/machinery/computer/bookmanagement : /obj/machinery/computer/libraryconsole/bookmanagement

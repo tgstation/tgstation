@@ -2,7 +2,7 @@
 /mob/living/simple_animal/hostile/asteroid/basilisk
 	name = "basilisk"
 	desc = "A territorial beast, covered in a thick shell that absorbs energy. Its stare causes victims to freeze from the inside."
-	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	icon_state = "Basilisk"
 	icon_living = "Basilisk"
 	icon_aggro = "Basilisk_alert"
@@ -43,7 +43,7 @@
 	damage = 10
 	damage_type = BURN
 	nodamage = FALSE
-	flag = ENERGY
+	armor_flag = ENERGY
 	temperature = -50 // Cools you down! per hit!
 	var/slowdown = TRUE //Determines if the projectile applies a slowdown status effect on carbons or not
 
@@ -80,7 +80,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/AttackingTarget()
 	. = ..()
-	if(lava_drinker && !warmed_up && istype(target, /turf/open/lava))
+	if(lava_drinker && !warmed_up && islava(target))
 		visible_message(span_warning("[src] begins to drink from [target]..."))
 		if(do_after(src, 70, target = target))
 			visible_message(span_warning("[src] begins to fire up!"))
@@ -103,7 +103,7 @@
 /mob/living/simple_animal/hostile/asteroid/basilisk/watcher
 	name = "watcher"
 	desc = "A levitating, eye-like creature held aloft by winglike formations of sinew. A sharp spine of crystal protrudes from its body."
-	icon = 'icons/mob/lavaland/watcher.dmi'
+	icon = 'icons/mob/simple/lavaland/watcher.dmi'
 	icon_state = "watcher"
 	icon_living = "watcher"
 	icon_aggro = "watcher"
@@ -203,7 +203,7 @@
 		var/mob/living/L = target
 		if (istype(L))
 			L.adjust_fire_stacks(0.1)
-			L.IgniteMob()
+			L.ignite_mob()
 
 /obj/projectile/temp/basilisk/icewing
 	damage = 5

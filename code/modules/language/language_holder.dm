@@ -61,7 +61,10 @@ Key procs
 		var/datum/mind/M = owner
 		if(M.current)
 			update_atom_languages(M.current)
-	get_selected_language()
+
+	// If we have an owner, we'll set a default selected language
+	if(owner)
+		get_selected_language()
 
 /datum/language_holder/Destroy()
 	QDEL_NULL(language_menu)
@@ -180,6 +183,18 @@ Key procs
 /datum/language_holder/proc/get_random_spoken_language()
 	return pick(spoken_languages)
 
+/// Gets a random spoken language, trying to get a non-common language.
+/datum/language_holder/proc/get_random_spoken_uncommon_language()
+	var/list/languages_minus_common = assoc_to_keys(spoken_languages) - /datum/language/common
+
+	// They have a language other than common
+	if(length(languages_minus_common))
+		return pick(languages_minus_common)
+
+	// They can only speak common, oh well.
+	else
+		return /datum/language/common
+
 /// Opens a language menu reading from the language holder.
 /datum/language_holder/proc/open_language_menu(mob/user)
 	if(!language_menu)
@@ -297,11 +312,6 @@ Key procs
 								/datum/language/slime = list(LANGUAGE_ATOM))
 	spoken_languages = list(/datum/language/slime = list(LANGUAGE_ATOM))
 
-/datum/language_holder/swarmer
-	understood_languages = list(/datum/language/swarmer = list(LANGUAGE_ATOM))
-	spoken_languages = list(/datum/language/swarmer = list(LANGUAGE_ATOM))
-	blocked_languages = list(/datum/language/common = list(LANGUAGE_ATOM))
-
 /datum/language_holder/venus
 	understood_languages = list(/datum/language/sylvan = list(LANGUAGE_ATOM))
 	spoken_languages = list(/datum/language/sylvan = list(LANGUAGE_ATOM))
@@ -394,6 +404,11 @@ Key procs
 	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
 							/datum/language/shadowtongue = list(LANGUAGE_ATOM))
 
+/datum/language_holder/clown
+	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+								/datum/language/monkey = list(LANGUAGE_ATOM))
+	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+							/datum/language/monkey = list(LANGUAGE_ATOM))
 /datum/language_holder/empty
 	understood_languages = list()
 	spoken_languages = list()

@@ -6,6 +6,7 @@
 /obj/item/circuit_component/get_variable
 	display_name = "Get Variable"
 	desc = "A component that gets a variable on an object."
+	category = "Admin"
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL|CIRCUIT_FLAG_ADMIN
 
 	/// Whether to grab a global variable or a variable from this entity.
@@ -57,4 +58,5 @@
 		output_value.set_output(null)
 		return
 
+	log_admin_circuit("[parent.get_creator()] requested the variable '[var_name]' on [object].")
 	output_value.set_output(object.vars[var_name])

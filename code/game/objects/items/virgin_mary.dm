@@ -27,7 +27,7 @@
 		return
 
 	to_chat(joe, span_notice("As you burn the picture, a nickname comes to mind..."))
-	var/nickname = stripped_input(joe, "Pick a nickname", "Mafioso Nicknames", null, NICKNAME_CAP, TRUE)
+	var/nickname = tgui_input_text(joe, "Pick a nickname", "Mafioso Nicknames", max_length = NICKNAME_CAP)
 	nickname = reject_bad_name(nickname, allow_numbers = FALSE, max_length = NICKNAME_CAP, ascii_only = TRUE)
 	if(!nickname)
 		return

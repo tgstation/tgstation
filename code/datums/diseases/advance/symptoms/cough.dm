@@ -1,23 +1,12 @@
-/*
-//////////////////////////////////////
-
-Coughing
-
-	Noticable.
-	Little Resistance.
-	Doesn't increase stage speed much.
-	Transmissibile.
-	Low Level.
-
-BONUS
-	Spreads the virus in a small square around the host.
-	Can force the affected mob to drop small items!
-
-//////////////////////////////////////
+/**Coughing
+ * Slightly decreases stealth
+ * Reduces resistance
+ * Slightly increases stage speed
+ * Increases transmissibility
+ * Low level
+ * Bonus: Spreads the virus in a small square around the host. Can force the affected mob to drop small items!
 */
-
 /datum/symptom/cough
-
 	name = "Cough"
 	desc = "The virus irritates the throat of the host, causing occasional coughing. Each cough will try to infect bystanders who are within 1 tile of the host with the virus."
 	stealth = -1
@@ -63,7 +52,7 @@ BONUS
 	switch(A.stage)
 		if(1, 2, 3)
 			if(prob(base_message_chance) && !suppress_warning)
-				to_chat(M, "<span notice='warning'>[pick("You swallow excess mucus.", "You lightly cough.")]</span>")
+				to_chat(M, span_warning("[pick("You swallow excess mucus.", "You lightly cough.")]"))
 		else
 			M.emote("cough")
 			if(M.CanSpreadAirborneDisease())
@@ -73,7 +62,7 @@ BONUS
 				if(I && I.w_class == WEIGHT_CLASS_TINY)
 					M.dropItemToGround(I)
 			if(power >= 2 && prob(30))
-				to_chat(M, "<span notice='userdanger'>[pick("You have a coughing fit!", "You can't stop coughing!")]</span>")
+				to_chat(M, span_userdanger("[pick("You have a coughing fit!", "You can't stop coughing!")]"))
 				M.Immobilize(20)
 				addtimer(CALLBACK(M, /mob/.proc/emote, "cough"), 6)
 				addtimer(CALLBACK(M, /mob/.proc/emote, "cough"), 12)

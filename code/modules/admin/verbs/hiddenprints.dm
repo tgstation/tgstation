@@ -3,7 +3,7 @@
 		return
 
 	var/interface = "A log of every player who has touched [victim], sorted by last touch.<br><br><ol>"
-	var/victim_hiddenprints = victim.return_hiddenprints()
+	var/victim_hiddenprints = GET_ATOM_HIDDENPRINTS(victim)
 
 	if(!islist(victim_hiddenprints))
 		victim_hiddenprints = list()

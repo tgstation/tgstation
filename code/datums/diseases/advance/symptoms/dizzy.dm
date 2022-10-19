@@ -1,19 +1,11 @@
-/*
-//////////////////////////////////////
-
-Dizziness
-
-	Hidden.
-	Lowers resistance considerably.
-	Decreases stage speed.
-	Reduced transmittability
-	Intense Level.
-
-Bonus
-	Shakes the affected mob's screen for short periods.
-
-//////////////////////////////////////
-*/
+/**Dizziness
+ * Increases stealth
+ * Lowers resistance
+ * Decreases stage speed considerably
+ * Slightly reduces transmissibility
+ * Intense Level
+ * Bonus: Shakes the affected mob's screen for short periods.
+ */
 
 /datum/symptom/dizzy // Not the egg
 
@@ -52,7 +44,6 @@ Bonus
 				to_chat(M, span_warning("[pick("You feel dizzy.", "Your head spins.")]"))
 		else
 			to_chat(M, span_userdanger("A wave of dizziness washes over you!"))
-			if(M.dizziness <= 70)
-				M.dizziness += 30
+			M.adjust_dizzy_up_to(1 MINUTES, 140 SECONDS)
 			if(power >= 2)
-				M.set_drugginess(40)
+				M.set_drugginess(80 SECONDS)

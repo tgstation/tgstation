@@ -7,7 +7,6 @@ export const CONSOLE_MODE_FEATURES = 'features';
 export const CONSOLE_MODE_SEQUENCER = 'sequencer';
 export const CONSOLE_MODE_STORAGE = 'storage';
 
-export const GENES = ['A', 'T', 'C', 'G'];
 export const GENE_COLORS = {
   A: 'green',
   T: 'green',
@@ -35,8 +34,8 @@ export const SUBJECT_UNCONSCIOUS = 2;
 export const SUBJECT_DEAD = 3;
 export const SUBJECT_TRANSFORMING = 4;
 
-export const RADIATION_STRENGTH_MAX = 15;
-export const RADIATION_DURATION_MAX = 30;
+export const PULSE_STRENGTH_MAX = 15;
+export const PULSE_DURATION_MAX = 30;
 
 // __DEFINES/DNA.dm - Mutation "Quality"
 const POSITIVE = 1;
@@ -47,3 +46,7 @@ export const MUT_COLORS = {
   [NEGATIVE]: 'bad',
   [MINOR_NEGATIVE]: 'average',
 };
+
+export const CLEAR_GENE = 0;
+export const NEXT_GENE = 1;
+export const PREV_GENE = 2;

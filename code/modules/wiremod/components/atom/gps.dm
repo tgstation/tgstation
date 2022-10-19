@@ -6,6 +6,7 @@
 /obj/item/circuit_component/gps
 	display_name = "Internal GPS"
 	desc = "A component that returns the xyz co-ordinates of itself."
+	category = "Entity"
 
 	/// The result from the output
 	var/datum/port/output/x_pos
@@ -21,7 +22,7 @@
 
 /obj/item/circuit_component/gps/input_received(datum/port/input/port)
 
-	var/turf/location = get_turf(src)
+	var/turf/location = get_location()
 
 	x_pos.set_output(location?.x)
 	y_pos.set_output(location?.y)

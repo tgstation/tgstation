@@ -15,9 +15,7 @@ The console is located at computer/gulag_teleporter.dm
 	state_open = FALSE
 	density = TRUE
 	obj_flags = NO_BUILD // Becomes undense when the door is open
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 200
-	active_power_usage = 5000
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 5
 	circuit = /obj/item/circuitboard/machine/gulag_teleporter
 	var/locked = FALSE
 	var/message_cooldown
@@ -35,7 +33,8 @@ The console is located at computer/gulag_teleporter.dm
 		/obj/item/clothing/gloves/color/plasmaman,
 		/obj/item/tank/internals,
 		/obj/item/clothing/mask/breath,
-		/obj/item/clothing/mask/gas))
+		/obj/item/clothing/mask/gas,
+	))
 
 /obj/machinery/gulag_teleporter/Initialize(mapload)
 	. = ..()
@@ -52,9 +51,6 @@ The console is located at computer/gulag_teleporter.dm
 		to_chat(user, span_warning("[src] is locked!"))
 		return
 	toggle_open()
-
-/obj/machinery/gulag_teleporter/updateUsrDialog()
-	return
 
 /obj/machinery/gulag_teleporter/attackby(obj/item/I, mob/user)
 	if(!occupant && default_deconstruction_screwdriver(user, "[icon_state]", "[icon_state]",I))
@@ -144,7 +140,6 @@ The console is located at computer/gulag_teleporter.dm
 					continue
 				if(linked_reclaimer)
 					linked_reclaimer.stored_items[mob_occupant] += W
-					linked_reclaimer.contents += W
 					W.forceMove(linked_reclaimer)
 				else
 					W.forceMove(src)
@@ -165,6 +160,8 @@ The console is located at computer/gulag_teleporter.dm
 		prisoner.equip_to_appropriate_slot(id, qdel_on_fail = TRUE)
 	if(R)
 		R.fields["criminal"] = "Incarcerated"
+
+	use_power(active_power_usage)
 
 /obj/item/circuitboard/machine/gulag_teleporter
 	name = "labor camp teleporter (Machine Board)"

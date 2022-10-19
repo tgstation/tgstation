@@ -21,7 +21,7 @@
 	. = ..()
 	var/mob/M = target
 	if(istype(M))
-		if(M.anti_magic_check())
+		if(M.can_block_magic())
 			return BULLET_ACT_BLOCK
 		else
 			M.slip(100, M.loc, GALOSHES_DONT_HELP|SLIDE, 0, FALSE)
@@ -33,6 +33,8 @@
 
 /obj/projectile/bullet/mime/on_hit(atom/target, blocked = FALSE)
 	. = ..()
-	if(iscarbon(target))
-		var/mob/living/carbon/M = target
-		M.silent = max(M.silent, 10)
+	if(!isliving(target))
+		return
+
+	var/mob/living/living_target = target
+	living_target.set_silence_if_lower(20 SECONDS)

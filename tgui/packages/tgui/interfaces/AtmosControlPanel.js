@@ -12,41 +12,24 @@ export const AtmosControlPanel = (props, context) => {
       // Generate a unique id
       id: group.area + i,
     })),
-    sortBy(group => group.id),
+    sortBy((group) => group.id),
   ])(data.excited_groups);
   return (
-    <Window
-      title="SSAir Control Panel"
-      width={900}
-      height={500}>
+    <Window title="SSAir Control Panel" width={900} height={500}>
       <Section m={1}>
-        <Flex
-          justify="space-between"
-          align="baseline">
+        <Flex justify="space-between" align="baseline">
           <Flex.Item>
             <Button
               onClick={() => act('toggle-freeze')}
               color={data.frozen === 1 ? 'good' : 'bad'}>
-              {data.frozen === 1
-                ? 'Freeze Subsystem'
-                : 'Unfreeze Subsystem'}
+              {data.frozen === 1 ? 'Freeze Subsystem' : 'Unfreeze Subsystem'}
             </Button>
           </Flex.Item>
-          <Flex.Item>
-            Fire Cnt: {data.fire_count}
-          </Flex.Item>
-          <Flex.Item>
-            Active Turfs: {data.active_size}
-          </Flex.Item>
-          <Flex.Item>
-            Excited Groups: {data.excited_size}
-          </Flex.Item>
-          <Flex.Item>
-            Hotspots: {data.hotspots_size}
-          </Flex.Item>
-          <Flex.Item>
-            Superconductors: {data.conducting_size}
-          </Flex.Item>
+          <Flex.Item>Fire Cnt: {data.fire_count}</Flex.Item>
+          <Flex.Item>Active Turfs: {data.active_size}</Flex.Item>
+          <Flex.Item>Excited Groups: {data.excited_size}</Flex.Item>
+          <Flex.Item>Hotspots: {data.hotspots_size}</Flex.Item>
+          <Flex.Item>Superconductors: {data.conducting_size}</Flex.Item>
           <Flex.Item>
             <Button.Checkbox
               checked={data.showing_user}
@@ -68,52 +51,40 @@ export const AtmosControlPanel = (props, context) => {
           <Section>
             <Table>
               <Table.Row header>
-                <Table.Cell>
-                  Area Name
-                </Table.Cell>
+                <Table.Cell>Area Name</Table.Cell>
+                <Table.Cell collapsing>Breakdown</Table.Cell>
+                <Table.Cell collapsing>Dismantle</Table.Cell>
+                <Table.Cell collapsing>Turfs</Table.Cell>
                 <Table.Cell collapsing>
-                  Breakdown
+                  {data.display_max === 1 && 'Max Share'}
                 </Table.Cell>
-                <Table.Cell collapsing>
-                  Dismantle
-                </Table.Cell>
-                <Table.Cell collapsing>
-                  Turfs
-                </Table.Cell>
-                <Table.Cell collapsing>
-                  {data.display_max === 1 && "Max Share"}
-                </Table.Cell>
-                <Table.Cell collapsing>
-                  Display
-                </Table.Cell>
+                <Table.Cell collapsing>Display</Table.Cell>
               </Table.Row>
-              {groups.map(group => (
+              {groups.map((group) => (
                 <tr key={group.id}>
                   <td>
                     <Button
                       content={group.area}
-                      onClick={() => act('move-to-target', {
-                        spot: group.jump_to,
-                      })} />
+                      onClick={() =>
+                        act('move-to-target', {
+                          spot: group.jump_to,
+                        })
+                      }
+                    />
                   </td>
-                  <td>
-                    {group.breakdown}
-                  </td>
-                  <td>
-                    {group.dismantle}
-                  </td>
-                  <td>
-                    {group.size}
-                  </td>
-                  <td>
-                    {data.display_max === 1 && group.max_share}
-                  </td>
+                  <td>{group.breakdown}</td>
+                  <td>{group.dismantle}</td>
+                  <td>{group.size}</td>
+                  <td>{data.display_max === 1 && group.max_share}</td>
                   <td>
                     <Button.Checkbox
                       checked={group.should_show}
-                      onClick={() => act('toggle_show_group', {
-                        group: group.group,
-                      })} />
+                      onClick={() =>
+                        act('toggle_show_group', {
+                          group: group.group,
+                        })
+                      }
+                    />
                   </td>
                 </tr>
               ))}

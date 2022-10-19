@@ -92,7 +92,7 @@
 
 /datum/tgs_api/v5/proc/RequireInitialBridgeResponse()
 	while(!version)
-		sleep(1)
+		sleep(1 TICKS)
 
 /datum/tgs_api/v5/OnInitializationComplete()
 	Bridge(DMAPI5_BRIDGE_COMMAND_PRIME)
@@ -269,7 +269,7 @@
 	if(!result)
 		return
 
-	//okay so the standard TGS4 proceedure is: right before rebooting change the port to whatever was sent to us in the above json's data parameter
+	//okay so the standard TGS proceedure is: right before rebooting change the port to whatever was sent to us in the above json's data parameter
 
 	var/port = result[DMAPI5_BRIDGE_RESPONSE_NEW_PORT]
 	if(!isnum(port))

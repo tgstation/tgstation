@@ -1,9 +1,9 @@
-import { Antagonist, Category } from "../base";
-import { multiline } from "common/string";
+import { Antagonist, Category } from '../base';
+import { multiline } from 'common/string';
 
 const SentientDisease: Antagonist = {
-  key: "sentientdisease",
-  name: "Sentient Disease",
+  key: 'sentientdisease',
+  name: 'Sentient Disease',
   description: [
     multiline`
       Mutate and spread yourself and infect as much of the crew as possible

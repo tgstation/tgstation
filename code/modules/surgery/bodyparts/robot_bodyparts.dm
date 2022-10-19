@@ -13,14 +13,18 @@
 /obj/item/bodypart/l_arm/robot
 	name = "cyborg left arm"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
-	attack_verb_continuous = list("slaps", "punches")
-	attack_verb_simple = list("slap", "punch")
+	limb_id = BODYPART_ID_ROBOTIC
+	attack_verb_simple = list("slapped", "punched")
 	inhand_icon_state = "buildpipe"
 	icon = 'icons/mob/augmentation/augments.dmi'
+	icon_static = 'icons/mob/augmentation/augments.dmi'
 	flags_1 = CONDUCT_1
 	icon_state = "borg_l_arm"
-	status = BODYPART_ROBOTIC
-	disable_threshold = 1
+	is_dimorphic = FALSE
+	should_draw_greyscale = FALSE
+	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
+	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
+	dmg_overlay_type = "robotic"
 
 	brute_reduction = 5
 	burn_reduction = 4
@@ -36,14 +40,18 @@
 /obj/item/bodypart/r_arm/robot
 	name = "cyborg right arm"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
-	attack_verb_continuous = list("slaps", "punches")
-	attack_verb_simple = list("slap", "punch")
+	attack_verb_simple = list("slapped", "punched")
 	inhand_icon_state = "buildpipe"
+	icon_static = 'icons/mob/augmentation/augments.dmi'
 	icon = 'icons/mob/augmentation/augments.dmi'
+	limb_id = BODYPART_ID_ROBOTIC
 	flags_1 = CONDUCT_1
 	icon_state = "borg_r_arm"
-	status = BODYPART_ROBOTIC
-	disable_threshold = 1
+	is_dimorphic = FALSE
+	should_draw_greyscale = FALSE
+	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
+	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
+	dmg_overlay_type = "robotic"
 
 	brute_reduction = 5
 	burn_reduction = 4
@@ -59,14 +67,18 @@
 /obj/item/bodypart/l_leg/robot
 	name = "cyborg left leg"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
-	attack_verb_continuous = list("kicks", "stomps")
-	attack_verb_simple = list("kick", "stomp")
+	attack_verb_simple = list("kicked", "stomped")
 	inhand_icon_state = "buildpipe"
+	icon_static = 'icons/mob/augmentation/augments.dmi'
 	icon = 'icons/mob/augmentation/augments.dmi'
+	limb_id = BODYPART_ID_ROBOTIC
 	flags_1 = CONDUCT_1
 	icon_state = "borg_l_leg"
-	status = BODYPART_ROBOTIC
-	disable_threshold = 1
+	is_dimorphic = FALSE
+	should_draw_greyscale = FALSE
+	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
+	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
+	dmg_overlay_type = "robotic"
 
 	brute_reduction = 5
 	burn_reduction = 4
@@ -82,14 +94,18 @@
 /obj/item/bodypart/r_leg/robot
 	name = "cyborg right leg"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
-	attack_verb_continuous = list("kicks", "stomps")
-	attack_verb_simple = list("kick", "stomp")
+	attack_verb_simple = list("kicked", "stomped")
 	inhand_icon_state = "buildpipe"
+	icon_static =  'icons/mob/augmentation/augments.dmi'
 	icon = 'icons/mob/augmentation/augments.dmi'
+	limb_id = BODYPART_ID_ROBOTIC
 	flags_1 = CONDUCT_1
 	icon_state = "borg_r_leg"
-	status = BODYPART_ROBOTIC
-	disable_threshold = 1
+	is_dimorphic = FALSE
+	should_draw_greyscale = FALSE
+	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
+	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
+	dmg_overlay_type = "robotic"
 
 	brute_reduction = 5
 	burn_reduction = 4
@@ -106,10 +122,16 @@
 	name = "cyborg torso"
 	desc = "A heavily reinforced case containing cyborg logic boards, with space for a standard power cell."
 	inhand_icon_state = "buildpipe"
+	icon_static =  'icons/mob/augmentation/augments.dmi'
 	icon = 'icons/mob/augmentation/augments.dmi'
+	limb_id = BODYPART_ID_ROBOTIC
 	flags_1 = CONDUCT_1
 	icon_state = "borg_chest"
-	status = BODYPART_ROBOTIC
+	is_dimorphic = FALSE
+	should_draw_greyscale = FALSE
+	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
+	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
+	dmg_overlay_type = "robotic"
 
 	brute_reduction = 5
 	burn_reduction = 4
@@ -196,11 +218,12 @@
 		. += span_info("It has a couple spots that still need to be <b>wired</b>.")
 
 /obj/item/bodypart/chest/robot/drop_organs(mob/user, violent_removal)
+	var/atom/drop_loc = drop_location()
 	if(wired)
-		new /obj/item/stack/cable_coil(drop_location(), 1)
+		new /obj/item/stack/cable_coil(drop_loc, 1)
 		wired = FALSE
 	if(cell)
-		cell.forceMove(drop_location())
+		cell.forceMove(drop_loc)
 		cell = null
 	..()
 
@@ -209,10 +232,16 @@
 	name = "cyborg head"
 	desc = "A standard reinforced braincase, with spine-plugged neural socket and sensor gimbals."
 	inhand_icon_state = "buildpipe"
+	icon_static = 'icons/mob/augmentation/augments.dmi'
 	icon = 'icons/mob/augmentation/augments.dmi'
+	limb_id = BODYPART_ID_ROBOTIC
 	flags_1 = CONDUCT_1
 	icon_state = "borg_head"
-	status = BODYPART_ROBOTIC
+	is_dimorphic = FALSE
+	should_draw_greyscale = FALSE
+	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
+	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
+	dmg_overlay_type = "robotic"
 
 	brute_reduction = 5
 	burn_reduction = 4
@@ -227,7 +256,6 @@
 
 	var/obj/item/assembly/flash/handheld/flash1 = null
 	var/obj/item/assembly/flash/handheld/flash2 = null
-
 
 /obj/item/bodypart/head/robot/handle_atom_del(atom/head_atom)
 	if(head_atom == flash1)
@@ -292,11 +320,12 @@
 
 
 /obj/item/bodypart/head/robot/drop_organs(mob/user, violent_removal)
+	var/atom/drop_loc = drop_location()
 	if(flash1)
-		flash1.forceMove(user.loc)
+		flash1.forceMove(drop_loc)
 		flash1 = null
 	if(flash2)
-		flash2.forceMove(user.loc)
+		flash2.forceMove(drop_loc)
 		flash2 = null
 	..()
 
@@ -306,6 +335,7 @@
 /obj/item/bodypart/l_arm/robot/surplus
 	name = "surplus prosthetic left arm"
 	desc = "A skeletal, robotic limb. Outdated and fragile, but it's still better than nothing."
+	icon_static = 'icons/mob/augmentation/surplus_augments.dmi'
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
 	brute_reduction = 0
 	burn_reduction = 0
@@ -314,6 +344,7 @@
 /obj/item/bodypart/r_arm/robot/surplus
 	name = "surplus prosthetic right arm"
 	desc = "A skeletal, robotic limb. Outdated and fragile, but it's still better than nothing."
+	icon_static = 'icons/mob/augmentation/surplus_augments.dmi'
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
 	brute_reduction = 0
 	burn_reduction = 0
@@ -322,6 +353,7 @@
 /obj/item/bodypart/l_leg/robot/surplus
 	name = "surplus prosthetic left leg"
 	desc = "A skeletal, robotic limb. Outdated and fragile, but it's still better than nothing."
+	icon_static = 'icons/mob/augmentation/surplus_augments.dmi'
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
 	brute_reduction = 0
 	burn_reduction = 0
@@ -330,6 +362,7 @@
 /obj/item/bodypart/r_leg/robot/surplus
 	name = "surplus prosthetic right leg"
 	desc = "A skeletal, robotic limb. Outdated and fragile, but it's still better than nothing."
+	icon_static = 'icons/mob/augmentation/surplus_augments.dmi'
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
 	brute_reduction = 0
 	burn_reduction = 0

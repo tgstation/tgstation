@@ -2,7 +2,6 @@
 	if(stat == DEAD)
 		return
 
-	silent = FALSE
 	losebreath = 0
 
 	if(!gibbed)
@@ -12,6 +11,9 @@
 	add_memory_in_range(src, 7, MEMORY_DEATH, list(DETAIL_PROTAGONIST = src), memory_flags = MEMORY_FLAG_NOMOOD, story_value = STORY_VALUE_OKAY, memory_flags = MEMORY_CHECK_BLIND_AND_DEAF)
 
 	. = ..()
+
+	if(!gibbed)
+		attach_rot()
 
 	for(var/T in get_traumas())
 		var/datum/brain_trauma/BT = T
@@ -41,32 +43,29 @@
 	if(!no_bodyparts)
 		if(no_organs)//so the organs don't get transfered inside the bodyparts we'll drop.
 			for(var/X in internal_organs)
-				if(no_brain || !istype(X, /obj/item/organ/brain))
+				if(no_brain || !istype(X, /obj/item/organ/internal/brain))
 					qdel(X)
 		else //we're going to drop all bodyparts except chest, so the only organs that needs spilling are those inside it.
-			for(var/X in internal_organs)
-				var/obj/item/organ/O = X
-				if(no_brain && istype(O, /obj/item/organ/brain))
-					qdel(O) //so the brain isn't transfered to the head when the head drops.
+			for(var/obj/item/organ/organs as anything in internal_organs)
+				if(no_brain && istype(organs, /obj/item/organ/internal/brain))
+					qdel(organs) //so the brain isn't transfered to the head when the head drops.
 					continue
-				var/org_zone = check_zone(O.zone) //both groin and chest organs.
+				var/org_zone = check_zone(organs.zone) //both groin and chest organs.
 				if(org_zone == BODY_ZONE_CHEST)
-					O.Remove(src)
-					O.forceMove(Tsec)
-					O.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)
+					organs.Remove(src)
+					organs.forceMove(Tsec)
+					organs.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)
 	else
-		for(var/X in internal_organs)
-			var/obj/item/organ/I = X
-			if(no_brain && istype(I, /obj/item/organ/brain))
-				qdel(I)
+		for(var/obj/item/organ/organs as anything in internal_organs)
+			if(no_brain && istype(organs, /obj/item/organ/internal/brain))
+				qdel(organs)
 				continue
-			if(no_organs && !istype(I, /obj/item/organ/brain))
-				qdel(I)
+			if(no_organs && !istype(organs, /obj/item/organ/internal/brain))
+				qdel(organs)
 				continue
-			I.Remove(src)
-			I.forceMove(Tsec)
-			I.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)
-
+			organs.Remove(src)
+			organs.forceMove(Tsec)
+			organs.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)
 
 /mob/living/carbon/spread_bodyparts()
 	for(var/X in bodyparts)

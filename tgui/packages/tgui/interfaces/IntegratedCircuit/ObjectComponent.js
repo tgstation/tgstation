@@ -1,13 +1,8 @@
-import { useBackend } from '../../backend';
-import {
-  Box,
-  Stack, Button,
-} from '../../components';
+import { Box, Stack, Button } from '../../components';
 import { Component } from 'inferno';
 import { shallowDiffers } from '../../../common/react';
-import { ABSOLUTE_Y_OFFSET } from './constants';
-import { Port } from "./Port";
-
+import { ABSOLUTE_Y_OFFSET, noop } from './constants';
+import { Port } from './Port';
 
 export class ObjectComponent extends Component {
   constructor() {
@@ -38,9 +33,8 @@ export class ObjectComponent extends Component {
   }
 
   handleStopDrag(e) {
-    const { act } = useBackend(this.context);
     const { dragPos } = this.state;
-    const { index } = this.props;
+    const { index, act = () => _ } = this.props;
     if (dragPos) {
       act('set_component_coordinates', {
         component_id: index,
@@ -79,10 +73,10 @@ export class ObjectComponent extends Component {
     const { input_ports, output_ports } = this.props;
 
     return (
-      shallowDiffers(this.props, nextProps)
-      || shallowDiffers(this.state, nextState)
-      || shallowDiffers(input_ports, nextProps.input_ports)
-      || shallowDiffers(output_ports, nextProps.output_ports)
+      shallowDiffers(this.props, nextProps) ||
+      shallowDiffers(this.state, nextState) ||
+      shallowDiffers(input_ports, nextProps.input_ports) ||
+      shallowDiffers(output_ports, nextProps.output_ports)
     );
   }
 
@@ -98,14 +92,14 @@ export class ObjectComponent extends Component {
       removable,
       ui_buttons,
       locations,
-      onPortUpdated,
-      onPortLoaded,
-      onPortMouseDown,
-      onPortRightClick,
-      onPortMouseUp,
+      onPortUpdated = noop,
+      onPortLoaded = noop,
+      onPortMouseDown = noop,
+      onPortRightClick = noop,
+      onPortMouseUp = noop,
+      act = noop,
       ...rest
     } = this.props;
-    const { act } = useBackend(this.context);
     const { startPos, dragPos } = this.state;
 
     let [x_pos, y_pos] = [x, y];
@@ -125,13 +119,13 @@ export class ObjectComponent extends Component {
 
     return (
       <Box
-        {...rest}
         position="absolute"
         left={`${x_pos}px`}
         top={`${y_pos}px`}
         onMouseDown={this.handleStartDrag}
         onMouseUp={this.handleStopDrag}
-        onComponentWillUnmount={this.handleDrag}>
+        onComponentWillUnmount={this.handleDrag}
+        {...rest}>
         <Box
           backgroundColor={color}
           py={1}
@@ -141,29 +135,35 @@ export class ObjectComponent extends Component {
             <Stack.Item grow={1} unselectable="on">
               {name}
             </Stack.Item>
-            {!!ui_buttons && Object.keys(ui_buttons).map(icon => (
-              <Stack.Item key={icon}>
-                <Button
-                  icon={icon}
-                  color="transparent"
-                  compact
-                  onClick={() => act('perform_action', {
-                    component_id: index,
-                    action_name: ui_buttons[icon],
-                  })}
-                />
-              </Stack.Item>
-            ))}
+            {!!ui_buttons &&
+              Object.keys(ui_buttons).map((icon) => (
+                <Stack.Item key={icon}>
+                  <Button
+                    icon={icon}
+                    color="transparent"
+                    compact
+                    onClick={() =>
+                      act('perform_action', {
+                        component_id: index,
+                        action_name: ui_buttons[icon],
+                      })
+                    }
+                  />
+                </Stack.Item>
+              ))}
             <Stack.Item>
               <Button
                 color="transparent"
                 icon="info"
                 compact
-                onClick={(e) => act('set_examined_component', {
-                  component_id: index,
-                  x: e.pageX,
-                  y: e.pageY + ABSOLUTE_Y_OFFSET,
-                })} />
+                onClick={(e) =>
+                  act('set_examined_component', {
+                    component_id: index,
+                    x: e.pageX,
+                    y: e.pageY + ABSOLUTE_Y_OFFSET,
+                  })
+                }
+              />
             </Stack.Item>
             {!!removable && (
               <Stack.Item>
@@ -171,7 +171,10 @@ export class ObjectComponent extends Component {
                   color="transparent"
                   icon="times"
                   compact
-                  onClick={() => act('detach_component', { component_id: index })} />
+                  onClick={() =>
+                    act('detach_component', { component_id: index })
+                  }
+                />
               </Stack.Item>
             )}
           </Stack>
@@ -190,6 +193,7 @@ export class ObjectComponent extends Component {
                       port={port}
                       portIndex={portIndex + 1}
                       componentId={index}
+                      act={act}
                       {...PortOptions}
                     />
                   </Stack.Item>
@@ -201,11 +205,13 @@ export class ObjectComponent extends Component {
                 {output_ports.map((port, portIndex) => (
                   <Stack.Item key={portIndex}>
                     <Port
+                      act={act}
                       port={port}
                       portIndex={portIndex + 1}
                       componentId={index}
                       {...PortOptions}
-                      isOutput />
+                      isOutput
+                    />
                   </Stack.Item>
                 ))}
               </Stack>

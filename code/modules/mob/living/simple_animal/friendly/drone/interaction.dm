@@ -6,28 +6,30 @@
 //How the world interacts with drones
 
 
-/mob/living/simple_animal/drone/attack_drone(mob/living/simple_animal/drone/D)
-	if(D != src && stat == DEAD)
-		var/d_input = tgui_alert(D,"Perform which action?","Drone Interaction",list("Reactivate","Cannibalize","Nothing"))
-		if(d_input)
-			switch(d_input)
-				if("Reactivate")
-					try_reactivate(D)
+/mob/living/simple_animal/drone/attack_drone(mob/living/simple_animal/drone/drone)
+	if(drone == src || stat != DEAD)
+		return FALSE
+	var/input = tgui_alert(drone, "Perform which action?", "Drone Interaction", list("Reactivate", "Cannibalize"))
+	if(!input)
+		return FALSE
+	switch(input)
+		if("Reactivate")
+			try_reactivate(drone)
+		if("Cannibalize")
+			if(drone.health >= drone.maxHealth)
+				to_chat(drone, span_warning("You're already in perfect condition!"))
+				return
+			drone.visible_message(span_notice("[drone] begins to cannibalize parts from [src]."), span_notice("You begin to cannibalize parts from [src]..."))
+			if(do_after(drone, 60, 0, target = src))
+				drone.visible_message(span_notice("[drone] repairs itself using [src]'s remains!"), span_notice("You repair yourself using [src]'s remains."))
+				drone.adjustBruteLoss(-src.maxHealth)
+				new /obj/effect/decal/cleanable/oil/streak(get_turf(src))
+				qdel(src)
+			else
+				to_chat(drone, span_warning("You need to remain still to cannibalize [src]!"))
 
-				if("Cannibalize")
-					if(D.health < D.maxHealth)
-						D.visible_message(span_notice("[D] begins to cannibalize parts from [src]."), span_notice("You begin to cannibalize parts from [src]..."))
-						if(do_after(D, 60, 0, target = src))
-							D.visible_message(span_notice("[D] repairs itself using [src]'s remains!"), span_notice("You repair yourself using [src]'s remains."))
-							D.adjustBruteLoss(-src.maxHealth)
-							new /obj/effect/decal/cleanable/oil/streak(get_turf(src))
-							qdel(src)
-						else
-							to_chat(D, span_warning("You need to remain still to cannibalize [src]!"))
-					else
-						to_chat(D, span_warning("You're already in perfect condition!"))
-				if("Nothing")
-					return
+/mob/living/simple_animal/drone/attack_drone_secondary(mob/living/simple_animal/drone/drone)
+	return SECONDARY_ATTACK_CALL_NORMAL
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /mob/living/simple_animal/drone/attack_hand(mob/user, list/modifiers)
@@ -90,28 +92,39 @@
 		to_chat(user, span_warning("You need to remain still to reactivate [src]!"))
 
 
-/mob/living/simple_animal/drone/attackby(obj/item/I, mob/user)
-	if(I.tool_behaviour == TOOL_SCREWDRIVER && stat != DEAD)
-		if(health < maxHealth)
-			to_chat(user, span_notice("You start to tighten loose screws on [src]..."))
-			if(I.use_tool(src, user, 80))
-				adjustBruteLoss(-getBruteLoss())
-				visible_message(span_notice("[user] tightens [src == user ? "[user.p_their()]" : "[src]'s"] loose screws!"), span_notice("You tighten [src == user ? "your" : "[src]'s"] loose screws."))
-			else
-				to_chat(user, span_warning("You need to remain still to tighten [src]'s screws!"))
-		else
-			to_chat(user, span_warning("[src]'s screws can't get any tighter!"))
-		return //This used to not exist and drones who repaired themselves also stabbed the shit out of themselves.
-	else if(I.tool_behaviour == TOOL_WRENCH && user != src) //They aren't required to be hacked, because laws can change in other ways (i.e. admins)
-		user.visible_message(span_notice("[user] starts resetting [src]..."), \
-			span_notice("You press down on [src]'s factory reset control..."))
-		if(I.use_tool(src, user, 50, volume=50))
-			user.visible_message(span_notice("[user] resets [src]!"), \
-				span_notice("You reset [src]'s directives to factory defaults!"))
-			update_drone_hack(FALSE)
-		return
-	else
-		..()
+/mob/living/simple_animal/drone/screwdriver_act(mob/living/user, obj/item/tool)
+	if(stat == DEAD)
+		return FALSE
+	if(health >= maxHealth)
+		to_chat(user, span_warning("[src]'s screws can't get any tighter!"))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	to_chat(user, span_notice("You start to tighten loose screws on [src]..."))
+
+	if(!tool.use_tool(src, user, 8 SECONDS, volume=50))
+		to_chat(user, span_warning("You need to remain still to tighten [src]'s screws!"))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+
+	adjustBruteLoss(-getBruteLoss())
+	visible_message(span_notice("[user] tightens [src == user ? "[user.p_their()]" : "[src]'s"] loose screws!"), span_notice("[src == user ? "You tighten" : "[user] tightens"] your loose screws."))
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/mob/living/simple_animal/drone/wrench_act(mob/living/user, obj/item/tool)
+	if(user == src)
+		return FALSE
+	user.visible_message(
+		span_notice("[user] starts resetting [src]..."),
+		span_notice("You press down on [src]'s factory reset control...")
+		)
+	if(tool.use_tool(src, user, 5 SECONDS, volume=50))
+		user.visible_message(
+			span_notice("[user] resets [src]!"),
+			span_notice("You reset [src]'s directives to factory defaults!")
+			)
+		update_drone_hack(FALSE)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/mob/living/simple_animal/drone/transferItemToLoc(obj/item/item, newloc, force, silent)
+	return !(item.type in drone_item_whitelist_flat) && ..()
 
 /mob/living/simple_animal/drone/getarmor(def_zone, type)
 	var/armorval = 0

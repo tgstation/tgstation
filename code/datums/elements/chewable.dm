@@ -30,6 +30,7 @@
 	RegisterSignal(target, COMSIG_ITEM_EQUIPPED, .proc/on_equipped)
 
 /datum/element/chewable/Detach(datum/source, force)
+	. = ..()
 	processing -= source
 	UnregisterSignal(source, list(COMSIG_ITEM_DROPPED, COMSIG_ITEM_EQUIPPED))
 

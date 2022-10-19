@@ -11,8 +11,7 @@ const isNode = process && process.release && process.release.name === 'node';
 let isChrome = false;
 try {
   isChrome = window.navigator.userAgent.toLowerCase().includes('chrome');
-}
-catch {}
+} catch {}
 
 // Timestamping function
 const getTimestamp = () => {
@@ -32,7 +31,7 @@ const getPrefix = (() => {
       bright: '\x1b[37;1m',
       reset: '\x1b[0m',
     };
-    return ns => [
+    return (ns) => [
       `${ESC.dimmed}${getTimestamp()} ${ESC.bright}${ns}${ESC.reset}`,
     ];
   }
@@ -42,12 +41,13 @@ const getPrefix = (() => {
       dimmed: 'color: #888',
       bright: 'font-weight: bold',
     };
-    return ns => [
+    return (ns) => [
       `%c${getTimestamp()}%c ${ns}`,
       styles.dimmed,
       styles.bright,
     ];
   }
+  // prettier-ignore
   return ns => [
     `${getTimestamp()} ${ns}`,
   ];
@@ -56,7 +56,7 @@ const getPrefix = (() => {
 /**
  * Creates a logger object.
  */
-export const createLogger = ns => ({
+export const createLogger = (ns) => ({
   log: (...args) => console.log(...getPrefix(ns), ...args),
   trace: (...args) => console.trace(...getPrefix(ns), ...args),
   debug: (...args) => console.debug(...getPrefix(ns), ...args),

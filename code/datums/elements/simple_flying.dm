@@ -20,10 +20,10 @@
 	UnregisterSignal(target, COMSIG_MOB_STATCHANGE)
 
 ///signal called by the stat of the target changing
-/datum/element/simple_flying/proc/on_stat_change(mob/living/simple_animal/target, new_stat)
+/datum/element/simple_flying/proc/on_stat_change(mob/living/target, new_stat)
 	SIGNAL_HANDLER
 
 	if(new_stat == CONSCIOUS)
-		ADD_TRAIT(target, TRAIT_MOVE_FLYING, ROUNDSTART_TRAIT)
+		ADD_TRAIT(target, TRAIT_MOVE_FLYING, ELEMENT_TRAIT(type))
 	else
-		REMOVE_TRAIT(target, TRAIT_MOVE_FLYING, ROUNDSTART_TRAIT)
+		REMOVE_TRAIT(target, TRAIT_MOVE_FLYING, ELEMENT_TRAIT(type))

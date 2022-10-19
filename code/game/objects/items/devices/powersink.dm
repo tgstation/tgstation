@@ -14,8 +14,8 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "powersink0"
 	inhand_icon_state = "electronic"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	flags_1 = CONDUCT_1
 	item_flags = NO_PIXEL_RANDOM_DROP
@@ -74,35 +74,34 @@
 	update_appearance()
 	set_light(0)
 
-/obj/item/powersink/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_WRENCH)
-		if(mode == DISCONNECTED)
-			var/turf/T = loc
-			if(isturf(T) && !T.intact)
-				attached = locate() in T
-				if(!attached)
-					to_chat(user, span_warning("\The [src] must be placed over an exposed, powered cable node!"))
-				else
-					set_mode(CLAMPED_OFF)
-					user.visible_message( \
-						"[user] attaches \the [src] to the cable.", \
-						span_notice("You bolt \the [src] into the floor and connect it to the cable."),
-						span_hear("You hear some wires being connected to something."))
-			else
+/obj/item/powersink/wrench_act(mob/living/user, obj/item/tool)
+	. = TRUE
+	if(mode == DISCONNECTED)
+		var/turf/T = loc
+		if(isturf(T) && T.underfloor_accessibility >= UNDERFLOOR_INTERACTABLE)
+			attached = locate() in T
+			if(!attached)
 				to_chat(user, span_warning("\The [src] must be placed over an exposed, powered cable node!"))
+			else
+				set_mode(CLAMPED_OFF)
+				user.visible_message( \
+					"[user] attaches \the [src] to the cable.", \
+					span_notice("You bolt \the [src] into the floor and connect it to the cable."),
+					span_hear("You hear some wires being connected to something."))
 		else
-			set_mode(DISCONNECTED)
-			user.visible_message( \
-				"[user] detaches \the [src] from the cable.", \
-				span_notice("You unbolt \the [src] from the floor and detach it from the cable."),
-				span_hear("You hear some wires being disconnected from something."))
-
-	else if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		user.visible_message( \
-			"[user] messes with \the [src] for a bit.", \
-			span_notice("You can't fit the screwdriver into \the [src]'s bolts! Try using a wrench."))
+			to_chat(user, span_warning("\The [src] must be placed over an exposed, powered cable node!"))
 	else
-		return ..()
+		set_mode(DISCONNECTED)
+		user.visible_message( \
+			"[user] detaches \the [src] from the cable.", \
+			span_notice("You unbolt \the [src] from the floor and detach it from the cable."),
+			span_hear("You hear some wires being disconnected from something."))
+
+/obj/item/powersink/screwdriver_act(mob/living/user, obj/item/tool)
+	user.visible_message( \
+		"[user] messes with \the [src] for a bit.", \
+		span_notice("You can't fit the screwdriver into \the [src]'s bolts! Try using a wrench."))
+	return TRUE
 
 /obj/item/powersink/attack_paw(mob/user, list/modifiers)
 	return
@@ -124,7 +123,7 @@
 				span_notice("You activate \the [src]."),
 				span_hear("You hear a click."))
 			message_admins("Power sink activated by [ADMIN_LOOKUPFLW(user)] at [ADMIN_VERBOSEJMP(src)]")
-			log_game("Power sink activated by [key_name(user)] at [AREACOORD(src)]")
+			user.log_message("activated a powersink", LOG_GAME)
 			set_mode(OPERATING)
 
 		if(OPERATING)
@@ -132,6 +131,7 @@
 				"[user] deactivates \the [src]!", \
 				span_notice("You deactivate \the [src]."),
 				span_hear("You hear a click."))
+			user.log_message("deactivated the powersink", LOG_GAME)
 			set_mode(CLAMPED_OFF)
 
 /// Removes internal heat and shares it with the atmosphere.

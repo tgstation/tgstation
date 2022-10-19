@@ -28,20 +28,24 @@
  * * overworld_scaling - Integer or float to scale the item in the overworld.
  * * storage_scaling - Integer or float to scale the item in storage/inventory.
  */
-/datum/element/item_scaling/Attach(datum/target, overworld_scaling, storage_scaling)
+/datum/element/item_scaling/Attach(atom/target, overworld_scaling, storage_scaling)
 	. = ..()
 	if(!isatom(target))
 		return ELEMENT_INCOMPATIBLE
+
 	// Initial scaling set to overworld_scaling when item is spawned.
 	scale(target, overworld_scaling)
 
 	src.overworld_scaling = overworld_scaling
 	src.storage_scaling = storage_scaling
 
-	// Object scaled when dropped/thrown OR when exiting a storage component.
-	RegisterSignal(target, list(COMSIG_ITEM_DROPPED, COMSIG_STORAGE_EXITED), .proc/scale_overworld)
+	// Make sure overlays also inherit the scaling.
+	ADD_KEEP_TOGETHER(target, ITEM_SCALING_TRAIT)
+
+	// Object scaled when dropped/thrown OR when exiting a storage object.
+	RegisterSignal(target, list(COMSIG_ITEM_DROPPED, COMSIG_ATOM_EXITED), .proc/scale_overworld)
 	// Object scaled when placed in an inventory slot OR when entering a storage component.
-	RegisterSignal(target, list(COMSIG_ITEM_EQUIPPED, COMSIG_STORAGE_ENTERED), .proc/scale_storage)
+	RegisterSignal(target, list(COMSIG_ITEM_EQUIPPED, COMSIG_ATOM_ENTERED), .proc/scale_storage)
 
 /**
  * Detach proc for the item_scaling element.
@@ -50,13 +54,16 @@
  * Arguments:
  * * target - Datum which the element is attached to.
  */
-/datum/element/item_scaling/Detach(datum/target)
+/datum/element/item_scaling/Detach(atom/target)
 	UnregisterSignal(target, list(
 		COMSIG_ITEM_PICKUP,
 		COMSIG_ITEM_DROPPED,
-		COMSIG_STORAGE_ENTERED,
-		COMSIG_STORAGE_EXITED,
+		COMSIG_ATOM_ENTERED,
+		COMSIG_ATOM_EXITED,
 	))
+
+	REMOVE_KEEP_TOGETHER(target, ITEM_SCALING_TRAIT)
+
 	return ..()
 
 /**
@@ -75,7 +82,7 @@
 	scalable_object.transform = M.Scale(scaling)
 
 /**
- * Signal handler for COMSIG_ITEM_DROPPED or COMSIG_STORAGE_EXITED
+ * Signal handler for COMSIG_ITEM_DROPPED or COMSIG_ATOM_EXITED
  *
  * Longer detailed paragraph about the proc
  * including any relevant detail
@@ -88,7 +95,7 @@
 	scale(source, overworld_scaling)
 
 /**
- * Signal handler for COMSIG_ITEM_EQUIPPED or COMSIG_STORAGE_ENTERED.
+ * Signal handler for COMSIG_ITEM_EQUIPPED or COMSIG_ATOM_ENTERED.
  *
  * Longer detailed paragraph about the proc
  * including any relevant detail

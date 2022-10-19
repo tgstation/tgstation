@@ -142,7 +142,7 @@
 			close_animation()
 			sleep(CLOSE_DURATION + 2)
 			if(open_status == STATION_TUBE_CLOSED && pod && pod.loc == loc)
-				pod.follow_tube()
+				pod.follow_tube(src)
 			pod_moving = FALSE
 			return TRUE
 	return FALSE
@@ -166,11 +166,10 @@
 
 /obj/structure/transit_tube/station/proc/finish_stopped(obj/structure/transit_tube_pod/pod)
 	pod_moving = FALSE
-	if(!QDELETED(pod))
-		var/datum/gas_mixture/floor_mixture = loc.return_air()
-		floor_mixture.archive()
-		pod.air_contents.archive()
-		pod.air_contents.share(floor_mixture, 1) //mix the pod's gas mixture with the tile it's on
+	if(QDELETED(pod))
+		return
+	var/datum/gas_mixture/floor_mixture = loc.return_air()
+	if(pod.air_contents.equalize(floor_mixture)) //equalize the pod's mix with the tile it's on
 		air_update_turf(FALSE, FALSE)
 
 /obj/structure/transit_tube/station/init_tube_dirs()
@@ -242,7 +241,7 @@
 	for(var/obj/structure/transit_tube_pod/pod in loc)
 		if(!pod.moving)
 			pod_moving = TRUE
-			pod.follow_tube()
+			pod.follow_tube(src)
 			pod_moving = FALSE
 			return TRUE
 	return FALSE
@@ -252,7 +251,7 @@
 	. += span_notice("This station will create a pod for you to ride, no need to wait for one.")
 
 /obj/structure/transit_tube/station/dispenser/Bumped(atom/movable/AM)
-	if(!(istype(AM) && AM.dir == boarding_dir))
+	if(!(istype(AM) && AM.dir == boarding_dir) || AM.anchored)
 		return
 	var/obj/structure/transit_tube_pod/dispensed/pod = new(loc)
 	AM.visible_message(span_notice("[pod] forms around [AM]."), span_notice("[pod] materializes around you."))

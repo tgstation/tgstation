@@ -1,0 +1,4 @@
+#comment We fucked up, run this to revert behavior.
+
+/area/misc/space : /area/space
+/area/misc/space/nearstation : /area/space/nearstation

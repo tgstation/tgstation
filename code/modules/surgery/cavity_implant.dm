@@ -2,8 +2,8 @@
 	name = "Cavity implant"
 	steps = list(
 		/datum/surgery_step/incise,
-		/datum/surgery_step/clamp_bleeders,
 		/datum/surgery_step/retract_skin,
+		/datum/surgery_step/clamp_bleeders,
 		/datum/surgery_step/incise,
 		/datum/surgery_step/handle_cavity,
 		/datum/surgery_step/close)
@@ -18,6 +18,8 @@
 	implements = list(/obj/item = 100)
 	repeatable = TRUE
 	time = 32
+	preop_sound = 'sound/surgery/organ1.ogg'
+	success_sound = 'sound/surgery/organ2.ogg'
 	var/obj/item/item_for_cavity
 
 /datum/surgery_step/handle_cavity/tool_check(mob/user, obj/item/tool)
@@ -41,7 +43,7 @@
 /datum/surgery_step/handle_cavity/success(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool, datum/surgery/surgery = FALSE)
 	var/obj/item/bodypart/chest/target_chest = target.get_bodypart(BODY_ZONE_CHEST)
 	if(tool)
-		if(item_for_cavity || tool.w_class > WEIGHT_CLASS_NORMAL || HAS_TRAIT(tool, TRAIT_NODROP) || istype(tool, /obj/item/organ))
+		if(item_for_cavity || tool.w_class > WEIGHT_CLASS_NORMAL || HAS_TRAIT(tool, TRAIT_NODROP) || isorgan(tool))
 			to_chat(user, span_warning("You can't seem to fit [tool] in [target]'s [target_zone]!"))
 			return FALSE
 		else

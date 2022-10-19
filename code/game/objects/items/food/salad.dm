@@ -2,20 +2,20 @@
 ////////////////////////////////////////////SALAD////////////////////////////////////////////
 /obj/item/food/salad
 	icon = 'icons/obj/food/soupsalad.dmi'
-	trash_type = /obj/item/reagent_containers/glass/bowl
+	trash_type = /obj/item/reagent_containers/cup/bowl
 	bite_consumption = 3
 	w_class = WEIGHT_CLASS_NORMAL
 	food_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("leaves" = 1)
 	foodtypes = VEGETABLES
-	eatverbs = list("devour","nibble","gnaw","gobble","chomp") //who the fuck gnaws and devours on a salad
+	eatverbs = list("devour", "nibble", "gnaw", "gobble", "chomp") //who the fuck gnaws and devours on a salad
 	venue_value = FOOD_PRICE_NORMAL
 
 /obj/item/food/salad/aesirsalad
 	name = "\improper Aesir salad"
 	desc = "Probably too incredible for mortal men to fully enjoy."
 	icon_state = "aesirsalad"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/medicine/omnizine = 10, /datum/reagent/consumable/nutriment/vitamin = 12)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 12)
 	tastes = list("leaves" = 1)
 	foodtypes = VEGETABLES | FRUIT
 
@@ -57,7 +57,7 @@
 	icon_state = "citrusdelight"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 11, /datum/reagent/consumable/nutriment/vitamin = 7)
 	tastes = list("sourness" = 1, "leaves" = 1)
-	foodtypes = FRUIT
+	foodtypes = FRUIT | ORANGES
 
 /obj/item/food/salad/ricebowl
 	name = "ricebowl"
@@ -114,7 +114,7 @@
 	name = "\improper Salad of Eden"
 	desc = "A salad brimming with untapped potential."
 	icon_state = "edensalad"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/medicine/earthsblood = 3, /datum/reagent/medicine/omnizine = 5, /datum/reagent/drug/happiness = 2)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("extreme bitterness" = 3, "hope" = 1)
 	foodtypes = VEGETABLES
 
@@ -127,7 +127,7 @@
 	foodtypes = GRAIN | MEAT | VEGETABLES
 
 
-/obj/item/reagent_containers/glass/bowl
+/obj/item/reagent_containers/cup/bowl
 	name = "bowl"
 	desc = "A simple bowl, used for soups and salads."
 	icon = 'icons/obj/food/soupsalad.dmi'
@@ -135,9 +135,9 @@
 	reagent_flags = OPENCONTAINER
 	custom_materials = list(/datum/material/glass = 500)
 	w_class = WEIGHT_CLASS_NORMAL
-	custom_price = PAYCHECK_ASSISTANT * 0.6
+	custom_price = PAYCHECK_CREW * 0.6
 
-/obj/item/reagent_containers/glass/bowl/Initialize(mapload)
+/obj/item/reagent_containers/cup/bowl/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/salad/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 6)
 
@@ -148,3 +148,59 @@
 	tastes = list()
 	icon_state = "bowl"
 	desc = "A delicious customized salad."
+
+/obj/item/food/salad/kale_salad
+	name = "kale salad"
+	desc = "A healthy kale salad drizzled in oil, perfect for warm summer months."
+	icon_state = "kale_salad"
+	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 12, /datum/reagent/consumable/nutriment = 12)
+	tastes = list("healthy greens" = 2, "olive dressing" = 1)
+	foodtypes = VEGETABLES
+
+/obj/item/food/salad/greek_salad
+	name = "Greek salad"
+	desc = "A popular salad made of tomatoes, onions, feta cheese, and olives all drizzled in olive oil. Though it feels like it's missing something..."
+	icon_state = "greek_salad"
+	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 13, /datum/reagent/consumable/nutriment = 14)
+	tastes = list("healthy greens" = 2, "olive dressing" = 1, "feta cheese" = 1)
+	foodtypes = VEGETABLES | DAIRY
+
+/obj/item/food/salad/caesar_salad
+	name = "Caesar salad"
+	desc = "A simple yet flavorful salad of onions, lettuce, croutons, and shreds of cheese dressed in oil. Comes with a slice of pita bread!"
+	icon_state = "caesar_salad"
+	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 12, /datum/reagent/consumable/nutriment = 12)
+	tastes = list("healthy greens" = 2, "olive dressing" = 2, "feta cheese" = 2, "pita bread" = 1)
+	foodtypes = VEGETABLES | DAIRY | GRAIN
+
+/obj/item/food/salad/spring_salad
+	name = "spring salad"
+	desc = "A simple salad of carrots, lettuce and peas drizzled in oil with a pinch of salt."
+	icon_state = "spring_salad"
+	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 12, /datum/reagent/consumable/nutriment = 12)
+	tastes = list("crisp greens" = 2, "olive dressing" = 2, "salt" = 1)
+	foodtypes = VEGETABLES
+
+/obj/item/food/salad/potato_salad
+	name = "potato salad"
+	desc = "A dish of boiled potatoes mixed with boiled eggs, onions, and mayonnaise. A staple of every self-respecting barbeque."
+	icon_state = "potato_salad"
+	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 12, /datum/reagent/consumable/nutriment = 12, /datum/reagent/consumable/nutriment/protein = 4)
+	tastes = list("creamy potatoes" = 2, "eggs" = 2, "mayonnaise" = 1, "onions" = 1)
+	foodtypes = VEGETABLES | BREAKFAST
+
+/obj/item/food/salad/spinach_fruit_salad
+	name = "spinach fruit salad"
+	desc = "A vibrant fruit salad made of spinach, berries, and pineapple chunks all drizzled in oil. Yummy!"
+	icon_state = "spinach_fruit_salad"
+	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 12, /datum/reagent/consumable/nutriment = 12)
+	tastes = list("spinach" = 2, "berries" = 2, "pineapple" = 2, "dressing" = 1)
+	foodtypes = VEGETABLES | FRUIT
+
+/obj/item/food/salad/antipasto_salad
+	name = "antipasto salad"
+	desc = "A traditional Italian salad made of salami, mozzarella cheese, olives, and tomatoes. Often served as a first course meal."
+	icon_state = "antipasto_salad"
+	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 12, /datum/reagent/consumable/nutriment = 12, /datum/reagent/consumable/nutriment/protein = 6)
+	tastes = list("lettuce" = 2, "salami" = 2, "mozzarella cheese" = 2, "tomatoes" = 2, "dressing" = 1)
+	foodtypes = VEGETABLES | DAIRY | MEAT

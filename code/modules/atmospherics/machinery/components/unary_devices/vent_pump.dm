@@ -12,6 +12,7 @@
 	desc = "Has a valve and pump attached to it."
 
 	use_power = IDLE_POWER_USE
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.15
 	can_unwrench = TRUE
 	welded = FALSE
 	layer = GAS_SCRUBBER_LAYER
@@ -150,7 +151,7 @@
 	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
 	if(frequency)
-		radio_connection = SSradio.add_object(src, frequency,radio_filter_in)
+		radio_connection = SSradio.add_object(src, frequency, radio_filter_in)
 
 /obj/machinery/atmospherics/components/unary/vent_pump/proc/broadcast_status()
 	if(!radio_connection)
@@ -181,7 +182,9 @@
 	radio_connection.post_signal(src, signal, radio_filter_out)
 
 /obj/machinery/atmospherics/components/unary/vent_pump/update_name()
-	..()
+	. = ..()
+	if(override_naming)
+		return
 	var/area/vent_area = get_area(src)
 	name = "\proper [vent_area.name] [name] [id_tag]"
 
@@ -207,10 +210,12 @@
 	if("purge" in signal.data)
 		pressure_checks &= ~EXT_BOUND
 		pump_direction = SIPHONING
+		investigate_log("pump direction was set to [pump_direction] by [key_name(signal_sender)]", INVESTIGATE_ATMOS)
 
 	if("stabilize" in signal.data)
 		pressure_checks |= EXT_BOUND
 		pump_direction = RELEASING
+		investigate_log("pump direction was set to [pump_direction] by [key_name(signal_sender)]", INVESTIGATE_ATMOS)
 
 	if("power" in signal.data)
 		on = text2num(signal.data["power"])
@@ -280,7 +285,7 @@
 			welded = FALSE
 		update_appearance()
 		pipe_vision_img = image(src, loc, dir = dir)
-		pipe_vision_img.plane = ABOVE_HUD_PLANE
+		SET_PLANE_EXPLICIT(pipe_vision_img, ABOVE_HUD_PLANE, src)
 		investigate_log("was [welded ? "welded shut" : "unwelded"] by [key_name(user)]", INVESTIGATE_ATMOS)
 		add_fingerprint(user)
 	return TRUE
@@ -307,7 +312,7 @@
 	welded = FALSE
 	update_appearance()
 	pipe_vision_img = image(src, loc, dir = dir)
-	pipe_vision_img.plane = ABOVE_HUD_PLANE
+	SET_PLANE_EXPLICIT(pipe_vision_img, ABOVE_HUD_PLANE, src)
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 100, TRUE)
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume
@@ -367,86 +372,6 @@
 	piping_layer = 4
 	icon_state = "vent_map_siphon_on-4"
 
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos
-	frequency = FREQ_ATMOS_STORAGE
-	on = TRUE
-	icon_state = "vent_map_siphon_on-3"
-
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/plasma_output
-	name = "plasma tank output inlet"
-	id_tag = ATMOS_GAS_MONITOR_OUTPUT_PLAS
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/oxygen_output
-	name = "oxygen tank output inlet"
-	id_tag = ATMOS_GAS_MONITOR_OUTPUT_O2
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/nitrogen_output
-	name = "nitrogen tank output inlet"
-	id_tag = ATMOS_GAS_MONITOR_OUTPUT_N2
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/mix_output
-	name = "mix tank output inlet"
-	id_tag = ATMOS_GAS_MONITOR_OUTPUT_MIX
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/nitrous_output
-	name = "nitrous oxide tank output inlet"
-	id_tag = ATMOS_GAS_MONITOR_OUTPUT_N2O
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/carbon_output
-	name = "carbon dioxide tank output inlet"
-	id_tag = ATMOS_GAS_MONITOR_OUTPUT_CO2
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/bz_output
-	name = "bz tank output inlet"
-	id_tag = ATMOS_GAS_MONITOR_OUTPUT_BZ
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/freon_output
-	name = "freon tank output inlet"
-	id_tag = ATMOS_GAS_MONITOR_OUTPUT_FREON
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/halon_output
-	name = "halon tank output inlet"
-	id_tag = ATMOS_GAS_MONITOR_OUTPUT_HALON
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/healium_output
-	name = "healium tank output inlet"
-	id_tag = ATMOS_GAS_MONITOR_OUTPUT_HEALIUM
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/hydrogen_output
-	name = "hydrogen tank output inlet"
-	id_tag = ATMOS_GAS_MONITOR_OUTPUT_H2
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/hypernoblium_output
-	name = "hypernoblium tank output inlet"
-	id_tag = ATMOS_GAS_MONITOR_OUTPUT_HYPERNOBLIUM
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/miasma_output
-	name = "miasma tank output inlet"
-	id_tag = ATMOS_GAS_MONITOR_OUTPUT_MIASMA
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/nitryl_output
-	name = "nitryl tank output inlet"
-	id_tag = ATMOS_GAS_MONITOR_OUTPUT_NO2
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/pluoxium_output
-	name = "pluoxium tank output inlet"
-	id_tag = ATMOS_GAS_MONITOR_OUTPUT_PLUOXIUM
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/proto_nitrate_output
-	name = "proto-nitrate tank output inlet"
-	id_tag = ATMOS_GAS_MONITOR_OUTPUT_PROTO_NITRATE
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/stimulum_output
-	name = "stimulum tank output inlet"
-	id_tag = ATMOS_GAS_MONITOR_OUTPUT_STIMULUM
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/tritium_output
-	name = "tritium tank output inlet"
-	id_tag = ATMOS_GAS_MONITOR_OUTPUT_TRITIUM
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/water_vapor_output
-	name = "water vapor tank output inlet"
-	id_tag = ATMOS_GAS_MONITOR_OUTPUT_H2O
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/zauker_output
-	name = "zauker tank output inlet"
-	id_tag = ATMOS_GAS_MONITOR_OUTPUT_ZAUKER
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/helium_output
-	name = "helium tank output inlet"
-	id_tag = ATMOS_GAS_MONITOR_OUTPUT_HELIUM
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/antinoblium_output
-	name = "antinoblium tank output inlet"
-	id_tag = ATMOS_GAS_MONITOR_OUTPUT_ANTINOBLIUM
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/incinerator_output
-	name = "incinerator chamber output inlet"
-	id_tag = ATMOS_GAS_MONITOR_OUTPUT_INCINERATOR
-	frequency = FREQ_ATMOS_CONTROL
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/ordnance_mixing_output
-	name = "ordnance mixing output inlet"
-	id_tag = ATMOS_GAS_MONITOR_OUTPUT_ORDNANCE_LAB
-	frequency = FREQ_ATMOS_CONTROL
-
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/layer2
 	piping_layer = 2
 	icon_state = "vent_map-2"
@@ -492,15 +417,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/on/layer4
 	piping_layer = 4
 	icon_state = "vent_map_siphon_on-4"
-
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/atmos
-	frequency = FREQ_ATMOS_STORAGE
-	on = TRUE
-	icon_state = "vent_map_siphon_on-3"
-
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/atmos/air_output
-	name = "air mix tank output inlet"
-	id_tag = ATMOS_GAS_MONITOR_OUTPUT_AIR
 
 #undef INT_BOUND
 #undef EXT_BOUND

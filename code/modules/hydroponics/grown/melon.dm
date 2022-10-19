@@ -59,6 +59,9 @@
 	desc = "The water within this melon has been blessed by some deity that's particularly fond of watermelon."
 	icon_state = "holymelon"
 	bite_consumption_mod = 2
+	w_class = WEIGHT_CLASS_NORMAL
+	foodtypes = FRUIT
+	juice_results = list(/datum/reagent/water/holywater = 0)
 	wine_power = 70 //Water to wine, baby.
 	wine_flavor = "divinity"
 
@@ -91,7 +94,7 @@
 	if(!holy_person.mind?.holy_role || HAS_TRAIT(holy_person, TRAIT_AGEUSIA))
 		return
 	to_chat(holy_person, span_notice("Truly, a piece of heaven!"))
-	SEND_SIGNAL(holy_person, COMSIG_ADD_MOOD_EVENT, "Divine_chew", /datum/mood_event/holy_consumption)
+	holy_person.add_mood_event("Divine_chew", /datum/mood_event/holy_consumption)
 	return FOOD_LIKED
 
 /// Barrel melon Seeds

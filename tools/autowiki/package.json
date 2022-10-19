@@ -1,0 +1,10 @@
+{
+	"name": "autowiki",
+	"version": "1.0.0",
+	"description": "Automatically publish generated pages to the tg wiki",
+	"main": "autowiki.js",
+	"author": "Mothblocks",
+	"dependencies": {
+		"mwbot": "^2.0.0"
+	}
+}

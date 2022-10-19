@@ -27,7 +27,7 @@
 /datum/preference_middleware/random/proc/randomize_character()
 	for (var/datum/preference/preference as anything in get_preferences_in_priority_order())
 		if (preferences.should_randomize(preference))
-			preferences.write_preference(preference, preference.create_random_value(src))
+			preferences.write_preference(preference, preference.create_random_value(preferences))
 
 	preferences.character_preview_view.update_body()
 

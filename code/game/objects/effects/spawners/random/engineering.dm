@@ -18,7 +18,7 @@
 		/obj/item/multitool = 1,
 		/obj/item/clothing/glasses/meson = 1,
 		/obj/item/storage/belt/utility = 1,
-		/obj/item/clothing/head/welding = 1,
+		/obj/item/clothing/head/utility/welding = 1,
 	)
 
 /obj/effect/spawner/random/engineering/tool_advanced
@@ -133,5 +133,5 @@
 /obj/effect/spawner/random/engineering/tracking_beacon
 	name = "tracking beacon spawner"
 	icon_state = "beacon"
-	spawn_loot_chance = 50
+	spawn_loot_chance = 35
 	loot = list(/obj/item/beacon)

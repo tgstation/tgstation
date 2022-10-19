@@ -1,13 +1,13 @@
 /obj/item/flashlight
 	name = "flashlight"
 	desc = "A hand-held emergency light."
-	custom_price = PAYCHECK_EASY
+	custom_price = PAYCHECK_CREW
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "flashlight"
 	inhand_icon_state = "flashlight"
 	worn_icon_state = "flashlight"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
@@ -17,14 +17,33 @@
 	light_range = 4
 	light_power = 1
 	light_on = FALSE
+	/// Can we toggle this light on and off (used for contexual screentips only)
+	var/toggle_context = TRUE
+	/// The sound the light makes when it's turned on
+	var/sound_on = 'sound/weapons/magin.ogg'
+	/// The sound the light makes when it's turned off
+	var/sound_off = 'sound/weapons/magout.ogg'
+	/// Is the light turned on or off currently
 	var/on = FALSE
-
 
 /obj/item/flashlight/Initialize(mapload)
 	. = ..()
 	if(icon_state == "[initial(icon_state)]-on")
 		on = TRUE
 	update_brightness()
+	register_context()
+
+/obj/item/flashlight/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	// single use lights can be toggled on once
+	if(isnull(held_item) && (toggle_context || !on))
+		context[SCREENTIP_CONTEXT_RMB] = "Toggle light"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(istype(held_item, /obj/item/flashlight) && (toggle_context || !on))
+		context[SCREENTIP_CONTEXT_LMB] = "Toggle light"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	return NONE
 
 /obj/item/flashlight/proc/update_brightness(mob/user)
 	if(on)
@@ -35,13 +54,18 @@
 	if(light_system == STATIC_LIGHT)
 		update_light()
 
-
-/obj/item/flashlight/attack_self(mob/user)
+/obj/item/flashlight/proc/toggle_light(mob/user)
 	on = !on
-	playsound(user, on ? 'sound/weapons/magin.ogg' : 'sound/weapons/magout.ogg', 40, TRUE)
+	playsound(user, on ? sound_on : sound_off, 40, TRUE)
 	update_brightness(user)
 	update_action_buttons()
-	return 1
+
+/obj/item/flashlight/attack_self(mob/user)
+	toggle_light(user)
+
+/obj/item/flashlight/attack_hand_secondary(mob/user, list/modifiers)
+	attack_self(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/flashlight/suicide_act(mob/living/carbon/human/user)
 	if (user.is_blind())
@@ -75,7 +99,7 @@
 					to_chat(user, span_warning("You're going to need to remove that [(M.head && M.head.flags_cover & HEADCOVERSEYES) ? "helmet" : (M.wear_mask && M.wear_mask.flags_cover & MASKCOVERSEYES) ? "mask": "glasses"] first!"))
 					return
 
-				var/obj/item/organ/eyes/E = M.getorganslot(ORGAN_SLOT_EYES)
+				var/obj/item/organ/internal/eyes/E = M.getorganslot(ORGAN_SLOT_EYES)
 				if(!E)
 					to_chat(user, span_warning("[M] doesn't have any eyes!"))
 					return
@@ -90,7 +114,7 @@
 						span_danger("You direct [src] to [M]'s eyes."))
 					if(M.stat == DEAD || (M.is_blind()) || !M.flash_act(visual = 1)) //mob is dead or fully blind
 						to_chat(user, span_warning("[M]'s pupils don't react to the light!"))
-					else if(M.dna && M.dna.check_mutation(XRAY)) //mob has X-ray vision
+					else if(M.dna && M.dna.check_mutation(/datum/mutation/human/xray)) //mob has X-ray vision
 						to_chat(user, span_danger("[M]'s pupils give an eerie glow!"))
 					else //they're okay!
 						to_chat(user, span_notice("[M]'s pupils narrow."))
@@ -104,9 +128,9 @@
 				var/their = M.p_their()
 
 				var/list/mouth_organs = new
-				for(var/obj/item/organ/O in M.internal_organs)
-					if(O.zone == BODY_ZONE_PRECISE_MOUTH)
-						mouth_organs.Add(O)
+				for(var/obj/item/organ/organ as anything in M.internal_organs)
+					if(organ.zone == BODY_ZONE_PRECISE_MOUTH)
+						mouth_organs.Add(organ)
 				var/organ_list = ""
 				var/organ_count = LAZYLEN(mouth_organs)
 				if(organ_count)
@@ -210,12 +234,12 @@
 	if(creator)
 		visible_message(span_danger("[creator] created a medical hologram!"))
 
-
 /obj/item/flashlight/seclite
 	name = "seclite"
 	desc = "A robust flashlight used by security."
 	icon_state = "seclite"
 	inhand_icon_state = "seclite"
+	worn_icon_state = "seclite"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	force = 9 // Not as good as a stun baton.
@@ -238,32 +262,20 @@
 	custom_materials = null
 	on = TRUE
 
-
 // green-shaded desk lamp
 /obj/item/flashlight/lamp/green
 	desc = "A classic green-shaded desk lamp."
 	icon_state = "lampgreen"
 	inhand_icon_state = "lampgreen"
 
-
-
-/obj/item/flashlight/lamp/verb/toggle_light()
-	set name = "Toggle light"
-	set category = "Object"
-	set src in oview(1)
-
-	if(!usr.stat)
-		attack_self(usr)
-
 //Bananalamp
 /obj/item/flashlight/lamp/bananalamp
 	name = "banana lamp"
 	desc = "Only a clown would think to make a ghetto banana-shaped lamp. Even has a goofy pullstring."
 	icon_state = "bananalamp"
-	inhand_icon_state = "bananalamp"
+	inhand_icon_state = null
 
 // FLARES
-
 /obj/item/flashlight/flare
 	name = "flare"
 	desc = "A red Nanotrasen issued flare. There are instructions on the side, it reads 'pull cord, make light'."
@@ -273,14 +285,16 @@
 	inhand_icon_state = "flare"
 	worn_icon_state = "flare"
 	actions_types = list()
-	/// How many seconds of fuel we have left
-	var/fuel = 0
-	var/on_damage = 7
-	var/produce_heat = 1500
 	heat = 1000
 	light_color = LIGHT_COLOR_FLARE
 	light_system = MOVABLE_LIGHT
 	grind_results = list(/datum/reagent/sulfur = 15)
+	sound_on = 'sound/items/match_strike.ogg'
+	toggle_context = FALSE
+	/// How many seconds of fuel we have left
+	var/fuel = 0
+	var/on_damage = 7
+	var/produce_heat = 1500
 
 /obj/item/flashlight/flare/Initialize(mapload)
 	. = ..()
@@ -316,7 +330,6 @@
 		inhand_icon_state = "[initial(inhand_icon_state)]"
 
 /obj/item/flashlight/flare/attack_self(mob/user)
-
 	// Usual checks
 	if(fuel <= 0)
 		to_chat(user, span_warning("[src] is out of fuel!"))
@@ -368,7 +381,7 @@
 	name = "suspicious lantern"
 	desc = "A suspicious looking lantern."
 	icon_state = "syndilantern"
-	inhand_icon_state = "syndilantern"
+	inhand_icon_state = null
 	light_range = 10
 
 /obj/item/flashlight/lantern/jade
@@ -383,7 +396,7 @@
 	desc = "Extract from a yellow slime. It emits a strong light when squeezed."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "slime"
-	inhand_icon_state = "slime"
+	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = null
@@ -449,30 +462,29 @@
 /obj/item/flashlight/glowstick
 	name = "glowstick"
 	desc = "A military-grade glowstick."
-	custom_price = PAYCHECK_PRISONER
+	custom_price = PAYCHECK_LOWER
 	w_class = WEIGHT_CLASS_SMALL
 	light_range = 4
 	light_system = MOVABLE_LIGHT
 	color = LIGHT_COLOR_GREEN
 	icon_state = "glowstick"
 	base_icon_state = "glowstick"
-	inhand_icon_state = "glowstick"
+	inhand_icon_state = null
 	worn_icon_state = "lightstick"
 	grind_results = list(/datum/reagent/phenol = 15, /datum/reagent/hydrogen = 10, /datum/reagent/oxygen = 5) //Meth-in-a-stick
+	sound_on = 'sound/effects/wounds/crack2.ogg' // the cracking sound isn't just for wounds silly
+	toggle_context = FALSE
 	/// How many seconds of fuel we have left
 	var/fuel = 0
-
 
 /obj/item/flashlight/glowstick/Initialize(mapload)
 	fuel = rand(3200, 4000)
 	set_light_color(color)
 	return ..()
 
-
 /obj/item/flashlight/glowstick/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
-
 
 /obj/item/flashlight/glowstick/process(delta_time)
 	fuel = max(fuel - delta_time, 0)
@@ -508,7 +520,6 @@
 	glowstick_overlay.color = color
 	. += glowstick_overlay
 
-
 /obj/item/flashlight/glowstick/attack_self(mob/user)
 	if(fuel <= 0)
 		to_chat(user, span_notice("[src] is spent."))
@@ -526,7 +537,7 @@
 	if(!fuel)
 		user.visible_message(span_suicide("[user] is trying to squirt [src]'s fluids into [user.p_their()] eyes... but it's empty!"))
 		return SHAME
-	var/obj/item/organ/eyes/eyes = user.getorganslot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/internal/eyes/eyes = user.getorganslot(ORGAN_SLOT_EYES)
 	if(!eyes)
 		user.visible_message(span_suicide("[user] is trying to squirt [src]'s fluids into [user.p_their()] eyes... but [user.p_they()] don't have any!"))
 		return SHAME
@@ -566,7 +577,7 @@
 	light_range = 4
 	light_power = 10
 	alpha = 0
-	layer = 0
+	plane = FLOOR_PLANE
 	on = TRUE
 	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -574,7 +585,6 @@
 	var/even_cycle = FALSE
 	///Base light_range that can be set on Initialize to use in smooth light range expansions and contractions.
 	var/base_light_range = 4
-
 
 /obj/item/flashlight/spotlight/Initialize(mapload, _light_range, _light_power, _light_color)
 	. = ..()
@@ -585,7 +595,6 @@
 		set_light_power(_light_power)
 	if(!isnull(_light_color))
 		set_light_color(_light_color)
-
 
 /obj/item/flashlight/flashdark
 	name = "flashdark"
@@ -598,7 +607,6 @@
 	var/dark_light_range = 2.5
 	///Variable to preserve old lighting behavior in flashlights, to handle darkness.
 	var/dark_light_power = -3
-
 
 /obj/item/flashlight/flashdark/update_brightness(mob/user)
 	. = ..()

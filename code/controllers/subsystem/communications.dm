@@ -10,6 +10,9 @@ SUBSYSTEM_DEF(communications)
 	COOLDOWN_DECLARE(nonsilicon_message_cooldown)
 	COOLDOWN_DECLARE(emergency_meeting_cooldown)
 
+	/// Are we trying to send a cross-station message that contains soft-filtered words? If so, flip to TRUE to extend the time admins have to cancel the message.
+	var/soft_filtering = FALSE
+
 /datum/controller/subsystem/communications/proc/can_announce(mob/living/user, is_silicon)
 	if(is_silicon && COOLDOWN_FINISHED(src, silicon_message_cooldown))
 		return TRUE
@@ -18,14 +21,14 @@ SUBSYSTEM_DEF(communications)
 	else
 		return FALSE
 
-/datum/controller/subsystem/communications/proc/make_announcement(mob/living/user, is_silicon, input)
+/datum/controller/subsystem/communications/proc/make_announcement(mob/living/user, is_silicon, input, syndicate, list/players)
 	if(!can_announce(user, is_silicon))
 		return FALSE
 	if(is_silicon)
-		minor_announce(html_decode(input),"[user.name] Announces:")
+		minor_announce(html_decode(input),"[user.name] Announces:", players = players)
 		COOLDOWN_START(src, silicon_message_cooldown, COMMUNICATION_COOLDOWN_AI)
 	else
-		priority_announce(html_decode(user.treat_message(input)), null, 'sound/misc/announce.ogg', "Captain", has_important_message = TRUE)
+		priority_announce(html_decode(user.treat_message(input)), null, 'sound/misc/announce.ogg', "[syndicate? "Syndicate " : ""]Captain", has_important_message = TRUE, players = players)
 		COOLDOWN_START(src, nonsilicon_message_cooldown, COMMUNICATION_COOLDOWN)
 	user.log_talk(input, LOG_SAY, tag="priority announcement")
 	message_admins("[ADMIN_LOOKUPFLW(user)] has made a priority announcement.")
@@ -33,7 +36,7 @@ SUBSYSTEM_DEF(communications)
 /**
  * Check if a mob can call an emergency meeting
  *
- * Should only really happen during april fools. 
+ * Should only really happen during april fools.
  * Checks to see that it's been at least 5 minutes since the last emergency meeting call.
  * Arguments:
  * * user - Mob who called the meeting
@@ -49,7 +52,7 @@ SUBSYSTEM_DEF(communications)
 /**
  * Call an emergency meeting
  *
- * Communications subsystem wrapper for the call_emergency_meeting world proc. 
+ * Communications subsystem wrapper for the call_emergency_meeting world proc.
  * Checks to make sure the proc can be called, and handles
  * relevant logging and timing. See that proc definition for more detail.
  * Arguments:
@@ -71,10 +74,10 @@ SUBSYSTEM_DEF(communications)
 				var/datum/comm_message/M = new(sending.title,sending.content,sending.possible_answers.Copy())
 				C.add_message(M)
 			if(print)
-				var/obj/item/paper/P = new /obj/item/paper(C.loc)
-				P.name = "paper - '[sending.title]'"
-				P.info = sending.content
-				P.update_appearance()
+				var/obj/item/paper/printed_paper = new /obj/item/paper(C.loc)
+				printed_paper.name = "paper - '[sending.title]'"
+				printed_paper.add_raw_text(sending.content)
+				printed_paper.update_appearance()
 
 #undef COMMUNICATION_COOLDOWN
 #undef COMMUNICATION_COOLDOWN_AI

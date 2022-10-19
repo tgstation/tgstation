@@ -1,0 +1,118 @@
+#comment This is the second turf updates txt. This one only reorganizes the work tree. Use the first one if you're trying to update your area typepaths for stations, then run this.
+
+/area/centcom/control : /area/centcom/central_command_areas/control
+/area/centcom/evacuation : /area/centcom/central_command_areas/evacuation
+/area/centcom/evacuation/ship : /area/centcom/central_command_areas/evacuation/ship
+/area/centcom/fore : /area/centcom/central_command_areas/fore
+/area/centcom/supply : /area/centcom/central_command_areas/supply
+/area/centcom/ferry : /area/centcom/central_command_areas/ferry
+/area/centcom/briefing : /area/centcom/central_command_areas/briefing
+/area/centcom/armory : /area/centcom/central_command_areas/armory
+/area/centcom/admin : /area/centcom/central_command_areas/admin
+/area/centcom/admin/storage : /area/centcom/central_command_areas/admin/storage
+/area/centcom/prison : /area/centcom/central_command_areas/prison
+/area/centcom/prison/cells : /area/centcom/central_command_areas/prison/cells
+/area/centcom/courtroom : /area/centcom/central_command_areas/courtroom
+/area/centcom/holding : /area/centcom/central_command_areas/holding
+/area/centcom/supplypod/supplypod_temp_holding : /area/centcom/central_command_areas/supplypod/supplypod_temp_holding
+/area/centcom/supplypod : /area/centcom/central_command_areas/supplypod
+/area/centcom/supplypod/pod_storage : /area/centcom/central_command_areas/supplypod/pod_storage
+/area/centcom/supplypod/loading : /area/centcom/central_command_areas/supplypod/loading
+/area/centcom/supplypod/loading/one : /area/centcom/central_command_areas/supplypod/loading/one
+/area/centcom/supplypod/loading/two : /area/centcom/central_command_areas/supplypod/loading/two
+/area/centcom/supplypod/loading/three : /area/centcom/central_command_areas/supplypod/loading/three
+/area/centcom/supplypod/loading/four : /area/centcom/central_command_areas/supplypod/loading/four
+/area/centcom/supplypod/loading/ert : /area/centcom/central_command_areas/supplypod/loading/ert
+
+/area/tdome : /area/centcom/tdome
+/area/tdome/arena : /area/centcom/tdome/arena
+/area/tdome/arena_source : /area/centcom/tdome/arena_source
+/area/tdome/tdome1 : /area/centcom/tdome/tdome1
+/area/tdome/tdome2 : /area/centcom/tdome/tdome2
+/area/tdome/administration : /area/centcom/tdome/administration
+/area/tdome/observation : /area/centcom/tdome/observation
+
+/area/wizard_station : /area/centcom/wizard_station
+/area/abductor_ship : /area/centcom/abductor_ship
+/area/syndicate_mothership : /area/centcom/syndicate_mothership
+/area/syndicate_mothership/control : /area/centcom/syndicate_mothership/control
+/area/syndicate_mothership/expansion_bombthreat : /area/centcom/syndicate_mothership/expansion_bombthreat
+/area/syndicate_mothership/expansion_bioterrorism : /area/centcom/syndicate_mothership/expansion_bioterrorism
+/area/syndicate_mothership/expansion_chemicalwarfare : /area/centcom/syndicate_mothership/expansion_chemicalwarfare
+/area/syndicate_mothership/expansion_fridgerummage :/area/centcom/syndicate_mothership/expansion_fridgerummage
+/area/syndicate_mothership/elite_squad : /area/centcom/syndicate_mothership/elite_squad
+
+/area/heretic_sacrifice : /area/centcom/heretic_sacrifice
+/area/heretic_sacrifice/ash : /area/centcom/heretic_sacrifice/ash
+/area/heretic_sacrifice/void : /area/centcom/heretic_sacrifice/void
+/area/heretic_sacrifice/flesh : /area/centcom/heretic_sacrifice/flesh
+/area/heretic_sacrifice/rust : /area/centcom/heretic_sacrifice/rust
+
+/area/ctf : /area/centcom/ctf
+/area/ctf/control_room : /area/centcom/ctf/control_room
+/area/ctf/control_room2 : /area/centcom/ctf/control_room2
+/area/ctf/central : /area/centcom/ctf/central
+/area/ctf/main_hall : /area/centcom/ctf/main_hall
+/area/ctf/main_hall2 : /area/centcom/ctf/main_hall2
+/area/ctf/corridor : /area/centcom/ctf/corridor
+/area/ctf/corridor2: /area/centcom/ctf/corridor2
+/area/ctf/flag_room : /area/centcom/ctf/flag_room
+/area/ctf/flag_room2 : /area/centcom/ctf/flag_room2
+
+/area/start : /area/misc/start
+/area/testroom : /area/misc/testroom
+
+/area/ai_monitored : /area/station/ai_monitored
+/area/ai_monitored/turret_protected : /area/station/ai_monitored/turret_protected
+/area/ai_monitored : /area/station/ai_monitored
+/area/ai_monitored/aisat/exterior : /area/station/ai_monitored/aisat/exterior
+/area/ai_monitored/command/storage/satellite : /area/station/ai_monitored/command/storage/satellite
+/area/ai_monitored/turret_protected : /area/station/ai_monitored/turret_protected
+/area/ai_monitored/turret_protected/ai_upload : /area/station/ai_monitored/turret_protected/ai_upload
+/area/ai_monitored/turret_protected/ai_upload_foyer : /area/station/ai_monitored/turret_protected/ai_upload_foyer
+/area/ai_monitored/turret_protected/ai : /area/station/ai_monitored/turret_protected/ai
+/area/ai_monitored/turret_protected/aisat : /area/station/ai_monitored/turret_protected/aisat
+/area/ai_monitored/turret_protected/aisat/atmos : /area/station/ai_monitored/turret_protected/aisat/atmos
+/area/ai_monitored/turret_protected/aisat/foyer : /area/station/ai_monitored/turret_protected/aisat/foyer
+/area/ai_monitored/turret_protected/aisat/service : /area/station/ai_monitored/turret_protected/aisat/service
+/area/ai_monitored/turret_protected/aisat/hallway : /area/station/ai_monitored/turret_protected/aisat/hallway
+/area/ai_monitored/turret_protected/aisat/maint : /area/station/ai_monitored/turret_protected/aisat/maint
+/area/ai_monitored/turret_protected/aisat_interior : /area/station/ai_monitored/turret_protected/aisat_interior
+/area/ai_monitored/turret_protected/ai_sat_ext_as : /area/station/ai_monitored/turret_protected/ai_sat_ext_as
+/area/ai_monitored/turret_protected/ai_sat_ext_ap : /area/station/ai_monitored/turret_protected/ai_sat_ext_ap
+/area/ai_monitored/command/storage/eva : /area/station/ai_monitored/command/storage/eva
+/area/ai_monitored/command/storage/eva/upper : /area/station/ai_monitored/command/storage/eva/upper
+/area/ai_monitored/command/nuke_storage : /area/station/ai_monitored/command/nuke_storage
+/area/ai_monitored/security/armory : /area/station/ai_monitored/security/armory
+/area/ai_monitored/security/armory/upper : /area/station/ai_monitored/security/armory/upper
+
+/area/tcommsat/oldaisat : /area/ruin/tcommsat_oldaisat
+
+/area/solars/ancientstation/charlie/solars : /area/ruin/solars/ancientstation/charlie/solars
+/area/solars/derelict_starboard : /area/ruin/solars/derelict_starboard
+/area/solars/derelict_aft : /area/ruin/solars/derelict_aft
+
+/area/ai_multicam_room : /area/centcom/ai_multicam_room
+
+/area/cordon : /area/misc/cordon
+
+/area/holodeck : /area/station/holodeck
+/area/holodeck/rec_center : /area/station/holodeck/rec_center
+/area/holodeck/rec_center/offstation_one : /area/station/holodeck/rec_center/offstation_one
+
+/area/asteroid : /area/centcom/asteroid
+/area/asteroid/nearstation : /area/centcom/asteroid/nearstation
+/area/asteroid/nearstation/bomb_site : /area/centcom/asteroid/nearstation/bomb_site
+
+/area/hilbertshotel : /area/misc/hilbertshotel
+/area/hilbertshotelstorage : /area/misc/hilbertshotelstorage
+
+/area/construction : /area/station/construction
+/area/construction/mining/aux_base : /area/station/construction/mining/aux_base
+/area/construction/storage_wing : /area/station/construction/storage_wing
+
+/area/mafia : /area/centcom/mafia
+
+/area/shuttle_arena : /area/shuttle/shuttle_arena
+
+/area/survivalpod : /area/misc/survivalpod

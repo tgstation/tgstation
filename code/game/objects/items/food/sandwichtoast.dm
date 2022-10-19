@@ -49,7 +49,7 @@
 
 /obj/item/food/jellysandwich/slime
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/toxin/slimejelly = 10, /datum/reagent/consumable/nutriment/vitamin = 4)
-	foodtypes  = GRAIN | TOXIC
+	foodtypes = GRAIN | TOXIC
 
 /obj/item/food/jellysandwich/cherry
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/cherryjelly = 8, /datum/reagent/consumable/nutriment/vitamin = 4)
@@ -63,6 +63,30 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 10)
 	tastes = list("nothing suspicious" = 1)
 	foodtypes = GRAIN | GROSS
+	food_flags = FOOD_FINGER_FOOD
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/griddle_toast
+	name = "griddle toast"
+	desc = "Thick cut bread, griddled to perfection."
+	icon = 'icons/obj/food/burgerbread.dmi'
+	icon_state = "griddle_toast"
+	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 3)
+	tastes = list("toast" = 1)
+	foodtypes = GRAIN
+	w_class = WEIGHT_CLASS_SMALL
+	burns_on_grill = TRUE
+	slot_flags = ITEM_SLOT_MASK
+
+/obj/item/food/butteredtoast
+	name = "buttered toast"
+	desc = "Butter lightly spread over a piece of toast."
+	icon = 'icons/obj/food/burgerbread.dmi'
+	icon_state = "butteredtoast"
+	bite_consumption = 3
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 1)
+	tastes = list("butter" = 1, "toast" = 1)
+	foodtypes = GRAIN | BREAKFAST
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
 
@@ -85,18 +109,6 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/toxin/slimejelly = 8, /datum/reagent/consumable/nutriment/vitamin = 4)
 	foodtypes = GRAIN | TOXIC | SUGAR | BREAKFAST
 
-/obj/item/food/butteredtoast
-	name = "buttered toast"
-	desc = "Butter lightly spread over a piece of toast."
-	icon = 'icons/obj/food/food.dmi'
-	icon_state = "butteredtoast"
-	bite_consumption = 3
-	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 1)
-	tastes = list("butter" = 1, "toast" = 1)
-	foodtypes = GRAIN | BREAKFAST
-	food_flags = FOOD_FINGER_FOOD
-	w_class = WEIGHT_CLASS_SMALL
-
 /obj/item/food/twobread
 	name = "two bread"
 	desc = "This seems awfully bitter."
@@ -111,6 +123,7 @@
 /obj/item/food/hotdog
 	name = "hotdog"
 	desc = "Fresh footlong ready to go down on."
+	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "hotdog"
 	bite_consumption = 3
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/consumable/ketchup = 3, /datum/reagent/consumable/nutriment/vitamin = 6)
@@ -119,8 +132,21 @@
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_CHEAP
 
+// Used for unit tests, do not delete
 /obj/item/food/hotdog/debug
 	eat_time = 0
+
+/obj/item/food/danish_hotdog
+	name = "danish hotdog"
+	desc = "Appetizing bun, with a sausage in the middle, covered with sauce, fried onion and pickles rings"
+	icon = 'icons/obj/food/meat.dmi'
+	icon_state = "danish_hotdog"
+	bite_consumption = 4
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/consumable/ketchup = 3, /datum/reagent/consumable/nutriment/vitamin = 7)
+	tastes = list("bun" = 3, "meat" = 2, "fried onion" = 1, "pickles" = 1)
+	foodtypes = GRAIN | MEAT | VEGETABLES 
+	w_class = WEIGHT_CLASS_SMALL
+	venue_value = FOOD_PRICE_NORMAL
 
 /obj/item/food/blt
 	name = "\improper BLT"
@@ -131,5 +157,27 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 3)
 	tastes = list("bacon" = 3, "lettuce" = 2, "tomato" = 2, "bread" = 2)
 	foodtypes = GRAIN | MEAT | VEGETABLES | BREAKFAST
+	food_flags = FOOD_FINGER_FOOD
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/peanut_butter_jelly_sandwich
+	name = "peanut butter and jelly sandwich"
+	desc = "A classic PB&J sandwich, just like your mom used to make."
+	icon = 'icons/obj/food/burgerbread.dmi'
+	icon_state = "peanut_butter_jelly_sandwich"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/nutriment/vitamin = 2)
+	tastes = list("peanut butter" = 1, "jelly" = 1, "bread" = 2)
+	foodtypes = GRAIN | FRUIT | NUTS
+	food_flags = FOOD_FINGER_FOOD
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/peanut_butter_banana_sandwich
+	name = "peanut butter and banana sandwich"
+	desc = "A grilled peanut butter sandwich with banana slices mixed in, a good high protein treat."
+	icon = 'icons/obj/food/burgerbread.dmi'
+	icon_state = "peanut_butter_banana_sandwich"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/banana = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
+	tastes = list("peanut butter" = 1, "banana" = 1, "bread" = 2)
+	foodtypes = GRAIN | FRUIT | NUTS
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL

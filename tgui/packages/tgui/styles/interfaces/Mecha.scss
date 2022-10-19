@@ -1,0 +1,43 @@
+@use '../base.scss';
+@use '../colors.scss';
+@use '../functions.scss' as *;
+
+$color-danger: #c92020 !default;
+
+.Mecha__displayBox {
+  background-color: #002003;
+  border: 0.167em inset #e8e4c9;
+  color: #03e017;
+  font-size: 2em;
+  font-family: monospace;
+  padding: 0.25em;
+}
+
+.Mecha__displayBoxRed {
+  background-color: #002003;
+  border: 0.167em inset #e8e4c9;
+  color: #f54b4b;
+  font-size: 2em;
+  font-family: monospace;
+  padding: 0.25em;
+}
+
+.Mecha__Button {
+  outline-width: 0.25rem !important;
+  border-width: 0.65rem !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.Mecha__ButtonDanger {
+  background-color: $color-danger !important;
+  border-color: $color-danger !important;
+  outline-width: 0.25rem !important;
+  border-width: 0.65rem !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  &:hover {
+    background-color: lighten($color-danger, 15%) !important;
+    border-color: lighten($color-danger, 15%) !important;
+  }
+}

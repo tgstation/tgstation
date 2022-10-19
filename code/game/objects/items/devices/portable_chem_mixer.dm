@@ -1,14 +1,14 @@
 /obj/item/storage/portable_chem_mixer
 	name = "Portable Chemical Mixer"
 	desc = "A portable device that dispenses and mixes chemicals. All necessary reagents need to be supplied with beakers. A label indicates that the 'CTRL'-button on the device may be used to open it for refills. This device can be worn as a belt. The letters 'S&T' are imprinted on the side."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "portablechemicalmixer_open"
 	worn_icon_state = "portable_chem_mixer"
 	w_class = WEIGHT_CLASS_HUGE
 	slot_flags = ITEM_SLOT_BELT
 	equip_sound = 'sound/items/equip/toolbelt_equip.ogg'
-	custom_price = PAYCHECK_MEDIUM * 10
-	custom_premium_price = PAYCHECK_MEDIUM * 14
+	custom_price = PAYCHECK_CREW * 10
+	custom_premium_price = PAYCHECK_CREW * 14
 
 	var/obj/item/reagent_containers/beaker = null ///Creating an empty slot for a beaker that can be added to dispense into
 	var/amount = 30 ///The amount of reagent that is to be dispensed currently
@@ -18,17 +18,15 @@
 	///If the UI has the pH meter shown
 	var/show_ph = TRUE
 
-/obj/item/storage/portable_chem_mixer/ComponentInitialize()
+/obj/item/storage/portable_chem_mixer/Initialize(mapload)
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_combined_w_class = 200
-	STR.max_items = 50
-	STR.insert_preposition = "in"
-	STR.set_holdable(list(
-		/obj/item/reagent_containers/glass/beaker,
-		/obj/item/reagent_containers/glass/bottle,
-		/obj/item/reagent_containers/food/drinks/waterbottle,
-		/obj/item/reagent_containers/food/condiment,
+	atom_storage.max_total_storage = 200
+	atom_storage.max_slots = 50
+	atom_storage.set_holdable(list(
+		/obj/item/reagent_containers/cup/beaker,
+		/obj/item/reagent_containers/cup/bottle,
+		/obj/item/reagent_containers/cup/glass/waterbottle,
+		/obj/item/reagent_containers/condiment,
 	))
 
 /obj/item/storage/portable_chem_mixer/Destroy()
@@ -40,15 +38,14 @@
 		return ..()
 
 /obj/item/storage/portable_chem_mixer/attackby(obj/item/I, mob/user, params)
-	var/locked = SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED)
-	if (istype(I, /obj/item/reagent_containers) && !(I.item_flags & ABSTRACT) && I.is_open_container() && locked)
+	if (is_reagent_container(I) && !(I.item_flags & ABSTRACT) && I.is_open_container() && atom_storage.locked)
 		var/obj/item/reagent_containers/B = I
 		. = TRUE //no afterattack
 		if(!user.transferItemToLoc(B, src))
 			return
 		replace_beaker(user, B)
 		update_appearance()
-		updateUsrDialog()
+		ui_interact(user)
 		return
 	return ..()
 
@@ -70,7 +67,7 @@
 	return
 
 /obj/item/storage/portable_chem_mixer/update_icon_state()
-	if(!SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED))
+	if(!atom_storage.locked)
 		icon_state = "portablechemicalmixer_open"
 		return ..()
 	if(beaker)
@@ -81,20 +78,18 @@
 
 
 /obj/item/storage/portable_chem_mixer/AltClick(mob/living/user)
-	var/locked = SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED)
-	if(!locked)
+	if(!atom_storage.locked)
 		return ..()
-	if(!can_interact(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(!can_interact(user) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 		return
 	replace_beaker(user)
 	update_appearance()
 
 /obj/item/storage/portable_chem_mixer/CtrlClick(mob/living/user)
-	var/locked = SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED)
-	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SET_LOCKSTATE, !locked)
-	if (!locked)
+	atom_storage.locked = !atom_storage.locked
+	if (!atom_storage.locked)
 		update_contents()
-	if (locked)
+	if (atom_storage.locked)
 		replace_beaker(user)
 	update_appearance()
 	playsound(src, 'sound/items/screwdriver2.ogg', 50)
@@ -122,17 +117,15 @@
 	if (loc != user)
 		return ..()
 	else
-		var/locked = SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED)
-		if (!locked)
+		if (!atom_storage.locked)
 			return ..()
-	if(SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED))
+	if(atom_storage?.locked)
 		ui_interact(user)
 		return
 
 /obj/item/storage/portable_chem_mixer/attack_self(mob/user)
 	if(loc == user)
-		var/locked = SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED)
-		if (locked)
+		if (atom_storage.locked)
 			ui_interact(user)
 			return
 		else
@@ -152,9 +145,16 @@
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "PortableChemMixer", name)
-		if(user.hallucinating())
+
+		var/is_hallucinating = FALSE
+		if(isliving(user))
+			var/mob/living/living_user = user
+			is_hallucinating = !!living_user.has_status_effect(/datum/status_effect/hallucination)
+
+		if(is_hallucinating)
 			// to not ruin the immersion by constantly changing the fake chemicals
 			ui.set_autoupdate(FALSE)
+
 		ui.open()
 
 /obj/item/storage/portable_chem_mixer/ui_data(mob/user)
@@ -166,9 +166,11 @@
 	data["beakerTransferAmounts"] = beaker ? list(1,5,10,30,50,100) : null
 	data["showpH"] = show_ph
 	var/chemicals[0]
-	var/is_hallucinating = user.hallucinating()
-	if(user.hallucinating())
-		is_hallucinating = TRUE
+	var/is_hallucinating = FALSE
+	if(isliving(user))
+		var/mob/living/living_user = user
+		is_hallucinating = !!living_user.has_status_effect(/datum/status_effect/hallucination)
+
 	for(var/re in dispensable_reagents)
 		var/value = dispensable_reagents[re]
 		var/datum/reagent/temp = GLOB.chemical_reagents_list[re]

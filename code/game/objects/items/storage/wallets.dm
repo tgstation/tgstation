@@ -5,17 +5,15 @@
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FLAMMABLE
 	slot_flags = ITEM_SLOT_ID
-	component_type = /datum/component/storage/concrete/wallet
 
 	var/obj/item/card/id/front_id = null
 	var/list/combined_access
 	var/cached_flat_icon
 
-/obj/item/storage/wallet/ComponentInitialize()
+/obj/item/storage/wallet/Initialize(mapload)
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage/concrete/wallet)
-	STR.max_items = 4
-	STR.set_holdable(list(
+	atom_storage.max_slots = 4
+	atom_storage.set_holdable(list(
 		/obj/item/stack/spacecash,
 		/obj/item/holochip,
 		/obj/item/card,
@@ -43,7 +41,7 @@
 
 /obj/item/storage/wallet/Exited(atom/movable/gone, direction)
 	. = ..()
-	if(istype(gone, /obj/item/card/id))
+	if(isidcard(gone))
 		refreshID()
 
 /**
@@ -56,16 +54,19 @@
 
 	front_id = null
 	var/winning_tally = 0
+	var/is_magnetic_found = FALSE
 	for(var/obj/item/card/id/id_card in contents)
 		// Certain IDs can forcibly jump to the front so they can disguise other cards in wallets. Chameleon/Agent ID cards are an example of this.
-		if(HAS_TRAIT(id_card, TRAIT_MAGNETIC_ID_CARD))
+		if(!is_magnetic_found && HAS_TRAIT(id_card, TRAIT_MAGNETIC_ID_CARD))
 			front_id = id_card
-			break
+			is_magnetic_found = TRUE
 
-		var/card_tally = SSid_access.tally_access(id_card, ACCESS_FLAG_COMMAND)
-		if(card_tally > winning_tally)
-			winning_tally = card_tally
-			front_id = id_card
+		if(!is_magnetic_found)
+			var/card_tally = SSid_access.tally_access(id_card, ACCESS_FLAG_COMMAND)
+			if(card_tally > winning_tally)
+				winning_tally = card_tally
+				front_id = id_card
+
 		LAZYINITLIST(combined_access)
 		combined_access |= id_card.access
 
@@ -85,7 +86,7 @@
 
 /obj/item/storage/wallet/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
-	if(istype(arrived, /obj/item/card/id))
+	if(isidcard(arrived))
 		refreshID()
 
 /obj/item/storage/wallet/update_overlays()
@@ -93,7 +94,6 @@
 	cached_flat_icon = null
 	if(!front_id)
 		return
-	COMPILE_OVERLAYS(front_id)
 	. += mutable_appearance(front_id.icon, front_id.icon_state)
 	. += front_id.overlays
 	. += mutable_appearance(icon, "wallet_overlay")

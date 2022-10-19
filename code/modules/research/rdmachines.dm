@@ -119,6 +119,6 @@
 	else
 		var/obj/item/stack/S = item_inserted
 		stack_name = S.name
-		use_power(min(1000, (amount_inserted / 100)))
+		use_power(min(active_power_usage, (amount_inserted / 100)))
 	add_overlay("protolathe_[stack_name]")
 	addtimer(CALLBACK(src, /atom/proc/cut_overlay, "protolathe_[stack_name]"), 10)

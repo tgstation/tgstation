@@ -2,7 +2,7 @@
 /// See /datum/weakref's documentation for more information.
 /proc/WEAKREF(datum/input)
 	if(istype(input) && !QDELETED(input))
-		if(istype(input, /datum/weakref))
+		if(isweakref(input))
 			return input
 
 		if(!input.weak_reference)
@@ -37,7 +37,7 @@
  *
  * A common use case for weak references is holding onto what created itself.
  * For example, if a machine wanted to know what its last user was, it might
- * create a `var/mob/living/last_user`. However, this is a storng reference to
+ * create a `var/mob/living/last_user`. However, this is a strong reference to
  * the mob, and thus will force a hard deletion when that mob is deleted.
  * It is often better in this case to instead create a weakref to the user,
  * meaning this type definition becomes `var/datum/weakref/last_user`.
@@ -75,3 +75,34 @@
 /datum/weakref/proc/resolve()
 	var/datum/D = locate(reference)
 	return (!QDELETED(D) && D.weak_reference == src) ? D : null
+
+/**
+ * SERIOUSLY READ THE AUTODOC COMMENT FOR THIS PROC BEFORE EVEN THINKING ABOUT USING IT
+ *
+ * Like resolve, but doesn't care if the datum is being qdeleted but hasn't been deleted yet.
+ *
+ * The return value of this proc leaves hanging references if the datum is being qdeleted but hasn't been deleted yet.
+ *
+ * Do not do anything that would create a lasting reference to the return value, such as giving it a tag, putting it on the map,
+ * adding it to an atom's contents or vis_contents, giving it a key (if it's a mob), attaching it to an atom (if it's an image),
+ * or assigning it to a datum or list referenced somewhere other than a temporary value.
+ *
+ * Unless you're resolving a weakref to a datum in a COMSIG_PARENT_QDELETING signal handler registered on that very same datum,
+ * just use resolve instead.
+ */
+/datum/weakref/proc/hard_resolve()
+	var/datum/D = locate(reference)
+	return (D?.weak_reference == src) ? D : null
+
+/datum/weakref/vv_get_dropdown()
+	. = ..()
+	VV_DROPDOWN_OPTION(VV_HK_WEAKREF_RESOLVE, "Go to reference")
+
+/datum/weakref/vv_do_topic(list/href_list)
+	. = ..()
+	if(href_list[VV_HK_WEAKREF_RESOLVE])
+		if(!check_rights(NONE))
+			return
+		var/datum/R = resolve()
+		if(R)
+			usr.client.debug_variables(R)

@@ -56,7 +56,7 @@
 			if (!isnum(mainsettings["maxhealth"]["value"]))
 				mainsettings["maxhealth"]["value"] = text2num(mainsettings["maxhealth"]["value"])
 			if (mainsettings["maxhealth"]["value"] > 0)
-				basemob.maxHealth = basemob.maxHealth =  mainsettings["maxhealth"]["value"]
+				basemob.maxHealth = basemob.maxHealth = mainsettings["maxhealth"]["value"]
 
 		if (mainsettings["name"]["value"])
 			basemob.name = basemob.real_name = html_decode(mainsettings["name"]["value"])

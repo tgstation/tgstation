@@ -100,7 +100,7 @@
 				drip.vars[slot] = null
 
 		if("rename")
-			var/newname = stripped_input(owner, "What do you want to name this outfit?", OUTFIT_EDITOR_NAME)
+			var/newname = tgui_input_text(owner, "What do you want to name this outfit?", OUTFIT_EDITOR_NAME)
 			if(newname)
 				drip.name = newname
 		if("save")
@@ -167,7 +167,7 @@
 			if(suit)
 				suit = new suit //initial() doesn't like lists
 				options = suit.allowed
-			if(!options.len) //nothing will happen, but don't let the user think it's broken
+			if(!length(options)) //nothing will happen, but don't let the user think it's broken
 				to_chat(owner, span_warning("No options available for the current suit."))
 
 		if("belt")
@@ -179,6 +179,10 @@
 			choose_any_item(slot)
 		if("back")
 			options = typesof(/obj/item/storage/backpack)
+			for(var/obj/item/mod/control/pre_equipped/potential_mod as anything in subtypesof(/obj/item/mod/control/pre_equipped))
+				if(!(initial(potential_mod.slot_flags) == ITEM_SLOT_BACK))
+					continue
+				options |= potential_mod
 		if("r_hand")
 			choose_any_item(slot)
 
@@ -189,8 +193,12 @@
 		if("r_pocket")
 			choose_any_item(slot)
 
-	if(length(options))
-		set_item(slot, tgui_input_list(owner, "Choose an item", OUTFIT_EDITOR_NAME, options))
+	if(!length(options))
+		return
+	var/option = tgui_input_list(owner, "Choose an item", OUTFIT_EDITOR_NAME, options)
+	if(isnull(option))
+		return
+	set_item(slot, option)
 
 
 #undef OUTFIT_EDITOR_NAME

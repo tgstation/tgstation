@@ -1,20 +1,6 @@
 GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 
 /datum/orbit_menu
-	/// Serialised list of all valid POIs. Master list that holds all POIs from all other lists.
-	var/list/pois = list()
-	/// Serialised list of all alive POIs.
-	var/list/alive = list()
-	/// Serialised list of all antagonist POIs.
-	var/list/antagonists = list()
-	/// Serialised list of all dead mob POIs.
-	var/list/dead = list()
-	/// Serialised list of all observers POIS.
-	var/list/ghosts = list()
-	/// Serialised list of all non-mob POIs.
-	var/list/misc = list()
-	/// Serialised list of all POIS without a mind.
-	var/list/npcs = list()
 
 /datum/orbit_menu/ui_state(mob/user)
 	return GLOB.observer_state
@@ -49,40 +35,20 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 			if (auto_observe)
 				user.do_observe(poi)
 			return TRUE
+		if ("refresh")
+			update_static_data(usr, ui)
+			return TRUE
 
-/datum/orbit_menu/ui_data(mob/user)
-	var/list/data = list()
-
-	update_poi_list()
-
-	data["alive"] = alive
-	data["antagonists"] = antagonists
-	data["dead"] = dead
-	data["ghosts"] = ghosts
-	data["misc"] = misc
-	data["npcs"] = npcs
-
-	return data
-
-/datum/orbit_menu/ui_assets()
-	return list(
-		get_asset_datum(/datum/asset/simple/orbit),
-	)
-
-/// Fully updates the list of POIs.
-/datum/orbit_menu/proc/update_poi_list()
+/datum/orbit_menu/ui_static_data(mob/user)
 	var/list/new_mob_pois = SSpoints_of_interest.get_mob_pois(CALLBACK(src, .proc/validate_mob_poi), append_dead_role = FALSE)
 	var/list/new_other_pois = SSpoints_of_interest.get_other_pois()
 
-	pois.Cut()
-
-	alive.Cut()
-	antagonists.Cut()
-	dead.Cut()
-	ghosts.Cut()
-	npcs.Cut()
-
-	misc.Cut()
+	var/list/alive = list()
+	var/list/antagonists = list()
+	var/list/dead = list()
+	var/list/ghosts = list()
+	var/list/misc = list()
+	var/list/npcs = list()
 
 	for(var/name in new_mob_pois)
 		var/list/serialized = list()
@@ -91,9 +57,7 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 
 		var/poi_ref = REF(mob_poi)
 		serialized["ref"] = poi_ref
-		serialized["name"] = name
-
-		pois[poi_ref] = mob_poi
+		serialized["full_name"] = name
 
 		if(isobserver(mob_poi))
 			var/number_of_orbiters = length(mob_poi.get_all_orbiters())
@@ -117,6 +81,15 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 		var/datum/mind/mind = mob_poi.mind
 		var/was_antagonist = FALSE
 
+		serialized["job"] = mind?.assigned_role?.title
+		serialized["name"] = mob_poi.real_name
+		serialized["health"] = null
+		// Cast the mob so we can get health
+		var/mob/living/player
+		if(isliving(mob_poi)) // Kind of silly here since we've already checked for dead mobs
+			player = mob_poi
+			serialized["health"] = FLOOR((player.health / player.maxHealth * 100), 1)
+
 		for(var/datum/antagonist/antag_datum as anything in mind.antag_datums)
 			if (antag_datum.show_to_ghosts)
 				was_antagonist = TRUE
@@ -128,16 +101,40 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 			alive += list(serialized)
 
 	for(var/name in new_other_pois)
-		var/list/serialized = list()
-
 		var/atom/atom_poi = new_other_pois[name]
 
-		var/poi_ref = REF(atom_poi)
-		serialized["ref"] = poi_ref
-		serialized["name"] = name
+		misc += list(list(
+			"ref" = REF(atom_poi),
+			"name" = name,
+			"extra" = null, // Just in case you want to add anything
+		))
 
-		pois[poi_ref] = atom_poi
-		misc += list(serialized)
+		// Display the supermatter crystal integrity
+		if(istype(atom_poi, /obj/machinery/power/supermatter_crystal))
+			var/obj/machinery/power/supermatter_crystal/crystal = atom_poi
+			misc[length(misc)]["extra"] = "Integrity: [crystal.get_integrity_percent()]%"
+			continue
+		// Display the nuke timer
+		if(istype(atom_poi, /obj/machinery/nuclearbomb))
+			var/obj/machinery/nuclearbomb/bomb = atom_poi
+			if(bomb.timing)
+				misc[length(misc)]["extra"] = "Timer: [bomb.countdown?.displayed_text]s"
+			continue
+		// Display the holder if its a nuke disk
+		if(istype(atom_poi, /obj/item/disk/nuclear))
+			var/obj/item/disk/nuclear/disk = atom_poi
+			var/mob/holder = disk.pulledby || get(disk, /mob)
+			misc[length(misc)]["extra"] = "Location: [holder?.real_name || "Unsecured"]"
+			continue
+
+	return list(
+		"alive" = alive,
+		"antagonists" = antagonists,
+		"dead" = dead,
+		"ghosts" = ghosts,
+		"misc" = misc,
+		"npcs" = npcs,
+	)
 
 /// Shows the UI to the specified user.
 /datum/orbit_menu/proc/show(mob/user)

@@ -6,31 +6,27 @@ import { Button, Divider, LabeledList, NumberInput, ProgressBar, Section, Stack,
 import { getGasColor, getGasLabel } from '../constants';
 import { Window } from '../layouts';
 
-const mappedTopMargin = "2%";
+const mappedTopMargin = '2%';
 
 export const BluespaceSender = (props, context) => {
   const { act, data } = useBackend(context);
-  const {
-    on,
-    gas_transfer_rate,
-    price_multiplier,
-  } = data;
+  const { on, gas_transfer_rate, price_multiplier } = data;
   const bluespace_network_gases = flow([
-    filter(gas => gas.amount >= 0.01),
-    sortBy(gas => -gas.amount),
+    filter((gas) => gas.amount >= 0.01),
+    sortBy((gas) => -gas.amount),
   ])(data.bluespace_network_gases || []);
-  const gasMax = Math.max(1, ...bluespace_network_gases.map(gas => gas.amount));
+  const gasMax = Math.max(
+    1,
+    ...bluespace_network_gases.map((gas) => gas.amount)
+  );
   return (
-    <Window
-      title="Bluespace Sender"
-      width={500}
-      height={600}>
+    <Window title="Bluespace Sender" width={500} height={600}>
       <Window.Content>
         <Section
           scrollable
           fill
           title="Bluespace Network Gases"
-          buttons={(
+          buttons={
             <>
               <Button
                 mr={0.5}
@@ -42,7 +38,8 @@ export const BluespaceSender = (props, context) => {
                 Network! That means any connected Bluespace Vendor (multitool)
                 will hook up to all the gas stored in this, and charge
                 this machine's price to buy it.
-              `} />
+              `}
+              />
               <NumberInput
                 animated
                 value={gas_transfer_rate}
@@ -51,9 +48,12 @@ export const BluespaceSender = (props, context) => {
                 unit="moles/S"
                 minValue={0}
                 maxValue={1}
-                onDrag={(e, value) => act('rate', {
-                  rate: value,
-                })} />
+                onDrag={(e, value) =>
+                  act('rate', {
+                    rate: value,
+                  })
+                }
+              />
               <Button
                 ml={0.5}
                 icon={data.on ? 'power-off' : 'times'}
@@ -61,25 +61,27 @@ export const BluespaceSender = (props, context) => {
                 selected={data.on}
                 tooltipPosition="bottom-start"
                 tooltip="Will only take in gases while on."
-                onClick={() => act('power')} />
+                onClick={() => act('power')}
+              />
               <Button
                 ml={0.5}
                 content="Retrieve gases"
                 tooltipPosition="bottom-start"
                 tooltip="Will transfer any gases inside to the pipe."
-                onClick={() => act('retrieve')} />
+                onClick={() => act('retrieve')}
+              />
             </>
-          )}>
+          }>
           <Box>
-            {"The vendors have made " + data.credits + " credits so far."}
+            {'The vendors have made ' + data.credits + ' credits so far.'}
           </Box>
           <Divider />
           <LabeledList>
-            {bluespace_network_gases.map(gas => (
+            {bluespace_network_gases.map((gas) => (
               <>
                 <Stack key={gas.name}>
                   <Stack.Item color="label" basis={10} ml={1}>
-                    {getGasLabel(gas.name) + " prices: "}
+                    {getGasLabel(gas.name) + ' prices: '}
                     <br />
                     <Box mt={0.25}>
                       <NumberInput
@@ -89,10 +91,13 @@ export const BluespaceSender = (props, context) => {
                         unit="per mole"
                         minValue={0}
                         maxValue={100}
-                        onDrag={(e, value) => act('price', {
-                          gas_price: value,
-                          gas_type: gas.id,
-                        })} />
+                        onDrag={(e, value) =>
+                          act('price', {
+                            gas_price: value,
+                            gas_type: gas.id,
+                          })
+                        }
+                      />
                     </Box>
                   </Stack.Item>
                   <Stack.Item grow mt={mappedTopMargin} mr={1}>

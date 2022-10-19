@@ -39,6 +39,7 @@
 		"Driftbeam",
 		"Echoing Laughter",
 		"Electric Boogaloo",
+		"Ethical Principles",
 		"Fat Leg",
 		"Heaven's Cavaliers",
 		"I Am Become Death",
@@ -60,14 +61,15 @@
 		"Space Grease",
 		"Space Justice",
 		"Space Pearl",
-		"Star Scraper",
-		"War as a Business",
-		"Xenophobia",
 		"Space Queen's Revenge",
-		"Syndicate Privateer"
+		"Star Scraper",
+		"Syndicate Privateer",
+		"War as a Business",
+		"Xenophobia"
 	],
 	"silverscale_names":[
 		"Antelope's Run",
+		"Archduke's Silver Ring",
 		"Aristocrat's Principle",
 		"Aristocratic Tributary",
 		"Bane of Serfs",
@@ -89,13 +91,12 @@
 		"Ruling Body",
 		"Serpentine Dominion",
 		"Silver Fox",
+		"Silver Steed",
 		"Silver Sterling",
 		"Silverchain's Sovereignty",
 		"Spaceflower",
 		"Status Quo",
 		"Swords and Sandals",
-		"Thesaurus Terror",
-		"Archduke's Silver Ring",
-		"Silver Steed"
+		"Thesaurus Terror"
 	]
 }

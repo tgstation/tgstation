@@ -6,6 +6,7 @@ Unused icons for new areas are "awaycontent1" ~ "awaycontent30"
 // Away Missions
 /area/awaymission
 	name = "Strange Location"
+	icon = 'icons/area/areas_away_missions.dmi'
 	icon_state = "away"
 	has_gravity = STANDARD_GRAVITY
 	ambience_index = AMBIENCE_AWAY
@@ -16,6 +17,8 @@ Unused icons for new areas are "awaycontent1" ~ "awaycontent30"
 	name = "Beach"
 	icon_state = "away"
 	static_lighting = FALSE
+	base_lighting_alpha = 255
+	base_lighting_color = "#FFFFCC"
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
 	ambientsounds = list('sound/ambience/shore.ogg', 'sound/ambience/seag1.ogg','sound/ambience/seag2.ogg','sound/ambience/seag2.ogg','sound/ambience/ambiodd.ogg','sound/ambience/ambinice.ogg')

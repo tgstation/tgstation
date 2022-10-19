@@ -10,7 +10,7 @@
 	var/last_trigger = 0
 	var/time_between_triggers = 600 //takes a minute to recharge
 	var/charges = INFINITY
-	var/checks_antimagic = TRUE
+	var/antimagic_flags = MAGIC_RESISTANCE
 
 	var/list/static/ignore_typecache
 	var/list/mob/immune_minds = list()
@@ -33,7 +33,8 @@
 	if(!ignore_typecache)
 		ignore_typecache = typecacheof(list(
 			/obj/effect,
-			/mob/dead))
+			/mob/dead,
+		))
 
 /obj/structure/trap/Destroy()
 	qdel(spark_system)
@@ -76,7 +77,7 @@
 		var/mob/M = AM
 		if(M.mind in immune_minds)
 			return
-		if(checks_antimagic && M.anti_magic_check())
+		if(M.can_block_magic(antimagic_flags))
 			flare()
 			return
 	if(charges <= 0)
@@ -105,7 +106,7 @@
 	icon_state = "bounty_trap_on"
 	stun_time = 200
 	sparks = FALSE //the item version gives them off to prevent runtimes (see Destroy())
-	checks_antimagic  = FALSE
+	antimagic_flags = NONE
 	var/obj/item/bountytrap/stored_item
 	var/caught = FALSE
 
@@ -171,7 +172,7 @@
 	var/turf/T = get_turf(src)
 	if(!user || !user.transferItemToLoc(src, T))//visibly unequips
 		return
-	to_chat(user, "<span class=notice>You set up [src]. Examine while close to disarm it.</span>")
+	to_chat(user, span_notice("You set up [src]. Examine while close to disarm it."))
 	stored_trap.forceMove(T)//moves trap to ground
 	forceMove(stored_trap)//moves item into trap
 
@@ -215,7 +216,7 @@
 	to_chat(L, span_danger("<B>The ground quakes beneath your feet!</B>"))
 	L.Paralyze(100)
 	L.adjustBruteLoss(35)
-	var/obj/structure/flora/rock/giant_rock = new(get_turf(src))
+	var/obj/structure/flora/rock/style_random/giant_rock = new(get_turf(src))
 	QDEL_IN(giant_rock, 200)
 
 

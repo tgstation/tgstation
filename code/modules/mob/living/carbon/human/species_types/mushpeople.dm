@@ -1,5 +1,6 @@
 /datum/species/mush //mush mush codecuck
 	name = "Mushroomperson"
+	plural_form = "Mushroompeople"
 	id = SPECIES_MUSHROOM
 	mutant_bodyparts = list("caps" = "Round")
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
@@ -11,8 +12,6 @@
 	say_mod = "poofs" //what does a mushroom sound like
 	species_traits = list(MUTCOLORS, NOEYESPRITES, NO_UNDERWEAR, HAS_FLESH, HAS_BONE)
 	inherent_traits = list(
-		TRAIT_ADVANCEDTOOLUSER,
-		TRAIT_CAN_STRIP,
 		TRAIT_NOBREATH,
 		TRAIT_NOFLASH,
 	)
@@ -28,10 +27,19 @@
 	burnmod = 1.25
 	heatmod = 1.5
 
-	mutanteyes = /obj/item/organ/eyes/night_vision/mushroom
+	mutanteyes = /obj/item/organ/internal/eyes/night_vision/mushroom
 	use_skintones = FALSE
 	var/datum/martial_art/mushpunch/mush
 	species_language_holder = /datum/language_holder/mushroom
+
+	bodypart_overrides = list(
+		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/mushroom,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/mushroom,
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/mushroom,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/mushroom,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/mushroom,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/mushroom,
+	)
 
 /datum/species/mush/check_roundstart_eligible()
 	return FALSE //hard locked out of roundstart on the order of design lead kor, this can be removed in the future when planetstation is here OR SOMETHING but right now we have a problem with races.

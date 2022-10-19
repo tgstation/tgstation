@@ -1,5 +1,5 @@
 /datum/antagonist/slaughter
-	name = "Slaughter demon"
+	name = "\improper Slaughter Demon"
 	show_name_in_check_antagonists = TRUE
 	ui_name = "AntagInfoDemon"
 	job_rank = ROLE_ALIEN

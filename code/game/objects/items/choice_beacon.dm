@@ -4,6 +4,8 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "gangtool-blue"
 	inhand_icon_state = "radio"
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	var/uses = 1
 
 /obj/item/choice_beacon/attack_self(mob/user)
@@ -14,7 +16,7 @@
 	return list()
 
 /obj/item/choice_beacon/proc/canUseBeacon(mob/living/user)
-	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 		return TRUE
 	else
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 40, TRUE)
@@ -22,10 +24,14 @@
 
 /obj/item/choice_beacon/proc/generate_options(mob/living/M)
 	var/list/display_names = generate_display_names()
-	if(!display_names.len)
+	if(!length(display_names))
 		return
 	var/choice = tgui_input_list(M, "Which item would you like to order?", "Select an Item", display_names)
-	if(!choice || !M.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(isnull(choice))
+		return
+	if(isnull(display_names[choice]))
+		return
+	if(!M.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 		return
 
 	spawn_option(display_names[choice],M)
@@ -41,7 +47,7 @@
 		"style" = STYLE_BLUESPACE,
 		"spawn" = choice,
 	))
-	var/msg = "<span class=danger>After making your selection, you notice a strange target on the ground. It might be best to step back!</span>"
+	var/msg = span_danger("After making your selection, you notice a strange target on the ground. It might be best to step back!")
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(istype(H.ears, /obj/item/radio/headset))
@@ -92,12 +98,12 @@
 	if(!augment_list)
 		augment_list = list()
 		var/list/templist = list(
-		/obj/item/organ/cyberimp/brain/anti_drop,
-		/obj/item/organ/cyberimp/arm/toolset,
-		/obj/item/organ/cyberimp/arm/surgery,
-		/obj/item/organ/cyberimp/chest/thrusters,
-		/obj/item/organ/lungs/cybernetic/tier3,
-		/obj/item/organ/liver/cybernetic/tier3) //cyberimplants range from a nice bonus to fucking broken bullshit so no subtypesof
+		/obj/item/organ/internal/cyberimp/brain/anti_drop,
+		/obj/item/organ/internal/cyberimp/arm/toolset,
+		/obj/item/organ/internal/cyberimp/arm/surgery,
+		/obj/item/organ/internal/cyberimp/chest/thrusters,
+		/obj/item/organ/internal/lungs/cybernetic/tier3,
+		/obj/item/organ/internal/liver/cybernetic/tier3) //cyberimplants range from a nice bonus to fucking broken bullshit so no subtypesof
 		for(var/V in templist)
 			var/atom/A = V
 			augment_list[initial(A.name)] = A

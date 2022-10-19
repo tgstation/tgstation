@@ -23,6 +23,8 @@
 					notice = "<br>**REPORT TO THE BRIG**"
 				if("Incarcerated")
 					background = "background-color:#CD6500;"
+				if("Suspected")
+					background = "background-color:#CD6500;"
 				if("Paroled")
 					background = "background-color:#CD6500;"
 				if("Discharged")
@@ -99,11 +101,12 @@
 			if(isliving(M))
 				var/mob/living/L = M
 				var/obj/item/card/id/scan = L.get_idcard(TRUE)
+				if (!scan)
+					say("You do not have a registered ID!")
+					return
 				authenticated = scan.registered_name
 				if(authenticated)
-					for(var/datum/data/record/R in GLOB.data_core.security)
-						if(R.fields["name"] == authenticated)
-							current = R
+					current = find_record("name", authenticated, GLOB.data_core.security)
 					playsound(src, 'sound/machines/terminal_on.ogg', 50, FALSE)
 		if("Logout")
 			current = null
@@ -127,7 +130,7 @@
 								to_chat(M, span_notice("The fine has been paid in full."))
 							SSblackbox.ReportCitation(text2num(href_list["cdataid"]),"","","","", 0, pay)
 							qdel(C)
-							playsound(src, "terminal_type", 25, FALSE)
+							playsound(src, SFX_TERMINAL_TYPE, 25, FALSE)
 					else
 						to_chat(M, span_warning("Fines can only be paid with holochips!"))
 	updateUsrDialog()

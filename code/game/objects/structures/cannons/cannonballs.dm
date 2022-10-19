@@ -40,6 +40,7 @@
 	name = "malfunction shots"
 	singular_name = "malfunction shot"
 	icon_state = "emp_cannonballs"
+	base_icon_state = "emp_cannonballs"
 	desc = "A shot filled with two chambers that combine on impact, creating a chemical EMP. What does any of that mean? Who knows. Modern piracy really lost its soul with these newfangled things."
 	max_amount = 4
 	merge_type = /obj/item/stack/cannonball/emp
@@ -51,6 +52,7 @@
 	desc = "An insane amount of explosives jammed into a massive cannonball. The last cannonball you'll ever fire in a fight, mostly because there'll be nothing left to shoot at afterwards."
 	max_amount = 5
 	icon_state = "biggest_cannonballs"
+	base_icon_state = "biggest_cannonballs"
 	merge_type = /obj/item/stack/cannonball/the_big_one
 	projectile_type = /obj/projectile/bullet/cannonball/biggest_one
 
@@ -63,6 +65,7 @@
 	desc = "A clump of tightly packed garbage. It'll work as a cannonball, but it may be unhealthy to actually put this in a real cannon."
 	max_amount = 4
 	icon_state = "trashballs"
+	base_icon_state = "trashballs"
 	merge_type = /obj/item/stack/cannonball/trashball
 	projectile_type = /obj/projectile/bullet/cannonball/trashball
 

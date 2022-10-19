@@ -17,7 +17,7 @@
 /obj/machinery/computer/chef_order/Initialize(mapload)
 	. = ..()
 	radio = new(src)
-	radio.frequency = FREQ_SUPPLY
+	radio.set_frequency(FREQ_SUPPLY)
 	radio.subspace_transmission = TRUE
 	radio.canhear_range = 0
 	radio.recalculateChannels()
@@ -33,10 +33,10 @@
 /obj/machinery/computer/chef_order/proc/get_total_cost()
 	. = 0
 	for(var/datum/orderable_item/item as anything in grocery_list)
-		for(var/i in 1 to grocery_list[item]) //for how many times we bought it
-			. += item.cost_per_order //add its price
+		. += grocery_list[item] * item.cost_per_order
 
 /obj/machinery/computer/chef_order/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "ProduceConsole", name)
@@ -71,7 +71,7 @@
 	var/datum/orderable_item/wanted_item = locate(params["target"]) in order_datums
 	switch(action)
 		if("cart_set")
-			grocery_list[wanted_item] = params["amt"]
+			grocery_list[wanted_item] = clamp(params["amt"], 0, 20)
 			if(!grocery_list[wanted_item])
 				grocery_list -= wanted_item
 			update_static_data(chef)
@@ -83,7 +83,7 @@
 				say("No bank account detected!")
 				return
 			var/final_cost = get_total_cost()
-			if(!chef_card.registered_account.adjust_money(-final_cost))
+			if(!chef_card.registered_account.adjust_money(-final_cost, "Chef Order: Purchase"))
 				say("Sorry, but you do not have enough money.")
 				return
 			say("Thank you for your purchase! It will arrive on the next cargo shuttle!")
@@ -106,7 +106,7 @@
 				return
 			var/final_cost = get_total_cost()
 			final_cost *= 2
-			if(!chef_card.registered_account.adjust_money(-final_cost))
+			if(!chef_card.registered_account.adjust_money(-final_cost, "Chef Order: Purchase"))
 				say("Sorry, but you do not have enough money. Remember, Express upcharges the cost!")
 				return
 			say("Thank you for your purchase! Please note: The charge of this purchase and machine cooldown has been doubled!")

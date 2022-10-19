@@ -3,7 +3,7 @@
 /turf/closed/mineral/volcanic/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "b" = (
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "c" = (
 /turf/closed/wall/mineral/abductor,
@@ -39,7 +39,7 @@
 	},
 /area/ruin/unpowered)
 "p" = (
-/obj/effect/mob_spawn/human/abductor,
+/obj/effect/mob_spawn/corpse/human/abductor,
 /turf/open/floor/plating/abductor{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},

@@ -4,7 +4,8 @@
 	for(var/I in overlays_standing)
 		add_overlay(I)
 
-	var/asleep = IsSleeping()
+	var/are_we_drooling = istype(click_intercept, /datum/action/cooldown/alien/acid)
+
 	if(stat == DEAD)
 		//If we mostly took damage from fire
 		if(getFireLoss() > 125)
@@ -12,7 +13,7 @@
 		else
 			icon_state = "alien[caste]_dead"
 
-	else if((stat == UNCONSCIOUS && !asleep) || stat == HARD_CRIT || stat == SOFT_CRIT || IsParalyzed())
+	else if((stat == UNCONSCIOUS && !IsSleeping()) || stat == HARD_CRIT || stat == SOFT_CRIT || IsParalyzed())
 		icon_state = "alien[caste]_unconscious"
 	else if(leap_on_click)
 		icon_state = "alien[caste]_pounce"
@@ -21,11 +22,11 @@
 		icon_state = "alien[caste]_sleep"
 	else if(mob_size == MOB_SIZE_LARGE)
 		icon_state = "alien[caste]"
-		if(drooling)
+		if(are_we_drooling)
 			add_overlay("alienspit_[caste]")
 	else
 		icon_state = "alien[caste]"
-		if(drooling)
+		if(are_we_drooling)
 			add_overlay("alienspit")
 
 	if(leaping)
@@ -43,8 +44,8 @@
 			alt_icon = old_icon
 	pixel_x = base_pixel_x + body_position_pixel_x_offset
 	pixel_y = base_pixel_y + body_position_pixel_y_offset
-	update_inv_hands()
-	update_inv_handcuffed()
+	update_held_items()
+	update_worn_handcuffs()
 
 /mob/living/carbon/alien/humanoid/regenerate_icons()
 	if(!..())
@@ -55,25 +56,26 @@
 	. = ..()
 	update_icons()
 
-/mob/living/carbon/alien/humanoid/update_inv_handcuffed()
+/mob/living/carbon/alien/humanoid/update_worn_handcuffs()
 	remove_overlay(HANDCUFF_LAYER)
 	var/cuff_icon = "aliencuff"
-	var/dmi_file = 'icons/mob/alien.dmi'
+	var/dmi_file = 'icons/mob/nonhuman-player/alien.dmi'
 
 	if(mob_size == MOB_SIZE_LARGE)
 		cuff_icon = "aliencuff_[caste]"
-		dmi_file = 'icons/mob/alienqueen.dmi'
+		dmi_file = 'icons/mob/nonhuman-player/alienqueen.dmi'
 
 	if(handcuffed)
 		var/mutable_appearance/handcuff_overlay = mutable_appearance(dmi_file, cuff_icon, -HANDCUFF_LAYER)
 		if(handcuffed.blocks_emissive)
-			handcuff_overlay += emissive_blocker(handcuff_overlay.icon, handcuff_overlay.icon_state, alpha = handcuff_overlay.alpha)
+			handcuff_overlay += emissive_blocker(handcuff_overlay.icon, handcuff_overlay.icon_state, src, alpha = handcuff_overlay.alpha)
 
 		overlays_standing[HANDCUFF_LAYER] = handcuff_overlay
 		apply_overlay(HANDCUFF_LAYER)
+// AND HERE MOTHERFUCKER AHHHHHH
 
 //Royals have bigger sprites, so inhand things must be handled differently.
-/mob/living/carbon/alien/humanoid/royal/update_inv_hands()
+/mob/living/carbon/alien/humanoid/royal/update_held_items()
 	..()
 	remove_overlay(HANDS_LAYER)
 	var/list/hands = list()
@@ -85,7 +87,7 @@
 			itm_state = l_hand.icon_state
 		var/mutable_appearance/l_hand_item = mutable_appearance(alt_inhands_file, "[itm_state][caste]_l", -HANDS_LAYER)
 		if(l_hand.blocks_emissive)
-			l_hand_item.overlays += emissive_blocker(l_hand_item.icon, l_hand_item.icon_state, alpha = l_hand_item.alpha)
+			l_hand_item.overlays += emissive_blocker(l_hand_item.icon, l_hand_item.icon_state, src, alpha = l_hand_item.alpha)
 		hands += l_hand_item
 
 	var/obj/item/r_hand = get_item_for_held_index(2)
@@ -95,7 +97,7 @@
 			itm_state = r_hand.icon_state
 		var/mutable_appearance/r_hand_item = mutable_appearance(alt_inhands_file, "[itm_state][caste]_r", -HANDS_LAYER)
 		if(r_hand.blocks_emissive)
-			r_hand_item.overlays += emissive_blocker(r_hand_item.icon, r_hand_item.icon_state, alpha = r_hand_item.alpha)
+			r_hand_item.overlays += emissive_blocker(r_hand_item.icon, r_hand_item.icon_state, src, alpha = r_hand_item.alpha)
 		hands += r_hand_item
 
 	overlays_standing[HANDS_LAYER] = hands

@@ -2,6 +2,7 @@
 /obj/effect/ebeam/chain
 	name = "lightning chain"
 	layer = LYING_MOB_LAYER
+	plane = GAME_PLANE_FOV_HIDDEN
 
 /mob/living/simple_animal/hostile/guardian/beam
 	melee_damage_lower = 7
@@ -49,7 +50,7 @@
 				successfulshocks = 0
 			if(shockallchains())
 				successfulshocks++
-			SLEEP_CHECK_DEATH(3)
+			SLEEP_CHECK_DEATH(3, src)
 
 /mob/living/simple_animal/hostile/guardian/beam/Recall()
 	. = ..()

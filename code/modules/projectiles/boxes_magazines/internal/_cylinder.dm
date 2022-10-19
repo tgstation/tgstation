@@ -55,7 +55,7 @@
 	if(!load_type)
 		load_type = ammo_type
 
-	for(var/i = 1, i <= max_ammo, i++)
+	for(var/i in 1 to max_ammo)
 		if(!give_round(new load_type(src)))
 			break
 	update_appearance()

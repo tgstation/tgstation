@@ -6,6 +6,7 @@
 /obj/item/circuit_component/self
 	display_name = "Self"
 	desc = "A component that returns the current shell."
+	category = "Entity"
 
 	/// The shell this component is attached to.
 	var/datum/port/output/output

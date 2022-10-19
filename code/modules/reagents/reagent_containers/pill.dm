@@ -1,7 +1,7 @@
 /obj/item/reagent_containers/pill
 	name = "pill"
 	desc = "A tablet or capsule."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "pill"
 	inhand_icon_state = "pill"
 	worn_icon_state = "pen"
@@ -139,7 +139,7 @@
 	name = "mannitol pill"
 	desc = "Used to treat brain damage."
 	icon_state = "pill17"
-	list_reagents = list(/datum/reagent/medicine/mannitol = 50)
+	list_reagents = list(/datum/reagent/medicine/mannitol = 14)
 	rename_with_volume = TRUE
 
 //Lower quantity mannitol pills (50u pills heal 250 brain damage, 5u pills heal 25)

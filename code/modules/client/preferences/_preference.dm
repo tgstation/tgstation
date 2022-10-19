@@ -9,14 +9,17 @@
 #define PREFERENCE_PRIORITY_GENDER 3
 
 /// The priority at which body type is decided, applied after gender so we can
-/// make sure they're non-binary.
+/// support the "use gender" option.
 #define PREFERENCE_PRIORITY_BODY_TYPE 4
 
 /// The priority at which names are decided, needed for proper randomization.
 #define PREFERENCE_PRIORITY_NAMES 5
 
+/// Preferences that aren't names, but change the name changes set by PREFERENCE_PRIORITY_NAMES.
+#define PREFERENCE_PRIORITY_NAME_MODIFICATIONS 6
+
 /// The maximum preference priority, keep this updated, but don't use it for `priority`.
-#define MAX_PREFERENCE_PRIORITY PREFERENCE_PRIORITY_NAMES
+#define MAX_PREFERENCE_PRIORITY PREFERENCE_PRIORITY_NAME_MODIFICATIONS
 
 /// For choiced preferences, this key will be used to set display names in constant data.
 #define CHOICED_PREFERENCE_DISPLAY_NAMES "display_names"
@@ -101,6 +104,10 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	/// If the selected species has this in its /datum/species/species_traits,
 	/// will show the feature as selectable.
 	var/relevant_species_trait = null
+
+	/// If the selected species has this in its /datum/species/var/external_organs,
+	/// will show the feature as selectable.
+	var/relevant_external_organ = null
 
 /// Called on the saved input when retrieving.
 /// Also called by the value sent from the user through UI. Do not trust it.
@@ -237,6 +244,8 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 		// things running pre-assets-initialization.
 		if (!isnull(Master.current_initializing_subsystem))
 			extra_info = "Info was attempted to be retrieved while [Master.current_initializing_subsystem] was initializing."
+		else if (!MC_RUNNING())
+			extra_info = "Info was attempted to be retrieved before the MC started, but not while it was actively initializing a subsystem"
 
 		CRASH("Preference type `[preference_type]` is invalid! [extra_info]")
 
@@ -313,7 +322,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	SHOULD_CALL_PARENT(TRUE)
 	SHOULD_NOT_SLEEP(TRUE)
 
-	if (!isnull(relevant_mutant_bodypart) || !isnull(relevant_species_trait))
+	if (!isnull(relevant_mutant_bodypart) || !isnull(relevant_species_trait) || !isnull(relevant_external_organ))
 		var/species_type = preferences.read_preference(/datum/preference/choiced/species)
 
 		var/datum/species/species = new species_type
@@ -498,6 +507,8 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	abstract_type = /datum/preference/numeric
 
 /datum/preference/numeric/deserialize(input, datum/preferences/preferences)
+	if(istext(input)) // Sometimes TGUI will return a string instead of a number, so we take that into account.
+		input = text2num(input) // Worst case, it's null, it'll just use create_default_value()
 	return sanitize_float(input, minimum, maximum, step, create_default_value())
 
 /datum/preference/numeric/serialize(input)
@@ -516,7 +527,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 		"step" = step,
 	)
 
-/// A prefernece whose value is always TRUE or FALSE
+/// A preference whose value is always TRUE or FALSE
 /datum/preference/toggle
 	abstract_type = /datum/preference/toggle
 
@@ -531,3 +542,27 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 /datum/preference/toggle/is_valid(value)
 	return value == TRUE || value == FALSE
+
+
+/// A string-based preference accepting arbitrary string values entered by the user, with a maximum length.
+/datum/preference/text
+	abstract_type = /datum/preference/text
+
+	/// What is the maximum length of the value allowed in this field?
+	var/maximum_value_length = 256
+
+	/// Should we strip HTML the input or simply restrict it to the maximum_value_length?
+	var/should_strip_html = TRUE
+
+
+/datum/preference/text/deserialize(input, datum/preferences/preferences)
+	return should_strip_html ? STRIP_HTML_SIMPLE(input, maximum_value_length) : copytext(input, 1, maximum_value_length)
+
+/datum/preference/text/create_default_value()
+	return ""
+
+/datum/preference/text/is_valid(value)
+	return istext(value) && length(value) < maximum_value_length
+
+/datum/preference/text/compile_constant_data()
+	return list("maximum_length" = maximum_value_length)

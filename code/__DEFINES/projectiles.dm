@@ -1,6 +1,4 @@
 
-GLOBAL_LIST_EMPTY_TYPED(proj_by_path_key, /obj/projectile) // A list of projectile objects, which are keyed by their path
-
 // check_pierce() return values
 /// Default behavior: hit and delete self
 #define PROJECTILE_PIERCE_NONE 0

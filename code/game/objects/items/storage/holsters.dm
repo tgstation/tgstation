@@ -6,43 +6,67 @@
 	inhand_icon_state = "holster"
 	worn_icon_state = "holster"
 	alternate_worn_layer = UNDER_SUIT_LAYER
+	w_class = WEIGHT_CLASS_BULKY
 
 /obj/item/storage/belt/holster/equipped(mob/user, slot)
 	. = ..()
-	if(slot == ITEM_SLOT_BELT || ITEM_SLOT_SUITSTORE)
+	if(slot & (ITEM_SLOT_BELT|ITEM_SLOT_SUITSTORE))
 		ADD_TRAIT(user, TRAIT_GUNFLIP, CLOTHING_TRAIT)
 
 /obj/item/storage/belt/holster/dropped(mob/user)
 	. = ..()
 	REMOVE_TRAIT(user, TRAIT_GUNFLIP, CLOTHING_TRAIT)
 
-/obj/item/storage/belt/holster/ComponentInitialize()
+/obj/item/storage/belt/holster/Initialize(mapload)
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 1
-	STR.max_w_class = WEIGHT_CLASS_NORMAL
-	STR.set_holdable(list(
+	atom_storage.max_slots = 1
+	atom_storage.max_total_storage = 16
+	atom_storage.set_holdable(list(
 		/obj/item/gun/ballistic/automatic/pistol,
 		/obj/item/gun/ballistic/revolver,
 		/obj/item/gun/energy/e_gun/mini,
 		/obj/item/gun/energy/disabler,
 		/obj/item/gun/energy/dueling,
 		/obj/item/food/grown/banana,
+		/obj/item/gun/energy/laser/thermal
 		))
+
+/obj/item/storage/belt/holster/thermal
+	name = "thermal shoulder holsters"
+	desc = "A rather plain pair of shoulder holsters with a bit of insulated padding inside. Meant to hold a twinned pair of thermal pistols, but can fit several kinds of energy handguns as well."
+
+/obj/item/storage/belt/holster/thermal/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 2
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.set_holdable(list(
+		/obj/item/gun/energy/e_gun/mini,
+		/obj/item/gun/energy/disabler,
+		/obj/item/gun/energy/dueling,
+		/obj/item/food/grown/banana,
+		/obj/item/gun/energy/laser/thermal
+		))
+
+/obj/item/storage/belt/holster/thermal/PopulateContents()
+	generate_items_inside(list(
+		/obj/item/gun/energy/laser/thermal/inferno = 1,
+		/obj/item/gun/energy/laser/thermal/cryo = 1,
+	),src)
 
 /obj/item/storage/belt/holster/detective
 	name = "detective's holster"
 	desc = "A holster able to carry handguns and some ammo. WARNING: Badasses only."
+	w_class = WEIGHT_CLASS_BULKY
 
-/obj/item/storage/belt/holster/detective/ComponentInitialize()
+/obj/item/storage/belt/holster/detective/Initialize(mapload)
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 3
-	STR.max_w_class = WEIGHT_CLASS_NORMAL
-	STR.set_holdable(list(
+	atom_storage.max_slots = 3
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.set_holdable(list(
 		/obj/item/gun/ballistic/automatic/pistol,
 		/obj/item/ammo_box/magazine/m9mm, // Pistol magazines.
 		/obj/item/ammo_box/magazine/m9mm_aps,
+		/obj/item/ammo_box/magazine/m10mm,
 		/obj/item/ammo_box/magazine/m45,
 		/obj/item/ammo_box/magazine/m50,
 		/obj/item/gun/ballistic/revolver,
@@ -53,6 +77,7 @@
 		/obj/item/gun/energy/e_gun/mini,
 		/obj/item/gun/energy/disabler,
 		/obj/item/gun/energy/dueling,
+		/obj/item/gun/energy/laser/thermal
 		))
 
 /obj/item/storage/belt/holster/detective/full/PopulateContents()
@@ -80,6 +105,7 @@
 	icon_state = "syndicate_holster"
 	inhand_icon_state = "syndicate_holster"
 	worn_icon_state = "syndicate_holster"
+	w_class = WEIGHT_CLASS_NORMAL
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
 /obj/item/storage/belt/holster/chameleon/Initialize(mapload)
@@ -89,11 +115,11 @@
 	chameleon_action.chameleon_type = /obj/item/storage/belt
 	chameleon_action.chameleon_name = "Belt"
 	chameleon_action.initialize_disguises()
+	add_item_action(chameleon_action)
 
-/obj/item/storage/belt/holster/chameleon/ComponentInitialize()
+/obj/item/storage/belt/holster/chameleon/Initialize(mapload)
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.silent = TRUE
+	atom_storage.silent = TRUE
 
 /obj/item/storage/belt/holster/chameleon/emp_act(severity)
 	. = ..()
@@ -105,15 +131,15 @@
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
 
-/obj/item/storage/belt/holster/chameleon/ComponentInitialize()
+/obj/item/storage/belt/holster/chameleon/Initialize(mapload)
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 2
-	STR.max_w_class = WEIGHT_CLASS_NORMAL
-	STR.set_holdable(list(
+	atom_storage.max_slots = 2
+	atom_storage.max_total_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.set_holdable(list(
 		/obj/item/gun/ballistic/automatic/pistol,
 		/obj/item/ammo_box/magazine/m9mm,
 		/obj/item/ammo_box/magazine/m9mm_aps,
+		/obj/item/ammo_box/magazine/m10mm,
 		/obj/item/ammo_box/magazine/m45,
 		/obj/item/ammo_box/magazine/m50,
 		/obj/item/gun/ballistic/revolver,
@@ -121,7 +147,7 @@
 		/obj/item/ammo_box/a357,
 		/obj/item/ammo_box/a762,
 		/obj/item/ammo_box/magazine/toy/pistol,
-		/obj/item/gun/energy/kinetic_accelerator/crossbow,
+		/obj/item/gun/energy/recharge/ebow,
 		/obj/item/gun/energy/e_gun/mini,
 		/obj/item/gun/energy/disabler,
 		/obj/item/gun/energy/dueling
@@ -135,12 +161,11 @@
 	worn_icon_state = "syndicate_holster"
 	w_class = WEIGHT_CLASS_BULKY
 
-/obj/item/storage/belt/holster/nukie/ComponentInitialize()
+/obj/item/storage/belt/holster/nukie/Initialize(mapload)
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 2
-	STR.max_w_class = WEIGHT_CLASS_BULKY
-	STR.set_holdable(list(
+	atom_storage.max_slots = 2
+	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY
+	atom_storage.set_holdable(list(
 		/obj/item/gun, // ALL guns.
 		/obj/item/ammo_box/magazine, // ALL magazines.
 		/obj/item/ammo_box/c38, //There isn't a speedloader parent type, so I just put these three here by hand.

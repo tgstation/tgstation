@@ -3,7 +3,7 @@
 /// Helper for getting the correct bucket for a given timer
 #define BUCKET_POS(timer) (((round((timer.timeToRun - timer.timer_subsystem.head_offset) / world.tick_lag)+1) % BUCKET_LEN)||BUCKET_LEN)
 /// Gets the maximum time at which timers will be invoked from buckets, used for deferring to secondary queue
-#define TIMER_MAX(timer_ss) (world.time + TICKS2DS(min(BUCKET_LEN-(timer_ss.practical_offset-DS2TICKS(world.time - timer_ss.head_offset))-1, BUCKET_LEN-1)))
+#define TIMER_MAX(timer_ss) (timer_ss.head_offset + TICKS2DS(BUCKET_LEN + timer_ss.practical_offset - 1))
 /// Max float with integer precision
 #define TIMER_ID_MAX (2**24)
 
@@ -127,7 +127,9 @@ SUBSYSTEM_DEF(timer)
 		ctime_timer.spent = REALTIMEOFDAY
 		callBack.InvokeAsync()
 
-		if(ctime_timer.flags & TIMER_LOOP)
+		if(ctime_timer.flags & TIMER_LOOP) // Re-insert valid looping client timers into the client timer list.
+			if (QDELETED(ctime_timer)) // Don't re-insert timers deleted inside their callbacks.
+				continue
 			ctime_timer.spent = 0
 			ctime_timer.timeToRun = REALTIMEOFDAY + ctime_timer.wait
 			BINARY_INSERT(ctime_timer, clienttime_timers, /datum/timedevent, ctime_timer, timeToRun, COMPARE_KEY)
@@ -173,7 +175,9 @@ SUBSYSTEM_DEF(timer)
 				callBack.InvokeAsync()
 				last_invoke_tick = world.time
 
-			if (timer.flags & TIMER_LOOP) // Prepare looping timers to re-enter the queue
+			if (timer.flags & TIMER_LOOP) // Prepare valid looping timers to re-enter the queue
+				if(QDELETED(timer)) // If a loop is deleted in its callback, we need to avoid re-inserting it.
+					continue
 				timer.spent = 0
 				timer.timeToRun = world.time + timer.wait
 				timer.bucketJoin()
@@ -260,6 +264,13 @@ SUBSYSTEM_DEF(timer)
 	// Add all timed events from the secondary queue as well
 	alltimers += second_queue
 
+	for (var/datum/timedevent/t as anything in alltimers)
+		t.timer_subsystem = src // Recovered timers need to be reparented
+		t.bucket_joined = FALSE
+		t.bucket_pos = -1
+		t.prev = null
+		t.next = null
+
 	// If there are no timers being tracked by the subsystem,
 	// there is no need to do any further rebuilding
 	if (!length(alltimers))
@@ -303,6 +314,7 @@ SUBSYSTEM_DEF(timer)
 		new_bucket_count++
 		var/bucket_pos = BUCKET_POS(timer)
 		timer.bucket_pos = bucket_pos
+		timer.bucket_joined = TRUE
 
 		var/datum/timedevent/bucket_head = bucket_list[bucket_pos]
 		if (!bucket_head)
@@ -324,15 +336,20 @@ SUBSYSTEM_DEF(timer)
 
 
 /datum/controller/subsystem/timer/Recover()
-	//Find the current timer sub-subsystem in global and recover its buckets etc
+	// Find the current timer sub-subsystem in global and recover its buckets etc
 	var/datum/controller/subsystem/timer/timerSS = null
 	for(var/global_var in global.vars)
 		if (istype(global.vars[global_var],src.type))
 			timerSS = global.vars[global_var]
-	second_queue |= timerSS.second_queue
-	hashes |= timerSS.hashes
-	timer_id_dict |= timerSS.timer_id_dict
-	bucket_list |= timerSS.bucket_list
+
+	hashes = timerSS.hashes
+	timer_id_dict = timerSS.timer_id_dict
+
+	bucket_list = timerSS.bucket_list
+	second_queue = timerSS.second_queue
+
+	// The buckets are FUBAR
+	reset_buckets()
 
 /**
  * # Timed Event
@@ -459,7 +476,7 @@ SUBSYSTEM_DEF(timer)
 	if(buckethead == src)
 		bucket_list[bucket_pos] = next
 		timer_subsystem.bucket_count--
-	else if(timeToRun < TIMER_MAX(timer_subsystem))
+	else if(bucket_joined)
 		timer_subsystem.bucket_count--
 	else
 		var/l = length(second_queue)
@@ -552,6 +569,7 @@ SUBSYSTEM_DEF(timer)
  * * callback the callback to call on timer finish
  * * wait deciseconds to run the timer for
  * * flags flags for this timer, see: code\__DEFINES\subsystems.dm
+ * * timer_subsystem the subsystem to insert this timer into
  */
 /proc/_addtimer(datum/callback/callback, wait = 0, flags = 0, datum/controller/subsystem/timer/timer_subsystem, file, line)
 	if (!callback)
@@ -564,7 +582,10 @@ SUBSYSTEM_DEF(timer)
 		stack_trace("addtimer called with a callback assigned to a qdeleted object. In the future such timers will not \
 			be supported and may refuse to run or run with a 0 wait")
 
-	wait = max(CEILING(wait, world.tick_lag), world.tick_lag)
+	if (flags & TIMER_CLIENT_TIME) // REALTIMEOFDAY has a resolution of 1 decisecond
+		wait = max(CEILING(wait, 1), 1) // so if we use tick_lag timers may be inserted in the "past"
+	else
+		wait = max(CEILING(wait, world.tick_lag), world.tick_lag)
 
 	if(wait >= INFINITY)
 		CRASH("Attempted to create timer with INFINITY delay")
@@ -593,7 +614,7 @@ SUBSYSTEM_DEF(timer)
 						. = hash_timer.id
 					return
 	else if(flags & TIMER_OVERRIDE)
-		stack_trace("TIMER_OVERRIDE used without TIMER_UNIQUE")
+		stack_trace("TIMER_OVERRIDE used without TIMER_UNIQUE") //this is also caught by grep.
 
 	var/datum/timedevent/timer = new(callback, wait, flags, timer_subsystem, hash, file && "[file]:[line]")
 	return timer.id

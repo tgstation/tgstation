@@ -202,7 +202,7 @@
 	set category = "Debug"
 	if(!check_rights(R_DEBUG))  //Shouldn't happen... but just to be safe.
 		message_admins(span_danger("ERROR: Non-admin [key_name(usr)] attempted to execute a SDQL query!"))
-		log_admin("Non-admin [key_name(usr)] attempted to execute a SDQL query!")
+		usr.log_message("non-admin attempted to execute a SDQL query!", LOG_ADMIN)
 		return FALSE
 	var/list/results = world.SDQL2_query(query_text, key_name_admin(usr), "[key_name(usr)]")
 	if(length(results) == 3)
@@ -210,11 +210,12 @@
 			to_chat(usr, results[I], confidential = TRUE)
 	SSblackbox.record_feedback("nested tally", "SDQL query", 1, list(ckey, query_text))
 
-/world/proc/SDQL2_query(query_text, log_entry1, log_entry2)
+/world/proc/SDQL2_query(query_text, log_entry1, log_entry2, silent = FALSE)
 	var/query_log = "executed SDQL query(s): \"[query_text]\"."
-	message_admins("[log_entry1] [query_log]")
+	if(!silent)
+		message_admins("[log_entry1] [query_log]")
 	query_log = "[log_entry2] [query_log]"
-	log_game(query_log)
+	usr.log_message(query_log, LOG_ADMIN)
 	NOTICE(query_log)
 
 	var/start_time_total = REALTIMEOFDAY
@@ -377,7 +378,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 		//print the key
 		if(islist(key))
 			recursive_list_print(output, key, datum_handler, atom_handler)
-		else if(is_proper_datum(key) && (datum_handler || (isatom(key) && atom_handler)))
+		else if(isdatum(key) && (datum_handler || (isatom(key) && atom_handler)))
 			if(isatom(key) && atom_handler)
 				output += atom_handler.Invoke(key)
 			else
@@ -391,7 +392,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 			var/value = input[key]
 			if(islist(value))
 				recursive_list_print(output, value, datum_handler, atom_handler)
-			else if(is_proper_datum(value) && (datum_handler || (isatom(value) && atom_handler)))
+			else if(isdatum(value) && (datum_handler || (isatom(value) && atom_handler)))
 				if(isatom(value) && atom_handler)
 					output += atom_handler.Invoke(value)
 				else
@@ -683,7 +684,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 	switch(query_tree[1])
 		if("call")
 			for(var/i in found)
-				if(!is_proper_datum(i))
+				if(!isdatum(i))
 					continue
 				world.SDQL_var(i, query_tree["call"][1], null, i, superuser, src)
 				obj_count_finished++
@@ -712,7 +713,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 			if("set" in query_tree)
 				var/list/set_list = query_tree["set"]
 				for(var/d in found)
-					if(!is_proper_datum(d))
+					if(!isdatum(d))
 						continue
 					SDQL_internal_vv(d, set_list)
 					obj_count_finished++
@@ -723,8 +724,8 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 	state = SDQL2_STATE_SWITCHING
 
 /datum/sdql2_query/proc/SDQL_print(object, list/text_list, print_nulls = TRUE)
-	if(is_proper_datum(object))
-		text_list += "<A HREF='?_src_=vars;[HrefToken(TRUE)];Vars=[REF(object)]'>[REF(object)]</A> : [object]"
+	if(isdatum(object))
+		text_list += "<A HREF='?_src_=vars;[HrefToken(forceGlobal = TRUE)];Vars=[REF(object)]'>[REF(object)]</A> : [object]"
 		if(istype(object, /atom))
 			var/atom/A = object
 			var/turf/T = A.loc
@@ -982,8 +983,9 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 /proc/SDQL_testout(list/query_tree, indent = 0)
 	var/static/whitespace = "&nbsp;&nbsp;&nbsp; "
 	var/spaces = ""
-	for(var/s = 0, s < indent, s++)
-		spaces += whitespace
+	if(indent > 0)
+		for(var/i in 1 to indent)
+			spaces += whitespace
 
 	for(var/item in query_tree)
 		if(istype(item, /list))
@@ -1010,7 +1012,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 	var/static/list/exclude = list("usr", "src", "marked", "global", "MC", "FS", "CFG")
 	var/long = start < expression.len
 	var/datum/D
-	if(is_proper_datum(object))
+	if(isdatum(object))
 		D = object
 
 	if (object == world && (!long || expression[start + 1] == ".") && !(expression[start] in exclude) && copytext(expression[start], 1, 3) != "SS") //3 == length("SS") + 1
@@ -1021,10 +1023,14 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 		if(lowertext(copytext(expression[start + 1], 1, 3)) != "0x") //3 == length("0x") + 1
 			to_chat(usr, span_danger("Invalid pointer syntax: [expression[start + 1]]"), confidential = TRUE)
 			return null
-		v = locate("\[[expression[start + 1]]]")
-		if(!v)
-			to_chat(usr, span_danger("Invalid pointer: [expression[start + 1]]"), confidential = TRUE)
+		var/datum/located = locate("\[[expression[start + 1]]]")
+		if(!istype(located))
+			to_chat(usr, span_danger("Invalid pointer: [expression[start + 1]] - null or not datum"), confidential = TRUE)
 			return null
+		if(!located.can_vv_mark())
+			to_chat(usr, span_danger("Pointer [expression[start+1]] cannot be marked"), confidential = TRUE)
+			return null
+		v = located
 		start++
 		long = start < expression.len
 	else if(expression[start] == "(" && long)
@@ -1199,13 +1205,10 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 		query_list += word
 	return query_list
 
-/proc/is_proper_datum(thing)
-	return istype(thing, /datum) || istype(thing, /client)
-
 /obj/effect/statclick/SDQL2_delete/Click()
 	if(!usr.client?.holder)
 		message_admins("[key_name_admin(usr)] non-holder clicked on a statclick! ([src])")
-		log_game("[key_name(usr)] non-holder clicked on a statclick! ([src])")
+		usr.log_message("non-holder clicked on a statclick! ([src])", LOG_ADMIN)
 		return
 	var/datum/sdql2_query/Q = target
 	Q.delete_click()
@@ -1213,7 +1216,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 /obj/effect/statclick/SDQL2_action/Click()
 	if(!usr.client?.holder)
 		message_admins("[key_name_admin(usr)] non-holder clicked on a statclick! ([src])")
-		log_game("[key_name(usr)] non-holder clicked on a statclick! ([src])")
+		usr.log_message("non-holder clicked on a statclick! ([src])", LOG_ADMIN)
 		return
 	var/datum/sdql2_query/Q = target
 	Q.action_click()
@@ -1224,6 +1227,6 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 /obj/effect/statclick/sdql2_vv_all/Click()
 	if(!usr.client?.holder)
 		message_admins("[key_name_admin(usr)] non-holder clicked on a statclick! ([src])")
-		log_game("[key_name(usr)] non-holder clicked on a statclick! ([src])")
+		usr.log_message("non-holder clicked on a statclick! ([src])", LOG_ADMIN)
 		return
 	usr.client.debug_variables(GLOB.sdql2_queries)

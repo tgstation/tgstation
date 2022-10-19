@@ -5,7 +5,7 @@
 	gender= PLURAL
 	name = "paint"
 	desc = "Used to recolor floors and walls. Can be removed by the janitor."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "paint_neutral"
 	inhand_icon_state = "paintcan"
 	w_class = WEIGHT_CLASS_NORMAL
@@ -114,7 +114,7 @@
 	target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
 
 /obj/item/paint/paint_remover
-	gender =  PLURAL
+	gender = PLURAL
 	name = "paint remover"
 	desc = "Used to remove color from anything."
 	icon_state = "paint_neutral"

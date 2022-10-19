@@ -40,11 +40,11 @@
 	if(is_station_level(z))
 		GLOB.station_turfs += src
 	if(smoothing_flags & SMOOTH_DIAGONAL_CORNERS && fixed_underlay) //Set underlays for the diagonal walls.
-		var/mutable_appearance/underlay_appearance = mutable_appearance(layer = TURF_LAYER, plane = FLOOR_PLANE)
+		var/mutable_appearance/underlay_appearance = mutable_appearance(layer = TURF_LAYER, offset_spokesman = src, plane = FLOOR_PLANE)
 		if(fixed_underlay["space"])
 			underlay_appearance.icon = 'icons/turf/space.dmi'
-			underlay_appearance.icon_state = SPACE_ICON_STATE
-			underlay_appearance.plane = PLANE_SPACE
+			underlay_appearance.icon_state = SPACE_ICON_STATE(x, y, z)
+			SET_PLANE(underlay_appearance, PLANE_SPACE, src)
 		else
 			underlay_appearance.icon = fixed_underlay["icon"]
 			underlay_appearance.icon_state = fixed_underlay["icon_state"]
@@ -52,6 +52,7 @@
 		underlays += underlay_appearance
 
 /turf/closed/wall/atom_destruction(damage_flag)
+	. = ..()
 	dismantle_wall(TRUE, FALSE)
 
 /turf/closed/wall/Destroy()
@@ -87,6 +88,7 @@
 		ChangeTurf(decon_type, flags = CHANGETURF_INHERIT_AIR)
 	else
 		ScrapeAway()
+	QUEUE_SMOOTH_NEIGHBORS(src)
 
 /turf/closed/wall/proc/break_wall()
 	new sheet_type(src, sheet_amount)
@@ -231,7 +233,7 @@
 			F.attach(src, user)
 		return TRUE
 	//Poster stuff
-	else if(istype(W, /obj/item/poster))
+	else if(istype(W, /obj/item/poster) && Adjacent(user)) //no tk memes.
 		place_poster(W,user)
 		return TRUE
 
@@ -269,7 +271,7 @@
 	if(.)
 		ChangeTurf(/turf/closed/wall/mineral/cult)
 
-/turf/closed/wall/get_dumping_location(obj/item/storage/source, mob/user)
+/turf/closed/wall/get_dumping_location()
 	return null
 
 /turf/closed/wall/acid_act(acidpwr, acid_volume)
@@ -323,5 +325,8 @@
 	if(prob(70))
 		new /obj/effect/temp_visual/glowing_rune(src)
 	return ..()
+
+/turf/closed/wall/metal_foam_base
+	girder_type = /obj/structure/foamedmetal
 
 #undef MAX_DENT_DECALS

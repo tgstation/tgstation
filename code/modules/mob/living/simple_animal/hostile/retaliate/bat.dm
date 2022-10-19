@@ -29,9 +29,6 @@
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	mob_size = MOB_SIZE_TINY
 	speak_emote = list("squeaks")
-	var/max_co2 = 0 //to be removed once metastation map no longer use those for Sgt Araneus
-	var/min_oxy = 0
-	var/max_plas = 0
 	//Space bats need no air to fly in.
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
@@ -55,11 +52,8 @@
 	icon_state = "guard"
 	maxHealth = 250
 	health = 250
-	max_co2 = 5
-	max_plas = 2
 	melee_damage_lower = 15
 	melee_damage_upper = 20
-	min_oxy = 5
 	movement_type = GROUND
 	response_help_continuous = "pets"
 	response_help_simple = "pet"

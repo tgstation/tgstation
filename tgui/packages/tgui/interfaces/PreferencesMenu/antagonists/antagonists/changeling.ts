@@ -1,9 +1,9 @@
-import { Antagonist, Category } from "../base";
-import { multiline } from "common/string";
+import { Antagonist, Category } from '../base';
+import { multiline } from 'common/string';
 
 const Changeling: Antagonist = {
-  key: "changeling",
-  name: "Changeling",
+  key: 'changeling',
+  name: 'Changeling',
   description: [
     multiline`
       A highly intelligent alien predator that is capable of altering their

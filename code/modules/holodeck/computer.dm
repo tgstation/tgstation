@@ -25,17 +25,18 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 #define HOLODECK_CD 2 SECONDS
 #define HOLODECK_DMG_CD 5 SECONDS
 
+/// typecache for turfs that should be considered ok during floorchecks.
+/// A linked turf being anything not in this typecache will cause the holodeck to perform an emergency shutdown.
+GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf/open/floor/holofloor, /turf/closed)))
 
 /obj/machinery/computer/holodeck
 	name = "holodeck control console"
 	desc = "A computer used to control a nearby holodeck."
 	icon_screen = "holocontrol"
-	idle_power_usage = 10
-	active_power_usage = 50
 
 	//new vars
 	///what area type this holodeck loads into. linked turns into the nearest instance of this area
-	var/area/mapped_start_area = /area/holodeck/rec_center
+	var/area/mapped_start_area = /area/station/holodeck/rec_center
 
 	///the currently used map template
 	var/datum/map_template/holodeck/template
@@ -49,7 +50,7 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 	//old vars
 
 	///the area that this holodeck loads templates into, used for power and deleting holo objects that leave it
-	var/area/holodeck/linked
+	var/area/station/holodeck/linked
 
 	///what program is loaded right now or is about to be loaded
 	var/program = "holodeck_offline"
@@ -70,6 +71,11 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 	var/list/spawned = list()
 	var/list/effects = list() //like above, but for holo effects
 
+	///special locs that can mess with derez'ing holo spawned objects
+	var/list/special_locs = list(
+		/obj/item/clothing/head/mob_holder,
+	)
+
 	///TRUE if the holodeck is using extra power because of a program, FALSE otherwise
 	var/active = FALSE
 	///increases the holodeck cooldown if TRUE, causing the holodeck to take longer to allow loading new programs
@@ -84,31 +90,35 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 
 /obj/machinery/computer/holodeck/LateInitialize()//from here linked is populated and the program list is generated. its also set to load the offline program
 	linked = GLOB.areas_by_type[mapped_start_area]
+	if(!linked)
+		log_mapping("[src] at [AREACOORD(src)] has no matching holodeck area.")
+		qdel(src)
+		return
+
 	bottom_left = locate(linked.x, linked.y, src.z)
+	if(!bottom_left)
+		log_mapping("[src] at [AREACOORD(src)] has an invalid holodeck area.")
+		qdel(src)
+		return
 
 	var/area/computer_area = get_area(src)
-	if(istype(computer_area, /area/holodeck))
+	if(istype(computer_area, /area/station/holodeck))
 		log_mapping("Holodeck computer cannot be in a holodeck, This would cause circular power dependency.")
 		qdel(src)
 		return
 
 	// the following is necessary for power reasons
-	if(!linked)
-		log_world("No matching holodeck area found")
-		qdel(src)
-		return
-	else if (!offline_program)
+	if(!offline_program)
 		stack_trace("Holodeck console created without an offline program")
 		qdel(src)
 		return
 
+	linked.linked = src
+	var/area/my_area = get_area(src)
+	if(my_area)
+		linked.power_usage = my_area.power_usage
 	else
-		linked.linked = src
-		var/area/my_area = get_area(src)
-		if(my_area)
-			linked.power_usage = my_area.power_usage
-		else
-			linked.power_usage = list(AREA_USAGE_LEN)
+		linked.power_usage = list(AREA_USAGE_LEN)
 
 	COOLDOWN_START(src, holodeck_cooldown, HOLODECK_CD)
 	generate_program_list()
@@ -125,6 +135,7 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 			LAZYADD(program_cache, list(info_this))
 
 /obj/machinery/computer/holodeck/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "Holodeck", name)
@@ -146,6 +157,7 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 	if(.)
 		return
 	. = TRUE
+
 	switch(action)
 		if("load_program")
 			var/program_to_load = params["id"]
@@ -166,19 +178,21 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 			if(program_to_load)
 				load_program(program_to_load)
 		if("safety")
+			if (!(obj_flags & EMAGGED) && !issilicon(usr))
+				return
 			if((obj_flags & EMAGGED) && program)
 				emergency_shutdown()
 			nerf(obj_flags & EMAGGED,FALSE)
 			obj_flags ^= EMAGGED
 			say("Safeties reset. Restarting...")
-			log_game("[key_name(usr)] disabled Holodeck safeties.")
+			usr.log_message("disabled Holodeck safeties.", LOG_GAME)
 
 ///this is what makes the holodeck not spawn anything on broken tiles (space and non engine plating / non holofloors)
 /datum/map_template/holodeck/update_blacklist(turf/placement, list/input_blacklist)
 	for(var/turf/possible_blacklist as anything in get_affected_turfs(placement))
 		if (possible_blacklist.holodeck_compatible)
 			continue
-		input_blacklist += possible_blacklist
+		input_blacklist[possible_blacklist] = TRUE
 
 ///loads the template whose id string it was given ("offline_program" loads datum/map_template/holodeck/offline)
 /obj/machinery/computer/holodeck/proc/load_program(map_id, force = FALSE, add_delay = TRUE)
@@ -212,7 +226,7 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 	template.load(bottom_left) //this is what actually loads the holodeck simulation into the map
 
 	if(template.restricted)
-		log_game("[key_name(usr)] loaded a restricted Holodeck program: [program].")
+		usr.log_message("loaded a restricted Holodeck program: [program].", LOG_GAME)
 		message_admins("[ADMIN_LOOKUPFLW(usr)] loaded a restricted Holodeck program: [program].")
 
 	spawned = template.created_atoms //populate the spawned list with the atoms belonging to the holodeck
@@ -259,7 +273,7 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 			spawned -= holo_atom
 			continue
 
-		RegisterSignal(holo_atom, COMSIG_PARENT_PREQDELETED, .proc/remove_from_holo_lists)
+		RegisterSignal(holo_atom, COMSIG_PARENT_QDELETING, .proc/remove_from_holo_lists)
 		holo_atom.flags_1 |= HOLOGRAM_1
 
 		if(isholoeffect(holo_atom))//activates holo effects and transfers them from the spawned list into the effects list
@@ -269,10 +283,10 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 			var/atom/holo_effect_product = holo_effect.activate(src)//change name
 			if(istype(holo_effect_product))
 				spawned += holo_effect_product // we want mobs or objects spawned via holoeffects to be tracked as objects
-				RegisterSignal(holo_effect_product, COMSIG_PARENT_PREQDELETED, .proc/remove_from_holo_lists)
+				RegisterSignal(holo_effect_product, COMSIG_PARENT_QDELETING, .proc/remove_from_holo_lists)
 			if(islist(holo_effect_product))
 				for(var/atom/atom_product as anything in holo_effect_product)
-					RegisterSignal(atom_product, COMSIG_PARENT_PREQDELETED, .proc/remove_from_holo_lists)
+					RegisterSignal(atom_product, COMSIG_PARENT_QDELETING, .proc/remove_from_holo_lists)
 			continue
 
 		if(isobj(holo_atom))
@@ -299,20 +313,26 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 	spawned -= holo_atom
 	if(!holo_atom)
 		return
-	UnregisterSignal(holo_atom, COMSIG_PARENT_PREQDELETED)
+	UnregisterSignal(holo_atom, COMSIG_PARENT_QDELETING)
 	var/turf/target_turf = get_turf(holo_atom)
 	for(var/atom/movable/atom_contents as anything in holo_atom) //make sure that things inside of a holoitem are moved outside before destroying it
 		atom_contents.forceMove(target_turf)
 
+	if(istype(holo_atom, /obj/item/clothing/under/rank))
+		var/obj/item/clothing/under/holo_clothing = holo_atom
+		holo_clothing.dump_attachment()
+
 	if(!silent)
 		visible_message(span_notice("[holo_atom] fades away!"))
 
+	if(is_type_in_list(holo_atom.loc, special_locs))
+		qdel(holo_atom.loc)
 	qdel(holo_atom)
 
 /obj/machinery/computer/holodeck/proc/remove_from_holo_lists(datum/to_remove, _forced)
 	SIGNAL_HANDLER
 	spawned -= to_remove
-	UnregisterSignal(to_remove, COMSIG_PARENT_PREQDELETED)
+	UnregisterSignal(to_remove, COMSIG_PARENT_QDELETING)
 
 /obj/machinery/computer/holodeck/process(delta_time)
 	if(damaged && DT_PROB(5, delta_time))
@@ -340,7 +360,7 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 				derez(item)
 	for(var/obj/effect/holodeck_effect/holo_effect as anything in effects)
 		holo_effect.tick()
-	update_mode_power_usage(ACTIVE_POWER_USE, 50 + spawned.len * 3 + effects.len * 5)
+	update_mode_power_usage(ACTIVE_POWER_USE, active_power_usage + spawned.len * 3 + effects.len * 5)
 
 /obj/machinery/computer/holodeck/proc/toggle_power(toggleOn = FALSE)
 	if(active == toggleOn)
@@ -365,13 +385,12 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 	active = FALSE
 	load_program(offline_program, TRUE)
 
-///returns TRUE if the entire floor of the holodeck is intact, returns FALSE if any are broken
+///returns TRUE if all floors of the holodeck are present, returns FALSE if any are broken or removed
 /obj/machinery/computer/holodeck/proc/floorcheck()
 	for(var/turf/holo_floor in linked)
-		if(isspaceturf(holo_floor))
-			return FALSE
-		if(!holo_floor.intact)
-			return FALSE
+		if (is_type_in_typecache(holo_floor, GLOB.typecache_holodeck_linked_floorcheck_ok))
+			continue
+		return FALSE
 	return TRUE
 
 ///changes all weapons in the holodeck to do stamina damage if set
@@ -389,11 +408,12 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 	if(!LAZYLEN(emag_programs))
 		to_chat(user, "[src] does not seem to have a card swipe port. It must be an inferior model.")
 		return
-	playsound(src, "sparks", 75, TRUE)
+	playsound(src, SFX_SPARKS, 75, TRUE)
 	obj_flags |= EMAGGED
 	to_chat(user, span_warning("You vastly increase projector power and override the safety and security protocols."))
 	say("Warning. Automatic shutoff and derezzing protocols have been corrupted. Please call Nanotrasen maintenance and do not use the simulator.")
-	log_game("[key_name(user)] emagged the Holodeck Control Console")
+	user.log_message("emagged the Holodeck Control Console.", LOG_GAME)
+	message_admins("[ADMIN_LOOKUPFLW(user)] emagged the Holodeck Control Console.")
 	nerf(!(obj_flags & EMAGGED),FALSE)
 
 /obj/machinery/computer/holodeck/emp_act(severity)

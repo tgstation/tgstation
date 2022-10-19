@@ -100,8 +100,7 @@
 /obj/machinery/skill_station/dump_inventory_contents(list/subset = null)
 	// Don't drop the skillchip, it's directly inserted into the machine.
 	// dump_contents() will drop everything including the skillchip as an alternative to this.
-	subset = contents - inserted_skillchip
-	return ..()
+	return ..(contents - inserted_skillchip)
 
 /obj/machinery/skill_station/proc/toggle_open(mob/user)
 	state_open ? close_machine() : open_machine()
@@ -229,7 +228,7 @@
 		.["slots_max"] = null
 		return
 
-	var/obj/item/organ/brain/occupant_brain = carbon_occupant.getorganslot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/internal/brain/occupant_brain = carbon_occupant.getorganslot(ORGAN_SLOT_BRAIN)
 
 	// If there's no brain, we don't need to worry either.
 	if(QDELETED(occupant_brain))
@@ -272,7 +271,7 @@
 				return TRUE
 			var/chipref = params["ref"]
 			var/mob/living/carbon/carbon_occupant = occupant
-			var/obj/item/organ/brain/occupant_brain = carbon_occupant.getorganslot(ORGAN_SLOT_BRAIN)
+			var/obj/item/organ/internal/brain/occupant_brain = carbon_occupant.getorganslot(ORGAN_SLOT_BRAIN)
 			if(QDELETED(carbon_occupant) || QDELETED(occupant_brain))
 				return TRUE
 			var/obj/item/skillchip/to_be_removed = locate(chipref) in occupant_brain.skillchips
@@ -297,7 +296,7 @@
 				stack_trace("[usr] tried to toggle skillchip activation when [src] was in an invalid state.")
 				return TRUE
 			var/mob/living/carbon/carbon_occupant = occupant
-			var/obj/item/organ/brain/occupant_brain = carbon_occupant.getorganslot(ORGAN_SLOT_BRAIN)
+			var/obj/item/organ/internal/brain/occupant_brain = carbon_occupant.getorganslot(ORGAN_SLOT_BRAIN)
 			if(QDELETED(carbon_occupant) || QDELETED(occupant_brain))
 				return TRUE
 			var/obj/item/skillchip/to_be_removed = locate(chipref) in occupant_brain.skillchips

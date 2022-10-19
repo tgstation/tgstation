@@ -87,7 +87,7 @@
 
 /// Used to "load" a persistent scar
 /datum/scar/proc/load(obj/item/bodypart/BP, version, description, specific_location, severity=WOUND_SEVERITY_SEVERE, biology=BIO_FLESH_BONE, char_slot)
-	if(!BP.is_organic_limb())
+	if(!IS_ORGANIC_LIMB(BP))
 		qdel(src)
 		return
 
@@ -136,7 +136,7 @@
 		if(WOUND_SEVERITY_CRITICAL)
 			msg = span_smallnoticeital("<b>[msg]</b>")
 		if(WOUND_SEVERITY_LOSS)
-			msg = "[victim.p_their(TRUE)] [limb.name] [description]." // different format
+			msg = "[victim.p_their(TRUE)] [limb.plaintext_zone] [description]." // different format
 			msg = span_notice("<i><b>[msg]</b></i>")
 	return "\t[msg]"
 

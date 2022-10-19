@@ -19,7 +19,7 @@
 	uniform = /obj/item/clothing/under/rank/security/detective
 	neck = /obj/item/clothing/neck/tie/detective
 	shoes = /obj/item/clothing/shoes/sneakers/brown
-	suit = /obj/item/clothing/suit/det_suit
+	suit = /obj/item/clothing/suit/jacket/det_suit
 	gloves = /obj/item/clothing/gloves/color/black
 	head = /obj/item/clothing/head/fedora/det_hat
 	mask = /obj/item/clothing/mask/cigarette
@@ -28,6 +28,7 @@
 	name = "Mafia Psychologist"
 
 	uniform = /obj/item/clothing/under/suit/black
+	neck = /obj/item/clothing/neck/tie/black/tied
 	shoes = /obj/item/clothing/shoes/laceup
 
 /datum/outfit/mafia/chaplain
@@ -38,9 +39,9 @@
 /datum/outfit/mafia/md
 	name = "Mafia Medical Doctor"
 
-	uniform = /obj/item/clothing/under/rank/medical/doctor
+	uniform = /obj/item/clothing/under/rank/medical/scrubs/blue
 	shoes = /obj/item/clothing/shoes/sneakers/white
-	suit =  /obj/item/clothing/suit/toggle/labcoat
+	suit = /obj/item/clothing/suit/toggle/labcoat
 
 /datum/outfit/mafia/security
 	name = "Mafia Security Officer"
@@ -64,7 +65,7 @@
 	uniform = /obj/item/clothing/under/rank/civilian/head_of_personnel
 	suit = /obj/item/clothing/suit/armor/vest/alt
 	shoes = /obj/item/clothing/shoes/sneakers/brown
-	head = /obj/item/clothing/head/hopcap
+	head = /obj/item/clothing/head/hats/hopcap
 	glasses = /obj/item/clothing/glasses/sunglasses
 
 /datum/outfit/mafia/hos
@@ -84,7 +85,7 @@
 	shoes = /obj/item/clothing/shoes/jackboots
 	suit = /obj/item/clothing/suit/armor/vest/warden/alt
 	gloves = /obj/item/clothing/gloves/color/black
-	head = /obj/item/clothing/head/warden
+	head = /obj/item/clothing/head/hats/warden
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 
 //mafia

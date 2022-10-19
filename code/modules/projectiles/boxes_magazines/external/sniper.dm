@@ -23,3 +23,9 @@
 	desc = "An extremely powerful round capable of passing straight through cover and anyone unfortunate enough to be behind it."
 	ammo_type = /obj/item/ammo_casing/p50/penetrator
 	max_ammo = 5
+
+/obj/item/ammo_box/magazine/sniper_rounds/marksman
+	name = "sniper rounds (marksman)"
+	desc = "An extremely fast sniper round able to pretty much instantly shoot through something."
+	ammo_type = /obj/item/ammo_casing/p50/marksman
+	max_ammo = 5

@@ -87,12 +87,12 @@ Notes:
 
 
 /datum/tooltip/proc/hide()
+	queueHide = showing ? TRUE : FALSE
+
 	if (queueHide)
 		addtimer(CALLBACK(src, .proc/do_hide), 1)
 	else
 		do_hide()
-
-	queueHide = showing ? TRUE : FALSE
 
 	return TRUE
 

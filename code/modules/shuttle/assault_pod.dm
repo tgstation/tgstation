@@ -1,6 +1,6 @@
 /obj/docking_port/mobile/assault_pod
 	name = "assault pod"
-	id = "steel_rain"
+	shuttle_id = "steel_rain"
 	dwidth = 3
 	width = 7
 	height = 7
@@ -22,8 +22,8 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "gangtool-red"
 	inhand_icon_state = "radio"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	desc = "Used to select a landing zone for assault pods."
 	var/shuttle_id = "steel_rain"
 	var/dwidth = 3
@@ -34,9 +34,10 @@
 
 
 /obj/item/assault_pod/attack_self(mob/living/user)
-	var/target_area
-	target_area = input("Area to land", "Select a Landing Zone", target_area) as null|anything in GLOB.teleportlocs
-	if(!target_area)
+	var/target_area = tgui_input_list(user, "Area to land", "Landing Zone", GLOB.teleportlocs)
+	if(isnull(target_area))
+		return
+	if(isnull(GLOB.teleportlocs[target_area]))
 		return
 	var/area/picked_area = GLOB.teleportlocs[target_area]
 	if(!src || QDELETED(src))
@@ -47,7 +48,7 @@
 		return
 	var/turf/T = pick(turfs)
 	var/obj/docking_port/stationary/landing_zone = new /obj/docking_port/stationary(T)
-	landing_zone.id = "assault_pod([REF(src)])"
+	landing_zone.shuttle_id = "assault_pod([REF(src)])"
 	landing_zone.port_destinations = "assault_pod([REF(src)])"
 	landing_zone.name = "Landing Zone"
 	landing_zone.dwidth = dwidth
@@ -58,7 +59,7 @@
 
 	for(var/obj/machinery/computer/shuttle/S in GLOB.machines)
 		if(S.shuttleId == shuttle_id)
-			S.possible_destinations = "[landing_zone.id]"
+			S.possible_destinations = "[landing_zone.shuttle_id]"
 
 	to_chat(user, span_notice("Landing zone set."))
 

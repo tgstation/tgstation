@@ -39,6 +39,8 @@
 #define TANK_MAX_RELEASE_PRESSURE (ONE_ATMOSPHERE*3)
 /// The default initial value gas tanks release valves are set to. (At least the ones containing pure plasma/oxygen.)
 #define TANK_DEFAULT_RELEASE_PRESSURE 16
+/// The default initial value gas plasmamen tanks releases valves are set to.
+#define TANK_PLASMAMAN_RELEASE_PRESSURE 4
 /// The internal temperature in kelvins at which a handheld gas tank begins to take damage.
 #define TANK_MELT_TEMPERATURE 1000000
 /// The internal pressure in kPa at which a handheld gas tank begins to take damage.
@@ -49,6 +51,13 @@
 #define TANK_FRAGMENT_PRESSURE (40.*ONE_ATMOSPHERE)
 /// Range scaling constant for tank explosions. Calibrated so that a TTV assembled using two 70L tanks will hit the maxcap at at least 160atm.
 #define TANK_FRAGMENT_SCALE (84.*ONE_ATMOSPHERE)
+/// Denotes that our tank is overpressurized simply from gas merging.
+#define TANK_MERGE_OVERPRESSURE "tank_overpressure"
+// Indices for the reaction_results returned by explosion_information()
+/// Reactions that have happened in the tank.
+#define TANK_RESULTS_REACTION 1
+/// Additional information of the tank.
+#define TANK_RESULTS_MISC 2
 
 //MULTIPIPES
 //IF YOU EVER CHANGE THESE CHANGE SPRITES TO MATCH.
@@ -58,7 +67,7 @@
 #define PIPING_LAYER_DEFAULT 3
 #define PIPING_LAYER_P_X 5
 #define PIPING_LAYER_P_Y 5
-#define PIPING_LAYER_LCHANGE 0.05
+#define PIPING_LAYER_LCHANGE 0.005
 
 /// intended to connect with all layers, check for all instead of just one.
 #define PIPING_ALL_LAYER (1<<0)

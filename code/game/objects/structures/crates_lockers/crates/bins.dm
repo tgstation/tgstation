@@ -7,6 +7,7 @@
 	anchored = TRUE
 	horizontal = FALSE
 	delivery_icon = null
+	can_install_electronics = FALSE
 
 /obj/structure/closet/crate/bin/Initialize(mapload)
 	. = ..()
@@ -27,7 +28,7 @@
 		var/obj/item/storage/bag/trash/T = W
 		to_chat(user, span_notice("You fill the bag."))
 		for(var/obj/item/O in src)
-			SEND_SIGNAL(T, COMSIG_TRY_STORAGE_INSERT, O, user, TRUE)
+			T.atom_storage?.attempt_insert(O, user, TRUE)
 		T.update_appearance()
 		do_animate()
 		return TRUE

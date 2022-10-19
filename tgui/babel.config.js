@@ -4,8 +4,9 @@
  * @license MIT
  */
 
-const createBabelConfig = options => {
+const createBabelConfig = (options) => {
   const { presets = [], plugins = [], removeConsole } = options;
+  // prettier-ignore
   return {
     presets: [
       [require.resolve('@babel/preset-typescript'), {
@@ -34,7 +35,7 @@ const createBabelConfig = options => {
   };
 };
 
-module.exports = api => {
+module.exports = (api) => {
   api.cache(true);
   const mode = process.env.NODE_ENV;
   return createBabelConfig({ mode });

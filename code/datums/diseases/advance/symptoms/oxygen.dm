@@ -1,22 +1,12 @@
-/*
-//////////////////////////////////////
-
-Self-Respiration
-
-	Slightly hidden.
-	Lowers resistance significantly.
-	Decreases stage speed significantly.
-	Decreases transmittablity tremendously.
-	Fatal Level.
-
-Bonus
-	The body generates salbutamol.
-
-//////////////////////////////////////
+/*Self-Respiration
+ * Slight increase to stealth
+ * Greatly reduces resistance
+ * Greatly reduces stage speed
+ * Reduces transmission tremendously
+ * Lethal level
+ * Bonus: Gives the carrier TRAIT_NOBREATH, preventing suffocation and CPR
 */
-
 /datum/symptom/oxygen
-
 	name = "Self-Respiration"
 	desc = "The virus rapidly synthesizes oxygen, effectively removing the need for breathing."
 	stealth = 1

@@ -39,7 +39,7 @@ menu "menu"
 		command = ".quit"
 		category = "&File"
 		saved-params = "is-checked"
-	elem
+	elem "help-menu"
 		name = "&Help"
 		command = ""
 		saved-params = "is-checked"
@@ -50,7 +50,7 @@ menu "menu"
 		saved-params = "is-checked"
 	elem
 		name = "&Hotkeys"
-		command = "hotkeys-help"
+		command = "Hotkeys-Help"
 		category = "&Help"
 		saved-params = "is-checked"
 
@@ -65,7 +65,7 @@ window "mainwindow"
 		is-default = true
 		saved-params = "pos;size;is-minimized;is-maximized"
 		statusbar = false
-		icon = 'icons\\tg_32.png'
+		icon = 'icons\\ui_icons\\common\\tg_32.png'
 		macro = "default"
 		menu = "menu"
 	elem "split"
@@ -104,6 +104,7 @@ window "mapwindow"
 		anchor2 = -1,-1
 		saved-params = "pos;size;is-minimized;is-maximized"
 		is-pane = true
+		on-status = ".winset \"status_bar.text=[[*]]\" "
 	elem "map"
 		type = MAP
 		pos = 0,0
@@ -121,7 +122,7 @@ window "mapwindow"
 		pos = 0,464
 		size = 280x16
 		anchor1 = 0,100
-		is-visible = false
+		is-visible = true
 		text = ""
 		align = left
 		background-color = #222222
@@ -220,14 +221,13 @@ window "outputwindow"
 		size = 517x20
 		anchor1 = 0,100
 		anchor2 = 100,100
-		background-color = #d3b5b5
 		is-default = true
-		border = sunken
+		border = line
 		saved-params = "command"
 	elem "oocbutton"
 		type = BUTTON
 		pos = 599,460
-		size = 40x19
+		size = 40x20
 		anchor1 = 100,100
 		anchor2 = -1,-1
 		background-color = none
@@ -240,7 +240,7 @@ window "outputwindow"
 	elem "saybutton"
 		type = BUTTON
 		pos = 519,460
-		size = 40x19
+		size = 40x20
 		anchor1 = 100,100
 		anchor2 = -1,-1
 		background-color = none
@@ -253,7 +253,7 @@ window "outputwindow"
 	elem "mebutton"
 		type = BUTTON
 		pos = 559,460
-		size = 40x19
+		size = 40x20
 		anchor1 = 100,100
 		anchor2 = -1,-1
 		background-color = none
@@ -269,7 +269,6 @@ window "outputwindow"
 		size = 640x456
 		anchor1 = 0,0
 		anchor2 = 100,100
-		background-color = #ffffff
 		is-visible = false
 		is-disabled = true
 		saved-params = ""
@@ -336,5 +335,24 @@ window "statwindow"
 		anchor1 = 0,0
 		anchor2 = 100,100
 		is-visible = false
+		saved-params = ""
+
+window "tgui_say"
+	elem "tgui_say"
+		type = MAIN
+		pos = 848,500
+		size = 231x30
+		anchor1 = 50,50
+		anchor2 = 50,50
+		is-visible = false
+		saved-params = ""
+		statusbar = false
+		can-minimize = false
+	elem "browser"
+		type = BROWSER
+		pos = 0,0
+		size = 231x30
+		anchor1 = 0,0
+		anchor2 = 0,0
 		saved-params = ""
 

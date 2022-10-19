@@ -68,9 +68,9 @@
 	used_tray.AddToPlate(baked_result)
 
 	if(positive_result)
-		used_oven.visible_message(span_warning("You smell something great coming from [used_oven]"))
+		used_oven.visible_message(span_notice("You smell something great coming from [used_oven]."), blind_message = span_notice("You smell something great..."))
 	else
-		used_oven.visible_message(span_warning("You smell a burnt smell coming from [used_oven]"))
+		used_oven.visible_message(span_warning("You smell a burnt smell coming from [used_oven]."), blind_message = span_warning("You smell a burnt smell..."))
 	SEND_SIGNAL(parent, COMSIG_BAKE_COMPLETED, baked_result)
 	qdel(parent)
 

@@ -17,7 +17,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 /// A single reagent
 /datum/reagent
 	/// datums don't have names by default
-	var/name = "Reagent"
+	var/name = ""
 	/// nor do they have descriptions
 	var/description = ""
 	///J/(K*mol)
@@ -40,7 +40,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/datum/reagents/holder = null
 	/// LIQUID, SOLID, GAS
 	var/reagent_state = LIQUID
-	/// special data associated with this like viruses etc
+	/// Special data associated with the reagent that will be passed on upon transfer to a new holder.
 	var/list/data
 	/// increments everytime on_mob_life is called
 	var/current_cycle = 0
@@ -80,15 +80,11 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/penetrates_skin = VAPOR
 	/// See fermi_readme.dm REAGENT_DEAD_PROCESS, REAGENT_DONOTSPLIT, REAGENT_INVISIBLE, REAGENT_SNEAKYNAME, REAGENT_SPLITRETAINVOL, REAGENT_CANSYNTH, REAGENT_IMPURE
 	var/chemical_flags = NONE
-	///impure chem values (see fermi_readme.dm for more details on impure/inverse/failed mechanics):
-	/// What chemical path is made when metabolised as a function of purity
-	var/impure_chem = /datum/reagent/impurity
 	/// If the impurity is below 0.5, replace ALL of the chem with inverse_chem upon metabolising
 	var/inverse_chem_val = 0.25
 	/// What chem is metabolised when purity is below inverse_chem_val
 	var/inverse_chem = /datum/reagent/inverse
 	///what chem is made at the end of a reaction IF the purity is below the recipies purity_min at the END of a reaction only
-	var/failed_chem = /datum/reagent/consumable/failed_reaction
 	///Thermodynamic vars
 	///How hot this reagent burns when it's on fire - null means it can't burn
 	var/burning_temperature = null
@@ -174,7 +170,7 @@ Primarily used in reagents/reaction_agents
 
 /// Called when this reagent is removed while inside a mob
 /datum/reagent/proc/on_mob_delete(mob/living/L)
-	SEND_SIGNAL(L, COMSIG_CLEAR_MOOD_EVENT, "[type]_overdose")
+	L.clear_mood_event("[type]_overdose")
 	return
 
 /// Called when this reagent first starts being metabolized by a liver
@@ -200,7 +196,8 @@ Primarily used in reagents/reaction_agents
 
 /// Called after add_reagents creates a new reagent.
 /datum/reagent/proc/on_new(data)
-	return
+	if(data)
+		src.data = data
 
 /// Called when two reagents of the same are mixing.
 /datum/reagent/proc/on_merge(data, amount)
@@ -210,10 +207,6 @@ Primarily used in reagents/reaction_agents
 /datum/reagent/proc/on_update(atom/A)
 	return
 
-/// Called when the reagent container is hit by an explosion
-/datum/reagent/proc/on_ex_act(severity)
-	return
-
 /// Called if the reagent has passed the overdose threshold and is set to be triggering overdose effects
 /datum/reagent/proc/overdose_process(mob/living/M, delta_time, times_fired)
 	return
@@ -221,7 +214,7 @@ Primarily used in reagents/reaction_agents
 /// Called when an overdose starts
 /datum/reagent/proc/overdose_start(mob/living/M)
 	to_chat(M, span_userdanger("You feel like you took too much of [name]!"))
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[type]_overdose", /datum/mood_event/overdose, name)
+	M.add_mood_event("[type]_overdose", /datum/mood_event/overdose, name)
 	return
 
 /**
@@ -252,12 +245,37 @@ Primarily used in reagents/reaction_agents
 		creation_purity = src.creation_purity
 	return creation_purity / normalise_num_to
 
-/proc/pretty_string_from_reagent_list(list/reagent_list)
+/**
+ * Input a reagent_list, outputs pretty readable text!
+ * Default output will be formatted as
+ * * water, 5 | silicon, 6 | soup, 4 | space lube, 8
+ *
+ * * names_only will remove the amount displays, showing
+ * * water | silicon | soup | space lube
+ *
+ * * join_text will alter the text between reagents
+ * * setting to ", " will result in
+ * * water, 5, silicon, 6, soup, 4, space lube, 8
+ *
+ * * final_and should be combined with the above. will format as
+ * * water, 5, silicon, 6, soup, 4, and space lube, 8
+ *
+ * * capitalize_names will result in
+ * * Water, 5 | Silicon, 6 | Soup, 4 | Space lube, 8
+ *
+ * * * use (reagents.reagent_list, names_only, join_text = ", ", final_and, capitalize_names) for the formatting
+ * * * Water, Silicon, Soup, and Space Lube
+ */
+/proc/pretty_string_from_reagent_list(list/reagent_list, names_only, join_text = " | ", final_and, capitalize_names)
 	//Convert reagent list to a printable string for logging etc
-	var/list/rs = list()
-	for (var/datum/reagent/R in reagent_list)
-		rs += "[R.name], [R.volume]"
+	var/list/reagent_strings = list()
+	var/reagents_left = reagent_list.len
+	var/intial_list_length = reagents_left
+	for (var/datum/reagent/reagent as anything in reagent_list)
+		reagents_left--
+		if(final_and && intial_list_length > 1 && reagents_left == 0)
+			reagent_strings += "and [capitalize_names ? capitalize(reagent.name) : reagent.name][names_only ? null : ", [reagent.volume]"]"
+		else
+			reagent_strings += "[capitalize_names ? capitalize(reagent.name) : reagent.name][names_only ? null : ", [reagent.volume]"]"
 
-	return rs.Join(" | ")
-
-
+	return reagent_strings.Join(join_text)

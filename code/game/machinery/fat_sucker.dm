@@ -37,7 +37,7 @@
 	. = ..()
 
 /obj/machinery/fat_sucker/RefreshParts()
-	..()
+	. = ..()
 	var/rating = 0
 	for(var/obj/item/stock_parts/micro_laser/L in component_parts)
 		rating += L.rating
@@ -99,7 +99,7 @@
 		to_chat(user, span_warning("The safety hatch has been disabled!"))
 
 /obj/machinery/fat_sucker/AltClick(mob/living/user)
-	if(!user.canUseTopic(src, BE_CLOSE))
+	if(!user.canUseTopic(src, be_close = TRUE))
 		return
 	if(user == occupant)
 		to_chat(user, span_warning("You can't reach the controls from inside!"))
@@ -153,7 +153,7 @@
 		playsound(loc, 'sound/machines/chime.ogg', 30, FALSE)
 	else
 		next_fact--
-	use_power(500)
+	use_power(active_power_usage)
 
 /obj/machinery/fat_sucker/proc/start_extracting()
 	if(state_open || !occupant || processing || !powered())

@@ -1,18 +1,10 @@
-/*
-//////////////////////////////////////
-
-Hallucigen
-
-	Very noticable.
-	Lowers resistance considerably.
-	Decreases stage speed.
-	Reduced transmittable.
-	Critical Level.
-
-Bonus
-	Makes the affected mob be hallucinated for short periods of time.
-
-//////////////////////////////////////
+/*Hallucigen
+ * Slightly increases stealth
+ * Lowers resistance tremendously
+ * Slightly decreases stage speed
+ * Slightly reduces transmissibility
+ * Critical level
+ * Bonus:Makes the affected mob be hallucinated for short periods of time.
 */
 
 /datum/symptom/hallucigen
@@ -69,4 +61,4 @@ Bonus
 					to_chat(M, span_userdanger("[pick("Oh, your head...", "Your head pounds.", "They're everywhere! Run!", "Something in the shadows...")]"))
 				else
 					to_chat(M, span_notice("[pick(healthy_messages)]"))
-			M.hallucination += (45 * power)
+			M.adjust_hallucinations(90 SECONDS * power)

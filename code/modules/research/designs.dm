@@ -24,7 +24,7 @@ other types of metals and chemistry for reagents).
 	/// Name of the created object
 	var/name = "Name"
 	/// Description of the created object
-	var/desc = "Desc"
+	var/desc = null
 	/// The ID of the design. Used for quick reference. Alphanumeric, lower-case, no symbols
 	var/id = DESIGN_ID_IGNORE
 	/// Bitflags indicating what machines this design is compatable with. ([IMPRINTER]|[AWAY_IMPRINTER]|[PROTOLATHE]|[AWAY_LATHE]|[AUTOLATHE]|[MECHFAB]|[BIOGENERATOR]|[LIMBGROWER]|[SMELTER])
@@ -37,8 +37,8 @@ other types of metals and chemistry for reagents).
 	var/build_path = null
 	/// List of reagents produced by this design. Currently only supported by the biogenerator.
 	var/list/make_reagents = list()
-	/// What category this design falls under. Used for sorting in production machines, mostly the mechfab.
-	var/list/category = null
+	/// What categories this design falls under. Used for sorting in production machines.
+	var/list/category = list()
 	/// List of reagents required to create one unit of the product.
 	var/list/reagents_list = list()
 	/// The maximum number of units of whatever is produced by this can be produced in one go.
@@ -75,7 +75,7 @@ other types of metals and chemistry for reagents).
 	for(var/i in materials) //Go through all of our materials, get the subsystem instance, and then replace the list.
 		var/amount = materials[i]
 		if(!istext(i)) //Not a category, so get the ref the normal way
-			var/datum/material/M =  GET_MATERIAL_REF(i)
+			var/datum/material/M = GET_MATERIAL_REF(i)
 			temp_list[M] = amount
 		else
 			temp_list[i] = amount
@@ -85,6 +85,13 @@ other types of metals and chemistry for reagents).
 	var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/research_designs)
 	sheet.send(user)
 	return sheet.icon_tag(id)
+
+/// Returns the description of the design
+/datum/design/proc/get_description()
+	var/obj/object_build_item_path = build_path
+
+	return isnull(desc) ? initial(object_build_item_path.desc) : desc
+
 
 ////////////////////////////////////////
 //Disks for transporting design datums//
