@@ -176,6 +176,7 @@
 #include "stomach.dm"
 #include "strippable.dm"
 #include "subsystem_init.dm"
+#include "suit_storage_icons.dm"
 #include "surgeries.dm"
 #include "teleporters.dm"
 #include "tgui_create_message.dm"
@@ -183,7 +184,6 @@
 #include "traitor.dm"
 #include "unit_test.dm"
 #include "wizard_loadout.dm"
-#include "suit_storage_icons.dm"
 #ifdef REFERENCE_TRACKING_DEBUG //Don't try and parse this file if ref tracking isn't turned on. IE: don't parse ref tracking please mr linter
 #include "find_reference_sanity.dm"
 #endif
