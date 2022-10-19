@@ -68,8 +68,12 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	if(isbot(owner))
+	if(istype(owner, /mob/living/simple_animal/bot))
 		var/mob/living/simple_animal/bot/bot_mob = owner
+		if(!(bot_mob.bot_mode_flags & BOT_MODE_ON))
+			return FALSE
+	if(istype(owner, /mob/living/basic/bot))
+		var/mob/living/basic/bot/bot_mob = owner
 		if(!(bot_mob.bot_mode_flags & BOT_MODE_ON))
 			return FALSE
 	return TRUE

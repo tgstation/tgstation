@@ -521,7 +521,7 @@
 				to_chat(user, span_notice("You start to pipe up [src]..."))
 				if(do_after(user, 40, target = src) && D.use(1))
 					to_chat(user, span_notice("You pipe up [src]."))
-					var/mob/living/simple_animal/bot/hygienebot/H = new(drop_location())
+					var/mob/living/basic/bot/hygienebot/H = new(drop_location())
 					H.name = created_name
 					qdel(src)
 			if(I.tool_behaviour == TOOL_SCREWDRIVER) //deconstruct

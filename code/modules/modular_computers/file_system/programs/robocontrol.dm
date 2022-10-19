@@ -66,7 +66,7 @@
 		botlist += list(newbot)
 
 	for(var/mob/living/basic/bot/basic_bot as anything in GLOB.basic_bots_list)
-		if(basic_bot.z != zlevel || !(basic_bot.bot_mode_flags & BOT_MODE_REMOTE_ENABLED)) //Only non-emagged bots on the same Z-level are detected!
+		if(!is_valid_z_level(current_turf, get_turf(basic_bot)) || !(basic_bot.bot_mode_flags & BOT_MODE_REMOTE_ENABLED)) //Only non-emagged bots on the same Z-level are detected!
 			continue
 		if(computer && !basic_bot.check_access(user)) // Only check Bots we can access)
 			continue

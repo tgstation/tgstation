@@ -2,7 +2,6 @@
 /mob/living/basic/bot/hygienebot
 	name = "\improper Hygienebot"
 	desc = "A flying cleaning robot, he'll chase down people who can't shower properly!"
-	icon = 'icons/mob/aibots.dmi'
 	icon_state = "hygienebot"
 	base_icon_state = "hygienebot"
 	pass_flags = PASSMOB | PASSFLAPS | PASSTABLE
@@ -12,7 +11,7 @@
 	health = 100
 	maxHealth = 100
 
-	ai_controller = /datum/ai_controller/basic_controller/bot/hygiene
+	ai_controller = /datum/ai_controller/basic/bot/hygiene
 	maints_access_required = list(ACCESS_ROBOTICS, ACCESS_JANITOR)
 	radio_key = /obj/item/encryptionkey/headset_service
 	radio_channel = RADIO_CHANNEL_SERVICE //Service

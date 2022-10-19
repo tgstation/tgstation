@@ -1,7 +1,7 @@
 // AI (i.e. game AI, not the AI player) controlled bots
 /mob/living/basic/bot
 	name = "Bot"
-	icon = 'icons/mob/aibots.dmi'
+	icon = 'icons/mob/silicon/aibots.dmi'
 	icon_state = "hygienebot"
 	base_icon_state = "hygienebot"
 	layer = MOB_LAYER
