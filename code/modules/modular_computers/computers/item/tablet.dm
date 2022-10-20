@@ -37,6 +37,11 @@
 		/obj/item/clothing/mask/cigarette,
 	)
 
+/obj/item/modular_computer/tablet/Initialize(mapload)
+	. = ..()
+	if(inserted_item)
+		inserted_item = new inserted_item(src)
+
 /obj/item/modular_computer/tablet/update_icon_state()
 	if(has_variants && !bypass_state)
 		if(!finish_color)
@@ -378,6 +383,3 @@
 	if(loaded_cartridge)
 		var/obj/item/computer_hardware/hard_drive/portable/disk = new loaded_cartridge(src)
 		install_component(disk)
-
-	if(inserted_item)
-		inserted_item = new inserted_item(src)
