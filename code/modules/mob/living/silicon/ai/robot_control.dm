@@ -72,46 +72,47 @@
 	if(!is_interactable(usr))
 		return
 
-	var/mob/living/simple_animal/bot/bot
-	switch(action)
-		if("callbot") //Command a bot to move to a selected location.
-			if(owner.call_bot_cooldown > world.time)
-				to_chat(usr, span_danger("Error: Your last call bot command is still processing, please wait for the bot to finish calculating a route."))
-				return
-			bot = locate(params["ref"]) in GLOB.bots_list
-			owner.bot_ref = WEAKREF(bot)
-			if(!bot || !(bot.bot_mode_flags & BOT_MODE_REMOTE_ENABLED) || owner.control_disabled)
-				return
-			owner.waypoint_mode = TRUE
-			to_chat(usr, span_notice("Set your waypoint by clicking on a valid location free of obstructions."))
-			. = TRUE
-		if("interface") //Remotely connect to a bot!
-			bot = locate(params["ref"]) in GLOB.bots_list
-			owner.bot_ref = WEAKREF(bot)
-			if(!bot || !(bot.bot_mode_flags & BOT_MODE_REMOTE_ENABLED) || owner.control_disabled)
-				return
-			bot.attack_ai(usr)
-			. = TRUE
+	var/mob/living/simple_animal/bot/bot = locate(params["ref"]) in GLOB.bots_list
+	var/mob/living/basic/bot/basic_bot = locate(params["ref"]) in GLOB.basic_bots_list
 
-	var/mob/living/basic/bot/basic_bot
+	if(owner.control_disabled)
+		return
+
 	switch(action)
 		if("callbot") //Command a bot to move to a selected location.
 			if(owner.call_bot_cooldown > world.time)
 				to_chat(usr, span_danger("Error: Your last call bot command is still processing, please wait for the bot to finish calculating a route."))
 				return
-			basic_bot = locate(params["ref"]) in GLOB.basic_bots_list
-			owner.bot_ref = WEAKREF(basic_bot)
-			if(!basic_bot || !(basic_bot.bot_mode_flags & BOT_MODE_REMOTE_ENABLED) || owner.control_disabled)
+
+			if(bot)
+				owner.bot_ref = WEAKREF(bot)
+
+				if(bot.bot_mode_flags & BOT_MODE_REMOTE_ENABLED)
+					owner.waypoint_mode = TRUE
+					to_chat(usr, span_notice("Set your waypoint by clicking on a valid location free of obstructions."))
+					. = TRUE
+
+			else if(basic_bot)
+				owner.bot_ref = WEAKREF(basic_bot)
+
+				if(basic_bot.bot_mode_flags & BOT_MODE_REMOTE_ENABLED)
+					owner.waypoint_mode = TRUE
+					to_chat(usr, span_notice("Set your waypoint by clicking on a valid location free of obstructions."))
+					. = TRUE
+
+			else
 				return
-			owner.waypoint_mode = TRUE
-			to_chat(usr, span_notice("Set your waypoint by clicking on a valid location free of obstructions."))
-			. = TRUE
+
 		if("interface") //Remotely connect to a bot!
-			basic_bot = locate(params["ref"]) in GLOB.basic_bots_list
-			if(!basic_bot)
-				basic_bot = locate(params["ref"]) in GLOB.basic_bots_list
-			owner.bot_ref = WEAKREF(basic_bot)
-			if(!basic_bot || !(basic_bot.bot_mode_flags & BOT_MODE_REMOTE_ENABLED) || owner.control_disabled)
+			owner.bot_ref = WEAKREF(bot)
+			if(bot)
+				if(bot.bot_mode_flags & BOT_MODE_REMOTE_ENABLED)
+					bot.attack_ai(usr)
+					. = TRUE
+			else if(basic_bot)
+				if(basic_bot.bot_mode_flags & BOT_MODE_REMOTE_ENABLED)
+					basic_bot.attack_ai(usr)
+					. = TRUE
+			else
 				return
-			basic_bot.attack_ai(usr)
-			. = TRUE
+

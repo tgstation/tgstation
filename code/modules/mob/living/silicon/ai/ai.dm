@@ -564,15 +564,26 @@
 
 /mob/living/silicon/ai/proc/call_bot(turf/waypoint)
 	var/mob/living/simple_animal/bot/bot = bot_ref?.resolve()
-	if(!bot)
+	var/mob/living/basic/bot/basic_bot = bot_ref?.resolve()
+
+	if(istype(bot, /mob/living/simple_animal/bot))
+		if(bot.calling_ai && bot.calling_ai != src) //Prevents an override if another AI is controlling this bot.
+			to_chat(src, span_danger("Interface error. Unit is already in use."))
+			return
+		bot.call_bot(src, waypoint)
+
+	else if(istype(bot, /mob/living/basic/bot))
+		var/current_caller = basic_bot.ai_controller.blackboard[BB_BOT_CURRENT_SUMMONER]
+		if(isAI(current_caller) && current_caller != src) //Prevents an override if another AI is controlling this bot.
+			to_chat(src, span_danger("Interface error. Unit is already in use."))
+			return
+		basic_bot.call_bot(src, waypoint)
+
+	else
 		return
 
-	if(bot.calling_ai && bot.calling_ai != src) //Prevents an override if another AI is controlling this bot.
-		to_chat(src, span_danger("Interface error. Unit is already in use."))
-		return
 	to_chat(src, span_notice("Sending command to bot..."))
 	call_bot_cooldown = world.time + CALL_BOT_COOLDOWN
-	bot.call_bot(src, waypoint)
 	call_bot_cooldown = 0
 
 /mob/living/silicon/ai/proc/alarm_triggered(datum/source, alarm_type, area/source_area)

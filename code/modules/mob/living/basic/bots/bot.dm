@@ -33,7 +33,7 @@
 	///Bot-related cover flags on the Bot to deal with what has been done to their cover, including emagging.
 	var/bot_cover_flags = BOT_COVER_LOCKED
 	///Description of the current task of the bot. Set by the AI
-	var/current_status_description = "Inactive"
+	var/current_status_description = "Idle"
 
 	///The Robot arm attached to this robot - has a 50% chance to drop on death.
 	var/robot_arm = /obj/item/bodypart/r_arm/robot
@@ -102,13 +102,12 @@
 	QDEL_NULL(access_card)
 	return ..()
 
-
-///Sets the mode of the AI (so UI knows what its doing). If the first param is null it returns to inactive
+///Sets the mode of the AI (so UI knows what its doing). If the first param is null it returns to idle
 /mob/living/basic/bot/proc/set_current_behavior_description(new_status_description)
 	if(new_status_description)
 		current_status_description = new_status_description
 	else
-		current_status_description = "Inactive"
+		current_status_description = "Idle"
 
 /// Returns the current activity of the bot
 /mob/living/basic/bot/proc/get_current_behavior_description()
@@ -164,6 +163,22 @@
 	balloon_alert(src, "turned off")
 	update_appearance()
 
+/mob/living/basic/bot/proc/call_bot(caller, turf/waypoint, message = TRUE)
+	if(!istype(ai_controller, /datum/ai_controller/basic_controller/bot))
+		return //Cannot be called, we have no AI controller
+
+	var/datum/ai_controller/basic_controller/bot/bot_controller = ai_controller
+
+	bot_controller.call_bot(caller, waypoint, message)
+
+/mob/living/basic/bot/proc/reset_bot(caller, turf/waypoint, message = TRUE)
+	if(!istype(ai_controller, /datum/ai_controller/basic_controller/bot))
+		return //Cannot be called, we have no AI controller
+
+	var/datum/ai_controller/basic_controller/bot/bot_controller = ai_controller
+
+	bot_controller.reset_bot(caller, waypoint, message)
+
 /mob/living/basic/bot/Bump(atom/A) //Leave no door unopened!
 	. = ..()
 	if((istype(A, /obj/machinery/door/airlock) || istype(A, /obj/machinery/door/window)) && (!isnull(access_card)))
@@ -217,7 +232,6 @@
 		bot_cover_flags |= BOT_COVER_EMAGGED
 		bot_cover_flags &= ~BOT_COVER_LOCKED //Manually emagging the bot locks out the panel.
 		bot_mode_flags &= ~BOT_MODE_REMOTE_ENABLED //Manually emagging the bot also locks the AI from controlling it.
-		//bot_reset()
 		turn_on() //The bot automatically turns on when emagged, unless recently hit with EMP.
 		to_chat(src, span_userdanger("(#$*#$^^( OVERRIDE DETECTED"))
 		if(user)
@@ -287,13 +301,14 @@
 		///Make this into procs
 		if("patroloff")
 			bot_mode_flags &= ~BOT_MODE_AUTOPATROL
+			reset_bot()
 
 		if("patrolon")
 			bot_mode_flags |= BOT_MODE_AUTOPATROL
+			reset_bot()
 
 		if("summon")
-			//bot_reset()
-			//summon_target = get_turf(user)
+			call_bot(user, get_turf(user), FALSE)
 			if(user_access.len != 0)
 				access_card.set_access(user_access + base_access) //Adds the user's access, if any.
 			speak("Responding.", radio_channel)
@@ -371,7 +386,6 @@
 			bot_cover_flags ^= BOT_COVER_OPEN
 		if("patrol")
 			bot_mode_flags ^= BOT_MODE_AUTOPATROL
-			//bot_reset()
 		if("airplane")
 			bot_mode_flags ^= BOT_MODE_REMOTE_ENABLED
 		if("hack")
@@ -382,14 +396,12 @@
 				to_chat(usr, span_warning("You overload [src]'s [hackables]."))
 				message_admins("Safety lock of [ADMIN_LOOKUPFLW(src)] was disabled by [ADMIN_LOOKUPFLW(usr)] in [ADMIN_VERBOSEJMP(src)]")
 				usr.log_message("disabled safety lock of [src] in [AREACOORD(src)].", LOG_GAME)
-				//bot_reset()
 			else if(!(bot_cover_flags & BOT_COVER_HACKED))
 				to_chat(usr, span_boldannounce("You fail to repair [src]'s [hackables]."))
 			else
 				bot_cover_flags &= ~(BOT_COVER_EMAGGED|BOT_COVER_HACKED)
 				to_chat(usr, span_notice("You reset the [src]'s [hackables]."))
 				usr.log_message("re-enabled safety lock of [src] in [AREACOORD(src)].", LOG_GAME)
-				//bot_reset()
 		if("eject_pai")
 			if(paicard)
 				to_chat(usr, span_notice("You eject [paicard] from [initial(src.name)]."))

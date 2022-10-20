@@ -229,7 +229,8 @@
 ///Bot AI keys
 ///Base bot
 
-#define BB_BOT_WAS_SUMMONED "BB_was_summoned"
+#define BB_BOT_CURRENT_SUMMONER "BB_last_summoner"
+#define BB_BOT_SUMMON_WAYPOINT "BB_summon_waypoint"
 #define BB_BOT_CURRENT_PATROL_POINT "BB_current_patrol_point"
 
 ///Hygiene bot keys
