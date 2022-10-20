@@ -366,16 +366,16 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 	if(card_slot?.stored_card || card_slot2?.stored_card) // IDs get removed first before pAIs
 		context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove ID"
+		. = CONTEXTUAL_SCREENTIP_SET
 	else if(inserted_pai)
 		context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove pAI"
+		. = CONTEXTUAL_SCREENTIP_SET
 
 	if(all_components[MC_SDD])
 		context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB] = "Remove SSD"
-
-	if(all_components[MC_SDD] || card_slot?.stored_card || card_slot2?.stored_card || inserted_pai)
-		return CONTEXTUAL_SCREENTIP_SET
-	else
-		return NONE
+		. = CONTEXTUAL_SCREENTIP_SET
+	
+	return . || NONE
 
 /obj/item/modular_computer/update_icon_state()
 	if(!bypass_state)
