@@ -255,9 +255,9 @@ GLOBAL_LIST_EMPTY(species_list)
 	if(!target)
 		target = user
 	if(isnum(target))
-		CRASH("a do_after on [user] as the holder, and had a target set as [target]- probably intended to be the time instead.")
+		CRASH("a do_after created by [user] had a target set as [target]- probably intended to be the time instead.")
 	if(isatom(time))
-		CRASH("a do_after on [user] as the holder, and had a timer of [time]- probably intended to be the target instead.")
+		CRASH("a do_after created by [user] had a timer of [time]- probably intended to be the target instead.")
 
 	if(!interaction_key)
 		interaction_key = target //Use the direct ref to the target
