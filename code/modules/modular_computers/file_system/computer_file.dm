@@ -11,12 +11,7 @@
 	var/uid
 	///Static ID to ensure all IDs are unique.
 	var/static/file_uid = 0
-	///The hard drive that has this computer file stored.
-	var/obj/item/computer_hardware/hard_drive/holder
 	///The modular computer hosting the file.
-	var/obj/item/modular_computer/computer
-
-	///The computer hosting the application.
 	var/obj/item/modular_computer/computer
 
 /datum/computer_file/New()
