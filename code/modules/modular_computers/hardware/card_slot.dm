@@ -17,8 +17,7 @@
 		if(holder)
 			if(holder.active_program)
 				holder.active_program.event_idremoved(0)
-			for(var/p in holder.idle_threads)
-				var/datum/computer_file/program/computer_program = p
+			for(var/datum/computer_file/program/computer_program as anything in holder.idle_threads)
 				computer_program.event_idremoved(1)
 
 			holder.update_slot_icon()

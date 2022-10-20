@@ -348,13 +348,16 @@
 		for(var/datum/computer_file/program/messenger/msg in hdd.stored_files)
 			msg.mime_mode = TRUE
 			msg.allow_emojis = TRUE
+			msg.ringer_status = FALSE
 
 /obj/item/modular_computer/tablet/pda/curator
 	name = "curator PDA"
+	desc = "A small experimental microcomputer."
 	greyscale_config = null
 	greyscale_colors = null
 	icon_state = "pda-library"
 	inserted_item = /obj/item/pen/fountain
+	long_ranged = TRUE
 	default_applications = list(
 		/datum/computer_file/program/newscaster,
 	)
@@ -366,6 +369,7 @@
 	if(hdd)
 		for(var/datum/computer_file/program/messenger/msg in hdd.stored_files)
 			msg.allow_emojis = TRUE
+			msg.ringer_status = FALSE
 
 /**
  * No Department
@@ -386,11 +390,19 @@
 	greyscale_colors = "#891417#80FF80"
 	saved_identification = "John Doe"
 	saved_job = "Citizen"
-	invisible = TRUE
 	device_theme = "syndicate"
+
+/obj/item/modular_computer/tablet/pda/syndicate/Initialize(mapload)
+	. = ..()
+	var/obj/item/computer_hardware/hard_drive/hdd = all_components[MC_HDD]
+
+	if(hdd)
+		for(var/datum/computer_file/program/messenger/msg in hdd.stored_files)
+			msg.invisible = TRUE
 
 /obj/item/modular_computer/tablet/pda/clear
 	name = "clear PDA"
 	icon_state = "pda-clear"
 	greyscale_config = null
 	greyscale_colors = null
+	long_ranged = TRUE

@@ -446,6 +446,7 @@
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
 	taste_description = "mushroom"
 	ph = 11
+	overdose_threshold = 30
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/hallucinogens = 12)
 
@@ -501,6 +502,14 @@
 	var/atom/movable/plane_master_controller/game_plane_master_controller = psychonaut.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 	game_plane_master_controller.remove_filter("rainbow")
 	game_plane_master_controller.remove_filter("psilocybin_wave")
+
+/datum/reagent/drug/mushroomhallucinogen/overdose_process(mob/living/psychonaut, delta_time, times_fired)
+	. = ..()
+	if(DT_PROB(10, delta_time))
+		psychonaut.emote(pick("twitch","drool","moan"))
+
+	if(DT_PROB(10, delta_time))
+		psychonaut.apply_status_effect(/datum/status_effect/tower_of_babel)
 
 /datum/reagent/drug/blastoff
 	name = "bLaStOoF"

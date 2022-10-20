@@ -64,6 +64,11 @@
 	/// You will need to manage adding/removing from this yourself, but I'll do the updating for you
 	var/list/image/update_on_z
 
+	/// Lazylist of all overlays attached to us to update when we change z levels
+	/// You will need to manage adding/removing from this yourself, but I'll do the updating for you
+	/// Oh and note, if order of addition is important this WILL break that. so mind yourself
+	var/list/image/update_overlays_on_z
+
 	///Cooldown tick timer for buckle messages
 	var/buckle_message_cooldown = 0
 	///Last fingerprints to touch this atom
@@ -374,7 +379,8 @@
 	atom_storage = new cloning.type(src, cloning.max_slots, cloning.max_specific_storage, cloning.max_total_storage, cloning.numerical_stacking, cloning.allow_quick_gather, cloning.collection_mode, cloning.attack_hand_interact)
 
 	if(cloning.can_hold || cloning.cant_hold)
-		atom_storage.set_holdable(cloning.can_hold, cloning.cant_hold)
+		if(!atom_storage.can_hold && !atom_storage.cant_hold) //In the event that the can/can't hold lists are already in place (such as from storage objects added on initialize).
+			atom_storage.set_holdable(cloning.can_hold, cloning.cant_hold)
 
 	return atom_storage
 
@@ -1156,15 +1162,14 @@
  */
 /atom/proc/wash(clean_types)
 	SHOULD_CALL_PARENT(TRUE)
-
-	. = FALSE
 	if(SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, clean_types) & COMPONENT_CLEANED)
-		. = TRUE
+		return TRUE
 
 	// Basically "if has washable coloration"
 	if(length(atom_colours) >= WASHABLE_COLOUR_PRIORITY && atom_colours[WASHABLE_COLOUR_PRIORITY])
 		remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 		return TRUE
+	return FALSE
 
 /**
  * call back when a var is edited on this atom
@@ -2062,16 +2067,3 @@
 	if(caller && (caller.pass_flags & pass_flags_self))
 		return TRUE
 	. = !density
-
-/**
- * Starts cleaning something by sending the COMSIG_START_CLEANING signal.
- * This signal is received by the [cleaner component](code/datums/components/cleaner.html).
- *
- * Arguments
- * * source the datum to send the signal from
- * * target the thing being cleaned
- * * user the person doing the cleaning
- * * clean_target set this to false if the target should not be washed and if experience should not be awarded to the user
- */
-/atom/proc/start_cleaning(datum/source, atom/target, mob/living/user, clean_target = TRUE)
-	SEND_SIGNAL(source, COMSIG_START_CLEANING, target, user, clean_target)

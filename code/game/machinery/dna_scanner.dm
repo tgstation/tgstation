@@ -169,7 +169,7 @@
 
 /obj/item/disk/data/Initialize(mapload)
 	. = ..()
-	icon_state = "datadisk[rand(0,6)]"
+	icon_state = "datadisk[rand(0,7)]"
 	add_overlay("datadisk_gene")
 
 /obj/item/disk/data/debug

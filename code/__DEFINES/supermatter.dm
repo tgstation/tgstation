@@ -20,8 +20,6 @@
 #define CRITICAL_POWER_PENALTY_THRESHOLD 9000 //+1 bolt of electricity.
 #define HEAT_PENALTY_THRESHOLD 40 //Higher == Crystal safe operational temperature is higher.
 
-#define DAMAGE_HARDCAP 1.8
-
 #define THERMAL_RELEASE_MODIFIER 4 //Higher == less heat released during reaction, not to be confused with the above values
 #define PLASMA_RELEASE_MODIFIER 650 //Higher == less plasma released by reaction
 #define OXYGEN_RELEASE_MODIFIER 340 //Higher == less oxygen released at high temperature/power

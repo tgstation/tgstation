@@ -273,14 +273,22 @@
 	else
 		adjust_chemicals((chem_recharge_rate - chem_recharge_slowdown) * delta_time)
 
-/*
+/**
  * Signal proc for [COMSIG_MOB_MIDDLECLICKON] and [COMSIG_MOB_ALTCLICKON].
  * Allows the changeling to sting people with a click.
  */
 /datum/antagonist/changeling/proc/on_click_sting(mob/living/ling, atom/clicked)
 	SIGNAL_HANDLER
 
-	if(!chosen_sting || clicked == ling || !istype(ling) || ling.stat != CONSCIOUS)
+	// nothing to handle
+	if(!chosen_sting)
+		return
+	if(!isliving(ling) || clicked == ling || ling.stat != CONSCIOUS)
+		return
+	// sort-of hack done here: we use in_given_range here because it's quicker.
+	// actual ling stings do pathfinding to determine whether the target's "in range".
+	// however, this is "close enough" preliminary checks to not block click
+	if(!isliving(clicked) || !IN_GIVEN_RANGE(ling, clicked, sting_range))
 		return
 
 	INVOKE_ASYNC(chosen_sting, /datum/action/changeling/sting.proc/try_to_sting, ling, clicked)

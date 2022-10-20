@@ -133,6 +133,7 @@
 	name = "bananium energy shield"
 	desc = "A shield that stops most melee attacks, protects user from almost all energy projectiles, and can be thrown to slip opponents."
 	icon_state = "bananaeshield"
+	inhand_icon_state = "bananaeshield"
 	throw_speed = 1
 	force = 0
 	throwforce = 0

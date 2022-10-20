@@ -93,7 +93,3 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 	messages += "Crystalline hyperstructure returning to safe operating parameters. Failsafe has been disengaged."
 	messages += "remain before causality stabilization."
 	return messages
-
-/// Adjusts the damage and mole limit at which we start taking damage.
-/datum/sm_delam/proc/mole_power_damage_limit(obj/machinery/power/supermatter_crystal/sm)
-	return 1

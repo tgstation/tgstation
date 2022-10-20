@@ -36,9 +36,10 @@
 
 	target = get_ranged_target_turf(src, dir, 10)
 
-	trunk = locate() in loc
-	if(trunk)
-		trunk.linked = src // link the pipe trunk to self
+	var/obj/structure/disposalpipe/trunk/found_trunk = locate() in loc
+	if(found_trunk)
+		found_trunk.set_linked(src) // link the pipe trunk to self
+		trunk = found_trunk
 
 /obj/structure/disposaloutlet/Destroy()
 	if(trunk)

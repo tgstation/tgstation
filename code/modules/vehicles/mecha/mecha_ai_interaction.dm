@@ -98,7 +98,8 @@
 	AI.ai_restore_power()
 	mecha_flags |= SILICON_PILOT
 	moved_inside(AI)
-	AI.cancel_camera()
+	AI.eyeobj?.forceMove(src)
+	AI.eyeobj?.RegisterSignal(src, COMSIG_MOVABLE_MOVED, /mob/camera/ai_eye/proc/update_visibility)
 	AI.controlled_equipment = src
 	AI.remote_control = src
 	to_chat(AI, AI.can_dominate_mechs ? span_greenannounce("Takeover of [name] complete! You are now loaded onto the onboard computer. Do not attempt to leave the station sector!") :\

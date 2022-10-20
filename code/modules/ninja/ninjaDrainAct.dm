@@ -146,12 +146,15 @@
 /obj/machinery/computer/secure_data/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
 	if(!ninja || !hacking_module)
 		return NONE
+	if(!can_hack(ninja, feedback = TRUE))
+		return NONE
+
 	AI_notify_hack()
 	INVOKE_ASYNC(src, .proc/ninjadrain_charge, ninja, hacking_module)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/computer/secure_data/proc/ninjadrain_charge(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
-	if(!do_after(ninja, 20 SECONDS))
+	if(!do_after(ninja, 20 SECONDS, src, extra_checks = CALLBACK(src, .proc/can_hack, ninja)))
 		return
 	for(var/datum/data/record/rec in sort_record(GLOB.data_core.general, sortBy, order))
 		for(var/datum/data/record/security_record in GLOB.data_core.security)
@@ -162,6 +165,18 @@
 	var/datum/objective/security_scramble/objective = locate() in ninja_antag.objectives
 	if(objective)
 		objective.completed = TRUE
+
+/obj/machinery/computer/secure_data/proc/can_hack(mob/living/hacker, feedback = FALSE)
+	if(machine_stat & (NOPOWER|BROKEN))
+		if(feedback && hacker)
+			balloon_alert(hacker, "can't hack!")
+		return FALSE
+	var/area/console_area = get_area(src)
+	if(!console_area || !(console_area.area_flags & VALID_TERRITORY))
+		if(feedback && hacker)
+			balloon_alert(hacker, "signal too weak!")
+		return FALSE
+	return TRUE
 
 //COMMUNICATIONS CONSOLE//
 /obj/machinery/computer/communications/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)

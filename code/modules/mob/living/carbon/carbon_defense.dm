@@ -403,7 +403,7 @@
 		to_chat(helper, span_warning("You can't put [p_them()] out with just your bare hands!"))
 		return
 
-	if(SEND_SIGNAL(src, COMSIG_CARBON_PRE_HELP_ACT, helper) & COMPONENT_BLOCK_HELP_ACT)
+	if(SEND_SIGNAL(src, COMSIG_CARBON_PRE_MISC_HELP, helper) & COMPONENT_BLOCK_MISC_HELP)
 		return
 
 	if(helper == src)
