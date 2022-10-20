@@ -178,9 +178,9 @@
 	if(amount)
 		var/mutable_appearance/sparks = mutable_appearance('icons/effects/welding_effect.dmi', "welding_sparks", GASFIRE_LAYER, src, ABOVE_LIGHTING_PLANE)
 		target.add_overlay(sparks)
-		target.update_overlays_on_z += sparks
+		LAZYADD(update_overlays_on_z, sparks)
 		. = ..()
-		target.update_overlays_on_z -= sparks
+		LAZYREMOVE(update_overlays_on_z, sparks)
 		target.cut_overlay(sparks)
 	else
 		. = ..(amount=1)
