@@ -269,7 +269,7 @@
  * Unequips all held items.
  */
 /mob/living/silicon/robot/drop_all_held_items()
-	for(var/cyborg_slot in 1 to 3)
+	for(var/cyborg_slot in 1 to length(held_items))
 		if(!held_items[cyborg_slot])
 			continue
 		unequip_module_from_slot(held_items[cyborg_slot], cyborg_slot)
