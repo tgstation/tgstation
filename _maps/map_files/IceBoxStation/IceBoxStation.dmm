@@ -48045,7 +48045,10 @@
 /area/station/hallway/secondary/service)
 "oGS" = (
 /obj/structure/table/wood,
-/obj/machinery/libraryscanner,
+/obj/machinery/libraryscanner{
+	pixel_y = 5;
+	pixel_x = -3
+	},
 /obj/effect/turf_decal/siding/wood/corner,
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/wood,
