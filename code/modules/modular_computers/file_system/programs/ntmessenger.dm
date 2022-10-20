@@ -27,7 +27,9 @@
 	/// even more wisdom from PDA.dm - "no everyone spamming" (prevents people from spamming the same message over and over)
 	var/last_text_everyone
 	/// Scanned photo for sending purposes.
-	var/datum/picture/picture
+	var/datum/picture/saved_image
+	/// Whether the user is invisible to the message list.
+	var/invisible = FALSE
 	/// Whether or not we allow emojis to be sent by the user.
 	var/allow_emojis = FALSE
 	/// Whether or not we're currently looking at the message list.
@@ -53,7 +55,7 @@
 	if(!istype(attacking_item, /obj/item/photo))
 		return FALSE
 	var/obj/item/photo/pic = attacking_item
-	computer.saved_image = pic.picture
+	saved_image = pic.picture
 	ProcessPhoto()
 	return TRUE
 
@@ -86,7 +88,7 @@
 		if(!drive)
 			continue
 		for(var/datum/computer_file/program/messenger/app in drive.stored_files)
-			if(!P.saved_identification || !P.saved_job || P.invisible || app.monitor_hidden)
+			if(!P.saved_identification || !P.saved_job || app.invisible || app.monitor_hidden)
 				continue
 			dictionary += P
 
@@ -96,8 +98,8 @@
 	return "[messenger.saved_identification] ([messenger.saved_job])"
 
 /datum/computer_file/program/messenger/proc/ProcessPhoto()
-	if(computer.saved_image)
-		var/icon/img = computer.saved_image.picture_image
+	if(saved_image)
+		var/icon/img = saved_image.picture_image
 		var/deter_path = "tmp_msg_photo[rand(0, 99999)].png"
 		usr << browse_rsc(img, deter_path) // funny random assignment for now, i'll make an actual key later
 		photo_path = deter_path
@@ -194,7 +196,7 @@
 				return UI_UPDATE
 
 		if("PDA_clearPhoto")
-			computer.saved_image = null
+			saved_image = null
 			photo_path = null
 			return UI_UPDATE
 

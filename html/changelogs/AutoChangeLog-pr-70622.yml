@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - bugfix: "Fixes pressing a paper up to a camera while you are \"Unknown\"."

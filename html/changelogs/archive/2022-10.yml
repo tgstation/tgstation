@@ -687,3 +687,101 @@
       the codebase default that you run the Generate Job Configuration verb (in Server
       tab) in order to import all of your already set variables from jobs.txt. Please
       check to ensure that all of your wanted settings are present in the new file.'
+2022-10-20:
+  ATHATH:
+  - rscdel: Explosive holoparasites no longer have a 40% chance per punch to teleport
+      their victims up to 10 tiles away. They can now join the other holoparasite
+      types in partaking in the pastime of brutalizing the bleeding corpses of their
+      victims without worrying about accidentally teleporting them into a primary
+      hallway.
+  CCC23:
+  - rscadd: Added New way to purchase the autorifle and ammo to cargo
+  - balance: added more ballistics weapons to combat
+  Cass-Bitchcoin:
+  - bugfix: removed unrestricted helpers that directed you to be stuck in the service
+      hall
+  - qol: added unrestricted helpers in maintenance that lead into the bar
+  - qol: added unrestricted helpers that lead out of service hall
+  - bugfix: nudges book scanner to look better with the new sprite for it.
+  - bugfix: repositions a camera on icebox so that AI can operate an air alarm they
+      could not previously
+  GoblinBackwards:
+  - balance: You can no longer order new weakpoint locators/bombs if the originals
+      were destroyed.
+  - balance: The weakpoint objective requires both areas to be scanned before you
+      can blow up the weakpoint.
+  - bugfix: Fixes parts of the weakpoint locator description that were meant to say
+      the scan locations being missing.
+  - bugfix: You no longer get stuck standing still if a cryo cell you were inside
+      is broken.
+  - bugfix: Mining modsuits no longer sometimes get their inventory slots disabled
+      after recharging them by inserting plasma.
+  - rscdel: Removed the CO2 filters in Kilo/Icebox atmos that would pump CO2 back
+      into the scrubbers pipes.
+  JohnFulpWillard:
+  - bugfix: Shuttles are no longer part of the station, as they're god damn moving
+      ships.
+  - bugfix: Curator and Mime PDAs are now silent roundstart again.
+  LemonInTheDark:
+  - rscadd: You can now choke on cigarettes. Careful, those suckers can be nasty
+  Melbert:
+  - bugfix: Jellypeople (species) can consume food created by silver slimes
+  - bugfix: Fixes Nightmare heart revival causing their other organs to not realize
+      they're no longer dead on the same tick.
+  - bugfix: Attempting to move around while in a state of non-existence will not give
+      you a message saying you're buckled to the concept of non-existence
+  Mothblocks:
+  - qol: Removed some doorjack chat messages that already have a balloon alert.
+  - bugfix: Fixed problems relating to detaching items from training toolboxes.
+  Paxilmaniac:
+  - bugfix: stone stairs placed side by side will now actually line up in spriting
+  - bugfix: I forgor to remove the ability to build material stairs without a stairs
+      frame when I added the whole frame system, this has been fixed, use a stairs
+      frame made of wood or iron now.
+  Profakos:
+  - spellcheck: Chitinous Armour's description reflects its protection values more
+      accurately.
+  RikuTheKiller:
+  - bugfix: Air alerts no longer prescribe you with breathing things you'll just die
+      from.
+  - qol: Air alerts now tell you that you've got a plasma tank in your survival box
+      if you're a plasmaman and don't say you have a gas mask in there, it's a breath
+      mask.
+  ShizCalev:
+  - bugfix: Fixed broken/missing gibs on the nature shuttle.
+  dopamiin:
+  - bugfix: The chaplain's backpack no longer hides behind hair, but instead extends
+      its spikes proudly.
+  etherware-novice:
+  - bugfix: you can now clean storage items (toolbox) with soap
+  lizardqueenlexi:
+  - bugfix: made regenerate_organs() apply to external organs as well as internal
+      ones
+  san7890:
+  - qol: The voting system will now prevent you (and give a short message via the
+      tooltip) from starting a map vote when there are zero or one map choices available.
+  - qol: If there is only one map choice available, the map vote will automatically
+      change it to that map choice when the shuttle departs the station. It has also
+      been made so that you may not rock the vote after this point if it has been
+      auto-rotated, since there was only ever once choice to begin with, making the
+      whole purpose of a vote useless.
+  timothymtorres:
+  - rscadd: Add tower of babel wizard event that makes people lose all their languages
+      and gain a randomized one.  The wizard however gains the ability to speak all
+      languages.  Curators, chaplains, book of babel, and antimagic objects will prevent
+      babel effects.  Reading any type of language manual will also prevent it's effects.
+  - rscadd: Add bolt of babel to the list of projectiles that can be fired from staff
+      of chaos and magicarp.  Anyone hit by the bolt will suffer the same effects
+      from the tower of babel.
+  - rscadd: Staff of babel (formerly the staff of sapping) that spawns during spawn
+      magic wizard event.
+  - rscadd: Mushroom Hallucinogen overdose effect will temporarily and sporadically
+      make a person suffer the tower of babel effect and speak in random tongues.
+  - admin: New smite option "Curse of babel" that applies babel effect to a single
+      player for a limited duration (or set to -1 to apply INFINITE duration)
+  - admin: New admin verb in secrets for fun to trigger Tower of Babel event.  This
+      will apply the effects to all living players.  There is also another verb to
+      remove this effect.
+  - rscdel: Remove staff of sapping and bolt of sapping. These effects have been replaced
+      with staff of babel and bolt of babel.
+  - bugfix: Fix item icons for action buttons to be center aligned
