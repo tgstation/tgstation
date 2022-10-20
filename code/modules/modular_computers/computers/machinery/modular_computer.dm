@@ -113,13 +113,6 @@
 		return cpu.interact(user)
 	return ..()
 
-// Process currently calls handle_power(), may be expanded in future if more things are added.
-/obj/machinery/modular_computer/process(delta_time)
-	if(cpu)
-		// Keep names in sync.
-		cpu.name = name
-		cpu.process(delta_time)
-
 // Modular computers can have battery in them, we handle power in previous proc, so prevent this from messing it up for us.
 /obj/machinery/modular_computer/power_change()
 	if(cpu?.use_power()) // If it still has a power source, PC wouldn't go offline.
