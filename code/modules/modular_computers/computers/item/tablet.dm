@@ -243,7 +243,7 @@
 /obj/item/modular_computer/tablet/integrated/install_default_programs()
 	for(var/programs in starting_programs)
 		var/datum/computer_file/program/program_type = new programs
-		store_file(new program_type)
+		store_file(program_type)
 		program_type.computer = physical
 
 /obj/item/modular_computer/tablet/integrated/Destroy()
