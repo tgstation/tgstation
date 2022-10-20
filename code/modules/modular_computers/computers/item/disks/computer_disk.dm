@@ -17,7 +17,31 @@
 	. = ..()
 	for(var/programs in starting_programs)
 		var/datum/computer_file/program/program_type = new programs
-		store_file(program_type)
+		add_file(program_type)
+
+/**
+ * add_file
+ *
+ * Attempts to add an already existing file to the computer disk, then adds that capacity to the used capicity.
+ */
+/obj/item/computer_disk/proc/add_file(datum/computer_file/file)
+	if((file.size + used_capacity) > max_capacity)
+		return FALSE
+	stored_files.Add(file)
+	used_capacity += file.size
+	return TRUE
+
+/**
+ * remove_file
+ *
+ * Removes an app from the stored_files list, then removes their size from the capacity.
+ */
+/obj/item/computer_disk/proc/remove_file(datum/computer_file/file)
+	if(!(file in stored_files))
+		return FALSE
+	stored_files.Cut(file)
+	used_capacity -= file.size
+	return TRUE
 
 /obj/item/computer_disk/advanced
 	name = "advanced data disk"

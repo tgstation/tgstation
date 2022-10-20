@@ -180,9 +180,9 @@
 					return
 
 				if(sending_virus)
-					var/obj/item/computer_disk/virus/disk = inserted_disk
+					var/obj/item/computer_disk/virus/disk = computer.inserted_disk
 					if(istype(disk))
-						disk.send_virus(target, usr)
+						disk.send_virus(src, target, usr)
 						return UI_UPDATE
 
 				send_message(usr, list(target))
@@ -217,7 +217,7 @@
 	data["photo"] = photo_path
 	data["canSpam"] = spam_mode
 
-	var/obj/item/computer_disk/virus/disk = inserted_disk
+	var/obj/item/computer_disk/virus/disk = computer.inserted_disk
 	if(disk && istype(disk))
 		data["virus_attach"] = TRUE
 		data["sending_virus"] = sending_virus

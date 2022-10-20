@@ -15,10 +15,11 @@
 	uid = file_uid++
 
 /datum/computer_file/Destroy(force)
-	computer.remove_file(src)
-	if(computer && computer.active_program == src)
-		computer.kill_program(forced = TRUE)
-	computer = null
+	if(computer)
+		computer.remove_file(src)
+		if(computer && computer.active_program == src)
+			computer.kill_program(forced = TRUE)
+		computer = null
 	return ..()
 
 // Returns independent copy of this file.

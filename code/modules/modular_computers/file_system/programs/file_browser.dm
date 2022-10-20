@@ -31,7 +31,7 @@
 			var/datum/computer_file/file = computer.find_file_by_name(params["name"], computer.inserted_disk)
 			if(!file || file.undeletable)
 				return
-			remove_file(file, computer.inserted_disk)
+			computer.inserted_disk.remove_file(file)
 			return TRUE
 		if("PRG_renamefile")
 			var/datum/computer_file/file = computer.find_file_by_name(params["name"])
@@ -62,12 +62,12 @@
 			if(!F)
 				return
 			var/datum/computer_file/C = F.clone(FALSE)
-			computer.store_file(C, computer.inserted_disk)
+			computer.inserted_disk.add_file(C)
 			return TRUE
 		if("PRG_copyfromusb")
 			if(!computer.inserted_disk)
 				return
-			var/datum/computer_file/F = find_file_by_name(params["name"], computer.inserted_disk)
+			var/datum/computer_file/F = computer.find_file_by_name(params["name"], computer.inserted_disk)
 			if(!F || !istype(F))
 				return
 			var/datum/computer_file/C = F.clone(FALSE)
@@ -106,7 +106,7 @@
 		if(computer.inserted_disk)
 			data["usbconnected"] = TRUE
 			var/list/usbfiles = list()
-			for(var/datum/computer_file/F in computer.inserted_disk.stored_files)
+			for(var/datum/computer_file/F as anything in computer.inserted_disk.stored_files)
 				usbfiles += list(list(
 					"name" = F.filename,
 					"type" = F.filetype,

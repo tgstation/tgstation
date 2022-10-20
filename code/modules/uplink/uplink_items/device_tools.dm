@@ -122,7 +122,7 @@
 
 /datum/uplink_item/device_tools/frame/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
 	. = ..()
-	var/obj/item/computer_disk/virus/target = .
+	var/obj/item/computer_disk/virus/frame/target = .
 	if(!target)
 		return
 	target.current_progression = uplink_handler.progression_points

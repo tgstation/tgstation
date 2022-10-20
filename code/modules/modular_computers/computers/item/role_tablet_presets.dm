@@ -382,11 +382,9 @@
 
 /obj/item/modular_computer/tablet/pda/syndicate/Initialize(mapload)
 	. = ..()
-	var/obj/item/computer_hardware/hard_drive/hdd = all_components[MC_HDD]
-
-	if(hdd)
-		for(var/datum/computer_file/program/messenger/msg in hdd.stored_files)
-			msg.invisible = TRUE
+	var/datum/computer_file/program/messenger/msg = locate() in stored_files
+	if(msg)
+		msg.invisible = TRUE
 
 /obj/item/modular_computer/tablet/pda/clear
 	name = "clear PDA"

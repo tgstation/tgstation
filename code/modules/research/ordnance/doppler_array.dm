@@ -49,8 +49,8 @@
 	. += span_notice("It is currently facing [dir2text(dir)]")
 
 /obj/machinery/doppler_array/attackby(obj/item/item, mob/user, params)
-	if(istype(item, /obj/item/computer_hardware/hard_drive/portable))
-		var/obj/item/computer_hardware/hard_drive/portable/disk = item
+	if(istype(item, /obj/item/computer_disk))
+		var/obj/item/computer_disk/disk = item
 		eject_disk(user)
 		if(user.transferItemToLoc(disk, src))
 			inserted_disk = disk
@@ -86,7 +86,7 @@
 	record_data.explosion_record = record
 	record_data.possible_experiments = apply_experiments(record)
 
-	if(inserted_disk.store_file(record_data))
+	if(inserted_disk.add_file(record_data))
 		playsound(src, 'sound/machines/ping.ogg', 25)
 	else
 		playsound(src, 'sound/machines/terminal_error.ogg', 25)
@@ -218,7 +218,7 @@
 /obj/machinery/doppler_array/Exited(atom/movable/gone, direction)
 	if(gone == inserted_disk)
 		inserted_disk = null
-	. = ..()
+	return ..()
 
 /obj/machinery/doppler_array/powered()
 	if(panel_open)

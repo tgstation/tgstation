@@ -286,13 +286,15 @@
 	if(robotact)
 		return robotact
 	robotact = find_file_by_name("robotact")
-	if(!robotact)
-		stack_trace("Cyborg [silicon_owner] ( [silicon_owner.type] ) was somehow missing their self-manage app in their tablet. A new copy has been created.")
-		robotact = new(src)
-		if(!store_file(robotact))
-			qdel(robotact)
-			robotact = null
-			CRASH("Cyborg [silicon_owner]'s tablet hard drive rejected recieving a new copy of the self-manage app. To fix, check the hard drive's space remaining. Please make a bug report about this.")
+	if(robotact)
+		return robotact
+	stack_trace("Cyborg [silicon_owner] ( [silicon_owner.type] ) was somehow missing their self-manage app in their tablet. A new copy has been created.")
+	robotact = new(src)
+	if(store_file(robotact))
+		return robotact
+	qdel(robotact)
+	robotact = null
+	CRASH("Cyborg [silicon_owner]'s tablet hard drive rejected recieving a new copy of the self-manage app. To fix, check the hard drive's space remaining. Please make a bug report about this.")
 
 //Makes the light settings reflect the borg's headlamp settings
 /obj/item/modular_computer/tablet/integrated/cyborg/ui_data(mob/user)
@@ -385,7 +387,6 @@
 
 /obj/item/modular_computer/tablet/pda/Initialize(mapload)
 	. = ..()
-	install_component(new /obj/item/computer_hardware/hard_drive/small)
 	install_component(new /obj/item/computer_hardware/battery(src, /obj/item/stock_parts/cell/computer))
 	install_component(new /obj/item/computer_hardware/card_slot)
 

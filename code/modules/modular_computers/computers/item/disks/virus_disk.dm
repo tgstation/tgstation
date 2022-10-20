@@ -9,7 +9,7 @@
 	///How many charges the virus has left
 	var/charges = 5
 
-/obj/item/computer_disk/virus/proc/send_virus(obj/item/modular_computer/tablet/target, mob/living/user)
+/obj/item/computer_disk/virus/proc/send_virus(obj/item/modular_computer/tablet/source, obj/item/modular_computer/tablet/target, mob/living/user)
 	if(charges <= 0)
 		to_chat(user, span_notice("ERROR: Out of charges."))
 		return FALSE
@@ -26,14 +26,14 @@
 /obj/item/computer_disk/virus/clown
 	name = "\improper H.O.N.K. disk"
 
-/obj/item/computer_disk/virus/clown/send_virus(obj/item/modular_computer/tablet/target, mob/living/user)
+/obj/item/computer_disk/virus/clown/send_virus(obj/item/modular_computer/tablet/source, obj/item/modular_computer/tablet/target, mob/living/user)
 	. = ..()
 	if(!.)
 		return FALSE
 
 	user.show_message(span_notice("Success!"))
 	charges--
-	target.honkamnt = rand(15, 25)
+	target.honkvirus_amount = rand(15, 25)
 	return TRUE
 
 /**
@@ -43,7 +43,7 @@
 /obj/item/computer_disk/virus/mime
 	name = "\improper sound of silence disk"
 
-/obj/item/computer_disk/virus/mime/send_virus(obj/item/modular_computer/tablet/target, mob/living/user)
+/obj/item/computer_disk/virus/mime/send_virus(obj/item/modular_computer/tablet/source, obj/item/modular_computer/tablet/target, mob/living/user)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -64,7 +64,7 @@
 	name = "\improper D.E.T.O.M.A.T.attacking_item.X. disk"
 	charges = 6
 
-/obj/item/computer_disk/virus/detomatix/send_virus(obj/item/modular_computer/tablet/target, mob/living/user)
+/obj/item/computer_disk/virus/detomatix/send_virus(obj/item/modular_computer/tablet/source, obj/item/modular_computer/tablet/target, mob/living/user)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -75,15 +75,15 @@
 		charges--
 		return
 
-	var/original_host = holder
+	var/original_host = source
 	var/fakename = sanitize_name(tgui_input_text(user, "Enter a name for the rigged message.", "Forge Message", max_length = MAX_NAME_LEN), allow_numbers = TRUE)
-	if(!fakename || holder != original_host || !user.canUseTopic(holder, be_close = TRUE))
+	if(!fakename || source != original_host || !user.canUseTopic(source, be_close = TRUE))
 		return
 	var/fakejob = sanitize_name(tgui_input_text(user, "Enter a job for the rigged message.", "Forge Message", max_length = MAX_NAME_LEN), allow_numbers = TRUE)
-	if(!fakejob || holder != original_host || !user.canUseTopic(holder, be_close = TRUE))
+	if(!fakejob || source != original_host || !user.canUseTopic(source, be_close = TRUE))
 		return
 
-	var/datum/computer_file/program/messenger/app = locate() in holder.stored_files
+	var/datum/computer_file/program/messenger/app = locate() in source.stored_files
 	if(!app || charges <= 0 || !app.send_message(user, list(target), rigged = REF(user), fake_name = fakename, fake_job = fakejob))
 		return FALSE
 	charges--
