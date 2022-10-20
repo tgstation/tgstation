@@ -1,8 +1,8 @@
 GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar to GLOB.PDAs (used primarily with ntmessenger.dm)
 
 // This is the base type that does all the hardware stuff.
-// Other types expand it - tablets use a direct subtypes, and
-// consoles and laptops use "procssor" item that is held inside machinery piece
+// Other types expand it - tablets and laptops are subtypes
+// consoles use "procssor" item that is held inside it.
 /obj/item/modular_computer
 	name = "modular microcomputer"
 	desc = "A small portable microcomputer."
@@ -14,28 +14,38 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	armor = list(MELEE = 0, BULLET = 20, LASER = 20, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
 	light_system = MOVABLE_LIGHT_DIRECTIONAL
 
-	var/bypass_state = FALSE // bypassing the set icon state
-
-	var/enabled = 0 // Whether the computer is turned on.
-	var/upgradable = TRUE // whether or not the computer can be upgraded
-	var/deconstructable = TRUE // whether or not the computer can be deconstructed
-	var/screen_on = 1 // Whether the computer is active/opened/it's screen is on.
-	var/device_theme = "ntos" // Sets the theme for the main menu, hardware config, and file browser apps. Overridden by certain non-NT devices.
-	var/datum/computer_file/program/active_program = null // A currently active program running on the computer.
-	///The type of device this computer is, as a flag
+	///Flag of the type of device the modular computer is, deciding what types of apps it can run.
 	var/hardware_flag = NONE
-//	Options: PROGRAM_ALL PROGRAM_CONSOLE | | PROGRAM_LAPTOP | PROGRAM_TABLET
-	var/last_power_usage = 0
-	var/last_battery_percent = 0 // Used for deciding if battery percentage has chandged
-	var/last_world_time = "00:00"
-	var/list/last_header_icons
-	///Looping sound for when the computer is on
+//	Options: PROGRAM_ALL | PROGRAM_CONSOLE | PROGRAM_LAPTOP | PROGRAM_TABLET
+
+	///Whether the icon state should be bypassed entirely, used for PDAs.
+	var/bypass_state = FALSE
+	///The theme, used for the main menu, some hardware config, and file browser apps.
+	var/device_theme = "ntos"
+
+	///Bool on whether the computer is currently active or not.
+	var/enabled = FALSE
+	///If the screen is open, only used by laptops.
+	var/screen_on = TRUE
+
+	///Looping sound for when the computer is on.
 	var/datum/looping_sound/computer/soundloop
 	///Whether or not this modular computer uses the looping sound
 	var/looping_sound = TRUE
 
-	var/base_active_power_usage = 50 // Power usage when the computer is open (screen is active) and can be interacted with. Remember hardware can use power too.
-	var/base_idle_power_usage = 5 // Power usage when the computer is idle and screen is off (currently only applies to laptops)
+	///If the computer has a flashlight/LED light built-in.
+	var/has_light = FALSE
+	/// How far the computer's light can reach, is not editable by players.
+	var/comp_light_luminosity = 3
+	/// The built-in light's color, editable by players.
+	var/comp_light_color = "#FFFFFF"
+
+	///The last recorded amount of power used.
+	var/last_power_usage = 0
+	///Power usage when the computer is open (screen is active) and can be interacted with. Remember hardware can use power too.
+	var/base_active_power_usage = 50
+	///Power usage when the computer is idle and screen is off (currently only applies to laptops)
+	var/base_idle_power_usage = 5
 
 	// Modular computers can run on various devices. Each DEVICE (Laptop, Console, Tablet,..)
 	// must have it's own DMI file. Icon states must be called exactly the same in all files, but may look differently
@@ -45,11 +55,6 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	var/icon_state_powered = null // Icon state when the computer is turned on.
 	var/icon_state_menu = "menu" // Icon state overlay when the computer is turned on, but no program is loaded that would override the screen.
 	var/display_overlays = TRUE // If FALSE, don't draw overlays on this device at all
-	var/max_hardware_size = 0 // Maximal hardware w_class. Tablets/PDAs have 1, laptops 2, consoles 4.
-	var/steel_sheet_cost = 5 // Amount of steel sheets refunded when disassembling an empty frame of this computer.
-
-	/// Amount of programs that can be ran at once
-	var/max_idle_programs = 2
 
 	/// List of "connection ports" in this computer and the components with which they are plugged
 	var/list/all_components = list()
@@ -57,32 +62,35 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	var/list/expansion_bays
 	/// Number of total expansion bays this computer has available.
 	var/max_bays = 0
+	///The w_class (size) hardware it can handle, laptops get extra, computers get more.
+	var/max_hardware_size = 0
 
-	var/saved_identification = null // next two values are the currently imprinted id and job values
-	var/saved_job = null
+	///The full name of the stored ID card's identity. These vars should probably be on the PDA.
+	var/saved_identification
+	///The job title of the stored ID card
+	var/saved_job
 
+	///The program currently active on the tablet.
+	var/datum/computer_file/program/active_program
+	///Idle programs on background. They still receive process calls but can't be interacted with.
+	var/list/idle_threads
+	/// Amount of programs that can be ran at once
+	var/max_idle_programs = 2
+
+	///The 'computer' itself, as an obj. Primarily used for Adjacent() and UI visibility checks, especially for computers.
+	var/obj/physical
+	///Amount of steel sheets refunded when disassembling an empty frame of this computer.
+	var/steel_sheet_cost = 5
+
+	///A pAI currently loaded into the modular computer.
+	var/obj/item/pai_card/inserted_pai
 	/// Allow people with chunky fingers to use?
 	var/allow_chunky = FALSE
 
-	var/honkamnt = 0 /// honk honk honk honk honk honkh onk honkhnoohnk
+	///If hit by a Clown virus, remaining honks left until it stops.
+	var/honkvirus_amount = 0
 	///Whether the PDA can still use NTNet while out of NTNet's reach.
 	var/long_ranged = FALSE
-
-	var/list/idle_threads // Idle programs on background. They still receive process calls but can't be interacted with.
-	var/obj/physical = null // Object that represents our computer. It's used for Adjacent() and UI visibility checks.
-	var/has_light = FALSE //If the computer has a flashlight/LED light/what-have-you installed
-
-	/// How far the computer's light can reach, is not editable by players.
-	var/comp_light_luminosity = 3
-	/// The built-in light's color, editable by players.
-	var/comp_light_color = "#FFFFFF"
-
-	var/invisible = FALSE // whether or not the tablet is invisible in messenger and other apps
-
-	var/datum/picture/saved_image // the saved image used for messaging purpose like come on dude
-
-	/// Stored pAI in the computer
-	var/obj/item/pai_card/inserted_pai = null
 
 	///The amount of paper currently stored in the PDA
 	var/stored_paper = 10
@@ -742,7 +750,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 			return
 
 	// Insert new hardware
-	if(istype(attacking_item, /obj/item/computer_hardware) && upgradable)
+	if(istype(attacking_item, /obj/item/computer_hardware))
 		if(install_component(attacking_item, user))
 			playsound(src, 'sound/machines/card_slide.ogg', 50)
 			return
@@ -751,7 +759,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 /obj/item/modular_computer/screwdriver_act(mob/user, obj/item/tool)
 	. = ..()
-	if(!deconstructable)
+	if((resistance_flags & INDESTRUCTIBLE) || (flags_1 & NODECONSTRUCT_1))
 		return
 	if(!length(all_components))
 		balloon_alert(user, "no components installed!")

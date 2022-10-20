@@ -12,7 +12,7 @@
 
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
 	///A flag that describes this device type
-	var/hardware_flag = 0
+	var/hardware_flag = NONE
 	///Power usage during last tick
 	var/last_power_usage = 0
 	/// Amount of programs that can be ran at once

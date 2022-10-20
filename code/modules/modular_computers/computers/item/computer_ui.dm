@@ -40,8 +40,8 @@
 		to_chat(user, span_danger("\The [src] beeps three times, it's screen displaying a \"DISK ERROR\" warning."))
 		return // No HDD, No HDD files list or no stored files. Something is very broken.
 
-	if(honkamnt > 0) // EXTRA annoying, huh!
-		honkamnt--
+	if(honkvirus_amount > 0) // EXTRA annoying, huh!
+		honkvirus_amount--
 		playsound(src, 'sound/items/bikehorn.ogg', 30, TRUE)
 
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -58,8 +58,6 @@
 	data["show_imprint"] = istype(src, /obj/item/modular_computer/tablet/)
 
 	return data
-
-
 
 /obj/item/modular_computer/ui_data(mob/user)
 	var/list/data = get_header_data()
