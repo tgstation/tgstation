@@ -1849,6 +1849,7 @@
 /datum/crafting_recipe/pillow_hood
 	name = "pillow hood"
 	result = /obj/item/clothing/head/pillow_hood
+	tool_behaviors = list(TOOL_WIRECUTTER, TOOL_KNIFE)
 	time = 2 SECONDS
 	reqs = list(
 		/obj/item/stack/sticky_tape = 5,

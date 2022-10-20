@@ -82,12 +82,14 @@
 	pillow_trophy = null
 	balloon_alert(user, span_notice("tag removed"))
 	playsound(user,'sound/items/poster_ripped.ogg', 50)
-	update_state()
+	update_appearance()
 	
 
-/obj/item/pillow/proc/update_state()
-	desc = "A soft and fluffy pillow. You can smack someone with this! [tag_desc]"
-	icon_state = "pillow_[variation]"
+/obj/item/pillow/update_appearance(updates)
+	. = ..()
+	if(!pillow_trophy)
+		desc = "A soft and fluffy pillow. You can smack someone with this! [tag_desc]"
+		icon_state = "pillow_[variation]"
 
 /obj/item/pillow/random
 
@@ -142,7 +144,8 @@
 	desc = "daww look at that little clown!"
 	icon_state = "pillow_5_t"
 
-/obj/item/pillow/clown/update_state()
+/obj/item/pillow/clown/update_appearance(updates)
+	. = ..()
 	icon_state = "pillow_5"
 
 /obj/item/pillow/mime
@@ -150,5 +153,6 @@
 	desc = "daww look at that little mime!"
 	icon_state = "pillow_6_t"
 
-/obj/item/pillow/mime/update_state()
+/obj/item/pillow/mime/update_appearance(updates)
+	. = ..()
 	icon_state = "pillow_6"
