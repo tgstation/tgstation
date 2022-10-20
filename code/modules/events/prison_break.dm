@@ -23,11 +23,18 @@
 	announce_when = rand(50, 60)
 	end_when = rand(20, 40) //Chance for one or two flickers before everything opens
 	severity = rand(1,3)
+
+	var/list/areas_affected = list()
+
 	for(var/i in 1 to severity)
 		var/picked_area = pick_n_take(potential_areas)
+		areas_affected += picked_area
+
 		for(var/area/area_to_check in GLOB.sortedAreas)
 			if(istype(area_to_check, picked_area))
 				areas_to_open += area_to_check
+
+	message_admins("Grey Tide event has selected the following areas to open: [english_list(areas_affected)]") //This returns paths, not names. Trying to pull the area's name with .name doesn't work
 
 /datum/round_event/grey_tide/announce(fake)
 	priority_announce("Gr3y.T1d3 virus detected in [station_name()] secure locking encryption subroutines. Severity level of [severity]. Recommend station AI involvement.", "Security Alert") //It affects more than just doors!
@@ -58,8 +65,9 @@
 			else if(istype(object_to_open, /obj/machinery/status_display/door_timer))
 				var/obj/machinery/status_display/door_timer/prison_timer = object_to_open
 				prison_timer.timer_end(forced = TRUE)
-			else if(istype(object_to_open, /obj/machinery/light_switch))
-				var/obj/machinery/light_switch/switch_to_flick = object_to_open
-				if(area_to_open.lightswitch)
-					switch_to_flick.set_lights(FALSE) //Escape (or sneak into) under the cover of darkness
+			else if(istype(object_to_open, /obj/machinery/power/apc))
+				var/obj/machinery/power/apc/apc_to_trigger = object_to_open
+				apc_to_trigger.lighting = APC_CHANNEL_OFF
+				apc_to_trigger.update_appearance()
+				apc_to_trigger.update()
 
