@@ -326,7 +326,7 @@
 	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/caramel_popcorn
-	name ="Caramel popcorn"
+	name = "Caramel popcorn"
 	reqs = list(
 		/obj/item/food/popcorn = 1,
 		/datum/reagent/consumable/caramel = 3,
