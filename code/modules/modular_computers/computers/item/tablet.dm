@@ -37,6 +37,10 @@
 		/obj/item/clothing/mask/cigarette,
 	)
 
+/obj/item/modular_computer/tablet/Destroy()
+	QDEL_NULL(inserted_item)
+	return ..()
+
 /obj/item/modular_computer/tablet/update_icon_state()
 	if(has_variants && !bypass_state)
 		if(!finish_color)

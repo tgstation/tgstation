@@ -21,8 +21,6 @@
 /datum/computer_file/Destroy(force)
 	if(computer)
 		computer.remove_file(src)
-		if(computer && computer.active_program == src)
-			computer.kill_program(forced = TRUE)
 		computer = null
 	return ..()
 

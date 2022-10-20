@@ -152,6 +152,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		var/obj/item/computer_hardware/component = all_components[port]
 		qdel(component)
 	all_components?.Cut()
+	QDEL_NULL(inserted_disk)
 	//Some components will actually try and interact with this, so let's do it later
 	QDEL_NULL(soundloop)
 	QDEL_LIST(stored_files)
