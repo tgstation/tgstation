@@ -410,3 +410,14 @@
 	set_vehicle_dir_offsets(NORTH, movable_parent.pixel_x, 0)
 	set_vehicle_dir_offsets(EAST, movable_parent.pixel_x, 0)
 	set_vehicle_dir_offsets(WEST, movable_parent.pixel_x, 0)
+
+/datum/component/riding/creature/hugglebipper
+	can_be_driven = FALSE
+
+/datum/component/riding/creature/hugglebipper/handle_specials()
+	. = ..()
+	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 8), TEXT_SOUTH = list(0, 8), TEXT_EAST = list(-2, 8), TEXT_WEST = list(2, 8)))
+	set_vehicle_dir_layer(SOUTH, OBJ_LAYER)
+	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
+	set_vehicle_dir_layer(EAST, OBJ_LAYER)
+	set_vehicle_dir_layer(WEST, OBJ_LAYER)

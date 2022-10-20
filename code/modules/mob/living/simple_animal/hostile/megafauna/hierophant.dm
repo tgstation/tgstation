@@ -309,20 +309,20 @@ Difficulty: Hard
 		J = get_step(previousturf, set_dir)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/arena_trap(mob/victim) //trap a target in an arena
-	var/turf/T = get_turf(victim)
-	if(!istype(victim) || victim.stat == DEAD || !T || arena_cooldown > world.time)
+	var/turf/arena_center = get_turf(victim)
+	if(!istype(victim) || victim.stat == DEAD || !arena_center || arena_cooldown > world.time)
 		return
-	if((istype(get_area(T), /area/ruin/unpowered/hierophant) || istype(get_area(src), /area/ruin/unpowered/hierophant)) && victim != src)
+	if((istype(get_area(arena_center), /area/ruin/unpowered/hierophant) || istype(get_area(src), /area/ruin/unpowered/hierophant)) && victim != src)
 		return
 	update_cooldowns(list(COOLDOWN_UPDATE_SET_ARENA = arena_cooldown_time))
 	for(var/d in GLOB.cardinals)
-		INVOKE_ASYNC(src, .proc/arena_squares, T, d)
-	for(var/t in RANGE_TURFS(11, T))
-		if(t && get_dist(t, T) == 11)
-			new /obj/effect/temp_visual/hierophant/wall(t, src)
-			new /obj/effect/temp_visual/hierophant/blast/damaging(t, src, FALSE)
-	if(get_dist(src, T) >= 11) //hey you're out of range I need to get closer to you!
-		INVOKE_ASYNC(src, .proc/blink, T)
+		INVOKE_ASYNC(src, .proc/arena_squares, arena_center, d)
+	for(var/turf/turf in RIM_TURFS(11, 11, arena_center))
+		if(turf)
+			new /obj/effect/temp_visual/hierophant/wall(turf, src)
+			new /obj/effect/temp_visual/hierophant/blast/damaging(turf, src, FALSE)
+	if(get_dist(src, arena_center) >= 11) //hey you're out of range I need to get closer to you!
+		INVOKE_ASYNC(src, .proc/blink, arena_center)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/arena_squares(turf/T, set_dir) //make a fancy effect extending from the arena target
 	var/turf/previousturf = T

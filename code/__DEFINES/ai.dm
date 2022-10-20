@@ -232,3 +232,5 @@
 
 ///boolean. if true, hugglebipper won't attempt to stalk anymore, instead charging in.
 #define BB_HUGGLEBIPPER_STOP_STALKING "BB_hugglebipper_stop_stalking"
+///weakref of the destination turf. If a hugglebipper has this it will prioritize going there and dropping off contents if it has it
+#define BB_HUGGLEBIPPER_DROPOFF "BB_hugglebipper_dropoff"
