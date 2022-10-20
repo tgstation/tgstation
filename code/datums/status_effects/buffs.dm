@@ -366,7 +366,9 @@
 	chainsaw.attack_self(owner)
 
 	owner.log_message("entered a blood frenzy", LOG_ATTACK)
-	owner.reagents.add_reagent(/datum/reagent/medicine/adminordrazine, 25)
+	if(iscarbon(owner))
+		owner.reagents.add_reagent(/datum/reagent/medicine/adminordrazine, 25)
+
 	to_chat(owner, span_warning("KILL, KILL, KILL! YOU HAVE NO ALLIES ANYMORE, KILL THEM ALL!"))
 
 	var/datum/client_colour/colour = owner.add_client_colour(/datum/client_colour/bloodlust)
