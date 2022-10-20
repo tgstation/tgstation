@@ -3852,7 +3852,7 @@
 "vD" = (
 /obj/effect/turf_decal/weather/snow,
 /obj/item/modular_computer/tablet/pda/syndicate{
-	loaded_cartridge = /obj/item/computer_hardware/hard_drive/portable/virus/clown;
+	loaded_cartridge = /obj/item/computer_disk/virus/clown;
 	desc = "A portable microcomputer by Thinktronic Systems, LTD.";
 	name = "soviet tablet"
 	},
