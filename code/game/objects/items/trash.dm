@@ -156,7 +156,7 @@
 
 /obj/item/trash/caramel_popcorn
 	name = "empty caramel popcorn"
-	desc = "now it's not a sweet snack, but just a sticky bag..."
+	desc = "Now it's not a sweet snack, but just a sticky bag..."
 	icon_state = "empty_caramel_popcorn"
 
 /obj/item/trash/salty_popcorn
