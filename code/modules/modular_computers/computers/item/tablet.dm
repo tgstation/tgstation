@@ -244,7 +244,7 @@
 	for(var/programs in starting_programs)
 		var/datum/computer_file/program/program_type = new programs
 		store_file(program_type)
-		program_type.computer = physical
+		program_type.computer = src
 
 /obj/item/modular_computer/tablet/integrated/Destroy()
 	silicon_owner = null
@@ -366,7 +366,7 @@
 	for(var/programs as anything in default_programs + pda_programs+ starting_programs)
 		var/datum/computer_file/program/program_type = new programs
 		store_file(program_type)
-		program_type.computer = physical
+		program_type.computer = src
 	return ..()
 
 /obj/item/modular_computer/tablet/pda/update_overlays()

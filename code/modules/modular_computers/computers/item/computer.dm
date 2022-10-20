@@ -140,7 +140,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	for(var/programs in default_programs + starting_programs)
 		var/datum/computer_file/program/program_type = new programs
 		store_file(program_type)
-		program_type.computer = physical
+		program_type.computer = src
 
 /obj/item/modular_computer/Destroy()
 	STOP_PROCESSING(SSobj, src)
