@@ -1,4 +1,9 @@
-// Use this proc to add file to the drive. Returns 1 on success and 0 on failure. Contains necessary sanity checks.
+/**
+ * store_file
+ *
+ * Adds an already initialized file to the computer, checking if one already exists.
+ * Returns TRUE if successfully stored, FALSE otherwise.
+ */
 /obj/item/modular_computer/proc/store_file(datum/computer_file/file_storing)
 	if(!file_storing || !istype(file_storing))
 		return FALSE
@@ -12,11 +17,17 @@
 	SEND_SIGNAL(file_storing, COMSIG_MODULAR_COMPUTER_FILE_ADDING)
 	file_storing.computer = src
 	stored_files.Add(file_storing)
-	recalculate_size()
+	used_capacity += file_storing.size
 	SEND_SIGNAL(file_storing, COMSIG_MODULAR_COMPUTER_FILE_ADDED)
 	return TRUE
 
-// Use this proc to remove file from the drive. Returns 1 on success and 0 on failure. Contains necessary sanity checks.
+/**
+ * remove_file
+ *
+ * Removes a given file from the computer, if possible.
+ * Properly checking if the file even exists and is in the computer.
+ * Returns TRUE if successfully completed, FALSE otherwise
+ */
 /obj/item/modular_computer/proc/remove_file(datum/computer_file/file_removing)
 	if(!file_removing || !istype(file_removing))
 		return FALSE
@@ -29,19 +40,17 @@
 
 	SEND_SIGNAL(file_removing, COMSIG_MODULAR_COMPUTER_FILE_DELETING)
 	stored_files.Remove(file_removing)
-	recalculate_size()
+	used_capacity -= file_removing.size
 	SEND_SIGNAL(file_removing, COMSIG_MODULAR_COMPUTER_FILE_DELETED)
+	qdel(file_removing)
 	return TRUE
 
-// Loops through all stored files and recalculates used_capacity of this drive
-/obj/item/modular_computer/proc/recalculate_size()
-	var/total_size = 0
-	for(var/datum/computer_file/stored_files as anything in stored_files)
-		total_size += stored_files.size
-
-	used_capacity = total_size
-
-// Checks whether file can be stored on the hard drive. We can only store unique files, so this checks whether we wouldn't get a duplicity by adding a file.
+/**
+ * can_store_file
+ *
+ * Checks if a computer can store a file, as computers can only store unique files.
+ * returns TRUE if possible, FALSE otherwise.
+ */
 /obj/item/modular_computer/proc/can_store_file(datum/computer_file/file)
 	if(!file || !istype(file))
 		return FALSE
@@ -58,8 +67,13 @@
 
 	return TRUE
 
-
-// Tries to find the file by filename, will search a disk instead if there is one. Returns null on failure
+/**
+ * find_file_by_name
+ *
+ * Will check all applications in a tablet for files and, if they have \
+ * the same filename (disregarding extension), will return it.
+ * If a computer disk is passed instead, it will check the disk over the computer.
+ */
 /obj/item/modular_computer/proc/find_file_by_name(filename, obj/item/computer_disk/target_disk)
 	if(!filename)
 		return null

@@ -33,12 +33,6 @@
 		active_program.ui_interact(user)
 		return
 
-	// We are still here, that means there is no program loaded. Load the BIOS/ROM/OS/whatever you want to call it.
-	// This screen simply lists available programs and user may select them.
-	if(!stored_files || !stored_files.len)
-		to_chat(user, span_danger("\The [src] beeps three times, it's screen displaying a \"DISK ERROR\" warning."))
-		return // No HDD, No HDD files list or no stored files. Something is very broken.
-
 	if(honkvirus_amount > 0) // EXTRA annoying, huh!
 		honkvirus_amount--
 		playsound(src, 'sound/items/bikehorn.ogg', 30, TRUE)
@@ -54,7 +48,7 @@
 	. = ..()
 	var/list/data = list()
 
-	data["show_imprint"] = istype(src, /obj/item/modular_computer/tablet/)
+	data["show_imprint"] = istype(src, /obj/item/modular_computer/tablet)
 
 	return data
 

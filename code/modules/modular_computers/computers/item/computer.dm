@@ -22,9 +22,10 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	var/used_capacity = 0
 	///List of stored files on this drive. DO NOT MODIFY DIRECTLY!
 	var/list/datum/computer_file/stored_files = list()
-	///List of programs the computer starts with, given on Initialize.
+
+	///Non-static list of programs the computer should recieve on Initialize.
 	var/list/datum/computer_file/starting_programs = list()
-	///Static list of default programs that come with ALL tablets.
+	///Static list of default programs that come with ALL computers, here so computers don't have to repeat this.
 	var/static/list/datum/computer_file/default_programs = list(
 		/datum/computer_file/program/computerconfig,
 		/datum/computer_file/program/ntnetdownload,

@@ -11,7 +11,7 @@
 	///List of stored files on this drive. DO NOT MODIFY DIRECTLY!
 	var/list/datum/computer_file/stored_files = list()
 
-	///List of stored files on this drive. DO NOT MODIFY DIRECTLY!
+	///List of all programs that the disk should start with.
 	var/list/datum/computer_file/starting_programs = list()
 
 /obj/item/computer_disk/Initialize(mapload)
