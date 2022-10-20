@@ -173,7 +173,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 		if(istype(inserted_pai)) // Remove pAI
 			user.put_in_hands(inserted_pai)
-			to_chat(user, span_notice("You remove [inserted_pai] from the [name]."))
+			balloon_alert(user, "removed pAI")
 			inserted_pai = null
 			return TRUE
 
