@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - bugfix: "Shuttles are no longer part of the station, as they're god damn moving ships."

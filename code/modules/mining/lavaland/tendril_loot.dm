@@ -444,6 +444,11 @@
 /obj/effect/immortality_talisman/attackby()
 	return
 
+/obj/effect/immortality_talisman/relaymove(mob/living/user, direction)
+	// Won't really come into play since our mob has notransform and cannot move,
+	// but regardless block all relayed moves, becuase no, you cannot move in the void.
+	return
+
 /obj/effect/immortality_talisman/singularity_pull()
 	return
 
