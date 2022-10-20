@@ -400,6 +400,8 @@
 		/mob/living/simple_animal/sloth/citrus,
 		/mob/living/simple_animal/sloth/paperwork,
 		/mob/living/simple_animal/soulscythe,
+		// DO NOT ADD NEW ENTRIES TO THIS LIST
+		// READ THE COMMENT ABOVE
 	)
 
 /datum/unit_test/simple_animal_freeze/Run()
