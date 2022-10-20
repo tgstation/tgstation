@@ -1,22 +1,36 @@
-/// The amount of thermal energy the spark has upon ignition.
-#define IGNITION_THERMAL_ENERGY 525000
-/// The heat capacity of the spark upon ignition.
-#define IGNITION_HEAT_CAPACITY 525
+/// The amount of thermal energy per litre the spark has upon ignition.
+#define IGNITION_THERMAL_ENERGY_DENSITY 7500
+/// The heat capacity per litre of the spark upon ignition.
+#define IGNITION_HEAT_CAPACITY_DENSITY 7.5
+/// The heat capacity per litre of the spark upon ignition when the igniter is a condenser.
+#define IGNITION_CONDENSER_HEAT_CAPACITY_DENSITY 2500
+/// The maximum volume the oxygen tank can be before the bomb is considered bulky.
+#define MAXIMUM_NORMAL_WEIGHT_VOLUME 6
 
 /obj/item/onetankbomb
-	name = "bomb"
+	name = "singletank grenade"
 	icon = 'icons/obj/atmospherics/tank.dmi'
 	inhand_icon_state = "assembly"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	throwforce = 5
-	w_class = WEIGHT_CLASS_BULKY
+	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 2
 	throw_range = 4
 	flags_1 = CONDUCT_1
 	var/status = FALSE   //0 - not readied //1 - bomb finished with welder
 	var/obj/item/assembly_holder/bombassembly = null   //The first part of the bomb is an assembly holder, holding an igniter+some device
 	var/obj/item/tank/bombtank = null //the second part of the bomb is a plasma tank
+	/// The heat capacity of the spark. A higher heat capacity will release a colder spark with the same thermal energy.
+	var/ignition_heat_capacity
+
+/obj/item/onetankbomb/Initialize(mapload, heat_capacity, volume, is_condenser)
+	. = ..()
+	ignition_heat_capacity = heat_capacity
+	if(volume > MAXIMUM_NORMAL_WEIGHT_VOLUME)
+		w_class = WEIGHT_CLASS_BULKY
+		name = "singletank bomb"
+	desc = "[is_condenser ? "Cools" : "Heats"] the gases in the tank."
 
 /obj/item/onetankbomb/Destroy()
 	bombassembly = null
@@ -85,7 +99,7 @@
 	sleep(10)
 	if(QDELETED(src))
 		return
-	bombtank.ignite() //if its not a dud, boom (or not boom if you made shitty mix) the ignite proc is below, in this file
+	bombtank.ignite(ignition_heat_capacity) //if its not a dud, boom (or not boom if you made shitty mix) the ignite proc is below, in this file
 	if(!status)
 		bombtank.release()
 
@@ -120,21 +134,37 @@
 /obj/item/tank/proc/bomb_assemble(obj/item/assembly_holder/assembly, mob/living/user)
 	//Check if either part of the assembly has an igniter, but if both parts are igniters, then fuck it
 	var/igniter_count = 0
+	var/obj/item/assembly/igniter/igniter
 	for(var/obj/item/assembly/attached_assembly as anything in assembly.assemblies)
 		if(isigniter(attached_assembly))
+			if(igniter_count > 1)
+				balloon_alert(user, "Too many igniters!")
+				return
 			igniter_count += 1
+			igniter = attached_assembly
 	if(LAZYLEN(assembly.assemblies) == igniter_count)
 		return
 
 	if((src in user.get_equipped_items(TRUE)) && !user.canUnEquip(src))
-		to_chat(user, span_warning("[src] is stuck to you!"))
+		balloon_alert(user, "[src] is stuck to you!")
 		return
 
 	if(!user.canUnEquip(assembly))
-		to_chat(user, span_warning("[assembly] is stuck to your hand!"))
+		balloon_alert(user, "[assembly] is stuck to your hand!")
 		return
 
-	var/obj/item/onetankbomb/bomb = new
+	if(!igniter)
+		balloon_alert(user, "The [src] has no igniters in it!")
+		return
+
+	var/volume = src.volume
+	var/igniter_heat_capacity_density = IGNITION_HEAT_CAPACITY_DENSITY
+	var/is_condenser_assembly = FALSE
+	if(istype(igniter, /obj/item/assembly/igniter/condenser))
+		igniter_heat_capacity_density = IGNITION_CONDENSER_HEAT_CAPACITY_DENSITY
+		is_condenser_assembly = TRUE
+
+	var/obj/item/onetankbomb/bomb = new(src, igniter_heat_capacity_density * volume, volume, is_condenser_assembly)
 	user.transferItemToLoc(src, bomb)
 	user.transferItemToLoc(assembly, bomb)
 
@@ -151,10 +181,13 @@
 	to_chat(user, span_notice("You attach [assembly] to [src]."))
 	return
 
-/obj/item/tank/proc/ignite() //This happens when a bomb is told to explode
+/obj/item/tank/proc/ignite(ignition_heat_capacity) //This happens when a bomb is told to explode
 	START_PROCESSING(SSobj, src)
 	var/datum/gas_mixture/our_mix = return_air()
-	our_mix.temperature = (our_mix.temperature * our_mix.heat_capacity() + IGNITION_THERMAL_ENERGY) / (our_mix.heat_capacity() + IGNITION_HEAT_CAPACITY)
+	var/temperature = our_mix.temperature
+	var/heat_capacity = our_mix.heat_capacity()
+	var/volume = our_mix.volume
+	our_mix.temperature = (temperature * heat_capacity + IGNITION_THERMAL_ENERGY_DENSITY * volume) / (heat_capacity + ignition_heat_capacity)
 
 /obj/item/tank/proc/release() //This happens when the bomb is not welded. Tank contents are just spat out.
 	var/datum/gas_mixture/our_mix = return_air()
@@ -170,5 +203,7 @@
 	else
 		return null
 
-#undef IGNITION_THERMAL_ENERGY
-#undef IGNITION_HEAT_CAPACITY
+#undef IGNITION_THERMAL_ENERGY_DENSITY
+#undef IGNITION_HEAT_CAPACITY_DENSITY
+#undef IGNITION_CONDENSER_HEAT_CAPACITY_DENSITY
+#undef MAXIMUM_NORMAL_WEIGHT_VOLUME
