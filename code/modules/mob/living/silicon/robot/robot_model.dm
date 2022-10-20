@@ -124,7 +124,7 @@
 		return
 	var/list/held_modules = cyborg.held_items.Copy()
 	var/active_module = cyborg.module_active
-	cyborg.uneq_all()
+	cyborg.drop_all_held_items()
 	modules = list()
 	for(var/obj/item/module in basic_modules)
 		add_module(module, FALSE, FALSE)
