@@ -1,0 +1,6 @@
+author: "Cass-Bitchcoin"
+delete-after: True
+changes: 
+  - bugfix: "removed unrestricted helpers that directed you to be stuck in the service hall"
+  - qol: "added unrestricted helpers in maintenance that lead into the bar"
+  - qol: "added unrestricted helpers that lead out of service hall"
