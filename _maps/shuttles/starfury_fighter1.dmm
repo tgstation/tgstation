@@ -51,6 +51,7 @@
 /obj/item/multitool,
 /obj/machinery/light/small/directional/west{
 	brightness = 3;
+	
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/sbc_fighter1)
