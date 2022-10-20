@@ -145,7 +145,7 @@ Difficulty: Hard
 
 /// Slams the ground around the source throwing back enemies caught nearby, delay is for the radius increase
 /mob/living/simple_animal/hostile/megafauna/wendigo/proc/wendigo_slam(range, delay, throw_range)
-	var/turf/origin = get_turf(source)
+	var/turf/origin = get_turf(src)
 	if(!origin)
 		return
 	var/list/all_turfs = RANGE_TURFS(range, origin)
@@ -156,10 +156,10 @@ Difficulty: Hard
 				continue
 			new /obj/effect/temp_visual/small_smoke/halfsecond(stomp_turf)
 			for(var/mob/living/target in stomp_turf)
-				if(target == source || target.throwing)
+				if(target == src || target.throwing)
 					continue
-				to_chat(target, span_userdanger("[source]'s ground slam shockwave sends you flying!"))
-				var/turf/thrownat = get_ranged_target_turf_direct(source, target, throw_range, rand(-10, 10))
+				to_chat(target, span_userdanger("[src]'s ground slam shockwave sends you flying!"))
+				var/turf/thrownat = get_ranged_target_turf_direct(src, target, throw_range, rand(-10, 10))
 				target.throw_at(thrownat, 8, 2, null, TRUE, force = MOVE_FORCE_OVERPOWERING, gentle = TRUE)
 				target.apply_damage(20, BRUTE, wound_bonus=CANT_WOUND)
 				shake_camera(target, 2, 1)
