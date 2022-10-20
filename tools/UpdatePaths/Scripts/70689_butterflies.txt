@@ -1,0 +1,3 @@
+#comment basic mob-ifies butterflies~
+
+/mob/living/simple_animal/butterfly : /mob/living/basic/butterfly{@OLD}
