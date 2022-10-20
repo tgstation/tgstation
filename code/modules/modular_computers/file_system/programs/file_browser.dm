@@ -18,8 +18,6 @@
 	if(.)
 		return
 
-	var/obj/item/computer_hardware/hard_drive/RHDD = computer.all_components[MC_SDD]
-
 	switch(action)
 		if("PRG_deletefile")
 			var/datum/computer_file/file = computer.find_file_by_name(params["name"])
@@ -28,12 +26,12 @@
 			computer.remove_file(file)
 			return TRUE
 		if("PRG_usbdeletefile")
-			if(!RHDD)
+			if(!computer.inserted_disk)
 				return
-			var/datum/computer_file/file = RHDD.find_file_by_name(params["name"])
+			var/datum/computer_file/file = computer.find_file_by_name(params["name"], computer.inserted_disk)
 			if(!file || file.undeletable)
 				return
-			RHDD.remove_file(file)
+			remove_file(file, computer.inserted_disk)
 			return TRUE
 		if("PRG_renamefile")
 			var/datum/computer_file/file = computer.find_file_by_name(params["name"])
@@ -46,9 +44,9 @@
 			file.filename = newname
 			return TRUE
 		if("PRG_usbrenamefile")
-			if(!RHDD)
+			if(!computer.inserted_disk)
 				return
-			var/datum/computer_file/file = RHDD.find_file_by_name(params["name"])
+			var/datum/computer_file/file = computer.find_file_by_name(params["name"], computer.inserted_disk)
 			if(!file)
 				return
 			var/newname = reject_bad_name(params["new_name"])
@@ -58,18 +56,18 @@
 			file.filename = newname
 			return TRUE
 		if("PRG_copytousb")
-			if(!RHDD)
+			if(!computer.inserted_disk)
 				return
 			var/datum/computer_file/F = computer.find_file_by_name(params["name"])
 			if(!F)
 				return
 			var/datum/computer_file/C = F.clone(FALSE)
-			computer.store_file(C)
+			computer.store_file(C, computer.inserted_disk)
 			return TRUE
 		if("PRG_copyfromusb")
-			if(!RHDD)
+			if(!computer.inserted_disk)
 				return
-			var/datum/computer_file/F = RHDD.find_file_by_name(params["name"])
+			var/datum/computer_file/F = find_file_by_name(params["name"], computer.inserted_disk)
 			if(!F || !istype(F))
 				return
 			var/datum/computer_file/C = F.clone(FALSE)
@@ -83,8 +81,6 @@
 
 /datum/computer_file/program/filemanager/ui_data(mob/user)
 	var/list/data = get_header_data()
-
-	var/obj/item/computer_hardware/hard_drive/portable/RHDD = computer.all_components[MC_SDD]
 	if(error)
 		data["error"] = error
 	if(!computer)
@@ -104,18 +100,18 @@
 				"size" = F.size,
 				"undeletable" = F.undeletable,
 				"alert_able" = noisy,
-				"alert_silenced" = silenced
+				"alert_silenced" = silenced,
 			))
 		data["files"] = files
-		if(RHDD)
+		if(computer.inserted_disk)
 			data["usbconnected"] = TRUE
 			var/list/usbfiles = list()
-			for(var/datum/computer_file/F in RHDD.stored_files)
+			for(var/datum/computer_file/F in computer.inserted_disk.stored_files)
 				usbfiles += list(list(
 					"name" = F.filename,
 					"type" = F.filetype,
 					"size" = F.size,
-					"undeletable" = F.undeletable
+					"undeletable" = F.undeletable,
 				))
 			data["usbfiles"] = usbfiles
 

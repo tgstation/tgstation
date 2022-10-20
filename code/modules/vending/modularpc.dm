@@ -9,7 +9,7 @@
 	vend_reply = "Game on!"
 	products = list(
 		/obj/item/computer_hardware/hard_drive = 4,
-		/obj/item/computer_hardware/hard_drive/portable = 8,
+		/obj/item/computer_disk = 8,
 		/obj/item/computer_hardware/hard_drive/small = 4,
 		/obj/item/computer_hardware/battery = 8,
 		/obj/item/modular_computer/laptop = 4,

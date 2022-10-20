@@ -168,13 +168,6 @@
 	w_class = WEIGHT_CLASS_TINY
 	custom_price = PAYCHECK_CREW * 2
 
-// Syndicate variant - very slight better
-/obj/item/computer_hardware/hard_drive/portable/syndicate
-	desc = "An efficient SSD for portable devices developed by a rival organisation."
-	power_usage = 8
-	max_capacity = 70
-	var/datum/antagonist/traitor/traitor_data // Syndicate hard drive has the user's data baked directly into it on creation
-
 /// For tablets given to nuke ops
 /obj/item/computer_hardware/hard_drive/small/nukeops
 	power_usage = 8

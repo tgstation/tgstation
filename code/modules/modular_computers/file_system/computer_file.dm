@@ -2,11 +2,13 @@
 	var/filename = "NewFile" // Placeholder. No spacebars
 	var/filetype = "XXX" // File full names are [filename].[filetype] so like NewFile.XXX in this case
 	var/size = 1 // File size in GQ. Integers only!
-	var/obj/item/modular_computer/computer
 	var/unsendable = FALSE // Whether the file may be sent to someone via NTNet transfer or other means.
 	var/undeletable = FALSE // Whether the file may be deleted. Setting to TRUE prevents deletion/renaming/etc.
 	var/uid // UID of this file
 	var/static/file_uid = 0
+
+	///The computer hosting the application.
+	var/obj/item/modular_computer/computer
 
 /datum/computer_file/New()
 	..()

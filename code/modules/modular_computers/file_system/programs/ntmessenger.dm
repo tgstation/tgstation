@@ -178,7 +178,7 @@
 					return
 
 				if(sending_virus)
-					var/obj/item/computer_hardware/hard_drive/portable/virus/disk = computer.all_components[MC_SDD]
+					var/obj/item/computer_disk/virus/disk = inserted_disk
 					if(istype(disk))
 						disk.send_virus(target, usr)
 						return UI_UPDATE
@@ -215,9 +215,9 @@
 	data["photo"] = photo_path
 	data["canSpam"] = spam_mode
 
-	var/obj/item/computer_hardware/hard_drive/portable/virus/disk = computer.all_components[MC_SDD]
-	if(disk)
-		data["virus_attach"] = istype(disk, /obj/item/computer_hardware/hard_drive/portable/virus)
+	var/obj/item/computer_disk/virus/disk = inserted_disk
+	if(disk && istype(disk))
+		data["virus_attach"] = TRUE
 		data["sending_virus"] = sending_virus
 
 	return data

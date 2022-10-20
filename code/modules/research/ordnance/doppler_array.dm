@@ -15,7 +15,7 @@
 	/// List of all explosion records in the form of /datum/data/tachyon_record
 	var/list/records = list()
 	/// Reference to a disk we are going to print to.
-	var/obj/item/computer_hardware/hard_drive/portable/inserted_disk
+	var/obj/item/computer_disk/inserted_disk
 
 	// Lighting system to better communicate the directions.
 	light_system = MOVABLE_LIGHT_DIRECTIONAL

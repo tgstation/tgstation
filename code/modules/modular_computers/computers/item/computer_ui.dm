@@ -89,7 +89,7 @@
 		)
 
 	data["removable_media"] = list()
-	if(all_components[MC_SDD])
+	if(inserted_disk)
 		data["removable_media"] += "Eject Disk"
 	var/datum/computer_file/program/ai_restorer/airestore_app = locate() in stored_files
 	if(airestore_app?.stored_card)
@@ -178,12 +178,11 @@
 			var/mob/user = usr
 			switch(param)
 				if("Eject Disk")
-					var/obj/item/computer_hardware/hard_drive/portable/portable_drive = all_components[MC_SDD]
-					if(!portable_drive)
+					if(!inserted_disk)
 						return
-					if(uninstall_component(portable_drive, usr))
-						user.put_in_hands(portable_drive)
-						playsound(src, 'sound/machines/card_slide.ogg', 50)
+					user.put_in_hands(inserted_disk)
+					inserted_disk = null
+					playsound(src, 'sound/machines/card_slide.ogg', 50)
 				if("intelliCard")
 					var/datum/computer_file/program/ai_restorer/airestore_app = locate() in stored_files
 					if(!airestore_app)

@@ -302,7 +302,7 @@
 
 /obj/item/modular_computer/tablet/pda/clown
 	name = "clown PDA"
-	loaded_cartridge = /obj/item/computer_hardware/hard_drive/portable/virus/clown
+	loaded_cartridge = /obj/item/computer_disk/virus/clown
 	icon_state = "pda-clown"
 	greyscale_config = null
 	greyscale_colors = null
@@ -319,7 +319,7 @@
 
 /obj/item/modular_computer/tablet/pda/clown/proc/AfterSlip(mob/living/carbon/human/M)
 	if (istype(M) && (M.real_name != saved_identification))
-		var/obj/item/computer_hardware/hard_drive/portable/virus/clown/cart = all_components[MC_SDD]
+		var/obj/item/computer_disk/virus/clown/cart = inserted_disk
 		if(istype(cart) && cart.charges < 5)
 			cart.charges++
 			playsound(src,'sound/machines/ping.ogg',30,TRUE)
@@ -329,7 +329,7 @@
 
 /obj/item/modular_computer/tablet/pda/mime
 	name = "mime PDA"
-	loaded_cartridge = /obj/item/computer_hardware/hard_drive/portable/virus/mime
+	loaded_cartridge = /obj/item/computer_disk/virus/mime
 	greyscale_config = /datum/greyscale_config/tablet/mime
 	greyscale_colors = "#FAFAFA#EA3232"
 	inserted_item = /obj/item/toy/crayon/mime

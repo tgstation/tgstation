@@ -138,7 +138,7 @@
 
 	if(T)
 		T.hotspot_expose(700,125)
-		if(istype(all_components[MC_SDD], /obj/item/computer_hardware/hard_drive/portable/virus/deto))
+		if(istype(inserted_disk, /obj/item/computer_disk/virus/detomatix))
 			explosion(src, devastation_range = -1, heavy_impact_range = 1, light_impact_range = 3, flash_range = 4)
 		else
 			explosion(src, devastation_range = -1, heavy_impact_range = -1, light_impact_range = 2, flash_range = 3)
@@ -383,8 +383,8 @@
 	install_component(new /obj/item/computer_hardware/card_slot)
 
 	if(loaded_cartridge)
-		var/obj/item/computer_hardware/hard_drive/portable/disk = new loaded_cartridge(src)
-		install_component(disk)
+		var/obj/item/computer_disk/disk = new loaded_cartridge(src)
+		inserted_disk = disk
 
 	if(inserted_item)
 		inserted_item = new inserted_item(src)

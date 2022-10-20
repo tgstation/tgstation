@@ -74,7 +74,7 @@
 	id = "portadrive_basic"
 	build_type = IMPRINTER | AWAY_IMPRINTER
 	materials = list(/datum/material/glass = 800)
-	build_path = /obj/item/computer_hardware/hard_drive/portable
+	build_path = /obj/item/computer_disk
 	category = list(
 		RND_CATEGORY_MODULAR_COMPUTERS + RND_SUBCATEGORY_MODULAR_COMPUTERS_PARTS
 	)
@@ -85,7 +85,7 @@
 	id = "portadrive_advanced"
 	build_type = IMPRINTER | AWAY_IMPRINTER
 	materials = list(/datum/material/glass = 1600)
-	build_path = /obj/item/computer_hardware/hard_drive/portable/advanced
+	build_path = /obj/item/computer_disk/advanced
 	category = list(
 		RND_CATEGORY_MODULAR_COMPUTERS + RND_SUBCATEGORY_MODULAR_COMPUTERS_PARTS
 	)
@@ -96,7 +96,7 @@
 	id = "portadrive_super"
 	build_type = IMPRINTER | AWAY_IMPRINTER
 	materials = list(/datum/material/glass = 3200)
-	build_path = /obj/item/computer_hardware/hard_drive/portable/super
+	build_path = /obj/item/computer_disk/super
 	category = list(
 		RND_CATEGORY_MODULAR_COMPUTERS + RND_SUBCATEGORY_MODULAR_COMPUTERS_PARTS
 	)

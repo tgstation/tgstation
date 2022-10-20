@@ -14,6 +14,8 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	armor = list(MELEE = 0, BULLET = 20, LASER = 20, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
 	light_system = MOVABLE_LIGHT_DIRECTIONAL
 
+	var/obj/item/computer_disk/inserted_disk
+
 	///The amount of storage space the computer starts with.
 	var/max_capacity = 128
 	///The amount of storage space we've got filled
@@ -413,13 +415,11 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	. = ..()
 	if(.)
 		return
-
-	var/obj/item/computer_hardware/hard_drive/ssd = all_components[MC_SDD]
-	if(!ssd)
+	if(!inserted_disk)
 		return
-	if(uninstall_component(ssd, usr))
-		user.put_in_hands(ssd)
-		playsound(src, 'sound/machines/card_slide.ogg', 50)
+	user.put_in_hands(inserted_disk)
+	inserted_disk = null
+	playsound(src, 'sound/machines/card_slide.ogg', 50)
 
 /obj/item/modular_computer/proc/turn_on(mob/user, open_ui = TRUE)
 	var/issynth = issilicon(user) // Robots and AIs get different activation messages.

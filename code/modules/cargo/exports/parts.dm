@@ -60,19 +60,19 @@
 /datum/export/modular_part/portabledrive/advanced
 	cost = CARGO_CRATE_VALUE * 0.4
 	unit_name = "advanced data disk"
-	export_types = list(/obj/item/computer_hardware/hard_drive/portable/advanced)
+	export_types = list(/obj/item/computer_disk/advanced)
 	include_subtypes = FALSE
 
 /datum/export/modular_part/portabledrive/super
 	cost = CARGO_CRATE_VALUE * 0.6
 	unit_name = "super data disk"
-	export_types = list(/obj/item/computer_hardware/hard_drive/portable/super)
+	export_types = list(/obj/item/computer_disk/super)
 	include_subtypes = FALSE
 
 /datum/export/modular_part/portabledrive/standard
 	cost = CARGO_CRATE_VALUE * 0.2
 	unit_name = "data disk"
-	export_types = list(/obj/item/computer_hardware/hard_drive/portable)
+	export_types = list(/obj/item/computer_disk)
 	include_subtypes = TRUE
 
 //Hard Drives
