@@ -65,8 +65,8 @@ SUBSYSTEM_DEF(verb_manager)
 
 		stack_trace("_queue_verb() returned false because it was given a deleted callback! [destroyed_string]")
 		return FALSE
-	if(!istext(incoming_callback.object) && QDELETED(incoming_callback.object)) //just in case the object is GLOBAL_PROC
 
+	if(!istext(incoming_callback.object) && QDELETED(incoming_callback.object)) //just in case the object is GLOBAL_PROC
 		var/destroyed_string
 		if(!incoming_callback.object)
 			destroyed_string = "callback.object is null."
