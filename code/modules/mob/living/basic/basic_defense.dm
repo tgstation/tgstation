@@ -38,12 +38,16 @@
 		to_chat(user, span_danger("You [response_harm_simple] [src]!"))
 		playsound(loc, attacked_sound, 25, TRUE, -1)
 
-		var/damage = rand(user.dna.species.punchdamagelow, user.dna.species.punchdamagehigh)
+		var/damage = get_human_punch_damage(user)
 
 		attack_threshold_check(damage)
 		log_combat(user, src, "attacked")
 		updatehealth()
 		return TRUE
+
+///returns how much damage a human punching does
+/mob/living/basic/proc/get_human_punch_damage(mob/living/carbon/human/puncher)
+	return rand(puncher.dna.species.punchdamagelow, puncher.dna.species.punchdamagehigh)
 
 /mob/living/basic/attack_hulk(mob/living/carbon/human/user)
 	. = ..()

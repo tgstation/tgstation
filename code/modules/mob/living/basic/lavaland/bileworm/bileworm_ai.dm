@@ -1,4 +1,4 @@
-/datum/ai_controller/basic_controller/bileworm
+/datum/ai_controller/basic/bileworm
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(),
 	)

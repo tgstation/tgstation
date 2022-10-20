@@ -3,12 +3,12 @@
 	name = "wisdom cow"
 	desc = "Known for its wisdom, shares it with all."
 	gold_core_spawnable = FALSE
-	ai_controller = /datum/ai_controller/basic_controller/cow/wisdom
+	ai_controller = /datum/ai_controller/basic/cow/wisdom
 
 /mob/living/basic/cow/wisdom/setup_eating()
 	return //cannot tame me! and I don't care about eatin' nothing, neither!
 
-/datum/ai_controller/basic_controller/cow/wisdom
+/datum/ai_controller/basic/cow/wisdom
 	//don't give a targetting datum
 	blackboard = list(
 		BB_BASIC_MOB_TIP_REACTING = FALSE,

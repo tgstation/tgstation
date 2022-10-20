@@ -17,7 +17,7 @@
 	combat_mode = TRUE
 	faction = list("stickman")
 
-	ai_controller = /datum/ai_controller/basic_controller/stickman
+	ai_controller = /datum/ai_controller/basic/stickman
 
 /mob/living/basic/stickman/Initialize(mapload)
 	. = ..()
@@ -25,7 +25,7 @@
 	AddElement(/datum/element/basic_body_temp_sensitive, cold_damage = 7.5, heat_damage = 7.5)
 	AddElement(/datum/element/atmos_requirements, list("min_oxy" = 5, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0), 7.5)
 
-/datum/ai_controller/basic_controller/stickman
+/datum/ai_controller/basic/stickman
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic()
 	)
@@ -67,14 +67,14 @@
 	melee_damage_upper = 5
 	attack_sound = 'sound/weapons/genhit1.ogg'
 
-	ai_controller = /datum/ai_controller/basic_controller/stickman/ranged
+	ai_controller = /datum/ai_controller/basic/stickman/ranged
 
 /mob/living/basic/stickman/ranged/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/death_drops, list(/obj/item/gun/ballistic/automatic/pistol/stickman))
 	AddElement(/datum/element/ranged_attacks, /obj/item/ammo_casing/c9mm, 'sound/misc/bang.ogg')
 
-/datum/ai_controller/basic_controller/stickman/ranged
+/datum/ai_controller/basic/stickman/ranged
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_ranged_attack_subtree/stickman

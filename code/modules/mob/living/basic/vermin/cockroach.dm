@@ -25,7 +25,7 @@
 	basic_mob_flags = DEL_ON_DEATH
 	faction = list("hostile")
 
-	ai_controller = /datum/ai_controller/basic_controller/cockroach
+	ai_controller = /datum/ai_controller/basic/cockroach
 
 	var/cockroach_cell_line = CELL_LINE_TABLE_COCKROACH
 
@@ -46,7 +46,7 @@
 	return FALSE
 
 
-/datum/ai_controller/basic_controller/cockroach
+/datum/ai_controller/basic/cockroach
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic()
 	)
@@ -78,14 +78,14 @@
 	obj_damage = 10
 	gold_core_spawnable = HOSTILE_SPAWN
 	faction = list("hostile")
-	ai_controller = /datum/ai_controller/basic_controller/cockroach/glockroach
+	ai_controller = /datum/ai_controller/basic/cockroach/glockroach
 	cockroach_cell_line = CELL_LINE_TABLE_GLOCKROACH
 
 /mob/living/basic/cockroach/glockroach/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/ranged_attacks, /obj/item/ammo_casing/glockroach)
 
-/datum/ai_controller/basic_controller/cockroach/glockroach
+/datum/ai_controller/basic/cockroach/glockroach
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/random_speech/cockroach,
 		/datum/ai_planning_subtree/simple_find_target,
@@ -113,7 +113,7 @@
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	faction = list("hostile")
 	sharpness = SHARP_POINTY
-	ai_controller = /datum/ai_controller/basic_controller/cockroach/hauberoach
+	ai_controller = /datum/ai_controller/basic/cockroach/hauberoach
 	cockroach_cell_line = CELL_LINE_TABLE_HAUBEROACH
 
 /mob/living/basic/cockroach/hauberoach/Initialize(mapload)
@@ -130,7 +130,7 @@
 		return TRUE
 	living_target.visible_message(span_notice("[living_target] squashes [cockroach], not even noticing its spike."), span_notice("You squashed [cockroach], not even noticing its spike."))
 	return FALSE
-/datum/ai_controller/basic_controller/cockroach/hauberoach
+/datum/ai_controller/basic/cockroach/hauberoach
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/random_speech/cockroach,
 		/datum/ai_planning_subtree/simple_find_target,

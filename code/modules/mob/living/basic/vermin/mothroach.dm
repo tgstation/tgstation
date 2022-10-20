@@ -32,7 +32,7 @@
 
 	faction = list("neutral")
 
-	ai_controller = /datum/ai_controller/basic_controller/mothroach
+	ai_controller = /datum/ai_controller/basic/mothroach
 
 /mob/living/basic/mothroach/Initialize(mapload)
 	. = ..()
@@ -64,7 +64,7 @@
 	else
 		playsound(loc, 'sound/voice/moth/scream_moth.ogg', 50, TRUE)
 
-/datum/ai_controller/basic_controller/mothroach
+/datum/ai_controller/basic/mothroach
 	blackboard = list()
 
 	ai_traits = STOP_MOVING_WHEN_PULLED

@@ -40,5 +40,5 @@
 			if(DT_PROB(1, delta_time))
 				affected_mob.visible_message(span_danger("[affected_mob] coughs up butterflies!"), \
 													span_userdanger("You cough up butterflies!"))
-				new /mob/living/simple_animal/butterfly(affected_mob.loc)
-				new /mob/living/simple_animal/butterfly(affected_mob.loc)
+				new /mob/living/basic/butterfly(affected_mob.loc)
+				new /mob/living/basic/butterfly(affected_mob.loc)

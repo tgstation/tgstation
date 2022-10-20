@@ -25,7 +25,7 @@
 	maxHealth = 50
 	gold_core_spawnable = FRIENDLY_SPAWN
 	blood_volume = BLOOD_VOLUME_NORMAL
-	ai_controller = /datum/ai_controller/basic_controller/sheep
+	ai_controller = /datum/ai_controller/basic/sheep
 
 	/// Were we sacrificed by cultists?
 	var/cult_converted = FALSE
@@ -79,7 +79,7 @@
 	if(.)
 		update_appearance(UPDATE_ICON)
 
-/datum/ai_controller/basic_controller/sheep
+/datum/ai_controller/basic/sheep
 	ai_traits = STOP_MOVING_WHEN_PULLED
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk

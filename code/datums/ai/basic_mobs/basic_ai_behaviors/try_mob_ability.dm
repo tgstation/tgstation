@@ -15,6 +15,7 @@
 	. = ..()
 	var/datum/weakref/weak_target = controller.blackboard[target_key]
 	var/mob/living/target = weak_target?.resolve()
+
 	if(QDELETED(target) || target.stat >= UNCONSCIOUS)
 		controller.blackboard[target_key] = null
 

@@ -26,7 +26,7 @@
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	can_be_held = TRUE
-	var/static/list/edibles = typecacheof(list(/mob/living/simple_animal/butterfly, /mob/living/basic/cockroach)) //list of atoms, however turfs won't affect AI, but will affect consumption.
+	var/static/list/edibles = typecacheof(list(/mob/living/basic/butterfly, /mob/living/basic/cockroach)) //list of atoms, however turfs won't affect AI, but will affect consumption.
 
 /mob/living/simple_animal/hostile/lizard/Initialize(mapload)
 	. = ..()

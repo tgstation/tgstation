@@ -21,7 +21,7 @@
 /turf/open/floor/engine/cult,
 /area/ruin/unpowered)
 "g" = (
-/mob/living/simple_animal/butterfly,
+/mob/living/basic/butterfly,
 /turf/open/floor/engine/cult,
 /area/ruin/unpowered)
 "h" = (

@@ -1,7 +1,7 @@
-/datum/ai_controller/basic_controller
+/datum/ai_controller/basic
 	movement_delay = 0.4 SECONDS
 
-/datum/ai_controller/basic_controller/TryPossessPawn(atom/new_pawn)
+/datum/ai_controller/basic/TryPossessPawn(atom/new_pawn)
 	if(!isbasicmob(new_pawn))
 		return AI_CONTROLLER_INCOMPATIBLE
 	var/mob/living/basic/basic_mob = new_pawn
@@ -13,13 +13,13 @@
 	return ..() //Run parent at end
 
 
-/datum/ai_controller/basic_controller/able_to_run()
+/datum/ai_controller/basic/able_to_run()
 	. = ..()
 	if(isliving(pawn))
 		var/mob/living/living_pawn = pawn
 		if(IS_DEAD_OR_INCAP(living_pawn))
 			return FALSE
 
-/datum/ai_controller/basic_controller/proc/update_speed(mob/living/basic/basic_mob)
+/datum/ai_controller/basic/proc/update_speed(mob/living/basic/basic_mob)
 	SIGNAL_HANDLER
 	movement_delay = basic_mob.cached_multiplicative_slowdown

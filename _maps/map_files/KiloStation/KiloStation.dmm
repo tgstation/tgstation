@@ -25922,7 +25922,7 @@
 /obj/structure/flora/bush/grassy/style_random,
 /obj/structure/flora/bush/lavendergrass/style_random,
 /obj/structure/flora/bush/leavy/style_random,
-/mob/living/simple_animal/butterfly,
+/mob/living/basic/butterfly,
 /turf/open/floor/grass,
 /area/station/hallway/primary/fore)
 "hsL" = (
@@ -51619,7 +51619,7 @@
 /obj/structure/flora/bush/lavendergrass/style_random,
 /obj/structure/flora/bush/fullgrass/style_random,
 /obj/structure/flora/bush/grassy/style_random,
-/mob/living/simple_animal/butterfly,
+/mob/living/basic/butterfly,
 /turf/open/floor/grass,
 /area/station/hallway/primary/fore)
 "oLG" = (

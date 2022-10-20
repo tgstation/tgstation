@@ -17,7 +17,7 @@
 	gold_core_spawnable = NO_SPAWN
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
-	ai_controller = /datum/ai_controller/basic_controller/cow/moonicorn
+	ai_controller = /datum/ai_controller/basic/cow/moonicorn
 	food_types = list(/obj/item/food/grown/galaxythistle)
 	tame_message = "nods with respect"
 	self_tame_message = "nod with respect"
@@ -42,7 +42,7 @@
 	///stop killing my FRIENDS
 	faction |= tamer.faction
 
-/datum/ai_controller/basic_controller/cow/moonicorn
+/datum/ai_controller/basic/cow/moonicorn
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/allow_items/moonicorn(),
 		BB_BASIC_MOB_TIP_REACTING = FALSE,

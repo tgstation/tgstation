@@ -26,7 +26,7 @@
 	//doesn't melee, at all.
 	//or move normally.
 
-	ai_controller = /datum/ai_controller/basic_controller/bileworm
+	ai_controller = /datum/ai_controller/basic/bileworm
 
 	///which action this mob will be given, subtypes have different attacks
 	var/attack_action_path = /datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/bileworm

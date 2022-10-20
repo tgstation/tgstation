@@ -75,7 +75,7 @@
 		/mob/living/basic/cow,
 		/mob/living/simple_animal/hostile/lizard,
 		/mob/living/simple_animal/pet/fox,
-		/mob/living/simple_animal/butterfly,
+		/mob/living/basic/butterfly,
 		/mob/living/simple_animal/pet/cat/cak,
 		/mob/living/simple_animal/pet/dog/breaddog,
 		/mob/living/simple_animal/chick,
