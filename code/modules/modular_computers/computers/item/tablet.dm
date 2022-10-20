@@ -37,8 +37,14 @@
 		/obj/item/clothing/mask/cigarette,
 	)
 
+/obj/item/modular_computer/tablet/Initialize(mapload)
+	. = ..()
+	if(inserted_item)
+		inserted_item = new inserted_item(src)
+
 /obj/item/modular_computer/tablet/Destroy()
-	QDEL_NULL(inserted_item)
+	if(inserted_item)
+		QDEL_NULL(inserted_item)
 	return ..()
 
 /obj/item/modular_computer/tablet/update_icon_state()
@@ -217,6 +223,7 @@
 	has_light = FALSE //tablet light button actually enables/disables the borg lamp
 	comp_light_luminosity = 0
 	has_variants = FALSE
+	inserted_item = null
 	starting_programs = list(
 		/datum/computer_file/program/messenger,
 	)
@@ -248,7 +255,6 @@
 	for(var/programs in starting_programs)
 		var/datum/computer_file/program/program_type = new programs
 		store_file(program_type)
-		program_type.computer = src
 
 /obj/item/modular_computer/tablet/integrated/Destroy()
 	silicon_owner = null
@@ -370,7 +376,6 @@
 	for(var/programs as anything in default_programs + pda_programs+ starting_programs)
 		var/datum/computer_file/program/program_type = new programs
 		store_file(program_type)
-		program_type.computer = src
 	return ..()
 
 /obj/item/modular_computer/tablet/pda/update_overlays()
@@ -397,6 +402,3 @@
 	if(loaded_cartridge)
 		var/obj/item/computer_disk/disk = new loaded_cartridge(src)
 		inserted_disk = disk
-
-	if(inserted_item)
-		inserted_item = new inserted_item(src)

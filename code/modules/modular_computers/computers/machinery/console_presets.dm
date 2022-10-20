@@ -18,7 +18,6 @@
 	for(var/programs in starting_programs)
 		var/datum/computer_file/program/program_type = new programs
 		cpu.store_file(program_type)
-		program_type.computer = cpu
 
 // ===== ENGINEERING CONSOLE =====
 /obj/machinery/modular_computer/console/preset/engineering

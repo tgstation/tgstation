@@ -99,6 +99,7 @@
 		/datum/computer_file/program/phys_scanner/chemistry,
 		/datum/computer_file/program/signal_commander,
 	)
+
 /obj/item/modular_computer/tablet/pda/heads/quartermaster
 	name = "quartermaster PDA"
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick

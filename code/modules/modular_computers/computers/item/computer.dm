@@ -140,25 +140,24 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	for(var/programs in default_programs + starting_programs)
 		var/datum/computer_file/program/program_type = new programs
 		store_file(program_type)
-		program_type.computer = src
 
 /obj/item/modular_computer/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	wipe_program(forced = TRUE)
 	for(var/datum/computer_file/program/idle as anything in idle_threads)
 		idle.kill_program(TRUE)
-	idle_threads.Cut()
 	for(var/port in all_components)
 		var/obj/item/computer_hardware/component = all_components[port]
 		qdel(component)
 	all_components?.Cut()
-	QDEL_NULL(inserted_disk)
 	//Some components will actually try and interact with this, so let's do it later
 	QDEL_NULL(soundloop)
 	QDEL_LIST(stored_files)
 	Remove_Messenger()
 
-	if(istype(inserted_pai))
+	if(inserted_disk)
+		QDEL_NULL(inserted_disk)
+	if(inserted_pai)
 		QDEL_NULL(inserted_pai)
 
 	physical = null
@@ -657,7 +656,6 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	kill_program(forced = TRUE)
 	for(var/datum/computer_file/program/P in idle_threads)
 		P.kill_program(forced = TRUE)
-		idle_threads.Remove(P)
 	if(looping_sound)
 		soundloop.stop()
 	if(physical && loud)
