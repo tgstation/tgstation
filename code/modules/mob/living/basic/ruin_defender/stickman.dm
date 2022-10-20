@@ -21,9 +21,21 @@
 
 /mob/living/basic/stickman/Initialize(mapload)
 	. = ..()
+	// String assoc list returns a cached list, so this is like a static list to pass into the element below.
+	var/list/habitable_atmos = string_assoc_list(list(
+		"min_oxy" = 5,
+		"max_oxy" = 0,
+		"min_plas" = 0,
+		"max_plas" = 1,
+		"min_co2" = 0,
+		"max_co2" = 5,
+		"min_n2" = 0,
+		"max_n2" = 0,
+	))
+
 	new /obj/effect/temp_visual/paper_scatter(get_turf(src))
 	AddElement(/datum/element/basic_body_temp_sensitive, cold_damage = 7.5, heat_damage = 7.5)
-	AddElement(/datum/element/atmos_requirements, list("min_oxy" = 5, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0), 7.5)
+	AddElement(/datum/element/atmos_requirements, atmos_requirements = habitable_atmos, unsuitable_atmos_damage = 7.5)
 
 /datum/ai_controller/basic_controller/stickman
 	blackboard = list(
@@ -71,7 +83,8 @@
 
 /mob/living/basic/stickman/ranged/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/death_drops, list(/obj/item/gun/ballistic/automatic/pistol/stickman))
+	var/static/list/stickman_drops = list(/obj/item/gun/ballistic/automatic/pistol/stickman)
+	AddElement(/datum/element/death_drops, stickman_drops)
 	AddElement(/datum/element/ranged_attacks, /obj/item/ammo_casing/c9mm, 'sound/misc/bang.ogg')
 
 /datum/ai_controller/basic_controller/stickman/ranged
