@@ -134,6 +134,8 @@
 #define BOT_PATROL "Patrolling"
 /// Summoned to a location
 #define BOT_SUMMON "Being summoned"
+/// Summoned to a location
+#define BOT_RESPONDING "Being summoned"
 /// Currently moving
 #define BOT_MOVING "Moving"
 

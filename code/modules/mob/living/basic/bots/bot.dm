@@ -104,7 +104,7 @@
 
 ///Sets the mode of the AI (so UI knows what its doing). If the first param is null it returns to idle
 /mob/living/basic/bot/proc/set_current_mode(new_mode)
-	if(new_status_description)
+	if(new_mode)
 		mode = new_mode
 	else
 		mode = BOT_IDLE

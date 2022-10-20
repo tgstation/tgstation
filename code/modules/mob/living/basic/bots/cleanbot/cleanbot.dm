@@ -10,7 +10,7 @@
 	health = 25
 	maxHealth = 25
 
-	ai_controller = /datum/ai_controller/basic_controller/bot/hygiene
+	ai_controller = /datum/ai_controller/basic_controller/bot/clean
 	maints_access_required = list(ACCESS_ROBOTICS, ACCESS_JANITOR)
 	radio_key = /obj/item/encryptionkey/headset_service
 	radio_channel = RADIO_CHANNEL_SERVICE //Service
@@ -100,8 +100,8 @@
 /mob/living/basic/bot/cleanbot/Initialize(mapload)
 	. = ..()
 
-	AddComponent(/datum/component/cleaner, CLEANBOT_CLEANING_TIME, \
-		on_cleaned_callback = CALLBACK(src, /atom/.proc/update_appearance, UPDATE_ICON))
+	AddComponent(/datum/component/cleaner, 1 SECONDS, \
+		on_cleaned_callback = CALLBACK(src, /proc/finish_cleaning))
 
 	update_targets()
 	update_appearance(UPDATE_ICON)
@@ -109,11 +109,11 @@
 	// Doing this hurts my soul, but simplebot access reworks are for another day.
 	var/datum/id_trim/job/jani_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/janitor]
 	access_card.add_access(jani_trim.access + jani_trim.wildcard_access)
-	prev_access = access_card.access.Copy()
+	base_access = access_card.access.Copy()
 
 	GLOB.janitor_devices += src
 
-/mob/living/simple_animal/bot/cleanbot/Destroy()
+/mob/living/basic/bot/cleanbot/Destroy()
 	GLOB.janitor_devices -= src
 	if(weapon)
 		var/atom/drop_loc = drop_location()
@@ -121,49 +121,55 @@
 		drop_part(weapon, drop_loc)
 	return ..()
 
-/mob/living/simple_animal/bot/cleanbot/proc/update_targets()
+/mob/living/basic/bot/cleanbot/explode()
+	var/atom/drop_loc = drop_location()
+	new /obj/item/reagent_containers/cup/bucket(drop_loc)
+	new /obj/item/assembly/prox_sensor(drop_loc)
+	return ..()
+
+/mob/living/basic/bot/cleanbot/proc/update_targets()
 	if(bot_cover_flags & BOT_COVER_EMAGGED) // When emagged, ignore cleanables and scan humans first.
 		target_types = list(/mob/living/carbon)
-		return
 
-	//main targets
-	target_types = list(
-		/obj/effect/decal/cleanable/oil,
-		/obj/effect/decal/cleanable/vomit,
-		/obj/effect/decal/cleanable/robot_debris,
-		/obj/effect/decal/cleanable/molten_object,
-		/obj/effect/decal/cleanable/food,
-		/obj/effect/decal/cleanable/ash,
-		/obj/effect/decal/cleanable/greenglow,
-		/obj/effect/decal/cleanable/dirt,
-		/obj/effect/decal/cleanable/insectguts,
-		/obj/effect/decal/remains,
-	)
-
-	if(janitor_mode_flags & CLEANBOT_CLEAN_BLOOD)
-		target_types += list(
-			/obj/effect/decal/cleanable/xenoblood,
-			/obj/effect/decal/cleanable/blood,
-			/obj/effect/decal/cleanable/trail_holder,
+	else
+		//main targets
+		target_types = list(
+			/obj/effect/decal/cleanable/oil,
+			/obj/effect/decal/cleanable/vomit,
+			/obj/effect/decal/cleanable/robot_debris,
+			/obj/effect/decal/cleanable/molten_object,
+			/obj/effect/decal/cleanable/food,
+			/obj/effect/decal/cleanable/ash,
+			/obj/effect/decal/cleanable/greenglow,
+			/obj/effect/decal/cleanable/dirt,
+			/obj/effect/decal/cleanable/insectguts,
+			/obj/effect/decal/remains,
 		)
 
-	if(janitor_mode_flags & CLEANBOT_CLEAN_PESTS)
-		target_types += list(
-			/mob/living/basic/cockroach,
-			/mob/living/simple_animal/mouse,
-		)
+		if(janitor_mode_flags & CLEANBOT_CLEAN_BLOOD)
+			target_types += list(
+				/obj/effect/decal/cleanable/xenoblood,
+				/obj/effect/decal/cleanable/blood,
+				/obj/effect/decal/cleanable/trail_holder,
+			)
 
-	if(janitor_mode_flags & CLEANBOT_CLEAN_DRAWINGS)
-		target_types += list(/obj/effect/decal/cleanable/crayon)
+		if(janitor_mode_flags & CLEANBOT_CLEAN_PESTS)
+			target_types += list(
+				/mob/living/basic/cockroach,
+				/mob/living/simple_animal/mouse,
+			)
 
-	if(janitor_mode_flags & CLEANBOT_CLEAN_TRASH)
-		target_types += list(
-			/obj/item/trash,
-			/obj/item/food/deadmouse,
-		)
+		if(janitor_mode_flags & CLEANBOT_CLEAN_DRAWINGS)
+			target_types += list(/obj/effect/decal/cleanable/crayon)
+
+		if(janitor_mode_flags & CLEANBOT_CLEAN_TRASH)
+			target_types += list(
+				/obj/item/trash,
+				/obj/item/food/deadmouse,
+			)
 
 	if(istype(ai_controller, /datum/ai_controller/basic_controller/bot/clean))
-		var/datum/ai_controller/basic_controller/bot/clean/cleanbot
+		var/datum/ai_controller/basic_controller/bot/clean/cleanbot = ai_controller
 		cleanbot.set_valid_targets(typecacheof(target_types))
 
 /mob/living/basic/bot/cleanbot/examine(mob/user)
@@ -223,7 +229,8 @@
 				continue
 
 			if(title_name in officers_titles)
-				commissioned = TRUE
+				if(istype(ai_controller, /datum/ai_controller/basic_controller/bot/clean))
+					ai_controller.blackboard[BB_BOT_IS_COMMISSIONED] = TRUE
 			if(title in prefixes)
 				name = title[title_name] + " [name]"
 			if(title in suffixes)
@@ -255,113 +262,35 @@
 		to_chat(user, span_danger("[src] buzzes and beeps."))
 	update_targets() //recalibrate target list
 
-/mob/living/simple_animal/bot/cleanbot/process_scan(atom/scan_target)
-	if(iscarbon(scan_target))
-		var/mob/living/carbon/scan_carbon = scan_target
-		if(!(scan_carbon in view(DEFAULT_SCAN_RANGE, src)))
-			return null
-		if(scan_carbon.stat == DEAD)
-			return null
-		if(scan_carbon.body_position != LYING_DOWN)
-			return null
-		return scan_carbon
-	if(is_type_in_typecache(scan_target, target_types))
-		return scan_target
-
-/mob/living/simple_animal/bot/cleanbot/handle_atom_del(atom/deleting_atom)
+/mob/living/basic/bot/cleanbot/handle_atom_del(atom/deleting_atom)
 	if(deleting_atom == weapon)
 		weapon = null
 		update_appearance(UPDATE_ICON)
 	return ..()
 
-/mob/living/simple_animal/bot/cleanbot/handle_automated_action()
-	. = ..()
-	if(!.)
-		return
-	if(mode == BOT_CLEANING)
-		return
-
-	if(bot_cover_flags & BOT_COVER_EMAGGED) //Emag functions
-		var/mob/living/carbon/victim = locate(/mob/living/carbon) in loc
-		if(victim && victim == target)
-			UnarmedAttack(victim, proximity_flag = TRUE) // Acid spray
-		if(isopenturf(loc) && prob(15)) // Wets floors and spawns foam randomly
-			UnarmedAttack(src, proximity_flag = TRUE)
-	else if(prob(5))
-		audible_message("[src] makes an excited beeping booping sound!")
-
-	if(ismob(target) && isnull(process_scan(target)))
-		target = null
-	if(!target)
-		target = scan(target_types)
-
-	if(!target && bot_mode_flags & BOT_MODE_AUTOPATROL) //Search for cleanables it can see.
-		switch(mode)
-			if(BOT_IDLE, BOT_START_PATROL)
-				start_patrol()
-			if(BOT_PATROL)
-				bot_patrol()
-	else if(target)
-		if(QDELETED(target) || !isturf(target.loc))
-			target = null
-			mode = BOT_IDLE
-			return
-
-		if(loc == get_turf(target))
-			if(check_bot(target))
-				shuffle = TRUE //Shuffle the list the next time we scan so we dont both go the same way.
-				path = list()
-			else
-				UnarmedAttack(target, proximity_flag = TRUE) //Rather than check at every step of the way, let's check before we do an action, so we can rescan before the other bot.
-				if(QDELETED(target)) //We done here.
-					target = null
-					mode = BOT_IDLE
-					return
-
-		if(!length(path)) //No path, need a new one
-			//Try to produce a path to the target, and ignore airlocks to which it has access.
-			path = get_path_to(src, target, 30, id=access_card)
-			if(!bot_move(target))
-				add_to_ignore(target)
-				target = null
-				path = list()
-				return
-			mode = BOT_MOVING
-		else if(!bot_move(target))
-			target = null
-			mode = BOT_IDLE
-			return
-
-
-
-/mob/living/simple_animal/bot/cleanbot/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
+/mob/living/basic/bot/cleanbot/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
 	if(ismopable(attack_target))
-		mode = BOT_CLEANING
 		update_icon_state()
 		. = ..()
-		target = null
-		mode = BOT_IDLE
 
 	else if(isitem(attack_target) || istype(attack_target, /obj/effect/decal))
 		visible_message(span_danger("[src] sprays hydrofluoric acid at [attack_target]!"))
 		playsound(src, 'sound/effects/spray2.ogg', 50, TRUE, -6)
 		attack_target.acid_act(75, 10)
-		target = null
+		finish_cleaning()
 	else if(istype(attack_target, /mob/living/basic/cockroach) || ismouse(attack_target))
 		var/mob/living/living_target = attack_target
 		if(!living_target.stat)
+			melee_attack(living_target)
 			visible_message(span_danger("[src] smashes [living_target] with its mop!"))
-			living_target.death()
-		target = null
+			if(!victim || victim.stat == DEAD)//cleanbots always finish the job
+				finish_cleaning()
 
 	else if(bot_cover_flags & BOT_COVER_EMAGGED) //Emag functions
 		if(iscarbon(attack_target))
 			var/mob/living/carbon/victim = attack_target
-			if(victim.stat == DEAD)//cleanbots always finish the job
-				target = null
-				return
 
 			victim.visible_message(
 				span_danger("[src] sprays hydrofluoric acid at [victim]!"),
@@ -382,23 +311,10 @@
 			victim.emote("scream")
 			playsound(src.loc, 'sound/effects/spray2.ogg', 50, TRUE, -6)
 			victim.acid_act(5, 100)
-		else if(attack_target == src) // Wets floors and spawns foam randomly
-			if(prob(75))
-				var/turf/open/current_floor = loc
-				if(istype(current_floor))
-					current_floor.MakeSlippery(TURF_WET_WATER, min_wet_time = 20 SECONDS, wet_time_to_add = 15 SECONDS)
-			else
-				visible_message(span_danger("[src] whirs and bubbles violently, before releasing a plume of froth!"))
-				new /obj/effect/particle_effect/fluid/foam(loc)
-
-/mob/living/simple_animal/bot/cleanbot/explode()
-	var/atom/drop_loc = drop_location()
-	new /obj/item/reagent_containers/cup/bucket(drop_loc)
-	new /obj/item/assembly/prox_sensor(drop_loc)
-	return ..()
+			finish_cleaning()
 
 // Variables sent to TGUI
-/mob/living/simple_animal/bot/cleanbot/ui_data(mob/user)
+/mob/living/basic/bot/cleanbot/ui_data(mob/user)
 	var/list/data = ..()
 
 	if(!(bot_cover_flags & BOT_COVER_LOCKED) || issilicon(user)|| isAdminGhostAI(user))
@@ -409,7 +325,7 @@
 	return data
 
 // Actions received from TGUI
-/mob/living/simple_animal/bot/cleanbot/ui_act(action, params)
+/mob/living/basic/bot/cleanbot/ui_act(action, params)
 	. = ..()
 	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !usr.has_unlimited_silicon_privilege))
 		return
@@ -424,3 +340,8 @@
 		if("clean_graffiti")
 			janitor_mode_flags ^= CLEANBOT_CLEAN_DRAWINGS
 	update_targets()
+
+
+/mob/living/basic/bot/cleanbot/proc/finish_cleaning()
+	update_appearance(UPDATE_ICON)
+	SEND_SIGNAL(src, COMSIG_AINOTIFY_CLEANBOT_FINISH_CLEANING, ai_controller, BB_CLEAN_BOT_TARGET, BB_TARGETTING_DATUM)

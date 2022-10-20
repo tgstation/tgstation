@@ -70,9 +70,15 @@
 
 ///Handles basic behavior for a bot (Primarily patrolling)
 /datum/ai_planning_subtree/core_bot_behaviors
+	COOLDOWN_DECLARE(reset_ignore_cooldown)
 
 /datum/ai_planning_subtree/core_bot_behaviors/SelectBehaviors(datum/ai_controller/controller, delta_time)
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
+
+	// occasionally reset our ignore list
+	if(COOLDOWN_FINISHED(src, reset_ignore_cooldown) && length(controller.blackboard[BB_IGNORE_LIST]))
+		COOLDOWN_START(src, reset_ignore_cooldown, AI_BOT_IGNORE_DURATION)
+		controller.blackboard[BB_IGNORE_LIST] = list()
 
 	if(controller.blackboard[BB_BOT_SUMMON_WAYPOINT])
 		controller.set_movement_target(get_turf(controller.blackboard[BB_BOT_SUMMON_WAYPOINT]), /datum/ai_movement/jps)
@@ -184,15 +190,6 @@
 	controller.blackboard[BB_BOT_CURRENT_SUMMONER] = null
 	controller.blackboard[BB_BOT_SUMMON_WAYPOINT] = null
 
-
-
-
-
-
-
-
-
-
 ///Looks for targets based on the specified targetting datum, and sets the target if something is found.
 /datum/ai_behavior/scan
 	behavior_flags = AI_BEHAVIOR_MOVE_AND_PERFORM
@@ -200,50 +197,47 @@
 	var/should_finish_after_scan = TRUE
 	var/scan_range = DEFAULT_SCAN_RANGE
 
-/datum/ai_behavior/find_filth/perform(delta_time, datum/ai_controller/controller, target_key, targetting_datum_key)
+/datum/ai_behavior/scan/perform(delta_time, datum/ai_controller/controller, target_key, targetting_datum_key)
 	. = ..()
 
-	var/mob/living/replacepawn = controller.pawn
+	var/mob/living/living_pawn = controller.pawn
 	var/datum/targetting_datum/targetting_datum = controller.blackboard[targetting_datum_key]
 
-	var/turf/current_turf = get_turf(replacepawn)
+	var/turf/current_turf = get_turf(living_pawn)
 
 	if(!current_turf)
 		return
 
 	var/list/adjacent = current_turf.get_atmos_adjacent_turfs(1)
 
-	for(var/turf/scan as anything in adjacent) //Let's see if there's something right next to us first!
-		if(check_bot(scan)) //Is there another bot there? Then let's just skip it
-			continue
-		var/final_result = targetting_datum.can_attack(replacepawn, scan)
+	for(var/turf/scanned_turf as anything in adjacent) //Let's see if there's something right next to us first!
+		for(var/atom/scan in scanned_turf)
+			var/final_result = targetting_datum.can_attack(living_pawn, scan)
+			if(final_result)
+				on_find_target(controller, target_key, final_result)
+
+	for(var/atom/scanned_atom as anything in reverseList(view(scan_range, living_pawn) - adjacent)) //Search for something in range, minus what we already checked.
+		var/final_result = targetting_datum.can_attack(living_pawn, scanned_atom)
 		if(final_result)
-			return final_result
-
-	for(var/turf/scanned_turfs as anything in shuffle(view(scan_range, src)) - adjacent) //Search for something in range, minus what we already checked.
-		if(check_bot(scanned_turfs)) //Is there another bot there? Then let's just skip it
-			continue
-		var/final_result = checkscan(scanned_turfs, scan_types, old_target)
-		if(final_result)
-			return final_result
-
-
-
-
-
-
-
-	for(var/mob/living/carbon/human/nearby_human in view(7, basic_bot)) //Find potential filthy people
-		if(targetting_datum.can_attack(basic_bot, nearby_human)) //They're a valid target for us
-			controller.blackboard[target_key] = nearby_human
-			basic_bot.speak("Unhygienic client found. Please stand still so I can clean you.")
-			basic_bot.visible_message("<b>[basic_bot]</b> points at [nearby_human.name]!")
-			controller.CancelActions()
-			break
+			on_find_target(controller, target_key, final_result)
 
 	if(should_finish_after_scan)
 		finish_action(controller, TRUE)
 
-	//Does not cancel on it's own by default
+/datum/ai_behavior/scan/proc/on_find_target(datum/ai_controller/controller, target_key, target)
+	controller.blackboard[target_key] = target
+	controller.CancelActions()
 
 
+/datum/ai_behavior/scan/constant
+	should_finish_after_scan = FALSE
+
+/datum/ai_behavior/force_bot_salute
+
+
+/datum/ai_behavior/force_bot_salute/perform(delta_time, datum/ai_controller/controller, ...)
+	. = ..()
+	for(var/mob/living/simple_animal/bot/B in view(5, src))
+		if(!B.commissioned && B.bot_mode_flags & BOT_MODE_ON)
+			B.visible_message("<b>[B]</b> performs an elaborate salute for [controller.pawn]!")
+			break

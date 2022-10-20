@@ -43,6 +43,9 @@
 #define BB_NEXT_HUNGRY "BB_NEXT_HUNGRY"
 ///what we're going to eat next
 #define BB_FOOD_TARGET "bb_food_target"
+///Objects to ignore due to them being unreachable
+#define BB_IGNORE_LIST "BB__IGNORE_LISTlist"
+
 
 //for songs
 
@@ -226,12 +229,17 @@
 #define BB_BILEWORM_DEVOUR "BB_bileworm_devour"
 
 
+/// After this long, the bots ignore list is reset
+#define AI_BOT_IGNORE_DURATION 30 SECONDS
+
 ///Bot AI keys
 ///Base bot
 
 #define BB_BOT_CURRENT_SUMMONER "BB_last_summoner"
 #define BB_BOT_SUMMON_WAYPOINT "BB_summon_waypoint"
 #define BB_BOT_CURRENT_PATROL_POINT "BB_current_patrol_point"
+#define BB_BOT_IS_COMMISSIONED "BB_bot_is_commissioned"
+
 
 ///Hygiene bot keys
 #define BB_HYGIENE_BOT_TARGET "BB_hygiene_bot_target"

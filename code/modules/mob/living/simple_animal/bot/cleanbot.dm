@@ -1,5 +1,3 @@
-#define CLEANBOT_CLEANING_TIME (1 SECONDS)
-
 //Cleanbot
 /mob/living/simple_animal/bot/cleanbot
 	name = "\improper Cleanbot"
@@ -98,7 +96,7 @@
 /mob/living/simple_animal/bot/cleanbot/Initialize(mapload)
 	. = ..()
 
-	AddComponent(/datum/component/cleaner, CLEANBOT_CLEANING_TIME, \
+	AddComponent(/datum/component/cleaner, 1 SECONDS, \
 		on_cleaned_callback = CALLBACK(src, /atom/.proc/update_appearance, UPDATE_ICON))
 
 	get_targets()

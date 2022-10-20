@@ -517,8 +517,7 @@
 		if(final_result)
 			return final_result
 
-/mob/living/simple_animal/bot/proc/checkscan(atom/
-, list/scan_types, old_target)
+/mob/living/simple_animal/bot/proc/checkscan(atom/scan, list/scan_types, old_target)
 	for(var/scan_type in scan_types)
 		if(!istype(scan, scan_type)) //Check that the thing we found is the type we want!
 			continue //If not, keep searching!

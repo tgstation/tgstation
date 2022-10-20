@@ -7,15 +7,22 @@
 
 	var/mob/living/basic/bot/targetting_bot = living_mob
 
+	if(QDELETED(the_target) || !isturf(the_target.loc))
+		return FALSE
 
-	if(iscarbon(the_target))
-		var/mob/living/carbon/target_carbon = the_target
-		if(!(target_carbon in view(DEFAULT_SCAN_RANGE, src)))
-			return null
-		if(target_carbon.stat == DEAD)
-			return null
-		if(target_carbon.body_position != LYING_DOWN)
-			return null
+	if(living_mob.ai_controller.blackboard[BB_IGNORE_LIST][WEAKREF(the_target)])
+		return FALSE
+
+	if(isliving(the_target))
+		var/mob/living/living_target = the_target
+		if(living_target.stat == DEAD)
+			return FALSE
+
+		if(iscarbon(living_target))
+			var/mob/living/carbon/target_carbon = living_target
+			if(target_carbon.body_position != LYING_DOWN)
+				return FALSE
+
 		return TRUE
 	if(is_type_in_typecache(the_target, targetting_bot.ai_controller.blackboard[BB_CLEAN_BOT_VALID_TARGETS]))
 		return the_target

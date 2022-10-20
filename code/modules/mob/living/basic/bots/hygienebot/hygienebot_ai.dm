@@ -107,7 +107,7 @@
 	var/datum/targetting_datum/targetting_datum = controller.blackboard[targetting_datum_key]
 
 	if(!targetting_datum.can_attack(hygiene_bot, mob_target))
-		finish_action(controller, TRUE) //They're either clean or invisible, either way no longer our problem
+		finish_action(controller, TRUE, target_key, targetting_datum_key) //They're either clean or invisible, either way no longer our problem
 
 	if(chase_lines.len && DT_PROB(chase_line_prob, delta_time))
 		hygiene_bot.speak(pick(chase_lines))
@@ -115,7 +115,7 @@
 	controller.blackboard[BB_HYGIENE_BOT_PATIENCE] = controller.blackboard[BB_HYGIENE_BOT_PATIENCE] - delta_time SECONDS
 
 	if(controller.blackboard[BB_HYGIENE_BOT_PATIENCE] < 0)
-		finish_action(controller, FALSE)
+		finish_action(controller, FALSE, target_key, targetting_datum_key)
 
 
 /datum/ai_behavior/chase_filthy_person/finish_action(datum/ai_controller/controller, succeeded, target_key, targetting_datum_key)

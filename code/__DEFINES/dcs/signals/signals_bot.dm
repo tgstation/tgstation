@@ -6,3 +6,7 @@
 
 /// Called in /obj/structure/dispenserbot/remove_item(). (obj/item/to_remove)
 #define COMSIG_DISPENSERBOT_REMOVE_ITEM "moneybot_remove_item"
+
+
+/// Called in /mob/living/basic/bot/clean/finish_cleaning(). (datum/ai_controller/ai_controller, target_key, targetting_datum_key))
+#define COMSIG_AINOTIFY_CLEANBOT_FINISH_CLEANING "AINotify_cleanbot_finish_cleaning"
