@@ -943,7 +943,7 @@
 /obj/item/food/caramel_popcorn
 	name = "caramel popcorn"
 	icon_state = "сaramel_popcorn"
-	desc = "caramel-covered popcorn. Sweet!"
+	desc = "Caramel-covered popcorn. Sweet!"
 	trash_type = /obj/item/trash/caramel_popcorn
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/caramel = 4)
 	bite_consumption = 0.1
