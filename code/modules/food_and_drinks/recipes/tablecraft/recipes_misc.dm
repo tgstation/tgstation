@@ -329,7 +329,7 @@
 	name ="Caramel popcorn"
 	reqs = list(
 		/obj/item/food/popcorn = 1,
-		/datum/reagent/consumable/caramel = 3
+		/datum/reagent/consumable/caramel = 3,
 	)
 	result = /obj/item/food/caramel_popcorn
 	subcategory = CAT_MISCFOOD
