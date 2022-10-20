@@ -60,8 +60,9 @@
 
 	if(istype(inserted_item, /obj/item/pen))
 		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Remove pen"
+		. = CONTEXTUAL_SCREENTIP_SET
 
-	return CONTEXTUAL_SCREENTIP_SET
+	return . || NONE
 
 /obj/item/modular_computer/tablet/attackby(obj/item/W, mob/user)
 	. = ..()
