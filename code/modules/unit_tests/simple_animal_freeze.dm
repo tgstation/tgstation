@@ -402,8 +402,6 @@
 		/mob/living/simple_animal/soulscythe,
 	)
 
-TEST_FOCUS(/datum/unit_test/simple_animal_freeze)
-
 /datum/unit_test/simple_animal_freeze/Run()
 	var/list/seen = list()
 
