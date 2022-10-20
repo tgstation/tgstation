@@ -331,7 +331,7 @@
 	new /obj/effect/temp_visual/warp_cube(get_turf(linked), user, linked.teleport_color, FALSE)
 	var/obj/effect/warp_cube/link_holder = new /obj/effect/warp_cube(T)
 	user.forceMove(link_holder) //mess around with loc so the user can't wander around
-	sleep(2.5)
+	sleep(0.25 SECONDS)
 	if(QDELETED(user))
 		qdel(link_holder)
 		return
@@ -340,7 +340,7 @@
 		qdel(link_holder)
 		return
 	link_holder.forceMove(get_turf(linked))
-	sleep(2.5)
+	sleep(0.25 SECONDS)
 	if(QDELETED(user))
 		qdel(link_holder)
 		return
@@ -496,8 +496,10 @@
 	if(!user.can_read(src))
 		return FALSE
 	to_chat(user, span_notice("You flip through the pages of the book, quickly and conveniently learning every language in existence. Somewhat less conveniently, the aging book crumbles to dust in the process. Whoops."))
+	cure_curse_of_babel(user) // removes tower of babel if we have it
+	user.grant_all_languages(source=LANGUAGE_BABEL)
 	user.remove_blocked_language(GLOB.all_languages, source = LANGUAGE_ALL)
-	user.grant_all_languages()
+	ADD_TRAIT(user, TRAIT_TOWER_OF_BABEL, MAGIC_TRAIT) // this makes you immune to babel effects
 	new /obj/effect/decal/cleanable/ash(get_turf(user))
 	qdel(src)
 

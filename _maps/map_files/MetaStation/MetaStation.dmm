@@ -4176,7 +4176,7 @@
 /area/station/hallway/primary/central)
 "buk" = (
 /obj/structure/sign/warning/electric_shock,
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/station/maintenance/starboard/fore)
 "buv" = (
 /obj/structure/sign/warning/secure_area/directional/west,
@@ -10935,7 +10935,7 @@
 /obj/item/book/manual/wiki/security_space_law{
 	pixel_y = 3
 	},
-/obj/item/radio/intercom/directional/north,
+/obj/item/radio/intercom/command/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "eau" = (
@@ -11067,7 +11067,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage/gas)
 "ecz" = (
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/station/maintenance/solars/port/aft)
 "ecA" = (
 /obj/effect/turf_decal/tile/blue{
@@ -38855,9 +38855,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/security/prison/garden)
-"nQg" = (
-/turf/closed/wall,
-/area/station/maintenance/solars/port/fore)
 "nQh" = (
 /obj/structure/window{
 	dir = 8
@@ -40086,8 +40083,8 @@
 	pixel_x = 1;
 	pixel_y = 5
 	},
-/obj/item/radio/intercom/directional/west,
 /obj/machinery/computer/security/telescreen/entertainment/directional/north,
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain/private)
 "onr" = (
@@ -47494,7 +47491,7 @@
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "qSh" = (
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/station/maintenance/solars/starboard/fore)
 "qSk" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden,
@@ -51901,7 +51898,7 @@
 /area/station/science/cytology)
 "srk" = (
 /obj/structure/sign/warning/electric_shock,
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/station/maintenance/port/fore)
 "srp" = (
 /obj/effect/turf_decal/stripes/line,
@@ -55895,10 +55892,7 @@
 /obj/item/camera{
 	pixel_y = 4
 	},
-/obj/item/radio/intercom/directional/west{
-	freerange = 1;
-	name = "Captain's Intercom"
-	},
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain/private)
 "tJb" = (
@@ -59324,6 +59318,15 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"uQu" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/sign/xenobio_guide/directional/north,
+/turf/open/floor/iron/white,
+/area/station/science/xenobiology)
 "uQF" = (
 /obj/structure/lattice,
 /obj/item/stack/rods,
@@ -86821,7 +86824,7 @@ gAf
 sGL
 ctN
 sGL
-ecz
+sGL
 lMJ
 lMJ
 lMJ
@@ -87074,7 +87077,7 @@ qEf
 qEf
 gXF
 gmS
-tSw
+bhS
 cxi
 uAC
 dvT
@@ -87225,10 +87228,10 @@ aaa
 aaa
 aaa
 tOm
-nQg
-nQg
-nQg
-jXu
+pma
+pma
+pma
+hZQ
 lbZ
 jXu
 jXu
@@ -87485,7 +87488,7 @@ tOm
 ntM
 pgJ
 fRZ
-jXu
+hZQ
 ybi
 twr
 dOS
@@ -87588,7 +87591,7 @@ tSw
 tSw
 tSw
 vUM
-tSw
+bhS
 rtO
 cnF
 wjT
@@ -87845,10 +87848,10 @@ suz
 veo
 tSw
 vUM
-tSw
-tSw
-tSw
-tSw
+bhS
+bhS
+bhS
+bhS
 ecz
 aaa
 aaa
@@ -88253,8 +88256,8 @@ rrt
 rrt
 rrt
 tOm
-nQg
-nQg
+pma
+pma
 pma
 hZQ
 jXu
@@ -112677,8 +112680,8 @@ aav
 sxo
 qSh
 qSh
-qXB
-qXB
+tCS
+tCS
 qXB
 mSB
 tCS
@@ -112935,7 +112938,7 @@ sxo
 pZG
 ltg
 nEe
-qXB
+tCS
 wrn
 psZ
 tCS
@@ -113706,7 +113709,7 @@ sxo
 qSh
 qSh
 qSh
-qXB
+tCS
 qXB
 wrn
 tCS
@@ -114813,7 +114816,7 @@ xiL
 xiL
 idA
 xVu
-faD
+uQu
 iWc
 xVu
 pXo

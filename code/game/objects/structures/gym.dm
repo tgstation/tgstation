@@ -78,11 +78,11 @@
 	while (lifts++ < 6)
 		if (user.loc != src.loc)
 			break
-		sleep(3)
+		sleep(0.3 SECONDS)
 		animate(user, pixel_y = -2, time = 3)
-		sleep(3)
+		sleep(0.3 SECONDS)
 		animate(user, pixel_y = -4, time = 3)
-		sleep(2)
+		sleep(0.2 SECONDS)
 		playsound(user, 'sound/machines/creak.ogg', 60, TRUE)
 
 /obj/structure/weightmachine/weightlifter
@@ -97,9 +97,9 @@
 		if (user.loc != src.loc)
 			break
 		for (var/innerReps = max(reps, 1), innerReps > 0, innerReps--)
-			sleep(4)
+			sleep(0.4 SECONDS)
 			animate(user, pixel_y = (user.pixel_y == 3) ? 5 : 3, time = 3)
 		playsound(user, 'sound/machines/creak.ogg', 60, TRUE)
-	sleep(3)
+	sleep(0.3 SECONDS)
 	animate(user, pixel_y = 2, time = 3)
-	sleep(3)
+	sleep(0.3 SECONDS)

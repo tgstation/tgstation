@@ -3,7 +3,7 @@
 /// This stacks with other contextual screentip elements, though you may want to register the signal/flag manually at that point for performance.
 /datum/element/contextual_screentip_bare_hands
 	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH
-	id_arg_index = 3
+	id_arg_index = 2
 
 	/// If set, the text to show for LMB
 	var/lmb_text

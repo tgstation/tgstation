@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes: 
-  - bugfix: "TGchat now supports hyperlinking... links... with curly braces."

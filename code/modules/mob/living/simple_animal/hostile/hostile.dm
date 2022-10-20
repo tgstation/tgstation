@@ -5,54 +5,92 @@
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES //Bitflags. Set to ENVIRONMENT_SMASH_STRUCTURES to break closets,tables,racks, etc; ENVIRONMENT_SMASH_WALLS for walls; ENVIRONMENT_SMASH_RWALLS for rwalls
 	///The current target of our attacks, use GiveTarget and LoseTarget to set this var
 	var/atom/target
+	///Does this mob use ranged attacks?
 	var/ranged = FALSE
-	var/rapid = 0 //How many shots per volley.
-	var/rapid_fire_delay = 2 //Time between rapid fire shots
+	///How many shots per volley.
+	var/rapid = 0
+	///Time between rapid fire shots
+	var/rapid_fire_delay = 2
 
+	///Are we dodging?
 	var/dodging = FALSE
-	var/approaching_target = FALSE //We should dodge now
-	var/in_melee = FALSE //We should sidestep now
+	///We should dodge now
+	var/approaching_target = FALSE
+	///We should sidestep now
+	var/in_melee = FALSE
+	///Probability that we dodge
 	var/dodge_prob = 30
-	var/sidestep_per_cycle = 1 //How many sidesteps per npcpool cycle when in melee
+	///How many sidesteps per npcpool cycle when in melee
+	var/sidestep_per_cycle = 1
 
-	var/projectiletype //set ONLY it and NULLIFY casingtype var, if we have ONLY projectile
+	///set ONLY it and NULLIFY casingtype var, if we have ONLY projectile
+	var/projectiletype
+	///Sound our projectile makes when fired
 	var/projectilesound
-	var/casingtype //set ONLY it and NULLIFY projectiletype, if we have projectile IN CASING
-	var/move_to_delay = 3 //delay for the automated movement.
+	///set ONLY it and NULLIFY projectiletype, if we have projectile IN CASING
+	var/casingtype
+	///delay for the automated movement.
+	var/move_to_delay = 3
+	///List of mobs this mob is friendly towards
 	var/list/friends = list()
+	///List of emotes this mob can do when it taunts
 	var/list/emote_taunt = list()
+	///Probability that the mob will taunt
 	var/taunt_chance = 0
 
-	var/rapid_melee = 1  //Number of melee attacks between each npc pool tick. Spread evenly.
-	var/melee_queue_distance = 4 //If target is close enough start preparing to hit them if we have rapid_melee enabled
+	///Number of melee attacks between each npc pool tick. Spread evenly.
+	var/rapid_melee = 1
+	///If target is close enough start preparing to hit them if we have rapid_melee enabled
+	var/melee_queue_distance = 4
 
-	var/ranged_message = "fires" //Fluff text for ranged mobs
-	var/ranged_cooldown = 0 //What the current cooldown on ranged attacks is, generally world.time + ranged_cooldown_time
-	var/ranged_cooldown_time = 30 //How long, in deciseconds, the cooldown of ranged attacks is
-	var/ranged_ignores_vision = FALSE //if it'll fire ranged attacks even if it lacks vision on its target, only works with environment smash
-	var/check_friendly_fire = 0 // Should the ranged mob check for friendlies when shooting
-	var/retreat_distance = null //If our mob runs from players when they're too close, set in tile distance. By default, mobs do not retreat.
-	var/minimum_distance = 1 //Minimum approach distance, so ranged mobs chase targets down, but still keep their distance set in tiles to the target, set higher to make mobs keep distance
+	///Fluff text for ranged mobs
+	var/ranged_message = "fires"
+	///What the current cooldown on ranged attacks is, generally world.time + ranged_cooldown_time
+	var/ranged_cooldown = 0
+	///How long, in deciseconds, the cooldown of ranged attacks is
+	var/ranged_cooldown_time = 30
+	///if it'll fire ranged attacks even if it lacks vision on its target, only works with environment smash
+	var/ranged_ignores_vision = FALSE
+	///Should the ranged mob check for friendlies when shooting
+	var/check_friendly_fire = FALSE
+	///If our mob runs from players when they're too close, set in tile distance. By default, mobs do not retreat.
+	var/retreat_distance = null
+	///Minimum approach distance, so ranged mobs chase targets down, but still keep their distance set in tiles to the target, set higher to make mobs keep distance
+	var/minimum_distance = 1
 
 
 //These vars are related to how mobs locate and target
-	var/robust_searching = 0 //By default, mobs have a simple searching method, set this to 1 for the more scrutinous searching (stat_attack, stat_exclusive, etc), should be disabled on most mobs
-	var/vision_range = 9 //How big of an area to search for targets in, a vision of 9 attempts to find targets as soon as they walk into screen view
-	var/aggro_vision_range = 9 //If a mob is aggro, we search in this radius. Defaults to 9 to keep in line with original simple mob aggro radius
-	var/search_objects = 0 //If we want to consider objects when searching around, set this to 1. If you want to search for objects while also ignoring mobs until hurt, set it to 2. To completely ignore mobs, even when attacked, set it to 3
-	var/search_objects_timer_id //Timer for regaining our old search_objects value after being attacked
-	var/search_objects_regain_time = 30 //the delay between being attacked and gaining our old search_objects value back
-	var/list/wanted_objects = list() //A typecache of objects types that will be checked against to attack, should we have search_objects enabled
+	///By default, mobs have a simple searching method, set this to TRUE for the more scrutinous searching (stat_attack, stat_exclusive, etc), should be disabled on most mobs
+	var/robust_searching = FALSE
+	///How big of an area to search for targets in, a vision of 9 attempts to find targets as soon as they walk into screen view
+	var/vision_range = 9
+	///If a mob is aggro, we search in this radius. Defaults to 9 to keep in line with original simple mob aggro radius
+	var/aggro_vision_range = 9
+	///If we want to consider objects when searching around, set this to 1. If you want to search for objects while also ignoring mobs until hurt, set it to 2. To completely ignore mobs, even when attacked, set it to 3
+	var/search_objects = 0
+	///Timer for regaining our old search_objects value after being attacked
+	var/search_objects_timer_id
+	///The delay between being attacked and gaining our old search_objects value back
+	var/search_objects_regain_time = 30
+	///A typecache of objects types that will be checked against to attack, should we have search_objects enabled
+	var/list/wanted_objects = list()
 	///Mobs ignore mob/living targets with a stat lower than that of stat_attack. If set to DEAD, then they'll include corpses in their targets, if to HARD_CRIT they'll keep attacking until they kill, and so on.
 	var/stat_attack = CONSCIOUS
-	var/stat_exclusive = FALSE //Mobs with this set to TRUE will exclusively attack things defined by stat_attack, stat_attack DEAD means they will only attack corpses
-	var/attack_same = 0 //Set us to 1 to allow us to attack our own faction
+	///Mobs with this set to TRUE will exclusively attack things defined by stat_attack, stat_attack DEAD means they will only attack corpses
+	var/stat_exclusive = FALSE
+	///Set us to TRUE to allow us to attack our own faction
+	var/attack_same = FALSE
+
 	//Use GET_TARGETS_FROM(mob) to access this
 	//Attempting to call GET_TARGETS_FROM(mob) when this var is null will just return mob as a base
-	var/datum/weakref/targets_from //all range/attack/etc. calculations should be done from the atom this weakrefs, useful for Vehicles and such.
-	var/attack_all_objects = FALSE //if true, equivalent to having a wanted_objects list containing ALL objects.
-	var/lose_patience_timer_id //id for a timer to call LoseTarget(), used to stop mobs fixating on a target they can't reach
-	var/lose_patience_timeout = 300 //30 seconds by default, so there's no major changes to AI behaviour, beyond actually bailing if stuck forever
+	///all range/attack/etc. calculations should be done from the atom this weakrefs, useful for Vehicles and such.
+	var/datum/weakref/targets_from
+	///if true, equivalent to having a wanted_objects list containing ALL objects.
+	var/attack_all_objects = FALSE
+	///id for a timer to call LoseTarget(), used to stop mobs fixating on a target they can't reach
+	var/lose_patience_timer_id
+	///30 seconds by default, so there's no major changes to AI behaviour, beyond actually bailing if stuck forever
+	var/lose_patience_timeout = 300
 
 /mob/living/simple_animal/hostile/Initialize(mapload)
 	. = ..()

@@ -18,7 +18,7 @@
 
 /obj/item/gun/ballistic/rifle/rack(mob/user = null)
 	if (bolt_locked == FALSE)
-		to_chat(user, span_notice("You open the bolt of \the [src]."))
+		balloon_alert(user, "bolt opened")
 		playsound(src, rack_sound, rack_sound_volume, rack_sound_vary)
 		process_chamber(FALSE, FALSE, FALSE)
 		bolt_locked = TRUE
@@ -80,7 +80,7 @@
 				unjam_chance = 10
 			else
 				unjam_chance += 10
-				to_chat(user, span_warning("[src] is jammed!"))
+				balloon_alert(user, "jammed!")
 				playsound(user,'sound/weapons/jammed.ogg', 75, TRUE)
 				return FALSE
 	..()
