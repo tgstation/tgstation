@@ -137,7 +137,7 @@
 /datum/ai_behavior/move_to_next_patrol_point/setup(datum/ai_controller/controller, ...)
 	. = ..()
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
-	bot_pawn.set_current_behavior_description("Patrolling")
+	bot_pawn.set_current_mode(BOT_PATROL)
 
 /datum/ai_behavior/move_to_next_patrol_point/perform(delta_time, datum/ai_controller/controller)
 	. = ..()
@@ -158,7 +158,7 @@
 
 
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
-	bot_pawn.set_current_behavior_description()
+	bot_pawn.set_current_mode()
 
 	controller.CancelActions() //This is important because we are often performing permanent actions (e.g. looking for targets) while patrolling. Maybe we can think of a better solution for this in the future?
 
@@ -171,7 +171,7 @@
 /datum/ai_behavior/move_to_summon_location/setup(datum/ai_controller/controller, ...)
 	. = ..()
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
-	bot_pawn.set_current_behavior_description("Being summoned")
+	bot_pawn.set_current_mode(BOT_SUMMON)
 
 /datum/ai_behavior/move_to_summon_location/perform(delta_time, datum/ai_controller/controller)
 	. = ..()
@@ -180,6 +180,70 @@
 /datum/ai_behavior/move_to_summon_location/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
-	bot_pawn.set_current_behavior_description()
+	bot_pawn.set_current_mode()
 	controller.blackboard[BB_BOT_CURRENT_SUMMONER] = null
 	controller.blackboard[BB_BOT_SUMMON_WAYPOINT] = null
+
+
+
+
+
+
+
+
+
+
+///Looks for targets based on the specified targetting datum, and sets the target if something is found.
+/datum/ai_behavior/scan
+	behavior_flags = AI_BEHAVIOR_MOVE_AND_PERFORM
+	action_cooldown = 1 SECONDS
+	var/should_finish_after_scan = TRUE
+	var/scan_range = DEFAULT_SCAN_RANGE
+
+/datum/ai_behavior/find_filth/perform(delta_time, datum/ai_controller/controller, target_key, targetting_datum_key)
+	. = ..()
+
+	var/mob/living/replacepawn = controller.pawn
+	var/datum/targetting_datum/targetting_datum = controller.blackboard[targetting_datum_key]
+
+	var/turf/current_turf = get_turf(replacepawn)
+
+	if(!current_turf)
+		return
+
+	var/list/adjacent = current_turf.get_atmos_adjacent_turfs(1)
+
+	for(var/turf/scan as anything in adjacent) //Let's see if there's something right next to us first!
+		if(check_bot(scan)) //Is there another bot there? Then let's just skip it
+			continue
+		var/final_result = targetting_datum.can_attack(replacepawn, scan)
+		if(final_result)
+			return final_result
+
+	for(var/turf/scanned_turfs as anything in shuffle(view(scan_range, src)) - adjacent) //Search for something in range, minus what we already checked.
+		if(check_bot(scanned_turfs)) //Is there another bot there? Then let's just skip it
+			continue
+		var/final_result = checkscan(scanned_turfs, scan_types, old_target)
+		if(final_result)
+			return final_result
+
+
+
+
+
+
+
+	for(var/mob/living/carbon/human/nearby_human in view(7, basic_bot)) //Find potential filthy people
+		if(targetting_datum.can_attack(basic_bot, nearby_human)) //They're a valid target for us
+			controller.blackboard[target_key] = nearby_human
+			basic_bot.speak("Unhygienic client found. Please stand still so I can clean you.")
+			basic_bot.visible_message("<b>[basic_bot]</b> points at [nearby_human.name]!")
+			controller.CancelActions()
+			break
+
+	if(should_finish_after_scan)
+		finish_action(controller, TRUE)
+
+	//Does not cancel on it's own by default
+
+

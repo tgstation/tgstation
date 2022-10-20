@@ -43,7 +43,7 @@
 
 	///Gets cancelled if patrol is cancelled
 
-///Stupid override, this one does need to finish properly
+///Override that does need to finish, so that new plans can be made (for if something changes and we need to re-adjust)
 /datum/ai_behavior/find_filthy_person/idle
 
 /datum/ai_behavior/find_filthy_person/idle/perform(delta_time, datum/ai_controller/controller, target_key, targetting_datum_key)
@@ -97,7 +97,7 @@
 	if(!(hygiene_bot.bot_cover_flags & BOT_COVER_EMAGGED)) ///If we're emagged dont set speed here
 		hygiene_bot.set_mob_speed(chase_speed)
 
-	hygiene_bot.set_current_behavior_description("Chasing")
+	hygiene_bot.set_current_mode(BOT_HUNT)
 
 /datum/ai_behavior/chase_filthy_person/perform(delta_time, datum/ai_controller/controller, target_key, targetting_datum_key)
 	. = ..()
@@ -123,7 +123,7 @@
 
 	var/mob/living/basic/bot/hygienebot/hygiene_bot = controller.pawn
 
-	hygiene_bot.set_current_behavior_description()
+	hygiene_bot.set_current_mode()
 
 	if(succeeded)
 		controller.blackboard[target_key] = null ///Reset target

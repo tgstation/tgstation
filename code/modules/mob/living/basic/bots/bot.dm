@@ -33,7 +33,7 @@
 	///Bot-related cover flags on the Bot to deal with what has been done to their cover, including emagging.
 	var/bot_cover_flags = BOT_COVER_LOCKED
 	///Description of the current task of the bot. Set by the AI
-	var/current_status_description = "Idle"
+	var/mode = BOT_IDLE
 
 	///The Robot arm attached to this robot - has a 50% chance to drop on death.
 	var/robot_arm = /obj/item/bodypart/r_arm/robot
@@ -103,11 +103,11 @@
 	return ..()
 
 ///Sets the mode of the AI (so UI knows what its doing). If the first param is null it returns to idle
-/mob/living/basic/bot/proc/set_current_behavior_description(new_status_description)
+/mob/living/basic/bot/proc/set_current_mode(new_mode)
 	if(new_status_description)
-		current_status_description = new_status_description
+		mode = new_mode
 	else
-		current_status_description = "Idle"
+		mode = BOT_IDLE
 
 /// Returns the current activity of the bot
 /mob/living/basic/bot/proc/get_current_behavior_description()
@@ -116,7 +116,7 @@
 	else if(!(bot_mode_flags & BOT_MODE_ON))
 		return "Inactive"
 	else
-		return current_status_description
+		return mode
 
 /mob/living/basic/bot/proc/drop_part(obj/item/drop_item, dropzone)
 	var/obj/item/item_to_drop

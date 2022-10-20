@@ -237,3 +237,8 @@
 #define BB_HYGIENE_BOT_TARGET "BB_hygiene_bot_target"
 #define BB_HYGIENE_BOT_ANGRY "BB_hygiene_bot_angry"
 #define BB_HYGIENE_BOT_PATIENCE "BB_hygiene_bot_patience"
+
+
+///Clean bot keys
+#define BB_CLEAN_BOT_TARGET "BB_clean_bot_target"
+#define BB_CLEAN_BOT_VALID_TARGETS "BB_clean_bot_valid_targets"
