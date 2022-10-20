@@ -268,7 +268,7 @@
 /**
  * Unequips all held items.
  */
-/mob/living/silicon/robot/proc/uneq_all()
+/mob/living/silicon/robot/drop_all_held_items()
 	for(var/cyborg_slot in 1 to 3)
 		if(!held_items[cyborg_slot])
 			continue
