@@ -28,7 +28,7 @@
 			program_file.kill_program(TRUE)
 
 	SEND_SIGNAL(file_removing, COMSIG_MODULAR_COMPUTER_FILE_DELETING)
-	stored_files -= file_removing
+	stored_files.Remove(file_removing)
 	recalculate_size()
 	SEND_SIGNAL(file_removing, COMSIG_MODULAR_COMPUTER_FILE_DELETED)
 	return TRUE

@@ -1,6 +1,7 @@
 /obj/item/computer_disk
 	name = "data disk"
 	desc = "Removable disk used to store data."
+	icon = 'icons/obj/module.dmi'
 	icon_state = "datadisk6"
 	w_class = WEIGHT_CLASS_TINY
 	///The amount of storage space is on the disk
@@ -39,7 +40,7 @@
 /obj/item/computer_disk/proc/remove_file(datum/computer_file/file)
 	if(!(file in stored_files))
 		return FALSE
-	stored_files.Cut(file)
+	stored_files.Remove(file)
 	used_capacity -= file.size
 	return TRUE
 

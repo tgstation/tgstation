@@ -241,8 +241,8 @@
 		return INITIALIZE_HINT_QDEL
 
 /obj/item/modular_computer/tablet/integrated/install_default_programs()
-	SHOULD_CALL_PARENT(FALSE)
-	for(var/datum/computer_file/program/program_type as anything in starting_programs)
+	for(var/programs in starting_programs)
+		var/datum/computer_file/program/program_type = new programs
 		store_file(new program_type)
 		program_type.computer = physical
 
@@ -363,7 +363,7 @@
 	var/loaded_cartridge
 
 /obj/item/modular_computer/tablet/pda/install_default_programs()
-	for(var/programs as anything in pda_programs)
+	for(var/programs as anything in default_programs + pda_programs+ starting_programs)
 		var/datum/computer_file/program/program_type = new programs
 		store_file(program_type)
 		program_type.computer = physical

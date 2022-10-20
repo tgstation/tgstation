@@ -90,7 +90,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	///The program currently active on the tablet.
 	var/datum/computer_file/program/active_program
 	///Idle programs on background. They still receive process calls but can't be interacted with.
-	var/list/idle_threads
+	var/list/idle_threads = list()
 	/// Amount of programs that can be ran at once
 	var/max_idle_programs = 2
 
@@ -135,6 +135,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	install_default_programs()
 
 /obj/item/modular_computer/proc/install_default_programs()
+	SHOULD_CALL_PARENT(FALSE)
 	for(var/programs in default_programs + starting_programs)
 		var/datum/computer_file/program/program_type = new programs
 		store_file(program_type)
@@ -768,6 +769,14 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		var/obj/item/computer_hardware/H = all_components[h]
 		if(H.try_insert(attacking_item, user))
 			return
+
+	// Insert a data disk
+	if(istype(attacking_item, /obj/item/computer_disk))
+		if(!user.transferItemToLoc(attacking_item, src))
+			return
+		inserted_disk = attacking_item
+		playsound(src, 'sound/machines/card_slide.ogg', 50)
+		return
 
 	// Insert new hardware
 	if(istype(attacking_item, /obj/item/computer_hardware))
