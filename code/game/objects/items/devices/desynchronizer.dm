@@ -79,7 +79,7 @@
 
 /obj/effect/abstract/sync_holder/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/secluded_atom)
+	ADD_TRAIT(src, TRAIT_SECLUDED_LOCATION, INNATE_TRAIT)
 
 /obj/effect/abstract/sync_holder/relaymove(mob/living/user, direction)
 	// While faded out of spacetime, no, you cannot move.

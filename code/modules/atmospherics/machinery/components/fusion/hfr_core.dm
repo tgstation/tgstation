@@ -176,7 +176,7 @@
 	investigate_log("has been created.", INVESTIGATE_HYPERTORUS)
 
 	// Our center is unreachable, so prevent stuff from getting stuck in there
-	AddElement(/datum/element/secluded_atom_loc)
+	AddElement(/datum/element/trait_loc, TRAIT_SECLUDED_LOCATION)
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/Destroy()
 	unregister_signals(TRUE)

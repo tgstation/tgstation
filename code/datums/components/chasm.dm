@@ -235,4 +235,4 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 
 /obj/effect/abstract/chasm_storage/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/secluded_atom)
+	ADD_TRAIT(src, TRAIT_SECLUDED_LOCATION, INNATE_TRAIT)

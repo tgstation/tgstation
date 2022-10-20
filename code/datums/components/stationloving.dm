@@ -18,14 +18,13 @@
 		relocate()
 
 /datum/component/stationloving/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_MOVABLE_Z_CHANGED, .proc/on_parent_z_change)
 	RegisterSignal(parent, COMSIG_PARENT_PREQDELETED, .proc/on_parent_pre_qdeleted)
 	RegisterSignal(parent, COMSIG_ITEM_IMBUE_SOUL, .proc/check_soul_imbue)
 	RegisterSignal(parent, COMSIG_ITEM_MARK_RETRIEVAL, .proc/check_mark_retrieval)
 	// Relocate when we become unreachable
-	RegisterSignal(parent, COMSIG_MOVABLE_SECLUDED_LOCATION, .proc/on_parent_unreachable)
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/on_parent_moved)
 	// Relocate when our loc, or any of our loc's locs, becomes unreachable
-	var/static/list/loc_connections = list(COMSIG_MOVABLE_SECLUDED_LOCATION = .proc/on_parent_unreachable)
+	var/static/list/loc_connections = list(COMSIG_MOVABLE_MOVED = .proc/on_parent_moved)
 	AddComponent(/datum/component/connect_containers, parent, loc_connections)
 
 /datum/component/stationloving/UnregisterFromParent()
@@ -34,7 +33,7 @@
 		COMSIG_PARENT_PREQDELETED,
 		COMSIG_ITEM_IMBUE_SOUL,
 		COMSIG_ITEM_MARK_RETRIEVAL,
-		COMSIG_MOVABLE_SECLUDED_LOCATION,
+		COMSIG_MOVABLE_MOVED,
 	))
 
 	qdel(GetComponent(/datum/component/connect_containers))
@@ -55,7 +54,7 @@
 		if(GLOB.blobstart.len > 0)
 			target_turf = get_turf(pick(GLOB.blobstart))
 		else
-			CRASH("Unable to find a blobstart landmark for stationliving component to relocate.")
+			CRASH("Unable to find a blobstart landmark for [type] to relocate [parent].")
 
 	var/atom/movable/movable_parent = parent
 	playsound(movable_parent, 'sound/machines/synth_no.ogg', 5, TRUE)
@@ -69,21 +68,22 @@
 
 	return target_turf
 
-/// Signal handler when the parent has changed z-levels.
-/// Checks to make sure it's a valid destination, if it's not then it relacates the parent instead.
-/datum/component/stationloving/proc/on_parent_z_change(datum/source, turf/old_turf, turf/new_turf)
+/// Signal proc for [COMSIG_MOVABLE_MOVED], called when our parent moves, or our parent's loc, or our parent's loc loc...
+/// To check if our disk is moving somewhere it shouldn't be, such as off Z level, or into an invalid area
+/datum/component/stationloving/proc/on_parent_moved(atom/movable/source, turf/old_turf)
 	SIGNAL_HANDLER
 
-	if(atom_in_bounds(parent))
+	if(atom_in_bounds(source))
 		return
 
-	var/turf/current_turf = get_turf(parent)
+	var/turf/current_turf = get_turf(source)
 	var/turf/new_destination = relocate()
-	log_game("[parent] attempted to be moved out of bounds from [loc_name(old_turf)] to [loc_name(current_turf)]. Moving it to [loc_name(new_destination)].")
-	if(inform_admins)
-		message_admins("[parent] attempted to be moved out of bounds from [ADMIN_VERBOSEJMP(old_turf)] to [ADMIN_VERBOSEJMP(current_turf)]. Moving it to [ADMIN_VERBOSEJMP(new_destination)].")
+	log_game("[parent] attempted to be moved out of bounds from [loc_name(old_turf)] \
+		to [loc_name(current_turf)]. Moving it to [loc_name(new_destination)].")
 
-	return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
+	if(inform_admins)
+		message_admins("[parent] attempted to be moved out of bounds from [ADMIN_VERBOSEJMP(old_turf)] \
+			to [ADMIN_VERBOSEJMP(current_turf)]. Moving it to [ADMIN_VERBOSEJMP(new_destination)].")
 
 /datum/component/stationloving/proc/check_soul_imbue(datum/source)
 	SIGNAL_HANDLER
@@ -98,14 +98,32 @@
 
 /// Checks whether a given atom's turf is within bounds. Returns TRUE if it is, FALSE if it isn't.
 /datum/component/stationloving/proc/atom_in_bounds(atom/atom_to_check)
-	var/static/list/allowed_shuttles = typecacheof(list(/area/shuttle/syndicate, /area/shuttle/escape, /area/shuttle/pod_1, /area/shuttle/pod_2, /area/shuttle/pod_3, /area/shuttle/pod_4))
-	var/static/list/disallowed_centcom_areas = typecacheof(list(/area/centcom/abductor_ship, /area/awaymission/errorroom))
+	// Typecache of shuttles that we allow the disk to stay on
+	var/static/list/allowed_shuttles = typecacheof(list(
+		/area/shuttle/syndicate,
+		/area/shuttle/escape,
+		/area/shuttle/pod_1,
+		/area/shuttle/pod_2,
+		/area/shuttle/pod_3,
+		/area/shuttle/pod_4,
+	))
+	// Typecache of areas on the centcom Z-level that we allow the disk to stay on
+	var/static/list/disallowed_centcom_areas = typecacheof(list(
+		/area/centcom/abductor_ship,
+		/area/awaymission/errorroom,
+	))
+
+	// Our loc is a secluded location = not in bounds
+	if (atom_to_check.loc && HAS_TRAIT(atom_to_check.loc, TRAIT_SECLUDED_LOCATION))
+		return FALSE
+	// No turf below us = nullspace = not in bounds
 	var/turf/destination_turf = get_turf(atom_to_check)
 	if (!destination_turf)
 		return FALSE
-	var/area/destination_area = destination_turf.loc
 	if (is_station_level(destination_turf.z))
 		return TRUE
+
+	var/area/destination_area = destination_turf.loc
 	if (is_centcom_level(destination_turf.z))
 		if (is_type_in_typecache(destination_area, disallowed_centcom_areas))
 			return FALSE
@@ -130,17 +148,9 @@
 		return FALSE
 
 	var/turf/new_turf = relocate()
-	log_game("[parent] has been destroyed in [loc_name(current_turf)]. Preventing destruction and moving it to [loc_name(new_turf)].")
+	log_game("[parent] has been destroyed in [loc_name(current_turf)]. \
+		Preventing destruction and moving it to [loc_name(new_turf)].")
 	if(inform_admins)
-		message_admins("[parent] has been destroyed in [ADMIN_VERBOSEJMP(current_turf)]. Preventing destruction and moving it to [ADMIN_VERBOSEJMP(new_turf)].")
+		message_admins("[parent] has been destroyed in [ADMIN_VERBOSEJMP(current_turf)]. \
+			Preventing destruction and moving it to [ADMIN_VERBOSEJMP(new_turf)].")
 	return TRUE
-
-/// Signal handler for when the parent enters an unreachable location. Always relocates the parent.
-/datum/component/stationloving/proc/on_parent_unreachable()
-	SIGNAL_HANDLER
-
-	var/turf/current_turf = get_turf(parent)
-	var/turf/new_turf = relocate()
-	log_game("[parent] has been moved to unreachable location in [loc_name(current_turf)]. Moving it to [loc_name(new_turf)].")
-	if(inform_admins)
-		message_admins("[parent] has been moved to unreachable location in [ADMIN_VERBOSEJMP(current_turf)]. Moving it to [ADMIN_VERBOSEJMP(new_turf)].")
