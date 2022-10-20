@@ -374,7 +374,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	if(all_components[MC_SDD])
 		context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB] = "Remove SSD"
 		. = CONTEXTUAL_SCREENTIP_SET
-	
+
 	return . || NONE
 
 /obj/item/modular_computer/update_icon_state()
@@ -716,7 +716,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		if(!user.transferItemToLoc(attacking_item, src))
 			return
 		inserted_pai = attacking_item
-		to_chat(user, span_notice("You slot \the [attacking_item] into [src]."))
+		balloon_alert(user, "inserted pai")
 		return
 
 	// Check if any Applications need it
@@ -728,18 +728,18 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 	if(istype(attacking_item, /obj/item/paper))
 		if(stored_paper >= max_paper)
-			to_chat(user, span_warning("You try to add \the [attacking_item] into [src], but it can't hold any more!"))
+			balloon_alert(user, "no more room!")
 			return
 		if(!user.temporarilyRemoveItemFromInventory(attacking_item))
 			return FALSE
-		to_chat(user, span_notice("You insert \the [attacking_item] into [src]'s paper recycler."))
+		balloon_alert(user, "inserted paper")
 		qdel(attacking_item)
 		stored_paper++
 		return
 	if(istype(attacking_item, /obj/item/paper_bin))
 		var/obj/item/paper_bin/bin = attacking_item
 		if(bin.total_paper <= 0)
-			to_chat(user, span_notice("\The [bin] is empty!"))
+			balloon_alert(user, "empty bin!")
 			return
 		var/papers_added //just to keep track
 		while((bin.total_paper > 0) && (stored_paper < max_paper))
@@ -748,6 +748,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 			bin.remove_paper()
 		if(!papers_added)
 			return
+		balloon_alert(user, "inserted paper")
 		to_chat(user, span_notice("Added in [papers_added] new sheets. You now have [stored_paper] / [max_paper] printing paper stored."))
 		bin.update_appearance()
 		return

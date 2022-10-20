@@ -76,6 +76,7 @@
 		I.forceMove(src)
 
 	stored_card = I
+	balloon_alert(user, "inserted ID")
 	to_chat(user, span_notice("You insert \the [I] into \the [expansion_hw ? "secondary":"primary"] [src]."))
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 	holder.update_appearance()
@@ -103,6 +104,7 @@
 	else
 		stored_card.forceMove(drop_location())
 
+	balloon_alert(user, "removed ID")
 	to_chat(user, span_notice("You remove the card from \the [src]."))
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 	holder?.update_appearance()
