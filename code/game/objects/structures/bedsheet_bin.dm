@@ -56,7 +56,7 @@ LINEN BINS
 	if(!user.dropItemToGround(src))
 		return
 
-	src.forceMove(get_turf(target))
+	forceMove(get_turf(target))
 	balloon_alert(user, "covered")
 	coverup(target)
 	add_fingerprint(user)
