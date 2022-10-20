@@ -1,4 +1,3 @@
-
 # Learn AI
 
 In ye olde days, we designed mob AI, and we built it into simple animals as they were the "non player controlled" mobs. Made sense at the time. But by coding AI directly into the mob, there was so little ability to make unique or complicated AI, and even when it was pulled off the code was hacky and non-reusable. the datum AI system was made to rectify these problems, and expand AI beyond just mobs.
@@ -31,7 +30,7 @@ First, let's look at the blackboard.
 	)
 ```
 
-Think of the blackboard as the unique format for variables. They are set initially, or by behaviors, **but never in subtrees.** Because we check `blackboard[BB_SOME_KEY]` instead of a variable, we can wipe out variables and slap new ones onto the AI as it runs. For example, this cow uses BB_BASIC_MOB_TIP_REACTING and BB_BASIC_MOB_TIPPER because cows can get tipped, and the AI needs to know that in the subtrees when it plans behavior. And in fact, those two keys aren't required to be defined initially, it's just for clarity that they are.
+Think of the blackboard as the unique format for variables. They are set initially, or later on by behaviors, subtrees, the pawn having things happen to it, etc. Because we check `blackboard[BB_SOME_KEY]` instead of a variable, we can wipe out variables and slap new ones onto the AI as it runs. For example, this cow uses BB_BASIC_MOB_TIP_REACTING and BB_BASIC_MOB_TIPPER because cows can get tipped, and the AI needs to know that in the subtrees when it plans behavior. And in fact, those two keys aren't required to be defined initially, it's just for clarity that they are.
 
 Speaking of subtrees, let's look at that now.
 
@@ -138,7 +137,7 @@ And one of those behaviors, `basic_melee_attack`. As I have been doing so far, I
 		controller.blackboard -= target_key
 ```
 
-One rule for subtrees: **NO setting blackboard keys in subtrees!** We want blackboard to handle them, subtrees are just for checking the state either via looking at the pawn (atom the AI controls) or looking at the blackboard.
+You can set blackboard keys anywhere, but if you can bundle everything inside of a behavior, that's ideal. If you can't, that's perfectly fine. The only thing you should actively avoid is **performing entire behaviors in the subtree.** Here's aan example
 
 BAD:
 
@@ -157,6 +156,7 @@ BAD:
 			controller.queue_behavior(/datum/ai_behavior/use_on_object, BB_MONKEY_CURRENT_PRESS_TARGET)
 			return
 ```
+This is a whole behavior, disguised. And if it is one, why don't we...
 
 GOOD:
 
@@ -169,6 +169,4 @@ GOOD:
 		controller.queue_behavior(/datum/ai_behavior/use_on_object, BB_MONKEY_CURRENT_PRESS_TARGET)
 		return SUBTREE_RETURN_FINISH_PLANNING
 ```
-As you can see we're putting the search behavior... on a behavior! The monkey will plan from other subtrees while it finds nearby, but now we have a BB any subtree can look at, any behavior can modify or remove.
-
-## Advanced Concepts
+Ah, there we go! Remember, it's not even wrong to set things on the subtree, but if it's getting complicated enough, or if it's generic behavior multiple things can benefit from... hey, move it into a behavior, yeah?
