@@ -1,5 +1,0 @@
-author: "RikuTheKiller"
-delete-after: True
-changes: 
-  - bugfix: "Air alerts no longer prescribe you with breathing things you'll just die from."
-  - qol: "Air alerts now tell you that you've got a plasma tank in your survival box if you're a plasmaman and don't say you have a gas mask in there, it's a breath mask."

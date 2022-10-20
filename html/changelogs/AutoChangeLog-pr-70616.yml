@@ -1,4 +1,0 @@
-author: "Mothblocks"
-delete-after: True
-changes: 
-  - qol: "Removed some doorjack chat messages that already have a balloon alert."

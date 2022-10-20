@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "Attempting to move around while in a state of non-existence will not give you a message saying you're buckled to the concept of non-existence"

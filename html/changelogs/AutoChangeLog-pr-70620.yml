@@ -1,4 +1,0 @@
-author: "Cass-Bitchcoin"
-delete-after: True
-changes: 
-  - bugfix: "repositions a camera on icebox so that AI can operate an air alarm they could not previously"
