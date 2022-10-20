@@ -132,7 +132,7 @@
 
 /obj/item/clothing/neck/pillow_tag
 	name = "pillow tag"
-	desc = "a price tag for the pillow. It appears to have space to fill names in."
+	desc = "A price tag for the pillow. It appears to have space to fill names in."
 	icon = 'icons/obj/pillow.dmi'
 	icon_state = "pillow_tag"
 	worn_icon = 'icons/mob/clothing/neck.dmi'
@@ -141,7 +141,7 @@
 
 /obj/item/pillow/clown
 	name = "clown pillow"
-	desc = "daww look at that little clown!"
+	desc = "Daww look at that little clown!"
 	icon_state = "pillow_5_t"
 
 /obj/item/pillow/clown/update_appearance(updates)
@@ -150,7 +150,7 @@
 
 /obj/item/pillow/mime
 	name = "mime pillow"
-	desc = "daww look at that little mime!"
+	desc = "Daww look at that little mime!"
 	icon_state = "pillow_6_t"
 
 /obj/item/pillow/mime/update_appearance(updates)
