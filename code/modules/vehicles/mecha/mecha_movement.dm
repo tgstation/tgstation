@@ -151,12 +151,13 @@
 
 /obj/vehicle/sealed/mecha/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
-	update_camera_location(old_loc)
+	if(chassis_camera)
+		update_camera_location(old_loc)
 
 /obj/vehicle/sealed/mecha/forceMove(atom/destination)
 	. = ..()
 	//Only bother updating the camera if we actually managed to move
-	if(.)
+	if(. && chassis_camera)
 		update_camera_location(destination)
 
 /obj/vehicle/sealed/mecha/proc/do_camera_update(oldLoc)
@@ -164,7 +165,7 @@
 		GLOB.cameranet.updatePortableCamera(chassis_camera)
 	updating = FALSE
 
-#define MECHA_CAMERA_BUFFER 1 SECONDS
+#define MECHA_CAMERA_BUFFER 0.5 SECONDS
 /obj/vehicle/sealed/mecha/proc/update_camera_location(oldLoc)
 	oldLoc = get_turf(oldLoc)
 	if(!QDELETED(chassis_camera) && !updating && oldLoc != get_turf(src))

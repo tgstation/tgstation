@@ -87,6 +87,7 @@
 	///Special version of the radio, which is unsellable
 	var/obj/item/radio/mech/radio
 	var/list/trackers = list()
+	///Camera installed into the mech
 	var/obj/machinery/camera/emp_proof/exosuit/chassis_camera
 	///Portable camera camerachunk update
 	var/updating = FALSE

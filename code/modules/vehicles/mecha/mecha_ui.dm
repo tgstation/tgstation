@@ -241,7 +241,7 @@
 				tgui_alert(usr, "You cannot set a name that contains a word prohibited in IC chat!")
 				return
 			name = userinput
-			chassis_camera.update_c_tag()
+			chassis_camera.update_c_tag(src)
 		if("toggle_safety")
 			set_safety(usr)
 			return
