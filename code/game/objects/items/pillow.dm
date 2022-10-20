@@ -1,4 +1,4 @@
-
+//Pillow and pillow related items
 /obj/item/pillow
 	name = "pillow"
 	desc = "A soft and fluffy pillow. You can smack someone with this!"
