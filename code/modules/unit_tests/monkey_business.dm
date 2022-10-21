@@ -8,34 +8,30 @@
  * but its also hilarious and fun to watch locally.
  */
 /datum/unit_test/monkey_business
-	priority = TEST_DEFAULT + 1 // should be the last test to run, except for create and destroy
-	var/monkey_count = 50
+	priority = TEST_MONKEY_BUSINESS
 	var/monkey_timer = 30 SECONDS
+	var/monkey_angry_nth = 5 // every nth monkey will be angry
 	var/start_runtimes = 0
-	var/list/monkey_list
 	var/running = TRUE
 
 /datum/unit_test/monkey_business/Run()
-	monkey_list = list()
 	start_runtimes = GLOB.total_runtimes
-	for(var/monkey_id in 1 to monkey_count)
-		var/turf/spawn_turf = get_safe_random_station_turf()
-		var/mob/living/carbon/human/monkey = new /mob/living/carbon/human(spawn_turf)
-		monkey.set_name("Monkey [monkey_id]")
+	for(var/monkey_id in 1 to length(GLOB.the_station_areas))
+		var/mob/living/carbon/human/monkey = allocate(/mob/living/carbon/human, get_first_open_turf_in_area(GLOB.the_station_areas[monkey_id]))
 		monkey.set_species(/datum/species/monkey)
-		if(prob(10)) // BLOOD FOR THE BLOOD GODS
+		monkey.set_name("Monkey [monkey_id]")
+		if(!(monkey_id % monkey_angry_nth)) // BLOOD FOR THE BLOOD GODS
 			monkey.put_in_active_hand(new /obj/item/knife/shiv)
 			new /datum/ai_controller/monkey/angry(monkey)
 		else
 			new /datum/ai_controller/monkey(monkey)
 		monkey.ai_controller.blackboard[BB_MONKEY_TARGET_MONKEYS] = TRUE
-		monkey_list += monkey
 	addtimer(CALLBACK(src, .proc/finalize), monkey_timer)
+	sleep(monkey_timer)
 	while(running)
-		sleep(2 TICKS)
+		sleep(2 TICKS) // make sure we're actually done
 
 /datum/unit_test/monkey_business/proc/finalize()
-	QDEL_LIST(monkey_list)
 	var/monkey_runtimes = GLOB.total_runtimes - start_runtimes
 	if(monkey_runtimes)
 		TEST_FAIL("Monkey Business caused [monkey_runtimes] runtimes")

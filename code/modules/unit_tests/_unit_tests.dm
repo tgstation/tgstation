@@ -53,7 +53,10 @@
 
 #define TEST_PRE 0
 #define TEST_DEFAULT 1
-#define TEST_DEL_WORLD INFINITY
+/// This should be one of the last tests to run
+#define TEST_MONKEY_BUSINESS 10
+/// This must be the last test to run
+#define TEST_CREATE_AND_DESTROY INFINITY
 
 /// Change color to red on ANSI terminal output, if enabled with -DANSICOLORS.
 #ifdef ANSICOLORS
