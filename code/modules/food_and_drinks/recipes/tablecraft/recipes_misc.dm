@@ -331,7 +331,7 @@
 		/obj/item/food/popcorn = 1,
 		/datum/reagent/consumable/caramel = 3,
 	)
-	result = /obj/item/food/caramel_popcorn
+	result = /obj/item/food/popcorn/caramel
 	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/salty_popcorn
@@ -340,5 +340,5 @@
 		/obj/item/food/popcorn = 1,
 		/datum/reagent/consumable/salt = 3,
 	)
-	result = /obj/item/food/salty_popcorn
+	result = /obj/item/food/popcorn/salty
 	subcategory = CAT_MISCFOOD
