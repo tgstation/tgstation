@@ -1,4 +1,0 @@
-author: "MSO, Dopamiin, Ryll"
-delete-after: True
-changes: 
-  - bugfix: "fixed an edge case where admins spawning ghosts in as mobs would sometimes give the wrong person control of the new mob."

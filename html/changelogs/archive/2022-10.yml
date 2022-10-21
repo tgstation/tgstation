@@ -785,3 +785,54 @@
   - rscdel: Remove staff of sapping and bolt of sapping. These effects have been replaced
       with staff of babel and bolt of babel.
   - bugfix: Fix item icons for action buttons to be center aligned
+2022-10-21:
+  Ebb-Real:
+  - bugfix: Chairs get placed in the same direction as you face when you place a chair.
+  MSO, Dopamiin, Ryll:
+  - bugfix: fixed an edge case where admins spawning ghosts in as mobs would sometimes
+      give the wrong person control of the new mob.
+  Melbert:
+  - bugfix: Fixes pressing a paper up to a camera while you are "Unknown".
+  - bugfix: Fixes a runtime from deleting a mob with an eye of god equipped
+  - bugfix: Having a Changeling sting active will no longer block alt-clicking to
+      open bags and middle mouse to swap hands in most circumstances
+  - bugfix: Changing species will now carry over brain traumas, liver traits, cybernetic
+      organs, organ damage, and the heretic living heart.
+  RaveRadbury:
+  - qol: Added balloon alerts for securing emergency energy shields
+  - bugfix: People can now see when you begin reading the Guide to Dank Mimery
+  Rhials:
+  - bugfix: The command intercom now has a sprite. Wow.
+  - bugfix: Injecting patients (victims) with sleeper chems no longer runtimes on
+      log_combat.
+  Sealed101:
+  - bugfix: Fixed AIs piloting a mecha gaining unobstructed vision with no cameras
+      present when moving past a certain point
+  SeigaSeiga:
+  - imageadd: Added a Shinto style Chaplain suit and holy book icon. Made the Shrinehand
+      Robe available in the chaplain's wardrobe.
+  ShizCalev:
+  - spellcheck: Corrected formatting on the examine message for unarmed mines
+  - refactor: Modernized the janicart!
+  - bugfix: Fixed janicart examine message not mentioning how to dump it when it was
+      almost empty, but not completely empty.
+  - bugfix: Fixed varedited janicarts having no caution signs visible when they went
+      over 4 signs.
+  Tastyfish:
+  - bugfix: Flashlights and similar directional light items no longer make you glow
+      forever under certain circumstances.
+  jlsnow301:
+  - rscadd: Orbit UI buttons now reflect health and show job icons
+  - rscadd: ID trims now have an orbit icon variable for its display on the observer
+      menu
+  - code_imp: Orbit UI heatmap is now toggleable with health (top button)
+  - bugfix: Sorting for disguised names should work better.
+  - refactor: Refactored Orbit into a folder.
+  san7890:
+  - bugfix: When a human went through an emagged recycler, they would have literally
+      everything on them chewed up in the recycler. However, they still appeared to
+      have all of their stuff on them due to some faulty code. When you now punt that
+      tider into the chewer-of-death, they should now appropriately reflect that all
+      of their clothes have been deleted.
+  - bugfix: You can now properly weld and use plasma cutters without the target of
+      your actions being irrevocably FUCKED.

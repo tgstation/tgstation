@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "Changing species will now carry over brain traumas, liver traits, cybernetic organs, organ damage, and the heretic living heart."
