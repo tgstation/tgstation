@@ -495,7 +495,7 @@
 	volume = 120
 	icon_state = "coffeepot"
 	fill_icon_state = "coffeepot"
-	fill_icon_thresholds = list(0, 1, 40, 80, 120)
+	fill_icon_thresholds = list(0, 1, 30, 60, 100)
 
 /obj/item/reagent_containers/cup/coffeepot/bluespace
 	name = "bluespace coffeepot"

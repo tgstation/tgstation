@@ -1783,6 +1783,10 @@
 					/obj/item/storage/box/coffeepack/arabica,
 					/obj/item/reagent_containers/cup/coffeepot,
 					/obj/item/storage/fancy/coffee_condi_display,
+					/obj/item/reagent_containers/cup/glass/bottle/juice/cream,
+					/obj/item/reagent_containers/condiment/milk,
+					/obj/item/reagent_containers/condiment/soymilk,
+					/obj/item/reagent_containers/condiment/sugar,
 					/obj/item/reagent_containers/cup/bottle/syrup_bottle/caramel)	//one extra syrup as a treat
 	crate_name = "coffee equippemnt crate"
 
@@ -2127,6 +2131,7 @@
 	crate_type = /obj/structure/closet/crate/cardboard
 
 /datum/supply_pack/organic/syrup_contraband
+	contraband = TRUE
 	name = "Contraband Syrups Box"
 	desc = "A packaged box containing illegal coffee syrups. Possesion of these carries a penalty established in the galactic penal code"
 	cost = CARGO_CRATE_VALUE * 6

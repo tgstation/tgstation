@@ -502,15 +502,16 @@
  */
 
 /obj/machinery/coffeemaker/impressa
-	density = TRUE
 	name = "impressa coffeemaker"
-	desc = "An impressa modello 5 coffeemaker of the Piccionaia Home Appliances premium coffeemakers product line. Makes coffee from fresh dried whole beans."
+	desc = "An industry-grade Impressa Modello 5 Coffeemaker of the Piccionaia Home Appliances premium coffeemakers product line. Makes coffee from fresh dried whole beans."
 	icon = 'icons/obj/machines/coffeemaker.dmi'
 	icon_state = "coffeemaker_impressa"
 	circuit = /obj/item/circuitboard/machine/coffeemaker/impressa
-	initial_cartridge = null //no cartridge, just coffee beans
-	brew_time = 10 SECONDS //industrial grade, its faster than the regular one
+	initial_cartridge = null		//no cartridge, just coffee beans
+	brew_time = 10 SECONDS			//industrial grade, its faster than the regular one
 	var/const/bean_capacity = 10	//how many beans can fit inside
+	density = TRUE
+	pass_flags = PASSTABLE
 
 	//this type of coffeemaker takes fresh whole beans insted of cartidges
 	var/list/coffee= list()
