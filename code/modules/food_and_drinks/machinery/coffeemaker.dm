@@ -521,7 +521,7 @@
 	. = ..()
 	if(mapload)
 		coffeepot = new /obj/item/reagent_containers/cup/coffeepot(src)
-		coffee = new /obj/item/food/grown/coffee(src)
+		cartridge = null
 
 
 /obj/machinery/coffeemaker/impressa/Destroy()
