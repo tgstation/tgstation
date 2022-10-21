@@ -41,12 +41,25 @@
 
 	update_appearance(UPDATE_ICON)
 
-/obj/machinery/microwave/Destroy()
+/obj/machinery/microwave/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	ingredients += arrived
+	return ..()
+
+/obj/machinery/microwave/Exited(atom/movable/gone, direction)
+	if(gone in ingredients)
+		ingredients -= gone
+	return ..()
+
+
+/obj/machinery/microwave/on_deconstruction()
 	eject()
-	if(wires)
-		QDEL_NULL(wires)
+	return ..()
+
+/obj/machinery/microwave/Destroy()
+	QDEL_LIST(ingredients)
+	QDEL_NULL(wires)
 	QDEL_NULL(soundloop)
-	. = ..()
+	return ..()
 
 /obj/machinery/microwave/set_anchored(anchorvalue)
 	. = ..()
@@ -264,7 +277,6 @@
 				return TRUE
 			if(T.atom_storage.attempt_remove(S, src))
 				loaded++
-				ingredients += S
 		if(loaded)
 			to_chat(user, span_notice("You insert [loaded] items into \the [src]."))
 		return
@@ -277,7 +289,6 @@
 			to_chat(user, span_warning("\The [O] is stuck to your hand!"))
 			return FALSE
 
-		ingredients += O
 		user.visible_message(span_notice("[user] adds \a [O] to \the [src]."), span_notice("You add [O] to \the [src]."))
 		update_appearance()
 		return
@@ -322,10 +333,9 @@
 			examine(user)
 
 /obj/machinery/microwave/proc/eject()
-	for(var/i in ingredients)
-		var/atom/movable/AM = i
-		AM.forceMove(drop_location())
-	ingredients.Cut()
+	var/atom/drop_loc = drop_location()
+	for(var/atom/movable/movable_ingredient as anything in ingredients)
+		movable_ingredient.forceMove(drop_loc)
 	open()
 	playsound(loc, 'sound/machines/click.ogg', 15, TRUE, -3)
 
@@ -381,7 +391,7 @@
 
 /obj/machinery/microwave/proc/muck()
 	wzhzhzh()
-	playsound(src.loc, 'sound/effects/splat.ogg', 50, TRUE)
+	playsound(loc, 'sound/effects/splat.ogg', 50, TRUE)
 	dirty_anim_playing = TRUE
 	update_appearance()
 	loop(MICROWAVE_MUCK, 4)
@@ -390,7 +400,8 @@
 	if((machine_stat & BROKEN) && type == MICROWAVE_PRE)
 		pre_fail()
 		return
-	if(!time)
+
+	if(!time || !length(ingredients))
 		switch(type)
 			if(MICROWAVE_NORMAL)
 				loop_finish()
@@ -428,10 +439,6 @@
 		dump_inventory_contents()
 
 	after_finish_loop()
-
-/obj/machinery/microwave/dump_inventory_contents()
-	. = ..()
-	ingredients.Cut()
 
 /obj/machinery/microwave/proc/pre_fail()
 	broken = 2
