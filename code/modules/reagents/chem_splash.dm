@@ -103,7 +103,6 @@
 				continue
 			turflist[lad] = TRUE
 
-		reactable += valid_step
 		reactable += valid_step.get_all_contents() // Yes this means multitile objects double react. I don't care. skill issue
 		if(hot_chem)
 			valid_step.hotspot_expose(chem_temp*2, 5)
