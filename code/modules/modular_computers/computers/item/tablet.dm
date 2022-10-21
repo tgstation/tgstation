@@ -360,23 +360,22 @@
 	greyscale_colors = "#999875#a92323"
 
 	max_capacity = 64
+	bypass_state = TRUE
+	allow_chunky = TRUE
+
+	///Static list of default PDA apps to install on Initialize.
 	var/static/list/datum/computer_file/pda_programs = list(
 		/datum/computer_file/program/messenger,
 		/datum/computer_file/program/nt_pay,
 		/datum/computer_file/program/notepad,
 	)
-
-	bypass_state = TRUE
-	allow_chunky = TRUE
-
 	///The pre-installed cartridge that comes with the tablet
 	var/loaded_cartridge
 
 /obj/item/modular_computer/tablet/pda/install_default_programs()
-	for(var/programs as anything in default_programs + pda_programs+ starting_programs)
+	for(var/programs as anything in (default_programs + pda_programs + starting_programs))
 		var/datum/computer_file/program/program_type = new programs
 		store_file(program_type)
-	return ..()
 
 /obj/item/modular_computer/tablet/pda/update_overlays()
 	. = ..()
