@@ -241,6 +241,8 @@
 	maxHealth = 15
 	health = 15
 
+	ai_controller = /datum/ai_controller/basic_controller/mouse/rat
+
 /mob/living/basic/mouse/rat/create_a_new_rat()
 	new /mob/living/basic/mouse/rat(loc)
 
@@ -361,4 +363,4 @@
 		if(living_target.faction_check_mob(living_mob, TRUE))
 			return FALSE
 
-	return TRUE
+	return ..()
