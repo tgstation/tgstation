@@ -43,7 +43,7 @@
 		inserted_item = new inserted_item(src)
 
 /obj/item/modular_computer/tablet/Destroy()
-	if(inserted_item)
+	if(istype(inserted_item))
 		QDEL_NULL(inserted_item)
 	return ..()
 
