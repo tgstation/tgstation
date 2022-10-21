@@ -18,7 +18,7 @@
 /obj/item/radio/intercom/prison/Initialize(mapload, ndir, building)
 	. = ..()
 	if(wires)
-		wires.cut(WIRES_TX)
+		wires.cut(WIRE_TX)
 
 /obj/item/radio/intercom/Initialize(mapload, ndir, building)
 	. = ..()
