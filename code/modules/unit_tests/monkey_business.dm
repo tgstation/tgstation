@@ -13,7 +13,7 @@
 	var/monkey_timer = 30 SECONDS
 	var/start_runtimes = 0
 	var/list/monkey_list
-	var/list/running = TRUE
+	var/running = TRUE
 
 /datum/unit_test/monkey_business/Run()
 	monkey_list = list()
@@ -31,7 +31,7 @@
 		monkey_list += monkey
 	addtimer(CALLBACK(src, .proc/finalize), monkey_timer)
 	while(running)
-		sleep(2)
+		sleep(2 TICKS)
 
 /datum/unit_test/monkey_business/proc/finalize()
 	QDEL_LIST(monkey_list)
