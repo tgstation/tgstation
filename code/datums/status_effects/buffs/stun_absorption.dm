@@ -32,7 +32,7 @@
 	/// Static list of all generic "stun received " signals that we will react to and block.
 	/// These all have the same arguments sent, so we can handle them all via the same signal handler.
 	/// Note though that we can register other signals to block effects outside of these if we want.
-	var/static/list/generic_stun_signals = list(
+	var/static/list/incapacitation_effect_signals = list(
 		COMSIG_LIVING_STATUS_STUN,
 		COMSIG_LIVING_STATUS_KNOCKDOWN,
 		COMSIG_LIVING_STATUS_IMMOBILIZE,
@@ -67,7 +67,7 @@
 	if(owner.mind || owner.client)
 		owner.log_message("gained stun absorption (from: [source || "Unknown"])", LOG_ATTACK)
 
-	RegisterSignal(owner, generic_stun_signals, .proc/try_absorb_incapacitating_effect)
+	RegisterSignal(owner, incapacitation_effect_signals, .proc/try_absorb_incapacitating_effect)
 	RegisterSignal(owner, COMSIG_LIVING_GENERIC_STUN_CHECK, .proc/try_absorb_generic_effect)
 	return TRUE
 
@@ -75,7 +75,7 @@
 	if(owner.mind || owner.client)
 		owner.log_message("lost stun absorption (from: [source || "Unknown"])", LOG_ATTACK)
 
-	UnregisterSignal(owner, generic_stun_signals)
+	UnregisterSignal(owner, incapacitation_effect_signals)
 	UnregisterSignal(owner, COMSIG_LIVING_GENERIC_STUN_CHECK)
 
 /datum/status_effect/stun_absorption/get_examine_text()
