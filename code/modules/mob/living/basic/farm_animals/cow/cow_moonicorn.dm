@@ -55,7 +55,8 @@
 		//finds someone to kill
 		/datum/ai_planning_subtree/simple_find_target,
 		//...or something to eat, possibly. both types of target handled by melee attack subtree
-		/datum/ai_planning_subtree/find_food,
+		//because both subtrees look for targets, but different ones, it will prioritize attacking humans over food
+		/datum/ai_planning_subtree/find_and_eat_food,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree/moonicorn,
 	)
 
