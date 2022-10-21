@@ -56,8 +56,6 @@
 	icon_state = "[choice]"
 	playsound(src, 'sound/machines/click.ogg', 40, TRUE)
 
-
-
 /obj/item/universal_scanner/afterattack(obj/object, mob/user, proximity)
 	. = ..()
 	if(!istype(object) || !proximity)
