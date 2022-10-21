@@ -957,6 +957,5 @@
 	foodtypes = GRAIN | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/caramel_popcorn
 
 
