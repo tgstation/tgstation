@@ -29,8 +29,12 @@
 
 	ai_controller = /datum/ai_controller/basic/butterfly
 
+	var/needs_atmos = TRUE
+
 /mob/living/basic/butterfly/Initialize(mapload)
 	. = ..()
+	if(needs_atmos)
+		AddElement(/datum/element/atmos_requirements, list("min_oxy" = 5, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0), 7.5)
 	AddElement(/datum/element/simple_flying)
 	var/newcolor = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 	add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
@@ -46,3 +50,9 @@
 	ai_traits = STOP_MOVING_WHEN_PULLED
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
+
+///subtype that doesn't have atmos requirements
+/mob/living/basic/butterfly/eden
+	name = "butterfly of eden"
+	desc = "A colorful butterfly, how'd it get down here?"
+	needs_atmos = FALSE

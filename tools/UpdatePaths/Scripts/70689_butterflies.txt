@@ -1,3 +1,4 @@
 #comment basic mob-ifies butterflies~
 
+/mob/living/simple_animal/butterfly {atmos_requirements = list()} : /mob/living/basic/butterfly/eden
 /mob/living/simple_animal/butterfly : /mob/living/basic/butterfly{@OLD}
