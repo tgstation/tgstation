@@ -158,9 +158,9 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	QDEL_LIST(stored_files)
 	Remove_Messenger()
 
-	if(istype(inserted_disk))
+	if(inserted_disk)
 		QDEL_NULL(inserted_disk)
-	if(istype(inserted_pai))
+	if(inserted_pai)
 		QDEL_NULL(inserted_pai)
 
 	physical = null
