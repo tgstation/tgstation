@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - bugfix: "Sechuds cannot pierce the sneak suit to see the wearer's ID trim."
