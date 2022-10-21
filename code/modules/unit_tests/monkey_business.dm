@@ -28,6 +28,7 @@
 			new /datum/ai_controller/monkey/angry(monkey)
 		else
 			new /datum/ai_controller/monkey(monkey)
+		monkey.ai_controller.blackboard[BB_MONKEY_TARGET_MONKEYS] = TRUE
 		monkey_list += monkey
 	addtimer(CALLBACK(src, .proc/finalize), monkey_timer)
 	while(running)
@@ -39,21 +40,3 @@
 	if(monkey_runtimes)
 		TEST_FAIL("Monkey Business caused [monkey_runtimes] runtimes")
 	running = FALSE
-
-/// This is a copy/paste of monkey_set_combat_target/perform, but without the check preventing a monkey from aggroing to another monkey
-/// Relies on unit tests loading after AI code, which is a safe assumption
-
-/datum/ai_behavior/monkey_set_combat_target/perform(delta_time, datum/ai_controller/controller, set_key, enemies_key)
-	var/list/enemies = controller.blackboard[enemies_key]
-	var/list/valids = list()
-	for(var/mob/living/possible_enemy in view(MONKEY_ENEMY_VISION, controller.pawn))
-		var/datum/weakref/enemy_ref = WEAKREF(possible_enemy)
-		if(possible_enemy == controller.pawn || (!enemies[enemy_ref] && (!controller.blackboard[BB_MONKEY_AGGRESSIVE]))) //Are they an enemy? (And do we even care?)
-			continue
-		// Weighted list, so the closer they are the more likely they are to be chosen as the enemy
-		valids[enemy_ref] = CEILING(100 / (get_dist(controller.pawn, possible_enemy) || 1), 1)
-
-	if(!valids.len)
-		finish_action(controller, FALSE)
-	controller.blackboard[set_key] = pick_weight(valids)
-	finish_action(controller, TRUE)
