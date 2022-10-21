@@ -84,7 +84,7 @@
 	steam.attach(epicenter)
 	steam.start()
 
-	// This is a basic floodfill algorithem of atmos connected tiles
+	// This is a basic floodfill algorithm of atmos connected tiles
 	// Turfs will be stored in the form turf -> TRUE
 	var/chem_temp = source.chem_temp
 	var/hot_chem = chem_temp >= 300
