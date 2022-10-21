@@ -105,6 +105,7 @@
 
 /mob/living/simple_animal/hostile/regalrat/examine(mob/user)
 	. = ..()
+
 	if(ismouse(user))
 		if(user.faction_check_mob(src, TRUE))
 			. += span_notice("This is your king. Long live [p_their()] majesty!")

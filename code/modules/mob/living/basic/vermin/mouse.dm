@@ -39,7 +39,7 @@
 /mob/living/basic/mouse/Initialize(mapload)
 	. = ..()
 	if(contributes_to_ratcap)
-		SSmobs.cheeserats += src
+		SSmobs.cheeserats |= src
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 	if(isnull(body_color))
@@ -61,18 +61,17 @@
 	. = ..()
 
 	var/sameside = user.faction_check_mob(src, TRUE)
-	if(istype(user,/mob/living/simple_animal/hostile/regalrat))
+	if(istype(user, /mob/living/simple_animal/hostile/regalrat))
 		if(sameside)
 			. += span_notice("This rat serves under you.")
 		else
 			. += span_warning("This peasant serves a different king! Strike [p_them()] down!")
 
-	else
+	else if(user != src && ismouse(user))
 		if(sameside)
 			. += span_notice("You both serve the same king.")
 		else
 			. += span_warning("This fool serves a different king!")
-
 
 /mob/living/basic/mouse/proc/splat()
 	icon_dead = "mouse_[body_color]_splat"
@@ -86,29 +85,29 @@
 	if(!admin_revive && !ckey && length(SSmobs.cheeserats) >= cap)
 		visible_message(span_warning("[src] twitches, but does not continue moving \
 			due to the overwhelming rodent population on the station!"))
-		return FALSE
+		return
 
 	. = ..()
-	if(.)
-		SSmobs.cheeserats += src
+	if(stat != DEAD)
+		SSmobs.cheeserats |= src
 
 /mob/living/basic/mouse/death(gibbed)
-	// Ckey'd rats will not turn into an item
-	if(!ckey)
-		// Call parent with gibbed = TRUE, becuase we're getting rid of the body
-		..(TRUE)
-		// Now if we were't ACTUALLY gibbed, spawn the dead mouse
-		if(!gibbed)
-			var/obj/item/food/deadmouse/mouse = new(loc)
-			mouse.name = name
-			mouse.icon_state = icon_dead
-			if(HAS_TRAIT(src, TRAIT_BEING_SHOCKED))
-				mouse.desc = "They're toast."
-				mouse.add_atom_colour("#3A3A3A", FIXED_COLOUR_PRIORITY)
-		qdel(src)
-	else
-		SSmobs.cheeserats -= src
-	return ..()
+	SSmobs.cheeserats -= src
+	// Rats with a mind will not turn into a lizard snack on death
+	if(mind)
+		return ..()
+
+	// Call parent with gibbed = TRUE, becuase we're getting rid of the body
+	. = ..(TRUE)
+	// Now if we were't ACTUALLY gibbed, spawn the dead mouse
+	if(!gibbed)
+		var/obj/item/food/deadmouse/mouse = new(loc)
+		mouse.name = name
+		mouse.icon_state = icon_dead
+		if(HAS_TRAIT(src, TRAIT_BEING_SHOCKED))
+			mouse.desc = "They're toast."
+			mouse.add_atom_colour("#3A3A3A", FIXED_COLOUR_PRIORITY)
+	qdel(src)
 
 /mob/living/basic/mouse/proc/on_entered(datum/source, atom/movable/entered)
 	SIGNAL_HANDLER
@@ -178,15 +177,15 @@
 	if(cable.avail() && !HAS_TRAIT(src, TRAIT_SHOCKIMMUNE) && prob(cable_zap_prob))
 		visible_message(
 			span_warning("[src] chews through \the [cable]. It's toast!"),
-			span_userdanger("As you bite deeply into [cable], you suddenly realize this may have been a bad idea.")
+			span_userdanger("As you bite deeply into [cable], you suddenly realize this may have been a bad idea."),
 			span_hear("You hear electricity crack."),
 		)
 		// Finely toasted
-		ADD_TRAIT(src, TRAIT_BEING_SHOCKED, GENERIC_TRAIT)
+		ADD_TRAIT(src, TRAIT_BEING_SHOCKED, TRAIT_GENERIC)
 		// Unfortunately we can't check the return value of electrocute_act before displaying a message,
 		// as it's possible the damage from electrocution results in our hunter being deleted.
 		// But what are the odds of the shock failing? Hahaha...
-		electrocute_act(maxHealth * 2, cable, shock_flags = SHOCK_SUPPRESS_MESSAGE)
+		electrocute_act(maxHealth * 2, cable, flags = SHOCK_SUPPRESS_MESSAGE)
 
 	else
 		visible_message(
@@ -270,7 +269,8 @@
 		. += span_warning("[p_theyre(TRUE)] dripping with fuel and smells terrible.")
 
 /obj/item/food/deadmouse/attackby(obj/item/attacking_item, mob/user, params)
-	if(attacking_item.get_sharpness() && user.combat_mode)
+	var/mob/living/living_user = user
+	if(istype(living_user) && attacking_item.get_sharpness() && living_user.combat_mode)
 		if(!isturf(loc))
 			balloon_alert(user, "can't butcher here!")
 			return
@@ -308,10 +308,11 @@
 	grind_results = list(/datum/reagent/blood = 20, /datum/reagent/liquidgibs = 5, /datum/reagent/consumable/mold = 10)
 	preserved_food = TRUE
 
+/// The mouse AI controller
 /datum/ai_controller/basic_controller/mouse
 	blackboard = list(
-		BB_CURRENT_HUNTING_TARGET = null,
-		BB_LOW_PRIORITY_HUNTING_TARGET = null,
+		BB_CURRENT_HUNTING_TARGET = null, // cheese
+		BB_LOW_PRIORITY_HUNTING_TARGET = null, // cable
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED
@@ -326,11 +327,13 @@
 		/datum/ai_planning_subtree/find_and_hunt_target/look_for_cables,
 	)
 
+/// AI controller for rats, slightly more complex than mice becuase they attack people
 /datum/ai_controller/basic_controller/mouse/rat
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(),
-		BB_CURRENT_HUNTING_TARGET = null,
-		BB_LOW_PRIORITY_HUNTING_TARGET = null,
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/rat(),
+		BB_BASIC_MOB_CURRENT_TARGET = null, // heathen
+		BB_CURRENT_HUNTING_TARGET = null, // cheese
+		BB_LOW_PRIORITY_HUNTING_TARGET = null, // cable
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED

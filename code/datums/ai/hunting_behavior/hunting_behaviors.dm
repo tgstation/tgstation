@@ -26,26 +26,27 @@
 		return
 	if(controller.blackboard[BB_HUNTING_COOLDOWN] >= world.time)
 		return
+	var/mob/living/living_pawn = controller.pawn
 	// We can't hunt if we're indisposed
-	if(HAS_TRAIT(controller.pawn, TRAIT_HANDS_BLOCKED) || controller.pawn.stat != CONSCIOUS)
+	if(HAS_TRAIT(controller.pawn, TRAIT_HANDS_BLOCKED) || living_pawn.stat != CONSCIOUS)
 		return
 
 	// We're targeting something else for another reason
 	var/datum/weakref/target_weakref = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
-	var/atom/target = weak_target?.resolve()
+	var/atom/target = target_weakref?.resolve()
 	if(!QDELETED(target))
 		return
 
 	var/datum/weakref/hunting_weakref = controller.blackboard[target_key]
 	var/atom/hunted = hunting_weakref?.resolve()
 	// We're not hunting anything, look around for something
-	if(QDELETED(target))
+	if(QDELETED(hunted))
 		controller.queue_behavior(finding_behavior, target_key, hunt_targets, hunt_range)
 
-	// We ARE hunting something, execute the hunt
-	// Note that if our AI controller has multiple hunting targets set,
-	// another subtree's hunt, which may not be ideal - be sure to update
-	// the target key accordinly
+	// We ARE hunting something, execute the hunt.
+	// Note that if our AI controller has multiple hunting subtrees set,
+	// we may accidentally be executing another tree's hunt - not ideal,
+	// try to set a unique target key if you have multiple
 	else
 		controller.queue_behavior(hunting_behavior, target_key, BB_HUNTING_COOLDOWN)
 		return SUBTREE_RETURN_FINISH_PLANNING //If we're hunting we're too busy for anything else
@@ -73,7 +74,7 @@
 		if(living_target.stat == DEAD) //bitch is dead
 			return FALSE
 
-	return can_see(source, possible_dinner, radius)
+	return can_see(source, dinner, radius)
 
 /// Hunts down a specific atom type.
 /datum/ai_behavior/hunt_target
@@ -83,7 +84,8 @@
 
 /datum/ai_behavior/hunt_target/setup(datum/ai_controller/controller, hunting_target_key, hunting_cooldown_key)
 	. = ..()
-	controller.current_movement_target = controller.blackboard[hunting_target_key]
+	var/datum/weakref/hunting_weakref = controller.blackboard[hunting_target_key]
+	controller.current_movement_target = hunting_weakref?.resolve()
 
 /datum/ai_behavior/hunt_target/perform(delta_time, datum/ai_controller/controller, hunting_target_key, hunting_cooldown_key)
 	. = ..()
@@ -91,14 +93,13 @@
 	var/datum/weakref/hunting_weakref = controller.blackboard[hunting_target_key]
 	var/atom/hunted = hunting_weakref?.resolve()
 
-	if(hunted)
-		target_caught(hunter, hunted)
-		finish_action(controller, TRUE, hunting_target_key, hunting_cooldown_key)
-
-	else
+	if(QDELETED(hunted))
 		//Target is gone for some reason. forget about this task!
 		controller[hunting_target_key] = null
 		finish_action(controller, FALSE, hunting_target_key)
+	else
+		target_caught(hunter, hunted)
+		finish_action(controller, TRUE, hunting_target_key, hunting_cooldown_key)
 
 /datum/ai_behavior/hunt_target/proc/target_caught(mob/living/hunter, atom/hunted)
 	if(isliving(hunted)) // Are we hunting a living mob?
