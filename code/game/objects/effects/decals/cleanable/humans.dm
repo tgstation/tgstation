@@ -117,7 +117,7 @@
 	RegisterSignal(src, COMSIG_MOVABLE_PIPE_EJECTING, .proc/on_pipe_eject)
 
 /obj/effect/decal/cleanable/blood/gibs/Destroy()
-	streak_diseases = null
+	LAZYNULL(streak_diseases)
 	return ..()
 
 /obj/effect/decal/cleanable/blood/gibs/replace_decal(obj/effect/decal/cleanable/C)
