@@ -74,6 +74,7 @@
 
 	if(is_type_in_list(W, contained_item))
 		if(W.w_class >= WEIGHT_CLASS_SMALL) // Anything equal to or larger than small won't work
+			user.balloon_alert(user, "too big!")
 			return
 		if(inserted_item)
 			to_chat(user, span_warning("There is already \a [inserted_item] in \the [src]!"))
