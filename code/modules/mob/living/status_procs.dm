@@ -16,6 +16,9 @@
 	if(force_stun)
 		return FALSE
 
+	if(SEND_SIGNAL(src, COMSIG_LIVING_GENERIC_STUN_CHECK, check_flags, force_stun) & COMPONENT_NO_STUN)
+		return TRUE
+
 	if(HAS_TRAIT(src, TRAIT_STUNIMMUNE))
 		return TRUE
 

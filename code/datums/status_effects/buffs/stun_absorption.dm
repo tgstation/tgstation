@@ -67,8 +67,8 @@
 	if(owner.mind || owner.client)
 		owner.log_message("gained stun absorption (from: [source || "Unknown"])", LOG_ATTACK)
 
-	RegisterSignal(owner, generic_stun_signals, .proc/try_absorb_stun)
-	RegisterSignal(owner, COMSIG_CARBON_ENTER_STAMCRIT, .proc/try_absorb_stamcrit)
+	RegisterSignal(owner, generic_stun_signals, .proc/try_absorb_incapacitating_effect)
+	RegisterSignal(owner, COMSIG_LIVING_GENERIC_STUN_CHECK, .proc/try_absorb_generic_effect)
 	return TRUE
 
 /datum/status_effect/stun_absorption/on_remove()
@@ -76,7 +76,7 @@
 		owner.log_message("lost stun absorption (from: [source || "Unknown"])", LOG_ATTACK)
 
 	UnregisterSignal(owner, generic_stun_signals)
-	UnregisterSignal(owner, COMSIG_CARBON_ENTER_STAMCRIT)
+	UnregisterSignal(owner, COMSIG_LIVING_GENERIC_STUN_CHECK)
 
 /datum/status_effect/stun_absorption/get_examine_text()
 	return examine_message
@@ -84,9 +84,9 @@
 /**
  * Signal proc for generic stun signals being sent, such as [COMSIG_LIVING_STATUS_STUN] or [COMSIG_LIVING_STATUS_KNOCKDOWN].
  *
- * When we get stunned, we will try to absorb a stun, and return [COMPONENT_NO_STUN] if we succeed.
+ * When we get stunned, we will try to absorb a number of seconds from the stun, and return [COMPONENT_NO_STUN] if we succeed.
  */
-/datum/status_effect/stun_absorption/proc/try_absorb_stun(mob/living/source, amount = 0, ignore_canstun = FALSE)
+/datum/status_effect/stun_absorption/proc/try_absorb_incapacitating_effect(mob/living/source, amount = 0, ignore_canstun = FALSE)
 	SIGNAL_HANDLER
 
 	// we blocked a stun this tick that resulting is us qdeling, so stop
@@ -103,17 +103,18 @@
 	return COMPONENT_NO_STUN
 
 /**
- * Signal proc for [COMSIG_CARBON_ENTER_STAMCRIT].
+ * Signal proc for [COMSIG_LIVING_GENERIC_STUN_CHECK]. (Note, this includes being stamcrit)
  *
- * When we enter stamcrit, we will block it.
+ * Whenever a generic stun check is done against us, we'll just try to block it with "0 second" stun.
+ * This prevents spam us from showing feedback messages, and is for the generic "can be stunned" check.
  */
-/datum/status_effect/stun_absorption/proc/try_absorb_stamcrit(mob/living/source)
+/datum/status_effect/stun_absorption/proc/try_absorb_generic_effect(mob/living/source, check_flags)
 	SIGNAL_HANDLER
 
 	if(QDELING(src))
 		return NONE
 
-	// "0 amount" is used here as stamcrit is a continuous state, and we don't want to increment stuns absorbed.
+	// "0 amount" / "0 seconds of stun" is used so no feedback is sent on success
 	if(!absorb_stun(0))
 		return NONE
 
@@ -146,21 +147,23 @@
 	// At this point, a stun was successfully absorbed
 	. = TRUE
 
-	// Show the message
-	if(shown_message)
-		// We do this replacement meme, instead of just setting it up in creation,
-		// so that we respect indentity changes done while active
-		var/really_shown_message = replacetext(shown_message, "%EFFECT_OWNER", "[owner]")
-		owner.visible_message(span_warning(really_shown_message), ignored_mobs = owner)
+	// Only do effects if the amount was > 0 seconds
+	if(amount > 0 SECONDS)
+		// Show the message
+		if(shown_message)
+			// We do this replacement meme, instead of just setting it up in creation,
+			// so that we respect indentity changes done while active
+			var/really_shown_message = replacetext(shown_message, "%EFFECT_OWNER", "[owner]")
+			owner.visible_message(span_warning(really_shown_message), ignored_mobs = owner)
 
-	// Send the self message
-	if(self_message)
-		to_chat(owner, span_boldwarning(self_message))
+		// Send the self message
+		if(self_message)
+			to_chat(owner, span_boldwarning(self_message))
 
-	// Count seconds absorbed
-	seconds_of_stuns_absorbed += amount
-	if(seconds_of_stuns_absorbed >= max_seconds_of_stuns_blocked)
-		qdel(src)
+		// Count seconds absorbed
+		seconds_of_stuns_absorbed += amount
+		if(seconds_of_stuns_absorbed >= max_seconds_of_stuns_blocked)
+			qdel(src)
 
 	return .
 
