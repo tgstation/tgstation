@@ -33,8 +33,8 @@
 	var/body_color
 	/// Does this mouse contribute to the ratcap?
 	var/contributes_to_ratcap = TRUE
-	/// Prob tha we get zapped and die to a powered cable
-	var/cable_zap_prob = 15
+	/// Prob that we get zapped and die to a powered cable
+	var/cable_zap_prob = 85
 
 /mob/living/basic/mouse/Initialize(mapload)
 	. = ..()
