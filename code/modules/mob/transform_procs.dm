@@ -194,14 +194,14 @@
 		qdel(t)
 
 	var/alien_caste = pick("Hunter","Sentinel","Drone")
-	var/mob/living/carbon/alien/humanoid/new_xeno
+	var/mob/living/carbon/alien/adult/new_xeno
 	switch(alien_caste)
 		if("Hunter")
-			new_xeno = new /mob/living/carbon/alien/humanoid/hunter(loc)
+			new_xeno = new /mob/living/carbon/alien/adult/hunter(loc)
 		if("Sentinel")
-			new_xeno = new /mob/living/carbon/alien/humanoid/sentinel(loc)
+			new_xeno = new /mob/living/carbon/alien/adult/sentinel(loc)
 		if("Drone")
-			new_xeno = new /mob/living/carbon/alien/humanoid/drone(loc)
+			new_xeno = new /mob/living/carbon/alien/adult/drone(loc)
 
 	new_xeno.set_combat_mode(TRUE)
 	new_xeno.key = key

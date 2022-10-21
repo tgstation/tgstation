@@ -25,7 +25,7 @@
 /datum/surgery/organ_manipulation/alien
 	name = "Alien organ manipulation"
 	possible_locs = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD, BODY_ZONE_PRECISE_GROIN, BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
-	target_mobtypes = list(/mob/living/carbon/alien/humanoid)
+	target_mobtypes = list(/mob/living/carbon/alien/adult)
 	steps = list(
 		/datum/surgery_step/saw,
 		/datum/surgery_step/incise,

@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "Having a Changeling sting active will no longer block alt-clicking to open bags and middle mouse to swap hands in most circumstances"

@@ -1,6 +1,6 @@
 
 
-/mob/living/carbon/alien/humanoid/attack_hulk(mob/living/carbon/human/user)
+/mob/living/carbon/alien/adult/attack_hulk(mob/living/carbon/human/user)
 	. = ..()
 	if(!.)
 		return
@@ -14,7 +14,7 @@
 					span_userdanger("[user] [hitverb]s you!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, user)
 	to_chat(user, span_danger("You [hitverb] [src]!"))
 
-/mob/living/carbon/alien/humanoid/attack_hand(mob/living/carbon/human/user, list/modifiers)
+/mob/living/carbon/alien/adult/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	if(!..() || !user.combat_mode)
 		return
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
@@ -48,7 +48,7 @@
 		to_chat(user, span_warning("Your punch misses [src]!"))
 
 
-/mob/living/carbon/alien/humanoid/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect)
+/mob/living/carbon/alien/adult/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect)
 	if(!no_effect && !visual_effect_icon)
 		visual_effect_icon = ATTACK_EFFECT_CLAW
 	..()
