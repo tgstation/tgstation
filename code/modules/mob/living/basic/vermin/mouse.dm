@@ -61,7 +61,7 @@
 	. = ..()
 
 	var/sameside = user.faction_check_mob(src, TRUE)
-	if(istype(user, /mob/living/simple_animal/hostile/regalrat))
+	if(isregalrat(user))
 		if(sameside)
 			. += span_notice("This rat serves under you.")
 		else

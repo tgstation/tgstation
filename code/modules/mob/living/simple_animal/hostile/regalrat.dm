@@ -112,7 +112,7 @@
 		else
 			. += span_warning("This is a false king! Strike [p_them()] down!")
 
-	else if(user != src && istype(user, /mob/living/simple_animal/hostile/regalrat))
+	else if(user != src && isregalrat(user))
 		. += span_warning("Who is this foolish false king? This will not stand!")
 
 /mob/living/simple_animal/hostile/regalrat/handle_environment(datum/gas_mixture/environment)
