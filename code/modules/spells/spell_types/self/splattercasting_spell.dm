@@ -12,20 +12,21 @@
 	invocation = "THE STARS ALIGN! THE COSMOS BLEEDS!"
 	invocation_type = INVOCATION_SHOUT
 	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_OFF_CENTCOM|SPELL_REQUIRES_MIND
+	antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY
 	spell_max_level = 1
 
 /datum/action/cooldown/spell/splattercasting/cast(mob/living/cast_on)
 	. = ..()
-	playsound(cast_on, 'sound/effects/pope_entry.ogg', 100)
 
 	to_chat(cast_on, span_green("You focus your arcane knowledge into your lifeforce, your blood simmering with new potential..."))
 	if(!do_after(cast_on, 5 SECONDS))
 		to_chat(cast_on, span_warning("Your focus is broken, and the simmering slowly fades."))
 		return
 
-	to_chat(cast_on, span_userdanger("You feel your very essense binding to your magic! A stabbing pain within \
+	playsound(cast_on, 'sound/effects/pope_entry.ogg', 100)
+	to_chat(cast_on, span_danger("You feel your very essense binding to your magic! A stabbing pain within \
 		brings unimaginable momentary torment as your heart stops, and your skin grows cold. You are now \
-		merely a vessel for the arcane flow. Soon, all that is left is not pain, but the hunger."))
+		merely a vessel for the arcane flow. Soon, all that is left is not pain, but hunger."))
 
 	cast_on.set_species(/datum/species/vampire)
 

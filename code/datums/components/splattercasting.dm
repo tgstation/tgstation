@@ -19,11 +19,12 @@
 	. = ..()
 	RegisterSignal(parent, COMSIG_SPECIES_LOSS, .proc/on_species_change)
 	RegisterSignal(parent, COMSIG_MOB_SPELL_PROJECTILE, .proc/on_spell_projectile)
+	RegisterSignal(parent, COMSIG_MOB_BEFORE_SPELL_CAST, .proc/on_before_spell_cast)
 	RegisterSignal(parent, COMSIG_MOB_AFTER_SPELL_CAST, .proc/on_after_spell_cast)
 
 /datum/component/splattercasting/UnregisterFromParent()
 	. = ..()
-	UnregisterSignal(parent, list(COMSIG_MOB_AFTER_SPELL_CAST))
+	UnregisterSignal(parent, list(COMSIG_SPECIES_LOSS, COMSIG_MOB_SPELL_PROJECTILE, COMSIG_MOB_BEFORE_SPELL_CAST, COMSIG_MOB_AFTER_SPELL_CAST))
 
 ///signal sent when a spell casts a projectile
 /datum/component/splattercasting/proc/on_species_change(mob/living/carbon/source, datum/species/lost_species)
@@ -42,6 +43,24 @@
 	to_fire.color = "#ff7070"
 	to_fire.name = "blood-[to_fire.name]"
 	to_fire.set_light(2, 2, LIGHT_COLOR_BLOOD_MAGIC, TRUE)
+
+///signal sent before parent casts a spell
+/datum/component/splattercasting/proc/on_before_spell_cast(mob/living/carbon/source, datum/action/cooldown/spell/spell, atom/cast_on)
+	SIGNAL_HANDLER
+
+	var/changed_spell = FALSE
+	if(!(spell.spell_requirements & SPELL_REQUIRES_NO_ANTIMAGIC))
+		spell.spell_requirements |= SPELL_REQUIRES_NO_ANTIMAGIC
+		changed_spell = TRUE
+	if(!(spell.antimagic_flags & MAGIC_RESISTANCE_HOLY))
+		spell.antimagic_flags |= MAGIC_RESISTANCE_HOLY
+		changed_spell = TRUE
+
+	if(changed_spell)
+		//we changed some kind of antimagic so we should check if the new version of the spell is still valid.
+		//since can_cast_spell has already been checked before "before spell cast" only antimagic check should fail
+		if(!spell.can_cast_spell(feedback = TRUE))
+			return SPELL_CANCEL_CAST
 
 ///signal sent after parent casts a spell
 /datum/component/splattercasting/proc/on_after_spell_cast(mob/living/carbon/source, datum/action/cooldown/spell/spell, atom/cast_on)
