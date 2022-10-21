@@ -132,6 +132,3 @@
 
 ///From mob/living/carbon/human/suicide()
 #define COMSIG_HUMAN_SUICIDE_ACT "human_suicide_act"
-
-#define COMSIG_CARBON_ENTER_STAMCRIT "carbon_stamcrit"
-	// return COMPONENT_NO_STUN to stop stamcrit
