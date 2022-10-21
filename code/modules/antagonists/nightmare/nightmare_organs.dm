@@ -19,7 +19,7 @@
 	our_jaunt = new(M)
 	our_jaunt.Grant(M)
 
-/obj/item/organ/internal/brain/shadow/nightmare/Remove(mob/living/carbon/M, special = FALSE)
+/obj/item/organ/internal/brain/shadow/nightmare/Remove(mob/living/carbon/M, special = FALSE, no_id_transfer = FALSE)
 	QDEL_NULL(our_jaunt)
 	return ..()
 

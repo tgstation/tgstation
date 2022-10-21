@@ -71,7 +71,7 @@
 //Second link in a breath chain, calls check_breath()
 /mob/living/carbon/proc/breathe(delta_time, times_fired)
 	var/obj/item/organ/internal/lungs = getorganslot(ORGAN_SLOT_LUNGS)
-	if(reagents.has_reagent(/datum/reagent/toxin/lexorin, needs_metabolizing = TRUE))
+	if(SEND_SIGNAL(src, COMSIG_CARBON_ATTEMPT_BREATHE) & COMSIG_CARBON_BLOCK_BREATH)
 		return
 
 	SEND_SIGNAL(src, COMSIG_CARBON_PRE_BREATHE)
@@ -151,7 +151,7 @@
 		failed_last_breath = TRUE
 		throw_alert(ALERT_NOT_ENOUGH_OXYGEN, /atom/movable/screen/alert/not_enough_oxy)
 		return FALSE
-
+	
 	var/safe_oxy_min = 16
 	var/safe_co2_max = 10
 	var/safe_plas_max = 0.05
@@ -334,7 +334,11 @@
 		if(reagents.has_reagent(/datum/reagent/toxin/formaldehyde, 1) || reagents.has_reagent(/datum/reagent/cryostylane)) // No organ decay if the body contains formaldehyde.
 			return
 		for(var/obj/item/organ/internal/organ as anything in internal_organs)
-			organ.on_death(delta_time, times_fired) //Needed so organs decay while inside the body.
+			// On-death is where organ decay is handled
+			organ.on_death(delta_time, times_fired)
+			// We need to re-check the stat every organ, as one of our others may have revived us
+			if(stat != DEAD)
+				break
 		return
 
 	// NOTE: internal_organs_slot is sorted by GLOB.organ_process_order on insertion

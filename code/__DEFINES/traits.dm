@@ -526,8 +526,11 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Marks the item as having been transmuted. Functionally blacklists the item from being recycled or sold for materials.
 #define TRAIT_MAT_TRANSMUTED "transmuted"
 
+// cargo traits
 ///If the item will block the cargo shuttle from flying to centcom
 #define TRAIT_BANNED_FROM_CARGO_SHUTTLE "banned_from_cargo_shuttle"
+///If the item's contents are immune to the missing item manifest error
+#define TRAIT_NO_MISSING_ITEM_ERROR "no_missing_item_error"
 
 ///SSeconomy trait, if the market is crashing and people can't withdraw credits from ID cards.
 #define TRAIT_MARKET_CRASHING "market_crashing"
@@ -656,6 +659,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// trait that prevents AI controllers from planning detached from ai_status to prevent weird state stuff.
 #define TRAIT_AI_PAUSED "TRAIT_AI_PAUSED"
+
+/// this is used to bypass tongue language restrictions but not tongue disabilities
+#define TRAIT_TOWER_OF_BABEL "tower_of_babel"
 
 //Medical Categories for quirks
 #define CAT_QUIRK_ALL 0
@@ -849,6 +855,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define ITEM_SCALING_TRAIT "item_scaling"
 /// Trait given by Objects that provide blindsight
 #define ITEM_BLIND_TRAIT "blind_item_trait"
+/// Trait given by choking
+#define CHOKING_TRAIT "choking_trait"
 /// Trait given by hallucinations
 #define HALLUCINATION_TRAIT "hallucination_trait"
 

@@ -82,7 +82,7 @@ VERB_MANAGER_SUBSYSTEM_DEF(input)
 			stack_trace("non /datum/callback/verb_callback instance inside SSinput's verb_queue!")
 			continue
 
-		average_click_delay = MC_AVG_FAST_UP_SLOW_DOWN(average_click_delay, (REALTIMEOFDAY - queued_click.creation_time) SECONDS)
+		average_click_delay = MC_AVG_FAST_UP_SLOW_DOWN(average_click_delay, TICKS2DS((DS2TICKS(world.time) - queued_click.creation_time)) SECONDS)
 		queued_click.InvokeAsync()
 
 		current_clicks++

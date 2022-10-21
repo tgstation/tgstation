@@ -49,7 +49,7 @@
 			return
 	take_damage(400, BRUTE, MELEE, 0, get_dir(src, B))
 
-/obj/attack_alien(mob/living/carbon/alien/humanoid/user, list/modifiers)
+/obj/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
 	if(attack_generic(user, 60, BRUTE, MELEE, 0))
 		playsound(src.loc, 'sound/weapons/slash.ogg', 100, TRUE)
 
