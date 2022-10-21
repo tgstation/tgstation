@@ -396,16 +396,7 @@ Used by the AI doomsday and the self-destruct nuke.
 GLOBAL_LIST_EMPTY(the_station_areas)
 
 /datum/controller/subsystem/mapping/proc/generate_station_area_list()
-	var/static/list/station_areas_blacklist = typecacheof(list(
-		/area/space,
-		/area/mine,
-		/area/ruin,
-		/area/centcom/asteroid/nearstation,
-		/area/icemoon,
-	))
-	for(var/area/A in world)
-		if (is_type_in_typecache(A, station_areas_blacklist))
-			continue
+	for(var/area/station/A in world)
 		if (!A.contents.len || !(A.area_flags & UNIQUE_AREA))
 			continue
 		var/turf/picked = A.contents[1]
@@ -766,8 +757,6 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	create_plane_offsets(gen_from, new_offset)
 	for(var/offset in gen_from to new_offset)
 		GLOB.fullbright_overlays += create_fullbright_overlay(offset)
-		GLOB.cryo_overlays_cover_on += create_cryo_overlay(offset, "cover-on")
-		GLOB.cryo_overlays_cover_off += create_cryo_overlay(offset, "cover-off")
 
 	for(var/datum/gas/gas_type as anything in GLOB.meta_gas_info)
 		var/list/gas_info = GLOB.meta_gas_info[gas_type]

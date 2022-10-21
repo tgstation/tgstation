@@ -12,7 +12,7 @@
 
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
 	///A flag that describes this device type
-	var/hardware_flag = 0
+	var/hardware_flag = NONE
 	///Power usage during last tick
 	var/last_power_usage = 0
 	/// Amount of programs that can be ran at once
@@ -133,9 +133,24 @@
 		return cpu.screwdriver_act(user, tool)
 	return ..()
 
+/obj/machinery/modular_computer/wrench_act(mob/user, obj/item/tool)
+	if(cpu)
+		return cpu.wrench_act(user, tool)
+	return ..()
+
+/obj/machinery/modular_computer/welder_act(mob/user, obj/item/tool)
+	if(cpu)
+		return cpu.welder_act(user, tool)
+	return ..()
+
 /obj/machinery/modular_computer/attackby(obj/item/W as obj, mob/living/user)
 	if (cpu && !user.combat_mode && !(flags_1 & NODECONSTRUCT_1))
 		return cpu.attackby(W, user)
+	return ..()
+
+/obj/machinery/modular_computer/attacked_by(obj/item/attacking_item, mob/living/user)
+	if (cpu)
+		return cpu.attacked_by(attacking_item, user)
 	return ..()
 
 // Stronger explosions cause serious damage to internal components
