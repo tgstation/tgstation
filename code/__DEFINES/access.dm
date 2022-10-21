@@ -542,7 +542,7 @@
 	/obj/item/modular_computer/tablet/pda/cargo = list(REGION_SUPPLY), \
 	/obj/item/modular_computer/tablet/pda/shaftminer = list(REGION_SUPPLY), \
 	/obj/item/modular_computer/tablet/pda/chaplain = list(REGION_GENERAL), \
-	/obj/item/modular_computer/tablet/pda/lawyer = list(REGION_GENERAL, REGION_SECURITY), \
+	/obj/item/modular_computer/tablet/pda/lawyer = list(REGION_GENERAL), \
 	/obj/item/modular_computer/tablet/pda/botanist = list(REGION_GENERAL), \
 	/obj/item/modular_computer/tablet/pda/roboticist = list(REGION_RESEARCH), \
 	/obj/item/modular_computer/tablet/pda/curator = list(REGION_GENERAL), \
