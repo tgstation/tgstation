@@ -145,7 +145,7 @@
 
 /datum/round_event/scrubber_clog/major/get_mob()
 	var/static/list/mob_list = list(
-		/mob/living/simple_animal/hostile/rat,
+		/mob/living/basic/mouse/rat,
 		/mob/living/simple_animal/hostile/bee,
 		/mob/living/simple_animal/hostile/giant_spider,
 	)

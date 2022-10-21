@@ -14136,7 +14136,7 @@
 	default_raw_text = "ratsratsratsratsratsratsratsratsratsratsratsratsrats"
 	},
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/mouse,
+/mob/living/basic/mouse,
 /turf/open/floor/plating,
 /area/station/maintenance/tram/right)
 "eZs" = (
@@ -44824,7 +44824,7 @@
 /turf/open/floor/plating,
 /area/station/hallway/primary/tram/left)
 "pZr" = (
-/mob/living/simple_animal/mouse/brown/tom,
+/mob/living/basic/mouse/brown/tom,
 /turf/open/misc/asteroid,
 /area/station/security/prison/workout)
 "pZu" = (
@@ -60504,7 +60504,7 @@
 /area/station/commons/toilet)
 "vBi" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/mouse,
+/mob/living/basic/mouse,
 /turf/open/floor/plating,
 /area/station/maintenance/tram/right)
 "vBC" = (

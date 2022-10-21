@@ -79788,7 +79788,7 @@
 	c_tag = "Prison Maintenance";
 	network = list("ss13","prison")
 	},
-/mob/living/simple_animal/mouse/brown/tom{
+/mob/living/basic/mouse/brown/tom{
 	name = "Jerm"
 	},
 /turf/open/floor/iron/grimy,
