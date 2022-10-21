@@ -138,7 +138,6 @@
 	// Add the relevant traits and modifiers
 	ADD_TRAIT(owner, TRAIT_UNKNOWN, id)
 	ADD_TRAIT(owner, TRAIT_SILENT_FOOTSTEPS, id)
-	owner.name = owner.get_visible_name() // This is done every life tick, we'll just do it here to make sure it's immediate
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/shadow_cloak)
 	owner.add_actionspeed_modifier(/datum/actionspeed_modifier/shadow_cloak)
 	// Register signals to cause effects
@@ -156,7 +155,6 @@
 	// Remove traits and modifiers
 	REMOVE_TRAIT(owner, TRAIT_UNKNOWN, id)
 	REMOVE_TRAIT(owner, TRAIT_SILENT_FOOTSTEPS, id)
-	owner.name = owner.get_visible_name() // This is done every life tick, we'll just do it here to make sure it's immediate
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/shadow_cloak)
 	owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/shadow_cloak)
 	// Clear signals
