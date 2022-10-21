@@ -66,7 +66,7 @@
 		if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
 			context[SCREENTIP_CONTEXT_RMB] = "Disassemble"
 			. = CONTEXTUAL_SCREENTIP_SET
-		if(held_item.tool_behaviour == TOOL_WRENCH))
+		if(held_item.tool_behaviour == TOOL_WRENCH)
 			context[SCREENTIP_CONTEXT_RMB] = "Deconstruct"
 			. = CONTEXTUAL_SCREENTIP_SET
 
