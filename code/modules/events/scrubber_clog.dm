@@ -64,7 +64,7 @@
 
 /datum/round_event/scrubber_clog/proc/get_mob()
 	var/static/list/mob_list = list(
-				/mob/living/simple_animal/mouse,
+				/mob/living/basic/mouse,
 				/mob/living/basic/cockroach,
 				/mob/living/simple_animal/butterfly,
 	)
