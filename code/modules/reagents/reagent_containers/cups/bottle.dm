@@ -469,7 +469,7 @@
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "syrup"
 	fill_icon_state = "syrup"
-	fill_icon_thresholds = list(0, 10, 20, 30, 40, 50)
+	fill_icon_thresholds = list(0, 20, 40, 60, 80, 100)
 	possible_transfer_amounts = list(5, 10)
 	reagent_flags = DUNKABLE | DRAINABLE | TRANSPARENT	//redefined to make it non-refillable
 	volume = 50
@@ -482,7 +482,7 @@
 	if(!check_allowed_items(attacking_item,target_self=1))
 		return
 
-	if(attacking_item.is_refillable()) //Something like a glass. Player probably wants to transfer TO it.
+	if(attacking_item.is_refillable())
 		if(!reagents.total_volume)
 			to_chat(user, span_warning("[src] is empty!"))
 			return
