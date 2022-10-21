@@ -369,8 +369,6 @@
 		/datum/computer_file/program/nt_pay,
 		/datum/computer_file/program/notepad,
 	)
-	///The pre-installed cartridge that comes with the tablet
-	var/loaded_cartridge
 
 /obj/item/modular_computer/tablet/pda/install_default_programs()
 	for(var/programs as anything in (default_programs + pda_programs + starting_programs))
@@ -379,15 +377,11 @@
 
 /obj/item/modular_computer/tablet/pda/update_overlays()
 	. = ..()
-	var/init_icon = initial(icon)
 	var/obj/item/computer_hardware/card_slot/card = all_components[MC_CARD]
-	if(!init_icon)
-		return
-	if(card)
-		if(card.stored_card)
-			. += mutable_appearance(init_icon, "id_overlay")
+	if(card && card.stored_card)
+		. += mutable_appearance(initial(icon), "id_overlay")
 	if(light_on)
-		. += mutable_appearance(init_icon, "light_overlay")
+		. += mutable_appearance(initial(icon), "light_overlay")
 
 /obj/item/modular_computer/tablet/pda/attack_ai(mob/user)
 	to_chat(user, span_notice("It doesn't feel right to snoop around like that..."))
@@ -397,7 +391,3 @@
 	. = ..()
 	install_component(new /obj/item/computer_hardware/battery(src, /obj/item/stock_parts/cell/computer))
 	install_component(new /obj/item/computer_hardware/card_slot)
-
-	if(loaded_cartridge)
-		var/obj/item/computer_disk/disk = new loaded_cartridge(src)
-		inserted_disk = disk

@@ -14,6 +14,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	armor = list(MELEE = 0, BULLET = 20, LASER = 20, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
 	light_system = MOVABLE_LIGHT_DIRECTIONAL
 
+	///The disk in this PDA. If set, this will be inserted on Initialize.
 	var/obj/item/computer_disk/inserted_disk
 
 	///The amount of storage space the computer starts with.
@@ -128,6 +129,8 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	UpdateDisplay()
 	if(has_light)
 		add_item_action(/datum/action/item_action/toggle_computer_light)
+	if(inserted_disk)
+		inserted_disk = new inserted_disk(src)
 
 	update_appearance()
 	register_context()

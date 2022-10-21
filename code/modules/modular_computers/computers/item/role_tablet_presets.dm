@@ -303,7 +303,7 @@
 
 /obj/item/modular_computer/tablet/pda/clown
 	name = "clown PDA"
-	loaded_cartridge = /obj/item/computer_disk/virus/clown
+	inserted_disk = /obj/item/computer_disk/virus/clown
 	icon_state = "pda-clown"
 	greyscale_config = null
 	greyscale_colors = null
@@ -330,7 +330,7 @@
 
 /obj/item/modular_computer/tablet/pda/mime
 	name = "mime PDA"
-	loaded_cartridge = /obj/item/computer_disk/virus/mime
+	inserted_disk = /obj/item/computer_disk/virus/mime
 	greyscale_config = /datum/greyscale_config/tablet/mime
 	greyscale_colors = "#FAFAFA#EA3232"
 	inserted_item = /obj/item/toy/crayon/mime
