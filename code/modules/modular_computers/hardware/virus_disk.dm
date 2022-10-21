@@ -17,7 +17,7 @@
 	if(target)
 		user.show_message(span_notice("Success!"))
 		charges--
-		target.honkamnt = rand(15, 25)
+		target.honkvirus_amount = rand(15, 25)
 	else
 		to_chat(user, span_notice("ERROR: Could not find device."))
 

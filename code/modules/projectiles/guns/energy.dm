@@ -256,7 +256,7 @@
 /obj/item/gun/energy/suicide_act(mob/living/user)
 	if (istype(user) && can_shoot() && can_trigger_gun(user) && user.get_bodypart(BODY_ZONE_HEAD))
 		user.visible_message(span_suicide("[user] is putting the barrel of [src] in [user.p_their()] mouth. It looks like [user.p_theyre()] trying to commit suicide!"))
-		sleep(25)
+		sleep(2.5 SECONDS)
 		if(user.is_holding(src))
 			user.visible_message(span_suicide("[user] melts [user.p_their()] face off with [src]!"))
 			playsound(loc, fire_sound, 50, TRUE, -1)

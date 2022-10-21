@@ -81,6 +81,10 @@
 	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE
 
+/obj/effect/abstract/sync_holder/relaymove(mob/living/user, direction)
+	// While faded out of spacetime, no, you cannot move.
+	return
+
 /obj/effect/abstract/sync_holder/Destroy()
 	for(var/I in contents)
 		var/atom/movable/AM = I

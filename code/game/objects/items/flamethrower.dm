@@ -209,7 +209,7 @@
 			igniter.ignite_turf(src,T)
 		else
 			default_ignite(T)
-		sleep(1)
+		sleep(0.1 SECONDS)
 		previousturf = T
 	operating = FALSE
 	for(var/mob/M in viewers(1, loc))

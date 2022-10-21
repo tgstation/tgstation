@@ -660,6 +660,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// trait that prevents AI controllers from planning detached from ai_status to prevent weird state stuff.
 #define TRAIT_AI_PAUSED "TRAIT_AI_PAUSED"
 
+/// this is used to bypass tongue language restrictions but not tongue disabilities
+#define TRAIT_TOWER_OF_BABEL "tower_of_babel"
+
 //Medical Categories for quirks
 #define CAT_QUIRK_ALL 0
 #define CAT_QUIRK_NOTES 1
@@ -852,6 +855,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define ITEM_SCALING_TRAIT "item_scaling"
 /// Trait given by Objects that provide blindsight
 #define ITEM_BLIND_TRAIT "blind_item_trait"
+/// Trait given by choking
+#define CHOKING_TRAIT "choking_trait"
 /// Trait given by hallucinations
 #define HALLUCINATION_TRAIT "hallucination_trait"
 
