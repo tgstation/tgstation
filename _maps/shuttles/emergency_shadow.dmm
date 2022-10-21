@@ -270,8 +270,9 @@
 /obj/effect/turf_decal/siding/dark{
 	dir = 4
 	},
-/obj/effect/mapping_helpers/airlock/access/all/command/general,
-/obj/machinery/door/window/brigdoor/left/directional/east,
+/obj/machinery/door/window/brigdoor/left/directional/east{
+	req_access = list("command")
+	},
 /turf/open/floor/eighties,
 /area/shuttle/escape)
 "kx" = (
@@ -612,8 +613,9 @@
 /obj/effect/turf_decal/siding/dark{
 	dir = 4
 	},
-/obj/effect/mapping_helpers/airlock/access/all/command/general,
-/obj/machinery/door/window/brigdoor/right/directional/east,
+/obj/machinery/door/window/brigdoor/right/directional/east{
+	req_access = list("command")
+	},
 /turf/open/floor/eighties,
 /area/shuttle/escape)
 "Ch" = (
