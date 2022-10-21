@@ -915,6 +915,21 @@
 	pixel_y = 7;
 	pixel_x = 5
 	},
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/obj/structure/table,
+/obj/item/reagent_containers/cup/glass/coffee/full{
+	pixel_x = 5;
+	pixel_y = 7
+	},
+/obj/item/storage/box/coffeepack/arabica{
+	pixel_x = -9;
+	pixel_y = 1
+	},
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "asP" = (
@@ -23244,6 +23259,22 @@
 	pixel_x = -4;
 	pixel_y = 4
 	},
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 4
+	},
+/obj/structure/table/glass,
+/obj/item/reagent_containers/cup/glass/coffee/full{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/storage/box/coffeepack/arabica{
+	pixel_x = 8;
+	pixel_y = 16
+	},
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "irH" = (
@@ -27402,7 +27433,7 @@
 /obj/structure/extinguisher_cabinet/directional/north,
 /obj/machinery/airalarm/directional/east,
 /obj/structure/table/glass,
-/obj/machinery/coffeemaker,
+/obj/machinery/coffeemaker/impressa,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "jQS" = (
@@ -32590,6 +32621,30 @@
 /obj/item/reagent_containers/cup/glass/coffee/full{
 	pixel_y = 4;
 	pixel_x = 8
+	},
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/obj/effect/turf_decal/trimline/green/filled/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 8
+	},
+/obj/machinery/requests_console/directional/west{
+	announcementConsole = 1;
+	department = "Bridge";
+	departmentType = 5;
+	name = "Bridge Requests Console"
+	},
+/obj/structure/table/glass,
+/obj/item/storage/fancy/coffee_cart_rack{
+	pixel_x = -7
+	},
+/obj/item/reagent_containers/cup/glass/coffee/full{
+	pixel_x = 8;
+	pixel_y = 4
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
@@ -43359,7 +43414,7 @@
 	dir = 2
 	},
 /obj/structure/table,
-/obj/machinery/coffeemaker,
+/obj/machinery/coffeemaker/impressa,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "pwS" = (
