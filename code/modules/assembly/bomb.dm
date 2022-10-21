@@ -174,11 +174,11 @@
 	bomb.bombtank = src //Same for tank
 	master = bomb
 
-	forceMove(bomb)
 	bomb.update_appearance()
 
 	user.put_in_hands(bomb) //Equips the bomb if possible, or puts it on the floor.
 	to_chat(user, span_notice("You attach [assembly] to [src]."))
+	forceMove(bomb)
 	return
 
 /obj/item/tank/proc/ignite(ignition_heat_capacity) //This happens when a bomb is told to explode
