@@ -56593,15 +56593,7 @@
 "nJT" = (
 /obj/structure/table/reinforced,
 /obj/machinery/airalarm/directional/north,
-/obj/item/storage/box/matches{
-	pixel_x = 2;
-	pixel_y = 5
-	},
-/obj/item/lighter,
-/obj/item/lighter{
-	pixel_x = 3;
-	pixel_y = 3
-	},
+/obj/machinery/coffeemaker/impressa,
 /turf/open/floor/wood,
 /area/station/engineering/break_room)
 "nJV" = (
@@ -58109,6 +58101,20 @@
 /obj/effect/spawner/random/entertainment/cigarette_pack{
 	pixel_x = 3;
 	pixel_y = 2
+	},
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/obj/structure/table/reinforced,
+/obj/effect/spawner/random/entertainment/cigarette_pack,
+/obj/effect/spawner/random/entertainment/cigarette_pack{
+	pixel_x = 3;
+	pixel_y = 2
+	},
+/obj/item/storage/box/coffeepack/arabica{
+	pixel_x = -13;
+	pixel_y = 8
 	},
 /turf/open/floor/wood,
 /area/station/engineering/break_room)
