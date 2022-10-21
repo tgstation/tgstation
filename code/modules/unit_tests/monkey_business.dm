@@ -8,7 +8,7 @@
  * but its also hilarious and fun to watch locally.
  */
 /datum/unit_test/monkey_business
-	priority = PRIORITY_LOW + 1 // should be the last test to run
+	priority = TEST_DEFAULT + 1 // should be the last test to run, except for create and destroy
 	var/monkey_count = 50
 	var/monkey_timer = 30 SECONDS
 	var/start_runtimes = 0
