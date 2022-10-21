@@ -374,8 +374,7 @@
 	sac_target.adjust_stutter(40 SECONDS)
 
 	// They're already back on the station for some reason, don't bother teleporting
-	var/turf/below_target = get_turf(sac_target)
-	if(below_target && below_target.z != 0 && is_station_level(below_target.z))
+	if(is_station_level(sac_target.z))
 		return
 
 	// Teleport them to a random safe coordinate on the station z level.
