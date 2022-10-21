@@ -269,8 +269,11 @@
 		return TRUE //no afterattack
 
 /obj/machinery/coffeemaker/proc/can_brew()
-	if(cartridge && cartridge.charges > 0)
+	if(!cartridge)
 		balloon_alert_to_viewers("no coffee cartidge inserted!")
+		return FALSE
+	if(cartridge.charges < 1)
+		balloon_alert_to_viewers("coffee cartidge empty!")
 		return FALSE
 	if(!coffeepot)
 		balloon_alert_to_viewers("no coffeepot inside!")
