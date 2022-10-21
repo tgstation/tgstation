@@ -143,9 +143,9 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	user.ignore_slowdown(HIGHLANDER)
 	user.add_stun_absorption(
 		source = HIGHLANDER,
-		message = "%EFFECT_OWNER is protected by the power of Scotland!",
-		self_message = "The power of Scotland absorbs the stun!",
-		examine_message = "[user.p_theyre(TRUE)] protected by the power of Scotland!",
+		message = span_warning("%EFFECT_OWNER is protected by the power of Scotland!"),
+		self_message = span_boldwarning("The power of Scotland absorbs the stun!"),
+		examine_message = span_warning("[user.p_theyre(TRUE)] protected by the power of Scotland!"),
 	)
 
 /obj/item/claymore/highlander/dropped(mob/living/user)

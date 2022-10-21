@@ -154,11 +154,11 @@
 			// We do this replacement meme, instead of just setting it up in creation,
 			// so that we respect indentity changes done while active
 			var/really_shown_message = replacetext(shown_message, "%EFFECT_OWNER", "[owner]")
-			owner.visible_message(span_warning(really_shown_message), ignored_mobs = owner)
+			owner.visible_message(really_shown_message, ignored_mobs = owner)
 
 		// Send the self message
 		if(self_message)
-			to_chat(owner, span_boldwarning(self_message))
+			to_chat(owner, self_message)
 
 		// Count seconds absorbed
 		seconds_of_stuns_absorbed += amount

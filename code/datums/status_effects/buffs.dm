@@ -25,7 +25,7 @@
 	owner.add_stun_absorption(
 		source = "His Grace",
 		priority = 3,
-		self_message = "His Grace protects you from the stun!",
+		self_message = span_boldwarning("His Grace protects you from the stun!"),
 	)
 	return ..()
 

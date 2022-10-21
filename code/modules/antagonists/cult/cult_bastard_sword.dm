@@ -49,9 +49,9 @@
 		source = name,
 		duration = duration,
 		priority = 2,
-		message = "%EFFECT_OWNER doesn't even flinch as the sword's power courses through [user.p_them()]!",
-		self_message = "You shrug off the stun!",
-		examine_message = "[user.p_theyre(TRUE)] glowing with a blazing red aura!",
+		message = span_warning("%EFFECT_OWNER doesn't even flinch as the sword's power courses through [user.p_them()]!"),
+		self_message = span_boldwarning("You shrug off the stun!"),
+		examine_message = span_warning("[user.p_theyre(TRUE)] glowing with a blazing red aura!"),
 	)
 	user.spin(duration, 1)
 	animate(user, color = oldcolor, time = duration, easing = EASE_IN)
