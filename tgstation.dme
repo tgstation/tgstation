@@ -1240,7 +1240,6 @@
 #include "code\datums\status_effects\debuffs\silenced.dm"
 #include "code\datums\status_effects\debuffs\speech_debuffs.dm"
 #include "code\datums\status_effects\debuffs\strandling.dm"
-#include "code\datums\status_effects\debuffs\stuns.dm"
 #include "code\datums\storage\storage.dm"
 #include "code\datums\storage\subtypes\bag_of_holding.dm"
 #include "code\datums\storage\subtypes\cards.dm"

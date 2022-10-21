@@ -1,3 +1,12 @@
+/**
+ * # Stun absorption
+ *
+ * A status effect effectively functions as [TRAIT_STUNIMMUNE], but with additional effects tied to it,
+ * such as showing a message on trigger / examine, or only blocking a limited amount of stuns.
+ *
+ * Apply this via [/mob/living/proc/add_stun_absorption]. If you do not supply a duration,
+ * remove this via [/mob/living/proc/remove_stun_absorption].
+ */
 /datum/status_effect/stun_absorption
 	id = "absorb_stun"
 	tick_interval = -1
@@ -119,7 +128,6 @@
  * Returns TRUE on successful absorption, or FALSE otherwise.
  */
 /datum/status_effect/stun_absorption/proc/absorb_stun(amount)
-
 	if(owner.stat != CONSCIOUS)
 		return FALSE
 
@@ -167,7 +175,7 @@
  * * source - the source of the stun absorption.
  * * duration - how long does the stun absorption last before it ends?
  * * priority - what is this effect's priority to other stun absorptions?
- * * message - optional, "other message" arg of visible message, shown on trigger
+ * * message - optional, "other message" arg of visible message, shown on trigger. Use %EFFECT_OWNER if you want the owner's name to be inserted.
  * * self_message - optional, "self message" arg of visible message, shown on trigger
  * * examine_message - optional, what is shown on examine of the mob.
  * * max_seconds_of_stuns_blocked - optional, how many seconds of stuns can it block before deleting?
@@ -214,11 +222,12 @@
  * Returns TRUE if an effect was deleted, FALSE otherwise
  */
 /mob/living/proc/remove_stun_absorption(source)
+	. = FALSE
 	for(var/datum/status_effect/stun_absorption/effect in status_effects)
 		if(effect.source != source)
 			continue
 
 		qdel(effect)
-		return TRUE
+		. = TRUE
 
-	return FALSE
+	return .
