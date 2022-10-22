@@ -1,4 +1,0 @@
-author: "dawsonkeyes"
-delete-after: True
-changes: 
-  - bugfix: "wendigo ground slam no longer a global proc"

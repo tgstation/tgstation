@@ -677,6 +677,9 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	return TRUE
 
 /obj/item/modular_computer/proc/UpdateDisplay()
+	if(!saved_identification && !saved_job)
+		name = initial(name)
+		return
 	name = "[saved_identification] ([saved_job])"
 
 /obj/item/modular_computer/attackby(obj/item/attacking_item, mob/user, params)
