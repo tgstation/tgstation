@@ -79,15 +79,19 @@
 	var/atom/movable/screen/stamina
 	var/atom/movable/screen/healthdoll
 	var/atom/movable/screen/spacesuit
+
 	// subtypes can override this to force a specific UI style
 	var/ui_style
+
+	/// Whether or not the current UI style is a greyscale UI
+	var/ui_style_is_greyscale
 
 /datum/hud/New(mob/owner)
 	mymob = owner
 
 	if (!ui_style)
 		// will fall back to the default if any of these are null
-		ui_style = ui_style2icon(owner.client?.prefs?.read_preference(/datum/preference/choiced/ui_style))
+		set_ui_style_from_hud(GLOB.available_hud_styles[owner.client?.prefs?.read_preference(/datum/preference/choiced/ui_style)])
 
 	toggle_palette = new()
 	toggle_palette.set_hud(src)
@@ -366,6 +370,10 @@
 	if(!mymob)
 		return
 
+/datum/hud/proc/set_ui_style_from_hud(datum/hud_style/hud_style)
+	ui_style = ui_style2icon(hud_style.name)
+	ui_style_is_greyscale = isnull(hud_style.base_icon)
+
 /datum/hud/proc/update_ui_style(datum/hud_style/hud_style)
 	var/new_ui_style = hud_style.hud_icon()
 
@@ -376,8 +384,9 @@
 	for(var/atom/movable/screen/item in static_inventory + toggleable_inventory + hotkeybuttons + infodisplay + screenoverlays + inv_slots + listed_actions?.actions + palette_actions?.actions)
 		if (item.icon == ui_style || item.is_greyscale)
 			item.icon = new_ui_style
+			item.update_appearance()
 
-	ui_style = new_ui_style
+	set_ui_style_from_hud(hud_style)
 	build_hand_slots()
 
 //Triggered when F12 is pressed (Unless someone changed something in the DMF)

@@ -84,12 +84,11 @@
 	screen_loc = ui_navigate_menu
 	is_greyscale = TRUE
 
-/atom/movable/screen/navigate/Initialize(mapload)
+/atom/movable/screen/navigate/update_appearance(updates)
 	. = ..()
 
 	// Greyscale UI has a different pixel placement
-	if (greyscale_colors)
-		screen_loc = ui_navigate_menu_adjusted
+	screen_loc = hud?.ui_style_is_greyscale ? ui_navigate_menu_adjusted : ui_navigate_menu
 
 /atom/movable/screen/navigate/Click()
 	if(!isliving(usr))

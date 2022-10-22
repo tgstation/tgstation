@@ -328,6 +328,9 @@
 			inv_slots[TOBITSHIFT(inv.slot_id) + 1] = inv
 			inv.update_appearance()
 
+	for (var/atom/movable/screen/screen_object as anything in static_inventory)
+		screen_object.update_appearance()
+
 	update_locked_slots()
 
 /datum/hud/human/update_locked_slots()
