@@ -11,15 +11,14 @@
 	priority = TEST_MONKEY_BUSINESS
 	var/monkey_timer = 30 SECONDS
 	var/monkey_angry_nth = 5 // every nth monkey will be angry
-	var/start_runtimes = 0
 
 /datum/unit_test/monkey_business/Run()
-	start_runtimes = GLOB.total_runtimes
+	var/start_runtimes = GLOB.total_runtimes
 	for(var/monkey_id in 1 to length(GLOB.the_station_areas))
 		var/mob/living/carbon/human/monkey = allocate(/mob/living/carbon/human, get_first_open_turf_in_area(GLOB.the_station_areas[monkey_id]))
 		monkey.set_species(/datum/species/monkey)
 		monkey.set_name("Monkey [monkey_id]")
-		if(!(monkey_id % monkey_angry_nth)) // BLOOD FOR THE BLOOD GODS
+		if(monkey_id % monkey_angry_nth == 0) // BLOOD FOR THE BLOOD GODS
 			monkey.put_in_active_hand(new /obj/item/knife/shiv)
 			new /datum/ai_controller/monkey/angry(monkey)
 		else
