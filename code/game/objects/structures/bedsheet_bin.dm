@@ -40,10 +40,11 @@ LINEN BINS
 	register_item_context()
 
 /obj/item/bedsheet/add_item_context(datum/source, list/context, mob/living/target)
-	if(!isliving(target) || target.body_position != LYING_DOWN)
-		return NONE
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Rotate"
+	
+	if(isliving(target) || target.body_position == LYING_DOWN)
+		context[SCREENTIP_CONTEXT_LMB] = "Cover"
 
-	context[SCREENTIP_CONTEXT_LMB] = "Cover"
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/bedsheet/attack(mob/living/target, mob/living/user)
@@ -92,6 +93,12 @@ LINEN BINS
 		to_chat(user, span_notice("You tear [src] up."))
 	else
 		return ..()
+
+/obj/item/bedsheet/AltClick(mob/living/user)
+	// double check the canUseTopic args to make sure it's correct
+	if(!istype(user) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = !iscyborg(user)))
+		return
+	dir = dir & WEST ? EAST : WEST
 
 /obj/item/bedsheet/blue
 	icon_state = "sheetblue"
