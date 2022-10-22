@@ -1,0 +1,4 @@
+author: "lizardqueenlexi"
+delete-after: True
+changes: 
+  - bugfix: "Fixed a minor error causing the H.O.N.K. to be impossible to construct."
