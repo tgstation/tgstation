@@ -120,7 +120,6 @@
 "ao" = (
 /obj/machinery/light/small/directional/west{
 	brightness = 3;
-	
 	},
 /obj/structure/chair/comfy/shuttle{
 	dir = 1;
@@ -319,7 +318,6 @@
 "aR" = (
 /obj/machinery/light/small/directional/west{
 	brightness = 3;
-	
 	},
 /obj/structure/chair/comfy/shuttle{
 	name = "tactical chair"
@@ -356,7 +354,6 @@
 "aU" = (
 /obj/machinery/light/small/directional/west{
 	brightness = 3;
-	
 	},
 /obj/effect/turf_decal/siding/thinplating_new/dark,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
