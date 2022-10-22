@@ -40,15 +40,15 @@
 	stage.underfloor_accessibility = initial(stage.underfloor_accessibility)
 
 
-// Dummy mouse that is guaranteed to bite the cable beneath it when told.
+/// Dummy mouse that is guaranteed to die when biting shocked cables.
 /mob/living/basic/mouse/cable_lover
 	cable_zap_prob = 100
 	ai_controller = /datum/ai_controller/basic_controller/mouse/guaranteed_to_bite
 
-// Dummy mouse's ai controller that is guaranteed to bite the cable beneath it when told.
+/// Dummy mouse's ai controller that is guaranteed to find and bite a cable beneath it
 /datum/ai_controller/basic_controller/mouse/guaranteed_to_bite
 	planning_subtrees = list(/datum/ai_planning_subtree/find_and_hunt_target/look_for_cables/guaranteed)
 
-// Cable hunting subtree that's guarantee to hunt its target.
+/// Cable hunting subtree that's guarantee to hunt its target.
 /datum/ai_planning_subtree/find_and_hunt_target/look_for_cables/guaranteed
 	hunt_chance = 100

@@ -10,7 +10,7 @@
 	health = 5
 	see_in_dark = 6
 	density = FALSE
-	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
+	pass_flags = PASSTABLE|PASSGRILLE|PASSMOB
 	mob_size = MOB_SIZE_TINY
 	can_be_held = TRUE
 	held_w_class = WEIGHT_CLASS_TINY
@@ -33,7 +33,7 @@
 	var/body_color
 	/// Does this mouse contribute to the ratcap?
 	var/contributes_to_ratcap = TRUE
-	/// Prob that we get zapped and die to a powered cable
+	/// Probability that, if we successfully bite a shocked cable, that we will die to it.
 	var/cable_zap_prob = 85
 
 /mob/living/basic/mouse/Initialize(mapload)
@@ -44,6 +44,7 @@
 
 	if(isnull(body_color))
 		body_color = pick("brown", "gray", "white")
+		held_state = "mouse_[body_color]" // not handled by variety element
 		AddElement(/datum/element/animal_variety, "mouse", body_color, FALSE)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOUSE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 10)
 	AddComponent(/datum/component/squeak, list('sound/effects/mousesqueek.ogg' = 1), 100, extrarange = SHORT_RANGE_SOUND_EXTRARANGE) //as quiet as a mouse or whatever
@@ -73,10 +74,12 @@
 		else
 			. += span_warning("This fool serves a different king!")
 
+/// Kills the rat and changes its icon state to be splatted (bloody).
 /mob/living/basic/mouse/proc/splat()
 	icon_dead = "mouse_[body_color]_splat"
 	adjust_health(-maxHealth)
 
+// On revival, re-add the mouse to the ratcap, or block it if we're at it
 /mob/living/basic/mouse/revive(full_heal = FALSE, admin_revive = FALSE)
 	if(!contributes_to_ratcap)
 		return ..()
@@ -91,6 +94,7 @@
 	if(stat != DEAD)
 		SSmobs.cheeserats |= src
 
+// On death, remove the mouse from the ratcap, and turn it into an item if applicable
 /mob/living/basic/mouse/death(gibbed)
 	SSmobs.cheeserats -= src
 	// Rats with a mind will not turn into a lizard snack on death
@@ -109,12 +113,6 @@
 			mouse.add_atom_colour("#3A3A3A", FIXED_COLOUR_PRIORITY)
 	qdel(src)
 
-/mob/living/basic/mouse/proc/on_entered(datum/source, atom/movable/entered)
-	SIGNAL_HANDLER
-
-	if(ishuman(entered) && stat == CONSCIOUS)
-		to_chat(entered, span_notice("[icon2html(src, entered)] Squeak!"))
-
 /mob/living/basic/mouse/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
 	. = ..()
 	if(!.)
@@ -131,7 +129,16 @@
 		try_bite_cable(attack_target)
 		return TRUE
 
+/// Signal proc for [COMSIG_ATOM_ENTERED]. Sends a lil' squeak to chat when someone walks over us.
+/mob/living/basic/mouse/proc/on_entered(datum/source, atom/movable/entered)
+	SIGNAL_HANDLER
+
+	if(ishuman(entered) && stat == CONSCIOUS)
+		to_chat(entered, span_notice("[icon2html(src, entered)] Squeak!"))
+
+/// Attempts to consume a piece of cheese, causing a few effects.
 /mob/living/basic/mouse/proc/try_consume_cheese(obj/item/food/cheese/cheese)
+	// Royal cheese will evolve us into a regal rat
 	if(istype(cheese, /obj/item/food/cheese/royal))
 		visible_message(
 			span_warning("[src] devours [cheese]! They morph into something... greater!"),
@@ -142,37 +149,42 @@
 		return
 
 	var/cap = CONFIG_GET(number/ratcap)
+	// Normal cheese will either heal us
 	if(prob(90) || health < maxHealth)
 		visible_message(
-			span_notice("[src] nibbles the [cheese]."),
-			span_notice("You nibble the [cheese], restoring your health.")
+			span_notice("[src] nibbles [cheese]."),
+			span_notice("You nibble [cheese][health < maxHealth ? ", restoring your health" : ""].")
 		)
 		adjust_health(-maxHealth)
 
+	// Or, if we're at full health, there's a 10% chance that normal cheese will spawn a new mouse
+	// ...if the rat cap allows us, that is
 	else if(length(SSmobs.cheeserats) >= cap)
 		visible_message(
 			span_warning("[src] carefully eats [cheese], hiding it from the [cap] mice on the station!"),
 			span_notice("You carefully nibble [cheese], hiding it from the [cap] other mice on board the station.")
 		)
-
 	else
 		visible_message(
 			span_notice("[src] nibbles through [cheese], attracting another mouse!"),
-			span_notice("You nibble through  [cheese], attracting another mouse!")
+			span_notice("You nibble through [cheese], attracting another mouse!")
 		)
 		create_a_new_rat()
 
 	qdel(cheese)
 
+/// Evolves this rat into a regal rat
 /mob/living/basic/mouse/proc/evolve_into_regal_rat()
 	var/mob/living/simple_animal/hostile/regalrat/controlled/regalrat = new(loc)
 	mind?.transfer_to(regalrat)
 	INVOKE_ASYNC(regalrat, /atom/movable/proc/say, "RISE, MY SUBJECTS! SCREEEEEEE!")
 	qdel(src)
 
+/// Creates a new mouse based on this mouse's subtype.
 /mob/living/basic/mouse/proc/create_a_new_rat()
 	new /mob/living/basic/mouse(loc)
 
+/// Biting into a cable will cause a mouse to get shocked and die if applicable. Or do nothing if they're lucky.
 /mob/living/basic/mouse/proc/try_bite_cable(obj/structure/cable/cable)
 	if(cable.avail() && !HAS_TRAIT(src, TRAIT_SHOCKIMMUNE) && prob(cable_zap_prob))
 		visible_message(
