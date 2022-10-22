@@ -100,7 +100,7 @@
 				to [ADMIN_VERBOSEJMP(current_turf)]. Moving it to [ADMIN_VERBOSEJMP(new_destination)].")
 
 /// Signal proc for [SIGNAL_ADDTRAIT], via [TRAIT_SECLUDED_LOCATION] on our locs, to ensure nothing funky happens
-/datum/component/stationloving/proc/on_loc_secluded(datum/source)
+/datum/component/stationloving/proc/on_loc_secluded(atom/movable/source)
 	SIGNAL_HANDLER
 
 	var/turf/new_destination = relocate()
