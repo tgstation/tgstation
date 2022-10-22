@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - bugfix: "Computers without a saved job/ID are no longer called \" ()\""

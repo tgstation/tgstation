@@ -1,5 +1,0 @@
-author: "LT3"
-delete-after: True
-changes: 
-  - bugfix: "Tramstation's tram doors now work properly."
-  - rscadd: "The tram has a destination sign, and the call buttons have a status display for where the tram is and if it's operational or not."

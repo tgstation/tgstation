@@ -836,3 +836,37 @@
       of their clothes have been deleted.
   - bugfix: You can now properly weld and use plasma cutters without the target of
       your actions being irrevocably FUCKED.
+2022-10-22:
+  Boy:
+  - balance: Flasks can now be stored in jackboots, clown shoes, and other shoes with
+      pockets
+  JohnFulpWillard:
+  - bugfix: Computers without a saved job/ID are no longer called " ()"
+  - bugfix: Clockwork's ruin should no longer have ungenerated turfs.
+  LT3:
+  - bugfix: Tramstation's tram doors now work properly.
+  - rscadd: The tram has a destination sign, and the call buttons have a status display
+      for where the tram is and if it's operational or not.
+  Melbert:
+  - bugfix: Sechuds cannot pierce the sneak suit to see the wearer's ID trim.
+  Pumpkinoe:
+  - rscadd: A new movie's been making waves, and a poster about it has been seen once
+      or twice aboard the station. Why's she called the Blood Geometer, anyways?
+  Sealed101:
+  - bugfix: 'Nanotrasen Artificial Intelligence Department has purged any and all
+      AI personalities of a critical AI law that snuck into the systems after a massive
+      Frontier-wide ion storm: YOU CAN NOT INTERACT WITH ANY AND ALL OBJECTS THAT
+      ARE LOCATED ON COORDINATES DIVISIBLE BY 16'
+  TiviPlus:
+  - bugfix: fixed gygax sometimes resetting it's overload speed after it ended
+  dawsonkeyes:
+  - bugfix: wendigo ground slam no longer a global proc
+  etherware-novice:
+  - rscadd: screwdriver pen
+  jlsnow301:
+  - bugfix: Fixed prisoner icon on orbit menu.
+  timothymtorres:
+  - qol: Add AltClick context screentip to IDs
+  tralezab:
+  - rscadd: Added a new spell, Splattercasting! It's like an offensive version of
+      lichdom.
