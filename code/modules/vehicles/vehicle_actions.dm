@@ -396,7 +396,7 @@
 	animate(rider, pixel_y = -6, time = 0.4 SECONDS)
 	animate(board, pixel_y = -6, time = 0.3 SECONDS)
 	board.unbuckle_mob(rider)
-	addtimer(CALLBACK(V, /obj/vehicle/ridden/scooter/skateboard/proc/pick_up_board, L), 1 SECONDS)  // so the board can still handle "picking it up"
+	addtimer(CALLBACK(board, /obj/vehicle/ridden/scooter/skateboard/proc/pick_up_board, rider), 1 SECONDS)  // so the board can still handle "picking it up"
 
 
 
