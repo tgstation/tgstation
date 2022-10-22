@@ -9,6 +9,7 @@
 /atom/movable/screen
 	name = ""
 	icon = 'icons/hud/screen_gen.dmi'
+	greyscale_config = /datum/greyscale_config/hud
 	// NOTE: screen objects do NOT change their plane to match the z layer of their owner
 	// You shouldn't need this, but if you ever do and it's widespread, reconsider what you're doing.
 	plane = HUD_PLANE
@@ -33,6 +34,9 @@
 	 */
 	var/del_on_map_removal = TRUE
 
+	/// Whether or not this HUD is greyscaled
+	var/is_greyscale = FALSE
+
 /atom/movable/screen/Destroy()
 	master = null
 	hud = null
@@ -47,6 +51,24 @@
 /atom/movable/screen/proc/component_click(atom/movable/screen/component_button/component, params)
 	return
 
+/atom/movable/screen/Initialize(mapload)
+	. = ..()
+
+	if (is_greyscale)
+		screen_set_greyscale()
+
+/atom/movable/screen/update_appearance(updates)
+	. = ..()
+
+	if (is_greyscale)
+		screen_set_greyscale()
+
+/// Sets the greyscale colors of the UI if player has a colored theme
+/atom/movable/screen/proc/screen_set_greyscale()
+	// MBTODO: Get preferences is here
+	// MBTODO: Don't do this if the UI theme isn't a greyscale one
+	set_greyscale("#E589C5#267F00")
+
 /atom/movable/screen/text
 	icon = null
 	icon_state = null
@@ -58,6 +80,7 @@
 /atom/movable/screen/swap_hand
 	plane = HUD_PLANE
 	name = "swap hand"
+	is_greyscale = TRUE
 
 /atom/movable/screen/swap_hand/Click()
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
@@ -78,6 +101,14 @@
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "navigate"
 	screen_loc = ui_navigate_menu
+	is_greyscale = TRUE
+
+/atom/movable/screen/navigate/Initialize(mapload)
+	. = ..()
+
+	// Greyscale UI has a different pixel placement
+	if (greyscale_colors)
+		screen_loc = ui_navigate_menu_adjusted
 
 /atom/movable/screen/navigate/Click()
 	if(!isliving(usr))
@@ -90,12 +121,14 @@
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "craft"
 	screen_loc = ui_crafting
+	is_greyscale = TRUE
 
 /atom/movable/screen/area_creator
 	name = "create new area"
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "area_edit"
 	screen_loc = ui_building
+	is_greyscale = TRUE
 
 /atom/movable/screen/area_creator/Click()
 	if(usr.incapacitated() || (isobserver(usr) && !isAdminGhostAI(usr)))
@@ -111,6 +144,7 @@
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "talk_wheel"
 	screen_loc = ui_language_menu
+	is_greyscale = TRUE
 
 /atom/movable/screen/language_menu/Click()
 	var/mob/M = usr
@@ -127,6 +161,7 @@
 	/// The overlay when hovering over with an item in your hand
 	var/image/object_overlay
 	plane = HUD_PLANE
+	is_greyscale = TRUE
 
 /atom/movable/screen/inventory/Click(location, control, params)
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
@@ -192,6 +227,7 @@
 	var/mutable_appearance/handcuff_overlay
 	var/static/mutable_appearance/blocked_overlay = mutable_appearance('icons/hud/screen_gen.dmi', "blocked")
 	var/held_index = 0
+	is_greyscale = TRUE
 
 /atom/movable/screen/inventory/hand/update_overlays()
 	. = ..()
@@ -201,7 +237,7 @@
 		handcuff_overlay = mutable_appearance('icons/hud/screen_gen.dmi', state)
 
 	if(!hud?.mymob)
-		return
+		return .
 
 	if(iscarbon(hud.mymob))
 		var/mob/living/carbon/C = hud.mymob
@@ -213,7 +249,11 @@
 				. += blocked_overlay
 
 	if(held_index == hud.mymob.active_hand_index)
-		. += (held_index % 2) ? "lhandactive" : "rhandactive"
+		// Explicit iconstate2appearance is needed here since icon can change between update_overlays() for greyscale HUDs,
+		// which just returning an icon state doesn't account for, leading to the active hand getting stuck.
+		. += iconstate2appearance(icon, (held_index % 2) ? "lhandactive" : "rhandactive")
+
+	return .
 
 /atom/movable/screen/inventory/hand/Click(location, control, params)
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
@@ -255,6 +295,7 @@
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "act_drop"
 	plane = HUD_PLANE
+	is_greyscale = TRUE
 
 /atom/movable/screen/drop/Click()
 	if(usr.stat == CONSCIOUS)
@@ -265,10 +306,7 @@
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "combat_off"
 	screen_loc = ui_combat_toggle
-
-/atom/movable/screen/combattoggle/Initialize(mapload)
-	. = ..()
-	update_appearance()
+	is_greyscale = TRUE
 
 /atom/movable/screen/combattoggle/Click()
 	if(isliving(usr))
@@ -315,6 +353,7 @@
 	name = "run/walk toggle"
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "running"
+	is_greyscale = TRUE
 
 /atom/movable/screen/mov_intent/Click()
 	toggle(usr)
@@ -337,21 +376,26 @@
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "pull"
 	base_icon_state = "pull"
+	is_greyscale = TRUE
 
 /atom/movable/screen/pull/Click()
 	if(isobserver(usr))
 		return
 	usr.stop_pulling()
 
-/atom/movable/screen/pull/update_icon_state()
-	icon_state = "[base_icon_state][hud?.mymob?.pulling ? null : 0]"
-	return ..()
+/atom/movable/screen/pull/update_appearance(updates)
+	. = ..()
+
+	// Don't show anything if we're not pulling.
+	// Can't set icon_state to "" because the greyscale config doesn't have it
+	alpha = isnull(hud?.mymob?.pulling) ? 0 : 255
 
 /atom/movable/screen/resist
 	name = "resist"
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "act_resist"
 	plane = HUD_PLANE
+	is_greyscale = TRUE
 
 /atom/movable/screen/resist/Click()
 	if(isliving(usr))
@@ -364,6 +408,7 @@
 	icon_state = "act_rest"
 	base_icon_state = "act_rest"
 	plane = HUD_PLANE
+	is_greyscale = TRUE
 
 /atom/movable/screen/rest/Click()
 	if(isliving(usr))
@@ -409,6 +454,7 @@
 	name = "throw/catch"
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "act_throw_off"
+	is_greyscale = TRUE
 
 /atom/movable/screen/throw_catch/Click()
 	if(iscarbon(usr))
@@ -419,6 +465,7 @@
 	name = "damage zone"
 	icon_state = "zone_sel"
 	screen_loc = ui_zonesel
+	is_greyscale = TRUE
 	var/overlay_icon = 'icons/hud/screen_gen.dmi'
 	var/static/list/hover_overlays_cache = list()
 	var/hovering

@@ -17,6 +17,8 @@
 	/// God I hate how dragging works
 	var/datum/weakref/last_hovored_ref
 
+	is_greyscale = TRUE
+
 /atom/movable/screen/movable/action_button/Destroy()
 	if(our_hud)
 		var/mob/viewer = our_hud.mymob
@@ -306,6 +308,7 @@ GLOBAL_LIST_INIT(palette_removed_matrix, list(1.4,0,0,0, 0.7,0.4,0,0, 0.4,0,0.6,
 /atom/movable/screen/palette_scroll
 	icon = 'icons/hud/screen_gen.dmi'
 	screen_loc = ui_palette_scroll
+	is_greyscale = TRUE
 	/// How should we move the palette's actions?
 	/// Positive scrolls down the list, negative scrolls back
 	var/scroll_direction = 0

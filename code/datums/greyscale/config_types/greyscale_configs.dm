@@ -946,3 +946,7 @@
 	icon_file = 'icons/obj/radio.dmi'
 	json_config = 'code/datums/greyscale/json_configs/encryptionkey_security.json'
 
+/datum/greyscale_config/hud
+	name = "HUD"
+	icon_file = 'icons/hud/screen_basic_template.dmi'
+	json_config = 'code/datums/greyscale/json_configs/hud.json'

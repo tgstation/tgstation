@@ -6,11 +6,12 @@
 	SIGNAL_HANDLER
 
 	var/datum/hud/H = user.hud_used
-	var/atom/movable/screen/craft/C = new()
-	C.icon = H.ui_style
-	H.static_inventory += C
-	CL.screen += C
-	RegisterSignal(C, COMSIG_CLICK, .proc/component_ui_interact)
+	var/atom/movable/screen/craft/crafting_button = new()
+	crafting_button.icon = H.ui_style
+	crafting_button.update_appearance()
+	H.static_inventory += crafting_button
+	CL.screen += crafting_button
+	RegisterSignal(crafting_button, COMSIG_CLICK, .proc/component_ui_interact)
 
 /datum/component/personal_crafting
 	var/busy

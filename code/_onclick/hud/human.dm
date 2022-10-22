@@ -4,6 +4,7 @@
 /atom/movable/screen/human/toggle
 	name = "toggle"
 	icon_state = "toggle"
+	is_greyscale = TRUE
 
 /atom/movable/screen/human/toggle/Click()
 
@@ -26,6 +27,7 @@
 /atom/movable/screen/human/equip
 	name = "equip"
 	icon_state = "act_equip"
+	is_greyscale = TRUE
 
 /atom/movable/screen/human/equip/Click()
 	if(ismecha(usr.loc)) // stops inventory actions in a mech

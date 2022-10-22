@@ -256,7 +256,14 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 /mob/proc/create_mob_hud()
 	if(!client || hud_used)
 		return
-	set_hud_used(new hud_type(src))
+
+	var/datum/hud/new_hud = new hud_type(src)
+	set_hud_used(new_hud)
+
+	// Update the GAGS coloring if we are a GAGS UI
+	for (var/atom/movable/screen/screen_object as anything in (new_hud.static_inventory + new_hud.hotkeybuttons + new_hud.infodisplay))
+		screen_object.update_appearance()
+
 	update_sight()
 	SEND_SIGNAL(src, COMSIG_MOB_HUD_CREATED)
 

@@ -1,0 +1,810 @@
+{
+	"uniform": [
+		{
+			"type": "icon_state",
+			"icon_state": "template",
+			"blend_mode": "overlay",
+			"color_ids": [
+				1
+			]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "uniform",
+			"blend_mode": "overlay",
+			"color_ids": [
+				2
+			]
+		}
+	],
+	"suit": [
+		{
+			"type": "icon_state",
+			"icon_state": "template",
+			"blend_mode": "overlay",
+			"color_ids": [
+				1
+			]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "suit",
+			"blend_mode": "overlay",
+			"color_ids": [
+				2
+			]
+		}
+	],
+	"back": [
+		{
+			"type": "icon_state",
+			"icon_state": "template_small",
+			"blend_mode": "overlay",
+			"color_ids": [
+				1
+			]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "back",
+			"blend_mode": "overlay",
+			"color_ids": [
+				2
+			]
+		}
+	],
+	"id": [
+		{
+			"type": "icon_state",
+			"icon_state": "template_small",
+			"blend_mode": "overlay",
+			"color_ids": [
+				1
+			]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "id",
+			"blend_mode": "overlay",
+			"color_ids": [
+				2
+			]
+		}
+	],
+	"belt": [
+		{
+			"type": "icon_state",
+			"icon_state": "template_small",
+			"blend_mode": "overlay",
+			"color_ids": [
+				1
+			]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "belt",
+			"blend_mode": "overlay",
+			"color_ids": [
+				2
+			]
+		}
+	],
+	"mask": [
+		{
+			"type": "icon_state",
+			"icon_state": "template",
+			"blend_mode": "overlay",
+			"color_ids": [
+				1
+			]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "mask",
+			"blend_mode": "overlay",
+			"color_ids": [
+				2
+			]
+		}
+	],
+	"glasses": [
+		{
+			"type": "icon_state",
+			"icon_state": "template",
+			"blend_mode": "overlay",
+			"color_ids": [
+				1
+			]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "glasses",
+			"blend_mode": "overlay",
+			"color_ids": [
+				2
+			]
+		}
+	],
+	"ears": [
+		{
+			"type": "icon_state",
+			"icon_state": "template",
+			"blend_mode": "overlay",
+			"color_ids": [
+				1
+			]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "ears",
+			"blend_mode": "overlay",
+			"color_ids": [
+				2
+			]
+		}
+	],
+	"head": [
+		{
+			"type": "icon_state",
+			"icon_state": "template",
+			"blend_mode": "overlay",
+			"color_ids": [
+				1
+			]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "head",
+			"blend_mode": "overlay",
+			"color_ids": [
+				2
+			]
+		}
+	],
+	"suit_storage": [
+		{
+			"type": "icon_state",
+			"icon_state": "template",
+			"blend_mode": "overlay",
+			"color_ids": [
+				1
+			]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "suit_storage",
+			"blend_mode": "overlay",
+			"color_ids": [
+				2
+			]
+		}
+	],
+	"pocket": [
+		{
+			"type": "icon_state",
+			"icon_state": "template_small",
+			"blend_mode": "overlay",
+			"color_ids": [
+				1
+			]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "pocket",
+			"blend_mode": "overlay",
+			"color_ids": [
+				2
+			]
+		}
+	],
+	"gloves": [
+		{
+			"type": "icon_state",
+			"icon_state": "template",
+			"blend_mode": "overlay",
+			"color_ids": [
+				1
+			]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "gloves",
+			"blend_mode": "overlay",
+			"color_ids": [
+				2
+			]
+		}
+	],
+	"shoes": [
+		{
+			"type": "icon_state",
+			"icon_state": "template",
+			"blend_mode": "overlay",
+			"color_ids": [
+				1
+			]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "shoes",
+			"blend_mode": "overlay",
+			"color_ids": [
+				2
+			]
+		}
+	],
+	"hand_r": [
+		{
+			"type": "icon_state",
+			"icon_state": "template",
+			"blend_mode": "overlay",
+			"color_ids": [
+				1
+			]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "hand_r",
+			"blend_mode": "overlay",
+			"color_ids": [
+				2
+			]
+		}
+	],
+	"hand_l": [
+		{
+			"type": "icon_state",
+			"icon_state": "template",
+			"blend_mode": "overlay",
+			"color_ids": [
+				1
+			]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "hand_l",
+			"blend_mode": "overlay",
+			"color_ids": [
+				2
+			]
+		}
+	],
+	"neck": [
+		{
+			"type": "icon_state",
+			"icon_state": "template",
+			"blend_mode": "overlay",
+			"color_ids": [
+				1
+			]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "neck",
+			"blend_mode": "overlay",
+			"color_ids": [
+				2
+			]
+		}
+	],
+	"toggle": [
+		{
+			"type": "icon_state",
+			"icon_state": "toggle_bg",
+			"blend_mode": "overlay",
+			"color_ids": [
+				1
+			]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "toggle",
+			"blend_mode": "overlay",
+			"color_ids": [
+				2
+			]
+		}
+	],
+	"zone_sel": [
+		{
+			"type": "icon_state",
+			"icon_state": "template",
+			"blend_mode": "overlay",
+			"color_ids": [
+				1
+			]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "zone_sel",
+			"blend_mode": "overlay",
+			"color_ids": [
+				2
+			]
+		}
+	],
+	"walking": [
+		{
+			"type": "icon_state",
+			"icon_state": "template",
+			"blend_mode": "overlay",
+			"color_ids": [
+				1
+			]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "walking",
+			"blend_mode": "overlay",
+			"color_ids": [
+				2
+			]
+		}
+	],
+	"running": [
+		{
+			"type": "icon_state",
+			"icon_state": "template",
+			"blend_mode": "overlay",
+			"color_ids": [
+				1
+			]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "running",
+			"blend_mode": "overlay",
+			"color_ids": [
+				2
+			]
+		}
+	],
+	"template": [
+		{
+			"type": "icon_state",
+			"icon_state": "template",
+			"blend_mode": "overlay",
+			"color_ids": [
+				1
+			]
+		}
+	],
+	"template_small": [
+		{
+			"type": "icon_state",
+			"icon_state": "template_small",
+			"blend_mode": "overlay",
+			"color_ids": [
+				1
+			]
+		}
+	],
+	"template_active": [
+		{
+			"type": "icon_state",
+			"icon_state": "template",
+			"blend_mode": "overlay",
+			"color_ids": [
+				1
+			]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "template_active",
+			"blend_mode": "overlay"
+		}
+	],
+	"area_edit": [
+		{
+			"type": "icon_state",
+			"icon_state": "template_tiny",
+			"blend_mode": "overlay",
+			"color_ids": [
+				1
+			]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "area_edit",
+			"blend_mode": "overlay"
+		}
+	],
+	"talk_wheel": [
+		{
+			"type": "icon_state",
+			"icon_state": "template_tiny",
+			"blend_mode": "overlay",
+			"color_ids": [
+				1
+			]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "talk_wheel",
+			"blend_mode": "overlay"
+		}
+	],
+	"navigate": [
+		{
+			"type": "icon_state",
+			"icon_state": "template_tiny",
+			"blend_mode": "overlay",
+			"color_ids": [
+				1
+			]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "navigate",
+			"blend_mode": "overlay"
+		}
+	],
+	"craft": [
+		{
+			"type": "icon_state",
+			"icon_state": "template_tiny",
+			"blend_mode": "overlay",
+			"color_ids": [
+				1
+			]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "craft",
+			"blend_mode": "overlay",
+			"color_ids": [
+				2
+			]
+		}
+	],
+	"lhandactive": [
+		{
+			"type": "icon_state",
+			"icon_state": "lhandactive",
+			"blend_mode": "overlay",
+			"color_ids": [
+				2
+			]
+		}
+	],
+	"rhandactive": [
+		{
+			"type": "icon_state",
+			"icon_state": "rhandactive",
+			"blend_mode": "overlay",
+			"color_ids": [
+				2
+			]
+		}
+	],
+	"reserved": [
+		{
+			"type": "icon_state",
+			"icon_state": "reserved",
+			"blend_mode": "overlay",
+			"color_ids": [
+				1
+			]
+		}
+	],
+	"combat": [
+		{
+			"type": "icon_state",
+			"icon_state": "template",
+			"blend_mode": "overlay",
+			"color_ids": [
+				1
+			]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "combat_dudes",
+			"blend_mode": "overlay",
+			"color_ids": [
+				2
+			]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "combat_on",
+			"blend_mode": "overlay",
+			"color_ids": [
+				2
+			]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "combat_effects",
+			"blend_mode": "overlay"
+		}
+	],
+	"combat_off": [
+		{
+			"type": "icon_state",
+			"icon_state": "template",
+			"blend_mode": "overlay",
+			"color_ids": [
+				1
+			]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "combat_dudes",
+			"blend_mode": "overlay",
+			"color_ids": [
+				2
+			]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "combat_off",
+			"blend_mode": "overlay",
+			"color_ids": [
+				2
+			]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "combat_effects",
+			"blend_mode": "overlay"
+		}
+	],
+	"pull": [
+		{
+			"type": "icon_state",
+			"icon_state": "template_long_top",
+			"blend_mode": "overlay",
+			"color_ids": [
+				1
+			]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "pull",
+			"blend_mode": "overlay",
+			"color_ids": [
+				2
+			]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "template_long_top_active",
+			"blend_mode": "overlay",
+			"color_ids": [
+				2
+			]
+		}
+	],
+	"act_throw_off": [
+		{
+			"type": "icon_state",
+			"icon_state": "template_long_top",
+			"blend_mode": "overlay",
+			"color_ids": [
+				1
+			]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "throw",
+			"blend_mode": "overlay",
+			"color_ids": [
+				2
+			]
+		}
+	],
+	"act_throw_on": [
+		{
+			"type": "icon_state",
+			"icon_state": "template_long_top",
+			"blend_mode": "overlay",
+			"color_ids": [
+				1
+			]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "throw",
+			"blend_mode": "overlay",
+			"color_ids": [
+				2
+			]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "template_long_top_active",
+			"blend_mode": "overlay",
+			"color_ids": [
+				2
+			]
+		}
+	],
+	"act_drop": [
+		{
+			"type": "icon_state",
+			"icon_state": "template_long_bottom",
+			"blend_mode": "overlay",
+			"color_ids": [
+				1
+			]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "drop",
+			"blend_mode": "overlay",
+			"color_ids": [
+				2
+			]
+		}
+	],
+	"act_resist": [
+		{
+			"type": "icon_state",
+			"icon_state": "template_long_bottom",
+			"blend_mode": "overlay",
+			"color_ids": [
+				1
+			]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "resist",
+			"blend_mode": "overlay",
+			"color_ids": [
+				2
+			]
+		}
+	],
+	"act_rest": [
+		{
+			"type": "icon_state",
+			"icon_state": "template_long_bottom",
+			"blend_mode": "overlay",
+			"color_ids": [
+				1
+			]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "rest",
+			"blend_mode": "overlay",
+			"color_ids": [
+				2
+			]
+		}
+	],
+	"act_rest0": [
+		{
+			"type": "icon_state",
+			"icon_state": "template_long_bottom",
+			"blend_mode": "overlay",
+			"color_ids": [
+				1
+			]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "rest",
+			"blend_mode": "overlay",
+			"color_ids": [
+				2
+			]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "template_long_bottom_active",
+			"blend_mode": "overlay",
+			"color_ids": [
+				2
+			]
+		}
+	],
+	"act_equip": [
+		{
+			"type": "icon_state",
+			"icon_state": "equip_bg",
+			"blend_mode": "overlay",
+			"color_ids": [
+				1
+			]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "equip_text",
+			"blend_mode": "overlay",
+			"color_ids": [
+				2
+			]
+		}
+	],
+	"swap_1": [
+		{
+			"type": "icon_state",
+			"icon_state": "swap_1_bg",
+			"blend_mode": "overlay",
+			"color_ids": [
+				1
+			]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "swap_1_text",
+			"blend_mode": "overlay",
+			"color_ids": [
+				2
+			]
+		}
+	],
+	"swap_1_m": [
+		{
+			"type": "icon_state",
+			"icon_state": "swap_1_m_bg",
+			"blend_mode": "overlay",
+			"color_ids": [
+				1
+			]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "swap_1_text",
+			"blend_mode": "overlay",
+			"color_ids": [
+				2
+			]
+		}
+	],
+	"swap_2": [
+		{
+			"type": "icon_state",
+			"icon_state": "swap_2_bg",
+			"blend_mode": "overlay",
+			"color_ids": [
+				1
+			]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "swap_2_text",
+			"blend_mode": "overlay",
+			"color_ids": [
+				2
+			]
+		}
+	],
+	"scroll_up": [
+		{
+			"type": "icon_state",
+			"icon_state": "scroll_up_bg",
+			"blend_mode": "overlay",
+			"color_ids": [
+				1
+			]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "scroll_up_arrow",
+			"blend_mode": "overlay",
+			"color_ids": [
+				2
+			]
+		}
+	],
+	"scroll_down": [
+		{
+			"type": "icon_state",
+			"icon_state": "scroll_down_bg",
+			"blend_mode": "overlay",
+			"color_ids": [
+				1
+			]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "scroll_down_arrow",
+			"blend_mode": "overlay",
+			"color_ids": [
+				2
+			]
+		}
+	]
+}
