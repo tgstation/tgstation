@@ -729,10 +729,17 @@ SUBSYSTEM_DEF(job)
 		var/job_name = occupation.title
 		var/job_key = occupation.config_tag
 
-		var/default_positions = job_config[job_key][TOTAL_POSITIONS]
-		var/starting_positions = job_config[job_key][SPAWN_POSITIONS]
-		var/playtime_requirements = job_config[job_key][PLAYTIME_REQUIREMENTS]
-		var/required_account_age = job_config[job_key][REQUIRED_ACCOUNT_AGE]
+		// We start by initializing them to these values, to allow for using this verb when adding new jobs, so it doesn't runtime.
+		var/default_positions = occupation.total_positions
+		var/starting_positions = occupation.spawn_positions
+		var/playtime_requirements = occupation.exp_requirements
+		var/required_account_age = occupation.minimal_player_age
+
+		if(job_config[job_key])
+			default_positions = job_config[job_key][TOTAL_POSITIONS]
+			starting_positions = job_config[job_key][SPAWN_POSITIONS]
+			playtime_requirements = job_config[job_key][PLAYTIME_REQUIREMENTS]
+			required_account_age = job_config[job_key][REQUIRED_ACCOUNT_AGE]
 
 		// When we regenerate, we want to make sure commented stuff stays commented, but we also want to migrate information that remains uncommented. So, let's make sure we keep that pattern.
 		if(job_config["[job_key]"]) // Let's see if any data for this job exists.
