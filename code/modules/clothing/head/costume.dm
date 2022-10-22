@@ -122,9 +122,9 @@
 		var/obj/item/clothing/suit/costume/cardborg/CB = H.wear_suit
 		CB.disguise(user, src)
 
-/obj/item/clothing/head/costume/cardborg/dropped(mob/living/user, slot)
+/obj/item/clothing/head/costume/cardborg/dropped(mob/living/carbon/human/user)
 	..()
-	if(ishuman(user) && (slot & ITEM_SLOT_HEAD))
+	if(!istype(user?.head, /obj/item/clothing/head/costume/cardborg))  // is it really unequipped?
 		user.remove_alt_appearance("standard_borg_disguise")
 
 /obj/item/clothing/head/costume/bronze

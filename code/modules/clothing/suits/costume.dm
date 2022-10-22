@@ -171,9 +171,9 @@
 	if(slot & ITEM_SLOT_OCLOTHING)
 		disguise(user)
 
-/obj/item/clothing/suit/costume/cardborg/dropped(mob/living/user, slot)
+/obj/item/clothing/suit/costume/cardborg/dropped(mob/living/carbon/human/user)
 	..()
-	if(slot & ITEM_SLOT_OCLOTHING)
+	if(!istype(user?.wear_suit, /obj/item/clothing/suit/costume/cardborg))  // is it still equipped?
 		user.remove_alt_appearance("standard_borg_disguise")
 
 /obj/item/clothing/suit/costume/cardborg/proc/disguise(mob/living/carbon/human/H, obj/item/clothing/head/costume/cardborg/borghead)
