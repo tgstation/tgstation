@@ -21,7 +21,7 @@
 
 /datum/round_event/grey_tide/setup()
 	announce_when = rand(50, 60)
-	end_when = rand(20, 40) //Chance for one or two flickers before everything opens
+	end_when = rand(20, 30)
 	severity = rand(1,3)
 
 	var/list/areas_affected = list()
@@ -44,7 +44,7 @@
 		kill()
 
 /datum/round_event/grey_tide/tick()
-	if(ISMULTIPLE(activeFor, 15))
+	if(ISMULTIPLE(activeFor, 12))
 		for(var/area/area_to_open in areas_to_open)
 			for(var/obj/machinery/light/chosen_light in area_to_open)
 				chosen_light.flicker(10)
