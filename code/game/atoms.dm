@@ -299,7 +299,7 @@
  *
  * To have your LateIntialize proc be called, your atoms [Initalization][/atom/proc/Initialize]
  *  proc must return the hint
- * [INITIALIZE_HINT_LATELOAD] otherwise you will never be called.
+ * [INITIALIZE_HINT_LATELOAD] otherwise it will never be called.
  *
  * useful for doing things like finding other machines on GLOB.machines because you can guarantee
  * that all atoms will actually exist in the "WORLD" at this time and that all their Intialization
