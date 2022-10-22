@@ -10,19 +10,20 @@
 	announce_when = 50
 	end_when = 20
 	var/list/area/areas_to_open = list()
-	var/list/potential_areas = list(/area/station/command,
-									/area/station/engineering,
-									/area/station/medical,
-									/area/station/security,
-									/area/station/cargo,
-									/area/station/science,
-									/area/station/service)
 	var/severity = 1
 
 /datum/round_event/grey_tide/setup()
 	announce_when = rand(50, 60)
 	end_when = rand(20, 30)
 	severity = rand(1,3)
+
+	var/list/potential_areas = list(/area/station/command,
+								/area/station/engineering,
+								/area/station/medical,
+								/area/station/security,
+								/area/station/cargo,
+								/area/station/science,
+								/area/station/service)
 
 	var/list/areas_affected = list()
 
@@ -64,7 +65,7 @@
 			else if(istype(object_to_open, /obj/machinery/status_display/door_timer))
 				var/obj/machinery/status_display/door_timer/prison_timer = object_to_open
 				prison_timer.timer_end(forced = TRUE)
-			else if(istype(object_to_open, /obj/machinery/power/apc))
+			else if(istype(object_to_open, /obj/machinery/power/apc)) //Escape (or sneak in) under the cover of darkness
 				var/obj/machinery/power/apc/apc_to_trigger = object_to_open
 				apc_to_trigger.lighting = APC_CHANNEL_OFF
 				apc_to_trigger.update_appearance()
