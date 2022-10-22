@@ -118,7 +118,7 @@
 	resilience = TRAUMA_RESILIENCE_ABSOLUTE
 
 /datum/brain_trauma/severe/paralysis/paraplegic/vending
-	resilience = TRAUMA_LIMIT_SURGERY
+	resilience = TRAUMA_RESILIENCE_SURGERY
 
 /datum/brain_trauma/severe/narcolepsy
 	name = "Narcolepsy"
