@@ -114,15 +114,18 @@
 
 /obj/item/clothing/head/costume/cardborg/equipped(mob/living/user, slot)
 	..()
-	if(ishuman(user) && (slot & ITEM_SLOT_HEAD))
-		var/mob/living/carbon/human/H = user
-		if(istype(H.wear_suit, /obj/item/clothing/suit/costume/cardborg))
-			var/obj/item/clothing/suit/costume/cardborg/CB = H.wear_suit
-			CB.disguise(user, src)
+	if(!ishuman(user) || !(slot & ITEM_SLOT_HEAD))
+		return
 
-/obj/item/clothing/head/costume/cardborg/dropped(mob/living/user)
+	var/mob/living/carbon/human/H = user
+	if(istype(H.wear_suit, /obj/item/clothing/suit/costume/cardborg))
+		var/obj/item/clothing/suit/costume/cardborg/CB = H.wear_suit
+		CB.disguise(user, src)
+
+/obj/item/clothing/head/costume/cardborg/dropped(mob/living/user, slot)
 	..()
-	user.remove_alt_appearance("standard_borg_disguise")
+	if(ishuman(user) && (slot & ITEM_SLOT_HEAD))
+		user.remove_alt_appearance("standard_borg_disguise")
 
 /obj/item/clothing/head/costume/bronze
 	name = "bronze hat"

@@ -171,9 +171,10 @@
 	if(slot & ITEM_SLOT_OCLOTHING)
 		disguise(user)
 
-/obj/item/clothing/suit/costume/cardborg/dropped(mob/living/user)
+/obj/item/clothing/suit/costume/cardborg/dropped(mob/living/user, slot)
 	..()
-	user.remove_alt_appearance("standard_borg_disguise")
+	if(slot & ITEM_SLOT_OCLOTHING)
+		user.remove_alt_appearance("standard_borg_disguise")
 
 /obj/item/clothing/suit/costume/cardborg/proc/disguise(mob/living/carbon/human/H, obj/item/clothing/head/costume/cardborg/borghead)
 	if(istype(H))
