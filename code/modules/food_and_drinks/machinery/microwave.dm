@@ -205,23 +205,32 @@
 		update_appearance()
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
+/obj/machinery/microwave/crowbar_act(mob/living/user, obj/item/tool)
+	if(operating)
+		return
+	if(!default_deconstruction_crowbar(tool))
+		return
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/machinery/microwave/screwdriver_act(mob/living/user, obj/item/tool)
+	if(operating)
+		return
+	if(dirty >= 100)
+		return
+	if(default_deconstruction_screwdriver(user, icon_state, icon_state, tool))
+		update_appearance()
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
 /obj/machinery/microwave/attackby(obj/item/O, mob/living/user, params)
 	if(operating)
 		return
-	if(default_deconstruction_crowbar(O))
-		return
-
-	if(dirty < 100)
-		if(default_deconstruction_screwdriver(user, icon_state, icon_state, O))
-			update_appearance()
-			return
 
 	if(panel_open && is_wire_tool(O))
 		wires.interact(user)
 		return TRUE
 
 	if(broken > 0)
-		if(broken == 2 && O.tool_behaviour == TOOL_WIRECUTTER) // If it's broken and they're using a screwdriver
+		if(broken == 2 && O.tool_behaviour == TOOL_WIRECUTTER) // If it's broken and they're using a TOOL_WIRECUTTER
 			user.visible_message(span_notice("[user] starts to fix part of \the [src]."), span_notice("You start to fix part of \the [src]..."))
 			if(O.use_tool(src, user, 20))
 				user.visible_message(span_notice("[user] fixes part of \the [src]."), span_notice("You fix part of \the [src]."))
@@ -293,7 +302,7 @@
 		update_appearance()
 		return
 
-	..()
+	return ..()
 
 /obj/machinery/microwave/attack_hand_secondary(mob/user, list/modifiers)
 	if(user.canUseTopic(src, !issilicon(usr)))
