@@ -18,17 +18,17 @@
 
 	RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/on_movable_relocated)
 	if(target.loc)
-		ADD_TRAIT(target.loc, trait_to_give, ELEMENT_TRAIT(type))
+		ADD_TRAIT(target.loc, trait_to_give, REF(target))
 
 /datum/element/trait_loc/Detach(atom/movable/source, ...)
 	. = ..()
 	UnregisterSignal(source, COMSIG_MOVABLE_MOVED)
 	if(source.loc)
-		REMOVE_TRAIT(source.loc, trait_to_give, ELEMENT_TRAIT(type))
+		REMOVE_TRAIT(source.loc, trait_to_give, REF(source))
 
 /datum/element/trait_loc/proc/on_movable_relocated(atom/movable/source, atom/old_loc)
 	SIGNAL_HANDLER
 
-	REMOVE_TRAIT(old_loc, trait_to_give, ELEMENT_TRAIT(type))
+	REMOVE_TRAIT(old_loc, trait_to_give, REF(source))
 	if(source.loc)
-		ADD_TRAIT(source.loc, trait_to_give, ELEMENT_TRAIT(type))
+		ADD_TRAIT(source.loc, trait_to_give, REF(source))
