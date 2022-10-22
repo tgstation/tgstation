@@ -12,7 +12,6 @@
 	var/monkey_timer = 30 SECONDS
 	var/monkey_angry_nth = 5 // every nth monkey will be angry
 	var/start_runtimes = 0
-	var/running = TRUE
 
 /datum/unit_test/monkey_business/Run()
 	start_runtimes = GLOB.total_runtimes
@@ -26,13 +25,7 @@
 		else
 			new /datum/ai_controller/monkey(monkey)
 		monkey.ai_controller.blackboard[BB_MONKEY_TARGET_MONKEYS] = TRUE
-	addtimer(CALLBACK(src, .proc/finalize), monkey_timer)
 	sleep(monkey_timer)
-	while(running)
-		sleep(2 TICKS) // make sure we're actually done
-
-/datum/unit_test/monkey_business/proc/finalize()
 	var/monkey_runtimes = GLOB.total_runtimes - start_runtimes
 	if(monkey_runtimes)
 		TEST_FAIL("Monkey Business caused [monkey_runtimes] runtimes")
-	running = FALSE
