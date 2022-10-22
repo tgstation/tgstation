@@ -444,15 +444,12 @@
 	flickering = TRUE
 	if(on && status == LIGHT_OK)
 		for(var/i in 1 to amount)
-			if(status != LIGHT_OK || !has_power())
+			if(status != LIGHT_OK)
 				break
 			on = !on
 			update(FALSE)
 			sleep(rand(5, 15))
-		if(has_power())
-			on = (status == LIGHT_OK)
-		else
-			on = FALSE
+		on = (status == LIGHT_OK)
 		update(FALSE)
 		. = TRUE //did we actually flicker?
 	flickering = FALSE
