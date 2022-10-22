@@ -68,7 +68,7 @@
 	name = "salty popcorn"
 	icon_state = "salty_popcorn"
 	desc = "Salty popcorn, a classic for all time."
-	trash_type = /obj/item/trash/salty_popcorn
+	trash_type = /obj/item/trash/popcorn/salty
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/salt = 2)
 	tastes = list("salt" = 2, "popcorn" = 1)
 
@@ -76,7 +76,7 @@
 	name = "caramel popcorn"
 	icon_state = "сaramel_popcorn"
 	desc = "Caramel-covered popcorn. Sweet!"
-	trash_type = /obj/item/trash/caramel_popcorn
+	trash_type = /obj/item/trash/popcorn/caramel
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/caramel = 4)
 	tastes = list("caramel" = 2, "popcorn" = 1)
 	foodtypes = JUNKFOOD | SUGAR
