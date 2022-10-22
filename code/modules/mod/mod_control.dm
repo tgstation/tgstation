@@ -99,7 +99,7 @@
 	if(length(req_access))
 		locked = TRUE
 	new_core?.install(src)
-	generate_parts()
+	generate_parts() //todo remove
 	for(var/obj/item/part as anything in get_parts(items = TRUE, all = TRUE))
 		part.name = "[theme.name] [part.name]"
 		part.desc = "[part.desc] [theme.desc]"
@@ -412,7 +412,6 @@
 	var/obj/item/helmet = new /obj/item/clothing/head/mod(src)
 	make_part(helmet)
 	var/obj/item/chestplate = new /obj/item/clothing/suit/mod(src)
-	chestplate.allowed += typecacheof(theme.allowed_suit_storage)
 	make_part(chestplate)
 	var/obj/item/gauntlets = new /obj/item/clothing/gloves/mod(src)
 	make_part(gauntlets)
@@ -604,6 +603,7 @@
 	wearer?.regenerate_icons()
 
 /obj/item/mod/control/proc/set_mod_skin(new_skin)
+/*
 	if(active)
 		CRASH("[src] tried to set skin while active!")
 	skin = new_skin
@@ -614,7 +614,6 @@
 		part.icon = used_skin[MOD_ICON_OVERRIDE] || 'icons/obj/clothing/modsuit/mod_clothing.dmi'
 		part.worn_icon = used_skin[MOD_WORN_ICON_OVERRIDE] || 'icons/mob/clothing/modsuit/mod_clothing.dmi'
 		part.icon_state = "[skin]-[initial(part.icon_state)]"
-	/*
 	for(var/obj/item/clothing/part as anything in mod_parts)
 		var/used_category
 		if(part == helmet)
@@ -641,8 +640,8 @@
 			overslotting_parts -= part
 			continue
 		overslotting_parts |= part
-	*/
 	wearer?.regenerate_icons()
+*/
 
 /obj/item/mod/control/proc/on_exit(datum/source, atom/movable/part, direction)
 	SIGNAL_HANDLER

@@ -272,7 +272,7 @@
 	ADD_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, MOD_TRAIT)
 	check_upstairs() //todo at some point flip your screen around
 
-/obj/item/mod/module/atrocinator/deactivated(display_message = TRUE, deleting = FALSE)
+/obj/item/mod/module/atrocinator/deactivate(display_message = TRUE, deleting = FALSE)
 	if(you_fucked_up && !deleting)
 		to_chat(mod.wearer, span_danger("It's too late."))
 		return FALSE

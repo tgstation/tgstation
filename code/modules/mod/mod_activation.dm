@@ -186,6 +186,7 @@
 ///Seals or unseals the given part.
 /obj/item/mod/control/proc/seal_part(obj/item/clothing/part, seal)
 	var/datum/mod_part/part_datum = mod_parts[part.slot_flags]
+	part_datum.sealed = seal
 	if(seal)
 		part.clothing_flags |= part.visor_flags
 		part.flags_inv |= part.visor_flags_inv
@@ -204,7 +205,9 @@
 
 /// Finishes the suit's activation, starts processing.
 /obj/item/mod/control/proc/finish_activation(on)
+	var/datum/mod_part/part_datum = mod_parts[slot_flags]
 	active = on
+	part_datum.sealed = on
 	if(active)
 		for(var/obj/item/mod/module/module as anything in modules)
 			module.on_suit_activation()
