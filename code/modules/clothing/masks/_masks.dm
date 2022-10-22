@@ -62,7 +62,7 @@
 		M.update_worn_mask()
 
 //Proc that moves gas/breath masks out of the way, disabling them and allowing pill/food consumption
-/obj/item/clothing/mask/proc/adjustmask(mob/living/user)
+/obj/item/clothing/mask/proc/adjustmask(mob/living/carbon/user)
 	if(user?.incapacitated())
 		return
 	mask_adjusted = !mask_adjusted
@@ -81,9 +81,13 @@
 		flags_cover &= ~visor_flags_cover
 		if(adjusted_flags)
 			slot_flags = adjusted_flags
-	if(user)
+	if(!user)
+		return
+	// Update the mob if it's wearing the mask.
+	if(user.wear_mask == src)
 		user.wear_mask_update(src, toggle_off = mask_adjusted)
-		user.update_action_buttons_icon() //when mask is adjusted out, we update all buttons icon so the user's potential internal tank correctly shows as off.
+	// Update icon for adjusted mask.
+	user.update_action_buttons_icon()
 
 /**
  * Proc called in lungs.dm to act if wearing a mask with filters, used to reduce the filters durability, return a changed gas mixture depending on the filter status
