@@ -414,7 +414,11 @@
 						user.put_in_hands(held_item)
 						return
 
-					strippable_item.finish_equip(owner, held_item, user)
+					if (isnull(strippable_item.finish_equip(owner, held_item, user)) && iscarbon(user))
+						var/mob/living/carbon/carbon_user = user
+						// Close an open air tank if it exchanged from user to owner.
+						if (held_item == carbon_user.internal)
+							carbon_user.close_internals()
 			else if (strippable_item.try_unequip(owner, user))
 				LAZYORASSOCLIST(interactions, user, key)
 

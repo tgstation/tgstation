@@ -151,7 +151,7 @@
 		failed_last_breath = TRUE
 		throw_alert(ALERT_NOT_ENOUGH_OXYGEN, /atom/movable/screen/alert/not_enough_oxy)
 		return FALSE
-	
+
 	var/safe_oxy_min = 16
 	var/safe_co2_max = 10
 	var/safe_plas_max = 0.05
@@ -309,15 +309,14 @@
 	breath.temperature = bodytemperature
 
 /mob/living/carbon/proc/get_breath_from_internal(volume_needed)
-	if(internal)
-		if(internal.loc != src)
-			internal = null
-		else if ((!wear_mask || !(wear_mask.clothing_flags & MASKINTERNALS)) && !getorganslot(ORGAN_SLOT_BREATHING_TUBE))
-			internal = null
-		else
-			. = internal.remove_air_volume(volume_needed)
-			if(!.)
-				return FALSE //to differentiate between no internals and active, but empty internals
+	if (!internal)
+		return
+	if(invalid_internals())
+		close_internals()
+		return
+	. = internal.remove_air_volume(volume_needed)
+	// To differentiate between no internals and active, but empty internals.
+	return . ? . : FALSE
 
 /mob/living/carbon/proc/handle_blood(delta_time, times_fired)
 	return

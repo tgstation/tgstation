@@ -48,33 +48,42 @@
 /obj/item/tank/ui_action_click(mob/user)
 	toggle_internals(user)
 
-/obj/item/tank/proc/toggle_internals(mob/user)
-	var/mob/living/carbon/human/H = user
-	if(!istype(H))
-		return
-
-	if(H.internal == src)
-		to_chat(H, span_notice("You close [src] valve."))
-		H.internal = null
+/obj/item/tank/proc/open_internals(mob/living/carbon/human/human_target)
+	if(human_target.internal)
+		to_chat(human_target, span_notice("You switch your internals to [src]."))
 	else
-		if(!H.getorganslot(ORGAN_SLOT_BREATHING_TUBE))
-			if(!H.wear_mask)
-				to_chat(H, span_warning("You need a mask!"))
-				return
-			var/is_clothing = isclothing(H.wear_mask)
-			if(is_clothing && H.wear_mask.mask_adjusted)
-				H.wear_mask.adjustmask(H)
-			if(!is_clothing || !(H.wear_mask.clothing_flags & MASKINTERNALS))
-				to_chat(H, span_warning("[H.wear_mask] can't use [src]!"))
-				return
+		to_chat(human_target, span_notice("You open [src] valve."))
+	human_target.open_internals(src)
+/obj/item/tank/proc/close_internals(mob/living/carbon/human/human_target)
+	to_chat(human_target, span_notice("You close [src] valve."))
+	human_target.close_internals()
 
-		if(H.internal)
-			to_chat(H, span_notice("You switch your internals to [src]."))
-		else
-			to_chat(H, span_notice("You open [src] valve."))
-		H.internal = src
-	H.update_action_buttons_icon()
-
+/obj/item/tank/proc/toggle_internals(mob/mob_target)
+	var/mob/living/carbon/human/human_target = mob_target
+	// Non-human carbons can't toggle their own internals.
+	if(!istype(human_target))
+		return
+	// Just close the tank if it's open.
+	if(human_target.internal == src)
+		close_internals(human_target)
+		return
+	// Use breathing tube regardless of mask.
+	if(human_target.can_breathe_tube())
+		open_internals(human_target)
+		return
+	// Use mask in absence of tube.
+	var/obj/item/clothing/mask/mask = human_target.wear_mask
+	if(mask && isclothing(mask) && ((mask.visor_flags & MASKINTERNALS) || (mask.clothing_flags & MASKINTERNALS)))
+		// Adjust dishevelled breathing mask back onto face.
+		if (mask.mask_adjusted)
+			mask.adjustmask(human_target)
+		open_internals(human_target)
+		return
+	// Invalid or missing mask
+	if (mask)
+		to_chat(human_target, span_warning("[mask] can't use [src]!"))
+	else
+		to_chat(human_target, span_warning("You need a mask!"))
 
 /obj/item/tank/Initialize(mapload)
 	. = ..()

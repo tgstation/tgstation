@@ -174,6 +174,32 @@
 
 	update_equipment_speed_mods()
 
+// Returns TRUE if an air tank compatible mask is equipped.
+/mob/living/carbon/proc/can_breathe_mask()
+	return wear_mask && isclothing(wear_mask) && (wear_mask.clothing_flags & MASKINTERNALS) ? TRUE : FALSE
+// Returns TRUE if a breathing tube is equipped.
+/mob/living/carbon/proc/can_breathe_tube()
+	return getorganslot(ORGAN_SLOT_BREATHING_TUBE) ? TRUE : FALSE
+// Returns TRUE if an air tank compatible mask or breathing tube is equipped.
+/mob/living/carbon/proc/can_breathe_internals()
+	return can_breathe_tube() || can_breathe_mask()
+// Returns TRUE if air tank is open and mob lacks apparatus, or if the tank moved away from the mob.
+/mob/living/carbon/proc/invalid_internals()
+	return internal && (internal.loc != src || !can_breathe_internals()) ? TRUE : FALSE
+
+// Open an internal air tank.
+/mob/living/carbon/proc/open_internals(obj/item/tank/target_tank)
+	if (!can_breathe_internals())
+		return
+	internal = target_tank
+	update_action_buttons_icon()
+// Close current internal air tank.
+/mob/living/carbon/proc/close_internals()
+	if (!internal)
+		return
+	internal = null
+	update_action_buttons_icon()
+
 //handle stuff to update when a mob equips/unequips a mask.
 /mob/living/proc/wear_mask_update(obj/item/I, toggle_off = 1)
 	update_worn_mask()

@@ -290,8 +290,9 @@
 /mob/living/carbon/human/wear_mask_update(obj/item/I, toggle_off = 1)
 	if((I.flags_inv & (HIDEHAIR|HIDEFACIALHAIR)) || (initial(I.flags_inv) & (HIDEHAIR|HIDEFACIALHAIR)))
 		update_body_parts()
-	if(toggle_off && internal && !getorganslot(ORGAN_SLOT_BREATHING_TUBE))
-		internal = null
+	// Close internal air tank if mask was the only breathing apparatus.
+	if(invalid_internals())
+		close_internals()
 	if(I.flags_inv & HIDEEYES)
 		update_worn_glasses()
 	sec_hud_set_security_status()

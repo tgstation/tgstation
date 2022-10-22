@@ -186,11 +186,7 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 
 	var/mob/living/carbon/carbon_source = source
 
-	var/obj/item/clothing/mask = carbon_source.wear_mask
-	if (!istype(mask))
-		return
-
-	if ((mask.clothing_flags & MASKINTERNALS) && istype(item, /obj/item/tank))
+	if (carbon_source.can_breathe_internals() && istype(item, /obj/item/tank))
 		return isnull(carbon_source.internal) ? "enable_internals" : "disable_internals"
 
 /proc/strippable_alternate_action_internals(obj/item/item, atom/source, mob/user)
@@ -202,8 +198,7 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 	if (!istype(carbon_source))
 		return
 
-	var/obj/item/clothing/mask = carbon_source.wear_mask
-	if (!istype(mask) || !(mask.clothing_flags & MASKINTERNALS))
+	if (!carbon_source.can_breathe_internals())
 		return
 
 	carbon_source.visible_message(
@@ -222,7 +217,7 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 
 		// This isn't meant to be FALSE, it correlates to the icon's name.
 	else if (!QDELETED(item))
-		if((carbon_source.wear_mask?.clothing_flags & MASKINTERNALS) || carbon_source.getorganslot(ORGAN_SLOT_BREATHING_TUBE))
+		if(carbon_source.can_breathe_internals())
 			carbon_source.internal = item
 
 	carbon_source.visible_message(
