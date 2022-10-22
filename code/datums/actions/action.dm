@@ -168,9 +168,6 @@
 			if(button.icon_state != background_icon_state)
 				button.icon_state = background_icon_state
 
-		button.is_greyscale = (background_icon_state == ACTION_BUTTON_DEFAULT_BACKGROUND)
-
-		button.update_appearance()
 		ApplyIcon(button, force)
 
 	if(button_overlay_state)

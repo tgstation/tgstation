@@ -9,7 +9,6 @@
 /atom/movable/screen
 	name = ""
 	icon = 'icons/hud/screen_gen.dmi'
-	greyscale_config = /datum/greyscale_config/hud
 	// NOTE: screen objects do NOT change their plane to match the z layer of their owner
 	// You shouldn't need this, but if you ever do and it's widespread, reconsider what you're doing.
 	plane = HUD_PLANE
@@ -35,6 +34,7 @@
 	var/del_on_map_removal = TRUE
 
 	/// Whether or not this HUD is greyscaled
+	// MBTODO: Maybe unnecessary?
 	var/is_greyscale = FALSE
 
 /atom/movable/screen/Destroy()
@@ -50,24 +50,6 @@
 
 /atom/movable/screen/proc/component_click(atom/movable/screen/component_button/component, params)
 	return
-
-/atom/movable/screen/Initialize(mapload)
-	. = ..()
-
-	if (is_greyscale)
-		screen_set_greyscale()
-
-/atom/movable/screen/update_appearance(updates)
-	. = ..()
-
-	if (is_greyscale)
-		screen_set_greyscale()
-
-/// Sets the greyscale colors of the UI if player has a colored theme
-/atom/movable/screen/proc/screen_set_greyscale()
-	// MBTODO: Get preferences is here
-	// MBTODO: Don't do this if the UI theme isn't a greyscale one
-	set_greyscale("#E589C5#267F00")
 
 /atom/movable/screen/text
 	icon = null
@@ -98,7 +80,6 @@
 
 /atom/movable/screen/navigate
 	name = "navigate"
-	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "navigate"
 	screen_loc = ui_navigate_menu
 	is_greyscale = TRUE
@@ -118,14 +99,12 @@
 
 /atom/movable/screen/craft
 	name = "crafting menu"
-	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "craft"
 	screen_loc = ui_crafting
 	is_greyscale = TRUE
 
 /atom/movable/screen/area_creator
 	name = "create new area"
-	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "area_edit"
 	screen_loc = ui_building
 	is_greyscale = TRUE
@@ -141,7 +120,6 @@
 
 /atom/movable/screen/language_menu
 	name = "language menu"
-	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "talk_wheel"
 	screen_loc = ui_language_menu
 	is_greyscale = TRUE
@@ -292,7 +270,6 @@
 
 /atom/movable/screen/drop
 	name = "drop"
-	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "act_drop"
 	plane = HUD_PLANE
 	is_greyscale = TRUE
@@ -303,10 +280,13 @@
 
 /atom/movable/screen/combattoggle
 	name = "toggle combat mode"
-	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "combat_off"
 	screen_loc = ui_combat_toggle
 	is_greyscale = TRUE
+
+/atom/movable/screen/combattoggle/Initialize(mapload)
+	. = ..()
+	update_appearance()
 
 /atom/movable/screen/combattoggle/Click()
 	if(isliving(usr))
@@ -351,7 +331,6 @@
 
 /atom/movable/screen/mov_intent
 	name = "run/walk toggle"
-	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "running"
 	is_greyscale = TRUE
 
@@ -373,7 +352,6 @@
 
 /atom/movable/screen/pull
 	name = "stop pulling"
-	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "pull"
 	base_icon_state = "pull"
 	is_greyscale = TRUE
@@ -392,7 +370,6 @@
 
 /atom/movable/screen/resist
 	name = "resist"
-	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "act_resist"
 	plane = HUD_PLANE
 	is_greyscale = TRUE
@@ -404,7 +381,6 @@
 
 /atom/movable/screen/rest
 	name = "rest"
-	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "act_rest"
 	base_icon_state = "act_rest"
 	plane = HUD_PLANE
@@ -452,7 +428,6 @@
 
 /atom/movable/screen/throw_catch
 	name = "throw/catch"
-	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "act_throw_off"
 	is_greyscale = TRUE
 

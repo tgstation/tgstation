@@ -4,20 +4,9 @@
 	including inventories and item quick actions.
 */
 
-// The default UI style is the first one in the list
-GLOBAL_LIST_INIT(available_ui_styles, list(
-	"Midnight" = 'icons/hud/screen_midnight.dmi',
-	"Retro" = 'icons/hud/screen_retro.dmi',
-	"Plasmafire" = 'icons/hud/screen_plasmafire.dmi',
-	"Slimecore" = 'icons/hud/screen_slimecore.dmi',
-	"Operative" = 'icons/hud/screen_operative.dmi',
-	"Clockwork" = 'icons/hud/screen_clockwork.dmi',
-	"Glass" = 'icons/hud/screen_glass.dmi',
-	"Trasen-Knox" = 'icons/hud/screen_trasenknox.dmi'
-))
-
 /proc/ui_style2icon(ui_style)
-	return GLOB.available_ui_styles[ui_style] || GLOB.available_ui_styles[GLOB.available_ui_styles[1]]
+	var/datum/hud_style/hud_style = GLOB.available_hud_styles[ui_style] || GLOB.default_hud_style
+	return hud_style.hud_icon()
 
 /datum/hud
 	var/mob/mymob
@@ -257,12 +246,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	if(!client || hud_used)
 		return
 
-	var/datum/hud/new_hud = new hud_type(src)
-	set_hud_used(new_hud)
-
-	// Update the GAGS coloring if we are a GAGS UI
-	for (var/atom/movable/screen/screen_object as anything in (new_hud.static_inventory + new_hud.hotkeybuttons + new_hud.infodisplay))
-		screen_object.update_appearance()
+	set_hud_used(new hud_type(src))
 
 	update_sight()
 	SEND_SIGNAL(src, COMSIG_MOB_HUD_CREATED)
@@ -382,13 +366,15 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	if(!mymob)
 		return
 
-/datum/hud/proc/update_ui_style(new_ui_style)
+/datum/hud/proc/update_ui_style(datum/hud_style/hud_style)
+	var/new_ui_style = hud_style.hud_icon()
+
 	// do nothing if overridden by a subtype or already on that style
 	if (initial(ui_style) || ui_style == new_ui_style)
 		return
 
-	for(var/atom/item in static_inventory + toggleable_inventory + hotkeybuttons + infodisplay + screenoverlays + inv_slots)
-		if (item.icon == ui_style)
+	for(var/atom/movable/screen/item in static_inventory + toggleable_inventory + hotkeybuttons + infodisplay + screenoverlays + inv_slots + listed_actions?.actions + palette_actions?.actions)
+		if (item.icon == ui_style || item.is_greyscale)
 			item.icon = new_ui_style
 
 	ui_style = new_ui_style

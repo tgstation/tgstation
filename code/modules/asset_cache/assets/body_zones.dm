@@ -5,7 +5,7 @@
 /datum/asset/simple/body_zones
 
 /datum/asset/simple/body_zones/register()
-	assets["body_zones.base.png"] = icon('icons/hud/screen_midnight.dmi', "zone_sel")
+	assets["body_zones.base.png"] = icon(GLOB.default_hud_style.hud_icon(), "zone_sel")
 
 	add_limb(BODY_ZONE_HEAD)
 	add_limb(BODY_ZONE_CHEST)
