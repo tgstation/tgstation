@@ -33,8 +33,8 @@
 	 */
 	var/del_on_map_removal = TRUE
 
-	/// Whether or not this HUD is greyscaled
-	// MBTODO: Maybe unnecessary?
+	/// Whether or not this HUD is greyscaled.
+	/// Used for making sure it gets updated when switching styles.
 	var/is_greyscale = FALSE
 
 /atom/movable/screen/Destroy()
