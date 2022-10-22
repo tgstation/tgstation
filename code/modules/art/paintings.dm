@@ -422,7 +422,7 @@
 	pixels_per_unit = 18
 	w_class = WEIGHT_CLASS_BULKY
 
-	custom_price = PAYCHECK_CREW * 1.25
+	custom_price = PAYCHECK_CREW * 1.75
 
 /obj/item/canvas/fortyfive_twentyseven/Initialize(mapload)
 	. = ..()
