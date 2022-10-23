@@ -122,6 +122,8 @@
 
 /mob/living/simple_animal/bot/cleanbot/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	if(istype(arrived, /obj/item/reagent_containers/cup/bucket))
+		if(build_bucket)
+			qdel(build_bucket)
 		build_bucket = arrived
 		set_greyscale(build_bucket.greyscale_colors)
 	return ..()
