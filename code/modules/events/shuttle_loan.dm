@@ -16,6 +16,13 @@
 	category = EVENT_CATEGORY_BUREAUCRATIC
 	description = "If cargo accepts the offer, fills the shuttle with loot and/or enemies."
 
+/datum/round_event_control/shuttle_loan/can_spawn_event(players_amt)
+	. = ..()
+
+	for(var/datum/round_event/running_event in SSevents.running)
+		if(istype(running_event, /datum/round_event/shuttle_loan)) //Make sure two of these don't happen at once.
+			return FALSE
+
 /datum/round_event/shuttle_loan
 	announce_when = 1
 	end_when = 500
