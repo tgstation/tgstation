@@ -378,8 +378,7 @@
 	. = ..()
 	to_chat(owner, span_notice("Your bloodlust seeps back into the bog of your subconscious and you regain self control."))
 	owner.log_message("exited a blood frenzy", LOG_ATTACK)
-	if(chainsaw)
-		QDEL_NULL(chainsaw)
+	QDEL_NULL(chainsaw)
 
 /datum/status_effect/speed_boost
 	id = "speed_boost"
