@@ -144,6 +144,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	return TRUE
 #else
 	return load_immediately
+#endif
 
 
 /datum/asset/spritesheet/should_refresh()
