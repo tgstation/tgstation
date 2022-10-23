@@ -52,7 +52,7 @@
 	user.adjust_blurriness(6)
 	if(eyes)
 		eyes.applyOrganDamage(rand(6,8))
-	sleep(1 SECONDS)
+	sleep(10)
 	return (BRUTELOSS)
 
 /obj/item/paperplane/update_overlays()

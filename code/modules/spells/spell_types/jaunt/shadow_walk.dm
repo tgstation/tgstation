@@ -20,7 +20,7 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	if(is_jaunting(owner))
+	if(is_jaunting())
 		return TRUE
 	var/turf/cast_turf = get_turf(owner)
 	if(cast_turf.get_lumcount() >= SHADOW_SPECIES_LIGHT_THRESHOLD)

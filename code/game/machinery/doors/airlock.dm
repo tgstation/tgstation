@@ -394,7 +394,7 @@
 /obj/machinery/door/airlock/proc/handlePowerRestore()
 	var/cont = TRUE
 	while (cont)
-		sleep(1 SECONDS)
+		sleep(10)
 		if(QDELETED(src))
 			return
 		cont = FALSE
@@ -686,7 +686,7 @@
 	if(!aiHacking)
 		aiHacking = TRUE
 		to_chat(user, span_warning("Airlock AI control has been blocked. Beginning fault-detection."))
-		sleep(5 SECONDS)
+		sleep(50)
 		if(canAIControl(user))
 			to_chat(user, span_notice("Alert cancelled. Airlock control has been restored without our assistance."))
 			aiHacking = FALSE
@@ -696,9 +696,9 @@
 			aiHacking = FALSE
 			return
 		to_chat(user, span_notice("Fault confirmed: airlock control wire disabled or cut."))
-		sleep(2 SECONDS)
+		sleep(20)
 		to_chat(user, span_notice("Attempting to hack into airlock. This may take some time."))
-		sleep(20 SECONDS)
+		sleep(200)
 		if(canAIControl(user))
 			to_chat(user, span_notice("Alert cancelled. Airlock control has been restored without our assistance."))
 			aiHacking = FALSE
@@ -708,7 +708,7 @@
 			aiHacking = FALSE
 			return
 		to_chat(user, span_notice("Upload access confirmed. Loading control program into airlock software."))
-		sleep(17 SECONDS)
+		sleep(170)
 		if(canAIControl(user))
 			to_chat(user, span_notice("Alert cancelled. Airlock control has been restored without our assistance."))
 			aiHacking = FALSE
@@ -718,11 +718,11 @@
 			aiHacking = FALSE
 			return
 		to_chat(user, span_notice("Transfer complete. Forcing airlock to execute program."))
-		sleep(5 SECONDS)
+		sleep(50)
 		//disable blocked control
 		aiControlDisabled = AI_WIRE_HACKED
 		to_chat(user, span_notice("Receiving control information from airlock."))
-		sleep(1 SECONDS)
+		sleep(10)
 		//bring up airlock dialog
 		aiHacking = FALSE
 		if(user)
@@ -769,7 +769,7 @@
 
 /obj/machinery/door/airlock/proc/electrified_loop()
 	while (secondsElectrified > MACHINE_NOT_ELECTRIFIED)
-		sleep(1 SECONDS)
+		sleep(10)
 		if(QDELETED(src))
 			return
 
@@ -1171,14 +1171,14 @@
 	SEND_SIGNAL(src, COMSIG_AIRLOCK_OPEN, forced)
 	operating = TRUE
 	update_icon(ALL, AIRLOCK_OPENING, TRUE)
-	sleep(0.1 SECONDS)
+	sleep(1)
 	set_opacity(0)
 	update_freelook_sight()
-	sleep(0.4 SECONDS)
+	sleep(4)
 	set_density(FALSE)
 	flags_1 &= ~PREVENT_CLICK_UNDER_1
 	air_update_turf(TRUE, FALSE)
-	sleep(0.1 SECONDS)
+	sleep(1)
 	layer = OPEN_DOOR_LAYER
 	update_icon(ALL, AIRLOCK_OPEN, TRUE)
 	operating = FALSE
@@ -1223,18 +1223,18 @@
 		set_density(TRUE)
 		flags_1 |= PREVENT_CLICK_UNDER_1
 		air_update_turf(TRUE, TRUE)
-	sleep(0.1 SECONDS)
+	sleep(1)
 	if(!air_tight)
 		set_density(TRUE)
 		flags_1 |= PREVENT_CLICK_UNDER_1
 		air_update_turf(TRUE, TRUE)
-	sleep(0.4 SECONDS)
+	sleep(4)
 	if(dangerous_close)
 		crush()
 	if(visible && !glass)
 		set_opacity(1)
 	update_freelook_sight()
-	sleep(0.1 SECONDS)
+	sleep(1)
 	update_icon(ALL, AIRLOCK_CLOSED, 1)
 	operating = FALSE
 	delayed_close_requested = FALSE
@@ -1285,7 +1285,7 @@
 			D.use_charge(user)
 		operating = TRUE
 		update_icon(ALL, AIRLOCK_EMAG, 1)
-		sleep(0.6 SECONDS)
+		sleep(6)
 		if(QDELETED(src))
 			return
 		operating = FALSE
@@ -1297,7 +1297,7 @@
 		loseMainPower()
 		loseBackupPower()
 
-/obj/machinery/door/airlock/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
+/obj/machinery/door/airlock/attack_alien(mob/living/carbon/alien/humanoid/user, list/modifiers)
 	if(isElectrified() && shock(user, 100)) //Mmm, fried xeno!
 		add_fingerprint(user)
 		return

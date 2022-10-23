@@ -90,7 +90,7 @@
 				user.emote("spin")
 				if (i == 3 && myhead)
 					myhead.drop_limb()
-				sleep(0.3 SECONDS)
+				sleep(3)
 			else
 				user.visible_message(span_suicide("[user] panics and starts choking to death!"))
 				return OXYLOSS

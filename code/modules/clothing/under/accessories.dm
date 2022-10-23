@@ -360,13 +360,10 @@
 	desc = "Can protect your clothing from ink stains, but you'll look like a nerd if you're using one."
 	icon_state = "pocketprotector"
 
-/obj/item/clothing/accessory/pocketprotector/Initialize(mapload)
+/obj/item/clothing/accessory/pocketprotector/full/Initialize(mapload)
 	. = ..()
 
 	create_storage(type = /datum/storage/pockets/pocketprotector)
-
-/obj/item/clothing/accessory/pocketprotector/full/Initialize(mapload)
-	. = ..()
 
 	new /obj/item/pen/red(src)
 	new /obj/item/pen(src)

@@ -1356,12 +1356,12 @@ GLOBAL_LIST_EMPTY(vending_products)
 /obj/machinery/vending/custom/crowbar_act(mob/living/user, obj/item/I)
 	return FALSE
 
-/obj/machinery/vending/custom/deconstruct(disassembled)
+/obj/machinery/vending/custom/Destroy()
 	unbuckle_all_mobs(TRUE)
-	var/turf/current_turf = get_turf(src)
-	if(current_turf)
-		for(var/obj/item/stored_item in contents)
-			stored_item.forceMove(current_turf)
+	var/turf/T = get_turf(src)
+	if(T)
+		for(var/obj/item/I in contents)
+			I.forceMove(T)
 		explosion(src, devastation_range = -1, light_impact_range = 3)
 	return ..()
 

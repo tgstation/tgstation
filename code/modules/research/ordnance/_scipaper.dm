@@ -115,7 +115,7 @@
 /datum/scientific_paper/proc/allowed_to_publish(datum/techweb/techweb_to_check)
 	if(!tier || !gains || !partner_path || (0 in gains))
 		return FALSE
-	return !techweb_to_check.published_papers[experiment_path][tier]
+	return techweb_to_check.published_papers[experiment_path][tier] ? FALSE : TRUE
 
 /datum/scientific_paper/proc/publish_paper(datum/techweb/techweb_to_publish)
 	autofill()
@@ -206,10 +206,16 @@
 			var/datum/data/tachyon_record/record_to_check = papers.explosion_record
 			if(explosion_record.explosion_identifier == record_to_check.explosion_identifier)
 				return FALSE
-	return ..()
+	. = ..()
 
 /datum/scientific_paper/explosive/set_experiment(ex_path = null, variable = null, data = null)
-	if(!ispath(ex_path, /datum/experiment/ordnance/explosive) || !variable || !istype(data, /datum/data/tachyon_record))
+	var/invalid = FALSE
+
+	invalid = invalid || !ispath(ex_path, /datum/experiment/ordnance/explosive)
+	invalid = invalid || !variable
+	invalid = invalid || !istype(data, /datum/data/tachyon_record)
+
+	if(invalid)
 		experiment_path = null
 		tracked_variable = null
 		explosion_record = null
@@ -278,7 +284,6 @@
 
 /// Various informations on companies/scientific programs/journals etc that the players can sign on to.
 /datum/scientific_partner
-	/// Name of the partner, shown in the Science program's UI.
 	var/name
 	/// Brief explanation of the associated program. Can be used for lore.
 	var/flufftext
@@ -307,10 +312,10 @@
 	return TRUE
 
 /datum/computer_file/data/ordnance
-	size = 4
-	filetype = "ORD"
 	/// List of experiments filtered by doppler array or populated by the tank compressor. Experiment path as key, score as value.
 	var/list/possible_experiments
+	size = 4
+	filetype = "ORD"
 
 /datum/computer_file/data/ordnance/proc/return_data()
 	return null
@@ -321,9 +326,9 @@
 	return temp
 
 /datum/computer_file/data/ordnance/explosive
-	filetype = "DOP"
 	/// Tachyon record, used for an explosive experiment.
 	var/datum/data/tachyon_record/explosion_record
+	filetype = "DOP"
 
 /datum/computer_file/data/ordnance/explosive/return_data()
 	return explosion_record

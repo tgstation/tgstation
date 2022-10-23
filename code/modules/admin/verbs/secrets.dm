@@ -291,18 +291,6 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 
 			summon_magic(holder, survivor_probability)
 
-		if("towerOfBabel")
-			if(!is_funmin)
-				return
-			if(tgui_alert(usr,"Would you like to randomize language for everyone?",,list("Yes","No")) == "Yes")
-				SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Tower of babel"))
-				holder.tower_of_babel()
-
-		if("cureTowerOfBabel")
-			if(!is_funmin)
-				return
-			holder.tower_of_babel_undo()
-
 		if("events")
 			if(!is_funmin)
 				return
@@ -592,10 +580,10 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 	set waitfor = FALSE
 	if (playlightning)
 		sound_to_playing_players('sound/magic/lightning_chargeup.ogg')
-		sleep(8 SECONDS)
+		sleep(80)
 	priority_announce(replacetext(announcement, "%STATION%", station_name()))
 	if (playlightning)
-		sleep(2 SECONDS)
+		sleep(20)
 		sound_to_playing_players('sound/magic/lightningbolt.ogg')
 
 /// Spawns a portal storm that spawns in sentient/non sentient mobs

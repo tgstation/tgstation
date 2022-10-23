@@ -157,7 +157,7 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 		if(!dropped_thing || QDELETED(dropped_thing))
 			return
 		dropped_thing.pixel_y--
-		sleep(0.2 SECONDS)
+		sleep(2)
 
 	//Make sure the item is still there after our sleep
 	if(!dropped_thing || QDELETED(dropped_thing))

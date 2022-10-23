@@ -98,7 +98,7 @@
 	playsound(src, openSound, 100, TRUE)
 	set_opacity(FALSE)
 	flick("[initial(icon_state)]opening",src)
-	sleep(1 SECONDS)
+	sleep(10)
 	set_density(FALSE)
 	door_opened = TRUE
 	layer = OPEN_DOOR_LAYER
@@ -118,7 +118,7 @@
 	isSwitchingStates = TRUE
 	playsound(src, closeSound, 100, TRUE)
 	flick("[initial(icon_state)]closing",src)
-	sleep(1 SECONDS)
+	sleep(10)
 	set_density(TRUE)
 	set_opacity(TRUE)
 	door_opened = FALSE

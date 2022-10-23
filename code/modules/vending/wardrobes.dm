@@ -435,7 +435,6 @@
 		/obj/item/clothing/head/chaplain/taqiyah/red = 3,
 		/obj/item/clothing/suit/chaplainsuit/monkrobeeast = 1,
 		/obj/item/clothing/head/rasta = 1,
-		/obj/item/clothing/suit/chaplainsuit/shrinehand = 1,
 		)
 	contraband = list(
 		/obj/item/toy/plush/ratplush = 1,

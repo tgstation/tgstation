@@ -64,7 +64,9 @@
 		/area/station/engineering,
 		/area/station/solars,
 		/area/station/holodeck,
+		/area/shuttle,
 		/area/station/maintenance,
+		/area/icemoon,
 	))
 
 	//Subtypes from the above that actually should explode.

@@ -53,11 +53,11 @@
 		if(stacks == 11) //Warning message that the stacks are getting too high
 			to_chat(user, span_warning("Our legs are really starting to hurt..."))
 
-		sleep(4 SECONDS)
+		sleep(40)
 
 	while(!active && stacks) //Damage stacks decrease fairly rapidly while not in sanic mode
 		if(QDELETED(src) || QDELETED(user))
 			return
 
 		stacks--
-		sleep(2 SECONDS)
+		sleep(20)

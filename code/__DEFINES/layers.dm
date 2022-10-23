@@ -45,13 +45,13 @@
 #define O_LIGHTING_VISUAL_PLANE 11
 #define O_LIGHTING_VISUAL_RENDER_TARGET "O_LIGHT_VISUAL_PLANE"
 
+///Things that should render ignoring lighting
+#define ABOVE_LIGHTING_PLANE 12
+
 /// This plane masks out lighting to create an "emissive" effect, ie for glowing lights in otherwise dark areas.
 #define EMISSIVE_PLANE 14
 
 #define RENDER_PLANE_LIGHTING 15
-
-///Things that should render ignoring lighting
-#define ABOVE_LIGHTING_PLANE 16
 
 ///---------------- MISC -----------------------
 

@@ -203,8 +203,8 @@
 		var/obj/item/computer_hardware/card_slot/card_holder = computer.all_components[MC_CARD]
 		if(card_holder)
 			ID = card_holder.GetID()
-		generate_network_log("Connection closed -- Program ID: [filename] User:[ID ? "[ID.registered_name]" : "None"]")
-	return TRUE
+		generate_network_log("Connection closed -- Program ID: [filename] User:[ID?"[ID.registered_name]":"None"]")
+	return 1
 
 /datum/computer_file/program/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -247,6 +247,7 @@
 
 				if(user && istype(user))
 					computer.ui_interact(user) // Re-open the UI on this computer. It should show the main screen now.
+
 
 /datum/computer_file/program/ui_host()
 	if(computer.physical)

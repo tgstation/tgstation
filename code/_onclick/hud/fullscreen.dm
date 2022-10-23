@@ -14,8 +14,6 @@
 		screen.update_for_view(client.view)
 		client.screen += screen
 
-	SET_PLANE_EXPLICIT(screen, PLANE_TO_TRUE(screen.plane), src)
-
 	return screen
 
 /mob/proc/clear_fullscreen(category, animated = 10)

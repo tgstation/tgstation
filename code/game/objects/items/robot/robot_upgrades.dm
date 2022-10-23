@@ -558,10 +558,10 @@
 		var/datum/effect_system/fluid_spread/smoke/smoke = new
 		smoke.set_up(1, holder = robot, location = robot.loc)
 		smoke.start()
-		sleep(0.2 SECONDS)
+		sleep(2)
 		for(var/i in 1 to 4)
 			playsound(robot, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, TRUE, -1)
-			sleep(1.2 SECONDS)
+			sleep(12)
 		if(!prev_lockcharge)
 			robot.SetLockdown(FALSE)
 		robot.set_anchored(FALSE)

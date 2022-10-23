@@ -1,6 +1,6 @@
 /obj/item/storage/belt
-	name = "not actually a toolbelt"
-	desc = "Can hold various things. This is the base type of /belt, are you sure you should have this?"
+	name = "belt"
+	desc = "Can hold various things."
 	icon = 'icons/obj/clothing/belts.dmi'
 	icon_state = "utility"
 	inhand_icon_state = "utility"

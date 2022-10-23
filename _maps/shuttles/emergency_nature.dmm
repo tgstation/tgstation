@@ -1046,7 +1046,7 @@
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "QM" = (
-/obj/effect/gibspawner/human,
+/obj/item/bodypart,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},

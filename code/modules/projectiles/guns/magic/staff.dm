@@ -138,7 +138,7 @@
 		/obj/projectile/magic/locker,
 		/obj/projectile/magic/necropotence,
 		/obj/projectile/magic/resurrection,
-		/obj/projectile/magic/babel,
+		/obj/projectile/magic/sapping,
 		/obj/projectile/magic/spellblade,
 		/obj/projectile/magic/teleport,
 		/obj/projectile/magic/wipe,
@@ -242,14 +242,14 @@
 	worn_icon_state = "flightstaff"
 	school = SCHOOL_EVOCATION
 
-/obj/item/gun/magic/staff/babel
-	name = "staff of babel"
-	desc = "An artefact that spits bolts of confusion magic that can make something depressed and incoherent."
+/obj/item/gun/magic/staff/sapping
+	name = "staff of sapping"
+	desc = "An artefact that spits bolts of sapping magic that can make something sad."
 	fire_sound = 'sound/magic/staff_change.ogg'
-	ammo_type = /obj/item/ammo_casing/magic/babel
-	icon_state = "staffofbabel"
+	ammo_type = /obj/item/ammo_casing/magic/sapping
+	icon_state = "staffofsapping"
 	inhand_icon_state = "staffofdoor"
-	worn_icon_state = "babelstaff"
+	worn_icon_state = "sapstaff"
 	school = SCHOOL_FORBIDDEN //evil
 
 /obj/item/gun/magic/staff/necropotence

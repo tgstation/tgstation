@@ -23,7 +23,6 @@
 	var/rods = 2
 	var/cable = 1
 	var/list/debris = list()
-	var/associated_lift = null
 
 /obj/machinery/door/window/Initialize(mapload, set_dir, unres_sides)
 	. = ..()
@@ -115,9 +114,9 @@
 		return
 	autoclose = TRUE
 	if(check_access(null))
-		sleep(5 SECONDS)
+		sleep(50)
 	else //secure doors close faster
-		sleep(2 SECONDS)
+		sleep(20)
 	if(!density && autoclose) //did someone change state while we slept?
 		close()
 
@@ -210,7 +209,7 @@
 	do_animate("opening")
 	playsound(src, 'sound/machines/windowdoor.ogg', 100, TRUE)
 	icon_state ="[base_state]open"
-	sleep(1 SECONDS)
+	sleep(10)
 	set_density(FALSE)
 	air_update_turf(TRUE, FALSE)
 	update_freelook_sight()
@@ -236,7 +235,7 @@
 	set_density(TRUE)
 	air_update_turf(TRUE, TRUE)
 	update_freelook_sight()
-	sleep(1 SECONDS)
+	sleep(10)
 
 	operating = FALSE
 	return 1
@@ -273,7 +272,7 @@
 		operating = TRUE
 		flick("[base_state]spark", src)
 		playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-		sleep(0.6 SECONDS)
+		sleep(6)
 		operating = FALSE
 		desc += "<BR>[span_warning("Its access panel is smoking slightly.")]"
 		open(2)

@@ -118,12 +118,9 @@
 	qdel(src)
 
 /obj/item/weldingtool/use_tool(atom/target, mob/living/user, delay, amount, volume, datum/callback/extra_checks)
-	var/mutable_appearance/sparks = mutable_appearance('icons/effects/welding_effect.dmi', "welding_sparks", GASFIRE_LAYER, src, ABOVE_LIGHTING_PLANE)
-	target.add_overlay(sparks)
-	LAZYADD(update_overlays_on_z, sparks)
+	target.add_overlay(GLOB.welding_sparks)
 	. = ..()
-	LAZYREMOVE(update_overlays_on_z, sparks)
-	target.cut_overlay(sparks)
+	target.cut_overlay(GLOB.welding_sparks)
 
 /obj/item/weldingtool/attack(mob/living/carbon/human/attacked_humanoid, mob/living/user)
 	if(!istype(attacked_humanoid))

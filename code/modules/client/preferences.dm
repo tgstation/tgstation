@@ -406,10 +406,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				else
 					job_preferences[other_job] = JP_MEDIUM
 
-	if(level == null)
-		job_preferences -= job.title
-	else
-		job_preferences[job.title] = level
+	job_preferences[job.title] = level
 
 	return TRUE
 

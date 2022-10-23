@@ -159,8 +159,9 @@
 	if(!ismob(AM0))
 		qdel(AM0)
 	else // Lets not qdel a mob, yes?
-		for(var/iterable in AM0.contents)
-			var/atom/movable/content = iterable
+		for(var/i in AM0.contents)
+			var/atom/movable/content = i
+			content.moveToNullspace()
 			qdel(content)
 
 /obj/machinery/recycler/proc/recycle_item(obj/item/I)

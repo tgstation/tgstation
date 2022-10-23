@@ -111,13 +111,13 @@
 		if (M.id == src.id)
 			INVOKE_ASYNC(M, /obj/machinery/door/poddoor.proc/open)
 
-	sleep(1 SECONDS)
+	sleep(10)
 
 	for(var/obj/machinery/mass_driver/M in GLOB.machines)
 		if(M.id == src.id)
 			M.drive()
 
-	sleep(6 SECONDS)
+	sleep(60)
 
 	for(var/obj/machinery/door/poddoor/M in GLOB.machines)
 		if (M.id == src.id)

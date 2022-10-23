@@ -44,13 +44,13 @@
 		if(M.id == id)
 			M.open()
 
-	sleep(2 SECONDS)
+	sleep(20)
 	for(var/obj/machinery/mass_driver/M in range(range, src))
 		if(M.id == id)
 			M.power = connected.power
 			M.drive()
 
-	sleep(5 SECONDS)
+	sleep(50)
 	for(var/obj/machinery/door/poddoor/M in range(range, src))
 		if(M.id == id)
 			M.close()

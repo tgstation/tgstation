@@ -201,11 +201,11 @@
 		return
 	if(!anchored && !isinspace())
 		tool.play_tool_sound(src, 100)
-		balloon_alert(user, "secured")
+		to_chat(user, span_notice("You secure \the [src] to the floor!"))
 		set_anchored(TRUE)
 	else if(anchored)
 		tool.play_tool_sound(src, 100)
-		balloon_alert(user, "unsecured")
+		to_chat(user, span_notice("You unsecure \the [src] from the floor!"))
 		if(active)
 			to_chat(user, span_notice("\The [src] shuts off!"))
 			shields_down()

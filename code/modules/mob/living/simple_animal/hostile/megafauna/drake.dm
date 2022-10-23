@@ -205,7 +205,7 @@
 				continue
 			hit_list += M
 			M.take_damage(45, BRUTE, MELEE, 1)
-		sleep(0.15 SECONDS)
+		sleep(1.5)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/ex_act(severity, target)
 	if(severity <= EXPLODE_LIGHT)

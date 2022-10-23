@@ -22,4 +22,3 @@
 #define LANGUAGE_STONER "stoner"
 #define LANGUAGE_VOICECHANGE "voicechange"
 #define LANGUAGE_RADIOKEY "radiokey"
-#define LANGUAGE_BABEL "babel"

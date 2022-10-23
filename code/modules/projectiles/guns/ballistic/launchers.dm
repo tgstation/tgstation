@@ -92,19 +92,19 @@
 		user.notransform = TRUE
 		playsound(src, 'sound/vehicles/rocketlaunch.ogg', 80, TRUE, 5)
 		animate(user, pixel_z = 300, time = 30, easing = LINEAR_EASING)
-		sleep(7 SECONDS)
+		sleep(70)
 		animate(user, pixel_z = 0, time = 5, easing = LINEAR_EASING)
-		sleep(0.5 SECONDS)
+		sleep(5)
 		user.notransform = FALSE
 		process_fire(user, user, TRUE)
 		if(!QDELETED(user)) //if they weren't gibbed by the explosion, take care of them for good.
 			user.gib()
 		return MANUAL_SUICIDE
 	else
-		sleep(0.5 SECONDS)
+		sleep(5)
 		shoot_with_empty_chamber(user)
-		sleep(2 SECONDS)
+		sleep(20)
 		user.visible_message(span_warning("[user] looks about the room realizing [user.p_theyre()] still there. [user.p_they(TRUE)] proceed to shove [src] down their throat and choke [user.p_them()]self with it!"), \
 			span_userdanger("You look around after realizing you're still here, then proceed to choke yourself to death with [src]!"))
-		sleep(2 SECONDS)
+		sleep(20)
 		return OXYLOSS
