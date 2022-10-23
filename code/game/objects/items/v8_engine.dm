@@ -49,6 +49,9 @@
 	desc = "Dangerous. Loud. Sleek. It has a built in roulette wheel. This thing could easily rip your arm off if you're not careful."
 	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "house_edge0"
+	inhand_icon_state = "house_edge"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	w_class = WEIGHT_CLASS_HUGE
 	force = 12
 	throwforce = 10
@@ -83,8 +86,7 @@
 		icon_state = "house_edge[fire_charges]"
 		do_sparks(number = 0, cardinal_only = TRUE, source = src)
 
-/obj/item/house_edge/pre_attack_secondary(atom/target, mob/living/user, params)
-	. = ..()
+/obj/item/house_edge/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
 	if(!COOLDOWN_FINISHED(src, fire_charge_cooldown))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(fire_charges <= 0)
@@ -94,6 +96,10 @@
 	COOLDOWN_START(src, fire_charge_cooldown, DASH_COOLDOWN)
 	reset_charges(on_dash = TRUE)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/house_edge/update_icon_state()
+	inhand_icon_state = "house_edge[HAS_TRAIT(src, TRAIT_WIELDED)]"
+	return ..()
 
 /obj/item/house_edge/proc/reset_charges(on_dash = FALSE)
 	if(!COOLDOWN_FINISHED(src, fire_charge_cooldown) && !on_dash)
