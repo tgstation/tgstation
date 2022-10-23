@@ -301,12 +301,23 @@
 /mob/living/carbon/human/head_update(obj/item/I, forced)
 	if((I.flags_inv & (HIDEHAIR|HIDEFACIALHAIR)) || forced)
 		update_body_parts()
+	// Close internal air tank if helmet was the only breathing apparatus.
+	if (invalid_internals())
+		close_internals()
 	if(I.flags_inv & HIDEEYES || forced)
 		update_worn_glasses()
 	if(I.flags_inv & HIDEEARS || forced)
 		update_body()
 	sec_hud_set_security_status()
 	..()
+
+// Called when an equipped MOD suit toggles activation.
+/mob/living/carbon/human/proc/mod_suit_toggled()
+	SIGNAL_HANDLER
+	// The MOD helmet becomes unsealed if it's deactivated.
+	// Close internal air tank if MOD helmet was the only breathing apparatus.
+	if (invalid_internals())
+		close_internals()
 
 /mob/living/carbon/human/proc/equipOutfit(outfit, visualsOnly = FALSE)
 	var/datum/outfit/O = null

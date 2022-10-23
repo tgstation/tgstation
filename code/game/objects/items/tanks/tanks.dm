@@ -79,10 +79,21 @@
 			mask.adjustmask(human_target)
 		open_internals(human_target)
 		return
-	// Invalid or missing mask
-	if (mask)
+	// Use helmet in absence of tube or valid mask.
+	if(human_target.can_breathe_helmet())
+		open_internals(human_target)
+		return
+	// Invalid helmet and missing mask.
+	// Don't show the "isn't sealed" message for non-helmet headgear, such as hats.
+	var/obj/item/clothing/head/helmet = human_target.head
+	if (helmet && (istype(helmet, /obj/item/clothing/head/mod) || istype(helmet, /obj/item/clothing/head/helmet)))
+		to_chat(human_target, span_warning("[helmet] isn't sealed, you need a mask!"))
+	// Invalid or missing mask, missing any other apparatus.
+	else if (mask)
+		// Invalid mask
 		to_chat(human_target, span_warning("[mask] can't use [src]!"))
 	else
+		// Not wearing any breathing apparatus.
 		to_chat(human_target, span_warning("You need a mask!"))
 
 /obj/item/tank/Initialize(mapload)

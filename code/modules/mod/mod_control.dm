@@ -444,9 +444,10 @@
 	icon_state = "[skin]-control[active ? "-sealed" : ""]"
 	return ..()
 
-/obj/item/mod/control/proc/set_wearer(mob/user)
+/obj/item/mod/control/proc/set_wearer(mob/living/carbon/human/user)
 	wearer = user
 	SEND_SIGNAL(src, COMSIG_MOD_WEARER_SET, wearer)
+	RegisterSignal(wearer, COMSIG_MOD_TOGGLED, /mob/living/carbon/human/.proc/mod_suit_toggled)
 	RegisterSignal(wearer, COMSIG_ATOM_EXITED, .proc/on_exit)
 	RegisterSignal(wearer, COMSIG_SPECIES_GAIN, .proc/on_species_gain)
 	update_charge_alert()
@@ -457,6 +458,7 @@
 	for(var/obj/item/mod/module/module as anything in modules)
 		module.on_unequip()
 	UnregisterSignal(wearer, list(COMSIG_ATOM_EXITED, COMSIG_SPECIES_GAIN))
+	UnregisterSignal(wearer, COMSIG_MOD_TOGGLED)
 	wearer.clear_alert(ALERT_MODSUIT_CHARGE)
 	SEND_SIGNAL(src, COMSIG_MOD_WEARER_UNSET, wearer)
 	wearer = null
