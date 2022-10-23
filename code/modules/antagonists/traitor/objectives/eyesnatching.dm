@@ -162,7 +162,7 @@
 	if(!eyeballies || victim.is_eyes_covered())
 		return ..()
 
-	if((head && head.eyes != eyeballies) || eyeballies.zone != BODY_ZONE_HEAD)
+	if((head && head.eyes != eyeballies) || eyeballies.zone != BODY_ZONE_PRECISE_EYES)
 		to_chat(user, span_warning("You don't know how to apply [src] to the abomination that [victim] is!"))
 		return ..()
 
