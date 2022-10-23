@@ -42,9 +42,12 @@
 		JOB_SCIENTIST = /obj/machinery/rnd/server,
 	)
 
-/datum/traitor_objective/destroy_machinery/generate_objective(datum/mind/generating_for, list/possible_duplicates)
+/datum/traitor_objective/destroy_machinery/can_generate_objective(datum/mind/generating_for, list/possible_duplicates)
 	if(length(possible_duplicates) >= maximum_allowed && !allow_more_than_max)
 		return FALSE
+	return TRUE
+
+/datum/traitor_objective/destroy_machinery/generate_objective(datum/mind/generating_for, list/possible_duplicates)
 	for(var/datum/traitor_objective/destroy_machinery/objective as anything in possible_duplicates)
 		applicable_jobs -= objective.chosen_job
 	if(!length(applicable_jobs))
@@ -70,8 +73,3 @@
 	replace_in_name("%MACHINE%", possible_machines[1].name)
 	return TRUE
 
-
-/datum/traitor_objective/destroy_machinery/is_duplicate(datum/traitor_objective/destroy_machinery/objective_to_compare)
-	if(objective_to_compare.chosen_job == chosen_job)
-		return TRUE
-	return FALSE

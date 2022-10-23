@@ -99,11 +99,6 @@
 /datum/traitor_objective/bug_room/ungenerate_objective()
 	bug = null
 
-/datum/traitor_objective/bug_room/is_duplicate(datum/traitor_objective/bug_room/objective_to_compare)
-	if(objective_to_compare.target_office == target_office)
-		return TRUE
-	return FALSE
-
 /obj/item/traitor_bug
 	name = "suspicious device"
 	desc = "It looks dangerous."

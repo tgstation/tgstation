@@ -28,6 +28,7 @@
 
 /datum/traitor_objective/destroy_heirloom/common
 	/// 30 minutes in, syndicate won't care about common heirlooms anymore
+	progression_minimum = 0 MINUTES
 	progression_maximum = 30 MINUTES
 	target_jobs = list(
 		// Medical
@@ -56,6 +57,7 @@
 /// This is only for assistants, because the syndies are a lot less likely to give a shit about what an assistant does, so they're a lot less likely to appear
 /datum/traitor_objective/destroy_heirloom/less_common
 	/// 30 minutes in, syndicate won't care about common heirlooms anymore
+	progression_minimum = 0 MINUTES
 	progression_maximum = 30 MINUTES
 	target_jobs = list(
 		/datum/job/assistant
@@ -63,6 +65,7 @@
 
 /datum/traitor_objective/destroy_heirloom/uncommon
 	/// 45 minutes in, syndicate won't care about uncommon heirlooms anymore
+	progression_minimum = 0 MINUTES
 	progression_maximum = 45 MINUTES
 	target_jobs = list(
 		// Cargo

@@ -48,22 +48,23 @@
 	if(istype(step, /datum/surgery_step/brainwash/sleeper_agent))
 		succeed_objective()
 
-/datum/traitor_objective/sleeper_protocol/generate_objective(datum/mind/generating_for, list/possible_duplicates)
+/datum/traitor_objective/sleeper_protocol/can_generate_objective(datum/mind/generating_for, list/possible_duplicates)
 	var/datum/job/job = generating_for.assigned_role
 	if(!(job.title in limited_to) && !inverted_limitation)
 		return FALSE
 	if((job.title in limited_to) && inverted_limitation)
 		return FALSE
+	if(length(possible_duplicates) > 0)
+		return FALSE
+	return TRUE
+
+/datum/traitor_objective/sleeper_protocol/generate_objective(datum/mind/generating_for, list/possible_duplicates)
 	AddComponent(/datum/component/traitor_objective_mind_tracker, generating_for, \
 		signals = list(COMSIG_MOB_SURGERY_STEP_SUCCESS = .proc/on_surgery_success))
 	return TRUE
 
 /datum/traitor_objective/sleeper_protocol/ungenerate_objective()
 	disk = null
-
-/datum/traitor_objective/sleeper_protocol/is_duplicate()
-	return TRUE
-
 /obj/item/disk/surgery/sleeper_protocol
 	name = "Suspicious Surgery Disk"
 	desc = "The disk provides instructions on how to turn someone into a sleeper agent for the Syndicate."

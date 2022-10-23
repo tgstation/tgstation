@@ -37,6 +37,8 @@
 	/// The actual pet that needs to be killed
 	var/mob/living/target_pet
 
+	duplicate_type = /datum/traitor_objective/kill_pet
+
 /datum/traitor_objective/kill_pet/medium_risk
 	progression_minimum = 10 MINUTES
 	progression_reward = list(5 MINUTES, 8 MINUTES)
@@ -91,8 +93,3 @@
 	if(target_pet)
 		UnregisterSignal(target_pet, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH))
 	target_pet = null
-
-/datum/traitor_objective/kill_pet/is_duplicate(datum/traitor_objective/kill_pet/objective_to_compare)
-	if(objective_to_compare.target.type == target.type)
-		return TRUE
-	return FALSE

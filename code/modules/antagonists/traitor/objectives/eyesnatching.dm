@@ -10,6 +10,8 @@
 	name = "Steal %TARGET%'s (%JOB TITLE%) eyes"
 	description = "%TARGET% messed with the wrong people. Steal their eyes to teach them a lesson. You will be provided an experimental eyesnatcher device to aid you in your mission."
 
+	progression_minimum = 10 MINUTES
+
 	progression_reward = list(4 MINUTES, 8 MINUTES)
 	telecrystal_reward = list(1, 2)
 
