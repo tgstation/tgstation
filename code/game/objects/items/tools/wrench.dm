@@ -48,14 +48,13 @@
 	throwforce = 4
 	attack_verb_continuous = list("heals", "medicals", "taps", "pokes", "analyzes") //"cobbyed"
 	attack_verb_simple = list("heal", "medical", "tap", "poke", "analyze")
-	hide_suicide = TRUE  // hides the default to add a custom one
+	///var to hold the name of the person who suicided
+	var/suicider
 
 /obj/item/wrench/medical/examine(mob/user)
 	. = ..()
 	if(suicider)
-		. += "It reminds you of [suicider]."
-	if(suicide_count)
-		. += "[suicide_count] people have given their life to the wrench, are you next?"
+		. += span_notice("For some reason, it reminds you of [suicider].")
 
 /obj/item/wrench/medical/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is praying to the medical wrench to take [user.p_their()] soul. It looks like [user.p_theyre()] trying to commit suicide!"))

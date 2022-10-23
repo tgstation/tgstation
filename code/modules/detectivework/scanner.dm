@@ -158,14 +158,6 @@
 				add_log("Reagent: <font color='red'>[R]</font> Volume: <font color='red'>[reagents[R]]</font>")
 			found_something = TRUE
 
-		if(A.suicider)
-			sleep(3 SECONDS)
-			add_log(span_info("<B>Supernatual Detection:"))
-			add_log("Someone named [suicider] has used this to take their life.")
-			if(suicide_count > 1)
-				add_log("Further ectoplasmic scanning suggest [suicide_count] have also used this to off themself.")
-			found_something = TRUE
-
 		// Get a new user
 		var/mob/holder = null
 		if(ismob(src.loc))
