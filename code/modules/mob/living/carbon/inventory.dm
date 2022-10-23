@@ -190,13 +190,11 @@
 /mob/living/carbon/proc/invalid_internals()
 	return internal && (internal.loc != src || !can_breathe_internals()) ? TRUE : FALSE
 
-// Open an internal air tank.
+// Open an internal air tank without checking for breathing apparatus.
 /mob/living/carbon/proc/open_internals(obj/item/tank/target_tank)
-	if (!can_breathe_internals())
-		return
 	internal = target_tank
 	update_action_buttons_icon()
-// Close current internal air tank.
+// Close the currently open internal air tank.
 /mob/living/carbon/proc/close_internals()
 	if (!internal)
 		return
