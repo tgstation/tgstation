@@ -282,7 +282,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 /obj/item/stack/pipe_cleaner_coil/update_icon_state()
 	. = ..()
-	icon_state = "[initial(inhand_icon_state)][amount < 3 ? amount : ""]"
+	icon_state = "[initial(icon_state)][amount < 3 ? amount : ""]"
 	inhand_icon_state = "coil_[pipecleaner_color]"
 
 /obj/item/stack/pipe_cleaner_coil/update_icon()
@@ -291,9 +291,9 @@ By design, d1 is the smallest direction and d2 is the highest
 
 /obj/item/stack/pipe_cleaner_coil/attack_hand(mob/user, list/modifiers)
 	. = ..()
-	if(.)
+	if(!.)
 		return
-	var/obj/item/stack/pipe_cleaner_coil/new_pipe_cleaner = ..()
+	var/obj/item/stack/pipe_cleaner_coil/new_pipe_cleaner = .
 	if(istype(new_pipe_cleaner))
 		new_pipe_cleaner.set_pipecleaner_color(pipecleaner_color)
 
