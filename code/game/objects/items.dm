@@ -406,21 +406,13 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 			. += "[src] is made of fire-retardant materials."
 		return
 
-	if(hide_suicide)
+	if(hide_suicide || !user?.mind?.holy_role)
 		return
 
 	if(suicider)
 		. += "For some reason, it reminds you of [suicider]."
 
-	switch(suicide_count)
-		if(10 to INFINITY)
-			. += "You feel a strong spiritual presence around this."
-		if(5 to INFINITY)
-			. += "You vaugely feel some spiritual presence."
-		if(2 to INFINITY)
-			. += "Theres a twinge of...something...surrounding this."
-
-	if(suicide_count && user?.mind.holy_role)
+	if(suicide_count)
 		var/estimate_suicide = max(1, suicide_count + rand(-3, 3))  // standard deviate of 3
 		. += "You estimate about [estimate_suicide] people have used this to take their life."
 
