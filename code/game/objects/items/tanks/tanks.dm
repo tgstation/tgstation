@@ -48,12 +48,14 @@
 /obj/item/tank/ui_action_click(mob/user)
 	toggle_internals(user)
 
+/// Open a human's internals and notify them in chat.
 /obj/item/tank/proc/open_internals(mob/living/carbon/human/human_target)
 	if(human_target.internal)
 		to_chat(human_target, span_notice("You switch your internals to [src]."))
 	else
 		to_chat(human_target, span_notice("You open [src] valve."))
 	human_target.open_internals(src)
+/// Close a human's internals and notify them in chat.
 /obj/item/tank/proc/close_internals(mob/living/carbon/human/human_target)
 	to_chat(human_target, span_notice("You close [src] valve."))
 	human_target.close_internals()

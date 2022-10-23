@@ -311,7 +311,7 @@
 	sec_hud_set_security_status()
 	..()
 
-// Called when an equipped MOD suit toggles activation.
+/// Called when an equipped MOD suit toggles activation.
 /mob/living/carbon/human/proc/mod_suit_toggled()
 	SIGNAL_HANDLER
 	// The MOD helmet becomes unsealed if it's deactivated.

@@ -194,18 +194,18 @@
 /mob/living/carbon/proc/invalid_internals()
 	return internal && (internal.loc != src || !can_breathe_internals()) ? TRUE : FALSE
 
-// Open an internal air tank without checking for breathing apparatus.
+/// Open an internal air tank without checking for breathing apparatus.
 /mob/living/carbon/proc/open_internals(obj/item/tank/target_tank)
 	internal = target_tank
 	update_action_buttons_icon()
-// Close the currently open internal air tank.
+/// Close the currently open internal air tank.
 /mob/living/carbon/proc/close_internals()
 	if (!internal)
 		return
 	internal = null
 	update_action_buttons_icon()
 
-//handle stuff to update when a mob equips/unequips a mask.
+/// Handle stuff to update when a mob equips/unequips a mask.
 /mob/living/proc/wear_mask_update(obj/item/I, toggle_off = 1)
 	update_worn_mask()
 
@@ -215,7 +215,7 @@
 		update_tint()
 	update_worn_mask()
 
-//handle stuff to update when a mob equips/unequips a headgear.
+/// Handle stuff to update when a mob equips/unequips a headgear.
 /mob/living/carbon/proc/head_update(obj/item/I, forced)
 	if(isclothing(I))
 		var/obj/item/clothing/C = I
