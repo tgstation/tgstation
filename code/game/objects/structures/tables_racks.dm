@@ -51,7 +51,7 @@
 
 /obj/structure/table/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
-	
+
 	if(isnull(held_item))
 		return NONE
 
@@ -62,7 +62,7 @@
 			context[SCREENTIP_CONTEXT_RMB] = "Deal card faceup"
 			. = CONTEXTUAL_SCREENTIP_SET
 
-	if(!(flags_1 & NODECONSTRUCT_1 && deconstruction_ready))
+	if(!(flags_1 & NODECONSTRUCT_1) && deconstruction_ready)
 		if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
 			context[SCREENTIP_CONTEXT_RMB] = "Disassemble"
 			. = CONTEXTUAL_SCREENTIP_SET
@@ -601,8 +601,8 @@
 	if(isnull(held_item))
 		return NONE
 
-	if(held_item.tool_behaviour == TOOL_WELDER) 
-		context[SCREENTIP_CONTEXT_RMB] = deconstruction_ready ? "Strengthen" : "Loosen"			
+	if(held_item.tool_behaviour == TOOL_WELDER)
+		context[SCREENTIP_CONTEXT_RMB] = deconstruction_ready ? "Strengthen" : "Weaken"
 		. = CONTEXTUAL_SCREENTIP_SET
 
 	return . || NONE
