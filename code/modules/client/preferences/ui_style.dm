@@ -9,9 +9,12 @@
 	var/list/values = list()
 
 	for (var/style in GLOB.available_hud_styles)
-		var/datum/hud_style/hud_style = GLOB.available_hud_styles[style]
+		// MBTODO: Helping to isolate a bug
+		// var/datum/hud_style/hud_style = GLOB.available_hud_styles[style]
+		var/datum/hud_style/hud_style = GLOB.available_hud_styles["Glass"]
 
 		var/icon/icon = hud_style.hand_icon("r")
+
 		icon.Crop(1, 1, world.icon_size * 2, world.icon_size)
 		icon.Blend(hud_style.hand_icon("l"), ICON_OVERLAY, world.icon_size)
 
