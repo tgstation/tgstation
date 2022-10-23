@@ -174,19 +174,23 @@
 
 	update_equipment_speed_mods()
 
-// Returns TRUE if an air tank compatible helmet is equipped.
+/// Returns TRUE if an air tank compatible helmet is equipped.
 /mob/living/carbon/proc/can_breathe_helmet()
 	return head && isclothing(head) && (head.clothing_flags & MASKINTERNALS) ? TRUE : FALSE
-// Returns TRUE if an air tank compatible mask is equipped.
+
+/// Returns TRUE if an air tank compatible mask is equipped.
 /mob/living/carbon/proc/can_breathe_mask()
 	return wear_mask && isclothing(wear_mask) && (wear_mask.clothing_flags & MASKINTERNALS) ? TRUE : FALSE
-// Returns TRUE if a breathing tube is equipped.
+
+/// Returns TRUE if a breathing tube is equipped.
 /mob/living/carbon/proc/can_breathe_tube()
 	return getorganslot(ORGAN_SLOT_BREATHING_TUBE) ? TRUE : FALSE
-// Returns TRUE if an air tank compatible mask or breathing tube is equipped.
+
+/// Returns TRUE if an air tank compatible mask or breathing tube is equipped.
 /mob/living/carbon/proc/can_breathe_internals()
 	return can_breathe_tube() || can_breathe_mask() || can_breathe_helmet()
-// Returns TRUE if air tank is open and mob lacks apparatus, or if the tank moved away from the mob.
+
+/// Returns TRUE if air tank is open and mob lacks apparatus, or if the tank moved away from the mob.
 /mob/living/carbon/proc/invalid_internals()
 	return internal && (internal.loc != src || !can_breathe_internals()) ? TRUE : FALSE
 
