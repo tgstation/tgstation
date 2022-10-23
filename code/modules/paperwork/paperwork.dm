@@ -222,12 +222,14 @@
 /obj/item/paperwork/ancient
 	name = "ancient paperwork"
 	desc = "A dusty, ugly mess of papers. It's impossible to really tell how old these are, but Central Command might appreciate them anyways."
+	detailed_desc = "Sifting through the dust mess of papers, you can't recognize a single name, date, or topic mentioned within these papers. How old are these?"
 
 /obj/item/paperwork/ancient/Initialize(mapload)
 	. = ..()
 
-	var/obj/item/paperwork/paperwork_type = pick(subtypesof(/obj/item/paperwork))
-	while(istype(paperwork_type, /obj/item/paperwork/ancient) || istype(paperwork_type, /obj/item/paperwork/photocopy))
-		paperwork_type = pick(subtypesof(/obj/item/paperwork)) //REROLL
+	var/list/paperwork_list = subtypesof(/obj/item/paperwork)
+	paperwork_list.Remove(list(/obj/item/paperwork/ancient, /obj/item/paperwork/photocopy)) //Get rid of the uncopiable paperwork pieces
+
+	var/obj/item/paperwork/paperwork_type = pick(paperwork_list)
 
 	copy_stamp_info(paperwork_type)
