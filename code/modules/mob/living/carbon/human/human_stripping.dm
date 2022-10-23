@@ -213,12 +213,12 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 		return
 
 	if(carbon_source.internal)
-		carbon_source.internal = null
+		carbon_source.cutoff_internals()
 
 		// This isn't meant to be FALSE, it correlates to the icon's name.
 	else if (!QDELETED(item))
 		if(carbon_source.can_breathe_internals())
-			carbon_source.internal = item
+			carbon_source.open_internals(item)
 
 	carbon_source.visible_message(
 		span_danger("[user] [isnull(carbon_source.internal) ? "closes": "opens"] the valve on [source]'s [item.name]."),

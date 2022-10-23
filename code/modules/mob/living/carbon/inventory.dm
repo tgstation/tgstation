@@ -168,7 +168,7 @@
 
 	// Not an else-if because we're probably equipped in another slot
 	if(I == internal && (QDELETED(src) || QDELETED(I) || I.loc != src))
-		internal = null
+		cutoff_internals()
 		if(!QDELETED(src))
 			update_action_buttons_icon(status_only = TRUE)
 
@@ -200,7 +200,7 @@
 /mob/living/carbon/proc/invalid_internals()
 	return internal && (internal.loc != src || !can_breathe_internals())
 
-/// Connect to an internal air tank without checking for breathing apparatus, and notify them in chat. Called by obj/item/tank/proc/open_internals
+/// Callback for receiving connection to internal air tank, and notify them in chat. Called by obj/item/tank/proc/open_internals
 /mob/living/carbon/proc/connect_internals(obj/item/tank/target_tank)
 	if(internal)
 		to_chat(src, span_notice("You switch your internals to [target_tank]."))
@@ -208,8 +208,7 @@
 		to_chat(src, span_notice("You open [target_tank] valve."))
 	internal = target_tank
 	update_action_buttons_icon()
-
-/// Disconnect from the currently open internal air tank, and notify them in chat. Called by obj/item/tank/proc/close_internals
+/// Callback for losing connection to the currently open internal air tank, and notify them in chat. Called by obj/item/tank/proc/close_internals
 /mob/living/carbon/proc/disconnect_internals()
 	if (!internal)
 		return
@@ -217,9 +216,15 @@
 	internal = null
 	update_action_buttons_icon()
 
+/// Connect to a and open an air tank directly.
+/mob/living/carbon/proc/open_internals(obj/item/tank/target_tank)
+	if (target_tank)
+		target_tank.open_internals(src)
+
 /// Emergency disconnect from the currently open internal air tank, usually after mob unequips breathing apparatus.
 /mob/living/carbon/proc/cutoff_internals()
-	internal.close_internals(src)
+	if (internal)
+		internal.close_internals(src)
 
 /// Handle stuff to update when a mob equips/unequips a mask.
 /mob/living/proc/wear_mask_update(obj/item/I, toggle_off = 1)
