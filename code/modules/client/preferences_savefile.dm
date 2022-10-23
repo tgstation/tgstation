@@ -152,11 +152,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 /datum/preferences/proc/load_preferences()
 	if(!savefile)
-		stack_trace("Attempted to load the preferences of [parent] without a savefile; did you forget to call load_path?")
-		if(parent)
-			load_path(parent.ckey)
+		stack_trace("Attempted to load the preferences of [parent] without a savefile; did you forget to call load_savefile?")
+		load_savefile()
 	if(!savefile)
-		stack_trace("Failed to load the savefile for [parent] after manually calling load_path; something is very wrong.")
+		stack_trace("Failed to load the savefile for [parent] after manually calling load_savefile; something is very wrong.")
 		return FALSE
 
 	var/needs_update = save_data_needs_update(savefile.get_entry())
