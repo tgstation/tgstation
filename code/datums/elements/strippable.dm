@@ -413,8 +413,8 @@
 					if (!user.Adjacent(owner))
 						user.put_in_hands(held_item)
 						return
-					strippable_item.finish_equip(owner, held_item, user)
 
+					strippable_item.finish_equip(owner, held_item, user)
 			else if (strippable_item.try_unequip(owner, user))
 				LAZYORASSOCLIST(interactions, user, key)
 

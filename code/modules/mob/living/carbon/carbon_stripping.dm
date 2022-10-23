@@ -107,6 +107,7 @@
 /datum/strippable_item/hand/finish_equip(atom/source, obj/item/equipping, mob/user)
 	if (!iscarbon(source))
 		return FALSE
+
 	var/mob/mob_source = source
 	mob_source.put_in_hand(equipping, hand_index)
 
