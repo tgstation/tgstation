@@ -145,14 +145,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		return
 	// path = "data/player_saves/[ckey[1]]/[ckey]/[filename]"
 	path = "data/player_saves_json_testing/[ckey[1]]/[ckey]/[filename]"
+	savefile = new /datum/json_savefile(path)
 
 /datum/preferences/proc/load_preferences()
-	if(!path)
-		return FALSE
-	if(!fexists(path))
-		return FALSE
+	if(!savefile)
+		CRASH("Attempted to load preferences without a savefile; did you forget to call load_path?")
 
-	savefile = new /datum/json_savefile(path)
 	var/needs_update = save_data_needs_update(savefile.get_entry())
 	if(needs_update == -2) //fatal, can't load any data
 		var/bacpath = "[path].updatebac" //todo: if the savefile version is higher then the server, check the backup, and give the player a prompt to load the backup
@@ -228,8 +226,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	return TRUE
 
 /datum/preferences/proc/save_preferences()
-	if(!savefile) // if we didnt have anything to load previously, it wont exist
-		savefile = new /datum/json_savefile(path)
+	if(!savefile)
+		CRASH("Attempted to save preferences without a savefile; did you forget to call load_path?")
 	savefile.set_entry("version", SAVEFILE_VERSION_MAX) //updates (or failing that the sanity checks) will ensure data is not invalid at load. Assume up-to-date
 
 	for (var/preference_type in GLOB.preference_entries)
