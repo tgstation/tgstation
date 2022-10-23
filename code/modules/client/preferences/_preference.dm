@@ -210,11 +210,15 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 	if (!parent)
 		return null
+	if(!savefile)
+		if(!path)
+			stack_trace("Attempted to load savedata for [parent] but no savefile path was set.")
+			return null
+		savefile = new /datum/json_savefile(path)
 
 	// Both of these will cache savefiles, but only for a tick.
 	// This is because storing a savefile will lock it, causing later issues down the line.
 	// Do not change them to addtimer, since the timer SS might not be running at this time.
-
 	switch (savefile_identifier)
 		if (PREFERENCE_CHARACTER)
 			return savefile.get_entry("character[default_slot]")
