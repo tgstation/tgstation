@@ -55,11 +55,13 @@
 	else
 		to_chat(human_target, span_notice("You open [src] valve."))
 	human_target.open_internals(src)
+
 /// Close a human's internals and notify them in chat.
 /obj/item/tank/proc/close_internals(mob/living/carbon/human/human_target)
 	to_chat(human_target, span_notice("You close [src] valve."))
 	human_target.close_internals()
 
+/// Checks if a mob has an internals breathing apparatus. Opens the tank if an apparatus is found.
 /obj/item/tank/proc/toggle_internals(mob/mob_target)
 	var/mob/living/carbon/human/human_target = mob_target
 	// Non-human carbons can't toggle their own internals.

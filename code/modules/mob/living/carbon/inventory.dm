@@ -198,6 +198,7 @@
 /mob/living/carbon/proc/open_internals(obj/item/tank/target_tank)
 	internal = target_tank
 	update_action_buttons_icon()
+
 /// Close the currently open internal air tank.
 /mob/living/carbon/proc/close_internals()
 	if (!internal)
