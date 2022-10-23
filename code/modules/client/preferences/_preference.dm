@@ -211,7 +211,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	if (!parent)
 		return null
 	if(!savefile)
-		CRASH("Attempted to get save data for [savefile_identifier] on [parent] but no savefile was set!")
+		CRASH("Attempted to get the savedata for [savefile_identifier] of [parent] without a savefile. This should have been handled by load_preferences()")
 
 	// Both of these will cache savefiles, but only for a tick.
 	// This is because storing a savefile will lock it, causing later issues down the line.
