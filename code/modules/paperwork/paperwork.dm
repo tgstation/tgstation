@@ -60,11 +60,11 @@
 			. += detailed_desc
 		else
 			if(stamped)
-				. += "It looks like these documents have already been stamped. Now they can be returned to Central Command."
+				. += span_info("It looks like these documents have already been stamped. Now they can be returned to Central Command.")
 			else
 				var/datum/job/stamp_title = stamp_job
 				var/title = initial(stamp_title.title)
-				. += "Trying to read through it makes your head spin. Judging by the few words you can make out, this looks like a job for the [title]."
+				. += span_info("Trying to read through it makes your head spin. Judging by the few words you can make out, this looks like a job for the [title].")
 
 /**
  * Adds the stamp overlay and sets "stamped" to true

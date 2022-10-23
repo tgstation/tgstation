@@ -18,13 +18,6 @@
 	category = EVENT_CATEGORY_BUREAUCRATIC
 	description = "If cargo accepts the offer, fills the shuttle with loot and/or enemies."
 
-/datum/round_event_control/shuttle_loan/can_spawn_event(players_amt)
-	. = ..()
-
-	for(var/datum/round_event/running_event in SSevents.running) //I do not think this works
-		if(istype(running_event, /datum/round_event/shuttle_loan)) //Make sure two of these don't happen at once.
-			return FALSE
-
 /datum/round_event/shuttle_loan
 	announce_when = 1
 	end_when = 500
@@ -108,7 +101,7 @@
 			SSshuttle.centcom_message += "Live explosive ordnance incoming. Exercise extreme caution."
 			loan_type = "Shuttle with a ticking bomb"
 		if(PAPERS_PLEASE)
-			SSshuttle.centcom_message += "Paperwork in transit."
+			SSshuttle.centcom_message += "Paperwork incoming."
 			loan_type = "Paperwork shipment"
 
 	log_game("Shuttle loan event firing with type '[loan_type]'.")

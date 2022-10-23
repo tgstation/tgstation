@@ -48,4 +48,4 @@
 
 	if(backfired)
 		backfired = FALSE
-		. += " Improperly filed paperwork found in this shipment. A stipend has been taken from your budget as a result."
+		. += " Counterfeit paperwork was detected in this shipment. A stipend has been taken from your budget as a result."
