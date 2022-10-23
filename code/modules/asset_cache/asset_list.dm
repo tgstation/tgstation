@@ -139,6 +139,13 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	/// Defaults to false so we can process this stuff nicely
 	var/load_immediately = FALSE
 
+#ifdef DO_NOT_DEFER_ASSETS
+/datum/asset/spritesheet/New()
+	// ALWAYS load now
+	load_immediately = TRUE
+	return ..()
+#endif
+
 /datum/asset/spritesheet/should_refresh()
 	if (..())
 		return TRUE
@@ -170,7 +177,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	if(load_immediately)
 		realize_spritesheets(yield = FALSE)
 	else
-		SSasset_loading.generate_queue += src
+		SSasset_loading.queue_asset(src)
 
 /datum/asset/spritesheet/proc/realize_spritesheets(yield)
 	if(fully_generated)
@@ -197,7 +204,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		write_to_cache()
 	fully_generated = TRUE
 	// If we were ever in there, remove ourselves
-	SSasset_loading.generate_queue -= src
+	SSasset_loading.dequeue_asset(src)
 
 /datum/asset/spritesheet/queued_generation()
 	realize_spritesheets(yield = TRUE)
