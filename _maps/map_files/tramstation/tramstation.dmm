@@ -7561,7 +7561,6 @@
 /obj/modular_map_root/tramstation{
 	key = "maintenance_uppermedsci"
 	},
-/obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance,
 /obj/effect/mapping_helpers/airlock/access/any/medical/morgue,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/medical)
