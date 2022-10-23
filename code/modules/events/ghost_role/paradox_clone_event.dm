@@ -9,8 +9,8 @@
 
 /datum/round_event/ghost_role/paradox_clone
 	minimum_required = 1
-	role_name = "paradox_clone"
-	fakeable = FALSE
+	role_name = "Paradox Clone"
+	fakeable = TRUE
 
 /datum/round_event/ghost_role/paradox_clone/spawn_role()
 	var/list/candidates = get_candidates(ROLE_PARADOX_CLONE, ROLE_PARADOX_CLONE)

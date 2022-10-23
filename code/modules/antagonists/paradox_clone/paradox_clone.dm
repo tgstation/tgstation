@@ -38,21 +38,22 @@
 	suit = /obj/item/clothing/suit/apron
 
 /datum/antagonist/paradox_clone/on_gain()
-	forge_objectives(original)
+	forge_objectives()
 	. = ..()
 
-/datum/antagonist/paradox_clone/proc/forge_objectives(datum/mind/original)
+/datum/antagonist/paradox_clone/proc/forge_objectives()
+	if(!original)//admins didn't set one
+		original = find_original()
+	if(!original)//we didn't find one
+		send_to_playing_players(span_narsie("IT BROKE!!"))
+		qdel(src)
+		return
+
 	var/datum/objective/assassinate/paradox_clone/kill = new
 	kill.owner = owner
 	kill.target = original
-	kill.explanation_text = "Kill your counterpart and take their place."
+	kill.update_explanation_text()
 	objectives += kill
-
-	if(!original)//admins didn't set one
-		original = find_original()
-		if(!original)//we didn't find one
-			qdel(src)
-			return
 
 /datum/antagonist/paradox_clone/proc/find_original()
 	var/list/viable_minds = list() //The first list, which excludes hijinks
@@ -72,13 +73,14 @@
 	if(possible_targets.len > 0)
 		chosen_victim = pick(possible_targets)
 	return chosen_victim
+		send_to_playing_players(span_narsie("VICTIM CHOSEN")
 
 /datum/objective/assassinate/paradox_clone
 
 /datum/objective/assassinate/paradox_clone/update_explanation_text()
 	..()
 	if(target?.current)
-		explanation_text = "Murder [target.name], the [!target_role_type ? target.assigned_role.title : target.special_role]."
+		explanation_text = "Murder and replace [target.name], the [!target_role_type ? target.assigned_role.title : target.special_role]."
 	else
 		message_admins("WARNING! [ADMIN_LOOKUPFLW(owner)] paradox clone objectives forged without an original!")
 		explanation_text = "Free Objective"
