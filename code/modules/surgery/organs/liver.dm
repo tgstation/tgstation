@@ -103,12 +103,15 @@
 	var/obj/belly = liver_owner.getorganslot(ORGAN_SLOT_STOMACH)
 	if(filterToxins && !HAS_TRAIT(owner, TRAIT_TOXINLOVER))
 		//handle liver toxin filtration
+		var/total_toxins = 0
 		for(var/datum/reagent/toxin/toxin in liver_owner.reagents.reagent_list)
 			var/thisamount = liver_owner.reagents.get_reagent_amount(toxin.type)
 			if(belly)
 				thisamount += belly.reagents.get_reagent_amount(toxin.type)
-			if (thisamount && thisamount <= toxTolerance * (maxHealth - damage) / maxHealth ) //toxTolerance is effectively multiplied by the % that your liver's health is at
-				liver_owner.reagents.remove_reagent(toxin.type, 0.5 * delta_time)
+			total_toxins += thisamount
+			
+			if (total_toxins && total_toxins <= toxTolerance * (maxHealth - damage) / maxHealth ) //toxTolerance is effectively multiplied by the % that your liver's health is at
+				liver_owner.reagents.remove_reagent(toxin.type, toxin.metabolization_rate * liver_owner.metabolism_efficiency * delta_time)
 			else
 				damange_to_deal += (thisamount * toxLethality * delta_time)
 				if(provide_pain_message != HAS_PAINFUL_TOXIN)
