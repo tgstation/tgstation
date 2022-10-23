@@ -132,3 +132,5 @@
 
 ///From mob/living/carbon/human/suicide()
 #define COMSIG_HUMAN_SUICIDE_ACT "human_suicide_act"
+///From mob/living/carbon/human/suicide(), called when a NON-MANUAL suicide is triggered.
+#define COMSIG_HUMAN_SUICIDE_COMPLETE "human_suicide_complete"

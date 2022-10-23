@@ -891,6 +891,7 @@
 #include "code\datums\components\stationstuck.dm"
 #include "code\datums\components\strong_pull.dm"
 #include "code\datums\components\subtype_picker.dm"
+#include "code\datums\components\suicide_count.dm"
 #include "code\datums\components\summoning.dm"
 #include "code\datums\components\supermatter_crystal.dm"
 #include "code\datums\components\surgery_initiator.dm"

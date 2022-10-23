@@ -79,6 +79,7 @@
 
 				death(FALSE)
 				ghostize(FALSE) // Disallows reentering body and disassociates mind
+				SEND_SIGNAL(src, COMSIG_HUMAN_SUICIDE_COMPLETE)
 
 				return
 
