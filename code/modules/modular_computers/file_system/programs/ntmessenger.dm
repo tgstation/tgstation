@@ -27,7 +27,9 @@
 	/// even more wisdom from PDA.dm - "no everyone spamming" (prevents people from spamming the same message over and over)
 	var/last_text_everyone
 	/// Scanned photo for sending purposes.
-	var/datum/picture/picture
+	var/datum/picture/saved_image
+	/// Whether the user is invisible to the message list.
+	var/invisible = FALSE
 	/// Whether or not we allow emojis to be sent by the user.
 	var/allow_emojis = FALSE
 	/// Whether or not we're currently looking at the message list.
@@ -53,7 +55,7 @@
 	if(!istype(attacking_item, /obj/item/photo))
 		return FALSE
 	var/obj/item/photo/pic = attacking_item
-	computer.saved_image = pic.picture
+	saved_image = pic.picture
 	ProcessPhoto()
 	return TRUE
 
@@ -86,7 +88,7 @@
 		if(!drive)
 			continue
 		for(var/datum/computer_file/program/messenger/app in drive.stored_files)
-			if(!P.saved_identification || !P.saved_job || P.invisible || app.monitor_hidden)
+			if(!P.saved_identification || !P.saved_job || app.invisible || app.monitor_hidden)
 				continue
 			dictionary += P
 
@@ -96,8 +98,8 @@
 	return "[messenger.saved_identification] ([messenger.saved_job])"
 
 /datum/computer_file/program/messenger/proc/ProcessPhoto()
-	if(computer.saved_image)
-		var/icon/img = computer.saved_image.picture_image
+	if(saved_image)
+		var/icon/img = saved_image.picture_image
 		var/deter_path = "tmp_msg_photo[rand(0, 99999)].png"
 		usr << browse_rsc(img, deter_path) // funny random assignment for now, i'll make an actual key later
 		photo_path = deter_path
@@ -194,7 +196,7 @@
 				return UI_UPDATE
 
 		if("PDA_clearPhoto")
-			computer.saved_image = null
+			saved_image = null
 			photo_path = null
 			return UI_UPDATE
 
@@ -224,30 +226,23 @@
 
 	return data
 
-////////////////////////
-// MESSAGE HANDLING
-////////////////////////
+//////////////////////
+// MESSAGE HANDLING //
+//////////////////////
 
-// How I Learned To Stop Being A PDA Bloat Chump And Learn To Embrace The Lightweight
-
-// Gets the input for a message being sent.
-
-/datum/computer_file/program/messenger/proc/msg_input(mob/living/user = usr, target_name = null, rigged = FALSE)
-	var/message = null
-
+///Gets an input message from user and returns the sanitized message.
+/datum/computer_file/program/messenger/proc/msg_input(mob/living/user, target_name, rigged = FALSE)
+	var/input_message
 	if(mime_mode)
-		message = emoji_sanitize(tgui_input_text(user, "Enter emojis", "NT Messaging[target_name ? " ([target_name])" : ""]"))
+		input_message = emoji_sanitize(tgui_input_text(user, "Enter emojis", "NT Messaging[target_name ? " ([target_name])" : ""]"))
 	else
-		message = tgui_input_text(user, "Enter a message", "NT Messaging[target_name ? " ([target_name])" : ""]")
+		input_message = tgui_input_text(user, "Enter a message", "NT Messaging[target_name ? " ([target_name])" : ""]")
 
-	if (!message || !sending_and_receiving)
+	if (!input_message || !sending_and_receiving)
 		return
-
 	if(!user.canUseTopic(computer, be_close = TRUE))
 		return
-
-	return sanitize(message)
-
+	return sanitize(input_message)
 
 /datum/computer_file/program/messenger/proc/send_message(mob/living/user, list/obj/item/modular_computer/targets, everyone = FALSE, rigged = FALSE, fake_name = null, fake_job = null)
 	if(!targets.len)
