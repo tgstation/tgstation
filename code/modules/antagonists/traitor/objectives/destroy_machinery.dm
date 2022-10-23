@@ -12,6 +12,7 @@
 	progression_reward = list(2 MINUTES, 8 MINUTES)
 	telecrystal_reward = list(0, 1)
 
+	progression_minimum = 0 MINUTES
 	progression_maximum = 10 MINUTES
 
 	/// The maximum amount of this type of objective a traitor can have.

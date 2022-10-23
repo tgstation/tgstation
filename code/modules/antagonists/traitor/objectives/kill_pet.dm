@@ -13,6 +13,7 @@
 	description = "The %DEPARTMENT HEAD% has particularly annoyed us by sending us spam emails and we want their %PET% dead to show them what happens when they cross us. "
 	telecrystal_reward = list(1, 2)
 
+	progression_minimum = 0 MINUTES
 	progression_reward = list(3 MINUTES, 6 MINUTES)
 
 	/// Possible heads mapped to their pet type. Can be a list of possible pets

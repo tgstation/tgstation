@@ -109,7 +109,7 @@
 			continue
 		var/datum/quirk/item_quirk/family_heirloom/quirk = locate() in possible_target.current.quirks
 		if(!quirk || !quirk.heirloom.resolve())
-			return
+			continue
 		if(!(possible_target.assigned_role.type in target_jobs))
 			continue
 		possible_targets += possible_target

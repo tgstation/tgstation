@@ -116,7 +116,6 @@
 
 /datum/uplink_handler/proc/try_add_objective(datum/traitor_objective/objective_typepath, force = FALSE)
 	var/datum/traitor_objective/objective = new objective_typepath(src)
-	var/should_abort = SEND_SIGNAL(objective, COMSIG_TRAITOR_OBJECTIVE_PRE_GENERATE, owner, potential_duplicate_objectives[objective_typepath]) & COMPONENT_TRAITOR_OBJECTIVE_ABORT_GENERATION
 	var/duplicate_typepath = objective.duplicate_type
 	if(!duplicate_typepath)
 		if(objective.abstract_type != /datum/traitor_objective)
@@ -127,6 +126,8 @@
 	if(!force && !objective.can_generate_objective(owner, potential_duplicate_objectives[duplicate_typepath]))
 		qdel(objective)
 		return
+
+	var/should_abort = SEND_SIGNAL(objective, COMSIG_TRAITOR_OBJECTIVE_PRE_GENERATE, owner, potential_duplicate_objectives[duplicate_typepath]) & COMPONENT_TRAITOR_OBJECTIVE_ABORT_GENERATION
 	if(should_abort || !objective.generate_objective(owner, potential_duplicate_objectives[duplicate_typepath]))
 		qdel(objective)
 		return

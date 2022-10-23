@@ -10,6 +10,8 @@
 	name = "Perform the sleeper protocol on a crewmember"
 	description = "Use the button below to materialize a surgery disk in your hand, where you'll then be able to perform the sleeper protocol on a crewmember. If the disk gets destroyed, the objective will fail. This will only work on living and sentient crewmembers."
 
+	progression_minimum = 0 MINUTES
+
 	progression_reward = list(8 MINUTES, 15 MINUTES)
 	telecrystal_reward = 0
 

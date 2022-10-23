@@ -35,6 +35,7 @@
 	var/list/victim_belogings = list()
 
 /datum/traitor_objective/kidnapping/common
+	progression_minimum = 0 MINUTES
 	progression_maximum = 30 MINUTES
 	target_jobs = list(
 		// Medical
@@ -62,12 +63,14 @@
 	)
 
 /datum/traitor_objective/kidnapping/less_common
+	progression_minimum = 0 MINUTES
 	progression_maximum = 15 MINUTES
 	target_jobs = list(
 		/datum/job/assistant
 	)
 
 /datum/traitor_objective/kidnapping/uncommon //Hard to fish out victims
+	progression_minimum = 0 MINUTES
 	progression_maximum = 45 MINUTES
 	target_jobs = list(
 		// Medical
