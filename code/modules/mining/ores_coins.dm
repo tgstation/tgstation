@@ -429,7 +429,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		icon_state = "coin_[coinflip]"
 		playsound(user.loc, 'sound/items/coinflip.ogg', 50, TRUE)
 		var/oldloc = loc
-		sleep(15)
+		sleep(1.5 SECONDS)
 		if(loc == oldloc && user && !user.incapacitated())
 			user.visible_message(span_notice("[user] flips [src]. It lands on [coinflip]."), \
 				span_notice("You flip [src]. It lands on [coinflip]."), \
@@ -498,7 +498,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		icon_state = "coin_[coinflip]"
 		playsound(user.loc, 'sound/items/coinflip.ogg', 50, TRUE)
 		var/oldloc = loc
-		sleep(15)
+		sleep(1.5 SECONDS)
 		if(loc == oldloc && user && !user.incapacitated())
 			user.visible_message(span_notice("[user] flips [src]. It lands on [coinflip]."), \
 				span_notice("You flip [src]. It lands on [coinflip]."), \

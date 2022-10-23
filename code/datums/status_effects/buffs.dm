@@ -161,7 +161,7 @@
 	if(!iscarbon(owner))
 		return
 	var/mob/living/carbon/C = owner
-	QDEL_LIST(C.all_scars)
+	QDEL_LAZYLIST(C.all_scars)
 
 /atom/movable/screen/alert/status_effect/fleshmend
 	name = "Fleshmend"

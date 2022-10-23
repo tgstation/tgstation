@@ -7,11 +7,10 @@
 	filedesc = "Hardware Configuration Tool"
 	extended_desc = "This program allows configuration of computer's hardware"
 	program_icon_state = "generic"
-	unsendable = 1
-	undeletable = 1
+	undeletable = TRUE
 	size = 4
-	available_on_ntnet = 0
-	requires_ntnet = 0
+	available_on_ntnet = FALSE
+	requires_ntnet = FALSE
 	tgui_id = "NtosConfiguration"
 	program_icon = "cog"
 

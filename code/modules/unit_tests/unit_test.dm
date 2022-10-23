@@ -76,11 +76,17 @@ GLOBAL_LIST_EMPTY(unit_test_mapping_logs)
 /// Instances allocated through this proc will be destroyed when the test is over
 /datum/unit_test/proc/allocate(type, ...)
 	var/list/arguments = args.Copy(2)
-	if (!arguments.len)
-		arguments = list(run_loc_floor_bottom_left)
-	else if (arguments[1] == null)
-		arguments[1] = run_loc_floor_bottom_left
-	var/instance = new type(arglist(arguments))
+	if(ispath(type, /atom))
+		if (!arguments.len)
+			arguments = list(run_loc_floor_bottom_left)
+		else if (arguments[1] == null)
+			arguments[1] = run_loc_floor_bottom_left
+	var/instance
+	// Byond will throw an index out of bounds if arguments is empty in that arglist call. Sigh
+	if(length(arguments))
+		instance = new type(arglist(arguments))
+	else
+		instance = new type()
 	allocated += instance
 	return instance
 
@@ -124,15 +130,14 @@ GLOBAL_LIST_EMPTY(unit_test_mapping_logs)
 	GLOB.current_test = test
 	var/duration = REALTIMEOFDAY
 
+	log_world("::group::[test_path]")
 	test.Run()
 
 	duration = REALTIMEOFDAY - duration
 	GLOB.current_test = null
 	GLOB.failed_any_test |= !test.succeeded
 
-	var/list/log_entry = list(
-		"[test.succeeded ? TEST_OUTPUT_GREEN("PASS") : TEST_OUTPUT_RED("FAIL")]: [test_path] [duration / 10]s",
-	)
+	var/list/log_entry = list()
 	var/list/fail_reasons = test.fail_reasons
 
 	for(var/reasonID in 1 to LAZYLEN(fail_reasons))
@@ -143,10 +148,19 @@ GLOBAL_LIST_EMPTY(unit_test_mapping_logs)
 		test.log_for_test(text, "error", file, line)
 
 		// Normal log message
-		log_entry += "\tREASON #[reasonID]: [text] at [file]:[line]"
+		log_entry += "\tFAILURE #[reasonID]: [text] at [file]:[line]"
 
 	var/message = log_entry.Join("\n")
 	log_test(message)
+
+	var/test_output_desc = "[test_path] [duration / 10]s"
+	if (test.succeeded)
+		log_world("[TEST_OUTPUT_GREEN("PASS")] [test_output_desc]")
+
+	log_world("::endgroup::")
+
+	if (!test.succeeded)
+		log_world("::error::[TEST_OUTPUT_RED("FAIL")] [test_output_desc]")
 
 	test_results[test_path] = list("status" = test.succeeded ? UNIT_TEST_PASSED : UNIT_TEST_FAILED, "message" = message, "name" = test_path)
 

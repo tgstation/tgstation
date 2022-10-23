@@ -43,8 +43,6 @@
 	/// Tracks the number of EMPs currently stacked.
 	var/emped = 0
 
-	/// If true, the transmit wire starts cut.
-	var/prison_radio = FALSE
 	/// Whether wires are accessible. Toggleable by screwdrivering.
 	var/unscrewed = FALSE
 	/// If true, the radio has access to the full spectrum.
@@ -78,8 +76,6 @@
 
 /obj/item/radio/Initialize(mapload)
 	wires = new /datum/wires/radio(src)
-	if(prison_radio)
-		wires.cut(WIRE_TX) // OH GOD WHY
 	secure_radio_connections = list()
 	. = ..()
 
@@ -90,7 +86,7 @@
 
 	set_listening(listening)
 	set_broadcasting(broadcasting)
-	set_frequency(sanitize_frequency(frequency, freerange))
+	set_frequency(sanitize_frequency(frequency, freerange, syndie))
 	set_on(on)
 
 	AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
@@ -401,7 +397,7 @@
 				tune = tune * 10
 				. = TRUE
 			if(.)
-				set_frequency(sanitize_frequency(tune, freerange))
+				set_frequency(sanitize_frequency(tune, freerange, syndie))
 		if("listen")
 			set_listening(!listening)
 			. = TRUE

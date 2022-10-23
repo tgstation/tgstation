@@ -1,5 +1,5 @@
 
-/mob/living/carbon/alien/humanoid/update_icons()
+/mob/living/carbon/alien/adult/update_icons()
 	cut_overlays()
 	for(var/I in overlays_standing)
 		add_overlay(I)
@@ -47,16 +47,16 @@
 	update_held_items()
 	update_worn_handcuffs()
 
-/mob/living/carbon/alien/humanoid/regenerate_icons()
+/mob/living/carbon/alien/adult/regenerate_icons()
 	if(!..())
 	// update_icons() //Handled in update_transform(), leaving this here as a reminder
 		update_transform()
 
-/mob/living/carbon/alien/humanoid/perform_update_transform() //The old method of updating lying/standing was update_icons(). Aliens still expect that.
+/mob/living/carbon/alien/adult/perform_update_transform() //The old method of updating lying/standing was update_icons(). Aliens still expect that.
 	. = ..()
 	update_icons()
 
-/mob/living/carbon/alien/humanoid/update_worn_handcuffs()
+/mob/living/carbon/alien/adult/update_worn_handcuffs()
 	remove_overlay(HANDCUFF_LAYER)
 	var/cuff_icon = "aliencuff"
 	var/dmi_file = 'icons/mob/nonhuman-player/alien.dmi'
@@ -75,7 +75,7 @@
 // AND HERE MOTHERFUCKER AHHHHHH
 
 //Royals have bigger sprites, so inhand things must be handled differently.
-/mob/living/carbon/alien/humanoid/royal/update_held_items()
+/mob/living/carbon/alien/adult/royal/update_held_items()
 	..()
 	remove_overlay(HANDS_LAYER)
 	var/list/hands = list()

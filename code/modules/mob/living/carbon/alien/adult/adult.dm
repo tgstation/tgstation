@@ -1,4 +1,4 @@
-/mob/living/carbon/alien/humanoid
+/mob/living/carbon/alien/adult
 	name = "alien"
 	icon_state = "alien"
 	pass_flags = PASSTABLE
@@ -30,33 +30,33 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 	/datum/strippable_item/mob_item_slot/legcuffs,
 )))
 
-/mob/living/carbon/alien/humanoid/Initialize(mapload)
+/mob/living/carbon/alien/adult/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW, 0.5, -11)
 	AddElement(/datum/element/strippable, GLOB.strippable_alien_humanoid_items)
 
-/mob/living/carbon/alien/humanoid/create_internal_organs()
+/mob/living/carbon/alien/adult/create_internal_organs()
 	internal_organs += new /obj/item/organ/internal/stomach/alien()
 	return ..()
 
-/mob/living/carbon/alien/humanoid/cuff_resist(obj/item/I)
+/mob/living/carbon/alien/adult/cuff_resist(obj/item/I)
 	playsound(src, 'sound/voice/hiss5.ogg', 40, TRUE, TRUE)  //Alien roars when starting to break free
 	..(I, cuff_break = INSTANT_CUFFBREAK)
 
-/mob/living/carbon/alien/humanoid/resist_grab(moving_resist)
+/mob/living/carbon/alien/adult/resist_grab(moving_resist)
 	if(pulledby.grab_state)
 		visible_message(span_danger("[src] breaks free of [pulledby]'s grip!"), \
 						span_danger("You break free of [pulledby]'s grip!"))
 	pulledby.stop_pulling()
 	. = 0
 
-/mob/living/carbon/alien/humanoid/alien_evolve(mob/living/carbon/alien/humanoid/new_xeno)
+/mob/living/carbon/alien/adult/alien_evolve(mob/living/carbon/alien/adult/new_xeno)
 	drop_all_held_items()
 	..()
 
 //For alien evolution/promotion/queen finder procs. Checks for an active alien of that type
 /proc/get_alien_type(alienpath)
-	for(var/mob/living/carbon/alien/humanoid/A in GLOB.alive_mob_list)
+	for(var/mob/living/carbon/alien/adult/A in GLOB.alive_mob_list)
 		if(!istype(A, alienpath))
 			continue
 		if(!A.key || A.stat == DEAD) //Only living aliens with a ckey are valid.
@@ -64,17 +64,17 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 		return A
 	return FALSE
 
-/mob/living/carbon/alien/humanoid/check_breath(datum/gas_mixture/breath)
+/mob/living/carbon/alien/adult/check_breath(datum/gas_mixture/breath)
 	if(breath?.total_moles() > 0 && !HAS_TRAIT(src, TRAIT_ALIEN_SNEAK))
 		playsound(get_turf(src), pick('sound/voice/lowHiss2.ogg', 'sound/voice/lowHiss3.ogg', 'sound/voice/lowHiss4.ogg'), 50, FALSE, -5)
 	return ..()
 
-/mob/living/carbon/alien/humanoid/set_name()
+/mob/living/carbon/alien/adult/set_name()
 	if(numba)
 		name = "[name] ([numba])"
 		real_name = name
 
-/mob/living/carbon/alien/humanoid/proc/grab(mob/living/carbon/human/target)
+/mob/living/carbon/alien/adult/proc/grab(mob/living/carbon/human/target)
 	if(target.check_block())
 		target.visible_message(span_warning("[target] blocks [src]'s grab!"), \
 						span_userdanger("You block [src]'s grab!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, src)
@@ -83,7 +83,7 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 	target.grabbedby(src)
 	return TRUE
 
-/mob/living/carbon/alien/humanoid/setGrabState(newstate)
+/mob/living/carbon/alien/adult/setGrabState(newstate)
 	if(newstate == grab_state)
 		return
 	if(newstate > GRAB_AGGRESSIVE)
@@ -105,13 +105,13 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 			if(. <= GRAB_AGGRESSIVE)
 				ADD_TRAIT(pulling, TRAIT_FLOORED, CHOKEHOLD_TRAIT)
 
-/mob/living/carbon/alien/humanoid/MouseDrop_T(atom/dropping, atom/user)
+/mob/living/carbon/alien/adult/MouseDrop_T(atom/dropping, atom/user)
 	if(devour_lad(dropping))
 		return
 	return ..()
 
 /// Returns FALSE if we're not allowed to eat it, true otherwise
-/mob/living/carbon/alien/humanoid/proc/can_consume(atom/movable/poor_soul)
+/mob/living/carbon/alien/adult/proc/can_consume(atom/movable/poor_soul)
 	if(!isliving(poor_soul) || pulling != poor_soul)
 		return FALSE
 	if(incapacitated() || grab_state < GRAB_AGGRESSIVE || stat != CONSCIOUS)
@@ -121,9 +121,9 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 	return TRUE
 
 /// Attempts to devour the passed in thing in devour_time seconds
-/// The mob needs to be consumable, as decided by [/mob/living/carbon/alien/humanoid/proc/can_consume]
+/// The mob needs to be consumable, as decided by [/mob/living/carbon/alien/adult/proc/can_consume]
 /// Returns FALSE if the attempt never even started, TRUE otherwise
-/mob/living/carbon/alien/humanoid/proc/devour_lad(atom/movable/candidate, devour_time = 13.5 SECONDS)
+/mob/living/carbon/alien/adult/proc/devour_lad(atom/movable/candidate, devour_time = 13.5 SECONDS)
 	setDir(get_dir(src, candidate))
 	if(!can_consume(candidate))
 		return FALSE
