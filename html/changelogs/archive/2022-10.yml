@@ -870,3 +870,20 @@
   tralezab:
   - rscadd: Added a new spell, Splattercasting! It's like an offensive version of
       lichdom.
+2022-10-23:
+  Foxtrot (Funce):
+  - admin: '"Admin PM" verb can now be cancelled without an error message'
+  LemonInTheDark:
+  - bugfix: Breaking reagent tanks will be significantly more responsive
+  Major0911:
+  - rscadd: new popcorn flavors and two kinds of empty boxes after them
+  Melbert:
+  - bugfix: Fixes a runtime from non-cultists picking up cult daggers
+  - bugfix: Nutriments and Peptides will no longer heal robotic limbs.
+  - bugfix: Fixes a runtime with voting actions.
+  - bugfix: Fixes a runtime with Wendigo's slam
+  - bugfix: Fixes a minor runtime with Fleshmend clearing scars.
+  etherware-novice:
+  - refactor: removed prison_radio var
+  lizardqueenlexi:
+  - bugfix: Fixed a minor error causing the H.O.N.K. to be impossible to construct.

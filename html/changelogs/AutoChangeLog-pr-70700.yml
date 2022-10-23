@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "Fixes a minor runtime with Fleshmend clearing scars."

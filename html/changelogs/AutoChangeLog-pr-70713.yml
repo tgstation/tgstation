@@ -1,4 +1,0 @@
-author: "etherware-novice"
-delete-after: True
-changes: 
-  - refactor: "removed prison_radio var"
