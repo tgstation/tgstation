@@ -211,9 +211,9 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	if (!parent)
 		return null
 	if(!savefile)
+		stack_trace("No savefile instantiated for [parent].")
 		if(!path)
-			stack_trace("Attempted to load savedata for [parent] but no savefile path was set.")
-			return null
+			CRASH("Attempted to load savedata for [parent] but no savefile path was set.")
 		savefile = new /datum/json_savefile(path)
 
 	// Both of these will cache savefiles, but only for a tick.
