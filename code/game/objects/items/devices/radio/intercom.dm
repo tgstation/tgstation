@@ -43,7 +43,7 @@
 		if(obj_flags & EMAGGED)
 			. += span_warning("Its frequency lock has been shorted...")
 	else
-		. += span_notice("It has a frequency lock set to [frequency].")
+		. += span_notice("It has a frequency lock set to [frequency/10].")
 
 /obj/item/radio/intercom/screwdriver_act(mob/living/user, obj/item/tool)
 	if(unscrewed)
