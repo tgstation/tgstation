@@ -48,13 +48,13 @@
 
 	if(last_person)
 		examine_list += span_notice(
-			is_holy ? "You can sense a lost spirit, [last_person], who took their life with this." :
+			is_holy ? "You can sense a lost spirit, [last_person], who took their life with this." : \
 			"Looking at this somehow reminds you of [last_person]."
 		)
 
 	if(count)
 		var/wrong_guess = max(2, collective + rand(-3, 3))
 		examine_list += span_notice(
-			is_holy ? "You can sense a collective of [collective] lost souls who met the same fate.",
+			is_holy ? "You can sense a collective of [collective] lost souls who met the same fate." : \
 			"This item reminds you of [wrong_guess] others, you'd guess."
 		)
