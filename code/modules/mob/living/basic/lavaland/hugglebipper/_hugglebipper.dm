@@ -41,35 +41,8 @@
 		return
 
 	face_atom(target)
-
-	var/result = buckle_mob(target, TRUE)
-
-	//find where to run off to, regardless of whether we successfully grabbed our target
-	var/turf/planned_dropoff
-	var/list/turf/rim_turfs = shuffle(RIM_TURFS(10, 11, target))
-	for(var/turf/open/possible_dropoff in rim_turfs)
-		if(isgroundlessturf(possible_dropoff))
-			continue
-		get_path_to()
-
-		//barebones solution
-		var/invalid = FALSE
-		for(var/turf/surrounding_dropoff_turf in range(5, possible_dropoff))
-			if(locate(/mob/living/basic/mining) in surrounding_dropoff_turf)
-				invalid = TRUE
-				break
-			if(locate(/mob/living/simple_animal/hostile) in surrounding_dropoff_turf)
-				invalid = TRUE
-				break
-		if(invalid)
-			continue
-		/// there needs to be a check here to see if we can reach this turf before trying to go there
-		planned_dropoff = possible_dropoff
-		break
-	if(planned_dropoff)
-		ai_controller?.blackboard[BB_HUGGLEBIPPER_DROPOFF] = WEAKREF(planned_dropoff)
-
 	//we no longer care who we are targetting so we really just want to go to dropoff
 	//if we haven't picked anyone up? we're STILL going to dropoff
 	ai_controller?.blackboard[BB_BASIC_MOB_CURRENT_TARGET] = null
-	balloon_alert(src, "[result ? "grabbed" : "can't grab!"]")
+	ai_controller?.blackboard[BB_HUGGLEBIPPER_WEAK_RETREAT_TURF] = WEAKREF(get_turf(target))
+	balloon_alert(src, "[buckle_mob(target, TRUE) ? "grabbed" : "can't grab!"]")

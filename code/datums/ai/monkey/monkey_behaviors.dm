@@ -307,6 +307,7 @@
 	finish_action(controller, TRUE)
 
 /datum/ai_behavior/monkey_set_combat_target/perform(delta_time, datum/ai_controller/controller, set_key, enemies_key)
+	. = ..()
 	var/list/enemies = controller.blackboard[enemies_key]
 	var/list/valids = list()
 	for(var/mob/living/possible_enemy in view(MONKEY_ENEMY_VISION, controller.pawn))

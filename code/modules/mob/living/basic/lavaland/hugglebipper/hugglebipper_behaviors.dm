@@ -103,3 +103,32 @@
 	. = ..()
 	var/mob/living/basic/basic_mob = controller.pawn
 	basic_mob.icon_state = initial(basic_mob.icon_state)
+
+///run away from a turf until you are sufficiently far enough away or got stuck
+/datum/ai_behavior/hugglebipper_retreating
+	action_cooldown = 2 SECONDS
+	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_MOVE_AND_PERFORM
+	required_distance = 7
+
+/datum/ai_behavior/hugglebipper_retreating/setup(datum/ai_controller/controller, weak_retreat_key)
+	. = ..()
+	var/datum/weakref/weak_retreat_from = controller.blackboard[weak_retreat_key]
+	var/turf/weak_retreat_from = weak_dropoff?.resolve()
+	if(!weak_retreat_from)
+		return FALSE
+
+	var/mob/living/living_pawn = controller.pawn
+	SSmove_manager.move_away(living_pawn, weak_retreat_from, required_distance, )
+
+/datum/ai_behavior/hugglebipper_retreating/perform(delta_time, datum/ai_controller/controller, weak_retreat_key)
+	. = ..()
+	var/datum/weakref/weak_retreat_from = controller.blackboard[weak_retreat_key]
+	var/turf/weak_retreat_from = weak_dropoff?.resolve()
+	if(!weak_retreat_from)
+		return FALSE
+
+	if(get_dist())
+
+/datum/ai_behavior/hugglebipper_retreating/finish_action(datum/ai_controller/controller, succeeded, weak_retreat_key)
+	. = ..()
+	controller.blackboard[weak_retreat_key] = null

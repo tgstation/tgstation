@@ -15,12 +15,12 @@
 
 /datum/ai_planning_subtree/hugglebipper_dropoff/SelectBehaviors(datum/ai_controller/controller, delta_time)
 
-	var/datum/weakref/weak_dropoff = controller.blackboard[BB_HUGGLEBIPPER_DROPOFF]
-	var/turf/dropoff = weak_dropoff?.resolve()
+	var/datum/weakref/weak_retreat_from = controller.blackboard[BB_HUGGLEBIPPER_WEAK_RETREAT_TURF]
+	var/turf/weak_retreat_from = weak_dropoff?.resolve()
 	if(!dropoff)
 		return //nowhere to run to so just go to stalking
 
-	controller.queue_behavior(/datum/ai_behavior/dropoff_buckled_mobs, BB_HUGGLEBIPPER_DROPOFF)
+	controller.queue_behavior(/datum/ai_behavior/dropoff_buckled_mobs, BB_HUGGLEBIPPER_WEAK_RETREAT_TURF)
 	return SUBTREE_RETURN_FINISH_PLANNING
 
 /datum/ai_planning_subtree/hugglebipper_stalking

@@ -34,6 +34,7 @@
 	controller.current_movement_target = controller.blackboard[target_key]
 
 /datum/ai_behavior/break_spine/perform(delta_time, datum/ai_controller/controller, target_key)
+	. = ..()
 	var/mob/living/batman = controller.blackboard[target_key]
 	var/mob/living/big_guy = controller.pawn //he was molded by the darkness
 
@@ -267,6 +268,7 @@
 /datum/ai_behavior/perform_emote
 
 /datum/ai_behavior/perform_emote/perform(delta_time, datum/ai_controller/controller, emote)
+	. = ..()
 	var/mob/living/living_pawn = controller.pawn
 	if(!istype(living_pawn))
 		return
@@ -276,6 +278,7 @@
 /datum/ai_behavior/perform_speech
 
 /datum/ai_behavior/perform_speech/perform(delta_time, datum/ai_controller/controller, speech)
+	. = ..()
 	var/mob/living/living_pawn = controller.pawn
 	if(!istype(living_pawn))
 		return
