@@ -1,20 +1,24 @@
 /datum/export/paperwork
 	cost = CARGO_CRATE_VALUE * 2
-	unit_name = "paperwork"
+	unit_name = "paperwork pile"
 	export_types = list(/obj/item/paperwork)
 	exclude_types = list(/obj/item/paperwork/photocopy) //Has its own category
 	allow_negative_cost = TRUE
 
 /datum/export/paperwork/get_cost(obj/sold_object)
 	var/obj/item/paperwork/sold_paperwork = sold_object
-	if(!sold_paperwork.stamped)
-		cost = -cost  //Punishment for improperly filed paperwork
+	var/paperwork_cost = cost
 
-	return cost
+	if(!sold_paperwork.stamped)
+		paperwork_cost = -init_cost  //Punishment for improperly filed paperwork.
+	else
+		paperwork_cost = ..()
+
+	return paperwork_cost
 
 /datum/export/photocopy
 	cost = CARGO_CRATE_VALUE
-	unit_name = "messy paperwork"
+	unit_name = "messy paperwork pile"
 	export_types = list(/obj/item/paperwork/photocopy)
 	allow_negative_cost = TRUE
 	///Tracks the chance of losing money for trying to double-dip with photocopies. Resets every time it ruins an order.
@@ -32,12 +36,12 @@
 			if(prob(backfire_chance))
 				backfire_chance = 0
 				backfired = TRUE
-				return -cost * 4
+				return -init_cost * 4 //
 			else
-				return cost
+				return ..()
 
 	else
-		return -cost
+		return -init_cost
 
 /datum/export/photocopy/total_printout(datum/export_report/ex, notes)
 	. = ..()

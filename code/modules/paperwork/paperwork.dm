@@ -100,7 +100,7 @@
 	detailed_desc = span_notice("<i>As you sift through the papers, you slowly start to piece together what you're reading.</i>")
 	detailed_desc += "[span_info(" The papers are a mess of shipping order paperwork. There's no rhyme or reason to how these documents are sorted at all.")]"
 	detailed_desc += "[span_info(" By the looks of it, there's nothing out of the ordinary here besides a high-priority request for a second engine.")]"
-	detailed_desc += "[span_info(" The 'priority request reason' field is scribbled out, but a note in the margins reads 'we want to try two engines don't worry about it'.")]"
+	detailed_desc += "[span_info(" The 'priority request reason' field is scribbled out, but a note in the margins reads 'we just want to try two engines, don't worry about it'.")]"
 	detailed_desc += "[span_info(" Despite how disorganized the documents are, they're all appropriately filled in. You should probably stamp this.")]"
 
 /obj/item/paperwork/security
@@ -189,7 +189,7 @@
 	detailed_desc += "[span_info(" Everything checks out. You should probably stamp this.")]"
 
 //Photocopied paperwork. These are created when paperwork, whether stamped or otherwise, is printed. If it is stamped, it can be sold to cargo at the risk of the paperwork not being accepted (which takes a small fee from cargo)..
-//If it is unstamped it is useless, but can be hit with a VOID stamp because paperwork
+//If it is unstamped it is useless, but can be hit with a VOID stamp to prevent it from losing cargo any money upon being sold
 /obj/item/paperwork/photocopy
 	name = "photocopied paperwork documents"
 	desc = "An even more disorganized mess of photocopied documents and paperwork. Did these even copy in the right order?"
