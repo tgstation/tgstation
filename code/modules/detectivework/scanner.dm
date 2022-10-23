@@ -158,7 +158,7 @@
 				add_log("Reagent: <font color='red'>[R]</font> Volume: <font color='red'>[reagents[R]]</font>")
 			found_something = TRUE
 
-		if(suicider)
+		if(A.suicider)
 			sleep(3 SECONDS)
 			add_log(span_info("<B>Supernatual Detection:"))
 			add_log("Someone named [suicider] has used this to take their life.")
