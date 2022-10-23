@@ -48,7 +48,7 @@
 /obj/item/paperwork/update_overlays()
 	. = ..()
 
-	if(stamped)
+	if(stamped && stamp_overlay)
 		. += stamp_overlay
 
 /obj/item/paperwork/examine_more(mob/user)
@@ -73,9 +73,9 @@
  * Handled as a proc so that an object may be maked as "stamped" even when a stamp isn't present (like the photocopier)
  */
 /obj/item/paperwork/proc/add_stamp()
-	stamped = TRUE
 	stamp_overlay = mutable_appearance('icons/obj/bureaucracy.dmi', stamp_icon)
 	add_overlay(stamp_overlay)
+	stamped = TRUE
 
 /**
  * Copies the requested stamp, associated job, and associated icon of a given paperwork type
@@ -200,13 +200,13 @@
 /obj/item/paperwork/photocopy/examine_more(mob/user)
 	. = ..()
 
-	. += "These appear to just be a photocopy of the original documents."
-
 	if(stamped)
 		if(voided)
-			. += "It looks like it's been marked as 'VOID' on the front. It's unlikely that anyone will accept these now."
+			. += span_notice("It looks like it's been marked as 'VOID' on the front. It's unlikely that anyone will accept these now.")
 		else
-			. += "The stamp on the front appears to be smudged and faded. Central Command will probably still accept these, right?"
+			. += span_notice("The stamp on the front appears to be smudged and faded. Central Command will probably still accept these, right?")
+	else
+		. += span_notice("These appear to just be a photocopy of the original documents.")
 
 /obj/item/paperwork/photocopy/attackby(obj/item/attacking_item, mob/user, params)
 	if(istype(attacking_item, /obj/item/stamp/void) && !stamped && !voided)

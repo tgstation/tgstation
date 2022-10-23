@@ -337,7 +337,7 @@
 	var/obj/item/paperwork/photocopy/copied_paperwork = new(loc, paperwork_copy)
 	copied_paperwork.copy_stamp_info(paperwork_copy)
 	if(paperwork_copy.stamped)
-		copied_paperwork.stamp_icon = "paper_stamp-pc" //Override with the photocopy one
+		copied_paperwork.stamp_icon = "paper_stamp-pc" //Override with the photocopy overlay sprite
 		copied_paperwork.add_stamp()
 	give_pixel_offset(copied_paperwork)
 	toner_cartridge.charges -= PAPERWORK_TONER_USE
