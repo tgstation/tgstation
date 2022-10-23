@@ -107,7 +107,11 @@
 /datum/strippable_item/hand/finish_equip(atom/source, obj/item/equipping, mob/user)
 	if (!iscarbon(source))
 		return FALSE
-
+	if (iscarbon(user))
+		var/mob/living/carbon/carbon_user = user
+		// Close an open air tank if it exchanged from user to owner.
+		if (equipping == carbon_user.internal)
+			carbon_user.close_internals()
 	var/mob/mob_source = source
 	mob_source.put_in_hand(equipping, hand_index)
 
