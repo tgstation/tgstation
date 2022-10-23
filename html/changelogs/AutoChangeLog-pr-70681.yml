@@ -1,0 +1,4 @@
+author: "Vishenka0704"
+delete-after: True
+changes: 
+  - admin: "separate antagonists from living player, and add another field with security info"
