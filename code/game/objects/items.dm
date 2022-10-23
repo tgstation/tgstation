@@ -211,6 +211,13 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	/// Used in obj/item/examine to determines whether or not to detail an item's statistics even if it does not meet the force requirements
 	var/override_notes = FALSE
 
+	/// the name of the last suicider oo spooky
+	var/suicider
+	/// the number of people who have suicided with this item, adds a spooky aura the higher it is
+	var/suicide_count = 0
+	/// hides suicide text
+	var/hide_suicide = FALSE
+
 /obj/item/Initialize(mapload)
 
 	if(attack_verb_continuous)
@@ -398,6 +405,25 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 		if(resistance_flags & FIRE_PROOF)
 			. += "[src] is made of fire-retardant materials."
 		return
+
+	if(hide_suicide)
+		return
+
+	if(suicider)
+		. += "For some reason, it reminds you of [suicider]."
+
+	switch(suicide_count)
+		if(10 to INFINITY)
+			. += "You feel a strong spiritual presence around this."
+		if(5 to INFINITY)
+			. += "You vaugely feel some spiritual presence."
+		if(2 to INFINITY)
+			. += "Theres a twinge of...something...surrounding this."
+
+	if(suicide_count && user?.mind.holy_role)
+		var/estimate_suicide = max(1, suicide_count + rand(-3, 3))  // standard deviate of 3
+		. += "You estimate about [estimate_suicide] people have used this to take their life."
+
 
 /obj/item/examine_more(mob/user)
 	. = ..()

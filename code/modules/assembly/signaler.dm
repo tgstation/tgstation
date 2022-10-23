@@ -15,7 +15,7 @@
 	var/frequency = FREQ_SIGNALER
 	var/datum/radio_frequency/radio_connection
 	///Holds the mind that commited suicide.
-	var/datum/mind/suicider
+	var/datum/mind/techeater
 	///Holds a reference string to the mob, decides how much of a gamer you are.
 	var/suicide_mob
 	var/hearing_range = 1
@@ -27,7 +27,7 @@
 	user.visible_message(span_suicide("[user] eats \the [src]! If it is signaled, [user.p_they()] will die!"))
 	playsound(src, 'sound/items/eatfood.ogg', 50, TRUE)
 	moveToNullspace()
-	suicider = user.mind
+	techeater = user.mind
 	suicide_mob = REF(user)
 	return MANUAL_SUICIDE_NONLETHAL
 
@@ -52,7 +52,7 @@
 
 /obj/item/assembly/signaler/Destroy()
 	SSradio.remove_object(src,frequency)
-	suicider = null
+	techeater = null
 	. = ..()
 
 /obj/item/assembly/signaler/activate()
@@ -159,8 +159,8 @@
 		return
 	if(!(src.wires & WIRE_RADIO_RECEIVE))
 		return
-	if(suicider)
-		manual_suicide(suicider)
+	if(techeater)
+		manual_suicide(techeater)
 		return
 
 	// If the holder is a TTV, we want to store the last received signal to incorporate it into TTV logging, else wipe it.

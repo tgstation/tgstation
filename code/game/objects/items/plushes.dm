@@ -662,8 +662,7 @@
 	attack_verb_continuous = list("flutters", "flaps")
 	attack_verb_simple = list("flutter", "flap")
 	squeak_override = list('sound/voice/moth/scream_moth.ogg'=1)
-///Used to track how many people killed themselves with item/toy/plush/moth
-	var/suicide_count = 0
+	hide_suicide = TRUE
 
 /obj/item/toy/plush/moth/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] stares deeply into the eyes of [src] and it begins consuming [user.p_them()]!  It looks like [user.p_theyre()] trying to commit suicide!"))

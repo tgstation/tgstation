@@ -80,6 +80,8 @@
 				death(FALSE)
 				ghostize(FALSE) // Disallows reentering body and disassociates mind
 
+				held_item?.suicider = user.real_name
+				held_item?.suicide_count += 1
 				return
 
 		var/suicide_message

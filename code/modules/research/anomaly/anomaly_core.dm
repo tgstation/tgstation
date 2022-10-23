@@ -14,8 +14,8 @@
 		return FALSE
 	if(signal.data["code"] != code)
 		return FALSE
-	if(suicider)
-		manual_suicide(suicider)
+	if(techeater)
+		manual_suicide(techeater)
 	for(var/obj/effect/anomaly/A in get_turf(src))
 		A.anomalyNeutralize()
 	return TRUE
