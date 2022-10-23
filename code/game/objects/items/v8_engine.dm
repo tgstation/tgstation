@@ -49,7 +49,7 @@
 	desc = "Dangerous. Loud. Sleek. It has a built in roulette wheel. This thing could easily rip your arm off if you're not careful."
 	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "house_edge0"
-	inhand_icon_state = "house_edge"
+	inhand_icon_state = "house_edge0"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	w_class = WEIGHT_CLASS_HUGE
@@ -98,7 +98,7 @@
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/house_edge/update_icon_state()
-	inhand_icon_state = "house_edge[HAS_TRAIT(src, TRAIT_WIELDED)]"
+	inhand_icon_state = HAS_TRAIT(src, TRAIT_WIELDED) ? "house_edge1" : "house_edge0"
 	return ..()
 
 /obj/item/house_edge/proc/reset_charges(on_dash = FALSE)
