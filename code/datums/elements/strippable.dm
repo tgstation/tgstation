@@ -226,11 +226,6 @@
 		return FALSE
 
 	var/mob/mob_source = source
-	if (iscarbon(user))
-		var/mob/living/carbon/carbon_user = user
-		// Close an open air tank if it exchanged from user to owner.
-		if (equipping == carbon_user.internal)
-			carbon_user.close_internals()
 	mob_source.equip_to_slot(equipping, item_slot)
 
 	return finish_equip_mob(equipping, source, user)

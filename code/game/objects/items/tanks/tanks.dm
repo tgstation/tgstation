@@ -44,22 +44,35 @@
 	var/list/explosion_info
 	/// List containing reactions happening inside our tank.
 	var/list/reaction_info
+	/// Mob that is currently breathing from the tank.
+	var/mob/living/carbon/breathing_mob = null
+
+/// Open tank and connect to a mob's internals.
+/obj/item/tank/proc/open_internals(mob/living/carbon/carbon_target)
+	breathing_mob = carbon_target
+	carbon_target.connect_internals(src)
+
+/// Close tank and disconnect from a mob's internals.
+/obj/item/tank/proc/close_internals(mob/living/carbon/carbon_target)
+	breathing_mob = null
+	carbon_target.disconnect_internals()
+
+/// Closes the tank if dropped while open.
+/obj/item/tank/dropped(mob/living/user, silent)
+	. = ..(user, silent)
+	// Close open air tank if it got dropped by it's current user.
+	if (breathing_mob && src.loc != breathing_mob)
+		close_internals(breathing_mob)
+
+/// Closes the tank if given to another mob while open.
+/obj/item/tank/equipped(mob/living/user, slot, initial)
+	. = ..(user, slot, initial)
+	// Close open air tank if it was equipped by a mob other than the current user.
+	if (breathing_mob && user != breathing_mob)
+		close_internals(breathing_mob)
 
 /obj/item/tank/ui_action_click(mob/user)
 	toggle_internals(user)
-
-/// Open a human's internals and notify them in chat.
-/obj/item/tank/proc/open_internals(mob/living/carbon/human/human_target)
-	if(human_target.internal)
-		to_chat(human_target, span_notice("You switch your internals to [src]."))
-	else
-		to_chat(human_target, span_notice("You open [src] valve."))
-	human_target.open_internals(src)
-
-/// Close a human's internals and notify them in chat.
-/obj/item/tank/proc/close_internals(mob/living/carbon/human/human_target)
-	to_chat(human_target, span_notice("You close [src] valve."))
-	human_target.close_internals()
 
 /// Checks if a mob has an internals breathing apparatus. Opens the tank if an apparatus is found.
 /obj/item/tank/proc/toggle_internals(mob/mob_target)
@@ -68,7 +81,7 @@
 	if(!istype(human_target))
 		return
 	// Just close the tank if it's open.
-	if(human_target.internal == src)
+	if(breathing_mob == human_target)
 		close_internals(human_target)
 		return
 	// Use breathing tube regardless of mask.

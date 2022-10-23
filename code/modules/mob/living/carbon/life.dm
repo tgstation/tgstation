@@ -312,7 +312,7 @@
 	if (!internal)
 		return
 	if(invalid_internals())
-		close_internals()
+		cutoff_internals()
 		return
 	. = internal.remove_air_volume(volume_needed)
 	// To differentiate between no internals and active, but empty internals.

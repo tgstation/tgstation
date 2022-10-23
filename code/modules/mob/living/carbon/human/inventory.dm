@@ -292,7 +292,7 @@
 		update_body_parts()
 	// Close internal air tank if mask was the only breathing apparatus.
 	if(invalid_internals())
-		close_internals()
+		cutoff_internals()
 	if(I.flags_inv & HIDEEYES)
 		update_worn_glasses()
 	sec_hud_set_security_status()
@@ -303,7 +303,7 @@
 		update_body_parts()
 	// Close internal air tank if helmet was the only breathing apparatus.
 	if (invalid_internals())
-		close_internals()
+		cutoff_internals()
 	if(I.flags_inv & HIDEEYES || forced)
 		update_worn_glasses()
 	if(I.flags_inv & HIDEEARS || forced)
@@ -317,7 +317,7 @@
 	// The MOD helmet becomes unsealed if it's deactivated.
 	// Close internal air tank if MOD helmet was the only breathing apparatus.
 	if (invalid_internals())
-		close_internals()
+		cutoff_internals()
 
 /mob/living/carbon/human/proc/equipOutfit(outfit, visualsOnly = FALSE)
 	var/datum/outfit/O = null

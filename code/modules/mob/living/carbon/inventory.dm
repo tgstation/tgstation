@@ -176,15 +176,21 @@
 
 /// Returns TRUE if an air tank compatible helmet is equipped.
 /mob/living/carbon/proc/can_breathe_helmet()
-	return head && isclothing(head) && (head.clothing_flags & MASKINTERNALS) ? TRUE : FALSE
+	if (head && isclothing(head) && (head.clothing_flags & HEADINTERNALS))
+		return TRUE
+	return FALSE
 
 /// Returns TRUE if an air tank compatible mask is equipped.
 /mob/living/carbon/proc/can_breathe_mask()
-	return wear_mask && isclothing(wear_mask) && (wear_mask.clothing_flags & MASKINTERNALS) ? TRUE : FALSE
+	if (wear_mask && isclothing(wear_mask) && (wear_mask.clothing_flags & MASKINTERNALS))
+		return TRUE
+	return FALSE
 
 /// Returns TRUE if a breathing tube is equipped.
 /mob/living/carbon/proc/can_breathe_tube()
-	return getorganslot(ORGAN_SLOT_BREATHING_TUBE) ? TRUE : FALSE
+	if (getorganslot(ORGAN_SLOT_BREATHING_TUBE))
+		return TRUE
+	return FALSE
 
 /// Returns TRUE if an air tank compatible mask or breathing tube is equipped.
 /mob/living/carbon/proc/can_breathe_internals()
@@ -192,19 +198,28 @@
 
 /// Returns TRUE if air tank is open and mob lacks apparatus, or if the tank moved away from the mob.
 /mob/living/carbon/proc/invalid_internals()
-	return internal && (internal.loc != src || !can_breathe_internals()) ? TRUE : FALSE
+	return internal && (internal.loc != src || !can_breathe_internals())
 
-/// Open an internal air tank without checking for breathing apparatus.
-/mob/living/carbon/proc/open_internals(obj/item/tank/target_tank)
+/// Connect to an internal air tank without checking for breathing apparatus, and notify them in chat. Called by obj/item/tank/proc/open_internals
+/mob/living/carbon/proc/connect_internals(obj/item/tank/target_tank)
+	if(internal)
+		to_chat(src, span_notice("You switch your internals to [target_tank]."))
+	else
+		to_chat(src, span_notice("You open [target_tank] valve."))
 	internal = target_tank
 	update_action_buttons_icon()
 
-/// Close the currently open internal air tank.
-/mob/living/carbon/proc/close_internals()
+/// Disconnect from the currently open internal air tank, and notify them in chat. Called by obj/item/tank/proc/close_internals
+/mob/living/carbon/proc/disconnect_internals()
 	if (!internal)
 		return
+	to_chat(src, span_notice("You close [internal] valve."))
 	internal = null
 	update_action_buttons_icon()
+
+/// Emergency disconnect from the currently open internal air tank, usually after mob unequips breathing apparatus.
+/mob/living/carbon/proc/cutoff_internals()
+	internal.close_internals(src)
 
 /// Handle stuff to update when a mob equips/unequips a mask.
 /mob/living/proc/wear_mask_update(obj/item/I, toggle_off = 1)
