@@ -216,7 +216,7 @@
 	internal = null
 	update_action_buttons_icon()
 
-/// Connect to a and open an air tank directly.
+/// Connect to and open an air tank directly.
 /mob/living/carbon/proc/open_internals(obj/item/tank/target_tank)
 	if (target_tank)
 		target_tank.open_internals(src)
