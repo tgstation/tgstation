@@ -41,8 +41,8 @@ LINEN BINS
 
 /obj/item/bedsheet/add_item_context(datum/source, list/context, mob/living/target)
 	context[SCREENTIP_CONTEXT_ALT_LMB] = "Rotate"
-	
-	if(isliving(target) || target.body_position == LYING_DOWN)
+
+	if(isliving(target) && target.body_position == LYING_DOWN)
 		context[SCREENTIP_CONTEXT_LMB] = "Cover"
 
 	return CONTEXTUAL_SCREENTIP_SET
