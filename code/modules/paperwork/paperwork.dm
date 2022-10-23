@@ -226,5 +226,8 @@
 /obj/item/paperwork/ancient/Initialize(mapload)
 	. = ..()
 
-	var/obj/item/paperwork/paperwork_type = pick(subtypesof(/obj/item/paperwork)) //Yes this includes photocopies. Figure out how that will work later.
+	var/obj/item/paperwork/paperwork_type = pick(subtypesof(/obj/item/paperwork))
+	while(istype(paperwork_type, /obj/item/paperwork/ancient) || istype(paperwork_type, /obj/item/paperwork/photocopy))
+		paperwork_type = pick(subtypesof(/obj/item/paperwork)) //REROLL
+
 	copy_stamp_info(paperwork_type)

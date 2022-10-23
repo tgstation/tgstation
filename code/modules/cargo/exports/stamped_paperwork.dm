@@ -8,7 +8,9 @@
 /datum/export/paperwork/get_cost(obj/sold_object)
 	var/obj/item/paperwork/sold_paperwork = sold_object
 	if(!sold_paperwork.stamped)
-		return -cost  //Punishment for improperly filed paperwork
+		cost = -cost  //Punishment for improperly filed paperwork
+
+	return cost
 
 /datum/export/photocopy
 	cost = CARGO_CRATE_VALUE
@@ -30,12 +32,12 @@
 			if(prob(backfire_chance))
 				backfire_chance = 0
 				backfired = TRUE
-				return -CARGO_CRATE_VALUE * 4
+				return -cost * 4
 			else
 				return cost
 
 	else
-		return -CARGO_CRATE_VALUE //Tempted to just make it return 0 to stop people from maliciously tanking the budget
+		return -cost
 
 /datum/export/photocopy/total_printout(datum/export_report/ex, notes)
 	. = ..()
