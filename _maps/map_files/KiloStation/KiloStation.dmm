@@ -75328,6 +75328,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/wood,
+/obj/effect/mapping_helpers/ianbirthday,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "vvE" = (
