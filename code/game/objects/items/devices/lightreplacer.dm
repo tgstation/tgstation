@@ -242,7 +242,7 @@
 		used = TRUE
 		if(istype(A, /obj/machinery/light))
 			if(!proximity && bluespace_toggle)
-				U.beam(A, icon_state = "rped_upgrade", time = 1 SECONDS)
+				U.Beam(A, icon_state = "rped_upgrade", time = 1 SECONDS)
 				playsound(src, 'sound/items/pshoom.ogg', 40, 1)
 			ReplaceLight(A, U)
 
@@ -263,4 +263,5 @@
 	return  // balancing against longrange explosions
 
 /obj/item/lightreplacer/blue/update_icon(updates)
+	. = ..()
 	icon_state = initial(icon_state)
