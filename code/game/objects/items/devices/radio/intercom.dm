@@ -146,6 +146,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom, 26)
 /obj/item/radio/intercom/chapel
 	name = "Confessional intercom"
 	anonymize = TRUE
+	freqlock = TRUE
 
 /obj/item/radio/intercom/chapel/Initialize(mapload, ndir, building)
 	. = ..()
