@@ -102,7 +102,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			unlock_content = !!C.IsByondMember()
 			if(unlock_content)
 				max_save_slots = 8
-
+	else
+		#ifdef UNIT_TESTS
+		load_path("unit_tests_dummy_ckey")
+		#else
+		CRASH("Attempted to create a preferences datum without a client.")
+		#endif
+	load_savefile()
 	// give them default keybinds and update their movement keys
 	key_bindings = deep_copy_list(GLOB.default_hotkeys)
 	key_bindings_by_key = get_key_bindings_by_key(key_bindings)

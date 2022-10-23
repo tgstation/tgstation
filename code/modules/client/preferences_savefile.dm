@@ -139,12 +139,15 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		var/datum/keybinding/conflicted = item
 		to_chat(parent, span_danger("[conflicted.category]: [conflicted.full_name] needs updating"))
 
-
-/datum/preferences/proc/load_path(ckey,filename="preferences.json")
+/datum/preferences/proc/load_path(ckey, filename="preferences.json")
 	if(!ckey)
 		return
 	// path = "data/player_saves/[ckey[1]]/[ckey]/[filename]"
 	path = "data/player_saves_json_testing/[ckey[1]]/[ckey]/[filename]"
+
+/datum/preferences/proc/load_savefile()
+	if(!path)
+		CRASH("Attempted to load savefile without first loading a path!")
 	savefile = new /datum/json_savefile(path)
 
 /datum/preferences/proc/load_preferences()
