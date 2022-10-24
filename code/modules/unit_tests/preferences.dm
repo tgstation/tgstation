@@ -2,7 +2,7 @@
 /datum/unit_test/preferences_implement_everything
 
 /datum/unit_test/preferences_implement_everything/Run()
-	var/datum/preferences/preferences = new
+	var/datum/preferences/preferences = new(new /datum/client_interface)
 	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human)
 
 	for (var/preference_type in GLOB.preference_entries)
