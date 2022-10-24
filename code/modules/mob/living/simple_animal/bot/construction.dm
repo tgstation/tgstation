@@ -45,7 +45,7 @@
 	desc = "It's a bucket with a sensor attached."
 	name = "incomplete cleanbot assembly"
 	icon_state = "bucket_proxy"
-	greyscale_config = /datum/greyscale_config/buckets_cleanbot_assembly
+	greyscale_config = /datum/greyscale_config/buckets_cleanbot
 	throwforce = 5
 	created_name = "Cleanbot"
 	var/obj/item/reagent_containers/cup/bucket/bucket_obj

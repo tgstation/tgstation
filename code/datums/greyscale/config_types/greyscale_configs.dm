@@ -798,12 +798,7 @@
 /datum/greyscale_config/buckets_cleanbot
 	name = "Buckets - Cleanbot"
 	icon_file = 'icons/mob/silicon/aibots.dmi'
-	json_config = 'code/datums/greyscale/json_configs/buckets.json'
-
-/datum/greyscale_config/buckets_cleanbot_assembly
-	name = "Buckets - Cleanbot Assembly"
-	icon_file = 'icons/mob/silicon/aibots.dmi'
-	json_config = 'code/datums/greyscale/json_configs/buckets.json'
+	json_config = 'code/datums/greyscale/json_configs/buckets_bot.json'
 
 /datum/greyscale_config/buttondown_slacks
 	name = "Buttondown with Slacks"
