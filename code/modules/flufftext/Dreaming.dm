@@ -1,3 +1,13 @@
+/**
+ * Begins the dreaming process on a sleeping carbon
+ *
+ * Longer detailed paragraph about the proc
+ * including any relevant detail
+ * Arguments:
+ * * arg1 - Relevance of this argument
+ * * arg2 - Relevance of this argument
+ */
+
 /mob/living/carbon/proc/handle_dreams()
 	if(prob(10) && !dreaming)
 		dream()
