@@ -42,6 +42,7 @@
 	. = ..()
 
 /datum/antagonist/paradox_clone/proc/forge_objectives()
+
 	if(!original)//admins didn't set one
 		original = find_original()
 	if(!original)//we didn't find one
@@ -73,7 +74,6 @@
 	if(possible_targets.len > 0)
 		chosen_victim = pick(possible_targets)
 	return chosen_victim
-		send_to_playing_players(span_narsie("VICTIM CHOSEN")
 
 /datum/objective/assassinate/paradox_clone
 
