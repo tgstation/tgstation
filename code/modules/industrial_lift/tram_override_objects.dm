@@ -26,6 +26,7 @@
 /obj/machinery/door/window/left/tram
 	icon = 'icons/obj/doors/tramdoor.dmi'
 	req_access = list("engineering")
+
 /obj/machinery/door/window/right/tram
 	icon = 'icons/obj/doors/tramdoor.dmi'
 	req_access = list("engineering")
@@ -34,11 +35,13 @@
 	. = ..()
 	RemoveElement(/datum/element/atmos_sensitive, mapload)
 	associated_lift = MAIN_STATION_TRAM
+	INVOKE_ASYNC(src, /obj/machinery/door/window.proc/open)
 
 /obj/machinery/door/window/right/tram/Initialize(mapload, set_dir, unres_sides)
 	. = ..()
 	RemoveElement(/datum/element/atmos_sensitive, mapload)
 	associated_lift = MAIN_STATION_TRAM
+	INVOKE_ASYNC(src, /obj/machinery/door/window.proc/open)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/left/tram, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/right/tram, 0)
