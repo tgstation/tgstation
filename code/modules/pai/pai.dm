@@ -6,7 +6,7 @@
 	health = 500
 	held_lh = 'icons/mob/inhands/pai_item_lh.dmi'
 	held_rh = 'icons/mob/inhands/pai_item_rh.dmi'
-	head_icon = 'icons/mob/clothing/head/pai_item_head.dmi'
+	head_icon = 'icons/mob/clothing/head/pai_head.dmi'
 	hud_type = /datum/hud/pai
 	icon = 'icons/mob/silicon/pai.dmi'
 	icon_state = "repairbot"
@@ -108,6 +108,7 @@
 		"bat" = FALSE,
 		"butterfly" = FALSE,
 		"cat" = TRUE,
+		"chicken" = FALSE,
 		"corgi" = FALSE,
 		"crow" = TRUE,
 		"duffel" = TRUE,

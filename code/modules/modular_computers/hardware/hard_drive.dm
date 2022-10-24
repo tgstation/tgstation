@@ -88,6 +88,10 @@
 		return FALSE
 
 	if(F in stored_files)
+		if(istype(F, /datum/computer_file/program))
+			var/datum/computer_file/program/program_file = F
+			if(program_file.program_state != PROGRAM_STATE_KILLED)
+				program_file.kill_program(TRUE)
 		SEND_SIGNAL(F, COMSIG_MODULAR_COMPUTER_FILE_DELETING)
 		stored_files -= F
 		recalculate_size()
@@ -181,6 +185,7 @@
 	. = ..()
 
 	store_file(new /datum/computer_file/program/messenger)
+	store_file(new /datum/computer_file/program/nt_pay)
 	store_file(new /datum/computer_file/program/notepad)
 
 // For borg integrated tablets. No downloader.

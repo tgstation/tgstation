@@ -37,8 +37,6 @@
 	var/maints_access_required = list(ACCESS_ROBOTICS)
 	///The Robot arm attached to this robot - has a 50% chance to drop on death.
 	var/robot_arm = /obj/item/bodypart/r_arm/robot
-	///People currently looking into a bot's UI panel.
-	var/list/users = list()
 	///The inserted (if any) pAI in this bot.
 	var/obj/item/pai_card/paicard
 	///The type of bot it is, for radio control.
@@ -196,6 +194,8 @@
 		path_hud.add_atom_to_hud(src)
 		path_hud.show_to(src)
 
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_BOTS_GLITCHED))
+		randomize_language_if_on_station()
 
 /mob/living/simple_animal/bot/Destroy()
 	if(path_hud)
@@ -231,7 +231,7 @@
 
 /mob/living/simple_animal/bot/death(gibbed)
 	explode()
-	..()
+	return ..()
 
 /mob/living/simple_animal/bot/proc/explode()
 	visible_message(span_boldnotice("[src] blows apart!"))
@@ -257,7 +257,7 @@
 		if(user)
 			log_combat(user, src, "emagged")
 		return
-	else //Bot is unlocked, but the maint panel has not been opened with a screwdriver yet.
+	else //Bot is unlocked, but the maint panel has not been opened with a screwdriver (or through the UI) yet.
 		to_chat(user, span_warning("You need to open maintenance panel first!"))
 
 /mob/living/simple_animal/bot/examine(mob/user)
@@ -284,7 +284,7 @@
 /mob/living/simple_animal/bot/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	if(amount > 0 && prob(10))
 		new /obj/effect/decal/cleanable/oil(loc)
-	. = ..()
+	return ..()
 
 /mob/living/simple_animal/bot/updatehealth()
 	..()
@@ -525,7 +525,7 @@
 			continue
 
 		var/scan_result = process_scan(scan) //Some bots may require additional processing when a result is selected.
-		if(scan_result)
+		if(!isnull(scan_result))
 			return scan_result
 
 //When the scan finds a target, run bot specific processing to select it for the next step. Empty by default.
@@ -533,11 +533,14 @@
 	return scan_target
 
 /mob/living/simple_animal/bot/proc/check_bot(targ)
-	var/turf/T = get_turf(targ)
-	if(T)
-		for(var/C in T.contents)
-			if(istype(C,type) && (C != src)) //Is there another bot there already? If so, let's skip it so we dont all atack on top of eachother.
-				return TRUE //Let's abort if we find a bot so we dont have to keep rechecking
+	var/turf/target_turf = get_turf(targ)
+	if(!target_turf)
+		return FALSE
+	for(var/turf_contents in target_turf.contents)
+		//Is there another bot there already? If so, let's skip it so we dont all atack on top of eachother.
+		if(istype(turf_contents, type) && (turf_contents != src))
+			return TRUE //Let's abort if we find a bot so we dont have to keep rechecking
+	return FALSE
 
 /mob/living/simple_animal/bot/proc/add_to_ignore(subject)
 	if(ignore_list.len < 50) //This will help keep track of them, so the bot is always trying to reach a blocked spot.
@@ -643,6 +646,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	access_card.set_access(prev_access)
 	tries = 0
 	mode = BOT_IDLE
+	ignore_list = list()
 	diag_hud_set_botstat()
 	diag_hud_set_botmode()
 
@@ -1052,7 +1056,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 			MA.icon = path_image_icon
 			MA.icon_state = path_image_icon_state
 			MA.layer = ABOVE_OPEN_TURF_LAYER
-			MA.plane = GAME_PLANE
+			SET_PLANE(MA, GAME_PLANE, T)
 			MA.appearance_flags = RESET_COLOR|RESET_TRANSFORM
 			MA.color = path_image_color
 			MA.dir = direction
@@ -1077,3 +1081,22 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 /mob/living/simple_animal/bot/rust_heretic_act()
 	adjustBruteLoss(400)
+
+/**
+ * Randomizes our bot's language if:
+ * - They are on the setation Z level
+ * OR
+ * - They are on the escape shuttle
+ */
+/mob/living/simple_animal/bot/proc/randomize_language_if_on_station()
+	var/turf/bot_turf = get_turf(src)
+	var/area/bot_area = get_area(src)
+	if(!is_station_level(bot_turf.z) && !istype(bot_area, /area/shuttle/escape))
+		// Why snowflake check for escape shuttle? Well, a lot of shuttles spawn with bots
+		// but docked at centcom, and I wanted those bots to also speak funny languages
+		return FALSE
+
+	/// The bot's language holder - so we can randomize and change their language
+	var/datum/language_holder/bot_languages = get_language_holder()
+	bot_languages.selected_language = bot_languages.get_random_spoken_uncommon_language()
+	return TRUE

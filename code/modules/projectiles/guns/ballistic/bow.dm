@@ -14,6 +14,7 @@
 	weapon_weight = WEAPON_HEAVY
 	w_class = WEIGHT_CLASS_BULKY
 	internal_magazine = TRUE
+	cartridge_wording = "arrow"
 	bolt_type = BOLT_TYPE_NO_BOLT
 	var/drawn = FALSE
 
@@ -38,7 +39,7 @@
 
 /obj/item/gun/ballistic/bow/attack_self(mob/user)
 	if(chambered)
-		to_chat(user, span_notice("You [drawn ? "release the tension on" : "draw the string on"] [src]."))
+		balloon_alert(user, "[drawn ? "string released" : "string drawn"]")
 		drawn = !drawn
 	update_appearance()
 
@@ -68,6 +69,7 @@
 	name = "arrow"
 	desc = "Stabby Stabman!"
 	icon_state = "arrow"
+	inhand_icon_state = "arrow"
 	flags_1 = NONE
 	throwforce = 1
 	projectile_type = /obj/projectile/bullet/reusable/arrow
@@ -97,7 +99,7 @@
 	name = "quiver"
 	desc = "Holds arrows for your bow. Good, because while pocketing arrows is possible, it surely can't be pleasant."
 	icon_state = "quiver"
-	inhand_icon_state = "quiver"
+	inhand_icon_state = null
 	worn_icon_state = "harpoon_quiver"
 	var/arrow_path = /obj/item/ammo_casing/caseless/arrow
 

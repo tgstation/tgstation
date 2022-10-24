@@ -28,11 +28,15 @@
 /datum/antagonist/nukeop/proc/equip_op()
 	if(!ishuman(owner.current))
 		return
-	var/mob/living/carbon/human/H = owner.current
 
-	H.set_species(/datum/species/human) //Plasamen burn up otherwise, and lizards are vulnerable to asimov AIs
+	var/mob/living/carbon/human/operative = owner.current
 
-	H.equipOutfit(nukeop_outfit)
+	if(!nukeop_outfit) // this variable is null in instances where an antagonist datum is granted via enslaving the mind (/datum/mind/proc/enslave_mind_to_creator), like in golems.
+		return
+
+	operative.set_species(/datum/species/human) //Plasmamen burn up otherwise, and besides, all other species are vulnerable to asimov AIs. Let's standardize all operatives being human.
+
+	operative.equipOutfit(nukeop_outfit)
 	return TRUE
 
 /datum/antagonist/nukeop/greet()
@@ -80,7 +84,7 @@
 		var/obj/machinery/nuclearbomb/syndicate/nuke = locate() in GLOB.nuke_list
 		if(nuke)
 			nuke_team.tracked_nuke = nuke
-			if(nuke.r_code == "ADMIN")
+			if(nuke.r_code == NUKE_CODE_UNSET)
 				nuke.r_code = nuke_team.memorized_code
 			else //Already set by admins/something else?
 				nuke_team.memorized_code = nuke.r_code
@@ -302,7 +306,7 @@
 		var/obj/machinery/nuclearbomb/selfdestruct/nuke = locate() in GLOB.nuke_list
 		if(nuke)
 			nuke_team.tracked_nuke = nuke
-			if(nuke.r_code == "ADMIN")
+			if(nuke.r_code == NUKE_CODE_UNSET)
 				nuke.r_code = nuke_team.memorized_code
 			else //Already set by admins/something else?
 				nuke_team.memorized_code = nuke.r_code

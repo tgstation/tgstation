@@ -16,6 +16,10 @@
 	var/tomail = FALSE // contains wrapped package
 	var/hasmob = FALSE // contains a mob
 
+/obj/structure/disposalholder/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_WEATHER_IMMUNE, REF(src))
+
 /obj/structure/disposalholder/Destroy()
 	active = FALSE
 	last_pipe = null
@@ -57,7 +61,7 @@
 // start the movement process
 // argument is the disposal unit the holder started in
 /obj/structure/disposalholder/proc/start(obj/machinery/disposal/D)
-	if(!D.trunk)
+	if(QDELETED(D.trunk))
 		D.expel(src) // no trunk connected, so expel immediately
 		return
 	forceMove(D.trunk)

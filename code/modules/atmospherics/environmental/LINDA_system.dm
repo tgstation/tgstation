@@ -86,7 +86,9 @@
 			continue
 		// The assumption is that ONLY DURING INIT if two tiles have the same cycle, there's no way canpass(a->b) will be different then canpass(b->a), so this is faster
 		// Saves like 1.2 seconds
-		if(current_turf.current_cycle >= current_cycle)
+		// Note: current cycle here goes DOWN as we sleep. this is to ensure we can use the >= logic in the first step of process_cell
+		// It's not a massive thing, and I'm sorry for the cursed code, but it be this way
+		if(current_turf.current_cycle <= current_cycle)
 			continue
 
 		//Can you and me form a deeper relationship, or is this just a passing wind
@@ -207,7 +209,7 @@
 	if(!text || !air)
 		return
 
-	var/datum/gas_mixture/turf_mixture = SSair.parse_gas_string(text)
+	var/datum/gas_mixture/turf_mixture = SSair.parse_gas_string(text, /datum/gas_mixture/turf)
 
 	air.merge(turf_mixture)
 	archive()

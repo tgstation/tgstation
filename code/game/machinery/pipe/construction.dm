@@ -55,7 +55,7 @@ Buildable meters
 	update()
 	pixel_x += rand(-5, 5)
 	pixel_y += rand(-5, 5)
-	
+
 	//Flipping handled manually due to custom handling for trinary pipes
 	AddComponent(/datum/component/simple_rotation, ROTATION_NO_FLIPPING)
 	return ..()
@@ -294,7 +294,7 @@ Buildable meters
 			C.vomit(0, TRUE, FALSE, 4, FALSE)
 			if(prob(20))
 				C.spew_organ()
-			sleep(5)
+			sleep(0.5 SECONDS)
 		C.blood_volume = 0
 	return(OXYLOSS|BRUTELOSS)
 

@@ -5,26 +5,21 @@
 	requires_power = TRUE
 	always_unpowered = TRUE
 	static_lighting = FALSE
-	area_has_base_lighting = FALSE
 
+	base_lighting_alpha = 255
 	power_light = FALSE
 	power_equip = FALSE
 	power_environ = FALSE
-	area_flags = UNIQUE_AREA | NO_ALERTS
+	area_flags = UNIQUE_AREA
 	outdoors = TRUE
 	ambience_index = AMBIENCE_SPACE
 	flags_1 = CAN_BE_DIRTY_1
 	sound_environment = SOUND_AREA_SPACE
 	ambient_buzz = null //Space is deafeningly quiet
 
-/area/space/Initialize(mapload)
-	. = ..()
-
-	add_overlay(GLOB.fullbright_overlay)
-
 /area/space/nearstation
 	icon_state = "space_near"
-	area_flags = UNIQUE_AREA | NO_ALERTS | AREA_USES_STARLIGHT
+	area_flags = UNIQUE_AREA | AREA_USES_STARLIGHT
 
 /area/misc/start
 	name = "start area"

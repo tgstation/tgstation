@@ -98,13 +98,13 @@
 						while(AI.stat != DEAD && flush)
 							AI.adjustOxyLoss(5)
 							AI.updatehealth()
-							sleep(5)
+							sleep(0.5 SECONDS)
 						flush = FALSE
 			. = TRUE
 		if("wireless")
 			AI.control_disabled = !AI.control_disabled
 			if(!AI.control_disabled)
-				AI.interaction_range = null
+				AI.interaction_range = INFINITY
 			else
 				AI.interaction_range = 0
 			to_chat(AI, span_warning("[src]'s wireless port has been [AI.control_disabled ? "disabled" : "enabled"]!"))

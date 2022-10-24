@@ -1,6 +1,7 @@
 /obj/item/food/burger
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "hburger"
+	inhand_icon_state = "burger"
 	bite_consumption = 3
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("bun" = 2, "beef patty" = 4)
@@ -49,6 +50,7 @@
 	name = "corgi burger"
 	desc = "You monster."
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 6)
+	tastes = list("bun" = 4, "corgi meat" = 2)
 	foodtypes = GRAIN | MEAT | GORE
 	venue_value = FOOD_PRICE_EXOTIC
 
@@ -112,6 +114,7 @@
 	desc = "Best served rawr."
 	icon_state = "bearger"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 5)
+	tastes = list("bun" = 2, "meat" = 2, "salmon" = 2)
 	foodtypes = GRAIN | MEAT
 	venue_value = FOOD_PRICE_EXOTIC
 
@@ -120,6 +123,7 @@
 	desc = "This tastes funny..."
 	icon_state = "clownburger"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 6)
+	tastes = list("bun" = 2, "a bad joke" = 4)
 	foodtypes = GRAIN | FRUIT
 	venue_value = FOOD_PRICE_NORMAL
 
@@ -308,6 +312,7 @@
 	desc = "HOT! HOT!"
 	icon_state = "fivealarmburger"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/capsaicin = 5, /datum/reagent/consumable/condensedcapsaicin = 5, /datum/reagent/consumable/nutriment/vitamin = 6)
+	tastes = list("extreme heat" = 4, "bun" = 2)
 	foodtypes = GRAIN | MEAT
 	venue_value = FOOD_PRICE_NORMAL
 
@@ -316,6 +321,7 @@
 	desc = "Pretty much what you'd expect..."
 	icon_state = "ratburger"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
+	tastes = list("dead rat" = 4, "bun" = 2)
 	foodtypes = GRAIN | MEAT | GORE
 	venue_value = FOOD_PRICE_CHEAP
 
@@ -324,6 +330,7 @@
 	desc = "It's still warm. The steam coming off of it looks like baseball."
 	icon_state = "baseball"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
+	tastes = list("bun" = 2, "a home run" = 4)
 	foodtypes = GRAIN | GROSS
 	custom_price = PAYCHECK_CREW * 0.8
 	venue_value = FOOD_PRICE_NORMAL

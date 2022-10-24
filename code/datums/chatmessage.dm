@@ -168,7 +168,22 @@
 
 	// Approximate text height
 	var/complete_text = "<span class='center [extra_classes.Join(" ")]' style='color: [tgt_color]'>[owner.say_emphasis(text)]</span>"
-	var/mheight = WXH_TO_HEIGHT(owned_by.MeasureText(complete_text, null, CHAT_MESSAGE_WIDTH))
+
+	var/mheight
+	WXH_TO_HEIGHT(owned_by.MeasureText(complete_text, null, CHAT_MESSAGE_WIDTH), mheight)
+
+
+	if(!TICK_CHECK)
+		return finish_image_generation(mheight, target, owner, complete_text, lifespan)
+
+	var/datum/callback/our_callback = CALLBACK(src, .proc/finish_image_generation, mheight, target, owner, complete_text, lifespan)
+	SSrunechat.message_queue += our_callback
+	return
+
+///finishes the image generation after the MeasureText() call in generate_image().
+///necessary because after that call the proc can resume at the end of the tick and cause overtime.
+/datum/chatmessage/proc/finish_image_generation(mheight, atom/target, mob/owner, complete_text, lifespan)
+
 	approx_lines = max(1, mheight / CHAT_MESSAGE_APPROX_LHEIGHT)
 
 	// Translate any existing messages upwards, apply exponential decay factors to timers
@@ -176,8 +191,7 @@
 	if (owned_by.seen_messages)
 		var/idx = 1
 		var/combined_height = approx_lines
-		for(var/msg in owned_by.seen_messages[message_loc])
-			var/datum/chatmessage/m = msg
+		for(var/datum/chatmessage/m as anything in owned_by.seen_messages[message_loc])
 			animate(m.message, pixel_y = m.message.pixel_y + mheight, time = CHAT_MESSAGE_SPAWN_TIME)
 			combined_height += m.approx_lines
 
@@ -185,7 +199,7 @@
 			// scheduled time once the EOL has been executed.
 			if (!m.isFading)
 				var/sched_remaining = timeleft(m.fadertimer, SSrunechat)
-				var/remaining_time = (sched_remaining) * (CHAT_MESSAGE_EXP_DECAY ** idx++) * (CHAT_MESSAGE_HEIGHT_DECAY ** combined_height)
+				var/remaining_time = max(0, (sched_remaining) * (CHAT_MESSAGE_EXP_DECAY ** idx++) * (CHAT_MESSAGE_HEIGHT_DECAY ** combined_height))
 				if (remaining_time)
 					deltimer(m.fadertimer, SSrunechat)
 					m.fadertimer = addtimer(CALLBACK(m, .proc/end_of_life), remaining_time, TIMER_STOPPABLE|TIMER_DELETE_ME, SSrunechat)
@@ -198,7 +212,7 @@
 
 	// Build message image
 	message = image(loc = message_loc, layer = CHAT_LAYER + CHAT_LAYER_Z_STEP * current_z_idx++)
-	message.plane = RUNECHAT_PLANE
+	SET_PLANE_EXPLICIT(message, RUNECHAT_PLANE, message_loc)
 	message.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA | KEEP_APART
 	message.alpha = 0
 	message.pixel_y = target.maptext_height
@@ -212,6 +226,7 @@
 	LAZYADDASSOCLIST(owned_by.seen_messages, message_loc, src)
 	owned_by.images |= message
 	animate(message, alpha = 255, time = CHAT_MESSAGE_SPAWN_TIME)
+	RegisterSignal(message_loc, COMSIG_MOVABLE_Z_CHANGED, .proc/loc_z_changed)
 
 	// Register with the runechat SS to handle EOL and destruction
 	var/duration = lifespan - CHAT_MESSAGE_EOL_FADE
@@ -228,6 +243,10 @@
 	isFading = TRUE
 	animate(message, alpha = 0, time = fadetime, flags = ANIMATION_PARALLEL)
 	addtimer(CALLBACK(GLOBAL_PROC, /proc/qdel, src), fadetime, TIMER_DELETE_ME, SSrunechat)
+
+/datum/chatmessage/proc/loc_z_changed(datum/source, turf/old_turf, turf/new_turf, same_z_layer)
+	SIGNAL_HANDLER
+	SET_PLANE(message, RUNECHAT_PLANE, new_turf)
 
 /**
  * Creates a message overlay at a defined location for a given speaker

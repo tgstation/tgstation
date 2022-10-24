@@ -16,6 +16,7 @@
 	exp_required_type = EXP_TYPE_CREW
 	exp_required_type_department = EXP_TYPE_SECURITY
 	exp_granted_type = EXP_TYPE_CREW
+	config_tag = "HEAD_OF_SECURITY"
 
 	outfit = /datum/outfit/job/hos
 	plasmaman_outfit = /datum/outfit/plasmaman/head_of_security
@@ -61,7 +62,7 @@
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 	gloves = /obj/item/clothing/gloves/color/black
 	head = /obj/item/clothing/head/hos/beret
-	shoes = /obj/item/clothing/shoes/jackboots
+	shoes = /obj/item/clothing/shoes/jackboots/sec
 	l_pocket = /obj/item/restraints/handcuffs
 	r_pocket = /obj/item/assembly/flash/handheld
 

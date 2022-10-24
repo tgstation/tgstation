@@ -1,5 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - bugfix: "Mining station's access was reverted, and Curators once again can access it. Supply security officers also once again only have access to it during elevated access."
-  - qol: "'Mining' access is now named 'Mining Dock' while 'Mining EVA' is now named 'Mining Outpost', to better reflect what they are."

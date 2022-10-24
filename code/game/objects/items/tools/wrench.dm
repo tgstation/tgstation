@@ -3,6 +3,7 @@
 	desc = "A wrench with common uses. Can be found in your hand."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "wrench"
+	inhand_icon_state = "wrench"
 	worn_icon_state = "wrench"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
@@ -32,7 +33,6 @@
 	name = "alien wrench"
 	desc = "A polarized wrench. It causes anything placed between the jaws to turn."
 	icon = 'icons/obj/abductor.dmi'
-	icon_state = "wrench"
 	belt_icon_state = "wrench_alien"
 	custom_materials = list(/datum/material/iron = 5000, /datum/material/silver = 2500, /datum/material/plasma = 1000, /datum/material/titanium = 2000, /datum/material/diamond = 2000)
 	usesound = 'sound/effects/empulse.ogg'
@@ -43,6 +43,7 @@
 	name = "medical wrench"
 	desc = "A medical wrench with common(medical?) uses. Can be found in your hand."
 	icon_state = "wrench_medical"
+	inhand_icon_state = "wrench_medical"
 	force = 2 //MEDICAL
 	throwforce = 4
 	attack_verb_continuous = list("heals", "medicals", "taps", "pokes", "analyzes") //"cobbyed"
@@ -65,7 +66,7 @@
 
 	// Let the sound effect finish playing
 	add_fingerprint(user)
-	sleep(20)
+	sleep(2 SECONDS)
 	if(!user)
 		return
 	for(var/obj/item/suicide_wrench in user)
@@ -85,6 +86,7 @@
 	name = "combat wrench"
 	desc = "It's like a normal wrench but edgier. Can be found on the battlefield."
 	icon_state = "wrench_combat"
+	inhand_icon_state = "wrench_combat"
 	belt_icon_state = "wrench_combat"
 	attack_verb_continuous = list("devastates", "brutalizes", "commits a war crime against", "obliterates", "humiliates")
 	attack_verb_simple = list("devastate", "brutalize", "commit a war crime against", "obliterate", "humiliate")

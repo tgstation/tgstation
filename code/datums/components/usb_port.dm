@@ -37,6 +37,8 @@
 		var/obj/item/circuit_component/component = circuit_component
 		if(ispath(circuit_component))
 			component = new circuit_component(null)
+		if(!should_register)
+			component.register_usb_parent(parent)
 		RegisterSignal(component, COMSIG_CIRCUIT_COMPONENT_SAVE, .proc/save_component)
 		circuit_components += component
 

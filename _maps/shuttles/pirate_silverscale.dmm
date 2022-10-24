@@ -108,14 +108,14 @@
 /area/shuttle/pirate)
 "em" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/yellow/warning,
 /turf/open/floor/plating/airless,
 /area/shuttle/pirate)
 "eK" = (
-/obj/structure/shuttle/engine/router,
+/obj/machinery/power/shuttle_engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/pirate)
 "eU" = (
@@ -175,7 +175,7 @@
 /area/shuttle/pirate)
 "hF" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/yellow/warning{
@@ -258,7 +258,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/pirate)
 "mz" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/yellow/warning{
@@ -273,7 +273,7 @@
 /turf/open/floor/carpet/royalblack,
 /area/shuttle/pirate)
 "nm" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/yellow/warning{
@@ -293,7 +293,7 @@
 /area/shuttle/pirate)
 "nK" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
 /obj/effect/turf_decal/trimline/yellow/warning{
@@ -354,7 +354,7 @@
 /turf/open/floor/carpet/royalblack,
 /area/shuttle/pirate)
 "vw" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 8
 	},
 /obj/effect/turf_decal/trimline/yellow/warning{
@@ -490,7 +490,7 @@
 /area/shuttle/pirate)
 "AE" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
 /obj/effect/turf_decal/trimline/yellow/warning,
@@ -516,7 +516,7 @@
 	dir = 4;
 	dwidth = 13;
 	height = 3;
-	shuttle_id = "pirateship_home";
+	shuttle_id = "pirate_home";
 	name = "Deep Space";
 	width = 26
 	},
@@ -703,7 +703,7 @@
 	},
 /area/shuttle/pirate)
 "Mu" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
@@ -918,7 +918,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/pirate)
 "UJ" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 8
 	},
 /obj/effect/turf_decal/trimline/yellow/warning{
@@ -932,7 +932,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "Ww" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,

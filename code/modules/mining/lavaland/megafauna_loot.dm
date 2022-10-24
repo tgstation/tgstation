@@ -182,7 +182,7 @@
 			new /obj/effect/temp_visual/hierophant/blast/visual(t, user, TRUE)
 		for(var/mob/living/L in range(1, source))
 			INVOKE_ASYNC(src, .proc/teleport_mob, source, L, T, user)
-		sleep(6) //at this point the blasts detonate
+		sleep(0.6 SECONDS) //at this point the blasts detonate
 		if(beacon)
 			beacon.icon_state = "hierophant_tele_off"
 	else
@@ -199,19 +199,19 @@
 	if(!turf_to_teleport_to || turf_to_teleport_to.is_blocked_turf(TRUE))
 		return
 	animate(teleporting, alpha = 0, time = 2, easing = EASE_OUT) //fade out
-	sleep(1)
+	sleep(0.1 SECONDS)
 	if(!teleporting)
 		return
 	teleporting.visible_message(span_hierophant_warning("[teleporting] fades out!"))
-	sleep(2)
+	sleep(0.2 SECONDS)
 	if(!teleporting)
 		return
 	var/success = do_teleport(teleporting, turf_to_teleport_to, no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC)
-	sleep(1)
+	sleep(0.1 SECONDS)
 	if(!teleporting)
 		return
 	animate(teleporting, alpha = 255, time = 2, easing = EASE_IN) //fade IN
-	sleep(1)
+	sleep(0.1 SECONDS)
 	if(!teleporting)
 		return
 	teleporting.visible_message(span_hierophant_warning("[teleporting] fades in!"))
@@ -278,13 +278,14 @@
 	var/mob/living/carbon/wearer = loc
 	if(istype(wearer) && DT_PROB(1, delta_time)) //cursed by bubblegum
 		if(prob(7.5))
-			new /datum/hallucination/oh_yeah(wearer)
-			to_chat(wearer, span_colossus("<b>[pick("I AM IMMORTAL.","I SHALL TAKE BACK WHAT'S MINE.","I SEE YOU.","YOU CANNOT ESCAPE ME FOREVER.","DEATH CANNOT HOLD ME.")]</b>"))
+			wearer.cause_hallucination(/datum/hallucination/oh_yeah, "H.E.C.K suit", haunt_them = TRUE)
 		else
 			to_chat(wearer, span_warning("[pick("You hear faint whispers.","You smell ash.","You feel hot.","You hear a roar in the distance.")]"))
 
 /obj/item/clothing/head/hooded/hostile_environment
 	name = "H.E.C.K. helmet"
+	icon = 'icons/obj/clothing/head/helmet.dmi'
+	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
 	desc = "Hostile Environiment Cross-Kinetic Helmet: A helmet designed to withstand the wide variety of hazards from Lavaland. It wasn't enough for its last owner."
 	icon_state = "hostile_env"
 	w_class = WEIGHT_CLASS_NORMAL
@@ -342,6 +343,7 @@
 	desc = "An old relic of hell created by devils to establish themselves as the leadership of hell over the demons. It grows stronger while it possesses a powerful soul."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "soulscythe"
+	inhand_icon_state = "soulscythe"
 	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
 	attack_verb_continuous = list("chops", "slices", "cuts", "reaps")
@@ -708,7 +710,19 @@
 	switch(random)
 		if(1)
 			to_chat(user, span_danger("Your appearance morphs to that of a very small humanoid ash dragon! You get to look like a freak without the cool abilities."))
-			consumer.dna.features = list("mcolor" = "#A02720", "tail_lizard" = "Dark Tiger", "tail_human" = "None", "snout" = "Sharp", "horns" = "Curled", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "Long", "body_markings" = "Dark Tiger Body", "legs" = "Digitigrade Legs")
+			consumer.dna.features = list(
+				"mcolor" = "#A02720",
+				"tail_lizard" = "Dark Tiger",
+				"tail_human" = "None",
+				"snout" = "Sharp",
+				"horns" = "Curled",
+				"ears" = "None",
+				"wings" = "None",
+				"frills" = "None",
+				"spines" = "Long",
+				"body_markings" = "Dark Tiger Body",
+				"legs" = DIGITIGRADE_LEGS,
+			)
 			consumer.eye_color_left = "#FEE5A3"
 			consumer.eye_color_right = "#FEE5A3"
 			consumer.set_species(/datum/species/lizard)
@@ -730,6 +744,7 @@
 	name = "staff of lava"
 	desc = "The ability to fill the emergency shuttle with lava. What more could you want out of life?"
 	icon_state = "lavastaff"
+	inhand_icon_state = "lavastaff"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	icon = 'icons/obj/weapons/guns/magic.dmi'
@@ -804,6 +819,7 @@
 	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
 	icon_state = "cleaving_saw"
+	inhand_icon_state = "cleaving_saw"
 	worn_icon_state = "cleaving_saw"
 	attack_verb_continuous = list("attacks", "saws", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "saw", "slice", "tear", "lacerate", "rip", "dice", "cut")
@@ -923,6 +939,7 @@
 	name = "staff of storms"
 	desc = "An ancient staff retrieved from the remains of Legion. The wind stirs as you move it."
 	icon_state = "staffofstorms"
+	inhand_icon_state = "staffofstorms"
 	icon = 'icons/obj/weapons/guns/magic.dmi'
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'

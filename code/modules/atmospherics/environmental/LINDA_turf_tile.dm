@@ -77,7 +77,7 @@
 ///Copies all gas info from the turf into a new gas_mixture, along with our temperature
 ///Returns the created gas_mixture
 /turf/proc/create_gas_mixture()
-	var/datum/gas_mixture/mix = SSair.parse_gas_string(initial_gas_mix)
+	var/datum/gas_mixture/mix = SSair.parse_gas_string(initial_gas_mix, /datum/gas_mixture/turf)
 
 	//acounts for changes in temperature
 	var/turf/parent = parent_type
@@ -174,7 +174,7 @@
 	var/list/gases = air.gases
 
 	var/list/new_overlay_types
-	GAS_OVERLAYS(gases, new_overlay_types)
+	GAS_OVERLAYS(gases, new_overlay_types, src)
 
 	if (atmos_overlay_types)
 		for(var/overlay in atmos_overlay_types-new_overlay_types) //doesn't remove overlays that would only be added
@@ -351,10 +351,12 @@
 		else
 			enemy_tile.consider_pressure_difference(src, difference)
 
-	our_air.react(src)
+	var/reacting = our_air.react(src)
+	if(our_excited_group)
+		our_excited_group.turf_reactions |= reacting //Adds the flag to turf_reactions so excited groups can check for them before dismantling.
 
 	update_visuals()
-	if(!consider_superconductivity(starting = TRUE) && !active_hotspot) //Might need to include the return of react() here
+	if(!consider_superconductivity(starting = TRUE) && !active_hotspot && !(reacting & (REACTING | STOP_REACTIONS)))
 		if(!our_excited_group) //If nothing of interest is happening, kill the active turf
 			SSair.remove_from_active(src) //This will kill any connected excited group, be careful (This broke atmos for 4 years)
 		if(cached_ticker > EXCITED_GROUP_DISMANTLE_CYCLES) //If you're stalling out, take a rest
@@ -413,6 +415,8 @@
 	var/display_id = 0
 	///Wrapping loop of the index colors
 	var/static/wrapping_id = 0
+	///All turf reaction flags we have received.
+	var/turf_reactions = NONE
 
 /datum/excited_group/New()
 	SSair.excited_groups += src
@@ -529,12 +533,14 @@
 		display_id = wrapping_id
 	for(var/thing in turf_list)
 		var/turf/display = thing
-		display.vis_contents += GLOB.colored_turfs[display_id]
+		var/offset = GET_Z_PLANE_OFFSET(display.z) + 1
+		display.vis_contents += GLOB.colored_turfs[display_id][offset]
 
 /datum/excited_group/proc/hide_turfs()
 	for(var/thing in turf_list)
 		var/turf/display = thing
-		display.vis_contents -= GLOB.colored_turfs[display_id]
+		var/offset = GET_Z_PLANE_OFFSET(display.z) + 1
+		display.vis_contents -= GLOB.colored_turfs[display_id][offset]
 	display_id = 0
 
 /datum/excited_group/proc/display_turf(turf/thing)
@@ -542,7 +548,8 @@
 		wrapping_id = wrapping_id % GLOB.colored_turfs.len
 		wrapping_id++ //We do this after because lists index at 1
 		display_id = wrapping_id
-	thing.vis_contents += GLOB.colored_turfs[display_id]
+	var/offset = GET_Z_PLANE_OFFSET(thing.z) + 1
+	thing.vis_contents += GLOB.colored_turfs[display_id][offset]
 
 ////////////////////////SUPERCONDUCTIVITY/////////////////////////////
 

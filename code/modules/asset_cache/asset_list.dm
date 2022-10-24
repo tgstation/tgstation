@@ -159,6 +159,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		CRASH("spritesheet [type] cannot register without a name")
 
 	if (!should_refresh() && read_from_cache())
+		fully_generated = TRUE
 		return
 
 	// If it's cached, may as well load it now, while the loading is cheap
@@ -355,7 +356,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		size[SPRSZ_STRIPPED] = null
 		sheet_copy.Insert(I, icon_state=sprite_name)
 		size[SPRSZ_ICON] = sheet_copy
-		
+
 		sprites[sprite_name] = list(size_id, position)
 	else
 		sizes[size_id] = size = list(1, I, null)

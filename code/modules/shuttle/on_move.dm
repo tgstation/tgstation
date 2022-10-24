@@ -115,7 +115,8 @@ All ShuttleMove procs go here
 /atom/movable/proc/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	var/turf/newT = get_turf(src)
 	if (newT.z != oldT.z)
-		on_changed_z_level(oldT, newT)
+		var/same_z_layer = (GET_TURF_PLANE_OFFSET(oldT) == GET_TURF_PLANE_OFFSET(newT))
+		on_changed_z_level(oldT, newT, same_z_layer)
 
 	if(light)
 		update_light()
@@ -327,7 +328,7 @@ All ShuttleMove procs go here
 	Connect_cable(TRUE)
 	propagate_if_no_network()
 
-/obj/structure/shuttle/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)
+/obj/machinery/power/shuttle_engine/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)
 	. = ..()
 	if(. & MOVE_AREA)
 		. |= MOVE_CONTENTS
@@ -357,6 +358,10 @@ All ShuttleMove procs go here
 
 // Never move the stationary docking port, otherwise things get WEIRD
 /obj/docking_port/stationary/onShuttleMove()
+	return FALSE
+
+// Holy shit go away
+/obj/effect/abstract/z_holder/onShuttleMove()
 	return FALSE
 
 // Special movable stationary port, for your mothership shenanigans

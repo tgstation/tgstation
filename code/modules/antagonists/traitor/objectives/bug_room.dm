@@ -169,6 +169,7 @@
 		return
 	forceMove(target)
 	target.vis_contents += src
+	vis_flags |= VIS_INHERIT_PLANE
 	planted_on = target
 	RegisterSignal(planted_on, COMSIG_PARENT_QDELETING, .proc/handle_planted_on_deletion)
 	SEND_SIGNAL(src, COMSIG_TRAITOR_BUG_PLANTED_OBJECT, target)
@@ -178,16 +179,21 @@
 
 /obj/item/traitor_bug/Destroy()
 	if(planted_on)
+		vis_flags &= ~VIS_INHERIT_PLANE
 		planted_on.vis_contents -= src
 	return ..()
 
 /obj/item/traitor_bug/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(planted_on)
+		vis_flags &= ~VIS_INHERIT_PLANE
 		planted_on.vis_contents -= src
 		anchored = FALSE
 		UnregisterSignal(planted_on, COMSIG_PARENT_QDELETING)
 		planted_on = null
+
+/obj/item/traitor_bug/attackby_storage_insert(datum/storage, atom/storage_holder, mob/user)
+	return !istype(storage_holder, target_object_type)
 
 /obj/structure/traitor_bug
 	name = "suspicious device"

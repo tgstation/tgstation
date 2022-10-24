@@ -98,8 +98,7 @@
 	if(TIMER_COOLDOWN_CHECK(src, REF(user))) //prevents mining turfs in progress
 		return
 	TIMER_COOLDOWN_START(src, REF(user), hand_mine_speed)
-	var/skill_modifier = 1
-	skill_modifier = user?.mind.get_skill_modifier(/datum/skill/mining, SKILL_SPEED_MODIFIER)
+	var/skill_modifier = user.mind?.get_skill_modifier(/datum/skill/mining, SKILL_SPEED_MODIFIER) || 1
 	balloon_alert(user, "pulling out pieces...")
 	if(!do_after(user, hand_mine_speed * skill_modifier, target = src))
 		TIMER_COOLDOWN_END(src, REF(user)) //if we fail we can start again immediately
@@ -539,10 +538,10 @@
 		defuse()
 	..()
 
-/turf/closed/mineral/gibtonite/proc/explosive_reaction(mob/user = null, triggered_by_explosion = 0)
+/turf/closed/mineral/gibtonite/proc/explosive_reaction(mob/user = null)
 	if(stage == GIBTONITE_UNSTRUCK)
 		activated_overlay = mutable_appearance('icons/turf/smoothrocks.dmi', "rock_Gibtonite_inactive", ON_EDGED_TURF_LAYER) //shows in gaps between pulses if there are any
-		activated_overlay.plane = GAME_PLANE_UPPER
+		SET_PLANE(activated_overlay, GAME_PLANE_UPPER, src)
 		add_overlay(activated_overlay)
 		name = "gibtonite deposit"
 		desc = "An active gibtonite reserve. Run!"
@@ -551,8 +550,8 @@
 
 		var/notify_admins = !is_mining_level(z)
 
-		if(!triggered_by_explosion)
-			log_bomber(user, "has trigged a gibtonite deposit reaction via", src, null, notify_admins)
+		if(user)
+			log_bomber(user, "has triggered a gibtonite deposit reaction via", src, null, notify_admins)
 		else
 			log_bomber(null, "An explosion has triggered a gibtonite deposit reaction via", src, null, notify_admins)
 
@@ -563,7 +562,7 @@
 	while(istype(src, /turf/closed/mineral/gibtonite) && stage == GIBTONITE_ACTIVE && det_time > 0 && mineralAmt >= 1)
 		flick_overlay_view(image('icons/turf/smoothrocks.dmi', src, "rock_Gibtonite_active"), src, 5) //makes the animation pulse one time per tick
 		det_time--
-		sleep(5)
+		sleep(0.5 SECONDS)
 	if(istype(src, /turf/closed/mineral/gibtonite))
 		if(stage == GIBTONITE_ACTIVE && det_time <= 0 && mineralAmt >= 1)
 			var/turf/bombturf = get_turf(src)
@@ -585,7 +584,7 @@
 /turf/closed/mineral/gibtonite/gets_drilled(mob/user, give_exp = FALSE, triggered_by_explosion = FALSE)
 	if(stage == GIBTONITE_UNSTRUCK && mineralAmt >= 1) //Gibtonite deposit is activated
 		playsound(src,'sound/effects/hit_on_shattered_glass.ogg',50,TRUE)
-		explosive_reaction(user, triggered_by_explosion)
+		explosive_reaction(user)
 		return
 	if(stage == GIBTONITE_ACTIVE && mineralAmt >= 1) //Gibtonite deposit goes kaboom
 		var/turf/bombturf = get_turf(src)

@@ -210,14 +210,14 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		var/list/turfs = list()
 		for(var/turf/T in contents)
 			turfs += T
-		map_generator.generate_terrain(turfs)
+		map_generator.generate_terrain(turfs, src)
 
 /area/proc/test_gen()
 	if(map_generator)
 		var/list/turfs = list()
 		for(var/turf/T in contents)
 			turfs += T
-		map_generator.generate_terrain(turfs)
+		map_generator.generate_terrain(turfs, src)
 
 
 /**
@@ -272,8 +272,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  * Alarm auto resets after 600 ticks
  */
 /area/proc/burglaralert(obj/trigger)
-	if (area_flags & NO_ALERTS)
-		return
 	//Trigger alarm effect
 	set_fire_effect(TRUE)
 	//Lockdown airlocks

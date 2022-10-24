@@ -10,6 +10,7 @@
 	gain_text = "<span class='notice'>You feel like you could drink a whole keg!</span>"
 	lose_text = "<span class='danger'>You don't feel as resistant to alcohol anymore. Somehow.</span>"
 	medical_record_text = "Patient demonstrates a high tolerance for alcohol."
+	mail_goodies = list(/obj/item/skillchip/wine_taster)
 
 /datum/quirk/apathetic
 	name = "Apathetic"
@@ -18,6 +19,7 @@
 	value = 4
 	mood_quirk = TRUE
 	medical_record_text = "Patient was administered the Apathy Evaluation Scale but did not bother to complete it."
+	mail_goodies = list(/obj/item/hourglass)
 
 /datum/quirk/apathetic/add()
 	if (quirk_holder.mob_mood)
@@ -36,6 +38,7 @@
 	lose_text = "<span class='danger'>You no longer feel like drinking would ease your pain.</span>"
 	medical_record_text = "Patient has unusually efficient liver metabolism and can slowly regenerate wounds by drinking alcoholic beverages."
 	processing_quirk = TRUE
+	mail_goodies = list(/obj/effect/spawner/random/food_or_drink/booze)
 
 /datum/quirk/drunkhealing/process(delta_time)
 	switch(quirk_holder.get_drunk_amount())
@@ -58,6 +61,7 @@
 	gain_text = "<span class='notice'>You feel in tune with those around you.</span>"
 	lose_text = "<span class='danger'>You feel isolated from others.</span>"
 	medical_record_text = "Patient is highly perceptive of and sensitive to social cues, or may possibly have ESP. Further testing needed."
+	mail_goodies = list(/obj/item/toy/foamfinger)
 
 /datum/quirk/item_quirk/clown_enjoyer
 	name = "Clown Enjoyer"
@@ -68,6 +72,18 @@
 	gain_text = "<span class='notice'>You are a big enjoyer of clowns.</span>"
 	lose_text = "<span class='danger'>The clown doesn't seem so great.</span>"
 	medical_record_text = "Patient reports being a big enjoyer of clowns."
+	mail_goodies = list(
+		/obj/item/bikehorn,
+		/obj/item/stamp/clown,
+		/obj/item/megaphone/clown,
+		/obj/item/clothing/shoes/clown_shoes,
+		/obj/item/bedsheet/clown,
+		/obj/item/clothing/mask/gas/clown_hat,
+		/obj/item/storage/backpack/clown,
+		/obj/item/storage/backpack/duffelbag/clown,
+		/obj/item/toy/crayon/rainbow,
+		/obj/item/toy/figure/clown,
+	)
 
 /datum/quirk/item_quirk/clown_enjoyer/add_unique()
 	give_item_to_holder(/obj/item/clothing/accessory/clown_enjoyer_pin, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
@@ -85,6 +101,19 @@
 	gain_text = "<span class='notice'>You are a big fan of the Mime.</span>"
 	lose_text = "<span class='danger'>The mime doesn't seem so great.</span>"
 	medical_record_text = "Patient reports being a big fan of mimes."
+	mail_goodies = list(
+		/obj/item/toy/crayon/mime,
+		/obj/item/clothing/mask/gas/mime,
+		/obj/item/storage/backpack/mime,
+		/obj/item/clothing/under/rank/civilian/mime,
+		/obj/item/reagent_containers/cup/glass/bottle/bottleofnothing,
+		/obj/item/stamp/mime,
+		/obj/item/storage/box/hug/black/survival,
+		/obj/item/bedsheet/mime,
+		/obj/item/clothing/shoes/sneakers/mime,
+		/obj/item/toy/figure/mime,
+		/obj/item/toy/crayon/spraycan/mimecan,
+	)
 
 /datum/quirk/item_quirk/mime_fan/add_unique()
 	give_item_to_holder(/obj/item/clothing/accessory/mime_fan_pin, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
@@ -102,6 +131,7 @@
 	gain_text = "<span class='notice'>You feel lithe on your feet!</span>"
 	lose_text = "<span class='danger'>You feel clumsy again.</span>"
 	medical_record_text = "Patient scored highly on cardio tests."
+	mail_goodies = list(/obj/item/melee/skateboard, /obj/item/clothing/shoes/wheelys/rollerskates)
 
 /datum/quirk/friendly
 	name = "Friendly"
@@ -113,6 +143,7 @@
 	lose_text = "<span class='danger'>You no longer feel compelled to hug others.</span>"
 	mood_quirk = TRUE
 	medical_record_text = "Patient demonstrates low-inhibitions for physical contact and well-developed arms. Requesting another doctor take over this case."
+	mail_goodies = list(/obj/item/storage/box/hug)
 
 /datum/quirk/jolly
 	name = "Jolly"
@@ -122,6 +153,7 @@
 	mob_trait = TRAIT_JOLLY
 	mood_quirk = TRUE
 	medical_record_text = "Patient demonstrates constant euthymia irregular for environment. It's a bit much, to be honest."
+	mail_goodies = list(/obj/item/clothing/mask/joy)
 
 /datum/quirk/light_step
 	name = "Light Step"
@@ -132,6 +164,7 @@
 	gain_text = "<span class='notice'>You walk with a little more litheness.</span>"
 	lose_text = "<span class='danger'>You start tromping around like a barbarian.</span>"
 	medical_record_text = "Patient's dexterity belies a strong capacity for stealth."
+	mail_goodies = list(/obj/item/clothing/shoes/sandal)
 
 /datum/quirk/item_quirk/musician
 	name = "Musician"
@@ -142,6 +175,7 @@
 	gain_text = "<span class='notice'>You know everything about musical instruments.</span>"
 	lose_text = "<span class='danger'>You forget how musical instruments work.</span>"
 	medical_record_text = "Patient brain scans show a highly-developed auditory pathway."
+	mail_goodies = list(/obj/effect/spawner/random/entertainment/musical_instrument, /obj/item/instrument/piano_synth/headphones)
 
 /datum/quirk/item_quirk/musician/add_unique()
 	give_item_to_holder(/obj/item/choice_beacon/music, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
@@ -155,6 +189,11 @@
 	gain_text = "<span class='notice'>The shadows seem a little less dark.</span>"
 	lose_text = "<span class='danger'>Everything seems a little darker.</span>"
 	medical_record_text = "Patient's eyes show above-average acclimation to darkness."
+	mail_goodies = list(
+		/obj/item/flashlight/flashdark,
+		/obj/item/food/grown/mushroom/glowshroom/shadowshroom,
+		/obj/item/skillchip/light_remover,
+	)
 
 /datum/quirk/night_vision/add()
 	refresh_quirk_holder_eyes()
@@ -177,6 +216,7 @@
 	value = 8
 	mob_trait = TRAIT_SELF_AWARE
 	medical_record_text = "Patient demonstrates an uncanny knack for self-diagnosis."
+	mail_goodies = list(/obj/item/clothing/neck/stethoscope, /obj/item/skillchip/entrails_reader)
 
 /datum/quirk/skittish
 	name = "Skittish"
@@ -185,6 +225,7 @@
 	value = 8
 	mob_trait = TRAIT_SKITTISH
 	medical_record_text = "Patient demonstrates a high aversion to danger and has described hiding in containers out of fear."
+	mail_goodies = list(/obj/structure/closet/cardboard)
 
 /datum/quirk/item_quirk/spiritual
 	name = "Spiritual"
@@ -195,6 +236,13 @@
 	gain_text = "<span class='notice'>You have faith in a higher power.</span>"
 	lose_text = "<span class='danger'>You lose faith!</span>"
 	medical_record_text = "Patient reports a belief in a higher power."
+	mail_goodies = list(
+		/obj/item/storage/book/bible/booze,
+		/obj/item/reagent_containers/cup/glass/bottle/holywater,
+		/obj/item/bedsheet/chaplain,
+		/obj/item/toy/cards/deck/tarot,
+		/obj/item/storage/fancy/candle_box,
+	)
 
 /datum/quirk/item_quirk/spiritual/add_unique()
 	give_item_to_holder(/obj/item/storage/fancy/candle_box, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
@@ -209,6 +257,12 @@
 	gain_text = "<span class='notice'>You know how to tag walls efficiently.</span>"
 	lose_text = "<span class='danger'>You forget how to tag walls properly.</span>"
 	medical_record_text = "Patient was recently seen for possible paint huffing incident."
+	mail_goodies = list(
+		/obj/item/toy/crayon/spraycan,
+		/obj/item/canvas/nineteen_nineteen,
+		/obj/item/canvas/twentythree_nineteen,
+		/obj/item/canvas/twentythree_twentythree
+	)
 
 /datum/quirk/item_quirk/tagger/add_unique()
 	give_item_to_holder(/obj/item/toy/crayon/spraycan, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
@@ -221,3 +275,4 @@
 	mob_trait = TRAIT_VORACIOUS
 	gain_text = "<span class='notice'>You feel HONGRY.</span>"
 	lose_text = "<span class='danger'>You no longer feel HONGRY.</span>"
+	mail_goodies = list(/obj/effect/spawner/random/food_or_drink/dinner)
