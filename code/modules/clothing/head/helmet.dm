@@ -104,6 +104,7 @@
 
 
 /obj/item/clothing/head/helmet/toggleable
+	dog_fashion = null
 	var/toggle_message
 	var/alt_toggle_message
 
@@ -142,7 +143,6 @@
 	visor_flags_inv = HIDEFACE|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
-	dog_fashion = null
 
 /obj/item/clothing/head/helmet/toggleable/justice/can_toggle()
 	if(!COOLDOWN_FINISHED(src, visor_toggle_cooldown))
@@ -158,7 +158,6 @@
 	toggle_message = "You turn off the lights on"
 	alt_toggle_message = "You turn on the lights on"
 	actions_types = list(/datum/action/item_action/toggle_helmet_light)
-	dog_fashion = null
 	COOLDOWN_DECLARE(visor_toggle_cooldown)
 	///Looping sound datum for the siren helmet
 	var/datum/looping_sound/siren/weewooloop
@@ -182,8 +181,6 @@
 	name = "alarm helmet"
 	desc = "WEEEEOOO. WEEEEEOOO. STOP THAT MONKEY. WEEEOOOO."
 	icon_state = "justice2"
-	toggle_message = "You turn off the light on"
-	alt_toggle_message = "You turn on the light on"
 
 /obj/item/clothing/head/helmet/swat
 	name = "\improper SWAT helmet"
