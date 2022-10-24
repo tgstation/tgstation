@@ -128,7 +128,7 @@
 	desc = "Grants you Void Phase, a long range targeted teleport spell. \
 		Additionally causes damage to heathens around your original and target destination."
 	gain_text = "The entity calls themself the Aristocrat. They effortlessly walk through air like \
-		nothing - leaving a harsh, cold breeze in their wake. They disappear, and I am left in the snow."
+		nothing - leaving a harsh, cold breeze in their wake. They disappear, and I am left in the blizzard."
 	next_knowledge = list(
 		/datum/heretic_knowledge/blade_upgrade/void,
 		/datum/heretic_knowledge/reroll_targets,
