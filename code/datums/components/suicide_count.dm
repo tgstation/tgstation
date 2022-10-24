@@ -1,39 +1,40 @@
-// no extra data displayed (exclusively using callback)
-#define SUICIDE_VIS_NONE 0
-// displays suicide data to holyroles (chaplain)
-#define SUICIDE_VIS_HOLY 1
-// displays suicide data to everyone
-#define SUICIDE_VIS_ALL 2
+/*
+
+	A component designed to log and count who has suicided with the attached item.
+	If view_mode is HOLY, then only those spiritual enough are able to detect the ghosts' spirits.
+	If it's ALL, any old folk can come and examine for the suicide information.
+	Forensics scanners can always detect an item's suicide counts. (not implemented yet todo)
+	You may also specify a on_die callback, which could be used to update various other aspects with the number of suicides.
+
+*/
 
 /datum/component/suicide_count
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	var/view_mode
 	var/last_person
 	var/count = 0
-	var/datum/callback/ondie
+	var/datum/callback/on_die
 
-/datum/component/suicide_count/Initialize(_view_mode = SUICIDE_VIS_HOLY, datum/callback/_ondie)
+/datum/component/suicide_count/Initialize(view_mode = SUICIDE_VIS_HOLY, datum/callback/on_die)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	view_mode = _view_mode
-	ondie = _ondie
+	src.view_mode = view_mode
+	src.ondie = ondie
 
 /datum/component/suicide_count/RegisterWithParent()
-	. = ..()
 	RegisterSignal(parent, COMSIG_HUMAN_SUICIDE_COMPLETE, .proc/on_suicide)
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 
 /datum/component/suicide_count/UnregisterFromParent()
-	. = ..()
 	UnregisterSignal(parent, list(COMSIG_HUMAN_SUICIDE_COMPLETE, COMSIG_PARENT_EXAMINE))
 
-/datum/component/suicide_count/on_suicide(mob/living/user)
+/datum/component/suicide_count/on_suicide(mob/living/source)
 	SIGNAL_HANDLER
-	if(!istype(user))
+	if(!istype(source))
 		return
 
-	last_person = user.real_name
+	last_person = source.real_name
 	count++
 
 /datum/component/suicide_count/on_examine(atom/source, mob/user, list/examine_list)
@@ -54,8 +55,9 @@
 		)
 
 	if(count)
-		var/wrong_guess = max(2, collective + rand(-3, 3))
+		var/wrong_guess = max(2, count + rand(-2, 2))
 		examine_list += span_notice(
-			is_holy ? "You can sense a collective of [collective] lost souls who met the same fate." : \
-			"This item reminds you of [wrong_guess] others, you'd guess."
+			is_holy \
+				? "You can sense a collective of [count] lost souls who met the same fate." \
+				: "This item reminds you of [wrong_guess] others, you'd guess."
 		)
