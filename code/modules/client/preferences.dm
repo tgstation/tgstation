@@ -94,7 +94,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	for (var/middleware_type in subtypesof(/datum/preference_middleware))
 		middleware += new middleware_type(src)
 
-	if(istype(parent) || istype(parent, /datum/client_interface))
+	if(IS_CLIENT_OR_MOCK(parent))
 		if(!is_guest_key(parent.key))
 			load_path(parent.ckey)
 			if(!fexists(path))
