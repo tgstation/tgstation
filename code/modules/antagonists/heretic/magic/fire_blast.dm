@@ -20,12 +20,19 @@
 	/// How long the beam visual lasts, also used to determine time between jumps
 	var/beam_duration = 2 SECONDS
 
+/datum/action/cooldown/spell/charged/beam/fire_blast/cast(atom/cast_on)
+	if(isliving(cast_on))
+		var/mob/living/caster = cast_on
+		// Caster becomes fireblasted, but in a good way - heals damage over time
+		caster.apply_status_effect(/datum/status_effect/fire_blasted, beam_duration, -2)
+	return ..()
+
 /datum/action/cooldown/spell/charged/beam/fire_blast/send_beam(atom/origin, mob/living/carbon/to_beam, bounces = 4)
 	// Send a beam from the origin to the hit mob
 	origin.Beam(to_beam, icon_state = "solar_beam", time = beam_duration, beam_type = /obj/effect/ebeam/fire)
 
-	// If they block the magic, the chain wont necessarily stop, but likely will
-	// (due to them not catching on fire)
+	// If they block the magic, the chain wont necessarily stop,
+	// but likely will (due to them not catching on fire)
 	if(to_beam.can_block_magic(antimagic_flags))
 		to_beam.visible_message(
 			span_warning("[to_beam] absorbs the spell, remaining unharmed!"),
@@ -98,17 +105,24 @@
 
 	return length(priority_possibles) ? pick(priority_possibles) : pick(possibles)
 
-// Status effect applied when someone's hit by the fire blast. Applies and overlay and causes some damage over time.
+/**
+ * Status effect applied when someone's hit by the fire blast.
+ *
+ * Applies an overlay, then causes a damage over time (or heal over time)
+ */
 /datum/status_effect/fire_blasted
 	id = "fire_blasted"
 	alert_type = null
 	duration = 5 SECONDS
 	tick_interval = 0.5 SECONDS
+	/// How much fire / stam to do per tick (stamina damage is doubled this)
+	var/tick_damage = 1
 	/// How long does the animation of the appearance last? If 0 or negative, we make no overlay
 	var/animate_duration = 0.75 SECONDS
 
-/datum/status_effect/fire_blasted/on_creation(mob/living/new_owner, animate_duration = -1)
+/datum/status_effect/fire_blasted/on_creation(mob/living/new_owner, animate_duration = -1, tick_damage = 1)
 	src.animate_duration = animate_duration
+	src.tick_damage = tick_damage
 	return ..()
 
 /datum/status_effect/fire_blasted/on_apply()
@@ -121,7 +135,8 @@
 	return TRUE
 
 /datum/status_effect/fire_blasted/tick(delta_time, times_fired)
-	owner.take_overall_damage(burn = 1, stamina = 2)
+	owner.adjustFireLoss(tick_damage)
+	owner.adjustStaminaLoss(2 * tick_damage)
 
 // The beam fireblast spits out, causes people to walk through it to be on fire
 /obj/effect/ebeam/fire
@@ -151,7 +166,8 @@
 	living_entered.apply_damage(10, BURN, wound_bonus = 5)
 	living_entered.adjust_fire_stacks(2)
 	living_entered.ignite_mob()
-	living_entered.apply_status_effect(/datum/status_effect/fire_blasted) // No overlay, just the status
+	// Apply the fireblasted effect - no overlay
+	living_entered.apply_status_effect(/datum/status_effect/fire_blasted)
 
 // Visual effect played when we hit the max bounces
 /obj/effect/temp_visual/fire_blast_bonus
