@@ -54218,7 +54218,6 @@
 	dir = 8;
 	pixel_y = -22
 	},
-/obj/structure/sign/collision_counter,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
 "tom" = (
@@ -64918,7 +64917,6 @@
 	dir = 4;
 	pixel_y = -22
 	},
-/obj/structure/sign/collision_counter,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
 "xel" = (
