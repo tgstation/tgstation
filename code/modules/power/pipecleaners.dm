@@ -340,7 +340,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 	for(var/obj/structure/pipe_cleaner/LC in T)
 		if(LC.d2 == dirn && LC.d1 == 0)
-			to_chat(user, span_warning("There's already a pipe leaner at that position!"))
+			to_chat(user, span_warning("There's already a pipe cleaner at that position!"))
 			return
 
 	var/obj/structure/pipe_cleaner/C = get_new_pipe_cleaner(T)
