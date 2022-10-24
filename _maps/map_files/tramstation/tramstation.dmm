@@ -2308,11 +2308,11 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "bar" = (
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium_blue"
-	},
 /obj/structure/chair/comfy/shuttle,
 /obj/structure/fluff/tram_rail,
+/obj/structure/industrial_lift/tram{
+	icon_state = "titanium"
+	},
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "baA" = (
@@ -3576,14 +3576,14 @@
 /turf/open/floor/iron,
 /area/station/maintenance/tram/left)
 "bxs" = (
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium_blue"
-	},
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /obj/structure/fluff/tram_rail{
 	dir = 1
+	},
+/obj/structure/industrial_lift/tram{
+	icon_state = "titanium"
 	},
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
@@ -5756,12 +5756,12 @@
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "cfS" = (
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium_blue"
-	},
 /obj/structure/fluff/tram_rail,
 /obj/effect/landmark/start/hangover,
 /obj/structure/chair/comfy/shuttle,
+/obj/structure/industrial_lift/tram{
+	icon_state = "titanium"
+	},
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "cfY" = (
@@ -11031,11 +11031,11 @@
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "dTe" = (
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium_blue"
-	},
 /obj/structure/fluff/tram_rail,
 /obj/structure/chair/comfy/shuttle,
+/obj/structure/industrial_lift/tram{
+	icon_state = "titanium"
+	},
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "dTk" = (
@@ -23955,14 +23955,14 @@
 /turf/open/floor/iron,
 /area/station/tcommsat/computer)
 "iEb" = (
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium_blue"
-	},
 /obj/structure/fluff/tram_rail{
 	dir = 1
 	},
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
+	},
+/obj/structure/industrial_lift/tram{
+	icon_state = "titanium"
 	},
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
@@ -33650,16 +33650,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/ai_monitored/command/storage/eva)
-"mas" = (
-/obj/structure/industrial_lift/tram{
-	icon_state = "plating"
-	},
-/obj/structure/tramwall/titanium,
-/obj/machinery/power/shuttle_engine/propulsion/tram{
-	dir = 4
-	},
-/turf/open/openspace,
-/area/station/hallway/primary/tram/center)
 "may" = (
 /turf/open/floor/plating,
 /area/station/hallway/secondary/exit/departure_lounge)
@@ -41686,16 +41676,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/commons/storage/tools)
-"oVt" = (
-/obj/structure/industrial_lift/tram{
-	icon_state = "plating"
-	},
-/obj/structure/tramwall/titanium,
-/obj/machinery/power/shuttle_engine/propulsion/tram{
-	dir = 8
-	},
-/turf/open/openspace,
-/area/station/hallway/primary/tram/center)
 "oVy" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 8
@@ -51402,6 +51382,13 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/station/security/prison/mess)
+"sna" = (
+/obj/structure/industrial_lift/tram{
+	icon_state = "plating"
+	},
+/obj/structure/tramwall/titanium,
+/turf/open/openspace,
+/area/station/hallway/primary/tram/center)
 "snl" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
@@ -54231,6 +54218,7 @@
 	dir = 8;
 	pixel_y = -22
 	},
+/obj/structure/sign/collision_counter,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
 "tom" = (
@@ -64930,6 +64918,7 @@
 	dir = 4;
 	pixel_y = -22
 	},
+/obj/structure/sign/collision_counter,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
 "xel" = (
@@ -164342,11 +164331,11 @@ izU
 jpv
 aEM
 lPP
-oVt
+sna
 xXi
 rgS
 spf
-oVt
+sna
 gCX
 eOi
 agt
@@ -166912,11 +166901,11 @@ izU
 vtp
 dUC
 swU
-mas
+sna
 xXi
 iYk
 spf
-mas
+sna
 tqy
 ebF
 vsR

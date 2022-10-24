@@ -24,7 +24,11 @@
 	opacity = FALSE
 
 /obj/machinery/door/window/left/tram
+	icon = 'icons/obj/doors/tramdoor.dmi'
+	req_access = list("engineering")
 /obj/machinery/door/window/right/tram
+	icon = 'icons/obj/doors/tramdoor.dmi'
+	req_access = list("engineering")
 
 /obj/machinery/door/window/left/tram/Initialize(mapload, set_dir, unres_sides)
 	. = ..()
