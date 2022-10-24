@@ -398,7 +398,7 @@
 		return FALSE
 
 	spell_level++
-	cooldown_time = max(cooldown_time - cooldown_reduction_per_rank, 0)
+	cooldown_time = max(cooldown_time - cooldown_reduction_per_rank, 0.25 SECONDS) // 0 second CD starts to break things.
 	update_spell_name()
 	return TRUE
 
@@ -414,7 +414,11 @@
 		return FALSE
 
 	spell_level--
-	cooldown_time = min(cooldown_time + cooldown_reduction_per_rank, initial(cooldown_time))
+	if(cooldown_reduction_per_rank < 0)
+		cooldown_time = min(cooldown_time + cooldown_reduction_per_rank, initial(cooldown_time))
+	else
+		cooldown_time = max(cooldown_time + cooldown_reduction_per_rank, initial(cooldown_time))
+
 	update_spell_name()
 	return TRUE
 
