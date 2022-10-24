@@ -20,7 +20,7 @@
 		return COMPONENT_INCOMPATIBLE
 
 	src.view_mode = view_mode
-	src.ondie = ondie
+	src.on_die = on_die
 
 /datum/component/suicide_count/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_HUMAN_SUICIDE_COMPLETE, .proc/on_suicide)
