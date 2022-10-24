@@ -542,7 +542,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 		data["PC_programheaders"] = program_headers
 
-	data["PC_stationdateandtime"] = "[time2text(world.realtime, "MMM DD")], [GLOB.year_integer+540] [station_time_timestamp()]"
+	data["PC_stationdateandtime"] = "[time2text(world.realtime, "MMM/DD")]/[GLOB.year_integer+540] [station_time_timestamp()]"
 	data["PC_showexitprogram"] = !!active_program // Hides "Exit Program" button on mainscreen
 	return data
 
