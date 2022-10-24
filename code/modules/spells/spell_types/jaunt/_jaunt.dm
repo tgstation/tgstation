@@ -104,7 +104,7 @@
 	spell_requirements &= ~SPELL_CASTABLE_WHILE_PHASED
 	REMOVE_TRAIT(unjaunter, TRAIT_MAGICALLY_PHASED, REF(src))
 	REMOVE_TRAIT(unjaunter, TRAIT_RUNECHAT_HIDDEN, REF(src))
-// This needs to happen at the end, after all the traits and stuff is handled
+	// This needs to happen at the end, after all the traits and stuff is handled
 	SEND_SIGNAL(unjaunter, COMSIG_MOB_AFTER_EXIT_JAUNT, src)
 
 /datum/action/cooldown/spell/jaunt/Remove(mob/living/remove_from)

@@ -2,9 +2,21 @@
  * ## Touch Spell
  *
  * Touch spells are spells which function through the power of an item attack.
- * Instead of the spell triggering when the caster presses the button, instead
- * pressing the button will give them a hand object. The spell's effects are cast
- * when the hand object makes contact with something.
+ *
+ * Instead of the spell triggering when the caster presses the button,
+ * pressing the button will give them a hand object.
+ * The spell's effects are cast when the hand object makes contact with something.
+ *
+ * To implement a touch spell, all you need is to implement:
+ * * is_valid_target - to check whether the slapped target is valid
+ * * cast_on_hand_hit - to implement effects on cast
+ *
+ * However, for added complexity, you can optionally implement:
+ * * on_antimagic_triggered - to cause effects when antimagic is triggered
+ * * cast_on_secondary_hand_hit - to implement different effects if the caster r-clicked
+
+ * It is not necessarily to touch any of the core functions, and is
+ * (generally) inadvisable unless you know what you're doing
  */
 /datum/action/cooldown/spell/touch
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_HANDS_BLOCKED
@@ -153,6 +165,7 @@
  */
 /datum/action/cooldown/spell/touch/proc/on_hand_hit(datum/source, atom/victim, mob/caster, proximity_flag, click_parameters)
 	SIGNAL_HANDLER
+	SHOULD_NOT_OVERRIDE(TRUE) // DEFINITELY don't put effects here, put them in cast_on_hand_hit
 
 	if(!proximity_flag)
 		return
@@ -168,6 +181,7 @@
  */
 /datum/action/cooldown/spell/touch/proc/on_secondary_hand_hit(datum/source, atom/victim, mob/caster, proximity_flag, click_parameters)
 	SIGNAL_HANDLER
+	SHOULD_NOT_OVERRIDE(TRUE) // DEFINITELY don't put effects here, put them in cast_on_secondary_hand_hit
 
 	if(!proximity_flag)
 		return
@@ -183,7 +197,7 @@
 		return FALSE
 	if(!is_valid_target(victim))
 		return FALSE
-	if(!can_cast_spell(feedback = FALSE))
+	if(!can_cast_spell(feedback = TRUE))
 		return FALSE
 
 	return TRUE
@@ -284,6 +298,16 @@
 /datum/action/cooldown/spell/touch/proc/on_antimagic_triggered(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
 	return
 
+/**
+ * ## Touch attack item
+ *
+ * Used for touch spells to have something physical to slap people with.
+ *
+ * Try to avoid adding behavior onto these for your touch spells!
+ * The spells themselves should handle most, if not all, of the casted effects.
+ *
+ * These should generally just be dummy objects - holds name and icon stuff.
+ */
 /obj/item/melee/touch_attack
 	name = "\improper outstretched hand"
 	desc = "High Five?"
@@ -292,7 +316,7 @@
 	righthand_file = 'icons/mob/inhands/items/touchspell_righthand.dmi'
 	icon_state = "latexballon"
 	inhand_icon_state = null
-	item_flags = NEEDS_PERMIT | ABSTRACT
+	item_flags = NEEDS_PERMIT | ABSTRACT | HAND_ITEM
 	w_class = WEIGHT_CLASS_HUGE
 	force = 0
 	throwforce = 0
