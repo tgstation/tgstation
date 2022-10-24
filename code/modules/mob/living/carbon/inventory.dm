@@ -198,7 +198,7 @@
 
 /// Returns truthy if air tank is open and mob lacks apparatus, or if the tank moved away from the mob.
 /mob/living/carbon/proc/invalid_internals()
-	return (external && !can_breathe_internals()) || (internal && (internal.loc != src || !can_breathe_internals()))
+	return (internal || external) && (!can_breathe_internals() || (internal && internal.loc != src))
 
 /**
  * Open the internal air tank without checking for any breathing apparatus. Closes any existing tanks before opening another one.
@@ -256,8 +256,10 @@
 
 /// Quickly/lazily close all airtanks without any checks or notification.
 /mob/living/carbon/proc/close_all_airtanks()
-	close_internals()
-	close_externals()
+	if (external)
+		close_externals()
+	if (internal)
+		close_internals()
 
 /**
  * Prepares to open the internal air tank and notifies the mob in chat.
@@ -270,7 +272,7 @@
 /mob/living/carbon/proc/toggle_open_internals(obj/item/tank/target_tank, is_external = FALSE)
 	if (!target_tank)
 		return
-	if(internal || external)
+	if(internal || (is_external && external))
 		to_chat(src, span_notice("You switch your internals to [target_tank]."))
 	else
 		to_chat(src, span_notice("You open [target_tank] valve."))

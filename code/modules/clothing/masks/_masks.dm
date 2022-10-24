@@ -86,8 +86,9 @@
 	// Update the mob if it's wearing the mask.
 	if(user.wear_mask == src)
 		user.wear_mask_update(src, toggle_off = mask_adjusted)
-	// Update icon for adjusted mask.
-	user.update_action_buttons_icon()
+	if(src.loc == user)
+		// Update action button icon for adjusted mask, if someone is holding it.
+		user.update_action_buttons_icon()
 
 /**
  * Proc called in lungs.dm to act if wearing a mask with filters, used to reduce the filters durability, return a changed gas mixture depending on the filter status

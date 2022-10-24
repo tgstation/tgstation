@@ -190,7 +190,7 @@
 	var/mob/living/carbon/C = user
 	if(!istype(C))
 		C = loc.loc
-	if(istype(C) && C.internal == src)
+	if(istype(C) && (C.external == src || C.internal == src))
 		.["connected"] = TRUE
 
 /obj/item/tank/ui_act(action, params)
