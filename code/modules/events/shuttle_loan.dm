@@ -23,6 +23,13 @@
 		if(istype(running_event, /datum/round_event/shuttle_loan)) //Make sure two of these don't happen at once.
 			return FALSE
 
+/datum/round_event_control/shuttle_loan/admin_setup()
+	if(!check_rights(R_FUN))
+		return ADMIN_CANCEL_EVENT
+
+	for(var/datum/round_event/running_event in SSevents.running)
+		running_event.kill() //Replace the old event with the new one!
+
 /datum/round_event/shuttle_loan
 	announce_when = 1
 	end_when = 500
