@@ -404,9 +404,6 @@ GLOBAL_LIST_EMPTY(lifts)
 				var/datum/callback/land_slam = new(collided, /mob/living/.proc/tram_slam_land)
 				collided.throw_at(throw_target, 200 * collision_lethality, 4 * collision_lethality, callback = land_slam)
 
-				//Add to the blood counter
-				SEND_SIGNAL(src, COMSIG_TRAM_COLLISION)
-
 	unset_movement_registrations(exited_locs)
 	group_move(things_to_move, going)
 	set_movement_registrations(entering_locs)
