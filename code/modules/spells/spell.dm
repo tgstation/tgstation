@@ -414,7 +414,7 @@
 		return FALSE
 
 	spell_level--
-	if(cooldown_reduction_per_rank < 0)
+	if(cooldown_reduction_per_rank > 0 SECONDS)
 		cooldown_time = min(cooldown_time + cooldown_reduction_per_rank, initial(cooldown_time))
 	else
 		cooldown_time = max(cooldown_time + cooldown_reduction_per_rank, initial(cooldown_time))

@@ -23,10 +23,14 @@
 	. = ..()
 	cast_on.apply_status_effect(/datum/status_effect/realignment)
 	to_chat(cast_on, span_notice("We begin to realign ourselves."))
+
+/datum/action/cooldown/spell/realignment/after_cast(atom/cast_on)
+	. = ..()
 	// With every cast, our spell level increases for a short time, which goes back down after a period
 	// and with every spell level, the cooldown duration of the spell goes up
 	if(level_spell())
-		addtimer(CALLBACK(src, .proc/delevel_spell), initial(cooldown_time) * (spell_max_level + 2))
+		var/reduction_timer = max(cooldown_time * spell_max_level * 0.5, 1.5 MINUTES)
+		addtimer(CALLBACK(src, .proc/delevel_spell), reduction_timer)
 
 /datum/action/cooldown/spell/realignment/update_spell_name()
 	var/spell_title = ""
@@ -51,11 +55,11 @@
 	tick_interval = 0.2 SECONDS
 
 /datum/status_effect/realignment/get_examine_text()
-	return span_notice("[owner.p_they(TRUE)] [owner.p_are()] glowing a soft white!")
+	return span_notice("[owner.p_theyre(TRUE)] glowing a soft white.")
 
 /datum/status_effect/realignment/on_apply()
 	ADD_TRAIT(owner, TRAIT_PACIFISM, id)
-	owner.add_filter(id, 2, list("type" = "outline", "color" = "#d6e3e7", "size" = 1))
+	owner.add_filter(id, 2, list("type" = "outline", "color" = "#d6e3e7", "size" = 2))
 	var/filter = owner.get_filter(id)
 	animate(filter, alpha = 127, time = 1 SECONDS, loop = -1)
 	animate(alpha = 63, time = 2 SECONDS)
