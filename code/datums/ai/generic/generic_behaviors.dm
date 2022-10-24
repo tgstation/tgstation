@@ -148,7 +148,7 @@
 		finish_action(controller, FALSE)
 		return
 	var/pocket_choice = prob(50) ? ITEM_SLOT_RPOCKET : ITEM_SLOT_LPOCKET
-	if(prob(50) && living_target.can_put_in_hand(held_item, rand(1,2)))
+	if(prob(50))
 		living_target.put_in_hands(held_item)
 	else
 		living_target.equip_to_slot_if_possible(held_item, pocket_choice)
