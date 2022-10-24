@@ -287,6 +287,43 @@
 	if((I.body_parts_covered & FEET) || (I.flags_inv | I.transparent_protection) & HIDESHOES)
 		SEND_SIGNAL(src, COMSIG_CARBON_UNEQUIP_SHOECOVER, I, force, newloc, no_move, invdrop, silent)
 
+/mob/living/carbon/human/toggle_internals(obj/item/tank, is_external = FALSE)
+	// Just close the tank if it's the one the mob already has open.
+	var/obj/item/existing_tank = is_external ? external : internal
+	if(tank == existing_tank)
+		toggle_close_internals(tank, is_external)
+		return TRUE
+	// Use breathing tube regardless of mask.
+	if(can_breathe_tube())
+		toggle_open_internals(tank, is_external)
+		return TRUE
+	// Use mask in absence of tube.
+	if(wear_mask && isclothing(wear_mask) && ((wear_mask.visor_flags & MASKINTERNALS) || (wear_mask.clothing_flags & MASKINTERNALS)))
+		// Adjust dishevelled breathing mask back onto face.
+		if (wear_mask.mask_adjusted)
+			wear_mask.adjustmask(src)
+		toggle_open_internals(tank, is_external)
+		return TRUE
+	// Use helmet in absence of tube or valid mask.
+	if(can_breathe_helmet())
+		toggle_open_internals(tank, is_external)
+		return TRUE
+	// Invalid helmet and missing mask.
+	// Don't show the "isn't sealed" message for non-helmet headgear, such as hats.
+	if (head && (istype(head, /obj/item/clothing/head/mod) || istype(head, /obj/item/clothing/head/helmet)))
+		to_chat(src, span_warning("[head] isn't sealed, you need a mask!"))
+	// Invalid or missing mask, missing any other apparatus.
+	else if (wear_mask)
+		// Invalid mask
+		to_chat(src, span_warning("[wear_mask] can't use [tank]!"))
+	else
+		// Not wearing any breathing apparatus.
+		to_chat(src, span_warning("You need a mask!"))
+
+/// Returns TRUE if the tank successfully toggles open/closed. Opens the tank only if a breathing apparatus is found.
+/mob/living/carbon/human/toggle_externals(obj/item/tank)
+	return toggle_internals(tank, TRUE)
+
 /mob/living/carbon/human/wear_mask_update(obj/item/I, toggle_off = 1)
 	if((I.flags_inv & (HIDEHAIR|HIDEFACIALHAIR)) || (initial(I.flags_inv) & (HIDEHAIR|HIDEFACIALHAIR)))
 		update_body_parts()
@@ -310,14 +347,6 @@
 		update_body()
 	sec_hud_set_security_status()
 	..()
-
-/// Called when an equipped MOD suit toggles activation.
-/mob/living/carbon/human/proc/mod_suit_toggled()
-	SIGNAL_HANDLER
-	// The MOD helmet becomes unsealed if it's deactivated.
-	// Close internal air tank if MOD helmet was the only breathing apparatus.
-	if (invalid_internals())
-		cutoff_internals()
 
 /mob/living/carbon/human/proc/equipOutfit(outfit, visualsOnly = FALSE)
 	var/datum/outfit/O = null

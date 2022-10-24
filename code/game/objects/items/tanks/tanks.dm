@@ -47,71 +47,34 @@
 	/// Mob that is currently breathing from the tank.
 	var/mob/living/carbon/breathing_mob = null
 
-/// Open tank and connect to a mob's internals.
-/obj/item/tank/proc/open_internals(mob/living/carbon/carbon_target)
-	breathing_mob = carbon_target
-	carbon_target.connect_internals(src)
-
-/// Close tank and disconnect from a mob's internals.
-/obj/item/tank/proc/close_internals(mob/living/carbon/carbon_target)
-	breathing_mob = null
-	carbon_target.disconnect_internals()
-
 /// Closes the tank if dropped while open.
 /obj/item/tank/dropped(mob/living/user, silent)
 	. = ..(user, silent)
 	// Close open air tank if it got dropped by it's current user.
 	if (breathing_mob && src.loc != breathing_mob)
-		close_internals(breathing_mob)
+		breathing_mob.cutoff_internals()
 
 /// Closes the tank if given to another mob while open.
 /obj/item/tank/equipped(mob/living/user, slot, initial)
 	. = ..(user, slot, initial)
 	// Close open air tank if it was equipped by a mob other than the current user.
 	if (breathing_mob && user != breathing_mob)
-		close_internals(breathing_mob)
+		breathing_mob.cutoff_internals()
+
+/// Called by carbons after they connect the tank to their breathing apparatus.
+/obj/item/tank/proc/after_internals_opened(mob/living/carbon/carbon_target)
+	breathing_mob = carbon_target
+
+/// Called by carbons after they disconnect the tank from their breathing apparatus.
+/obj/item/tank/proc/after_internals_closed(mob/living/carbon/carbon_target)
+	breathing_mob = null
+
+/// Attempts to toggle the mob's internals on or off using this tank.
+/obj/item/tank/proc/toggle_internals(mob/living/carbon/mob_target)
+	mob_target.toggle_internals(src)
 
 /obj/item/tank/ui_action_click(mob/user)
 	toggle_internals(user)
-
-/// Checks if a mob has an internals breathing apparatus. Opens the tank if an apparatus is found.
-/obj/item/tank/proc/toggle_internals(mob/mob_target)
-	var/mob/living/carbon/human/human_target = mob_target
-	// Non-human carbons can't toggle their own internals.
-	if(!istype(human_target))
-		return
-	// Just close the tank if it's open.
-	if(breathing_mob == human_target)
-		close_internals(human_target)
-		return
-	// Use breathing tube regardless of mask.
-	if(human_target.can_breathe_tube())
-		open_internals(human_target)
-		return
-	// Use mask in absence of tube.
-	var/obj/item/clothing/mask/mask = human_target.wear_mask
-	if(mask && isclothing(mask) && ((mask.visor_flags & MASKINTERNALS) || (mask.clothing_flags & MASKINTERNALS)))
-		// Adjust dishevelled breathing mask back onto face.
-		if (mask.mask_adjusted)
-			mask.adjustmask(human_target)
-		open_internals(human_target)
-		return
-	// Use helmet in absence of tube or valid mask.
-	if(human_target.can_breathe_helmet())
-		open_internals(human_target)
-		return
-	// Invalid helmet and missing mask.
-	// Don't show the "isn't sealed" message for non-helmet headgear, such as hats.
-	var/obj/item/clothing/head/helmet = human_target.head
-	if (helmet && (istype(helmet, /obj/item/clothing/head/mod) || istype(helmet, /obj/item/clothing/head/helmet)))
-		to_chat(human_target, span_warning("[helmet] isn't sealed, you need a mask!"))
-	// Invalid or missing mask, missing any other apparatus.
-	else if (mask)
-		// Invalid mask
-		to_chat(human_target, span_warning("[mask] can't use [src]!"))
-	else
-		// Not wearing any breathing apparatus.
-		to_chat(human_target, span_warning("You need a mask!"))
 
 /obj/item/tank/Initialize(mapload)
 	. = ..()
