@@ -81,7 +81,7 @@
 		flags_cover &= ~visor_flags_cover
 		if(adjusted_flags)
 			slot_flags = adjusted_flags
-	if(!user)
+	if(!user || !istype(user))
 		return
 	// Update the mob if it's wearing the mask.
 	if(user.wear_mask == src)
