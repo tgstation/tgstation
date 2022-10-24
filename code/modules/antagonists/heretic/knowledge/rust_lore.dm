@@ -12,6 +12,7 @@
  *
  * Mark of Rust
  * Ritual of Knowledge
+ * Rust Construction
  * Aggressive Spread
  * > Sidepaths:
  *   Curse of Corrosion
@@ -139,7 +140,18 @@
 	mark_type = /datum/status_effect/eldritch/rust
 
 /datum/heretic_knowledge/knowledge_ritual/rust
+	next_knowledge = list(/datum/heretic_knowledge/spell/rust_construction)
+	route = PATH_RUST
+
+/datum/heretic_knowledge/spell/rust_construction
+	name = "Rust Construction"
+	desc = "Grants you Rust Construction, a spell that allows you to raise a wall out of a rusted floor. \
+		Anyone overtop the wall will be throw aside (or upwards) and sustain damage."
+	gain_text = "Images of foreign and ominous structures began to dance in my mind. Covered head to toe in thick rust, \
+		they no longer looked man made. Or perhaps they never were in the first place."
 	next_knowledge = list(/datum/heretic_knowledge/spell/area_conversion)
+	spell_to_add = /datum/action/cooldown/spell/pointed/rust_construction
+	cost = 1
 	route = PATH_RUST
 
 /datum/heretic_knowledge/spell/area_conversion

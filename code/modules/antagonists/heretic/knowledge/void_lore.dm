@@ -12,6 +12,7 @@
  *
  * Mark of Void
  * Ritual of Knowledge
+ * Cone of Cold
  * Void Phase
  * > Sidepaths:
  *   Carving Knife
@@ -108,15 +109,26 @@
 	mark_type = /datum/status_effect/eldritch/void
 
 /datum/heretic_knowledge/knowledge_ritual/void
+	next_knowledge = list(/datum/heretic_knowledge/spell/void_cone)
+	route = PATH_VOID
+
+/datum/heretic_knowledge/spell/void_cone
+	name = "Void Blast"
+	desc = "Grants you Void Blast, a spell that shoots out a freezing blast in a code ahead of you, \
+		freezing the ground and any victims within."
+	gain_text = "Every door I open racks my body. I am afraid of what is behind them. Someone is expecting me, \
+		and my legs start to drag. Is that... snow?"
 	next_knowledge = list(/datum/heretic_knowledge/spell/void_phase)
+	spell_to_add = /datum/action/cooldown/spell/cone/staggered/cone_of_cold/void
+	cost = 1
 	route = PATH_VOID
 
 /datum/heretic_knowledge/spell/void_phase
 	name = "Void Phase"
 	desc = "Grants you Void Phase, a long range targeted teleport spell. \
 		Additionally causes damage to heathens around your original and target destination."
-	gain_text = "The entity calls themself the Aristocrat. They effortlessly walk through air like\
-		nothing leaving a harsh, cold breeze in their wake. They disappear, and I am left in the snow."
+	gain_text = "The entity calls themself the Aristocrat. They effortlessly walk through air like \
+		nothing - leaving a harsh, cold breeze in their wake. They disappear, and I am left in the snow."
 	next_knowledge = list(
 		/datum/heretic_knowledge/blade_upgrade/void,
 		/datum/heretic_knowledge/reroll_targets,

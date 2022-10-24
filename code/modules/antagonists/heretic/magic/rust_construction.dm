@@ -67,12 +67,18 @@
 	var/message_shown = FALSE
 	for(var/mob/living/living_mob in cast_on)
 		message_shown = TRUE
-		living_mob.visible_message(
-			span_warning("\A [new_wall] [rises_message] and slams into [living_mob]!"),
-			span_userdanger("\A [new_wall] [rises_message] beneath your feet and slams into you!"),
-		)
-		living_mob.apply_damage(10, BRUTE, wound_bonus = 10)
-		living_mob.Knockdown(5 SECONDS)
+		if(IS_HERETIC_OR_MONSTER(living_mob) || living_mob == owner)
+			living_mob.visible_message(
+				span_warning("\A [new_wall] [rises_message] and pushes along [living_mob]!"),
+				span_notice("\A [new_wall] [rises_message] beneath your feet and pushes you along!"),
+			)
+		else
+			living_mob.visible_message(
+				span_warning("\A [new_wall] [rises_message] and slams into [living_mob]!"),
+				span_userdanger("\A [new_wall] [rises_message] beneath your feet and slams into you!"),
+			)
+			living_mob.apply_damage(10, BRUTE, wound_bonus = 10)
+			living_mob.Knockdown(5 SECONDS)
 		living_mob.SpinAnimation(5, 1)
 
 		// If we're a multiz map send them to the next floor

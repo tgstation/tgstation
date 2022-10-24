@@ -12,6 +12,7 @@
  *
  * Mark of the Blade
  * Ritual of Knowledge
+ * Realignment
  * Stance of the Scarred Duelist
  * > Sidepaths:
  *   Carving Knife
@@ -214,7 +215,18 @@
 	source.apply_status_effect(/datum/status_effect/protective_blades, 60 SECONDS, 1, 20, 0 SECONDS)
 
 /datum/heretic_knowledge/knowledge_ritual/blade
+	next_knowledge = list(/datum/heretic_knowledge/spell/realignment)
+	route = PATH_BLADE
+
+/datum/heretic_knowledge/spell/realignment
+	name = "Realignment"
+	desc = "Grants you Realignment a spell that wil realign your body rapidly for a short period. \
+		During this process, you will rapidly regenerate stamina and stuns, however, you will be unable to attack. \
+		This spell can be casted in rapid succession, but doing so will increase the cooldown."
+	gain_text = "In the flurry of death, he found peace within himself. Despite insurmountable odds, he forged on."
 	next_knowledge = list(/datum/heretic_knowledge/duel_stance)
+	spell_to_add = /datum/action/cooldown/spell/realignment
+	cost = 1
 	route = PATH_BLADE
 
 /// The amount of blood flow reduced per level of severity of gained bleeding wounds for Stance of the Torn Champion.

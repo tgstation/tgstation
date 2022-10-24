@@ -12,6 +12,7 @@
  *
  * Mark of Ash
  * Ritual of Knowledge
+ * Fire Blast
  * Mask of Madness
  * > Sidepaths:
  *   Curse of Corrosion
@@ -105,8 +106,20 @@
 		grasp.UpdateButtons()
 
 /datum/heretic_knowledge/knowledge_ritual/ash
-	next_knowledge = list(/datum/heretic_knowledge/mad_mask)
+	next_knowledge = list(/datum/heretic_knowledge/spell/fire_blast)
 	route = PATH_ASH
+
+/datum/heretic_knowledge/spell/fire_blast
+	name = "Volcano Blast"
+	desc = "Grants you Volcano Blast, a spell that - after a short charge - fires off a beam of energy \
+		at a nearby enemy, setting them on fire and burning them. If they do not extinguish themselves, \
+		the beam will continue to another target."
+	gain_text = "No fire was hot enough to rekindle them. No fire was bright enough to save them. No fire is eternal."
+	next_knowledge = list(/datum/heretic_knowledge/mad_mask)
+	spell_to_add = /datum/action/cooldown/spell/charged/beam/fire_blast
+	cost = 1
+	route = PATH_ASH
+
 
 /datum/heretic_knowledge/mad_mask
 	name = "Mask of Madness"
