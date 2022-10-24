@@ -112,7 +112,7 @@
 	. = ..()
 	if(.)
 		return
-	if(user.incapacitated() || !can_toggle())
+	if(user.incapacitated() || !try_toggle())
 		return
 	up = !up
 	flags_1 ^= visor_flags
@@ -126,7 +126,7 @@
 		var/mob/living/carbon/carbon_user = user
 		carbon_user.head_update(src, forced = TRUE)
 
-/obj/item/clothing/head/helmet/toggleable/proc/can_toggle()
+/obj/item/clothing/head/helmet/toggleable/proc/try_toggle()
 	return TRUE
 
 /obj/item/clothing/head/helmet/toggleable/riot
@@ -144,7 +144,7 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 
-/obj/item/clothing/head/helmet/toggleable/justice/can_toggle()
+/obj/item/clothing/head/helmet/toggleable/justice/try_toggle()
 	if(!COOLDOWN_FINISHED(src, visor_toggle_cooldown))
 		return FALSE
 	COOLDOWN_START(src, visor_toggle_cooldown, 2 SECONDS)
