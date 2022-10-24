@@ -124,20 +124,15 @@
 /datum/ai_behavior/give/perform(delta_time, datum/ai_controller/controller, target_key)
 	. = ..()
 	var/mob/living/pawn = controller.pawn
-	//var/obj/item/held_item = pawn.get_item_by_slot(pawn.active_hand_index())
 	var/obj/item/held_item = pawn.get_active_held_item()
 	var/datum/weakref/target_ref = controller.blackboard[target_key]
 	var/atom/target = target_ref?.resolve()
-	message_admins(" [held_item] is held and to be given to [target] by [pawn]") //to remove (debug)
 
-
-	if(!held_item) //if held item is null we stop and
-		message_admins("[held_item] is null held by [pawn], abort. [target] was target")//to remove (debug)
+	if(!held_item) //if held_item is null, we pretend that action was succesful
 		finish_action(controller, TRUE)
 		return
 
 	if(!target || !pawn.CanReach(target) || !isliving(target))
-		message_admins("[pawn] failed to give [held_item] to [target]  and action finished")//to remove (debug)
 		finish_action(controller, FALSE)
 		return
 
@@ -154,10 +149,8 @@
 		return
 	var/pocket_choice = prob(50) ? ITEM_SLOT_RPOCKET : ITEM_SLOT_LPOCKET
 	if(prob(50) && living_target.can_put_in_hand(held_item, rand(1,2)))
-		message_admins("somethign goes in hand") // to remove (debug)
 		living_target.put_in_hands(held_item)
 	else
-		message_admins("something should go in to pockets") // to remove (debug)
 		living_target.equip_to_slot_if_possible(held_item, pocket_choice)
 
 	finish_action(controller, TRUE)
