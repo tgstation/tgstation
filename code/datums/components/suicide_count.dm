@@ -48,8 +48,9 @@
 
 	if(last_person)
 		examine_list += span_notice(
-			is_holy ? "You can sense a lost spirit, [last_person], who took their life with this." : \
-			"Looking at this somehow reminds you of [last_person]."
+			is_holy \
+				? "You can sense a lost spirit, [last_person], who took their life with this." \
+				: "Looking at this somehow reminds you of [last_person]."
 		)
 
 	if(count)
