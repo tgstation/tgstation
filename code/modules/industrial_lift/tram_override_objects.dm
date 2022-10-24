@@ -25,10 +25,12 @@
 
 /obj/machinery/door/window/left/tram
 	icon = 'icons/obj/doors/tramdoor.dmi'
+	//The tram door will only open in transit if you have engineering access. Also for repairing and such.
 	req_access = list("engineering")
 
 /obj/machinery/door/window/right/tram
 	icon = 'icons/obj/doors/tramdoor.dmi'
+	//The tram door will only open in transit if you have engineering access. Also for repairing and such.
 	req_access = list("engineering")
 
 /obj/machinery/door/window/left/tram/Initialize(mapload, set_dir, unres_sides)
