@@ -88,27 +88,24 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	value_cache = null
 	return ..()
 
-/datum/preferences/New(client/C)
-	parent = C
+/datum/preferences/New(client/parent)
+	src.parent = parent
 
 	for (var/middleware_type in subtypesof(/datum/preference_middleware))
 		middleware += new middleware_type(src)
 
-	if(istype(C))
-		if(!is_guest_key(C.key))
-			load_path(C.ckey)
+	if(istype(parent) || istype(parent, /datum/client_interface))
+		if(!is_guest_key(parent.key))
+			load_path(parent.ckey)
 			if(!fexists(path))
 				try_savefile_type_migration()
-			unlock_content = !!C.IsByondMember()
+			unlock_content = !!parent.IsByondMember()
 			if(unlock_content)
 				max_save_slots = 8
 	else
-		#ifdef UNIT_TESTS
-		load_path("unit_tests_dummy_ckey")
-		#else
-		CRASH("Attempted to create a preferences datum without a client.")
-		#endif
+		CRASH("attempted to create a preferences datum without a client or mock!")
 	load_savefile()
+
 	// give them default keybinds and update their movement keys
 	key_bindings = deep_copy_list(GLOB.default_hotkeys)
 	key_bindings_by_key = get_key_bindings_by_key(key_bindings)
@@ -120,9 +117,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			return
 	//we couldn't load character data so just randomize the character appearance + name
 	randomise_appearance_prefs() //let's create a random character then - rather than a fat, bald and naked man.
-	if(C)
+	if(parent)
 		apply_all_client_preferences()
-		C.set_macros()
+		parent.set_macros()
 
 	if(!loaded_preferences_successfully)
 		save_preferences()

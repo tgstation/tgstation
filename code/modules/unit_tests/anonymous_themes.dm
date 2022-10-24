@@ -8,8 +8,7 @@
 
 	var/datum/client_interface/client = new
 	human.mock_client = client
-
-	client.prefs = new
+	client.prefs = new(client)
 
 	client.prefs.write_preference(GLOB.preference_entries[/datum/preference/name/real_name], "Prefs Biddle")
 
