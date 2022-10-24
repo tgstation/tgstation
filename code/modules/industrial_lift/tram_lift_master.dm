@@ -123,7 +123,7 @@
 
 /datum/lift_master/tram/process(delta_time)
 	if(!travel_distance)
-		addtimer(CALLBACK(src, .proc/unlock_controls), 3 SECONDS)
+		addtimer(CALLBACK(src, .proc/unlock_controls), 1 SECONDS)
 		return PROCESS_KILL
 	else if(world.time >= next_move)
 		var/start_time = TICK_USAGE
