@@ -36,7 +36,7 @@
 	last_person = user.real_name
 	count++
 
-/datum/component/suicide_count/on_examine(atom/A, mob/user, list/examine_list)
+/datum/component/suicide_count/on_examine(atom/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
 	var/is_holy = user.mind?.holy_role
