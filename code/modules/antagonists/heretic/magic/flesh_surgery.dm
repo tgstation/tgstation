@@ -179,7 +179,7 @@
 		)
 
 	carbon_victim.balloon_alert(caster, "extracting [chosen_organ]...")
-	playsound(victim, 'sound/effects/dismember.ogg', 50, TRUE)
+	playsound(victim, 'sound/weapons/slice.ogg', 50, TRUE)
 	carbon_victim.add_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_DARK_RED)
 	if(!do_after(caster, time_it_takes, carbon_victim, extra_checks = CALLBACK(src, .proc/extraction_checks, picked_organ, hand, victim, caster)))
 		carbon_victim.balloon_alert(caster, "interrupted!")
@@ -202,7 +202,7 @@
 	picked_organ.Remove(carbon_victim)
 	carbon_victim.balloon_alert(caster, "[chosen_organ] removed")
 	carbon_victim.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_DARK_RED)
-	playsound(victim, 'sound/effects/blobattack.ogg', 50, TRUE)
+	playsound(victim, 'sound/effects/dismember.ogg', 50, TRUE)
 	if(carbon_victim.stat == CONSCIOUS)
 		carbon_victim.adjust_timed_status_effect(15 SECONDS, /datum/status_effect/speech/slurring/heretic)
 		carbon_victim.emote("scream")
@@ -213,14 +213,14 @@
 
 /// Extra checks ran while we're extracting an organ to make sure we can continue to do.
 /datum/action/cooldown/spell/touch/flesh_surgery/proc/extraction_checks(obj/item/organ/picked_organ, obj/item/melee/touch_attack/hand, mob/living/carbon/victim, mob/living/carbon/caster)
-	if(QDELETED(hand) || QDELETED(picked_organ) || QDELETED(victim) || !IsAvailable())
+	if(QDELETED(src) || QDELETED(hand) || QDELETED(picked_organ) || QDELETED(victim) || !IsAvailable())
 		return FALSE
 
 	return TRUE
 
 /// Extra checks ran while we're healing something (organ, mob).
 /datum/action/cooldown/spell/touch/flesh_surgery/proc/heal_checks(obj/item/melee/touch_attack/hand, atom/healing, mob/living/carbon/caster)
-	if(QDELETED(hand) ||QDELETED(healing) || !IsAvailable())
+	if(QDELETED(src) || QDELETED(hand) ||QDELETED(healing) || !IsAvailable())
 		return FALSE
 
 	return TRUE

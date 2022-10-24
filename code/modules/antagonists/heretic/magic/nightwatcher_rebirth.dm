@@ -39,7 +39,7 @@
 	victim.Beam(caster, icon_state = "r_beam", time = 2 SECONDS)
 
 	//This is essentially a death mark, use this to finish your opponent quicker.
-	if(HAS_TRAIT(victim, TRAIT_CRITICAL_CONDITION) && !HAS_TRAIT(victim, TRAIT_NODEATH))
+	if(CAN_SUCCUMB(victim))
 		victim.death()
 	victim.apply_damage(20, BURN)
 
