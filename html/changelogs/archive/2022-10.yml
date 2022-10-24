@@ -887,3 +887,15 @@
   - refactor: removed prison_radio var
   lizardqueenlexi:
   - bugfix: Fixed a minor error causing the H.O.N.K. to be impossible to construct.
+2022-10-24:
+  ArcaneMusic:
+  - bugfix: The black market uplink now properly uses the correct item path and description.
+  Melbert:
+  - bugfix: Streaks of blood from gibs will now all be infective with diseases, instead
+      of only the parent gib
+  - bugfix: Fixes an edge case runtime with heretic sacrificing
+  Rhials:
+  - bugfix: headpikes now drop their mounted head on destruction.
+  Vishenka0704:
+  - admin: separate antagonists from living player, and add another field with security
+      info

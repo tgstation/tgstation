@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "Streaks of blood from gibs will now all be infective with diseases, instead of only the parent gib"
