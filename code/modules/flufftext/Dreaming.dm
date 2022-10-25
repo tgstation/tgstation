@@ -13,11 +13,10 @@
  * Generates a dream sequence to be displayed to the sleeper
  *
  *
- * Generates the "dream" to display to the sleeper. A dream consists of a subject, a verb, and an object, displayed in sequence to the sleeper.
+ * Generates the "dream" to display to the sleeper. A dream consists of a subject, a verb, and (most of the time) an object, displayed in sequence to the sleeper.
  * Dreams are generated as a list of strings stored inside dream_fragments, which is passed to and displayed in dream_sequence().
  * Bedsheets on the sleeper will provide a custom subject for the dream, pulled from the dream_messages on each bedsheet.
- * When nouns are selected for the subject/object, they may have blanks for adjectives, which are filled in immediately afterwards.
- *
+ * When nouns are selected for the subject/object, they usually have sections for adjectives, which are either replaced or removed.
  */
 
 /mob/living/carbon/proc/dream()
@@ -73,6 +72,16 @@
 
 	dreaming = TRUE
 	dream_sequence(dream_fragments)
+
+/**
+ * Displays the passed list of dream fragments to a sleeping carbon
+ *
+ * Displays the first string of the passed dream fragments, then either ends the dream sequence
+ * or performs a callback on itself depending on if there are any remaining dream fragments to display
+ *
+ * Arguments:
+ * * dream_fragments - A list of strings, in the order they will be displayed.
+ */
 
 /mob/living/carbon/proc/dream_sequence(list/dream_fragments)
 	if(stat != UNCONSCIOUS || HAS_TRAIT(src, TRAIT_CRITICAL_CONDITION))

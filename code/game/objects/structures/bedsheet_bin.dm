@@ -26,8 +26,11 @@ LINEN BINS
 	dying_key = DYE_REGISTRY_BEDSHEET
 
 	dog_fashion = /datum/dog_fashion/head/ghost
+	/// Custom nouns to act as the subject of dreams
 	var/list/dream_messages = list("white")
+	/// The number of cloth sheets to be dropped by this bedsheet when cut
 	var/stack_amount = 3
+	/// Denotes if the bedsheet is a single, double, or other kind of bedsheet
 	var/bedsheet_type = BEDSHEET_SINGLE
 
 /obj/item/bedsheet/Initialize(mapload)
