@@ -123,7 +123,8 @@
 
 /datum/lift_master/tram/process(delta_time)
 	if(!travel_distance)
-		addtimer(CALLBACK(src, .proc/unlock_controls), 1 SECONDS)
+		addtimer(CALLBACK(src, .proc/unlock_controls), 3 SECONDS)
+		addtimer(CALLBACK(src, .proc/update_tram_doors, OPEN_DOORS), 1 SECONDS)
 		return PROCESS_KILL
 	else if(world.time >= next_move)
 		var/start_time = TICK_USAGE
@@ -166,7 +167,6 @@
 /datum/lift_master/tram/proc/unlock_controls()
 	set_travelling(FALSE)
 	set_controls(LIFT_PLATFORM_UNLOCKED)
-	update_tram_doors(OPEN_DOORS)
 	for(var/obj/structure/industrial_lift/tram/tram_part as anything in lift_platforms) //only thing everyone needs to know is the new location.
 		tram_part.set_travelling(FALSE)
 
